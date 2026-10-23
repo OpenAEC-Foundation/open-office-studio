@@ -36,6 +36,7 @@ jobs:
           PAKKETTEN: ${{ vars.CONVERSIE_APT_PAKKETTEN }}
         run: sudo apt-get install -y --no-install-recommends $PAKKETTEN
       - run: pnpm install --frozen-lockfile
+      - run: pnpm versie:check
       - run: pnpm test
       - run: python -m unittest discover -s tests -v
       - run: node scripts/test-kantoor-engines.mjs

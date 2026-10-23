@@ -1,0 +1,79 @@
+name: Zelfstandige databasebrowser controleren en bouwen
+on:
+  push:
+    branches: [main, "feat/**"]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  database:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Linux-bouwafhankelijkheden
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev patchelf squashfs-tools
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm versie:check
+      - run: pnpm test
+      - run: pnpm database:build
+      - name: Vastgelegde databaseproeven ophalen
+        if: runner.os == 'Linux'
+        run: node scripts/corpus-download.mjs docs/tests/smoke-manifest.json
+      - name: Zelfstandige productieparser controleren
+        if: runner.os == 'Linux'
+        env:
+          DATABASE_DIST: apps/database-studio/dist
+        run: node scripts/test-database-worker.mjs .local/corpus/bestanden/jackcess-b9d004aa5f8287ae413074a933e2c54235f1de29.mdb .local/corpus/bestanden/jackcess-e16c664c03d368bc37fb55265544ba23c201f174.accdb .local/corpus/bestanden/jackcess-6121fc34bed66f15e836e8130cd9489184e7a384.mdb
+      - name: Windows-loader voorbereiden
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./scripts/voorbereiden-windows.ps1 -ProjectMap apps/database-studio/src-tauri
+      - run: cargo test --manifest-path apps/database-studio/src-tauri/Cargo.toml --locked
+      - name: Linux-pakketten bouwen
+        if: runner.os == 'Linux'
+        run: pnpm database:desktop:build --bundles deb,appimage
+      - name: Windows-pakket bouwen
+        if: runner.os == 'Windows'
+        run: pnpm database:desktop:build --bundles nsis
+      - name: macOS-pakket bouwen
+        if: runner.os == 'macOS'
+        run: pnpm database:desktop:build --bundles dmg
+      - name: Linux-pakketten uitpakken en controleren
+        if: runner.os == 'Linux'
+        run: python scripts/controleer-installers.py --platform linux --programma open-database-studio --bundels apps/database-studio/src-tauri/target/release/bundle --rapport .local/pakketcontrole-Database-Linux.json
+      - name: Windows-pakket uitpakken en controleren
+        if: runner.os == 'Windows'
+        run: python scripts/controleer-installers.py --platform windows --programma open-database-studio --bundels apps/database-studio/src-tauri/target/release/bundle --rapport .local/pakketcontrole-Database-Windows.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: open-database-studio-${{ runner.os }}
+          path: |
+            apps/database-studio/src-tauri/target/release/bundle/**/*.deb
+            apps/database-studio/src-tauri/target/release/bundle/**/*.AppImage
+            apps/database-studio/src-tauri/target/release/bundle/**/*.exe
+            apps/database-studio/src-tauri/target/release/bundle/**/*.dmg
+          if-no-files-found: error
+      - name: Pakketrapport bewaren
+        if: runner.os != 'macOS'
+        uses: actions/upload-artifact@v4
+        with:
+          name: pakketcontrole-Database-${{ runner.os }}
+          path: .local/pakketcontrole-Database-*.json
+          include-hidden-files: true
+          if-no-files-found: error

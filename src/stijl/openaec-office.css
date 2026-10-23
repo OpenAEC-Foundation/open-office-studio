@@ -1,0 +1,549 @@
+/* OpenAEC Foundation · CC BY-SA 4.0. Afgeleid van het stijlboek; zie bron.json. */
+@import "./openaec-tokens.css";
+@import "./openaec-shell.css";
+
+.office {
+  --office-kophoogte: 40px;
+  --office-statushoogte: 22px;
+  --office-accent: var(--oa-color-brand-amber);
+  --module-accent: var(--oa-color-brand-amber);
+  --module-tint: #d9770614;
+  --oa-ui-bg: var(--oa-color-surface-light-bg);
+  --oa-ui-surface: var(--oa-color-surface-light-panel);
+  --oa-ui-text: var(--oa-color-text-light-primary);
+  --oa-ui-muted: var(--oa-color-text-light-secondary);
+  --oa-ui-border: var(--oa-color-border-light-default);
+  font-family: var(--oa-font-family-body);
+  color: var(--oa-ui-text);
+  background: var(--oa-ui-bg);
+}
+.office[data-module] {
+  --module-accent: var(--oa-color-brand-amber);
+  --module-tint: #d9770614;
+}
+.office-header {
+  flex-basis: var(--office-kophoogte);
+  gap: 12px;
+  background: var(--oa-shell-bg-lighter);
+  color: var(--oa-shell-text);
+  border-color: var(--oa-shell-border-subtle);
+  padding-inline: 12px;
+}
+.office .office-beeldmerk {
+  width: 24px;
+  height: 28px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+.office-beeldmerk img {
+  display: block;
+  width: 24px;
+  height: 28px;
+  object-fit: contain;
+}
+.office-merk strong,
+.database-eigen-merk strong {
+  font-family: var(--oa-font-family-heading);
+  font-weight: 700;
+  color: var(--oa-shell-text);
+}
+.office-weekversie,
+.database-zelfstandig .database-weekversie {
+  color: var(--oa-shell-text-secondary);
+  background: var(--oa-shell-bg);
+  border: 1px solid var(--oa-shell-border-subtle);
+  border-radius: 4px;
+  padding: 4px 7px;
+  font-size: 10px;
+  white-space: nowrap;
+}
+.office-modulenaam {
+  color: var(--oa-shell-text);
+  background: var(--oa-shell-hover);
+  padding-block: 4px;
+}
+.office-merk strong span,
+.database-eigen-merk strong > span,
+.office-documenttitel,
+.database-lokaal {
+  color: var(--oa-shell-text-secondary);
+}
+.office-header-scheiding {
+  background: var(--oa-shell-border);
+}
+.office .office-headerknop,
+.office .office-opslagformaat {
+  border-radius: 4px;
+  height: 28px;
+  min-height: 28px;
+  padding-block: 4px;
+}
+.office .office-opslagformaat {
+  background: var(--oa-shell-bg);
+  color: var(--oa-shell-text);
+  border-color: var(--oa-shell-border);
+  color-scheme: light;
+}
+.office[data-office-thema="forge"] .office-opslagformaat {
+  color-scheme: dark;
+}
+.office .office-headerknop:hover:not(:disabled),
+.office .office-iconknop:hover {
+  background: var(--oa-shell-hover-strong);
+  color: var(--oa-shell-text);
+}
+.office .office-iconknop {
+  height: 28px;
+  width: 28px;
+  padding: 4px;
+  border-radius: 4px;
+}
+.office-header .office-bewaren {
+  background: var(--oa-shell-file-tab-bg);
+  color: var(--oa-color-brand-night-build);
+}
+.office .office-header .office-bewaren:hover {
+  background: var(--oa-color-brand-warm-gold);
+  color: var(--oa-color-brand-night-build);
+}
+.office-backstage.is-overlay {
+  inset: var(--office-kophoogte) 0 var(--office-statushoogte);
+}
+.office-backstage,
+.start-inhoud {
+  background: var(--oa-ui-bg);
+}
+.start-navigatie {
+  background: var(--oa-shell-bg);
+  border-color: var(--oa-shell-border-subtle);
+}
+.start-navigatie button {
+  border-radius: 4px;
+  color: var(--oa-shell-text);
+}
+.start-navigatie .start-label,
+.start-navigatie .start-openaec,
+.start-navigatie small,
+.start-navigatie .nav-plus {
+  color: var(--oa-shell-text-secondary);
+}
+.start-navonder {
+  border-color: var(--oa-shell-border-subtle);
+}
+.start-navigatie .start-module > svg:first-child {
+  color: inherit;
+}
+.start-navigatie button.geselecteerd {
+  background: var(--oa-shell-hover-strong);
+  border-color: var(--oa-shell-border);
+  color: var(--oa-shell-text);
+  box-shadow: inset 3px 0 var(--oa-color-brand-amber);
+}
+.start-navigatie button:hover:not(:disabled),
+.start-navigatie .start-terug {
+  background: var(--oa-shell-hover);
+  color: var(--oa-shell-text);
+}
+.start-kop h1 {
+  font-family: var(--oa-font-family-heading);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #36363e;
+}
+.start-kop p,
+.start-sectiekop > span {
+  color: #57534e;
+}
+.start-welkom > span {
+  background: #d97706;
+  box-shadow: 0 0 0 3px #d9770614;
+}
+.start-sectiekop h2 {
+  font-family: var(--oa-font-family-heading);
+  font-size: 15px;
+  font-weight: 700;
+  color: #36363e;
+}
+.office-knop,
+.start-sjabloon,
+.start-bestandknop,
+.start-voorbeeld {
+  border-radius: 6px;
+  border-color: #e7e5e4;
+  box-shadow: none;
+}
+.office-primair {
+  background: #36363e;
+  border-color: #36363e;
+}
+.office-primair > svg {
+  color: #f59e0b;
+}
+.office-primair:hover:not(:disabled) {
+  background: #2a2a32;
+  border-color: #d97706;
+}
+.office .ribbon {
+  background: var(--oa-shell-bg);
+  color: var(--oa-shell-text);
+}
+/* De presentatiemodule levert zelf een buitenrand rond haar werkbalk. */
+.office .office-presentatie > div:has(> div > .ribbon) {
+  padding: 0 !important;
+  border-bottom: 0 !important;
+  background: var(--oa-shell-bg) !important;
+}
+.office .ribbon-tabs {
+  height: 28px;
+  padding: 0 8px;
+  gap: 2px;
+  background: var(--oa-shell-bg-lighter);
+  border-bottom: 1px solid var(--oa-color-brand-amber);
+}
+.office .ribbon-tabknoppen {
+  gap: 2px;
+}
+.office .ribbon-tabs button {
+  margin: 0 0 -1px;
+  padding: 0 15px;
+  border: 1px solid transparent;
+  border-radius: 4px 4px 0 0;
+  color: var(--oa-shell-text);
+  background: transparent;
+}
+.office .ribbon-tabs button[aria-selected="true"] {
+  background: var(--oa-shell-bg);
+  border: 1px solid var(--oa-color-brand-amber);
+  border-bottom-color: var(--oa-shell-bg);
+  color: var(--oa-shell-text);
+}
+.office .ribbon-tabs button[aria-selected="true"]:after {
+  display: none;
+}
+.office .ribbon-tabs button:hover {
+  background: var(--oa-shell-hover);
+  color: var(--oa-shell-text);
+}
+.office .ribbon-tabs .ribbon-bestand {
+  background: var(--oa-shell-file-tab-bg);
+  color: var(--oa-color-brand-night-build);
+  margin-right: 3px;
+}
+.office .ribbon-tabs .ribbon-bestand:hover {
+  background: var(--oa-color-brand-warm-gold);
+  color: var(--oa-color-brand-night-build);
+}
+.office .ribbon-tabs .ribbon-inklap {
+  color: var(--oa-shell-text-secondary);
+  background: var(--oa-shell-bg-lighter);
+}
+.office .ribbon-inhoud {
+  height: 94px;
+  margin: 0;
+  padding: 5px 3px 3px;
+  border: 0;
+  border-bottom: 1px solid var(--oa-shell-border-subtle);
+  border-radius: 0;
+  background: var(--oa-shell-bg);
+  box-shadow: none;
+}
+.office .ribbon-groep {
+  padding: 0 10px;
+  border-color: var(--oa-shell-ribbon-group-separator);
+}
+.office .ribbon-groep-naam {
+  color: var(--oa-shell-text-secondary);
+  font-size: 9px;
+  line-height: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border-top: 1px solid var(--oa-shell-border-subtle);
+  padding-top: 2px;
+}
+.office .ribbon-actie {
+  border-radius: 4px;
+  color: var(--oa-shell-text);
+  font-size: 11px;
+  min-height: 26px;
+  padding-block: 4px;
+}
+.office .ribbon-actie:hover:not(:disabled),
+.office .ribbon-actie[aria-pressed="true"] {
+  color: var(--oa-shell-text);
+  background: var(--oa-shell-ribbon-btn-active-bg);
+  border-color: var(--oa-shell-ribbon-btn-active-border);
+}
+.office .ribbon-actie svg {
+  color: inherit;
+}
+.office .ribbon select,
+.office .ribbon input {
+  border-radius: 3px;
+  background: var(--oa-shell-bg-lighter);
+  color: var(--oa-shell-text);
+  border-color: var(--oa-shell-border);
+  box-shadow: none;
+  color-scheme: light;
+}
+.office[data-office-thema="forge"] .ribbon select,
+.office[data-office-thema="forge"] .ribbon input {
+  color-scheme: dark;
+}
+.office .ribbon-groot {
+  min-height: 62px;
+  gap: 6px;
+}
+.office .ribbon-kleur,
+.office .ribbon-keuze > svg {
+  color: var(--oa-shell-text-secondary);
+}
+.office .ribbon-stijlgalerij .ribbon-groot {
+  background: var(--oa-shell-bg-lighter);
+  border-color: var(--oa-shell-border);
+}
+.office .ribbon-ingebouwd button {
+  color: var(--oa-shell-text) !important;
+}
+.office .ribbon-ingebouwd button:hover {
+  background: var(--oa-shell-hover) !important;
+  border-color: var(--oa-shell-border) !important;
+}
+.office .office-formulebalk {
+  background: #fafaf9;
+  border-color: #e7e5e4;
+}
+.office .docx-editor__scroll-container {
+  background: #f5f5f4 !important;
+}
+.office .docx-outline-nav {
+  background: #fafaf9;
+  border-color: #e7e5e4;
+  border-radius: 4px;
+}
+.office .office-statusbalk,
+.office .database-app footer {
+  height: var(--office-statushoogte);
+  min-height: var(--office-statushoogte);
+  background: var(--oa-shell-status-bg);
+  color: var(--oa-color-text-dark-secondary);
+  border-top: 1px solid var(--oa-shell-status-border);
+  font-size: 10px;
+}
+.office .office-statusbalk i {
+  background: #f59e0b;
+}
+.office .office-statusbalk kbd {
+  border-color: #71717a;
+  background: #2a2a32;
+  color: #fafaf9;
+}
+.office .database-app {
+  --surface: #fff;
+  --bg: #fafaf9;
+  --text: #36363e;
+  --muted: #57534e;
+  --border: #e7e5e4;
+  --soft: #f5f5f4;
+}
+.office .database-app h1,
+.office .database-app h2,
+.office .database-app h3 {
+  font-family: var(--oa-font-family-heading);
+  font-weight: 700;
+}
+.office .database-app aside button.selected {
+  color: var(--text);
+  border-color: #d9770660;
+  background: #d9770614;
+  box-shadow: inset 3px 0 #d97706;
+}
+.office .database-app .melding {
+  background: var(--soft);
+  color: var(--text);
+  border-color: var(--border);
+}
+.office .database-app .melding.fout {
+  background: #fef2f2;
+  color: #991b1b;
+  border-color: #fecaca;
+}
+.office .database-app .welkom .db-icon {
+  color: #d97706;
+  background: #d9770614;
+  border-radius: 8px;
+}
+.office .database-app[data-theme="dark"] {
+  --surface: #2a2a32;
+  --bg: #36363e;
+  --text: #fafaf9;
+  --muted: #d6d3d1;
+  --border: #52525b;
+  --soft: #3f3f46;
+  --oa-ui-bg: #36363e;
+  --oa-ui-surface: #2a2a32;
+  --oa-ui-text: #fafaf9;
+  --oa-ui-muted: #d6d3d1;
+  --oa-ui-border: #52525b;
+}
+.office .database-app[data-theme="dark"] .melding.fout {
+  background: #7f1d1d;
+  color: #fafaf9;
+}
+.office .database-app[data-theme="dark"] aside h3 {
+  color: #f59e0b;
+}
+.start-notities {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+  margin: 24px 0 32px;
+  padding: 19px 22px;
+  border: 1px solid #e7e5e4;
+  border-radius: 6px;
+  background: #fff;
+  text-align: left;
+  color: #36363e;
+}
+.start-notities:hover {
+  border-color: #d9770680;
+  background: #fffbf5;
+}
+.start-notities-icoon {
+  display: grid;
+  place-items: center;
+  height: 48px;
+  width: 48px;
+  border: 1px solid #d9770630;
+  border-radius: 8px;
+  background: #d977060d;
+  color: #a75c06;
+  flex-shrink: 0;
+}
+.start-notities strong {
+  display: block;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 18px;
+}
+.start-notities small {
+  display: block;
+  color: #78716c;
+  font-size: 11px;
+  margin-top: 5px;
+}
+.start-notities-open {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+  white-space: nowrap;
+  font-size: 11px;
+}
+/* Navigatie volgt de app; de inhoud van notities blijft een licht werkblad. */
+.office .notities-boeken {
+  background: var(--oa-shell-bg);
+  border-color: var(--oa-shell-border-subtle);
+  color: var(--oa-shell-text);
+}
+.office .notities-boekkiezer,
+.office .notities-boekkiezer select,
+.office .notities-boeken nav button,
+.office .notities-zijvoet button {
+  color: var(--oa-shell-text);
+}
+.office .notities-boekkiezer option {
+  background: var(--oa-shell-bg);
+  color: var(--oa-shell-text);
+}
+.office .notities-zijlabel,
+.office .notities-boeken nav button small,
+.office .notities-nieuwboek,
+.office .notities-zijvoet p,
+.office .notities-zijvoet button span,
+.office .notities-boekkiezer button,
+.office .notities-sectiekop button {
+  color: var(--oa-shell-text-secondary);
+}
+.office .notities-boeken nav button.is-geselecteerd,
+.office .notities-boeken nav button:hover,
+.office .notities-zijvoet button:hover,
+.office .notities-zijvoet button.is-geselecteerd {
+  background: var(--oa-shell-hover-strong);
+  border-color: var(--oa-shell-border);
+  color: var(--oa-shell-text);
+  box-shadow: none;
+}
+.office .notities-zoek {
+  background: var(--oa-shell-bg-lighter);
+  border-color: var(--oa-shell-border);
+  color: var(--oa-shell-text-secondary);
+}
+.office .notities-zoek input {
+  color: var(--oa-shell-text);
+}
+.office .notities-zoek input::placeholder {
+  color: var(--oa-shell-text-secondary);
+}
+.office .notities-paginalijst small,
+.office .notities-paginadatum,
+.office .notities-canvastip {
+  color: var(--oa-color-text-light-secondary);
+}
+.office-dialoog {
+  border-color: var(--oa-color-border-light-default);
+  border-radius: 12px;
+  color: var(--oa-color-text-light-primary);
+  font-family: var(--oa-font-family-body);
+}
+.office-dialoog h2 {
+  font-family: var(--oa-font-family-heading);
+}
+.office-dialoog p,
+.office-dialoog strong {
+  color: var(--oa-color-text-light-secondary);
+}
+.office-dialoog .office-dialoogdoorgaan {
+  background: var(--oa-color-brand-deep-forge);
+  border-color: var(--oa-color-brand-deep-forge);
+}
+.office-dialoog .office-dialoogdoorgaan:hover {
+  background: var(--oa-color-brand-night-build);
+}
+@media (max-width: 800px) {
+  .office-header {
+    gap: 8px;
+    padding-inline: 10px;
+  }
+  .office-weekversie {
+    display: none;
+  }
+  .office .ribbon-groep {
+    padding-inline: 8px;
+  }
+  .database-eigen-merk strong > span {
+    display: none;
+  }
+  .office-documenttitel {
+    justify-content: flex-start;
+  }
+}
+@media (max-width: 560px) {
+  .office .office-opslagformaat {
+    max-width: 86px;
+    min-width: 60px;
+  }
+  .office .office-merk {
+    gap: 4px;
+  }
+  .office .office-merk strong {
+    font-size: 12px;
+  }
+  .office .office-header {
+    gap: 4px;
+    padding-inline: 6px;
+  }
+  .office .office-documenttitel > svg {
+    display: none;
+  }
+}

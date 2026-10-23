@@ -8,9 +8,16 @@ use tauri::Manager;
 mod conversie;
 
 fn lees_bytes(request: &tauri::ipc::Request<'_>) -> Result<Vec<u8>, String> {
-    match request.body() {
+    lees_binaire_inhoud(request.body(), false)
+}
+
+fn lees_binaire_inhoud(
+    inhoud: &tauri::ipc::InvokeBody,
+    leeg_toegestaan: bool,
+) -> Result<Vec<u8>, String> {
+    match inhoud {
         tauri::ipc::InvokeBody::Raw(bytes)
-            if !bytes.is_empty() && bytes.len() <= 100 * 1024 * 1024 =>
+            if (leeg_toegestaan || !bytes.is_empty()) && bytes.len() <= 100 * 1024 * 1024 =>
         {
             Ok(bytes.clone())
         }
@@ -70,7 +77,6 @@ fn schrijf_atomair(pad: &Path, bytes: &[u8]) -> Result<(), String> {
 
 #[tauri::command]
 async fn bewaar_kopie(request: tauri::ipc::Request<'_>) -> Result<Option<String>, String> {
-    let bytes = lees_bytes(&request)?;
     let naam = request
         .headers()
         .get("x-office-naam")
@@ -80,9 +86,6 @@ async fn bewaar_kopie(request: tauri::ipc::Request<'_>) -> Result<Option<String>
         .decode_utf8()
         .map_err(|_| "De bestandsnaam bevat ongeldige tekens.")?
         .into_owned();
-    if bytes.is_empty() || bytes.len() > 100 * 1024 * 1024 {
-        return Err("Het bestand is leeg of groter dan 100 MB.".into());
-    }
     let bestandsnaam = Path::new(&naam)
         .file_name()
         .and_then(|s| s.to_str())
@@ -93,9 +96,11 @@ async fn bewaar_kopie(request: tauri::ipc::Request<'_>) -> Result<Option<String>
         .and_then(|s| s.to_str())
         .unwrap_or("")
         .to_lowercase();
-    if !conversie::mag_bewaren(&extensie) {
+    if extensie != "openaec-notities" && !conversie::mag_bewaren(&extensie) {
         return Err("Niet-ondersteund bestandsformaat.".into());
     }
+    // Een lege Markdownpagina is een geldig tekstbestand; conversie en andere formaten blijven streng.
+    let bytes = lees_binaire_inhoud(request.body(), extensie == "md")?;
     let bestand = rfd::AsyncFileDialog::new()
         .set_title("Kopie opslaan")
         .set_file_name(&bestandsnaam)
@@ -169,6 +174,22 @@ fn main() {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn bewaart_lege_markdown_zonder_oude_inhoud_achter_te_laten() {
+        let invoer = tauri::ipc::InvokeBody::Raw(Vec::new());
+        assert!(lees_binaire_inhoud(&invoer, false).is_err());
+        let bytes = lees_binaire_inhoud(&invoer, true).unwrap();
+        let map = tempfile::tempdir().unwrap();
+        let pad = map.path().join("lege-pagina.md");
+        std::fs::write(&pad, b"oude inhoud").unwrap();
+        schrijf_atomair(&pad, &bytes).unwrap();
+        assert!(std::fs::read(&pad).unwrap().is_empty());
+        assert!(lees_binaire_inhoud(
+            &tauri::ipc::InvokeBody::Json(serde_json::json!("geen binaire inhoud")),
+            true
+        )
+        .is_err());
+    }
     #[test]
     fn vervangt_bestand_volledig() {
         let map = tempfile::tempdir().unwrap();

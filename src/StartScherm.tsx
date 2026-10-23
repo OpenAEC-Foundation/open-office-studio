@@ -10,6 +10,7 @@ import {
   HardDrive,
   Plus,
   ArrowUpRight,
+  NotebookPen,
 } from "lucide-react";
 import type { Soort } from "./editors";
 
@@ -94,18 +95,22 @@ export function StartScherm({
   open,
   nieuw,
   openDatabase,
+  openNotities,
   bewaar,
   voorbeeld,
   databaseActief = false,
+  notitiesActief = false,
 }: {
   bezig: boolean;
   terug?: () => void;
   open: () => void;
   nieuw: (soort: Soort) => void;
   openDatabase: () => void;
+  openNotities: () => void;
   bewaar?: () => void;
   voorbeeld: (soort: Soort) => void;
   databaseActief?: boolean;
+  notitiesActief?: boolean;
 }) {
   return (
     <div className="office-start">
@@ -148,6 +153,15 @@ export function StartScherm({
               <Plus size={13} className="nav-plus" />
             </button>
           ))}
+          <button
+            disabled={bezig}
+            onClick={openNotities}
+            title="Open Notities Studio"
+          >
+            <NotebookPen size={18} />
+            <span>Notities</span>
+            <Plus size={13} className="nav-plus" />
+          </button>
         </div>
         <div className="start-navonder">
           <button
@@ -172,7 +186,7 @@ export function StartScherm({
               <span /> Jouw lokale kantoor
             </span>
             <h1>{terug ? "Bestand" : "Je werkruimte."}</h1>
-            <p>Schrijven, rekenen en presenteren. Alles op één plek.</p>
+            <p>Schrijven, rekenen, presenteren en ideeën vastleggen.</p>
           </div>
           <button
             className="office-knop office-primair"
@@ -180,7 +194,11 @@ export function StartScherm({
             onClick={open}
           >
             <FolderOpen size={17} />
-            {databaseActief ? "Database openen" : "Bestand openen"}
+            {notitiesActief
+              ? "Notitieback-up toevoegen"
+              : databaseActief
+                ? "Database openen"
+                : "Bestand openen"}
             <kbd>Ctrl O</kbd>
           </button>
         </div>
@@ -213,6 +231,24 @@ export function StartScherm({
             ))}
           </div>
         </section>
+        <button
+          className="start-notities"
+          disabled={bezig}
+          onClick={openNotities}
+        >
+          <span className="start-notities-icoon">
+            <NotebookPen size={27} strokeWidth={1.5} />
+          </span>
+          <span>
+            <strong>Een plek voor je ideeën.</strong>
+            <small>
+              Notitieboeken, secties en pagina’s. Automatisch lokaal bewaard.
+            </small>
+          </span>
+          <span className="start-notities-open">
+            Open Notities <ArrowRight size={15} />
+          </span>
+        </button>
         <section
           className="start-voorbeelden"
           aria-labelledby="start-voorbeelden-titel"
@@ -256,15 +292,19 @@ export function StartScherm({
             <span>
               <strong>Bladeren op deze computer</strong>
               <small>
-                {databaseActief
-                  ? "Open een MDB- of ACCDB-database."
-                  : "Open een document, rekenblad of presentatie."}
+                {notitiesActief
+                  ? "Voeg een OpenAEC-notitieback-up toe."
+                  : databaseActief
+                    ? "Open een MDB- of ACCDB-database."
+                    : "Open een document, rekenblad of presentatie."}
               </small>
             </span>
             <span className="bestandsformaten">
-              {(databaseActief
-                ? ["MDB", "ACCDB"]
-                : ["DOCX", "XLSX", "PPTX"]
+              {(notitiesActief
+                ? ["NOTITIES"]
+                : databaseActief
+                  ? ["MDB", "ACCDB"]
+                  : ["DOCX", "XLSX", "PPTX"]
               ).map((formaat) => (
                 <i key={formaat}>{formaat}</i>
               ))}
@@ -283,7 +323,8 @@ export function StartScherm({
               DOCX, XLSX en PPTX werken rechtstreeks. De desktopversie kan met
               een ingesteld conversieprogramma ook ODF en oudere formaten
               omzetten. Opmaak kan daarbij afwijken. Database Studio leest MDB-
-              en ACCDB-tabellen; bewerken en VBA volgen later.
+              en ACCDB-tabellen; bewerken en VBA volgen later. De afzonderlijke
+              app is te installeren als Open Database Studio.
             </p>
           </details>
         </div>

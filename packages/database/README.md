@@ -2,6 +2,8 @@
 
 Experimentele databasebrowser in de gedeelde React/Tauri-werkruimte. Volgt [issue #8](https://github.com/OpenAEC-Foundation/open-office-studio/issues/8). Tekst, Rekenblad en Presentatie houden voorrang.
 
+Vanaf weekuitgave 2026-W43.1 is er ook een [zelfstandige desktopapp](../../apps/database-studio), met een eigen venster, pictogram, installer en native exportdialoog. De parser en objectbrowser worden gedeeld; de zelfstandige bundel bevat de kantoorengines niet.
+
 ## Werkt nu
 
 - MDB- en ACCDB-bestanden lokaal openen met de MIT-parser `mdb-reader` 3.2.0.

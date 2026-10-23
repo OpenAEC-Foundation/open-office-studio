@@ -58,18 +58,18 @@ def elf_x64(pad):
     eis("not found" not in afhankelijkheden, f"Ontbrekende bibliotheken:\n{afhankelijkheden}")
 
 
-def snelkoppeling(pad, wortel):
+def snelkoppeling(pad, wortel, programma="open-office-studio"):
     configuratie = configparser.ConfigParser(interpolation=None)
     configuratie.read(pad, encoding="utf-8")
     gegevens = configuratie["Desktop Entry"]
     eis(gegevens.get("Type") == "Application", "De Linux-snelkoppeling is geen toepassing.")
-    eis(gegevens.get("Exec") == "open-office-studio", "De Linux-snelkoppeling start het verkeerde programma.")
-    eis(gegevens.get("Icon") == "open-office-studio", "De Linux-snelkoppeling verwijst naar het verkeerde pictogram.")
-    eis(any((wortel / "usr/share/icons").rglob("open-office-studio.png")),
+    eis(gegevens.get("Exec") == programma, "De Linux-snelkoppeling start het verkeerde programma.")
+    eis(gegevens.get("Icon") == programma, "De Linux-snelkoppeling verwijst naar het verkeerde pictogram.")
+    eis(any((wortel / "usr/share/icons").rglob(f"{programma}.png")),
         "Het pictogram bij de Linux-snelkoppeling ontbreekt.")
 
 
-def windows(pakket, map):
+def windows(pakket, map, programmanaam="open-office-studio"):
     archief = shutil.which("7z") or shutil.which("7z.exe")
     if not archief:
         kandidaat = Path("C:/Program Files/7-Zip/7z.exe")
@@ -77,7 +77,7 @@ def windows(pakket, map):
     eis(archief, "7-Zip is nodig voor de Windows-pakketcontrole.")
     opdracht(archief, "t", pakket)
     opdracht(archief, "x", "-y", f"-o{map}", pakket)
-    programma = een(map.rglob("open-office-studio.exe"), "Windows-programma")
+    programma = een(map.rglob(f"{programmanaam}.exe"), "Windows-programma")
     loader = een(map.rglob("WebView2Loader.dll"), "WebView2-loader")
     pe_x64(programma)
     pe_x64(loader)
@@ -88,20 +88,20 @@ def windows(pakket, map):
     return ["NSIS-archief leesbaar", "programma en WebView2-loader x64", "WebView2-bootstrapper aanwezig"]
 
 
-def deb(pakket, map, versie):
-    for veld, verwacht in [("Package", "open-office-studio"), ("Version", versie), ("Architecture", "amd64")]:
+def deb(pakket, map, versie, programma="open-office-studio"):
+    for veld, verwacht in [("Package", programma), ("Version", versie), ("Architecture", "amd64")]:
         eis(opdracht("dpkg-deb", "--field", pakket, veld).strip() == verwacht,
             f"Verkeerde DEB-{veld}; verwacht {verwacht}.")
     afhankelijkheden = opdracht("dpkg-deb", "--field", pakket, "Depends")
     for bibliotheek in ("libwebkit2gtk-4.1-0", "libgtk-3-0"):
         eis(bibliotheek in afhankelijkheden, f"DEB-afhankelijkheid ontbreekt: {bibliotheek}.")
     opdracht("dpkg-deb", "--extract", pakket, map)
-    elf_x64(map / "usr/bin/open-office-studio")
-    snelkoppeling(een((map / "usr/share/applications").glob("*.desktop"), "Linux-snelkoppeling"), map)
+    elf_x64(map / f"usr/bin/{programma}")
+    snelkoppeling(een((map / "usr/share/applications").glob("*.desktop"), "Linux-snelkoppeling"), map, programma)
     return ["DEB-versie en architectuur", "runtime-afhankelijkheden opgegeven", "ELF x64 en bibliotheken gevonden", "snelkoppeling en pictogram aanwezig"]
 
 
-def appimage(pakket, map):
+def appimage(pakket, map, programma="open-office-studio"):
     with pakket.open("rb") as bestand:
         kop = bestand.read(4 * 1024 * 1024)
     eis(kop[:4] == b"\x7fELF" and kop[8:11] == b"AI\x02", "Geen AppImage van type 2.")
@@ -115,38 +115,40 @@ def appimage(pakket, map):
     opdracht("unsquashfs", "-no-progress", "-no-xattrs", "-d", map, "-o", positie, pakket)
     eis((map / "AppRun").is_file(), "De AppImage-startfunctie ontbreekt.")
     eis((map / "AppRun").stat().st_mode & stat.S_IXUSR, "AppRun is niet uitvoerbaar.")
-    elf_x64(map / "usr/bin/open-office-studio")
-    snelkoppeling(een(map.glob("*.desktop"), "AppImage-snelkoppeling"), map)
+    elf_x64(map / f"usr/bin/{programma}")
+    snelkoppeling(een(map.glob("*.desktop"), "AppImage-snelkoppeling"), map, programma)
     return ["AppImage type 2", "SquashFS volledig uitgepakt", "AppRun uitvoerbaar", "ELF x64 en bibliotheken gevonden", "snelkoppeling en pictogram aanwezig"]
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--platform", choices=["windows", "linux"], required=True)
+    parser.add_argument("--programma", choices=["open-office-studio", "open-database-studio"], default="open-office-studio")
     parser.add_argument("--bundels", type=Path, default=Path("src-tauri/target/release/bundle"))
     parser.add_argument("--versie", default=json.loads(Path("package.json").read_text())["version"])
     parser.add_argument("--rapport", type=Path, required=True)
     opties = parser.parse_args()
-    patronen = ([f"*_{opties.versie}_x64-setup.exe"] if opties.platform == "windows" else
-                [f"*_{opties.versie}_amd64.deb", f"*_{opties.versie}_amd64.AppImage"])
+    product = "Open*Database*Studio" if opties.programma == "open-database-studio" else "Open*Office*Studio"
+    patronen = ([f"{product}_{opties.versie}_x64-setup.exe"] if opties.platform == "windows" else
+                [f"{product}_{opties.versie}_amd64.deb", f"{product}_{opties.versie}_amd64.AppImage"])
     uitkomsten = []
     with tempfile.TemporaryDirectory(prefix="office-pakketcontrole-") as tijdelijk:
         for index, patroon in enumerate(patronen):
             pakket = een(opties.bundels.rglob(patroon), patroon).resolve()
             map = Path(tijdelijk) / str(index)
             if opties.platform == "windows":
-                controles = windows(pakket, map)
+                controles = windows(pakket, map, opties.programma)
             elif pakket.suffix == ".deb":
-                controles = deb(pakket, map, opties.versie)
+                controles = deb(pakket, map, opties.versie, opties.programma)
             else:
-                controles = appimage(pakket, map)
+                controles = appimage(pakket, map, opties.programma)
             with pakket.open("rb") as bestand:
                 checksum = hashlib.file_digest(bestand, "sha256").hexdigest()
             uitkomsten.append({"naam": pakket.name, "bytes": pakket.stat().st_size,
                                "sha256": checksum, "controles": controles})
             print(f"Gecontroleerd: {pakket.name}", flush=True)
     opties.rapport.parent.mkdir(parents=True, exist_ok=True)
-    opties.rapport.write_text(json.dumps({"platform": opties.platform, "versie": opties.versie,
+    opties.rapport.write_text(json.dumps({"platform": opties.platform, "programma": opties.programma, "versie": opties.versie,
         "pakketten": uitkomsten, "installatie_en_native_bediening": "niet_gecontroleerd"},
         ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Pakketrapport: {opties.rapport}")

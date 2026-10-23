@@ -1,0 +1,585 @@
+.notities-studio {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--oa-ui-bg, #fafaf9);
+  color: #36363e;
+  position: relative;
+}
+.notities-studio button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.notities-studio button,
+.notities-studio input,
+.notities-studio select,
+.notities-studio textarea {
+  font: inherit;
+}
+.notities-studio .ribbon-actie {
+  display: flex;
+}
+.notities-werkruimte {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 228px 250px minmax(0, 1fr);
+}
+.notities-boeken {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 14px 12px;
+  background: #f5f5f4;
+  border-right: 1px solid #e7e5e4;
+  min-height: 0;
+  overflow-y: auto;
+}
+.notities-zijlabel {
+  font-size: 9px;
+  letter-spacing: 1px;
+  font-weight: 600;
+  color: #78716c;
+  padding: 0 8px;
+}
+.notities-boekkiezer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 13px 4px 20px;
+  color: #a75c06;
+}
+.notities-boekkiezer select {
+  min-width: 0;
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  color: #36363e;
+  border: 0;
+  background: transparent;
+}
+.notities-boekkiezer button,
+.notities-sectiekop button,
+.notities-lijstkop > button {
+  border: 0;
+  padding: 4px;
+  color: #78716c;
+  background: transparent;
+  border-radius: 4px;
+}
+.notities-zoek {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  padding: 9px;
+  background: #fff;
+  border: 1px solid #e7e5e4;
+  border-radius: 5px;
+  color: #78716c;
+}
+.notities-zoek input {
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  font-size: 11px;
+  color: #36363e;
+  outline: none;
+}
+.notities-zoek:focus-within {
+  border-color: #d97706;
+  outline: 2px solid #d9770620;
+}
+.notities-sectiekop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 25px;
+  margin-bottom: 9px;
+}
+.notities-boeken nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.notities-boeken nav button {
+  display: flex;
+  width: 100%;
+  padding: 10px 9px;
+  color: #57534e;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  text-align: left;
+  background: transparent;
+}
+.notities-boeken nav button > i {
+  width: 5px;
+  height: 20px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.notities-boeken nav button > span {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.notities-boeken nav button small {
+  font-size: 10px;
+  color: #78716c;
+}
+.notities-boeken nav button.is-geselecteerd {
+  background: #fff;
+  border-color: #e7e5e4;
+  color: #36363e;
+  box-shadow: 0 1px 3px #36363e06;
+  font-weight: 600;
+}
+.notities-boeken nav button:hover,
+.notities-zijvoet button:hover {
+  background: #fff;
+}
+.notities-nieuwboek {
+  font-size: 11px !important;
+  padding: 14px 9px;
+  color: #78716c;
+  border: 0;
+  background: transparent;
+}
+.notities-zijvoet {
+  margin-top: auto;
+  padding-top: 35px;
+}
+.notities-zijvoet button {
+  display: flex;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: #57534e;
+  padding: 9px;
+  border-radius: 4px;
+  font-size: 11px;
+}
+.notities-zijvoet button span {
+  margin-left: auto;
+  color: #78716c;
+}
+.notities-zijvoet button.is-geselecteerd {
+  background: #fff;
+}
+.notities-zijvoet p {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 15px 9px 0;
+  font-size: 10px;
+  color: #78716c;
+}
+.notities-paginas {
+  background: #fafaf9;
+  border-right: 1px solid #e7e5e4;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.notities-lijstkop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 18px 16px;
+}
+.notities-lijstkop span {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: #78716c;
+}
+.notities-lijstkop h2 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 19px;
+  margin: 5px 0 0;
+  word-break: break-word;
+}
+.notities-nieuwepagina {
+  justify-content: center;
+  margin: 0 16px 17px;
+  padding: 9px;
+  background: #fff;
+  color: #57534e;
+  border: 1px dashed #d6d3d1;
+  border-radius: 5px;
+  font-size: 11px !important;
+}
+.notities-nieuwepagina:hover {
+  border-color: #d97706;
+  color: #a75c06;
+}
+.notities-paginalijst {
+  padding: 0 9px 20px;
+  overflow: auto;
+}
+.notities-paginalijst > button {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 7px;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  padding: 14px 10px;
+  margin-bottom: 5px;
+}
+.notities-paginalijst > button.is-geselecteerd {
+  background: #fff;
+  border-color: #e7e5e4;
+  box-shadow: inset 3px 0 #d97706;
+}
+.notities-paginalijst > button:hover {
+  background: #fff;
+}
+.notities-paginalijst strong {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #36363e;
+  overflow-wrap: anywhere;
+}
+.notities-paginalijst > button > span {
+  font-size: 11px;
+  color: #78716c;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.notities-paginalijst small {
+  font-size: 9px;
+  line-height: 1.6;
+  color: #78716c;
+}
+.notities-geenresultaten {
+  padding: 10px;
+  color: #78716c;
+  font-size: 12px;
+}
+.notities-pagina {
+  min-width: 0;
+  overflow-y: auto;
+  background: #fff;
+}
+.notities-pagina article {
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 24px clamp(24px, 4vw, 70px) 80px;
+}
+.notities-paginakop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #78716c;
+  font-size: 10px;
+  margin-bottom: 30px;
+}
+.notities-paginakop > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.notities-paginakop b {
+  font-weight: 400;
+  margin: 0 10px;
+  color: #d6d3d1;
+}
+.notities-paginakop button {
+  flex-shrink: 0;
+  border: 1px solid #e7e5e4;
+  border-radius: 4px;
+  background: #fff;
+  padding: 7px 9px;
+  color: #78716c;
+  font-size: 10px;
+}
+.notities-paginatitel {
+  display: block;
+  width: 100%;
+  font:
+    700 clamp(24px, 2.5vw, 36px) / 1.4 "Space Grotesk",
+    sans-serif !important;
+  letter-spacing: -1px;
+  border: 0;
+  background: transparent;
+  color: #36363e;
+  padding: 0 0 8px;
+}
+.notities-paginatitel:focus {
+  outline: none !important;
+  box-shadow: 0 1px #d97706;
+}
+.notities-paginadatum {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: #a8a29e;
+  font-size: 10px;
+  padding-bottom: 24px;
+  margin-bottom: 17px;
+  border-bottom: 1px solid #f5f5f4;
+}
+.notities-blok {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 1px -9px;
+  padding: 3px 8px;
+  border-left: 2px solid transparent;
+}
+.notities-blok.is-actief:focus-within {
+  border-color: #d97706;
+}
+.notities-blok textarea {
+  width: 100%;
+  resize: none;
+  overflow-y: hidden;
+  min-height: 28px;
+  color: #57534e;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  line-height: 1.9;
+  font-size: 13px;
+  outline: none;
+  border-radius: 0;
+}
+.notities-blok textarea:focus {
+  outline: none;
+}
+.notities-blok.is-kop {
+  margin-top: 20px;
+}
+.notities-blok.is-kop textarea {
+  color: #36363e;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.6;
+}
+.notities-blok.is-subkop textarea {
+  font-size: 16px;
+  font-weight: 500;
+  color: #36363e;
+  line-height: 1.8;
+}
+.notities-blok input[type="checkbox"] {
+  accent-color: #d97706;
+  margin: 6px 0 0;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.notities-blok.is-klaar textarea {
+  text-decoration: line-through;
+  color: #a8a29e;
+}
+.notities-punt {
+  color: #d97706;
+  line-height: 25px;
+  width: 15px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.notities-bloktoevoegen {
+  background: transparent;
+  border: 0;
+  color: #a8a29e;
+  padding: 14px 0;
+  font-size: 11px !important;
+}
+.notities-bloktoevoegen:hover {
+  color: #a75c06;
+}
+.notities-paginatip {
+  margin-top: 20px;
+  font-size: 10px;
+  color: #a8a29e;
+}
+.notities-legepagina {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: 35px;
+  color: #78716c;
+}
+.notities-legepagina > svg {
+  color: #d97706;
+}
+.notities-legepagina h2 {
+  font-family: "Space Grotesk", sans-serif;
+  color: #36363e;
+}
+.notities-legepagina button {
+  background: #36363e;
+  color: #fff;
+  border: 0;
+  border-radius: 4px;
+  padding: 10px 15px;
+  margin-top: 10px;
+}
+.notities-opslagstatus {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: #fafaf9;
+  border-top: 1px solid #e7e5e4;
+  font-size: 10px;
+  color: #78716c;
+}
+.notities-opslagstatus > span {
+  margin-left: auto;
+  font-size: 9px;
+}
+.notities-melding {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 16px;
+  border-bottom: 1px solid #e7e5e4;
+  background: #fffbeb;
+  color: #78350f;
+  font-size: 11px;
+}
+.notities-melding > span {
+  flex: 1;
+}
+.notities-melding button {
+  flex-shrink: 0;
+  color: inherit;
+  border: 1px solid #d9770640;
+  padding: 4px 7px;
+  border-radius: 4px;
+  background: transparent;
+}
+.notities-melding.is-fout {
+  background: #fef2f2;
+  color: #991b1b;
+}
+.notities-bewaaruitleg {
+  color: #78716c;
+  font-size: 11px;
+  line-height: 1.8;
+  padding-left: 20px;
+}
+.notities-herstel {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  background: #fffbeb;
+  color: #78350f;
+  padding: 15px;
+  border: 1px solid #fde68a;
+  border-radius: 5px;
+}
+.notities-herstel button {
+  margin-left: auto;
+  padding: 7px 10px;
+  border: 1px solid #d97706;
+  border-radius: 4px;
+  background: #fff;
+  color: #78350f;
+}
+.notities-leestekst p {
+  white-space: pre-wrap;
+  color: #78716c;
+  line-height: 1.9;
+}
+.notities-naamachtergrond {
+  position: fixed;
+  z-index: 90;
+  inset: 0;
+  background: #36363e45;
+  display: grid;
+  place-items: center;
+  backdrop-filter: blur(3px);
+}
+.notities-naamdialoog {
+  width: min(420px, 90%);
+  padding: 28px;
+  background: #fff;
+  border: 1px solid #e7e5e4;
+  border-radius: 8px;
+  box-shadow: 0 15px 60px #36363e25;
+}
+.notities-naamdialoog h2 {
+  font:
+    700 21px "Space Grotesk",
+    sans-serif;
+  margin: 0 0 24px;
+}
+.notities-naamdialoog label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12px;
+}
+.notities-naamdialoog input {
+  padding: 10px;
+  border: 1px solid #d6d3d1;
+  border-radius: 4px;
+}
+.notities-naamdialoog > div {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+.notities-naamdialoog button {
+  padding: 9px 13px;
+  background: #fff;
+  border: 1px solid #e7e5e4;
+  border-radius: 4px;
+}
+.notities-naamdialoog button[type="submit"] {
+  background: #36363e;
+  color: #fff;
+  border-color: #36363e;
+}
+@media (max-width: 1050px) {
+  .notities-werkruimte {
+    grid-template-columns: 190px 210px minmax(0, 1fr);
+  }
+  .notities-pagina article {
+    padding-inline: 25px;
+  }
+}
+@media (max-width: 760px) {
+  .notities-werkruimte {
+    grid-template-columns: 160px minmax(0, 1fr);
+  }
+  .notities-boeken {
+    padding: 16px 8px 8px;
+  }
+  .notities-paginas {
+    grid-column: 1;
+    grid-row: 2;
+    max-height: 250px;
+  }
+  .notities-pagina {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+  .notities-opslagstatus > span {
+    display: none;
+  }
+}

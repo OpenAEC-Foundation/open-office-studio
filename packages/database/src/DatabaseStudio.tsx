@@ -20,28 +20,25 @@ import {
 } from "./model";
 import { DatabaseClient } from "./database-client";
 import { Ribbon, Groep, Actie } from "../../../src/Ribbon";
-function downloaden(naam: string, inhoud: string, type: string) {
-  const url = URL.createObjectURL(new Blob([inhoud], { type }));
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = naam;
-  link.click();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
+import { downloadDatabaseUitvoer, type DatabaseUitvoer } from "./uitvoer";
 const soorten: Objectsoort[] = ["Tabel", "Query", "VBA"];
 export function DatabaseStudio({
   bestandsmenu,
   inactief = false,
   registreerOpenen,
+  bewaarUitvoer = downloadDatabaseUitvoer,
 }: {
   bestandsmenu?: () => void;
   inactief?: boolean;
   registreerOpenen?: (openen: (() => void) | null) => void;
+  bewaarUitvoer?: DatabaseUitvoer;
 } = {}) {
   const [sessie, setSessie] = useState<DatabaseSession | null>(null);
   const [selectie, setSelectie] = useState("");
   const [zoeken, setZoeken] = useState("");
   const [fout, setFout] = useState("");
+  const [exportmelding, setExportmelding] = useState("");
+  const [exportBezig, setExportBezig] = useState(false);
   const [bezig, setBezig] = useState(false);
   const [donker, setDonker] = useState(false);
   const invoer = useRef<HTMLInputElement>(null);
@@ -50,9 +47,11 @@ export function DatabaseStudio({
   const actief = useRef(true);
   const [paginaStart, setPaginaStart] = useState(0);
   useEffect(() => {
-    registreerOpenen?.(bezig ? null : () => invoer.current?.click());
+    registreerOpenen?.(
+      bezig || exportBezig ? null : () => invoer.current?.click(),
+    );
     return () => registreerOpenen?.(null);
-  }, [registreerOpenen, bezig]);
+  }, [registreerOpenen, bezig, exportBezig]);
   useEffect(() => {
     actief.current = true;
     return () => {
@@ -75,21 +74,51 @@ export function DatabaseStudio({
     setSelectie("");
     setZoeken("");
     setFout("");
+    setExportmelding("");
   }
-  function exporteer() {
-    if (!object || (object.soort === "Tabel" && !object.rijen)) return;
-    downloaden(
-      object.naam +
-        (object.soort === "Tabel"
-          ? ".csv"
-          : object.soort === "VBA"
-            ? ".bas"
-            : ".sql"),
-      object.soort === "Tabel"
-        ? csv(object.kolommen ?? [], rijen)
-        : (object.bron ?? ""),
-      "text/plain;charset=utf-8",
-    );
+  async function exporteer() {
+    if (
+      !object ||
+      bezig ||
+      exportBezig ||
+      (object.soort === "Tabel" && !object.rijen)
+    )
+      return;
+    setExportBezig(true);
+    setFout("");
+    setExportmelding("");
+    try {
+      const resultaat = await bewaarUitvoer(
+        object.naam +
+          (object.soort === "Tabel"
+            ? ".csv"
+            : object.soort === "VBA"
+              ? ".bas"
+              : ".sql"),
+        object.soort === "Tabel"
+          ? csv(object.kolommen ?? [], rijen)
+          : (object.bron ?? ""),
+        object.soort === "Tabel"
+          ? "text/csv;charset=utf-8"
+          : "text/plain;charset=utf-8",
+      );
+      if (actief.current)
+        setExportmelding(
+          resultaat.status === "opgeslagen"
+            ? `Opgeslagen: ${resultaat.pad}`
+            : resultaat.status === "geannuleerd"
+              ? "Exporteren geannuleerd."
+              : "Download aangevraagd. Controleer het bestand in je downloads.",
+        );
+    } catch (error) {
+      if (actief.current)
+        setFout(
+          "Exporteren mislukt: " +
+            (error instanceof Error ? error.message : String(error)),
+        );
+    } finally {
+      if (actief.current) setExportBezig(false);
+    }
   }
   function openVoorbeeld() {
     lezer.current?.sluit();
@@ -99,6 +128,7 @@ export function DatabaseStudio({
     setZoeken("");
     setFout("");
     setPaginaStart(0);
+    setExportmelding("");
   }
   async function kiesObject(id: string, start = 0) {
     setSelectie(id);
@@ -151,14 +181,14 @@ export function DatabaseStudio({
                     icoon={FolderOpen}
                     naam={bezig ? "Bestand lezen…" : "Database kiezen"}
                     groot
-                    disabled={bezig}
+                    disabled={bezig || exportBezig}
                     onClick={() => invoer.current?.click()}
                   />
                   <Actie
                     icoon={Database}
                     naam="Voorbeeld verkennen"
                     groot
-                    disabled={bezig}
+                    disabled={bezig || exportBezig}
                     onClick={openVoorbeeld}
                   />
                 </Groep>
@@ -170,9 +200,10 @@ export function DatabaseStudio({
                     disabled={
                       !object ||
                       bezig ||
+                      exportBezig ||
                       (object.soort === "Tabel" && !object.rijen)
                     }
-                    onClick={exporteer}
+                    onClick={() => void exporteer()}
                   />
                 </Groep>
                 <Groep naam="Bestand">
@@ -180,7 +211,7 @@ export function DatabaseStudio({
                     icoon={X}
                     naam="Database sluiten"
                     groot
-                    disabled={!sessie || bezig}
+                    disabled={!sessie || bezig || exportBezig}
                     onClick={sluit}
                   />
                 </Groep>
@@ -227,6 +258,7 @@ export function DatabaseStudio({
           if (!bestand) return;
           setBezig(true);
           setFout("");
+          setExportmelding("");
           let client: DatabaseClient | null = null;
           try {
             client = new DatabaseClient();
@@ -261,6 +293,11 @@ export function DatabaseStudio({
           {fout}
         </div>
       )}
+      {exportmelding && (
+        <div role="status" className="melding">
+          {exportmelding}
+        </div>
+      )}
       <main>
         <aside>
           <h2>Databaseobjecten</h2>
@@ -280,7 +317,7 @@ export function DatabaseStudio({
                 .filter((item) => item.soort === soort)
                 .map((item) => (
                   <button
-                    disabled={bezig}
+                    disabled={bezig || exportBezig}
                     className={selectie === item.id ? "selected" : ""}
                     key={item.id}
                     onClick={() => void kiesObject(item.id)}
@@ -327,7 +364,7 @@ export function DatabaseStudio({
                 <section>
                   <Braces />
                   <h3>Query’s</h3>
-                  <p>SQL-bron bekijken en downloaden.</p>
+                  <p>Voorbeeldbron bekijken en downloaden.</p>
                 </section>
                 <section>
                   <Code2 />
@@ -357,9 +394,11 @@ export function DatabaseStudio({
                     </h2>
                     <button
                       disabled={
-                        bezig || (object.soort === "Tabel" && !object.rijen)
+                        bezig ||
+                        exportBezig ||
+                        (object.soort === "Tabel" && !object.rijen)
                       }
-                      onClick={exporteer}
+                      onClick={() => void exporteer()}
                     >
                       <Download size={16} />
                       {object.soort === "Tabel"

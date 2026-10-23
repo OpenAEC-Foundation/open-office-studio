@@ -1,0 +1,221 @@
+.notities-historie .ribbon-groep-inhoud {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 2px;
+}
+.notities-werkruimte.zonder-panelen {
+  grid-template-columns: minmax(0, 1fr);
+}
+.notities-werkruimte.zonder-panelen > aside {
+  display: none;
+}
+.notities-werkruimte.zonder-panelen .notities-pagina {
+  grid-column: 1;
+  grid-row: 1;
+}
+.notities-historie .ribbon-actie {
+  font-size: 10px;
+  padding: 6px;
+}
+.notities-pagina {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.notities-pagina article {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+.notities-paginakop {
+  flex-shrink: 0;
+  padding: 17px 32px 0;
+  margin-bottom: 16px;
+}
+.notities-paginatitel {
+  flex-shrink: 0;
+  margin: 0 32px;
+  width: calc(100% - 64px);
+  font-size: 29px !important;
+}
+.notities-paginadatum {
+  flex-shrink: 0;
+  padding: 4px 32px 15px;
+  margin: 0;
+  border-bottom: 1px solid #e7e5e4;
+}
+.notities-canvasvenster {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  position: relative;
+  background: #fafaf9;
+  overscroll-behavior: contain;
+}
+.notities-canvasruimte {
+  position: relative;
+}
+.notities-canvas {
+  position: relative;
+  transform-origin: 0 0;
+  background: #fafaf9;
+}
+.notities-canvas.met-raster {
+  background-image: radial-gradient(#a8a29e38 0.7px, transparent 0.9px);
+  background-size: 20px 20px;
+}
+.notities-canvastip {
+  position: absolute;
+  left: 40px;
+  top: 10px;
+  color: #78716c;
+  font-size: 10px;
+  pointer-events: none;
+  user-select: none;
+}
+.notities-tekstvak {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e7e5e4;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: 0 2px 6px #36363e05;
+}
+.notities-tekstvak:hover {
+  border-color: #d6d3d1;
+}
+.notities-tekstvak.is-actief {
+  border-color: #d9770680;
+  box-shadow:
+    0 0 0 1px #d9770614,
+    0 3px 12px #36363e06;
+}
+.notities-tekstvak.is-bewegen {
+  box-shadow: 0 8px 24px #36363e1a;
+}
+.notities-vakkop {
+  display: flex;
+  min-height: 25px;
+  border-bottom: 1px solid #f5f5f4;
+  border-radius: 5px 5px 0 0;
+  background: #fafaf9;
+  user-select: none;
+}
+.notities-vakgreep {
+  flex: 1;
+  min-width: 0;
+  touch-action: none;
+  cursor: grab !important;
+  padding: 4px 9px;
+  border: 0;
+  border-radius: 5px 0 0 0;
+  background: transparent;
+  color: #a8a29e;
+  text-align: left;
+  font-size: 9px !important;
+}
+.notities-vakgreep:active {
+  cursor: grabbing !important;
+}
+.notities-tekstvak.is-actief .notities-vakgreep,
+.notities-tekstvak:hover .notities-vakgreep {
+  color: #a75c06;
+}
+.notities-vakverwijderen {
+  justify-content: center;
+  height: 25px;
+  width: 27px;
+  padding: 4px;
+  color: #a8a29e;
+  border: 0;
+  border-radius: 0 5px 0 0;
+  background: transparent;
+}
+.notities-vakverwijderen:hover {
+  color: #991b1b;
+  background: #fef2f2;
+}
+.notities-vakinhoud {
+  padding: 11px 18px 3px;
+  min-height: 45px;
+  flex: 1;
+}
+.notities-vakinhoud .notities-blok.is-kop:first-child {
+  margin-top: 5px;
+}
+.notities-vakinhoud .notities-bloktoevoegen {
+  padding: 8px 0;
+  font-size: 10px !important;
+  color: #a8a29e;
+  opacity: 0;
+}
+.notities-tekstvak:hover .notities-bloktoevoegen,
+.notities-tekstvak:focus-within .notities-bloktoevoegen,
+.notities-vakinhoud .notities-bloktoevoegen:focus {
+  opacity: 1;
+}
+.notities-vakformaat {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 23px;
+  height: 23px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 0 0 5px 0;
+  background: transparent;
+  color: #a8a29e;
+  touch-action: none;
+  cursor: nwse-resize !important;
+}
+.notities-tekstvak.is-actief .notities-vakformaat,
+.notities-vakformaat:hover {
+  color: #a75c06;
+  background: #d977060c;
+}
+.notities-eerstevak {
+  position: absolute;
+  left: 40px;
+  top: 60px;
+  padding: 24px 30px;
+  display: flex !important;
+  flex-direction: column;
+  gap: 10px !important;
+  color: #a75c06;
+  background: #fff;
+  border: 1px dashed #d9770680;
+  border-radius: 7px;
+}
+.notities-eerstevak strong {
+  font:
+    600 20px "Space Grotesk",
+    sans-serif;
+  color: #36363e;
+}
+.notities-eerstevak > span {
+  font-size: 11px;
+  color: #78716c;
+}
+.notities-leestekst {
+  overflow: auto;
+  flex: 1;
+  min-height: 0;
+  padding: 0 32px 32px;
+}
+.notities-herstel {
+  margin: 20px 32px;
+}
+@media (max-width: 1050px) {
+  .notities-pagina article {
+    padding: 0;
+  }
+}

@@ -16,7 +16,9 @@ import {
   X,
   HardDrive,
   FileText,
+  NotebookPen,
 } from "lucide-react";
+import type { NotitieActies } from "./notities/NotitiesStudio";
 import type { Soort } from "./editors";
 import { DatabaseStudio } from "../packages/database/src/DatabaseStudio";
 import "./office.css";
@@ -24,7 +26,9 @@ import { StartScherm, modules } from "./StartScherm";
 import { DocumentOpslag, type BewaarUitkomst } from "./opslag";
 import { VerlaatDialoog } from "./VerlaatDialoog";
 import { controleerPakket } from "./pakketcontrole";
-import { version } from "../package.json";
+import versie from "../versie.json";
+import openaecSymbool from "./stijl/openaec-symbol.svg";
+import { ThemaKnop, useOfficeThema } from "./stijl/ThemaKnop";
 import {
   bestandstypen,
   bestandssoort,
@@ -33,6 +37,7 @@ import {
   uitvoerformaten,
 } from "./formaten";
 const Editor = lazy(() => import("./editors"));
+const NotitiesStudio = lazy(() => import("./notities/NotitiesStudio"));
 type Bestand = { id: number; naam: string; soort: Soort; bytes: Uint8Array };
 class EditorGrens extends Component<{ children: ReactNode }, { fout: string }> {
   state = { fout: "" };
@@ -50,8 +55,10 @@ class EditorGrens extends Component<{ children: ReactNode }, { fout: string }> {
   }
 }
 export function OfficeStudio() {
+  const { thema, wisselThema } = useOfficeThema();
   const [bestand, setBestand] = useState<Bestand | null>(null),
     [databaseOpen, setDatabaseOpen] = useState(false),
+    [notitiesOpen, setNotitiesOpen] = useState(false),
     [bestandsmenu, setBestandsmenu] = useState(true),
     [gewijzigd, setGewijzigd] = useState(false),
     [melding, setMelding] = useState(""),
@@ -65,6 +72,15 @@ export function OfficeStudio() {
     bezigRef = useRef(false);
   const verlaatAntwoord = useRef<((doorgaan: boolean) => void) | null>(null);
   const databaseOpenen = useRef<(() => void) | null>(null);
+  const notitieActies = useRef<NotitieActies | null>(null);
+  const notitieGewijzigd = useRef(false);
+  const registreerNotities = useCallback((acties: NotitieActies | null) => {
+    notitieActies.current = acties;
+  }, []);
+  const notitiesBewerkt = useCallback((waarde: boolean) => {
+    notitieGewijzigd.current = waarde;
+    setGewijzigd(waarde);
+  }, []);
   const registreerDatabaseOpenen = useCallback(
     (openen: (() => void) | null) => {
       databaseOpenen.current = openen;
@@ -86,7 +102,8 @@ export function OfficeStudio() {
     if (opslag.wijzig(id)) setGewijzigd(true);
   }
   async function verlaten() {
-    if (!opslag.gewijzigd) return true;
+    if (notitieGewijzigd.current) notitieActies.current?.bewaren();
+    if (!opslag.gewijzigd && !notitieGewijzigd.current) return true;
     if (verlaatAntwoord.current) return false;
     vorigeFocus.current =
       document.activeElement instanceof HTMLElement
@@ -104,6 +121,11 @@ export function OfficeStudio() {
   }
   async function kiesBestand() {
     if (bezigRef.current) return;
+    if (notitiesOpen) {
+      setBestandsmenu(false);
+      requestAnimationFrame(() => notitieActies.current?.openen());
+      return;
+    }
     if (databaseOpen) {
       if (!databaseOpenen.current) return;
       setBestandsmenu(false);
@@ -124,7 +146,8 @@ export function OfficeStudio() {
   }, [gewijzigd]);
   useEffect(() => {
     const sluit = (e: BeforeUnloadEvent) => {
-      if (opslag.gewijzigd) {
+      if (notitieGewijzigd.current) notitieActies.current?.bewaren();
+      if (opslag.gewijzigd || notitieGewijzigd.current) {
         e.preventDefault();
         e.returnValue = "";
       }
@@ -189,6 +212,10 @@ export function OfficeStudio() {
     }
   }
   async function opslaan() {
+    if (notitiesOpen) {
+      notitieActies.current?.bewaren();
+      return;
+    }
     const serialiseerDocument = serialiseer.current;
     if (!bestand || !serialiseerDocument || bezigRef.current) return;
     setBestandsmenu(false);
@@ -235,7 +262,11 @@ export function OfficeStudio() {
         e.stopImmediatePropagation();
         if (!bezigRef.current) void kiesBestand();
       }
-      if (e.key === "Escape" && bestandsmenu && (bestand || databaseOpen))
+      if (
+        e.key === "Escape" &&
+        bestandsmenu &&
+        (bestand || databaseOpen || notitiesOpen)
+      )
         setBestandsmenu(false);
     };
     window.addEventListener("keydown", toetsen, true);
@@ -248,6 +279,8 @@ export function OfficeStudio() {
     setGewijzigd(false);
     setMelding("");
     setDatabaseOpen(false);
+    setNotitiesOpen(false);
+    notitieGewijzigd.current = false;
     setBestandsmenu(false);
     setBestand({ id, soort, naam, bytes });
     setExportFormaat(soort);
@@ -292,13 +325,19 @@ export function OfficeStudio() {
     }
   }
   const module = modules.find((item) => item.soort === bestand?.soort);
-  const ModuleIcoon = module?.icoon ?? (databaseOpen ? Database : FileText);
+  const ModuleIcoon =
+    module?.icoon ??
+    (notitiesOpen ? NotebookPen : databaseOpen ? Database : FileText);
   return (
     <>
       <div
         className="office"
+        data-office-thema={thema}
         inert={verlaatvraag}
-        data-module={bestand?.soort ?? (databaseOpen ? "database" : "start")}
+        data-module={
+          bestand?.soort ??
+          (notitiesOpen ? "notities" : databaseOpen ? "database" : "start")
+        }
       >
         <header className="office-header">
           <button
@@ -308,17 +347,20 @@ export function OfficeStudio() {
             aria-label="OpenAEC Office Studio · Start"
           >
             <span className="office-beeldmerk">
-              <FileText size={21} strokeWidth={1.6} />
+              <img src={openaecSymbool} alt="" />
             </span>
             <strong>
               OpenAEC<span>Office Studio</span>
             </strong>
           </button>
-          {(bestand || databaseOpen) && (
+          <span className="office-weekversie" title={`Versie ${versie.versie}`}>
+            {versie.label}
+          </span>
+          {(bestand || databaseOpen || notitiesOpen) && (
             <>
               <span className="office-header-scheiding" />
               <span className="office-modulenaam">
-                {module?.kort ?? "Database"}
+                {module?.kort ?? (notitiesOpen ? "Notities" : "Database")}
               </span>
             </>
           )}
@@ -337,7 +379,8 @@ export function OfficeStudio() {
             )}
           </div>
           <div className="office-snelacties">
-            {(bestand || databaseOpen) && (
+            <ThemaKnop thema={thema} wissel={wisselThema} />
+            {(bestand || databaseOpen || notitiesOpen) && (
               <button
                 className="office-iconknop"
                 onClick={() => setBestandsmenu(true)}
@@ -352,13 +395,15 @@ export function OfficeStudio() {
               disabled={bezig || (databaseOpen && !databaseGereed)}
               onClick={() => void kiesBestand()}
               title={
-                databaseOpen
-                  ? "Database openen · Ctrl+O"
-                  : "Bestand openen · Ctrl+O"
+                notitiesOpen
+                  ? "Notitieback-up toevoegen · Ctrl+O"
+                  : databaseOpen
+                    ? "Database openen · Ctrl+O"
+                    : "Bestand openen · Ctrl+O"
               }
             >
               <FolderOpen size={16} />
-              <span>Openen</span>
+              <span>{notitiesOpen ? "Back-up toevoegen" : "Openen"}</span>
             </button>
             {bestand && (
               <>
@@ -493,6 +538,17 @@ export function OfficeStudio() {
               </Suspense>
             </EditorGrens>
           </div>
+        ) : notitiesOpen ? (
+          <Suspense
+            fallback={<p className="office-loading">Notities laden…</p>}
+          >
+            <NotitiesStudio
+              bestandsmenu={() => setBestandsmenu(true)}
+              inactief={bestandsmenu || verlaatvraag}
+              registreer={registreerNotities}
+              onOnopgeslagen={notitiesBewerkt}
+            />
+          </Suspense>
         ) : databaseOpen ? (
           <DatabaseStudio
             bestandsmenu={() => setBestandsmenu(true)}
@@ -500,14 +556,14 @@ export function OfficeStudio() {
             registreerOpenen={registreerDatabaseOpenen}
           />
         ) : null}
-        {(bestandsmenu || (!bestand && !databaseOpen)) && (
+        {(bestandsmenu || (!bestand && !databaseOpen && !notitiesOpen)) && (
           <div
-            className={`office-backstage ${bestand || databaseOpen ? "is-overlay" : ""}`}
+            className={`office-backstage ${bestand || databaseOpen || notitiesOpen ? "is-overlay" : ""}`}
           >
             <StartScherm
               bezig={bezig || (databaseOpen && !databaseGereed)}
               terug={
-                bestand || databaseOpen
+                bestand || databaseOpen || notitiesOpen
                   ? () => setBestandsmenu(false)
                   : undefined
               }
@@ -515,6 +571,26 @@ export function OfficeStudio() {
               nieuw={(soort) => void nieuw(soort)}
               voorbeeld={(soort) => void voorbeeld(soort)}
               databaseActief={databaseOpen}
+              notitiesActief={notitiesOpen}
+              openNotities={() =>
+                void (async () => {
+                  if (bezigRef.current) return;
+                  if (notitiesOpen) {
+                    setBestandsmenu(false);
+                    return;
+                  }
+                  if (!(await verlaten())) return;
+                  opslag.wissel();
+                  serialiseer.current = null;
+                  setGereed(false);
+                  setBestand(null);
+                  setDatabaseOpen(false);
+                  setNotitiesOpen(true);
+                  setBestandsmenu(false);
+                  setGewijzigd(false);
+                  setMelding("");
+                })()
+              }
               bewaar={bestand && gereed ? () => void opslaan() : undefined}
               openDatabase={() =>
                 void (async () => {
@@ -525,6 +601,8 @@ export function OfficeStudio() {
                   setGereed(false);
                   setBestand(null);
                   setDatabaseOpen(true);
+                  setNotitiesOpen(false);
+                  notitieGewijzigd.current = false;
                   setBestandsmenu(false);
                   setGewijzigd(false);
                   setMelding("");
@@ -541,7 +619,11 @@ export function OfficeStudio() {
           </span>
           <span>
             {module?.naam ??
-              (databaseOpen ? "Open Database Studio" : "OpenAEC Office Studio")}
+              (notitiesOpen
+                ? "Open Notities Studio"
+                : databaseOpen
+                  ? "Open Database Studio"
+                  : "OpenAEC Office Studio")}
           </span>
           <span className="office-statusrechts">
             {bestand
@@ -550,14 +632,14 @@ export function OfficeStudio() {
                 : gewijzigd
                   ? "Niet-opgeslagen wijzigingen"
                   : "Gereed"
-              : `Ontwikkelversie ${version}`}
+              : `Ontwikkelversie ${versie.label}`}
             {bestand && <kbd>Ctrl+S</kbd>}
           </span>
         </footer>
       </div>
       {verlaatvraag && (
         <VerlaatDialoog
-          naam={bestand?.naam ?? "Dit bestand"}
+          naam={bestand?.naam ?? (notitiesOpen ? "Je notities" : "Dit bestand")}
           antwoord={beantwoordVerlaten}
           vorigeFocus={vorigeFocus.current}
         />

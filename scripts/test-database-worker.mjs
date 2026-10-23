@@ -5,11 +5,12 @@ import { pathToFileURL } from "node:url";
 import assert from "node:assert/strict";
 
 // Controleert de gebouwde browserparser met een berichtadapter; geen vervanging voor een GUI-proef.
-const naam = (await readdir("dist/assets")).find((n) =>
+const uitvoermap = process.env.DATABASE_DIST ?? "dist";
+const naam = (await readdir(`${uitvoermap}/assets`)).find((n) =>
   /^database-worker-.*\.js$/.test(n),
 );
 assert.ok(naam, "Bouw eerst de productieversie.");
-const moduleUrl = pathToFileURL(resolve("dist/assets", naam)).href;
+const moduleUrl = pathToFileURL(resolve(uitvoermap, "assets", naam)).href;
 for (const pad of process.argv.slice(2)) {
   const worker = new Worker(
     new URL(

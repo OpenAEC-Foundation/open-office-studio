@@ -1,6 +1,6 @@
 {
   "name": "@openaec/office-studio",
-  "version": "0.4.3",
+  "version": "2026.43.4",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@11.25.0",
@@ -14,7 +14,14 @@
     "desktop:build": "tauri build",
     "predev": "node scripts/kopieer-assets.mjs",
     "prebuild": "node scripts/kopieer-assets.mjs",
-    "test:engines": "node scripts/test-kantoor-engines.mjs"
+    "test:engines": "node scripts/test-kantoor-engines.mjs",
+    "versie:week": "node scripts/weekversie.mjs",
+    "versie:check": "node scripts/controleer-weekversie.mjs",
+    "database:dev": "vite --config apps/database-studio/vite.config.ts",
+    "predatabase:build": "node scripts/kopieer-licenties.mjs --database",
+    "database:build": "tsc --noEmit && vite build --config apps/database-studio/vite.config.ts && node scripts/controleer-database-bundel.mjs",
+    "database:desktop:dev": "cd apps/database-studio && pnpm exec tauri dev",
+    "database:desktop:build": "cd apps/database-studio && pnpm exec tauri build"
   },
   "dependencies": {
     "@betteroffice/docx": "0.4.3",
@@ -39,6 +46,8 @@
     "process": "0.11.10",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
     "stream-browserify": "3.0.0"
   },
   "devDependencies": {

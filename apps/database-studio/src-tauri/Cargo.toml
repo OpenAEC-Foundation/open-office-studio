@@ -1,0 +1,14 @@
+[package]
+name = "open-database-studio"
+version = "2026.43.4"
+description = "Lokale browser voor oude MDB- en ACCDB-databases"
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+rfd = "0.15"
+tempfile = "3"
+percent-encoding = "2"

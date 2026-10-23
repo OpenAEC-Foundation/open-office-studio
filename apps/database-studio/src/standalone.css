@@ -1,0 +1,48 @@
+.database-zelfstandig {
+  --module-accent: #916223;
+  --module-tint: #fbf2df;
+}
+.database-zelfstandig > .database-app {
+  flex: 1;
+  min-height: 0;
+}
+.database-eigen-merk {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+.database-eigen-merk strong {
+  font-size: 14px;
+  font-weight: 600;
+}
+.database-eigen-merk strong > span {
+  font-weight: 400;
+  color: #707780;
+  margin-left: 5px;
+}
+.database-weekversie {
+  border: 1px solid #e4d8c2;
+  color: #79551e;
+  background: #fcf6e9;
+  border-radius: 6px;
+  padding: 5px 9px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.database-lokaal {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  color: #6b7481;
+}
+@media (max-width: 800px) {
+  .database-lokaal {
+    display: none;
+  }
+  .database-zelfstandig .office-headerknop {
+    margin-left: auto;
+  }
+}
