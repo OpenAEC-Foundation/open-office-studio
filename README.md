@@ -1,142 +1,221 @@
+**English** · [Nederlands](README.nl.md)
+
+<div align="center">
+
 # Open Office Studio
 
-Open-source kantoortoepassingen van het OpenAEC-ecosysteem voor tekstverwerking, rekenbladen, presentaties en notities.
+**An open-source office suite from the OpenAEC Foundation: documents, spreadsheets, presentations, notes, Access databases and email in one desktop app.**
 
-Actuele bronversie: **2026-W44.1** (`2026.44.1`). Zie [versieafspraken](docs/versies.md).
+[![License: Apache-2.0](https://img.shields.io/github/license/OpenAEC-Foundation/open-office-studio)](LICENSE)
+[![Latest release](https://img.shields.io/github/v/release/OpenAEC-Foundation/open-office-studio?include_prereleases&label=release)](https://github.com/OpenAEC-Foundation/open-office-studio/releases)
+[![CI](https://github.com/OpenAEC-Foundation/open-office-studio/actions/workflows/desktop.yml/badge.svg)](https://github.com/OpenAEC-Foundation/open-office-studio/actions/workflows/desktop.yml)
 
-**[Open Database Studio](apps/database-studio)** is nu ook een afzonderlijke desktopapp voor oude MDB- en ACCDB-databases, met een eigen venster en installers. Tekst, Rekenblad, Presentatie en Notities zijn onderdeel van de kantooromgeving.
+### [Download](https://github.com/OpenAEC-Foundation/open-office-studio/releases) &nbsp;·&nbsp; [Build from source](#build-from-source) &nbsp;·&nbsp; [Documentation](#documentation)
 
-![OpenAEC Office Studio in officiële OpenAEC-stijl](docs/screenshots/start-2026-W43.4.jpg)
+![Open Office Studio: a Word document with the ribbon, rulers and live spell checking](docs/screenshots/readme-writer-2026-W44.5.jpg)
 
-## In beeld
+</div>
 
-Werkelijke schermafbeeldingen van de lokale productiebuild, met de eigen [voorbeeldbestanden](docs/voorbeelden). De interface heeft een gedeelde ribbon, contextuele opdrachten en een lokaal bestandsmenu. Deze beelden tonen de ontwikkelversie; ze zijn geen verklaring van volledige formaatcompatibiliteit.
+Open Office Studio is a local office environment for Windows, macOS and Linux. It opens and saves Word, Excel and PowerPoint files directly, opens old Microsoft Access databases as an editable copy, and includes a notes module and an email client. Everything runs on your own computer; there is no account and no cloud service.
 
-De beelden zijn op 24 oktober 2026 vastgelegd uit bronversie **2026-W43.4**. De interface volgt het officiële [OpenAEC-stijlboek](docs/ontwerp/openaec-stijl.md), met Forge- en Light-weergave, een compact lint en het OpenAEC-symbool. De zon-/maanknop wisselt de appweergave; documenten en het vrije notitiecanvas blijven licht. Het lint kan worden ingeklapt; het bestandsmenu bedekt de volledige werkruimte. De drie voorbeelden zijn rechtstreeks vanuit het startscherm te openen. Alle negen beelden staan in het [schermafbeeldingenoverzicht](docs/screenshots).
+> **Status:** Open Office Studio is under active development. Releases are published as *pre-releases* (development builds). Test it with copies of your files before relying on it. The user interface is currently in Dutch; support for more languages, starting with English, is being worked on.
 
-### Open Tekst Studio
+## Screenshots
 
-Paginaweergave met tekstopmaak, alineastijlen en documentnavigatie. Kies bovenin **Markdown (.md)** en **Opslaan als** om tekst, koppen, lijsten, links en tabellen als Markdown te bewaren. Dit werkt ook in de browser, zonder conversieruntime. Paginaopmaak en ingesloten afbeeldingen vragen daarnaast om een DOCX; Markdown bevat bij afbeeldingen een leesbare verwijzing.
+| | | |
+|---|---|---|
+| ![Spreadsheet with a bar chart next to the data](docs/screenshots/readme-spreadsheet-chart-2026-W44.5.jpg) **Spreadsheet with an inserted chart** | ![Database Studio showing a table in the SQLite working copy](docs/screenshots/readme-database-2026-W44.5.jpg) **Database Studio: a table in the working copy** | ![Email Studio with a message and an XLSX attachment](docs/screenshots/readme-email-2026-W44.5.jpg) **Email Studio (browser demo mailbox)** |
 
-![Tekst: ontwerpnotitie met compact OpenAEC-lint en linialen](docs/screenshots/tekst-2026-W43.4.jpg)
+All screenshots show version 2026-W44.5 in a local production build, with the project's own sample files and fictitious data. More images are in [docs/screenshots](docs/screenshots/README.md).
 
-<details>
-<summary>Licht thema en bestandsmenu bekijken</summary>
+## What's inside
 
-![Tekst: dezelfde ontwerpnotitie in het lichte thema](docs/screenshots/tekst-licht-2026-W43.4.jpg)
+### Writer (Open Tekst Studio)
+- Edits DOCX directly, with a page view, rulers, a ribbon and keyboard shortcuts that follow common office suites.
+- Paragraph and character formatting, styles with a style editor, lists, borders and shading, tables and images.
+- Headers and footers, page numbers, sections and columns, a table of contents, footnotes and endnotes, watermarks.
+- Comments, track changes, and comparing two versions of a document.
+- Find and replace, Go to, word count, document properties and a reading mode.
 
-![Bestandsmenu: de werkruimte en het lint zijn volledig bedekt](docs/screenshots/bestandsmenu-2026-W43.4.jpg)
+### Spreadsheet (Open Rekenblad Studio)
+- Edits XLSX directly: formulas, cell formatting, rows, columns and sheets, sorting, fill, AutoSum, freeze panes, find and replace.
+- Dutch-style input such as `1,5`, `12,5%`, `€ 1.234,50` and `26-10-2026` is recognised as a number or date.
+- CSV/TSV import and export.
 
-</details>
+### Presentation (Open Presentatie Studio)
+- Edits PPTX directly: slides, shapes, text, alignment, speaker notes, and a slideshow from the first or current slide.
 
-### Open Rekenblad Studio
+### Notes (Open Notities Studio)
+- Notebooks, sections and pages, saved locally and automatically, with backups.
+- Each section is either a free canvas with text boxes you place yourself, or a Markdown page with source editor, live preview, tables and task lists. Markdown import and export. See [docs/notities.md](docs/notities.md).
 
-Rekenblad met formulebalk, rij- en kolomkoppen, celopmaak en berekende materiaaltotalen.
+### Database Studio (Open Database Studio)
+- Opens Microsoft Access **MDB and ACCDB** files without Access. After a read-only analysis it builds an editable **SQLite working copy**; the original file is never modified.
+- Tables (grid and design view), saved queries and an Access-SQL editor, simple forms and reports, and a compatibility report per file.
+- **VBA** runs in its own sandboxed interpreter with a DAO subset, only after you give explicit permission. Nothing runs automatically (no AutoExec). Access form designs and macros are inventoried, not executed.
+- Save the working copy as `.sqlite`; export tables and query results as CSV, source as SQL or BAS, reports as JSON or text.
+- Available inside the suite and as a separate desktop app. See [apps/database-studio](apps/database-studio/README.md) and [packages/vba](packages/vba/README.md).
 
-![Rekenblad: materiaaloverzicht met formules en opgemaakte cellen](docs/screenshots/rekenblad-2026-W43.4.jpg)
+### Email Studio
+- A standalone IMAP/SMTP email client: folders, search, reply, reply all, forward, drafts and attachments.
+- When you add an account, it suggests server settings from a built-in provider list, your domain's autoconfig, DNS (SRV/MX) and a connection test. Looking up Mozilla's Thunderbird database is optional and off by default.
+- Sign in with **Microsoft or Google via OAuth2** (PKCE, system browser). This needs an OAuth client ID that you configure yourself; see [docs/email-oauth.md](docs/email-oauth.md).
+- Attachment previews; Office attachments open as an editable copy in Writer, Spreadsheet or Presentation, MDB/ACCDB in Database Studio. **Send as attachment** from any open document.
+- HTML mail is shown sanitised in a sandboxed frame; external images are blocked until you allow them.
 
-### Open Presentatie Studio
+### Across the suite
+- **Document tabs** in one window; on the desktop you can drag a tab out into its own window.
+- **Save As** in about fifteen formats per module. The app itself writes DOCX/XLSX/PPTX, the macro-enabled variants (for files opened as such), Markdown, CSV/TSV, HTML, PNG and **PDF**. OpenDocument (ODT/ODS/ODP), older Office formats (DOC/XLS/PPT), templates, RTF and EPUB use an installed **LibreOffice**, which the desktop app finds by itself and runs with macros disabled. LibreOffice is not bundled. See [docs/formaten.md](docs/formaten.md).
+- **Charts** (eleven types) can be inserted and edited in documents, spreadsheets and presentations.
+- **Spell checking** for Dutch, English (UK) and English (US) with Hunspell dictionaries, wavy underlines, suggestions, an F7 dialog and autocorrect.
+- Print preview, document zoom, a collapsible ribbon, light and dark app themes, recent files and automatic crash recovery.
+- On Windows the installer registers Open Office Studio for Office, OpenDocument, RTF and MDB/ACCDB files (it shows up under *Open with* and *Default apps*).
 
-Dia’s, vormen, tekst en sprekersnotities in één werkruimte.
+What works per file format, and what does not, is documented in [docs/formaten.md](docs/formaten.md) and the test reports in [docs/tests](docs/tests).
 
-![Presentatie: ontwerpvisie met dia-overzicht en sprekersnotities](docs/screenshots/presentatie-2026-W43.4.jpg)
+## Download and install
 
-### Open Database Studio
+Download the files from the [releases page](https://github.com/OpenAEC-Foundation/open-office-studio/releases). `VERSION` below is the release version, for example `2026.44.0`.
 
-Opent MDB- en ACCDB-bestanden lokaal en bouwt er een bewerkbare SQLite-werkkopie van; het origineel blijft ongewijzigd. In de werkkopie bewerk je tabellen, voer je Access-SQL-query’s uit, maak je eenvoudige formulieren en rapporten en voer je VBA afgeschermd uit, alleen na toestemming. Wijzigingen bewaar je als `.sqlite`; tabellen, query’s en bron kunnen als CSV, SQL, BAS, JSON of tekst worden geëxporteerd. Het beeld toont de zelfstandige database-app met de ingebouwde voorbeeldgegevens. Zie [Open Database Studio](apps/database-studio/README.md) en [VBA-runtime](packages/vba/README.md) voor werking en grenzen.
+| System | File | Notes |
+|---|---|---|
+| Windows 10/11, x64 | `Open.Office.Studio_VERSION_x64-setup.exe` | Code-signed (Authenticode, via Azure Artifact Signing) with a timestamp. Includes the WebView2 bootstrapper. |
+| macOS, Apple Silicon | `Open.Office.Studio_VERSION_aarch64.dmg` | Signed with a Developer ID and notarised by Apple. Open the DMG and drag the app to *Applications*. |
+| Linux x64 (Debian, Ubuntu) | `Open.Office.Studio_VERSION_amd64.deb` | `sudo apt install ./Open.Office.Studio_VERSION_amd64.deb` |
+| Linux x64 (any distribution) | `Open.Office.Studio_VERSION_amd64.AppImage` | `chmod +x` the file and start it. |
+| All | `SHA256SUMS`, `pakketcontrole-*.json` | Checksums and the package-check reports of the build. |
 
-![Zelfstandige Open Database Studio met voorbeeldtabel](docs/screenshots/database-2026-W43.4.jpg)
+The release workflow can also build the standalone Open Database Studio; when a release contains it, its installers are listed next to the Office Studio files. No RPM package is published. You can build one yourself, see [Build from source](#build-from-source).
 
-### Open Notities Studio
+### Check your download
 
-Een vrije pagina met tekstvakken die je zelf plaatst, sleept en groter of kleiner maakt. Ieder tekstvak kan alinea’s, koppen en taken bevatten. Notitieboeken en secties houden alles bij elkaar. Met zoom, inklapbare navigatie, ongedaan maken, automatisch lokaal opslaan, back-ups en Markdown-export. Oudere notities blijven leesbaar. Zie [werking en opslag](docs/notities.md).
-
-![Notities: drie vrij geplaatste tekstvakken in de werkelijke productiebuild](docs/screenshots/notities-canvas-2026-W43.4.jpg)
-
-Vanaf **2026-W43.4** kan iedere notitiesectie **Canvas** of **Markdown** zijn. Markdown heeft een broneditor, direct voorbeeld, tabellen, takenlijsten en `.md`-import/export. Bij omzetten blijft de oorspronkelijke sectie behouden.
-
-![Notities: Markdownsectie met bron en direct voorbeeld](docs/screenshots/notities-markdown-breed-2026-W43.4.jpg)
-
-## Modules
-
-- **Open Tekst Studio** — teksten schrijven, opmaken en opslaan; woorden tellen, hoofdletters wijzigen, opmerkingen, speciale tekens en ga naar pagina.
-- **Open Rekenblad Studio** — tabellen, formules en celopmaak bewerken; rijen, kolommen en bladen beheren, sorteren, doorvoeren, AutoSom, vensters fixeren, zoeken en vervangen. Nederlandse invoer zoals `1,5`, `12,5%`, `€ 1.234,50` en `26-10-2026` wordt als getal of datum herkend.
-- **Open Presentatie Studio** — dia’s maken, verplaatsen, verwijderen, uitlijnen, vormgeven en presenteren vanaf de eerste of huidige dia.
-- **Open Notities Studio** — notitieboeken, secties, pagina’s, takenlijsten, zoeken en lokale opslag.
-
-- **Open Database Studio** — MDB/ACCDB als bewerkbare SQLite-werkkopie: tabellen bewerken, query’s (Access-SQL), formulieren, rapporten en afgeschermde VBA-uitvoering na toestemming, met een compatibiliteitsrapport per bestand. Access-formulierontwerpen en macro’s worden alleen geïnventariseerd; het origineel wordt nooit overschreven. Zie [apps/database-studio](apps/database-studio/README.md) en [packages/vba](packages/vba/README.md).
-
-### Bediening
-
-De linten volgen het werkpatroon en de standaardsneltoetsen van gangbare kantoorsuites, zoals Ctrl+1/2/3 voor koppen, Ctrl+E/L/R/J voor uitlijnen, Ctrl+Shift+1–6 voor getalnotaties, Alt+= voor AutoSom en F5 voor de diavoorstelling. De sneltoets staat in de tooltip van elke knop. **Ctrl + scrollwiel**, touchpadknijpen en **Ctrl + =/−** zoomen alleen het document, rond de muispositie; **Ctrl + 0** zet de zoom terug op 100%. Het percentage staat in de statusbalk en wordt per document onthouden.
-
-Wat de engines (nog) niet kunnen, ontbreekt bewust: onder meer een inhoudsopgave, voetnoten, spelling, autofilter, dia dupliceren en het uitvoeren van VBA.
-
-## Status
-
-Een lokale React-werkruimte met drie aangesloten kantoorengines en een Tauri-desktopbasis is beschikbaar. Nieuw, openen en opslaan als zijn aangesloten. De suite is nog een ontwikkelprototype.
-
-DOCX, XLSX en PPTX werken rechtstreeks. Opslaan als (Ctrl+Shift+S) biedt per module ongeveer vijftien formaten. Markdown, CSV/TSV, HTML, TXT en PNG maakt de app zelf, ook in de browser; PDF gaat zonder runtime via Afdrukken. De desktopversie vindt een **geïnstalleerde kantoorruntime (LibreOffice)** zelf en gebruikt die voor ODF, oudere Office-formaten, sjablonen, EPUB en PDF, met een veilig profiel waarin macro's uitstaan (zie [Kantoorruntime](docs/formaten.md#kantoorruntime-conversieprogramma)). De runtime wordt nog niet met onze installers meegeleverd. Er zijn routes voor 81 invoerextensies; dit betekent niet dat elk bestand of elk formaat al correct werkt. Zie de [formaatmatrix en beperkingen](docs/formaten.md).
-
-De [corpusproef](docs/tests/2026-10-21-formaten.md) gebruikt 1.566 openbare bestanden met vastgelegde bronrevisies en hashes. De engines voltooiden 571 rechtstreekse en 775 geconverteerde open-/opslag-/heropenproeven; Database Studio las 79 databases. Weigeringen, tijdslimieten en de beperkte visuele controle staan eveneens in het verslag. De [browserproeven van 0.4.1](docs/tests/2026-10-21-browser.md) bevestigen opslag, annuleren, foutbehoud en echte MDB/ACCDB-pagina’s, inclusief een hierbij gevonden en herstelde browserfout. Voor eerdere bedieningstests: [ribbon en editors](docs/tests/2026-10-21.md), [opslagbeveiliging](docs/tests/2026-10-21-opslag.md).
-
-De proeven van 26 oktober 2026 doorlopen de [testmatrix](docs/onderzoek/testmatrix.md) met synthetische bestanden: [documenten](docs/tests/2026-10-26-documenten.md), [rekenbladen](docs/tests/2026-10-26-rekenbladen.md) met onafhankelijke formulecontrole, [presentaties](docs/tests/2026-10-26-presentaties.md), de [databasecorpusproef](docs/tests/2026-10-26-database.md) en de [bundelmeting](docs/tests/2026-10-26-bundel.md). Praktijkbestanden en de live Y-app-opslagproef ontbreken nog; zie [praktijkcorpus](docs/onderzoek/praktijkcorpus.md) en [integratie](docs/onderzoek/integratie.md).
-
-De [GUI-controle van 0.4.3](docs/tests/2026-10-22-gui.md) controleert de vier werkruimtes, het bestandsmenu, bewerken en echte downloads. Bewaarde DOCX-, XLSX- en PPTX-bestanden zijn daarnaast met onafhankelijke lezers gecontroleerd. Daarbij zijn de laagvolgorde van het bestandsmenu, de algemene database-openknop en de donkere databaseweergave hersteld.
-
-De ontwikkeling met screenshots staat in [pull request #10](https://github.com/OpenAEC-Foundation/open-office-studio/pull/10). De [bouwcontroles](https://github.com/JanAdriaan891/open-office-studio/actions/workflows/desktop.yml) maken pakketten voor Windows x64, Linux x64 en macOS ARM64. Een geslaagde build vervangt geen installatie- en gebruikerstest.
-
-De [uitgaven](https://github.com/OpenAEC-Foundation/open-office-studio/releases) bevatten een Windows-installer, Linux-DEB/AppImage, macOS-ARM64-DMG, pakketrapporten en SHA256SUMS. Versies volgen vanaf 2026.43.0 het OpenAEC-schema JJJJ.WW.N (jaar, ISO-week, volgnummer). Een tag `v<versie>` start [`release.yml`](.github/workflows/release.yml): dezelfde controles als de bouwstraat, Authenticode-ondertekening voor Windows en ondertekening met notarisatie voor macOS met de sleutels van de organisatie, en een concept-uitgave die pas na een installatietest openbaar wordt. De bouwstraat pakt de Windows- en Linux-installers ook uit en controleert de programma-architectuur, WebView2, Linux-bibliotheken en snelkoppelingen. Eerdere testreleases tot en met 0.4.3 staan op de [ontwikkelfork](https://github.com/JanAdriaan891/open-office-studio/releases).
-
-De Windows-installer koppelt de kantoorformaten (Word, Excel, PowerPoint, OpenDocument, RTF) en MDB/ACCDB aan Open Office Studio, zet de app in ‘Openen met’ en onder Standaard-apps; zie [`koppelingen.nsh`](src-tauri/windows/koppelingen.nsh). Een dubbelklik opent het bestand als nieuw tabblad in het hoofdvenster, ook als de app al draait (één instantie). Is het hoofdvenster gesloten terwijl losgemaakte vensters openstaan, dan krijgt het laatst actieve venster het bestand. Staat hetzelfde bestand al open, dan springt de app naar dat tabblad; MDB/ACCDB openen in het Database-tabblad. De Database-uitgave wordt door [`release.yml`](.github/workflows/release.yml) naast Office Studio gebouwd en ondertekend.
-
-## Opbouw
-
-- `packages/documenten` — tekstverwerking.
-- `packages/rekenbladen` — tabellen en formules.
-- `packages/presentaties` — dia’s en presentatieweergave.
-
-## Eerste ontwikkelstappen
-
-1. Nederlandse editorbediening en de functionele acceptatieproeven afronden.
-2. Native opslag, herstel en installers op alle doelplatformen testen.
-3. Formaatgetrouwheid, grote bestanden en distributie van de conversieruntime afronden.
-
-## Onderzoek
-
-- [Routekeuze en licentieafweging](docs/onderzoek/README.md)
-- [Bestaande Y-app-integratie](docs/onderzoek/integratie.md)
-- [ODF-criteria en -proeven](docs/onderzoek/odf.md)
-- [Praktijkcorpus: selectie en procedure](docs/onderzoek/praktijkcorpus.md)
-
-## Controles
-
-Python 3.10 of nieuwer, zonder aanvullende pakketten:
+From the folder where you saved the files:
 
 ```bash
-python3 -m unittest discover -s tests -v
+sha256sum --ignore-missing -c SHA256SUMS                  # Linux
+shasum -a 256 Open.Office.Studio_VERSION_aarch64.dmg      # macOS: compare with the line in SHA256SUMS
 ```
 
-Zie de [testmatrix](docs/onderzoek/testmatrix.md) voor het vergelijken van DOCX-, XLSX- en PPTX-pakketten.
+```powershell
+Get-FileHash .\Open.Office.Studio_VERSION_x64-setup.exe -Algorithm SHA256   # Windows: compare with SHA256SUMS
+```
 
-## Desktopontwikkeling
+### Linux: media support
 
-- [Functionele eisen en vergelijking met andere editors](docs/ontwerp/functionele-lat.md).
-- `pnpm dev`: lokale kantooromgeving.
-- `pnpm build`: TypeScript en productiebuild.
-- `pnpm test`: adapter- en exportcontroles.
+The Linux app uses WebKitGTK, which plays audio and video through GStreamer. If the app reports that media cannot be played, install the base and good plugin sets, for example on Debian/Ubuntu:
 
-- `pnpm test:engines`: documenten wijzigen, opslaan en opnieuw openen met de echte engines.
-- `node scripts/test-matrix-documenten.mjs`, `node scripts/test-matrix-rekenbladen.mjs`: testmatrix D1–D3, P1–P3 en R1–R3 met synthetische fixtures in `.local/matrix/`.
-- `node scripts/test-rekenblad-opdrachten.mjs`, `node scripts/test-presentatie-opdrachten.mjs`: lintopdrachten tegen de echte engines.
-- `node scripts/database-corpusproef.mjs`, `node scripts/meet-bundel.mjs`, `node scripts/praktijkcorpus.mjs`: databasecorpus, bundelmeting en praktijkroundtrips.
-- `pnpm desktop:dev`: Tauri-desktopomgeving.
-- `pnpm desktop:build`: native pakket voor het huidige platform.
-- `pnpm database:dev`, `pnpm database:build`, `pnpm database:desktop:build`: de afzonderlijke database-app ontwikkelen en bouwen.
-- `pnpm versie:week 2026-10-23 1`, `pnpm versie:check`: weekversie instellen en controleren.
-- `python scripts/controleer-installers.py --platform linux --rapport .local/pakketcontrole-Linux.json`: gebouwde DEB en AppImage controleren; vereist Python 3.11+, dpkg, squashfs-tools en ldd. Gebruik op Windows `--platform windows` met 7-Zip voor de NSIS-installer en de gebundelde WebView2-bestanden.
-- [Testverslag en resterend werk](docs/tests/2026-10-21.md).
+```bash
+sudo apt install gstreamer1.0-plugins-base gstreamer1.0-plugins-good
+```
 
-## Licentie
+### Optional: LibreOffice for more formats
 
-Apache License 2.0, zie [LICENSE](LICENSE).
+DOCX, XLSX and PPTX need nothing else. For OpenDocument and older Office formats, install [LibreOffice](https://www.libreoffice.org/). The desktop app looks in the standard install locations, or you can choose the program under *Save As*. See [docs/formaten.md](docs/formaten.md#kantoorruntime-conversieprogramma).
+
+## Build from source
+
+### Requirements
+
+- **Node.js 22** (the version used in CI) and **pnpm 11.25.0** (pinned in `package.json`; `corepack enable` picks it up).
+- **Rust** (stable) with Cargo, plus the WebAssembly target for the spell checker:
+  ```bash
+  rustup target add wasm32-unknown-unknown
+  ```
+- The **Tauri 2 system dependencies** for your platform: see the [Tauri prerequisites](https://v2.tauri.app/start/prerequisites/). On Debian/Ubuntu, CI installs:
+  ```bash
+  sudo apt install libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev patchelf
+  ```
+- **Python 3.10 or newer** for the Python checks (no extra packages).
+- Network access to GitHub on the first build (see below).
+
+### Commands
+
+```bash
+pnpm install --frozen-lockfile
+pnpm dev               # browser version at http://127.0.0.1:1420 (email uses a demo mailbox)
+pnpm desktop:dev       # desktop app with Tauri
+pnpm build             # type check and production build
+pnpm desktop:build     # native package for the current platform
+```
+
+On Linux, `pnpm desktop:build` builds every Tauri bundle type, including DEB, AppImage and RPM. The RPM is not tested in CI.
+
+The standalone database app: `pnpm database:dev`, `pnpm database:build`, `pnpm database:desktop:build`.
+
+### Tests
+
+```bash
+pnpm test                                     # unit tests (Vitest)
+pnpm test:engines                             # open, edit, save and reopen with the real engines
+python3 -m unittest discover -s tests -v      # package, format and association checks
+cargo test --manifest-path src-tauri/Cargo.toml
+cargo test --manifest-path apps/database-studio/src-tauri/Cargo.toml
+```
+
+### Fonts, dictionaries and the spell checker
+
+Extra open fonts and the Hunspell dictionaries are **not stored in Git**. Before `pnpm dev` and `pnpm build`, `scripts/kopieer-assets.mjs` downloads them from pinned commits listed in [`assets/lettertypen.json`](assets/lettertypen.json) and [`assets/woordenboeken.json`](assets/woordenboeken.json), checks their SHA-256 and caches them in `.local/`. The spell-checker module is built with Cargo to WebAssembly and cached in `.local/spelling-wasm/`. Their licence texts are copied into the app. `pnpm dev` continues with a warning if something is missing; `pnpm build` stops.
+
+### Version scheme
+
+Versions follow the OpenAEC weekly scheme `YYYY.WW.N`: year, ISO week and sequence number in that week (shown in the app as `2026-W44.5`).
+
+```bash
+pnpm versie:week 2026-10-28 1   # set the version in all manifests for a date and sequence number
+pnpm versie:check               # check that all version files agree
+```
+
+A tag `v<version>` starts [`release.yml`](.github/workflows/release.yml): it runs the same checks as CI, signs the Windows and macOS packages, checks the signatures, and creates a draft pre-release with `SHA256SUMS`. See [docs/versies.md](docs/versies.md).
+
+## Project structure
+
+```
+src/                   React app: shell, ribbons, editors, Save As, charts, spelling, notes, print
+src-tauri/             Rust desktop shell: file access, conversion, email backend, windows, recovery
+packages/database/     MDB/ACCDB reader and SQLite working copy
+packages/vba/          VBA interpreter with DAO subset
+packages/email/        Email Studio interface and HTML sanitiser
+apps/database-studio/  Standalone Open Database Studio
+scripts/               Build, release and test scripts
+tests/                 Python checks
+docs/                  Formats, versions, design, research and test reports (mostly in Dutch)
+assets/                Manifests for fonts and dictionaries
+```
+
+The document, spreadsheet and presentation engines come from the [`@betteroffice`](https://betteroffice.dev/) packages (Apache-2.0). The desktop app is built with [Tauri 2](https://tauri.app/); the interface uses React 19 and TypeScript.
+
+## Privacy and security
+
+- **No telemetry.** The app contains no analytics or tracking code and does not check for updates by itself.
+- Your files stay on your computer. Network connections are made only for things you set up: your mail servers, OAuth sign-in, the mail server lookup (and the Thunderbird database only if you turn it on), and external images in an email after you allow them.
+- **Passwords and OAuth refresh tokens** are stored in the operating system's keychain (Windows Credential Manager, macOS Keychain, Secret Service on Linux), not in plain files.
+- **VBA** from Access databases runs only after explicit permission, in a sandboxed interpreter without COM, Windows APIs or file access; nothing runs automatically.
+- LibreOffice conversions use a fresh profile with macros disabled, a time limit and a size limit.
+- The original MDB/ACCDB file is never written to.
+
+## Contributing
+
+- Report bugs and request features in [GitHub Issues](https://github.com/OpenAEC-Foundation/open-office-studio/issues). Attach a sample file when you can, with confidential content removed.
+- Pull requests go to `main`. Run `pnpm test`, the Python checks and `cargo test` before you open one, and keep the version files consistent (`pnpm versie:check`).
+- Code, commit messages and most documentation are currently in Dutch. Only add test files that you created yourself or that have a clear open licence.
+
+## Documentation
+
+- [File formats, Save As and limits](docs/formaten.md)
+- [Weekly versions](docs/versies.md)
+- [Email OAuth2 setup](docs/email-oauth.md)
+- [Notes](docs/notities.md)
+- [OpenAEC style guide](docs/ontwerp/openaec-stijl.md)
+- [Test reports](docs/tests) and [research](docs/onderzoek/README.md)
+
+## License
+
+Open Office Studio is licensed under the [Apache License 2.0](LICENSE).
+
+Third-party components keep their own licences. Fonts, dictionaries and npm dependencies ship their licence texts inside the app (`public/licenses/`, generated at build time). The sources and licences of the spell-checker parts are listed in [docs/licenties/spelling.md](docs/licenties/spelling.md); further licence records are in [docs/licenties](docs/licenties).
+
+Microsoft Word, Excel, PowerPoint and Access are trademarks of Microsoft Corporation. Open Office Studio is an independent project and is not affiliated with Microsoft; these names are used only to describe file compatibility.
+
+## Part of the OpenAEC Foundation
+
+Open Office Studio is part of the [OpenAEC Foundation](https://open-aec.com), which develops open-source software for the construction industry. See the other projects on [GitHub](https://github.com/OpenAEC-Foundation).

@@ -1,6 +1,19 @@
 # Schermafbeeldingen
 
-De actuele beelden zijn op **24 oktober 2026** vastgelegd uit de lokale productiebuild van **2026-W43.4**, met de officiële OpenAEC-stijl. De hoofd-README gebruikt deze negen JPG-bestanden:
+## README (2026-W44.5)
+
+De hoofd-README ([Engels](../../README.md), [Nederlands](../../README.nl.md)) gebruikt vier beelden die op **28 oktober 2026** zijn vastgelegd uit de lokale productiebuild van **2026-W44.5** (`pnpm build` en `vite preview`, headless Chromium, 1440 × 900 pixels, taal nl-NL). De beelden zijn alleen naar JPG omgezet, niet bewerkt.
+
+| Beeld | Wat je ziet |
+| --- | --- |
+| [Tekst](readme-writer-2026-W44.5.jpg) | De eigen ontwerpnotitie met lint en linialen. Er is één zin met een bewust verkeerd gespeld woord ingetypt om de golflijn te tonen. De documenttaal in deze kopie staat op nl-NL; het voorbeeldbestand zelf heeft en-US als standaardtaal. |
+| [Rekenblad](readme-spreadsheet-chart-2026-W44.5.jpg) | Het eigen materiaaloverzicht op 70% zoom, met een via Invoegen › Grafiek toegevoegde staafgrafiek van de kolom Totaal. |
+| [Database](readme-database-2026-W44.5.jpg) | Database Studio binnen de suite met de ingebouwde voorbeelddatabase (tabel Materialen in de werkkopie). |
+| [E-mail](readme-email-2026-W44.5.jpg) | Email Studio met het ingebouwde demopostvak van de browserversie (verzonnen adressen op `.invalid`). |
+
+## Eerdere beelden (2026-W43.4)
+
+Deze beelden zijn op **24 oktober 2026** vastgelegd uit de lokale productiebuild van **2026-W43.4**, met de officiële OpenAEC-stijl. De vorige hoofd-README gebruikte deze negen JPG-bestanden:
 
 | Beeld | Wat je ziet |
 | --- | --- |
@@ -16,7 +29,7 @@ De actuele beelden zijn op **24 oktober 2026** vastgelegd uit de lokale producti
 
 De beelden tonen de echte React-interface die ook in de desktopapp wordt gebruikt, op **1280 × 720 pixels**. De JPG-bestanden zijn rechtstreeks uit het browservenster opgeslagen, zonder beeldbewerking. Tekst, Rekenblad en Presentatie gebruiken de [eigen voorbeeldbestanden](../voorbeelden); de notities bevatten alleen eigen voorbeeldteksten. Er zijn geen bedieningselementen of documentresultaten aan de afbeeldingen toegevoegd. De geopende kantoor- en databasewerkruimte leverden bij deze opname geen browserconsolefouten op. De beelden vervangen geen afzonderlijke controle van de native desktopvensters of van formaatcompatibiliteit.
 
-## Eerdere beelden
+## Oudere beelden
 
 De oudere JPG-beelden blijven beschikbaar voor de eerdere verslagen. De reeks `*-2026-W43.3.jpg` toont de gedeelde Forge- en Light-weergave. `notities-markdown-2026-W43.4.jpg` toont de Markdownsectie met zichtbare notitieboeken en paginalijst, opgenomen op 23 oktober 2026.
 
