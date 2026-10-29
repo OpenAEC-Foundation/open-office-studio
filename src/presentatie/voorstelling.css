@@ -1,0 +1,271 @@
+/* Diavoorstelling en presentatorweergave (#79). */
+
+.voorstelling {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  background: #000;
+  color: #f3f4f6;
+  font-family: Inter, system-ui, sans-serif;
+  outline: none;
+}
+.voorstelling:fullscreen {
+  width: 100%;
+  height: 100%;
+}
+body.voorstelling-venster {
+  margin: 0;
+  background: #000;
+  overflow: hidden;
+}
+.voorstelling-venster > .presentator,
+.voorstelling-venster > .voorstelling-toeschouwer {
+  position: fixed;
+  inset: 0;
+}
+.voorstelling-toeschouwer {
+  position: absolute;
+  inset: 0;
+  background: #000;
+}
+.voorstelling-toeschouwer:hover .voorstelling-hoek,
+.voorstelling-hoek:focus-within {
+  opacity: 1;
+}
+.voorstelling-hoek {
+  position: absolute;
+  inset-inline-start: 16px;
+  inset-block-end: 16px;
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 8px;
+  background: rgba(32, 33, 36, 0.75);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .voorstelling-hoek {
+    transition: none;
+  }
+}
+.voorstelling-hoek button,
+.presentator button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.voorstelling-hoek button:hover,
+.presentator button:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.voorstelling-hoek button[aria-pressed="true"],
+.presentator button[aria-pressed="true"] {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+.voorstelling button:focus-visible,
+.voorstelling-venster button:focus-visible,
+.presentator-notitietekst:focus-visible {
+  outline: 2px solid #fbbf24;
+  outline-offset: 2px;
+}
+.voorstelling-invoer {
+  position: absolute;
+  inset-inline-end: 24px;
+  inset-block-end: 24px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: rgba(32, 33, 36, 0.85);
+  font-size: 18px;
+}
+
+/* Een dia passend in zijn vak. */
+.diavlak {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+.diavlak-dia {
+  position: absolute;
+  background: #fff;
+  touch-action: none;
+}
+.diavlak-dia canvas {
+  display: block;
+}
+.diavlak-inkt {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.diavlak-laser {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, #ff3b30 0 35%, rgba(255, 59, 48, 0.55) 60%, rgba(255, 59, 48, 0) 72%);
+  pointer-events: none;
+}
+.diavlak-scherm {
+  position: absolute;
+  inset: 0;
+}
+.diavlak-zwart {
+  background: #000;
+}
+.diavlak-wit {
+  background: #fff;
+}
+.diavlak-einde {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 4%;
+  color: #e5e7eb;
+  font-size: clamp(12px, 2.2vmin, 28px);
+}
+
+/* Presentatorweergave. */
+.presentator {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background: #1f2023;
+  color: #f3f4f6;
+  font-size: 14px;
+}
+.presentator-kop,
+.presentator-voet {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 8px 16px;
+  background: #2a2b2f;
+}
+.presentator-timer {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+.presentator-tijd {
+  min-width: 5ch;
+  font-size: 26px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+.presentator-klok {
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+  color: #cbd5e1;
+}
+.presentator-ruimte {
+  flex: 1;
+}
+.presentator-gereedschap {
+  display: inline-flex;
+  gap: 2px;
+  padding-inline: 8px;
+  border-inline: 1px solid rgba(255, 255, 255, 0.15);
+}
+.presentator-einde {
+  background: #b91c1c !important;
+  color: #fff;
+}
+.presentator-midden {
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(260px, 1fr);
+  gap: 16px;
+  padding: 16px;
+  min-height: 0;
+}
+.presentator-huidig {
+  min-height: 0;
+}
+.presentator-zij {
+  display: grid;
+  grid-template-rows: minmax(120px, 0.8fr) minmax(0, 1.2fr);
+  gap: 16px;
+  min-height: 0;
+}
+.presentator-volgende,
+.presentator-notities {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.presentator h2 {
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #cbd5e1;
+  text-transform: none;
+}
+.presentator-notities-kop {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.presentator-notities-kop h2 {
+  flex: 1;
+  margin: 0;
+}
+.presentator-notitietekst {
+  flex: 1;
+  overflow: auto;
+  margin-top: 6px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: #121316;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+.presentator-leeg {
+  color: #94a3b8;
+}
+.presentator-nummer {
+  min-width: 10ch;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  font-size: 16px;
+}
+.presentator-spring label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.presentator-spring input {
+  width: 5em;
+  padding: 3px 6px;
+  border: 1px solid #4b5563;
+  border-radius: 4px;
+  background: #121316;
+  color: inherit;
+  font: inherit;
+}
+.presentator-melding {
+  color: #fbbf24;
+}
+.presentator-uitleg {
+  margin-inline-start: auto;
+  color: #94a3b8;
+  font-size: 12px;
+}
+@media (max-width: 760px) {
+  .presentator-midden {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}

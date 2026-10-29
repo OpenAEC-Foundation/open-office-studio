@@ -5,6 +5,7 @@ import i18next from "../i18n/config";
 import { formatLijst, useOpmaak } from "../i18n/opmaak";
 import { Dialoog } from "./Dialoog";
 import { useInstellingen } from "../instellingen";
+import { heeftOpdracht, volgOpdrachten } from "../tekst/menu/opdrachten";
 import {
   alleSneltoetsen,
   geldtIn,
@@ -81,6 +82,12 @@ export function SneltoetsenOverzicht({
   const { taal, getal } = useOpmaak();
   const [zoek, setZoek] = useState("");
   const versie = useSyncExternalStore(volgRegistraties, registratieVersie);
+  // Aangemelde opdrachten (bijv. het filter van Rekenblad): een toets wordt dan beschikbaar.
+  const opdrachten = useSyncExternalStore(volgOpdrachten, () =>
+    alleSneltoetsen()
+      .map((i) => (i.opdracht && heeftOpdracht(i.opdracht) ? i.opdracht : ""))
+      .join("|"),
+  );
   // Tekst: alleen het gekozen sneltoetsprofiel (instellingen).
   const profiel = useInstellingen().tekst.sneltoetsprofiel;
   const secties = useMemo(
@@ -90,7 +97,7 @@ export function SneltoetsenOverzicht({
         module,
       ),
     // taal: de sectienamen volgen de interfacetaal.
-    [zoek, module, versie, profiel, taal],
+    [zoek, module, versie, profiel, taal, opdrachten],
   );
   const aantal = secties.reduce((som, s) => som + s.toetsen.length, 0);
   return (
@@ -139,9 +146,16 @@ export function SneltoetsenOverzicht({
                   <tr
                     key={`${info.module}-${info.toets}`}
                     data-elders={module && sectie.module === "algemeen" && !geldtIn(info, module) ? "" : undefined}
+                    data-uit={info.opdracht && !heeftOpdracht(info.opdracht) ? "" : undefined}
                   >
                     <td>
                       {info.omschrijving}
+                      {info.opdracht && !heeftOpdracht(info.opdracht) && (
+                        <small>
+                          {" · "}
+                          {t("shortcuts.unavailable")}
+                        </small>
+                      )}
                       {info.alleen && (
                         <small>
                           {" · "}

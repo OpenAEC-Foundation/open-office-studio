@@ -11,9 +11,13 @@ import { dirname, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { leesTaalcodes } from "./controleer-i18n.mjs";
 
-/** De sjablonen per app; `naam` is de sleutel onder `launcher` in desktop.json. */
+/**
+ * De sjablonen per app; `naam` is de sleutel onder `launcher` in desktop.json. `bestanden`: de app
+ * opent gekoppelde bestanden (MimeType uit bundle.fileAssociations in tauri.linux.conf.json), dus
+ * krijgt Exec `%F`: elk geselecteerd bestand als eigen argument, ook met spaties in het pad.
+ */
 export const SJABLONEN = [
-  { naam: "officeStudio", pad: "src-tauri/linux/open-office-studio.desktop.hbs" },
+  { naam: "officeStudio", pad: "src-tauri/linux/open-office-studio.desktop.hbs", bestanden: true },
   { naam: "databaseStudio", pad: "apps/database-studio/src-tauri/linux/open-database-studio.desktop.hbs" },
 ];
 
@@ -44,6 +48,7 @@ function trefwoorden(tekst) {
 
 /** Bouwt de inhoud van één sjabloon (Handlebars-variabelen van Tauri blijven staan). */
 export async function maakSjabloon(app, { wortel = ".", talenBestand } = {}) {
+  const bestanden = SJABLONEN.find((s) => s.naam === app)?.bestanden === true;
   const talen = (await leesTaalcodes(talenBestand ?? join(wortel, "src/i18n/talen.ts"))).filter((t) => DESKTOPTALEN.includes(t));
   const lees = async (taal) =>
     JSON.parse(await readFile(join(wortel, "src/i18n/locales", taal, "desktop.json"), "utf8")).launcher[app];
@@ -61,7 +66,7 @@ export async function maakSjabloon(app, { wortel = ".", talenBestand } = {}) {
     ...vertaald.map(([code, t]) => `Comment[${code}]=${waarde(t.comment)}`),
     `Keywords=${trefwoorden(engels.keywords)}`,
     ...vertaald.map(([code, t]) => `Keywords[${code}]=${trefwoorden(t.keywords)}`),
-    "Exec={{exec}}",
+    bestanden ? "Exec={{exec}} %F" : "Exec={{exec}}",
     "StartupWMClass={{exec}}",
     "Icon={{icon}}",
     "Terminal=false",

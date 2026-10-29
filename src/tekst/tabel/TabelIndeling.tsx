@@ -21,6 +21,8 @@ import {
   WrapText,
   BetweenHorizontalStart,
   Table2,
+  Sigma,
+  TextCursorInput,
 } from "lucide-react";
 import { useDocxCommand, type DocxEditorRef } from "@betteroffice/docx-react";
 import { Groep } from "../../Ribbon";
@@ -44,6 +46,8 @@ import {
   tabelStaat,
   tabelTeksten,
   tekstNaarTabel,
+  tekstrichting,
+  voegSomIn,
   zetRijen,
   type TabelStaat,
 } from "./opdrachten";
@@ -157,16 +161,49 @@ export function TabelIndeling() {
             onClick={() => uitvoeren((r) => celUitlijning(r, "bottom"))}
           />
         </div>
-        <EigenKnop
-          naam={t("table.buttons.cellMargins")}
-          icoon={BetweenHorizontalStart}
-          groot
-          disabled={uit}
-          uitleg={reden}
-          onClick={() => setVenster("marges")}
-        />
+        <div className="ribbon-stapel">
+          <EigenKnop
+            naam={t("table.buttons.cellMargins")}
+            icoon={BetweenHorizontalStart}
+            disabled={uit}
+            uitleg={reden}
+            onClick={() => setVenster("marges")}
+          />
+          <Keuzemenu
+            naam={t("table.buttons.textDirection")}
+            icoon={TextCursorInput}
+            disabled={uit}
+            uitleg={reden ?? t("table.buttons.textDirectionTip")}
+            items={(
+              [
+                ["lrTb", "table.buttons.textDirectionHorizontal"],
+                ["tbRl", "table.buttons.textDirectionDown"],
+                ["btLr", "table.buttons.textDirectionUp"],
+              ] as const
+            ).map(([richting, sleutel]) => ({
+              naam: t(sleutel),
+              gekozen: (staat?.richting ?? "lrTb") === richting,
+              kies: () => uitvoeren((r) => tekstrichting(r, richting)),
+            }))}
+          />
+        </div>
       </Groep>
       <Groep naam={t("table.groups.data")}>
+        <Keuzemenu
+          naam={t("table.buttons.formula")}
+          icoon={Sigma}
+          groot
+          disabled={uit}
+          uitleg={reden ?? t("table.buttons.formulaTip")}
+          items={(
+            [
+              ["boven", "table.buttons.sumAbove"],
+              ["links", "table.buttons.sumLeft"],
+              ["onder", "table.buttons.sumBelow"],
+              ["rechts", "table.buttons.sumRight"],
+            ] as const
+          ).map(([richting, sleutel]) => ({ naam: t(sleutel), kies: () => uitvoeren((r) => voegSomIn(r, richting)) }))}
+        />
         <EigenKnop
           naam={t("table.buttons.sort")}
           icoon={ArrowDownAZ}

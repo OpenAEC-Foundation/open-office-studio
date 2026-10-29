@@ -1,7 +1,10 @@
 import {
+  lazy,
+  Suspense,
   useContext,
   useEffect,
   useRef,
+  useState,
   useSyncExternalStore,
   type ReactNode,
 } from "react";
@@ -22,6 +25,10 @@ import {
   type Uitlijning,
   type Verplaatsing,
 } from "./presentatie-opdrachten";
+
+const Voorstelling = lazy(() =>
+  import("../presentatie/Voorstelling").then((m) => ({ default: m.Voorstelling })),
+);
 
 /** Meldingstekst in de interfacetaal, op het moment van de melding. */
 const melding = (sleutel: string) =>
@@ -58,12 +65,15 @@ function inInvoer() {
       ["INPUT", "TEXTAREA", "SELECT"].includes(actief.tagName))
   );
 }
-/** De diavoorstelling is een <dialog> binnen de editor met eigen toetsen. */
-const inVoorstelling = () => Boolean(wortel()?.querySelector("dialog[open]"));
+/** De diavoorstelling (eigen laag of die van de engine) heeft eigen toetsen. */
+const inVoorstelling = () =>
+  Boolean(wortel()?.querySelector("dialog[open]") || document.querySelector(".voorstelling"));
+/** De diasorteerder ligt over het werkvlak en handelt zijn eigen toetsen af. */
+const inSorteerder = () => Boolean(wortel()?.querySelector(".sorteerder"));
 /** Focus op de dia, het diapaneel of nergens; niet in het lint of een invoerveld. */
 function focusOpDia() {
   const actief = document.activeElement;
-  if (inVoorstelling() || inInvoer()) return false;
+  if (inVoorstelling() || inInvoer() || inSorteerder()) return false;
   if (!actief || actief === document.body) return true;
   return Boolean(
     actief.closest(
@@ -115,6 +125,8 @@ export function useDiaActies() {
   const fout = useContext(RibbonFout);
   const bewerkbaar = useBewerkbaar(api);
   const paneel = useRef(false);
+  /** Zoeken en vervangen (Ctrl+F, Ctrl+H); "vervangen" zet de focus op het vervangveld. */
+  const [zoeken, setZoeken] = useState<"zoeken" | "vervangen" | null>(null);
   useEffect(() => {
     const aanwijzen = (e: PointerEvent) => {
       if (
@@ -222,12 +234,31 @@ export function useDiaActies() {
       await voegTekstvakToe(api.handle, toepassen(api), huidigeIndex(), tekst);
     });
   };
-  const voorstelling = (vanafBegin: boolean) =>
-    uitvoeren(async (api) => {
-      if (vanafBegin) api.goToSlide(1);
-      const resultaat = await api.commands.execute("slideshow", null);
-      if (!resultaat.ok) throw new Error(resultaat.failure.message);
-    });
+  // Eigen diavoorstelling met presentatorweergave (src/presentatie/Voorstelling.tsx).
+  const [show, setShow] = useState<{
+    vanafBegin: boolean;
+    presentator: boolean;
+    huidig: number;
+  } | null>(null);
+  const voorstelling = (vanafBegin: boolean, presentator = false) => {
+    if (!api || show) return;
+    setShow({ vanafBegin, presentator, huidig: huidigeIndex() });
+  };
+  const voorstellingElement =
+    show && api ? (
+      <Suspense fallback={null}>
+        <Voorstelling
+          api={api}
+          verzoek={show}
+          huidig={show.huidig}
+          einde={(index) => {
+            setShow(null);
+            api.goToSlide(index + 1);
+            window.setTimeout(() => api.focus(), 0);
+          }}
+        />
+      </Suspense>
+    ) : null;
   const opdracht = (uitvoer: () => Promise<{ ok: boolean }>) =>
     uitvoeren(async () => {
       await uitvoer();
@@ -246,9 +277,31 @@ export function useDiaActies() {
       beschikbaar: () => !inVoorstelling(),
     },
     {
+      toets: "Alt+F5",
+      uitvoeren: () => voorstelling(false, true),
+      beschikbaar: () => !inVoorstelling(),
+    },
+    {
+      toets: "Ctrl+F",
+      uitvoeren: () => setZoeken("zoeken"),
+      beschikbaar: () => !inVoorstelling() && Boolean(api),
+    },
+    {
+      toets: "Ctrl+H",
+      uitvoeren: () => setZoeken("vervangen"),
+      beschikbaar: () => !inVoorstelling() && Boolean(api) && bewerkbaar,
+    },
+    // De engine kent alleen Ctrl+Shift+Z; Ctrl+Y zoals in PowerPoint.
+    {
+      toets: "Ctrl+Y",
+      uitvoeren: () => opdracht(() => api!.commands.execute("redo", null)),
+      // In de diasorteerder handelt die zelf Ctrl+Y af.
+      beschikbaar: () => !inVoorstelling() && !inSorteerder() && Boolean(api),
+    },
+    {
       toets: "Ctrl+M",
       uitvoeren: () => opdracht(() => api!.commands.execute("insertSlide", {})),
-      beschikbaar: () => !inVoorstelling() && !inInvoer(),
+      beschikbaar: () => !inVoorstelling() && !inInvoer() && !inSorteerder(),
     },
     ...(
       [
@@ -263,7 +316,7 @@ export function useDiaActies() {
         if (api?.commands.getState("alignment", { value }).enabled)
           opdracht(() => api.commands.execute("alignment", { value }));
       },
-      beschikbaar: () => !inVoorstelling() && !inInvoer(),
+      beschikbaar: () => !inVoorstelling() && !inInvoer() && !inSorteerder(),
     })),
     {
       toets: "PageUp",
@@ -312,6 +365,7 @@ export function useDiaActies() {
       beschikbaar: () =>
         !inVoorstelling() &&
         !inInvoer() &&
+        !inSorteerder() &&
         !bewerktTekst() &&
         Boolean(api) &&
         (Boolean(geselecteerdeVorm(api!)) || paneel.current),
@@ -322,6 +376,8 @@ export function useDiaActies() {
   return {
     actief: Boolean(api),
     bewerkbaar,
+    zoeken,
+    setZoeken,
     naarDia,
     verplaatsen,
     diaVerwijderen,
@@ -330,6 +386,7 @@ export function useDiaActies() {
     tekstInvoegen,
     datum,
     voorstelling,
+    voorstellingElement,
   };
 }
 export type DiaActies = ReturnType<typeof useDiaActies>;

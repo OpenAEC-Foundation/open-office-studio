@@ -1,0 +1,183 @@
+/* Diasorteerder (#76) en diavoorstelling met presentatorweergave (#79). */
+
+.sorteerder {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  background: var(--oa-color-surface-light-bg, #f3f4f6);
+  color: var(--oa-ui-text, #1f2328);
+  font-family: var(--oa-font-family-body, Inter, system-ui, sans-serif);
+  font-size: 13px;
+}
+.sorteerder-balk,
+.sorteerder-naam,
+.sorteerder-voet {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 6px 12px;
+  background: var(--oa-color-surface-light-panel, #fff);
+  border-block-end: 1px solid var(--oa-color-border-light-default, #d0d7de);
+}
+.sorteerder-voet {
+  border-block-end: 0;
+  border-block-start: 1px solid var(--oa-color-border-light-default, #d0d7de);
+  justify-content: space-between;
+  min-height: 28px;
+}
+.sorteerder-titel {
+  margin-inline-end: 8px;
+  font-weight: 600;
+}
+.sorteerder-balk button,
+.sorteerder-naam button,
+.sorteerder-sectie button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.sorteerder-balk button:hover:not(:disabled),
+.sorteerder-naam button:hover,
+.sorteerder-sectie button:hover:not(:disabled) {
+  background: var(--module-zacht, rgba(0, 0, 0, 0.06));
+  border-color: var(--oa-color-border-light-default, #d0d7de);
+}
+.sorteerder button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.sorteerder button:focus-visible,
+.sorteerder-tegel:focus-visible {
+  outline: 2px solid var(--module-accent, #c2410c);
+  outline-offset: 2px;
+}
+.sorteerder-ruimte {
+  flex: 1;
+}
+.sorteerder-zoom {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--oa-color-text-light-secondary, #57606a);
+}
+.sorteerder-zoom input {
+  width: 140px;
+}
+.sorteerder-naam input {
+  margin-inline-start: 6px;
+  padding: 3px 6px;
+  font: inherit;
+  min-width: 220px;
+}
+.sorteerder-uitleg {
+  color: var(--oa-color-text-light-secondary, #57606a);
+  font-size: 12px;
+}
+.sorteerder-raster {
+  flex: 1;
+  overflow: auto;
+  padding: 16px 20px 24px;
+  touch-action: pan-y;
+}
+.sorteerder-raster[data-slepen] {
+  cursor: grabbing;
+}
+.sorteerder-groep {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 16px;
+  margin-block-end: 18px;
+}
+.sorteerder-sectie {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-block: 4px 10px;
+  border-block-end: 1px solid var(--oa-color-border-light-default, #d0d7de);
+}
+.sorteerder-sectie-knop {
+  font-weight: 600 !important;
+}
+.sorteerder-aantal {
+  font-weight: 400;
+  color: var(--oa-color-text-light-secondary, #57606a);
+  margin-inline-start: 6px;
+}
+.sorteerder-icoon {
+  padding: 3px !important;
+}
+.sorteerder-tegel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  padding: 4px;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  user-select: none;
+  cursor: default;
+}
+.sorteerder-tegel[data-gekozen] {
+  border-color: var(--module-accent, #c2410c);
+  background: var(--module-zacht, rgba(194, 65, 12, 0.08));
+}
+.sorteerder-tegel[data-verborgen] .sorteerder-beeld {
+  opacity: 0.45;
+}
+.sorteerder-tegel[data-invoeg]::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--module-accent, #c2410c);
+}
+.sorteerder-tegel[data-invoeg="voor"]::before {
+  inset-inline-start: -11px;
+}
+.sorteerder-tegel[data-invoeg="na"]::before {
+  inset-inline-end: -11px;
+}
+.sorteerder-beeld {
+  display: block;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+.sorteerder-onder {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--oa-color-text-light-secondary, #57606a);
+  font-size: 12px;
+}
+.sorteerder-nummer {
+  font-variant-numeric: tabular-nums;
+}
+.sorteerder-leeg {
+  padding: 24px;
+}
+.sorteerder-sleep {
+  z-index: 1000;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--module-accent, #c2410c);
+  color: #fff;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+/* In de diasorteerder geen notitiepaneel (zoals PowerPoint). */
+.office-presentatie:has(.sorteerder) div:has(> [data-testid="pptx-notes-textarea"]) {
+  display: none !important;
+}

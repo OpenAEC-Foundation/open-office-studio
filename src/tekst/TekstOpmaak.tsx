@@ -23,8 +23,9 @@ import {
   type GelezenTekens,
   type TekenOpmaak,
 } from "./opmaak";
-import { formulierUit, type AlineaFormulier } from "./alinea/model";
-import { AlineaVenster } from "./alinea/AlineaVenster";
+import { effectieveEigenschappen, formulierUit, type AlineaFormulier } from "./alinea/model";
+import { opgelosteAlinea } from "./liniaal/geometrie";
+import { AlineaVenster, type AlineaTab } from "./alinea/AlineaVenster";
 import { formulierUit as lettertypeFormulier, type LettertypeFormulier } from "./lettertype/model";
 import { LettertypeVenster } from "./lettertype/LettertypeVenster";
 import type { YrsStoryRange } from "@betteroffice/docx/yrs";
@@ -39,7 +40,7 @@ import { leesNummering, leesNummeringUitPakket, pasNummeringToe, type GelezenNum
 import { planLijst, type LijstKeuze } from "./lijst/plan";
 
 type Venster =
-  | { soort: "alinea"; selectie: TekstSelectie; begin: AlineaFormulier }
+  | { soort: "alinea"; selectie: TekstSelectie; begin: AlineaFormulier; tab?: AlineaTab }
   | {
       soort: "lettertype";
       selectie: TekstSelectie;
@@ -70,7 +71,8 @@ function tekensVan(selectie: TekstSelectie) {
 
 export interface TekstOpmaakApi {
   bewerkbaar: boolean;
-  open: (soort: VensterSoort, tab?: RandenTab) => void;
+  /** Opent een venster; `tab` kiest het tabblad (randen: randen/pagina; alinea: afstand/einden/tabs). */
+  open: (soort: VensterSoort, tab?: RandenTab | AlineaTab) => void;
   /** Directe tekenwijziging op de selectie of het woord bij de cursor. */
   tekens: (wijziging: TekenOpmaak | ((t: GelezenTekens) => TekenOpmaak)) => void;
   /** Directe alineawijziging op de selectie (lint en sneltoetsen). */
@@ -137,7 +139,7 @@ export function TekstOpmaakProvider({ children }: { children: ReactNode }) {
               setVenster({
                 soort,
                 selectie,
-                tab: tab ?? "randen",
+                tab: tab === "pagina" || tab === "arcering" ? tab : "randen",
                 begin: {
                   alinea: randFormulierUit(p.borders as Record<string, unknown> | undefined),
                   arcering: arceringUit(p.shading as never),
@@ -147,7 +149,18 @@ export function TekstOpmaakProvider({ children }: { children: ReactNode }) {
                 },
               });
             } else if (soort === "alinea")
-              setVenster({ soort, selectie, begin: formulierUit(selectie.alineas[0]?.properties ?? {}) });
+              setVenster({
+                soort,
+                selectie,
+                // Met wat de alinea uit zijn stijl erft (inspringing, afstand, tabs).
+                begin: formulierUit(
+                  effectieveEigenschappen(
+                    selectie.alineas[0]?.properties ?? {},
+                    selectie.alineas[0] ? opgelosteAlinea(selectie.sessie, selectie.story, selectie.alineas[0].paraId) : undefined,
+                  ),
+                ),
+                tab: tab === "afstand" || tab === "einden" || tab === "tabs" ? tab : undefined,
+              });
             else {
               const t = tekensVan(selectie);
               setVenster({ soort, selectie, ...t, begin: lettertypeFormulier(t.gelezen) });
@@ -261,6 +274,7 @@ export function TekstOpmaakProvider({ children }: { children: ReactNode }) {
       {venster?.soort === "alinea" && (
         <AlineaVenster
           begin={venster.begin}
+          tab={venster.tab}
           meerdere={venster.selectie.alineas.length > 1}
           sluit={sluit}
           toepassen={(w) => {

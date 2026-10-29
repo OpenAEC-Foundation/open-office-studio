@@ -16,6 +16,8 @@ export type MenuOpdrachtId = "lettertype" | "alinea" | (string & {});
 export interface MenuContext {
   /** Waar het menu werd geopend (clientcoördinaten), als dat van toepassing is. */
   punt?: { x: number; y: number };
+  /** Gegevens bij de opdracht, zoals de nieuwe paginamarges vanaf de liniaal. */
+  gegevens?: unknown;
 }
 
 export type MenuHandler = (context: MenuContext) => void;

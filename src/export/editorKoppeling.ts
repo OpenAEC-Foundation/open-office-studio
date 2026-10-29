@@ -7,6 +7,7 @@ import { registreerKoppeling, type EditorKoppeling } from "./koppeling";
 import type { Herladen } from "../lint/editorApi";
 import type { AfdrukBron } from "../afdrukken/bron";
 import { vraagAfdrukvoorbeeld } from "../afdrukken/openen";
+import { werkboekBytes } from "../lint/rekenblad-filter";
 
 /** 0-gebaseerde index van de dia die het diapaneel als huidige toont. */
 function huidigeDia() {
@@ -78,7 +79,7 @@ function rekenbladBron(
   let selectie: Awaited<ReturnType<typeof rekenbladSelectie>> = null;
   const bytes = async () => {
     await api.version();
-    return api.save();
+    return werkboekBytes(api);
   };
   const context = async () => ({
     api,

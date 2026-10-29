@@ -69,7 +69,8 @@ All screenshots show version 2026-W44.5 in a local production build, with the pr
 - **Charts** (eleven types) can be inserted and edited in documents, spreadsheets and presentations.
 - **Spell checking** for Dutch, English (UK) and English (US) with Hunspell dictionaries, wavy underlines, suggestions, an F7 dialog and autocorrect.
 - Print preview, document zoom, a collapsible ribbon, light and dark app themes, recent files and automatic crash recovery.
-- On Windows the installer registers Open Office Studio for Office, OpenDocument, RTF and MDB/ACCDB files (it shows up under *Open with* and *Default apps*).
+- The installers register Open Office Studio for Office, OpenDocument, RTF and MDB/ACCDB files (30 extensions): on Windows under *Open with* and *Default apps*, on macOS as document types (Finder › *Open With*, also while the app is running) and on Linux through MIME types in the launcher of the DEB/RPM package (several files at once). Double-clicking a file while the app is running opens it in the most recently used window.
+- Automatic updates (desktop): at startup or from Settings › About the app checks GitHub Releases for a new, signed version and installs it only after you confirm. No telemetry; can be turned off in the settings or by an administrator. See [docs/updates.md](docs/updates.md) (Dutch).
 
 What works per file format, and what does not, is documented in [docs/formaten.md](docs/formaten.md) and the test reports in [docs/tests](docs/tests).
 

@@ -49,7 +49,10 @@ export interface EditorKoppeling {
 }
 
 /** Toon en eventuele knoppen van een melding. */
-export type MeldOpties = Toon | { toon: Toon; acties?: MeldingActie[] };
+export type MeldOpties =
+  | Toon
+  /** `duur`: null laat de melding staan tot de gebruiker kiest (zoals bij een update). */
+  | { toon: Toon; acties?: MeldingActie[]; duur?: number | null };
 
 interface Opties {
   /** Slaat het tabblad op; waar als het daarna gesloten mag worden. */
@@ -108,13 +111,13 @@ export function useTabbladen(opties: Opties) {
   const meld = useCallback(
     (tekst: string, id?: number | null, opties: MeldOpties = "info") => {
       if (!tekst) return;
-      const { toon, acties } =
-        typeof opties === "string" ? { toon: opties, acties: undefined } : opties;
+      const { toon, acties, duur } =
+        typeof opties === "string" ? { toon: opties, acties: undefined, duur: undefined } : opties;
       const tabblad =
         id != null && toestandRef.current.tabbladen.some((t) => t.id === id)
           ? id
           : null;
-      voegMeldingToe({ tabblad, toon, tekst, acties });
+      voegMeldingToe({ tabblad, toon, tekst, acties, ...(duur !== undefined ? { duur } : {}) });
     },
     [voegMeldingToe],
   );

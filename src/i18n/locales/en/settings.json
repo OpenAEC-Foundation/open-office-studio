@@ -137,6 +137,43 @@
     "licenses": "Licences",
     "licensesLink": "Licences of the components used",
     "description": "Text, spreadsheet, presentation, database and email in one local workspace from the OpenAEC Foundation. Your files stay on your computer.",
-    "translations": "Dutch is the source language. The other languages are machine translations by OpenAEC and are still being reviewed; improvements are welcome."
+    "translations": "Dutch is the source language. The other languages are machine translations by OpenAEC and are still being reviewed; improvements are welcome.",
+    "updates": {
+      "title": "Updates",
+      "automatic": "Check for updates at startup",
+      "channel": "Channel",
+      "channels": {
+        "stabiel": "Stable",
+        "ontwikkel": "Development versions (pre-releases)"
+      },
+      "check": "Check for updates",
+      "checking": "Checking…",
+      "upToDate": "You are using the latest version ({{version}}).",
+      "available": "Version {{version}} is available.",
+      "availablePrerelease": "Development version {{version}} is available.",
+      "notes": "What's new",
+      "updateNow": "Update now",
+      "later": "Later",
+      "installing": "The update is being downloaded and verified. Open Office Studio will restart afterwards.",
+      "manual": "Version {{version}} is available, but not as an automatic update for this installation package. Download the new version from the releases page.",
+      "releasePage": "Open releases page",
+      "privacy": "The check only requests the list of releases from GitHub. No data about you or your documents is sent.",
+      "off": {
+        "geenSleutel": "Automatic updates are not set up in this version. New versions are on the releases page.",
+        "beheerd": "Automatic updates have been turned off by your administrator.",
+        "ontwikkelbouw": "Automatic updates do not work in a development build."
+      },
+      "browser": "The browser version always loads the latest version from the server; updates only apply to the desktop app.",
+      "errors": {
+        "netwerk": "Check failed: no connection to GitHub ({{detail}}).",
+        "github": "Check failed: unexpected response from GitHub ({{detail}}).",
+        "updater": "The update could not be checked ({{detail}}).",
+        "installeren": "Installation failed: {{detail}}",
+        "nietOpgeslagen": "Save the changed documents first ({{number}} still open); then you can update.",
+        "geenUpdate": "Check for updates again first.",
+        "bezig": "An update is already being installed."
+      },
+      "toast": "Open Office Studio {{version}} is available."
+    }
   }
 }

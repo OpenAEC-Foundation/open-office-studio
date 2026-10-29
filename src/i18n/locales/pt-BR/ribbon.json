@@ -37,7 +37,9 @@
       "slideShow": "Apresentação de Slides",
       "moveSlide": "Mover slide",
       "arrange": "Organizar",
-      "alignToSlide": "Alinhar ao slide"
+      "alignToSlide": "Alinhar ao slide",
+      "find": "Localizar",
+      "presentationViews": "Modos de Exibição de Apresentação"
     },
     "commands": {
       "fontSize": "Tamanho da fonte",
@@ -99,7 +101,11 @@
       "printHint": "Visualização de impressão: slides, folhetos ou páginas de anotações ({{shortcut}})",
       "notesPages": "Páginas de anotações",
       "notesPagesHint": "Imprimir páginas de anotações ou salvá-las como PDF",
-      "fitSlide": "Ajustar slide à janela"
+      "fitSlide": "Ajustar slide à janela",
+      "findReplace": "Localizar e substituir",
+      "presenterView": "Modo do Apresentador",
+      "normalView": "Normal",
+      "slideSorter": "Classificação de Slides"
     },
     "characters": {
       "euro": "Símbolo do euro",
@@ -136,7 +142,21 @@
       "placeCursor": "Coloque primeiro o cursor em uma caixa de texto.",
       "onlySlide": "O único slide não pode ser excluído."
     },
-    "dateShapeName": "Data"
+    "dateShapeName": "Data",
+    "find": {
+      "title": "Localizar e substituir",
+      "findWhat": "Localizar",
+      "replaceWith": "Substituir por",
+      "matchCase": "Diferenciar maiúsculas e minúsculas",
+      "previous": "Anterior",
+      "next": "Próximo",
+      "replace": "Substituir",
+      "replaceAll": "Substituir tudo",
+      "found": "Resultado {{current}} de {{total}} · slide {{slide}}",
+      "notFound": "Termo não encontrado.",
+      "replacedCurrent": "Substituído.",
+      "replacedAll": "Substituições: {{number}} (uma única etapa para desfazer)."
+    }
   },
   "shortcuts": {
     "modules": {
@@ -190,6 +210,7 @@
       "findReplace": "Localizar e substituir",
       "firstSlide": "Primeiro slide",
       "fontDialog": "Fonte…",
+      "formatCells": "Formatar células (formato de número)",
       "generalFormat": "Formato geral",
       "goTo": "Ir para",
       "growFont": "Aumentar tamanho da fonte",
@@ -228,7 +249,9 @@
       "paragraphDialog": "Parágrafo…",
       "paste": "Colar",
       "pasteFormatting": "Colar formatação",
+      "pasteSpecial": "Colar especial",
       "pasteTextOnly": "Colar somente texto",
+      "pasteValues": "Colar valores",
       "percentFormat": "Porcentagem",
       "previousPane": "Ir para a parte anterior da janela",
       "previousSheet": "Planilha anterior",
@@ -267,7 +290,40 @@
       "undo": "Desfazer",
       "zoom100": "Zoom 100%",
       "zoomIn": "Ampliar",
-      "zoomOut": "Reduzir"
+      "zoomOut": "Reduzir",
+      "newDocument": "Novo documento do mesmo tipo",
+      "editCell": "Editar célula",
+      "filter": "Ativar/desativar filtro",
+      "newMessage": "Nova mensagem",
+      "reply": "Responder",
+      "replyAll": "Responder a todos",
+      "forward": "Encaminhar",
+      "searchMail": "Pesquisar nas mensagens",
+      "getMail": "Receber mensagens",
+      "deleteMessage": "Excluir mensagem",
+      "toggleRead": "Lida/não lida",
+      "toggleStar": "Marcar com estrela",
+      "archive": "Arquivar",
+      "nextMessage": "Próxima mensagem",
+      "previousMessage": "Mensagem anterior",
+      "nextUnread": "Próxima mensagem não lida",
+      "searchNotes": "Pesquisar nas notas",
+      "copyWithHeaders": "Copiar com nomes de coluna",
+      "clearCell": "Limpar célula",
+      "selectColumn": "Selecionar coluna",
+      "selectRow": "Selecionar linha",
+      "contextMenu": "Abrir menu de contexto",
+      "presenterView": "Apresentação com modo do apresentador (também em uma tela)",
+      "showBlackScreen": "Apresentação: tela preta liga/desliga",
+      "showWhiteScreen": "Apresentação: tela branca liga/desliga",
+      "showPen": "Apresentação: caneta",
+      "showHighlighter": "Apresentação: marca-texto",
+      "showLaser": "Apresentação: apontador laser",
+      "showClearInk": "Apresentação: apagar a tinta do slide",
+      "fillRight": "Preencher à direita",
+      "openFilterMenu": "Abrir o menu de filtro (em uma célula de cabeçalho com seta)",
+      "insertFunction": "Inserir função",
+      "toggleReference": "Referência absoluta ou relativa (ao editar uma fórmula)"
     }
   },
   "spreadsheet": {
@@ -301,7 +357,8 @@
       "sort": "Classificar",
       "fill": "Preencher",
       "freezePanes": "Congelar painéis",
-      "output": "Saída"
+      "output": "Saída",
+      "sortFilter": "Classificar e filtrar"
     },
     "commands": {
       "fontSize": "Tamanho da fonte",
@@ -363,7 +420,15 @@
       "freezeFirstColumn": "Congelar primeira coluna",
       "print": "Imprimir",
       "printHint": "Visualização de impressão e imprimir ({{shortcut}})",
-      "exportImage": "Exportar como imagem"
+      "exportImage": "Exportar como imagem",
+      "sortDialog": "Classificar…",
+      "filter": "Filtro",
+      "filterHint": "Ativar ou desativar o filtro (setas na linha de cabeçalho)",
+      "clearFilter": "Limpar",
+      "reapplyFilter": "Reaplicar",
+      "fillRight": "À direita",
+      "fillSeries": "Série…",
+      "insertFunction": "Inserir função"
     },
     "dialogs": {
       "closeEsc": "Fechar (Esc)",

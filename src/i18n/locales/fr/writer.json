@@ -1055,7 +1055,8 @@
       "tocRemoved": "Table des matières supprimée",
       "footnoteInserted": "Note de bas de page insérée",
       "endnoteInserted": "Note de fin insérée",
-      "noteFormatChanged": "Format des notes modifié"
+      "noteFormatChanged": "Format des notes modifié",
+      "marginsChanged": "Marges modifiées"
     },
     "errors": {
       "notReady": "Le document n'est pas encore prêt.",
@@ -1559,7 +1560,18 @@
       "toText": "Convertir en texte",
       "toTextTip": "Convertir le tableau en texte",
       "split": "Fractionner le tableau",
-      "splitTip": "Fractionne le tableau au-dessus de la ligne contenant le curseur. Le document est rechargé ; Annuler ne fonctionne alors plus pour les étapes précédentes."
+      "splitTip": "Fractionne le tableau au-dessus de la ligne contenant le curseur. Le document est rechargé ; Annuler ne fonctionne alors plus pour les étapes précédentes.",
+      "textDirection": "Orientation du texte",
+      "textDirectionTip": "Orientation du texte dans les cellules sélectionnées",
+      "textDirectionHorizontal": "Horizontale",
+      "textDirectionDown": "Rotation de 90° (de haut en bas)",
+      "textDirectionUp": "Rotation de 270° (de bas en haut)",
+      "formula": "Formule",
+      "formulaTip": "Somme des nombres à côté de la cellule ; le résultat est inséré comme valeur",
+      "sumAbove": "Somme au-dessus",
+      "sumLeft": "Somme à gauche",
+      "sumBelow": "Somme en dessous",
+      "sumRight": "Somme à droite"
     },
     "row": {
       "title": "Propriétés de la ligne",
@@ -1657,7 +1669,46 @@
       "noBody": "Le document n'a pas de texte principal.",
       "tableNotFound": "Le tableau est introuvable dans le document.",
       "splitRow": "Placez le curseur dans la ligne qui doit devenir la première ligne du nouveau tableau (pas la première ligne).",
-      "splitMerged": "Impossible de fractionner le tableau ici : une cellule fusionnée s'étend sur cette ligne."
+      "splitMerged": "Impossible de fractionner le tableau ici : une cellule fusionnée s'étend sur cette ligne.",
+      "noNumbers": "Aucun nombre à additionner à côté de cette cellule."
+    }
+  },
+  "ruler": {
+    "horizontal": "Règle horizontale",
+    "vertical": "Règle verticale",
+    "tabKindTip": "Type de tabulation : {{kind}}. Cliquez pour changer.",
+    "tabKinds": {
+      "left": "Tabulation gauche",
+      "center": "Tabulation centrée",
+      "right": "Tabulation droite",
+      "decimal": "Tabulation décimale",
+      "bar": "Barre verticale"
+    },
+    "clickHint": "Cliquez pour placer une {{kind}}. Double-cliquez pour la boîte de dialogue Tabulations.",
+    "tabStop": "{{kind}} à {{position}}",
+    "tabHint": "Faites glisser pour déplacer, ou hors de la règle pour supprimer ; double-cliquez pour la boîte de dialogue Tabulations.",
+    "markers": {
+      "eerste": "Retrait de première ligne",
+      "verkeerd": "Retrait négatif",
+      "links": "Retrait gauche",
+      "rechts": "Retrait droit"
+    },
+    "leftMargin": "Marge gauche",
+    "rightMargin": "Marge droite",
+    "topMargin": "Marge supérieure",
+    "bottomMargin": "Marge inférieure",
+    "tableColumn": "Faire glisser la largeur de colonne (Maj : cette colonne seulement)",
+    "tableRow": "Faire glisser la hauteur de la ligne {{n}}",
+    "altHint": "Alt : mesure exacte",
+    "marginsUnavailable": "Impossible de faire glisser les marges ici ; utilisez Mise en page › Marges.",
+    "measure": {
+      "indent": "{{name}} : {{value}} cm",
+      "tab": "Tabulation à {{value}} cm",
+      "removeTab": "Relâchez pour supprimer la tabulation",
+      "margin": "{{name}} : {{value}} cm",
+      "columns": "Colonne {{a}} : {{wa}} cm · colonne {{b}} : {{wb}} cm",
+      "column": "Colonne {{a}} : {{wa}} cm",
+      "row": "Ligne {{n}} : {{value}} cm"
     }
   }
 }

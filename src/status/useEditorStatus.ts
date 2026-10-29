@@ -6,6 +6,8 @@ import { huidigeIndex } from "../lint/presentatie-acties";
 import { zichtbaarElement } from "../lint/editorApi";
 import { publiceerStatus } from "./statusinfo";
 import { selectieStatistiek } from "./berekening";
+import { filterTelling } from "../lint/rekenblad-gegevens";
+import { abonneerFilters } from "../lint/rekenblad-filter";
 
 /** Grotere selecties tellen we niet: de statusbalk mag nooit haperen. */
 const MAX_CELLEN = 200_000;
@@ -16,12 +18,19 @@ export function useRekenbladStatus(api: XlsxEditorApi | null, zichtbaar: boolean
   useEffect(() => {
     if (!api || !zichtbaar) return;
     let wachten = 0;
+    const filter = () => {
+      try {
+        return filterTelling(api, api.handle.sheetInfo().activeSheet);
+      } catch {
+        return null;
+      }
+    };
     const meet = () => {
       try {
         const { sheetId, bereik } = leesSelectie(api);
         const cellen = (bereik.bottom - bereik.top + 1) * (bereik.right - bereik.left + 1);
         if (cellen < 2 || cellen > MAX_CELLEN) {
-          publiceerStatus(eigenaar, { soort: "rekenblad", statistiek: null, cellen });
+          publiceerStatus(eigenaar, { soort: "rekenblad", statistiek: null, cellen, filter: filter() });
           return;
         }
         const lezing = api.handle.readCells({
@@ -39,13 +48,14 @@ export function useRekenbladStatus(api: XlsxEditorApi | null, zichtbaar: boolean
         publiceerStatus(eigenaar, {
           soort: "rekenblad",
           cellen,
+          filter: filter(),
           statistiek: lezing.ok
             ? selectieStatistiek(lezing.ranges[0].cells.map((rij) => rij.map((cel) => cel.value)))
             : null,
         });
       } catch {
         // Nog geen selectie (of het blad wordt opnieuw geladen).
-        publiceerStatus(eigenaar, { soort: "rekenblad", statistiek: null, cellen: 0 });
+        publiceerStatus(eigenaar, { soort: "rekenblad", statistiek: null, cellen: 0, filter: filter() });
       }
     };
     const plan = () => {
@@ -55,10 +65,12 @@ export function useRekenbladStatus(api: XlsxEditorApi | null, zichtbaar: boolean
     meet();
     const stopOpdrachten = api.commands.subscribe(plan);
     const stopWijzigingen = api.handle.onUpdate(plan);
+    const stopFilters = abonneerFilters(api.handle, plan);
     return () => {
       clearTimeout(wachten);
       stopOpdrachten();
       stopWijzigingen();
+      stopFilters();
       publiceerStatus(eigenaar, null);
     };
   }, [api, zichtbaar]);

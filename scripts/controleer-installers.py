@@ -58,12 +58,29 @@ def elf_x64(pad):
     eis("not found" not in afhankelijkheden, f"Ontbrekende bibliotheken:\n{afhankelijkheden}")
 
 
+def verwachte_mime_typen(programma):
+    """MimeType-regel volgens tauri.linux.conf.json (alleen Office Studio koppelt bestanden)."""
+    if programma != "open-office-studio":
+        return None
+    conf = json.loads(Path("src-tauri/tauri.linux.conf.json").read_text(encoding="utf-8"))
+    return [k["mimeType"] for k in conf["bundle"]["fileAssociations"]]
+
+
 def snelkoppeling(pad, wortel, programma="open-office-studio"):
     configuratie = configparser.ConfigParser(interpolation=None)
+    configuratie.optionxform = str
     configuratie.read(pad, encoding="utf-8")
     gegevens = configuratie["Desktop Entry"]
     eis(gegevens.get("Type") == "Application", "De Linux-snelkoppeling is geen toepassing.")
-    eis(gegevens.get("Exec") == programma, "De Linux-snelkoppeling start het verkeerde programma.")
+    mime = verwachte_mime_typen(programma)
+    # Gekoppelde bestanden komen als losse argumenten binnen (%F), ook met spaties in het pad.
+    exec_verwacht = f"{programma} %F" if mime else programma
+    eis(gegevens.get("Exec") == exec_verwacht,
+        f"De Linux-snelkoppeling start het verkeerde programma: {gegevens.get('Exec')!r}, verwacht {exec_verwacht!r}.")
+    if mime:
+        gevonden = [m for m in gegevens.get("MimeType", "").split(";") if m]
+        eis(sorted(gevonden) == sorted(mime),
+            f"MimeType in de Linux-snelkoppeling wijkt af van tauri.linux.conf.json: {gevonden}.")
     eis(gegevens.get("Icon") == programma, "De Linux-snelkoppeling verwijst naar het verkeerde pictogram.")
     eis(any((wortel / "usr/share/icons").rglob(f"{programma}.png")),
         "Het pictogram bij de Linux-snelkoppeling ontbreekt.")
@@ -98,7 +115,13 @@ def deb(pakket, map, versie, programma="open-office-studio"):
     opdracht("dpkg-deb", "--extract", pakket, map)
     elf_x64(map / f"usr/bin/{programma}")
     snelkoppeling(een((map / "usr/share/applications").glob("*.desktop"), "Linux-snelkoppeling"), map, programma)
-    return ["DEB-versie en architectuur", "runtime-afhankelijkheden opgegeven", "ELF x64 en bibliotheken gevonden", "snelkoppeling en pictogram aanwezig"]
+    controles = ["DEB-versie en architectuur", "runtime-afhankelijkheden opgegeven", "ELF x64 en bibliotheken gevonden", "snelkoppeling en pictogram aanwezig"]
+    if verwachte_mime_typen(programma):
+        # De AppImage registreert zelf geen MIME-typen; het DEB-pakket installeert de ACCDB-aanvulling.
+        eis((map / "usr/share/mime/packages/open-office-studio.xml").is_file(),
+            "Het MIME-pakket (ACCDB) ontbreekt in het DEB-pakket.")
+        controles.append("bestandskoppelingen (MimeType, Exec %F, MIME-pakket)")
+    return controles
 
 
 def appimage(pakket, map, programma="open-office-studio"):

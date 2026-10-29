@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useContext, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { zichtbaarElement } from "./editorApi";
+import { useEditorApi, useEditorZichtbaar, zichtbaarElement } from "./editorApi";
 import {
   usePptxCommand,
   ToolbarCommand as DiaControl,
@@ -53,9 +53,14 @@ import {
   X,
   Printer,
   NotebookText,
+  LayoutGrid,
+  GalleryVertical,
+  Presentation,
+  Search,
 } from "lucide-react";
 import {
   Actie,
+  RibbonFout,
   Ribbon,
   Groep,
   OpdrachtKleur,
@@ -64,8 +69,10 @@ import {
 } from "../Ribbon";
 import { useDocumentZoom, type ZoomKoppeling } from "../useDocumentZoom";
 import { P, PK, PL, Geschiedenis, Zoom, scrollvlakVan, type Knop } from "./gedeeld";
-import { useDiaActies, DiaKnop, type DiaActies } from "./presentatie-acties";
+import { useDiaActies, DiaKnop, huidigeIndex, type DiaActies } from "./presentatie-acties";
+import { publiceerWeergave, useDiaWeergave, zetWeergave, type DiaWeergave } from "../presentatie/weergave";
 import { specialeTekens } from "./presentatie-opdrachten";
+import { PresentatieZoeken } from "./presentatie-zoekpaneel";
 import {
   DiaGrafiekontwerp,
   GrafiekGroep,
@@ -73,6 +80,10 @@ import {
 } from "../grafieken/ui/ingesloten";
 import { vraagAfdrukvoorbeeld } from "../afdrukken/openen";
 import "./presentatie.css";
+
+const DiaSorteerder = lazy(() =>
+  import("../presentatie/DiaSorteerder").then((m) => ({ default: m.DiaSorteerder })),
+);
 
 /** Een engine-opdracht met een sneltoets die het lint zelf afhandelt. */
 function PT<K extends PptxCommandId>({
@@ -188,8 +199,92 @@ function Voorstelling({ acties }: { acties: DiaActies }) {
         uit={!acties.actief}
         onClick={() => acties.voorstelling(false)}
       />
+      <DiaKnop
+        naam={t("presentation.commands.presenterView")}
+        icoon={Presentation}
+        toets="Alt+F5"
+        groot
+        uit={!acties.actief}
+        onClick={() => acties.voorstelling(false, true)}
+      />
     </Groep>
   );
+}
+function Weergaven({
+  weergave,
+  zet,
+  uit,
+}: {
+  weergave: DiaWeergave;
+  zet: (w: DiaWeergave) => void;
+  uit: boolean;
+}) {
+  const { t } = useTranslation("ribbon");
+  return (
+    <Groep naam={t("presentation.groups.presentationViews")}>
+      <DiaKnop
+        naam={t("presentation.commands.normalView")}
+        icoon={GalleryVertical}
+        groot
+        aan={weergave === "normaal"}
+        uit={uit}
+        onClick={() => zet("normaal")}
+      />
+      <DiaKnop
+        naam={t("presentation.commands.slideSorter")}
+        icoon={LayoutGrid}
+        groot
+        aan={weergave === "sorteerder"}
+        uit={uit}
+        onClick={() => zet(weergave === "sorteerder" ? "normaal" : "sorteerder")}
+      />
+    </Groep>
+  );
+}
+
+/** Diasorteerder en de weergavekeuze (lint en statusbalk) voor deze presentatie. */
+function useWeergave(acties: DiaActies) {
+  const { presentatie: api, herlaad } = useEditorApi();
+  const fout = useContext(RibbonFout);
+  const zichtbaar = useEditorZichtbaar();
+  const sleutel = herlaad ?? api;
+  const { weergave } = useDiaWeergave(sleutel);
+  const [anker, setAnker] = useState<HTMLSpanElement | null>(null);
+  const eigenaar = useRef({}).current;
+  const zet = (w: DiaWeergave) => {
+    if (!sleutel) return;
+    if (w === "sorteerder") zetWeergave(sleutel, { weergave: w, selectie: [huidigeIndex()], bericht: "" });
+    else zetWeergave(sleutel, { weergave: w });
+  };
+  const recent = useRef({ zet, acties });
+  recent.current = { zet, acties };
+  useEffect(() => {
+    if (!zichtbaar || !sleutel) return;
+    publiceerWeergave(eigenaar, {
+      weergave,
+      zet: (w) => recent.current.zet(w),
+      voorstelling: () => recent.current.acties.voorstelling(false),
+    });
+    return () => publiceerWeergave(eigenaar, null);
+  }, [zichtbaar, sleutel, weergave]);
+  const element = (
+    <>
+      <span ref={setAnker} hidden />
+      {weergave === "sorteerder" && sleutel && (
+        <Suspense fallback={null}>
+          <DiaSorteerder
+            api={api}
+            herlaad={herlaad}
+            anker={anker}
+            bewerkbaar={acties.bewerkbaar}
+            huidig={huidigeIndex}
+            fout={fout}
+          />
+        </Suspense>
+      )}
+    </>
+  );
+  return { weergave, zet, element };
 }
 function DiaVerwijderen({ acties }: { acties: DiaActies }) {
   const { t } = useTranslation("ribbon");
@@ -401,8 +496,10 @@ export function PresentatieRibbon({
     vulling = usePptxCommand("shapeFill"),
     rand = usePptxCommand("shapeStrokeColor");
   const acties = useDiaActies();
+  const api = useEditorApi().presentatie;
   const grafieken = useIngeslotenGrafieken("pptx");
   const [notities, wisselNotities] = useNotities();
+  const weergave = useWeergave(acties);
   const dia = () =>
     zichtbaarElement<HTMLElement>(
       '.office-presentatie [data-testid="pptx-slide-canvas"]',
@@ -421,6 +518,19 @@ export function PresentatieRibbon({
   return (
     <>
     {grafieken.venster}
+    {weergave.element}
+    {acties.voorstellingElement}
+    {api && acties.zoeken && (
+      <PresentatieZoeken
+        api={api}
+        stand={acties.zoeken}
+        bewerkbaar={acties.bewerkbaar}
+        sluiten={() => {
+          acties.setZoeken(null);
+          api.focus();
+        }}
+      />
+    )}
     <Ribbon
       bestand={bestand}
       tabs={[
@@ -466,6 +576,16 @@ export function PresentatieRibbon({
                   groot
                   uit={!acties.actief}
                   onClick={() => acties.voorstelling(true)}
+                />
+              </Groep>
+              <Groep naam={t("presentation.groups.find")}>
+                <DiaKnop
+                  naam={t("presentation.commands.findReplace")}
+                  icoon={Search}
+                  toets="Ctrl+H"
+                  groot
+                  uit={!acties.actief}
+                  onClick={() => acties.setZoeken(acties.bewerkbaar ? "vervangen" : "zoeken")}
                 />
               </Groep>
             </>
@@ -623,6 +743,7 @@ export function PresentatieRibbon({
           naam: t("presentation.tabs.view"),
           inhoud: (
             <>
+              <Weergaven weergave={weergave.weergave} zet={weergave.zet} uit={!acties.actief} />
               <Zoom opdracht={zoom} />
               <Groep naam={t("presentation.groups.workspace")}>
                 <P

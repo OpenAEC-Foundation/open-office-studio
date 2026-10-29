@@ -90,6 +90,7 @@ import { TabelIndeling, TekstNaarTabelKnop } from "../tekst/tabel/TabelIndeling"
 import { AfbeeldingGroepen } from "../tekst/afbeelding/AfbeeldingGroepen";
 import { ZoekKnoppen } from "../tekst/zoeken/ZoekPaneel";
 import { WordHost } from "../tekst/WordHost";
+import { Liniaal } from "../tekst/liniaal/Liniaal";
 import { WijzigingenGroepen } from "../tekst/wijzigingen/Wijzigingen";
 import { usePagina } from "../tekst/pagina/ui/usePagina";
 import {
@@ -888,6 +889,7 @@ export function TekstRibbon({
       />
       <TekstDialogen opdrachten={opdrachten} />
       <WordHost />
+      <Liniaal aan={liniaal} />
       <TekstStatus opdrachten={opdrachten} />
       <TekstInfo />
       {grafieken.venster}

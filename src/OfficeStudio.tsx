@@ -69,6 +69,7 @@ import { Statusbalk } from "./status/Statusbalk";
 import { leesInstellingen } from "./instellingen";
 import { noteerBrowser } from "./recent";
 import { useHerstel } from "./useHerstel";
+import { useUpdateBijStart } from "./updates";
 import { neerzetMelding, useNeerzetten } from "./Neerzetzone";
 import { VensterMenu, useVenstermenu } from "./VensterMenu";
 import {
@@ -180,6 +181,10 @@ export function OfficeStudio() {
     (tekst: string, opties: MeldOpties = "info") =>
       meld(tekst, tabs.toestandRef.current.actief ?? undefined, opties),
     [meld, tabs.toestandRef],
+  );
+  // Updates (#26): melding rechtsonder voor het hele venster; met knoppen blijft zij staan.
+  useUpdateBijStart((tekst, toon, acties) =>
+    meld(tekst, null, { toon, acties, duur: acties?.length ? null : undefined }),
   );
   const actiefDocument = actief?.type === "document" ? actief : null;
   const documentGereed = !!actiefDocument?.gereed;
@@ -581,6 +586,7 @@ export function OfficeStudio() {
     opslaan: opslaanToets,
     opslaanAls: () => openOpslaanAls(),
     openen: kiesBestand,
+    nieuw: (soort) => void nieuw(soort),
     sluit: () => actief && void sluit([actief.id]),
     verwerk: (actie) => {
       tabs.verwerk(actie);

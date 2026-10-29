@@ -65,7 +65,9 @@ import {
   zelfdeDelta,
   type HtmlTekst,
   type PlakKeuze,
+  tabelUitKlembord,
 } from "./plakopties";
+import { kanTabelPlakken, plakTabel } from "../tabel/opdrachten";
 import { DatumTijdDialoog } from "./DatumTijdDialoog";
 import { ontbrekendeStijl } from "../stijlen/model";
 import { metHeleAlinea } from "../stijlen/toepassen";
@@ -387,8 +389,17 @@ export function TekstBewerken({
       if (!ref || !begin) return;
       const html = e.clipboardData?.getData("text/html") ?? "";
       const tekst = platteTekst(e.clipboardData?.getData("text/plain") ?? "");
-      if (!tekst) return;
       const alsTekst = Date.now() - plakAlsTekst.current < 1500;
+      // Een tabel (zoals een kopie uit Rekenblad) wordt een echte tabel, niet
+      // tabgescheiden tekst; de engine plakt dan niet zelf.
+      const cellen = !alsTekst && html ? tabelUitKlembord(html) : null;
+      if (cellen && kanTabelPlakken(ref)) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        void plakTabel(ref, cellen).catch(fout);
+        return;
+      }
+      if (!tekst) return;
       const ctx = leesContext(ref, { leeg: true, range: { ...begin.range, end: begin.range.start } });
       const basis: GekopieerdeOpmaak | null = ctx
         ? { delta: opmaakUitBron(ctx), positie: positieUitBron(ctx), stijl: null }

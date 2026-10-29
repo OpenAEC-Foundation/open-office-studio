@@ -8,6 +8,7 @@
  * van de engine staan.
  */
 import type { YrsInlineFormatDelta } from "@betteroffice/docx/yrs";
+import { leesHtmlTabel } from "../../rekenblad/klembordLogica";
 
 export type PlakKeuze = "behouden" | "samenvoegen" | "tekst";
 
@@ -311,3 +312,32 @@ export function stukken<T>(lijst: readonly T[], gelijk: (a: T, b: T) => boolean)
 
 export const zelfdeDelta = (a: YrsInlineFormatDelta | null, b: YrsInlineFormatDelta | null) =>
   JSON.stringify(a) === JSON.stringify(b);
+
+// --- Tabellen plakken ---------------------------------------------------------
+
+/** Meer kolommen kent Word niet; meer rijen plakken we als tekst. */
+const MAX_KOLOMMEN = 63;
+const MAX_RIJEN = 2000;
+
+/**
+ * De cellen van een tabel in klembord-HTML (zoals een kopie uit Rekenblad,
+ * een ander rekenblad of een webpagina), om als echte tabel te plakken. Null
+ * als er geen tabel is, als het één cel is (dan gewoon tekst, zoals een
+ * gekopieerde celwaarde), als de tabel te groot is, of als er ook tekst buiten
+ * de tabel staat (die zou anders verloren gaan).
+ */
+export function tabelUitKlembord(html: string): string[][] | null {
+  if (!/<table[\s>]/i.test(html)) return null;
+  const buiten = html
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .replace(/<(style|script|head)[\s\S]*?<\/\1>/gi, "")
+    .replace(/<table[\s>][\s\S]*<\/table>/i, "")
+    .replace(/<[^>]+>/g, "");
+  if (ontcijfer(buiten).replace(/[\s\u00a0]+/g, "")) return null;
+  if ((html.match(/<table[\s>]/gi) ?? []).length > 1) return null;
+  const rijen = leesHtmlTabel(html);
+  if (!rijen?.length || !rijen[0].length) return null;
+  if (rijen.length === 1 && rijen[0].length === 1) return null;
+  if (rijen.length > MAX_RIJEN || rijen[0].length > MAX_KOLOMMEN) return null;
+  return rijen;
+}

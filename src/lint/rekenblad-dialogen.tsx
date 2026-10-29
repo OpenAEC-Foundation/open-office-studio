@@ -14,14 +14,17 @@ import {
   zoekVolgende,
 } from "./rekenblad-opdrachten";
 
-function Paneel({
+export function Paneel({
   titel,
   sluiten,
   children,
+  breed,
 }: {
   titel: string;
   sluiten: () => void;
   children: ReactNode;
+  /** Breder venster, bijvoorbeeld Celeigenschappen. */
+  breed?: boolean;
 }) {
   const { t } = useTranslation("ribbon");
   const id = useId();
@@ -32,7 +35,7 @@ function Paneel({
   return createPortal(
     <section
       ref={paneel}
-      className="rekenblad-paneel"
+      className={breed ? "rekenblad-paneel is-breed" : "rekenblad-paneel"}
       role="dialog"
       aria-modal="false"
       aria-labelledby={id}
@@ -61,7 +64,7 @@ function Paneel({
   );
 }
 
-const tekstVan = (fout: unknown) =>
+export const tekstVan = (fout: unknown) =>
   fout instanceof Melding || fout instanceof Error
     ? fout.message
     : String(fout);

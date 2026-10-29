@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import { useInstellingen, wijzigInstellingen, type Instellingen } from "../../instellingen";
 import { Contextmenu } from "../stijlen/StijlGalerij";
 import { useTaalAansluiting, useTekstExtra } from "./winkel";
+import { useMaat } from "../liniaal/meting";
 
 /** Taal en bijhouden, na pagina en woorden. */
 export function TekstStatusExtra() {
@@ -17,11 +18,18 @@ export function TekstStatusExtra() {
   const { statusbalk } = useInstellingen();
   const taal = useTaalAansluiting();
   const { t } = useTranslation("writer");
+  // Maat tijdens het slepen op de liniaal of aan een tabelrand (#47, #48).
+  const maat = useMaat();
   if (!extra) return null;
   const spelling = taal.status?.() ?? null;
   const taalnaam = extra.taal?.naam ?? t("info.notSpecified");
   return (
     <>
+      {maat && (
+        <span className="statusbalk-maat" role="status">
+          {maat}
+        </span>
+      )}
       {statusbalk.taal && (
         <button
           type="button"

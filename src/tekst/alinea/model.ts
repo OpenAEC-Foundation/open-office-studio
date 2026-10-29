@@ -13,6 +13,7 @@ import {
   type Regelafstand,
 } from "../eenheden";
 import type { AlineaOpmaak, Tabstop, Uitlijning } from "../opmaak";
+import { TWIPS_PER_PX, directeTabs, inspringingUitBlok, tabsUitBlok } from "../liniaal/model";
 
 export type TabUitlijning = "left" | "center" | "right" | "decimal" | "bar";
 export type Opvulteken = "none" | "dot" | "hyphen" | "underscore" | "middleDot";
@@ -38,6 +39,11 @@ export interface AlineaFormulier {
   bijeen: boolean;
   paginaEinde: boolean;
   tabs: TabRegel[];
+  /**
+   * Tabstops die uit de stijl komen (twips, exact): haalt de gebruiker er een
+   * weg, dan wist een ‘clear’-tabstop hem, zoals in Word.
+   */
+  stijlTabs?: number[];
 }
 
 /** Keuzes met hun i18n-sleutel (namespace writer); vertalen bij het tonen. */
@@ -103,6 +109,7 @@ export function formulierUit(p: Record<string, unknown>): AlineaFormulier {
         opvul: (opvulNamen.some(([w]) => w === t.opvul) ? t.opvul : "none") as Opvulteken,
       }))
       .sort((a, b) => a.cm - b.cm),
+    ...(Array.isArray(p._stijlTabs) && p._stijlTabs.length ? { stijlTabs: p._stijlTabs as number[] } : {}),
   };
 }
 
@@ -137,7 +144,12 @@ export function wijzigingUit(oud: AlineaFormulier, nieuw: AlineaFormulier): Alin
   if (oud.volgende !== nieuw.volgende) w.keepNext = nieuw.volgende;
   if (oud.bijeen !== nieuw.bijeen) w.keepLines = nieuw.bijeen;
   if (oud.paginaEinde !== nieuw.paginaEinde) w.pageBreakBefore = nieuw.paginaEinde;
-  if (!gelijk(oud.tabs, nieuw.tabs)) w.tabs = nieuw.tabs.length ? tabsNaarModel(nieuw.tabs) : null;
+  if (!gelijk(oud.tabs, nieuw.tabs)) {
+    const tabs = tabsNaarModel(nieuw.tabs);
+    for (const pos of nieuw.stijlTabs ?? [])
+      if (!nieuw.tabs.some((t) => Math.abs(cmNaarTwips(t.cm) - pos) <= 3)) tabs.push({ position: pos, alignment: "clear" });
+    w.tabs = tabs.length ? tabs.sort((a, b) => a.position - b.position) : null;
+  }
   return w;
 }
 
@@ -145,4 +157,53 @@ export function wijzigingUit(oud: AlineaFormulier, nieuw: AlineaFormulier): Alin
 export function volgendeTabPositie(tabs: readonly TabRegel[]) {
   const laatste = tabs.reduce((m, t) => Math.max(m, t.cm), 0);
   return rond(laatste + 2.5);
+}
+
+const ontbreekt = (w: unknown) => w === undefined || w === null;
+const twipsUitPx = (w: unknown) => (typeof w === "number" && Number.isFinite(w) ? Math.round(w * TWIPS_PER_PX) : undefined);
+
+/**
+ * Alinea-eigenschappen zoals het venster ze moet tonen: de directe opmaak,
+ * aangevuld met wat de alinea uit zijn stijl erft (de opgeloste indeling van
+ * de engine, `yrsBlocksForStory`). Zonder dit toont het venster 0 cm voor een
+ * alinea die via zijn stijl is ingesprongen. Alleen wat de gebruiker daarna
+ * wijzigt, wordt direct opgeslagen (zie `wijzigingUit`).
+ */
+export function effectieveEigenschappen(
+  p: Record<string, unknown>,
+  opgelost: Record<string, unknown> | undefined,
+): Record<string, unknown> & { _stijlTabs?: number[] } {
+  if (!opgelost) return p;
+  const uit: Record<string, unknown> = { ...p };
+  const ind = inspringingUitBlok(opgelost);
+  if (ontbreekt(p.indentLeft) && ind.links) uit.indentLeft = ind.links;
+  if (ontbreekt(p.indentRight) && ind.rechts) uit.indentRight = ind.rechts;
+  if (ontbreekt(p.indentFirstLine) && ind.eerste) {
+    uit.indentFirstLine = Math.abs(ind.eerste);
+    uit.hangingIndent = ind.eerste < 0;
+  }
+  const sp = (opgelost.spacing ?? {}) as { before?: number; after?: number; line?: number; lineUnit?: string; lineRule?: string };
+  if (ontbreekt(p.spaceBefore) && twipsUitPx(sp.before) !== undefined) uit.spaceBefore = twipsUitPx(sp.before);
+  if (ontbreekt(p.spaceAfter) && twipsUitPx(sp.after) !== undefined) uit.spaceAfter = twipsUitPx(sp.after);
+  if (ontbreekt(p.lineSpacing) && typeof sp.line === "number" && sp.line > 0) {
+    if (sp.lineUnit === "multiplier" || (!sp.lineUnit && (sp.lineRule ?? "auto") === "auto" && sp.line < 10)) {
+      uit.lineSpacing = Math.round(sp.line * 240);
+      uit.lineSpacingRule = "auto";
+    } else {
+      uit.lineSpacing = twipsUitPx(sp.line);
+      uit.lineSpacingRule = sp.lineRule === "exact" || sp.lineRule === "atLeast" ? sp.lineRule : "atLeast";
+    }
+  }
+  if (ontbreekt(p.alignment) && typeof opgelost.alignment === "string")
+    uit.alignment = opgelost.alignment === "justify" ? "both" : opgelost.alignment;
+  for (const k of ["keepNext", "keepLines", "pageBreakBefore", "contextualSpacing", "widowControl"] as const)
+    if (ontbreekt(p[k]) && typeof opgelost[k] === "boolean") uit[k] = opgelost[k];
+  const effectief = tabsUitBlok(opgelost);
+  if (effectief.length) {
+    const direct = directeTabs(p);
+    uit.tabs = effectief.map((t) => ({ position: t.positie, alignment: t.soort, ...(t.opvul ? { leader: t.opvul } : {}) }));
+    const stijl = effectief.filter((t) => !direct.some((d) => Math.abs(d.position - t.positie) <= 2)).map((t) => t.positie);
+    if (stijl.length) (uit as { _stijlTabs?: number[] })._stijlTabs = stijl;
+  }
+  return uit;
 }

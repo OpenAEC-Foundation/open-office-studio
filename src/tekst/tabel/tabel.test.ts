@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  somVan,
   cellenNaarTekst,
   cmNaarTwips,
   gelijkeKolommen,
@@ -191,5 +192,27 @@ describe("breedte van een nieuwe tabel", () => {
     const vijf = gelijkeKolommen(9072, 5);
     expect(vijf.reduce((a, b) => a + b, 0)).toBe(9072);
     expect(new Set(vijf.slice(0, 4)).size).toBe(1);
+  });
+});
+
+describe("formule: som", () => {
+  const t = [
+    ["Product", "Aantal", "Prijs"],
+    ["Appel", "3", "€ 1,50"],
+    ["Peer", "", "2,25"],
+    ["Totaal", "", ""],
+  ];
+  it("telt aaneengesloten getallen boven, tot een kopregel", () => {
+    expect(somVan(t, 3, 2, "boven")).toEqual({ som: 3.75, aantal: 2 });
+  });
+  it("slaat lege cellen direct naast de cel over en stopt bij een lege cel daarna", () => {
+    expect(somVan(t, 3, 1, "boven")).toEqual({ som: 3, aantal: 1 });
+  });
+  it("links en rechts", () => {
+    expect(somVan([["1", "2", ""]], 0, 2, "links")).toEqual({ som: 3, aantal: 2 });
+    expect(somVan([["", "2", "4"]], 0, 0, "rechts")).toEqual({ som: 6, aantal: 2 });
+  });
+  it("null zonder getallen", () => {
+    expect(somVan(t, 0, 0, "onder")).toBeNull();
   });
 });

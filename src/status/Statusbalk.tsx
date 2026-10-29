@@ -6,6 +6,7 @@ import { useOpmaak } from "../i18n/opmaak";
 import { useModuleStatus, useZoomBediening } from "./statusinfo";
 import { getal, schuifNaarZoom, zoomNaarSchuif } from "./berekening";
 import { TekstStatusExtra, TekstWeergaveKnoppen, useStatusbalkMenu } from "../tekst/info/StatusbalkItems";
+import { PresentatieWeergaveKnoppen } from "../presentatie/WeergaveKnoppen";
 import "./statusbalk.css";
 
 export interface StatusbalkProps {
@@ -69,7 +70,13 @@ function ModuleInfo({ soort }: { soort: string | null }) {
   }
   if (info.soort === "rekenblad" && soort === "xlsx" && statusbalk.rekenblad) {
     const s = info.statistiek;
-    if (!s || s.aantal < 2) return null;
+    const f = info.filter;
+    const filter = f ? (
+      <span title={t("spreadsheet.filterTitle")}>
+        {t("spreadsheet.filter", { visible: g(f.zichtbaar), total: g(f.totaal) })}
+      </span>
+    ) : null;
+    if (!s || s.aantal < 2) return filter ? <span className="statusbalk-module">{filter}</span> : null;
     return (
       <span
         className="statusbalk-module"
@@ -87,6 +94,7 @@ function ModuleInfo({ soort }: { soort: string | null }) {
         {s.gemiddelde !== null && <span>{t("spreadsheet.average", { value: g(s.gemiddelde) })}</span>}
         <span>{t("spreadsheet.count", { value: g(s.aantal) })}</span>
         {s.getallen > 0 && <span>{t("spreadsheet.sum", { value: g(s.som) })}</span>}
+        {filter}
       </span>
     );
   }
@@ -201,6 +209,7 @@ export function Statusbalk({
       {document?.gereed && <ModuleInfo soort={soort} />}
       <span className="office-statusrechts">
         {soort === "docx" && document?.gereed && <TekstWeergaveKnoppen />}
+        {soort === "pptx" && document?.gereed && <PresentatieWeergaveKnoppen />}
         {document && document.zoom !== null && statusbalk.zoom && (
           <Zoomschuif zoom={document.zoom} />
         )}

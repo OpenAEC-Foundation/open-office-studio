@@ -83,6 +83,12 @@ export interface SneltoetsInfo {
    * toets en omschrijving alleen hier.
    */
   actie?: string;
+  /**
+   * Opdracht-id uit `src/tekst/menu/opdrachten.ts` die deze toets uitvoert, voor functies die
+   * een ander onderdeel levert (bijvoorbeeld het autofilter van Rekenblad). Zolang niemand de
+   * opdracht heeft aangemeld, toont het overzicht de toets als nog niet beschikbaar.
+   */
+  opdracht?: string;
 }
 
 const documenten: SneltoetsModule[] = ["tekst", "rekenblad", "presentatie"];
@@ -137,6 +143,17 @@ const presentatie = lint("presentatie");
 const tekstEngine = engine("tekst");
 const rekenbladEngine = engine("rekenblad");
 const presentatieEngine = engine("presentatie");
+const email = (toets: string, id: string): SneltoetsInfo => maak(toets, id, "email", "app");
+const notities = (toets: string, id: string): SneltoetsInfo => maak(toets, id, "notities", "app");
+const database = (toets: string, id: string): SneltoetsInfo => maak(toets, id, "database", "app");
+
+/** Opdracht-ids voor toetsen die een ander onderdeel (of later de engine) invult. */
+export const OPDRACHTEN = {
+  /** Rekenblad: autofilter aan/uit op de selectie (Ctrl+Shift+L; #62). */
+  rekenbladFilter: "rekenblad.filter",
+  /** Rekenblad: onderstrepen (Ctrl+U); de engine kent nog geen onderstreping in celopmaak. */
+  rekenbladOnderstrepen: "rekenblad.onderstrepen",
+} as const;
 
 /** Klembord en selecteren: in elke editor via de engine en de webview. */
 const klembord = (maak: ReturnType<typeof engine>) => [
@@ -152,6 +169,7 @@ export const vasteSneltoetsen: readonly SneltoetsInfo[] = [
   algemeen("Ctrl+Shift+S", "saveAs", { alleen: documenten }),
   algemeen("F12", "saveAs", { alleen: documenten }),
   algemeen("Ctrl+O", "open"),
+  algemeen("Ctrl+N", "newDocument", { alleen: documenten }),
   algemeen("Ctrl+W", "closeTab"),
   algemeen("Ctrl+F4", "closeTab"),
   algemeen("Ctrl+Tab", "nextTab"),
@@ -257,7 +275,7 @@ export const vasteSneltoetsen: readonly SneltoetsInfo[] = [
   // Rekenblad: lint (src/lint/rekenblad.tsx).
   rekenblad("Ctrl+L", "alignLeft"),
   rekenblad("Ctrl+E", "center"),
-  rekenblad("Ctrl+R", "alignRight"),
+  // Ctrl+R is naar rechts doorvoeren, zoals Ctrl+D omlaag (#63); rechts uitlijnen via het lint.
   rekenblad("Ctrl+Shift+1", "numberFormat"),
   rekenblad("Ctrl+Shift+2", "scientificFormat"),
   rekenblad("Ctrl+Shift+3", "dateFormat"),
@@ -269,6 +287,12 @@ export const vasteSneltoetsen: readonly SneltoetsInfo[] = [
   rekenblad("Ctrl+Shift+;", "currentTime"),
   rekenblad("Ctrl+Shift+:", "currentTime"),
   rekenblad("Ctrl+D", "fillDown"),
+  rekenblad("Ctrl+R", "fillRight"),
+  rekenblad("Shift+F3", "insertFunction"),
+  // Op een kopcel met filterpijl (src/lint/rekenblad-laag.tsx).
+  rekenblad("Alt+ArrowDown", "openFilterMenu"),
+  // F4 in de celinvoer of formulebalk (src/lint/rekenblad-formulebalk.tsx).
+  rekenblad("F4", "toggleReference"),
   rekenblad("Ctrl+PageUp", "previousSheet"),
   rekenblad("Ctrl+PageDown", "nextSheet"),
   rekenblad("Ctrl+F", "find"),
@@ -279,17 +303,35 @@ export const vasteSneltoetsen: readonly SneltoetsInfo[] = [
   rekenblad("Ctrl+Shift+O", "printPreview"),
   rekenblad("Alt+F1", "chartOnSheet"),
   rekenblad("F11", "chartNewSheet"),
+  maak("Ctrl+Shift+L", "filter", "rekenblad", "lint", { opdracht: OPDRACHTEN.rekenbladFilter }),
+  maak("Ctrl+U", "underline", "rekenblad", "engine", { opdracht: OPDRACHTEN.rekenbladOnderstrepen }),
   // Rekenblad: engine (@betteroffice/xlsx-react).
   rekenbladEngine("Ctrl+B", "bold"),
   rekenbladEngine("Ctrl+I", "italic"),
   rekenbladEngine("Ctrl+Z", "undo"),
   rekenbladEngine("Ctrl+Y", "redo"),
   rekenbladEngine("Ctrl+Shift+Z", "redo"),
-  ...klembord(rekenbladEngine),
+  // Klembord als HTML-tabel en tekst, plakken speciaal (src/rekenblad/RekenbladExtra.tsx).
+  rekenblad("Ctrl+X", "cut"),
+  rekenblad("Ctrl+C", "copy"),
+  rekenblad("Ctrl+V", "paste"),
+  rekenblad("Ctrl+Shift+V", "pasteValues"),
+  rekenblad("Ctrl+Alt+V", "pasteSpecial"),
+  rekenblad("Ctrl+1", "formatCells"),
+  rekenbladEngine("Ctrl+A", "selectAll"),
+  rekenbladEngine("F2", "editCell"),
 
   // Presentatie: lint (src/lint/presentatie-acties.tsx).
   presentatie("F5", "slideshowFromBeginning"),
   presentatie("Shift+F5", "slideshowFromCurrent"),
+  presentatie("Alt+F5", "presenterView"),
+  // Tijdens de voorstelling (src/presentatie/voorstelling-logica.ts).
+  presentatie("B", "showBlackScreen"),
+  presentatie("W", "showWhiteScreen"),
+  presentatie("P", "showPen"),
+  presentatie("H", "showHighlighter"),
+  presentatie("L", "showLaser"),
+  presentatie("E", "showClearInk"),
   presentatie("Ctrl+M", "newSlide"),
   presentatie("Ctrl+L", "alignLeft"),
   presentatie("Ctrl+E", "center"),
@@ -304,6 +346,10 @@ export const vasteSneltoetsen: readonly SneltoetsInfo[] = [
   presentatie("Ctrl+Shift+Home", "moveSlideToStart"),
   presentatie("Ctrl+Shift+End", "moveSlideToEnd"),
   presentatie("Delete", "deleteShapeOrSlide"),
+  // Presentatie: zoeken en vervangen (src/lint/presentatie-zoekpaneel.tsx) en Ctrl+Y.
+  presentatie("Ctrl+F", "find"),
+  presentatie("Ctrl+H", "findReplace"),
+  presentatie("Ctrl+Y", "redo"),
   // Presentatie: afdrukvoorbeeld van de app (src/afdrukken/AfdrukvoorbeeldHost.tsx).
   maak("Ctrl+P", "printSlides", "presentatie", "app"),
   maak("Ctrl+Shift+O", "printPreview", "presentatie", "app"),
@@ -314,6 +360,43 @@ export const vasteSneltoetsen: readonly SneltoetsInfo[] = [
   presentatieEngine("Ctrl+Z", "undo"),
   presentatieEngine("Ctrl+Shift+Z", "redo"),
   ...klembord(presentatieEngine),
+
+  // E-mail (packages/email/src/ui/EmailStudio.tsx, zoals Thunderbird).
+  email("Ctrl+N", "newMessage"),
+  email("Ctrl+R", "reply"),
+  email("Ctrl+Shift+R", "replyAll"),
+  email("Ctrl+L", "forward"),
+  email("Ctrl+F", "searchMail"),
+  email("F5", "getMail"),
+  email("Ctrl+T", "getMail"),
+  email("Delete", "deleteMessage"),
+  email("M", "toggleRead"),
+  email("S", "toggleStar"),
+  email("A", "archive"),
+  email("F", "nextMessage"),
+  email("B", "previousMessage"),
+  email("N", "nextUnread"),
+
+  // Notities (src/notities/NotitiesStudio.tsx en MarkdownEditor.tsx).
+  notities("Ctrl+Z", "undo"),
+  notities("Ctrl+Y", "redo"),
+  notities("Ctrl+Shift+Z", "redo"),
+  notities("Ctrl+Shift+F", "searchNotes"),
+  notities("Ctrl+B", "bold"),
+  notities("Ctrl+I", "italic"),
+  notities("Ctrl+K", "insertLink"),
+
+  // Database: tabelraster (packages/database/src/ui/Raster.tsx).
+  database("Ctrl+A", "selectAll"),
+  database("Ctrl+C", "copy"),
+  database("Ctrl+Shift+C", "copyWithHeaders"),
+  database("Ctrl+V", "paste"),
+  database("F2", "editCell"),
+  database("Enter", "editCell"),
+  database("Delete", "clearCell"),
+  database("Ctrl+Space", "selectColumn"),
+  database("Shift+Space", "selectRow"),
+  database("Shift+F10", "contextMenu"),
 ];
 
 /** Vaste vorm van een combinatie: modifiers op volgorde, toets in kleine letters. */

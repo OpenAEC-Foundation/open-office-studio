@@ -1055,7 +1055,8 @@
       "tocRemoved": "Sumário removido",
       "footnoteInserted": "Nota de rodapé inserida",
       "endnoteInserted": "Nota de fim inserida",
-      "noteFormatChanged": "Formato das notas alterado"
+      "noteFormatChanged": "Formato das notas alterado",
+      "marginsChanged": "Margens alteradas"
     },
     "errors": {
       "notReady": "O documento ainda não está pronto.",
@@ -1559,7 +1560,18 @@
       "toText": "Converter em texto",
       "toTextTip": "Converter a tabela em texto",
       "split": "Dividir tabela",
-      "splitTip": "Divide a tabela acima da linha com o cursor. O documento é recarregado; Desfazer deixa de funcionar para as etapas anteriores."
+      "splitTip": "Divide a tabela acima da linha com o cursor. O documento é recarregado; Desfazer deixa de funcionar para as etapas anteriores.",
+      "textDirection": "Direção do texto",
+      "textDirectionTip": "Direção do texto nas células selecionadas",
+      "textDirectionHorizontal": "Horizontal",
+      "textDirectionDown": "Girado 90° (de cima para baixo)",
+      "textDirectionUp": "Girado 270° (de baixo para cima)",
+      "formula": "Fórmula",
+      "formulaTip": "Soma dos números ao lado da célula; o resultado é inserido como valor",
+      "sumAbove": "Soma acima",
+      "sumLeft": "Soma à esquerda",
+      "sumBelow": "Soma abaixo",
+      "sumRight": "Soma à direita"
     },
     "row": {
       "title": "Propriedades da linha",
@@ -1657,7 +1669,46 @@
       "noBody": "O documento não tem texto principal.",
       "tableNotFound": "A tabela não foi encontrada no documento.",
       "splitRow": "Coloque o cursor na linha que deve ser a primeira linha da nova tabela (não a primeira linha).",
-      "splitMerged": "A tabela não pode ser dividida aqui: uma célula mesclada atravessa esta linha."
+      "splitMerged": "A tabela não pode ser dividida aqui: uma célula mesclada atravessa esta linha.",
+      "noNumbers": "Não há números ao lado desta célula para somar."
+    }
+  },
+  "ruler": {
+    "horizontal": "Régua horizontal",
+    "vertical": "Régua vertical",
+    "tabKindTip": "Tipo de tabulação: {{kind}}. Clique para alterar.",
+    "tabKinds": {
+      "left": "Tabulação à esquerda",
+      "center": "Tabulação centralizada",
+      "right": "Tabulação à direita",
+      "decimal": "Tabulação decimal",
+      "bar": "Barra vertical"
+    },
+    "clickHint": "Clique para inserir uma {{kind}}. Clique duas vezes para a caixa Tabulação.",
+    "tabStop": "{{kind}} em {{position}}",
+    "tabHint": "Arraste para mover ou para fora da régua para remover; clique duas vezes para a caixa Tabulação.",
+    "markers": {
+      "eerste": "Recuo da primeira linha",
+      "verkeerd": "Recuo deslocado",
+      "links": "Recuo à esquerda",
+      "rechts": "Recuo à direita"
+    },
+    "leftMargin": "Margem esquerda",
+    "rightMargin": "Margem direita",
+    "topMargin": "Margem superior",
+    "bottomMargin": "Margem inferior",
+    "tableColumn": "Arrastar largura da coluna (Shift: só esta coluna)",
+    "tableRow": "Arrastar altura da linha {{n}}",
+    "altHint": "Alt: medida exata",
+    "marginsUnavailable": "Não é possível arrastar as margens aqui; use Layout › Margens.",
+    "measure": {
+      "indent": "{{name}}: {{value}} cm",
+      "tab": "Tabulação em {{value}} cm",
+      "removeTab": "Solte para remover a tabulação",
+      "margin": "{{name}}: {{value}} cm",
+      "columns": "Coluna {{a}}: {{wa}} cm · coluna {{b}}: {{wb}} cm",
+      "column": "Coluna {{a}}: {{wa}} cm",
+      "row": "Linha {{n}}: {{value}} cm"
     }
   }
 }

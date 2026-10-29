@@ -1045,7 +1045,8 @@
       "tocRemoved": "Inhaltsverzeichnis entfernt",
       "footnoteInserted": "Fußnote eingefügt",
       "endnoteInserted": "Endnote eingefügt",
-      "noteFormatChanged": "Notizformat geändert"
+      "noteFormatChanged": "Notizformat geändert",
+      "marginsChanged": "Seitenränder geändert"
     },
     "errors": {
       "notReady": "Das Dokument ist noch nicht bereit.",
@@ -1548,7 +1549,18 @@
       "toText": "In Text konvertieren",
       "toTextTip": "Die Tabelle in Text konvertieren",
       "split": "Tabelle teilen",
-      "splitTip": "Teilt die Tabelle oberhalb der Zeile mit dem Cursor. Das Dokument wird neu geladen; Rückgängig funktioniert dann für frühere Schritte nicht mehr."
+      "splitTip": "Teilt die Tabelle oberhalb der Zeile mit dem Cursor. Das Dokument wird neu geladen; Rückgängig funktioniert dann für frühere Schritte nicht mehr.",
+      "textDirection": "Textrichtung",
+      "textDirectionTip": "Richtung des Texts in den markierten Zellen",
+      "textDirectionHorizontal": "Horizontal",
+      "textDirectionDown": "Um 90° gedreht (von oben nach unten)",
+      "textDirectionUp": "Um 270° gedreht (von unten nach oben)",
+      "formula": "Formel",
+      "formulaTip": "Summe der Zahlen neben der Zelle; das Ergebnis wird als Wert eingefügt",
+      "sumAbove": "Summe oberhalb",
+      "sumLeft": "Summe links",
+      "sumBelow": "Summe unterhalb",
+      "sumRight": "Summe rechts"
     },
     "row": {
       "title": "Zeileneigenschaften",
@@ -1643,7 +1655,46 @@
       "noBody": "Das Dokument hat keinen Haupttext.",
       "tableNotFound": "Die Tabelle wurde im Dokument nicht gefunden.",
       "splitRow": "Setzen Sie den Cursor in die Zeile, die die erste Zeile der neuen Tabelle werden soll (nicht die erste Zeile).",
-      "splitMerged": "Die Tabelle kann hier nicht geteilt werden: Eine verbundene Zelle überspannt diese Zeile."
+      "splitMerged": "Die Tabelle kann hier nicht geteilt werden: Eine verbundene Zelle überspannt diese Zeile.",
+      "noNumbers": "Neben dieser Zelle stehen keine Zahlen zum Addieren."
+    }
+  },
+  "ruler": {
+    "horizontal": "Horizontales Lineal",
+    "vertical": "Vertikales Lineal",
+    "tabKindTip": "Tabstopptyp: {{kind}}. Klicken zum Wechseln.",
+    "tabKinds": {
+      "left": "Linksbündiger Tabstopp",
+      "center": "Zentrierter Tabstopp",
+      "right": "Rechtsbündiger Tabstopp",
+      "decimal": "Dezimaltabstopp",
+      "bar": "Vertikale Linie"
+    },
+    "clickHint": "Klicken, um einen {{kind}} zu setzen. Doppelklick öffnet das Dialogfeld Tabstopps.",
+    "tabStop": "{{kind}} bei {{position}}",
+    "tabHint": "Ziehen zum Verschieben oder vom Lineal ziehen zum Entfernen; Doppelklick für das Dialogfeld Tabstopps.",
+    "markers": {
+      "eerste": "Einzug erste Zeile",
+      "verkeerd": "Hängender Einzug",
+      "links": "Einzug links",
+      "rechts": "Einzug rechts"
+    },
+    "leftMargin": "Linker Rand",
+    "rightMargin": "Rechter Rand",
+    "topMargin": "Oberer Rand",
+    "bottomMargin": "Unterer Rand",
+    "tableColumn": "Spaltenbreite ziehen (Umschalt: nur diese Spalte)",
+    "tableRow": "Höhe von Zeile {{n}} ziehen",
+    "altHint": "Alt: genaues Maß",
+    "marginsUnavailable": "Ränder können hier nicht gezogen werden; verwenden Sie Layout › Seitenränder.",
+    "measure": {
+      "indent": "{{name}}: {{value}} cm",
+      "tab": "Tabstopp bei {{value}} cm",
+      "removeTab": "Loslassen entfernt den Tabstopp",
+      "margin": "{{name}}: {{value}} cm",
+      "columns": "Spalte {{a}}: {{wa}} cm · Spalte {{b}}: {{wb}} cm",
+      "column": "Spalte {{a}}: {{wa}} cm",
+      "row": "Zeile {{n}}: {{value}} cm"
     }
   }
 }

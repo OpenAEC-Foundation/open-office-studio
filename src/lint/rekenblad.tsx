@@ -1,4 +1,4 @@
-import { useContext, useEffect, useReducer, useState } from "react";
+import { useContext, useEffect, useReducer, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { vraagAfdrukvoorbeeld } from "../afdrukken/openen";
 import {
@@ -55,6 +55,18 @@ import {
   Hash,
   FlaskConical,
   Baseline,
+  Filter,
+  FilterX,
+  RefreshCw,
+  ArrowDownUp,
+  ArrowRightToLine,
+  ListOrdered,
+  ClipboardList,
+  MoveHorizontal,
+  MoveVertical,
+  ArrowLeftRight,
+  SlidersHorizontal,
+  Files,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -70,18 +82,17 @@ import { useDocumentZoom, type ZoomKoppeling } from "../useDocumentZoom";
 import { C, CK, CL, Geschiedenis, Zoom } from "./gedeeld";
 import { useEditorApi, zichtbaarElement } from "./editorApi";
 import { useSneltoetsen, type Sneltoets } from "./sneltoetsen";
+import { OPDRACHTEN } from "./sneltoetsenlijst";
+import { heeftOpdracht, meldOpdrachtAan, voerOpdrachtUit } from "../tekst/menu/opdrachten";
 import {
   alleenLezen,
   autoSomInvoegen,
   bewerktTekst,
   bladInvoegen,
-  bladVerwijderen,
   datumnotatie,
   datumTijdInvoegen,
-  doorvoerenOmlaag,
   fixeren,
   gaNaarBlad,
-  klembord,
   kolommenInvoegen,
   kolommenVerwijderen,
   kolommenZichtbaarheid,
@@ -89,8 +100,23 @@ import {
   rijenInvoegen,
   rijenVerwijderen,
   rijenZichtbaarheid,
-  sorteren,
 } from "./rekenblad-opdrachten";
+import {
+  doorvoeren,
+  filterAanUit,
+  filterOpnieuw,
+  snelSorteren,
+  wisFilters,
+} from "./rekenblad-gegevens";
+import { abonneerFilters, bladFilter, heeftCriteria } from "./rekenblad-filter";
+import { ReeksVenster, SorteerVenster } from "./rekenblad-vensters";
+import {
+  Formulebalk,
+  FunctieVenster,
+  invoegplek,
+  useFormuleHulp,
+  type Invoegplek,
+} from "./rekenblad-formulebalk";
 import { BladHernoemen, GaNaar, ZoekenVervangen } from "./rekenblad-dialogen";
 import {
   Grafiekontwerp,
@@ -98,8 +124,12 @@ import {
   useRekenbladGrafieken,
 } from "../grafieken/ui/rekenblad";
 import "./rekenblad.css";
+import { openRekenbladVenster, RekenbladExtra } from "../rekenblad/RekenbladExtra";
+import { kopieer, leesKlembord, plak } from "../rekenblad/klembord";
+import { optimaleBreedte, optimaleHoogte } from "../rekenblad/structuur";
+import { valutaNotatie } from "../rekenblad/notatieOpdrachten";
 
-type Paneel = "zoeken" | "ganaar" | "hernoemen" | null;
+type Paneel = "zoeken" | "ganaar" | "hernoemen" | "sorteren" | "reeks" | null;
 
 function useStand(api: XlsxEditorApi | null) {
   const [, ververs] = useReducer((n: number) => n + 1, 0);
@@ -107,18 +137,23 @@ function useStand(api: XlsxEditorApi | null) {
     if (!api) return;
     const stopOpdrachten = api.commands.subscribe(ververs);
     const stopWijzigingen = api.handle.onUpdate(() => ververs());
+    const stopFilters = abonneerFilters(api.handle, ververs);
     return () => {
       stopOpdrachten();
       stopWijzigingen();
+      stopFilters();
     };
   }, [api]);
   if (!api) return null;
   const info = api.handle.sheetInfo();
+  const filter = bladFilter(api.handle, info.activeSheet);
   return {
     bladen: info.sheetNames.length,
     actief: info.activeSheet,
     bevroren: info.frozenRows + info.frozenCols > 0,
     schrijfbaar: !alleenLezen(api),
+    filter: !!filter,
+    gefilterd: heeftCriteria(filter),
   };
 }
 
@@ -237,12 +272,11 @@ function RekenbladUitlijning() {
           icoon={AlignCenter}
           toets="Ctrl+E"
         />
-        <CS
+        <C
           id="horizontalAlignment"
           args={{ value: "right" }}
           naam={t("spreadsheet.commands.alignRight")}
           icoon={AlignRight}
-          toets="Ctrl+R"
         />
         <C
           id="textWrapping"
@@ -288,12 +322,11 @@ function RekenbladGetal({ uitgebreid }: { uitgebreid?: boolean }) {
             />
           </>
         )}
-        <CS
-          id="numberFormat"
-          args={{ value: "currency" }}
+        <A
           naam={t("spreadsheet.commands.formatCurrency")}
           icoon={Euro}
           toets="Ctrl+Shift+4"
+          doe={valutaNotatie}
         />
         <CS
           id="numberFormat"
@@ -323,6 +356,12 @@ function RekenbladGetal({ uitgebreid }: { uitgebreid?: boolean }) {
           naam={t("spreadsheet.commands.increaseDecimal")}
           icoon={IndentIncrease}
         />
+        <A
+          naam={t("spreadsheet:numberFormat.menu")}
+          icoon={SlidersHorizontal}
+          toets="Ctrl+1"
+          doe={() => openRekenbladVenster({ soort: "getal" })}
+        />
       </div>
     </Groep>
   );
@@ -336,20 +375,29 @@ function Klembord() {
         icoon={ClipboardPaste}
         toets="Ctrl+V"
         groot
-        doe={(api) => klembord(api, "v")}
+        doe={async (api) => {
+          const inhoud = await leesKlembord();
+          if (inhoud) await plak(api, inhoud);
+        }}
       />
       <div className="ribbon-stapel">
         <A
           naam={t("spreadsheet.commands.cut")}
           icoon={Scissors}
           toets="Ctrl+X"
-          doe={(api) => klembord(api, "x")}
+          doe={(api) => kopieer(api, true)}
         />
         <A
           naam={t("spreadsheet.commands.copy")}
           icoon={Copy}
           toets="Ctrl+C"
-          doe={(api) => klembord(api, "c")}
+          doe={(api) => kopieer(api)}
+        />
+        <A
+          naam={t("spreadsheet:clipboard.pasteSpecialMenu")}
+          icoon={ClipboardList}
+          toets="Ctrl+Alt+V"
+          doe={() => openRekenbladVenster({ soort: "plakkenSpeciaal" })}
         />
       </div>
       <C id="paintFormat" naam={t("spreadsheet.commands.formatPainter")} icoon={Paintbrush} groot />
@@ -415,11 +463,20 @@ export function RekenbladRibbon({
     bereik: ".rekenblad-koppen",
     koppeling: zoomKoppeling,
   });
-  const api = useEditorApi().rekenblad;
+  const apis = useEditorApi();
+  const api = apis.rekenblad;
+  const laag = apis.rekenbladLaag;
   const stand = useStand(api);
   const uitvoeren = useUitvoerder();
   const fout = useContext(RibbonFout);
   const [paneel, setPaneel] = useState<Paneel>(null);
+  const [functiePlek, setFunctiePlek] = useState<Invoegplek | null>(null);
+  const formuleHulp = useFormuleHulp(laag, !!api);
+  const functieInvoegen = () => {
+    if (!api) return;
+    const plek = invoegplek(api, laag, document.activeElement);
+    if (plek) setFunctiePlek(plek);
+  };
   const uit = !stand?.schrijfbaar;
   const grafieken = useRekenbladGrafieken();
   const sluiten = () => {
@@ -438,7 +495,6 @@ export function RekenbladRibbon({
   const sneltoetsen: Sneltoets[] = [
     ["Ctrl+L", "left"],
     ["Ctrl+E", "center"],
-    ["Ctrl+R", "right"],
   ].map(([toets, value]) => ({
     toets,
     beschikbaar: geenTekst,
@@ -450,7 +506,6 @@ export function RekenbladRibbon({
     [
       ["1", "number"],
       ["2", "scientific"],
-      ["4", "currency"],
       ["5", "percent"],
       ["6", "automatic"],
     ] as const
@@ -466,6 +521,11 @@ export function RekenbladRibbon({
       toets: "Ctrl+Shift+3",
       beschikbaar: geenTekst,
       uitvoeren: () => uitvoeren(datumnotatie),
+    },
+    {
+      toets: "Ctrl+Shift+4",
+      beschikbaar: geenTekst,
+      uitvoeren: () => uitvoeren(valutaNotatie),
     },
     {
       toets: "Alt+=",
@@ -487,8 +547,14 @@ export function RekenbladRibbon({
     {
       toets: "Ctrl+D",
       beschikbaar: geenTekst,
-      uitvoeren: () => uitvoeren(doorvoerenOmlaag),
+      uitvoeren: () => uitvoeren((a) => doorvoeren(a, "omlaag")),
     },
+    {
+      toets: "Ctrl+R",
+      beschikbaar: geenTekst,
+      uitvoeren: () => uitvoeren((a) => doorvoeren(a, "rechts")),
+    },
+    { toets: "Shift+F3", uitvoeren: functieInvoegen },
     {
       toets: "Ctrl+PageUp",
       beschikbaar: geenTekst,
@@ -507,6 +573,18 @@ export function RekenbladRibbon({
     { toets: "Ctrl+Shift+F5", uitvoeren: () => setPaneel("ganaar") },
     { toets: "Ctrl+P", uitvoeren: () => vraagAfdrukvoorbeeld() },
     { toets: "Ctrl+Shift+O", uitvoeren: () => vraagAfdrukvoorbeeld() },
+    // Filter (#62) en onderstrepen: opdrachten die een ander onderdeel aanmeldt met
+    // meldOpdrachtAan(OPDRACHTEN.…); tot dan doet de toets niets en meldt F1 "nog niet beschikbaar".
+    {
+      toets: "Ctrl+Shift+L",
+      beschikbaar: () => geenTekst() && heeftOpdracht(OPDRACHTEN.rekenbladFilter),
+      uitvoeren: () => voerOpdrachtUit(OPDRACHTEN.rekenbladFilter),
+    },
+    {
+      toets: "Ctrl+U",
+      beschikbaar: () => heeftOpdracht(OPDRACHTEN.rekenbladOnderstrepen),
+      uitvoeren: () => voerOpdrachtUit(OPDRACHTEN.rekenbladOnderstrepen),
+    },
     // Zoals Excel: Alt+F1 op dit blad, F11 op een nieuw blad.
     {
       toets: "Alt+F1",
@@ -520,6 +598,13 @@ export function RekenbladRibbon({
     },
   );
   useSneltoetsen(rekenbladHost, api ? sneltoetsen : [], "rekenblad");
+  // Ctrl+Shift+L en het menu: het filter (#62) via het opdrachtenregister.
+  const filterRef = useRef(() => uitvoeren(filterAanUit));
+  filterRef.current = () => uitvoeren(filterAanUit);
+  useEffect(
+    () => (api ? meldOpdrachtAan(OPDRACHTEN.rekenbladFilter, () => filterRef.current()) : undefined),
+    [api],
+  );
 
   const zoeken = (
     <Groep naam={t("spreadsheet.groups.find")}>
@@ -549,6 +634,15 @@ export function RekenbladRibbon({
   );
   const functies = (
     <Groep naam={t("spreadsheet.groups.function")}>
+      <Actie
+        naam={t("spreadsheet.commands.insertFunction")}
+        icoon={Sigma}
+        groot
+        disabled={!api || uit}
+        title={`${t("spreadsheet.commands.insertFunction")} · Shift+F3`}
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={functieInvoegen}
+      />
       <A
         naam={t("spreadsheet.commands.autoSum")}
         icoon={Sigma}
@@ -595,7 +689,13 @@ export function RekenbladRibbon({
           naam={t("spreadsheet.commands.deleteSheet")}
           icoon={Trash2}
           uit={uit || (stand?.bladen ?? 0) < 2}
-          doe={bladVerwijderen}
+          doe={() => openRekenbladVenster({ soort: "bladVerwijderen" })}
+        />
+        <A
+          naam={t("spreadsheet:sheets.moveCopy")}
+          icoon={Files}
+          uit={uit}
+          doe={() => openRekenbladVenster({ soort: "bladVerplaatsen" })}
         />
       </div>
     </Groep>
@@ -678,6 +778,36 @@ export function RekenbladRibbon({
             inhoud: (
               <>
                 <Cellen uit={uit} />
+                <Groep naam={t("spreadsheet:structure.group")}>
+                  <div className="ribbon-stapel">
+                    <A
+                      naam={t("spreadsheet:menu.columnWidth")}
+                      icoon={MoveHorizontal}
+                      uit={uit}
+                      doe={() => openRekenbladVenster({ soort: "breedte" })}
+                    />
+                    <A
+                      naam={t("spreadsheet:structure.optimalWidth")}
+                      icoon={ArrowLeftRight}
+                      uit={uit}
+                      doe={(a) => optimaleBreedte(a)}
+                    />
+                  </div>
+                  <div className="ribbon-stapel">
+                    <A
+                      naam={t("spreadsheet:menu.rowHeight")}
+                      icoon={MoveVertical}
+                      uit={uit}
+                      doe={() => openRekenbladVenster({ soort: "hoogte" })}
+                    />
+                    <A
+                      naam={t("spreadsheet:structure.optimalHeight")}
+                      icoon={MoveVertical}
+                      uit={uit}
+                      doe={(a) => optimaleHoogte(a)}
+                    />
+                  </div>
+                </Groep>
                 <Groep naam={t("spreadsheet.groups.delete")}>
                   <div className="ribbon-stapel">
                     <A
@@ -755,30 +885,76 @@ export function RekenbladRibbon({
             naam: t("spreadsheet.tabs.data"),
             inhoud: (
               <>
-                <Groep naam={t("spreadsheet.groups.sort")}>
+                <Groep naam={t("spreadsheet.groups.sortFilter")}>
+                  <div className="ribbon-stapel">
+                    <A
+                      naam={t("spreadsheet.commands.sortAscending")}
+                      icoon={ArrowUpAZ}
+                      uit={uit}
+                      doe={(a) => snelSorteren(a, false)}
+                    />
+                    <A
+                      naam={t("spreadsheet.commands.sortDescending")}
+                      icoon={ArrowDownZA}
+                      uit={uit}
+                      doe={(a) => snelSorteren(a, true)}
+                    />
+                  </div>
                   <A
-                    naam={t("spreadsheet.commands.sortAscending")}
-                    icoon={ArrowUpAZ}
+                    naam={t("spreadsheet.commands.sortDialog")}
+                    icoon={ArrowDownUp}
                     groot
                     uit={uit}
-                    doe={(a) => sorteren(a, false)}
+                    doe={() => setPaneel("sorteren")}
                   />
-                  <A
-                    naam={t("spreadsheet.commands.sortDescending")}
-                    icoon={ArrowDownZA}
+                  <Actie
+                    naam={t("spreadsheet.commands.filter")}
+                    icoon={Filter}
                     groot
-                    uit={uit}
-                    doe={(a) => sorteren(a, true)}
+                    disabled={!api || uit}
+                    actief={!!stand?.filter}
+                    title={`${t("spreadsheet.commands.filterHint")} · Ctrl+Shift+L`}
+                    onMouseDown={(event) => event.preventDefault()}
+                    onClick={() => uitvoeren(filterAanUit)}
                   />
+                  <div className="ribbon-stapel">
+                    <A
+                      naam={t("spreadsheet.commands.clearFilter")}
+                      icoon={FilterX}
+                      uit={uit || !stand?.gefilterd}
+                      doe={wisFilters}
+                    />
+                    <A
+                      naam={t("spreadsheet.commands.reapplyFilter")}
+                      icoon={RefreshCw}
+                      uit={uit || !stand?.filter}
+                      doe={filterOpnieuw}
+                    />
+                  </div>
                 </Groep>
                 <Groep naam={t("spreadsheet.groups.fill")}>
+                  <div className="ribbon-stapel">
+                    <A
+                      naam={t("spreadsheet.commands.fillDown")}
+                      icoon={ArrowDownToLine}
+                      toets="Ctrl+D"
+                      uit={uit}
+                      doe={(a) => doorvoeren(a, "omlaag")}
+                    />
+                    <A
+                      naam={t("spreadsheet.commands.fillRight")}
+                      icoon={ArrowRightToLine}
+                      toets="Ctrl+R"
+                      uit={uit}
+                      doe={(a) => doorvoeren(a, "rechts")}
+                    />
+                  </div>
                   <A
-                    naam={t("spreadsheet.commands.fillDown")}
-                    icoon={ArrowDownToLine}
-                    toets="Ctrl+D"
+                    naam={t("spreadsheet.commands.fillSeries")}
+                    icoon={ListOrdered}
                     groot
                     uit={uit}
-                    doe={doorvoerenOmlaag}
+                    doe={() => setPaneel("reeks")}
                   />
                 </Groep>
                 {functies}
@@ -860,9 +1036,8 @@ export function RekenbladRibbon({
             : []),
         ]}
       />
-      <div className="office-formulebalk">
-        <RekenbladToolbar.FormulaBar />
-      </div>
+      <Formulebalk api={api} laag={laag} functieInvoegen={functieInvoegen} />
+      {formuleHulp}
       {api && paneel === "zoeken" && (
         <ZoekenVervangen api={api} sluiten={sluiten} />
       )}
@@ -870,7 +1045,20 @@ export function RekenbladRibbon({
       {api && paneel === "hernoemen" && (
         <BladHernoemen api={api} sluiten={sluiten} />
       )}
+      {api && paneel === "sorteren" && <SorteerVenster api={api} sluit={sluiten} />}
+      {api && paneel === "reeks" && <ReeksVenster api={api} sluit={sluiten} />}
+      {api && functiePlek && (
+        <FunctieVenster
+          api={api}
+          plek={functiePlek}
+          sluit={() => {
+            setFunctiePlek(null);
+            api.focus();
+          }}
+        />
+      )}
       {grafieken.venster}
+      <RekenbladExtra />
     </RekenbladToolbar>
   );
 }

@@ -1,0 +1,348 @@
+/* Liniaal en tabelgrepen van Open Tekst (#47, #48). */
+
+/* De liniaal van de engine is uit (showRuler=false); ook zijn tabelgrepen vervangen we. */
+.office-tekst .canvas-table-resize-overlay {
+  display: none !important;
+}
+
+.docx-editor__viewport.tl-met-liniaal > .docx-editor__scroll-container {
+  margin-left: 18px;
+}
+
+.tl-liniaal-h {
+  order: -1;
+  flex: 0 0 auto;
+  position: relative;
+  overflow: hidden;
+  background: var(--doc-bg, #edf0f3);
+  border-bottom: 1px solid var(--doc-border, #dce1e7);
+  user-select: none;
+  touch-action: none;
+  z-index: 31;
+}
+.tl-liniaal-h.is-uit .tl-strook,
+.tl-liniaal-v.is-uit {
+  opacity: 0.75;
+}
+
+.tl-tabsoort {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0 !important;
+  border-right: 1px solid var(--doc-border, #dce1e7) !important;
+  background: #f8f9fb;
+  color: var(--doc-text, #343843);
+  cursor: pointer;
+}
+.tl-tabsoort:hover {
+  background: var(--doc-primary-light, #fff2de);
+  color: var(--doc-primary, #aa6010);
+}
+.tl-tabsoort:focus-visible {
+  outline: 2px solid var(--doc-primary, #aa6010);
+  outline-offset: -2px;
+}
+
+.tl-strook {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  background: #d9dde3;
+  cursor: default;
+}
+.tl-wit {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: #fff;
+  pointer-events: none;
+}
+.tl-streep {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  background: #7a808a;
+  pointer-events: none;
+}
+.tl-streep-kwart {
+  height: 2px;
+}
+.tl-streep-half {
+  height: 5px;
+}
+.tl-streep-cijfer {
+  height: 0;
+  background: none;
+}
+.tl-streep span,
+.tl-vstreep span {
+  position: absolute;
+  font: 9px/1 Inter, sans-serif;
+  color: #4a505a;
+  white-space: nowrap;
+}
+.tl-streep span {
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.tl-standaardtab {
+  position: absolute;
+  bottom: -2px;
+  width: 1px;
+  height: 3px;
+  background: #9aa1ab;
+  pointer-events: none;
+}
+
+/* Inspringmarkeringen: eerste regel boven, verkeerd om en links onder, rechts onder. */
+.tl-markering {
+  position: absolute;
+  width: 11px;
+  margin-left: -5.5px;
+  cursor: ew-resize;
+  z-index: 4;
+}
+.tl-markering::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 5.5px solid transparent;
+  border-right: 5.5px solid transparent;
+}
+.tl-markering-eerste {
+  top: -3px;
+  height: 8px;
+}
+.tl-markering-eerste::before {
+  top: 0;
+  border-top: 7px solid #6b717c;
+}
+.tl-markering-verkeerd,
+.tl-markering-rechts {
+  bottom: 2px;
+  height: 7px;
+}
+.tl-markering-verkeerd::before,
+.tl-markering-rechts::before {
+  bottom: 0;
+  border-bottom: 7px solid #6b717c;
+}
+.tl-markering-links {
+  bottom: -3px;
+  height: 5px;
+  background: #6b717c;
+  width: 9px;
+  margin-left: -4.5px;
+}
+.tl-markering-links::before {
+  display: none;
+}
+.tl-markering:hover::before,
+.tl-markering.is-sleep::before,
+.tl-markering:focus-visible::before {
+  border-top-color: var(--doc-primary, #aa6010);
+  border-bottom-color: var(--doc-primary, #aa6010);
+}
+.tl-markering-links:hover,
+.tl-markering-links.is-sleep,
+.tl-markering-links:focus-visible {
+  background: var(--doc-primary, #aa6010);
+}
+.tl-markering:focus-visible,
+.tl-tab:focus-visible {
+  outline: 1px dotted var(--doc-primary, #aa6010);
+}
+
+.tl-tab {
+  position: absolute;
+  bottom: 0;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  display: grid;
+  place-items: center;
+  color: #262a31;
+  cursor: ew-resize;
+  z-index: 5;
+}
+.tl-tab .tl-tabglyph {
+  /* Het punt van de glyph valt op de tabpositie. */
+  margin-left: 0;
+}
+.tl-tab:hover,
+.tl-tab.is-sleep {
+  color: var(--doc-primary, #aa6010);
+}
+.tl-tab.is-weg {
+  opacity: 0.35;
+}
+
+.tl-margegrens {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 7px;
+  margin-left: -3.5px;
+  cursor: ew-resize;
+  z-index: 2;
+}
+.tl-margegrens:hover {
+  background: rgba(170, 96, 16, 0.18);
+}
+
+.tl-kolommarkering {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 7px;
+  margin-left: -3.5px;
+  background: repeating-linear-gradient(135deg, #8b919b 0 1px, #e9ecf0 1px 3px);
+  border-left: 1px solid #8b919b;
+  border-right: 1px solid #8b919b;
+  cursor: ew-resize;
+  z-index: 3;
+}
+.tl-kolommarkering:hover,
+.tl-kolommarkering.is-sleep {
+  border-color: var(--doc-primary, #aa6010);
+}
+
+/* Verticale liniaal: links van het scrollvlak. */
+.tl-liniaal-v {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  overflow: hidden;
+  background: var(--doc-bg, #edf0f3);
+  border-right: 1px solid var(--doc-border, #dce1e7);
+  user-select: none;
+  touch-action: none;
+  z-index: 30;
+}
+.tl-vgrijs {
+  position: absolute;
+  left: 3px;
+  right: 3px;
+  background: #d9dde3;
+}
+.tl-liniaal-v .tl-wit {
+  left: 3px !important;
+  right: 3px !important;
+  bottom: auto;
+}
+.tl-vstreep {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 1px;
+  background: #7a808a;
+  pointer-events: none;
+}
+.tl-vstreep.tl-streep-kwart {
+  width: 2px;
+}
+.tl-vstreep.tl-streep-half {
+  width: 5px;
+}
+.tl-vstreep.tl-streep-cijfer {
+  width: 0;
+  background: none;
+}
+.tl-vstreep span {
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
+.tl-vmargegrens,
+.tl-rijmarkering {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 7px;
+  margin-top: -3.5px;
+  cursor: ns-resize;
+  z-index: 2;
+}
+.tl-vmargegrens:hover {
+  background: rgba(170, 96, 16, 0.18);
+}
+.tl-rijmarkering {
+  left: 3px;
+  right: 3px;
+  background: repeating-linear-gradient(45deg, #8b919b 0 1px, #e9ecf0 1px 3px);
+  border-top: 1px solid #8b919b;
+  border-bottom: 1px solid #8b919b;
+  z-index: 3;
+}
+.tl-rijmarkering:hover,
+.tl-rijmarkering.is-sleep {
+  border-color: var(--doc-primary, #aa6010);
+}
+
+.tl-hulplijn {
+  position: absolute;
+  border: 0 dashed #4a505a;
+  pointer-events: none;
+  z-index: 40;
+}
+.tl-maat {
+  position: absolute;
+  z-index: 41;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: #262a31;
+  color: #fff;
+  font: 11px/1.4 Inter, sans-serif;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Tabelgrepen in het document (plug-in-overlay). */
+.tl-grepen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+.tl-greep {
+  position: absolute;
+  pointer-events: auto;
+  z-index: 15;
+}
+.tl-greep-kolom {
+  cursor: col-resize;
+}
+.tl-greep-rij {
+  cursor: row-resize;
+}
+.tl-greep:hover,
+.tl-greep.is-sleep {
+  background: rgba(170, 96, 16, 0.12);
+}
+.tl-greep-lijn {
+  position: absolute;
+  pointer-events: none;
+  z-index: 16;
+  border: 0 dashed #aa6010;
+}
+.tl-greep-lijn-kolom {
+  border-left-width: 1px;
+}
+.tl-greep-lijn-rij {
+  border-top-width: 1px;
+}
+
+.office-statusbalk .statusbalk-maat {
+  font-variant-numeric: tabular-nums;
+  color: var(--oa-shell-accent, #d97706);
+}

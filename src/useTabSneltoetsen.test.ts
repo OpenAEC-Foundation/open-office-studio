@@ -43,6 +43,19 @@ describe("tabbladsneltoetsen", () => {
     expect(tabToets(toets("F6"), context())).toBeNull();
   });
 
+  it("Ctrl+N maakt een nieuw document van dezelfde soort; elders blijft Ctrl+N vrij", () => {
+    expect(tabToets(toets("n", { ctrlKey: true }), context(document("xlsx")))).toEqual({
+      opdracht: "nieuw",
+      soort: "xlsx",
+    });
+    // Cmd+N op macOS, ook met Caps Lock (hoofdletter).
+    expect(tabToets(toets("N", { metaKey: true }), context())).toEqual({ opdracht: "nieuw", soort: "docx" });
+    // Startscherm en modules (E-mail: nieuw bericht) niet; Ctrl+Shift+N is een tekststijl (Word).
+    expect(tabToets(toets("n", { ctrlKey: true }), context(null))).toBeNull();
+    expect(tabToets(toets("n", { ctrlKey: true, shiftKey: true }), context())).toBeNull();
+    expect(tabToets(toets("n", { ctrlKey: true, altKey: true }), context())).toBeNull();
+  });
+
   it("F12 is Opslaan als, alleen voor documenten", () => {
     expect(tabToets(toets("F12"), context())).toEqual({
       opdracht: "opslaanAls",

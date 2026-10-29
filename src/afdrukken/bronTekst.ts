@@ -163,7 +163,9 @@ export async function tekstPaginas(
 ): Promise<AfdrukDocument> {
   await ref.flushPendingInput();
   await ref.whenLayoutComplete({ timeoutMs: 60_000 }).catch(() => 0);
-  const paginas = await vangPaginas(ref);
+  // Met opname van de canvasopdrachten: de PDF maakt er vectoren met echte tekst van (#18).
+  const { metVectoropname } = await import("../export/pdf/opname");
+  const paginas = await metVectoropname(() => vangPaginas(ref));
   const { bladwijzers, koppelingen } = await koppenEnKoppelingen(ref);
   if (!paginas.length)
     throw new Error(i18next.t("print:errors.noPages"));

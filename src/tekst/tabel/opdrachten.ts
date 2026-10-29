@@ -13,6 +13,7 @@
  */
 import type { DocxEditorRef } from "@betteroffice/docx-react";
 import i18next from "../../i18n/config";
+import { formatGetal } from "../../i18n/opmaak";
 import { begin, engine, klaar, ruw, voorstel, type Engine, type Sessie } from "../gedeeld/engine.ts";
 import {
   MIN_KOLOM,
@@ -23,12 +24,14 @@ import {
   passendBijInhoud,
   passendInVenster,
   rijMet,
+  somVan,
   sorteerVolgorde,
   tekstNaarCellen,
   tekstbreedteOpPagina,
   verdeelKolommen,
   type IndelingPagina,
   type Scheiding,
+  type SomRichting,
   type Sorteersleutel,
   type TabelPayload,
 } from "./logica.ts";
@@ -241,6 +244,132 @@ export async function tabelInvoegen(ref: DocxEditorRef | null, rijen: number, ko
   e.ref.focus();
 }
 
+/** Of een geplakte tabel hier als echte tabel kan komen (anders plakt de engine tekst). */
+export function kanTabelPlakken(ref: DocxEditorRef | null) {
+  try {
+    const e = engine(ref);
+    if (!e.ref.commands.getState("insertTable").enabled) return false;
+    if (e.ref.commands.getState("editingMode").value === "suggesting") return false;
+    const sel = e.sessie.selection();
+    // In een cel zou het een geneste tabel worden; die tekent de engine nog niet goed.
+    return !!sel && sel.anchor.story === sel.head.story && !/:t\d+:r\d+c\d+$/.test(sel.head.story);
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Plakt cellen (uit klembord-HTML, zoals een kopie uit Rekenblad) als echte
+ * tabel bij de cursor; een selectie wordt eerst vervangen. Kolommen gelijk
+ * verdeeld over de tekstbreedte, de cursor na de tabel. Eén ongedaan-maakstap.
+ */
+export async function plakTabel(ref: DocxEditorRef | null, cellen: readonly (readonly string[])[]) {
+  const e = engine(ref);
+  await e.ref.flushPendingInput();
+  const s = e.sessie;
+  const sel = s.selection();
+  if (!sel) throw new Error(i18next.t("writer:table.errors.cursorInDocument"));
+  const kolommen = Math.max(1, ...cellen.map((r) => r.length));
+  const breedte = breedteBijCursor(e);
+  const verhalen = [sel.head.story];
+  let doel: { story: string; paraId: string; offset: number } | null = null;
+  begin(e);
+  try {
+    let head = sel.head;
+    if (sel.anchor.paraId !== sel.head.paraId || sel.anchor.offset !== sel.head.offset) {
+      // Selectie in documentvolgorde vervangen.
+      const alineas = s.paragraphSpans(sel.head.story).map((p) => p.paraId);
+      const voor =
+        alineas.indexOf(sel.anchor.paraId) < alineas.indexOf(sel.head.paraId) ||
+        (sel.anchor.paraId === sel.head.paraId && sel.anchor.offset < sel.head.offset);
+      const [van, tot] = voor ? [sel.anchor, sel.head] : [sel.head, sel.anchor];
+      s.deleteRange({ story: sel.head.story, start: { paraId: van.paraId, offset: van.offset }, end: { paraId: tot.paraId, offset: tot.offset } });
+      head = { story: sel.head.story, paraId: van.paraId, offset: van.offset };
+    }
+    const plek = head.offset > 0 ? { story: head.story, paraId: s.splitParagraph(head).secondParaId, offset: 0 } : head;
+    const ontvangst = s.insertTable(plek, cellen.length, kolommen);
+    verhalen.push(...ontvangst.createdStoryIds);
+    ontvangst.createdStoryIds.forEach((verhaal, n) => {
+      const tekst = cellen[Math.floor(n / kolommen)]?.[n % kolommen] ?? "";
+      let alinea = s.paragraphs(verhaal)[0]?.paraId;
+      tekst.split("\n").forEach((regel, i) => {
+        if (!alinea) return;
+        if (i > 0) alinea = s.splitParagraph({ story: verhaal, paraId: alinea, offset: s.paragraphs(verhaal).find((p) => p.paraId === alinea)?.text.length ?? 0 }).secondParaId;
+        if (regel) s.insertText({ story: verhaal, paraId: alinea, offset: 0 }, regel);
+      });
+    });
+    zetBreedtes(s, ontvangst.table, gelijkeKolommen(breedte, kolommen), "autofit", { w: breedte, type: "dxa" });
+    // De alinea na de tabel draagt het tabel-embed vooraan: de cursor komt erna.
+    const offset = tekstBegin(s, plek.story, plek.paraId) - s.locateParagraph(plek.story, plek.paraId).start;
+    doel = { story: plek.story, paraId: plek.paraId, offset: Math.max(0, offset) };
+    s.setSelection(doel);
+  } finally {
+    klaar(e, verhalen);
+  }
+  e.ref.focus();
+  // Na het plakken zet de invoer van de engine de cursor terug; daarna opnieuw na de tabel.
+  if (doel) {
+    const plek = doel;
+    requestAnimationFrame(() => {
+      try {
+        s.setSelection(plek);
+        e.weergave.syncYrsInputState(false);
+      } catch {
+        // Alleen de cursorplek; de tabel staat er al.
+      }
+    });
+  }
+}
+
+/**
+ * Kolombreedtes na het slepen van een tabelrand (in het document of op de
+ * liniaal): tblGrid en tcW in één ongedaan-maakstap. De tabel krijgt een vaste
+ * indeling, anders past de engine de breedtes weer aan de inhoud aan. Wijzigt
+ * de totale breedte, dan gaat de tabelbreedte mee.
+ */
+export function zetKolombreedtes(ref: DocxEditorRef | null, loc: TabelLoc, breedtes: readonly number[]) {
+  const e = engine(ref);
+  if (e.ref.commands.getState("editingMode").value === "suggesting")
+    throw new Error(i18next.t("writer:table.errors.layoutTracking"));
+  const { payload } = tabelEmbed(e.sessie, loc);
+  const oud = huidigeBreedtes(payload);
+  const som = (l: readonly number[]) => l.reduce((a, b) => a + b, 0);
+  const anders = som(oud) !== som(breedtes) || (payload.tblPr?.widthType as string | undefined) === "auto";
+  begin(e);
+  try {
+    zetBreedtes(e.sessie, loc, breedtes, "fixed", anders ? { w: Math.round(som(breedtes)), type: "dxa" } : undefined);
+  } finally {
+    klaar(e, [loc.story]);
+  }
+}
+
+/**
+ * Rijhoogte na het slepen van een rijrand: minimaal (zoals Word bij slepen),
+ * of exact als de rij al een exacte hoogte had. Eén ongedaan-maakstap.
+ */
+export function zetRijhoogte(ref: DocxEditorRef | null, loc: TabelLoc, rij: number, hoogte: number) {
+  const e = engine(ref);
+  if (e.ref.commands.getState("editingMode").value === "suggesting")
+    throw new Error(i18next.t("writer:table.errors.layoutTracking"));
+  const { payload } = tabelEmbed(e.sessie, loc);
+  if (!payload.rows[rij]) return;
+  begin(e);
+  try {
+    zetEmbed(
+      e.sessie,
+      loc,
+      "rows",
+      payload.rows.map((r, i) =>
+        i === rij
+          ? { ...r, trPr: rijMet(r.trPr, { hoogte, regel: r.trPr?.heightRule === "exact" ? "exact" : "atLeast" }) }
+          : r,
+      ),
+    );
+  } finally {
+    klaar(e, [loc.story]);
+  }
+}
+
 export function kolommenGelijk(ref: DocxEditorRef | null) {
   metPlek(ref, (e, plek) => {
     const { payload } = tabelEmbed(e.sessie, plek.tabel);
@@ -409,6 +538,47 @@ export function celMarges(ref: DocxEditorRef | null, marges: Marges, heleTabel: 
   });
 }
 
+export type Tekstrichting = "lrTb" | "tbRl" | "btLr";
+
+/** Tekstrichting van de geselecteerde cellen (`w:textDirection`); horizontaal wist hem. */
+export function tekstrichting(ref: DocxEditorRef | null, richting: Tekstrichting) {
+  metPlek(ref, (e, plek) => e.sessie.setCellTextFormat(plek.bereik, { textDirection: richting === "lrTb" ? null : richting }));
+}
+
+/**
+ * Formule › Som: telt de getallen boven, links, onder of rechts van de cel met
+ * de cursor op (zoals Word `=SUM(ABOVE)`) en zet de uitkomst in de cel. Het is
+ * een vaste waarde, geen bijwerkbaar veld: velden in cellen kent de engine
+ * nog niet. Eén ongedaan-maakstap; geeft de som terug.
+ */
+export function voegSomIn(ref: DocxEditorRef | null, richting: SomRichting) {
+  const e = engine(ref);
+  const plek = vereistPlek(e);
+  const verhaal = e.sessie.selection()?.head.story ?? "";
+  begin(e);
+  try {
+    const s = e.sessie;
+    const { payload } = tabelEmbed(s, plek.tabel);
+    const rij = payload.rows.findIndex((r) => r.cells.some((c) => c.story === verhaal));
+    if (rij < 0) throw new Error(i18next.t("writer:table.errors.cursorInTable"));
+    const kolom = payload.rows[rij].cells.findIndex((c) => c.story === verhaal);
+    const uitkomst = somVan(tabelTeksten(s, plek.tabel), rij, kolom, richting);
+    if (!uitkomst) throw new Error(i18next.t("writer:table.errors.noNumbers"));
+    const tekst = formatGetal(uitkomst.som, { maximumFractionDigits: 10, useGrouping: false });
+    const alineas = s.paragraphs(verhaal);
+    const eerste = alineas[0];
+    const laatste = alineas[alineas.length - 1];
+    if (!eerste || !laatste) throw new Error(i18next.t("writer:table.errors.cursorInTable"));
+    const bereik = { story: verhaal, start: { paraId: eerste.paraId, offset: 0 }, end: { paraId: laatste.paraId, offset: laatste.text.length } };
+    s.replaceRange(bereik, tekst, voorstel(e.ref));
+    s.setSelection({ story: verhaal, paraId: eerste.paraId, offset: tekst.length });
+    return uitkomst.som;
+  } finally {
+    // De celtekst verandert ook: het celverhaal moet opnieuw worden opgebouwd.
+    klaar(e, [plek.tabel.story, verhaal]);
+  }
+}
+
 export function geenTerugloop(ref: DocxEditorRef | null, aan: boolean) {
   metPlek(ref, (e, plek) => e.sessie.setCellTextFormat(plek.bereik, { noWrap: aan }));
 }
@@ -433,6 +603,7 @@ export function tabelStaat(ref: DocxEditorRef | null) {
       hoogte: typeof tr.height === "number" ? tr.height : null,
       regel: (tr.heightRule as RijInstelling["regel"]) ?? "auto",
       verticaal: (cel?.tcPr?.verticalAlign as Verticaal | undefined) ?? "top",
+      richting: ((cel?.tcPr?.textDirection as Tekstrichting | undefined) ?? "lrTb") as Tekstrichting,
       marges,
       tabelMarges: (payload.tblPr?.cellMargins as Marges | undefined) ?? marges,
       indeling: (payload.tblPr?.tableLayout as string | undefined) ?? "autofit",

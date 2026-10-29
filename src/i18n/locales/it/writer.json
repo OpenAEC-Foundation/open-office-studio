@@ -1055,7 +1055,8 @@
       "tocRemoved": "Sommario rimosso",
       "footnoteInserted": "Nota a piè di pagina inserita",
       "endnoteInserted": "Nota di chiusura inserita",
-      "noteFormatChanged": "Formato note modificato"
+      "noteFormatChanged": "Formato note modificato",
+      "marginsChanged": "Margini modificati"
     },
     "errors": {
       "notReady": "Il documento non è ancora pronto.",
@@ -1559,7 +1560,18 @@
       "toText": "Converti in testo",
       "toTextTip": "Converti la tabella in testo",
       "split": "Dividi tabella",
-      "splitTip": "Divide la tabella sopra la riga con il cursore. Il documento viene ricaricato; Annulla non funziona più per i passaggi precedenti."
+      "splitTip": "Divide la tabella sopra la riga con il cursore. Il documento viene ricaricato; Annulla non funziona più per i passaggi precedenti.",
+      "textDirection": "Direzione testo",
+      "textDirectionTip": "Direzione del testo nelle celle selezionate",
+      "textDirectionHorizontal": "Orizzontale",
+      "textDirectionDown": "Ruotato di 90° (dall'alto in basso)",
+      "textDirectionUp": "Ruotato di 270° (dal basso in alto)",
+      "formula": "Formula",
+      "formulaTip": "Somma dei numeri accanto alla cella; il risultato viene inserito come valore",
+      "sumAbove": "Somma sopra",
+      "sumLeft": "Somma a sinistra",
+      "sumBelow": "Somma sotto",
+      "sumRight": "Somma a destra"
     },
     "row": {
       "title": "Proprietà riga",
@@ -1657,7 +1669,46 @@
       "noBody": "Il documento non ha testo principale.",
       "tableNotFound": "La tabella non è stata trovata nel documento.",
       "splitRow": "Posiziona il cursore nella riga che deve diventare la prima riga della nuova tabella (non la prima riga).",
-      "splitMerged": "Qui non è possibile dividere la tabella: una cella unita occupa questa riga."
+      "splitMerged": "Qui non è possibile dividere la tabella: una cella unita occupa questa riga.",
+      "noNumbers": "Nessun numero accanto a questa cella da sommare."
+    }
+  },
+  "ruler": {
+    "horizontal": "Righello orizzontale",
+    "vertical": "Righello verticale",
+    "tabKindTip": "Tipo di tabulazione: {{kind}}. Fai clic per cambiare.",
+    "tabKinds": {
+      "left": "Tabulazione a sinistra",
+      "center": "Tabulazione centrata",
+      "right": "Tabulazione a destra",
+      "decimal": "Tabulazione decimale",
+      "bar": "Barra verticale"
+    },
+    "clickHint": "Fai clic per inserire una {{kind}}. Doppio clic per la finestra Tabulazioni.",
+    "tabStop": "{{kind}} a {{position}}",
+    "tabHint": "Trascina per spostare o fuori dal righello per rimuovere; doppio clic per la finestra Tabulazioni.",
+    "markers": {
+      "eerste": "Rientro prima riga",
+      "verkeerd": "Rientro sporgente",
+      "links": "Rientro sinistro",
+      "rechts": "Rientro destro"
+    },
+    "leftMargin": "Margine sinistro",
+    "rightMargin": "Margine destro",
+    "topMargin": "Margine superiore",
+    "bottomMargin": "Margine inferiore",
+    "tableColumn": "Trascina larghezza colonna (Maiusc: solo questa colonna)",
+    "tableRow": "Trascina altezza della riga {{n}}",
+    "altHint": "Alt: misura esatta",
+    "marginsUnavailable": "Qui non è possibile trascinare i margini; usa Layout › Margini.",
+    "measure": {
+      "indent": "{{name}}: {{value}} cm",
+      "tab": "Tabulazione a {{value}} cm",
+      "removeTab": "Rilascia per rimuovere la tabulazione",
+      "margin": "{{name}}: {{value}} cm",
+      "columns": "Colonna {{a}}: {{wa}} cm · colonna {{b}}: {{wb}} cm",
+      "column": "Colonna {{a}}: {{wa}} cm",
+      "row": "Riga {{n}}: {{value}} cm"
     }
   }
 }

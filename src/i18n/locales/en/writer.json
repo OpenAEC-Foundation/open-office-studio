@@ -1045,7 +1045,8 @@
       "tocRemoved": "Table of contents removed",
       "footnoteInserted": "Footnote inserted",
       "endnoteInserted": "Endnote inserted",
-      "noteFormatChanged": "Note format changed"
+      "noteFormatChanged": "Note format changed",
+      "marginsChanged": "Margins changed"
     },
     "errors": {
       "notReady": "The document is not ready yet.",
@@ -1548,7 +1549,18 @@
       "toText": "Convert to Text",
       "toTextTip": "Convert the table to text",
       "split": "Split Table",
-      "splitTip": "Splits the table above the row with the cursor. The document is reloaded; Undo then no longer works for earlier steps."
+      "splitTip": "Splits the table above the row with the cursor. The document is reloaded; Undo then no longer works for earlier steps.",
+      "textDirection": "Text Direction",
+      "textDirectionTip": "Direction of the text in the selected cells",
+      "textDirectionHorizontal": "Horizontal",
+      "textDirectionDown": "Rotated 90° (top to bottom)",
+      "textDirectionUp": "Rotated 270° (bottom to top)",
+      "formula": "Formula",
+      "formulaTip": "Sum of the numbers next to the cell; the result is inserted as a value",
+      "sumAbove": "Sum above",
+      "sumLeft": "Sum left",
+      "sumBelow": "Sum below",
+      "sumRight": "Sum right"
     },
     "row": {
       "title": "Row Properties",
@@ -1643,7 +1655,46 @@
       "noBody": "The document has no main text.",
       "tableNotFound": "The table was not found in the document.",
       "splitRow": "Place the cursor in the row that should become the first row of the new table (not the first row).",
-      "splitMerged": "The table cannot be split here: a merged cell spans this row."
+      "splitMerged": "The table cannot be split here: a merged cell spans this row.",
+      "noNumbers": "No numbers next to this cell to add up."
+    }
+  },
+  "ruler": {
+    "horizontal": "Horizontal ruler",
+    "vertical": "Vertical ruler",
+    "tabKindTip": "Tab type: {{kind}}. Click to change.",
+    "tabKinds": {
+      "left": "Left tab",
+      "center": "Center tab",
+      "right": "Right tab",
+      "decimal": "Decimal tab",
+      "bar": "Bar tab"
+    },
+    "clickHint": "Click to set a {{kind}}. Double-click for the Tabs dialog.",
+    "tabStop": "{{kind}} at {{position}}",
+    "tabHint": "Drag to move, or drag off the ruler to remove; double-click for the Tabs dialog.",
+    "markers": {
+      "eerste": "First Line Indent",
+      "verkeerd": "Hanging Indent",
+      "links": "Left Indent",
+      "rechts": "Right Indent"
+    },
+    "leftMargin": "Left margin",
+    "rightMargin": "Right margin",
+    "topMargin": "Top margin",
+    "bottomMargin": "Bottom margin",
+    "tableColumn": "Drag column width (Shift: this column only)",
+    "tableRow": "Drag height of row {{n}}",
+    "altHint": "Alt: exact size",
+    "marginsUnavailable": "Margins can't be dragged here; use Layout › Margins.",
+    "measure": {
+      "indent": "{{name}}: {{value}} cm",
+      "tab": "Tab stop at {{value}} cm",
+      "removeTab": "Release to remove the tab stop",
+      "margin": "{{name}}: {{value}} cm",
+      "columns": "Column {{a}}: {{wa}} cm · column {{b}}: {{wb}} cm",
+      "column": "Column {{a}}: {{wa}} cm",
+      "row": "Row {{n}}: {{value}} cm"
     }
   }
 }

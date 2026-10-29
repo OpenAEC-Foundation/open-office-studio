@@ -4,6 +4,8 @@ import { fileURLToPath } from "node:url";
 export default defineConfig({
   root: fileURLToPath(new URL(".", import.meta.url)),
   worker: { format: "es" },
+  // Zonder kantoorlettertypen in deze bundel (zie src/export/pdf/lettertypebron.ts).
+  define: { "import.meta.env.VITE_DATABASE_APP": JSON.stringify("1") },
   resolve: {
     alias: {
       stream: "stream-browserify",

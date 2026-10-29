@@ -12,7 +12,8 @@ import { useTranslation } from "react-i18next";
 import { RibbonFout } from "../../../Ribbon";
 import { huidigeTaal } from "../../../i18n/config";
 import { engineVertalingDirect } from "../../../i18n/engine";
-import { meldWijziging, useEditorApi, zichtbaarElement } from "../../../lint/editorApi";
+import { meldWijziging, useEditorApi, useEditorZichtbaar, zichtbaarElement } from "../../../lint/editorApi";
+import { meldOpdrachtAan } from "../../menu/opdrachten";
 import { useSneltoetsen } from "../../../lint/sneltoetsen";
 import { metPakket, verwijderMarkering } from "../ooxml.ts";
 import {
@@ -30,6 +31,7 @@ import {
   type KolomVoorkeur,
   type Kolommen,
   type MargeVoorkeur,
+  type Marges,
   type SectieDoel,
 } from "../secties.ts";
 import {
@@ -359,6 +361,17 @@ export function usePagina() {
 
   const sectieWijziging = (klaar: string, w: Parameters<typeof wijzigSecties>[2]) =>
     void pakket({ klaar, cursor: "sectie", werk: (b, { sectie }) => wijzigSecties(b, sectie, w) });
+  // Marges slepen op de liniaal (#47): de sectie van de cursor, via de pakketroute.
+  const zichtbaar = useEditorZichtbaar();
+  const recentSectie = useRef(sectieWijziging);
+  recentSectie.current = sectieWijziging;
+  useEffect(() => {
+    if (!zichtbaar) return;
+    return meldOpdrachtAan("paginamarges", ({ gegevens }) => {
+      const m = gegevens as Partial<Marges> | undefined;
+      if (m && Object.keys(m).length) recentSectie.current(t("page.done.marginsChanged"), { marges: m });
+    });
+  }, [zichtbaar, t]);
   const marges = (v: MargeVoorkeur) =>
     sectieWijziging(t("page.done.marginsSet", { name: t(`page.layout.marginPresets.${MARGES[v].sleutel}`) }), { marges: MARGES[v].marges });
   const afdrukstand = (a: Afdrukstand) => sectieWijziging(t(a === "liggend" ? "page.done.landscape" : "page.done.portrait"), { afdrukstand: a });

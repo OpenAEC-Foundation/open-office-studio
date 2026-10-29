@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import type { Soort } from "./editors";
 import type { Tabblad, TabbladActie } from "./tabbladen";
 
 interface Opties {
@@ -10,6 +11,8 @@ interface Opties {
   opslaan: () => void;
   opslaanAls: () => void;
   openen: () => void;
+  /** Ctrl+N: een nieuw, leeg document van dezelfde soort als het actieve document. */
+  nieuw: (soort: Soort) => void;
   sluit: () => void;
   verwerk: (actie: TabbladActie) => void;
   terug: () => void;
@@ -18,6 +21,7 @@ interface Opties {
 export type TabToets =
   | { opdracht: "opslaan" | "opslaanAls" | "openen" | "sluit" | "terug" }
   | { opdracht: "actie"; actie: TabbladActie }
+  | { opdracht: "nieuw"; soort: Soort }
   | null;
 
 type Toets = Pick<
@@ -52,6 +56,10 @@ export function tabToets(
   )
     return { opdracht: "opslaanAls" };
   if (ctrl && !e.altKey && toets === "o") return { opdracht: "openen" };
+  // Ctrl+N: nieuw document van dezelfde soort (zoals Word, Excel en PowerPoint). Andere
+  // modules (E-mail: nieuw bericht) houden Ctrl+N voor zichzelf.
+  if (ctrl && !e.altKey && !e.shiftKey && toets === "n" && context.actief?.type === "document")
+    return { opdracht: "nieuw", soort: context.actief.soort };
   // Ctrl+F6 / Ctrl+Shift+F6: volgend of vorig document, zoals in kantoorsuites.
   if (ctrl && !e.altKey && e.key === "F6")
     return {
@@ -117,6 +125,7 @@ export function useTabSneltoetsen(opties: Opties) {
       e.stopImmediatePropagation();
       if (e.repeat && uitkomst.opdracht !== "actie") return;
       if (uitkomst.opdracht === "actie") o.verwerk(uitkomst.actie);
+      else if (uitkomst.opdracht === "nieuw") o.nieuw(uitkomst.soort);
       else o[uitkomst.opdracht]();
     };
     window.addEventListener("keydown", toetsen, true);

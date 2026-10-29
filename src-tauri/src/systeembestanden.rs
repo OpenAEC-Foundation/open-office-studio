@@ -63,7 +63,9 @@ impl Systeembestanden {
     /// Bestanden uit de opstartargumenten; ze gaan naar het hoofdvenster.
     pub fn bij_start(argumenten: impl Iterator<Item = OsString>) -> Self {
         let staat = Self::default();
-        staat.voeg_toe(startpaden(argumenten, None), HOOFDVENSTER);
+        // Absoluut maken tegen de startmap: het pad blijft geldig als de werkmap later verandert.
+        let map = std::env::current_dir().ok();
+        staat.voeg_toe(startpaden(argumenten, map.as_deref()), HOOFDVENSTER);
         staat
     }
 
@@ -126,10 +128,19 @@ impl Systeembestanden {
 }
 
 /// Alle bestaande bestanden na de programmanaam; relatieve paden ten opzichte van `map`.
+///
+/// Linux geeft gekoppelde bestanden via `Exec=… %F` als losse argumenten (spaties blijven in
+/// het argument). Een starter die toch een `file://`-adres meegeeft (zoals bij `%U`), wordt
+/// omgezet naar het lokale pad; andere adressen vallen af.
 pub fn startpaden(argumenten: impl Iterator<Item = OsString>, map: Option<&Path>) -> Vec<PathBuf> {
     argumenten
         .skip(1)
-        .map(PathBuf::from)
+        .filter_map(|argument| match argument.to_str() {
+            Some(tekst) if tekst.len() > 7 && tekst[..7].eq_ignore_ascii_case("file://") => {
+                tauri::Url::parse(tekst).ok()?.to_file_path().ok()
+            }
+            _ => Some(PathBuf::from(argument)),
+        })
         .map(|pad| match map {
             Some(map) if pad.is_relative() => map.join(pad),
             _ => pad,
@@ -369,6 +380,35 @@ mod tests {
             ),
             vec![map.path().join("a.xlsx"), map.path().join("b.pptx")]
         );
+    }
+
+    #[test]
+    fn meerdere_bestanden_met_spaties_uit_de_linux_starter() {
+        // Exec=open-office-studio %F: elk bestand is één argument, spaties horen erbij.
+        let map = tempfile::tempdir().unwrap();
+        let submap = map.path().join("Mijn documenten");
+        std::fs::create_dir(&submap).unwrap();
+        let eerste = submap.join("offerte 2026 (definitief).docx");
+        let tweede = map.path().join("begroting Q4.xlsx");
+        std::fs::write(&eerste, b"PK").unwrap();
+        std::fs::write(&tweede, b"PK").unwrap();
+        assert_eq!(
+            startpaden(
+                argumenten(vec![eerste.clone().into(), tweede.clone().into()]),
+                Some(Path::new("/elders"))
+            ),
+            vec![eerste.clone(), tweede]
+        );
+        // Een file://-adres (starter met %U) wordt het lokale pad; procenttekens gedecodeerd.
+        let adres = tauri::Url::from_file_path(&eerste).unwrap().to_string();
+        assert!(adres.contains("%20"), "{adres}");
+        assert_eq!(startpaden(argumenten(vec![adres.into()]), None), vec![eerste]);
+        // Andere adressen en ontbrekende bestanden vallen af.
+        assert!(startpaden(
+            argumenten(vec!["https://example.org/a.docx".into(), "file:///bestaat/niet.docx".into()]),
+            None
+        )
+        .is_empty());
     }
 
     #[test]

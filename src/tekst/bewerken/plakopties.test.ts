@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  tabelUitKlembord,
   cssGrootte,
   cssKleur,
   deltaUitHtml,
@@ -78,5 +79,25 @@ describe("plakopties: HTML lezen", () => {
 
   it("normaliseert regeleinden", () => {
     expect(platteTekst("a\r\nb\rc")).toBe("a\nb\nc");
+  });
+});
+
+describe("tabel uit het klembord", () => {
+  const rekenblad =
+    '<html><body><table><tr><td>Naam</td><td x:num="12">12</td></tr><tr><td>Peer &amp; appel</td><td>3,5</td></tr></table></body></html>';
+  it("leest de cellen van een tabel", () => {
+    expect(tabelUitKlembord(rekenblad)).toEqual([
+      ["Naam", "12"],
+      ["Peer & appel", "3,5"],
+    ]);
+  });
+  it("één cel blijft tekst", () => {
+    expect(tabelUitKlembord("<table><tr><td>42</td></tr></table>")).toBeNull();
+  });
+  it("tekst buiten de tabel: gewoon plakken (niets kwijt)", () => {
+    expect(tabelUitKlembord("<p>Inleiding</p><table><tr><td>a</td><td>b</td></tr></table>")).toBeNull();
+  });
+  it("geen tabel", () => {
+    expect(tabelUitKlembord("<p>a</p>")).toBeNull();
   });
 });

@@ -20,6 +20,7 @@ import {
 } from "../instellingen";
 import { herstelInterval, INTERVAL_SLEUTEL, STANDAARD_INTERVAL_MINUTEN } from "../herstel";
 import { useWoordenlijsten } from "../spelling/woordenlijst";
+import { UpdatesSectie } from "./UpdatesSectie";
 import {
   conversieStatus,
   kiesConversieprogramma,
@@ -205,7 +206,7 @@ export function InstellingenVenster({ sluit }: { sluit: () => void }) {
             {tab === "uiterlijk" && <Uiterlijk instellingen={concept.instellingen} wijzig={wijzig} />}
             {tab === "bewerken" && <Bewerken instellingen={concept.instellingen} wijzig={wijzig} />}
             {tab === "email" && <Email instellingen={concept.instellingen} wijzig={wijzig} />}
-            {tab === "over" && <Over />}
+            {tab === "over" && <Over instellingen={concept.instellingen} wijzig={wijzig} />}
           </div>
         </div>
       </Modal>
@@ -571,28 +572,31 @@ function Email({ instellingen, wijzig }: { instellingen: Instellingen; wijzig: (
   );
 }
 
-function Over() {
+function Over({ instellingen, wijzig }: { instellingen: Instellingen; wijzig: (w: Wijziging) => void }) {
   const { t } = useTranslation("settings");
   return (
-    <Sectie titel={t("about.appName")}>
-      <dl className="instellingen-over">
-        <dt>{t("about.version")}</dt>
-        <dd>
-          {versie.label} ({versie.versie})
-        </dd>
-        <dt>{t("about.framework")}</dt>
-        <dd>Tauri + React + TypeScript</dd>
-        <dt>{t("about.design")}</dt>
-        <dd>OpenAEC Style Book (CC BY-SA 4.0)</dd>
-        <dt>{t("about.licenses")}</dt>
-        <dd>
-          <a href="licenses/npm.txt" target="_blank" rel="noreferrer">
-            {t("about.licensesLink")}
-          </a>
-        </dd>
-      </dl>
-      <p className="instellingen-uitleg">{t("about.description")}</p>
-      <p className="instellingen-uitleg">{t("about.translations")}</p>
-    </Sectie>
+    <>
+      <Sectie titel={t("about.appName")}>
+        <dl className="instellingen-over">
+          <dt>{t("about.version")}</dt>
+          <dd>
+            {versie.label} ({versie.versie})
+          </dd>
+          <dt>{t("about.framework")}</dt>
+          <dd>Tauri + React + TypeScript</dd>
+          <dt>{t("about.design")}</dt>
+          <dd>OpenAEC Style Book (CC BY-SA 4.0)</dd>
+          <dt>{t("about.licenses")}</dt>
+          <dd>
+            <a href="licenses/npm.txt" target="_blank" rel="noreferrer">
+              {t("about.licensesLink")}
+            </a>
+          </dd>
+        </dl>
+        <p className="instellingen-uitleg">{t("about.description")}</p>
+        <p className="instellingen-uitleg">{t("about.translations")}</p>
+      </Sectie>
+      <UpdatesSectie instellingen={instellingen} wijzig={wijzig} />
+    </>
   );
 }

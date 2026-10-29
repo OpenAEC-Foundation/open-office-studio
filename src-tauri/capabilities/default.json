@@ -1,6 +1,6 @@
 {
   "identifier": "main",
-  "description": "Alleen de lokale kantooromgeving; alle vensters (ook losgemaakte en nieuwe) krijgen dezelfde rechten, inclusief de eigen titelbalk (slepen, minimaliseren, maximaliseren, sluiten)",
+  "description": "Alleen de lokale kantooromgeving; alle vensters (ook losgemaakte en nieuwe) krijgen dezelfde rechten, inclusief de eigen titelbalk (slepen, minimaliseren, maximaliseren, sluiten) en het voorstellingsvenster op een tweede monitor (document-voorstelling-*)",
   "windows": ["main", "document-*"],
   "permissions": [
     "core:default",
@@ -10,6 +10,10 @@
     "core:window:allow-toggle-maximize",
     "core:window:allow-internal-toggle-maximize",
     "core:window:allow-start-dragging",
-    "core:window:allow-is-maximized"
+    "core:window:allow-is-maximized",
+    "core:window:allow-set-fullscreen",
+    "core:window:allow-set-focus",
+    "core:window:allow-destroy",
+    "core:webview:allow-create-webview-window"
   ]
 }

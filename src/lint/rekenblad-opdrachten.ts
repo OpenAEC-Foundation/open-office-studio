@@ -1,6 +1,7 @@
 import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
 import i18next from "../i18n/config";
 import { meldWijziging, zichtbaarElement } from "./editorApi";
+import { filtersNaOps } from "./rekenblad-filter";
 import type {
   CapturedFormat,
   XlsxCellValue,
@@ -21,12 +22,9 @@ import {
   ontleedVerwijzing,
   selectieRond,
   serieleDatum,
-  sorteerVolgorde,
-  heeftKoprij,
   TIJDNOTATIE,
   tijdTekst,
   verborgenIndices,
-  verschuifFormule,
   vervangTekst,
   type Bereik,
   type Cel,
@@ -67,6 +65,7 @@ export type RuweOp =
   | { type: "setFreezePane"; sheet: number; pane: Pane }
   | { type: "setColWidth"; sheet: number; col: number; width: number | null }
   | { type: "setRowHeight"; sheet: number; row: number; height: number | null }
+  | { type: "mergeCells"; sheet: number; range: { start: Cel; end: Cel } }
   | {
       type: "applyRangeFormat";
       sheet: number;
@@ -162,6 +161,8 @@ export async function voerOpsUit(api: XlsxEditorApi, ops: RuweOp[]) {
     const vertaald = engineteksten.find(([patroon]) => patroon.test(tekst));
     throw new Melding(vertaald ? melding(vertaald[1]) : tekst);
   }
+  // Filterbereiken schuiven mee met invoegen en verwijderen (#62).
+  if (resultaat.applied) filtersNaOps(api.handle, ops);
   // applyOps loopt buiten de wijzigingsmelding van de editor om.
   if (resultaat.applied) meldWijziging(api.handle);
   return resultaat;
@@ -342,125 +343,7 @@ export async function fixeren(api: XlsxEditorApi, soort: Fixeren) {
   await voerOpsUit(api, [{ type: "setFreezePane", sheet: blad, pane }]);
 }
 
-const rij = (b: Bereik, r: number): Bereik => ({ ...b, top: r, bottom: r });
-
-/** Verplaatst rijopmaak alleen als de rijen verschillen; anders blijft het één bewerking. */
-function opmaakOps(
-  api: XlsxEditorApi,
-  blad: number,
-  bereik: Bereik,
-  bronRijen: number[],
-  doelRijen: number[],
-): RuweOp[] {
-  const formaten = new Map<number, CapturedFormat>();
-  const vorm = (r: number) => {
-    if (!formaten.has(r))
-      formaten.set(r, api.handle.captureFormat(blad, bereikA1(rij(bereik, r))));
-    return formaten.get(r)!;
-  };
-  const ops: RuweOp[] = [];
-  doelRijen.forEach((doelRij, i) => {
-    const bron = vorm(bronRijen[i]);
-    if (JSON.stringify(bron) !== JSON.stringify(vorm(doelRij)))
-      ops.push({
-        type: "applyRangeFormat",
-        sheet: blad,
-        range: {
-          start: { row: doelRij, col: bereik.left },
-          end: { row: doelRij, col: bereik.right },
-        },
-        format: bron,
-      });
-  });
-  return ops;
-}
-
-export async function sorteren(api: XlsxEditorApi, aflopend: boolean) {
-  const { blad, sheetId, bereik, focus } = leesSelectie(api);
-  if (bereik.top === bereik.bottom)
-    throw new Melding(melding("sortSelectRange"));
-  const lezing = await api.readCells({ ranges: [doel(sheetId, bereik)] });
-  if (!lezing.ok) throw new Melding(lezing.failure.message);
-  const cellen = lezing.ranges[0].cells;
-  if (cellen.some((r) => r.some((c) => c.formula !== null)))
-    throw new Melding(melding("sortFormulas"));
-  const waarden: XlsxCellValue[][] = cellen.map((r) => r.map((c) => c.value));
-  const kop = heeftKoprij(waarden) ? 1 : 0;
-  const volgorde = sorteerVolgorde(
-    waarden.slice(kop),
-    Math.min(Math.max(focus.col - bereik.left, 0), bereik.right - bereik.left),
-    aflopend,
-  );
-  if (volgorde.every((bron, i) => bron === i)) return;
-  const invoer = api.handle
-    .rangeCells(blad, bereikA1(bereik))
-    .map((r) => r.map((c) => c.input));
-  const data = { ...bereik, top: bereik.top + kop };
-  const stappen: XlsxEditStep[] = [
-    {
-      op: "setCellInputs",
-      target: doel(sheetId, data),
-      inputs: volgorde.map((bron) => invoer[kop + bron]),
-    },
-  ];
-  const controle = await api.validateEdits({
-    expectVersion: lezing.version,
-    steps: stappen,
-  });
-  if (!controle.ok)
-    throw new Melding(fouttekst(controle.failure));
-  const ops = opmaakOps(
-    api,
-    blad,
-    data,
-    volgorde.map((bron) => data.top + bron),
-    volgorde.map((_, i) => data.top + i),
-  );
-  if (ops.length) api.handle.applyOps(ops);
-  await bewerk(api, stappen);
-}
-
-export async function doorvoerenOmlaag(api: XlsxEditorApi) {
-  const { blad, sheetId, bereik } = leesSelectie(api);
-  const enkel = bereik.top === bereik.bottom;
-  if (enkel && bereik.top === 0)
-    throw new Melding(melding("fillNothingAbove"));
-  const bronRij = enkel ? bereik.top - 1 : bereik.top;
-  const doelBereik = { ...bereik, top: enkel ? bereik.top : bereik.top + 1 };
-  const bron = api.handle.rangeCells(blad, bereikA1(rij(bereik, bronRij)))[0];
-  const doelRijen = Array.from(
-    { length: doelBereik.bottom - doelBereik.top + 1 },
-    (_, i) => doelBereik.top + i,
-  );
-  const stappen: XlsxEditStep[] = [
-    {
-      op: "setCellInputs",
-      target: doel(sheetId, doelBereik),
-      inputs: doelRijen.map((r) =>
-        bron.map((c) =>
-          c.isFormula
-            ? `=${verschuifFormule(c.input.slice(1), r - bronRij, 0)}`
-            : c.input,
-        ),
-      ),
-    },
-  ];
-  const controle = await api.validateEdits({
-    expectVersion: await api.version(),
-    steps: stappen,
-  });
-  if (!controle.ok)
-    throw new Melding(fouttekst(controle.failure));
-  const ops = opmaakOps(
-    api,
-    blad,
-    bereik,
-    doelRijen.map(() => bronRij),
-    doelRijen,
-  );
-  if (ops.length) api.handle.applyOps(ops);
-  await bewerk(api, stappen);
-}
+// Sorteren en doorvoeren staan in rekenblad-gegevens.ts (#62, #63).
 
 export async function autoSomInvoegen(api: XlsxEditorApi) {
   const { blad, sheetId, bereik } = leesSelectie(api);

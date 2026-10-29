@@ -41,6 +41,8 @@ export interface Instellingen {
   };
   /** Tekst: sneltoetsprofiel (LibreOffice-achtig of Word) en de mini-werkbalk bij selectie. */
   tekst: { sneltoetsprofiel: "standaard" | "word"; miniWerkbalk: boolean };
+  /** Automatische updates van de desktopapp (#26, src/updates.ts): controle bij start en kanaal. */
+  updates: { automatisch: boolean; kanaal: "stabiel" | "ontwikkel" };
 }
 
 export const standaardInstellingen: Instellingen = {
@@ -66,6 +68,8 @@ export const standaardInstellingen: Instellingen = {
     cijferwoordenNegeren: true,
   },
   tekst: { sneltoetsprofiel: "standaard", miniWerkbalk: true },
+  // Alle uitgaven zijn (nog) pre-releases; het ontwikkelkanaal neemt ze mee.
+  updates: { automatisch: true, kanaal: "ontwikkel" },
 };
 
 const SLEUTEL = "openaec-office-instellingen";
@@ -88,6 +92,7 @@ export function normaliseerInstellingen(ruw: unknown): Instellingen {
   const status = isObject(r.statusbalk) ? r.statusbalk : {};
   const spelling = isObject(r.spelling) ? r.spelling : {};
   const tekst = isObject(r.tekst) ? r.tekst : {};
+  const updates = isObject(r.updates) ? r.updates : {};
   return {
     taal: isTaalKeuze(r.taal) ? r.taal : s.taal,
     thema: kies(r.thema, ["light", "forge", "systeem"] as const, s.thema),
@@ -120,6 +125,10 @@ export function normaliseerInstellingen(ruw: unknown): Instellingen {
     tekst: {
       sneltoetsprofiel: kies(tekst.sneltoetsprofiel, ["standaard", "word"] as const, "standaard"),
       miniWerkbalk: waarOnwaar(tekst.miniWerkbalk, s.tekst.miniWerkbalk),
+    },
+    updates: {
+      automatisch: waarOnwaar(updates.automatisch, s.updates.automatisch),
+      kanaal: kies(updates.kanaal, ["stabiel", "ontwikkel"] as const, s.updates.kanaal),
     },
   };
 }

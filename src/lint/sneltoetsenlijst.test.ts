@@ -10,6 +10,7 @@ import {
   toetsDelen,
   vasteSneltoetsen,
   zoekSneltoetsen,
+  OPDRACHTEN,
   type SneltoetsModule,
 } from "./sneltoetsenlijst";
 
@@ -88,6 +89,46 @@ describe("sneltoetsenregister", () => {
   it("zoekt in omschrijving en toets", () => {
     expect(zoekSneltoetsen(vasteSneltoetsen, "autosom").map((i) => i.toets)).toEqual(["Alt+="]);
     expect(zoekSneltoetsen(vasteSneltoetsen, "ctrl+shift+s").some((i) => i.toets === "Ctrl+Shift+S")).toBe(true);
+  });
+});
+
+describe("vaste set uit #19 in elke module", () => {
+  const modules: SneltoetsModule[] = ["tekst", "rekenblad", "presentatie"];
+  const geldt = (module: SneltoetsModule, toets: string) =>
+    vasteSneltoetsen.some((i) => normaliseer(i.toets) === normaliseer(toets) && geldtIn(i, module));
+
+  it.each(modules)("%s kent de gangbare kantoortoetsen", (module) => {
+    const vast = ["Ctrl+N", "Ctrl+O", "Ctrl+S", "F12", "Ctrl+P", "Ctrl+Z", "Ctrl+Y", "Ctrl+X", "Ctrl+C", "Ctrl+V", "Ctrl+A", "Ctrl+F", "Ctrl+H", "Ctrl+B", "Ctrl+I", "Ctrl+U", "Ctrl+W"];
+    expect(vast.filter((toets) => !geldt(module, toets))).toEqual([]);
+  });
+
+  it("per module: pagina-einde, cel bewerken, filter en diavoorstelling", () => {
+    expect(geldt("tekst", "Ctrl+Enter")).toBe(true);
+    expect(geldt("rekenblad", "F2")).toBe(true);
+    expect(geldt("rekenblad", "Ctrl+Shift+L")).toBe(true);
+    expect(geldt("presentatie", "F5")).toBe(true);
+    expect(geldt("presentatie", "Shift+F5")).toBe(true);
+  });
+
+  it("Ctrl+N maakt alleen in documenten een nieuw document; E-mail opent een nieuw bericht", () => {
+    const nieuw = vasteSneltoetsen.find((i) => i.module === "algemeen" && i.toets === "Ctrl+N")!;
+    expect(geldtIn(nieuw, "email")).toBe(false);
+    expect(vasteSneltoetsen.find((i) => i.module === "email" && i.toets === "Ctrl+N")?.id).toBe("newMessage");
+  });
+
+  it("toetsen van een ander onderdeel staan uit tot de opdracht is aangemeld", async () => {
+    const { heeftOpdracht, meldOpdrachtAan } = await import("../tekst/menu/opdrachten");
+    const filter = vasteSneltoetsen.find((i) => i.module === "rekenblad" && i.toets === "Ctrl+Shift+L")!;
+    expect(filter.opdracht).toBe(OPDRACHTEN.rekenbladFilter);
+    expect(heeftOpdracht(filter.opdracht!)).toBe(false);
+    const af = meldOpdrachtAan(OPDRACHTEN.rekenbladFilter, () => undefined);
+    expect(heeftOpdracht(filter.opdracht!)).toBe(true);
+    af();
+  });
+
+  it("E-mail, Notities en Database hebben een eigen sectie in het overzicht", () => {
+    for (const module of ["email", "notities", "database"] as SneltoetsModule[])
+      expect(vasteSneltoetsen.filter((i) => i.module === module).length).toBeGreaterThan(5);
   });
 });
 

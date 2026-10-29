@@ -22,6 +22,8 @@ import {
 } from "./lint/editorApi";
 import { useNederlandseInvoer } from "./useNederlandseInvoer";
 import { useHerladen } from "./grafieken/ui/herladen";
+import { laadFiltersUitBestand, maakRekenbladLaag } from "./lint/rekenblad-laag";
+import { werkboekBytes } from "./lint/rekenblad-filter";
 import { werkEigenschappenBij } from "./tekst/info/opslaan";
 import { koppelEditor } from "./export/editorKoppeling";
 import { lettertypeModule } from "./lettertypen/provider";
@@ -102,7 +104,7 @@ export default function OfficeEditor(props: EditorProps) {
       if (props.soort === "xlsx") {
         if (!rekenbladApi) throw new Error(i18next.t("shell:errors.spreadsheetNotReady"));
         await rekenbladApi.version();
-        return rekenbladApi.save();
+        return werkboekBytes(rekenbladApi);
       }
       if (props.soort === "pptx") {
         if (!presentatieApi)
@@ -124,6 +126,9 @@ export default function OfficeEditor(props: EditorProps) {
       }
     },
   });
+  // Filterpijlen, vulgreep en formulehulp boven het raster (#58, #62, #63).
+  const rekenbladLaag = useMemo(maakRekenbladLaag, []);
+  const xlsxPlugins = useMemo(() => [...herladen.plugins, rekenbladLaag.plugin], [herladen.plugins, rekenbladLaag]);
   const herladenRecent = useRef(herladen);
   herladenRecent.current = herladen;
   const apis = useMemo(
@@ -133,8 +138,9 @@ export default function OfficeEditor(props: EditorProps) {
       presentatie: presentatieApi,
       herlaad: herladen.api,
       grafiekSelectie: herladen.grafiekSelectie,
+      rekenbladLaag,
     }),
-    [rekenbladApi, presentatieApi, herladen.api, herladen.grafiekSelectie],
+    [rekenbladApi, presentatieApi, herladen.api, herladen.grafiekSelectie, rekenbladLaag],
   );
   useNederlandseInvoer(rekenbladHost, rekenbladApi);
   // Spellingcontrole en autocorrectie (#21): golflijnen, menu, F7, statusbalk.
@@ -282,8 +288,9 @@ export default function OfficeEditor(props: EditorProps) {
         });
       props.registreer(async () => {
         await api.version();
-        return api.save();
+        return werkboekBytes(api);
       });
+      laadFiltersUitBestand(api, herladenRecent.current.bytes);
       herladenRecent.current.naXlsx(api);
       return () => {
         stopWijziging();
@@ -341,7 +348,8 @@ export default function OfficeEditor(props: EditorProps) {
               loadingIndicator={
                 <p className="office-loading">{t("loading.document")}</p>
               }
-              showRuler={liniaal}
+              // Eigen liniaal (src/tekst/liniaal) in plaats van die van de engine.
+              showRuler={false}
               showOutline={navigatie}
               showOutlineButton={false}
               colorMode="light"
@@ -375,7 +383,7 @@ export default function OfficeEditor(props: EditorProps) {
               <XlsxEditor
                 key={herladen.sleutel}
                 file={herladen.bytes}
-                plugins={herladen.plugins}
+                plugins={xlsxPlugins}
                 fileName={props.naam}
                 onReady={gereedXlsx}
                 onChange={props.gewijzigd}

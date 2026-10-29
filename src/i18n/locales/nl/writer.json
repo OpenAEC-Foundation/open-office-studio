@@ -1045,7 +1045,8 @@
       "tocRemoved": "Inhoudsopgave verwijderd",
       "footnoteInserted": "Voetnoot ingevoegd",
       "endnoteInserted": "Eindnoot ingevoegd",
-      "noteFormatChanged": "Notenopmaak aangepast"
+      "noteFormatChanged": "Notenopmaak aangepast",
+      "marginsChanged": "Marges aangepast"
     },
     "errors": {
       "notReady": "Het document is nog niet gereed.",
@@ -1548,7 +1549,18 @@
       "toText": "Naar tekst",
       "toTextTip": "Tabel converteren naar tekst",
       "split": "Tabel splitsen",
-      "splitTip": "Splitst de tabel boven de rij met de cursor. Het document wordt opnieuw geladen; Ongedaan maken werkt daarna niet voor eerdere stappen."
+      "splitTip": "Splitst de tabel boven de rij met de cursor. Het document wordt opnieuw geladen; Ongedaan maken werkt daarna niet voor eerdere stappen.",
+      "textDirection": "Tekstrichting",
+      "textDirectionTip": "Richting van de tekst in de geselecteerde cellen",
+      "textDirectionHorizontal": "Horizontaal",
+      "textDirectionDown": "90° gedraaid (van boven naar beneden)",
+      "textDirectionUp": "270° gedraaid (van beneden naar boven)",
+      "formula": "Formule",
+      "formulaTip": "Som van de getallen naast de cel; de uitkomst komt als waarde in de cel",
+      "sumAbove": "Som boven",
+      "sumLeft": "Som links",
+      "sumBelow": "Som onder",
+      "sumRight": "Som rechts"
     },
     "row": {
       "title": "Rij-eigenschappen",
@@ -1643,7 +1655,46 @@
       "noBody": "Het document heeft geen hoofdtekst.",
       "tableNotFound": "De tabel is niet gevonden in het document.",
       "splitRow": "Zet de cursor in de rij die de eerste rij van de nieuwe tabel moet worden (niet de eerste rij).",
-      "splitMerged": "De tabel kan hier niet worden gesplitst: een samengevoegde cel loopt over deze rij."
+      "splitMerged": "De tabel kan hier niet worden gesplitst: een samengevoegde cel loopt over deze rij.",
+      "noNumbers": "Geen getallen naast deze cel om op te tellen."
+    }
+  },
+  "ruler": {
+    "horizontal": "Horizontale liniaal",
+    "vertical": "Verticale liniaal",
+    "tabKindTip": "Tabsoort: {{kind}}. Klik om te wisselen.",
+    "tabKinds": {
+      "left": "Linkstab",
+      "center": "Centreertab",
+      "right": "Rechtstab",
+      "decimal": "Decimale tab",
+      "bar": "Staaftab"
+    },
+    "clickHint": "Klik om een {{kind}} te plaatsen. Dubbelklik voor het venster Tabs.",
+    "tabStop": "{{kind}} op {{position}}",
+    "tabHint": "Sleep om te verplaatsen of van de liniaal af om te verwijderen; dubbelklik voor het venster Tabs.",
+    "markers": {
+      "eerste": "Eerste regel inspringen",
+      "verkeerd": "Verkeerd om inspringen",
+      "links": "Links inspringen",
+      "rechts": "Rechts inspringen"
+    },
+    "leftMargin": "Linkermarge",
+    "rightMargin": "Rechtermarge",
+    "topMargin": "Bovenmarge",
+    "bottomMargin": "Ondermarge",
+    "tableColumn": "Kolombreedte slepen (Shift: alleen deze kolom)",
+    "tableRow": "Hoogte van rij {{n}} slepen",
+    "altHint": "Alt: exacte maat",
+    "marginsUnavailable": "Marges slepen kan hier niet; gebruik Indeling › Marges.",
+    "measure": {
+      "indent": "{{name}}: {{value}} cm",
+      "tab": "Tabstop op {{value}} cm",
+      "removeTab": "Loslaten verwijdert de tabstop",
+      "margin": "{{name}}: {{value}} cm",
+      "columns": "Kolom {{a}}: {{wa}} cm · kolom {{b}}: {{wb}} cm",
+      "column": "Kolom {{a}}: {{wa}} cm",
+      "row": "Rij {{n}}: {{value}} cm"
     }
   }
 }

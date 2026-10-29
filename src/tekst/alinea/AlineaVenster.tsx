@@ -16,7 +16,8 @@ import {
   type AlineaFormulier,
 } from "./model";
 
-type Tab = "afstand" | "einden" | "tabs";
+export type AlineaTab = "afstand" | "einden" | "tabs";
+type Tab = AlineaTab;
 
 /** Speciale inspringing met de i18n-sleutel (namespace writer). */
 const speciaalNamen: readonly (readonly [EersteRegel, string])[] = [
@@ -85,11 +86,14 @@ export function AlineaVoorbeeld({ f }: { f: AlineaFormulier }) {
 
 export function AlineaVenster({
   begin,
+  tab: beginTab,
   meerdere,
   toepassen,
   sluit,
 }: {
   begin: AlineaFormulier;
+  /** Het tabblad bij het openen (dubbelklik op de liniaal opent ‘Tabs’). */
+  tab?: AlineaTab;
   /** De selectie raakt meerdere alinea's: alleen gewijzigde velden gelden voor allemaal. */
   meerdere: boolean;
   toepassen: (wijziging: AlineaOpmaak) => void;
@@ -98,7 +102,7 @@ export function AlineaVenster({
   const { t } = useTranslation(["writer", "common"]);
   const { getal } = useOpmaak();
   const opties = <T extends string>(lijst: readonly (readonly [T, string])[]) => lijst.map(([w, k]) => [w, t(k)] as const);
-  const [tab, setTab] = useState<Tab>("afstand");
+  const [tab, setTab] = useState<Tab>(beginTab ?? "afstand");
   const [f, setF] = useState(begin);
   const [nieuweTab, setNieuweTab] = useState(() => volgendeTabPositie(begin.tabs));
   const zet = <K extends keyof AlineaFormulier>(k: K, w: AlineaFormulier[K]) => setF((o) => ({ ...o, [k]: w }));

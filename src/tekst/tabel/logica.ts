@@ -298,3 +298,32 @@ export function rijNietAfbreken(tr: Record<string, unknown> | undefined) {
   const o = tr?._originalFormatting as Record<string, unknown> | undefined;
   return o?.cantSplit === true || tr?.cantSplit === true;
 }
+
+// ---------------------------------------------------------------------------
+// Formule: som van de cellen boven, links, onder of rechts (zoals =SUM(ABOVE))
+
+export type SomRichting = "boven" | "links" | "onder" | "rechts";
+
+/**
+ * Som van de getallen naast cel (`rij`, `kolom`) in een richting, zoals
+ * Word `=SUM(ABOVE)`: aaneengesloten cellen met een getal; een cel zonder
+ * getal (zoals een kopregel) sluit de reeks af, lege cellen direct naast de
+ * cel worden overgeslagen. Null zonder getallen.
+ */
+export function somVan(teksten: readonly (readonly string[])[], rij: number, kolom: number, richting: SomRichting) {
+  const [dr, dk] = richting === "boven" ? [-1, 0] : richting === "onder" ? [1, 0] : richting === "links" ? [0, -1] : [0, 1];
+  let som = 0;
+  let aantal = 0;
+  for (let r = rij + dr, k = kolom + dk; r >= 0 && r < teksten.length && k >= 0 && k < (teksten[r]?.length ?? 0); r += dr, k += dk) {
+    const tekst = teksten[r][k]?.trim() ?? "";
+    if (!tekst) {
+      if (aantal) break;
+      continue;
+    }
+    const n = leesGetal(tekst);
+    if (n === null) break;
+    som += n;
+    aantal++;
+  }
+  return aantal ? { som: Math.round(som * 1e9) / 1e9, aantal } : null;
+}

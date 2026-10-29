@@ -64,6 +64,10 @@ jobs:
       WIN_SIGN: ${{ secrets.AZURE_CLIENT_ID != '' && secrets.AZURE_ENDPOINT != '' && secrets.AZURE_TRUSTED_SIGNING_ACCOUNT_NAME != '' }}
       MAC_SIGN: ${{ secrets.APPLE_CERTIFICATE != '' && secrets.APPLE_SIGNING_IDENTITY != '' && secrets.APPLE_API_KEY != '' }}
       ONDERTEKENEN_VERPLICHT: ${{ github.ref_type == 'tag' }}
+      # Updaters (#26, docs/updates.md): alleen met het organisatiegeheim én een publieke sleutel
+      # in tauri.conf.json. Ontbreekt een van beide, dan wordt gewoon zonder updater-artefacten
+      # gebouwd en staat de updatefunctie in die versie uit.
+      UPDATER_GEHEIM: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY != '' }}
     steps:
       - uses: actions/checkout@v4
       - name: Ondertekening beschikbaar
@@ -91,6 +95,21 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Updater-artefacten (alleen met geheim en publieke sleutel)
+        shell: bash
+        run: |
+          sleutel=$(node -p "((require('./src-tauri/tauri.conf.json').plugins?.updater?.pubkey) ?? '').trim().length > 0")
+          if [ "$UPDATER_GEHEIM" = true ] && [ "$sleutel" = true ]; then
+            printf '%s' '{"bundle":{"createUpdaterArtifacts":true}}' > "$RUNNER_TEMP/updater.conf.json"
+            echo "UPDATER_CONFIG=$RUNNER_TEMP/updater.conf.json" >> "$GITHUB_ENV"
+            echo "Updater-artefacten: aan (ondertekend met TAURI_SIGNING_PRIVATE_KEY)."
+          elif [ "$UPDATER_GEHEIM" = true ]; then
+            echo "::warning::Het geheim TAURI_SIGNING_PRIVATE_KEY bestaat, maar plugins.updater.pubkey in src-tauri/tauri.conf.json is leeg; bouwen zonder updater-artefacten (docs/updates.md)."
+          elif [ "$sleutel" = true ]; then
+            echo "::warning::De publieke updatersleutel staat in tauri.conf.json, maar het geheim TAURI_SIGNING_PRIVATE_KEY ontbreekt; bouwen zonder updater-artefacten (docs/updates.md)."
+          else
+            echo "Updater niet ingericht; bouwen zonder updater-artefacten (docs/updates.md)."
+          fi
       - name: Linux-bouwafhankelijkheden
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev patchelf squashfs-tools poppler-utils
@@ -149,8 +168,17 @@ jobs:
           !(runner.os == 'Windows' && env.WIN_SIGN == 'true') &&
           !(runner.os == 'macOS' && env.MAC_SIGN == 'true')
         shell: bash
+        env:
+          UPDATER_SLEUTEL: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          UPDATER_WACHTWOORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         run: |
-          pnpm desktop:build --bundles ${{ matrix.bundels }}
+          # De updatersleutel alleen voor Office Studio (Database Studio heeft geen updater).
+          if [ -n "${UPDATER_CONFIG:-}" ]; then
+            TAURI_SIGNING_PRIVATE_KEY="$UPDATER_SLEUTEL" TAURI_SIGNING_PRIVATE_KEY_PASSWORD="$UPDATER_WACHTWOORD" \
+              pnpm desktop:build --bundles ${{ matrix.bundels }} --config "$UPDATER_CONFIG"
+          else
+            pnpm desktop:build --bundles ${{ matrix.bundels }}
+          fi
           pnpm database:desktop:build --bundles ${{ matrix.bundels }}
       # Tauri roept signCommand aan voor het programma, de uninstaller en de installer.
       - name: Pakket bouwen (Windows, ondertekend)
@@ -160,9 +188,18 @@ jobs:
           AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          UPDATER_SLEUTEL: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          UPDATER_WACHTWOORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         run: |
-          pnpm desktop:build --bundles ${{ matrix.bundels }} --config "$env:OPS_SIGN_CONFIG"
+          $updater = @()
+          if ($env:UPDATER_CONFIG) {
+            $updater = @('--config', $env:UPDATER_CONFIG)
+            $env:TAURI_SIGNING_PRIVATE_KEY = $env:UPDATER_SLEUTEL
+            $env:TAURI_SIGNING_PRIVATE_KEY_PASSWORD = $env:UPDATER_WACHTWOORD
+          }
+          pnpm desktop:build --bundles ${{ matrix.bundels }} --config "$env:OPS_SIGN_CONFIG" @updater
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Remove-Item Env:TAURI_SIGNING_PRIVATE_KEY, Env:TAURI_SIGNING_PRIVATE_KEY_PASSWORD -ErrorAction SilentlyContinue
           pnpm database:desktop:build --bundles ${{ matrix.bundels }} --config "$env:OPS_SIGN_CONFIG"
       - name: Pakket bouwen (macOS, ondertekend en genotariseerd)
         if: runner.os == 'macOS' && env.MAC_SIGN == 'true'
@@ -174,8 +211,15 @@ jobs:
           APPLE_API_KEY: ${{ secrets.APPLE_API_KEY }}
           APPLE_API_KEY_PATH: ${{ runner.temp }}/apple-api-key.p8
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          UPDATER_SLEUTEL: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          UPDATER_WACHTWOORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         run: |
-          pnpm desktop:build --bundles ${{ matrix.bundels }}
+          if [ -n "${UPDATER_CONFIG:-}" ]; then
+            TAURI_SIGNING_PRIVATE_KEY="$UPDATER_SLEUTEL" TAURI_SIGNING_PRIVATE_KEY_PASSWORD="$UPDATER_WACHTWOORD" \
+              pnpm desktop:build --bundles ${{ matrix.bundels }} --config "$UPDATER_CONFIG"
+          else
+            pnpm desktop:build --bundles ${{ matrix.bundels }}
+          fi
           pnpm database:desktop:build --bundles ${{ matrix.bundels }}
 
       # Poort: installer, geïnstalleerd programma en uninstaller dragen een geldige
@@ -255,6 +299,8 @@ jobs:
             src-tauri/target/release/bundle/**/*.AppImage
             src-tauri/target/release/bundle/**/*-setup.exe
             src-tauri/target/release/bundle/**/*.dmg
+            src-tauri/target/release/bundle/**/*.sig
+            src-tauri/target/release/bundle/macos/*.app.tar.gz
             apps/database-studio/src-tauri/target/release/bundle/**/*.deb
             apps/database-studio/src-tauri/target/release/bundle/**/*.AppImage
             apps/database-studio/src-tauri/target/release/bundle/**/*-setup.exe
@@ -272,17 +318,26 @@ jobs:
     permissions:
       contents: write
     steps:
+      # Alleen het script voor het updatemanifest.
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: scripts
       - uses: actions/download-artifact@v4
         with:
           path: artefacten
-      - name: Bestanden en SHA256SUMS verzamelen
+      - name: Bestanden, updatemanifest en SHA256SUMS verzamelen
+        env:
+          TAG: ${{ github.ref_name }}
+          VERSIE: ${{ needs.versie.outputs.versie }}
         run: |
           mkdir uitgave
-          find artefacten -type f \( -name '*-setup.exe' -o -name '*.dmg' -o -name '*.deb' -o -name '*.AppImage' -o -name 'pakketcontrole-*.json' \) -exec cp {} uitgave/ \;
+          find artefacten -type f \( -name '*-setup.exe' -o -name '*.dmg' -o -name '*.deb' -o -name '*.AppImage' -o -name '*.app.tar.gz' -o -name '*.sig' -o -name 'pakketcontrole-*.json' \) -exec cp {} uitgave/ \;
           cd uitgave
           # GitHub vervangt spaties in namen van uitgavebestanden door punten;
           # zelf hernoemen houdt SHA256SUMS gelijk aan de downloadnamen.
           for bestand in *' '*; do [ -e "$bestand" ] && mv -- "$bestand" "${bestand// /.}"; done
+          # latest.json voor de updater (#26); zonder handtekeningen (geen geheim) wordt het overgeslagen.
+          node ../scripts/maak-latest-json.mjs . "$VERSIE" "$TAG" "Open Office Studio $VERSIE: zie de uitgavenpagina voor de wijzigingen."
           sha256sum -- * > ../SHA256SUMS
           mv ../SHA256SUMS .
           cat SHA256SUMS

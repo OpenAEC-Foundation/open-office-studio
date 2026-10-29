@@ -69,7 +69,8 @@ Alle beelden tonen versie 2026-W44.5 in een lokale productiebuild, met de eigen 
 - **Grafieken** (elf soorten) invoegen en bewerken in documenten, rekenbladen en presentaties.
 - **Spellingcontrole** voor Nederlands, Engels (VK) en Engels (VS) met Hunspell-woordenboeken: golflijnen, suggesties, een F7-venster en autocorrectie.
 - Afdrukvoorbeeld, documentzoom, een inklapbaar lint, een lichte en donkere appweergave, recente bestanden en automatisch herstel na een crash.
-- Op Windows koppelt de installer Office-, OpenDocument-, RTF- en MDB/ACCDB-bestanden aan Open Office Studio (zichtbaar onder *Openen met* en *Standaard-apps*).
+- De installers koppelen Office-, OpenDocument-, RTF- en MDB/ACCDB-bestanden (30 extensies) aan Open Office Studio: op Windows onder *Openen met* en *Standaard-apps*, op macOS als documenttypen (Finder › *Open met*, ook als de app al draait) en op Linux via MIME-typen in het startmenu-item van het DEB/RPM-pakket (meerdere bestanden tegelijk). Een dubbelklik terwijl de app al draait, opent het bestand in het laatst gebruikte venster.
+- Automatische updates (desktop): bij het starten of via Instellingen › Over controleert de app GitHub Releases op een nieuwe, ondertekende versie en installeert die pas na bevestiging. Geen telemetrie; uit te zetten in de instellingen of door de beheerder. Zie [docs/updates.md](docs/updates.md).
 
 Wat per bestandsformaat wel en niet werkt, staat in [docs/formaten.md](docs/formaten.md) en de testverslagen in [docs/tests](docs/tests).
 

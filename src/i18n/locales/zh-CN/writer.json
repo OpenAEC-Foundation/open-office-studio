@@ -1035,7 +1035,8 @@
       "tocRemoved": "已删除目录",
       "footnoteInserted": "已插入脚注",
       "endnoteInserted": "已插入尾注",
-      "noteFormatChanged": "已更改注释格式"
+      "noteFormatChanged": "已更改注释格式",
+      "marginsChanged": "已更改页边距"
     },
     "errors": {
       "notReady": "文档尚未就绪。",
@@ -1537,7 +1538,18 @@
       "toText": "转换为文本",
       "toTextTip": "将表格转换为文本",
       "split": "拆分表格",
-      "splitTip": "在光标所在行的上方拆分表格。文档将重新加载；之后无法撤消之前的步骤。"
+      "splitTip": "在光标所在行的上方拆分表格。文档将重新加载；之后无法撤消之前的步骤。",
+      "textDirection": "文字方向",
+      "textDirectionTip": "所选单元格中的文字方向",
+      "textDirectionHorizontal": "水平",
+      "textDirectionDown": "旋转 90°（从上到下）",
+      "textDirectionUp": "旋转 270°（从下到上）",
+      "formula": "公式",
+      "formulaTip": "对单元格旁边的数字求和；结果以数值形式插入",
+      "sumAbove": "上方求和",
+      "sumLeft": "左侧求和",
+      "sumBelow": "下方求和",
+      "sumRight": "右侧求和"
     },
     "row": {
       "title": "行属性",
@@ -1629,7 +1641,46 @@
       "noBody": "文档没有正文。",
       "tableNotFound": "在文档中找不到该表格。",
       "splitRow": "请将光标置于应成为新表格第一行的行中（不能是第一行）。",
-      "splitMerged": "无法在此处拆分表格：有合并单元格跨越此行。"
+      "splitMerged": "无法在此处拆分表格：有合并单元格跨越此行。",
+      "noNumbers": "此单元格旁边没有可相加的数字。"
+    }
+  },
+  "ruler": {
+    "horizontal": "水平标尺",
+    "vertical": "垂直标尺",
+    "tabKindTip": "制表位类型：{{kind}}。单击以切换。",
+    "tabKinds": {
+      "left": "左对齐制表位",
+      "center": "居中制表位",
+      "right": "右对齐制表位",
+      "decimal": "小数点对齐制表位",
+      "bar": "竖线制表位"
+    },
+    "clickHint": "单击放置{{kind}}。双击打开“制表位”对话框。",
+    "tabStop": "{{position}} 处的{{kind}}",
+    "tabHint": "拖动可移动，拖离标尺可删除；双击打开“制表位”对话框。",
+    "markers": {
+      "eerste": "首行缩进",
+      "verkeerd": "悬挂缩进",
+      "links": "左缩进",
+      "rechts": "右缩进"
+    },
+    "leftMargin": "左边距",
+    "rightMargin": "右边距",
+    "topMargin": "上边距",
+    "bottomMargin": "下边距",
+    "tableColumn": "拖动调整列宽（Shift：仅此列）",
+    "tableRow": "拖动调整第 {{n}} 行的行高",
+    "altHint": "Alt：精确尺寸",
+    "marginsUnavailable": "此处无法拖动边距；请使用“布局 › 页边距”。",
+    "measure": {
+      "indent": "{{name}}：{{value}} 厘米",
+      "tab": "制表位：{{value}} 厘米",
+      "removeTab": "松开即可删除制表位",
+      "margin": "{{name}}：{{value}} 厘米",
+      "columns": "第 {{a}} 列：{{wa}} 厘米 · 第 {{b}} 列：{{wb}} 厘米",
+      "column": "第 {{a}} 列：{{wa}} 厘米",
+      "row": "第 {{n}} 行：{{value}} 厘米"
     }
   }
 }

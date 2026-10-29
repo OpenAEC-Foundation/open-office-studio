@@ -1,0 +1,589 @@
+/* Rekenblad: filterpijlen, vulgreep, formulehulp en vensters (#58, #62, #63). */
+
+/* ---- laag boven het raster ---- */
+.rekenblad-filterpijl {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid #b9c1ca;
+  border-radius: 3px;
+  background: #f7f8fa;
+  color: #49525e;
+  box-shadow: 0 1px 1px #0000000f;
+  cursor: pointer;
+  pointer-events: auto;
+}
+.rekenblad-filterpijl:hover {
+  background: #e9edf1;
+}
+.rekenblad-filterpijl.is-actief {
+  border-color: #217346;
+  background: #e3f0e8;
+  color: #1a5c38;
+}
+.rekenblad-filterpijl:focus-visible {
+  outline: 2px solid #bc6a15;
+  outline-offset: 1px;
+}
+.rekenblad-vulgreep {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  box-sizing: border-box;
+  border: 1px solid #fff;
+  background: #217346;
+  cursor: crosshair;
+  pointer-events: auto;
+  touch-action: none;
+}
+.rekenblad-vulvoorbeeld {
+  position: absolute;
+  box-sizing: border-box;
+  border: 2px dashed #217346;
+  pointer-events: none;
+}
+.rekenblad-markering {
+  position: absolute;
+  box-sizing: border-box;
+  border: 2px solid;
+  pointer-events: none;
+}
+.rekenblad-vulopties {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 18px;
+  padding: 0;
+  border: 1px solid #b9c1ca;
+  border-radius: 3px;
+  background: #fff;
+  color: #3d4552;
+  cursor: pointer;
+  pointer-events: auto;
+}
+.rekenblad-vulopties:hover,
+.rekenblad-vulopties[aria-expanded="true"] {
+  background: #eef2f5;
+}
+
+/* ---- zwevende menu's ---- */
+.rekenblad-menu,
+.rekenblad-filtermenu,
+.rekenblad-aanvullen,
+.rekenblad-argumenthulp {
+  position: fixed;
+  z-index: 950;
+  border: 1px solid #d3d9e0;
+  border-radius: 8px;
+  background: #fff;
+  color: #2c323c;
+  box-shadow: 0 10px 32px #1523382e;
+  font:
+    12px Inter,
+    system-ui,
+    sans-serif;
+}
+.rekenblad-menu {
+  display: grid;
+  min-width: 210px;
+  padding: 4px;
+}
+.rekenblad-menu button,
+.rekenblad-menuregel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 5px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.rekenblad-menu button:hover,
+.rekenblad-menu button:focus-visible,
+.rekenblad-menuregel:hover:not(:disabled) {
+  background: #f1f4f7;
+  outline: none;
+}
+.rekenblad-menuregel:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.rekenblad-menu-vink {
+  width: 12px;
+  color: #217346;
+  font-size: 9px;
+}
+.rekenblad-filtermenu {
+  display: grid;
+  gap: 6px;
+  width: 280px;
+  padding: 6px;
+}
+.rekenblad-segment {
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 6px;
+  background: #f0f3f6;
+}
+.rekenblad-segment button {
+  flex: 1;
+  padding: 4px 6px;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: #4a535f;
+  font: inherit;
+  cursor: pointer;
+}
+.rekenblad-segment .is-gekozen {
+  background: #fff;
+  color: #1e2530;
+  box-shadow: 0 1px 2px #0000001a;
+}
+.rekenblad-filtermenu input:not([type="checkbox"]):not([type="radio"]),
+.rekenblad-filtermenu select {
+  height: 28px;
+  min-width: 0;
+  padding: 0 7px;
+  border: 1px solid #d3d9e0;
+  border-radius: 5px;
+  background: #fff;
+  color: inherit;
+  font: inherit;
+}
+.rekenblad-filterwaarden {
+  display: grid;
+  gap: 4px;
+}
+.rekenblad-vinklijst {
+  display: grid;
+  align-content: start;
+  max-height: 220px;
+  overflow: auto;
+  padding: 4px;
+  border: 1px solid #e1e5ea;
+  border-radius: 5px;
+}
+.rekenblad-vinklijst label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rekenblad-filtervoorwaarden,
+.rekenblad-voorwaarde {
+  display: grid;
+  gap: 4px;
+}
+.rekenblad-voorwaarde {
+  grid-template-columns: 1fr 1fr;
+}
+.rekenblad-enof {
+  display: flex;
+  grid-column: 1 / -1;
+  gap: 12px;
+}
+.rekenblad-enof label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.rekenblad-filtertop {
+  display: grid;
+  grid-template-columns: 1fr 64px 1fr;
+  gap: 4px;
+}
+.rekenblad-menuknoppen {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  padding-top: 2px;
+}
+.rekenblad-menuknoppen button {
+  padding: 5px 10px;
+  border: 1px solid #d3d9e0;
+  border-radius: 6px;
+  background: #fff;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.rekenblad-menuknoppen .rekenblad-primair {
+  border-color: #a95606;
+  background: #a95606;
+  color: #fff;
+}
+.rekenblad-menuknoppen button:disabled {
+  opacity: 0.5;
+}
+.rekenblad-filtermenu :focus-visible,
+.rekenblad-menu :focus-visible {
+  outline: 2px solid #bc6a15;
+  outline-offset: 1px;
+}
+.rekenblad-zacht {
+  margin: 0;
+  color: #737b87;
+  font-size: 11px;
+}
+
+/* ---- formulebalk ---- */
+.office .office-formulebalk {
+  gap: 4px;
+}
+.office .office-formulebalk [data-testid="xlsx-name-box"],
+.office .office-formulebalk [data-testid="xlsx-name-box"] + span {
+  display: none !important;
+}
+.office .office-formulebalk .rekenblad-naamvak {
+  flex: 0 0 auto;
+  width: 96px;
+  height: 28px;
+  box-sizing: border-box;
+  padding: 0 6px;
+  border: 1px solid #dce0e5;
+  border-radius: 3px;
+  background: #fff;
+  color: #2c323c;
+  font:
+    600 12px ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    monospace !important;
+  text-align: center;
+}
+.office .office-formulebalk .rekenblad-naamvak:focus {
+  outline: 2px solid #bc6a15;
+  outline-offset: -1px;
+  text-align: start;
+}
+.rekenblad-fx,
+.rekenblad-uitvouwen {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: none;
+  color: #5d6672;
+  cursor: pointer;
+}
+.rekenblad-fx i {
+  font:
+    italic 700 13px Georgia,
+    serif;
+}
+.rekenblad-fx:hover:not(:disabled),
+.rekenblad-uitvouwen:hover {
+  border-color: #dce0e5;
+  background: #fff;
+}
+.rekenblad-fx:focus-visible,
+.rekenblad-uitvouwen:focus-visible {
+  outline: 2px solid #bc6a15;
+}
+.office .office-formulebalk.is-uitgevouwen {
+  align-items: flex-start;
+}
+.office .office-formulebalk.is-uitgevouwen > div[role="group"] {
+  display: none !important;
+}
+.rekenblad-formule-uitgebreid {
+  flex: 1;
+  min-width: 0;
+  min-height: 72px;
+  box-sizing: border-box;
+  padding: 5px 8px;
+  border: 1px solid #dce0e5;
+  border-radius: 3px;
+  background: #fff;
+  color: #2c323c;
+  font:
+    12px ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    monospace;
+  resize: vertical;
+}
+.rekenblad-formule-uitgebreid:focus {
+  outline: 2px solid #bc6a15;
+  outline-offset: -1px;
+}
+.rekenblad-aanvullen {
+  display: grid;
+  width: min(380px, calc(100vw - 16px));
+  max-height: 300px;
+  overflow: auto;
+  padding: 4px;
+}
+.rekenblad-aanvullen [role="option"] {
+  display: grid;
+  grid-template-columns: minmax(84px, auto) 1fr;
+  gap: 10px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.rekenblad-aanvullen [role="option"] span {
+  overflow: hidden;
+  color: #5c6573;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rekenblad-aanvullen .is-gekozen {
+  background: #e3eee7;
+}
+.rekenblad-aanvullen .rekenblad-zacht {
+  padding: 4px 6px 2px;
+}
+.rekenblad-argumenthulp {
+  max-width: min(460px, calc(100vw - 16px));
+  padding: 6px 9px;
+}
+.rekenblad-argumenthulp p {
+  margin: 4px 0 0;
+  color: #5c6573;
+}
+
+/* ---- vensters ---- */
+.werkruimte-dialoog.rekenblad-venster {
+  width: min(100%, 680px);
+}
+.werkruimte-dialoog.rekenblad-venster.is-smal {
+  width: min(100%, 440px);
+}
+.rekenblad-vensterinhoud {
+  display: grid;
+  gap: 10px;
+}
+.rekenblad-vensterinhoud .rekenblad-zacht {
+  color: var(--w-tekst-zacht, #737b87);
+  font-size: 12px;
+}
+.rekenblad-vinkrij {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.rekenblad-vinkrij label,
+.rekenblad-reeks fieldset label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.rekenblad-niveaus {
+  width: 100%;
+  border-collapse: collapse;
+}
+.rekenblad-niveaus th,
+.rekenblad-niveaus td {
+  padding: 4px;
+  text-align: start;
+  vertical-align: middle;
+  font-weight: normal;
+}
+.rekenblad-niveaus thead th {
+  color: var(--w-tekst-zacht, #737b87);
+  font-size: 12px;
+}
+.rekenblad-niveaus tbody th {
+  white-space: nowrap;
+}
+.rekenblad-venster select,
+.rekenblad-venster input:not([type="checkbox"]):not([type="radio"]) {
+  min-width: 0;
+  max-width: 100%;
+  height: 30px;
+  padding: 0 8px;
+  border: 1px solid var(--w-rand, #d3d9e0);
+  border-radius: 6px;
+  background: var(--w-bg, #fff);
+}
+.rekenblad-kleurkeuze {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.rekenblad-kleurstaal {
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--w-rand, #d3d9e0);
+  border-radius: 3px;
+}
+.rekenblad-niveauknoppen {
+  white-space: nowrap;
+}
+.rekenblad-niveauknoppen button {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: none;
+  cursor: pointer;
+}
+.rekenblad-niveauknoppen button:hover:not(:disabled) {
+  background: var(--w-bg-zacht, #f1f4f7);
+}
+.rekenblad-niveauknoppen button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.rekenblad-toevoegen {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  justify-self: start;
+}
+.rekenblad-reeks {
+  grid-template-columns: 1fr 1fr;
+}
+.rekenblad-reeks fieldset {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--w-rand, #d3d9e0);
+  border-radius: 8px;
+}
+.rekenblad-reeks fieldset:disabled,
+.rekenblad-reeks .is-uit {
+  opacity: 0.5;
+}
+.rekenblad-reeks .rekenblad-velden,
+.rekenblad-reeks > p {
+  grid-column: 1 / -1;
+}
+.rekenblad-velden {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.rekenblad-velden label,
+.rekenblad-functiezoek label {
+  display: grid;
+  gap: 4px;
+}
+.rekenblad-functiezoek {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 10px;
+}
+.rekenblad-functiekolommen {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: 14px;
+  min-height: 300px;
+}
+.rekenblad-functielijst {
+  max-height: 360px;
+  overflow: auto;
+  padding: 3px;
+  border: 1px solid var(--w-rand, #d3d9e0);
+  border-radius: 6px;
+}
+.rekenblad-functielijst [role="option"] {
+  padding: 3px 6px;
+  border-radius: 4px;
+  font:
+    12px ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    monospace;
+  cursor: pointer;
+}
+.rekenblad-functielijst .is-gekozen {
+  background: var(--w-accent, #f59e0b);
+  color: var(--w-accent-tekst, #1c1c20);
+}
+.rekenblad-functiedetail {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  min-width: 0;
+}
+.rekenblad-functiedetail p {
+  margin: 0;
+}
+.rekenblad-syntaxis,
+.rekenblad-formulevoorbeeld code {
+  font:
+    600 12px ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    monospace;
+  overflow-wrap: anywhere;
+}
+.rekenblad-argumenten {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--w-rand, #d3d9e0);
+  border-radius: 8px;
+  max-height: 240px;
+  overflow: auto;
+}
+.rekenblad-argumenten label {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  align-items: center;
+  gap: 8px;
+}
+.rekenblad-argumenten label span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font:
+    12px ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    monospace;
+}
+.rekenblad-argumenten label em {
+  color: var(--w-tekst-zacht, #737b87);
+  font: inherit;
+  font-style: italic;
+}
+.rekenblad-argumenten .is-actief span {
+  font-weight: 700;
+}
+.rekenblad-formulevoorbeeld span {
+  color: var(--w-tekst-zacht, #737b87);
+}
+
+@media (max-width: 640px) {
+  .rekenblad-functiekolommen,
+  .rekenblad-functiezoek,
+  .rekenblad-reeks,
+  .rekenblad-velden {
+    grid-template-columns: 1fr;
+  }
+  .rekenblad-argumenten label {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (forced-colors: active) {
+  .rekenblad-vulgreep {
+    background: Highlight;
+  }
+  .rekenblad-markering,
+  .rekenblad-vulvoorbeeld {
+    border-color: Highlight !important;
+  }
+}

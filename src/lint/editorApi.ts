@@ -2,6 +2,7 @@ import { createContext, useContext } from "react";
 import type { DocxEditorRef } from "@betteroffice/docx-react";
 import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
 import type { PptxEditorApi } from "@betteroffice/pptx-react";
+import type { RekenbladLaag } from "./rekenblad-laag";
 
 /** Directe engine-API voor opdrachten die niet als lintopdracht bestaan. */
 export interface EditorApis {
@@ -12,6 +13,8 @@ export interface EditorApis {
   herlaad?: Herladen | null;
   /** Rekenblad: id van de geselecteerde grafiek, zoals de engine die geeft. */
   grafiekSelectie?: GrafiekSelectie | null;
+  /** Rekenblad: eigen laag boven het raster (selectie, filterpijlen, vulgreep). */
+  rekenbladLaag?: RekenbladLaag | null;
 }
 
 /** Waar de editor na herladen naartoe gaat. */

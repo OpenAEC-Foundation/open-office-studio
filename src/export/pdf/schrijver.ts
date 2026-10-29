@@ -10,11 +10,16 @@
  *    niet-Latijnse tekens, via ToUnicode);
  *  - zijn koppelingen klikbaar (Link-annotaties), staan bladwijzers in de
  *    inhoudsopgave en komen documenteigenschappen in Info en XMP.
- * Een volledig vectoriële PDF met ingesloten lettertypesubsets is de volgende
- * stap; die vraagt dat de engines hun glyphs per lettertype prijsgeven.
+ *
+ * Vectorpagina's (#18): waar de opname van het paginacanvas zich laat
+ * omzetten (`vector.ts`), krijgt de pagina een eigen inhoudsstroom met
+ * vectoren, echte tekst in ingesloten, uitgedunde TrueType-lettertypen
+ * (CIDFontType2, Identity-H, ToUnicode) en afbeeldingen. Die pagina's delen
+ * één bronnenwoordenboek. Anders blijft het beeld met tekstlaag hierboven.
  */
 import { zlibSync } from "fflate";
 import { GLYPH_BREEDTE, glyphloosLettertype } from "./glyphloos.ts";
+import { getal } from "./getal.ts";
 
 export type PdfBeeld =
   | { soort: "jpeg"; breedte: number; hoogte: number; bytes: Uint8Array }
@@ -41,6 +46,8 @@ export interface PdfKoppeling {
 export interface PdfPagina {
   breedte: number;
   hoogte: number;
+  /** Inhoudsstroom met vectoren (gebruikt `PdfDocument.bronnen`); dan geen beeld of tekstlaag. */
+  vector?: string;
   beeld?: PdfBeeld;
   tekst?: PdfTekst[];
   koppelingen?: PdfKoppeling[];
@@ -50,6 +57,49 @@ export interface PdfBladwijzer {
   titel: string;
   pagina: number;
   y?: number;
+}
+
+export interface PdfFont {
+  naam: string;
+  /** PostScript-naam met deelverzamelingsprefix, zoals ABCDEF+Carlito. */
+  basisnaam: string;
+  bestand: Uint8Array;
+  eenheden: number;
+  stijgen: number;
+  dalen: number;
+  kader: [number, number, number, number];
+  cursiefHoek: number;
+  hoofdletter: number;
+  vast: boolean;
+  /** [glyph, breedte in lettertype-eenheden], oplopend. */
+  breedtes: [number, number][];
+  /** [glyph, tekst] voor ToUnicode. */
+  unicode: [number, string][];
+}
+
+export interface PdfBeeldStroom {
+  breedte: number;
+  hoogte: number;
+  filter: "DCTDecode" | "FlateDecode";
+  kleuren: 1 | 3;
+  /** PNG-voorspeller (Predictor 15) in de Flate-gegevens. */
+  voorspeller: boolean;
+  bytes: Uint8Array;
+  masker?: PdfBeeldStroom;
+}
+
+export interface PdfVerloop {
+  naam: string;
+  soort: 2 | 3;
+  coords: number[];
+  stops: { t: number; kleur: [number, number, number] }[];
+}
+
+export interface PdfBronnen {
+  fonts: PdfFont[];
+  beelden: { naam: string; stroom: PdfBeeldStroom }[];
+  toestanden: { naam: string; ca: number; CA: number }[];
+  verlopen: PdfVerloop[];
 }
 
 export interface PdfDocument {
@@ -63,6 +113,8 @@ export interface PdfDocument {
   datum?: Date;
   paginas: PdfPagina[];
   bladwijzers?: PdfBladwijzer[];
+  /** Gedeelde bronnen van de vectorpagina's. */
+  bronnen?: PdfBronnen;
 }
 
 const enc = new TextEncoder();
@@ -92,12 +144,7 @@ function latin1(s: string) {
   return b;
 }
 
-/** Getal zonder exponent en met hooguit 3 decimalen. */
-export const getal = (n: number) => {
-  if (!Number.isFinite(n)) return "0";
-  const r = Math.round(n * 1000) / 1000;
-  return Object.is(r, -0) ? "0" : String(r);
-};
+export { getal };
 
 /** Tekststring als UTF-16BE met BOM in hex (voor Info, bladwijzers). */
 export function pdfTekst(s: string) {
@@ -196,25 +243,33 @@ export function schrijfPdf(doc: PdfDocument): Uint8Array {
   const paginaBoom = reserveer();
   const info = reserveer();
   const metadata = reserveer();
-  const lettertype = reserveer();
-  const cidFont = reserveer();
-  const beschrijving = reserveer();
-  const fontBestand = reserveer();
-  const toUnicode = reserveer();
-  const cidNaarGid = reserveer();
+  // Het glyphloze lettertype alleen als er een onzichtbare tekstlaag is.
+  let glyphloos: { lettertype: number; cidFont: number; beschrijving: number; fontBestand: number; toUnicode: number; cidNaarGid: number } | null = null;
+  const glyphloosNrs = () =>
+    (glyphloos ??= {
+      lettertype: reserveer(),
+      cidFont: reserveer(),
+      beschrijving: reserveer(),
+      fontBestand: reserveer(),
+      toUnicode: reserveer(),
+      cidNaarGid: reserveer(),
+    });
   const tekenset = new Tekenset();
+  // Bronnen van de vectorpagina's: één woordenboek, alleen als er vectorpagina's zijn.
+  const bronnenNr = doc.paginas.some((p) => p.vector) && doc.bronnen ? reserveer() : 0;
 
   const paginaNummers: number[] = [];
   doc.paginas.forEach((pagina) => {
     const nr = reserveer();
     paginaNummers.push(nr);
     const inhoudNr = reserveer();
-    const beeldNr = pagina.beeld ? reserveer() : 0;
+    const beeldNr = pagina.beeld && !(pagina.vector !== undefined && bronnenNr) ? reserveer() : 0;
     const B = pagina.breedte;
     const H = pagina.hoogte;
-    let inhoud = "";
-    if (pagina.beeld) inhoud += `q\n${getal(B)} 0 0 ${getal(H)} 0 0 cm\n/Im0 Do\nQ\n`;
-    const stukken = (pagina.tekst ?? []).filter(
+    const vector = pagina.vector !== undefined && bronnenNr ? pagina.vector : null;
+    let inhoud = vector ?? "";
+    if (pagina.beeld && vector === null) inhoud += `q\n${getal(B)} 0 0 ${getal(H)} 0 0 cm\n/Im0 Do\nQ\n`;
+    const stukken = (vector === null ? pagina.tekst ?? [] : []).filter(
       (t) => t.tekst.length > 0 && t.grootte > 0.5 && Number.isFinite(t.x + t.y + t.breedte),
     );
     if (stukken.length) {
@@ -241,13 +296,16 @@ export function schrijfPdf(doc: PdfDocument): Uint8Array {
         `<< /Type /Annot /Subtype /Link /Rect [${getal(k.x)} ${getal(H - k.y - k.hoogte)} ${getal(k.x + k.breedte)} ${getal(H - k.y)}] /Border [0 0 0] /A << /S /URI /URI ${pdfLetterlijk(url)} >> >>`,
       );
     }
-    const middelen = `<< /ProcSet [/PDF /Text /ImageC]${pagina.beeld ? ` /XObject << /Im0 ${beeldNr} 0 R >>` : ""}${stukken.length ? ` /Font << /F0 ${lettertype} 0 R >>` : ""} >>`;
+    const middelen =
+      vector !== null
+        ? `${bronnenNr} 0 R`
+        : `<< /ProcSet [/PDF /Text /ImageC]${pagina.beeld ? ` /XObject << /Im0 ${beeldNr} 0 R >>` : ""}${stukken.length ? ` /Font << /F0 ${glyphloosNrs().lettertype} 0 R >>` : ""} >>`;
     object(
       nr,
       `<< /Type /Page /Parent ${paginaBoom} 0 R /MediaBox [0 0 ${getal(B)} ${getal(H)}] /Resources ${middelen} /Contents ${inhoudNr} 0 R${annotaties.length ? ` /Annots [${annotaties.map((a) => `${a} 0 R`).join(" ")}]` : ""} >>`,
     );
     object(inhoudNr, `<< /Length ${inhoudBytes.length} /Filter /FlateDecode >>`, inhoudBytes);
-    if (pagina.beeld) {
+    if (pagina.beeld && vector === null) {
       const b = pagina.beeld;
       if (b.soort === "jpeg")
         object(
@@ -266,7 +324,11 @@ export function schrijfPdf(doc: PdfDocument): Uint8Array {
     }
   });
 
+  if (bronnenNr && doc.bronnen) schrijfBronnen(doc.bronnen, bronnenNr, reserveer, object);
+
   // Lettertype voor de onzichtbare tekstlaag.
+  if (glyphloos) {
+  const { lettertype, cidFont, beschrijving, fontBestand, toUnicode, cidNaarGid } = glyphloos;
   const font = glyphloosLettertype();
   const fontStroom = zlibSync(font, { level: 9 });
   object(
@@ -289,6 +351,7 @@ export function schrijfPdf(doc: PdfDocument): Uint8Array {
   for (let cid = 1; cid <= tekenset.aantal; cid++) kaart[cid * 2 + 1] = 1;
   const kaartStroom = zlibSync(kaart, { level: 9 });
   object(cidNaarGid, `<< /Length ${kaartStroom.length} /Filter /FlateDecode >>`, kaartStroom);
+  }
 
   object(
     paginaBoom,
@@ -382,4 +445,129 @@ function idVan(lengte: number, paginas: number, titel: string, datum: Date) {
     .map((n) => n.toString(16).padStart(8, "0"))
     .join("")
     .toUpperCase();
+}
+
+type Schrijf = (nr: number, inhoud: string | Uint8Array, stroom?: Uint8Array) => void;
+
+/** ToUnicode-tabel voor glyph → tekst. */
+function unicodeTabel(paren: [number, string][]) {
+  const regels: string[] = [];
+  for (let i = 0; i < paren.length; i += 100) {
+    const blok = paren.slice(i, i + 100);
+    regels.push(`${blok.length} beginbfchar`);
+    for (const [g, tekst] of blok) {
+      let hex = "";
+      for (let j = 0; j < tekst.length; j++) hex += tekst.charCodeAt(j).toString(16).padStart(4, "0");
+      regels.push(`<${g.toString(16).padStart(4, "0")}> <${hex || "0020"}>`);
+    }
+    regels.push("endbfchar");
+  }
+  return `/CIDInit /ProcSet findresource begin
+12 dict begin
+begincmap
+/CIDSystemInfo << /Registry (Adobe) /Ordering (UCS) /Supplement 0 >> def
+/CMapName /Adobe-Identity-UCS def
+/CMapType 2 def
+1 begincodespacerange
+<0000> <FFFF>
+endcodespacerange
+${regels.join("\n")}
+endcmap
+CMapName currentdict /CMap defineresource pop
+end
+end`;
+}
+
+/** /W-reeks: opeenvolgende glyphs in één groep. */
+function breedteReeks(breedtes: [number, number][], schaal: number) {
+  const delen: string[] = [];
+  let i = 0;
+  while (i < breedtes.length) {
+    const start = breedtes[i][0];
+    const groep: string[] = [];
+    let j = i;
+    while (j < breedtes.length && breedtes[j][0] === start + (j - i)) {
+      groep.push(getal(breedtes[j][1] * schaal));
+      j++;
+    }
+    delen.push(`${start} [${groep.join(" ")}]`);
+    i = j;
+  }
+  return `[${delen.join(" ")}]`;
+}
+
+function beeldObject(stroom: PdfBeeldStroom, nr: number, reserveer: () => number, object: Schrijf) {
+  const masker = stroom.masker ? reserveer() : 0;
+  const parms = stroom.voorspeller
+    ? ` /DecodeParms << /Predictor 15 /Colors ${stroom.kleuren} /BitsPerComponent 8 /Columns ${stroom.breedte} >>`
+    : "";
+  object(
+    nr,
+    `<< /Type /XObject /Subtype /Image /Width ${stroom.breedte} /Height ${stroom.hoogte} /ColorSpace /${stroom.kleuren === 1 ? "DeviceGray" : "DeviceRGB"} /BitsPerComponent 8 /Filter /${stroom.filter}${parms}${masker ? ` /SMask ${masker} 0 R` : ""} /Length ${stroom.bytes.length} >>`,
+    stroom.bytes,
+  );
+  if (stroom.masker) beeldObject(stroom.masker, masker, reserveer, object);
+}
+
+function functie(stops: PdfVerloop["stops"]) {
+  const kleur = (k: [number, number, number]) => k.map(getal).join(" ");
+  const lijst = [...stops].sort((a, b) => a.t - b.t).map((s) => ({ ...s, t: Math.max(0, Math.min(1, s.t)) }));
+  if (!lijst.length) return "<< /FunctionType 2 /Domain [0 1] /C0 [0 0 0] /C1 [0 0 0] /N 1 >>";
+  if (lijst[0].t > 0) lijst.unshift({ ...lijst[0], t: 0 });
+  if (lijst[lijst.length - 1].t < 1) lijst.push({ ...lijst[lijst.length - 1], t: 1 });
+  if (lijst.length === 1) lijst.push({ ...lijst[0], t: 1 });
+  const stuk = (a: (typeof lijst)[number], b: (typeof lijst)[number]) =>
+    `<< /FunctionType 2 /Domain [0 1] /C0 [${kleur(a.kleur)}] /C1 [${kleur(b.kleur)}] /N 1 >>`;
+  if (lijst.length === 2) return stuk(lijst[0], lijst[1]);
+  const grenzen: number[] = [];
+  for (let i = 1; i < lijst.length - 1; i++) {
+    const vorige = grenzen.length ? grenzen[grenzen.length - 1] : 0;
+    grenzen.push(Math.min(1, Math.max(lijst[i].t, vorige + 1e-4)));
+  }
+  const functies = lijst.slice(0, -1).map((a, i) => stuk(a, lijst[i + 1]));
+  return `<< /FunctionType 3 /Domain [0 1] /Functions [${functies.join(" ")}] /Bounds [${grenzen.map(getal).join(" ")}] /Encode [${functies.map(() => "0 1").join(" ")}] >>`;
+}
+
+/** Schrijft het gedeelde bronnenwoordenboek van de vectorpagina's en alles waarnaar het verwijst. */
+function schrijfBronnen(bronnen: PdfBronnen, nr: number, reserveer: () => number, object: Schrijf) {
+  const fonts: string[] = [];
+  for (const f of bronnen.fonts) {
+    const type0 = reserveer();
+    const cid = reserveer();
+    const beschrijving = reserveer();
+    const bestand = reserveer();
+    const tu = reserveer();
+    fonts.push(`/${f.naam} ${type0} 0 R`);
+    const schaal = 1000 / f.eenheden;
+    const naam = `/${f.basisnaam}`;
+    object(type0, `<< /Type /Font /Subtype /Type0 /BaseFont ${naam} /Encoding /Identity-H /DescendantFonts [${cid} 0 R] /ToUnicode ${tu} 0 R >>`);
+    object(
+      cid,
+      `<< /Type /Font /Subtype /CIDFontType2 /BaseFont ${naam} /CIDSystemInfo << /Registry (Adobe) /Ordering (Identity) /Supplement 0 >> /FontDescriptor ${beschrijving} 0 R /DW 0 /W ${breedteReeks(f.breedtes, schaal)} /CIDToGIDMap /Identity >>`,
+    );
+    const vlaggen = 4 | (f.vast ? 1 : 0) | (f.cursiefHoek ? 64 : 0);
+    object(
+      beschrijving,
+      `<< /Type /FontDescriptor /FontName ${naam} /Flags ${vlaggen} /FontBBox [${f.kader.map((v) => getal(v * schaal)).join(" ")}] /ItalicAngle ${getal(f.cursiefHoek)} /Ascent ${getal(f.stijgen * schaal)} /Descent ${getal(f.dalen * schaal)} /CapHeight ${getal(f.hoofdletter * schaal)} /StemV 80 /FontFile2 ${bestand} 0 R >>`,
+    );
+    const gepakt = zlibSync(f.bestand, { level: 9 });
+    object(bestand, `<< /Length ${gepakt.length} /Length1 ${f.bestand.length} /Filter /FlateDecode >>`, gepakt);
+    const cmap = zlibSync(enc.encode(unicodeTabel(f.unicode)), { level: 9 });
+    object(tu, `<< /Length ${cmap.length} /Filter /FlateDecode >>`, cmap);
+  }
+  const beelden: string[] = [];
+  for (const b of bronnen.beelden) {
+    const n = reserveer();
+    beelden.push(`/${b.naam} ${n} 0 R`);
+    beeldObject(b.stroom, n, reserveer, object);
+  }
+  const toestanden = bronnen.toestanden.map((t) => `/${t.naam} << /Type /ExtGState /ca ${getal(t.ca)} /CA ${getal(t.CA)} >>`);
+  const verlopen = bronnen.verlopen.map(
+    (v) =>
+      `/${v.naam} << /ShadingType ${v.soort} /ColorSpace /DeviceRGB /Coords [${v.coords.map(getal).join(" ")}] /Function ${functie(v.stops)} /Extend [true true] >>`,
+  );
+  object(
+    nr,
+    `<< /ProcSet [/PDF /Text /ImageB /ImageC]${fonts.length ? ` /Font << ${fonts.join(" ")} >>` : ""}${beelden.length ? ` /XObject << ${beelden.join(" ")} >>` : ""}${toestanden.length ? ` /ExtGState << ${toestanden.join(" ")} >>` : ""}${verlopen.length ? ` /Shading << ${verlopen.join(" ")} >>` : ""} >>`,
+  );
 }

@@ -31,6 +31,8 @@ export interface RekenbladStatusInfo {
   /** Null bij één cel of een te grote selectie. */
   statistiek: Statistiek | null;
   cellen: number;
+  /** Zichtbare en totale gegevensrijen als een filter op het blad criteria heeft (#62). */
+  filter?: { zichtbaar: number; totaal: number } | null;
 }
 
 export interface PresentatieStatusInfo {

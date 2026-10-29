@@ -7,6 +7,7 @@
  */
 import { useSyncExternalStore } from "react";
 import { defineDocxPlugin, type DocxGeometryTarget, type DocxPluginGeometry } from "@betteroffice/docx-react";
+import { geometriePlugin } from "../liniaal/geometriePlugin";
 
 export type Markeersoort = "zoek" | "zoekHuidig" | "balk";
 export interface Markering {
@@ -91,4 +92,4 @@ export const markeringPlugin = defineDocxPlugin<Record<string, never>>({
 });
 
 /** De plug-ins die Open Tekst Studio aan elke tekst-editor geeft. */
-export const TEKST_PLUGINS = [markeringPlugin];
+export const TEKST_PLUGINS = [markeringPlugin, geometriePlugin];

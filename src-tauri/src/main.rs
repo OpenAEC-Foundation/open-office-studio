@@ -8,6 +8,7 @@ mod lettertypen;
 mod recent;
 mod systeembestanden;
 mod taal;
+mod updates;
 mod vensters;
 mod werkbestanden;
 mod voorkeuren;
@@ -186,6 +187,9 @@ fn main() {
                 systeembestanden::ontvang(app, paden);
             },
         ))
+        // Updates (#26): de plugin controleert handtekeningen; kanaal en bediening in updates.rs.
+        .plugin(tauri_plugin_updater::Builder::new().build())
+        .manage(updates::Updates::default())
         .manage(vensters::Vensters::default())
         .manage(werkbestanden::Werkbestanden::default())
         .manage(recent::Recent::default())
@@ -248,6 +252,10 @@ fn main() {
             voorkeuren::lees_voorkeuren,
             voorkeuren::bewaar_voorkeuren,
             taal::zet_taal,
+            updates::update_status,
+            updates::controleer_update,
+            updates::installeer_update,
+            updates::open_releasepagina,
             email::email_accounts,
             email::email_bewaar_account,
             email::email_verwijder_account,

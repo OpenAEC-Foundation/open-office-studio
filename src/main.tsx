@@ -16,11 +16,19 @@ import "./stijl/openaec-office.css";
 bewaarWasmInGeheugen();
 // In de SuperCloud-werkplek: opslaan en openen via de gastpagina (src/werkplek.ts).
 installeerWerkplekHost(versie.versie);
+// Desktop: het voorstellingsvenster op een tweede monitor (src/presentatie/toeschouwerKanaal.ts).
+const voorstelling = new URLSearchParams(location.search).get("voorstelling");
 // Eerst de gekozen taal laden (een eigen chunk behalve nl/en), dan pas tekenen.
-void taalGereed.finally(() =>
-  createRoot(document.getElementById("root")!).render(
+void taalGereed.finally(async () => {
+  const wortel = createRoot(document.getElementById("root")!);
+  if (voorstelling) {
+    const { ToeschouwerVenster } = await import("./presentatie/ToeschouwerVenster");
+    wortel.render(<ToeschouwerVenster sessie={voorstelling} />);
+    return;
+  }
+  wortel.render(
     <React.StrictMode>
       <OfficeStudio />
     </React.StrictMode>,
-  ),
-);
+  );
+});
