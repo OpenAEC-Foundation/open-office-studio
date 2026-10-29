@@ -3,6 +3,8 @@
  * magische bytes. De inhoud wint van de naam: een "foto.jpg" die een PDF is,
  * wordt als PDF getoond (met een waarschuwing over de misleidende naam).
  */
+import i18next from "../../../../src/i18n/config";
+import { formatGetal } from "../../../../src/i18n/opmaak";
 import type { Kantoorsoort, Voorbeeldsoort } from "./contract";
 
 export type Afbeeldingtype = "jpeg" | "png" | "gif" | "webp" | "bmp" | "svg";
@@ -46,10 +48,12 @@ const KANTOOR_EXT: Record<string, Kantoorsoort> = {
 export const MIME_AFBEELDING: Record<Afbeeldingtype, string> = {
   jpeg: "image/jpeg", png: "image/png", gif: "image/gif", webp: "image/webp", bmp: "image/bmp", svg: "image/svg+xml",
 };
-const SOORTNAAM: Record<Voorbeeldsoort, string> = {
-  pdf: "PDF", dwg: "DWG-tekening", dxf: "DXF-tekening", ifc: "IFC-model", markdown: "Markdown",
-  tekst: "tekst", afbeelding: "afbeelding", office: "Office-document", onbekend: "onbekend bestand",
+/** Sleutel onder `email:preview.detection.kinds` per soort. */
+const SOORTSLEUTEL: Record<Voorbeeldsoort, string> = {
+  pdf: "pdf", dwg: "dwg", dxf: "dxf", ifc: "ifc", markdown: "markdown",
+  tekst: "text", afbeelding: "image", office: "office", onbekend: "unknown",
 };
+const tk = (sleutel: string, opties?: Record<string, unknown>) => i18next.t(`email:preview.detection.${sleutel}`, opties);
 
 function begintMet(b: Uint8Array, s: string, vanaf = 0): boolean {
   if (b.length < vanaf + s.length) return false;
@@ -152,7 +156,7 @@ export function herkenSoort(bestandsnaam: string, inhoudstype: string, kop?: Uin
     // Kenmerkende, maar niet te tonen inhoud: alleen Office mag op naam blijven
     // (bijv. een .xlsx die als ZIP zonder bekende ingang begint).
     if (naam.soort === "office" && begintMet(kop, "PK\x03\x04")) return { ...naam, extensie, opInhoud: false };
-    const w = naam.soort !== "onbekend" ? `De naam wijst op ${SOORTNAAM[naam.soort]}, maar de inhoud is iets anders.` : undefined;
+    const w = naam.soort !== "onbekend" ? tk("contentDiffers", { kind: soortnaam(naam.soort) }) : undefined;
     return { soort: "onbekend", extensie, opInhoud: true, waarschuwing: w };
   }
   if (inhoud) {
@@ -163,16 +167,21 @@ export function herkenSoort(bestandsnaam: string, inhoudstype: string, kop?: Uin
     if (!zelfde && naam.soort === "tekst" && (inhoud.afbeelding === "svg" || inhoud.soort === "dxf"))
       return { ...naam, extensie, opInhoud: false };
     if (!zelfde && naam.soort !== "onbekend")
-      r.waarschuwing = `Deze bijlage heet “.${extensie || "?"}” (${SOORTNAAM[naam.soort]}), maar de inhoud is ${SOORTNAAM[inhoud.soort]}${inhoud.afbeelding ? ` (${inhoud.afbeelding.toUpperCase()})` : ""}.`;
+      r.waarschuwing = tk(inhoud.afbeelding ? "mismatchSubtype" : "mismatch", {
+        extension: extensie || "?",
+        named: soortnaam(naam.soort),
+        actual: soortnaam(inhoud.soort),
+        subtype: inhoud.afbeelding?.toUpperCase(),
+      });
     return r;
   }
   // Geen kenmerkende inhoud.
   if (naam.soort === "tekst" || naam.soort === "markdown" || naam.soort === "dxf") {
     if (lijktTekst(kop)) return { ...naam, extensie, opInhoud: false };
-    return { soort: "onbekend", extensie, opInhoud: true, waarschuwing: `De naam wijst op ${SOORTNAAM[naam.soort]}, maar de inhoud is binair.` };
+    return { soort: "onbekend", extensie, opInhoud: true, waarschuwing: tk("contentBinary", { kind: soortnaam(naam.soort) }) };
   }
   if (naam.soort === "afbeelding" && naam.afbeelding === "svg") {
-    return { soort: "onbekend", extensie, opInhoud: true, waarschuwing: "De naam wijst op een SVG-afbeelding, maar de inhoud is geen SVG." };
+    return { soort: "onbekend", extensie, opInhoud: true, waarschuwing: tk("notSvg") };
   }
   if (naam.soort === "onbekend") {
     // Onbekende naam maar leesbare tekst: als tekst tonen.
@@ -186,17 +195,21 @@ export function herkenSoort(bestandsnaam: string, inhoudstype: string, kop?: Uin
     soort: "onbekend",
     extensie,
     opInhoud: false,
-    waarschuwing: `De naam wijst op ${SOORTNAAM[naam.soort]}, maar de inhoud heeft niet de bijbehorende kenmerken.`,
+    waarschuwing: tk("signatureMissing", { kind: soortnaam(naam.soort) }),
   };
 }
 
+/** Naam van de soort in de interfacetaal, zoals hij midden in een zin staat. */
 export function soortnaam(s: Voorbeeldsoort): string {
-  return SOORTNAAM[s];
+  return tk(`kinds.${SOORTSLEUTEL[s]}`);
 }
 
+/** Grootte met binaire eenheden (1024) en het getalformaat van de interfacetaal. */
 export function grootteTekst(bytes: number): string {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} kB`;
-  if (bytes < 1024 * 1024 * 1024) return `${(bytes / 1024 / 1024).toFixed(1).replace(".", ",")} MB`;
-  return `${(bytes / 1024 / 1024 / 1024).toFixed(2).replace(".", ",")} GB`;
+  const g = (n: number, cijfers: number) =>
+    formatGetal(n, { minimumFractionDigits: cijfers, maximumFractionDigits: cijfers, useGrouping: false });
+  if (bytes < 1024) return `${g(bytes, 0)} B`;
+  if (bytes < 1024 * 1024) return `${g(Math.round(bytes / 1024), 0)} kB`;
+  if (bytes < 1024 * 1024 * 1024) return `${g(bytes / 1024 / 1024, 1)} MB`;
+  return `${g(bytes / 1024 / 1024 / 1024, 2)} GB`;
 }

@@ -21,8 +21,26 @@ function fontsUitPublic(): Plugin {
 export default defineConfig({
   plugins: [fontsUitPublic()],
   // Worktrees van agents en lokale proefuitvoer niet dubbel meetellen.
-  test: { exclude: [...configDefaults.exclude, ".claude/**", ".local/**"] },
+  test: {
+    exclude: [...configDefaults.exclude, ".claude/**", ".local/**"],
+    // Tests in het Nederlands, ongeacht de systeemtaal (zie docs/i18n.md).
+    setupFiles: ["src/i18n/testopzet.ts"],
+  },
   worker: { format: "es" },
+  build: {
+    rollupOptions: {
+      output: {
+        // Elke interfacetaal behalve nl/en is één chunk (zie docs/i18n.md).
+        manualChunks(id) {
+          const taal = /\/src\/i18n\/locales\/([^/]+)\//.exec(id)?.[1];
+          if (taal && taal !== "nl" && taal !== "en") return `i18n-${taal}`;
+          if (/\/src\/i18n\/engine\/([^/]+)\.ts$/.test(id))
+            return `engine-${/\/engine\/([^/]+)\.ts$/.exec(id)![1]}`;
+          return undefined;
+        },
+      },
+    },
+  },
   resolve: {
     alias: {
       stream: "stream-browserify",

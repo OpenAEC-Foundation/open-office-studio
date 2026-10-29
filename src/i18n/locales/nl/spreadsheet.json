@@ -1,0 +1,92 @@
+{
+  "formulaCheck": {
+    "titleWarning": "Controleer de formules in dit rekenblad",
+    "titleInfo": "Opmerkingen over de formules in dit rekenblad",
+    "cells_one": "{{count}} cel",
+    "cells_other": "{{count}} cellen",
+    "examplesMore_one": "{{list}} en {{count}} meer",
+    "examplesMore_other": "{{list}} en {{count}} meer",
+    "userFunction": "Gebruikersfunctie (macro of invoegtoepassing)",
+    "function": "Functie",
+    "notCalculated": "{{kind}} {{name}} wordt niet berekend ({{cells}}: {{examples}}). De opgeslagen uitkomst blijft staan en wordt niet bijgewerkt; afhankelijke cellen kunnen verouderd zijn.",
+    "recalculated_one": "{{cells}} had een verouderde opgeslagen uitkomst en is bij openen herberekend ({{examples}}). Bij opslaan worden de nieuwe uitkomsten bewaard.",
+    "recalculated_other": "{{cells}} hadden een verouderde opgeslagen uitkomst en zijn bij openen herberekend ({{examples}}). Bij opslaan worden de nieuwe uitkomsten bewaard.",
+    "manualCalculation": "Het bestand is opgeslagen met handmatig rekenen; opgeslagen uitkomsten kunnen verouderd zijn.",
+    "externalLinks_one": "Het werkboek verwijst naar een extern werkboek; die waarden worden niet bijgewerkt.",
+    "externalLinks_other": "Het werkboek verwijst naar {{count}} externe werkboeken; die waarden worden niet bijgewerkt.",
+    "errorCells": "{{cells}} met een foutwaarde: {{list}}.",
+    "errorItem": "{{error}} ({{examples}})",
+    "noCachedResult": "{{cells}} met een formule zonder opgeslagen uitkomst ({{examples}}).",
+    "fullCalcOnLoad": "Het bestand vraagt om volledige herberekening bij openen (fullCalcOnLoad); de opgeslagen uitkomsten zijn mogelijk verouderd.",
+    "calcChain": "De rekenvolgorde (calcChain) wordt bij opslaan niet bewaard; Excel bouwt die opnieuw op.",
+    "tooLarge": "Rekenblad is te groot voor de controle.",
+    "invalidWorkbook": "Geen geldig XLSX-werkboek."
+  },
+  "print": {
+    "pageLabel": "{{sheet}}, pagina {{page}} van {{pages}}",
+    "notWorksheet": "Blad ‘{{name}}’ is geen werkblad en wordt overgeslagen.",
+    "nothingToPrint": "Er is niets om af te drukken: de bladen zijn leeg."
+  },
+  "export": {
+    "pngUnavailable": "Deze rekenbladengine kan geen PNG maken."
+  },
+  "csvImport": {
+    "title": "{{name}} importeren",
+    "import": "Importeren",
+    "separator": "Scheidingsteken",
+    "separatorSemicolon": "Puntkomma ;",
+    "separatorComma": "Komma ,",
+    "separatorTab": "Tab",
+    "separatorPipe": "Verticale streep |",
+    "separatorCustom": "Eigen teken…",
+    "customCharacter": "Eigen teken",
+    "textQualifier": "Tekstafbakening",
+    "qualifierDouble": "Dubbel aanhalingsteken \"",
+    "qualifierSingle": "Enkel aanhalingsteken '",
+    "qualifierNone": "Geen",
+    "encoding": "Tekencodering",
+    "encodingAuto": "Automatisch",
+    "encodingDetected": "{{name}} ({{encoding}})",
+    "encodingWindows1252": "Windows-1252 (West-Europees)",
+    "numbers": "Getallen",
+    "numbersDutch": "Nederlands (1.234,56)",
+    "numbersEnglish": "Engels (1,234.56)",
+    "dateOrder": "Datumvolgorde",
+    "dateOrderDmy": "Dag-maand-jaar (31-12-2026)",
+    "dateOrderMdy": "Maand-dag-jaar (12/31/2026)",
+    "dateOrderYmd": "Jaar-maand-dag (2026-12-31)",
+    "fromRow": "Vanaf rij",
+    "headerRow": "Eerste rij is kopregel",
+    "previewLabel": "Voorbeeld van de eerste 50 rijen",
+    "columnType": "Type van kolom {{number}}",
+    "columnTypes": {
+      "standaard": "Standaard",
+      "tekst": "Tekst",
+      "datum": "Datum",
+      "overslaan": "Overslaan"
+    },
+    "detected_one": "{{separator}} als scheidingsteken, {{count}} kolom.",
+    "detected_other": "{{separator}} als scheidingsteken, {{count}} kolommen.",
+    "explanation": "Kies <b>Tekst</b> voor postcodes, artikelnummers en IBAN; voorloopnullen en getallen van meer dan 15 cijfers blijven in Standaard al tekst. Waarden die met =, +, - of @ beginnen worden nooit als formule ingelezen (apostrof in de voorvertoning).",
+    "separatorNames": {
+      "tab": "tab",
+      "semicolon": "puntkomma",
+      "comma": "komma",
+      "pipe": "verticale streep",
+      "other": "“{{character}}”"
+    },
+    "report": {
+      "import": "Import",
+      "imported": "{{rows}} en {{columns}} ingelezen; {{separator}} als scheidingsteken, codering {{encoding}}.",
+      "rows_one": "{{count}} rij",
+      "rows_other": "{{count}} rijen",
+      "columns_one": "{{count}} kolom",
+      "columns_other": "{{count}} kolommen",
+      "formulaLike": "Formuleachtige tekst",
+      "formulaLikeCells_one": "{{count}} cel die met =, +, - of @ begint is als tekst opgenomen, niet als formule (bescherming tegen CSV-injectie).",
+      "formulaLikeCells_other": "{{count}} cellen die met =, +, - of @ beginnen zijn als tekst opgenomen, niet als formule (bescherming tegen CSV-injectie).",
+      "truncated": "Afgekapt",
+      "truncatedText": "Het bestand is groter dan een werkblad ({{rows}} rijen of {{columns}} kolommen); de rest is niet ingelezen."
+    }
+  }
+}

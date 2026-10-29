@@ -5,6 +5,8 @@
  * laden. Daarbij vervalt de ongedaan-maakgeschiedenis; het venster zegt dat.
  */
 import { useId, useState } from "react";
+import { useTranslation } from "react-i18next";
+import i18next from "../../i18n/config";
 import type { DocxEditorRef } from "@betteroffice/docx-react";
 import { Dialoog } from "../../werkruimte/Dialoog";
 import type { Herladen } from "../../lint/editorApi";
@@ -41,7 +43,7 @@ export async function voegVeldIn(
   nu = new Date(),
 ) {
   const invoer = ref.getEditorRef();
-  if (!invoer) throw new Error("Het document is nog niet gereed.");
+  if (!invoer) throw new Error(i18next.t("writer:editing.dateTime.notReady"));
   const markering = maakMarkering();
   // Cursor en beeld vóór de markering: na het herladen staat de cursor achter het veld.
   const plek = await leesPlek(ref);
@@ -66,7 +68,7 @@ export async function voegVeldIn(
   // Niet gevonden: de markering weer weghalen en als tekst invoegen.
   invoer.undo();
   invoer.insertText(waarde);
-  throw new Error("Het veld kon hier niet worden geplaatst; de datum is als tekst ingevoegd.");
+  throw new Error(i18next.t("writer:editing.dateTime.fieldFailed"));
 }
 
 export function DatumTijdDialoog({
@@ -82,6 +84,7 @@ export function DatumTijdDialoog({
   herlaad: Herladen | null;
   fout: (error: unknown) => void;
 }) {
+  const { t } = useTranslation(["writer", "common"]);
   const id = useId();
   const [nu] = useState(() => new Date());
   const [gekozen, setGekozen] = useState(leesVoorkeur);
@@ -101,7 +104,7 @@ export function DatumTijdDialoog({
     }
     const ref = api();
     if (!ref || !herlaad) {
-      fout(new Error("Een veld invoegen kan hier niet; de datum wordt als tekst ingevoegd."));
+      fout(new Error(t("editing.dateTime.fieldUnavailable")));
       voegIn(formatteerDatum(new Date(), notatie.afbeelding));
       return;
     }
@@ -111,22 +114,22 @@ export function DatumTijdDialoog({
 
   return (
     <Dialoog
-      titel="Datum en tijd"
+      titel={t("editing.dateTime.title")}
       sluit={sluit}
       className="tekst-datumtijd"
       acties={
         <>
           <button type="button" className="werkruimte-knop" onClick={sluit}>
-            Annuleren
+            {t("common:cancel")}
           </button>
           <button type="button" className="werkruimte-knop is-primair" onClick={invoegen}>
-            Invoegen
+            {t("editing.dateTime.insert")}
           </button>
         </>
       }
     >
       <p id={`${id}-uitleg`} className="werkruimte-uitleg">
-        Beschikbare notaties (Nederlands)
+        {t("editing.dateTime.formats")}
       </p>
       <div
         className="tekst-datumtijd-lijst"
@@ -165,12 +168,11 @@ export function DatumTijdDialoog({
       </div>
       <label className="werkruimte-vink">
         <input type="checkbox" checked={veld} onChange={(e) => setVeld(e.target.checked)} />
-        Automatisch bijwerken (als {notatie.tijd ? "TIME" : "DATE"}-veld)
+        {t("editing.dateTime.autoUpdate", { field: notatie.tijd ? "TIME" : "DATE" })}
       </label>
       {veld && (
         <p className="werkruimte-uitleg">
-          Het document wordt daarvoor opnieuw geladen; Ongedaan maken van eerdere bewerkingen is
-          daarna niet meer mogelijk.
+          {t("editing.dateTime.reloadWarning")}
         </p>
       )}
     </Dialoog>

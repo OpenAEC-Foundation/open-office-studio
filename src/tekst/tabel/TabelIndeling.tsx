@@ -4,6 +4,9 @@
  * staan in ./opdrachten.ts (Yrs-sessie) en ./pakket.ts (splitsen).
  */
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
+import i18next from "../../i18n/config";
+import { formatGetal } from "../../i18n/opmaak";
 import {
   AlignVerticalJustifyCenter,
   AlignVerticalJustifyEnd,
@@ -60,11 +63,11 @@ import {
 export async function splitsHuidigeTabel(ref: DocxEditorRef | null, herlaad: Herladen | null | undefined) {
   const e = engine(ref);
   const s = tabelStaat(ref);
-  if (!s) throw new Error("Zet de cursor eerst in een tabel.");
+  if (!s) throw new Error(i18next.t("writer:table.errors.cursorInTable"));
   if (e.ref.commands.getState("editingMode").value === "suggesting")
-    throw new Error("Zet ‘Wijzigingen bijhouden’ uit om een tabel te splitsen.");
-  if (s.plek.tabel.story !== "body") throw new Error("Alleen tabellen in de hoofdtekst kunnen worden gesplitst.");
-  if (!herlaad) throw new Error("Het document is nog niet gereed.");
+    throw new Error(i18next.t("writer:table.errors.splitTracking"));
+  if (s.plek.tabel.story !== "body") throw new Error(i18next.t("writer:table.errors.splitBodyOnly"));
+  if (!herlaad) throw new Error(i18next.t("writer:table.errors.notReady"));
   await e.ref.flushPendingInput();
   const bytes = await herlaad.bytes();
   herlaad.vervang(splitsTabel(bytes, s.plek.tabel.tableIndex, s.plek.rijen[0]));
@@ -72,6 +75,7 @@ export async function splitsHuidigeTabel(ref: DocxEditorRef | null, herlaad: Her
 
 /** Groepen voor het contexttabblad Tabelopmaak. */
 export function TabelIndeling() {
+  const { t } = useTranslation("writer");
   const tik = useEditorTik();
   const api = useEditorApi();
   const uitvoeren = useUitvoeren();
@@ -79,46 +83,46 @@ export function TabelIndeling() {
   const bewerkbaar = useDocxCommand("insertPageBreak").state.enabled;
   const voorstel = useDocxCommand("editingMode").state.value === "suggesting";
   const uit = !bewerkbaar || !staat || voorstel;
-  const reden = voorstel ? "Niet beschikbaar terwijl wijzigingen worden bijgehouden" : undefined;
+  const reden = voorstel ? t("table.unavailableWhileTracking") : undefined;
   const setVenster = (id: "rij" | "marges" | "sorteren" | "naarTekst") => openVenster(api.tekst, `tabel.${id}`);
   const splitsen = () => uitvoeren((ref) => splitsHuidigeTabel(ref, api.herlaad), false);
 
   return (
     <>
-      <Groep naam="Celgrootte">
+      <Groep naam={t("table.groups.cellSize")}>
         <EigenKnop
-          naam="Rij…"
+          naam={t("table.buttons.row")}
           icoon={TableProperties}
           groot
           disabled={uit}
-          uitleg={reden ?? "Rijhoogte, kopregel herhalen en afbreken over pagina’s"}
+          uitleg={reden ?? t("table.buttons.rowTip")}
           onClick={() => setVenster("rij")}
         />
         <div className="ribbon-stapel">
           <EigenKnop
-            naam="Rijen gelijk verdelen"
+            naam={t("table.buttons.distributeRows")}
             icoon={Rows3}
             disabled={uit}
             uitleg={reden}
             onClick={() => uitvoeren(rijenGelijk)}
           />
           <EigenKnop
-            naam="Kolommen gelijk verdelen"
+            naam={t("table.buttons.distributeColumns")}
             icoon={Columns3}
             disabled={uit}
             uitleg={reden}
             onClick={() => uitvoeren(kolommenGelijk)}
           />
           <Keuzemenu
-            naam="AutoAanpassen"
+            naam={t("table.buttons.autoFit")}
             icoon={Scaling}
             disabled={uit}
             uitleg={reden}
             items={[
-              { naam: "Inhoud automatisch aanpassen", kies: () => uitvoeren((r) => maakPassend(r, "inhoud")) },
-              { naam: "Venster automatisch aanpassen", kies: () => uitvoeren((r) => maakPassend(r, "venster")) },
+              { naam: t("table.buttons.autoFitContents"), kies: () => uitvoeren((r) => maakPassend(r, "inhoud")) },
+              { naam: t("table.buttons.autoFitWindow"), kies: () => uitvoeren((r) => maakPassend(r, "venster")) },
               {
-                naam: "Vaste kolombreedte",
+                naam: t("table.buttons.fixedColumnWidth"),
                 gekozen: staat?.indeling === "fixed",
                 kies: () => uitvoeren((r) => maakPassend(r, "vast")),
               },
@@ -126,35 +130,35 @@ export function TabelIndeling() {
           />
         </div>
       </Groep>
-      <Groep naam="Uitlijning in cel">
+      <Groep naam={t("table.groups.cellAlignment")}>
         <div className="ribbon-stapel">
           <EigenKnop
-            naam="Boven"
+            naam={t("table.buttons.alignTop")}
             icoon={AlignVerticalJustifyStart}
             actief={staat?.verticaal === "top"}
             disabled={uit}
-            uitleg={reden ?? "Celinhoud bovenaan uitlijnen"}
+            uitleg={reden ?? t("table.buttons.alignTopTip")}
             onClick={() => uitvoeren((r) => celUitlijning(r, "top"))}
           />
           <EigenKnop
-            naam="Midden"
+            naam={t("table.buttons.alignCenter")}
             icoon={AlignVerticalJustifyCenter}
             actief={staat?.verticaal === "center"}
             disabled={uit}
-            uitleg={reden ?? "Celinhoud verticaal centreren"}
+            uitleg={reden ?? t("table.buttons.alignCenterTip")}
             onClick={() => uitvoeren((r) => celUitlijning(r, "center"))}
           />
           <EigenKnop
-            naam="Onder"
+            naam={t("table.buttons.alignBottom")}
             icoon={AlignVerticalJustifyEnd}
             actief={staat?.verticaal === "bottom"}
             disabled={uit}
-            uitleg={reden ?? "Celinhoud onderaan uitlijnen"}
+            uitleg={reden ?? t("table.buttons.alignBottomTip")}
             onClick={() => uitvoeren((r) => celUitlijning(r, "bottom"))}
           />
         </div>
         <EigenKnop
-          naam="Celmarges"
+          naam={t("table.buttons.cellMargins")}
           icoon={BetweenHorizontalStart}
           groot
           disabled={uit}
@@ -162,39 +166,36 @@ export function TabelIndeling() {
           onClick={() => setVenster("marges")}
         />
       </Groep>
-      <Groep naam="Gegevens">
+      <Groep naam={t("table.groups.data")}>
         <EigenKnop
-          naam="Sorteren"
+          naam={t("table.buttons.sort")}
           icoon={ArrowDownAZ}
           groot
           disabled={uit}
-          uitleg={reden ?? "Rijen sorteren op een of meer kolommen"}
+          uitleg={reden ?? t("table.buttons.sortTip")}
           onClick={() => setVenster("sorteren")}
         />
         <div className="ribbon-stapel">
           <EigenKnop
-            naam="Kopregels herhalen"
+            naam={t("table.buttons.repeatHeader")}
             icoon={Repeat2}
             actief={staat?.kopregel ?? false}
             disabled={uit}
-            uitleg={reden ?? "De bovenste rij(en) bovenaan elke pagina herhalen"}
+            uitleg={reden ?? t("table.buttons.repeatHeaderTip")}
             onClick={() => uitvoeren((r) => zetRijen(r, { kopregel: !staat?.kopregel }))}
           />
           <EigenKnop
-            naam="Naar tekst"
+            naam={t("table.buttons.toText")}
             icoon={WrapText}
             disabled={uit}
-            uitleg={reden ?? "Tabel converteren naar tekst"}
+            uitleg={reden ?? t("table.buttons.toTextTip")}
             onClick={() => setVenster("naarTekst")}
           />
           <EigenKnop
-            naam="Tabel splitsen"
+            naam={t("table.buttons.split")}
             icoon={SquareSplitVertical}
             disabled={uit || (staat?.plek.rijen[0] ?? 0) < 1}
-            uitleg={
-              reden ??
-              "Splitst de tabel boven de rij met de cursor. Het document wordt opnieuw geladen; Ongedaan maken werkt daarna niet voor eerdere stappen."
-            }
+            uitleg={reden ?? t("table.buttons.splitTip")}
             onClick={splitsen}
           />
         </div>
@@ -216,20 +217,22 @@ export function TabelVenster({ id, gegevens, sluit }: { id: string; gegevens?: u
   return null;
 }
 
-function Acties({ ok, sluit, label = "OK", disabled }: { ok: () => void; sluit: () => void; label?: string; disabled?: boolean }) {
+function Acties({ ok, sluit, label, disabled }: { ok: () => void; sluit: () => void; label?: string; disabled?: boolean }) {
+  const { t } = useTranslation("common");
   return (
     <>
       <button type="button" className="werkruimte-knop" onClick={sluit}>
-        Annuleren
+        {t("cancel")}
       </button>
       <button type="button" className="werkruimte-knop is-primair" disabled={disabled} onClick={ok}>
-        {label}
+        {label ?? t("ok")}
       </button>
     </>
   );
 }
 
 function RijVenster({ staat, sluit }: { staat: TabelStaat; sluit: () => void }) {
+  const { t } = useTranslation("writer");
   const uitvoeren = useUitvoeren();
   const [regel, setRegel] = useState(staat.hoogte ? staat.regel : "auto");
   const [hoogte, setHoogte] = useState(toonGetal(twipsNaarCm(staat.hoogte ?? 567)));
@@ -256,35 +259,35 @@ function RijVenster({ staat, sluit }: { staat: TabelStaat; sluit: () => void }) 
     );
   }
   return (
-    <Dialoog titel="Rij-eigenschappen" sluit={sluit} className="tw-venster" acties={<Acties ok={ok} sluit={sluit} disabled={!geldig} />}>
+    <Dialoog titel={t("table.row.title")} sluit={sluit} className="tw-venster" acties={<Acties ok={ok} sluit={sluit} disabled={!geldig} />}>
       <p className="werkruimte-uitleg">
-        {alle ? "Alle rijen van de tabel." : van === tot ? `Rij ${van + 1}.` : `Rij ${van + 1} tot en met ${tot + 1}.`}
+        {alle ? t("table.row.allRows") : van === tot ? t("table.row.oneRow", { row: van + 1 }) : t("table.row.rowRange", { from: van + 1, to: tot + 1 })}
       </p>
       <fieldset>
-        <legend>Grootte</legend>
+        <legend>{t("table.row.size")}</legend>
         <label className="werkruimte-veld">
-          <span>Rijhoogte</span>
+          <span>{t("table.row.height")}</span>
           <select value={regel} onChange={(e) => setRegel(e.target.value as typeof regel)} data-autofocus="">
-            <option value="auto">Automatisch (passend bij de inhoud)</option>
-            <option value="atLeast">Minimaal</option>
-            <option value="exact">Exact</option>
+            <option value="auto">{t("table.row.auto")}</option>
+            <option value="atLeast">{t("table.row.atLeast")}</option>
+            <option value="exact">{t("table.row.exact")}</option>
           </select>
         </label>
-        <Maatveld label="Hoogte" waarde={hoogte} wijzig={setHoogte} disabled={regel === "auto"} />
+        <Maatveld label={t("table.row.heightValue")} waarde={hoogte} wijzig={setHoogte} disabled={regel === "auto"} />
       </fieldset>
       <fieldset>
-        <legend>Opties</legend>
+        <legend>{t("table.row.options")}</legend>
         <label className="werkruimte-vink">
           <input type="checkbox" checked={!nietAfbreken} onChange={(e) => setNietAfbreken(!e.target.checked)} />
-          Rij mag over pagina’s worden afgebroken
+          {t("table.row.allowBreak")}
         </label>
         <label className="werkruimte-vink">
           <input type="checkbox" checked={kopregel} onChange={(e) => setKopregel(e.target.checked)} />
-          Herhalen als kopregel bovenaan elke pagina
+          {t("table.row.repeatHeader")}
         </label>
         <label className="werkruimte-vink">
           <input type="checkbox" checked={alle} onChange={(e) => setAlle(e.target.checked)} />
-          Op alle rijen van de tabel toepassen
+          {t("table.row.applyToAll")}
         </label>
       </fieldset>
     </Dialoog>
@@ -292,6 +295,7 @@ function RijVenster({ staat, sluit }: { staat: TabelStaat; sluit: () => void }) 
 }
 
 function MargesVenster({ staat, sluit }: { staat: TabelStaat; sluit: () => void }) {
+  const { t } = useTranslation("writer");
   const uitvoeren = useUitvoeren();
   const [heel, setHeel] = useState(true);
   const vanBron = (bron: TabelStaat["marges"]) => ({
@@ -327,28 +331,30 @@ function MargesVenster({ staat, sluit }: { staat: TabelStaat; sluit: () => void 
     );
   }
   return (
-    <Dialoog titel="Celmarges" sluit={sluit} className="tw-venster" acties={<Acties ok={ok} sluit={sluit} disabled={!geldig} />}>
-      <div className="werkruimte-keuzes" role="radiogroup" aria-label="Toepassen op">
+    <Dialoog titel={t("table.margins.title")} sluit={sluit} className="tw-venster" acties={<Acties ok={ok} sluit={sluit} disabled={!geldig} />}>
+      <div className="werkruimte-keuzes" role="radiogroup" aria-label={t("table.margins.applyTo")}>
         <label>
-          <input type="radio" checked={heel} onChange={() => kies(true)} /> Standaardmarges van de hele tabel
+          <input type="radio" checked={heel} onChange={() => kies(true)} /> {t("table.margins.wholeTable")}
         </label>
         <label>
-          <input type="radio" checked={!heel} onChange={() => kies(false)} /> Alleen de geselecteerde cellen
+          <input type="radio" checked={!heel} onChange={() => kies(false)} /> {t("table.margins.selectedCells")}
         </label>
       </div>
       <div className="tw-raster2">
-        {veld("top", "Boven")}
-        {veld("bottom", "Onder")}
-        {veld("left", "Links")}
-        {veld("right", "Rechts")}
+        {veld("top", t("table.margins.top"))}
+        {veld("bottom", t("table.margins.bottom"))}
+        {veld("left", t("table.margins.left"))}
+        {veld("right", t("table.margins.right"))}
       </div>
     </Dialoog>
   );
 }
 
-const SOORTNAMEN: Record<Sorteersoort, string> = { tekst: "Tekst", getal: "Getal", datum: "Datum" };
+/** Sorteersoorten met hun sleutel onder `writer:table.sort.types`. */
+const SOORTNAMEN: Record<Sorteersoort, string> = { tekst: "text", getal: "number", datum: "date" };
 
 function SorteerVenster({ staat, sluit }: { staat: TabelStaat; sluit: () => void }) {
+  const { t } = useTranslation("writer");
   const api = useEditorApi().tekst;
   const uitvoeren = useUitvoeren();
   const teksten = useMemo(() => {
@@ -366,7 +372,7 @@ function SorteerVenster({ staat, sluit }: { staat: TabelStaat; sluit: () => void
       (teksten.length > 2 &&
         teksten[0].some((c, k) => raadSoort([c]) === "tekst" && c.trim() !== "" && raadSoort(teksten.slice(1).map((r) => r[k] ?? "")) !== "tekst")),
   );
-  const kolomNaam = (k: number) => (kop ? teksten[0]?.[k]?.trim() || `Kolom ${k + 1}` : `Kolom ${k + 1}`);
+  const kolomNaam = (k: number) => (kop ? teksten[0]?.[k]?.trim() : "") || t("table.sort.column", { n: k + 1 });
   const soortVan = (k: number) => raadSoort(teksten.slice(kop ? 1 : 0).map((r) => r[k] ?? ""));
   const [sleutels, setSleutels] = useState<(Sorteersleutel | null)[]>(() => [
     { kolom: staat.plek.kolommen[0], soort: soortVan(staat.plek.kolommen[0]), aflopend: false },
@@ -383,49 +389,49 @@ function SorteerVenster({ staat, sluit }: { staat: TabelStaat; sluit: () => void
     uitvoeren((r) => sorteer(r, gekozen, kopregels));
   }
   return (
-    <Dialoog titel="Sorteren" sluit={sluit} className="tw-venster is-breed" acties={<Acties ok={ok} sluit={sluit} label="Sorteren" />}>
+    <Dialoog titel={t("table.sort.title")} sluit={sluit} className="tw-venster is-breed" acties={<Acties ok={ok} sluit={sluit} label={t("table.sort.ok")} />}>
       {sleutels.map((s, i) => (
         <fieldset key={i}>
-          <legend>{i === 0 ? "Sorteren op" : "Daarna op"}</legend>
+          <legend>{i === 0 ? t("table.sort.sortBy") : t("table.sort.thenBy")}</legend>
           <div className="werkruimte-rij">
             <select
-              aria-label="Kolom"
+              aria-label={t("table.sort.columnLabel")}
               value={s?.kolom ?? ""}
               data-autofocus={i === 0 ? "" : undefined}
               onChange={(e) =>
                 zet(i, e.target.value === "" ? null : { kolom: +e.target.value, soort: soortVan(+e.target.value), aflopend: s?.aflopend ?? false })
               }
             >
-              {i > 0 && <option value="">(geen)</option>}
+              {i > 0 && <option value="">{t("table.sort.none")}</option>}
               {Array.from({ length: staat.kolommen }, (_, k) => (
                 <option key={k} value={k}>
                   {kolomNaam(k)}
                 </option>
               ))}
             </select>
-            <select aria-label="Type" value={s?.soort ?? "tekst"} disabled={!s} onChange={(e) => s && zet(i, { ...s, soort: e.target.value as Sorteersoort })}>
+            <select aria-label={t("table.sort.type")} value={s?.soort ?? "tekst"} disabled={!s} onChange={(e) => s && zet(i, { ...s, soort: e.target.value as Sorteersoort })}>
               {Object.entries(SOORTNAMEN).map(([w, n]) => (
                 <option key={w} value={w}>
-                  {n}
+                  {t(`table.sort.types.${n}`)}
                 </option>
               ))}
             </select>
             <label className="werkruimte-vink">
               <input type="radio" name={`richting${i}`} checked={!s?.aflopend} disabled={!s} onChange={() => s && zet(i, { ...s, aflopend: false })} />
-              Oplopend
+              {t("table.sort.ascending")}
             </label>
             <label className="werkruimte-vink">
               <input type="radio" name={`richting${i}`} checked={!!s?.aflopend} disabled={!s} onChange={() => s && zet(i, { ...s, aflopend: true })} />
-              Aflopend
+              {t("table.sort.descending")}
             </label>
           </div>
         </fieldset>
       ))}
       <label className="werkruimte-vink">
         <input type="checkbox" checked={kop} onChange={(e) => setKop(e.target.checked)} />
-        Mijn lijst heeft een kopregel
+        {t("table.sort.hasHeader")}
       </label>
-      <p className="werkruimte-uitleg">De celopmaak verhuist met de rijen mee. Ongedaan maken (Ctrl+Z) zet de oude volgorde terug.</p>
+      <p className="werkruimte-uitleg">{t("table.sort.note", { undo: "Ctrl+Z" })}</p>
     </Dialoog>
   );
 }
@@ -434,11 +440,12 @@ function aantalKoppen(rijen: number, staat: TabelStaat) {
   return staat.kopregel ? Math.min(rijen - 1, 1) : 1;
 }
 
-const SCHEIDINGEN: { waarde: Exclude<Scheiding, { teken: string }>; naam: string }[] = [
-  { waarde: "tab", naam: "Tabs" },
-  { waarde: "puntkomma", naam: "Puntkomma’s" },
-  { waarde: "komma", naam: "Komma’s" },
-  { waarde: "alinea", naam: "Alineamarkeringen" },
+/** Scheidingstekens met hun sleutel onder `writer:table.separator`. */
+const SCHEIDINGEN: { waarde: Exclude<Scheiding, { teken: string }>; sleutel: string }[] = [
+  { waarde: "tab", sleutel: "tabs" },
+  { waarde: "puntkomma", sleutel: "semicolons" },
+  { waarde: "komma", sleutel: "commas" },
+  { waarde: "alinea", sleutel: "paragraphs" },
 ];
 
 function ScheidingKeuze({
@@ -452,23 +459,24 @@ function ScheidingKeuze({
   anders: string;
   setAnders: (s: string) => void;
 }) {
+  const { t } = useTranslation("writer");
   return (
     <fieldset>
-      <legend>Tekst scheiden bij</legend>
+      <legend>{t("table.separator.legend")}</legend>
       <div className="werkruimte-keuzes">
         {SCHEIDINGEN.map((s) => (
           <label key={s.waarde}>
-            <input type="radio" name="scheiding" checked={scheiding === s.waarde} onChange={() => setScheiding(s.waarde)} /> {s.naam}
+            <input type="radio" name="scheiding" checked={scheiding === s.waarde} onChange={() => setScheiding(s.waarde)} /> {t(`table.separator.${s.sleutel}`)}
           </label>
         ))}
         <label>
-          <input type="radio" name="scheiding" checked={typeof scheiding === "object"} onChange={() => setScheiding({ teken: anders || "-" })} /> Anders:
+          <input type="radio" name="scheiding" checked={typeof scheiding === "object"} onChange={() => setScheiding({ teken: anders || "-" })} /> {t("table.separator.other")}
           <input
             type="text"
             maxLength={1}
             size={2}
             value={anders}
-            aria-label="Ander scheidingsteken"
+            aria-label={t("table.separator.otherLabel")}
             onChange={(e) => {
               setAnders(e.target.value);
               setScheiding({ teken: e.target.value || "-" });
@@ -481,6 +489,7 @@ function ScheidingKeuze({
 }
 
 function NaarTekstVenster({ sluit }: { sluit: () => void }) {
+  const { t } = useTranslation("writer");
   const uitvoeren = useUitvoeren();
   const [scheiding, setScheiding] = useState<Scheiding>("tab");
   const [anders, setAnders] = useState("-");
@@ -489,24 +498,25 @@ function NaarTekstVenster({ sluit }: { sluit: () => void }) {
     uitvoeren((r) => tabelNaarTekst(r, scheiding));
   }
   return (
-    <Dialoog titel="Tabel converteren naar tekst" sluit={sluit} className="tw-venster" acties={<Acties ok={ok} sluit={sluit} label="Converteren" />}>
+    <Dialoog titel={t("table.toText.title")} sluit={sluit} className="tw-venster" acties={<Acties ok={ok} sluit={sluit} label={t("table.convert")} />}>
       <ScheidingKeuze scheiding={scheiding} setScheiding={setScheiding} anders={anders} setAnders={setAnders} />
-      <p className="werkruimte-uitleg">Elke rij wordt een alinea; bij ‘Alineamarkeringen’ wordt elke cel een alinea.</p>
+      <p className="werkruimte-uitleg">{t("table.toText.note", { paragraphs: t("table.separator.paragraphs") })}</p>
     </Dialoog>
   );
 }
 
 /** Invoegen › Tabellen: geselecteerde tekst omzetten naar een tabel. */
 export function TekstNaarTabelKnop() {
+  const { t } = useTranslation("writer");
   const api = useEditorApi().tekst;
   const uitvoeren = useUitvoeren();
   const bewerkbaar = useDocxCommand("insertTable").state.enabled;
   return (
     <EigenKnop
-      naam="Tekst naar tabel"
+      naam={t("table.fromText.button")}
       icoon={Table2}
       disabled={!bewerkbaar}
-      uitleg="Geselecteerde alinea’s omzetten naar een tabel"
+      uitleg={t("table.fromText.buttonTip")}
       onClick={() => uitvoeren((ref) => openTekstNaarTabel(ref, api), false)}
     />
   );
@@ -517,11 +527,12 @@ export async function openTekstNaarTabel(ref: DocxEditorRef | null, sleutel: obj
   const e = engine(ref);
   await e.ref.flushPendingInput();
   const alineas = geselecteerdeAlineas(e).map((a) => a.text);
-  if (!alineas.some((a) => a.trim())) throw new Error("Selecteer eerst de alinea’s die een tabel moeten worden.");
+  if (!alineas.some((a) => a.trim())) throw new Error(i18next.t("writer:table.errors.selectParagraphs"));
   openVenster(sleutel, "tabel.tekstNaarTabel", alineas);
 }
 
 function TekstNaarTabelVenster({ alineas, sluit }: { alineas: string[]; sluit: () => void }) {
+  const { t } = useTranslation("writer");
   const uitvoeren = useUitvoeren();
   const [scheiding, setScheiding] = useState<Scheiding>(() => raadScheiding(alineas));
   const [anders, setAnders] = useState("-");
@@ -534,13 +545,16 @@ function TekstNaarTabelVenster({ alineas, sluit }: { alineas: string[]; sluit: (
     uitvoeren((r) => tekstNaarTabel(r, scheiding, scheiding === "alinea" ? n : undefined));
   }
   return (
-    <Dialoog titel="Tekst converteren naar tabel" sluit={sluit} className="tw-venster is-breed" acties={<Acties ok={ok} sluit={sluit} label="Converteren" />}>
-      <Maatveld label="Aantal kolommen" waarde={scheiding === "alinea" ? kolommen : String(breed)} wijzig={setKolommen} eenheid="" stap={1} min={1} max={63} disabled={scheiding !== "alinea"} />
+    <Dialoog titel={t("table.fromText.title")} sluit={sluit} className="tw-venster is-breed" acties={<Acties ok={ok} sluit={sluit} label={t("table.convert")} />}>
+      <Maatveld label={t("table.fromText.columns")} waarde={scheiding === "alinea" ? kolommen : String(breed)} wijzig={setKolommen} eenheid="" stap={1} min={1} max={63} disabled={scheiding !== "alinea"} />
       <p className="werkruimte-uitleg">
-        {cellen.length} {cellen.length === 1 ? "rij" : "rijen"} × {breed} {breed === 1 ? "kolom" : "kolommen"}
+        {t("table.fromText.size", {
+          rows: t("table.fromText.rows", { count: cellen.length, number: formatGetal(cellen.length) }),
+          columns: t("table.fromText.columnCount", { count: breed, number: formatGetal(breed) }),
+        })}
       </p>
       <ScheidingKeuze scheiding={scheiding} setScheiding={setScheiding} anders={anders} setAnders={setAnders} />
-      <table className="tw-tabelvoorbeeld" aria-label="Voorbeeld">
+      <table className="tw-tabelvoorbeeld" aria-label={t("table.fromText.preview")}>
         <tbody>
           {cellen.slice(0, 5).map((rij, i) => (
             <tr key={i}>
@@ -551,7 +565,7 @@ function TekstNaarTabelVenster({ alineas, sluit }: { alineas: string[]; sluit: (
           ))}
         </tbody>
       </table>
-      {cellen.length > 5 && <p className="werkruimte-uitleg">… en nog {cellen.length - 5} rijen.</p>}
+      {cellen.length > 5 && <p className="werkruimte-uitleg">{t("table.fromText.moreRows", { count: cellen.length - 5, number: formatGetal(cellen.length - 5) })}</p>}
     </Dialoog>
   );
 }

@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import type { Adres, MailBackend } from "../contract";
 import { formatAdres, isGeldigAdres, parseAdressen, uniekeAdressen } from "../adressen";
 
@@ -22,6 +23,7 @@ export function Adresveld({
   accountId: string;
   autoFocus?: boolean;
 }) {
+  const { t } = useTranslation("email");
   const [invoer, setInvoer] = useState("");
   const [voorstellen, setVoorstellen] = useState<Adres[]>([]);
   const [gekozen, setGekozen] = useState(0);
@@ -73,12 +75,12 @@ export function Adresveld({
           <span
             key={adres.adres + i}
             className={`email-chip ${isGeldigAdres(adres.adres) ? "" : "is-ongeldig"}`}
-            title={isGeldigAdres(adres.adres) ? formatAdres(adres) : `Ongeldig adres: ${adres.adres}`}
+            title={isGeldigAdres(adres.adres) ? formatAdres(adres) : t("address.invalid", { address: adres.adres })}
           >
             {adres.naam || adres.adres}
             <button
               type="button"
-              aria-label={`${adres.adres} verwijderen`}
+              aria-label={t("address.remove", { address: adres.adres })}
               onClick={(e) => {
                 e.stopPropagation();
                 wijzig(waarde.filter((_, j) => j !== i));

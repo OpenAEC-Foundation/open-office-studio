@@ -5,7 +5,7 @@
 }
 .tw-keuzemenu-pijl {
   position: absolute;
-  right: 2px;
+  inset-inline-end: 2px;
   bottom: 4px;
   pointer-events: none;
   opacity: 0.7;
@@ -37,7 +37,7 @@
   background: transparent;
   color: inherit;
   font: inherit;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
 }
 .tw-menu button:hover:not(:disabled),
@@ -323,7 +323,7 @@
   border: 0;
   border-radius: 4px;
   background: transparent;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
 }
 .tw-zoek-speciaal button:hover,
@@ -372,7 +372,7 @@
   border: 1px solid transparent;
   border-radius: 6px;
   background: transparent;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
   overflow-wrap: anywhere;
 }
@@ -410,7 +410,7 @@
   border: 1px solid transparent;
   border-radius: 6px;
   background: transparent;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
   white-space: pre;
 }
@@ -524,7 +524,7 @@
 .tw-verschillen {
   max-height: 180px;
   margin: 8px 0 0;
-  padding-left: 18px;
+  padding-inline-start: 18px;
   overflow: auto;
   font-size: 12px;
 }

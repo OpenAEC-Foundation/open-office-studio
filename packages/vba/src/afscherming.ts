@@ -10,6 +10,7 @@
  * 2. Statisch: `scanAfscherming` meldt vooraf welke afgeschermde constructies
  *    een module bevat, zonder de code uit te voeren.
  */
+import i18next from "i18next";
 import type { Argument, Expr, ModuleAst, Statement } from "./ast.ts";
 import { VbaAfbreking } from "./fouten.ts";
 
@@ -39,18 +40,30 @@ export interface Afscherming {
   object?: boolean;
 }
 
+/** Sleutel van de reden per categorie (`vba:shield.reason.<sleutel>`). */
 const REDENEN: Record<AfschermingCategorie, string> = {
-  proces: "starten van programma’s",
-  bestand: "toegang tot het bestandssysteem",
-  com: "COM-/ActiveX-objecten",
-  "windows-api": "aanroepen van de Windows-API",
-  toetsenbord: "versturen van toetsaanslagen",
-  omgeving: "lezen van omgevingsvariabelen",
-  register: "toegang tot het Windows-register",
-  hyperlink: "openen van hyperlinks en externe programma’s",
-  export: "exporteren of importeren via bestanden",
-  project: "het VBA-project en zijn verwijzingen (VBE, References)",
+  proces: "process",
+  bestand: "file",
+  com: "com",
+  "windows-api": "windowsApi",
+  toetsenbord: "keyboard",
+  omgeving: "environment",
+  register: "registry",
+  hyperlink: "hyperlink",
+  export: "export",
+  project: "project",
 };
+
+/** Waarom een categorie is afgeschermd, in de actieve taal. */
+export const afschermingsreden = (categorie: AfschermingCategorie) => i18next.t(`vba:shield.reason.${REDENEN[categorie]}`);
+
+/** Voegt `reden` toe als getter, zodat de tekst pas bij het tonen wordt vertaald. */
+function metReden(a: Omit<Afscherming, "reden">): Afscherming {
+  return Object.defineProperty(a, "reden", {
+    get: () => afschermingsreden(a.categorie),
+    enumerable: true,
+  }) as Afscherming;
+}
 
 /** Standaardfoutnummer per categorie (zoals VBA zelf zou melden). */
 const NUMMERS: Record<AfschermingCategorie, number> = {
@@ -68,7 +81,7 @@ const NUMMERS: Record<AfschermingCategorie, number> = {
 
 const f = (naam: string, categorie: AfschermingCategorie, nummer = NUMMERS[categorie], object = false): [string, Afscherming] => [
   naam.toLowerCase(),
-  { naam, categorie, reden: REDENEN[categorie], nummer, ...(object ? { object } : {}) },
+  metReden({ naam, categorie, nummer, ...(object ? { object } : {}) }),
 ];
 
 /** Ingebouwde functies en statements die worden geweigerd. */
@@ -143,19 +156,19 @@ export const GEWEIGERDE_LEDEN = new Map<string, Afscherming>([
 /** Bestands-I/O-statements (Open … For, Print #, Close # …): foutnummer per statement. */
 export function bestandsstatement(wat: string): Afscherming {
   const nummer = /^(open|name)/i.test(wat) ? 75 : 52;
-  return { naam: wat, categorie: "bestand", reden: REDENEN.bestand, nummer };
+  return metReden({ naam: wat, categorie: "bestand", nummer });
 }
 
 /** Een met Declare uit een DLL gehaalde functie. */
 export function declareAfscherming(naam: string): Afscherming {
-  return { naam: `Declare ${naam}`, categorie: "windows-api", reden: REDENEN["windows-api"], nummer: 453 };
+  return metReden({ naam: `Declare ${naam}`, categorie: "windows-api", nummer: 453 });
 }
 
 /** AddressOf (terugroepfunctie voor de Windows-API). */
-export const ADDRESSOF: Afscherming = { naam: "AddressOf", categorie: "windows-api", reden: REDENEN["windows-api"], nummer: 453 };
+export const ADDRESSOF: Afscherming = metReden({ naam: "AddressOf", categorie: "windows-api", nummer: 453 });
 
 export function afschermingsmelding(a: Afscherming) {
-  return `${a.naam} is afgeschermd (${a.reden}) en wordt in Open Office Studio niet uitgevoerd. De VBA-code werkt alleen met de werkkopie van de database.`;
+  return i18next.t("vba:shield.blocked", { name: a.naam, reason: a.reden });
 }
 
 /** De weigering zelf: een niet-vangbare afbreking die weet wát er geweigerd is. */
@@ -170,12 +183,11 @@ export function weiger(a: Afscherming): never {
 }
 
 export function weigerLid(object: string, lid: string): never {
-  const a = GEWEIGERDE_LEDEN.get(`${object}.${lid}`.toLowerCase()) ?? {
+  const a = GEWEIGERDE_LEDEN.get(`${object}.${lid}`.toLowerCase()) ?? metReden({
     naam: `${object}.${lid}`,
-    categorie: "bestand" as const,
-    reden: REDENEN.bestand,
+    categorie: "bestand",
     nummer: NUMMERS.bestand,
-  };
+  });
   return weiger(a);
 }
 

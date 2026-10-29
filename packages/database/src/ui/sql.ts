@@ -1,4 +1,5 @@
-/** Kleine, pure hulpfuncties rond Access-SQL voor de interface (geen vertaling). */
+/** Kleine, pure hulpfuncties rond Access-SQL voor de interface (geen SQL-vertaling). */
+import i18next from "i18next";
 import type { OpgeslagenQuery } from "../werkkopie/contract.ts";
 
 /** Verwijdert commentaar en een voorafgaande `PARAMETERS …;`-declaratie. */
@@ -46,17 +47,10 @@ export function isActiequery(soort: OpgeslagenQuery["soort"]) {
   return ["delete", "update", "append", "maketable", "ddl"].includes(soort);
 }
 
-export const ACTIENAMEN: Record<OpgeslagenQuery["soort"], string> = {
-  select: "Selectiequery",
-  crosstab: "Kruistabelquery",
-  delete: "Verwijderquery",
-  update: "Bijwerkquery",
-  append: "Toevoegquery",
-  maketable: "Tabelmaakquery",
-  ddl: "Gegevensdefinitiequery",
-  union: "Samenvoegingsquery",
-  passthrough: "Pass-through-query",
-};
+/** Naam van een querysoort zoals Access die toont (Selectiequery, Bijwerkquery …), in de interfacetaal. */
+export function actieNaam(soort: OpgeslagenQuery["soort"]): string {
+  return i18next.t(`database:sqlHelp.queryKind.${soort}`);
+}
 
 /** Bestandsnaam zonder tekens die besturingssystemen weigeren. */
 export function veiligeNaam(naam: string) {

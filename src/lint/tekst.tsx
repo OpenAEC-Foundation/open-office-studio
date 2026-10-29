@@ -64,7 +64,9 @@ import {
   PenLine,
   SpellCheck,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { openSpellingVenster } from "../spelling/tekst/menu";
+import { formatGetal } from "../i18n/opmaak";
 import {
   Ribbon,
   Groep,
@@ -125,8 +127,11 @@ import { moduleToets } from "./sneltoetsenlijst";
 import "./tekst.css";
 
 type Opdrachten = ReturnType<typeof useTekstOpdrachten>;
-/** Regelafstand "1.15" uit de engine als "1,15". */
-const decimaleKomma = (label: string) => label.replace(".", ",");
+/** Regelafstand "1.15" uit de engine met het decimaalteken van de taal ("1,15" in nl). */
+const decimaleKomma = (label: string) =>
+  label.replace(/^(\d+)\.(\d+)$/, (_, geheel: string, deel: string) =>
+    formatGetal(Number(`${geheel}.${deel}`), { minimumFractionDigits: deel.length }),
+  );
 
 /**
  * Het lint hangt in de editor en wordt bij herladen (pakketroute: grafiek,
@@ -137,64 +142,66 @@ const lintTabPerDocument = new WeakMap<object, string>();
 
 const hoofdletterKnoppen: {
   soort: Hoofdlettersoort | "rouleren";
-  naam: string;
+  /** Sleutel onder ribbon:writer.case. */
+  sleutel: string;
   icoon: typeof Type;
   sneltoets?: string;
 }[] = [
-  { soort: "hoofdletters", naam: "HOOFDLETTERS", icoon: CaseUpper },
-  { soort: "kleine", naam: "kleine letters", icoon: CaseLower },
-  { soort: "zin", naam: "Zin beginnen met hoofdletter", icoon: CaseSensitive },
-  { soort: "titel", naam: "Elk Woord Met Hoofdletter", icoon: LetterText },
-  { soort: "wisselen", naam: "hOOFDLETTERS wISSELEN", icoon: ArrowDownUp },
+  { soort: "hoofdletters", sleutel: "upper", icoon: CaseUpper },
+  { soort: "kleine", sleutel: "lower", icoon: CaseLower },
+  { soort: "zin", sleutel: "sentence", icoon: CaseSensitive },
+  { soort: "titel", sleutel: "title", icoon: LetterText },
+  { soort: "wisselen", sleutel: "toggle", icoon: ArrowDownUp },
   {
     soort: "rouleren",
-    naam: "Hoofdlettergebruik rouleren",
+    sleutel: "cycle",
     icoon: RefreshCw,
     sneltoets: "Shift+F3",
   },
 ];
 
 function TekstLettertype() {
+  const { t } = useTranslation("ribbon");
   const grootte = useHerhaalbaar("fontSize", useDocxCommand("fontSize")),
     kleur = useHerhaalbaar("textColor", useDocxCommand("textColor")),
     markering = useHerhaalbaar("highlightColor", useDocxCommand("highlightColor"));
   return (
-    <Groep naam="Lettertype">
+    <Groep naam={t("writer.groups.font")}>
       <div className="ribbon-rij">
         <WL />
         <OpdrachtGetal
           opdracht={grootte}
-          naam="Tekengrootte"
+          naam={t("writer.commands.fontSize")}
           args={(points) => ({ points })}
         />
         <GrootteKnoppen />
       </div>
       <div className="ribbon-rij ribbon-iconen">
-        <W id="bold" naam="Vet" icoon={Bold} />
-        <W id="italic" naam="Cursief" icoon={Italic} />
-        <W id="underline" naam="Onderstrepen" icoon={Underline} />
-        <W id="strikethrough" naam="Doorhalen" icoon={Strikethrough} />
+        <W id="bold" naam={t("writer.commands.bold")} icoon={Bold} />
+        <W id="italic" naam={t("writer.commands.italic")} icoon={Italic} />
+        <W id="underline" naam={t("writer.commands.underline")} icoon={Underline} />
+        <W id="strikethrough" naam={t("writer.commands.strikethrough")} icoon={Strikethrough} />
         <WS
           id="superscript"
-          naam="Superscript"
+          naam={t("writer.commands.superscript")}
           icoon={Superscript}
           sneltoets="Ctrl+Shift+P"
         />
         <WS
           id="subscript"
-          naam="Subscript"
+          naam={t("writer.commands.subscript")}
           icoon={Subscript}
           sneltoets="Ctrl+Shift+B"
         />
         <OpdrachtKleur
           opdracht={markering}
-          naam="Markeerkleur"
+          naam={t("writer.commands.highlightColor")}
           icoon={Highlighter}
           args={(color) => ({ color })}
         />
         <OpdrachtKleur
           opdracht={kleur}
-          naam="Tekstkleur"
+          naam={t("writer.commands.fontColor")}
           icoon={Type}
           args={(color) => ({ color: { rgb: color.slice(1) } })}
         />
@@ -204,38 +211,39 @@ function TekstLettertype() {
   );
 }
 function TekstAlinea() {
+  const { t } = useTranslation("ribbon");
   return (
-    <Groep naam="Alinea">
+    <Groep naam={t("writer.groups.paragraph")}>
       <div className="ribbon-rij ribbon-iconen">
-        <W id="bulletList" naam="Opsomming" icoon={List} />
-        <W id="numberedList" naam="Nummering" icoon={ListOrdered} />
-        <W id="outdent" naam="Minder inspringen" icoon={IndentDecrease} />
-        <W id="indent" naam="Meer inspringen" icoon={IndentIncrease} />
+        <W id="bulletList" naam={t("writer.commands.bullets")} icoon={List} />
+        <W id="numberedList" naam={t("writer.commands.numbering")} icoon={ListOrdered} />
+        <W id="outdent" naam={t("writer.commands.decreaseIndent")} icoon={IndentDecrease} />
+        <W id="indent" naam={t("writer.commands.increaseIndent")} icoon={IndentIncrease} />
         <LijstKnop />
       </div>
       <div className="ribbon-rij ribbon-iconen">
         <W
           id="alignment"
           args={{ value: "left" }}
-          naam="Links uitlijnen"
+          naam={t("writer.commands.alignLeft")}
           icoon={AlignLeft}
         />
         <W
           id="alignment"
           args={{ value: "center" }}
-          naam="Centreren"
+          naam={t("writer.commands.center")}
           icoon={AlignCenter}
         />
         <W
           id="alignment"
           args={{ value: "right" }}
-          naam="Rechts uitlijnen"
+          naam={t("writer.commands.alignRight")}
           icoon={AlignRight}
         />
         <W
           id="alignment"
           args={{ value: "both" }}
-          naam="Uitvullen"
+          naam={t("writer.commands.justify")}
           icoon={AlignJustify}
         />
         <AlineaKnop />
@@ -246,35 +254,37 @@ function TekstAlinea() {
 }
 // Galerij met voorbeelden uit de documentstijlen (src/tekst/stijlen, #45).
 function Stijlen({ uitgebreid }: { uitgebreid?: boolean }) {
+  const { t } = useTranslation("ribbon");
   return (
     <StijlGalerij
       uitgebreid={uitgebreid}
-      extra={<AlineastijlKeuze naam="Alle stijlen" breed />}
+      extra={<AlineastijlKeuze naam={t("writer.commands.allStyles")} breed />}
     />
   );
 }
 function Klembord({ opdrachten }: { opdrachten: Opdrachten }) {
+  const { t } = useTranslation("ribbon");
   return (
-    <Groep naam="Klembord">
+    <Groep naam={t("writer.groups.clipboard")}>
       <EigenKnop
-        naam="Plakken"
+        naam={t("writer.commands.paste")}
         icoon={ClipboardPaste}
         groot
         disabled={!opdrachten.bewerkbaar}
         sneltoets="Ctrl+V"
-        uitleg="met opmaak; Ctrl+Shift+V plakt als alleen tekst"
+        uitleg={t("writer.hints.paste", { shortcut: "Ctrl+Shift+V" })}
         onClick={opdrachten.plakkenMetOpmaak}
       />
       <div className="ribbon-stapel">
         <EigenKnop
-          naam="Knippen"
+          naam={t("writer.commands.cut")}
           icoon={Scissors}
           sneltoets="Ctrl+X"
           disabled={!opdrachten.bewerkbaar}
           onClick={() => opdrachten.klembord("cut")}
         />
         <EigenKnop
-          naam="Kopiëren"
+          naam={t("writer.commands.copy")}
           icoon={Copy}
           sneltoets="Ctrl+C"
           onClick={() => opdrachten.klembord("copy")}
@@ -285,11 +295,12 @@ function Klembord({ opdrachten }: { opdrachten: Opdrachten }) {
   );
 }
 function OpmaakWissen() {
+  const { t } = useTranslation("ribbon");
   return (
-    <Groep naam="Opmaak">
+    <Groep naam={t("writer.groups.formatting")}>
       <WS
         id="clearFormatting"
-        naam="Opmaak wissen"
+        naam={t("writer.commands.clearFormatting")}
         icoon={Eraser}
         sneltoets="Ctrl+M"
         groot
@@ -300,9 +311,10 @@ function OpmaakWissen() {
 /** Zoeken, vervangen en Ga naar: het navigatievenster uit src/tekst/zoeken (#29). */
 const Zoeken = ZoekKnoppen;
 function WoordenTellen({ opdrachten }: { opdrachten: Opdrachten }) {
+  const { t } = useTranslation("ribbon");
   return (
     <EigenKnop
-      naam="Woorden tellen"
+      naam={t("writer.commands.wordCount")}
       icoon={WholeWord}
       groot
       onClick={() => opdrachten.setDialoog("woorden")}
@@ -310,9 +322,10 @@ function WoordenTellen({ opdrachten }: { opdrachten: Opdrachten }) {
   );
 }
 function Opmerking({ opdrachten }: { opdrachten: Opdrachten }) {
+  const { t } = useTranslation("ribbon");
   return (
     <EigenKnop
-      naam="Opmerking"
+      naam={t("writer.commands.comment")}
       icoon={MessageSquarePlus}
       groot
       sneltoets="Ctrl+Alt+C"
@@ -322,12 +335,13 @@ function Opmerking({ opdrachten }: { opdrachten: Opdrachten }) {
   );
 }
 function Afdrukken() {
+  const { t } = useTranslation("ribbon");
   return (
-    <Groep naam="Afdrukken">
+    <Groep naam={t("writer.groups.print")}>
       <Actie
-        naam="Afdrukken"
+        naam={t("writer.commands.print")}
         icoon={Printer}
-        title="Afdrukvoorbeeld en afdrukken (Ctrl+P)"
+        title={t("writer.hints.print", { shortcut: "Ctrl+P" })}
         groot
         onClick={() => vraagAfdrukvoorbeeld()}
       />
@@ -349,6 +363,7 @@ export function TekstRibbon({
   wijzigNavigatie: () => void;
   zoomKoppeling?: ZoomKoppeling;
 }) {
+  const { t } = useTranslation("ribbon");
   const zoom = useDocxCommand("zoom");
   const profiel = useInstellingen().tekst.sneltoetsprofiel;
   useDocumentZoom({
@@ -375,114 +390,114 @@ export function TekstRibbon({
   if (tabel.state.value)
     contextTabs.push({
       id: "tabel",
-      naam: "Tabelopmaak",
+      naam: t("writer.tabs.tableDesign"),
       inhoud: (
         <>
-          <Groep naam="Rijen">
+          <Groep naam={t("writer.groups.rows")}>
             <div className="ribbon-stapel">
               <W
                 id="tableAction"
                 args="addRowAbove"
-                naam="Rij boven invoegen"
+                naam={t("writer.commands.insertRowAbove")}
                 icoon={Rows3}
               />
               <W
                 id="tableAction"
                 args="addRowBelow"
-                naam="Rij onder invoegen"
+                naam={t("writer.commands.insertRowBelow")}
                 icoon={Rows3}
               />
             </div>
           </Groep>
-          <Groep naam="Kolommen">
+          <Groep naam={t("writer.groups.columns")}>
             <div className="ribbon-stapel">
               <W
                 id="tableAction"
                 args="addColumnLeft"
-                naam="Kolom links invoegen"
+                naam={t("writer.commands.insertColumnLeft")}
                 icoon={Columns2}
               />
               <W
                 id="tableAction"
                 args="addColumnRight"
-                naam="Kolom rechts invoegen"
+                naam={t("writer.commands.insertColumnRight")}
                 icoon={Columns2}
               />
             </div>
           </Groep>
-          <Groep naam="Cellen">
+          <Groep naam={t("writer.groups.cells")}>
             <W
               id="tableAction"
               args="mergeCells"
-              naam="Samenvoegen"
+              naam={t("writer.commands.mergeCells")}
               icoon={Merge}
               groot
             />
             <W
               id="tableAction"
               args="splitCell"
-              naam="Cel splitsen"
+              naam={t("writer.commands.splitCell")}
               icoon={Grid2X2}
               groot
             />
           </Groep>
-          <Groep naam="Selecteren">
+          <Groep naam={t("writer.groups.select")}>
             <div className="ribbon-stapel">
               <W
                 id="tableAction"
                 args="selectRow"
-                naam="Rij selecteren"
+                naam={t("writer.commands.selectRow")}
                 icoon={Rows3}
               />
               <W
                 id="tableAction"
                 args="selectColumn"
-                naam="Kolom selecteren"
+                naam={t("writer.commands.selectColumn")}
                 icoon={Columns2}
               />
               <W
                 id="tableAction"
                 args="selectTable"
-                naam="Tabel selecteren"
+                naam={t("writer.commands.selectTable")}
                 icoon={Table2}
               />
             </div>
           </Groep>
-          <Groep naam="Tabelstijl">
+          <Groep naam={t("writer.groups.tableStyle")}>
             <div className="ribbon-ingebouwd">
               <TekstControl id="tableAction" />
-              <span>Randen en opvulling</span>
+              <span>{t("writer.commands.bordersAndShading")}</span>
             </div>
           </Groep>
-          <Groep naam="Indeling">
+          <Groep naam={t("writer.groups.tableLayout")}>
             <W
               id="tableAction"
               args={{ type: "openTableProperties" }}
-              naam="Eigenschappen"
+              naam={t("writer.commands.properties")}
               icoon={Table2}
               groot
             />
           </Groep>
           <TabelIndeling />
-          <Groep naam="Verwijderen">
+          <Groep naam={t("writer.groups.delete")}>
             <div className="ribbon-stapel">
               <W
                 id="tableAction"
                 args="deleteRow"
-                naam="Rij verwijderen"
+                naam={t("writer.commands.deleteRow")}
                 icoon={Trash2}
               />
               <W
                 id="tableAction"
                 args="deleteColumn"
-                naam="Kolom verwijderen"
+                naam={t("writer.commands.deleteColumn")}
                 icoon={Trash2}
               />
             </div>
             <W
               id="tableAction"
               args="deleteTable"
-              naam="Tabel verwijderen"
+              naam={t("writer.commands.deleteTable")}
               icoon={Trash2}
               groot
             />
@@ -493,44 +508,44 @@ export function TekstRibbon({
   if (afbeelding.state.enabled)
     contextTabs.push({
       id: "afbeelding",
-      naam: "Afbeeldingsopmaak",
+      naam: t("writer.tabs.pictureFormat"),
       inhoud: (
         <>
-          <Groep naam="Afbeelding">
-            <W id="imageProperties" naam="Eigenschappen" icoon={Image} groot />
+          <Groep naam={t("writer.groups.picture")}>
+            <W id="imageProperties" naam={t("writer.commands.properties")} icoon={Image} groot />
           </Groep>
           <AfbeeldingGroepen />
-          <Groep naam="Tekstterugloop">
-            <WK id="imageWrap" naam="Tekstterugloop" breed />
+          <Groep naam={t("writer.groups.wrapText")}>
+            <WK id="imageWrap" naam={t("writer.commands.wrapText")} breed />
           </Groep>
-          <Groep naam="Draaien">
+          <Groep naam={t("writer.groups.rotate")}>
             <W
               id="imageTransform"
               args={{ action: "rotateCW" }}
-              naam="Rechtsom draaien"
+              naam={t("writer.commands.rotateRight")}
               icoon={RotateCw}
               groot
             />
             <W
               id="imageTransform"
               args={{ action: "rotateCCW" }}
-              naam="Linksom draaien"
+              naam={t("writer.commands.rotateLeft")}
               icoon={RotateCcw}
               groot
             />
           </Groep>
-          <Groep naam="Spiegelen">
+          <Groep naam={t("writer.groups.flip")}>
             <W
               id="imageTransform"
               args={{ action: "flipH" }}
-              naam="Horizontaal spiegelen"
+              naam={t("writer.commands.flipHorizontal")}
               icoon={FlipHorizontal2}
               groot
             />
             <W
               id="imageTransform"
               args={{ action: "flipV" }}
-              naam="Verticaal spiegelen"
+              naam={t("writer.commands.flipVertical")}
               icoon={FlipVertical2}
               groot
             />
@@ -551,7 +566,7 @@ export function TekstRibbon({
         tabs={[
           {
             id: "start",
-            naam: "Start",
+            naam: t("writer.tabs.home"),
             inhoud: (
               <>
                 <Geschiedenis soort="tekst" />
@@ -566,37 +581,37 @@ export function TekstRibbon({
           },
           {
             id: "invoegen",
-            naam: "Invoegen",
+            naam: t("writer.tabs.insert"),
             inhoud: (
               <>
-                <Groep naam="Pagina’s">
+                <Groep naam={t("writer.groups.pages")}>
                   <WS
                     id="insertPageBreak"
-                    naam="Pagina-einde"
+                    naam={t("writer.commands.pageBreak")}
                     icoon={FilePlus2}
                     sneltoets="Ctrl+Enter"
                     groot
                   />
                 </Groep>
-                <Groep naam="Tabellen">
+                <Groep naam={t("writer.groups.tables")}>
                   <TabelKiezer />
                   <TekstNaarTabelKnop />
                 </Groep>
-                <Groep naam="Illustraties">
-                  <W id="insertImage" naam="Afbeelding" icoon={Image} groot />
+                <Groep naam={t("writer.groups.illustrations")}>
+                  <W id="insertImage" naam={t("writer.commands.picture")} icoon={Image} groot />
                 </Groep>
                 <GrafiekGroep g={grafieken} uit={!opdrachten.bewerkbaar} />
-                <Groep naam="Koppelingen">
-                  <W id="insertLink" naam="Hyperlink" icoon={Link} groot />
+                <Groep naam={t("writer.groups.links")}>
+                  <W id="insertLink" naam={t("writer.commands.hyperlink")} icoon={Link} groot />
                 </Groep>
                 <KopVoetInvoegenGroep p={pagina} />
-                <Groep naam="Opmerkingen">
+                <Groep naam={t("writer.groups.comments")}>
                   <Opmerking opdrachten={opdrachten} />
                 </Groep>
-                <Groep naam="Tekst">
+                <Groep naam={t("writer.groups.text")}>
                   {/* Platte tekst kan ook in een kop- of voettekst die u bewerkt. */}
                   <EigenKnop
-                    naam="Speciaal teken"
+                    naam={t("writer.commands.specialCharacter")}
                     icoon={Omega}
                     groot
                     disabled={!opdrachten.invoerbaar && !pagina.kopVoet}
@@ -604,16 +619,16 @@ export function TekstRibbon({
                   />
                   <div className="ribbon-stapel">
                     <EigenKnop
-                      naam="Datum"
+                      naam={t("writer.commands.date")}
                       icoon={CalendarDays}
-                      uitleg="Voegt de datum van vandaag in als tekst"
+                      uitleg={t("writer.hints.date")}
                       disabled={!opdrachten.bewerkbaar && !pagina.kopVoet}
                       onClick={() => opdrachten.voegIn(datumTekst(new Date()))}
                     />
                     <EigenKnop
-                      naam="Tijd"
+                      naam={t("writer.commands.time")}
                       icoon={Clock}
-                      uitleg="Voegt de huidige tijd in als tekst"
+                      uitleg={t("writer.hints.time")}
                       disabled={!opdrachten.bewerkbaar && !pagina.kopVoet}
                       onClick={() => opdrachten.voegIn(tijdTekst(new Date()))}
                     />
@@ -625,16 +640,16 @@ export function TekstRibbon({
           },
           {
             id: "opmaak",
-            naam: "Opmaak",
+            naam: t("writer.tabs.format"),
             inhoud: (
               <>
-                <Groep naam="Tekenopmaak">
+                <Groep naam={t("writer.groups.characterFormatting")}>
                   <div className="ribbon-rij ribbon-iconen">
-                    <W id="bold" naam="Vet" icoon={Bold} />
-                    <W id="italic" naam="Cursief" icoon={Italic} />
-                    <W id="underline" naam="Onderstrepen" icoon={Underline} />
+                    <W id="bold" naam={t("writer.commands.bold")} icoon={Bold} />
+                    <W id="italic" naam={t("writer.commands.italic")} icoon={Italic} />
+                    <W id="underline" naam={t("writer.commands.underline")} icoon={Underline} />
                     <EigenKnop
-                      naam="Dubbel onderstrepen"
+                      naam={t("writer.commands.doubleUnderline")}
                       icoon={Baseline}
                       sneltoets="Ctrl+D"
                       disabled={!opdrachten.bewerkbaar}
@@ -644,41 +659,43 @@ export function TekstRibbon({
                   <div className="ribbon-rij ribbon-iconen">
                     <W
                       id="strikethrough"
-                      naam="Doorhalen"
+                      naam={t("writer.commands.strikethrough")}
                       icoon={Strikethrough}
                     />
                     <WS
                       id="superscript"
-                      naam="Superscript"
+                      naam={t("writer.commands.superscript")}
                       icoon={Superscript}
                       sneltoets="Ctrl+Shift+P"
                     />
                     <WS
                       id="subscript"
-                      naam="Subscript"
+                      naam={t("writer.commands.subscript")}
                       icoon={Subscript}
                       sneltoets="Ctrl+Shift+B"
                     />
                   </div>
                 </Groep>
-                <Groep naam="Hoofdletters">
+                <Groep naam={t("writer.groups.changeCase")}>
                   <div className="ribbon-rij ribbon-iconen">
                     {hoofdletterKnoppen
                       .slice(0, 3)
-                      .map(({ soort, ...knop }) => (
+                      .map(({ soort, sleutel, ...knop }) => (
                         <EigenKnop
                           key={soort}
                           {...knop}
+                          naam={t(`writer.case.${sleutel}`)}
                           disabled={!opdrachten.bewerkbaar}
                           onClick={() => void opdrachten.hoofdletters(soort)}
                         />
                       ))}
                   </div>
                   <div className="ribbon-rij ribbon-iconen">
-                    {hoofdletterKnoppen.slice(3).map(({ soort, ...knop }) => (
+                    {hoofdletterKnoppen.slice(3).map(({ soort, sleutel, ...knop }) => (
                       <EigenKnop
                         key={soort}
                         {...knop}
+                        naam={t(`writer.case.${sleutel}`)}
                         disabled={!opdrachten.bewerkbaar}
                         onClick={() => void opdrachten.hoofdletters(soort)}
                       />
@@ -687,19 +704,19 @@ export function TekstRibbon({
                 </Groep>
                 <OpmaakWissen />
                 <TekstAlinea />
-                <Groep naam="Regelafstand">
-                  <WK id="lineSpacing" naam="Regelafstand" breed vertaal={decimaleKomma} />
+                <Groep naam={t("writer.groups.lineSpacing")}>
+                  <WK id="lineSpacing" naam={t("writer.commands.lineSpacing")} breed vertaal={decimaleKomma} />
                 </Groep>
-                <Groep naam="Tekstrichting">
+                <Groep naam={t("writer.groups.textDirection")}>
                   <div className="ribbon-stapel">
                     <W
                       id="setLtr"
-                      naam="Van links naar rechts"
+                      naam={t("writer.commands.leftToRight")}
                       icoon={AlignLeft}
                     />
                     <W
                       id="setRtl"
-                      naam="Van rechts naar links"
+                      naam={t("writer.commands.rightToLeft")}
                       icoon={AlignRight}
                     />
                   </div>
@@ -711,7 +728,7 @@ export function TekstRibbon({
           verwijzingenTab(pagina),
           {
             id: "stijlen",
-            naam: "Stijlen",
+            naam: t("writer.tabs.styles"),
             inhoud: (
               <>
                 <Stijlen uitgebreid />
@@ -722,27 +739,27 @@ export function TekstRibbon({
           },
           {
             id: "indeling",
-            naam: "Indeling",
+            naam: t("writer.tabs.layout"),
             inhoud: (
               <>
-                <Groep naam="Pagina-instelling">
+                <Groep naam={t("writer.groups.pageSetup")}>
                   <PaginaIndelingKnoppen p={pagina} />
                   <W
                     id="pageSetup"
-                    naam="Pagina-opmaak"
+                    naam={t("writer.commands.pageSetup")}
                     icoon={LayoutTemplate}
                     groot
                   />
                   <WatermerkKnop p={pagina} />
                 </Groep>
                 <KolommenGroep p={pagina} />
-                <Groep naam="Pagina-achtergrond">
+                <Groep naam={t("writer.groups.pageBackground")}>
                   <PaginaAchtergrondKnoppen />
                 </Groep>
-                <Groep naam="Eindes">
+                <Groep naam={t("writer.groups.breaks")}>
                   <WS
                     id="insertPageBreak"
-                    naam="Pagina-einde"
+                    naam={t("writer.commands.pageBreak")}
                     icoon={FilePlus2}
                     sneltoets="Ctrl+Enter"
                     groot
@@ -751,57 +768,57 @@ export function TekstRibbon({
                   <ExtraEindes p={pagina} />
                 </Groep>
                 <AfstandGroep />
-                <Groep naam="Regelafstand">
-                  <WK id="lineSpacing" naam="Regelafstand" breed vertaal={decimaleKomma} />
+                <Groep naam={t("writer.groups.lineSpacing")}>
+                  <WK id="lineSpacing" naam={t("writer.commands.lineSpacing")} breed vertaal={decimaleKomma} />
                 </Groep>
               </>
             ),
           },
           {
             id: "controleren",
-            naam: "Controleren",
+            naam: t("writer.tabs.review"),
             inhoud: (
               <>
-                <Groep naam="Taal">
+                <Groep naam={t("writer.groups.proofing")}>
                   <EigenKnop
-                    naam="Spelling en grammatica"
+                    naam={t("writer.commands.spellingGrammar")}
                     icoon={SpellCheck}
                     groot
                     sneltoets="F7"
-                    uitleg="Deelvenster met onbekende woorden en suggesties"
+                    uitleg={t("writer.hints.spelling")}
                     onClick={() => {
-                      if (!openSpellingVenster()) opdrachten.fout("De spellingcontrole is nog niet gereed.");
+                      if (!openSpellingVenster()) opdrachten.fout(t("writer.errors.spellingNotReady"));
                     }}
                   />
                   <WoordenTellen opdrachten={opdrachten} />
                 </Groep>
-                <Groep naam="Opmerkingen">
+                <Groep naam={t("writer.groups.comments")}>
                   <Opmerking opdrachten={opdrachten} />
                   <W
                     id="commentsSidebar"
-                    naam="Opmerkingen tonen"
+                    naam={t("writer.commands.showComments")}
                     icoon={MessageSquare}
                     groot
                   />
                 </Groep>
-                <Groep naam="Wijzigingen bijhouden">
+                <Groep naam={t("writer.groups.tracking")}>
                   <EigenKnop
-                    naam="Opnemen"
+                    naam={t("writer.commands.trackChanges")}
                     icoon={PenLine}
                     groot
                     actief={opdrachten.opnemen}
-                    uitleg="Wijzigingen bijhouden"
+                    uitleg={t("writer.hints.trackChanges")}
                     sneltoets="Ctrl+Shift+C"
                     onClick={opdrachten.wisselOpnemen}
                   />
-                  <WK id="editingMode" naam="Bewerkingsmodus" breed />
+                  <WK id="editingMode" naam={t("writer.commands.editingMode")} breed />
                 </Groep>
-                <Groep naam="Wijzigingen">
-                  <W id="reviewAccept" naam="Accepteren" icoon={Check} groot />
-                  <W id="reviewReject" naam="Weigeren" icoon={X} groot />
+                <Groep naam={t("writer.groups.changes")}>
+                  <W id="reviewAccept" naam={t("writer.commands.accept")} icoon={Check} groot />
+                  <W id="reviewReject" naam={t("writer.commands.reject")} icoon={X} groot />
                   <div className="ribbon-stapel">
-                    <W id="reviewPrevious" naam="Vorige" icoon={ChevronLeft} />
-                    <W id="reviewNext" naam="Volgende" icoon={ChevronRight} />
+                    <W id="reviewPrevious" naam={t("writer.commands.previous")} icoon={ChevronLeft} />
+                    <W id="reviewNext" naam={t("writer.commands.next")} icoon={ChevronRight} />
                   </div>
                 </Groep>
                 <WijzigingenGroepen />
@@ -811,31 +828,31 @@ export function TekstRibbon({
           },
           {
             id: "beeld",
-            naam: "Beeld",
+            naam: t("writer.tabs.view"),
             inhoud: (
               <>
                 <WeergaveGroep />
-                <Groep naam="Weergeven">
+                <Groep naam={t("writer.groups.show")}>
                   <Actie
                     icoon={Ruler}
-                    naam="Liniaal"
+                    naam={t("writer.commands.ruler")}
                     groot
                     actief={liniaal}
-                    title="Liniaal · Ctrl+Shift+R"
+                    title={`${t("writer.commands.ruler")} · Ctrl+Shift+R`}
                     onClick={wijzigLiniaal}
                   />
                   <Actie
                     icoon={PanelLeft}
-                    naam="Navigator"
+                    naam={t("writer.commands.navigator")}
                     groot
                     actief={navigatie}
-                    title="Navigator · F5"
+                    title={`${t("writer.commands.navigator")} · F5`}
                     onClick={wijzigNavigatie}
                   />
                 </Groep>
-                <Groep naam="Navigeren">
+                <Groep naam={t("writer.groups.navigation")}>
                   <EigenKnop
-                    naam="Ga naar pagina"
+                    naam={t("writer.commands.goToPage")}
                     icoon={ArrowDownToLine}
                     groot
                     onClick={() => opdrachten.setDialoog("pagina")}
@@ -848,15 +865,15 @@ export function TekstRibbon({
           },
           {
             id: "extra",
-            naam: "Extra",
+            naam: t("writer.tabs.tools"),
             inhoud: (
               <>
-                <Groep naam="Extra">
+                <Groep naam={t("writer.groups.tools")}>
                   <WoordenTellen opdrachten={opdrachten} />
                 </Groep>
-                <Groep naam="Tekens">
+                <Groep naam={t("writer.groups.symbols")}>
                   <EigenKnop
-                    naam="Speciaal teken"
+                    naam={t("writer.commands.specialCharacter")}
                     icoon={Omega}
                     groot
                     disabled={!opdrachten.invoerbaar && !pagina.kopVoet}

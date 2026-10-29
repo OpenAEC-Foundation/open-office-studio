@@ -10,6 +10,7 @@
  * Yrs-sessie (`replaceRange`, `splitParagraph`), ook als één stap.
  */
 import type { DocxEditorRef } from "@betteroffice/docx-react";
+import i18next from "../../i18n/config";
 import { auteur, begin, engine, klaar, ruw, voorstel, type Engine, type Sessie } from "../gedeeld/engine.ts";
 import {
   TEKEN,
@@ -79,9 +80,9 @@ export function verhaalVolgorde(s: Sessie, verhaal = "body", uit: string[] = [])
 
 function plekVan(story: string) {
   const delen = [...story.matchAll(/:t(\d+):r(\d+)c(\d+)/g)];
-  if (!delen.length) return "Tekst";
+  if (!delen.length) return i18next.t("writer:find.location.text");
   const laatste = delen[delen.length - 1];
-  return `Tabel ${+laatste[1] + 1}, rij ${+laatste[2] + 1}, kolom ${+laatste[3] + 1}`;
+  return i18next.t("writer:find.location.tableCell", { table: +laatste[1] + 1, row: +laatste[2] + 1, column: +laatste[3] + 1 });
 }
 
 /** Opmaak, pagina-einden en sessie-offsets per alinea uit de ruwe segmenten. */
@@ -204,7 +205,7 @@ export function zoekIn(index: ZoekIndex, opdracht: Zoekopdracht, max = 5000): Re
   const uit: Resultaat[] = [];
   const filter = opdracht.opmaak;
   const metOpmaak = heeftOpmaak(filter);
-  if (!opdracht.zoek && !metOpmaak) throw new ZoekFout("Typ eerst iets om te zoeken of kies een opmaak.");
+  if (!opdracht.zoek && !metOpmaak) throw new ZoekFout(i18next.t("writer:find.errors.typeOrFormat"));
   const patroon = opdracht.zoek ? maakPatroon(opdracht.zoek, opdracht.opties) : null;
   for (const verhaal of index.verhalen) {
     const alineaOp = (i: number) => verhaal.alineas.find((a) => i >= a.start && i <= a.start + a.tekst.length);
@@ -248,7 +249,7 @@ export function zoekIn(index: ZoekIndex, opdracht: Zoekopdracht, max = 5000): Re
 }
 
 export async function zoek(ref: DocxEditorRef | null, opdracht: Zoekopdracht) {
-  if (!ref) throw new Error("Het document is nog niet gereed.");
+  if (!ref) throw new Error(i18next.t("writer:find.errors.notReady"));
   const index = await bouwIndex(ref);
   return { index, resultaten: zoekIn(index, opdracht) };
 }
@@ -312,7 +313,7 @@ export async function vervang(
   const e = engine(ref);
   if (!treffers.length) return { aantal: 0, route: "bewerkingen" };
   const teksten = treffers.map((t) => (t.groepen ? vervangTekst(sjabloon, t.groepen, opties) : sjabloon.replace(/\^p/g, "\n").replace(/\^t/g, "\t")));
-  if (teksten.some((t) => /[\v\f]/.test(t))) throw new ZoekFout("^l en ^m kunnen niet in de vervangtekst worden gebruikt.");
+  if (teksten.some((t) => /[\v\f]/.test(t))) throw new ZoekFout(i18next.t("writer:find.errors.breakInReplacement"));
   const eenvoudig = treffers.every((t, i) => t.delen.length === 1 && !t.tekst.includes("\n") && !t.tekst.includes("\f") && !teksten[i].includes("\n"));
   const suggest = e.ref.commands.getState("editingMode").value === "suggesting" ? { author: auteur(), date: new Date().toISOString() } : undefined;
   if (eenvoudig) {
@@ -335,10 +336,10 @@ export async function vervang(
       const code = resultaat.failure.code;
       throw new ZoekFout(
         code === "stale-version"
-          ? "Het document is intussen gewijzigd. Zoek opnieuw en probeer het nog eens."
+          ? i18next.t("writer:find.errors.staleVersion")
           : code === "tracked-revision-conflict"
-            ? "Een treffer overlapt een bijgehouden wijziging; accepteer of weiger die eerst."
-            : `Vervangen lukte niet (${resultaat.failure.message}).`,
+            ? i18next.t("writer:find.errors.trackedConflict")
+            : i18next.t("writer:find.errors.replaceFailed", { message: resultaat.failure.message }),
       );
     }
     return { aantal: treffers.length, route: "bewerkingen" };
@@ -354,7 +355,7 @@ function vervangViaSessie(e: Engine, index: ZoekIndex, treffers: readonly Result
   const plekken = treffers.map((t, i) => {
     const van = sessiePlek(index, t.story, t.start);
     const tot = sessiePlek(index, t.story, t.eind, true);
-    if (!van || !tot) throw new ZoekFout("Deze treffer bevat tekst die niet kan worden vervangen (bijvoorbeeld een bijgehouden wijziging).");
+    if (!van || !tot) throw new ZoekFout(i18next.t("writer:find.errors.cannotReplace"));
     return { t, van, tot, tekst: teksten[i] };
   });
   const verhalen = new Set<string>();
@@ -379,7 +380,7 @@ function vervangViaSessie(e: Engine, index: ZoekIndex, treffers: readonly Result
           const r = ontvangst.range;
           eind = r ? { story: t.story, paraId: r.end.paraId, offset: Math.max(0, r.end.offset - (r.end.paraId === van.paraId ? 1 : 0)) } : { story: t.story, paraId: van.paraId, offset: eerste.length };
         }
-      } else if (pagina) throw new ZoekFout("Een pagina-einde kan niet als voorstel worden verwijderd; zet Wijzigingen bijhouden eerst uit.");
+      } else if (pagina) throw new ZoekFout(i18next.t("writer:find.errors.pageBreakSuggestion"));
       else {
         const ontvangst = s.replaceRange(bereik, eerste, auteurVoorstel);
         const r = ontvangst.range;

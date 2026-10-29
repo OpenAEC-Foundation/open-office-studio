@@ -42,26 +42,26 @@ pub fn bytes_van(db: &Database, familie: &str, vet: bool, cursief: bool) -> Resu
     };
     let id = db
         .query(&query)
-        .ok_or_else(|| format!("Lettertype {familie} staat niet op deze computer."))?;
-    let face = db.face(id).ok_or("Lettertype niet gevonden.")?;
+        .ok_or_else(|| crate::taal::t_met("errors.font.notInstalled", &[("family", familie)]))?;
+    let face = db.face(id).ok_or_else(|| crate::taal::t("errors.font.notFound"))?;
     if !face
         .families
         .iter()
         .any(|(naam, _)| naam.eq_ignore_ascii_case(familie))
     {
-        return Err(format!("Lettertype {familie} staat niet op deze computer."));
+        return Err(crate::taal::t_met("errors.font.notInstalled", &[("family", familie)]));
     }
     db.with_face_data(id, |data, index| {
         if data.len() > MAX_BYTES {
-            return Err("Dit lettertypebestand is te groot.".to_owned());
+            return Err(crate::taal::t("errors.font.fileTooLarge"));
         }
         // Een lettertypeverzameling (.ttc) kan de app niet als los lettertype gebruiken.
         if index != 0 || data.starts_with(b"ttcf") {
-            return Err("Dit lettertype zit in een verzameling (.ttc) en kan niet los worden gebruikt.".to_owned());
+            return Err(crate::taal::t("errors.font.inCollection"));
         }
         Ok(data.to_vec())
     })
-    .ok_or("Het lettertypebestand kon niet worden gelezen.")?
+    .ok_or_else(|| crate::taal::t("errors.font.unreadable"))?
 }
 
 #[tauri::command]
@@ -78,7 +78,7 @@ pub async fn systeemlettertype(
     cursief: bool,
 ) -> Result<tauri::ipc::Response, String> {
     if familie.len() > 200 {
-        return Err("Ongeldige lettertypenaam.".into());
+        return Err(crate::taal::t("errors.font.nameInvalid"));
     }
     let bytes = tauri::async_runtime::spawn_blocking(move || {
         bytes_van(database(), &familie, vet, cursief)

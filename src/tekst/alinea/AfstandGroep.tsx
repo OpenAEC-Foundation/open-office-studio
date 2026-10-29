@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { ArrowDownToLine, ArrowUpToLine } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Groep } from "../../Ribbon";
 import { useEditorApi } from "../../lint/editorApi";
 import { EigenKnop } from "../../lint/tekst-opdrachten";
@@ -70,6 +71,7 @@ function Veld({
   uit: boolean;
   zet: (waarde: number) => void;
 }) {
+  const { t } = useTranslation("writer");
   const id = useId();
   const [tekst, setTekst] = useState("");
   const [bewerken, setBewerken] = useState(false);
@@ -77,8 +79,8 @@ function Veld({
   const begin = useRef("");
   const afgehandeld = useRef(false);
   const getoond = bewerken ? tekst : waarde === undefined ? "" : `${getalTekst(waarde, 2)} ${eenheid}`;
-  const bevestig = (t: string) => {
-    const n = leesGetal(t);
+  const bevestig = (invoer: string) => {
+    const n = leesGetal(invoer);
     if (n !== null && n >= (eenheid === "pt" ? 0 : -20)) zet(n);
   };
   return (
@@ -90,13 +92,13 @@ function Veld({
         value={getoond}
         disabled={uit}
         inputMode="decimal"
-        title={`${label} (${eenheid}); pijltjes = ${getalTekst(stap)} ${eenheid} op of af`}
+        title={t("paragraph.ribbon.fieldHint", { label, unit: eenheid, step: `${getalTekst(stap)} ${eenheid}` })}
         onFocus={(e) => {
-          const t = waarde === undefined ? "" : getalTekst(waarde, 2);
-          begin.current = t;
+          const begintekst = waarde === undefined ? "" : getalTekst(waarde, 2);
+          begin.current = begintekst;
           afgehandeld.current = false;
           setBewerken(true);
-          setTekst(t);
+          setTekst(begintekst);
           requestAnimationFrame(() => e.target.select());
         }}
         onBlur={() => {
@@ -117,10 +119,10 @@ function Veld({
           } else if (e.key === "ArrowUp" || e.key === "ArrowDown") {
             e.preventDefault();
             const n = Math.max(eenheid === "pt" ? 0 : -20, rond((leesGetal(tekst) ?? waarde ?? 0) + (e.key === "ArrowUp" ? stap : -stap)));
-            const t = getalTekst(n, 2);
+            const nieuw = getalTekst(n, 2);
             // Al toegepast: bij het verlaten niet nog eens.
-            begin.current = t;
-            setTekst(t);
+            begin.current = nieuw;
+            setTekst(nieuw);
             zet(n);
           }
         }}
@@ -131,31 +133,32 @@ function Veld({
 
 /** Lintgroepen "Inspringen" en "Afstand" zoals op het tabblad Indeling van Word. */
 export function AfstandGroep() {
+  const { t } = useTranslation("writer");
   const opmaak = useTekstOpmaak();
   const w = useHuidigeAlinea();
   const uit = !opmaak.bewerkbaar;
   return (
     <>
-      <Groep naam="Inspringen">
+      <Groep naam={t("paragraph.ribbon.indent")}>
         <div className="tekst-afstand">
-          <Veld label="Links" eenheid="cm" stap={0.25} waarde={w?.links} uit={uit} zet={(n) => opmaak.alinea({ indentLeft: n ? cmNaarTwips(n) : null })} />
-          <Veld label="Rechts" eenheid="cm" stap={0.25} waarde={w?.rechts} uit={uit} zet={(n) => opmaak.alinea({ indentRight: n ? cmNaarTwips(n) : null })} />
+          <Veld label={t("paragraph.left")} eenheid="cm" stap={0.25} waarde={w?.links} uit={uit} zet={(n) => opmaak.alinea({ indentLeft: n ? cmNaarTwips(n) : null })} />
+          <Veld label={t("paragraph.right")} eenheid="cm" stap={0.25} waarde={w?.rechts} uit={uit} zet={(n) => opmaak.alinea({ indentRight: n ? cmNaarTwips(n) : null })} />
         </div>
       </Groep>
-      <Groep naam="Afstand">
+      <Groep naam={t("paragraph.spacing")}>
         <div className="tekst-afstand">
-          <Veld label="Voor" eenheid="pt" stap={6} waarde={w?.voor} uit={uit} zet={(n) => opmaak.alinea({ spaceBefore: ptNaarTwips(n) })} />
-          <Veld label="Na" eenheid="pt" stap={6} waarde={w?.na} uit={uit} zet={(n) => opmaak.alinea({ spaceAfter: ptNaarTwips(n) })} />
+          <Veld label={t("paragraph.before")} eenheid="pt" stap={6} waarde={w?.voor} uit={uit} zet={(n) => opmaak.alinea({ spaceBefore: ptNaarTwips(n) })} />
+          <Veld label={t("paragraph.after")} eenheid="pt" stap={6} waarde={w?.na} uit={uit} zet={(n) => opmaak.alinea({ spaceAfter: ptNaarTwips(n) })} />
         </div>
         <div className="ribbon-stapel">
           <EigenKnop
-            naam={w && w.voor > 0 ? "Ruimte voor verwijderen" : "Ruimte voor toevoegen (12 pt)"}
+            naam={w && w.voor > 0 ? t("paragraph.ribbon.removeSpaceBefore") : t("paragraph.ribbon.addSpaceBefore", { size: "12 pt" })}
             icoon={ArrowUpToLine}
             disabled={uit}
             onClick={() => opmaak.alinea({ spaceBefore: w && w.voor > 0 ? 0 : ptNaarTwips(12) })}
           />
           <EigenKnop
-            naam={w && w.na > 0 ? "Ruimte na verwijderen" : "Ruimte na toevoegen (12 pt)"}
+            naam={w && w.na > 0 ? t("paragraph.ribbon.removeSpaceAfter") : t("paragraph.ribbon.addSpaceAfter", { size: "12 pt" })}
             icoon={ArrowDownToLine}
             disabled={uit}
             onClick={() => opmaak.alinea({ spaceAfter: w && w.na > 0 ? 0 : ptNaarTwips(12) })}

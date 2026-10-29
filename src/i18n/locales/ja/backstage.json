@@ -1,0 +1,471 @@
+{
+  "start": {
+    "backToWorkspace": "ワークスペースに戻る",
+    "workspace": "ワークスペース",
+    "home": "スタート",
+    "saveTitle": "保存 · Ctrl+S",
+    "saveAs": "名前を付けて保存",
+    "saveAsTitle": "名前を付けて保存 · F12 または Ctrl+Shift+S",
+    "print": "印刷",
+    "printTitle": "印刷プレビューと印刷 · Ctrl+P",
+    "info": "情報",
+    "infoTitle": "文書のプロパティ、統計情報、文書の検査",
+    "sendAsAttachment": "添付ファイルとして送信",
+    "sendAsAttachmentTitle": "現在の文書を新しいメール メッセージに添付します",
+    "email": "メール",
+    "emailUnread_other": "メール、未読 {{count}} 件",
+    "newFile": "新規ファイル",
+    "databaseTitle": "Database Studio · Access データベースを編集可能な作業コピーとして開く",
+    "databaseSubtitle": "作業コピー · 編集、クエリ、VBA",
+    "settingsTitle": "設定 · Ctrl+,",
+    "shortcutsTitle": "キーボード ショートカット · F1",
+    "tagline": "あなたのローカル オフィス",
+    "titleFile": "ファイル",
+    "titleWorkspace": "あなたのワークスペース。",
+    "intro": "書く、計算する、プレゼンする、アイデアを記録する。",
+    "addNotesBackup": "メモのバックアップを追加",
+    "openDatabase": "データベースを開く",
+    "openFile": "ファイルを開く",
+    "openShortcut": "Ctrl O",
+    "newFileTitle": "新規ファイル",
+    "newFileHint": "ツールを選んで、空白のファイルから始めます",
+    "notesHeading": "アイデアのための場所。",
+    "notesText": "ノートブック、セクション、ページ。自動的にローカルに保存されます。",
+    "openNotes": "メモを開く",
+    "emailText": "IMAP と SMTP で自分のメールを使えます。添付ファイルは文書、表計算、プレゼンテーション、データベースで直接開けます。",
+    "unread_other": "未読 {{count}} 件",
+    "openEmail": "メールを開く",
+    "examplesTitle": "作成できるものを見てみましょう",
+    "examplesHint": "サンプル ファイル",
+    "existingTitle": "既存のファイル",
+    "browse": "このコンピューターを参照",
+    "browseNotes": "OpenAEC のメモのバックアップを追加します。",
+    "browseDatabase": "MDB または ACCDB データベース、あるいは SQLite 作業コピーを開きます。",
+    "browseDocuments": "文書、スプレッドシート、プレゼンテーションを開きます。",
+    "formatNotes": "メモ",
+    "filesStayLocal": "ファイルはお使いのコンピューターに保存されたままです。",
+    "aboutVersion": "このバージョンについて",
+    "aboutText": "DOCX、XLSX、PPTX はそのまま使用できます。変換プログラムを設定すると、デスクトップ版では ODF や古い形式も変換できます。その際、書式が異なる場合があります。Database Studio は MDB または ACCDB ファイルから、テーブル、クエリ、フォーム、レポート、VBA を含む編集可能な SQLite 作業コピーを作成します。元のファイルは変更されません。単体のアプリは Open Database Studio としてインストールできます。",
+    "modules": {
+      "docx": {
+        "new": "白紙の文書",
+        "example": "設計メモ",
+        "exampleText": "テキスト、スタイル、表"
+      },
+      "xlsx": {
+        "new": "空白のスプレッドシート",
+        "example": "資材一覧",
+        "exampleText": "資材、数式、合計"
+      },
+      "pptx": {
+        "new": "新しいプレゼンテーション",
+        "example": "デザイン ビジョン",
+        "exampleText": "スライド、図形、ノート"
+      }
+    }
+  },
+  "recent": {
+    "title": "最近使用したファイル",
+    "hintDesktop": "最近開いたファイルと保存したファイル",
+    "hintBrowser": "このブラウザーは名前だけを記憶します。ファイルをもう一度選択してください",
+    "clear": "一覧をクリア",
+    "clearTitle": "一覧をクリアします。ピン留めしたファイルは残ります",
+    "missing": "{{name}} が {{folder}} に見つかりません。✕ で一覧から削除するか、[参照] から開いてください。",
+    "missingOriginalFolder": "{{name}} が元のフォルダーに見つかりません。✕ で一覧から削除するか、[参照] から開いてください。",
+    "notFound": "見つかりません",
+    "notFoundIn": "見つかりません · {{location}}",
+    "openFrom": "{{folder}} · 開く",
+    "chooseFile": "ファイルを選択",
+    "nameOnly": "名前のみ判明しています",
+    "pin": "{{name}} をピン留め",
+    "unpin": "{{name}} のピン留めを外す",
+    "pinTitle": "一番上にピン留め",
+    "unpinTitle": "ピン留めを外す",
+    "remove": "{{name}} を一覧から削除",
+    "removeTitle": "一覧から削除（ファイル自体は残ります）",
+    "today": "今日 {{time}}",
+    "yesterday": "昨日 {{time}}",
+    "todayInline": "今日 {{time}}",
+    "yesterdayInline": "昨日 {{time}}"
+  },
+  "recovery": {
+    "title": "文書の回復",
+    "explanation": "前回 Open Office Studio は正しく終了しませんでした。これらの文書の回復用コピーが保存されています。回復すると、未保存の新しいタブで開きます。元のファイルは変更されません。",
+    "copyFrom": "{{module}} · {{date}} の回復用コピー",
+    "restore": "回復",
+    "saveAs": "名前を付けて保存…",
+    "discard": "破棄",
+    "discardLabel": "{{name}} の回復用コピーを破棄",
+    "later": "後で決める",
+    "laterTitle": "コピーは次回起動時まで保持されます",
+    "restoredFrom": "{{date}} の回復用コピーから回復しました。元のファイルは変更されていません。保持するには、この文書を保存してください。",
+    "restoreFailed": "{{name}} を回復できませんでした: {{error}}",
+    "copyFailed": "自動回復でコピーを保存できませんでした: {{error}}"
+  },
+  "leave": {
+    "title": "未保存の変更",
+    "askSave": "<strong>{{name}}</strong> を閉じる前に変更を保存しますか?",
+    "unsaved": "<strong>{{name}}</strong> にはまだ保存されていない変更があります。変更を残すには、先にファイルを保存してください。",
+    "others_other": "このあと、未保存の変更がある文書がさらに {{count}} 件あります。",
+    "dontSave": "保存しない",
+    "discard": "変更を破棄"
+  },
+  "saveAs": {
+    "title": "名前を付けて保存",
+    "fileName": "ファイル名",
+    "browserInfo": "ブラウザーでは、アプリ自体で Markdown、CSV、HTML、テキスト、PDF を作成でき、表計算とプレゼンテーションでは PNG も作成できます。「デスクトップ アプリのみ」と表示された形式には、オフィス ランタイムを備えたデスクトップ版が必要です。",
+    "runtimeSearching": "オフィス ランタイムを検索しています…",
+    "runtimeFound": "オフィス ランタイム: {{version}}",
+    "runtimeDetails": "（{{source}}、{{profile}}）",
+    "sourceEnvironment": "OPENAEC_CONVERSIE_PROGRAMMA から",
+    "sourceSetting": "ユーザーが選択",
+    "sourceAutomatic": "自動検出",
+    "profileSafe": "安全なプロファイル: マクロ無効",
+    "profileOwn": "独自のプロファイル",
+    "runtimeMissing": "オフィス ランタイム（LibreOffice）が見つかりません。ランタイムが必要な形式は使用できません。",
+    "chooseConverter": "変換プログラムを選択",
+    "format": "形式",
+    "groups": {
+      "own": "ネイティブ形式",
+      "openDocument": "OpenDocument",
+      "legacyOffice": "以前の Office 形式",
+      "templates": "テンプレート",
+      "macro": "マクロ有効",
+      "webText": "Web とテキスト",
+      "pdfImage": "PDF と画像"
+    },
+    "routes": {
+      "inApp": "アプリ内",
+      "runtime": "オフィス ランタイム経由",
+      "print": "印刷経由"
+    },
+    "runtimeMissingShort": "ランタイムなし",
+    "desktopOnly": "デスクトップ アプリのみ",
+    "separator": "区切り文字",
+    "separatorSemicolon": "セミコロン ;",
+    "separatorComma": "コンマ ,",
+    "separatorTab": "タブ",
+    "separatorPipe": "縦棒 |",
+    "encoding": "エンコード",
+    "encodingUtf8BomExcel": "UTF-8 (BOM 付き、Excel)",
+    "encodingUtf8BomNotepad": "UTF-8 (BOM 付き、メモ帳、Excel)",
+    "csvInfo": "選択したシートのみを、数式ではなく値で保存します。=、+、- または @ で始まるテキストにはアポストロフィが付き、表計算ソフトで数式として実行されないようにします。",
+    "sheet": "シート",
+    "activeSheet": "{{name}}（アクティブ）",
+    "protect": "開くときのパスワードで保護",
+    "password": "パスワード",
+    "repeatPassword": "パスワードの再入力",
+    "encryptionInfo": "ECMA-376（AES-256）に準拠した暗号化で、Word、Excel、PowerPoint、LibreOffice で開けます。パスワードは保存されません。パスワードを忘れると、ファイルを開けなくなります。",
+    "noEncryptionInfo": "これは書き込み保護やシート保護ではありません。チェックを入れない場合、ファイルは暗号化されずに保存されます。",
+    "passwordMissing": "パスワードを指定してください。",
+    "passwordMismatch": "パスワードが一致しません。",
+    "passwordTooLong": "{{max}} 文字以内にしてください。",
+    "slide": "スライド",
+    "slideNumber": "スライド {{number}}",
+    "currentSlide": "スライド {{number}}（現在）",
+    "pdfVariant": "PDF の種類",
+    "pdfPlain": "標準 PDF",
+    "pdfA2b": "PDF/A-2b（アーカイブ）",
+    "slides": "スライド",
+    "pages": "ページ",
+    "rangePlaceholder": "すべて、または例: 1-3,5",
+    "bookmarks": "見出しをブックマークにする",
+    "printRoute": "オフィス ランタイムがない場合、PDF は印刷経由で作成します。印刷ダイアログでプリンター <strong>PDF に保存</strong> を選択してください（Windows: “Microsoft Print to PDF”）。レイアウトはエディターでの表示に従います。",
+    "untitled": "無題",
+    "copyInfo": "これは別の形式のコピーです。文書を .{{ext}} として保存するまで、変更ありの状態のままになります。",
+    "print": "印刷…",
+    "formats": {
+      "docx": {
+        "docx": {
+          "name": "Word 文書",
+          "keeps": "編集可能"
+        },
+        "odt": {
+          "name": "OpenDocument テキスト",
+          "keeps": "編集可能。書式が異なる場合があります"
+        },
+        "fodt": {
+          "name": "OpenDocument テキスト（フラット XML）",
+          "keeps": "編集可能。書式が異なる場合があります"
+        },
+        "doc": {
+          "name": "Word 97–2003 文書",
+          "keeps": "編集可能。書式が異なる場合があります"
+        },
+        "dotx": {
+          "name": "Word テンプレート",
+          "keeps": "編集可能。書式が異なる場合があります"
+        },
+        "dot": {
+          "name": "Word 97–2003 テンプレート",
+          "keeps": "編集可能。書式が異なる場合があります"
+        },
+        "ott": {
+          "name": "OpenDocument テキスト テンプレート",
+          "keeps": "編集可能。書式が異なる場合があります"
+        },
+        "docm": {
+          "name": "Word マクロ有効文書",
+          "keeps": "開いたマクロ ファイルのみ: VBA プロジェクトはそのまま保持、マクロは実行されません"
+        },
+        "rtf": {
+          "name": "Rich Text Format",
+          "keeps": "編集可能。書式が異なる場合があります"
+        },
+        "txt": {
+          "name": "書式なしテキスト (UTF-8)",
+          "keeps": "テキストのみ。書式、表、画像は失われます"
+        },
+        "html": {
+          "name": "Web ページ (HTML)",
+          "keeps": "書式が異なる場合があります。画像は埋め込まれます"
+        },
+        "xhtml": {
+          "name": "XHTML Web ページ",
+          "keeps": "書式が異なる場合があります"
+        },
+        "epub": {
+          "name": "EPUB 電子書籍",
+          "keeps": "閲覧専用。ページ レイアウトは失われます"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "テキストと構造。ページ レイアウト、画像、変更履歴は失われます"
+        },
+        "pdf": {
+          "name": "PDF 文書",
+          "keeps": "印刷プレビューと同じ表示。テキストは検索可能"
+        },
+        "png": {
+          "name": "PNG 画像（最初のページ）",
+          "keeps": "表示のみ。最初のページのみ"
+        }
+      },
+      "xlsx": {
+        "xlsx": {
+          "name": "Excel ブック",
+          "keeps": "編集可能"
+        },
+        "ods": {
+          "name": "OpenDocument スプレッドシート",
+          "keeps": "編集可能。書式が異なる場合があります"
+        },
+        "fods": {
+          "name": "OpenDocument スプレッドシート（フラット XML）",
+          "keeps": "編集可能。書式が異なる場合があります"
+        },
+        "xls": {
+          "name": "Excel 97–2003 ブック",
+          "keeps": "編集可能。書式が異なる場合があります"
+        },
+        "xltx": {
+          "name": "Excel テンプレート",
+          "keeps": "編集可能。書式が異なる場合があります"
+        },
+        "xlt": {
+          "name": "Excel 97–2003 テンプレート",
+          "keeps": "編集可能。書式が異なる場合があります"
+        },
+        "ots": {
+          "name": "OpenDocument スプレッドシート テンプレート",
+          "keeps": "編集可能。書式が異なる場合があります"
+        },
+        "xlsm": {
+          "name": "Excel マクロ有効ブック",
+          "keeps": "開いたマクロ ファイルのみ: VBA プロジェクトはそのまま保持、マクロは実行されません"
+        },
+        "csv": {
+          "name": "CSV（コンマ区切り）",
+          "keeps": "1 シートのみ。数式と書式なしの値"
+        },
+        "tsv": {
+          "name": "タブ区切りテキスト (TSV)",
+          "keeps": "1 シートのみ。数式と書式なしの値"
+        },
+        "html": {
+          "name": "Web ページ (HTML)",
+          "keeps": "表示のみ。数式は失われます"
+        },
+        "dif": {
+          "name": "Data Interchange Format (DIF)",
+          "keeps": "最初のシートのみ。数式と書式なしの値"
+        },
+        "slk": {
+          "name": "SYLK",
+          "keeps": "最初のシートのみ。数式は保持、書式の大部分は失われます"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "値の表示のみ。数式と書式は失われます"
+        },
+        "pdf": {
+          "name": "PDF 文書",
+          "keeps": "印刷プレビューと同じ表示。テキストは検索可能"
+        },
+        "png": {
+          "name": "PNG 画像（シート）",
+          "keeps": "表示のみ。1 シートの使用範囲"
+        }
+      },
+      "pptx": {
+        "pptx": {
+          "name": "PowerPoint プレゼンテーション",
+          "keeps": "編集可能"
+        },
+        "ppsx": {
+          "name": "PowerPoint スライド ショー",
+          "keeps": "編集可能。スライド ショーとして開きます。書式が異なる場合があります"
+        },
+        "odp": {
+          "name": "OpenDocument プレゼンテーション",
+          "keeps": "編集可能。書式が異なる場合があります"
+        },
+        "fodp": {
+          "name": "OpenDocument プレゼンテーション（フラット XML）",
+          "keeps": "編集可能。書式が異なる場合があります"
+        },
+        "ppt": {
+          "name": "PowerPoint 97–2003 プレゼンテーション",
+          "keeps": "編集可能。書式が異なる場合があります"
+        },
+        "pps": {
+          "name": "PowerPoint 97–2003 スライド ショー",
+          "keeps": "編集可能。書式が異なる場合があります"
+        },
+        "potx": {
+          "name": "PowerPoint テンプレート",
+          "keeps": "編集可能。書式が異なる場合があります"
+        },
+        "pot": {
+          "name": "PowerPoint 97–2003 テンプレート",
+          "keeps": "編集可能。書式が異なる場合があります"
+        },
+        "otp": {
+          "name": "OpenDocument プレゼンテーション テンプレート",
+          "keeps": "編集可能。書式が異なる場合があります"
+        },
+        "pptm": {
+          "name": "PowerPoint マクロ有効プレゼンテーション",
+          "keeps": "開いたマクロ ファイルのみ: VBA プロジェクトはそのまま保持、マクロは実行されません"
+        },
+        "html": {
+          "name": "Web ページ (HTML)",
+          "keeps": "スライドごとのテキストのみ。レイアウトと画像は失われます"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "スライドごとのテキストのみ。レイアウトと画像は失われます"
+        },
+        "pdf": {
+          "name": "PDF 文書",
+          "keeps": "印刷プレビューと同じ表示。テキストは検索可能"
+        },
+        "png": {
+          "name": "PNG 画像（現在のスライド）",
+          "keeps": "表示のみ。1 スライド"
+        }
+      }
+    }
+  },
+  "saveResult": {
+    "saved": "保存しました: {{path}}",
+    "exported": "エクスポートしました: {{path}}。変更を残すには、編集可能なファイルも保存してください。",
+    "cancelled": "保存をキャンセルしました。",
+    "chooseLocation": "保存する名前と場所を選択してください。",
+    "download": "ダウンロードを要求しました。ダウンロード フォルダーでファイルを確認してください。",
+    "tooLarge": "ファイルが空か、100 MB を超えています。",
+    "needsDesktop": "この形式には、オフィス ランタイム（LibreOffice）を備えたデスクトップ版が必要です。"
+  },
+  "printPreview": {
+    "title": "印刷プレビュー – {{title}}",
+    "notReady": "文書が完全に開くと印刷できます。",
+    "preparingPages": "ページを準備しています…",
+    "preparingPrint": "印刷を準備しています…",
+    "preparingPrintProgress": "印刷を準備しています… {{done}}/{{total}}",
+    "printHint": "印刷ダイアログで、プリンター、両面印刷、必要に応じて「PDF に保存」を選択してください。",
+    "makingPdf": "PDF を作成しています…",
+    "makingPdfProgress": "PDF を作成しています… {{done}}/{{total}}",
+    "pdfSaved": "PDF を保存しました: {{path}}",
+    "pdfDownloading": "PDF {{name}} をダウンロードしています。",
+    "layoutSaved": "ページ設定をブックに格納しました。確定するには文書を保存してください。",
+    "saveAsPdf": "PDF として保存",
+    "print": "印刷",
+    "keyboardHelp": "Page Up と Page Down でページを移動し、Ctrl+P で印刷します。",
+    "settings": "印刷設定",
+    "pages": "ページ",
+    "rangePlaceholder": "すべて、または例: 1-3, 5",
+    "copies": "部数",
+    "collate": "部単位で印刷 (1, 2, 3 – 1, 2, 3)",
+    "systemDialogHint": "プリンター、両面印刷、カラーは、このあとシステムの印刷ダイアログで選択します。",
+    "printAs": "印刷対象",
+    "slides": "スライド",
+    "handouts": "配布資料",
+    "notesPages": "ノート",
+    "slidesPerPage": "1 ページあたりのスライド数",
+    "withLines": "{{number}}（罫線付き）",
+    "paper": "用紙",
+    "slideSize": "スライドのサイズ",
+    "frameSlides": "スライドに枠を付ける",
+    "report": "レポート",
+    "saveLayout": "ページ設定をブックに格納",
+    "pdf": "PDF",
+    "imageQuality": "画質",
+    "qualitySmall": "小さいファイル (150 dpi)",
+    "qualityStandard": "標準 (200 dpi)",
+    "qualityHigh": "高画質、可逆圧縮 (300 dpi)",
+    "pdfHint": "テキストは選択・検索可能なままです。PDF はこのプレビューどおりになります。",
+    "toolbar": "ページ移動とズーム",
+    "previousPage": "前のページ",
+    "nextPage": "次のページ",
+    "pageOf": "<input/> / {{total}} ページ",
+    "pageNumber": "ページ番号",
+    "zoomOut": "縮小",
+    "zoom": "ズーム",
+    "zoomIn": "拡大",
+    "wholePage": "ページ全体",
+    "pageWidth": "ページ幅",
+    "preview": "ページのプレビュー",
+    "pageImage": "{{number}} ページのプレビュー",
+    "drawingPage": "ページを描画しています…",
+    "orientation": "印刷の向き",
+    "portrait": "縦",
+    "landscape": "横",
+    "activeSheet": "作業中のシート",
+    "wholeWorkbook": "ブック全体",
+    "selection": "選択範囲 ({{range}})",
+    "selectionNone": "選択範囲（選択なし）",
+    "ignorePrintArea": "印刷範囲を無視",
+    "pageSetup": "ページ設定",
+    "sheet": "シート",
+    "scale": "拡大縮小",
+    "percentage": "パーセント",
+    "fitPage": "1 ページに収める",
+    "fitWidth": "ページ幅に合わせる",
+    "pagesWide": "横のページ数",
+    "pagesTall": "縦（0 = 自動）",
+    "marginTop": "上 (cm)",
+    "marginBottom": "下",
+    "marginLeft": "左",
+    "marginRight": "右",
+    "printArea": "印刷範囲",
+    "printAreaPlaceholder": "使用範囲、または例: A1:H40",
+    "repeatRows": "タイトル行",
+    "repeatRowsPlaceholder": "例: 1:2",
+    "repeatColumns": "タイトル列",
+    "repeatColumnsPlaceholder": "例: A:B",
+    "gridlines": "枠線を印刷",
+    "headings": "行列番号を印刷",
+    "centerHorizontally": "水平方向に中央揃え",
+    "pageOrder": "ページの方向",
+    "downThenOver": "下へ、次に右へ",
+    "overThenDown": "右へ、次に下へ",
+    "header": "ヘッダー",
+    "footer": "フッター",
+    "sectionLeft": "左",
+    "sectionCenter": "中央",
+    "sectionRight": "右",
+    "sectionLabel": "{{area}} {{section}}",
+    "fields": "フィールド: {{fields}}。",
+    "pageBreakPreview": "改ページ プレビュー…"
+  }
+}

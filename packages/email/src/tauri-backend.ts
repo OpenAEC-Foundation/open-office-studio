@@ -14,6 +14,7 @@ import type {
   TestUitkomst,
 } from "./contract";
 import type { OAuthClientInstelling } from "./oauth";
+import i18next from "../../../src/i18n/config";
 import { naarMailFout } from "./fouten";
 
 /** Uint8Array naar base64 zonder grote tussenstrings per byte. */
@@ -32,7 +33,7 @@ export function naarBytes(waarde: unknown): Uint8Array {
   if (ArrayBuffer.isView(waarde)) return new Uint8Array(waarde.buffer, waarde.byteOffset, waarde.byteLength);
   if (Array.isArray(waarde)) return Uint8Array.from(waarde as number[]);
   if (typeof waarde === "string") return Uint8Array.from(atob(waarde), (c) => c.charCodeAt(0));
-  throw naarMailFout({ code: "intern", melding: "Onverwachte binaire uitvoer van de backend." });
+  throw naarMailFout({ code: "intern", melding: i18next.t("email:errors.unexpectedBinary") });
 }
 
 function opstellingVoorIpc(opstelling: Opstelling) {

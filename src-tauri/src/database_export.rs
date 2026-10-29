@@ -9,13 +9,13 @@ const MAXIMUM: usize = 100 * 1024 * 1024;
 /// Controleert naam en inhoud; geeft de kale bestandsnaam en de extensie terug.
 pub fn exportnaam(naam: &str, bytes: &[u8]) -> Result<(String, String), String> {
     if bytes.is_empty() || bytes.len() > MAXIMUM {
-        return Err("De export is leeg of groter dan 100 MB.".into());
+        return Err(crate::taal::t("errors.databaseExport.emptyOrTooLarge"));
     }
     // Alleen de bestandsnaam telt; een pad van buitenaf wordt genegeerd.
     let naam = Path::new(naam)
         .file_name()
         .and_then(|n| n.to_str())
-        .ok_or("Bestandsnaam ontbreekt.")?
+        .ok_or_else(|| crate::taal::t("errors.databaseExport.nameMissing"))?
         .to_owned();
     let extensie = Path::new(&naam)
         .extension()
@@ -25,18 +25,15 @@ pub fn exportnaam(naam: &str, bytes: &[u8]) -> Result<(String, String), String> 
     if extensie == "sqlite" {
         // Alleen een echte SQLite-werkkopie; nooit een MDB/ACCDB onder een andere naam.
         if !bytes.starts_with(SQLITE_KOP) {
-            return Err("Dit is geen SQLite-werkkopie.".into());
+            return Err(crate::taal::t("errors.databaseExport.notSqlite"));
         }
         return Ok((naam, extensie));
     }
     if !TEKSTEXPORTS.contains(&extensie.as_str()) {
-        return Err(
-            "Alleen CSV-, bron-, rapport- en SQLite-werkkopie-exports zijn toegestaan. Access-databases worden niet overschreven."
-                .into(),
-        );
+        return Err(crate::taal::t("errors.databaseExport.typeNotAllowed"));
     }
     if std::str::from_utf8(bytes).is_err() {
-        return Err("Een tekstexport moet geldige UTF-8-tekst zijn.".into());
+        return Err(crate::taal::t("errors.databaseExport.textNotUtf8"));
     }
     Ok((naam, extensie))
 }
@@ -47,26 +44,26 @@ pub async fn bewaar_database_export(
 ) -> Result<Option<String>, String> {
     let bytes = match request.body() {
         tauri::ipc::InvokeBody::Raw(bytes) if bytes.len() <= MAXIMUM => bytes.clone(),
-        _ => return Err("Stuur de export als binaire gegevens van maximaal 100 MB.".into()),
+        _ => return Err(crate::taal::t("errors.databaseExport.sendAsBinary")),
     };
     let kop = request
         .headers()
         .get("x-database-naam")
         .and_then(|n| n.to_str().ok())
-        .ok_or("Bestandsnaam ontbreekt.")?;
+        .ok_or_else(|| crate::taal::t("errors.databaseExport.nameMissing"))?;
     let naam = percent_encoding::percent_decode_str(kop)
         .decode_utf8()
-        .map_err(|_| "Ongeldige bestandsnaam.")?;
+        .map_err(|_| crate::taal::t("errors.databaseExport.nameInvalid"))?;
     let (naam, extensie) = exportnaam(&naam, &bytes)?;
     let bestand = rfd::AsyncFileDialog::new()
-        .set_title("Database-export opslaan")
+        .set_title(crate::taal::t("dialogs.databaseExport.title"))
         .set_file_name(&naam)
         .add_filter(
-            if extensie == "sqlite" {
-                "SQLite-werkkopie"
+            crate::taal::t(if extensie == "sqlite" {
+                "dialogs.databaseExport.sqliteFilter"
             } else {
-                "Database-export"
-            },
+                "dialogs.databaseExport.filter"
+            }),
             &[&extensie],
         )
         .save_file()
@@ -84,14 +81,14 @@ pub async fn bewaar_database_export(
         .map(str::to_lowercase)
         != Some(extensie)
     {
-        return Err("De gekozen extensie past niet bij de export.".into());
+        return Err(crate::taal::t("errors.databaseExport.extensionMismatch"));
     }
     if pad.exists()
         && rfd::AsyncMessageDialog::new()
-            .set_title("Export vervangen")
-            .set_description(format!(
-                "Het bestand {} bestaat al. Vervangen?",
-                pad.display()
+            .set_title(crate::taal::t("dialogs.databaseExport.replaceTitle"))
+            .set_description(crate::taal::t_met(
+                "dialogs.replaceFile.message",
+                &[("path", &pad.display().to_string())],
             ))
             .set_buttons(rfd::MessageButtons::YesNo)
             .show()

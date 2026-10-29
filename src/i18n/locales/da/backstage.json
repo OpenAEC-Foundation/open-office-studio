@@ -1,0 +1,474 @@
+{
+  "start": {
+    "backToWorkspace": "Tilbage til arbejdsområdet",
+    "workspace": "ARBEJDSOMRÅDE",
+    "home": "Start",
+    "saveTitle": "Gem · Ctrl+S",
+    "saveAs": "Gem som",
+    "saveAsTitle": "Gem som · F12 eller Ctrl+Shift+S",
+    "print": "Udskriv",
+    "printTitle": "Vis udskrift og udskriv · Ctrl+P",
+    "info": "Info",
+    "infoTitle": "Dokumentegenskaber, statistik og undersøg dokument",
+    "sendAsAttachment": "Send som vedhæftet fil",
+    "sendAsAttachmentTitle": "Vedhæft det aktuelle dokument i en ny mail",
+    "email": "Mail",
+    "emailUnread_one": "Mail, {{count}} ulæst",
+    "emailUnread_other": "Mail, {{count}} ulæste",
+    "newFile": "NY FIL",
+    "databaseTitle": "Database Studio · Access-database som redigerbar arbejdskopi",
+    "databaseSubtitle": "Arbejdskopi · redigering, forespørgsler, VBA",
+    "settingsTitle": "Indstillinger · Ctrl+,",
+    "shortcutsTitle": "Tastaturgenveje · F1",
+    "tagline": "Dit lokale kontor",
+    "titleFile": "Filer",
+    "titleWorkspace": "Dit arbejdsområde.",
+    "intro": "Skriv, regn, præsenter og fang idéer.",
+    "addNotesBackup": "Tilføj sikkerhedskopi af noter",
+    "openDatabase": "Åbn database",
+    "openFile": "Åbn fil",
+    "openShortcut": "Ctrl O",
+    "newFileTitle": "Ny fil",
+    "newFileHint": "Vælg dit værktøj, og start med en tom fil",
+    "notesHeading": "Et sted til dine idéer.",
+    "notesText": "Notesbøger, sektioner og sider. Gemmes automatisk lokalt.",
+    "openNotes": "Åbn Noter",
+    "emailText": "Din egen mail via IMAP og SMTP. Vedhæftede filer åbnes direkte i Tekst, Regneark, Præsentation eller Database.",
+    "unread_one": "{{count}} ulæst",
+    "unread_other": "{{count}} ulæste",
+    "openEmail": "Åbn Mail",
+    "examplesTitle": "Se, hvad du kan lave",
+    "examplesHint": "Eksempelfiler",
+    "existingTitle": "Eksisterende fil",
+    "browse": "Gennemse denne computer",
+    "browseNotes": "Tilføj en sikkerhedskopi af OpenAEC-noter.",
+    "browseDatabase": "Åbn en MDB- eller ACCDB-database eller en SQLite-arbejdskopi.",
+    "browseDocuments": "Åbn et dokument, et regneark eller en præsentation.",
+    "formatNotes": "NOTER",
+    "filesStayLocal": "Dine filer bliver på din computer.",
+    "aboutVersion": "Om denne version",
+    "aboutText": "DOCX, XLSX og PPTX fungerer direkte. Med et konfigureret konverteringsprogram kan skrivebordsversionen også konvertere ODF og ældre formater; formateringen kan afvige. Database Studio laver en MDB- eller ACCDB-fil om til en redigerbar SQLite-arbejdskopi med tabeller, forespørgsler, formularer, rapporter og VBA; originalen forbliver uændret. Den selvstændige app kan installeres som Open Database Studio.",
+    "modules": {
+      "docx": {
+        "new": "Tomt dokument",
+        "example": "Designnotat",
+        "exampleText": "Tekst, typografier og en tabel"
+      },
+      "xlsx": {
+        "new": "Tomt regneark",
+        "example": "Materialeoversigt",
+        "exampleText": "Materialer, formler og totaler"
+      },
+      "pptx": {
+        "new": "Tom præsentation",
+        "example": "Designvision",
+        "exampleText": "Dias, figurer og noter"
+      }
+    }
+  },
+  "recent": {
+    "title": "Seneste",
+    "hintDesktop": "Senest åbnede og gemte filer",
+    "hintBrowser": "Denne browser husker kun navne; vælg filen igen",
+    "clear": "Ryd listen",
+    "clearTitle": "Ryd listen; fastgjorte filer bliver stående",
+    "missing": "{{name}} findes ikke længere i {{folder}}. Fjern den fra listen med ✕, eller åbn den via Gennemse.",
+    "missingOriginalFolder": "{{name}} findes ikke længere i den oprindelige mappe. Fjern den fra listen med ✕, eller åbn den via Gennemse.",
+    "notFound": "Ikke fundet",
+    "notFoundIn": "Ikke fundet · {{location}}",
+    "openFrom": "{{folder}} · åbn",
+    "chooseFile": "Vælg fil",
+    "nameOnly": "Kun navnet er kendt",
+    "pin": "Fastgør {{name}}",
+    "unpin": "Frigør {{name}}",
+    "pinTitle": "Fastgør øverst",
+    "unpinTitle": "Frigør",
+    "remove": "Fjern {{name}} fra listen",
+    "removeTitle": "Fjern fra listen (filen bevares)",
+    "today": "I dag {{time}}",
+    "yesterday": "I går {{time}}",
+    "todayInline": "i dag {{time}}",
+    "yesterdayInline": "i går {{time}}"
+  },
+  "recovery": {
+    "title": "Gendan dokumenter",
+    "explanation": "Sidste gang blev Open Office Studio ikke lukket korrekt. Der er gemt en gendannelseskopi af disse dokumenter. Gendannelse åbner en ny, ikke-gemt fane; den oprindelige fil forbliver uændret.",
+    "copyFrom": "{{module}} · gendannelseskopi fra {{date}}",
+    "restore": "Gendan",
+    "saveAs": "Gem som…",
+    "discard": "Kassér",
+    "discardLabel": "Kassér gendannelseskopien af {{name}}",
+    "later": "Beslut senere",
+    "laterTitle": "Kopierne gemmes indtil næste start",
+    "restoredFrom": "Gendannet fra gendannelseskopien fra {{date}}. Den oprindelige fil er ikke ændret; gem dette dokument for at beholde det.",
+    "restoreFailed": "Gendannelse af {{name}} mislykkedes: {{error}}",
+    "copyFailed": "Automatisk gendannelse kunne ikke gemme en kopi: {{error}}"
+  },
+  "leave": {
+    "title": "Ikke-gemte ændringer",
+    "askSave": "Vil du gemme ændringerne i <strong>{{name}}</strong>, før du lukker det?",
+    "unsaved": "<strong>{{name}}</strong> indeholder ændringer, der endnu ikke er gemt. Gem filen først, hvis du vil beholde dem.",
+    "others_one": "Derefter følger endnu {{count}} dokument med ikke-gemte ændringer.",
+    "others_other": "Derefter følger endnu {{count}} dokumenter med ikke-gemte ændringer.",
+    "dontSave": "Gem ikke",
+    "discard": "Kassér ændringer"
+  },
+  "saveAs": {
+    "title": "Gem som",
+    "fileName": "Filnavn",
+    "browserInfo": "I browseren laver appen selv Markdown, CSV, HTML, tekst og PDF samt PNG for regneark og præsentationer. Formater mærket “kun i skrivebordsappen” kræver skrivebordsversionen med et kørselsmiljø til kontorprogrammer.",
+    "runtimeSearching": "Søger efter kørselsmiljø til kontorprogrammer…",
+    "runtimeFound": "Kørselsmiljø til kontorprogrammer: {{version}}",
+    "runtimeDetails": "({{source}}, {{profile}})",
+    "sourceEnvironment": "fra OPENAEC_CONVERSIE_PROGRAMMA",
+    "sourceSetting": "valgt af dig",
+    "sourceAutomatic": "fundet automatisk",
+    "profileSafe": "sikker profil: makroer slået fra",
+    "profileOwn": "egen profil",
+    "runtimeMissing": "Intet kørselsmiljø til kontorprogrammer (LibreOffice) fundet. Formater via kørselsmiljøet er ikke tilgængelige.",
+    "chooseConverter": "Vælg konverteringsprogram",
+    "format": "Format",
+    "groups": {
+      "own": "Eget format",
+      "openDocument": "OpenDocument",
+      "legacyOffice": "Ældre Office-formater",
+      "templates": "Skabeloner",
+      "macro": "Makroaktiverede",
+      "webText": "Web og tekst",
+      "pdfImage": "PDF og billede"
+    },
+    "routes": {
+      "inApp": "i appen",
+      "runtime": "via kørselsmiljø til kontorprogrammer",
+      "print": "via Udskriv"
+    },
+    "runtimeMissingShort": "kørselsmiljø mangler",
+    "desktopOnly": "kun i skrivebordsappen",
+    "separator": "Separator",
+    "separatorSemicolon": "Semikolon ; (dansk)",
+    "separatorComma": "Komma ,",
+    "separatorTab": "Tabulator",
+    "separatorPipe": "Lodret streg |",
+    "encoding": "Kodning",
+    "encodingUtf8BomExcel": "UTF-8 med BOM (Excel)",
+    "encodingUtf8BomNotepad": "UTF-8 med BOM (Notesblok, Excel)",
+    "csvInfo": "Kun det valgte ark, med værdier i stedet for formler. Tekst, der begynder med =, +, - eller @, får en apostrof, så et regnearksprogram ikke udfører den som en formel.",
+    "sheet": "Ark",
+    "activeSheet": "{{name}} (aktivt)",
+    "protect": "Beskyt med en adgangskode til åbning",
+    "password": "Adgangskode",
+    "repeatPassword": "Gentag adgangskode",
+    "encryptionInfo": "Kryptering efter ECMA-376 (AES-256), kan åbnes i Word, Excel, PowerPoint og LibreOffice. Adgangskoden gemmes ikke; hvis du mister den, kan filen ikke længere åbnes.",
+    "noEncryptionInfo": "Dette er ikke skrive- eller arkbeskyttelse: uden flueben gemmes filen ukrypteret.",
+    "passwordMissing": "Vælg en adgangskode.",
+    "passwordMismatch": "Adgangskoderne er ikke ens.",
+    "passwordTooLong": "Højst {{max}} tegn.",
+    "slide": "Dias",
+    "slideNumber": "Dias {{number}}",
+    "currentSlide": "Dias {{number}} (aktuelt)",
+    "pdfVariant": "PDF-variant",
+    "pdfPlain": "Almindelig PDF",
+    "pdfA2b": "PDF/A-2b (arkiv)",
+    "slides": "Dias",
+    "pages": "Sider",
+    "rangePlaceholder": "alle, eller f.eks. 1-3,5",
+    "bookmarks": "Overskrifter som bogmærker",
+    "printRoute": "PDF uden kørselsmiljø til kontorprogrammer går via Udskriv: vælg printeren <strong>Gem som PDF</strong> i udskriftsvinduet (Windows: “Microsoft Print to PDF”). Formateringen følger visningen i editoren.",
+    "untitled": "Unavngivet",
+    "copyInfo": "Dette er en kopi i et andet format. Dokumentet forbliver markeret som ændret, indtil du gemmer det som .{{ext}}.",
+    "print": "Udskriv…",
+    "formats": {
+      "docx": {
+        "docx": {
+          "name": "Word-dokument",
+          "keeps": "redigerbart"
+        },
+        "odt": {
+          "name": "OpenDocument-tekst",
+          "keeps": "redigerbart; formateringen kan afvige"
+        },
+        "fodt": {
+          "name": "OpenDocument-tekst (flad XML)",
+          "keeps": "redigerbart; formateringen kan afvige"
+        },
+        "doc": {
+          "name": "Word 97–2003-dokument",
+          "keeps": "redigerbart; formateringen kan afvige"
+        },
+        "dotx": {
+          "name": "Word-skabelon",
+          "keeps": "redigerbar; formateringen kan afvige"
+        },
+        "dot": {
+          "name": "Word 97–2003-skabelon",
+          "keeps": "redigerbar; formateringen kan afvige"
+        },
+        "ott": {
+          "name": "OpenDocument-tekstskabelon",
+          "keeps": "redigerbar; formateringen kan afvige"
+        },
+        "docm": {
+          "name": "Word-dokument med makroer",
+          "keeps": "kun for en åbnet makrofil: VBA-projektet bevares uændret, makroer køres ikke"
+        },
+        "rtf": {
+          "name": "Rich Text Format",
+          "keeps": "redigerbart; formateringen kan afvige"
+        },
+        "txt": {
+          "name": "Almindelig tekst (UTF-8)",
+          "keeps": "kun tekst; formatering, tabeller og billeder forsvinder"
+        },
+        "html": {
+          "name": "Webside (HTML)",
+          "keeps": "formateringen kan afvige; billeder integreret"
+        },
+        "xhtml": {
+          "name": "XHTML-webside",
+          "keeps": "formateringen kan afvige"
+        },
+        "epub": {
+          "name": "EPUB-e-bog",
+          "keeps": "kun læsning; sidelayoutet forsvinder"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "tekst og struktur; sidelayout, billeder og revisioner forsvinder"
+        },
+        "pdf": {
+          "name": "PDF-dokument",
+          "keeps": "visning som i udskriftsvisningen; søgbar tekst"
+        },
+        "png": {
+          "name": "PNG-billede (første side)",
+          "keeps": "kun visning; kun første side"
+        }
+      },
+      "xlsx": {
+        "xlsx": {
+          "name": "Excel-projektmappe",
+          "keeps": "redigerbar"
+        },
+        "ods": {
+          "name": "OpenDocument-regneark",
+          "keeps": "redigerbart; formateringen kan afvige"
+        },
+        "fods": {
+          "name": "OpenDocument-regneark (flad XML)",
+          "keeps": "redigerbart; formateringen kan afvige"
+        },
+        "xls": {
+          "name": "Excel 97–2003-projektmappe",
+          "keeps": "redigerbar; formateringen kan afvige"
+        },
+        "xltx": {
+          "name": "Excel-skabelon",
+          "keeps": "redigerbar; formateringen kan afvige"
+        },
+        "xlt": {
+          "name": "Excel 97–2003-skabelon",
+          "keeps": "redigerbar; formateringen kan afvige"
+        },
+        "ots": {
+          "name": "OpenDocument-regnearksskabelon",
+          "keeps": "redigerbar; formateringen kan afvige"
+        },
+        "xlsm": {
+          "name": "Excel-projektmappe med makroer",
+          "keeps": "kun for en åbnet makrofil: VBA-projektet bevares uændret, makroer køres ikke"
+        },
+        "csv": {
+          "name": "CSV (separerede værdier)",
+          "keeps": "kun ét ark; værdier uden formler og formatering"
+        },
+        "tsv": {
+          "name": "Tabulatorsepareret tekst (TSV)",
+          "keeps": "kun ét ark; værdier uden formler og formatering"
+        },
+        "html": {
+          "name": "Webside (HTML)",
+          "keeps": "kun visning; formler forsvinder"
+        },
+        "dif": {
+          "name": "Data Interchange Format (DIF)",
+          "keeps": "kun første ark; værdier uden formler og formatering"
+        },
+        "slk": {
+          "name": "SYLK",
+          "keeps": "kun første ark; formler bevares, formatering for det meste ikke"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "kun visning af værdier; formler og formatering forsvinder"
+        },
+        "pdf": {
+          "name": "PDF-dokument",
+          "keeps": "visning som i udskriftsvisningen; søgbar tekst"
+        },
+        "png": {
+          "name": "PNG-billede (ark)",
+          "keeps": "kun visning; anvendt område i ét ark"
+        }
+      },
+      "pptx": {
+        "pptx": {
+          "name": "PowerPoint-præsentation",
+          "keeps": "redigerbar"
+        },
+        "ppsx": {
+          "name": "PowerPoint-diasshow",
+          "keeps": "redigerbart; åbnes som diasshow; formateringen kan afvige"
+        },
+        "odp": {
+          "name": "OpenDocument-præsentation",
+          "keeps": "redigerbar; formateringen kan afvige"
+        },
+        "fodp": {
+          "name": "OpenDocument-præsentation (flad XML)",
+          "keeps": "redigerbar; formateringen kan afvige"
+        },
+        "ppt": {
+          "name": "PowerPoint 97–2003-præsentation",
+          "keeps": "redigerbar; formateringen kan afvige"
+        },
+        "pps": {
+          "name": "PowerPoint 97–2003-diasshow",
+          "keeps": "redigerbart; formateringen kan afvige"
+        },
+        "potx": {
+          "name": "PowerPoint-skabelon",
+          "keeps": "redigerbar; formateringen kan afvige"
+        },
+        "pot": {
+          "name": "PowerPoint 97–2003-skabelon",
+          "keeps": "redigerbar; formateringen kan afvige"
+        },
+        "otp": {
+          "name": "OpenDocument-præsentationsskabelon",
+          "keeps": "redigerbar; formateringen kan afvige"
+        },
+        "pptm": {
+          "name": "PowerPoint-præsentation med makroer",
+          "keeps": "kun for en åbnet makrofil: VBA-projektet bevares uændret, makroer køres ikke"
+        },
+        "html": {
+          "name": "Webside (HTML)",
+          "keeps": "kun tekst pr. dias; layout og billeder forsvinder"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "kun tekst pr. dias; layout og billeder forsvinder"
+        },
+        "pdf": {
+          "name": "PDF-dokument",
+          "keeps": "visning som i udskriftsvisningen; søgbar tekst"
+        },
+        "png": {
+          "name": "PNG-billede (aktuelt dias)",
+          "keeps": "kun visning; ét dias"
+        }
+      }
+    }
+  },
+  "saveResult": {
+    "saved": "Gemt: {{path}}",
+    "exported": "Eksporteret: {{path}}. Gem også din redigerbare fil for at beholde ændringerne.",
+    "cancelled": "Lagring annulleret.",
+    "chooseLocation": "Vælg et navn og en placering at gemme på.",
+    "download": "Download anmodet. Kontrollér filen i dine downloads.",
+    "tooLarge": "Filen er tom eller større end 100 MB.",
+    "needsDesktop": "Dette format kræver skrivebordsversionen med et kørselsmiljø til kontorprogrammer (LibreOffice)."
+  },
+  "printPreview": {
+    "title": "Vis udskrift – {{title}}",
+    "notReady": "Du kan udskrive, når dokumentet er helt åbnet.",
+    "preparingPages": "Forbereder sider…",
+    "preparingPrint": "Forbereder udskrift…",
+    "preparingPrintProgress": "Forbereder udskrift… {{done}} af {{total}}",
+    "printHint": "Vælg printer, dobbeltsidet udskrivning og eventuelt ‘Gem som PDF’ i udskriftsvinduet.",
+    "makingPdf": "Opretter PDF…",
+    "makingPdfProgress": "Opretter PDF… {{done}} af {{total}}",
+    "pdfSaved": "PDF gemt: {{path}}",
+    "pdfDownloading": "PDF-filen {{name}} downloades.",
+    "layoutSaved": "Sideopsætningen er gemt i projektmappen. Gem dokumentet for at beholde den.",
+    "saveAsPdf": "Gem som PDF",
+    "print": "Udskriv",
+    "keyboardHelp": "Page Up og Page Down bladrer gennem siderne; Ctrl+P udskriver.",
+    "settings": "Udskriftsindstillinger",
+    "pages": "Sider",
+    "rangePlaceholder": "alle, eller f.eks. 1-3, 5",
+    "copies": "Kopier",
+    "collate": "Sorteret (1, 2, 3 – 1, 2, 3)",
+    "systemDialogHint": "Printer, dobbeltsidet udskrivning og farve vælger du derefter i systemets udskriftsvindue.",
+    "printAs": "Udskriv som",
+    "slides": "Dias",
+    "handouts": "Uddelingskopier",
+    "notesPages": "Notesider",
+    "slidesPerPage": "Dias pr. side",
+    "withLines": "{{number}} (med linjer)",
+    "paper": "Papir",
+    "slideSize": "Diasstørrelse",
+    "frameSlides": "Ramme om dias",
+    "report": "Rapport",
+    "saveLayout": "Gem sideopsætning i projektmappen",
+    "pdf": "PDF",
+    "imageQuality": "Billedkvalitet",
+    "qualitySmall": "Lille fil (150 dpi)",
+    "qualityStandard": "Standard (200 dpi)",
+    "qualityHigh": "Høj, tabsfri (300 dpi)",
+    "pdfHint": "Teksten forbliver markerbar og søgbar; PDF-filen følger præcis denne visning.",
+    "toolbar": "Gennemse og zoom",
+    "previousPage": "Forrige side",
+    "nextPage": "Næste side",
+    "pageOf": "Side <input/> af {{total}}",
+    "pageNumber": "Sidenummer",
+    "zoomOut": "Zoom ud",
+    "zoom": "Zoom",
+    "zoomIn": "Zoom ind",
+    "wholePage": "Hel side",
+    "pageWidth": "Sidebredde",
+    "preview": "Sidevisning",
+    "pageImage": "Visning af side {{number}}",
+    "drawingPage": "Tegner side…",
+    "orientation": "Retning",
+    "portrait": "Stående",
+    "landscape": "Liggende",
+    "activeSheet": "Aktivt ark",
+    "wholeWorkbook": "Hele projektmappen",
+    "selection": "Markering ({{range}})",
+    "selectionNone": "Markering (intet markeret)",
+    "ignorePrintArea": "Ignorer udskriftsområde",
+    "pageSetup": "Sideopsætning",
+    "sheet": "Ark",
+    "scale": "Skalering",
+    "percentage": "Procent",
+    "fitPage": "Tilpas til én side",
+    "fitWidth": "Tilpas til sidebredde",
+    "pagesWide": "Sider i bredden",
+    "pagesTall": "i højden (0 = automatisk)",
+    "marginTop": "Top (cm)",
+    "marginBottom": "Bund",
+    "marginLeft": "Venstre",
+    "marginRight": "Højre",
+    "printArea": "Udskriftsområde",
+    "printAreaPlaceholder": "anvendt område, eller f.eks. A1:H40",
+    "repeatRows": "Gentag rækker",
+    "repeatRowsPlaceholder": "f.eks. 1:2",
+    "repeatColumns": "Gentag kolonner",
+    "repeatColumnsPlaceholder": "f.eks. A:B",
+    "gridlines": "Udskriv gitterlinjer",
+    "headings": "Udskriv række- og kolonneoverskrifter",
+    "centerHorizontally": "Centrer vandret",
+    "pageOrder": "Siderækkefølge",
+    "downThenOver": "Ned, derefter hen",
+    "overThenDown": "Hen, derefter ned",
+    "header": "Sidehoved",
+    "footer": "Sidefod",
+    "sectionLeft": "venstre",
+    "sectionCenter": "midte",
+    "sectionRight": "højre",
+    "sectionLabel": "{{area}} {{section}}",
+    "fields": "Felter: {{fields}}.",
+    "pageBreakPreview": "Vis sideskift…"
+  }
+}

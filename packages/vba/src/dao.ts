@@ -4,6 +4,7 @@
  * domeinfuncties (DLookup, DCount …). Bewerkingen via een recordset gaan met
  * de rowid naar `voegToe`, `wijzig` en `verwijder`.
  */
+import i18next from "i18next";
 import type {
   QueryResultaat,
   TabelSchema,
@@ -170,6 +171,23 @@ export function naarWaarde(w: VbaWaarde, rt: VbaRuntime): Waarde {
   return naarTekst(w, rt.land);
 }
 
+
+/**
+ * Meldt de werkkopie dat een tabel al bestaat (CREATE TABLE of maakTabel)? Herkent de
+ * melding in de actieve taal (database:accessSql.tableExists, workingCopy.errors.tableOrQueryExists)
+ * en de Nederlandse brontekst.
+ */
+function bestaatAl(melding: string): boolean {
+  if (/^(Tabel ‘[^’]*’ bestaat al|Er bestaat al een tabel of query)/.test(melding)) return true;
+  const GAT = "\u0001";
+  return ["database:accessSql.tableExists", "database:workingCopy.errors.tableOrQueryExists"].some((sleutel) => {
+    const vorm = i18next.t(sleutel, { name: GAT });
+    if (vorm === sleutel || !vorm.includes(GAT)) return false;
+    const patroon = vorm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(GAT, "[^]*?");
+    return new RegExp(`^${patroon}`).test(melding);
+  });
+}
+
 /** Vertaalt fouten van de werkkopie naar DAO-foutnummers. */
 export function daoFout(e: unknown): unknown {
   if (e instanceof VbaFout || e instanceof VbaAfbreking) return e;
@@ -185,7 +203,7 @@ export function daoFout(e: unknown): unknown {
     intern: 3000,
   };
   // CREATE TABLE of maakTabel op een bestaande tabel: in Access fout 3010.
-  if (code === "beperking" && /^(Tabel ‘[^’]*’ bestaat al|Er bestaat al een tabel of query)/.test(melding)) return new VbaFout(3010, melding, "DAO.Database");
+  if (code === "beperking" && bestaatAl(melding)) return new VbaFout(3010, melding, "DAO.Database");
   if (code && code in nummers) return new VbaFout(nummers[code], melding, "DAO.Database");
   return new VbaFout(3000, melding, "DAO.Database");
 }
@@ -200,7 +218,7 @@ async function metDb<T>(f: () => Promise<T>): Promise<T> {
 
 export function werkkopieVan(rt: VbaRuntime): Werkkopie {
   if (!rt.werkkopie)
-    throw new VbaAfbreking("niet-ondersteund", "Er is geen database gekoppeld: CurrentDb, recordsets en DoCmd.RunSQL hebben een werkkopie nodig.");
+    throw new VbaAfbreking("niet-ondersteund", i18next.t("vba:dao.noDatabase"));
   return rt.werkkopie;
 }
 
@@ -303,7 +321,7 @@ export class Recordset extends VbaObject {
     if (this.gesloten) throw fout(3420);
     if (this.eof || this.bof) throw fout(3021);
     const r = this.rijen[this.positie];
-    if (r.verwijderd) throw fout(3167, "Record is verwijderd.");
+    if (r.verwijderd) throw fout(3167, i18next.t("vba:dao.recordDeleted"));
     return r;
   }
   veldIndex(naam: VbaWaarde, rt: VbaRuntime): number {
@@ -316,7 +334,7 @@ export class Recordset extends VbaObject {
     let i = this.kolommen.findIndex((k) => k.toLowerCase() === n);
     // "Tabel.Veld" als kolomnaam: zoek ook op het laatste deel
     if (i < 0) i = this.kolommen.findIndex((k) => k.toLowerCase().split(".").pop() === n.split(".").pop());
-    if (i < 0) throw fout(3265, `Item ‘${naarTekst(naam, rt.land)}’ is niet gevonden in deze verzameling.`);
+    if (i < 0) throw fout(3265, i18next.t("vba:runtime.itemNotFound", { name: naarTekst(naam, rt.land) }));
     return i;
   }
   leesVeld(i: number): VbaWaarde {
@@ -326,7 +344,7 @@ export class Recordset extends VbaObject {
   zetVeld(i: number, w: VbaWaarde) {
     if (this.gesloten) throw fout(3420);
     if (this.modus === "geen") throw fout(3020);
-    if (!this.tabel) throw fout(3027, "Kan niet bijwerken: deze recordset is alleen-lezen (query of samengestelde SQL).");
+    if (!this.tabel) throw fout(3027, i18next.t("vba:dao.cannotUpdateReadOnly"));
     this.buffer[i] = w instanceof Leeg ? NULL : w;
     this.gewijzigd.add(i);
   }
@@ -358,7 +376,7 @@ export class Recordset extends VbaObject {
       try {
         e = parseerExpressie(criterium, { sql: true });
       } catch (f) {
-        if (f instanceof VbaParseerFout) throw new VbaFout(3077, `Syntaxisfout in het zoekcriterium: ${f.kaleMelding}`);
+        if (f instanceof VbaParseerFout) throw new VbaFout(3077, i18next.t("vba:dao.criteriaSyntaxError", { message: f.kaleMelding }));
         throw f;
       }
       for (let p = vanaf; p >= 0 && p < this.rijen.length; p += richting) {
@@ -442,13 +460,13 @@ export class Recordset extends VbaObject {
       case "type":
         return int(this.soort);
       case "addnew":
-        if (!this.tabel) throw fout(3027, "Kan geen record toevoegen: deze recordset is alleen-lezen.");
+        if (!this.tabel) throw fout(3027, i18next.t("vba:dao.cannotAddReadOnly"));
         this.modus = "addnew";
         this.buffer = this.kolommen.map(() => NULL);
         this.gewijzigd.clear();
         return LEEG;
       case "edit":
-        if (!this.tabel) throw fout(3027, "Kan niet bewerken: deze recordset is alleen-lezen.");
+        if (!this.tabel) throw fout(3027, i18next.t("vba:dao.cannotEditReadOnly"));
         this.buffer = [...this.huidig().waarden];
         this.modus = "edit";
         this.gewijzigd.clear();
@@ -486,7 +504,7 @@ export class Recordset extends VbaObject {
         this.annuleer();
         return LEEG;
       case "delete": {
-        if (!this.tabel) throw fout(3027, "Kan niet verwijderen: deze recordset is alleen-lezen.");
+        if (!this.tabel) throw fout(3027, i18next.t("vba:dao.cannotDeleteReadOnly"));
         const rij = this.huidig();
         await metDb(() => werkkopieVan(r).verwijder(this.tabel!, rij.rowid!));
         rij.verwijderd = true;
@@ -537,7 +555,7 @@ export class Recordset extends VbaObject {
       case "openrecordset":
       case "filter":
       case "sort":
-        throw new VbaAfbreking("niet-ondersteund", `Recordset.${naam} (filteren/sorteren van een geopende recordset) wordt niet ondersteund; open een nieuwe recordset met WHERE/ORDER BY.`);
+        throw new VbaAfbreking("niet-ondersteund", i18next.t("vba:dao.filterSortUnsupported", { name: naam }));
     }
     return super.lid(naam, args, rt);
   }
@@ -548,7 +566,7 @@ export class Recordset extends VbaObject {
     if (naam === "bookmark") {
       const id = bankAfronden(naarGetal(await r.deref(waarde), r.land));
       const p = this.rijen.findIndex((x) => x.id === id);
-      if (p < 0) throw fout(3159, "Geen geldige bladwijzer.");
+      if (p < 0) throw fout(3159, i18next.t("vba:dao.invalidBookmark"));
       this.annuleer();
       this.positie = p;
       return;
@@ -575,13 +593,13 @@ export class Recordset extends VbaObject {
   override async bang(naam: string): Promise<VbaWaarde> {
     const n = naam.toLowerCase();
     const i = this.kolommen.findIndex((k) => k.toLowerCase() === n);
-    if (i < 0) throw fout(3265, `Item ‘${naam}’ is niet gevonden in deze verzameling.`);
+    if (i < 0) throw fout(3265, i18next.t("vba:runtime.itemNotFound", { name: naam }));
     return this.velden[i];
   }
   override async zetBang(naam: string, waarde: VbaWaarde, rt: unknown): Promise<void> {
     const n = naam.toLowerCase();
     const i = this.kolommen.findIndex((k) => k.toLowerCase() === n);
-    if (i < 0) throw fout(3265, `Item ‘${naam}’ is niet gevonden in deze verzameling.`);
+    if (i < 0) throw fout(3265, i18next.t("vba:runtime.itemNotFound", { name: naam }));
     this.zetVeld(i, await (rt as VbaRuntime).deref(waarde));
   }
   override async elementen(): Promise<VbaWaarde[]> {
@@ -676,7 +694,7 @@ async function evalueerCriterium(e: Expr, waarden: VbaWaarde[], kolommen: string
     const n = naam.toLowerCase();
     let i = kolommen.findIndex((k) => k.toLowerCase() === n);
     if (i < 0) i = kolommen.findIndex((k) => k.toLowerCase().split(".").pop() === n.split(".").pop());
-    if (i < 0) throw fout(3070, `Het veld ‘${naam}’ in het zoekcriterium is onbekend.`);
+    if (i < 0) throw fout(3070, i18next.t("vba:dao.unknownCriteriaField", { name: naam }));
     return waarden[i];
   };
   const ev = (x: Expr): Promise<VbaWaarde> => evalueerCriterium(x, waarden, kolommen, rt);
@@ -747,7 +765,7 @@ async function evalueerCriterium(e: Expr, waarden: VbaWaarde[], kolommen: string
       }
       break;
   }
-  throw new VbaAfbreking("niet-ondersteund", "Dit zoekcriterium (FindFirst/FindNext) bevat een constructie die niet wordt ondersteund.");
+  throw new VbaAfbreking("niet-ondersteund", i18next.t("vba:dao.criteriaUnsupported"));
 }
 
 // ---------- openen ----------
@@ -789,12 +807,12 @@ export async function openRecordset(
     );
   }
   const query = !isSql(bron) ? querys.find((q) => q.naam.toLowerCase() === naam.toLowerCase()) : undefined;
-  if (!isSql(bron) && !query) throw fout(3078, `De tabel of query ‘${naam}’ is niet gevonden in de database.`);
+  if (!isSql(bron) && !query) throw fout(3078, i18next.t("vba:dao.tableOrQueryNotFound", { name: naam }));
   const sql = query ? query.sql : bron;
   // Parameters controleren (fout 3061 zoals DAO)
   const nodig = await metDb(() => db.parametersVan(query ? query.naam : sql));
   const ontbrekend = nodig.filter((p) => !parameters || !Object.keys(parameters).some((k) => k.toLowerCase() === p.toLowerCase()));
-  if (ontbrekend.length) throw fout(3061, `Te weinig parameters. Verwacht: ${ontbrekend.length}.`);
+  if (ontbrekend.length) throw fout(3061, i18next.t("vba:dao.tooFewParameters", { expected: ontbrekend.length }));
   const resultaat = await metDb(() => (query ? db.voerQueryUit(query.naam, parameters) : db.query(sql, { parameters, limiet: 1_000_000 })));
   // Bijwerkbaar als de werkkopie de basistabel en de rowids meegeeft (SELECT op één tabel).
   const bijwerk = !alleenLezen && resultaat.bron && resultaat.bron.rowids.length === resultaat.rijen.length ? resultaat.bron : undefined;
@@ -991,7 +1009,7 @@ class Verzameling extends VbaObject {
       return LEEG;
     }
     if (naam === "append")
-      throw new VbaAfbreking("niet-ondersteund", `${this.typeNaam}.Append wordt niet ondersteund.`);
+      throw new VbaAfbreking("niet-ondersteund", i18next.t("vba:runtime.memberUnsupported", { member: `${this.typeNaam}.Append` }));
     return super.lid(naam, args, rt);
   }
   override async standaard(args: VbaWaarde[], rt: unknown): Promise<VbaWaarde> {
@@ -1005,7 +1023,7 @@ class Verzameling extends VbaObject {
     }
     const n = zonderHaken(naarTekst(sleutel, r.land)).toLowerCase();
     const item = lijst.find((x) => x.naam.toLowerCase() === n);
-    if (!item) throw fout(3265, `Item ‘${naarTekst(sleutel, r.land)}’ is niet gevonden in deze verzameling.`);
+    if (!item) throw fout(3265, i18next.t("vba:runtime.itemNotFound", { name: naarTekst(sleutel, r.land) }));
     return item.obj;
   }
   override async bang(naam: string, rt: unknown) {
@@ -1043,7 +1061,7 @@ class TableDefObject extends VbaObject {
         const veldnaam = ontbreekt(args[0]) ? "" : naarTekst(await r.deref(args[0]), r.land);
         const type = ontbreekt(args[1]) ? 10 : bankAfronden(naarGetal(await r.deref(args[1]), r.land));
         const soort = SOORT_UIT_DAO[type];
-        if (!soort) throw fout(3259, `Veldtype ${type} wordt niet ondersteund.`);
+        if (!soort) throw fout(3259, i18next.t("vba:dao.fieldTypeUnsupported", { type }));
         const v: VeldSchema = { naam: veldnaam, soort };
         if (soort === "tekst") v.lengte = ontbreekt(args[2]) ? 255 : bankAfronden(naarGetal(await r.deref(args[2]), r.land));
         return new VeldDefObject(v, -1, true);
@@ -1070,8 +1088,8 @@ class TableDefObject extends VbaObject {
             await metDb(() => db.verwijderVeld(this.schema.naam, veld));
           },
           async (obj) => {
-            if (!(obj instanceof VeldDefObject) || !obj.los) throw fout(3367, "Fields.Append verwacht een veld uit CreateField.");
-            if (!obj.v.naam) throw fout(3264, "Het veld heeft geen naam.");
+            if (!(obj instanceof VeldDefObject) || !obj.los) throw fout(3367, i18next.t("vba:dao.fieldsAppendExpectsField"));
+            if (!obj.v.naam) throw fout(3264, i18next.t("vba:dao.fieldHasNoName"));
             if (!this.nieuw) await metDb(() => db.voegVeldToe(this.schema.naam, { ...obj.v }));
             this.schema.velden.push({ ...obj.v });
             obj.los = false;
@@ -1201,8 +1219,8 @@ export class DatabaseObject extends VbaObject {
           async () => (await schemas(r)).tabellen.map((t) => ({ naam: t.naam, obj: new TableDefObject(structuredClone(t)) })),
           (naam) => metDb(() => db.verwijderTabel(naam)),
           async (obj) => {
-            if (!(obj instanceof TableDefObject) || !obj.nieuw) throw fout(3367, "TableDefs.Append verwacht een TableDef uit CreateTableDef.");
-            if (!obj.schema.velden.length) throw fout(3264, "De tabel heeft nog geen velden (Fields.Append).");
+            if (!(obj instanceof TableDefObject) || !obj.nieuw) throw fout(3367, i18next.t("vba:dao.tableDefsAppendExpectsTableDef"));
+            if (!obj.schema.velden.length) throw fout(3264, i18next.t("vba:dao.tableHasNoFields"));
             await metDb(() => db.maakTabel({ naam: obj.schema.naam, velden: obj.schema.velden }));
             obj.nieuw = false;
           },
@@ -1219,7 +1237,7 @@ export class DatabaseObject extends VbaObject {
         // Zonder naam: tijdelijke querydef. Met naam: blijvend opgeslagen in de werkkopie
         // (in DAO na QueryDefs.Append; CreateQueryDef met naam doet dat direct).
         if (!qnaam) return new QueryDefObject("", sql, querySoort(sql), true);
-        if (!sql) throw new VbaAfbreking("niet-ondersteund", "CreateQueryDef met een naam maar zonder SQL wordt niet ondersteund.");
+        if (!sql) throw new VbaAfbreking("niet-ondersteund", i18next.t("vba:dao.createQueryDefWithoutSql"));
         const db = werkkopieVan(r);
         await metDb(() => db.bewaarQuery({ naam: qnaam, sql, soort: querySoort(sql) }));
         vergeetSchemas(r);
@@ -1247,7 +1265,7 @@ export class DatabaseObject extends VbaObject {
       case "createrelation":
       case "relations":
       case "containers":
-        throw new VbaAfbreking("niet-ondersteund", `Database.${naam} wordt niet ondersteund.`);
+        throw new VbaAfbreking("niet-ondersteund", i18next.t("vba:runtime.memberUnsupported", { member: `Database.${naam}` }));
     }
     return super.lid(naam, args, rt);
   }
@@ -1317,7 +1335,7 @@ class EigenschappenVerzameling extends VbaObject {
       return p;
     }
     const p = this.items.get(naarTekst(sleutel, rt.land).toLowerCase());
-    if (!p) throw fout(3270, `Eigenschap ‘${naarTekst(sleutel, rt.land)}’ is niet gevonden.`);
+    if (!p) throw fout(3270, i18next.t("vba:dao.propertyNotFound", { name: naarTekst(sleutel, rt.land) }));
     return p;
   }
   override async standaard(args: VbaWaarde[], rt: unknown): Promise<VbaWaarde> {
@@ -1341,7 +1359,7 @@ class EigenschappenVerzameling extends VbaObject {
         return LEEG;
       case "append": {
         const p = args[0] ?? LEEG; // niet derefereren: dan komt de waarde terug
-        if (!(p instanceof EigenschapObject)) throw fout(3367, "Properties.Append verwacht een eigenschap uit CreateProperty.");
+        if (!(p instanceof EigenschapObject)) throw fout(3367, i18next.t("vba:dao.propertiesAppendExpectsProperty"));
         if (this.items.has(p.naam.toLowerCase())) throw fout(3367);
         this.items.set(p.naam.toLowerCase(), p);
         return LEEG;

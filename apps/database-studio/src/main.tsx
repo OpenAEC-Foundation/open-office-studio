@@ -1,6 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { FolderOpen, ShieldCheck } from "lucide-react";
+import { FolderOpen, Languages, ShieldCheck } from "lucide-react";
+import { useTranslation } from "react-i18next";
+// Meertaligheid: zelfde configuratie en taalkeuze (instellingen) als de kantooromgeving.
+import i18next, { bepaalTaal, gereed, TALEN } from "../../../src/i18n/config";
+import { useInstellingen, wijzigInstellingen } from "../../../src/instellingen";
+import { isTaalKeuze, TAALNAMEN } from "../../../src/i18n/talen";
 import "@fontsource/inter/400.css";
 import "@fontsource/inter/500.css";
 import "@fontsource/inter/600.css";
@@ -17,11 +22,23 @@ import "../../../src/stijl/openaec-office.css";
 import openaecSymbool from "../../../src/stijl/openaec-symbol.svg";
 import { ThemaKnop, useOfficeThema } from "../../../src/stijl/ThemaKnop";
 
-/** Bewaart via de native opslagdialoog; de Rust-kant staat alleen bekende exporttypen toe. */
+/**
+ * Bewaart via de native opslagdialoog; de Rust-kant staat alleen bekende
+ * exporttypen toe. De teksten van de native dialogen gaan in de gekozen taal
+ * mee als kopregels (de Rust-kant valt terug op Nederlands).
+ */
 async function bewaarNatief(naam: string, bytes: Uint8Array) {
   const { invoke } = await import("@tauri-apps/api/core");
+  const t = (sleutel: string) => encodeURIComponent(i18next.t(`database:standalone.nativeDialog.${sleutel}`));
   const pad = await invoke<string | null>("bewaar_database_export", bytes, {
-    headers: { "x-database-naam": encodeURIComponent(naam) },
+    headers: {
+      "x-database-naam": encodeURIComponent(naam),
+      "x-dialoog-titel": t("saveTitle"),
+      "x-dialoog-filter-sqlite": t("filterSqlite"),
+      "x-dialoog-filter-export": t("filterExport"),
+      "x-vervang-titel": t("replaceTitle"),
+      "x-vervang-tekst": t("replaceText"),
+    },
   });
   return pad
     ? ({ status: "opgeslagen", pad } as const)
@@ -32,7 +49,39 @@ const bewaar: DatabaseUitvoer = (naam, inhoud) =>
 const bewaarBinair: DatabaseBinaireUitvoer = (naam, inhoud) =>
   bewaarNatief(naam, inhoud);
 
+/**
+ * Taalkeuze van de zelfstandige app. Bewaart in dezelfde instellingen als de
+ * kantooromgeving (`taal`, src/instellingen.ts); de app heeft geen eigen
+ * instellingenvenster.
+ */
+function TaalKeuze() {
+  const { t } = useTranslation("database");
+  const { taal } = useInstellingen();
+  const label = t("standalone.language");
+  return (
+    <label className="database-taalkeuze" title={label}>
+      <Languages size={14} aria-hidden="true" />
+      <select
+        aria-label={label}
+        value={taal}
+        onChange={(e) => {
+          if (isTaalKeuze(e.target.value)) wijzigInstellingen({ taal: e.target.value });
+        }}
+      >
+        {TALEN.map(({ code, naam }) => (
+          <option key={code} value={code}>
+            {code === "auto"
+              ? t("settings:general.languageAuto", { language: TAALNAMEN[bepaalTaal("auto")] })
+              : naam}
+          </option>
+        ))}
+      </select>
+    </label>
+  );
+}
+
 function ZelfstandigeDatabaseStudio() {
+  const { t } = useTranslation("database");
   const { thema, wisselThema } = useOfficeThema();
   const openen = useRef<(() => void) | null>(null);
   const [gereed, setGereed] = useState(false);
@@ -65,21 +114,22 @@ function ZelfstandigeDatabaseStudio() {
             OpenAEC <span>Database Studio</span>
           </strong>
         </div>
-        <span className="database-weekversie" title={`Versie ${versie.versie}`}>
+        <span className="database-weekversie" title={t("standalone.version", { version: versie.versie })}>
           {versie.label}
         </span>
         <span className="database-lokaal">
-          <ShieldCheck size={14} /> Lokaal · origineel blijft ongewijzigd
+          <ShieldCheck size={14} /> {t("standalone.local")}
         </span>
+        <TaalKeuze />
         <ThemaKnop thema={thema} wissel={wisselThema} />
         <button
           className="office-headerknop"
           disabled={!gereed}
           onClick={() => openen.current?.()}
-          title="Database openen · Ctrl+O"
+          title={t("standalone.openShortcut")}
         >
           <FolderOpen size={16} />
-          <span>Database openen</span>
+          <span>{t("standalone.open")}</span>
         </button>
       </header>
       <DatabaseStudio
@@ -91,8 +141,11 @@ function ZelfstandigeDatabaseStudio() {
   );
 }
 
-createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <ZelfstandigeDatabaseStudio />
-  </React.StrictMode>,
+// Eerste weergave pas als de gekozen taal geladen is (zoals src/main.tsx).
+void gereed.then(() =>
+  createRoot(document.getElementById("root")!).render(
+    <React.StrictMode>
+      <ZelfstandigeDatabaseStudio />
+    </React.StrictMode>,
+  ),
 );

@@ -6,6 +6,7 @@
  */
 import type { DocxCompareDiagnostic, DocxComparedChange } from "@betteroffice/docx";
 import { strFromU8, unzipSync } from "fflate";
+import i18next from "../../i18n/config";
 import { voorbeeld } from "./opdrachten.ts";
 
 export interface VergelijkOpties {
@@ -38,7 +39,7 @@ export async function vergelijk(origineel: Uint8Array, gewijzigd: Uint8Array, op
     if (heeftWijzigingen(a)) a = (await voorbeeld(a, "accepteren")).bytes;
     if (heeftWijzigingen(b)) b = (await voorbeeld(b, "accepteren")).bytes;
   }
-  const auteur = opties.auteur.trim().replace(/[\u0000-\u001f]/g, "") || "Vergelijking";
+  const auteur = opties.auteur.trim().replace(/[\u0000-\u001f]/g, "") || i18next.t("writer:changes.compare.defaultAuthor");
   // Pas bij gebruik laden: de vergelijking hoort niet in de opstartbundel.
   const { compareDocx } = await import("@betteroffice/docx");
   const uit = await compareDocx(a, b, {
@@ -51,37 +52,39 @@ export async function vergelijk(origineel: Uint8Array, gewijzigd: Uint8Array, op
   return { ok: true, bytes: uit.docx, wijzigingen: uit.changes, meldingen: uit.diagnostics, verschillen: uit.changes.length };
 }
 
+/** Engine-meldingen met een eigen uitleg (`writer:changes.compare.diagnostics.<sleutel>`). */
 const UITLEG: Partial<Record<DocxCompareDiagnostic["code"], string>> = {
-  "invalid-options": "De instellingen voor de vergelijking zijn ongeldig.",
-  "invalid-docx": "Een van de bestanden is geen geldig Word-document.",
-  "existing-revisions": "Een document bevat al bijgehouden wijzigingen. Vink ‘Bestaande wijzigingen eerst accepteren’ aan, of accepteer of weiger ze eerst.",
-  "paragraph-insertion": "Er zijn alinea’s toegevoegd. De engine vergelijkt nu alleen tekst binnen alinea’s die in beide versies voorkomen.",
-  "paragraph-deletion": "Er zijn alinea’s verwijderd. De engine vergelijkt nu alleen tekst binnen alinea’s die in beide versies voorkomen.",
-  "paragraph-move": "Alinea’s zijn verplaatst; dat kan de vergelijking nog niet weergeven.",
-  "ambiguous-alignment": "Het is niet eenduidig welke alinea’s bij elkaar horen.",
-  "table-change": "Tabellen verschillen; tabelwijzigingen kan de vergelijking nog niet weergeven.",
-  "structure-change": "De opbouw van het document verschilt (secties, tabellen of blokken).",
-  "field-change": "Velden verschillen; die worden niet als wijziging getoond.",
-  "object-change": "Afbeeldingen of objecten verschillen; die worden niet als wijziging getoond.",
-  "content-control-change": "Inhoudsbesturingselementen verschillen.",
-  "formatting-change": "De opmaak verschilt; opmaakwijzigingen worden niet als wijziging getoond.",
-  "unsupported-content": "Het document bevat inhoud die de vergelijking niet ondersteunt.",
-  "unsupported-formatting": "Het document bevat opmaak die de vergelijking niet ondersteunt.",
-  "out-of-scope-change": "Er zijn verschillen buiten de hoofdtekst (kop- en voetteksten, noten); die worden niet vergeleken.",
-  "opaque-part-change": "Andere onderdelen van het pakket verschillen; die worden niet vergeleken.",
-  "metadata-difference": "Documenteigenschappen verschillen; die worden niet vergeleken.",
-  "limit-exceeded": "Het document is te groot of te verschillend voor de vergelijking.",
-  "diagnostics-truncated": "Er zijn meer meldingen dan getoond.",
-  "batch-refused": "De verschillen konden niet als wijzigingen worden vastgelegd.",
-  "serialization-failed": "Het resultaat kon niet worden opgeslagen.",
-  "roundtrip-mismatch": "Het resultaat kwam niet overeen met de gewijzigde versie.",
+  "invalid-options": "invalidOptions",
+  "invalid-docx": "invalidDocx",
+  "existing-revisions": "existingRevisions",
+  "paragraph-insertion": "paragraphInsertion",
+  "paragraph-deletion": "paragraphDeletion",
+  "paragraph-move": "paragraphMove",
+  "ambiguous-alignment": "ambiguousAlignment",
+  "table-change": "tableChange",
+  "structure-change": "structureChange",
+  "field-change": "fieldChange",
+  "object-change": "objectChange",
+  "content-control-change": "contentControlChange",
+  "formatting-change": "formattingChange",
+  "unsupported-content": "unsupportedContent",
+  "unsupported-formatting": "unsupportedFormatting",
+  "out-of-scope-change": "outOfScopeChange",
+  "opaque-part-change": "opaquePartChange",
+  "metadata-difference": "metadataDifference",
+  "limit-exceeded": "limitExceeded",
+  "diagnostics-truncated": "diagnosticsTruncated",
+  "batch-refused": "batchRefused",
+  "serialization-failed": "serializationFailed",
+  "roundtrip-mismatch": "roundtripMismatch",
 };
 
-/** Nederlandse uitleg bij een melding van de engine, met het aantal keer. */
+/** Uitleg in de interfacetaal bij een melding van de engine, met het aantal keer. */
 export function meldingen(lijst: readonly DocxCompareDiagnostic[]) {
   const per = new Map<string, { tekst: string; ernst: DocxCompareDiagnostic["severity"]; aantal: number }>();
   for (const d of lijst) {
-    const tekst = UITLEG[d.code] ?? d.message;
+    const sleutel = UITLEG[d.code];
+    const tekst = sleutel ? i18next.t(`writer:changes.compare.diagnostics.${sleutel}`) : d.message;
     const oud = per.get(d.code);
     if (oud) oud.aantal++;
     else per.set(d.code, { tekst, ernst: d.severity, aantal: 1 });
@@ -92,13 +95,15 @@ export function meldingen(lijst: readonly DocxCompareDiagnostic[]) {
 
 /** Korte omschrijving van één verschil: ‘oud’ → ‘nieuw’. */
 export function verschilTekst(w: DocxComparedChange) {
-  if (w.kind === "insertion") return { soort: "Ingevoegd", oud: "", nieuw: w.revised.text };
-  if (w.kind === "deletion") return { soort: "Verwijderd", oud: w.original.text, nieuw: "" };
-  return { soort: "Vervangen", oud: w.original.text, nieuw: w.revised.text };
+  const soort = (s: "inserted" | "deleted" | "replaced") => i18next.t(`writer:changes.compare.kinds.${s}`);
+  if (w.kind === "insertion") return { soort: soort("inserted"), oud: "", nieuw: w.revised.text };
+  if (w.kind === "deletion") return { soort: soort("deleted"), oud: w.original.text, nieuw: "" };
+  return { soort: soort("replaced"), oud: w.original.text, nieuw: w.revised.text };
 }
 
 /** Naam voor het resultaattabblad. */
 export function resultaatNaam(origineel: string, gewijzigd: string) {
   const kaal = (n: string) => n.replace(/\.(docx|docm|dotx)$/i, "");
-  return `Vergelijking ${kaal(origineel)} – ${kaal(gewijzigd)}.docx`.replace(/[\\/:*?"<>|]/g, "-");
+  const naam = i18next.t("writer:changes.compare.resultName", { original: kaal(origineel), revised: kaal(gewijzigd) });
+  return `${naam}.docx`.replace(/[\\/:*?"<>|]/g, "-");
 }

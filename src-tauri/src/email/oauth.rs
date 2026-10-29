@@ -38,11 +38,16 @@ pub struct OAuthKoppeling {
     pub aangemeld_als: String,
 }
 
+/// `sleutel` en `waarden` maken `melding` vertaalbaar (zie `fout.rs`).
 #[derive(Clone, Debug, PartialEq, Eq, Serialize)]
 pub struct OAuthStatus {
     pub beschikbaar: bool,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub melding: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub sleutel: Option<&'static str>,
+    #[serde(skip_serializing_if = "std::collections::BTreeMap::is_empty")]
+    pub waarden: super::fout::Waarden,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize)]
@@ -167,7 +172,9 @@ pub fn willekeurig(aantal: usize) -> Uitkomst<String> {
     let mut buf = vec![0u8; aantal];
     ring::rand::SystemRandom::new()
         .fill(&mut buf)
-        .map_err(|_| MailFout::intern("Geen veilige willekeur beschikbaar."))?;
+        .map_err(|_| {
+            MailFout::intern("Geen veilige willekeur beschikbaar.").sleutel("oauth.randomUnavailable")
+        })?;
     Ok(b64url(&buf))
 }
 
@@ -263,24 +270,28 @@ pub fn verwerk_terugkoppeling(regel: &str, state: &str, provider: Provider) -> T
         if v.contains_key("code") || v.contains_key("error") {
             return Terugkoppeling::Fout(MailFout::geweigerd(
                 "De terugkoppeling van de aanmeldpagina hoort niet bij deze aanmelding (state klopt niet).",
-            ));
+            )
+            .sleutel("oauth.stateMismatch"));
         }
         return Terugkoppeling::Overig;
     }
     if let Some(fout) = v.get("error") {
-        let m = if fout == "access_denied" {
-            format!(
+        let f = if fout == "access_denied" {
+            MailFout::aanmelding(format!(
                 "Aanmelden bij {} is geannuleerd of geweigerd.",
                 provider.naam()
-            )
+            ))
+            .sleutel("oauth.cancelledOrDenied")
         } else {
-            format!(
-                "{} weigerde de aanmelding ({}).",
-                provider.naam(),
-                super::fout::servertekst(fout)
-            )
+            let detail = super::fout::servertekst(fout);
+            MailFout::aanmelding(format!(
+                "{} weigerde de aanmelding ({detail}).",
+                provider.naam()
+            ))
+            .sleutel("oauth.providerRefused")
+            .waarde("detail", detail)
         };
-        return Terugkoppeling::Fout(MailFout::aanmelding(m));
+        return Terugkoppeling::Fout(f.waarde("provider", provider.naam()));
     }
     match v.get("code").filter(|c| !c.is_empty()) {
         Some(c) => Terugkoppeling::Code(c.clone()),
@@ -310,6 +321,8 @@ pub fn opnieuw_aanmelden(provider: Provider) -> MailFout {
         "Opnieuw aanmelden bij {}: de toestemming is verlopen of ingetrokken.",
         provider.naam()
     ))
+    .sleutel("oauth.reauthenticate")
+    .waarde("provider", provider.naam())
 }
 
 /// Ontleedt het antwoord van het tokeneindpunt; nooit tokens in fouten.
@@ -319,6 +332,9 @@ pub fn ontleed_tokenantwoord(status: u16, lichaam: &[u8], provider: Provider) ->
             "{} gaf een onverwacht antwoord (HTTP {status}).",
             provider.naam()
         ))
+        .sleutel("oauth.unexpectedResponse")
+        .waarde("provider", provider.naam())
+        .waarde("status", status)
     })?;
     if let Some(fout) = json.error {
         return Err(match fout.as_str() {
@@ -328,12 +344,16 @@ pub fn ontleed_tokenantwoord(status: u16, lichaam: &[u8], provider: Provider) ->
             "invalid_client" | "unauthorized_client" => MailFout::niet_beschikbaar(format!(
                 "De OAuth-client voor {} is niet juist ingesteld (client-ID of -geheim).",
                 provider.naam()
-            )),
-            andere => MailFout::aanmelding(format!(
-                "{} weigerde het token ({}).",
-                provider.naam(),
-                super::fout::servertekst(andere)
-            )),
+            ))
+            .sleutel("oauth.clientMisconfigured")
+            .waarde("provider", provider.naam()),
+            andere => {
+                let detail = super::fout::servertekst(andere);
+                MailFout::aanmelding(format!("{} weigerde het token ({detail}).", provider.naam()))
+                    .sleutel("oauth.tokenRefused")
+                    .waarde("provider", provider.naam())
+                    .waarde("detail", detail)
+            }
         });
     }
     let toegang = json
@@ -344,6 +364,9 @@ pub fn ontleed_tokenantwoord(status: u16, lichaam: &[u8], provider: Provider) ->
                 "{} gaf geen toegangstoken (HTTP {status}).",
                 provider.naam()
             ))
+            .sleutel("oauth.noAccessToken")
+            .waarde("provider", provider.naam())
+            .waarde("status", status)
         })?;
     let seconden = match json.expires_in {
         Some(serde_json::Value::Number(n)) => n.as_u64().unwrap_or(3600),
@@ -381,7 +404,8 @@ pub fn xoauth2(gebruiker: &str, token: &str) -> String {
 
 /// Splitst `http(s)://host[:poort]/pad`; HTTP alleen naar loopback.
 pub fn ontleed_url(url: &str) -> Uitkomst<(bool, String, u16, String)> {
-    let fout = || MailFout::intern("Ongeldig tokeneindpunt.");
+    let fout =
+        || MailFout::intern("Ongeldig tokeneindpunt.").sleutel("oauth.invalidTokenEndpoint");
     let (tls, rest) = if let Some(r) = url.strip_prefix("https://") {
         (true, r)
     } else if let Some(r) = url.strip_prefix("http://") {
@@ -423,7 +447,11 @@ async fn tokenverzoek(
         ),
     )
     .await
-    .map_err(|_| MailFout::tijdslimiet(format!("{} reageerde niet op tijd.", provider.naam())))??;
+    .map_err(|_| {
+        MailFout::tijdslimiet(format!("{} reageerde niet op tijd.", provider.naam()))
+            .sleutel("oauth.timeout")
+            .waarde("provider", provider.naam())
+    })??;
     ontleed_tokenantwoord(status, &antwoord, provider)
 }
 
@@ -486,10 +514,11 @@ impl Luisteraar {
     pub async fn nieuw() -> Uitkomst<Self> {
         let v4 = TcpListener::bind("127.0.0.1:0").await.map_err(|_| {
             MailFout::intern("Geen tijdelijke poort beschikbaar voor de aanmelding.")
+                .sleutel("oauth.noFreePort")
         })?;
         let poort = v4
             .local_addr()
-            .map_err(|_| MailFout::intern("Geen poort."))?
+            .map_err(|_| MailFout::intern("Geen poort.").sleutel("oauth.noPort"))?
             .port();
         let v6 = TcpListener::bind(("::1", poort)).await.ok();
         Ok(Self { v4, v6, poort })
@@ -596,7 +625,7 @@ async fn blokkerend<T: Send + 'static>(
 ) -> Uitkomst<T> {
     tokio::task::spawn_blocking(f)
         .await
-        .map_err(|_| MailFout::intern("De sleutelhanger reageerde niet."))?
+        .map_err(|_| super::sleutelhanger_reageert_niet())?
 }
 
 impl OAuthHulp {
@@ -674,10 +703,14 @@ impl OAuthHulp {
                 Some(_) => OAuthStatus {
                     beschikbaar: true,
                     melding: None,
+                    sleutel: None,
+                    waarden: Default::default(),
                 },
                 None => OAuthStatus {
                     beschikbaar: false,
                     melding: Some(uitleg(p)),
+                    sleutel: Some(uitleg_sleutel(p)),
+                    waarden: Default::default(),
                 },
             });
         }
@@ -694,7 +727,9 @@ impl OAuthHulp {
     ) -> Uitkomst<()> {
         let id = client_id.trim();
         if id.len() > 300 || id.contains(|c: char| c.is_whitespace() || c.is_control()) {
-            return Err(MailFout::geweigerd("Dit is geen geldig client-ID."));
+            return Err(
+                MailFout::geweigerd("Dit is geen geldig client-ID.").sleutel("oauth.invalidClientId")
+            );
         }
         let mut bestand = self.lees_bestand();
         let instelling = (!id.is_empty()).then(|| ClientInstelling {
@@ -714,14 +749,18 @@ impl OAuthHulp {
         })
         .await?;
         std::fs::create_dir_all(&self.map)
-            .map_err(|_| MailFout::intern("De datamap kon niet worden aangemaakt."))?;
+            .map_err(|_| super::accounts::datamap_niet_aangemaakt())?;
         let json = serde_json::to_vec_pretty(&bestand)
-            .map_err(|_| MailFout::intern("Opslaan mislukt."))?;
-        let fout = |_| MailFout::intern("De OAuth-instelling kon niet worden opgeslagen.");
+            .map_err(|_| MailFout::intern("Opslaan mislukt.").sleutel("common.saveFailed"))?;
+        let niet_opgeslagen = || {
+            MailFout::intern("De OAuth-instelling kon niet worden opgeslagen.")
+                .sleutel("oauth.settingSaveFailed")
+        };
+        let fout = |_| niet_opgeslagen();
         let mut t = tempfile::NamedTempFile::new_in(&self.map).map_err(fout)?;
         t.write_all(&json).map_err(fout)?;
         t.persist(self.map.join(CLIENTBESTAND))
-            .map_err(|_| MailFout::intern("De OAuth-instelling kon niet worden opgeslagen."))?;
+            .map_err(|_| niet_opgeslagen())?;
         Ok(())
     }
 
@@ -773,11 +812,10 @@ impl OAuthHulp {
                     "Opnieuw aanmelden bij {}: er is geen aanmelding opgeslagen voor dit account.",
                     p.naam()
                 ))
+                .sleutel("oauth.noStoredSignIn")
+                .waarde("provider", p.naam())
             })?;
-        let client = self
-            .client(p)
-            .await
-            .ok_or_else(|| MailFout::niet_beschikbaar(uitleg(p)))?;
+        let client = self.client(p).await.ok_or_else(|| niet_ingesteld(p))?;
         let tokens = vernieuw(p, &self.eindpunten_van(p), &client, &oud).await?;
         if let Some(nieuw) = tokens.vernieuw.clone().filter(|n| *n != oud) {
             // Sommige providers roteren het vernieuwingstoken.
@@ -795,10 +833,7 @@ impl OAuthHulp {
         p: Provider,
         login_hint: Option<&str>,
     ) -> Uitkomst<(Tokens, Option<String>)> {
-        let client = self
-            .client(p)
-            .await
-            .ok_or_else(|| MailFout::niet_beschikbaar(uitleg(p)))?;
+        let client = self.client(p).await.ok_or_else(|| niet_ingesteld(p))?;
         let eindpunten = self.eindpunten_van(p);
         let verifier = willekeurig(48)?;
         let state = willekeurig(24)?;
@@ -820,12 +855,15 @@ impl OAuthHulp {
         }
         (self.opener)(&url).map_err(|_| {
             MailFout::niet_beschikbaar("De webbrowser kon niet worden geopend voor het aanmelden.")
+                .sleutel("oauth.browserFailed")
         })?;
         let code = tokio::select! {
             r = tokio::time::timeout(AANMELD_LIMIET, luisteraar.wacht(&state, p)) => r.map_err(|_| {
                 MailFout::tijdslimiet(format!("Het aanmelden bij {} duurde langer dan 5 minuten en is afgebroken.", p.naam()))
+                    .sleutel("oauth.signInTimeout")
+                    .waarde("provider", p.naam())
             })?,
-            _ = ontvanger => Err(MailFout::geweigerd("Het aanmelden is geannuleerd.")),
+            _ = ontvanger => Err(MailFout::geweigerd("Het aanmelden is geannuleerd.").sleutel("oauth.cancelled")),
         }?;
         drop(luisteraar);
         let tokens = wissel_code(p, &eindpunten, &client, &code, &verifier, &redirect).await?;
@@ -833,7 +871,9 @@ impl OAuthHulp {
             return Err(MailFout::aanmelding(format!(
                 "{} gaf geen vernieuwingstoken; probeer opnieuw aan te melden.",
                 p.naam()
-            )));
+            ))
+            .sleutel("oauth.noRefreshToken")
+            .waarde("provider", p.naam()));
         }
         let email = tokens.id_token.as_deref().and_then(email_uit_id_token);
         Ok((tokens, email))
@@ -841,6 +881,18 @@ impl OAuthHulp {
 }
 
 use std::io::Write as _;
+
+/// Vertaalsleutel bij `uitleg`.
+pub fn uitleg_sleutel(p: Provider) -> &'static str {
+    match p {
+        Provider::Microsoft => "oauth.notConfigured.microsoft",
+        Provider::Google => "oauth.notConfigured.google",
+    }
+}
+
+fn niet_ingesteld(p: Provider) -> MailFout {
+    MailFout::niet_beschikbaar(uitleg(p)).sleutel(uitleg_sleutel(p))
+}
 
 pub fn uitleg(p: Provider) -> String {
     match p {

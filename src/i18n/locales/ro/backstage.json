@@ -1,0 +1,477 @@
+{
+  "start": {
+    "backToWorkspace": "Înapoi la spațiul de lucru",
+    "workspace": "SPAȚIU DE LUCRU",
+    "home": "Pornire",
+    "saveTitle": "Salvare · Ctrl+S",
+    "saveAs": "Salvare ca",
+    "saveAsTitle": "Salvare ca · F12 sau Ctrl+Shift+S",
+    "print": "Imprimare",
+    "printTitle": "Examinare înaintea imprimării și imprimare · Ctrl+P",
+    "info": "Informații",
+    "infoTitle": "Proprietăți document, statistici și inspectare document",
+    "sendAsAttachment": "Trimitere ca atașare",
+    "sendAsAttachmentTitle": "Atașați documentul curent la un mesaj de e-mail nou",
+    "email": "E-mail",
+    "emailUnread_one": "E-mail, {{count}} mesaj necitit",
+    "emailUnread_few": "E-mail, {{count}} mesaje necitite",
+    "emailUnread_other": "E-mail, {{count}} de mesaje necitite",
+    "newFile": "FIȘIER NOU",
+    "databaseTitle": "Database Studio · bază de date Access ca copie de lucru editabilă",
+    "databaseSubtitle": "Copie de lucru · editare, interogări, VBA",
+    "settingsTitle": "Setări · Ctrl+,",
+    "shortcutsTitle": "Comenzi rapide de la tastatură · F1",
+    "tagline": "Biroul dvs. local",
+    "titleFile": "Fișier",
+    "titleWorkspace": "Spațiul dvs. de lucru.",
+    "intro": "Scrieți, calculați, prezentați și notați idei.",
+    "addNotesBackup": "Adăugare copie de rezervă a notelor",
+    "openDatabase": "Deschidere bază de date",
+    "openFile": "Deschidere fișier",
+    "openShortcut": "Ctrl O",
+    "newFileTitle": "Fișier nou",
+    "newFileHint": "Alegeți instrumentul și începeți cu un fișier gol",
+    "notesHeading": "Un loc pentru ideile dvs.",
+    "notesText": "Blocnotesuri, secțiuni și pagini. Salvate automat, local.",
+    "openNotes": "Deschidere Note",
+    "emailText": "Propriul dvs. e-mail prin IMAP și SMTP. Atașările se deschid direct în Text, Foaie de calcul, Prezentare sau Bază de date.",
+    "unread_one": "{{count}} mesaj necitit",
+    "unread_few": "{{count}} mesaje necitite",
+    "unread_other": "{{count}} de mesaje necitite",
+    "openEmail": "Deschidere E-mail",
+    "examplesTitle": "Descoperiți ce puteți crea",
+    "examplesHint": "Fișiere exemplu",
+    "existingTitle": "Fișier existent",
+    "browse": "Răsfoire pe acest computer",
+    "browseNotes": "Adăugați o copie de rezervă a notelor OpenAEC.",
+    "browseDatabase": "Deschideți o bază de date MDB sau ACCDB ori o copie de lucru SQLite.",
+    "browseDocuments": "Deschideți un document, o foaie de calcul sau o prezentare.",
+    "formatNotes": "NOTE",
+    "filesStayLocal": "Fișierele dvs. rămân pe computerul dvs.",
+    "aboutVersion": "Despre această versiune",
+    "aboutText": "DOCX, XLSX și PPTX funcționează direct. Cu un program de conversie configurat, versiunea desktop poate converti și ODF și formate mai vechi; formatarea poate diferi. Database Studio transformă un fișier MDB sau ACCDB într-o copie de lucru SQLite editabilă, cu tabele, interogări, formulare, rapoarte și VBA; originalul rămâne neschimbat. Aplicația separată poate fi instalată ca Open Database Studio.",
+    "modules": {
+      "docx": {
+        "new": "Document gol",
+        "example": "Notă de proiectare",
+        "exampleText": "Text, stiluri și un tabel"
+      },
+      "xlsx": {
+        "new": "Foaie de calcul goală",
+        "example": "Situație materiale",
+        "exampleText": "Materiale, formule și totaluri"
+      },
+      "pptx": {
+        "new": "Prezentare goală",
+        "example": "Viziune de proiectare",
+        "exampleText": "Diapozitive, forme și note"
+      }
+    }
+  },
+  "recent": {
+    "title": "Recente",
+    "hintDesktop": "Fișiere deschise și salvate recent",
+    "hintBrowser": "Acest browser reține doar numele; alegeți din nou fișierul",
+    "clear": "Golire listă",
+    "clearTitle": "Golire listă; fișierele fixate rămân",
+    "missing": "{{name}} nu mai poate fi găsit în {{folder}}. Eliminați-l din listă cu ✕ sau deschideți-l prin Răsfoire.",
+    "missingOriginalFolder": "{{name}} nu mai poate fi găsit în folderul inițial. Eliminați-l din listă cu ✕ sau deschideți-l prin Răsfoire.",
+    "notFound": "Negăsit",
+    "notFoundIn": "Negăsit · {{location}}",
+    "openFrom": "{{folder}} · deschidere",
+    "chooseFile": "Alegere fișier",
+    "nameOnly": "Doar numele este cunoscut",
+    "pin": "Fixare {{name}}",
+    "unpin": "Anulare fixare {{name}}",
+    "pinTitle": "Fixare sus",
+    "unpinTitle": "Anulare fixare",
+    "remove": "Eliminare {{name}} din listă",
+    "removeTitle": "Eliminare din listă (fișierul rămâne)",
+    "today": "Astăzi {{time}}",
+    "yesterday": "Ieri {{time}}",
+    "todayInline": "astăzi {{time}}",
+    "yesterdayInline": "ieri {{time}}"
+  },
+  "recovery": {
+    "title": "Recuperare documente",
+    "explanation": "Data trecută, Open Office Studio nu a fost închis corect. Pentru aceste documente s-a păstrat o copie de recuperare. Recuperarea deschide o filă nouă, nesalvată; fișierul original rămâne neschimbat.",
+    "copyFrom": "{{module}} · copie de recuperare din {{date}}",
+    "restore": "Recuperare",
+    "saveAs": "Salvare ca…",
+    "discard": "Renunțare",
+    "discardLabel": "Renunțare la copia de recuperare a {{name}}",
+    "later": "Decid mai târziu",
+    "laterTitle": "Copiile sunt păstrate până la următoarea pornire",
+    "restoredFrom": "Recuperat din copia de recuperare din {{date}}. Fișierul original nu a fost modificat; salvați acest document pentru a-l păstra.",
+    "restoreFailed": "Recuperarea {{name}} a eșuat: {{error}}",
+    "copyFailed": "Recuperarea automată nu a putut păstra o copie: {{error}}"
+  },
+  "leave": {
+    "title": "Modificări nesalvate",
+    "askSave": "Salvați modificările din <strong>{{name}}</strong> înainte de a-l închide?",
+    "unsaved": "<strong>{{name}}</strong> conține modificări care nu au fost încă salvate. Salvați mai întâi fișierul dacă doriți să le păstrați.",
+    "others_one": "Urmează încă {{count}} document cu modificări nesalvate.",
+    "others_few": "Urmează încă {{count}} documente cu modificări nesalvate.",
+    "others_other": "Urmează încă {{count}} de documente cu modificări nesalvate.",
+    "dontSave": "Nu se salvează",
+    "discard": "Renunțare la modificări"
+  },
+  "saveAs": {
+    "title": "Salvare ca",
+    "fileName": "Nume fișier",
+    "browserInfo": "În browser, aplicația creează singură Markdown, CSV, HTML, text și PDF, plus PNG pentru foi de calcul și prezentări. Formatele marcate „doar în aplicația desktop” necesită versiunea desktop cu un runtime office.",
+    "runtimeSearching": "Se caută runtime-ul office…",
+    "runtimeFound": "Runtime office: {{version}}",
+    "runtimeDetails": "({{source}}, {{profile}})",
+    "sourceEnvironment": "din OPENAEC_CONVERSIE_PROGRAMMA",
+    "sourceSetting": "ales de dvs.",
+    "sourceAutomatic": "detectat automat",
+    "profileSafe": "profil sigur: macrocomenzi dezactivate",
+    "profileOwn": "profil propriu",
+    "runtimeMissing": "Nu s-a găsit niciun runtime office (LibreOffice). Formatele prin runtime nu sunt disponibile.",
+    "chooseConverter": "Alegere program de conversie",
+    "format": "Format",
+    "groups": {
+      "own": "Format propriu",
+      "openDocument": "OpenDocument",
+      "legacyOffice": "Formate Office mai vechi",
+      "templates": "Șabloane",
+      "macro": "Cu macrocomenzi activate",
+      "webText": "Web și text",
+      "pdfImage": "PDF și imagine"
+    },
+    "routes": {
+      "inApp": "în aplicație",
+      "runtime": "prin runtime office",
+      "print": "prin Imprimare"
+    },
+    "runtimeMissingShort": "runtime lipsă",
+    "desktopOnly": "doar în aplicația desktop",
+    "separator": "Delimitator",
+    "separatorSemicolon": "Punct și virgulă ; (română)",
+    "separatorComma": "Virgulă ,",
+    "separatorTab": "Tab",
+    "separatorPipe": "Bară verticală |",
+    "encoding": "Codificare",
+    "encodingUtf8BomExcel": "UTF-8 cu BOM (Excel)",
+    "encodingUtf8BomNotepad": "UTF-8 cu BOM (Notepad, Excel)",
+    "csvInfo": "Doar foaia aleasă, cu valori în loc de formule. Textul care începe cu =, +, - sau @ primește un apostrof, astfel încât un program de calcul tabelar să nu-l execute ca formulă.",
+    "sheet": "Foaie",
+    "activeSheet": "{{name}} (activă)",
+    "protect": "Protejare cu parolă la deschidere",
+    "password": "Parolă",
+    "repeatPassword": "Repetare parolă",
+    "encryptionInfo": "Criptare conform ECMA-376 (AES-256), poate fi deschis în Word, Excel, PowerPoint și LibreOffice. Parola nu este păstrată; dacă o pierdeți, fișierul nu mai poate fi deschis.",
+    "noEncryptionInfo": "Aceasta nu este o protecție la scriere sau a foii: fără bifă, fișierul este salvat necriptat.",
+    "passwordMissing": "Alegeți o parolă.",
+    "passwordMismatch": "Parolele nu coincid.",
+    "passwordTooLong": "Cel mult {{max}} caractere.",
+    "slide": "Diapozitiv",
+    "slideNumber": "Diapozitivul {{number}}",
+    "currentSlide": "Diapozitivul {{number}} (curent)",
+    "pdfVariant": "Variantă PDF",
+    "pdfPlain": "PDF obișnuit",
+    "pdfA2b": "PDF/A-2b (arhivare)",
+    "slides": "Diapozitive",
+    "pages": "Pagini",
+    "rangePlaceholder": "toate sau, de ex., 1-3,5",
+    "bookmarks": "Titluri ca marcaje",
+    "printRoute": "PDF fără runtime office se face prin Imprimare: în fereastra de imprimare alegeți imprimanta <strong>Salvare ca PDF</strong> (Windows: „Microsoft Print to PDF”). Formatarea urmează afișarea din editor.",
+    "untitled": "Fără titlu",
+    "copyInfo": "Aceasta este o copie în alt format. Documentul rămâne marcat ca modificat până când îl salvați ca .{{ext}}.",
+    "print": "Imprimare…",
+    "formats": {
+      "docx": {
+        "docx": {
+          "name": "Document Word",
+          "keeps": "editabil"
+        },
+        "odt": {
+          "name": "Text OpenDocument",
+          "keeps": "editabil; formatarea poate diferi"
+        },
+        "fodt": {
+          "name": "Text OpenDocument (XML simplu)",
+          "keeps": "editabil; formatarea poate diferi"
+        },
+        "doc": {
+          "name": "Document Word 97–2003",
+          "keeps": "editabil; formatarea poate diferi"
+        },
+        "dotx": {
+          "name": "Șablon Word",
+          "keeps": "editabil; formatarea poate diferi"
+        },
+        "dot": {
+          "name": "Șablon Word 97–2003",
+          "keeps": "editabil; formatarea poate diferi"
+        },
+        "ott": {
+          "name": "Șablon text OpenDocument",
+          "keeps": "editabil; formatarea poate diferi"
+        },
+        "docm": {
+          "name": "Document Word cu macrocomenzi",
+          "keeps": "doar pentru un fișier cu macrocomenzi deschis: proiectul VBA se păstrează neschimbat, macrocomenzile nu se execută"
+        },
+        "rtf": {
+          "name": "Rich Text Format",
+          "keeps": "editabil; formatarea poate diferi"
+        },
+        "txt": {
+          "name": "Text simplu (UTF-8)",
+          "keeps": "doar text; formatarea, tabelele și imaginile se pierd"
+        },
+        "html": {
+          "name": "Pagină web (HTML)",
+          "keeps": "formatarea poate diferi; imagini încorporate"
+        },
+        "xhtml": {
+          "name": "Pagină web XHTML",
+          "keeps": "formatarea poate diferi"
+        },
+        "epub": {
+          "name": "Carte electronică EPUB",
+          "keeps": "doar citire; aspectul paginii se pierde"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "text și structură; aspectul paginii, imaginile și reviziile se pierd"
+        },
+        "pdf": {
+          "name": "Document PDF",
+          "keeps": "afișare ca în examinarea înaintea imprimării; text care poate fi căutat"
+        },
+        "png": {
+          "name": "Imagine PNG (prima pagină)",
+          "keeps": "doar afișare; doar prima pagină"
+        }
+      },
+      "xlsx": {
+        "xlsx": {
+          "name": "Registru de lucru Excel",
+          "keeps": "editabil"
+        },
+        "ods": {
+          "name": "Foaie de calcul OpenDocument",
+          "keeps": "editabil; formatarea poate diferi"
+        },
+        "fods": {
+          "name": "Foaie de calcul OpenDocument (XML simplu)",
+          "keeps": "editabil; formatarea poate diferi"
+        },
+        "xls": {
+          "name": "Registru de lucru Excel 97–2003",
+          "keeps": "editabil; formatarea poate diferi"
+        },
+        "xltx": {
+          "name": "Șablon Excel",
+          "keeps": "editabil; formatarea poate diferi"
+        },
+        "xlt": {
+          "name": "Șablon Excel 97–2003",
+          "keeps": "editabil; formatarea poate diferi"
+        },
+        "ots": {
+          "name": "Șablon foaie de calcul OpenDocument",
+          "keeps": "editabil; formatarea poate diferi"
+        },
+        "xlsm": {
+          "name": "Registru de lucru Excel cu macrocomenzi",
+          "keeps": "doar pentru un fișier cu macrocomenzi deschis: proiectul VBA se păstrează neschimbat, macrocomenzile nu se execută"
+        },
+        "csv": {
+          "name": "CSV (valori separate)",
+          "keeps": "doar o foaie; valori fără formule și formatare"
+        },
+        "tsv": {
+          "name": "Text cu tabulatori (TSV)",
+          "keeps": "doar o foaie; valori fără formule și formatare"
+        },
+        "html": {
+          "name": "Pagină web (HTML)",
+          "keeps": "doar afișare; formulele se pierd"
+        },
+        "dif": {
+          "name": "Data Interchange Format (DIF)",
+          "keeps": "doar prima foaie; valori fără formule și formatare"
+        },
+        "slk": {
+          "name": "SYLK",
+          "keeps": "doar prima foaie; formulele rămân, formatarea în mare parte nu"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "doar afișarea valorilor; formulele și formatarea se pierd"
+        },
+        "pdf": {
+          "name": "Document PDF",
+          "keeps": "afișare ca în examinarea înaintea imprimării; text care poate fi căutat"
+        },
+        "png": {
+          "name": "Imagine PNG (foaie)",
+          "keeps": "doar afișare; zona utilizată a unei foi"
+        }
+      },
+      "pptx": {
+        "pptx": {
+          "name": "Prezentare PowerPoint",
+          "keeps": "editabil"
+        },
+        "ppsx": {
+          "name": "Expunere de diapozitive PowerPoint",
+          "keeps": "editabil; se deschide ca expunere de diapozitive; formatarea poate diferi"
+        },
+        "odp": {
+          "name": "Prezentare OpenDocument",
+          "keeps": "editabil; formatarea poate diferi"
+        },
+        "fodp": {
+          "name": "Prezentare OpenDocument (XML simplu)",
+          "keeps": "editabil; formatarea poate diferi"
+        },
+        "ppt": {
+          "name": "Prezentare PowerPoint 97–2003",
+          "keeps": "editabil; formatarea poate diferi"
+        },
+        "pps": {
+          "name": "Expunere de diapozitive PowerPoint 97–2003",
+          "keeps": "editabil; formatarea poate diferi"
+        },
+        "potx": {
+          "name": "Șablon PowerPoint",
+          "keeps": "editabil; formatarea poate diferi"
+        },
+        "pot": {
+          "name": "Șablon PowerPoint 97–2003",
+          "keeps": "editabil; formatarea poate diferi"
+        },
+        "otp": {
+          "name": "Șablon prezentare OpenDocument",
+          "keeps": "editabil; formatarea poate diferi"
+        },
+        "pptm": {
+          "name": "Prezentare PowerPoint cu macrocomenzi",
+          "keeps": "doar pentru un fișier cu macrocomenzi deschis: proiectul VBA se păstrează neschimbat, macrocomenzile nu se execută"
+        },
+        "html": {
+          "name": "Pagină web (HTML)",
+          "keeps": "doar textul fiecărui diapozitiv; aspectul și imaginile se pierd"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "doar textul fiecărui diapozitiv; aspectul și imaginile se pierd"
+        },
+        "pdf": {
+          "name": "Document PDF",
+          "keeps": "afișare ca în examinarea înaintea imprimării; text care poate fi căutat"
+        },
+        "png": {
+          "name": "Imagine PNG (diapozitivul curent)",
+          "keeps": "doar afișare; un singur diapozitiv"
+        }
+      }
+    }
+  },
+  "saveResult": {
+    "saved": "Salvat: {{path}}",
+    "exported": "Exportat: {{path}}. Salvați și fișierul editabil pentru a păstra modificările.",
+    "cancelled": "Salvare anulată.",
+    "chooseLocation": "Alegeți un nume și o locație pentru salvare.",
+    "download": "Descărcare solicitată. Verificați fișierul în descărcări.",
+    "tooLarge": "Fișierul este gol sau mai mare de 100 MB.",
+    "needsDesktop": "Acest format necesită versiunea desktop cu un runtime office (LibreOffice)."
+  },
+  "printPreview": {
+    "title": "Examinare înaintea imprimării – {{title}}",
+    "notReady": "Puteți imprima după ce documentul s-a deschis complet.",
+    "preparingPages": "Se pregătesc paginile…",
+    "preparingPrint": "Se pregătește imprimarea…",
+    "preparingPrintProgress": "Se pregătește imprimarea… {{done}} din {{total}}",
+    "printHint": "În fereastra de imprimare alegeți imprimanta, imprimarea față-verso și, eventual, „Salvare ca PDF”.",
+    "makingPdf": "Se creează PDF-ul…",
+    "makingPdfProgress": "Se creează PDF-ul… {{done}} din {{total}}",
+    "pdfSaved": "PDF salvat: {{path}}",
+    "pdfDownloading": "PDF-ul {{name}} se descarcă.",
+    "layoutSaved": "Configurarea paginii a fost stocată în registrul de lucru. Salvați documentul pentru a o păstra.",
+    "saveAsPdf": "Salvare ca PDF",
+    "print": "Imprimare",
+    "keyboardHelp": "Page Up și Page Down parcurg paginile; Ctrl+P imprimă.",
+    "settings": "Setări de imprimare",
+    "pages": "Pagini",
+    "rangePlaceholder": "toate sau, de ex., 1-3, 5",
+    "copies": "Exemplare",
+    "collate": "Colaționare (1, 2, 3 – 1, 2, 3)",
+    "systemDialogHint": "Imprimanta, imprimarea față-verso și culoarea le alegeți apoi în fereastra de imprimare a sistemului.",
+    "printAs": "Imprimare ca",
+    "slides": "Diapozitive",
+    "handouts": "Documente imprimate",
+    "notesPages": "Pagini de note",
+    "slidesPerPage": "Diapozitive pe pagină",
+    "withLines": "{{number}} (cu linii)",
+    "paper": "Hârtie",
+    "slideSize": "Dimensiune diapozitiv",
+    "frameSlides": "Încadrare diapozitive",
+    "report": "Raport",
+    "saveLayout": "Stocare configurare pagină în registrul de lucru",
+    "pdf": "PDF",
+    "imageQuality": "Calitate imagine",
+    "qualitySmall": "Fișier mic (150 dpi)",
+    "qualityStandard": "Standard (200 dpi)",
+    "qualityHigh": "Ridicată, fără pierderi (300 dpi)",
+    "pdfHint": "Textul rămâne selectabil și poate fi căutat; PDF-ul urmează exact această examinare.",
+    "toolbar": "Răsfoire și zoom",
+    "previousPage": "Pagina anterioară",
+    "nextPage": "Pagina următoare",
+    "pageOf": "Pagina <input/> din {{total}}",
+    "pageNumber": "Număr pagină",
+    "zoomOut": "Micșorare",
+    "zoom": "Zoom",
+    "zoomIn": "Mărire",
+    "wholePage": "Pagina întreagă",
+    "pageWidth": "Lățime pagină",
+    "preview": "Examinare pagină",
+    "pageImage": "Examinarea paginii {{number}}",
+    "drawingPage": "Se desenează pagina…",
+    "orientation": "Orientare",
+    "portrait": "Portret",
+    "landscape": "Vedere",
+    "activeSheet": "Foaia activă",
+    "wholeWorkbook": "Întregul registru de lucru",
+    "selection": "Selecție ({{range}})",
+    "selectionNone": "Selecție (nimic selectat)",
+    "ignorePrintArea": "Ignorare zonă de imprimare",
+    "pageSetup": "Configurare pagină",
+    "sheet": "Foaie",
+    "scale": "Scalare",
+    "percentage": "Procent",
+    "fitPage": "Încadrare într-o pagină",
+    "fitWidth": "Încadrare în lățimea paginii",
+    "pagesWide": "Pagini lățime",
+    "pagesTall": "înălțime (0 = automat)",
+    "marginTop": "Sus (cm)",
+    "marginBottom": "Jos",
+    "marginLeft": "Stânga",
+    "marginRight": "Dreapta",
+    "printArea": "Zonă de imprimare",
+    "printAreaPlaceholder": "zona utilizată sau, de ex., A1:H40",
+    "repeatRows": "Rânduri de repetat",
+    "repeatRowsPlaceholder": "de ex., 1:2",
+    "repeatColumns": "Coloane de repetat",
+    "repeatColumnsPlaceholder": "de ex., A:B",
+    "gridlines": "Imprimare linii de grilă",
+    "headings": "Imprimare titluri de rânduri și coloane",
+    "centerHorizontally": "Centrare orizontală",
+    "pageOrder": "Ordinea paginilor",
+    "downThenOver": "În jos, apoi peste",
+    "overThenDown": "Peste, apoi în jos",
+    "header": "Antet",
+    "footer": "Subsol",
+    "sectionLeft": "stânga",
+    "sectionCenter": "centru",
+    "sectionRight": "dreapta",
+    "sectionLabel": "{{area}} {{section}}",
+    "fields": "Câmpuri: {{fields}}.",
+    "pageBreakPreview": "Examinare sfârșit de pagină…"
+  }
+}

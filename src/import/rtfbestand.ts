@@ -13,6 +13,7 @@
  * opsommingstekst uit \listtext/\pntext blijft staan). Die worden geteld
  * en in het rapport genoemd.
  */
+import i18next from "../i18n/config";
 import type {
   Blok,
   Inline,
@@ -166,7 +167,7 @@ export function isRtf(bytes: Uint8Array) {
 
 export function rtfNaarModel(bytes: Uint8Array): RtfImport {
   if (!isRtf(bytes))
-    throw new Error("Dit is geen RTF-bestand: de kop {\\rtf ontbreekt.");
+    throw new Error(i18next.t("import:errors.notRtf"));
   const overgeslagen: Record<string, number> = {};
   const tel = (wat: string) =>
     (overgeslagen[wat] = (overgeslagen[wat] ?? 0) + 1);

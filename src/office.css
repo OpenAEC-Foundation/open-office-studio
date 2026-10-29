@@ -401,22 +401,21 @@ select {
   background: var(--module-accent);
   position: absolute;
   bottom: -5px;
-  left: 14px;
-  right: 14px;
+  inset-inline: 14px;
   border-radius: 2px;
 }
 .office .ribbon-tabs .ribbon-bestand {
   color: #5b6472;
   padding-inline: 13px;
-  margin-right: 5px;
+  margin-inline-end: 5px;
   font-weight: 600;
 }
 .office .ribbon-tabs .ribbon-inklap {
-  margin-left: auto;
+  margin-inline-start: auto;
   padding-inline: 10px;
   color: #6a7584;
   position: sticky;
-  right: 0;
+  inset-inline-end: 0;
   background: #f6f7f9;
 }.office .ribbon-inhoud[hidden] {
   display: none;
@@ -439,13 +438,13 @@ select {
   flex-direction: column;
   justify-content: space-between;
   flex-shrink: 0;
-  border-right: 1px solid #e5e7eb;
+  border-inline-end: 1px solid #e5e7eb;
   padding: 0 12px;
   min-width: 65px;
   margin: 0;
 }
 .office .ribbon-groep:last-child {
-  border-right: 0;
+  border-inline-end: 0;
 }
 .office .ribbon-groep-inhoud {
   flex: 1;
@@ -564,7 +563,8 @@ select {
   width: 100%;
   height: 100%;
   min-width: 0;
-  padding: 4px 24px 4px 8px;
+  padding-block: 4px;
+  padding-inline: 8px 24px;
   border: 1px solid #dce0e5;
   border-radius: 6px;
   color: #414650;
@@ -580,7 +580,7 @@ select {
 }
 .office .ribbon-keuze > svg {
   position: absolute;
-  right: 7px;
+  inset-inline-end: 7px;
   pointer-events: none;
   color: #89909b;
 }
@@ -588,7 +588,8 @@ select {
   width: 55px;
   min-width: 0;
   height: 30px;
-  padding: 4px 3px 4px 7px;
+  padding-block: 4px;
+  padding-inline: 7px 3px;
   border: 1px solid #dce0e5;
   border-radius: 6px;
   color: #414650;
@@ -617,7 +618,7 @@ select {
   position: absolute;
   height: 3px;
   bottom: 3px;
-  left: 5px;
+  inset-inline-start: 5px;
   width: 17px;
   border-radius: 1px;
 }
@@ -804,7 +805,7 @@ select {
   flex-direction: column;
   flex: 0 0 218px;
   padding: 28px 14px 16px;
-  border-right: 1px solid #e1e4e9;
+  border-inline-end: 1px solid #e1e4e9;
   background: #fcfcfd;
   overflow: auto;
 }
@@ -834,7 +835,7 @@ select {
   border-radius: 8px;
   color: #525c6a;
   background: transparent;
-  text-align: left;
+  text-align: start;
   font-size: 13px;
   transition:
     background 0.15s,
@@ -863,9 +864,15 @@ select {
   background: #eef1f5;
 }
 .start-navigatie .nav-plus {
-  margin-left: auto;
+  margin-inline-start: auto;
   color: #9ba3af;
   width: 13px;
+}
+/* Rechts-naar-links: pijlen op Start wijzen de leesrichting op. */
+[dir="rtl"] .office-start .lucide-arrow-left,
+[dir="rtl"] .office-start .lucide-arrow-right,
+[dir="rtl"] .office-start .lucide-arrow-up-right {
+  transform: scaleX(-1);
 }
 .start-module.module-docx > svg:first-child {
   color: #4e70c4;
@@ -973,7 +980,7 @@ select {
   border-color: #3a475a;
 }
 .office-primair kbd {
-  margin-left: 8px;
+  margin-inline-start: 8px;
   padding: 3px 4px;
   border: 1px solid #ffffff29;
   border-radius: 4px;
@@ -1024,7 +1031,7 @@ select {
   --module-zacht: #faf0e9;
 }
 .start-sjabloon {
-  text-align: left;
+  text-align: start;
   padding: 0;
   border: 1px solid #dde2e9;
   background: #fff;
@@ -1217,7 +1224,7 @@ select {
   margin-top: 4px;
 }
 .sjabloon-details > svg {
-  margin-left: auto;
+  margin-inline-start: auto;
   flex-shrink: 0;
   color: #929ead;
 }
@@ -1231,7 +1238,7 @@ select {
   align-items: center;
   gap: 10px;
   min-width: 0;
-  text-align: left;
+  text-align: start;
   padding: 13px 12px;
   border: 1px solid #e0e5eb;
   border-radius: 9px;
@@ -1263,7 +1270,7 @@ select {
   color: #768293;
 }
 .start-voorbeeldbestand > svg {
-  margin-left: auto;
+  margin-inline-start: auto;
   flex-shrink: 0;
   color: #8d99a9;
 }
@@ -1276,7 +1283,7 @@ select {
   background: #fff;
   border: 1px solid #dce2e9;
   border-radius: 9px;
-  text-align: left;
+  text-align: start;
 }
 .start-bestand-openen:hover:not(:disabled) {
   border-color: #a1afc0;
@@ -1306,12 +1313,12 @@ select {
 }
 .start-bestand-openen > svg {
   color: #8c99aa;
-  margin-left: 8px;
+  margin-inline-start: 8px;
   flex-shrink: 0;
 }
 .bestandsformaten {
   display: flex;
-  margin-left: auto;
+  margin-inline-start: auto;
   gap: 5px;
 }
 .bestandsformaten > i {
@@ -1340,7 +1347,7 @@ select {
 }
 .start-onderkant details {
   max-width: 330px;
-  margin-left: auto;
+  margin-inline-start: auto;
   color: #778393;
 }
 .start-onderkant summary {
@@ -1513,7 +1520,7 @@ select {
     width: 125px;
     height: 105px;
     flex-shrink: 0;
-    border-right: 1px solid #e1e6ee;
+    border-inline-end: 1px solid #e1e6ee;
     border-bottom: 0;
   }
   .voorbeeld-app {
@@ -1707,4 +1714,19 @@ select {
     sans-serif !important;
   color: #88929e !important;
   letter-spacing: 0.7px !important;
+}
+
+/* Rechts-naar-links (ar, he): de schil spiegelt, de documentinhoud niet.
+   Het editorgebied staat op ltr; het lint binnen de editor volgt weer de
+   taal. De richting van tekst in een document hoort bij het document zelf
+   (zie docs/i18n.md). */
+html[dir="rtl"] .office .office-tekst,
+html[dir="rtl"] .office .office-rekenblad-host,
+html[dir="rtl"] .office .office-presentatie {
+  direction: ltr;
+}
+html[dir="rtl"] .office .office-tekst .ribbon,
+html[dir="rtl"] .office .office-rekenblad-host .ribbon,
+html[dir="rtl"] .office .office-presentatie .ribbon {
+  direction: rtl;
 }

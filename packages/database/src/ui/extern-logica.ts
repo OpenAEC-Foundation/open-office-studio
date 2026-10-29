@@ -3,6 +3,7 @@
  * afhankelijkheden, filters, ketenweergave, padverkorting en export van het
  * resultaat van “Uitvoeren wat werkt”. Geen broncode, geen verbindingsreeksen.
  */
+import i18next from "i18next";
 import type {
   Afhankelijkheid,
   AfhankelijkheidSoort,
@@ -18,66 +19,85 @@ import type {
   WatWerktSamenvatting,
 } from "../../../vba/src/extern-typen.ts";
 import { csv, type DatabaseObject } from "../model.ts";
+import { formatGetal } from "../../../../src/i18n/opmaak";
 
 // ---------------------------------------------------------------- teksten
 
-export const STATUS_BESCHIKBAAR: Record<Beschikbaarheid, { tekst: string; teken: string }> = {
-  ingebouwd: { tekst: "Ingebouwd", teken: "✓" },
-  deels: { tekst: "Deels nagebootst", teken: "◐" },
-  ontbreekt: { tekst: "Ontbreekt", teken: "✕" },
+const tr = (sleutel: string, opties?: Record<string, unknown>) => i18next.t(`database:externalRefs.${sleutel}`, opties);
+
+/** Status met teken; de tekst wordt pas bij het lezen vertaald (taal kan wisselen). */
+function status(sleutel: string, teken: string): { readonly tekst: string; teken: string } {
+  return {
+    get tekst() {
+      return tr(sleutel);
+    },
+    teken,
+  };
+}
+
+export const STATUS_BESCHIKBAAR: Record<Beschikbaarheid, { readonly tekst: string; teken: string }> = {
+  ingebouwd: status("availability.builtIn", "✓"),
+  deels: status("availability.partial", "◐"),
+  ontbreekt: status("availability.missing", "✕"),
 };
 
-export const STATUS_PROCEDURE: Record<ProcedureStatus, { tekst: string; teken: string }> = {
-  uitvoerbaar: { tekst: "Uitvoerbaar", teken: "✓" },
-  deels: { tekst: "Deels uitvoerbaar", teken: "◐" },
-  niet: { tekst: "Niet uitvoerbaar", teken: "✕" },
+export const STATUS_PROCEDURE: Record<ProcedureStatus, { readonly tekst: string; teken: string }> = {
+  uitvoerbaar: status("procedureStatus.runnable", "✓"),
+  deels: status("procedureStatus.partial", "◐"),
+  niet: status("procedureStatus.notRunnable", "✕"),
 };
 
-export const STATUS_UITVOERING: Record<UitvoeringStatus | "niet-uitgevoerd", { tekst: string; teken: string }> = {
-  geslaagd: { tekst: "Geslaagd", teken: "✓" },
-  fout: { tekst: "Fout", teken: "✕" },
-  tijdslimiet: { tekst: "Tijdslimiet", teken: "⏱" },
-  gestopt: { tekst: "Gestopt", teken: "■" },
-  "niet-uitgevoerd": { tekst: "Niet uitgevoerd", teken: "–" },
+export const STATUS_UITVOERING: Record<UitvoeringStatus | "niet-uitgevoerd", { readonly tekst: string; teken: string }> = {
+  geslaagd: status("runStatus.succeeded", "✓"),
+  fout: status("runStatus.error", "✕"),
+  tijdslimiet: status("runStatus.timeout", "⏱"),
+  gestopt: status("runStatus.stopped", "■"),
+  "niet-uitgevoerd": status("runStatus.notRun", "–"),
 };
 
-export const MODI: { waarde: OntbrekendModus; naam: string; uitleg: string }[] = [
-  {
-    waarde: "stoppen",
-    naam: "Stoppen",
-    uitleg: "De procedure stopt bij het eerste ontbrekende onderdeel. Veiligste keuze; standaard.",
-  },
-  {
-    waarde: "fout",
-    naam: "Fout teruggeven aan VBA",
-    uitleg:
-      "Het ontbrekende onderdeel geeft de VBA-fout die Access zelf zou geven (bv. 429 bij CreateObject). De eigen foutafhandeling van de code (On Error) werkt dan gewoon.",
-  },
-  {
-    waarde: "overslaan",
-    naam: "Overslaan en vastleggen",
-    uitleg:
-      "De instructie wordt overgeslagen en vastgelegd; een functie levert een lege waarde, een object een plaatsvervanger. De rest van de code loopt door.",
-  },
+function modus(waarde: OntbrekendModus, sleutel: string): { waarde: OntbrekendModus; readonly naam: string; readonly uitleg: string } {
+  return {
+    waarde,
+    get naam() {
+      return tr(`modes.${sleutel}.name`);
+    },
+    get uitleg() {
+      return tr(`modes.${sleutel}.description`);
+    },
+  };
+}
+
+export const MODI: { waarde: OntbrekendModus; readonly naam: string; readonly uitleg: string }[] = [
+  modus("stoppen", "stop"),
+  modus("fout", "error"),
+  modus("overslaan", "skip"),
 ];
 
-export const SOORT_NAAM: Record<AfhankelijkheidSoort, string> = {
-  bibliotheek: "Bibliotheek",
-  declare: "Windows-API (Declare)",
-  createobject: "COM-object",
-  bestand: "Bestand",
-  proces: "Proces starten (Shell)",
-  toetsenbord: "Toetsenbord (SendKeys)",
-  omgeving: "Omgeving (Environ)",
-  register: "Register",
-  pad: "Pad",
-  "gekoppelde-tabel": "Gekoppelde tabel",
-  "externe-database": "Externe database (OpenDatabase)",
-  hyperlink: "Hyperlink",
-  export: "Export",
-  onbekend: "Onbekende naam",
-  syntaxis: "Syntaxisfout",
+const SOORT_SLEUTEL: Record<AfhankelijkheidSoort, string> = {
+  bibliotheek: "library",
+  declare: "declare",
+  createobject: "createObject",
+  bestand: "file",
+  proces: "process",
+  toetsenbord: "keyboard",
+  omgeving: "environment",
+  register: "registry",
+  pad: "path",
+  "gekoppelde-tabel": "linkedTable",
+  "externe-database": "externalDatabase",
+  hyperlink: "hyperlink",
+  export: "export",
+  onbekend: "unknownName",
+  syntaxis: "syntaxError",
 };
+
+/** Naam per soort afhankelijkheid; vertaald op het moment van lezen. */
+export const SOORT_NAAM = Object.defineProperties(
+  {} as Record<AfhankelijkheidSoort, string>,
+  Object.fromEntries(
+    Object.entries(SOORT_SLEUTEL).map(([soort, sleutel]) => [soort, { enumerable: true, get: () => tr(`kind.${sleutel}`) }]),
+  ),
+);
 
 // ---------------------------------------------------------------- paden
 
@@ -230,19 +250,19 @@ export function verdeelKandidaten(lijst: ProcedureAnalyse[], metDeels: boolean) 
   for (const p of lijst) {
     const reden =
       p.soort !== "sub" && p.soort !== "function"
-        ? "eigenschapsprocedure"
+        ? tr("notRunReason.propertyProcedure")
         : p.moduleSoort === "klasse"
-          ? "klassenmodule (vraagt een instantie)"
+          ? tr("notRunReason.classModule")
           : p.gebeurtenis
-            ? "gebeurtenisprocedure"
+            ? tr("notRunReason.eventProcedure")
             : p.moduleSoort === "formulier"
-              ? "formulier- of rapportmodule (vraagt een geopend formulier)"
+              ? tr("notRunReason.formModule")
               : !p.publiek
-                ? "niet publiek"
+                ? tr("notRunReason.notPublic")
                 : !p.zonderVerplichteParameters
-                  ? "heeft verplichte parameters"
+                  ? tr("notRunReason.requiredParameters")
                   : p.status === "niet" || (p.status === "deels" && !metDeels)
-                    ? `status ${STATUS_PROCEDURE[p.status].tekst.toLowerCase()}`
+                    ? tr("notRunReason.status", { status: STATUS_PROCEDURE[p.status].tekst.toLowerCase() })
                     : null;
     if (reden) nietUitgevoerd.push({ module: p.module, procedure: p.naam, reden });
     else kandidaten.push(p);
@@ -259,7 +279,7 @@ export function gekoppeldeTabellenUit(objecten: DatabaseObject[], inWerkkopie: s
     .filter((o) => o.soort === "Gekoppelde tabel")
     .map((o) => ({
       naam: o.naam,
-      bron: o.eigenschappen?.find(([k]) => k === "Soort")?.[1] ?? "Gekoppelde tabel",
+      bron: o.eigenschappen?.find(([k]) => k === "Soort" || k === i18next.t("database:analysis.property.kind"))?.[1] ?? tr("kind.linkedTable"),
       inWerkkopie: aanwezig.has(o.naam.toLowerCase()),
     }));
 }
@@ -286,8 +306,12 @@ export function oorzaakNaam(oorzaak: string): string {
 export function uitvoeringFoutTekst(u: Uitvoering): string {
   const f = u.fout;
   if (!f) return "";
-  const waar = [f.module, f.regel ? `regel ${f.regel}` : ""].filter(Boolean).join(", ");
-  return `${f.nummer ? `Fout ${f.nummer}: ` : ""}${f.omschrijving.trim()}${waar ? ` (${waar})` : ""}`;
+  const omschrijving = f.omschrijving.trim();
+  const tekst = f.nummer ? tr("error.withNumber", { number: f.nummer, description: omschrijving }) : omschrijving;
+  if (f.module && f.regel) return tr("error.atModuleLine", { text: tekst, module: f.module, line: f.regel });
+  if (f.module) return tr("error.atModule", { text: tekst, module: f.module });
+  if (f.regel) return tr("error.atLine", { text: tekst, line: f.regel });
+  return tekst;
 }
 
 export function telResultaat(regels: Resultaatregel[]) {
@@ -344,7 +368,19 @@ export function resultaatAlsJson(r: ResultaatExport): string {
 }
 
 export function resultaatAlsCsv(r: ResultaatExport): string {
-  const kolommen = ["Module", "Procedure", "Status", "Foutnummer", "Omschrijving", "Regel", "Duur (ms)", "Overgeslagen", "Overgeslagen onderdelen", "Debug.Print", "Hostgebeurtenissen"];
+  const kolommen = [
+    tr("csv.module"),
+    tr("csv.procedure"),
+    tr("csv.status"),
+    tr("csv.errorNumber"),
+    tr("csv.description"),
+    tr("csv.line"),
+    tr("csv.durationMs"),
+    tr("csv.skipped"),
+    tr("csv.skippedParts"),
+    "Debug.Print",
+    tr("csv.hostEvents"),
+  ];
   const rijen = r.regels.map((x) => {
     const u = x.uitvoering;
     return [
@@ -365,11 +401,11 @@ export function resultaatAlsCsv(r: ResultaatExport): string {
 }
 
 export function hostgebeurtenisTekst(h: Uitvoering["hostgebeurtenissen"][number]): string {
-  const naam = h.soort === "msgBox" ? "MsgBox" : h.soort === "inputBox" ? "InputBox" : h.soort === "formulier" ? `Formulier.${h.naam ?? "?"}` : `DoCmd.${h.naam ?? "?"}`;
+  const naam = h.soort === "msgBox" ? "MsgBox" : h.soort === "inputBox" ? "InputBox" : h.soort === "formulier" ? `${tr("hostEventForm")}.${h.naam ?? "?"}` : `DoCmd.${h.naam ?? "?"}`;
   return h.doel ? `${naam} (${h.doel})` : naam;
 }
 
 /** Duur leesbaar: “120 ms”, “2,4 s”. */
 export function duurTekst(ms: number): string {
-  return ms < 1000 ? `${Math.round(ms)} ms` : `${(ms / 1000).toLocaleString("nl-NL", { maximumFractionDigits: 1 })} s`;
+  return ms < 1000 ? tr("duration.ms", { value: formatGetal(Math.round(ms)) }) : tr("duration.s", { value: formatGetal(ms / 1000, { maximumFractionDigits: 1 }) });
 }

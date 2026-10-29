@@ -1,5 +1,10 @@
 import { strFromU8, unzipSync } from "fflate";
 import type { WorkbookHandle, XlsxCellValue } from "@betteroffice/xlsx";
+import i18next from "./i18n/config";
+
+/** Vertaalt een sleutel uit `spreadsheet:formulaCheck`. */
+const t = (sleutel: string, opties?: Record<string, unknown>) =>
+  i18next.t(`spreadsheet:formulaCheck.${sleutel}`, opties ?? {}) as string;
 
 /**
  * Inventariseert bij het openen van een XLSX wat de rekenkern stil afhandelt:
@@ -179,13 +184,13 @@ export function inventariseerRekenblad(bytes: Uint8Array): RekenbladControle {
       if (!nodig) return false;
       totaal += bestand.originalSize;
       if (bestand.originalSize > MAX_ONDERDEEL || totaal > MAX_TOTAAL)
-        throw new Error("Rekenblad is te groot voor de controle.");
+        throw new Error(t("tooLarge"));
       return true;
     },
   });
   const werkboek = delen["xl/workbook.xml"];
   const relaties = delen["xl/_rels/workbook.xml.rels"];
-  if (!werkboek || !relaties) throw new Error("Geen geldig XLSX-werkboek.");
+  if (!werkboek || !relaties) throw new Error(t("invalidWorkbook"));
   const wbXml = strFromU8(werkboek);
   const doelen = new Map<string, string>();
   for (const m of strFromU8(relaties).matchAll(
@@ -332,16 +337,16 @@ export function leesUitWerkboek(
 function voorbeelden(cellen: string[]) {
   const deel = cellen.slice(0, MAX_VOORBEELDEN).join(", ");
   return cellen.length > MAX_VOORBEELDEN
-    ? `${deel} en ${cellen.length - MAX_VOORBEELDEN} meer`
+    ? t("examplesMore", { list: deel, count: cellen.length - MAX_VOORBEELDEN })
     : deel;
 }
 
 function cellenTekst(aantal: number) {
-  return aantal === 1 ? "1 cel" : `${aantal} cellen`;
+  return t("cells", { count: aantal });
 }
 
 /**
- * Zet de inventarisatie om in een Nederlandse melding, of `null` als er niets te
+ * Zet de inventarisatie om in een melding in de interfacetaal, of `null` als er niets te
  * melden is. `afwijkend` is de uitkomst van {@link vergelijkCache}.
  */
 export function rekenbladMelding(
@@ -355,10 +360,15 @@ export function rekenbladMelding(
     waarschuwing = true;
     for (const [naam, cellen] of onbekend) {
       const soort = naam.startsWith("_XLUDF.")
-        ? "Gebruikersfunctie (macro of invoegtoepassing)"
-        : "Functie";
+        ? t("userFunction")
+        : t("function");
       regels.push(
-        `${soort} ${naam.replace(/^_XLUDF\./, "")} wordt niet berekend (${cellenTekst(cellen.length)}: ${voorbeelden(cellen)}). De opgeslagen uitkomst blijft staan en wordt niet bijgewerkt; afhankelijke cellen kunnen verouderd zijn.`,
+        t("notCalculated", {
+          kind: soort,
+          name: naam.replace(/^_XLUDF\./, ""),
+          cells: cellenTekst(cellen.length),
+          examples: voorbeelden(cellen),
+        }),
       );
     }
   }
@@ -366,48 +376,50 @@ export function rekenbladMelding(
     // Vraagt het bestand zelf om herberekening, dan is een oude cache verwacht.
     if (!controle.volledigHerberekenen) waarschuwing = true;
     regels.push(
-      `${cellenTekst(afwijkend.length)} had${afwijkend.length === 1 ? "" : "den"} een verouderde opgeslagen uitkomst en ${afwijkend.length === 1 ? "is" : "zijn"} bij openen herberekend (${voorbeelden(afwijkend)}). Bij opslaan worden de nieuwe uitkomsten bewaard.`,
+      t("recalculated", {
+        count: afwijkend.length,
+        cells: cellenTekst(afwijkend.length),
+        examples: voorbeelden(afwijkend),
+      }),
     );
   }
   if (controle.handmatigRekenen) {
     waarschuwing = true;
-    regels.push(
-      "Het bestand is opgeslagen met handmatig rekenen; opgeslagen uitkomsten kunnen verouderd zijn.",
-    );
+    regels.push(t("manualCalculation"));
   }
   if (controle.externeKoppelingen) {
     waarschuwing = true;
-    regels.push(
-      `Het werkboek verwijst naar ${controle.externeKoppelingen === 1 ? "een extern werkboek" : `${controle.externeKoppelingen} externe werkboeken`}; die waarden worden niet bijgewerkt.`,
-    );
+    regels.push(t("externalLinks", { count: controle.externeKoppelingen }));
   }
   const fouten = Object.entries(controle.foutcellen);
   if (fouten.length) {
     const totaal = fouten.reduce((som, [, c]) => som + c.length, 0);
     regels.push(
-      `${cellenTekst(totaal)} met een foutwaarde: ${fouten
-        .map(([fout, cellen]) => `${fout} (${voorbeelden(cellen)})`)
-        .join("; ")}.`,
+      t("errorCells", {
+        cells: cellenTekst(totaal),
+        list: fouten
+          .map(([fout, cellen]) =>
+            t("errorItem", { error: fout, examples: voorbeelden(cellen) }),
+          )
+          .join("; "),
+      }),
     );
   }
   if (controle.zonderUitkomst.length)
     regels.push(
-      `${cellenTekst(controle.zonderUitkomst.length)} met een formule zonder opgeslagen uitkomst (${voorbeelden(controle.zonderUitkomst)}).`,
+      t("noCachedResult", {
+        cells: cellenTekst(controle.zonderUitkomst.length),
+        examples: voorbeelden(controle.zonderUitkomst),
+      }),
     );
   if (controle.volledigHerberekenen)
-    regels.push(
-      "Het bestand vraagt om volledige herberekening bij openen (fullCalcOnLoad); de opgeslagen uitkomsten zijn mogelijk verouderd.",
-    );
+    regels.push(t("fullCalcOnLoad"));
   if (controle.rekenketen && controle.formules)
-    regels.push(
-      "De rekenvolgorde (calcChain) wordt bij opslaan niet bewaard; Excel bouwt die opnieuw op.",
-    );
+    regels.push(t("calcChain"));
   if (!regels.length) return null;
   return {
     ernst: waarschuwing ? "waarschuwing" : "info",
-    titel: waarschuwing
-      ? "Controleer de formules in dit rekenblad"
-      : "Opmerkingen over de formules in dit rekenblad",
+    titel: waarschuwing ? t("titleWarning") : t("titleInfo"),
     regels,
   };
 }

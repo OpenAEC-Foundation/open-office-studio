@@ -7,6 +7,8 @@ import {
   type MouseEvent,
 } from "react";
 import { createPortal } from "react-dom";
+import { useTranslation } from "react-i18next";
+import { useOpmaak } from "../i18n/opmaak";
 import { useDocxCommand } from "@betteroffice/docx-react";
 import { Table } from "lucide-react";
 import { Actie, RibbonFout } from "../Ribbon";
@@ -37,6 +39,7 @@ const TUSSEN = 3;
  * en de dialoog ‘Tabel invoegen…’ met getallen.
  */
 export function TabelKiezer() {
+  const { t } = useTranslation("ribbon");
   const api = useEditorApi().tekst;
   const meld = useContext(RibbonFout);
   const bewerkbaar = useDocxCommand("insertTable").state.enabled;
@@ -66,13 +69,13 @@ export function TabelKiezer() {
   return (
     <div ref={knop} className="tabelkiezer">
       <Actie
-        naam="Tabel"
+        naam={t("tablePicker.table")}
         icoon={Table}
         groot
         disabled={!bewerkbaar}
         aria-haspopup="dialog"
         aria-expanded={open === "raster"}
-        title="Tabel · Kies het aantal rijen en kolommen"
+        title={`${t("tablePicker.table")} · ${t("tablePicker.tableHint")}`}
         onMouseDown={(event) => event.preventDefault()}
         onClick={() => (open === "raster" ? sluiten(true) : openen("raster"))}
       />
@@ -114,6 +117,9 @@ function Raster({
   sluiten: (terugNaarDocument: boolean) => void;
   dialoog: () => void;
 }) {
+  const { t } = useTranslation("ribbon");
+  // Opnieuw tekenen bij een taalwissel (afmetingUitleg leest i18next zelf).
+  useOpmaak();
   const paneel = useRef<HTMLDivElement>(null);
   const raster = useRef<HTMLDivElement>(null);
   const [plek, setPlek] = useState({ left: 0, top: 0 });
@@ -163,7 +169,7 @@ function Raster({
       ref={paneel}
       className="tabelkiezer-paneel"
       role="dialog"
-      aria-label="Tabel invoegen"
+      aria-label={t("tablePicker.insertTable")}
       style={{ left: plek.left, top: plek.top }}
       onKeyDown={(event) => {
         if (event.key === "Escape") {
@@ -174,14 +180,16 @@ function Raster({
       }}
     >
       <div className="tabelkiezer-kop" aria-hidden="true">
-        {keuze ? `Tabel ${afmetingTekst(keuze)}` : "Tabel invoegen"}
+        {keuze
+          ? t("tablePicker.tableOfSize", { size: afmetingTekst(keuze) })
+          : t("tablePicker.insertTable")}
       </div>
       <div
         ref={raster}
         className="tabelkiezer-raster"
         role="slider"
         tabIndex={0}
-        aria-label="Tabelgrootte, kolommen bij rijen"
+        aria-label={t("tablePicker.gridLabel")}
         aria-valuetext={afmetingUitleg(keuze)}
         style={{
           gridTemplateColumns: `repeat(${RASTER.kolommen}, ${CEL}px)`,
@@ -217,7 +225,7 @@ function Raster({
         {cellen}
       </div>
       <div className="tabelkiezer-afmeting" aria-live="polite">
-        {keuze ? afmetingTekst(keuze) : "Beweeg of gebruik de pijltjestoetsen"}
+        {keuze ? afmetingTekst(keuze) : t("tablePicker.gridHint")}
       </div>
       <button
         type="button"
@@ -230,7 +238,7 @@ function Raster({
         }}
         onClick={dialoog}
       >
-        Tabel invoegen…
+        {t("tablePicker.insertTableDialog")}
       </button>
     </div>,
     document.body,
@@ -248,6 +256,8 @@ function TabelDialoog({
   invoegen: (grootte: Tabelgrootte) => void;
   sluiten: () => void;
 }) {
+  const { t } = useTranslation(["ribbon", "common"]);
+  const { getal } = useOpmaak();
   const eerste = useRef<HTMLInputElement>(null);
   const [tekst, setTekst] = useState({
     kolommen: String(keuze.kolommen),
@@ -295,7 +305,7 @@ function TabelDialoog({
         className="office-dialoog tekst-dialoog tabelvoorbeeld-dialoog"
         role="dialog"
         aria-modal="true"
-        aria-label="Tabel invoegen"
+        aria-label={t("tablePicker.insertTable")}
         onKeyDown={(event) => {
           if (event.key === "Escape") {
             event.preventDefault();
@@ -308,22 +318,26 @@ function TabelDialoog({
           if (klopt) invoegen({ kolommen: Number(tekst.kolommen), rijen: Number(tekst.rijen) });
         }}
       >
-        <h2>Tabel invoegen</h2>
+        <h2>{t("tablePicker.insertTable")}</h2>
         <div className="tabelvoorbeeld-velden">
-          {veld("kolommen", "Aantal kolommen")}
-          {veld("rijen", "Aantal rijen")}
+          {veld("kolommen", t("tablePicker.numberOfColumns"))}
+          {veld("rijen", t("tablePicker.numberOfRows"))}
         </div>
         <p className="tabelvoorbeeld-toelichting">
           {klopt
-            ? `Het voorbeeld bij de cursor toont een tabel van ${afmetingUitleg(keuze)}.`
-            : `Kies 1 tot ${GRENZEN.kolommen} kolommen en 1 tot ${GRENZEN.rijen} rijen.`}
+            ? t("tablePicker.previewNote", { size: afmetingUitleg(keuze) })
+            : t("tablePicker.limits", {
+                min: getal(1),
+                maxColumns: getal(GRENZEN.kolommen),
+                maxRows: getal(GRENZEN.rijen),
+              })}
         </p>
         <div className="office-dialoogacties">
           <button type="submit" className="office-dialoogdoorgaan" disabled={!klopt}>
-            Invoegen
+            {t("tablePicker.insert")}
           </button>
           <button type="button" onClick={sluiten}>
-            Annuleren
+            {t("common:cancel")}
           </button>
         </div>
       </form>

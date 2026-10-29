@@ -1,3 +1,7 @@
+.office.database-zelfstandig {
+  /* Eigen kopbalk van de losse app; Office Studio heeft een titelbalk van 32 px. */
+  --office-kophoogte: 40px;
+}
 .database-zelfstandig {
   --module-accent: #916223;
   --module-tint: #fbf2df;
@@ -19,7 +23,7 @@
 .database-eigen-merk strong > span {
   font-weight: 400;
   color: #707780;
-  margin-left: 5px;
+  margin-inline-start: 5px;
 }
 .database-weekversie {
   border: 1px solid #e4d8c2;
@@ -31,7 +35,7 @@
   white-space: nowrap;
 }
 .database-lokaal {
-  margin-left: auto;
+  margin-inline-start: auto;
   display: flex;
   align-items: center;
   gap: 7px;
@@ -43,6 +47,23 @@
     display: none;
   }
   .database-zelfstandig .office-headerknop {
-    margin-left: auto;
+    margin-inline-start: auto;
   }
+}
+.database-taalkeuze {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #6b7481;
+}
+.database-taalkeuze select {
+  font: inherit;
+  font-size: 12px;
+  max-inline-size: 170px;
+  padding-block: 5px;
+  padding-inline: 6px;
+  border: 1px solid #dfe3e8;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
 }

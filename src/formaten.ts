@@ -1,9 +1,10 @@
 import catalogus from "./formaten.json";
 import type { Soort } from "./editors";
+import i18next from "./i18n/config";
 
 export const bestandstypen = catalogus;
 
-/** Groepen in Opslaan als, in deze volgorde. */
+/** Groepen in Opslaan als, in deze volgorde (vertaald via `backstage:saveAs.groups`). */
 export const GROEPEN = {
   eigen: "Eigen formaat",
   opendocument: "OpenDocument",
@@ -94,9 +95,7 @@ export async function converteer(
   opties?: ConversieOpties,
 ): Promise<Uint8Array> {
   if (!("__TAURI_INTERNALS__" in window))
-    throw new Error(
-      "Dit formaat vereist de desktopversie met een kantoorruntime (LibreOffice).",
-    );
+    throw new Error(i18next.t("backstage:saveResult.needsDesktop"));
   const { invoke } = await import("@tauri-apps/api/core");
   const headers: Record<string, string> = {
     "x-office-bron": van,

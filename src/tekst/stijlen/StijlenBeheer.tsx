@@ -25,6 +25,8 @@ import type {
   TextFormatting,
   Theme,
 } from "@betteroffice/docx/types/document";
+import i18next from "../../i18n/config";
+import { useTranslation } from "react-i18next";
 import { RibbonFout } from "../../Ribbon";
 import { useEditorApi, zichtbaarElement } from "../../lint/editorApi";
 import { useSneltoetsen } from "../../lint/sneltoetsen";
@@ -149,11 +151,11 @@ function tekenstijl(ref: DocxEditorRef, stijlen: StyleDefinitions | undefined, s
   const sessie = editor?.getYrsSession();
   const bereik = editor?.getSelectionRange();
   if (!editor || !sessie || !bereik || bereik.from === bereik.to)
-    throw new Error("Selecteer eerst de tekst waarop je de tekenstijl wilt toepassen.");
+    throw new Error(i18next.t("writer:styles.errors.selectTextFirst"));
   const van = editor.displayPositionToYrsLoc(Math.min(bereik.from, bereik.to));
   const tot = editor.displayPositionToYrsLoc(Math.max(bereik.from, bereik.to));
   if (!van || !tot || van.story !== tot.story)
-    throw new Error("De tekenstijl kan hier niet worden toegepast.");
+    throw new Error(i18next.t("writer:styles.errors.cannotApplyHere"));
   const e = eigenTekenopmaak(stijlen, styleId, thema);
   const delta = {
     ...(e.vet !== undefined ? { bold: !!e.vet } : {}),
@@ -164,7 +166,7 @@ function tekenstijl(ref: DocxEditorRef, stijlen: StyleDefinitions | undefined, s
     ...(e.grootte ? { fontSize: e.grootte } : {}),
     ...(e.lettertype ? { fontFamily: { ascii: e.lettertype, hAnsi: e.lettertype } } : {}),
   };
-  if (!Object.keys(delta).length) throw new Error("Deze tekenstijl heeft geen opmaak om toe te passen.");
+  if (!Object.keys(delta).length) throw new Error(i18next.t("writer:styles.errors.nothingToApply"));
   sessie.formatRange(
     { story: van.story, start: { paraId: van.paraId, offset: van.offset }, end: { paraId: tot.paraId, offset: tot.offset } },
     delta,
@@ -183,6 +185,7 @@ async function nieuweEditor(api: () => DocxEditorRef | null, oud: DocxEditorRef 
 }
 
 export function StijlenBeheer({ children }: { children: ReactNode }) {
+  const { t } = useTranslation("writer");
   const apis = useEditorApi();
   const api = apis.tekst;
   const herlaad = apis.herlaad ?? null;
@@ -205,9 +208,9 @@ export function StijlenBeheer({ children }: { children: ReactNode }) {
   const gebruikt = useMemo(() => gebruikteStijlen(document), [document]);
 
   async function herlaadStijlen(bewerk: (o: StijlOnderdelen) => StijlBewerking) {
-    if (!herlaad) throw new Error("Stijlen wijzigen is hier niet beschikbaar.");
+    if (!herlaad) throw new Error(t("styles.errors.notAvailable"));
     const ref = api();
-    if (!ref) throw new Error("Het document is nog niet gereed.");
+    if (!ref) throw new Error(t("styles.errors.notReady"));
     await ref.flushPendingInput();
     const paraId = ref.getSelectionInfo()?.paraId ?? undefined;
     let alineastijl: string | undefined;
@@ -229,7 +232,7 @@ export function StijlenBeheer({ children }: { children: ReactNode }) {
       if (nieuw && nieuw.setParagraphStyle({ paraId, styleId: alineastijl })) {
         await nieuw.flushPendingInput();
         herlaad.vervang(await herlaad.bytes(), { paraId });
-      } else meld("De nieuwe stijl is gemaakt, maar kon niet op de alinea worden gezet.");
+      } else meld(t("styles.errors.newStyleNotApplied"));
     }
     return veranderd;
   }
@@ -253,14 +256,14 @@ export function StijlenBeheer({ children }: { children: ReactNode }) {
 
   async function werkBij(styleId: string) {
     const stijl = stijlen?.styles.find((s) => s.styleId === styleId);
-    if (!stijl) throw new Error("Deze stijl bestaat niet (meer) in het document.");
+    if (!stijl) throw new Error(t("styles.errors.styleGone"));
     const ref = api();
     await ref?.flushPendingInput();
     const sel = selectieOpmaak();
     const soort = stijl.type === "character" ? "character" : "paragraph";
     const eigenschappen: StijlEigenschappen = uitOpmaak(sel.tekst, sel.alinea, soort, thema);
     if (!Object.keys(eigenschappen).length)
-      throw new Error("De selectie heeft geen opmaak om in de stijl over te nemen.");
+      throw new Error(t("styles.errors.selectionHasNoFormatting"));
     await herlaadStijlen((o) => ({ stijlen: wijzigStijl(o.stijlen, styleId, { eigenschappen }) }));
   }
 
@@ -268,7 +271,7 @@ export function StijlenBeheer({ children }: { children: ReactNode }) {
     const stijl = stijlen?.styles.find((s) => s.styleId === styleId);
     try {
       const ref = api();
-      if (!ref) throw new Error("Het document is nog niet gereed.");
+      if (!ref) throw new Error(t("styles.errors.notReady"));
       if (stijl?.type === "character") {
         tekenstijl(ref, stijlen, styleId, thema);
         return;
@@ -324,7 +327,7 @@ export function StijlenBeheer({ children }: { children: ReactNode }) {
           {
             toets: "Ctrl+Alt+Shift+S",
             uitvoeren: () => setVenster({ soort: "venster" }),
-            omschrijving: "Stijlenvenster",
+            omschrijving: t("styles.shortcutPane"),
           },
         ],
     "tekst",

@@ -1,5 +1,7 @@
 import { ZOOM_MAX, ZOOM_MIN } from "../documentzoom";
 import type { Statistiek } from "./statusinfo";
+import { formatGetal } from "../i18n/opmaak";
+import type { Taal } from "../i18n/talen";
 
 /**
  * De zoomschuif loopt van 0 tot 100 met 100% in het midden, zoals in
@@ -50,9 +52,8 @@ export function selectieStatistiek(rijen: readonly (readonly Cel[])[]): Statisti
   };
 }
 
-const nl = new Intl.NumberFormat("nl-NL", { maximumFractionDigits: 10 });
-/** Getal in Nederlandse notatie, met hooguit tien decimalen. */
-export function getal(waarde: number) {
+/** Getal in de notatie van de interfacetaal, met hooguit tien decimalen. */
+export function getal(waarde: number, taal?: Taal) {
   // Drijvende-kommaruis (0,1 + 0,2) niet tonen.
-  return nl.format(Number(waarde.toPrecision(12)));
+  return formatGetal(Number(waarde.toPrecision(12)), { maximumFractionDigits: 10 }, taal);
 }

@@ -1,0 +1,265 @@
+{
+  "types": {
+    "column": {
+      "name": "Säule",
+      "description": "Werte nebeneinander vergleichen"
+    },
+    "stackedColumn": {
+      "name": "Gestapelte Säule",
+      "description": "Teile und Summe je Kategorie"
+    },
+    "percentColumn": {
+      "name": "100%-Säule",
+      "description": "Anteile je Kategorie"
+    },
+    "bar": {
+      "name": "Balken",
+      "description": "Horizontal, für lange Namen"
+    },
+    "line": {
+      "name": "Linie",
+      "description": "Verlauf über die Zeit"
+    },
+    "lineMarkers": {
+      "name": "Linie mit Markierungen",
+      "description": "Verlauf mit sichtbaren Datenpunkten"
+    },
+    "area": {
+      "name": "Fläche",
+      "description": "Verlauf mit Betonung der Größe"
+    },
+    "pie": {
+      "name": "Kreis",
+      "description": "Aufteilung einer einzelnen Reihe"
+    },
+    "doughnut": {
+      "name": "Ring",
+      "description": "Aufteilung mit offener Mitte"
+    },
+    "scatter": {
+      "name": "Punkt (XY)",
+      "description": "Zusammenhang zwischen zwei Zahlen"
+    },
+    "combo": {
+      "name": "Säule + Linie",
+      "description": "Letzte Reihe als Linie auf einer Sekundärachse"
+    }
+  },
+  "unknownType": "Unbekannter Typ",
+  "busy": "Wird verarbeitet…",
+  "defaults": {
+    "seriesName": "Reihe {{n}}",
+    "categoryName": "Kategorie {{n}}",
+    "chartName": "Diagramm {{n}}",
+    "sheetName": "Diagramm {{n}}",
+    "true": "WAHR",
+    "false": "FALSCH"
+  },
+  "ribbon": {
+    "charts": "Diagramme",
+    "chart": "Diagramm",
+    "editChart": "Diagramm bearbeiten",
+    "allCharts": "Alle Diagramme",
+    "dataAndFormat": "Daten und Formatierung",
+    "overview": "Übersicht",
+    "type": "Typ",
+    "changeType": "Diagrammtyp ändern",
+    "data": "Daten",
+    "selectData": "Daten auswählen",
+    "layout": "Layout",
+    "titleAndLegend": "Titel und Legende",
+    "delete": "Löschen",
+    "deleteChart": "Diagramm löschen",
+    "withShortcut": "{{name}} · {{shortcut}}"
+  },
+  "dialog": {
+    "title": {
+      "insert": "Diagramm einfügen",
+      "edit": "Diagramm bearbeiten"
+    },
+    "button": {
+      "insert": "Einfügen",
+      "edit": "Aktualisieren"
+    },
+    "reloadNote": {
+      "insert": "Das Dokument wird nach dem Einfügen neu geladen. Änderungen davor können nicht mehr rückgängig gemacht werden.",
+      "edit": "Das Dokument wird nach dem Aktualisieren neu geladen. Änderungen davor können nicht mehr rückgängig gemacht werden."
+    },
+    "closeTitle": "Schließen (Esc)",
+    "type": "Typ",
+    "data": "Daten",
+    "cellRange": "Zellbereich",
+    "cellRangePlaceholder": "Zum Beispiel A1:D6",
+    "noContiguousRange": "Die Bezüge dieses Diagramms bilden keinen zusammenhängenden Bereich; die Daten bleiben unverändert, bis Sie einen Bereich eingeben.",
+    "firstRowNames": "Erste Zeile enthält Namen",
+    "firstColumnNames": "Erste Spalte enthält Namen",
+    "seriesIn": "Reihen in",
+    "columns": "Spalten",
+    "rows": "Zeilen",
+    "series": "Reihe",
+    "seriesNoNumbersTitle": "{{name}}: keine Zahlen, nicht übernommen",
+    "noNumbers": "(keine Zahlen)",
+    "enterRange": "Geben Sie den Zellbereich ein, der die Daten enthält.",
+    "placeCursorInTable": "Setzen Sie den Cursor zuerst in eine Tabelle mit Zahlen.",
+    "titles": "Titel",
+    "chartTitle": "Titel",
+    "subtitle": "Untertitel",
+    "categoryAxis": "Kategorienachse",
+    "valueAxis": "Werteachse",
+    "horizontalAxis": "Horizontale Achse",
+    "verticalAxis": "Vertikale Achse",
+    "secondaryAxis": "Sekundärachse",
+    "format": "Format",
+    "legend": "Legende",
+    "gridlines": "Gitternetzlinien",
+    "dataLabels": "Datenbeschriftungen",
+    "decimals": "Dezimalstellen",
+    "placement": "Platzierung",
+    "besideData": "Neben den Daten auf diesem Blatt",
+    "newSheet": "Auf einem neuen Blatt",
+    "sheetName": "Blattname",
+    "summary": {
+      "series_one": "{{n}} Reihe",
+      "series_other": "{{n}} Reihen",
+      "categories_one": "{{n}} Kategorie",
+      "categories_other": "{{n}} Kategorien",
+      "text": "{{series}} · {{categories}}",
+      "withSheet": "{{series}} · {{categories}} · {{sheet}}"
+    }
+  },
+  "legend": {
+    "bottom": "Unten",
+    "right": "Rechts",
+    "top": "Oben",
+    "left": "Links",
+    "none": "Keine Legende"
+  },
+  "dataSheet": {
+    "row": "Zeile",
+    "series": "Reihe",
+    "removeLastRow": "Letzte Zeile löschen",
+    "removeLastSeries": "Letzte Reihe löschen",
+    "paste": "Einfügen",
+    "pasteTitle": "Tabulatorgetrennten Text aus der Zwischenablage einfügen, zum Beispiel aus einer Tabelle kopiert",
+    "fromTable": "Aus ausgewählter Tabelle",
+    "fromTableTitle": "Übernimmt die Tabelle, in der der Cursor steht",
+    "pasteNotAllowed": "Einfügen über die Schaltfläche ist hier nicht erlaubt. Klicken Sie in eine Zelle und verwenden Sie Strg+V.",
+    "corner": "Eckzelle",
+    "seriesNameLabel": "Name von Reihe {{n}}",
+    "categoryLabel": "Kategorie {{n}}",
+    "valueLabel": "Wert Zeile {{row}}, Reihe {{series}}"
+  },
+  "preview": {
+    "label": "Vorschau: {{title}}",
+    "untitled": "Vorschau: Diagramm ohne Titel"
+  },
+  "list": {
+    "title": "Diagramme in diesem Dokument",
+    "empty": "Dieses Dokument enthält noch keine Diagramme.",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "deleteLabel": "{{name}} löschen",
+    "place": {
+      "slide": "Folie {{n}}",
+      "sheet": "Blatt {{name}}",
+      "text": "Diagramm {{n}} im Text"
+    }
+  },
+  "deleteConfirm": {
+    "title": "Diagramm löschen",
+    "text": "‘{{name}}’ löschen? Das Dokument wird dann neu geladen; frühere Änderungen können nicht mehr rückgängig gemacht werden.",
+    "textSheet": "‘{{name}}’ von Blatt {{sheet}} löschen? Das Dokument wird dann neu geladen; frühere Änderungen können nicht mehr rückgängig gemacht werden.",
+    "button": "Löschen"
+  },
+  "errors": {
+    "unknownType": "Unbekannter Diagrammtyp.",
+    "noSeries": "Das Diagramm benötigt mindestens eine Datenreihe.",
+    "tooManySeries": "Ein Diagramm kann hier höchstens {{max}} Reihen enthalten.",
+    "tooManyCategories": "Ein Diagramm kann hier höchstens {{max}} Kategorien enthalten.",
+    "noCategories": "Das Diagramm benötigt mindestens eine Kategorie.",
+    "valueCountMismatch": "Reihe ‘{{name}}’ hat nicht so viele Werte, wie es Kategorien gibt.",
+    "noNumbers": "Die Daten enthalten keine Zahlen.",
+    "comboNeedsTwoSeries": "Ein Kombidiagramm benötigt mindestens zwei Reihen: Säulen und eine Linie.",
+    "scatterNeedsNumbers": "Ein Punktdiagramm benötigt Zahlen als X-Werte in der ersten Spalte oder Zeile.",
+    "titleTooLong": "Titel dürfen höchstens {{max}} Zeichen lang sein.",
+    "invalidColor": "Farbe ‘{{color}}’ ist keine gültige Farbe.",
+    "noNumericColumn": "Keine der Spalten im Bereich enthält Zahlen, daher gibt es nichts darzustellen. Wählen Sie einen Bereich mit mindestens einer Spalte mit Zahlen, oder stellen Sie ‘Reihen in’ auf Zeilen.",
+    "noNumericRow": "Keine der Zeilen im Bereich enthält Zahlen, daher gibt es nichts darzustellen. Wählen Sie einen Bereich mit mindestens einer Zeile mit Zahlen, oder stellen Sie ‘Reihen in’ auf Spalten.",
+    "chooseSeries": "Wählen Sie mindestens eine Reihe für das Diagramm.",
+    "rangeTooLarge": "Der Bereich ist zu groß: höchstens {{max}} Zellen.",
+    "noDataBesideHeaders": "Der Bereich enthält außer den Überschriften keine Daten.",
+    "pasteTooLarge": "Die eingefügten Daten sind zu groß für ein Diagramm.",
+    "invalidRange": "Das ist kein gültiger Zellbereich. Verwenden Sie zum Beispiel A1:D6 oder 'Blatt 1'!A1:D6.",
+    "noSuchSheet": "Es gibt kein Blatt mit dem Namen ‘{{name}}’.",
+    "spreadsheetNotReady": "Die Tabelle ist noch nicht bereit.",
+    "spreadsheetReadOnly": "Die Tabelle ist schreibgeschützt.",
+    "documentNotReady": "Das Dokument ist noch nicht bereit.",
+    "presentationNotEditable": "Die Präsentation kann gerade nicht bearbeitet werden.",
+    "selectChartFirst": "Wählen Sie zuerst ein Diagramm aus.",
+    "chartGone": "Das Diagramm ist nicht mehr auffindbar.",
+    "notEditableHere": "Dieses Diagramm kann hier nicht bearbeitet werden.",
+    "notEditable": "Dieses Diagramm kann nicht bearbeitet werden.",
+    "package": {
+      "tooLarge": "Das Dokument ist zu groß, um darin ein Diagramm zu bearbeiten.",
+      "tooManyParts": "Das Dokument enthält zu viele oder zu große Teile.",
+      "notZip": "Das Dokument ist keine gültige Office-Datei (zip).",
+      "invalidPartName": "Das Dokument enthält einen ungültigen Teilnamen.",
+      "noContentTypes": "Im Dokument fehlt [Content_Types].xml.",
+      "missingPart": "Teil {{part}} fehlt im Dokument.",
+      "noFreePartName": "Es ist kein freier Teilname mehr verfügbar."
+    },
+    "xml": {
+      "tooLarge": "Ein XML-Teil ist zu groß für die Verarbeitung.",
+      "damaged": "Der XML-Teil ist beschädigt.",
+      "doctype": "XML mit einer DOCTYPE wird aus Sicherheitsgründen nicht verarbeitet.",
+      "tooDeep": "Der XML-Teil ist zu tief verschachtelt.",
+      "overlappingChanges": "Interner Fehler: überlappende XML-Änderungen."
+    },
+    "chartXml": {
+      "notDrawingML": "Dieser Teil ist kein DrawingML-Diagramm.",
+      "noPlotArea": "Das Diagramm hat keine Zeichnungsfläche.",
+      "unusualPrefix": "Dieses Diagramm verwendet eine ungewöhnliche XML-Schreibweise und kann hier nicht sicher bearbeitet werden."
+    },
+    "document": {
+      "noMainPart": "Im Dokument fehlt der Hauptteil.",
+      "tooManyCharts": "Dieses Dokument enthält bereits {{total}} Diagramme; mehr werden nicht unterstützt.",
+      "invalidSheetName": "Ungültiger Blattname: höchstens 31 Zeichen, ohne \\ / ? * [ ] :",
+      "sheetExists": "Ein Blatt mit dem Namen ‘{{name}}’ existiert bereits.",
+      "noSheetList": "Die Arbeitsmappe hat keine Liste von Blättern.",
+      "drawingMissing": "Die Zeichnung dieses Blatts fehlt oder ist beschädigt.",
+      "noSuchWorksheet": "Das gewählte Blatt existiert nicht oder ist kein Arbeitsblatt.",
+      "notPlainWorksheet": "Ein Diagramm kann nur auf einem normalen Arbeitsblatt platziert werden.",
+      "drawingDamaged": "Die Zeichnung dieses Blatts ist beschädigt.",
+      "docxUnusualPrefix": "Dieses Dokument verwendet eine ungewöhnliche XML-Schreibweise; das Diagramm kann nicht sicher eingefügt werden.",
+      "noBody": "Das Dokument hat keinen Textkörper.",
+      "tableTooLarge": "Die Tabelle ist zu groß für ein Diagramm.",
+      "noSuchSlide": "Die gewählte Folie existiert nicht.",
+      "slideUnusualPrefix": "Diese Folie verwendet eine ungewöhnliche XML-Schreibweise; das Diagramm kann nicht sicher eingefügt werden.",
+      "noShapeTree": "Die Folie hat keinen Formenbaum.",
+      "chartRemoved": "Das Diagramm existiert nicht mehr im Dokument.",
+      "chartNotFound": "Das Diagramm wurde nicht gefunden.",
+      "cannotRemove": "Das Diagrammobjekt kann nicht entfernt werden."
+    }
+  },
+  "read": {
+    "reasons": {
+      "extendedChart": "Dies ist ein erweitertes Diagramm (etwa ein Wasserfall- oder Treemap-Diagramm), das hier nicht bearbeitet werden kann.",
+      "unsupportedType": "Dieses Diagramm verwendet einen Typ, der hier nicht bearbeitet werden kann ({{types}}).",
+      "noReadableSeries": "Das Diagramm enthält keine lesbaren Reihen.",
+      "unsupportedCombination": "Dieses Diagramm kombiniert Typen auf eine Weise, die hier nicht bearbeitet werden kann.",
+      "noSeries": "Das Diagramm enthält keine Datenreihen.",
+      "invalid": "Dieses Diagramm kann hier nicht bearbeitet werden: {{reason}}",
+      "unusualPrefix": "Dieses Diagramm verwendet eine ungewöhnliche XML-Schreibweise und kann hier nicht sicher bearbeitet werden."
+    },
+    "warnings": {
+      "stackedBars": "Gestapelte Balken werden beim Bearbeiten nebeneinander angeordnet.",
+      "stackedLines": "Gestapelte Linien werden beim Bearbeiten zu getrennten Linien.",
+      "stackedAreas": "Gestapelte Flächen werden beim Bearbeiten zu getrennten Flächen.",
+      "linesAfterColumns": "Die Linienreihen werden beim Bearbeiten hinter die Säulen gesetzt.",
+      "lastSeriesAsLine": "Beim Bearbeiten wird nur die letzte Reihe als Linie gezeichnet.",
+      "multiLevelCategories": "Mehrstufige Kategorien werden beim Bearbeiten einstufig.",
+      "moreValuesThanCategories": "Reihe ‘{{name}}’ hat mehr Werte, als es Kategorien gibt.",
+      "trendlinesDropped": "Trendlinien und Fehlerindikatoren werden beim Bearbeiten entfernt."
+    }
+  }
+}

@@ -5,6 +5,7 @@
  * verhalen van de sessie, opmerkingen uit `getComments()`.
  */
 import type { DocxEditorRef } from "@betteroffice/docx-react";
+import i18next from "../../i18n/config";
 import { engine, type Sessie } from "../gedeeld/engine.ts";
 import { verhaalVolgorde } from "./zoeken.ts";
 
@@ -61,7 +62,7 @@ function naarPlek(ref: DocxEditorRef, plek: { story: string; paraId: string; off
 
 export function paginaDoelen(ref: DocxEditorRef): Doel[] {
   const totaal = ref.getTotalPages() || paginas(ref).length;
-  return Array.from({ length: totaal }, (_, i) => ({ nr: i + 1, label: `Pagina ${i + 1}`, ga: (r) => r.scrollToPage(i + 1) }));
+  return Array.from({ length: totaal }, (_, i) => ({ nr: i + 1, label: i18next.t("writer:find.goTo.labels.page", { n: i + 1 }), ga: (r) => r.scrollToPage(i + 1) }));
 }
 
 export function sectieDoelen(ref: DocxEditorRef): Doel[] {
@@ -71,7 +72,7 @@ export function sectieDoelen(ref: DocxEditorRef): Doel[] {
     const sectie = p.sectionIndex ?? 0;
     if (gezien.has(sectie)) return;
     gezien.add(sectie);
-    uit.push({ nr: uit.length + 1, label: `Sectie ${uit.length + 1} (pagina ${i + 1})`, ga: (r) => r.scrollToPage(i + 1) });
+    uit.push({ nr: uit.length + 1, label: i18next.t("writer:find.goTo.labels.section", { n: uit.length + 1, page: i + 1 }), ga: (r) => r.scrollToPage(i + 1) });
   });
   return uit;
 }
@@ -86,7 +87,7 @@ export function regelDoelen(ref: DocxEditorRef): Doel[] {
       const aantal = Math.max(regels.length, (f.toLine ?? 0) - (f.fromLine ?? 0));
       for (let i = 0; i < aantal; i++) {
         const positie = regels[i]?.segments?.find((s) => typeof s.run?.pmStart === "number")?.run?.pmStart ?? f.pmStart;
-        uit.push({ nr: uit.length + 1, label: `Regel ${uit.length + 1}`, ga: (r) => void naarPositie(r, positie) });
+        uit.push({ nr: uit.length + 1, label: i18next.t("writer:find.goTo.labels.line", { n: uit.length + 1 }), ga: (r) => void naarPositie(r, positie) });
       }
     }
   return uit;
@@ -99,7 +100,7 @@ export async function kopDoelen(ref: DocxEditorRef): Promise<Doel[]> {
   const tekst = new Map(gelezen.ok ? gelezen.paragraphs.map((p) => [p.paraId, p.text]) : []);
   return koppen.map((k, i) => ({
     nr: i + 1,
-    label: `${"  ".repeat(Math.max(0, k.heading.outlineLevel))}${(tekst.get(k.paraId) ?? "").replace(/￼/g, "").trim() || "(lege kop)"}`,
+    label: `${"  ".repeat(Math.max(0, k.heading.outlineLevel))}${(tekst.get(k.paraId) ?? "").replace(/￼/g, "").trim() || i18next.t("writer:find.goTo.labels.emptyHeading")}`,
     ga: (r) => naarPlek(r, { story: "body", paraId: k.paraId, offset: 0 }),
   }));
 }
@@ -119,9 +120,11 @@ export function tabelDoelen(ref: DocxEditorRef): Doel[] {
       const eerste = rijen[0]?.cells[0]?.story;
       const voorbeeld = eerste ? sessie.paragraphs(eerste).map((p) => p.text).join(" ").replace(/￼/g, "").slice(0, 40) : "";
       const nr = uit.length + 1;
+      const basis = i18next.t("writer:find.goTo.labels.table", { n: nr, rows: rijen.length, columns: rijen[0]?.cells.length ?? 0 });
+      const metVoorbeeld = voorbeeld ? i18next.t("writer:find.goTo.labels.withPreview", { label: basis, preview: voorbeeld }) : basis;
       uit.push({
         nr,
-        label: `Tabel ${nr}: ${rijen.length} × ${rijen[0]?.cells.length ?? 0}${voorbeeld ? ` — ${voorbeeld}` : ""}${verhaal !== "body" ? " (in een tabel)" : ""}`,
+        label: verhaal !== "body" ? i18next.t("writer:find.goTo.labels.nestedTable", { label: metVoorbeeld }) : metVoorbeeld,
         ga: (r) => {
           const plek = eerste ? eersteAlinea(sessie, eerste) : null;
           if (plek) naarPlek(r, plek);
@@ -142,7 +145,9 @@ export function afbeeldingDoelen(ref: DocxEditorRef): Doel[] {
         for (const b of wachtend) {
           const nr = uit.length + 1;
           const plek = { story: verhaal, paraId: deel.paraId, offset: b.offset };
-          uit.push({ nr, label: `Afbeelding ${nr}${b.alt ? `: ${b.alt.slice(0, 50)}` : ""}`, ga: (r) => naarPlek(r, plek, 1) });
+          uit.push({ nr, label: b.alt
+              ? i18next.t("writer:find.goTo.labels.pictureAlt", { n: nr, alt: b.alt.slice(0, 50) })
+              : i18next.t("writer:find.goTo.labels.picture", { n: nr }), ga: (r) => naarPlek(r, plek, 1) });
         }
         wachtend = [];
         offset = 0;
@@ -184,9 +189,9 @@ export function opmerkingDoelen(ref: DocxEditorRef): Doel[] {
       const tekst = opmerkingTekst(c.content);
       return {
         nr: i + 1,
-        label: `${c.author ?? "Onbekend"}: ${tekst.slice(0, 50)}`,
+        label: i18next.t("writer:find.goTo.labels.comment", { author: c.author ?? i18next.t("common:unknown"), text: tekst.slice(0, 50) }),
         ga: (r: DocxEditorRef) => {
-          if (!r.scrollToCommentId(c.id)) throw new Error("Deze opmerking is niet meer te vinden.");
+          if (!r.scrollToCommentId(c.id)) throw new Error(i18next.t("writer:find.goTo.commentGone"));
         },
       };
     });

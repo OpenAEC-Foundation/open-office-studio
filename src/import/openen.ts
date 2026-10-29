@@ -3,6 +3,8 @@
  * (rechtstreeks, eigen omzetting of kantoorruntime) en welk rapport erbij
  * hoort. De UI geeft alleen de vragen (wachtwoord, CSV-instellingen) mee.
  */
+import i18next from "../i18n/config";
+import { formatGetal } from "../i18n/opmaak";
 import type { Soort } from "../editors";
 import {
   bestandssoort,
@@ -19,7 +21,7 @@ import {
 } from "./csvimport";
 import type { Rapportregel } from "./rapport";
 import { controleerPakket } from "../pakketcontrole";
-import { MACROS, openRapport, type Rapport } from "./rapport";
+import { MACRO_ID, macronaam, openRapport, type Rapport } from "./rapport";
 import { MACRO_INVOER, MACROFORMAAT, scheidMacros } from "./macros";
 import type { Bronkenmerken } from "./bron";
 import {
@@ -82,7 +84,7 @@ export async function bereidOpenen(
   if (versleuteling.soort !== "agile" && versleuteling.soort !== "standard")
     throw new Error(versleutelingsMelding(versleuteling));
   if (!hulp.vraagWachtwoord)
-    throw new Error("Dit bestand is met een wachtwoord versleuteld.");
+    throw new Error(i18next.t("import:errors.encrypted"));
   let fout: string | undefined;
   let ontsleuteld: Uint8Array;
   for (;;) {
@@ -93,14 +95,17 @@ export async function bereidOpenen(
       break;
     } catch (e) {
       if (!(e instanceof VerkeerdWachtwoord)) throw e;
-      fout = "Onjuist wachtwoord. Probeer het opnieuw.";
+      fout = i18next.t("import:password.wrong");
     }
   }
   const resultaat = await bereidOnversleuteld(naam, ontsleuteld, hulp, [
     {
-      onderdeel: "Wachtwoordbeveiliging",
+      onderdeel: i18next.t("import:report.parts.passwordProtection"),
       info: true,
-      gevolg: `Het bestand is ontsleuteld (${versleuteling.soort === "agile" ? "ECMA-376 Agile" : "ECMA-376 Standard"}). Het wachtwoord is niet bewaard; kies bij Opslaan als opnieuw een wachtwoord om de kopie te beveiligen.`,
+      gevolg: i18next.t("import:sources.decrypted", {
+        method:
+          versleuteling.soort === "agile" ? "ECMA-376 Agile" : "ECMA-376 Standard",
+      }),
     },
   ]);
   if (resultaat)
@@ -119,11 +124,11 @@ async function bereidOnversleuteld(
   const ext = extensieVan(naam);
   const soort = bestandssoort(ext);
   if (!soort)
-    throw new Error("Dit bestandsformaat wordt nog niet ondersteund.");
+    throw new Error(i18next.t("import:errors.unsupportedFormat"));
 
   if (ext === soort) {
     const controle = controleerPakket(bytes, soort);
-    if (controle.datum1904) bronregels = [...bronregels, DATUM1904];
+    if (controle.datum1904) bronregels = [...bronregels, datum1904()];
     if (!controle.strict)
       return {
         soort,
@@ -148,25 +153,40 @@ async function bereidOnversleuteld(
     const controle = controleerPakket(zonder, soort);
     if (!controle.strict) {
       const doel = MACROFORMAAT[soort];
-      const modules = macros.modules.length
-        ? ` (${macros.modules.length} module${macros.modules.length === 1 ? "" : "s"}: ${macros.modules.slice(0, 8).join(", ")}${macros.modules.length > 8 ? ", …" : ""})`
+      const aantal = macros.modules.length;
+      const modules = aantal
+        ? i18next.t("import:sources.moduleList", {
+            count: aantal,
+            names:
+              macros.modules.slice(0, 8).join(", ") + (aantal > 8 ? ", …" : ""),
+          })
         : "";
       const regels: Rapportregel[] = macros.heeftVba
         ? [
             {
-              onderdeel: MACROS,
-              gevolg:
-                `Het VBA-project${modules} wordt nooit uitgevoerd en blijft byte-voor-byte behouden bij opslaan als .${doel}.` +
-                (macros.ondertekend
-                  ? " De digitale handtekening van het project gaat ongewijzigd mee."
-                  : "") +
-                ` Opslaan als .${soort} verwijdert de macro’s (met een melding vooraf).`,
+              id: MACRO_ID,
+              onderdeel: macronaam(),
+              gevolg: [
+                modules
+                  ? i18next.t("import:sources.vbaKeptWithModules", {
+                      modules,
+                      format: doel,
+                    })
+                  : i18next.t("import:sources.vbaKept", { format: doel }),
+                ...(macros.ondertekend
+                  ? [i18next.t("import:sources.vbaSigned")]
+                  : []),
+                i18next.t("import:sources.vbaRemovedOnSave", { format: soort }),
+              ].join(" "),
             },
           ]
         : [
             {
-              onderdeel: "Macroformaat",
-              gevolg: `Dit .${ext}-bestand bevat geen VBA-project; het blijft een .${doel} bij opslaan.`,
+              onderdeel: i18next.t("import:report.parts.macroFormat"),
+              gevolg: i18next.t("import:sources.noVbaProject", {
+                ext,
+                format: doel,
+              }),
               info: true,
             },
           ];
@@ -210,8 +230,10 @@ async function bereidOnversleuteld(
     const { bytes: docx, regels } = zetTekstOm(ext, bytes);
     if (fout)
       regels.unshift({
-        onderdeel: "Kantoorruntime",
-        gevolg: `Omzetten via de runtime mislukte (${String(fout)}); de eigen lezer is gebruikt.`,
+        onderdeel: i18next.t("import:report.parts.officeRuntime"),
+        gevolg: i18next.t("import:sources.runtimeFailed", {
+          error: String(fout),
+        }),
       });
     return {
       soort,
@@ -241,21 +263,34 @@ async function bereidOnversleuteld(
     const resultaat = csvNaarXlsx(bytes, instellingen, bladnaam);
     const regels: Rapportregel[] = [
       {
-        onderdeel: "Import",
-        gevolg: `${resultaat.rijen} rij(en) en ${resultaat.kolommen} kolom(men) ingelezen; ${scheidingsnaam(resultaat.scheidingsteken)} als scheidingsteken, codering ${resultaat.codering}.`,
+        onderdeel: i18next.t("import:report.parts.import"),
+        gevolg: i18next.t("import:sources.csvImported", {
+          rows: i18next.t("import:sources.csvRows", {
+            count: resultaat.rijen,
+            rows: formatGetal(resultaat.rijen),
+          }),
+          columns: i18next.t("import:sources.csvColumns", {
+            count: resultaat.kolommen,
+            columns: formatGetal(resultaat.kolommen),
+          }),
+          separator: scheidingsnaam(resultaat.scheidingsteken),
+          encoding: resultaat.codering,
+        }),
         info: true,
       },
     ];
     if (resultaat.formuleachtig)
       regels.push({
-        onderdeel: "Formuleachtige tekst",
-        gevolg: `${resultaat.formuleachtig} cel(len) die met =, +, - of @ beginnen zijn als tekst opgenomen, niet als formule (bescherming tegen CSV-injectie).`,
+        onderdeel: i18next.t("import:report.parts.formulaLikeText"),
+        gevolg: i18next.t("import:sources.formulaLike", {
+          count: resultaat.formuleachtig,
+          cells: formatGetal(resultaat.formuleachtig),
+        }),
       });
     if (resultaat.afgekapt)
       regels.push({
-        onderdeel: "Afgekapt",
-        gevolg:
-          "Het bestand is groter dan een werkblad (1.048.576 rijen of 16.384 kolommen); de rest is niet ingelezen.",
+        onderdeel: i18next.t("import:report.parts.truncated"),
+        gevolg: i18next.t("import:sources.truncated"),
       });
     return {
       soort,
@@ -277,7 +312,7 @@ async function bereidOnversleuteld(
 
   // Overige formaten (en Strict-XLSX) via de kantoorruntime.
   async function viaRuntime(): Promise<Openresultaat> {
-    if (!soort) throw new Error("Onbekende module.");
+    if (!soort) throw new Error(i18next.t("import:errors.unknownModule"));
     let risicos: ReturnType<typeof controleerPakket>["risicos"] = [];
     let macros = false;
     try {
@@ -289,7 +324,7 @@ async function bereidOnversleuteld(
     }
     const omgezet = await hulp.converteer(bytes, ext, soort, soort);
     if (controleerPakket(omgezet, soort).datum1904)
-      bronregels = [...bronregels, DATUM1904];
+      bronregels = [...bronregels, datum1904()];
     return {
       soort,
       naam: metExtensie(naam, soort),
@@ -325,9 +360,9 @@ export const OUD_BINAIR = new Set([
   "pot",
 ]);
 
-const DATUM1904: Rapportregel = {
-  onderdeel: "Datumsysteem 1904",
-  gevolg:
-    "Het werkboek telt datums vanaf 1 januari 1904 (zoals oudere Mac-Excel). Datums worden juist getoond en het datumsysteem blijft bij opslaan behouden; kopieer je datums naar een werkboek met het systeem 1900, dan verschuiven ze 1462 dagen.",
+/** Regel over het datumsysteem 1904, in de interfacetaal van dit moment. */
+const datum1904 = (): Rapportregel => ({
+  onderdeel: i18next.t("import:report.parts.dateSystem1904"),
+  gevolg: i18next.t("import:sources.dateSystem1904"),
   info: true,
-};
+});

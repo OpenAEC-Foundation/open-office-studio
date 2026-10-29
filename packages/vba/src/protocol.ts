@@ -11,6 +11,8 @@ import type { GekoppeldeTabelInvoer, OntbrekendModus, OvergeslagenOnderdeel, Ver
 export interface WorkerOpties {
   stappenlimiet?: number;
   landinstelling?: "nl" | "en-us";
+  /** Taal van de interface voor meldingen uit de worker (zie packages/database/src/i18n-worker.ts). */
+  taal?: string;
   /** Standaardmodus voor ontbrekende onderdelen (standaard "stoppen"). */
   ontbrekend?: OntbrekendModus;
   /** Welke hostfuncties de client aanbiedt; de rest geeft in de worker een duidelijke melding. */

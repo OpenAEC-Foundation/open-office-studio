@@ -7,6 +7,7 @@ mod herstel;
 mod lettertypen;
 mod recent;
 mod systeembestanden;
+mod taal;
 mod vensters;
 mod werkbestanden;
 mod voorkeuren;
@@ -25,9 +26,7 @@ fn lees_binaire_inhoud(
         {
             Ok(bytes.clone())
         }
-        _ => Err(
-            "Het bestand is leeg, groter dan 100 MB of niet als binaire gegevens verzonden.".into(),
-        ),
+        _ => Err(taal::t("errors.file.invalidBody")),
     }
 }
 
@@ -43,7 +42,7 @@ async fn converteer_document(
             .get(naam)
             .and_then(|v| v.to_str().ok())
             .map(str::to_owned)
-            .ok_or_else(|| "De formaatinformatie ontbreekt.".to_owned())
+            .ok_or_else(|| taal::t("errors.file.formatInfoMissing"))
     };
     let bron = kop("x-office-bron")?;
     let doel = kop("x-office-doel")?;
@@ -70,8 +69,16 @@ async fn converteer_document(
 }
 
 fn schrijf_atomair(pad: &Path, bytes: &[u8]) -> Result<(), String> {
-    let map = pad.parent().ok_or("De doelmap ontbreekt.")?;
-    let mut tijdelijk = tempfile::NamedTempFile::new_in(map).map_err(|e| e.to_string())?;
+    let map = pad
+        .parent()
+        .ok_or_else(|| taal::t("errors.file.targetFolderMissing"))?;
+    // Eindigt op .tmp: synchronisatieclients (o.a. de OpenAEC SuperCloud) slaan
+    // zulke bestanden over, zodat alleen het definitieve bestand wordt geüpload.
+    let mut tijdelijk = tempfile::Builder::new()
+        .prefix(".~oos-")
+        .suffix(".tmp")
+        .tempfile_in(map)
+        .map_err(|e| e.to_string())?;
     tijdelijk.write_all(bytes).map_err(|e| e.to_string())?;
     tijdelijk.as_file().sync_all().map_err(|e| e.to_string())?;
     tijdelijk.persist(pad).map_err(|e| e.to_string())?;
@@ -84,23 +91,23 @@ fn bewaarnaam(request: &tauri::ipc::Request<'_>) -> Result<(String, String), Str
         .headers()
         .get("x-office-naam")
         .and_then(|v| v.to_str().ok())
-        .ok_or("De bestandsnaam ontbreekt.")?;
+        .ok_or_else(|| taal::t("errors.file.nameMissing"))?;
     let naam = percent_encoding::percent_decode_str(naam)
         .decode_utf8()
-        .map_err(|_| "De bestandsnaam bevat ongeldige tekens.")?
+        .map_err(|_| taal::t("errors.file.nameInvalidChars"))?
         .into_owned();
     let bestandsnaam = Path::new(&naam)
         .file_name()
         .and_then(|s| s.to_str())
-        .unwrap_or("Naamloos.docx")
-        .to_owned();
+        .map(str::to_owned)
+        .unwrap_or_else(|| format!("{}.docx", taal::t("dialogs.untitled")));
     let extensie = Path::new(&bestandsnaam)
         .extension()
         .and_then(|s| s.to_str())
         .unwrap_or("")
         .to_lowercase();
     if extensie != "openaec-notities" && !conversie::mag_bewaren(&extensie) {
-        return Err("Niet-ondersteund bestandsformaat.".into());
+        return Err(taal::t("errors.file.unsupportedFormat"));
     }
     Ok((bestandsnaam, extensie))
 }
@@ -114,7 +121,7 @@ async fn kies_opslagpad(
     let bestand = rfd::AsyncFileDialog::new()
         .set_title(titel)
         .set_file_name(bestandsnaam)
-        .add_filter("Kantoorbestand", &[extensie])
+        .add_filter(taal::t("dialogs.officeFile"), &[extensie])
         .save_file()
         .await;
     let Some(bestand) = bestand else {
@@ -131,14 +138,14 @@ async fn kies_opslagpad(
         .as_deref()
         != Some(extensie)
     {
-        return Err("De gekozen extensie past niet bij het document.".into());
+        return Err(taal::t("errors.file.extensionMismatch"));
     }
     if pad.exists() {
         let bevestiging = rfd::AsyncMessageDialog::new()
-            .set_title("Bestand vervangen")
-            .set_description(format!(
-                "Het bestand {} bestaat al. Vervangen?",
-                pad.display()
+            .set_title(taal::t("dialogs.replaceFile.title"))
+            .set_description(taal::t_met(
+                "dialogs.replaceFile.message",
+                &[("path", &pad.display().to_string())],
             ))
             .set_buttons(rfd::MessageButtons::YesNo)
             .show()
@@ -155,7 +162,7 @@ async fn bewaar_kopie(request: tauri::ipc::Request<'_>) -> Result<Option<String>
     let (bestandsnaam, extensie) = bewaarnaam(&request)?;
     // Een lege Markdownpagina is een geldig tekstbestand; conversie en andere formaten blijven streng.
     let bytes = lees_binaire_inhoud(request.body(), extensie == "md")?;
-    let Some(pad) = kies_opslagpad("Kopie opslaan", &bestandsnaam, &extensie).await? else {
+    let Some(pad) = kies_opslagpad(&taal::t("dialogs.saveCopy"), &bestandsnaam, &extensie).await? else {
         return Ok(None);
     };
     tauri::async_runtime::spawn_blocking(move || {
@@ -187,6 +194,11 @@ fn main() {
         .manage(systeembestanden::Systeembestanden::bij_start(
             std::env::args_os(),
         ))
+        // Native teksten in de taal van de voorkeuren tot de frontend `zet_taal` meldt.
+        .setup(|app| {
+            voorkeuren::zet_begintaal(app.handle());
+            Ok(())
+        })
         .on_window_event(|venster, gebeurtenis| {
             systeembestanden::bij_venstergebeurtenis(venster, gebeurtenis);
             vensters::bij_venstergebeurtenis(venster, gebeurtenis);
@@ -210,6 +222,7 @@ fn main() {
             vensters::meld_tabbladen,
             vensters::open_documenten,
             vensters::activeer_tabblad,
+            vensters::nieuw_venster,
             converteer_document,
             systeembestanden::systeembestanden,
             systeembestanden::claim_systeembestand,
@@ -234,6 +247,7 @@ fn main() {
             conversie::wis_conversieprogramma,
             voorkeuren::lees_voorkeuren,
             voorkeuren::bewaar_voorkeuren,
+            taal::zet_taal,
             email::email_accounts,
             email::email_bewaar_account,
             email::email_verwijder_account,
@@ -309,6 +323,17 @@ mod tests {
         schrijf_atomair(&pad, b"nieuw").unwrap();
         assert_eq!(std::fs::read(&pad).unwrap(), b"nieuw");
         assert_eq!(std::fs::read_dir(map.path()).unwrap().count(), 1);
+    }
+    #[test]
+    fn tijdelijk_bestand_eindigt_op_tmp() {
+        let map = tempfile::tempdir().unwrap();
+        let tijdelijk = tempfile::Builder::new()
+            .prefix(".~oos-")
+            .suffix(".tmp")
+            .tempfile_in(map.path())
+            .unwrap();
+        let naam = tijdelijk.path().file_name().unwrap().to_str().unwrap().to_owned();
+        assert!(naam.starts_with(".~oos-") && naam.ends_with(".tmp"), "{naam}");
     }
     #[test]
     fn fout_laat_bestaande_inhoud_met_rust() {

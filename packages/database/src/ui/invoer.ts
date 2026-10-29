@@ -3,7 +3,12 @@
  * getallen `1.234,56`, datums `26-10-2026 14:30`, Ja/Nee. Puur en zonder DOM,
  * zodat het raster, formulieren en parameters dezelfde regels gebruiken.
  */
+import i18next from "i18next";
 import type { VeldSchema, Veldsoort, Waarde } from "../werkkopie/contract.ts";
+import { formatGetal } from "../../../../src/i18n/opmaak.ts";
+
+const t = (sleutel: string, opties?: Record<string, unknown>) => i18next.t(`database:input.${sleutel}`, opties);
+const jaNee = (w: unknown) => (w ? t("yes") : t("no"));
 
 export type Invoerresultaat =
   | { ok: true; waarde: Waarde }
@@ -19,18 +24,13 @@ const valutaNotatie = new Intl.NumberFormat("nl-NL", {
   maximumFractionDigits: 4,
 });
 
-export const SOORTNAMEN: Record<Veldsoort, string> = {
-  tekst: "Korte tekst",
-  memo: "Lange tekst",
-  geheel: "Geheel getal",
-  getal: "Getal",
-  valuta: "Valuta",
-  datum: "Datum/tijd",
-  jaNee: "Ja/Nee",
-  autonummer: "AutoNummering",
-  binair: "Binair",
-  guid: "Replicatie-id",
-};
+const SOORTEN: Veldsoort[] = ["tekst", "memo", "geheel", "getal", "valuta", "datum", "jaNee", "autonummer", "binair", "guid"];
+
+/** Namen van de veldsoorten zoals Access ze toont, in de interfacetaal (getters: volgen een taalwissel). */
+export const SOORTNAMEN = Object.defineProperties(
+  {} as Record<Veldsoort, string>,
+  Object.fromEntries(SOORTEN.map((s) => [s, { enumerable: true, get: () => t(`fieldType.${s}`) }])),
+);
 
 /** Soorten die niet in een cel te bewerken zijn. */
 export function bewerkbaar(soort: Veldsoort) {
@@ -114,9 +114,9 @@ export function leesDatum(tekst: string): string | null {
 
 export function leesJaNee(tekst: string): boolean | null {
   const t = tekst.trim().toLowerCase();
-  if (["ja", "j", "waar", "true", "1", "-1", "x", "aan", "yes", "y"].includes(t))
+  if (["ja", "j", "waar", "true", "1", "-1", "x", "aan", "yes", "y"].includes(t) || t === jaNee(true).toLowerCase())
     return true;
-  if (["nee", "n", "onwaar", "false", "0", "uit", "no"].includes(t))
+  if (["nee", "n", "onwaar", "false", "0", "uit", "no"].includes(t) || t === jaNee(false).toLowerCase())
     return false;
   return null;
 }
@@ -130,12 +130,12 @@ export function leesInvoer(
   if (!bewerkbaar(veld.soort))
     return {
       ok: false,
-      fout: `Veld ‘${veld.naam}’ (${SOORTNAMEN[veld.soort]}) kan niet worden bewerkt.`,
+      fout: t("errors.notEditable", { field: veld.naam, type: SOORTNAMEN[veld.soort] }),
     };
   if (leeg) {
     if (veld.soort === "jaNee") return { ok: true, waarde: false };
     if (veld.verplicht)
-      return { ok: false, fout: `Veld ‘${veld.naam}’ is verplicht.` };
+      return { ok: false, fout: t("errors.required", { field: veld.naam }) };
     return { ok: true, waarde: null };
   }
   switch (veld.soort) {
@@ -144,20 +144,20 @@ export function leesInvoer(
       if (veld.soort === "tekst" && veld.lengte && tekst.length > veld.lengte)
         return {
           ok: false,
-          fout: `‘${veld.naam}’ mag maximaal ${veld.lengte} tekens bevatten (nu ${tekst.length}).`,
+          fout: t("errors.tooLong", { field: veld.naam, max: veld.lengte, length: tekst.length }),
         };
       return { ok: true, waarde: tekst };
     case "geheel": {
       const n = leesGetal(tekst);
       if (n === null)
-        return { ok: false, fout: `‘${tekst}’ is geen geheel getal.` };
+        return { ok: false, fout: t("errors.notInteger", { value: tekst }) };
       if (!Number.isInteger(n))
         return {
           ok: false,
-          fout: `Veld ‘${veld.naam}’ verwacht een geheel getal, zonder decimalen.`,
+          fout: t("errors.noDecimals", { field: veld.naam }),
         };
       if (!Number.isSafeInteger(n))
-        return { ok: false, fout: `‘${tekst}’ is te groot voor dit veld.` };
+        return { ok: false, fout: t("errors.tooLarge", { value: tekst }) };
       return { ok: true, waarde: n };
     }
     case "getal":
@@ -166,7 +166,7 @@ export function leesInvoer(
       if (n === null)
         return {
           ok: false,
-          fout: `‘${tekst}’ is geen getal. Gebruik een komma voor decimalen, bijvoorbeeld 1.234,56.`,
+          fout: t("errors.notNumber", { value: tekst }),
         };
       return {
         ok: true,
@@ -178,14 +178,14 @@ export function leesInvoer(
       if (d === null)
         return {
           ok: false,
-          fout: `‘${tekst}’ is geen geldige datum. Gebruik bijvoorbeeld 26-10-2026 of 26-10-2026 14:30.`,
+          fout: t("errors.notDate", { value: tekst }),
         };
       return { ok: true, waarde: d };
     }
     case "jaNee": {
       const b = leesJaNee(tekst);
       if (b === null)
-        return { ok: false, fout: `Kies Ja of Nee voor ‘${veld.naam}’.` };
+        return { ok: false, fout: t("errors.chooseYesNo", { field: veld.naam }) };
       return { ok: true, waarde: b };
     }
     case "guid": {
@@ -193,7 +193,7 @@ export function leesInvoer(
       if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(g))
         return {
           ok: false,
-          fout: `‘${tekst}’ is geen geldige replicatie-id (GUID).`,
+          fout: t("errors.notGuid", { value: tekst }),
         };
       return { ok: true, waarde: `{${g.toUpperCase()}}` };
     }
@@ -223,9 +223,9 @@ export function toonDatum(iso: string): string {
 /** Waarde voor weergave in raster, formulier en rapport. */
 export function toonWaarde(w: Waarde | undefined, soort?: Veldsoort | null): string {
   if (w === null || w === undefined) return "";
-  if (w instanceof Uint8Array) return `[Binair: ${w.byteLength.toLocaleString("nl-NL")} bytes]`;
-  if (typeof w === "boolean") return w ? "Ja" : "Nee";
-  if (soort === "jaNee" && typeof w === "number") return w ? "Ja" : "Nee";
+  if (w instanceof Uint8Array) return t("binary", { size: formatGetal(w.byteLength) });
+  if (typeof w === "boolean") return jaNee(w);
+  if (soort === "jaNee" && typeof w === "number") return jaNee(w);
   if (typeof w === "number") {
     if (soort === "valuta") return valutaNotatie.format(w);
     // Onbekende soort (berekende kolom, bv. Year()): gehele getallen zonder duizendtallen, zoals Access.
@@ -241,9 +241,9 @@ export function toonWaarde(w: Waarde | undefined, soort?: Veldsoort | null): str
 export function bewerkTekst(w: Waarde | undefined, soort?: Veldsoort | null): string {
   if (w === null || w === undefined) return "";
   if (w instanceof Uint8Array) return toonWaarde(w, soort);
-  if (typeof w === "boolean") return w ? "Ja" : "Nee";
+  if (typeof w === "boolean") return jaNee(w);
   if (typeof w === "number") {
-    if (soort === "jaNee") return w ? "Ja" : "Nee";
+    if (soort === "jaNee") return jaNee(w);
     if (soort === "valuta")
       return w.toLocaleString("nl-NL", { minimumFractionDigits: 2, maximumFractionDigits: 4, useGrouping: false });
     return String(w).replace(".", ",");
@@ -278,23 +278,25 @@ export function leesbareFout(fout: unknown): string {
   const tekst = fout instanceof Error ? fout.message : String(fout);
   const uniek = /UNIQUE constraint failed: ([^\s,]+)/i.exec(tekst);
   if (uniek)
-    return `Deze waarde bestaat al: ${veldnaam(uniek[1])} moet uniek zijn (sleutel of unieke index). De wijziging is niet bewaard.`;
+    return t("sqlite.unique", { field: veldnaam(uniek[1]) });
   const nietLeeg = /NOT NULL constraint failed: ([^\s,]+)/i.exec(tekst);
   if (nietLeeg)
-    return `${veldnaam(nietLeeg[1])} is verplicht en mag niet leeg zijn. De wijziging is niet bewaard.`;
+    return t("sqlite.notNull", { field: veldnaam(nietLeeg[1]) });
   if (/FOREIGN KEY constraint failed/i.test(tekst))
-    return "Deze wijziging schendt een relatie met referentiële integriteit: er is geen bijbehorende rij in de gekoppelde tabel, of er verwijzen nog rijen naar deze rij. De wijziging is niet bewaard.";
+    return t("sqlite.foreignKey");
   const controle = /CHECK constraint failed: (.*)$/i.exec(tekst);
   if (controle)
-    return `De waarde voldoet niet aan de veldregel (${controle[1].trim()}), bijvoorbeeld een maximale lengte. De wijziging is niet bewaard.`;
+    return t("sqlite.check", { rule: controle[1].trim() });
   if (/datatype mismatch/i.test(tekst))
-    return "Het gegevenstype past niet bij dit veld. De wijziging is niet bewaard.";
+    return t("sqlite.datatype");
   return tekst;
 }
 
 function veldnaam(kwalificatie: string) {
   const delen = kwalificatie.split(".");
-  return `veld ‘${delen[delen.length - 1]}’${delen.length > 1 ? ` in ‘${delen[0]}’` : ""}`;
+  return delen.length > 1
+    ? t("sqlite.fieldInTable", { field: delen[delen.length - 1], table: delen[0] })
+    : t("sqlite.field", { field: delen[delen.length - 1] });
 }
 
 /**

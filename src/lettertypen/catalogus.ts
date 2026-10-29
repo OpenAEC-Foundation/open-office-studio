@@ -5,6 +5,7 @@
  * categorie voor de keuzelijst en de licentie voor de vermelding.
  */
 import * as fonts from "@betteroffice/fonts";
+import i18next from "../i18n/config";
 import manifest from "../../assets/lettertypen.json";
 
 export type Categorie =
@@ -195,7 +196,7 @@ export function laadExtraBytes(
     bestaand = fetch(url).then((r) => {
       if (!r.ok)
         throw new Error(
-          `Lettertype ${face.family} kon niet worden geladen (${r.status}).`,
+          i18next.t("fonts:errors.loadFailed", { font: face.family, status: r.status }),
         );
       return r.arrayBuffer();
     });

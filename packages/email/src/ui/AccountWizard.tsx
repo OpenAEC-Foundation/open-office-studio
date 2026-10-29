@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CircleCheck, CircleDashed, CircleMinus, CircleX, Globe, KeyRound, LoaderCircle, ShieldAlert } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import type { Account, AccountInvoer, ConfiguratieVoorstel, MailBackend, OAuthProvider, ServerInstelling, TestUitkomst } from "../contract";
 import { isGeldigAdres } from "../adressen";
 import { foutTekst, naarMailFout } from "../fouten";
 import { domeinVan, gok } from "../voorinstellingen";
 import { herkenProvider, oauthServers, PROVIDERNAAM } from "../oauth";
 import {
+  bereikbaarSoort,
   maakKaarten,
   metVoortgang,
   serverSleutel,
@@ -29,7 +31,7 @@ const STAPICOON = {
   niets: CircleMinus,
   overgeslagen: CircleMinus,
 } as const;
-const STAPTEKST = { wacht: "wacht", bezig: "bezig…", gevonden: "gevonden", niets: "niets gevonden", overgeslagen: "niet uitgevoerd" } as const;
+const STAPTEKST = { wacht: "waiting", bezig: "busy", gevonden: "found", niets: "nothing", overgeslagen: "skipped" } as const;
 
 function volledig(server: ConfiguratieVoorstel["imap"], email: string): ServerInstelling {
   return { ...server, gebruikersnaam: server.gebruikersnaam ?? email };
@@ -50,6 +52,7 @@ export function AccountWizard({
   sluit?: () => void;
   klaar: (account: Account) => void;
 }) {
+  const { t, i18n } = useTranslation("email");
   const [volledigeNaam, setVolledigeNaam] = useState("");
   const [email, setEmail] = useState("");
   const [wachtwoord, setWachtwoord] = useState("");
@@ -91,12 +94,20 @@ export function AccountWizard({
   useEffect(() => zoeker.wijzig(email), [email, zoeker]);
 
   const domein = domeinVan(email);
-  const kaarten = useMemo(() => (zoeken.status === "klaar" ? maakKaarten(zoeken.voorstellen, domein) : []), [zoeken, domein]);
+  // De kaartteksten (bron, bereikbaarheid) volgen de interfacetaal.
+  const taal = i18n.language;
+  const kaarten = useMemo(
+    () => (zoeken.status === "klaar" ? maakKaarten(zoeken.voorstellen, domein) : []),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [zoeken, domein, taal],
+  );
   // Optionele voortgang van de desktopbackend (`email-zoek-voortgang`).
   const [voortgang, setVoortgang] = useState<Record<string, StapStatus>>({});
   useEffect(() => {
     if (zoeken.status === "wacht") setVoortgang({});
   }, [zoeken.status]);
+  // De voortgang is per (vertaalde) stapnaam bijgehouden; bij een taalwissel opnieuw.
+  useEffect(() => setVoortgang({}), [taal]);
   useEffect(() => {
     if (!isDesktop()) return;
     let stop: (() => void) | null = null;
@@ -162,7 +173,7 @@ export function AccountWizard({
   async function meldAan(provider: OAuthProvider) {
     setFout("");
     if (!volledigeNaam.trim() || !isGeldigAdres(email.trim())) {
-      setFout("Vul eerst je naam en e-mailadres in.");
+      setFout(t("accounts.wizard.enterNameAndEmailFirst"));
       return;
     }
     if (!oauth.status?.[provider].beschikbaar) {
@@ -192,7 +203,7 @@ export function AccountWizard({
     try {
       setUitkomst(await backend.test(invoer()));
     } catch (e) {
-      setFout(foutTekst(e, "Testen mislukt"));
+      setFout(foutTekst(e, t("accounts.test.failed")));
     } finally {
       setBezig("");
     }
@@ -205,7 +216,7 @@ export function AccountWizard({
     try {
       klaar(await backend.bewaarAccount(invoer()));
     } catch (e) {
-      setFout(foutTekst(e, "Account opslaan mislukt"));
+      setFout(foutTekst(e, t("accounts.wizard.saveFailed")));
     } finally {
       setBezig("");
     }
@@ -216,7 +227,7 @@ export function AccountWizard({
   const serversIngevuld = !!imap?.host && !!smtp?.host;
   return (
     <Dialoog
-      titel="Account toevoegen"
+      titel={t("accounts.wizard.title")}
       sluit={oauth.bezig ? () => void oauth.annuleer() : sluit}
       breed="groot"
       className="email-wizard"
@@ -230,19 +241,19 @@ export function AccountWizard({
             )}
             {sluit && (
               <button className="email-knop" onClick={sluit}>
-                Annuleren
+                {t("common:cancel")}
               </button>
             )}
             <button className="email-knop" onClick={() => void test()} disabled={!!bezig || !gegevensGeldig || !serversIngevuld}>
-              {bezig === "testen" ? "Testen…" : uitkomst ? "Opnieuw testen" : "Testen"}
+              {bezig === "testen" ? t("accounts.test.testing") : uitkomst ? t("accounts.test.retest") : t("accounts.test.test")}
             </button>
             <button
               className="email-knop is-primair"
               onClick={() => void bewaar()}
               disabled={!!bezig || !gegevensGeldig || !serversIngevuld}
-              title={getest ? "Account opslaan" : "Nog niet (geslaagd) getest; je kunt het account toch opslaan"}
+              title={getest ? t("accounts.wizard.saveTitle") : t("accounts.wizard.saveUntestedTitle")}
             >
-              {bezig === "bewaren" ? "Opslaan…" : getest ? "Gereed" : "Toch opslaan"}
+              {bezig === "bewaren" ? t("accounts.wizard.saving") : getest ? t("accounts.wizard.done") : t("accounts.wizard.saveAnyway")}
             </button>
           </>
         )
@@ -259,14 +270,20 @@ export function AccountWizard({
               zoeker.wijzig(email, true);
             }}
           >
-            <p className="email-intro">Gebruik je bestaande e-mailadres. Email Studio werkt met elke provider die IMAP en SMTP aanbiedt.</p>
+            <p className="email-intro">{t("accounts.wizard.intro")}</p>
             <label>
-              Je volledige naam
-              <input autoFocus value={volledigeNaam} onChange={(e) => setVolledigeNaam(e.target.value)} autoComplete="name" placeholder="Voornaam Achternaam" />
-              <small>Zoals ontvangers je naam zien.</small>
+              {t("accounts.wizard.fullName")}
+              <input
+                autoFocus
+                value={volledigeNaam}
+                onChange={(e) => setVolledigeNaam(e.target.value)}
+                autoComplete="name"
+                placeholder={t("accounts.wizard.fullNamePlaceholder")}
+              />
+              <small>{t("accounts.wizard.fullNameHint")}</small>
             </label>
             <label>
-              E-mailadres
+              {t("accounts.wizard.email")}
               <input
                 type="email"
                 value={email}
@@ -276,15 +293,16 @@ export function AccountWizard({
                   setOauthUitleg(null);
                 }}
                 autoComplete="email"
-                placeholder="naam@voorbeeld.nl"
+                placeholder={t("accounts.wizard.emailPlaceholder")}
                 spellCheck={false}
+                dir="ltr"
               />
             </label>
             <label>
-              Wachtwoord
+              {t("accounts.wizard.password")}
               <input type="password" value={wachtwoord} onChange={(e) => setWachtwoord(e.target.value)} autoComplete="current-password" />
               <small>
-                <KeyRound size={12} /> Wordt pas gebruikt bij Testen of Gereed, en alleen in de sleutelhanger van je besturingssysteem bewaard.
+                <KeyRound size={12} /> {t("accounts.wizard.passwordHint")}
               </small>
             </label>
             <label className="email-vinkje">
@@ -299,24 +317,25 @@ export function AccountWizard({
                 }}
               />
               <span>
-                Ook de Thunderbird-database raadplegen
-                <small>De domeinnaam (niet je adres of wachtwoord) gaat dan naar Mozilla.</small>
+                {t("accounts.wizard.ispdb")}
+                <small>{t("accounts.wizard.ispdbHint")}</small>
               </span>
             </label>
             <div className="email-oauthblok">
-              <span>Of meld je aan zonder wachtwoord in de app:</span>
+              <span>{t("accounts.wizard.oauthPrompt")}</span>
               <OAuthKnoppen aanbevolen={aanbevolen} kies={(p) => void meldAan(p)} uitgeschakeld={!!bezig} />
             </div>
             {oauthUitleg && <OAuthUitleg provider={oauthUitleg} status={oauth.status?.[oauthUitleg]} />}
             <button type="submit" hidden />
           </form>
 
-          <section className="email-zoekresultaat" aria-label="Gevonden instellingen" aria-busy={zoeken.status === "bezig" || zoeken.status === "wacht"}>
+          <section className="email-zoekresultaat" aria-label={t("accounts.wizard.foundSettings")} aria-busy={zoeken.status === "bezig" || zoeken.status === "wacht"}>
             <h3>
-              <Globe size={15} /> Serverinstellingen {domein && isGeldigAdres(email.trim()) ? `voor ${domein}` : ""}
+              <Globe size={15} />{" "}
+              {domein && isGeldigAdres(email.trim()) ? t("accounts.wizard.serverSettingsFor", { domain: domein }) : t("accounts.wizard.serverSettings")}
             </h3>
             {zoeken.status === "leeg" ? (
-              <p className="email-hint">Vul je e-mailadres in; Email Studio zoekt dan automatisch naar de juiste servers.</p>
+              <p className="email-hint">{t("accounts.wizard.enterEmailHint")}</p>
             ) : (
               <ol className="email-zoekstappen" aria-live="polite">
                 {stappen.map((stap) => {
@@ -324,7 +343,7 @@ export function AccountWizard({
                   return (
                     <li key={stap.naam} className={`is-${stap.status}`}>
                       <Icoon size={13} className={stap.status === "bezig" ? "email-draait" : undefined} />
-                      {stap.naam} <small>{STAPTEKST[stap.status]}</small>
+                      {stap.naam} <small>{t(`accounts.discovery.stepStatus.${STAPTEKST[stap.status]}`)}</small>
                     </li>
                   );
                 })}
@@ -332,14 +351,14 @@ export function AccountWizard({
             )}
             {zoeken.status === "fout" && (
               <p className="email-foutregel" role="alert">
-                {foutTekst(zoeken.fout, "Zoeken mislukt")} Vul de servers hieronder zelf in.
+                {foutTekst(zoeken.fout, t("accounts.wizard.searchFailed"))} {t("accounts.wizard.fillInManually")}
               </p>
             )}
             {zoeken.status === "klaar" && !kaarten.length && (
-              <p className="email-hint">Er zijn geen instellingen gevonden. Vul de servers hieronder zelf in; vraag ze zo nodig op bij je provider.</p>
+              <p className="email-hint">{t("accounts.wizard.nothingFound")}</p>
             )}
             {kaarten.length > 0 && (
-              <div className="email-kaarten" role="radiogroup" aria-label="Voorstellen">
+              <div className="email-kaarten" role="radiogroup" aria-label={t("accounts.wizard.proposals")}>
                 {kaarten.map((kaart) => {
                   const actief = kaart.sleutel === gekozen && !aangepast;
                   return (
@@ -352,25 +371,25 @@ export function AccountWizard({
                         </small>
                         <span className="email-kaartserver">
                           IMAP {kaart.imap}{" "}
-                          <em className={`email-bereik is-${kaart.imapBereikbaar.tekst.replace(/ /g, "-")}`}>
+                          <em className={`email-bereik is-${bereikbaarSoort(kaart.imapBereikbaar.teken)}`}>
                             {kaart.imapBereikbaar.teken} {kaart.imapBereikbaar.tekst}
                           </em>
                         </span>
                         <span className="email-kaartserver">
                           SMTP {kaart.smtp}{" "}
-                          <em className={`email-bereik is-${kaart.smtpBereikbaar.tekst.replace(/ /g, "-")}`}>
+                          <em className={`email-bereik is-${bereikbaarSoort(kaart.smtpBereikbaar.teken)}`}>
                             {kaart.smtpBereikbaar.teken} {kaart.smtpBereikbaar.tekst}
                           </em>
                         </span>
                         {kaart.onversleuteld && (
                           <span className="email-kaartwaarschuwing">
-                            <ShieldAlert size={13} /> onversleuteld
+                            <ShieldAlert size={13} /> {t("accounts.wizard.unencrypted")}
                           </span>
                         )}
                       </button>
                       {kaart.oauth && (
                         <button className="email-knop is-primair" onClick={() => void meldAan(kaart.oauth!)}>
-                          Aanmelden met {PROVIDERNAAM[kaart.oauth]}
+                          {t("accounts.oauth.signInWith", { provider: PROVIDERNAAM[kaart.oauth] })}
                         </button>
                       )}
                     </div>
@@ -379,7 +398,7 @@ export function AccountWizard({
               </div>
             )}
             <h3 className="email-handmatig-kop">
-              Handmatige configuratie {aangepast && <small>· aangepast</small>}
+              {t("accounts.wizard.manualConfiguration")} {aangepast && <small>{t("accounts.wizard.adjusted")}</small>}
             </h3>
             {imap && smtp ? (
               <ServerVelden
@@ -393,11 +412,11 @@ export function AccountWizard({
                 }}
               />
             ) : (
-              <p className="email-hint">De velden verschijnen zodra er een geldig e-mailadres is.</p>
+              <p className="email-hint">{t("accounts.wizard.fieldsAppear")}</p>
             )}
             {uitkomst && !uitkomst.imap.ok && !uitkomst.smtp.ok && (
               <p className="email-hint">
-                <CircleX size={13} /> Beide servers faalden. Controleer adres, wachtwoord en servernamen.
+                <CircleX size={13} /> {t("accounts.wizard.bothServersFailed")}
               </p>
             )}
           </section>

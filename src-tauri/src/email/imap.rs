@@ -3,11 +3,14 @@
 //! Y-app-desktopimplementatie (zie herkomst in `mod.rs`).
 
 use super::accounts::controleer_beveiliging;
-use super::fout::{servertekst, uit_io, MailFout, Uitkomst};
+use super::fout::{
+    aanmelden_mislukt, geen_tls_naam, geen_wachtwoord, niet_lokaal, servertekst, uit_io,
+    MailFout, Uitkomst,
+};
 use super::mime::{self, Vlaggen};
 use super::{
-    Account, Adres, Authenticatie, Bericht, BerichtKop, BerichtLijst, Beveiliging, Lijstverzoek,
-    Limieten, Map, ServerInstelling, Speciaal, Vlag, Zoekveld,
+    Account, Adres, Authenticatie, Bericht, BerichtKop, BerichtLijst, Beveiliging, Deeluitkomst,
+    Lijstverzoek, Limieten, Map, ServerInstelling, Speciaal, Vlag, Zoekveld,
 };
 use async_imap::types::{Fetch, Flag, Name, NameAttribute};
 use futures::TryStreamExt;
@@ -73,6 +76,10 @@ pub async fn verbind_tcp(server: &ServerInstelling) -> Uitkomst<TcpStream> {
                 server.poort,
                 VERBIND_LIMIET.as_secs()
             ))
+            .sleutel("imap.connectTimeout")
+            .waarde("host", host)
+            .waarde("port", server.poort)
+            .waarde("seconds", VERBIND_LIMIET.as_secs())
         })?
         .map_err(|e| uit_io(&e, host))?;
     if server.beveiliging == Beveiliging::Geen {
@@ -81,9 +88,7 @@ pub async fn verbind_tcp(server: &ServerInstelling) -> Uitkomst<TcpStream> {
             .map(|a| a.ip().is_loopback())
             .unwrap_or(false);
         if !lokaal {
-            return Err(MailFout::geweigerd(format!(
-                "{host} is niet deze computer; een onversleutelde verbinding is daarom geweigerd."
-            )));
+            return Err(niet_lokaal(host));
         }
     }
     let _ = tcp.set_nodelay(true);
@@ -92,15 +97,18 @@ pub async fn verbind_tcp(server: &ServerInstelling) -> Uitkomst<TcpStream> {
 
 pub async fn tls_over(tcp: TcpStream, host: &str) -> Uitkomst<TlsStream<TcpStream>> {
     let host = kale_host(host);
-    let naam = rustls::pki_types::ServerName::try_from(host.to_string()).map_err(|_| {
-        MailFout::verbinding(format!("'{host}' is geen geldige servernaam voor TLS."))
-    })?;
+    let naam =
+        rustls::pki_types::ServerName::try_from(host.to_string()).map_err(|_| geen_tls_naam(host))?;
     tokio::time::timeout(
         VERBIND_LIMIET,
         tokio_rustls::TlsConnector::from(tls_instellingen()).connect(naam, tcp),
     )
     .await
-    .map_err(|_| MailFout::tijdslimiet(format!("De TLS-handdruk met {host} duurde te lang.")))?
+    .map_err(|_| {
+        MailFout::tijdslimiet(format!("De TLS-handdruk met {host} duurde te lang."))
+            .sleutel("tls.handshakeTimeout")
+            .waarde("host", host)
+    })?
     .map_err(|e| uit_io(&e, host))
 }
 
@@ -202,49 +210,140 @@ impl std::fmt::Debug for Aanmelding {
     }
 }
 
+/// De IMAP-handeling waarbij een fout optrad; begint de melding van
+/// `imapfout` ("Map aanmaken: …") en gaat als `actionKey` mee.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub enum Wat {
+    Aanmelden,
+    Starttls,
+    MappenOphalen,
+    MappenTellen,
+    MapAanmaken,
+    MapHernoemen,
+    MapVerwijderen,
+    /// Met de (gedecodeerde) mapnaam.
+    MapOpenenNaam(String),
+    MapOpenen,
+    BerichtenOphalen,
+    Zoeken,
+    BerichtOphalen,
+    Markeren,
+    Verplaatsen,
+    Kopieren,
+    Verwijderen,
+    Opruimen,
+    OpslaanIn(Speciaal),
+}
+
+impl Wat {
+    /// Nederlandse tekst en vertaalsleutel.
+    fn tekst(&self) -> (String, &'static str) {
+        let (t, s) = match self {
+            Wat::Aanmelden => ("Aanmelden", "imap.action.signIn"),
+            Wat::Starttls => ("STARTTLS", "imap.action.startTls"),
+            Wat::MappenOphalen => ("Mappen ophalen", "imap.action.listFolders"),
+            Wat::MappenTellen => ("Mappen tellen", "imap.action.countFolders"),
+            Wat::MapAanmaken => ("Map aanmaken", "imap.action.createFolder"),
+            Wat::MapHernoemen => ("Map hernoemen", "imap.action.renameFolder"),
+            Wat::MapVerwijderen => ("Map verwijderen", "imap.action.deleteFolder"),
+            Wat::MapOpenenNaam(naam) => {
+                return (format!("Map '{naam}' openen"), "imap.action.openNamedFolder")
+            }
+            Wat::MapOpenen => ("Map openen", "imap.action.openFolder"),
+            Wat::BerichtenOphalen => ("Berichten ophalen", "imap.action.fetchMessages"),
+            Wat::Zoeken => ("Zoeken", "imap.action.search"),
+            Wat::BerichtOphalen => ("Bericht ophalen", "imap.action.fetchMessage"),
+            Wat::Markeren => ("Markeren", "imap.action.flag"),
+            Wat::Verplaatsen => ("Verplaatsen", "imap.action.move"),
+            Wat::Kopieren => ("Kopiëren", "imap.action.copy"),
+            Wat::Verwijderen => ("Verwijderen", "imap.action.delete"),
+            Wat::Opruimen => ("Opruimen", "imap.action.expunge"),
+            Wat::OpslaanIn(Speciaal::Verzonden) => {
+                ("Opslaan in Verzonden", "imap.action.saveToSent")
+            }
+            Wat::OpslaanIn(Speciaal::Concepten) => {
+                ("Opslaan in Concepten", "imap.action.saveToDrafts")
+            }
+            Wat::OpslaanIn(_) => ("Opslaan in map", "imap.action.saveToFolder"),
+        };
+        (t.to_string(), s)
+    }
+}
+
 /// Vertaalt een IMAP-fout. `niet_gevonden` geeft aan dat een NO van de server
 /// betekent dat de map of het bericht niet bestaat.
 pub fn imapfout(
     e: async_imap::error::Error,
     host: &str,
-    wat: &str,
+    handeling: Wat,
     niet_gevonden: bool,
 ) -> MailFout {
     use async_imap::error::Error::*;
-    match e {
-        Io(io) => uit_io(&io, host),
-        ConnectionLost => MailFout::verbinding(format!("De verbinding met {host} is verbroken.")),
-        No(t) if niet_gevonden => MailFout::niet_gevonden(format!("{wat}: {}", servertekst(&t))),
+    let (wat, wat_sleutel) = handeling.tekst();
+    let met_detail = |f: MailFout, sleutel: &'static str, detail: String| {
+        f.sleutel(sleutel).waarde("detail", detail)
+    };
+    let f = match e {
+        Io(io) => return uit_io(&io, host),
+        ConnectionLost => {
+            return MailFout::verbinding(format!("De verbinding met {host} is verbroken."))
+                .sleutel("imap.connectionLost")
+                .waarde("host", host)
+        }
+        No(t) if niet_gevonden => {
+            let t = servertekst(&t);
+            met_detail(
+                MailFout::niet_gevonden(format!("{wat}: {t}")),
+                "imap.notFound",
+                t,
+            )
+        }
         No(t) => {
             let t = servertekst(&t);
             if t.to_ascii_uppercase().contains("OVERQUOTA")
                 || t.to_ascii_lowercase().contains("quota")
             {
-                MailFout::te_groot(format!("{wat}: de mailbox is vol ({t})."))
+                met_detail(
+                    MailFout::te_groot(format!("{wat}: de mailbox is vol ({t}).")),
+                    "imap.quotaExceeded",
+                    t,
+                )
             } else {
-                MailFout::geweigerd(format!("{wat}: de server weigerde ({t})."))
+                met_detail(
+                    MailFout::geweigerd(format!("{wat}: de server weigerde ({t}).")),
+                    "imap.refused",
+                    t,
+                )
             }
         }
-        Bad(t) => MailFout::geweigerd(format!(
-            "{wat}: de server begreep de opdracht niet ({}).",
-            servertekst(&t)
-        )),
-        Validate(_) => MailFout::geweigerd(format!("{wat}: ongeldige tekens in de naam.")),
-        Append => MailFout::geweigerd(format!("{wat}: de server weigerde het bericht.")),
-        Parse(_) => MailFout::intern(format!("{wat}: onverwacht antwoord van de server.")),
-        _ => MailFout::intern(format!("{wat}: onverwachte fout.")),
+        Bad(t) => {
+            let t = servertekst(&t);
+            met_detail(
+                MailFout::geweigerd(format!("{wat}: de server begreep de opdracht niet ({t}).")),
+                "imap.badCommand",
+                t,
+            )
+        }
+        Validate(_) => MailFout::geweigerd(format!("{wat}: ongeldige tekens in de naam."))
+            .sleutel("imap.invalidName"),
+        Append => MailFout::geweigerd(format!("{wat}: de server weigerde het bericht."))
+            .sleutel("imap.appendRejected"),
+        Parse(_) => MailFout::intern(format!("{wat}: onverwacht antwoord van de server."))
+            .sleutel("imap.unexpectedResponse"),
+        _ => MailFout::intern(format!("{wat}: onverwachte fout.")).sleutel("imap.unexpectedError"),
+    };
+    let f = f.waarde("actionKey", wat_sleutel);
+    match handeling {
+        Wat::MapOpenenNaam(naam) => f.waarde("folder", naam),
+        _ => f,
     }
 }
 
 fn aanmeldfout(e: async_imap::error::Error, host: &str) -> MailFout {
     use async_imap::error::Error::*;
     match e {
-        No(t) | Bad(t) => MailFout::aanmelding(format!(
-            "Aanmelden bij {host} is mislukt: gebruikersnaam of wachtwoord klopt niet ({}). \
-             Bij Gmail, Outlook, iCloud en Yahoo is een app-wachtwoord nodig.",
-            servertekst(&t)
-        )),
-        andere => imapfout(andere, host, "Aanmelden", false),
+        No(t) | Bad(t) => aanmelden_mislukt(host, servertekst(&t)),
+        andere => imapfout(andere, host, Wat::Aanmelden, false),
     }
 }
 
@@ -256,15 +355,22 @@ async fn lees_begroeting(client: &mut Client, host: &str) -> Uitkomst<()> {
                 status: Status::Bye,
                 information,
                 ..
-            } => Err(MailFout::verbinding(format!(
-                "{host} weigerde de verbinding: {}",
-                servertekst(information.as_deref().unwrap_or(""))
-            ))),
+            } => {
+                let detail = servertekst(information.as_deref().unwrap_or(""));
+                Err(
+                    MailFout::verbinding(format!("{host} weigerde de verbinding: {detail}"))
+                        .sleutel("imap.greetingRefused")
+                        .waarde("host", host)
+                        .waarde("detail", detail),
+                )
+            }
             _ => Ok(()),
         },
         Ok(None) => Err(MailFout::verbinding(format!(
             "{host} sloot de verbinding meteen. Past de beveiliging (SSL/TLS of STARTTLS) bij de poort?"
-        ))),
+        ))
+        .sleutel("imap.closedImmediately")
+        .waarde("host", host)),
         Err(e) => Err(uit_io(&e, host)),
     }
 }
@@ -287,9 +393,7 @@ impl async_imap::Authenticator for CramMd5<'_> {
 pub async fn verbind_en_meld_aan(a: &Aanmelding) -> Uitkomst<(Sessie, HashSet<String>)> {
     controleer_beveiliging(&a.server, false)?;
     if a.wachtwoord.is_empty() {
-        return Err(MailFout::aanmelding(
-            "Er is geen wachtwoord ingevuld of opgeslagen voor dit account.",
-        ));
+        return Err(geen_wachtwoord());
     }
     let host = kale_host(&a.server.host).to_string();
     let werk = async {
@@ -307,11 +411,15 @@ pub async fn verbind_en_meld_aan(a: &Aanmelding) -> Uitkomst<(Sessie, HashSet<St
                     async_imap::error::Error::No(_) | async_imap::error::Error::Bad(_) => MailFout::verbinding(format!(
                         "{host} ondersteunt geen STARTTLS op poort {}. Kies SSL/TLS (meestal poort 993).",
                         a.server.poort
-                    )),
-                    andere => imapfout(andere, &host, "STARTTLS", false),
+                    ))
+                    .sleutel("imap.noStarttls")
+                    .waarde("host", &host)
+                    .waarde("port", a.server.poort),
+                    andere => imapfout(andere, &host, Wat::Starttls, false),
                 })?;
                 let Stroom::Plat(tcp) = c.into_inner() else {
-                    return Err(MailFout::intern("Onverwachte verbindingstoestand."));
+                    return Err(MailFout::intern("Onverwachte verbindingstoestand.")
+                        .sleutel("imap.unexpectedState"));
                 };
                 Client::new(Stroom::Tls(Box::new(tls_over(tcp, &host).await?)))
             }
@@ -368,12 +476,16 @@ pub async fn verbind_en_meld_aan(a: &Aanmelding) -> Uitkomst<(Sessie, HashSet<St
     };
     tokio::time::timeout(VERBIND_LIMIET * 2, werk)
         .await
-        .map_err(|_| MailFout::tijdslimiet(format!("Aanmelden bij {host} duurde te lang.")))?
+        .map_err(|_| {
+            MailFout::tijdslimiet(format!("Aanmelden bij {host} duurde te lang."))
+                .sleutel("imap.signInTimeout")
+                .waarde("host", &host)
+        })?
         .map_err(|f: MailFout| f.zonder_geheim(&a.wachtwoord))
 }
 
 /// Verbindingstest voor de accountinstellingen.
-pub async fn test(server: &ServerInstelling, wachtwoord: &str) -> Uitkomst<String> {
+pub async fn test(server: &ServerInstelling, wachtwoord: &str) -> Uitkomst<Deeluitkomst> {
     let waarschuwing = controleer_beveiliging(server, false)?;
     let (mut sessie, _) = verbind_en_meld_aan(&Aanmelding {
         server: server.clone(),
@@ -382,11 +494,11 @@ pub async fn test(server: &ServerInstelling, wachtwoord: &str) -> Uitkomst<Strin
     })
     .await?;
     let _ = tokio::time::timeout(Duration::from_secs(5), sessie.logout()).await;
-    let mut melding = format!("Aangemeld bij {}.", kale_host(&server.host));
-    if let Some(w) = waarschuwing {
-        melding = format!("{melding} {w}");
-    }
-    Ok(melding)
+    Ok(Deeluitkomst::aangemeld(
+        kale_host(&server.host),
+        "IMAP",
+        waarschuwing,
+    ))
 }
 
 /* ─── Sessiepool ─── */
@@ -441,7 +553,10 @@ impl Bezet {
             Err(_) => Err(MailFout::tijdslimiet(format!(
                 "{host} reageerde niet binnen {} seconden.",
                 limiet.as_secs()
-            ))),
+            ))
+            .sleutel("imap.commandTimeout")
+            .waarde("host", &host)
+            .waarde("seconds", limiet.as_secs())),
         };
         if let Err(f) = &uitkomst {
             use super::fout::Foutcode::*;
@@ -483,11 +598,19 @@ impl ImapPool {
                 let rest = w.tot.saturating_duration_since(Instant::now());
                 if !rest.is_zero() {
                     let mut fout = w.fout.clone();
+                    let seconden = rest.as_secs().max(1);
                     fout.melding = format!(
                         "{} (Email Studio probeert het over {} seconden opnieuw, om blokkering door de server te voorkomen.)",
                         fout.melding,
-                        rest.as_secs().max(1)
+                        seconden
                     );
+                    // De oorspronkelijke melding wordt de deeltekst `{{message}}`.
+                    if let Some(oorspronkelijk) = fout.sleutel {
+                        fout = fout
+                            .sleutel("imap.retryLater")
+                            .waarde("messageKey", oorspronkelijk)
+                            .waarde("retrySeconds", seconden);
+                    }
                     return Err(fout);
                 }
             }
@@ -662,7 +785,7 @@ pub fn codeer_mapnaam(naam: &str) -> String {
 
 fn controleer_mapnaam(pad: &str) -> Uitkomst<()> {
     if pad.trim().is_empty() || pad.len() > 1000 || pad.contains(['\r', '\n', '\0']) {
-        return Err(MailFout::geweigerd("Ongeldige mapnaam."));
+        return Err(MailFout::geweigerd("Ongeldige mapnaam.").sleutel("imap.invalidFolderName"));
     }
     Ok(())
 }
@@ -790,10 +913,10 @@ pub async fn mappen(ctx: &Context<'_>) -> Uitkomst<Vec<Map>> {
             Box::pin(async move {
                 s.list(Some(""), Some("*"))
                     .await
-                    .map_err(|e| imapfout(e, h, "Mappen ophalen", false))?
+                    .map_err(|e| imapfout(e, h, Wat::MappenOphalen, false))?
                     .try_collect::<Vec<_>>()
                     .await
-                    .map_err(|e| imapfout(e, h, "Mappen ophalen", false))
+                    .map_err(|e| imapfout(e, h, Wat::MappenOphalen, false))
             })
         })
         .await?;
@@ -843,7 +966,7 @@ pub async fn mappen(ctx: &Context<'_>) -> Uitkomst<Vec<Map>> {
                         Ok(mb) => Ok(Some((mb.exists, mb.unseen))),
                         Err(async_imap::error::Error::No(_))
                         | Err(async_imap::error::Error::Bad(_)) => Ok(None),
-                        Err(e) => Err(imapfout(e, h, "Mappen tellen", false)),
+                        Err(e) => Err(imapfout(e, h, Wat::MappenTellen, false)),
                     }
                 })
             })
@@ -878,7 +1001,7 @@ pub async fn maak_map(ctx: &Context<'_>, pad: &str) -> Uitkomst<()> {
         Box::pin(async move {
             s.create(&pad)
                 .await
-                .map_err(|e| imapfout(e, h, "Map aanmaken", false))?;
+                .map_err(|e| imapfout(e, h, Wat::MapAanmaken, false))?;
             let _ = s.subscribe(&pad).await;
             Ok(())
         })
@@ -892,7 +1015,8 @@ pub async fn hernoem_map(ctx: &Context<'_>, pad: &str, nieuw: &str) -> Uitkomst<
     controleer_mapnaam(pad)?;
     controleer_mapnaam(nieuw)?;
     if pad.eq_ignore_ascii_case("INBOX") {
-        return Err(MailFout::geweigerd("De Inbox kan niet worden hernoemd."));
+        return Err(MailFout::geweigerd("De Inbox kan niet worden hernoemd.")
+            .sleutel("imap.cannotRenameInbox"));
     }
     let (oud, nieuw) = (codeer_mapnaam(pad), codeer_mapnaam(nieuw));
     let mut b = ctx.neem().await?;
@@ -900,7 +1024,7 @@ pub async fn hernoem_map(ctx: &Context<'_>, pad: &str, nieuw: &str) -> Uitkomst<
         Box::pin(async move {
             s.rename(&oud, &nieuw)
                 .await
-                .map_err(|e| imapfout(e, h, "Map hernoemen", false))
+                .map_err(|e| imapfout(e, h, Wat::MapHernoemen, false))
         })
     })
     .await?;
@@ -911,7 +1035,8 @@ pub async fn hernoem_map(ctx: &Context<'_>, pad: &str, nieuw: &str) -> Uitkomst<
 pub async fn verwijder_map(ctx: &Context<'_>, pad: &str) -> Uitkomst<()> {
     controleer_mapnaam(pad)?;
     if pad.eq_ignore_ascii_case("INBOX") {
-        return Err(MailFout::geweigerd("De Inbox kan niet worden verwijderd."));
+        return Err(MailFout::geweigerd("De Inbox kan niet worden verwijderd.")
+            .sleutel("imap.cannotDeleteInbox"));
     }
     let pad = codeer_mapnaam(pad);
     let mut b = ctx.neem().await?;
@@ -921,7 +1046,7 @@ pub async fn verwijder_map(ctx: &Context<'_>, pad: &str) -> Uitkomst<()> {
             let _ = s.run_command_and_check_ok("UNSELECT").await;
             s.delete(&pad)
                 .await
-                .map_err(|e| imapfout(e, h, "Map verwijderen", false))
+                .map_err(|e| imapfout(e, h, Wat::MapVerwijderen, false))
         })
     })
     .await?;
@@ -960,7 +1085,8 @@ fn kop_uit_fetch(f: &Fetch, map: &str) -> Option<BerichtKop> {
 /// accepteren.
 pub fn imap_tekst(t: &str, literal_plus: bool) -> Uitkomst<String> {
     if t.contains(['\r', '\n', '\0']) {
-        return Err(MailFout::geweigerd("Zoektekst bevat ongeldige tekens."));
+        return Err(MailFout::geweigerd("Zoektekst bevat ongeldige tekens.")
+            .sleutel("imap.invalidSearchCharacters"));
     }
     if !t.is_ascii() && literal_plus {
         return Ok(format!("{{{}+}}\r\n{t}", t.len()));
@@ -981,7 +1107,7 @@ pub fn zoekcriteria(v: &Lijstverzoek, literal_plus: bool) -> Uitkomst<String> {
     if let Some(z) = v.zoek.as_ref().filter(|z| !z.tekst.trim().is_empty()) {
         let tekst = z.tekst.trim();
         if tekst.chars().count() > 200 {
-            return Err(MailFout::geweigerd("De zoektekst is te lang."));
+            return Err(MailFout::geweigerd("De zoektekst is te lang.").sleutel("imap.searchTooLong"));
         }
         utf8 = !tekst.is_ascii();
         let waarde = imap_tekst(tekst, literal_plus)?;
@@ -1032,7 +1158,8 @@ pub fn zoekcriteria(v: &Lijstverzoek, literal_plus: bool) -> Uitkomst<String> {
 
 fn uidset(uids: &[u32]) -> Uitkomst<String> {
     if uids.is_empty() || uids.contains(&0) {
-        return Err(MailFout::geweigerd("Geen geldige berichten opgegeven."));
+        return Err(MailFout::geweigerd("Geen geldige berichten opgegeven.")
+            .sleutel("imap.noValidMessages"));
     }
     Ok(uids
         .iter()
@@ -1062,7 +1189,7 @@ pub async fn berichten(ctx: &Context<'_>, v: &Lijstverzoek) -> Uitkomst<BerichtL
                 imapfout(
                     e,
                     h,
-                    &format!("Map '{}' openen", decodeer_mapnaam(&map)),
+                    Wat::MapOpenenNaam(decodeer_mapnaam(&map)),
                     true,
                 )
             })?;
@@ -1082,10 +1209,10 @@ pub async fn berichten(ctx: &Context<'_>, v: &Lijstverzoek) -> Uitkomst<BerichtL
                     let fetches: Vec<Fetch> = s
                         .fetch(format!("{laag}:{hoog}"), KOPVELDEN)
                         .await
-                        .map_err(|e| imapfout(e, h, "Berichten ophalen", false))?
+                        .map_err(|e| imapfout(e, h, Wat::BerichtenOphalen, false))?
                         .try_collect()
                         .await
-                        .map_err(|e| imapfout(e, h, "Berichten ophalen", false))?;
+                        .map_err(|e| imapfout(e, h, Wat::BerichtenOphalen, false))?;
                     let mut met_volgorde: Vec<(u32, BerichtKop)> = fetches
                         .iter()
                         .filter_map(|f| kop_uit_fetch(f, &map).map(|k| (f.message, k)))
@@ -1097,7 +1224,7 @@ pub async fn berichten(ctx: &Context<'_>, v: &Lijstverzoek) -> Uitkomst<BerichtL
                     let mut uids: Vec<u32> = s
                         .uid_search(&criteria)
                         .await
-                        .map_err(|e| imapfout(e, h, "Zoeken", false))?
+                        .map_err(|e| imapfout(e, h, Wat::Zoeken, false))?
                         .into_iter()
                         .collect();
                     uids.sort_unstable_by(|a, b| b.cmp(a));
@@ -1121,10 +1248,10 @@ pub async fn berichten(ctx: &Context<'_>, v: &Lijstverzoek) -> Uitkomst<BerichtL
                     let fetches: Vec<Fetch> = s
                         .uid_fetch(set, KOPVELDEN)
                         .await
-                        .map_err(|e| imapfout(e, h, "Berichten ophalen", false))?
+                        .map_err(|e| imapfout(e, h, Wat::BerichtenOphalen, false))?
                         .try_collect()
                         .await
-                        .map_err(|e| imapfout(e, h, "Berichten ophalen", false))?;
+                        .map_err(|e| imapfout(e, h, Wat::BerichtenOphalen, false))?;
                     let mut per_uid: HashMap<u32, BerichtKop> = fetches
                         .iter()
                         .filter_map(|f| kop_uit_fetch(f, &map).map(|k| (k.uid, k)))
@@ -1142,6 +1269,11 @@ pub async fn berichten(ctx: &Context<'_>, v: &Lijstverzoek) -> Uitkomst<BerichtL
     .await
 }
 
+fn bericht_weg() -> MailFout {
+    MailFout::niet_gevonden("Dit bericht bestaat niet meer (mogelijk verplaatst of verwijderd).")
+        .sleutel("imap.messageGone")
+}
+
 /// Haalt de ruwe bron op, na controle van de grootte. `lezen` zet \Seen.
 async fn haal_bron(
     ctx: &Context<'_>,
@@ -1151,7 +1283,7 @@ async fn haal_bron(
 ) -> Uitkomst<(Vec<u8>, Vlaggen)> {
     controleer_mapnaam(map)?;
     if uid == 0 {
-        return Err(MailFout::geweigerd("Ongeldig bericht."));
+        return Err(MailFout::geweigerd("Ongeldig bericht.").sleutel("imap.invalidMessage"));
     }
     let max = ctx.limieten.max_bericht;
     let map = map.to_string();
@@ -1167,29 +1299,30 @@ async fn haal_bron(
                 imapfout(
                     e,
                     h,
-                    &format!("Map '{}' openen", decodeer_mapnaam(&map)),
+                    Wat::MapOpenenNaam(decodeer_mapnaam(&map)),
                     true,
                 )
             })?;
             let info: Vec<Fetch> = s
                 .uid_fetch(uid.to_string(), "(UID FLAGS RFC822.SIZE)")
                 .await
-                .map_err(|e| imapfout(e, h, "Bericht ophalen", false))?
+                .map_err(|e| imapfout(e, h, Wat::BerichtOphalen, false))?
                 .try_collect()
                 .await
-                .map_err(|e| imapfout(e, h, "Bericht ophalen", false))?;
-            let info = info.iter().find(|f| f.uid == Some(uid)).ok_or_else(|| {
-                MailFout::niet_gevonden(
-                    "Dit bericht bestaat niet meer (mogelijk verplaatst of verwijderd).",
-                )
-            })?;
+                .map_err(|e| imapfout(e, h, Wat::BerichtOphalen, false))?;
+            let info = info
+                .iter()
+                .find(|f| f.uid == Some(uid))
+                .ok_or_else(bericht_weg)?;
             let grootte = info.size.unwrap_or(0) as usize;
             if grootte > max {
+                let (mb, max_mb) = (grootte / (1024 * 1024), max / (1024 * 1024));
                 return Err(MailFout::te_groot(format!(
-                    "Het bericht is {} MB; Email Studio opent berichten tot {} MB.",
-                    grootte / (1024 * 1024),
-                    max / (1024 * 1024)
-                )));
+                    "Het bericht is {mb} MB; Email Studio opent berichten tot {max_mb} MB."
+                ))
+                .sleutel("imap.messageTooLarge")
+                .waarde("size", mb)
+                .waarde("max", max_mb));
             }
             let mut v = vlaggen(info);
             let query = if lezen {
@@ -1200,18 +1333,14 @@ async fn haal_bron(
             let delen: Vec<Fetch> = s
                 .uid_fetch(uid.to_string(), query)
                 .await
-                .map_err(|e| imapfout(e, h, "Bericht ophalen", false))?
+                .map_err(|e| imapfout(e, h, Wat::BerichtOphalen, false))?
                 .try_collect()
                 .await
-                .map_err(|e| imapfout(e, h, "Bericht ophalen", false))?;
+                .map_err(|e| imapfout(e, h, Wat::BerichtOphalen, false))?;
             let bron = delen
                 .iter()
                 .find_map(|f| f.body())
-                .ok_or_else(|| {
-                    MailFout::niet_gevonden(
-                        "Dit bericht bestaat niet meer (mogelijk verplaatst of verwijderd).",
-                    )
-                })?
+                .ok_or_else(bericht_weg)?
                 .to_vec();
             if lezen {
                 v.gelezen = true;
@@ -1252,14 +1381,14 @@ pub async fn markeer(
         Box::pin(async move {
             s.select(&map)
                 .await
-                .map_err(|e| imapfout(e, h, "Map openen", true))?;
+                .map_err(|e| imapfout(e, h, Wat::MapOpenen, true))?;
             let opdracht = format!("{}FLAGS.SILENT ({imapvlag})", if aan { "+" } else { "-" });
             s.uid_store(&set, &opdracht)
                 .await
-                .map_err(|e| imapfout(e, h, "Markeren", false))?
+                .map_err(|e| imapfout(e, h, Wat::Markeren, false))?
                 .try_collect::<Vec<_>>()
                 .await
-                .map_err(|e| imapfout(e, h, "Markeren", false))?;
+                .map_err(|e| imapfout(e, h, Wat::Markeren, false))?;
             Ok(())
         })
     })
@@ -1275,16 +1404,16 @@ async fn verplaats_binnen(b: &mut Bezet, map: String, set: String, doel: String)
         Box::pin(async move {
             s.select(&map)
                 .await
-                .map_err(|e| imapfout(e, h, "Map openen", true))?;
+                .map_err(|e| imapfout(e, h, Wat::MapOpenen, true))?;
             if kan_move {
                 return s
                     .uid_mv(&set, &doel)
                     .await
-                    .map_err(|e| imapfout(e, h, "Verplaatsen", false));
+                    .map_err(|e| imapfout(e, h, Wat::Verplaatsen, false));
             }
             s.uid_copy(&set, &doel)
                 .await
-                .map_err(|e| imapfout(e, h, "Kopiëren", false))?;
+                .map_err(|e| imapfout(e, h, Wat::Kopieren, false))?;
             verwijder_in_sessie(s, h, &set, kan_uidplus).await
         })
     })
@@ -1300,24 +1429,24 @@ async fn verwijder_in_sessie(
 ) -> Uitkomst<()> {
     s.uid_store(set, "+FLAGS.SILENT (\\Deleted)")
         .await
-        .map_err(|e| imapfout(e, h, "Verwijderen", false))?
+        .map_err(|e| imapfout(e, h, Wat::Verwijderen, false))?
         .try_collect::<Vec<_>>()
         .await
-        .map_err(|e| imapfout(e, h, "Verwijderen", false))?;
+        .map_err(|e| imapfout(e, h, Wat::Verwijderen, false))?;
     if kan_uidplus {
         s.uid_expunge(set)
             .await
-            .map_err(|e| imapfout(e, h, "Opruimen", false))?
+            .map_err(|e| imapfout(e, h, Wat::Opruimen, false))?
             .try_collect::<Vec<_>>()
             .await
-            .map_err(|e| imapfout(e, h, "Opruimen", false))?;
+            .map_err(|e| imapfout(e, h, Wat::Opruimen, false))?;
     } else {
         s.expunge()
             .await
-            .map_err(|e| imapfout(e, h, "Opruimen", false))?
+            .map_err(|e| imapfout(e, h, Wat::Opruimen, false))?
             .try_collect::<Vec<_>>()
             .await
-            .map_err(|e| imapfout(e, h, "Opruimen", false))?;
+            .map_err(|e| imapfout(e, h, Wat::Opruimen, false))?;
     }
     Ok(())
 }
@@ -1352,7 +1481,7 @@ pub async fn verwijder(
             Box::pin(async move {
                 s.select(&map)
                     .await
-                    .map_err(|e| imapfout(e, h, "Map openen", true))?;
+                    .map_err(|e| imapfout(e, h, Wat::MapOpenen, true))?;
                 verwijder_in_sessie(s, h, &set, kan_uidplus).await
             })
         })
@@ -1363,11 +1492,13 @@ pub async fn verwijder(
             MailFout::niet_gevonden(
                 "Er is geen prullenbak gevonden op de server. Kies een prullenbakmap in de accountinstellingen of verwijder definitief.",
             )
+            .sleutel("imap.noTrash")
         })?;
         if prullenbak == map {
             return Err(MailFout::geweigerd(
                 "Deze berichten staan al in de prullenbak; verwijder ze definitief.",
-            ));
+            )
+            .sleutel("imap.alreadyInTrash"));
         }
         let mut b = ctx.neem().await?;
         verplaats_binnen(&mut b, map.to_string(), set, prullenbak).await?;
@@ -1383,15 +1514,16 @@ pub async fn bewaar_in(
     ruw: &[u8],
     vlaggen: &str,
 ) -> Uitkomst<()> {
-    let naam = match soort {
-        Speciaal::Verzonden => "Verzonden",
-        Speciaal::Concepten => "Concepten",
-        _ => "map",
+    let (naam, sleutel) = match soort {
+        Speciaal::Verzonden => ("Verzonden", "imap.sentFolderMissing"),
+        Speciaal::Concepten => ("Concepten", "imap.draftsFolderMissing"),
+        _ => ("map", "imap.specialFolderMissing"),
     };
     let doel = speciale_map(ctx, soort).await?.ok_or_else(|| {
         MailFout::niet_gevonden(format!(
             "Er is geen map voor {naam} gevonden op de server. Kies die map in de accountinstellingen."
         ))
+        .sleutel(sleutel)
     })?;
     let ruw = ruw.to_vec();
     let vlaggen = vlaggen.to_string();
@@ -1400,7 +1532,7 @@ pub async fn bewaar_in(
         Box::pin(async move {
             s.append(&doel, Some(&vlaggen), None, &ruw)
                 .await
-                .map_err(|e| imapfout(e, h, &format!("Opslaan in {naam}"), false))
+                .map_err(|e| imapfout(e, h, Wat::OpslaanIn(soort), false))
         })
     })
     .await?;

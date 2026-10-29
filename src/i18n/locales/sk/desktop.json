@@ -1,0 +1,143 @@
+{
+  "dialogs": {
+    "cancel": "Zrušiť",
+    "saveAsEllipsis": "Uložiť ako…",
+    "officeFile": "Kancelársky súbor",
+    "officeFiles": "Kancelárske súbory",
+    "untitled": "Bez názvu",
+    "saveCopy": "Uložiť kópiu",
+    "saveAs": "Uložiť ako",
+    "openFile": "Otvoriť súbor",
+    "replaceFile": {
+      "title": "Nahradiť súbor",
+      "message": "Súbor {{path}} už existuje. Chcete ho nahradiť?"
+    },
+    "unsavedChanges": {
+      "title": "Neuložené zmeny",
+      "message_one": "Jeden dokument v tomto okne obsahuje zmeny, ktoré ešte neboli uložené. Tieto zmeny sa stratia. Napriek tomu zavrieť?",
+      "message_few": "{{count}} dokumenty v tomto okne obsahujú zmeny, ktoré ešte neboli uložené. Tieto zmeny sa stratia. Napriek tomu zavrieť?",
+      "message_many": "{{count}} dokumentu v tomto okne obsahuje zmeny, ktoré ešte neboli uložené. Tieto zmeny sa stratia. Napriek tomu zavrieť?",
+      "message_other": "{{count}} dokumentov v tomto okne obsahuje zmeny, ktoré ešte neboli uložené. Tieto zmeny sa stratia. Napriek tomu zavrieť?"
+    },
+    "fileChanged": {
+      "title": "Súbor bol zmenený",
+      "missing": "Súbor {{name}} už v pôvodnom umiestnení neexistuje. Vytvoriť ho znova s vašou verziou, alebo ho uložiť inam?",
+      "changedExternally": "Súbor {{name}} bol od otvorenia zmenený mimo Open Office Studio. Prepísaním sa tieto zmeny zahodia.",
+      "overwrite": "Prepísať"
+    },
+    "foreignFormat": {
+      "title": "Uložiť ako {{format}}",
+      "message": "Súbor {{name}} sa aktualizuje vo formáte {{format}}. Kancelárske behové prostredie na to dokument skonvertuje; formátovanie, ktoré {{format}} nepodporuje, sa môže stratiť.",
+      "hint": "Vyberte Uložiť ako…, ak chcete zachovať súbor DOCX, XLSX alebo PPTX.",
+      "update": "Aktualizovať ako {{format}}"
+    },
+    "chooseConverter": "Vybrať konverzný program (soffice)",
+    "databaseExport": {
+      "title": "Uložiť export databázy",
+      "filter": "Export databázy",
+      "sqliteFilter": "Pracovná kópia SQLite",
+      "replaceTitle": "Nahradiť export",
+      "replaceMessage": "Tento súbor exportu už existuje. Chcete ho nahradiť?"
+    }
+  },
+  "errors": {
+    "file": {
+      "invalidBody": "Súbor je prázdny, väčší ako 100 MB alebo nebol odoslaný ako binárne údaje.",
+      "emptyOrTooLarge": "Súbor je prázdny alebo väčší ako 100 MB.",
+      "formatInfoMissing": "Chýbajú informácie o formáte.",
+      "formatMissing": "Chýba formát.",
+      "targetFolderMissing": "Chýba cieľový priečinok.",
+      "nameMissing": "Chýba názov súboru.",
+      "nameInvalidChars": "Názov súboru obsahuje neplatné znaky.",
+      "unsupportedFormat": "Nepodporovaný formát súboru.",
+      "extensionMismatch": "Zvolená prípona nezodpovedá dokumentu.",
+      "alreadyOpenedOrOtherWindow": "Tento súbor je už otvorený alebo nie je určený pre toto okno.",
+      "notThisWindow": "Tento súbor nepatrí k tomuto oknu.",
+      "notLinked": "Tento súbor už nie je prepojený s touto kartou.",
+      "tokenMissing": "Chýba token.",
+      "openInOtherTab": "Súbor {{name}} je otvorený na inej karte. Najprv ho zavrite alebo vyberte iný názov.",
+      "readOnly": "V tomto priečinku nemáte povolenie na zápis alebo je súbor iba na čítanie ({{path}}). Vyberte iné umiestnenie.",
+      "notInRecentList": "Tento súbor už v zozname nie je."
+    },
+    "preferences": {
+      "tooLarge": "Predvoľby sú väčšie ako 64 kB.",
+      "invalid": "Predvoľby nie sú platný objekt JSON.",
+      "configDirUnavailable": "Konfiguračný priečinok aplikácie nie je k dispozícii.",
+      "pathInvalid": "Neplatná cesta k predvoľbám."
+    },
+    "font": {
+      "notInstalled": "Písmo {{family}} nie je v tomto počítači nainštalované.",
+      "notFound": "Písmo sa nenašlo.",
+      "fileTooLarge": "Tento súbor písma je príliš veľký.",
+      "inCollection": "Toto písmo je súčasťou kolekcie (.ttc) a nedá sa použiť samostatne.",
+      "unreadable": "Súbor písma sa nepodarilo prečítať.",
+      "nameInvalid": "Neplatný názov písma."
+    },
+    "recovery": {
+      "keyInvalid": "Neplatný kľúč na obnovenie.",
+      "spaceFull": "Priestor pre kópie na obnovenie (512 MB) je plný. Uložte svoje dokumenty.",
+      "sessionMissing": "Chýba relácia.",
+      "keyMissing": "Chýba kľúč.",
+      "dataInvalid": "Neplatné údaje na obnovenie.",
+      "unknownDocumentType": "Neznámy typ dokumentu.",
+      "sessionNotThisWindow": "Táto relácia obnovenia nepatrí k tomuto oknu.",
+      "sessionOtherWindow": "Táto relácia obnovenia patrí k inému oknu.",
+      "sessionStillRunning": "Táto relácia stále beží."
+    },
+    "window": {
+      "closed": "Toto okno bolo zatvorené.",
+      "transferEmptyOrTooLarge": "Prenos je prázdny alebo príliš veľký.",
+      "mainWindowUnavailable": "Hlavné okno nie je k dispozícii.",
+      "openFailed": "Okno sa nepodarilo otvoriť: {{error}}",
+      "transferExpired": "Platnosť tohto prenosu vypršala alebo už bol prevzatý.",
+      "transferAlreadyTaken": "Tento prenos už bol prevzatý.",
+      "transferUnknown": "Tento prenos je neznámy."
+    },
+    "conversion": {
+      "unknownModule": "Neznámy kancelársky modul.",
+      "sourceFormatMismatch": "Zdrojový formát nepatrí k tomuto modulu.",
+      "outputFormatUnsupported": "Tento výstupný formát nie je podporovaný.",
+      "outputFormatDirect": "Tento výstupný formát sa vytvára priamo v aplikácii, nie konverziou.",
+      "invalidOptions": "Neplatné možnosti konverzie.",
+      "chooseSoffice": "Vyberte program soffice (Windows: soffice.exe) z priečinka program kancelárskeho behového prostredia.",
+      "chosenFileMissing": "Vybraný súbor neexistuje.",
+      "chosenPathNotFile": "Vybraná cesta nie je súbor.",
+      "chosenFileNotExecutable": "Vybraný súbor nie je spustiteľný.",
+      "appDataDirUnavailable": "Priečinok s údajmi aplikácie nie je k dispozícii.",
+      "startFailed": "Konverziu sa nepodarilo spustiť: {{error}}",
+      "failed": "Konverzia zlyhala ({{reason}}). Originál sa zachoval.",
+      "exitCode": "návratový kód {{code}}",
+      "processAborted": "proces prerušený",
+      "timeout": "Konverzia prekročila časový limit a bola zastavená. Originál sa zachoval.",
+      "profilePathInvalid": "Cesta k dočasnému profilu je neplatná.",
+      "inputSize": "Vyberte súbor s veľkosťou najviac 100 MB, ktorý nie je prázdny.",
+      "runtimeMissing": "Tento formát vyžaduje kancelárske behové prostredie (LibreOffice). Nenašlo sa: nainštalujte ho, vyberte program v dialógu Uložiť ako alebo nastavte OPENAEC_CONVERSIE_PROGRAMMA. DOCX, XLSX a PPTX fungujú priamo.",
+      "notConverted": "Tento súbor sa nepodarilo skonvertovať. Môže byť poškodený alebo chránený, alebo v lokálnom behovom prostredí chýba filter formátu.",
+      "multipleOutputs": "Konverzia vytvorila viac ako jeden súbor.",
+      "noUsableOutput": "Konverzia nevytvorila použiteľný súbor s veľkosťou najviac 100 MB."
+    },
+    "databaseExport": {
+      "emptyOrTooLarge": "Export je prázdny alebo väčší ako 100 MB.",
+      "emptyInvalidOrTooLarge": "Export je prázdny, neplatný alebo väčší ako 100 MB.",
+      "nameMissing": "Chýba názov súboru.",
+      "nameInvalid": "Neplatný názov súboru.",
+      "notSqlite": "Toto nie je pracovná kópia SQLite.",
+      "typeNotAllowed": "Povolené sú iba exporty CSV, zdrojov, zostáv a pracovných kópií SQLite. Databázy Access sa nikdy neprepisujú.",
+      "textNotUtf8": "Textový export musí byť platný text v kódovaní UTF-8.",
+      "sendAsBinary": "Odošlite export ako binárne údaje s veľkosťou najviac 100 MB.",
+      "extensionMismatch": "Zvolená prípona nezodpovedá exportu."
+    }
+  },
+  "launcher": {
+    "officeStudio": {
+      "genericName": "Kancelársky balík",
+      "comment": "Lokálne kancelárske prostredie OpenAEC",
+      "keywords": "textový editor;tabuľkový procesor;tabuľka;prezentácia;databáza;e-mail;pošta;kancelária;office;"
+    },
+    "databaseStudio": {
+      "genericName": "Prehliadač databáz",
+      "comment": "Otvárajte staršie databázy MDB a ACCDB lokálne",
+      "keywords": "databáza;tabuľka;dotaz;database;access;"
+    }
+  }
+}

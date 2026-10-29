@@ -1,3 +1,4 @@
+import i18next from "i18next";
 import {
   controleerDatabaseBestand,
   type Compatibiliteitsrapport,
@@ -28,6 +29,20 @@ import {
   foutUitBericht,
   type WerkkopieMethode,
 } from "./werkkopie/werkkopie-brug.ts";
+import databaseWorkerUrl from "./database-worker.ts?worker&url";
+import { startWorker } from "../../../src/startWorker";
+
+/**
+ * Stuurt de interfacetaal naar een worker (meldingen uit de worker in de
+ * goede taal, zie i18n-worker.ts), nu en bij elke taalwissel. Geeft een
+ * functie terug die het volgen stopt.
+ */
+function volgTaal(worker: Worker): () => void {
+  const stuur = (taal: string) => worker.postMessage({ type: "taal", taal });
+  stuur(i18next.language);
+  i18next.on("languageChanged", stuur);
+  return () => i18next.off("languageChanged", stuur);
+}
 
 /**
  * Fout van de alleen-lezende lezer, met een vaste code (bijv. "versleuteld")
@@ -45,10 +60,7 @@ export class DatabaseFout extends Error {
 }
 
 export class DatabaseClient {
-  private worker = new Worker(
-    new URL("./database-worker.ts", import.meta.url),
-    { type: "module" },
-  );
+  private worker = startWorker(databaseWorkerUrl);
   private nummer = 0;
   private gesloten: string | null = null;
   private wachtend = new Map<
@@ -59,6 +71,7 @@ export class DatabaseClient {
       timer: ReturnType<typeof setTimeout>;
     }
   >();
+  private stopTaal = volgTaal(this.worker);
   constructor() {
     this.worker.onmessage = ({ data }) => {
       const verzoek = this.wachtend.get(data.id);
@@ -77,7 +90,7 @@ export class DatabaseClient {
     };
     this.worker.onerror = () =>
       this.sluit(
-        "De databaselezer is gestopt. Open het bestand opnieuw om verder te gaan.",
+        i18next.t("database:client.readerStopped"),
       );
   }
   private vraag<T>(
@@ -90,7 +103,7 @@ export class DatabaseClient {
       const timer = setTimeout(
         () =>
           this.sluit(
-            "Het lezen duurde langer dan 15 seconden. De parser is gestopt; het origineel is behouden.",
+            i18next.t("database:client.readTimeout"),
           ),
         15000,
       );
@@ -117,14 +130,15 @@ export class DatabaseClient {
       rapport,
       vbaVerwijzingen: verwijzingen ?? [],
       melding:
-        "Alleen-lezen: tabellen (200 rijen per pagina), relaties, indexen, querydefinities en aanwezige VBA-bron worden lokaal gelezen. Formulieren, rapporten en macro’s worden alleen geïnventariseerd. Niets wordt uitgevoerd; zie het compatibiliteitsrapport.",
+        i18next.t("database:client.readOnlyNotice"),
     };
   }
   tabel(naam: string, start: number) {
     return this.vraag<DatabaseObject>({ type: "tabel", naam, start });
   }
-  sluit(reden = "De database is gesloten.") {
+  sluit(reden = i18next.t("database:client.databaseClosed")) {
     this.gesloten = reden;
+    this.stopTaal();
     this.worker.terminate();
     for (const verzoek of this.wachtend.values()) {
       clearTimeout(verzoek.timer);
@@ -192,6 +206,7 @@ export class WerkkopieClient implements Werkkopie {
   private _rapport: OpbouwRapport | null = null;
   private _meldingen: string[] = [];
   private worker: Worker;
+  private stopTaal: () => void;
   private limieten: Required<WerkkopieTijdslimieten>;
   private nummer = 0;
   private gesloten: string | null = null;
@@ -208,10 +223,8 @@ export class WerkkopieClient implements Werkkopie {
   private constructor(naam: string, limieten: Required<WerkkopieTijdslimieten>) {
     this._bron = { naam, sha256: "" };
     this.limieten = limieten;
-    this.worker = new Worker(
-      new URL("./database-worker.ts", import.meta.url),
-      { type: "module" },
-    );
+    this.worker = startWorker(databaseWorkerUrl);
+    this.stopTaal = volgTaal(this.worker);
     this.koppel();
   }
 
@@ -243,7 +256,7 @@ export class WerkkopieClient implements Werkkopie {
     opties: WerkkopieClientOpties,
     mislukt: string,
   ): Promise<WerkkopieClient> {
-    const afbreken = () => client.annuleer("Het openen van de werkkopie is afgebroken.");
+    const afbreken = () => client.annuleer(i18next.t("database:client.openAborted"));
     opties.signal?.addEventListener("abort", afbreken, { once: true });
     try {
       if (opties.signal?.aborted) afbreken();
@@ -265,9 +278,9 @@ export class WerkkopieClient implements Werkkopie {
   }
 
   /** Nieuwe, lege werkkopie zonder Access-origineel. */
-  static async nieuw(naam = "Nieuwe database", opties: WerkkopieClientOpties = {}): Promise<WerkkopieClient> {
+  static async nieuw(naam = i18next.t("database:client.newDatabaseName"), opties: WerkkopieClientOpties = {}): Promise<WerkkopieClient> {
     const client = WerkkopieClient.maak(naam, opties);
-    return WerkkopieClient.start(client, { type: "werkkopie:nieuw", naam }, [], opties, "De nieuwe database kon niet worden gemaakt.");
+    return WerkkopieClient.start(client, { type: "werkkopie:nieuw", naam }, [], opties, i18next.t("database:client.newFailed"));
   }
 
   /**
@@ -277,10 +290,10 @@ export class WerkkopieClient implements Werkkopie {
    */
   static async laad(bestand: Blob, opties: WerkkopieClientOpties = {}): Promise<WerkkopieClient> {
     const naam = (bestand as Partial<File>).name ?? "werkkopie.sqlite";
-    if (!bestand.size) throw new WerkkopieFout("syntaxis", "Dit bestand is leeg.");
-    if (bestand.size > MAX_WERKKOPIE) throw new WerkkopieFout("beperking", "Kies een werkkopie van maximaal 100 MB.");
+    if (!bestand.size) throw new WerkkopieFout("syntaxis", i18next.t("database:client.emptyFile"));
+    if (bestand.size > MAX_WERKKOPIE) throw new WerkkopieFout("beperking", i18next.t("database:client.tooLarge"));
     const kop = new Uint8Array(await bestand.slice(0, 16).arrayBuffer());
-    if (!kopIsSqlite(kop)) throw new WerkkopieFout("syntaxis", "Dit is geen SQLite-bestand. Kies een eerder bewaarde werkkopie (.sqlite).");
+    if (!kopIsSqlite(kop)) throw new WerkkopieFout("syntaxis", i18next.t("database:client.notSqlite"));
     const client = WerkkopieClient.maak(naam, opties);
     const bytes = await bestand.arrayBuffer();
     return WerkkopieClient.start(
@@ -288,7 +301,7 @@ export class WerkkopieClient implements Werkkopie {
       { type: "werkkopie:laad", bytes, naam, vreemdeSqlite: !!opties.vreemdeSqlite },
       [bytes],
       opties,
-      "De werkkopie kon niet worden geopend.",
+      i18next.t("database:client.openFailed"),
     );
   }
 
@@ -305,7 +318,7 @@ export class WerkkopieClient implements Werkkopie {
       { type: "werkkopie:open", bytes, naam: bestand.name, modules: opties.modules },
       [bytes],
       opties,
-      "De werkkopie kon niet worden opgebouwd.",
+      i18next.t("database:client.buildFailed"),
     );
   }
 
@@ -319,12 +332,15 @@ export class WerkkopieClient implements Werkkopie {
       }
       clearTimeout(verzoek.timer);
       this.wachtend.delete(data.id);
-      if (data.fout) verzoek.fout(foutUitBericht({ code: data.code, melding: data.fout }));
+      if (data.fout) {
+        const fout = foutUitBericht({ code: data.code, melding: data.fout });
+        verzoek.fout(data.vreemdeSqlite ? Object.assign(fout, { vreemdeSqlite: true }) : fout);
+      }
       else verzoek.klaar(data.resultaat);
     };
     this.worker.onerror = () =>
       this.annuleer(
-        "De werkkopie is onverwacht gestopt. Het origineel is ongewijzigd; bouw de werkkopie opnieuw op.",
+        i18next.t("database:client.crashed"),
       );
   }
 
@@ -340,7 +356,7 @@ export class WerkkopieClient implements Werkkopie {
       const timer = setTimeout(
         () =>
           this.annuleer(
-            `De werkkopie deed er langer dan ${Math.round(limiet / 1000)} seconden over en is gestopt. Het origineel is ongewijzigd; bouw de werkkopie opnieuw op of verhoog de tijdslimiet.`,
+            i18next.t("database:client.timeout", { count: Math.round(limiet / 1000) }),
             "beperking",
           ),
         limiet,
@@ -364,11 +380,12 @@ export class WerkkopieClient implements Werkkopie {
 
   /** Stopt de worker direct; alle openstaande verzoeken worden afgewezen. */
   annuleer(
-    reden = "De werkkopie is gestopt op verzoek.",
+    reden = i18next.t("database:client.stoppedOnRequest"),
     code: "beperking" | "intern" = "intern",
   ) {
     if (this.gesloten) return;
     this.gesloten = reden;
+    this.stopTaal();
     this.worker.terminate();
     for (const verzoek of this.wachtend.values()) {
       clearTimeout(verzoek.timer);
@@ -496,7 +513,7 @@ export class WerkkopieClient implements Werkkopie {
     try {
       await this.roep<void>("sluit");
     } finally {
-      this.annuleer("De werkkopie is gesloten.");
+      this.annuleer(i18next.t("database:client.workingCopyClosed"));
     }
   }
 }

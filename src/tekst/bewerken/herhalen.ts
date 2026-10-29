@@ -2,6 +2,7 @@
  * Herhalen (F4, en Ctrl+Y als er niets opnieuw te doen is): de laatste
  * opmaakopdracht nog eens uitvoeren op de huidige selectie.
  */
+import i18next from "../../i18n/config";
 
 /** Engine-opdrachten die als opmaak tellen en dus herhaald kunnen worden. */
 export const HERHAALBAAR = new Set([
@@ -60,33 +61,34 @@ export class Herhaalgeheugen {
   }
 }
 
-const namen: Record<string, string> = {
-  bold: "Vet",
-  italic: "Cursief",
-  underline: "Onderstrepen",
-  strikethrough: "Doorhalen",
-  superscript: "Superscript",
-  subscript: "Subscript",
-  clearFormatting: "Opmaak wissen",
-  paragraphStyle: "Stijl",
-  fontFamily: "Lettertype",
-  fontSize: "Lettergrootte",
-  textColor: "Tekstkleur",
-  highlightColor: "Markeren",
-  alignment: "Uitlijning",
-  lineSpacing: "Regelafstand",
-  bulletList: "Opsomming",
-  numberedList: "Nummering",
-  indent: "Meer inspringen",
-  outdent: "Minder inspringen",
-};
+/** Opdrachten met een eigen naam onder `writer:editing.repeat.commands`. */
+const MET_NAAM = new Set([
+  "bold",
+  "italic",
+  "underline",
+  "strikethrough",
+  "superscript",
+  "subscript",
+  "clearFormatting",
+  "paragraphStyle",
+  "fontFamily",
+  "fontSize",
+  "textColor",
+  "highlightColor",
+  "alignment",
+  "lineSpacing",
+  "bulletList",
+  "numberedList",
+  "indent",
+  "outdent",
+]);
 
 /** Leesbare naam van een engine-opdracht met zijn argument. */
 export function naamVanOpdracht(id: string, args: unknown): string {
-  const naam = namen[id] ?? id;
+  const naam = MET_NAAM.has(id) ? i18next.t(`writer:editing.repeat.commands.${id}`) : id;
   if (args && typeof args === "object") {
     const waarde = Object.values(args as Record<string, unknown>)[0];
-    if (typeof waarde === "string" || typeof waarde === "number") return `${naam} ${waarde}`;
+    if (typeof waarde === "string" || typeof waarde === "number") return i18next.t("writer:editing.repeat.withValue", { name: naam, value: waarde });
   }
   return naam;
 }

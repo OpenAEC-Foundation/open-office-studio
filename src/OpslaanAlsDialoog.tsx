@@ -1,5 +1,6 @@
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { Save, TriangleAlert } from "lucide-react";
+import { Trans, useTranslation } from "react-i18next";
 import type { Soort } from "./editors";
 import {
   GROEPEN,
@@ -20,12 +21,24 @@ import type { Codering, Scheidingsteken } from "./export/csv";
 import { PdfOpties, standaardAppPdf } from "./export/PdfOpties";
 import "./OpslaanAlsDialoog.css";
 
+/** Sleutel onder `backstage:saveAs.routes` per route. */
 const ROUTENAMEN: Record<Route, string> = {
-  engine: "in de app",
-  runtime: "via kantoorruntime",
-  afdrukken: "via Afdrukken",
-  tekst: "in de app",
-  html: "in de app",
+  engine: "inApp",
+  runtime: "runtime",
+  afdrukken: "print",
+  tekst: "inApp",
+  html: "inApp",
+};
+
+/** Sleutel onder `backstage:saveAs.groups` per groep uit formaten.ts. */
+const GROEPSLEUTEL: Record<Groep, string> = {
+  eigen: "own",
+  opendocument: "openDocument",
+  "office-oud": "legacyOffice",
+  sjablonen: "templates",
+  macro: "macro",
+  "web-tekst": "webText",
+  "pdf-afbeelding": "pdfImage",
 };
 
 export interface OpslaanAlsProps {
@@ -54,6 +67,7 @@ export interface OpslaanAlsProps {
 }
 
 export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
+  const { t } = useTranslation(["backstage", "common"]);
   const desktop = "__TAURI_INTERNALS__" in window;
   const id = useId();
   const dialoog = useRef<HTMLElement>(null);
@@ -132,11 +146,11 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
   const wachtwoordFout = !metWachtwoord
     ? ""
     : !wachtwoord
-      ? "Kies een wachtwoord."
+      ? t("saveAs.passwordMissing")
       : wachtwoord !== herhaling
-        ? "De wachtwoorden zijn niet gelijk."
+        ? t("saveAs.passwordMismatch")
         : wachtwoord.length > 255
-          ? "Hooguit 255 tekens."
+          ? t("saveAs.passwordTooLong", { max: 255 })
           : "";
   const verlies = props.verlies(gekozen, route, metWachtwoord);
   const groepen = (Object.keys(GROEPEN) as Groep[])
@@ -146,6 +160,11 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
     }))
     .filter((g) => g.formaten.length);
   const bereikGeldig = !bereik.trim() || /^[\d\s,-]+$/.test(bereik);
+  // Naam en verwachting per formaat vertaald; de catalogus is de terugval.
+  const formaatNaam = (f: Uitvoerformaat) =>
+    t(`saveAs.formats.${props.soort}.${f.ext}.name`, { defaultValue: f.naam });
+  const formaatBehoud = (f: Uitvoerformaat) =>
+    t(`saveAs.formats.${props.soort}.${f.ext}.keeps`, { defaultValue: f.behoud });
   const kan = !!route && !!naam.trim() && bereikGeldig && !wachtwoordFout;
 
   function bevestig() {
@@ -190,12 +209,11 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
 
   const bladkeuze = props.bladen && props.bladen.namen.length > 1 && (
     <label>
-      Blad
+      {t("saveAs.sheet")}
       <select value={blad} onChange={(e) => setBlad(Number(e.target.value))}>
         {props.bladen.namen.map((naam, index) => (
           <option key={index} value={index}>
-            {naam}
-            {index === props.bladen!.actief ? " (actief)" : ""}
+            {index === props.bladen!.actief ? t("saveAs.activeSheet", { name: naam }) : naam}
           </option>
         ))}
       </select>
@@ -241,9 +259,9 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
           }
         }}
       >
-        <h2 id={`${id}-titel`}>Opslaan als</h2>
+        <h2 id={`${id}-titel`}>{t("saveAs.title")}</h2>
         <label className="opslaanals-naam">
-          Bestandsnaam
+          {t("saveAs.fileName")}
           <span>
             <input
               ref={naamveld}
@@ -258,35 +276,32 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
 
         <div className="opslaanals-runtime" role="status">
           {!desktop ? (
-            <>
-              In de browser maakt de app Markdown, CSV, HTML, tekst en PDF
-              zelf, en PNG bij rekenbladen en presentaties. Formaten met “alleen in de desktopapp” vragen de
-              desktopversie met een kantoorruntime.
-            </>
+            <>{t("saveAs.browserInfo")}</>
           ) : status === null ? (
-            <>Kantoorruntime zoeken…</>
+            <>{t("saveAs.runtimeSearching")}</>
           ) : runtime ? (
             <>
-              Kantoorruntime: {status.versie ?? status.pad}{" "}
+              {t("saveAs.runtimeFound", { version: status.versie ?? status.pad })}{" "}
               <small>
-                (
-                {status.bron === "omgeving"
-                  ? "uit OPENAEC_CONVERSIE_PROGRAMMA"
-                  : status.bron === "instelling"
-                    ? "zelf gekozen"
-                    : "automatisch gevonden"}
-                {status.profiel === "veilig"
-                  ? ", veilig profiel: macro’s uit"
-                  : ", eigen profiel"}
-                )
+                {t("saveAs.runtimeDetails", {
+                  source:
+                    status.bron === "omgeving"
+                      ? t("saveAs.sourceEnvironment")
+                      : status.bron === "instelling"
+                        ? t("saveAs.sourceSetting")
+                        : t("saveAs.sourceAutomatic"),
+                  profile:
+                    status.profiel === "veilig"
+                      ? t("saveAs.profileSafe")
+                      : t("saveAs.profileOwn"),
+                })}
               </small>
             </>
           ) : (
             <>
-              <TriangleAlert size={14} /> Geen kantoorruntime (LibreOffice)
-              gevonden. Formaten via de runtime zijn niet beschikbaar.{" "}
+              <TriangleAlert size={14} /> {t("saveAs.runtimeMissing")}{" "}
               <button type="button" onClick={() => void kiesProgramma()}>
-                Conversieprogramma kiezen
+                {t("saveAs.chooseConverter")}
               </button>
             </>
           )}
@@ -294,10 +309,14 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
         </div>
 
         <fieldset className="opslaanals-formaten">
-          <legend>Formaat</legend>
+          <legend>{t("saveAs.format")}</legend>
           {groepen.map(({ groep, formaten }) => (
-            <div key={groep} role="group" aria-label={GROEPEN[groep]}>
-              <h3>{GROEPEN[groep]}</h3>
+            <div
+              key={groep}
+              role="group"
+              aria-label={t(`saveAs.groups.${GROEPSLEUTEL[groep]}`, { defaultValue: GROEPEN[groep] })}
+            >
+              <h3>{t(`saveAs.groups.${GROEPSLEUTEL[groep]}`, { defaultValue: GROEPEN[groep] })}</h3>
               {formaten.map((formaat) => {
                 const r = routeVan(formaat);
                 return (
@@ -311,21 +330,21 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
                       value={formaat.ext}
                       checked={formaat.ext === gekozen.ext}
                       disabled={!r}
-                      aria-label={`${formaat.naam} (.${formaat.ext})`}
+                      aria-label={`${formaatNaam(formaat)} (.${formaat.ext})`}
                       onChange={() => setExt(formaat.ext)}
                     />
                     <span>
                       <b>
-                        {formaat.naam} <code>.{formaat.ext}</code>
+                        {formaatNaam(formaat)} <code>.{formaat.ext}</code>
                       </b>
-                      <small>{formaat.behoud}</small>
+                      <small>{formaatBehoud(formaat)}</small>
                     </span>
                     <i>
                       {r
-                        ? ROUTENAMEN[r]
+                        ? t(`saveAs.routes.${ROUTENAMEN[r]}`)
                         : desktop
-                          ? "runtime ontbreekt"
-                          : "alleen in de desktopapp"}
+                          ? t("saveAs.runtimeMissingShort")
+                          : t("saveAs.desktopOnly")}
                     </i>
                   </label>
                 );
@@ -338,37 +357,33 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
           <div className="opslaanals-opties">
             {gekozen.ext === "csv" && (
               <label>
-                Scheidingsteken
+                {t("saveAs.separator")}
                 <select
                   value={scheidingsteken}
                   onChange={(e) =>
                     setScheidingsteken(e.target.value as Scheidingsteken)
                   }
                 >
-                  <option value=";">Puntkomma ; (Nederlands)</option>
-                  <option value=",">Komma ,</option>
-                  <option value="tab">Tab</option>
-                  <option value="|">Verticale streep |</option>
+                  <option value=";">{t("saveAs.separatorSemicolon")}</option>
+                  <option value=",">{t("saveAs.separatorComma")}</option>
+                  <option value="tab">{t("saveAs.separatorTab")}</option>
+                  <option value="|">{t("saveAs.separatorPipe")}</option>
                 </select>
               </label>
             )}
             <label>
-              Codering
+              {t("saveAs.encoding")}
               <select
                 value={codering}
                 onChange={(e) => setCodering(e.target.value as Codering)}
               >
-                <option value="utf8-bom">UTF-8 met BOM (Excel)</option>
+                <option value="utf8-bom">{t("saveAs.encodingUtf8BomExcel")}</option>
                 <option value="utf8">UTF-8</option>
                 <option value="windows-1252">Windows-1252 (ANSI)</option>
               </select>
             </label>
             {bladkeuze}
-            <p>
-              Alleen het gekozen blad, met waarden in plaats van formules. Tekst
-              die met =, +, - of @ begint krijgt een apostrof, zodat een
-              rekenprogramma die niet als formule uitvoert.
-            </p>
+            <p>{t("saveAs.csvInfo")}</p>
           </div>
         )}
         {kanBeveiligen && (
@@ -379,12 +394,12 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
                 checked={beveiligen}
                 onChange={(e) => setBeveiligen(e.target.checked)}
               />
-              Beveiligen met een wachtwoord om te openen
+              {t("saveAs.protect")}
             </label>
             {beveiligen && (
               <>
                 <label>
-                  Wachtwoord
+                  {t("saveAs.password")}
                   <input
                     type="password"
                     autoComplete="new-password"
@@ -393,7 +408,7 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
                   />
                 </label>
                 <label>
-                  Herhaal wachtwoord
+                  {t("saveAs.repeatPassword")}
                   <input
                     type="password"
                     autoComplete="new-password"
@@ -406,8 +421,8 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
             )}
             <p>
               {beveiligen
-                ? "Versleuteling volgens ECMA-376 (AES-256), te openen in Word, Excel, PowerPoint en LibreOffice. Het wachtwoord wordt niet bewaard; ben je het kwijt, dan is het bestand niet meer te openen."
-                : "Dit is geen schrijf- of bladbeveiliging: zonder vinkje wordt het bestand onversleuteld bewaard."}
+                ? t("saveAs.encryptionInfo")
+                : t("saveAs.noEncryptionInfo")}
               {wachtwoordFout && beveiligen && (wachtwoord || herhaling) ? (
                 <span className="opslaanals-fout"> {wachtwoordFout}</span>
               ) : null}
@@ -417,15 +432,13 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
         {gekozen.ext === "txt" && route === "tekst" && (
           <div className="opslaanals-opties">
             <label>
-              Codering
+              {t("saveAs.encoding")}
               <select
                 value={tekstcodering}
                 onChange={(e) => setTekstcodering(e.target.value as Codering)}
               >
                 <option value="utf8">UTF-8</option>
-                <option value="utf8-bom">
-                  UTF-8 met BOM (Kladblok, Excel)
-                </option>
+                <option value="utf8-bom">{t("saveAs.encodingUtf8BomNotepad")}</option>
                 <option value="windows-1252">Windows-1252 (ANSI)</option>
               </select>
             </label>
@@ -437,15 +450,16 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
         {gekozen.ext === "png" && props.soort === "pptx" && props.dias && (
           <div className="opslaanals-opties">
             <label>
-              Dia
+              {t("saveAs.slide")}
               <select
                 value={dia}
                 onChange={(e) => setDia(Number(e.target.value))}
               >
                 {Array.from({ length: props.dias.aantal }, (_, index) => (
                   <option key={index} value={index}>
-                    Dia {index + 1}
-                    {index === props.dias!.huidig ? " (huidige)" : ""}
+                    {index === props.dias!.huidig
+                      ? t("saveAs.currentSlide", { number: index + 1 })
+                      : t("saveAs.slideNumber", { number: index + 1 })}
                   </option>
                 ))}
               </select>
@@ -468,24 +482,24 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
         {gekozen.ext === "pdf" && route === "runtime" && (
           <div className="opslaanals-opties">
             <label>
-              PDF-variant
+              {t("saveAs.pdfVariant")}
               <select
                 value={pdfa}
                 onChange={(e) =>
                   setPdfa(Number(e.target.value) as 0 | 1 | 2 | 3)
                 }
               >
-                <option value={0}>Gewone PDF</option>
-                <option value={2}>PDF/A-2b (archief)</option>
+                <option value={0}>{t("saveAs.pdfPlain")}</option>
+                <option value={2}>{t("saveAs.pdfA2b")}</option>
                 <option value={1}>PDF/A-1b</option>
                 <option value={3}>PDF/A-3b</option>
               </select>
             </label>
             <label>
-              {props.soort === "pptx" ? "Dia’s" : "Pagina’s"}
+              {props.soort === "pptx" ? t("saveAs.slides") : t("saveAs.pages")}
               <input
                 type="text"
-                placeholder="alle, of bijv. 1-3,5"
+                placeholder={t("saveAs.rangePlaceholder")}
                 value={bereik}
                 aria-invalid={!bereikGeldig}
                 onChange={(e) => setBereik(e.target.value)}
@@ -498,33 +512,28 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
                   checked={bladwijzers}
                   onChange={(e) => setBladwijzers(e.target.checked)}
                 />
-                Koppen als bladwijzers
+                {t("saveAs.bookmarks")}
               </label>
             )}
           </div>
         )}
         {route === "afdrukken" && (
           <p className="opslaanals-uitleg">
-            PDF zonder kantoorruntime gaat via Afdrukken: kies in het
-            afdrukvenster de printer <strong>Opslaan als PDF</strong> (Windows:
-            “Microsoft Print to PDF”). Opmaak volgt de weergave in de editor.
+            <Trans t={t} i18nKey="saveAs.printRoute" components={{ strong: <strong /> }} />
           </p>
         )}
         {verlies && (
           <Verliesrapport
             rapport={verlies}
-            bestandsnaam={`${naam.trim() || "Naamloos"}.${props.soort}`}
+            bestandsnaam={`${naam.trim() || t("saveAs.untitled")}.${props.soort}`}
           />
         )}
         {gekozen.ext !== props.soort && route && (
-          <p className="opslaanals-uitleg">
-            Dit is een kopie in een ander formaat. Het document blijft als
-            gewijzigd gemarkeerd tot je het als .{props.soort} bewaart.
-          </p>
+          <p className="opslaanals-uitleg">{t("saveAs.copyInfo", { ext: props.soort })}</p>
         )}
         <div className="office-dialoogacties">
           <button type="button" onClick={props.annuleer}>
-            Annuleren
+            {t("common:cancel")}
           </button>
           <button
             type="button"
@@ -533,7 +542,7 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
             onClick={bevestig}
           >
             <Save size={13} />{" "}
-            {route === "afdrukken" ? "Afdrukken…" : "Opslaan"}
+            {route === "afdrukken" ? t("saveAs.print") : t("common:save")}
           </button>
         </div>
       </section>

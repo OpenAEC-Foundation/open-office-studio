@@ -1,0 +1,147 @@
+{
+  "header": {
+    "homeTitle": "Salt la Pornire",
+    "homeLabel": "OpenAEC Office Studio · Pornire",
+    "version": "Versiune {{version}}",
+    "unsaved": "Modificări nesalvate",
+    "unchanged": "Nemodificat",
+    "fileAndStart": "Fișier și Pornire",
+    "openFileTitle": "Deschidere fișier într-o filă nouă · Ctrl+O",
+    "openNotesBackupTitle": "Adăugare copie de rezervă a notelor · Ctrl+O",
+    "openDatabaseTitle": "Deschidere bază de date · Ctrl+O",
+    "addBackup": "Adăugare copie de rezervă",
+    "saveAs": "Salvare ca",
+    "saveAsTitle": "Salvare ca · F12 sau Ctrl+Shift+S (Ctrl+S salvează în fișierul deschis)",
+    "busy": "Se lucrează…"
+  },
+  "message": {
+    "close": "Închidere mesaj",
+    "markdownNote": "Markdown păstrează textul și structura. Salvați și un DOCX pentru aspectul paginii, imagini și revizii."
+  },
+  "loading": {
+    "editor": "Se încarcă editorul…",
+    "notes": "Se încarcă Note…",
+    "email": "Se încarcă Email Studio…",
+    "document": "Se încarcă documentul…",
+    "fonts": "Se încarcă fonturile…"
+  },
+  "errors": {
+    "editorFailed": "Editorul nu a putut deschide acest fișier: {{error}}",
+    "openFailed": "Deschiderea a eșuat: {{error}}",
+    "openFileFailed": "Deschiderea {{name}} a eșuat: {{error}}",
+    "saveFailed": "Salvarea a eșuat: {{error}}",
+    "printFailed": "Imprimarea a eșuat: {{error}}",
+    "sendAsAttachmentFailed": "Trimiterea ca atașare a eșuat: {{error}}",
+    "templateUnavailable": "Șablon indisponibil",
+    "exampleFailed": "Exemplul nu a putut fi deschis.",
+    "fileSize": "Alegeți un fișier care nu este gol și are cel mult 100 MB.",
+    "unsupportedFormat": "{{name}}: acest format nu este acceptat.",
+    "emptyAttachment": "Atașarea este goală.",
+    "databaseModifiedFile": "Database Studio are o copie de lucru modificată. Salvați-o sau închideți-o mai întâi, apoi deschideți din nou fișierul.",
+    "databaseModifiedAttachment": "Database Studio are o copie de lucru modificată. Salvați-o sau închideți-o mai întâi, apoi deschideți din nou atașarea.",
+    "spreadsheetNotReady": "Foaia de calcul nu este încă pregătită.",
+    "presentationNotReady": "Prezentarea nu este încă pregătită.",
+    "documentNotReady": "Documentul nu este încă pregătit.",
+    "documentSaveFailed": "Documentul nu a putut fi salvat."
+  },
+  "tabs": {
+    "untitled": "Fără titlu {{n}}",
+    "memoryWarning_one": "Este deschis {{count}} document. Fiecare document deschis folosește memorie; închideți documentele de care nu mai aveți nevoie.",
+    "memoryWarning_few": "Sunt deschise {{count}} documente. Fiecare document deschis folosește memorie; închideți documentele de care nu mai aveți nevoie.",
+    "memoryWarning_other": "Sunt deschise {{count}} de documente. Fiecare document deschis folosește memorie; închideți documentele de care nu mai aveți nevoie."
+  },
+  "tabBar": {
+    "label": "File deschise",
+    "start": "Pornire",
+    "startTitle": "Pornire · document nou sau existent, Note și Bază de date",
+    "tabTitleUnsaved": "{{name}} · modificări nesalvate",
+    "dragOutHint": "Glisați în afară pentru o fereastră separată",
+    "unsavedA11y": ", modificări nesalvate",
+    "closeTab": "Închidere {{name}}",
+    "closeTitle": "Închidere · Ctrl+W",
+    "allTabs": "Toate filele deschise",
+    "addTab": "Adăugare filă",
+    "addTabTitle": "Deschidere document nou sau existent, Note sau Bază de date",
+    "releaseOpensWindow": "Eliberați pentru a deschide o fereastră separată",
+    "closeOthers": "Închidere celelalte",
+    "closeToRight": "Închidere filele din dreapta"
+  },
+  "windowMenu": {
+    "button": "Documente deschise",
+    "buttonTitle": "Documente deschise · Ctrl+Tab sau Ctrl+F6 pentru comutare",
+    "empty": "Niciun document deschis.",
+    "thisWindow": "Această fereastră",
+    "mainWindow": "Fereastra principală",
+    "windowNumber": "Fereastra {{number}}",
+    "unsavedTitle": "Modificări nesalvate",
+    "modified": "modificat",
+    "newWindow": "Fereastră nouă"
+  },
+  "windows": {
+    "openInNewWindow": "Deschidere în fereastră nouă",
+    "backToMainWindow": "Înapoi la fereastra principală",
+    "databaseMovedHere": "Database Studio se află acum în această fereastră. Deschideți din nou baza de date aici dacă doriți să continuați lucrul.",
+    "documentMoved": "Documentul a fost mutat, inclusiv modificările nesalvate. Istoricul Anulare nu este mutat odată cu el.",
+    "linkUnavailable": "Legătura dintre ferestre nu este disponibilă: {{error}}",
+    "closeGuardUnavailable": "Protecția la închidere nu este disponibilă: {{error}}",
+    "databaseModified": "Database Studio nu poate muta o copie de lucru modificată într-o altă fereastră. Exportați sau salvați mai întâi baza de date.",
+    "otherWindowFailed": "Cealaltă fereastră nu a putut deschide fila.",
+    "mainWindowNoResponse": "Fereastra principală nu răspunde. Fila rămâne deschisă aici.",
+    "newWindowTimeout": "Fereastra nouă nu a preluat documentul la timp. Fila rămâne deschisă aici.",
+    "alreadyMainWindow": "Aceasta este deja fereastra principală.",
+    "popupBlocked": "Fereastra nouă nu a putut fi deschisă. Permiteți ferestrele pop-up pentru această pagină.",
+    "moveToWindow": "Mută în {{window}}",
+    "newWindowFailed": "Nu s-a putut deschide o fereastră nouă: {{error}}"
+  },
+  "dropZone": {
+    "release": "Eliberați pentru a deschide",
+    "explanation": "Documentele, foile de calcul și prezentările se deschid fiecare într-o filă proprie; MDB și ACCDB se deschid în Database Studio.",
+    "image": "{{name}} este o imagine. Glisarea nu inserează încă imagini într-un document; utilizați Inserare › Imagine.",
+    "unsupported": "{{name}} nu poate fi deschis: .{{ext}} nu este acceptat. Open Office Studio deschide documente, foi de calcul, prezentări și baze de date Access."
+  },
+  "ribbon": {
+    "label": "Panglică",
+    "file": "Fișier",
+    "hide": "Ascundere panglică",
+    "show": "Afișare panglică",
+    "hideHint": "Mai mult spațiu pentru document · Ctrl+F1",
+    "scrollLeft": "Defilare panglică la stânga",
+    "scrollRight": "Defilare panglică la dreapta",
+    "commandFailed": "Comanda nu a putut fi executată.",
+    "nothingToUndo": "Nu există nimic de anulat.",
+    "nothingToRedo": "Nu există nimic de refăcut.",
+    "presentationOpening": "Prezentarea încă se deschide.",
+    "selectShapeFirst": "Selectați mai întâi o formă."
+  },
+  "theme": {
+    "light": "Temă luminoasă",
+    "forge": "Tema Forge"
+  },
+  "host": {
+    "conflict": "Altcineva a salvat între timp acest document. Versiunea dvs. a fost salvată ca o copie: {{name}}.",
+    "readOnly": "{{name}} a fost deschis doar în citire. Folosiți Salvare ca pentru a păstra modificările.",
+    "openFailed": "Documentul din spațiul de lucru nu a putut fi deschis: {{error}}"
+  },
+  "title": {
+    "document": "{{document}} — {{app}} ({{module}})",
+    "module": "{{app}} ({{module}})"
+  },
+  "titleBar": {
+    "quickAccess": "Acces rapid",
+    "saveTitle": "Salvare · Ctrl+S",
+    "settings": "Setări",
+    "minimize": "Minimizare",
+    "maximize": "Maximizare",
+    "restore": "Restabilire",
+    "close": "Închide fereastra"
+  },
+  "toasts": {
+    "region": "Notificări",
+    "info": "Info",
+    "success": "Gata",
+    "warning": "Atenție",
+    "error": "Eroare",
+    "details": "Detalii",
+    "less": "Mai puțin"
+  }
+}

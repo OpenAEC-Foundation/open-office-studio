@@ -24,6 +24,8 @@ for (const pad of process.argv.slice(2)) {
     globalThis.global = undefined;
     globalThis.setImmediate = undefined;
     globalThis.self = { postMessage: (bericht) => parentPort.postMessage(bericht) };
+    // De controles hieronder lezen de Nederlandse rapportteksten; los van de systeemtaal van de runner.
+    Object.defineProperty(globalThis, 'navigator', { value: { language: 'nl-NL', languages: ['nl-NL'] }, configurable: true });
     await import(${JSON.stringify(moduleUrl)});
     parentPort.on('message', (data) => self.onmessage({data}));
     parentPort.postMessage({id: 0});

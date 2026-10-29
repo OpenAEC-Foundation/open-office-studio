@@ -1,0 +1,999 @@
+{
+  "accounts": {
+    "test": {
+      "test": "测试",
+      "testConnection": "测试连接",
+      "testing": "正在测试…",
+      "retest": "重新测试",
+      "failed": "测试失败"
+    },
+    "settings": {
+      "title": "账户设置",
+      "noAccount": "还没有账户。",
+      "addAccount": "添加账户",
+      "accountList": "账户",
+      "saving": "正在保存…",
+      "saved": "设置已保存。",
+      "saveFailed": "无法保存",
+      "tabs": {
+        "identity": "身份",
+        "servers": "服务器",
+        "folders": "文件夹",
+        "fetching": "收取与隐私",
+        "advanced": "高级"
+      },
+      "deleteAccount": {
+        "title": "删除账户",
+        "confirm": "确定要删除 <strong>{{name}}</strong>（{{email}}）吗？你的邮件仍保留在服务器上；已保存的密码将从钥匙串中删除。",
+        "button": "删除账户",
+        "failed": "无法删除账户"
+      },
+      "identity": {
+        "accountName": "账户名称",
+        "accountNameHint": "仅供你自己查看，例如“工作”或“个人”。",
+        "yourName": "你的姓名",
+        "email": "电子邮件地址",
+        "replyTo": "回复地址",
+        "replyToPlaceholder": "留空 = 你的电子邮件地址",
+        "signature": "签名",
+        "signatureHint": "添加在新邮件和回复的下方，位于“-- ”之后。"
+      },
+      "oauthAccount": {
+        "signedInAs": "已通过 {{provider}} 以 <strong>{{account}}</strong> 身份登录",
+        "noPasswordStored": "不保存密码；访问使用钥匙串中的令牌。",
+        "signInAgain": "重新登录",
+        "signedInAgain": "已重新以 {{account}} 身份登录。"
+      },
+      "password": {
+        "change": "更改密码",
+        "storedPlaceholder": "已保存 · 留空则保持不变",
+        "noneStoredPlaceholder": "尚未保存密码"
+      },
+      "folders": {
+        "hint": "选择 Email Studio 存放已发送邮件、草稿、已删除邮件和已归档邮件的位置。",
+        "roles": {
+          "sent": "已发送邮件",
+          "drafts": "草稿",
+          "trash": "废纸篓",
+          "archive": "归档"
+        },
+        "automatic": "自动",
+        "automaticWithFolder": "自动（{{folder}}）"
+      },
+      "fetching": {
+        "checkForNew": "检查新邮件",
+        "manualOnly": "仅手动",
+        "everyMinutes_other": "每 {{count}} 分钟",
+        "externalContent": "始终显示远程图片和内容",
+        "externalContentHint": "建议关闭：远程图片会告诉发件人你在何时何地打开了邮件。",
+        "trustedSenders": "始终显示其远程内容的发件人",
+        "forgetSender": "忘记 {{sender}}"
+      },
+      "advanced": {
+        "oauthIntro": "使用 Microsoft 或 Google 登录采用 OAuth2。这些设置适用于所有账户。只有在应用未内置客户端 ID 时才需要你自己的客户端 ID；请参阅 <code>{{doc}}</code>。",
+        "ispdb": "新建账户时也查询 Thunderbird 数据库",
+        "ispdbHint": "此时域名会发送给 Mozilla。默认关闭。",
+        "available": "可用。",
+        "unavailable": "不可用。",
+        "loadingStatus": "正在加载状态…",
+        "clientId": "客户端 ID",
+        "clientSecret": "客户端密钥（可选）",
+        "saveClientId": "保存客户端 ID",
+        "clientIdSaved": "已保存 {{provider}} 的客户端 ID。",
+        "clientIdSaveFailed": "无法保存客户端 ID",
+        "desktopOnly": "只能在桌面应用中设置你自己的客户端 ID。"
+      }
+    },
+    "wizard": {
+      "title": "添加账户",
+      "intro": "使用你现有的电子邮件地址。Email Studio 适用于任何提供 IMAP 和 SMTP 的服务商。",
+      "fullName": "你的全名",
+      "fullNamePlaceholder": "名 姓",
+      "fullNameHint": "收件人看到的你的姓名。",
+      "email": "电子邮件地址",
+      "emailPlaceholder": "name@example.com",
+      "password": "密码",
+      "passwordHint": "仅在你选择“测试”或“完成”时使用，并且只保存在操作系统的钥匙串中。",
+      "ispdb": "也查询 Thunderbird 数据库",
+      "ispdbHint": "此时会将域名（而非你的地址或密码）发送给 Mozilla。",
+      "oauthPrompt": "或在应用中免密码登录：",
+      "enterNameAndEmailFirst": "请先输入你的姓名和电子邮件地址。",
+      "saving": "正在保存…",
+      "done": "完成",
+      "saveAnyway": "仍然保存",
+      "saveTitle": "保存账户",
+      "saveUntestedTitle": "尚未（成功）测试；你仍可以保存账户",
+      "saveFailed": "无法保存账户",
+      "foundSettings": "已找到设置",
+      "serverSettings": "服务器设置",
+      "serverSettingsFor": "{{domain}} 的服务器设置",
+      "enterEmailHint": "输入你的电子邮件地址；Email Studio 将自动查找合适的服务器。",
+      "searchFailed": "搜索失败",
+      "fillInManually": "请在下方自行输入服务器。",
+      "nothingFound": "未找到设置。请在下方自行输入服务器；如有需要，可向服务商索取。",
+      "proposals": "建议",
+      "unencrypted": "未加密",
+      "manualConfiguration": "手动配置",
+      "adjusted": "· 已编辑",
+      "fieldsAppear": "输入有效的电子邮件地址后即会显示这些字段。",
+      "bothServersFailed": "两个服务器均失败。请检查地址、密码和服务器名称。"
+    },
+    "discovery": {
+      "steps": {
+        "builtIn": "内置列表",
+        "ownDomain": "自有域名",
+        "dns": "DNS",
+        "ispdb": "Thunderbird 数据库",
+        "probe": "连接探测"
+      },
+      "stepStatus": {
+        "waiting": "等待中",
+        "busy": "进行中…",
+        "found": "已找到",
+        "nothing": "未找到",
+        "skipped": "未运行"
+      },
+      "sources": {
+        "preset": "内置列表",
+        "autoconfig": "来自你自有域名的配置",
+        "srv": "DNS SRV 记录",
+        "mx": "MX 记录（已识别服务商）",
+        "ispdb": "Thunderbird 数据库",
+        "guess": "常见服务器名称"
+      },
+      "unencrypted": "未加密",
+      "reachable": "可访问",
+      "unreachable": "无法访问",
+      "untested": "未测试"
+    },
+    "server": {
+      "incoming": "收件（IMAP）",
+      "outgoing": "发件（SMTP）",
+      "columns": {
+        "server": "服务器",
+        "port": "端口",
+        "security": "安全性",
+        "authentication": "身份验证",
+        "username": "用户名"
+      },
+      "hostLabel": "{{protocol}} 服务器",
+      "portLabel": "{{protocol}} 端口",
+      "securityLabel": "{{protocol}} 安全性",
+      "authenticationLabel": "{{protocol}} 身份验证",
+      "usernameLabel": "{{protocol}} 用户名",
+      "imapPlaceholder": "imap.example.com",
+      "smtpPlaceholder": "smtp.example.com",
+      "securityNone": "无",
+      "authNormal": "普通密码",
+      "authEncrypted": "加密密码",
+      "unencryptedWarning": "<strong>未加密的连接。</strong>你的密码和邮件会以可读形式在网络上传输。如果服务商支持，请选择 SSL/TLS 或 STARTTLS。",
+      "oauthHint": "OAuth2 会在测试时或首次使用时要求你在服务商处登录。"
+    },
+    "oauth": {
+      "notSupported": "此版本的应用尚不支持使用 Microsoft 或 Google 登录。",
+      "signInFailed": "使用 {{provider}} 登录失败",
+      "signInWith": "使用 {{provider}} 登录",
+      "recommended": "推荐",
+      "waitTitle": "请在浏览器中完成登录",
+      "waitText": "{{provider}} 的登录页面已在浏览器中打开。请在那里登录并授予邮件访问权限；之后 Email Studio 将在此继续。",
+      "unavailableTitle": "此处无法使用 {{provider}} 登录。",
+      "unavailableHelp": "在桌面应用中，你可以在<em>工具 › 账户设置 › 高级</em>中为 {{provider}} 设置你自己的客户端 ID。创建方法见 <code>{{doc}}</code>。你也可以继续使用（应用）密码。"
+    }
+  },
+  "errors": {
+    "code": {
+      "connection": "无法连接到服务器。请检查网络连接以及服务器名称和端口。",
+      "authentication": "登录失败。请检查用户名和密码（工具 › 账户设置）。",
+      "certificate": "服务器的证书不受信任，或与此服务器名称不匹配。",
+      "timeout": "服务器未及时响应。请稍后重试。",
+      "notFound": "该邮件或文件夹在服务器上已不存在。",
+      "refused": "服务器拒绝了该命令。",
+      "tooLarge": "邮件对服务器来说太大。请缩小或删除附件。",
+      "unavailable": "此功能在此处不可用。",
+      "internal": "出了点问题。"
+    },
+    "withDetail": "{{explanation}}（{{detail}}）",
+    "withContext": "{{context}}：{{message}}",
+    "backendMissing": "此版本的桌面应用不包含电子邮件功能。",
+    "unexpectedBinary": "后端返回了意外的二进制输出。"
+  },
+  "dialog": {
+    "closeEsc": "关闭 (Esc)"
+  },
+  "sendAsAttachment": {
+    "title": "作为附件发送"
+  },
+  "ribbon": {
+    "tabs": {
+      "start": "开始",
+      "view": "视图",
+      "tools": "工具"
+    },
+    "groups": {
+      "new": "新建",
+      "respond": "回复",
+      "delete": "删除",
+      "mark": "标签",
+      "organize": "整理",
+      "layout": "布局",
+      "sort": "排序",
+      "message": "邮件",
+      "accounts": "账户",
+      "folders": "文件夹"
+    },
+    "withShortcut": "{{action}} · {{shortcut}}",
+    "fetch": "收取邮件",
+    "fetchTitle": "收取邮件 · {{key}} 或 {{shortcut}}",
+    "readUnread": "已读/未读",
+    "readUnreadTitle": "已读或未读 · {{shortcut}}",
+    "star": "星标",
+    "move": "移动",
+    "moveTitle": "移动到文件夹",
+    "folderPane": "文件夹窗格",
+    "readingPane": "阅读窗格",
+    "resetLayout": "重置布局",
+    "sortBy": "排序方式",
+    "sort": {
+      "date": "日期",
+      "sender": "发件人",
+      "subject": "主题",
+      "size": "大小"
+    },
+    "ascending": "升序",
+    "descending": "降序",
+    "viewSource": "查看源代码",
+    "accountSettings": "账户设置"
+  },
+  "studio": {
+    "errors": {
+      "loadAccounts": "无法加载账户",
+      "loadMessages": "无法加载邮件",
+      "openMessage": "无法打开邮件",
+      "delete": "无法删除",
+      "move": "无法移动",
+      "mark": "无法标记",
+      "forwardAttachments": "无法获取要转发的附件",
+      "openFile": "无法打开 {{name}}",
+      "saveFile": "无法保存 {{name}}",
+      "source": "无法获取源代码",
+      "updateFolder": "无法更新文件夹",
+      "deleteFolder": "无法删除文件夹"
+    },
+    "accountAdded": "已添加账户 {{email}}。",
+    "addAccount": "添加账户",
+    "deletePermanently": {
+      "title": "永久删除",
+      "text_other": "{{count}} 封邮件将被永久删除。此操作无法撤消。",
+      "confirm": "永久删除"
+    },
+    "noArchiveFolder": "此账户没有归档文件夹。请在“工具 › 账户设置 › 文件夹”中选择一个。",
+    "fetched": "已收取邮件。",
+    "deleteFolder": {
+      "title": "删除文件夹",
+      "text": "文件夹“{{folder}}”及其中的所有邮件将在服务器上被删除。"
+    },
+    "welcome": {
+      "title": "还没有电子邮件账户",
+      "text": "使用电子邮件地址和密码添加你的账户。Email Studio 会找到合适的设置。"
+    },
+    "folderPaneWidth": "文件夹窗格宽度",
+    "messageListWidth": "邮件列表宽度",
+    "messageList": "邮件列表",
+    "search": {
+      "in": "在 {{folder}} 中搜索",
+      "label": "搜索邮件（{{shortcut}}）",
+      "clear": "清除搜索"
+    },
+    "filter": {
+      "label": "快速筛选",
+      "unread": "未读",
+      "unreadTitle": "仅未读",
+      "starred": "已加星标",
+      "starredTitle": "仅已加星标",
+      "attachment": "附件",
+      "attachmentTitle": "仅含附件",
+      "body": "正文",
+      "bodyTitle": "同时搜索邮件正文（较慢）"
+    },
+    "count": {
+      "filtered": "{{shown}} / {{total}}",
+      "filteredLoaded": "已加载 {{loaded}} 封中的 {{shown}} 封",
+      "messages_other": "{{count}} 封邮件",
+      "selected_other": "已选择 {{count}} 封"
+    },
+    "noResults": "未找到邮件。",
+    "emptyFolder": "此文件夹为空。",
+    "moveTo_other": "将 {{count}} 封邮件移动到",
+    "folderDialog": {
+      "newTitle": "新建文件夹",
+      "renameTitle": "重命名文件夹",
+      "create": "创建",
+      "rename": "重命名",
+      "name": "名称",
+      "inside": "位于“{{folder}}”内"
+    },
+    "source": {
+      "title": "邮件源代码",
+      "saveAs": "另存为 {{extension}}"
+    }
+  },
+  "address": {
+    "invalid": "无效地址：{{address}}",
+    "remove": "移除 {{address}}"
+  },
+  "list": {
+    "label": "邮件",
+    "to": "收件人：{{address}}",
+    "noRecipient": "（无收件人）",
+    "replied": "已回复",
+    "hasAttachment": "含附件",
+    "noSubject": "（无主题）",
+    "star": "添加星标",
+    "unstar": "移除星标",
+    "loadingMore": "正在加载更多邮件…"
+  },
+  "folders": {
+    "label": "文件夹",
+    "loading": "正在加载文件夹…",
+    "unread_other": "{{count}} 封未读",
+    "inbox": "收件箱"
+  },
+  "reader": {
+    "loadingMessage": "正在加载邮件…",
+    "chooseMessage": "选择一封邮件以阅读。",
+    "label": "邮件：{{subject}}",
+    "reply": "回复",
+    "replyTitle": "回复 · {{shortcut}}",
+    "replyAll": "全部回复",
+    "replyAllTitle": "全部回复 · {{shortcut}}",
+    "forward": "转发",
+    "forwardTitle": "转发 · {{shortcut}}",
+    "archive": "归档",
+    "archiveTitle": "归档 · {{shortcut}}",
+    "delete": "删除",
+    "deleteTitle": "删除 · {{shortcut}}",
+    "starTitle": "星标 · {{shortcut}}",
+    "from": "发件人",
+    "to": "收件人",
+    "none": "（无）",
+    "cc": "抄送",
+    "replyTo": "回复至",
+    "date": "日期",
+    "external": {
+      "blocked_other": "为保护你的隐私，已阻止 {{count}} 张远程图片。",
+      "desktopHint": "经你允许后，应用会获取并显示这些图片，而不让邮件连接到任何地方。",
+      "demoHint": "（在演示中，它们指向不存在的地址。）",
+      "show": "显示远程内容",
+      "alwaysFrom": "始终显示来自 {{sender}} 的内容",
+      "failed_other": "无法获取 {{count}} 张远程图片。"
+    },
+    "attachments": {
+      "label": "附件",
+      "previewOrOpen": "单击：预览 · 双击：在{{module}}中打开",
+      "preview": "预览",
+      "openCopyTitle": "在{{module}}中作为可编辑副本打开",
+      "openIn": "在{{module}}中打开",
+      "saveTitle": "保存到此计算机"
+    },
+    "content": "邮件内容",
+    "loadingContent": "正在加载内容…"
+  },
+  "compose": {
+    "errors": {
+      "saveDraft": "无法保存草稿",
+      "noRecipients": "请至少添加一位收件人。",
+      "send": "无法发送",
+      "attachmentsLarge": "附件总计 {{size}}；许多服务器会拒绝超过 {{max}} 的邮件。",
+      "linkNotAllowed": "仅允许 http(s)、mailto 和 tel 链接。"
+    },
+    "noSubject": {
+      "title": "无主题",
+      "text": "此邮件没有主题。仍要发送吗？",
+      "fillIn": "输入主题",
+      "sendWithout": "不带主题发送"
+    },
+    "forgotAttachment": {
+      "title": "忘记添加附件了？",
+      "text": "你的邮件提到了<strong>“{{word}}”</strong>，但尚未添加附件。",
+      "sendAnyway": "仍然发送",
+      "keywords": "附件|附上|附件中|随附|见附件"
+    },
+    "addAttachment": "添加附件",
+    "attachment": "附加",
+    "removeAttachment": "移除 {{name}}",
+    "attachmentsSummary_other": "{{count}} 个附件 · {{size}}",
+    "dropToAttach": "拖放到此处以添加为附件",
+    "sent": "邮件已发送。",
+    "sentWithSubject": "邮件已发送：{{subject}}。",
+    "unsent": {
+      "title": "邮件未发送",
+      "text": "要将此邮件保存为草稿吗？",
+      "discard": "放弃",
+      "saveDraft": "保存草稿"
+    },
+    "label": "撰写：{{subject}}",
+    "newMessage": "新邮件",
+    "send": "发送",
+    "sending": "正在发送…",
+    "sendTitle": "发送 · {{shortcut}}",
+    "draft": "草稿",
+    "savingDraft": "正在保存…",
+    "saveDraftTitle": "保存为草稿 · {{shortcut}}",
+    "dismissError": "关闭提示",
+    "from": "发件人",
+    "to": "收件人",
+    "cc": "抄送",
+    "bcc": "密送",
+    "subject": "主题",
+    "body": "邮件正文",
+    "format": {
+      "label": "格式",
+      "withShortcut": "{{action}} · {{shortcut}}",
+      "bold": "加粗",
+      "italic": "倾斜",
+      "underline": "下划线",
+      "bullets": "项目符号",
+      "numbering": "编号",
+      "link": "链接",
+      "insertLink": "插入链接",
+      "clear": "清除格式",
+      "linkAddress": "链接地址",
+      "insert": "插入"
+    }
+  },
+  "link": {
+    "browserFailed": "无法打开浏览器。请复制地址：{{url}}",
+    "phoneTitle": "电话号码",
+    "openTitle": "打开链接？",
+    "copied": "地址已复制。",
+    "copyFailed": "复制失败；请手动选择地址。",
+    "copy": "复制地址",
+    "openInBrowser": "在浏览器中打开",
+    "phoneIntro": "邮件中出现了此电话号码：",
+    "realTarget": "此链接实际指向：",
+    "misleading": "邮件中的文字显示为 <strong>{{shown}}</strong>，但链接指向 <strong>{{actual}}</strong>。这可能是网络钓鱼。",
+    "unencrypted": "注意：此链接未使用加密连接（http）。"
+  },
+  "files": {
+    "saveUnsupported": "此版本的桌面应用还无法保存 {{name}}。请在模块中打开附件或更新应用。",
+    "saved": "已保存：{{path}}",
+    "saveCancelled": "已取消保存。",
+    "downloadRequested": "已请求下载。请在下载文件夹中查看该文件。"
+  },
+  "quote": {
+    "unknownSender": "（未知）",
+    "wroteOn": "{{sender}} 于 {{date}} 写道：",
+    "wrote": "{{sender}} 写道：",
+    "forwarded": "转发的邮件",
+    "subject": "主题：{{value}}",
+    "date": "日期：{{value}}",
+    "from": "发件人：{{value}}",
+    "to": "收件人：{{value}}",
+    "cc": "抄送：{{value}}"
+  },
+  "demo": {
+    "banner": "演示 — 浏览器中无法使用真实电子邮件；请使用桌面应用。",
+    "accountName": "演示邮箱",
+    "folders": {
+      "notifications": "通知",
+      "drafts": "草稿",
+      "sent": "已发送",
+      "archive": "归档",
+      "junk": "垃圾邮件",
+      "trash": "废纸篓"
+    },
+    "welcome": {
+      "subject": "欢迎使用 OpenAEC Email Studio",
+      "heading": "欢迎！",
+      "intro": "这是一个演示邮箱。在浏览器中，Email Studio 无法收取或发送真实电子邮件；请使用桌面应用。",
+      "introHtml": "这是一个<strong>演示邮箱</strong>。在浏览器中，Email Studio 无法收取或发送真实电子邮件；请使用桌面应用。",
+      "tryIt": "请随意尝试：回复、加星标（S）、移动到归档，以及在文字或电子表格中打开附件。",
+      "tryItHtml": "请随意尝试：回复、加星标（<kbd>S</kbd>）、移动到归档，以及在文字或电子表格中打开附件。",
+      "logoText": "下方的 OpenAEC 徽标是来自附件的内嵌图片（cid:）。",
+      "logoAlt": "OpenAEC 徽标",
+      "logoHtml": "左侧的徽标是来自附件的内嵌图片。"
+    },
+    "errors": {
+      "accountNotFound": "账户不存在。",
+      "messageNotFound": "邮件不存在。",
+      "folderExists": "此文件夹已存在。",
+      "folderCannotRename": "此文件夹无法重命名。",
+      "specialFolderDelete": "特殊文件夹无法删除。",
+      "attachmentNotFound": "附件不存在。",
+      "targetFolderNotFound": "目标文件夹不存在。",
+      "noRecipients": "未指定收件人。",
+      "recipientRefused": "演示：服务器拒绝收件人 {{domain}}。",
+      "attachmentsTooLarge": "演示：附件限制为 {{max}}。"
+    },
+    "accountAdded": {
+      "subject": "已添加你的账户（演示）",
+      "text": "账户 {{email}} 已添加到演示中。{{notice}}"
+    },
+    "discovery": {
+      "knownProvider": "已知服务商（演示）。",
+      "mx": "{{domain}} 的 MX 记录指向 mail.protection.outlook.com（演示）。",
+      "ownServer": "{{name}}（自有服务器）",
+      "autoconfig": "在 autoconfig.{{domain}} 找到（演示）。",
+      "srv": "_imaps._tcp 和 _submission._tcp（演示）。",
+      "ispdb": "来自 Thunderbird 数据库（演示）。",
+      "guessImapOk": "常见服务器名称；IMAP 探测成功（演示）。",
+      "guessAlternative": "备用服务器名称（演示）。"
+    },
+    "test": {
+      "noServer": "未指定 {{protocol}} 服务器。",
+      "invalidPort": "端口无效。",
+      "unreachable": "演示：无法访问 {{host}}。",
+      "simulated": "演示：已模拟连接。",
+      "simulatedUnencrypted": "演示：已模拟连接（未加密！）。"
+    },
+    "oauthDesktopOnly": "只能在桌面应用中使用 Microsoft 或 Google 登录。"
+  },
+  "preview": {
+    "loading": "正在加载预览…",
+    "dialog": {
+      "attachments": "附件",
+      "previous": "上一个附件",
+      "previousTitle": "上一个附件 (←)",
+      "next": "下一个附件",
+      "nextTitle": "下一个附件 (→)",
+      "close": "关闭预览",
+      "closeTitle": "关闭 (Esc)",
+      "fetching": "正在获取附件…",
+      "fetchFailed": "无法获取附件：{{message}}"
+    },
+    "card": {
+      "fileName": "文件名",
+      "size": "大小",
+      "openExternal": "使用默认应用打开",
+      "unknown": "未知",
+      "attention": "注意",
+      "yes": "是",
+      "no": "否"
+    },
+    "detection": {
+      "kinds": {
+        "pdf": "PDF 文件",
+        "dwg": "DWG 图纸",
+        "dxf": "DXF 图纸",
+        "ifc": "IFC 模型",
+        "markdown": "Markdown",
+        "text": "文本",
+        "image": "图片",
+        "office": "Office 文档",
+        "unknown": "未知文件"
+      },
+      "contentDiffers": "名称表明这是{{kind}}，但内容并非如此。",
+      "mismatch": "此附件名为“.{{extension}}”（{{named}}），但内容是{{actual}}。",
+      "mismatchSubtype": "此附件名为“.{{extension}}”（{{named}}），但内容是{{actual}}（{{subtype}}）。",
+      "contentBinary": "名称表明这是{{kind}}，但内容是二进制数据。",
+      "notSvg": "名称表明这是 SVG 图片，但内容不是 SVG。",
+      "signatureMissing": "名称表明这是{{kind}}，但内容缺少相应特征。"
+    },
+    "image": {
+      "loadFailed": "无法加载图片：{{message}}",
+      "subtitle": "图片",
+      "cannotDisplay": "此图片无法在此显示（已损坏或为不支持的变体）。",
+      "tooLarge": "此图片大于 {{size}} MB，不显示预览。",
+      "tooManyPixels": "此图片为 {{width}} × {{height}} 像素（超过 {{megapixels}} 百万像素），不显示预览。",
+      "toolbar": "图片",
+      "zoomOut": "缩小",
+      "zoomOutTitle": "缩小 (−)",
+      "zoomIn": "放大",
+      "zoomInTitle": "放大 (+)",
+      "fit": "适合窗口",
+      "fitTitle": "适合窗口 (0)",
+      "actualSize": "实际大小 (100%)",
+      "actualSizeTitle": "实际大小",
+      "rotate": "顺时针旋转",
+      "rotateTitle": "顺时针旋转 (R)",
+      "area": "图片预览"
+    },
+    "text": {
+      "loadFailed": "无法加载文本：{{message}}",
+      "toolbar": "文本",
+      "encoding": "编码：{{encoding}}",
+      "utf8Bom": "UTF-8（带 BOM）",
+      "formatJson": "格式化 JSON",
+      "wrapLines": "自动换行",
+      "truncated": "显示 {{size}} 中的前 {{limit}}。保存文件以查看全部内容。",
+      "contentOf": "{{name}} 的内容"
+    },
+    "markdown": {
+      "loadFailed": "无法加载文件：{{message}}",
+      "linkNotOpened": "链接未打开：{{url}}",
+      "imageFallback": "图片",
+      "externalBlocked": "{{alt}}（已阻止外部图片）",
+      "unavailable": "{{alt}}（不可用）",
+      "view": "视图",
+      "rendered": "渲染",
+      "source": "源代码",
+      "showExternalImages": "显示外部图片",
+      "truncated": "显示 {{size}} 中的前 {{limit}}。",
+      "confirmLabel": "打开链接",
+      "confirmQuestion": "要在 Office Studio 之外打开此链接吗？"
+    },
+    "pdf": {
+      "loadFailed": "无法加载 PDF：{{message}}",
+      "properties": "属性",
+      "frameTitle": "PDF：{{name}}",
+      "linuxUnsupported": "Linux 上的 WebView 无法可靠地显示 PDF。完整预览将在未来版本中提供（Rust 查看器）。",
+      "cannotPreview": "此 PDF 无法在此预览。完整预览将在未来版本中提供（Rust 查看器）。",
+      "subtitle": "PDF 文档",
+      "subtitleVersion": "PDF {{version}}",
+      "pages": "页数",
+      "author": "作者",
+      "subject": "主题",
+      "createdWith": "创建工具",
+      "created": "创建时间",
+      "modified": "修改时间",
+      "encrypted": "已加密",
+      "incomplete": "文件似乎不完整或已损坏",
+      "showPreview": "显示预览"
+    },
+    "cad": {
+      "loadFailed": "无法加载图纸：{{message}}",
+      "previewLater": "预览将在未来版本中提供（Rust 查看器）。",
+      "tooLargeToParse": "此文件太大，无法在此分析。预览将在未来版本中提供（Rust 查看器）。",
+      "dwgSubtitle": "AutoCAD 图纸 (DWG)",
+      "dxfSubtitle": "DXF 图纸",
+      "dxfBinarySubtitle": "二进制 DXF 图纸",
+      "format": "格式",
+      "savedAs": "保存格式",
+      "unknownAutocadVersion": "未知 AutoCAD 版本",
+      "units": "单位",
+      "entities": "实体",
+      "blocks": "块",
+      "layers": "图层",
+      "thumbnailAlt": "图纸的嵌入缩略图",
+      "thumbnailCaption": "文件中的缩略图",
+      "entitiesByType": "按类型统计的实体",
+      "layersCount": "图层（{{n}}）",
+      "andMore": "… 以及其他 {{n}} 个",
+      "versionRange": "AutoCAD {{from}} 至 {{to}}",
+      "versionAndLater": "AutoCAD {{version}} 及更高版本",
+      "unitCode": "代码 {{code}}",
+      "unitNames": {
+        "unitless": "无单位",
+        "inch": "英寸",
+        "foot": "英尺",
+        "mile": "英里",
+        "millimeter": "毫米",
+        "centimeter": "厘米",
+        "meter": "米",
+        "kilometer": "千米",
+        "microinch": "微英寸",
+        "mil": "密耳",
+        "yard": "码",
+        "angstrom": "埃",
+        "nanometer": "纳米",
+        "micron": "微米",
+        "decimeter": "分米",
+        "decameter": "十米",
+        "hectometer": "百米",
+        "gigameter": "吉米",
+        "astronomicalUnit": "天文单位",
+        "lightYear": "光年",
+        "parsec": "秒差距",
+        "usSurveyFoot": "美国测量英尺",
+        "usSurveyInch": "美国测量英寸",
+        "usSurveyYard": "美国测量码",
+        "usSurveyMile": "美国测量英里"
+      }
+    },
+    "ifc": {
+      "loadFailed": "无法加载模型：{{message}}",
+      "previewLater": "3D 预览将在未来版本中提供（Rust 查看器）。",
+      "tooLarge": "此模型大于 {{size}} MB，不在此分析。",
+      "analysing": "正在分析模型… {{percent}}",
+      "cancelled": "分析已取消。",
+      "retry": "重新分析",
+      "failed": "分析失败：{{message}}",
+      "subtitle": "IFC 模型",
+      "subtitleWithSchema": "IFC 模型 · {{schemas}}",
+      "nameInFile": "文件中的名称",
+      "timestamp": "时间戳",
+      "author": "作者",
+      "organization": "组织",
+      "application": "应用程序",
+      "description": "说明",
+      "sites": "场地",
+      "buildings": "建筑",
+      "entities": "实体",
+      "incomplete": "文件似乎不完整（缺少 END-ISO-10303-21）",
+      "storeys": "楼层（{{n}}）",
+      "elementsHeading": "建筑构件",
+      "allEntityTypes": "所有实体类型（{{n}}）",
+      "elements": {
+        "wall": "墙",
+        "wallStandardCase": "墙（标准情况）",
+        "curtainWall": "幕墙",
+        "slab": "楼板",
+        "roof": "屋顶",
+        "column": "柱",
+        "beam": "梁",
+        "member": "杆件",
+        "plate": "板",
+        "door": "门",
+        "window": "窗",
+        "stair": "楼梯",
+        "ramp": "坡道",
+        "railing": "栏杆",
+        "covering": "覆面",
+        "footing": "基础",
+        "pile": "桩",
+        "space": "空间",
+        "opening": "洞口",
+        "furnishing": "家具",
+        "flowSegment": "风管和管道段",
+        "flowTerminal": "设备末端",
+        "proxy": "其他建筑构件",
+        "storey": "楼层"
+      }
+    },
+    "office": {
+      "kinds": {
+        "document": "文字文档",
+        "spreadsheet": "电子表格",
+        "presentation": "演示文稿",
+        "database": "数据库"
+      },
+      "genericDocument": "Office 文档",
+      "type": "类型",
+      "openFailed": "打开失败：{{message}}",
+      "openCopyHint": "在{{module}}中打开可编辑副本。邮件中的原始文件保持不变。",
+      "cannotOpen": "无法在此打开此 Office 格式。",
+      "opening": "正在打开…",
+      "openIn": "在{{module}}中打开"
+    },
+    "unknown": {
+      "subtitle": "无可用预览",
+      "declaredType": "声明的类型",
+      "extension": "扩展名",
+      "none": "无",
+      "message": "无法为此文件类型显示预览。请保存文件，仅在信任发件人时才打开。"
+    }
+  },
+  "backend": {
+    "accounts": {
+      "fileCorrupt": "账户文件 {{path}} 已损坏。",
+      "fileUnreadable": "无法读取账户文件。",
+      "fileWriteFailed": "无法写入账户文件。",
+      "invalidEmail": "请输入有效的电子邮件地址。",
+      "invalidReplyTo": "回复地址不是有效的电子邮件地址。",
+      "lineBreakInName": "名称不能包含换行符。",
+      "notFound": "此账户已不存在。",
+      "saveFailed": "无法保存账户。",
+      "usernameMissing": "请输入 IMAP 和 SMTP 的用户名。"
+    },
+    "attachments": {
+      "blockedDatabase": "出于安全原因，“{{name}}”不会自动打开。请在 Database Studio 中打开 Access 数据库。如仍要查看，请保存附件。",
+      "blockedExecutable": "出于安全原因，“{{name}}”不会自动打开。此类文件可以运行程序。如仍要查看，请保存附件。",
+      "blockedMacros": "出于安全原因，“{{name}}”不会自动打开。此文档包含宏。如仍要查看，请保存附件。",
+      "blockedScripts": "出于安全原因，“{{name}}”不会自动打开。此类文件可能包含脚本。如仍要查看，请保存附件。",
+      "emptyOrTooLarge": "附件为空或大于 100 MB。",
+      "executableContent": "“{{name}}”是{{kind}}，出于安全原因不会打开。",
+      "invalidName": "文件名无效。",
+      "kind": {
+        "linuxProgram": "Linux 程序 (ELF)",
+        "macProgram": "macOS 程序 (Mach-O) 或 Java 类",
+        "script": "脚本",
+        "windowsProgram": "Windows 程序 (PE)",
+        "windowsShortcut": "Windows 快捷方式"
+      },
+      "nameMissing": "缺少文件名。",
+      "noProgram": "未找到可打开此附件的程序。",
+      "notFound": "此邮件中不存在附件 {{index}}。",
+      "openFailed": "打开失败。",
+      "sendAsBinary": "请将附件作为不超过 100 MB 的二进制数据发送。",
+      "tempDirFailed": "无法创建临时文件夹。",
+      "tempSaveFailed": "无法临时保存附件。"
+    },
+    "auth": {
+      "failed": "登录 {{host}} 失败：用户名或密码不正确（{{detail}}）。Gmail、Outlook、iCloud 和 Yahoo 需要应用专用密码。",
+      "noPassword": "此账户未输入或保存密码。",
+      "noStoredPassword": "此账户未保存密码。请在账户设置中输入密码。"
+    },
+    "autoconfig": {
+      "httpsRedirectOnly": "仅跟随指向 HTTPS 的重定向。",
+      "invalidEncoding": "配置文件中的字符编码无效。",
+      "notFound": "未找到配置（HTTP {{status}}）。",
+      "tooManyRedirects": "重定向次数过多。"
+    },
+    "common": {
+      "saveFailed": "保存失败。"
+    },
+    "compose": {
+      "attachmentCorrupt": "附件“{{name}}”已损坏。",
+      "attachmentsTooLarge": "附件总大小超过 {{max}} MB。请通过共享链接发送大文件。",
+      "buildFailed": "无法撰写邮件（{{detail}}）。",
+      "field": {
+        "bcc": "密送",
+        "cc": "抄送",
+        "from": "发件人",
+        "inReplyTo": "In-Reply-To",
+        "references": "References",
+        "replyTo": "Reply-To",
+        "subject": "主题",
+        "to": "收件人"
+      },
+      "invalidAddress": "{{field}} 中的“{{address}}”不是有效的电子邮件地址。",
+      "invalidCharacters": "{{field}} 包含无效字符。",
+      "invalidEnvelope": "信封无效。",
+      "noRecipients": "请至少输入一位收件人。"
+    },
+    "connection": {
+      "failed": "无法连接到 {{host}}：{{detail}}",
+      "hostNotFound": "未找到服务器名称 {{host}}。",
+      "refused": "服务器 {{host}} 拒绝了连接。请检查端口和安全设置。",
+      "reset": "与 {{host}} 的连接意外关闭。安全设置（SSL/TLS 或 STARTTLS）与端口是否匹配？",
+      "timeout": "服务器 {{host}} 未及时响应。请检查服务器名称、端口和防火墙。"
+    },
+    "files": {
+      "saveFailed": "无法保存文件。"
+    },
+    "http": {
+      "invalidHttpResponse": "HTTP 响应无效。",
+      "invalidResponse": "响应无效。",
+      "invalidServerName": "服务器名称 {{host}} 无效。",
+      "invalidUrl": "网址无效。",
+      "plainOnlyLocal": "仅允许向本计算机使用未加密的 HTTP。",
+      "redirectWithoutLocation": "重定向缺少地址。",
+      "responseTooLarge": "服务器响应过大。"
+    },
+    "images": {
+      "credentialsInUrl": "不获取包含登录凭据的地址。",
+      "hostNotFound": "未找到 {{host}}。",
+      "httpOnly": "仅允许 http 和 https 地址。",
+      "invalidServerName": "服务器名称无效。",
+      "notAnImage": "此地址未返回图片。",
+      "privateAddress": "不获取来自内部或本地地址的外部内容。",
+      "timeout": "图片未在 10 秒内加载完成。",
+      "tooLarge": "图片大于 10 MB。",
+      "tooManyRedirects": "重定向次数过多（最多 3 次）。",
+      "unavailable": "图片不可用（HTTP {{status}}）。",
+      "unknownRedirect": "未知的重定向。",
+      "unsupportedImage": "内容不是受支持的图片。"
+    },
+    "imap": {
+      "action": {
+        "copy": "复制",
+        "countFolders": "统计文件夹",
+        "createFolder": "创建文件夹",
+        "delete": "删除",
+        "deleteFolder": "删除文件夹",
+        "expunge": "清理",
+        "fetchMessage": "获取邮件",
+        "fetchMessages": "获取邮件",
+        "flag": "标记",
+        "listFolders": "获取文件夹",
+        "move": "移动",
+        "openFolder": "打开文件夹",
+        "openNamedFolder": "打开文件夹“{{folder}}”",
+        "renameFolder": "重命名文件夹",
+        "saveToDrafts": "保存到草稿",
+        "saveToFolder": "保存到文件夹",
+        "saveToSent": "保存到已发送",
+        "search": "搜索",
+        "signIn": "登录",
+        "startTls": "STARTTLS"
+      },
+      "alreadyInTrash": "这些邮件已在废纸篓中；请永久删除它们。",
+      "appendRejected": "{{action}}：服务器拒绝了邮件。",
+      "badCommand": "{{action}}：服务器无法理解该命令（{{detail}}）。",
+      "cannotDeleteInbox": "收件箱无法删除。",
+      "cannotRenameInbox": "收件箱无法重命名。",
+      "closedImmediately": "{{host}} 立即关闭了连接。安全设置（SSL/TLS 或 STARTTLS）与端口是否匹配？",
+      "commandTimeout": "{{host}} 未在 {{seconds}} 秒内响应。",
+      "connectTimeout": "{{host}}:{{port}} 在 {{seconds}} 秒内无响应。请检查服务器名称、端口和防火墙。",
+      "connectionLost": "与 {{host}} 的连接已断开。",
+      "draftsFolderMissing": "服务器上未找到草稿文件夹。请在账户设置中选择该文件夹。",
+      "greetingRefused": "{{host}} 拒绝了连接：{{detail}}",
+      "invalidFolderName": "文件夹名称无效。",
+      "invalidMessage": "邮件无效。",
+      "invalidName": "{{action}}：名称中包含无效字符。",
+      "invalidSearchCharacters": "搜索文本包含无效字符。",
+      "messageGone": "此邮件已不存在（可能已被移动或删除）。",
+      "messageTooLarge": "邮件大小为 {{size}} MB；Email Studio 最多打开 {{max}} MB 的邮件。",
+      "noStarttls": "{{host}} 不支持在端口 {{port}} 上使用 STARTTLS。请选择 SSL/TLS（通常为端口 993）。",
+      "noTrash": "服务器上未找到废纸篓文件夹。请在账户设置中选择废纸篓文件夹，或永久删除。",
+      "noValidMessages": "未指定有效邮件。",
+      "notFound": "{{action}}：{{detail}}",
+      "quotaExceeded": "{{action}}：邮箱已满（{{detail}}）。",
+      "refused": "{{action}}：服务器拒绝（{{detail}}）。",
+      "retryLater": "{{message}}（为避免被服务器屏蔽，Email Studio 将在 {{retrySeconds}} 秒后重试。）",
+      "searchTooLong": "搜索文本过长。",
+      "sentFolderMissing": "服务器上未找到已发送文件夹。请在账户设置中选择该文件夹。",
+      "signInTimeout": "登录 {{host}} 耗时过长。",
+      "specialFolderMissing": "服务器上未找到该文件夹。请在账户设置中选择该文件夹。",
+      "unexpectedError": "{{action}}：意外错误。",
+      "unexpectedResponse": "{{action}}：服务器返回意外响应。",
+      "unexpectedState": "意外的连接状态。"
+    },
+    "keychain": {
+      "notResponding": "钥匙串未响应。",
+      "unavailable": "操作系统钥匙串不可用。Email Studio 从不以明文保存密码；在 Linux 上需要 Secret Service（例如 GNOME Keyring 或 KWallet）。",
+      "unexpected": "钥匙串返回了意外错误。"
+    },
+    "links": {
+      "openFailed": "无法打开链接。",
+      "unsupportedScheme": "只能打开 http、https 和 mailto 链接。"
+    },
+    "messages": {
+      "invalidMime": "无法读取邮件（MIME 结构无效）。",
+      "unreadable": "无法读取邮件。"
+    },
+    "oauth": {
+      "browserFailed": "无法打开网页浏览器进行登录。",
+      "cancelled": "登录已取消。",
+      "cancelledOrDenied": "登录 {{provider}} 已取消或被拒绝。",
+      "clientMisconfigured": "{{provider}} 的 OAuth 客户端配置不正确（客户端 ID 或密钥）。",
+      "emailUnknown": "无法确定登录所用的电子邮件地址；请输入地址后重试。",
+      "invalidClientId": "这不是有效的客户端 ID。",
+      "invalidTokenEndpoint": "令牌端点无效。",
+      "noAccessToken": "{{provider}} 未返回访问令牌（HTTP {{status}}）。",
+      "noFreePort": "没有可用于登录的临时端口。",
+      "noPort": "无端口。",
+      "noRefreshToken": "{{provider}} 未返回刷新令牌；请重新登录。",
+      "noStoredSignIn": "请重新登录 {{provider}}：此账户未保存登录信息。",
+      "notConfigured": {
+        "google": "尚未设置使用 Google 登录：没有客户端 ID。请在 Google Cloud 中创建“桌面应用”类型的 OAuth 客户端（通过 http://127.0.0.1 重定向），启用 Gmail API，并在同意屏幕中添加范围 https://mail.google.com/。然后输入客户端 ID 和客户端密钥（参见 docs/email-oauth.md）。",
+        "microsoft": "尚未设置使用 Microsoft 登录：没有客户端 ID。请在 Microsoft Entra（应用注册）中将应用注册为“公共客户端”，添加重定向 URI 为 http://localhost 的“移动和桌面应用程序”平台，并授予委托权限 IMAP.AccessAsUser.All、SMTP.Send、offline_access、openid 和 email。然后输入客户端 ID（参见 docs/email-oauth.md）。"
+      },
+      "providerRefused": "{{provider}} 拒绝了登录（{{detail}}）。",
+      "randomUnavailable": "没有可用的安全随机源。",
+      "reauthenticate": "请重新登录 {{provider}}：权限已过期或已被撤销。",
+      "settingSaveFailed": "无法保存 OAuth 设置。",
+      "signInFirst": "此账户使用 OAuth2：请先使用 Microsoft 或 Google 登录。",
+      "signInFirstToTest": "请先使用 Microsoft 或 Google 登录以测试 OAuth2。",
+      "signInTimeout": "登录 {{provider}} 超过 5 分钟，已中止。",
+      "stateMismatch": "登录页面的响应不属于本次登录（state 不匹配）。",
+      "timeout": "{{provider}} 未及时响应。",
+      "tokenRefused": "{{provider}} 拒绝了令牌（{{detail}}）。",
+      "unexpectedResponse": "{{provider}} 返回了意外响应（HTTP {{status}}）。"
+    },
+    "security": {
+      "cramMd5SmtpUnsupported": "SMTP 不支持加密密码（CRAM-MD5）。请选择“普通密码”；通过 SSL/TLS 或 STARTTLS 时密码同样会被加密。",
+      "invalidServerName": "“{{host}}”不是有效的 {{protocol}} 服务器名称。",
+      "notLocalhost": "{{host}} 不是本计算机，因此已拒绝未加密的连接。",
+      "portMissing": "缺少 {{protocol}} 的端口。",
+      "unencryptedRefused": "已拒绝以未加密方式登录 {{host}}：你的密码会以可读形式在网络上传输。请选择 SSL/TLS 或 STARTTLS。仅允许与本计算机（localhost）建立未加密连接，例如用于 Proton Mail Bridge。"
+    },
+    "server": {
+      "noTimelyResponse": "{{host}} 未及时响应。"
+    },
+    "smtp": {
+      "authMethodUnsupported": "SMTP 不支持此登录方式。",
+      "error": "{{host}} 发生 SMTP 错误：{{detail}}",
+      "messageTooLarge": "{{host}} 因邮件过大而拒绝（{{detail}}）。",
+      "noAuthMechanism": "{{host}} 未提供 Email Studio 支持的登录方式（PLAIN 或 LOGIN）。请选择 STARTTLS 或 SSL/TLS；许多服务器仅在加密后才提供登录。",
+      "oauthRejected": "{{host}} 拒绝了 OAuth2 令牌；你可能需要重新登录。",
+      "rejected": "{{host}} 拒绝了邮件（{{detail}}）。",
+      "sendTimeout": "通过 {{host}} 发送耗时过长。",
+      "tlsFailed": "无法与 {{host}} 建立安全连接（{{detail}}）。安全设置与端口是否匹配？",
+      "tryLater": "{{host}} 目前无法接收邮件；请稍后重试（{{detail}}）。"
+    },
+    "storage": {
+      "appDataDirNotFound": "未找到应用数据文件夹。",
+      "dataDirCreateFailed": "无法创建数据文件夹。",
+      "dataDirMissing": "缺少数据文件夹。"
+    },
+    "test": {
+      "signedIn": "已登录 {{host}}。",
+      "signedInUnencrypted": "已登录 {{host}}。注意：{{protocol}} 连接未加密。仅因服务器在本计算机上运行才允许这样做。"
+    },
+    "tls": {
+      "certificateRejected": "已拒绝与 {{host}} 的安全连接：{{reason}}。为保护你的密码，Email Studio 不会连接到无法验证身份的服务器。",
+      "handshakeFailed": "无法与 {{host}} 建立安全连接（{{detail}}）。安全设置（SSL/TLS 或 STARTTLS）与端口是否匹配？",
+      "handshakeTimeout": "与 {{host}} 的 TLS 握手耗时过长。",
+      "invalidServerName": "“{{host}}”不是有效的 TLS 服务器名称。",
+      "reason": {
+        "expired": "证书已过期",
+        "invalid": "证书无效（{{detail}}）",
+        "notYetValid": "证书尚未生效（本计算机的时钟是否正确？）",
+        "revoked": "证书已被吊销",
+        "unknownIssuer": "证书并非由受信任的证书颁发机构颁发（可能是自签名证书）",
+        "wrongName": "证书不属于名称 {{host}}；请使用证书上显示的服务器名称"
+      }
+    }
+  }
+}

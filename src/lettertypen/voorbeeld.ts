@@ -3,6 +3,7 @@
  * laden als een regel in beeld komt; tot dan tekent de browser een neutrale
  * terugval met dezelfde regelhoogte, zodat de lijst niet verspringt.
  */
+import i18next from "../i18n/config";
 import { ALLE_STIJLEN, familieInfo, registreerCss } from "./catalogus";
 import { opSysteem, systeemLettertypeBytes } from "./systeem";
 import { VERVANGINGEN } from "./vervanging";
@@ -103,11 +104,19 @@ export async function laadVoorbeeld(regel: KeuzeRegel, alle = false): Promise<bo
 
 /** Korte vermelding (licentie, herkomst, vervanging) voor tooltip en infopaneel. */
 export function vermelding(regel: KeuzeRegel): string {
-  if (regel.herkomst === "systeem") return "Lettertype van deze computer.";
+  const t = (sleutel: string, waarden?: Record<string, string | undefined>) =>
+    i18next.t(`fonts:attribution.${sleutel}`, waarden);
+  if (regel.herkomst === "systeem") return t("system");
   if (regel.herkomst === "office")
-    return `Office-lettertype; hier getekend met ${regel.vervanger}${regel.metrisch ? " (metrisch gelijk)" : " (benadering)"}. In het bestand blijft ${regel.familie} staan.`;
-  if (regel.herkomst === "onbekend") return "Niet beschikbaar; de app kiest een vervanger.";
+    return t(regel.metrisch ? "officeMetric" : "officeApproximation", {
+      substitute: regel.vervanger,
+      font: regel.familie,
+    });
+  if (regel.herkomst === "onbekend") return t("unknown");
   const info = familieInfo(regel.familie)!;
-  const metrisch = info.metrischVoor ? ` Metrisch gelijk aan ${info.metrischVoor}.` : "";
-  return `${info.licentie === "OFL-1.1" ? "SIL Open Font License 1.1" : info.licentie} · ${info.herkomst === "extra" ? info.bron : "meegeleverd (@betteroffice/fonts)"}.${metrisch}`;
+  const licentie = t("license", {
+    license: info.licentie === "OFL-1.1" ? "SIL Open Font License 1.1" : info.licentie,
+    source: info.herkomst === "extra" ? info.bron : t("bundled", { package: "@betteroffice/fonts" }),
+  });
+  return info.metrischVoor ? `${licentie} ${t("metricCompatible", { font: info.metrischVoor })}` : licentie;
 }

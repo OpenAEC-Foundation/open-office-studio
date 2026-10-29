@@ -1,0 +1,265 @@
+{
+  "types": {
+    "column": {
+      "name": "Stolpe",
+      "description": "Sammenlign verdier side om side"
+    },
+    "stackedColumn": {
+      "name": "Stablet stolpe",
+      "description": "Deler og totalsum per kategori"
+    },
+    "percentColumn": {
+      "name": "100 % stolpe",
+      "description": "Andeler per kategori"
+    },
+    "bar": {
+      "name": "Liggende stolpe",
+      "description": "Vannrett, for lange navn"
+    },
+    "line": {
+      "name": "Linje",
+      "description": "Trend over tid"
+    },
+    "lineMarkers": {
+      "name": "Linje med indikatorer",
+      "description": "Trend med synlige datapunkter"
+    },
+    "area": {
+      "name": "Område",
+      "description": "Trend med vekt på størrelse"
+    },
+    "pie": {
+      "name": "Sektor",
+      "description": "Fordeling av én enkelt serie"
+    },
+    "doughnut": {
+      "name": "Smultring",
+      "description": "Fordeling med åpen midte"
+    },
+    "scatter": {
+      "name": "Punkt (XY)",
+      "description": "Sammenheng mellom to tall"
+    },
+    "combo": {
+      "name": "Stolpe + linje",
+      "description": "Siste serie som linje på en sekundærakse"
+    }
+  },
+  "unknownType": "Ukjent type",
+  "busy": "Arbeider…",
+  "defaults": {
+    "seriesName": "Serie {{n}}",
+    "categoryName": "Kategori {{n}}",
+    "chartName": "Diagram {{n}}",
+    "sheetName": "Diagram {{n}}",
+    "true": "SANN",
+    "false": "USANN"
+  },
+  "ribbon": {
+    "charts": "Diagrammer",
+    "chart": "Diagram",
+    "editChart": "Rediger diagram",
+    "allCharts": "Alle diagrammer",
+    "dataAndFormat": "Data og formatering",
+    "overview": "Oversikt",
+    "type": "Type",
+    "changeType": "Endre diagramtype",
+    "data": "Data",
+    "selectData": "Velg data",
+    "layout": "Oppsett",
+    "titleAndLegend": "Tittel og forklaring",
+    "delete": "Slett",
+    "deleteChart": "Slett diagram",
+    "withShortcut": "{{name}} · {{shortcut}}"
+  },
+  "dialog": {
+    "title": {
+      "insert": "Sett inn diagram",
+      "edit": "Rediger diagram"
+    },
+    "button": {
+      "insert": "Sett inn",
+      "edit": "Oppdater"
+    },
+    "reloadNote": {
+      "insert": "Dokumentet lastes inn på nytt etter innsettingen. Endringer gjort før det kan ikke lenger angres.",
+      "edit": "Dokumentet lastes inn på nytt etter oppdateringen. Endringer gjort før det kan ikke lenger angres."
+    },
+    "closeTitle": "Lukk (Esc)",
+    "type": "Type",
+    "data": "Data",
+    "cellRange": "Celleområde",
+    "cellRangePlaceholder": "For eksempel A1:D6",
+    "noContiguousRange": "Referansene i dette diagrammet danner ikke et sammenhengende område; dataene forblir uendret til du angir et område.",
+    "firstRowNames": "Første rad inneholder navn",
+    "firstColumnNames": "Første kolonne inneholder navn",
+    "seriesIn": "Serier i",
+    "columns": "kolonner",
+    "rows": "rader",
+    "series": "Serie",
+    "seriesNoNumbersTitle": "{{name}}: ingen tall, ikke tatt med",
+    "noNumbers": "(ingen tall)",
+    "enterRange": "Angi celleområdet som inneholder dataene.",
+    "placeCursorInTable": "Plasser først markøren i en tabell med tall.",
+    "titles": "Titler",
+    "chartTitle": "Tittel",
+    "subtitle": "Undertittel",
+    "categoryAxis": "Kategoriakse",
+    "valueAxis": "Verdiakse",
+    "horizontalAxis": "Vannrett akse",
+    "verticalAxis": "Loddrett akse",
+    "secondaryAxis": "Sekundærakse",
+    "format": "Format",
+    "legend": "Forklaring",
+    "gridlines": "Rutenett",
+    "dataLabels": "Dataetiketter",
+    "decimals": "Desimaler",
+    "placement": "Plassering",
+    "besideData": "Ved siden av dataene på dette arket",
+    "newSheet": "På et nytt ark",
+    "sheetName": "Arknavn",
+    "summary": {
+      "series_one": "{{n}} serie",
+      "series_other": "{{n}} serier",
+      "categories_one": "{{n}} kategori",
+      "categories_other": "{{n}} kategorier",
+      "text": "{{series}} · {{categories}}",
+      "withSheet": "{{series}} · {{categories}} · {{sheet}}"
+    }
+  },
+  "legend": {
+    "bottom": "Nederst",
+    "right": "Høyre",
+    "top": "Øverst",
+    "left": "Venstre",
+    "none": "Ingen forklaring"
+  },
+  "dataSheet": {
+    "row": "Rad",
+    "series": "Serie",
+    "removeLastRow": "Slett siste rad",
+    "removeLastSeries": "Slett siste serie",
+    "paste": "Lim inn",
+    "pasteTitle": "Lim inn tabulatordelt tekst fra utklippstavlen, for eksempel kopiert fra et regneark",
+    "fromTable": "Fra merket tabell",
+    "fromTableTitle": "Henter tabellen markøren står i",
+    "pasteNotAllowed": "Innliming med knappen er ikke tillatt her. Klikk i en celle og bruk Ctrl+V.",
+    "corner": "Hjørnecelle",
+    "seriesNameLabel": "Navn på serie {{n}}",
+    "categoryLabel": "Kategori {{n}}",
+    "valueLabel": "Verdi rad {{row}}, serie {{series}}"
+  },
+  "preview": {
+    "label": "Forhåndsvisning: {{title}}",
+    "untitled": "Forhåndsvisning: diagram uten tittel"
+  },
+  "list": {
+    "title": "Diagrammer i dette dokumentet",
+    "empty": "Dette dokumentet inneholder ingen diagrammer ennå.",
+    "edit": "Rediger",
+    "delete": "Slett",
+    "deleteLabel": "Slett {{name}}",
+    "place": {
+      "slide": "lysbilde {{n}}",
+      "sheet": "ark {{name}}",
+      "text": "diagram {{n}} i teksten"
+    }
+  },
+  "deleteConfirm": {
+    "title": "Slett diagram",
+    "text": "Vil du slette ‘{{name}}’? Dokumentet lastes deretter inn på nytt; tidligere endringer kan ikke lenger angres.",
+    "textSheet": "Vil du slette ‘{{name}}’ fra arket {{sheet}}? Dokumentet lastes deretter inn på nytt; tidligere endringer kan ikke lenger angres.",
+    "button": "Slett"
+  },
+  "errors": {
+    "unknownType": "Ukjent diagramtype.",
+    "noSeries": "Diagrammet trenger minst én dataserie.",
+    "tooManySeries": "Et diagram kan her inneholde maksimalt {{max}} serier.",
+    "tooManyCategories": "Et diagram kan her inneholde maksimalt {{max}} kategorier.",
+    "noCategories": "Diagrammet trenger minst én kategori.",
+    "valueCountMismatch": "Serien ‘{{name}}’ har ikke like mange verdier som det er kategorier.",
+    "noNumbers": "Dataene inneholder ingen tall.",
+    "comboNeedsTwoSeries": "Et kombinasjonsdiagram trenger minst to serier: stolper og en linje.",
+    "scatterNeedsNumbers": "Et punktdiagram trenger tall som X-verdier i første kolonne eller rad.",
+    "titleTooLong": "Titler kan være maksimalt {{max}} tegn lange.",
+    "invalidColor": "Fargen ‘{{color}}’ er ikke en gyldig farge.",
+    "noNumericColumn": "Ingen av kolonnene i området inneholder tall, så det er ingenting å tegne. Velg et område med minst én kolonne med tall, eller sett ‘Serier i’ til rader.",
+    "noNumericRow": "Ingen av radene i området inneholder tall, så det er ingenting å tegne. Velg et område med minst én rad med tall, eller sett ‘Serier i’ til kolonner.",
+    "chooseSeries": "Velg minst én serie for diagrammet.",
+    "rangeTooLarge": "Området er for stort: maksimalt {{max}} celler.",
+    "noDataBesideHeaders": "Området inneholder ingen data utover overskriftene.",
+    "pasteTooLarge": "De innlimte dataene er for store for et diagram.",
+    "invalidRange": "Det er ikke et gyldig celleområde. Bruk for eksempel A1:D6 eller 'Ark 1'!A1:D6.",
+    "noSuchSheet": "Det finnes ikke noe ark med navnet ‘{{name}}’.",
+    "spreadsheetNotReady": "Regnearket er ikke klart ennå.",
+    "spreadsheetReadOnly": "Regnearket er skrivebeskyttet.",
+    "documentNotReady": "Dokumentet er ikke klart ennå.",
+    "presentationNotEditable": "Presentasjonen kan ikke redigeres akkurat nå.",
+    "selectChartFirst": "Merk et diagram først.",
+    "chartGone": "Diagrammet finnes ikke lenger.",
+    "notEditableHere": "Dette diagrammet kan ikke redigeres her.",
+    "notEditable": "Dette diagrammet kan ikke redigeres.",
+    "package": {
+      "tooLarge": "Dokumentet er for stort til å redigere et diagram i det.",
+      "tooManyParts": "Dokumentet inneholder for mange eller for store deler.",
+      "notZip": "Dokumentet er ikke en gyldig Office-fil (zip).",
+      "invalidPartName": "Dokumentet inneholder et ugyldig delnavn.",
+      "noContentTypes": "Dokumentet mangler [Content_Types].xml.",
+      "missingPart": "Delen {{part}} mangler i dokumentet.",
+      "noFreePartName": "Det er ingen ledige delnavn igjen."
+    },
+    "xml": {
+      "tooLarge": "En XML-del er for stor til å behandles.",
+      "damaged": "XML-delen er skadet.",
+      "doctype": "XML med DOCTYPE behandles ikke av sikkerhetshensyn.",
+      "tooDeep": "XML-delen er nestet for dypt.",
+      "overlappingChanges": "Intern feil: overlappende XML-endringer."
+    },
+    "chartXml": {
+      "notDrawingML": "Denne delen er ikke et DrawingML-diagram.",
+      "noPlotArea": "Diagrammet har ikke noe tegneområde.",
+      "unusualPrefix": "Dette diagrammet bruker en uvanlig XML-notasjon og kan ikke redigeres trygt her."
+    },
+    "document": {
+      "noMainPart": "Dokumentet mangler hoveddelen.",
+      "tooManyCharts": "Dette dokumentet inneholder allerede {{total}} diagrammer; flere støttes ikke.",
+      "invalidSheetName": "Ugyldig arknavn: maksimalt 31 tegn, uten \\ / ? * [ ] :",
+      "sheetExists": "Det finnes allerede et ark med navnet ‘{{name}}’.",
+      "noSheetList": "Arbeidsboken har ingen liste over ark.",
+      "drawingMissing": "Tegningen for dette arket mangler eller er skadet.",
+      "noSuchWorksheet": "Det valgte arket finnes ikke eller er ikke et regneark.",
+      "notPlainWorksheet": "Et diagram kan bare plasseres på et vanlig regneark.",
+      "drawingDamaged": "Tegningen for dette arket er skadet.",
+      "docxUnusualPrefix": "Dette dokumentet bruker en uvanlig XML-notasjon; diagrammet kan ikke settes inn trygt.",
+      "noBody": "Dokumentet har ingen brødtekst.",
+      "tableTooLarge": "Tabellen er for stor for et diagram.",
+      "noSuchSlide": "Det valgte lysbildet finnes ikke.",
+      "slideUnusualPrefix": "Dette lysbildet bruker en uvanlig XML-notasjon; diagrammet kan ikke settes inn trygt.",
+      "noShapeTree": "Lysbildet har ikke noe figurtre.",
+      "chartRemoved": "Diagrammet finnes ikke lenger i dokumentet.",
+      "chartNotFound": "Fant ikke diagrammet.",
+      "cannotRemove": "Diagramobjektet kan ikke fjernes."
+    }
+  },
+  "read": {
+    "reasons": {
+      "extendedChart": "Dette er et utvidet diagram (for eksempel et foss- eller trekartdiagram) som ikke kan redigeres her.",
+      "unsupportedType": "Dette diagrammet bruker en type som ikke kan redigeres her ({{types}}).",
+      "noReadableSeries": "Diagrammet inneholder ingen serier som kan leses.",
+      "unsupportedCombination": "Dette diagrammet kombinerer typer på en måte som ikke kan redigeres her.",
+      "noSeries": "Diagrammet inneholder ingen dataserier.",
+      "invalid": "Dette diagrammet kan ikke redigeres her: {{reason}}",
+      "unusualPrefix": "Dette diagrammet bruker en uvanlig XML-notasjon og kan ikke redigeres trygt her."
+    },
+    "warnings": {
+      "stackedBars": "Stablede liggende stolper plasseres side om side under redigering.",
+      "stackedLines": "Stablede linjer blir separate linjer under redigering.",
+      "stackedAreas": "Stablede områder blir separate områder under redigering.",
+      "linesAfterColumns": "Linjeseriene plasseres etter stolpene under redigering.",
+      "lastSeriesAsLine": "Under redigering tegnes bare den siste serien som linje.",
+      "multiLevelCategories": "Kategorier på flere nivåer blir ett enkelt nivå under redigering.",
+      "moreValuesThanCategories": "Serien ‘{{name}}’ har flere verdier enn det er kategorier.",
+      "trendlinesDropped": "Trendlinjer og feilfelt fjernes under redigering."
+    }
+  }
+}

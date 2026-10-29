@@ -15,6 +15,8 @@ import {
   type ReactNode,
 } from "react";
 import { AlertTriangle, HelpCircle, Info, XCircle } from "lucide-react";
+import i18next from "i18next";
+import { useTranslation } from "react-i18next";
 
 const FOCUSBAAR =
   'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -166,35 +168,38 @@ export function DialoogBron({ children, onDialogen }: { children: ReactNode; onD
   );
 }
 
+/** VBA-MsgBox-knoppen (vbOKOnly … vbRetryCancel): waarde en sleutel in dialogs.msgBox.*. */
 const MSGBOX_KNOPPEN: [number, string][][] = [
-  [[1, "OK"]],
+  [[1, "ok"]],
   [
-    [1, "OK"],
-    [2, "Annuleren"],
+    [1, "ok"],
+    [2, "cancel"],
   ],
   [
-    [3, "Afbreken"],
-    [4, "Opnieuw"],
-    [5, "Negeren"],
+    [3, "abort"],
+    [4, "retry"],
+    [5, "ignore"],
   ],
   [
-    [6, "Ja"],
-    [7, "Nee"],
-    [2, "Annuleren"],
+    [6, "yes"],
+    [7, "no"],
+    [2, "cancel"],
   ],
   [
-    [6, "Ja"],
-    [7, "Nee"],
+    [6, "yes"],
+    [7, "no"],
   ],
   [
-    [4, "Opnieuw"],
-    [2, "Annuleren"],
+    [4, "retry"],
+    [2, "cancel"],
   ],
 ];
 
 /** Knoppen, pictogram en standaardknop van een VBA-MsgBox. */
 export function msgBoxOpbouw(knoppen: number) {
-  const lijst = MSGBOX_KNOPPEN[knoppen & 7] ?? MSGBOX_KNOPPEN[0];
+  const lijst = (MSGBOX_KNOPPEN[knoppen & 7] ?? MSGBOX_KNOPPEN[0]).map(
+    ([w, sleutel]) => [w, i18next.t(`database:dialogs.msgBox.${sleutel}`)] as [number, string],
+  );
   const pictogram = knoppen & 0x70;
   const standaard = Math.min((knoppen & 0x300) >> 8, lijst.length - 1);
   const escape = lijst.some(([w]) => w === 2) ? 2 : lijst.length === 1 ? 1 : null;
@@ -206,8 +211,9 @@ function VerzoekDialoog({ verzoek, klaar }: { verzoek: Verzoek; klaar: () => voi
   const [waarden, setWaarden] = useState<Record<string, string>>({});
   const [fout, setFout] = useState("");
   const id = useId();
+  const { t } = useTranslation("database");
   if (verzoek.soort === "bevestig") {
-    const { titel, tekst: inhoud, ja = "OK", nee = "Annuleren", gevaarlijk, standaardNee } = verzoek.opties;
+    const { titel, tekst: inhoud, ja = t("common:ok"), nee = t("common:cancel"), gevaarlijk, standaardNee } = verzoek.opties;
     const neeEerst = gevaarlijk || standaardNee;
     const kies = (w: boolean) => {
       verzoek.klaar(w);
@@ -238,13 +244,13 @@ function VerzoekDialoog({ verzoek, klaar }: { verzoek: Verzoek; klaar: () => voi
       klaar();
     };
     return (
-      <Dialoog titel={verzoek.titel} onSluit={sluit} acties={<button className="primary" onClick={sluit}>OK</button>}>
+      <Dialoog titel={verzoek.titel} onSluit={sluit} acties={<button className="primary" onClick={sluit}>{t("common:ok")}</button>}>
         <div>{verzoek.tekst}</div>
       </Dialoog>
     );
   }
   if (verzoek.soort === "vraag") {
-    const { titel, label, ok = "OK", controleer } = verzoek.opties;
+    const { titel, label, ok = t("common:ok"), controleer } = verzoek.opties;
     const bevestig = () => {
       const f = controleer?.(tekst) ?? null;
       if (f) return setFout(f);
@@ -264,7 +270,7 @@ function VerzoekDialoog({ verzoek, klaar }: { verzoek: Verzoek; klaar: () => voi
             <button className="primary" onClick={bevestig}>
               {ok}
             </button>
-            <button onClick={annuleer}>Annuleren</button>
+            <button onClick={annuleer}>{t("common:cancel")}</button>
           </>
         }
       >
@@ -313,9 +319,9 @@ function VerzoekDialoog({ verzoek, klaar }: { verzoek: Verzoek; klaar: () => voi
         acties={
           <>
             <button className="primary" onClick={bevestig}>
-              Uitvoeren
+              {t("dialogs.parameters.run")}
             </button>
-            <button onClick={annuleer}>Annuleren</button>
+            <button onClick={annuleer}>{t("common:cancel")}</button>
           </>
         }
       >
@@ -325,7 +331,7 @@ function VerzoekDialoog({ verzoek, klaar }: { verzoek: Verzoek; klaar: () => voi
             bevestig();
           }}
         >
-          <p className="muted">Deze query vraagt om parameterwaarden. Getallen met een komma, datums als 26-10-2026.</p>
+          <p className="muted">{t("dialogs.parameters.hint")}</p>
           {verzoek.namen.map((naam, i) => (
             <label key={naam} className="database-veld" htmlFor={`${id}-${i}`}>
               <span>{naam}</span>
@@ -352,7 +358,7 @@ function VerzoekDialoog({ verzoek, klaar }: { verzoek: Verzoek; klaar: () => voi
   const Icoon = pictogram === 16 ? XCircle : pictogram === 32 ? HelpCircle : pictogram === 48 ? AlertTriangle : pictogram === 64 ? Info : null;
   return (
     <Dialoog
-      titel={titel || "Open Database Studio"}
+      titel={titel || t("dialogs.msgBox.defaultTitle")}
       className="database-msgbox"
       onSluit={escape === null ? undefined : () => kies(escape)}
       acties={lijst.map(([w, naam], i) => (
@@ -365,7 +371,7 @@ function VerzoekDialoog({ verzoek, klaar }: { verzoek: Verzoek; klaar: () => voi
         {Icoon && <Icoon size={28} aria-hidden />}
         <p>{inhoud}</p>
       </div>
-      <p className="muted">Melding uit VBA-code van deze database.</p>
+      <p className="muted">{t("dialogs.msgBox.fromVba")}</p>
     </Dialoog>
   );
 }

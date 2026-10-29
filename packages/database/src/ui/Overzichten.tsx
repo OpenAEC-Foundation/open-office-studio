@@ -1,15 +1,18 @@
 /** Opbouwvoortgang, opbouwrapport en compatibiliteitsrapport (relaties: zie Relaties.tsx). */
 import { FileJson, FileText, X } from "lucide-react";
-import type { Compatibiliteitsrapport } from "../model.ts";
+import { Trans, useTranslation } from "react-i18next";
+import { useOpmaak } from "../../../../src/i18n/opmaak";
+import { rapportstatusNaam, type Compatibiliteitsrapport } from "../model.ts";
 import type { OpbouwRapport, Voortgang } from "../werkkopie/opbouw.ts";
 
+/** Sleutels onder `overview.phase`; vertaald bij weergave. */
 const FASEN: Record<Voortgang["fase"], string> = {
-  voorbereiden: "Voorbereiden",
-  tabel: "Tabellen overnemen",
-  indexen: "Indexen aanmaken",
-  relaties: "Relaties vastleggen",
-  querys: "Query’s overnemen",
-  klaar: "Afronden",
+  voorbereiden: "prepare",
+  tabel: "tables",
+  indexen: "indexes",
+  relaties: "relationships",
+  querys: "queries",
+  klaar: "finish",
 };
 
 export function OpbouwVoortgang({
@@ -23,37 +26,44 @@ export function OpbouwVoortgang({
   tabellenKlaar: number;
   onAnnuleer: () => void;
 }) {
+  const { t } = useTranslation("database");
+  const { getal } = useOpmaak();
   const fractie = voortgang?.totaal ? Math.min(1, (voortgang.rijen ?? 0) / voortgang.totaal) : undefined;
   return (
     <section className="database-opbouw" aria-labelledby="database-opbouw-titel" aria-busy="true">
-      <h2 id="database-opbouw-titel">Werkkopie opbouwen</h2>
+      <h2 id="database-opbouw-titel">{t("overview.build.title")}</h2>
       <p>
-        {naam} wordt overgenomen in een bewerkbare SQLite-werkkopie. <strong>Het origineel blijft ongewijzigd.</strong>
+        <Trans t={t} i18nKey="overview.build.intro" values={{ name: naam }} components={{ strong: <strong /> }} />
       </p>
       <p role="status" aria-live="polite">
-        {voortgang ? FASEN[voortgang.fase] : "Bestand lezen"}
+        {voortgang ? t(`overview.phase.${FASEN[voortgang.fase]}`) : t("overview.phase.readFile")}
         {voortgang?.tabel ? ` · ${voortgang.tabel}` : ""}
-        {voortgang?.totaal ? ` · ${(voortgang.rijen ?? 0).toLocaleString("nl-NL")} van ${voortgang.totaal.toLocaleString("nl-NL")} rijen` : ""}
-        {tabellenKlaar ? ` · ${tabellenKlaar} ${tabellenKlaar === 1 ? "tabel" : "tabellen"} klaar` : ""}
+        {voortgang?.totaal
+          ? ` · ${t("overview.build.rowsOf", { done: getal(voortgang.rijen ?? 0), total: getal(voortgang.totaal) })}`
+          : ""}
+        {tabellenKlaar ? ` · ${t("overview.build.tablesDone", { count: tabellenKlaar })}` : ""}
       </p>
-      <progress aria-label="Voortgang van de huidige stap" max={1} value={fractie} />
+      <progress aria-label={t("overview.build.progressLabel")} max={1} value={fractie} />
       <button onClick={onAnnuleer}>
-        <X size={16} /> Annuleren
+        <X size={16} /> {t("common:cancel")}
       </button>
-      <p className="muted">Annuleren stopt de opbouw direct. Je kunt de database daarna alleen-lezen bekijken of opnieuw openen.</p>
+      <p className="muted">{t("overview.build.cancelHint")}</p>
     </section>
   );
 }
 
 export function OpbouwRapportWeergave({ rapport, onExporteer }: { rapport: OpbouwRapport; onExporteer: () => void }) {
-  const overgeslagen = rapport.tabellen.reduce((s, t) => s + t.overgeslagen, 0);
+  const { t } = useTranslation("database");
+  const { getal, datumTijd } = useOpmaak();
+  const overgeslagen = rapport.tabellen.reduce((s, tabel) => s + tabel.overgeslagen, 0);
+  const ernstNaam = { fout: t("overview.severity.error"), waarschuwing: t("overview.severity.warning") } as Record<string, string>;
   return (
     <div className="database-overzicht">
       <div className="object-toolbar">
         <h2>
-          Opbouwrapport
+          {t("overview.buildReport.title")}
           <small>
-            {rapport.formaat} · {(rapport.duurMs / 1000).toLocaleString("nl-NL", { maximumFractionDigits: 1 })} s · SHA-256{" "}
+            {rapport.formaat} · {t("overview.buildReport.seconds", { value: getal(rapport.duurMs / 1000, { maximumFractionDigits: 1 }) })} · SHA-256{" "}
             {rapport.sha256.slice(0, 16)}…
           </small>
         </h2>
@@ -63,56 +73,67 @@ export function OpbouwRapportWeergave({ rapport, onExporteer }: { rapport: Opbou
       </div>
       <dl className="database-eigenschappen">
         <div>
-          <dt>Bron</dt>
+          <dt>{t("overview.buildReport.source")}</dt>
           <dd>{rapport.bron}</dd>
         </div>
         <div>
-          <dt>Opgebouwd</dt>
-          <dd>{new Date(rapport.tijdstip).toLocaleString("nl-NL")}</dd>
+          <dt>{t("overview.buildReport.built")}</dt>
+          <dd>{datumTijd(rapport.tijdstip)}</dd>
         </div>
         <div>
-          <dt>Indexen</dt>
+          <dt>{t("overview.buildReport.indexes")}</dt>
           <dd>
-            {rapport.indexen.aangemaakt} aangemaakt{rapport.indexen.mislukt ? `, ${rapport.indexen.mislukt} mislukt` : ""}
+            {rapport.indexen.mislukt
+              ? t("overview.buildReport.indexesCreatedFailed", {
+                  created: getal(rapport.indexen.aangemaakt),
+                  failed: getal(rapport.indexen.mislukt),
+                })
+              : t("overview.buildReport.indexesCreated", { created: getal(rapport.indexen.aangemaakt) })}
           </dd>
         </div>
         <div>
-          <dt>Relaties</dt>
+          <dt>{t("overview.buildReport.relationships")}</dt>
           <dd>
-            {rapport.relaties.totaal} totaal, {rapport.relaties.afgedwongen} afgedwongen
+            {t("overview.buildReport.relationshipsSummary", {
+              total: getal(rapport.relaties.totaal),
+              enforced: getal(rapport.relaties.afgedwongen),
+            })}
           </dd>
         </div>
         <div>
-          <dt>Query’s</dt>
+          <dt>{t("overview.buildReport.queries")}</dt>
           <dd>
-            {rapport.querys.opgeslagen} van {rapport.querys.totaal} overgenomen
+            {t("overview.buildReport.queriesSummary", {
+              saved: getal(rapport.querys.opgeslagen),
+              total: getal(rapport.querys.totaal),
+            })}
           </dd>
         </div>
         <div>
-          <dt>Overgeslagen rijen</dt>
-          <dd>{overgeslagen.toLocaleString("nl-NL")}</dd>
+          <dt>{t("overview.buildReport.skippedRows")}</dt>
+          <dd>{getal(overgeslagen)}</dd>
         </div>
       </dl>
-      <h3>Tabellen</h3>
+      <h3>{t("overview.buildReport.tables")}</h3>
       <div className="table-wrap">
         <table>
           <thead>
             <tr>
-              <th scope="col">Tabel</th>
-              <th scope="col">Rijen in origineel</th>
-              <th scope="col">Overgenomen</th>
-              <th scope="col">Overgeslagen</th>
-              <th scope="col">Kolommen</th>
+              <th scope="col">{t("overview.buildReport.table")}</th>
+              <th scope="col">{t("overview.buildReport.rowsSource")}</th>
+              <th scope="col">{t("overview.buildReport.rowsLoaded")}</th>
+              <th scope="col">{t("overview.buildReport.rowsSkipped")}</th>
+              <th scope="col">{t("overview.buildReport.columns")}</th>
             </tr>
           </thead>
           <tbody>
-            {rapport.tabellen.map((t) => (
-              <tr key={t.naam} className={t.overgeslagen ? "is-waarschuwing" : ""}>
-                <td>{t.naam}</td>
-                <td>{t.rijenBron.toLocaleString("nl-NL")}</td>
-                <td>{t.rijenGeladen.toLocaleString("nl-NL")}</td>
-                <td>{t.overgeslagen.toLocaleString("nl-NL")}</td>
-                <td>{t.kolommen}</td>
+            {rapport.tabellen.map((tabel) => (
+              <tr key={tabel.naam} className={tabel.overgeslagen ? "is-waarschuwing" : ""}>
+                <td>{tabel.naam}</td>
+                <td>{getal(tabel.rijenBron)}</td>
+                <td>{getal(tabel.rijenGeladen)}</td>
+                <td>{getal(tabel.overgeslagen)}</td>
+                <td>{getal(tabel.kolommen)}</td>
               </tr>
             ))}
           </tbody>
@@ -120,11 +141,11 @@ export function OpbouwRapportWeergave({ rapport, onExporteer }: { rapport: Opbou
       </div>
       {!!rapport.meldingen.length && (
         <>
-          <h3>Meldingen ({rapport.meldingen.length})</h3>
+          <h3>{t("overview.buildReport.messages", { count: rapport.meldingen.length })}</h3>
           <ul className="database-meldingen">
             {rapport.meldingen.map((m, i) => (
               <li key={i} className={`ernst-${m.ernst}`}>
-                <span className="database-status">{m.ernst === "fout" ? "fout" : m.ernst === "waarschuwing" ? "let op" : "info"}</span>
+                <span className="database-status">{ernstNaam[m.ernst] ?? t("overview.severity.info")}</span>
                 <strong>{m.onderdeel}</strong> {m.tekst}
               </li>
             ))}
@@ -142,11 +163,13 @@ export function CompatibiliteitWeergave({
   rapport: Compatibiliteitsrapport;
   onExporteer: (soort: "json" | "txt") => void;
 }) {
+  const { t } = useTranslation("database");
+  const { getal } = useOpmaak();
   return (
     <div className="database-overzicht">
       <div className="object-toolbar">
         <h2>
-          Compatibiliteitsrapport
+          {t("overview.compat.title")}
           <small>
             {rapport.formaat} · SHA-256 {rapport.sha256.slice(0, 16)}…
           </small>
@@ -155,17 +178,17 @@ export function CompatibiliteitWeergave({
           <FileJson size={16} /> JSON
         </button>
         <button onClick={() => onExporteer("txt")}>
-          <FileText size={16} /> Tekst
+          <FileText size={16} /> {t("overview.compat.text")}
         </button>
       </div>
       <div className="table-wrap">
         <table className="database-rapport">
           <thead>
             <tr>
-              <th scope="col">Onderdeel</th>
-              <th scope="col">Status</th>
-              <th scope="col">Aantal</th>
-              <th scope="col">Toelichting</th>
+              <th scope="col">{t("overview.compat.part")}</th>
+              <th scope="col">{t("overview.compat.status")}</th>
+              <th scope="col">{t("overview.compat.count")}</th>
+              <th scope="col">{t("overview.compat.explanation")}</th>
             </tr>
           </thead>
           <tbody>
@@ -173,9 +196,9 @@ export function CompatibiliteitWeergave({
               <tr key={regel.onderdeel}>
                 <td>{regel.onderdeel}</td>
                 <td>
-                  <span className={`database-status status-${regel.status.replaceAll(" ", "-")}`}>{regel.status}</span>
+                  <span className={`database-status status-${regel.status.replaceAll(" ", "-")}`}>{rapportstatusNaam(regel.status)}</span>
                 </td>
-                <td>{regel.aantal ?? "–"}</td>
+                <td>{regel.aantal == null ? "–" : getal(regel.aantal)}</td>
                 <td>{regel.toelichting}</td>
               </tr>
             ))}
@@ -183,8 +206,7 @@ export function CompatibiliteitWeergave({
         </table>
       </div>
       <p className="muted">
-        Gelezen met {rapport.lezer}. Het rapport bevat alleen aantallen, namen en meldingen, geen tabelgegevens. Het beschrijft het
-        alleen-lezen-pad; zie het opbouwrapport voor wat in de werkkopie is overgenomen.
+        {t("overview.compat.footnote", { reader: rapport.lezer })}
       </p>
     </div>
   );

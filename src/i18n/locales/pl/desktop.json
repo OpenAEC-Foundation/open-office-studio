@@ -1,0 +1,143 @@
+{
+  "dialogs": {
+    "cancel": "Anuluj",
+    "saveAsEllipsis": "Zapisz jako…",
+    "officeFile": "Plik biurowy",
+    "officeFiles": "Pliki biurowe",
+    "untitled": "Bez tytułu",
+    "saveCopy": "Zapisz kopię",
+    "saveAs": "Zapisz jako",
+    "openFile": "Otwórz plik",
+    "replaceFile": {
+      "title": "Zastąp plik",
+      "message": "Plik {{path}} już istnieje. Czy chcesz go zastąpić?"
+    },
+    "unsavedChanges": {
+      "title": "Niezapisane zmiany",
+      "message_one": "Jeden dokument w tym oknie zawiera zmiany, które nie zostały jeszcze zapisane. Zostaną one utracone. Zamknąć mimo to?",
+      "message_few": "{{count}} dokumenty w tym oknie zawierają zmiany, które nie zostały jeszcze zapisane. Zostaną one utracone. Zamknąć mimo to?",
+      "message_many": "{{count}} dokumentów w tym oknie zawiera zmiany, które nie zostały jeszcze zapisane. Zostaną one utracone. Zamknąć mimo to?",
+      "message_other": "{{count}} dokumentu w tym oknie zawiera zmiany, które nie zostały jeszcze zapisane. Zostaną one utracone. Zamknąć mimo to?"
+    },
+    "fileChanged": {
+      "title": "Plik został zmieniony",
+      "missing": "Plik {{name}} nie istnieje już w pierwotnej lokalizacji. Utworzyć go ponownie z Twoją wersją czy zapisać w innym miejscu?",
+      "changedExternally": "Plik {{name}} został zmieniony poza Open Office Studio od czasu jego otwarcia. Zastąpienie go odrzuci te zmiany.",
+      "overwrite": "Zastąp"
+    },
+    "foreignFormat": {
+      "title": "Zapisz jako {{format}}",
+      "message": "Plik {{name}} zostanie zaktualizowany w formacie {{format}}. Środowisko biurowe przekonwertuje w tym celu dokument; formatowanie, którego {{format}} nie obsługuje, może zostać utracone.",
+      "hint": "Wybierz Zapisz jako…, aby zachować plik DOCX, XLSX lub PPTX.",
+      "update": "Zaktualizuj jako {{format}}"
+    },
+    "chooseConverter": "Wybierz program do konwersji (soffice)",
+    "databaseExport": {
+      "title": "Zapisz eksport bazy danych",
+      "filter": "Eksport bazy danych",
+      "sqliteFilter": "Kopia robocza SQLite",
+      "replaceTitle": "Zastąp eksport",
+      "replaceMessage": "Ten plik eksportu już istnieje. Czy chcesz go zastąpić?"
+    }
+  },
+  "errors": {
+    "file": {
+      "invalidBody": "Plik jest pusty, większy niż 100 MB lub nie został wysłany jako dane binarne.",
+      "emptyOrTooLarge": "Plik jest pusty lub większy niż 100 MB.",
+      "formatInfoMissing": "Brak informacji o formacie.",
+      "formatMissing": "Brak formatu.",
+      "targetFolderMissing": "Brak folderu docelowego.",
+      "nameMissing": "Brak nazwy pliku.",
+      "nameInvalidChars": "Nazwa pliku zawiera nieprawidłowe znaki.",
+      "unsupportedFormat": "Nieobsługiwany format pliku.",
+      "extensionMismatch": "Wybrane rozszerzenie nie pasuje do dokumentu.",
+      "alreadyOpenedOrOtherWindow": "Ten plik jest już otwarty lub nie jest przeznaczony dla tego okna.",
+      "notThisWindow": "Ten plik nie należy do tego okna.",
+      "notLinked": "Ten plik nie jest już powiązany z tą kartą.",
+      "tokenMissing": "Brak tokenu.",
+      "openInOtherTab": "Plik {{name}} jest otwarty na innej karcie. Najpierw go zamknij lub wybierz inną nazwę.",
+      "readOnly": "Brak uprawnień do zapisu w tym folderze lub plik jest tylko do odczytu ({{path}}). Wybierz inną lokalizację.",
+      "notInRecentList": "Tego pliku nie ma już na liście."
+    },
+    "preferences": {
+      "tooLarge": "Preferencje są większe niż 64 kB.",
+      "invalid": "Preferencje nie są prawidłowym obiektem JSON.",
+      "configDirUnavailable": "Folder konfiguracji aplikacji jest niedostępny.",
+      "pathInvalid": "Nieprawidłowa ścieżka preferencji."
+    },
+    "font": {
+      "notInstalled": "Czcionka {{family}} nie jest zainstalowana na tym komputerze.",
+      "notFound": "Nie znaleziono czcionki.",
+      "fileTooLarge": "Ten plik czcionki jest za duży.",
+      "inCollection": "Ta czcionka należy do kolekcji (.ttc) i nie może być używana osobno.",
+      "unreadable": "Nie można odczytać pliku czcionki.",
+      "nameInvalid": "Nieprawidłowa nazwa czcionki."
+    },
+    "recovery": {
+      "keyInvalid": "Nieprawidłowy klucz odzyskiwania.",
+      "spaceFull": "Miejsce na kopie odzyskiwania (512 MB) jest pełne. Zapisz swoje dokumenty.",
+      "sessionMissing": "Brak sesji.",
+      "keyMissing": "Brak klucza.",
+      "dataInvalid": "Nieprawidłowe dane odzyskiwania.",
+      "unknownDocumentType": "Nieznany typ dokumentu.",
+      "sessionNotThisWindow": "Ta sesja odzyskiwania nie należy do tego okna.",
+      "sessionOtherWindow": "Ta sesja odzyskiwania należy do innego okna.",
+      "sessionStillRunning": "Ta sesja jest nadal aktywna."
+    },
+    "window": {
+      "closed": "To okno zostało zamknięte.",
+      "transferEmptyOrTooLarge": "Przekazanie jest puste lub za duże.",
+      "mainWindowUnavailable": "Okno główne jest niedostępne.",
+      "openFailed": "Nie można otworzyć okna: {{error}}",
+      "transferExpired": "To przekazanie wygasło lub zostało już odebrane.",
+      "transferAlreadyTaken": "To przekazanie zostało już odebrane.",
+      "transferUnknown": "To przekazanie jest nieznane."
+    },
+    "conversion": {
+      "unknownModule": "Nieznany moduł biurowy.",
+      "sourceFormatMismatch": "Format źródłowy nie należy do tego modułu.",
+      "outputFormatUnsupported": "Ten format wyjściowy nie jest obsługiwany.",
+      "outputFormatDirect": "Ten format wyjściowy jest tworzony bezpośrednio w aplikacji, a nie przez konwersję.",
+      "invalidOptions": "Nieprawidłowe opcje konwersji.",
+      "chooseSoffice": "Wybierz program soffice (Windows: soffice.exe) z folderu program środowiska biurowego.",
+      "chosenFileMissing": "Wybrany plik nie istnieje.",
+      "chosenPathNotFile": "Wybrana ścieżka nie jest plikiem.",
+      "chosenFileNotExecutable": "Wybrany plik nie jest plikiem wykonywalnym.",
+      "appDataDirUnavailable": "Folder danych aplikacji jest niedostępny.",
+      "startFailed": "Nie można rozpocząć konwersji: {{error}}",
+      "failed": "Konwersja nie powiodła się ({{reason}}). Oryginał został zachowany.",
+      "exitCode": "kod wyjścia {{code}}",
+      "processAborted": "proces przerwany",
+      "timeout": "Konwersja przekroczyła limit czasu i została zatrzymana. Oryginał został zachowany.",
+      "profilePathInvalid": "Ścieżka profilu tymczasowego jest nieprawidłowa.",
+      "inputSize": "Wybierz niepusty plik o rozmiarze maksymalnie 100 MB.",
+      "runtimeMissing": "Ten format wymaga środowiska biurowego (LibreOffice). Nie znaleziono go: zainstaluj je, wybierz program w oknie Zapisz jako lub ustaw OPENAEC_CONVERSIE_PROGRAMMA. Pliki DOCX, XLSX i PPTX działają bezpośrednio.",
+      "notConverted": "Nie można przekonwertować tego pliku. Może być uszkodzony lub chroniony albo w lokalnym środowisku brakuje filtru formatu.",
+      "multipleOutputs": "Konwersja utworzyła więcej niż jeden plik.",
+      "noUsableOutput": "Konwersja nie utworzyła użytecznego pliku o rozmiarze maksymalnie 100 MB."
+    },
+    "databaseExport": {
+      "emptyOrTooLarge": "Eksport jest pusty lub większy niż 100 MB.",
+      "emptyInvalidOrTooLarge": "Eksport jest pusty, nieprawidłowy lub większy niż 100 MB.",
+      "nameMissing": "Brak nazwy pliku.",
+      "nameInvalid": "Nieprawidłowa nazwa pliku.",
+      "notSqlite": "To nie jest kopia robocza SQLite.",
+      "typeNotAllowed": "Dozwolone są tylko eksporty CSV, źródeł, raportów i kopii roboczych SQLite. Bazy danych Access nigdy nie są zastępowane.",
+      "textNotUtf8": "Eksport tekstowy musi być prawidłowym tekstem UTF-8.",
+      "sendAsBinary": "Wyślij eksport jako dane binarne o rozmiarze maksymalnie 100 MB.",
+      "extensionMismatch": "Wybrane rozszerzenie nie pasuje do eksportu."
+    }
+  },
+  "launcher": {
+    "officeStudio": {
+      "genericName": "Pakiet biurowy",
+      "comment": "Lokalne środowisko biurowe OpenAEC",
+      "keywords": "edytor tekstu;arkusz kalkulacyjny;prezentacja;baza danych;e-mail;poczta;biuro;office;"
+    },
+    "databaseStudio": {
+      "genericName": "Przeglądarka baz danych",
+      "comment": "Otwieraj lokalnie starsze bazy danych MDB i ACCDB",
+      "keywords": "baza danych;tabela;kwerenda;zapytanie;database;access;"
+    }
+  }
+}

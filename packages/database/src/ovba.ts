@@ -1,4 +1,5 @@
 /** Eigen implementatie van MS-OVBA 2.4.1 (decompressie) en 2.3.4.2 (dir-stream). Voert niets uit. */
+import i18next from "i18next";
 export interface VbaModuleVerwijzing {
   naam: string;
   stroom: string;
@@ -37,7 +38,7 @@ export function pakVbaUit(invoer: Uint8Array, start = 0): Uint8Array {
     positie += 2;
     if (!(kop & 0x8000)) {
       if (positie + 4096 > invoer.length)
-        throw new Error("Afgebroken ongecomprimeerd MS-OVBA-blok.");
+        throw new Error(i18next.t("database:ovba.truncatedChunk"));
       for (let i = 0; i < 4096; i++) uit.push(invoer[positie + i]);
       positie += 4096;
       continue;
@@ -60,7 +61,7 @@ export function pakVbaUit(invoer: Uint8Array, start = 0): Uint8Array {
         const lengte = (token & lengteMasker) + 3;
         const afstand = (token >> (16 - bits)) + 1;
         if (afstand > verschil)
-          throw new Error("MS-OVBA-kopieertoken verwijst buiten het blok.");
+          throw new Error(i18next.t("database:ovba.copyTokenOutside"));
         const bron = uit.length - afstand;
         for (let i = 0; i < lengte; i++) uit.push(uit[bron + i]);
       }
@@ -127,7 +128,7 @@ export function leesVbaDir(gecomprimeerd: Uint8Array): VbaProjectInfo {
     if (id === 0x0009) grootte = 6;
     const data = dir.subarray(positie + 6, positie + 6 + grootte);
     if (positie + 6 + grootte > dir.length)
-      throw new Error("De VBA-dir-stream is afgebroken.");
+      throw new Error(i18next.t("database:ovba.dirTruncated"));
     positie += 6 + grootte;
     if (id === 0x0003 && grootte >= 2)
       info.codepagina = data[0] | (data[1] << 8);
@@ -184,7 +185,7 @@ export function leesVbaDir(gecomprimeerd: Uint8Array): VbaProjectInfo {
   for (const item of ruw) {
     const naam = tekst(item.unicodeNaam, item.naam);
     if (item.offset === undefined)
-      throw new Error(`Module ${naam} heeft geen bronoffset in de dir-stream.`);
+      throw new Error(i18next.t("database:ovba.noSourceOffset", { name: naam }));
     info.modules.push({
       naam,
       stroom: tekst(item.unicodeStroom, item.stroom) || naam,
@@ -211,16 +212,16 @@ export function ontsleutelProjectwaarde(hex: string): Uint8Array {
   const invoer = Uint8Array.from(hex.match(/../g) ?? [], (paar) =>
     parseInt(paar, 16),
   );
-  if (invoer.length < 8) throw new Error("Te korte projectwaarde.");
+  if (invoer.length < 8) throw new Error(i18next.t("database:ovba.valueTooShort"));
   const [zaad, versieVersleuteld, sleutelVersleuteld] = invoer;
   if ((zaad ^ versieVersleuteld) !== 2)
-    throw new Error("Onbekende versleutelingsversie.");
+    throw new Error(i18next.t("database:ovba.unknownEncryptionVersion"));
   let onversleuteld = zaad ^ sleutelVersleuteld;
   let versleuteld1 = sleutelVersleuteld;
   let versleuteld2 = versieVersleuteld;
   let positie = 3;
   const volgende = () => {
-    if (positie >= invoer.length) throw new Error("Afgebroken projectwaarde.");
+    if (positie >= invoer.length) throw new Error(i18next.t("database:ovba.valueTruncated"));
     const versleuteld = invoer[positie++];
     const waarde = versleuteld ^ ((versleuteld2 + onversleuteld) & 0xff);
     versleuteld2 = versleuteld1;
@@ -232,7 +233,7 @@ export function ontsleutelProjectwaarde(hex: string): Uint8Array {
   let lengte = 0;
   for (let i = 0; i < 4; i++) lengte |= volgende() << (8 * i);
   if (lengte < 0 || lengte > invoer.length)
-    throw new Error("Ongeldige lengte in projectwaarde.");
+    throw new Error(i18next.t("database:ovba.invalidValueLength"));
   return Uint8Array.from({ length: lengte }, volgende);
 }
 

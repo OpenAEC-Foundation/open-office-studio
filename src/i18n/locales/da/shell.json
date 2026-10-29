@@ -1,0 +1,146 @@
+{
+  "header": {
+    "homeTitle": "Gå til Start",
+    "homeLabel": "OpenAEC Office Studio · Start",
+    "version": "Version {{version}}",
+    "unsaved": "Ikke-gemte ændringer",
+    "unchanged": "Uændret",
+    "fileAndStart": "Filer og Start",
+    "openFileTitle": "Åbn en fil under en ny fane · Ctrl+O",
+    "openNotesBackupTitle": "Tilføj en sikkerhedskopi af noter · Ctrl+O",
+    "openDatabaseTitle": "Åbn database · Ctrl+O",
+    "addBackup": "Tilføj sikkerhedskopi",
+    "saveAs": "Gem som",
+    "saveAsTitle": "Gem som · F12 eller Ctrl+Shift+S (Ctrl+S gemmer i den åbne fil)",
+    "busy": "Arbejder…"
+  },
+  "message": {
+    "close": "Luk meddelelsen",
+    "markdownNote": "Markdown bevarer tekst og struktur. Gem også en DOCX for sidelayout, billeder og registrerede ændringer."
+  },
+  "loading": {
+    "editor": "Indlæser editoren…",
+    "notes": "Indlæser Noter…",
+    "email": "Indlæser Email Studio…",
+    "document": "Indlæser dokumentet…",
+    "fonts": "Indlæser skrifttyper…"
+  },
+  "errors": {
+    "editorFailed": "Editoren kunne ikke åbne denne fil: {{error}}",
+    "openFailed": "Åbning mislykkedes: {{error}}",
+    "openFileFailed": "Åbning af {{name}} mislykkedes: {{error}}",
+    "saveFailed": "Lagring mislykkedes: {{error}}",
+    "printFailed": "Udskrivning mislykkedes: {{error}}",
+    "sendAsAttachmentFailed": "Afsendelse som vedhæftet fil mislykkedes: {{error}}",
+    "templateUnavailable": "Skabelonen er ikke tilgængelig",
+    "exampleFailed": "Eksemplet kunne ikke åbnes.",
+    "fileSize": "Vælg en fil, der ikke er tom og højst er på 100 MB.",
+    "unsupportedFormat": "{{name}}: dette format understøttes ikke.",
+    "emptyAttachment": "Den vedhæftede fil er tom.",
+    "databaseModifiedFile": "Database Studio har en ændret arbejdskopi. Gem eller luk den først, og åbn derefter filen igen.",
+    "databaseModifiedAttachment": "Database Studio har en ændret arbejdskopi. Gem eller luk den først, og åbn derefter den vedhæftede fil igen.",
+    "spreadsheetNotReady": "Regnearket er ikke klar endnu.",
+    "presentationNotReady": "Præsentationen er ikke klar endnu.",
+    "documentNotReady": "Dokumentet er ikke klar endnu.",
+    "documentSaveFailed": "Dokumentet kunne ikke gemmes."
+  },
+  "tabs": {
+    "untitled": "Unavngivet {{n}}",
+    "memoryWarning_one": "{{count}} dokument er åbent. Hvert åbent dokument bruger hukommelse; luk dokumenter, du ikke længere har brug for.",
+    "memoryWarning_other": "{{count}} dokumenter er åbne. Hvert åbent dokument bruger hukommelse; luk dokumenter, du ikke længere har brug for."
+  },
+  "tabBar": {
+    "label": "Åbne faner",
+    "start": "Start",
+    "startTitle": "Start · nyt eller eksisterende dokument, Noter og Database",
+    "tabTitleUnsaved": "{{name}} · ikke-gemte ændringer",
+    "dragOutHint": "Træk udenfor for at få et separat vindue",
+    "unsavedA11y": ", ikke-gemte ændringer",
+    "closeTab": "Luk {{name}}",
+    "closeTitle": "Luk · Ctrl+W",
+    "allTabs": "Alle åbne faner",
+    "addTab": "Tilføj fane",
+    "addTabTitle": "Åbn et nyt eller eksisterende dokument, Noter eller Database",
+    "releaseOpensWindow": "Slip for at åbne et separat vindue",
+    "closeOthers": "Luk andre",
+    "closeToRight": "Luk faner til højre"
+  },
+  "windowMenu": {
+    "button": "Åbne dokumenter",
+    "buttonTitle": "Åbne dokumenter · Ctrl+Tab eller Ctrl+F6 for at skifte",
+    "empty": "Ingen åbne dokumenter.",
+    "thisWindow": "Dette vindue",
+    "mainWindow": "Hovedvindue",
+    "windowNumber": "Vindue {{number}}",
+    "unsavedTitle": "Ikke-gemte ændringer",
+    "modified": "ændret",
+    "newWindow": "Nyt vindue"
+  },
+  "windows": {
+    "openInNewWindow": "Åbn i nyt vindue",
+    "backToMainWindow": "Tilbage til hovedvinduet",
+    "databaseMovedHere": "Database Studio er nu i dette vindue. Åbn din database her igen, hvis du vil arbejde videre.",
+    "documentMoved": "Dokumentet er flyttet, inklusive ikke-gemte ændringer. Historikken for Fortryd flyttes ikke med.",
+    "linkUnavailable": "Vindueskobling er ikke tilgængelig: {{error}}",
+    "closeGuardUnavailable": "Lukkebeskyttelse er ikke tilgængelig: {{error}}",
+    "databaseModified": "Database Studio kan ikke flytte en ændret arbejdskopi til et andet vindue. Eksportér eller gem databasen først.",
+    "otherWindowFailed": "Det andet vindue kunne ikke åbne fanen.",
+    "mainWindowNoResponse": "Hovedvinduet svarer ikke. Fanen forbliver åben her.",
+    "newWindowTimeout": "Det nye vindue overtog ikke dokumentet i tide. Fanen forbliver åben her.",
+    "alreadyMainWindow": "Dette er allerede hovedvinduet.",
+    "popupBlocked": "Det nye vindue kunne ikke åbnes. Tillad pop op-vinduer for denne side.",
+    "moveToWindow": "Flyt til {{window}}",
+    "newWindowFailed": "Der kunne ikke åbnes et nyt vindue: {{error}}"
+  },
+  "dropZone": {
+    "release": "Slip for at åbne",
+    "explanation": "Dokumenter, regneark og præsentationer åbnes hver under sin egen fane; MDB og ACCDB åbnes i Database Studio.",
+    "image": "{{name}} er et billede. Træk indsætter endnu ikke billeder i et dokument; brug Indsæt › Billede.",
+    "unsupported": "{{name}} kan ikke åbnes: .{{ext}} understøttes ikke. Open Office Studio åbner dokumenter, regneark, præsentationer og Access-databaser."
+  },
+  "ribbon": {
+    "label": "Bånd",
+    "file": "Filer",
+    "hide": "Skjul båndet",
+    "show": "Vis båndet",
+    "hideHint": "Mere plads til dit dokument · Ctrl+F1",
+    "scrollLeft": "Rul båndet til venstre",
+    "scrollRight": "Rul båndet til højre",
+    "commandFailed": "Kommandoen kunne ikke udføres.",
+    "nothingToUndo": "Der er intet at fortryde.",
+    "nothingToRedo": "Der er intet at gentage.",
+    "presentationOpening": "Præsentationen er stadig ved at blive åbnet.",
+    "selectShapeFirst": "Markér først en figur."
+  },
+  "theme": {
+    "light": "Lyst tema",
+    "forge": "Forge-tema"
+  },
+  "host": {
+    "conflict": "En anden har gemt dokumentet i mellemtiden. Din version blev gemt som en kopi: {{name}}.",
+    "readOnly": "{{name}} blev åbnet skrivebeskyttet. Brug Gem som for at beholde dine ændringer.",
+    "openFailed": "Dokumentet fra arbejdsområdet kunne ikke åbnes: {{error}}"
+  },
+  "title": {
+    "document": "{{document}} — {{app}} ({{module}})",
+    "module": "{{app}} ({{module}})"
+  },
+  "titleBar": {
+    "quickAccess": "Hurtig adgang",
+    "saveTitle": "Gem · Ctrl+S",
+    "settings": "Indstillinger",
+    "minimize": "Minimer",
+    "maximize": "Maksimer",
+    "restore": "Gendan",
+    "close": "Luk vinduet"
+  },
+  "toasts": {
+    "region": "Meddelelser",
+    "info": "Info",
+    "success": "Færdig",
+    "warning": "Bemærk",
+    "error": "Fejl",
+    "details": "Detaljer",
+    "less": "Mindre"
+  }
+}

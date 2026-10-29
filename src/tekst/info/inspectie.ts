@@ -109,7 +109,8 @@ export function inspecteer(bytes: Uint8Array): InspectieUitslag {
 }
 
 /** Verwijdert of pakt elementen uit in één onderdeel; geeft de nieuwe XML. */
-function schoonOnderdeel(xml: string, opties: Opschonen): string {
+function schoonOnderdeel(xml: string, opties: Opschonen, anoniem = "Auteur"): string {
+  const naam = anoniem.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
   const wortel = leesXml(xml);
   const vervangingen: Vervanging[] = [];
   const weg = (el: XmlElement) => vervangingen.push({ start: el.start, eind: el.eind, tekst: "" });
@@ -149,7 +150,7 @@ function schoonOnderdeel(xml: string, opties: Opschonen): string {
       if (opties.persoonlijk && ("w:author" in k.attrs || "w:initials" in k.attrs)) {
         const begin = xml.slice(k.start, k.leeg ? k.inhoudStart - 2 : k.inhoudStart - 1);
         const nieuw = begin
-          .replace(/\sw:author="[^"]*"/, ' w:author="Auteur"')
+          .replace(/\sw:author="[^"]*"/, () => ` w:author="${naam}"`)
           .replace(/\sw:initials="[^"]*"/, "");
         vervangingen.push({ start: k.start, eind: k.start + begin.length, tekst: nieuw });
       }
@@ -160,13 +161,16 @@ function schoonOnderdeel(xml: string, opties: Opschonen): string {
   return vervangingen.length ? vervang(xml, vervangingen) : xml;
 }
 
-/** Verwijdert de gekozen soorten gegevens; geeft nieuwe bytes. */
-export function schoonOp(bytes: Uint8Array, opties: Opschonen): Uint8Array {
+/**
+ * Verwijdert de gekozen soorten gegevens; geeft nieuwe bytes. `anoniem`
+ * vervangt de namen bij opmerkingen en wijzigingen.
+ */
+export function schoonOp(bytes: Uint8Array, opties: Opschonen, anoniem = "Auteur"): Uint8Array {
   const pakket = new Pakket(bytes);
   const { document, delen } = verhaalOnderdelen(pakket);
   for (const deel of delen) {
     const oud = pakket.lees(deel);
-    const nieuw = schoonOnderdeel(oud, opties);
+    const nieuw = schoonOnderdeel(oud, opties, anoniem);
     if (nieuw !== oud) pakket.schrijf(deel, nieuw);
   }
   if (opties.opmerkingen) {
@@ -187,7 +191,7 @@ export function schoonOp(bytes: Uint8Array, opties: Opschonen): Uint8Array {
       const pad = Pakket.doelPad(document, r.target);
       if (!pakket.heeft(pad)) continue;
       const oud = pakket.lees(pad);
-      const nieuw = schoonOnderdeel(oud, { persoonlijk: true });
+      const nieuw = schoonOnderdeel(oud, { persoonlijk: true }, anoniem);
       if (nieuw !== oud) pakket.schrijf(pad, nieuw);
     }
   }

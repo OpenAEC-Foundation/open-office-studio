@@ -5,6 +5,7 @@
  * Wat niet vertaalbaar is, geeft een `WerkkopieFout` met code
  * "niet-ondersteund" en een concrete melding. Zie `vertaalAccessSql`.
  */
+import i18next from "i18next";
 import {
   WerkkopieFout,
   type OpgeslagenQuery,
@@ -12,6 +13,11 @@ import {
   type Waarde,
 } from "./contract.ts";
 import { isoUitMs, msUitTekst } from "./functies.ts";
+
+/** Vertaling binnen `database:accessSql` (in de taal van het moment). */
+function tr(sleutel: string, opties?: Record<string, unknown>): string {
+  return i18next.t(`database:accessSql.${sleutel}`, opties);
+}
 
 // ---------------------------------------------------------------------------
 // Tokenizer
@@ -37,7 +43,7 @@ export function tokeniseer(sql: string): Token[] {
   const tokens: Token[] = [];
   let i = 0;
   const fout = (melding: string, positie = i) =>
-    new WerkkopieFout("syntaxis", `${melding} (teken ${positie + 1}).`);
+    new WerkkopieFout("syntaxis", tr("atChar", { message: melding, pos: positie + 1 }));
   while (i < sql.length) {
     const c = sql[i];
     if (/\s/.test(c) || c === "\0") {
@@ -60,7 +66,7 @@ export function tokeniseer(sql: string): Token[] {
           diepte--;
         }
       }
-      if (eind < 0) throw fout("Sluitend ] ontbreekt");
+      if (eind < 0) throw fout(tr("closingBracketMissing"));
       tokens.push({ soort: "haak", waarde: sql.slice(i + 1, eind), positie: start });
       i = eind + 1;
       continue;
@@ -70,7 +76,7 @@ export function tokeniseer(sql: string): Token[] {
       i++;
       for (;;) {
         if (i >= sql.length)
-          throw fout("Tekst zonder afsluitend aanhalingsteken", start);
+          throw fout(tr("unterminatedString"), start);
         if (sql[i] === c) {
           if (sql[i + 1] === c) {
             waarde += c;
@@ -87,7 +93,7 @@ export function tokeniseer(sql: string): Token[] {
     }
     if (c === "#") {
       const eind = sql.indexOf("#", i + 1);
-      if (eind < 0) throw fout("Datum zonder afsluitend #");
+      if (eind < 0) throw fout(tr("unterminatedDate"));
       tokens.push({
         soort: "datum",
         waarde: sql.slice(i + 1, eind).trim(),
@@ -151,7 +157,7 @@ export function tokeniseer(sql: string): Token[] {
       i++;
       continue;
     }
-    throw fout(`Onverwacht teken ‘${c}’`);
+    throw fout(tr("unexpectedChar", { char: c }));
   }
   tokens.push({ soort: "eind", waarde: "", positie: sql.length });
   return tokens;
@@ -290,7 +296,9 @@ class Parser {
   private fout(melding: string, token = this.huidig): never {
     throw new WerkkopieFout(
       "syntaxis",
-      `${melding} bij ${token.soort === "eind" ? "het einde" : `‘${token.waarde}’ (teken ${token.positie + 1})`}.`,
+      token.soort === "eind"
+        ? tr("atEnd", { message: melding })
+        : tr("atToken", { message: melding, token: token.waarde, pos: token.positie + 1 }),
     );
   }
   private isWoord(woord: string, n = 0) {
@@ -312,10 +320,10 @@ class Parser {
     return true;
   }
   private verwachtWoord(woord: string) {
-    if (!this.neemWoord(woord)) this.fout(`${woord} verwacht`);
+    if (!this.neemWoord(woord)) this.fout(tr("wordExpected", { word: woord }));
   }
   private verwachtTeken(teken: string) {
-    if (!this.neemTeken(teken)) this.fout(`‘${teken}’ verwacht`);
+    if (!this.neemTeken(teken)) this.fout(tr("tokenExpected", { token: teken }));
   }
   /** Naam als identifier: bare naam (niet gereserveerd) of [naam]. */
   private naam(toegestaanGereserveerd = false): string {
@@ -328,7 +336,7 @@ class Parser {
       this.i++;
       return tok.waarde;
     }
-    return this.fout("Naam verwacht");
+    return this.fout(tr("nameExpected"));
   }
   private isNaam() {
     const tok = this.huidig;
@@ -349,7 +357,7 @@ class Parser {
         if (einde >= 3 && delen[einde - 1].waarde === ")" && delen[einde - 3].waarde === "(") einde -= 3;
         const typeTok = delen[einde - 1];
         const naamDelen = delen.slice(0, einde - 1);
-        if (!typeTok || !naamDelen.length) this.fout("Parameterdeclaratie onvolledig");
+        if (!typeTok || !naamDelen.length) this.fout(tr("parameterIncomplete"));
         parameters.push({
           naam: naamDelen.map((d) => d.waarde).join(" "),
           type: typeTok.waarde,
@@ -364,7 +372,7 @@ class Parser {
       this.verwachtWoord("OPTION");
     }
     while (this.neemTeken(";"));
-    if (this.huidig.soort !== "eind") this.fout("Onverwachte tekst na de opdracht");
+    if (this.huidig.soort !== "eind") this.fout(tr("textAfterStatement"));
     return { parameters, stelling };
   }
 
@@ -416,7 +424,7 @@ class Parser {
       const set: { doel: Expr; e: Expr }[] = [];
       do {
         const doel = this.primair();
-        if (doel.t !== "naam") this.fout("Veldnaam verwacht in SET");
+        if (doel.t !== "naam") this.fout(tr("fieldExpectedInSet"));
         this.verwachtTeken("=");
         set.push({ doel, e: this.expr() });
       } while (this.neemTeken(","));
@@ -440,7 +448,7 @@ class Parser {
     }
     if (this.isWoord("CREATE") || this.isWoord("DROP") || this.isWoord("ALTER"))
       return { t: "ddl", d: this.ddl() };
-    return this.fout("Onbekende opdracht; verwacht SELECT, TRANSFORM, INSERT, UPDATE, DELETE of DDL");
+    return this.fout(tr("unknownStatement"));
   }
 
   /** Sluit een subquery: Access verdraagt een puntkomma vóór het sluithaakje. */
@@ -457,7 +465,7 @@ class Parser {
     if (tok.soort === "tekst" || tok.soort === "haak") {
       pad = tok.waarde;
       this.i++;
-    } else this.fout("Pad van externe database verwacht");
+    } else this.fout(tr("externalPathExpected"));
     if (this.huidig.soort === "haak" || this.huidig.soort === "tekst") this.i++;
     return pad;
   }
@@ -528,7 +536,7 @@ class Parser {
       else if (this.neemWoord("DISTINCTROW")) kern.distinct = "distinctrow";
       else if (this.neemWoord("TOP")) {
         const tok = this.huidig;
-        if (tok.soort !== "getal") this.fout("Getal verwacht na TOP");
+        if (tok.soort !== "getal") this.fout(tr("numberAfterTop"));
         this.i++;
         kern.top = { n: Number(tok.waarde), procent: this.neemWoord("PERCENT") };
       } else break;
@@ -628,7 +636,7 @@ class Parser {
       return { t: "sub", s, alias: this.alias() };
     }
     // Na FROM/JOIN volgt altijd een naam, ook als die een gereserveerd woord is (tabel ‘Order’).
-    if (this.isWoord("SELECT")) this.fout("Subquery tussen haakjes verwacht");
+    if (this.isWoord("SELECT")) this.fout(tr("subqueryExpected"));
     let naam = this.naam(true);
     while (this.isTeken(".") && (this.kijk(1).soort === "naam" || this.kijk(1).soort === "haak")) {
       this.i++;
@@ -641,13 +649,13 @@ class Parser {
   selectieTotEinde(): Selectie {
     const s = this.selectie();
     while (this.neemTeken(";"));
-    if (this.huidig.soort !== "eind") this.fout("Onverwachte tekst na de subquery");
+    if (this.huidig.soort !== "eind") this.fout(tr("textAfterSubquery"));
     return s;
   }
 
   exprTotEinde(): Expr {
     const e = this.expr();
-    if (this.huidig.soort !== "eind") this.fout("Onverwachte tekst na de expressie");
+    if (this.huidig.soort !== "eind") this.fout(tr("textAfterExpression"));
     return e;
   }
 
@@ -689,7 +697,7 @@ class Parser {
             }
             throw new WerkkopieFout(
               "niet-ondersteund",
-              `Vergelijking ‘${teken} ${kwantor} (SELECT …)’ wordt niet ondersteund; alleen = ANY/SOME en <> ALL (als IN en NOT IN).`,
+              tr("quantifiedComparison", { op: teken, quantifier: kwantor }),
             );
           }
           links = { t: "bin", op: teken, l: links, r: this.expr(VERGELIJK_BINDING + 1) };
@@ -770,7 +778,7 @@ class Parser {
           this.verwachtTeken(")");
           return { t: "haakjes", e };
         }
-        return this.fout("Expressie verwacht");
+        return this.fout(tr("expressionExpected"));
       case "naam": {
         const woord = tok.waarde.toUpperCase();
         if (woord === "NULL") {
@@ -807,14 +815,14 @@ class Parser {
             this.isTeken("!", 1) ||
             ["PERCENT", "TOP", "PARAMETERS", "WITH", "VALUES", "TRANSFORM", "PIVOT"].includes(woord) ||
             ((woord === "GROUP" || woord === "ORDER") && !this.isWoord("BY", 1));
-          if (!naamAchtig) this.fout(woord === "SELECT" ? "Subquery tussen haakjes verwacht" : "Expressie verwacht");
+          if (!naamAchtig) this.fout(woord === "SELECT" ? tr("subqueryExpected") : tr("expressionExpected"));
         }
         return this.naamPad();
       }
       case "haak":
         return this.naamPad();
     }
-    return this.fout("Expressie verwacht");
+    return this.fout(tr("expressionExpected"));
   }
 
   private naamPad(): Expr {
@@ -829,7 +837,7 @@ class Parser {
       const volgende = this.kijk(1);
       if (volgende.soort === "teken" && volgende.waarde === "*" && this.isTeken(".")) {
         this.i += 2;
-        if (delen.length !== 1) this.fout("Ongeldige verwijzing met *");
+        if (delen.length !== 1) this.fout(tr("invalidStar"));
         return { t: "ster", tabel: delen[0] };
       }
       if (volgende.soort !== "naam" && volgende.soort !== "haak") break;
@@ -846,7 +854,7 @@ class Parser {
   private ddlKolom(): DdlKolom {
     const naam = this.naam(true);
     const typeTok = this.huidig;
-    if (typeTok.soort !== "naam") this.fout("Veldtype verwacht");
+    if (typeTok.soort !== "naam") this.fout(tr("fieldTypeExpected"));
     this.i++;
     let type = typeTok.waarde.toUpperCase();
     if (this.isWoord("PRECISION") && type === "DOUBLE") this.i++;
@@ -930,7 +938,7 @@ class Parser {
           do {
             if (this.neemWoord("PRIMARY")) primair = true;
             else if (this.neemWoord("DISALLOW") || this.neemWoord("IGNORE")) this.verwachtWoord("NULL");
-            else this.fout("PRIMARY, DISALLOW NULL of IGNORE NULL verwacht");
+            else this.fout(tr("indexOptionExpected"));
           } while (this.isWoord("PRIMARY") || this.isWoord("DISALLOW") || this.isWoord("IGNORE"));
         }
         return { t: "maakindex", naam, tabel, kolommen, uniek: uniek || primair, primair };
@@ -972,8 +980,8 @@ class Parser {
             }
             verwijzingen.push({ kolommen: eigen, tabel, naar, trapsUpdate, trapsDelete });
           } else if (this.neemWoord("CHECK")) {
-            throw new WerkkopieFout("niet-ondersteund", "CHECK-beperkingen in Access-DDL worden niet vertaald.");
-          } else this.fout("PRIMARY KEY, UNIQUE of FOREIGN KEY verwacht");
+            throw new WerkkopieFout("niet-ondersteund", tr("checkNotTranslated"));
+          } else this.fout(tr("constraintExpected"));
         } else if (this.isWoord("PRIMARY") && this.isWoord("KEY", 1)) {
           this.i += 2;
           primair.push(...this.naamLijst());
@@ -990,27 +998,27 @@ class Parser {
         return { t: "dropindex", naam, tabel: this.naam() };
       }
       if (this.isWoord("PROCEDURE") || this.isWoord("VIEW") || this.isWoord("USER") || this.isWoord("GROUP"))
-        throw new WerkkopieFout("niet-ondersteund", `DROP ${this.huidig.waarde.toUpperCase()} wordt in de werkkopie niet ondersteund.`);
-      return this.fout("TABLE of INDEX verwacht");
+        throw new WerkkopieFout("niet-ondersteund", tr("dropNotSupported", { what: this.huidig.waarde.toUpperCase() }));
+      return this.fout(tr("tableOrIndexExpected"));
     }
     this.verwachtWoord("ALTER");
     this.verwachtWoord("TABLE");
     const tabel = this.naam();
     if (this.neemWoord("ADD")) {
       if (this.isWoord("CONSTRAINT") || this.isWoord("PRIMARY") || this.isWoord("FOREIGN"))
-        throw new WerkkopieFout("niet-ondersteund", "ALTER TABLE … ADD CONSTRAINT kan SQLite niet op een bestaande tabel uitvoeren.");
+        throw new WerkkopieFout("niet-ondersteund", tr("addConstraint"));
       this.neemWoord("COLUMN");
       return { t: "kolomerbij", tabel, kolom: this.ddlKolom() };
     }
     if (this.neemWoord("DROP")) {
       if (this.isWoord("CONSTRAINT"))
-        throw new WerkkopieFout("niet-ondersteund", "ALTER TABLE … DROP CONSTRAINT kan SQLite niet op een bestaande tabel uitvoeren.");
+        throw new WerkkopieFout("niet-ondersteund", tr("dropConstraint"));
       this.neemWoord("COLUMN");
       return { t: "kolomweg", tabel, kolom: this.naam(true) };
     }
     if (this.isWoord("ALTER"))
-      throw new WerkkopieFout("niet-ondersteund", "ALTER TABLE … ALTER COLUMN (veldtype wijzigen) wordt in de werkkopie niet ondersteund.");
-    return this.fout("ADD of DROP verwacht");
+      throw new WerkkopieFout("niet-ondersteund", tr("alterColumn"));
+    return this.fout(tr("addOrDropExpected"));
   }
 }
 
@@ -1025,7 +1033,7 @@ export function ontleedAccessSql(sql: string): Ontleed {
 export function datumLiteraal(tekst: string): string {
   const ms = msUitTekst(tekst, "mdj");
   if (ms === null)
-    throw new WerkkopieFout("syntaxis", `Ongeldige datum #${tekst}#.`);
+    throw new WerkkopieFout("syntaxis", tr("invalidDate", { text: tekst }));
   const iso = isoUitMs(ms);
   // Alleen een tijd: Access-datum 30-12-1899 met tijd.
   if (iso === "1899-12-30" && /:/.test(tekst)) return "1899-12-30T00:00:00";
@@ -1166,18 +1174,18 @@ class Vertaler {
     const query = this.ctx.query(naam);
     if (!query) {
       if (/^f_[0-9a-f]{32}_/i.test(naam))
-        throw nietOndersteund(`‘${naam}’ is de verborgen hulptabel van een veld met meerdere waarden of een bijlageveld; die wordt niet in de werkkopie overgenomen.`);
+        throw nietOndersteund(tr("hiddenComplexTable", { name: naam }));
       if (/^MSys/i.test(naam))
-        throw nietOndersteund(`‘${naam}’ is een Access-systeemtabel; systeemtabellen worden niet in de werkkopie overgenomen.`);
+        throw nietOndersteund(tr("systemTable", { name: naam }));
       const gekoppeld = this.ctx.gekoppeld?.(naam);
       if (gekoppeld)
-        throw nietOndersteund(`‘${naam}’ is een gekoppelde tabel (${gekoppeld}); de externe bron wordt niet geopend en staat niet in de werkkopie.`);
-      throw new WerkkopieFout("onbekend-object", `Tabel of query ‘${naam}’ bestaat niet in de werkkopie.`);
+        throw nietOndersteund(tr("linkedTable", { name: naam, kind: gekoppeld }));
+      throw new WerkkopieFout("onbekend-object", tr("objectMissing", { name: naam }));
     }
     if (this.bezig.has(kl(query.naam)))
-      throw new WerkkopieFout("niet-ondersteund", `Kringverwijzing: query ‘${query.naam}’ verwijst (indirect) naar zichzelf.`);
+      throw new WerkkopieFout("niet-ondersteund", tr("circularQuery", { name: query.naam }));
     if (!["select", "union", "crosstab"].includes(query.soort))
-      throw new WerkkopieFout("niet-ondersteund", `Query ‘${query.naam}’ is een ${query.soort}-query en kan niet als bron dienen.`);
+      throw new WerkkopieFout("niet-ondersteund", tr("queryNotSource", { name: query.naam, kind: query.soort }));
     this.bezig.add(kl(query.naam));
     try {
       const ontleed = ontleedAccessSql(query.sql);
@@ -1187,7 +1195,7 @@ class Vertaler {
       return { naam: query.naam, kolommen, tabel: false };
     } catch (fout) {
       if (fout instanceof WerkkopieFout && !fout.message.includes(`query ‘${query.naam}’`))
-        throw new WerkkopieFout(fout.code, `In query ‘${query.naam}’: ${fout.message}`);
+        throw new WerkkopieFout(fout.code, tr("inQuery", { name: query.naam, message: fout.message }));
       throw fout;
     } finally {
       this.bezig.delete(kl(query.naam));
@@ -1197,7 +1205,7 @@ class Vertaler {
   private stellingAlsSelect(stelling: Stelling, naam: string): { sql: string; kolommen: KolomInfo[] | null } {
     if (stelling.t === "select") return this.selectie(stelling.s, null);
     if (stelling.t === "transform") return this.transform(stelling, null);
-    throw new WerkkopieFout("niet-ondersteund", `Query ‘${naam}’ is geen selectiequery.`);
+    throw new WerkkopieFout("niet-ondersteund", tr("notSelectQuery", { name: naam }));
   }
 
   // ------------------------------------------------------------- scope
@@ -1422,7 +1430,7 @@ class Vertaler {
       case "^":
         return `pow(${l}, ${r})`;
     }
-    throw nietOndersteund(`Operator ${e.op} wordt niet ondersteund.`);
+    throw nietOndersteund(tr("operatorNotSupported", { op: e.op }));
   }
 
   /** Like met Access-jokers: eenvoudige patronen naar LIKE met escape, de rest naar acc_like. */
@@ -1459,7 +1467,7 @@ class Vertaler {
       crit = criteria === undefined ? "" : letterlijk(criteria);
     if (ex === null || dom === null || crit === null)
       throw nietOndersteund(
-        `${e.naam}: alleen letterlijke tekstargumenten worden vertaald (een samengestelde voorwaarde zoals "ID=" & [ID] wordt per rij in VBA berekend en is hier niet ondersteund).`,
+        tr("domainLiteralOnly", { fn: e.naam }),
       );
     const bronInfo = this.bronInfo(dom);
     const scope: Scope = {
@@ -1500,7 +1508,9 @@ class Vertaler {
       if (n < min || n > max)
         throw new WerkkopieFout(
           "syntaxis",
-          `${e.naam} verwacht ${min === max ? min : `${min} tot ${max}`} argument(en), niet ${n}.`,
+          min === max
+            ? tr("argCount", { fn: e.naam, count: min, n })
+            : tr("argRange", { fn: e.naam, min, max, n }),
         );
     };
     const of = (i: number, standaard = "NULL") => a[i] ?? standaard;
@@ -1530,13 +1540,13 @@ class Vertaler {
         aantal(2, 3);
         return `(CASE WHEN ${a[0]} THEN ${a[1]} ELSE ${of(2)} END)`;
       case "switch": {
-        if (n < 2 || n % 2) throw new WerkkopieFout("syntaxis", "Switch verwacht paren van voorwaarde en waarde.");
+        if (n < 2 || n % 2) throw new WerkkopieFout("syntaxis", tr("switchPairs"));
         let sql = "(CASE";
         for (let i = 0; i < n; i += 2) sql += ` WHEN ${a[i]} THEN ${a[i + 1]}`;
         return sql + " END)";
       }
       case "choose": {
-        if (n < 2) throw new WerkkopieFout("syntaxis", "Choose verwacht een index en minstens één keuze.");
+        if (n < 2) throw new WerkkopieFout("syntaxis", tr("chooseArgs"));
         return `(CASE CAST(${a[0]} AS INTEGER)${a.slice(1).map((x, i) => ` WHEN ${i + 1} THEN ${x}`).join("")} END)`;
       }
       case "nz":
@@ -1584,7 +1594,7 @@ class Vertaler {
         return `acc_instrrev(${a[0]}, ${a[1]}, ${of(2)}, ${of(3)})`;
       case "replace":
         if (n !== 3)
-          throw nietOndersteund("Replace met start-, aantal- of vergelijkingsargument wordt niet ondersteund; alleen Replace(tekst, zoek, vervang).");
+          throw nietOndersteund(tr("replaceArgs"));
         return `REPLACE(${a[0]}, ${a[1]}, ${a[2]})`;
       case "space":
         aantal(1);
@@ -1750,15 +1760,15 @@ class Vertaler {
         return "'Admin'";
     }
     if (naam === "eval")
-      throw nietOndersteund("Eval voert een tekst als expressie uit en wordt in de werkkopie niet ondersteund.");
+      throw nietOndersteund(tr("eval"));
     throw nietOndersteund(
-      `Functie ‘${e.naam}’ is geen Access-functie die de werkkopie kent; mogelijk is het een VBA-functie uit een module, en VBA wordt in query’s niet uitgevoerd.`,
+      tr("unknownFunction", { fn: e.naam }),
     );
   }
 
   private eersteWeekVanJaar(arg: Expr) {
     if (!(arg.t === "getal" && (Number(arg.v) === 0 || Number(arg.v) === 1)))
-      throw nietOndersteund("DatePart/DateDiff met een afwijkende eerste week van het jaar (vbFirstFourDays/vbFirstFullWeek) wordt niet ondersteund.");
+      throw nietOndersteund(tr("firstWeek"));
   }
 
   // ------------------------------------------------------------- bronnen
@@ -1775,7 +1785,7 @@ class Vertaler {
     }
     if (b.t === "tabel") {
       if (b.extern !== null)
-        throw nietOndersteund(`Tabel ‘${b.naam}’ komt uit een externe database (IN '…'); die wordt niet geopend.`);
+        throw nietOndersteund(tr("externalTable", { name: b.naam }));
       const info = this.bronInfo(b.naam);
       scope.bronnen.push({ alias: b.alias ?? info.naam, naam: info.naam, kolommen: info.kolommen, tabel: info.tabel });
       this.bronTekst.set(b, b.alias ? `${citeer(info.naam)} AS ${citeer(b.alias)}` : citeer(info.naam));
@@ -1820,7 +1830,7 @@ class Vertaler {
         else if (o.e.t === "naam" && namen) return [];
         else if (o.e.t === "naam") term = citeer(o.e.delen[o.e.delen.length - 1]);
         else if (o.e.t === "getal") term = o.e.v;
-        else throw nietOndersteund("ORDER BY van een UNION-query mag alleen veldnamen of kolomnummers bevatten.");
+        else throw nietOndersteund(tr("unionOrderBy"));
         return [term + (o.aflopend ? " DESC" : "")];
       });
       if (termen.length) sql += ` ORDER BY ${termen.join(", ")}`;
@@ -1856,7 +1866,7 @@ class Vertaler {
       if (e.t === "ster") {
         const bronnen = e.tabel === null ? scope.bronnen : scope.bronnen.filter((b) => kl(b.alias) === kl(e.tabel!));
         if (e.tabel !== null && !bronnen.length)
-          throw new WerkkopieFout("onbekend-object", `‘${e.tabel}.*’ verwijst naar een tabel die niet in FROM staat.`);
+          throw new WerkkopieFout("onbekend-object", tr("starNotInFrom", { table: e.tabel }));
         for (const b of bronnen) {
           if (b.kolommen) kolommen.push(...b.kolommen);
           else kolommenBekend = false;
@@ -1935,7 +1945,7 @@ class Vertaler {
           if (x.t === "getal") return Number(x.v);
           if (x.t === "null") return null;
           if (x.t === "un" && x.op === "-" && x.e.t === "getal") return -Number(x.e.v);
-          throw nietOndersteund("PIVOT … IN (…) mag alleen letterlijke waarden bevatten.");
+          throw nietOndersteund(tr("pivotLiterals"));
         });
       } else if (this.ctx.pivotWaarden) {
         let haal = `SELECT DISTINCT ${pivotSql} AS p`;
@@ -1945,7 +1955,7 @@ class Vertaler {
         waarden = this.ctx.pivotWaarden(this.cteVoorvoegsel() + haal, [...this.slots]);
       }
       if (waarden.length > 254)
-        throw new WerkkopieFout("beperking", `De kruistabel zou ${waarden.length} kolommen krijgen; Access staat er hoogstens 254 toe.`);
+        throw new WerkkopieFout("beperking", tr("crosstabTooWide", { count: waarden.length }));
       return waarden.map((w) => {
         const voorwaarde =
           w === null
@@ -1980,7 +1990,7 @@ class Vertaler {
       return x;
     };
     const nieuw = kopie(e);
-    if (!gevonden) throw nietOndersteund("De TRANSFORM-expressie van een kruistabel moet een aggregaatfunctie bevatten.");
+    if (!gevonden) throw nietOndersteund(tr("transformAggregate"));
     this.caseVoorwaarde = voorwaarde;
     try {
       return this.expr(nieuw, scope);
@@ -1999,8 +2009,8 @@ class Vertaler {
   private doelBron(scope: Scope, naam: string, opdracht: string): ScopeBron {
     const bron = this.zoekBron(scope, naam);
     if (!bron)
-      throw nietOndersteund(`${opdracht}: ‘${naam}’ staat niet in de bronnen van de query; Access zou dit als parameter opvatten en kan het niet bijwerken.`);
-    if (!bron.tabel) throw nietOndersteund(`${opdracht}: ‘${naam}’ is een query, geen tabel; bijwerken via een query wordt niet ondersteund.`);
+      throw nietOndersteund(tr("targetNotInSources", { statement: opdracht, name: naam }));
+    if (!bron.tabel) throw nietOndersteund(tr("targetIsQuery", { statement: opdracht, name: naam }));
     return bron;
   }
 
@@ -2011,18 +2021,18 @@ class Vertaler {
     const doelen = u.set.map((s) => {
       const d = s.doel as Extract<Expr, { t: "naam" }>;
       if (d.delen.length === 2) return { bron: this.doelBron(scope, d.delen[0], "UPDATE"), veld: d.delen[1] };
-      if (d.delen.length !== 1) throw nietOndersteund(`UPDATE: ongeldig doelveld ‘${this.naamUit(d)}’.`);
+      if (d.delen.length !== 1) throw nietOndersteund(tr("updateInvalidTarget", { name: this.naamUit(d) }));
       const gevonden = this.zoekKolom(scope, d.delen[0]);
       const bron = gevonden?.bron ?? (scope.bronnen.length === 1 ? scope.bronnen[0] : null);
-      if (!bron) throw new WerkkopieFout("onbekend-object", `UPDATE: veld ‘${d.delen[0]}’ komt in geen van de tabellen voor.`);
-      if (!bron.tabel) throw nietOndersteund(`UPDATE: ‘${bron.naam}’ is een query, geen tabel.`);
+      if (!bron) throw new WerkkopieFout("onbekend-object", tr("updateFieldMissing", { name: d.delen[0] }));
+      if (!bron.tabel) throw nietOndersteund(tr("updateIsQuery", { name: bron.naam }));
       return { bron, veld: gevonden?.kolom?.naam ?? d.delen[0] };
     });
     const doel = doelen[0].bron;
     const ander = doelen.find((d) => d.bron !== doel);
     if (ander)
       throw nietOndersteund(
-        `UPDATE wijzigt velden in meer dan één tabel (${doel.alias} en ${ander.bron.alias}); SQLite kan per opdracht maar één tabel bijwerken.`,
+        tr("updateMultiTable", { a: doel.alias, b: ander.bron.alias }),
       );
     const enkel = this.eenTabel(u.bronnen);
     if (enkel) {
@@ -2051,16 +2061,16 @@ class Vertaler {
       if (naam === null) continue;
       const bron = this.doelBron(scope, naam, "DELETE");
       if (doel && doel !== bron)
-        throw nietOndersteund(`DELETE uit meer dan één tabel tegelijk (${doel.alias} en ${bron.alias}) wordt niet ondersteund.`);
+        throw nietOndersteund(tr("deleteMultiTable", { a: doel.alias, b: bron.alias }));
       doel = bron;
     }
     if (!doel) {
       const tabellen = scope.bronnen.filter((b) => b.tabel);
       if (scope.bronnen.length !== 1 || !tabellen.length)
-        throw nietOndersteund("DELETE met meerdere tabellen moet aangeven uit welke tabel verwijderd wordt (DELETE Tabel.* FROM …).");
+        throw nietOndersteund(tr("deleteWhichTable"));
       doel = tabellen[0];
     }
-    if (!doel.tabel) throw nietOndersteund(`DELETE: ‘${doel.naam}’ is een query, geen tabel.`);
+    if (!doel.tabel) throw nietOndersteund(tr("deleteIsQuery", { name: doel.naam }));
     const enkel = this.eenTabel(d.bronnen);
     if (enkel) {
       const waar = d.waar ? ` WHERE ${this.expr(d.waar, scope)}` : "";
@@ -2072,19 +2082,19 @@ class Vertaler {
   }
 
   insert(i: Extract<Stelling, { t: "insert" }>): string {
-    if (i.extern !== null) throw nietOndersteund(`INSERT INTO een externe database (IN '…') wordt niet ondersteund.`);
+    if (i.extern !== null) throw nietOndersteund(tr("insertExternal"));
     const doel = this.ctx.tabel(i.doel);
     if (!doel) {
       const gekoppeld = this.ctx.gekoppeld?.(i.doel);
       if (gekoppeld)
-        throw nietOndersteund(`Doeltabel ‘${i.doel}’ is een gekoppelde tabel (${gekoppeld}); de externe bron wordt niet geopend of gewijzigd.`);
-      throw new WerkkopieFout("onbekend-object", `Doeltabel ‘${i.doel}’ bestaat niet in de werkkopie.`);
+        throw nietOndersteund(tr("targetLinked", { name: i.doel, kind: gekoppeld }));
+      throw new WerkkopieFout("onbekend-object", tr("targetMissing", { name: i.doel }));
     }
     const kolommen = i.kolommen
       ? ` (${i.kolommen
           .map((k) => {
             const kolom = doel.kolommen.find((x) => kl(x.naam) === kl(k));
-            if (!kolom) throw new WerkkopieFout("onbekend-object", `Veld ‘${k}’ bestaat niet in tabel ‘${doel.naam}’.`);
+            if (!kolom) throw new WerkkopieFout("onbekend-object", tr("fieldNotInTable", { field: k, table: doel.naam }));
             return citeer(kolom.naam);
           })
           .join(", ")})`
@@ -2188,7 +2198,7 @@ function soortUitAccessType(type: string): Veldsoort {
   if (["BIT", "YESNO", "LOGICAL", "LOGICAL1", "BOOLEAN"].includes(t)) return "jaNee";
   if (["BINARY", "VARBINARY", "LONGBINARY", "OLEOBJECT", "IMAGE", "GENERAL", "OLE"].includes(t)) return "binair";
   if (["GUID", "UNIQUEIDENTIFIER"].includes(t)) return "guid";
-  throw nietOndersteund(`Veldtype ‘${type}’ in Access-DDL wordt niet ondersteund.`);
+  throw nietOndersteund(tr("ddlTypeNotSupported", { type }));
 }
 
 export function indexNaam(tabel: string, index: string) {
@@ -2210,12 +2220,12 @@ function ddlNaarSqlite(d: Ddl, v: Vertaler, ctx: VertaalContext): { sql: string;
   };
   switch (d.t) {
     case "maaktabel": {
-      if (ctx.tabel(d.naam)) throw new WerkkopieFout("beperking", `Tabel ‘${d.naam}’ bestaat al.`);
+      if (ctx.tabel(d.naam)) throw new WerkkopieFout("beperking", tr("tableExists", { name: d.naam }));
       const delen = d.kolommen.map((k) => kolomSql(k, d.primair.length === 1 && kl(d.primair[0]) === kl(k.naam)));
       if (d.primair.length > 1) delen.push(`PRIMARY KEY (${d.primair.map(citeer).join(", ")})`);
       if (d.primair.length === 1) {
         const i = d.kolommen.findIndex((k) => kl(k.naam) === kl(d.primair[0]));
-        if (i < 0) throw new WerkkopieFout("onbekend-object", `Primaire sleutel verwijst naar onbekend veld ‘${d.primair[0]}’.`);
+        if (i < 0) throw new WerkkopieFout("onbekend-object", tr("primaryKeyUnknownField", { name: d.primair[0] }));
         if (!d.kolommen[i].primair) delen[i] += " PRIMARY KEY";
       }
       for (const u of d.uniek) delen.push(`UNIQUE (${u.map(citeer).join(", ")})`);
@@ -2227,14 +2237,14 @@ function ddlNaarSqlite(d: Ddl, v: Vertaler, ctx: VertaalContext): { sql: string;
     }
     case "droptabel": {
       const t = ctx.tabel(d.naam);
-      if (!t) throw new WerkkopieFout("onbekend-object", `Tabel ‘${d.naam}’ bestaat niet.`);
+      if (!t) throw new WerkkopieFout("onbekend-object", tr("tableMissing", { name: d.naam }));
       return { sql: `DROP TABLE ${citeer(t.naam)}`, doeltabel: t.naam };
     }
     case "maakindex": {
       const t = ctx.tabel(d.tabel);
-      if (!t) throw new WerkkopieFout("onbekend-object", `Tabel ‘${d.tabel}’ bestaat niet.`);
+      if (!t) throw new WerkkopieFout("onbekend-object", tr("tableMissing", { name: d.tabel }));
       if (d.primair)
-        throw nietOndersteund("CREATE INDEX … WITH PRIMARY: SQLite kan geen primaire sleutel aan een bestaande tabel toevoegen.");
+        throw nietOndersteund(tr("indexWithPrimary"));
       return {
         sql: `CREATE ${d.uniek ? "UNIQUE " : ""}INDEX ${citeer(indexNaam(t.naam, d.naam))} ON ${citeer(t.naam)} (${d.kolommen.map((k) => citeer(k.naam) + (k.aflopend ? " DESC" : "")).join(", ")})`,
         doeltabel: t.naam,
@@ -2242,19 +2252,19 @@ function ddlNaarSqlite(d: Ddl, v: Vertaler, ctx: VertaalContext): { sql: string;
     }
     case "dropindex": {
       const t = ctx.tabel(d.tabel);
-      if (!t) throw new WerkkopieFout("onbekend-object", `Tabel ‘${d.tabel}’ bestaat niet.`);
+      if (!t) throw new WerkkopieFout("onbekend-object", tr("tableMissing", { name: d.tabel }));
       return { sql: `DROP INDEX ${citeer(indexNaam(t.naam, d.naam))}`, doeltabel: t.naam };
     }
     case "kolomerbij": {
       const t = ctx.tabel(d.tabel);
-      if (!t) throw new WerkkopieFout("onbekend-object", `Tabel ‘${d.tabel}’ bestaat niet.`);
+      if (!t) throw new WerkkopieFout("onbekend-object", tr("tableMissing", { name: d.tabel }));
       if (d.kolom.primair || d.kolom.uniek)
-        throw nietOndersteund("ALTER TABLE … ADD COLUMN met PRIMARY KEY of UNIQUE kan SQLite niet uitvoeren.");
+        throw nietOndersteund(tr("addColumnKey"));
       return { sql: `ALTER TABLE ${citeer(t.naam)} ADD COLUMN ${kolomSql(d.kolom, false)}`, doeltabel: t.naam };
     }
     case "kolomweg": {
       const t = ctx.tabel(d.tabel);
-      if (!t) throw new WerkkopieFout("onbekend-object", `Tabel ‘${d.tabel}’ bestaat niet.`);
+      if (!t) throw new WerkkopieFout("onbekend-object", tr("tableMissing", { name: d.tabel }));
       return { sql: `ALTER TABLE ${citeer(t.naam)} DROP COLUMN ${citeer(d.kolom)}`, doeltabel: t.naam };
     }
   }
@@ -2279,7 +2289,9 @@ export function vertaalAccessSql(
 ): Vertaling {
   if (opties.soort === "passthrough")
     throw nietOndersteund(
-      `${opties.naam ? `Query ‘${opties.naam}’ is een` : "Een"} pass-through-query: de SQL is bestemd voor een externe ODBC-server en wordt in de werkkopie niet uitgevoerd.`,
+      opties.naam
+        ? tr("passthroughNamed", { name: opties.naam })
+        : tr("passthrough"),
     );
   const { parameters, stelling } = ontleedAccessSql(sql);
   const v = new Vertaler(ctx);
@@ -2293,9 +2305,9 @@ export function vertaalAccessSql(
   switch (stelling.t) {
     case "select": {
       const into = stelling.s.delen.length === 1 ? stelling.s.delen[0].into : null;
-      if (stelling.s.delen.some((d, i) => i > 0 && d.into)) throw new WerkkopieFout("syntaxis", "INTO mag alleen in het eerste deel van een UNION staan.");
+      if (stelling.s.delen.some((d, i) => i > 0 && d.into)) throw new WerkkopieFout("syntaxis", tr("intoFirstPart"));
       if (into) {
-        if (into.extern !== null) throw nietOndersteund("SELECT … INTO een externe database (IN '…') wordt niet ondersteund.");
+        if (into.extern !== null) throw nietOndersteund(tr("selectIntoExternal"));
         const bestaand = ctx.tabel(into.naam);
         const doel = bestaand?.naam ?? into.naam;
         const s = v.selectie(stelling.s, null);

@@ -1,4 +1,5 @@
 import type { XlsxCellValue } from "@betteroffice/xlsx";
+import i18next, { intlLocale } from "../i18n/config";
 
 export interface Cel {
   row: number;
@@ -97,7 +98,18 @@ export function selectieRond(
 const leeg = (w: XlsxCellValue) =>
   w.kind === "empty" || (w.kind === "text" && w.value === "");
 
-const vergelijker = new Intl.Collator("nl", { sensitivity: "base" });
+/** Sorteervolgorde van tekst volgens de interfacetaal, zoals Calc en Excel. */
+const vergelijkers = new Map<string, Intl.Collator>();
+function vergelijker() {
+  const locale = intlLocale();
+  let collator = vergelijkers.get(locale);
+  if (!collator)
+    vergelijkers.set(
+      locale,
+      (collator = new Intl.Collator(locale, { sensitivity: "base" })),
+    );
+  return collator;
+}
 
 function rang(w: XlsxCellValue) {
   return w.kind === "number" || w.kind === "bool"
@@ -113,7 +125,7 @@ export function vergelijkWaarden(a: XlsxCellValue, b: XlsxCellValue) {
   if (r) return r;
   return rang(a) === 0
     ? getalVan(a) - getalVan(b)
-    : vergelijker.compare(tekstVan(a), tekstVan(b));
+    : vergelijker().compare(tekstVan(a), tekstVan(b));
 }
 const getalVan = (w: XlsxCellValue) =>
   w.kind === "number" ? w.value : w.kind === "bool" ? Number(w.value) : 0;
@@ -260,29 +272,38 @@ export const tijdTekst = (d: Date) =>
 export const DATUMNOTATIE = "dd-mm-yyyy";
 export const TIJDNOTATIE = "hh:mm:ss";
 
+/** Nieuwe bladnaam in de interfacetaal ("Blad 3", "Sheet3"), zoals Excel invoegt. */
 export function nieuweBladnaam(namen: string[]) {
   const bezet = new Set(namen.map((naam) => naam.toLowerCase()));
-  for (let n = namen.length + 1; ; n++)
-    if (!bezet.has(`blad ${n}`) && !bezet.has(`blad${n}`)) return `Blad ${n}`;
+  for (let n = namen.length + 1; ; n++) {
+    const naam = i18next.t("ribbon:spreadsheet.sheetName.default", {
+      number: n,
+    });
+    const klein = naam.toLowerCase();
+    if (!bezet.has(klein) && !bezet.has(klein.replace(/\s+/g, ""))) return naam;
+  }
 }
 
 /** Foutmelding voor een ongeldige bladnaam, of null. */
 export function bladnaamFout(naam: string, namen: string[], huidige?: number) {
+  const t = i18next.t.bind(i18next);
   const schoon = naam.trim();
-  if (!schoon) return "Geef het blad een naam.";
+  if (!schoon) return t("ribbon:spreadsheet.sheetName.empty");
   if (schoon.length > 31)
-    return "Een bladnaam mag maximaal 31 tekens lang zijn.";
+    return t("ribbon:spreadsheet.sheetName.tooLong", { max: 31 });
   if (/[[\]:*?/\\]/.test(schoon))
-    return "Een bladnaam mag geen van de tekens [ ] : * ? / \\ bevatten.";
+    return t("ribbon:spreadsheet.sheetName.invalidCharacters", {
+      characters: "[ ] : * ? / \\",
+    });
   if (schoon.startsWith("'") || schoon.endsWith("'"))
-    return "Een bladnaam mag niet met een apostrof beginnen of eindigen.";
+    return t("ribbon:spreadsheet.sheetName.apostrophe");
   if (
     namen.some(
       (bestaand, i) =>
         i !== huidige && bestaand.toLowerCase() === schoon.toLowerCase(),
     )
   )
-    return `Er is al een blad met de naam "${schoon}".`;
+    return t("ribbon:spreadsheet.sheetName.exists", { name: schoon });
   return null;
 }
 

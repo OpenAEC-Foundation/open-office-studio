@@ -4,6 +4,7 @@
  */
 import type { DocxEditorRef } from "@betteroffice/docx-react";
 import type { YrsAuthor, YrsLoc, YrsParagraph, YrsSession, YrsStoryRange } from "@betteroffice/docx/yrs";
+import i18next from "../i18n/config";
 
 export interface TekstSelectie {
   ref: DocxEditorRef;
@@ -31,7 +32,7 @@ function leesAuteur() {
 
 /** De auteur voor een bijgehouden wijziging, of niets als bijhouden uit staat. */
 export function auteurBijOpnemen(opnemen: boolean): YrsAuthor | undefined {
-  return opnemen ? { name: leesAuteur() || "Onbekende auteur", date: new Date().toISOString() } : undefined;
+  return opnemen ? { name: leesAuteur() || i18next.t("writer:general.unknownAuthor"), date: new Date().toISOString() } : undefined;
 }
 
 function vergelijk(volgorde: Map<string, number>, a: YrsLoc, b: YrsLoc) {
@@ -40,11 +41,11 @@ function vergelijk(volgorde: Map<string, number>, a: YrsLoc, b: YrsLoc) {
 
 /** Leest de huidige selectie uit de engine. */
 export async function leesSelectie(ref: DocxEditorRef | null): Promise<TekstSelectie> {
-  if (!ref) throw new Error("Het document is nog niet gereed.");
+  if (!ref) throw new Error(i18next.t("writer:general.documentNotReady"));
   await ref.flushPendingInput();
   const paged = ref.getEditorRef();
   const sessie = paged?.getYrsSession();
-  if (!paged || !sessie) throw new Error("Het document is nog niet gereed.");
+  if (!paged || !sessie) throw new Error(i18next.t("writer:general.documentNotReady"));
   let anker: YrsLoc | null = null;
   let kop: YrsLoc | null = null;
   const bekend = sessie.selection();
@@ -58,7 +59,7 @@ export async function leesSelectie(ref: DocxEditorRef | null): Promise<TekstSele
       kop = paged.displayPositionToYrsLoc(bereik.to);
     }
   }
-  if (!anker || !kop) throw new Error("Zet de cursor eerst in de tekst.");
+  if (!anker || !kop) throw new Error(i18next.t("writer:general.placeCursorFirst"));
   if (anker.story !== kop.story) kop = anker;
   const story = anker.story;
   const alleAlineas = sessie.paragraphs(story);

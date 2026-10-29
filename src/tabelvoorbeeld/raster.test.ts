@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { zetTaal } from "../i18n/config";
 import {
   afmetingTekst,
   afmetingUitleg,
@@ -48,6 +49,17 @@ describe("tabelraster", () => {
     expect(afmetingTekst({ rijen: 4, kolommen: 3 })).toBe("3 × 4");
     expect(afmetingTekst(null)).toBe("");
     expect(afmetingUitleg({ rijen: 1, kolommen: 2 })).toBe("2 kolommen bij 1 rij");
+  });
+
+  it("verwoordt de afmeting in de interfacetaal", async () => {
+    await zetTaal("en");
+    try {
+      expect(afmetingUitleg({ rijen: 1, kolommen: 2 })).toBe("2 columns by 1 row");
+      expect(afmetingUitleg(null)).toBe("Choose a table size");
+    } finally {
+      await zetTaal("nl");
+    }
+    expect(afmetingUitleg({ rijen: 3, kolommen: 1 })).toBe("1 kolom bij 3 rijen");
   });
 
   it("begrenst getallen uit de dialoog", () => {

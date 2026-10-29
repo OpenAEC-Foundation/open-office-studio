@@ -4,6 +4,7 @@
  * interface raakt gaat naar de host (VbaHost/FormulierHost); zonder host volgt
  * een concrete melding in plaats van stil niets te doen.
  */
+import i18next from "i18next";
 import { weigerLid } from "./afscherming.ts";
 import { naarHost, vanHost } from "./conversie.ts";
 import { huidigeDatabase, openRecordset, voerSqlUit, werkkopieVan } from "./dao.ts";
@@ -130,12 +131,15 @@ function formulierHost(rt: VbaRuntime, doel: FormulierDoel) {
   if (!host && rt.frame && rt.frame.module.soort !== "formulier")
     throw fout(
       doel.soort === "rapport" ? 2451 : 2450,
-      `Access kan het ${doel.soort === "rapport" ? "rapport" : "formulier"} ‘${doel.naam.split("/")[0]}’ niet vinden (het is niet geopend).`,
+      i18next.t(doel.soort === "rapport" ? "vba:access.reportNotOpen" : "vba:access.formNotOpen", { name: doel.naam.split("/")[0] }),
     );
   if (!host)
     throw new VbaAfbreking(
       "niet-ondersteund",
-      `${doel.soort === "rapport" ? "Rapport" : "Formulier"} ‘${doel.naam}’${doel.besturing ? `, besturingselement ‘${doel.besturing}’` : ""}: er is geen formulierhost gekoppeld, dus Me en Forms!… zijn hier niet beschikbaar.`,
+      i18next.t(
+        `vba:access.noFormHost.${doel.soort === "rapport" ? "report" : "form"}${doel.besturing ? "Control" : ""}`,
+        { name: doel.naam, control: doel.besturing },
+      ),
     );
   return host;
 }
@@ -188,7 +192,7 @@ export class FormulierObject extends VbaObject {
         return this.doel.naam;
       case "controls":
         if (args.length) return this.besturing(naarTekst(await r.deref(args[0]), r.land));
-        throw new VbaAfbreking("niet-ondersteund", "De verzameling Controls kan alleen per naam worden gebruikt (Me.Controls(\"naam\")).");
+        throw new VbaAfbreking("niet-ondersteund", i18next.t("vba:access.controlsByNameOnly"));
       case "recordsetclone":
       case "recordset": {
         const bron = vanHost(await formulierHost(r, this.doel).lees(this.doel, "recordsource", []));
@@ -274,18 +278,18 @@ class FormulierenCollectie extends VbaObject {
     const r = rt as VbaRuntime;
     const sleutel = await r.deref(args[0] ?? "");
     if (sleutel instanceof Getal)
-      throw new VbaAfbreking("niet-ondersteund", `${this.typeNaam}(index) wordt niet ondersteund; gebruik de naam.`);
+      throw new VbaAfbreking("niet-ondersteund", i18next.t("vba:access.indexUnsupported", { collection: this.typeNaam }));
     return this.formulier(naarTekst(sleutel, r.land));
   }
   override async lid(naam: string, args: VbaWaarde[], rt: unknown): Promise<VbaWaarde> {
     if (naam === "item") return this.standaard(args, rt);
     // Zonder formulierhost is er niets geopend.
     if (naam === "count" && !(rt as VbaRuntime).opties.formulieren) return int(0);
-    throw new VbaAfbreking("niet-ondersteund", `${this.typeNaam}.${naam} wordt niet ondersteund.`);
+    throw new VbaAfbreking("niet-ondersteund", i18next.t("vba:runtime.memberUnsupported", { member: `${this.typeNaam}.${naam}` }));
   }
   override async elementen(rt: unknown): Promise<VbaWaarde[]> {
     if (!(rt as VbaRuntime).opties.formulieren) return [];
-    throw new VbaAfbreking("niet-ondersteund", `For Each over ${this.typeNaam} wordt niet ondersteund; gebruik de naam.`);
+    throw new VbaAfbreking("niet-ondersteund", i18next.t("vba:access.forEachUnsupported", { collection: this.typeNaam }));
   }
 }
 
@@ -359,10 +363,11 @@ async function hostGebeurtenis(rt: VbaRuntime, naam: string, args: VbaWaarde[]):
     return r === undefined ? LEEG : vanHost(r);
   }
   if (ZONDER_HOST_GEEN_GEVOLG.has(naam)) return LEEG;
-  const wat = typeof hostArgs[0] === "string" ? ` ‘${hostArgs[0]}’` : "";
   throw new VbaAfbreking(
     "niet-ondersteund",
-    `DoCmd.${soort}${wat}: hiervoor is de interface nodig, maar er is geen host gekoppeld. Voer deze procedure uit vanuit Database Studio met geopende formulieren.`,
+    typeof hostArgs[0] === "string"
+      ? i18next.t("vba:access.doCmdNeedsHostNamed", { action: soort, name: hostArgs[0] })
+      : i18next.t("vba:access.doCmdNeedsHost", { action: soort }),
   );
 }
 
@@ -396,7 +401,7 @@ class DoCmdObject extends VbaObject {
         const naamQ = naarTekst(await r.deref(args[0] ?? ""), r.land);
         const db = werkkopieVan(r);
         const q = (await db.querys()).find((x) => x.naam.toLowerCase() === naamQ.toLowerCase());
-        if (!q) throw fout(7874, `Access kan het object ‘${naamQ}’ niet vinden.`);
+        if (!q) throw fout(7874, i18next.t("vba:access.objectNotFound", { name: naamQ }));
         if (q.soort !== "select" && q.soort !== "union" && q.soort !== "crosstab") {
           await voerSqlUit(r, q.naam);
           return LEEG;
@@ -406,16 +411,16 @@ class DoCmdObject extends VbaObject {
         });
       }
       case "runmacro":
-        throw new VbaAfbreking("niet-ondersteund", "DoCmd.RunMacro: Access-macro’s worden niet uitgevoerd.");
+        throw new VbaAfbreking("niet-ondersteund", i18next.t("vba:access.runMacroUnsupported"));
       case "deleteobject":
       case "rename":
       case "copyobject":
       case "setproperty":
       case "transferspreadsheetlink":
-        throw new VbaAfbreking("niet-ondersteund", `DoCmd.${naam} wordt niet ondersteund.`);
+        throw new VbaAfbreking("niet-ondersteund", i18next.t("vba:runtime.memberUnsupported", { member: `DoCmd.${naam}` }));
     }
     if (naam in DOCMD_GEBEURTENIS) return hostGebeurtenis(r, naam, args);
-    throw new VbaAfbreking("niet-ondersteund", `DoCmd.${naam} wordt niet ondersteund.`);
+    throw new VbaAfbreking("niet-ondersteund", i18next.t("vba:runtime.memberUnsupported", { member: `DoCmd.${naam}` }));
   }
 }
 DOCMD_GEBEURTENIS["openquery_select"] = "OpenQuery";
@@ -619,7 +624,7 @@ class ApplicationObject extends VbaObject {
       case "vbe":
         return weigerLid("Application", naam === "vbe" ? "VBE" : "References");
       case "eval":
-        throw new VbaAfbreking("niet-ondersteund", `Application.${naam} wordt niet ondersteund.`);
+        throw new VbaAfbreking("niet-ondersteund", i18next.t("vba:runtime.memberUnsupported", { member: `Application.${naam}` }));
     }
     const f = r.ingebouwd(naam);
     if (f) return r.roepIngebouwdAan(f, args);
@@ -654,12 +659,12 @@ async function sysCmd(args: VbaWaarde[], rt: VbaRuntime): Promise<VbaWaarde> {
     case 13:
       return weigerLid("SysCmd", "GetWorkgroupFile");
   }
-  throw new VbaAfbreking("niet-ondersteund", `SysCmd met actie ${actie} wordt niet ondersteund.`);
+  throw new VbaAfbreking("niet-ondersteund", i18next.t("vba:access.sysCmdUnsupported", { action: actie }));
 }
 
-const nietOndersteundeFunctie = (naam: string, reden: string): Ingebouwd => ({
+const nietOndersteundeFunctie = (naam: string, reden: "managedDatabase" | "memoryAddress"): Ingebouwd => ({
   fn: () => {
-    throw new VbaAfbreking("niet-ondersteund", `${naam} wordt niet ondersteund: ${reden}.`);
+    throw new VbaAfbreking("niet-ondersteund", i18next.t(`vba:access.unsupportedFunction.${reden}`, { name: naam }));
   },
 });
 
@@ -667,10 +672,10 @@ export const accessFuncties: Record<string, Ingebouwd> = {
   syscmd: { ruw: true, fn: (args, rt) => sysCmd(args, rt) },
   currentuser: { fn: () => "Admin" },
   quit: { fn: (args, rt) => hostGebeurtenis(rt, "quit", args) },
-  closecurrentdatabase: nietOndersteundeFunctie("CloseCurrentDatabase", "de database wordt door Open Office Studio beheerd"),
-  strptr: nietOndersteundeFunctie("StrPtr", "geheugenadressen zijn alleen zinvol voor de Windows-API"),
-  varptr: nietOndersteundeFunctie("VarPtr", "geheugenadressen zijn alleen zinvol voor de Windows-API"),
-  objptr: nietOndersteundeFunctie("ObjPtr", "geheugenadressen zijn alleen zinvol voor de Windows-API"),
+  closecurrentdatabase: nietOndersteundeFunctie("CloseCurrentDatabase", "managedDatabase"),
+  strptr: nietOndersteundeFunctie("StrPtr", "memoryAddress"),
+  varptr: nietOndersteundeFunctie("VarPtr", "memoryAddress"),
+  objptr: nietOndersteundeFunctie("ObjPtr", "memoryAddress"),
 };
 
 export function accessGlobalen(rt: VbaRuntime): [string, VbaWaarde][] {

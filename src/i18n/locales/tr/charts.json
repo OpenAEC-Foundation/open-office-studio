@@ -1,0 +1,265 @@
+{
+  "types": {
+    "column": {
+      "name": "Sütun",
+      "description": "Değerleri yan yana karşılaştırın"
+    },
+    "stackedColumn": {
+      "name": "Yığılmış sütun",
+      "description": "Kategori başına parçalar ve toplam"
+    },
+    "percentColumn": {
+      "name": "%100 sütun",
+      "description": "Kategori başına paylar"
+    },
+    "bar": {
+      "name": "Çubuk",
+      "description": "Yatay, uzun adlar için"
+    },
+    "line": {
+      "name": "Çizgi",
+      "description": "Zaman içindeki eğilim"
+    },
+    "lineMarkers": {
+      "name": "İşaretçili çizgi",
+      "description": "Görünür veri noktalarıyla eğilim"
+    },
+    "area": {
+      "name": "Alan",
+      "description": "Büyüklüğü vurgulayan eğilim"
+    },
+    "pie": {
+      "name": "Pasta",
+      "description": "Tek bir serinin dağılımı"
+    },
+    "doughnut": {
+      "name": "Halka",
+      "description": "Ortası açık dağılım"
+    },
+    "scatter": {
+      "name": "Dağılım (XY)",
+      "description": "İki sayı arasındaki ilişki"
+    },
+    "combo": {
+      "name": "Sütun + çizgi",
+      "description": "İkincil eksende çizgi olarak son seri"
+    }
+  },
+  "unknownType": "Bilinmeyen tür",
+  "busy": "İşleniyor…",
+  "defaults": {
+    "seriesName": "Seri {{n}}",
+    "categoryName": "Kategori {{n}}",
+    "chartName": "Grafik {{n}}",
+    "sheetName": "Grafik {{n}}",
+    "true": "DOĞRU",
+    "false": "YANLIŞ"
+  },
+  "ribbon": {
+    "charts": "Grafikler",
+    "chart": "Grafik",
+    "editChart": "Grafiği düzenle",
+    "allCharts": "Tüm grafikler",
+    "dataAndFormat": "Veri ve biçimlendirme",
+    "overview": "Genel bakış",
+    "type": "Tür",
+    "changeType": "Grafik türünü değiştir",
+    "data": "Veri",
+    "selectData": "Veri seç",
+    "layout": "Düzen",
+    "titleAndLegend": "Başlık ve gösterge",
+    "delete": "Sil",
+    "deleteChart": "Grafiği sil",
+    "withShortcut": "{{name}} · {{shortcut}}"
+  },
+  "dialog": {
+    "title": {
+      "insert": "Grafik ekle",
+      "edit": "Grafiği düzenle"
+    },
+    "button": {
+      "insert": "Ekle",
+      "edit": "Güncelle"
+    },
+    "reloadNote": {
+      "insert": "Belge ekledikten sonra yeniden yüklenir. Bundan önceki değişiklikler artık geri alınamaz.",
+      "edit": "Belge güncelledikten sonra yeniden yüklenir. Bundan önceki değişiklikler artık geri alınamaz."
+    },
+    "closeTitle": "Kapat (Esc)",
+    "type": "Tür",
+    "data": "Veri",
+    "cellRange": "Hücre aralığı",
+    "cellRangePlaceholder": "Örneğin A1:D6",
+    "noContiguousRange": "Bu grafiğin başvuruları bitişik bir aralık oluşturmuyor; siz bir aralık girene kadar veriler değişmeden kalır.",
+    "firstRowNames": "İlk satır adları içeriyor",
+    "firstColumnNames": "İlk sütun adları içeriyor",
+    "seriesIn": "Seriler",
+    "columns": "sütunlarda",
+    "rows": "satırlarda",
+    "series": "Seri",
+    "seriesNoNumbersTitle": "{{name}}: sayı yok, dahil edilmedi",
+    "noNumbers": "(sayı yok)",
+    "enterRange": "Verileri içeren hücre aralığını girin.",
+    "placeCursorInTable": "Önce imleci sayı içeren bir tabloya yerleştirin.",
+    "titles": "Başlıklar",
+    "chartTitle": "Başlık",
+    "subtitle": "Alt başlık",
+    "categoryAxis": "Kategori ekseni",
+    "valueAxis": "Değer ekseni",
+    "horizontalAxis": "Yatay eksen",
+    "verticalAxis": "Dikey eksen",
+    "secondaryAxis": "İkincil eksen",
+    "format": "Biçim",
+    "legend": "Gösterge",
+    "gridlines": "Kılavuz çizgileri",
+    "dataLabels": "Veri etiketleri",
+    "decimals": "Ondalık basamak",
+    "placement": "Yerleşim",
+    "besideData": "Bu sayfada verilerin yanında",
+    "newSheet": "Yeni bir sayfada",
+    "sheetName": "Sayfa adı",
+    "summary": {
+      "series_one": "{{n}} seri",
+      "series_other": "{{n}} seri",
+      "categories_one": "{{n}} kategori",
+      "categories_other": "{{n}} kategori",
+      "text": "{{series}} · {{categories}}",
+      "withSheet": "{{series}} · {{categories}} · {{sheet}}"
+    }
+  },
+  "legend": {
+    "bottom": "Alt",
+    "right": "Sağ",
+    "top": "Üst",
+    "left": "Sol",
+    "none": "Gösterge yok"
+  },
+  "dataSheet": {
+    "row": "Satır",
+    "series": "Seri",
+    "removeLastRow": "Son satırı sil",
+    "removeLastSeries": "Son seriyi sil",
+    "paste": "Yapıştır",
+    "pasteTitle": "Panodan sekmeyle ayrılmış metni yapıştırın, örneğin bir hesap tablosundan kopyalanmış",
+    "fromTable": "Seçili tablodan",
+    "fromTableTitle": "İmlecin bulunduğu tabloyu alır",
+    "pasteNotAllowed": "Burada düğmeyle yapıştırmaya izin verilmiyor. Bir hücreye tıklayın ve Ctrl+V kullanın.",
+    "corner": "Köşe hücresi",
+    "seriesNameLabel": "{{n}}. serinin adı",
+    "categoryLabel": "Kategori {{n}}",
+    "valueLabel": "Değer satır {{row}}, seri {{series}}"
+  },
+  "preview": {
+    "label": "Önizleme: {{title}}",
+    "untitled": "Önizleme: başlıksız grafik"
+  },
+  "list": {
+    "title": "Bu belgedeki grafikler",
+    "empty": "Bu belge henüz grafik içermiyor.",
+    "edit": "Düzenle",
+    "delete": "Sil",
+    "deleteLabel": "{{name}} öğesini sil",
+    "place": {
+      "slide": "slayt {{n}}",
+      "sheet": "sayfa {{name}}",
+      "text": "metindeki grafik {{n}}"
+    }
+  },
+  "deleteConfirm": {
+    "title": "Grafiği sil",
+    "text": "‘{{name}}’ silinsin mi? Ardından belge yeniden yüklenir; önceki değişiklikler artık geri alınamaz.",
+    "textSheet": "‘{{name}}’, {{sheet}} sayfasından silinsin mi? Ardından belge yeniden yüklenir; önceki değişiklikler artık geri alınamaz.",
+    "button": "Sil"
+  },
+  "errors": {
+    "unknownType": "Bilinmeyen grafik türü.",
+    "noSeries": "Grafik en az bir veri serisi gerektirir.",
+    "tooManySeries": "Bir grafik burada en fazla {{max}} seri içerebilir.",
+    "tooManyCategories": "Bir grafik burada en fazla {{max}} kategori içerebilir.",
+    "noCategories": "Grafik en az bir kategori gerektirir.",
+    "valueCountMismatch": "‘{{name}}’ serisinde kategori sayısı kadar değer yok.",
+    "noNumbers": "Veriler hiç sayı içermiyor.",
+    "comboNeedsTwoSeries": "Birleşik grafik en az iki seri gerektirir: sütunlar ve bir çizgi.",
+    "scatterNeedsNumbers": "Dağılım grafiği ilk sütunda veya satırda X değerleri olarak sayılar gerektirir.",
+    "titleTooLong": "Başlıklar en fazla {{max}} karakter uzunluğunda olabilir.",
+    "invalidColor": "‘{{color}}’ geçerli bir renk değil.",
+    "noNumericColumn": "Aralıktaki sütunların hiçbiri sayı içermiyor, bu nedenle çizilecek bir şey yok. En az bir sayı sütunu olan bir aralık seçin veya ‘Seriler’ seçeneğini satırlar olarak ayarlayın.",
+    "noNumericRow": "Aralıktaki satırların hiçbiri sayı içermiyor, bu nedenle çizilecek bir şey yok. En az bir sayı satırı olan bir aralık seçin veya ‘Seriler’ seçeneğini sütunlar olarak ayarlayın.",
+    "chooseSeries": "Grafik için en az bir seri seçin.",
+    "rangeTooLarge": "Aralık çok büyük: en fazla {{max}} hücre.",
+    "noDataBesideHeaders": "Aralık, başlıklar dışında veri içermiyor.",
+    "pasteTooLarge": "Yapıştırılan veriler bir grafik için çok büyük.",
+    "invalidRange": "Bu geçerli bir hücre aralığı değil. Örneğin A1:D6 veya 'Sayfa 1'!A1:D6 kullanın.",
+    "noSuchSheet": "‘{{name}}’ adlı bir sayfa yok.",
+    "spreadsheetNotReady": "Hesap tablosu henüz hazır değil.",
+    "spreadsheetReadOnly": "Hesap tablosu salt okunur.",
+    "documentNotReady": "Belge henüz hazır değil.",
+    "presentationNotEditable": "Sunu şu anda düzenlenemiyor.",
+    "selectChartFirst": "Önce bir grafik seçin.",
+    "chartGone": "Grafik artık bulunamıyor.",
+    "notEditableHere": "Bu grafik burada düzenlenemez.",
+    "notEditable": "Bu grafik düzenlenemez.",
+    "package": {
+      "tooLarge": "Belge, içinde grafik düzenlemek için çok büyük.",
+      "tooManyParts": "Belge çok fazla veya çok büyük parça içeriyor.",
+      "notZip": "Belge geçerli bir Office dosyası (zip) değil.",
+      "invalidPartName": "Belge geçersiz bir parça adı içeriyor.",
+      "noContentTypes": "Belgede [Content_Types].xml eksik.",
+      "missingPart": "Belgede {{part}} parçası eksik.",
+      "noFreePartName": "Boş parça adı kalmadı."
+    },
+    "xml": {
+      "tooLarge": "Bir XML parçası işlenemeyecek kadar büyük.",
+      "damaged": "XML parçası hasarlı.",
+      "doctype": "DOCTYPE içeren XML güvenlik nedeniyle işlenmez.",
+      "tooDeep": "XML parçası çok derin iç içe geçmiş.",
+      "overlappingChanges": "İç hata: çakışan XML değişiklikleri."
+    },
+    "chartXml": {
+      "notDrawingML": "Bu parça bir DrawingML grafiği değil.",
+      "noPlotArea": "Grafiğin çizim alanı yok.",
+      "unusualPrefix": "Bu grafik alışılmadık bir XML gösterimi kullanıyor ve burada güvenle düzenlenemez."
+    },
+    "document": {
+      "noMainPart": "Belgenin ana parçası eksik.",
+      "tooManyCharts": "Bu belge zaten {{total}} grafik içeriyor; daha fazlası desteklenmiyor.",
+      "invalidSheetName": "Geçersiz sayfa adı: en fazla 31 karakter, \\ / ? * [ ] : olmadan",
+      "sheetExists": "‘{{name}}’ adlı bir sayfa zaten var.",
+      "noSheetList": "Çalışma kitabında sayfa listesi yok.",
+      "drawingMissing": "Bu sayfanın çizimi eksik veya hasarlı.",
+      "noSuchWorksheet": "Seçilen sayfa yok veya bir çalışma sayfası değil.",
+      "notPlainWorksheet": "Grafik yalnızca normal bir çalışma sayfasına yerleştirilebilir.",
+      "drawingDamaged": "Bu sayfanın çizimi hasarlı.",
+      "docxUnusualPrefix": "Bu belge alışılmadık bir XML gösterimi kullanıyor; grafik güvenle eklenemez.",
+      "noBody": "Belgenin gövdesi yok.",
+      "tableTooLarge": "Tablo bir grafik için çok büyük.",
+      "noSuchSlide": "Seçilen slayt yok.",
+      "slideUnusualPrefix": "Bu slayt alışılmadık bir XML gösterimi kullanıyor; grafik güvenle eklenemez.",
+      "noShapeTree": "Slaytın şekil ağacı yok.",
+      "chartRemoved": "Grafik artık belgede yok.",
+      "chartNotFound": "Grafik bulunamadı.",
+      "cannotRemove": "Grafik nesnesi kaldırılamıyor."
+    }
+  },
+  "read": {
+    "reasons": {
+      "extendedChart": "Bu, burada düzenlenemeyen genişletilmiş bir grafik (örneğin şelale veya ağaç haritası grafiği).",
+      "unsupportedType": "Bu grafik burada düzenlenemeyen bir tür kullanıyor ({{types}}).",
+      "noReadableSeries": "Grafik okunabilir seri içermiyor.",
+      "unsupportedCombination": "Bu grafik türleri burada düzenlenemeyecek şekilde birleştiriyor.",
+      "noSeries": "Grafik hiç veri serisi içermiyor.",
+      "invalid": "Bu grafik burada düzenlenemez: {{reason}}",
+      "unusualPrefix": "Bu grafik alışılmadık bir XML gösterimi kullanıyor ve burada güvenle düzenlenemez."
+    },
+    "warnings": {
+      "stackedBars": "Yığılmış çubuklar düzenlenirken yan yana yerleştirilir.",
+      "stackedLines": "Yığılmış çizgiler düzenlenirken ayrı çizgilere dönüşür.",
+      "stackedAreas": "Yığılmış alanlar düzenlenirken ayrı alanlara dönüşür.",
+      "linesAfterColumns": "Çizgi serileri düzenlenirken sütunlardan sonra yerleştirilir.",
+      "lastSeriesAsLine": "Düzenlenirken yalnızca son seri çizgi olarak çizilir.",
+      "multiLevelCategories": "Çok düzeyli kategoriler düzenlenirken tek düzeye iner.",
+      "moreValuesThanCategories": "‘{{name}}’ serisinde kategori sayısından fazla değer var.",
+      "trendlinesDropped": "Eğilim çizgileri ve hata çubukları düzenlenirken kaldırılır."
+    }
+  }
+}

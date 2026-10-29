@@ -1,0 +1,232 @@
+{
+  "types": {
+    "column": { "name": "Column", "description": "Compare values side by side" },
+    "stackedColumn": { "name": "Stacked column", "description": "Parts and total per category" },
+    "percentColumn": { "name": "100% column", "description": "Shares per category" },
+    "bar": { "name": "Bar", "description": "Horizontal, for long names" },
+    "line": { "name": "Line", "description": "Trend over time" },
+    "lineMarkers": { "name": "Line with markers", "description": "Trend with visible data points" },
+    "area": { "name": "Area", "description": "Trend with emphasis on magnitude" },
+    "pie": { "name": "Pie", "description": "Breakdown of a single series" },
+    "doughnut": { "name": "Doughnut", "description": "Breakdown with an open centre" },
+    "scatter": { "name": "Scatter (XY)", "description": "Relationship between two numbers" },
+    "combo": { "name": "Column + line", "description": "Last series as a line on a secondary axis" }
+  },
+  "unknownType": "Unknown type",
+  "busy": "Working…",
+  "defaults": {
+    "seriesName": "Series {{n}}",
+    "categoryName": "Category {{n}}",
+    "chartName": "Chart {{n}}",
+    "sheetName": "Chart {{n}}",
+    "true": "TRUE",
+    "false": "FALSE"
+  },
+  "ribbon": {
+    "charts": "Charts",
+    "chart": "Chart",
+    "editChart": "Edit chart",
+    "allCharts": "All charts",
+    "dataAndFormat": "Data and formatting",
+    "overview": "Overview",
+    "type": "Type",
+    "changeType": "Change chart type",
+    "data": "Data",
+    "selectData": "Select data",
+    "layout": "Layout",
+    "titleAndLegend": "Title and legend",
+    "delete": "Delete",
+    "deleteChart": "Delete chart",
+    "withShortcut": "{{name}} · {{shortcut}}"
+  },
+  "dialog": {
+    "title": {
+      "insert": "Insert chart",
+      "edit": "Edit chart"
+    },
+    "button": {
+      "insert": "Insert",
+      "edit": "Update"
+    },
+    "reloadNote": {
+      "insert": "The document is reloaded after inserting. Changes made before that point can no longer be undone.",
+      "edit": "The document is reloaded after updating. Changes made before that point can no longer be undone."
+    },
+    "closeTitle": "Close (Esc)",
+    "type": "Type",
+    "data": "Data",
+    "cellRange": "Cell range",
+    "cellRangePlaceholder": "For example A1:D6",
+    "noContiguousRange": "The references of this chart do not form a contiguous range; the data stays unchanged until you enter a range.",
+    "firstRowNames": "First row contains names",
+    "firstColumnNames": "First column contains names",
+    "seriesIn": "Series in",
+    "columns": "columns",
+    "rows": "rows",
+    "series": "Series",
+    "seriesNoNumbersTitle": "{{name}}: no numbers, not included",
+    "noNumbers": "(no numbers)",
+    "enterRange": "Enter the cell range that contains the data.",
+    "placeCursorInTable": "First place the cursor in a table with numbers.",
+    "titles": "Titles",
+    "chartTitle": "Title",
+    "subtitle": "Subtitle",
+    "categoryAxis": "Category axis",
+    "valueAxis": "Value axis",
+    "horizontalAxis": "Horizontal axis",
+    "verticalAxis": "Vertical axis",
+    "secondaryAxis": "Secondary axis",
+    "format": "Format",
+    "legend": "Legend",
+    "gridlines": "Gridlines",
+    "dataLabels": "Data labels",
+    "decimals": "Decimal places",
+    "placement": "Placement",
+    "besideData": "Next to the data on this sheet",
+    "newSheet": "On a new sheet",
+    "sheetName": "Sheet name",
+    "summary": {
+      "series_one": "{{n}} series",
+      "series_other": "{{n}} series",
+      "categories_one": "{{n}} category",
+      "categories_other": "{{n}} categories",
+      "text": "{{series}} · {{categories}}",
+      "withSheet": "{{series}} · {{categories}} · {{sheet}}"
+    }
+  },
+  "legend": {
+    "bottom": "Bottom",
+    "right": "Right",
+    "top": "Top",
+    "left": "Left",
+    "none": "No legend"
+  },
+  "dataSheet": {
+    "row": "Row",
+    "series": "Series",
+    "removeLastRow": "Delete last row",
+    "removeLastSeries": "Delete last series",
+    "paste": "Paste",
+    "pasteTitle": "Paste tab-separated text from the clipboard, for example copied from a spreadsheet",
+    "fromTable": "From selected table",
+    "fromTableTitle": "Takes over the table the cursor is in",
+    "pasteNotAllowed": "Pasting with the button is not allowed here. Click in a cell and use Ctrl+V.",
+    "corner": "Corner cell",
+    "seriesNameLabel": "Name of series {{n}}",
+    "categoryLabel": "Category {{n}}",
+    "valueLabel": "Value row {{row}}, series {{series}}"
+  },
+  "preview": {
+    "label": "Preview: {{title}}",
+    "untitled": "Preview: untitled chart"
+  },
+  "list": {
+    "title": "Charts in this document",
+    "empty": "This document does not contain any charts yet.",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleteLabel": "Delete {{name}}",
+    "place": {
+      "slide": "slide {{n}}",
+      "sheet": "sheet {{name}}",
+      "text": "chart {{n}} in the text"
+    }
+  },
+  "deleteConfirm": {
+    "title": "Delete chart",
+    "text": "Delete ‘{{name}}’? The document is then reloaded; earlier changes can no longer be undone.",
+    "textSheet": "Delete ‘{{name}}’ from sheet {{sheet}}? The document is then reloaded; earlier changes can no longer be undone.",
+    "button": "Delete"
+  },
+  "errors": {
+    "unknownType": "Unknown chart type.",
+    "noSeries": "The chart needs at least one data series.",
+    "tooManySeries": "A chart can contain at most {{max}} series here.",
+    "tooManyCategories": "A chart can contain at most {{max}} categories here.",
+    "noCategories": "The chart needs at least one category.",
+    "valueCountMismatch": "Series ‘{{name}}’ does not have as many values as there are categories.",
+    "noNumbers": "The data does not contain any numbers.",
+    "comboNeedsTwoSeries": "A combo chart needs at least two series: columns and a line.",
+    "scatterNeedsNumbers": "A scatter chart needs numbers as X values in the first column or row.",
+    "titleTooLong": "Titles can be at most {{max}} characters long.",
+    "invalidColor": "Colour ‘{{color}}’ is not a valid colour.",
+    "noNumericColumn": "None of the columns in the range contain numbers, so there is nothing to plot. Choose a range with at least one column of numbers, or set ‘Series in’ to rows.",
+    "noNumericRow": "None of the rows in the range contain numbers, so there is nothing to plot. Choose a range with at least one row of numbers, or set ‘Series in’ to columns.",
+    "chooseSeries": "Choose at least one series for the chart.",
+    "rangeTooLarge": "The range is too large: at most {{max}} cells.",
+    "noDataBesideHeaders": "The range contains no data besides the headers.",
+    "pasteTooLarge": "The pasted data is too large for a chart.",
+    "invalidRange": "That is not a valid cell range. Use for example A1:D6 or 'Sheet 1'!A1:D6.",
+    "noSuchSheet": "There is no sheet named ‘{{name}}’.",
+    "spreadsheetNotReady": "The spreadsheet is not ready yet.",
+    "spreadsheetReadOnly": "The spreadsheet is read-only.",
+    "documentNotReady": "The document is not ready yet.",
+    "presentationNotEditable": "The presentation cannot be edited right now.",
+    "selectChartFirst": "Select a chart first.",
+    "chartGone": "The chart can no longer be found.",
+    "notEditableHere": "This chart cannot be edited here.",
+    "notEditable": "This chart cannot be edited.",
+    "package": {
+      "tooLarge": "The document is too large to edit a chart in it.",
+      "tooManyParts": "The document contains too many or too large parts.",
+      "notZip": "The document is not a valid Office file (zip).",
+      "invalidPartName": "The document contains an invalid part name.",
+      "noContentTypes": "The document is missing [Content_Types].xml.",
+      "missingPart": "Part {{part}} is missing from the document.",
+      "noFreePartName": "There is no free part name left."
+    },
+    "xml": {
+      "tooLarge": "An XML part is too large to process.",
+      "damaged": "The XML part is damaged.",
+      "doctype": "XML with a DOCTYPE is not processed for security reasons.",
+      "tooDeep": "The XML part is nested too deeply.",
+      "overlappingChanges": "Internal error: overlapping XML changes."
+    },
+    "chartXml": {
+      "notDrawingML": "This part is not a DrawingML chart.",
+      "noPlotArea": "The chart has no plot area.",
+      "unusualPrefix": "This chart uses an unusual XML notation and cannot be edited safely here."
+    },
+    "document": {
+      "noMainPart": "The document is missing its main part.",
+      "tooManyCharts": "This document already contains {{total}} charts; more are not supported.",
+      "invalidSheetName": "Invalid sheet name: at most 31 characters, without \\ / ? * [ ] :",
+      "sheetExists": "A sheet named ‘{{name}}’ already exists.",
+      "noSheetList": "The workbook has no list of sheets.",
+      "drawingMissing": "The drawing of this sheet is missing or damaged.",
+      "noSuchWorksheet": "The chosen sheet does not exist or is not a worksheet.",
+      "notPlainWorksheet": "A chart can only be placed on a regular worksheet.",
+      "drawingDamaged": "The drawing of this sheet is damaged.",
+      "docxUnusualPrefix": "This document uses an unusual XML notation; the chart cannot be inserted safely.",
+      "noBody": "The document has no body.",
+      "tableTooLarge": "The table is too large for a chart.",
+      "noSuchSlide": "The chosen slide does not exist.",
+      "slideUnusualPrefix": "This slide uses an unusual XML notation; the chart cannot be inserted safely.",
+      "noShapeTree": "The slide has no shape tree.",
+      "chartRemoved": "The chart no longer exists in the document.",
+      "chartNotFound": "The chart was not found.",
+      "cannotRemove": "The chart object cannot be removed."
+    }
+  },
+  "read": {
+    "reasons": {
+      "extendedChart": "This is an extended chart (such as a waterfall or treemap chart) that cannot be edited here.",
+      "unsupportedType": "This chart uses a type that cannot be edited here ({{types}}).",
+      "noReadableSeries": "The chart contains no series that can be read.",
+      "unsupportedCombination": "This chart combines types in a way that cannot be edited here.",
+      "noSeries": "The chart contains no data series.",
+      "invalid": "This chart cannot be edited here: {{reason}}",
+      "unusualPrefix": "This chart uses an unusual XML notation and cannot be edited safely here."
+    },
+    "warnings": {
+      "stackedBars": "Stacked bars are placed side by side when editing.",
+      "stackedLines": "Stacked lines become separate lines when editing.",
+      "stackedAreas": "Stacked areas become separate areas when editing.",
+      "linesAfterColumns": "The line series are placed after the columns when editing.",
+      "lastSeriesAsLine": "When editing, only the last series is drawn as a line.",
+      "multiLevelCategories": "Multi-level categories become a single level when editing.",
+      "moreValuesThanCategories": "Series ‘{{name}}’ has more values than there are categories.",
+      "trendlinesDropped": "Trendlines and error bars are removed when editing."
+    }
+  }
+}

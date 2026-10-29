@@ -1,0 +1,92 @@
+{
+  "formulaCheck": {
+    "titleWarning": "Prüfen Sie die Formeln in dieser Tabelle",
+    "titleInfo": "Hinweise zu den Formeln in dieser Tabelle",
+    "cells_one": "{{count}} Zelle",
+    "cells_other": "{{count}} Zellen",
+    "examplesMore_one": "{{list}} und {{count}} weitere",
+    "examplesMore_other": "{{list}} und {{count}} weitere",
+    "userFunction": "Benutzerdefinierte Funktion (Makro oder Add-in)",
+    "function": "Funktion",
+    "notCalculated": "{{kind}} {{name}} wird nicht berechnet ({{cells}}: {{examples}}). Das gespeicherte Ergebnis bleibt erhalten und wird nicht aktualisiert; abhängige Zellen können veraltet sein.",
+    "recalculated_one": "{{cells}} hatte ein veraltetes gespeichertes Ergebnis und wurde beim Öffnen neu berechnet ({{examples}}). Beim Speichern werden die neuen Ergebnisse übernommen.",
+    "recalculated_other": "{{cells}} hatten ein veraltetes gespeichertes Ergebnis und wurden beim Öffnen neu berechnet ({{examples}}). Beim Speichern werden die neuen Ergebnisse übernommen.",
+    "manualCalculation": "Die Datei wurde mit manueller Berechnung gespeichert; gespeicherte Ergebnisse können veraltet sein.",
+    "externalLinks_one": "Die Arbeitsmappe verweist auf eine externe Arbeitsmappe; diese Werte werden nicht aktualisiert.",
+    "externalLinks_other": "Die Arbeitsmappe verweist auf {{count}} externe Arbeitsmappen; diese Werte werden nicht aktualisiert.",
+    "errorCells": "{{cells}} mit einem Fehlerwert: {{list}}.",
+    "errorItem": "{{error}} ({{examples}})",
+    "noCachedResult": "{{cells}} mit einer Formel ohne gespeichertes Ergebnis ({{examples}}).",
+    "fullCalcOnLoad": "Die Datei verlangt beim Öffnen eine vollständige Neuberechnung (fullCalcOnLoad); die gespeicherten Ergebnisse sind möglicherweise veraltet.",
+    "calcChain": "Die Berechnungskette (calcChain) wird beim Speichern nicht beibehalten; Excel baut sie neu auf.",
+    "tooLarge": "Die Tabelle ist zu groß für die Prüfung.",
+    "invalidWorkbook": "Keine gültige XLSX-Arbeitsmappe."
+  },
+  "print": {
+    "pageLabel": "{{sheet}}, Seite {{page}} von {{pages}}",
+    "notWorksheet": "Blatt ‘{{name}}’ ist kein Arbeitsblatt und wird übersprungen.",
+    "nothingToPrint": "Es gibt nichts zu drucken: Die Blätter sind leer."
+  },
+  "export": {
+    "pngUnavailable": "Diese Tabellen-Engine kann kein PNG erstellen."
+  },
+  "csvImport": {
+    "title": "{{name}} importieren",
+    "import": "Importieren",
+    "separator": "Trennzeichen",
+    "separatorSemicolon": "Semikolon ;",
+    "separatorComma": "Komma ,",
+    "separatorTab": "Tabulator",
+    "separatorPipe": "Senkrechter Strich |",
+    "separatorCustom": "Eigenes Zeichen…",
+    "customCharacter": "Eigenes Zeichen",
+    "textQualifier": "Textqualifizierer",
+    "qualifierDouble": "Doppeltes Anführungszeichen \"",
+    "qualifierSingle": "Einfaches Anführungszeichen '",
+    "qualifierNone": "Keiner",
+    "encoding": "Zeichenkodierung",
+    "encodingAuto": "Automatisch",
+    "encodingDetected": "{{name}} ({{encoding}})",
+    "encodingWindows1252": "Windows-1252 (Westeuropäisch)",
+    "numbers": "Zahlen",
+    "numbersDutch": "Niederländisch (1.234,56)",
+    "numbersEnglish": "Englisch (1,234.56)",
+    "dateOrder": "Datumsreihenfolge",
+    "dateOrderDmy": "Tag-Monat-Jahr (31-12-2026)",
+    "dateOrderMdy": "Monat-Tag-Jahr (12/31/2026)",
+    "dateOrderYmd": "Jahr-Monat-Tag (2026-12-31)",
+    "fromRow": "Ab Zeile",
+    "headerRow": "Erste Zeile ist Kopfzeile",
+    "previewLabel": "Vorschau der ersten 50 Zeilen",
+    "columnType": "Typ von Spalte {{number}}",
+    "columnTypes": {
+      "standaard": "Standard",
+      "tekst": "Text",
+      "datum": "Datum",
+      "overslaan": "Überspringen"
+    },
+    "detected_one": "{{separator}} als Trennzeichen, {{count}} Spalte.",
+    "detected_other": "{{separator}} als Trennzeichen, {{count}} Spalten.",
+    "explanation": "Wählen Sie <b>Text</b> für Postleitzahlen, Artikelnummern und IBAN; führende Nullen und Zahlen mit mehr als 15 Ziffern bleiben unter Standard bereits Text. Werte, die mit =, +, - oder @ beginnen, werden nie als Formel eingelesen (Apostroph in der Vorschau).",
+    "separatorNames": {
+      "tab": "Tabulator",
+      "semicolon": "Semikolon",
+      "comma": "Komma",
+      "pipe": "senkrechter Strich",
+      "other": "„{{character}}“"
+    },
+    "report": {
+      "import": "Import",
+      "imported": "{{rows}} und {{columns}} eingelesen; {{separator}} als Trennzeichen, Kodierung {{encoding}}.",
+      "rows_one": "{{count}} Zeile",
+      "rows_other": "{{count}} Zeilen",
+      "columns_one": "{{count}} Spalte",
+      "columns_other": "{{count}} Spalten",
+      "formulaLike": "Formelähnlicher Text",
+      "formulaLikeCells_one": "{{count}} Zelle, die mit =, +, - oder @ beginnt, wurde als Text übernommen, nicht als Formel (Schutz vor CSV-Injection).",
+      "formulaLikeCells_other": "{{count}} Zellen, die mit =, +, - oder @ beginnen, wurden als Text übernommen, nicht als Formel (Schutz vor CSV-Injection).",
+      "truncated": "Abgeschnitten",
+      "truncatedText": "Die Datei ist größer als ein Arbeitsblatt ({{rows}} Zeilen oder {{columns}} Spalten); der Rest wurde nicht eingelesen."
+    }
+  }
+}

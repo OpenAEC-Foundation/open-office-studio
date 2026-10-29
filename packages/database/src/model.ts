@@ -1,3 +1,4 @@
+import i18next from "i18next";
 import type { VbaVerwijzingDetail } from "./access-analyse.ts";
 /** Adaptercontract: onbekende onderdelen worden nooit als lege, gelezen lijsten gepresenteerd. */
 export type Objectsoort =
@@ -50,9 +51,18 @@ export interface Compatibiliteitsrapport {
   datum: string;
   regels: Rapportregel[];
 }
-/** Melding voor versleutelde of met een wachtwoord beveiligde databases. */
-export const VERSLEUTELD_MELDING =
-  "Deze database is versleuteld of met een wachtwoord beveiligd; dat wordt nog niet ondersteund.";
+/** Melding voor versleutelde of met een wachtwoord beveiligde databases (in de interfacetaal). */
+export const versleuteldMelding = () => i18next.t("database:model.encrypted");
+/** Status van een rapportregel in de interfacetaal (de status zelf is een vaste code). */
+export const rapportstatusNaam = (status: Rapportstatus) =>
+  i18next.t(`database:model.status.${STATUSSLEUTEL[status]}`);
+const STATUSSLEUTEL: Record<Rapportstatus, string> = {
+  gelezen: "read",
+  gedeeltelijk: "partial",
+  "niet gelezen": "notRead",
+  "niet aanwezig": "notPresent",
+  "niet uitgevoerd": "notRun",
+};
 export interface DatabaseSession {
   naam: string;
   grootte?: number;
@@ -65,17 +75,18 @@ export interface DatabaseSession {
 }
 export function controleerDatabaseBestand(file: File) {
   if (!/\.(mdb|accdb)$/i.test(file.name))
-    throw new Error("Kies een MDB- of ACCDB-bestand.");
+    throw new Error(i18next.t("database:model.chooseMdb"));
   if (!file.size)
-    throw new Error("Dit bestand is leeg. Kies een database met inhoud.");
+    throw new Error(i18next.t("database:model.emptyFile"));
   if (file.size > 100 * 1024 * 1024)
-    throw new Error("Kies een database van maximaal 100 MB.");
+    throw new Error(i18next.t("database:model.tooLarge"));
 }
 export const voorbeeld: DatabaseSession = {
   naam: "Voorbeelddatabase",
   voorbeeld: true,
-  melding:
-    "Demonstratie met ingebouwde voorbeeldgegevens. Dit zijn geen gegevens uit een geopend databasebestand.",
+  get melding() {
+    return i18next.t("database:model.sampleNotice");
+  },
   objecten: [
     {
       id: "materialen",
@@ -115,19 +126,20 @@ export function csv(kolommen: string[], rijen: string[][]): string {
   );
 }
 export function rapportAlsTekst(rapport: Compatibiliteitsrapport): string {
+  const t = (sleutel: string, opties?: Record<string, unknown>) => i18next.t(`database:model.reportText.${sleutel}`, opties);
   const regels = [
-    `Compatibiliteitsrapport Open Database Studio`,
-    `Bestand: ${rapport.bestand}`,
-    `Grootte: ${rapport.grootte} bytes`,
+    t("title"),
+    t("file", { value: rapport.bestand }),
+    t("size", { value: rapport.grootte }),
     `SHA-256: ${rapport.sha256}`,
-    `Formaat: ${rapport.formaat}`,
-    `Lezer: ${rapport.lezer}`,
-    `Datum: ${rapport.datum}`,
+    t("format", { value: rapport.formaat }),
+    t("reader", { value: rapport.lezer }),
+    t("date", { value: rapport.datum }),
     "",
   ];
   for (const regel of rapport.regels)
     regels.push(
-      `[${regel.status}] ${regel.onderdeel}${regel.aantal === null ? "" : ` (${regel.aantal})`}: ${regel.toelichting}`,
+      `[${rapportstatusNaam(regel.status)}] ${regel.onderdeel}${regel.aantal === null ? "" : ` (${regel.aantal})`}: ${regel.toelichting}`,
     );
   return regels.join("\r\n") + "\r\n";
 }

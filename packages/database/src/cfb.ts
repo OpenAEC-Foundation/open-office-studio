@@ -1,4 +1,5 @@
 /** Minimale, alleen-lezende lezer voor Compound File Binary (MS-CFB), voor VBA-opslag. */
+import i18next from "i18next";
 export interface CfbItem {
   pad: string;
   soort: "opslag" | "stroom";
@@ -18,7 +19,7 @@ export function isCfb(bytes: Uint8Array) {
 }
 
 export function leesCfb(bytes: Uint8Array): CfbItem[] {
-  if (!isCfb(bytes)) throw new Error("Geen compound-bestand (CFB).");
+  if (!isCfb(bytes)) throw new Error(i18next.t("database:ovba.notCfb"));
   const zicht = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
   const u32 = (positie: number) => zicht.getUint32(positie, true);
   const sectorGrootte = 1 << zicht.getUint16(30, true);
@@ -48,7 +49,7 @@ export function leesCfb(bytes: Uint8Array): CfbItem[] {
   for (const nummer of fatSectoren) {
     const basis = sector(nummer);
     if (basis + sectorGrootte > bytes.length)
-      throw new Error("CFB-FAT verwijst buiten het bestand.");
+      throw new Error(i18next.t("database:ovba.fatOutside"));
     for (let i = 0; i < sectorGrootte / 4; i++) fat.push(u32(basis + i * 4));
   }
   const keten = (start: number, tabel: number[]) => {
@@ -67,7 +68,7 @@ export function leesCfb(bytes: Uint8Array): CfbItem[] {
     const uit = new Uint8Array(reeks.length * sectorGrootte);
     reeks.forEach((n, i) => {
       if (sector(n) + sectorGrootte > bytes.length)
-        throw new Error("CFB-sector buiten het bestand.");
+        throw new Error(i18next.t("database:ovba.sectorOutside"));
       uit.set(
         bytes.subarray(sector(n), sector(n) + sectorGrootte),
         i * sectorGrootte,
@@ -109,7 +110,7 @@ export function leesCfb(bytes: Uint8Array): CfbItem[] {
     });
   }
   const wortel = items[0];
-  if (!wortel || wortel.type !== 5) throw new Error("CFB-hoofdmap ontbreekt.");
+  if (!wortel || wortel.type !== 5) throw new Error(i18next.t("database:ovba.rootMissing"));
   const miniStroom =
     wortel.start === EINDE ? new Uint8Array() : leesKeten(wortel.start);
   const stroom = (item: (typeof items)[number]) => {

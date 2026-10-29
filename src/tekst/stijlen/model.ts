@@ -1,6 +1,6 @@
 /**
- * Stijlen zoals de engine ze uit het document heeft gelezen: namen in het
- * Nederlands, opgeloste eigenschappen (met overerving) voor de voorbeelden
+ * Stijlen zoals de engine ze uit het document heeft gelezen: namen in de
+ * interfacetaal, opgeloste eigenschappen (met overerving) voor de voorbeelden
  * in de galerij, en welke stijlen het document gebruikt.
  */
 import type { CSSProperties } from "react";
@@ -12,70 +12,90 @@ import type {
   TextFormatting,
   Theme,
 } from "@betteroffice/docx/types/document";
+import i18next from "../../i18n/config";
+import { formatGetal } from "../../i18n/opmaak";
 import type { StijlEigenschappen } from "./stijlenxml";
 
-const NAMEN: Record<string, string> = {
-  normal: "Standaard",
-  title: "Titel",
-  subtitle: "Ondertitel",
-  quote: "Citaat",
-  "intense quote": "Duidelijk citaat",
-  "list paragraph": "Lijstalinea",
-  "no spacing": "Geen afstand",
-  caption: "Bijschrift",
-  strong: "Zwaar",
-  emphasis: "Nadruk",
-  "subtle emphasis": "Subtiele nadruk",
-  "intense emphasis": "Intense nadruk",
-  "subtle reference": "Subtiele verwijzing",
-  "intense reference": "Intense verwijzing",
-  "book title": "Titel van boek",
-  "toc heading": "Kop van inhoudsopgave",
-  header: "Koptekst",
-  footer: "Voettekst",
-  "header char": "Koptekst Char",
-  "footer char": "Voettekst Char",
-  "default paragraph font": "Standaardalinea-lettertype",
-  "body text": "Plattetekst",
-  "body text 2": "Plattetekst 2",
-  "body text 3": "Plattetekst 3",
-  hyperlink: "Hyperlink",
-  "followedhyperlink": "GevolgdeHyperlink",
-  "normal table": "Standaardtabel",
-  "table grid": "Tabelraster",
-  "no list": "Geen lijst",
-  "footnote text": "Voetnoottekst",
-  "footnote reference": "Voetnootverwijzing",
-  "endnote text": "Eindnoottekst",
-  "endnote reference": "Eindnootverwijzing",
-  "list bullet": "Lijst met opsommingstekens",
-  "list number": "Lijstnummering",
-  list: "Lijst",
-  "list continue": "Lijstvervolg",
-  "annotation text": "Tekst opmerking",
-  "annotation reference": "Verwijzing opmerking",
-  "balloon text": "Ballontekst",
-  "placeholder text": "Tekst van tijdelijke aanduiding",
-  "intense quote char": "Duidelijk citaat Char",
-  "quote char": "Citaat Char",
-  "title char": "Titel Char",
-  "subtitle char": "Ondertitel Char",
-  macro: "Macrotekst",
-  "plain text": "Tekst zonder opmaak",
-  "normal (web)": "Normaal (web)",
+/**
+ * Ingebouwde stijlen: de interne (Engelse) naam in styles.xml → i18n-sleutel
+ * onder `writer:styles.builtin`. Alleen de weergave wordt vertaald; de naam
+ * en het styleId in het bestand blijven ongewijzigd.
+ */
+const INGEBOUWD: Record<string, string> = {
+  normal: "normal",
+  title: "title",
+  subtitle: "subtitle",
+  quote: "quote",
+  "intense quote": "intenseQuote",
+  "list paragraph": "listParagraph",
+  "no spacing": "noSpacing",
+  caption: "caption",
+  strong: "strong",
+  emphasis: "emphasis",
+  "subtle emphasis": "subtleEmphasis",
+  "intense emphasis": "intenseEmphasis",
+  "subtle reference": "subtleReference",
+  "intense reference": "intenseReference",
+  "book title": "bookTitle",
+  "toc heading": "tocHeading",
+  header: "header",
+  footer: "footer",
+  "header char": "headerChar",
+  "footer char": "footerChar",
+  "default paragraph font": "defaultParagraphFont",
+  "body text": "bodyText",
+  hyperlink: "hyperlink",
+  followedhyperlink: "followedHyperlink",
+  "normal table": "normalTable",
+  "table grid": "tableGrid",
+  "no list": "noList",
+  "footnote text": "footnoteText",
+  "footnote reference": "footnoteReference",
+  "endnote text": "endnoteText",
+  "endnote reference": "endnoteReference",
+  "list bullet": "listBullet",
+  "list number": "listNumber",
+  list: "list",
+  "list continue": "listContinue",
+  "annotation text": "annotationText",
+  "annotation reference": "annotationReference",
+  "balloon text": "balloonText",
+  "placeholder text": "placeholderText",
+  "intense quote char": "intenseQuoteChar",
+  "quote char": "quoteChar",
+  "title char": "titleChar",
+  "subtitle char": "subtitleChar",
+  macro: "macro",
+  "plain text": "plainText",
+  "normal (web)": "normalWeb",
 };
 
-/** De Nederlandse naam van een stijl, zoals een Nederlandse tekstverwerker die toont. */
+/** Genummerde varianten ("List Bullet 2") → sleutel met {{level}}. */
+const GENUMMERD: Record<string, string> = {
+  "list bullet": "listBulletLevel",
+  "list number": "listNumberLevel",
+  "list continue": "listContinueLevel",
+  list: "listLevel",
+  "body text": "bodyTextLevel",
+};
+
+const ingebouwd = (sleutel: string, waarden?: Record<string, string>) =>
+  i18next.t(`writer:styles.builtin.${sleutel}`, waarden);
+
+/**
+ * De weergavenaam van een stijl in de interfacetaal, zoals Word die toont
+ * (Nederlands: "Heading 1" als "Kop 1"). Eigen stijlen houden hun naam.
+ */
 export function stijlNaam(stijl: Pick<Style, "name" | "styleId">): string {
   const naam = stijl.name ?? stijl.styleId;
   const laag = naam.toLowerCase().trim();
-  if (NAMEN[laag]) return NAMEN[laag];
+  if (INGEBOUWD[laag]) return ingebouwd(INGEBOUWD[laag]);
   let m = /^heading (\d)( char)?$/.exec(laag);
-  if (m) return `Kop ${m[1]}${m[2] ? " Char" : ""}`;
+  if (m) return ingebouwd(m[2] ? "headingChar" : "heading", { level: m[1] });
   m = /^toc (\d)$/.exec(laag);
-  if (m) return `Inhopg ${m[1]}`;
+  if (m) return ingebouwd("toc", { level: m[1] });
   m = /^(list bullet|list number|list continue|list|body text) (\d)$/.exec(laag);
-  if (m && NAMEN[m[1]]) return `${NAMEN[m[1]]} ${m[2]}`;
+  if (m && GENUMMERD[m[1]]) return ingebouwd(GENUMMERD[m[1]], { level: m[2] });
   return naam;
 }
 
@@ -288,8 +308,8 @@ export function uitOpmaak(
 export function ontbrekendeStijl(stijlen: StyleDefinitions | undefined, styleId: string): string | null {
   if (!stijlen?.styles.length || stijlen.styles.some((s) => s.styleId === styleId)) return null;
   const kop = /^Heading(\d)$/.exec(styleId);
-  const naam = kop ? `Kop ${kop[1]}` : stijlNaam({ styleId, name: styleId });
-  return `Dit document heeft (nog) geen stijl ‘${naam}’. Maak hem aan via Stijlen › Nieuwe stijl.`;
+  const naam = kop ? ingebouwd("heading", { level: kop[1] }) : stijlNaam({ styleId, name: styleId });
+  return i18next.t("writer:styles.missingStyle", { name: naam });
 }
 
 type Knoop = { type?: string; content?: unknown; formatting?: { styleId?: string }; rows?: unknown };
@@ -327,52 +347,60 @@ export function gebruikteStijlen(document: Document | null | undefined): Map<str
   return telling;
 }
 
-const PT = (twip: number) => `${Math.round((twip / 20) * 10) / 10} pt`;
-const CM = (twip: number) => `${Math.round((twip / 567) * 100) / 100} cm`;
+const PT = (twip: number) => `${formatGetal(twip / 20, { maximumFractionDigits: 1 })} pt`;
+const CM = (twip: number) => `${formatGetal(twip / 567, { maximumFractionDigits: 2 })} cm`;
+const UITLIJNING: Record<string, string> = { left: "left", center: "center", right: "right", both: "justify" };
 
 /** Leesbare beschrijving van directe (niet-stijl) opmaak, voor ‘Inspecteren’. */
 export function beschrijfOpmaak(
   tekst: TextFormatting | undefined,
   alinea: ParagraphFormatting | undefined,
 ): { tekst: string[]; alinea: string[] } {
+  const v = (sleutel: string, waarden?: Record<string, string>) => i18next.t(`writer:styles.inspect.${sleutel}`, waarden);
   const t: string[] = [];
   if (tekst) {
     if (tekst.fontFamily?.ascii || tekst.fontFamily?.asciiTheme)
-      t.push(`Lettertype: ${tekst.fontFamily.ascii ?? tekst.fontFamily.asciiTheme}`);
-    if (tekst.fontSize) t.push(`Grootte: ${tekst.fontSize / 2} pt`);
-    if (tekst.bold !== undefined) t.push(tekst.bold ? "Vet" : "Niet vet");
-    if (tekst.italic !== undefined) t.push(tekst.italic ? "Cursief" : "Niet cursief");
-    if (tekst.underline) t.push(tekst.underline.style === "none" ? "Niet onderstreept" : `Onderstreept (${tekst.underline.style})`);
-    if (tekst.strike) t.push("Doorgehaald");
-    if (tekst.doubleStrike) t.push("Dubbel doorgehaald");
+      t.push(v("font", { value: tekst.fontFamily.ascii ?? tekst.fontFamily.asciiTheme ?? "" }));
+    if (tekst.fontSize) t.push(v("size", { value: `${formatGetal(tekst.fontSize / 2)} pt` }));
+    if (tekst.bold !== undefined) t.push(v(tekst.bold ? "bold" : "notBold"));
+    if (tekst.italic !== undefined) t.push(v(tekst.italic ? "italic" : "notItalic"));
+    if (tekst.underline)
+      t.push(tekst.underline.style === "none" ? v("notUnderlined") : v("underlined", { style: tekst.underline.style }));
+    if (tekst.strike) t.push(v("strikethrough"));
+    if (tekst.doubleStrike) t.push(v("doubleStrikethrough"));
     if (tekst.vertAlign && tekst.vertAlign !== "baseline")
-      t.push(tekst.vertAlign === "superscript" ? "Superscript" : "Subscript");
-    if (tekst.allCaps) t.push("Hoofdletters");
-    if (tekst.smallCaps) t.push("Kleine hoofdletters");
-    if (tekst.hidden) t.push("Verborgen");
-    if (tekst.color?.rgb || tekst.color?.themeColor) t.push(`Kleur: ${tekst.color.rgb ? `#${tekst.color.rgb}` : tekst.color.themeColor}`);
-    if (tekst.highlight && tekst.highlight !== "none") t.push(`Markering: ${tekst.highlight}`);
-    if (tekst.spacing) t.push(`Tekenafstand: ${PT(tekst.spacing)}`);
-    if (tekst.language?.latin) t.push(`Taal: ${tekst.language.latin}`);
-    if (tekst.styleId) t.push(`Tekenstijl: ${tekst.styleId}`);
+      t.push(v(tekst.vertAlign === "superscript" ? "superscript" : "subscript"));
+    if (tekst.allCaps) t.push(v("allCaps"));
+    if (tekst.smallCaps) t.push(v("smallCaps"));
+    if (tekst.hidden) t.push(v("hidden"));
+    if (tekst.color?.rgb || tekst.color?.themeColor)
+      t.push(v("color", { value: tekst.color.rgb ? `#${tekst.color.rgb}` : tekst.color.themeColor ?? "" }));
+    if (tekst.highlight && tekst.highlight !== "none") t.push(v("highlight", { value: tekst.highlight }));
+    if (tekst.spacing) t.push(v("characterSpacing", { value: PT(tekst.spacing) }));
+    if (tekst.language?.latin) t.push(v("language", { value: tekst.language.latin }));
+    if (tekst.styleId) t.push(v("characterStyle", { value: tekst.styleId }));
   }
   const a: string[] = [];
   if (alinea) {
-    if (alinea.alignment) a.push(`Uitlijning: ${{ left: "links", center: "gecentreerd", right: "rechts", both: "uitgevuld" }[alinea.alignment as string] ?? alinea.alignment}`);
-    if (alinea.spaceBefore !== undefined) a.push(`Ruimte voor: ${PT(alinea.spaceBefore)}`);
-    if (alinea.spaceAfter !== undefined) a.push(`Ruimte na: ${PT(alinea.spaceAfter)}`);
+    if (alinea.alignment) {
+      const sleutel = UITLIJNING[alinea.alignment as string];
+      a.push(v("alignment", { value: sleutel ? v(`alignmentValue.${sleutel}`) : String(alinea.alignment) }));
+    }
+    if (alinea.spaceBefore !== undefined) a.push(v("spaceBefore", { value: PT(alinea.spaceBefore) }));
+    if (alinea.spaceAfter !== undefined) a.push(v("spaceAfter", { value: PT(alinea.spaceAfter) }));
     if (alinea.lineSpacing !== undefined)
       a.push(
         !alinea.lineSpacingRule || alinea.lineSpacingRule === "auto"
-          ? `Regelafstand: ${Math.round((alinea.lineSpacing / 240) * 100) / 100}`
-          : `Regelafstand: ${PT(alinea.lineSpacing)} (${alinea.lineSpacingRule === "exact" ? "exact" : "minimaal"})`,
+          ? v("lineSpacing", { value: formatGetal(alinea.lineSpacing / 240, { maximumFractionDigits: 2 }) })
+          : v(alinea.lineSpacingRule === "exact" ? "lineSpacingExactly" : "lineSpacingAtLeast", { value: PT(alinea.lineSpacing) }),
       );
-    if (alinea.indentLeft) a.push(`Inspringing links: ${CM(alinea.indentLeft)}`);
-    if (alinea.indentRight) a.push(`Inspringing rechts: ${CM(alinea.indentRight)}`);
-    if (alinea.indentFirstLine) a.push(`${alinea.hangingIndent ? "Verkeerd om" : "Eerste regel"}: ${CM(alinea.indentFirstLine)}`);
-    if (alinea.keepNext) a.push("Bij volgende houden");
-    if (alinea.keepLines) a.push("Regels bij elkaar houden");
-    if (alinea.pageBreakBefore) a.push("Pagina-einde ervoor");
+    if (alinea.indentLeft) a.push(v("indentLeft", { value: CM(alinea.indentLeft) }));
+    if (alinea.indentRight) a.push(v("indentRight", { value: CM(alinea.indentRight) }));
+    if (alinea.indentFirstLine)
+      a.push(v(alinea.hangingIndent ? "hanging" : "firstLine", { value: CM(alinea.indentFirstLine) }));
+    if (alinea.keepNext) a.push(v("keepWithNext"));
+    if (alinea.keepLines) a.push(v("keepLinesTogether"));
+    if (alinea.pageBreakBefore) a.push(v("pageBreakBefore"));
   }
   return { tekst: t, alinea: a };
 }

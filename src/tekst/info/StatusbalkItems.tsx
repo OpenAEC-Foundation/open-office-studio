@@ -6,6 +6,7 @@
  */
 import { useState, type MouseEvent } from "react";
 import { BookOpen, FileText, Languages, PenLine } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useInstellingen, wijzigInstellingen, type Instellingen } from "../../instellingen";
 import { Contextmenu } from "../stijlen/StijlGalerij";
 import { useTaalAansluiting, useTekstExtra } from "./winkel";
@@ -15,8 +16,10 @@ export function TekstStatusExtra() {
   const extra = useTekstExtra();
   const { statusbalk } = useInstellingen();
   const taal = useTaalAansluiting();
+  const { t } = useTranslation("writer");
   if (!extra) return null;
   const spelling = taal.status?.() ?? null;
+  const taalnaam = extra.taal?.naam ?? t("info.notSpecified");
   return (
     <>
       {statusbalk.taal && (
@@ -24,11 +27,15 @@ export function TekstStatusExtra() {
           type="button"
           className="statusbalk-taal"
           onClick={extra.kiesTaal}
-          title={`Taal: ${extra.taal?.naam ?? "niet opgegeven"} · klik om de taal te kiezen`}
-          aria-label={`Taal: ${extra.taal?.naam ?? "niet opgegeven"}${spelling ? `, ${spelling}` : ""}. Taal kiezen`}
+          title={t("info.statusbar.languageTip", { language: taalnaam })}
+          aria-label={
+            spelling
+              ? t("info.statusbar.languageLabelSpelling", { language: taalnaam, spelling })
+              : t("info.statusbar.languageLabel", { language: taalnaam })
+          }
         >
           <Languages size={12} aria-hidden="true" />
-          {extra.taal?.naam ?? "Taal onbekend"}
+          {extra.taal?.naam ?? t("info.statusbar.languageUnknown")}
           {spelling && <span className="statusbalk-spelling"> · {spelling}</span>}
         </button>
       )}
@@ -38,10 +45,10 @@ export function TekstStatusExtra() {
           aria-pressed={extra.bijhouden}
           className={extra.bijhouden ? "statusbalk-bijhouden is-aan" : "statusbalk-bijhouden"}
           onClick={extra.wisselBijhouden}
-          title="Wijzigingen bijhouden aan of uit · Ctrl+Shift+C"
+          title={t("info.statusbar.trackTip", { shortcut: "Ctrl+Shift+C" })}
         >
           <PenLine size={12} aria-hidden="true" />
-          Wijzigingen bijhouden: {extra.bijhouden ? "aan" : "uit"}
+          {extra.bijhouden ? t("info.statusbar.trackOn") : t("info.statusbar.trackOff")}
         </button>
       )}
     </>
@@ -52,15 +59,16 @@ export function TekstStatusExtra() {
 export function TekstWeergaveKnoppen() {
   const extra = useTekstExtra();
   const { statusbalk } = useInstellingen();
+  const { t } = useTranslation("writer");
   if (!extra || !statusbalk.weergave) return null;
   return (
-    <span className="statusbalk-weergave" role="group" aria-label="Weergave">
+    <span className="statusbalk-weergave" role="group" aria-label={t("info.statusbar.view")}>
       <button
         type="button"
         className="statusbalk-icoon"
-        aria-label="Afdrukweergave"
+        aria-label={t("info.views.printLayout")}
         aria-pressed={extra.weergave === "afdruk"}
-        title="Afdrukweergave"
+        title={t("info.views.printLayout")}
         onClick={() => extra.zetWeergave("afdruk")}
       >
         <FileText size={13} />
@@ -68,9 +76,9 @@ export function TekstWeergaveKnoppen() {
       <button
         type="button"
         className="statusbalk-icoon"
-        aria-label="Leesmodus"
+        aria-label={t("info.views.readMode")}
         aria-pressed={extra.weergave === "lees"}
-        title="Leesmodus · rustige, schermvullende weergave"
+        title={t("info.views.readModeTip")}
         onClick={() => extra.zetWeergave("lees")}
       >
         <BookOpen size={13} />
@@ -79,20 +87,22 @@ export function TekstWeergaveKnoppen() {
   );
 }
 
-const ITEMS: [keyof Instellingen["statusbalk"], string][] = [
-  ["tekst", "Paginanummer en woorden"],
-  ["taal", "Taal"],
-  ["bijhouden", "Wijzigingen bijhouden"],
-  ["weergave", "Weergaveknoppen"],
-  ["zoom", "Zoomschuif"],
-  ["rekenblad", "Rekenblad: som, gemiddelde, aantal"],
-  ["presentatie", "Presentatie: dia x van y"],
-  ["database", "Database: werkkopie"],
+/** Items in het menu; de weergavenaam is `writer:info.statusbar.items.<sleutel>`. */
+const ITEMS: (keyof Instellingen["statusbalk"])[] = [
+  "tekst",
+  "taal",
+  "bijhouden",
+  "weergave",
+  "zoom",
+  "rekenblad",
+  "presentatie",
+  "database",
 ];
 
 /** Rechtermuisknopmenu van de statusbalk: items aan- of uitzetten. */
 export function useStatusbalkMenu() {
   const { statusbalk } = useInstellingen();
+  const { t } = useTranslation("writer");
   const [plek, setPlek] = useState<{ x: number; y: number } | null>(null);
   return {
     onContextMenu(e: MouseEvent) {
@@ -103,10 +113,10 @@ export function useStatusbalkMenu() {
       <Contextmenu
         x={plek.x}
         y={plek.y}
-        label="Statusbalk aanpassen"
+        label={t("info.statusbar.customize")}
         sluit={() => setPlek(null)}
-        items={ITEMS.map(([sleutel, naam]) => ({
-          naam,
+        items={ITEMS.map((sleutel) => ({
+          naam: t(`info.statusbar.items.${sleutel}`),
           aan: statusbalk[sleutel],
           uitvoeren: () => wijzigInstellingen({ statusbalk: { [sleutel]: !statusbalk[sleutel] } }),
         }))}

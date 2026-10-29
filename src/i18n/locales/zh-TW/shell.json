@@ -1,0 +1,145 @@
+{
+  "header": {
+    "homeTitle": "移至「開始」",
+    "homeLabel": "OpenAEC Office Studio · 開始",
+    "version": "版本 {{version}}",
+    "unsaved": "有未儲存的變更",
+    "unchanged": "未變更",
+    "fileAndStart": "檔案和開始",
+    "openFileTitle": "在新索引標籤中開啟檔案 · Ctrl+O",
+    "openNotesBackupTitle": "新增筆記備份 · Ctrl+O",
+    "openDatabaseTitle": "開啟資料庫 · Ctrl+O",
+    "addBackup": "新增備份",
+    "saveAs": "另存新檔",
+    "saveAsTitle": "另存新檔 · F12 或 Ctrl+Shift+S（Ctrl+S 會儲存至目前開啟的檔案）",
+    "busy": "處理中…"
+  },
+  "message": {
+    "close": "關閉訊息",
+    "markdownNote": "Markdown 會保留文字和結構。若要保留版面配置、圖片和修訂，請另外儲存一份 DOCX。"
+  },
+  "loading": {
+    "editor": "正在載入編輯器…",
+    "notes": "正在載入筆記…",
+    "email": "正在載入 Email Studio…",
+    "document": "正在載入文件…",
+    "fonts": "正在載入字型…"
+  },
+  "errors": {
+    "editorFailed": "編輯器無法開啟此檔案：{{error}}",
+    "openFailed": "開啟失敗：{{error}}",
+    "openFileFailed": "開啟 {{name}} 失敗：{{error}}",
+    "saveFailed": "儲存失敗：{{error}}",
+    "printFailed": "列印失敗：{{error}}",
+    "sendAsAttachmentFailed": "以附件傳送失敗：{{error}}",
+    "templateUnavailable": "無法使用範本",
+    "exampleFailed": "無法開啟範例。",
+    "fileSize": "請選擇一個非空白且不超過 100 MB 的檔案。",
+    "unsupportedFormat": "{{name}}：不支援此格式。",
+    "emptyAttachment": "附件是空的。",
+    "databaseModifiedFile": "Database Studio 中有已變更的工作複本。請先儲存或關閉它，然後再重新開啟檔案。",
+    "databaseModifiedAttachment": "Database Studio 中有已變更的工作複本。請先儲存或關閉它，然後再重新開啟附件。",
+    "spreadsheetNotReady": "試算表尚未就緒。",
+    "presentationNotReady": "簡報尚未就緒。",
+    "documentNotReady": "文件尚未就緒。",
+    "documentSaveFailed": "無法儲存文件。"
+  },
+  "tabs": {
+    "untitled": "未命名 {{n}}",
+    "memoryWarning_other": "已開啟 {{count}} 份文件。每份開啟的文件都會使用記憶體；請關閉不再需要的文件。"
+  },
+  "tabBar": {
+    "label": "已開啟的索引標籤",
+    "start": "開始",
+    "startTitle": "開始 · 新的或現有文件、筆記和資料庫",
+    "tabTitleUnsaved": "{{name}} · 有未儲存的變更",
+    "dragOutHint": "拖曳到外面即可在個別視窗中開啟",
+    "unsavedA11y": "，有未儲存的變更",
+    "closeTab": "關閉 {{name}}",
+    "closeTitle": "關閉 · Ctrl+W",
+    "allTabs": "所有已開啟的索引標籤",
+    "addTab": "新增索引標籤",
+    "addTabTitle": "開啟新的或現有文件、筆記或資料庫",
+    "releaseOpensWindow": "放開即可在個別視窗中開啟",
+    "closeOthers": "關閉其他索引標籤",
+    "closeToRight": "關閉右側的索引標籤"
+  },
+  "windowMenu": {
+    "button": "開啟的文件",
+    "buttonTitle": "開啟的文件 · 按 Ctrl+Tab 或 Ctrl+F6 切換",
+    "empty": "沒有開啟的文件。",
+    "thisWindow": "此視窗",
+    "mainWindow": "主視窗",
+    "windowNumber": "視窗 {{number}}",
+    "unsavedTitle": "有未儲存的變更",
+    "modified": "已變更",
+    "newWindow": "新增視窗"
+  },
+  "windows": {
+    "openInNewWindow": "在新視窗中開啟",
+    "backToMainWindow": "返回主視窗",
+    "databaseMovedHere": "Database Studio 現在位於此視窗中。若要繼續工作，請在這裡重新開啟資料庫。",
+    "documentMoved": "文件已移動，包括未儲存的變更。「復原」記錄不會一併移動。",
+    "linkUnavailable": "無法使用視窗連結：{{error}}",
+    "closeGuardUnavailable": "無法使用關閉保護：{{error}}",
+    "databaseModified": "Database Studio 無法將已變更的工作複本移至其他視窗。請先匯出或儲存資料庫。",
+    "otherWindowFailed": "另一個視窗無法開啟此索引標籤。",
+    "mainWindowNoResponse": "主視窗沒有回應。索引標籤會保留在這裡。",
+    "newWindowTimeout": "新視窗未能及時接手文件。索引標籤會保留在這裡。",
+    "alreadyMainWindow": "這已經是主視窗。",
+    "popupBlocked": "無法開啟新視窗。請允許此頁面顯示快顯視窗。",
+    "moveToWindow": "移至{{window}}",
+    "newWindowFailed": "無法開啟新視窗：{{error}}"
+  },
+  "dropZone": {
+    "release": "放開即可開啟",
+    "explanation": "文件、試算表和簡報各自在個別的索引標籤中開啟；MDB 和 ACCDB 會在 Database Studio 中開啟。",
+    "image": "{{name}} 是圖片。拖曳目前還無法將圖片插入文件；請使用「插入 › 圖片」。",
+    "unsupported": "無法開啟 {{name}}：不支援 .{{ext}}。Open Office Studio 可開啟文件、試算表、簡報和 Access 資料庫。"
+  },
+  "ribbon": {
+    "label": "功能區",
+    "file": "檔案",
+    "hide": "隱藏功能區",
+    "show": "顯示功能區",
+    "hideHint": "為文件騰出更多空間 · Ctrl+F1",
+    "scrollLeft": "向左捲動功能區",
+    "scrollRight": "向右捲動功能區",
+    "commandFailed": "無法執行此命令。",
+    "nothingToUndo": "沒有可復原的動作。",
+    "nothingToRedo": "沒有可取消復原的動作。",
+    "presentationOpening": "簡報仍在開啟中。",
+    "selectShapeFirst": "請先選取圖案。"
+  },
+  "theme": {
+    "light": "淺色佈景主題",
+    "forge": "Forge 佈景主題"
+  },
+  "host": {
+    "conflict": "其他人在此期間儲存了此文件。你的版本已另存為副本：{{name}}。",
+    "readOnly": "{{name}} 以唯讀方式開啟。請使用「另存新檔」保留你的變更。",
+    "openFailed": "無法開啟工作區中的文件：{{error}}"
+  },
+  "title": {
+    "document": "{{document}} — {{app}} ({{module}})",
+    "module": "{{app}} ({{module}})"
+  },
+  "titleBar": {
+    "quickAccess": "快速存取",
+    "saveTitle": "儲存 · Ctrl+S",
+    "settings": "設定",
+    "minimize": "最小化",
+    "maximize": "最大化",
+    "restore": "還原",
+    "close": "關閉視窗"
+  },
+  "toasts": {
+    "region": "通知",
+    "info": "資訊",
+    "success": "完成",
+    "warning": "注意",
+    "error": "錯誤",
+    "details": "詳細資料",
+    "less": "收合"
+  }
+}

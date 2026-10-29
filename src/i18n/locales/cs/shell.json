@@ -1,0 +1,148 @@
+{
+  "header": {
+    "homeTitle": "Přejít na Úvod",
+    "homeLabel": "OpenAEC Office Studio · Úvod",
+    "version": "Verze {{version}}",
+    "unsaved": "Neuložené změny",
+    "unchanged": "Beze změn",
+    "fileAndStart": "Soubor a Úvod",
+    "openFileTitle": "Otevřít soubor na nové kartě · Ctrl+O",
+    "openNotesBackupTitle": "Přidat zálohu poznámek · Ctrl+O",
+    "openDatabaseTitle": "Otevřít databázi · Ctrl+O",
+    "addBackup": "Přidat zálohu",
+    "saveAs": "Uložit jako",
+    "saveAsTitle": "Uložit jako · F12 nebo Ctrl+Shift+S (Ctrl+S ukládá do otevřeného souboru)",
+    "busy": "Probíhá zpracování…"
+  },
+  "message": {
+    "close": "Zavřít zprávu",
+    "markdownNote": "Markdown uchovává text a strukturu. Uložte také DOCX, aby se zachovalo rozložení stránky, obrázky a revize."
+  },
+  "loading": {
+    "editor": "Načítání editoru…",
+    "notes": "Načítání Poznámek…",
+    "email": "Načítání Email Studio…",
+    "document": "Načítání dokumentu…",
+    "fonts": "Načítání písem…"
+  },
+  "errors": {
+    "editorFailed": "Editor nemohl otevřít tento soubor: {{error}}",
+    "openFailed": "Otevření se nezdařilo: {{error}}",
+    "openFileFailed": "Otevření {{name}} se nezdařilo: {{error}}",
+    "saveFailed": "Uložení se nezdařilo: {{error}}",
+    "printFailed": "Tisk se nezdařil: {{error}}",
+    "sendAsAttachmentFailed": "Odeslání jako přílohy se nezdařilo: {{error}}",
+    "templateUnavailable": "Šablona není k dispozici",
+    "exampleFailed": "Ukázku se nepodařilo otevřít.",
+    "fileSize": "Zvolte soubor, který není prázdný a má nejvýše 100 MB.",
+    "unsupportedFormat": "{{name}}: tento formát není podporován.",
+    "emptyAttachment": "Příloha je prázdná.",
+    "databaseModifiedFile": "Database Studio má změněnou pracovní kopii. Nejprve ji uložte nebo zavřete a potom soubor otevřete znovu.",
+    "databaseModifiedAttachment": "Database Studio má změněnou pracovní kopii. Nejprve ji uložte nebo zavřete a potom přílohu otevřete znovu.",
+    "spreadsheetNotReady": "Tabulka ještě není připravena.",
+    "presentationNotReady": "Prezentace ještě není připravena.",
+    "documentNotReady": "Dokument ještě není připraven.",
+    "documentSaveFailed": "Dokument se nepodařilo uložit."
+  },
+  "tabs": {
+    "untitled": "Bez názvu {{n}}",
+    "memoryWarning_one": "Je otevřen {{count}} dokument. Každý otevřený dokument využívá paměť; zavřete dokumenty, které už nepotřebujete.",
+    "memoryWarning_few": "Jsou otevřeny {{count}} dokumenty. Každý otevřený dokument využívá paměť; zavřete dokumenty, které už nepotřebujete.",
+    "memoryWarning_many": "Je otevřeno {{count}} dokumentu. Každý otevřený dokument využívá paměť; zavřete dokumenty, které už nepotřebujete.",
+    "memoryWarning_other": "Je otevřeno {{count}} dokumentů. Každý otevřený dokument využívá paměť; zavřete dokumenty, které už nepotřebujete."
+  },
+  "tabBar": {
+    "label": "Otevřené karty",
+    "start": "Úvod",
+    "startTitle": "Úvod · nový nebo existující dokument, Poznámky a Databáze",
+    "tabTitleUnsaved": "{{name}} · neuložené změny",
+    "dragOutHint": "Přetažením ven otevřete samostatné okno",
+    "unsavedA11y": ", neuložené změny",
+    "closeTab": "Zavřít {{name}}",
+    "closeTitle": "Zavřít · Ctrl+W",
+    "allTabs": "Všechny otevřené karty",
+    "addTab": "Přidat kartu",
+    "addTabTitle": "Otevřít nový nebo existující dokument, Poznámky nebo Databázi",
+    "releaseOpensWindow": "Uvolněním otevřete samostatné okno",
+    "closeOthers": "Zavřít ostatní",
+    "closeToRight": "Zavřít karty vpravo"
+  },
+  "windowMenu": {
+    "button": "Otevřené dokumenty",
+    "buttonTitle": "Otevřené dokumenty · přepnete pomocí Ctrl+Tab nebo Ctrl+F6",
+    "empty": "Žádné otevřené dokumenty.",
+    "thisWindow": "Toto okno",
+    "mainWindow": "Hlavní okno",
+    "windowNumber": "Okno {{number}}",
+    "unsavedTitle": "Neuložené změny",
+    "modified": "změněno",
+    "newWindow": "Nové okno"
+  },
+  "windows": {
+    "openInNewWindow": "Otevřít v novém okně",
+    "backToMainWindow": "Zpět do hlavního okna",
+    "databaseMovedHere": "Database Studio je nyní v tomto okně. Pokud chcete pokračovat v práci, otevřete databázi znovu zde.",
+    "documentMoved": "Dokument byl přesunut včetně neuložených změn. Historie funkce Zpět se při přesunu nepřenáší.",
+    "linkUnavailable": "Propojení oken není k dispozici: {{error}}",
+    "closeGuardUnavailable": "Ochrana proti zavření není k dispozici: {{error}}",
+    "databaseModified": "Database Studio nemůže přenést změněnou pracovní kopii do jiného okna. Nejprve databázi exportujte nebo uložte.",
+    "otherWindowFailed": "Druhé okno nemohlo kartu otevřít.",
+    "mainWindowNoResponse": "Hlavní okno nereaguje. Karta zůstane otevřená zde.",
+    "newWindowTimeout": "Nové okno dokument včas nepřevzalo. Karta zůstane otevřená zde.",
+    "alreadyMainWindow": "Toto už je hlavní okno.",
+    "popupBlocked": "Nové okno se nepodařilo otevřít. Povolte pro tuto stránku automaticky otevíraná okna.",
+    "moveToWindow": "Přesunout do: {{window}}",
+    "newWindowFailed": "Nové okno se nepodařilo otevřít: {{error}}"
+  },
+  "dropZone": {
+    "release": "Uvolněním otevřete",
+    "explanation": "Dokumenty, tabulky a prezentace se otevírají každý na vlastní kartě; MDB a ACCDB v Database Studio.",
+    "image": "{{name}} je obrázek. Přetažením se obrázky do dokumentu zatím nevkládají; použijte Vložení › Obrázek.",
+    "unsupported": "{{name}} nelze otevřít: .{{ext}} není podporováno. Open Office Studio otevírá dokumenty, tabulky, prezentace a databáze Access."
+  },
+  "ribbon": {
+    "label": "Pás karet",
+    "file": "Soubor",
+    "hide": "Skrýt pás karet",
+    "show": "Zobrazit pás karet",
+    "hideHint": "Více místa pro dokument · Ctrl+F1",
+    "scrollLeft": "Posunout pás karet doleva",
+    "scrollRight": "Posunout pás karet doprava",
+    "commandFailed": "Příkaz se nepodařilo provést.",
+    "nothingToUndo": "Není co vrátit zpět.",
+    "nothingToRedo": "Není co opakovat.",
+    "presentationOpening": "Prezentace se ještě otevírá.",
+    "selectShapeFirst": "Nejprve vyberte obrazec."
+  },
+  "theme": {
+    "light": "Světlý motiv",
+    "forge": "Motiv Forge"
+  },
+  "host": {
+    "conflict": "Někdo jiný mezitím tento dokument uložil. Vaše verze byla uložena jako kopie: {{name}}.",
+    "readOnly": "{{name}} byl otevřen jen pro čtení. Změny uložte pomocí Uložit jako.",
+    "openFailed": "Dokument z pracovní plochy nelze otevřít: {{error}}"
+  },
+  "title": {
+    "document": "{{document}} — {{app}} ({{module}})",
+    "module": "{{app}} ({{module}})"
+  },
+  "titleBar": {
+    "quickAccess": "Rychlý přístup",
+    "saveTitle": "Uložit · Ctrl+S",
+    "settings": "Nastavení",
+    "minimize": "Minimalizovat",
+    "maximize": "Maximalizovat",
+    "restore": "Obnovit",
+    "close": "Zavřít okno"
+  },
+  "toasts": {
+    "region": "Oznámení",
+    "info": "Informace",
+    "success": "Hotovo",
+    "warning": "Pozor",
+    "error": "Chyba",
+    "details": "Podrobnosti",
+    "less": "Méně"
+  }
+}

@@ -7,6 +7,7 @@
  * uitvoering vanaf het label; `Resume`/`Resume Next` keren terug naar de plek
  * van de fout, terwijl lussen en With-blokken daar gewoon nog actief zijn.
  */
+import i18next from "i18next";
 import type {
   Argument,
   ConstDef,
@@ -21,7 +22,7 @@ import type {
 } from "./ast.ts";
 import { combineer, leesDatum } from "./datum.ts";
 import {
-  FOUTTEKSTEN,
+  foutTekstOfAlgemeen,
   nietOndersteund,
   VbaAfbreking,
   VbaFout,
@@ -391,15 +392,15 @@ export class VbaRuntime {
   /** Voert een procedure uit. Fouten worden gegooid als VbaFout of VbaAfbreking (met positie). */
   async voerUit(module: string, procedure: string, args: VbaWaarde[] = [], opties: { ontbrekend?: OntbrekendModus; stappenlimiet?: number } = {}): Promise<Uitkomst> {
     const m = this.modules.get(module.toLowerCase());
-    if (!m) throw new VbaAfbreking("intern", `Module ‘${module}’ bestaat niet.`);
+    if (!m) throw new VbaAfbreking("intern", i18next.t("vba:interpreter.moduleNotFound", { module }));
     if (m.fouten.length) {
       const f = m.fouten[0];
-      throw new VbaAfbreking("intern", `Module ‘${m.naam}’ bevat syntaxisfouten en kan niet worden uitgevoerd. Eerste fout: ${f.message}`);
+      throw new VbaAfbreking("intern", i18next.t("vba:interpreter.moduleHasSyntaxErrors", { module: m.naam, error: f.message }));
     }
     const procs = m.procs.get(procedure.toLowerCase())?.filter((p) => p.soort === "sub" || p.soort === "function" || p.soort === "get");
-    if (!procs?.length) throw new VbaAfbreking("intern", `Procedure ‘${procedure}’ bestaat niet in module ‘${m.naam}’.`);
+    if (!procs?.length) throw new VbaAfbreking("intern", i18next.t("vba:interpreter.procedureNotInModule", { procedure, module: m.naam }));
     if (m.soort === "klasse")
-      throw new VbaAfbreking("intern", `‘${m.naam}’ is een klassenmodule; maak eerst een instantie met New.`);
+      throw new VbaAfbreking("intern", i18next.t("vba:interpreter.isClassModule", { module: m.naam }));
     this.stappen = 0;
     this.diepte = 0;
     this.stapel = [];
@@ -433,9 +434,9 @@ export class VbaRuntime {
     f.kolom = s.kolom;
     const limiet = this.stappenlimietNu ?? this.opties.stappenlimiet ?? 5_000_000;
     if (++this.stappen > limiet)
-      throw new VbaAfbreking("stappenlimiet", `De stappenlimiet van ${limiet.toLocaleString("nl-NL")} instructies is bereikt; mogelijk een oneindige lus.`);
+      throw new VbaAfbreking("stappenlimiet", i18next.t("vba:interpreter.stepLimit", { limit: limiet }));
     if ((this.stappen & 0x1fff) === 0) await new Promise((r) => setTimeout(r, 0));
-    if (this.opties.signaal?.aborted) throw new VbaAfbreking("geannuleerd", "De uitvoering is gestopt.");
+    if (this.opties.signaal?.aborted) throw new VbaAfbreking("geannuleerd", i18next.t("vba:runtime.stopped"));
   }
 
   // ---------- naamresolutie ----------
@@ -685,7 +686,7 @@ export class VbaRuntime {
       this.registreerOvergeslagen(`New ${type}`, "com");
       return new OntbrekendObject(type);
     }
-    throw fout(429, `Kan geen object van het type ‘${type}’ maken: alleen klassenmodules, Collection en Scripting.Dictionary worden ondersteund.`);
+    throw fout(429, i18next.t("vba:interpreter.cannotCreateObject", { type }));
   }
 
   private maakInstantie(m: ModuleInfo, initialiseer: true): Promise<KlasseInstantie>;
@@ -715,7 +716,7 @@ export class VbaRuntime {
       const me = this.formulierMe(inst.module);
       if (me) return me.lid(k, args, this);
     }
-    throw fout(438, `${inst.module.naam} kent geen eigenschap of methode ‘${naam}’.`);
+    throw fout(438, i18next.t("vba:runtime.noPropertyOrMethod", { object: inst.module.naam, name: naam }));
   }
 
   async klasseZetLid(inst: KlasseInstantie, naam: string, args: VbaWaarde[], waarde: VbaWaarde, isSet: boolean) {
@@ -723,7 +724,7 @@ export class VbaRuntime {
     const procs = inst.module.procs.get(k);
     if (procs) {
       const p = procs.find((x) => x.soort === (isSet ? "set" : "let")) ?? procs.find((x) => x.soort === "let" || x.soort === "set");
-      if (!p) throw fout(450, `Eigenschap ‘${naam}’ is alleen-lezen.`);
+      if (!p) throw fout(450, i18next.t("vba:interpreter.propertyReadOnly", { name: naam }));
       await this.roepProcedureAan(inst.module, [p], inst, [], null, isSet ? "set" : "let", [...args, waarde]);
       return;
     }
@@ -743,7 +744,7 @@ export class VbaRuntime {
       const me = this.formulierMe(inst.module);
       if (me) return me.zetLid(k, args, waarde, this);
     }
-    throw fout(438, `${inst.module.naam} kent geen eigenschap ‘${naam}’.`);
+    throw fout(438, i18next.t("vba:interpreter.noProperty", { object: inst.module.naam, name: naam }));
   }
 
   /** `Me` van een formulier- of rapportmodule (via de FormulierHost). */
@@ -796,7 +797,7 @@ export class VbaRuntime {
   }
 
   private metObject(f: Frame): VbaWaarde {
-    if (!f.met.length) throw new VbaAfbreking("intern", "Een verwijzing met een punt (.Naam) staat buiten een With-blok.");
+    if (!f.met.length) throw new VbaAfbreking("intern", i18next.t("vba:interpreter.dotOutsideWith"));
     return f.met[f.met.length - 1];
   }
 
@@ -837,7 +838,7 @@ export class VbaRuntime {
         return w.isType(e.type);
       }
       case "addressof":
-        return this.afgeschermd(weigering(ADDRESSOF, "AddressOf (terugroepfuncties voor de Windows-API) is afgeschermd."));
+        return this.afgeschermd(weigering(ADDRESSOF, i18next.t("vba:interpreter.addressOfBlocked")));
     }
   }
 
@@ -857,7 +858,7 @@ export class VbaRuntime {
         return NIETS;
       case "datum": {
         const d = leesDatum(l.v, "mdy");
-        if (d === null) throw fout(13, `Ongeldige datumliteraal #${l.v}#.`);
+        if (d === null) throw fout(13, i18next.t("vba:interpreter.invalidDateLiteral", { literal: l.v }));
         return new Datum(d);
       }
     }
@@ -869,7 +870,7 @@ export class VbaRuntime {
       if (me) return me;
     }
     if (f.instantie) return f.instantie;
-    throw new VbaAfbreking("intern", "Me kan alleen in een klassen- of formuliermodule worden gebruikt.");
+    throw new VbaAfbreking("intern", i18next.t("vba:interpreter.meOutsideClass"));
   }
 
   private async binair(op: string, l: Expr, r: Expr, f: Frame): Promise<VbaWaarde> {
@@ -928,14 +929,14 @@ export class VbaRuntime {
         return this.afgeschermd(this.declareGeweigerd(naam));
       case "module":
       case "enum":
-        throw fout(424, `‘${naam}’ is geen waarde.`);
+        throw fout(424, i18next.t("vba:interpreter.notAValue", { name: naam }));
     }
   }
 
   declareGeweigerd(naam: string) {
     return weigering(
       declareAfscherming(naam),
-      `‘${naam}’ is met Declare uit een Windows-DLL gehaald. Aanroepen van de Windows-API (Declare) zijn afgeschermd en worden niet uitgevoerd.`,
+      i18next.t("vba:interpreter.declareBlocked", { name: naam }),
     );
   }
 
@@ -950,9 +951,9 @@ export class VbaRuntime {
       }
     }
     if (alsAanroep)
-      throw new VbaAfbreking("niet-ondersteund", `Sub of Function ‘${naam}’ is niet gedefinieerd (niet in de geladen modules en niet in de ondersteunde bibliotheek).`);
+      throw new VbaAfbreking("niet-ondersteund", i18next.t("vba:interpreter.procedureNotDefined", { name: naam }));
     if (f.module.ast.opties.expliciet)
-      throw new VbaAfbreking("niet-ondersteund", `Variabele ‘${naam}’ is niet gedefinieerd (Option Explicit staat aan).`);
+      throw new VbaAfbreking("niet-ondersteund", i18next.t("vba:interpreter.variableNotDefined", { name: naam }));
     const cel = new GewoneCel(standaardWaarde(this.defType(f.module, naam)), this.defType(f.module, naam));
     f.locals.set(naam.toLowerCase(), cel);
     return cel.w;
@@ -966,7 +967,7 @@ export class VbaRuntime {
       let i = positie;
       if (a.naam) {
         const idx = namen?.findIndex((n) => n.toLowerCase() === a.naam!.toLowerCase()) ?? -1;
-        if (idx < 0) throw fout(448, `Benoemd argument ‘${a.naam}’ is niet gevonden.`);
+        if (idx < 0) throw fout(448, i18next.t("vba:interpreter.namedArgumentNotFound", { name: a.naam }));
         i = idx;
       } else positie++;
       while (uit.length < i) uit.push(ONTBREEKT);
@@ -1059,7 +1060,7 @@ export class VbaRuntime {
         const m = g.module;
         const k = e.naam.toLowerCase();
         const sub = await this.inModule(m, k, m.instantie ?? null, m === f.module);
-        if (!sub) throw fout(438, `Module ${m.naam} kent ‘${e.naam}’ niet.`);
+        if (!sub) throw fout(438, i18next.t("vba:interpreter.moduleMemberNotFound", { module: m.naam, name: e.naam }));
         if (sub.s === "proc") return this.roepProcedureAan(m, sub.procs, sub.instantie, args, f, "gewoon");
         if (sub.s === "cel") return this.indexeer(await this.leesCel(sub.cel), await this.argWaarden(args, f));
         if (sub.s === "const") return sub.w;
@@ -1068,7 +1069,7 @@ export class VbaRuntime {
       }
       if (g?.s === "enum") {
         const i = g.def.leden.findIndex((l) => l.naam.toLowerCase() === e.naam.toLowerCase());
-        if (i < 0) throw fout(438, `Enum ${g.def.naam} kent ‘${e.naam}’ niet.`);
+        if (i < 0) throw fout(438, i18next.t("vba:interpreter.enumMemberNotFound", { enum: g.def.naam, name: e.naam }));
         return this.enumWaarde(g.module, g.def, i);
       }
       if (!g && e.obj.naam.toLowerCase() === "vba") {
@@ -1099,7 +1100,7 @@ export class VbaRuntime {
     }
     if (obj instanceof VbaRecord) {
       const veld = obj.velden.get(e.naam.toLowerCase());
-      if (!veld) throw fout(438, `Type ${obj.typeNaam} heeft geen veld ‘${e.naam}’.`);
+      if (!veld) throw fout(438, i18next.t("vba:interpreter.typeFieldNotFound", { type: obj.typeNaam, name: e.naam }));
       return this.indexeer(veld.cel.w, await this.argWaarden(args, f));
     }
     if (obj instanceof Niets) throw fout(91);
@@ -1162,8 +1163,8 @@ export class VbaRuntime {
       }
       if (g?.s === "melid") return g.obj.zetLid(g.naam, [], waarde, this);
       if (g?.s === "ingebouwd" || g?.s === "globaal")
-        throw nietOndersteund(`Toewijzen aan ‘${doel.naam}’ (bv. de systeemdatum of -tijd zetten)`);
-      if (g?.s === "const") throw fout(450, `‘${doel.naam}’ is een constante.`);
+        throw nietOndersteund(i18next.t("vba:interpreter.assignToBuiltIn", { name: doel.naam }));
+      if (g?.s === "const") throw fout(450, i18next.t("vba:interpreter.isConstant", { name: doel.naam }));
       const cel = await this.celVan(doel, f, true);
       if (!cel) throw fout(450);
       return ken(cel);
@@ -1191,7 +1192,7 @@ export class VbaRuntime {
             return;
           }
         }
-        if (g?.s === "ingebouwd") throw nietOndersteund(`Toewijzen aan ${doel.doel.naam}(…) (Mid-instructie)`);
+        if (g?.s === "ingebouwd") throw nietOndersteund(i18next.t("vba:interpreter.assignToMid", { name: doel.doel.naam }));
       }
       const obj = await this.ruw(doel.doel, f);
       if (obj instanceof VbaObject) return obj.zetStandaard(await this.argWaarden(doel.args, f), waarde, this);
@@ -1212,7 +1213,7 @@ export class VbaRuntime {
       throw fout(424);
     }
     if (doel.k === "me") throw fout(450);
-    throw fout(450, "Aan deze expressie kan niets worden toegewezen.");
+    throw fout(450, i18next.t("vba:interpreter.cannotAssign"));
   }
 
   // ---------- procedures ----------
@@ -1235,8 +1236,8 @@ export class VbaRuntime {
         ? (procs.find((p) => p.soort === "get" || p.soort === "function" || p.soort === "sub") ?? procs[0])
         : procs.find((p) => p.soort === soort)!;
     if (m.fouten.length)
-      throw new VbaAfbreking("intern", `Module ‘${m.naam}’ bevat syntaxisfouten; ‘${proc.naam}’ kan niet worden uitgevoerd. Eerste fout: ${m.fouten[0].message}`);
-    if (m.soort === "klasse" && !instantie) throw fout(91, `${m.naam}.${proc.naam} vraagt een instantie (New ${m.naam}).`);
+      throw new VbaAfbreking("intern", i18next.t("vba:interpreter.procedureInModuleWithSyntaxErrors", { module: m.naam, procedure: proc.naam, error: m.fouten[0].message }));
+    if (m.soort === "klasse" && !instantie) throw fout(91, i18next.t("vba:interpreter.needsInstance", { module: m.naam, procedure: proc.naam }));
     await this.klaar();
     const maxDiepte = this.opties.maxDiepte ?? 1000;
     if (this.diepte >= maxDiepte) throw fout(28);
@@ -1265,7 +1266,7 @@ export class VbaRuntime {
       await this.voerLijstUit(proc.body, f);
     } catch (e) {
       if (!(e instanceof Verlaat && (e.wat === "sub" || e.wat === "function" || e.wat === "property" || e.wat === "proc"))) {
-        if (e instanceof GaNaar) throw new VbaAfbreking("intern", `Label ‘${e.label}’ niet gevonden in ${m.naam}.${proc.naam}.`);
+        if (e instanceof GaNaar) throw new VbaAfbreking("intern", i18next.t("vba:interpreter.labelNotFound", { label: e.label, module: m.naam, procedure: proc.naam }));
         if (e instanceof Hervat) throw fout(20);
         if (e instanceof Terug) throw fout(3);
         if ((e instanceof VbaFout || e instanceof VbaAfbreking) && !e.positie)
@@ -1296,9 +1297,9 @@ export class VbaRuntime {
       else positioneel.push(a.waarde === null ? null : a);
     }
     if (!vast && positioneel.length > params.length && !params.some((p) => p.paramArray))
-      throw fout(450, `Te veel argumenten voor ${proc.naam}.`);
+      throw fout(450, i18next.t("vba:interpreter.tooManyArguments", { procedure: proc.naam }));
     if (vast && vast.length > params.length && !params.some((p) => p.paramArray))
-      throw fout(450, `Te veel argumenten voor ${proc.naam}.`);
+      throw fout(450, i18next.t("vba:interpreter.tooManyArguments", { procedure: proc.naam }));
     for (let i = 0; i < params.length; i++) {
       const p = params[i];
       const k = p.naam.toLowerCase();
@@ -1321,7 +1322,7 @@ export class VbaRuntime {
       }
       const arg = vast ? null : (positioneel[i] ?? benoemd.get(k) ?? null);
       if (!arg || arg.waarde === null) {
-        if (!p.optioneel) throw fout(449, `Argument ‘${p.naam}’ van ${proc.naam} is niet optioneel.`);
+        if (!p.optioneel) throw fout(449, i18next.t("vba:interpreter.argumentNotOptional", { name: p.naam, procedure: proc.naam }));
         let w: VbaWaarde;
         if (p.standaard) w = await this.waarde(p.standaard, this.moduleFrame(f.module));
         else w = type === "Variant" ? ONTBREEKT : type.endsWith("()") ? new VbaMatrix([], [], type.slice(0, -2)) : standaardWaarde(type);
@@ -1387,7 +1388,7 @@ export class VbaRuntime {
           break;
         }
         if (signaal instanceof VbaFout && (signaal as VbaFout & { frame?: Frame }).frame !== f && this.isVervolgfout(signaal)) {
-          this.registreerOvergeslagen(`fout ${signaal.nummer} na overgeslagen onderdeel`, "vervolgfout");
+          this.registreerOvergeslagen(i18next.t("vba:interpreter.errorAfterSkipped", { number: signaal.nummer }), "vervolgfout");
           i++;
           break;
         }
@@ -1426,7 +1427,7 @@ export class VbaRuntime {
     f.inHandler = true;
     const body = f.proc!.body;
     const j = this.zoekLabel(body, modus.label);
-    if (j < 0) throw new VbaAfbreking("niet-ondersteund", `Foutlabel ‘${modus.label}’ staat niet op het hoogste niveau van ${f.proc!.naam}.`);
+    if (j < 0) throw new VbaAfbreking("niet-ondersteund", i18next.t("vba:interpreter.errorLabelNotTopLevel", { label: modus.label, procedure: f.proc!.naam }));
     try {
       await this.voerLijstUit(body, f, j);
     } catch (s) {
@@ -1481,7 +1482,7 @@ export class VbaRuntime {
         return;
       case "let": {
         const w = await this.waarde(s.waarde, f);
-        if (w instanceof VbaObject) throw fout(438, "Een object kan alleen met Set worden toegewezen (of heeft geen standaardwaarde).");
+        if (w instanceof VbaObject) throw fout(438, i18next.t("vba:interpreter.objectNeedsSet"));
         await this.wijsToe(s.doel, w, f, false);
         return;
       }
@@ -1573,7 +1574,7 @@ export class VbaRuntime {
       case "gosub": {
         const body = f.proc!.body;
         const j = this.zoekLabel(body, s.label);
-        if (j < 0) throw new VbaAfbreking("niet-ondersteund", `GoSub-label ‘${s.label}’ staat niet op het hoogste niveau.`);
+        if (j < 0) throw new VbaAfbreking("niet-ondersteund", i18next.t("vba:interpreter.goSubLabelNotTopLevel", { label: s.label }));
         f.gosubDiepte++;
         try {
           await this.voerLijstUit(body, f, j);
@@ -1598,18 +1599,18 @@ export class VbaRuntime {
         throw new Hervat(s.soort, s.label);
       case "error": {
         const n = Math.round(naarGetal(await this.waarde(s.nummer, f), this.land));
-        throw new VbaFout(n, FOUTTEKSTEN[n] ?? `Toepassingsfout ${n}`);
+        throw new VbaFout(n, foutTekstOfAlgemeen(n));
       }
       case "end":
         throw new VbaAfbreking("end", "End");
       case "stop":
-        this.debugPrint("[Stop-instructie bereikt; de uitvoering is beëindigd.]", true);
+        this.debugPrint(i18next.t("vba:interpreter.stopReached"), true);
         throw new VbaAfbreking("end", "Stop");
       case "raiseevent":
         // Gebeurtenissen van klassen hebben hier geen ontvangers (WithEvents wordt niet gekoppeld).
         return;
       case "geweigerd":
-        this.afgeschermd(weigering(bestandsstatement(s.wat), `${s.wat}: bestandstoegang vanuit VBA is afgeschermd en wordt niet uitgevoerd.`));
+        this.afgeschermd(weigering(bestandsstatement(s.wat), i18next.t("vba:interpreter.fileAccessBlocked", { statement: s.wat })));
         return;
       case "nietondersteund":
         throw nietOndersteund(s.wat);
@@ -1730,7 +1731,7 @@ export class VbaRuntime {
     if (reeks instanceof VbaMatrix) elementen = [...reeks.data];
     else if (reeks instanceof VbaObject) elementen = await reeks.elementen(this);
     else if (reeks instanceof Niets) throw fout(91);
-    else throw fout(13, "For Each vraagt een matrix of verzameling.");
+    else throw fout(13, i18next.t("vba:interpreter.forEachNeedsCollection"));
     const cel = await this.celVan(s.teller, f, true);
     if (!cel) throw fout(92);
     for (const el of elementen) {
@@ -1774,7 +1775,7 @@ export class VbaRuntime {
       if (procs && (m.soort !== "klasse")) return this.roepProcedureAan(m, procs, m.instantie ?? null, [], this.frame, "gewoon", args);
     }
     modNaam = null;
-    throw fout(2517, `Procedure ‘${naam}’ is niet gevonden.`);
+    throw fout(2517, i18next.t("vba:interpreter.procedureNotFound", { name: naam }));
   }
 }
 

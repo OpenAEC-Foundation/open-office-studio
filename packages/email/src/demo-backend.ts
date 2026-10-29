@@ -13,6 +13,7 @@ import type {
   Opstelling,
   TestUitkomst,
 } from "./contract";
+import i18next from "../../../src/i18n/config";
 import { MailFoutMelding } from "./fouten";
 import { gok, voorinstelling } from "./voorinstellingen";
 import { inhoudstype } from "./kantoor";
@@ -22,7 +23,10 @@ import { inhoudstype } from "./kantoor";
  * (geen IMAP/SMTP); deze backend laat de interface zien met neutrale,
  * zelfgeschreven voorbeeldberichten. Niets verlaat de computer.
  */
-export const DEMO_MELDING = "Demo — in de browser is geen echte e-mail mogelijk; gebruik de desktopapp.";
+/** Melding bovenaan de demo, in de huidige taal. */
+export function demoMelding() {
+  return i18next.t("email:demo.banner");
+}
 
 type BijlageBron = { bestandsnaam: string; inhoudstype: string; contentId?: string; inline?: boolean } & (
   | { bytes: Uint8Array }
@@ -47,13 +51,13 @@ function base64NaarBytes(b64: string) {
 }
 
 const MAPPEN = (): Map[] => [
-  { pad: "INBOX", naam: "Postvak IN", scheiding: "/", speciaal: "inbox", selecteerbaar: true },
-  { pad: "INBOX/Meldingen", naam: "Meldingen", scheiding: "/", selecteerbaar: true },
-  { pad: "Concepten", naam: "Concepten", scheiding: "/", speciaal: "concepten", selecteerbaar: true },
-  { pad: "Verzonden", naam: "Verzonden", scheiding: "/", speciaal: "verzonden", selecteerbaar: true },
-  { pad: "Archief", naam: "Archief", scheiding: "/", speciaal: "archief", selecteerbaar: true },
-  { pad: "Ongewenst", naam: "Ongewenst", scheiding: "/", speciaal: "ongewenst", selecteerbaar: true },
-  { pad: "Prullenbak", naam: "Prullenbak", scheiding: "/", speciaal: "prullenbak", selecteerbaar: true },
+  { pad: "INBOX", naam: i18next.t("email:folders.inbox"), scheiding: "/", speciaal: "inbox", selecteerbaar: true },
+  { pad: "INBOX/Meldingen", naam: i18next.t("email:demo.folders.notifications"), scheiding: "/", selecteerbaar: true },
+  { pad: "Concepten", naam: i18next.t("email:demo.folders.drafts"), scheiding: "/", speciaal: "concepten", selecteerbaar: true },
+  { pad: "Verzonden", naam: i18next.t("email:demo.folders.sent"), scheiding: "/", speciaal: "verzonden", selecteerbaar: true },
+  { pad: "Archief", naam: i18next.t("email:demo.folders.archive"), scheiding: "/", speciaal: "archief", selecteerbaar: true },
+  { pad: "Ongewenst", naam: i18next.t("email:demo.folders.junk"), scheiding: "/", speciaal: "ongewenst", selecteerbaar: true },
+  { pad: "Prullenbak", naam: i18next.t("email:demo.folders.trash"), scheiding: "/", speciaal: "prullenbak", selecteerbaar: true },
 ];
 
 const IK: Adres = { naam: "Demo Gebruiker", adres: "demo@voorbeeld.invalid" };
@@ -107,15 +111,19 @@ function demoBerichten(): DemoBericht[] {
   const lijst: DemoBericht[] = [
     maakBericht(1, "INBOX", {
       datum: geleden(0.5),
-      onderwerp: "Welkom bij OpenAEC Email Studio",
+      onderwerp: i18next.t("email:demo.welcome.subject"),
       van: [STUDIO],
-      tekst:
-        "Welkom!\n\nDit is een demomailbox. In de browser kan Email Studio geen echte e-mail ophalen of versturen; gebruik daarvoor de desktopapp.\n\nProbeer gerust: beantwoorden, markeren met een ster (S), verplaatsen naar het archief en een bijlage openen in Tekst of Rekenblad.\n\nHet OpenAEC-logo hieronder is een inline afbeelding uit een bijlage (cid:).",
+      tekst: [
+        i18next.t("email:demo.welcome.heading"),
+        i18next.t("email:demo.welcome.intro"),
+        i18next.t("email:demo.welcome.tryIt"),
+        i18next.t("email:demo.welcome.logoText"),
+      ].join("\n\n"),
       html: `<div style="font-family: Inter, sans-serif; color: #36363e">
-<h2 style="color: #d97706; margin: 0 0 12px">Welkom!</h2>
-<p>Dit is een <strong>demomailbox</strong>. In de browser kan Email Studio geen echte e-mail ophalen of versturen; gebruik daarvoor de desktopapp.</p>
-<p>Probeer gerust: beantwoorden, markeren met een ster (<kbd>S</kbd>), verplaatsen naar het archief en een bijlage openen in Tekst of Rekenblad.</p>
-<p><img src="cid:logo@voorbeeld.invalid" alt="OpenAEC-logo" width="24" height="24"> Het logo links is een inline afbeelding uit een bijlage.</p>
+<h2 style="color: #d97706; margin: 0 0 12px">${i18next.t("email:demo.welcome.heading")}</h2>
+<p>${i18next.t("email:demo.welcome.introHtml")}</p>
+<p>${i18next.t("email:demo.welcome.tryItHtml")}</p>
+<p><img src="cid:logo@voorbeeld.invalid" alt="${i18next.t("email:demo.welcome.logoAlt")}" width="24" height="24"> ${i18next.t("email:demo.welcome.logoHtml")}</p>
 </div>`,
     }, [{ bestandsnaam: "logo.png", inhoudstype: "image/png", contentId: "logo@voorbeeld.invalid", inline: true, bytes: base64NaarBytes(LOGO_PNG) }]),
     maakBericht(2, "INBOX", {
@@ -226,7 +234,7 @@ export class DemoBackend implements MailBackend {
       this.data.push({
         account: {
           id: "demo",
-          naam: "Demopostvak",
+          naam: i18next.t("email:demo.accountName"),
           volledigeNaam: IK.naam,
           email: IK.adres,
           handtekening: "Demo Gebruiker\nOpenAEC Office Studio",
@@ -246,12 +254,12 @@ export class DemoBackend implements MailBackend {
 
   private vind(accountId: string) {
     const gevonden = this.data.find((d) => d.account.id === accountId);
-    if (!gevonden) throw new MailFoutMelding("niet-gevonden", "Account bestaat niet.");
+    if (!gevonden) throw new MailFoutMelding("niet-gevonden", i18next.t("email:demo.errors.accountNotFound"));
     return gevonden;
   }
   private berichtVan(accountId: string, map: string, uid: number) {
     const gevonden = this.vind(accountId).berichten.find((b) => b.bericht.map === map && b.bericht.uid === uid);
-    if (!gevonden) throw new MailFoutMelding("niet-gevonden", "Bericht bestaat niet.");
+    if (!gevonden) throw new MailFoutMelding("niet-gevonden", i18next.t("email:demo.errors.messageNotFound"));
     return gevonden;
   }
   private speciaal(account: DemoAccount, soort: "verzonden" | "concepten" | "prullenbak" | "archief") {
@@ -280,10 +288,10 @@ export class DemoBackend implements MailBackend {
       mappen: MAPPEN(),
       berichten: [
         maakBericht(1, "INBOX", {
-          onderwerp: "Je account is toegevoegd (demo)",
+          onderwerp: i18next.t("email:demo.accountAdded.subject"),
           van: [STUDIO],
           aan: [{ naam: account.volledigeNaam, adres: account.email }],
-          tekst: `Het account ${account.email} is in de demo toegevoegd. ${DEMO_MELDING}`,
+          tekst: i18next.t("email:demo.accountAdded.text", { email: account.email, notice: demoMelding() }),
         }),
       ],
       volgendeUid: 10,
@@ -315,12 +323,12 @@ export class DemoBackend implements MailBackend {
     const vast = voorinstelling(email);
     if (vast) {
       const oauth = /gmail|googlemail/.test(domein) ? "google" : /outlook|hotmail|live|msn/.test(domein) ? "microsoft" : undefined;
-      uit.push({ ...vast, provider: oauth === "google" ? "Google" : oauth === "microsoft" ? "Microsoft (Outlook.com)" : domein, oauth, toelichting: "Bekende provider (demo).", bereikbaar: proef(true, true) });
+      uit.push({ ...vast, provider: oauth === "google" ? "Google" : oauth === "microsoft" ? "Microsoft (Outlook.com)" : domein, oauth, toelichting: i18next.t("email:demo.discovery.knownProvider"), bereikbaar: proef(true, true) });
     } else if (domein.includes("m365") || domein === "ontwerpbureau.nl") {
       uit.push({
         bron: "mx",
         provider: "Microsoft 365",
-        toelichting: `MX-record van ${domein} wijst naar mail.protection.outlook.com (demo).`,
+        toelichting: i18next.t("email:demo.discovery.mx", { domain: domein }),
         oauth: "microsoft",
         bereikbaar: proef(true, true),
         imap: server("outlook.office365.com", 993, "ssl"),
@@ -329,29 +337,30 @@ export class DemoBackend implements MailBackend {
     } else if (domein === "adviesgroep.nl") {
       uit.push({
         bron: "autoconfig",
-        provider: "Adviesgroep (eigen server)",
-        toelichting: `Gevonden op autoconfig.${domein} (demo).`,
+        provider: i18next.t("email:demo.discovery.ownServer", { name: "Adviesgroep" }),
+        toelichting: i18next.t("email:demo.discovery.autoconfig", { domain: domein }),
         bereikbaar: proef(true, null),
         imap: server(`mail.${domein}`, 993, "ssl"),
         smtp: server(`mail.${domein}`, 587, "starttls"),
       });
-      uit.push({ bron: "srv", toelichting: "_imaps._tcp en _submission._tcp (demo).", bereikbaar: proef(true, true), imap: server(`mail.${domein}`, 993, "ssl"), smtp: server(`mail.${domein}`, 587, "starttls") });
+      uit.push({ bron: "srv", toelichting: i18next.t("email:demo.discovery.srv"), bereikbaar: proef(true, true), imap: server(`mail.${domein}`, 993, "ssl"), smtp: server(`mail.${domein}`, 587, "starttls") });
     } else if (domein) {
-      if (opties?.ispdb) uit.push({ bron: "ispdb", toelichting: "Uit de Thunderbird-database (demo).", bereikbaar: proef(null, null), imap: server(`imap.${domein}`, 993, "ssl"), smtp: server(`smtp.${domein}`, 465, "ssl") });
-      uit.push({ bron: "gok", toelichting: "Gangbare servernamen; de IMAP-proef slaagde (demo).", bereikbaar: proef(true, false), imap: server(`imap.${domein}`, 993, "ssl"), smtp: server(`smtp.${domein}`, 587, "starttls") });
-      uit.push({ bron: "gok", toelichting: "Alternatieve servernaam (demo).", bereikbaar: proef(false, true), imap: server(`mail.${domein}`, 993, "ssl"), smtp: server(`mail.${domein}`, 465, "ssl") });
+      if (opties?.ispdb) uit.push({ bron: "ispdb", toelichting: i18next.t("email:demo.discovery.ispdb"), bereikbaar: proef(null, null), imap: server(`imap.${domein}`, 993, "ssl"), smtp: server(`smtp.${domein}`, 465, "ssl") });
+      uit.push({ bron: "gok", toelichting: i18next.t("email:demo.discovery.guessImapOk"), bereikbaar: proef(true, false), imap: server(`imap.${domein}`, 993, "ssl"), smtp: server(`smtp.${domein}`, 587, "starttls") });
+      uit.push({ bron: "gok", toelichting: i18next.t("email:demo.discovery.guessAlternative"), bereikbaar: proef(false, true), imap: server(`mail.${domein}`, 993, "ssl"), smtp: server(`mail.${domein}`, 465, "ssl") });
     }
     return uit;
   }
 
   async test(account: AccountInvoer): Promise<TestUitkomst> {
     const controleer = (s: AccountInvoer["imap"], naam: string) => {
-      if (!s.host.trim()) return { ok: false, melding: `Geen ${naam}-server opgegeven.` };
-      if (!(s.poort > 0 && s.poort < 65536)) return { ok: false, melding: "Ongeldige poort." };
-      if (/fout|invalid-host/i.test(s.host)) return { ok: false, melding: `Demo: ${s.host} is niet bereikbaar.` };
+      if (!s.host.trim()) return { ok: false, melding: i18next.t("email:demo.test.noServer", { protocol: naam }) };
+      if (!(s.poort > 0 && s.poort < 65536)) return { ok: false, melding: i18next.t("email:demo.test.invalidPort") };
+      if (/fout|invalid-host/i.test(s.host)) return { ok: false, melding: i18next.t("email:demo.test.unreachable", { host: s.host }) };
       return {
         ok: true,
-        melding: `Demo: verbinding gesimuleerd${s.beveiliging === "geen" ? " (onversleuteld!)" : ""}.`,
+        melding:
+          s.beveiliging === "geen" ? i18next.t("email:demo.test.simulatedUnencrypted") : i18next.t("email:demo.test.simulated"),
       };
     };
     return { imap: controleer(account.imap, "IMAP"), smtp: controleer(account.smtp, "SMTP") };
@@ -366,13 +375,13 @@ export class DemoBackend implements MailBackend {
   }
   async maakMap(accountId: string, pad: string) {
     const account = this.vind(accountId);
-    if (account.mappen.some((m) => m.pad === pad)) throw new MailFoutMelding("geweigerd", "Deze map bestaat al.");
+    if (account.mappen.some((m) => m.pad === pad)) throw new MailFoutMelding("geweigerd", i18next.t("email:demo.errors.folderExists"));
     account.mappen.push({ pad, naam: pad.split("/").pop() ?? pad, scheiding: "/", selecteerbaar: true });
   }
   async hernoemMap(accountId: string, pad: string, nieuwPad: string) {
     const account = this.vind(accountId);
     const map = account.mappen.find((m) => m.pad === pad);
-    if (!map || map.speciaal === "inbox") throw new MailFoutMelding("geweigerd", "Deze map kan niet worden hernoemd.");
+    if (!map || map.speciaal === "inbox") throw new MailFoutMelding("geweigerd", i18next.t("email:demo.errors.folderCannotRename"));
     for (const m of account.mappen)
       if (m.pad === pad || m.pad.startsWith(pad + "/")) {
         m.pad = nieuwPad + m.pad.slice(pad.length);
@@ -384,7 +393,7 @@ export class DemoBackend implements MailBackend {
   async verwijderMap(accountId: string, pad: string) {
     const account = this.vind(accountId);
     const map = account.mappen.find((m) => m.pad === pad);
-    if (!map || map.speciaal) throw new MailFoutMelding("geweigerd", "Speciale mappen kunnen niet worden verwijderd.");
+    if (!map || map.speciaal) throw new MailFoutMelding("geweigerd", i18next.t("email:demo.errors.specialFolderDelete"));
     account.mappen = account.mappen.filter((m) => m.pad !== pad && !m.pad.startsWith(pad + "/"));
     account.berichten = account.berichten.filter((b) => b.bericht.map !== pad && !b.bericht.map.startsWith(pad + "/"));
   }
@@ -420,7 +429,7 @@ export class DemoBackend implements MailBackend {
 
   async bijlage(accountId: string, map: string, uid: number, index: number) {
     const bron = this.berichtVan(accountId, map, uid).bronnen[index];
-    if (!bron) throw new MailFoutMelding("niet-gevonden", "Bijlage bestaat niet.");
+    if (!bron) throw new MailFoutMelding("niet-gevonden", i18next.t("email:demo.errors.attachmentNotFound"));
     return "bytes" in bron ? bron.bytes.slice() : this.laad(bron.pad);
   }
 
@@ -450,7 +459,7 @@ export class DemoBackend implements MailBackend {
 
   async verplaats(accountId: string, map: string, uids: number[], doel: string) {
     const account = this.vind(accountId);
-    if (!account.mappen.some((m) => m.pad === doel)) throw new MailFoutMelding("niet-gevonden", "Doelmap bestaat niet.");
+    if (!account.mappen.some((m) => m.pad === doel)) throw new MailFoutMelding("niet-gevonden", i18next.t("email:demo.errors.targetFolderNotFound"));
     for (const uid of uids) {
       const b = this.berichtVan(accountId, map, uid);
       b.bericht.map = doel;
@@ -497,11 +506,11 @@ export class DemoBackend implements MailBackend {
   async verstuur(accountId: string, opstelling: Opstelling) {
     const account = this.vind(accountId);
     const ontvangers = [...opstelling.aan, ...opstelling.cc, ...opstelling.bcc];
-    if (!ontvangers.length) throw new MailFoutMelding("geweigerd", "Geen ontvangers opgegeven.");
+    if (!ontvangers.length) throw new MailFoutMelding("geweigerd", i18next.t("email:demo.errors.noRecipients"));
     if (ontvangers.some((a) => /@fout\.invalid>?$/i.test(a.trim())))
-      throw new MailFoutMelding("geweigerd", "Demo: de server weigert ontvanger @fout.invalid.");
+      throw new MailFoutMelding("geweigerd", i18next.t("email:demo.errors.recipientRefused", { domain: "@fout.invalid" }));
     const grootte = opstelling.bijlagen.reduce((som, b) => som + b.bytes.length, 0);
-    if (grootte > 25 * 1024 * 1024) throw new MailFoutMelding("te-groot", "Demo: maximaal 25 MB aan bijlagen.");
+    if (grootte > 25 * 1024 * 1024) throw new MailFoutMelding("te-groot", i18next.t("email:demo.errors.attachmentsTooLarge", { max: "25 MB" }));
     const berichtId = `<demo-${crypto.randomUUID()}@voorbeeld.invalid>`;
     account.berichten.push(this.uitOpstelling(account, this.speciaal(account, "verzonden"), opstelling, berichtId));
     return { berichtId };
@@ -514,12 +523,12 @@ export class DemoBackend implements MailBackend {
   }
 
   async oauthStatus(): Promise<Record<OAuthProvider, OAuthStatus>> {
-    const status = { beschikbaar: false, melding: "Aanmelden met Microsoft of Google kan alleen in de desktopapp." };
+    const status = { beschikbaar: false, melding: i18next.t("email:demo.oauthDesktopOnly") };
     return { microsoft: { ...status }, google: { ...status } };
   }
 
   async meldAanMetOAuth(_provider: OAuthProvider, _account: AccountInvoer): Promise<Account> {
-    throw new MailFoutMelding("niet-beschikbaar", "Aanmelden met Microsoft of Google kan alleen in de desktopapp.");
+    throw new MailFoutMelding("niet-beschikbaar", i18next.t("email:demo.oauthDesktopOnly"));
   }
 
   async annuleerOAuth() {

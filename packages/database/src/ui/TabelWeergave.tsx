@@ -5,6 +5,9 @@
  */
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { Plus, Search, Trash2, Download, RefreshCw } from "lucide-react";
+import i18next from "i18next";
+import { useTranslation } from "react-i18next";
+import { formatGetal } from "../../../../src/i18n/opmaak.ts";
 import type { Rij, TabelSchema, Waarde, Werkkopie } from "../werkkopie/contract.ts";
 import { bewerkbaar, leesbareFout, leesInvoer, SOORTNAMEN } from "./invoer.ts";
 import { Raster, useVulHoogte, type RasterBron, type RasterKolom } from "./Raster.tsx";
@@ -45,7 +48,7 @@ function useTabelBron(werkkopie: Werkkopie, schema: TabelSchema, zoek: string, s
         setFout("");
         setVersie((v) => v + 1);
       } catch (e) {
-        if (gen === generatie.current) setFout("De rijen konden niet worden gelezen: " + leesbareFout(e));
+        if (gen === generatie.current) setFout(i18next.t("database:tableView.rowsReadFailed", { error: leesbareFout(e) }));
       } finally {
         if (gen === generatie.current) bezig.current.delete(blok);
       }
@@ -132,6 +135,7 @@ export function TabelWeergave({
   onExporteer: () => void;
 }) {
   const dialogen = useDialogen();
+  const { t } = useTranslation("database");
   const [zoek, setZoek] = useState("");
   const [zoekterm, setZoekterm] = useState("");
   const [sorteer, setSorteer] = useState<{ kolom: string; aflopend: boolean } | null>(null);
@@ -173,7 +177,7 @@ export function TabelWeergave({
     const perRij = new Map<number, Record<string, Waarde>>();
     for (const w of plan.wijzigingen) {
       const rowid = ids[w.rij - rijen[0]];
-      if (rowid === undefined) throw new Error(`Rij ${w.rij + 1} bestaat niet (meer).`);
+      if (rowid === undefined) throw new Error(i18next.t("database:tableView.rowGone", { row: w.rij + 1 }));
       const veld = kolommen[w.kolom].veld!.naam;
       perRij.set(rowid, { ...(perRij.get(rowid) ?? {}), [veld]: w.waarde });
     }
@@ -184,7 +188,7 @@ export function TabelWeergave({
         try {
           await werkkopie.voegToe(schema.naam, waarden);
         } catch (e) {
-          throw new Error(`Nieuwe rij ${i + 1}: ${leesbareFout(e)}`);
+          throw new Error(i18next.t("database:tableView.newRowError", { row: i + 1, error: leesbareFout(e) }));
         }
       await werkkopie.bevestig();
     } catch (e) {
@@ -204,15 +208,15 @@ export function TabelWeergave({
       .map((v) => `${v.naam}: ${String(r.waarden[v.naam] ?? "")}`)
       .join(", ");
     const ja = await dialogen.bevestig({
-      titel: "Rij verwijderen",
+      titel: t("tableView.deleteRow.title"),
       tekst: (
         <>
-          <p>Je staat op het punt één rij uit ‘{schema.naam}’ te verwijderen:</p>
+          <p>{t("tableView.deleteRow.text", { table: schema.naam })}</p>
           <p className="muted">{omschrijving}</p>
-          <p>Dit gebeurt in de werkkopie; het origineel blijft ongewijzigd.</p>
+          <p>{t("tableView.deleteRow.workingCopy")}</p>
         </>
       ),
-      ja: "Verwijderen",
+      ja: t("common:delete"),
       gevaarlijk: true,
     });
     if (!ja) return;
@@ -223,7 +227,7 @@ export function TabelWeergave({
       if (cel.rij > 0 && cel.rij >= (totaal ?? 1) - 1) setCel({ rij: cel.rij - 1, kolom: cel.kolom });
       herlaad();
     } catch (e) {
-      setActieFout("Verwijderen mislukt: " + leesbareFout(e));
+      setActieFout(t("tableView.deleteFailed", { error: leesbareFout(e) }));
     }
   }
 
@@ -257,24 +261,24 @@ export function TabelWeergave({
 
   return (
     <div ref={vlak} className="database-tabelweergave">
-      <div className="database-werkbalk" role="toolbar" aria-label={`Bewerken van ${schema.naam}`}>
+      <div className="database-werkbalk" role="toolbar" aria-label={t("tableView.toolbar", { table: schema.naam })}>
         <label className="zoek">
           <Search size={16} aria-hidden />
           <input
-            aria-label="Zoeken in tekstvelden"
-            placeholder="Zoeken in tekstvelden…"
+            aria-label={t("tableView.searchLabel")}
+            placeholder={t("tableView.searchPlaceholder")}
             value={zoek}
             onChange={(e) => setZoek(e.target.value)}
           />
         </label>
         <button onClick={() => setNieuw(nieuw ? null : {})} aria-expanded={!!nieuw}>
-          <Plus size={16} /> Rij toevoegen
+          <Plus size={16} /> {t("tableView.addRow")}
         </button>
         <button onClick={() => void verwijderActief()} disabled={!rijVan(cel.rij)}>
-          <Trash2 size={16} /> Rij verwijderen
+          <Trash2 size={16} /> {t("tableView.deleteRow.title")}
         </button>
         <button onClick={() => herlaad()}>
-          <RefreshCw size={16} /> Vernieuwen
+          <RefreshCw size={16} /> {t("tableView.refresh")}
         </button>
         <button onClick={onExporteer}>
           <Download size={16} /> CSV
@@ -283,7 +287,7 @@ export function TabelWeergave({
       {nieuw && (
         <form
           className="database-nieuwe-rij"
-          aria-label="Nieuwe rij"
+          aria-label={t("tableView.newRow")}
           onSubmit={(e) => {
             e.preventDefault();
             void voegToe();
@@ -308,7 +312,7 @@ export function TabelWeergave({
                   <input
                     id={`${id}-${i}`}
                     disabled={!bewerkbaar(v.soort)}
-                    placeholder={v.soort === "autonummer" ? "(automatisch)" : v.soort === "datum" ? "dd-mm-jjjj" : ""}
+                    placeholder={v.soort === "autonummer" ? t("tableView.automatic") : v.soort === "datum" ? t("tableView.datePlaceholder") : ""}
                     value={nieuw[v.naam] ?? ""}
                     onChange={(e) => setNieuw({ ...nieuw, [v.naam]: e.target.value })}
                   />
@@ -323,10 +327,10 @@ export function TabelWeergave({
           )}
           <div className="database-knoppen">
             <button type="submit" className="primary">
-              Rij opslaan
+              {t("tableView.saveRow")}
             </button>
             <button type="button" onClick={() => setNieuw(null)}>
-              Annuleren
+              {t("common:cancel")}
             </button>
           </div>
         </form>
@@ -337,10 +341,10 @@ export function TabelWeergave({
         </p>
       )}
       {totaal === null ? (
-        <p role="status">Rijen laden…</p>
+        <p role="status">{t("tableView.loadingRows")}</p>
       ) : (
         <Raster
-          label={`Tabel ${schema.naam}`}
+          label={t("tableView.gridLabel", { table: schema.naam })}
           kolommen={kolommen}
           bron={bron}
           vul
@@ -355,8 +359,12 @@ export function TabelWeergave({
           kanToevoegen={!zoekterm}
           actief={cel}
           onActief={setCel}
-          leeg={zoekterm ? `Geen rijen gevonden met ‘${zoekterm}’.` : "Deze tabel is leeg. Gebruik ‘Rij toevoegen’ of plak rijen (Ctrl+V) na het toevoegen van een eerste rij."}
-          voet={<span className="muted">{`${totaal.toLocaleString("nl-NL")} ${totaal === 1 ? "rij" : "rijen"}${zoekterm ? " (gefilterd)" : ""}`}</span>}
+          leeg={zoekterm ? t("tableView.noMatches", { term: zoekterm }) : t("tableView.empty")}
+          voet={
+            <span className="muted">
+              {t(zoekterm ? "tableView.rowsFiltered" : "tableView.rows", { count: totaal, formatted: formatGetal(totaal) })}
+            </span>
+          }
         />
       )}
     </div>

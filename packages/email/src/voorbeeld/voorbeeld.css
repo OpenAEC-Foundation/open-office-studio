@@ -91,15 +91,19 @@
 }
 .vb-venster.is-paneel {
   flex: 1;
-  border-left: 1px solid var(--vb-rand);
+  border-inline-start: 1px solid var(--vb-rand);
 }
 
 /* Kop */
+[dir="rtl"] .vb-navigatie svg {
+  transform: scaleX(-1);
+}
 .vb-kop {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 12px 10px 16px;
+  padding-block: 10px;
+  padding-inline: 16px 12px;
   border-bottom: 1px solid var(--vb-rand);
   background: var(--vb-vlak);
 }
@@ -240,7 +244,7 @@
   cursor: pointer;
 }
 .vb-segment button + button {
-  border-left: 1px solid var(--vb-rand-sterk);
+  border-inline-start: 1px solid var(--vb-rand-sterk);
 }
 .vb-segment button[aria-pressed="true"] {
   background: var(--vb-accent-zacht);
@@ -431,7 +435,7 @@
 .vb-md-inhoud blockquote {
   margin: 0;
   padding: 2px 14px;
-  border-left: 3px solid var(--vb-accent);
+  border-inline-start: 3px solid var(--vb-accent);
   color: var(--vb-tekst-2);
 }
 .vb-md-inhoud table {
@@ -556,14 +560,15 @@
   font-size: 12.5px;
 }
 .vb-tabel th {
-  text-align: left;
+  text-align: start;
   font-weight: 400;
   padding: 3px 0;
   overflow-wrap: anywhere;
 }
 .vb-tabel td {
-  text-align: right;
-  padding: 3px 0 3px 12px;
+  text-align: end;
+  padding-block: 3px;
+  padding-inline: 12px 0;
   font-variant-numeric: tabular-nums;
   color: var(--vb-tekst-2);
   white-space: nowrap;
@@ -573,7 +578,7 @@
 }
 .vb-lijst {
   margin: 6px 0 0;
-  padding-left: 18px;
+  padding-inline-start: 18px;
   columns: 2;
   font-size: 12.5px;
 }

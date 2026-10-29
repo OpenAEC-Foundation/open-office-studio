@@ -12,6 +12,8 @@ import {
   ZoomIn,
   ZoomOut,
 } from "lucide-react";
+import { Trans, useTranslation } from "react-i18next";
+import { useOpmaak } from "../i18n/opmaak";
 import { Dialoog } from "../werkruimte/Dialoog";
 import type { AfdrukBron, RekenbladBron } from "./bron";
 import {
@@ -48,14 +50,18 @@ export interface AfdrukvoorbeeldProps {
 type Zoom = "pagina" | "breedte" | number;
 const VOORBEELD_DPI = 110;
 const ZOOMSTAPPEN = [0.5, 0.75, 1, 1.25, 1.5, 2];
+/** Velden in kop- en voettekst; de codes zelf zijn niet vertaald (rekenbladInstellingen.ts). */
+const VELDEN = "&[Pagina], &[Pagina's], &[Datum], &[Tijd], &[Bestand], &[Blad]";
 
 export default function Afdrukvoorbeeld(props: AfdrukvoorbeeldProps) {
   const { bron } = props;
+  const { t } = useTranslation(["backstage", "common"]);
+  const { procent } = useOpmaak();
   const id = useId();
   const weergave = useRef<HTMLDivElement>(null);
   const [doc, setDoc] = useState<AfdrukDocument | null>(null);
   const [fout, setFout] = useState("");
-  const [bezig, setBezig] = useState<string | null>("Pagina's voorbereiden…");
+  const [bezig, setBezig] = useState<string | null>(() => t("printPreview.preparingPages"));
   const [huidig, setHuidig] = useState(0);
   const [zoom, setZoom] = useState<Zoom>("pagina");
   const [bereik, setBereik] = useState("");
@@ -113,7 +119,7 @@ export default function Afdrukvoorbeeld(props: AfdrukvoorbeeldProps) {
   useEffect(() => {
     if (bron.soort === "xlsx" && !bladInstellingen) return;
     let actief = true;
-    setBezig("Pagina's voorbereiden…");
+    setBezig(t("printPreview.preparingPages"));
     const wacht = setTimeout(async () => {
       try {
         let nieuw: AfdrukDocument;
@@ -180,8 +186,8 @@ export default function Afdrukvoorbeeld(props: AfdrukvoorbeeldProps) {
       void (async () => {
         try {
           const { canvasNaarBlob } = await import("./afdrukframe");
-          const t = await doc.paginas[index].teken(VOORBEELD_DPI);
-          const blob = await canvasNaarBlob(t.canvas, "image/png");
+          const tekening = await doc.paginas[index].teken(VOORBEELD_DPI);
+          const blob = await canvasNaarBlob(tekening.canvas, "image/png");
           if (beelden.current.doc !== doc) return;
           beelden.current.urls.set(index, URL.createObjectURL(blob));
           setGetekend((n) => n + 1);
@@ -215,7 +221,7 @@ export default function Afdrukvoorbeeld(props: AfdrukvoorbeeldProps) {
 
   async function afdrukken() {
     if (!doc || !gekozen?.length) return;
-    setBezig("Afdruk voorbereiden…");
+    setBezig(t("printPreview.preparingPrint"));
     try {
       const { drukPaginasAf } = await import("./afdrukframe");
       await drukPaginasAf(
@@ -223,11 +229,9 @@ export default function Afdrukvoorbeeld(props: AfdrukvoorbeeldProps) {
         exemplaren(gekozen, aantal, sorteren),
         doc.titel,
         200,
-        (klaar, n) => setBezig(`Afdruk voorbereiden… ${klaar} van ${n}`),
+        (klaar, n) => setBezig(t("printPreview.preparingPrintProgress", { done: klaar, total: n })),
       );
-      props.meld(
-        "Kies in het afdrukvenster de printer, dubbelzijdig afdrukken en eventueel ‘Opslaan als PDF’.",
-      );
+      props.meld(t("printPreview.printHint"));
     } catch (e) {
       setFout(e instanceof Error ? e.message : String(e));
     } finally {
@@ -237,17 +241,22 @@ export default function Afdrukvoorbeeld(props: AfdrukvoorbeeldProps) {
 
   async function alsPdf() {
     if (!doc || !gekozen?.length) return;
-    setBezig("PDF maken…");
+    setBezig(t("printPreview.makingPdf"));
     try {
       const { maakPdf } = await import("../export/pdf");
       const bytes = await maakPdf(doc, {
         indexen: gekozen,
         kwaliteit,
-        voortgang: (klaar, n) => setBezig(`PDF maken… ${klaar} van ${n}`),
+        voortgang: (klaar, n) => setBezig(t("printPreview.makingPdfProgress", { done: klaar, total: n })),
       });
-      const naam = `${doc.titel.replace(/[\\/:*?"<>|]+/g, "_").trim() || "Naamloos"}.pdf`;
+      const naam = `${doc.titel.replace(/[\\/:*?"<>|]+/g, "_").trim() || t("saveAs.untitled")}.pdf`;
       const pad = await props.bewaar(bytes, naam, "application/pdf");
-      if (pad !== null) props.meld(pad ? `PDF bewaard: ${pad}` : `PDF ${naam} wordt gedownload.`);
+      if (pad !== null)
+        props.meld(
+          pad
+            ? t("printPreview.pdfSaved", { path: pad })
+            : t("printPreview.pdfDownloading", { name: naam }),
+        );
     } catch (e) {
       setFout(e instanceof Error ? e.message : String(e));
     } finally {
@@ -265,7 +274,7 @@ export default function Afdrukvoorbeeld(props: AfdrukvoorbeeldProps) {
     if (!wijzigingen.size) return;
     try {
       await bron.bewaarInstellingen(wijzigingen);
-      props.meld("De pagina-indeling is in de werkmap opgeslagen. Bewaar het document om dit vast te leggen.");
+      props.meld(t("printPreview.layoutSaved"));
       props.sluit();
     } catch (e) {
       setFout(e instanceof Error ? e.message : String(e));
@@ -297,7 +306,7 @@ export default function Afdrukvoorbeeld(props: AfdrukvoorbeeldProps) {
         </span>
       )}
       <button type="button" className="werkruimte-knop" onClick={props.sluit}>
-        Sluiten
+        {t("common:close")}
       </button>
       <button
         type="button"
@@ -305,7 +314,7 @@ export default function Afdrukvoorbeeld(props: AfdrukvoorbeeldProps) {
         disabled={!doc || !bereikGeldig || !!bezig}
         onClick={alsPdf}
       >
-        <FileDown size={13} /> Opslaan als PDF
+        <FileDown size={13} /> {t("printPreview.saveAsPdf")}
       </button>
       <button
         type="button"
@@ -314,14 +323,14 @@ export default function Afdrukvoorbeeld(props: AfdrukvoorbeeldProps) {
         disabled={!doc || !bereikGeldig || !!bezig}
         onClick={afdrukken}
       >
-        <Printer size={13} /> Afdrukken
+        <Printer size={13} /> {t("printPreview.print")}
       </button>
     </>
   );
 
   return (
     <Dialoog
-      titel={`Afdrukvoorbeeld – ${bron.titel}`}
+      titel={t("printPreview.title", { title: bron.titel })}
       sluit={props.sluit}
       className="afdrukvoorbeeld"
       acties={acties}
@@ -343,24 +352,24 @@ export default function Afdrukvoorbeeld(props: AfdrukvoorbeeldProps) {
         }}
       >
         <span id={`${id}-uitleg`} className="werkruimte-verborgen">
-          Page Up en Page Down bladeren door de pagina's; Ctrl+P drukt af.
+          {t("printPreview.keyboardHelp")}
         </span>
         <div className="afdruk-inhoud">
-          <aside className="afdruk-opties" aria-label="Afdrukinstellingen">
+          <aside className="afdruk-opties" aria-label={t("printPreview.settings")}>
             <fieldset>
-              <legend>Afdrukken</legend>
+              <legend>{t("printPreview.print")}</legend>
               <label>
-                Pagina’s
+                {t("printPreview.pages")}
                 <input
                   type="text"
                   value={bereik}
-                  placeholder="alle, of bijv. 1-3, 5"
+                  placeholder={t("printPreview.rangePlaceholder")}
                   aria-invalid={!!doc && !bereikGeldig}
                   onChange={(e) => setBereik(e.target.value)}
                 />
               </label>
               <label>
-                Exemplaren
+                {t("printPreview.copies")}
                 <input
                   type="number"
                   min={1}
@@ -372,19 +381,17 @@ export default function Afdrukvoorbeeld(props: AfdrukvoorbeeldProps) {
               {aantal > 1 && (
                 <label className="afdruk-vink">
                   <input type="checkbox" checked={sorteren} onChange={(e) => setSorteren(e.target.checked)} />
-                  Sorteren (1, 2, 3 – 1, 2, 3)
+                  {t("printPreview.collate")}
                 </label>
               )}
-              <p className="afdruk-uitleg">
-                Printer, dubbelzijdig en kleur kies je daarna in het afdrukvenster van het systeem.
-              </p>
+              <p className="afdruk-uitleg">{t("printPreview.systemDialogHint")}</p>
             </fieldset>
 
             {bron.soort === "pptx" && (
               <fieldset>
-                <legend>Presentatie</legend>
+                <legend>{t("common:modules.presentatie")}</legend>
                 <label>
-                  Afdrukken als
+                  {t("printPreview.printAs")}
                   <select
                     value={presentatie.indeling}
                     onChange={(e) => {
@@ -392,14 +399,14 @@ export default function Afdrukvoorbeeld(props: AfdrukvoorbeeldProps) {
                       setPresentatie({ ...standaardPresentatie(indeling), perPagina: presentatie.perPagina });
                     }}
                   >
-                    <option value="dias">Dia’s</option>
-                    <option value="handout">Hand-outs</option>
-                    <option value="notities">Notitiepagina’s</option>
+                    <option value="dias">{t("printPreview.slides")}</option>
+                    <option value="handout">{t("printPreview.handouts")}</option>
+                    <option value="notities">{t("printPreview.notesPages")}</option>
                   </select>
                 </label>
                 {presentatie.indeling === "handout" && (
                   <label>
-                    Dia’s per pagina
+                    {t("printPreview.slidesPerPage")}
                     <select
                       value={presentatie.perPagina}
                       onChange={(e) =>
@@ -408,20 +415,19 @@ export default function Afdrukvoorbeeld(props: AfdrukvoorbeeldProps) {
                     >
                       {HANDOUT_AANTALLEN.map((n) => (
                         <option key={n} value={n}>
-                          {n}
-                          {n === 3 ? " (met regels)" : ""}
+                          {n === 3 ? t("printPreview.withLines", { number: n }) : n}
                         </option>
                       ))}
                     </select>
                   </label>
                 )}
                 <label>
-                  Papier
+                  {t("printPreview.paper")}
                   <select
                     value={presentatie.papier}
                     onChange={(e) => setPresentatie({ ...presentatie, papier: e.target.value as Papier | "dia" })}
                   >
-                    {presentatie.indeling === "dias" && <option value="dia">Diagrootte</option>}
+                    {presentatie.indeling === "dias" && <option value="dia">{t("printPreview.slideSize")}</option>}
                     {(Object.keys(PAPIER) as Papier[]).map((p) => (
                       <option key={p} value={p}>
                         {PAPIER[p].naam}
@@ -439,7 +445,7 @@ export default function Afdrukvoorbeeld(props: AfdrukvoorbeeldProps) {
                       checked={presentatie.kader}
                       onChange={(e) => setPresentatie({ ...presentatie, kader: e.target.checked })}
                     />
-                    Kader om dia’s
+                    {t("printPreview.frameSlides")}
                   </label>
                 )}
               </fieldset>
@@ -447,7 +453,7 @@ export default function Afdrukvoorbeeld(props: AfdrukvoorbeeldProps) {
 
             {bron.soort === "rapport" && (
               <fieldset>
-                <legend>Rapport</legend>
+                <legend>{t("printPreview.report")}</legend>
                 <StandKeuze stand={rapportStand} wijzig={setRapportStand} />
               </fieldset>
             )}
@@ -468,79 +474,89 @@ export default function Afdrukvoorbeeld(props: AfdrukvoorbeeldProps) {
             )}
             {bron.soort === "xlsx" && bron.bewaarInstellingen && (
               <button type="button" className="werkruimte-knop" disabled={!indelingGewijzigd} onClick={bewaarIndeling}>
-                Pagina-indeling in werkmap opslaan
+                {t("printPreview.saveLayout")}
               </button>
             )}
 
             <fieldset>
-              <legend>PDF</legend>
+              <legend>{t("printPreview.pdf")}</legend>
               <label>
-                Beeldkwaliteit
+                {t("printPreview.imageQuality")}
                 <select value={kwaliteit} onChange={(e) => setKwaliteit(e.target.value as typeof kwaliteit)}>
-                  <option value="klein">Klein bestand (150 dpi)</option>
-                  <option value="standaard">Standaard (200 dpi)</option>
-                  <option value="hoog">Hoog, verliesvrij (300 dpi)</option>
+                  <option value="klein">{t("printPreview.qualitySmall")}</option>
+                  <option value="standaard">{t("printPreview.qualityStandard")}</option>
+                  <option value="hoog">{t("printPreview.qualityHigh")}</option>
                 </select>
               </label>
-              <p className="afdruk-uitleg">
-                Tekst blijft selecteerbaar en doorzoekbaar; de PDF volgt precies dit voorbeeld.
-              </p>
+              <p className="afdruk-uitleg">{t("printPreview.pdfHint")}</p>
             </fieldset>
           </aside>
 
           <div className="afdruk-voorbeeld">
-            <div className="afdruk-balk" role="toolbar" aria-label="Bladeren en zoomen">
-              <button type="button" aria-label="Vorige pagina" disabled={huidig <= 0} onClick={() => naar(huidig - 1)}>
+            <div className="afdruk-balk" role="toolbar" aria-label={t("printPreview.toolbar")}>
+              <button
+                type="button"
+                aria-label={t("printPreview.previousPage")}
+                disabled={huidig <= 0}
+                onClick={() => naar(huidig - 1)}
+              >
                 <ChevronLeft size={15} />
               </button>
               <span className="afdruk-teller">
-                Pagina{" "}
-                <input
-                  type="number"
-                  min={1}
-                  max={Math.max(1, totaal)}
-                  value={totaal ? huidig + 1 : 0}
-                  aria-label="Paginanummer"
-                  onChange={(e) => naar(Number(e.target.value) - 1)}
-                />{" "}
-                van {totaal}
+                <Trans
+                  t={t}
+                  i18nKey="printPreview.pageOf"
+                  values={{ total: totaal }}
+                  components={{
+                    input: (
+                      <input
+                        type="number"
+                        min={1}
+                        max={Math.max(1, totaal)}
+                        value={totaal ? huidig + 1 : 0}
+                        aria-label={t("printPreview.pageNumber")}
+                        onChange={(e) => naar(Number(e.target.value) - 1)}
+                      />
+                    ),
+                  }}
+                />
               </span>
               <button
                 type="button"
-                aria-label="Volgende pagina"
+                aria-label={t("printPreview.nextPage")}
                 disabled={huidig >= totaal - 1}
                 onClick={() => naar(huidig + 1)}
               >
                 <ChevronRight size={15} />
               </button>
               <span className="afdruk-scheiding" />
-              <button type="button" aria-label="Uitzoomen" onClick={() => zoomStap(-1)}>
+              <button type="button" aria-label={t("printPreview.zoomOut")} onClick={() => zoomStap(-1)}>
                 <ZoomOut size={15} />
               </button>
               <select
-                aria-label="Zoom"
+                aria-label={t("printPreview.zoom")}
                 value={typeof zoom === "number" ? String(zoom) : zoom}
                 onChange={(e) =>
                   setZoom(e.target.value === "pagina" || e.target.value === "breedte" ? e.target.value : Number(e.target.value))
                 }
               >
-                <option value="pagina">Hele pagina</option>
-                <option value="breedte">Paginabreedte</option>
+                <option value="pagina">{t("printPreview.wholePage")}</option>
+                <option value="breedte">{t("printPreview.pageWidth")}</option>
                 {ZOOMSTAPPEN.map((z) => (
                   <option key={z} value={String(z)}>
-                    {Math.round(z * 100)}%
+                    {procent(z, { maximumFractionDigits: 0 })}
                   </option>
                 ))}
                 {typeof zoom === "number" && !ZOOMSTAPPEN.includes(zoom) && (
-                  <option value={String(zoom)}>{Math.round(zoom * 100)}%</option>
+                  <option value={String(zoom)}>{procent(zoom, { maximumFractionDigits: 0 })}</option>
                 )}
               </select>
-              <button type="button" aria-label="Inzoomen" onClick={() => zoomStap(1)}>
+              <button type="button" aria-label={t("printPreview.zoomIn")} onClick={() => zoomStap(1)}>
                 <ZoomIn size={15} />
               </button>
               {pagina?.label && <span className="afdruk-label">{pagina.label}</span>}
             </div>
-            <div className="afdruk-weergave" ref={weergave} tabIndex={0} aria-label="Paginavoorbeeld">
+            <div className="afdruk-weergave" ref={weergave} tabIndex={0} aria-label={t("printPreview.preview")}>
               {pagina && (
                 <div
                   className="afdruk-pagina"
@@ -550,13 +566,16 @@ export default function Afdrukvoorbeeld(props: AfdrukvoorbeeldProps) {
                   }}
                 >
                   {beelden.current.doc === doc && beelden.current.urls.has(huidig) ? (
-                    <img src={beelden.current.urls.get(huidig)} alt={`Voorbeeld van pagina ${huidig + 1}`} />
+                    <img
+                      src={beelden.current.urls.get(huidig)}
+                      alt={t("printPreview.pageImage", { number: huidig + 1 })}
+                    />
                   ) : (
-                    <span className="afdruk-laden">Pagina tekenen…</span>
+                    <span className="afdruk-laden">{t("printPreview.drawingPage")}</span>
                   )}
                 </div>
               )}
-              {!doc && !fout && <p role="status">Pagina’s voorbereiden…</p>}
+              {!doc && !fout && <p role="status">{t("printPreview.preparingPages")}</p>}
             </div>
             {doc?.meldingen?.map((m, i) => (
               <p key={i} className="afdruk-melding">
@@ -585,12 +604,13 @@ export default function Afdrukvoorbeeld(props: AfdrukvoorbeeldProps) {
 }
 
 function StandKeuze({ stand, wijzig }: { stand: Stand; wijzig: (s: Stand) => void }) {
+  const { t } = useTranslation("backstage");
   return (
     <label>
-      Afdrukstand
+      {t("printPreview.orientation")}
       <select value={stand} onChange={(e) => wijzig(e.target.value as Stand)}>
-        <option value="staand">Staand</option>
-        <option value="liggend">Liggend</option>
+        <option value="staand">{t("printPreview.portrait")}</option>
+        <option value="liggend">{t("printPreview.landscape")}</option>
       </select>
     </label>
   );
@@ -609,6 +629,12 @@ function RekenbladOpties(props: {
   einden: () => void;
 }) {
   const { bron, inst, wijzig } = props;
+  const { t } = useTranslation(["backstage", "common"]);
+  const DELEN = {
+    links: t("printPreview.sectionLeft"),
+    midden: t("printPreview.sectionCenter"),
+    rechts: t("printPreview.sectionRight"),
+  };
   const marge = (sleutel: keyof BladAfdrukInstellingen["marges"], naam: string) => (
     <label className="afdruk-klein">
       {naam}
@@ -631,8 +657,8 @@ function RekenbladOpties(props: {
         <input
           key={deel}
           type="text"
-          aria-label={`${naam} ${deel}`}
-          placeholder={deel}
+          aria-label={t("printPreview.sectionLabel", { area: naam, section: DELEN[deel] })}
+          placeholder={DELEN[deel]}
           value={inst[soort][deel]}
           onChange={(e) => wijzig({ [soort]: { ...inst[soort], [deel]: e.target.value } })}
         />
@@ -642,14 +668,16 @@ function RekenbladOpties(props: {
   return (
     <>
       <fieldset>
-        <legend>Rekenblad</legend>
+        <legend>{t("common:modules.rekenblad")}</legend>
         <label>
-          Afdrukken
+          {t("printPreview.print")}
           <select value={props.omvang} onChange={(e) => props.setOmvang(e.target.value as RekenbladOmvang)}>
-            <option value="blad">Actief blad</option>
-            <option value="werkmap">Hele werkmap</option>
+            <option value="blad">{t("printPreview.activeSheet")}</option>
+            <option value="werkmap">{t("printPreview.wholeWorkbook")}</option>
             <option value="selectie" disabled={!bron.selectie}>
-              Selectie{bron.selectie ? ` (${bron.selectie})` : " (niets geselecteerd)"}
+              {bron.selectie
+                ? t("printPreview.selection", { range: bron.selectie })
+                : t("printPreview.selectionNone")}
             </option>
           </select>
         </label>
@@ -659,14 +687,14 @@ function RekenbladOpties(props: {
             checked={props.negeerBereik}
             onChange={(e) => props.setNegeerBereik(e.target.checked)}
           />
-          Afdrukbereik negeren
+          {t("printPreview.ignorePrintArea")}
         </label>
       </fieldset>
       <fieldset>
-        <legend>Pagina-indeling</legend>
+        <legend>{t("printPreview.pageSetup")}</legend>
         {bron.bladen.length > 1 && (
           <label>
-            Blad
+            {t("printPreview.sheet")}
             <select value={props.bladKeuze} onChange={(e) => props.setBladKeuze(Number(e.target.value))}>
               {bron.bladen.map((naam, i) => (
                 <option key={i} value={i}>
@@ -677,7 +705,7 @@ function RekenbladOpties(props: {
           </label>
         )}
         <label>
-          Papier
+          {t("printPreview.paper")}
           <select value={inst.papier} onChange={(e) => wijzig({ papier: e.target.value as Papier })}>
             {(Object.keys(PAPIER) as Papier[]).map((p) => (
               <option key={p} value={p}>
@@ -688,7 +716,7 @@ function RekenbladOpties(props: {
         </label>
         <StandKeuze stand={inst.stand} wijzig={(stand) => wijzig({ stand })} />
         <label>
-          Schaal
+          {t("printPreview.scale")}
           <select
             value={inst.passend ? (inst.passendHoog === 0 ? "breedte" : "pagina") : "procent"}
             onChange={(e) => {
@@ -698,15 +726,15 @@ function RekenbladOpties(props: {
               else wijzig({ passend: true, passendBreed: 1, passendHoog: 0 });
             }}
           >
-            <option value="procent">Percentage</option>
-            <option value="pagina">Passend op één pagina</option>
-            <option value="breedte">Passend op paginabreedte</option>
+            <option value="procent">{t("printPreview.percentage")}</option>
+            <option value="pagina">{t("printPreview.fitPage")}</option>
+            <option value="breedte">{t("printPreview.fitWidth")}</option>
           </select>
         </label>
         {inst.passend ? (
           <div className="afdruk-rij">
             <label className="afdruk-klein">
-              Pagina’s breed
+              {t("printPreview.pagesWide")}
               <input
                 type="number"
                 min={0}
@@ -716,7 +744,7 @@ function RekenbladOpties(props: {
               />
             </label>
             <label className="afdruk-klein">
-              hoog (0 = vrij)
+              {t("printPreview.pagesTall")}
               <input
                 type="number"
                 min={0}
@@ -728,7 +756,7 @@ function RekenbladOpties(props: {
           </div>
         ) : (
           <label>
-            Percentage
+            {t("printPreview.percentage")}
             <input
               type="number"
               min={10}
@@ -739,35 +767,35 @@ function RekenbladOpties(props: {
           </label>
         )}
         <div className="afdruk-rij">
-          {marge("boven", "Boven (cm)")}
-          {marge("onder", "Onder")}
-          {marge("links", "Links")}
-          {marge("rechts", "Rechts")}
+          {marge("boven", t("printPreview.marginTop"))}
+          {marge("onder", t("printPreview.marginBottom"))}
+          {marge("links", t("printPreview.marginLeft"))}
+          {marge("rechts", t("printPreview.marginRight"))}
         </div>
         <label>
-          Afdrukbereik
+          {t("printPreview.printArea")}
           <input
             type="text"
-            placeholder="gebruikt bereik, of bijv. A1:H40"
+            placeholder={t("printPreview.printAreaPlaceholder")}
             value={inst.afdrukbereik ?? ""}
             onChange={(e) => wijzig({ afdrukbereik: e.target.value.trim() || null })}
           />
         </label>
         <div className="afdruk-rij">
           <label className="afdruk-klein">
-            Rijen herhalen
+            {t("printPreview.repeatRows")}
             <input
               type="text"
-              placeholder="bijv. 1:2"
+              placeholder={t("printPreview.repeatRowsPlaceholder")}
               value={inst.herhaalRijen ?? ""}
               onChange={(e) => wijzig({ herhaalRijen: e.target.value.trim() || null })}
             />
           </label>
           <label className="afdruk-klein">
-            Kolommen herhalen
+            {t("printPreview.repeatColumns")}
             <input
               type="text"
-              placeholder="bijv. A:B"
+              placeholder={t("printPreview.repeatColumnsPlaceholder")}
               value={inst.herhaalKolommen ?? ""}
               onChange={(e) => wijzig({ herhaalKolommen: e.target.value.trim() || null })}
             />
@@ -775,11 +803,11 @@ function RekenbladOpties(props: {
         </div>
         <label className="afdruk-vink">
           <input type="checkbox" checked={inst.rasterlijnen} onChange={(e) => wijzig({ rasterlijnen: e.target.checked })} />
-          Rasterlijnen afdrukken
+          {t("printPreview.gridlines")}
         </label>
         <label className="afdruk-vink">
           <input type="checkbox" checked={inst.koppen} onChange={(e) => wijzig({ koppen: e.target.checked })} />
-          Rij- en kolomkoppen afdrukken
+          {t("printPreview.headings")}
         </label>
         <label className="afdruk-vink">
           <input
@@ -787,22 +815,20 @@ function RekenbladOpties(props: {
             checked={inst.horizontaalCentreren}
             onChange={(e) => wijzig({ horizontaalCentreren: e.target.checked })}
           />
-          Horizontaal centreren
+          {t("printPreview.centerHorizontally")}
         </label>
         <label>
-          Paginavolgorde
+          {t("printPreview.pageOrder")}
           <select value={inst.volgorde} onChange={(e) => wijzig({ volgorde: e.target.value as "omlaag" | "over" })}>
-            <option value="omlaag">Eerst omlaag, dan over</option>
-            <option value="over">Eerst over, dan omlaag</option>
+            <option value="omlaag">{t("printPreview.downThenOver")}</option>
+            <option value="over">{t("printPreview.overThenDown")}</option>
           </select>
         </label>
-        {kopVoet("kop", "Koptekst")}
-        {kopVoet("voet", "Voettekst")}
-        <p className="afdruk-uitleg">
-          Velden: &amp;[Pagina], &amp;[Pagina's], &amp;[Datum], &amp;[Tijd], &amp;[Bestand], &amp;[Blad].
-        </p>
+        {kopVoet("kop", t("printPreview.header"))}
+        {kopVoet("voet", t("printPreview.footer"))}
+        <p className="afdruk-uitleg">{t("printPreview.fields", { fields: VELDEN })}</p>
         <button type="button" className="werkruimte-knop" onClick={props.einden}>
-          Pagina-eindevoorbeeld…
+          {t("printPreview.pageBreakPreview")}
         </button>
       </fieldset>
     </>

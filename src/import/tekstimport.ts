@@ -2,6 +2,8 @@
  * Eigen omzetting van TXT, Markdown, HTML en RTF naar DOCX, zonder
  * kantoorruntime. Levert de DOCX-bytes plus de rapportregels.
  */
+import i18next from "../i18n/config";
+import { formatGetal } from "../i18n/opmaak";
 import { schrijfDocx } from "./docxschrijver";
 import { decodeerHtml, htmlNaarModel } from "./htmlbestand";
 import { markdownNaarModel } from "./markdownbestand";
@@ -29,17 +31,36 @@ export interface Tekstomzetting {
 
 const MAX_TEKST = 32 * 1024 * 1024;
 
+const t = (sleutel: string, opties?: Record<string, unknown>) =>
+  i18next.t(`import:${sleutel}`, opties ?? {});
+
+/** Sleutel in `import:sources.rtfParts` per overgeslagen RTF-onderdeel (zie rtfbestand.ts). */
+const RTF_ONDERDEEL: Record<string, string> = {
+  "kop- en voetteksten": "headersFooters",
+  "voet- of eindnoten": "footnotes",
+  opmerkingen: "comments",
+  "ingesloten objecten": "embeddedObjects",
+  "vormen of tekstvakken": "shapes",
+  "binaire afbeeldingen": "binaryImages",
+  "geneste tabellen": "nestedTables",
+  "samengevoegde tabelcellen": "mergedCells",
+  "velden (alleen het resultaat)": "fields",
+  "afbeeldingen in een niet-ondersteund formaat": "unsupportedImages",
+  "afbeeldingen in een niet-ondersteund formaat (WMF/EMF)": "unsupportedImagesWmf",
+};
+
 export function zetTekstOm(ext: string, bytes: Uint8Array): Tekstomzetting {
   if (bytes.length > MAX_TEKST)
-    throw new Error(
-      "Dit tekstbestand is te groot om zonder kantoorruntime te openen (maximaal 32 MB).",
-    );
+    throw new Error(t("errors.textTooLarge"));
   const regels: Rapportregel[] = [];
   if (ext === "txt") {
     const gelezen = leesTekst(bytes);
     regels.push({
-      onderdeel: "Codering",
-      gevolg: `Herkend als ${gelezen.coderingsnaam}; regeleinden: ${regeleindeNaam(gelezen.regeleinde)}. Elke regel is een alinea geworden.`,
+      onderdeel: t("report.parts.encoding"),
+      gevolg: t("sources.txt", {
+        encoding: gelezen.coderingsnaam,
+        lineEndings: regeleindeNaam(gelezen.regeleinde),
+      }),
       info: true,
     });
     return { bytes: schrijfDocx(tekstNaarModel(gelezen.tekst)), regels };
@@ -48,26 +69,27 @@ export function zetTekstOm(ext: string, bytes: Uint8Array): Tekstomzetting {
     const gelezen = leesTekst(bytes);
     const resultaat = markdownNaarModel(gelezen.tekst);
     regels.push({
-      onderdeel: "Markdown",
-      gevolg: `Koppen, lijsten, koppelingen, tabellen, code en citaten zijn overgenomen (codering ${gelezen.coderingsnaam}).`,
+      onderdeel: t("report.parts.markdown"),
+      gevolg: t("sources.markdown", { encoding: gelezen.coderingsnaam }),
       info: true,
     });
     if (resultaat.nietIngesloten)
       regels.push({
-        onderdeel: "Afbeeldingen",
-        gevolg: `${resultaat.nietIngesloten} afbeelding(en) met een extern of lokaal pad zijn niet opgehaald en staan als tekst in het document. Alleen ingesloten data-afbeeldingen (PNG, JPEG, GIF) worden overgenomen.`,
+        onderdeel: t("report.parts.images"),
+        gevolg: t("sources.markdownImages", {
+          count: resultaat.nietIngesloten,
+          images: formatGetal(resultaat.nietIngesloten),
+        }),
       });
     if (resultaat.ruweHtml)
       regels.push({
-        onderdeel: "Ingesloten HTML",
-        gevolg:
-          "Alleen de tekst en eenvoudige opmaak zijn overgenomen; scripts en stijlen niet.",
+        onderdeel: t("report.parts.embeddedHtml"),
+        gevolg: t("sources.embeddedHtml"),
       });
     if (resultaat.voetnoten)
       regels.push({
-        onderdeel: "Voetnoten",
-        gevolg:
-          "Staan als gewone tekst met een verwijzingsnummer, niet als echte voetnoten.",
+        onderdeel: t("report.parts.footnotes"),
+        gevolg: t("sources.footnotes"),
       });
     return { bytes: schrijfDocx(resultaat.document), regels };
   }
@@ -75,36 +97,41 @@ export function zetTekstOm(ext: string, bytes: Uint8Array): Tekstomzetting {
     const { tekst, codering } = decodeerHtml(bytes);
     const resultaat = htmlNaarModel(tekst);
     regels.push({
-      onderdeel: "Webpagina",
-      gevolg: `Tekst, koppen, opmaak, lijsten, tabellen en koppelingen zijn overgenomen (codering ${codering}). Scripts, stijlbladen, formulieren en externe bronnen zijn niet geladen of uitgevoerd; de pagina-indeling kan afwijken.`,
+      onderdeel: t("report.parts.webPage"),
+      gevolg: t("sources.html", { encoding: codering }),
       info: true,
     });
     if (resultaat.nietIngesloten)
       regels.push({
-        onderdeel: "Afbeeldingen",
-        gevolg: `${resultaat.nietIngesloten} externe afbeelding(en) zijn niet opgehaald en staan als tekst in het document.`,
+        onderdeel: t("report.parts.images"),
+        gevolg: t("sources.htmlImages", {
+          count: resultaat.nietIngesloten,
+          images: formatGetal(resultaat.nietIngesloten),
+        }),
       });
     if (resultaat.formulieren)
       regels.push({
-        onderdeel: "Formulieren",
-        gevolg: "Formuliervelden zijn als tekst overgenomen en werken niet.",
+        onderdeel: t("report.parts.forms"),
+        gevolg: t("sources.forms"),
       });
     return { bytes: schrijfDocx(resultaat.document), regels };
   }
   if (ext === "rtf") {
     const resultaat = rtfNaarModel(bytes);
     regels.push({
-      onderdeel: "Rich Text Format",
-      gevolg:
-        "Gelezen met de eenvoudige eigen RTF-lezer: tekst, basisopmaak, koppen, eenvoudige tabellen, koppelingen en PNG/JPEG-afbeeldingen. Lijstnummering staat als tekst.",
+      onderdeel: t("report.parts.richTextFormat"),
+      gevolg: t("sources.rtf"),
       info: true,
     });
     for (const [wat, aantal] of Object.entries(resultaat.overgeslagen))
       regels.push({
-        onderdeel: wat.charAt(0).toUpperCase() + wat.slice(1),
-        gevolg: `Niet overgenomen (${aantal}×). Open het bestand in de desktopapp met kantoorruntime voor een vollediger omzetting.`,
+        onderdeel:
+          wat in RTF_ONDERDEEL
+            ? t(`sources.rtfParts.${RTF_ONDERDEEL[wat]}`)
+            : wat.charAt(0).toUpperCase() + wat.slice(1),
+        gevolg: t("sources.rtfSkipped", { times: formatGetal(aantal) }),
       });
     return { bytes: schrijfDocx(resultaat.document), regels };
   }
-  throw new Error(`Dit formaat (${ext}) kan de app niet zelf omzetten.`);
+  throw new Error(t("errors.cannotConvert", { ext }));
 }

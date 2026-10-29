@@ -40,6 +40,11 @@ export interface LintTeksten {
   naarRechts: string;
 }
 
+/**
+ * Nederlandse standaardteksten. Het lint heeft geen i18n-afhankelijkheid; een
+ * meertalige app geeft vertaalde teksten mee via `teksten` (Office Studio:
+ * `src/Ribbon.tsx`). De toetstip van Bestand is de eerste letter daarvan.
+ */
 const standaardTeksten: LintTeksten = {
   lint: "Lint",
   bestand: "Bestand",

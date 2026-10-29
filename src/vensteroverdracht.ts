@@ -1,6 +1,8 @@
+import i18next from "./i18n/config";
 import type { Soort } from "./editors";
 import type { ModuleNaam } from "./tabbladen";
 import type { Werkbestand } from "./werkbestand";
+import { titelbron, venstertitel as maakTitel } from "./venstertitel";
 
 /**
  * Een tabblad dat naar een ander venster gaat. Documenten gaan mét hun
@@ -22,7 +24,8 @@ export type Overdracht =
     }
   | { type: "module"; module: ModuleNaam };
 
-export type Doel = "nieuw" | "hoofd";
+/** Een nieuw venster, het hoofdvenster of een bestaand venster (Tauri-label). */
+export type Doel = "nieuw" | "hoofd" | { venster: string };
 
 export interface Positie {
   /** Schermcoördinaten in CSS-pixels (logische pixels). */
@@ -54,22 +57,17 @@ export interface Vensterkanaal {
 
 export const TIJDSLIMIET = 30_000;
 
-const appnaam = {
-  docx: "Open Tekst Studio",
-  xlsx: "Open Rekenblad Studio",
-  pptx: "Open Presentatie Studio",
-} as const;
-
+/** De titel van een nieuw venster tot de webview zelf de titel zet. */
 export function venstertitel(overdracht: Overdracht) {
-  if (overdracht.type === "document")
-    return `${overdracht.naam} — ${appnaam[overdracht.soort]}`;
-  return overdracht.module === "notities"
-    ? "Open Notities Studio"
-    : overdracht.module === "database"
-      ? "Open Database Studio"
-      : "Open Office Studio";
+  return maakTitel(
+    titelbron(
+      overdracht.type === "document"
+        ? { ...overdracht, gewijzigd: overdracht.gewijzigd }
+        : { ...overdracht, gewijzigd: false },
+    ),
+    (sleutel, waarden) => i18next.t(sleutel, waarden),
+  );
 }
-
 
 /* ── Verpakking: 4 bytes lengte (LE) + JSON-kop + documentbytes ── */
 
@@ -215,7 +213,7 @@ export function browserkanaal(omgeving: BrowserOmgeving): Vensterkanaal {
     } else if (bericht.type === "geweigerd") {
       uitstaand
         .get(bericht.sleutel)
-        ?.klaar(new Error("Het andere venster kon het tabblad niet openen."));
+        ?.klaar(new Error(i18next.t("shell:windows.otherWindowFailed")));
     } else if (bericht.type === "vervallen" && bericht.naar === mijnId) {
       wachtOpBegin.get(bericht.sleutel)?.(null);
       wachtOpBegin.delete(bericht.sleutel);
@@ -231,9 +229,11 @@ export function browserkanaal(omgeving: BrowserOmgeving): Vensterkanaal {
           () =>
             klaar(
               new Error(
-                doel === "hoofd"
-                  ? "Het hoofdvenster reageert niet. Het tabblad blijft hier open."
-                  : "Het nieuwe venster heeft het document niet op tijd overgenomen. Het tabblad blijft hier open.",
+                i18next.t(
+                  doel === "hoofd"
+                    ? "shell:windows.mainWindowNoResponse"
+                    : "shell:windows.newWindowTimeout",
+                ),
               ),
             ),
           limiet,
@@ -244,9 +244,14 @@ export function browserkanaal(omgeving: BrowserOmgeving): Vensterkanaal {
           if (fout) reject(fout);
           else resolve();
         }
+        if (typeof doel === "object") {
+          // De browser kent alleen het hoofdvenster en nieuwe vensters.
+          klaar(new Error(i18next.t("shell:windows.otherWindowFailed")));
+          return;
+        }
         if (doel === "hoofd") {
           if (!hoofdId) {
-            klaar(new Error("Dit is al het hoofdvenster."));
+            klaar(new Error(i18next.t("shell:windows.alreadyMainWindow")));
             return;
           }
           uitstaand.set(sleutel, { overdracht, naar: hoofdId, geclaimd: true, klaar });
@@ -262,9 +267,7 @@ export function browserkanaal(omgeving: BrowserOmgeving): Vensterkanaal {
         const url = `${omgeving.pad}?venster=document&overdracht=${encodeURIComponent(sleutel)}&bron=${encodeURIComponent(hoofdId ?? mijnId)}`;
         if (!omgeving.open(url, positie))
           klaar(
-            new Error(
-              "Het nieuwe venster kon niet worden geopend. Sta pop-upvensters toe voor deze pagina.",
-            ),
+            new Error(i18next.t("shell:windows.popupBlocked")),
           );
       });
     },

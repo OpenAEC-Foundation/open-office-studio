@@ -13,12 +13,13 @@
  *     selectie, onChange) en sluit de stap af.
  */
 import type { DocxEditorRef } from "@betteroffice/docx-react";
+import i18next from "../../i18n/config";
 
 /** Sessie en weergave van de editor; gooit een begrijpelijke fout zonder document. */
 export function engine(ref: DocxEditorRef | null) {
   const weergave = ref?.getEditorRef() ?? null;
   const sessie = weergave?.getYrsSession() ?? null;
-  if (!ref || !weergave || !sessie) throw new Error("Het document is nog niet gereed.");
+  if (!ref || !weergave || !sessie) throw new Error(i18next.t("writer:general.documentNotReady"));
   return { ref, weergave, sessie };
 }
 export type Engine = ReturnType<typeof engine>;
@@ -75,13 +76,21 @@ export function bewerk<T>(ref: DocxEditorRef | null, doe: (e: Engine) => { resul
   return resultaat;
 }
 
-/** Auteur voor bijgehouden wijzigingen (dezelfde sleutel als het opmerkingenvenster). */
-export function auteur() {
+/** De ingestelde auteursnaam (dezelfde sleutel als het opmerkingenvenster), of "". */
+export function eigenAuteur() {
   try {
-    return localStorage.getItem("open-tekst-auteur")?.trim() || "Onbekende auteur";
+    return localStorage.getItem("open-tekst-auteur")?.trim() ?? "";
   } catch {
-    return "Onbekende auteur";
+    return "";
   }
+}
+
+/**
+ * Auteur voor bijgehouden wijzigingen. Zonder ingestelde naam een
+ * standaardnaam in de interfacetaal van dat moment (zoals Word).
+ */
+export function auteur() {
+  return eigenAuteur() || i18next.t("writer:general.unknownAuthor");
 }
 
 /** Het bijhouden-voorstel voor sessiebewerkingen in de modus Voorstellen. */

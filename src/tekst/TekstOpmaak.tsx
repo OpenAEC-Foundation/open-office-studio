@@ -5,6 +5,8 @@
  */
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useDocxCommand } from "@betteroffice/docx-react";
+import { useTranslation } from "react-i18next";
+import i18next from "../i18n/config";
 import { CaseSensitive, ListTree, PaintBucket, Pilcrow, SquareDashed, Square } from "lucide-react";
 import { RibbonFout } from "../Ribbon";
 import { useEditorApi, useEditorZichtbaar, zichtbaarElement } from "../lint/editorApi";
@@ -55,7 +57,7 @@ export type VensterSoort = "alinea" | "lettertype" | "randen" | "lijst";
 /** Tekens in de selectie (of het woord bij de cursor) en hun huidige opmaak. */
 function tekensVan(selectie: TekstSelectie) {
   const bereik = woordBereik(selectie);
-  if (!bereik) throw new Error("Selecteer eerst de tekst die je wilt opmaken.");
+  if (!bereik) throw new Error(i18next.t("writer:general.selectTextToFormat"));
   const alinea = selectie.alineas[0];
   const attrs = runAttributen(selectie.sessie, selectie.story, bereik.start.paraId, bereik.start.offset);
   const gelezen = leesTekens(attrs, (alinea?.properties.defaultTextFormatting ?? {}) as Record<string, unknown>);
@@ -95,6 +97,7 @@ export function TekstOpmaakProvider({ children }: { children: ReactNode }) {
   const api = editorApi.tekst;
   const herlaad = editorApi.herlaad ?? null;
   const meld = useContext(RibbonFout);
+  const { t } = useTranslation("writer");
   // Niet insertPageBreak: die staat uit in de bijhoudmodus, alineaopmaak niet.
   const bewerkbaar = useDocxCommand("alignment").state.enabled;
   const opnemen = useDocxCommand("editingMode").state.value === "suggesting";
@@ -173,7 +176,7 @@ export function TekstOpmaakProvider({ children }: { children: ReactNode }) {
 
   async function lijstToepassen(selectie: TekstSelectie, nummering: GelezenNummering, keuze: LijstKeuze) {
     const plan = planLijst(selectie.alle, selectie.van, selectie.tot, keuze, nummering);
-    if (plan.pakket && !herlaad) throw new Error("Nieuwe lijstnotaties zijn hier niet beschikbaar.");
+    if (plan.pakket && !herlaad) throw new Error(i18next.t("writer:general.listFormatsUnavailable"));
     if (plan.engine.length) {
       const per = new Map(plan.engine.map((e) => [e.paraId, e]));
       pasAlineasToe(
@@ -200,7 +203,7 @@ export function TekstOpmaakProvider({ children }: { children: ReactNode }) {
   async function randenToepassen(selectie: TekstSelectie, w: RandenWijziging) {
     if (Object.keys(w.alinea).length) alineaToepassen(selectie, w.alinea);
     if (!w.pagina) return;
-    if (!herlaad) throw new Error("Paginarand en paginakleur zijn hier niet beschikbaar.");
+    if (!herlaad) throw new Error(i18next.t("writer:general.pageBackgroundUnavailable"));
     // Pakketroute: na de engine-wijzigingen opslaan, bewerken en herladen.
     const plek = await leesPlek(selectie.ref);
     const bytes = await herlaad.bytes();
@@ -212,24 +215,24 @@ export function TekstOpmaakProvider({ children }: { children: ReactNode }) {
 
   const kan = () => recent.current.bewerkbaar;
   const sneltoetsen: Sneltoets[] = [
-    { toets: "Ctrl+Shift+J", uitvoeren: () => opmaak.open("alinea"), beschikbaar: kan, omschrijving: "Alinea-opmaak" },
+    { toets: "Ctrl+Shift+J", uitvoeren: () => opmaak.open("alinea"), beschikbaar: kan, omschrijving: t("general.shortcuts.paragraph") },
     {
       toets: "Ctrl+Shift+A",
       uitvoeren: () => opmaak.tekens((t) => ({ allCaps: !t.allCaps })),
       beschikbaar: kan,
-      omschrijving: "Alle hoofdletters",
+      omschrijving: t("general.shortcuts.allCaps"),
     },
     {
       toets: "Ctrl+Shift+K",
       uitvoeren: () => opmaak.tekens((t) => ({ smallCaps: !t.smallCaps })),
       beschikbaar: kan,
-      omschrijving: "Kleinkapitalen",
+      omschrijving: t("general.shortcuts.smallCaps"),
     },
     {
       toets: "Ctrl+Shift+H",
       uitvoeren: () => opmaak.tekens((t) => ({ hidden: !t.hidden })),
       beschikbaar: kan,
-      omschrijving: "Verborgen tekst",
+      omschrijving: t("general.shortcuts.hidden"),
     },
   ];
   useSneltoetsen(tekstVlak, venster ? [] : sneltoetsen, "tekst");
@@ -317,13 +320,14 @@ export function TekstOpmaakProvider({ children }: { children: ReactNode }) {
 /** Lintknop die het alineavenster opent. */
 export function AlineaKnop({ groot }: { groot?: boolean }) {
   const opmaak = useTekstOpmaak();
+  const { t } = useTranslation("writer");
   return (
     <EigenKnop
-      naam="Alinea…"
+      naam={t("general.buttons.paragraph")}
       icoon={Pilcrow}
       groot={groot}
       sneltoets="Ctrl+Shift+J"
-      uitleg="Inspringen, afstand, regelafstand, tabs en pagina-einden"
+      uitleg={t("general.buttons.paragraphTip")}
       disabled={!opmaak.bewerkbaar}
       onClick={() => opmaak.open("alinea")}
     />
@@ -333,13 +337,14 @@ export function AlineaKnop({ groot }: { groot?: boolean }) {
 /** Lintknop die het lettertypevenster opent. */
 export function LettertypeKnop({ groot }: { groot?: boolean }) {
   const opmaak = useTekstOpmaak();
+  const { t } = useTranslation("writer");
   return (
     <EigenKnop
-      naam="Lettertype…"
+      naam={t("general.buttons.font")}
       icoon={CaseSensitive}
       groot={groot}
       sneltoets="Ctrl+Shift+F"
-      uitleg="Lettertype, effecten, onderstreping en tekenafstand"
+      uitleg={t("general.buttons.fontTip")}
       disabled={!opmaak.bewerkbaar}
       onClick={() => opmaak.open("lettertype")}
     />
@@ -349,12 +354,13 @@ export function LettertypeKnop({ groot }: { groot?: boolean }) {
 /** Lintknop "Randen en arcering" (alinea). */
 export function RandenKnop({ groot }: { groot?: boolean }) {
   const opmaak = useTekstOpmaak();
+  const { t } = useTranslation("writer");
   return (
     <EigenKnop
-      naam="Randen en arcering…"
+      naam={t("general.buttons.borders")}
       icoon={Square}
       groot={groot}
-      uitleg="Randen per zijde, stijl, dikte, kleur en arcering van de alinea"
+      uitleg={t("general.buttons.bordersTip")}
       disabled={!opmaak.bewerkbaar}
       onClick={() => opmaak.open("randen", "randen")}
     />
@@ -364,21 +370,22 @@ export function RandenKnop({ groot }: { groot?: boolean }) {
 /** Lintgroep "Pagina-achtergrond": paginarand en paginakleur (pakketroute). */
 export function PaginaAchtergrondKnoppen() {
   const opmaak = useTekstOpmaak();
+  const { t } = useTranslation("writer");
   return (
     <>
       <EigenKnop
-        naam="Paginaranden"
+        naam={t("general.buttons.pageBorders")}
         icoon={SquareDashed}
         groot
-        uitleg="Rand rond de pagina; het document wordt daarna opnieuw geladen"
+        uitleg={t("general.buttons.pageBordersTip")}
         disabled={!opmaak.bewerkbaar}
         onClick={() => opmaak.open("randen", "pagina")}
       />
       <EigenKnop
-        naam="Paginakleur"
+        naam={t("general.buttons.pageColor")}
         icoon={PaintBucket}
         groot
-        uitleg="Achtergrondkleur van de pagina's; het document wordt daarna opnieuw geladen"
+        uitleg={t("general.buttons.pageColorTip")}
         disabled={!opmaak.bewerkbaar}
         onClick={() => opmaak.open("randen", "pagina")}
       />
@@ -389,11 +396,12 @@ export function PaginaAchtergrondKnoppen() {
 /** Lintknop die de lijstopties opent. */
 export function LijstKnop() {
   const opmaak = useTekstOpmaak();
+  const { t } = useTranslation("writer");
   return (
     <EigenKnop
-      naam="Lijstopties…"
+      naam={t("general.buttons.listOptions")}
       icoon={ListTree}
-      uitleg="Nummernotatie, opsommingsteken, niveaus, opnieuw beginnen of doorgaan"
+      uitleg={t("general.buttons.listOptionsTip")}
       disabled={!opmaak.bewerkbaar}
       onClick={() => opmaak.open("lijst")}
     />

@@ -1,0 +1,1008 @@
+{
+  "accounts": {
+    "test": {
+      "test": "Testen",
+      "testConnection": "Verbinding testen",
+      "testing": "Testen…",
+      "retest": "Opnieuw testen",
+      "failed": "Testen mislukt"
+    },
+    "settings": {
+      "title": "Accountinstellingen",
+      "noAccount": "Er is nog geen account.",
+      "addAccount": "Account toevoegen",
+      "accountList": "Accounts",
+      "saving": "Opslaan…",
+      "saved": "Instellingen opgeslagen.",
+      "saveFailed": "Opslaan mislukt",
+      "tabs": {
+        "identity": "Identiteit",
+        "servers": "Servers",
+        "folders": "Mappen",
+        "fetching": "Ophalen en privacy",
+        "advanced": "Geavanceerd"
+      },
+      "deleteAccount": {
+        "title": "Account verwijderen",
+        "confirm": "Weet je zeker dat je <strong>{{name}}</strong> ({{email}}) wilt verwijderen? De berichten blijven op de server staan; het opgeslagen wachtwoord wordt uit de sleutelhanger verwijderd.",
+        "button": "Account verwijderen",
+        "failed": "Verwijderen mislukt"
+      },
+      "identity": {
+        "accountName": "Accountnaam",
+        "accountNameHint": "Alleen voor jezelf, bijvoorbeeld \"Werk\" of \"Privé\".",
+        "yourName": "Je naam",
+        "email": "E-mailadres",
+        "replyTo": "Antwoordadres (Reply-To)",
+        "replyToPlaceholder": "Leeg = je e-mailadres",
+        "signature": "Handtekening",
+        "signatureHint": "Wordt onder nieuwe berichten en antwoorden gezet, na \"-- \"."
+      },
+      "oauthAccount": {
+        "signedInAs": "Aangemeld als <strong>{{account}}</strong> bij {{provider}}",
+        "noPasswordStored": "Er is geen wachtwoord opgeslagen; de toegang loopt via een token in de sleutelhanger.",
+        "signInAgain": "Opnieuw aanmelden",
+        "signedInAgain": "Opnieuw aangemeld als {{account}}."
+      },
+      "password": {
+        "change": "Wachtwoord wijzigen",
+        "storedPlaceholder": "Opgeslagen · leeg laten om te behouden",
+        "noneStoredPlaceholder": "Nog geen wachtwoord opgeslagen"
+      },
+      "folders": {
+        "hint": "Kies waar Email Studio verzonden berichten, concepten, verwijderde en gearchiveerde berichten bewaart.",
+        "roles": {
+          "sent": "Verzonden berichten",
+          "drafts": "Concepten",
+          "trash": "Prullenbak",
+          "archive": "Archief"
+        },
+        "automatic": "Automatisch",
+        "automaticWithFolder": "Automatisch ({{folder}})"
+      },
+      "fetching": {
+        "checkForNew": "Nieuwe berichten controleren",
+        "manualOnly": "Alleen handmatig",
+        "everyMinutes_one": "Elke {{count}} minuut",
+        "everyMinutes_other": "Elke {{count}} minuten",
+        "externalContent": "Externe afbeeldingen en inhoud altijd tonen",
+        "externalContentHint": "Uit aanbevolen: externe afbeeldingen verraden afzenders wanneer en waar je een bericht opent.",
+        "trustedSenders": "Afzenders waarvan externe inhoud altijd wordt getoond",
+        "forgetSender": "{{sender}} vergeten"
+      },
+      "advanced": {
+        "oauthIntro": "Aanmelden met Microsoft of Google gebruikt OAuth2. Deze instellingen gelden voor alle accounts. Een eigen client-ID is alleen nodig als de app er geen meebrengt; zie <code>{{doc}}</code>.",
+        "ispdb": "Bij een nieuw account ook de Thunderbird-database raadplegen",
+        "ispdbHint": "De domeinnaam gaat dan naar Mozilla. Standaard uit.",
+        "available": "Beschikbaar.",
+        "unavailable": "Niet beschikbaar.",
+        "loadingStatus": "Status laden…",
+        "clientId": "Client-ID",
+        "clientSecret": "Client-secret (optioneel)",
+        "saveClientId": "Client-ID opslaan",
+        "clientIdSaved": "Client-ID voor {{provider}} opgeslagen.",
+        "clientIdSaveFailed": "Client-ID opslaan mislukt",
+        "desktopOnly": "Een eigen client-ID instellen kan alleen in de desktopapp."
+      }
+    },
+    "wizard": {
+      "title": "Account toevoegen",
+      "intro": "Gebruik je bestaande e-mailadres. Email Studio werkt met elke provider die IMAP en SMTP aanbiedt.",
+      "fullName": "Je volledige naam",
+      "fullNamePlaceholder": "Voornaam Achternaam",
+      "fullNameHint": "Zoals ontvangers je naam zien.",
+      "email": "E-mailadres",
+      "emailPlaceholder": "naam@voorbeeld.nl",
+      "password": "Wachtwoord",
+      "passwordHint": "Wordt pas gebruikt bij Testen of Gereed, en alleen in de sleutelhanger van je besturingssysteem bewaard.",
+      "ispdb": "Ook de Thunderbird-database raadplegen",
+      "ispdbHint": "De domeinnaam (niet je adres of wachtwoord) gaat dan naar Mozilla.",
+      "oauthPrompt": "Of meld je aan zonder wachtwoord in de app:",
+      "enterNameAndEmailFirst": "Vul eerst je naam en e-mailadres in.",
+      "saving": "Opslaan…",
+      "done": "Gereed",
+      "saveAnyway": "Toch opslaan",
+      "saveTitle": "Account opslaan",
+      "saveUntestedTitle": "Nog niet (geslaagd) getest; je kunt het account toch opslaan",
+      "saveFailed": "Account opslaan mislukt",
+      "foundSettings": "Gevonden instellingen",
+      "serverSettings": "Serverinstellingen",
+      "serverSettingsFor": "Serverinstellingen voor {{domain}}",
+      "enterEmailHint": "Vul je e-mailadres in; Email Studio zoekt dan automatisch naar de juiste servers.",
+      "searchFailed": "Zoeken mislukt",
+      "fillInManually": "Vul de servers hieronder zelf in.",
+      "nothingFound": "Er zijn geen instellingen gevonden. Vul de servers hieronder zelf in; vraag ze zo nodig op bij je provider.",
+      "proposals": "Voorstellen",
+      "unencrypted": "onversleuteld",
+      "manualConfiguration": "Handmatige configuratie",
+      "adjusted": "· aangepast",
+      "fieldsAppear": "De velden verschijnen zodra er een geldig e-mailadres is.",
+      "bothServersFailed": "Beide servers faalden. Controleer adres, wachtwoord en servernamen."
+    },
+    "discovery": {
+      "steps": {
+        "builtIn": "Ingebouwde lijst",
+        "ownDomain": "Eigen domein",
+        "dns": "DNS",
+        "ispdb": "Thunderbird-database",
+        "probe": "Verbindingsproef"
+      },
+      "stepStatus": {
+        "waiting": "wacht",
+        "busy": "bezig…",
+        "found": "gevonden",
+        "nothing": "niets gevonden",
+        "skipped": "niet uitgevoerd"
+      },
+      "sources": {
+        "preset": "Ingebouwde lijst",
+        "autoconfig": "Configuratie van het eigen domein",
+        "srv": "DNS-SRV-records",
+        "mx": "MX-records (provider herkend)",
+        "ispdb": "Thunderbird-database",
+        "guess": "Gangbare servernamen"
+      },
+      "unencrypted": "onversleuteld",
+      "reachable": "bereikbaar",
+      "unreachable": "niet bereikbaar",
+      "untested": "niet getest"
+    },
+    "server": {
+      "incoming": "Inkomend (IMAP)",
+      "outgoing": "Uitgaand (SMTP)",
+      "columns": {
+        "server": "Server",
+        "port": "Poort",
+        "security": "Beveiliging",
+        "authentication": "Authenticatie",
+        "username": "Gebruikersnaam"
+      },
+      "hostLabel": "{{protocol}}-server",
+      "portLabel": "{{protocol}}-poort",
+      "securityLabel": "{{protocol}}-beveiliging",
+      "authenticationLabel": "{{protocol}}-authenticatie",
+      "usernameLabel": "{{protocol}}-gebruikersnaam",
+      "imapPlaceholder": "imap.voorbeeld.nl",
+      "smtpPlaceholder": "smtp.voorbeeld.nl",
+      "securityNone": "Geen",
+      "authNormal": "Normaal wachtwoord",
+      "authEncrypted": "Versleuteld wachtwoord",
+      "unencryptedWarning": "<strong>Onversleutelde verbinding.</strong> Je wachtwoord en berichten gaan leesbaar over het netwerk. Kies SSL/TLS of STARTTLS als je provider dat ondersteunt.",
+      "oauthHint": "OAuth2 vraagt bij het testen of eerste gebruik om aanmelden via de provider."
+    },
+    "oauth": {
+      "notSupported": "Deze versie van de app ondersteunt aanmelden met Microsoft of Google nog niet.",
+      "signInFailed": "Aanmelden bij {{provider}} mislukt",
+      "signInWith": "Aanmelden met {{provider}}",
+      "recommended": "aanbevolen",
+      "waitTitle": "Rond het aanmelden af in je browser",
+      "waitText": "De aanmeldpagina van {{provider}} is in je browser geopend. Meld je daar aan en geef toestemming voor e-mail; daarna gaat Email Studio hier verder.",
+      "unavailableTitle": "Aanmelden met {{provider}} is hier niet beschikbaar.",
+      "unavailableHelp": "In de desktopapp kun je onder <em>Extra › Accountinstellingen › Geavanceerd</em> een eigen client-ID voor {{provider}} instellen. Hoe je die aanmaakt staat in <code>{{doc}}</code>. Je kunt ook verdergaan met een (app-)wachtwoord."
+    }
+  },
+  "errors": {
+    "code": {
+      "connection": "Geen verbinding met de server. Controleer je internetverbinding en de servernaam en poort.",
+      "authentication": "Aanmelden mislukt. Controleer gebruikersnaam en wachtwoord (Extra › Accountinstellingen).",
+      "certificate": "Het certificaat van de server wordt niet vertrouwd of hoort niet bij deze servernaam.",
+      "timeout": "De server reageerde niet op tijd. Probeer het later opnieuw.",
+      "notFound": "Het bericht of de map bestaat niet (meer) op de server.",
+      "refused": "De server heeft de opdracht geweigerd.",
+      "tooLarge": "Het bericht is te groot voor de server. Verklein of verwijder bijlagen.",
+      "unavailable": "Deze functie is hier niet beschikbaar.",
+      "internal": "Er ging iets mis."
+    },
+    "withDetail": "{{explanation}} ({{detail}})",
+    "withContext": "{{context}}: {{message}}",
+    "backendMissing": "De e-mailfunctie ontbreekt in deze versie van de desktopapp.",
+    "unexpectedBinary": "Onverwachte binaire uitvoer van de backend."
+  },
+  "dialog": {
+    "closeEsc": "Sluiten (Esc)"
+  },
+  "sendAsAttachment": {
+    "title": "Verzenden als bijlage"
+  },
+  "ribbon": {
+    "tabs": {
+      "start": "Start",
+      "view": "Beeld",
+      "tools": "Extra"
+    },
+    "groups": {
+      "new": "Nieuw",
+      "respond": "Reageren",
+      "delete": "Verwijderen",
+      "mark": "Markeren",
+      "organize": "Ordenen",
+      "layout": "Indeling",
+      "sort": "Sorteren",
+      "message": "Bericht",
+      "accounts": "Accounts",
+      "folders": "Mappen"
+    },
+    "withShortcut": "{{action}} · {{shortcut}}",
+    "fetch": "Ophalen",
+    "fetchTitle": "Berichten ophalen · {{key}} of {{shortcut}}",
+    "readUnread": "Gelezen/ongelezen",
+    "readUnreadTitle": "Gelezen of ongelezen · {{shortcut}}",
+    "star": "Ster",
+    "move": "Verplaatsen",
+    "moveTitle": "Verplaatsen naar map",
+    "folderPane": "Mappenpaneel",
+    "readingPane": "Leesvenster",
+    "resetLayout": "Indeling herstellen",
+    "sortBy": "Sorteren op",
+    "sort": {
+      "date": "Datum",
+      "sender": "Afzender",
+      "subject": "Onderwerp",
+      "size": "Grootte"
+    },
+    "ascending": "Oplopend",
+    "descending": "Aflopend",
+    "viewSource": "Bron bekijken",
+    "accountSettings": "Accountinstellingen"
+  },
+  "studio": {
+    "errors": {
+      "loadAccounts": "Accounts laden mislukt",
+      "loadMessages": "Berichten laden mislukt",
+      "openMessage": "Bericht openen mislukt",
+      "delete": "Verwijderen mislukt",
+      "move": "Verplaatsen mislukt",
+      "mark": "Markeren mislukt",
+      "forwardAttachments": "Bijlagen ophalen voor doorsturen mislukt",
+      "openFile": "{{name}} openen mislukt",
+      "saveFile": "{{name}} opslaan mislukt",
+      "source": "Bron ophalen mislukt",
+      "updateFolder": "Map bijwerken mislukt",
+      "deleteFolder": "Map verwijderen mislukt"
+    },
+    "accountAdded": "Account {{email}} toegevoegd.",
+    "addAccount": "Account toevoegen",
+    "deletePermanently": {
+      "title": "Definitief verwijderen",
+      "text_one": "Dit bericht wordt definitief verwijderd. Dit kan niet ongedaan worden gemaakt.",
+      "text_other": "{{count}} berichten worden definitief verwijderd. Dit kan niet ongedaan worden gemaakt.",
+      "confirm": "Definitief verwijderen"
+    },
+    "noArchiveFolder": "Dit account heeft geen archiefmap. Kies er een in Extra › Accountinstellingen › Mappen.",
+    "fetched": "Berichten opgehaald.",
+    "deleteFolder": {
+      "title": "Map verwijderen",
+      "text": "De map “{{folder}}” en alle berichten erin worden op de server verwijderd."
+    },
+    "welcome": {
+      "title": "Nog geen e-mailaccount",
+      "text": "Voeg je account toe met je e-mailadres en wachtwoord. Email Studio zoekt de juiste instellingen."
+    },
+    "folderPaneWidth": "Breedte mappenpaneel",
+    "messageListWidth": "Breedte berichtenlijst",
+    "messageList": "Berichtenlijst",
+    "search": {
+      "in": "Zoeken in {{folder}}",
+      "label": "Berichten zoeken ({{shortcut}})",
+      "clear": "Zoekopdracht wissen"
+    },
+    "filter": {
+      "label": "Snelfilter",
+      "unread": "Ongelezen",
+      "unreadTitle": "Alleen ongelezen",
+      "starred": "Ster",
+      "starredTitle": "Alleen met ster",
+      "attachment": "Bijlage",
+      "attachmentTitle": "Alleen met bijlage",
+      "body": "Inhoud",
+      "bodyTitle": "Ook in de berichttekst zoeken (trager)"
+    },
+    "count": {
+      "filtered": "{{shown}} van {{total}}",
+      "filteredLoaded": "{{shown}} van {{loaded}} geladen",
+      "messages_one": "{{count}} bericht",
+      "messages_other": "{{count}} berichten",
+      "selected_one": "{{count}} geselecteerd",
+      "selected_other": "{{count}} geselecteerd"
+    },
+    "noResults": "Geen berichten gevonden.",
+    "emptyFolder": "Deze map is leeg.",
+    "moveTo_one": "Bericht verplaatsen naar",
+    "moveTo_other": "{{count}} berichten verplaatsen naar",
+    "folderDialog": {
+      "newTitle": "Nieuwe map",
+      "renameTitle": "Map hernoemen",
+      "create": "Maken",
+      "rename": "Hernoemen",
+      "name": "Naam",
+      "inside": "Binnen “{{folder}}”"
+    },
+    "source": {
+      "title": "Berichtbron",
+      "saveAs": "Opslaan als {{extension}}"
+    }
+  },
+  "address": {
+    "invalid": "Ongeldig adres: {{address}}",
+    "remove": "{{address}} verwijderen"
+  },
+  "list": {
+    "label": "Berichten",
+    "to": "Aan: {{address}}",
+    "noRecipient": "(geen ontvanger)",
+    "replied": "Beantwoord",
+    "hasAttachment": "Met bijlage",
+    "noSubject": "(geen onderwerp)",
+    "star": "Ster toevoegen",
+    "unstar": "Ster verwijderen",
+    "loadingMore": "Meer berichten laden…"
+  },
+  "folders": {
+    "label": "Mappen",
+    "loading": "Mappen laden…",
+    "unread_one": "{{count}} ongelezen",
+    "unread_other": "{{count}} ongelezen",
+    "inbox": "Postvak IN"
+  },
+  "reader": {
+    "loadingMessage": "Bericht laden…",
+    "chooseMessage": "Kies een bericht om het te lezen.",
+    "label": "Bericht: {{subject}}",
+    "reply": "Beantwoorden",
+    "replyTitle": "Beantwoorden · {{shortcut}}",
+    "replyAll": "Allen",
+    "replyAllTitle": "Allen beantwoorden · {{shortcut}}",
+    "forward": "Doorsturen",
+    "forwardTitle": "Doorsturen · {{shortcut}}",
+    "archive": "Archiveren",
+    "archiveTitle": "Archiveren · {{shortcut}}",
+    "delete": "Verwijderen",
+    "deleteTitle": "Verwijderen · {{shortcut}}",
+    "starTitle": "Ster · {{shortcut}}",
+    "from": "Van",
+    "to": "Aan",
+    "none": "(geen)",
+    "cc": "Cc",
+    "replyTo": "Antwoord aan",
+    "date": "Datum",
+    "external": {
+      "blocked_one": "Eén externe afbeelding is geblokkeerd om je privacy te beschermen.",
+      "blocked_other": "{{count}} externe afbeeldingen zijn geblokkeerd om je privacy te beschermen.",
+      "desktopHint": "Na toestemming haalt de app ze op en toont ze zonder het bericht verbinding te laten maken.",
+      "demoHint": "(In de demo verwijzen ze naar niet-bestaande adressen.)",
+      "show": "Externe inhoud tonen",
+      "alwaysFrom": "Altijd tonen van {{sender}}",
+      "failed_one": "Eén externe afbeelding kon niet worden opgehaald.",
+      "failed_other": "{{count}} externe afbeeldingen konden niet worden opgehaald."
+    },
+    "attachments": {
+      "label": "Bijlagen",
+      "previewOrOpen": "Klik: voorvertoning · dubbelklik: openen in {{module}}",
+      "preview": "Voorvertoning",
+      "openCopyTitle": "Als bewerkbare kopie openen in {{module}}",
+      "openIn": "Openen in {{module}}",
+      "saveTitle": "Opslaan op deze computer"
+    },
+    "content": "Berichtinhoud",
+    "loadingContent": "Inhoud laden…"
+  },
+  "compose": {
+    "errors": {
+      "saveDraft": "Concept bewaren mislukt",
+      "noRecipients": "Voeg minstens één ontvanger toe.",
+      "send": "Verzenden mislukt",
+      "attachmentsLarge": "De bijlagen zijn samen {{size}}; veel servers weigeren berichten boven {{max}}.",
+      "linkNotAllowed": "Alleen http(s)-, mailto- en tel-koppelingen zijn toegestaan."
+    },
+    "noSubject": {
+      "title": "Geen onderwerp",
+      "text": "Dit bericht heeft geen onderwerp. Toch verzenden?",
+      "fillIn": "Onderwerp invullen",
+      "sendWithout": "Zonder onderwerp verzenden"
+    },
+    "forgotAttachment": {
+      "title": "Bijlage vergeten?",
+      "text": "Je bericht noemt <strong>“{{word}}”</strong>, maar er is geen bijlage toegevoegd.",
+      "sendAnyway": "Toch verzenden",
+      "keywords": "bijlage|bijlagen|bijgevoegd|bijgaand|in de bijlage"
+    },
+    "addAttachment": "Bijlage toevoegen",
+    "attachment": "Bijlage",
+    "removeAttachment": "{{name}} verwijderen",
+    "attachmentsSummary_one": "{{count}} bijlage · {{size}}",
+    "attachmentsSummary_other": "{{count}} bijlagen · {{size}}",
+    "dropToAttach": "Laat los om als bijlage toe te voegen",
+    "sent": "Bericht verzonden.",
+    "sentWithSubject": "Bericht verzonden: {{subject}}.",
+    "unsent": {
+      "title": "Bericht niet verzonden",
+      "text": "Wil je dit bericht als concept bewaren?",
+      "discard": "Verwerpen",
+      "saveDraft": "Concept bewaren"
+    },
+    "label": "Opstellen: {{subject}}",
+    "newMessage": "Nieuw bericht",
+    "send": "Verzenden",
+    "sending": "Verzenden…",
+    "sendTitle": "Verzenden · {{shortcut}}",
+    "draft": "Concept",
+    "savingDraft": "Bewaren…",
+    "saveDraftTitle": "Als concept bewaren · {{shortcut}}",
+    "dismissError": "Melding sluiten",
+    "from": "Van",
+    "to": "Aan",
+    "cc": "Cc",
+    "bcc": "Bcc",
+    "subject": "Onderwerp",
+    "body": "Berichttekst",
+    "format": {
+      "label": "Opmaak",
+      "withShortcut": "{{action}} · {{shortcut}}",
+      "bold": "Vet",
+      "italic": "Cursief",
+      "underline": "Onderstrepen",
+      "bullets": "Opsomming",
+      "numbering": "Nummering",
+      "link": "Koppeling",
+      "insertLink": "Koppeling invoegen",
+      "clear": "Opmaak wissen",
+      "linkAddress": "Adres van de koppeling",
+      "insert": "Invoegen"
+    }
+  },
+  "link": {
+    "browserFailed": "Kon de browser niet openen. Kopieer het adres: {{url}}",
+    "phoneTitle": "Telefoonnummer",
+    "openTitle": "Koppeling openen?",
+    "copied": "Adres gekopieerd.",
+    "copyFailed": "Kopiëren is niet gelukt; selecteer het adres handmatig.",
+    "copy": "Adres kopiëren",
+    "openInBrowser": "Openen in browser",
+    "phoneIntro": "Dit telefoonnummer staat in het bericht:",
+    "realTarget": "Deze koppeling gaat werkelijk naar:",
+    "misleading": "De tekst in het bericht noemt <strong>{{shown}}</strong>, maar de koppeling gaat naar <strong>{{actual}}</strong>. Dit kan phishing zijn.",
+    "unencrypted": "Let op: deze koppeling gebruikt geen versleutelde verbinding (http)."
+  },
+  "files": {
+    "saveUnsupported": "Deze versie van de desktopapp kan {{name}} nog niet opslaan. Open de bijlage in een module of werk de app bij.",
+    "saved": "Opgeslagen: {{path}}",
+    "saveCancelled": "Opslaan geannuleerd.",
+    "downloadRequested": "Download aangevraagd. Controleer het bestand in je downloads."
+  },
+  "quote": {
+    "unknownSender": "(onbekend)",
+    "wroteOn": "Op {{date}} schreef {{sender}}:",
+    "wrote": "{{sender}} schreef:",
+    "forwarded": "Doorgestuurd bericht",
+    "subject": "Onderwerp: {{value}}",
+    "date": "Datum: {{value}}",
+    "from": "Van: {{value}}",
+    "to": "Aan: {{value}}",
+    "cc": "Cc: {{value}}"
+  },
+  "demo": {
+    "banner": "Demo — in de browser is geen echte e-mail mogelijk; gebruik de desktopapp.",
+    "accountName": "Demopostvak",
+    "folders": {
+      "notifications": "Meldingen",
+      "drafts": "Concepten",
+      "sent": "Verzonden",
+      "archive": "Archief",
+      "junk": "Ongewenst",
+      "trash": "Prullenbak"
+    },
+    "welcome": {
+      "subject": "Welkom bij OpenAEC Email Studio",
+      "heading": "Welkom!",
+      "intro": "Dit is een demomailbox. In de browser kan Email Studio geen echte e-mail ophalen of versturen; gebruik daarvoor de desktopapp.",
+      "introHtml": "Dit is een <strong>demomailbox</strong>. In de browser kan Email Studio geen echte e-mail ophalen of versturen; gebruik daarvoor de desktopapp.",
+      "tryIt": "Probeer gerust: beantwoorden, markeren met een ster (S), verplaatsen naar het archief en een bijlage openen in Tekst of Rekenblad.",
+      "tryItHtml": "Probeer gerust: beantwoorden, markeren met een ster (<kbd>S</kbd>), verplaatsen naar het archief en een bijlage openen in Tekst of Rekenblad.",
+      "logoText": "Het OpenAEC-logo hieronder is een inline afbeelding uit een bijlage (cid:).",
+      "logoAlt": "OpenAEC-logo",
+      "logoHtml": "Het logo links is een inline afbeelding uit een bijlage."
+    },
+    "errors": {
+      "accountNotFound": "Account bestaat niet.",
+      "messageNotFound": "Bericht bestaat niet.",
+      "folderExists": "Deze map bestaat al.",
+      "folderCannotRename": "Deze map kan niet worden hernoemd.",
+      "specialFolderDelete": "Speciale mappen kunnen niet worden verwijderd.",
+      "attachmentNotFound": "Bijlage bestaat niet.",
+      "targetFolderNotFound": "Doelmap bestaat niet.",
+      "noRecipients": "Geen ontvangers opgegeven.",
+      "recipientRefused": "Demo: de server weigert ontvanger {{domain}}.",
+      "attachmentsTooLarge": "Demo: maximaal {{max}} aan bijlagen."
+    },
+    "accountAdded": {
+      "subject": "Je account is toegevoegd (demo)",
+      "text": "Het account {{email}} is in de demo toegevoegd. {{notice}}"
+    },
+    "discovery": {
+      "knownProvider": "Bekende provider (demo).",
+      "mx": "MX-record van {{domain}} wijst naar mail.protection.outlook.com (demo).",
+      "ownServer": "{{name}} (eigen server)",
+      "autoconfig": "Gevonden op autoconfig.{{domain}} (demo).",
+      "srv": "_imaps._tcp en _submission._tcp (demo).",
+      "ispdb": "Uit de Thunderbird-database (demo).",
+      "guessImapOk": "Gangbare servernamen; de IMAP-proef slaagde (demo).",
+      "guessAlternative": "Alternatieve servernaam (demo)."
+    },
+    "test": {
+      "noServer": "Geen {{protocol}}-server opgegeven.",
+      "invalidPort": "Ongeldige poort.",
+      "unreachable": "Demo: {{host}} is niet bereikbaar.",
+      "simulated": "Demo: verbinding gesimuleerd.",
+      "simulatedUnencrypted": "Demo: verbinding gesimuleerd (onversleuteld!)."
+    },
+    "oauthDesktopOnly": "Aanmelden met Microsoft of Google kan alleen in de desktopapp."
+  },
+  "preview": {
+    "loading": "Voorbeeld laden…",
+    "dialog": {
+      "attachments": "Bijlagen",
+      "previous": "Vorige bijlage",
+      "previousTitle": "Vorige bijlage (←)",
+      "next": "Volgende bijlage",
+      "nextTitle": "Volgende bijlage (→)",
+      "close": "Voorbeeld sluiten",
+      "closeTitle": "Sluiten (Esc)",
+      "fetching": "Bijlage ophalen…",
+      "fetchFailed": "De bijlage kon niet worden opgehaald: {{message}}"
+    },
+    "card": {
+      "fileName": "Bestandsnaam",
+      "size": "Grootte",
+      "openExternal": "Openen met standaardprogramma",
+      "unknown": "onbekend",
+      "attention": "Let op",
+      "yes": "ja",
+      "no": "nee"
+    },
+    "detection": {
+      "kinds": {
+        "pdf": "PDF",
+        "dwg": "DWG-tekening",
+        "dxf": "DXF-tekening",
+        "ifc": "IFC-model",
+        "markdown": "Markdown",
+        "text": "tekst",
+        "image": "afbeelding",
+        "office": "Office-document",
+        "unknown": "onbekend bestand"
+      },
+      "contentDiffers": "De naam wijst op {{kind}}, maar de inhoud is iets anders.",
+      "mismatch": "Deze bijlage heet “.{{extension}}” ({{named}}), maar de inhoud is {{actual}}.",
+      "mismatchSubtype": "Deze bijlage heet “.{{extension}}” ({{named}}), maar de inhoud is {{actual}} ({{subtype}}).",
+      "contentBinary": "De naam wijst op {{kind}}, maar de inhoud is binair.",
+      "notSvg": "De naam wijst op een SVG-afbeelding, maar de inhoud is geen SVG.",
+      "signatureMissing": "De naam wijst op {{kind}}, maar de inhoud heeft niet de bijbehorende kenmerken."
+    },
+    "image": {
+      "loadFailed": "De afbeelding kon niet worden geladen: {{message}}",
+      "subtitle": "Afbeelding",
+      "cannotDisplay": "Deze afbeelding kan hier niet worden weergegeven (beschadigd of een niet-ondersteunde variant).",
+      "tooLarge": "Deze afbeelding is groter dan {{size}} MB en wordt niet als voorbeeld getoond.",
+      "tooManyPixels": "Deze afbeelding is {{width}} × {{height}} pixels (meer dan {{megapixels}} megapixel) en wordt niet als voorbeeld getoond.",
+      "toolbar": "Afbeelding",
+      "zoomOut": "Uitzoomen",
+      "zoomOutTitle": "Uitzoomen (−)",
+      "zoomIn": "Inzoomen",
+      "zoomInTitle": "Inzoomen (+)",
+      "fit": "Passend maken",
+      "fitTitle": "Passend maken (0)",
+      "actualSize": "Ware grootte (100%)",
+      "actualSizeTitle": "Ware grootte",
+      "rotate": "Rechtsom draaien",
+      "rotateTitle": "Rechtsom draaien (R)",
+      "area": "Afbeeldingsvoorbeeld"
+    },
+    "text": {
+      "loadFailed": "De tekst kon niet worden geladen: {{message}}",
+      "toolbar": "Tekst",
+      "encoding": "Codering: {{encoding}}",
+      "utf8Bom": "UTF-8 (met BOM)",
+      "formatJson": "JSON opmaken",
+      "wrapLines": "Regels afbreken",
+      "truncated": "Eerste {{limit}} getoond van {{size}}. Sla het bestand op om alles te zien.",
+      "contentOf": "Inhoud van {{name}}"
+    },
+    "markdown": {
+      "loadFailed": "Het bestand kon niet worden geladen: {{message}}",
+      "linkNotOpened": "Link niet geopend: {{url}}",
+      "imageFallback": "Afbeelding",
+      "externalBlocked": "{{alt}} (externe afbeelding geblokkeerd)",
+      "unavailable": "{{alt}} (niet beschikbaar)",
+      "view": "Weergave",
+      "rendered": "Weergave",
+      "source": "Bron",
+      "showExternalImages": "Externe afbeeldingen tonen",
+      "truncated": "Eerste {{limit}} getoond van {{size}}.",
+      "confirmLabel": "Link openen",
+      "confirmQuestion": "Deze link openen buiten Office Studio?"
+    },
+    "pdf": {
+      "loadFailed": "De PDF kon niet worden geladen: {{message}}",
+      "properties": "Eigenschappen",
+      "frameTitle": "PDF: {{name}}",
+      "linuxUnsupported": "De webview op Linux kan PDF's niet betrouwbaar tonen. Het volledige voorbeeld volgt in een volgende versie (Rust-viewer).",
+      "cannotPreview": "Deze PDF kan hier niet als voorbeeld worden getoond. Het volledige voorbeeld volgt in een volgende versie (Rust-viewer).",
+      "subtitle": "PDF-document",
+      "subtitleVersion": "PDF {{version}}",
+      "pages": "Pagina's",
+      "author": "Auteur",
+      "subject": "Onderwerp",
+      "createdWith": "Gemaakt met",
+      "created": "Aangemaakt",
+      "modified": "Gewijzigd",
+      "encrypted": "Versleuteld",
+      "incomplete": "het bestand lijkt onvolledig of beschadigd",
+      "showPreview": "Voorbeeld tonen"
+    },
+    "cad": {
+      "loadFailed": "De tekening kon niet worden geladen: {{message}}",
+      "previewLater": "Voorbeeld volgt in een volgende versie (Rust-viewer).",
+      "tooLargeToParse": "Dit bestand is te groot om hier te ontleden. Voorbeeld volgt in een volgende versie (Rust-viewer).",
+      "dwgSubtitle": "AutoCAD-tekening (DWG)",
+      "dxfSubtitle": "DXF-tekening",
+      "dxfBinarySubtitle": "Binaire DXF-tekening",
+      "format": "Formaat",
+      "savedAs": "Opgeslagen als",
+      "unknownAutocadVersion": "onbekende AutoCAD-versie",
+      "units": "Eenheden",
+      "entities": "Entiteiten",
+      "blocks": "Blokken",
+      "layers": "Lagen",
+      "thumbnailAlt": "Ingebed miniatuurvoorbeeld van de tekening",
+      "thumbnailCaption": "Miniatuur uit het bestand",
+      "entitiesByType": "Entiteiten per type",
+      "layersCount": "Lagen ({{n}})",
+      "andMore": "… en nog {{n}}",
+      "versionRange": "AutoCAD {{from}} t/m {{to}}",
+      "versionAndLater": "AutoCAD {{version}} en later",
+      "unitCode": "code {{code}}",
+      "unitNames": {
+        "unitless": "zonder eenheid",
+        "inch": "inch",
+        "foot": "voet",
+        "mile": "mijl",
+        "millimeter": "millimeter",
+        "centimeter": "centimeter",
+        "meter": "meter",
+        "kilometer": "kilometer",
+        "microinch": "micro-inch",
+        "mil": "mil",
+        "yard": "yard",
+        "angstrom": "ångström",
+        "nanometer": "nanometer",
+        "micron": "micron",
+        "decimeter": "decimeter",
+        "decameter": "decameter",
+        "hectometer": "hectometer",
+        "gigameter": "gigameter",
+        "astronomicalUnit": "astronomische eenheid",
+        "lightYear": "lichtjaar",
+        "parsec": "parsec",
+        "usSurveyFoot": "US survey foot",
+        "usSurveyInch": "US survey inch",
+        "usSurveyYard": "US survey yard",
+        "usSurveyMile": "US survey mile"
+      }
+    },
+    "ifc": {
+      "loadFailed": "Het model kon niet worden geladen: {{message}}",
+      "previewLater": "Het 3D-voorbeeld volgt in een volgende versie (Rust-viewer).",
+      "tooLarge": "Dit model is groter dan {{size}} MB en wordt hier niet geanalyseerd.",
+      "analysing": "Model analyseren… {{percent}}",
+      "cancelled": "Analyse geannuleerd.",
+      "retry": "Opnieuw analyseren",
+      "failed": "De analyse is mislukt: {{message}}",
+      "subtitle": "IFC-model",
+      "subtitleWithSchema": "IFC-model · {{schemas}}",
+      "nameInFile": "Naam in bestand",
+      "timestamp": "Tijdstip",
+      "author": "Auteur",
+      "organization": "Organisatie",
+      "application": "Toepassing",
+      "description": "Beschrijving",
+      "sites": "Terreinen",
+      "buildings": "Gebouwen",
+      "entities": "Entiteiten",
+      "incomplete": "het bestand lijkt onvolledig (geen END-ISO-10303-21)",
+      "storeys": "Verdiepingen ({{n}})",
+      "elementsHeading": "Bouwdelen",
+      "allEntityTypes": "Alle entiteittypen ({{n}})",
+      "elements": {
+        "wall": "Wanden",
+        "wallStandardCase": "Wanden (standaard)",
+        "curtainWall": "Vliesgevels",
+        "slab": "Vloeren en platen",
+        "roof": "Daken",
+        "column": "Kolommen",
+        "beam": "Liggers",
+        "member": "Staven",
+        "plate": "Platen",
+        "door": "Deuren",
+        "window": "Ramen",
+        "stair": "Trappen",
+        "ramp": "Hellingbanen",
+        "railing": "Leuningen",
+        "covering": "Afwerkingen",
+        "footing": "Funderingen",
+        "pile": "Palen",
+        "space": "Ruimten",
+        "opening": "Sparingen",
+        "furnishing": "Inrichting",
+        "flowSegment": "Leidingdelen",
+        "flowTerminal": "Eindpunten installaties",
+        "proxy": "Overige bouwdelen",
+        "storey": "Verdiepingen"
+      }
+    },
+    "office": {
+      "kinds": {
+        "document": "Tekstdocument",
+        "spreadsheet": "Rekenblad",
+        "presentation": "Presentatie",
+        "database": "Database"
+      },
+      "genericDocument": "Office-document",
+      "type": "Type",
+      "openFailed": "Openen mislukt: {{message}}",
+      "openCopyHint": "Open een bewerkbare kopie in {{module}}. Het origineel in de e-mail blijft ongewijzigd.",
+      "cannotOpen": "Dit Office-formaat kan hier niet worden geopend.",
+      "opening": "Openen…",
+      "openIn": "Openen in {{module}}"
+    },
+    "unknown": {
+      "subtitle": "Geen voorbeeld beschikbaar",
+      "declaredType": "Opgegeven type",
+      "extension": "Extensie",
+      "none": "geen",
+      "message": "Van dit bestandstype kan geen voorbeeld worden getoond. Sla het op en open het alleen als je de afzender vertrouwt."
+    }
+  },
+  "backend": {
+    "accounts": {
+      "fileCorrupt": "Het accountbestand {{path}} is beschadigd.",
+      "fileUnreadable": "Het accountbestand kon niet worden gelezen.",
+      "fileWriteFailed": "Het accountbestand kon niet worden geschreven.",
+      "invalidEmail": "Vul een geldig e-mailadres in.",
+      "invalidReplyTo": "Het antwoordadres is geen geldig e-mailadres.",
+      "lineBreakInName": "Namen mogen geen regeleinden bevatten.",
+      "notFound": "Dit account bestaat niet (meer).",
+      "saveFailed": "Accounts konden niet worden opgeslagen.",
+      "usernameMissing": "Vul de gebruikersnaam in voor IMAP en SMTP."
+    },
+    "attachments": {
+      "blockedDatabase": "'{{name}}' wordt om veiligheidsredenen niet automatisch geopend. Open Access-databases in Database Studio. Sla de bijlage op als je hem toch wilt bekijken.",
+      "blockedExecutable": "'{{name}}' wordt om veiligheidsredenen niet automatisch geopend. Dit bestandstype kan programma's uitvoeren. Sla de bijlage op als je hem toch wilt bekijken.",
+      "blockedMacros": "'{{name}}' wordt om veiligheidsredenen niet automatisch geopend. Dit document bevat macro's. Sla de bijlage op als je hem toch wilt bekijken.",
+      "blockedScripts": "'{{name}}' wordt om veiligheidsredenen niet automatisch geopend. Dit bestandstype kan scripts bevatten. Sla de bijlage op als je hem toch wilt bekijken.",
+      "emptyOrTooLarge": "De bijlage is leeg of groter dan 100 MB.",
+      "executableContent": "'{{name}}' is een {{kind}} en wordt om veiligheidsredenen niet geopend.",
+      "invalidName": "Ongeldige bestandsnaam.",
+      "kind": {
+        "linuxProgram": "Linux-programma (ELF)",
+        "macProgram": "macOS-programma (Mach-O) of Java-klasse",
+        "script": "script",
+        "windowsProgram": "Windows-programma (PE)",
+        "windowsShortcut": "Windows-snelkoppeling"
+      },
+      "nameMissing": "De bestandsnaam ontbreekt.",
+      "noProgram": "Er is geen programma gevonden om deze bijlage te openen.",
+      "notFound": "Bijlage {{index}} bestaat niet in dit bericht.",
+      "openFailed": "Openen mislukt.",
+      "sendAsBinary": "Stuur de bijlage als binaire gegevens van maximaal 100 MB.",
+      "tempDirFailed": "Er kon geen tijdelijke map worden gemaakt.",
+      "tempSaveFailed": "De bijlage kon niet tijdelijk worden opgeslagen."
+    },
+    "auth": {
+      "failed": "Aanmelden bij {{host}} is mislukt: gebruikersnaam of wachtwoord klopt niet ({{detail}}). Bij Gmail, Outlook, iCloud en Yahoo is een app-wachtwoord nodig.",
+      "noPassword": "Er is geen wachtwoord ingevuld of opgeslagen voor dit account.",
+      "noStoredPassword": "Er is geen wachtwoord opgeslagen voor dit account. Vul het wachtwoord in bij de accountinstellingen."
+    },
+    "autoconfig": {
+      "httpsRedirectOnly": "Alleen doorverwijzingen naar HTTPS worden gevolgd.",
+      "invalidEncoding": "Ongeldige tekencodering in het configuratiebestand.",
+      "notFound": "Geen configuratie gevonden (HTTP {{status}}).",
+      "tooManyRedirects": "Te veel doorverwijzingen."
+    },
+    "common": {
+      "saveFailed": "Opslaan mislukt."
+    },
+    "compose": {
+      "attachmentCorrupt": "De bijlage '{{name}}' is beschadigd.",
+      "attachmentsTooLarge": "De bijlagen zijn samen groter dan {{max}} MB. Verstuur grote bestanden via een deellink.",
+      "buildFailed": "Het bericht kon niet worden opgesteld ({{detail}}).",
+      "field": {
+        "bcc": "Bcc",
+        "cc": "Cc",
+        "from": "Van",
+        "inReplyTo": "In-Reply-To",
+        "references": "References",
+        "replyTo": "Antwoord aan",
+        "subject": "Het onderwerp",
+        "to": "Aan"
+      },
+      "invalidAddress": "'{{address}}' in {{field}} is geen geldig e-mailadres.",
+      "invalidCharacters": "{{field}} bevat ongeldige tekens.",
+      "invalidEnvelope": "Ongeldige envelop.",
+      "noRecipients": "Vul minstens één ontvanger in."
+    },
+    "connection": {
+      "failed": "Geen verbinding met {{host}}: {{detail}}",
+      "hostNotFound": "De servernaam {{host}} is niet gevonden.",
+      "refused": "De server {{host}} weigerde de verbinding. Controleer de poort en de beveiligingsinstelling.",
+      "reset": "De verbinding met {{host}} werd onverwacht verbroken. Past de beveiliging (SSL/TLS of STARTTLS) bij de poort?",
+      "timeout": "De server {{host}} reageerde niet op tijd. Controleer de servernaam, de poort en de firewall."
+    },
+    "files": {
+      "saveFailed": "Het bestand kon niet worden opgeslagen."
+    },
+    "http": {
+      "invalidHttpResponse": "Ongeldig HTTP-antwoord.",
+      "invalidResponse": "Ongeldig antwoord.",
+      "invalidServerName": "Ongeldige servernaam {{host}}.",
+      "invalidUrl": "Ongeldig webadres.",
+      "plainOnlyLocal": "Onversleuteld HTTP is alleen toegestaan naar deze computer.",
+      "redirectWithoutLocation": "Doorverwijzing zonder adres.",
+      "responseTooLarge": "Het antwoord van de server is te groot."
+    },
+    "images": {
+      "credentialsInUrl": "Adressen met inloggegevens worden niet opgehaald.",
+      "hostNotFound": "{{host}} is niet gevonden.",
+      "httpOnly": "Alleen http- en https-adressen zijn toegestaan.",
+      "invalidServerName": "Ongeldige servernaam.",
+      "notAnImage": "Dit adres levert geen afbeelding.",
+      "privateAddress": "Externe inhoud van interne of lokale adressen wordt niet opgehaald.",
+      "timeout": "De afbeelding laadde niet binnen 10 seconden.",
+      "tooLarge": "De afbeelding is groter dan 10 MB.",
+      "tooManyRedirects": "Te veel doorverwijzingen (maximaal 3).",
+      "unavailable": "De afbeelding is niet beschikbaar (HTTP {{status}}).",
+      "unknownRedirect": "Onbekende doorverwijzing.",
+      "unsupportedImage": "De inhoud is geen ondersteunde afbeelding."
+    },
+    "imap": {
+      "action": {
+        "copy": "Kopiëren",
+        "countFolders": "Mappen tellen",
+        "createFolder": "Map aanmaken",
+        "delete": "Verwijderen",
+        "deleteFolder": "Map verwijderen",
+        "expunge": "Opruimen",
+        "fetchMessage": "Bericht ophalen",
+        "fetchMessages": "Berichten ophalen",
+        "flag": "Markeren",
+        "listFolders": "Mappen ophalen",
+        "move": "Verplaatsen",
+        "openFolder": "Map openen",
+        "openNamedFolder": "Map '{{folder}}' openen",
+        "renameFolder": "Map hernoemen",
+        "saveToDrafts": "Opslaan in Concepten",
+        "saveToFolder": "Opslaan in map",
+        "saveToSent": "Opslaan in Verzonden",
+        "search": "Zoeken",
+        "signIn": "Aanmelden",
+        "startTls": "STARTTLS"
+      },
+      "alreadyInTrash": "Deze berichten staan al in de prullenbak; verwijder ze definitief.",
+      "appendRejected": "{{action}}: de server weigerde het bericht.",
+      "badCommand": "{{action}}: de server begreep de opdracht niet ({{detail}}).",
+      "cannotDeleteInbox": "De Inbox kan niet worden verwijderd.",
+      "cannotRenameInbox": "De Inbox kan niet worden hernoemd.",
+      "closedImmediately": "{{host}} sloot de verbinding meteen. Past de beveiliging (SSL/TLS of STARTTLS) bij de poort?",
+      "commandTimeout": "{{host}} reageerde niet binnen {{seconds}} seconden.",
+      "connectTimeout": "Geen antwoord van {{host}}:{{port}} binnen {{seconds}} seconden. Controleer servernaam, poort en firewall.",
+      "connectionLost": "De verbinding met {{host}} is verbroken.",
+      "draftsFolderMissing": "Er is geen map voor Concepten gevonden op de server. Kies die map in de accountinstellingen.",
+      "greetingRefused": "{{host}} weigerde de verbinding: {{detail}}",
+      "invalidFolderName": "Ongeldige mapnaam.",
+      "invalidMessage": "Ongeldig bericht.",
+      "invalidName": "{{action}}: ongeldige tekens in de naam.",
+      "invalidSearchCharacters": "Zoektekst bevat ongeldige tekens.",
+      "messageGone": "Dit bericht bestaat niet meer (mogelijk verplaatst of verwijderd).",
+      "messageTooLarge": "Het bericht is {{size}} MB; Email Studio opent berichten tot {{max}} MB.",
+      "noStarttls": "{{host}} ondersteunt geen STARTTLS op poort {{port}}. Kies SSL/TLS (meestal poort 993).",
+      "noTrash": "Er is geen prullenbak gevonden op de server. Kies een prullenbakmap in de accountinstellingen of verwijder definitief.",
+      "noValidMessages": "Geen geldige berichten opgegeven.",
+      "notFound": "{{action}}: {{detail}}",
+      "quotaExceeded": "{{action}}: de mailbox is vol ({{detail}}).",
+      "refused": "{{action}}: de server weigerde ({{detail}}).",
+      "retryLater": "{{message}} (Email Studio probeert het over {{retrySeconds}} seconden opnieuw, om blokkering door de server te voorkomen.)",
+      "searchTooLong": "De zoektekst is te lang.",
+      "sentFolderMissing": "Er is geen map voor Verzonden gevonden op de server. Kies die map in de accountinstellingen.",
+      "signInTimeout": "Aanmelden bij {{host}} duurde te lang.",
+      "specialFolderMissing": "Er is geen map voor map gevonden op de server. Kies die map in de accountinstellingen.",
+      "unexpectedError": "{{action}}: onverwachte fout.",
+      "unexpectedResponse": "{{action}}: onverwacht antwoord van de server.",
+      "unexpectedState": "Onverwachte verbindingstoestand."
+    },
+    "keychain": {
+      "notResponding": "De sleutelhanger reageerde niet.",
+      "unavailable": "De sleutelhanger van het besturingssysteem is niet beschikbaar. Email Studio bewaart wachtwoorden nooit in platte tekst; op Linux is een Secret Service nodig (bijvoorbeeld GNOME Keyring of KWallet).",
+      "unexpected": "De sleutelhanger gaf een onverwachte fout."
+    },
+    "links": {
+      "openFailed": "De link kon niet worden geopend.",
+      "unsupportedScheme": "Alleen http-, https- en mailto-links kunnen worden geopend."
+    },
+    "messages": {
+      "invalidMime": "Het bericht kon niet worden gelezen (ongeldige MIME-opbouw).",
+      "unreadable": "Het bericht kon niet worden gelezen."
+    },
+    "oauth": {
+      "browserFailed": "De webbrowser kon niet worden geopend voor het aanmelden.",
+      "cancelled": "Het aanmelden is geannuleerd.",
+      "cancelledOrDenied": "Aanmelden bij {{provider}} is geannuleerd of geweigerd.",
+      "clientMisconfigured": "De OAuth-client voor {{provider}} is niet juist ingesteld (client-ID of -geheim).",
+      "emailUnknown": "Het e-mailadres van de aanmelding kon niet worden bepaald; vul het adres in en probeer opnieuw.",
+      "invalidClientId": "Dit is geen geldig client-ID.",
+      "invalidTokenEndpoint": "Ongeldig tokeneindpunt.",
+      "noAccessToken": "{{provider}} gaf geen toegangstoken (HTTP {{status}}).",
+      "noFreePort": "Geen tijdelijke poort beschikbaar voor de aanmelding.",
+      "noPort": "Geen poort.",
+      "noRefreshToken": "{{provider}} gaf geen vernieuwingstoken; probeer opnieuw aan te melden.",
+      "noStoredSignIn": "Opnieuw aanmelden bij {{provider}}: er is geen aanmelding opgeslagen voor dit account.",
+      "notConfigured": {
+        "google": "Aanmelden met Google is nog niet ingesteld: er is geen client-ID. Maak in Google Cloud een OAuth-client van het type 'Desktop-app' (redirect via http://127.0.0.1), schakel de Gmail API in en voeg de scope https://mail.google.com/ toe aan het toestemmingsscherm. Vul daarna client-ID en client-geheim in (zie docs/email-oauth.md).",
+        "microsoft": "Aanmelden met Microsoft is nog niet ingesteld: er is geen client-ID. Registreer een app in Microsoft Entra (App-registraties) als 'Openbare client', voeg het platform 'Mobiele en desktopapps' toe met redirect-URI http://localhost, en geef de gedelegeerde machtigingen IMAP.AccessAsUser.All, SMTP.Send, offline_access, openid en email. Vul daarna het client-ID in (zie docs/email-oauth.md)."
+      },
+      "providerRefused": "{{provider}} weigerde de aanmelding ({{detail}}).",
+      "randomUnavailable": "Geen veilige willekeur beschikbaar.",
+      "reauthenticate": "Opnieuw aanmelden bij {{provider}}: de toestemming is verlopen of ingetrokken.",
+      "settingSaveFailed": "De OAuth-instelling kon niet worden opgeslagen.",
+      "signInFirst": "Dit account gebruikt OAuth2: meld je eerst aan met Microsoft of Google.",
+      "signInFirstToTest": "Meld je eerst aan met Microsoft of Google om OAuth2 te testen.",
+      "signInTimeout": "Het aanmelden bij {{provider}} duurde langer dan 5 minuten en is afgebroken.",
+      "stateMismatch": "De terugkoppeling van de aanmeldpagina hoort niet bij deze aanmelding (state klopt niet).",
+      "timeout": "{{provider}} reageerde niet op tijd.",
+      "tokenRefused": "{{provider}} weigerde het token ({{detail}}).",
+      "unexpectedResponse": "{{provider}} gaf een onverwacht antwoord (HTTP {{status}})."
+    },
+    "security": {
+      "cramMd5SmtpUnsupported": "Versleuteld wachtwoord (CRAM-MD5) wordt voor SMTP niet ondersteund. Kies 'normaal wachtwoord'; over SSL/TLS of STARTTLS is het wachtwoord dan ook versleuteld.",
+      "invalidServerName": "'{{host}}' is geen geldige servernaam voor {{protocol}}.",
+      "notLocalhost": "{{host}} is niet deze computer; een onversleutelde verbinding is daarom geweigerd.",
+      "portMissing": "De poort voor {{protocol}} ontbreekt.",
+      "unencryptedRefused": "Aanmelden bij {{host}} zonder versleuteling is geweigerd: je wachtwoord zou leesbaar over het netwerk gaan. Kies SSL/TLS of STARTTLS. Onversleuteld is alleen toegestaan naar deze computer (localhost), bijvoorbeeld voor Proton Mail Bridge."
+    },
+    "server": {
+      "noTimelyResponse": "{{host}} reageerde niet op tijd."
+    },
+    "smtp": {
+      "authMethodUnsupported": "Deze aanmeldmethode wordt voor SMTP niet ondersteund.",
+      "error": "SMTP-fout bij {{host}}: {{detail}}",
+      "messageTooLarge": "{{host}} weigert het bericht omdat het te groot is ({{detail}}).",
+      "noAuthMechanism": "{{host}} biedt geen aanmeldmethode aan die Email Studio ondersteunt (PLAIN of LOGIN). Kies STARTTLS of SSL/TLS; veel servers bieden aanmelden pas na versleuteling aan.",
+      "oauthRejected": "{{host}} weigerde het OAuth2-token; opnieuw aanmelden kan nodig zijn.",
+      "rejected": "{{host}} weigerde het bericht ({{detail}}).",
+      "sendTimeout": "Versturen via {{host}} duurde te lang.",
+      "tlsFailed": "De beveiligde verbinding met {{host}} kwam niet tot stand ({{detail}}). Past de beveiliging bij de poort?",
+      "tryLater": "{{host}} kan het bericht nu niet aannemen; probeer het later opnieuw ({{detail}})."
+    },
+    "storage": {
+      "appDataDirNotFound": "De datamap van de app is niet gevonden.",
+      "dataDirCreateFailed": "De datamap kon niet worden aangemaakt.",
+      "dataDirMissing": "De datamap ontbreekt."
+    },
+    "test": {
+      "signedIn": "Aangemeld bij {{host}}.",
+      "signedInUnencrypted": "Aangemeld bij {{host}}. Let op: de {{protocol}}-verbinding is niet versleuteld. Dat is alleen toegestaan omdat de server op deze computer draait."
+    },
+    "tls": {
+      "certificateRejected": "De beveiligde verbinding met {{host}} is geweigerd: {{reason}}. Om je wachtwoord te beschermen maakt Email Studio geen verbinding met een server waarvan de identiteit niet vaststaat.",
+      "handshakeFailed": "De beveiligde verbinding met {{host}} kwam niet tot stand ({{detail}}). Past de beveiliging (SSL/TLS of STARTTLS) bij de poort?",
+      "handshakeTimeout": "De TLS-handdruk met {{host}} duurde te lang.",
+      "invalidServerName": "'{{host}}' is geen geldige servernaam voor TLS.",
+      "reason": {
+        "expired": "het certificaat is verlopen",
+        "invalid": "het certificaat is ongeldig ({{detail}})",
+        "notYetValid": "het certificaat is nog niet geldig (klopt de klok van deze computer?)",
+        "revoked": "het certificaat is ingetrokken",
+        "unknownIssuer": "het certificaat is niet uitgegeven door een vertrouwde certificaatautoriteit (mogelijk zelfondertekend)",
+        "wrongName": "het certificaat hoort niet bij de naam {{host}}; gebruik de servernaam die op het certificaat staat"
+      }
+    }
+  }
+}

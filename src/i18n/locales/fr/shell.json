@@ -1,0 +1,147 @@
+{
+  "header": {
+    "homeTitle": "Aller à l'accueil",
+    "homeLabel": "OpenAEC Office Studio · Accueil",
+    "version": "Version {{version}}",
+    "unsaved": "Modifications non enregistrées",
+    "unchanged": "Aucune modification",
+    "fileAndStart": "Fichier et Accueil",
+    "openFileTitle": "Ouvrir un fichier dans un nouvel onglet · Ctrl+O",
+    "openNotesBackupTitle": "Ajouter une sauvegarde des notes · Ctrl+O",
+    "openDatabaseTitle": "Ouvrir une base de données · Ctrl+O",
+    "addBackup": "Ajouter une sauvegarde",
+    "saveAs": "Enregistrer sous",
+    "saveAsTitle": "Enregistrer sous · F12 ou Ctrl+Shift+S (Ctrl+S enregistre dans le fichier ouvert)",
+    "busy": "Traitement en cours…"
+  },
+  "message": {
+    "close": "Fermer le message",
+    "markdownNote": "Markdown conserve le texte et la structure. Enregistrez aussi un fichier DOCX pour la mise en page, les images et les révisions."
+  },
+  "loading": {
+    "editor": "Chargement de l'éditeur…",
+    "notes": "Chargement de Notes…",
+    "email": "Chargement d'Email Studio…",
+    "document": "Chargement du document…",
+    "fonts": "Chargement des polices…"
+  },
+  "errors": {
+    "editorFailed": "L'éditeur n'a pas pu ouvrir ce fichier : {{error}}",
+    "openFailed": "Échec de l'ouverture : {{error}}",
+    "openFileFailed": "Échec de l'ouverture de {{name}} : {{error}}",
+    "saveFailed": "Échec de l'enregistrement : {{error}}",
+    "printFailed": "Échec de l'impression : {{error}}",
+    "sendAsAttachmentFailed": "Échec de l'envoi en pièce jointe : {{error}}",
+    "templateUnavailable": "Modèle non disponible",
+    "exampleFailed": "Impossible d'ouvrir l'exemple.",
+    "fileSize": "Choisissez un fichier non vide de 100 Mo maximum.",
+    "unsupportedFormat": "{{name}} : ce format n'est pas pris en charge.",
+    "emptyAttachment": "La pièce jointe est vide.",
+    "databaseModifiedFile": "Database Studio contient une copie de travail modifiée. Enregistrez-la ou fermez-la d'abord, puis rouvrez le fichier.",
+    "databaseModifiedAttachment": "Database Studio contient une copie de travail modifiée. Enregistrez-la ou fermez-la d'abord, puis rouvrez la pièce jointe.",
+    "spreadsheetNotReady": "Le classeur n'est pas encore prêt.",
+    "presentationNotReady": "La présentation n'est pas encore prête.",
+    "documentNotReady": "Le document n'est pas encore prêt.",
+    "documentSaveFailed": "Impossible d'enregistrer le document."
+  },
+  "tabs": {
+    "untitled": "Sans titre {{n}}",
+    "memoryWarning_one": "{{count}} document est ouvert. Chaque document ouvert utilise de la mémoire ; fermez les documents dont vous n'avez plus besoin.",
+    "memoryWarning_many": "{{count}} de documents sont ouverts. Chaque document ouvert utilise de la mémoire ; fermez les documents dont vous n'avez plus besoin.",
+    "memoryWarning_other": "{{count}} documents sont ouverts. Chaque document ouvert utilise de la mémoire ; fermez les documents dont vous n'avez plus besoin."
+  },
+  "tabBar": {
+    "label": "Onglets ouverts",
+    "start": "Accueil",
+    "startTitle": "Accueil · document nouveau ou existant, Notes et Base de données",
+    "tabTitleUnsaved": "{{name}} · modifications non enregistrées",
+    "dragOutHint": "Faites glisser vers l'extérieur pour une fenêtre séparée",
+    "unsavedA11y": ", modifications non enregistrées",
+    "closeTab": "Fermer {{name}}",
+    "closeTitle": "Fermer · Ctrl+W",
+    "allTabs": "Tous les onglets ouverts",
+    "addTab": "Ajouter un onglet",
+    "addTabTitle": "Ouvrir un document nouveau ou existant, Notes ou Base de données",
+    "releaseOpensWindow": "Relâchez pour ouvrir une fenêtre séparée",
+    "closeOthers": "Fermer les autres",
+    "closeToRight": "Fermer les onglets à droite"
+  },
+  "windowMenu": {
+    "button": "Documents ouverts",
+    "buttonTitle": "Documents ouverts · Ctrl+Tab ou Ctrl+F6 pour basculer",
+    "empty": "Aucun document ouvert.",
+    "thisWindow": "Cette fenêtre",
+    "mainWindow": "Fenêtre principale",
+    "windowNumber": "Fenêtre {{number}}",
+    "unsavedTitle": "Modifications non enregistrées",
+    "modified": "modifié",
+    "newWindow": "Nouvelle fenêtre"
+  },
+  "windows": {
+    "openInNewWindow": "Ouvrir dans une nouvelle fenêtre",
+    "backToMainWindow": "Revenir à la fenêtre principale",
+    "databaseMovedHere": "Database Studio se trouve désormais dans cette fenêtre. Rouvrez votre base de données ici pour continuer à travailler.",
+    "documentMoved": "Le document a été déplacé, y compris les modifications non enregistrées. L'historique d'annulation n'est pas conservé lors du déplacement.",
+    "linkUnavailable": "Liaison des fenêtres non disponible : {{error}}",
+    "closeGuardUnavailable": "Protection à la fermeture non disponible : {{error}}",
+    "databaseModified": "Database Studio ne peut pas transférer une copie de travail modifiée vers une autre fenêtre. Exportez ou enregistrez d'abord la base de données.",
+    "otherWindowFailed": "L'autre fenêtre n'a pas pu ouvrir l'onglet.",
+    "mainWindowNoResponse": "La fenêtre principale ne répond pas. L'onglet reste ouvert ici.",
+    "newWindowTimeout": "La nouvelle fenêtre n'a pas repris le document à temps. L'onglet reste ouvert ici.",
+    "alreadyMainWindow": "Il s'agit déjà de la fenêtre principale.",
+    "popupBlocked": "Impossible d'ouvrir la nouvelle fenêtre. Autorisez les fenêtres contextuelles pour cette page.",
+    "moveToWindow": "Déplacer vers {{window}}",
+    "newWindowFailed": "Impossible d’ouvrir une nouvelle fenêtre : {{error}}"
+  },
+  "dropZone": {
+    "release": "Relâchez pour ouvrir",
+    "explanation": "Les documents, classeurs et présentations s'ouvrent chacun dans leur propre onglet ; les fichiers MDB et ACCDB dans Database Studio.",
+    "image": "{{name}} est une image. Le glisser-déposer n'insère pas encore d'images dans un document ; utilisez Insertion › Image.",
+    "unsupported": "Impossible d'ouvrir {{name}} : .{{ext}} n'est pas pris en charge. Open Office Studio ouvre les documents, classeurs, présentations et bases de données Access."
+  },
+  "ribbon": {
+    "label": "Ruban",
+    "file": "Fichier",
+    "hide": "Masquer le ruban",
+    "show": "Afficher le ruban",
+    "hideHint": "Plus d'espace pour votre document · Ctrl+F1",
+    "scrollLeft": "Faire défiler le ruban vers la gauche",
+    "scrollRight": "Faire défiler le ruban vers la droite",
+    "commandFailed": "Impossible d'exécuter la commande.",
+    "nothingToUndo": "Il n'y a rien à annuler.",
+    "nothingToRedo": "Il n'y a rien à rétablir.",
+    "presentationOpening": "La présentation est encore en cours d'ouverture.",
+    "selectShapeFirst": "Sélectionnez d'abord une forme."
+  },
+  "theme": {
+    "light": "Thème clair",
+    "forge": "Thème Forge"
+  },
+  "host": {
+    "conflict": "Quelqu’un d’autre a enregistré ce document entre-temps. Votre version a été enregistrée en tant que copie : {{name}}.",
+    "readOnly": "{{name}} a été ouvert en lecture seule. Utilisez Enregistrer sous pour conserver vos modifications.",
+    "openFailed": "Impossible d’ouvrir le document de l’espace de travail : {{error}}"
+  },
+  "title": {
+    "document": "{{document}} — {{app}} ({{module}})",
+    "module": "{{app}} ({{module}})"
+  },
+  "titleBar": {
+    "quickAccess": "Accès rapide",
+    "saveTitle": "Enregistrer · Ctrl+S",
+    "settings": "Paramètres",
+    "minimize": "Réduire",
+    "maximize": "Agrandir",
+    "restore": "Restaurer",
+    "close": "Fermer la fenêtre"
+  },
+  "toasts": {
+    "region": "Notifications",
+    "info": "Info",
+    "success": "Terminé",
+    "warning": "Attention",
+    "error": "Erreur",
+    "details": "Détails",
+    "less": "Moins"
+  }
+}

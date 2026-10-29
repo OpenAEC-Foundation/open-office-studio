@@ -1,4 +1,5 @@
 import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
+import i18next from "../i18n/config";
 import { meldWijziging, zichtbaarElement } from "./editorApi";
 import type {
   CapturedFormat,
@@ -33,6 +34,10 @@ import {
 
 /** Een melding voor de gebruiker, geen programmeerfout. */
 export class Melding extends Error {}
+
+/** Meldingstekst in de interfacetaal, op het moment van de melding. */
+const melding = (sleutel: string, opties?: Record<string, unknown>) =>
+  i18next.t(`ribbon:spreadsheet.messages.${sleutel}`, opties) as string;
 
 export interface Selectie {
   blad: number;
@@ -91,7 +96,7 @@ export function leesSelectie(api: XlsxEditorApi): Selectie {
     host?.querySelector<HTMLInputElement>('[data-testid="xlsx-name-box"]')
       ?.value ?? "",
   );
-  if (!focus) throw new Melding("Selecteer eerst een cel.");
+  if (!focus) throw new Melding(melding("selectCell"));
   const grootte = api.commands.getState("merge").value ?? {
     rows: 1,
     columns: 1,
@@ -111,13 +116,17 @@ export function leesSelectie(api: XlsxEditorApi): Selectie {
   };
 }
 
-const foutteksten: Record<string, string> = {
-  "locked-target":
-    "Het bereik bevat samengevoegde cellen, matrixformules of een beveiligd blad.",
-  "read-only": "Het rekenblad is alleen-lezen.",
-  "stale-version": "Het rekenblad is intussen gewijzigd. Probeer het opnieuw.",
-  "limit-exceeded": "Het bereik is te groot voor deze opdracht.",
+/** Foutcodes van de engine naar een meldingssleutel. */
+const foutsleutels: Record<string, string> = {
+  "locked-target": "lockedTarget",
+  "read-only": "readOnly",
+  "stale-version": "staleVersion",
+  "limit-exceeded": "limitExceeded",
 };
+const fouttekst = (failure: { code: string; message: string }) =>
+  foutsleutels[failure.code]
+    ? melding(foutsleutels[failure.code])
+    : failure.message;
 
 async function bewerk(
   api: XlsxEditorApi,
@@ -131,23 +140,19 @@ async function bewerk(
     steps,
   });
   if (!resultaat.ok)
-    throw new Melding(
-      foutteksten[resultaat.failure.code] ?? resultaat.failure.message,
-    );
+    throw new Melding(fouttekst(resultaat.failure));
   return resultaat;
 }
 
+/** Engelse engine-meldingen naar een meldingssleutel. */
 const engineteksten: [RegExp, string][] = [
-  [/duplicate sheet name/i, "Er is al een blad met deze naam."],
-  [
-    /last (visible )?sheet|only sheet/i,
-    "Een werkmap moet minstens één blad houden.",
-  ],
-  [/out of (range|bounds)/i, "Dit valt buiten het rekenblad."],
+  [/duplicate sheet name/i, "duplicateSheet"],
+  [/last (visible )?sheet|only sheet/i, "keepOneSheet"],
+  [/out of (range|bounds)/i, "outOfRange"],
 ];
 
 export async function voerOpsUit(api: XlsxEditorApi, ops: RuweOp[]) {
-  if (alleenLezen(api)) throw new Melding("Het rekenblad is alleen-lezen.");
+  if (alleenLezen(api)) throw new Melding(melding("readOnly"));
   await api.version();
   let resultaat;
   try {
@@ -155,7 +160,7 @@ export async function voerOpsUit(api: XlsxEditorApi, ops: RuweOp[]) {
   } catch (fout) {
     const tekst = fout instanceof Error ? fout.message : String(fout);
     const vertaald = engineteksten.find(([patroon]) => patroon.test(tekst));
-    throw new Melding(vertaald ? vertaald[1] : tekst);
+    throw new Melding(vertaald ? melding(vertaald[1]) : tekst);
   }
   // applyOps loopt buiten de wijzigingsmelding van de editor om.
   if (resultaat.applied) meldWijziging(api.handle);
@@ -235,7 +240,7 @@ export async function rijenZichtbaarheid(
       )
     : verborgen(api, blad, bereik).rijen;
   if (!rijen.length)
-    throw new Melding("Er zijn geen verborgen rijen in de selectie.");
+    throw new Melding(melding("noHiddenRows"));
   await voerOpsUit(
     api,
     rijen.map((row) => ({
@@ -259,7 +264,7 @@ export async function kolommenZichtbaarheid(
       )
     : verborgen(api, blad, bereik).kolommen;
   if (!kolommen.length)
-    throw new Melding("Er zijn geen verborgen kolommen in de selectie.");
+    throw new Melding(melding("noHiddenColumns"));
   await voerOpsUit(
     api,
     kolommen.map((col) => ({
@@ -303,7 +308,7 @@ export async function bladInvoegen(api: XlsxEditorApi) {
 export async function bladVerwijderen(api: XlsxEditorApi) {
   const info = api.handle.sheetInfo();
   if (info.sheetNames.length < 2)
-    throw new Melding("Een werkmap moet minstens één blad houden.");
+    throw new Melding(melding("keepOneSheet"));
   const index = info.activeSheet;
   if (index > 0) await gaNaarBlad(api, index - 1);
   await voerOpsUit(api, [{ type: "removeSheet", index }]);
@@ -331,9 +336,7 @@ export async function fixeren(api: XlsxEditorApi, soort: Fixeren) {
   if (soort === "cel") {
     const { focus } = leesSelectie(api);
     if (!focus.row && !focus.col)
-      throw new Melding(
-        "Zet de cursor rechtsonder het gebied dat vast moet blijven, bijvoorbeeld in B2.",
-      );
+      throw new Melding(melding("freezeCursor"));
     pane = { rows: focus.row, cols: focus.col, top_left: focus };
   }
   await voerOpsUit(api, [{ type: "setFreezePane", sheet: blad, pane }]);
@@ -375,16 +378,12 @@ function opmaakOps(
 export async function sorteren(api: XlsxEditorApi, aflopend: boolean) {
   const { blad, sheetId, bereik, focus } = leesSelectie(api);
   if (bereik.top === bereik.bottom)
-    throw new Melding(
-      "Selecteer het bereik dat u wilt sorteren, met alle kolommen die bij elkaar horen.",
-    );
+    throw new Melding(melding("sortSelectRange"));
   const lezing = await api.readCells({ ranges: [doel(sheetId, bereik)] });
   if (!lezing.ok) throw new Melding(lezing.failure.message);
   const cellen = lezing.ranges[0].cells;
   if (cellen.some((r) => r.some((c) => c.formula !== null)))
-    throw new Melding(
-      "Het bereik bevat formules. Sorteren met formules wordt nog niet ondersteund, omdat verwijzingen dan zouden verschuiven.",
-    );
+    throw new Melding(melding("sortFormulas"));
   const waarden: XlsxCellValue[][] = cellen.map((r) => r.map((c) => c.value));
   const kop = heeftKoprij(waarden) ? 1 : 0;
   const volgorde = sorteerVolgorde(
@@ -409,9 +408,7 @@ export async function sorteren(api: XlsxEditorApi, aflopend: boolean) {
     steps: stappen,
   });
   if (!controle.ok)
-    throw new Melding(
-      foutteksten[controle.failure.code] ?? controle.failure.message,
-    );
+    throw new Melding(fouttekst(controle.failure));
   const ops = opmaakOps(
     api,
     blad,
@@ -427,7 +424,7 @@ export async function doorvoerenOmlaag(api: XlsxEditorApi) {
   const { blad, sheetId, bereik } = leesSelectie(api);
   const enkel = bereik.top === bereik.bottom;
   if (enkel && bereik.top === 0)
-    throw new Melding("Boven de selectie staat niets om door te voeren.");
+    throw new Melding(melding("fillNothingAbove"));
   const bronRij = enkel ? bereik.top - 1 : bereik.top;
   const doelBereik = { ...bereik, top: enkel ? bereik.top : bereik.top + 1 };
   const bron = api.handle.rangeCells(blad, bereikA1(rij(bereik, bronRij)))[0];
@@ -453,9 +450,7 @@ export async function doorvoerenOmlaag(api: XlsxEditorApi) {
     steps: stappen,
   });
   if (!controle.ok)
-    throw new Melding(
-      foutteksten[controle.failure.code] ?? controle.failure.message,
-    );
+    throw new Melding(fouttekst(controle.failure));
   const ops = opmaakOps(
     api,
     blad,
@@ -484,9 +479,7 @@ export async function autoSomInvoegen(api: XlsxEditorApi) {
     ({ row, col }) => cache.get(`${row}:${col}`) ?? { kind: "empty" },
   );
   if (!plan)
-    throw new Melding(
-      "Er staan geen getallen boven of links van de cel om op te tellen.",
-    );
+    throw new Melding(melding("autoSumNoNumbers"));
   if (plan.soort === "cel") {
     await bewerk(api, [
       {
@@ -616,9 +609,7 @@ export async function gaNaar(api: XlsxEditorApi, tekst: string) {
   );
   const verwijzing = ontleedVerwijzing(naam ? naam.verwijzing : tekst);
   if (!verwijzing)
-    throw new Melding(
-      `"${tekst.trim()}" is geen geldige celverwijzing of benoemd bereik.`,
-    );
+    throw new Melding(melding("invalidReference", { text: tekst.trim() }));
   const blad =
     verwijzing.blad === null
       ? info.activeSheet
@@ -626,7 +617,7 @@ export async function gaNaar(api: XlsxEditorApi, tekst: string) {
           (n) => n.toLowerCase() === verwijzing.blad!.toLowerCase(),
         );
   if (blad < 0)
-    throw new Melding(`Het blad "${verwijzing.blad}" bestaat niet.`);
+    throw new Melding(melding("sheetNotFound", { name: verwijzing.blad }));
   await gaNaarBlad(api, blad);
   const { top, left, bottom, right } = verwijzing.bereik;
   api.selectCells(blad, {

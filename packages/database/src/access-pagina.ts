@@ -1,4 +1,5 @@
 /** Eigen, alleen-lezende paginalezer voor Jet/ACE-tabeldefinities (indexen) en een onafhankelijke rijtelling. */
+import i18next from "i18next";
 export interface RuwFormaat {
   naam: string;
   jet3: boolean;
@@ -55,7 +56,7 @@ function rc4(sleutel: Uint8Array, data: Uint8Array) {
 
 export function leesFormaat(bytes: Uint8Array): RuwFormaat {
   if (bytes.length < 2048 || bytes[0] !== 0 || bytes[1] !== 1)
-    throw new Error("Geen Jet/ACE-kop gevonden.");
+    throw new Error(i18next.t("database:analysis.page.noHeader"));
   const versie = bytes[0x14];
   const jet3 = versie === 0;
   const kop = rc4(
@@ -64,7 +65,7 @@ export function leesFormaat(bytes: Uint8Array): RuwFormaat {
   );
   const sleutel = new DataView(kop.buffer).getUint32(0x3e - 0x18, true);
   return {
-    naam: versies[versie] ?? `Onbekende versie ${versie}`,
+    naam: versies[versie] ?? i18next.t("database:analysis.page.unknownVersion", { version: versie }),
     jet3,
     paginagrootte: jet3 ? 2048 : 4096,
     sleutel: versie >= 2 ? 0 : sleutel,
@@ -92,15 +93,15 @@ export function leesVersleuteling(bytes: Uint8Array): string | null {
   const hoofd = z.getUint16(0x29b, true);
   const sub = z.getUint16(0x29d, true);
   const vlaggen = bytes.length >= 0x2a3 ? z.getUint32(0x29f, true) : 0;
-  if (hoofd === 4 && sub === 4) return "Office-agileversleuteling (wachtwoord)";
+  if (hoofd === 4 && sub === 4) return i18next.t("database:analysis.page.encAgile");
   if ((hoofd === 3 || hoofd === 4) && sub === 3)
-    return "Office-uitbreidbare versleuteling (wachtwoord)";
+    return i18next.t("database:analysis.page.encExtensible");
   if ([2, 3, 4].includes(hoofd) && sub === 2)
     return vlaggen & 0x20
-      ? "Office-standaardversleuteling (AES, wachtwoord)"
-      : "Office-RC4-CryptoAPI-versleuteling (wachtwoord)";
-  if (hoofd === 1 && sub === 1) return "Office-RC4-versleuteling (wachtwoord)";
-  return "Office-versleuteling (wachtwoord)";
+      ? i18next.t("database:analysis.page.encStandard")
+      : i18next.t("database:analysis.page.encRc4CryptoApi");
+  if (hoofd === 1 && sub === 1) return i18next.t("database:analysis.page.encRc4");
+  return i18next.t("database:analysis.page.encOffice");
 }
 
 export function leesPagina(
@@ -110,7 +111,7 @@ export function leesPagina(
 ) {
   const start = nummer * formaat.paginagrootte;
   if (nummer < 1 || start + formaat.paginagrootte > bytes.length)
-    throw new Error(`Pagina ${nummer} ligt buiten het bestand.`);
+    throw new Error(i18next.t("database:analysis.page.outsideFile", { page: nummer }));
   const pagina = bytes.subarray(start, start + formaat.paginagrootte);
   if (!formaat.sleutel) return pagina;
   const sleutel = new Uint8Array(4);
@@ -147,12 +148,12 @@ export function leesTabeldefinitie(
   const gezien = new Set<number>();
   for (let n = paginaNummer; n; ) {
     if (gezien.has(n) || gezien.size > 1000)
-      throw new Error("Kringverwijzing in tabeldefinitie.");
+      throw new Error(i18next.t("database:analysis.page.circular"));
     gezien.add(n);
     const pagina = leesPagina(bytes, formaat, n);
     if (pagina[0] !== 0x02)
       throw new Error(
-        `Pagina ${n} is geen tabeldefinitie (mogelijk versleuteld).`,
+        i18next.t("database:analysis.page.notTableDef", { page: n }),
       );
     delen.push(delen.length ? pagina.subarray(8) : pagina);
     n = new DataView(pagina.buffer, pagina.byteOffset).getUint32(4, true);
@@ -171,7 +172,7 @@ export function leesTabeldefinitie(
   const aantalIndexen = z.getUint32(j3 ? 27 : 47, true);
   const aantalEcht = z.getUint32(j3 ? 31 : 51, true);
   if (aantalKolommen > 4096 || aantalIndexen > 1024 || aantalEcht > 1024)
-    throw new Error("Onwaarschijnlijke tabeldefinitie.");
+    throw new Error(i18next.t("database:analysis.page.implausible"));
   let positie = (j3 ? 43 : 63) + aantalEcht * (j3 ? 8 : 12);
   const kolommen: RuweKolom[] = [];
   for (let i = 0; i < aantalKolommen; i++) {
@@ -300,19 +301,19 @@ export function leesRijenRuw(
   opties: RuweRijenOpties = {},
 ): Record<string, RuweWaarde>[] {
   if (formaat.jet3)
-    throw new Error("Ruwe rijen worden alleen voor Jet 4/ACE gelezen.");
+    throw new Error(i18next.t("database:analysis.page.rawRowsJet4Only"));
   const { kolommen } = leesTabeldefinitie(bytes, formaat, tabelPagina);
   const rijen: Record<string, RuweWaarde>[] = [];
   const plaats = (pagina: Uint8Array, rij: number) => {
     const z = new DataView(pagina.buffer, pagina.byteOffset, pagina.byteLength);
     if (rij >= z.getUint16(12, true))
-      throw new Error("Rijverwijzing buiten de pagina.");
+      throw new Error(i18next.t("database:analysis.page.rowOutsidePage"));
     const offset = z.getUint16(14 + rij * 2, true);
     const start = offset & 0x1fff;
     const einde = rij
       ? z.getUint16(14 + (rij - 1) * 2, true) & 0x1fff
       : pagina.length;
-    if (start > einde) throw new Error("Ongeldige rijgrenzen.");
+    if (start > einde) throw new Error(i18next.t("database:analysis.page.invalidRowBounds"));
     return { offset, inhoud: pagina.subarray(start, einde) };
   };
   const verwijzing = (data: Uint8Array, positie: number) => ({
@@ -328,14 +329,14 @@ export function leesRijenRuw(
     const { offset, inhoud } = plaats(pagina, rij);
     if (offset & 0x8000 && !diepte) return null;
     if (!(offset & 0x4000)) return inhoud;
-    if (diepte > 3) throw new Error("Te diepe overloopverwijzing.");
+    if (diepte > 3) throw new Error(i18next.t("database:analysis.page.overflowTooDeep"));
     const doel = verwijzing(inhoud, 0);
     return leesRij(leesPagina(bytes, formaat, doel.pagina), doel.rij, diepte + 1);
   };
   // Lange waarde (OLE/memo): 12 bytes kop; 0x80000000 = in de rij,
   // 0x40000000 = één LVAL-rij, anders een keten van LVAL-rijen.
   const langeWaarde = (veld: Uint8Array): Uint8Array => {
-    if (veld.length < 12) throw new Error("Ongeldige lange waarde.");
+    if (veld.length < 12) throw new Error(i18next.t("database:analysis.page.invalidLongValue"));
     const kop = new DataView(veld.buffer, veld.byteOffset, 12).getUint32(0, true);
     const lengte = kop & 0x3fffffff;
     if (kop & 0x80000000) return veld.slice(12, 12 + lengte);
@@ -345,14 +346,14 @@ export function leesRijenRuw(
     const uit = new Uint8Array(lengte);
     let gevuld = 0;
     for (let stap = 0; gevuld < lengte && doel.pagina; stap++) {
-      if (stap > 100000) throw new Error("Te lange LVAL-keten.");
+      if (stap > 100000) throw new Error(i18next.t("database:analysis.page.lvalChainTooLong"));
       const deel = plaats(leesPagina(bytes, formaat, doel.pagina), doel.rij).inhoud;
       const stuk = deel.subarray(4, 4 + Math.min(deel.length - 4, lengte - gevuld));
       uit.set(stuk, gevuld);
       gevuld += stuk.length;
       doel = verwijzing(deel, 0);
     }
-    if (gevuld < lengte) throw new Error("Lange waarde is onvolledig.");
+    if (gevuld < lengte) throw new Error(i18next.t("database:analysis.page.longValueIncomplete"));
     return uit;
   };
   const aantal = Math.floor(bytes.length / formaat.paginagrootte);
@@ -367,7 +368,7 @@ export function leesRijenRuw(
         if (rij) rijen.push(decodeerRij(rij));
       } catch (fout) {
         opties.overgeslagen?.(
-          `pagina ${n}, rij ${r}: ${fout instanceof Error ? fout.message : String(fout)}`,
+          i18next.t("database:analysis.page.skippedRow", { page: n, row: r, error: fout instanceof Error ? fout.message : String(fout) }),
         );
       }
     }

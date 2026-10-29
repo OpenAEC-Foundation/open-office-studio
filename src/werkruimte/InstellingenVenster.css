@@ -1,0 +1,237 @@
+/* Inhoud van het instellingenvenster (Style Book, SettingsDialog.css), met
+   logische eigenschappen zodat zijbalk en rijen in RTL spiegelen. */
+.instellingen-venster .oa-modal-voet {
+  justify-content: space-between;
+}
+
+.instellingen-voet-rechts {
+  display: flex;
+  gap: 6px;
+}
+
+.instellingen-fout {
+  flex: 1;
+  min-width: 0;
+  color: #b42318;
+  font-size: 11px;
+}
+
+.oa-modal-overlay[data-thema="forge"] .instellingen-fout {
+  color: #ff9b8f;
+}
+
+.instellingen-lichaam {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Zijbalk van 120 px met rechte tabs. */
+.instellingen-zijbalk {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 2px;
+  width: 120px;
+  padding-block: 8px;
+  overflow-y: auto;
+  background: var(--theme-dialog-sidebar-bg);
+  border-inline-end: 1px solid var(--theme-dialog-sidebar-border);
+}
+
+.instellingen-tab {
+  padding-block: 8px;
+  padding-inline: 12px;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: var(--theme-dialog-tab-text);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  text-align: start;
+  cursor: default;
+  transition: all 0.15s ease;
+  overflow-wrap: anywhere;
+}
+
+.instellingen-tab:hover {
+  background: var(--theme-dialog-tab-hover);
+  color: var(--theme-dialog-tab-hover-text);
+}
+
+.instellingen-tab.active {
+  background: var(--theme-dialog-tab-active-bg);
+  color: var(--theme-dialog-tab-active-text);
+}
+
+.instellingen-inhoud {
+  flex: 1;
+  min-width: 0;
+  padding: 12px;
+  overflow-y: auto;
+  background: var(--theme-dialog-content-bg);
+  color: var(--theme-dialog-content-text);
+}
+
+.instellingen-sectie {
+  margin-bottom: 14px;
+}
+
+.instellingen-sectie:last-child {
+  margin-bottom: 0;
+}
+
+.instellingen-sectie h3 {
+  margin: 0 0 8px 0;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--theme-dialog-section-border);
+  color: var(--theme-dialog-content-text);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.instellingen-rij {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.instellingen-label {
+  flex-shrink: 1;
+  min-width: 0;
+  color: var(--theme-dialog-content-text);
+  font-size: 11px;
+}
+
+.instellingen-uitleg {
+  margin: 2px 0 8px;
+  color: var(--theme-dialog-content-secondary);
+  font-size: 11px;
+}
+
+.instellingen-invoer {
+  width: 64px;
+  padding-block: 3px;
+  padding-inline: 6px;
+  border: 1px solid var(--theme-dialog-input-border);
+  border-radius: 0;
+  background: var(--theme-dialog-input-bg);
+  color: var(--theme-dialog-input-text);
+  font: inherit;
+  font-size: 11px;
+  outline: none;
+}
+
+.instellingen-invoer.is-breed {
+  width: 220px;
+}
+
+.instellingen-invoer:focus {
+  border-color: var(--theme-focus-color);
+}
+
+.instellingen-eenheid {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+}
+
+.instellingen-vink {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 8px;
+  color: var(--theme-dialog-content-text);
+  font-size: 11px;
+  cursor: default;
+}
+
+.instellingen-vink input {
+  flex-shrink: 0;
+  width: 13px;
+  height: 13px;
+  margin: 1px 0 0;
+  accent-color: var(--theme-focus-color);
+}
+
+.instellingen-keuzes {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.instellingen-keuzes > .instellingen-label {
+  margin-bottom: 6px;
+}
+
+.instellingen-knoppen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Themakeuze: 200 px, rechts uitgelijnd (in RTL links). */
+.instellingen-thema {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.instellingen-themakeuze {
+  width: 200px;
+  margin-top: 6px;
+}
+
+.instellingen-themakeuze .themed-select-trigger,
+.instellingen-themakeuze .themed-select-item {
+  padding-block: 5px;
+  padding-inline: 8px;
+}
+
+.instellingen-woorden {
+  max-height: 160px;
+  margin: 8px 0 0;
+  padding: 0;
+  overflow: auto;
+  list-style: none;
+  font-size: 11px;
+}
+
+.instellingen-woorden li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-block: 2px;
+}
+
+.instellingen-over {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 4px 12px;
+  margin: 0 0 8px;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.instellingen-over dt {
+  font-weight: 600;
+}
+
+.instellingen-over dd {
+  margin: 0;
+}
+
+.instellingen-over a {
+  color: var(--theme-dialog-tab-active-text);
+}
+
+.instellingen-bevestigtekst {
+  margin: 0;
+  padding: 12px;
+  font-size: 12px;
+}

@@ -1,0 +1,480 @@
+{
+  "start": {
+    "backToWorkspace": "Zpět do pracovního prostoru",
+    "workspace": "PRACOVNÍ PROSTOR",
+    "home": "Úvod",
+    "saveTitle": "Uložit · Ctrl+S",
+    "saveAs": "Uložit jako",
+    "saveAsTitle": "Uložit jako · F12 nebo Ctrl+Shift+S",
+    "print": "Tisk",
+    "printTitle": "Náhled tisku a tisk · Ctrl+P",
+    "info": "Informace",
+    "infoTitle": "Vlastnosti dokumentu, statistika a kontrola dokumentu",
+    "sendAsAttachment": "Odeslat jako přílohu",
+    "sendAsAttachmentTitle": "Vložit aktuální dokument jako přílohu do nové e-mailové zprávy",
+    "email": "E-mail",
+    "emailUnread_one": "E-mail, {{count}} nepřečtená",
+    "emailUnread_few": "E-mail, {{count}} nepřečtené",
+    "emailUnread_many": "E-mail, {{count}} nepřečtené",
+    "emailUnread_other": "E-mail, {{count}} nepřečtených",
+    "newFile": "NOVÝ SOUBOR",
+    "databaseTitle": "Database Studio · databáze Access jako upravitelná pracovní kopie",
+    "databaseSubtitle": "Pracovní kopie · úpravy, dotazy, VBA",
+    "settingsTitle": "Nastavení · Ctrl+,",
+    "shortcutsTitle": "Klávesové zkratky · F1",
+    "tagline": "Vaše místní kancelář",
+    "titleFile": "Soubor",
+    "titleWorkspace": "Váš pracovní prostor.",
+    "intro": "Psát, počítat, prezentovat a zachycovat nápady.",
+    "addNotesBackup": "Přidat zálohu poznámek",
+    "openDatabase": "Otevřít databázi",
+    "openFile": "Otevřít soubor",
+    "openShortcut": "Ctrl O",
+    "newFileTitle": "Nový soubor",
+    "newFileHint": "Zvolte nástroj a začněte s prázdným souborem",
+    "notesHeading": "Místo pro vaše nápady.",
+    "notesText": "Poznámkové bloky, oddíly a stránky. Automaticky ukládáno místně.",
+    "openNotes": "Otevřít Poznámky",
+    "emailText": "Vlastní e-mail přes IMAP a SMTP. Přílohy se otevírají přímo v modulech Text, Tabulka, Prezentace nebo Databáze.",
+    "unread_one": "{{count}} nepřečtená",
+    "unread_few": "{{count}} nepřečtené",
+    "unread_many": "{{count}} nepřečtené",
+    "unread_other": "{{count}} nepřečtených",
+    "openEmail": "Otevřít E-mail",
+    "examplesTitle": "Objevte, co můžete vytvořit",
+    "examplesHint": "Ukázkové soubory",
+    "existingTitle": "Existující soubor",
+    "browse": "Procházet tento počítač",
+    "browseNotes": "Přidejte zálohu poznámek OpenAEC.",
+    "browseDatabase": "Otevřete databázi MDB nebo ACCDB nebo pracovní kopii SQLite.",
+    "browseDocuments": "Otevřete dokument, tabulku nebo prezentaci.",
+    "formatNotes": "POZNÁMKY",
+    "filesStayLocal": "Vaše soubory zůstávají ve vašem počítači.",
+    "aboutVersion": "O této verzi",
+    "aboutText": "DOCX, XLSX a PPTX fungují přímo. S nastaveným převodním programem umí desktopová verze převádět také ODF a starší formáty; formátování se přitom může lišit. Database Studio vytvoří ze souboru MDB nebo ACCDB upravitelnou pracovní kopii SQLite s tabulkami, dotazy, formuláři, sestavami a VBA; originál zůstane beze změny. Samostatnou aplikaci lze nainstalovat jako Open Database Studio.",
+    "modules": {
+      "docx": {
+        "new": "Prázdný dokument",
+        "example": "Projektová poznámka",
+        "exampleText": "Text, styly a tabulka"
+      },
+      "xlsx": {
+        "new": "Prázdná tabulka",
+        "example": "Přehled materiálů",
+        "exampleText": "Materiály, vzorce a součty"
+      },
+      "pptx": {
+        "new": "Prázdná prezentace",
+        "example": "Vize návrhu",
+        "exampleText": "Snímky, obrazce a poznámky"
+      }
+    }
+  },
+  "recent": {
+    "title": "Poslední",
+    "hintDesktop": "Naposledy otevřené a uložené soubory",
+    "hintBrowser": "Tento prohlížeč si pamatuje jen názvy; vyberte soubor znovu",
+    "clear": "Vymazat seznam",
+    "clearTitle": "Vymazat seznam; připnuté soubory zůstanou",
+    "missing": "Soubor {{name}} se již ve složce {{folder}} nenachází. Odeberte ho ze seznamu pomocí ✕ nebo ho otevřete přes Procházet.",
+    "missingOriginalFolder": "Soubor {{name}} se již v původní složce nenachází. Odeberte ho ze seznamu pomocí ✕ nebo ho otevřete přes Procházet.",
+    "notFound": "Nenalezeno",
+    "notFoundIn": "Nenalezeno · {{location}}",
+    "openFrom": "{{folder}} · otevřít",
+    "chooseFile": "Vybrat soubor",
+    "nameOnly": "Známý je jen název",
+    "pin": "Připnout {{name}}",
+    "unpin": "Odepnout {{name}}",
+    "pinTitle": "Připnout nahoru",
+    "unpinTitle": "Odepnout",
+    "remove": "Odebrat {{name}} ze seznamu",
+    "removeTitle": "Odebrat ze seznamu (soubor zůstane zachován)",
+    "today": "Dnes {{time}}",
+    "yesterday": "Včera {{time}}",
+    "todayInline": "dnes {{time}}",
+    "yesterdayInline": "včera {{time}}"
+  },
+  "recovery": {
+    "title": "Obnovit dokumenty",
+    "explanation": "Open Office Studio nebylo minule řádně ukončeno. Z těchto dokumentů byla uložena kopie pro obnovení. Obnovení otevře novou, neuloženou kartu; původní soubor zůstane beze změny.",
+    "copyFrom": "{{module}} · kopie pro obnovení z {{date}}",
+    "restore": "Obnovit",
+    "saveAs": "Uložit jako…",
+    "discard": "Zahodit",
+    "discardLabel": "Zahodit kopii pro obnovení souboru {{name}}",
+    "later": "Rozhodnout později",
+    "laterTitle": "Kopie zůstanou uloženy do příštího spuštění",
+    "restoredFrom": "Obnoveno z kopie pro obnovení z {{date}}. Původní soubor nebyl změněn; chcete-li tento dokument zachovat, uložte ho.",
+    "restoreFailed": "Obnovení souboru {{name}} se nezdařilo: {{error}}",
+    "copyFailed": "Automatické obnovení nemohlo uložit kopii: {{error}}"
+  },
+  "leave": {
+    "title": "Neuložené změny",
+    "askSave": "Chcete před zavřením uložit změny v souboru <strong>{{name}}</strong>?",
+    "unsaved": "Soubor <strong>{{name}}</strong> obsahuje změny, které ještě nebyly uloženy. Chcete-li je zachovat, nejprve soubor uložte.",
+    "others_one": "Potom následuje ještě {{count}} další dokument s neuloženými změnami.",
+    "others_few": "Potom následují ještě {{count}} další dokumenty s neuloženými změnami.",
+    "others_many": "Potom následuje ještě {{count}} dalšího dokumentu s neuloženými změnami.",
+    "others_other": "Potom následuje ještě {{count}} dalších dokumentů s neuloženými změnami.",
+    "dontSave": "Neukládat",
+    "discard": "Zahodit změny"
+  },
+  "saveAs": {
+    "title": "Uložit jako",
+    "fileName": "Název souboru",
+    "browserInfo": "V prohlížeči aplikace sama vytváří Markdown, CSV, HTML, text a PDF a u tabulek a prezentací také PNG. Formáty označené „jen v desktopové aplikaci“ vyžadují desktopovou verzi s kancelářským běhovým prostředím.",
+    "runtimeSearching": "Hledání kancelářského běhového prostředí…",
+    "runtimeFound": "Kancelářské běhové prostředí: {{version}}",
+    "runtimeDetails": "({{source}}, {{profile}})",
+    "sourceEnvironment": "z OPENAEC_CONVERSIE_PROGRAMMA",
+    "sourceSetting": "zvoleno uživatelem",
+    "sourceAutomatic": "nalezeno automaticky",
+    "profileSafe": "bezpečný profil: makra vypnuta",
+    "profileOwn": "vlastní profil",
+    "runtimeMissing": "Nebylo nalezeno žádné kancelářské běhové prostředí (LibreOffice). Formáty vyžadující běhové prostředí nejsou k dispozici.",
+    "chooseConverter": "Zvolit převodní program",
+    "format": "Formát",
+    "groups": {
+      "own": "Vlastní formát",
+      "openDocument": "OpenDocument",
+      "legacyOffice": "Starší formáty Office",
+      "templates": "Šablony",
+      "macro": "S podporou maker",
+      "webText": "Web a text",
+      "pdfImage": "PDF a obrázek"
+    },
+    "routes": {
+      "inApp": "v aplikaci",
+      "runtime": "přes kancelářské běhové prostředí",
+      "print": "přes Tisk"
+    },
+    "runtimeMissingShort": "chybí běhové prostředí",
+    "desktopOnly": "jen v desktopové aplikaci",
+    "separator": "Oddělovač",
+    "separatorSemicolon": "Středník ; (čeština)",
+    "separatorComma": "Čárka ,",
+    "separatorTab": "Tabulátor",
+    "separatorPipe": "Svislá čára |",
+    "encoding": "Kódování",
+    "encodingUtf8BomExcel": "UTF-8 s BOM (Excel)",
+    "encodingUtf8BomNotepad": "UTF-8 s BOM (Poznámkový blok, Excel)",
+    "csvInfo": "Jen zvolený list, s hodnotami místo vzorců. Text začínající znakem =, +, - nebo @ dostane apostrof, aby ho tabulkový program nespustil jako vzorec.",
+    "sheet": "List",
+    "activeSheet": "{{name}} (aktivní)",
+    "protect": "Chránit otevření heslem",
+    "password": "Heslo",
+    "repeatPassword": "Zopakovat heslo",
+    "encryptionInfo": "Šifrování podle ECMA-376 (AES-256), lze otevřít ve Wordu, Excelu, PowerPointu a LibreOffice. Heslo se neukládá; pokud ho ztratíte, soubor už nepůjde otevřít.",
+    "noEncryptionInfo": "Nejde o ochranu proti zápisu ani o zámek listu: bez zaškrtnutí se soubor uloží nešifrovaný.",
+    "passwordMissing": "Zvolte heslo.",
+    "passwordMismatch": "Hesla se neshodují.",
+    "passwordTooLong": "Nejvýše {{max}} znaků.",
+    "slide": "Snímek",
+    "slideNumber": "Snímek {{number}}",
+    "currentSlide": "Snímek {{number}} (aktuální)",
+    "pdfVariant": "Varianta PDF",
+    "pdfPlain": "Běžné PDF",
+    "pdfA2b": "PDF/A-2b (archiv)",
+    "slides": "Snímky",
+    "pages": "Stránky",
+    "rangePlaceholder": "vše, nebo např. 1-3,5",
+    "bookmarks": "Nadpisy jako záložky",
+    "printRoute": "Bez kancelářského běhového prostředí vzniká PDF přes Tisk: v dialogovém okně tisku zvolte tiskárnu <strong>Uložit jako PDF</strong> (Windows: „Microsoft Print to PDF“). Formátování odpovídá zobrazení v editoru.",
+    "untitled": "Bez názvu",
+    "copyInfo": "Toto je kopie v jiném formátu. Dokument zůstane označen jako změněný, dokud ho neuložíte jako .{{ext}}.",
+    "print": "Tisk…",
+    "formats": {
+      "docx": {
+        "docx": {
+          "name": "Dokument aplikace Word",
+          "keeps": "upravitelné"
+        },
+        "odt": {
+          "name": "Text OpenDocument",
+          "keeps": "upravitelné; formátování se může lišit"
+        },
+        "fodt": {
+          "name": "Text OpenDocument (plochý XML)",
+          "keeps": "upravitelné; formátování se může lišit"
+        },
+        "doc": {
+          "name": "Dokument aplikace Word 97–2003",
+          "keeps": "upravitelné; formátování se může lišit"
+        },
+        "dotx": {
+          "name": "Šablona aplikace Word",
+          "keeps": "upravitelné; formátování se může lišit"
+        },
+        "dot": {
+          "name": "Šablona aplikace Word 97–2003",
+          "keeps": "upravitelné; formátování se může lišit"
+        },
+        "ott": {
+          "name": "Šablona textu OpenDocument",
+          "keeps": "upravitelné; formátování se může lišit"
+        },
+        "docm": {
+          "name": "Dokument aplikace Word s makry",
+          "keeps": "jen pro otevřený soubor s makry: projekt VBA zachován beze změny, makra se nespouštějí"
+        },
+        "rtf": {
+          "name": "Rich Text Format",
+          "keeps": "upravitelné; formátování se může lišit"
+        },
+        "txt": {
+          "name": "Prostý text (UTF-8)",
+          "keeps": "jen text; formátování, tabulky a obrázky se ztratí"
+        },
+        "html": {
+          "name": "Webová stránka (HTML)",
+          "keeps": "formátování se může lišit; obrázky vložené"
+        },
+        "xhtml": {
+          "name": "Webová stránka XHTML",
+          "keeps": "formátování se může lišit"
+        },
+        "epub": {
+          "name": "Elektronická kniha EPUB",
+          "keeps": "jen ke čtení; rozvržení stránek se ztratí"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "text a struktura; rozvržení stránek, obrázky a revize se ztratí"
+        },
+        "pdf": {
+          "name": "Dokument PDF",
+          "keeps": "vzhled jako v náhledu tisku; text lze prohledávat"
+        },
+        "png": {
+          "name": "Obrázek PNG (první stránka)",
+          "keeps": "jen zobrazení; jen první stránka"
+        }
+      },
+      "xlsx": {
+        "xlsx": {
+          "name": "Sešit aplikace Excel",
+          "keeps": "upravitelné"
+        },
+        "ods": {
+          "name": "Tabulka OpenDocument",
+          "keeps": "upravitelné; formátování se může lišit"
+        },
+        "fods": {
+          "name": "Tabulka OpenDocument (plochý XML)",
+          "keeps": "upravitelné; formátování se může lišit"
+        },
+        "xls": {
+          "name": "Sešit aplikace Excel 97–2003",
+          "keeps": "upravitelné; formátování se může lišit"
+        },
+        "xltx": {
+          "name": "Šablona aplikace Excel",
+          "keeps": "upravitelné; formátování se může lišit"
+        },
+        "xlt": {
+          "name": "Šablona aplikace Excel 97–2003",
+          "keeps": "upravitelné; formátování se může lišit"
+        },
+        "ots": {
+          "name": "Šablona tabulky OpenDocument",
+          "keeps": "upravitelné; formátování se může lišit"
+        },
+        "xlsm": {
+          "name": "Sešit aplikace Excel s makry",
+          "keeps": "jen pro otevřený soubor s makry: projekt VBA zachován beze změny, makra se nespouštějí"
+        },
+        "csv": {
+          "name": "CSV (oddělené hodnoty)",
+          "keeps": "jen jeden list; hodnoty bez vzorců a formátování"
+        },
+        "tsv": {
+          "name": "Text oddělený tabulátory (TSV)",
+          "keeps": "jen jeden list; hodnoty bez vzorců a formátování"
+        },
+        "html": {
+          "name": "Webová stránka (HTML)",
+          "keeps": "jen zobrazení; vzorce se ztratí"
+        },
+        "dif": {
+          "name": "Data Interchange Format (DIF)",
+          "keeps": "jen první list; hodnoty bez vzorců a formátování"
+        },
+        "slk": {
+          "name": "SYLK",
+          "keeps": "jen první list; vzorce zůstanou, formátování většinou ne"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "jen zobrazení hodnot; vzorce a formátování se ztratí"
+        },
+        "pdf": {
+          "name": "Dokument PDF",
+          "keeps": "vzhled jako v náhledu tisku; text lze prohledávat"
+        },
+        "png": {
+          "name": "Obrázek PNG (list)",
+          "keeps": "jen zobrazení; použitá oblast jednoho listu"
+        }
+      },
+      "pptx": {
+        "pptx": {
+          "name": "Prezentace aplikace PowerPoint",
+          "keeps": "upravitelné"
+        },
+        "ppsx": {
+          "name": "Předvádění aplikace PowerPoint",
+          "keeps": "upravitelné; otevře se jako prezentace na celou obrazovku; formátování se může lišit"
+        },
+        "odp": {
+          "name": "Prezentace OpenDocument",
+          "keeps": "upravitelné; formátování se může lišit"
+        },
+        "fodp": {
+          "name": "Prezentace OpenDocument (plochý XML)",
+          "keeps": "upravitelné; formátování se může lišit"
+        },
+        "ppt": {
+          "name": "Prezentace aplikace PowerPoint 97–2003",
+          "keeps": "upravitelné; formátování se může lišit"
+        },
+        "pps": {
+          "name": "Předvádění aplikace PowerPoint 97–2003",
+          "keeps": "upravitelné; formátování se může lišit"
+        },
+        "potx": {
+          "name": "Šablona aplikace PowerPoint",
+          "keeps": "upravitelné; formátování se může lišit"
+        },
+        "pot": {
+          "name": "Šablona aplikace PowerPoint 97–2003",
+          "keeps": "upravitelné; formátování se může lišit"
+        },
+        "otp": {
+          "name": "Šablona prezentace OpenDocument",
+          "keeps": "upravitelné; formátování se může lišit"
+        },
+        "pptm": {
+          "name": "Prezentace aplikace PowerPoint s makry",
+          "keeps": "jen pro otevřený soubor s makry: projekt VBA zachován beze změny, makra se nespouštějí"
+        },
+        "html": {
+          "name": "Webová stránka (HTML)",
+          "keeps": "jen text jednotlivých snímků; rozložení a obrázky se ztratí"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "jen text jednotlivých snímků; rozložení a obrázky se ztratí"
+        },
+        "pdf": {
+          "name": "Dokument PDF",
+          "keeps": "vzhled jako v náhledu tisku; text lze prohledávat"
+        },
+        "png": {
+          "name": "Obrázek PNG (aktuální snímek)",
+          "keeps": "jen zobrazení; jeden snímek"
+        }
+      }
+    }
+  },
+  "saveResult": {
+    "saved": "Uloženo: {{path}}",
+    "exported": "Exportováno: {{path}}. Chcete-li zachovat změny, uložte také svůj upravitelný soubor.",
+    "cancelled": "Ukládání bylo zrušeno.",
+    "chooseLocation": "Zvolte název a umístění pro uložení.",
+    "download": "Stahování bylo vyžádáno. Zkontrolujte soubor ve stažených souborech.",
+    "tooLarge": "Soubor je prázdný nebo větší než 100 MB.",
+    "needsDesktop": "Tento formát vyžaduje desktopovou verzi s kancelářským běhovým prostředím (LibreOffice)."
+  },
+  "printPreview": {
+    "title": "Náhled tisku – {{title}}",
+    "notReady": "Tisknout lze, jakmile bude dokument zcela otevřen.",
+    "preparingPages": "Příprava stránek…",
+    "preparingPrint": "Příprava tisku…",
+    "preparingPrintProgress": "Příprava tisku… {{done}} z {{total}}",
+    "printHint": "V dialogovém okně tisku zvolte tiskárnu, oboustranný tisk a případně ‚Uložit jako PDF‘.",
+    "makingPdf": "Vytváření PDF…",
+    "makingPdfProgress": "Vytváření PDF… {{done}} z {{total}}",
+    "pdfSaved": "PDF uloženo: {{path}}",
+    "pdfDownloading": "PDF {{name}} se stahuje.",
+    "layoutSaved": "Vzhled stránky byl uložen do sešitu. Uložte dokument, aby se změna zachovala.",
+    "saveAsPdf": "Uložit jako PDF",
+    "print": "Tisk",
+    "keyboardHelp": "Klávesy Page Up a Page Down listují stránkami; Ctrl+P tiskne.",
+    "settings": "Nastavení tisku",
+    "pages": "Stránky",
+    "rangePlaceholder": "vše, nebo např. 1-3, 5",
+    "copies": "Kopie",
+    "collate": "Kompletovat (1, 2, 3 – 1, 2, 3)",
+    "systemDialogHint": "Tiskárnu, oboustranný tisk a barvu zvolíte poté v systémovém dialogovém okně tisku.",
+    "printAs": "Tisknout jako",
+    "slides": "Snímky",
+    "handouts": "Podklady",
+    "notesPages": "Stránky poznámek",
+    "slidesPerPage": "Snímků na stránku",
+    "withLines": "{{number}} (s řádky)",
+    "paper": "Papír",
+    "slideSize": "Velikost snímku",
+    "frameSlides": "Rámeček kolem snímků",
+    "report": "Sestava",
+    "saveLayout": "Uložit vzhled stránky do sešitu",
+    "pdf": "PDF",
+    "imageQuality": "Kvalita obrázků",
+    "qualitySmall": "Malý soubor (150 dpi)",
+    "qualityStandard": "Standardní (200 dpi)",
+    "qualityHigh": "Vysoká, bezeztrátová (300 dpi)",
+    "pdfHint": "Text zůstane možné vybírat a prohledávat; PDF přesně odpovídá tomuto náhledu.",
+    "toolbar": "Procházení a lupa",
+    "previousPage": "Předchozí stránka",
+    "nextPage": "Další stránka",
+    "pageOf": "Stránka <input/> z {{total}}",
+    "pageNumber": "Číslo stránky",
+    "zoomOut": "Oddálit",
+    "zoom": "Lupa",
+    "zoomIn": "Přiblížit",
+    "wholePage": "Celá stránka",
+    "pageWidth": "Šířka stránky",
+    "preview": "Náhled stránky",
+    "pageImage": "Náhled stránky {{number}}",
+    "drawingPage": "Vykreslování stránky…",
+    "orientation": "Orientace",
+    "portrait": "Na výšku",
+    "landscape": "Na šířku",
+    "activeSheet": "Aktivní list",
+    "wholeWorkbook": "Celý sešit",
+    "selection": "Výběr ({{range}})",
+    "selectionNone": "Výběr (nic není vybráno)",
+    "ignorePrintArea": "Ignorovat oblast tisku",
+    "pageSetup": "Vzhled stránky",
+    "sheet": "List",
+    "scale": "Měřítko",
+    "percentage": "Procento",
+    "fitPage": "Přizpůsobit na jednu stránku",
+    "fitWidth": "Přizpůsobit na šířku stránky",
+    "pagesWide": "Stránek na šířku",
+    "pagesTall": "na výšku (0 = automaticky)",
+    "marginTop": "Nahoře (cm)",
+    "marginBottom": "Dole",
+    "marginLeft": "Vlevo",
+    "marginRight": "Vpravo",
+    "printArea": "Oblast tisku",
+    "printAreaPlaceholder": "použitá oblast, nebo např. A1:H40",
+    "repeatRows": "Opakovat řádky",
+    "repeatRowsPlaceholder": "např. 1:2",
+    "repeatColumns": "Opakovat sloupce",
+    "repeatColumnsPlaceholder": "např. A:B",
+    "gridlines": "Tisknout mřížku",
+    "headings": "Tisknout záhlaví řádků a sloupců",
+    "centerHorizontally": "Zarovnat na střed vodorovně",
+    "pageOrder": "Pořadí stránek",
+    "downThenOver": "Nejprve dolů, potom napříč",
+    "overThenDown": "Nejprve napříč, potom dolů",
+    "header": "Záhlaví",
+    "footer": "Zápatí",
+    "sectionLeft": "vlevo",
+    "sectionCenter": "uprostřed",
+    "sectionRight": "vpravo",
+    "sectionLabel": "{{area}} {{section}}",
+    "fields": "Pole: {{fields}}.",
+    "pageBreakPreview": "Zobrazení konců stránek…"
+  }
+}

@@ -8,6 +8,7 @@
  * de app de opmaak niet zelf na te bouwen en blijft de paginering gelijk aan
  * de editor.
  */
+import i18next from "../i18n/config";
 import type { DocxEditorRef } from "@betteroffice/docx-react";
 import type { AfdrukDocument, AfdrukPagina, Bladwijzer, Koppeling } from "./model";
 import { metTekstopname, naarPunten } from "./tekstopname";
@@ -84,7 +85,7 @@ async function vangPaginas(ref: DocxEditorRef) {
     if (!resultaat.ok)
       throw new Error(
         ("failure" in resultaat && resultaat.failure?.message) ||
-          "Het document kon niet voor afdrukken worden voorbereid.",
+          i18next.t("print:errors.documentNotPrepared"),
       );
     return gevangen.map((p) => ({ canvas: p.canvas, tekst: tekstVan(p.canvas) }));
   } finally {
@@ -165,7 +166,7 @@ export async function tekstPaginas(
   const paginas = await vangPaginas(ref);
   const { bladwijzers, koppelingen } = await koppenEnKoppelingen(ref);
   if (!paginas.length)
-    throw new Error("Het document heeft geen pagina's om af te drukken.");
+    throw new Error(i18next.t("print:errors.noPages"));
   const uit: AfdrukPagina[] = paginas.map(({ canvas, tekst }, index) => {
     const pxBreedte = canvas.width / BEELDPUNTEN_PER_PX;
     const pxHoogte = canvas.height / BEELDPUNTEN_PER_PX;
@@ -174,7 +175,7 @@ export async function tekstPaginas(
     return {
       breedte: pxBreedte * PT_PER_PX,
       hoogte: pxHoogte * PT_PER_PX,
-      label: `Pagina ${index + 1}`,
+      label: i18next.t("print:pages.page", { number: index + 1 }),
       // De editor rastert altijd op 192 dpi; hogere resoluties zijn niet beschikbaar.
       teken: async () => ({
         canvas,

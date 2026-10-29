@@ -1,0 +1,471 @@
+{
+  "start": {
+    "backToWorkspace": "返回工作區",
+    "workspace": "工作區",
+    "home": "開始",
+    "saveTitle": "儲存 · Ctrl+S",
+    "saveAs": "另存新檔",
+    "saveAsTitle": "另存新檔 · F12 或 Ctrl+Shift+S",
+    "print": "列印",
+    "printTitle": "預覽列印與列印 · Ctrl+P",
+    "info": "資訊",
+    "infoTitle": "文件內容、統計資料與檢查文件",
+    "sendAsAttachment": "以附件傳送",
+    "sendAsAttachmentTitle": "將目前的文件以附件放入新的電子郵件訊息",
+    "email": "電子郵件",
+    "emailUnread_other": "電子郵件，{{count}} 封未讀",
+    "newFile": "新增檔案",
+    "databaseTitle": "Database Studio · 將 Access 資料庫作為可編輯的工作複本",
+    "databaseSubtitle": "工作複本 · 編輯、查詢、VBA",
+    "settingsTitle": "設定 · Ctrl+,",
+    "shortcutsTitle": "鍵盤快速鍵 · F1",
+    "tagline": "您的本機辦公室",
+    "titleFile": "檔案",
+    "titleWorkspace": "您的工作區。",
+    "intro": "撰寫、計算、簡報與記錄想法。",
+    "addNotesBackup": "新增筆記備份",
+    "openDatabase": "開啟資料庫",
+    "openFile": "開啟檔案",
+    "openShortcut": "Ctrl O",
+    "newFileTitle": "新增檔案",
+    "newFileHint": "選擇工具，從空白檔案開始",
+    "notesHeading": "記錄想法的地方。",
+    "notesText": "筆記本、區段與頁面。自動儲存在本機。",
+    "openNotes": "開啟筆記",
+    "emailText": "透過 IMAP 與 SMTP 使用您自己的電子郵件。附件可直接在文字、試算表、簡報或資料庫中開啟。",
+    "unread_other": "{{count}} 封未讀",
+    "openEmail": "開啟電子郵件",
+    "examplesTitle": "看看您能建立什麼",
+    "examplesHint": "範例檔案",
+    "existingTitle": "現有檔案",
+    "browse": "瀏覽這台電腦",
+    "browseNotes": "新增 OpenAEC 筆記備份。",
+    "browseDatabase": "開啟 MDB 或 ACCDB 資料庫，或 SQLite 工作複本。",
+    "browseDocuments": "開啟文件、試算表或簡報。",
+    "formatNotes": "筆記",
+    "filesStayLocal": "您的檔案會一直保留在您的電腦上。",
+    "aboutVersion": "關於此版本",
+    "aboutText": "DOCX、XLSX 與 PPTX 可直接使用。設定轉換程式後，桌面版也能轉換 ODF 與較舊的格式，格式設定可能會有差異。Database Studio 會將 MDB 或 ACCDB 檔案轉換為可編輯的 SQLite 工作複本，包含資料表、查詢、表單、報表與 VBA；原始檔案保持不變。獨立應用程式可安裝為 Open Database Studio。",
+    "modules": {
+      "docx": {
+        "new": "空白文件",
+        "example": "設計備忘",
+        "exampleText": "文字、樣式與表格"
+      },
+      "xlsx": {
+        "new": "空白試算表",
+        "example": "材料總覽",
+        "exampleText": "材料、公式與總計"
+      },
+      "pptx": {
+        "new": "空白簡報",
+        "example": "設計願景",
+        "exampleText": "投影片、圖案與備忘稿"
+      }
+    }
+  },
+  "recent": {
+    "title": "最近",
+    "hintDesktop": "最近開啟和儲存的檔案",
+    "hintBrowser": "此瀏覽器只會記住名稱；請重新選擇檔案",
+    "clear": "清除清單",
+    "clearTitle": "清除清單；已釘選的檔案會保留",
+    "missing": "在 {{folder}} 中找不到 {{name}}。可用 ✕ 將它從清單中移除，或透過「瀏覽」開啟。",
+    "missingOriginalFolder": "在原始資料夾中找不到 {{name}}。可用 ✕ 將它從清單中移除，或透過「瀏覽」開啟。",
+    "notFound": "找不到",
+    "notFoundIn": "找不到 · {{location}}",
+    "openFrom": "{{folder}} · 開啟",
+    "chooseFile": "選擇檔案",
+    "nameOnly": "只知道名稱",
+    "pin": "釘選 {{name}}",
+    "unpin": "取消釘選 {{name}}",
+    "pinTitle": "釘選到頂端",
+    "unpinTitle": "取消釘選",
+    "remove": "從清單中移除 {{name}}",
+    "removeTitle": "從清單中移除（檔案本身會保留）",
+    "today": "今天 {{time}}",
+    "yesterday": "昨天 {{time}}",
+    "todayInline": "今天 {{time}}",
+    "yesterdayInline": "昨天 {{time}}"
+  },
+  "recovery": {
+    "title": "復原文件",
+    "explanation": "上次 Open Office Studio 未正常關閉。已為這些文件保留復原複本。復原會開啟新的未儲存索引標籤；原始檔案保持不變。",
+    "copyFrom": "{{module}} · {{date}} 的復原複本",
+    "restore": "復原",
+    "saveAs": "另存新檔…",
+    "discard": "捨棄",
+    "discardLabel": "捨棄 {{name}} 的復原複本",
+    "later": "稍後決定",
+    "laterTitle": "這些複本會保留到下次啟動",
+    "restoredFrom": "已從 {{date}} 的復原複本復原。原始檔案未變更；請儲存此文件以保留它。",
+    "restoreFailed": "無法復原 {{name}}：{{error}}",
+    "copyFailed": "自動復原無法儲存複本：{{error}}"
+  },
+  "leave": {
+    "title": "未儲存的變更",
+    "askSave": "是否要在關閉前儲存 <strong>{{name}}</strong> 的變更？",
+    "unsaved": "<strong>{{name}}</strong> 包含尚未儲存的變更。若要保留這些變更，請先儲存檔案。",
+    "others_other": "之後還有 {{count}} 份含有未儲存變更的文件。",
+    "dontSave": "不要儲存",
+    "discard": "捨棄變更"
+  },
+  "saveAs": {
+    "title": "另存新檔",
+    "fileName": "檔案名稱",
+    "browserInfo": "在瀏覽器中，應用程式會自行產生 Markdown、CSV、HTML、文字與 PDF，以及試算表和簡報的 PNG。標示「僅限桌面應用程式」的格式需要具備辦公室執行環境的桌面版。",
+    "runtimeSearching": "正在尋找辦公室執行環境…",
+    "runtimeFound": "辦公室執行環境：{{version}}",
+    "runtimeDetails": "（{{source}}，{{profile}}）",
+    "sourceEnvironment": "來自 OPENAEC_CONVERSIE_PROGRAMMA",
+    "sourceSetting": "由您選擇",
+    "sourceAutomatic": "自動偵測",
+    "profileSafe": "安全設定檔：巨集已關閉",
+    "profileOwn": "自己的設定檔",
+    "runtimeMissing": "找不到辦公室執行環境（LibreOffice）。需要執行環境的格式無法使用。",
+    "chooseConverter": "選擇轉換程式",
+    "format": "格式",
+    "groups": {
+      "own": "原生格式",
+      "openDocument": "OpenDocument",
+      "legacyOffice": "較舊的 Office 格式",
+      "templates": "範本",
+      "macro": "啟用巨集",
+      "webText": "網頁與文字",
+      "pdfImage": "PDF 與影像"
+    },
+    "routes": {
+      "inApp": "在應用程式中",
+      "runtime": "透過辦公室執行環境",
+      "print": "透過列印"
+    },
+    "runtimeMissingShort": "缺少執行環境",
+    "desktopOnly": "僅限桌面應用程式",
+    "separator": "分隔符號",
+    "separatorSemicolon": "分號 ;",
+    "separatorComma": "逗號 ,",
+    "separatorTab": "定位字元",
+    "separatorPipe": "垂直線 |",
+    "encoding": "編碼",
+    "encodingUtf8BomExcel": "含 BOM 的 UTF-8（Excel）",
+    "encodingUtf8BomNotepad": "含 BOM 的 UTF-8（記事本、Excel）",
+    "csvInfo": "僅匯出所選工作表，以值取代公式。以 =、+、- 或 @ 開頭的文字會加上單引號，避免試算表程式將其當作公式執行。",
+    "sheet": "工作表",
+    "activeSheet": "{{name}}（使用中）",
+    "protect": "以密碼保護開啟",
+    "password": "密碼",
+    "repeatPassword": "再次輸入密碼",
+    "encryptionInfo": "依照 ECMA-376（AES-256）加密，可在 Word、Excel、PowerPoint 和 LibreOffice 中開啟。密碼不會被儲存；如果遺失密碼，將無法再開啟此檔案。",
+    "noEncryptionInfo": "這不是防寫或工作表保護：未勾選時，檔案會以未加密方式儲存。",
+    "passwordMissing": "請設定密碼。",
+    "passwordMismatch": "兩次輸入的密碼不相符。",
+    "passwordTooLong": "最多 {{max}} 個字元。",
+    "slide": "投影片",
+    "slideNumber": "投影片 {{number}}",
+    "currentSlide": "投影片 {{number}}（目前）",
+    "pdfVariant": "PDF 類型",
+    "pdfPlain": "標準 PDF",
+    "pdfA2b": "PDF/A-2b（封存）",
+    "slides": "投影片",
+    "pages": "頁面",
+    "rangePlaceholder": "全部，或例如 1-3,5",
+    "bookmarks": "將標題轉為書籤",
+    "printRoute": "沒有辦公室執行環境時，PDF 會透過列印產生：在列印對話方塊中選擇印表機 <strong>另存為 PDF</strong>（Windows：「Microsoft Print to PDF」）。版面配置會依照編輯器中的顯示。",
+    "untitled": "未命名",
+    "copyInfo": "這是另一種格式的複本。在您將文件儲存為 .{{ext}} 之前，它會一直標示為已變更。",
+    "print": "列印…",
+    "formats": {
+      "docx": {
+        "docx": {
+          "name": "Word 文件",
+          "keeps": "可編輯"
+        },
+        "odt": {
+          "name": "OpenDocument 文字",
+          "keeps": "可編輯；格式設定可能有差異"
+        },
+        "fodt": {
+          "name": "OpenDocument 文字（平面 XML）",
+          "keeps": "可編輯；格式設定可能有差異"
+        },
+        "doc": {
+          "name": "Word 97–2003 文件",
+          "keeps": "可編輯；格式設定可能有差異"
+        },
+        "dotx": {
+          "name": "Word 範本",
+          "keeps": "可編輯；格式設定可能有差異"
+        },
+        "dot": {
+          "name": "Word 97–2003 範本",
+          "keeps": "可編輯；格式設定可能有差異"
+        },
+        "ott": {
+          "name": "OpenDocument 文字範本",
+          "keeps": "可編輯；格式設定可能有差異"
+        },
+        "docm": {
+          "name": "Word 啟用巨集的文件",
+          "keeps": "僅適用於已開啟的巨集檔案：VBA 專案原封保留，不會執行巨集"
+        },
+        "rtf": {
+          "name": "Rich Text Format",
+          "keeps": "可編輯；格式設定可能有差異"
+        },
+        "txt": {
+          "name": "純文字（UTF-8）",
+          "keeps": "僅文字；格式設定、表格與圖片會遺失"
+        },
+        "html": {
+          "name": "網頁（HTML）",
+          "keeps": "格式設定可能有差異；圖片已內嵌"
+        },
+        "xhtml": {
+          "name": "XHTML 網頁",
+          "keeps": "格式設定可能有差異"
+        },
+        "epub": {
+          "name": "EPUB 電子書",
+          "keeps": "僅供閱讀；版面配置會遺失"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "文字與結構；版面配置、圖片與修訂會遺失"
+        },
+        "pdf": {
+          "name": "PDF 文件",
+          "keeps": "外觀與預覽列印相同；文字可搜尋"
+        },
+        "png": {
+          "name": "PNG 影像（第一頁）",
+          "keeps": "僅供檢視；僅第一頁"
+        }
+      },
+      "xlsx": {
+        "xlsx": {
+          "name": "Excel 活頁簿",
+          "keeps": "可編輯"
+        },
+        "ods": {
+          "name": "OpenDocument 試算表",
+          "keeps": "可編輯；格式設定可能有差異"
+        },
+        "fods": {
+          "name": "OpenDocument 試算表（平面 XML）",
+          "keeps": "可編輯；格式設定可能有差異"
+        },
+        "xls": {
+          "name": "Excel 97–2003 活頁簿",
+          "keeps": "可編輯；格式設定可能有差異"
+        },
+        "xltx": {
+          "name": "Excel 範本",
+          "keeps": "可編輯；格式設定可能有差異"
+        },
+        "xlt": {
+          "name": "Excel 97–2003 範本",
+          "keeps": "可編輯；格式設定可能有差異"
+        },
+        "ots": {
+          "name": "OpenDocument 試算表範本",
+          "keeps": "可編輯；格式設定可能有差異"
+        },
+        "xlsm": {
+          "name": "Excel 啟用巨集的活頁簿",
+          "keeps": "僅適用於已開啟的巨集檔案：VBA 專案原封保留，不會執行巨集"
+        },
+        "csv": {
+          "name": "CSV（逗號分隔值）",
+          "keeps": "僅一個工作表；只有值，沒有公式與格式設定"
+        },
+        "tsv": {
+          "name": "Tab 分隔文字（TSV）",
+          "keeps": "僅一個工作表；只有值，沒有公式與格式設定"
+        },
+        "html": {
+          "name": "網頁（HTML）",
+          "keeps": "僅供檢視；公式會遺失"
+        },
+        "dif": {
+          "name": "Data Interchange Format (DIF)",
+          "keeps": "僅第一個工作表；只有值，沒有公式與格式設定"
+        },
+        "slk": {
+          "name": "SYLK",
+          "keeps": "僅第一個工作表；保留公式，大部分格式設定不保留"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "僅顯示值；公式與格式設定會遺失"
+        },
+        "pdf": {
+          "name": "PDF 文件",
+          "keeps": "外觀與預覽列印相同；文字可搜尋"
+        },
+        "png": {
+          "name": "PNG 影像（工作表）",
+          "keeps": "僅供檢視；一個工作表的使用範圍"
+        }
+      },
+      "pptx": {
+        "pptx": {
+          "name": "PowerPoint 簡報",
+          "keeps": "可編輯"
+        },
+        "ppsx": {
+          "name": "PowerPoint 播放檔",
+          "keeps": "可編輯；以投影片放映開啟；格式設定可能有差異"
+        },
+        "odp": {
+          "name": "OpenDocument 簡報",
+          "keeps": "可編輯；格式設定可能有差異"
+        },
+        "fodp": {
+          "name": "OpenDocument 簡報（平面 XML）",
+          "keeps": "可編輯；格式設定可能有差異"
+        },
+        "ppt": {
+          "name": "PowerPoint 97–2003 簡報",
+          "keeps": "可編輯；格式設定可能有差異"
+        },
+        "pps": {
+          "name": "PowerPoint 97–2003 播放檔",
+          "keeps": "可編輯；格式設定可能有差異"
+        },
+        "potx": {
+          "name": "PowerPoint 範本",
+          "keeps": "可編輯；格式設定可能有差異"
+        },
+        "pot": {
+          "name": "PowerPoint 97–2003 範本",
+          "keeps": "可編輯；格式設定可能有差異"
+        },
+        "otp": {
+          "name": "OpenDocument 簡報範本",
+          "keeps": "可編輯；格式設定可能有差異"
+        },
+        "pptm": {
+          "name": "PowerPoint 啟用巨集的簡報",
+          "keeps": "僅適用於已開啟的巨集檔案：VBA 專案原封保留，不會執行巨集"
+        },
+        "html": {
+          "name": "網頁（HTML）",
+          "keeps": "僅每張投影片的文字；版面配置與圖片會遺失"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "僅每張投影片的文字；版面配置與圖片會遺失"
+        },
+        "pdf": {
+          "name": "PDF 文件",
+          "keeps": "外觀與預覽列印相同；文字可搜尋"
+        },
+        "png": {
+          "name": "PNG 影像（目前投影片）",
+          "keeps": "僅供檢視；一張投影片"
+        }
+      }
+    }
+  },
+  "saveResult": {
+    "saved": "已儲存：{{path}}",
+    "exported": "已匯出：{{path}}。請同時儲存可編輯的檔案以保留變更。",
+    "cancelled": "已取消儲存。",
+    "chooseLocation": "請選擇要儲存的名稱與位置。",
+    "download": "已要求下載。請在下載資料夾中檢查檔案。",
+    "tooLarge": "檔案是空的或大於 100 MB。",
+    "needsDesktop": "此格式需要具備辦公室執行環境（LibreOffice）的桌面版。"
+  },
+  "printPreview": {
+    "title": "預覽列印 – {{title}}",
+    "notReady": "文件完全開啟後即可列印。",
+    "preparingPages": "正在準備頁面…",
+    "preparingPrint": "正在準備列印…",
+    "preparingPrintProgress": "正在準備列印… {{done}}/{{total}}",
+    "printHint": "在列印對話方塊中選擇印表機、雙面列印，也可選擇「另存為 PDF」。",
+    "makingPdf": "正在建立 PDF…",
+    "makingPdfProgress": "正在建立 PDF… {{done}}/{{total}}",
+    "pdfSaved": "PDF 已儲存：{{path}}",
+    "pdfDownloading": "正在下載 PDF {{name}}。",
+    "layoutSaved": "版面設定已存放在活頁簿中。請儲存文件以保留此設定。",
+    "saveAsPdf": "另存為 PDF",
+    "print": "列印",
+    "keyboardHelp": "按 Page Up 和 Page Down 翻頁；按 Ctrl+P 列印。",
+    "settings": "列印設定",
+    "pages": "頁面",
+    "rangePlaceholder": "全部，或例如 1-3, 5",
+    "copies": "份數",
+    "collate": "自動分頁（1, 2, 3 – 1, 2, 3）",
+    "systemDialogHint": "印表機、雙面列印和色彩稍後在系統的列印對話方塊中選擇。",
+    "printAs": "列印內容",
+    "slides": "投影片",
+    "handouts": "講義",
+    "notesPages": "備忘稿",
+    "slidesPerPage": "每頁投影片數",
+    "withLines": "{{number}}（含格線）",
+    "paper": "紙張",
+    "slideSize": "投影片大小",
+    "frameSlides": "投影片加框",
+    "report": "報表",
+    "saveLayout": "將版面設定存放在活頁簿中",
+    "pdf": "PDF",
+    "imageQuality": "影像品質",
+    "qualitySmall": "小型檔案（150 dpi）",
+    "qualityStandard": "標準（200 dpi）",
+    "qualityHigh": "高品質，無失真（300 dpi）",
+    "pdfHint": "文字仍可選取和搜尋；PDF 會完全依照此預覽。",
+    "toolbar": "翻頁與縮放",
+    "previousPage": "上一頁",
+    "nextPage": "下一頁",
+    "pageOf": "第 <input/> 頁，共 {{total}} 頁",
+    "pageNumber": "頁碼",
+    "zoomOut": "縮小",
+    "zoom": "縮放",
+    "zoomIn": "放大",
+    "wholePage": "整頁",
+    "pageWidth": "頁寬",
+    "preview": "頁面預覽",
+    "pageImage": "第 {{number}} 頁的預覽",
+    "drawingPage": "正在繪製頁面…",
+    "orientation": "方向",
+    "portrait": "直向",
+    "landscape": "橫向",
+    "activeSheet": "使用中的工作表",
+    "wholeWorkbook": "整本活頁簿",
+    "selection": "選取範圍（{{range}}）",
+    "selectionNone": "選取範圍（未選取任何內容）",
+    "ignorePrintArea": "忽略列印範圍",
+    "pageSetup": "版面設定",
+    "sheet": "工作表",
+    "scale": "縮放比例",
+    "percentage": "百分比",
+    "fitPage": "放入一頁",
+    "fitWidth": "符合頁寬",
+    "pagesWide": "頁寬",
+    "pagesTall": "頁高（0 = 自動）",
+    "marginTop": "上（公分）",
+    "marginBottom": "下",
+    "marginLeft": "左",
+    "marginRight": "右",
+    "printArea": "列印範圍",
+    "printAreaPlaceholder": "使用範圍，或例如 A1:H40",
+    "repeatRows": "標題列",
+    "repeatRowsPlaceholder": "例如 1:2",
+    "repeatColumns": "標題欄",
+    "repeatColumnsPlaceholder": "例如 A:B",
+    "gridlines": "列印格線",
+    "headings": "列印列與欄標題",
+    "centerHorizontally": "水平置中",
+    "pageOrder": "列印順序",
+    "downThenOver": "循欄列印",
+    "overThenDown": "循列列印",
+    "header": "頁首",
+    "footer": "頁尾",
+    "sectionLeft": "左",
+    "sectionCenter": "中",
+    "sectionRight": "右",
+    "sectionLabel": "{{area}}{{section}}",
+    "fields": "欄位：{{fields}}。",
+    "pageBreakPreview": "分頁預覽…"
+  }
+}

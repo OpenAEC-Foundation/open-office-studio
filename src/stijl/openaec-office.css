@@ -3,7 +3,7 @@
 @import "./openaec-shell.css";
 
 .office {
-  --office-kophoogte: 40px;
+  --office-kophoogte: 32px;
   --office-statushoogte: 22px;
   --office-accent: var(--oa-color-brand-amber);
   --module-accent: var(--oa-color-brand-amber);
@@ -189,6 +189,11 @@
   color: var(--oa-shell-text);
 }
 /* De presentatiemodule levert zelf een buitenrand rond haar werkbalk. */
+/* Het lint staat boven de documentbalk (lintplek.tsx); de lege werkbalkhouder
+   van de presentatie-engine neemt dan geen ruimte meer in. */
+.office .office-presentatie > div:first-child:has(> div:only-child:empty) {
+  display: none !important;
+}
 .office .office-presentatie > div:has(> div > .ribbon) {
   padding: 0 !important;
   border-bottom: 0 !important;

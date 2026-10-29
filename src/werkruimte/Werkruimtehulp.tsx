@@ -44,7 +44,7 @@ export function Werkruimtehulp({ soort }: { soort: string | null }) {
       if (!venster) return;
       const doel = e.target instanceof Element ? e.target : document.activeElement;
       // Een ander modaal venster gaat voor; tussen onze eigen vensters mag je wisselen.
-      const eigen = !!doel?.closest(".werkruimte-dialoog");
+      const eigen = !!doel?.closest(".werkruimte-dialoog, .oa-modal");
       if (!eigen && doel?.closest("[role='dialog'], [role='alertdialog']")) return;
       if (!eigen && document.querySelector(".office[inert]")) return;
       e.preventDefault();

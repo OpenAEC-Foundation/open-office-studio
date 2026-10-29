@@ -1,5 +1,5 @@
+import i18next from "./i18n/config";
 import type { Soort } from "./editors";
-import type { Rapport } from "./import/rapport";
 import type { Bronkenmerken } from "./import/bron";
 import type { Werkbestand } from "./werkbestand";
 
@@ -20,9 +20,6 @@ export interface DocumentTabblad {
   gewijzigd: boolean;
   exportFormaat: string;
   zoom: number | null;
-  melding: string;
-  /** Rapport over onvolledige ondersteuning na openen (niet-blokkerend). */
-  rapport: Rapport | null;
   /** Versleuteling en macro’s van het origineel, voor opslaan. */
   bron: Bronkenmerken | null;
 }
@@ -32,7 +29,6 @@ export interface ModuleTabblad {
   id: number;
   module: ModuleNaam;
   gewijzigd: boolean;
-  melding: string;
 }
 
 export type Tabblad = DocumentTabblad | ModuleTabblad;
@@ -66,8 +62,6 @@ export type TabbladActie =
       werkbestand?: Werkbestand | null;
       exportFormaat?: string;
       gewijzigd?: boolean;
-      melding?: string;
-      rapport?: Rapport | null;
       bron?: Bronkenmerken | null;
     }
   | { type: "openModule"; module: ModuleNaam }
@@ -88,8 +82,6 @@ export type TabbladActie =
           | "gewijzigd"
           | "exportFormaat"
           | "zoom"
-          | "melding"
-          | "rapport"
           | "naam"
           | "werkbestand"
         >
@@ -121,18 +113,23 @@ export function actiefTabblad(toestand: TabbladToestand) {
   return toestand.tabbladen.find((t) => t.id === toestand.actief) ?? null;
 }
 
-/** Laagste vrije nummer: "Naamloos 1.docx", "Naamloos 2.docx", … */
+const regexVeilig = (tekst: string) => tekst.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+/** Laagste vrije nummer: "Naamloos 1.docx", "Naamloos 2.docx", … (in de interfacetaal). */
 export function naamloos(toestand: TabbladToestand, soort: Soort) {
+  const [voor = "", na = ""] = i18next
+    .t("shell:tabs.untitled", { n: "\u0000" })
+    .split("\u0000");
+  const patroon = new RegExp(`^${regexVeilig(voor)}(\\d+)${regexVeilig(na)}\\.\\w+$`);
   const bezet = new Set(
     toestand.tabbladen.flatMap((t) => {
-      const m =
-        t.type === "document" ? /^Naamloos (\d+)\.\w+$/.exec(t.naam) : null;
+      const m = t.type === "document" ? patroon.exec(t.naam) : null;
       return m ? [Number(m[1])] : [];
     }),
   );
   let n = 1;
   while (bezet.has(n)) n++;
-  return `Naamloos ${n}.${soort}`;
+  return `${i18next.t("shell:tabs.untitled", { n })}.${soort}`;
 }
 
 /** Tabbladen rechts van `id`, voor "Rechts sluiten". */
@@ -155,9 +152,7 @@ export function aantalGewijzigd(toestand: TabbladToestand) {
 
 export function titel(tabblad: Tabblad) {
   if (tabblad.type === "document") return tabblad.naam;
-  return { notities: "Notities", database: "Database", email: "E-mail" }[
-    tabblad.module
-  ];
+  return i18next.t(`common:modules.${tabblad.module}`);
 }
 
 /** Wisselt rondgaand; Start (null) is de eerste positie. */
@@ -203,8 +198,6 @@ export function tabbladReducer(
         gewijzigd: actie.gewijzigd ?? false,
         exportFormaat: actie.exportFormaat ?? actie.soort,
         zoom: null,
-        melding: actie.melding ?? "",
-        rapport: actie.rapport ?? null,
         bron: actie.bron ?? null,
       };
       return {
@@ -227,7 +220,6 @@ export function tabbladReducer(
             id,
             module: actie.module,
             gewijzigd: false,
-            melding: "",
           },
         ],
         actief: id,
@@ -285,9 +277,6 @@ export function tabbladReducer(
             : {
                 ...(actie.wijziging.gewijzigd !== undefined && {
                   gewijzigd: actie.wijziging.gewijzigd,
-                }),
-                ...(actie.wijziging.melding !== undefined && {
-                  melding: actie.wijziging.melding,
                 }),
               };
         const sleutels = Object.keys(wijziging) as (keyof typeof wijziging)[];

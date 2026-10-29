@@ -1,0 +1,141 @@
+{
+  "dialogs": {
+    "cancel": "Avbryt",
+    "saveAsEllipsis": "Spara som…",
+    "officeFile": "Office-fil",
+    "officeFiles": "Office-filer",
+    "untitled": "Namnlös",
+    "saveCopy": "Spara en kopia",
+    "saveAs": "Spara som",
+    "openFile": "Öppna fil",
+    "replaceFile": {
+      "title": "Ersätt fil",
+      "message": "Filen {{path}} finns redan. Vill du ersätta den?"
+    },
+    "unsavedChanges": {
+      "title": "Osparade ändringar",
+      "message_one": "Ett dokument i det här fönstret har ändringar som inte har sparats. De går förlorade. Stäng ändå?",
+      "message_other": "{{count}} dokument i det här fönstret har ändringar som inte har sparats. De går förlorade. Stäng ändå?"
+    },
+    "fileChanged": {
+      "title": "Filen har ändrats",
+      "missing": "{{name}} finns inte längre på sin ursprungliga plats. Vill du återskapa den med din version eller spara den någon annanstans?",
+      "changedExternally": "{{name}} har ändrats utanför Open Office Studio sedan du öppnade den. Om du skriver över försvinner de ändringarna.",
+      "overwrite": "Skriv över"
+    },
+    "foreignFormat": {
+      "title": "Spara som {{format}}",
+      "message": "{{name}} uppdateras i formatet {{format}}. Körmiljön för kontorsprogram konverterar dokumentet för detta; formatering som {{format}} inte stöder kan gå förlorad.",
+      "hint": "Välj Spara som… för att behålla en DOCX, XLSX eller PPTX.",
+      "update": "Uppdatera som {{format}}"
+    },
+    "chooseConverter": "Välj konverteringsprogram (soffice)",
+    "databaseExport": {
+      "title": "Spara databasexport",
+      "filter": "Databasexport",
+      "sqliteFilter": "SQLite-arbetskopia",
+      "replaceTitle": "Ersätt export",
+      "replaceMessage": "Den här exportfilen finns redan. Vill du ersätta den?"
+    }
+  },
+  "errors": {
+    "file": {
+      "invalidBody": "Filen är tom, större än 100 MB eller skickades inte som binära data.",
+      "emptyOrTooLarge": "Filen är tom eller större än 100 MB.",
+      "formatInfoMissing": "Formatinformationen saknas.",
+      "formatMissing": "Formatet saknas.",
+      "targetFolderMissing": "Målmappen saknas.",
+      "nameMissing": "Filnamnet saknas.",
+      "nameInvalidChars": "Filnamnet innehåller ogiltiga tecken.",
+      "unsupportedFormat": "Filformatet stöds inte.",
+      "extensionMismatch": "Det valda filnamnstillägget passar inte dokumentet.",
+      "alreadyOpenedOrOtherWindow": "Den här filen är redan öppen eller är inte avsedd för det här fönstret.",
+      "notThisWindow": "Den här filen hör inte till det här fönstret.",
+      "notLinked": "Den här filen är inte längre kopplad till den här fliken.",
+      "tokenMissing": "Token saknas.",
+      "openInOtherTab": "{{name}} är öppen i en annan flik. Stäng den först eller välj ett annat namn.",
+      "readOnly": "Ingen skrivbehörighet i den här mappen eller så är filen skrivskyddad ({{path}}). Välj en annan plats.",
+      "notInRecentList": "Den här filen finns inte längre i listan."
+    },
+    "preferences": {
+      "tooLarge": "Inställningarna är större än 64 kB.",
+      "invalid": "Inställningarna är inte ett giltigt JSON-objekt.",
+      "configDirUnavailable": "Appens konfigurationsmapp är inte tillgänglig.",
+      "pathInvalid": "Ogiltig sökväg för inställningarna."
+    },
+    "font": {
+      "notInstalled": "Teckensnittet {{family}} är inte installerat på den här datorn.",
+      "notFound": "Teckensnittet hittades inte.",
+      "fileTooLarge": "Den här teckensnittsfilen är för stor.",
+      "inCollection": "Det här teckensnittet ingår i en samling (.ttc) och kan inte användas separat.",
+      "unreadable": "Teckensnittsfilen kunde inte läsas.",
+      "nameInvalid": "Ogiltigt teckensnittsnamn."
+    },
+    "recovery": {
+      "keyInvalid": "Ogiltig återställningsnyckel.",
+      "spaceFull": "Utrymmet för återställningskopior (512 MB) är fullt. Spara dina dokument.",
+      "sessionMissing": "Sessionen saknas.",
+      "keyMissing": "Nyckeln saknas.",
+      "dataInvalid": "Ogiltiga återställningsdata.",
+      "unknownDocumentType": "Okänd dokumenttyp.",
+      "sessionNotThisWindow": "Den här återställningssessionen hör inte till det här fönstret.",
+      "sessionOtherWindow": "Den här återställningssessionen hör till ett annat fönster.",
+      "sessionStillRunning": "Den här sessionen körs fortfarande."
+    },
+    "window": {
+      "closed": "Det här fönstret har stängts.",
+      "transferEmptyOrTooLarge": "Överföringen är tom eller för stor.",
+      "mainWindowUnavailable": "Huvudfönstret är inte tillgängligt.",
+      "openFailed": "Fönstret kunde inte öppnas: {{error}}",
+      "transferExpired": "Den här överföringen har gått ut eller har redan hämtats.",
+      "transferAlreadyTaken": "Den här överföringen har redan hämtats.",
+      "transferUnknown": "Den här överföringen är okänd."
+    },
+    "conversion": {
+      "unknownModule": "Okänd kontorsmodul.",
+      "sourceFormatMismatch": "Källformatet hör inte till den här modulen.",
+      "outputFormatUnsupported": "Det här utdataformatet stöds inte.",
+      "outputFormatDirect": "Det här utdataformatet skapas direkt i appen, inte genom konvertering.",
+      "invalidOptions": "Ogiltiga konverteringsalternativ.",
+      "chooseSoffice": "Välj programmet soffice (Windows: soffice.exe) i mappen program i körmiljön för kontorsprogram.",
+      "chosenFileMissing": "Den valda filen finns inte.",
+      "chosenPathNotFile": "Den valda sökvägen är inte en fil.",
+      "chosenFileNotExecutable": "Den valda filen är inte körbar.",
+      "appDataDirUnavailable": "Appens datamapp är inte tillgänglig.",
+      "startFailed": "Konverteringen kunde inte starta: {{error}}",
+      "failed": "Konverteringen misslyckades ({{reason}}). Originalet har behållits.",
+      "exitCode": "slutkod {{code}}",
+      "processAborted": "processen avbröts",
+      "timeout": "Konverteringen överskred tidsgränsen och stoppades. Originalet har behållits.",
+      "profilePathInvalid": "Den tillfälliga profilsökvägen är ogiltig.",
+      "inputSize": "Välj en fil på högst 100 MB som inte är tom.",
+      "runtimeMissing": "Det här formatet kräver en körmiljö för kontorsprogram (LibreOffice). Den hittades inte: installera den, välj programmet i Spara som eller ange OPENAEC_CONVERSIE_PROGRAMMA. DOCX, XLSX och PPTX fungerar direkt.",
+      "notConverted": "Den här filen kunde inte konverteras. Den kan vara skadad eller skyddad, eller så saknas formatfiltret i den lokala körmiljön.",
+      "multipleOutputs": "Konverteringen gav mer än en fil.",
+      "noUsableOutput": "Konverteringen gav ingen användbar fil på högst 100 MB."
+    },
+    "databaseExport": {
+      "emptyOrTooLarge": "Exporten är tom eller större än 100 MB.",
+      "emptyInvalidOrTooLarge": "Exporten är tom, ogiltig eller större än 100 MB.",
+      "nameMissing": "Filnamn saknas.",
+      "nameInvalid": "Ogiltigt filnamn.",
+      "notSqlite": "Det här är inte en SQLite-arbetskopia.",
+      "typeNotAllowed": "Endast export av CSV, källa, rapport och SQLite-arbetskopia är tillåten. Access-databaser skrivs aldrig över.",
+      "textNotUtf8": "En textexport måste vara giltig UTF-8-text.",
+      "sendAsBinary": "Skicka exporten som binära data på högst 100 MB.",
+      "extensionMismatch": "Det valda filnamnstillägget passar inte exporten."
+    }
+  },
+  "launcher": {
+    "officeStudio": {
+      "genericName": "Kontorspaket",
+      "comment": "Lokal kontorsmiljö från OpenAEC",
+      "keywords": "ordbehandlare;kalkylblad;presentation;databas;e-post;kontor;office;"
+    },
+    "databaseStudio": {
+      "genericName": "Databasvisare",
+      "comment": "Öppna gamla MDB- och ACCDB-databaser lokalt",
+      "keywords": "databas;tabell;fråga;access;"
+    }
+  }
+}

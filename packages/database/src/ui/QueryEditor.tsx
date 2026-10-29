@@ -8,10 +8,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Code2, Download, FileSearch, Play, RefreshCw, Save, Table2 } from "lucide-react";
 import type { OpgeslagenQuery, QueryResultaat, TabelSchema, Waarde, Werkkopie } from "../werkkopie/contract.ts";
+import { useTranslation } from "react-i18next";
+import { formatGetal } from "../../../../src/i18n/opmaak.ts";
 import { kleurTokens } from "../syntaxis.ts";
 import { past } from "../../../../src/lint/sneltoetsen.ts";
 import { bewerkbaar, leesbareFout } from "./invoer.ts";
-import { ACTIENAMEN, isActiequery, querysoortVan } from "./sql.ts";
+import { actieNaam, isActiequery, querysoortVan } from "./sql.ts";
 import { Raster, useVulHoogte, type RasterKolom } from "./Raster.tsx";
 import type { PlakPlan } from "./raster-logica.ts";
 import { useDialogen } from "./Dialoog.tsx";
@@ -103,6 +105,7 @@ export function QueryEditor({
   onResultaat?: (uitvoer: QueryUitvoer | null) => void;
 }) {
   const dialogen = useDialogen();
+  const { t } = useTranslation("database");
   const [sql, setSql] = useState(opgeslagen?.sql ?? beginSql ?? "SELECT *\nFROM ");
   const [resultaat, setResultaat] = useState<QueryResultaat | null>(null);
   const [melding, setMelding] = useState("");
@@ -122,38 +125,39 @@ export function QueryEditor({
     const doel = ongewijzigd ? opgeslagen!.naam : sql;
     try {
       setBezig(true);
-      const parameters = await vraagParameters(werkkopie, doel, dialogen, `Parameters voor ${opgeslagen?.naam ?? "de query"}`);
+      const parameters = await vraagParameters(werkkopie, doel, dialogen, opgeslagen ? t("source.parametersFor", { name: opgeslagen.naam }) : t("source.parametersForQuery"));
       if (!parameters) {
-        setMelding("Uitvoeren geannuleerd.");
+        setMelding(t("queryEditor.runCancelled"));
         return;
       }
       if (isActiequery(soort)) {
         const ja = await dialogen.bevestig({
-          titel: `${ACTIENAMEN[soort]} uitvoeren`,
+          titel: t("queryEditor.confirm.title", { kind: actieNaam(soort) }),
           tekst: (
             <>
               <p>
-                Deze {ACTIENAMEN[soort].toLowerCase()} wijzigt {soort === "ddl" ? "de structuur van" : "gegevens in"} de werkkopie.
-                Dit kan niet ongedaan worden gemaakt, maar het origineel blijft ongewijzigd.
+                {t(soort === "ddl" ? "queryEditor.confirm.changesStructure" : "queryEditor.confirm.changesData", {
+                  kind: actieNaam(soort).toLowerCase(),
+                })}
               </p>
-              <p>Doorgaan?</p>
+              <p>{t("queryEditor.confirm.continue")}</p>
             </>
           ),
-          ja: "Uitvoeren",
+          ja: t("queryEditor.run"),
           gevaarlijk: true,
         });
         if (!ja) {
-          setMelding("Uitvoeren geannuleerd.");
+          setMelding(t("queryEditor.runCancelled"));
           return;
         }
       }
       const r = ongewijzigd ? await werkkopie.voerQueryUit(opgeslagen!.naam, parameters) : await werkkopie.query(sql, { parameters });
       setResultaat(r);
       if (isActiequery(soort)) {
-        setMelding(`${r.gewijzigd.toLocaleString("nl-NL")} ${r.gewijzigd === 1 ? "rij" : "rijen"} gewijzigd.`);
+        setMelding(t("queryEditor.rowsChanged", { count: r.gewijzigd, formatted: formatGetal(r.gewijzigd) }));
         onGewijzigd();
       } else {
-        setMelding(r.afgekapt ? "Het resultaat is afgekapt op 10.000 rijen; verfijn de query voor de rest." : "");
+        setMelding(r.afgekapt ? t("queryEditor.truncated", { max: formatGetal(10000) }) : "");
         // Focus naar het resultaat, zodat het meteen in beeld en met het toetsenbord te gebruiken is.
         setFocus((f) => f + 1);
       }
@@ -164,8 +168,8 @@ export function QueryEditor({
     }
   }
   useEffect(() => {
-    onResultaat?.(resultaat && resultaat.kolommen.length ? { titel: opgeslagen?.naam ?? "Queryresultaat", resultaat } : null);
-  }, [resultaat, opgeslagen, onResultaat]);
+    onResultaat?.(resultaat && resultaat.kolommen.length ? { titel: opgeslagen?.naam ?? t("queryEditor.resultTitle"), resultaat } : null);
+  }, [resultaat, opgeslagen, onResultaat, t]);
   const actie = useRef(uitvoeren);
   actie.current = uitvoeren;
   useEffect(() => {
@@ -181,23 +185,33 @@ export function QueryEditor({
   async function bewaarAlsQuery() {
     const bestaand = await werkkopie.querys();
     const naam = await dialogen.vraag({
-      titel: "Query opslaan",
-      label: "Naam van de query",
+      titel: t("queryEditor.save.title"),
+      label: t("queryEditor.save.label"),
       standaard: opgeslagen?.naam ?? `Query${bestaand.length + 1}`,
-      controleer: (w) => (!w.trim() ? "Geef een naam." : tabellen.some((t) => t.naam.toLowerCase() === w.trim().toLowerCase()) ? "Er is al een tabel met deze naam." : null),
+      controleer: (w) =>
+        !w.trim()
+          ? t("queryEditor.save.nameMissing")
+          : tabellen.some((tb) => tb.naam.toLowerCase() === w.trim().toLowerCase())
+            ? t("queryEditor.save.tableExists")
+            : null,
     });
     if (!naam) return;
     const schoon = naam.trim();
     if (schoon.toLowerCase() !== opgeslagen?.naam.toLowerCase() && bestaand.some((q) => q.naam.toLowerCase() === schoon.toLowerCase())) {
-      const ja = await dialogen.bevestig({ titel: "Query vervangen", tekst: `Er bestaat al een query ‘${schoon}’. Vervangen?`, ja: "Vervangen", gevaarlijk: true });
+      const ja = await dialogen.bevestig({
+        titel: t("queryEditor.replace.title"),
+        tekst: t("queryEditor.replace.text", { name: schoon }),
+        ja: t("queryEditor.replace.confirm"),
+        gevaarlijk: true,
+      });
       if (!ja) return;
     }
     try {
       await werkkopie.bewaarQuery({ naam: schoon, sql, soort: querysoortVan(sql) });
-      setMelding(`Opgeslagen als query ‘${schoon}’ in de werkkopie.`);
+      setMelding(t("queryEditor.saved", { name: schoon }));
       onBewaard(schoon);
     } catch (e) {
-      setFout("Opslaan mislukt: " + leesbareFout(e));
+      setFout(t("queryEditor.saveFailed", { error: leesbareFout(e) }));
     }
   }
 
@@ -256,48 +270,48 @@ export function QueryEditor({
 
   return (
     <div ref={vlak} className={`database-queryeditor is-${modus}`}>
-      <div className="database-werkbalk" role="toolbar" aria-label="Query">
-        <div className="database-weergavekeuze" role="group" aria-label="Weergave">
+      <div className="database-werkbalk" role="toolbar" aria-label={t("queryEditor.toolbar")}>
+        <div className="database-weergavekeuze" role="group" aria-label={t("queryEditor.view")}>
           <button
             aria-pressed={modus === "gegevensblad"}
             disabled={actieq}
-            title={actieq ? "Een actiequery heeft geen gegevensblad" : "Gegevensbladweergave"}
+            title={actieq ? t("queryEditor.noDatasheet") : t("queryEditor.datasheetView")}
             onClick={() => {
               setModus("gegevensblad");
               if (!resultaat?.kolommen.length) void uitvoeren();
             }}
           >
-            <Table2 size={16} /> Gegevensblad
+            <Table2 size={16} /> {t("queryEditor.datasheet")}
           </button>
           <button aria-pressed={modus === "sql"} onClick={() => setModus("sql")}>
-            <Code2 size={16} /> SQL-weergave
+            <Code2 size={16} /> {t("queryEditor.sqlView")}
           </button>
         </div>
-        <button className="primary" onClick={() => void uitvoeren()} disabled={bezig} title={modus === "sql" ? "Uitvoeren (F5 of Ctrl+Enter)" : "Opnieuw uitvoeren (F5)"}>
-          {modus === "sql" ? <Play size={16} /> : <RefreshCw size={16} />} {bezig ? "Bezig…" : modus === "sql" ? "Uitvoeren" : "Vernieuwen"}
+        <button className="primary" onClick={() => void uitvoeren()} disabled={bezig} title={modus === "sql" ? t("queryEditor.runTitle") : t("queryEditor.rerunTitle")}>
+          {modus === "sql" ? <Play size={16} /> : <RefreshCw size={16} />} {bezig ? t("queryEditor.busy") : modus === "sql" ? t("queryEditor.run") : t("queryEditor.refresh")}
         </button>
         {modus === "sql" && (
           <button onClick={() => void bewaarAlsQuery()} disabled={bezig}>
-            <Save size={16} /> {opgeslagen ? "Opslaan" : "Opslaan als query"}
+            <Save size={16} /> {opgeslagen ? t("common:save") : t("queryEditor.saveAsQuery")}
           </button>
         )}
-        <button disabled={!heeftRijen} onClick={() => resultaat && onExporteer({ titel: opgeslagen?.naam ?? "Queryresultaat", resultaat })}>
+        <button disabled={!heeftRijen} onClick={() => resultaat && onExporteer({ titel: opgeslagen?.naam ?? t("queryEditor.resultTitle"), resultaat })}>
           <Download size={16} /> CSV
         </button>
         {modus === "sql" && resultaat && (
           <button
             onClick={() =>
               void dialogen.melding(
-                "Uitgevoerde SQLite-SQL",
+                t("queryEditor.executedSql"),
                 <pre className="database-diagnose-sql">{resultaat.uitgevoerd}</pre>,
               )
             }
-            title="De SQL zoals die op de SQLite-werkkopie is uitgevoerd (diagnose)"
+            title={t("queryEditor.executedSqlTitle")}
           >
             <FileSearch size={16} /> SQLite-SQL
           </button>
         )}
-        <span className="database-querysoort">{ACTIENAMEN[soort]}</span>
+        <span className="database-querysoort">{actieNaam(soort)}</span>
       </div>
       {modus === "sql" && (
         <>
@@ -307,7 +321,7 @@ export function QueryEditor({
           <div
             role="separator"
             aria-orientation="horizontal"
-            aria-label="Hoogte van de SQL-editor (pijltjes omhoog/omlaag)"
+            aria-label={t("queryEditor.editorHeight")}
             aria-valuemin={80}
             aria-valuemax={900}
             aria-valuenow={editorHoogte}
@@ -340,35 +354,35 @@ export function QueryEditor({
           {melding}
         </p>
       )}
-      <section className="database-query-resultaat" aria-label="Resultaat" aria-busy={bezig}>
+      <section className="database-query-resultaat" aria-label={t("queryEditor.result")} aria-busy={bezig}>
         {heeftRijen ? (
           <Raster
-            label={`Resultaat van ${opgeslagen?.naam ?? "de query"}`}
+            label={opgeslagen ? t("queryEditor.resultOf", { name: opgeslagen.naam }) : t("queryEditor.resultOfQuery")}
             kolommen={kolommen}
             rijen={resultaat!.rijen.map((w, i) => ({ sleutel: resultaat!.bron?.rowids[i] ?? i, waarden: w }))}
             onWijzig={basis ? wijzig : undefined}
             onPlak={basis ? plak : undefined}
             vul
             focusSignaal={focus}
-            leeg="De query gaf geen rijen."
+            leeg={t("queryEditor.noRows")}
             voet={
               <span className="muted">
-                {resultaat!.rijen.length.toLocaleString("nl-NL")} {resultaat!.rijen.length === 1 ? "rij" : "rijen"}
-                {resultaat!.afgekapt ? " (afgekapt)" : ""}
-                {basis ? ` · bewerkbaar (‘${basis.naam}’)` : " · alleen-lezen"}
+                {t("queryEditor.rows", { count: resultaat!.rijen.length, formatted: formatGetal(resultaat!.rijen.length) })}
+                {resultaat!.afgekapt ? ` ${t("queryEditor.truncatedShort")}` : ""}
+                {basis ? ` · ${t("queryEditor.editable", { name: basis.naam })}` : ` · ${t("queryEditor.readOnly")}`}
               </span>
             }
           />
         ) : bezig ? (
           <p role="status" className="muted">
-            Query uitvoeren…
+            {t("queryEditor.running")}
           </p>
         ) : modus === "sql" ? (
-          <p className="muted">Access-SQL (Jet-dialect) · F5 of Ctrl+Enter om uit te voeren · de query draait op de werkkopie. Het resultaat verschijnt hier.</p>
+          <p className="muted">{t("queryEditor.sqlHint")}</p>
         ) : actieq ? null : (
           <div className="database-knoppen">
             <button onClick={() => void uitvoeren()}>
-              <Play size={16} /> Gegevens tonen
+              <Play size={16} /> {t("queryEditor.showData")}
             </button>
           </div>
         )}

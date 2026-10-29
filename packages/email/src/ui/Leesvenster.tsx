@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useInstellingen } from "../../../../src/instellingen";
 import {
   Archive,
@@ -21,7 +22,7 @@ import type { Account, Bericht, BijlageInfo, MailBackend } from "../contract";
 import { formatAdres, formatAdressen, toonAdres } from "../adressen";
 import { formatDatum } from "../citaat";
 import { externeUrls, frameDocument, saneerHtml, tekstNaarHtml } from "../sanitizer";
-import { grootteTekst, kanDirectOpenen, kantoorModule, MODULENAAM } from "../kantoor";
+import { grootteTekst, kanDirectOpenen, kantoorModule, moduleNaam } from "../kantoor";
 import { isDesktop, laadExterneAfbeeldingen } from "../backend";
 import { externToegestaan, onthoudExtern } from "./voorkeuren";
 import { BijlageVoorbeeld, maakBron, type VoorbeeldBron } from "../voorbeeld";
@@ -66,6 +67,7 @@ export function Leesvenster({
   /** Meldt of de voorvertoning open is (sneltoetsen van het hoofdscherm uit). */
   voorbeeldOpen?: (open: boolean) => void;
 }) {
+  const { t } = useTranslation("email");
   const [cidUrls, setCidUrls] = useState<Record<string, string> | null>(null);
   const [versie, setVersie] = useState(0);
   const frame = useRef<HTMLIFrameElement>(null);
@@ -180,10 +182,10 @@ export function Leesvenster({
   if (!bericht)
     return (
       <div className="email-leeg">
-        {bezig ? <p>Bericht laden…</p> : fout ? <p role="alert">{fout}</p> : (
+        {bezig ? <p>{t("reader.loadingMessage")}</p> : fout ? <p role="alert">{fout}</p> : (
           <>
             <Mail size={34} strokeWidth={1.2} />
-            <p>Kies een bericht om het te lezen.</p>
+            <p>{t("reader.chooseMessage")}</p>
           </>
         )}
       </div>
@@ -191,55 +193,55 @@ export function Leesvenster({
 
   const bijlagen = bericht.bijlagen.filter((b) => !b.inline || !b.contentId);
   return (
-    <article className="email-lezen" aria-label={`Bericht: ${bericht.onderwerp}`}>
+    <article className="email-lezen" aria-label={t("reader.label", { subject: bericht.onderwerp })}>
       <header className="email-leeskop">
         <div className="email-leesacties">
-          <button className="email-knop" onClick={() => beantwoord("antwoord")} title="Beantwoorden · Ctrl+R">
-            <Reply size={15} /> Beantwoorden
+          <button className="email-knop" onClick={() => beantwoord("antwoord")} title={t("reader.replyTitle", { shortcut: "Ctrl+R" })}>
+            <Reply size={15} /> {t("reader.reply")}
           </button>
-          <button className="email-knop" onClick={() => beantwoord("allen")} title="Allen beantwoorden · Ctrl+Shift+R">
-            <ReplyAll size={15} /> Allen
+          <button className="email-knop" onClick={() => beantwoord("allen")} title={t("reader.replyAllTitle", { shortcut: "Ctrl+Shift+R" })}>
+            <ReplyAll size={15} /> {t("reader.replyAll")}
           </button>
-          <button className="email-knop" onClick={() => beantwoord("doorsturen")} title="Doorsturen · Ctrl+L">
-            <Forward size={15} /> Doorsturen
+          <button className="email-knop" onClick={() => beantwoord("doorsturen")} title={t("reader.forwardTitle", { shortcut: "Ctrl+L" })}>
+            <Forward size={15} /> {t("reader.forward")}
           </button>
-          <button className="email-iconknop" onClick={archiveer} aria-label="Archiveren" title="Archiveren · A">
+          <button className="email-iconknop" onClick={archiveer} aria-label={t("reader.archive")} title={t("reader.archiveTitle", { shortcut: "A" })}>
             <Archive size={16} />
           </button>
-          <button className="email-iconknop" onClick={verwijder} aria-label="Verwijderen" title="Verwijderen · Del">
+          <button className="email-iconknop" onClick={verwijder} aria-label={t("reader.delete")} title={t("reader.deleteTitle", { shortcut: "Del" })}>
             <Trash2 size={16} />
           </button>
           <button
             className={`email-iconknop ${bericht.gemarkeerd ? "is-ster" : ""}`}
             onClick={ster}
-            aria-label={bericht.gemarkeerd ? "Ster verwijderen" : "Ster toevoegen"}
+            aria-label={bericht.gemarkeerd ? t("list.unstar") : t("list.star")}
             aria-pressed={bericht.gemarkeerd}
-            title="Ster · S"
+            title={t("reader.starTitle", { shortcut: "S" })}
           >
             <Star size={16} fill={bericht.gemarkeerd ? "currentColor" : "none"} />
           </button>
         </div>
-        <h1>{bericht.onderwerp || "(geen onderwerp)"}</h1>
+        <h1>{bericht.onderwerp || t("list.noSubject")}</h1>
         <dl>
-          <dt>Van</dt>
+          <dt>{t("reader.from")}</dt>
           <dd>
             <strong>{toonAdres(bericht.van[0])}</strong> {bericht.van[0]?.naam && <span>&lt;{bericht.van[0].adres}&gt;</span>}
           </dd>
-          <dt>Aan</dt>
-          <dd>{formatAdressen(bericht.aan) || "(geen)"}</dd>
+          <dt>{t("reader.to")}</dt>
+          <dd>{formatAdressen(bericht.aan) || t("reader.none")}</dd>
           {bericht.cc.length > 0 && (
             <>
-              <dt>Cc</dt>
+              <dt>{t("reader.cc")}</dt>
               <dd>{formatAdressen(bericht.cc)}</dd>
             </>
           )}
           {bericht.antwoordAan.length > 0 && formatAdressen(bericht.antwoordAan) !== formatAdressen(bericht.van) && (
             <>
-              <dt>Antwoord aan</dt>
+              <dt>{t("reader.replyTo")}</dt>
               <dd>{bericht.antwoordAan.map(formatAdres).join(", ")}</dd>
             </>
           )}
-          <dt>Datum</dt>
+          <dt>{t("reader.date")}</dt>
           <dd>{formatDatum(bericht.datum)}</dd>
         </dl>
       </header>
@@ -247,9 +249,8 @@ export function Leesvenster({
         <div className="email-externbalk" role="note">
           <ImageOff size={15} />
           <span>
-            {inhoud.geblokkeerd === 1 ? "Eén externe afbeelding is" : `${inhoud.geblokkeerd} externe afbeeldingen zijn`} geblokkeerd om je privacy te
-            beschermen.
-            {isDesktop() ? " Na toestemming haalt de app ze op en toont ze zonder het bericht verbinding te laten maken." : " (In de demo verwijzen ze naar niet-bestaande adressen.)"}
+            {t("reader.external.blocked", { count: inhoud.geblokkeerd })}{" "}
+            {isDesktop() ? t("reader.external.desktopHint") : t("reader.external.demoHint")}
           </span>
           <button
             className="email-knop"
@@ -258,7 +259,7 @@ export function Leesvenster({
               setVersie(versie + 1);
             }}
           >
-            Externe inhoud tonen
+            {t("reader.external.show")}
           </button>
           {afzender && (
             <button
@@ -268,7 +269,7 @@ export function Leesvenster({
                 setVersie(versie + 1);
               }}
             >
-              Altijd tonen van {afzender}
+              {t("reader.external.alwaysFrom", { sender: afzender })}
             </button>
           )}
         </div>
@@ -276,11 +277,11 @@ export function Leesvenster({
       {inhoud && inhoud.mislukt > 0 && (
         <div className="email-externbalk" role="status">
           <ImageOff size={15} />
-          <span>{inhoud.mislukt === 1 ? "Eén externe afbeelding kon" : `${inhoud.mislukt} externe afbeeldingen konden`} niet worden opgehaald.</span>
+          <span>{t("reader.external.failed", { count: inhoud.mislukt })}</span>
         </div>
       )}
       {bijlagen.length > 0 && (
-        <ul className="email-bijlagen" aria-label="Bijlagen">
+        <ul className="email-bijlagen" aria-label={t("reader.attachments.label")}>
           {bijlagen.map((b) => {
             const module = kantoorModule(b.bestandsnaam);
             const Icoon = module ? MODULE_ICOON[module] : Paperclip;
@@ -289,7 +290,7 @@ export function Leesvenster({
               <li key={b.index}>
                 <button
                   className="email-bijlagevoorbeeld"
-                  title={direct ? "Klik: voorvertoning · dubbelklik: openen in " + MODULENAAM[module!] : "Voorvertoning"}
+                  title={direct ? t("reader.attachments.previewOrOpen", { module: moduleNaam(module!) }) : t("reader.attachments.preview")}
                   onClick={(e) => {
                     if (e.detail <= 1) setVoorbeeld(bronnen.findIndex((x) => x.info.index === b.index));
                   }}
@@ -306,12 +307,12 @@ export function Leesvenster({
                   </span>
                 </button>
                 {direct && (
-                  <button className="email-knop is-primair" onClick={() => openBijlage(b)} title={`Als bewerkbare kopie openen in ${MODULENAAM[module!]}`}>
-                    <ExternalLink size={14} /> Openen in {MODULENAAM[module!]}
+                  <button className="email-knop is-primair" onClick={() => openBijlage(b)} title={t("reader.attachments.openCopyTitle", { module: moduleNaam(module!) })}>
+                    <ExternalLink size={14} /> {t("reader.attachments.openIn", { module: moduleNaam(module!) })}
                   </button>
                 )}
-                <button className="email-knop" onClick={() => bewaarBijlage(b)} title="Opslaan op deze computer">
-                  <Download size={14} /> Opslaan
+                <button className="email-knop" onClick={() => bewaarBijlage(b)} title={t("reader.attachments.saveTitle")}>
+                  <Download size={14} /> {t("common:save")}
                 </button>
               </li>
             );
@@ -336,7 +337,7 @@ export function Leesvenster({
           key={`${bericht.map}:${bericht.uid}:${extern}:${versie}`}
           ref={frame}
           className="email-berichtframe"
-          title="Berichtinhoud"
+          title={t("reader.content")}
           // Geen allow-scripts: de inhoud kan nooit script uitvoeren. allow-same-origin
           // is nodig om klikken op links in de host af te handelen.
           sandbox="allow-same-origin"
@@ -346,7 +347,7 @@ export function Leesvenster({
         />
       ) : (
         <div className="email-leeg">
-          <p>Inhoud laden…</p>
+          <p>{t("reader.loadingContent")}</p>
         </div>
       )}
     </article>

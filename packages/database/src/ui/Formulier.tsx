@@ -5,6 +5,8 @@
  * alleen als de gebruiker VBA voor deze database heeft toegestaan.
  */
 import { useCallback, useEffect, useId, useReducer, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import i18next from "i18next";
 import { ChevronFirst, ChevronLast, ChevronLeft, ChevronRight, Plus, Save, Table2, Trash2, Undo2, X, LayoutTemplate } from "lucide-react";
 import type { HostWaarde } from "../../../vba/src/host.ts";
 import type { QueryResultaat, TabelSchema, VeldSchema, Veldsoort, Waarde, Werkkopie } from "../werkkopie/contract.ts";
@@ -74,6 +76,7 @@ export function Formulier({
   onGewijzigd: () => void;
   onExporteer: (kolommen: string[], rijen: Waarde[][], soorten: (Veldsoort | null)[]) => void;
 }) {
+  const { t } = useTranslation("database");
   const dialogen = useDialogen();
   const id = useId();
   const [, teken] = useReducer((x: number) => x + 1, 0);
@@ -172,21 +175,21 @@ export function Formulier({
 
   /** Bewaart het huidige record; false bij een fout (die dan zichtbaar is). */
   async function bewaar(): Promise<boolean> {
-    const t = st.current;
-    if (!t.dirty) return true;
-    const tabel = t.bron?.tabel;
+    const tk = st.current;
+    if (!tk.dirty) return true;
+    const tabel = tk.bron?.tabel;
     if (!tabel) {
-      setFout("Dit formulier is alleen-lezen: de bron is geen tabel of eenvoudige query op één tabel.");
+      setFout(t("form.readOnlyForm"));
       return false;
     }
     const waarden: Record<string, Waarde> = {};
     for (const v of definitie.velden) {
       const schema = schemaVan(v.veld);
       if (!schema || !bewerkbaar(schema.soort)) continue;
-      const tekst = t.concept[v.veld] ?? "";
-      const oud = bewerkTekst(waardeVan(v.veld, t.huidig.waarden), schema.soort);
-      if (t.huidig.rowid !== null && tekst === oud) continue;
-      if (t.huidig.rowid === null && !tekst.trim() && !schema.verplicht) continue;
+      const tekst = tk.concept[v.veld] ?? "";
+      const oud = bewerkTekst(waardeVan(v.veld, tk.huidig.waarden), schema.soort);
+      if (tk.huidig.rowid !== null && tekst === oud) continue;
+      if (tk.huidig.rowid === null && !tekst.trim() && !schema.verplicht) continue;
       const r = leesInvoer(tekst, schema);
       if (!r.ok) {
         setFout(r.fout);
@@ -196,20 +199,20 @@ export function Formulier({
       waarden[schema.naam] = r.waarde;
     }
     if ((await gebeurtenis("Form_BeforeUpdate")).geannuleerd) {
-      setFout("Opslaan geannuleerd door Form_BeforeUpdate.");
+      setFout(t("form.saveCancelled"));
       return false;
     }
     try {
-      if (t.huidig.rowid === null) {
+      if (tk.huidig.rowid === null) {
         const rowid = await werkkopie.voegToe(tabel.naam, waarden);
         await laadBronOpnieuw();
         const rij = await werkkopie.rij(tabel.naam, rowid);
-        if (t.bron?.soort === "tabel") t.nav = { ...t.nav, index: t.nav.totaal - 1 };
+        if (tk.bron?.soort === "tabel") tk.nav = { ...tk.nav, index: tk.nav.totaal - 1 };
         zetConcept({ rowid, waarden: rij?.waarden ?? waarden });
       } else {
-        if (Object.keys(waarden).length) await werkkopie.wijzig(tabel.naam, t.huidig.rowid, waarden);
-        const rij = await werkkopie.rij(tabel.naam, t.huidig.rowid);
-        zetConcept({ rowid: t.huidig.rowid, waarden: rij?.waarden ?? t.huidig.waarden });
+        if (Object.keys(waarden).length) await werkkopie.wijzig(tabel.naam, tk.huidig.rowid, waarden);
+        const rij = await werkkopie.rij(tabel.naam, tk.huidig.rowid);
+        zetConcept({ rowid: tk.huidig.rowid, waarden: rij?.waarden ?? tk.huidig.waarden });
       }
       setFout("");
       onGewijzigd();
@@ -257,24 +260,24 @@ export function Formulier({
   }
 
   async function verwijderRecord() {
-    const t = st.current;
-    if (!t.bron?.tabel || t.huidig.rowid === null) return;
+    const tk = st.current;
+    if (!tk.bron?.tabel || tk.huidig.rowid === null) return;
     const ja = await dialogen.bevestig({
-      titel: "Record verwijderen",
-      tekst: `Het huidige record uit ‘${t.bron.tabel.naam}’ verwijderen? Dit gebeurt in de werkkopie; het origineel blijft ongewijzigd.`,
-      ja: "Verwijderen",
+      titel: t("form.deleteTitle"),
+      tekst: t("form.deleteText", { table: tk.bron.tabel.naam }),
+      ja: t("common:delete"),
       gevaarlijk: true,
     });
     if (!ja) return;
     try {
-      await werkkopie.verwijder(t.bron.tabel.naam, t.huidig.rowid);
+      await werkkopie.verwijder(tk.bron.tabel.naam, tk.huidig.rowid);
       onGewijzigd();
-      if (t.bron.soort === "resultaat") {
+      if (tk.bron.soort === "resultaat") {
         await laadBronOpnieuw();
-        t.nav = { ...t.nav, index: Math.min(t.nav.index, Math.max(0, t.nav.totaal - 1)) };
-      } else t.nav = naVerwijderen(t.nav);
-      t.dirty = false;
-      await gaNaar({ naar: t.nav.index }, { bewaren: false });
+        tk.nav = { ...tk.nav, index: Math.min(tk.nav.index, Math.max(0, tk.nav.totaal - 1)) };
+      } else tk.nav = naVerwijderen(tk.nav);
+      tk.dirty = false;
+      await gaNaar({ naar: tk.nav.index }, { bewaren: false });
     } catch (e) {
       setFout(leesbareFout(e));
     }
@@ -283,9 +286,9 @@ export function Formulier({
   async function sluit() {
     if (!(await bewaar())) {
       const ja = await dialogen.bevestig({
-        titel: "Wijzigingen niet opgeslagen",
-        tekst: "Het huidige record kon niet worden opgeslagen. Sluiten zonder op te slaan?",
-        ja: "Sluiten zonder opslaan",
+        titel: t("form.unsavedTitle"),
+        tekst: t("form.unsavedText"),
+        ja: t("form.closeWithoutSaving"),
         gevaarlijk: true,
       });
       if (!ja) return;
@@ -299,11 +302,11 @@ export function Formulier({
 
   async function knop(naamKnop: string) {
     if (!module || !procedureIn(module.bron, `${naamKnop}_Click`)) {
-      setFout(`Knop ‘${naamKnop}’ heeft geen VBA-gebeurtenis ${naamKnop}_Click${module ? "" : " (er is geen formuliermodule Form_" + naam + ")"}.`);
+      setFout(module ? t("form.buttonNoEvent", { button: naamKnop }) : t("form.buttonNoEventNoModule", { button: naamKnop, form: naam }));
       return;
     }
     if (!metVba) {
-      setFout("VBA is voor deze database niet toegestaan; knopgebeurtenissen worden niet uitgevoerd. Open het formulier opnieuw om toestemming te geven.");
+      setFout(t("form.vbaNotAllowed"));
       return;
     }
     await gebeurtenis(`${naamKnop}_Click`);
@@ -363,7 +366,7 @@ export function Formulier({
             case "openargs":
               return null;
           }
-          throw new Error(`Formuliereigenschap ‘${eigenschap}’ wordt (nog) niet ondersteund.`);
+          throw new Error(i18next.t("database:form.runtime.formPropertyUnsupported", { property: eigenschap }));
         }
         const veld = zoekVeld(b);
         const knopDef = zoekKnop(b);
@@ -398,7 +401,7 @@ export function Formulier({
           case "oldvalue":
             return veld ? naarHostWaarde(waardeVan(veld.veld, t.huidig.waarden)) : null;
         }
-        throw new Error(`Eigenschap ‘${eigenschap}’ van besturingselement ‘${b}’ wordt (nog) niet ondersteund.`);
+        throw new Error(i18next.t("database:form.runtime.controlPropertyUnsupported", { property: eigenschap, control: b }));
       },
       zet(b, eigenschap, waarde) {
         const t = st.current;
@@ -410,7 +413,7 @@ export function Formulier({
             return hostRef.current.requery();
           } else if (eigenschap === "dirty") {
             if (!waarde) return hostRef.current.bewaar().then(() => undefined);
-          } else throw new Error(`Formuliereigenschap ‘${eigenschap}’ kan (nog) niet worden ingesteld.`);
+          } else throw new Error(i18next.t("database:form.runtime.formPropertyNotSettable", { property: eigenschap }));
           teken();
           return;
         }
@@ -444,7 +447,7 @@ export function Formulier({
           case "fontbold":
             break; // opmaak wordt genegeerd
           default:
-            throw new Error(`Eigenschap ‘${eigenschap}’ van besturingselement ‘${b}’ kan (nog) niet worden ingesteld.`);
+            throw new Error(i18next.t("database:form.runtime.controlPropertyNotSettable", { property: eigenschap, control: b }));
         }
         teken();
       },
@@ -472,7 +475,7 @@ export function Formulier({
               return null;
             }
           }
-          throw new Error(`Formuliermethode ‘${methode}’ wordt (nog) niet ondersteund.`);
+          throw new Error(i18next.t("database:form.runtime.formMethodUnsupported", { method: methode }));
         }
         switch (methode) {
           case "setfocus":
@@ -487,7 +490,7 @@ export function Formulier({
           case "requery":
             return null;
         }
-        throw new Error(`Methode ‘${methode}’ van besturingselement ‘${b}’ wordt (nog) niet ondersteund.`);
+        throw new Error(i18next.t("database:form.runtime.controlMethodUnsupported", { method: methode, control: b }));
       },
     });
     return weg;
@@ -518,7 +521,7 @@ export function Formulier({
         await gebeurtenis("Form_Current");
       } catch (e) {
         if (actief) {
-          setFout("Het formulier kon zijn gegevens niet laden: " + leesbareFout(e));
+          setFout(t("form.loadFailed", { error: leesbareFout(e) }));
           setLaden(false);
         }
       }
@@ -544,25 +547,25 @@ export function Formulier({
         void gaNaar("vorige");
       }
     }}>
-      <div className="database-werkbalk" role="toolbar" aria-label="Formulier">
+      <div className="database-werkbalk" role="toolbar" aria-label={t("form.toolbar")}>
         <h3 className="database-formulier-titel">{s.caption}</h3>
         <button onClick={() => setGegevensblad(!gegevensblad)} aria-pressed={gegevensblad}>
-          <Table2 size={16} /> Gegevensblad
+          <Table2 size={16} /> {t("form.datasheet")}
         </button>
         {onOntwerp && (
           <button onClick={onOntwerp}>
-            <LayoutTemplate size={16} /> Ontwerp
+            <LayoutTemplate size={16} /> {t("form.design")}
           </button>
         )}
         <button onClick={() => void sluit()}>
-          <X size={16} /> Sluiten
+          <X size={16} /> {t("common:close")}
         </button>
       </div>
       {module && (
         <p className="muted">
           {metVba
-            ? `Gekoppeld aan VBA-module ${module.naam}: gebeurtenissen worden afgeschermd uitgevoerd op de werkkopie.`
-            : `Er is een VBA-module ${module.naam}, maar VBA is niet toegestaan; gebeurtenissen worden overgeslagen.`}
+            ? t("form.vbaLinked", { module: module.naam })
+            : t("form.vbaSkipped", { module: module.naam })}
         </p>
       )}
       {fout && (
@@ -588,7 +591,7 @@ export function Formulier({
           />
         ) : s.bron?.resultaat ? (
           <Raster
-            label={`Gegevensblad ${naam}`}
+            label={t("form.datasheetLabel", { name: naam })}
             kolommen={s.bron.resultaat.kolommen.map((k, i) => ({ naam: k, soort: s.bron!.resultaat!.kolomsoorten?.[i] ?? null }))}
             rijen={s.bron.resultaat.rijen.map((w, i) => ({ sleutel: i, waarden: w }))}
           />
@@ -642,7 +645,7 @@ export function Formulier({
                     id={veldId}
                     readOnly={vergrendeld}
                     disabled={e.enabled === false || laden}
-                    placeholder={soort === "autonummer" && nieuw ? "(automatisch)" : soort === "datum" ? "dd-mm-jjjj" : undefined}
+                    placeholder={soort === "autonummer" && nieuw ? t("form.autoNumberPlaceholder") : soort === "datum" ? t("form.datePlaceholder") : undefined}
                     value={s.concept[v.veld] ?? ""}
                     onFocus={(ev) => (ev.currentTarget.dataset.begin = ev.currentTarget.value)}
                     onBlur={(ev) => {
@@ -676,28 +679,28 @@ export function Formulier({
         </form>
       )}
       {!gegevensblad && (
-        <nav className="database-recordnavigatie" aria-label="Recordnavigatie">
-          <button type="button" aria-label="Eerste record" disabled={laden || !kan(n, "eerste")} onClick={() => void gaNaar("eerste")}>
+        <nav className="database-recordnavigatie" aria-label={t("form.navigation")}>
+          <button type="button" aria-label={t("form.firstRecord")} disabled={laden || !kan(n, "eerste")} onClick={() => void gaNaar("eerste")}>
             <ChevronFirst size={16} />
           </button>
-          <button type="button" aria-label="Vorige record" disabled={laden || !kan(n, "vorige")} onClick={() => void gaNaar("vorige")}>
+          <button type="button" aria-label={t("form.previousRecord")} disabled={laden || !kan(n, "vorige")} onClick={() => void gaNaar("vorige")}>
             <ChevronLeft size={16} />
           </button>
           <span role="status" aria-live="polite">
-            {laden ? "Laden…" : positieTekst(n)}
-            {s.dirty ? " · gewijzigd" : ""}
+            {laden ? t("common:loading") : positieTekst(n)}
+            {s.dirty ? ` · ${t("form.modified")}` : ""}
           </span>
-          <button type="button" aria-label="Volgende record" disabled={laden || !kan(n, "volgende")} onClick={() => void gaNaar("volgende")}>
+          <button type="button" aria-label={t("form.nextRecord")} disabled={laden || !kan(n, "volgende")} onClick={() => void gaNaar("volgende")}>
             <ChevronRight size={16} />
           </button>
-          <button type="button" aria-label="Laatste record" disabled={laden || !kan(n, "laatste")} onClick={() => void gaNaar("laatste")}>
+          <button type="button" aria-label={t("form.lastRecord")} disabled={laden || !kan(n, "laatste")} onClick={() => void gaNaar("laatste")}>
             <ChevronLast size={16} />
           </button>
           <button type="button" disabled={laden || alleenLezen || !kan(n, "nieuw")} onClick={() => void gaNaar("nieuw")}>
-            <Plus size={16} /> Nieuw
+            <Plus size={16} /> {t("form.new")}
           </button>
           <button type="button" className="primary" disabled={laden || !s.dirty} onClick={() => void bewaar()}>
-            <Save size={16} /> Opslaan
+            <Save size={16} /> {t("common:save")}
           </button>
           <button
             type="button"
@@ -708,15 +711,15 @@ export function Formulier({
               teken();
             }}
           >
-            <Undo2 size={16} /> Ongedaan maken
+            <Undo2 size={16} /> {t("form.undo")}
           </button>
           <button type="button" disabled={laden || alleenLezen || !kan(n, "verwijderen")} onClick={() => void verwijderRecord()}>
-            <Trash2 size={16} /> Verwijderen
+            <Trash2 size={16} /> {t("common:delete")}
           </button>
         </nav>
       )}
       {alleenLezen && s.bron && (
-        <p className="muted">Alleen-lezen: de bron is geen tabel of eenvoudige query op één tabel.</p>
+        <p className="muted">{t("form.readOnlyNote")}</p>
       )}
     </div>
   );

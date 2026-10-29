@@ -1,0 +1,143 @@
+{
+  "title": "Configuración",
+  "resetToDefaults": "Restablecer valores predeterminados",
+  "resetConfirm": "¿Restablecer toda la configuración a los valores predeterminados? El cambio no se guarda hasta que haga clic en Guardar.",
+  "saveFailed": "No se pudo guardar la configuración.",
+  "tabs": {
+    "algemeen": "General",
+    "uiterlijk": "Apariencia",
+    "bewerken": "Edición",
+    "email": "Correo electrónico",
+    "over": "Acerca de"
+  },
+  "general": {
+    "application": "Aplicación",
+    "language": "Idioma",
+    "languageAuto": "Automático ({{language}})",
+    "languageSearch": "Buscar idioma…",
+    "languageNone": "No se encontró ningún idioma",
+    "machineTranslation": "Esta traducción se ha generado automáticamente y aún no la ha revisado un hablante nativo.",
+    "saving": "Guardado",
+    "formatsHelp": "Formato predeterminado para documentos nuevos. ODF requiere el programa de conversión (aplicación de escritorio); con Guardar como siempre puede elegir otro formato.",
+    "format": {
+      "docx": "Texto",
+      "xlsx": "Hoja de cálculo",
+      "pptx": "Presentación"
+    },
+    "recoveryInterval": "Punto de recuperación cada",
+    "minutes": "minutos",
+    "recoveryHelp": "Frecuencia con la que se crea una copia de recuperación de los documentos modificados (de 1 a 60 minutos), para recuperarlos tras un cierre inesperado.",
+    "authorName": "Nombre para los comentarios",
+    "converter": "Programa de conversión",
+    "converterBrowser": "El programa de conversión (LibreOffice) se elige en la aplicación de escritorio. En el navegador solo funcionan los formatos nativos.",
+    "converterLoading": "Obteniendo estado…",
+    "converterFoundChosen": "Encontrado: {{path}}{{version}}, elegido manualmente.",
+    "converterFoundAuto": "Encontrado: {{path}}{{version}}, detectado automáticamente.",
+    "converterMissing": "No se encontró ningún programa de conversión. Elija soffice de LibreOffice para abrir y guardar ODF y formatos más antiguos.",
+    "converterChoose": "Elegir programa…",
+    "converterAuto": "Detectar automáticamente"
+  },
+  "languages": {
+    "nl": "Neerlandés",
+    "en": "Inglés",
+    "de": "Alemán",
+    "fr": "Francés",
+    "es": "Español",
+    "it": "Italiano",
+    "pt-BR": "Portugués (Brasil)",
+    "pt-PT": "Portugués (Portugal)",
+    "pl": "Polaco",
+    "cs": "Checo",
+    "sk": "Eslovaco",
+    "hu": "Húngaro",
+    "ro": "Rumano",
+    "el": "Griego",
+    "sv": "Sueco",
+    "da": "Danés",
+    "nb": "Noruego (bokmål)",
+    "fi": "Finés",
+    "tr": "Turco",
+    "ru": "Ruso",
+    "uk": "Ucraniano",
+    "ar": "Árabe",
+    "he": "Hebreo",
+    "hi": "Hindi",
+    "id": "Indonesio",
+    "vi": "Vietnamita",
+    "th": "Tailandés",
+    "zh-CN": "Chino (simplificado)",
+    "zh-TW": "Chino (tradicional)",
+    "ja": "Japonés",
+    "ko": "Coreano"
+  },
+  "appearance": {
+    "theme": "Tema",
+    "themes": {
+      "light": "Claro",
+      "forge": "Forge (oscuro)",
+      "systeem": "Según el sistema"
+    },
+    "ribbon": "Cinta de opciones",
+    "ribbonCompact": "Cinta compacta: solo iconos en los botones pequeños",
+    "ribbonCollapsed": "Cinta contraída de forma predeterminada (solo las pestañas; Ctrl+F1 alterna)",
+    "statusbar": "Barra de estado",
+    "status": {
+      "zoom": "Control deslizante de zoom",
+      "tekst": "Texto: página, palabras y caracteres",
+      "taal": "Texto: idioma (y ortografía)",
+      "bijhouden": "Texto: control de cambios",
+      "weergave": "Texto: botones de vista (diseño de impresión, modo de lectura)",
+      "rekenblad": "Hoja de cálculo: suma, promedio y recuento de la selección",
+      "presentatie": "Presentación: diapositiva x de y",
+      "database": "Base de datos: estado de la copia de trabajo"
+    }
+  },
+  "editing": {
+    "text": "Texto",
+    "shortcutProfile": "Métodos abreviados de teclado",
+    "profiles": {
+      "standaard": "Estándar (como LibreOffice)",
+      "word": "Word"
+    },
+    "profilesHelp": {
+      "standaard": "Ctrl+1 = Título 1, Ctrl+2 = Título 2, etc.",
+      "word": "Ctrl+1 = interlineado sencillo, Ctrl+Alt+1 = Título 1."
+    },
+    "miniToolbar": "Mostrar la minibarra de herramientas al seleccionar texto",
+    "spelling": "Ortografía y autocorrección",
+    "spellingOptions": {
+      "controleren": "Revisar la ortografía mientras escribe (línea ondulada roja)",
+      "hoofdletterwoordenNegeren": "Omitir palabras en MAYÚSCULAS",
+      "cijferwoordenNegeren": "Omitir palabras que contienen números",
+      "autocorrectie": "Autocorrección: DOs MAyúsculas SEguidas, mayúscula al principio de la oración y errores tipográficos frecuentes"
+    },
+    "spellingHelp": "Diccionarios: OpenTaal (neerlandés) y SCOWL (inglés, Reino Unido y EE. UU.). Haga clic con el botón derecho en una palabra subrayada para ver sugerencias; F7 abre el panel Ortografía y gramática.",
+    "personalDictionary_one": "Diccionario personal ({{count}} palabra)…",
+    "personalDictionary_many": "Diccionario personal ({{count}} de palabras)…",
+    "personalDictionary_other": "Diccionario personal ({{count}} palabras)…",
+    "personalDictionaryLabel": "Diccionario personal",
+    "personalDictionaryEmpty": "Aún no se han agregado palabras.",
+    "removeWord": "Quitar {{word}}",
+    "remove": "Quitar",
+    "keyboard": "Teclado",
+    "showShortcuts": "Ver métodos abreviados de teclado · F1"
+  },
+  "email": {
+    "privacy": "Privacidad",
+    "externalImages": "Imágenes externas en el correo electrónico",
+    "external": {
+      "account": "Según la configuración de cada cuenta",
+      "nooit": "No cargar nunca automáticamente (se pueden permitir por mensaje)"
+    }
+  },
+  "about": {
+    "appName": "Open Office Studio",
+    "version": "Versión",
+    "framework": "Creado con",
+    "design": "Diseño",
+    "licenses": "Licencias",
+    "licensesLink": "Licencias de los componentes utilizados",
+    "description": "Texto, hoja de cálculo, presentación, base de datos y correo electrónico en un espacio de trabajo local de la OpenAEC Foundation. Sus archivos permanecen en su equipo.",
+    "translations": "El neerlandés es el idioma de origen. Los demás idiomas son traducciones automáticas de OpenAEC y aún se están revisando; las mejoras son bienvenidas."
+  }
+}

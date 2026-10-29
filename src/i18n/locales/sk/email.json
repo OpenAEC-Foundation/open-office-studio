@@ -1,0 +1,1026 @@
+{
+  "accounts": {
+    "test": {
+      "test": "Otestovať",
+      "testConnection": "Otestovať pripojenie",
+      "testing": "Testuje sa…",
+      "retest": "Otestovať znova",
+      "failed": "Test zlyhal"
+    },
+    "settings": {
+      "title": "Nastavenia konta",
+      "noAccount": "Zatiaľ neexistuje žiadne konto.",
+      "addAccount": "Pridať konto",
+      "accountList": "Kontá",
+      "saving": "Ukladá sa…",
+      "saved": "Nastavenia boli uložené.",
+      "saveFailed": "Nepodarilo sa uložiť",
+      "tabs": {
+        "identity": "Identita",
+        "servers": "Servery",
+        "folders": "Priečinky",
+        "fetching": "Sťahovanie a súkromie",
+        "advanced": "Rozšírené"
+      },
+      "deleteAccount": {
+        "title": "Odstrániť konto",
+        "confirm": "Naozaj chcete odstrániť <strong>{{name}}</strong> ({{email}})? Vaše správy zostanú na serveri; uložené heslo sa odstráni z kľúčenky.",
+        "button": "Odstrániť konto",
+        "failed": "Konto sa nepodarilo odstrániť"
+      },
+      "identity": {
+        "accountName": "Názov konta",
+        "accountNameHint": "Iba pre vás, napríklad „Práca“ alebo „Osobné“.",
+        "yourName": "Vaše meno",
+        "email": "E-mailová adresa",
+        "replyTo": "Adresa pre odpovede",
+        "replyToPlaceholder": "Prázdne = vaša e-mailová adresa",
+        "signature": "Podpis",
+        "signatureHint": "Pridáva sa pod nové správy a odpovede, za „-- “."
+      },
+      "oauthAccount": {
+        "signedInAs": "Prihlásené ako <strong>{{account}}</strong> cez {{provider}}",
+        "noPasswordStored": "Žiadne heslo nie je uložené; prístup využíva token v kľúčenke.",
+        "signInAgain": "Prihlásiť sa znova",
+        "signedInAgain": "Znova prihlásené ako {{account}}."
+      },
+      "password": {
+        "change": "Zmeniť heslo",
+        "storedPlaceholder": "Uložené · ak ho chcete zachovať, nechajte prázdne",
+        "noneStoredPlaceholder": "Zatiaľ nie je uložené žiadne heslo"
+      },
+      "folders": {
+        "hint": "Zvoľte, kam Email Studio ukladá odoslané správy, koncepty a odstránené a archivované správy.",
+        "roles": {
+          "sent": "Odoslané správy",
+          "drafts": "Koncepty",
+          "trash": "Kôš",
+          "archive": "Archív"
+        },
+        "automatic": "Automaticky",
+        "automaticWithFolder": "Automaticky ({{folder}})"
+      },
+      "fetching": {
+        "checkForNew": "Kontrolovať nové správy",
+        "manualOnly": "Iba manuálne",
+        "everyMinutes_one": "Každú {{count}} minútu",
+        "everyMinutes_few": "Každé {{count}} minúty",
+        "everyMinutes_many": "Každých {{count}} minúty",
+        "everyMinutes_other": "Každých {{count}} minút",
+        "externalContent": "Vždy zobrazovať vzdialené obrázky a obsah",
+        "externalContentHint": "Odporúčame vypnúť: vzdialené obrázky prezrádzajú odosielateľom, kedy a kde správu otvárate.",
+        "trustedSenders": "Odosielatelia, ktorých vzdialený obsah sa vždy zobrazuje",
+        "forgetSender": "Zabudnúť {{sender}}"
+      },
+      "advanced": {
+        "oauthIntro": "Prihlásenie cez Microsoft alebo Google používa OAuth2. Tieto nastavenia platia pre všetky kontá. Vlastné client ID je potrebné iba vtedy, ak ho aplikácia neobsahuje; pozrite <code>{{doc}}</code>.",
+        "ispdb": "Pri novom konte prehľadať aj databázu Thunderbirdu",
+        "ispdbHint": "Názov domény sa potom odošle spoločnosti Mozilla. Predvolene vypnuté.",
+        "available": "K dispozícii.",
+        "unavailable": "Nie je k dispozícii.",
+        "loadingStatus": "Načítava sa stav…",
+        "clientId": "Client ID",
+        "clientSecret": "Client secret (voliteľné)",
+        "saveClientId": "Uložiť client ID",
+        "clientIdSaved": "Client ID pre {{provider}} bolo uložené.",
+        "clientIdSaveFailed": "Client ID sa nepodarilo uložiť",
+        "desktopOnly": "Vlastné client ID môžete nastaviť iba v počítačovej aplikácii."
+      }
+    },
+    "wizard": {
+      "title": "Pridať konto",
+      "intro": "Použite svoju existujúcu e-mailovú adresu. Email Studio funguje s každým poskytovateľom, ktorý ponúka IMAP a SMTP.",
+      "fullName": "Vaše celé meno",
+      "fullNamePlaceholder": "Meno Priezvisko",
+      "fullNameHint": "Ako príjemcovia uvidia vaše meno.",
+      "email": "E-mailová adresa",
+      "emailPlaceholder": "name@example.com",
+      "password": "Heslo",
+      "passwordHint": "Používa sa iba po výbere možnosti Otestovať alebo Hotovo a ukladá sa iba do kľúčenky operačného systému.",
+      "ispdb": "Prehľadať aj databázu Thunderbirdu",
+      "ispdbHint": "Názov domény (nie vaša adresa ani heslo) sa potom odošle spoločnosti Mozilla.",
+      "oauthPrompt": "Alebo sa prihláste bez hesla v aplikácii:",
+      "enterNameAndEmailFirst": "Najprv zadajte svoje meno a e-mailovú adresu.",
+      "saving": "Ukladá sa…",
+      "done": "Hotovo",
+      "saveAnyway": "Napriek tomu uložiť",
+      "saveTitle": "Uložiť konto",
+      "saveUntestedTitle": "Zatiaľ (úspešne) neotestované; konto môžete napriek tomu uložiť",
+      "saveFailed": "Konto sa nepodarilo uložiť",
+      "foundSettings": "Nájdené nastavenia",
+      "serverSettings": "Nastavenia servera",
+      "serverSettingsFor": "Nastavenia servera pre {{domain}}",
+      "enterEmailHint": "Zadajte svoju e-mailovú adresu; Email Studio potom automaticky vyhľadá správne servery.",
+      "searchFailed": "Vyhľadávanie zlyhalo",
+      "fillInManually": "Zadajte servery nižšie sami.",
+      "nothingFound": "Nenašli sa žiadne nastavenia. Zadajte servery nižšie sami; v prípade potreby sa na ne opýtajte poskytovateľa.",
+      "proposals": "Návrhy",
+      "unencrypted": "nešifrované",
+      "manualConfiguration": "Manuálna konfigurácia",
+      "adjusted": "· upravené",
+      "fieldsAppear": "Polia sa zobrazia, hneď ako bude zadaná platná e-mailová adresa.",
+      "bothServersFailed": "Oba servery zlyhali. Skontrolujte adresu, heslo a názvy serverov."
+    },
+    "discovery": {
+      "steps": {
+        "builtIn": "Vstavaný zoznam",
+        "ownDomain": "Vlastná doména",
+        "dns": "DNS",
+        "ispdb": "Databáza Thunderbirdu",
+        "probe": "Skúška pripojenia"
+      },
+      "stepStatus": {
+        "waiting": "čaká sa",
+        "busy": "prebieha…",
+        "found": "nájdené",
+        "nothing": "nič sa nenašlo",
+        "skipped": "nespustené"
+      },
+      "sources": {
+        "preset": "Vstavaný zoznam",
+        "autoconfig": "Konfigurácia z vašej vlastnej domény",
+        "srv": "Záznamy DNS SRV",
+        "mx": "Záznamy MX (poskytovateľ rozpoznaný)",
+        "ispdb": "Databáza Thunderbirdu",
+        "guess": "Bežné názvy serverov"
+      },
+      "unencrypted": "nešifrované",
+      "reachable": "dostupný",
+      "unreachable": "nedostupný",
+      "untested": "neotestované"
+    },
+    "server": {
+      "incoming": "Prichádzajúca (IMAP)",
+      "outgoing": "Odchádzajúca (SMTP)",
+      "columns": {
+        "server": "Server",
+        "port": "Port",
+        "security": "Zabezpečenie",
+        "authentication": "Overovanie",
+        "username": "Používateľské meno"
+      },
+      "hostLabel": "Server {{protocol}}",
+      "portLabel": "Port {{protocol}}",
+      "securityLabel": "Zabezpečenie {{protocol}}",
+      "authenticationLabel": "Overovanie {{protocol}}",
+      "usernameLabel": "Používateľské meno {{protocol}}",
+      "imapPlaceholder": "imap.example.com",
+      "smtpPlaceholder": "smtp.example.com",
+      "securityNone": "Žiadne",
+      "authNormal": "Normálne heslo",
+      "authEncrypted": "Šifrované heslo",
+      "unencryptedWarning": "<strong>Nešifrované pripojenie.</strong> Vaše heslo a správy putujú sieťou v čitateľnej podobe. Zvoľte SSL/TLS alebo STARTTLS, ak to váš poskytovateľ podporuje.",
+      "oauthHint": "OAuth2 vás pri teste alebo prvom použití vyzve na prihlásenie u poskytovateľa."
+    },
+    "oauth": {
+      "notSupported": "Táto verzia aplikácie zatiaľ nepodporuje prihlásenie cez Microsoft alebo Google.",
+      "signInFailed": "Prihlásenie cez {{provider}} zlyhalo",
+      "signInWith": "Prihlásiť sa cez {{provider}}",
+      "recommended": "odporúčané",
+      "waitTitle": "Dokončite prihlásenie v prehliadači",
+      "waitText": "Prihlasovacia stránka {{provider}} sa otvorila v prehliadači. Prihláste sa tam a udeľte prístup k e-mailu; Email Studio potom bude pokračovať tu.",
+      "unavailableTitle": "Prihlásenie cez {{provider}} tu nie je k dispozícii.",
+      "unavailableHelp": "V počítačovej aplikácii môžete nastaviť vlastné client ID pre {{provider}} v <em>Nástroje › Nastavenia konta › Rozšírené</em>. Ako ho vytvoriť, je opísané v <code>{{doc}}</code>. Môžete tiež pokračovať s heslom (pre aplikácie)."
+    }
+  },
+  "errors": {
+    "code": {
+      "connection": "Žiadne pripojenie k serveru. Skontrolujte internetové pripojenie, názov servera a port.",
+      "authentication": "Prihlásenie zlyhalo. Skontrolujte používateľské meno a heslo (Nástroje › Nastavenia konta).",
+      "certificate": "Certifikát servera nie je dôveryhodný alebo nezodpovedá názvu tohto servera.",
+      "timeout": "Server neodpovedal včas. Skúste to neskôr.",
+      "notFound": "Správa alebo priečinok už na serveri neexistuje.",
+      "refused": "Server odmietol príkaz.",
+      "tooLarge": "Správa je pre server príliš veľká. Zmenšite prílohy alebo ich odstráňte.",
+      "unavailable": "Táto funkcia tu nie je k dispozícii.",
+      "internal": "Niečo sa pokazilo."
+    },
+    "withDetail": "{{explanation}} ({{detail}})",
+    "withContext": "{{context}}: {{message}}",
+    "backendMissing": "Táto verzia počítačovej aplikácie neobsahuje funkciu e-mailu.",
+    "unexpectedBinary": "Neočakávaný binárny výstup z backendu."
+  },
+  "dialog": {
+    "closeEsc": "Zavrieť (Esc)"
+  },
+  "sendAsAttachment": {
+    "title": "Odoslať ako prílohu"
+  },
+  "ribbon": {
+    "tabs": {
+      "start": "Domov",
+      "view": "Zobraziť",
+      "tools": "Nástroje"
+    },
+    "groups": {
+      "new": "Nová",
+      "respond": "Odpovedať",
+      "delete": "Odstrániť",
+      "mark": "Značky",
+      "organize": "Usporiadať",
+      "layout": "Rozloženie",
+      "sort": "Zoradiť",
+      "message": "Správa",
+      "accounts": "Kontá",
+      "folders": "Priečinky"
+    },
+    "withShortcut": "{{action}} · {{shortcut}}",
+    "fetch": "Stiahnuť správy",
+    "fetchTitle": "Stiahnuť správy · {{key}} alebo {{shortcut}}",
+    "readUnread": "Prečítané/neprečítané",
+    "readUnreadTitle": "Prečítané alebo neprečítané · {{shortcut}}",
+    "star": "Hviezdička",
+    "move": "Presunúť",
+    "moveTitle": "Presunúť do priečinka",
+    "folderPane": "Tabla priečinkov",
+    "readingPane": "Tabla na čítanie",
+    "resetLayout": "Obnoviť rozloženie",
+    "sortBy": "Zoradiť podľa",
+    "sort": {
+      "date": "Dátum",
+      "sender": "Odosielateľ",
+      "subject": "Predmet",
+      "size": "Veľkosť"
+    },
+    "ascending": "Vzostupne",
+    "descending": "Zostupne",
+    "viewSource": "Zobraziť zdroj",
+    "accountSettings": "Nastavenia konta"
+  },
+  "studio": {
+    "errors": {
+      "loadAccounts": "Kontá sa nepodarilo načítať",
+      "loadMessages": "Správy sa nepodarilo načítať",
+      "openMessage": "Správu sa nepodarilo otvoriť",
+      "delete": "Nepodarilo sa odstrániť",
+      "move": "Nepodarilo sa presunúť",
+      "mark": "Nepodarilo sa označiť",
+      "forwardAttachments": "Prílohy na preposlanie sa nepodarilo stiahnuť",
+      "openFile": "{{name}} sa nepodarilo otvoriť",
+      "saveFile": "{{name}} sa nepodarilo uložiť",
+      "source": "Zdroj sa nepodarilo stiahnuť",
+      "updateFolder": "Priečinok sa nepodarilo aktualizovať",
+      "deleteFolder": "Priečinok sa nepodarilo odstrániť"
+    },
+    "accountAdded": "Konto {{email}} bolo pridané.",
+    "addAccount": "Pridať konto",
+    "deletePermanently": {
+      "title": "Odstrániť natrvalo",
+      "text_one": "Táto správa bude natrvalo odstránená. Túto akciu nemožno vrátiť späť.",
+      "text_few": "{{count}} správy budú natrvalo odstránené. Túto akciu nemožno vrátiť späť.",
+      "text_many": "{{count}} správy bude natrvalo odstránených. Túto akciu nemožno vrátiť späť.",
+      "text_other": "{{count}} správ bude natrvalo odstránených. Túto akciu nemožno vrátiť späť.",
+      "confirm": "Odstrániť natrvalo"
+    },
+    "noArchiveFolder": "Toto konto nemá priečinok archívu. Zvoľte ho v Nástroje › Nastavenia konta › Priečinky.",
+    "fetched": "Správy boli stiahnuté.",
+    "deleteFolder": {
+      "title": "Odstrániť priečinok",
+      "text": "Priečinok „{{folder}}“ a všetky správy v ňom sa na serveri odstránia."
+    },
+    "welcome": {
+      "title": "Zatiaľ žiadne e-mailové konto",
+      "text": "Pridajte svoje konto pomocou e-mailovej adresy a hesla. Email Studio nájde správne nastavenia."
+    },
+    "folderPaneWidth": "Šírka tably priečinkov",
+    "messageListWidth": "Šírka zoznamu správ",
+    "messageList": "Zoznam správ",
+    "search": {
+      "in": "Hľadať v {{folder}}",
+      "label": "Hľadať správy ({{shortcut}})",
+      "clear": "Vymazať hľadanie"
+    },
+    "filter": {
+      "label": "Rýchly filter",
+      "unread": "Neprečítané",
+      "unreadTitle": "Iba neprečítané",
+      "starred": "S hviezdičkou",
+      "starredTitle": "Iba s hviezdičkou",
+      "attachment": "Príloha",
+      "attachmentTitle": "Iba s prílohou",
+      "body": "Telo",
+      "bodyTitle": "Hľadať aj v texte správy (pomalšie)"
+    },
+    "count": {
+      "filtered": "{{shown}} z {{total}}",
+      "filteredLoaded": "{{shown}} z {{loaded}} načítaných",
+      "messages_one": "{{count}} správa",
+      "messages_few": "{{count}} správy",
+      "messages_many": "{{count}} správy",
+      "messages_other": "{{count}} správ",
+      "selected_one": "{{count}} vybratá",
+      "selected_few": "{{count}} vybraté",
+      "selected_many": "{{count}} vybratej",
+      "selected_other": "{{count}} vybratých"
+    },
+    "noResults": "Nenašli sa žiadne správy.",
+    "emptyFolder": "Tento priečinok je prázdny.",
+    "moveTo_one": "Presunúť správu do",
+    "moveTo_few": "Presunúť {{count}} správy do",
+    "moveTo_many": "Presunúť {{count}} správy do",
+    "moveTo_other": "Presunúť {{count}} správ do",
+    "folderDialog": {
+      "newTitle": "Nový priečinok",
+      "renameTitle": "Premenovať priečinok",
+      "create": "Vytvoriť",
+      "rename": "Premenovať",
+      "name": "Názov",
+      "inside": "Vnútri „{{folder}}“"
+    },
+    "source": {
+      "title": "Zdroj správy",
+      "saveAs": "Uložiť ako {{extension}}"
+    }
+  },
+  "address": {
+    "invalid": "Neplatná adresa: {{address}}",
+    "remove": "Odstrániť {{address}}"
+  },
+  "list": {
+    "label": "Správy",
+    "to": "Komu: {{address}}",
+    "noRecipient": "(bez príjemcu)",
+    "replied": "Zodpovedané",
+    "hasAttachment": "Má prílohu",
+    "noSubject": "(bez predmetu)",
+    "star": "Pridať hviezdičku",
+    "unstar": "Odstrániť hviezdičku",
+    "loadingMore": "Načítavajú sa ďalšie správy…"
+  },
+  "folders": {
+    "label": "Priečinky",
+    "loading": "Načítavajú sa priečinky…",
+    "unread_one": "{{count}} neprečítaná",
+    "unread_few": "{{count}} neprečítané",
+    "unread_many": "{{count}} neprečítanej",
+    "unread_other": "{{count}} neprečítaných",
+    "inbox": "Doručená pošta"
+  },
+  "reader": {
+    "loadingMessage": "Načítava sa správa…",
+    "chooseMessage": "Zvoľte správu, ktorú chcete čítať.",
+    "label": "Správa: {{subject}}",
+    "reply": "Odpovedať",
+    "replyTitle": "Odpovedať · {{shortcut}}",
+    "replyAll": "Odpovedať všetkým",
+    "replyAllTitle": "Odpovedať všetkým · {{shortcut}}",
+    "forward": "Preposlať",
+    "forwardTitle": "Preposlať · {{shortcut}}",
+    "archive": "Archivovať",
+    "archiveTitle": "Archivovať · {{shortcut}}",
+    "delete": "Odstrániť",
+    "deleteTitle": "Odstrániť · {{shortcut}}",
+    "starTitle": "Hviezdička · {{shortcut}}",
+    "from": "Od",
+    "to": "Komu",
+    "none": "(žiadne)",
+    "cc": "Kópia",
+    "replyTo": "Odpovedať na",
+    "date": "Dátum",
+    "external": {
+      "blocked_one": "Jeden vzdialený obrázok bol zablokovaný na ochranu vášho súkromia.",
+      "blocked_few": "{{count}} vzdialené obrázky boli zablokované na ochranu vášho súkromia.",
+      "blocked_many": "{{count}} vzdialeného obrázka bolo zablokovaných na ochranu vášho súkromia.",
+      "blocked_other": "{{count}} vzdialených obrázkov bolo zablokovaných na ochranu vášho súkromia.",
+      "desktopHint": "S vaším povolením ich aplikácia stiahne a zobrazí bez toho, aby sa správa niekam pripájala.",
+      "demoHint": "(V ukážke odkazujú na adresy, ktoré neexistujú.)",
+      "show": "Zobraziť vzdialený obsah",
+      "alwaysFrom": "Vždy zobrazovať od {{sender}}",
+      "failed_one": "Jeden vzdialený obrázok sa nepodarilo stiahnuť.",
+      "failed_few": "{{count}} vzdialené obrázky sa nepodarilo stiahnuť.",
+      "failed_many": "{{count}} vzdialeného obrázka sa nepodarilo stiahnuť.",
+      "failed_other": "{{count}} vzdialených obrázkov sa nepodarilo stiahnuť."
+    },
+    "attachments": {
+      "label": "Prílohy",
+      "previewOrOpen": "Kliknutie: ukážka · dvojité kliknutie: otvoriť v {{module}}",
+      "preview": "Ukážka",
+      "openCopyTitle": "Otvoriť ako upraviteľnú kópiu v {{module}}",
+      "openIn": "Otvoriť v {{module}}",
+      "saveTitle": "Uložiť do tohto počítača"
+    },
+    "content": "Obsah správy",
+    "loadingContent": "Načítava sa obsah…"
+  },
+  "compose": {
+    "errors": {
+      "saveDraft": "Koncept sa nepodarilo uložiť",
+      "noRecipients": "Pridajte aspoň jedného príjemcu.",
+      "send": "Nepodarilo sa odoslať",
+      "attachmentsLarge": "Prílohy majú spolu {{size}}; mnohé servery odmietajú správy väčšie ako {{max}}.",
+      "linkNotAllowed": "Povolené sú iba odkazy http(s), mailto a tel."
+    },
+    "noSubject": {
+      "title": "Bez predmetu",
+      "text": "Táto správa nemá predmet. Napriek tomu odoslať?",
+      "fillIn": "Zadať predmet",
+      "sendWithout": "Odoslať bez predmetu"
+    },
+    "forgotAttachment": {
+      "title": "Nezabudli ste na prílohu?",
+      "text": "Vaša správa spomína <strong>„{{word}}“</strong>, ale nebola pridaná žiadna príloha.",
+      "sendAnyway": "Napriek tomu odoslať",
+      "keywords": "príloha|prílohy|v prílohe|prikladám|priložené"
+    },
+    "addAttachment": "Pridať prílohu",
+    "attachment": "Priložiť",
+    "removeAttachment": "Odstrániť {{name}}",
+    "attachmentsSummary_one": "{{count}} príloha · {{size}}",
+    "attachmentsSummary_few": "{{count}} prílohy · {{size}}",
+    "attachmentsSummary_many": "{{count}} prílohy · {{size}}",
+    "attachmentsSummary_other": "{{count}} príloh · {{size}}",
+    "dropToAttach": "Pustením pridáte ako prílohu",
+    "sent": "Správa bola odoslaná.",
+    "sentWithSubject": "Správa bola odoslaná: {{subject}}.",
+    "unsent": {
+      "title": "Správa nebola odoslaná",
+      "text": "Chcete túto správu uložiť ako koncept?",
+      "discard": "Zahodiť",
+      "saveDraft": "Uložiť koncept"
+    },
+    "label": "Písanie: {{subject}}",
+    "newMessage": "Nová správa",
+    "send": "Odoslať",
+    "sending": "Odosiela sa…",
+    "sendTitle": "Odoslať · {{shortcut}}",
+    "draft": "Koncept",
+    "savingDraft": "Ukladá sa…",
+    "saveDraftTitle": "Uložiť ako koncept · {{shortcut}}",
+    "dismissError": "Zavrieť správu",
+    "from": "Od",
+    "to": "Komu",
+    "cc": "Kópia",
+    "bcc": "Skrytá kópia",
+    "subject": "Predmet",
+    "body": "Text správy",
+    "format": {
+      "label": "Formátovanie",
+      "withShortcut": "{{action}} · {{shortcut}}",
+      "bold": "Tučné",
+      "italic": "Kurzíva",
+      "underline": "Podčiarknuté",
+      "bullets": "Odrážky",
+      "numbering": "Číslovanie",
+      "link": "Prepojenie",
+      "insertLink": "Vložiť prepojenie",
+      "clear": "Vymazať formátovanie",
+      "linkAddress": "Adresa prepojenia",
+      "insert": "Vložiť"
+    }
+  },
+  "link": {
+    "browserFailed": "Prehliadač sa nepodarilo otvoriť. Skopírujte adresu: {{url}}",
+    "phoneTitle": "Telefónne číslo",
+    "openTitle": "Otvoriť prepojenie?",
+    "copied": "Adresa bola skopírovaná.",
+    "copyFailed": "Kopírovanie zlyhalo; vyberte adresu manuálne.",
+    "copy": "Kopírovať adresu",
+    "openInBrowser": "Otvoriť v prehliadači",
+    "phoneIntro": "Toto telefónne číslo sa nachádza v správe:",
+    "realTarget": "Toto prepojenie v skutočnosti vedie na:",
+    "misleading": "Text správy spomína <strong>{{shown}}</strong>, ale prepojenie vedie na <strong>{{actual}}</strong>. Môže ísť o phishing.",
+    "unencrypted": "Poznámka: toto prepojenie nepoužíva šifrované pripojenie (http)."
+  },
+  "files": {
+    "saveUnsupported": "Táto verzia počítačovej aplikácie zatiaľ nedokáže uložiť {{name}}. Otvorte prílohu v module alebo aktualizujte aplikáciu.",
+    "saved": "Uložené: {{path}}",
+    "saveCancelled": "Ukladanie bolo zrušené.",
+    "downloadRequested": "Sťahovanie bolo vyžiadané. Skontrolujte súbor v stiahnutých súboroch."
+  },
+  "quote": {
+    "unknownSender": "(neznáme)",
+    "wroteOn": "Dňa {{date}} {{sender}} napísal(a):",
+    "wrote": "{{sender}} napísal(a):",
+    "forwarded": "Preposlaná správa",
+    "subject": "Predmet: {{value}}",
+    "date": "Dátum: {{value}}",
+    "from": "Od: {{value}}",
+    "to": "Komu: {{value}}",
+    "cc": "Kópia: {{value}}"
+  },
+  "demo": {
+    "banner": "Ukážka — skutočný e-mail v prehliadači nie je možný; použite počítačovú aplikáciu.",
+    "accountName": "Ukážková schránka",
+    "folders": {
+      "notifications": "Oznámenia",
+      "drafts": "Koncepty",
+      "sent": "Odoslané",
+      "archive": "Archív",
+      "junk": "Nevyžiadaná pošta",
+      "trash": "Kôš"
+    },
+    "welcome": {
+      "subject": "Vitajte v OpenAEC Email Studio",
+      "heading": "Vitajte!",
+      "intro": "Toto je ukážková schránka. V prehliadači Email Studio nemôže prijímať ani odosielať skutočný e-mail; použite na to počítačovú aplikáciu.",
+      "introHtml": "Toto je <strong>ukážková schránka</strong>. V prehliadači Email Studio nemôže prijímať ani odosielať skutočný e-mail; použite na to počítačovú aplikáciu.",
+      "tryIt": "Pokojne si vyskúšajte: odpovedanie, označovanie hviezdičkou (S), presúvanie do archívu a otvorenie prílohy v module Text alebo Tabuľka.",
+      "tryItHtml": "Pokojne si vyskúšajte: odpovedanie, označovanie hviezdičkou (<kbd>S</kbd>), presúvanie do archívu a otvorenie prílohy v module Text alebo Tabuľka.",
+      "logoText": "Logo OpenAEC nižšie je vložený obrázok z prílohy (cid:).",
+      "logoAlt": "Logo OpenAEC",
+      "logoHtml": "Logo vľavo je vložený obrázok z prílohy."
+    },
+    "errors": {
+      "accountNotFound": "Konto neexistuje.",
+      "messageNotFound": "Správa neexistuje.",
+      "folderExists": "Tento priečinok už existuje.",
+      "folderCannotRename": "Tento priečinok nemožno premenovať.",
+      "specialFolderDelete": "Špeciálne priečinky nemožno odstrániť.",
+      "attachmentNotFound": "Príloha neexistuje.",
+      "targetFolderNotFound": "Cieľový priečinok neexistuje.",
+      "noRecipients": "Neboli zadaní žiadni príjemcovia.",
+      "recipientRefused": "Ukážka: server odmieta príjemcu {{domain}}.",
+      "attachmentsTooLarge": "Ukážka: prílohy sú obmedzené na {{max}}."
+    },
+    "accountAdded": {
+      "subject": "Vaše konto bolo pridané (ukážka)",
+      "text": "Konto {{email}} bolo pridané do ukážky. {{notice}}"
+    },
+    "discovery": {
+      "knownProvider": "Známy poskytovateľ (ukážka).",
+      "mx": "Záznam MX domény {{domain}} odkazuje na mail.protection.outlook.com (ukážka).",
+      "ownServer": "{{name}} (vlastný server)",
+      "autoconfig": "Nájdené na autoconfig.{{domain}} (ukážka).",
+      "srv": "_imaps._tcp a _submission._tcp (ukážka).",
+      "ispdb": "Z databázy Thunderbirdu (ukážka).",
+      "guessImapOk": "Bežné názvy serverov; skúška IMAP bola úspešná (ukážka).",
+      "guessAlternative": "Alternatívny názov servera (ukážka)."
+    },
+    "test": {
+      "noServer": "Nebol zadaný žiadny server {{protocol}}.",
+      "invalidPort": "Neplatný port.",
+      "unreachable": "Ukážka: {{host}} nie je dostupný.",
+      "simulated": "Ukážka: pripojenie simulované.",
+      "simulatedUnencrypted": "Ukážka: pripojenie simulované (nešifrované!)."
+    },
+    "oauthDesktopOnly": "Prihlásenie cez Microsoft alebo Google je možné iba v počítačovej aplikácii."
+  },
+  "preview": {
+    "loading": "Načítava sa ukážka…",
+    "dialog": {
+      "attachments": "Prílohy",
+      "previous": "Predchádzajúca príloha",
+      "previousTitle": "Predchádzajúca príloha (←)",
+      "next": "Ďalšia príloha",
+      "nextTitle": "Ďalšia príloha (→)",
+      "close": "Zavrieť ukážku",
+      "closeTitle": "Zavrieť (Esc)",
+      "fetching": "Sťahuje sa príloha…",
+      "fetchFailed": "Prílohu sa nepodarilo stiahnuť: {{message}}"
+    },
+    "card": {
+      "fileName": "Názov súboru",
+      "size": "Veľkosť",
+      "openExternal": "Otvoriť v predvolenej aplikácii",
+      "unknown": "neznáme",
+      "attention": "Poznámka",
+      "yes": "áno",
+      "no": "nie"
+    },
+    "detection": {
+      "kinds": {
+        "pdf": "PDF",
+        "dwg": "výkres DWG",
+        "dxf": "výkres DXF",
+        "ifc": "model IFC",
+        "markdown": "Markdown",
+        "text": "text",
+        "image": "obrázok",
+        "office": "dokument Office",
+        "unknown": "neznámy súbor"
+      },
+      "contentDiffers": "Názov naznačuje {{kind}}, ale obsah je iný.",
+      "mismatch": "Táto príloha sa volá „.{{extension}}“ ({{named}}), ale obsahom je {{actual}}.",
+      "mismatchSubtype": "Táto príloha sa volá „.{{extension}}“ ({{named}}), ale obsahom je {{actual}} ({{subtype}}).",
+      "contentBinary": "Názov naznačuje {{kind}}, ale obsah je binárny.",
+      "notSvg": "Názov naznačuje obrázok SVG, ale obsah nie je SVG.",
+      "signatureMissing": "Názov naznačuje {{kind}}, ale obsahu chýbajú zodpovedajúce znaky."
+    },
+    "image": {
+      "loadFailed": "Obrázok sa nepodarilo načítať: {{message}}",
+      "subtitle": "Obrázok",
+      "cannotDisplay": "Tento obrázok sa tu nedá zobraziť (poškodený alebo nepodporovaný variant).",
+      "tooLarge": "Tento obrázok je väčší ako {{size}} MB a nezobrazuje sa v ukážke.",
+      "tooManyPixels": "Tento obrázok má {{width}} × {{height}} pixelov (viac ako {{megapixels}} megapixelov) a nezobrazuje sa v ukážke.",
+      "toolbar": "Obrázok",
+      "zoomOut": "Oddialiť",
+      "zoomOutTitle": "Oddialiť (−)",
+      "zoomIn": "Priblížiť",
+      "zoomInTitle": "Priblížiť (+)",
+      "fit": "Prispôsobiť oknu",
+      "fitTitle": "Prispôsobiť oknu (0)",
+      "actualSize": "Skutočná veľkosť (100 %)",
+      "actualSizeTitle": "Skutočná veľkosť",
+      "rotate": "Otočiť doprava",
+      "rotateTitle": "Otočiť doprava (R)",
+      "area": "Ukážka obrázka"
+    },
+    "text": {
+      "loadFailed": "Text sa nepodarilo načítať: {{message}}",
+      "toolbar": "Text",
+      "encoding": "Kódovanie: {{encoding}}",
+      "utf8Bom": "UTF-8 (s BOM)",
+      "formatJson": "Formátovať JSON",
+      "wrapLines": "Zalamovať riadky",
+      "truncated": "Zobrazuje sa prvých {{limit}} z {{size}}. Ak chcete vidieť všetko, uložte súbor.",
+      "contentOf": "Obsah {{name}}"
+    },
+    "markdown": {
+      "loadFailed": "Súbor sa nepodarilo načítať: {{message}}",
+      "linkNotOpened": "Prepojenie nebolo otvorené: {{url}}",
+      "imageFallback": "Obrázok",
+      "externalBlocked": "{{alt}} (externý obrázok zablokovaný)",
+      "unavailable": "{{alt}} (nie je k dispozícii)",
+      "view": "Zobraziť",
+      "rendered": "Vykreslené",
+      "source": "Zdroj",
+      "showExternalImages": "Zobraziť externé obrázky",
+      "truncated": "Zobrazuje sa prvých {{limit}} z {{size}}.",
+      "confirmLabel": "Otvoriť prepojenie",
+      "confirmQuestion": "Otvoriť toto prepojenie mimo Office Studio?"
+    },
+    "pdf": {
+      "loadFailed": "PDF sa nepodarilo načítať: {{message}}",
+      "properties": "Vlastnosti",
+      "frameTitle": "PDF: {{name}}",
+      "linuxUnsupported": "Webview v Linuxe nedokáže spoľahlivo zobrazovať PDF. Úplná ukážka pribudne v budúcej verzii (prehliadač v Ruste).",
+      "cannotPreview": "Ukážku tohto PDF tu nemožno zobraziť. Úplná ukážka pribudne v budúcej verzii (prehliadač v Ruste).",
+      "subtitle": "Dokument PDF",
+      "subtitleVersion": "PDF {{version}}",
+      "pages": "Strany",
+      "author": "Autor",
+      "subject": "Predmet",
+      "createdWith": "Vytvorené v",
+      "created": "Vytvorené",
+      "modified": "Upravené",
+      "encrypted": "Šifrované",
+      "incomplete": "súbor sa zdá byť neúplný alebo poškodený",
+      "showPreview": "Zobraziť ukážku"
+    },
+    "cad": {
+      "loadFailed": "Výkres sa nepodarilo načítať: {{message}}",
+      "previewLater": "Ukážka pribudne v budúcej verzii (prehliadač v Ruste).",
+      "tooLargeToParse": "Tento súbor je príliš veľký na analýzu tu. Ukážka pribudne v budúcej verzii (prehliadač v Ruste).",
+      "dwgSubtitle": "Výkres AutoCAD (DWG)",
+      "dxfSubtitle": "Výkres DXF",
+      "dxfBinarySubtitle": "Binárny výkres DXF",
+      "format": "Formát",
+      "savedAs": "Uložené ako",
+      "unknownAutocadVersion": "neznáma verzia AutoCADu",
+      "units": "Jednotky",
+      "entities": "Entity",
+      "blocks": "Bloky",
+      "layers": "Hladiny",
+      "thumbnailAlt": "Vložená miniatúra výkresu",
+      "thumbnailCaption": "Miniatúra zo súboru",
+      "entitiesByType": "Entity podľa typu",
+      "layersCount": "Hladiny ({{n}})",
+      "andMore": "… a ďalšie ({{n}})",
+      "versionRange": "AutoCAD {{from}} až {{to}}",
+      "versionAndLater": "AutoCAD {{version}} a novší",
+      "unitCode": "kód {{code}}",
+      "unitNames": {
+        "unitless": "bez jednotiek",
+        "inch": "palec",
+        "foot": "stopa",
+        "mile": "míľa",
+        "millimeter": "milimeter",
+        "centimeter": "centimeter",
+        "meter": "meter",
+        "kilometer": "kilometer",
+        "microinch": "mikropalec",
+        "mil": "mil",
+        "yard": "yard",
+        "angstrom": "ångström",
+        "nanometer": "nanometer",
+        "micron": "mikrón",
+        "decimeter": "decimeter",
+        "decameter": "dekameter",
+        "hectometer": "hektometer",
+        "gigameter": "gigameter",
+        "astronomicalUnit": "astronomická jednotka",
+        "lightYear": "svetelný rok",
+        "parsec": "parsek",
+        "usSurveyFoot": "americká geodetická stopa",
+        "usSurveyInch": "americký geodetický palec",
+        "usSurveyYard": "americký geodetický yard",
+        "usSurveyMile": "americká geodetická míľa"
+      }
+    },
+    "ifc": {
+      "loadFailed": "Model sa nepodarilo načítať: {{message}}",
+      "previewLater": "3D ukážka pribudne v budúcej verzii (prehliadač v Ruste).",
+      "tooLarge": "Tento model je väčší ako {{size}} MB a tu sa neanalyzuje.",
+      "analysing": "Analyzuje sa model… {{percent}}",
+      "cancelled": "Analýza bola zrušená.",
+      "retry": "Analyzovať znova",
+      "failed": "Analýza zlyhala: {{message}}",
+      "subtitle": "Model IFC",
+      "subtitleWithSchema": "Model IFC · {{schemas}}",
+      "nameInFile": "Názov v súbore",
+      "timestamp": "Časová pečiatka",
+      "author": "Autor",
+      "organization": "Organizácia",
+      "application": "Aplikácia",
+      "description": "Popis",
+      "sites": "Pozemky",
+      "buildings": "Budovy",
+      "entities": "Entity",
+      "incomplete": "súbor sa zdá byť neúplný (chýba END-ISO-10303-21)",
+      "storeys": "Podlažia ({{n}})",
+      "elementsHeading": "Stavebné prvky",
+      "allEntityTypes": "Všetky typy entít ({{n}})",
+      "elements": {
+        "wall": "Steny",
+        "wallStandardCase": "Steny (štandardný prípad)",
+        "curtainWall": "Ľahké obvodové plášte",
+        "slab": "Podlahy a dosky",
+        "roof": "Strechy",
+        "column": "Stĺpy",
+        "beam": "Nosníky",
+        "member": "Prútové prvky",
+        "plate": "Platne",
+        "door": "Dvere",
+        "window": "Okná",
+        "stair": "Schodiská",
+        "ramp": "Rampy",
+        "railing": "Zábradlia",
+        "covering": "Obklady",
+        "footing": "Základy",
+        "pile": "Piloty",
+        "space": "Priestory",
+        "opening": "Otvory",
+        "furnishing": "Vybavenie",
+        "flowSegment": "Úseky potrubí a vzduchovodov",
+        "flowTerminal": "Koncové prvky inštalácií",
+        "proxy": "Ostatné stavebné prvky",
+        "storey": "Podlažia"
+      }
+    },
+    "office": {
+      "kinds": {
+        "document": "Textový dokument",
+        "spreadsheet": "Tabuľka",
+        "presentation": "Prezentácia",
+        "database": "Databáza"
+      },
+      "genericDocument": "Dokument Office",
+      "type": "Typ",
+      "openFailed": "Otvorenie zlyhalo: {{message}}",
+      "openCopyHint": "Otvorte upraviteľnú kópiu v {{module}}. Originál v e-maile zostane nezmenený.",
+      "cannotOpen": "Tento formát Office sa tu nedá otvoriť.",
+      "opening": "Otvára sa…",
+      "openIn": "Otvoriť v {{module}}"
+    },
+    "unknown": {
+      "subtitle": "Ukážka nie je k dispozícii",
+      "declaredType": "Deklarovaný typ",
+      "extension": "Prípona",
+      "none": "žiadna",
+      "message": "Pre tento typ súboru nemožno zobraziť ukážku. Uložte ho a otvorte iba vtedy, ak odosielateľovi dôverujete."
+    }
+  },
+  "backend": {
+    "accounts": {
+      "fileCorrupt": "Súbor kont {{path}} je poškodený.",
+      "fileUnreadable": "Súbor kont sa nepodarilo prečítať.",
+      "fileWriteFailed": "Súbor kont sa nepodarilo zapísať.",
+      "invalidEmail": "Zadajte platnú e-mailovú adresu.",
+      "invalidReplyTo": "Adresa pre odpovede nie je platná e-mailová adresa.",
+      "lineBreakInName": "Názvy nesmú obsahovať zalomenia riadkov.",
+      "notFound": "Toto konto už neexistuje.",
+      "saveFailed": "Kontá sa nepodarilo uložiť.",
+      "usernameMissing": "Zadajte používateľské meno pre IMAP a SMTP."
+    },
+    "attachments": {
+      "blockedDatabase": "Z bezpečnostných dôvodov sa '{{name}}' neotvára automaticky. Databázy Access otvárajte v Database Studio. Ak ho chcete napriek tomu zobraziť, uložte prílohu.",
+      "blockedExecutable": "Z bezpečnostných dôvodov sa '{{name}}' neotvára automaticky. Tento typ súboru môže spúšťať programy. Ak ho chcete napriek tomu zobraziť, uložte prílohu.",
+      "blockedMacros": "Z bezpečnostných dôvodov sa '{{name}}' neotvára automaticky. Tento dokument obsahuje makrá. Ak ho chcete napriek tomu zobraziť, uložte prílohu.",
+      "blockedScripts": "Z bezpečnostných dôvodov sa '{{name}}' neotvára automaticky. Tento typ súboru môže obsahovať skripty. Ak ho chcete napriek tomu zobraziť, uložte prílohu.",
+      "emptyOrTooLarge": "Príloha je prázdna alebo väčšia ako 100 MB.",
+      "executableContent": "'{{name}}' je {{kind}} a z bezpečnostných dôvodov sa neotvorí.",
+      "invalidName": "Neplatný názov súboru.",
+      "kind": {
+        "linuxProgram": "Program pre Linux (ELF)",
+        "macProgram": "Program pre macOS (Mach-O) alebo trieda Java",
+        "script": "skript",
+        "windowsProgram": "Program pre Windows (PE)",
+        "windowsShortcut": "Odkaz systému Windows"
+      },
+      "nameMissing": "Chýba názov súboru.",
+      "noProgram": "Nenašiel sa žiadny program na otvorenie tejto prílohy.",
+      "notFound": "Príloha {{index}} v tejto správe neexistuje.",
+      "openFailed": "Otvorenie zlyhalo.",
+      "sendAsBinary": "Odošlite prílohu ako binárne údaje s veľkosťou najviac 100 MB.",
+      "tempDirFailed": "Dočasný priečinok sa nepodarilo vytvoriť.",
+      "tempSaveFailed": "Prílohu sa nepodarilo dočasne uložiť."
+    },
+    "auth": {
+      "failed": "Prihlásenie do {{host}} zlyhalo: používateľské meno alebo heslo je nesprávne ({{detail}}). Gmail, Outlook, iCloud a Yahoo vyžadujú heslo pre aplikácie.",
+      "noPassword": "Pre toto konto nebolo zadané ani uložené žiadne heslo.",
+      "noStoredPassword": "Pre toto konto nie je uložené žiadne heslo. Zadajte heslo v nastaveniach konta."
+    },
+    "autoconfig": {
+      "httpsRedirectOnly": "Sledujú sa iba presmerovania na HTTPS.",
+      "invalidEncoding": "Neplatné kódovanie znakov v konfiguračnom súbore.",
+      "notFound": "Nenašla sa žiadna konfigurácia (HTTP {{status}}).",
+      "tooManyRedirects": "Príliš veľa presmerovaní."
+    },
+    "common": {
+      "saveFailed": "Uloženie zlyhalo."
+    },
+    "compose": {
+      "attachmentCorrupt": "Príloha '{{name}}' je poškodená.",
+      "attachmentsTooLarge": "Prílohy majú spolu viac ako {{max}} MB. Veľké súbory posielajte cez odkaz na zdieľanie.",
+      "buildFailed": "Správu sa nepodarilo zostaviť ({{detail}}).",
+      "field": {
+        "bcc": "Skrytá kópia",
+        "cc": "Kópia",
+        "from": "Od",
+        "inReplyTo": "In-Reply-To",
+        "references": "References",
+        "replyTo": "Reply-To",
+        "subject": "Predmet",
+        "to": "Komu"
+      },
+      "invalidAddress": "'{{address}}' v poli {{field}} nie je platná e-mailová adresa.",
+      "invalidCharacters": "{{field}} obsahuje neplatné znaky.",
+      "invalidEnvelope": "Neplatná obálka.",
+      "noRecipients": "Zadajte aspoň jedného príjemcu."
+    },
+    "connection": {
+      "failed": "Žiadne pripojenie k {{host}}: {{detail}}",
+      "hostNotFound": "Názov servera {{host}} sa nenašiel.",
+      "refused": "Server {{host}} odmietol pripojenie. Skontrolujte port a nastavenie zabezpečenia.",
+      "reset": "Pripojenie k {{host}} bolo neočakávane ukončené. Zodpovedá nastavenie zabezpečenia (SSL/TLS alebo STARTTLS) portu?",
+      "timeout": "Server {{host}} neodpovedal včas. Skontrolujte názov servera, port a bránu firewall."
+    },
+    "files": {
+      "saveFailed": "Súbor sa nepodarilo uložiť."
+    },
+    "http": {
+      "invalidHttpResponse": "Neplatná odpoveď HTTP.",
+      "invalidResponse": "Neplatná odpoveď.",
+      "invalidServerName": "Neplatný názov servera {{host}}.",
+      "invalidUrl": "Neplatná webová adresa.",
+      "plainOnlyLocal": "Nešifrované HTTP je povolené iba k tomuto počítaču.",
+      "redirectWithoutLocation": "Presmerovanie bez adresy.",
+      "responseTooLarge": "Odpoveď servera je príliš veľká."
+    },
+    "images": {
+      "credentialsInUrl": "Adresy obsahujúce prihlasovacie údaje sa nesťahujú.",
+      "hostNotFound": "{{host}} sa nenašiel.",
+      "httpOnly": "Povolené sú iba adresy http a https.",
+      "invalidServerName": "Neplatný názov servera.",
+      "notAnImage": "Táto adresa nevracia obrázok.",
+      "privateAddress": "Externý obsah z interných alebo lokálnych adries sa nesťahuje.",
+      "timeout": "Obrázok sa nenačítal do 10 sekúnd.",
+      "tooLarge": "Obrázok je väčší ako 10 MB.",
+      "tooManyRedirects": "Príliš veľa presmerovaní (najviac 3).",
+      "unavailable": "Obrázok nie je k dispozícii (HTTP {{status}}).",
+      "unknownRedirect": "Neznáme presmerovanie.",
+      "unsupportedImage": "Obsah nie je podporovaný obrázok."
+    },
+    "imap": {
+      "action": {
+        "copy": "Kopírovanie",
+        "countFolders": "Počítanie priečinkov",
+        "createFolder": "Vytvorenie priečinka",
+        "delete": "Odstránenie",
+        "deleteFolder": "Odstránenie priečinka",
+        "expunge": "Vyčistenie",
+        "fetchMessage": "Stiahnutie správy",
+        "fetchMessages": "Stiahnutie správ",
+        "flag": "Označenie",
+        "listFolders": "Stiahnutie priečinkov",
+        "move": "Presun",
+        "openFolder": "Otvorenie priečinka",
+        "openNamedFolder": "Otvorenie priečinka '{{folder}}'",
+        "renameFolder": "Premenovanie priečinka",
+        "saveToDrafts": "Uloženie do Konceptov",
+        "saveToFolder": "Uloženie do priečinka",
+        "saveToSent": "Uloženie do Odoslaných",
+        "search": "Hľadanie",
+        "signIn": "Prihlásenie",
+        "startTls": "STARTTLS"
+      },
+      "alreadyInTrash": "Tieto správy sú už v koši; odstráňte ich natrvalo.",
+      "appendRejected": "{{action}}: server správu odmietol.",
+      "badCommand": "{{action}}: server nerozumel príkazu ({{detail}}).",
+      "cannotDeleteInbox": "Doručenú poštu nemožno odstrániť.",
+      "cannotRenameInbox": "Doručenú poštu nemožno premenovať.",
+      "closedImmediately": "{{host}} okamžite ukončil pripojenie. Zodpovedá nastavenie zabezpečenia (SSL/TLS alebo STARTTLS) portu?",
+      "commandTimeout": "{{host}} neodpovedal do {{seconds}} sekúnd.",
+      "connectTimeout": "Žiadna odpoveď od {{host}}:{{port}} do {{seconds}} sekúnd. Skontrolujte názov servera, port a bránu firewall.",
+      "connectionLost": "Pripojenie k {{host}} sa stratilo.",
+      "draftsFolderMissing": "Na serveri sa nenašiel priečinok Koncepty. Zvoľte tento priečinok v nastaveniach konta.",
+      "greetingRefused": "{{host}} odmietol pripojenie: {{detail}}",
+      "invalidFolderName": "Neplatný názov priečinka.",
+      "invalidMessage": "Neplatná správa.",
+      "invalidName": "{{action}}: neplatné znaky v názve.",
+      "invalidSearchCharacters": "Hľadaný text obsahuje neplatné znaky.",
+      "messageGone": "Táto správa už neexistuje (možno bola presunutá alebo odstránená).",
+      "messageTooLarge": "Správa má {{size}} MB; Email Studio otvára správy do {{max}} MB.",
+      "noStarttls": "{{host}} nepodporuje STARTTLS na porte {{port}}. Zvoľte SSL/TLS (zvyčajne port 993).",
+      "noTrash": "Na serveri sa nenašiel priečinok koša. Zvoľte priečinok koša v nastaveniach konta alebo odstráňte natrvalo.",
+      "noValidMessages": "Neboli zadané žiadne platné správy.",
+      "notFound": "{{action}}: {{detail}}",
+      "quotaExceeded": "{{action}}: poštová schránka je plná ({{detail}}).",
+      "refused": "{{action}}: server odmietol ({{detail}}).",
+      "retryLater": "{{message}} (Email Studio to skúsi znova o {{retrySeconds}} sekúnd, aby ho server nezablokoval.)",
+      "searchTooLong": "Hľadaný text je príliš dlhý.",
+      "sentFolderMissing": "Na serveri sa nenašiel priečinok Odoslané. Zvoľte tento priečinok v nastaveniach konta.",
+      "signInTimeout": "Prihlásenie do {{host}} trvalo príliš dlho.",
+      "specialFolderMissing": "Priečinok sa na serveri nenašiel. Zvoľte tento priečinok v nastaveniach konta.",
+      "unexpectedError": "{{action}}: neočakávaná chyba.",
+      "unexpectedResponse": "{{action}}: neočakávaná odpoveď servera.",
+      "unexpectedState": "Neočakávaný stav pripojenia."
+    },
+    "keychain": {
+      "notResponding": "Kľúčenka neodpovedala.",
+      "unavailable": "Kľúčenka operačného systému nie je k dispozícii. Email Studio nikdy neukladá heslá ako obyčajný text; v Linuxe sa vyžaduje služba Secret Service (napríklad GNOME Keyring alebo KWallet).",
+      "unexpected": "Kľúčenka vrátila neočakávanú chybu."
+    },
+    "links": {
+      "openFailed": "Prepojenie sa nepodarilo otvoriť.",
+      "unsupportedScheme": "Otvoriť možno iba prepojenia http, https a mailto."
+    },
+    "messages": {
+      "invalidMime": "Správu sa nepodarilo prečítať (neplatná štruktúra MIME).",
+      "unreadable": "Správu sa nepodarilo prečítať."
+    },
+    "oauth": {
+      "browserFailed": "Webový prehliadač na prihlásenie sa nepodarilo otvoriť.",
+      "cancelled": "Prihlásenie bolo zrušené.",
+      "cancelledOrDenied": "Prihlásenie do {{provider}} bolo zrušené alebo zamietnuté.",
+      "clientMisconfigured": "Klient OAuth pre {{provider}} nie je správne nakonfigurovaný (client ID alebo secret).",
+      "emailUnknown": "E-mailovú adresu prihlásenia sa nepodarilo zistiť; zadajte adresu a skúste to znova.",
+      "invalidClientId": "Toto nie je platné client ID.",
+      "invalidTokenEndpoint": "Neplatný koncový bod tokenu.",
+      "noAccessToken": "{{provider}} nevrátil prístupový token (HTTP {{status}}).",
+      "noFreePort": "Na prihlásenie nie je k dispozícii žiadny dočasný port.",
+      "noPort": "Žiadny port.",
+      "noRefreshToken": "{{provider}} nevrátil obnovovací token; skúste sa prihlásiť znova.",
+      "noStoredSignIn": "Prihláste sa znova do {{provider}}: pre toto konto nie je uložené žiadne prihlásenie.",
+      "notConfigured": {
+        "google": "Prihlásenie cez Google zatiaľ nie je nastavené: chýba client ID. V Google Cloud vytvorte klienta OAuth typu 'Počítačová aplikácia' (presmerovanie cez http://127.0.0.1), povoľte Gmail API a na obrazovku súhlasu pridajte rozsah https://mail.google.com/. Potom zadajte client ID a client secret (pozrite docs/email-oauth.md).",
+        "microsoft": "Prihlásenie cez Microsoft zatiaľ nie je nastavené: chýba client ID. Zaregistrujte aplikáciu v Microsoft Entra (Registrácie aplikácií) ako 'Verejný klient', pridajte platformu 'Mobilné a počítačové aplikácie' s URI presmerovania http://localhost a udeľte delegované povolenia IMAP.AccessAsUser.All, SMTP.Send, offline_access, openid a email. Potom zadajte client ID (pozrite docs/email-oauth.md)."
+      },
+      "providerRefused": "{{provider}} odmietol prihlásenie ({{detail}}).",
+      "randomUnavailable": "Nie je k dispozícii žiadny bezpečný zdroj náhodnosti.",
+      "reauthenticate": "Prihláste sa znova do {{provider}}: povolenie vypršalo alebo bolo odvolané.",
+      "settingSaveFailed": "Nastavenie OAuth sa nepodarilo uložiť.",
+      "signInFirst": "Toto konto používa OAuth2: najprv sa prihláste cez Microsoft alebo Google.",
+      "signInFirstToTest": "Ak chcete otestovať OAuth2, najprv sa prihláste cez Microsoft alebo Google.",
+      "signInTimeout": "Prihlásenie do {{provider}} trvalo viac ako 5 minút a bolo prerušené.",
+      "stateMismatch": "Odpoveď prihlasovacej stránky nepatrí k tomuto prihláseniu (nezhoda state).",
+      "timeout": "{{provider}} neodpovedal včas.",
+      "tokenRefused": "{{provider}} odmietol token ({{detail}}).",
+      "unexpectedResponse": "{{provider}} vrátil neočakávanú odpoveď (HTTP {{status}})."
+    },
+    "security": {
+      "cramMd5SmtpUnsupported": "Šifrované heslo (CRAM-MD5) nie je pre SMTP podporované. Zvoľte 'normálne heslo'; cez SSL/TLS alebo STARTTLS je heslo tiež šifrované.",
+      "invalidServerName": "'{{host}}' nie je platný názov servera pre {{protocol}}.",
+      "notLocalhost": "{{host}} nie je tento počítač, preto bolo nešifrované pripojenie odmietnuté.",
+      "portMissing": "Chýba port pre {{protocol}}.",
+      "unencryptedRefused": "Prihlásenie do {{host}} bez šifrovania bolo odmietnuté: vaše heslo by putovalo sieťou v čitateľnej podobe. Zvoľte SSL/TLS alebo STARTTLS. Nešifrované pripojenia sú povolené iba k tomuto počítaču (localhost), napríklad pre Proton Mail Bridge."
+    },
+    "server": {
+      "noTimelyResponse": "{{host}} neodpovedal včas."
+    },
+    "smtp": {
+      "authMethodUnsupported": "Táto metóda prihlásenia nie je pre SMTP podporovaná.",
+      "error": "Chyba SMTP na {{host}}: {{detail}}",
+      "messageTooLarge": "{{host}} odmieta správu, pretože je príliš veľká ({{detail}}).",
+      "noAuthMechanism": "{{host}} neponúka metódu prihlásenia, ktorú Email Studio podporuje (PLAIN alebo LOGIN). Zvoľte STARTTLS alebo SSL/TLS; mnohé servery ponúkajú prihlásenie až po zapnutí šifrovania.",
+      "oauthRejected": "{{host}} odmietol token OAuth2; možno sa budete musieť prihlásiť znova.",
+      "rejected": "{{host}} odmietol správu ({{detail}}).",
+      "sendTimeout": "Odosielanie cez {{host}} trvalo príliš dlho.",
+      "tlsFailed": "Zabezpečené pripojenie k {{host}} sa nepodarilo nadviazať ({{detail}}). Zodpovedá nastavenie zabezpečenia portu?",
+      "tryLater": "{{host}} teraz nemôže prijať správu; skúste to neskôr ({{detail}})."
+    },
+    "storage": {
+      "appDataDirNotFound": "Priečinok údajov aplikácie sa nenašiel.",
+      "dataDirCreateFailed": "Priečinok údajov sa nepodarilo vytvoriť.",
+      "dataDirMissing": "Chýba priečinok údajov."
+    },
+    "test": {
+      "signedIn": "Prihlásené do {{host}}.",
+      "signedInUnencrypted": "Prihlásené do {{host}}. Poznámka: pripojenie {{protocol}} nie je šifrované. Je to povolené iba preto, že server beží na tomto počítači."
+    },
+    "tls": {
+      "certificateRejected": "Zabezpečené pripojenie k {{host}} bolo odmietnuté: {{reason}}. Na ochranu vášho hesla sa Email Studio nepripája k serveru, ktorého identitu nemožno overiť.",
+      "handshakeFailed": "Zabezpečené pripojenie k {{host}} sa nepodarilo nadviazať ({{detail}}). Zodpovedá nastavenie zabezpečenia (SSL/TLS alebo STARTTLS) portu?",
+      "handshakeTimeout": "Handshake TLS s {{host}} trval príliš dlho.",
+      "invalidServerName": "'{{host}}' nie je platný názov servera pre TLS.",
+      "reason": {
+        "expired": "platnosť certifikátu vypršala",
+        "invalid": "certifikát je neplatný ({{detail}})",
+        "notYetValid": "certifikát ešte nie je platný (sú hodiny tohto počítača nastavené správne?)",
+        "revoked": "certifikát bol odvolaný",
+        "unknownIssuer": "certifikát nevydala dôveryhodná certifikačná autorita (možno je podpísaný sám sebou)",
+        "wrongName": "certifikát nepatrí k názvu {{host}}; použite názov servera uvedený v certifikáte"
+      }
+    }
+  }
+}

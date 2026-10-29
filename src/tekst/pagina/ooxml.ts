@@ -7,6 +7,7 @@
  */
 import { Pakket, REL } from "../../grafieken/pakket.ts";
 import { GrafiekFout } from "../../grafieken/fouten.ts";
+import { paginaTekst } from "./tekst.ts";
 import {
   attr,
   attrTekst,
@@ -76,14 +77,14 @@ export function metPakket<T>(bytes: Uint8Array, werk: (pakket: Pakket) => T): T 
 /** Pad van het hoofddocument (meestal `word/document.xml`). */
 export function documentPad(pakket: Pakket) {
   const rel = pakket.relaties("").find((r) => r.type === REL.officeDocument);
-  if (!rel) throw new PaginaFout("Het document mist zijn hoofdonderdeel.");
+  if (!rel) throw new PaginaFout(paginaTekst("errors.missingMainPart"));
   return Pakket.doelPad("", rel.target);
 }
 
 /** Controleert dat een onderdeel het gebruikelijke voorvoegsel `w:` gebruikt. */
 export function controleerW(wortel: XmlElement) {
   if (voorvoegselVoor(wortel, NS_W) !== "w")
-    throw new PaginaFout("Dit document gebruikt een afwijkende XML-schrijfwijze; het kan hier niet veilig worden aangepast.");
+    throw new PaginaFout(paginaTekst("errors.unusualXml"));
 }
 
 export interface WordDocument {
@@ -99,7 +100,7 @@ export function openDocument(pakket: Pakket): WordDocument {
   const wortel = leesXml(xml);
   controleerW(wortel);
   const body = kind(wortel, "body");
-  if (!body) throw new PaginaFout("Het document heeft geen hoofdtekst.");
+  if (!body) throw new PaginaFout(paginaTekst("errors.noBody"));
   return { pakket, pad, xml, wortel, body };
 }
 
@@ -433,12 +434,12 @@ export function vindMarkering(pakket: Pakket, markering: string): Markeringsplek
     if (!xml.includes(markering)) continue;
     const wortel = leesXml(xml);
     const t = zoekAlle(wortel, "t").find((el) => tekstVan(el).includes(markering));
-    if (!t) throw new PaginaFout("De cursorplek is niet terug te vinden in het document.");
+    if (!t) throw new PaginaFout(paginaTekst("errors.cursorLost"));
     let run: XmlElement | null = t.ouder;
     while (run && run.lokaal !== "r") run = run.ouder;
     let alinea: XmlElement | null = run;
     while (alinea && alinea.lokaal !== "p") alinea = alinea.ouder;
-    if (!run || !alinea) throw new PaginaFout("De cursorplek is niet terug te vinden in het document.");
+    if (!run || !alinea) throw new PaginaFout(paginaTekst("errors.cursorLost"));
     const alineaTekst = zoekAlle(alinea, "t").map(tekstVan).join("");
     const i = alineaTekst.indexOf(markering);
     return {

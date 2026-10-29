@@ -1,0 +1,84 @@
+{
+  "formulaCheck": {
+    "titleWarning": "Periksa rumus di lembar kerja ini",
+    "titleInfo": "Catatan tentang rumus di lembar kerja ini",
+    "cells_other": "{{count}} sel",
+    "examplesMore_other": "{{list}} dan {{count}} lainnya",
+    "userFunction": "Fungsi yang ditentukan pengguna (makro atau add-in)",
+    "function": "Fungsi",
+    "notCalculated": "{{kind}} {{name}} tidak dihitung ({{cells}}: {{examples}}). Hasil yang disimpan tetap ada dan tidak diperbarui; sel yang bergantung mungkin sudah usang.",
+    "recalculated_other": "{{cells}} memiliki hasil tersimpan yang usang dan dihitung ulang saat dibuka ({{examples}}). Hasil baru disimpan saat Anda menyimpan.",
+    "manualCalculation": "File disimpan dengan penghitungan manual; hasil yang disimpan mungkin usang.",
+    "externalLinks_other": "Buku kerja merujuk ke {{count}} buku kerja eksternal; nilai tersebut tidak diperbarui.",
+    "errorCells": "{{cells}} dengan nilai galat: {{list}}.",
+    "errorItem": "{{error}} ({{examples}})",
+    "noCachedResult": "{{cells}} dengan rumus tanpa hasil tersimpan ({{examples}}).",
+    "fullCalcOnLoad": "File meminta penghitungan ulang penuh saat dibuka (fullCalcOnLoad); hasil yang disimpan mungkin usang.",
+    "calcChain": "Rantai penghitungan (calcChain) tidak disimpan; Excel membangunnya kembali.",
+    "tooLarge": "Lembar kerja terlalu besar untuk diperiksa.",
+    "invalidWorkbook": "Bukan buku kerja XLSX yang valid."
+  },
+  "print": {
+    "pageLabel": "{{sheet}}, halaman {{page}} dari {{pages}}",
+    "notWorksheet": "Lembar ‘{{name}}’ bukan lembar kerja dan dilewati.",
+    "nothingToPrint": "Tidak ada yang dapat dicetak: lembar kosong."
+  },
+  "export": {
+    "pngUnavailable": "Mesin lembar kerja ini tidak dapat membuat PNG."
+  },
+  "csvImport": {
+    "title": "Impor {{name}}",
+    "import": "Impor",
+    "separator": "Pemisah",
+    "separatorSemicolon": "Titik koma ;",
+    "separatorComma": "Koma ,",
+    "separatorTab": "Tab",
+    "separatorPipe": "Garis vertikal |",
+    "separatorCustom": "Karakter lain…",
+    "customCharacter": "Karakter lain",
+    "textQualifier": "Pembatas teks",
+    "qualifierDouble": "Tanda kutip ganda \"",
+    "qualifierSingle": "Tanda kutip tunggal '",
+    "qualifierNone": "Tidak ada",
+    "encoding": "Pengodean karakter",
+    "encodingAuto": "Otomatis",
+    "encodingDetected": "{{name}} ({{encoding}})",
+    "encodingWindows1252": "Windows-1252 (Eropa Barat)",
+    "numbers": "Angka",
+    "numbersDutch": "Belanda (1.234,56)",
+    "numbersEnglish": "Inggris (1,234.56)",
+    "dateOrder": "Urutan tanggal",
+    "dateOrderDmy": "Hari-bulan-tahun (31-12-2026)",
+    "dateOrderMdy": "Bulan-hari-tahun (12/31/2026)",
+    "dateOrderYmd": "Tahun-bulan-hari (2026-12-31)",
+    "fromRow": "Mulai dari baris",
+    "headerRow": "Baris pertama adalah judul",
+    "previewLabel": "Pratinjau 50 baris pertama",
+    "columnType": "Jenis kolom {{number}}",
+    "columnTypes": {
+      "standaard": "Umum",
+      "tekst": "Teks",
+      "datum": "Tanggal",
+      "overslaan": "Lewati"
+    },
+    "detected_other": "{{separator}} sebagai pemisah, {{count}} kolom.",
+    "explanation": "Pilih <b>Teks</b> untuk kode pos, nomor artikel, dan IBAN; nol di depan dan angka lebih dari 15 digit sudah tetap menjadi teks di Umum. Nilai yang diawali =, +, - atau @ tidak pernah dibaca sebagai rumus (apostrof di pratinjau).",
+    "separatorNames": {
+      "tab": "tab",
+      "semicolon": "titik koma",
+      "comma": "koma",
+      "pipe": "garis vertikal",
+      "other": "“{{character}}”"
+    },
+    "report": {
+      "import": "Impor",
+      "imported": "{{rows}} dan {{columns}} dibaca; {{separator}} sebagai pemisah, pengodean {{encoding}}.",
+      "rows_other": "{{count}} baris",
+      "columns_other": "{{count}} kolom",
+      "formulaLike": "Teks mirip rumus",
+      "formulaLikeCells_other": "{{count}} sel yang diawali =, +, - atau @ dimasukkan sebagai teks, bukan sebagai rumus (perlindungan terhadap injeksi CSV).",
+      "truncated": "Dipotong",
+      "truncatedText": "File lebih besar dari lembar kerja ({{rows}} baris atau {{columns}} kolom); sisanya tidak dibaca."
+    }
+  }
+}

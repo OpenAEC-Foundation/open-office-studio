@@ -1,0 +1,269 @@
+{
+  "types": {
+    "column": {
+      "name": "Kolumnowy",
+      "description": "Porównanie wartości obok siebie"
+    },
+    "stackedColumn": {
+      "name": "Kolumnowy skumulowany",
+      "description": "Części i suma dla każdej kategorii"
+    },
+    "percentColumn": {
+      "name": "Kolumnowy skumulowany 100%",
+      "description": "Udziały w każdej kategorii"
+    },
+    "bar": {
+      "name": "Słupkowy",
+      "description": "Poziomy, dla długich nazw"
+    },
+    "line": {
+      "name": "Liniowy",
+      "description": "Trend w czasie"
+    },
+    "lineMarkers": {
+      "name": "Liniowy ze znacznikami",
+      "description": "Trend z widocznymi punktami danych"
+    },
+    "area": {
+      "name": "Warstwowy",
+      "description": "Trend z naciskiem na wielkość"
+    },
+    "pie": {
+      "name": "Kołowy",
+      "description": "Podział jednej serii"
+    },
+    "doughnut": {
+      "name": "Pierścieniowy",
+      "description": "Podział z pustym środkiem"
+    },
+    "scatter": {
+      "name": "Punktowy (XY)",
+      "description": "Zależność między dwiema liczbami"
+    },
+    "combo": {
+      "name": "Kolumnowy + liniowy",
+      "description": "Ostatnia seria jako linia na osi pomocniczej"
+    }
+  },
+  "unknownType": "Nieznany typ",
+  "busy": "Przetwarzanie…",
+  "defaults": {
+    "seriesName": "Seria {{n}}",
+    "categoryName": "Kategoria {{n}}",
+    "chartName": "Wykres {{n}}",
+    "sheetName": "Wykres {{n}}",
+    "true": "PRAWDA",
+    "false": "FAŁSZ"
+  },
+  "ribbon": {
+    "charts": "Wykresy",
+    "chart": "Wykres",
+    "editChart": "Edytuj wykres",
+    "allCharts": "Wszystkie wykresy",
+    "dataAndFormat": "Dane i formatowanie",
+    "overview": "Przegląd",
+    "type": "Typ",
+    "changeType": "Zmień typ wykresu",
+    "data": "Dane",
+    "selectData": "Zaznacz dane",
+    "layout": "Układ",
+    "titleAndLegend": "Tytuł i legenda",
+    "delete": "Usuń",
+    "deleteChart": "Usuń wykres",
+    "withShortcut": "{{name}} · {{shortcut}}"
+  },
+  "dialog": {
+    "title": {
+      "insert": "Wstaw wykres",
+      "edit": "Edytuj wykres"
+    },
+    "button": {
+      "insert": "Wstaw",
+      "edit": "Aktualizuj"
+    },
+    "reloadNote": {
+      "insert": "Po wstawieniu dokument zostanie ponownie załadowany. Zmian wprowadzonych wcześniej nie będzie można już cofnąć.",
+      "edit": "Po aktualizacji dokument zostanie ponownie załadowany. Zmian wprowadzonych wcześniej nie będzie można już cofnąć."
+    },
+    "closeTitle": "Zamknij (Esc)",
+    "type": "Typ",
+    "data": "Dane",
+    "cellRange": "Zakres komórek",
+    "cellRangePlaceholder": "Na przykład A1:D6",
+    "noContiguousRange": "Odwołania tego wykresu nie tworzą ciągłego zakresu; dane pozostaną bez zmian, dopóki nie wprowadzisz zakresu.",
+    "firstRowNames": "Pierwszy wiersz zawiera nazwy",
+    "firstColumnNames": "Pierwsza kolumna zawiera nazwy",
+    "seriesIn": "Serie w",
+    "columns": "kolumnach",
+    "rows": "wierszach",
+    "series": "Seria",
+    "seriesNoNumbersTitle": "{{name}}: brak liczb, nie uwzględniono",
+    "noNumbers": "(brak liczb)",
+    "enterRange": "Wprowadź zakres komórek zawierający dane.",
+    "placeCursorInTable": "Najpierw umieść kursor w tabeli z liczbami.",
+    "titles": "Tytuły",
+    "chartTitle": "Tytuł",
+    "subtitle": "Podtytuł",
+    "categoryAxis": "Oś kategorii",
+    "valueAxis": "Oś wartości",
+    "horizontalAxis": "Oś pozioma",
+    "verticalAxis": "Oś pionowa",
+    "secondaryAxis": "Oś pomocnicza",
+    "format": "Format",
+    "legend": "Legenda",
+    "gridlines": "Linie siatki",
+    "dataLabels": "Etykiety danych",
+    "decimals": "Miejsca dziesiętne",
+    "placement": "Umieszczenie",
+    "besideData": "Obok danych w tym arkuszu",
+    "newSheet": "W nowym arkuszu",
+    "sheetName": "Nazwa arkusza",
+    "summary": {
+      "series_one": "{{n}} seria",
+      "series_few": "{{n}} serie",
+      "series_many": "{{n}} serii",
+      "series_other": "{{n}} serii",
+      "categories_one": "{{n}} kategoria",
+      "categories_few": "{{n}} kategorie",
+      "categories_many": "{{n}} kategorii",
+      "categories_other": "{{n}} kategorii",
+      "text": "{{series}} · {{categories}}",
+      "withSheet": "{{series}} · {{categories}} · {{sheet}}"
+    }
+  },
+  "legend": {
+    "bottom": "Dół",
+    "right": "Prawo",
+    "top": "Góra",
+    "left": "Lewo",
+    "none": "Bez legendy"
+  },
+  "dataSheet": {
+    "row": "Wiersz",
+    "series": "Seria",
+    "removeLastRow": "Usuń ostatni wiersz",
+    "removeLastSeries": "Usuń ostatnią serię",
+    "paste": "Wklej",
+    "pasteTitle": "Wklej ze schowka tekst rozdzielany tabulatorami, na przykład skopiowany z arkusza kalkulacyjnego",
+    "fromTable": "Z zaznaczonej tabeli",
+    "fromTableTitle": "Przejmuje tabelę, w której znajduje się kursor",
+    "pasteNotAllowed": "Wklejanie za pomocą przycisku nie jest tu dozwolone. Kliknij komórkę i użyj Ctrl+V.",
+    "corner": "Komórka narożna",
+    "seriesNameLabel": "Nazwa serii {{n}}",
+    "categoryLabel": "Kategoria {{n}}",
+    "valueLabel": "Wartość wiersz {{row}}, seria {{series}}"
+  },
+  "preview": {
+    "label": "Podgląd: {{title}}",
+    "untitled": "Podgląd: wykres bez tytułu"
+  },
+  "list": {
+    "title": "Wykresy w tym dokumencie",
+    "empty": "Ten dokument nie zawiera jeszcze żadnych wykresów.",
+    "edit": "Edytuj",
+    "delete": "Usuń",
+    "deleteLabel": "Usuń {{name}}",
+    "place": {
+      "slide": "slajd {{n}}",
+      "sheet": "arkusz {{name}}",
+      "text": "wykres {{n}} w tekście"
+    }
+  },
+  "deleteConfirm": {
+    "title": "Usuń wykres",
+    "text": "Usunąć ‘{{name}}’? Dokument zostanie ponownie załadowany; wcześniejszych zmian nie będzie można już cofnąć.",
+    "textSheet": "Usunąć ‘{{name}}’ z arkusza {{sheet}}? Dokument zostanie ponownie załadowany; wcześniejszych zmian nie będzie można już cofnąć.",
+    "button": "Usuń"
+  },
+  "errors": {
+    "unknownType": "Nieznany typ wykresu.",
+    "noSeries": "Wykres wymaga co najmniej jednej serii danych.",
+    "tooManySeries": "Wykres może tu zawierać maksymalnie {{max}} serii.",
+    "tooManyCategories": "Wykres może tu zawierać maksymalnie {{max}} kategorii.",
+    "noCategories": "Wykres wymaga co najmniej jednej kategorii.",
+    "valueCountMismatch": "Seria ‘{{name}}’ nie ma tylu wartości, ile jest kategorii.",
+    "noNumbers": "Dane nie zawierają żadnych liczb.",
+    "comboNeedsTwoSeries": "Wykres kombi wymaga co najmniej dwóch serii: kolumn i linii.",
+    "scatterNeedsNumbers": "Wykres punktowy wymaga liczb jako wartości X w pierwszej kolumnie lub pierwszym wierszu.",
+    "titleTooLong": "Tytuły mogą mieć maksymalnie {{max}} znaków.",
+    "invalidColor": "Kolor ‘{{color}}’ nie jest prawidłowym kolorem.",
+    "noNumericColumn": "Żadna z kolumn zakresu nie zawiera liczb, więc nie ma czego przedstawić. Wybierz zakres z co najmniej jedną kolumną liczb lub ustaw ‘Serie w’ na wiersze.",
+    "noNumericRow": "Żaden z wierszy zakresu nie zawiera liczb, więc nie ma czego przedstawić. Wybierz zakres z co najmniej jednym wierszem liczb lub ustaw ‘Serie w’ na kolumny.",
+    "chooseSeries": "Wybierz co najmniej jedną serię dla wykresu.",
+    "rangeTooLarge": "Zakres jest zbyt duży: maksymalnie {{max}} komórek.",
+    "noDataBesideHeaders": "Zakres nie zawiera danych poza nagłówkami.",
+    "pasteTooLarge": "Wklejone dane są zbyt duże dla wykresu.",
+    "invalidRange": "To nie jest prawidłowy zakres komórek. Użyj na przykład A1:D6 lub 'Arkusz 1'!A1:D6.",
+    "noSuchSheet": "Nie ma arkusza o nazwie ‘{{name}}’.",
+    "spreadsheetNotReady": "Arkusz kalkulacyjny nie jest jeszcze gotowy.",
+    "spreadsheetReadOnly": "Arkusz kalkulacyjny jest tylko do odczytu.",
+    "documentNotReady": "Dokument nie jest jeszcze gotowy.",
+    "presentationNotEditable": "Prezentacji nie można teraz edytować.",
+    "selectChartFirst": "Najpierw zaznacz wykres.",
+    "chartGone": "Nie można już znaleźć wykresu.",
+    "notEditableHere": "Tego wykresu nie można tu edytować.",
+    "notEditable": "Tego wykresu nie można edytować.",
+    "package": {
+      "tooLarge": "Dokument jest zbyt duży, aby edytować w nim wykres.",
+      "tooManyParts": "Dokument zawiera zbyt wiele lub zbyt duże części.",
+      "notZip": "Dokument nie jest prawidłowym plikiem Office (zip).",
+      "invalidPartName": "Dokument zawiera nieprawidłową nazwę części.",
+      "noContentTypes": "W dokumencie brakuje pliku [Content_Types].xml.",
+      "missingPart": "W dokumencie brakuje części {{part}}.",
+      "noFreePartName": "Nie pozostała żadna wolna nazwa części."
+    },
+    "xml": {
+      "tooLarge": "Część XML jest zbyt duża do przetworzenia.",
+      "damaged": "Część XML jest uszkodzona.",
+      "doctype": "Ze względów bezpieczeństwa XML z deklaracją DOCTYPE nie jest przetwarzany.",
+      "tooDeep": "Część XML jest zbyt głęboko zagnieżdżona.",
+      "overlappingChanges": "Błąd wewnętrzny: nakładające się zmiany XML."
+    },
+    "chartXml": {
+      "notDrawingML": "Ta część nie jest wykresem DrawingML.",
+      "noPlotArea": "Wykres nie ma obszaru kreślenia.",
+      "unusualPrefix": "Ten wykres używa nietypowego zapisu XML i nie można go tu bezpiecznie edytować."
+    },
+    "document": {
+      "noMainPart": "W dokumencie brakuje części głównej.",
+      "tooManyCharts": "Ten dokument zawiera już {{total}} wykresów; więcej nie jest obsługiwanych.",
+      "invalidSheetName": "Nieprawidłowa nazwa arkusza: maksymalnie 31 znaków, bez \\ / ? * [ ] :",
+      "sheetExists": "Arkusz o nazwie ‘{{name}}’ już istnieje.",
+      "noSheetList": "Skoroszyt nie ma listy arkuszy.",
+      "drawingMissing": "Rysunek tego arkusza jest brakujący lub uszkodzony.",
+      "noSuchWorksheet": "Wybrany arkusz nie istnieje lub nie jest arkuszem danych.",
+      "notPlainWorksheet": "Wykres można umieścić tylko w zwykłym arkuszu danych.",
+      "drawingDamaged": "Rysunek tego arkusza jest uszkodzony.",
+      "docxUnusualPrefix": "Ten dokument używa nietypowego zapisu XML; nie można bezpiecznie wstawić wykresu.",
+      "noBody": "Dokument nie ma treści głównej.",
+      "tableTooLarge": "Tabela jest zbyt duża dla wykresu.",
+      "noSuchSlide": "Wybrany slajd nie istnieje.",
+      "slideUnusualPrefix": "Ten slajd używa nietypowego zapisu XML; nie można bezpiecznie wstawić wykresu.",
+      "noShapeTree": "Slajd nie ma drzewa kształtów.",
+      "chartRemoved": "Wykres nie istnieje już w dokumencie.",
+      "chartNotFound": "Nie znaleziono wykresu.",
+      "cannotRemove": "Nie można usunąć obiektu wykresu."
+    }
+  },
+  "read": {
+    "reasons": {
+      "extendedChart": "To jest wykres rozszerzony (na przykład kaskadowy lub mapa drzewa), którego nie można tu edytować.",
+      "unsupportedType": "Ten wykres używa typu, którego nie można tu edytować ({{types}}).",
+      "noReadableSeries": "Wykres nie zawiera serii, które można odczytać.",
+      "unsupportedCombination": "Ten wykres łączy typy w sposób, którego nie można tu edytować.",
+      "noSeries": "Wykres nie zawiera serii danych.",
+      "invalid": "Tego wykresu nie można tu edytować: {{reason}}",
+      "unusualPrefix": "Ten wykres używa nietypowego zapisu XML i nie można go tu bezpiecznie edytować."
+    },
+    "warnings": {
+      "stackedBars": "Podczas edycji skumulowane słupki są umieszczane obok siebie.",
+      "stackedLines": "Podczas edycji skumulowane linie stają się osobnymi liniami.",
+      "stackedAreas": "Podczas edycji skumulowane obszary stają się osobnymi obszarami.",
+      "linesAfterColumns": "Podczas edycji serie liniowe są umieszczane po kolumnach.",
+      "lastSeriesAsLine": "Podczas edycji tylko ostatnia seria jest rysowana jako linia.",
+      "multiLevelCategories": "Podczas edycji kategorie wielopoziomowe stają się jednopoziomowe.",
+      "moreValuesThanCategories": "Seria ‘{{name}}’ ma więcej wartości, niż jest kategorii.",
+      "trendlinesDropped": "Podczas edycji linie trendu i słupki błędów są usuwane."
+    }
+  }
+}

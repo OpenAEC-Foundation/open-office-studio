@@ -3,6 +3,7 @@
  * hun eigen type (voor overloop en TypeName), datums, matrices, records (Type)
  * en objecten. Conversies volgen de VBA-regels, inclusief bankiersafronding.
  */
+import i18next from "i18next";
 import { combineer, delenVan, leesDatum, splits } from "./datum.ts";
 import { fout } from "./fouten.ts";
 import { NEDERLANDS, type Landinstelling } from "./land.ts";
@@ -151,26 +152,26 @@ export abstract class VbaObject {
   async lid(naam: string, args: VbaWaarde[], _rt: unknown): Promise<VbaWaarde> {
     void args;
     void _rt;
-    throw fout(438, `${this.typeNaam} kent geen eigenschap of methode ‘${naam}’.`);
+    throw fout(438, i18next.t("vba:runtime.noPropertyOrMethod", { object: this.typeNaam, name: naam }));
   }
   /** Eigenschap schrijven (Let of Set). */
   async zetLid(naam: string, args: VbaWaarde[], waarde: VbaWaarde, _rt: unknown): Promise<void> {
     void args;
     void waarde;
     void _rt;
-    throw fout(438, `${this.typeNaam}.${naam} kan niet worden ingesteld.`);
+    throw fout(438, i18next.t("vba:values.cannotSet", { member: `${this.typeNaam}.${naam}` }));
   }
   /** Standaardlid, bv. Field.Value of Collection.Item. */
   async standaard(args: VbaWaarde[], rt: unknown): Promise<VbaWaarde> {
     void args;
     void rt;
-    throw fout(438, `${this.typeNaam} heeft geen standaardeigenschap.`);
+    throw fout(438, i18next.t("vba:values.noDefaultProperty", { object: this.typeNaam }));
   }
   async zetStandaard(args: VbaWaarde[], waarde: VbaWaarde, rt: unknown): Promise<void> {
     void args;
     void waarde;
     void rt;
-    throw fout(438, `${this.typeNaam} heeft geen standaardeigenschap om in te stellen.`);
+    throw fout(438, i18next.t("vba:values.noSettableDefaultProperty", { object: this.typeNaam }));
   }
   /** `obj!naam` — standaard: standaardlid met de naam als argument. */
   async bang(naam: string, rt: unknown): Promise<VbaWaarde> {
@@ -184,7 +185,7 @@ export abstract class VbaObject {
   /** Elementen voor For Each. */
   async elementen(_rt: unknown): Promise<VbaWaarde[]> {
     void _rt;
-    throw fout(438, `For Each werkt niet op ${this.typeNaam}.`);
+    throw fout(438, i18next.t("vba:values.forEachNotSupported", { object: this.typeNaam }));
   }
   /** Heeft dit object een standaardwaarde die bij een Let-toewijzing gelezen wordt? */
   heeftStandaardwaarde() {

@@ -7,6 +7,7 @@
  * één ongedaan-maakstap.
  */
 import type { DocxEditorRef } from "@betteroffice/docx-react";
+import i18next from "../../i18n/config";
 import { begin, engine, klaar, type Engine, type Sessie } from "../gedeeld/engine.ts";
 import {
   beeldGeometrie,
@@ -57,7 +58,7 @@ export function geselecteerdeAfbeelding(s: Sessie): BeeldPlek | null {
 
 function vereist(e: Engine) {
   const plek = geselecteerdeAfbeelding(e.sessie);
-  if (!plek) throw new Error("Selecteer eerst een afbeelding.");
+  if (!plek) throw new Error(i18next.t("writer:picture.errors.selectPicture"));
   return plek;
 }
 
@@ -86,7 +87,7 @@ export function bijsnijden(ref: DocxEditorRef | null, nieuw: Bijsnijding) {
 }
 
 export function zetAfmeting(ref: DocxEditorRef | null, breedte: number, hoogte: number) {
-  if (!(breedte > 0 && hoogte > 0)) throw new Error("Geef een breedte en hoogte groter dan 0.");
+  if (!(breedte > 0 && hoogte > 0)) throw new Error(i18next.t("writer:picture.errors.sizePositive"));
   return wijzigAfbeelding(ref, () => ({ width: Math.round(breedte * 100) / 100, height: Math.round(hoogte * 100) / 100 }));
 }
 
@@ -105,7 +106,7 @@ export interface PositieInstelling {
 export function zetPositie(ref: DocxEditorRef | null, instelling: PositieInstelling) {
   return wijzigAfbeelding(ref, ({ attrs }) => {
     if (!attrs.wrapType || attrs.wrapType === "inline")
-      throw new Error("Een afbeelding ‘In lijn met tekst’ heeft geen eigen positie. Kies eerst een andere tekstterugloop.");
+      throw new Error(i18next.t("writer:picture.errors.inlineNoPosition"));
     return { ...instelling };
   });
 }

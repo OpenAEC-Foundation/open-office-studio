@@ -1,0 +1,92 @@
+{
+  "formulaCheck": {
+    "titleWarning": "Kontroller formlene i dette regnearket",
+    "titleInfo": "Merknader om formlene i dette regnearket",
+    "cells_one": "{{count}} celle",
+    "cells_other": "{{count}} celler",
+    "examplesMore_one": "{{list}} og {{count}} til",
+    "examplesMore_other": "{{list}} og {{count}} til",
+    "userFunction": "Brukerdefinert funksjon (makro eller tillegg)",
+    "function": "Funksjon",
+    "notCalculated": "{{kind}} {{name}} beregnes ikke ({{cells}}: {{examples}}). Det lagrede resultatet beholdes og oppdateres ikke; avhengige celler kan være utdaterte.",
+    "recalculated_one": "{{cells}} hadde et utdatert lagret resultat og ble beregnet på nytt ved åpning ({{examples}}). De nye resultatene beholdes når du lagrer.",
+    "recalculated_other": "{{cells}} hadde et utdatert lagret resultat og ble beregnet på nytt ved åpning ({{examples}}). De nye resultatene beholdes når du lagrer.",
+    "manualCalculation": "Filen ble lagret med manuell beregning; lagrede resultater kan være utdaterte.",
+    "externalLinks_one": "Arbeidsboken refererer til en ekstern arbeidsbok; disse verdiene oppdateres ikke.",
+    "externalLinks_other": "Arbeidsboken refererer til {{count}} eksterne arbeidsbøker; disse verdiene oppdateres ikke.",
+    "errorCells": "{{cells}} med en feilverdi: {{list}}.",
+    "errorItem": "{{error}} ({{examples}})",
+    "noCachedResult": "{{cells}} med en formel uten lagret resultat ({{examples}}).",
+    "fullCalcOnLoad": "Filen ber om full ny beregning ved åpning (fullCalcOnLoad); de lagrede resultatene kan være utdaterte.",
+    "calcChain": "Beregningskjeden (calcChain) beholdes ikke ved lagring; Excel bygger den opp på nytt.",
+    "tooLarge": "Regnearket er for stort til å kontrolleres.",
+    "invalidWorkbook": "Ikke en gyldig XLSX-arbeidsbok."
+  },
+  "print": {
+    "pageLabel": "{{sheet}}, side {{page}} av {{pages}}",
+    "notWorksheet": "Arket ‘{{name}}’ er ikke et regneark og hoppes over.",
+    "nothingToPrint": "Det er ingenting å skrive ut: arkene er tomme."
+  },
+  "export": {
+    "pngUnavailable": "Denne regnearkmotoren kan ikke lage PNG."
+  },
+  "csvImport": {
+    "title": "Importer {{name}}",
+    "import": "Importer",
+    "separator": "Skilletegn",
+    "separatorSemicolon": "Semikolon ;",
+    "separatorComma": "Komma ,",
+    "separatorTab": "Tabulator",
+    "separatorPipe": "Loddrett strek |",
+    "separatorCustom": "Annet tegn…",
+    "customCharacter": "Annet tegn",
+    "textQualifier": "Tekstkvalifikator",
+    "qualifierDouble": "Doble anførselstegn \"",
+    "qualifierSingle": "Enkelt anførselstegn '",
+    "qualifierNone": "Ingen",
+    "encoding": "Tegnkoding",
+    "encodingAuto": "Automatisk",
+    "encodingDetected": "{{name}} ({{encoding}})",
+    "encodingWindows1252": "Windows-1252 (vesteuropeisk)",
+    "numbers": "Tall",
+    "numbersDutch": "Nederlandsk (1.234,56)",
+    "numbersEnglish": "Engelsk (1,234.56)",
+    "dateOrder": "Datorekkefølge",
+    "dateOrderDmy": "Dag-måned-år (31-12-2026)",
+    "dateOrderMdy": "Måned-dag-år (12/31/2026)",
+    "dateOrderYmd": "År-måned-dag (2026-12-31)",
+    "fromRow": "Fra rad",
+    "headerRow": "Første rad er overskrift",
+    "previewLabel": "Forhåndsvisning av de første 50 radene",
+    "columnType": "Type for kolonne {{number}}",
+    "columnTypes": {
+      "standaard": "Generelt",
+      "tekst": "Tekst",
+      "datum": "Dato",
+      "overslaan": "Hopp over"
+    },
+    "detected_one": "{{separator}} som skilletegn, {{count}} kolonne.",
+    "detected_other": "{{separator}} som skilletegn, {{count}} kolonner.",
+    "explanation": "Velg <b>Tekst</b> for postnumre, artikkelnumre og IBAN; innledende nuller og tall med mer enn 15 sifre forblir allerede tekst med Generelt. Verdier som begynner med =, +, - eller @, leses aldri inn som formel (apostrof i forhåndsvisningen).",
+    "separatorNames": {
+      "tab": "tabulator",
+      "semicolon": "semikolon",
+      "comma": "komma",
+      "pipe": "loddrett strek",
+      "other": "«{{character}}»"
+    },
+    "report": {
+      "import": "Importer",
+      "imported": "{{rows}} og {{columns}} lest inn; {{separator}} som skilletegn, koding {{encoding}}.",
+      "rows_one": "{{count}} rad",
+      "rows_other": "{{count}} rader",
+      "columns_one": "{{count}} kolonne",
+      "columns_other": "{{count}} kolonner",
+      "formulaLike": "Formellignende tekst",
+      "formulaLikeCells_one": "{{count}} celle som begynner med =, +, - eller @, ble tatt med som tekst, ikke som formel (beskyttelse mot CSV-injeksjon).",
+      "formulaLikeCells_other": "{{count}} celler som begynner med =, +, - eller @, ble tatt med som tekst, ikke som formel (beskyttelse mot CSV-injeksjon).",
+      "truncated": "Avkortet",
+      "truncatedText": "Filen er større enn et regneark ({{rows}} rader eller {{columns}} kolonner); resten er ikke lest inn."
+    }
+  }
+}

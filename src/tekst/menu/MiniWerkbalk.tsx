@@ -7,6 +7,7 @@
  */
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { useTranslation } from "react-i18next";
 import {
   useDocxCommand,
   type DocxCommandArgs,
@@ -34,6 +35,7 @@ import { AlineastijlKeuze } from "../stijlen/StijlKeuze";
 import type { TekstOpdrachten } from "../bewerken/TekstBewerken";
 import type { KwastStaat } from "../bewerken/kwast";
 import { portaalDoel } from "./portaal";
+import { useOpmaak } from "../../i18n/opmaak";
 
 /** Afstand (px) van de balk waarboven hij verdwijnt. */
 const WEG_AFSTAND = 140;
@@ -97,6 +99,14 @@ export function MiniWerkbalk({
   kwastKlik: () => void;
   kwastDubbelklik: () => void;
 }) {
+  const { t } = useTranslation("writer");
+  const { getal } = useOpmaak();
+  /** Regelafstand van de engine ("1.15") met het decimaalteken van de taal. */
+  const decimaal = (label: string) => {
+    const m = /^\d+(?:\.(\d+))?$/.exec(label);
+    const n = m?.[1]?.length ?? 0;
+    return m ? getal(Number(label), { minimumFractionDigits: n, maximumFractionDigits: n }) : label;
+  };
   const vak = useRef<HTMLDivElement>(null);
   const [positie, setPositie] = useState({ left: plek.x, top: plek.y - 90 });
   const [vervaag, setVervaag] = useState(0);
@@ -154,33 +164,33 @@ export function MiniWerkbalk({
       ref={vak}
       className="tekst-minibalk"
       role="toolbar"
-      aria-label="Mini-werkbalk"
+      aria-label={t("menu.mini.label")}
       style={{ ...positie, opacity: 1 - vervaag * 0.65 }}
       onMouseEnter={() => setVervaag(0)}
     >
       <div className="tekst-minibalk-rij">
         <WL />
-        <OpdrachtGetal opdracht={fontSize} naam="Tekengrootte" args={(points) => ({ points })} />
+        <OpdrachtGetal opdracht={fontSize} naam={t("menu.mini.fontSize")} args={(points) => ({ points })} />
         <Actie
-          naam="Tekengrootte vergroten"
+          naam={t("menu.mini.grow")}
           icoon={AArrowUp}
-          title="Tekengrootte vergroten · Ctrl+Shift+>"
+          title={t("menu.mini.withKey", { name: t("menu.mini.grow"), key: "Ctrl+Shift+>" })}
           onMouseDown={(e) => e.preventDefault()}
           onClick={() => grootte(1)}
         />
         <Actie
-          naam="Tekengrootte verkleinen"
+          naam={t("menu.mini.shrink")}
           icoon={AArrowDown}
-          title="Tekengrootte verkleinen · Ctrl+Shift+<"
+          title={t("menu.mini.withKey", { name: t("menu.mini.shrink"), key: "Ctrl+Shift+<" })}
           onMouseDown={(e) => e.preventDefault()}
           onClick={() => grootte(-1)}
         />
-        <AlineastijlKeuze naam="Stijl" />
+        <AlineastijlKeuze naam={t("menu.mini.style")} />
         <Actie
-          naam="Opmaak kopiëren"
+          naam={t("menu.mini.formatPainter")}
           icoon={Paintbrush}
           actief={kwastActief}
-          title="Opmaak kopiëren · dubbelklik om te blijven plakken"
+          title={t("menu.mini.formatPainterTitle")}
           onMouseDown={(e) => e.preventDefault()}
           onClick={(e) => {
             if (e.detail > 1) return;
@@ -194,40 +204,40 @@ export function MiniWerkbalk({
         />
       </div>
       <div className="tekst-minibalk-rij">
-        <Knop id="bold" args={null} naam="Vet" icoon={Bold} voerUit={voerUit} />
-        <Knop id="italic" args={null} naam="Cursief" icoon={Italic} voerUit={voerUit} />
-        <Knop id="underline" args={null} naam="Onderstrepen" icoon={Underline} voerUit={voerUit} />
+        <Knop id="bold" args={null} naam={t("menu.mini.bold")} icoon={Bold} voerUit={voerUit} />
+        <Knop id="italic" args={null} naam={t("menu.mini.italic")} icoon={Italic} voerUit={voerUit} />
+        <Knop id="underline" args={null} naam={t("menu.mini.underline")} icoon={Underline} voerUit={voerUit} />
         <OpdrachtKleur
           opdracht={markering}
-          naam="Markeerkleur"
+          naam={t("menu.mini.highlight")}
           icoon={Highlighter}
           args={(color) => ({ color })}
         />
         <OpdrachtKleur
           opdracht={kleur}
-          naam="Tekstkleur"
+          naam={t("menu.mini.fontColor")}
           icoon={Type}
           args={(color) => ({ color: { rgb: color.slice(1) } })}
         />
-        <Knop id="bulletList" args={null} naam="Opsomming" icoon={List} voerUit={voerUit} />
-        <Knop id="numberedList" args={null} naam="Nummering" icoon={ListOrdered} voerUit={voerUit} />
-        <WK id="lineSpacing" naam="Regelafstand" vertaal={(label) => label.replace(".", ",")} />
+        <Knop id="bulletList" args={null} naam={t("menu.mini.bullets")} icoon={List} voerUit={voerUit} />
+        <Knop id="numberedList" args={null} naam={t("menu.mini.numbering")} icoon={ListOrdered} voerUit={voerUit} />
+        <WK id="lineSpacing" naam={t("menu.mini.lineSpacing")} vertaal={decimaal} />
         <Knop
           id="alignment"
           args={{ value: "left" }}
-          naam="Links uitlijnen"
+          naam={t("menu.mini.alignLeft")}
           icoon={AlignLeft}
           voerUit={voerUit}
         />
         <Knop
           id="alignment"
           args={{ value: "center" }}
-          naam="Centreren"
+          naam={t("menu.mini.center")}
           icoon={AlignCenter}
           voerUit={voerUit}
         />
         <Actie
-          naam="Nieuwe opmerking"
+          naam={t("menu.mini.newComment")}
           icoon={MessageSquarePlus}
           disabled={!opdrachten.invoerbaar}
           onMouseDown={(e) => e.preventDefault()}

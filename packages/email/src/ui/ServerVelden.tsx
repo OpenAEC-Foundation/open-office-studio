@@ -1,15 +1,18 @@
 import { CircleCheck, CircleX, TriangleAlert } from "lucide-react";
+import { Trans, useTranslation } from "react-i18next";
 import type { Authenticatie, Beveiliging, ServerInstelling, TestUitkomst } from "../contract";
 import { STANDAARDPOORT } from "../voorinstellingen";
+import { backendTekst } from "../fouten";
 
-const BEVEILIGING: { waarde: Beveiliging; label: string }[] = [
+// Labels zonder sleutel zijn protocolnamen en worden niet vertaald.
+const BEVEILIGING: { waarde: Beveiliging; label?: string; sleutel?: string }[] = [
   { waarde: "ssl", label: "SSL/TLS" },
   { waarde: "starttls", label: "STARTTLS" },
-  { waarde: "geen", label: "Geen" },
+  { waarde: "geen", sleutel: "accounts.server.securityNone" },
 ];
-const AUTHENTICATIE: { waarde: Authenticatie; label: string }[] = [
-  { waarde: "normaal", label: "Normaal wachtwoord" },
-  { waarde: "versleuteld", label: "Versleuteld wachtwoord" },
+const AUTHENTICATIE: { waarde: Authenticatie; label?: string; sleutel?: string }[] = [
+  { waarde: "normaal", sleutel: "accounts.server.authNormal" },
+  { waarde: "versleuteld", sleutel: "accounts.server.authEncrypted" },
   { waarde: "oauth2", label: "OAuth2" },
 ];
 
@@ -25,37 +28,48 @@ export function ServerVelden({
   wijzig: (soort: "imap" | "smtp", server: ServerInstelling) => void;
   uitkomst?: TestUitkomst | null;
 }) {
+  const { t } = useTranslation("email");
   const rij = (soort: "imap" | "smtp", server: ServerInstelling) => {
     const zet = (deel: Partial<ServerInstelling>) => wijzig(soort, { ...server, ...deel });
     const resultaat = uitkomst?.[soort];
+    const protocol = soort.toUpperCase();
     return (
       <tr>
         <th scope="row">
-          {soort === "imap" ? "Inkomend (IMAP)" : "Uitgaand (SMTP)"}
+          {soort === "imap" ? t("accounts.server.incoming") : t("accounts.server.outgoing")}
           {resultaat && (
             <span className={`email-testuitkomst ${resultaat.ok ? "is-ok" : "is-fout"}`} role="status">
               {resultaat.ok ? <CircleCheck size={14} /> : <CircleX size={14} />}
-              {resultaat.melding}
+              {backendTekst(resultaat)}
             </span>
           )}
         </th>
         <td>
-          <input aria-label={`${soort.toUpperCase()}-server`} value={server.host} placeholder={soort === "imap" ? "imap.voorbeeld.nl" : "smtp.voorbeeld.nl"} onChange={(e) => zet({ host: e.target.value.trim() })} spellCheck={false} />
+          <input
+            className="email-serverhost"
+            aria-label={t("accounts.server.hostLabel", { protocol })}
+            value={server.host}
+            placeholder={soort === "imap" ? t("accounts.server.imapPlaceholder") : t("accounts.server.smtpPlaceholder")}
+            onChange={(e) => zet({ host: e.target.value.trim() })}
+            spellCheck={false}
+            dir="ltr"
+          />
         </td>
         <td>
           <input
-            aria-label={`${soort.toUpperCase()}-poort`}
+            aria-label={t("accounts.server.portLabel", { protocol })}
             type="number"
             min={1}
             max={65535}
             value={server.poort || ""}
             onChange={(e) => zet({ poort: Number(e.target.value) })}
             className="email-poort"
+            dir="ltr"
           />
         </td>
         <td>
           <select
-            aria-label={`${soort.toUpperCase()}-beveiliging`}
+            aria-label={t("accounts.server.securityLabel", { protocol })}
             value={server.beveiliging}
             onChange={(e) => {
               const beveiliging = e.target.value as Beveiliging;
@@ -66,22 +80,30 @@ export function ServerVelden({
           >
             {BEVEILIGING.map((b) => (
               <option key={b.waarde} value={b.waarde}>
-                {b.label}
+                {b.sleutel ? t(b.sleutel) : b.label}
               </option>
             ))}
           </select>
         </td>
         <td>
-          <select aria-label={`${soort.toUpperCase()}-authenticatie`} value={server.authenticatie} onChange={(e) => zet({ authenticatie: e.target.value as Authenticatie })}>
+          <select aria-label={t("accounts.server.authenticationLabel", { protocol })} value={server.authenticatie} onChange={(e) => zet({ authenticatie: e.target.value as Authenticatie })}>
             {AUTHENTICATIE.map((a) => (
               <option key={a.waarde} value={a.waarde}>
-                {a.label}
+                {a.sleutel ? t(a.sleutel) : a.label}
               </option>
             ))}
           </select>
         </td>
         <td>
-          <input aria-label={`${soort.toUpperCase()}-gebruikersnaam`} value={server.gebruikersnaam} onChange={(e) => zet({ gebruikersnaam: e.target.value })} spellCheck={false} autoComplete="username" />
+          <input
+            className="email-servergebruiker"
+            aria-label={t("accounts.server.usernameLabel", { protocol })}
+            value={server.gebruikersnaam}
+            onChange={(e) => zet({ gebruikersnaam: e.target.value })}
+            spellCheck={false}
+            autoComplete="username"
+            dir="ltr"
+          />
         </td>
       </tr>
     );
@@ -94,11 +116,11 @@ export function ServerVelden({
           <thead>
             <tr>
               <th />
-              <th>Server</th>
-              <th>Poort</th>
-              <th>Beveiliging</th>
-              <th>Authenticatie</th>
-              <th>Gebruikersnaam</th>
+              <th>{t("accounts.server.columns.server")}</th>
+              <th>{t("accounts.server.columns.port")}</th>
+              <th>{t("accounts.server.columns.security")}</th>
+              <th>{t("accounts.server.columns.authentication")}</th>
+              <th>{t("accounts.server.columns.username")}</th>
             </tr>
           </thead>
           <tbody>
@@ -111,13 +133,12 @@ export function ServerVelden({
         <p className="email-waarschuwing" role="alert">
           <TriangleAlert size={15} />
           <span>
-            <strong>Onversleutelde verbinding.</strong> Je wachtwoord en berichten gaan leesbaar over het netwerk. Kies SSL/TLS of STARTTLS als je provider
-            dat ondersteunt.
+            <Trans t={t} i18nKey="accounts.server.unencryptedWarning" components={{ strong: <strong /> }} />
           </span>
         </p>
       )}
       {(imap.authenticatie === "oauth2" || smtp.authenticatie === "oauth2") && (
-        <p className="email-hint">OAuth2 vraagt bij het testen of eerste gebruik om aanmelden via de provider.</p>
+        <p className="email-hint">{t("accounts.server.oauthHint")}</p>
       )}
     </div>
   );

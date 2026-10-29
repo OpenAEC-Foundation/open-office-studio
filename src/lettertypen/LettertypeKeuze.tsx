@@ -17,6 +17,8 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { ChevronDown } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import i18next from "../i18n/config";
 import { RibbonFout, type GebondenOpdracht } from "../Ribbon";
 import { useOfficeThema } from "../stijl/ThemaKnop";
 import {
@@ -74,27 +76,42 @@ export function onthoudLettertype(familie: string) {
   }
 }
 
+/** Vaste id van een groep; de naam volgt de interfacetaal (`fonts:groups.<id>`). */
+export type GroepId =
+  | "document"
+  | "recent"
+  | "sansSerif"
+  | "serif"
+  | "monospace"
+  | "handwritingDisplay"
+  | "system";
+
 export interface Groep {
+  id: GroepId;
+  /** Weergavenaam in de interfacetaal. */
   naam: string;
   regels: KeuzeRegel[];
 }
 
-const GROEP_VAN: Record<Categorie, string> = {
-  schreefloos: "Schreefloos",
-  schreef: "Schreef",
-  monospace: "Monospace",
-  handschrift: "Handschrift en display",
-  display: "Handschrift en display",
+const GROEP_VAN: Record<Categorie, GroepId> = {
+  schreefloos: "sansSerif",
+  schreef: "serif",
+  monospace: "monospace",
+  handschrift: "handwritingDisplay",
+  display: "handwritingDisplay",
 };
-export const GROEPEN = [
-  "In dit document",
-  "Recent gebruikt",
-  "Schreefloos",
-  "Schreef",
-  "Monospace",
-  "Handschrift en display",
-  "Op deze computer",
-] as const;
+export const GROEPEN: readonly GroepId[] = [
+  "document",
+  "recent",
+  "sansSerif",
+  "serif",
+  "monospace",
+  "handwritingDisplay",
+  "system",
+];
+
+/** Naam van een groep in de interfacetaal. */
+export const groepNaam = (id: GroepId) => i18next.t(`fonts:groups.${id}`);
 
 /**
  * Groepen voor de keuzelijst. In dit document en Recent staan bovenaan; een
@@ -139,16 +156,16 @@ export function lettertypeGroepen({
   const beperkt = !alle && !filter;
   const past = (r: KeuzeRegel) =>
     !filter || r.familie.toLowerCase().includes(filter);
-  const groepen = new Map<string, Map<string, KeuzeRegel>>(
+  const groepen = new Map<GroepId, Map<string, KeuzeRegel>>(
     GROEPEN.map((g) => [g, new Map()]),
   );
-  const zet = (groep: string, regel: KeuzeRegel) => {
+  const zet = (groep: GroepId, regel: KeuzeRegel) => {
     const lijst = groepen.get(groep)!;
     const sleutel = regel.familie.toLowerCase();
     if (past(regel) && !lijst.has(sleutel)) lijst.set(sleutel, regel);
   };
-  for (const naam of document) zet("In dit document", indeling(naam));
-  for (const naam of recent) zet("Recent gebruikt", indeling(naam));
+  for (const naam of document) zet("document", indeling(naam));
+  for (const naam of recent) zet("recent", indeling(naam));
   for (const info of CATALOGUS)
     if (!beperkt || KERNSET.has(info.familie.toLowerCase()))
       zet(GROEP_VAN[info.categorie], indeling(info.familie));
@@ -160,22 +177,20 @@ export function lettertypeGroepen({
         familieInfo(regel.vervanger)?.categorie ?? "schreefloos";
       zet(GROEP_VAN[categorie], regel);
     } else if (regel.herkomst === "systeem" && !beperkt)
-      zet("Op deze computer", regel);
+      zet("system", regel);
   }
   for (const naam of beperkt ? [] : systeem) {
     const regel = indeling(naam);
-    if (regel.herkomst === "systeem") zet("Op deze computer", regel);
+    if (regel.herkomst === "systeem") zet("system", regel);
   }
   const sorteer = (regels: KeuzeRegel[]) =>
     regels.sort((a, b) => a.familie.localeCompare(b.familie));
-  return GROEPEN.map((naam) => {
-    const regels = [...groepen.get(naam)!.values()];
+  return GROEPEN.map((id) => {
+    const regels = [...groepen.get(id)!.values()];
     return {
-      naam,
-      regels:
-        naam === "In dit document" || naam === "Recent gebruikt"
-          ? regels
-          : sorteer(regels),
+      id,
+      naam: groepNaam(id),
+      regels: id === "document" || id === "recent" ? regels : sorteer(regels),
     };
   }).filter((g) => g.regels.length);
 }
@@ -200,7 +215,7 @@ function bewaarAlleTonen(alle: boolean) {
 
 export function LettertypeKeuze({
   opdracht,
-  naam = "Lettertype",
+  naam: eigenNaam,
   voorbeeld,
   voorbereiden,
   naKeuze,
@@ -214,6 +229,8 @@ export function LettertypeKeuze({
   /** Maakt een gekozen lettertype bruikbaar voor de engine (vóór het toepassen). */
   voorbereiden?: (familie: string) => Promise<void>;
 }) {
+  const { t } = useTranslation("fonts");
+  const naam = eigenNaam ?? t("picker.font");
   const fout = useContext(RibbonFout);
   const documentNamen = useContext(DocumentLettertypen);
   const { thema } = useOfficeThema();
@@ -301,7 +318,7 @@ export function LettertypeKeuze({
       await voorbereiden?.(familie);
       const r = await opdracht.execute({ family: familie } as never);
       if (!r.ok)
-        fout(r.failure?.message ?? "Het lettertype kon niet worden gekozen.");
+        fout(r.failure?.message ?? t("errors.chooseFailed"));
     } catch (e) {
       fout(e instanceof Error ? e.message : String(e));
     }
@@ -363,10 +380,10 @@ export function LettertypeKeuze({
         className="lettertypekeuze-knop"
         aria-haspopup="listbox"
         aria-expanded={open}
-        aria-label={`${naam}: ${huidig || "gemengd"}`}
+        aria-label={t("picker.current", { name: naam, font: huidig || t("picker.mixed") })}
         title={
           huidigeRegel
-            ? `${naam}: ${huidig}\n${vermelding(huidigeRegel)}`
+            ? `${t("picker.current", { name: naam, font: huidig })}\n${vermelding(huidigeRegel)}`
             : naam
         }
         disabled={!opdracht.state.enabled}
@@ -400,8 +417,8 @@ export function LettertypeKeuze({
             <input
               ref={zoekveld}
               type="search"
-              placeholder="Zoeken…"
-              aria-label="Lettertype zoeken"
+              placeholder={t("picker.searchPlaceholder")}
+              aria-label={t("picker.searchLabel")}
               role="combobox"
               aria-expanded="true"
               aria-controls={`${id}-lijst`}
@@ -437,7 +454,7 @@ export function LettertypeKeuze({
             />
             <ul ref={lijst} id={`${id}-lijst`} role="listbox" aria-label={naam}>
               {groepen.map((groep) => (
-                <li key={groep.naam} role="presentation">
+                <li key={groep.id} role="presentation">
                   <span className="lettertypekeuze-groep" aria-hidden="true">
                     {groep.naam}
                   </span>
@@ -478,7 +495,7 @@ export function LettertypeKeuze({
               ))}
               {!plat.length && (
                 <li className="lettertypekeuze-leeg">
-                  Geen lettertype gevonden; Enter kiest “{zoek}”.
+                  {t("picker.noResults", { query: zoek })}
                 </li>
               )}
             </ul>
@@ -495,9 +512,9 @@ export function LettertypeKeuze({
                   style={{ fontFamily: voorbeeldFamilie(actieveRegel) }}
                   aria-hidden="true"
                 >
-                  <b>Vet</b> <i>Cursief</i>{" "}
+                  <b>{t("picker.bold")}</b> <i>{t("picker.italic")}</i>{" "}
                   <b>
-                    <i>Vet cursief</i>
+                    <i>{t("picker.boldItalic")}</i>
                   </b>
                 </div>
                 <p className="lettertypekeuze-licentie">
@@ -519,7 +536,7 @@ export function LettertypeKeuze({
                   zoekveld.current?.focus();
                 }}
               >
-                {alle ? "Minder lettertypen tonen" : "Alle lettertypen tonen"}
+                {alle ? t("picker.showFewer") : t("picker.showAll")}
               </button>
             )}
             {kanToestemmingVragen() && alle && (
@@ -528,7 +545,7 @@ export function LettertypeKeuze({
                 className="lettertypekeuze-toestemming"
                 onClick={() => void laadSysteemLettertypen(true)}
               >
-                Lettertypen van deze computer tonen…
+                {t("picker.showSystemFonts")}
               </button>
             )}
           </div>,

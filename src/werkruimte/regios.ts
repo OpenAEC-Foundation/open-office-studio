@@ -30,27 +30,37 @@ function inDocument(element: Element) {
   return !element.closest(".office") && element !== document.body;
 }
 
+/** Het lint van het actieve tabblad, boven de documentbalk (lintplek.tsx). */
+function zichtbaarLint(paneel: HTMLElement | null) {
+  return (
+    document.querySelector<HTMLElement>(".office-lintvlak > .office-lintplek:not([hidden]) .ribbon") ??
+    paneel?.querySelector<HTMLElement>(".ribbon") ??
+    null
+  );
+}
+
 function regios(laatsteInDocument: HTMLElement | null): Regio[] {
   const lijst: Regio[] = [];
   const voeg = (wortel: HTMLElement | null, doel: () => HTMLElement | null, bevat?: Regio["bevat"]) => {
     if (wortel) lijst.push({ wortel, doel, bevat: bevat ?? ((e) => wortel.contains(e)) });
   };
-  const kop = document.querySelector<HTMLElement>(".office-header");
+  // Volgorde van de OpenAEC Blueprint: titelbalk, lint, documentbalk, document, statusbalk.
+  const kop = document.querySelector<HTMLElement>(".office-titelbalk, .office-header");
   voeg(kop, () => (kop ? focusbare(kop)[0] ?? null : null));
+  const paneel = zichtbaarPaneel();
+  const lint = zichtbaarLint(paneel);
+  voeg(
+    lint,
+    () =>
+      lint?.querySelector<HTMLElement>("[role='tab'][aria-selected='true']") ??
+      (lint ? focusbare(lint)[0] ?? null : null),
+  );
   const tabbalk = document.querySelector<HTMLElement>(".office-tabbalk");
   voeg(
     tabbalk,
     () =>
       tabbalk?.querySelector<HTMLElement>("[role='tab'][aria-selected='true']") ??
       (tabbalk ? focusbare(tabbalk)[0] ?? null : null),
-  );
-  const paneel = zichtbaarPaneel();
-  const lint = paneel?.querySelector<HTMLElement>(".ribbon") ?? null;
-  voeg(
-    lint,
-    () =>
-      lint?.querySelector<HTMLElement>("[role='tab'][aria-selected='true']") ??
-      (lint ? focusbare(lint)[0] ?? null : null),
   );
   voeg(
     paneel,
@@ -71,6 +81,9 @@ function regios(laatsteInDocument: HTMLElement | null): Regio[] {
   );
   const status = document.querySelector<HTMLElement>(".office-statusbalk");
   voeg(status, () => (status ? focusbare(status)[0] ?? null : null));
+  // Meldingen rechtsonder zijn ook een regio zolang er een in beeld is.
+  const meldingen = document.querySelector<HTMLElement>(".office-meldingen:not([hidden])");
+  voeg(meldingen, () => (meldingen ? focusbare(meldingen)[0] ?? null : null));
   return lijst;
 }
 

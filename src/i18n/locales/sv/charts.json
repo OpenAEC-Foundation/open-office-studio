@@ -1,0 +1,265 @@
+{
+  "types": {
+    "column": {
+      "name": "Stapel",
+      "description": "Jämför värden sida vid sida"
+    },
+    "stackedColumn": {
+      "name": "Staplad stapel",
+      "description": "Delar och summa per kategori"
+    },
+    "percentColumn": {
+      "name": "100 % stapel",
+      "description": "Andelar per kategori"
+    },
+    "bar": {
+      "name": "Liggande stapel",
+      "description": "Vågrät, för långa namn"
+    },
+    "line": {
+      "name": "Linje",
+      "description": "Trend över tid"
+    },
+    "lineMarkers": {
+      "name": "Linje med brytpunkter",
+      "description": "Trend med synliga datapunkter"
+    },
+    "area": {
+      "name": "Yta",
+      "description": "Trend med betoning på storlek"
+    },
+    "pie": {
+      "name": "Cirkel",
+      "description": "Fördelning av en enskild serie"
+    },
+    "doughnut": {
+      "name": "Ring",
+      "description": "Fördelning med öppen mitt"
+    },
+    "scatter": {
+      "name": "Punkt (XY)",
+      "description": "Samband mellan två tal"
+    },
+    "combo": {
+      "name": "Stapel + linje",
+      "description": "Sista serien som linje på en sekundär axel"
+    }
+  },
+  "unknownType": "Okänd typ",
+  "busy": "Bearbetar…",
+  "defaults": {
+    "seriesName": "Serie {{n}}",
+    "categoryName": "Kategori {{n}}",
+    "chartName": "Diagram {{n}}",
+    "sheetName": "Diagram {{n}}",
+    "true": "SANT",
+    "false": "FALSKT"
+  },
+  "ribbon": {
+    "charts": "Diagram",
+    "chart": "Diagram",
+    "editChart": "Redigera diagram",
+    "allCharts": "Alla diagram",
+    "dataAndFormat": "Data och formatering",
+    "overview": "Översikt",
+    "type": "Typ",
+    "changeType": "Ändra diagramtyp",
+    "data": "Data",
+    "selectData": "Markera data",
+    "layout": "Layout",
+    "titleAndLegend": "Rubrik och förklaring",
+    "delete": "Ta bort",
+    "deleteChart": "Ta bort diagram",
+    "withShortcut": "{{name}} · {{shortcut}}"
+  },
+  "dialog": {
+    "title": {
+      "insert": "Infoga diagram",
+      "edit": "Redigera diagram"
+    },
+    "button": {
+      "insert": "Infoga",
+      "edit": "Uppdatera"
+    },
+    "reloadNote": {
+      "insert": "Dokumentet läses in igen efter infogningen. Ändringar som gjorts före det kan inte längre ångras.",
+      "edit": "Dokumentet läses in igen efter uppdateringen. Ändringar som gjorts före det kan inte längre ångras."
+    },
+    "closeTitle": "Stäng (Esc)",
+    "type": "Typ",
+    "data": "Data",
+    "cellRange": "Cellområde",
+    "cellRangePlaceholder": "Till exempel A1:D6",
+    "noContiguousRange": "Referenserna i det här diagrammet bildar inte ett sammanhängande område; data förblir oförändrade tills du anger ett område.",
+    "firstRowNames": "Första raden innehåller namn",
+    "firstColumnNames": "Första kolumnen innehåller namn",
+    "seriesIn": "Serier i",
+    "columns": "kolumner",
+    "rows": "rader",
+    "series": "Serie",
+    "seriesNoNumbersTitle": "{{name}}: inga tal, inte medtagen",
+    "noNumbers": "(inga tal)",
+    "enterRange": "Ange cellområdet som innehåller data.",
+    "placeCursorInTable": "Placera först markören i en tabell med tal.",
+    "titles": "Rubriker",
+    "chartTitle": "Rubrik",
+    "subtitle": "Underrubrik",
+    "categoryAxis": "Kategoriaxel",
+    "valueAxis": "Värdeaxel",
+    "horizontalAxis": "Vågrät axel",
+    "verticalAxis": "Lodrät axel",
+    "secondaryAxis": "Sekundär axel",
+    "format": "Format",
+    "legend": "Förklaring",
+    "gridlines": "Stödlinjer",
+    "dataLabels": "Dataetiketter",
+    "decimals": "Decimaler",
+    "placement": "Placering",
+    "besideData": "Bredvid data i det här bladet",
+    "newSheet": "I ett nytt blad",
+    "sheetName": "Bladnamn",
+    "summary": {
+      "series_one": "{{n}} serie",
+      "series_other": "{{n}} serier",
+      "categories_one": "{{n}} kategori",
+      "categories_other": "{{n}} kategorier",
+      "text": "{{series}} · {{categories}}",
+      "withSheet": "{{series}} · {{categories}} · {{sheet}}"
+    }
+  },
+  "legend": {
+    "bottom": "Nederkant",
+    "right": "Höger",
+    "top": "Överkant",
+    "left": "Vänster",
+    "none": "Ingen förklaring"
+  },
+  "dataSheet": {
+    "row": "Rad",
+    "series": "Serie",
+    "removeLastRow": "Ta bort sista raden",
+    "removeLastSeries": "Ta bort sista serien",
+    "paste": "Klistra in",
+    "pasteTitle": "Klistra in tabbavgränsad text från urklipp, till exempel kopierad från ett kalkylblad",
+    "fromTable": "Från markerad tabell",
+    "fromTableTitle": "Hämtar tabellen som markören står i",
+    "pasteNotAllowed": "Det är inte tillåtet att klistra in med knappen här. Klicka i en cell och använd Ctrl+V.",
+    "corner": "Hörncell",
+    "seriesNameLabel": "Namn på serie {{n}}",
+    "categoryLabel": "Kategori {{n}}",
+    "valueLabel": "Värde rad {{row}}, serie {{series}}"
+  },
+  "preview": {
+    "label": "Förhandsgranskning: {{title}}",
+    "untitled": "Förhandsgranskning: namnlöst diagram"
+  },
+  "list": {
+    "title": "Diagram i det här dokumentet",
+    "empty": "Det här dokumentet innehåller inga diagram ännu.",
+    "edit": "Redigera",
+    "delete": "Ta bort",
+    "deleteLabel": "Ta bort {{name}}",
+    "place": {
+      "slide": "bild {{n}}",
+      "sheet": "blad {{name}}",
+      "text": "diagram {{n}} i texten"
+    }
+  },
+  "deleteConfirm": {
+    "title": "Ta bort diagram",
+    "text": "Vill du ta bort ‘{{name}}’? Dokumentet läses sedan in igen; tidigare ändringar kan inte längre ångras.",
+    "textSheet": "Vill du ta bort ‘{{name}}’ från bladet {{sheet}}? Dokumentet läses sedan in igen; tidigare ändringar kan inte längre ångras.",
+    "button": "Ta bort"
+  },
+  "errors": {
+    "unknownType": "Okänd diagramtyp.",
+    "noSeries": "Diagrammet behöver minst en dataserie.",
+    "tooManySeries": "Ett diagram kan här innehålla högst {{max}} serier.",
+    "tooManyCategories": "Ett diagram kan här innehålla högst {{max}} kategorier.",
+    "noCategories": "Diagrammet behöver minst en kategori.",
+    "valueCountMismatch": "Serien ‘{{name}}’ har inte lika många värden som det finns kategorier.",
+    "noNumbers": "Data innehåller inga tal.",
+    "comboNeedsTwoSeries": "Ett kombinationsdiagram behöver minst två serier: staplar och en linje.",
+    "scatterNeedsNumbers": "Ett punktdiagram behöver tal som X-värden i första kolumnen eller raden.",
+    "titleTooLong": "Rubriker får vara högst {{max}} tecken långa.",
+    "invalidColor": "Färgen ‘{{color}}’ är inte en giltig färg.",
+    "noNumericColumn": "Ingen av kolumnerna i området innehåller tal, så det finns inget att rita. Välj ett område med minst en kolumn med tal, eller ställ in ‘Serier i’ på rader.",
+    "noNumericRow": "Ingen av raderna i området innehåller tal, så det finns inget att rita. Välj ett område med minst en rad med tal, eller ställ in ‘Serier i’ på kolumner.",
+    "chooseSeries": "Välj minst en serie för diagrammet.",
+    "rangeTooLarge": "Området är för stort: högst {{max}} celler.",
+    "noDataBesideHeaders": "Området innehåller inga data utöver rubrikerna.",
+    "pasteTooLarge": "De inklistrade data är för stora för ett diagram.",
+    "invalidRange": "Det är inte ett giltigt cellområde. Använd till exempel A1:D6 eller 'Blad 1'!A1:D6.",
+    "noSuchSheet": "Det finns inget blad med namnet ‘{{name}}’.",
+    "spreadsheetNotReady": "Kalkylbladet är inte klart än.",
+    "spreadsheetReadOnly": "Kalkylbladet är skrivskyddat.",
+    "documentNotReady": "Dokumentet är inte klart än.",
+    "presentationNotEditable": "Presentationen kan inte redigeras just nu.",
+    "selectChartFirst": "Markera ett diagram först.",
+    "chartGone": "Diagrammet går inte längre att hitta.",
+    "notEditableHere": "Det här diagrammet kan inte redigeras här.",
+    "notEditable": "Det här diagrammet kan inte redigeras.",
+    "package": {
+      "tooLarge": "Dokumentet är för stort för att redigera ett diagram i det.",
+      "tooManyParts": "Dokumentet innehåller för många eller för stora delar.",
+      "notZip": "Dokumentet är inte en giltig Office-fil (zip).",
+      "invalidPartName": "Dokumentet innehåller ett ogiltigt delnamn.",
+      "noContentTypes": "[Content_Types].xml saknas i dokumentet.",
+      "missingPart": "Delen {{part}} saknas i dokumentet.",
+      "noFreePartName": "Det finns inget ledigt delnamn kvar."
+    },
+    "xml": {
+      "tooLarge": "En XML-del är för stor för att bearbetas.",
+      "damaged": "XML-delen är skadad.",
+      "doctype": "XML med DOCTYPE bearbetas inte av säkerhetsskäl.",
+      "tooDeep": "XML-delen är för djupt kapslad.",
+      "overlappingChanges": "Internt fel: överlappande XML-ändringar."
+    },
+    "chartXml": {
+      "notDrawingML": "Den här delen är inte ett DrawingML-diagram.",
+      "noPlotArea": "Diagrammet har inget ritområde.",
+      "unusualPrefix": "Det här diagrammet använder en ovanlig XML-notation och kan inte redigeras säkert här."
+    },
+    "document": {
+      "noMainPart": "Dokumentets huvuddel saknas.",
+      "tooManyCharts": "Det här dokumentet innehåller redan {{total}} diagram; fler stöds inte.",
+      "invalidSheetName": "Ogiltigt bladnamn: högst 31 tecken, utan \\ / ? * [ ] :",
+      "sheetExists": "Det finns redan ett blad med namnet ‘{{name}}’.",
+      "noSheetList": "Arbetsboken har ingen lista över blad.",
+      "drawingMissing": "Ritningen för det här bladet saknas eller är skadad.",
+      "noSuchWorksheet": "Det valda bladet finns inte eller är inte ett kalkylblad.",
+      "notPlainWorksheet": "Ett diagram kan bara placeras i ett vanligt kalkylblad.",
+      "drawingDamaged": "Ritningen för det här bladet är skadad.",
+      "docxUnusualPrefix": "Det här dokumentet använder en ovanlig XML-notation; diagrammet kan inte infogas säkert.",
+      "noBody": "Dokumentet har ingen brödtext.",
+      "tableTooLarge": "Tabellen är för stor för ett diagram.",
+      "noSuchSlide": "Den valda bilden finns inte.",
+      "slideUnusualPrefix": "Den här bilden använder en ovanlig XML-notation; diagrammet kan inte infogas säkert.",
+      "noShapeTree": "Bilden har inget formträd.",
+      "chartRemoved": "Diagrammet finns inte längre i dokumentet.",
+      "chartNotFound": "Diagrammet hittades inte.",
+      "cannotRemove": "Det går inte att ta bort diagramobjektet."
+    }
+  },
+  "read": {
+    "reasons": {
+      "extendedChart": "Det här är ett utökat diagram (till exempel ett vattenfalls- eller trädkartediagram) som inte kan redigeras här.",
+      "unsupportedType": "Det här diagrammet använder en typ som inte kan redigeras här ({{types}}).",
+      "noReadableSeries": "Diagrammet innehåller inga serier som kan läsas.",
+      "unsupportedCombination": "Det här diagrammet kombinerar typer på ett sätt som inte kan redigeras här.",
+      "noSeries": "Diagrammet innehåller inga dataserier.",
+      "invalid": "Det här diagrammet kan inte redigeras här: {{reason}}",
+      "unusualPrefix": "Det här diagrammet använder en ovanlig XML-notation och kan inte redigeras säkert här."
+    },
+    "warnings": {
+      "stackedBars": "Staplade liggande staplar placeras sida vid sida vid redigering.",
+      "stackedLines": "Staplade linjer blir separata linjer vid redigering.",
+      "stackedAreas": "Staplade ytor blir separata ytor vid redigering.",
+      "linesAfterColumns": "Linjeserierna placeras efter staplarna vid redigering.",
+      "lastSeriesAsLine": "Vid redigering ritas bara den sista serien som linje.",
+      "multiLevelCategories": "Kategorier i flera nivåer blir en enda nivå vid redigering.",
+      "moreValuesThanCategories": "Serien ‘{{name}}’ har fler värden än det finns kategorier.",
+      "trendlinesDropped": "Trendlinjer och felstaplar tas bort vid redigering."
+    }
+  }
+}

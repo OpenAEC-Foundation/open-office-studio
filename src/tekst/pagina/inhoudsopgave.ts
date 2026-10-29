@@ -29,6 +29,7 @@ import {
   type WordDocument,
   type XmlElement,
 } from "./ooxml.ts";
+import { paginaTekst } from "./tekst.ts";
 
 /** Een kop zoals de engine die geeft. */
 export interface Kop {
@@ -40,11 +41,12 @@ export interface Kop {
 }
 
 export type Opvulteken = "punt" | "streep" | "lijn" | "geen";
-export const OPVULTEKENS: { waarde: Opvulteken; naam: string; voorbeeld: string }[] = [
-  { waarde: "punt", naam: "Puntjes", voorbeeld: "Inleiding ........ 1" },
-  { waarde: "streep", naam: "Streepjes", voorbeeld: "Inleiding -------- 1" },
-  { waarde: "lijn", naam: "Doorlopende lijn", voorbeeld: "Inleiding ________ 1" },
-  { waarde: "geen", naam: "Geen", voorbeeld: "Inleiding            1" },
+/** `sleutel`: naam in `writer:page.toc.dialog.leaders`. */
+export const OPVULTEKENS: { waarde: Opvulteken; sleutel: "dots" | "dashes" | "line" | "none" }[] = [
+  { waarde: "punt", sleutel: "dots" },
+  { waarde: "streep", sleutel: "dashes" },
+  { waarde: "lijn", sleutel: "line" },
+  { waarde: "geen", sleutel: "none" },
 ];
 const LEADER: Record<Opvulteken, string | null> = { punt: "dot", streep: "hyphen", lijn: "underscore", geen: null };
 
@@ -64,7 +66,10 @@ export const STANDAARD_INHOUD: InhoudOpties = {
   rechtsUitlijnen: true,
   opvulteken: "punt",
   hyperlinks: true,
-  titel: "Inhoudsopgave",
+  /** Standaardtitel in de interfacetaal op het moment van invoegen (zoals Word). */
+  get titel() {
+    return paginaTekst("toc.defaultTitle");
+  },
 };
 
 // ---------------------------------------------------------------------------
@@ -309,7 +314,7 @@ export function inhoudRegels(koppelingen: Koppeling[], o: InhoudOpties, breedte:
   const begin = `<w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText xml:space="preserve"> ${tocInstructie(o)} </w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r>`;
   const eind = `<w:r><w:fldChar w:fldCharType="end"/></w:r>`;
   if (!regels.length)
-    return `<w:p><w:pPr><w:pStyle w:val="TOC1"/></w:pPr>${begin}${tekstRun("Geen koppen gevonden. Geef titels een kopstijl (Kop 1, Kop 2 …) en werk de inhoudsopgave bij.")}${eind}</w:p>`;
+    return `<w:p><w:pPr><w:pStyle w:val="TOC1"/></w:pPr>${begin}${tekstRun(paginaTekst("toc.noHeadings"))}${eind}</w:p>`;
   return regels
     .map((k, i) => {
       const nummer = !o.paginanummers ? "" : o.rechtsUitlijnen ? `<w:r><w:tab/></w:r>${tekstRun(k.kop.pagina ?? "?")}` : tekstRun(` ${k.kop.pagina ?? "?"}`);
@@ -338,7 +343,7 @@ function voorbereiden(doc: WordDocument, o: InhoudOpties) {
 export function voegInhoudsopgaveIn(bytes: Uint8Array, markering: string | null, koppen: Kop[], opties: InhoudOpties): Uint8Array {
   return metPakket(bytes, (pakket) => {
     let doc = openDocument(pakket);
-    if (vindInhoudsopgave(doc)) throw new PaginaFout("Dit document heeft al een inhoudsopgave. Gebruik ‘Bijwerken’ of verwijder die eerst.");
+    if (vindInhoudsopgave(doc)) throw new PaginaFout(paginaTekst("errors.tocExists"));
     voorbereiden(doc, opties);
     doc = openDocument(pakket);
     // Eerst bladwijzers op de koppen (de markering blijft daarbij staan).
@@ -349,7 +354,7 @@ export function voegInhoudsopgaveIn(bytes: Uint8Array, markering: string | null,
       doc = openDocument(pakket);
     }
     const plek = markering ? vindMarkering(pakket, markering) : null;
-    if (markering && (!plek || plek.pad !== doc.pad)) throw new PaginaFout("Een inhoudsopgave kan alleen in de hoofdtekst. Zet de cursor in de tekst.");
+    if (markering && (!plek || plek.pad !== doc.pad)) throw new PaginaFout(paginaTekst("errors.tocBodyOnly"));
     const lijst = secties(doc);
     const sectie = plek ? lijst.find((s) => s.alinea && plek.alinea.start <= s.alinea.start) ?? lijst[lijst.length - 1] : lijst[0];
     const blok = inhoudBlok(inhoudRegels(koppelingen, opties, tekstbreedte(sectie.el)), opties, null, null);
@@ -387,7 +392,7 @@ export function werkInhoudsopgaveBij(bytes: Uint8Array, koppen: Kop[], modus: "p
   return metPakket(bytes, (pakket) => {
     let doc = openDocument(pakket);
     let gevonden = vindInhoudsopgave(doc);
-    if (!gevonden) throw new PaginaFout("Dit document heeft geen inhoudsopgave.");
+    if (!gevonden) throw new PaginaFout(paginaTekst("errors.noToc"));
     const o: InhoudOpties = { ...gevonden.opties, ...opties };
     if (modus === "alles") {
       voorbereiden(doc, o);
@@ -447,7 +452,7 @@ export function verwijderInhoudsopgave(bytes: Uint8Array): Uint8Array {
   return metPakket(bytes, (pakket) => {
     const doc = openDocument(pakket);
     const gevonden = vindInhoudsopgave(doc);
-    if (!gevonden) throw new PaginaFout("Dit document heeft geen inhoudsopgave.");
+    if (!gevonden) throw new PaginaFout(paginaTekst("errors.noToc"));
     pakket.schrijf(doc.pad, vervang(doc.xml, [{ start: gevonden.start, eind: gevonden.eind, tekst: "" }]));
     return pakket.inpakken();
   });

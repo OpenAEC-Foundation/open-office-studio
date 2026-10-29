@@ -1,5 +1,8 @@
 import { useMemo, useState, useSyncExternalStore } from "react";
 import { Search } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import i18next from "../i18n/config";
+import { formatLijst, useOpmaak } from "../i18n/opmaak";
 import { Dialoog } from "./Dialoog";
 import { useInstellingen } from "../instellingen";
 import {
@@ -26,6 +29,20 @@ const volgorde: SneltoetsModule[] = [
   "notities",
 ];
 
+/**
+ * Modulenaam in de interfacetaal. De lijst in src/lint blijft Nederlands;
+ * die naam is alleen de terugval.
+ */
+export function sneltoetsModuleNaam(module: SneltoetsModule) {
+  return module === "algemeen"
+    ? i18next.t("workspace:shortcuts.general", { defaultValue: moduleNamen.algemeen })
+    : i18next.t(`common:modules.${module}`, { defaultValue: moduleNamen[module] });
+}
+
+/** Modules als opsomming volgens de taal: "Tekst, Rekenblad". */
+const moduleLijst = (modules: readonly SneltoetsModule[]) =>
+  formatLijst(modules.map(sneltoetsModuleNaam), { type: "unit", style: "short" });
+
 /** Secties voor het overzicht: de actieve module eerst, dan Algemeen, dan de rest. */
 export function sneltoetsSecties(
   lijst: readonly SneltoetsInfo[],
@@ -36,7 +53,7 @@ export function sneltoetsSecties(
   return modules
     .map((m) => ({
       module: m,
-      naam: moduleNamen[m],
+      naam: sneltoetsModuleNaam(m),
       toetsen: lijst.filter((info) => info.module === m),
     }))
     .filter((sectie) => sectie.toetsen.length > 0);
@@ -60,6 +77,8 @@ export function SneltoetsenOverzicht({
   module: SneltoetsModule | null;
   sluit: () => void;
 }) {
+  const { t } = useTranslation("workspace");
+  const { taal, getal } = useOpmaak();
   const [zoek, setZoek] = useState("");
   const versie = useSyncExternalStore(volgRegistraties, registratieVersie);
   // Tekst: alleen het gekozen sneltoetsprofiel (instellingen).
@@ -70,11 +89,12 @@ export function SneltoetsenOverzicht({
         zoekSneltoetsen(alleSneltoetsen(), zoek).filter((info) => inProfiel(info, profiel)),
         module,
       ),
-    [zoek, module, versie, profiel],
+    // taal: de sectienamen volgen de interfacetaal.
+    [zoek, module, versie, profiel, taal],
   );
   const aantal = secties.reduce((som, s) => som + s.toetsen.length, 0);
   return (
-    <Dialoog titel="Sneltoetsen" sluit={sluit} className="werkruimte-sneltoetsen">
+    <Dialoog titel={t("common:shortcuts")} sluit={sluit} className="werkruimte-sneltoetsen">
       <label className="werkruimte-zoek">
         <Search size={15} aria-hidden="true" />
         <input
@@ -82,29 +102,36 @@ export function SneltoetsenOverzicht({
           data-autofocus
           value={zoek}
           onChange={(event) => setZoek(event.target.value)}
-          placeholder="Zoek een opdracht of toets"
-          aria-label="Sneltoetsen zoeken"
+          placeholder={t("shortcuts.searchPlaceholder")}
+          aria-label={t("shortcuts.searchLabel")}
           aria-describedby="sneltoetsen-aantal"
         />
       </label>
       <p id="sneltoetsen-aantal" className="werkruimte-aantal" role="status">
         {aantal === 0
-          ? "Geen sneltoetsen gevonden."
-          : `${aantal} ${aantal === 1 ? "sneltoets" : "sneltoetsen"}`}
+          ? t("shortcuts.noResults")
+          : t("shortcuts.count", { count: aantal, shortcuts: getal(aantal) })}
       </p>
       <div className="werkruimte-sneltoetslijst">
         {secties.map((sectie) => (
           <section key={sectie.module} aria-labelledby={`sneltoetsen-${sectie.module}`}>
             <h3 id={`sneltoetsen-${sectie.module}`}>
               {sectie.naam}
-              {sectie.module === module && <small> · huidige module</small>}
-              {sectie.module === "tekst" && <small> · profiel {profielNamen[profiel]}</small>}
+              {sectie.module === module && <small> · {t("shortcuts.currentModule")}</small>}
+              {sectie.module === "tekst" && <small>
+                  {" · "}
+                  {t("shortcuts.profile", {
+                    profile: t(`settings:editing.profiles.${profiel}`, {
+                      defaultValue: profielNamen[profiel],
+                    }),
+                  })}
+                </small>}
             </h3>
             <table>
               <thead className="werkruimte-verborgen">
                 <tr>
-                  <th scope="col">Opdracht</th>
-                  <th scope="col">Toets</th>
+                  <th scope="col">{t("shortcuts.command")}</th>
+                  <th scope="col">{t("shortcuts.key")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -116,10 +143,16 @@ export function SneltoetsenOverzicht({
                     <td>
                       {info.omschrijving}
                       {info.alleen && (
-                        <small> · in {info.alleen.map((m) => moduleNamen[m]).join(", ")}</small>
+                        <small>
+                          {" · "}
+                          {t("shortcuts.onlyIn", { modules: moduleLijst(info.alleen) })}
+                        </small>
                       )}
                       {info.behalve && (
-                        <small> · niet in {info.behalve.map((m) => moduleNamen[m]).join(", ")}</small>
+                        <small>
+                          {" · "}
+                          {t("shortcuts.notIn", { modules: moduleLijst(info.behalve) })}
+                        </small>
                       )}
                     </td>
                     <td>
@@ -133,7 +166,7 @@ export function SneltoetsenOverzicht({
         ))}
       </div>
       <p className="werkruimte-voetnoot">
-        Op macOS gebruik je ⌘ in plaats van Ctrl. Druk op Alt of F10 voor toetstips in het lint.
+        {t("shortcuts.footnote")}
       </p>
     </Dialoog>
   );

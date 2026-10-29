@@ -1,0 +1,150 @@
+{
+  "header": {
+    "homeTitle": "الانتقال إلى البداية",
+    "homeLabel": "OpenAEC Office Studio · البداية",
+    "version": "الإصدار {{version}}",
+    "unsaved": "تغييرات غير محفوظة",
+    "unchanged": "دون تغيير",
+    "fileAndStart": "ملف والبداية",
+    "openFileTitle": "فتح ملف في علامة تبويب جديدة · Ctrl+O",
+    "openNotesBackupTitle": "إضافة نسخة احتياطية من الملاحظات · Ctrl+O",
+    "openDatabaseTitle": "فتح قاعدة بيانات · Ctrl+O",
+    "addBackup": "إضافة نسخة احتياطية",
+    "saveAs": "حفظ باسم",
+    "saveAsTitle": "حفظ باسم · F12 أو Ctrl+Shift+S (يحفظ Ctrl+S في الملف المفتوح)",
+    "busy": "جارٍ العمل…"
+  },
+  "message": {
+    "close": "إغلاق الرسالة",
+    "markdownNote": "يحتفظ Markdown بالنص والبنية. احفظ أيضًا نسخة DOCX لتخطيط الصفحة والصور والمراجعات."
+  },
+  "loading": {
+    "editor": "جارٍ تحميل المحرر…",
+    "notes": "جارٍ تحميل الملاحظات…",
+    "email": "جارٍ تحميل Email Studio…",
+    "document": "جارٍ تحميل المستند…",
+    "fonts": "جارٍ تحميل الخطوط…"
+  },
+  "errors": {
+    "editorFailed": "تعذّر على المحرر فتح هذا الملف: {{error}}",
+    "openFailed": "فشل الفتح: {{error}}",
+    "openFileFailed": "فشل فتح {{name}}: {{error}}",
+    "saveFailed": "فشل الحفظ: {{error}}",
+    "printFailed": "فشلت الطباعة: {{error}}",
+    "sendAsAttachmentFailed": "فشل الإرسال كمرفق: {{error}}",
+    "templateUnavailable": "القالب غير متاح",
+    "exampleFailed": "تعذّر فتح المثال.",
+    "fileSize": "اختر ملفًا غير فارغ لا يتجاوز حجمه 100 MB.",
+    "unsupportedFormat": "{{name}}: هذا التنسيق غير مدعوم.",
+    "emptyAttachment": "المرفق فارغ.",
+    "databaseModifiedFile": "لدى Database Studio نسخة عمل معدّلة. احفظها أو أغلقها أولاً، ثم افتح الملف مرة أخرى.",
+    "databaseModifiedAttachment": "لدى Database Studio نسخة عمل معدّلة. احفظها أو أغلقها أولاً، ثم افتح المرفق مرة أخرى.",
+    "spreadsheetNotReady": "جدول البيانات ليس جاهزًا بعد.",
+    "presentationNotReady": "العرض التقديمي ليس جاهزًا بعد.",
+    "documentNotReady": "المستند ليس جاهزًا بعد.",
+    "documentSaveFailed": "تعذّر حفظ المستند."
+  },
+  "tabs": {
+    "untitled": "بلا عنوان {{n}}",
+    "memoryWarning_zero": "لا توجد مستندات مفتوحة ({{count}}). يستخدم كل مستند مفتوح الذاكرة؛ أغلق المستندات التي لم تعد بحاجة إليها.",
+    "memoryWarning_one": "يوجد {{count}} مستند مفتوح. يستخدم كل مستند مفتوح الذاكرة؛ أغلق المستندات التي لم تعد بحاجة إليها.",
+    "memoryWarning_two": "يوجد {{count}} مستندان مفتوحان. يستخدم كل مستند مفتوح الذاكرة؛ أغلق المستندات التي لم تعد بحاجة إليها.",
+    "memoryWarning_few": "توجد {{count}} مستندات مفتوحة. يستخدم كل مستند مفتوح الذاكرة؛ أغلق المستندات التي لم تعد بحاجة إليها.",
+    "memoryWarning_many": "يوجد {{count}} مستندًا مفتوحًا. يستخدم كل مستند مفتوح الذاكرة؛ أغلق المستندات التي لم تعد بحاجة إليها.",
+    "memoryWarning_other": "يوجد {{count}} مستند مفتوح. يستخدم كل مستند مفتوح الذاكرة؛ أغلق المستندات التي لم تعد بحاجة إليها."
+  },
+  "tabBar": {
+    "label": "علامات التبويب المفتوحة",
+    "start": "البداية",
+    "startTitle": "البداية · مستند جديد أو موجود، والملاحظات وقاعدة البيانات",
+    "tabTitleUnsaved": "{{name}} · تغييرات غير محفوظة",
+    "dragOutHint": "اسحب إلى الخارج لفتح نافذة مستقلة",
+    "unsavedA11y": "، تغييرات غير محفوظة",
+    "closeTab": "إغلاق {{name}}",
+    "closeTitle": "إغلاق · Ctrl+W",
+    "allTabs": "كل علامات التبويب المفتوحة",
+    "addTab": "إضافة علامة تبويب",
+    "addTabTitle": "فتح مستند جديد أو موجود، أو الملاحظات أو قاعدة البيانات",
+    "releaseOpensWindow": "أفلت لفتح نافذة مستقلة",
+    "closeOthers": "إغلاق الأخرى",
+    "closeToRight": "إغلاق علامات التبويب على اليمين"
+  },
+  "windowMenu": {
+    "button": "المستندات المفتوحة",
+    "buttonTitle": "المستندات المفتوحة · Ctrl+Tab أو Ctrl+F6 للتبديل",
+    "empty": "لا توجد مستندات مفتوحة.",
+    "thisWindow": "هذه النافذة",
+    "mainWindow": "النافذة الرئيسية",
+    "windowNumber": "النافذة {{number}}",
+    "unsavedTitle": "تغييرات غير محفوظة",
+    "modified": "معدّل",
+    "newWindow": "نافذة جديدة"
+  },
+  "windows": {
+    "openInNewWindow": "فتح في نافذة جديدة",
+    "backToMainWindow": "العودة إلى النافذة الرئيسية",
+    "databaseMovedHere": "أصبح Database Studio الآن في هذه النافذة. افتح قاعدة البيانات هنا مرة أخرى إذا أردت متابعة العمل.",
+    "documentMoved": "تم نقل المستند، بما في ذلك التغييرات غير المحفوظة. لا يُنقل سجل التراجع مع المستند.",
+    "linkUnavailable": "ربط النوافذ غير متاح: {{error}}",
+    "closeGuardUnavailable": "الحماية من الإغلاق غير متاحة: {{error}}",
+    "databaseModified": "لا يمكن لـ Database Studio نقل نسخة عمل معدّلة إلى نافذة أخرى. صدّر قاعدة البيانات أو احفظها أولاً.",
+    "otherWindowFailed": "تعذّر على النافذة الأخرى فتح علامة التبويب.",
+    "mainWindowNoResponse": "النافذة الرئيسية لا تستجيب. تبقى علامة التبويب مفتوحة هنا.",
+    "newWindowTimeout": "لم تتسلم النافذة الجديدة المستند في الوقت المحدد. تبقى علامة التبويب مفتوحة هنا.",
+    "alreadyMainWindow": "هذه هي النافذة الرئيسية بالفعل.",
+    "popupBlocked": "تعذّر فتح النافذة الجديدة. اسمح بالنوافذ المنبثقة لهذه الصفحة.",
+    "moveToWindow": "نقل إلى {{window}}",
+    "newWindowFailed": "تعذّر فتح نافذة جديدة: {{error}}"
+  },
+  "dropZone": {
+    "release": "أفلت للفتح",
+    "explanation": "تُفتح المستندات وجداول البيانات والعروض التقديمية كلٌّ في علامة تبويب خاصة؛ وتُفتح MDB وACCDB في Database Studio.",
+    "image": "{{name}} صورة. لا يُدرج السحب الصور في المستند بعد؛ استخدم إدراج › صورة.",
+    "unsupported": "لا يمكن فتح {{name}}: الامتداد .{{ext}} غير مدعوم. يفتح Open Office Studio المستندات وجداول البيانات والعروض التقديمية وقواعد بيانات Access."
+  },
+  "ribbon": {
+    "label": "الشريط",
+    "file": "ملف",
+    "hide": "إخفاء الشريط",
+    "show": "إظهار الشريط",
+    "hideHint": "مساحة أكبر لمستندك · Ctrl+F1",
+    "scrollLeft": "تمرير الشريط إلى اليسار",
+    "scrollRight": "تمرير الشريط إلى اليمين",
+    "commandFailed": "تعذّر تنفيذ الأمر.",
+    "nothingToUndo": "لا يوجد ما يمكن التراجع عنه.",
+    "nothingToRedo": "لا يوجد ما يمكن إعادته.",
+    "presentationOpening": "لا يزال العرض التقديمي قيد الفتح.",
+    "selectShapeFirst": "حدد شكلاً أولاً."
+  },
+  "theme": {
+    "light": "السمة الفاتحة",
+    "forge": "سمة Forge"
+  },
+  "host": {
+    "conflict": "حفظ شخص آخر هذا المستند في هذه الأثناء. حُفظت نسختك كنسخة منفصلة: {{name}}.",
+    "readOnly": "فُتح {{name}} للقراءة فقط. استخدم «حفظ باسم» للاحتفاظ بتغييراتك.",
+    "openFailed": "تعذّر فتح المستند من مساحة العمل: {{error}}"
+  },
+  "title": {
+    "document": "{{document}} — {{app}} ({{module}})",
+    "module": "{{app}} ({{module}})"
+  },
+  "titleBar": {
+    "quickAccess": "الوصول السريع",
+    "saveTitle": "حفظ · Ctrl+S",
+    "settings": "الإعدادات",
+    "minimize": "تصغير",
+    "maximize": "تكبير",
+    "restore": "استعادة الحجم",
+    "close": "إغلاق النافذة"
+  },
+  "toasts": {
+    "region": "الإشعارات",
+    "info": "معلومة",
+    "success": "تم",
+    "warning": "تنبيه",
+    "error": "خطأ",
+    "details": "التفاصيل",
+    "less": "أقل"
+  }
+}

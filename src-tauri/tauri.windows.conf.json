@@ -1,36 +1,90 @@
 {
   "bundle": {
-    "targets": ["nsis"],
-    "resources": { "resources/WebView2Loader.dll": "WebView2Loader.dll" },
+    "targets": [
+      "nsis"
+    ],
+    "resources": {
+      "resources/WebView2Loader.dll": "WebView2Loader.dll"
+    },
     "fileAssociations": [
       {
-        "ext": ["docx", "docm", "dotx", "dotm", "doc", "dot", "odt", "ott", "rtf"],
+        "ext": [
+          "docx",
+          "docm",
+          "dotx",
+          "dotm",
+          "doc",
+          "dot",
+          "odt",
+          "ott",
+          "rtf"
+        ],
         "name": "OpenAEC.OfficeStudio.Tekst",
         "description": "Tekstdocument",
         "role": "Editor"
       },
       {
-        "ext": ["xlsx", "xlsm", "xltx", "xltm", "xlsb", "xls", "xlt", "ods", "ots"],
+        "ext": [
+          "xlsx",
+          "xlsm",
+          "xltx",
+          "xltm",
+          "xlsb",
+          "xls",
+          "xlt",
+          "ods",
+          "ots"
+        ],
         "name": "OpenAEC.OfficeStudio.Rekenblad",
         "description": "Rekenblad",
         "role": "Editor"
       },
       {
-        "ext": ["pptx", "pptm", "potx", "potm", "ppsx", "pps", "ppt", "pot", "odp", "otp"],
+        "ext": [
+          "pptx",
+          "pptm",
+          "potx",
+          "potm",
+          "ppsx",
+          "pps",
+          "ppt",
+          "pot",
+          "odp",
+          "otp"
+        ],
         "name": "OpenAEC.OfficeStudio.Presentatie",
         "description": "Presentatie",
         "role": "Editor"
       },
       {
-        "ext": ["mdb", "accdb"],
+        "ext": [
+          "mdb",
+          "accdb"
+        ],
         "name": "OpenAEC.OfficeStudio.Database",
         "description": "Database",
         "role": "Viewer"
       }
     ],
     "windows": {
-      "webviewInstallMode": { "type": "embedBootstrapper", "silent": true },
-      "nsis": { "installerHooks": "windows/koppelingen.nsh" }
+      "webviewInstallMode": {
+        "type": "embedBootstrapper",
+        "silent": true
+      },
+      "nsis": {
+        "installerHooks": "windows/koppelingen.nsh",
+        "languages": [
+          "English",
+          "Dutch",
+          "German",
+          "French",
+          "Spanish",
+          "Italian",
+          "PortugueseBR",
+          "SimpChinese"
+        ],
+        "displayLanguageSelector": true
+      }
     }
   }
 }

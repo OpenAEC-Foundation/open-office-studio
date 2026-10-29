@@ -1,6 +1,8 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { formatGetal } from "../i18n/opmaak";
 import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
 import {
   Melding,
@@ -21,6 +23,7 @@ function Paneel({
   sluiten: () => void;
   children: ReactNode;
 }) {
+  const { t } = useTranslation("ribbon");
   const id = useId();
   const paneel = useRef<HTMLElement>(null);
   useEffect(() => {
@@ -45,8 +48,8 @@ function Paneel({
         <h2 id={id}>{titel}</h2>
         <button
           type="button"
-          aria-label="Sluiten"
-          title="Sluiten (Esc)"
+          aria-label={t("common:close")}
+          title={t("spreadsheet.dialogs.closeEsc")}
           onClick={sluiten}
         >
           <X size={15} />
@@ -70,6 +73,7 @@ export function ZoekenVervangen({
   api: XlsxEditorApi;
   sluiten: () => void;
 }) {
+  const { t } = useTranslation("ribbon");
   const [zoek, setZoek] = useState("");
   const [door, setDoor] = useState("");
   const [hoofdletters, setHoofdletters] = useState(false);
@@ -90,11 +94,15 @@ export function ZoekenVervangen({
     doe(async () => {
       const r = await zoekVolgende(api, zoek, hoofdletters, terug);
       return r
-        ? `${r.treffer.sheetName}!${r.treffer.a1} · ${r.aantal} ${r.aantal === 1 ? "resultaat" : "resultaten"}`
-        : "Zoekterm niet gevonden.";
+        ? t("spreadsheet.dialogs.find.found", {
+            count: r.aantal,
+            number: formatGetal(r.aantal),
+            location: `${r.treffer.sheetName}!${r.treffer.a1}`,
+          })
+        : t("spreadsheet.dialogs.find.notFound");
     });
   return (
-    <Paneel titel="Zoeken en vervangen" sluiten={sluiten}>
+    <Paneel titel={t("spreadsheet.dialogs.find.title")} sluiten={sluiten}>
       <form
         className="rekenblad-formulier"
         onSubmit={(event) => {
@@ -103,11 +111,11 @@ export function ZoekenVervangen({
         }}
       >
         <label>
-          Zoeken naar
+          {t("spreadsheet.dialogs.find.findWhat")}
           <input value={zoek} onChange={(e) => setZoek(e.target.value)} />
         </label>
         <label>
-          Vervangen door
+          {t("spreadsheet.dialogs.find.replaceWith")}
           <input value={door} onChange={(e) => setDoor(e.target.value)} />
         </label>
         <label className="rekenblad-vinkje">
@@ -116,14 +124,14 @@ export function ZoekenVervangen({
             checked={hoofdletters}
             onChange={(e) => setHoofdletters(e.target.checked)}
           />
-          Hoofdlettergevoelig
+          {t("spreadsheet.dialogs.find.matchCase")}
         </label>
         <div className="rekenblad-knoppen">
           <button type="button" disabled={!zoek} onClick={() => zoeken(true)}>
-            Vorige
+            {t("spreadsheet.dialogs.find.previous")}
           </button>
           <button type="submit" disabled={!zoek}>
-            Volgende
+            {t("spreadsheet.dialogs.find.next")}
           </button>
           <button
             type="button"
@@ -132,14 +140,14 @@ export function ZoekenVervangen({
               doe(async () => {
                 const r = await vervangHuidige(api, zoek, door, hoofdletters);
                 return r.vervangen
-                  ? "1 cel vervangen."
+                  ? t("spreadsheet.dialogs.find.replacedCurrent")
                   : r.volgende
-                    ? "Volgende resultaat geselecteerd; klik nogmaals om te vervangen."
-                    : "Zoekterm niet gevonden.";
+                    ? t("spreadsheet.dialogs.find.nextSelected")
+                    : t("spreadsheet.dialogs.find.notFound");
               })
             }
           >
-            Vervangen
+            {t("spreadsheet.dialogs.find.replace")}
           </button>
           <button
             type="button"
@@ -148,16 +156,20 @@ export function ZoekenVervangen({
             onClick={() =>
               doe(async () => {
                 const r = await allesVervangen(api, zoek, door, hoofdletters);
-                return (
-                  `${r.vervangen} ${r.vervangen === 1 ? "cel" : "cellen"} vervangen.` +
-                  (r.overgeslagen
-                    ? ` ${r.overgeslagen} overgeslagen (formules of opgemaakte weergave).`
-                    : "")
+                return t(
+                  r.overgeslagen
+                    ? "spreadsheet.dialogs.find.replacedAllSkipped"
+                    : "spreadsheet.dialogs.find.replacedAll",
+                  {
+                    count: r.vervangen,
+                    number: formatGetal(r.vervangen),
+                    skipped: formatGetal(r.overgeslagen),
+                  },
                 );
               })
             }
           >
-            Alles vervangen
+            {t("spreadsheet.dialogs.find.replaceAll")}
           </button>
         </div>
         <p role="status" className="rekenblad-status">
@@ -175,6 +187,7 @@ export function GaNaar({
   api: XlsxEditorApi;
   sluiten: () => void;
 }) {
+  const { t } = useTranslation("ribbon");
   const [tekst, setTekst] = useState("");
   const [status, setStatus] = useState("");
   const [namen] = useState(() => benoemdeBereiken(api));
@@ -188,7 +201,7 @@ export function GaNaar({
     }
   }
   return (
-    <Paneel titel="Navigator" sluiten={sluiten}>
+    <Paneel titel={t("spreadsheet.dialogs.goTo.title")} sluiten={sluiten}>
       <form
         className="rekenblad-formulier"
         onSubmit={(event) => {
@@ -197,10 +210,10 @@ export function GaNaar({
         }}
       >
         <label>
-          Ga naar cel, bereik of naam
+          {t("spreadsheet.dialogs.goTo.label")}
           <input
             value={tekst}
-            placeholder="Bijvoorbeeld B4, A1:C10 of Blad 2!A1"
+            placeholder={t("spreadsheet.dialogs.goTo.placeholder")}
             list={namen.length ? lijst : undefined}
             onChange={(e) => setTekst(e.target.value)}
           />
@@ -212,7 +225,7 @@ export function GaNaar({
                 <option key={n.naam} value={n.naam} />
               ))}
             </datalist>
-            <ul className="rekenblad-namen" aria-label="Benoemde bereiken">
+            <ul className="rekenblad-namen" aria-label={t("spreadsheet.dialogs.goTo.namedRanges")}>
               {namen.map((n) => (
                 <li key={n.naam}>
                   <button type="button" onClick={() => ga(n.naam)}>
@@ -230,7 +243,7 @@ export function GaNaar({
             className="rekenblad-primair"
             disabled={!tekst.trim()}
           >
-            Ga naar
+            {t("spreadsheet.dialogs.goTo.go")}
           </button>
         </div>
         <p role="status" className="rekenblad-status">
@@ -248,11 +261,12 @@ export function BladHernoemen({
   api: XlsxEditorApi;
   sluiten: () => void;
 }) {
+  const { t } = useTranslation("ribbon");
   const info = api.handle.sheetInfo();
   const [naam, setNaam] = useState(info.sheetNames[info.activeSheet] ?? "");
   const [status, setStatus] = useState("");
   return (
-    <Paneel titel="Blad hernoemen" sluiten={sluiten}>
+    <Paneel titel={t("spreadsheet.dialogs.rename.title")} sluiten={sluiten}>
       <form
         className="rekenblad-formulier"
         onSubmit={async (event) => {
@@ -266,7 +280,7 @@ export function BladHernoemen({
         }}
       >
         <label>
-          Naam
+          {t("spreadsheet.dialogs.rename.name")}
           <input
             value={naam}
             maxLength={31}
@@ -275,10 +289,10 @@ export function BladHernoemen({
         </label>
         <div className="rekenblad-knoppen">
           <button type="button" onClick={sluiten}>
-            Annuleren
+            {t("common:cancel")}
           </button>
           <button type="submit" className="rekenblad-primair">
-            Hernoemen
+            {t("spreadsheet.dialogs.rename.rename")}
           </button>
         </div>
         <p role="status" className="rekenblad-status">

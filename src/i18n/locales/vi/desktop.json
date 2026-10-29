@@ -1,0 +1,140 @@
+{
+  "dialogs": {
+    "cancel": "Hủy",
+    "saveAsEllipsis": "Lưu thành…",
+    "officeFile": "Tệp văn phòng",
+    "officeFiles": "Tệp văn phòng",
+    "untitled": "Không có tiêu đề",
+    "saveCopy": "Lưu bản sao",
+    "saveAs": "Lưu thành",
+    "openFile": "Mở tệp",
+    "replaceFile": {
+      "title": "Thay thế tệp",
+      "message": "Tệp {{path}} đã tồn tại. Thay thế tệp này?"
+    },
+    "unsavedChanges": {
+      "title": "Thay đổi chưa lưu",
+      "message_other": "{{count}} tài liệu trong cửa sổ này có thay đổi chưa được lưu. Các thay đổi đó sẽ bị mất. Vẫn đóng?"
+    },
+    "fileChanged": {
+      "title": "Tệp đã thay đổi",
+      "missing": "{{name}} không còn ở vị trí ban đầu. Tạo lại bằng phiên bản của bạn hay lưu vào nơi khác?",
+      "changedExternally": "{{name}} đã bị thay đổi bên ngoài Open Office Studio kể từ khi bạn mở. Ghi đè sẽ hủy các thay đổi đó.",
+      "overwrite": "Ghi đè"
+    },
+    "foreignFormat": {
+      "title": "Lưu dưới dạng {{format}}",
+      "message": "{{name}} sẽ được cập nhật ở định dạng {{format}}. Môi trường văn phòng sẽ chuyển đổi tài liệu cho việc này; định dạng mà {{format}} không hỗ trợ có thể bị mất.",
+      "hint": "Chọn Lưu thành… để giữ tệp DOCX, XLSX hoặc PPTX.",
+      "update": "Cập nhật dưới dạng {{format}}"
+    },
+    "chooseConverter": "Chọn chương trình chuyển đổi (soffice)",
+    "databaseExport": {
+      "title": "Lưu bản xuất cơ sở dữ liệu",
+      "filter": "Bản xuất cơ sở dữ liệu",
+      "sqliteFilter": "Bản sao làm việc SQLite",
+      "replaceTitle": "Thay thế bản xuất",
+      "replaceMessage": "Tệp xuất này đã tồn tại. Thay thế tệp này?"
+    }
+  },
+  "errors": {
+    "file": {
+      "invalidBody": "Tệp trống, lớn hơn 100 MB hoặc không được gửi dưới dạng dữ liệu nhị phân.",
+      "emptyOrTooLarge": "Tệp trống hoặc lớn hơn 100 MB.",
+      "formatInfoMissing": "Thiếu thông tin định dạng.",
+      "formatMissing": "Thiếu định dạng.",
+      "targetFolderMissing": "Thiếu thư mục đích.",
+      "nameMissing": "Thiếu tên tệp.",
+      "nameInvalidChars": "Tên tệp chứa ký tự không hợp lệ.",
+      "unsupportedFormat": "Định dạng tệp không được hỗ trợ.",
+      "extensionMismatch": "Phần mở rộng đã chọn không khớp với tài liệu.",
+      "alreadyOpenedOrOtherWindow": "Tệp này đã được mở hoặc không dành cho cửa sổ này.",
+      "notThisWindow": "Tệp này không thuộc cửa sổ này.",
+      "notLinked": "Tệp này không còn liên kết với tab này.",
+      "tokenMissing": "Thiếu mã thông báo.",
+      "openInOtherTab": "{{name}} đang mở trong một tab khác. Hãy đóng nó trước hoặc chọn tên khác.",
+      "readOnly": "Không có quyền ghi vào thư mục này hoặc tệp ở chế độ chỉ đọc ({{path}}). Hãy chọn vị trí khác.",
+      "notInRecentList": "Tệp này không còn trong danh sách."
+    },
+    "preferences": {
+      "tooLarge": "Tùy chọn lớn hơn 64 kB.",
+      "invalid": "Tùy chọn không phải là đối tượng JSON hợp lệ.",
+      "configDirUnavailable": "Thư mục cấu hình của ứng dụng không khả dụng.",
+      "pathInvalid": "Đường dẫn tùy chọn không hợp lệ."
+    },
+    "font": {
+      "notInstalled": "Phông chữ {{family}} chưa được cài đặt trên máy tính này.",
+      "notFound": "Không tìm thấy phông chữ.",
+      "fileTooLarge": "Tệp phông chữ này quá lớn.",
+      "inCollection": "Phông chữ này là một phần của bộ sưu tập (.ttc) và không thể dùng riêng.",
+      "unreadable": "Không thể đọc tệp phông chữ.",
+      "nameInvalid": "Tên phông chữ không hợp lệ."
+    },
+    "recovery": {
+      "keyInvalid": "Khóa khôi phục không hợp lệ.",
+      "spaceFull": "Dung lượng cho bản sao khôi phục (512 MB) đã đầy. Hãy lưu tài liệu của bạn.",
+      "sessionMissing": "Thiếu phiên.",
+      "keyMissing": "Thiếu khóa.",
+      "dataInvalid": "Dữ liệu khôi phục không hợp lệ.",
+      "unknownDocumentType": "Loại tài liệu không xác định.",
+      "sessionNotThisWindow": "Phiên khôi phục này không thuộc cửa sổ này.",
+      "sessionOtherWindow": "Phiên khôi phục này thuộc một cửa sổ khác.",
+      "sessionStillRunning": "Phiên này vẫn đang chạy."
+    },
+    "window": {
+      "closed": "Cửa sổ này đã bị đóng.",
+      "transferEmptyOrTooLarge": "Nội dung chuyển trống hoặc quá lớn.",
+      "mainWindowUnavailable": "Cửa sổ chính không khả dụng.",
+      "openFailed": "Không thể mở cửa sổ: {{error}}",
+      "transferExpired": "Lần chuyển này đã hết hạn hoặc đã được nhận.",
+      "transferAlreadyTaken": "Lần chuyển này đã được nhận.",
+      "transferUnknown": "Không xác định được lần chuyển này."
+    },
+    "conversion": {
+      "unknownModule": "Mô-đun văn phòng không xác định.",
+      "sourceFormatMismatch": "Định dạng nguồn không thuộc mô-đun này.",
+      "outputFormatUnsupported": "Định dạng đầu ra này không được hỗ trợ.",
+      "outputFormatDirect": "Định dạng đầu ra này được tạo trực tiếp trong ứng dụng, không phải bằng chuyển đổi.",
+      "invalidOptions": "Tùy chọn chuyển đổi không hợp lệ.",
+      "chooseSoffice": "Chọn chương trình soffice (Windows: soffice.exe) trong thư mục chương trình của môi trường văn phòng.",
+      "chosenFileMissing": "Tệp đã chọn không tồn tại.",
+      "chosenPathNotFile": "Đường dẫn đã chọn không phải là tệp.",
+      "chosenFileNotExecutable": "Tệp đã chọn không thể thực thi.",
+      "appDataDirUnavailable": "Thư mục dữ liệu ứng dụng không khả dụng.",
+      "startFailed": "Không thể bắt đầu chuyển đổi: {{error}}",
+      "failed": "Chuyển đổi thất bại ({{reason}}). Bản gốc vẫn được giữ.",
+      "exitCode": "mã thoát {{code}}",
+      "processAborted": "tiến trình bị dừng",
+      "timeout": "Chuyển đổi vượt quá giới hạn thời gian và đã bị dừng. Bản gốc vẫn được giữ.",
+      "profilePathInvalid": "Đường dẫn hồ sơ tạm thời không hợp lệ.",
+      "inputSize": "Chọn một tệp không trống, tối đa 100 MB.",
+      "runtimeMissing": "Định dạng này cần môi trường văn phòng (LibreOffice). Không tìm thấy: hãy cài đặt, chọn chương trình trong Lưu thành, hoặc đặt OPENAEC_CONVERSIE_PROGRAMMA. DOCX, XLSX và PPTX hoạt động trực tiếp.",
+      "notConverted": "Không thể chuyển đổi tệp này. Tệp có thể bị hỏng hoặc được bảo vệ, hoặc môi trường cục bộ thiếu bộ lọc định dạng.",
+      "multipleOutputs": "Chuyển đổi tạo ra nhiều hơn một tệp.",
+      "noUsableOutput": "Chuyển đổi không tạo ra tệp dùng được có kích thước tối đa 100 MB."
+    },
+    "databaseExport": {
+      "emptyOrTooLarge": "Bản xuất trống hoặc lớn hơn 100 MB.",
+      "emptyInvalidOrTooLarge": "Bản xuất trống, không hợp lệ hoặc lớn hơn 100 MB.",
+      "nameMissing": "Thiếu tên tệp.",
+      "nameInvalid": "Tên tệp không hợp lệ.",
+      "notSqlite": "Đây không phải là bản sao làm việc SQLite.",
+      "typeNotAllowed": "Chỉ cho phép xuất CSV, mã nguồn, báo cáo và bản sao làm việc SQLite. Cơ sở dữ liệu Access không bao giờ bị ghi đè.",
+      "textNotUtf8": "Bản xuất văn bản phải là văn bản UTF-8 hợp lệ.",
+      "sendAsBinary": "Gửi bản xuất dưới dạng dữ liệu nhị phân tối đa 100 MB.",
+      "extensionMismatch": "Phần mở rộng đã chọn không khớp với bản xuất."
+    }
+  },
+  "launcher": {
+    "officeStudio": {
+      "genericName": "Bộ ứng dụng văn phòng",
+      "comment": "Môi trường văn phòng OpenAEC cục bộ",
+      "keywords": "soạn thảo văn bản;bảng tính;trình chiếu;cơ sở dữ liệu;email;văn phòng;office;"
+    },
+    "databaseStudio": {
+      "genericName": "Trình xem cơ sở dữ liệu",
+      "comment": "Mở cục bộ các cơ sở dữ liệu MDB và ACCDB cũ",
+      "keywords": "cơ sở dữ liệu;bảng;truy vấn;access;database;"
+    }
+  }
+}

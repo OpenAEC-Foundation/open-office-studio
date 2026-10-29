@@ -1,0 +1,1008 @@
+{
+  "accounts": {
+    "test": {
+      "test": "Test",
+      "testConnection": "Test tilkobling",
+      "testing": "Tester…",
+      "retest": "Test igjen",
+      "failed": "Testen mislyktes"
+    },
+    "settings": {
+      "title": "Kontoinnstillinger",
+      "noAccount": "Det finnes ingen konto ennå.",
+      "addAccount": "Legg til konto",
+      "accountList": "Kontoer",
+      "saving": "Lagrer…",
+      "saved": "Innstillingene er lagret.",
+      "saveFailed": "Kunne ikke lagre",
+      "tabs": {
+        "identity": "Identitet",
+        "servers": "Servere",
+        "folders": "Mapper",
+        "fetching": "Henting og personvern",
+        "advanced": "Avansert"
+      },
+      "deleteAccount": {
+        "title": "Fjern konto",
+        "confirm": "Er du sikker på at du vil fjerne <strong>{{name}}</strong> ({{email}})? Meldingene dine blir liggende på serveren; det lagrede passordet fjernes fra nøkkelringen.",
+        "button": "Fjern konto",
+        "failed": "Kunne ikke fjerne kontoen"
+      },
+      "identity": {
+        "accountName": "Kontonavn",
+        "accountNameHint": "Bare for deg selv, for eksempel «Jobb» eller «Privat».",
+        "yourName": "Navnet ditt",
+        "email": "E-postadresse",
+        "replyTo": "Svaradresse",
+        "replyToPlaceholder": "Tom = e-postadressen din",
+        "signature": "Signatur",
+        "signatureHint": "Legges til under nye meldinger og svar, etter «-- »."
+      },
+      "oauthAccount": {
+        "signedInAs": "Logget på som <strong>{{account}}</strong> med {{provider}}",
+        "noPasswordStored": "Ingen passord lagres; tilgangen bruker et token i nøkkelringen.",
+        "signInAgain": "Logg på igjen",
+        "signedInAgain": "Logget på igjen som {{account}}."
+      },
+      "password": {
+        "change": "Endre passord",
+        "storedPlaceholder": "Lagret · la stå tomt for å beholde",
+        "noneStoredPlaceholder": "Ingen passord lagret ennå"
+      },
+      "folders": {
+        "hint": "Velg hvor Email Studio lagrer sendte meldinger, utkast og slettede og arkiverte meldinger.",
+        "roles": {
+          "sent": "Sendte meldinger",
+          "drafts": "Utkast",
+          "trash": "Papirkurv",
+          "archive": "Arkiv"
+        },
+        "automatic": "Automatisk",
+        "automaticWithFolder": "Automatisk ({{folder}})"
+      },
+      "fetching": {
+        "checkForNew": "Se etter nye meldinger",
+        "manualOnly": "Bare manuelt",
+        "everyMinutes_one": "Hvert minutt",
+        "everyMinutes_other": "Hvert {{count}}. minutt",
+        "externalContent": "Vis alltid eksterne bilder og innhold",
+        "externalContentHint": "Av anbefales: eksterne bilder forteller avsendere når og hvor du åpner en melding.",
+        "trustedSenders": "Avsendere med eksternt innhold som alltid vises",
+        "forgetSender": "Glem {{sender}}"
+      },
+      "advanced": {
+        "oauthIntro": "Pålogging med Microsoft eller Google bruker OAuth2. Disse innstillingene gjelder for alle kontoer. Egen klient-ID trengs bare hvis appen ikke inkluderer en; se <code>{{doc}}</code>.",
+        "ispdb": "Søk også i Thunderbird-databasen for en ny konto",
+        "ispdbHint": "Domenenavnet sendes da til Mozilla. Av som standard.",
+        "available": "Tilgjengelig.",
+        "unavailable": "Ikke tilgjengelig.",
+        "loadingStatus": "Laster inn status…",
+        "clientId": "Klient-ID",
+        "clientSecret": "Klienthemmelighet (valgfritt)",
+        "saveClientId": "Lagre klient-ID",
+        "clientIdSaved": "Klient-ID for {{provider}} er lagret.",
+        "clientIdSaveFailed": "Kunne ikke lagre klient-ID-en",
+        "desktopOnly": "Du kan bare angi egen klient-ID i skrivebordsappen."
+      }
+    },
+    "wizard": {
+      "title": "Legg til konto",
+      "intro": "Bruk den eksisterende e-postadressen din. Email Studio fungerer med alle leverandører som tilbyr IMAP og SMTP.",
+      "fullName": "Fullt navn",
+      "fullNamePlaceholder": "Fornavn Etternavn",
+      "fullNameHint": "Slik ser mottakerne navnet ditt.",
+      "email": "E-postadresse",
+      "emailPlaceholder": "name@example.com",
+      "password": "Passord",
+      "passwordHint": "Brukes bare når du velger Test eller Ferdig, og lagres bare i operativsystemets nøkkelring.",
+      "ispdb": "Søk også i Thunderbird-databasen",
+      "ispdbHint": "Domenenavnet (ikke adressen eller passordet ditt) sendes da til Mozilla.",
+      "oauthPrompt": "Eller logg på uten passord i appen:",
+      "enterNameAndEmailFirst": "Skriv inn navnet og e-postadressen din først.",
+      "saving": "Lagrer…",
+      "done": "Ferdig",
+      "saveAnyway": "Lagre likevel",
+      "saveTitle": "Lagre konto",
+      "saveUntestedTitle": "Ikke (vellykket) testet ennå; du kan fortsatt lagre kontoen",
+      "saveFailed": "Kunne ikke lagre kontoen",
+      "foundSettings": "Innstillinger funnet",
+      "serverSettings": "Serverinnstillinger",
+      "serverSettingsFor": "Serverinnstillinger for {{domain}}",
+      "enterEmailHint": "Skriv inn e-postadressen din; Email Studio søker deretter automatisk etter de riktige serverne.",
+      "searchFailed": "Søket mislyktes",
+      "fillInManually": "Skriv inn serverne nedenfor selv.",
+      "nothingFound": "Fant ingen innstillinger. Skriv inn serverne nedenfor selv; spør leverandøren om nødvendig.",
+      "proposals": "Forslag",
+      "unencrypted": "ukryptert",
+      "manualConfiguration": "Manuell konfigurasjon",
+      "adjusted": "· redigert",
+      "fieldsAppear": "Feltene vises så snart det finnes en gyldig e-postadresse.",
+      "bothServersFailed": "Begge serverne mislyktes. Kontroller adressen, passordet og servernavnene."
+    },
+    "discovery": {
+      "steps": {
+        "builtIn": "Innebygd liste",
+        "ownDomain": "Eget domene",
+        "dns": "DNS",
+        "ispdb": "Thunderbird-database",
+        "probe": "Tilkoblingstest"
+      },
+      "stepStatus": {
+        "waiting": "venter",
+        "busy": "pågår…",
+        "found": "funnet",
+        "nothing": "ingenting funnet",
+        "skipped": "ikke kjørt"
+      },
+      "sources": {
+        "preset": "Innebygd liste",
+        "autoconfig": "Konfigurasjon fra ditt eget domene",
+        "srv": "DNS SRV-poster",
+        "mx": "MX-poster (leverandør gjenkjent)",
+        "ispdb": "Thunderbird-database",
+        "guess": "Vanlige servernavn"
+      },
+      "unencrypted": "ukryptert",
+      "reachable": "tilgjengelig",
+      "unreachable": "ikke tilgjengelig",
+      "untested": "ikke testet"
+    },
+    "server": {
+      "incoming": "Innkommende (IMAP)",
+      "outgoing": "Utgående (SMTP)",
+      "columns": {
+        "server": "Server",
+        "port": "Port",
+        "security": "Sikkerhet",
+        "authentication": "Autentisering",
+        "username": "Brukernavn"
+      },
+      "hostLabel": "{{protocol}}-server",
+      "portLabel": "{{protocol}}-port",
+      "securityLabel": "{{protocol}}-sikkerhet",
+      "authenticationLabel": "{{protocol}}-autentisering",
+      "usernameLabel": "{{protocol}}-brukernavn",
+      "imapPlaceholder": "imap.example.com",
+      "smtpPlaceholder": "smtp.example.com",
+      "securityNone": "Ingen",
+      "authNormal": "Vanlig passord",
+      "authEncrypted": "Kryptert passord",
+      "unencryptedWarning": "<strong>Ukryptert tilkobling.</strong> Passordet og meldingene dine sendes over nettverket i lesbar form. Velg SSL/TLS eller STARTTLS hvis leverandøren din støtter det.",
+      "oauthHint": "Med OAuth2 blir du bedt om å logge på hos leverandøren ved test eller første bruk."
+    },
+    "oauth": {
+      "notSupported": "Denne versjonen av appen støtter ennå ikke pålogging med Microsoft eller Google.",
+      "signInFailed": "Pålogging med {{provider}} mislyktes",
+      "signInWith": "Logg på med {{provider}}",
+      "recommended": "anbefalt",
+      "waitTitle": "Fullfør påloggingen i nettleseren",
+      "waitText": "Påloggingssiden for {{provider}} er åpnet i nettleseren. Logg på der og gi tilgang til e-post; Email Studio fortsetter deretter her.",
+      "unavailableTitle": "Pålogging med {{provider}} er ikke tilgjengelig her.",
+      "unavailableHelp": "I skrivebordsappen kan du angi egen klient-ID for {{provider}} under <em>Verktøy › Kontoinnstillinger › Avansert</em>. Hvordan du oppretter en, er beskrevet i <code>{{doc}}</code>. Du kan også fortsette med et (app)passord."
+    }
+  },
+  "errors": {
+    "code": {
+      "connection": "Ingen tilkobling til serveren. Kontroller internettilkoblingen, servernavnet og porten.",
+      "authentication": "Påloggingen mislyktes. Kontroller brukernavn og passord (Verktøy › Kontoinnstillinger).",
+      "certificate": "Serverens sertifikat er ikke klarert eller samsvarer ikke med dette servernavnet.",
+      "timeout": "Serveren svarte ikke i tide. Prøv igjen senere.",
+      "notFound": "Meldingen eller mappen finnes ikke lenger på serveren.",
+      "refused": "Serveren avviste kommandoen.",
+      "tooLarge": "Meldingen er for stor for serveren. Gjør vedleggene mindre eller fjern dem.",
+      "unavailable": "Denne funksjonen er ikke tilgjengelig her.",
+      "internal": "Noe gikk galt."
+    },
+    "withDetail": "{{explanation}} ({{detail}})",
+    "withContext": "{{context}}: {{message}}",
+    "backendMissing": "Denne versjonen av skrivebordsappen inneholder ikke e-postfunksjonen.",
+    "unexpectedBinary": "Uventet binær utdata fra backend."
+  },
+  "dialog": {
+    "closeEsc": "Lukk (Esc)"
+  },
+  "sendAsAttachment": {
+    "title": "Send som vedlegg"
+  },
+  "ribbon": {
+    "tabs": {
+      "start": "Hjem",
+      "view": "Vis",
+      "tools": "Verktøy"
+    },
+    "groups": {
+      "new": "Ny",
+      "respond": "Svar",
+      "delete": "Slett",
+      "mark": "Etiketter",
+      "organize": "Organiser",
+      "layout": "Oppsett",
+      "sort": "Sorter",
+      "message": "Melding",
+      "accounts": "Kontoer",
+      "folders": "Mapper"
+    },
+    "withShortcut": "{{action}} · {{shortcut}}",
+    "fetch": "Hent meldinger",
+    "fetchTitle": "Hent meldinger · {{key}} eller {{shortcut}}",
+    "readUnread": "Lest/ulest",
+    "readUnreadTitle": "Lest eller ulest · {{shortcut}}",
+    "star": "Stjerne",
+    "move": "Flytt",
+    "moveTitle": "Flytt til mappe",
+    "folderPane": "Mapperute",
+    "readingPane": "Leserute",
+    "resetLayout": "Tilbakestill oppsett",
+    "sortBy": "Sorter etter",
+    "sort": {
+      "date": "Dato",
+      "sender": "Avsender",
+      "subject": "Emne",
+      "size": "Størrelse"
+    },
+    "ascending": "Stigende",
+    "descending": "Synkende",
+    "viewSource": "Vis kilde",
+    "accountSettings": "Kontoinnstillinger"
+  },
+  "studio": {
+    "errors": {
+      "loadAccounts": "Kunne ikke laste inn kontoene",
+      "loadMessages": "Kunne ikke laste inn meldingene",
+      "openMessage": "Kunne ikke åpne meldingen",
+      "delete": "Kunne ikke slette",
+      "move": "Kunne ikke flytte",
+      "mark": "Kunne ikke merke",
+      "forwardAttachments": "Kunne ikke hente vedleggene for videresending",
+      "openFile": "Kunne ikke åpne {{name}}",
+      "saveFile": "Kunne ikke lagre {{name}}",
+      "source": "Kunne ikke hente kilden",
+      "updateFolder": "Kunne ikke oppdatere mappen",
+      "deleteFolder": "Kunne ikke slette mappen"
+    },
+    "accountAdded": "Kontoen {{email}} er lagt til.",
+    "addAccount": "Legg til konto",
+    "deletePermanently": {
+      "title": "Slett permanent",
+      "text_one": "Denne meldingen slettes permanent. Dette kan ikke angres.",
+      "text_other": "{{count}} meldinger slettes permanent. Dette kan ikke angres.",
+      "confirm": "Slett permanent"
+    },
+    "noArchiveFolder": "Denne kontoen har ingen arkivmappe. Velg en under Verktøy › Kontoinnstillinger › Mapper.",
+    "fetched": "Meldinger hentet.",
+    "deleteFolder": {
+      "title": "Slett mappe",
+      "text": "Mappen «{{folder}}» og alle meldingene i den slettes på serveren."
+    },
+    "welcome": {
+      "title": "Ingen e-postkonto ennå",
+      "text": "Legg til kontoen din med e-postadresse og passord. Email Studio finner de riktige innstillingene."
+    },
+    "folderPaneWidth": "Bredde på mapperute",
+    "messageListWidth": "Bredde på meldingsliste",
+    "messageList": "Meldingsliste",
+    "search": {
+      "in": "Søk i {{folder}}",
+      "label": "Søk i meldinger ({{shortcut}})",
+      "clear": "Tøm søk"
+    },
+    "filter": {
+      "label": "Hurtigfilter",
+      "unread": "Uleste",
+      "unreadTitle": "Bare uleste",
+      "starred": "Med stjerne",
+      "starredTitle": "Bare med stjerne",
+      "attachment": "Vedlegg",
+      "attachmentTitle": "Bare med vedlegg",
+      "body": "Brødtekst",
+      "bodyTitle": "Søk også i meldingsteksten (tregere)"
+    },
+    "count": {
+      "filtered": "{{shown}} av {{total}}",
+      "filteredLoaded": "{{shown}} av {{loaded}} innlastet",
+      "messages_one": "{{count}} melding",
+      "messages_other": "{{count}} meldinger",
+      "selected_one": "{{count}} merket",
+      "selected_other": "{{count}} merket"
+    },
+    "noResults": "Fant ingen meldinger.",
+    "emptyFolder": "Denne mappen er tom.",
+    "moveTo_one": "Flytt melding til",
+    "moveTo_other": "Flytt {{count}} meldinger til",
+    "folderDialog": {
+      "newTitle": "Ny mappe",
+      "renameTitle": "Gi nytt navn til mappe",
+      "create": "Opprett",
+      "rename": "Gi nytt navn",
+      "name": "Navn",
+      "inside": "Inne i «{{folder}}»"
+    },
+    "source": {
+      "title": "Meldingskilde",
+      "saveAs": "Lagre som {{extension}}"
+    }
+  },
+  "address": {
+    "invalid": "Ugyldig adresse: {{address}}",
+    "remove": "Fjern {{address}}"
+  },
+  "list": {
+    "label": "Meldinger",
+    "to": "Til: {{address}}",
+    "noRecipient": "(ingen mottaker)",
+    "replied": "Besvart",
+    "hasAttachment": "Har vedlegg",
+    "noSubject": "(uten emne)",
+    "star": "Legg til stjerne",
+    "unstar": "Fjern stjerne",
+    "loadingMore": "Laster inn flere meldinger…"
+  },
+  "folders": {
+    "label": "Mapper",
+    "loading": "Laster inn mapper…",
+    "unread_one": "{{count}} ulest",
+    "unread_other": "{{count}} uleste",
+    "inbox": "Innboks"
+  },
+  "reader": {
+    "loadingMessage": "Laster inn melding…",
+    "chooseMessage": "Velg en melding for å lese den.",
+    "label": "Melding: {{subject}}",
+    "reply": "Svar",
+    "replyTitle": "Svar · {{shortcut}}",
+    "replyAll": "Svar alle",
+    "replyAllTitle": "Svar alle · {{shortcut}}",
+    "forward": "Videresend",
+    "forwardTitle": "Videresend · {{shortcut}}",
+    "archive": "Arkiver",
+    "archiveTitle": "Arkiver · {{shortcut}}",
+    "delete": "Slett",
+    "deleteTitle": "Slett · {{shortcut}}",
+    "starTitle": "Stjerne · {{shortcut}}",
+    "from": "Fra",
+    "to": "Til",
+    "none": "(ingen)",
+    "cc": "Kopi",
+    "replyTo": "Svar til",
+    "date": "Dato",
+    "external": {
+      "blocked_one": "Ett eksternt bilde ble blokkert for å beskytte personvernet ditt.",
+      "blocked_other": "{{count}} eksterne bilder ble blokkert for å beskytte personvernet ditt.",
+      "desktopHint": "Med din tillatelse henter appen dem og viser dem uten å la meldingen koble seg til noe sted.",
+      "demoHint": "(I demoen peker de til adresser som ikke finnes.)",
+      "show": "Vis eksternt innhold",
+      "alwaysFrom": "Vis alltid fra {{sender}}",
+      "failed_one": "Ett eksternt bilde kunne ikke hentes.",
+      "failed_other": "{{count}} eksterne bilder kunne ikke hentes."
+    },
+    "attachments": {
+      "label": "Vedlegg",
+      "previewOrOpen": "Klikk: forhåndsvis · dobbeltklikk: åpne i {{module}}",
+      "preview": "Forhåndsvis",
+      "openCopyTitle": "Åpne som redigerbar kopi i {{module}}",
+      "openIn": "Åpne i {{module}}",
+      "saveTitle": "Lagre på denne datamaskinen"
+    },
+    "content": "Meldingsinnhold",
+    "loadingContent": "Laster inn innhold…"
+  },
+  "compose": {
+    "errors": {
+      "saveDraft": "Kunne ikke lagre utkastet",
+      "noRecipients": "Legg til minst én mottaker.",
+      "send": "Kunne ikke sende",
+      "attachmentsLarge": "Vedleggene er totalt {{size}}; mange servere avviser meldinger over {{max}}.",
+      "linkNotAllowed": "Bare http(s)-, mailto- og tel-koblinger er tillatt."
+    },
+    "noSubject": {
+      "title": "Uten emne",
+      "text": "Denne meldingen har ikke noe emne. Vil du sende likevel?",
+      "fillIn": "Skriv inn et emne",
+      "sendWithout": "Send uten emne"
+    },
+    "forgotAttachment": {
+      "title": "Glemt et vedlegg?",
+      "text": "Meldingen din nevner <strong>«{{word}}»</strong>, men ingen vedlegg er lagt til.",
+      "sendAnyway": "Send likevel",
+      "keywords": "vedlegg|vedlagt|vedlagte|legger ved|se vedlagt"
+    },
+    "addAttachment": "Legg til vedlegg",
+    "attachment": "Legg ved",
+    "removeAttachment": "Fjern {{name}}",
+    "attachmentsSummary_one": "{{count}} vedlegg · {{size}}",
+    "attachmentsSummary_other": "{{count}} vedlegg · {{size}}",
+    "dropToAttach": "Slipp for å legge til som vedlegg",
+    "sent": "Meldingen er sendt.",
+    "sentWithSubject": "Meldingen er sendt: {{subject}}.",
+    "unsent": {
+      "title": "Meldingen ble ikke sendt",
+      "text": "Vil du lagre denne meldingen som utkast?",
+      "discard": "Forkast",
+      "saveDraft": "Lagre utkast"
+    },
+    "label": "Skriv: {{subject}}",
+    "newMessage": "Ny melding",
+    "send": "Send",
+    "sending": "Sender…",
+    "sendTitle": "Send · {{shortcut}}",
+    "draft": "Utkast",
+    "savingDraft": "Lagrer…",
+    "saveDraftTitle": "Lagre som utkast · {{shortcut}}",
+    "dismissError": "Lukk melding",
+    "from": "Fra",
+    "to": "Til",
+    "cc": "Kopi",
+    "bcc": "Blindkopi",
+    "subject": "Emne",
+    "body": "Meldingstekst",
+    "format": {
+      "label": "Formatering",
+      "withShortcut": "{{action}} · {{shortcut}}",
+      "bold": "Fet",
+      "italic": "Kursiv",
+      "underline": "Understreking",
+      "bullets": "Punktmerking",
+      "numbering": "Nummerering",
+      "link": "Kobling",
+      "insertLink": "Sett inn kobling",
+      "clear": "Fjern formatering",
+      "linkAddress": "Koblingsadresse",
+      "insert": "Sett inn"
+    }
+  },
+  "link": {
+    "browserFailed": "Kunne ikke åpne nettleseren. Kopier adressen: {{url}}",
+    "phoneTitle": "Telefonnummer",
+    "openTitle": "Åpne koblingen?",
+    "copied": "Adressen er kopiert.",
+    "copyFailed": "Kopieringen mislyktes; merk adressen manuelt.",
+    "copy": "Kopier adresse",
+    "openInBrowser": "Åpne i nettleser",
+    "phoneIntro": "Dette telefonnummeret står i meldingen:",
+    "realTarget": "Denne koblingen går egentlig til:",
+    "misleading": "Teksten i meldingen nevner <strong>{{shown}}</strong>, men koblingen går til <strong>{{actual}}</strong>. Dette kan være nettfisking.",
+    "unencrypted": "Merk: Denne koblingen bruker ikke en kryptert tilkobling (http)."
+  },
+  "files": {
+    "saveUnsupported": "Denne versjonen av skrivebordsappen kan ikke lagre {{name}} ennå. Åpne vedlegget i en modul eller oppdater appen.",
+    "saved": "Lagret: {{path}}",
+    "saveCancelled": "Lagring avbrutt.",
+    "downloadRequested": "Nedlasting forespurt. Se etter filen blant nedlastingene dine."
+  },
+  "quote": {
+    "unknownSender": "(ukjent)",
+    "wroteOn": "{{date}} skrev {{sender}}:",
+    "wrote": "{{sender}} skrev:",
+    "forwarded": "Videresendt melding",
+    "subject": "Emne: {{value}}",
+    "date": "Dato: {{value}}",
+    "from": "Fra: {{value}}",
+    "to": "Til: {{value}}",
+    "cc": "Kopi: {{value}}"
+  },
+  "demo": {
+    "banner": "Demo – ekte e-post er ikke mulig i nettleseren; bruk skrivebordsappen.",
+    "accountName": "Demopostboks",
+    "folders": {
+      "notifications": "Varsler",
+      "drafts": "Utkast",
+      "sent": "Sendt",
+      "archive": "Arkiv",
+      "junk": "Søppelpost",
+      "trash": "Papirkurv"
+    },
+    "welcome": {
+      "subject": "Velkommen til OpenAEC Email Studio",
+      "heading": "Velkommen!",
+      "intro": "Dette er en demopostboks. I nettleseren kan ikke Email Studio hente eller sende ekte e-post; bruk skrivebordsappen til det.",
+      "introHtml": "Dette er en <strong>demopostboks</strong>. I nettleseren kan ikke Email Studio hente eller sende ekte e-post; bruk skrivebordsappen til det.",
+      "tryIt": "Prøv gjerne: å svare, merke med stjerne (S), flytte til arkivet og åpne et vedlegg i Tekst eller Regneark.",
+      "tryItHtml": "Prøv gjerne: å svare, merke med stjerne (<kbd>S</kbd>), flytte til arkivet og åpne et vedlegg i Tekst eller Regneark.",
+      "logoText": "OpenAEC-logoen nedenfor er et innebygd bilde fra et vedlegg (cid:).",
+      "logoAlt": "OpenAEC-logo",
+      "logoHtml": "Logoen til venstre er et innebygd bilde fra et vedlegg."
+    },
+    "errors": {
+      "accountNotFound": "Kontoen finnes ikke.",
+      "messageNotFound": "Meldingen finnes ikke.",
+      "folderExists": "Denne mappen finnes allerede.",
+      "folderCannotRename": "Denne mappen kan ikke gis nytt navn.",
+      "specialFolderDelete": "Spesialmapper kan ikke slettes.",
+      "attachmentNotFound": "Vedlegget finnes ikke.",
+      "targetFolderNotFound": "Målmappen finnes ikke.",
+      "noRecipients": "Ingen mottakere er angitt.",
+      "recipientRefused": "Demo: serveren avviser mottakeren {{domain}}.",
+      "attachmentsTooLarge": "Demo: vedlegg er begrenset til {{max}}."
+    },
+    "accountAdded": {
+      "subject": "Kontoen din er lagt til (demo)",
+      "text": "Kontoen {{email}} er lagt til i demoen. {{notice}}"
+    },
+    "discovery": {
+      "knownProvider": "Kjent leverandør (demo).",
+      "mx": "MX-posten for {{domain}} peker til mail.protection.outlook.com (demo).",
+      "ownServer": "{{name}} (egen server)",
+      "autoconfig": "Funnet på autoconfig.{{domain}} (demo).",
+      "srv": "_imaps._tcp og _submission._tcp (demo).",
+      "ispdb": "Fra Thunderbird-databasen (demo).",
+      "guessImapOk": "Vanlige servernavn; IMAP-testen lyktes (demo).",
+      "guessAlternative": "Alternativt servernavn (demo)."
+    },
+    "test": {
+      "noServer": "Ingen {{protocol}}-server er angitt.",
+      "invalidPort": "Ugyldig port.",
+      "unreachable": "Demo: {{host}} kan ikke nås.",
+      "simulated": "Demo: tilkobling simulert.",
+      "simulatedUnencrypted": "Demo: tilkobling simulert (ukryptert!)."
+    },
+    "oauthDesktopOnly": "Pålogging med Microsoft eller Google er bare mulig i skrivebordsappen."
+  },
+  "preview": {
+    "loading": "Laster inn forhåndsvisning…",
+    "dialog": {
+      "attachments": "Vedlegg",
+      "previous": "Forrige vedlegg",
+      "previousTitle": "Forrige vedlegg (←)",
+      "next": "Neste vedlegg",
+      "nextTitle": "Neste vedlegg (→)",
+      "close": "Lukk forhåndsvisning",
+      "closeTitle": "Lukk (Esc)",
+      "fetching": "Henter vedlegg…",
+      "fetchFailed": "Kunne ikke hente vedlegget: {{message}}"
+    },
+    "card": {
+      "fileName": "Filnavn",
+      "size": "Størrelse",
+      "openExternal": "Åpne med standardprogrammet",
+      "unknown": "ukjent",
+      "attention": "Merk",
+      "yes": "ja",
+      "no": "nei"
+    },
+    "detection": {
+      "kinds": {
+        "pdf": "en PDF",
+        "dwg": "en DWG-tegning",
+        "dxf": "en DXF-tegning",
+        "ifc": "en IFC-modell",
+        "markdown": "Markdown",
+        "text": "tekst",
+        "image": "et bilde",
+        "office": "et Office-dokument",
+        "unknown": "en ukjent fil"
+      },
+      "contentDiffers": "Navnet tyder på {{kind}}, men innholdet er noe annet.",
+      "mismatch": "Dette vedlegget heter «.{{extension}}» ({{named}}), men innholdet er {{actual}}.",
+      "mismatchSubtype": "Dette vedlegget heter «.{{extension}}» ({{named}}), men innholdet er {{actual}} ({{subtype}}).",
+      "contentBinary": "Navnet tyder på {{kind}}, men innholdet er binært.",
+      "notSvg": "Navnet tyder på et SVG-bilde, men innholdet er ikke SVG.",
+      "signatureMissing": "Navnet tyder på {{kind}}, men innholdet mangler de tilsvarende kjennetegnene."
+    },
+    "image": {
+      "loadFailed": "Kunne ikke laste inn bildet: {{message}}",
+      "subtitle": "Bilde",
+      "cannotDisplay": "Dette bildet kan ikke vises her (skadet eller en variant som ikke støttes).",
+      "tooLarge": "Dette bildet er større enn {{size}} MB og vises ikke som forhåndsvisning.",
+      "tooManyPixels": "Dette bildet er {{width}} × {{height}} piksler (mer enn {{megapixels}} megapiksler) og vises ikke som forhåndsvisning.",
+      "toolbar": "Bilde",
+      "zoomOut": "Zoom ut",
+      "zoomOutTitle": "Zoom ut (−)",
+      "zoomIn": "Zoom inn",
+      "zoomInTitle": "Zoom inn (+)",
+      "fit": "Tilpass til vinduet",
+      "fitTitle": "Tilpass til vinduet (0)",
+      "actualSize": "Faktisk størrelse (100 %)",
+      "actualSizeTitle": "Faktisk størrelse",
+      "rotate": "Roter med klokken",
+      "rotateTitle": "Roter med klokken (R)",
+      "area": "Forhåndsvisning av bilde"
+    },
+    "text": {
+      "loadFailed": "Kunne ikke laste inn teksten: {{message}}",
+      "toolbar": "Tekst",
+      "encoding": "Koding: {{encoding}}",
+      "utf8Bom": "UTF-8 (med BOM)",
+      "formatJson": "Formater JSON",
+      "wrapLines": "Bryt linjer",
+      "truncated": "Viser de første {{limit}} av {{size}}. Lagre filen for å se alt.",
+      "contentOf": "Innholdet i {{name}}"
+    },
+    "markdown": {
+      "loadFailed": "Kunne ikke laste inn filen: {{message}}",
+      "linkNotOpened": "Koblingen ble ikke åpnet: {{url}}",
+      "imageFallback": "Bilde",
+      "externalBlocked": "{{alt}} (eksternt bilde blokkert)",
+      "unavailable": "{{alt}} (ikke tilgjengelig)",
+      "view": "Vis",
+      "rendered": "Gjengitt",
+      "source": "Kilde",
+      "showExternalImages": "Vis eksterne bilder",
+      "truncated": "Viser de første {{limit}} av {{size}}.",
+      "confirmLabel": "Åpne kobling",
+      "confirmQuestion": "Vil du åpne denne koblingen utenfor Office Studio?"
+    },
+    "pdf": {
+      "loadFailed": "Kunne ikke laste inn PDF-filen: {{message}}",
+      "properties": "Egenskaper",
+      "frameTitle": "PDF: {{name}}",
+      "linuxUnsupported": "Nettvisningen på Linux kan ikke vise PDF-filer pålitelig. Full forhåndsvisning kommer i en fremtidig versjon (Rust-visning).",
+      "cannotPreview": "Denne PDF-filen kan ikke forhåndsvises her. Full forhåndsvisning kommer i en fremtidig versjon (Rust-visning).",
+      "subtitle": "PDF-dokument",
+      "subtitleVersion": "PDF {{version}}",
+      "pages": "Sider",
+      "author": "Forfatter",
+      "subject": "Emne",
+      "createdWith": "Opprettet med",
+      "created": "Opprettet",
+      "modified": "Endret",
+      "encrypted": "Kryptert",
+      "incomplete": "filen ser ut til å være ufullstendig eller skadet",
+      "showPreview": "Vis forhåndsvisning"
+    },
+    "cad": {
+      "loadFailed": "Kunne ikke laste inn tegningen: {{message}}",
+      "previewLater": "En forhåndsvisning kommer i en fremtidig versjon (Rust-visning).",
+      "tooLargeToParse": "Denne filen er for stor til å analyseres her. En forhåndsvisning kommer i en fremtidig versjon (Rust-visning).",
+      "dwgSubtitle": "AutoCAD-tegning (DWG)",
+      "dxfSubtitle": "DXF-tegning",
+      "dxfBinarySubtitle": "Binær DXF-tegning",
+      "format": "Format",
+      "savedAs": "Lagret som",
+      "unknownAutocadVersion": "ukjent AutoCAD-versjon",
+      "units": "Enheter",
+      "entities": "Entiteter",
+      "blocks": "Blokker",
+      "layers": "Lag",
+      "thumbnailAlt": "Innebygd miniatyrbilde av tegningen",
+      "thumbnailCaption": "Miniatyrbilde fra filen",
+      "entitiesByType": "Entiteter etter type",
+      "layersCount": "Lag ({{n}})",
+      "andMore": "… og {{n}} til",
+      "versionRange": "AutoCAD {{from}} til {{to}}",
+      "versionAndLater": "AutoCAD {{version}} og nyere",
+      "unitCode": "kode {{code}}",
+      "unitNames": {
+        "unitless": "uten enhet",
+        "inch": "tomme",
+        "foot": "fot",
+        "mile": "engelsk mil",
+        "millimeter": "millimeter",
+        "centimeter": "centimeter",
+        "meter": "meter",
+        "kilometer": "kilometer",
+        "microinch": "mikrotomme",
+        "mil": "mil (tusendels tomme)",
+        "yard": "yard",
+        "angstrom": "ångström",
+        "nanometer": "nanometer",
+        "micron": "mikron",
+        "decimeter": "desimeter",
+        "decameter": "dekameter",
+        "hectometer": "hektometer",
+        "gigameter": "gigameter",
+        "astronomicalUnit": "astronomisk enhet",
+        "lightYear": "lysår",
+        "parsec": "parsec",
+        "usSurveyFoot": "amerikansk landmålingsfot",
+        "usSurveyInch": "amerikansk landmålingstomme",
+        "usSurveyYard": "amerikansk landmålingsyard",
+        "usSurveyMile": "amerikansk landmålingsmil"
+      }
+    },
+    "ifc": {
+      "loadFailed": "Kunne ikke laste inn modellen: {{message}}",
+      "previewLater": "3D-forhåndsvisningen kommer i en fremtidig versjon (Rust-visning).",
+      "tooLarge": "Denne modellen er større enn {{size}} MB og analyseres ikke her.",
+      "analysing": "Analyserer modell… {{percent}}",
+      "cancelled": "Analysen ble avbrutt.",
+      "retry": "Analyser på nytt",
+      "failed": "Analysen mislyktes: {{message}}",
+      "subtitle": "IFC-modell",
+      "subtitleWithSchema": "IFC-modell · {{schemas}}",
+      "nameInFile": "Navn i filen",
+      "timestamp": "Tidsstempel",
+      "author": "Forfatter",
+      "organization": "Organisasjon",
+      "application": "Program",
+      "description": "Beskrivelse",
+      "sites": "Tomter",
+      "buildings": "Bygninger",
+      "entities": "Entiteter",
+      "incomplete": "filen ser ut til å være ufullstendig (ingen END-ISO-10303-21)",
+      "storeys": "Etasjer ({{n}})",
+      "elementsHeading": "Bygningsdeler",
+      "allEntityTypes": "Alle entitetstyper ({{n}})",
+      "elements": {
+        "wall": "Vegger",
+        "wallStandardCase": "Vegger (standardtilfelle)",
+        "curtainWall": "Glassfasader",
+        "slab": "Gulv og dekker",
+        "roof": "Tak",
+        "column": "Søyler",
+        "beam": "Bjelker",
+        "member": "Staver",
+        "plate": "Plater",
+        "door": "Dører",
+        "window": "Vinduer",
+        "stair": "Trapper",
+        "ramp": "Ramper",
+        "railing": "Rekkverk",
+        "covering": "Kledninger",
+        "footing": "Fundamenter",
+        "pile": "Peler",
+        "space": "Rom",
+        "opening": "Åpninger",
+        "furnishing": "Inventar",
+        "flowSegment": "Kanal- og rørsegmenter",
+        "flowTerminal": "Installasjonsterminaler",
+        "proxy": "Andre bygningsdeler",
+        "storey": "Etasjer"
+      }
+    },
+    "office": {
+      "kinds": {
+        "document": "Tekstdokument",
+        "spreadsheet": "Regneark",
+        "presentation": "Presentasjon",
+        "database": "Database"
+      },
+      "genericDocument": "Office-dokument",
+      "type": "Type",
+      "openFailed": "Åpning mislyktes: {{message}}",
+      "openCopyHint": "Åpne en redigerbar kopi i {{module}}. Originalen i e-posten forblir uendret.",
+      "cannotOpen": "Dette Office-formatet kan ikke åpnes her.",
+      "opening": "Åpner…",
+      "openIn": "Åpne i {{module}}"
+    },
+    "unknown": {
+      "subtitle": "Ingen forhåndsvisning tilgjengelig",
+      "declaredType": "Angitt type",
+      "extension": "Filtype",
+      "none": "ingen",
+      "message": "Det kan ikke vises noen forhåndsvisning for denne filtypen. Lagre den og åpne den bare hvis du stoler på avsenderen."
+    }
+  },
+  "backend": {
+    "accounts": {
+      "fileCorrupt": "Kontofilen {{path}} er skadet.",
+      "fileUnreadable": "Kunne ikke lese kontofilen.",
+      "fileWriteFailed": "Kunne ikke skrive kontofilen.",
+      "invalidEmail": "Skriv inn en gyldig e-postadresse.",
+      "invalidReplyTo": "Svaradressen er ikke en gyldig e-postadresse.",
+      "lineBreakInName": "Navn kan ikke inneholde linjeskift.",
+      "notFound": "Denne kontoen finnes ikke lenger.",
+      "saveFailed": "Kunne ikke lagre kontoene.",
+      "usernameMissing": "Skriv inn brukernavnet for IMAP og SMTP."
+    },
+    "attachments": {
+      "blockedDatabase": "Av sikkerhetshensyn åpnes ikke '{{name}}' automatisk. Åpne Access-databaser i Database Studio. Lagre vedlegget hvis du likevel vil se det.",
+      "blockedExecutable": "Av sikkerhetshensyn åpnes ikke '{{name}}' automatisk. Denne filtypen kan kjøre programmer. Lagre vedlegget hvis du likevel vil se det.",
+      "blockedMacros": "Av sikkerhetshensyn åpnes ikke '{{name}}' automatisk. Dette dokumentet inneholder makroer. Lagre vedlegget hvis du likevel vil se det.",
+      "blockedScripts": "Av sikkerhetshensyn åpnes ikke '{{name}}' automatisk. Denne filtypen kan inneholde skript. Lagre vedlegget hvis du likevel vil se det.",
+      "emptyOrTooLarge": "Vedlegget er tomt eller større enn 100 MB.",
+      "executableContent": "'{{name}}' er {{kind}} og åpnes ikke av sikkerhetshensyn.",
+      "invalidName": "Ugyldig filnavn.",
+      "kind": {
+        "linuxProgram": "Linux-program (ELF)",
+        "macProgram": "macOS-program (Mach-O) eller Java-klasse",
+        "script": "skript",
+        "windowsProgram": "Windows-program (PE)",
+        "windowsShortcut": "Windows-snarvei"
+      },
+      "nameMissing": "Filnavnet mangler.",
+      "noProgram": "Fant ikke noe program for å åpne dette vedlegget.",
+      "notFound": "Vedlegg {{index}} finnes ikke i denne meldingen.",
+      "openFailed": "Åpning mislyktes.",
+      "sendAsBinary": "Send vedlegget som binære data på maksimalt 100 MB.",
+      "tempDirFailed": "Kunne ikke opprette en midlertidig mappe.",
+      "tempSaveFailed": "Kunne ikke lagre vedlegget midlertidig."
+    },
+    "auth": {
+      "failed": "Pålogging på {{host}} mislyktes: brukernavnet eller passordet er feil ({{detail}}). Gmail, Outlook, iCloud og Yahoo krever et apppassord.",
+      "noPassword": "Det er ikke angitt eller lagret noe passord for denne kontoen.",
+      "noStoredPassword": "Det er ikke lagret noe passord for denne kontoen. Skriv inn passordet i kontoinnstillingene."
+    },
+    "autoconfig": {
+      "httpsRedirectOnly": "Bare omdirigeringer til HTTPS følges.",
+      "invalidEncoding": "Ugyldig tegnkoding i konfigurasjonsfilen.",
+      "notFound": "Fant ingen konfigurasjon (HTTP {{status}}).",
+      "tooManyRedirects": "For mange omdirigeringer."
+    },
+    "common": {
+      "saveFailed": "Lagring mislyktes."
+    },
+    "compose": {
+      "attachmentCorrupt": "Vedlegget '{{name}}' er skadet.",
+      "attachmentsTooLarge": "Vedleggene er totalt større enn {{max}} MB. Send store filer via en delingskobling.",
+      "buildFailed": "Kunne ikke sette sammen meldingen ({{detail}}).",
+      "field": {
+        "bcc": "Blindkopi",
+        "cc": "Kopi",
+        "from": "Fra",
+        "inReplyTo": "In-Reply-To",
+        "references": "References",
+        "replyTo": "Reply-To",
+        "subject": "Emnet",
+        "to": "Til"
+      },
+      "invalidAddress": "'{{address}}' i {{field}} er ikke en gyldig e-postadresse.",
+      "invalidCharacters": "{{field}} inneholder ugyldige tegn.",
+      "invalidEnvelope": "Ugyldig konvolutt.",
+      "noRecipients": "Skriv inn minst én mottaker."
+    },
+    "connection": {
+      "failed": "Ingen tilkobling til {{host}}: {{detail}}",
+      "hostNotFound": "Fant ikke servernavnet {{host}}.",
+      "refused": "Serveren {{host}} avviste tilkoblingen. Kontroller porten og sikkerhetsinnstillingen.",
+      "reset": "Tilkoblingen til {{host}} ble uventet lukket. Samsvarer sikkerhetsinnstillingen (SSL/TLS eller STARTTLS) med porten?",
+      "timeout": "Serveren {{host}} svarte ikke i tide. Kontroller servernavnet, porten og brannmuren."
+    },
+    "files": {
+      "saveFailed": "Kunne ikke lagre filen."
+    },
+    "http": {
+      "invalidHttpResponse": "Ugyldig HTTP-svar.",
+      "invalidResponse": "Ugyldig svar.",
+      "invalidServerName": "Ugyldig servernavn {{host}}.",
+      "invalidUrl": "Ugyldig nettadresse.",
+      "plainOnlyLocal": "Ukryptert HTTP er bare tillatt til denne datamaskinen.",
+      "redirectWithoutLocation": "Omdirigering uten adresse.",
+      "responseTooLarge": "Serversvaret er for stort."
+    },
+    "images": {
+      "credentialsInUrl": "Adresser som inneholder påloggingsinformasjon, hentes ikke.",
+      "hostNotFound": "Fant ikke {{host}}.",
+      "httpOnly": "Bare http- og https-adresser er tillatt.",
+      "invalidServerName": "Ugyldig servernavn.",
+      "notAnImage": "Denne adressen returnerer ikke et bilde.",
+      "privateAddress": "Eksternt innhold fra interne eller lokale adresser hentes ikke.",
+      "timeout": "Bildet ble ikke lastet inn innen 10 sekunder.",
+      "tooLarge": "Bildet er større enn 10 MB.",
+      "tooManyRedirects": "For mange omdirigeringer (maksimalt 3).",
+      "unavailable": "Bildet er ikke tilgjengelig (HTTP {{status}}).",
+      "unknownRedirect": "Ukjent omdirigering.",
+      "unsupportedImage": "Innholdet er ikke et bilde som støttes."
+    },
+    "imap": {
+      "action": {
+        "copy": "Kopier",
+        "countFolders": "Tell mapper",
+        "createFolder": "Opprett mappe",
+        "delete": "Slett",
+        "deleteFolder": "Slett mappe",
+        "expunge": "Rydd opp",
+        "fetchMessage": "Hent melding",
+        "fetchMessages": "Hent meldinger",
+        "flag": "Flagg",
+        "listFolders": "Hent mapper",
+        "move": "Flytt",
+        "openFolder": "Åpne mappe",
+        "openNamedFolder": "Åpne mappen '{{folder}}'",
+        "renameFolder": "Gi nytt navn til mappe",
+        "saveToDrafts": "Lagre i Utkast",
+        "saveToFolder": "Lagre i mappe",
+        "saveToSent": "Lagre i Sendt",
+        "search": "Søk",
+        "signIn": "Logg på",
+        "startTls": "STARTTLS"
+      },
+      "alreadyInTrash": "Disse meldingene ligger allerede i papirkurven; slett dem permanent.",
+      "appendRejected": "{{action}}: serveren avviste meldingen.",
+      "badCommand": "{{action}}: serveren forstod ikke kommandoen ({{detail}}).",
+      "cannotDeleteInbox": "Innboksen kan ikke slettes.",
+      "cannotRenameInbox": "Innboksen kan ikke gis nytt navn.",
+      "closedImmediately": "{{host}} lukket tilkoblingen umiddelbart. Samsvarer sikkerhetsinnstillingen (SSL/TLS eller STARTTLS) med porten?",
+      "commandTimeout": "{{host}} svarte ikke innen {{seconds}} sekunder.",
+      "connectTimeout": "Ikke noe svar fra {{host}}:{{port}} innen {{seconds}} sekunder. Kontroller servernavnet, porten og brannmuren.",
+      "connectionLost": "Tilkoblingen til {{host}} ble brutt.",
+      "draftsFolderMissing": "Fant ingen utkastmappe på serveren. Velg den mappen i kontoinnstillingene.",
+      "greetingRefused": "{{host}} avviste tilkoblingen: {{detail}}",
+      "invalidFolderName": "Ugyldig mappenavn.",
+      "invalidMessage": "Ugyldig melding.",
+      "invalidName": "{{action}}: ugyldige tegn i navnet.",
+      "invalidSearchCharacters": "Søketeksten inneholder ugyldige tegn.",
+      "messageGone": "Denne meldingen finnes ikke lenger (den kan ha blitt flyttet eller slettet).",
+      "messageTooLarge": "Meldingen er {{size}} MB; Email Studio åpner meldinger på opptil {{max}} MB.",
+      "noStarttls": "{{host}} støtter ikke STARTTLS på port {{port}}. Velg SSL/TLS (vanligvis port 993).",
+      "noTrash": "Fant ingen papirkurvmappe på serveren. Velg en papirkurvmappe i kontoinnstillingene eller slett permanent.",
+      "noValidMessages": "Ingen gyldige meldinger er angitt.",
+      "notFound": "{{action}}: {{detail}}",
+      "quotaExceeded": "{{action}}: postboksen er full ({{detail}}).",
+      "refused": "{{action}}: serveren nektet ({{detail}}).",
+      "retryLater": "{{message}} (Email Studio prøver igjen om {{retrySeconds}} sekunder for å unngå å bli blokkert av serveren.)",
+      "searchTooLong": "Søketeksten er for lang.",
+      "sentFolderMissing": "Fant ingen mappe for sendte meldinger på serveren. Velg den mappen i kontoinnstillingene.",
+      "signInTimeout": "Påloggingen på {{host}} tok for lang tid.",
+      "specialFolderMissing": "Fant ikke mappen på serveren. Velg den mappen i kontoinnstillingene.",
+      "unexpectedError": "{{action}}: uventet feil.",
+      "unexpectedResponse": "{{action}}: uventet svar fra serveren.",
+      "unexpectedState": "Uventet tilkoblingstilstand."
+    },
+    "keychain": {
+      "notResponding": "Nøkkelringen svarte ikke.",
+      "unavailable": "Operativsystemets nøkkelring er ikke tilgjengelig. Email Studio lagrer aldri passord i klartekst; på Linux kreves en Secret Service (for eksempel GNOME Keyring eller KWallet).",
+      "unexpected": "Nøkkelringen returnerte en uventet feil."
+    },
+    "links": {
+      "openFailed": "Kunne ikke åpne koblingen.",
+      "unsupportedScheme": "Bare http-, https- og mailto-koblinger kan åpnes."
+    },
+    "messages": {
+      "invalidMime": "Kunne ikke lese meldingen (ugyldig MIME-struktur).",
+      "unreadable": "Kunne ikke lese meldingen."
+    },
+    "oauth": {
+      "browserFailed": "Kunne ikke åpne nettleseren for pålogging.",
+      "cancelled": "Påloggingen ble avbrutt.",
+      "cancelledOrDenied": "Påloggingen hos {{provider}} ble avbrutt eller avslått.",
+      "clientMisconfigured": "OAuth-klienten for {{provider}} er ikke riktig konfigurert (klient-ID eller hemmelighet).",
+      "emailUnknown": "Kunne ikke fastslå e-postadressen for påloggingen; skriv inn adressen og prøv igjen.",
+      "invalidClientId": "Dette er ikke en gyldig klient-ID.",
+      "invalidTokenEndpoint": "Ugyldig tokenendepunkt.",
+      "noAccessToken": "{{provider}} returnerte ikke noe tilgangstoken (HTTP {{status}}).",
+      "noFreePort": "Ingen midlertidig port er tilgjengelig for pålogging.",
+      "noPort": "Ingen port.",
+      "noRefreshToken": "{{provider}} returnerte ikke noe oppdateringstoken; prøv å logge på igjen.",
+      "noStoredSignIn": "Logg på {{provider}} igjen: ingen pålogging er lagret for denne kontoen.",
+      "notConfigured": {
+        "google": "Pålogging med Google er ikke konfigurert ennå: det finnes ingen klient-ID. Opprett i Google Cloud en OAuth-klient av typen 'Skrivebordsapp' (omdirigering via http://127.0.0.1), aktiver Gmail API og legg til omfanget https://mail.google.com/ på samtykkeskjermen. Skriv deretter inn klient-ID og klienthemmelighet (se docs/email-oauth.md).",
+        "microsoft": "Pålogging med Microsoft er ikke konfigurert ennå: det finnes ingen klient-ID. Registrer en app i Microsoft Entra (Appregistreringer) som 'Offentlig klient', legg til plattformen 'Mobil- og skrivebordsprogrammer' med omdirigerings-URI-en http://localhost, og gi de delegerte tillatelsene IMAP.AccessAsUser.All, SMTP.Send, offline_access, openid og email. Skriv deretter inn klient-ID-en (se docs/email-oauth.md)."
+      },
+      "providerRefused": "{{provider}} avviste påloggingen ({{detail}}).",
+      "randomUnavailable": "Ingen sikker tilfeldighet tilgjengelig.",
+      "reauthenticate": "Logg på {{provider}} igjen: tillatelsen har utløpt eller blitt tilbakekalt.",
+      "settingSaveFailed": "Kunne ikke lagre OAuth-innstillingen.",
+      "signInFirst": "Denne kontoen bruker OAuth2: logg først på med Microsoft eller Google.",
+      "signInFirstToTest": "Logg først på med Microsoft eller Google for å teste OAuth2.",
+      "signInTimeout": "Påloggingen hos {{provider}} tok mer enn 5 minutter og ble avbrutt.",
+      "stateMismatch": "Svaret fra påloggingssiden hører ikke til denne påloggingen (state samsvarer ikke).",
+      "timeout": "{{provider}} svarte ikke i tide.",
+      "tokenRefused": "{{provider}} avviste tokenet ({{detail}}).",
+      "unexpectedResponse": "{{provider}} returnerte et uventet svar (HTTP {{status}})."
+    },
+    "security": {
+      "cramMd5SmtpUnsupported": "Kryptert passord (CRAM-MD5) støttes ikke for SMTP. Velg 'vanlig passord'; via SSL/TLS eller STARTTLS krypteres passordet også.",
+      "invalidServerName": "'{{host}}' er ikke et gyldig servernavn for {{protocol}}.",
+      "notLocalhost": "{{host}} er ikke denne datamaskinen, så en ukryptert tilkobling ble avvist.",
+      "portMissing": "Porten for {{protocol}} mangler.",
+      "unencryptedRefused": "Pålogging på {{host}} uten kryptering ble avvist: passordet ditt ville blitt sendt over nettverket i lesbar form. Velg SSL/TLS eller STARTTLS. Ukrypterte tilkoblinger er bare tillatt til denne datamaskinen (localhost), for eksempel for Proton Mail Bridge."
+    },
+    "server": {
+      "noTimelyResponse": "{{host}} svarte ikke i tide."
+    },
+    "smtp": {
+      "authMethodUnsupported": "Denne påloggingsmetoden støttes ikke for SMTP.",
+      "error": "SMTP-feil hos {{host}}: {{detail}}",
+      "messageTooLarge": "{{host}} avviser meldingen fordi den er for stor ({{detail}}).",
+      "noAuthMechanism": "{{host}} tilbyr ingen påloggingsmetode som Email Studio støtter (PLAIN eller LOGIN). Velg STARTTLS eller SSL/TLS; mange servere tilbyr pålogging først etter kryptering.",
+      "oauthRejected": "{{host}} avviste OAuth2-tokenet; du må kanskje logge på igjen.",
+      "rejected": "{{host}} avviste meldingen ({{detail}}).",
+      "sendTimeout": "Sending via {{host}} tok for lang tid.",
+      "tlsFailed": "Den sikre tilkoblingen til {{host}} kunne ikke opprettes ({{detail}}). Samsvarer sikkerhetsinnstillingen med porten?",
+      "tryLater": "{{host}} kan ikke ta imot meldingen akkurat nå; prøv igjen senere ({{detail}})."
+    },
+    "storage": {
+      "appDataDirNotFound": "Fant ikke appens datamappe.",
+      "dataDirCreateFailed": "Kunne ikke opprette datamappen.",
+      "dataDirMissing": "Datamappen mangler."
+    },
+    "test": {
+      "signedIn": "Logget på {{host}}.",
+      "signedInUnencrypted": "Logget på {{host}}. Merk: {{protocol}}-tilkoblingen er ikke kryptert. Dette er bare tillatt fordi serveren kjører på denne datamaskinen."
+    },
+    "tls": {
+      "certificateRejected": "Den sikre tilkoblingen til {{host}} ble avvist: {{reason}}. For å beskytte passordet ditt kobler ikke Email Studio til en server med en identitet som ikke kan bekreftes.",
+      "handshakeFailed": "Den sikre tilkoblingen til {{host}} kunne ikke opprettes ({{detail}}). Samsvarer sikkerhetsinnstillingen (SSL/TLS eller STARTTLS) med porten?",
+      "handshakeTimeout": "TLS-håndtrykket med {{host}} tok for lang tid.",
+      "invalidServerName": "'{{host}}' er ikke et gyldig servernavn for TLS.",
+      "reason": {
+        "expired": "sertifikatet har utløpt",
+        "invalid": "sertifikatet er ugyldig ({{detail}})",
+        "notYetValid": "sertifikatet er ikke gyldig ennå (går klokken på denne datamaskinen riktig?)",
+        "revoked": "sertifikatet er tilbakekalt",
+        "unknownIssuer": "sertifikatet er ikke utstedt av en klarert sertifiseringsinstans (muligens selvsignert)",
+        "wrongName": "sertifikatet hører ikke til navnet {{host}}; bruk servernavnet som står på sertifikatet"
+      }
+    }
+  }
+}

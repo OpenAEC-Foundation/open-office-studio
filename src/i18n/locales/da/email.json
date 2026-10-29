@@ -1,0 +1,1008 @@
+{
+  "accounts": {
+    "test": {
+      "test": "Test",
+      "testConnection": "Test forbindelse",
+      "testing": "Tester…",
+      "retest": "Test igen",
+      "failed": "Testen mislykkedes"
+    },
+    "settings": {
+      "title": "Kontoindstillinger",
+      "noAccount": "Der er endnu ingen konto.",
+      "addAccount": "Tilføj konto",
+      "accountList": "Konti",
+      "saving": "Gemmer…",
+      "saved": "Indstillingerne er gemt.",
+      "saveFailed": "Kunne ikke gemme",
+      "tabs": {
+        "identity": "Identitet",
+        "servers": "Servere",
+        "folders": "Mapper",
+        "fetching": "Hentning og privatliv",
+        "advanced": "Avanceret"
+      },
+      "deleteAccount": {
+        "title": "Fjern konto",
+        "confirm": "Er du sikker på, at du vil fjerne <strong>{{name}}</strong> ({{email}})? Dine meddelelser forbliver på serveren; den gemte adgangskode fjernes fra nøgleringen.",
+        "button": "Fjern konto",
+        "failed": "Kontoen kunne ikke fjernes"
+      },
+      "identity": {
+        "accountName": "Kontonavn",
+        "accountNameHint": "Kun til dig selv, for eksempel \"Arbejde\" eller \"Privat\".",
+        "yourName": "Dit navn",
+        "email": "Mailadresse",
+        "replyTo": "Svaradresse",
+        "replyToPlaceholder": "Tom = din mailadresse",
+        "signature": "Signatur",
+        "signatureHint": "Tilføjes under nye meddelelser og svar efter \"-- \"."
+      },
+      "oauthAccount": {
+        "signedInAs": "Logget ind som <strong>{{account}}</strong> med {{provider}}",
+        "noPasswordStored": "Der gemmes ingen adgangskode; adgangen bruger et token i nøgleringen.",
+        "signInAgain": "Log ind igen",
+        "signedInAgain": "Logget ind igen som {{account}}."
+      },
+      "password": {
+        "change": "Skift adgangskode",
+        "storedPlaceholder": "Gemt · lad stå tomt for at beholde",
+        "noneStoredPlaceholder": "Ingen adgangskode gemt endnu"
+      },
+      "folders": {
+        "hint": "Vælg, hvor Email Studio gemmer sendte meddelelser, kladder samt slettede og arkiverede meddelelser.",
+        "roles": {
+          "sent": "Sendte meddelelser",
+          "drafts": "Kladder",
+          "trash": "Papirkurv",
+          "archive": "Arkiv"
+        },
+        "automatic": "Automatisk",
+        "automaticWithFolder": "Automatisk ({{folder}})"
+      },
+      "fetching": {
+        "checkForNew": "Søg efter nye meddelelser",
+        "manualOnly": "Kun manuelt",
+        "everyMinutes_one": "Hvert minut",
+        "everyMinutes_other": "Hvert {{count}}. minut",
+        "externalContent": "Vis altid eksterne billeder og indhold",
+        "externalContentHint": "Fra anbefales: eksterne billeder fortæller afsendere, hvornår og hvor du åbner en meddelelse.",
+        "trustedSenders": "Afsendere, hvis eksterne indhold altid vises",
+        "forgetSender": "Glem {{sender}}"
+      },
+      "advanced": {
+        "oauthIntro": "Log ind med Microsoft eller Google bruger OAuth2. Disse indstillinger gælder for alle konti. Dit eget klient-id er kun nødvendigt, hvis appen ikke indeholder et; se <code>{{doc}}</code>.",
+        "ispdb": "Slå også op i Thunderbird-databasen for en ny konto",
+        "ispdbHint": "Domænenavnet sendes så til Mozilla. Fra som standard.",
+        "available": "Tilgængelig.",
+        "unavailable": "Ikke tilgængelig.",
+        "loadingStatus": "Indlæser status…",
+        "clientId": "Klient-id",
+        "clientSecret": "Klienthemmelighed (valgfri)",
+        "saveClientId": "Gem klient-id",
+        "clientIdSaved": "Klient-id for {{provider}} er gemt.",
+        "clientIdSaveFailed": "Klient-id'et kunne ikke gemmes",
+        "desktopOnly": "Du kan kun angive dit eget klient-id i skrivebordsappen."
+      }
+    },
+    "wizard": {
+      "title": "Tilføj konto",
+      "intro": "Brug din eksisterende mailadresse. Email Studio fungerer med alle udbydere, der tilbyder IMAP og SMTP.",
+      "fullName": "Dit fulde navn",
+      "fullNamePlaceholder": "Fornavn Efternavn",
+      "fullNameHint": "Sådan ser modtagerne dit navn.",
+      "email": "Mailadresse",
+      "emailPlaceholder": "name@example.com",
+      "password": "Adgangskode",
+      "passwordHint": "Bruges kun, når du vælger Test eller Udfør, og gemmes kun i operativsystemets nøglering.",
+      "ispdb": "Slå også op i Thunderbird-databasen",
+      "ispdbHint": "Domænenavnet (ikke din adresse eller adgangskode) sendes så til Mozilla.",
+      "oauthPrompt": "Eller log ind uden adgangskode i appen:",
+      "enterNameAndEmailFirst": "Angiv først dit navn og din mailadresse.",
+      "saving": "Gemmer…",
+      "done": "Udfør",
+      "saveAnyway": "Gem alligevel",
+      "saveTitle": "Gem konto",
+      "saveUntestedTitle": "Endnu ikke (korrekt) testet; du kan stadig gemme kontoen",
+      "saveFailed": "Kontoen kunne ikke gemmes",
+      "foundSettings": "Indstillinger fundet",
+      "serverSettings": "Serverindstillinger",
+      "serverSettingsFor": "Serverindstillinger for {{domain}}",
+      "enterEmailHint": "Angiv din mailadresse; Email Studio søger derefter automatisk efter de rigtige servere.",
+      "searchFailed": "Søgningen mislykkedes",
+      "fillInManually": "Angiv selv serverne nedenfor.",
+      "nothingFound": "Der blev ikke fundet nogen indstillinger. Angiv selv serverne nedenfor; spørg om nødvendigt din udbyder.",
+      "proposals": "Forslag",
+      "unencrypted": "ukrypteret",
+      "manualConfiguration": "Manuel konfiguration",
+      "adjusted": "· redigeret",
+      "fieldsAppear": "Felterne vises, så snart der er en gyldig mailadresse.",
+      "bothServersFailed": "Begge servere mislykkedes. Kontrollér adressen, adgangskoden og servernavnene."
+    },
+    "discovery": {
+      "steps": {
+        "builtIn": "Indbygget liste",
+        "ownDomain": "Eget domæne",
+        "dns": "DNS",
+        "ispdb": "Thunderbird-database",
+        "probe": "Forbindelsestest"
+      },
+      "stepStatus": {
+        "waiting": "venter",
+        "busy": "i gang…",
+        "found": "fundet",
+        "nothing": "intet fundet",
+        "skipped": "ikke kørt"
+      },
+      "sources": {
+        "preset": "Indbygget liste",
+        "autoconfig": "Konfiguration fra dit eget domæne",
+        "srv": "DNS SRV-poster",
+        "mx": "MX-poster (udbyder genkendt)",
+        "ispdb": "Thunderbird-database",
+        "guess": "Almindelige servernavne"
+      },
+      "unencrypted": "ukrypteret",
+      "reachable": "tilgængelig",
+      "unreachable": "ikke tilgængelig",
+      "untested": "ikke testet"
+    },
+    "server": {
+      "incoming": "Indgående (IMAP)",
+      "outgoing": "Udgående (SMTP)",
+      "columns": {
+        "server": "Server",
+        "port": "Port",
+        "security": "Sikkerhed",
+        "authentication": "Godkendelse",
+        "username": "Brugernavn"
+      },
+      "hostLabel": "{{protocol}}-server",
+      "portLabel": "{{protocol}}-port",
+      "securityLabel": "{{protocol}}-sikkerhed",
+      "authenticationLabel": "{{protocol}}-godkendelse",
+      "usernameLabel": "{{protocol}}-brugernavn",
+      "imapPlaceholder": "imap.example.com",
+      "smtpPlaceholder": "smtp.example.com",
+      "securityNone": "Ingen",
+      "authNormal": "Normal adgangskode",
+      "authEncrypted": "Krypteret adgangskode",
+      "unencryptedWarning": "<strong>Ukrypteret forbindelse.</strong> Din adgangskode og dine meddelelser sendes over netværket i læsbar form. Vælg SSL/TLS eller STARTTLS, hvis din udbyder understøtter det.",
+      "oauthHint": "Med OAuth2 bliver du bedt om at logge ind hos udbyderen ved test eller første brug."
+    },
+    "oauth": {
+      "notSupported": "Denne version af appen understøtter endnu ikke log ind med Microsoft eller Google.",
+      "signInFailed": "Log ind med {{provider}} mislykkedes",
+      "signInWith": "Log ind med {{provider}}",
+      "recommended": "anbefalet",
+      "waitTitle": "Fuldfør log ind i browseren",
+      "waitText": "Log ind-siden for {{provider}} er åbnet i browseren. Log ind der, og giv adgang til mail; Email Studio fortsætter derefter her.",
+      "unavailableTitle": "Log ind med {{provider}} er ikke tilgængelig her.",
+      "unavailableHelp": "I skrivebordsappen kan du angive dit eget klient-id for {{provider}} under <em>Værktøjer › Kontoindstillinger › Avanceret</em>. Hvordan du opretter et, er beskrevet i <code>{{doc}}</code>. Du kan også fortsætte med en (app)adgangskode."
+    }
+  },
+  "errors": {
+    "code": {
+      "connection": "Ingen forbindelse til serveren. Kontrollér din internetforbindelse samt servernavnet og porten.",
+      "authentication": "Log ind mislykkedes. Kontrollér brugernavn og adgangskode (Værktøjer › Kontoindstillinger).",
+      "certificate": "Der er ikke tillid til serverens certifikat, eller det matcher ikke dette servernavn.",
+      "timeout": "Serveren svarede ikke i tide. Prøv igen senere.",
+      "notFound": "Meddelelsen eller mappen findes ikke længere på serveren.",
+      "refused": "Serveren afviste kommandoen.",
+      "tooLarge": "Meddelelsen er for stor til serveren. Gør vedhæftede filer mindre, eller fjern dem.",
+      "unavailable": "Denne funktion er ikke tilgængelig her.",
+      "internal": "Noget gik galt."
+    },
+    "withDetail": "{{explanation}} ({{detail}})",
+    "withContext": "{{context}}: {{message}}",
+    "backendMissing": "Denne version af skrivebordsappen indeholder ikke mailfunktionen.",
+    "unexpectedBinary": "Uventet binært output fra backend."
+  },
+  "dialog": {
+    "closeEsc": "Luk (Esc)"
+  },
+  "sendAsAttachment": {
+    "title": "Send som vedhæftet fil"
+  },
+  "ribbon": {
+    "tabs": {
+      "start": "Hjem",
+      "view": "Vis",
+      "tools": "Værktøjer"
+    },
+    "groups": {
+      "new": "Ny",
+      "respond": "Besvar",
+      "delete": "Slet",
+      "mark": "Mærker",
+      "organize": "Organiser",
+      "layout": "Layout",
+      "sort": "Sortér",
+      "message": "Meddelelse",
+      "accounts": "Konti",
+      "folders": "Mapper"
+    },
+    "withShortcut": "{{action}} · {{shortcut}}",
+    "fetch": "Hent meddelelser",
+    "fetchTitle": "Hent meddelelser · {{key}} eller {{shortcut}}",
+    "readUnread": "Læst/ulæst",
+    "readUnreadTitle": "Læst eller ulæst · {{shortcut}}",
+    "star": "Stjerne",
+    "move": "Flyt",
+    "moveTitle": "Flyt til mappe",
+    "folderPane": "Mapperude",
+    "readingPane": "Læserude",
+    "resetLayout": "Nulstil layout",
+    "sortBy": "Sortér efter",
+    "sort": {
+      "date": "Dato",
+      "sender": "Afsender",
+      "subject": "Emne",
+      "size": "Størrelse"
+    },
+    "ascending": "Stigende",
+    "descending": "Faldende",
+    "viewSource": "Vis kilde",
+    "accountSettings": "Kontoindstillinger"
+  },
+  "studio": {
+    "errors": {
+      "loadAccounts": "Kontiene kunne ikke indlæses",
+      "loadMessages": "Meddelelserne kunne ikke indlæses",
+      "openMessage": "Meddelelsen kunne ikke åbnes",
+      "delete": "Kunne ikke slette",
+      "move": "Kunne ikke flytte",
+      "mark": "Kunne ikke markere",
+      "forwardAttachments": "De vedhæftede filer til videresendelse kunne ikke hentes",
+      "openFile": "{{name}} kunne ikke åbnes",
+      "saveFile": "{{name}} kunne ikke gemmes",
+      "source": "Kilden kunne ikke hentes",
+      "updateFolder": "Mappen kunne ikke opdateres",
+      "deleteFolder": "Mappen kunne ikke slettes"
+    },
+    "accountAdded": "Kontoen {{email}} er tilføjet.",
+    "addAccount": "Tilføj konto",
+    "deletePermanently": {
+      "title": "Slet permanent",
+      "text_one": "Denne meddelelse slettes permanent. Det kan ikke fortrydes.",
+      "text_other": "{{count}} meddelelser slettes permanent. Det kan ikke fortrydes.",
+      "confirm": "Slet permanent"
+    },
+    "noArchiveFolder": "Denne konto har ingen arkivmappe. Vælg en under Værktøjer › Kontoindstillinger › Mapper.",
+    "fetched": "Meddelelser hentet.",
+    "deleteFolder": {
+      "title": "Slet mappe",
+      "text": "Mappen \"{{folder}}\" og alle meddelelser i den slettes på serveren."
+    },
+    "welcome": {
+      "title": "Ingen mailkonto endnu",
+      "text": "Tilføj din konto med din mailadresse og adgangskode. Email Studio finder de rigtige indstillinger."
+    },
+    "folderPaneWidth": "Bredde på mapperude",
+    "messageListWidth": "Bredde på meddelelsesliste",
+    "messageList": "Meddelelsesliste",
+    "search": {
+      "in": "Søg i {{folder}}",
+      "label": "Søg i meddelelser ({{shortcut}})",
+      "clear": "Ryd søgning"
+    },
+    "filter": {
+      "label": "Hurtigfilter",
+      "unread": "Ulæste",
+      "unreadTitle": "Kun ulæste",
+      "starred": "Med stjerne",
+      "starredTitle": "Kun med stjerne",
+      "attachment": "Vedhæftet fil",
+      "attachmentTitle": "Kun med vedhæftet fil",
+      "body": "Brødtekst",
+      "bodyTitle": "Søg også i meddelelsesteksten (langsommere)"
+    },
+    "count": {
+      "filtered": "{{shown}} af {{total}}",
+      "filteredLoaded": "{{shown}} af {{loaded}} indlæste",
+      "messages_one": "{{count}} meddelelse",
+      "messages_other": "{{count}} meddelelser",
+      "selected_one": "{{count}} markeret",
+      "selected_other": "{{count}} markeret"
+    },
+    "noResults": "Ingen meddelelser fundet.",
+    "emptyFolder": "Denne mappe er tom.",
+    "moveTo_one": "Flyt meddelelse til",
+    "moveTo_other": "Flyt {{count}} meddelelser til",
+    "folderDialog": {
+      "newTitle": "Ny mappe",
+      "renameTitle": "Omdøb mappe",
+      "create": "Opret",
+      "rename": "Omdøb",
+      "name": "Navn",
+      "inside": "Inde i \"{{folder}}\""
+    },
+    "source": {
+      "title": "Meddelelsens kilde",
+      "saveAs": "Gem som {{extension}}"
+    }
+  },
+  "address": {
+    "invalid": "Ugyldig adresse: {{address}}",
+    "remove": "Fjern {{address}}"
+  },
+  "list": {
+    "label": "Meddelelser",
+    "to": "Til: {{address}}",
+    "noRecipient": "(ingen modtager)",
+    "replied": "Besvaret",
+    "hasAttachment": "Har vedhæftet fil",
+    "noSubject": "(intet emne)",
+    "star": "Tilføj stjerne",
+    "unstar": "Fjern stjerne",
+    "loadingMore": "Indlæser flere meddelelser…"
+  },
+  "folders": {
+    "label": "Mapper",
+    "loading": "Indlæser mapper…",
+    "unread_one": "{{count}} ulæst",
+    "unread_other": "{{count}} ulæste",
+    "inbox": "Indbakke"
+  },
+  "reader": {
+    "loadingMessage": "Indlæser meddelelse…",
+    "chooseMessage": "Vælg en meddelelse for at læse den.",
+    "label": "Meddelelse: {{subject}}",
+    "reply": "Besvar",
+    "replyTitle": "Besvar · {{shortcut}}",
+    "replyAll": "Besvar alle",
+    "replyAllTitle": "Besvar alle · {{shortcut}}",
+    "forward": "Videresend",
+    "forwardTitle": "Videresend · {{shortcut}}",
+    "archive": "Arkivér",
+    "archiveTitle": "Arkivér · {{shortcut}}",
+    "delete": "Slet",
+    "deleteTitle": "Slet · {{shortcut}}",
+    "starTitle": "Stjerne · {{shortcut}}",
+    "from": "Fra",
+    "to": "Til",
+    "none": "(ingen)",
+    "cc": "Cc",
+    "replyTo": "Svar til",
+    "date": "Dato",
+    "external": {
+      "blocked_one": "Ét eksternt billede blev blokeret for at beskytte dit privatliv.",
+      "blocked_other": "{{count}} eksterne billeder blev blokeret for at beskytte dit privatliv.",
+      "desktopHint": "Med din tilladelse henter appen dem og viser dem uden at lade meddelelsen oprette forbindelse nogen steder.",
+      "demoHint": "(I demoen peger de på adresser, der ikke findes.)",
+      "show": "Vis eksternt indhold",
+      "alwaysFrom": "Vis altid fra {{sender}}",
+      "failed_one": "Ét eksternt billede kunne ikke hentes.",
+      "failed_other": "{{count}} eksterne billeder kunne ikke hentes."
+    },
+    "attachments": {
+      "label": "Vedhæftede filer",
+      "previewOrOpen": "Klik: eksempel · dobbeltklik: åbn i {{module}}",
+      "preview": "Eksempel",
+      "openCopyTitle": "Åbn som redigerbar kopi i {{module}}",
+      "openIn": "Åbn i {{module}}",
+      "saveTitle": "Gem på denne computer"
+    },
+    "content": "Meddelelsens indhold",
+    "loadingContent": "Indlæser indhold…"
+  },
+  "compose": {
+    "errors": {
+      "saveDraft": "Kladden kunne ikke gemmes",
+      "noRecipients": "Tilføj mindst én modtager.",
+      "send": "Kunne ikke sende",
+      "attachmentsLarge": "De vedhæftede filer fylder i alt {{size}}; mange servere afviser meddelelser over {{max}}.",
+      "linkNotAllowed": "Kun http(s)-, mailto- og tel-links er tilladt."
+    },
+    "noSubject": {
+      "title": "Intet emne",
+      "text": "Denne meddelelse har intet emne. Vil du sende alligevel?",
+      "fillIn": "Angiv et emne",
+      "sendWithout": "Send uden emne"
+    },
+    "forgotAttachment": {
+      "title": "Har du glemt en vedhæftet fil?",
+      "text": "Din meddelelse nævner <strong>\"{{word}}\"</strong>, men der er ikke tilføjet nogen vedhæftet fil.",
+      "sendAnyway": "Send alligevel",
+      "keywords": "vedhæftet|vedhæftede|vedhæfter|bilag|se vedhæftede"
+    },
+    "addAttachment": "Tilføj vedhæftet fil",
+    "attachment": "Vedhæft",
+    "removeAttachment": "Fjern {{name}}",
+    "attachmentsSummary_one": "{{count}} vedhæftet fil · {{size}}",
+    "attachmentsSummary_other": "{{count}} vedhæftede filer · {{size}}",
+    "dropToAttach": "Slip for at tilføje som vedhæftet fil",
+    "sent": "Meddelelsen er sendt.",
+    "sentWithSubject": "Meddelelsen er sendt: {{subject}}.",
+    "unsent": {
+      "title": "Meddelelsen blev ikke sendt",
+      "text": "Vil du gemme denne meddelelse som kladde?",
+      "discard": "Kassér",
+      "saveDraft": "Gem kladde"
+    },
+    "label": "Skriv: {{subject}}",
+    "newMessage": "Ny meddelelse",
+    "send": "Send",
+    "sending": "Sender…",
+    "sendTitle": "Send · {{shortcut}}",
+    "draft": "Kladde",
+    "savingDraft": "Gemmer…",
+    "saveDraftTitle": "Gem som kladde · {{shortcut}}",
+    "dismissError": "Luk meddelelse",
+    "from": "Fra",
+    "to": "Til",
+    "cc": "Cc",
+    "bcc": "Bcc",
+    "subject": "Emne",
+    "body": "Meddelelsestekst",
+    "format": {
+      "label": "Formatering",
+      "withShortcut": "{{action}} · {{shortcut}}",
+      "bold": "Fed",
+      "italic": "Kursiv",
+      "underline": "Understreget",
+      "bullets": "Punkttegn",
+      "numbering": "Nummerering",
+      "link": "Link",
+      "insertLink": "Indsæt link",
+      "clear": "Ryd formatering",
+      "linkAddress": "Linkadresse",
+      "insert": "Indsæt"
+    }
+  },
+  "link": {
+    "browserFailed": "Browseren kunne ikke åbnes. Kopiér adressen: {{url}}",
+    "phoneTitle": "Telefonnummer",
+    "openTitle": "Åbn link?",
+    "copied": "Adressen er kopieret.",
+    "copyFailed": "Kopiering mislykkedes; markér adressen manuelt.",
+    "copy": "Kopiér adresse",
+    "openInBrowser": "Åbn i browser",
+    "phoneIntro": "Dette telefonnummer forekommer i meddelelsen:",
+    "realTarget": "Dette link går i virkeligheden til:",
+    "misleading": "Teksten i meddelelsen nævner <strong>{{shown}}</strong>, men linket går til <strong>{{actual}}</strong>. Det kan være phishing.",
+    "unencrypted": "Bemærk: Dette link bruger ikke en krypteret forbindelse (http)."
+  },
+  "files": {
+    "saveUnsupported": "Denne version af skrivebordsappen kan endnu ikke gemme {{name}}. Åbn den vedhæftede fil i et modul, eller opdater appen.",
+    "saved": "Gemt: {{path}}",
+    "saveCancelled": "Lagring annulleret.",
+    "downloadRequested": "Download anmodet. Se efter filen i dine downloads."
+  },
+  "quote": {
+    "unknownSender": "(ukendt)",
+    "wroteOn": "Den {{date}} skrev {{sender}}:",
+    "wrote": "{{sender}} skrev:",
+    "forwarded": "Videresendt meddelelse",
+    "subject": "Emne: {{value}}",
+    "date": "Dato: {{value}}",
+    "from": "Fra: {{value}}",
+    "to": "Til: {{value}}",
+    "cc": "Cc: {{value}}"
+  },
+  "demo": {
+    "banner": "Demo – rigtig mail er ikke mulig i browseren; brug skrivebordsappen.",
+    "accountName": "Demopostkasse",
+    "folders": {
+      "notifications": "Notifikationer",
+      "drafts": "Kladder",
+      "sent": "Sendt",
+      "archive": "Arkiv",
+      "junk": "Uønsket mail",
+      "trash": "Papirkurv"
+    },
+    "welcome": {
+      "subject": "Velkommen til OpenAEC Email Studio",
+      "heading": "Velkommen!",
+      "intro": "Dette er en demopostkasse. I browseren kan Email Studio ikke hente eller sende rigtig mail; brug skrivebordsappen til det.",
+      "introHtml": "Dette er en <strong>demopostkasse</strong>. I browseren kan Email Studio ikke hente eller sende rigtig mail; brug skrivebordsappen til det.",
+      "tryIt": "Prøv gerne: at svare, markere med stjerne (S), flytte til arkivet og åbne en vedhæftet fil i Tekst eller Regneark.",
+      "tryItHtml": "Prøv gerne: at svare, markere med stjerne (<kbd>S</kbd>), flytte til arkivet og åbne en vedhæftet fil i Tekst eller Regneark.",
+      "logoText": "OpenAEC-logoet nedenfor er et indlejret billede fra en vedhæftet fil (cid:).",
+      "logoAlt": "OpenAEC-logo",
+      "logoHtml": "Logoet til venstre er et indlejret billede fra en vedhæftet fil."
+    },
+    "errors": {
+      "accountNotFound": "Kontoen findes ikke.",
+      "messageNotFound": "Meddelelsen findes ikke.",
+      "folderExists": "Denne mappe findes allerede.",
+      "folderCannotRename": "Denne mappe kan ikke omdøbes.",
+      "specialFolderDelete": "Specialmapper kan ikke slettes.",
+      "attachmentNotFound": "Den vedhæftede fil findes ikke.",
+      "targetFolderNotFound": "Destinationsmappen findes ikke.",
+      "noRecipients": "Ingen modtagere angivet.",
+      "recipientRefused": "Demo: serveren afviser modtageren {{domain}}.",
+      "attachmentsTooLarge": "Demo: vedhæftede filer er begrænset til {{max}}."
+    },
+    "accountAdded": {
+      "subject": "Din konto er tilføjet (demo)",
+      "text": "Kontoen {{email}} er tilføjet til demoen. {{notice}}"
+    },
+    "discovery": {
+      "knownProvider": "Kendt udbyder (demo).",
+      "mx": "MX-posten for {{domain}} peger på mail.protection.outlook.com (demo).",
+      "ownServer": "{{name}} (egen server)",
+      "autoconfig": "Fundet på autoconfig.{{domain}} (demo).",
+      "srv": "_imaps._tcp og _submission._tcp (demo).",
+      "ispdb": "Fra Thunderbird-databasen (demo).",
+      "guessImapOk": "Almindelige servernavne; IMAP-testen lykkedes (demo).",
+      "guessAlternative": "Alternativt servernavn (demo)."
+    },
+    "test": {
+      "noServer": "Ingen {{protocol}}-server angivet.",
+      "invalidPort": "Ugyldig port.",
+      "unreachable": "Demo: {{host}} kan ikke nås.",
+      "simulated": "Demo: forbindelse simuleret.",
+      "simulatedUnencrypted": "Demo: forbindelse simuleret (ukrypteret!)."
+    },
+    "oauthDesktopOnly": "Log ind med Microsoft eller Google er kun muligt i skrivebordsappen."
+  },
+  "preview": {
+    "loading": "Indlæser eksempel…",
+    "dialog": {
+      "attachments": "Vedhæftede filer",
+      "previous": "Forrige vedhæftede fil",
+      "previousTitle": "Forrige vedhæftede fil (←)",
+      "next": "Næste vedhæftede fil",
+      "nextTitle": "Næste vedhæftede fil (→)",
+      "close": "Luk eksempel",
+      "closeTitle": "Luk (Esc)",
+      "fetching": "Henter vedhæftet fil…",
+      "fetchFailed": "Den vedhæftede fil kunne ikke hentes: {{message}}"
+    },
+    "card": {
+      "fileName": "Filnavn",
+      "size": "Størrelse",
+      "openExternal": "Åbn med standardprogrammet",
+      "unknown": "ukendt",
+      "attention": "Bemærk",
+      "yes": "ja",
+      "no": "nej"
+    },
+    "detection": {
+      "kinds": {
+        "pdf": "en PDF",
+        "dwg": "en DWG-tegning",
+        "dxf": "en DXF-tegning",
+        "ifc": "en IFC-model",
+        "markdown": "Markdown",
+        "text": "tekst",
+        "image": "et billede",
+        "office": "et Office-dokument",
+        "unknown": "en ukendt fil"
+      },
+      "contentDiffers": "Navnet antyder {{kind}}, men indholdet er noget andet.",
+      "mismatch": "Denne vedhæftede fil hedder \".{{extension}}\" ({{named}}), men indholdet er {{actual}}.",
+      "mismatchSubtype": "Denne vedhæftede fil hedder \".{{extension}}\" ({{named}}), men indholdet er {{actual}} ({{subtype}}).",
+      "contentBinary": "Navnet antyder {{kind}}, men indholdet er binært.",
+      "notSvg": "Navnet antyder et SVG-billede, men indholdet er ikke SVG.",
+      "signatureMissing": "Navnet antyder {{kind}}, men indholdet mangler de tilsvarende kendetegn."
+    },
+    "image": {
+      "loadFailed": "Billedet kunne ikke indlæses: {{message}}",
+      "subtitle": "Billede",
+      "cannotDisplay": "Dette billede kan ikke vises her (beskadiget eller en variant, der ikke understøttes).",
+      "tooLarge": "Dette billede er større end {{size}} MB og vises ikke som eksempel.",
+      "tooManyPixels": "Dette billede er {{width}} × {{height}} pixel (mere end {{megapixels}} megapixel) og vises ikke som eksempel.",
+      "toolbar": "Billede",
+      "zoomOut": "Zoom ud",
+      "zoomOutTitle": "Zoom ud (−)",
+      "zoomIn": "Zoom ind",
+      "zoomInTitle": "Zoom ind (+)",
+      "fit": "Tilpas til vindue",
+      "fitTitle": "Tilpas til vindue (0)",
+      "actualSize": "Faktisk størrelse (100 %)",
+      "actualSizeTitle": "Faktisk størrelse",
+      "rotate": "Rotér med uret",
+      "rotateTitle": "Rotér med uret (R)",
+      "area": "Billedeksempel"
+    },
+    "text": {
+      "loadFailed": "Teksten kunne ikke indlæses: {{message}}",
+      "toolbar": "Tekst",
+      "encoding": "Kodning: {{encoding}}",
+      "utf8Bom": "UTF-8 (med BOM)",
+      "formatJson": "Formatér JSON",
+      "wrapLines": "Ombryd linjer",
+      "truncated": "Viser de første {{limit}} af {{size}}. Gem filen for at se det hele.",
+      "contentOf": "Indhold af {{name}}"
+    },
+    "markdown": {
+      "loadFailed": "Filen kunne ikke indlæses: {{message}}",
+      "linkNotOpened": "Linket blev ikke åbnet: {{url}}",
+      "imageFallback": "Billede",
+      "externalBlocked": "{{alt}} (eksternt billede blokeret)",
+      "unavailable": "{{alt}} (ikke tilgængelig)",
+      "view": "Vis",
+      "rendered": "Gengivet",
+      "source": "Kilde",
+      "showExternalImages": "Vis eksterne billeder",
+      "truncated": "Viser de første {{limit}} af {{size}}.",
+      "confirmLabel": "Åbn link",
+      "confirmQuestion": "Vil du åbne dette link uden for Office Studio?"
+    },
+    "pdf": {
+      "loadFailed": "PDF-filen kunne ikke indlæses: {{message}}",
+      "properties": "Egenskaber",
+      "frameTitle": "PDF: {{name}}",
+      "linuxUnsupported": "Webvisningen på Linux kan ikke vise PDF-filer pålideligt. Den fulde forhåndsvisning kommer i en fremtidig version (Rust-fremviser).",
+      "cannotPreview": "Denne PDF kan ikke vises som eksempel her. Den fulde forhåndsvisning kommer i en fremtidig version (Rust-fremviser).",
+      "subtitle": "PDF-dokument",
+      "subtitleVersion": "PDF {{version}}",
+      "pages": "Sider",
+      "author": "Forfatter",
+      "subject": "Emne",
+      "createdWith": "Oprettet med",
+      "created": "Oprettet",
+      "modified": "Ændret",
+      "encrypted": "Krypteret",
+      "incomplete": "filen ser ud til at være ufuldstændig eller beskadiget",
+      "showPreview": "Vis eksempel"
+    },
+    "cad": {
+      "loadFailed": "Tegningen kunne ikke indlæses: {{message}}",
+      "previewLater": "En forhåndsvisning kommer i en fremtidig version (Rust-fremviser).",
+      "tooLargeToParse": "Denne fil er for stor til at blive analyseret her. En forhåndsvisning kommer i en fremtidig version (Rust-fremviser).",
+      "dwgSubtitle": "AutoCAD-tegning (DWG)",
+      "dxfSubtitle": "DXF-tegning",
+      "dxfBinarySubtitle": "Binær DXF-tegning",
+      "format": "Format",
+      "savedAs": "Gemt som",
+      "unknownAutocadVersion": "ukendt AutoCAD-version",
+      "units": "Enheder",
+      "entities": "Entiteter",
+      "blocks": "Blokke",
+      "layers": "Lag",
+      "thumbnailAlt": "Indlejret miniature af tegningen",
+      "thumbnailCaption": "Miniature fra filen",
+      "entitiesByType": "Entiteter efter type",
+      "layersCount": "Lag ({{n}})",
+      "andMore": "… og {{n}} mere",
+      "versionRange": "AutoCAD {{from}} til {{to}}",
+      "versionAndLater": "AutoCAD {{version}} og nyere",
+      "unitCode": "kode {{code}}",
+      "unitNames": {
+        "unitless": "uden enhed",
+        "inch": "tomme",
+        "foot": "fod",
+        "mile": "mil (engelsk)",
+        "millimeter": "millimeter",
+        "centimeter": "centimeter",
+        "meter": "meter",
+        "kilometer": "kilometer",
+        "microinch": "mikrotomme",
+        "mil": "mil (tusindedel tomme)",
+        "yard": "yard",
+        "angstrom": "ångström",
+        "nanometer": "nanometer",
+        "micron": "mikron",
+        "decimeter": "decimeter",
+        "decameter": "dekameter",
+        "hectometer": "hektometer",
+        "gigameter": "gigameter",
+        "astronomicalUnit": "astronomisk enhed",
+        "lightYear": "lysår",
+        "parsec": "parsec",
+        "usSurveyFoot": "amerikansk landmålerfod",
+        "usSurveyInch": "amerikansk landmålertomme",
+        "usSurveyYard": "amerikansk landmåleryard",
+        "usSurveyMile": "amerikansk landmålermil"
+      }
+    },
+    "ifc": {
+      "loadFailed": "Modellen kunne ikke indlæses: {{message}}",
+      "previewLater": "3D-forhåndsvisningen kommer i en fremtidig version (Rust-fremviser).",
+      "tooLarge": "Denne model er større end {{size}} MB og analyseres ikke her.",
+      "analysing": "Analyserer model… {{percent}}",
+      "cancelled": "Analysen blev annulleret.",
+      "retry": "Analysér igen",
+      "failed": "Analysen mislykkedes: {{message}}",
+      "subtitle": "IFC-model",
+      "subtitleWithSchema": "IFC-model · {{schemas}}",
+      "nameInFile": "Navn i filen",
+      "timestamp": "Tidsstempel",
+      "author": "Forfatter",
+      "organization": "Organisation",
+      "application": "Program",
+      "description": "Beskrivelse",
+      "sites": "Grunde",
+      "buildings": "Bygninger",
+      "entities": "Entiteter",
+      "incomplete": "filen ser ud til at være ufuldstændig (ingen END-ISO-10303-21)",
+      "storeys": "Etager ({{n}})",
+      "elementsHeading": "Bygningsdele",
+      "allEntityTypes": "Alle entitetstyper ({{n}})",
+      "elements": {
+        "wall": "Vægge",
+        "wallStandardCase": "Vægge (standardtilfælde)",
+        "curtainWall": "Glasfacader",
+        "slab": "Gulve og dæk",
+        "roof": "Tage",
+        "column": "Søjler",
+        "beam": "Bjælker",
+        "member": "Stænger",
+        "plate": "Plader",
+        "door": "Døre",
+        "window": "Vinduer",
+        "stair": "Trapper",
+        "ramp": "Ramper",
+        "railing": "Rækværk",
+        "covering": "Beklædninger",
+        "footing": "Fundamenter",
+        "pile": "Pæle",
+        "space": "Rum",
+        "opening": "Åbninger",
+        "furnishing": "Inventar",
+        "flowSegment": "Kanal- og rørsegmenter",
+        "flowTerminal": "Installationsterminaler",
+        "proxy": "Andre bygningsdele",
+        "storey": "Etager"
+      }
+    },
+    "office": {
+      "kinds": {
+        "document": "Tekstdokument",
+        "spreadsheet": "Regneark",
+        "presentation": "Præsentation",
+        "database": "Database"
+      },
+      "genericDocument": "Office-dokument",
+      "type": "Type",
+      "openFailed": "Åbning mislykkedes: {{message}}",
+      "openCopyHint": "Åbn en redigerbar kopi i {{module}}. Originalen i mailen forbliver uændret.",
+      "cannotOpen": "Dette Office-format kan ikke åbnes her.",
+      "opening": "Åbner…",
+      "openIn": "Åbn i {{module}}"
+    },
+    "unknown": {
+      "subtitle": "Intet eksempel tilgængeligt",
+      "declaredType": "Angivet type",
+      "extension": "Filtypenavn",
+      "none": "ingen",
+      "message": "Der kan ikke vises noget eksempel for denne filtype. Gem den, og åbn den kun, hvis du har tillid til afsenderen."
+    }
+  },
+  "backend": {
+    "accounts": {
+      "fileCorrupt": "Kontofilen {{path}} er beskadiget.",
+      "fileUnreadable": "Kontofilen kunne ikke læses.",
+      "fileWriteFailed": "Kontofilen kunne ikke skrives.",
+      "invalidEmail": "Angiv en gyldig mailadresse.",
+      "invalidReplyTo": "Svaradressen er ikke en gyldig mailadresse.",
+      "lineBreakInName": "Navne må ikke indeholde linjeskift.",
+      "notFound": "Denne konto findes ikke længere.",
+      "saveFailed": "Kontiene kunne ikke gemmes.",
+      "usernameMissing": "Angiv brugernavnet til IMAP og SMTP."
+    },
+    "attachments": {
+      "blockedDatabase": "Af sikkerhedsårsager åbnes '{{name}}' ikke automatisk. Åbn Access-databaser i Database Studio. Gem den vedhæftede fil, hvis du stadig vil se den.",
+      "blockedExecutable": "Af sikkerhedsårsager åbnes '{{name}}' ikke automatisk. Denne filtype kan køre programmer. Gem den vedhæftede fil, hvis du stadig vil se den.",
+      "blockedMacros": "Af sikkerhedsårsager åbnes '{{name}}' ikke automatisk. Dette dokument indeholder makroer. Gem den vedhæftede fil, hvis du stadig vil se den.",
+      "blockedScripts": "Af sikkerhedsårsager åbnes '{{name}}' ikke automatisk. Denne filtype kan indeholde scripts. Gem den vedhæftede fil, hvis du stadig vil se den.",
+      "emptyOrTooLarge": "Den vedhæftede fil er tom eller større end 100 MB.",
+      "executableContent": "'{{name}}' er {{kind}} og åbnes ikke af sikkerhedsårsager.",
+      "invalidName": "Ugyldigt filnavn.",
+      "kind": {
+        "linuxProgram": "Linux-program (ELF)",
+        "macProgram": "macOS-program (Mach-O) eller Java-klasse",
+        "script": "script",
+        "windowsProgram": "Windows-program (PE)",
+        "windowsShortcut": "Windows-genvej"
+      },
+      "nameMissing": "Filnavnet mangler.",
+      "noProgram": "Der blev ikke fundet noget program til at åbne denne vedhæftede fil.",
+      "notFound": "Vedhæftet fil {{index}} findes ikke i denne meddelelse.",
+      "openFailed": "Åbning mislykkedes.",
+      "sendAsBinary": "Send den vedhæftede fil som binære data på højst 100 MB.",
+      "tempDirFailed": "Der kunne ikke oprettes en midlertidig mappe.",
+      "tempSaveFailed": "Den vedhæftede fil kunne ikke gemmes midlertidigt."
+    },
+    "auth": {
+      "failed": "Log ind på {{host}} mislykkedes: brugernavnet eller adgangskoden er forkert ({{detail}}). Gmail, Outlook, iCloud og Yahoo kræver en appadgangskode.",
+      "noPassword": "Der er ikke angivet eller gemt nogen adgangskode til denne konto.",
+      "noStoredPassword": "Der er ikke gemt nogen adgangskode til denne konto. Angiv adgangskoden i kontoindstillingerne."
+    },
+    "autoconfig": {
+      "httpsRedirectOnly": "Kun omdirigeringer til HTTPS følges.",
+      "invalidEncoding": "Ugyldig tegnkodning i konfigurationsfilen.",
+      "notFound": "Ingen konfiguration fundet (HTTP {{status}}).",
+      "tooManyRedirects": "For mange omdirigeringer."
+    },
+    "common": {
+      "saveFailed": "Lagring mislykkedes."
+    },
+    "compose": {
+      "attachmentCorrupt": "Den vedhæftede fil '{{name}}' er beskadiget.",
+      "attachmentsTooLarge": "De vedhæftede filer er i alt større end {{max}} MB. Send store filer via et delingslink.",
+      "buildFailed": "Meddelelsen kunne ikke oprettes ({{detail}}).",
+      "field": {
+        "bcc": "Bcc",
+        "cc": "Cc",
+        "from": "Fra",
+        "inReplyTo": "In-Reply-To",
+        "references": "References",
+        "replyTo": "Reply-To",
+        "subject": "Emnet",
+        "to": "Til"
+      },
+      "invalidAddress": "'{{address}}' i {{field}} er ikke en gyldig mailadresse.",
+      "invalidCharacters": "{{field}} indeholder ugyldige tegn.",
+      "invalidEnvelope": "Ugyldig konvolut.",
+      "noRecipients": "Angiv mindst én modtager."
+    },
+    "connection": {
+      "failed": "Ingen forbindelse til {{host}}: {{detail}}",
+      "hostNotFound": "Servernavnet {{host}} blev ikke fundet.",
+      "refused": "Serveren {{host}} afviste forbindelsen. Kontrollér porten og sikkerhedsindstillingen.",
+      "reset": "Forbindelsen til {{host}} blev uventet lukket. Passer sikkerhedsindstillingen (SSL/TLS eller STARTTLS) til porten?",
+      "timeout": "Serveren {{host}} svarede ikke i tide. Kontrollér servernavnet, porten og firewallen."
+    },
+    "files": {
+      "saveFailed": "Filen kunne ikke gemmes."
+    },
+    "http": {
+      "invalidHttpResponse": "Ugyldigt HTTP-svar.",
+      "invalidResponse": "Ugyldigt svar.",
+      "invalidServerName": "Ugyldigt servernavn {{host}}.",
+      "invalidUrl": "Ugyldig webadresse.",
+      "plainOnlyLocal": "Ukrypteret HTTP er kun tilladt til denne computer.",
+      "redirectWithoutLocation": "Omdirigering uden adresse.",
+      "responseTooLarge": "Serverens svar er for stort."
+    },
+    "images": {
+      "credentialsInUrl": "Adresser med logonoplysninger hentes ikke.",
+      "hostNotFound": "{{host}} blev ikke fundet.",
+      "httpOnly": "Kun http- og https-adresser er tilladt.",
+      "invalidServerName": "Ugyldigt servernavn.",
+      "notAnImage": "Denne adresse returnerer ikke et billede.",
+      "privateAddress": "Eksternt indhold fra interne eller lokale adresser hentes ikke.",
+      "timeout": "Billedet blev ikke indlæst inden for 10 sekunder.",
+      "tooLarge": "Billedet er større end 10 MB.",
+      "tooManyRedirects": "For mange omdirigeringer (højst 3).",
+      "unavailable": "Billedet er ikke tilgængeligt (HTTP {{status}}).",
+      "unknownRedirect": "Ukendt omdirigering.",
+      "unsupportedImage": "Indholdet er ikke et understøttet billede."
+    },
+    "imap": {
+      "action": {
+        "copy": "Kopiér",
+        "countFolders": "Tæl mapper",
+        "createFolder": "Opret mappe",
+        "delete": "Slet",
+        "deleteFolder": "Slet mappe",
+        "expunge": "Ryd op",
+        "fetchMessage": "Hent meddelelse",
+        "fetchMessages": "Hent meddelelser",
+        "flag": "Markér",
+        "listFolders": "Hent mapper",
+        "move": "Flyt",
+        "openFolder": "Åbn mappe",
+        "openNamedFolder": "Åbn mappen '{{folder}}'",
+        "renameFolder": "Omdøb mappe",
+        "saveToDrafts": "Gem i Kladder",
+        "saveToFolder": "Gem i mappe",
+        "saveToSent": "Gem i Sendt",
+        "search": "Søg",
+        "signIn": "Log ind",
+        "startTls": "STARTTLS"
+      },
+      "alreadyInTrash": "Disse meddelelser er allerede i papirkurven; slet dem permanent.",
+      "appendRejected": "{{action}}: serveren afviste meddelelsen.",
+      "badCommand": "{{action}}: serveren forstod ikke kommandoen ({{detail}}).",
+      "cannotDeleteInbox": "Indbakken kan ikke slettes.",
+      "cannotRenameInbox": "Indbakken kan ikke omdøbes.",
+      "closedImmediately": "{{host}} lukkede forbindelsen med det samme. Passer sikkerhedsindstillingen (SSL/TLS eller STARTTLS) til porten?",
+      "commandTimeout": "{{host}} svarede ikke inden for {{seconds}} sekunder.",
+      "connectTimeout": "Intet svar fra {{host}}:{{port}} inden for {{seconds}} sekunder. Kontrollér servernavnet, porten og firewallen.",
+      "connectionLost": "Forbindelsen til {{host}} blev afbrudt.",
+      "draftsFolderMissing": "Der blev ikke fundet nogen kladdemappe på serveren. Vælg den mappe i kontoindstillingerne.",
+      "greetingRefused": "{{host}} afviste forbindelsen: {{detail}}",
+      "invalidFolderName": "Ugyldigt mappenavn.",
+      "invalidMessage": "Ugyldig meddelelse.",
+      "invalidName": "{{action}}: ugyldige tegn i navnet.",
+      "invalidSearchCharacters": "Søgeteksten indeholder ugyldige tegn.",
+      "messageGone": "Denne meddelelse findes ikke længere (den er muligvis flyttet eller slettet).",
+      "messageTooLarge": "Meddelelsen er {{size}} MB; Email Studio åbner meddelelser på op til {{max}} MB.",
+      "noStarttls": "{{host}} understøtter ikke STARTTLS på port {{port}}. Vælg SSL/TLS (normalt port 993).",
+      "noTrash": "Der blev ikke fundet nogen papirkurvsmappe på serveren. Vælg en papirkurvsmappe i kontoindstillingerne, eller slet permanent.",
+      "noValidMessages": "Ingen gyldige meddelelser angivet.",
+      "notFound": "{{action}}: {{detail}}",
+      "quotaExceeded": "{{action}}: postkassen er fuld ({{detail}}).",
+      "refused": "{{action}}: serveren nægtede ({{detail}}).",
+      "retryLater": "{{message}} (Email Studio prøver igen om {{retrySeconds}} sekunder for ikke at blive blokeret af serveren.)",
+      "searchTooLong": "Søgeteksten er for lang.",
+      "sentFolderMissing": "Der blev ikke fundet nogen mappe til sendte meddelelser på serveren. Vælg den mappe i kontoindstillingerne.",
+      "signInTimeout": "Log ind på {{host}} tog for lang tid.",
+      "specialFolderMissing": "Mappen blev ikke fundet på serveren. Vælg den mappe i kontoindstillingerne.",
+      "unexpectedError": "{{action}}: uventet fejl.",
+      "unexpectedResponse": "{{action}}: uventet svar fra serveren.",
+      "unexpectedState": "Uventet forbindelsestilstand."
+    },
+    "keychain": {
+      "notResponding": "Nøgleringen svarede ikke.",
+      "unavailable": "Operativsystemets nøglering er ikke tilgængelig. Email Studio gemmer aldrig adgangskoder i klartekst; på Linux kræves en Secret Service (for eksempel GNOME Keyring eller KWallet).",
+      "unexpected": "Nøgleringen returnerede en uventet fejl."
+    },
+    "links": {
+      "openFailed": "Linket kunne ikke åbnes.",
+      "unsupportedScheme": "Kun http-, https- og mailto-links kan åbnes."
+    },
+    "messages": {
+      "invalidMime": "Meddelelsen kunne ikke læses (ugyldig MIME-struktur).",
+      "unreadable": "Meddelelsen kunne ikke læses."
+    },
+    "oauth": {
+      "browserFailed": "Webbrowseren kunne ikke åbnes til log ind.",
+      "cancelled": "Log ind blev annulleret.",
+      "cancelledOrDenied": "Log ind hos {{provider}} blev annulleret eller afvist.",
+      "clientMisconfigured": "OAuth-klienten for {{provider}} er ikke konfigureret korrekt (klient-id eller hemmelighed).",
+      "emailUnknown": "Mailadressen for log ind kunne ikke fastslås; angiv adressen, og prøv igen.",
+      "invalidClientId": "Dette er ikke et gyldigt klient-id.",
+      "invalidTokenEndpoint": "Ugyldigt tokenslutpunkt.",
+      "noAccessToken": "{{provider}} returnerede ikke et adgangstoken (HTTP {{status}}).",
+      "noFreePort": "Der er ingen midlertidig port tilgængelig til log ind.",
+      "noPort": "Ingen port.",
+      "noRefreshToken": "{{provider}} returnerede ikke et opdateringstoken; prøv at logge ind igen.",
+      "noStoredSignIn": "Log ind hos {{provider}} igen: der er ikke gemt noget log ind for denne konto.",
+      "notConfigured": {
+        "google": "Log ind med Google er endnu ikke konfigureret: der er intet klient-id. Opret i Google Cloud en OAuth-klient af typen 'Skrivebordsapp' (omdirigering via http://127.0.0.1), aktivér Gmail API, og tilføj omfanget https://mail.google.com/ til samtykkeskærmen. Angiv derefter klient-id og klienthemmelighed (se docs/email-oauth.md).",
+        "microsoft": "Log ind med Microsoft er endnu ikke konfigureret: der er intet klient-id. Registrer en app i Microsoft Entra (Appregistreringer) som 'Offentlig klient', tilføj platformen 'Mobil- og skrivebordsprogrammer' med omdirigerings-URI'en http://localhost, og giv de delegerede tilladelser IMAP.AccessAsUser.All, SMTP.Send, offline_access, openid og email. Angiv derefter klient-id'et (se docs/email-oauth.md)."
+      },
+      "providerRefused": "{{provider}} afviste log ind ({{detail}}).",
+      "randomUnavailable": "Ingen sikker tilfældighed tilgængelig.",
+      "reauthenticate": "Log ind hos {{provider}} igen: tilladelsen er udløbet eller tilbagekaldt.",
+      "settingSaveFailed": "OAuth-indstillingen kunne ikke gemmes.",
+      "signInFirst": "Denne konto bruger OAuth2: log først ind med Microsoft eller Google.",
+      "signInFirstToTest": "Log først ind med Microsoft eller Google for at teste OAuth2.",
+      "signInTimeout": "Log ind hos {{provider}} tog mere end 5 minutter og blev afbrudt.",
+      "stateMismatch": "Svaret fra log ind-siden hører ikke til dette log ind (state passer ikke).",
+      "timeout": "{{provider}} svarede ikke i tide.",
+      "tokenRefused": "{{provider}} afviste tokenet ({{detail}}).",
+      "unexpectedResponse": "{{provider}} returnerede et uventet svar (HTTP {{status}})."
+    },
+    "security": {
+      "cramMd5SmtpUnsupported": "Krypteret adgangskode (CRAM-MD5) understøttes ikke til SMTP. Vælg 'normal adgangskode'; via SSL/TLS eller STARTTLS krypteres adgangskoden også.",
+      "invalidServerName": "'{{host}}' er ikke et gyldigt servernavn til {{protocol}}.",
+      "notLocalhost": "{{host}} er ikke denne computer, så en ukrypteret forbindelse blev afvist.",
+      "portMissing": "Porten til {{protocol}} mangler.",
+      "unencryptedRefused": "Log ind på {{host}} uden kryptering blev afvist: din adgangskode ville blive sendt over netværket i læsbar form. Vælg SSL/TLS eller STARTTLS. Ukrypterede forbindelser er kun tilladt til denne computer (localhost), for eksempel til Proton Mail Bridge."
+    },
+    "server": {
+      "noTimelyResponse": "{{host}} svarede ikke i tide."
+    },
+    "smtp": {
+      "authMethodUnsupported": "Denne log ind-metode understøttes ikke til SMTP.",
+      "error": "SMTP-fejl hos {{host}}: {{detail}}",
+      "messageTooLarge": "{{host}} afviser meddelelsen, fordi den er for stor ({{detail}}).",
+      "noAuthMechanism": "{{host}} tilbyder ingen log ind-metode, som Email Studio understøtter (PLAIN eller LOGIN). Vælg STARTTLS eller SSL/TLS; mange servere tilbyder først log ind efter kryptering.",
+      "oauthRejected": "{{host}} afviste OAuth2-tokenet; du skal muligvis logge ind igen.",
+      "rejected": "{{host}} afviste meddelelsen ({{detail}}).",
+      "sendTimeout": "Afsendelse via {{host}} tog for lang tid.",
+      "tlsFailed": "Den sikre forbindelse til {{host}} kunne ikke oprettes ({{detail}}). Passer sikkerhedsindstillingen til porten?",
+      "tryLater": "{{host}} kan ikke modtage meddelelsen lige nu; prøv igen senere ({{detail}})."
+    },
+    "storage": {
+      "appDataDirNotFound": "Appens datamappe blev ikke fundet.",
+      "dataDirCreateFailed": "Datamappen kunne ikke oprettes.",
+      "dataDirMissing": "Datamappen mangler."
+    },
+    "test": {
+      "signedIn": "Logget ind på {{host}}.",
+      "signedInUnencrypted": "Logget ind på {{host}}. Bemærk: {{protocol}}-forbindelsen er ikke krypteret. Det er kun tilladt, fordi serveren kører på denne computer."
+    },
+    "tls": {
+      "certificateRejected": "Den sikre forbindelse til {{host}} blev afvist: {{reason}}. For at beskytte din adgangskode opretter Email Studio ikke forbindelse til en server, hvis identitet ikke kan bekræftes.",
+      "handshakeFailed": "Den sikre forbindelse til {{host}} kunne ikke oprettes ({{detail}}). Passer sikkerhedsindstillingen (SSL/TLS eller STARTTLS) til porten?",
+      "handshakeTimeout": "TLS-handshaket med {{host}} tog for lang tid.",
+      "invalidServerName": "'{{host}}' er ikke et gyldigt servernavn til TLS.",
+      "reason": {
+        "expired": "certifikatet er udløbet",
+        "invalid": "certifikatet er ugyldigt ({{detail}})",
+        "notYetValid": "certifikatet er endnu ikke gyldigt (går computerens ur rigtigt?)",
+        "revoked": "certifikatet er tilbagekaldt",
+        "unknownIssuer": "certifikatet er ikke udstedt af en betroet certifikatudsteder (muligvis selvsigneret)",
+        "wrongName": "certifikatet hører ikke til navnet {{host}}; brug det servernavn, der står på certifikatet"
+      }
+    }
+  }
+}

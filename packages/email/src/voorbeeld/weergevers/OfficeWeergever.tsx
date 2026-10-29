@@ -1,15 +1,15 @@
 /** Office-documenten: kaart met "Openen in …" (koppeling via `openInModule`). */
 import { useState } from "react";
 import { Database, FileSpreadsheet, FileText, Presentation } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import i18next from "../../../../../src/i18n/config";
 import type { Kantoorsoort, WeergeverProps } from "../contract";
 import { BestandKnoppen, Kaart, basisRegels } from "./gemeenschappelijk";
 
-export const KANTOORMODULE: Record<Kantoorsoort, string> = {
-  tekst: "Tekst",
-  rekenblad: "Rekenblad",
-  presentatie: "Presentatie",
-  database: "Database",
-};
+/** Naam van de module in de interfacetaal (`common:modules`). */
+export function kantoormodule(k: Kantoorsoort): string {
+  return i18next.t(`common:modules.${k}`);
+}
 
 const ICOON: Record<Kantoorsoort, typeof FileText> = {
   tekst: FileText,
@@ -18,14 +18,16 @@ const ICOON: Record<Kantoorsoort, typeof FileText> = {
   database: Database,
 };
 
+/** Sleutel onder `email:preview.office.kinds`. */
 const OMSCHRIJVING: Record<Kantoorsoort, string> = {
-  tekst: "Tekstdocument",
-  rekenblad: "Rekenblad",
-  presentatie: "Presentatie",
-  database: "Database",
+  tekst: "document",
+  rekenblad: "spreadsheet",
+  presentatie: "presentation",
+  database: "database",
 };
 
 export function OfficeWeergever({ bron, herkenning, acties }: WeergeverProps) {
+  const { t } = useTranslation("email");
   const k = herkenning.kantoor;
   const Icoon = k ? ICOON[k] : FileText;
   const [bezig, zetBezig] = useState(false);
@@ -48,20 +50,23 @@ export function OfficeWeergever({ bron, herkenning, acties }: WeergeverProps) {
     <Kaart
       icoon={<Icoon size={26} />}
       titel={bron.bestandsnaam}
-      ondertitel={k ? OMSCHRIJVING[k] : "Office-document"}
-      regels={[...basisRegels(bron), { label: "Type", waarde: herkenning.extensie ? herkenning.extensie.toUpperCase() : bron.inhoudstype }]}
+      ondertitel={k ? t(`preview.office.kinds.${OMSCHRIJVING[k]}`) : t("preview.office.genericDocument")}
+      regels={[
+        ...basisRegels(bron),
+        { label: t("preview.office.type"), waarde: herkenning.extensie ? herkenning.extensie.toUpperCase() : bron.inhoudstype },
+      ]}
       melding={
         fout
-          ? `Openen mislukt: ${fout}`
+          ? t("preview.office.openFailed", { message: fout })
           : k
-            ? `Open een bewerkbare kopie in ${KANTOORMODULE[k]}. Het origineel in de e-mail blijft ongewijzigd.`
-            : "Dit Office-formaat kan hier niet worden geopend."
+            ? t("preview.office.openCopyHint", { module: kantoormodule(k) })
+            : t("preview.office.cannotOpen")
       }
       knoppen={
         <>
           {k && acties.openInModule && (
             <button type="button" className="vb-knop is-primair" onClick={() => void openen()} disabled={bezig}>
-              <Icoon size={15} aria-hidden /> {bezig ? "Openen…" : `Openen in ${KANTOORMODULE[k]}`}
+              <Icoon size={15} aria-hidden /> {bezig ? t("preview.office.opening") : t("preview.office.openIn", { module: kantoormodule(k) })}
             </button>
           )}
           <BestandKnoppen bron={bron} acties={acties} />

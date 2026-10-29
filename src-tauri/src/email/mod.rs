@@ -224,10 +224,52 @@ pub struct Bereikbaar {
     pub smtp: Option<bool>,
 }
 
+/// Uitkomst van één deel van de verbindingstest. `sleutel` en `waarden`
+/// maken de melding vertaalbaar (zie `fout.rs`); bij een fout zijn het die
+/// van de `MailFout`.
 #[derive(Clone, Debug, PartialEq, Eq, Serialize)]
 pub struct Deeluitkomst {
     pub ok: bool,
     pub melding: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub sleutel: Option<&'static str>,
+    #[serde(skip_serializing_if = "std::collections::BTreeMap::is_empty")]
+    pub waarden: fout::Waarden,
+}
+
+impl Deeluitkomst {
+    /// Geslaagde aanmelding, eventueel met de waarschuwing van
+    /// `controleer_beveiliging` voor een onversleutelde verbinding.
+    pub fn aangemeld(host: &str, protocol: &str, waarschuwing: Option<String>) -> Self {
+        let mut melding = format!("Aangemeld bij {host}.");
+        let mut waarden = fout::Waarden::new();
+        waarden.insert("host", host.to_string());
+        let sleutel = match waarschuwing {
+            Some(w) => {
+                melding = format!("{melding} {w}");
+                waarden.insert("protocol", protocol.to_string());
+                "test.signedInUnencrypted"
+            }
+            None => "test.signedIn",
+        };
+        Self {
+            ok: true,
+            melding,
+            sleutel: Some(sleutel),
+            waarden,
+        }
+    }
+}
+
+impl From<MailFout> for Deeluitkomst {
+    fn from(f: MailFout) -> Self {
+        Self {
+            ok: false,
+            melding: f.melding,
+            sleutel: f.sleutel,
+            waarden: f.waarden,
+        }
+    }
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize)]
@@ -459,7 +501,7 @@ impl EmailKern {
         let kluis = self.kluis.clone();
         tokio::task::spawn_blocking(move || f(kluis))
             .await
-            .map_err(|_| MailFout::intern("De sleutelhanger reageerde niet."))?
+            .map_err(|_| sleutelhanger_reageert_niet())?
     }
 
     async fn wachtwoord(&self, id: &str) -> Uitkomst<String> {
@@ -467,7 +509,10 @@ impl EmailKern {
         self.blokkerend(move |k| k.haal(&id))
             .await?
             .filter(|w| !w.is_empty())
-            .ok_or_else(|| MailFout::aanmelding("Er is geen wachtwoord opgeslagen voor dit account. Vul het wachtwoord in bij de accountinstellingen."))
+            .ok_or_else(|| {
+                MailFout::aanmelding("Er is geen wachtwoord opgeslagen voor dit account. Vul het wachtwoord in bij de accountinstellingen.")
+                    .sleutel("auth.noStoredPassword")
+            })
     }
 
     /// Wachtwoord of (bij OAuth2) een geldig toegangstoken voor deze server.
@@ -484,6 +529,7 @@ impl EmailKern {
             MailFout::aanmelding(
                 "Dit account gebruikt OAuth2: meld je eerst aan met Microsoft of Google.",
             )
+            .sleutel("oauth.signInFirst")
         })?;
         self.oauth
             .toegangstoken(&account.id, provider, forceer)
@@ -570,6 +616,7 @@ impl EmailKern {
                 MailFout::aanmelding(
                     "Meld je eerst aan met Microsoft of Google om OAuth2 te testen.",
                 )
+                .sleutel("oauth.signInFirstToTest")
             })?;
             let account = self.account(id).await?;
             return self.geheim(&account, server, false).await;
@@ -608,16 +655,13 @@ impl EmailKern {
             }
             Err(f) => Err(f),
         };
-        let deel = |r: Uitkomst<String>| match r {
-            Ok(melding) => Deeluitkomst { ok: true, melding },
+        let deel = |r: Uitkomst<Deeluitkomst>| match r {
+            Ok(d) => d,
             Err(mut f) => {
                 for g in &geheimen {
                     f = f.zonder_geheim(g);
                 }
-                Deeluitkomst {
-                    ok: false,
-                    melding: f.melding,
-                }
+                Deeluitkomst::from(f)
             }
         };
         Ok(TestUitkomst {
@@ -654,6 +698,7 @@ impl EmailKern {
         let (tokens, email) = self.oauth.meld_aan(provider, hint.as_deref()).await?;
         let aangemeld = email.or(hint).ok_or_else(|| {
             MailFout::aanmelding("Het e-mailadres van de aanmelding kon niet worden bepaald; vul het adres in en probeer opnieuw.")
+                .sleutel("oauth.emailUnknown")
         })?;
         if invoer.email.trim().is_empty() {
             invoer.email = aangemeld.clone();
@@ -794,6 +839,11 @@ impl EmailKern {
     }
 }
 
+/// Een blokkerende sleutelhangertaak liep vast of brak af.
+pub fn sleutelhanger_reageert_niet() -> MailFout {
+    MailFout::intern("De sleutelhanger reageerde niet.").sleutel("keychain.notResponding")
+}
+
 /// Voor het lezen van de accountlijst zonder sleutelhanger; de vlag
 /// `wachtwoordOpgeslagen` wordt daarna apart (blokkerend) ingevuld.
 struct NooitKluis;
@@ -825,7 +875,10 @@ fn kern(app: &tauri::AppHandle, staat: &EmailStaat) -> Uitkomst<Arc<EmailKern>> 
     let map = app
         .path()
         .app_data_dir()
-        .map_err(|_| MailFout::intern("De datamap van de app is niet gevonden."))?;
+        .map_err(|_| {
+            MailFout::intern("De datamap van de app is niet gevonden.")
+                .sleutel("storage.appDataDirNotFound")
+        })?;
     Ok(staat
         .kern
         .get_or_init(|| {

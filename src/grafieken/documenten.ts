@@ -2,6 +2,8 @@
  * Grafieken invoegen, opsommen, bijwerken en verwijderen in XLSX-, DOCX- en
  * PPTX-pakketten. Alle functies zijn puur: bytes erin, bytes eruit.
  */
+import i18next from "../i18n/config";
+import { formatGetal } from "../i18n/opmaak";
 import { GrafiekFout, LIMIETEN } from "./fouten.ts";
 import {
   grafiekXml,
@@ -81,7 +83,7 @@ export interface GrafiekVerwijzing {
 function hoofdDeel(pakket: Pakket) {
   const rel = pakket.relaties("").find((r) => r.type === REL.officeDocument);
   // relaties("") leest "_rels/.rels".
-  if (!rel) throw new GrafiekFout("Het document mist zijn hoofdonderdeel.");
+  if (!rel) throw new GrafiekFout(i18next.t("charts:errors.document.noMainPart"));
   return Pakket.doelPad("", rel.target);
 }
 
@@ -99,7 +101,7 @@ function maakGrafiekdeel(pakket: Pakket, map: "xl" | "word" | "ppt", model: Graf
   controleerModel(model);
   const aantal = pakket.namen().filter((n) => /\/charts\/chart\d*\.xml$/i.test(n)).length;
   if (aantal >= LIMIETEN.grafiekenPerPakket)
-    throw new GrafiekFout(`Dit document bevat al ${aantal} grafieken; meer wordt niet ondersteund.`);
+    throw new GrafiekFout(i18next.t("charts:errors.document.tooManyCharts", { total: formatGetal(aantal) }));
   const chartPad = pakket.vrijPad(`${map}/charts/chart#.xml`);
   if (map === "xl") {
     pakket.schrijf(chartPad, grafiekXml(model));
@@ -147,9 +149,9 @@ function voegBladToe(pakket: Pakket, naam: string): Blad {
   const { werkboek, bladen: lijst } = bladen(pakket);
   const schoon = naam.trim();
   if (!schoon || schoon.length > 31 || /[\\/?*[\]:]/.test(schoon) || /^'|'$/.test(schoon))
-    throw new GrafiekFout("Ongeldige bladnaam: hoogstens 31 tekens, zonder \\ / ? * [ ] :");
+    throw new GrafiekFout(i18next.t("charts:errors.document.invalidSheetName"));
   if (lijst.some((b) => b.naam.toLowerCase() === schoon.toLowerCase()))
-    throw new GrafiekFout(`Er bestaat al een blad met de naam ‘${schoon}’.`);
+    throw new GrafiekFout(i18next.t("charts:errors.document.sheetExists", { name: schoon }));
   const pad = pakket.vrijPad("xl/worksheets/sheet#.xml");
   pakket.schrijf(
     pad,
@@ -160,7 +162,7 @@ function voegBladToe(pakket: Pakket, naam: string): Blad {
   const xml = pakket.lees(werkboek);
   const wortel = leesXml(xml);
   const sheets = kind(wortel, "sheets");
-  if (!sheets) throw new GrafiekFout("Het werkboek heeft geen bladenlijst.");
+  if (!sheets) throw new GrafiekFout(i18next.t("charts:errors.document.noSheetList"));
   const max = kinderen(sheets, "sheet").reduce((m, s) => Math.max(m, Number(attr(s, "sheetId") ?? 0)), 0);
   const pre = voorvoegselVoor(wortel, NS.ssml);
   const rPre = voorvoegselVoor(wortel, NS_R);
@@ -188,7 +190,7 @@ function tekeningVan(pakket: Pakket, blad: Blad) {
   if (bestaand) {
     const doel = pakket.doel(blad.pad, ridVan(bestaand) ?? "");
     if (doel && pakket.heeft(doel)) return doel;
-    throw new GrafiekFout("De tekening van dit blad ontbreekt of is beschadigd.");
+    throw new GrafiekFout(i18next.t("charts:errors.document.drawingMissing"));
   }
   const tekening = pakket.vrijPad("xl/drawings/drawing#.xml");
   pakket.schrijf(
@@ -299,9 +301,9 @@ export function voegGrafiekToeXlsx(bytes: Uint8Array, model: GrafiekModel, plaat
       ? lijst[plaatsing.blad]
       : voegBladToe(pakket, plaatsing.blad.nieuw);
   if (!blad || !blad.pad || !pakket.heeft(blad.pad))
-    throw new GrafiekFout("Het gekozen blad bestaat niet of is geen werkblad.");
+    throw new GrafiekFout(i18next.t("charts:errors.document.noSuchWorksheet"));
   if (!/^\s*<\?xml[^>]*\?>\s*<(\w+:)?worksheet\b|^\s*<(\w+:)?worksheet\b/.test(pakket.lees(blad.pad)))
-    throw new GrafiekFout("Een grafiek kan alleen op een gewoon werkblad worden geplaatst.");
+    throw new GrafiekFout(i18next.t("charts:errors.document.notPlainWorksheet"));
   // Niet in een vastgezet deel ankeren: daar wordt de grafiek afgekapt.
   const paneel = pad(leesXml(pakket.lees(blad.pad)), "sheetViews", "sheetView", "pane");
   const vast = /^frozen/.test(attr(paneel, "state") ?? "");
@@ -313,7 +315,7 @@ export function voegGrafiekToeXlsx(bytes: Uint8Array, model: GrafiekModel, plaat
   const xml = pakket.lees(tekening);
   const wortel = leesXml(xml);
   const x = voorvoegselVoor(wortel, NS.xdr);
-  if (x === null) throw new GrafiekFout("De tekening van dit blad is beschadigd.");
+  if (x === null) throw new GrafiekFout(i18next.t("charts:errors.document.drawingDamaged"));
   const t = (n: string) => (x ? `${x}:${n}` : n);
   const aOk = voorvoegselVoor(wortel, NS_A) === "a";
   const id = maxId(wortel, "cNvPr") + 1;
@@ -322,7 +324,7 @@ export function voegGrafiekToeXlsx(bytes: Uint8Array, model: GrafiekModel, plaat
   const tot = { col: col + (plaatsing.kolommen ?? 8), row: row + (plaatsing.rijen ?? 16) };
   const punt = (n: string, c: number, r: number) =>
     `<${t(n)}><${t("col")}>${c}</${t("col")}><${t("colOff")}>0</${t("colOff")}><${t("row")}>${r}</${t("row")}><${t("rowOff")}>0</${t("rowOff")}></${t(n)}>`;
-  const naam = `Grafiek ${id}`;
+  const naam = i18next.t("charts:defaults.chartName", { n: id });
   const anker =
     `<${t("twoCellAnchor")} editAs="oneCell"${aOk ? "" : ` xmlns:a="${NS_A}"`}>` +
     punt("from", col, row) +
@@ -348,7 +350,7 @@ export function voegGrafiekToeXlsx(bytes: Uint8Array, model: GrafiekModel, plaat
 export function bladmodelXlsx(bytes: Uint8Array, bladIndex: number): Bladmodel {
   const pakket = new Pakket(bytes);
   const blad = bladen(pakket).bladen[bladIndex];
-  if (!blad || !blad.pad || !pakket.heeft(blad.pad)) throw new GrafiekFout("Het gekozen blad bestaat niet of is geen werkblad.");
+  if (!blad || !blad.pad || !pakket.heeft(blad.pad)) throw new GrafiekFout(i18next.t("charts:errors.document.noSuchWorksheet"));
   const wortel = leesXml(pakket.lees(blad.pad));
   const bezet: Bereik[] = [];
   const cel1 = (row: number, col: number) => bezet.push({ top: row, left: col, bottom: row, right: col });
@@ -463,9 +465,9 @@ export function voegGrafiekToeDocx(bytes: Uint8Array, model: GrafiekModel, plaat
   const xml = pakket.lees(doc);
   const wortel = leesXml(xml);
   if (voorvoegselVoor(wortel, NS.w) !== "w")
-    throw new GrafiekFout("Dit document gebruikt een afwijkende XML-schrijfwijze; de grafiek kan niet veilig worden ingevoegd.");
+    throw new GrafiekFout(i18next.t("charts:errors.document.docxUnusualPrefix"));
   const body = kind(wortel, "body");
-  if (!body) throw new GrafiekFout("Het document heeft geen hoofdtekst.");
+  if (!body) throw new GrafiekFout(i18next.t("charts:errors.document.noBody"));
   // Tekstbreedte uit de laatste sectie.
   const sect = zoekAlle(body, "sectPr").pop();
   const twips = (el: XmlElement | null, n: string) => Number(attr(el, n)) || 0;
@@ -478,7 +480,7 @@ export function voegGrafiekToeDocx(bytes: Uint8Array, model: GrafiekModel, plaat
   const chartPad = maakGrafiekdeel(pakket, "word", model);
   const rid = pakket.voegRelatieToe(doc, REL.chart, chartPad);
   const id = docPrMax(pakket) + 1;
-  const naam = `Grafiek ${id}`;
+  const naam = i18next.t("charts:defaults.chartName", { n: id });
   const wpOk = voorvoegselVoor(wortel, NS.wp) === "wp";
   const aOk = voorvoegselVoor(wortel, NS_A) === "a";
   const tekening =
@@ -543,7 +545,7 @@ export function tabelBijAlinea(bytes: Uint8Array, paraId: string, alineaTekst?: 
   );
   const breedte = Math.max(0, ...raster.map((r) => r.length));
   if (!raster.length || breedte < 2) return null;
-  if (raster.length * breedte > LIMIETEN.cellen) throw new GrafiekFout("De tabel is te groot voor een grafiek.");
+  if (raster.length * breedte > LIMIETEN.cellen) throw new GrafiekFout(i18next.t("charts:errors.document.tableTooLarge"));
   return raster.map((r) => [...r, ...Array(breedte - r.length).fill("")]);
 }
 
@@ -568,7 +570,7 @@ function grafiekenDocx(pakket: Pakket): GrafiekVerwijzing[] {
       chartPad,
       houderPad: doc,
       rid,
-      naam: attr(docPr, "name") ?? `Grafiek ${uit.length + 1}`,
+      naam: attr(docPr, "name") ?? i18next.t("charts:defaults.chartName", { n: uit.length + 1 }),
       volgnummer: uit.length,
       paraId: attr(alinea, "paraId"),
       ...samenvatting(pakket, chartPad),
@@ -606,13 +608,13 @@ export function voegGrafiekToePptx(bytes: Uint8Array, model: GrafiekModel, plaat
   const pakket = new Pakket(bytes);
   const info = dias(pakket);
   const dia = info.dias[plaatsing.dia];
-  if (!dia || !pakket.heeft(dia)) throw new GrafiekFout("De gekozen dia bestaat niet.");
+  if (!dia || !pakket.heeft(dia)) throw new GrafiekFout(i18next.t("charts:errors.document.noSuchSlide"));
   const xml = pakket.lees(dia);
   const wortel = leesXml(xml);
   if (voorvoegselVoor(wortel, NS.p) !== "p")
-    throw new GrafiekFout("Deze dia gebruikt een afwijkende XML-schrijfwijze; de grafiek kan niet veilig worden ingevoegd.");
+    throw new GrafiekFout(i18next.t("charts:errors.document.slideUnusualPrefix"));
   const boom = pad(wortel, "cSld", "spTree");
-  if (!boom) throw new GrafiekFout("De dia heeft geen vormenlijst.");
+  if (!boom) throw new GrafiekFout(i18next.t("charts:errors.document.noShapeTree"));
   const cx = Math.round(plaatsing.breedte ?? Math.min(info.breedte * 0.7, 8229600));
   const cy = Math.round(plaatsing.hoogte ?? Math.min(cx * 0.6, info.hoogte * 0.75));
   const x = Math.round(plaatsing.x ?? (info.breedte - cx) / 2);
@@ -620,7 +622,7 @@ export function voegGrafiekToePptx(bytes: Uint8Array, model: GrafiekModel, plaat
   const chartPad = maakGrafiekdeel(pakket, "ppt", model);
   const rid = pakket.voegRelatieToe(dia, REL.chart, chartPad);
   const id = maxId(wortel, "cNvPr") + 1;
-  const naam = `Grafiek ${id}`;
+  const naam = i18next.t("charts:defaults.chartName", { n: id });
   const aOk = voorvoegselVoor(wortel, NS_A) === "a";
   const frame =
     `<p:graphicFrame${aOk ? "" : ` xmlns:a="${NS_A}"`}><p:nvGraphicFramePr><p:cNvPr${attrTekst({ id, name: naam, descr: model.titel || undefined })}/><p:cNvGraphicFramePr><a:graphicFrameLocks noGrp="1"/></p:cNvGraphicFramePr><p:nvPr/></p:nvGraphicFramePr>` +
@@ -688,7 +690,7 @@ export function leesGrafiek(bytes: Uint8Array, chartPad: string): GelezenGrafiek
  */
 export function bewerkGrafiek(bytes: Uint8Array, formaat: Formaat, chartPad: string, model: GrafiekModel) {
   const pakket = new Pakket(bytes);
-  if (!pakket.heeft(chartPad)) throw new GrafiekFout("De grafiek bestaat niet meer in het document.");
+  if (!pakket.heeft(chartPad)) throw new GrafiekFout(i18next.t("charts:errors.document.chartRemoved"));
   const oud = pakket.lees(chartPad);
   if (formaat === "xlsx") {
     pakket.schrijf(chartPad, werkGrafiekXmlBij(oud, model));
@@ -719,7 +721,7 @@ export function verwijderGrafiek(bytes: Uint8Array, formaat: Formaat, verwijzing
   const xml = pakket.lees(verwijzing.houderPad);
   const wortel = leesXml(xml);
   const c = zoekAlle(wortel, "chart").find((e) => ridVan(e) === verwijzing.rid);
-  if (!c) throw new GrafiekFout("De grafiek is niet gevonden.");
+  if (!c) throw new GrafiekFout(i18next.t("charts:errors.document.chartNotFound"));
   let weg: XmlElement | null = null;
   for (let e: XmlElement | null = c; e; e = e.ouder) {
     if (formaat === "xlsx" && e.ouder === wortel) weg = e;
@@ -728,7 +730,7 @@ export function verwijderGrafiek(bytes: Uint8Array, formaat: Formaat, verwijzing
     if (formaat === "docx" && e.lokaal === "AlternateContent") weg = e;
     if (weg && (formaat !== "docx" || e.lokaal === "r")) break;
   }
-  if (!weg) throw new GrafiekFout("Het grafiekobject kan niet worden verwijderd.");
+  if (!weg) throw new GrafiekFout(i18next.t("charts:errors.document.cannotRemove"));
   pakket.schrijf(verwijzing.houderPad, vervang(xml, [{ start: weg.start, eind: weg.eind, tekst: "" }]));
   // Alleen opruimen als geen ander element dezelfde relatie gebruikt.
   const nogGebruikt = zoekAlle(leesXml(pakket.lees(verwijzing.houderPad)), "chart").some((e) => ridVan(e) === verwijzing.rid);

@@ -5,7 +5,8 @@
  */
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { TALEN, type Taal } from "../talen";
+import { useTranslation } from "react-i18next";
+import { TALEN, taalNaam, type Taal } from "../talen";
 import { SpellingSessie, type Alinea, type Plek } from "./sessie";
 import type { Fout } from "../controleur";
 
@@ -13,6 +14,7 @@ type Doel = { alinea: Alinea; fout: Fout };
 const sleutel = (d: Doel) => `${d.alinea.paraId}:${d.fout.start}:${d.fout.tekst}`;
 
 export function SpellingVenster({ sessie, stand }: { sessie: SpellingSessie; stand: number }) {
+  const { t } = useTranslation("spelling");
   const [doel, setDoel] = useState<Doel | null>(null);
   const [suggesties, setSuggesties] = useState<string[] | null>(null);
   const [vervang, setVervang] = useState("");
@@ -104,14 +106,13 @@ export function SpellingVenster({ sessie, stand }: { sessie: SpellingSessie; sta
   };
 
   const context = doel ? SpellingSessie.context(doel.alinea, doel.fout) : null;
-  const taalNaam = (t: Taal) => (t === "geen" ? "Niet controleren" : (TALEN.find((x) => x.id === t)?.naam ?? t));
 
   return createPortal(
     <aside
       ref={venster}
       className="spelling-venster"
       role="dialog"
-      aria-label="Spelling en grammatica"
+      aria-label={t("dialog.title")}
       onKeyDown={(e) => {
         if (e.key === "Escape") {
           e.preventDefault();
@@ -120,32 +121,32 @@ export function SpellingVenster({ sessie, stand }: { sessie: SpellingSessie; sta
       }}
     >
       <h2>
-        Spelling en grammatica
-        <button type="button" aria-label="Sluiten" title="Sluiten (Esc)" onClick={sluit}>
+        {t("dialog.title")}
+        <button type="button" aria-label={t("common:close")} title={t("dialog.closeTooltip")} onClick={sluit}>
           ×
         </button>
       </h2>
       {sessie.probleem ? (
         <p role="alert">{sessie.probleem}</p>
       ) : sessie.aantal === null ? (
-        <p role="status">Document controleren…</p>
+        <p role="status">{t("dialog.checking")}</p>
       ) : !doel ? (
         <div className="spelling-klaar" role="status">
-          <p>De spellingcontrole is voltooid. Er zijn geen onbekende woorden (meer) gevonden.</p>
+          <p>{t("dialog.complete")}</p>
           <button type="button" className="werkruimte-knop" data-autofocus onClick={sluit}>
-            OK
+            {t("common:ok")}
           </button>
         </div>
       ) : (
         <>
-          <div className="werkruimte-label">Niet in woordenlijst ({taalNaam(doel.fout.taal)}):</div>
+          <div className="werkruimte-label">{t("dialog.notInDictionary", { language: taalNaam(doel.fout.taal) })}</div>
           <p className="spelling-context" aria-live="polite">
             {context!.voor}
             <mark>{context!.woord}</mark>
             {context!.na}
           </p>
           <label>
-            Wijzigen in
+            {t("dialog.changeTo")}
             <input
               value={vervang}
               onChange={(e) => setVervang(e.target.value)}
@@ -157,18 +158,18 @@ export function SpellingVenster({ sessie, stand }: { sessie: SpellingSessie; sta
               }}
             />
           </label>
-          <div className="werkruimte-label">Suggesties</div>
-          <ul role="listbox" aria-label="Suggesties">
+          <div className="werkruimte-label">{t("dialog.suggestions")}</div>
+          <ul role="listbox" aria-label={t("dialog.suggestions")}>
             {suggesties === null ? (
               <li>
                 <button type="button" disabled>
-                  Zoeken…
+                  {t("dialog.searching")}
                 </button>
               </li>
             ) : !suggesties.length ? (
               <li>
                 <button type="button" disabled>
-                  (geen suggesties)
+                  {t("actions.noSuggestions")}
                 </button>
               </li>
             ) : (
@@ -201,7 +202,7 @@ export function SpellingVenster({ sessie, stand }: { sessie: SpellingSessie; sta
                 void sessie.vervang([doel], vervang);
               }}
             >
-              Wijzigen
+              {t("dialog.change")}
             </button>
             <button
               type="button"
@@ -211,7 +212,7 @@ export function SpellingVenster({ sessie, stand }: { sessie: SpellingSessie; sta
                 void sessie.vervang(sessie.zelfdeFouten(doel.fout.tekst, doel.fout.taal), vervang);
               }}
             >
-              Alles wijzigen
+              {t("dialog.changeAll")}
             </button>
             <button
               type="button"
@@ -222,7 +223,7 @@ export function SpellingVenster({ sessie, stand }: { sessie: SpellingSessie; sta
                 zoek({ paraId: doel.alinea.paraId, offset: doel.fout.eind }, { paraId: doel.alinea.paraId, start: doel.fout.start });
               }}
             >
-              Negeren
+              {t("dialog.ignoreOnce")}
             </button>
             <button
               type="button"
@@ -231,7 +232,7 @@ export function SpellingVenster({ sessie, stand }: { sessie: SpellingSessie; sta
                 sessie.negeerAlles(doel.fout.tekst);
               }}
             >
-              Alles negeren
+              {t("actions.ignoreAll")}
             </button>
             <button
               type="button"
@@ -241,11 +242,11 @@ export function SpellingVenster({ sessie, stand }: { sessie: SpellingSessie; sta
                 sessie.voegToe(doel.fout.tekst);
               }}
             >
-              Toevoegen aan woordenlijst
+              {t("actions.addToDictionary")}
             </button>
           </div>
           <label>
-            Taal van deze alinea
+            {t("actions.paragraphLanguage")}
             <select
               value={doel.alinea.taal}
               onChange={(e) => {
@@ -253,9 +254,9 @@ export function SpellingVenster({ sessie, stand }: { sessie: SpellingSessie; sta
                 sessie.kiesAlineaTaal(doel.alinea.paraId, e.target.value as Taal);
               }}
             >
-              {[...TALEN.map((t) => t.id), "geen" as const].map((t) => (
-                <option key={t} value={t}>
-                  {taalNaam(t)}
+              {[...TALEN.map((x) => x.id), "geen" as const].map((taal) => (
+                <option key={taal} value={taal}>
+                  {taalNaam(taal)}
                 </option>
               ))}
             </select>

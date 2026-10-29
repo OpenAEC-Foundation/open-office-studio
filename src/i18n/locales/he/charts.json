@@ -1,0 +1,267 @@
+{
+  "types": {
+    "column": {
+      "name": "עמודות",
+      "description": "השוואת ערכים זה לצד זה"
+    },
+    "stackedColumn": {
+      "name": "עמודות מוערמות",
+      "description": "חלקים וסך הכול לכל קטגוריה"
+    },
+    "percentColumn": {
+      "name": "עמודות 100%",
+      "description": "חלקים יחסיים לכל קטגוריה"
+    },
+    "bar": {
+      "name": "פסים",
+      "description": "אופקי, לשמות ארוכים"
+    },
+    "line": {
+      "name": "קו",
+      "description": "מגמה לאורך זמן"
+    },
+    "lineMarkers": {
+      "name": "קו עם סמנים",
+      "description": "מגמה עם נקודות נתונים גלויות"
+    },
+    "area": {
+      "name": "שטח",
+      "description": "מגמה עם דגש על גודל"
+    },
+    "pie": {
+      "name": "עוגה",
+      "description": "פילוח של סדרה אחת"
+    },
+    "doughnut": {
+      "name": "טבעת",
+      "description": "פילוח עם מרכז פתוח"
+    },
+    "scatter": {
+      "name": "פיזור (XY)",
+      "description": "הקשר בין שני מספרים"
+    },
+    "combo": {
+      "name": "עמודות + קו",
+      "description": "הסדרה האחרונה כקו על ציר משני"
+    }
+  },
+  "unknownType": "סוג לא ידוע",
+  "busy": "מעבד…",
+  "defaults": {
+    "seriesName": "סדרה {{n}}",
+    "categoryName": "קטגוריה {{n}}",
+    "chartName": "תרשים {{n}}",
+    "sheetName": "תרשים {{n}}",
+    "true": "TRUE",
+    "false": "FALSE"
+  },
+  "ribbon": {
+    "charts": "תרשימים",
+    "chart": "תרשים",
+    "editChart": "עריכת תרשים",
+    "allCharts": "כל התרשימים",
+    "dataAndFormat": "נתונים ועיצוב",
+    "overview": "סקירה",
+    "type": "סוג",
+    "changeType": "שינוי סוג תרשים",
+    "data": "נתונים",
+    "selectData": "בחירת נתונים",
+    "layout": "פריסה",
+    "titleAndLegend": "כותרת ומקרא",
+    "delete": "מחיקה",
+    "deleteChart": "מחיקת תרשים",
+    "withShortcut": "{{name}} · {{shortcut}}"
+  },
+  "dialog": {
+    "title": {
+      "insert": "הוספת תרשים",
+      "edit": "עריכת תרשים"
+    },
+    "button": {
+      "insert": "הוספה",
+      "edit": "עדכון"
+    },
+    "reloadNote": {
+      "insert": "המסמך נטען מחדש לאחר ההוספה. לא ניתן עוד לבטל שינויים שבוצעו לפני כן.",
+      "edit": "המסמך נטען מחדש לאחר העדכון. לא ניתן עוד לבטל שינויים שבוצעו לפני כן."
+    },
+    "closeTitle": "סגירה (Esc)",
+    "type": "סוג",
+    "data": "נתונים",
+    "cellRange": "טווח תאים",
+    "cellRangePlaceholder": "לדוגמה A1:D6",
+    "noContiguousRange": "ההפניות של תרשים זה אינן יוצרות טווח רציף; הנתונים לא ישתנו עד שתזינו טווח.",
+    "firstRowNames": "השורה הראשונה מכילה שמות",
+    "firstColumnNames": "העמודה הראשונה מכילה שמות",
+    "seriesIn": "סדרות ב",
+    "columns": "עמודות",
+    "rows": "שורות",
+    "series": "סדרה",
+    "seriesNoNumbersTitle": "{{name}}: אין מספרים, לא נכלל",
+    "noNumbers": "(אין מספרים)",
+    "enterRange": "הזינו את טווח התאים שמכיל את הנתונים.",
+    "placeCursorInTable": "מקמו תחילה את הסמן בטבלה עם מספרים.",
+    "titles": "כותרות",
+    "chartTitle": "כותרת",
+    "subtitle": "כותרת משנה",
+    "categoryAxis": "ציר קטגוריות",
+    "valueAxis": "ציר ערכים",
+    "horizontalAxis": "ציר אופקי",
+    "verticalAxis": "ציר אנכי",
+    "secondaryAxis": "ציר משני",
+    "format": "עיצוב",
+    "legend": "מקרא",
+    "gridlines": "קווי רשת",
+    "dataLabels": "תוויות נתונים",
+    "decimals": "מקומות עשרוניים",
+    "placement": "מיקום",
+    "besideData": "ליד הנתונים בגיליון זה",
+    "newSheet": "בגיליון חדש",
+    "sheetName": "שם הגיליון",
+    "summary": {
+      "series_one": "{{n}} סדרה",
+      "series_two": "{{n}} סדרות",
+      "series_other": "{{n}} סדרות",
+      "categories_one": "{{n}} קטגוריה",
+      "categories_two": "{{n}} קטגוריות",
+      "categories_other": "{{n}} קטגוריות",
+      "text": "{{series}} · {{categories}}",
+      "withSheet": "{{series}} · {{categories}} · {{sheet}}"
+    }
+  },
+  "legend": {
+    "bottom": "למטה",
+    "right": "ימין",
+    "top": "למעלה",
+    "left": "שמאל",
+    "none": "ללא מקרא"
+  },
+  "dataSheet": {
+    "row": "שורה",
+    "series": "סדרה",
+    "removeLastRow": "מחיקת השורה האחרונה",
+    "removeLastSeries": "מחיקת הסדרה האחרונה",
+    "paste": "הדבקה",
+    "pasteTitle": "הדבקת טקסט מופרד בטאבים מהלוח, לדוגמה שהועתק מגיליון אלקטרוני",
+    "fromTable": "מהטבלה שנבחרה",
+    "fromTableTitle": "לוקח את הטבלה שבה נמצא הסמן",
+    "pasteNotAllowed": "הדבקה באמצעות הכפתור אינה מותרת כאן. לחצו בתא והשתמשו ב-Ctrl+V.",
+    "corner": "תא פינה",
+    "seriesNameLabel": "שם סדרה {{n}}",
+    "categoryLabel": "קטגוריה {{n}}",
+    "valueLabel": "ערך שורה {{row}}, סדרה {{series}}"
+  },
+  "preview": {
+    "label": "תצוגה מקדימה: {{title}}",
+    "untitled": "תצוגה מקדימה: תרשים ללא כותרת"
+  },
+  "list": {
+    "title": "תרשימים במסמך זה",
+    "empty": "מסמך זה עדיין אינו מכיל תרשימים.",
+    "edit": "עריכה",
+    "delete": "מחיקה",
+    "deleteLabel": "מחיקת {{name}}",
+    "place": {
+      "slide": "שקופית {{n}}",
+      "sheet": "גיליון {{name}}",
+      "text": "תרשים {{n}} בטקסט"
+    }
+  },
+  "deleteConfirm": {
+    "title": "מחיקת תרשים",
+    "text": "למחוק את ‘{{name}}’? לאחר מכן המסמך ייטען מחדש; לא ניתן עוד לבטל שינויים קודמים.",
+    "textSheet": "למחוק את ‘{{name}}’ מהגיליון {{sheet}}? לאחר מכן המסמך ייטען מחדש; לא ניתן עוד לבטל שינויים קודמים.",
+    "button": "מחיקה"
+  },
+  "errors": {
+    "unknownType": "סוג תרשים לא ידוע.",
+    "noSeries": "התרשים צריך לפחות סדרת נתונים אחת.",
+    "tooManySeries": "תרשים יכול להכיל כאן {{max}} סדרות לכל היותר.",
+    "tooManyCategories": "תרשים יכול להכיל כאן {{max}} קטגוריות לכל היותר.",
+    "noCategories": "התרשים צריך לפחות קטגוריה אחת.",
+    "valueCountMismatch": "בסדרה ‘{{name}}’ אין ערכים כמספר הקטגוריות.",
+    "noNumbers": "הנתונים אינם מכילים מספרים.",
+    "comboNeedsTwoSeries": "תרשים משולב צריך לפחות שתי סדרות: עמודות וקו.",
+    "scatterNeedsNumbers": "תרשים פיזור צריך מספרים כערכי X בעמודה או בשורה הראשונה.",
+    "titleTooLong": "כותרות יכולות להכיל {{max}} תווים לכל היותר.",
+    "invalidColor": "הצבע ‘{{color}}’ אינו צבע חוקי.",
+    "noNumericColumn": "אף אחת מהעמודות בטווח אינה מכילה מספרים, ולכן אין מה לשרטט. בחרו טווח עם לפחות עמודת מספרים אחת, או הגדירו את ‘סדרות ב’ לשורות.",
+    "noNumericRow": "אף אחת מהשורות בטווח אינה מכילה מספרים, ולכן אין מה לשרטט. בחרו טווח עם לפחות שורת מספרים אחת, או הגדירו את ‘סדרות ב’ לעמודות.",
+    "chooseSeries": "בחרו לפחות סדרה אחת לתרשים.",
+    "rangeTooLarge": "הטווח גדול מדי: {{max}} תאים לכל היותר.",
+    "noDataBesideHeaders": "הטווח אינו מכיל נתונים מלבד הכותרות.",
+    "pasteTooLarge": "הנתונים שהודבקו גדולים מדי לתרשים.",
+    "invalidRange": "זה אינו טווח תאים חוקי. השתמשו לדוגמה ב-A1:D6 או ב-'גיליון 1'!A1:D6.",
+    "noSuchSheet": "אין גיליון בשם ‘{{name}}’.",
+    "spreadsheetNotReady": "הגיליון האלקטרוני עדיין לא מוכן.",
+    "spreadsheetReadOnly": "הגיליון האלקטרוני לקריאה בלבד.",
+    "documentNotReady": "המסמך עדיין לא מוכן.",
+    "presentationNotEditable": "לא ניתן לערוך את המצגת כרגע.",
+    "selectChartFirst": "בחרו תחילה תרשים.",
+    "chartGone": "לא ניתן עוד למצוא את התרשים.",
+    "notEditableHere": "לא ניתן לערוך תרשים זה כאן.",
+    "notEditable": "לא ניתן לערוך תרשים זה.",
+    "package": {
+      "tooLarge": "המסמך גדול מדי לעריכת תרשים בתוכו.",
+      "tooManyParts": "המסמך מכיל יותר מדי חלקים או חלקים גדולים מדי.",
+      "notZip": "המסמך אינו קובץ Office חוקי (zip).",
+      "invalidPartName": "המסמך מכיל שם חלק לא חוקי.",
+      "noContentTypes": "חסר [Content_Types].xml במסמך.",
+      "missingPart": "החלק {{part}} חסר במסמך.",
+      "noFreePartName": "לא נותר שם חלק פנוי."
+    },
+    "xml": {
+      "tooLarge": "חלק XML גדול מדי לעיבוד.",
+      "damaged": "חלק ה-XML פגום.",
+      "doctype": "XML עם DOCTYPE אינו מעובד מטעמי אבטחה.",
+      "tooDeep": "חלק ה-XML מקונן לעומק רב מדי.",
+      "overlappingChanges": "שגיאה פנימית: שינויי XML חופפים."
+    },
+    "chartXml": {
+      "notDrawingML": "חלק זה אינו תרשים DrawingML.",
+      "noPlotArea": "לתרשים אין שטח שרטוט.",
+      "unusualPrefix": "תרשים זה משתמש בכתיב XML חריג ולא ניתן לערוך אותו כאן בבטחה."
+    },
+    "document": {
+      "noMainPart": "חסר החלק הראשי של המסמך.",
+      "tooManyCharts": "מסמך זה כבר מכיל {{total}} תרשימים; לא נתמכים תרשימים נוספים.",
+      "invalidSheetName": "שם גיליון לא חוקי: 31 תווים לכל היותר, ללא \\ / ? * [ ] :",
+      "sheetExists": "כבר קיים גיליון בשם ‘{{name}}’.",
+      "noSheetList": "לחוברת העבודה אין רשימת גיליונות.",
+      "drawingMissing": "הציור של גיליון זה חסר או פגום.",
+      "noSuchWorksheet": "הגיליון שנבחר אינו קיים או אינו גיליון עבודה.",
+      "notPlainWorksheet": "ניתן למקם תרשים רק בגיליון עבודה רגיל.",
+      "drawingDamaged": "הציור של גיליון זה פגום.",
+      "docxUnusualPrefix": "מסמך זה משתמש בכתיב XML חריג; לא ניתן להוסיף את התרשים בבטחה.",
+      "noBody": "למסמך אין גוף.",
+      "tableTooLarge": "הטבלה גדולה מדי לתרשים.",
+      "noSuchSlide": "השקופית שנבחרה אינה קיימת.",
+      "slideUnusualPrefix": "שקופית זו משתמשת בכתיב XML חריג; לא ניתן להוסיף את התרשים בבטחה.",
+      "noShapeTree": "לשקופית אין עץ צורות.",
+      "chartRemoved": "התרשים כבר אינו קיים במסמך.",
+      "chartNotFound": "התרשים לא נמצא.",
+      "cannotRemove": "לא ניתן להסיר את אובייקט התרשים."
+    }
+  },
+  "read": {
+    "reasons": {
+      "extendedChart": "זהו תרשים מורחב (כגון תרשים מפל או מפת עץ) שלא ניתן לערוך כאן.",
+      "unsupportedType": "תרשים זה משתמש בסוג שלא ניתן לערוך כאן ({{types}}).",
+      "noReadableSeries": "התרשים אינו מכיל סדרות קריאות.",
+      "unsupportedCombination": "תרשים זה משלב סוגים באופן שלא ניתן לערוך כאן.",
+      "noSeries": "התרשים אינו מכיל סדרות נתונים.",
+      "invalid": "לא ניתן לערוך תרשים זה כאן: {{reason}}",
+      "unusualPrefix": "תרשים זה משתמש בכתיב XML חריג ולא ניתן לערוך אותו כאן בבטחה."
+    },
+    "warnings": {
+      "stackedBars": "פסים מוערמים ממוקמים זה לצד זה בעת העריכה.",
+      "stackedLines": "קווים מוערמים הופכים לקווים נפרדים בעת העריכה.",
+      "stackedAreas": "שטחים מוערמים הופכים לשטחים נפרדים בעת העריכה.",
+      "linesAfterColumns": "סדרות הקו ממוקמות אחרי העמודות בעת העריכה.",
+      "lastSeriesAsLine": "בעת העריכה רק הסדרה האחרונה משורטטת כקו.",
+      "multiLevelCategories": "קטגוריות רב-שכבתיות הופכות לשכבה אחת בעת העריכה.",
+      "moreValuesThanCategories": "בסדרה ‘{{name}}’ יש יותר ערכים ממספר הקטגוריות.",
+      "trendlinesDropped": "קווי מגמה וקווי שגיאה מוסרים בעת העריכה."
+    }
+  }
+}

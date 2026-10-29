@@ -1,8 +1,25 @@
-/* Tabbladen: één tabbalk tussen kopbalk en lint, in de docbar-kleur van de
-   OpenAEC-shell. Alle panelen blijven gemount; verborgen panelen houden hun
-   maat (visibility) zodat editors hun opmaak en scrollpositie behouden. */
+/* Documentbalk (OpenAEC Blueprint frame::document_bar; Style Book
+   DocumentBar.css): onder het lint, direct boven het document. 30 px met
+   twee randen en tabbladen van 24 px; het actieve tabblad in de accentkleur.
+   Alle panelen blijven gemount; verborgen panelen houden hun maat
+   (visibility) zodat editors hun opmaak en scrollpositie behouden. */
 .office {
-  --office-tabbalkhoogte: 32px;
+  --office-tabbalkhoogte: 30px;
+}
+/* Het lint van elk tabblad staat boven de documentbalk (lintplek.tsx). */
+.office-lintvlak {
+  flex: 0 0 auto;
+  min-width: 0;
+  position: relative;
+  z-index: 28;
+  background: var(--oa-shell-bg, #fafaf9);
+}
+.office-lintvlak[hidden],
+.office-lintplek[hidden] {
+  display: none;
+}
+.office-lintplek:empty {
+  display: none;
 }
 .office-tabbalk {
   flex: 0 0 var(--office-tabbalkhoogte);
@@ -11,10 +28,11 @@
   display: flex;
   align-items: flex-end;
   gap: 2px;
-  padding: 0 8px 0 6px;
+  padding: 0 4px;
   background: var(--oa-shell-docbar-bg, #f5f5f4);
-  border-bottom: 1px solid var(--oa-shell-border-subtle, #e5e8ed);
-  z-index: 29;
+  border-top: 1px solid rgba(217, 119, 6, 0.15);
+  border-bottom: 1px solid var(--oa-shell-border, rgba(54, 54, 62, 0.12));
+  z-index: 27;
   user-select: none;
 }
 .office-tablijst {
@@ -36,15 +54,15 @@
   flex: 0 1 200px;
   min-width: 96px;
   max-width: 220px;
-  height: 28px;
+  height: 24px;
   display: flex;
   align-items: center;
-  gap: 7px;
-  padding: 0 4px 0 10px;
-  border: 1px solid transparent;
+  gap: 6px;
+  padding-inline: 10px 4px;
+  border: 1px solid var(--oa-shell-border, rgba(54, 54, 62, 0.12));
   border-bottom: 0;
-  border-radius: 6px 6px 0 0;
-  color: var(--oa-shell-text-secondary, #6d7785);
+  border-radius: 3px 3px 0 0;
+  color: var(--oa-shell-text-muted, rgba(54, 54, 62, 0.5));
   font-size: 12px;
   cursor: default;
   touch-action: none;
@@ -54,31 +72,31 @@
   background: var(--oa-shell-hover, #d9770614);
 }
 .office-tab.is-actief {
-  color: var(--oa-shell-text, #36363e);
-  background: var(--oa-shell-bg-lighter, #fff);
-  border-color: var(--oa-shell-border-subtle, #e5e8ed);
-  box-shadow: inset 0 2px var(--oa-shell-accent, #d97706);
-  /* Sluit naadloos aan op het lint eronder. */
-  margin-bottom: -1px;
-  height: 29px;
+  color: var(--oa-shell-accent, #d97706);
+  border-color: var(--oa-shell-accent, #d97706);
+  background: var(--oa-shell-accent-soft, rgba(217, 119, 6, 0.08));
 }
 .office-tab:focus-visible {
   outline: 2px solid var(--oa-shell-focus-color, #d97706);
   outline-offset: -2px;
 }
 .office-starttab {
-  /* Start blijft vast links staan, ook als de overige tabbladen scrollen. */
+  /* Start blijft vast aan het begin staan, ook als de overige tabbladen scrollen. */
   position: sticky;
-  left: 0;
+  inset-inline-start: 0;
   z-index: 1;
   background: var(--oa-shell-docbar-bg, #f5f5f4);
   flex: 0 0 auto;
   min-width: 0;
-  padding-right: 12px;
+  padding-inline-end: 12px;
   font-weight: 500;
 }
 .office-starttab.is-actief {
-  background: var(--oa-shell-bg-lighter, #fff);
+  background: linear-gradient(
+      var(--oa-shell-accent-soft, rgba(217, 119, 6, 0.08)),
+      var(--oa-shell-accent-soft, rgba(217, 119, 6, 0.08))
+    ),
+    var(--oa-shell-docbar-bg, #f5f5f4);
 }
 .office-tabicoon {
   flex-shrink: 0;
@@ -98,8 +116,8 @@
 .office .office-tabsluiten {
   position: relative;
   flex-shrink: 0;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   display: grid;
   place-items: center;
   padding: 0;
@@ -121,8 +139,8 @@
 /* Niet-opgeslagen: een stip in plaats van het kruisje, tot je erop wijst. */
 .office-tabstip {
   display: none;
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: var(--oa-shell-accent, #d97706);
 }
@@ -152,15 +170,15 @@
   background: var(--oa-shell-accent, #d97706);
 }
 .office-tab.sleepdoel-links::before {
-  left: -2px;
+  inset-inline-start: -2px;
 }
 .office-tab.sleepdoel-rechts::after {
-  right: -2px;
+  inset-inline-end: -2px;
 }
 .office .office-tabknop {
   flex-shrink: 0;
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   margin-bottom: 2px;
   display: grid;
   place-items: center;
@@ -227,7 +245,7 @@
   border-radius: 4px;
   background: transparent;
   color: inherit;
-  text-align: left;
+  text-align: start;
   font-size: 12px;
   overflow: hidden;
   text-overflow: ellipsis;

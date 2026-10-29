@@ -11,6 +11,7 @@
  * Wachtwoorden worden alleen als argument doorgegeven; deze module bewaart
  * of logt ze nooit en foutmeldingen bevatten ze niet.
  */
+import i18next from "../i18n/config";
 import { isCfb, leesCfb } from "../../packages/database/src/cfb";
 import { schrijfCfb } from "./cfbschrijver";
 import { herhaalHash } from "./sha";
@@ -26,7 +27,7 @@ export type Versleuteling =
 
 export class VerkeerdWachtwoord extends Error {
   constructor() {
-    super("Het wachtwoord is onjuist.");
+    super(i18next.t("import:errors.wrongPassword"));
     this.name = "VerkeerdWachtwoord";
   }
 }
@@ -95,9 +96,7 @@ export function herkenVersleuteling(bytes: Uint8Array): Versleuteling | null {
 const subtle = () => {
   const c = globalThis.crypto?.subtle;
   if (!c)
-    throw new Error(
-      "Deze omgeving heeft geen WebCrypto; versleutelde bestanden kunnen niet worden geopend.",
-    );
+    throw new Error(i18next.t("import:errors.noWebCrypto"));
   return c;
 };
 
@@ -114,7 +113,7 @@ function hashNaam(naam: string): Hash {
   if (n === "SHA256") return "SHA-256";
   if (n === "SHA384") return "SHA-384";
   if (n === "SHA512") return "SHA-512";
-  throw new Error(`Hash-algoritme ${naam} wordt niet ondersteund.`);
+  throw new Error(i18next.t("import:errors.hashNotSupported", { name: naam }));
 }
 
 const samen = (...delen: Uint8Array[]) => {
@@ -165,7 +164,7 @@ async function wachtwoordHash(
   rondes: number,
 ) {
   if (rondes > 10_000_000)
-    throw new Error("Te veel hash-rondes in dit bestand.");
+    throw new Error(i18next.t("import:errors.tooManyHashRounds"));
   return herhaalHash(
     algoritme,
     await hash(algoritme, zout, utf16(wachtwoord)),
@@ -197,7 +196,7 @@ async function aesVersleutel(
   iv: Uint8Array,
   data: Uint8Array,
 ) {
-  if (data.length % 16) throw new Error("Gegevens niet op blokgrootte.");
+  if (data.length % 16) throw new Error(i18next.t("import:errors.dataNotBlockAligned"));
   const k = await aesSleutel(sleutel);
   const uit = new Uint8Array(
     await subtle().encrypt(
@@ -221,7 +220,7 @@ async function aesOntsleutel(
 ) {
   if (!data.length) return new Uint8Array();
   if (data.length % 16)
-    throw new Error("Versleutelde gegevens niet op blokgrootte.");
+    throw new Error(i18next.t("import:errors.encryptedDataNotBlockAligned"));
   const k = await aesSleutel(sleutel);
   const laatste = data.subarray(data.length - 16);
   const opvul = new Uint8Array(16).fill(16);
@@ -300,14 +299,14 @@ function leesAgileInfo(info: Uint8Array): AgileInfo {
     xml.slice(xml.search(/keyEncryptor\b[^>]*password/)),
   )?.[0];
   if (!keyData || !encryptor)
-    throw new Error("De versleutelingsgegevens zijn onvolledig.");
+    throw new Error(i18next.t("import:errors.encryptionInfoIncomplete"));
   const cipher = attr(keyData, "cipherAlgorithm");
   if (cipher && cipher !== "AES")
-    throw new Error(`Versleuteling met ${cipher} wordt niet ondersteund.`);
+    throw new Error(i18next.t("import:errors.cipherNotSupported", { cipher }));
   if (
     (attr(keyData, "cipherChaining") ?? "ChainingModeCBC") !== "ChainingModeCBC"
   )
-    throw new Error("Deze versleutelingsmodus wordt niet ondersteund.");
+    throw new Error(i18next.t("import:errors.chainingNotSupported"));
   const integriteit = attribuut(xml, "dataIntegrity", "encryptedHmacKey");
   return {
     keyData: {
@@ -400,13 +399,11 @@ async function ontsleutelAgile(
       await subtle().sign("HMAC", k, buffer(pakket)),
     );
     if (!gelijk(werkelijk, verwacht))
-      throw new Error(
-        "De integriteitscontrole van het versleutelde bestand mislukt; het bestand is beschadigd of gewijzigd.",
-      );
+      throw new Error(i18next.t("import:errors.integrityFailed"));
   }
   const grootte = u32(pakket, 0) + u32(pakket, 4) * 2 ** 32;
   if (grootte > 512 * 1024 * 1024)
-    throw new Error("Het versleutelde pakket is te groot.");
+    throw new Error(i18next.t("import:errors.encryptedPackageTooLarge"));
   const uit = new Uint8Array(grootte);
   const SEGMENT = 4096;
   for (
@@ -439,11 +436,9 @@ async function ontsleutelStandard(
   const hashAlg = u32(kop, 12);
   const bits = u32(kop, 16);
   if (![0x660e, 0x660f, 0x6610].includes(algoritme))
-    throw new Error(
-      "Deze (RC4-)versleuteling wordt niet ondersteund; alleen AES.",
-    );
+    throw new Error(i18next.t("import:errors.rc4NotSupported"));
   if (hashAlg !== 0x8004 && hashAlg !== 0)
-    throw new Error("Onbekend hash-algoritme.");
+    throw new Error(i18next.t("import:errors.unknownHash"));
   const v = info.subarray(12 + kopGrootte);
   const zoutGrootte = u32(v, 0);
   const zout = v.subarray(4, 4 + zoutGrootte);
@@ -472,7 +467,7 @@ async function ontsleutelStandard(
     throw new VerkeerdWachtwoord();
   const grootte = u32(pakket, 0) + u32(pakket, 4) * 2 ** 32;
   if (grootte > 512 * 1024 * 1024)
-    throw new Error("Het versleutelde pakket is te groot.");
+    throw new Error(i18next.t("import:errors.encryptedPackageTooLarge"));
   let data = pakket.subarray(8);
   data = data.subarray(0, data.length - (data.length % 16));
   return (await aesEcbOntsleutel(sleutel, data)).slice(0, grootte);
@@ -500,10 +495,12 @@ export async function ontsleutel(
 
 export function versleutelingsMelding(versleuteling: Versleuteling) {
   if (versleuteling.soort === "rc4")
-    return `Dit .${versleuteling.formaat}-bestand is met een wachtwoord beveiligd (RC4, oud binair formaat). De app kan dit soort versleuteling herkennen maar niet openen. Open het in het oorspronkelijke programma en bewaar het zonder wachtwoord of als .${versleuteling.formaat}x met wachtwoord.`;
+    return i18next.t("import:errors.rc4Binary", { format: versleuteling.formaat });
   if (versleuteling.soort === "onbekend")
-    return `Dit bestand gebruikt een onbekende versleuteling (versie ${versleuteling.versie}) en kan niet worden geopend.`;
-  return "Dit bestand is versleuteld.";
+    return i18next.t("import:errors.unknownEncryption", {
+      version: versleuteling.versie,
+    });
+  return i18next.t("import:errors.encryptedGeneric");
 }
 
 /* ── Versleutelen (Agile) ────────────────────────────────────────────── */
@@ -578,9 +575,9 @@ export async function versleutel(
   wachtwoord: string,
   opties: VersleutelOpties = {},
 ) {
-  if (!wachtwoord) throw new Error("Kies een wachtwoord.");
+  if (!wachtwoord) throw new Error(i18next.t("import:errors.choosePassword"));
   if (wachtwoord.length > 255)
-    throw new Error("Het wachtwoord mag hooguit 255 tekens lang zijn.");
+    throw new Error(i18next.t("import:errors.passwordTooLong"));
   const rondes = opties.rondes ?? 100000;
   const algoritme: Hash = "SHA-512";
   const keyZout = willekeurig(16);

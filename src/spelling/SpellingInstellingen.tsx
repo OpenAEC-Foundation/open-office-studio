@@ -3,10 +3,14 @@
  * persoonlijke woordenlijst.
  */
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useOpmaak } from "../i18n/opmaak";
 import { useInstellingen, wijzigInstellingen } from "../instellingen";
 import { useWoordenlijsten } from "./woordenlijst";
 
 export function SpellingInstellingen() {
+  const { t } = useTranslation("spelling");
+  const { getal } = useOpmaak();
   const { spelling } = useInstellingen();
   const { persoonlijk } = useWoordenlijsten();
   const [lijstOpen, setLijstOpen] = useState(false);
@@ -23,29 +27,25 @@ export function SpellingInstellingen() {
   const woorden = persoonlijk.alle();
   return (
     <fieldset className="werkruimte-groep">
-      <legend>Spelling en autocorrectie</legend>
-      {vink("controleren", "Spelling controleren tijdens het typen (rode golflijn)")}
-      {vink("hoofdletterwoordenNegeren", "Woorden in HOOFDLETTERS negeren")}
-      {vink("cijferwoordenNegeren", "Woorden met cijfers negeren")}
-      {vink(
-        "autocorrectie",
-        "Autocorrectie: TWee HOofdletters, hoofdletter aan het zinsbegin en veelvoorkomende typefouten",
-      )}
+      <legend>{t("settings.title")}</legend>
+      {vink("controleren", t("settings.checkWhileTyping"))}
+      {vink("hoofdletterwoordenNegeren", t("settings.ignoreUppercase"))}
+      {vink("cijferwoordenNegeren", t("settings.ignoreNumbers"))}
+      {vink("autocorrectie", t("settings.autocorrect"))}
       <p className="werkruimte-uitleg">
-        Woordenboeken: OpenTaal (Nederlands) en SCOWL (Engels, VK en VS). Rechtsklik op een onderstreept woord
-        voor suggesties; F7 opent het deelvenster Spelling en grammatica.
+        {t("settings.dictionariesHelp", { key: "F7" })}
       </p>
       <button type="button" className="werkruimte-knop" onClick={() => setLijstOpen(!lijstOpen)} aria-expanded={lijstOpen}>
-        Persoonlijke woordenlijst ({woorden.length})…
+        {t("settings.personalListButton", { number: getal(woorden.length) })}
       </button>
       {lijstOpen && (
-        <ul className="werkruimte-uitleg" aria-label="Persoonlijke woordenlijst" style={{ maxHeight: 160, overflow: "auto" }}>
-          {!woorden.length && <li>Nog geen woorden toegevoegd.</li>}
+        <ul className="werkruimte-uitleg" aria-label={t("settings.personalList")} style={{ maxHeight: 160, overflow: "auto" }}>
+          {!woorden.length && <li>{t("settings.noWords")}</li>}
           {woorden.map((w) => (
             <li key={w} style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
               {w}
-              <button type="button" className="werkruimte-knop" aria-label={`${w} verwijderen`} onClick={() => persoonlijk.verwijder(w)}>
-                Verwijderen
+              <button type="button" className="werkruimte-knop" aria-label={t("settings.removeWord", { word: w })} onClick={() => persoonlijk.verwijder(w)}>
+                {t("common:remove")}
               </button>
             </li>
           ))}

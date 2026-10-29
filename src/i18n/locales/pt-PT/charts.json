@@ -1,0 +1,267 @@
+{
+  "types": {
+    "column": {
+      "name": "Colunas",
+      "description": "Comparar valores lado a lado"
+    },
+    "stackedColumn": {
+      "name": "Colunas empilhadas",
+      "description": "Partes e total por categoria"
+    },
+    "percentColumn": {
+      "name": "Colunas 100%",
+      "description": "Proporções por categoria"
+    },
+    "bar": {
+      "name": "Barras",
+      "description": "Horizontal, para nomes longos"
+    },
+    "line": {
+      "name": "Linhas",
+      "description": "Tendência ao longo do tempo"
+    },
+    "lineMarkers": {
+      "name": "Linhas com marcadores",
+      "description": "Tendência com pontos de dados visíveis"
+    },
+    "area": {
+      "name": "Área",
+      "description": "Tendência com ênfase na magnitude"
+    },
+    "pie": {
+      "name": "Circular",
+      "description": "Divisão de uma única série"
+    },
+    "doughnut": {
+      "name": "Anel",
+      "description": "Divisão com centro aberto"
+    },
+    "scatter": {
+      "name": "Dispersão (XY)",
+      "description": "Relação entre dois números"
+    },
+    "combo": {
+      "name": "Colunas + linha",
+      "description": "Última série como linha num eixo secundário"
+    }
+  },
+  "unknownType": "Tipo desconhecido",
+  "busy": "A processar…",
+  "defaults": {
+    "seriesName": "Série {{n}}",
+    "categoryName": "Categoria {{n}}",
+    "chartName": "Gráfico {{n}}",
+    "sheetName": "Gráfico {{n}}",
+    "true": "VERDADEIRO",
+    "false": "FALSO"
+  },
+  "ribbon": {
+    "charts": "Gráficos",
+    "chart": "Gráfico",
+    "editChart": "Editar gráfico",
+    "allCharts": "Todos os gráficos",
+    "dataAndFormat": "Dados e formatação",
+    "overview": "Descrição geral",
+    "type": "Tipo",
+    "changeType": "Alterar tipo de gráfico",
+    "data": "Dados",
+    "selectData": "Selecionar dados",
+    "layout": "Esquema",
+    "titleAndLegend": "Título e legenda",
+    "delete": "Eliminar",
+    "deleteChart": "Eliminar gráfico",
+    "withShortcut": "{{name}} · {{shortcut}}"
+  },
+  "dialog": {
+    "title": {
+      "insert": "Inserir gráfico",
+      "edit": "Editar gráfico"
+    },
+    "button": {
+      "insert": "Inserir",
+      "edit": "Atualizar"
+    },
+    "reloadNote": {
+      "insert": "O documento é recarregado após a inserção. As alterações feitas antes disso já não podem ser anuladas.",
+      "edit": "O documento é recarregado após a atualização. As alterações feitas antes disso já não podem ser anuladas."
+    },
+    "closeTitle": "Fechar (Esc)",
+    "type": "Tipo",
+    "data": "Dados",
+    "cellRange": "Intervalo de células",
+    "cellRangePlaceholder": "Por exemplo, A1:D6",
+    "noContiguousRange": "As referências deste gráfico não formam um intervalo contínuo; os dados mantêm-se inalterados até introduzir um intervalo.",
+    "firstRowNames": "A primeira linha contém nomes",
+    "firstColumnNames": "A primeira coluna contém nomes",
+    "seriesIn": "Séries em",
+    "columns": "colunas",
+    "rows": "linhas",
+    "series": "Série",
+    "seriesNoNumbersTitle": "{{name}}: sem números, não incluída",
+    "noNumbers": "(sem números)",
+    "enterRange": "Introduza o intervalo de células que contém os dados.",
+    "placeCursorInTable": "Coloque primeiro o cursor numa tabela com números.",
+    "titles": "Títulos",
+    "chartTitle": "Título",
+    "subtitle": "Subtítulo",
+    "categoryAxis": "Eixo de categorias",
+    "valueAxis": "Eixo de valores",
+    "horizontalAxis": "Eixo horizontal",
+    "verticalAxis": "Eixo vertical",
+    "secondaryAxis": "Eixo secundário",
+    "format": "Formato",
+    "legend": "Legenda",
+    "gridlines": "Linhas de grelha",
+    "dataLabels": "Rótulos de dados",
+    "decimals": "Casas decimais",
+    "placement": "Posicionamento",
+    "besideData": "Junto aos dados nesta folha",
+    "newSheet": "Numa nova folha",
+    "sheetName": "Nome da folha",
+    "summary": {
+      "series_one": "{{n}} série",
+      "series_other": "{{n}} séries",
+      "series_many": "{{n}} séries",
+      "categories_one": "{{n}} categoria",
+      "categories_other": "{{n}} categorias",
+      "categories_many": "{{n}} categorias",
+      "text": "{{series}} · {{categories}}",
+      "withSheet": "{{series}} · {{categories}} · {{sheet}}"
+    }
+  },
+  "legend": {
+    "bottom": "Em baixo",
+    "right": "À direita",
+    "top": "Em cima",
+    "left": "À esquerda",
+    "none": "Sem legenda"
+  },
+  "dataSheet": {
+    "row": "Linha",
+    "series": "Série",
+    "removeLastRow": "Eliminar última linha",
+    "removeLastSeries": "Eliminar última série",
+    "paste": "Colar",
+    "pasteTitle": "Colar texto separado por tabulações da área de transferência, por exemplo copiado de uma folha de cálculo",
+    "fromTable": "Da tabela selecionada",
+    "fromTableTitle": "Usa a tabela onde está o cursor",
+    "pasteNotAllowed": "Aqui não é permitido colar com o botão. Clique numa célula e utilize Ctrl+V.",
+    "corner": "Célula de canto",
+    "seriesNameLabel": "Nome da série {{n}}",
+    "categoryLabel": "Categoria {{n}}",
+    "valueLabel": "Valor da linha {{row}}, série {{series}}"
+  },
+  "preview": {
+    "label": "Pré-visualização: {{title}}",
+    "untitled": "Pré-visualização: gráfico sem título"
+  },
+  "list": {
+    "title": "Gráficos neste documento",
+    "empty": "Este documento ainda não contém gráficos.",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "deleteLabel": "Eliminar {{name}}",
+    "place": {
+      "slide": "diapositivo {{n}}",
+      "sheet": "folha {{name}}",
+      "text": "gráfico {{n}} no texto"
+    }
+  },
+  "deleteConfirm": {
+    "title": "Eliminar gráfico",
+    "text": "Eliminar ‘{{name}}’? O documento será recarregado; as alterações anteriores já não poderão ser anuladas.",
+    "textSheet": "Eliminar ‘{{name}}’ da folha {{sheet}}? O documento será recarregado; as alterações anteriores já não poderão ser anuladas.",
+    "button": "Eliminar"
+  },
+  "errors": {
+    "unknownType": "Tipo de gráfico desconhecido.",
+    "noSeries": "O gráfico precisa de, pelo menos, uma série de dados.",
+    "tooManySeries": "Aqui, um gráfico pode conter no máximo {{max}} séries.",
+    "tooManyCategories": "Aqui, um gráfico pode conter no máximo {{max}} categorias.",
+    "noCategories": "O gráfico precisa de, pelo menos, uma categoria.",
+    "valueCountMismatch": "A série ‘{{name}}’ não tem tantos valores quantas as categorias.",
+    "noNumbers": "Os dados não contêm números.",
+    "comboNeedsTwoSeries": "Um gráfico de combinação precisa de, pelo menos, duas séries: colunas e uma linha.",
+    "scatterNeedsNumbers": "Um gráfico de dispersão precisa de números como valores X na primeira coluna ou linha.",
+    "titleTooLong": "Os títulos podem ter no máximo {{max}} caracteres.",
+    "invalidColor": "A cor ‘{{color}}’ não é uma cor válida.",
+    "noNumericColumn": "Nenhuma das colunas do intervalo contém números, pelo que não há nada para representar. Escolha um intervalo com pelo menos uma coluna de números ou defina ‘Séries em’ como linhas.",
+    "noNumericRow": "Nenhuma das linhas do intervalo contém números, pelo que não há nada para representar. Escolha um intervalo com pelo menos uma linha de números ou defina ‘Séries em’ como colunas.",
+    "chooseSeries": "Escolha pelo menos uma série para o gráfico.",
+    "rangeTooLarge": "O intervalo é demasiado grande: no máximo {{max}} células.",
+    "noDataBesideHeaders": "O intervalo não contém dados além dos cabeçalhos.",
+    "pasteTooLarge": "Os dados colados são demasiado grandes para um gráfico.",
+    "invalidRange": "Isto não é um intervalo de células válido. Utilize, por exemplo, A1:D6 ou 'Folha 1'!A1:D6.",
+    "noSuchSheet": "Não existe nenhuma folha com o nome ‘{{name}}’.",
+    "spreadsheetNotReady": "A folha de cálculo ainda não está pronta.",
+    "spreadsheetReadOnly": "A folha de cálculo é só de leitura.",
+    "documentNotReady": "O documento ainda não está pronto.",
+    "presentationNotEditable": "De momento, não é possível editar a apresentação.",
+    "selectChartFirst": "Selecione primeiro um gráfico.",
+    "chartGone": "O gráfico já não foi encontrado.",
+    "notEditableHere": "Este gráfico não pode ser editado aqui.",
+    "notEditable": "Este gráfico não pode ser editado.",
+    "package": {
+      "tooLarge": "O documento é demasiado grande para editar um gráfico nele.",
+      "tooManyParts": "O documento contém partes a mais ou demasiado grandes.",
+      "notZip": "O documento não é um ficheiro do Office válido (zip).",
+      "invalidPartName": "O documento contém um nome de parte inválido.",
+      "noContentTypes": "Falta [Content_Types].xml no documento.",
+      "missingPart": "Falta a parte {{part}} no documento.",
+      "noFreePartName": "Já não existe nenhum nome de parte livre."
+    },
+    "xml": {
+      "tooLarge": "Uma parte XML é demasiado grande para ser processada.",
+      "damaged": "A parte XML está danificada.",
+      "doctype": "Por motivos de segurança, o XML com DOCTYPE não é processado.",
+      "tooDeep": "A parte XML está aninhada demasiado profundamente.",
+      "overlappingChanges": "Erro interno: alterações de XML sobrepostas."
+    },
+    "chartXml": {
+      "notDrawingML": "Esta parte não é um gráfico DrawingML.",
+      "noPlotArea": "O gráfico não tem área de desenho.",
+      "unusualPrefix": "Este gráfico utiliza uma notação XML invulgar e não pode ser editado aqui com segurança."
+    },
+    "document": {
+      "noMainPart": "Falta a parte principal do documento.",
+      "tooManyCharts": "Este documento já contém {{total}} gráficos; não são suportados mais.",
+      "invalidSheetName": "Nome de folha inválido: no máximo 31 caracteres, sem \\ / ? * [ ] :",
+      "sheetExists": "Já existe uma folha com o nome ‘{{name}}’.",
+      "noSheetList": "O livro não tem uma lista de folhas.",
+      "drawingMissing": "O desenho desta folha está em falta ou danificado.",
+      "noSuchWorksheet": "A folha escolhida não existe ou não é uma folha de cálculo.",
+      "notPlainWorksheet": "Um gráfico só pode ser colocado numa folha de cálculo normal.",
+      "drawingDamaged": "O desenho desta folha está danificado.",
+      "docxUnusualPrefix": "Este documento utiliza uma notação XML invulgar; o gráfico não pode ser inserido com segurança.",
+      "noBody": "O documento não tem corpo.",
+      "tableTooLarge": "A tabela é demasiado grande para um gráfico.",
+      "noSuchSlide": "O diapositivo escolhido não existe.",
+      "slideUnusualPrefix": "Este diapositivo utiliza uma notação XML invulgar; o gráfico não pode ser inserido com segurança.",
+      "noShapeTree": "O diapositivo não tem árvore de formas.",
+      "chartRemoved": "O gráfico já não existe no documento.",
+      "chartNotFound": "O gráfico não foi encontrado.",
+      "cannotRemove": "Não é possível remover o objeto do gráfico."
+    }
+  },
+  "read": {
+    "reasons": {
+      "extendedChart": "Este é um gráfico expandido (como um gráfico em cascata ou de mapa de árvore) que não pode ser editado aqui.",
+      "unsupportedType": "Este gráfico utiliza um tipo que não pode ser editado aqui ({{types}}).",
+      "noReadableSeries": "O gráfico não contém séries legíveis.",
+      "unsupportedCombination": "Este gráfico combina tipos de uma forma que não pode ser editada aqui.",
+      "noSeries": "O gráfico não contém séries de dados.",
+      "invalid": "Este gráfico não pode ser editado aqui: {{reason}}",
+      "unusualPrefix": "Este gráfico utiliza uma notação XML invulgar e não pode ser editado aqui com segurança."
+    },
+    "warnings": {
+      "stackedBars": "As barras empilhadas são colocadas lado a lado durante a edição.",
+      "stackedLines": "As linhas empilhadas tornam-se linhas separadas durante a edição.",
+      "stackedAreas": "As áreas empilhadas tornam-se áreas separadas durante a edição.",
+      "linesAfterColumns": "As séries de linhas são colocadas depois das colunas durante a edição.",
+      "lastSeriesAsLine": "Durante a edição, apenas a última série é desenhada como linha.",
+      "multiLevelCategories": "As categorias de vários níveis passam a ter um único nível durante a edição.",
+      "moreValuesThanCategories": "A série ‘{{name}}’ tem mais valores do que categorias.",
+      "trendlinesDropped": "As linhas de tendência e as barras de erro são removidas durante a edição."
+    }
+  }
+}

@@ -32,7 +32,7 @@
   flex-direction: column;
   padding: 24px 14px 12px;
   background: #f5f5f4;
-  border-right: 1px solid #e7e5e4;
+  border-inline-end: 1px solid #e7e5e4;
   min-height: 0;
   overflow-y: auto;
 }
@@ -111,7 +111,7 @@
   color: #57534e;
   border: 1px solid transparent;
   border-radius: 5px;
-  text-align: left;
+  text-align: start;
   background: transparent;
 }
 .notities-boeken nav button > i {
@@ -163,7 +163,7 @@
   font-size: 11px;
 }
 .notities-zijvoet button span {
-  margin-left: auto;
+  margin-inline-start: auto;
   color: #78716c;
 }
 .notities-zijvoet button.is-geselecteerd {
@@ -179,7 +179,7 @@
 }
 .notities-paginas {
   background: #fafaf9;
-  border-right: 1px solid #e7e5e4;
+  border-inline-end: 1px solid #e7e5e4;
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -225,7 +225,7 @@
   align-items: stretch;
   gap: 7px;
   width: 100%;
-  text-align: left;
+  text-align: start;
   background: transparent;
   border: 1px solid transparent;
   border-radius: 5px;
@@ -339,7 +339,7 @@
   gap: 10px;
   margin: 1px -9px;
   padding: 3px 8px;
-  border-left: 2px solid transparent;
+  border-inline-start: 2px solid transparent;
 }
 .notities-blok.is-actief:focus-within {
   border-color: #d97706;
@@ -446,7 +446,7 @@
   color: #78716c;
 }
 .notities-opslagstatus > span {
-  margin-left: auto;
+  margin-inline-start: auto;
   font-size: 9px;
 }
 .notities-melding {
@@ -478,7 +478,7 @@
   color: #78716c;
   font-size: 11px;
   line-height: 1.8;
-  padding-left: 20px;
+  padding-inline-start: 20px;
 }
 .notities-herstel {
   display: flex;
@@ -492,7 +492,7 @@
   border-radius: 5px;
 }
 .notities-herstel button {
-  margin-left: auto;
+  margin-inline-start: auto;
   padding: 7px 10px;
   border: 1px solid #d97706;
   border-radius: 4px;

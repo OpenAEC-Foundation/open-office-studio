@@ -1,0 +1,146 @@
+{
+  "header": {
+    "homeTitle": "Siirry aloitusnäkymään",
+    "homeLabel": "OpenAEC Office Studio · Aloitus",
+    "version": "Versio {{version}}",
+    "unsaved": "Tallentamattomia muutoksia",
+    "unchanged": "Ei muutoksia",
+    "fileAndStart": "Tiedosto ja aloitus",
+    "openFileTitle": "Avaa tiedosto uudessa välilehdessä · Ctrl+O",
+    "openNotesBackupTitle": "Lisää muistiinpanojen varmuuskopio · Ctrl+O",
+    "openDatabaseTitle": "Avaa tietokanta · Ctrl+O",
+    "addBackup": "Lisää varmuuskopio",
+    "saveAs": "Tallenna nimellä",
+    "saveAsTitle": "Tallenna nimellä · F12 tai Ctrl+Shift+S (Ctrl+S tallentaa avattuun tiedostoon)",
+    "busy": "Käsitellään…"
+  },
+  "message": {
+    "close": "Sulje ilmoitus",
+    "markdownNote": "Markdown säilyttää tekstin ja rakenteen. Tallenna myös DOCX-tiedosto, jotta sivun muotoilu, kuvat ja muutokset säilyvät."
+  },
+  "loading": {
+    "editor": "Ladataan editoria…",
+    "notes": "Ladataan muistiinpanoja…",
+    "email": "Ladataan Email Studiota…",
+    "document": "Ladataan asiakirjaa…",
+    "fonts": "Ladataan fontteja…"
+  },
+  "errors": {
+    "editorFailed": "Editori ei voinut avata tätä tiedostoa: {{error}}",
+    "openFailed": "Avaaminen epäonnistui: {{error}}",
+    "openFileFailed": "Tiedoston {{name}} avaaminen epäonnistui: {{error}}",
+    "saveFailed": "Tallentaminen epäonnistui: {{error}}",
+    "printFailed": "Tulostaminen epäonnistui: {{error}}",
+    "sendAsAttachmentFailed": "Lähettäminen liitteenä epäonnistui: {{error}}",
+    "templateUnavailable": "Mallipohja ei ole käytettävissä",
+    "exampleFailed": "Esimerkkiä ei voitu avata.",
+    "fileSize": "Valitse tiedosto, joka ei ole tyhjä ja jonka koko on enintään 100 Mt.",
+    "unsupportedFormat": "{{name}}: tätä muotoa ei tueta.",
+    "emptyAttachment": "Liite on tyhjä.",
+    "databaseModifiedFile": "Database Studiossa on muutettu työkopio. Tallenna tai sulje se ensin ja avaa sitten tiedosto uudelleen.",
+    "databaseModifiedAttachment": "Database Studiossa on muutettu työkopio. Tallenna tai sulje se ensin ja avaa sitten liite uudelleen.",
+    "spreadsheetNotReady": "Laskentataulukko ei ole vielä valmis.",
+    "presentationNotReady": "Esitys ei ole vielä valmis.",
+    "documentNotReady": "Asiakirja ei ole vielä valmis.",
+    "documentSaveFailed": "Asiakirjaa ei voitu tallentaa."
+  },
+  "tabs": {
+    "untitled": "Nimetön {{n}}",
+    "memoryWarning_one": "{{count}} asiakirja on auki. Jokainen avoin asiakirja käyttää muistia; sulje asiakirjat, joita et enää tarvitse.",
+    "memoryWarning_other": "{{count}} asiakirjaa on auki. Jokainen avoin asiakirja käyttää muistia; sulje asiakirjat, joita et enää tarvitse."
+  },
+  "tabBar": {
+    "label": "Avoimet välilehdet",
+    "start": "Aloitus",
+    "startTitle": "Aloitus · uusi tai olemassa oleva asiakirja, muistiinpanot ja tietokanta",
+    "tabTitleUnsaved": "{{name}} · tallentamattomia muutoksia",
+    "dragOutHint": "Vedä ulos avataksesi omaan ikkunaan",
+    "unsavedA11y": ", tallentamattomia muutoksia",
+    "closeTab": "Sulje {{name}}",
+    "closeTitle": "Sulje · Ctrl+W",
+    "allTabs": "Kaikki avoimet välilehdet",
+    "addTab": "Lisää välilehti",
+    "addTabTitle": "Avaa uusi tai olemassa oleva asiakirja, muistiinpanot tai tietokanta",
+    "releaseOpensWindow": "Vapauttaminen avaa oman ikkunan",
+    "closeOthers": "Sulje muut",
+    "closeToRight": "Sulje oikealla olevat"
+  },
+  "windowMenu": {
+    "button": "Avoimet asiakirjat",
+    "buttonTitle": "Avoimet asiakirjat · vaihda Ctrl+Tab- tai Ctrl+F6-näppäimellä",
+    "empty": "Ei avoimia asiakirjoja.",
+    "thisWindow": "Tämä ikkuna",
+    "mainWindow": "Pääikkuna",
+    "windowNumber": "Ikkuna {{number}}",
+    "unsavedTitle": "Tallentamattomia muutoksia",
+    "modified": "muutettu",
+    "newWindow": "Uusi ikkuna"
+  },
+  "windows": {
+    "openInNewWindow": "Avaa uudessa ikkunassa",
+    "backToMainWindow": "Takaisin pääikkunaan",
+    "databaseMovedHere": "Database Studio on nyt tässä ikkunassa. Avaa tietokantasi uudelleen täällä, jos haluat jatkaa työskentelyä.",
+    "documentMoved": "Asiakirja on siirretty tallentamattomine muutoksineen. Kumoa-historia ei siirry mukana.",
+    "linkUnavailable": "Ikkunoiden välinen yhteys ei ole käytettävissä: {{error}}",
+    "closeGuardUnavailable": "Sulkemissuojaus ei ole käytettävissä: {{error}}",
+    "databaseModified": "Database Studio ei voi siirtää muutettua työkopiota toiseen ikkunaan. Vie tai tallenna tietokanta ensin.",
+    "otherWindowFailed": "Toinen ikkuna ei voinut avata välilehteä.",
+    "mainWindowNoResponse": "Pääikkuna ei vastaa. Välilehti pysyy auki tässä.",
+    "newWindowTimeout": "Uusi ikkuna ei ottanut asiakirjaa vastaan ajoissa. Välilehti pysyy auki tässä.",
+    "alreadyMainWindow": "Tämä on jo pääikkuna.",
+    "popupBlocked": "Uutta ikkunaa ei voitu avata. Salli ponnahdusikkunat tälle sivulle.",
+    "moveToWindow": "Siirrä kohteeseen {{window}}",
+    "newWindowFailed": "Uutta ikkunaa ei voitu avata: {{error}}"
+  },
+  "dropZone": {
+    "release": "Avaa vapauttamalla",
+    "explanation": "Asiakirjat, laskentataulukot ja esitykset avautuvat kukin omaan välilehteensä; MDB ja ACCDB avautuvat Database Studiossa.",
+    "image": "{{name}} on kuva. Vetäminen ei vielä lisää kuvia asiakirjaan; käytä komentoa Lisää › Kuva.",
+    "unsupported": "Tiedostoa {{name}} ei voi avata: muotoa .{{ext}} ei tueta. Open Office Studio avaa asiakirjoja, laskentataulukoita, esityksiä ja Access-tietokantoja."
+  },
+  "ribbon": {
+    "label": "Valintanauha",
+    "file": "Tiedosto",
+    "hide": "Piilota valintanauha",
+    "show": "Näytä valintanauha",
+    "hideHint": "Lisää tilaa asiakirjalle · Ctrl+F1",
+    "scrollLeft": "Vieritä valintanauhaa vasemmalle",
+    "scrollRight": "Vieritä valintanauhaa oikealle",
+    "commandFailed": "Komentoa ei voitu suorittaa.",
+    "nothingToUndo": "Ei mitään kumottavaa.",
+    "nothingToRedo": "Ei mitään tehtäväksi uudelleen.",
+    "presentationOpening": "Esitystä avataan vielä.",
+    "selectShapeFirst": "Valitse ensin muoto."
+  },
+  "theme": {
+    "light": "Vaalea teema",
+    "forge": "Forge-teema"
+  },
+  "host": {
+    "conflict": "Joku muu tallensi tämän asiakirjan sillä välin. Versiosi tallennettiin kopiona: {{name}}.",
+    "readOnly": "{{name}} avattiin vain luku -tilassa. Säilytä muutoksesi valitsemalla Tallenna nimellä.",
+    "openFailed": "Työtilan asiakirjaa ei voitu avata: {{error}}"
+  },
+  "title": {
+    "document": "{{document}} — {{app}} ({{module}})",
+    "module": "{{app}} ({{module}})"
+  },
+  "titleBar": {
+    "quickAccess": "Pikatyökalut",
+    "saveTitle": "Tallenna · Ctrl+S",
+    "settings": "Asetukset",
+    "minimize": "Pienennä",
+    "maximize": "Suurenna",
+    "restore": "Palauta",
+    "close": "Sulje ikkuna"
+  },
+  "toasts": {
+    "region": "Ilmoitukset",
+    "info": "Tiedoksi",
+    "success": "Valmis",
+    "warning": "Huomio",
+    "error": "Virhe",
+    "details": "Lisätiedot",
+    "less": "Vähemmän"
+  }
+}

@@ -29,24 +29,26 @@ export interface LettertypeFormulier {
   spatierenVanaf: number;
 }
 
+/** Onderstrepingen met hun i18n-sleutel (namespace writer); vertalen bij het tonen. */
 export const onderstrepingNamen: readonly (readonly [Onderstreping | "geen", string])[] = [
-  ["geen", "(geen)"],
-  ["single", "Enkel"],
-  ["words", "Alleen woorden"],
-  ["double", "Dubbel"],
-  ["thick", "Dik"],
-  ["dotted", "Gestippeld"],
-  ["dash", "Gestreept"],
-  ["dotDash", "Streep-punt"],
-  ["dotDotDash", "Streep-punt-punt"],
-  ["wave", "Golf"],
-  ["wavyDouble", "Dubbele golf"],
+  ["geen", "font.underline.none"],
+  ["single", "font.underline.single"],
+  ["words", "font.underline.wordsOnly"],
+  ["double", "font.underline.double"],
+  ["thick", "font.underline.thick"],
+  ["dotted", "font.underline.dotted"],
+  ["dash", "font.underline.dashed"],
+  ["dotDash", "font.underline.dotDash"],
+  ["dotDotDash", "font.underline.dotDotDash"],
+  ["wave", "font.underline.wave"],
+  ["wavyDouble", "font.underline.doubleWave"],
 ];
+/** Letterstijlen met hun i18n-sleutel (namespace writer). */
 export const stijlNamen: readonly (readonly [Letterstijl, string])[] = [
-  ["standaard", "Standaard"],
-  ["cursief", "Cursief"],
-  ["vet", "Vet"],
-  ["vetcursief", "Vet cursief"],
+  ["standaard", "font.style.regular"],
+  ["cursief", "font.style.italic"],
+  ["vet", "font.style.bold"],
+  ["vetcursief", "font.style.boldItalic"],
 ];
 
 export function formulierUit(t: GelezenTekens, standaardFamilie = "Calibri"): LettertypeFormulier {

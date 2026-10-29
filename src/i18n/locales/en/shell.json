@@ -1,0 +1,146 @@
+{
+  "header": {
+    "homeTitle": "Go to Start",
+    "homeLabel": "OpenAEC Office Studio · Start",
+    "version": "Version {{version}}",
+    "unsaved": "Unsaved changes",
+    "unchanged": "No changes",
+    "fileAndStart": "File and Start",
+    "openFileTitle": "Open a file in a new tab · Ctrl+O",
+    "openNotesBackupTitle": "Add a notes backup · Ctrl+O",
+    "openDatabaseTitle": "Open database · Ctrl+O",
+    "addBackup": "Add backup",
+    "saveAs": "Save as",
+    "saveAsTitle": "Save as · F12 or Ctrl+Shift+S (Ctrl+S saves to the open file)",
+    "busy": "Working…"
+  },
+  "message": {
+    "close": "Dismiss message",
+    "markdownNote": "Markdown keeps text and structure. Also save a DOCX for page layout, images and tracked changes."
+  },
+  "loading": {
+    "editor": "Loading editor…",
+    "notes": "Loading Notes…",
+    "email": "Loading Email Studio…",
+    "document": "Loading document…",
+    "fonts": "Loading fonts…"
+  },
+  "errors": {
+    "editorFailed": "The editor could not open this file: {{error}}",
+    "openFailed": "Opening failed: {{error}}",
+    "openFileFailed": "Opening {{name}} failed: {{error}}",
+    "saveFailed": "Saving failed: {{error}}",
+    "printFailed": "Printing failed: {{error}}",
+    "sendAsAttachmentFailed": "Sending as attachment failed: {{error}}",
+    "templateUnavailable": "Template not available",
+    "exampleFailed": "The example could not be opened.",
+    "fileSize": "Choose a file that is not empty and no larger than 100 MB.",
+    "unsupportedFormat": "{{name}}: this format is not supported.",
+    "emptyAttachment": "The attachment is empty.",
+    "databaseModifiedFile": "Database Studio has a modified working copy. Save or close it first, then open the file again.",
+    "databaseModifiedAttachment": "Database Studio has a modified working copy. Save or close it first, then open the attachment again.",
+    "spreadsheetNotReady": "The spreadsheet is not ready yet.",
+    "presentationNotReady": "The presentation is not ready yet.",
+    "documentNotReady": "The document is not ready yet.",
+    "documentSaveFailed": "The document could not be saved."
+  },
+  "tabs": {
+    "untitled": "Untitled {{n}}",
+    "memoryWarning_one": "{{count}} document is open. Every open document uses memory; close documents you no longer need.",
+    "memoryWarning_other": "{{count}} documents are open. Every open document uses memory; close documents you no longer need."
+  },
+  "tabBar": {
+    "label": "Open tabs",
+    "start": "Start",
+    "startTitle": "Start · new or existing document, Notes and Database",
+    "tabTitleUnsaved": "{{name}} · unsaved changes",
+    "dragOutHint": "Drag outside for a separate window",
+    "unsavedA11y": ", unsaved changes",
+    "closeTab": "Close {{name}}",
+    "closeTitle": "Close · Ctrl+W",
+    "allTabs": "All open tabs",
+    "addTab": "Add tab",
+    "addTabTitle": "Open a new or existing document, Notes or Database",
+    "releaseOpensWindow": "Release to open a separate window",
+    "closeOthers": "Close others",
+    "closeToRight": "Close tabs to the right"
+  },
+  "windowMenu": {
+    "button": "Open documents",
+    "buttonTitle": "Open documents · Ctrl+Tab or Ctrl+F6 to switch",
+    "empty": "No open documents.",
+    "thisWindow": "This window",
+    "mainWindow": "Main window",
+    "windowNumber": "Window {{number}}",
+    "unsavedTitle": "Unsaved changes",
+    "modified": "modified",
+    "newWindow": "New window"
+  },
+  "windows": {
+    "openInNewWindow": "Open in new window",
+    "backToMainWindow": "Back to main window",
+    "databaseMovedHere": "Database Studio is now in this window. Open your database here again if you want to continue working.",
+    "documentMoved": "The document has been moved, including unsaved changes. The Undo history does not move with it.",
+    "linkUnavailable": "Window link not available: {{error}}",
+    "closeGuardUnavailable": "Close protection not available: {{error}}",
+    "databaseModified": "Database Studio cannot take a modified working copy to another window. Export or save the database first.",
+    "otherWindowFailed": "The other window could not open the tab.",
+    "mainWindowNoResponse": "The main window is not responding. The tab stays open here.",
+    "newWindowTimeout": "The new window did not take over the document in time. The tab stays open here.",
+    "alreadyMainWindow": "This is already the main window.",
+    "popupBlocked": "The new window could not be opened. Allow pop-up windows for this page.",
+    "moveToWindow": "Move to {{window}}",
+    "newWindowFailed": "A new window could not be opened: {{error}}"
+  },
+  "dropZone": {
+    "release": "Release to open",
+    "explanation": "Documents, spreadsheets and presentations each open in their own tab; MDB and ACCDB open in Database Studio.",
+    "image": "{{name}} is an image. Dragging does not insert images into a document yet; use Insert › Image.",
+    "unsupported": "{{name}} cannot be opened: .{{ext}} is not supported. Open Office Studio opens documents, spreadsheets, presentations and Access databases."
+  },
+  "ribbon": {
+    "label": "Ribbon",
+    "file": "File",
+    "hide": "Hide ribbon",
+    "show": "Show ribbon",
+    "hideHint": "More room for your document · Ctrl+F1",
+    "scrollLeft": "Scroll ribbon left",
+    "scrollRight": "Scroll ribbon right",
+    "commandFailed": "The command could not be carried out.",
+    "nothingToUndo": "There is nothing to undo.",
+    "nothingToRedo": "There is nothing to redo.",
+    "presentationOpening": "The presentation is still opening.",
+    "selectShapeFirst": "Select a shape first."
+  },
+  "theme": {
+    "light": "Light theme",
+    "forge": "Forge theme"
+  },
+  "host": {
+    "conflict": "Someone else saved this document in the meantime. Your version was saved as a copy: {{name}}.",
+    "readOnly": "{{name}} was opened read-only. Use Save As to keep your changes.",
+    "openFailed": "The document from the workspace could not be opened: {{error}}"
+  },
+  "title": {
+    "document": "{{document}} — {{app}} ({{module}})",
+    "module": "{{app}} ({{module}})"
+  },
+  "titleBar": {
+    "quickAccess": "Quick access",
+    "saveTitle": "Save · Ctrl+S",
+    "settings": "Settings",
+    "minimize": "Minimize",
+    "maximize": "Maximize",
+    "restore": "Restore down",
+    "close": "Close window"
+  },
+  "toasts": {
+    "region": "Notifications",
+    "info": "Info",
+    "success": "Done",
+    "warning": "Attention",
+    "error": "Error",
+    "details": "Details",
+    "less": "Less"
+  }
+}

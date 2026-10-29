@@ -1,13 +1,12 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Dialoog } from "../../werkruimte/Dialoog";
 import { stijlNaam } from "./model";
 import { slaBevestigingOver, useStijlen } from "./StijlenBeheer";
 
-export const HERLAAD_MELDING =
-  "Het document wordt daarna opnieuw geladen; eerdere wijzigingen kun je dan niet meer ongedaan maken.";
-
 /** Bevestiging voor ‘stijl bijwerken op basis van de selectie’. */
 export function Bevestiging({ styleId }: { styleId: string }) {
+  const { t } = useTranslation(["writer", "common"]);
   const staat = useStijlen();
   const [nietMeer, setNietMeer] = useState(false);
   const [bezig, setBezig] = useState(false);
@@ -15,12 +14,12 @@ export function Bevestiging({ styleId }: { styleId: string }) {
   const naam = stijl ? stijlNaam(stijl) : styleId;
   return (
     <Dialoog
-      titel={`${naam} bijwerken`}
+      titel={t("styles.update.title", { name: naam })}
       sluit={staat.sluit}
       acties={
         <>
           <button type="button" className="werkruimte-knop" onClick={staat.sluit}>
-            Annuleren
+            {t("common:cancel")}
           </button>
           <button
             type="button"
@@ -39,20 +38,20 @@ export function Bevestiging({ styleId }: { styleId: string }) {
                 });
             }}
           >
-            Bijwerken
+            {t("styles.update.confirm")}
           </button>
         </>
       }
     >
       <p>
-        De stijl ‘{naam}’ neemt de opmaak van de selectie over (lettertype, grootte, nadruk, kleur
-        {stijl?.type === "character" ? "" : ", uitlijning, afstand en inspringing"}). Alle tekst
-        met deze stijl verandert mee.
+        {stijl?.type === "character"
+          ? t("styles.update.explanationCharacter", { name: naam })
+          : t("styles.update.explanationParagraph", { name: naam })}
       </p>
-      <p className="werkruimte-uitleg">{HERLAAD_MELDING}</p>
+      <p className="werkruimte-uitleg">{t("styles.reloadNotice")}</p>
       <label className="werkruimte-vink">
         <input type="checkbox" checked={nietMeer} onChange={(e) => setNietMeer(e.target.checked)} />
-        Niet meer vragen tijdens deze sessie
+        {t("styles.update.dontAskAgain")}
       </label>
     </Dialoog>
   );

@@ -1,0 +1,273 @@
+{
+  "types": {
+    "column": {
+      "name": "عمودي",
+      "description": "مقارنة القيم جنبًا إلى جنب"
+    },
+    "stackedColumn": {
+      "name": "عمودي مكدس",
+      "description": "الأجزاء والإجمالي لكل فئة"
+    },
+    "percentColumn": {
+      "name": "عمودي 100%",
+      "description": "الحصص لكل فئة"
+    },
+    "bar": {
+      "name": "شريطي",
+      "description": "أفقي، للأسماء الطويلة"
+    },
+    "line": {
+      "name": "خطي",
+      "description": "الاتجاه عبر الزمن"
+    },
+    "lineMarkers": {
+      "name": "خطي مع علامات",
+      "description": "الاتجاه مع نقاط بيانات ظاهرة"
+    },
+    "area": {
+      "name": "مساحي",
+      "description": "الاتجاه مع التركيز على الحجم"
+    },
+    "pie": {
+      "name": "دائري",
+      "description": "توزيع سلسلة واحدة"
+    },
+    "doughnut": {
+      "name": "حلقي",
+      "description": "توزيع بمركز مفتوح"
+    },
+    "scatter": {
+      "name": "مبعثر (XY)",
+      "description": "العلاقة بين رقمين"
+    },
+    "combo": {
+      "name": "عمودي + خطي",
+      "description": "آخر سلسلة كخط على محور ثانوي"
+    }
+  },
+  "unknownType": "نوع غير معروف",
+  "busy": "جارٍ المعالجة…",
+  "defaults": {
+    "seriesName": "السلسلة {{n}}",
+    "categoryName": "الفئة {{n}}",
+    "chartName": "مخطط {{n}}",
+    "sheetName": "مخطط {{n}}",
+    "true": "TRUE",
+    "false": "FALSE"
+  },
+  "ribbon": {
+    "charts": "المخططات",
+    "chart": "مخطط",
+    "editChart": "تحرير المخطط",
+    "allCharts": "كل المخططات",
+    "dataAndFormat": "البيانات والتنسيق",
+    "overview": "نظرة عامة",
+    "type": "النوع",
+    "changeType": "تغيير نوع المخطط",
+    "data": "البيانات",
+    "selectData": "تحديد البيانات",
+    "layout": "التخطيط",
+    "titleAndLegend": "العنوان ووسيلة الإيضاح",
+    "delete": "حذف",
+    "deleteChart": "حذف المخطط",
+    "withShortcut": "{{name}} · {{shortcut}}"
+  },
+  "dialog": {
+    "title": {
+      "insert": "إدراج مخطط",
+      "edit": "تحرير المخطط"
+    },
+    "button": {
+      "insert": "إدراج",
+      "edit": "تحديث"
+    },
+    "reloadNote": {
+      "insert": "يُعاد تحميل المستند بعد الإدراج. لا يمكن بعد ذلك التراجع عن التغييرات السابقة.",
+      "edit": "يُعاد تحميل المستند بعد التحديث. لا يمكن بعد ذلك التراجع عن التغييرات السابقة."
+    },
+    "closeTitle": "إغلاق (Esc)",
+    "type": "النوع",
+    "data": "البيانات",
+    "cellRange": "نطاق الخلايا",
+    "cellRangePlaceholder": "مثلًا A1:D6",
+    "noContiguousRange": "لا تشكّل مراجع هذا المخطط نطاقًا متصلًا؛ تبقى البيانات دون تغيير حتى تُدخل نطاقًا.",
+    "firstRowNames": "الصف الأول يحتوي على أسماء",
+    "firstColumnNames": "العمود الأول يحتوي على أسماء",
+    "seriesIn": "السلاسل في",
+    "columns": "الأعمدة",
+    "rows": "الصفوف",
+    "series": "السلسلة",
+    "seriesNoNumbersTitle": "{{name}}: لا أرقام، لم تُضمَّن",
+    "noNumbers": "(لا أرقام)",
+    "enterRange": "أدخل نطاق الخلايا الذي يحتوي على البيانات.",
+    "placeCursorInTable": "ضع المؤشر أولًا في جدول يحتوي على أرقام.",
+    "titles": "العناوين",
+    "chartTitle": "العنوان",
+    "subtitle": "العنوان الفرعي",
+    "categoryAxis": "محور الفئات",
+    "valueAxis": "محور القيم",
+    "horizontalAxis": "المحور الأفقي",
+    "verticalAxis": "المحور العمودي",
+    "secondaryAxis": "المحور الثانوي",
+    "format": "التنسيق",
+    "legend": "وسيلة الإيضاح",
+    "gridlines": "خطوط الشبكة",
+    "dataLabels": "تسميات البيانات",
+    "decimals": "المنازل العشرية",
+    "placement": "الموضع",
+    "besideData": "بجانب البيانات في هذه الورقة",
+    "newSheet": "في ورقة جديدة",
+    "sheetName": "اسم الورقة",
+    "summary": {
+      "series_zero": "{{n}} سلسلة",
+      "series_one": "{{n}} سلسلة",
+      "series_two": "{{n}} سلسلة",
+      "series_few": "{{n}} سلاسل",
+      "series_many": "{{n}} سلسلة",
+      "series_other": "{{n}} سلسلة",
+      "categories_zero": "{{n}} فئة",
+      "categories_one": "{{n}} فئة",
+      "categories_two": "{{n}} فئة",
+      "categories_few": "{{n}} فئات",
+      "categories_many": "{{n}} فئة",
+      "categories_other": "{{n}} فئة",
+      "text": "{{series}} · {{categories}}",
+      "withSheet": "{{series}} · {{categories}} · {{sheet}}"
+    }
+  },
+  "legend": {
+    "bottom": "أسفل",
+    "right": "يمين",
+    "top": "أعلى",
+    "left": "يسار",
+    "none": "بلا وسيلة إيضاح"
+  },
+  "dataSheet": {
+    "row": "صف",
+    "series": "سلسلة",
+    "removeLastRow": "حذف الصف الأخير",
+    "removeLastSeries": "حذف السلسلة الأخيرة",
+    "paste": "لصق",
+    "pasteTitle": "لصق نص مفصول بعلامات جدولة من الحافظة، مثلًا منسوخ من جدول بيانات",
+    "fromTable": "من الجدول المحدد",
+    "fromTableTitle": "يأخذ الجدول الذي يوجد فيه المؤشر",
+    "pasteNotAllowed": "اللصق بالزر غير مسموح هنا. انقر في خلية واستخدم Ctrl+V.",
+    "corner": "خلية الزاوية",
+    "seriesNameLabel": "اسم السلسلة {{n}}",
+    "categoryLabel": "الفئة {{n}}",
+    "valueLabel": "القيمة: الصف {{row}}، السلسلة {{series}}"
+  },
+  "preview": {
+    "label": "معاينة: {{title}}",
+    "untitled": "معاينة: مخطط بلا عنوان"
+  },
+  "list": {
+    "title": "المخططات في هذا المستند",
+    "empty": "لا يحتوي هذا المستند على مخططات بعد.",
+    "edit": "تحرير",
+    "delete": "حذف",
+    "deleteLabel": "حذف {{name}}",
+    "place": {
+      "slide": "الشريحة {{n}}",
+      "sheet": "الورقة {{name}}",
+      "text": "المخطط {{n}} في النص"
+    }
+  },
+  "deleteConfirm": {
+    "title": "حذف المخطط",
+    "text": "حذف ‘{{name}}’؟ سيُعاد تحميل المستند بعد ذلك؛ لا يمكن التراجع عن التغييرات السابقة.",
+    "textSheet": "حذف ‘{{name}}’ من الورقة {{sheet}}؟ سيُعاد تحميل المستند بعد ذلك؛ لا يمكن التراجع عن التغييرات السابقة.",
+    "button": "حذف"
+  },
+  "errors": {
+    "unknownType": "نوع مخطط غير معروف.",
+    "noSeries": "يحتاج المخطط إلى سلسلة بيانات واحدة على الأقل.",
+    "tooManySeries": "يمكن أن يحتوي المخطط هنا على {{max}} سلسلة كحد أقصى.",
+    "tooManyCategories": "يمكن أن يحتوي المخطط هنا على {{max}} فئة كحد أقصى.",
+    "noCategories": "يحتاج المخطط إلى فئة واحدة على الأقل.",
+    "valueCountMismatch": "السلسلة ‘{{name}}’ لا تحتوي على عدد من القيم يساوي عدد الفئات.",
+    "noNumbers": "لا تحتوي البيانات على أي أرقام.",
+    "comboNeedsTwoSeries": "يحتاج المخطط المركّب إلى سلسلتين على الأقل: أعمدة وخط.",
+    "scatterNeedsNumbers": "يحتاج المخطط المبعثر إلى أرقام كقيم X في العمود أو الصف الأول.",
+    "titleTooLong": "يمكن أن يتكون العنوان من {{max}} حرفًا كحد أقصى.",
+    "invalidColor": "اللون ‘{{color}}’ ليس لونًا صالحًا.",
+    "noNumericColumn": "لا يحتوي أي من أعمدة النطاق على أرقام، لذا لا يوجد ما يُرسم. اختر نطاقًا يحتوي على عمود أرقام واحد على الأقل، أو اضبط ‘السلاسل في’ على الصفوف.",
+    "noNumericRow": "لا يحتوي أي من صفوف النطاق على أرقام، لذا لا يوجد ما يُرسم. اختر نطاقًا يحتوي على صف أرقام واحد على الأقل، أو اضبط ‘السلاسل في’ على الأعمدة.",
+    "chooseSeries": "اختر سلسلة واحدة على الأقل للمخطط.",
+    "rangeTooLarge": "النطاق كبير جدًا: {{max}} خلية كحد أقصى.",
+    "noDataBesideHeaders": "لا يحتوي النطاق على بيانات غير العناوين.",
+    "pasteTooLarge": "البيانات الملصقة أكبر من أن تُستخدم في مخطط.",
+    "invalidRange": "هذا ليس نطاق خلايا صالحًا. استخدم مثلًا A1:D6 أو 'الورقة 1'!A1:D6.",
+    "noSuchSheet": "لا توجد ورقة باسم ‘{{name}}’.",
+    "spreadsheetNotReady": "جدول البيانات ليس جاهزًا بعد.",
+    "spreadsheetReadOnly": "جدول البيانات للقراءة فقط.",
+    "documentNotReady": "المستند ليس جاهزًا بعد.",
+    "presentationNotEditable": "لا يمكن تحرير العرض التقديمي الآن.",
+    "selectChartFirst": "حدد مخططًا أولًا.",
+    "chartGone": "لم يعد من الممكن العثور على المخطط.",
+    "notEditableHere": "لا يمكن تحرير هذا المخطط هنا.",
+    "notEditable": "لا يمكن تحرير هذا المخطط.",
+    "package": {
+      "tooLarge": "المستند أكبر من أن يُحرَّر فيه مخطط.",
+      "tooManyParts": "يحتوي المستند على أجزاء كثيرة جدًا أو كبيرة جدًا.",
+      "notZip": "المستند ليس ملف Office صالحًا (zip).",
+      "invalidPartName": "يحتوي المستند على اسم جزء غير صالح.",
+      "noContentTypes": "الملف [Content_Types].xml مفقود من المستند.",
+      "missingPart": "الجزء {{part}} مفقود من المستند.",
+      "noFreePartName": "لم يتبقَّ اسم جزء متاح."
+    },
+    "xml": {
+      "tooLarge": "جزء XML أكبر من أن تتم معالجته.",
+      "damaged": "جزء XML تالف.",
+      "doctype": "لا تتم معالجة XML الذي يحتوي على DOCTYPE لأسباب أمنية.",
+      "tooDeep": "جزء XML متداخل بعمق كبير.",
+      "overlappingChanges": "خطأ داخلي: تغييرات XML متداخلة."
+    },
+    "chartXml": {
+      "notDrawingML": "هذا الجزء ليس مخطط DrawingML.",
+      "noPlotArea": "لا توجد منطقة رسم في المخطط.",
+      "unusualPrefix": "يستخدم هذا المخطط صيغة XML غير مألوفة ولا يمكن تحريره هنا بأمان."
+    },
+    "document": {
+      "noMainPart": "الجزء الرئيسي مفقود من المستند.",
+      "tooManyCharts": "يحتوي هذا المستند بالفعل على {{total}} مخطط؛ لا يُدعم المزيد.",
+      "invalidSheetName": "اسم ورقة غير صالح: 31 حرفًا كحد أقصى، دون \\ / ? * [ ] :",
+      "sheetExists": "توجد بالفعل ورقة باسم ‘{{name}}’.",
+      "noSheetList": "لا يحتوي المصنف على قائمة أوراق.",
+      "drawingMissing": "رسم هذه الورقة مفقود أو تالف.",
+      "noSuchWorksheet": "الورقة المختارة غير موجودة أو ليست ورقة عمل.",
+      "notPlainWorksheet": "لا يمكن وضع المخطط إلا على ورقة عمل عادية.",
+      "drawingDamaged": "رسم هذه الورقة تالف.",
+      "docxUnusualPrefix": "يستخدم هذا المستند صيغة XML غير مألوفة؛ لا يمكن إدراج المخطط بأمان.",
+      "noBody": "لا يحتوي المستند على متن.",
+      "tableTooLarge": "الجدول أكبر من أن يُستخدم في مخطط.",
+      "noSuchSlide": "الشريحة المختارة غير موجودة.",
+      "slideUnusualPrefix": "تستخدم هذه الشريحة صيغة XML غير مألوفة؛ لا يمكن إدراج المخطط بأمان.",
+      "noShapeTree": "لا تحتوي الشريحة على شجرة أشكال.",
+      "chartRemoved": "لم يعد المخطط موجودًا في المستند.",
+      "chartNotFound": "لم يتم العثور على المخطط.",
+      "cannotRemove": "لا يمكن إزالة كائن المخطط."
+    }
+  },
+  "read": {
+    "reasons": {
+      "extendedChart": "هذا مخطط موسّع (مثل مخطط شلالي أو مخطط شجري) لا يمكن تحريره هنا.",
+      "unsupportedType": "يستخدم هذا المخطط نوعًا لا يمكن تحريره هنا ({{types}}).",
+      "noReadableSeries": "لا يحتوي المخطط على سلاسل قابلة للقراءة.",
+      "unsupportedCombination": "يجمع هذا المخطط بين أنواع بطريقة لا يمكن تحريرها هنا.",
+      "noSeries": "لا يحتوي المخطط على سلاسل بيانات.",
+      "invalid": "لا يمكن تحرير هذا المخطط هنا: {{reason}}",
+      "unusualPrefix": "يستخدم هذا المخطط صيغة XML غير مألوفة ولا يمكن تحريره هنا بأمان."
+    },
+    "warnings": {
+      "stackedBars": "توضع الأشرطة المكدسة جنبًا إلى جنب عند التحرير.",
+      "stackedLines": "تصبح الخطوط المكدسة خطوطًا منفصلة عند التحرير.",
+      "stackedAreas": "تصبح المساحات المكدسة مساحات منفصلة عند التحرير.",
+      "linesAfterColumns": "توضع سلاسل الخطوط بعد الأعمدة عند التحرير.",
+      "lastSeriesAsLine": "عند التحرير، تُرسم السلسلة الأخيرة فقط كخط.",
+      "multiLevelCategories": "تصبح الفئات متعددة المستويات بمستوى واحد عند التحرير.",
+      "moreValuesThanCategories": "السلسلة ‘{{name}}’ تحتوي على قيم أكثر من عدد الفئات.",
+      "trendlinesDropped": "تُزال خطوط الاتجاه وأشرطة الخطأ عند التحرير."
+    }
+  }
+}

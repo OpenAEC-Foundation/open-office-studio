@@ -29,7 +29,7 @@ function winkel<T>(begin: T) {
 export type Weergave = "afdruk" | "lees";
 
 export interface TekstExtraStatus {
-  /** BCP-47-code en Nederlandse naam van de taal op de cursor, of null. */
+  /** BCP-47-code en naam (in de interfacetaal) van de taal op de cursor, of null. */
   taal: { code: string; naam: string } | null;
   kiesTaal: () => void;
   /** Wijzigingen bijhouden aan/uit; null als het niet beschikbaar is. */

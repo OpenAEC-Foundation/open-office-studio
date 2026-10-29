@@ -2,6 +2,8 @@
  * Omrekenen tussen wat de gebruiker ziet (cm, pt, regels) en de eenheden van
  * OOXML (twips, 240-sten van een regel, halve punten, achtste punten).
  */
+import i18next from "../i18n/config";
+import { formatGetal } from "../i18n/opmaak";
 
 /** 1 inch = 1440 twips = 2,54 cm. */
 export const TWIPS_PER_CM = 1440 / 2.54;
@@ -24,9 +26,12 @@ export function rond(waarde: number, decimalen = 2) {
   return Math.round(waarde * f) / f;
 }
 
-/** Getal in Nederlandse notatie: komma als decimaalteken, geen overbodige nullen. */
+/**
+ * Getal in de notatie van de interfacetaal (nl: komma als decimaalteken),
+ * zonder duizendtallen en zonder overbodige nullen.
+ */
 export function getalTekst(waarde: number, decimalen = 2) {
-  return rond(waarde, decimalen).toLocaleString("nl-NL", {
+  return formatGetal(rond(waarde, decimalen), {
     maximumFractionDigits: decimalen,
     useGrouping: false,
   });
@@ -59,14 +64,32 @@ export type Regelafstand =
 
 export type RegelSoort = Regelafstand["soort"];
 
-export const regelSoortNamen: Record<RegelSoort, string> = {
-  enkel: "Enkel",
-  anderhalf: "1,5 regel",
-  dubbel: "Dubbel",
-  minimaal: "Minimaal",
-  exact: "Exact",
-  meerdere: "Meerdere",
+const REGELSOORT_SLEUTEL: Record<RegelSoort, string> = {
+  enkel: "single",
+  anderhalf: "onePointFive",
+  dubbel: "double",
+  minimaal: "atLeast",
+  exact: "exactly",
+  meerdere: "multiple",
 };
+
+/** Weergavenaam van een regelafstandsoort in de interfacetaal. */
+export const regelSoortNaam = (soort: RegelSoort) =>
+  i18next.t(`writer:general.lineSpacing.${REGELSOORT_SLEUTEL[soort]}`);
+
+/**
+ * Weergavenamen per soort, in de volgorde van het venster. De waarden zijn
+ * getters: ze worden bij elk lezen (tijdens het tekenen) vertaald.
+ */
+export const regelSoortNamen = Object.defineProperties(
+  {} as Record<RegelSoort, string>,
+  Object.fromEntries(
+    (Object.keys(REGELSOORT_SLEUTEL) as RegelSoort[]).map((soort) => [
+      soort,
+      { enumerable: true, get: () => regelSoortNaam(soort) },
+    ]),
+  ),
+);
 
 /** OOXML: `w:line` met `w:lineRule` (auto = 240-sten van een regel, anders twips). */
 export interface OoxmlRegelafstand {

@@ -1,0 +1,141 @@
+{
+  "dialogs": {
+    "cancel": "Annuller",
+    "saveAsEllipsis": "Gem som…",
+    "officeFile": "Kontorfil",
+    "officeFiles": "Kontorfiler",
+    "untitled": "Uden titel",
+    "saveCopy": "Gem en kopi",
+    "saveAs": "Gem som",
+    "openFile": "Åbn fil",
+    "replaceFile": {
+      "title": "Erstat fil",
+      "message": "Filen {{path}} findes allerede. Vil du erstatte den?"
+    },
+    "unsavedChanges": {
+      "title": "Ikke-gemte ændringer",
+      "message_one": "Ét dokument i dette vindue har ændringer, der ikke er gemt. De går tabt. Vil du lukke alligevel?",
+      "message_other": "{{count}} dokumenter i dette vindue har ændringer, der ikke er gemt. De går tabt. Vil du lukke alligevel?"
+    },
+    "fileChanged": {
+      "title": "Filen er ændret",
+      "missing": "{{name}} findes ikke længere på den oprindelige placering. Vil du oprette den igen med din version eller gemme den et andet sted?",
+      "changedExternally": "{{name}} er blevet ændret uden for Open Office Studio, siden du åbnede den. Overskrivning kasserer disse ændringer.",
+      "overwrite": "Overskriv"
+    },
+    "foreignFormat": {
+      "title": "Gem som {{format}}",
+      "message": "{{name}} opdateres i formatet {{format}}. Kontorprogrammet konverterer dokumentet til det; formatering, som {{format}} ikke understøtter, kan gå tabt.",
+      "hint": "Vælg Gem som… for at beholde en DOCX, XLSX eller PPTX.",
+      "update": "Opdater som {{format}}"
+    },
+    "chooseConverter": "Vælg konverteringsprogram (soffice)",
+    "databaseExport": {
+      "title": "Gem databaseeksport",
+      "filter": "Databaseeksport",
+      "sqliteFilter": "SQLite-arbejdskopi",
+      "replaceTitle": "Erstat eksport",
+      "replaceMessage": "Denne eksportfil findes allerede. Vil du erstatte den?"
+    }
+  },
+  "errors": {
+    "file": {
+      "invalidBody": "Filen er tom, større end 100 MB eller blev ikke sendt som binære data.",
+      "emptyOrTooLarge": "Filen er tom eller større end 100 MB.",
+      "formatInfoMissing": "Formatoplysningerne mangler.",
+      "formatMissing": "Formatet mangler.",
+      "targetFolderMissing": "Destinationsmappen mangler.",
+      "nameMissing": "Filnavnet mangler.",
+      "nameInvalidChars": "Filnavnet indeholder ugyldige tegn.",
+      "unsupportedFormat": "Filformatet understøttes ikke.",
+      "extensionMismatch": "Den valgte filtype passer ikke til dokumentet.",
+      "alreadyOpenedOrOtherWindow": "Denne fil er allerede åben eller er ikke beregnet til dette vindue.",
+      "notThisWindow": "Denne fil hører ikke til dette vindue.",
+      "notLinked": "Denne fil er ikke længere knyttet til denne fane.",
+      "tokenMissing": "Tokenet mangler.",
+      "openInOtherTab": "{{name}} er åben i en anden fane. Luk den først, eller vælg et andet navn.",
+      "readOnly": "Ingen skriverettighed i denne mappe, eller filen er skrivebeskyttet ({{path}}). Vælg en anden placering.",
+      "notInRecentList": "Denne fil er ikke længere på listen."
+    },
+    "preferences": {
+      "tooLarge": "Indstillingerne er større end 64 kB.",
+      "invalid": "Indstillingerne er ikke et gyldigt JSON-objekt.",
+      "configDirUnavailable": "Appens konfigurationsmappe er ikke tilgængelig.",
+      "pathInvalid": "Ugyldig sti til indstillingerne."
+    },
+    "font": {
+      "notInstalled": "Skrifttypen {{family}} er ikke installeret på denne computer.",
+      "notFound": "Skrifttypen blev ikke fundet.",
+      "fileTooLarge": "Denne skrifttypefil er for stor.",
+      "inCollection": "Denne skrifttype er en del af en samling (.ttc) og kan ikke bruges alene.",
+      "unreadable": "Skrifttypefilen kunne ikke læses.",
+      "nameInvalid": "Ugyldigt skrifttypenavn."
+    },
+    "recovery": {
+      "keyInvalid": "Ugyldig gendannelsesnøgle.",
+      "spaceFull": "Pladsen til gendannelseskopier (512 MB) er fuld. Gem dine dokumenter.",
+      "sessionMissing": "Sessionen mangler.",
+      "keyMissing": "Nøglen mangler.",
+      "dataInvalid": "Ugyldige gendannelsesdata.",
+      "unknownDocumentType": "Ukendt dokumenttype.",
+      "sessionNotThisWindow": "Denne gendannelsessession hører ikke til dette vindue.",
+      "sessionOtherWindow": "Denne gendannelsessession hører til et andet vindue.",
+      "sessionStillRunning": "Denne session kører stadig."
+    },
+    "window": {
+      "closed": "Dette vindue er blevet lukket.",
+      "transferEmptyOrTooLarge": "Overførslen er tom eller for stor.",
+      "mainWindowUnavailable": "Hovedvinduet er ikke tilgængeligt.",
+      "openFailed": "Vinduet kunne ikke åbnes: {{error}}",
+      "transferExpired": "Denne overførsel er udløbet eller er allerede hentet.",
+      "transferAlreadyTaken": "Denne overførsel er allerede hentet.",
+      "transferUnknown": "Denne overførsel er ukendt."
+    },
+    "conversion": {
+      "unknownModule": "Ukendt kontormodul.",
+      "sourceFormatMismatch": "Kildeformatet hører ikke til dette modul.",
+      "outputFormatUnsupported": "Dette outputformat understøttes ikke.",
+      "outputFormatDirect": "Dette outputformat oprettes direkte i appen, ikke ved konvertering.",
+      "invalidOptions": "Ugyldige konverteringsindstillinger.",
+      "chooseSoffice": "Vælg programmet soffice (Windows: soffice.exe) i programmappen til kontorprogrammet.",
+      "chosenFileMissing": "Den valgte fil findes ikke.",
+      "chosenPathNotFile": "Den valgte sti er ikke en fil.",
+      "chosenFileNotExecutable": "Den valgte fil kan ikke køres.",
+      "appDataDirUnavailable": "Appens datamappe er ikke tilgængelig.",
+      "startFailed": "Konverteringen kunne ikke starte: {{error}}",
+      "failed": "Konverteringen mislykkedes ({{reason}}). Originalen er bevaret.",
+      "exitCode": "afslutningskode {{code}}",
+      "processAborted": "processen blev afbrudt",
+      "timeout": "Konverteringen overskred tidsgrænsen og blev stoppet. Originalen er bevaret.",
+      "profilePathInvalid": "Stien til den midlertidige profil er ugyldig.",
+      "inputSize": "Vælg en fil på højst 100 MB, som ikke er tom.",
+      "runtimeMissing": "Dette format kræver et kontorprogram (LibreOffice). Det blev ikke fundet: installer det, vælg programmet under Gem som, eller angiv OPENAEC_CONVERSIE_PROGRAMMA. DOCX, XLSX og PPTX virker direkte.",
+      "notConverted": "Denne fil kunne ikke konverteres. Den kan være beskadiget eller beskyttet, eller formatfilteret mangler i det lokale kontorprogram.",
+      "multipleOutputs": "Konverteringen gav mere end én fil.",
+      "noUsableOutput": "Konverteringen gav ikke en brugbar fil på højst 100 MB."
+    },
+    "databaseExport": {
+      "emptyOrTooLarge": "Eksporten er tom eller større end 100 MB.",
+      "emptyInvalidOrTooLarge": "Eksporten er tom, ugyldig eller større end 100 MB.",
+      "nameMissing": "Filnavn mangler.",
+      "nameInvalid": "Ugyldigt filnavn.",
+      "notSqlite": "Dette er ikke en SQLite-arbejdskopi.",
+      "typeNotAllowed": "Kun eksport som CSV, kildekode, rapport og SQLite-arbejdskopi er tilladt. Access-databaser overskrives aldrig.",
+      "textNotUtf8": "En teksteksport skal være gyldig UTF-8-tekst.",
+      "sendAsBinary": "Send eksporten som binære data på højst 100 MB.",
+      "extensionMismatch": "Den valgte filtype passer ikke til eksporten."
+    }
+  },
+  "launcher": {
+    "officeStudio": {
+      "genericName": "Kontorpakke",
+      "comment": "Lokalt OpenAEC-kontormiljø",
+      "keywords": "tekstbehandling;regneark;præsentation;database;e-mail;kontor;office;"
+    },
+    "databaseStudio": {
+      "genericName": "Databaseviser",
+      "comment": "Åbn gamle MDB- og ACCDB-databaser lokalt",
+      "keywords": "database;tabel;forespørgsel;access;"
+    }
+  }
+}

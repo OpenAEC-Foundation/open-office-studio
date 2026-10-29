@@ -1,0 +1,269 @@
+{
+  "types": {
+    "column": {
+      "name": "Sloupcový",
+      "description": "Porovnání hodnot vedle sebe"
+    },
+    "stackedColumn": {
+      "name": "Skládaný sloupcový",
+      "description": "Části a celek podle kategorie"
+    },
+    "percentColumn": {
+      "name": "100% sloupcový",
+      "description": "Podíly podle kategorie"
+    },
+    "bar": {
+      "name": "Pruhový",
+      "description": "Vodorovný, pro dlouhé názvy"
+    },
+    "line": {
+      "name": "Spojnicový",
+      "description": "Vývoj v čase"
+    },
+    "lineMarkers": {
+      "name": "Spojnicový se značkami",
+      "description": "Vývoj s viditelnými datovými body"
+    },
+    "area": {
+      "name": "Plošný",
+      "description": "Vývoj s důrazem na velikost"
+    },
+    "pie": {
+      "name": "Výsečový",
+      "description": "Rozdělení jedné řady"
+    },
+    "doughnut": {
+      "name": "Prstencový",
+      "description": "Rozdělení s prázdným středem"
+    },
+    "scatter": {
+      "name": "Bodový (XY)",
+      "description": "Vztah mezi dvěma čísly"
+    },
+    "combo": {
+      "name": "Sloupcový + spojnicový",
+      "description": "Poslední řada jako čára na vedlejší ose"
+    }
+  },
+  "unknownType": "Neznámý typ",
+  "busy": "Zpracování…",
+  "defaults": {
+    "seriesName": "Řada {{n}}",
+    "categoryName": "Kategorie {{n}}",
+    "chartName": "Graf {{n}}",
+    "sheetName": "Graf {{n}}",
+    "true": "PRAVDA",
+    "false": "NEPRAVDA"
+  },
+  "ribbon": {
+    "charts": "Grafy",
+    "chart": "Graf",
+    "editChart": "Upravit graf",
+    "allCharts": "Všechny grafy",
+    "dataAndFormat": "Data a formátování",
+    "overview": "Přehled",
+    "type": "Typ",
+    "changeType": "Změnit typ grafu",
+    "data": "Data",
+    "selectData": "Vybrat data",
+    "layout": "Rozložení",
+    "titleAndLegend": "Název a legenda",
+    "delete": "Odstranit",
+    "deleteChart": "Odstranit graf",
+    "withShortcut": "{{name}} · {{shortcut}}"
+  },
+  "dialog": {
+    "title": {
+      "insert": "Vložit graf",
+      "edit": "Upravit graf"
+    },
+    "button": {
+      "insert": "Vložit",
+      "edit": "Aktualizovat"
+    },
+    "reloadNote": {
+      "insert": "Po vložení se dokument znovu načte. Změny provedené předtím už nebude možné vrátit zpět.",
+      "edit": "Po aktualizaci se dokument znovu načte. Změny provedené předtím už nebude možné vrátit zpět."
+    },
+    "closeTitle": "Zavřít (Esc)",
+    "type": "Typ",
+    "data": "Data",
+    "cellRange": "Oblast buněk",
+    "cellRangePlaceholder": "Například A1:D6",
+    "noContiguousRange": "Odkazy tohoto grafu netvoří souvislou oblast; data zůstanou beze změny, dokud nezadáte oblast.",
+    "firstRowNames": "První řádek obsahuje názvy",
+    "firstColumnNames": "První sloupec obsahuje názvy",
+    "seriesIn": "Řady v",
+    "columns": "sloupcích",
+    "rows": "řádcích",
+    "series": "Řada",
+    "seriesNoNumbersTitle": "{{name}}: žádná čísla, nezahrnuto",
+    "noNumbers": "(žádná čísla)",
+    "enterRange": "Zadejte oblast buněk, která obsahuje data.",
+    "placeCursorInTable": "Nejprve umístěte kurzor do tabulky s čísly.",
+    "titles": "Názvy",
+    "chartTitle": "Název",
+    "subtitle": "Podnázev",
+    "categoryAxis": "Osa kategorií",
+    "valueAxis": "Osa hodnot",
+    "horizontalAxis": "Vodorovná osa",
+    "verticalAxis": "Svislá osa",
+    "secondaryAxis": "Vedlejší osa",
+    "format": "Formát",
+    "legend": "Legenda",
+    "gridlines": "Mřížka",
+    "dataLabels": "Popisky dat",
+    "decimals": "Desetinná místa",
+    "placement": "Umístění",
+    "besideData": "Vedle dat na tomto listu",
+    "newSheet": "Na novém listu",
+    "sheetName": "Název listu",
+    "summary": {
+      "series_one": "{{n}} řada",
+      "series_few": "{{n}} řady",
+      "series_many": "{{n}} řady",
+      "series_other": "{{n}} řad",
+      "categories_one": "{{n}} kategorie",
+      "categories_few": "{{n}} kategorie",
+      "categories_many": "{{n}} kategorie",
+      "categories_other": "{{n}} kategorií",
+      "text": "{{series}} · {{categories}}",
+      "withSheet": "{{series}} · {{categories}} · {{sheet}}"
+    }
+  },
+  "legend": {
+    "bottom": "Dole",
+    "right": "Vpravo",
+    "top": "Nahoře",
+    "left": "Vlevo",
+    "none": "Bez legendy"
+  },
+  "dataSheet": {
+    "row": "Řádek",
+    "series": "Řada",
+    "removeLastRow": "Odstranit poslední řádek",
+    "removeLastSeries": "Odstranit poslední řadu",
+    "paste": "Vložit",
+    "pasteTitle": "Vložte ze schránky text oddělený tabulátory, například zkopírovaný z tabulky",
+    "fromTable": "Z vybrané tabulky",
+    "fromTableTitle": "Převezme tabulku, ve které je kurzor",
+    "pasteNotAllowed": "Vkládání tlačítkem zde není povoleno. Klikněte do buňky a použijte Ctrl+V.",
+    "corner": "Rohová buňka",
+    "seriesNameLabel": "Název řady {{n}}",
+    "categoryLabel": "Kategorie {{n}}",
+    "valueLabel": "Hodnota řádek {{row}}, řada {{series}}"
+  },
+  "preview": {
+    "label": "Náhled: {{title}}",
+    "untitled": "Náhled: graf bez názvu"
+  },
+  "list": {
+    "title": "Grafy v tomto dokumentu",
+    "empty": "Tento dokument zatím neobsahuje žádné grafy.",
+    "edit": "Upravit",
+    "delete": "Odstranit",
+    "deleteLabel": "Odstranit {{name}}",
+    "place": {
+      "slide": "snímek {{n}}",
+      "sheet": "list {{name}}",
+      "text": "graf {{n}} v textu"
+    }
+  },
+  "deleteConfirm": {
+    "title": "Odstranit graf",
+    "text": "Odstranit ‘{{name}}’? Dokument se poté znovu načte; dřívější změny už nebude možné vrátit zpět.",
+    "textSheet": "Odstranit ‘{{name}}’ z listu {{sheet}}? Dokument se poté znovu načte; dřívější změny už nebude možné vrátit zpět.",
+    "button": "Odstranit"
+  },
+  "errors": {
+    "unknownType": "Neznámý typ grafu.",
+    "noSeries": "Graf potřebuje alespoň jednu datovou řadu.",
+    "tooManySeries": "Graf zde může obsahovat nejvýše {{max}} řad.",
+    "tooManyCategories": "Graf zde může obsahovat nejvýše {{max}} kategorií.",
+    "noCategories": "Graf potřebuje alespoň jednu kategorii.",
+    "valueCountMismatch": "Řada ‘{{name}}’ nemá tolik hodnot, kolik je kategorií.",
+    "noNumbers": "Data neobsahují žádná čísla.",
+    "comboNeedsTwoSeries": "Kombinovaný graf potřebuje alespoň dvě řady: sloupce a čáru.",
+    "scatterNeedsNumbers": "Bodový graf potřebuje čísla jako hodnoty X v prvním sloupci nebo řádku.",
+    "titleTooLong": "Názvy mohou mít nejvýše {{max}} znaků.",
+    "invalidColor": "Barva ‘{{color}}’ není platná barva.",
+    "noNumericColumn": "Žádný ze sloupců oblasti neobsahuje čísla, takže není co vykreslit. Zvolte oblast s alespoň jedním sloupcem čísel nebo nastavte ‘Řady v’ na řádky.",
+    "noNumericRow": "Žádný z řádků oblasti neobsahuje čísla, takže není co vykreslit. Zvolte oblast s alespoň jedním řádkem čísel nebo nastavte ‘Řady v’ na sloupce.",
+    "chooseSeries": "Zvolte pro graf alespoň jednu řadu.",
+    "rangeTooLarge": "Oblast je příliš velká: nejvýše {{max}} buněk.",
+    "noDataBesideHeaders": "Oblast kromě záhlaví neobsahuje žádná data.",
+    "pasteTooLarge": "Vložená data jsou pro graf příliš velká.",
+    "invalidRange": "Toto není platná oblast buněk. Použijte například A1:D6 nebo 'List 1'!A1:D6.",
+    "noSuchSheet": "List s názvem ‘{{name}}’ neexistuje.",
+    "spreadsheetNotReady": "Tabulka ještě není připravena.",
+    "spreadsheetReadOnly": "Tabulka je jen pro čtení.",
+    "documentNotReady": "Dokument ještě není připraven.",
+    "presentationNotEditable": "Prezentaci teď nelze upravovat.",
+    "selectChartFirst": "Nejprve vyberte graf.",
+    "chartGone": "Graf už nelze najít.",
+    "notEditableHere": "Tento graf zde nelze upravit.",
+    "notEditable": "Tento graf nelze upravit.",
+    "package": {
+      "tooLarge": "Dokument je příliš velký na úpravu grafu.",
+      "tooManyParts": "Dokument obsahuje příliš mnoho nebo příliš velkých částí.",
+      "notZip": "Dokument není platný soubor Office (zip).",
+      "invalidPartName": "Dokument obsahuje neplatný název části.",
+      "noContentTypes": "V dokumentu chybí [Content_Types].xml.",
+      "missingPart": "V dokumentu chybí část {{part}}.",
+      "noFreePartName": "Nezbývá žádný volný název části."
+    },
+    "xml": {
+      "tooLarge": "Část XML je příliš velká na zpracování.",
+      "damaged": "Část XML je poškozená.",
+      "doctype": "XML s deklarací DOCTYPE se z bezpečnostních důvodů nezpracovává.",
+      "tooDeep": "Část XML je vnořená příliš hluboko.",
+      "overlappingChanges": "Interní chyba: překrývající se změny XML."
+    },
+    "chartXml": {
+      "notDrawingML": "Tato část není graf DrawingML.",
+      "noPlotArea": "Graf nemá zobrazovanou oblast.",
+      "unusualPrefix": "Tento graf používá neobvyklý zápis XML a nelze jej zde bezpečně upravit."
+    },
+    "document": {
+      "noMainPart": "V dokumentu chybí hlavní část.",
+      "tooManyCharts": "Tento dokument už obsahuje {{total}} grafů; další nejsou podporovány.",
+      "invalidSheetName": "Neplatný název listu: nejvýše 31 znaků, bez \\ / ? * [ ] :",
+      "sheetExists": "List s názvem ‘{{name}}’ už existuje.",
+      "noSheetList": "Sešit nemá seznam listů.",
+      "drawingMissing": "Kresba tohoto listu chybí nebo je poškozená.",
+      "noSuchWorksheet": "Zvolený list neexistuje nebo není list s daty.",
+      "notPlainWorksheet": "Graf lze umístit pouze na běžný list s daty.",
+      "drawingDamaged": "Kresba tohoto listu je poškozená.",
+      "docxUnusualPrefix": "Tento dokument používá neobvyklý zápis XML; graf nelze bezpečně vložit.",
+      "noBody": "Dokument nemá tělo.",
+      "tableTooLarge": "Tabulka je pro graf příliš velká.",
+      "noSuchSlide": "Zvolený snímek neexistuje.",
+      "slideUnusualPrefix": "Tento snímek používá neobvyklý zápis XML; graf nelze bezpečně vložit.",
+      "noShapeTree": "Snímek nemá strom obrazců.",
+      "chartRemoved": "Graf už v dokumentu neexistuje.",
+      "chartNotFound": "Graf nebyl nalezen.",
+      "cannotRemove": "Objekt grafu nelze odebrat."
+    }
+  },
+  "read": {
+    "reasons": {
+      "extendedChart": "Toto je rozšířený graf (například vodopádový graf nebo stromová mapa), který zde nelze upravit.",
+      "unsupportedType": "Tento graf používá typ, který zde nelze upravit ({{types}}).",
+      "noReadableSeries": "Graf neobsahuje žádné čitelné řady.",
+      "unsupportedCombination": "Tento graf kombinuje typy způsobem, který zde nelze upravit.",
+      "noSeries": "Graf neobsahuje žádné datové řady.",
+      "invalid": "Tento graf zde nelze upravit: {{reason}}",
+      "unusualPrefix": "Tento graf používá neobvyklý zápis XML a nelze jej zde bezpečně upravit."
+    },
+    "warnings": {
+      "stackedBars": "Skládané pruhy se při úpravách umístí vedle sebe.",
+      "stackedLines": "Skládané čáry se při úpravách změní na samostatné čáry.",
+      "stackedAreas": "Skládané plochy se při úpravách změní na samostatné plochy.",
+      "linesAfterColumns": "Spojnicové řady se při úpravách umístí za sloupce.",
+      "lastSeriesAsLine": "Při úpravách se jako čára vykreslí pouze poslední řada.",
+      "multiLevelCategories": "Víceúrovňové kategorie se při úpravách změní na jednu úroveň.",
+      "moreValuesThanCategories": "Řada ‘{{name}}’ má více hodnot, než je kategorií.",
+      "trendlinesDropped": "Spojnice trendu a chybové úsečky se při úpravách odeberou."
+    }
+  }
+}

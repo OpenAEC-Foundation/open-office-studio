@@ -1,12 +1,18 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import { formatProcent } from "../../i18n/opmaak";
 import {
   isCirkel,
   kleurVan,
   leesGetal,
-  nlGetal,
+  toonGetal,
   PALET,
   type GrafiekModel,
 } from "../model.ts";
+
+/** Percentage van een fractie in de notatie van de interfacetaal. */
+const procentTekst = (fractie: number, decimalen = 0) =>
+  formatProcent(fractie, { minimumFractionDigits: decimalen, maximumFractionDigits: decimalen });
 
 const B = 400;
 const H = 250;
@@ -31,13 +37,16 @@ function afkorten(t: string, n: number) {
 
 /** Een eigen SVG-tekening van het model, voor het live voorbeeld in het venster. */
 export function Voorvertoning({ model, klein }: { model: GrafiekModel; klein?: boolean }) {
-  const inhoud = useMemo(() => teken(model), [model]);
+  const { t, i18n } = useTranslation("charts");
+  // Getallen volgen de interfacetaal: opnieuw tekenen bij een taalwissel.
+  const taal = i18n.language;
+  const inhoud = useMemo(() => teken(model), [model, taal]);
   return (
     <svg
       className={klein ? "grafiek-voorbeeld-klein" : "grafiek-voorbeeld"}
       viewBox={`0 0 ${B} ${H}`}
       role="img"
-      aria-label={`Voorbeeld: ${model.titel || "grafiek zonder titel"}`}
+      aria-label={model.titel ? t("preview.label", { title: model.titel }) : t("preview.untitled")}
     >
       <rect width={B} height={H} fill="#fff" />
       {inhoud}
@@ -108,7 +117,7 @@ function teken(model: GrafiekModel) {
   }
   if (!n || !reeksen.length) return delen;
   const label = (w: number | null, procent = false) =>
-    w === null ? "" : procent ? `${nlGetal(w * 100, model.decimalen)}%` : nlGetal(w, model.decimalen);
+    w === null ? "" : procent ? procentTekst(w, model.decimalen) : toonGetal(w, model.decimalen);
 
   if (cirkel) {
     const cx = (links + rechts) / 2, cy = (boven + 6 + onder) / 2;
@@ -172,7 +181,7 @@ function teken(model: GrafiekModel) {
   const schaal2 = combinatie ? asSchaal(Math.min(...waardenVan(tweede), 0), Math.max(...waardenVan(tweede), 0)) : null;
   const xs = spreiding ? model.categorieen.map((c) => leesGetal(c) ?? 0) : [];
   const xSchaal = spreiding ? asSchaal(Math.min(...xs), Math.max(...xs)) : null;
-  const asLabel = (w: number) => (procent ? `${Math.round(w * 100)}%` : nlGetal(w, Math.abs(schaal.stap) < 1 ? Math.min(3, Math.ceil(-Math.log10(schaal.stap))) : 0));
+  const asLabel = (w: number) => (procent ? procentTekst(w) : toonGetal(w, Math.abs(schaal.stap) < 1 ? Math.min(3, Math.ceil(-Math.log10(schaal.stap))) : 0));
   const breedteLabels = horizontaal ? Math.min(70, 6 + 5.5 * Math.max(...model.categorieen.map((c) => afkorten(c, 12).length))) : 8 + 5.5 * Math.max(...[schaal.min, schaal.max].map((w) => asLabel(w).length));
   if (model.asTitelY) links += 14;
   if (model.asTitelX) onder -= 14;
@@ -197,7 +206,7 @@ function teken(model: GrafiekModel) {
   }
   if (schaal2)
     for (let w = schaal2.min, k = 0; w <= schaal2.max + schaal2.stap / 1e6 && k < 30; w += schaal2.stap, k++)
-      delen.push(<text key={`b${k}`} x={x1 + 4} y={vw(w, schaal2) + 3} fontSize="9" fill={TEKST}>{nlGetal(w)}</text>);
+      delen.push(<text key={`b${k}`} x={x1 + 4} y={vw(w, schaal2) + 3} fontSize="9" fill={TEKST}>{toonGetal(w)}</text>);
   // Categorie-as.
   const nul = vw(Math.max(schaal.min, Math.min(0, schaal.max)));
   delen.push(
@@ -208,7 +217,7 @@ function teken(model: GrafiekModel) {
   if (spreiding && xSchaal) {
     const xw = (w: number) => x0 + ((w - xSchaal.min) / (xSchaal.max - xSchaal.min)) * W;
     for (let w = xSchaal.min, k = 0; w <= xSchaal.max + xSchaal.stap / 1e6 && k < 30; w += xSchaal.stap, k++)
-      delen.push(<text key={`x${k}`} x={xw(w)} y={y1 + 12} textAnchor="middle" fontSize="9" fill={TEKST}>{nlGetal(w, xSchaal.stap < 1 ? 1 : 0)}</text>);
+      delen.push(<text key={`x${k}`} x={xw(w)} y={y1 + 12} textAnchor="middle" fontSize="9" fill={TEKST}>{toonGetal(w, xSchaal.stap < 1 ? 1 : 0)}</text>);
     reeksen.forEach((r, ri) =>
       r.waarden.forEach((w, i) => {
         if (w === null) return;

@@ -5,33 +5,44 @@
  */
 import { useMemo, useState } from "react";
 import { useDocxCommand } from "@betteroffice/docx-react";
+import { useTranslation } from "react-i18next";
+import { useOpmaak } from "../../i18n/opmaak";
 import { Dialoog } from "../../werkruimte/Dialoog";
-import { HERLAAD_MELDING } from "./Bevestiging";
 import { useStijlen } from "./StijlenBeheer";
 import { wijzigDocStandaarden, wijzigThemaLettertypen } from "./stijlenxml";
 
-export const LETTERTYPEPAREN: { naam: string; koppen: string; tekst: string }[] = [
-  { naam: "Office", koppen: "Calibri Light", tekst: "Calibri" },
-  { naam: "Office 2007–2010", koppen: "Cambria", tekst: "Calibri" },
-  { naam: "Klassiek", koppen: "Liberation Serif", tekst: "Liberation Serif" },
-  { naam: "Modern", koppen: "Montserrat", tekst: "Inter" },
-  { naam: "Rapport", koppen: "Source Serif 4", tekst: "Source Sans 3" },
-  { naam: "Elegant", koppen: "Playfair Display", tekst: "Lato" },
-  { naam: "Boek", koppen: "EB Garamond", tekst: "EB Garamond" },
-  { naam: "Technisch", koppen: "IBM Plex Sans", tekst: "Noto Serif" },
-  { naam: "Toegankelijk", koppen: "Atkinson Hyperlegible", tekst: "Atkinson Hyperlegible" },
+/**
+ * Lettertypeparen. `id` is stabiel; de weergavenaam komt uit
+ * `writer:styles.sets.fontPair.<id>` (productnamen als "Office" blijven gelijk).
+ */
+export const LETTERTYPEPAREN: { id: string; koppen: string; tekst: string }[] = [
+  { id: "office", koppen: "Calibri Light", tekst: "Calibri" },
+  { id: "office2007", koppen: "Cambria", tekst: "Calibri" },
+  { id: "classic", koppen: "Liberation Serif", tekst: "Liberation Serif" },
+  { id: "modern", koppen: "Montserrat", tekst: "Inter" },
+  { id: "report", koppen: "Source Serif 4", tekst: "Source Sans 3" },
+  { id: "elegant", koppen: "Playfair Display", tekst: "Lato" },
+  { id: "book", koppen: "EB Garamond", tekst: "EB Garamond" },
+  { id: "technical", koppen: "IBM Plex Sans", tekst: "Noto Serif" },
+  { id: "accessible", koppen: "Atkinson Hyperlegible", tekst: "Atkinson Hyperlegible" },
 ];
 
-export const AFSTANDEN: { naam: string; ruimteNa: number; regelafstand: number; uitleg: string }[] = [
-  { naam: "Standaard (Word 2013+)", ruimteNa: 8, regelafstand: 1.08, uitleg: "8 pt na, regelafstand 1,08" },
-  { naam: "Compact", ruimteNa: 4, regelafstand: 1, uitleg: "4 pt na, enkel" },
-  { naam: "Geen alinea-afstand", ruimteNa: 0, regelafstand: 1, uitleg: "0 pt na, enkel" },
-  { naam: "Ruim", ruimteNa: 10, regelafstand: 1.15, uitleg: "10 pt na, 1,15" },
-  { naam: "Open", ruimteNa: 12, regelafstand: 1.5, uitleg: "12 pt na, 1,5" },
-  { naam: "Dubbel", ruimteNa: 8, regelafstand: 2, uitleg: "8 pt na, dubbel" },
+/**
+ * Alinea-afstanden. `id` is stabiel; naam en uitleg komen uit
+ * `writer:styles.sets.spacing.<id>` en `…spacingHint.<soort>`.
+ */
+export const AFSTANDEN: { id: string; ruimteNa: number; regelafstand: number }[] = [
+  { id: "default", ruimteNa: 8, regelafstand: 1.08 },
+  { id: "compact", ruimteNa: 4, regelafstand: 1 },
+  { id: "noSpacing", ruimteNa: 0, regelafstand: 1 },
+  { id: "relaxed", ruimteNa: 10, regelafstand: 1.15 },
+  { id: "open", ruimteNa: 12, regelafstand: 1.5 },
+  { id: "double", ruimteNa: 8, regelafstand: 2 },
 ];
 
 export function StijlSets() {
+  const { t } = useTranslation(["writer", "common"]);
+  const { getal } = useOpmaak();
   const staat = useStijlen();
   const fonts = staat.thema?.fontScheme;
   const huidigKoppen = fonts?.majorFont?.latin ?? "";
@@ -47,6 +58,14 @@ export function StijlSets() {
     [koppen, tekst],
   );
   const zonderThema = !staat.thema?.fontScheme;
+  /** "8 pt na, regelafstand 1,08"; enkel/dubbel als woord. */
+  const afstandUitleg = (a: (typeof AFSTANDEN)[number]) => {
+    const na = getal(a.ruimteNa);
+    if (a.regelafstand === 1) return t("styles.sets.spacingHint.single", { after: na });
+    if (a.regelafstand === 2) return t("styles.sets.spacingHint.double", { after: na });
+    if (a.id === "default") return t("styles.sets.spacingHint.withLabel", { after: na, lineSpacing: getal(a.regelafstand) });
+    return t("styles.sets.spacingHint.multiple", { after: na, lineSpacing: getal(a.regelafstand) });
+  };
 
   async function toepassen() {
     setBezig(true);
@@ -75,23 +94,23 @@ export function StijlSets() {
 
   return (
     <Dialoog
-      titel="Stijlset en thema-lettertypen"
+      titel={t("styles.sets.title")}
       sluit={staat.sluit}
       acties={
         <>
           {fout && <span className="werkruimte-melding werkruimte-fout" role="alert">{fout}</span>}
-          <button type="button" className="werkruimte-knop" onClick={staat.sluit}>Annuleren</button>
+          <button type="button" className="werkruimte-knop" onClick={staat.sluit}>{t("common:cancel")}</button>
           <button type="button" className="werkruimte-knop is-primair" disabled={bezig} onClick={() => void toepassen()}>
-            Toepassen
+            {t("common:apply")}
           </button>
         </>
       }
     >
       <fieldset className="werkruimte-groep" disabled={zonderThema}>
-        <legend>Thema-lettertypen</legend>
-        {zonderThema && <p className="werkruimte-uitleg">Dit document heeft geen thema met lettertypen.</p>}
+        <legend>{t("styles.sets.themeFonts")}</legend>
+        {zonderThema && <p className="werkruimte-uitleg">{t("styles.sets.noTheme")}</p>}
         <label className="werkruimte-veld">
-          <span>Lettertypepaar</span>
+          <span>{t("styles.sets.fontPairLabel")}</span>
           <select
             value={paar}
             onChange={(e) => {
@@ -102,20 +121,20 @@ export function StijlSets() {
               }
             }}
           >
-            <option value={-1}>(eigen keuze)</option>
+            <option value={-1}>{t("styles.sets.customChoice")}</option>
             {LETTERTYPEPAREN.map((p, i) => (
-              <option key={p.naam} value={i}>
-                {p.naam}: {p.koppen} / {p.tekst}
+              <option key={p.id} value={i}>
+                {t("styles.sets.fontPairOption", { name: t(`styles.sets.fontPair.${p.id}`), headings: p.koppen, body: p.tekst })}
               </option>
             ))}
           </select>
         </label>
         <label className="werkruimte-veld">
-          <span>Koppen</span>
+          <span>{t("styles.sets.headings")}</span>
           <input type="text" list="tekst-set-lettertypen" value={koppen} onChange={(e) => setKoppen(e.target.value)} />
         </label>
         <label className="werkruimte-veld">
-          <span>Hoofdtekst</span>
+          <span>{t("styles.sets.body")}</span>
           <input type="text" list="tekst-set-lettertypen" value={tekst} onChange={(e) => setTekst(e.target.value)} />
         </label>
         <datalist id="tekst-set-lettertypen">
@@ -124,27 +143,25 @@ export function StijlSets() {
           ))}
         </datalist>
         <div className="tekst-set-voorbeeld" aria-hidden="true">
-          <strong style={{ fontFamily: `"${koppen}", sans-serif` }}>Kop in {koppen || "—"}</strong>
-          <span style={{ fontFamily: `"${tekst}", sans-serif` }}>Hoofdtekst in {tekst || "—"}: de snelle bruine vos.</span>
+          <strong style={{ fontFamily: `"${koppen}", sans-serif` }}>{t("styles.sets.headingSample", { font: koppen || "—" })}</strong>
+          <span style={{ fontFamily: `"${tekst}", sans-serif` }}>{t("styles.sets.bodySample", { font: tekst || "—" })}</span>
         </div>
-        <p className="werkruimte-uitleg">
-          Alleen stijlen die de thema-lettertypen gebruiken (zoals in de meeste Word-documenten) veranderen mee.
-        </p>
+        <p className="werkruimte-uitleg">{t("styles.sets.themeFontsHint")}</p>
       </fieldset>
       <fieldset className="werkruimte-groep">
-        <legend>Alinea-afstand van het document</legend>
+        <legend>{t("styles.sets.spacingTitle")}</legend>
         <div className="werkruimte-keuzes">
           <label>
-            <input type="radio" name="tekst-afstand" checked={afstand === null} onChange={() => setAfstand(null)} /> Niet wijzigen
+            <input type="radio" name="tekst-afstand" checked={afstand === null} onChange={() => setAfstand(null)} /> {t("styles.sets.dontChange")}
           </label>
           {AFSTANDEN.map((a, i) => (
-            <label key={a.naam} title={a.uitleg}>
-              <input type="radio" name="tekst-afstand" checked={afstand === i} onChange={() => setAfstand(i)} /> {a.naam}
+            <label key={a.id} title={afstandUitleg(a)}>
+              <input type="radio" name="tekst-afstand" checked={afstand === i} onChange={() => setAfstand(i)} /> {t(`styles.sets.spacing.${a.id}`)}
             </label>
           ))}
         </div>
       </fieldset>
-      <p className="werkruimte-uitleg">{HERLAAD_MELDING}</p>
+      <p className="werkruimte-uitleg">{t("styles.reloadNotice")}</p>
     </Dialoog>
   );
 }

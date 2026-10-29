@@ -1,0 +1,208 @@
+/* Modaal venster volgens het OpenAEC Style Book (Modal.css). De --theme-dialog-*
+   tokens van de template zijn hier afgeleid van de OpenAEC-kleuren van deze app
+   (src/stijl/openaec-tokens.css); accentteksten zijn iets donkerder (licht) of
+   lichter (Forge) voor 4,5:1 contrast. Logische eigenschappen voor RTL. */
+.oa-modal-overlay {
+  --theme-dialog-overlay: rgba(28, 25, 23, 0.35);
+  --theme-dialog-bg: var(--oa-color-surface-light-panel);
+  --theme-dialog-border: var(--oa-color-border-light-strong);
+  --theme-dialog-shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
+  --theme-dialog-header-bg: var(--oa-color-surface-light-bg);
+  --theme-dialog-header-text: #a95606;
+  --theme-dialog-content-bg: var(--oa-color-surface-light-panel);
+  --theme-dialog-content-text: var(--oa-color-text-light-primary);
+  --theme-dialog-content-secondary: var(--oa-color-text-light-secondary);
+  --theme-dialog-sidebar-bg: var(--oa-color-surface-light-muted);
+  --theme-dialog-sidebar-border: var(--oa-color-border-light-default);
+  --theme-dialog-tab-text: var(--oa-color-text-light-primary);
+  --theme-dialog-tab-hover: #ecebe9;
+  --theme-dialog-tab-hover-text: var(--oa-color-text-light-primary);
+  --theme-dialog-tab-active-bg: #fbefe0;
+  --theme-dialog-tab-active-text: #a04f04;
+  --theme-dialog-section-border: var(--oa-color-border-light-default);
+  --theme-dialog-input-bg: var(--oa-color-surface-light-panel);
+  --theme-dialog-input-border: var(--oa-color-border-light-strong);
+  --theme-dialog-input-text: var(--oa-color-text-light-primary);
+  --theme-focus-color: #a95606;
+  --theme-btn-primary-bg: #a95606;
+  --theme-btn-primary-text: #ffffff;
+  --theme-btn-primary-border: #a95606;
+  --theme-btn-primary-hover-bg: #8f4704;
+  --theme-btn-primary-hover-text: #ffffff;
+  --theme-btn-secondary-bg: var(--oa-color-surface-light-panel);
+  --theme-btn-secondary-text: var(--oa-color-text-light-primary);
+  --theme-btn-secondary-hover-bg: var(--oa-color-surface-light-muted);
+  --theme-btn-secondary-hover-border: var(--oa-color-neutral-400);
+  --theme-close-hover-bg: #ecebe9;
+  --theme-close-hover-text: #a95606;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: var(--theme-dialog-overlay);
+  font-family: var(--oa-font-family-body);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.oa-modal-overlay[data-thema="forge"] {
+  --theme-dialog-overlay: rgba(0, 0, 0, 0.55);
+  --theme-dialog-bg: #2a2a31;
+  --theme-dialog-border: #4a4a53;
+  --theme-dialog-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  --theme-dialog-header-bg: #34343c;
+  --theme-dialog-header-text: #f5b13d;
+  --theme-dialog-content-bg: #2a2a31;
+  --theme-dialog-content-text: #f2f2f0;
+  --theme-dialog-content-secondary: #c3c3c8;
+  --theme-dialog-sidebar-bg: #303037;
+  --theme-dialog-sidebar-border: #4a4a53;
+  --theme-dialog-tab-text: #e7e5e4;
+  --theme-dialog-tab-hover: #3f3f46;
+  --theme-dialog-tab-hover-text: #fafaf9;
+  --theme-dialog-tab-active-bg: #463a28;
+  --theme-dialog-tab-active-text: #f5b13d;
+  --theme-dialog-section-border: #4a4a53;
+  --theme-dialog-input-bg: #36363e;
+  --theme-dialog-input-border: #5a5a63;
+  --theme-dialog-input-text: #f2f2f0;
+  --theme-focus-color: #f5b13d;
+  --theme-btn-primary-bg: #f59e0b;
+  --theme-btn-primary-text: #1c1c20;
+  --theme-btn-primary-border: #f59e0b;
+  --theme-btn-primary-hover-bg: #f5b13d;
+  --theme-btn-primary-hover-text: #1c1c20;
+  --theme-btn-secondary-bg: #3f3f46;
+  --theme-btn-secondary-text: #f2f2f0;
+  --theme-btn-secondary-hover-bg: #4a4a53;
+  --theme-btn-secondary-hover-border: #71717a;
+  --theme-close-hover-bg: #3f3f46;
+  --theme-close-hover-text: #f5b13d;
+}
+
+.oa-modal {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  max-width: calc(100vw - 16px);
+  /* Bij een laag venster blijft de voet zichtbaar; de inhoud scrolt. */
+  max-height: 90vh;
+  background: var(--theme-dialog-bg);
+  border: 1px solid var(--theme-dialog-border);
+  border-radius: 0;
+  box-shadow: var(--theme-dialog-shadow);
+  color: var(--theme-dialog-content-text);
+  user-select: none;
+}
+
+.oa-modal :focus-visible {
+  outline: 2px solid var(--theme-focus-color);
+  outline-offset: 1px;
+}
+
+/* Titelstrook van 30 px; hieraan versleep je het venster. */
+.oa-modal-kop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  height: 30px;
+  padding: 0;
+  padding-inline-start: 10px;
+  background: linear-gradient(to bottom, var(--theme-dialog-header-bg) 0%, var(--theme-dialog-bg) 100%);
+  border-bottom: 1px solid var(--theme-dialog-border);
+  cursor: move;
+  touch-action: none;
+}
+
+.oa-modal-kop h2 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--theme-dialog-header-text);
+}
+
+.oa-modal-sluit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: calc(100% + 1px);
+  margin-top: -1px;
+  margin-inline-end: -1px;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: var(--theme-dialog-content-text);
+  font-size: 16px;
+  line-height: 1;
+  cursor: default;
+  transition: background 0.1s;
+}
+
+.oa-modal-sluit:hover {
+  background: var(--theme-close-hover-bg);
+  color: var(--theme-close-hover-text);
+}
+
+.oa-modal-inhoud {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--theme-dialog-content-bg);
+  color: var(--theme-dialog-content-text);
+  user-select: text;
+}
+
+.oa-modal-voet {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 6px;
+  padding: 8px 12px;
+  border-top: 1px solid var(--theme-dialog-border);
+  background: var(--theme-dialog-sidebar-bg);
+}
+
+/* Knoppen van de template (settings-btn). */
+.oa-knop {
+  min-width: 75px;
+  padding-block: 5px;
+  padding-inline: 20px;
+  border: 1px solid var(--theme-dialog-input-border);
+  border-radius: 2px;
+  font-size: 11px;
+  font-weight: 400;
+  font-family: inherit;
+  cursor: default;
+  transition:
+    background 0.1s,
+    border-color 0.1s;
+  background: var(--theme-btn-secondary-bg);
+  color: var(--theme-btn-secondary-text);
+}
+
+.oa-knop:hover:not(:disabled) {
+  background: var(--theme-btn-secondary-hover-bg);
+  border-color: var(--theme-btn-secondary-hover-border);
+}
+
+.oa-knop:disabled {
+  opacity: 0.55;
+}
+
+.oa-knop.is-primair {
+  background: var(--theme-btn-primary-bg);
+  color: var(--theme-btn-primary-text);
+  border-color: var(--theme-btn-primary-border);
+  box-shadow: inset 0 0 0 1px var(--theme-btn-primary-border);
+}
+
+.oa-knop.is-primair:hover:not(:disabled) {
+  background: var(--theme-btn-primary-hover-bg);
+  color: var(--theme-btn-primary-hover-text);
+  border-color: var(--theme-btn-primary-border);
+}

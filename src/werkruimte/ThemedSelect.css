@@ -1,0 +1,147 @@
+/* Keuzelijst volgens het OpenAEC Style Book (ThemedSelect.css), met logische
+   eigenschappen zodat hij in rechts-naar-links-talen spiegelt. */
+.themed-select {
+  position: relative;
+  min-width: 100px;
+}
+
+.themed-select-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding-block: 3px;
+  padding-inline: 6px;
+  border: 1px solid var(--theme-dialog-input-border);
+  border-radius: 0;
+  background: var(--theme-dialog-input-bg);
+  color: var(--theme-dialog-input-text);
+  font-size: 11px;
+  font-family: inherit;
+  cursor: default;
+  transition: border-color 0.1s;
+  min-height: 24px;
+}
+
+.themed-select-trigger:hover {
+  border-color: var(--theme-dialog-content-secondary);
+}
+
+.themed-select-trigger:focus-visible,
+.themed-select-trigger[aria-expanded="true"] {
+  border-color: var(--theme-focus-color);
+  outline: none;
+}
+
+.themed-select-label {
+  flex: 1;
+  text-align: start;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.themed-select-chevron {
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+.themed-select-menu {
+  position: absolute;
+  top: 100%;
+  inset-inline: 0;
+  margin-top: 1px;
+  background: var(--theme-dialog-input-bg);
+  border: 1px solid var(--theme-dialog-input-border);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+}
+
+.themed-select-zoek {
+  margin: 4px;
+  padding-block: 3px;
+  padding-inline: 6px;
+  border: 1px solid var(--theme-dialog-input-border);
+  border-radius: 0;
+  background: var(--theme-dialog-content-bg);
+  color: var(--theme-dialog-input-text);
+  font: inherit;
+  font-size: 11px;
+  outline: none;
+}
+
+.themed-select-zoek:focus {
+  border-color: var(--theme-focus-color);
+}
+
+.themed-select-lijst {
+  max-height: 200px;
+  overflow-y: auto;
+  outline: none;
+}
+
+.themed-select-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding-block: 5px;
+  padding-inline: 8px;
+  border: none;
+  background: transparent;
+  color: var(--theme-dialog-content-text);
+  font-size: 11px;
+  font-family: inherit;
+  cursor: default;
+  text-align: start;
+  transition:
+    background 0.1s,
+    color 0.1s;
+}
+
+.themed-select-item.is-actief {
+  background: var(--theme-dialog-tab-hover);
+  color: var(--theme-dialog-tab-hover-text);
+}
+
+.themed-select-item.active {
+  background: var(--theme-dialog-tab-active-bg);
+  color: var(--theme-dialog-tab-active-text);
+}
+
+.themed-select-item .themed-select-label {
+  font-weight: 500;
+}
+
+.themed-select-extra {
+  flex-shrink: 0;
+  color: var(--theme-dialog-content-secondary);
+  font-size: 10px;
+}
+
+.themed-select-item.active .themed-select-extra {
+  color: inherit;
+}
+
+.themed-select-leeg {
+  padding: 6px 8px;
+  font-size: 11px;
+  color: var(--theme-dialog-content-secondary);
+}
+
+/* Kleurstalen bij de themakeuze: vier vakjes van 14 px. */
+.themed-select-stalen {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.themed-select-staal {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border: 1px solid rgba(128, 128, 128, 0.3);
+}

@@ -1,0 +1,267 @@
+{
+  "types": {
+    "column": {
+      "name": "Histogramme",
+      "description": "Comparer des valeurs côte à côte"
+    },
+    "stackedColumn": {
+      "name": "Histogramme empilé",
+      "description": "Parties et total par catégorie"
+    },
+    "percentColumn": {
+      "name": "Histogramme 100 %",
+      "description": "Parts par catégorie"
+    },
+    "bar": {
+      "name": "Barres",
+      "description": "Horizontal, pour les noms longs"
+    },
+    "line": {
+      "name": "Courbe",
+      "description": "Évolution dans le temps"
+    },
+    "lineMarkers": {
+      "name": "Courbe avec marques",
+      "description": "Évolution avec points de données visibles"
+    },
+    "area": {
+      "name": "Aires",
+      "description": "Évolution en mettant l’accent sur l’ampleur"
+    },
+    "pie": {
+      "name": "Secteurs",
+      "description": "Répartition d’une seule série"
+    },
+    "doughnut": {
+      "name": "Anneau",
+      "description": "Répartition avec un centre ouvert"
+    },
+    "scatter": {
+      "name": "Nuage de points (XY)",
+      "description": "Relation entre deux nombres"
+    },
+    "combo": {
+      "name": "Histogramme + courbe",
+      "description": "Dernière série en courbe sur un axe secondaire"
+    }
+  },
+  "unknownType": "Type inconnu",
+  "busy": "Traitement en cours…",
+  "defaults": {
+    "seriesName": "Série {{n}}",
+    "categoryName": "Catégorie {{n}}",
+    "chartName": "Graphique {{n}}",
+    "sheetName": "Graphique {{n}}",
+    "true": "VRAI",
+    "false": "FAUX"
+  },
+  "ribbon": {
+    "charts": "Graphiques",
+    "chart": "Graphique",
+    "editChart": "Modifier le graphique",
+    "allCharts": "Tous les graphiques",
+    "dataAndFormat": "Données et mise en forme",
+    "overview": "Vue d’ensemble",
+    "type": "Type",
+    "changeType": "Modifier le type de graphique",
+    "data": "Données",
+    "selectData": "Sélectionner les données",
+    "layout": "Disposition",
+    "titleAndLegend": "Titre et légende",
+    "delete": "Supprimer",
+    "deleteChart": "Supprimer le graphique",
+    "withShortcut": "{{name}} · {{shortcut}}"
+  },
+  "dialog": {
+    "title": {
+      "insert": "Insérer un graphique",
+      "edit": "Modifier le graphique"
+    },
+    "button": {
+      "insert": "Insérer",
+      "edit": "Mettre à jour"
+    },
+    "reloadNote": {
+      "insert": "Le document est rechargé après l’insertion. Les modifications antérieures ne peuvent plus être annulées.",
+      "edit": "Le document est rechargé après la mise à jour. Les modifications antérieures ne peuvent plus être annulées."
+    },
+    "closeTitle": "Fermer (Échap)",
+    "type": "Type",
+    "data": "Données",
+    "cellRange": "Plage de cellules",
+    "cellRangePlaceholder": "Par exemple A1:D6",
+    "noContiguousRange": "Les références de ce graphique ne forment pas une plage contiguë ; les données restent inchangées jusqu’à ce que vous saisissiez une plage.",
+    "firstRowNames": "La première ligne contient des noms",
+    "firstColumnNames": "La première colonne contient des noms",
+    "seriesIn": "Séries en",
+    "columns": "colonnes",
+    "rows": "lignes",
+    "series": "Série",
+    "seriesNoNumbersTitle": "{{name}} : pas de nombres, non repris",
+    "noNumbers": "(pas de nombres)",
+    "enterRange": "Saisissez la plage de cellules qui contient les données.",
+    "placeCursorInTable": "Placez d’abord le curseur dans un tableau contenant des nombres.",
+    "titles": "Titres",
+    "chartTitle": "Titre",
+    "subtitle": "Sous-titre",
+    "categoryAxis": "Axe des catégories",
+    "valueAxis": "Axe des valeurs",
+    "horizontalAxis": "Axe horizontal",
+    "verticalAxis": "Axe vertical",
+    "secondaryAxis": "Axe secondaire",
+    "format": "Format",
+    "legend": "Légende",
+    "gridlines": "Quadrillage",
+    "dataLabels": "Étiquettes de données",
+    "decimals": "Décimales",
+    "placement": "Emplacement",
+    "besideData": "À côté des données sur cette feuille",
+    "newSheet": "Sur une nouvelle feuille",
+    "sheetName": "Nom de la feuille",
+    "summary": {
+      "series_one": "{{n}} série",
+      "series_other": "{{n}} séries",
+      "series_many": "{{n}} séries",
+      "categories_one": "{{n}} catégorie",
+      "categories_other": "{{n}} catégories",
+      "categories_many": "{{n}} catégories",
+      "text": "{{series}} · {{categories}}",
+      "withSheet": "{{series}} · {{categories}} · {{sheet}}"
+    }
+  },
+  "legend": {
+    "bottom": "En bas",
+    "right": "À droite",
+    "top": "En haut",
+    "left": "À gauche",
+    "none": "Pas de légende"
+  },
+  "dataSheet": {
+    "row": "Ligne",
+    "series": "Série",
+    "removeLastRow": "Supprimer la dernière ligne",
+    "removeLastSeries": "Supprimer la dernière série",
+    "paste": "Coller",
+    "pasteTitle": "Coller du texte séparé par des tabulations depuis le presse-papiers, par exemple copié d’un classeur",
+    "fromTable": "À partir du tableau sélectionné",
+    "fromTableTitle": "Reprend le tableau dans lequel se trouve le curseur",
+    "pasteNotAllowed": "Coller avec le bouton n’est pas autorisé ici. Cliquez dans une cellule et utilisez Ctrl+V.",
+    "corner": "Cellule d’angle",
+    "seriesNameLabel": "Nom de la série {{n}}",
+    "categoryLabel": "Catégorie {{n}}",
+    "valueLabel": "Valeur ligne {{row}}, série {{series}}"
+  },
+  "preview": {
+    "label": "Aperçu : {{title}}",
+    "untitled": "Aperçu : graphique sans titre"
+  },
+  "list": {
+    "title": "Graphiques de ce document",
+    "empty": "Ce document ne contient encore aucun graphique.",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "deleteLabel": "Supprimer {{name}}",
+    "place": {
+      "slide": "diapositive {{n}}",
+      "sheet": "feuille {{name}}",
+      "text": "graphique {{n}} dans le texte"
+    }
+  },
+  "deleteConfirm": {
+    "title": "Supprimer le graphique",
+    "text": "Supprimer « {{name}} » ? Le document est alors rechargé ; les modifications antérieures ne peuvent plus être annulées.",
+    "textSheet": "Supprimer « {{name}} » de la feuille {{sheet}} ? Le document est alors rechargé ; les modifications antérieures ne peuvent plus être annulées.",
+    "button": "Supprimer"
+  },
+  "errors": {
+    "unknownType": "Type de graphique inconnu.",
+    "noSeries": "Le graphique nécessite au moins une série de données.",
+    "tooManySeries": "Un graphique peut contenir ici au maximum {{max}} séries.",
+    "tooManyCategories": "Un graphique peut contenir ici au maximum {{max}} catégories.",
+    "noCategories": "Le graphique nécessite au moins une catégorie.",
+    "valueCountMismatch": "La série « {{name}} » n’a pas autant de valeurs qu’il y a de catégories.",
+    "noNumbers": "Les données ne contiennent aucun nombre.",
+    "comboNeedsTwoSeries": "Un graphique combiné nécessite au moins deux séries : des histogrammes et une courbe.",
+    "scatterNeedsNumbers": "Un nuage de points nécessite des nombres comme valeurs X dans la première colonne ou ligne.",
+    "titleTooLong": "Les titres peuvent comporter au maximum {{max}} caractères.",
+    "invalidColor": "La couleur « {{color}} » n’est pas une couleur valide.",
+    "noNumericColumn": "Aucune des colonnes de la plage ne contient de nombres ; il n’y a donc rien à représenter. Choisissez une plage avec au moins une colonne de nombres, ou réglez « Séries en » sur lignes.",
+    "noNumericRow": "Aucune des lignes de la plage ne contient de nombres ; il n’y a donc rien à représenter. Choisissez une plage avec au moins une ligne de nombres, ou réglez « Séries en » sur colonnes.",
+    "chooseSeries": "Choisissez au moins une série pour le graphique.",
+    "rangeTooLarge": "La plage est trop grande : au maximum {{max}} cellules.",
+    "noDataBesideHeaders": "La plage ne contient aucune donnée en dehors des en-têtes.",
+    "pasteTooLarge": "Les données collées sont trop volumineuses pour un graphique.",
+    "invalidRange": "Ce n’est pas une plage de cellules valide. Utilisez par exemple A1:D6 ou 'Feuille 1'!A1:D6.",
+    "noSuchSheet": "Il n’existe aucune feuille nommée « {{name}} ».",
+    "spreadsheetNotReady": "Le classeur n’est pas encore prêt.",
+    "spreadsheetReadOnly": "Le classeur est en lecture seule.",
+    "documentNotReady": "Le document n’est pas encore prêt.",
+    "presentationNotEditable": "La présentation ne peut pas être modifiée pour le moment.",
+    "selectChartFirst": "Sélectionnez d’abord un graphique.",
+    "chartGone": "Le graphique est introuvable.",
+    "notEditableHere": "Ce graphique ne peut pas être modifié ici.",
+    "notEditable": "Ce graphique ne peut pas être modifié.",
+    "package": {
+      "tooLarge": "Le document est trop volumineux pour y modifier un graphique.",
+      "tooManyParts": "Le document contient trop de parties ou des parties trop volumineuses.",
+      "notZip": "Le document n’est pas un fichier Office valide (zip).",
+      "invalidPartName": "Le document contient un nom de partie non valide.",
+      "noContentTypes": "Il manque [Content_Types].xml dans le document.",
+      "missingPart": "La partie {{part}} est absente du document.",
+      "noFreePartName": "Il ne reste aucun nom de partie libre."
+    },
+    "xml": {
+      "tooLarge": "Une partie XML est trop volumineuse pour être traitée.",
+      "damaged": "La partie XML est endommagée.",
+      "doctype": "Le XML avec un DOCTYPE n’est pas traité pour des raisons de sécurité.",
+      "tooDeep": "La partie XML est imbriquée trop profondément.",
+      "overlappingChanges": "Erreur interne : modifications XML qui se chevauchent."
+    },
+    "chartXml": {
+      "notDrawingML": "Cette partie n’est pas un graphique DrawingML.",
+      "noPlotArea": "Le graphique n’a pas de zone de traçage.",
+      "unusualPrefix": "Ce graphique utilise une notation XML inhabituelle et ne peut pas être modifié ici en toute sécurité."
+    },
+    "document": {
+      "noMainPart": "Il manque la partie principale du document.",
+      "tooManyCharts": "Ce document contient déjà {{total}} graphiques ; davantage n’est pas pris en charge.",
+      "invalidSheetName": "Nom de feuille non valide : au maximum 31 caractères, sans \\ / ? * [ ] :",
+      "sheetExists": "Une feuille nommée « {{name}} » existe déjà.",
+      "noSheetList": "Le classeur n’a pas de liste de feuilles.",
+      "drawingMissing": "Le dessin de cette feuille est manquant ou endommagé.",
+      "noSuchWorksheet": "La feuille choisie n’existe pas ou n’est pas une feuille de calcul.",
+      "notPlainWorksheet": "Un graphique ne peut être placé que sur une feuille de calcul ordinaire.",
+      "drawingDamaged": "Le dessin de cette feuille est endommagé.",
+      "docxUnusualPrefix": "Ce document utilise une notation XML inhabituelle ; le graphique ne peut pas être inséré en toute sécurité.",
+      "noBody": "Le document n’a pas de corps.",
+      "tableTooLarge": "Le tableau est trop grand pour un graphique.",
+      "noSuchSlide": "La diapositive choisie n’existe pas.",
+      "slideUnusualPrefix": "Cette diapositive utilise une notation XML inhabituelle ; le graphique ne peut pas être inséré en toute sécurité.",
+      "noShapeTree": "La diapositive n’a pas d’arborescence de formes.",
+      "chartRemoved": "Le graphique n’existe plus dans le document.",
+      "chartNotFound": "Le graphique est introuvable.",
+      "cannotRemove": "L’objet graphique ne peut pas être supprimé."
+    }
+  },
+  "read": {
+    "reasons": {
+      "extendedChart": "Il s’agit d’un graphique étendu (par exemple une cascade ou un compartimentage) qui ne peut pas être modifié ici.",
+      "unsupportedType": "Ce graphique utilise un type qui ne peut pas être modifié ici ({{types}}).",
+      "noReadableSeries": "Le graphique ne contient aucune série lisible.",
+      "unsupportedCombination": "Ce graphique combine des types d’une manière qui ne peut pas être modifiée ici.",
+      "noSeries": "Le graphique ne contient aucune série de données.",
+      "invalid": "Ce graphique ne peut pas être modifié ici : {{reason}}",
+      "unusualPrefix": "Ce graphique utilise une notation XML inhabituelle et ne peut pas être modifié ici en toute sécurité."
+    },
+    "warnings": {
+      "stackedBars": "Les barres empilées sont placées côte à côte lors de la modification.",
+      "stackedLines": "Les courbes empilées deviennent des courbes distinctes lors de la modification.",
+      "stackedAreas": "Les aires empilées deviennent des aires distinctes lors de la modification.",
+      "linesAfterColumns": "Les séries en courbe sont placées après les histogrammes lors de la modification.",
+      "lastSeriesAsLine": "Lors de la modification, seule la dernière série est tracée en courbe.",
+      "multiLevelCategories": "Les catégories à plusieurs niveaux deviennent un seul niveau lors de la modification.",
+      "moreValuesThanCategories": "La série « {{name}} » a plus de valeurs qu’il n’y a de catégories.",
+      "trendlinesDropped": "Les courbes de tendance et les barres d’erreur sont supprimées lors de la modification."
+    }
+  }
+}

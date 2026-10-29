@@ -6,6 +6,8 @@
  * handmatig einde haalt het weg.
  */
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useOpmaak } from "../i18n/opmaak";
 import type { RekenbladBron } from "./bron";
 import type { RekenbladKeuze } from "./bronRekenblad";
 import { indexNaarKolom } from "./rekenbladInstellingen";
@@ -32,6 +34,8 @@ export function PaginaEinden(props: {
   sluit: () => void;
   wijzig: (rijEinden: number[], kolomEinden: number[]) => void;
 }) {
+  const { t } = useTranslation(["print", "common"]);
+  const opmaak = useOpmaak();
   const [info, setInfo] = useState<Info | null>(null);
   const [fout, setFout] = useState("");
   const [sleep, setSleep] = useState<Sleep | null>(null);
@@ -45,7 +49,7 @@ export function PaginaEinden(props: {
       .indeling(props.blad, props.keuze)
       .then((i) => {
         if (!actief) return;
-        if (!i) setFout("Dit blad is leeg.");
+        if (!i) setFout(t("pageBreaks.emptySheet"));
         setInfo(i);
       })
       .catch((e) => actief && setFout(e instanceof Error ? e.message : String(e)));
@@ -66,10 +70,10 @@ export function PaginaEinden(props: {
 
   if (!info || !geo)
     return (
-      <div className="afdruk-einden" role="dialog" aria-modal="true" aria-label="Pagina-eindevoorbeeld">
-        <p role="status">{fout || "Pagina-einden berekenen…"}</p>
+      <div className="afdruk-einden" role="dialog" aria-modal="true" aria-label={t("pageBreaks.title")}>
+        <p role="status">{fout || t("pageBreaks.calculating")}</p>
         <button type="button" className="werkruimte-knop" onClick={props.sluit}>
-          Sluiten
+          {t("common:close")}
         </button>
       </div>
     );
@@ -80,6 +84,7 @@ export function PaginaEinden(props: {
   const kolomEinden = info.verdeling.kolommen.slice(1).map((g) => g[0]);
   const rijEinden = info.verdeling.rijen.slice(1).map((g) => g[0]);
   const marge = 28;
+  const aantalPaginas = info.verdeling.kolommen.length * info.verdeling.rijen.length;
 
   const dichtstbij = (lijst: number[], waarde: number) => {
     let beste = 1;
@@ -120,7 +125,7 @@ export function PaginaEinden(props: {
       className="afdruk-einden"
       role="dialog"
       aria-modal="true"
-      aria-label="Pagina-eindevoorbeeld"
+      aria-label={t("pageBreaks.title")}
       onKeyDown={(e) => {
         if (e.key === "Escape") {
           e.preventDefault();
@@ -130,10 +135,13 @@ export function PaginaEinden(props: {
       }}
     >
       <header>
-        <strong>Pagina-eindevoorbeeld</strong>
+        <strong>{t("pageBreaks.title")}</strong>
         <span>
-          Schaal {Math.round(info.verdeling.schaal * 100)}% · {info.verdeling.kolommen.length * info.verdeling.rijen.length}{" "}
-          pagina’s
+          {t("pageBreaks.summary", {
+            count: aantalPaginas,
+            pages: opmaak.getal(aantalPaginas),
+            scale: opmaak.procent(Math.round(info.verdeling.schaal * 100) / 100),
+          })}
         </span>
       </header>
       <svg
@@ -183,7 +191,7 @@ export function PaginaEinden(props: {
                 <g key={`${k}-${r}`}>
                   <rect x={x} y={y} width={w} height={h} className="einden-pagina" />
                   <text x={x + w / 2} y={y + h / 2} className="einden-nummer">
-                    Pagina {pagina(k, r)}
+                    {t("pages.page", { number: pagina(k, r) })}
                   </text>
                 </g>
               );
@@ -226,7 +234,7 @@ export function PaginaEinden(props: {
                   setSleep({ as: "kolom", van: abs, naar: abs });
                 }}
               >
-                <title>Pagina-einde vóór kolom {indexNaarKolom(abs)} (verslepen om te verplaatsen)</title>
+                <title>{t("pageBreaks.breakBeforeColumn", { column: indexNaarKolom(abs) })}</title>
               </line>
             );
           })}
@@ -247,7 +255,7 @@ export function PaginaEinden(props: {
                   setSleep({ as: "rij", van: abs, naar: abs });
                 }}
               >
-                <title>Pagina-einde vóór rij {abs + 1} (verslepen om te verplaatsen)</title>
+                <title>{t("pageBreaks.breakBeforeRow", { row: abs + 1 })}</title>
               </line>
             );
           })}
@@ -255,8 +263,7 @@ export function PaginaEinden(props: {
         </g>
       </svg>
       <p className="afdruk-uitleg">
-        Doorgetrokken lijnen zijn handmatige pagina-einden, gestippelde lijnen volgen uit papier en schaal. Versleep een
-        einde, of dubbelklik op een grens om een einde toe te voegen of weg te halen.
+        {t("pageBreaks.help")}
       </p>
       <footer>
         <button
@@ -265,10 +272,10 @@ export function PaginaEinden(props: {
           disabled={!handRij.size && !handKolom.size}
           onClick={() => props.wijzig([], [])}
         >
-          Handmatige einden wissen
+          {t("pageBreaks.clearManual")}
         </button>
         <button type="button" className="werkruimte-knop is-primair" data-autofocus onClick={props.sluit}>
-          Klaar
+          {t("pageBreaks.done")}
         </button>
       </footer>
     </div>

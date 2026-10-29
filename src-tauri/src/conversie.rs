@@ -43,19 +43,19 @@ pub fn mag_openen(ext: &str) -> bool {
 /// Exportfilter en standaardfilteropties uit de catalogus; alleen formaten met een runtimefilter.
 fn filter(bron: &str, doel: &str, module: &str) -> Result<(String, String), String> {
     let catalogus = catalogus();
-    let gegevens = catalogus.get(module).ok_or("Onbekende kantoormodule.")?;
+    let gegevens = catalogus.get(module).ok_or_else(|| crate::taal::t("errors.conversion.unknownModule"))?;
     if !gegevens["invoer"]
         .as_array()
         .is_some_and(|invoer| invoer.iter().any(|ext| ext.as_str() == Some(bron)))
     {
-        return Err("Het bronformaat hoort niet bij deze module.".into());
+        return Err(crate::taal::t("errors.conversion.sourceFormatMismatch"));
     }
     let formaat = gegevens["uitvoer"]
         .get(doel)
-        .ok_or("Dit uitvoerformaat wordt niet ondersteund.")?;
+        .ok_or_else(|| crate::taal::t("errors.conversion.outputFormatUnsupported"))?;
     let naam = formaat["filter"]
         .as_str()
-        .ok_or("Dit uitvoerformaat wordt rechtstreeks in de app gemaakt, niet via conversie.")?;
+        .ok_or_else(|| crate::taal::t("errors.conversion.outputFormatDirect"))?;
     Ok((
         naam.to_owned(),
         formaat["opties"].as_str().unwrap_or("").to_owned(),
@@ -81,7 +81,7 @@ pub struct Opties {
 impl Opties {
     /// Leest de optiekop (JSON) van de frontend; onbekende of ongeldige waarden worden geweigerd.
     pub fn uit_json(tekst: &str) -> Result<Self, String> {
-        let fout = || "Ongeldige conversieopties.".to_owned();
+        let fout = || crate::taal::t("errors.conversion.invalidOptions");
         let waarde: Value = serde_json::from_str(tekst).map_err(|_| fout())?;
         let object = waarde.as_object().ok_or_else(fout)?;
         let mut opties = Opties::default();
@@ -280,21 +280,18 @@ pub fn controleer_keuze(pad: &Path) -> Result<PathBuf, String> {
         .unwrap_or("")
         .to_lowercase();
     if !["soffice", "soffice.exe", "soffice.bin"].contains(&naam.as_str()) {
-        return Err(
-            "Kies het programma soffice (Windows: soffice.exe) uit de map program van de kantoorruntime."
-                .into(),
-        );
+        return Err(crate::taal::t("errors.conversion.chooseSoffice"));
     }
-    let pad = fs::canonicalize(pad).map_err(|_| "Het gekozen bestand bestaat niet.")?;
+    let pad = fs::canonicalize(pad).map_err(|_| crate::taal::t("errors.conversion.chosenFileMissing"))?;
     let gegevens = fs::metadata(&pad).map_err(|e| e.to_string())?;
     if !gegevens.is_file() {
-        return Err("Het gekozen pad is geen bestand.".into());
+        return Err(crate::taal::t("errors.conversion.chosenPathNotFile"));
     }
     #[cfg(unix)]
     {
         use std::os::unix::fs::PermissionsExt;
         if gegevens.permissions().mode() & 0o111 == 0 {
-            return Err("Het gekozen bestand is niet uitvoerbaar.".into());
+            return Err(crate::taal::t("errors.conversion.chosenFileNotExecutable"));
         }
     }
     Ok(pad)
@@ -327,7 +324,7 @@ pub fn lees_instelling(app: &tauri::AppHandle) -> Option<PathBuf> {
     waarde["programma"].as_str().map(PathBuf::from)
 }
 fn bewaar_instelling(app: &tauri::AppHandle, pad: Option<&Path>) -> Result<(), String> {
-    let bestand = instellingenbestand(app).ok_or("De app-gegevensmap is niet beschikbaar.")?;
+    let bestand = instellingenbestand(app).ok_or_else(|| crate::taal::t("errors.conversion.appDataDirUnavailable"))?;
     match pad {
         Some(pad) => {
             fs::create_dir_all(bestand.parent().unwrap()).map_err(|e| e.to_string())?;
@@ -374,26 +371,26 @@ fn voer_uit(opdracht: &mut Command, tijdslimiet: Duration) -> Result<(), String>
     }
     let mut kind = opdracht
         .spawn()
-        .map_err(|e| format!("Conversie kon niet starten: {e}"))?;
+        .map_err(|e| crate::taal::t_met("errors.conversion.startFailed", &[("error", &e.to_string())]))?;
     let start = Instant::now();
     loop {
         match kind.try_wait() {
             Ok(Some(status)) if status.success() => return Ok(()),
             Ok(Some(status)) => {
-                let code = status
+                let reden = status
                     .code()
-                    .map(|code| format!("procescode {code}"))
-                    .unwrap_or_else(|| "proces afgebroken".into());
-                return Err(format!(
-                    "De conversie is mislukt ({code}). Het origineel is behouden."
-                ));
+                    .map(|code| {
+                        crate::taal::t_met("errors.conversion.exitCode", &[("code", &code.to_string())])
+                    })
+                    .unwrap_or_else(|| crate::taal::t("errors.conversion.processAborted"));
+                return Err(crate::taal::t_met("errors.conversion.failed", &[("reason", &reden)]));
             }
             Ok(None) if start.elapsed() < tijdslimiet => {
                 std::thread::sleep(Duration::from_millis(30))
             }
             Ok(None) => {
                 stop(&mut kind);
-                return Err("De conversie heeft de tijdslimiet overschreden en is gestopt. Het origineel is behouden.".into());
+                return Err(crate::taal::t("errors.conversion.timeout"));
             }
             Err(e) => {
                 stop(&mut kind);
@@ -426,7 +423,7 @@ fn maak_profiel(map: &Path) -> Result<tauri::Url, String> {
     }
     .map_err(|e| e.to_string())?;
     tauri::Url::from_directory_path(&profiel)
-        .map_err(|_| "Het tijdelijke profielpad is ongeldig.".into())
+        .map_err(|_| crate::taal::t("errors.conversion.profilePathInvalid"))
 }
 
 static VERSIES: Mutex<Option<HashMap<PathBuf, String>>> = Mutex::new(None);
@@ -509,10 +506,10 @@ pub fn converteer_met(
     instelling: Option<&Path>,
 ) -> Result<Vec<u8>, String> {
     if bytes.is_empty() || bytes.len() as u64 > MAX_BYTES {
-        return Err("Kies een bestand van maximaal 100 MB dat niet leeg is.".into());
+        return Err(crate::taal::t("errors.conversion.inputSize"));
     }
     let (naam, standaard) = filter(bron, doel, module)?;
-    let (programma, _) = vind_programma(instelling).ok_or("Voor dit formaat is een kantoorruntime nodig (LibreOffice). Die is niet gevonden: installeer hem, kies het programma in Opslaan als, of zet OPENAEC_CONVERSIE_PROGRAMMA. DOCX, XLSX en PPTX werken rechtstreeks.")?;
+    let (programma, _) = vind_programma(instelling).ok_or_else(|| crate::taal::t("errors.conversion.runtimeMissing"))?;
     let map = werkmap(&programma)?;
     let invoer = map.path().join(format!("invoer.{bron}"));
     let uit = map.path().join("uit");
@@ -553,16 +550,15 @@ pub fn converteer_met(
         })
         .collect();
     let [resultaat] = resultaten.as_slice() else {
-        return Err(if resultaten.is_empty() {
-            "Dit bestand kon niet worden geconverteerd. Het kan beschadigd of beveiligd zijn, of het formaatfilter ontbreekt in de lokale runtime."
+        return Err(crate::taal::t(if resultaten.is_empty() {
+            "errors.conversion.notConverted"
         } else {
-            "De conversie leverde meer dan één bestand op."
-        }
-        .into());
+            "errors.conversion.multipleOutputs"
+        }));
     };
     let grootte = fs::metadata(resultaat).map_err(|e| e.to_string())?.len();
     if grootte == 0 || grootte > MAX_BYTES {
-        return Err("De conversie leverde geen bruikbaar bestand van maximaal 100 MB op.".into());
+        return Err(crate::taal::t("errors.conversion.noUsableOutput"));
     }
     fs::read(resultaat).map_err(|e| e.to_string())
 }
@@ -579,7 +575,7 @@ pub async fn conversie_status(app: tauri::AppHandle) -> Result<Value, String> {
 #[tauri::command]
 pub async fn kies_conversieprogramma(app: tauri::AppHandle) -> Result<Option<Value>, String> {
     let Some(bestand) = rfd::AsyncFileDialog::new()
-        .set_title("Conversieprogramma kiezen (soffice)")
+        .set_title(crate::taal::t("dialogs.chooseConverter"))
         .pick_file()
         .await
     else {

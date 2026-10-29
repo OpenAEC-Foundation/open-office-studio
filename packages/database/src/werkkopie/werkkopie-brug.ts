@@ -10,6 +10,7 @@
  *
  * Fouten komen aan als `WerkkopieFout` met dezelfde code.
  */
+import i18next from "i18next";
 import { WerkkopieFout, type WerkkopieFoutcode, type Werkkopie } from "./contract.ts";
 
 export const WERKKOPIE_METHODEN = [
@@ -97,17 +98,17 @@ export function foutAlsBericht(fout: unknown): FoutBericht {
 export function foutUitBericht(bericht: Partial<FoutBericht> | string): WerkkopieFout {
   if (typeof bericht === "string") return new WerkkopieFout("intern", bericht);
   const code = bericht.code && CODES.has(bericht.code) ? bericht.code : "intern";
-  return new WerkkopieFout(code, bericht.melding ?? "Onbekende fout in de werkkopie.");
+  return new WerkkopieFout(code, bericht.melding ?? i18next.t("database:bridge.unknownError"));
 }
 
 /** Voert een contractmethode uit op naam; onbekende namen worden geweigerd. */
 export async function voerWerkkopieMethodeUit(werkkopie: Werkkopie, methode: string, args: unknown[] = []): Promise<unknown> {
   if (methode === "bron") return werkkopie.bron;
   if (!(WERKKOPIE_METHODEN as readonly string[]).includes(methode))
-    throw new WerkkopieFout("intern", `Onbekende werkkopiemethode ‘${methode}’.`);
+    throw new WerkkopieFout("intern", i18next.t("database:bridge.unknownMethod", { method: methode }));
   const functie = werkkopie[methode as WerkkopieMethode] as ((...a: unknown[]) => Promise<unknown>) | undefined;
   if (typeof functie !== "function")
-    throw new WerkkopieFout("niet-ondersteund", `Deze werkkopie heeft geen methode ‘${methode}’.`);
+    throw new WerkkopieFout("niet-ondersteund", i18next.t("database:bridge.methodMissing", { method: methode }));
   return functie.apply(werkkopie, args);
 }
 
@@ -188,7 +189,7 @@ export async function werkkopieViaPoort(poort: Poort, opties: { tijdslimiet?: nu
       const timer = opties.tijdslimiet
         ? setTimeout(() => {
             wachtend.delete(id);
-            fout(new WerkkopieFout("beperking", `De werkkopie antwoordde niet binnen ${Math.round(opties.tijdslimiet! / 1000)} seconden (${methode}).`));
+            fout(new WerkkopieFout("beperking", i18next.t("database:bridge.timeout", { count: Math.round(opties.tijdslimiet! / 1000), method: methode })));
           }, opties.tijdslimiet)
         : undefined;
       wachtend.set(id, { klaar, fout, timer });
@@ -196,7 +197,7 @@ export async function werkkopieViaPoort(poort: Poort, opties: { tijdslimiet?: nu
     });
   };
   const bron = (await vraag("bron", [])) as Werkkopie["bron"];
-  const ontkoppel = (reden = "De koppeling met de werkkopie is verbroken.") => {
+  const ontkoppel = (reden = i18next.t("database:bridge.disconnected")) => {
     gesloten = reden;
     poort.removeEventListener("message", luisteraar);
     for (const v of wachtend.values()) {
@@ -209,7 +210,7 @@ export async function werkkopieViaPoort(poort: Poort, opties: { tijdslimiet?: nu
   for (const methode of WERKKOPIE_METHODEN)
     (proxy as unknown as Record<string, unknown>)[methode] = async (...args: unknown[]) => {
       const resultaat = await vraag(methode, args);
-      if (methode === "sluit") ontkoppel("De werkkopie is gesloten.");
+      if (methode === "sluit") ontkoppel(i18next.t("database:client.workingCopyClosed"));
       return resultaat;
     };
   return proxy;

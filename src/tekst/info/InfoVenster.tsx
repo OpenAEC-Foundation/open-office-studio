@@ -6,34 +6,37 @@
 import { useEffect, useState } from "react";
 import type { DocxEditorRef } from "@betteroffice/docx-react";
 import { ShieldCheck } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import type { TFunction } from "i18next";
+import i18next from "../../i18n/config";
+import { formatDatumTijd, formatGetal } from "../../i18n/opmaak";
 import type { Herladen } from "../../lint/editorApi";
 import { telTekst } from "../../lint/tekst-logica";
 import { Dialoog } from "../../werkruimte/Dialoog";
 import { leesEigenschappen, type DocumentEigenschappen, type KernEigenschappen } from "./docprops";
 import { sessieMinuten, wachtendeEigenschappen, zetEigenschappen } from "./opslaan";
 
-const VELDEN: { sleutel: keyof KernEigenschappen; naam: string; lang?: boolean }[] = [
-  { sleutel: "titel", naam: "Titel" },
-  { sleutel: "onderwerp", naam: "Onderwerp" },
-  { sleutel: "auteur", naam: "Auteur" },
-  { sleutel: "trefwoorden", naam: "Trefwoorden" },
-  { sleutel: "categorie", naam: "Categorie" },
-  { sleutel: "status", naam: "Status" },
-  { sleutel: "opmerkingen", naam: "Opmerkingen", lang: true },
+/** Velden; de weergavenaam is `writer:info.properties.fields.<sleutel>`. */
+const VELDEN: { sleutel: keyof KernEigenschappen; lang?: boolean }[] = [
+  { sleutel: "titel" },
+  { sleutel: "onderwerp" },
+  { sleutel: "auteur" },
+  { sleutel: "trefwoorden" },
+  { sleutel: "categorie" },
+  { sleutel: "status" },
+  { sleutel: "opmerkingen", lang: true },
 ];
 
-const getal = (n: number | null | undefined) => (n === null || n === undefined ? "—" : n.toLocaleString("nl-NL"));
+const getal = (n: number | null | undefined) => (n === null || n === undefined ? "—" : formatGetal(n));
 export function datumTekst(iso: string | null | undefined) {
   if (!iso) return "—";
   const d = new Date(iso);
-  return Number.isNaN(d.getTime())
-    ? iso
-    : d.toLocaleString("nl-NL", { dateStyle: "long", timeStyle: "short" });
+  return Number.isNaN(d.getTime()) ? iso : formatDatumTijd(d, { dateStyle: "long", timeStyle: "short" });
 }
-function duur(minuten: number) {
-  if (minuten < 60) return `${minuten} min`;
+function duur(minuten: number, t: TFunction = i18next.t) {
+  if (minuten < 60) return t("writer:info.properties.minutes", { minutes: formatGetal(minuten) });
   const uur = Math.floor(minuten / 60);
-  return `${uur} uur ${minuten % 60} min`;
+  return t("writer:info.properties.hoursMinutes", { hours: formatGetal(uur), minutes: formatGetal(minuten % 60) });
 }
 
 export function InfoVenster({
@@ -51,12 +54,13 @@ export function InfoVenster({
   const [velden, setVelden] = useState<KernEigenschappen | null>(null);
   const [telling, setTelling] = useState<{ woorden: number; tekens: number; tekensMetSpaties: number; alineas: number; paginas: number } | null>(null);
   const [fout, setFout] = useState("");
+  const { t } = useTranslation("writer");
 
   useEffect(() => {
     let actief = true;
     void (async () => {
       try {
-        if (!herlaad) throw new Error("De eigenschappen zijn hier niet beschikbaar.");
+        if (!herlaad) throw new Error(i18next.t("writer:info.properties.notAvailable"));
         const e = leesEigenschappen(await herlaad.bytes());
         if (!actief) return;
         const wachtend = wachtendeEigenschappen(herlaad);
@@ -103,33 +107,33 @@ export function InfoVenster({
   const minuten = (eigenschappen?.bewerkingstijd ?? 0) + sessieMinuten(herlaad);
   return (
     <Dialoog
-      titel="Info"
+      titel={t("info.properties.title")}
       sluit={sluit}
       className="tekst-info"
       acties={
         <>
-          <button type="button" className="werkruimte-knop" onClick={inspecteren} style={{ marginRight: "auto" }}>
-            <ShieldCheck size={14} aria-hidden="true" /> Document inspecteren…
+          <button type="button" className="werkruimte-knop" onClick={inspecteren} style={{ marginInlineEnd: "auto" }}>
+            <ShieldCheck size={14} aria-hidden="true" /> {t("info.properties.inspect")}
           </button>
           <button type="button" className="werkruimte-knop" onClick={sluit}>
-            Annuleren
+            {t("common:cancel")}
           </button>
           <button type="button" className="werkruimte-knop is-primair" disabled={!velden} onClick={toepassen}>
-            Toepassen
+            {t("common:apply")}
           </button>
         </>
       }
     >
       {fout && <p className="werkruimte-fout" role="alert">{fout}</p>}
       {!velden ? (
-        !fout && <p className="werkruimte-uitleg">Eigenschappen lezen…</p>
+        !fout && <p className="werkruimte-uitleg">{t("info.properties.reading")}</p>
       ) : (
         <div className="tekst-info-kolommen">
           <fieldset className="werkruimte-groep">
-            <legend>Eigenschappen</legend>
-            {VELDEN.map(({ sleutel, naam, lang }) => (
+            <legend>{t("info.properties.properties")}</legend>
+            {VELDEN.map(({ sleutel, lang }) => (
               <label key={sleutel} className="werkruimte-veld">
-                <span>{naam}</span>
+                <span>{t(`info.properties.fields.${sleutel}`)}</span>
                 {lang ? (
                   <textarea
                     rows={3}
@@ -146,46 +150,46 @@ export function InfoVenster({
                 )}
               </label>
             ))}
-            <p className="werkruimte-uitleg">Wordt bij de volgende keer opslaan in het bestand gezet.</p>
+            <p className="werkruimte-uitleg">{t("info.properties.savedOnNextSave")}</p>
           </fieldset>
           <div>
             <fieldset className="werkruimte-groep">
-              <legend>Statistieken</legend>
+              <legend>{t("info.properties.statistics")}</legend>
               <dl className="tekst-info-lijst">
-                <dt>Pagina’s</dt>
+                <dt>{t("info.properties.pages")}</dt>
                 <dd>{getal(telling?.paginas ?? eigenschappen?.paginas)}</dd>
-                <dt>Woorden</dt>
+                <dt>{t("info.properties.words")}</dt>
                 <dd>{getal(telling?.woorden ?? eigenschappen?.woorden)}</dd>
-                <dt>Tekens (zonder spaties)</dt>
+                <dt>{t("info.properties.charactersNoSpaces")}</dt>
                 <dd>{getal(telling?.tekens ?? eigenschappen?.tekens)}</dd>
-                <dt>Tekens (met spaties)</dt>
+                <dt>{t("info.properties.charactersWithSpaces")}</dt>
                 <dd>{getal(telling?.tekensMetSpaties ?? eigenschappen?.tekensMetSpaties)}</dd>
-                <dt>Alinea’s</dt>
+                <dt>{t("info.properties.paragraphs")}</dt>
                 <dd>{getal(telling?.alineas ?? eigenschappen?.alineas)}</dd>
-                <dt>Bewerkingstijd</dt>
-                <dd>{duur(minuten)}</dd>
+                <dt>{t("info.properties.editingTime")}</dt>
+                <dd>{duur(minuten, t)}</dd>
               </dl>
             </fieldset>
             <fieldset className="werkruimte-groep">
-              <legend>Datums en personen</legend>
+              <legend>{t("info.properties.datesAndPeople")}</legend>
               <dl className="tekst-info-lijst">
-                <dt>Gemaakt</dt>
+                <dt>{t("info.properties.created")}</dt>
                 <dd>{datumTekst(eigenschappen?.aangemaakt)}</dd>
-                <dt>Laatst gewijzigd</dt>
+                <dt>{t("info.properties.lastModified")}</dt>
                 <dd>{datumTekst(eigenschappen?.gewijzigd)}</dd>
-                <dt>Laatst gewijzigd door</dt>
+                <dt>{t("info.properties.lastModifiedBy")}</dt>
                 <dd>{eigenschappen?.laatstGewijzigdDoor || "—"}</dd>
-                <dt>Revisie</dt>
+                <dt>{t("info.properties.revision")}</dt>
                 <dd>{getal(eigenschappen?.revisie)}</dd>
                 {eigenschappen?.toepassing && (
                   <>
-                    <dt>Gemaakt met</dt>
+                    <dt>{t("info.properties.application")}</dt>
                     <dd>{eigenschappen.toepassing}</dd>
                   </>
                 )}
                 {eigenschappen?.bedrijf && (
                   <>
-                    <dt>Organisatie</dt>
+                    <dt>{t("info.properties.company")}</dt>
                     <dd>{eigenschappen.bedrijf}</dd>
                   </>
                 )}

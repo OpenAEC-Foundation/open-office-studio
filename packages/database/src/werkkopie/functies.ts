@@ -7,6 +7,7 @@
  * Landinstelling: Nederlands (zoals Access op een Nederlandse Windows):
  * decimale komma in CStr/Format, maand- en dagnamen in het Nederlands.
  */
+import i18next from "i18next";
 import type { Database } from "sql.js";
 
 type SqlWaarde = number | string | Uint8Array | null;
@@ -563,7 +564,7 @@ function dateAdd(interval: string, n: number, ms: number): number {
     case "s":
       return ms + geheel * 1000;
   }
-  throw new Error(`Onbekend interval ‘${interval}’ in DateAdd.`);
+  throw new Error(i18next.t("database:functions.unknownInterval", { interval, fn: "DateAdd" }));
 }
 function dagNummer(ms: number) {
   return Math.floor((ms - OLE_NUL) / DAG_MS);
@@ -600,7 +601,7 @@ function datePart(interval: string, ms: number, eersteDag = 1): number {
     case "s":
       return d.getUTCSeconds();
   }
-  throw new Error(`Onbekend interval ‘${interval}’ in DatePart.`);
+  throw new Error(i18next.t("database:functions.unknownInterval", { interval, fn: "DatePart" }));
 }
 function dateDiff(interval: string, a: number, b: number, eersteDag = 1): number {
   const da = new Date(a),
@@ -641,7 +642,7 @@ function dateDiff(interval: string, a: number, b: number, eersteDag = 1): number
     case "s":
       return Math.floor((b - OLE_NUL) / 1000) - Math.floor((a - OLE_NUL) / 1000);
   }
-  throw new Error(`Onbekend interval ‘${interval}’ in DateDiff.`);
+  throw new Error(i18next.t("database:functions.unknownInterval", { interval, fn: "DateDiff" }));
 }
 
 // ---------------------------------------------------------------------------

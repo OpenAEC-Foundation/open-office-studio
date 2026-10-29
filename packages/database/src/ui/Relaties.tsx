@@ -1,6 +1,7 @@
 /** Relatievenster: bestaande relaties, nieuwe relatie (met of zonder integriteit) en verwijderen. */
 import { useId, useState } from "react";
 import { Link2, Trash2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import type { RelatieSchema, TabelSchema, Werkkopie } from "../werkkopie/contract.ts";
 import { useDialogen } from "./Dialoog.tsx";
 import { leesbareFout } from "./invoer.ts";
@@ -19,6 +20,7 @@ export function RelatieVenster({
 }) {
   const id = useId();
   const dialogen = useDialogen();
+  const { t } = useTranslation("database");
   const [fout, setFout] = useState("");
   const [bezig, setBezig] = useState(false);
   const eerste = tabellen[0]?.naam ?? "";
@@ -54,21 +56,21 @@ export function RelatieVenster({
     await voer(async () => {
       const naam = await werkkopie.maakRelatie(r);
       zet({ naam: "" });
-      return `Relatie ‘${naam}’ gemaakt${r.integriteit ? " met referentiële integriteit (tabel ‘" + r.tabel + "’ veilig herbouwd)" : ""}.`;
+      return r.integriteit ? t("relationships.createdWithIntegrity", { name: naam, table: r.tabel }) : t("relationships.created", { name: naam });
     });
   }
 
   async function verwijder(r: RelatieSchema) {
     const ja = await dialogen.bevestig({
-      titel: "Relatie verwijderen",
-      tekst: `Relatie ‘${r.naam}’ (${r.tabel} → ${r.naarTabel}) verwijderen?${r.integriteit ? " De referentiële integriteit vervalt; de tabel wordt daarvoor veilig herbouwd." : ""} Gegevens blijven behouden.`,
-      ja: "Verwijderen",
+      titel: t("relationships.delete.title"),
+      tekst: t(r.integriteit ? "relationships.delete.textWithIntegrity" : "relationships.delete.text", { name: r.naam, from: r.tabel, to: r.naarTabel }),
+      ja: t("common:delete"),
       gevaarlijk: true,
     });
     if (!ja) return;
     await voer(async () => {
       await werkkopie.verwijderRelatie(r.naam);
-      return `Relatie ‘${r.naam}’ verwijderd.`;
+      return t("relationships.deleted", { name: r.naam });
     });
   }
 
@@ -76,11 +78,11 @@ export function RelatieVenster({
     <label className="database-veld" htmlFor={`${id}-${idDeel}`}>
       <span>{label}</span>
       <select id={`${id}-${idDeel}`} value={waarde} disabled={bezig || !tabel} onChange={(e) => kies(e.target.value)}>
-        <option value="">— kies een veld —</option>
+        <option value="">{t("relationships.chooseField")}</option>
         {tabel?.velden.map((v) => (
           <option key={v.naam} value={v.naam}>
             {v.naam}
-            {v.primair ? " (sleutel)" : ""}
+            {v.primair ? ` ${t("relationships.keySuffix")}` : ""}
           </option>
         ))}
       </select>
@@ -101,20 +103,20 @@ export function RelatieVenster({
 
   return (
     <div className="database-overzicht" aria-busy={bezig}>
-      <h2>Relaties</h2>
+      <h2>{t("relationships.title")}</h2>
       {!relaties.length ? (
-        <p>Er zijn geen relaties vastgelegd in de werkkopie.</p>
+        <p>{t("relationships.none")}</p>
       ) : (
         <div className="table-wrap">
-          <table aria-label="Relaties in de werkkopie">
+          <table aria-label={t("relationships.tableLabel")}>
             <thead>
               <tr>
-                <th scope="col">Naam</th>
-                <th scope="col">Van (verwijzend)</th>
-                <th scope="col">Naar (verwezen)</th>
-                <th scope="col">Referentiële integriteit</th>
+                <th scope="col">{t("relationships.column.name")}</th>
+                <th scope="col">{t("relationships.column.from")}</th>
+                <th scope="col">{t("relationships.column.to")}</th>
+                <th scope="col">{t("relationships.column.integrity")}</th>
                 <th scope="col">
-                  <span className="sr-only">Acties</span>
+                  <span className="sr-only">{t("relationships.column.actions")}</span>
                 </th>
               </tr>
             </thead>
@@ -130,11 +132,17 @@ export function RelatieVenster({
                   </td>
                   <td>
                     {r.integriteit
-                      ? ["Afgedwongen", r.trapsBijwerken ? "trapsgewijs bijwerken" : "", r.trapsVerwijderen ? "trapsgewijs verwijderen" : ""].filter(Boolean).join(" · ")
-                      : "Niet afgedwongen"}
+                      ? [
+                          t("relationships.enforced"),
+                          r.trapsBijwerken ? t("relationships.cascadeUpdate") : "",
+                          r.trapsVerwijderen ? t("relationships.cascadeDelete") : "",
+                        ]
+                          .filter(Boolean)
+                          .join(" · ")
+                      : t("relationships.notEnforced")}
                   </td>
                   <td className="database-rij-acties">
-                    <button type="button" aria-label={`Relatie ${r.naam} verwijderen`} title="Relatie verwijderen" disabled={bezig} onClick={() => void verwijder(r)}>
+                    <button type="button" aria-label={t("relationships.deleteNamed", { name: r.naam })} title={t("relationships.delete.title")} disabled={bezig} onClick={() => void verwijder(r)}>
                       <Trash2 size={14} />
                     </button>
                   </td>
@@ -144,51 +152,50 @@ export function RelatieVenster({
           </table>
         </div>
       )}
-      <h3>Nieuwe relatie</h3>
+      <h3>{t("relationships.new")}</h3>
       {tabellen.length === 0 ? (
-        <p className="muted">Maak eerst een tabel.</p>
+        <p className="muted">{t("relationships.createTableFirst")}</p>
       ) : (
         <form
           className="database-relatieformulier"
-          aria-label="Nieuwe relatie"
+          aria-label={t("relationships.new")}
           onSubmit={(e) => {
             e.preventDefault();
             void maak();
           }}
         >
           <fieldset disabled={bezig}>
-            <legend>Verwezen tabel (de “één”-kant, met de sleutel)</legend>
-            {tabelKeuze("Tabel", concept.naarTabel, (t) => zet({ naarTabel: t, naarVeld: sleutelVelden(tabellen.find((x) => x.naam === t))[0] ?? "" }), "naar")}
-            {veldKeuze("Veld", naarTabel, concept.naarVeld, (v) => zet({ naarVeld: v }), "naarveld")}
+            <legend>{t("relationships.referencedTable")}</legend>
+            {tabelKeuze(t("relationships.table"), concept.naarTabel, (t) => zet({ naarTabel: t, naarVeld: sleutelVelden(tabellen.find((x) => x.naam === t))[0] ?? "" }), "naar")}
+            {veldKeuze(t("relationships.field"), naarTabel, concept.naarVeld, (v) => zet({ naarVeld: v }), "naarveld")}
           </fieldset>
           <fieldset disabled={bezig}>
-            <legend>Verwijzende tabel (de “veel”-kant)</legend>
-            {tabelKeuze("Tabel", concept.tabel, (t) => zet({ tabel: t, veld: "" }), "van")}
-            {veldKeuze("Veld", vanTabel, concept.veld, (v) => zet({ veld: v }), "vanveld")}
+            <legend>{t("relationships.referencingTable")}</legend>
+            {tabelKeuze(t("relationships.table"), concept.tabel, (t) => zet({ tabel: t, veld: "" }), "van")}
+            {veldKeuze(t("relationships.field"), vanTabel, concept.veld, (v) => zet({ veld: v }), "vanveld")}
           </fieldset>
           <fieldset disabled={bezig}>
-            <legend>Eigenschappen</legend>
+            <legend>{t("relationships.properties")}</legend>
             <label className="database-veld" htmlFor={`${id}-naam`}>
-              <span>Naam (optioneel)</span>
+              <span>{t("relationships.nameOptional")}</span>
               <input id={`${id}-naam`} value={concept.naam} placeholder={`${concept.naarTabel}${concept.tabel}`} onChange={(e) => zet({ naam: e.target.value })} />
             </label>
             <label className="database-vink">
-              <input type="checkbox" checked={concept.integriteit} onChange={(e) => zet({ integriteit: e.target.checked })} /> Referentiële integriteit afdwingen
+              <input type="checkbox" checked={concept.integriteit} onChange={(e) => zet({ integriteit: e.target.checked })} /> {t("relationships.enforceIntegrity")}
             </label>
             <label className="database-vink">
-              <input type="checkbox" checked={concept.trapsBijwerken} disabled={!concept.integriteit} onChange={(e) => zet({ trapsBijwerken: e.target.checked })} /> Gerelateerde velden trapsgewijs bijwerken
+              <input type="checkbox" checked={concept.trapsBijwerken} disabled={!concept.integriteit} onChange={(e) => zet({ trapsBijwerken: e.target.checked })} /> {t("relationships.cascadeUpdateFields")}
             </label>
             <label className="database-vink">
-              <input type="checkbox" checked={concept.trapsVerwijderen} disabled={!concept.integriteit} onChange={(e) => zet({ trapsVerwijderen: e.target.checked })} /> Gerelateerde records trapsgewijs verwijderen
+              <input type="checkbox" checked={concept.trapsVerwijderen} disabled={!concept.integriteit} onChange={(e) => zet({ trapsVerwijderen: e.target.checked })} /> {t("relationships.cascadeDeleteRecords")}
             </label>
           </fieldset>
           <p className="muted">
-            Met referentiële integriteit moet het verwezen veld de primaire sleutel of uniek zijn en moeten alle bestaande gegevens kloppen; anders
-            meldt de werkkopie hoeveel rijen niet verwijzen. De verwijzende tabel wordt daarvoor veilig herbouwd.
+            {t("relationships.integrityHint")}
           </p>
           <div className="database-knoppen">
             <button type="submit" className="primary" disabled={bezig}>
-              <Link2 size={16} /> Relatie maken
+              <Link2 size={16} /> {t("relationships.create")}
             </button>
           </div>
         </form>

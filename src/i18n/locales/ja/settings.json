@@ -1,0 +1,141 @@
+{
+  "title": "設定",
+  "resetToDefaults": "既定値に戻す",
+  "resetConfirm": "すべての設定を既定値に戻しますか？［保存］をクリックするまで変更は保存されません。",
+  "saveFailed": "設定を保存できませんでした。",
+  "tabs": {
+    "algemeen": "全般",
+    "uiterlijk": "外観",
+    "bewerken": "編集",
+    "email": "メール",
+    "over": "バージョン情報"
+  },
+  "general": {
+    "application": "アプリケーション",
+    "language": "言語",
+    "languageAuto": "自動（{{language}}）",
+    "languageSearch": "言語を検索…",
+    "languageNone": "言語が見つかりません",
+    "machineTranslation": "この翻訳は自動で作成されたもので、ネイティブ スピーカーによる確認はまだ行われていません。",
+    "saving": "保存",
+    "formatsHelp": "新しいドキュメントの既定の形式。ODF には変換プログラム（デスクトップ アプリ）が必要です。［名前を付けて保存］ではいつでも別の形式を選べます。",
+    "format": {
+      "docx": "文書",
+      "xlsx": "表計算",
+      "pptx": "プレゼンテーション"
+    },
+    "recoveryInterval": "回復ポイントの間隔",
+    "minutes": "分",
+    "recoveryHelp": "変更されたドキュメントの回復用コピーを作成する間隔（1～60 分）。予期しない終了の後に回復するために使用します。",
+    "authorName": "コメントに表示する名前",
+    "converter": "変換プログラム",
+    "converterBrowser": "変換プログラム（LibreOffice）はデスクトップ アプリで選択します。ブラウザーでは独自の形式のみ使用できます。",
+    "converterLoading": "状態を取得しています…",
+    "converterFoundChosen": "検出: {{path}}{{version}}（手動で選択）",
+    "converterFoundAuto": "検出: {{path}}{{version}}（自動検出）",
+    "converterMissing": "変換プログラムが見つかりません。ODF や古い形式を開いたり保存したりするには、LibreOffice の soffice を選択してください。",
+    "converterChoose": "プログラムを選択…",
+    "converterAuto": "自動検出"
+  },
+  "languages": {
+    "nl": "オランダ語",
+    "en": "英語",
+    "de": "ドイツ語",
+    "fr": "フランス語",
+    "es": "スペイン語",
+    "it": "イタリア語",
+    "pt-BR": "ポルトガル語（ブラジル）",
+    "pt-PT": "ポルトガル語（ポルトガル）",
+    "pl": "ポーランド語",
+    "cs": "チェコ語",
+    "sk": "スロバキア語",
+    "hu": "ハンガリー語",
+    "ro": "ルーマニア語",
+    "el": "ギリシャ語",
+    "sv": "スウェーデン語",
+    "da": "デンマーク語",
+    "nb": "ノルウェー語（ブークモール）",
+    "fi": "フィンランド語",
+    "tr": "トルコ語",
+    "ru": "ロシア語",
+    "uk": "ウクライナ語",
+    "ar": "アラビア語",
+    "he": "ヘブライ語",
+    "hi": "ヒンディー語",
+    "id": "インドネシア語",
+    "vi": "ベトナム語",
+    "th": "タイ語",
+    "zh-CN": "中国語（簡体字）",
+    "zh-TW": "中国語（繁体字）",
+    "ja": "日本語",
+    "ko": "韓国語"
+  },
+  "appearance": {
+    "theme": "テーマ",
+    "themes": {
+      "light": "ライト",
+      "forge": "Forge（ダーク）",
+      "systeem": "システム設定に合わせる"
+    },
+    "ribbon": "リボン",
+    "ribbonCompact": "コンパクト リボン: 小さいボタンはアイコンのみ表示",
+    "ribbonCollapsed": "リボンを既定で折りたたむ（タブのみ表示、Ctrl+F1 で切り替え）",
+    "statusbar": "ステータス バー",
+    "status": {
+      "zoom": "ズーム スライダー",
+      "tekst": "文書: ページ、単語数、文字数",
+      "taal": "文書: 言語（とスペル チェック）",
+      "bijhouden": "文書: 変更履歴の記録",
+      "weergave": "文書: 表示ボタン（印刷レイアウト、閲覧モード）",
+      "rekenblad": "表計算: 選択範囲の合計、平均、データの個数",
+      "presentatie": "プレゼンテーション: スライド x / y",
+      "database": "データベース: 作業コピーの状態"
+    }
+  },
+  "editing": {
+    "text": "文書",
+    "shortcutProfile": "キーボード ショートカット",
+    "profiles": {
+      "standaard": "標準（LibreOffice と同じ）",
+      "word": "Word"
+    },
+    "profilesHelp": {
+      "standaard": "Ctrl+1 = 見出し 1、Ctrl+2 = 見出し 2、以下同様。",
+      "word": "Ctrl+1 = 行間 1 行、Ctrl+Alt+1 = 見出し 1。"
+    },
+    "miniToolbar": "テキストの選択時にミニ ツール バーを表示する",
+    "spelling": "スペル チェックとオートコレクト",
+    "spellingOptions": {
+      "controleren": "入力時にスペル チェックを行う（赤い波線）",
+      "hoofdletterwoordenNegeren": "すべて大文字の単語を無視する",
+      "cijferwoordenNegeren": "数字を含む単語を無視する",
+      "autocorrectie": "オートコレクト: 2 文字目を小文字にする（TWo INitial CApitals）、文の先頭文字を大文字にする、よくある入力ミスを修正する"
+    },
+    "spellingHelp": "辞書: OpenTaal（オランダ語）と SCOWL（英語、英国および米国）。下線の付いた単語を右クリックすると候補が表示されます。F7 キーで［スペル チェックと文章校正］ウィンドウが開きます。",
+    "personalDictionary_other": "ユーザー辞書（{{count}} 語）…",
+    "personalDictionaryLabel": "ユーザー辞書",
+    "personalDictionaryEmpty": "まだ単語が追加されていません。",
+    "removeWord": "{{word}} を削除",
+    "remove": "削除",
+    "keyboard": "キーボード",
+    "showShortcuts": "キーボード ショートカットを表示 · F1"
+  },
+  "email": {
+    "privacy": "プライバシー",
+    "externalImages": "メール内の外部画像",
+    "external": {
+      "account": "アカウントごとの設定に従う",
+      "nooit": "自動的に読み込まない（メッセージごとに許可することはできます）"
+    }
+  },
+  "about": {
+    "appName": "Open Office Studio",
+    "version": "バージョン",
+    "framework": "使用フレームワーク",
+    "design": "デザイン",
+    "licenses": "ライセンス",
+    "licensesLink": "使用しているコンポーネントのライセンス",
+    "description": "OpenAEC Foundation による、文書、表計算、プレゼンテーション、データベース、メールを 1 つにまとめたローカル ワークスペースです。ファイルはお使いのコンピューターに保存されたままです。",
+    "translations": "オランダ語が原文の言語です。その他の言語は OpenAEC による機械翻訳で、現在確認中です。改善のご提案を歓迎します。"
+  }
+}

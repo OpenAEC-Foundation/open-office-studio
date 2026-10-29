@@ -8,7 +8,10 @@ import {
   Sheet,
   X,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { kantoorModule } from "../packages/email/src/kantoor";
+import i18next from "./i18n/config";
+import { formatDatum, formatTijd } from "./i18n/opmaak";
 import { useRecent, type RecentBestand } from "./recent";
 import "./levenscyclus.css";
 
@@ -19,23 +22,21 @@ const ICONEN = {
   database: Database,
 } as const;
 
-const datumNotatie = new Intl.DateTimeFormat("nl-NL", {
-  day: "numeric",
-  month: "short",
-  hour: "2-digit",
-  minute: "2-digit",
-});
-
-export function datumTekst(datum: number, nu = Date.now()) {
+/**
+ * "Vandaag 14:05", "Gisteren 09:30" of "1 sep 10:00" in de interfacetaal.
+ * `inZin`: voor midden in een zin ("herstelkopie van vandaag 14:05").
+ */
+export function datumTekst(datum: number, nu = Date.now(), inZin = false) {
   const dag = 86_400_000;
   const vandaag = new Date(nu).setHours(0, 0, 0, 0);
-  const tijd = new Date(datum).toLocaleTimeString("nl-NL", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-  if (datum >= vandaag) return `Vandaag ${tijd}`;
-  if (datum >= vandaag - dag) return `Gisteren ${tijd}`;
-  return datumNotatie.format(datum);
+  const time = formatTijd(datum);
+  if (datum >= vandaag)
+    return i18next.t(inZin ? "backstage:recent.todayInline" : "backstage:recent.today", { time });
+  if (datum >= vandaag - dag)
+    return i18next.t(inZin ? "backstage:recent.yesterdayInline" : "backstage:recent.yesterday", {
+      time,
+    });
+  return formatDatum(datum, { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
 }
 
 /**
@@ -51,6 +52,7 @@ export function RecenteBestanden({
   /** Bestandskiezer (browser, of als een bestand niet meer bestaat). */
   bladeren: () => void;
 }) {
+  const { t } = useTranslation("backstage");
   const recent = useRecent();
   const [melding, setMelding] = useState("");
   if (!recent.lijst.length) return null;
@@ -64,7 +66,9 @@ export function RecenteBestanden({
     try {
       if (!(await recent.open(bestand.id)))
         setMelding(
-          `${bestand.naam} is niet meer te vinden in ${bestand.map || "de oorspronkelijke map"}. Haal het uit de lijst met ✕ of open het via Bladeren.`,
+          bestand.map
+            ? t("recent.missing", { name: bestand.naam, folder: bestand.map })
+            : t("recent.missingOriginalFolder", { name: bestand.naam }),
         );
     } catch (e) {
       setMelding(String(e));
@@ -74,11 +78,11 @@ export function RecenteBestanden({
   return (
     <section className="start-recent" aria-labelledby="start-recent-titel">
       <div className="start-sectiekop">
-        <h2 id="start-recent-titel">Recent</h2>
+        <h2 id="start-recent-titel">{t("recent.title")}</h2>
         <span>
           {recent.desktop
-            ? "Recent geopende en opgeslagen bestanden"
-            : "Deze browser onthoudt alleen namen; kies het bestand opnieuw"}
+            ? t("recent.hintDesktop")
+            : t("recent.hintBrowser")}
           <button
             className="start-recent-wis"
             disabled={bezig}
@@ -86,9 +90,9 @@ export function RecenteBestanden({
               setMelding("");
               recent.wis();
             }}
-            title="Lijst wissen; vastgezette bestanden blijven staan"
+            title={t("recent.clearTitle")}
           >
-            Lijst wissen
+            {t("recent.clear")}
           </button>
         </span>
       </div>
@@ -113,10 +117,10 @@ export function RecenteBestanden({
                 onClick={() => void open(bestand)}
                 title={
                   ontbreekt
-                    ? "Niet gevonden"
+                    ? t("recent.notFound")
                     : bestand.map
-                      ? `${bestand.map} · openen`
-                      : "Bestand kiezen"
+                      ? t("recent.openFrom", { folder: bestand.map })
+                      : t("recent.chooseFile")
                 }
               >
                 <span className="module-icoon">
@@ -125,8 +129,11 @@ export function RecenteBestanden({
                 <span className="start-recent-tekst">
                   <strong>{bestand.naam}</strong>
                   <small>
-                    {ontbreekt ? "Niet gevonden · " : ""}
-                    {bestand.map || "Alleen de naam is bekend"}
+                    {ontbreekt
+                      ? t("recent.notFoundIn", {
+                          location: bestand.map || t("recent.nameOnly"),
+                        })
+                      : bestand.map || t("recent.nameOnly")}
                   </small>
                 </span>
                 <time dateTime={new Date(bestand.datum).toISOString()}>
@@ -138,8 +145,10 @@ export function RecenteBestanden({
                 disabled={bezig}
                 onClick={() => recent.vastzetten(bestand.id, !bestand.vast)}
                 aria-pressed={bestand.vast}
-                aria-label={`${bestand.naam} ${bestand.vast ? "losmaken" : "vastzetten"}`}
-                title={bestand.vast ? "Losmaken" : "Bovenaan vastzetten"}
+                aria-label={t(bestand.vast ? "recent.unpin" : "recent.pin", {
+                  name: bestand.naam,
+                })}
+                title={bestand.vast ? t("recent.unpinTitle") : t("recent.pinTitle")}
               >
                 <Pin size={14} fill={bestand.vast ? "currentColor" : "none"} />
               </button>
@@ -147,8 +156,8 @@ export function RecenteBestanden({
                 className="start-recent-actie"
                 disabled={bezig}
                 onClick={() => recent.verwijder(bestand.id)}
-                aria-label={`${bestand.naam} uit de lijst halen`}
-                title="Uit de lijst halen (het bestand blijft bestaan)"
+                aria-label={t("recent.remove", { name: bestand.naam })}
+                title={t("recent.removeTitle")}
               >
                 <X size={14} />
               </button>

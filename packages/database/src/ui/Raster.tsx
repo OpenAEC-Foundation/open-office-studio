@@ -8,6 +8,8 @@
  */
 import { createContext, useCallback, useContext, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { ArrowDown, ArrowUp, ArrowUpDown, KeyRound } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { formatGetal } from "../../../../src/i18n/opmaak.ts";
 import type { VeldSchema, Veldsoort, Waarde } from "../werkkopie/contract.ts";
 import { bewerkTekst, leesbareFout, leesInvoer, SOORTNAMEN, toonWaarde } from "./invoer.ts";
 import { useDialogen } from "./Dialoog.tsx";
@@ -87,7 +89,7 @@ export function Raster({
   kanToevoegen = false,
   actief,
   onActief,
-  leeg = "Geen rijen.",
+  leeg,
   vul = false,
   focusSignaal,
   voet,
@@ -116,7 +118,11 @@ export function Raster({
   voet?: ReactNode;
 }) {
   const dialogen = useDialogen();
+  const { t } = useTranslation("database");
   const register = useContext(RasterRegister);
+  /** “3 rijen × 2 kolommen” in de interfacetaal. */
+  const omvangTekst = (rijen: number, kols: number) =>
+    `${t("grid.count.rows", { count: rijen, formatted: formatGetal(rijen) })} × ${t("grid.count.columns", { count: kols, formatted: formatGetal(kols) })}`;
   const b: RasterBron = useMemo(() => bron ?? { totaal: rijen?.length ?? 0, rij: (i: number) => rijen?.[i] }, [bron, rijen]);
   const N = b.totaal;
   const K = kolommen.length;
@@ -340,10 +346,11 @@ export function Raster({
       }
       geladen.push(rij.waarden.slice(g.c0, g.c1 + 1));
     }
-    const omvang = `${aantalRijen.toLocaleString("nl-NL")} ${aantalRijen === 1 ? "rij" : "rijen"} × ${kols} ${kols === 1 ? "kolom" : "kolommen"}`;
+    const omvang = omvangTekst(aantalRijen, kols);
     const gelukt = () =>
       setMelding(
-        `${omvang} gekopieerd${koppen ? " (met kolomkoppen)" : ""}.${afgekapt ? ` Maximaal ${KOPIEER_LIMIET.toLocaleString("nl-NL")} cellen per keer: alleen de eerste ${aantalRijen.toLocaleString("nl-NL")} rijen.` : ""}`,
+        t(koppen ? "grid.copy.doneWithHeaders" : "grid.copy.done", { size: omvang }) +
+          (afgekapt ? ` ${t("grid.copy.truncated", { max: formatGetal(KOPIEER_LIMIET), rows: formatGetal(aantalRijen) })}` : ""),
       );
     if (event?.clipboardData && alles) {
       const i = maak(geladen);
@@ -361,11 +368,11 @@ export function Raster({
         : maak(geladen);
     const ok = await schrijfKlembord(inhoud).catch(() => false);
     if (!ok && !alles) {
-      setMelding("De rijen worden nog geladen; druk zo opnieuw op Ctrl+C om alles te kopiëren.");
+      setMelding(t("grid.copy.stillLoading"));
       return;
     }
     if (ok) gelukt();
-    else setMelding("Kopiëren is niet gelukt: het klembord is niet beschikbaar.");
+    else setMelding(t("grid.copy.failed"));
     focusNaRender.current = true;
     setScroll((x) => ({ ...x }));
   }
@@ -373,7 +380,7 @@ export function Raster({
   /** Plakt tabgescheiden tekst vanaf de selectie; `cellen` direct opgeven kan ook (Delete = één lege waarde over de selectie). */
   async function plak(tekst: string, cellen = leesTsv(tekst)) {
     if (!onPlak) {
-      setMelding("Dit raster is alleen-lezen; plakken kan hier niet.");
+      setMelding(t("grid.paste.readOnly"));
       return;
     }
     if (!cellen.length) return;
@@ -381,19 +388,17 @@ export function Raster({
     const plan = maakPlakPlan(cellen, { rij: g.r0, kolom: g.c0 }, kolommen, N, { kanToevoegen, doel: g });
     if (plan.fouten.length) {
       await dialogen.melding(
-        "Plakken niet uitgevoerd",
+        t("grid.paste.notDoneTitle"),
         <>
-          <p>
-            {plan.fouten.length} {plan.fouten.length === 1 ? "waarde past" : "waarden passen"} niet bij het veldtype. Er is niets gewijzigd.
-          </p>
+          <p>{t("grid.paste.typeErrors", { count: plan.fouten.length })}</p>
           <ul className="database-plakfouten">
             {plan.fouten.slice(0, 20).map((f, i) => (
               <li key={i}>
-                Rij {f.rij + 1}, {f.kolomnaam}: {f.tekst}
+                {t("grid.paste.errorLine", { row: f.rij + 1, column: f.kolomnaam, error: f.tekst })}
               </li>
             ))}
           </ul>
-          {plan.fouten.length > 20 && <p className="muted">en nog {plan.fouten.length - 20} meer.</p>}
+          {plan.fouten.length > 20 && <p className="muted">{t("grid.paste.andMore", { count: plan.fouten.length - 20 })}</p>}
         </>,
       );
       focusNaRender.current = true;
@@ -402,19 +407,26 @@ export function Raster({
     }
     const aantalCellen = plan.wijzigingen.length + plan.nieuweRijen.reduce((s, r) => s + Object.keys(r).length, 0);
     if (!aantalCellen) {
-      setMelding(plan.waarschuwingen.join(" ") || "Niets om te plakken.");
+      setMelding(plan.waarschuwingen.join(" ") || t("grid.paste.nothing"));
       return;
     }
     if (plan.rijen > 1 || plan.nieuweRijen.length) {
       const voorbeeld = cellen.slice(0, 5);
       const ja = await dialogen.bevestig({
-        titel: "Plakken",
+        titel: t("grid.paste.title"),
         tekst: (
           <>
             <p>
-              {plan.wijzigingen.length.toLocaleString("nl-NL")} {plan.wijzigingen.length === 1 ? "cel wijzigen" : "cellen wijzigen"}
-              {plan.nieuweRijen.length ? ` en ${plan.nieuweRijen.length.toLocaleString("nl-NL")} ${plan.nieuweRijen.length === 1 ? "nieuwe rij" : "nieuwe rijen"} toevoegen` : ""}, vanaf rij{" "}
-              {g.r0 + 1}, kolom ‘{kolommen[g.c0]?.naam}’. Alles gebeurt als één bewerking in de werkkopie.
+              {t("grid.paste.confirm", {
+                action: plan.nieuweRijen.length
+                  ? t("grid.paste.changeAndAdd", {
+                      change: t("grid.paste.changeCells", { count: plan.wijzigingen.length, formatted: formatGetal(plan.wijzigingen.length) }),
+                      add: t("grid.paste.addRows", { count: plan.nieuweRijen.length, formatted: formatGetal(plan.nieuweRijen.length) }),
+                    })
+                  : t("grid.paste.changeCells", { count: plan.wijzigingen.length, formatted: formatGetal(plan.wijzigingen.length) }),
+                row: g.r0 + 1,
+                column: kolommen[g.c0]?.naam ?? "",
+              })}
             </p>
             {plan.waarschuwingen.map((w, i) => (
               <p key={i} className="melding">
@@ -423,7 +435,7 @@ export function Raster({
             ))}
             <div className="table-wrap">
               <table className="database-plakvoorbeeld">
-                <caption className="sr-only">Voorbeeld van de eerste rijen</caption>
+                <caption className="sr-only">{t("grid.paste.preview")}</caption>
                 <tbody>
                   {voorbeeld.map((r, i) => (
                     <tr key={i}>
@@ -437,8 +449,8 @@ export function Raster({
             </div>
           </>
         ),
-        ja: "Plakken",
-        nee: "Annuleren",
+        ja: t("grid.paste.title"),
+        nee: t("common:cancel"),
       });
       if (!ja) {
         focusNaRender.current = true;
@@ -452,10 +464,16 @@ export function Raster({
       setFout(null);
       zetSel({ anker: { rij: g.r0, kolom: g.c0 }, cursor: { rij: g.r0 + plan.rijen - 1, kolom: g.c0 + Math.max(0, plan.kolommen - 1) }, modus: "cellen" });
       setMelding(
-        `Geplakt: ${plan.wijzigingen.length.toLocaleString("nl-NL")} ${plan.wijzigingen.length === 1 ? "cel" : "cellen"}${plan.nieuweRijen.length ? `, ${plan.nieuweRijen.length} nieuwe ${plan.nieuweRijen.length === 1 ? "rij" : "rijen"}` : ""}.${plan.waarschuwingen.length ? " " + plan.waarschuwingen.join(" ") : ""}`,
+        (plan.nieuweRijen.length
+          ? t("grid.paste.doneWithRows", {
+              cells: t("grid.count.cells", { count: plan.wijzigingen.length, formatted: formatGetal(plan.wijzigingen.length) }),
+              rows: t("grid.count.newRows", { count: plan.nieuweRijen.length, formatted: formatGetal(plan.nieuweRijen.length) }),
+            })
+          : t("grid.paste.done", { cells: t("grid.count.cells", { count: plan.wijzigingen.length, formatted: formatGetal(plan.wijzigingen.length) }) })) +
+          (plan.waarschuwingen.length ? " " + plan.waarschuwingen.join(" ") : ""),
       );
     } catch (e) {
-      setFout({ rij: g.r0, kolom: g.c0, tekst: `Plakken mislukt; er is niets gewijzigd. ${leesbareFout(e)}` });
+      setFout({ rij: g.r0, kolom: g.c0, tekst: t("grid.paste.failed", { error: leesbareFout(e) }) });
     } finally {
       setBezig(false);
       focusNaRender.current = true;
@@ -463,9 +481,9 @@ export function Raster({
   }
 
   async function plakVanKlembord() {
-    const t = await leesKlembord();
-    if (t === null) setMelding("Het klembord kan hier niet worden gelezen. Gebruik Ctrl+V.");
-    else await plak(t);
+    const tekst = await leesKlembord();
+    if (tekst === null) setMelding(t("grid.paste.clipboardUnavailable"));
+    else await plak(tekst);
   }
 
   // ------------------------------------------------------------ lint
@@ -678,7 +696,7 @@ export function Raster({
     return (
       <div className={`database-raster-buiten${vul ? " is-vul" : ""}`}>
         <div className="database-raster-leeg" role="status">
-          {leeg}
+          {leeg ?? t("grid.noRows")}
         </div>
       </div>
     );
@@ -727,14 +745,14 @@ export function Raster({
               <th
                 className="database-rijkiezer database-rasterhoek"
                 aria-colindex={1}
-                title="Alles selecteren (Ctrl+A)"
+                title={t("grid.selectAllTitle")}
                 onMouseDown={(e) => {
                   e.preventDefault();
                   zetSel(selecteerAlles);
                   focusNaRender.current = true;
                 }}
               >
-                <span className="sr-only">Rijkiezer</span>
+                <span className="sr-only">{t("grid.rowSelector")}</span>
               </th>
               {kolommen.map((k, c) => {
                 const richting = sorteer?.kolom === k.naam ? (sorteer.aflopend ? "descending" : "ascending") : "none";
@@ -747,7 +765,7 @@ export function Raster({
                     aria-sort={onSorteer ? richting : undefined}
                     aria-selected={gekozen || undefined}
                     className={gekozen ? "is-gekozen" : ""}
-                    title={`${k.naam} — klik om de kolom te selecteren (Shift voor meer kolommen)`}
+                    title={t("grid.columnTitle", { column: k.naam })}
                     onMouseDown={(e) => {
                       if (e.button !== 0) return;
                       e.preventDefault();
@@ -760,13 +778,16 @@ export function Raster({
                     }}
                   >
                     <span className="database-kolomkop">
-                      {k.sleutel && <KeyRound size={12} aria-label="Primaire sleutel" />}
+                      {k.sleutel && <KeyRound size={12} aria-label={t("grid.primaryKey")} />}
                       <span>{k.naam}</span>
                       {onSorteer && (
                         <button
                           className="database-sorteerknop"
-                          aria-label={`Sorteren op ${k.naam}${richting === "ascending" ? " (nu oplopend)" : richting === "descending" ? " (nu aflopend)" : ""}`}
-                          title={`Sorteren op ${k.naam}`}
+                          aria-label={t(
+                            richting === "ascending" ? "grid.sortByAscending" : richting === "descending" ? "grid.sortByDescending" : "grid.sortBy",
+                            { column: k.naam },
+                          )}
+                          title={t("grid.sortBy", { column: k.naam })}
                           onMouseDown={(e) => e.stopPropagation()}
                           onClick={() => onSorteer(k.naam)}
                         >
@@ -796,7 +817,7 @@ export function Raster({
                     role="rowheader"
                     aria-colindex={1}
                     className="database-rijkiezer"
-                    title="Klik om de rij te selecteren (Shift voor meer rijen)"
+                    title={t("grid.rowTitle")}
                     onMouseDown={(e) => {
                       if (e.button !== 0) return;
                       e.preventDefault();
@@ -812,7 +833,7 @@ export function Raster({
                   </th>
                   {!rij ? (
                     <td colSpan={K} className="database-raster-laden" aria-busy="true">
-                      Laden…
+                      {t("common:loading")}
                     </td>
                   ) : (
                     kolommen.map((k, c) => {
@@ -853,7 +874,7 @@ export function Raster({
                           {isBewerk ? (
                             <input
                               data-bewerk
-                              aria-label={`${k.naam}, rij ${r + 1}`}
+                              aria-label={t("grid.cellLabel", { column: k.naam, row: r + 1 })}
                               value={bewerk.tekst}
                               disabled={bezig}
                               onChange={(e) => setBewerk({ ...bewerk, tekst: e.target.value })}
@@ -891,15 +912,16 @@ export function Raster({
       <div className="database-raster-status">
         <span role="status" aria-live="polite">
           {meer
-            ? `${bereikRijen(bereik).toLocaleString("nl-NL")} ${bereikRijen(bereik) === 1 ? "rij" : "rijen"} × ${bereikKolommen(bereik)} ${bereikKolommen(bereik) === 1 ? "kolom" : "kolommen"} geselecteerd${stat ? ` · ${statistiekTekst(stat.s)}${stat.ontbreekt ? " (van de geladen rijen)" : ""}` : ""}`
-            : `Rij ${(cel.rij + 1).toLocaleString("nl-NL")} van ${N.toLocaleString("nl-NL")}`}
+            ? `${t("grid.selected", { size: omvangTekst(bereikRijen(bereik), bereikKolommen(bereik)) })}${stat ? ` · ${statistiekTekst(stat.s)}${stat.ontbreekt ? ` ${t("grid.ofLoadedRows")}` : ""}` : ""}`
+            : t("grid.rowOf", { row: formatGetal(cel.rij + 1), total: formatGetal(N) })}
           {melding ? ` · ${melding}` : ""}
         </span>
         {voet}
       </div>
       <p id={`${id}-hulp`} className={vul ? "sr-only" : "muted database-rasterhulp"}>
-        Pijltjes bewegen · Shift+pijltjes of slepen selecteert · Ctrl+A alles · Ctrl+C kopiëren{onPlak ? " · Ctrl+V plakken" : ""}
-        {onWijzig ? " · Enter of F2 bewerken · Escape annuleren" : ""} · rechtermuisknop voor meer
+        {t("grid.help.base")}
+        {onPlak ? ` · ${t("grid.help.paste")}` : ""}
+        {onWijzig ? ` · ${t("grid.help.edit")}` : ""} · {t("grid.help.more")}
       </p>
       {menu && (
         <RasterMenu
@@ -911,14 +933,14 @@ export function Raster({
             setScroll((x) => ({ ...x }));
           }}
           items={[
-            { naam: "Kopiëren", toets: "Ctrl+C", actie: () => void kopieer() },
-            { naam: "Kopiëren met kopteksten", toets: "Ctrl+Shift+C", actie: () => void kopieer(true) },
-            ...(onPlak ? [{ naam: "Plakken", toets: "Ctrl+V", actie: () => void plakVanKlembord() }] : []),
-            { naam: "Alles selecteren", toets: "Ctrl+A", actie: () => zetSel(selecteerAlles) },
+            { naam: t("grid.menu.copy"), toets: "Ctrl+C", actie: () => void kopieer() },
+            { naam: t("grid.menu.copyWithHeaders"), toets: "Ctrl+Shift+C", actie: () => void kopieer(true) },
+            ...(onPlak ? [{ naam: t("grid.paste.title"), toets: "Ctrl+V", actie: () => void plakVanKlembord() }] : []),
+            { naam: t("grid.menu.selectAll"), toets: "Ctrl+A", actie: () => zetSel(selecteerAlles) },
             ...(onSorteer && kolommen[cel.kolom]
               ? [
-                  { naam: `Oplopend sorteren op ${kolommen[cel.kolom].naam}`, actie: () => onSorteer(kolommen[cel.kolom].naam, false), scheiding: true },
-                  { naam: `Aflopend sorteren op ${kolommen[cel.kolom].naam}`, actie: () => onSorteer(kolommen[cel.kolom].naam, true) },
+                  { naam: t("grid.menu.sortAscending", { column: kolommen[cel.kolom].naam }), actie: () => onSorteer(kolommen[cel.kolom].naam, false), scheiding: true },
+                  { naam: t("grid.menu.sortDescending", { column: kolommen[cel.kolom].naam }), actie: () => onSorteer(kolommen[cel.kolom].naam, true) },
                 ]
               : []),
           ]}
@@ -929,6 +951,7 @@ export function Raster({
 }
 
 function RasterMenu({ x, y, items, onSluit }: { x: number; y: number; items: { naam: string; toets?: string; actie: () => void; scheiding?: boolean }[]; onSluit: () => void }) {
+  const { t } = useTranslation("database");
   const lijst = useRef<HTMLUListElement>(null);
   useLayoutEffect(() => {
     const el = lijst.current;
@@ -949,7 +972,7 @@ function RasterMenu({ x, y, items, onSluit }: { x: number; y: number; items: { n
     <ul
       ref={lijst}
       role="menu"
-      aria-label="Raster"
+      aria-label={t("grid.menu.label")}
       className="database-rastermenu"
       style={{ left: x, top: y }}
       onKeyDown={(e) => {

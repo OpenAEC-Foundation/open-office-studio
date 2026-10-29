@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   AppWindow,
   ChevronDown,
@@ -38,8 +39,8 @@ interface Props {
   verplaats: (id: number, naar: number) => void;
   /** "+": opent Start om een document of module toe te voegen. */
   nieuw: () => void;
-  /** Extra contextmenu-opdrachten, zoals "In nieuw venster openen". */
-  extraMenu?: (tabblad: Tabblad) => MenuItem[];
+  /** Extra contextmenu-opdrachten, zoals "In nieuw venster openen" (mag later volgen). */
+  extraMenu?: (tabblad: Tabblad) => MenuItem[] | Promise<MenuItem[]>;
   /** Tabblad buiten de tabbalk losgelaten (schermcoördinaten in CSS-pixels). */
   losgesleept?: (id: number, x: number, y: number) => void;
 }
@@ -67,6 +68,7 @@ interface Sleep {
 
 export function TabBalk(props: Props) {
   const { tabbladen, actief } = props;
+  const { t } = useTranslation(["shell", "common"]);
   const lijst = useRef<HTMLDivElement>(null);
   const [overloop, setOverloop] = useState(false);
   const [menu, setMenu] = useState<{
@@ -114,7 +116,7 @@ export function TabBalk(props: Props) {
     return () => window.removeEventListener("keydown", annuleer, true);
   }, [sleep?.actief]);
 
-  const volgorde: (number | null)[] = [null, ...tabbladen.map((t) => t.id)];
+  const volgorde: (number | null)[] = [null, ...tabbladen.map((tab) => tab.id)];
 
   function focusTab(id: number | null) {
     props.activeer(id);
@@ -123,37 +125,45 @@ export function TabBalk(props: Props) {
 
   function tabMenu(tabblad: Tabblad, x: number, y: number, terug: HTMLElement) {
     const index = tabbladen.indexOf(tabblad);
-    setMenu({
-      x,
-      y,
-      terug,
-      items: [
-        { label: "Sluiten", actie: () => props.sluit([tabblad.id]) },
+    const extra = props.extraMenu?.(tabblad) ?? [];
+    const basis: MenuItem[] = [
+        { label: t("common:close"), actie: () => props.sluit([tabblad.id]) },
         {
-          label: "Andere sluiten",
+          label: t("tabBar.closeOthers"),
           uit: tabbladen.length < 2,
           actie: () =>
             props.sluit(
-              tabbladen.filter((t) => t.id !== tabblad.id).map((t) => t.id),
+              tabbladen.filter((tab) => tab.id !== tabblad.id).map((tab) => tab.id),
             ),
         },
         {
-          label: "Rechts sluiten",
+          label: t("tabBar.closeToRight"),
           uit: index === tabbladen.length - 1,
           actie: () =>
-            props.sluit(tabbladen.slice(index + 1).map((t) => t.id)),
+            props.sluit(tabbladen.slice(index + 1).map((tab) => tab.id)),
         },
-        ...(props.extraMenu?.(tabblad) ?? []),
-      ],
-    });
+    ];
+    const toon = (items: MenuItem[]) => setMenu({ x, y, terug, items });
+    if (Array.isArray(extra)) toon([...basis, ...extra]);
+    else {
+      // Vensteropdrachten (andere vensters) komen erbij zodra ze bekend zijn.
+      toon(basis);
+      void extra.then((items) =>
+        setMenu((menu) =>
+          menu && menu.terug === terug ? { ...menu, items: [...basis, ...items] } : menu,
+        ),
+      );
+    }
   }
 
   function toets(event: React.KeyboardEvent, tabblad: Tabblad | null) {
     const index = volgorde.indexOf(tabblad?.id ?? null);
     const naar = (i: number) =>
       focusTab(volgorde[(i + volgorde.length) % volgorde.length]);
-    if (event.key === "ArrowRight") naar(index + 1);
-    else if (event.key === "ArrowLeft") naar(index - 1);
+    // Rechts-naar-links: de pijltjes volgen de leesrichting.
+    const stap = rtl() ? -1 : 1;
+    if (event.key === "ArrowRight") naar(index + stap);
+    else if (event.key === "ArrowLeft") naar(index - stap);
     else if (event.key === "Home") naar(0);
     else if (event.key === "End") naar(volgorde.length - 1);
     else if (event.key === "Delete" && tabblad) props.sluit([tabblad.id]);
@@ -172,11 +182,17 @@ export function TabBalk(props: Props) {
     const tabs = [
       ...(lijst.current?.querySelectorAll<HTMLElement>("[data-tabblad]") ?? []),
     ];
+    const omgekeerd = rtl();
     const index = tabs.findIndex((tab) => {
       const r = tab.getBoundingClientRect();
-      return clientX < r.left + r.width / 2;
+      const midden = r.left + r.width / 2;
+      return omgekeerd ? clientX > midden : clientX < midden;
     });
     return index < 0 ? tabs.length : index;
+  }
+
+  function rtl() {
+    return !!lijst.current && getComputedStyle(lijst.current).direction === "rtl";
   }
 
   function isBuiten(event: React.PointerEvent) {
@@ -241,13 +257,13 @@ export function TabBalk(props: Props) {
       props.losgesleept(s.id, event.screenX, event.screenY);
       return;
     }
-    const van = tabbladen.findIndex((t) => t.id === s.id);
+    const van = tabbladen.findIndex((tab) => tab.id === s.id);
     // De invoegpositie telt het gesleepte tabblad zelf nog mee.
     props.verplaats(s.id, s.naar > van ? s.naar - 1 : s.naar);
   }
 
   const gesleept = sleep?.actief
-    ? tabbladen.find((t) => t.id === sleep.id)
+    ? tabbladen.find((tab) => tab.id === sleep.id)
     : undefined;
   const GesleeptIcoon = gesleept && tabbladIcoon(gesleept);
 
@@ -257,7 +273,7 @@ export function TabBalk(props: Props) {
         ref={lijst}
         className={"office-tablijst" + (sleep?.actief ? " is-slepend" : "")}
         role="tablist"
-        aria-label="Geopende tabbladen"
+        aria-label={t("tabBar.label")}
       >
         <div
           id={tabId(null)}
@@ -266,12 +282,12 @@ export function TabBalk(props: Props) {
           aria-controls={paneelId(null)}
           tabIndex={actief == null ? 0 : -1}
           className={"office-tab office-starttab" + (actief == null ? " is-actief" : "")}
-          title="Start · nieuw of bestaand document, Notities en Database"
+          title={t("tabBar.startTitle")}
           onClick={() => props.activeer(null)}
           onKeyDown={(event) => toets(event, null)}
         >
           <Home size={14} className="office-tabicoon" aria-hidden />
-          <span className="office-tabnaam">Start</span>
+          <span className="office-tabnaam">{t("tabBar.start")}</span>
         </div>
         {tabbladen.map((tabblad, index) => {
           const Icoon = tabbladIcoon(tabblad);
@@ -303,9 +319,10 @@ export function TabBalk(props: Props) {
                 tabblad.type === "document" ? tabblad.soort : tabblad.module
               }
               title={
-                naam +
-                (tabblad.gewijzigd ? " · niet-opgeslagen wijzigingen" : "") +
-                (props.losgesleept ? "\nSleep naar buiten voor een eigen venster" : "")
+                (tabblad.gewijzigd
+                  ? t("tabBar.tabTitleUnsaved", { name: naam })
+                  : naam) +
+                (props.losgesleept ? "\n" + t("tabBar.dragOutHint") : "")
               }
               onPointerDown={(event) => sleepStart(event, tabblad)}
               onPointerMove={sleepBeweeg}
@@ -342,14 +359,14 @@ export function TabBalk(props: Props) {
               <span className="office-tabnaam">{naam}</span>
               {tabblad.gewijzigd && (
                 <span className="visueel-verborgen">
-                  , niet-opgeslagen wijzigingen
+                  {t("tabBar.unsavedA11y")}
                 </span>
               )}
               <button
                 className="office-tabsluiten"
                 tabIndex={-1}
-                aria-label={`${naam} sluiten`}
-                title="Sluiten · Ctrl+W"
+                aria-label={t("tabBar.closeTab", { name: naam })}
+                title={t("tabBar.closeTitle")}
                 onClick={(event) => {
                   event.stopPropagation();
                   props.sluit([tabblad.id]);
@@ -365,9 +382,9 @@ export function TabBalk(props: Props) {
       {overloop && (
         <button
           className="office-tabknop"
-          aria-label="Alle geopende tabbladen"
+          aria-label={t("tabBar.allTabs")}
           aria-haspopup="menu"
-          title="Alle geopende tabbladen"
+          title={t("tabBar.allTabs")}
           onClick={(event) => {
             const r = event.currentTarget.getBoundingClientRect();
             setMenu({
@@ -375,10 +392,10 @@ export function TabBalk(props: Props) {
               y: r.bottom,
               terug: event.currentTarget,
               items: [
-                { label: "Start", actie: () => focusTab(null) },
-                ...tabbladen.map((t) => ({
-                  label: (t.gewijzigd ? "● " : "") + titel(t),
-                  actie: () => focusTab(t.id),
+                { label: t("tabBar.start"), actie: () => focusTab(null) },
+                ...tabbladen.map((tab) => ({
+                  label: (tab.gewijzigd ? "● " : "") + titel(tab),
+                  actie: () => focusTab(tab.id),
                 })),
               ],
             });
@@ -390,8 +407,8 @@ export function TabBalk(props: Props) {
       <button
         className="office-tabknop"
         onClick={props.nieuw}
-        aria-label="Tabblad toevoegen"
-        title="Nieuw of bestaand document, Notities of Database openen"
+        aria-label={t("tabBar.addTab")}
+        title={t("tabBar.addTabTitle")}
       >
         <Plus size={15} />
       </button>
@@ -407,7 +424,7 @@ export function TabBalk(props: Props) {
           </span>
           {sleep.buiten && (
             <small>
-              <AppWindow size={12} /> Loslaten opent een eigen venster
+              <AppWindow size={12} /> {t("tabBar.releaseOpensWindow")}
             </small>
           )}
         </div>

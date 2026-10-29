@@ -4,6 +4,7 @@ import {
   decodeerTekst,
   type Codering,
 } from "../../packages/email/src/voorbeeld/codering";
+import i18next from "../i18n/config";
 import type { Blok, Tekstdocument } from "./tekstmodel";
 
 export type Regeleinde = "CRLF" | "LF" | "CR" | "gemengd" | "geen";
@@ -65,16 +66,18 @@ export function leesTekst(bytes: Uint8Array): GelezenTekst {
   };
 }
 
-const REGELEINDENAAM: Record<Regeleinde, string> = {
-  CRLF: "Windows (CRLF)",
-  LF: "Unix/macOS (LF)",
-  CR: "klassiek Mac (CR)",
-  gemengd: "gemengd",
-  geen: "geen",
+/** Sleutel in `import:sources.lineEndings` per soort regeleinde. */
+const REGELEINDESLEUTEL: Record<Regeleinde, string> = {
+  CRLF: "crlf",
+  LF: "lf",
+  CR: "cr",
+  gemengd: "mixed",
+  geen: "none",
 };
 
+/** Naam van het regeleinde in de interfacetaal. */
 export function regeleindeNaam(regeleinde: Regeleinde) {
-  return REGELEINDENAAM[regeleinde];
+  return i18next.t(`import:sources.lineEndings.${REGELEINDESLEUTEL[regeleinde]}`);
 }
 
 /** Elke regel wordt een alinea; tabs blijven tabs. */

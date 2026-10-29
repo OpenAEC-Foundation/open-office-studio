@@ -2,6 +2,9 @@ import { useContext, useState, useSyncExternalStore, type ReactNode } from "reac
 import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
 import type { XlsxCellRead } from "@betteroffice/xlsx";
 import { ChartColumnBig, ChartPie, Pencil, Trash2, Database, Type as TypeIcoon, ListTree } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import i18next from "../../i18n/config";
+import { formatGetal } from "../../i18n/opmaak";
 import { Actie, Groep, RibbonFout } from "../../Ribbon";
 import { useEditorApi } from "../../lint/editorApi";
 import { leesSelectie } from "../../lint/rekenblad-opdrachten";
@@ -31,7 +34,7 @@ function celWaarde(c: XlsxCellRead): Cel {
   const w = c.value;
   if (w.kind === "number") return w.value;
   if (w.kind === "text") return w.value;
-  if (w.kind === "bool") return w.value ? "WAAR" : "ONWAAR";
+  if (w.kind === "bool") return i18next.t(w.value ? "charts:defaults.true" : "charts:defaults.false");
   return null;
 }
 
@@ -79,12 +82,17 @@ async function huidigGebied(api: XlsxEditorApi, blad: number, cel: { row: number
   return b;
 }
 
+/** Eerste vrije bladnaam "Grafiek 1", "Grafiek 2", … in de interfacetaal. */
 function vrijeBladnaam(namen: string[]) {
   const bezet = new Set(namen.map((n) => n.toLowerCase()));
-  for (let n = 1; ; n++) if (!bezet.has(`grafiek ${n}`)) return `Grafiek ${n}`;
+  for (let n = 1; ; n++) {
+    const naam = i18next.t("charts:defaults.sheetName", { n });
+    if (!bezet.has(naam.toLowerCase())) return naam;
+  }
 }
 
 export function useRekenbladGrafieken() {
+  const { t } = useTranslation("charts");
   const apis = useEditorApi();
   const api = apis.rekenblad;
   const herlaad = apis.herlaad;
@@ -98,9 +106,9 @@ export function useRekenbladGrafieken() {
   };
 
   function vereist() {
-    if (!api || !herlaad) throw new GrafiekFout("Het rekenblad is nog niet gereed.");
+    if (!api || !herlaad) throw new GrafiekFout(t("errors.spreadsheetNotReady"));
     if (api.commands.getState("bold").disabledReason?.code === "read-only")
-      throw new GrafiekFout("Het rekenblad is alleen-lezen.");
+      throw new GrafiekFout(t("errors.spreadsheetReadOnly"));
     return { api, herlaad };
   }
 
@@ -108,12 +116,12 @@ export function useRekenbladGrafieken() {
     const { api } = vereist();
     const info = api.handle.sheetInfo();
     const v = ontleedVerwijzing(invoer);
-    if (!v) throw new GrafiekFout("Dat is geen geldig celbereik. Gebruik bijvoorbeeld A1:D6 of 'Blad 1'!A1:D6.");
+    if (!v) throw new GrafiekFout(t("errors.invalidRange"));
     const bladIndex = v.blad === null ? info.activeSheet : info.sheetNames.findIndex((n) => n.toLowerCase() === v.blad!.toLowerCase());
-    if (bladIndex < 0) throw new GrafiekFout(`Er is geen blad met de naam ‘${v.blad}’.`);
+    if (bladIndex < 0) throw new GrafiekFout(t("errors.noSuchSheet", { name: v.blad }));
     const b = v.bereik;
     if ((b.bottom - b.top + 1) * (b.right - b.left + 1) > LIMIETEN.cellen)
-      throw new GrafiekFout(`Het bereik is te groot: hoogstens ${LIMIETEN.cellen.toLocaleString("nl-NL")} cellen.`);
+      throw new GrafiekFout(t("errors.rangeTooLarge", { max: formatGetal(LIMIETEN.cellen) }));
     const gelezen = await leesBereik(api, bladIndex, b);
     const blad = info.sheetNames[bladIndex];
     return { blad, bladIndex, bereik: b, tekst: `${bladVerwijzing(blad)}!${bereikA1(b)}`, ...gelezen };
@@ -140,8 +148,7 @@ export function useRekenbladGrafieken() {
       }
       setVenster(
         <GrafiekVenster
-          titel="Grafiek invoegen"
-          knop="Invoegen"
+          modus="insert"
           begin={standaardModel()}
           gegevens={{ soort: "bereik", bereik: bereikTekst, laad, plaatsing: { nieuweNaam: vrijeBladnaam(info.sheetNames), nieuwBlad: nieuwBladVoorkeur } }}
           bevestig={async ({ model, bron, nieuwBlad }) => {
@@ -181,12 +188,11 @@ export function useRekenbladGrafieken() {
   function bewerkVenster(bytes: Uint8Array, g: GrafiekVerwijzing) {
     const { herlaad } = vereist();
     const gelezen = leesGrafiek(bytes, g.chartPad);
-    if (!gelezen.bewerkbaar) throw new GrafiekFout(gelezen.reden ?? "Deze grafiek kan hier niet worden bewerkt.");
+    if (!gelezen.bewerkbaar) throw new GrafiekFout(gelezen.reden ?? t("errors.notEditableHere"));
     const bron = bronUitModel(gelezen.model);
     setVenster(
       <GrafiekVenster
-        titel="Grafiek bewerken"
-        knop="Bijwerken"
+        modus="edit"
         begin={gelezen.model}
         waarschuwingen={gelezen.waarschuwingen}
         gegevens={{
@@ -230,14 +236,14 @@ export function useRekenbladGrafieken() {
   function vraagVerwijderen(g: GrafiekVerwijzing) {
     setVenster(
       <Bevestig
-        titel="Grafiek verwijderen"
-        tekst={`‘${g.titel || g.naam}’ verwijderen van blad ${g.bladNaam}? Het document wordt daarna opnieuw geladen; ongedaan maken van eerdere wijzigingen is dan niet meer mogelijk.`}
-        knop="Verwijderen"
+        titel={t("deleteConfirm.title")}
+        tekst={t("deleteConfirm.textSheet", { name: g.titel || g.naam, sheet: g.bladNaam })}
+        knop={t("deleteConfirm.button")}
         doe={async () => {
           const { herlaad } = vereist();
           const bytes = await herlaad.bytes();
           const actueel = lijstGrafieken(bytes, "xlsx").find((x) => x.chartPad === g.chartPad && x.houderPad === g.houderPad);
-          if (!actueel) throw new GrafiekFout("De grafiek is niet meer gevonden.");
+          if (!actueel) throw new GrafiekFout(t("errors.chartGone"));
           const nieuw = verwijderGrafiek(bytes, "xlsx", actueel);
           setVenster(null);
           herlaad.vervang(nieuw, { blad: g.blad, cel: g.anker?.van });
@@ -250,7 +256,7 @@ export function useRekenbladGrafieken() {
     uitvoeren(async () => {
       const bytes = await vereist().herlaad.bytes();
       const g = await geselecteerdeGrafiek(bytes);
-      if (!g) throw new GrafiekFout("Selecteer eerst een grafiek.");
+      if (!g) throw new GrafiekFout(t("errors.selectChartFirst"));
       vraagVerwijderen(g);
     });
 
@@ -259,13 +265,14 @@ export function useRekenbladGrafieken() {
 export type RekenbladGrafieken = ReturnType<typeof useRekenbladGrafieken>;
 
 function Knop({ naam, icoon, groot, uit, doe, toets }: { naam: string; icoon: typeof ChartPie; groot?: boolean; uit?: boolean; doe: () => void; toets?: string }) {
+  const { t } = useTranslation("charts");
   return (
     <Actie
       naam={naam}
       icoon={icoon}
       groot={groot}
       disabled={uit}
-      title={toets ? `${naam} · ${toets}` : naam}
+      title={toets ? t("ribbon.withShortcut", { name: naam, shortcut: toets }) : naam}
       onMouseDown={(e) => e.preventDefault()}
       onClick={doe}
     />
@@ -274,12 +281,13 @@ function Knop({ naam, icoon, groot, uit, doe, toets }: { naam: string; icoon: ty
 
 /** Groep ‘Grafieken’ op het tabblad Invoegen. */
 export function RekenbladGrafiekGroep({ g, uit }: { g: RekenbladGrafieken; uit?: boolean }) {
+  const { t } = useTranslation("charts");
   return (
-    <Groep naam="Grafieken">
-      <Knop naam="Grafiek" icoon={ChartColumnBig} groot toets="Alt+F1" uit={uit || !g.beschikbaar} doe={() => g.invoegen()} />
+    <Groep naam={t("ribbon.charts")}>
+      <Knop naam={t("ribbon.chart")} icoon={ChartColumnBig} groot toets="Alt+F1" uit={uit || !g.beschikbaar} doe={() => g.invoegen()} />
       <div className="ribbon-stapel">
-        <Knop naam="Grafiek bewerken" icoon={Pencil} uit={uit || !g.beschikbaar} doe={g.bewerken} />
-        <Knop naam="Alle grafieken" icoon={ListTree} uit={!g.beschikbaar} doe={g.alleGrafieken} />
+        <Knop naam={t("ribbon.editChart")} icoon={Pencil} uit={uit || !g.beschikbaar} doe={g.bewerken} />
+        <Knop naam={t("ribbon.allCharts")} icoon={ListTree} uit={!g.beschikbaar} doe={g.alleGrafieken} />
       </div>
     </Groep>
   );
@@ -287,19 +295,20 @@ export function RekenbladGrafiekGroep({ g, uit }: { g: RekenbladGrafieken; uit?:
 
 /** Inhoud van het contexttabblad ‘Grafiekontwerp’. */
 export function Grafiekontwerp({ g, uit }: { g: RekenbladGrafieken; uit?: boolean }) {
+  const { t } = useTranslation("charts");
   return (
     <>
-      <Groep naam="Soort">
-        <Knop naam="Soort wijzigen" icoon={ChartPie} groot uit={uit} doe={g.bewerken} />
+      <Groep naam={t("ribbon.type")}>
+        <Knop naam={t("ribbon.changeType")} icoon={ChartPie} groot uit={uit} doe={g.bewerken} />
       </Groep>
-      <Groep naam="Gegevens">
-        <Knop naam="Gegevens selecteren" icoon={Database} groot uit={uit} doe={g.bewerken} />
+      <Groep naam={t("ribbon.data")}>
+        <Knop naam={t("ribbon.selectData")} icoon={Database} groot uit={uit} doe={g.bewerken} />
       </Groep>
-      <Groep naam="Indeling">
-        <Knop naam="Titel en legenda" icoon={TypeIcoon} groot uit={uit} doe={g.bewerken} />
+      <Groep naam={t("ribbon.layout")}>
+        <Knop naam={t("ribbon.titleAndLegend")} icoon={TypeIcoon} groot uit={uit} doe={g.bewerken} />
       </Groep>
-      <Groep naam="Verwijderen">
-        <Knop naam="Grafiek verwijderen" icoon={Trash2} groot uit={uit} doe={g.verwijderen} />
+      <Groep naam={t("ribbon.delete")}>
+        <Knop naam={t("ribbon.deleteChart")} icoon={Trash2} groot uit={uit} doe={g.verwijderen} />
       </Groep>
     </>
   );

@@ -5,8 +5,9 @@
  */
 import { useCallback, useEffect, useId, useMemo, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { ChevronLeft, ChevronRight, TriangleAlert, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { kiesWeergever, type Kantoorsoort, type VoorbeeldActies, type VoorbeeldBron } from "./contract";
-import { grootteTekst, herkenSoort, KOPLENGTE, type Herkenning } from "./herkenning";
+import { grootteTekst, herkenSoort, KOPLENGTE } from "./herkenning";
 import { registreerStandaardWeergevers } from "./standaard";
 import { Fout, Laden } from "./weergevers/gemeenschappelijk";
 import "./voorbeeld.css";
@@ -33,7 +34,7 @@ export interface BijlageVoorbeeldProps {
   thema?: "licht" | "donker";
 }
 
-type Stand = { stand: "laden" } | { stand: "klaar"; herkenning: Herkenning; voor: VoorbeeldBron } | { stand: "fout"; melding: string };
+type Stand = { stand: "laden" } | { stand: "klaar"; kop: Uint8Array; voor: VoorbeeldBron } | { stand: "fout"; melding: string };
 
 const FOCUSBAAR =
   'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), iframe, [tabindex]:not([tabindex="-1"])';
@@ -50,6 +51,7 @@ export function BijlageVoorbeeld({
   weergave = "modaal",
   thema,
 }: BijlageVoorbeeldProps) {
+  const { t, i18n } = useTranslation("email");
   const lijst = useMemo(() => {
     const l = bijlagen && bijlagen.length ? bijlagen : [bron];
     return l.includes(bron) ? l : [bron, ...l.filter((b) => b.bestandsnaam !== bron.bestandsnaam)];
@@ -65,7 +67,7 @@ export function BijlageVoorbeeld({
     let actief = true;
     zetStand({ stand: "laden" });
     huidig.bytes().then(
-      (b) => actief && zetStand({ stand: "klaar", voor: huidig, herkenning: herkenSoort(huidig.bestandsnaam, huidig.inhoudstype, b.subarray(0, KOPLENGTE)) }),
+      (b) => actief && zetStand({ stand: "klaar", voor: huidig, kop: b.subarray(0, KOPLENGTE) }),
       (e) => actief && zetStand({ stand: "fout", melding: e instanceof Error ? e.message : String(e) }),
     );
     return () => {
@@ -147,8 +149,15 @@ export function BijlageVoorbeeld({
     }
   };
 
-  // Een herkenning van de vorige bijlage nooit op de nieuwe toepassen.
-  const herkenning = stand.stand === "klaar" && stand.voor === huidig ? stand.herkenning : null;
+  // Een herkenning van de vorige bijlage nooit op de nieuwe toepassen. Opnieuw
+  // herkennen bij een taalwissel, zodat de waarschuwing meevertaalt.
+  const kop = stand.stand === "klaar" && stand.voor === huidig ? stand.kop : null;
+  const taal = i18n.language;
+  const herkenning = useMemo(
+    () => (kop ? herkenSoort(huidig.bestandsnaam, huidig.inhoudstype, kop) : null),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [kop, huidig, taal],
+  );
   const weergever = herkenning ? kiesWeergever(herkenning.soort, huidig, herkenning) : null;
   const titelId = useId();
 
@@ -172,19 +181,19 @@ export function BijlageVoorbeeld({
           <span>{grootteTekst(huidig.grootte)}</span>
         </div>
         {lijst.length > 1 && (
-          <div className="vb-navigatie" role="group" aria-label="Bijlagen">
-            <button type="button" className="vb-iconknop" onClick={() => ga(-1)} title="Vorige bijlage (←)" aria-label="Vorige bijlage">
+          <div className="vb-navigatie" role="group" aria-label={t("preview.dialog.attachments")}>
+            <button type="button" className="vb-iconknop" onClick={() => ga(-1)} title={t("preview.dialog.previousTitle")} aria-label={t("preview.dialog.previous")}>
               <ChevronLeft size={18} />
             </button>
             <span aria-live="polite">
               {index + 1} / {lijst.length}
             </span>
-            <button type="button" className="vb-iconknop" onClick={() => ga(1)} title="Volgende bijlage (→)" aria-label="Volgende bijlage">
+            <button type="button" className="vb-iconknop" onClick={() => ga(1)} title={t("preview.dialog.nextTitle")} aria-label={t("preview.dialog.next")}>
               <ChevronRight size={18} />
             </button>
           </div>
         )}
-        <button type="button" className="vb-iconknop vb-sluit" onClick={sluit} title="Sluiten (Esc)" aria-label="Voorbeeld sluiten">
+        <button type="button" className="vb-iconknop vb-sluit" onClick={sluit} title={t("preview.dialog.closeTitle")} aria-label={t("preview.dialog.close")}>
           <X size={18} />
         </button>
       </header>
@@ -194,8 +203,8 @@ export function BijlageVoorbeeld({
         </p>
       )}
       <div className="vb-inhoud">
-        {(stand.stand === "laden" || (stand.stand === "klaar" && !herkenning)) && <Laden tekst="Bijlage ophalen…" />}
-        {stand.stand === "fout" && <Fout melding={`De bijlage kon niet worden opgehaald: ${stand.melding}`} />}
+        {(stand.stand === "laden" || (stand.stand === "klaar" && !herkenning)) && <Laden tekst={t("preview.dialog.fetching")} />}
+        {stand.stand === "fout" && <Fout melding={t("preview.dialog.fetchFailed", { message: stand.melding })} />}
         {herkenning && weergever && (
           <weergever.Component
             key={`${index}-${weergever.naam}`}

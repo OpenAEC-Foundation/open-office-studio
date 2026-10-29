@@ -4,6 +4,7 @@
  */
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { useTranslation } from "react-i18next";
 import { ChevronDown, ClipboardCheck } from "lucide-react";
 import { PLAKKEUZES, type PlakKeuze } from "../bewerken/plakopties";
 import { cursorPlek, type Plaksessie } from "../bewerken/TekstBewerken";
@@ -18,6 +19,7 @@ export function Plakopties({
   kies: (keuze: PlakKeuze) => void;
   sluit: () => void;
 }) {
+  const { t } = useTranslation("writer");
   const [open, setOpen] = useState(false);
   const [plek, setPlek] = useState(sessie.plek);
   const vak = useRef<HTMLDivElement>(null);
@@ -72,24 +74,24 @@ export function Plakopties({
         className="tekst-plakopties-knop"
         aria-haspopup="menu"
         aria-expanded={open}
-        title="Plakopties (Ctrl)"
+        title={t("editing.paste.buttonTitle", { key: "Ctrl" })}
         onMouseDown={(e) => e.preventDefault()}
         onClick={() => setOpen(!open)}
       >
         <ClipboardCheck size={15} aria-hidden="true" />
-        <span>Plakopties</span>
+        <span>{t("editing.paste.button")}</span>
         <ChevronDown size={12} aria-hidden="true" />
       </button>
       {open && (
-        <div role="menu" aria-label="Plakopties" className="tekst-menu tekst-plakopties-menu">
-          {PLAKKEUZES.map(({ keuze, naam, uitleg }) => (
+        <div role="menu" aria-label={t("editing.paste.button")} className="tekst-menu tekst-plakopties-menu">
+          {PLAKKEUZES.map(({ keuze, sleutel }) => (
             <button
               key={keuze}
               type="button"
               role="menuitemradio"
               aria-checked={sessie.keuze === keuze}
               className="tekst-menu-item"
-              title={uitleg}
+              title={t(`editing.paste.${sleutel}Tip`)}
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => {
                 setOpen(false);
@@ -99,7 +101,7 @@ export function Plakopties({
               <span className="tekst-menu-vink" aria-hidden="true">
                 {sessie.keuze === keuze ? "●" : ""}
               </span>
-              <span>{naam}</span>
+              <span>{t(`editing.paste.${sleutel}`)}</span>
             </button>
           ))}
         </div>

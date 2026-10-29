@@ -2,35 +2,52 @@
  * Metadata uit DWG- en DXF-bestanden zonder renderer. Het echte voorbeeld
  * (tekening) komt later via de Rust-viewer; dit levert de kaart.
  */
+import i18next from "../../../../src/i18n/config";
+import { formatLijst } from "../../../../src/i18n/opmaak";
 import { decodeerTekst } from "./codering";
 
 export interface DwgVersie {
   code: string;
   release: string;
-  /** AutoCAD-versies die dit formaat schrijven. */
+  /** AutoCAD-versies die dit formaat schrijven (in de interfacetaal van dat moment). */
   autocad: string;
 }
 
-export const DWG_VERSIES: Record<string, Omit<DwgVersie, "code">> = {
-  AC1001: { release: "R2.2", autocad: "AutoCAD 2.2" },
-  AC1002: { release: "R2.5", autocad: "AutoCAD 2.5" },
-  AC1003: { release: "R2.6", autocad: "AutoCAD 2.6" },
-  AC1004: { release: "R9", autocad: "AutoCAD Release 9" },
-  AC1006: { release: "R10", autocad: "AutoCAD Release 10" },
-  AC1009: { release: "R11/R12", autocad: "AutoCAD Release 11 en 12" },
-  AC1012: { release: "R13", autocad: "AutoCAD Release 13" },
-  AC1014: { release: "R14", autocad: "AutoCAD Release 14" },
-  AC1015: { release: "R2000", autocad: "AutoCAD 2000, 2000i en 2002" },
-  AC1018: { release: "R2004", autocad: "AutoCAD 2004, 2005 en 2006" },
-  AC1021: { release: "R2007", autocad: "AutoCAD 2007, 2008 en 2009" },
-  AC1024: { release: "R2010", autocad: "AutoCAD 2010, 2011 en 2012" },
-  AC1027: { release: "R2013", autocad: "AutoCAD 2013 t/m 2017" },
-  AC1032: { release: "R2018", autocad: "AutoCAD 2018 en later" },
+/**
+ * AutoCAD-versies per DWG-formaat: een opsomming (wordt "a, b en c" in de
+ * interfacetaal), een reeks `{ van, tot }` of `{ vanaf }` ("… en later").
+ */
+export type AutocadVersies = string[] | { van: string; tot: string } | { vanaf: string };
+
+export const DWG_VERSIES: Record<string, { release: string; autocad: AutocadVersies }> = {
+  AC1001: { release: "R2.2", autocad: ["AutoCAD 2.2"] },
+  AC1002: { release: "R2.5", autocad: ["AutoCAD 2.5"] },
+  AC1003: { release: "R2.6", autocad: ["AutoCAD 2.6"] },
+  AC1004: { release: "R9", autocad: ["AutoCAD Release 9"] },
+  AC1006: { release: "R10", autocad: ["AutoCAD Release 10"] },
+  AC1009: { release: "R11/R12", autocad: ["AutoCAD Release 11", "12"] },
+  AC1012: { release: "R13", autocad: ["AutoCAD Release 13"] },
+  AC1014: { release: "R14", autocad: ["AutoCAD Release 14"] },
+  AC1015: { release: "R2000", autocad: ["AutoCAD 2000", "2000i", "2002"] },
+  AC1018: { release: "R2004", autocad: ["AutoCAD 2004", "2005", "2006"] },
+  AC1021: { release: "R2007", autocad: ["AutoCAD 2007", "2008", "2009"] },
+  AC1024: { release: "R2010", autocad: ["AutoCAD 2010", "2011", "2012"] },
+  AC1027: { release: "R2013", autocad: { van: "2013", tot: "2017" } },
+  AC1032: { release: "R2018", autocad: { vanaf: "2018" } },
 };
+
+/** AutoCAD-versies bij een DWG-code als tekst in de interfacetaal; undefined als onbekend. */
+export function autocadNaam(code: string): string | undefined {
+  const v = DWG_VERSIES[code]?.autocad;
+  if (!v) return undefined;
+  if (Array.isArray(v)) return formatLijst(v);
+  if ("vanaf" in v) return i18next.t("email:preview.cad.versionAndLater", { version: v.vanaf });
+  return i18next.t("email:preview.cad.versionRange", { from: v.van, to: v.tot });
+}
 
 export function dwgVersie(code: string): DwgVersie | null {
   const v = DWG_VERSIES[code];
-  return v ? { code, ...v } : null;
+  return v ? { code, release: v.release, autocad: autocadNaam(code)! } : null;
 }
 
 export interface DwgMeta {
@@ -104,13 +121,22 @@ export function dibNaarBmp(dib: Uint8Array): Uint8Array | null {
   return uit;
 }
 
+/** $INSUNITS-code → sleutel onder `email:preview.cad.unitNames`. */
 export const INSUNITS: Record<number, string> = {
-  0: "zonder eenheid", 1: "inch", 2: "voet", 3: "mijl", 4: "millimeter", 5: "centimeter",
-  6: "meter", 7: "kilometer", 8: "micro-inch", 9: "mil", 10: "yard", 11: "ångström",
+  0: "unitless", 1: "inch", 2: "foot", 3: "mile", 4: "millimeter", 5: "centimeter",
+  6: "meter", 7: "kilometer", 8: "microinch", 9: "mil", 10: "yard", 11: "angstrom",
   12: "nanometer", 13: "micron", 14: "decimeter", 15: "decameter", 16: "hectometer",
-  17: "gigameter", 18: "astronomische eenheid", 19: "lichtjaar", 20: "parsec",
-  21: "US survey foot", 22: "US survey inch", 23: "US survey yard", 24: "US survey mile",
+  17: "gigameter", 18: "astronomicalUnit", 19: "lightYear", 20: "parsec",
+  21: "usSurveyFoot", 22: "usSurveyInch", 23: "usSurveyYard", 24: "usSurveyMile",
 };
+
+/** Naam van een $INSUNITS-eenheid in de interfacetaal. */
+export function eenheidNaam(insunits: number): string {
+  const sleutel = INSUNITS[insunits];
+  return sleutel
+    ? i18next.t(`email:preview.cad.unitNames.${sleutel}`)
+    : i18next.t("email:preview.cad.unitCode", { code: insunits });
+}
 
 export interface DxfMeta {
   binair: boolean;
@@ -180,7 +206,7 @@ export function leesDxfMeta(b: Uint8Array): DxfMeta {
     }
   }
   if (meta.acadver) meta.versie = dwgVersie(meta.acadver);
-  if (meta.insunits !== undefined) meta.eenheid = INSUNITS[meta.insunits] ?? `code ${meta.insunits}`;
+  if (meta.insunits !== undefined) meta.eenheid = eenheidNaam(meta.insunits);
   meta.entiteiten = [...telling].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
   meta.totaalEntiteiten = [...telling.values()].reduce((a, b) => a + b, 0);
   meta.lagen = [...lagen].sort((a, b) => a.localeCompare(b, "nl"));

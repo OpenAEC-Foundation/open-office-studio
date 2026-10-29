@@ -1,0 +1,474 @@
+{
+  "start": {
+    "backToWorkspace": "Vissza a munkaterületre",
+    "workspace": "MUNKATERÜLET",
+    "home": "Kezdőlap",
+    "saveTitle": "Mentés · Ctrl+S",
+    "saveAs": "Mentés másként",
+    "saveAsTitle": "Mentés másként · F12 vagy Ctrl+Shift+S",
+    "print": "Nyomtatás",
+    "printTitle": "Nyomtatási kép és nyomtatás · Ctrl+P",
+    "info": "Információ",
+    "infoTitle": "Dokumentum tulajdonságai, statisztika és a dokumentum vizsgálata",
+    "sendAsAttachment": "Küldés mellékletként",
+    "sendAsAttachmentTitle": "Az aktuális dokumentum csatolása egy új e-mail-üzenethez",
+    "email": "E-mail",
+    "emailUnread_one": "E-mail, {{count}} olvasatlan",
+    "emailUnread_other": "E-mail, {{count}} olvasatlan",
+    "newFile": "ÚJ FÁJL",
+    "databaseTitle": "Database Studio · Access-adatbázis szerkeszthető munkapéldányként",
+    "databaseSubtitle": "Munkapéldány · szerkesztés, lekérdezések, VBA",
+    "settingsTitle": "Beállítások · Ctrl+,",
+    "shortcutsTitle": "Billentyűparancsok · F1",
+    "tagline": "Az Ön helyi irodája",
+    "titleFile": "Fájl",
+    "titleWorkspace": "Az Ön munkaterülete.",
+    "intro": "Írás, számolás, bemutatás és ötletek rögzítése.",
+    "addNotesBackup": "Jegyzetek biztonsági másolatának hozzáadása",
+    "openDatabase": "Adatbázis megnyitása",
+    "openFile": "Fájl megnyitása",
+    "openShortcut": "Ctrl O",
+    "newFileTitle": "Új fájl",
+    "newFileHint": "Válasszon eszközt, és kezdjen egy üres fájllal",
+    "notesHeading": "Hely az ötletei számára.",
+    "notesText": "Jegyzetfüzetek, szakaszok és oldalak. Automatikusan, helyben mentve.",
+    "openNotes": "Jegyzetek megnyitása",
+    "emailText": "Saját e-mail IMAP-on és SMTP-n keresztül. A mellékletek közvetlenül a Szöveg, Táblázat, Bemutató vagy Adatbázis modulban nyílnak meg.",
+    "unread_one": "{{count}} olvasatlan",
+    "unread_other": "{{count}} olvasatlan",
+    "openEmail": "E-mail megnyitása",
+    "examplesTitle": "Fedezze fel, mit hozhat létre",
+    "examplesHint": "Mintafájlok",
+    "existingTitle": "Meglévő fájl",
+    "browse": "Tallózás ezen a számítógépen",
+    "browseNotes": "OpenAEC-jegyzetek biztonsági másolatának hozzáadása.",
+    "browseDatabase": "MDB- vagy ACCDB-adatbázis, illetve SQLite-munkapéldány megnyitása.",
+    "browseDocuments": "Dokumentum, táblázat vagy bemutató megnyitása.",
+    "formatNotes": "JEGYZETEK",
+    "filesStayLocal": "A fájljai a saját számítógépén maradnak.",
+    "aboutVersion": "Erről a verzióról",
+    "aboutText": "A DOCX, XLSX és PPTX fájlok közvetlenül működnek. Beállított átalakítóprogrammal az asztali verzió az ODF és a régebbi formátumokat is át tudja alakítani; a formázás ilyenkor eltérhet. A Database Studio egy MDB- vagy ACCDB-fájlból szerkeszthető SQLite-munkapéldányt készít táblákkal, lekérdezésekkel, űrlapokkal, jelentésekkel és VBA-val; az eredeti fájl változatlan marad. A különálló alkalmazás Open Database Studio néven telepíthető.",
+    "modules": {
+      "docx": {
+        "new": "Üres dokumentum",
+        "example": "Tervezési feljegyzés",
+        "exampleText": "Szöveg, stílusok és egy táblázat"
+      },
+      "xlsx": {
+        "new": "Üres táblázat",
+        "example": "Anyagjegyzék",
+        "exampleText": "Anyagok, képletek és összegek"
+      },
+      "pptx": {
+        "new": "Üres bemutató",
+        "example": "Tervezési koncepció",
+        "exampleText": "Diák, alakzatok és jegyzetek"
+      }
+    }
+  },
+  "recent": {
+    "title": "Legutóbbiak",
+    "hintDesktop": "Legutóbb megnyitott és mentett fájlok",
+    "hintBrowser": "Ez a böngésző csak a neveket jegyzi meg; válassza ki újra a fájlt",
+    "clear": "Lista törlése",
+    "clearTitle": "Lista törlése; a rögzített fájlok megmaradnak",
+    "missing": "{{name}} már nem található itt: {{folder}}. Távolítsa el a listáról a ✕ gombbal, vagy nyissa meg a Tallózás segítségével.",
+    "missingOriginalFolder": "{{name}} már nem található az eredeti mappában. Távolítsa el a listáról a ✕ gombbal, vagy nyissa meg a Tallózás segítségével.",
+    "notFound": "Nem található",
+    "notFoundIn": "Nem található · {{location}}",
+    "openFrom": "{{folder}} · megnyitás",
+    "chooseFile": "Fájl kiválasztása",
+    "nameOnly": "Csak a név ismert",
+    "pin": "{{name}} rögzítése",
+    "unpin": "{{name}} rögzítésének feloldása",
+    "pinTitle": "Rögzítés felül",
+    "unpinTitle": "Rögzítés feloldása",
+    "remove": "{{name}} eltávolítása a listáról",
+    "removeTitle": "Eltávolítás a listáról (a fájl megmarad)",
+    "today": "Ma {{time}}",
+    "yesterday": "Tegnap {{time}}",
+    "todayInline": "ma {{time}}",
+    "yesterdayInline": "tegnap {{time}}"
+  },
+  "recovery": {
+    "title": "Dokumentumok helyreállítása",
+    "explanation": "Az Open Office Studio legutóbb nem megfelelően záródott be. Ezekről a dokumentumokról helyreállítási másolat készült. A helyreállítás egy új, nem mentett lapot nyit meg; az eredeti fájl változatlan marad.",
+    "copyFrom": "{{module}} · helyreállítási másolat, {{date}}",
+    "restore": "Helyreállítás",
+    "saveAs": "Mentés másként…",
+    "discard": "Elvetés",
+    "discardLabel": "{{name}} helyreállítási másolatának elvetése",
+    "later": "Döntés később",
+    "laterTitle": "A másolatok a következő indításig megmaradnak",
+    "restoredFrom": "Helyreállítva a következő időpontban készült helyreállítási másolatból: {{date}}. Az eredeti fájl nem módosult; a megtartáshoz mentse ezt a dokumentumot.",
+    "restoreFailed": "{{name}} helyreállítása sikertelen: {{error}}",
+    "copyFailed": "Az automatikus helyreállítás nem tudott másolatot menteni: {{error}}"
+  },
+  "leave": {
+    "title": "Nem mentett módosítások",
+    "askSave": "Menti a(z) <strong>{{name}}</strong> módosításait bezárás előtt?",
+    "unsaved": "A(z) <strong>{{name}}</strong> még nem mentett módosításokat tartalmaz. Ha meg szeretné őrizni őket, előbb mentse a fájlt.",
+    "others_one": "Ezután még {{count}} másik dokumentum következik nem mentett módosításokkal.",
+    "others_other": "Ezután még {{count}} másik dokumentum következik nem mentett módosításokkal.",
+    "dontSave": "Nincs mentés",
+    "discard": "Módosítások elvetése"
+  },
+  "saveAs": {
+    "title": "Mentés másként",
+    "fileName": "Fájlnév",
+    "browserInfo": "A böngészőben az alkalmazás maga készíti el a Markdown, CSV, HTML, szöveges és PDF fájlokat, táblázatoknál és bemutatóknál a PNG-t is. A „csak az asztali alkalmazásban” jelölésű formátumokhoz az asztali verzió és egy irodai futtatókörnyezet szükséges.",
+    "runtimeSearching": "Irodai futtatókörnyezet keresése…",
+    "runtimeFound": "Irodai futtatókörnyezet: {{version}}",
+    "runtimeDetails": "({{source}}, {{profile}})",
+    "sourceEnvironment": "forrás: OPENAEC_CONVERSIE_PROGRAMMA",
+    "sourceSetting": "saját választás",
+    "sourceAutomatic": "automatikusan észlelve",
+    "profileSafe": "biztonságos profil: makrók kikapcsolva",
+    "profileOwn": "saját profil",
+    "runtimeMissing": "Nem található irodai futtatókörnyezet (LibreOffice). A futtatókörnyezetet igénylő formátumok nem érhetők el.",
+    "chooseConverter": "Átalakítóprogram kiválasztása",
+    "format": "Formátum",
+    "groups": {
+      "own": "Saját formátum",
+      "openDocument": "OpenDocument",
+      "legacyOffice": "Régebbi Office-formátumok",
+      "templates": "Sablonok",
+      "macro": "Makróbarát",
+      "webText": "Web és szöveg",
+      "pdfImage": "PDF és kép"
+    },
+    "routes": {
+      "inApp": "az alkalmazásban",
+      "runtime": "irodai futtatókörnyezettel",
+      "print": "a Nyomtatás funkcióval"
+    },
+    "runtimeMissingShort": "nincs futtatókörnyezet",
+    "desktopOnly": "csak az asztali alkalmazásban",
+    "separator": "Elválasztó karakter",
+    "separatorSemicolon": "Pontosvessző ; (magyar)",
+    "separatorComma": "Vessző ,",
+    "separatorTab": "Tabulátor",
+    "separatorPipe": "Függőleges vonal |",
+    "encoding": "Kódolás",
+    "encodingUtf8BomExcel": "UTF-8 BOM-mal (Excel)",
+    "encodingUtf8BomNotepad": "UTF-8 BOM-mal (Jegyzettömb, Excel)",
+    "csvInfo": "Csak a kiválasztott munkalap, képletek helyett értékekkel. Az =, +, - vagy @ karakterrel kezdődő szöveg aposztrófot kap, hogy a táblázatkezelő ne képletként hajtsa végre.",
+    "sheet": "Munkalap",
+    "activeSheet": "{{name}} (aktív)",
+    "protect": "Védelem megnyitási jelszóval",
+    "password": "Jelszó",
+    "repeatPassword": "Jelszó megismétlése",
+    "encryptionInfo": "Titkosítás az ECMA-376 szerint (AES-256), megnyitható a Word, Excel, PowerPoint és LibreOffice programmal. A jelszót nem tároljuk; ha elfelejti, a fájl többé nem nyitható meg.",
+    "noEncryptionInfo": "Ez nem írásvédelem vagy munkalapvédelem: bejelölés nélkül a fájl titkosítatlanul lesz mentve.",
+    "passwordMissing": "Adjon meg egy jelszót.",
+    "passwordMismatch": "A jelszavak nem egyeznek.",
+    "passwordTooLong": "Legfeljebb {{max}} karakter.",
+    "slide": "Dia",
+    "slideNumber": "{{number}}. dia",
+    "currentSlide": "{{number}}. dia (aktuális)",
+    "pdfVariant": "PDF-változat",
+    "pdfPlain": "Normál PDF",
+    "pdfA2b": "PDF/A-2b (archív)",
+    "slides": "Diák",
+    "pages": "Oldalak",
+    "rangePlaceholder": "mind, vagy pl. 1-3,5",
+    "bookmarks": "Címsorok könyvjelzőként",
+    "printRoute": "Irodai futtatókörnyezet nélkül a PDF a Nyomtatás funkcióval készül: a nyomtatási párbeszédpanelen válassza a <strong>Mentés PDF-ként</strong> nyomtatót (Windows: „Microsoft Print to PDF”). A formázás a szerkesztőben látható megjelenést követi.",
+    "untitled": "Névtelen",
+    "copyInfo": "Ez egy másik formátumú másolat. A dokumentum módosítottként marad megjelölve, amíg .{{ext}} formátumban nem menti.",
+    "print": "Nyomtatás…",
+    "formats": {
+      "docx": {
+        "docx": {
+          "name": "Word-dokumentum",
+          "keeps": "szerkeszthető"
+        },
+        "odt": {
+          "name": "OpenDocument-szöveg",
+          "keeps": "szerkeszthető; a formázás eltérhet"
+        },
+        "fodt": {
+          "name": "OpenDocument-szöveg (egyszerű XML)",
+          "keeps": "szerkeszthető; a formázás eltérhet"
+        },
+        "doc": {
+          "name": "Word 97–2003 dokumentum",
+          "keeps": "szerkeszthető; a formázás eltérhet"
+        },
+        "dotx": {
+          "name": "Word-sablon",
+          "keeps": "szerkeszthető; a formázás eltérhet"
+        },
+        "dot": {
+          "name": "Word 97–2003 sablon",
+          "keeps": "szerkeszthető; a formázás eltérhet"
+        },
+        "ott": {
+          "name": "OpenDocument-szövegsablon",
+          "keeps": "szerkeszthető; a formázás eltérhet"
+        },
+        "docm": {
+          "name": "Makróbarát Word-dokumentum",
+          "keeps": "csak megnyitott makrós fájlhoz: a VBA-projekt változatlanul megmarad, a makrók nem futnak"
+        },
+        "rtf": {
+          "name": "Rich Text Format",
+          "keeps": "szerkeszthető; a formázás eltérhet"
+        },
+        "txt": {
+          "name": "Egyszerű szöveg (UTF-8)",
+          "keeps": "csak szöveg; a formázás, a táblázatok és a képek elvesznek"
+        },
+        "html": {
+          "name": "Weblap (HTML)",
+          "keeps": "a formázás eltérhet; képek beágyazva"
+        },
+        "xhtml": {
+          "name": "XHTML-weblap",
+          "keeps": "a formázás eltérhet"
+        },
+        "epub": {
+          "name": "EPUB e-könyv",
+          "keeps": "csak olvasásra; az oldalformázás elvész"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "szöveg és szerkezet; az oldalformázás, a képek és a változatok elvesznek"
+        },
+        "pdf": {
+          "name": "PDF-dokumentum",
+          "keeps": "megjelenés a nyomtatási kép szerint; kereshető szöveg"
+        },
+        "png": {
+          "name": "PNG-kép (első oldal)",
+          "keeps": "csak megjelenítés; csak az első oldal"
+        }
+      },
+      "xlsx": {
+        "xlsx": {
+          "name": "Excel-munkafüzet",
+          "keeps": "szerkeszthető"
+        },
+        "ods": {
+          "name": "OpenDocument-táblázat",
+          "keeps": "szerkeszthető; a formázás eltérhet"
+        },
+        "fods": {
+          "name": "OpenDocument-táblázat (egyszerű XML)",
+          "keeps": "szerkeszthető; a formázás eltérhet"
+        },
+        "xls": {
+          "name": "Excel 97–2003 munkafüzet",
+          "keeps": "szerkeszthető; a formázás eltérhet"
+        },
+        "xltx": {
+          "name": "Excel-sablon",
+          "keeps": "szerkeszthető; a formázás eltérhet"
+        },
+        "xlt": {
+          "name": "Excel 97–2003 sablon",
+          "keeps": "szerkeszthető; a formázás eltérhet"
+        },
+        "ots": {
+          "name": "OpenDocument-táblázatsablon",
+          "keeps": "szerkeszthető; a formázás eltérhet"
+        },
+        "xlsm": {
+          "name": "Makróbarát Excel-munkafüzet",
+          "keeps": "csak megnyitott makrós fájlhoz: a VBA-projekt változatlanul megmarad, a makrók nem futnak"
+        },
+        "csv": {
+          "name": "CSV (tagolt értékek)",
+          "keeps": "csak egy munkalap; értékek képletek és formázás nélkül"
+        },
+        "tsv": {
+          "name": "Tabulátorral tagolt szöveg (TSV)",
+          "keeps": "csak egy munkalap; értékek képletek és formázás nélkül"
+        },
+        "html": {
+          "name": "Weblap (HTML)",
+          "keeps": "csak megjelenítés; a képletek elvesznek"
+        },
+        "dif": {
+          "name": "Data Interchange Format (DIF)",
+          "keeps": "csak az első munkalap; értékek képletek és formázás nélkül"
+        },
+        "slk": {
+          "name": "SYLK",
+          "keeps": "csak az első munkalap; a képletek megmaradnak, a formázás nagyrészt nem"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "csak az értékek megjelenítése; a képletek és a formázás elvesznek"
+        },
+        "pdf": {
+          "name": "PDF-dokumentum",
+          "keeps": "megjelenés a nyomtatási kép szerint; kereshető szöveg"
+        },
+        "png": {
+          "name": "PNG-kép (munkalap)",
+          "keeps": "csak megjelenítés; egy munkalap használt tartománya"
+        }
+      },
+      "pptx": {
+        "pptx": {
+          "name": "PowerPoint-bemutató",
+          "keeps": "szerkeszthető"
+        },
+        "ppsx": {
+          "name": "PowerPoint-diavetítés",
+          "keeps": "szerkeszthető; diavetítésként nyílik meg; a formázás eltérhet"
+        },
+        "odp": {
+          "name": "OpenDocument-bemutató",
+          "keeps": "szerkeszthető; a formázás eltérhet"
+        },
+        "fodp": {
+          "name": "OpenDocument-bemutató (egyszerű XML)",
+          "keeps": "szerkeszthető; a formázás eltérhet"
+        },
+        "ppt": {
+          "name": "PowerPoint 97–2003 bemutató",
+          "keeps": "szerkeszthető; a formázás eltérhet"
+        },
+        "pps": {
+          "name": "PowerPoint 97–2003 diavetítés",
+          "keeps": "szerkeszthető; a formázás eltérhet"
+        },
+        "potx": {
+          "name": "PowerPoint-sablon",
+          "keeps": "szerkeszthető; a formázás eltérhet"
+        },
+        "pot": {
+          "name": "PowerPoint 97–2003 sablon",
+          "keeps": "szerkeszthető; a formázás eltérhet"
+        },
+        "otp": {
+          "name": "OpenDocument-bemutatósablon",
+          "keeps": "szerkeszthető; a formázás eltérhet"
+        },
+        "pptm": {
+          "name": "Makróbarát PowerPoint-bemutató",
+          "keeps": "csak megnyitott makrós fájlhoz: a VBA-projekt változatlanul megmarad, a makrók nem futnak"
+        },
+        "html": {
+          "name": "Weblap (HTML)",
+          "keeps": "csak a diák szövege; az elrendezés és a képek elvesznek"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "csak a diák szövege; az elrendezés és a képek elvesznek"
+        },
+        "pdf": {
+          "name": "PDF-dokumentum",
+          "keeps": "megjelenés a nyomtatási kép szerint; kereshető szöveg"
+        },
+        "png": {
+          "name": "PNG-kép (aktuális dia)",
+          "keeps": "csak megjelenítés; egy dia"
+        }
+      }
+    }
+  },
+  "saveResult": {
+    "saved": "Mentve: {{path}}",
+    "exported": "Exportálva: {{path}}. A módosítások megőrzéséhez a szerkeszthető fájlt is mentse.",
+    "cancelled": "A mentés megszakítva.",
+    "chooseLocation": "Válasszon nevet és helyet a mentéshez.",
+    "download": "Letöltés elindítva. Ellenőrizze a fájlt a letöltések között.",
+    "tooLarge": "A fájl üres vagy nagyobb 100 MB-nál.",
+    "needsDesktop": "Ehhez a formátumhoz az asztali verzió és egy irodai futtatókörnyezet (LibreOffice) szükséges."
+  },
+  "printPreview": {
+    "title": "Nyomtatási kép – {{title}}",
+    "notReady": "Nyomtatni akkor lehet, amikor a dokumentum teljesen megnyílt.",
+    "preparingPages": "Oldalak előkészítése…",
+    "preparingPrint": "Nyomtatás előkészítése…",
+    "preparingPrintProgress": "Nyomtatás előkészítése… {{done}}/{{total}}",
+    "printHint": "A nyomtatási párbeszédpanelen válassza ki a nyomtatót, a kétoldalas nyomtatást és szükség esetén a „Mentés PDF-ként” lehetőséget.",
+    "makingPdf": "PDF készítése…",
+    "makingPdfProgress": "PDF készítése… {{done}}/{{total}}",
+    "pdfSaved": "PDF mentve: {{path}}",
+    "pdfDownloading": "A(z) {{name}} PDF letöltése folyamatban.",
+    "layoutSaved": "Az oldalbeállítás a munkafüzetbe került. A megőrzéshez mentse a dokumentumot.",
+    "saveAsPdf": "Mentés PDF-ként",
+    "print": "Nyomtatás",
+    "keyboardHelp": "A Page Up és a Page Down billentyűvel lapozhat az oldalak között; a Ctrl+P nyomtat.",
+    "settings": "Nyomtatási beállítások",
+    "pages": "Oldalak",
+    "rangePlaceholder": "mind, vagy pl. 1-3, 5",
+    "copies": "Példányszám",
+    "collate": "Szétválogatás (1, 2, 3 – 1, 2, 3)",
+    "systemDialogHint": "A nyomtatót, a kétoldalas nyomtatást és a színt ezután a rendszer nyomtatási párbeszédpanelén választhatja ki.",
+    "printAs": "Nyomtatás mint",
+    "slides": "Diák",
+    "handouts": "Kiosztott anyagok",
+    "notesPages": "Jegyzetoldalak",
+    "slidesPerPage": "Dia oldalanként",
+    "withLines": "{{number}} (vonalakkal)",
+    "paper": "Papír",
+    "slideSize": "Diaméret",
+    "frameSlides": "Keret a diák körül",
+    "report": "Jelentés",
+    "saveLayout": "Oldalbeállítás mentése a munkafüzetbe",
+    "pdf": "PDF",
+    "imageQuality": "Képminőség",
+    "qualitySmall": "Kis fájl (150 dpi)",
+    "qualityStandard": "Normál (200 dpi)",
+    "qualityHigh": "Magas, veszteségmentes (300 dpi)",
+    "pdfHint": "A szöveg kijelölhető és kereshető marad; a PDF pontosan ezt a képet követi.",
+    "toolbar": "Lapozás és nagyítás",
+    "previousPage": "Előző oldal",
+    "nextPage": "Következő oldal",
+    "pageOf": "<input/>. oldal / {{total}}",
+    "pageNumber": "Oldalszám",
+    "zoomOut": "Kicsinyítés",
+    "zoom": "Nagyítási arány",
+    "zoomIn": "Nagyítás",
+    "wholePage": "Teljes oldal",
+    "pageWidth": "Oldalszélesség",
+    "preview": "Oldalkép",
+    "pageImage": "A(z) {{number}}. oldal képe",
+    "drawingPage": "Oldal megrajzolása…",
+    "orientation": "Tájolás",
+    "portrait": "Álló",
+    "landscape": "Fekvő",
+    "activeSheet": "Aktív munkalap",
+    "wholeWorkbook": "Teljes munkafüzet",
+    "selection": "Kijelölés ({{range}})",
+    "selectionNone": "Kijelölés (nincs kijelölve semmi)",
+    "ignorePrintArea": "Nyomtatási terület figyelmen kívül hagyása",
+    "pageSetup": "Oldalbeállítás",
+    "sheet": "Munkalap",
+    "scale": "Méretezés",
+    "percentage": "Százalék",
+    "fitPage": "Igazítás egy oldalra",
+    "fitWidth": "Igazítás az oldalszélességhez",
+    "pagesWide": "Oldal széltében",
+    "pagesTall": "magasságban (0 = automatikus)",
+    "marginTop": "Felső (cm)",
+    "marginBottom": "Alsó",
+    "marginLeft": "Bal",
+    "marginRight": "Jobb",
+    "printArea": "Nyomtatási terület",
+    "printAreaPlaceholder": "használt tartomány, vagy pl. A1:H40",
+    "repeatRows": "Ismétlődő sorok",
+    "repeatRowsPlaceholder": "pl. 1:2",
+    "repeatColumns": "Ismétlődő oszlopok",
+    "repeatColumnsPlaceholder": "pl. A:B",
+    "gridlines": "Cellarácsok nyomtatása",
+    "headings": "Sor- és oszlopazonosítók nyomtatása",
+    "centerHorizontally": "Vízszintes középre igazítás",
+    "pageOrder": "Oldalsorrend",
+    "downThenOver": "Előbb lefelé, aztán jobbra",
+    "overThenDown": "Előbb jobbra, aztán lefelé",
+    "header": "Élőfej",
+    "footer": "Élőláb",
+    "sectionLeft": "bal oldal",
+    "sectionCenter": "közép",
+    "sectionRight": "jobb oldal",
+    "sectionLabel": "{{area}}, {{section}}",
+    "fields": "Mezők: {{fields}}.",
+    "pageBreakPreview": "Oldaltörés megtekintése…"
+  }
+}

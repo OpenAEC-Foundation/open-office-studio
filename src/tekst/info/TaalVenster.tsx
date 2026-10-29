@@ -5,6 +5,8 @@
  */
 import { useState } from "react";
 import type { DocxEditorRef } from "@betteroffice/docx-react";
+import { Trans, useTranslation } from "react-i18next";
+import { useOpmaak } from "../../i18n/opmaak";
 import type { Herladen } from "../../lint/editorApi";
 import { Dialoog } from "../../werkruimte/Dialoog";
 import { herlaadMetStijlen } from "../stijlen/pakket";
@@ -26,6 +28,9 @@ export function TaalVenster({
   const [keuze, setKeuze] = useState(huidig ?? "nl-NL");
   const [fout, setFout] = useState("");
   const [bezig, setBezig] = useState(false);
+  const { t } = useTranslation("writer");
+  const { locale } = useOpmaak();
+  const naam = (code: string) => taalNaam(code, locale);
 
   async function toepassen() {
     if (!herlaad) return;
@@ -47,34 +52,37 @@ export function TaalVenster({
 
   return (
     <Dialoog
-      titel="Taal"
+      titel={t("info.language.title")}
       sluit={sluit}
       acties={
         <>
           {fout && <span className="werkruimte-melding werkruimte-fout" role="alert">{fout}</span>}
           <button type="button" className="werkruimte-knop" onClick={sluit}>
-            Annuleren
+            {t("common:cancel")}
           </button>
           <button type="button" className="werkruimte-knop is-primair" disabled={bezig || !herlaad || keuze === huidig} onClick={() => void toepassen()}>
-            Als documenttaal instellen
+            {t("info.language.setAsDocumentLanguage")}
           </button>
         </>
       }
     >
-      <p>Huidige taal bij de cursor: <strong>{huidig ? taalNaam(huidig) : "niet opgegeven"}</strong></p>
-      <div className="tekst-talen" role="radiogroup" aria-label="Taal">
+      <p>
+        <Trans
+          t={t}
+          i18nKey="info.language.current"
+          values={{ language: huidig ? naam(huidig) : t("info.notSpecified") }}
+          components={{ strong: <strong /> }}
+        />
+      </p>
+      <div className="tekst-talen" role="radiogroup" aria-label={t("info.language.title")}>
         {lijst.map((code) => (
           <label key={code} className="werkruimte-vink">
             <input type="radio" name="tekst-taal" checked={keuze === code} onChange={() => setKeuze(code)} />
-            {taalNaam(code)} <small>{code}</small>
+            {naam(code)} <small>{code}</small>
           </label>
         ))}
       </div>
-      <p className="werkruimte-uitleg">
-        De documenttaal geldt voor alle tekst zonder eigen taal (de standaard van het document). Tekst waaraan een andere
-        taal is toegekend, houdt die. Het document wordt daarna opnieuw geladen; eerdere wijzigingen kun je dan niet meer
-        ongedaan maken.
-      </p>
+      <p className="werkruimte-uitleg">{t("info.language.explanation")}</p>
     </Dialoog>
   );
 }

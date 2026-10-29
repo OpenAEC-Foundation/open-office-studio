@@ -1,4 +1,7 @@
 /** Koppeling tussen bijlagen en de modules van de kantooromgeving. */
+import i18next from "../../../src/i18n/config";
+import { formatGetal } from "../../../src/i18n/opmaak";
+
 export type KantoorModule = "docx" | "xlsx" | "pptx" | "database";
 
 const MODULES: Record<string, KantoorModule> = {
@@ -23,12 +26,17 @@ export function kanDirectOpenen(naam: string) {
   return DIRECT.has(extensie(naam));
 }
 
-export const MODULENAAM: Record<KantoorModule, string> = {
-  docx: "Tekst",
-  xlsx: "Rekenblad",
-  pptx: "Presentatie",
-  database: "Database",
+const MODULESLEUTEL: Record<KantoorModule, string> = {
+  docx: "tekst",
+  xlsx: "rekenblad",
+  pptx: "presentatie",
+  database: "database",
 };
+
+/** Naam van de module in de huidige taal (common:modules.*). */
+export function moduleNaam(module: KantoorModule) {
+  return i18next.t(`common:modules.${MODULESLEUTEL[module]}`);
+}
 
 export const INHOUDSTYPEN: Record<string, string> = {
   docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -56,7 +64,7 @@ export function inhoudstype(naam: string, bekend?: string) {
 }
 
 export function grootteTekst(bytes: number) {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} kB`;
-  return `${(bytes / 1024 / 1024).toFixed(1).replace(".", ",")} MB`;
+  if (bytes < 1024) return `${formatGetal(bytes)} B`;
+  if (bytes < 1024 * 1024) return `${formatGetal(Math.round(bytes / 1024))} kB`;
+  return `${formatGetal(bytes / 1024 / 1024, { minimumFractionDigits: 1, maximumFractionDigits: 1 })} MB`;
 }

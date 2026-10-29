@@ -3,6 +3,7 @@
  * (met fout 6 bij overloop, of een groter type als een operand Variant is),
  * Null plant zich voort, & behandelt Null als lege tekst.
  */
+import i18next from "i18next";
 import { fout } from "./fouten.ts";
 import type { Landinstelling } from "./land.ts";
 import {
@@ -222,7 +223,7 @@ export function lijktOp(tekst: string, patroon: string, modus: Vergelijking): bo
     else if (c === "#") re += "\\d";
     else if (c === "[") {
       const eind = patroon.indexOf("]", i + 1);
-      if (eind < 0) throw fout(93, "Ongeldig patroon in Like.");
+      if (eind < 0) throw fout(93, i18next.t("vba:operators.invalidLikePattern"));
       let inhoud = patroon.slice(i + 1, eind);
       let ontkend = false;
       if (inhoud.startsWith("!")) {

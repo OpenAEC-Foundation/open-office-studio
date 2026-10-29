@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // Paginafuncties van Tekst end-to-end (pakketroute, src/tekst/pagina):
 //  1. Een proefdocument maken (sjabloon + koppen en tekst over meerdere pagina's)
 //     en daarop paginanummers, inhoudsopgave, voetnoot/eindnoot, kolommen,

@@ -1,16 +1,20 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 use std::{io::Write, path::Path};
 
+// Native teksten in 31 talen, gedeeld met Open Office Studio (zie docs/i18n.md).
+#[path = "../../../../src-tauri/src/taal.rs"]
+mod taal;
+
 const SQLITE_KOP: &[u8] = b"SQLite format 3\0";
 
 fn exportnaam(naam: &str, bytes: &[u8]) -> Result<(String, String), String> {
     if bytes.is_empty() || bytes.len() > 100 * 1024 * 1024 {
-        return Err("De export is leeg, ongeldig of groter dan 100 MB.".into());
+        return Err(taal::t("errors.databaseExport.emptyInvalidOrTooLarge"));
     }
     let naam = Path::new(naam)
         .file_name()
         .and_then(|n| n.to_str())
-        .ok_or("Bestandsnaam ontbreekt.")?
+        .ok_or_else(|| taal::t("errors.databaseExport.nameMissing"))?
         .to_owned();
     let extensie = Path::new(&naam)
         .extension()
@@ -20,25 +24,25 @@ fn exportnaam(naam: &str, bytes: &[u8]) -> Result<(String, String), String> {
     if extensie == "sqlite" {
         // Alleen een echte SQLite-werkkopie; nooit een MDB/ACCDB onder een andere naam.
         if !bytes.starts_with(SQLITE_KOP) {
-            return Err("Dit is geen SQLite-werkkopie.".into());
+            return Err(taal::t("errors.databaseExport.notSqlite"));
         }
         return Ok((naam, extensie));
     }
     if !["csv", "sql", "bas", "json", "txt"].contains(&extensie.as_str()) {
-        return Err(
-            "Alleen CSV-, bron-, rapport- en SQLite-werkkopie-exports zijn toegestaan. Access-databases worden niet overschreven."
-                .into(),
-        );
+        return Err(taal::t("errors.databaseExport.typeNotAllowed"));
     }
     if std::str::from_utf8(bytes).is_err() {
-        return Err("De export is leeg, ongeldig of groter dan 100 MB.".into());
+        return Err(taal::t("errors.databaseExport.emptyInvalidOrTooLarge"));
     }
     Ok((naam, extensie))
 }
 
 fn schrijf_atomair(pad: &Path, bytes: &[u8]) -> Result<(), String> {
     let mut tijdelijk =
-        tempfile::NamedTempFile::new_in(pad.parent().ok_or("De doelmap ontbreekt.")?)
+        tempfile::NamedTempFile::new_in(
+            pad.parent()
+                .ok_or_else(|| taal::t("errors.file.targetFolderMissing"))?,
+        )
             .map_err(|e| e.to_string())?;
     tijdelijk.write_all(bytes).map_err(|e| e.to_string())?;
     tijdelijk.as_file().sync_all().map_err(|e| e.to_string())?;
@@ -52,22 +56,26 @@ async fn bewaar_database_export(
 ) -> Result<Option<String>, String> {
     let bytes = match request.body() {
         tauri::ipc::InvokeBody::Raw(bytes) if bytes.len() <= 100 * 1024 * 1024 => bytes.clone(),
-        _ => return Err("Stuur de export als binaire gegevens van maximaal 100 MB.".into()),
+        _ => return Err(taal::t("errors.databaseExport.sendAsBinary")),
     };
     let kop = request
         .headers()
         .get("x-database-naam")
         .and_then(|n| n.to_str().ok())
-        .ok_or("Bestandsnaam ontbreekt.")?;
+        .ok_or_else(|| taal::t("errors.databaseExport.nameMissing"))?;
     let naam = percent_encoding::percent_decode_str(kop)
         .decode_utf8()
-        .map_err(|_| "Ongeldige bestandsnaam.")?;
+        .map_err(|_| taal::t("errors.databaseExport.nameInvalid"))?;
     let (naam, extensie) = exportnaam(&naam, &bytes)?;
     let bestand = rfd::AsyncFileDialog::new()
-        .set_title("Database-export opslaan")
+        .set_title(taal::t("dialogs.databaseExport.title"))
         .set_file_name(&naam)
         .add_filter(
-            if extensie == "sqlite" { "SQLite-werkkopie" } else { "Database-export" },
+            taal::t(if extensie == "sqlite" {
+                "dialogs.databaseExport.sqliteFilter"
+            } else {
+                "dialogs.databaseExport.filter"
+            }),
             &[&extensie],
         )
         .save_file()
@@ -85,12 +93,12 @@ async fn bewaar_database_export(
         .map(str::to_lowercase)
         != Some(extensie)
     {
-        return Err("De gekozen extensie past niet bij de export.".into());
+        return Err(taal::t("errors.databaseExport.extensionMismatch"));
     }
     if pad.exists()
         && rfd::AsyncMessageDialog::new()
-            .set_title("Export vervangen")
-            .set_description("Dit exportbestand bestaat al. Vervangen?")
+            .set_title(taal::t("dialogs.databaseExport.replaceTitle"))
+            .set_description(taal::t("dialogs.databaseExport.replaceMessage"))
             .set_buttons(rfd::MessageButtons::YesNo)
             .show()
             .await
@@ -108,7 +116,12 @@ async fn bewaar_database_export(
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![bewaar_database_export])
+        // Tot de frontend `zet_taal` meldt: de systeemtaal (terugval Engels).
+        .setup(|_| {
+            taal::zet_keuze(None);
+            Ok(())
+        })
+        .invoke_handler(tauri::generate_handler![bewaar_database_export, taal::zet_taal])
         .run(tauri::generate_context!())
         .expect("Open Database Studio kon niet starten");
 }

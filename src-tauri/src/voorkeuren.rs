@@ -14,11 +14,11 @@ fn bestand(app: &tauri::AppHandle) -> Option<PathBuf> {
 /// Een JSON-object van hooguit 64 kB; anders een foutmelding.
 fn controleer(inhoud: &str) -> Result<(), String> {
     if inhoud.len() > MAX_BYTES {
-        return Err("De voorkeuren zijn groter dan 64 kB.".into());
+        return Err(crate::taal::t("errors.preferences.tooLarge"));
     }
     match serde_json::from_str::<serde_json::Value>(inhoud) {
         Ok(serde_json::Value::Object(_)) => Ok(()),
-        _ => Err("De voorkeuren zijn geen geldig JSON-object.".into()),
+        _ => Err(crate::taal::t("errors.preferences.invalid")),
     }
 }
 
@@ -38,13 +38,26 @@ pub fn lees_voorkeuren(app: tauri::AppHandle) -> Result<Option<String>, String> 
 #[tauri::command]
 pub fn bewaar_voorkeuren(app: tauri::AppHandle, inhoud: String) -> Result<(), String> {
     controleer(&inhoud)?;
-    let pad = bestand(&app).ok_or("De configuratiemap van de app is niet beschikbaar.")?;
-    let map = pad.parent().ok_or("Ongeldig pad voor de voorkeuren.")?;
+    let pad = bestand(&app).ok_or_else(|| crate::taal::t("errors.preferences.configDirUnavailable"))?;
+    let map = pad
+        .parent()
+        .ok_or_else(|| crate::taal::t("errors.preferences.pathInvalid"))?;
     fs::create_dir_all(map).map_err(|e| e.to_string())?;
     // Eerst naast het doel schrijven en dan hernoemen: nooit een half bestand.
     let tijdelijk = pad.with_extension("json.tmp");
     fs::write(&tijdelijk, inhoud.as_bytes()).map_err(|e| e.to_string())?;
     fs::rename(&tijdelijk, &pad).map_err(|e| e.to_string())
+}
+
+/// Begintaal van de native teksten: de keuze `taal` uit het voorkeurenbestand
+/// ("auto" of ontbrekend: de systeemtaal). De frontend meldt daarna de echte taal.
+pub fn zet_begintaal(app: &tauri::AppHandle) {
+    let inhoud = bestand(app).and_then(|pad| fs::read_to_string(pad).ok());
+    let keuze = inhoud
+        .as_deref()
+        .and_then(|tekst| serde_json::from_str::<serde_json::Value>(tekst).ok())
+        .and_then(|v| v.get("taal").and_then(|t| t.as_str()).map(str::to_owned));
+    crate::taal::zet_keuze(keuze.as_deref());
 }
 
 #[cfg(test)]

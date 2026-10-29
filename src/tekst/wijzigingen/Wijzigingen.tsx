@@ -8,16 +8,18 @@ import { useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } fro
 import { createPortal } from "react-dom";
 import { Check, CheckCheck, Eye, FileDiff, ListChecks, Users, X } from "lucide-react";
 import { DocxEditor, useDocxCommand, useDocxCommands, type DocxEditorRef } from "@betteroffice/docx-react";
+import { Trans, useTranslation } from "react-i18next";
+import i18next from "../../i18n/config";
+import { useEngineVertaling } from "../../i18n/engine";
 import { Actie, Groep, RibbonFout } from "../../Ribbon";
 import { useEditorApi, zichtbaarElement } from "../../lint/editorApi";
-import { tekstNlVolledig } from "../../nederlands-toegankelijk";
 import { Keuzemenu, useEditorTik, useUitvoeren } from "../gedeeld/ui";
 import { fout } from "../gedeeld/engine";
 import { maakWinkel } from "../gedeeld/winkel";
 import { TEKST_PLUGINS, zetMarkeringen, type Markering } from "../gedeeld/markering";
 import { zetPaneel } from "../zoeken/paneelstaat";
 import { besluit, lijst, voorbeeld, type Besluit } from "./opdrachten";
-import { WEERGAVEN, auteurs, getoond, samenvatting, soortNaam, toonDatum, type Weergave } from "./logica";
+import { WEERGAVEN, auteurs, getoond, samenvatting, soortNaam, toonDatum, weergaveNaam, weergaveUitleg, type Weergave } from "./logica";
 
 export const wijzigingenWinkel = maakWinkel({
   paneel: false,
@@ -30,6 +32,7 @@ export function WijzigingenGroepen() {
   useEditorTik();
   const api = useEditorApi().tekst;
   const meld = useContext(RibbonFout);
+  const { t } = useTranslation("writer");
   const uitvoeren = useUitvoeren();
   const opdrachten = useDocxCommands();
   const staat = wijzigingenWinkel.gebruik(api);
@@ -41,10 +44,15 @@ export function WijzigingenGroepen() {
   const geen = !zichtbaar.length;
   const filter = staat.verborgen.size > 0;
 
-  function doe(wat: Besluit, reikwijdte: Parameters<typeof besluit>[2], omschrijving: string) {
+  function doe(wat: Besluit, reikwijdte: Parameters<typeof besluit>[2]) {
     uitvoeren((ref) => {
       const aantal = besluit(ref, wat, { verborgen: staat.verborgen, ...reikwijdte });
-      if (!aantal) meld(`Geen wijzigingen om te ${wat === "accepteren" ? "accepteren" : "weigeren"} ${omschrijving}.`);
+      if (!aantal)
+        meld(
+          i18next.t(
+            `writer:changes.none.${wat === "accepteren" ? "accept" : "reject"}${reikwijdte?.selectie ? "Selection" : "Document"}`,
+          ),
+        );
     });
   }
   function enVolgende(wat: Besluit) {
@@ -53,48 +61,63 @@ export function WijzigingenGroepen() {
       void opdrachten.execute("reviewNext", null);
     });
   }
-  const menu = (wat: Besluit) => [
-    { naam: `${wat === "accepteren" ? "Accepteren" : "Weigeren"} en naar volgende`, kies: () => enVolgende(wat), disabled: geen },
-    "scheiding" as const,
-    {
-      naam: filter ? `Alle getoonde wijzigingen ${wat === "accepteren" ? "accepteren" : "weigeren"}` : `Alle wijzigingen ${wat === "accepteren" ? "accepteren" : "weigeren"}`,
-      kies: () => doe(wat, {}, "in het document"),
-      disabled: geen,
-    },
-    { naam: `Wijzigingen in de selectie ${wat === "accepteren" ? "accepteren" : "weigeren"}`, kies: () => doe(wat, { selectie: true }, "in de selectie"), disabled: geen },
-    ...(wat === "accepteren"
-      ? [{ naam: "Alles accepteren en bijhouden stoppen", kies: () => (doe(wat, {}, "in het document"), void opdrachten.execute("editingMode", { mode: "editing" })), disabled: geen }]
-      : []),
-  ];
+  const menu = (wat: Besluit) => {
+    const a = wat === "accepteren";
+    return [
+      { naam: t(a ? "changes.menu.acceptNext" : "changes.menu.rejectNext"), kies: () => enVolgende(wat), disabled: geen },
+      "scheiding" as const,
+      {
+        naam: filter
+          ? t(a ? "changes.menu.acceptAllShown" : "changes.menu.rejectAllShown")
+          : t(a ? "changes.menu.acceptAll" : "changes.menu.rejectAll"),
+        kies: () => doe(wat, {}),
+        disabled: geen,
+      },
+      {
+        naam: t(a ? "changes.menu.acceptSelection" : "changes.menu.rejectSelection"),
+        kies: () => doe(wat, { selectie: true }),
+        disabled: geen,
+      },
+      ...(a
+        ? [
+            {
+              naam: t("changes.menu.acceptAllStop"),
+              kies: () => (doe(wat, {}), void opdrachten.execute("editingMode", { mode: "editing" })),
+              disabled: geen,
+            },
+          ]
+        : []),
+    ];
+  };
   return (
     <>
-      <Groep naam="Alles">
-        <Keuzemenu naam="Accepteren…" icoon={CheckCheck} groot disabled={!bewerkbaar} items={menu("accepteren")} uitleg="Alles, in de selectie of alleen getoonde auteurs" />
-        <Keuzemenu naam="Weigeren…" icoon={X} groot disabled={!bewerkbaar} items={menu("weigeren")} uitleg="Alles, in de selectie of alleen getoonde auteurs" />
+      <Groep naam={t("changes.groups.all")}>
+        <Keuzemenu naam={t("changes.accept")} icoon={CheckCheck} groot disabled={!bewerkbaar} items={menu("accepteren")} uitleg={t("changes.acceptRejectTip")} />
+        <Keuzemenu naam={t("changes.reject")} icoon={X} groot disabled={!bewerkbaar} items={menu("weigeren")} uitleg={t("changes.acceptRejectTip")} />
       </Groep>
-      <Groep naam="Weergave">
+      <Groep naam={t("changes.groups.view")}>
         <Keuzemenu
-          naam={WEERGAVEN.find((w) => w.waarde === staat.weergave)?.naam ?? "Markeringen"}
+          naam={WEERGAVEN.includes(staat.weergave) ? weergaveNaam(staat.weergave) : t("changes.markup")}
           icoon={Eye}
           groot
-          uitleg="Markeringsweergave voor controle"
+          uitleg={t("changes.markupTip")}
           items={WEERGAVEN.map((w) => ({
-            naam: w.naam,
-            uitleg: w.uitleg,
-            gekozen: staat.weergave === w.waarde,
-            kies: () => wijzigingenWinkel.zet(api, { weergave: w.waarde }),
+            naam: weergaveNaam(w),
+            uitleg: weergaveUitleg(w),
+            gekozen: staat.weergave === w,
+            kies: () => wijzigingenWinkel.zet(api, { weergave: w }),
           }))}
         />
         <div className="ribbon-stapel">
           <Keuzemenu
-            naam={filter ? "Auteurs (gefilterd)" : "Auteurs"}
+            naam={filter ? t("changes.authorsFiltered") : t("changes.authors")}
             icoon={Users}
-            uitleg="Wijzigingen per auteur tonen in het deelvenster en meenemen bij ‘alle getoonde’"
+            uitleg={t("changes.authorsTip")}
             items={[
-              { naam: "Alle auteurs", gekozen: !filter, kies: () => wijzigingenWinkel.zet(api, { verborgen: new Set() }) },
+              { naam: t("changes.allAuthors"), gekozen: !filter, kies: () => wijzigingenWinkel.zet(api, { verborgen: new Set() }) },
               "scheiding",
               ...auteurs(alle).map((a) => ({
-                naam: `${a.naam} (${a.aantal})`,
+                naam: t("changes.authorWithCount", { name: a.naam || t("changes.unknownAuthor"), number: a.aantal }),
                 gekozen: !staat.verborgen.has(a.naam),
                 kies: () =>
                   wijzigingenWinkel.zet(api, (oud) => {
@@ -107,7 +130,8 @@ export function WijzigingenGroepen() {
             ]}
           />
           <Actieknop
-            naam="Deelvenster"
+            naam={t("changes.pane")}
+            uitleg={t("changes.paneTip")}
             actief={staat.paneel}
             onClick={() => {
               const open = !staat.paneel;
@@ -117,12 +141,12 @@ export function WijzigingenGroepen() {
           />
         </div>
       </Groep>
-      <Groep naam="Vergelijken">
+      <Groep naam={t("changes.groups.compare")}>
         <Actie
-          naam="Vergelijken"
+          naam={t("changes.compare.compare")}
           icoon={FileDiff}
           groot
-          title="Versies vergelijken: twee documenten, resultaat met wijzigingen in een nieuw tabblad"
+          title={t("changes.compareTip")}
           onMouseDown={(e) => e.preventDefault()}
           onClick={() => wijzigingenWinkel.zet(api, { vergelijken: true })}
         />
@@ -131,9 +155,9 @@ export function WijzigingenGroepen() {
   );
 }
 
-function Actieknop({ naam, actief, onClick }: { naam: string; actief: boolean; onClick: () => void }) {
+function Actieknop({ naam, uitleg, actief, onClick }: { naam: string; uitleg: string; actief: boolean; onClick: () => void }) {
   return (
-    <button type="button" className="ribbon-actie" aria-pressed={actief} aria-label={naam} title="Deelvenster met alle wijzigingen" onMouseDown={(e) => e.preventDefault()} onClick={onClick}>
+    <button type="button" className="ribbon-actie" aria-pressed={actief} aria-label={naam} title={uitleg} onMouseDown={(e) => e.preventDefault()} onClick={onClick}>
       <ListChecks size={17} strokeWidth={1.65} />
       <span>{naam}</span>
     </button>
@@ -145,6 +169,7 @@ export function WijzigingenPaneel() {
   const tik = useEditorTik();
   const api = useEditorApi().tekst;
   const meld = useContext(RibbonFout);
+  const { t } = useTranslation("writer");
   const staat = wijzigingenWinkel.gebruik(api);
   const [plek, setPlek] = useState<{ left: number; top: number; height: number } | null>(null);
   const alle = useMemo(() => lijst(api()), [tik, api]);
@@ -169,7 +194,7 @@ export function WijzigingenPaneel() {
   }, []);
   function kies(id: string) {
     const ref = api();
-    if (ref && !ref.scrollToChangeId(Number(id))) meld("Deze wijziging is niet meer te vinden.");
+    if (ref && !ref.scrollToChangeId(Number(id))) meld(i18next.t("writer:changes.panel.notFound"));
   }
   function een(id: string, wat: Besluit) {
     try {
@@ -186,21 +211,26 @@ export function WijzigingenPaneel() {
   return createPortal(
     <aside
       className="tw-zoekpaneel tw-wijzigingenpaneel"
-      aria-label="Wijzigingen"
+      aria-label={t("changes.panel.title")}
       style={{ left: plek.left, top: plek.top, maxHeight: plek.height }}
       onKeyDown={(e) => e.key === "Escape" && sluit()}
     >
       <header>
-        <h2>Wijzigingen</h2>
-        <button type="button" className="tw-zoek-sluit" aria-label="Sluiten" title="Sluiten · Esc" onClick={sluit}>
+        <h2>{t("changes.panel.title")}</h2>
+        <button type="button" className="tw-zoek-sluit" aria-label={t("common:close")} title={t("common:closeEsc")} onClick={sluit}>
           <X size={15} />
         </button>
       </header>
       <p className="tw-zoek-telling" role="status">
         {telling.totaal
-          ? `${telling.totaal} ${telling.totaal === 1 ? "wijziging" : "wijzigingen"}: ${telling.ingevoegd} ingevoegd, ${telling.verwijderd} verwijderd${telling.opmaak ? `, ${telling.opmaak} opmaak` : ""}`
-          : "Geen wijzigingen."}
-        {staat.verborgen.size > 0 && ` (${alle.length - zichtbaar.length} van verborgen auteurs)`}
+          ? t(telling.opmaak ? "changes.panel.summaryWithFormatting" : "changes.panel.summary", {
+              count: telling.totaal,
+              inserted: telling.ingevoegd,
+              deleted: telling.verwijderd,
+              formatting: telling.opmaak,
+            })
+          : t("changes.panel.none")}
+        {staat.verborgen.size > 0 && ` ${t("changes.panel.hiddenAuthors", { number: alle.length - zichtbaar.length })}`}
       </p>
       <ol className="tw-zoek-resultaten tw-wijzigingen">
         {zichtbaar.map((r) => (
@@ -208,15 +238,15 @@ export function WijzigingenPaneel() {
             <div className="tw-wijziging">
               <button type="button" className="tw-wijziging-tekst" onClick={() => kies(r.revisionId)}>
                 <span className="tw-zoek-plek">
-                  <strong>{r.author || "Onbekend"}</strong> · {soortNaam(r.kind)} · {toonDatum(r.date)}
+                  <strong>{r.author || t("changes.unknownAuthor")}</strong> · {soortNaam(r.kind)} · {toonDatum(r.date)}
                 </span>
                 <span className={`tw-wijziging-${/del/i.test(r.kind) ? "weg" : "erbij"}`}>{r.preview || "—"}</span>
               </button>
               <span className="tw-wijziging-knoppen">
-                <button type="button" aria-label={`Accepteren: ${r.preview}`} title="Accepteren" onClick={() => een(r.revisionId, "accepteren")}>
+                <button type="button" aria-label={t("changes.panel.acceptItem", { preview: r.preview })} title={t("changes.panel.accept")} onClick={() => een(r.revisionId, "accepteren")}>
                   <Check size={14} />
                 </button>
-                <button type="button" aria-label={`Weigeren: ${r.preview}`} title="Weigeren" onClick={() => een(r.revisionId, "weigeren")}>
+                <button type="button" aria-label={t("changes.panel.rejectItem", { preview: r.preview })} title={t("changes.panel.reject")} onClick={() => een(r.revisionId, "weigeren")}>
                   <X size={14} />
                 </button>
               </span>
@@ -237,6 +267,8 @@ export function WijzigingenPaneel() {
 export function MarkeringVoorbeeld() {
   const { tekst: api, herlaad } = useEditorApi();
   const staat = wijzigingenWinkel.gebruik(api);
+  const { t } = useTranslation("writer");
+  const engineVertaling = useEngineVertaling();
   const [inhoud, setInhoud] = useState<{ bytes: Uint8Array; gewijzigd: string[]; aantal: number } | null>(null);
   const [fouttekst, setFouttekst] = useState("");
   const [plek, setPlek] = useState<{ left: number; top: number; width: number; height: number } | null>(null);
@@ -251,7 +283,7 @@ export function MarkeringVoorbeeld() {
     setFouttekst("");
     void (async () => {
       // Via de opslagkoppeling van de editor: ref.save() zou ‘Opslaan als’ openen.
-      if (!herlaad) throw new Error("Het document is nog niet gereed.");
+      if (!herlaad) throw new Error(i18next.t("writer:general.documentNotReady"));
       const uit = await voorbeeld(await herlaad.bytes(), weergave === "origineel" ? "weigeren" : "accepteren");
       if (actief) setInhoud(uit);
     })().catch((e) => actief && setFouttekst(fout(e)));
@@ -284,23 +316,32 @@ export function MarkeringVoorbeeld() {
     zetMarkeringen("wijzigingen", markeringen);
   }
   if (weergave === "alle" || !plek) return null;
-  const naam = WEERGAVEN.find((w) => w.waarde === weergave)?.naam;
+  const naam = weergaveNaam(weergave);
   return createPortal(
-    <div className="tw-voorbeeld" style={plek} role="region" aria-label={`Voorbeeld: ${naam}`}>
+    <div className="tw-voorbeeld" style={plek} role="region" aria-label={t("changes.preview.region", { name: naam })}>
       <div className="tw-voorbeeld-balk">
         <Eye size={15} aria-hidden="true" />
         <span>
-          <strong>{naam}</strong> — alleen-lezen voorbeeld
-          {inhoud ? ` (${inhoud.aantal} ${inhoud.aantal === 1 ? "wijziging" : "wijzigingen"} ${weergave === "origineel" ? "geweigerd" : "geaccepteerd"} in de weergave; het document zelf is niet gewijzigd)` : ""}.
+          {inhoud ? (
+            <Trans
+              t={t}
+              i18nKey={weergave === "origineel" ? "changes.preview.readOnlyRejected" : "changes.preview.readOnlyAccepted"}
+              count={inhoud.aantal}
+              values={{ name: naam }}
+              components={{ strong: <strong /> }}
+            />
+          ) : (
+            <Trans t={t} i18nKey="changes.preview.readOnly" values={{ name: naam }} components={{ strong: <strong /> }} />
+          )}
         </span>
         <button type="button" onClick={() => wijzigingenWinkel.zet(api, { weergave: "alle" })}>
-          Terug naar alle markeringen
+          {t("changes.preview.back")}
         </button>
       </div>
       {fouttekst ? (
         <p className="tw-voorbeeld-melding">{fouttekst}</p>
       ) : !inhoud ? (
-        <p className="tw-voorbeeld-melding">Voorbeeld maken…</p>
+        <p className="tw-voorbeeld-melding">{t("changes.preview.making")}</p>
       ) : (
         <DocxEditor
           key={`${weergave}-${inhoud.bytes.byteLength}`}
@@ -313,10 +354,10 @@ export function MarkeringVoorbeeld() {
           showHelpMenu={false}
           plugins={TEKST_PLUGINS}
           colorMode="light"
-          i18n={tekstNlVolledig}
+          i18n={engineVertaling.tekst}
           className="tw-voorbeeld-editor"
           onFirstPagePainted={() => void strepen()}
-          loadingIndicator={<p className="tw-voorbeeld-melding">Voorbeeld laden…</p>}
+          loadingIndicator={<p className="tw-voorbeeld-melding">{t("changes.preview.loading")}</p>}
         />
       )}
     </div>,

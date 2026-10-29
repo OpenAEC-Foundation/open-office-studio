@@ -1,0 +1,84 @@
+{
+  "formulaCheck": {
+    "titleWarning": "請檢查此試算表中的公式",
+    "titleInfo": "關於此試算表中公式的說明",
+    "cells_other": "{{count}} 個儲存格",
+    "examplesMore_other": "{{list}} 及其他 {{count}} 個",
+    "userFunction": "使用者定義函數（巨集或增益集）",
+    "function": "函數",
+    "notCalculated": "{{kind}} {{name}} 不會被計算（{{cells}}：{{examples}}）。已儲存的結果維持不變且不會更新；相依的儲存格可能已過時。",
+    "recalculated_other": "{{cells}} 的已儲存結果已過時，開啟時已重新計算（{{examples}}）。儲存時會保留新結果。",
+    "manualCalculation": "此檔案以手動計算方式儲存；已儲存的結果可能已過時。",
+    "externalLinks_other": "此活頁簿參照了 {{count}} 個外部活頁簿；這些值不會更新。",
+    "errorCells": "含錯誤值的 {{cells}}：{{list}}。",
+    "errorItem": "{{error}}（{{examples}}）",
+    "noCachedResult": "含公式但沒有已儲存結果的 {{cells}}（{{examples}}）。",
+    "fullCalcOnLoad": "此檔案要求在開啟時完整重新計算（fullCalcOnLoad）；已儲存的結果可能已過時。",
+    "calcChain": "儲存時不會保留計算鏈（calcChain）；Excel 會重新建立。",
+    "tooLarge": "試算表太大，無法檢查。",
+    "invalidWorkbook": "不是有效的 XLSX 活頁簿。"
+  },
+  "print": {
+    "pageLabel": "{{sheet}}，第 {{page}} 頁，共 {{pages}} 頁",
+    "notWorksheet": "工作表「{{name}}」不是一般工作表，已略過。",
+    "nothingToPrint": "沒有可列印的內容：工作表都是空的。"
+  },
+  "export": {
+    "pngUnavailable": "此試算表引擎無法產生 PNG。"
+  },
+  "csvImport": {
+    "title": "匯入 {{name}}",
+    "import": "匯入",
+    "separator": "分隔符號",
+    "separatorSemicolon": "分號 ;",
+    "separatorComma": "逗號 ,",
+    "separatorTab": "定位字元",
+    "separatorPipe": "直線 |",
+    "separatorCustom": "其他字元…",
+    "customCharacter": "其他字元",
+    "textQualifier": "文字辨識符號",
+    "qualifierDouble": "雙引號 \"",
+    "qualifierSingle": "單引號 '",
+    "qualifierNone": "無",
+    "encoding": "字元編碼",
+    "encodingAuto": "自動",
+    "encodingDetected": "{{name}}（{{encoding}}）",
+    "encodingWindows1252": "Windows-1252（西歐）",
+    "numbers": "數字",
+    "numbersDutch": "荷蘭文（1.234,56）",
+    "numbersEnglish": "英文（1,234.56）",
+    "dateOrder": "日期順序",
+    "dateOrderDmy": "日-月-年（31-12-2026）",
+    "dateOrderMdy": "月-日-年（12/31/2026）",
+    "dateOrderYmd": "年-月-日（2026-12-31）",
+    "fromRow": "起始列",
+    "headerRow": "第一列為標題列",
+    "previewLabel": "前 50 列預覽",
+    "columnType": "第 {{number}} 欄的類型",
+    "columnTypes": {
+      "standaard": "一般",
+      "tekst": "文字",
+      "datum": "日期",
+      "overslaan": "略過"
+    },
+    "detected_other": "分隔符號為 {{separator}}，共 {{count}} 欄。",
+    "explanation": "郵遞區號、商品編號和 IBAN 請選擇<b>文字</b>；前置零和超過 15 位數的數字在「一般」中本來就會保留為文字。以 =、+、- 或 @ 開頭的值絕不會被讀取為公式（預覽中顯示單引號）。",
+    "separatorNames": {
+      "tab": "定位字元",
+      "semicolon": "分號",
+      "comma": "逗號",
+      "pipe": "直線",
+      "other": "「{{character}}」"
+    },
+    "report": {
+      "import": "匯入",
+      "imported": "已讀取 {{rows}}、{{columns}}；分隔符號為 {{separator}}，編碼為 {{encoding}}。",
+      "rows_other": "{{count}} 列",
+      "columns_other": "{{count}} 欄",
+      "formulaLike": "類似公式的文字",
+      "formulaLikeCells_other": "{{count}} 個以 =、+、- 或 @ 開頭的儲存格已作為文字而非公式匯入（防範 CSV 注入）。",
+      "truncated": "已截斷",
+      "truncatedText": "檔案超過工作表大小（{{rows}} 列或 {{columns}} 欄）；其餘部分未讀取。"
+    }
+  }
+}

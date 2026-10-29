@@ -1,3 +1,4 @@
+import i18next from "../../../src/i18n/config";
 import type { MailBackend } from "./contract";
 import { DemoBackend } from "./demo-backend";
 import { TauriBackend } from "./tauri-backend";
@@ -50,10 +51,10 @@ export async function bewaarBestand(naam: string, bytes: Uint8Array, type = "app
       try {
         pad = await invoke<string | null>("bewaar_kopie", bytes, kop);
       } catch {
-        return `Deze versie van de desktopapp kan ${naam} nog niet opslaan. Open de bijlage in een module of werk de app bij.`;
+        return i18next.t("email:files.saveUnsupported", { name: naam });
       }
     }
-    return pad ? `Opgeslagen: ${pad}` : "Opslaan geannuleerd.";
+    return pad ? i18next.t("email:files.saved", { path: pad }) : i18next.t("email:files.saveCancelled");
   }
   const url = URL.createObjectURL(new Blob([new Uint8Array(bytes)], { type }));
   const a = document.createElement("a");
@@ -63,7 +64,7 @@ export async function bewaarBestand(naam: string, bytes: Uint8Array, type = "app
   a.click();
   a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 60_000);
-  return "Download aangevraagd. Controleer het bestand in je downloads.";
+  return i18next.t("email:files.downloadRequested");
 }
 
 /**

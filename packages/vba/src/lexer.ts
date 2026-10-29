@@ -1,3 +1,4 @@
+import i18next from "i18next";
 import { VbaParseerFout } from "./fouten.ts";
 
 export type TokenSoort =
@@ -154,7 +155,7 @@ export function lex(bron: string, module = "?", opties: LexOpties = {}): Token[]
       for (;;) {
         if (i >= n || bron[i] === "\n" || bron[i] === "\r")
           throw new VbaParseerFout(
-            "Tekst zonder afsluitend aanhalingsteken.",
+            i18next.t("vba:parse.unterminatedString"),
             { module, regel, kolom: start - regelStart + 1 },
             "tekst niet afgesloten",
           );
@@ -179,7 +180,7 @@ export function lex(bron: string, module = "?", opties: LexOpties = {}): Token[]
       const nl = bron.slice(i, eind < 0 ? n : eind).search(/[\r\n]/);
       if (eind < 0 || nl >= 0)
         throw new VbaParseerFout(
-          "Naam tussen [ ] zonder afsluitend haakje.",
+          i18next.t("vba:parse.unterminatedBracketName"),
           pos(),
           "naam tussen haken",
         );
@@ -300,7 +301,7 @@ export function lex(bron: string, module = "?", opties: LexOpties = {}): Token[]
       continue;
     }
     throw new VbaParseerFout(
-      `Onverwacht teken ‘${c}’.`,
+      i18next.t("vba:parse.unexpectedCharacter", { char: c }),
       pos(),
       "onbekend teken",
     );

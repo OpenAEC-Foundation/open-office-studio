@@ -1,0 +1,141 @@
+{
+  "title": "设置",
+  "resetToDefaults": "恢复默认值",
+  "resetConfirm": "将所有设置恢复为默认值？点击“保存”后才会生效。",
+  "saveFailed": "无法保存设置。",
+  "tabs": {
+    "algemeen": "常规",
+    "uiterlijk": "外观",
+    "bewerken": "编辑",
+    "email": "电子邮件",
+    "over": "关于"
+  },
+  "general": {
+    "application": "应用程序",
+    "language": "语言",
+    "languageAuto": "自动（{{language}}）",
+    "languageSearch": "搜索语言…",
+    "languageNone": "未找到语言",
+    "machineTranslation": "此翻译由机器自动生成，尚未经过母语人士审校。",
+    "saving": "保存",
+    "formatsHelp": "新文档的默认格式。ODF 需要转换程序（桌面应用）；使用“另存为”始终可以选择其他格式。",
+    "format": {
+      "docx": "文字",
+      "xlsx": "电子表格",
+      "pptx": "演示文稿"
+    },
+    "recoveryInterval": "恢复点间隔",
+    "minutes": "分钟",
+    "recoveryHelp": "为已更改的文档创建恢复副本的频率（1 到 60 分钟），用于意外关闭后的恢复。",
+    "authorName": "批注中显示的姓名",
+    "converter": "转换程序",
+    "converterBrowser": "转换程序（LibreOffice）需在桌面应用中选择。在浏览器中只能使用本应用自身的格式。",
+    "converterLoading": "正在获取状态…",
+    "converterFoundChosen": "已找到：{{path}}{{version}}，由您选择。",
+    "converterFoundAuto": "已找到：{{path}}{{version}}，自动检测。",
+    "converterMissing": "未找到转换程序。请选择 LibreOffice 的 soffice，以打开和保存 ODF 及较旧的格式。",
+    "converterChoose": "选择程序…",
+    "converterAuto": "自动检测"
+  },
+  "languages": {
+    "nl": "荷兰语",
+    "en": "英语",
+    "de": "德语",
+    "fr": "法语",
+    "es": "西班牙语",
+    "it": "意大利语",
+    "pt-BR": "葡萄牙语（巴西）",
+    "pt-PT": "葡萄牙语（葡萄牙）",
+    "pl": "波兰语",
+    "cs": "捷克语",
+    "sk": "斯洛伐克语",
+    "hu": "匈牙利语",
+    "ro": "罗马尼亚语",
+    "el": "希腊语",
+    "sv": "瑞典语",
+    "da": "丹麦语",
+    "nb": "挪威语（博克马尔语）",
+    "fi": "芬兰语",
+    "tr": "土耳其语",
+    "ru": "俄语",
+    "uk": "乌克兰语",
+    "ar": "阿拉伯语",
+    "he": "希伯来语",
+    "hi": "印地语",
+    "id": "印度尼西亚语",
+    "vi": "越南语",
+    "th": "泰语",
+    "zh-CN": "中文（简体）",
+    "zh-TW": "中文（繁体）",
+    "ja": "日语",
+    "ko": "韩语"
+  },
+  "appearance": {
+    "theme": "主题",
+    "themes": {
+      "light": "浅色",
+      "forge": "Forge（深色）",
+      "systeem": "跟随系统"
+    },
+    "ribbon": "功能区",
+    "ribbonCompact": "紧凑功能区：小按钮仅显示图标",
+    "ribbonCollapsed": "默认折叠功能区（仅显示选项卡；按 Ctrl+F1 切换）",
+    "statusbar": "状态栏",
+    "status": {
+      "zoom": "缩放滑块",
+      "tekst": "文字：页码、字数和字符数",
+      "taal": "文字：语言（及拼写）",
+      "bijhouden": "文字：修订",
+      "weergave": "文字：视图按钮（页面视图、阅读模式）",
+      "rekenblad": "电子表格：所选内容的求和、平均值和计数",
+      "presentatie": "演示文稿：第 x 张幻灯片，共 y 张",
+      "database": "数据库：工作副本的状态"
+    }
+  },
+  "editing": {
+    "text": "文字",
+    "shortcutProfile": "键盘快捷键",
+    "profiles": {
+      "standaard": "标准（与 LibreOffice 相同）",
+      "word": "Word"
+    },
+    "profilesHelp": {
+      "standaard": "Ctrl+1 = 标题 1，Ctrl+2 = 标题 2，依此类推。",
+      "word": "Ctrl+1 = 单倍行距，Ctrl+Alt+1 = 标题 1。"
+    },
+    "miniToolbar": "选择文本时显示浮动工具栏",
+    "spelling": "拼写和自动更正",
+    "spellingOptions": {
+      "controleren": "键入时检查拼写（红色波浪线）",
+      "hoofdletterwoordenNegeren": "忽略全部大写的单词",
+      "cijferwoordenNegeren": "忽略包含数字的单词",
+      "autocorrectie": "自动更正：更正前两个字母连续大写（TWo INitial CApitals）、句首字母大写和常见拼写错误"
+    },
+    "spellingHelp": "词典：OpenTaal（荷兰语）和 SCOWL（英语，英国和美国）。右键单击带下划线的单词可查看建议；按 F7 打开“拼写和语法”窗格。",
+    "personalDictionary_other": "个人词典（{{count}} 个单词）…",
+    "personalDictionaryLabel": "个人词典",
+    "personalDictionaryEmpty": "尚未添加任何单词。",
+    "removeWord": "删除 {{word}}",
+    "remove": "删除",
+    "keyboard": "键盘",
+    "showShortcuts": "查看键盘快捷键 · F1"
+  },
+  "email": {
+    "privacy": "隐私",
+    "externalImages": "电子邮件中的外部图片",
+    "external": {
+      "account": "按各账户的设置",
+      "nooit": "从不自动加载（仍可按邮件单独允许）"
+    }
+  },
+  "about": {
+    "appName": "Open Office Studio",
+    "version": "版本",
+    "framework": "构建工具",
+    "design": "设计",
+    "licenses": "许可证",
+    "licensesLink": "所用组件的许可证",
+    "description": "OpenAEC Foundation 出品，将文字、电子表格、演示文稿、数据库和电子邮件集于一个本地工作区。您的文件始终保存在您自己的计算机上。",
+    "translations": "荷兰语是源语言。其他语言均由 OpenAEC 机器翻译，仍在审校中；欢迎提出改进建议。"
+  }
+}

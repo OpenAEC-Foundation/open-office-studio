@@ -1,0 +1,92 @@
+{
+  "formulaCheck": {
+    "titleWarning": "Kontrollér formlerne i dette regneark",
+    "titleInfo": "Bemærkninger til formlerne i dette regneark",
+    "cells_one": "{{count}} celle",
+    "cells_other": "{{count}} celler",
+    "examplesMore_one": "{{list}} og {{count}} mere",
+    "examplesMore_other": "{{list}} og {{count}} flere",
+    "userFunction": "Brugerdefineret funktion (makro eller tilføjelsesprogram)",
+    "function": "Funktion",
+    "notCalculated": "{{kind}} {{name}} beregnes ikke ({{cells}}: {{examples}}). Det gemte resultat bevares og opdateres ikke; afhængige celler kan være forældede.",
+    "recalculated_one": "{{cells}} havde et forældet gemt resultat og blev genberegnet ved åbning ({{examples}}). De nye resultater bevares, når du gemmer.",
+    "recalculated_other": "{{cells}} havde et forældet gemt resultat og blev genberegnet ved åbning ({{examples}}). De nye resultater bevares, når du gemmer.",
+    "manualCalculation": "Filen blev gemt med manuel beregning; gemte resultater kan være forældede.",
+    "externalLinks_one": "Projektmappen henviser til en ekstern projektmappe; disse værdier opdateres ikke.",
+    "externalLinks_other": "Projektmappen henviser til {{count}} eksterne projektmapper; disse værdier opdateres ikke.",
+    "errorCells": "{{cells}} med en fejlværdi: {{list}}.",
+    "errorItem": "{{error}} ({{examples}})",
+    "noCachedResult": "{{cells}} med en formel uden gemt resultat ({{examples}}).",
+    "fullCalcOnLoad": "Filen beder om en fuld genberegning ved åbning (fullCalcOnLoad); de gemte resultater kan være forældede.",
+    "calcChain": "Beregningskæden (calcChain) bevares ikke, når du gemmer; Excel genopbygger den.",
+    "tooLarge": "Regnearket er for stort til at blive kontrolleret.",
+    "invalidWorkbook": "Ikke en gyldig XLSX-projektmappe."
+  },
+  "print": {
+    "pageLabel": "{{sheet}}, side {{page}} af {{pages}}",
+    "notWorksheet": "Arket ‘{{name}}’ er ikke et regneark og springes over.",
+    "nothingToPrint": "Der er intet at udskrive: arkene er tomme."
+  },
+  "export": {
+    "pngUnavailable": "Denne regnearksmotor kan ikke oprette PNG."
+  },
+  "csvImport": {
+    "title": "Importér {{name}}",
+    "import": "Importér",
+    "separator": "Afgrænser",
+    "separatorSemicolon": "Semikolon ;",
+    "separatorComma": "Komma ,",
+    "separatorTab": "Tabulator",
+    "separatorPipe": "Lodret streg |",
+    "separatorCustom": "Andet tegn…",
+    "customCharacter": "Andet tegn",
+    "textQualifier": "Tekstkvalifikator",
+    "qualifierDouble": "Dobbelt anførselstegn \"",
+    "qualifierSingle": "Enkelt anførselstegn '",
+    "qualifierNone": "Ingen",
+    "encoding": "Tegnkodning",
+    "encodingAuto": "Automatisk",
+    "encodingDetected": "{{name}} ({{encoding}})",
+    "encodingWindows1252": "Windows-1252 (vesteuropæisk)",
+    "numbers": "Tal",
+    "numbersDutch": "Nederlandsk (1.234,56)",
+    "numbersEnglish": "Engelsk (1,234.56)",
+    "dateOrder": "Datorækkefølge",
+    "dateOrderDmy": "Dag-måned-år (31-12-2026)",
+    "dateOrderMdy": "Måned-dag-år (12/31/2026)",
+    "dateOrderYmd": "År-måned-dag (2026-12-31)",
+    "fromRow": "Fra række",
+    "headerRow": "Første række er overskrift",
+    "previewLabel": "Eksempel på de første 50 rækker",
+    "columnType": "Type for kolonne {{number}}",
+    "columnTypes": {
+      "standaard": "Standard",
+      "tekst": "Tekst",
+      "datum": "Dato",
+      "overslaan": "Spring over"
+    },
+    "detected_one": "{{separator}} som afgrænser, {{count}} kolonne.",
+    "detected_other": "{{separator}} som afgrænser, {{count}} kolonner.",
+    "explanation": "Vælg <b>Tekst</b> til postnumre, varenumre og IBAN; foranstillede nuller og tal med mere end 15 cifre forbliver allerede tekst med Standard. Værdier, der begynder med =, +, - eller @, læses aldrig som en formel (apostrof i eksemplet).",
+    "separatorNames": {
+      "tab": "tabulator",
+      "semicolon": "semikolon",
+      "comma": "komma",
+      "pipe": "lodret streg",
+      "other": "»{{character}}«"
+    },
+    "report": {
+      "import": "Importér",
+      "imported": "{{rows}} og {{columns}} indlæst; {{separator}} som afgrænser, kodning {{encoding}}.",
+      "rows_one": "{{count}} række",
+      "rows_other": "{{count}} rækker",
+      "columns_one": "{{count}} kolonne",
+      "columns_other": "{{count}} kolonner",
+      "formulaLike": "Formellignende tekst",
+      "formulaLikeCells_one": "{{count}} celle, der begynder med =, +, - eller @, blev medtaget som tekst og ikke som formel (beskyttelse mod CSV-injektion).",
+      "formulaLikeCells_other": "{{count}} celler, der begynder med =, +, - eller @, blev medtaget som tekst og ikke som formel (beskyttelse mod CSV-injektion).",
+      "truncated": "Afkortet",
+      "truncatedText": "Filen er større end et regneark ({{rows}} rækker eller {{columns}} kolonner); resten er ikke indlæst."
+    }
+  }
+}

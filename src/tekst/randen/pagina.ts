@@ -8,6 +8,7 @@ import { Pakket } from "../../grafieken/pakket.ts";
 import { attr, attrTekst, elementen, kind, leesXml, vervang, zoekAlle, type Vervanging, type XmlElement } from "../../grafieken/xml.ts";
 import type { Rand } from "../opmaak.ts";
 import { SECTPR_VOLGORDE } from "../pagina/ooxml.ts";
+import { vertaal } from "../stijlen/vertaling.ts";
 
 export type PaginaRandWeergave = "allPages" | "firstPage" | "notFirstPage";
 
@@ -131,7 +132,7 @@ export function zetPaginakleur(documentXml: string, kleur: string | null): strin
   }
   if (!nieuw) return documentXml;
   const body = kind(wortel, "body");
-  if (!body) throw new Error("Het document heeft geen inhoud (w:body).");
+  if (!body) throw new Error(vertaal("writer:borders.errors.noBody", "Het document heeft geen inhoud ({{element}}).", { element: "w:body" }));
   return vervang(documentXml, [{ start: body.start, eind: body.start, tekst: nieuw }]);
 }
 

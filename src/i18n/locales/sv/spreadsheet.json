@@ -1,0 +1,92 @@
+{
+  "formulaCheck": {
+    "titleWarning": "Kontrollera formlerna i det här kalkylbladet",
+    "titleInfo": "Anmärkningar om formlerna i det här kalkylbladet",
+    "cells_one": "{{count}} cell",
+    "cells_other": "{{count}} celler",
+    "examplesMore_one": "{{list}} och {{count}} till",
+    "examplesMore_other": "{{list}} och {{count}} till",
+    "userFunction": "Användardefinierad funktion (makro eller tillägg)",
+    "function": "Funktion",
+    "notCalculated": "{{kind}} {{name}} beräknas inte ({{cells}}: {{examples}}). Det sparade resultatet finns kvar och uppdateras inte; beroende celler kan vara inaktuella.",
+    "recalculated_one": "{{cells}} hade ett inaktuellt sparat resultat och beräknades om vid öppning ({{examples}}). De nya resultaten behålls när du sparar.",
+    "recalculated_other": "{{cells}} hade ett inaktuellt sparat resultat och beräknades om vid öppning ({{examples}}). De nya resultaten behålls när du sparar.",
+    "manualCalculation": "Filen sparades med manuell beräkning; sparade resultat kan vara inaktuella.",
+    "externalLinks_one": "Arbetsboken refererar till en extern arbetsbok; dessa värden uppdateras inte.",
+    "externalLinks_other": "Arbetsboken refererar till {{count}} externa arbetsböcker; dessa värden uppdateras inte.",
+    "errorCells": "{{cells}} med ett felvärde: {{list}}.",
+    "errorItem": "{{error}} ({{examples}})",
+    "noCachedResult": "{{cells}} med en formel utan sparat resultat ({{examples}}).",
+    "fullCalcOnLoad": "Filen begär en fullständig omberäkning vid öppning (fullCalcOnLoad); de sparade resultaten kan vara inaktuella.",
+    "calcChain": "Beräkningskedjan (calcChain) behålls inte när du sparar; Excel bygger upp den igen.",
+    "tooLarge": "Kalkylbladet är för stort för att kontrolleras.",
+    "invalidWorkbook": "Ingen giltig XLSX-arbetsbok."
+  },
+  "print": {
+    "pageLabel": "{{sheet}}, sida {{page}} av {{pages}}",
+    "notWorksheet": "Bladet ‘{{name}}’ är inte ett kalkylblad och hoppas över.",
+    "nothingToPrint": "Det finns inget att skriva ut: bladen är tomma."
+  },
+  "export": {
+    "pngUnavailable": "Den här kalkylmotorn kan inte skapa PNG."
+  },
+  "csvImport": {
+    "title": "Importera {{name}}",
+    "import": "Importera",
+    "separator": "Avgränsare",
+    "separatorSemicolon": "Semikolon ;",
+    "separatorComma": "Komma ,",
+    "separatorTab": "Tabb",
+    "separatorPipe": "Lodstreck |",
+    "separatorCustom": "Annat tecken…",
+    "customCharacter": "Annat tecken",
+    "textQualifier": "Textavgränsare",
+    "qualifierDouble": "Dubbla citattecken \"",
+    "qualifierSingle": "Enkelt citattecken '",
+    "qualifierNone": "Ingen",
+    "encoding": "Teckenkodning",
+    "encodingAuto": "Automatisk",
+    "encodingDetected": "{{name}} ({{encoding}})",
+    "encodingWindows1252": "Windows-1252 (västeuropeisk)",
+    "numbers": "Tal",
+    "numbersDutch": "Nederländska (1.234,56)",
+    "numbersEnglish": "Engelska (1,234.56)",
+    "dateOrder": "Datumordning",
+    "dateOrderDmy": "Dag-månad-år (31-12-2026)",
+    "dateOrderMdy": "Månad-dag-år (12/31/2026)",
+    "dateOrderYmd": "År-månad-dag (2026-12-31)",
+    "fromRow": "Från rad",
+    "headerRow": "Första raden är rubrik",
+    "previewLabel": "Förhandsgranskning av de första 50 raderna",
+    "columnType": "Typ för kolumn {{number}}",
+    "columnTypes": {
+      "standaard": "Allmänt",
+      "tekst": "Text",
+      "datum": "Datum",
+      "overslaan": "Hoppa över"
+    },
+    "detected_one": "{{separator}} som avgränsare, {{count}} kolumn.",
+    "detected_other": "{{separator}} som avgränsare, {{count}} kolumner.",
+    "explanation": "Välj <b>Text</b> för postnummer, artikelnummer och IBAN; inledande nollor och tal med fler än 15 siffror förblir redan text med Allmänt. Värden som börjar med =, +, - eller @ läses aldrig in som formel (apostrof i förhandsgranskningen).",
+    "separatorNames": {
+      "tab": "tabb",
+      "semicolon": "semikolon",
+      "comma": "komma",
+      "pipe": "lodstreck",
+      "other": "”{{character}}”"
+    },
+    "report": {
+      "import": "Importera",
+      "imported": "{{rows}} och {{columns}} inlästa; {{separator}} som avgränsare, kodning {{encoding}}.",
+      "rows_one": "{{count}} rad",
+      "rows_other": "{{count}} rader",
+      "columns_one": "{{count}} kolumn",
+      "columns_other": "{{count}} kolumner",
+      "formulaLike": "Formelliknande text",
+      "formulaLikeCells_one": "{{count}} cell som börjar med =, +, - eller @ togs med som text, inte som formel (skydd mot CSV-injektion).",
+      "formulaLikeCells_other": "{{count}} celler som börjar med =, +, - eller @ togs med som text, inte som formel (skydd mot CSV-injektion).",
+      "truncated": "Avkortad",
+      "truncatedText": "Filen är större än ett kalkylblad ({{rows}} rader eller {{columns}} kolumner); resten har inte lästs in."
+    }
+  }
+}

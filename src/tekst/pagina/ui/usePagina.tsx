@@ -8,7 +8,10 @@ import { useContext, useEffect, useRef, useState, useSyncExternalStore, type Rea
 import { createPortal } from "react-dom";
 import { useDocxCommand, useDocxCommands, type DocxEditorRef } from "@betteroffice/docx-react";
 import { X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { RibbonFout } from "../../../Ribbon";
+import { huidigeTaal } from "../../../i18n/config";
+import { engineVertalingDirect } from "../../../i18n/engine";
 import { meldWijziging, useEditorApi, zichtbaarElement } from "../../../lint/editorApi";
 import { useSneltoetsen } from "../../../lint/sneltoetsen";
 import { metPakket, verwijderMarkering } from "../ooxml.ts";
@@ -63,7 +66,7 @@ import "./pagina.css";
 const tekst = (e: unknown) => (e instanceof Error ? e.message : String(e));
 
 interface Pakketopdracht {
-  /** Voor meldingen, bijvoorbeeld "Paginanummers ingevoegd". */
+  /** Voor meldingen, bijvoorbeeld "Paginanummers ingevoegd" (al vertaald). */
   klaar: string;
   /** Een markering op de cursor: nodig, of alleen om de huidige sectie te kennen. */
   cursor?: "nodig" | "sectie";
@@ -122,11 +125,12 @@ function useNaHerladen() {
 /** De korte melding onderaan (overleeft het herladen van het lint). */
 function Melding() {
   const m = useSyncExternalStore(volgMelding, leesMelding, leesMelding);
+  const { t } = useTranslation("writer");
   if (!m) return null;
   return createPortal(
     <div className={`pagina-melding ${m.soort === "fout" ? "is-fout" : ""}`} role={m.soort === "fout" ? "alert" : "status"}>
       <span>{m.tekst}</span>
-      <button type="button" aria-label="Melding sluiten" onClick={sluitMelding}>
+      <button type="button" aria-label={t("page.reload.closeNotice")} onClick={sluitMelding}>
         <X size={14} />
       </button>
     </div>,
@@ -134,7 +138,18 @@ function Melding() {
   );
 }
 
+/** Begint de tekst van een open venster met de titel van het watermerkvenster van de engine? */
+function isWatermerkVenster(tekst: string) {
+  const titels = new Set(["Watermerk", "Watermark"]);
+  const titel = engineVertalingDirect(huidigeTaal())?.tekst.dialogs?.watermark?.title;
+  if (titel) titels.add(titel);
+  const begin = tekst.trimStart();
+  return [...titels].some((t) => begin.startsWith(t));
+}
+
 export function usePagina() {
+  // Ook voor de lintcomponent die usePagina gebruikt: een taalwissel tekent opnieuw (kopVoetTab, verwijzingenTab).
+  const { t } = useTranslation("writer");
   const apis = useEditorApi();
   const opdrachten = useDocxCommands();
   const fout = useContext(RibbonFout);
@@ -161,7 +176,7 @@ export function usePagina() {
   const klaarVoor = () => {
     const herlaad = apis.herlaad;
     const editor = api();
-    if (!herlaad || !editor?.getDocument()) throw new Error("Het document is nog niet gereed.");
+    if (!herlaad || !editor?.getDocument()) throw new Error(t("page.errors.notReady"));
     return { herlaad, editor };
   };
 
@@ -193,7 +208,7 @@ export function usePagina() {
     let doorgegeven = false;
     try {
       const { herlaad, editor } = klaarVoor();
-      if (!(await bevestigd("Document opnieuw laden"))) {
+      if (!(await bevestigd(t("page.reload.confirmTitle")))) {
         editor.focus();
         return;
       }
@@ -202,7 +217,7 @@ export function usePagina() {
       let markering: Awaited<ReturnType<typeof zetMarkering>> = null;
       if (o.cursor) {
         markering = bewerkbaar || kopVoetActief() ? await zetMarkering(editor) : null;
-        if (!markering && o.cursor === "nodig") throw new Error("Zet de cursor eerst op de plek in de tekst.");
+        if (!markering && o.cursor === "nodig") throw new Error(t("page.errors.cursorFirst"));
       }
       let bytes: Uint8Array;
       let uit: Uint8Array | null;
@@ -233,7 +248,7 @@ export function usePagina() {
         try {
           herstelLintTab(lintTab);
           await herstelPlek(nieuw, plek, "eind");
-          toonMelding(`${o.klaar}. Ongedaan maken van eerdere wijzigingen is na het herladen niet meer mogelijk.`);
+          toonMelding(t("page.reload.doneNotice", { done: o.klaar }));
           await o.na?.(nieuw);
         } finally {
           vrij();
@@ -255,12 +270,12 @@ export function usePagina() {
   function paginanummer(opties: PaginanummerOpties) {
     if (opties.positie === "cursor")
       return void pakket({
-        klaar: "Paginanummer ingevoegd",
+        klaar: t("page.done.pageNumberInserted"),
         cursor: "nodig",
         werk: (b, { markering }) => voegVeldInBijMarkering(b, markering!, opties.vorm),
       });
     void pakket({
-      klaar: "Paginanummers ingevoegd",
+      klaar: t("page.done.pageNumbersInserted"),
       cursor: opties.doel === -1 ? "sectie" : undefined,
       werk: (b, { sectie }) => voegPaginanummerIn(b, { ...opties, doel: opties.doel === -1 ? sectie : (opties.doel ?? "alle") }),
     });
@@ -268,17 +283,25 @@ export function usePagina() {
   function paginanummerVenster(begin: Partial<PaginanummerOpties> = {}) {
     setVenster(<PaginanummerDialoog begin={begin} secties={sectieStand(api()).aantalSecties} sluit={sluit} bevestig={paginanummer} />);
   }
-  const paginanummersWeg = () => void pakket({ klaar: "Paginanummers verwijderd", werk: (b) => verwijderPaginanummers(b) });
-  const eersteAnders = (aan: boolean) => void pakket({ klaar: aan ? "Eerste pagina anders" : "Eerste pagina gelijk", cursor: "sectie", werk: (b, { sectie }) => zetEerstePaginaAnders(b, sectie, aan) });
-  const evenOneven = (aan: boolean) => void pakket({ klaar: aan ? "Even en oneven pagina's anders" : "Even en oneven pagina's gelijk", werk: (b) => zetEvenOnevenAnders(b, aan) });
+  const paginanummersWeg = () => void pakket({ klaar: t("page.done.pageNumbersRemoved"), werk: (b) => verwijderPaginanummers(b) });
+  const eersteAnders = (aan: boolean) => void pakket({ klaar: t(aan ? "page.done.firstPageDifferent" : "page.done.firstPageSame"), cursor: "sectie", werk: (b, { sectie }) => zetEerstePaginaAnders(b, sectie, aan) });
+  const evenOneven = (aan: boolean) => void pakket({ klaar: t(aan ? "page.done.evenOddDifferent" : "page.done.evenOddSame"), werk: (b) => zetEvenOnevenAnders(b, aan) });
   const koppel = (soort: KopVoetSoort, gekoppeld: boolean) =>
     void pakket({
-      klaar: `${soort === "header" ? "Koptekst" : "Voettekst"} ${gekoppeld ? "gekoppeld aan" : "losgekoppeld van"} de vorige sectie`,
+      klaar: t(
+        soort === "header"
+          ? gekoppeld
+            ? "page.done.headerLinked"
+            : "page.done.headerUnlinked"
+          : gekoppeld
+            ? "page.done.footerLinked"
+            : "page.done.footerUnlinked",
+      ),
       cursor: "sectie",
       werk: (b, { sectie }) => koppelAanVorige(b, sectie, soort, gekoppeld),
     });
   const kopVoetWeg = (soort: KopVoetSoort) =>
-    void pakket({ klaar: `${soort === "header" ? "Koptekst" : "Voettekst"} verwijderd`, cursor: "sectie", werk: (b, { sectie }) => verwijderKopVoet(b, sectie, soort) });
+    void pakket({ klaar: t(soort === "header" ? "page.done.headerRemoved" : "page.done.footerRemoved"), cursor: "sectie", werk: (b, { sectie }) => verwijderKopVoet(b, sectie, soort) });
   async function afstandVenster() {
     try {
       const { herlaad } = klaarVoor();
@@ -289,7 +312,7 @@ export function usePagina() {
           koptekst={s.koptekst}
           voettekst={s.voettekst}
           sluit={sluit}
-          bevestig={(a) => void pakket({ klaar: "Afstand van kop- en voettekst aangepast", cursor: "sectie", werk: (b, { sectie }) => zetKopVoetAfstand(b, sectie, a) })}
+          bevestig={(a) => void pakket({ klaar: t("page.done.distanceChanged"), cursor: "sectie", werk: (b, { sectie }) => zetKopVoetAfstand(b, sectie, a) })}
         />,
       );
     } catch (e) {
@@ -301,11 +324,11 @@ export function usePagina() {
     if (!editor) return;
     const sectie = editor.getDocument()?.package?.document?.finalSectionProperties;
     const refs = soort === "header" ? sectie?.headerReferences : sectie?.footerReferences;
-    const naam = soort === "header" ? "Koptekst" : "Voettekst";
+    const kop = soort === "header";
     const openen = (e: DocxEditorRef) => {
-      if (!bewerkKopVoet(e, soort)) return fout(`De ${naam.toLowerCase()} kon niet worden geopend. Dubbelklik in de boven- of ondermarge van een pagina.`);
+      if (!bewerkKopVoet(e, soort)) return fout(t(kop ? "page.errors.headerOpenFailed" : "page.errors.footerOpenFailed"));
       setTimeout(() => {
-        if (!kopVoetActief()) fout(`De ${naam.toLowerCase()} kon niet worden geopend. Dubbelklik in de ${soort === "header" ? "boven" : "onder"}marge van een pagina.`);
+        if (!kopVoetActief()) fout(t(kop ? "page.errors.headerNotOpened" : "page.errors.footerNotOpened"));
       }, 600);
     };
     // Eerste pagina anders / even en oneven: die pagina's tonen een eigen onderdeel.
@@ -314,7 +337,7 @@ export function usePagina() {
     if (nodig.every((t) => refs?.some((r) => (r.type ?? "default") === t))) return openen(editor);
     // Nog geen (passende) kop/voettekst: eerst een lege toevoegen (pakketroute), daarna openen.
     void pakket({
-      klaar: `${naam} toegevoegd`,
+      klaar: t(kop ? "page.done.headerAdded" : "page.done.footerAdded"),
       cursor: "sectie",
       werk: (b, { sectie: s }) => zorgVoorKopVoet(b, s, soort),
       na: (nieuw) => {
@@ -336,11 +359,12 @@ export function usePagina() {
 
   const sectieWijziging = (klaar: string, w: Parameters<typeof wijzigSecties>[2]) =>
     void pakket({ klaar, cursor: "sectie", werk: (b, { sectie }) => wijzigSecties(b, sectie, w) });
-  const marges = (v: MargeVoorkeur) => sectieWijziging(`Marges ‘${MARGES[v].naam}’ ingesteld`, { marges: MARGES[v].marges });
-  const afdrukstand = (a: Afdrukstand) => sectieWijziging(a === "liggend" ? "Afdrukstand liggend" : "Afdrukstand staand", { afdrukstand: a });
-  const formaat = (f: Formaat) => sectieWijziging(`Papierformaat ${FORMATEN[f].naam}`, { formaat: FORMATEN[f] });
+  const marges = (v: MargeVoorkeur) =>
+    sectieWijziging(t("page.done.marginsSet", { name: t(`page.layout.marginPresets.${MARGES[v].sleutel}`) }), { marges: MARGES[v].marges });
+  const afdrukstand = (a: Afdrukstand) => sectieWijziging(t(a === "liggend" ? "page.done.landscape" : "page.done.portrait"), { afdrukstand: a });
+  const formaat = (f: Formaat) => sectieWijziging(t("page.done.paperSize", { name: FORMATEN[f].naam }), { formaat: FORMATEN[f] });
   const kolommen = (v: KolomVoorkeur) =>
-    void pakket({ klaar: "Kolommen ingesteld", cursor: "sectie", werk: (b, { sectie }) => zetKolomVoorkeur(b, sectie, v) });
+    void pakket({ klaar: t("page.done.columnsSet"), cursor: "sectie", werk: (b, { sectie }) => zetKolomVoorkeur(b, sectie, v) });
   async function kolommenVenster() {
     try {
       const { herlaad, editor } = klaarVoor();
@@ -354,7 +378,7 @@ export function usePagina() {
           secties={sectieStand(editor).aantalSecties}
           sluit={sluit}
           bevestig={(k: Kolommen, doel) =>
-            void pakket({ klaar: "Kolommen ingesteld", cursor: "sectie", werk: (b, { sectie }) => wijzigSecties(b, doel === "alle" ? "alle" : (sectie as SectieDoel), { kolommen: k }) })
+            void pakket({ klaar: t("page.done.columnsSet"), cursor: "sectie", werk: (b, { sectie }) => wijzigSecties(b, doel === "alle" ? "alle" : (sectie as SectieDoel), { kolommen: k }) })
           }
         />,
       );
@@ -362,21 +386,21 @@ export function usePagina() {
       fout(tekst(e));
     }
   }
-  const kolomeinde = () => void pakket({ klaar: "Kolomeinde ingevoegd", cursor: "nodig", werk: (b, { markering }) => voegKolomeindeIn(b, markering!) });
+  const kolomeinde = () => void pakket({ klaar: t("page.done.columnBreakInserted"), cursor: "nodig", werk: (b, { markering }) => voegKolomeindeIn(b, markering!) });
   /**
    * Sectie-einde (volgende, even of oneven pagina, of doorlopend). Pakketroute:
    * de engine voegt het via `insertSectionBreak*` wel in, maar kan het daarna
    * niet tekenen ("unsupported embed"); zie engine-verzoeken.
    */
   const SECTIE_EINDE = {
-    nextPage: "Sectie-einde (nieuwe pagina) ingevoegd",
-    continuous: "Doorlopend sectie-einde ingevoegd",
-    evenPage: "Sectie-einde (even pagina) ingevoegd",
-    oddPage: "Sectie-einde (oneven pagina) ingevoegd",
+    nextPage: "page.done.sectionBreakNextPage",
+    continuous: "page.done.sectionBreakContinuous",
+    evenPage: "page.done.sectionBreakEvenPage",
+    oddPage: "page.done.sectionBreakOddPage",
   } as const;
   const sectieEinde = (soort: keyof typeof SECTIE_EINDE) =>
     void pakket({
-      klaar: SECTIE_EINDE[soort],
+      klaar: t(SECTIE_EINDE[soort]),
       cursor: "nodig",
       werk: (b, { markering }) => voegSectieEindeIn(b, markering!, soort),
     });
@@ -397,7 +421,7 @@ export function usePagina() {
       if (!r.ok) return fout(r.failure.message);
       let gezien = false;
       const klok = setInterval(() => {
-        const open = [...document.querySelectorAll<HTMLElement>("[role='dialog']")].some((d) => d.getClientRects().length && /^\s*Watermerk/.test(d.textContent ?? ""));
+        const open = [...document.querySelectorAll<HTMLElement>("[role='dialog']")].some((d) => d.getClientRects().length && isWatermerkVenster(d.textContent ?? ""));
         gezien ||= open;
         const nu = api()?.getDocument();
         if (nu && voor && nu !== voor && apis.herlaad) {
@@ -445,12 +469,12 @@ export function usePagina() {
       const koppen = await haalKoppen(editor);
       if (bestaand)
         return void pakket({
-          klaar: "Inhoudsopgave vervangen",
+          klaar: t("page.done.tocReplaced"),
           werk: (b) => werkInhoudsopgaveBij(b, koppen, "alles", opties).bytes,
           na: tocNalopen,
         });
       void pakket({
-        klaar: koppen.length ? "Inhoudsopgave ingevoegd" : "Inhoudsopgave ingevoegd (nog zonder koppen)",
+        klaar: t(koppen.length ? "page.done.tocInserted" : "page.done.tocInsertedNoHeadings"),
         cursor: "nodig",
         werk: (b, { markering }) => voegInhoudsopgaveIn(b, markering, koppen, opties),
         na: tocNalopen,
@@ -463,7 +487,7 @@ export function usePagina() {
     try {
       const { herlaad } = klaarVoor();
       const bestaand = leesInhoudsopgave(await herlaad.bytes());
-      setVenster(<InhoudDialoog begin={bestaand ?? STANDAARD_INHOUD} bestaat={!!bestaand} sluit={sluit} bevestig={(o) => void inhoudInvoegen(o)} />);
+      setVenster(<InhoudDialoog begin={bestaand ?? { ...STANDAARD_INHOUD }} bestaat={!!bestaand} sluit={sluit} bevestig={(o) => void inhoudInvoegen(o)} />);
     } catch (e) {
       fout(tekst(e));
     }
@@ -477,34 +501,34 @@ export function usePagina() {
       const { herlaad, editor } = klaarVoor();
       setVenster(null);
       const bytes = await herlaad.bytes();
-      if (!leesInhoudsopgave(bytes)) throw new Error("Dit document heeft geen inhoudsopgave. Voeg er eerst een in.");
+      if (!leesInhoudsopgave(bytes)) throw new Error(t("page.errors.noTocInsertFirst"));
       const koppen = await haalKoppen(editor);
       const proef = werkInhoudsopgaveBij(bytes, koppen, modus);
       if (!proef.gewijzigd) {
-        toonMelding("De inhoudsopgave is al actueel.");
+        toonMelding(t("page.done.tocUpToDate"));
         editor.focus();
         return;
       }
-      void pakket({ klaar: modus === "paginas" ? "Paginanummers van de inhoudsopgave bijgewerkt" : "Inhoudsopgave bijgewerkt", werk: (b) => werkInhoudsopgaveBij(b, koppen, modus).bytes, na: modus === "alles" ? tocNalopen : undefined });
+      void pakket({ klaar: t(modus === "paginas" ? "page.done.tocPageNumbersUpdated" : "page.done.tocUpdated"), werk: (b) => werkInhoudsopgaveBij(b, koppen, modus).bytes, na: modus === "alles" ? tocNalopen : undefined });
     } catch (e) {
       fout(tekst(e));
     }
   }
-  const inhoudWeg = () => void pakket({ klaar: "Inhoudsopgave verwijderd", werk: (b) => verwijderInhoudsopgave(b) });
+  const inhoudWeg = () => void pakket({ klaar: t("page.done.tocRemoved"), werk: (b) => verwijderInhoudsopgave(b) });
 
   // --- Noten --------------------------------------------------------------------
 
   function noot(soort: NootSoort) {
-    if (!bewerkbaar) return fout("Het document kan nu niet worden bewerkt.");
+    if (!bewerkbaar) return fout(t("page.errors.notEditable"));
     setVenster(
       <NootDialoog
         soort={soort}
         sluit={sluit}
-        bevestig={(t) =>
+        bevestig={(tekst) =>
           void pakket({
-            klaar: soort === "voetnoot" ? "Voetnoot ingevoegd" : "Eindnoot ingevoegd",
+            klaar: t(soort === "voetnoot" ? "page.done.footnoteInserted" : "page.done.endnoteInserted"),
             cursor: "nodig",
-            werk: (b, { markering }) => voegNootIn(b, markering!, soort, t).bytes,
+            werk: (b, { markering }) => voegNootIn(b, markering!, soort, tekst).bytes,
           })
         }
       />,
@@ -518,7 +542,7 @@ export function usePagina() {
         <NootInstellingenDialoog
           begin={{ soort, instellingen: { voetnoot: leesNootInstellingen(bytes, "voetnoot"), eindnoot: leesNootInstellingen(bytes, "eindnoot") } }}
           sluit={sluit}
-          bevestig={(s, w) => void pakket({ klaar: "Notenopmaak aangepast", werk: (b) => zetNootInstellingen(b, s, w) })}
+          bevestig={(s, w) => void pakket({ klaar: t("page.done.noteFormatChanged"), werk: (b) => zetNootInstellingen(b, s, w) })}
         />,
       );
     } catch (e) {
@@ -560,7 +584,7 @@ export function usePagina() {
     try {
       const { editor } = klaarVoor();
       const noten = await haalNoten(editor);
-      if (!noten.length) return toonMelding("Dit document heeft geen voet- of eindnoten.");
+      if (!noten.length) return toonMelding(t("page.footnotes.list.none"));
       const hier = editor.getSelectionInfo()?.paraId ?? null;
       const alineas = (await editor.readParagraphs({ view: "accepted" })) as { ok: boolean; paragraphs?: { paraId: string }[] };
       const volgorde = new Map((alineas.paragraphs ?? []).map((p, i) => [p.paraId, i]));
@@ -571,7 +595,14 @@ export function usePagina() {
           ? (noten.find((n) => index(n) > positie) ?? noten[0])
           : ([...noten].reverse().find((n) => index(n) < positie && index(n) >= 0) ?? noten[noten.length - 1]);
       gaNaarNoot(editor, doel, "verwijzing");
-      toonMelding(`${doel.soort === "voetnoot" ? "Voetnoot" : "Eindnoot"} ${doel.volgnummer}: ${doel.tekst.slice(0, 80) || "(leeg)"}`, "info", 4000);
+      toonMelding(
+        t(doel.soort === "voetnoot" ? "page.footnotes.jumpFootnote" : "page.footnotes.jumpEndnote", {
+          number: doel.volgnummer,
+          text: doel.tekst.slice(0, 80) || t("page.footnotes.list.empty"),
+        }),
+        "info",
+        4000,
+      );
     } catch (e) {
       fout(tekst(e));
     }
@@ -588,9 +619,9 @@ export function usePagina() {
     venster
       ? []
       : [
-          { toets: "Ctrl+Alt+F", uitvoeren: () => noot("voetnoot"), beschikbaar: () => bewerkbaar, omschrijving: "Voetnoot invoegen" },
-          { toets: "Ctrl+Alt+D", uitvoeren: () => noot("eindnoot"), beschikbaar: () => bewerkbaar, omschrijving: "Eindnoot invoegen" },
-          { toets: "Ctrl+Shift+Enter", uitvoeren: kolomeinde, beschikbaar: () => bewerkbaar, omschrijving: "Kolomeinde" },
+          { toets: "Ctrl+Alt+F", uitvoeren: () => noot("voetnoot"), beschikbaar: () => bewerkbaar, omschrijving: t("page.footnotes.insertFootnote") },
+          { toets: "Ctrl+Alt+D", uitvoeren: () => noot("eindnoot"), beschikbaar: () => bewerkbaar, omschrijving: t("page.footnotes.insertEndnote") },
+          { toets: "Ctrl+Shift+Enter", uitvoeren: kolomeinde, beschikbaar: () => bewerkbaar, omschrijving: t("page.layout.columnBreak") },
         ],
     "tekst",
   );
@@ -602,6 +633,8 @@ export function usePagina() {
         <Melding />
       </>
     ),
+    /** Vertaling (writer) voor de lintfuncties die geen component zijn. */
+    t,
     bewerkbaar,
     beschikbaar: !!apis.herlaad,
     kopVoet,

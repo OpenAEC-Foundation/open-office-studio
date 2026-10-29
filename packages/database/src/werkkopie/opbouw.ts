@@ -3,6 +3,7 @@
  * Het origineel wordt alleen gelezen. Alles wat niet (volledig) kan worden
  * overgenomen, staat concreet in het opbouwrapport; niets wordt stil weggelaten.
  */
+import i18next from "i18next";
 import type MDBReader from "mdb-reader";
 import type { Database, SqlJsStatic } from "sql.js";
 import {
@@ -21,6 +22,11 @@ import {
 import { citeer, indexNaam, typeVoorSoort } from "./access-sql.ts";
 import { isoUitMs, registreerAccessFuncties } from "./functies.ts";
 import { levendeRecords, scanDatapaginas, type Datascan } from "./rijfilter.ts";
+
+/** Vertaling binnen `database:build` (in de taal van het moment van opbouwen). */
+function t(sleutel: string, opties?: Record<string, unknown>): string {
+  return i18next.t(`database:build.${sleutel}`, opties);
+}
 
 /** 1: eerste versie; 2: `_openaec_modules` (VBA-modules). */
 export const SCHEMAVERSIE = 2;
@@ -175,7 +181,7 @@ export async function bouwWerkkopie(
   opties: OpbouwOpties = {},
 ): Promise<{ db: Database; rapport: OpbouwRapport }> {
   if (bytes.byteLength > MAX_INVOER)
-    throw new WerkkopieFout("beperking", "Kies een database van maximaal 100 MB.");
+    throw new WerkkopieFout("beperking", t("tooLarge"));
   const begin = Date.now();
   const batch = Math.max(100, opties.batch ?? 5000);
   const voortgang = opties.voortgang ?? (() => {});
@@ -189,7 +195,7 @@ export async function bouwWerkkopie(
   try {
     formaat = leesFormaat(bytes);
   } catch (fout) {
-    meld("Bestandskop", "waarschuwing", `Bestandskop niet gelezen; indexen en primaire sleutels ontbreken daardoor: ${melding(fout)}`);
+    meld(t("part.fileHeader"), "waarschuwing", t("headerUnreadable", { error: melding(fout) }));
   }
   let catalogus: Rij[];
   try {
@@ -197,7 +203,7 @@ export async function bouwWerkkopie(
   } catch (fout) {
     throw new WerkkopieFout(
       "beperking",
-      `De systeemcatalogus (MSysObjects) is niet leesbaar; het bestand is mogelijk versleuteld, met een wachtwoord beveiligd of beschadigd: ${melding(fout)}`,
+      t("catalogUnreadable", { error: melding(fout) }),
     );
   }
   const msys = catalogus.map((r) => ({
@@ -211,7 +217,7 @@ export async function bouwWerkkopie(
   const plannen: TabelPlan[] = [];
   for (const naam of reader.getTableNames()) {
     if (/^(_openaec_|sqlite_)/i.test(naam)) {
-      meld(`Tabel ${naam}`, "fout", "De tabelnaam botst met een gereserveerde naam van de werkkopie; de tabel is niet overgenomen.");
+      meld(t("part.table", { name: naam }), "fout", t("reservedTableName"));
       continue;
     }
     const plan: TabelPlan = { naam, pagina: paginaVan.get(naam) ?? 0, kolommen: [], primair: [], indexen: [], rijenBron: 0, leesbaar: true };
@@ -225,22 +231,22 @@ export async function bouwWerkkopie(
           soort = "memo";
           bijlagen = true;
           meld(
-            `Tabel ${naam}`,
+            t("part.table", { name: naam }),
             "waarschuwing",
-            `Veld ‘${kolom.name}’ is een samengesteld veld (bijlage of meerdere waarden). In de werkkopie bevat het de bestandsnamen; bijlagen staan in _openaec_bijlagen. Meervoudige waarden worden niet overgenomen en per rij gemeld.`,
+            t("complexField", { field: kolom.name }),
           );
         } else if (soort === null) {
           soort = "memo";
-          meld(`Tabel ${naam}`, "waarschuwing", `Veld ‘${kolom.name}’ heeft een onbekend veldtype (${kolom.type}); de waarden zijn als tekst overgenomen.`);
+          meld(t("part.table", { name: naam }), "waarschuwing", t("unknownFieldType", { field: kolom.name, type: kolom.type }));
         }
         if (kolom.type === "numeric" && (kolom.precision ?? 0) > 15)
-          meld(`Tabel ${naam}`, "info", `Veld ‘${kolom.name}’ is Decimal met precisie ${kolom.precision}; SQLite bewaart het als REAL (circa 15 significante cijfers).`);
+          meld(t("part.table", { name: naam }), "info", t("decimalPrecision", { field: kolom.name, precision: kolom.precision }));
         const lengte = soort === "tekst" ? (formaat?.jet3 ? kolom.size : Math.floor(kolom.size / 2)) || 255 : undefined;
         plan.kolommen.push({ naam: kolom.name, type: kolom.type, soort, lengte, bijlagen });
       }
     } catch (fout) {
       plan.leesbaar = false;
-      meld(`Tabel ${naam}`, "fout", `Kolommen niet leesbaar; de tabel is niet overgenomen: ${melding(fout)}`);
+      meld(t("part.table", { name: naam }), "fout", t("columnsUnreadable", { error: melding(fout) }));
     }
     if (formaat && plan.pagina && plan.leesbaar) {
       try {
@@ -250,11 +256,11 @@ export async function bouwWerkkopie(
         if (primair) {
           if (primair.kolommen.every((k) => bekend.has(k.naam.toLowerCase())) && primair.kolommen.length)
             plan.primair = primair.kolommen.map((k) => k.naam);
-          else meld(`Tabel ${naam}`, "waarschuwing", `Primaire sleutel ‘${primair.naam}’ verwijst naar onbekende kolommen en is niet overgenomen.`);
+          else meld(t("part.table", { name: naam }), "waarschuwing", t("primaryKeyUnknownColumns", { name: primair.naam }));
         }
         plan.indexen = definitie.indexen.filter((i) => !i.primair && !i.extern);
       } catch (fout) {
-        meld(`Tabel ${naam}`, "waarschuwing", `Tabeldefinitie niet ruw gelezen; primaire sleutel en indexen ontbreken: ${melding(fout)}`);
+        meld(t("part.table", { name: naam }), "waarschuwing", t("tableDefUnreadable", { error: melding(fout) }));
       }
     }
     if (plan.leesbaar) plannen.push(plan);
@@ -263,9 +269,9 @@ export async function bouwWerkkopie(
 
   for (const o of msys.filter((x) => x.type === 4 || x.type === 6))
     meld(
-      `Gekoppelde tabel ${o.naam}`,
+      t("part.linkedTable", { name: o.naam }),
       "waarschuwing",
-      `${o.type === 4 ? "ODBC-koppeling" : "Koppeling naar een andere Access-database"}; de externe bron wordt niet geopend en de tabel staat niet in de werkkopie.`,
+      o.type === 4 ? t("linkedOdbc") : t("linkedAccess"),
     );
 
   // ---------------------------------------------------------------- relaties
@@ -312,23 +318,23 @@ export async function bouwWerkkopie(
         const van = planVan.get(tabel.toLowerCase());
         const naar = planVan.get(naarTabel.toLowerCase());
         const reden = (() => {
-          if (!van || !naar) return `tabel ${!van ? tabel : naarTabel} staat niet in de werkkopie`;
+          if (!van || !naar) return t("relationTableMissing", { table: !van ? tabel : naarTabel });
           const heeft = (p: TabelPlan, v: string) => p.kolommen.some((k) => k.naam.toLowerCase() === v.toLowerCase());
           if (!relatie.velden.every((v) => heeft(van, v)) || !relatie.naarVelden.every((v) => heeft(naar, v)))
-            return "een veld van de relatie bestaat niet";
+            return t("relationFieldMissing");
           // SQLite eist een primaire sleutel of unieke index op de verwezen velden.
           const doel = new Set(relatie.naarVelden.map((v) => v.toLowerCase()));
           const zelfde = (lijst: string[]) => lijst.length === doel.size && lijst.every((v) => doel.has(v.toLowerCase()));
           if (zelfde(naar.primair) || naar.indexen.some((i) => i.uniek && zelfde(i.kolommen.map((k) => k.naam)))) return null;
-          return `de verwezen velden in ${naarTabel} zijn geen primaire sleutel of unieke index`;
+          return t("relationNoUniqueTarget", { table: naarTabel });
         })();
         if (reden)
-          meld(`Relatie ${naam}`, "waarschuwing", `Access dwingt referentiële integriteit af, maar de werkkopie kan dat niet als FOREIGN KEY overnemen: ${reden}. De relatie is als niet-afgedwongen vastgelegd.`);
+          meld(t("part.relationship", { name: naam }), "waarschuwing", t("relationNotEnforced", { reason: reden }));
         else relatie.afdwingen = true;
       }
     }
   } catch (fout) {
-    meld("Relaties", "fout", `MSysRelationships niet gelezen; er zijn geen relaties overgenomen: ${melding(fout)}`);
+    meld(t("part.relationships"), "fout", t("relationshipsUnreadable", { error: melding(fout) }));
   }
 
   // ---------------------------------------------------------------- tabellen maken
@@ -350,7 +356,7 @@ export async function bouwWerkkopie(
         );
       }
       if (!delen.length) {
-        meld(`Tabel ${plan.naam}`, "waarschuwing", "De tabel heeft geen kolommen; er is een lege tabel met alleen een rij-id gemaakt.");
+        meld(t("part.table", { name: plan.naam }), "waarschuwing", t("noColumns"));
         delen.push(`"__leeg" INTEGER`);
       }
       db.run(`CREATE TABLE ${citeer(plan.naam)} (${delen.join(", ")})`);
@@ -393,19 +399,19 @@ export async function bouwWerkkopie(
             if (totaal === kandidaat.length && levend === plan.rijenBron) {
               houden = kandidaat;
               meld(
-                `Tabel ${plan.naam}`,
+                t("part.table", { name: plan.naam }),
                 "info",
-                `${kandidaat.length - levend} verwijderde of verouderde rijversie(s) in het bestand zijn overgeslagen; ${levend} levende rij(en) volgens de eigen paginascan.`,
+                t("deletedRowsSkipped", { count: kandidaat.length - levend, live: levend }),
               );
             } else
               meld(
-                `Tabel ${plan.naam}`,
+                t("part.table", { name: plan.naam }),
                 "waarschuwing",
-                `Het bestand bevat verwijderde of verplaatste rijen, maar de eigen paginascan sluit niet aan op mdb-reader (scan ${kandidaat.length}, mdb-reader ${totaal}, levend ${levend}, tabeldefinitie ${plan.rijenBron}). Alle door mdb-reader gelezen rijen zijn overgenomen, mogelijk met oude rijversies.`,
+                t("scanMismatch", { scan: kandidaat.length, reader: totaal, live: levend, definition: plan.rijenBron }),
               );
           }
         } catch (fout) {
-          meld(`Tabel ${plan.naam}`, "waarschuwing", `Eigen paginascan mislukt; verwijderde rijen zijn niet uitgefilterd: ${melding(fout)}`);
+          meld(t("part.table", { name: plan.naam }), "waarschuwing", t("scanFailed", { error: melding(fout) }));
         }
       }
       // Samengestelde velden kan mdb-reader 3.2 vaak helemaal niet lezen: die kolommen vallen af.
@@ -430,9 +436,9 @@ export async function bouwWerkkopie(
             weggelaten.add(k.naam);
             gevonden = true;
             meld(
-              `Tabel ${plan.naam}`,
+              t("part.table", { name: plan.naam }),
               "fout",
-              `Veld ‘${k.naam}’ is niet leesbaar (${melding(kolomFout)}); de waarden vanaf rij ${start + 1} zijn leeg gelaten, de overige velden zijn wel overgenomen.`,
+              t("fieldUnreadable", { field: k.naam, error: melding(kolomFout), row: start + 1 }),
             );
           }
         }
@@ -469,7 +475,7 @@ export async function bouwWerkkopie(
           if (!rijen.length && overgeslagen) {
             // Het hele blok is onleesbaar (bijv. een kapotte pagina in de usage map): stoppen.
             onleesbaar = voorOnleesbaar;
-            throw new Error(eersteLeesfout ?? "onleesbaar blok");
+            throw new Error(eersteLeesfout ?? t("unreadableBlock"));
           }
           return { rijen, klaar: rijen.length + overgeslagen < batch };
         }
@@ -503,9 +509,9 @@ export async function bouwWerkkopie(
             ({ rijen, klaar } = leesBlok(start));
           } catch (fout) {
             meld(
-              `Tabel ${plan.naam}`,
+              t("part.table", { name: plan.naam }),
               "fout",
-              `Rijen vanaf nummer ${start + 1} zijn niet leesbaar (${melding(fout)}); ${resultaat.rijenGeladen} rij(en) overgenomen.`,
+              t("rowsUnreadableFrom", { row: start + 1, error: melding(fout), count: resultaat.rijenGeladen }),
             );
             break;
           }
@@ -522,31 +528,31 @@ export async function bouwWerkkopie(
                 case "datetime": {
                   const ms = (v as Date).getTime();
                   if (!Number.isFinite(ms)) {
-                    probleem(k.naam, "ongeldige datum, leeg gelaten");
+                    probleem(k.naam, t("problem.invalidDate"));
                     return null;
                   }
                   return isoUitMs(ms);
                 }
                 case "datetimextended": {
                   const iso = isoUitUitgebreid(String(v));
-                  if (!iso) probleem(k.naam, "onbekende notatie van uitgebreide datum, als tekst bewaard");
+                  if (!iso) probleem(k.naam, t("problem.extendedDate"));
                   return iso ?? String(v);
                 }
                 case "currency":
                 case "numeric": {
                   const n = Number(v);
                   if (!Number.isFinite(n)) {
-                    probleem(k.naam, "getal niet leesbaar, als tekst bewaard");
+                    probleem(k.naam, t("problem.numberUnreadable"));
                     return String(v);
                   }
                   if (k.type === "numeric" && String(v).replace(/[^0-9]/g, "").replace(/^0+/, "").length > 15)
-                    probleem(k.naam, "Decimal met meer dan 15 cijfers, afgerond tot REAL");
+                    probleem(k.naam, t("problem.decimalRounded"));
                   return n;
                 }
                 case "bigint": {
                   const n = Number(v as bigint);
                   if (!Number.isSafeInteger(n)) {
-                    probleem(k.naam, "groot geheel getal buiten het veilige bereik, als tekst bewaard");
+                    probleem(k.naam, t("problem.bigint"));
                     return String(v);
                   }
                   return n;
@@ -554,7 +560,7 @@ export async function bouwWerkkopie(
                 case "complex": {
                   const lijst = Array.isArray(v) ? v : [];
                   if (lijst.some((b) => typeof (b as { name?: unknown })?.name !== "string")) {
-                    probleem(k.naam, "meervoudige waarden of onbekende samengestelde inhoud niet overgenomen");
+                    probleem(k.naam, t("problem.multiValue"));
                     return null;
                   }
                   bijlagen.push({ veld: k.naam, lijst });
@@ -563,7 +569,7 @@ export async function bouwWerkkopie(
               }
               if (v instanceof Uint8Array) return v;
               if (typeof v === "number" || typeof v === "string") return v;
-              probleem(k.naam, `onverwachte waarde (${typeof v}), als tekst bewaard`);
+              probleem(k.naam, t("problem.unexpected", { type: typeof v }));
               return String(v);
             });
             try {
@@ -588,24 +594,24 @@ export async function bouwWerkkopie(
         stmt.free();
       }
       if (zonderZwaar)
-        meld(`Tabel ${plan.naam}`, "fout", `${zonderZwaar} rij(en) overgenomen zonder memo- en binaire velden, omdat die niet leesbaar waren: ${eersteLeesfout}`);
+        meld(t("part.table", { name: plan.naam }), "fout", t("rowsWithoutHeavy", { count: zonderZwaar, error: eersteLeesfout }));
       // Na een kapotte pagina zijn ook de posities voorbij het tabeleinde onleesbaar; tel alleen wat er volgens de definitie kan ontbreken.
       const ontbrekend = Math.min(onleesbaar, Math.max(0, plan.rijenBron - resultaat.rijenGeladen - resultaat.overgeslagen));
       if (onleesbaar)
         meld(
-          `Tabel ${plan.naam}`,
+          t("part.table", { name: plan.naam }),
           "fout",
-          `${ontbrekend || onleesbaar} rij(en) waren niet leesbaar en zijn niet overgenomen: ${eersteLeesfout}`,
+          t("rowsUnreadable", { count: ontbrekend || onleesbaar, error: eersteLeesfout }),
         );
       for (const [sleutel, p] of problemen)
-        meld(`Tabel ${plan.naam}`, "waarschuwing", `Veld ‘${sleutel.split("\u0000")[0]}’: ${p.voorbeeld} (${p.aantal} rij(en)).`);
+        meld(t("part.table", { name: plan.naam }), "waarschuwing", t("fieldProblem", { field: sleutel.split("\u0000")[0], problem: p.voorbeeld, count: p.aantal }));
       if (resultaat.overgeslagen)
-        meld(`Tabel ${plan.naam}`, "fout", `${resultaat.overgeslagen} rij(en) niet overgenomen, bijvoorbeeld door een dubbele primaire sleutel: ${eersteFout}`);
+        meld(t("part.table", { name: plan.naam }), "fout", t("rowsSkipped", { count: resultaat.overgeslagen, error: eersteFout }));
       if (resultaat.rijenGeladen + resultaat.overgeslagen !== plan.rijenBron)
         meld(
-          `Tabel ${plan.naam}`,
+          t("part.table", { name: plan.naam }),
           "waarschuwing",
-          `Rijaantal wijkt af: tabeldefinitie ${plan.rijenBron}, gelezen ${resultaat.rijenGeladen + resultaat.overgeslagen}.`,
+          t("rowCountDiffers", { definition: plan.rijenBron, read: resultaat.rijenGeladen + resultaat.overgeslagen }),
         );
     }
     bijlageStmt.free();
@@ -621,7 +627,7 @@ export async function bouwWerkkopie(
         const kolommen = index.kolommen.map((k) => ({ naam: bekend.get(k.naam.toLowerCase()), oplopend: k.oplopend }));
         if (!kolommen.length || kolommen.some((k) => !k.naam)) {
           mislukt++;
-          meld(`Tabel ${plan.naam}`, "waarschuwing", `Index ‘${index.naam}’ verwijst naar onbekende kolommen en is niet aangemaakt.`);
+          meld(t("part.table", { name: plan.naam }), "waarschuwing", t("indexUnknownColumns", { name: index.naam }));
           continue;
         }
         const naam = indexNaam(plan.naam, index.naam);
@@ -636,13 +642,13 @@ export async function bouwWerkkopie(
             db.run(`CREATE INDEX ${citeer(naam)} ON ${citeer(plan.naam)} (${lijst})`);
             aangemaakt++;
             meld(
-              `Tabel ${plan.naam}`,
+              t("part.table", { name: plan.naam }),
               "waarschuwing",
-              `Index ‘${index.naam}’ staat in de tabeldefinitie als uniek, maar de gelezen gegevens bevatten dubbele waarden; als gewone index aangemaakt (${melding(fout)}).`,
+              t("indexNotUnique", { name: index.naam, error: melding(fout) }),
             );
           } else {
             mislukt++;
-            meld(`Tabel ${plan.naam}`, "waarschuwing", `Index ‘${index.naam}’ niet aangemaakt: ${melding(fout)}`);
+            meld(t("part.table", { name: plan.naam }), "waarschuwing", t("indexFailed", { name: index.naam, error: melding(fout) }));
           }
         }
       }
@@ -668,7 +674,7 @@ export async function bouwWerkkopie(
     const perTabel = new Map<string, number>();
     for (const [tabel] of schendingen) perTabel.set(String(tabel), (perTabel.get(String(tabel)) ?? 0) + 1);
     for (const [tabel, aantal] of perTabel)
-      meld(`Tabel ${tabel}`, "waarschuwing", `${aantal} rij(en) schenden een afgedwongen relatie (al zo in het origineel). Nieuwe wijzigingen worden wel gecontroleerd.`);
+      meld(t("part.table", { name: tabel }), "waarschuwing", t("relationViolations", { count: aantal }));
     db.run("PRAGMA foreign_keys = ON");
 
     // ------------------------------------------------------------ query’s
@@ -702,7 +708,7 @@ export async function bouwWerkkopie(
           const r = reconstrueerQuery(perQuery.get(q.id) ?? [], vlaggen.get(q.id) ?? 0);
           const soort = QUERYSOORT[r.soort];
           if (r.sql === null || soort === null) {
-            meld(`Query ${q.naam}`, "fout", `Niet overgenomen: ${r.beperkingen.join(" ") || "querysoort onbekend."}`);
+            meld(t("part.query", { name: q.naam }), "fout", t("queryNotImported", { reason: r.beperkingen.join(" ") || t("queryKindUnknown") }));
             continue;
           }
           qStmt.run([q.naam, r.sql, soort]);
@@ -710,7 +716,7 @@ export async function bouwWerkkopie(
         }
         qStmt.free();
       } catch (fout) {
-        meld("Query’s", "fout", `MSysQueries niet gelezen; er zijn geen query’s overgenomen: ${melding(fout)}`);
+        meld(t("part.queries"), "fout", t("queriesUnreadable", { error: melding(fout) }));
       }
     }
 
@@ -724,23 +730,23 @@ export async function bouwWerkkopie(
         modules++;
       }
       mStmt.free();
-      meld("VBA-modules", "info", `${modules} VBA-module(s) met broncode overgenomen in _openaec_modules. VBA wordt nooit automatisch uitgevoerd.`);
+      meld(t("part.vba"), "info", t("modulesImported", { count: modules }));
     }
 
     const formulieren = msys.filter((o) => o.type === -32768).length;
     const rapporten = msys.filter((o) => o.type === -32764).length;
     if (formulieren || rapporten)
       meld(
-        "Formulieren en rapporten",
+        t("part.formsReports"),
         "info",
-        `Het origineel bevat ${formulieren} formulier(en) en ${rapporten} rapport(en). Hun Access-ontwerp wordt niet overgenomen; nieuwe ontwerpen worden in _openaec_ontwerpen bewaard.`,
+        t("formsReports", { forms: formulieren, reports: rapporten }),
       );
 
     const rapport: OpbouwRapport = {
       bron: bronnaam,
       sha256: hash,
       grootte: bytes.byteLength,
-      formaat: formaat?.naam ?? "Onbekend",
+      formaat: formaat?.naam ?? t("unknown"),
       tijdstip: new Date().toISOString(),
       duurMs: Date.now() - begin,
       schemaversie: SCHEMAVERSIE,
@@ -780,6 +786,6 @@ export async function bouwWerkkopie(
       /* al gesloten */
     }
     if (fout instanceof WerkkopieFout) throw fout;
-    throw new WerkkopieFout("intern", `De werkkopie kon niet worden opgebouwd: ${melding(fout)}`);
+    throw new WerkkopieFout("intern", t("failed", { error: melding(fout) }));
   }
 }

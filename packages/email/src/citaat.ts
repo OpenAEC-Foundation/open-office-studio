@@ -1,3 +1,5 @@
+import i18next from "../../../src/i18n/config";
+import { formatDatumTijd } from "../../../src/i18n/opmaak";
 import type { Adres, Bericht } from "./contract";
 import { formatAdres, formatAdressen, uniekeAdressen } from "./adressen";
 import { escapeTekst, saneerHtml, tekstNaarHtml } from "./sanitizer";
@@ -58,13 +60,15 @@ export function formatDatum(datum?: string) {
   if (!datum) return "";
   const d = new Date(datum);
   if (Number.isNaN(d.getTime())) return datum;
-  return new Intl.DateTimeFormat("nl-NL", { dateStyle: "long", timeStyle: "short" }).format(d);
+  return formatDatumTijd(d, { dateStyle: "long", timeStyle: "short" });
 }
 
 function citaatKop(bericht: Bericht) {
-  const afzender = bericht.van[0] ? formatAdres(bericht.van[0]) : "(onbekend)";
+  const afzender = bericht.van[0] ? formatAdres(bericht.van[0]) : i18next.t("email:quote.unknownSender");
   const datum = formatDatum(bericht.datum);
-  return datum ? `Op ${datum} schreef ${afzender}:` : `${afzender} schreef:`;
+  return datum
+    ? i18next.t("email:quote.wroteOn", { date: datum, sender: afzender })
+    : i18next.t("email:quote.wrote", { sender: afzender });
 }
 
 /** Inhoud van het origineel als veilige HTML (voor citaat of doorsturen). */
@@ -89,12 +93,12 @@ export function bouwAntwoord(
   const bron = { accountId, map: bericht.map, uid: bericht.uid, modus };
   if (modus === "doorsturen") {
     const kop = [
-      "-------- Doorgestuurd bericht --------",
-      `Onderwerp: ${bericht.onderwerp}`,
-      `Datum: ${formatDatum(bericht.datum)}`,
-      `Van: ${formatAdressen(bericht.van)}`,
-      `Aan: ${formatAdressen(bericht.aan)}`,
-      ...(bericht.cc.length ? [`Cc: ${formatAdressen(bericht.cc)}`] : []),
+      `-------- ${i18next.t("email:quote.forwarded")} --------`,
+      i18next.t("email:quote.subject", { value: bericht.onderwerp }),
+      i18next.t("email:quote.date", { value: formatDatum(bericht.datum) }),
+      i18next.t("email:quote.from", { value: formatAdressen(bericht.van) }),
+      i18next.t("email:quote.to", { value: formatAdressen(bericht.aan) }),
+      ...(bericht.cc.length ? [i18next.t("email:quote.cc", { value: formatAdressen(bericht.cc) })] : []),
     ];
     return {
       onderwerp: onderwerpVoorDoorsturen(bericht.onderwerp),

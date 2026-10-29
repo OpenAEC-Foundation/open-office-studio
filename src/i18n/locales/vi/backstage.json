@@ -1,0 +1,471 @@
+{
+  "start": {
+    "backToWorkspace": "Quay lại không gian làm việc",
+    "workspace": "KHÔNG GIAN LÀM VIỆC",
+    "home": "Bắt đầu",
+    "saveTitle": "Lưu · Ctrl+S",
+    "saveAs": "Lưu dưới dạng",
+    "saveAsTitle": "Lưu dưới dạng · F12 hoặc Ctrl+Shift+S",
+    "print": "In",
+    "printTitle": "Xem trước khi in và in · Ctrl+P",
+    "info": "Thông tin",
+    "infoTitle": "Thuộc tính tài liệu, thống kê và kiểm tra tài liệu",
+    "sendAsAttachment": "Gửi dưới dạng tệp đính kèm",
+    "sendAsAttachmentTitle": "Đính kèm tài liệu hiện tại vào một email mới",
+    "email": "Email",
+    "emailUnread_other": "Email, {{count}} chưa đọc",
+    "newFile": "TỆP MỚI",
+    "databaseTitle": "Database Studio · Cơ sở dữ liệu Access dưới dạng bản sao làm việc có thể chỉnh sửa",
+    "databaseSubtitle": "Bản sao làm việc · chỉnh sửa, truy vấn, VBA",
+    "settingsTitle": "Cài đặt · Ctrl+,",
+    "shortcutsTitle": "Phím tắt · F1",
+    "tagline": "Văn phòng cục bộ của bạn",
+    "titleFile": "Tệp",
+    "titleWorkspace": "Không gian làm việc của bạn.",
+    "intro": "Viết, tính toán, trình bày và ghi lại ý tưởng.",
+    "addNotesBackup": "Thêm bản sao lưu ghi chú",
+    "openDatabase": "Mở cơ sở dữ liệu",
+    "openFile": "Mở tệp",
+    "openShortcut": "Ctrl O",
+    "newFileTitle": "Tệp mới",
+    "newFileHint": "Chọn công cụ và bắt đầu với một tệp trống",
+    "notesHeading": "Một nơi cho ý tưởng của bạn.",
+    "notesText": "Sổ ghi chép, phần và trang. Tự động lưu cục bộ.",
+    "openNotes": "Mở Ghi chú",
+    "emailText": "Email của riêng bạn qua IMAP và SMTP. Tệp đính kèm mở trực tiếp trong Văn bản, Bảng tính, Trình chiếu hoặc Cơ sở dữ liệu.",
+    "unread_other": "{{count}} chưa đọc",
+    "openEmail": "Mở Email",
+    "examplesTitle": "Khám phá những gì bạn có thể tạo",
+    "examplesHint": "Tệp mẫu",
+    "existingTitle": "Tệp hiện có",
+    "browse": "Duyệt máy tính này",
+    "browseNotes": "Thêm bản sao lưu ghi chú OpenAEC.",
+    "browseDatabase": "Mở cơ sở dữ liệu MDB hoặc ACCDB, hoặc bản sao làm việc SQLite.",
+    "browseDocuments": "Mở tài liệu, bảng tính hoặc bản trình chiếu.",
+    "formatNotes": "GHI CHÚ",
+    "filesStayLocal": "Tệp của bạn luôn nằm trên máy tính của bạn.",
+    "aboutVersion": "Giới thiệu phiên bản này",
+    "aboutText": "DOCX, XLSX và PPTX hoạt động trực tiếp. Khi đã thiết lập chương trình chuyển đổi, phiên bản máy tính còn có thể chuyển đổi ODF và các định dạng cũ hơn; định dạng trình bày có thể khác. Database Studio biến tệp MDB hoặc ACCDB thành bản sao làm việc SQLite có thể chỉnh sửa, gồm bảng, truy vấn, biểu mẫu, báo cáo và VBA; tệp gốc vẫn giữ nguyên. Ứng dụng riêng có thể cài đặt dưới tên Open Database Studio.",
+    "modules": {
+      "docx": {
+        "new": "Tài liệu trống",
+        "example": "Ghi chú thiết kế",
+        "exampleText": "Văn bản, kiểu và một bảng"
+      },
+      "xlsx": {
+        "new": "Bảng tính trống",
+        "example": "Tổng quan vật liệu",
+        "exampleText": "Vật liệu, công thức và tổng"
+      },
+      "pptx": {
+        "new": "Bản trình chiếu trống",
+        "example": "Tầm nhìn thiết kế",
+        "exampleText": "Trang chiếu, hình dạng và ghi chú"
+      }
+    }
+  },
+  "recent": {
+    "title": "Gần đây",
+    "hintDesktop": "Các tệp đã mở và lưu gần đây",
+    "hintBrowser": "Trình duyệt này chỉ nhớ tên; hãy chọn lại tệp",
+    "clear": "Xóa danh sách",
+    "clearTitle": "Xóa danh sách; các tệp đã ghim vẫn giữ lại",
+    "missing": "Không còn tìm thấy {{name}} trong {{folder}}. Xóa khỏi danh sách bằng ✕ hoặc mở qua Duyệt.",
+    "missingOriginalFolder": "Không còn tìm thấy {{name}} trong thư mục gốc. Xóa khỏi danh sách bằng ✕ hoặc mở qua Duyệt.",
+    "notFound": "Không tìm thấy",
+    "notFoundIn": "Không tìm thấy · {{location}}",
+    "openFrom": "{{folder}} · mở",
+    "chooseFile": "Chọn tệp",
+    "nameOnly": "Chỉ biết tên",
+    "pin": "Ghim {{name}}",
+    "unpin": "Bỏ ghim {{name}}",
+    "pinTitle": "Ghim lên đầu",
+    "unpinTitle": "Bỏ ghim",
+    "remove": "Xóa {{name}} khỏi danh sách",
+    "removeTitle": "Xóa khỏi danh sách (bản thân tệp vẫn được giữ)",
+    "today": "Hôm nay {{time}}",
+    "yesterday": "Hôm qua {{time}}",
+    "todayInline": "hôm nay {{time}}",
+    "yesterdayInline": "hôm qua {{time}}"
+  },
+  "recovery": {
+    "title": "Khôi phục tài liệu",
+    "explanation": "Lần trước Open Office Studio không được đóng đúng cách. Một bản sao khôi phục của các tài liệu này đã được lưu giữ. Khôi phục sẽ mở một tab mới chưa lưu; tệp gốc vẫn giữ nguyên.",
+    "copyFrom": "{{module}} · bản sao khôi phục từ {{date}}",
+    "restore": "Khôi phục",
+    "saveAs": "Lưu dưới dạng…",
+    "discard": "Loại bỏ",
+    "discardLabel": "Loại bỏ bản sao khôi phục của {{name}}",
+    "later": "Quyết định sau",
+    "laterTitle": "Các bản sao được giữ đến lần khởi động tiếp theo",
+    "restoredFrom": "Đã khôi phục từ bản sao khôi phục ngày {{date}}. Tệp gốc không bị thay đổi; hãy lưu tài liệu này để giữ lại.",
+    "restoreFailed": "Khôi phục {{name}} thất bại: {{error}}",
+    "copyFailed": "Tự động khôi phục không thể lưu bản sao: {{error}}"
+  },
+  "leave": {
+    "title": "Thay đổi chưa lưu",
+    "askSave": "Bạn có muốn lưu các thay đổi trong <strong>{{name}}</strong> trước khi đóng không?",
+    "unsaved": "<strong>{{name}}</strong> có những thay đổi chưa được lưu. Hãy lưu tệp trước nếu bạn muốn giữ chúng.",
+    "others_other": "Sau đó còn {{count}} tài liệu khác có thay đổi chưa lưu.",
+    "dontSave": "Không lưu",
+    "discard": "Hủy bỏ thay đổi"
+  },
+  "saveAs": {
+    "title": "Lưu dưới dạng",
+    "fileName": "Tên tệp",
+    "browserInfo": "Trong trình duyệt, ứng dụng tự tạo Markdown, CSV, HTML, văn bản và PDF, cùng PNG cho bảng tính và bản trình chiếu. Các định dạng có ghi “chỉ trong ứng dụng máy tính” cần phiên bản máy tính có runtime văn phòng.",
+    "runtimeSearching": "Đang tìm runtime văn phòng…",
+    "runtimeFound": "Runtime văn phòng: {{version}}",
+    "runtimeDetails": "({{source}}, {{profile}})",
+    "sourceEnvironment": "từ OPENAEC_CONVERSIE_PROGRAMMA",
+    "sourceSetting": "do bạn chọn",
+    "sourceAutomatic": "tự động phát hiện",
+    "profileSafe": "hồ sơ an toàn: tắt macro",
+    "profileOwn": "hồ sơ riêng",
+    "runtimeMissing": "Không tìm thấy runtime văn phòng (LibreOffice). Các định dạng cần runtime không khả dụng.",
+    "chooseConverter": "Chọn chương trình chuyển đổi",
+    "format": "Định dạng",
+    "groups": {
+      "own": "Định dạng gốc",
+      "openDocument": "OpenDocument",
+      "legacyOffice": "Định dạng Office cũ",
+      "templates": "Mẫu",
+      "macro": "Có macro",
+      "webText": "Web và văn bản",
+      "pdfImage": "PDF và hình ảnh"
+    },
+    "routes": {
+      "inApp": "trong ứng dụng",
+      "runtime": "qua runtime văn phòng",
+      "print": "qua In"
+    },
+    "runtimeMissingShort": "thiếu runtime",
+    "desktopOnly": "chỉ trong ứng dụng máy tính",
+    "separator": "Dấu phân cách",
+    "separatorSemicolon": "Dấu chấm phẩy ; (Việt Nam)",
+    "separatorComma": "Dấu phẩy ,",
+    "separatorTab": "Tab",
+    "separatorPipe": "Thanh dọc |",
+    "encoding": "Mã hóa",
+    "encodingUtf8BomExcel": "UTF-8 có BOM (Excel)",
+    "encodingUtf8BomNotepad": "UTF-8 có BOM (Notepad, Excel)",
+    "csvInfo": "Chỉ trang tính đã chọn, với giá trị thay cho công thức. Văn bản bắt đầu bằng =, +, - hoặc @ sẽ được thêm dấu nháy đơn để chương trình bảng tính không thực thi nó như công thức.",
+    "sheet": "Trang tính",
+    "activeSheet": "{{name}} (đang hoạt động)",
+    "protect": "Bảo vệ bằng mật khẩu khi mở",
+    "password": "Mật khẩu",
+    "repeatPassword": "Nhập lại mật khẩu",
+    "encryptionInfo": "Mã hóa theo ECMA-376 (AES-256), có thể mở trong Word, Excel, PowerPoint và LibreOffice. Mật khẩu không được lưu; nếu bạn quên, tệp sẽ không thể mở được nữa.",
+    "noEncryptionInfo": "Đây không phải là bảo vệ chống ghi hay bảo vệ trang tính: nếu không đánh dấu, tệp được lưu không mã hóa.",
+    "passwordMissing": "Hãy chọn mật khẩu.",
+    "passwordMismatch": "Mật khẩu không khớp.",
+    "passwordTooLong": "Tối đa {{max}} ký tự.",
+    "slide": "Trang chiếu",
+    "slideNumber": "Trang chiếu {{number}}",
+    "currentSlide": "Trang chiếu {{number}} (hiện tại)",
+    "pdfVariant": "Biến thể PDF",
+    "pdfPlain": "PDF thông thường",
+    "pdfA2b": "PDF/A-2b (lưu trữ)",
+    "slides": "Trang chiếu",
+    "pages": "Trang",
+    "rangePlaceholder": "tất cả, hoặc vd. 1-3,5",
+    "bookmarks": "Đề mục làm dấu trang",
+    "printRoute": "Khi không có runtime văn phòng, PDF được tạo qua In: trong hộp thoại in, chọn máy in <strong>Lưu dưới dạng PDF</strong> (Windows: “Microsoft Print to PDF”). Bố cục theo đúng hiển thị trong trình soạn thảo.",
+    "untitled": "Không tên",
+    "copyInfo": "Đây là bản sao ở định dạng khác. Tài liệu vẫn được đánh dấu là đã thay đổi cho đến khi bạn lưu nó dưới dạng .{{ext}}.",
+    "print": "In…",
+    "formats": {
+      "docx": {
+        "docx": {
+          "name": "Tài liệu Word",
+          "keeps": "có thể chỉnh sửa"
+        },
+        "odt": {
+          "name": "Văn bản OpenDocument",
+          "keeps": "có thể chỉnh sửa; định dạng có thể khác"
+        },
+        "fodt": {
+          "name": "Văn bản OpenDocument (XML phẳng)",
+          "keeps": "có thể chỉnh sửa; định dạng có thể khác"
+        },
+        "doc": {
+          "name": "Tài liệu Word 97–2003",
+          "keeps": "có thể chỉnh sửa; định dạng có thể khác"
+        },
+        "dotx": {
+          "name": "Mẫu Word",
+          "keeps": "có thể chỉnh sửa; định dạng có thể khác"
+        },
+        "dot": {
+          "name": "Mẫu Word 97–2003",
+          "keeps": "có thể chỉnh sửa; định dạng có thể khác"
+        },
+        "ott": {
+          "name": "Mẫu văn bản OpenDocument",
+          "keeps": "có thể chỉnh sửa; định dạng có thể khác"
+        },
+        "docm": {
+          "name": "Tài liệu Word có macro",
+          "keeps": "chỉ cho tệp macro đã mở: dự án VBA được giữ nguyên, macro không được chạy"
+        },
+        "rtf": {
+          "name": "Rich Text Format",
+          "keeps": "có thể chỉnh sửa; định dạng có thể khác"
+        },
+        "txt": {
+          "name": "Văn bản thuần (UTF-8)",
+          "keeps": "chỉ văn bản; định dạng, bảng và hình ảnh bị mất"
+        },
+        "html": {
+          "name": "Trang web (HTML)",
+          "keeps": "định dạng có thể khác; hình ảnh được nhúng"
+        },
+        "xhtml": {
+          "name": "Trang web XHTML",
+          "keeps": "định dạng có thể khác"
+        },
+        "epub": {
+          "name": "Sách điện tử EPUB",
+          "keeps": "chỉ đọc; bố cục trang bị mất"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "văn bản và cấu trúc; bố cục trang, hình ảnh và bản sửa đổi bị mất"
+        },
+        "pdf": {
+          "name": "Tài liệu PDF",
+          "keeps": "hiển thị như trong bản xem trước khi in; có thể tìm kiếm văn bản"
+        },
+        "png": {
+          "name": "Ảnh PNG (trang đầu)",
+          "keeps": "chỉ để xem; chỉ trang đầu tiên"
+        }
+      },
+      "xlsx": {
+        "xlsx": {
+          "name": "Sổ làm việc Excel",
+          "keeps": "có thể chỉnh sửa"
+        },
+        "ods": {
+          "name": "Bảng tính OpenDocument",
+          "keeps": "có thể chỉnh sửa; định dạng có thể khác"
+        },
+        "fods": {
+          "name": "Bảng tính OpenDocument (XML phẳng)",
+          "keeps": "có thể chỉnh sửa; định dạng có thể khác"
+        },
+        "xls": {
+          "name": "Sổ làm việc Excel 97–2003",
+          "keeps": "có thể chỉnh sửa; định dạng có thể khác"
+        },
+        "xltx": {
+          "name": "Mẫu Excel",
+          "keeps": "có thể chỉnh sửa; định dạng có thể khác"
+        },
+        "xlt": {
+          "name": "Mẫu Excel 97–2003",
+          "keeps": "có thể chỉnh sửa; định dạng có thể khác"
+        },
+        "ots": {
+          "name": "Mẫu bảng tính OpenDocument",
+          "keeps": "có thể chỉnh sửa; định dạng có thể khác"
+        },
+        "xlsm": {
+          "name": "Sổ làm việc Excel có macro",
+          "keeps": "chỉ cho tệp macro đã mở: dự án VBA được giữ nguyên, macro không được chạy"
+        },
+        "csv": {
+          "name": "CSV (giá trị phân tách)",
+          "keeps": "chỉ một trang tính; giá trị không có công thức và định dạng"
+        },
+        "tsv": {
+          "name": "Văn bản phân tách bằng tab (TSV)",
+          "keeps": "chỉ một trang tính; giá trị không có công thức và định dạng"
+        },
+        "html": {
+          "name": "Trang web (HTML)",
+          "keeps": "chỉ để xem; công thức bị mất"
+        },
+        "dif": {
+          "name": "Data Interchange Format (DIF)",
+          "keeps": "chỉ trang tính đầu tiên; giá trị không có công thức và định dạng"
+        },
+        "slk": {
+          "name": "SYLK",
+          "keeps": "chỉ trang tính đầu tiên; công thức được giữ, phần lớn định dạng thì không"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "chỉ hiển thị giá trị; công thức và định dạng bị mất"
+        },
+        "pdf": {
+          "name": "Tài liệu PDF",
+          "keeps": "hiển thị như trong bản xem trước khi in; có thể tìm kiếm văn bản"
+        },
+        "png": {
+          "name": "Ảnh PNG (trang tính)",
+          "keeps": "chỉ để xem; vùng đã dùng của một trang tính"
+        }
+      },
+      "pptx": {
+        "pptx": {
+          "name": "Bản trình chiếu PowerPoint",
+          "keeps": "có thể chỉnh sửa"
+        },
+        "ppsx": {
+          "name": "Trình chiếu PowerPoint",
+          "keeps": "có thể chỉnh sửa; mở dưới dạng trình chiếu; định dạng có thể khác"
+        },
+        "odp": {
+          "name": "Bản trình chiếu OpenDocument",
+          "keeps": "có thể chỉnh sửa; định dạng có thể khác"
+        },
+        "fodp": {
+          "name": "Bản trình chiếu OpenDocument (XML phẳng)",
+          "keeps": "có thể chỉnh sửa; định dạng có thể khác"
+        },
+        "ppt": {
+          "name": "Bản trình chiếu PowerPoint 97–2003",
+          "keeps": "có thể chỉnh sửa; định dạng có thể khác"
+        },
+        "pps": {
+          "name": "Trình chiếu PowerPoint 97–2003",
+          "keeps": "có thể chỉnh sửa; định dạng có thể khác"
+        },
+        "potx": {
+          "name": "Mẫu PowerPoint",
+          "keeps": "có thể chỉnh sửa; định dạng có thể khác"
+        },
+        "pot": {
+          "name": "Mẫu PowerPoint 97–2003",
+          "keeps": "có thể chỉnh sửa; định dạng có thể khác"
+        },
+        "otp": {
+          "name": "Mẫu bản trình chiếu OpenDocument",
+          "keeps": "có thể chỉnh sửa; định dạng có thể khác"
+        },
+        "pptm": {
+          "name": "Bản trình chiếu PowerPoint có macro",
+          "keeps": "chỉ cho tệp macro đã mở: dự án VBA được giữ nguyên, macro không được chạy"
+        },
+        "html": {
+          "name": "Trang web (HTML)",
+          "keeps": "chỉ văn bản theo từng trang chiếu; bố cục và hình ảnh bị mất"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "chỉ văn bản theo từng trang chiếu; bố cục và hình ảnh bị mất"
+        },
+        "pdf": {
+          "name": "Tài liệu PDF",
+          "keeps": "hiển thị như trong bản xem trước khi in; có thể tìm kiếm văn bản"
+        },
+        "png": {
+          "name": "Ảnh PNG (trang chiếu hiện tại)",
+          "keeps": "chỉ để xem; một trang chiếu"
+        }
+      }
+    }
+  },
+  "saveResult": {
+    "saved": "Đã lưu: {{path}}",
+    "exported": "Đã xuất: {{path}}. Hãy lưu cả tệp có thể chỉnh sửa của bạn để giữ các thay đổi.",
+    "cancelled": "Đã hủy lưu.",
+    "chooseLocation": "Chọn tên và vị trí để lưu.",
+    "download": "Đã yêu cầu tải xuống. Kiểm tra tệp trong thư mục tải xuống của bạn.",
+    "tooLarge": "Tệp trống hoặc lớn hơn 100 MB.",
+    "needsDesktop": "Định dạng này cần phiên bản máy tính có runtime văn phòng (LibreOffice)."
+  },
+  "printPreview": {
+    "title": "Xem trước khi in – {{title}}",
+    "notReady": "Bạn có thể in khi tài liệu đã mở hoàn toàn.",
+    "preparingPages": "Đang chuẩn bị trang…",
+    "preparingPrint": "Đang chuẩn bị bản in…",
+    "preparingPrintProgress": "Đang chuẩn bị bản in… {{done}} / {{total}}",
+    "printHint": "Trong hộp thoại in, chọn máy in, in hai mặt và nếu muốn thì chọn ‘Lưu dưới dạng PDF’.",
+    "makingPdf": "Đang tạo PDF…",
+    "makingPdfProgress": "Đang tạo PDF… {{done}} / {{total}}",
+    "pdfSaved": "Đã lưu PDF: {{path}}",
+    "pdfDownloading": "Đang tải xuống PDF {{name}}.",
+    "layoutSaved": "Thiết lập trang đã được lưu trong sổ làm việc. Hãy lưu tài liệu để giữ lại.",
+    "saveAsPdf": "Lưu dưới dạng PDF",
+    "print": "In",
+    "keyboardHelp": "Page Up và Page Down để chuyển trang; Ctrl+P để in.",
+    "settings": "Cài đặt in",
+    "pages": "Trang",
+    "rangePlaceholder": "tất cả, hoặc vd. 1-3, 5",
+    "copies": "Số bản",
+    "collate": "Đối chiếu (1, 2, 3 – 1, 2, 3)",
+    "systemDialogHint": "Máy in, in hai mặt và màu sắc được chọn sau đó trong hộp thoại in của hệ thống.",
+    "printAs": "In dưới dạng",
+    "slides": "Trang chiếu",
+    "handouts": "Tài liệu phát tay",
+    "notesPages": "Trang ghi chú",
+    "slidesPerPage": "Số trang chiếu mỗi trang",
+    "withLines": "{{number}} (có dòng kẻ)",
+    "paper": "Giấy",
+    "slideSize": "Kích thước trang chiếu",
+    "frameSlides": "Khung quanh trang chiếu",
+    "report": "Báo cáo",
+    "saveLayout": "Lưu thiết lập trang trong sổ làm việc",
+    "pdf": "PDF",
+    "imageQuality": "Chất lượng hình ảnh",
+    "qualitySmall": "Tệp nhỏ (150 dpi)",
+    "qualityStandard": "Tiêu chuẩn (200 dpi)",
+    "qualityHigh": "Cao, không mất dữ liệu (300 dpi)",
+    "pdfHint": "Văn bản vẫn có thể chọn và tìm kiếm; PDF giống hệt bản xem trước này.",
+    "toolbar": "Duyệt và thu phóng",
+    "previousPage": "Trang trước",
+    "nextPage": "Trang sau",
+    "pageOf": "Trang <input/> / {{total}}",
+    "pageNumber": "Số trang",
+    "zoomOut": "Thu nhỏ",
+    "zoom": "Thu phóng",
+    "zoomIn": "Phóng to",
+    "wholePage": "Toàn trang",
+    "pageWidth": "Chiều rộng trang",
+    "preview": "Xem trước trang",
+    "pageImage": "Xem trước trang {{number}}",
+    "drawingPage": "Đang vẽ trang…",
+    "orientation": "Hướng",
+    "portrait": "Dọc",
+    "landscape": "Ngang",
+    "activeSheet": "Trang tính hiện hoạt",
+    "wholeWorkbook": "Toàn bộ sổ làm việc",
+    "selection": "Vùng chọn ({{range}})",
+    "selectionNone": "Vùng chọn (chưa chọn gì)",
+    "ignorePrintArea": "Bỏ qua vùng in",
+    "pageSetup": "Thiết lập trang",
+    "sheet": "Trang tính",
+    "scale": "Tỷ lệ",
+    "percentage": "Phần trăm",
+    "fitPage": "Vừa một trang",
+    "fitWidth": "Vừa chiều rộng trang",
+    "pagesWide": "Số trang chiều rộng",
+    "pagesTall": "chiều cao (0 = tự động)",
+    "marginTop": "Trên (cm)",
+    "marginBottom": "Dưới",
+    "marginLeft": "Trái",
+    "marginRight": "Phải",
+    "printArea": "Vùng in",
+    "printAreaPlaceholder": "vùng đã dùng, hoặc vd. A1:H40",
+    "repeatRows": "Hàng lặp lại",
+    "repeatRowsPlaceholder": "vd. 1:2",
+    "repeatColumns": "Cột lặp lại",
+    "repeatColumnsPlaceholder": "vd. A:B",
+    "gridlines": "In đường lưới",
+    "headings": "In tiêu đề hàng và cột",
+    "centerHorizontally": "Căn giữa theo chiều ngang",
+    "pageOrder": "Thứ tự trang",
+    "downThenOver": "Xuống dưới, rồi sang ngang",
+    "overThenDown": "Sang ngang, rồi xuống dưới",
+    "header": "Đầu trang",
+    "footer": "Chân trang",
+    "sectionLeft": "trái",
+    "sectionCenter": "giữa",
+    "sectionRight": "phải",
+    "sectionLabel": "{{area}} {{section}}",
+    "fields": "Trường: {{fields}}.",
+    "pageBreakPreview": "Xem trước ngắt trang…"
+  }
+}

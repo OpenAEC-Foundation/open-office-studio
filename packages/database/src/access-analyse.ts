@@ -1,3 +1,4 @@
+import i18next from "i18next";
 import type MDBReader from "mdb-reader";
 import {
   leesFormaat,
@@ -23,7 +24,7 @@ import {
   type VbaVerwijzing,
 } from "./ovba.ts";
 import {
-  VERSLEUTELD_MELDING,
+  versleuteldMelding,
   type Compatibiliteitsrapport,
   type DatabaseObject,
   type Rapportregel,
@@ -36,9 +37,20 @@ const inventaris: Record<number, "Formulier" | "Rapport" | "Macro"> = {
   [-32764]: "Rapport",
   [-32766]: "Macro",
 };
+const INVENTARISSLEUTEL = { Formulier: "form", Rapport: "report", Macro: "macro" } as const;
 const MODULE = -32761;
-const LEZER =
-  "mdb-reader 3.2.0 met eigen MSysQueries-, tabeldefinitie-, CFB- en MS-OVBA-lezer";
+const lezer = () => t("reader");
+/** Vertaling binnen `database:analysis` (in de taal van het moment). */
+function t(sleutel: string, opties?: Record<string, unknown>): string {
+  return i18next.t(`database:analysis.${sleutel}`, opties);
+}
+const UITVOERING = () => t("executionNote");
+const REFSOORT: Record<VbaVerwijzing["soort"], string> = {
+  "Geregistreerde bibliotheek": "registered",
+  "ActiveX-besturingselement": "activex",
+  Projectverwijzing: "project",
+  Onbekend: "unknown",
+};
 
 function melding(fout: unknown) {
   return fout instanceof Error ? fout.message : String(fout);
@@ -105,7 +117,7 @@ function vbaUitObjecten(rijen: Rij[]): VbaStromen {
     [0xd0, 0xcf, 0x11, 0xe0].every((b, i) => (r.Data as Uint8Array)[i] === b),
   );
   if (start < 0)
-    throw new Error("MSysAccessObjects bevat geen compound-bestand.");
+    throw new Error(t("noCompoundFile"));
   const delen = gesorteerd.slice(start).map((r) => r.Data as Uint8Array);
   const geheel = new Uint8Array(delen.reduce((som, d) => som + d.length, 0));
   delen.reduce((positie, d) => (geheel.set(d, positie), positie + d.length), 0);
@@ -135,13 +147,13 @@ export async function analyseerDatabase(
   ) => regels.push({ onderdeel, status, aantal, toelichting });
 
   let formaat: RuwFormaat | null = null;
-  let formaatNaam = "Onbekend";
+  let formaatNaam = t("unknown");
   try {
     formaat = leesFormaat(bytes);
     formaatNaam =
-      formaat.naam + (formaat.sleutel ? " · RC4-paginaversleuteling" : "");
+      formaat.naam + (formaat.sleutel ? ` · ${t("rc4PageEncryption")}` : "");
   } catch (fout) {
-    regel("Bestandskop", "gedeeltelijk", null, melding(fout));
+    regel(t("part.fileHeader"), "gedeeltelijk", null, melding(fout));
   }
   const msysObjecten = (db.getTable("MSysObjects").getData() as Rij[]).map(
     (r) => ({
@@ -160,7 +172,7 @@ export async function analyseerDatabase(
   try {
     if (formaat) rijtelling = telRijenRuw(bytes, formaat);
   } catch (fout) {
-    regel("Onafhankelijke rijtelling", "niet gelezen", null, melding(fout));
+    regel(t("part.rowCount"), "niet gelezen", null, melding(fout));
   }
   const tabelProblemen: string[] = [];
   const telAfwijkingen: string[] = [];
@@ -181,7 +193,7 @@ export async function analyseerDatabase(
       tabel.getColumns();
     } catch (fout) {
       tabelProblemen.push(naam);
-      object.beperkingen!.push(`Kolommen niet leesbaar: ${melding(fout)}`);
+      object.beperkingen!.push(t("columnsUnreadable", { error: melding(fout) }));
     }
     const pagina = (perNaam.get(naam)?.id ?? 0) & 0xffffff;
     if (!formaat || !pagina) continue;
@@ -190,7 +202,7 @@ export async function analyseerDatabase(
       object.indexen = definitie.indexen.map((i) => ({
         naam: i.naam,
         kolommen: i.kolommen.map(
-          (k) => k.naam + (k.oplopend ? "" : " (aflopend)"),
+          (k) => (k.oplopend ? k.naam : t("descending", { column: k.naam })),
         ),
         primair: i.primair,
         uniek: i.uniek,
@@ -201,16 +213,16 @@ export async function analyseerDatabase(
       if (rijtelling && rijen !== null && ruw !== rijen) {
         telAfwijkingen.push(naam);
         object.beperkingen!.push(
-          `Rijaantal wijkt af: tabeldefinitie ${rijen}, eigen paginascan ${ruw}.`,
+          t("rowCountDiffers", { definition: rijen, scan: ruw }),
         );
       }
     } catch (fout) {
       indexFouten++;
-      object.beperkingen!.push(`Indexen niet gelezen: ${melding(fout)}`);
+      object.beperkingen!.push(t("indexesUnreadable", { error: melding(fout) }));
     }
   }
   regel(
-    "Tabellen",
+    t("part.tables"),
     tabelProblemen.length
       ? "gedeeltelijk"
       : tabelnamen.length
@@ -218,25 +230,25 @@ export async function analyseerDatabase(
         : "niet aanwezig",
     tabelnamen.length,
     tabelProblemen.length
-      ? `Kolommen niet leesbaar door niet-ondersteunde veldtypen in: ${tabelProblemen.join(", ")}.`
-      : "Gebruikerstabellen, kolomnamen, typen en rijaantallen via mdb-reader; gegevens per pagina van 200 rijen.",
+      ? t("tablesUnreadable", { tables: tabelProblemen.join(", ") })
+      : t("tablesRead"),
   );
   if (rijtelling)
     regel(
-      "Rijaantallen (onafhankelijke controle)",
+      t("part.rowCounts"),
       telAfwijkingen.length ? "gedeeltelijk" : "gelezen",
       tabelnamen.length - telAfwijkingen.length,
       telAfwijkingen.length
-        ? `Eigen paginascan wijkt af bij: ${telAfwijkingen.join(", ")}. Zie de tabelbeperkingen.`
-        : "De eigen scan van datapagina’s komt voor alle tabellen overeen met de tabeldefinitie.",
+        ? t("rowCountsDiffer", { tables: telAfwijkingen.join(", ") })
+        : t("rowCountsMatch"),
     );
   regel(
-    "Indexen en primaire sleutels",
+    t("part.indexes"),
     indexFouten ? "gedeeltelijk" : indexen ? "gelezen" : "niet aanwezig",
     indexen,
     indexFouten
-      ? `Bij ${indexFouten} tabel(len) kon de tabeldefinitie niet ruw worden gelezen.`
-      : "Uit de tabeldefinitiepagina’s gelezen met een eigen lezer (namen, kolommen, primair, uniek, relatie-index).",
+      ? t("indexesFailed", { count: indexFouten })
+      : t("indexesRead"),
   );
 
   const gekoppeld = msysObjecten.filter((o) => o.type === 4 || o.type === 6);
@@ -246,25 +258,21 @@ export async function analyseerDatabase(
       naam: o.naam,
       soort: "Gekoppelde tabel",
       eigenschappen: [
-        ["Soort", o.type === 4 ? "ODBC-koppeling" : "Gekoppelde Access-tabel"],
+        [t("property.kind"), o.type === 4 ? t("odbcLink") : t("linkedAccessTable")],
       ],
-      beperkingen: [
-        "Alleen inventaris. De externe bron wordt niet geopend; de verbindingsreeks wordt niet getoond.",
-      ],
+      beperkingen: [t("linkedInventoryOnly")],
     });
   regel(
-    "Gekoppelde tabellen",
+    t("part.linkedTables"),
     gekoppeld.length ? "niet gelezen" : "niet aanwezig",
     gekoppeld.length,
-    gekoppeld.length
-      ? "Alleen namen geïnventariseerd; externe bronnen worden niet geopend."
-      : "Geen gekoppelde tabellen in MSysObjects.",
+    gekoppeld.length ? t("linkedNamesOnly") : t("linkedNone"),
   );
 
   try {
     const rijen = systeemtabel(db, "MSysRelationships");
     if (!rijen)
-      regel("Relaties", "niet aanwezig", 0, "MSysRelationships ontbreekt.");
+      regel(t("part.relationships"), "niet aanwezig", 0, t("relationshipsMissing"));
     else {
       const groepen = new Map<string, Rij[]>();
       for (const rij of rijen) {
@@ -290,17 +298,17 @@ export async function analyseerDatabase(
           naam,
           soort: "Relatie",
           eigenschappen: [
-            ["Van (refererend)", van],
-            ["Naar (primair)", naar],
-            ["Soort", vlag & 0x1 ? "Eén-op-één" : "Eén-op-veel"],
+            [t("property.from"), van],
+            [t("property.to"), naar],
+            [t("property.kind"), vlag & 0x1 ? t("oneToOne") : t("oneToMany")],
             [
-              "Referentiële integriteit",
-              vlag & 0x2 ? "Niet afgedwongen" : "Afgedwongen",
+              t("property.integrity"),
+              vlag & 0x2 ? t("notEnforced") : t("enforced"),
             ],
-            ["Trapsgewijs bijwerken", vlag & 0x100 ? "Ja" : "Nee"],
-            ["Trapsgewijs verwijderen", vlag & 0x1000 ? "Ja" : "Nee"],
+            [t("property.cascadeUpdate"), vlag & 0x100 ? t("yes") : t("no")],
+            [t("property.cascadeDelete"), vlag & 0x1000 ? t("yes") : t("no")],
             [
-              "Standaardjoin",
+              t("property.defaultJoin"),
               vlag & 0x1000000
                 ? "LEFT JOIN"
                 : vlag & 0x2000000
@@ -312,25 +320,25 @@ export async function analyseerDatabase(
       }
       const gebruiker = groepen.size - systeem;
       regel(
-        "Relaties",
+        t("part.relationships"),
         gebruiker ? "gelezen" : "niet aanwezig",
         gebruiker,
-        (gebruiker
-          ? "Uit MSysRelationships: tabellen, kolommen, integriteit en trapsgewijze acties."
-          : "Geen gebruikersrelaties in MSysRelationships.") +
-          (systeem
-            ? ` ${systeem} interne Access-relatie(s) tussen systeemtabellen zijn niet in de objectbrowser opgenomen.`
-            : ""),
+        [
+          gebruiker ? t("relationshipsRead") : t("relationshipsNone"),
+          systeem ? t("systemRelationships", { count: systeem }) : "",
+        ]
+          .filter(Boolean)
+          .join(" "),
       );
     }
   } catch (fout) {
-    regel("Relaties", "niet gelezen", null, melding(fout));
+    regel(t("part.relationships"), "niet gelezen", null, melding(fout));
   }
 
   const queryObjecten = msysObjecten.filter((o) => o.type === 5);
   try {
     const rijen = queryObjecten.length ? systeemtabel(db, "MSysQueries") : [];
-    if (rijen === null) throw new Error("MSysQueries ontbreekt.");
+    if (rijen === null) throw new Error(t("queriesMissing"));
     const perQuery = new Map<number, QueryRij[]>();
     for (const rij of rijen) {
       const id = getal(rij.ObjectId) ?? 0;
@@ -359,21 +367,19 @@ export async function analyseerDatabase(
         soort: "Query",
         bron: resultaat.sql ?? undefined,
         eigenschappen: [
-          ["Querysoort", resultaat.soort],
+          [
+            t("property.queryKind"),
+            resultaat.soort === "ONBEKEND" ? t("queryKindUnknown") : resultaat.soort,
+          ],
           ...(query.naam.startsWith("~")
-            ? ([
-                [
-                  "Verborgen",
-                  "Ja, systeemquery voor een formulier, rapport of besturingselement",
-                ],
-              ] as [string, string][])
+            ? ([[t("property.hidden"), t("hiddenSystemQuery")]] as [string, string][])
             : []),
         ],
         beperkingen: resultaat.beperkingen,
       });
     }
     regel(
-      "Opgeslagen query’s",
+      t("part.queries"),
       !queryObjecten.length
         ? "niet aanwezig"
         : mislukt.length
@@ -381,12 +387,18 @@ export async function analyseerDatabase(
           : "gelezen",
       queryObjecten.length,
       !queryObjecten.length
-        ? "Geen query’s in MSysObjects."
-        : `SQL uit MSysQueries gereconstrueerd voor ${queryObjecten.length - mislukt.length} van ${queryObjecten.length}.${mislukt.length ? ` Niet gereconstrueerd: ${mislukt.join(", ")}.` : ""} Query’s worden niet uitgevoerd.`,
+        ? t("queriesNone")
+        : [
+            t("queriesReconstructed", { done: queryObjecten.length - mislukt.length, total: queryObjecten.length }),
+            mislukt.length ? t("queriesFailed", { list: mislukt.join(", ") }) : "",
+            t("queriesNotRun"),
+          ]
+            .filter(Boolean)
+            .join(" "),
     );
   } catch (fout) {
     regel(
-      "Opgeslagen query’s",
+      t("part.queries"),
       "niet gelezen",
       queryObjecten.length,
       melding(fout),
@@ -400,22 +412,14 @@ export async function analyseerDatabase(
         id: `${soort}:${o.naam}`,
         naam: o.naam,
         soort,
-        beperkingen: [
-          `Alleen inventaris (naam en soort uit MSysObjects). ${soort === "Macro" ? "Macro’s worden niet weergegeven of uitgevoerd." : `${soort}en worden niet weergegeven of uitgevoerd.`}`,
-        ],
+        beperkingen: [t(`inventoryOnly.${INVENTARISSLEUTEL[soort]}`)],
       });
-    const meervoud = {
-      Formulier: "Formulieren",
-      Rapport: "Rapporten",
-      Macro: "Macro’s",
-    }[soort];
+    const meervoud = i18next.t(`database:objects.plural.${INVENTARISSLEUTEL[soort]}`);
     regel(
       meervoud,
       lijst.length ? "niet gelezen" : "niet aanwezig",
       lijst.length,
-      lijst.length
-        ? "Alleen naam en soort geïnventariseerd; ontwerp en gedrag worden niet weergegeven of uitgevoerd."
-        : "Niet aanwezig volgens MSysObjects.",
+      lijst.length ? t("inventoryNamesOnly") : t("inventoryNone"),
     );
   }
 
@@ -440,11 +444,9 @@ export async function analyseerDatabase(
           overgeslagen: () => overgeslagen++,
         });
         ruwOvergeslagen = overgeslagen;
-        ruweRoute =
-          `${naam} is met de eigen rijlezer gelezen omdat mdb-reader faalde (${melding(oorzaak)})` +
-          (overgeslagen
-            ? `; ${overgeslagen} onleesbare rij(en) overgeslagen. `
-            : ". ");
+        ruweRoute = overgeslagen
+          ? t("rawRouteSkipped", { table: naam, error: melding(oorzaak), count: overgeslagen })
+          : t("rawRoute", { table: naam, error: melding(oorzaak) });
         return rijen;
       }
     };
@@ -457,24 +459,24 @@ export async function analyseerDatabase(
     );
     if (!opslag || !dir) {
       const reden = namen.includes("MSysModules2")
-        ? "Access 97-moduleopslag (MSysModules2) wordt niet gedecodeerd."
+        ? t("access97Modules")
         : ruwOvergeslagen
-          ? "Geen VBA-project gevonden in de leesbare rijen; het kan in de overgeslagen rijen staan."
-          : "Geen VBA-projectopslag gevonden.";
+          ? t("noProjectInReadableRows")
+          : t("noProjectStorage");
       regel(
-        "VBA-modules",
+        t("part.vba"),
         moduleObjecten.length || ruwOvergeslagen
           ? "niet gelezen"
           : "niet aanwezig",
         moduleObjecten.length,
-        `${ruweRoute}${reden} MSysObjects vermeldt ${moduleObjecten.length} module(s).`,
+        [ruweRoute, reden, t("modulesListed", { count: moduleObjecten.length })].filter(Boolean).join(" "),
       );
       for (const o of moduleObjecten)
         objecten.push({
           id: `vba:${o.naam}`,
           naam: o.naam,
           soort: "VBA",
-          beperkingen: [`Broncode niet teruggewonnen. ${reden}`],
+          beperkingen: [t("sourceNotRecoveredReason", { reason: reden })],
         });
     } else {
       const basis = dir[0].slice(0, -"vba/dir".length);
@@ -490,8 +492,8 @@ export async function analyseerDatabase(
           naam: module.naam,
           soort: "VBA",
           eigenschappen: [
-            ["Moduletype", module.soort],
-            ["Opslag", `${opslag.bron}, stroom ${module.stroom}`],
+            [t("property.moduleType"), t(`moduleKind.${module.soort === "Standaardmodule" ? "standard" : "classOrDocument"}`)],
+            [t("property.storage"), t("storageValue", { source: opslag.bron, stream: module.stroom })],
           ],
           beperkingen: [],
         };
@@ -501,7 +503,7 @@ export async function analyseerDatabase(
         );
         if (!stroom) {
           object.beperkingen!.push(
-            "Broncode niet teruggewonnen: de modulestroom ontbreekt in het VBA-project.",
+            t("streamMissing"),
           );
           continue;
         }
@@ -513,7 +515,7 @@ export async function analyseerDatabase(
           );
           if (bron === null)
             object.beperkingen!.push(
-              "Geen broncode aanwezig, alleen gecompileerde code (bijvoorbeeld MDE/ACCDE). Er is niets teruggewonnen.",
+              t("compiledOnly"),
             );
           else {
             object.bron = bron;
@@ -521,52 +523,49 @@ export async function analyseerDatabase(
           }
         } catch (fout) {
           object.beperkingen!.push(
-            `Broncode niet teruggewonnen: ${melding(fout)}`,
+            t("sourceNotRecoveredError", { error: melding(fout) }),
           );
         }
       }
       const verwijzingen = info.verwijzingen.map(
-        (v) => `${v.naam} (${v.soort.toLowerCase()})`,
+        (v) => t("reference", { name: v.naam, kind: t(`referenceKind.${REFSOORT[v.soort] ?? "unknown"}`) }),
       );
       regel(
-        "VBA-modules",
+        t("part.vba"),
         !info.modules.length
           ? "niet aanwezig"
           : metBron === info.modules.length
             ? "gelezen"
             : "gedeeltelijk",
         info.modules.length,
-        `VBA-project ‘${info.projectnaam}’ gevonden in ${opslag.bron} (codepagina ${info.codepagina}). ` +
-          ruweRoute +
-          (info.modules.length
-            ? `Broncode teruggewonnen voor ${metBron} van ${info.modules.length} module(s) met eigen MS-OVBA-decompressie. `
-            : "De dir-stroom vermeldt geen modules. ") +
-          `MSysObjects vermeldt ${moduleObjecten.length} standaard- of klassemodule(s). ` +
-          (beveiliging?.vergrendeld
-            ? "Het project is vergrendeld voor weergave. "
+        [
+          t("projectFound", { name: info.projectnaam, source: opslag.bron, codepage: info.codepagina }),
+          ruweRoute,
+          info.modules.length
+            ? t("sourceRecovered", { done: metBron, count: info.modules.length })
+            : t("dirNoModules"),
+          t("msysModules", { count: moduleObjecten.length }),
+          beveiliging?.vergrendeld
+            ? t("projectLocked")
             : beveiliging?.wachtwoord
-              ? "Het project heeft een wachtwoord. "
-              : "") +
-          (verwijzingen.length
-            ? `Verwijzingen: ${verwijzingen.join(", ")}. `
-            : "") +
-          "VBA wordt nooit uitgevoerd.",
+              ? t("projectPassword")
+              : "",
+          verwijzingen.length ? t("references", { list: verwijzingen.join(", ") }) : "",
+          t("vbaNeverRun"),
+        ]
+          .filter(Boolean)
+          .join(" "),
       );
     }
   } catch (fout) {
     regel(
-      "VBA-modules",
+      t("part.vba"),
       "niet gelezen",
       moduleObjecten.length,
-      `VBA-project niet gelezen: ${melding(fout)}`,
+      t("projectNotRead", { error: melding(fout) }),
     );
   }
-  regel(
-    "Uitvoering",
-    "niet uitgevoerd",
-    null,
-    "Openen voert geen query’s, macro’s, VBA, AutoExec of gekoppelde bronnen uit. Het origineel wordt niet gewijzigd.",
-  );
+  regel(t("part.execution"), "niet uitgevoerd", null, UITVOERING());
 
   return {
     objecten,
@@ -575,7 +574,7 @@ export async function analyseerDatabase(
       grootte: bestand.grootte,
       sha256: await sha256(bytes),
       formaat: formaatNaam,
-      lezer: LEZER,
+      lezer: lezer(),
       datum: new Date().toISOString(),
       regels,
     },
@@ -615,7 +614,7 @@ export async function analyseVersleuteld(
   bestand: { naam: string; grootte: number },
   soort: string | null,
 ): Promise<Analyse> {
-  let formaat = "Onbekend";
+  let formaat = t("unknown");
   try {
     formaat = leesFormaat(bytes).naam;
   } catch {
@@ -627,25 +626,23 @@ export async function analyseVersleuteld(
       bestand: bestand.naam,
       grootte: bestand.grootte,
       sha256: await sha256(bytes),
-      formaat: formaat + (soort ? ` · ${soort}` : " · versleuteld"),
-      lezer: LEZER,
+      formaat: `${formaat} · ${soort ?? t("encrypted")}`,
+      lezer: lezer(),
       datum: new Date().toISOString(),
       regels: [
         {
-          onderdeel: "Versleuteling",
+          onderdeel: t("part.encryption"),
           status: "niet gelezen",
           aantal: null,
-          toelichting:
-            VERSLEUTELD_MELDING +
-            (soort ? ` Herkend: ${soort}.` : "") +
-            " Er is geen wachtwoord gevraagd of geprobeerd; tabellen, query’s, relaties en VBA zijn niet gelezen.",
+          toelichting: [versleuteldMelding(), soort ? t("recognized", { kind: soort }) : "", t("noPasswordTried")]
+            .filter(Boolean)
+            .join(" "),
         },
         {
-          onderdeel: "Uitvoering",
+          onderdeel: t("part.execution"),
           status: "niet uitgevoerd",
           aantal: null,
-          toelichting:
-            "Openen voert geen query’s, macro’s, VBA, AutoExec of gekoppelde bronnen uit. Het origineel wordt niet gewijzigd.",
+          toelichting: UITVOERING(),
         },
       ],
     },
@@ -814,7 +811,7 @@ export function leesVbaVerwijzingen(db: MDBReader): VbaVerwijzingDetail[] {
     else if (id === 0x0016) {
       // Naam van een nieuwe verwijzing, of (direct na REFERENCECONTROL) de uitgebreide naam.
       if (inControle) continue;
-      huidig = { naam: decodeerVbaTekst(data, codepagina) || "(naamloos)", soort: "Onbekend" };
+      huidig = { naam: decodeerVbaTekst(data, codepagina) || t("unnamed"), soort: "Onbekend" };
       uit.push(huidig);
     } else if (id === 0x003e && huidig && !inControle) {
       const naam = utf16.decode(data);

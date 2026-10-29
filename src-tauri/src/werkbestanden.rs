@@ -175,7 +175,7 @@ impl Werkbestanden {
     pub fn lees(&self, token: &str, venster: &str) -> Result<Vec<u8>, String> {
         let pad = self
             .pad(token, venster)
-            .ok_or("Dit bestand hoort niet bij dit venster.")?;
+            .ok_or_else(|| crate::taal::t("errors.file.notThisWindow"))?;
         let bytes = crate::systeembestanden::lees_beperkt(&pad)?;
         let stempel = stempel_van(&pad, &bytes);
         if let Ok(mut k) = self.koppelingen.lock() {
@@ -201,7 +201,7 @@ impl Werkbestanden {
             let v = k
                 .get(token)
                 .filter(|v| v.venster == venster)
-                .ok_or("Dit bestand is niet (meer) aan dit tabblad gekoppeld.")?;
+                .ok_or_else(|| crate::taal::t("errors.file.notLinked"))?;
             (v.pad.clone(), v.stempel.clone())
         };
         let ext = ext.to_lowercase();
@@ -304,8 +304,8 @@ pub async fn bewaar_document(
     request: tauri::ipc::Request<'_>,
 ) -> Result<serde_json::Value, String> {
     use tauri::Manager;
-    let token = kop(&request, "x-office-token").ok_or("Het token ontbreekt.")?;
-    let ext = kop(&request, "x-office-ext").ok_or("Het formaat ontbreekt.")?;
+    let token = kop(&request, "x-office-token").ok_or_else(|| crate::taal::t("errors.file.tokenMissing"))?;
+    let ext = kop(&request, "x-office-ext").ok_or_else(|| crate::taal::t("errors.file.formatMissing"))?;
     let bytes = crate::lees_binaire_inhoud(request.body(), false)?;
     let label = venster.label().to_owned();
     let schrijf = |forceer: bool, bytes: Vec<u8>| {
@@ -330,30 +330,33 @@ pub async fn bewaar_document(
             .pad(&token, &label)
             .map(|p| bestandsnaam(&p))
             .unwrap_or_default();
-        let tekst = if uitkomst == Schrijfuitkomst::Ontbreekt {
-            format!("{naam} bestaat niet meer op de oorspronkelijke plek. Opnieuw aanmaken met jouw versie, of elders opslaan?")
+        let sleutel = if uitkomst == Schrijfuitkomst::Ontbreekt {
+            "dialogs.fileChanged.missing"
         } else {
-            format!("{naam} is gewijzigd buiten Open Office Studio sinds je het opende. Overschrijven gooit die wijzigingen weg.")
+            "dialogs.fileChanged.changedExternally"
         };
+        let tekst = crate::taal::t_met(sleutel, &[("name", &naam)]);
+        let overschrijven = crate::taal::t("dialogs.fileChanged.overwrite");
+        let opslaan_als = crate::taal::t("dialogs.saveAsEllipsis");
         let keuze = rfd::AsyncMessageDialog::new()
-            .set_title("Bestand gewijzigd")
+            .set_title(crate::taal::t("dialogs.fileChanged.title"))
             .set_description(tekst)
             .set_level(rfd::MessageLevel::Warning)
             .set_buttons(rfd::MessageButtons::YesNoCancelCustom(
-                "Overschrijven".into(),
-                "Opslaan als…".into(),
-                "Annuleren".into(),
+                overschrijven.clone(),
+                opslaan_als.clone(),
+                crate::taal::t("dialogs.cancel"),
             ))
             .show()
             .await;
         match keuze {
-            rfd::MessageDialogResult::Custom(k) if k == "Overschrijven" => {
+            rfd::MessageDialogResult::Custom(k) if k == overschrijven => {
                 uitkomst = schrijf(true, bytes).await.map_err(|e| e.to_string())??;
             }
             rfd::MessageDialogResult::Yes => {
                 uitkomst = schrijf(true, bytes).await.map_err(|e| e.to_string())??;
             }
-            rfd::MessageDialogResult::Custom(k) if k.starts_with("Opslaan") => {
+            rfd::MessageDialogResult::Custom(k) if k == opslaan_als => {
                 return Ok(serde_json::json!({ "status": "opslaan-als" }));
             }
             rfd::MessageDialogResult::No => {
@@ -387,15 +390,15 @@ pub async fn bewaar_als(
     let bytes = crate::lees_binaire_inhoud(request.body(), ext == "md")?;
     let oud = kop(&request, "x-office-token");
     let label = venster.label().to_owned();
-    let Some(pad) = crate::kies_opslagpad("Opslaan als", &bestandsnaam, &ext).await? else {
+    let Some(pad) = crate::kies_opslagpad(&crate::taal::t("dialogs.saveAs"), &bestandsnaam, &ext).await? else {
         return Ok(serde_json::json!({ "status": "geannuleerd" }));
     };
     let werkbestanden = app.state::<Werkbestanden>();
     if let Some((token, _)) = werkbestanden.zoek_pad(&pad) {
         if Some(&token) != oud.as_ref() {
-            return Err(format!(
-                "{} is geopend in een ander tabblad. Sluit dat eerst of kies een andere naam.",
-                bestandsnaam_van(&pad)
+            return Err(crate::taal::t_met(
+                "errors.file.openInOtherTab",
+                &[("name", &bestandsnaam_van(&pad))],
             ));
         }
     }
@@ -403,10 +406,7 @@ pub async fn bewaar_als(
     tauri::async_runtime::spawn_blocking(move || {
         if let Err(fout) = crate::schrijf_atomair(&pad, &bytes) {
             return Err(if is_alleen_lezen(&fout) {
-                format!(
-                    "Geen schrijfrechten in deze map of het bestand is alleen-lezen ({}). Kies een andere plek.",
-                    pad.display()
-                )
+                crate::taal::t_met("errors.file.readOnly", &[("path", &pad.display().to_string())])
             } else {
                 fout
             });
@@ -452,30 +452,34 @@ pub fn bij_venstergebeurtenis<R: tauri::Runtime>(
 pub async fn bevestig_formaat(naam: String, melding: Option<String>) -> String {
     let naam: String = naam.chars().take(200).collect();
     let ext = extensie(Path::new(&naam)).to_uppercase();
-    let mut tekst = format!(
-        "{naam} wordt bijgewerkt in het formaat {ext}. De kantoorruntime zet het document daarvoor om; opmaak die {ext} niet kent, kan verloren gaan."
+    let mut tekst = crate::taal::t_met(
+        "dialogs.foreignFormat.message",
+        &[("name", &naam), ("format", &ext)],
     );
     if let Some(melding) = melding.filter(|m| !m.trim().is_empty()) {
         tekst.push_str("\n\n");
         tekst.extend(melding.chars().take(1000));
     }
-    tekst.push_str("\n\nKies Opslaan als… om een DOCX, XLSX of PPTX te bewaren.");
+    tekst.push_str("\n\n");
+    tekst.push_str(&crate::taal::t("dialogs.foreignFormat.hint"));
+    let bijwerken = crate::taal::t_met("dialogs.foreignFormat.update", &[("format", &ext)]);
+    let opslaan_als = crate::taal::t("dialogs.saveAsEllipsis");
     let keuze = rfd::AsyncMessageDialog::new()
-        .set_title(format!("Opslaan als {ext}"))
+        .set_title(crate::taal::t_met("dialogs.foreignFormat.title", &[("format", &ext)]))
         .set_description(tekst)
         .set_level(rfd::MessageLevel::Warning)
         .set_buttons(rfd::MessageButtons::YesNoCancelCustom(
-            format!("Bijwerken als {ext}"),
-            "Opslaan als…".into(),
-            "Annuleren".into(),
+            bijwerken.clone(),
+            opslaan_als.clone(),
+            crate::taal::t("dialogs.cancel"),
         ))
         .show()
         .await;
     match keuze {
         rfd::MessageDialogResult::Yes => "ja",
-        rfd::MessageDialogResult::Custom(k) if k.starts_with("Bijwerken") => "ja",
+        rfd::MessageDialogResult::Custom(k) if k == bijwerken => "ja",
         rfd::MessageDialogResult::No => "opslaan-als",
-        rfd::MessageDialogResult::Custom(k) if k.starts_with("Opslaan") => "opslaan-als",
+        rfd::MessageDialogResult::Custom(k) if k == opslaan_als => "opslaan-als",
         _ => "annuleren",
     }
     .into()
@@ -504,9 +508,9 @@ pub async fn kies_bestanden(
         .filter(|e| !e.is_empty() && e.len() <= 12 && e.chars().all(|c| c.is_ascii_alphanumeric()))
         .take(80)
         .collect();
-    let mut dialoog = rfd::AsyncFileDialog::new().set_title("Bestand openen");
+    let mut dialoog = rfd::AsyncFileDialog::new().set_title(crate::taal::t("dialogs.openFile"));
     if !extensies.is_empty() {
-        dialoog = dialoog.add_filter("Kantoorbestanden", &extensies);
+        dialoog = dialoog.add_filter(crate::taal::t("dialogs.officeFiles"), &extensies);
     }
     let Some(bestanden) = dialoog.pick_files().await else {
         return Ok(0);

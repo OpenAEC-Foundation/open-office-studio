@@ -1,0 +1,477 @@
+{
+  "start": {
+    "backToWorkspace": "Torna all'area di lavoro",
+    "workspace": "AREA DI LAVORO",
+    "home": "Home",
+    "saveTitle": "Salva · Ctrl+S",
+    "saveAs": "Salva con nome",
+    "saveAsTitle": "Salva con nome · F12 o Ctrl+Shift+S",
+    "print": "Stampa",
+    "printTitle": "Anteprima di stampa e stampa · Ctrl+P",
+    "info": "Informazioni",
+    "infoTitle": "Proprietà del documento, statistiche e ispezione documento",
+    "sendAsAttachment": "Invia come allegato",
+    "sendAsAttachmentTitle": "Allega il documento corrente a un nuovo messaggio e-mail",
+    "email": "E-mail",
+    "emailUnread_one": "E-mail, {{count}} non letto",
+    "emailUnread_many": "E-mail, {{count}} non letti",
+    "emailUnread_other": "E-mail, {{count}} non letti",
+    "newFile": "NUOVO FILE",
+    "databaseTitle": "Database Studio · database Access come copia di lavoro modificabile",
+    "databaseSubtitle": "Copia di lavoro · modifica, query, VBA",
+    "settingsTitle": "Impostazioni · Ctrl+,",
+    "shortcutsTitle": "Scelte rapide da tastiera · F1",
+    "tagline": "Il tuo ufficio locale",
+    "titleFile": "File",
+    "titleWorkspace": "La tua area di lavoro.",
+    "intro": "Scrivere, calcolare, presentare e annotare idee.",
+    "addNotesBackup": "Aggiungi backup delle note",
+    "openDatabase": "Apri database",
+    "openFile": "Apri file",
+    "openShortcut": "Ctrl O",
+    "newFileTitle": "Nuovo file",
+    "newFileHint": "Scegli lo strumento e inizia con un file vuoto",
+    "notesHeading": "Uno spazio per le tue idee.",
+    "notesText": "Blocchi appunti, sezioni e pagine. Salvati automaticamente in locale.",
+    "openNotes": "Apri Note",
+    "emailText": "La tua e-mail tramite IMAP e SMTP. Gli allegati si aprono direttamente in Testo, Foglio di calcolo, Presentazione o Database.",
+    "unread_one": "{{count}} non letto",
+    "unread_many": "{{count}} non letti",
+    "unread_other": "{{count}} non letti",
+    "openEmail": "Apri E-mail",
+    "examplesTitle": "Scopri cosa puoi creare",
+    "examplesHint": "File di esempio",
+    "existingTitle": "File esistente",
+    "browse": "Sfoglia questo computer",
+    "browseNotes": "Aggiungi un backup delle note OpenAEC.",
+    "browseDatabase": "Apri un database MDB o ACCDB oppure una copia di lavoro SQLite.",
+    "browseDocuments": "Apri un documento, un foglio di calcolo o una presentazione.",
+    "formatNotes": "NOTE",
+    "filesStayLocal": "I tuoi file restano sul tuo computer.",
+    "aboutVersion": "Informazioni su questa versione",
+    "aboutText": "DOCX, XLSX e PPTX funzionano direttamente. Con un programma di conversione configurato, la versione desktop può convertire anche ODF e formati meno recenti; la formattazione può risultare diversa. Database Studio trasforma un file MDB o ACCDB in una copia di lavoro SQLite modificabile con tabelle, query, maschere, report e VBA; l'originale resta invariato. L'app autonoma può essere installata come Open Database Studio.",
+    "modules": {
+      "docx": {
+        "new": "Documento vuoto",
+        "example": "Nota di progetto",
+        "exampleText": "Testo, stili e una tabella"
+      },
+      "xlsx": {
+        "new": "Foglio di calcolo vuoto",
+        "example": "Elenco materiali",
+        "exampleText": "Materiali, formule e totali"
+      },
+      "pptx": {
+        "new": "Presentazione vuota",
+        "example": "Visione di progetto",
+        "exampleText": "Diapositive, forme e note"
+      }
+    }
+  },
+  "recent": {
+    "title": "Recenti",
+    "hintDesktop": "File aperti e salvati di recente",
+    "hintBrowser": "Questo browser ricorda solo i nomi; scegli di nuovo il file",
+    "clear": "Cancella elenco",
+    "clearTitle": "Cancella elenco; i file bloccati restano",
+    "missing": "{{name}} non si trova più in {{folder}}. Rimuovilo dall'elenco con ✕ o aprilo tramite Sfoglia.",
+    "missingOriginalFolder": "{{name}} non si trova più nella cartella originale. Rimuovilo dall'elenco con ✕ o aprilo tramite Sfoglia.",
+    "notFound": "Non trovato",
+    "notFoundIn": "Non trovato · {{location}}",
+    "openFrom": "{{folder}} · apri",
+    "chooseFile": "Scegli file",
+    "nameOnly": "È noto solo il nome",
+    "pin": "Blocca {{name}} in alto",
+    "unpin": "Sblocca {{name}}",
+    "pinTitle": "Blocca in alto",
+    "unpinTitle": "Sblocca",
+    "remove": "Rimuovi {{name}} dall'elenco",
+    "removeTitle": "Rimuovi dall'elenco (il file non viene eliminato)",
+    "today": "Oggi {{time}}",
+    "yesterday": "Ieri {{time}}",
+    "todayInline": "oggi {{time}}",
+    "yesterdayInline": "ieri {{time}}"
+  },
+  "recovery": {
+    "title": "Ripristina documenti",
+    "explanation": "L'ultima volta Open Office Studio non è stato chiuso correttamente. Di questi documenti è stata conservata una copia di ripristino. Il ripristino apre una nuova scheda non salvata; il file originale resta invariato.",
+    "copyFrom": "{{module}} · copia di ripristino del {{date}}",
+    "restore": "Ripristina",
+    "saveAs": "Salva con nome…",
+    "discard": "Elimina",
+    "discardLabel": "Elimina la copia di ripristino di {{name}}",
+    "later": "Decidi più tardi",
+    "laterTitle": "Le copie vengono conservate fino al prossimo avvio",
+    "restoredFrom": "Ripristinato dalla copia di ripristino del {{date}}. Il file originale non è stato modificato; salva questo documento per conservarlo.",
+    "restoreFailed": "Ripristino di {{name}} non riuscito: {{error}}",
+    "copyFailed": "Il ripristino automatico non è riuscito a salvare una copia: {{error}}"
+  },
+  "leave": {
+    "title": "Modifiche non salvate",
+    "askSave": "Vuoi salvare le modifiche a <strong>{{name}}</strong> prima di chiuderlo?",
+    "unsaved": "<strong>{{name}}</strong> contiene modifiche non ancora salvate. Salva prima il file se vuoi conservarle.",
+    "others_one": "Dopo segue ancora {{count}} altro documento con modifiche non salvate.",
+    "others_many": "Dopo seguono ancora {{count}} di altri documenti con modifiche non salvate.",
+    "others_other": "Dopo seguono ancora {{count}} altri documenti con modifiche non salvate.",
+    "dontSave": "Non salvare",
+    "discard": "Annulla modifiche"
+  },
+  "saveAs": {
+    "title": "Salva con nome",
+    "fileName": "Nome file",
+    "browserInfo": "Nel browser l'app crea da sola Markdown, CSV, HTML, testo e PDF, oltre a PNG per fogli di calcolo e presentazioni. I formati contrassegnati con «solo nell'app desktop» richiedono la versione desktop con un motore per ufficio.",
+    "runtimeSearching": "Ricerca del motore per ufficio…",
+    "runtimeFound": "Motore per ufficio: {{version}}",
+    "runtimeDetails": "({{source}}, {{profile}})",
+    "sourceEnvironment": "da OPENAEC_CONVERSIE_PROGRAMMA",
+    "sourceSetting": "scelto manualmente",
+    "sourceAutomatic": "rilevato automaticamente",
+    "profileSafe": "profilo sicuro: macro disattivate",
+    "profileOwn": "profilo personale",
+    "runtimeMissing": "Nessun motore per ufficio (LibreOffice) trovato. I formati che lo richiedono non sono disponibili.",
+    "chooseConverter": "Scegli programma di conversione",
+    "format": "Formato",
+    "groups": {
+      "own": "Formato nativo",
+      "openDocument": "OpenDocument",
+      "legacyOffice": "Formati Office meno recenti",
+      "templates": "Modelli",
+      "macro": "Con attivazione macro",
+      "webText": "Web e testo",
+      "pdfImage": "PDF e immagine"
+    },
+    "routes": {
+      "inApp": "nell'app",
+      "runtime": "tramite motore per ufficio",
+      "print": "tramite Stampa"
+    },
+    "runtimeMissingShort": "motore mancante",
+    "desktopOnly": "solo nell'app desktop",
+    "separator": "Separatore",
+    "separatorSemicolon": "Punto e virgola ; (italiano)",
+    "separatorComma": "Virgola ,",
+    "separatorTab": "Tabulazione",
+    "separatorPipe": "Barra verticale |",
+    "encoding": "Codifica",
+    "encodingUtf8BomExcel": "UTF-8 con BOM (Excel)",
+    "encodingUtf8BomNotepad": "UTF-8 con BOM (Blocco note, Excel)",
+    "csvInfo": "Solo il foglio scelto, con i valori al posto delle formule. Al testo che inizia con =, +, - o @ viene aggiunto un apostrofo, così un programma di fogli di calcolo non lo esegue come formula.",
+    "sheet": "Foglio",
+    "activeSheet": "{{name}} (attivo)",
+    "protect": "Proteggi l'apertura con una password",
+    "password": "Password",
+    "repeatPassword": "Ripeti password",
+    "encryptionInfo": "Crittografia secondo ECMA-376 (AES-256), apribile in Word, Excel, PowerPoint e LibreOffice. La password non viene salvata; se la perdi, il file non potrà più essere aperto.",
+    "noEncryptionInfo": "Non si tratta di una protezione da scrittura o del foglio: senza segno di spunta il file viene salvato senza crittografia.",
+    "passwordMissing": "Scegli una password.",
+    "passwordMismatch": "Le password non corrispondono.",
+    "passwordTooLong": "Al massimo {{max}} caratteri.",
+    "slide": "Diapositiva",
+    "slideNumber": "Diapositiva {{number}}",
+    "currentSlide": "Diapositiva {{number}} (corrente)",
+    "pdfVariant": "Variante PDF",
+    "pdfPlain": "PDF standard",
+    "pdfA2b": "PDF/A-2b (archiviazione)",
+    "slides": "Diapositive",
+    "pages": "Pagine",
+    "rangePlaceholder": "tutte, o ad es. 1-3,5",
+    "bookmarks": "Titoli come segnalibri",
+    "printRoute": "Senza motore per ufficio, il PDF passa da Stampa: nella finestra di stampa scegli la stampante <strong>Salva come PDF</strong> (Windows: «Microsoft Print to PDF»). Il layout segue la visualizzazione nell'editor.",
+    "untitled": "Senza titolo",
+    "copyInfo": "Questa è una copia in un altro formato. Il documento resta contrassegnato come modificato finché non lo salvi come .{{ext}}.",
+    "print": "Stampa…",
+    "formats": {
+      "docx": {
+        "docx": {
+          "name": "Documento di Word",
+          "keeps": "modificabile"
+        },
+        "odt": {
+          "name": "Testo OpenDocument",
+          "keeps": "modificabile; la formattazione può risultare diversa"
+        },
+        "fodt": {
+          "name": "Testo OpenDocument (XML flat)",
+          "keeps": "modificabile; la formattazione può risultare diversa"
+        },
+        "doc": {
+          "name": "Documento di Word 97–2003",
+          "keeps": "modificabile; la formattazione può risultare diversa"
+        },
+        "dotx": {
+          "name": "Modello di Word",
+          "keeps": "modificabile; la formattazione può risultare diversa"
+        },
+        "dot": {
+          "name": "Modello di Word 97–2003",
+          "keeps": "modificabile; la formattazione può risultare diversa"
+        },
+        "ott": {
+          "name": "Modello di testo OpenDocument",
+          "keeps": "modificabile; la formattazione può risultare diversa"
+        },
+        "docm": {
+          "name": "Documento di Word con attivazione macro",
+          "keeps": "solo per un file di macro aperto: progetto VBA mantenuto invariato, macro non eseguite"
+        },
+        "rtf": {
+          "name": "Rich Text Format",
+          "keeps": "modificabile; la formattazione può risultare diversa"
+        },
+        "txt": {
+          "name": "Testo normale (UTF-8)",
+          "keeps": "solo testo; formattazione, tabelle e immagini vengono perse"
+        },
+        "html": {
+          "name": "Pagina web (HTML)",
+          "keeps": "la formattazione può risultare diversa; immagini incorporate"
+        },
+        "xhtml": {
+          "name": "Pagina web XHTML",
+          "keeps": "la formattazione può risultare diversa"
+        },
+        "epub": {
+          "name": "E-book EPUB",
+          "keeps": "sola lettura; il layout di pagina viene perso"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "testo e struttura; layout di pagina, immagini e revisioni vengono persi"
+        },
+        "pdf": {
+          "name": "Documento PDF",
+          "keeps": "aspetto come nell'anteprima di stampa; testo ricercabile"
+        },
+        "png": {
+          "name": "Immagine PNG (prima pagina)",
+          "keeps": "solo visualizzazione; solo la prima pagina"
+        }
+      },
+      "xlsx": {
+        "xlsx": {
+          "name": "Cartella di lavoro di Excel",
+          "keeps": "modificabile"
+        },
+        "ods": {
+          "name": "Foglio di calcolo OpenDocument",
+          "keeps": "modificabile; la formattazione può risultare diversa"
+        },
+        "fods": {
+          "name": "Foglio di calcolo OpenDocument (XML flat)",
+          "keeps": "modificabile; la formattazione può risultare diversa"
+        },
+        "xls": {
+          "name": "Cartella di lavoro di Excel 97–2003",
+          "keeps": "modificabile; la formattazione può risultare diversa"
+        },
+        "xltx": {
+          "name": "Modello di Excel",
+          "keeps": "modificabile; la formattazione può risultare diversa"
+        },
+        "xlt": {
+          "name": "Modello di Excel 97–2003",
+          "keeps": "modificabile; la formattazione può risultare diversa"
+        },
+        "ots": {
+          "name": "Modello di foglio di calcolo OpenDocument",
+          "keeps": "modificabile; la formattazione può risultare diversa"
+        },
+        "xlsm": {
+          "name": "Cartella di lavoro di Excel con attivazione macro",
+          "keeps": "solo per un file di macro aperto: progetto VBA mantenuto invariato, macro non eseguite"
+        },
+        "csv": {
+          "name": "CSV (valori separati)",
+          "keeps": "un solo foglio; valori senza formule né formattazione"
+        },
+        "tsv": {
+          "name": "Testo delimitato da tabulazioni (TSV)",
+          "keeps": "un solo foglio; valori senza formule né formattazione"
+        },
+        "html": {
+          "name": "Pagina web (HTML)",
+          "keeps": "solo visualizzazione; le formule vengono perse"
+        },
+        "dif": {
+          "name": "Data Interchange Format (DIF)",
+          "keeps": "solo il primo foglio; valori senza formule né formattazione"
+        },
+        "slk": {
+          "name": "SYLK",
+          "keeps": "solo il primo foglio; le formule restano, la formattazione in gran parte no"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "solo visualizzazione dei valori; formule e formattazione vengono perse"
+        },
+        "pdf": {
+          "name": "Documento PDF",
+          "keeps": "aspetto come nell'anteprima di stampa; testo ricercabile"
+        },
+        "png": {
+          "name": "Immagine PNG (foglio)",
+          "keeps": "solo visualizzazione; intervallo utilizzato di un foglio"
+        }
+      },
+      "pptx": {
+        "pptx": {
+          "name": "Presentazione di PowerPoint",
+          "keeps": "modificabile"
+        },
+        "ppsx": {
+          "name": "Presentazione di PowerPoint (sola visione)",
+          "keeps": "modificabile; si apre come presentazione; la formattazione può risultare diversa"
+        },
+        "odp": {
+          "name": "Presentazione OpenDocument",
+          "keeps": "modificabile; la formattazione può risultare diversa"
+        },
+        "fodp": {
+          "name": "Presentazione OpenDocument (XML flat)",
+          "keeps": "modificabile; la formattazione può risultare diversa"
+        },
+        "ppt": {
+          "name": "Presentazione di PowerPoint 97–2003",
+          "keeps": "modificabile; la formattazione può risultare diversa"
+        },
+        "pps": {
+          "name": "Presentazione di PowerPoint 97–2003 (sola visione)",
+          "keeps": "modificabile; la formattazione può risultare diversa"
+        },
+        "potx": {
+          "name": "Modello di PowerPoint",
+          "keeps": "modificabile; la formattazione può risultare diversa"
+        },
+        "pot": {
+          "name": "Modello di PowerPoint 97–2003",
+          "keeps": "modificabile; la formattazione può risultare diversa"
+        },
+        "otp": {
+          "name": "Modello di presentazione OpenDocument",
+          "keeps": "modificabile; la formattazione può risultare diversa"
+        },
+        "pptm": {
+          "name": "Presentazione di PowerPoint con attivazione macro",
+          "keeps": "solo per un file di macro aperto: progetto VBA mantenuto invariato, macro non eseguite"
+        },
+        "html": {
+          "name": "Pagina web (HTML)",
+          "keeps": "solo testo per diapositiva; layout e immagini vengono persi"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "solo testo per diapositiva; layout e immagini vengono persi"
+        },
+        "pdf": {
+          "name": "Documento PDF",
+          "keeps": "aspetto come nell'anteprima di stampa; testo ricercabile"
+        },
+        "png": {
+          "name": "Immagine PNG (diapositiva corrente)",
+          "keeps": "solo visualizzazione; una diapositiva"
+        }
+      }
+    }
+  },
+  "saveResult": {
+    "saved": "Salvato: {{path}}",
+    "exported": "Esportato: {{path}}. Salva anche il file modificabile per conservare le modifiche.",
+    "cancelled": "Salvataggio annullato.",
+    "chooseLocation": "Scegli un nome e una posizione in cui salvare.",
+    "download": "Download richiesto. Controlla il file nei download.",
+    "tooLarge": "Il file è vuoto o supera i 100 MB.",
+    "needsDesktop": "Questo formato richiede la versione desktop con un motore per ufficio (LibreOffice)."
+  },
+  "printPreview": {
+    "title": "Anteprima di stampa – {{title}}",
+    "notReady": "Potrai stampare non appena il documento sarà completamente aperto.",
+    "preparingPages": "Preparazione delle pagine…",
+    "preparingPrint": "Preparazione della stampa…",
+    "preparingPrintProgress": "Preparazione della stampa… {{done}} di {{total}}",
+    "printHint": "Nella finestra di stampa scegli la stampante, la stampa fronte/retro ed eventualmente «Salva come PDF».",
+    "makingPdf": "Creazione del PDF…",
+    "makingPdfProgress": "Creazione del PDF… {{done}} di {{total}}",
+    "pdfSaved": "PDF salvato: {{path}}",
+    "pdfDownloading": "Download del PDF {{name}} in corso.",
+    "layoutSaved": "L'impostazione di pagina è stata memorizzata nella cartella di lavoro. Salva il documento per conservarla.",
+    "saveAsPdf": "Salva come PDF",
+    "print": "Stampa",
+    "keyboardHelp": "Page Up e Page Down scorrono le pagine; Ctrl+P stampa.",
+    "settings": "Impostazioni di stampa",
+    "pages": "Pagine",
+    "rangePlaceholder": "tutte, o ad es. 1-3, 5",
+    "copies": "Copie",
+    "collate": "Fascicola (1, 2, 3 – 1, 2, 3)",
+    "systemDialogHint": "Stampante, fronte/retro e colore si scelgono poi nella finestra di stampa del sistema.",
+    "printAs": "Stampa come",
+    "slides": "Diapositive",
+    "handouts": "Stampati",
+    "notesPages": "Pagine note",
+    "slidesPerPage": "Diapositive per pagina",
+    "withLines": "{{number}} (con righe)",
+    "paper": "Carta",
+    "slideSize": "Dimensioni diapositiva",
+    "frameSlides": "Cornice diapositive",
+    "report": "Report",
+    "saveLayout": "Memorizza l'impostazione di pagina nella cartella di lavoro",
+    "pdf": "PDF",
+    "imageQuality": "Qualità immagine",
+    "qualitySmall": "File piccolo (150 dpi)",
+    "qualityStandard": "Standard (200 dpi)",
+    "qualityHigh": "Alta, senza perdita (300 dpi)",
+    "pdfHint": "Il testo resta selezionabile e ricercabile; il PDF riproduce esattamente questa anteprima.",
+    "toolbar": "Sfoglia e zoom",
+    "previousPage": "Pagina precedente",
+    "nextPage": "Pagina successiva",
+    "pageOf": "Pagina <input/> di {{total}}",
+    "pageNumber": "Numero di pagina",
+    "zoomOut": "Riduci",
+    "zoom": "Zoom",
+    "zoomIn": "Ingrandisci",
+    "wholePage": "Pagina intera",
+    "pageWidth": "Larghezza pagina",
+    "preview": "Anteprima pagina",
+    "pageImage": "Anteprima della pagina {{number}}",
+    "drawingPage": "Disegno della pagina…",
+    "orientation": "Orientamento",
+    "portrait": "Verticale",
+    "landscape": "Orizzontale",
+    "activeSheet": "Foglio attivo",
+    "wholeWorkbook": "Intera cartella di lavoro",
+    "selection": "Selezione ({{range}})",
+    "selectionNone": "Selezione (nessuna selezione)",
+    "ignorePrintArea": "Ignora area di stampa",
+    "pageSetup": "Imposta pagina",
+    "sheet": "Foglio",
+    "scale": "Proporzioni",
+    "percentage": "Percentuale",
+    "fitPage": "Adatta a una pagina",
+    "fitWidth": "Adatta alla larghezza della pagina",
+    "pagesWide": "Pagine in larghezza",
+    "pagesTall": "in altezza (0 = automatico)",
+    "marginTop": "Superiore (cm)",
+    "marginBottom": "Inferiore",
+    "marginLeft": "Sinistro",
+    "marginRight": "Destro",
+    "printArea": "Area di stampa",
+    "printAreaPlaceholder": "intervallo utilizzato, o ad es. A1:H40",
+    "repeatRows": "Righe da ripetere",
+    "repeatRowsPlaceholder": "ad es. 1:2",
+    "repeatColumns": "Colonne da ripetere",
+    "repeatColumnsPlaceholder": "ad es. A:B",
+    "gridlines": "Stampa griglia",
+    "headings": "Stampa intestazioni di riga e di colonna",
+    "centerHorizontally": "Centra orizzontalmente",
+    "pageOrder": "Ordine pagine",
+    "downThenOver": "Prima in basso, poi a destra",
+    "overThenDown": "Prima a destra, poi in basso",
+    "header": "Intestazione",
+    "footer": "Piè di pagina",
+    "sectionLeft": "a sinistra",
+    "sectionCenter": "al centro",
+    "sectionRight": "a destra",
+    "sectionLabel": "{{area}} {{section}}",
+    "fields": "Campi: {{fields}}.",
+    "pageBreakPreview": "Anteprima interruzioni di pagina…"
+  }
+}

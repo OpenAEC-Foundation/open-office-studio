@@ -2,33 +2,35 @@
 import { achtstenNaarPt, ptNaarAchtsten } from "../eenheden.ts";
 import type { Arcering, Rand, RandZijde, Randen } from "../opmaak.ts";
 
+/** Randstijlen met hun i18n-sleutel (namespace writer); vertalen bij het tonen. */
 export const randStijlen = [
-  ["single", "Enkel"],
-  ["double", "Dubbel"],
-  ["dotted", "Gestippeld"],
-  ["dashed", "Gestreept"],
-  ["dotDash", "Streep-punt"],
-  ["thick", "Dik"],
-  ["triple", "Drievoudig"],
-  ["thinThickSmallGap", "Dun-dik"],
-  ["thickThinSmallGap", "Dik-dun"],
-  ["wave", "Golf"],
-  ["doubleWave", "Dubbele golf"],
-  ["threeDEmboss", "3D reliëf"],
-  ["threeDEngrave", "3D gegraveerd"],
-  ["outset", "Naar buiten"],
-  ["inset", "Naar binnen"],
+  ["single", "borders.lineStyle.single"],
+  ["double", "borders.lineStyle.double"],
+  ["dotted", "borders.lineStyle.dotted"],
+  ["dashed", "borders.lineStyle.dashed"],
+  ["dotDash", "borders.lineStyle.dotDash"],
+  ["thick", "borders.lineStyle.thick"],
+  ["triple", "borders.lineStyle.triple"],
+  ["thinThickSmallGap", "borders.lineStyle.thinThick"],
+  ["thickThinSmallGap", "borders.lineStyle.thickThin"],
+  ["wave", "borders.lineStyle.wave"],
+  ["doubleWave", "borders.lineStyle.doubleWave"],
+  ["threeDEmboss", "borders.lineStyle.emboss3d"],
+  ["threeDEngrave", "borders.lineStyle.engrave3d"],
+  ["outset", "borders.lineStyle.outset"],
+  ["inset", "borders.lineStyle.inset"],
 ] as const;
 export type RandStijl = (typeof randStijlen)[number][0];
 
 export const randDiktes = [0.25, 0.5, 0.75, 1, 1.5, 2.25, 3, 4.5, 6] as const;
 
+/** I18n-sleutels (namespace writer) van de zijden. */
 export const zijdeNamen: Record<RandZijde, string> = {
-  top: "Boven",
-  bottom: "Onder",
-  left: "Links",
-  right: "Rechts",
-  between: "Tussen alinea’s",
+  top: "borders.side.top",
+  bottom: "borders.side.bottom",
+  left: "borders.side.left",
+  right: "borders.side.right",
+  between: "borders.side.between",
 };
 
 export type Instelling = "geen" | "kader" | "schaduw" | "aangepast";
@@ -112,19 +114,20 @@ export function randenNaarModel(f: RandFormulier, zijden: readonly RandZijde[] =
 
 // --- Arcering ---------------------------------------------------------------
 
+/** Arceringspatronen met hun i18n-sleutel (namespace writer). */
 export const patroonNamen = [
-  ["clear", "Effen (alleen opvulling)"],
-  ["pct5", "5%"],
-  ["pct10", "10%"],
-  ["pct20", "20%"],
-  ["pct25", "25%"],
-  ["pct50", "50%"],
-  ["pct75", "75%"],
-  ["horzStripe", "Horizontale strepen"],
-  ["vertStripe", "Verticale strepen"],
-  ["diagStripe", "Diagonale strepen"],
-  ["horzCross", "Raster"],
-  ["diagCross", "Diagonaal raster"],
+  ["clear", "borders.pattern.clear"],
+  ["pct5", "borders.pattern.pct5"],
+  ["pct10", "borders.pattern.pct10"],
+  ["pct20", "borders.pattern.pct20"],
+  ["pct25", "borders.pattern.pct25"],
+  ["pct50", "borders.pattern.pct50"],
+  ["pct75", "borders.pattern.pct75"],
+  ["horzStripe", "borders.pattern.horizontalStripes"],
+  ["vertStripe", "borders.pattern.verticalStripes"],
+  ["diagStripe", "borders.pattern.diagonalStripes"],
+  ["horzCross", "borders.pattern.grid"],
+  ["diagCross", "borders.pattern.diagonalGrid"],
 ] as const;
 export type Patroon = (typeof patroonNamen)[number][0];
 

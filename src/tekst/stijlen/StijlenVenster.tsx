@@ -6,6 +6,8 @@
 import { useMemo, useState } from "react";
 import { Eraser, FilePlus2, Pilcrow, Type, Palette } from "lucide-react";
 import { useDocxCommands } from "@betteroffice/docx-react";
+import { useTranslation } from "react-i18next";
+import { useOpmaak } from "../../i18n/opmaak";
 import { Dialoog } from "../../werkruimte/Dialoog";
 import { beschrijfOpmaak, directeOpmaak, losOp, runOpPositie, stijlNaam, vindAlinea, voorbeeldStijl } from "./model";
 import { galerijStijlen, useStijlMenu } from "./StijlGalerij";
@@ -14,6 +16,8 @@ import { useStijlen } from "./StijlenBeheer";
 type Filter = "aanbevolen" | "gebruikt" | "alle";
 
 export function StijlenVenster() {
+  const { t } = useTranslation(["writer", "common"]);
+  const { locale, getal } = useOpmaak();
   const staat = useStijlen();
   const opdrachten = useDocxCommands();
   const menu = useStijlMenu();
@@ -30,10 +34,10 @@ export function StijlenVenster() {
         : alle
             .filter((s) => s.type === "paragraph" || s.type === "character")
             .filter((s) => (filter === "gebruikt" ? staat.gebruikt.has(s.styleId) : !s.hidden))
-            .sort((a, b) => stijlNaam(a).localeCompare(stijlNaam(b), "nl"));
+            .sort((a, b) => stijlNaam(a).localeCompare(stijlNaam(b), locale));
     const z = zoek.trim().toLowerCase();
     return z ? basis.filter((s) => stijlNaam(s).toLowerCase().includes(z) || s.styleId.toLowerCase().includes(z)) : basis;
-  }, [alle, filter, zoek, staat.gebruikt]);
+  }, [alle, filter, zoek, staat.gebruikt, locale]);
 
   // Inspecteren: stijl en directe opmaak op de cursorpositie.
   const ref = staat.api();
@@ -49,7 +53,7 @@ export function StijlenVenster() {
 
   return (
     <Dialoog
-      titel="Stijlen"
+      titel={t("styles.pane.title")}
       sluit={staat.sluit}
       className="tekst-stijlenvenster"
       acties={
@@ -60,26 +64,26 @@ export function StijlenVenster() {
             disabled={!staat.kanHerladen}
             onClick={() => staat.open({ soort: "nieuw", uitSelectie: true })}
           >
-            <FilePlus2 size={14} aria-hidden="true" /> Nieuwe stijl…
+            <FilePlus2 size={14} aria-hidden="true" /> {t("styles.pane.newStyle")}
           </button>
           <button type="button" className="werkruimte-knop" disabled={!staat.kanHerladen} onClick={() => staat.open({ soort: "sets" })}>
-            <Palette size={14} aria-hidden="true" /> Stijlset…
+            <Palette size={14} aria-hidden="true" /> {t("styles.pane.styleSet")}
           </button>
           <button
             type="button"
             className="werkruimte-knop"
             disabled={!staat.bewerkbaar}
-            title="Directe tekenopmaak van de selectie wissen (Ctrl+M)"
+            title={t("styles.pane.clearFormattingHint", { shortcut: "Ctrl+M" })}
             onClick={() =>
               void opdrachten.execute("clearFormatting", null).then((r) => {
                 if (!r.ok) staat.fout(r.failure.message);
               })
             }
           >
-            <Eraser size={14} aria-hidden="true" /> Opmaak wissen
+            <Eraser size={14} aria-hidden="true" /> {t("styles.pane.clearFormatting")}
           </button>
           <button type="button" className="werkruimte-knop is-primair" onClick={staat.sluit}>
-            Sluiten
+            {t("common:close")}
           </button>
         </>
       }
@@ -87,22 +91,22 @@ export function StijlenVenster() {
       <div className="tekst-stijlen-filters">
         <input
           type="search"
-          placeholder="Zoek een stijl"
-          aria-label="Zoek een stijl"
+          placeholder={t("styles.pane.search")}
+          aria-label={t("styles.pane.search")}
           value={zoek}
           data-autofocus
           onChange={(e) => setZoek(e.target.value)}
         />
-        <select aria-label="Welke stijlen" value={filter} onChange={(e) => setFilter(e.target.value as Filter)}>
-          <option value="gebruikt">In gebruik</option>
-          <option value="aanbevolen">Aanbevolen (galerij)</option>
-          <option value="alle">Alle stijlen</option>
+        <select aria-label={t("styles.pane.filterLabel")} value={filter} onChange={(e) => setFilter(e.target.value as Filter)}>
+          <option value="gebruikt">{t("styles.pane.filterInUse")}</option>
+          <option value="aanbevolen">{t("styles.pane.filterRecommended")}</option>
+          <option value="alle">{t("styles.pane.filterAll")}</option>
         </select>
         <label className="werkruimte-vink">
-          <input type="checkbox" checked={voorbeeld} onChange={(e) => setVoorbeeld(e.target.checked)} /> Voorbeeld
+          <input type="checkbox" checked={voorbeeld} onChange={(e) => setVoorbeeld(e.target.checked)} /> {t("styles.pane.preview")}
         </label>
       </div>
-      <ul className="tekst-stijlenlijst" role="listbox" aria-label="Stijlen">
+      <ul className="tekst-stijlenlijst" role="listbox" aria-label={t("styles.pane.title")}>
         {lijst.map((s) => {
           const actief = s.styleId === staat.alineastijl;
           const naam = stijlNaam(s);
@@ -113,7 +117,7 @@ export function StijlenVenster() {
                 type="button"
                 className={actief ? "is-actief" : ""}
                 disabled={!staat.bewerkbaar}
-                title={`${naam} toepassen · rechtermuisknop voor wijzigen en bijwerken`}
+                title={t("styles.pane.applyHint", { name: naam })}
                 onClick={() => staat.pasToe(s.styleId)}
                 onContextMenu={(e) => {
                   e.preventDefault();
@@ -124,30 +128,30 @@ export function StijlenVenster() {
                 <span className="tekst-stijlenlijst-naam" style={voorbeeld ? voorbeeldStijl(losOp(staat.stijlen, s.styleId, staat.thema), 14) : undefined}>
                   {naam}
                 </span>
-                <span className="tekst-stijlenlijst-soort" aria-label={s.type === "character" ? "tekenstijl" : "alineastijl"}>
-                  {aantal ? <small>{aantal}×</small> : null}
+                <span className="tekst-stijlenlijst-soort" aria-label={s.type === "character" ? t("styles.characterStyle") : t("styles.paragraphStyle")}>
+                  {aantal ? <small>{getal(aantal)}×</small> : null}
                   {s.type === "character" ? <Type size={13} aria-hidden="true" /> : <Pilcrow size={13} aria-hidden="true" />}
                 </span>
               </button>
             </li>
           );
         })}
-        {!lijst.length && <li className="werkruimte-uitleg">Geen stijlen gevonden.</li>}
+        {!lijst.length && <li className="werkruimte-uitleg">{t("styles.pane.noneFound")}</li>}
       </ul>
       <details className="tekst-inspecteren" open={inspecteren} onToggle={(e) => setInspecteren(e.currentTarget.open)}>
-        <summary>Opmaak inspecteren</summary>
+        <summary>{t("styles.inspect.title")}</summary>
         {!info?.paraId ? (
-          <p className="werkruimte-uitleg">Zet de cursor in de tekst om de opmaak te zien.</p>
+          <p className="werkruimte-uitleg">{t("styles.inspect.placeCursor")}</p>
         ) : (
           <dl>
-            <dt>Alineastijl</dt>
+            <dt>{t("styles.inspect.paragraphStyle")}</dt>
             <dd>{alineastijl ? stijlNaam(alineastijl) : standaard ? stijlNaam(standaard) : "—"}</dd>
-            <dt>Tekenstijl</dt>
+            <dt>{t("styles.inspect.characterStyleLabel")}</dt>
             <dd>{tekenstijl ? stijlNaam(tekenstijl) : run?.styleId ?? "—"}</dd>
-            <dt>Directe alinea-opmaak</dt>
-            <dd>{beschrijving.alinea.length ? beschrijving.alinea.join(" · ") : "geen"}</dd>
-            <dt>Directe tekenopmaak</dt>
-            <dd>{beschrijving.tekst.length ? beschrijving.tekst.join(" · ") : "geen"}</dd>
+            <dt>{t("styles.inspect.directParagraph")}</dt>
+            <dd>{beschrijving.alinea.length ? beschrijving.alinea.join(" · ") : t("styles.inspect.none")}</dd>
+            <dt>{t("styles.inspect.directCharacter")}</dt>
+            <dd>{beschrijving.tekst.length ? beschrijving.tekst.join(" · ") : t("styles.inspect.none")}</dd>
           </dl>
         )}
       </details>

@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Account, MailBackend } from "../contract";
 import { kiesBackend } from "../backend";
-import { DEMO_MELDING } from "../demo-backend";
+import { useTranslation } from "react-i18next";
+import { demoMelding } from "../demo-backend";
 import { foutTekst } from "../fouten";
 import { inhoudstype } from "../kantoor";
 import { AccountWizard } from "./AccountWizard";
@@ -31,16 +32,17 @@ export default function VerzendAlsBijlage({
   registreer?: (acties: OpstelActies | null) => void;
   backend?: MailBackend;
 }) {
+  const { t } = useTranslation("email");
   const backend = useMemo(() => gegevenBackend ?? kiesBackend(), [gegevenBackend]);
   const [accounts, setAccounts] = useState<Account[] | null>(null);
   const [fout, setFout] = useState("");
   useEffect(() => {
-    backend.accounts().then(setAccounts, (e) => setFout(foutTekst(e, "Accounts laden mislukt")));
+    backend.accounts().then(setAccounts, (e) => setFout(foutTekst(e, t("studio.errors.loadAccounts"))));
   }, [backend]);
 
   if (fout)
     return (
-      <Dialoog titel="Verzenden als bijlage" sluit={sluit}>
+      <Dialoog titel={t("sendAsAttachment.title")} sluit={sluit}>
         <p role="alert">{fout}</p>
       </Dialoog>
     );
@@ -52,14 +54,14 @@ export default function VerzendAlsBijlage({
         sluit={sluit}
         klaar={(account) => {
           setAccounts([account]);
-          melding(`Account ${account.email} toegevoegd.`);
+          melding(t("studio.accountAdded", { email: account.email }));
         }}
       />
     );
   const titel = naam.replace(/\.[^.]+$/, "");
   return (
     <div className="email-studio-overlay">
-      {backend.soort === "demo" && <div className="email-demobalk is-zwevend">{DEMO_MELDING}</div>}
+      {backend.soort === "demo" && <div className="email-demobalk is-zwevend">{demoMelding()}</div>}
       <Opstelvenster
         backend={backend}
         accounts={accounts}

@@ -1,0 +1,263 @@
+{
+  "types": {
+    "column": {
+      "name": "直條圖",
+      "description": "並排比較數值"
+    },
+    "stackedColumn": {
+      "name": "堆疊直條圖",
+      "description": "各類別的部分與總計"
+    },
+    "percentColumn": {
+      "name": "百分比堆疊直條圖",
+      "description": "各類別的比例"
+    },
+    "bar": {
+      "name": "橫條圖",
+      "description": "水平方向，適合較長名稱"
+    },
+    "line": {
+      "name": "折線圖",
+      "description": "隨時間變化的趨勢"
+    },
+    "lineMarkers": {
+      "name": "含資料標記的折線圖",
+      "description": "顯示資料點的趨勢"
+    },
+    "area": {
+      "name": "區域圖",
+      "description": "強調數量大小的趨勢"
+    },
+    "pie": {
+      "name": "圓形圖",
+      "description": "單一數列的組成"
+    },
+    "doughnut": {
+      "name": "環圈圖",
+      "description": "中心鏤空的組成"
+    },
+    "scatter": {
+      "name": "散佈圖 (XY)",
+      "description": "兩個數值之間的關係"
+    },
+    "combo": {
+      "name": "直條圖 + 折線圖",
+      "description": "最後一個數列以折線顯示在副座標軸上"
+    }
+  },
+  "unknownType": "未知類型",
+  "busy": "處理中…",
+  "defaults": {
+    "seriesName": "數列 {{n}}",
+    "categoryName": "類別 {{n}}",
+    "chartName": "圖表 {{n}}",
+    "sheetName": "圖表 {{n}}",
+    "true": "TRUE",
+    "false": "FALSE"
+  },
+  "ribbon": {
+    "charts": "圖表",
+    "chart": "圖表",
+    "editChart": "編輯圖表",
+    "allCharts": "所有圖表",
+    "dataAndFormat": "資料與格式",
+    "overview": "概觀",
+    "type": "類型",
+    "changeType": "變更圖表類型",
+    "data": "資料",
+    "selectData": "選取資料",
+    "layout": "版面配置",
+    "titleAndLegend": "標題與圖例",
+    "delete": "刪除",
+    "deleteChart": "刪除圖表",
+    "withShortcut": "{{name}} · {{shortcut}}"
+  },
+  "dialog": {
+    "title": {
+      "insert": "插入圖表",
+      "edit": "編輯圖表"
+    },
+    "button": {
+      "insert": "插入",
+      "edit": "更新"
+    },
+    "reloadNote": {
+      "insert": "插入後將重新載入文件。之前的變更將無法再復原。",
+      "edit": "更新後將重新載入文件。之前的變更將無法再復原。"
+    },
+    "closeTitle": "關閉 (Esc)",
+    "type": "類型",
+    "data": "資料",
+    "cellRange": "儲存格範圍",
+    "cellRangePlaceholder": "例如 A1:D6",
+    "noContiguousRange": "此圖表的參照不構成連續範圍；在您輸入範圍之前，資料維持不變。",
+    "firstRowNames": "第一列包含名稱",
+    "firstColumnNames": "第一欄包含名稱",
+    "seriesIn": "數列資料取自",
+    "columns": "欄",
+    "rows": "列",
+    "series": "數列",
+    "seriesNoNumbersTitle": "{{name}}：沒有數字，未納入",
+    "noNumbers": "（沒有數字）",
+    "enterRange": "請輸入包含資料的儲存格範圍。",
+    "placeCursorInTable": "請先將游標置於包含數字的表格中。",
+    "titles": "標題",
+    "chartTitle": "標題",
+    "subtitle": "副標題",
+    "categoryAxis": "類別軸",
+    "valueAxis": "數值軸",
+    "horizontalAxis": "水平軸",
+    "verticalAxis": "垂直軸",
+    "secondaryAxis": "副座標軸",
+    "format": "格式",
+    "legend": "圖例",
+    "gridlines": "格線",
+    "dataLabels": "資料標籤",
+    "decimals": "小數位數",
+    "placement": "位置",
+    "besideData": "在此工作表中資料旁邊",
+    "newSheet": "在新工作表中",
+    "sheetName": "工作表名稱",
+    "summary": {
+      "series_other": "{{n}} 個數列",
+      "categories_other": "{{n}} 個類別",
+      "text": "{{series}} · {{categories}}",
+      "withSheet": "{{series}} · {{categories}} · {{sheet}}"
+    }
+  },
+  "legend": {
+    "bottom": "下方",
+    "right": "右側",
+    "top": "上方",
+    "left": "左側",
+    "none": "無圖例"
+  },
+  "dataSheet": {
+    "row": "列",
+    "series": "數列",
+    "removeLastRow": "刪除最後一列",
+    "removeLastSeries": "刪除最後一個數列",
+    "paste": "貼上",
+    "pasteTitle": "從剪貼簿貼上以定位字元分隔的文字，例如從試算表複製的內容",
+    "fromTable": "從選取的表格",
+    "fromTableTitle": "採用游標所在的表格",
+    "pasteNotAllowed": "此處不允許使用按鈕貼上。請按一下儲存格並使用 Ctrl+V。",
+    "corner": "角落儲存格",
+    "seriesNameLabel": "數列 {{n}} 的名稱",
+    "categoryLabel": "類別 {{n}}",
+    "valueLabel": "值：第 {{row}} 列，數列 {{series}}"
+  },
+  "preview": {
+    "label": "預覽：{{title}}",
+    "untitled": "預覽：無標題圖表"
+  },
+  "list": {
+    "title": "此文件中的圖表",
+    "empty": "此文件尚未包含任何圖表。",
+    "edit": "編輯",
+    "delete": "刪除",
+    "deleteLabel": "刪除 {{name}}",
+    "place": {
+      "slide": "投影片 {{n}}",
+      "sheet": "工作表 {{name}}",
+      "text": "文字中的圖表 {{n}}"
+    }
+  },
+  "deleteConfirm": {
+    "title": "刪除圖表",
+    "text": "要刪除「{{name}}」嗎？隨後將重新載入文件；之前的變更將無法再復原。",
+    "textSheet": "要從工作表 {{sheet}} 刪除「{{name}}」嗎？隨後將重新載入文件；之前的變更將無法再復原。",
+    "button": "刪除"
+  },
+  "errors": {
+    "unknownType": "未知的圖表類型。",
+    "noSeries": "圖表至少需要一個資料數列。",
+    "tooManySeries": "此處一個圖表最多可包含 {{max}} 個數列。",
+    "tooManyCategories": "此處一個圖表最多可包含 {{max}} 個類別。",
+    "noCategories": "圖表至少需要一個類別。",
+    "valueCountMismatch": "數列「{{name}}」的值數量與類別數量不一致。",
+    "noNumbers": "資料中不包含任何數字。",
+    "comboNeedsTwoSeries": "組合圖至少需要兩個數列：直條和一條折線。",
+    "scatterNeedsNumbers": "散佈圖需要第一欄或第一列中的數字作為 X 值。",
+    "titleTooLong": "標題最多可包含 {{max}} 個字元。",
+    "invalidColor": "色彩「{{color}}」不是有效的色彩。",
+    "noNumericColumn": "範圍中沒有任何欄包含數字，因此沒有可繪製的內容。請選擇至少包含一欄數字的範圍，或將「數列資料取自」設為列。",
+    "noNumericRow": "範圍中沒有任何列包含數字，因此沒有可繪製的內容。請選擇至少包含一列數字的範圍，或將「數列資料取自」設為欄。",
+    "chooseSeries": "請為圖表至少選擇一個數列。",
+    "rangeTooLarge": "範圍太大：最多 {{max}} 個儲存格。",
+    "noDataBesideHeaders": "範圍中除標題外沒有任何資料。",
+    "pasteTooLarge": "貼上的資料對圖表來說太大。",
+    "invalidRange": "這不是有效的儲存格範圍。請使用例如 A1:D6 或 'Sheet 1'!A1:D6。",
+    "noSuchSheet": "沒有名為「{{name}}」的工作表。",
+    "spreadsheetNotReady": "試算表尚未就緒。",
+    "spreadsheetReadOnly": "試算表為唯讀。",
+    "documentNotReady": "文件尚未就緒。",
+    "presentationNotEditable": "目前無法編輯簡報。",
+    "selectChartFirst": "請先選取一個圖表。",
+    "chartGone": "已無法找到該圖表。",
+    "notEditableHere": "無法在此處編輯此圖表。",
+    "notEditable": "無法編輯此圖表。",
+    "package": {
+      "tooLarge": "文件太大，無法在其中編輯圖表。",
+      "tooManyParts": "文件包含的組件過多或過大。",
+      "notZip": "此文件不是有效的 Office 檔案 (zip)。",
+      "invalidPartName": "文件包含無效的組件名稱。",
+      "noContentTypes": "文件缺少 [Content_Types].xml。",
+      "missingPart": "文件缺少組件 {{part}}。",
+      "noFreePartName": "已沒有可用的組件名稱。"
+    },
+    "xml": {
+      "tooLarge": "XML 組件太大，無法處理。",
+      "damaged": "XML 組件已損毀。",
+      "doctype": "基於安全考量，不處理含有 DOCTYPE 的 XML。",
+      "tooDeep": "XML 組件巢狀層級過深。",
+      "overlappingChanges": "內部錯誤：XML 變更重疊。"
+    },
+    "chartXml": {
+      "notDrawingML": "此組件不是 DrawingML 圖表。",
+      "noPlotArea": "圖表沒有繪圖區。",
+      "unusualPrefix": "此圖表使用了不常見的 XML 寫法，無法在此處安全地編輯。"
+    },
+    "document": {
+      "noMainPart": "文件缺少主要組件。",
+      "tooManyCharts": "此文件已包含 {{total}} 個圖表；不支援更多圖表。",
+      "invalidSheetName": "工作表名稱無效：最多 31 個字元，且不可包含 \\ / ? * [ ] :",
+      "sheetExists": "已存在名為「{{name}}」的工作表。",
+      "noSheetList": "活頁簿沒有工作表清單。",
+      "drawingMissing": "此工作表的繪圖遺失或已損毀。",
+      "noSuchWorksheet": "選擇的工作表不存在或不是一般工作表。",
+      "notPlainWorksheet": "圖表只能放置在一般工作表上。",
+      "drawingDamaged": "此工作表的繪圖已損毀。",
+      "docxUnusualPrefix": "此文件使用了不常見的 XML 寫法；無法安全地插入圖表。",
+      "noBody": "文件沒有本文。",
+      "tableTooLarge": "表格太大，無法製作圖表。",
+      "noSuchSlide": "選擇的投影片不存在。",
+      "slideUnusualPrefix": "此投影片使用了不常見的 XML 寫法；無法安全地插入圖表。",
+      "noShapeTree": "投影片沒有圖形樹狀結構。",
+      "chartRemoved": "文件中已不存在該圖表。",
+      "chartNotFound": "找不到圖表。",
+      "cannotRemove": "無法移除圖表物件。"
+    }
+  },
+  "read": {
+    "reasons": {
+      "extendedChart": "這是延伸圖表（例如瀑布圖或矩形式樹狀結構圖），無法在此處編輯。",
+      "unsupportedType": "此圖表使用了無法在此處編輯的類型（{{types}}）。",
+      "noReadableSeries": "圖表不包含可讀取的數列。",
+      "unsupportedCombination": "此圖表組合類型的方式無法在此處編輯。",
+      "noSeries": "圖表不包含資料數列。",
+      "invalid": "無法在此處編輯此圖表：{{reason}}",
+      "unusualPrefix": "此圖表使用了不常見的 XML 寫法，無法在此處安全地編輯。"
+    },
+    "warnings": {
+      "stackedBars": "編輯時，堆疊橫條會並排放置。",
+      "stackedLines": "編輯時，堆疊折線會變成個別的折線。",
+      "stackedAreas": "編輯時，堆疊區域會變成個別的區域。",
+      "linesAfterColumns": "編輯時，折線數列會放在直條之後。",
+      "lastSeriesAsLine": "編輯時，只有最後一個數列以折線繪製。",
+      "multiLevelCategories": "編輯時，多層類別會變成單層。",
+      "moreValuesThanCategories": "數列「{{name}}」的值多於類別數量。",
+      "trendlinesDropped": "編輯時，趨勢線和誤差線會被移除。"
+    }
+  }
+}

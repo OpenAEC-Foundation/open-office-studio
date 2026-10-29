@@ -1,14 +1,17 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ExternalLink, Info, LoaderCircle } from "lucide-react";
+import { Trans, useTranslation } from "react-i18next";
+import i18next from "../../../../src/i18n/config";
 import type { Account, AccountInvoer, MailBackend, OAuthProvider, OAuthStatus } from "../contract";
-import { foutTekst, naarMailFout } from "../fouten";
+import { backendTekst, foutTekst, naarMailFout } from "../fouten";
 import { OAUTH_DOCUMENTATIE, PROVIDERNAAM } from "../oauth";
 
 export type OAuthStatussen = Record<OAuthProvider, OAuthStatus>;
-const NIET_BESCHIKBAAR: OAuthStatus = {
+/** Terugval als de backend geen OAuth-status kent; tekst in de taal van het moment. */
+const nietBeschikbaar = (): OAuthStatus => ({
   beschikbaar: false,
-  melding: "Deze versie van de app ondersteunt aanmelden met Microsoft of Google nog niet.",
-};
+  melding: i18next.t("email:accounts.oauth.notSupported"),
+});
 
 /** Status van de providers en een lopende aanmelding, met annuleren. */
 export function useOAuth(backend: MailBackend) {
@@ -19,7 +22,7 @@ export function useOAuth(backend: MailBackend) {
     backend
       .oauthStatus()
       .then(setStatus)
-      .catch(() => setStatus({ microsoft: NIET_BESCHIKBAAR, google: NIET_BESCHIKBAAR }));
+      .catch(() => setStatus({ microsoft: nietBeschikbaar(), google: nietBeschikbaar() }));
   }, [backend]);
   useEffect(ververs, [ververs]);
 
@@ -32,7 +35,7 @@ export function useOAuth(backend: MailBackend) {
         return await backend.meldAanMetOAuth(provider, account);
       } catch (e) {
         if (geannuleerd.current) return null;
-        throw new Error(foutTekst(e, `Aanmelden bij ${PROVIDERNAAM[provider]} mislukt`));
+        throw new Error(foutTekst(e, i18next.t("email:accounts.oauth.signInFailed", { provider: PROVIDERNAAM[provider] })));
       } finally {
         setBezig(null);
       }
@@ -53,31 +56,34 @@ export function useOAuth(backend: MailBackend) {
 }
 
 export function OAuthWacht({ provider, annuleer }: { provider: OAuthProvider; annuleer: () => void }) {
+  const { t } = useTranslation("email");
   return (
     <div className="email-oauthwacht" role="status" aria-live="polite">
       <LoaderCircle size={30} className="email-draait" />
-      <h3>Rond het aanmelden af in je browser</h3>
-      <p>
-        De aanmeldpagina van {PROVIDERNAAM[provider]} is in je browser geopend. Meld je daar aan en geef toestemming voor e-mail; daarna gaat Email Studio
-        hier verder.
-      </p>
+      <h3>{t("accounts.oauth.waitTitle")}</h3>
+      <p>{t("accounts.oauth.waitText", { provider: PROVIDERNAAM[provider] })}</p>
       <button className="email-knop" onClick={annuleer}>
-        Annuleren
+        {t("common:cancel")}
       </button>
     </div>
   );
 }
 
 export function OAuthUitleg({ provider, status }: { provider: OAuthProvider; status?: OAuthStatus }) {
+  const { t } = useTranslation("email");
   return (
     <div className="email-oauthuitleg" role="note">
       <Info size={15} />
       <div>
-        <strong>Aanmelden met {PROVIDERNAAM[provider]} is hier niet beschikbaar.</strong>
-        <p>{status?.melding ?? NIET_BESCHIKBAAR.melding}</p>
+        <strong>{t("accounts.oauth.unavailableTitle", { provider: PROVIDERNAAM[provider] })}</strong>
+        <p>{backendTekst(status) || t("accounts.oauth.notSupported")}</p>
         <p>
-          In de desktopapp kun je onder <em>Extra › Accountinstellingen › Geavanceerd</em> een eigen client-ID voor {PROVIDERNAAM[provider]} instellen. Hoe
-          je die aanmaakt staat in <code>{OAUTH_DOCUMENTATIE}</code>. Je kunt ook verdergaan met een (app-)wachtwoord.
+          <Trans
+            t={t}
+            i18nKey="accounts.oauth.unavailableHelp"
+            values={{ provider: PROVIDERNAAM[provider], doc: OAUTH_DOCUMENTATIE }}
+            components={{ em: <em />, code: <code /> }}
+          />
         </p>
       </div>
     </div>
@@ -94,6 +100,7 @@ export function OAuthKnoppen({
   kies: (provider: OAuthProvider) => void;
   uitgeschakeld?: boolean;
 }) {
+  const { t } = useTranslation("email");
   const volgorde: OAuthProvider[] = aanbevolen === "google" ? ["google", "microsoft"] : ["microsoft", "google"];
   return (
     <div className="email-oauthknoppen">
@@ -105,8 +112,8 @@ export function OAuthKnoppen({
           disabled={uitgeschakeld}
           onClick={() => kies(provider)}
         >
-          <ExternalLink size={14} /> Aanmelden met {PROVIDERNAAM[provider]}
-          {provider === aanbevolen && <small className="email-aanbevolen">aanbevolen</small>}
+          <ExternalLink size={14} /> {t("accounts.oauth.signInWith", { provider: PROVIDERNAAM[provider] })}
+          {provider === aanbevolen && <small className="email-aanbevolen">{t("accounts.oauth.recommended")}</small>}
         </button>
       ))}
     </div>

@@ -4,6 +4,7 @@
  * dat `FormulierHost` implementeert (`Me`, `Me!veld`, `Forms!frm!ctl`).
  * Er wordt nooit iets automatisch uitgevoerd; alleen op verzoek van de gebruiker.
  */
+import i18next from "i18next";
 import { VbaClient } from "../../../vba/src/vba-client.ts";
 import type { FormulierDoel, FormulierHost, HostWaarde, VbaHost } from "../../../vba/src/host.ts";
 import type { LaadResultaat, ProcedureInfo, VoerUitResultaat } from "../../../vba/src/protocol.ts";
@@ -19,6 +20,8 @@ import type { VbaModuleRecord, VbaModuleSoort, Waarde } from "../werkkopie/contr
 import type { BedienbareWerkkopie } from "./werkkopie-sessie.ts";
 
 export type { VbaModuleSoort };
+
+const tr = (sleutel: string, opties?: Record<string, unknown>) => i18next.t(`database:vbaSession.${sleutel}`, opties);
 export { moduleSoort } from "../werkkopie/modules.ts";
 
 export interface VbaModule {
@@ -39,18 +42,23 @@ export function moduleUitRecord(r: VbaModuleRecord): VbaModule {
 /** Controleert een nieuwe modulenaam; geeft een melding of null. */
 export function controleerModulenaam(naam: string, bestaand: string[]): string | null {
   const n = naam.trim();
-  if (!/^[A-Za-z][A-Za-z0-9_]*$/.test(n)) return "Gebruik een letter gevolgd door letters, cijfers of _.";
-  if (n.length > 64) return "Gebruik hoogstens 64 tekens.";
-  if (bestaand.some((b) => b.toLowerCase() === n.toLowerCase())) return "Deze module bestaat al.";
+  if (!/^[A-Za-z][A-Za-z0-9_]*$/.test(n)) return tr("moduleName.invalid");
+  if (n.length > 64) return tr("moduleName.tooLong", { max: 64 });
+  if (bestaand.some((b) => b.toLowerCase() === n.toLowerCase())) return tr("moduleName.exists");
   return null;
 }
 
 /** Startbron voor een nieuwe module van de gegeven soort. */
 export function nieuweModuleBron(naam: string, soort: VbaModuleSoort): string {
   if (soort === "formulier")
-    return `Option Compare Database\nOption Explicit\n\nPrivate Sub Form_Load()\n    Debug.Print "Formulier geladen: " & Me.Name\nEnd Sub\n`;
+    return `Option Compare Database\nOption Explicit\n\nPrivate Sub Form_Load()\n    Debug.Print "${vbaTekst(tr("template.formLoaded"))} " & Me.Name\nEnd Sub\n`;
   if (soort === "klasse") return `Option Compare Database\nOption Explicit\n\nPrivate Sub Class_Initialize()\nEnd Sub\n`;
-  return `Option Compare Database\nOption Explicit\n\nPublic Sub Test()\n    Debug.Print "Hallo vanuit ${naam}"\nEnd Sub\n`;
+  return `Option Compare Database\nOption Explicit\n\nPublic Sub Test()\n    Debug.Print "${vbaTekst(tr("template.hello", { name: naam }))}"\nEnd Sub\n`;
+}
+
+/** Tekst veilig binnen een VBA-tekenreeks (dubbele aanhalingstekens verdubbelen). */
+function vbaTekst(tekst: string): string {
+  return tekst.replace(/"/g, '""');
 }
 
 export function naarHostWaarde(w: Waarde | undefined): HostWaarde {
@@ -92,8 +100,8 @@ export class FormulierRegister implements FormulierHost {
     if (!f)
       throw new Error(
         doel.soort === "rapport"
-          ? `Rapport ‘${naam}’ is niet geopend als formulier; rapportgebeurtenissen worden niet uitgevoerd.`
-          : `Formulier ‘${naam}’ is niet geopend.`,
+          ? tr("reportNotOpen", { name: naam })
+          : tr("formNotOpen", { name: naam }),
       );
     return f;
   }
@@ -102,7 +110,7 @@ export class FormulierRegister implements FormulierHost {
   }
   async lees(doel: FormulierDoel, eigenschap: string, args: HostWaarde[]): Promise<HostWaarde> {
     if (!doel.naam && eigenschap === "activeform") {
-      if (!this.actief) throw new Error("Er is geen formulier actief.");
+      if (!this.actief) throw new Error(tr("noActiveForm"));
       return this.actief;
     }
     if (!doel.naam && eigenschap === "activecontrol") return null;
@@ -197,19 +205,23 @@ export class VbaSessie {
 export function foutTekst(r: Extract<VoerUitResultaat, { ok: false }>): string {
   const f = r.fout;
   const plaats = [f.module, f.procedure].filter(Boolean).join(".");
-  const waar = plaats ? ` (${plaats}${f.regel ? `, regel ${f.regel}` : ""})` : f.regel ? ` (regel ${f.regel})` : "";
-  const nummer = f.nummer ? `Fout ${f.nummer}: ` : "";
+  const beschrijving = f.beschrijving.replace(/\s+$/, "");
+  let tekst = f.nummer ? tr("error.withNumber", { number: f.nummer, description: beschrijving }) : beschrijving;
   const soort =
     f.soort === "afbreking"
       ? f.reden === "afgeschermd"
-        ? "Geweigerd (afgeschermd): "
+        ? "sandboxed"
         : f.reden === "tijdslimiet"
-          ? "Tijdslimiet: "
+          ? "timeout"
           : f.reden === "gestopt"
-            ? "Gestopt: "
-            : "Afgebroken: "
+            ? "stopped"
+            : "aborted"
       : f.soort === "parseer"
-        ? "Syntaxisfout: "
-        : "";
-  return `${soort}${nummer}${f.beschrijving.replace(/\s+$/, "")}${waar}`;
+        ? "syntax"
+        : null;
+  if (soort) tekst = tr(`error.kind.${soort}`, { text: tekst });
+  if (plaats && f.regel) return tr("error.atPlaceLine", { text: tekst, place: plaats, line: f.regel });
+  if (plaats) return tr("error.atPlace", { text: tekst, place: plaats });
+  if (f.regel) return tr("error.atLine", { text: tekst, line: f.regel });
+  return tekst;
 }

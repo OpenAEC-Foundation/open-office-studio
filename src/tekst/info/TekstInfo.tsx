@@ -6,6 +6,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useDocxCommand, type DocxEditorRef } from "@betteroffice/docx-react";
 import { useEditorApi, useEditorZichtbaar } from "../../lint/editorApi";
+import { useOpmaak } from "../../i18n/opmaak";
 import { InfoVenster } from "./InfoVenster";
 import { InspectieVenster } from "./InspectieVenster";
 import { Leesmodus } from "./Leesmodus";
@@ -64,6 +65,8 @@ export function TekstInfo() {
   const [weergave, setWeergave] = useState<Weergave>("afdruk");
   const [taal, setTaal] = useState<string | null>(null);
   const aansluiting = useTaalAansluiting();
+  // Taalnamen in de interfacetaal; een taalwissel publiceert opnieuw.
+  const { locale } = useOpmaak();
   const verzoek = useInfoVerzoek();
   const gezien = useRef(verzoek?.n ?? 0);
   // Vanuit Bestand › Info: na herladen terug naar het document.
@@ -97,7 +100,7 @@ export function TekstInfo() {
       return;
     }
     publiceerTekstExtra(eigenaar, {
-      taal: taal ? { code: taal, naam: taalNaam(taal) } : null,
+      taal: taal ? { code: taal, naam: taalNaam(taal, locale) } : null,
       kiesTaal: () => (aansluiting.kiesTaal ? aansluiting.kiesTaal(taal) : setDialoog("taal")),
       bijhouden,
       wisselBijhouden: () =>
@@ -105,7 +108,7 @@ export function TekstInfo() {
       weergave,
       zetWeergave: setWeergave,
     });
-  }, [zichtbaar, taal, bijhouden, weergave, aansluiting]);
+  }, [zichtbaar, taal, bijhouden, weergave, aansluiting, locale]);
   useEffect(() => () => publiceerTekstExtra(eigenaar, null), []);
 
   const sluit = () => {

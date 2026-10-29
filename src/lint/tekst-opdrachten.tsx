@@ -1,6 +1,9 @@
 import { useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { vraagAfdrukvoorbeeld } from "../afdrukken/openen";
 import { createPortal } from "react-dom";
+import { useTranslation } from "react-i18next";
+import i18next from "../i18n/config";
+import { useOpmaak } from "../i18n/opmaak";
 import {
   useDocxCommand,
   useDocxCommands,
@@ -113,7 +116,7 @@ function tekstVlak() {
 
 async function leesAlineas(api: DocxEditorRef) {
   const gelezen = await api.readParagraphs({ view: "accepted" });
-  if (!gelezen.ok) throw new Error("Het document kon niet worden gelezen.");
+  if (!gelezen.ok) throw new Error(i18next.t("ribbon:writer.errors.documentUnreadable"));
   return gelezen;
 }
 
@@ -124,6 +127,7 @@ export function useTekstOpdrachten({
   wijzigLiniaal: () => void;
   wijzigNavigatie: () => void;
 }) {
+  const { t } = useTranslation("ribbon");
   const api = useEditorApi().tekst;
   const opdrachten = useDocxCommands();
   const meld = useContext(RibbonFout);
@@ -147,7 +151,7 @@ export function useTekstOpdrachten({
   }
   function editor() {
     const ref = api();
-    if (!ref) throw new Error("Het document is nog niet gereed.");
+    if (!ref) throw new Error(t("writer.errors.documentNotReady"));
     return ref;
   }
 
@@ -155,7 +159,7 @@ export function useTekstOpdrachten({
     try {
       const ref = editor();
       const invoer = ref.getEditorRef();
-      if (!invoer) throw new Error("Het document is nog niet gereed.");
+      if (!invoer) throw new Error(t("writer.errors.documentNotReady"));
       ref.focus();
       invoer.insertText(tekst);
     } catch (error) {
@@ -179,7 +183,7 @@ export function useTekstOpdrachten({
         .then(() => {
           if (soort === "cut") ref.getEditorRef()?.deleteSelection();
         })
-        .catch(() => meld("Het klembord is niet beschikbaar. Gebruik Ctrl+C."));
+        .catch(() => meld(t("writer.errors.clipboardUnavailable", { shortcut: "Ctrl+C" })));
     } catch (error) {
       fout(error);
     }
@@ -216,14 +220,14 @@ export function useTekstOpdrachten({
   }
   function plakken() {
     if (!navigator.clipboard?.readText) {
-      meld("Plakken via het lint is hier niet toegestaan. Gebruik Ctrl+V.");
+      meld(t("writer.errors.pasteNotAllowed", { shortcut: "Ctrl+V" }));
       return;
     }
     navigator.clipboard
       .readText()
       .then((tekst) => tekst && voegIn(tekst))
       .catch(() =>
-        meld("Plakken via het lint is hier niet toegestaan. Gebruik Ctrl+V."),
+        meld(t("writer.errors.pasteNotAllowed", { shortcut: "Ctrl+V" })),
       );
   }
 
@@ -233,21 +237,19 @@ export function useTekstOpdrachten({
     const info = ref.getSelectionInfo();
     const tekst = info?.selectedText ?? "";
     if (!info?.paraId || !tekst)
-      throw new Error("Selecteer eerst de tekst die je wilt wijzigen.");
+      throw new Error(t("writer.errors.selectTextFirst"));
     if (/[\n\r\uFFFC]/u.test(tekst))
-      throw new Error("Selecteer tekst binnen één alinea, zonder objecten.");
+      throw new Error(t("writer.errors.selectWithinParagraph"));
     const gelezen = await ref.readParagraphs({
       view: "accepted",
       paraIds: [info.paraId],
     });
     const alinea = gelezen.ok ? gelezen.paragraphs[0] : undefined;
     if (!gelezen.ok || !alinea)
-      throw new Error("Deze tekst kan hier niet worden gewijzigd.");
+      throw new Error(t("writer.errors.cannotChangeHere"));
     const begin = selectieBegin(alinea.text, tekst, info.before);
     if (begin === null)
-      throw new Error(
-        "Deze selectie komt vaker in de alinea voor; selecteer een uniek stuk tekst.",
-      );
+      throw new Error(t("writer.errors.ambiguousSelection"));
     return { ref, tekst, begin, alinea, versie: gelezen.version };
   }
 
@@ -265,7 +267,7 @@ export function useTekstOpdrachten({
       const voorstel = opnemen
         ? {
             suggest: {
-              author: leesAuteur() || "Onbekende auteur",
+              author: leesAuteur() || t("writer.comment.unknownAuthor"),
               date: new Date().toISOString(),
             },
           }
@@ -286,7 +288,7 @@ export function useTekstOpdrachten({
         })),
       });
       if (!resultaat.ok)
-        throw new Error("Het hoofdlettergebruik kon niet worden gewijzigd.");
+        throw new Error(t("writer.errors.caseFailed"));
       ref.focus();
     } catch (error) {
       fout(error);
@@ -307,9 +309,7 @@ export function useTekstOpdrachten({
         marks: { underline: { style: "double" } },
       });
       if (!gelukt)
-        throw new Error(
-          "Dubbel onderstrepen lukt alleen bij een uniek stuk tekst binnen één alinea.",
-        );
+        throw new Error(t("writer.errors.doubleUnderlineFailed"));
       ref.focus();
     } catch (error) {
       fout(error);
@@ -331,20 +331,22 @@ export function useTekstOpdrachten({
   }
 
   function toonStijlen() {
-    const lint = zichtbaarElement(".office-tekst .ribbon");
+    const lint = zichtbaarElement(".office-lintplek[data-soort=\"docx\"] .ribbon, .office-tekst .ribbon");
     if (!lint) return;
     const inhoud = lint.querySelector<HTMLElement>(".ribbon-inhoud");
     if (inhoud?.hidden)
       lint.querySelector<HTMLButtonElement>(".ribbon-inklap")?.click();
-    if (!lint.querySelector("select[aria-label='Alle stijlen']"))
-      [...lint.querySelectorAll<HTMLButtonElement>("[role='tab']")]
-        .find((tab) => tab.textContent === "Stijlen")
-        ?.click();
+    // De keuzelijst heet in elke taal anders; het tabblad vinden we op zijn vaste id.
+    const alleStijlen = t("writer.commands.allStyles");
+    const stijlKeuze = () =>
+      [...lint.querySelectorAll<HTMLSelectElement>("select")].find(
+        (keuze) => keuze.getAttribute("aria-label") === alleStijlen,
+      );
+    if (!stijlKeuze())
+      lint.querySelector<HTMLButtonElement>("[role='tab'][id$='-stijlen']")?.click();
     let pogingen = 0;
     const focus = () => {
-      const keuze = lint.querySelector<HTMLSelectElement>(
-        "select[aria-label='Alle stijlen']",
-      );
+      const keuze = stijlKeuze();
       if (keuze) keuze.focus();
       else if (pogingen++ < 10) requestAnimationFrame(focus);
     };
@@ -458,6 +460,7 @@ function Dialoog({
   acties?: ReactNode;
   breed?: boolean;
 }) {
+  const { t } = useTranslation("common");
   const vak = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const eerste = vak.current?.querySelector<HTMLElement>(
@@ -490,7 +493,7 @@ function Dialoog({
         <div className="office-dialoogacties">
           {acties}
           <button type="button" onClick={sluit}>
-            {acties ? "Annuleren" : "Sluiten"}
+            {acties ? t("cancel") : t("close")}
           </button>
         </div>
       </div>
@@ -499,8 +502,6 @@ function Dialoog({
   );
 }
 
-const getal = (n: number) => n.toLocaleString("nl-NL");
-
 function WoordenTellen({
   api,
   sluit,
@@ -508,6 +509,8 @@ function WoordenTellen({
   api: () => DocxEditorRef | null;
   sluit: () => void;
 }) {
+  const { t } = useTranslation("ribbon");
+  const { getal } = useOpmaak();
   const [geheel, setGeheel] = useState<Telling | null>(null);
   const [selectie, setSelectie] = useState<Telling | null>(null);
   const [paginas, setPaginas] = useState(0);
@@ -531,37 +534,37 @@ function WoordenTellen({
       actief = false;
     };
   }, [api]);
-  const rijen: [string, (t: Telling) => number][] = [
-    ["Woorden", (t) => t.woorden],
-    ["Tekens inclusief spaties", (t) => t.tekens],
-    ["Tekens exclusief spaties", (t) => t.tekensZonderSpaties],
-    ["Alinea’s", (t) => t.alineas],
+  const rijen: [string, (telling: Telling) => number][] = [
+    ["words", (telling) => telling.woorden],
+    ["charactersWithSpaces", (telling) => telling.tekens],
+    ["charactersNoSpaces", (telling) => telling.tekensZonderSpaties],
+    ["paragraphs", (telling) => telling.alineas],
   ];
   return (
-    <Dialoog titel="Woorden tellen" sluit={sluit}>
+    <Dialoog titel={t("writer.wordCount.title")} sluit={sluit}>
       {fout ? (
         <p>{fout}</p>
       ) : !geheel ? (
-        <p>Tellen…</p>
+        <p>{t("writer.wordCount.counting")}</p>
       ) : (
         <table className="tekst-telling">
           <thead>
             <tr>
               <th />
-              {selectie && <th>Selectie</th>}
-              <th>Document</th>
+              {selectie && <th>{t("writer.wordCount.selection")}</th>}
+              <th>{t("writer.wordCount.document")}</th>
             </tr>
           </thead>
           <tbody>
-            {rijen.map(([naam, waarde]) => (
-              <tr key={naam}>
-                <th scope="row">{naam}</th>
+            {rijen.map(([sleutel, waarde]) => (
+              <tr key={sleutel}>
+                <th scope="row">{t(`writer.wordCount.${sleutel}`)}</th>
                 {selectie && <td>{getal(waarde(selectie))}</td>}
                 <td>{getal(waarde(geheel))}</td>
               </tr>
             ))}
             <tr>
-              <th scope="row">Pagina’s</th>
+              <th scope="row">{t("writer.wordCount.pages")}</th>
               {selectie && <td />}
               <td>{paginas ? getal(paginas) : "—"}</td>
             </tr>
@@ -579,10 +582,13 @@ function SpeciaalTeken({
   sluit: () => void;
   voegIn: (teken: string) => void;
 }) {
+  const { t } = useTranslation("ribbon");
   const [gekozen, setGekozen] = useState(specialeTekens[0].tekens[0]);
+  const naamVan = (teken: { id: string }) =>
+    t(`writer.specialCharacter.characters.${teken.id}`);
   return (
     <Dialoog
-      titel="Speciaal teken"
+      titel={t("writer.specialCharacter.title")}
       sluit={sluit}
       breed
       acties={
@@ -594,22 +600,22 @@ function SpeciaalTeken({
             voegIn(gekozen.teken);
           }}
         >
-          Invoegen
+          {t("writer.dialogs.insert")}
         </button>
       }
     >
       <div className="tekst-tekens">
         {specialeTekens.map((groep) => (
-          <section key={groep.groep} aria-label={groep.groep}>
-            <h3>{groep.groep}</h3>
+          <section key={groep.groep} aria-label={t(`writer.specialCharacter.groups.${groep.groep}`)}>
+            <h3>{t(`writer.specialCharacter.groups.${groep.groep}`)}</h3>
             <div>
               {groep.tekens.map((teken) => (
                 <button
-                  key={teken.naam}
+                  key={teken.id}
                   type="button"
                   className="tekst-teken"
-                  title={teken.naam}
-                  aria-label={teken.naam}
+                  title={naamVan(teken)}
+                  aria-label={naamVan(teken)}
                   aria-pressed={teken === gekozen}
                   onClick={() => setGekozen(teken)}
                   onDoubleClick={() => {
@@ -627,7 +633,7 @@ function SpeciaalTeken({
         ))}
       </div>
       <p className="tekst-teken-naam">
-        {gekozen.naam} · U+
+        {naamVan(gekozen)} · U+
         {gekozen.teken
           .codePointAt(0)!
           .toString(16)
@@ -647,6 +653,7 @@ function OpmerkingInvoegen({
   sluit: () => void;
   fout: (error: unknown) => void;
 }) {
+  const { t } = useTranslation("ribbon");
   const zijbalk = useDocxCommand("commentsSidebar");
   const [tekst, setTekst] = useState("");
   const [auteur, setAuteur] = useState(leesAuteur);
@@ -655,8 +662,8 @@ function OpmerkingInvoegen({
     try {
       const ref = api();
       if (!ref || !selectie?.paraId)
-        throw new Error("Zet de cursor eerst in een alinea.");
-      const naam = auteur.trim() || "Onbekende auteur";
+        throw new Error(t("writer.errors.placeCursorFirst"));
+      const naam = auteur.trim() || t("writer.comment.unknownAuthor");
       bewaarAuteur(auteur.trim());
       const gekozen = selectie.selectedText;
       const id = ref.addComment({
@@ -669,9 +676,7 @@ function OpmerkingInvoegen({
             : undefined,
       });
       if (id === null)
-        throw new Error(
-          "De opmerking kon niet worden geplaatst. Selecteer een uniek stuk tekst binnen één alinea.",
-        );
+        throw new Error(t("writer.errors.commentFailed"));
       sluit();
       if (!zijbalk.state.active) void zijbalk.execute();
     } catch (error) {
@@ -680,7 +685,7 @@ function OpmerkingInvoegen({
   }
   return (
     <Dialoog
-      titel="Opmerking invoegen"
+      titel={t("writer.comment.title")}
       sluit={sluit}
       acties={
         <button
@@ -689,17 +694,19 @@ function OpmerkingInvoegen({
           disabled={!tekst.trim()}
           onClick={invoegen}
         >
-          Invoegen
+          {t("writer.dialogs.insert")}
         </button>
       }
     >
       <p>
         {selectie?.selectedText
-          ? `Bij: “${selectie.selectedText.slice(0, 80)}${selectie.selectedText.length > 80 ? "…" : ""}”`
-          : "Bij de alinea waarin de cursor staat."}
+          ? t("writer.comment.onSelection", {
+              text: `${selectie.selectedText.slice(0, 80)}${selectie.selectedText.length > 80 ? "…" : ""}`,
+            })
+          : t("writer.comment.onParagraph")}
       </p>
       <label className="tekst-veld">
-        <span>Opmerking</span>
+        <span>{t("writer.comment.text")}</span>
         <textarea
           rows={4}
           value={tekst}
@@ -711,10 +718,10 @@ function OpmerkingInvoegen({
         />
       </label>
       <label className="tekst-veld">
-        <span>Auteur</span>
+        <span>{t("writer.comment.author")}</span>
         <input
           value={auteur}
-          placeholder="Onbekende auteur"
+          placeholder={t("writer.comment.unknownAuthor")}
           onChange={(event) => setAuteur(event.target.value)}
         />
       </label>
@@ -729,6 +736,8 @@ function GaNaarPagina({
   api: () => DocxEditorRef | null;
   sluit: () => void;
 }) {
+  const { t } = useTranslation("ribbon");
+  const { getal } = useOpmaak();
   const ref = api();
   const totaal = ref?.getTotalPages() ?? 0;
   const [pagina, setPagina] = useState(String(ref?.getCurrentPage() || 1));
@@ -742,7 +751,7 @@ function GaNaarPagina({
   }
   return (
     <Dialoog
-      titel="Ga naar pagina"
+      titel={t("writer.goToPage.title")}
       sluit={sluit}
       acties={
         <button
@@ -751,12 +760,16 @@ function GaNaarPagina({
           disabled={!geldig}
           onClick={ga}
         >
-          Ga naar
+          {t("writer.goToPage.go")}
         </button>
       }
     >
       <label className="tekst-veld">
-        <span>Paginanummer{totaal ? ` (1–${totaal})` : ""}</span>
+        <span>
+          {totaal
+            ? t("writer.goToPage.pageNumberRange", { first: getal(1), last: getal(totaal) })
+            : t("writer.goToPage.pageNumber")}
+        </span>
         <input
           type="number"
           min={1}

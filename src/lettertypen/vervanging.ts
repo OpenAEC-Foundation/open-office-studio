@@ -4,6 +4,7 @@
  * verandert niet: de oorspronkelijke naam blijft in het bestand staan.
  */
 import { strFromU8, unzipSync } from "fflate";
+import i18next from "../i18n/config";
 
 export type Vervangingssoort = "metrisch" | "benadering";
 
@@ -162,8 +163,8 @@ export function vervangingsMelding(vervangingen: Vervanging[]) {
   const metrisch = delen("metrisch");
   const benadering = delen("benadering");
   const zinnen = [
-    metrisch.length && `metrisch gelijk (zelfde regelval): ${metrisch.join(", ")}`,
-    benadering.length && `benadering (regels en pagina's kunnen verschuiven): ${benadering.join(", ")}`,
+    metrisch.length && i18next.t("fonts:substitution.metric", { fonts: metrisch.join(", ") }),
+    benadering.length && i18next.t("fonts:substitution.approximate", { fonts: benadering.join(", ") }),
   ].filter(Boolean);
-  return `Lettertypen vervangen omdat ze niet op deze computer staan — ${zinnen.join("; ")}. In het bestand blijven de oorspronkelijke namen staan.`;
+  return i18next.t("fonts:substitution.message", { details: zinnen.join("; ") });
 }

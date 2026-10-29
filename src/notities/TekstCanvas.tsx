@@ -7,6 +7,7 @@ import {
   type RefObject,
 } from "react";
 import { GripHorizontal, MoveDiagonal2, Plus, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { begrensVak, type Tekstvak, type VakPlaats } from "./model";
 
 type Gebaar = {
@@ -43,6 +44,7 @@ function VrijTekstvak({
   kinderen: ReactNode;
   meet: (hoogte: number) => void;
 }) {
+  const { t } = useTranslation("notes");
   const kader = useRef<HTMLDivElement>(null);
   const gebaar = useRef<Gebaar | null>(null);
   const [voorvertoning, setVoorvertoning] = useState<VakPlaats | null>(null);
@@ -167,19 +169,19 @@ function VrijTekstvak({
       <div className="notities-vakkop">
         <button
           className="notities-vakgreep"
-          aria-label={`Tekstvak ${index + 1} verplaatsen`}
-          title="Sleep om te verplaatsen · Pijltjes voor 1 pixel, Shift voor 10 · Escape annuleert"
+          aria-label={t("canvas.moveBox", { number: index + 1 })}
+          title={t("canvas.moveTitle")}
           onPointerDown={(e) => begin(e, "slepen")}
           {...pointer}
           onKeyDown={(e) => toets(e)}
         >
           <GripHorizontal size={15} />
-          <span>Tekstvak {index + 1}</span>
+          <span>{t("canvas.box", { number: index + 1 })}</span>
         </button>
         <button
           className="notities-vakverwijderen"
-          aria-label={`Tekstvak ${index + 1} verwijderen`}
-          title="Tekstvak verwijderen · Ongedaan maken met Ctrl+Z"
+          aria-label={t("canvas.deleteBox", { number: index + 1 })}
+          title={t("canvas.deleteTitle")}
           onClick={verwijder}
         >
           <X size={13} />
@@ -188,8 +190,8 @@ function VrijTekstvak({
       <div className="notities-vakinhoud">{kinderen}</div>
       <button
         className="notities-vakformaat"
-        aria-label={`Tekstvak ${index + 1} vergroten of verkleinen`}
-        title="Sleep om de grootte te wijzigen · Pijltjes voor 1 pixel, Shift voor 10"
+        aria-label={t("canvas.resizeBox", { number: index + 1 })}
+        title={t("canvas.resizeTitle")}
         onPointerDown={(e) => begin(e, "grootte")}
         {...pointer}
         onKeyDown={(e) => toets(e, true)}
@@ -223,6 +225,7 @@ export function TekstCanvas({
   nieuw: (x?: number, y?: number) => void;
   render: (vak: Tekstvak) => ReactNode;
 }) {
+  const { t } = useTranslation("notes");
   const [maten, setMaten] = useState<Record<string, number>>({});
   const [zicht, setZicht] = useState({ breedte: 800, hoogte: 600 });
   useEffect(() => {
@@ -249,7 +252,8 @@ export function TekstCanvas({
     <div
       ref={venster}
       className="notities-canvasvenster"
-      aria-label="Vrije notitiepagina"
+      dir="ltr"
+      aria-label={t("canvas.pageLabel")}
     >
       <div
         className="notities-canvasruimte"
@@ -269,13 +273,13 @@ export function TekstCanvas({
           }}
         >
           <span className="notities-canvastip">
-            Dubbelklik op een lege plek om een tekstvak toe te voegen
+            {t("canvas.tip")}
           </span>
           {!vakken.length && (
             <button className="notities-eerstevak" onClick={() => nieuw()}>
               <Plus size={20} />
-              <strong>Begin waar je wilt.</strong>
-              <span>Tekstvak toevoegen</span>
+              <strong>{t("canvas.firstTitle")}</strong>
+              <span>{t("canvas.firstAdd")}</span>
             </button>
           )}
           {vakken.map((vak, index) => (

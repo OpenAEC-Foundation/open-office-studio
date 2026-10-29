@@ -1,0 +1,1008 @@
+{
+  "accounts": {
+    "test": {
+      "test": "Sına",
+      "testConnection": "Bağlantıyı sına",
+      "testing": "Sınanıyor…",
+      "retest": "Yeniden sına",
+      "failed": "Sınama başarısız"
+    },
+    "settings": {
+      "title": "Hesap Ayarları",
+      "noAccount": "Henüz hesap yok.",
+      "addAccount": "Hesap ekle",
+      "accountList": "Hesaplar",
+      "saving": "Kaydediliyor…",
+      "saved": "Ayarlar kaydedildi.",
+      "saveFailed": "Kaydedilemedi",
+      "tabs": {
+        "identity": "Kimlik",
+        "servers": "Sunucular",
+        "folders": "Klasörler",
+        "fetching": "Alma ve gizlilik",
+        "advanced": "Gelişmiş"
+      },
+      "deleteAccount": {
+        "title": "Hesabı kaldır",
+        "confirm": "<strong>{{name}}</strong> ({{email}}) hesabını kaldırmak istediğinizden emin misiniz? İletileriniz sunucuda kalır; kayıtlı parola anahtar zincirinden kaldırılır.",
+        "button": "Hesabı kaldır",
+        "failed": "Hesap kaldırılamadı"
+      },
+      "identity": {
+        "accountName": "Hesap adı",
+        "accountNameHint": "Yalnızca sizin için, örneğin \"İş\" veya \"Kişisel\".",
+        "yourName": "Adınız",
+        "email": "E-posta adresi",
+        "replyTo": "Yanıt adresi",
+        "replyToPlaceholder": "Boş = e-posta adresiniz",
+        "signature": "İmza",
+        "signatureHint": "Yeni iletilerin ve yanıtların altına, \"-- \" işaretinden sonra eklenir."
+      },
+      "oauthAccount": {
+        "signedInAs": "{{provider}} ile <strong>{{account}}</strong> olarak oturum açıldı",
+        "noPasswordStored": "Parola kaydedilmez; erişim anahtar zincirindeki bir belirteçle sağlanır.",
+        "signInAgain": "Yeniden oturum aç",
+        "signedInAgain": "{{account}} olarak yeniden oturum açıldı."
+      },
+      "password": {
+        "change": "Parolayı değiştir",
+        "storedPlaceholder": "Kayıtlı · korumak için boş bırakın",
+        "noneStoredPlaceholder": "Henüz kayıtlı parola yok"
+      },
+      "folders": {
+        "hint": "Email Studio'nun gönderilen iletileri, taslakları, silinen ve arşivlenen iletileri nerede tutacağını seçin.",
+        "roles": {
+          "sent": "Gönderilen iletiler",
+          "drafts": "Taslaklar",
+          "trash": "Çöp kutusu",
+          "archive": "Arşiv"
+        },
+        "automatic": "Otomatik",
+        "automaticWithFolder": "Otomatik ({{folder}})"
+      },
+      "fetching": {
+        "checkForNew": "Yeni iletileri denetle",
+        "manualOnly": "Yalnızca el ile",
+        "everyMinutes_one": "Her {{count}} dakikada",
+        "everyMinutes_other": "Her {{count}} dakikada",
+        "externalContent": "Uzak resimleri ve içeriği her zaman göster",
+        "externalContentHint": "Kapalı önerilir: uzak resimler, gönderenlere bir iletiyi ne zaman ve nerede açtığınızı bildirir.",
+        "trustedSenders": "Uzak içeriği her zaman gösterilen gönderenler",
+        "forgetSender": "{{sender}} unut"
+      },
+      "advanced": {
+        "oauthIntro": "Microsoft veya Google ile oturum açma OAuth2 kullanır. Bu ayarlar tüm hesaplar için geçerlidir. Kendi istemci kimliğiniz yalnızca uygulama bir tane içermiyorsa gerekir; bkz. <code>{{doc}}</code>.",
+        "ispdb": "Yeni bir hesap için Thunderbird veritabanına da danış",
+        "ispdbHint": "Alan adı bu durumda Mozilla'ya gönderilir. Varsayılan olarak kapalı.",
+        "available": "Kullanılabilir.",
+        "unavailable": "Kullanılamıyor.",
+        "loadingStatus": "Durum yükleniyor…",
+        "clientId": "İstemci kimliği",
+        "clientSecret": "İstemci gizli anahtarı (isteğe bağlı)",
+        "saveClientId": "İstemci kimliğini kaydet",
+        "clientIdSaved": "{{provider}} için istemci kimliği kaydedildi.",
+        "clientIdSaveFailed": "İstemci kimliği kaydedilemedi",
+        "desktopOnly": "Kendi istemci kimliğinizi yalnızca masaüstü uygulamasında ayarlayabilirsiniz."
+      }
+    },
+    "wizard": {
+      "title": "Hesap ekle",
+      "intro": "Mevcut e-posta adresinizi kullanın. Email Studio, IMAP ve SMTP sunan her sağlayıcıyla çalışır.",
+      "fullName": "Tam adınız",
+      "fullNamePlaceholder": "Ad Soyad",
+      "fullNameHint": "Alıcıların adınızı nasıl göreceği.",
+      "email": "E-posta adresi",
+      "emailPlaceholder": "ad@example.com",
+      "password": "Parola",
+      "passwordHint": "Yalnızca Sına veya Bitti'yi seçtiğinizde kullanılır ve yalnızca işletim sisteminizin anahtar zincirinde saklanır.",
+      "ispdb": "Thunderbird veritabanına da danış",
+      "ispdbHint": "Bu durumda alan adı (adresiniz veya parolanız değil) Mozilla'ya gönderilir.",
+      "oauthPrompt": "Ya da uygulamada parolasız oturum açın:",
+      "enterNameAndEmailFirst": "Önce adınızı ve e-posta adresinizi girin.",
+      "saving": "Kaydediliyor…",
+      "done": "Bitti",
+      "saveAnyway": "Yine de kaydet",
+      "saveTitle": "Hesabı kaydet",
+      "saveUntestedTitle": "Henüz (başarıyla) sınanmadı; hesabı yine de kaydedebilirsiniz",
+      "saveFailed": "Hesap kaydedilemedi",
+      "foundSettings": "Ayarlar bulundu",
+      "serverSettings": "Sunucu ayarları",
+      "serverSettingsFor": "{{domain}} için sunucu ayarları",
+      "enterEmailHint": "E-posta adresinizi girin; Email Studio doğru sunucuları otomatik olarak arar.",
+      "searchFailed": "Arama başarısız",
+      "fillInManually": "Aşağıdaki sunucuları kendiniz girin.",
+      "nothingFound": "Ayar bulunamadı. Aşağıdaki sunucuları kendiniz girin; gerekirse sağlayıcınızdan isteyin.",
+      "proposals": "Öneriler",
+      "unencrypted": "şifrelenmemiş",
+      "manualConfiguration": "El ile yapılandırma",
+      "adjusted": "· düzenlendi",
+      "fieldsAppear": "Alanlar, geçerli bir e-posta adresi girildiğinde görünür.",
+      "bothServersFailed": "Her iki sunucu da başarısız oldu. Adresi, parolayı ve sunucu adlarını denetleyin."
+    },
+    "discovery": {
+      "steps": {
+        "builtIn": "Yerleşik liste",
+        "ownDomain": "Kendi alan adı",
+        "dns": "DNS",
+        "ispdb": "Thunderbird veritabanı",
+        "probe": "Bağlantı yoklaması"
+      },
+      "stepStatus": {
+        "waiting": "bekliyor",
+        "busy": "sürüyor…",
+        "found": "bulundu",
+        "nothing": "bir şey bulunamadı",
+        "skipped": "çalıştırılmadı"
+      },
+      "sources": {
+        "preset": "Yerleşik liste",
+        "autoconfig": "Kendi alan adınızdan yapılandırma",
+        "srv": "DNS SRV kayıtları",
+        "mx": "MX kayıtları (sağlayıcı tanındı)",
+        "ispdb": "Thunderbird veritabanı",
+        "guess": "Yaygın sunucu adları"
+      },
+      "unencrypted": "şifrelenmemiş",
+      "reachable": "erişilebilir",
+      "unreachable": "erişilemiyor",
+      "untested": "sınanmadı"
+    },
+    "server": {
+      "incoming": "Gelen (IMAP)",
+      "outgoing": "Giden (SMTP)",
+      "columns": {
+        "server": "Sunucu",
+        "port": "Bağlantı noktası",
+        "security": "Güvenlik",
+        "authentication": "Kimlik doğrulama",
+        "username": "Kullanıcı adı"
+      },
+      "hostLabel": "{{protocol}} sunucusu",
+      "portLabel": "{{protocol}} bağlantı noktası",
+      "securityLabel": "{{protocol}} güvenliği",
+      "authenticationLabel": "{{protocol}} kimlik doğrulaması",
+      "usernameLabel": "{{protocol}} kullanıcı adı",
+      "imapPlaceholder": "imap.example.com",
+      "smtpPlaceholder": "smtp.example.com",
+      "securityNone": "Yok",
+      "authNormal": "Normal parola",
+      "authEncrypted": "Şifreli parola",
+      "unencryptedWarning": "<strong>Şifrelenmemiş bağlantı.</strong> Parolanız ve iletileriniz ağ üzerinden okunabilir biçimde iletilir. Sağlayıcınız destekliyorsa SSL/TLS veya STARTTLS seçin.",
+      "oauthHint": "OAuth2, sınama sırasında veya ilk kullanımda sağlayıcıda oturum açmanızı ister."
+    },
+    "oauth": {
+      "notSupported": "Uygulamanın bu sürümü henüz Microsoft veya Google ile oturum açmayı desteklemiyor.",
+      "signInFailed": "{{provider}} ile oturum açma başarısız oldu",
+      "signInWith": "{{provider}} ile oturum aç",
+      "recommended": "önerilen",
+      "waitTitle": "Oturum açmayı tarayıcınızda tamamlayın",
+      "waitText": "{{provider}} oturum açma sayfası tarayıcınızda açıldı. Orada oturum açın ve e-postaya erişim izni verin; Email Studio ardından burada devam eder.",
+      "unavailableTitle": "{{provider}} ile oturum açma burada kullanılamıyor.",
+      "unavailableHelp": "Masaüstü uygulamasında {{provider}} için kendi istemci kimliğinizi <em>Araçlar › Hesap Ayarları › Gelişmiş</em> altında ayarlayabilirsiniz. Nasıl oluşturulacağı <code>{{doc}}</code> içinde açıklanmıştır. Bir (uygulama) parolasıyla da devam edebilirsiniz."
+    }
+  },
+  "errors": {
+    "code": {
+      "connection": "Sunucuya bağlantı yok. İnternet bağlantınızı, sunucu adını ve bağlantı noktasını denetleyin.",
+      "authentication": "Oturum açma başarısız oldu. Kullanıcı adınızı ve parolanızı denetleyin (Araçlar › Hesap Ayarları).",
+      "certificate": "Sunucunun sertifikası güvenilir değil veya bu sunucu adıyla eşleşmiyor.",
+      "timeout": "Sunucu zamanında yanıt vermedi. Lütfen daha sonra yeniden deneyin.",
+      "notFound": "İleti veya klasör artık sunucuda yok.",
+      "refused": "Sunucu komutu reddetti.",
+      "tooLarge": "İleti sunucu için çok büyük. Ekleri küçültün veya kaldırın.",
+      "unavailable": "Bu özellik burada kullanılamıyor.",
+      "internal": "Bir sorun oluştu."
+    },
+    "withDetail": "{{explanation}} ({{detail}})",
+    "withContext": "{{context}}: {{message}}",
+    "backendMissing": "Masaüstü uygulamasının bu sürümü e-posta özelliğini içermiyor.",
+    "unexpectedBinary": "Arka uçtan beklenmeyen ikili çıktı."
+  },
+  "dialog": {
+    "closeEsc": "Kapat (Esc)"
+  },
+  "sendAsAttachment": {
+    "title": "Ek olarak gönder"
+  },
+  "ribbon": {
+    "tabs": {
+      "start": "Giriş",
+      "view": "Görünüm",
+      "tools": "Araçlar"
+    },
+    "groups": {
+      "new": "Yeni",
+      "respond": "Yanıtla",
+      "delete": "Sil",
+      "mark": "Etiketler",
+      "organize": "Düzenle",
+      "layout": "Düzen",
+      "sort": "Sırala",
+      "message": "İleti",
+      "accounts": "Hesaplar",
+      "folders": "Klasörler"
+    },
+    "withShortcut": "{{action}} · {{shortcut}}",
+    "fetch": "İletileri al",
+    "fetchTitle": "İletileri al · {{key}} veya {{shortcut}}",
+    "readUnread": "Okundu/okunmadı",
+    "readUnreadTitle": "Okundu veya okunmadı · {{shortcut}}",
+    "star": "Yıldız",
+    "move": "Taşı",
+    "moveTitle": "Klasöre taşı",
+    "folderPane": "Klasör bölmesi",
+    "readingPane": "Okuma bölmesi",
+    "resetLayout": "Düzeni sıfırla",
+    "sortBy": "Sıralama ölçütü",
+    "sort": {
+      "date": "Tarih",
+      "sender": "Gönderen",
+      "subject": "Konu",
+      "size": "Boyut"
+    },
+    "ascending": "Artan",
+    "descending": "Azalan",
+    "viewSource": "Kaynağı görüntüle",
+    "accountSettings": "Hesap Ayarları"
+  },
+  "studio": {
+    "errors": {
+      "loadAccounts": "Hesaplar yüklenemedi",
+      "loadMessages": "İletiler yüklenemedi",
+      "openMessage": "İleti açılamadı",
+      "delete": "Silinemedi",
+      "move": "Taşınamadı",
+      "mark": "İşaretlenemedi",
+      "forwardAttachments": "İletme için ekler alınamadı",
+      "openFile": "{{name}} açılamadı",
+      "saveFile": "{{name}} kaydedilemedi",
+      "source": "Kaynak alınamadı",
+      "updateFolder": "Klasör güncellenemedi",
+      "deleteFolder": "Klasör silinemedi"
+    },
+    "accountAdded": "{{email}} hesabı eklendi.",
+    "addAccount": "Hesap ekle",
+    "deletePermanently": {
+      "title": "Kalıcı olarak sil",
+      "text_one": "Bu ileti kalıcı olarak silinecek. Bu işlem geri alınamaz.",
+      "text_other": "{{count}} ileti kalıcı olarak silinecek. Bu işlem geri alınamaz.",
+      "confirm": "Kalıcı olarak sil"
+    },
+    "noArchiveFolder": "Bu hesabın arşiv klasörü yok. Araçlar › Hesap Ayarları › Klasörler'den bir tane seçin.",
+    "fetched": "İletiler alındı.",
+    "deleteFolder": {
+      "title": "Klasörü sil",
+      "text": "“{{folder}}” klasörü ve içindeki tüm iletiler sunucudan silinecek."
+    },
+    "welcome": {
+      "title": "Henüz e-posta hesabı yok",
+      "text": "Hesabınızı e-posta adresiniz ve parolanızla ekleyin. Email Studio doğru ayarları bulur."
+    },
+    "folderPaneWidth": "Klasör bölmesi genişliği",
+    "messageListWidth": "İleti listesi genişliği",
+    "messageList": "İleti listesi",
+    "search": {
+      "in": "{{folder}} içinde ara",
+      "label": "İletilerde ara ({{shortcut}})",
+      "clear": "Aramayı temizle"
+    },
+    "filter": {
+      "label": "Hızlı filtre",
+      "unread": "Okunmamış",
+      "unreadTitle": "Yalnızca okunmamış",
+      "starred": "Yıldızlı",
+      "starredTitle": "Yalnızca yıldızlı",
+      "attachment": "Ek",
+      "attachmentTitle": "Yalnızca ekli",
+      "body": "Gövde",
+      "bodyTitle": "İleti metninde de ara (daha yavaş)"
+    },
+    "count": {
+      "filtered": "{{shown}} / {{total}}",
+      "filteredLoaded": "Yüklenen {{loaded}} iletiden {{shown}}",
+      "messages_one": "{{count}} ileti",
+      "messages_other": "{{count}} ileti",
+      "selected_one": "{{count}} seçili",
+      "selected_other": "{{count}} seçili"
+    },
+    "noResults": "İleti bulunamadı.",
+    "emptyFolder": "Bu klasör boş.",
+    "moveTo_one": "İletiyi şuraya taşı",
+    "moveTo_other": "{{count}} iletiyi şuraya taşı",
+    "folderDialog": {
+      "newTitle": "Yeni klasör",
+      "renameTitle": "Klasörü yeniden adlandır",
+      "create": "Oluştur",
+      "rename": "Yeniden adlandır",
+      "name": "Ad",
+      "inside": "“{{folder}}” içinde"
+    },
+    "source": {
+      "title": "İleti kaynağı",
+      "saveAs": "{{extension}} olarak kaydet"
+    }
+  },
+  "address": {
+    "invalid": "Geçersiz adres: {{address}}",
+    "remove": "{{address}} kaldır"
+  },
+  "list": {
+    "label": "İletiler",
+    "to": "Kime: {{address}}",
+    "noRecipient": "(alıcı yok)",
+    "replied": "Yanıtlandı",
+    "hasAttachment": "Eki var",
+    "noSubject": "(konu yok)",
+    "star": "Yıldız ekle",
+    "unstar": "Yıldızı kaldır",
+    "loadingMore": "Daha fazla ileti yükleniyor…"
+  },
+  "folders": {
+    "label": "Klasörler",
+    "loading": "Klasörler yükleniyor…",
+    "unread_one": "{{count}} okunmamış",
+    "unread_other": "{{count}} okunmamış",
+    "inbox": "Gelen Kutusu"
+  },
+  "reader": {
+    "loadingMessage": "İleti yükleniyor…",
+    "chooseMessage": "Okumak için bir ileti seçin.",
+    "label": "İleti: {{subject}}",
+    "reply": "Yanıtla",
+    "replyTitle": "Yanıtla · {{shortcut}}",
+    "replyAll": "Tümünü yanıtla",
+    "replyAllTitle": "Tümünü yanıtla · {{shortcut}}",
+    "forward": "İlet",
+    "forwardTitle": "İlet · {{shortcut}}",
+    "archive": "Arşivle",
+    "archiveTitle": "Arşivle · {{shortcut}}",
+    "delete": "Sil",
+    "deleteTitle": "Sil · {{shortcut}}",
+    "starTitle": "Yıldız · {{shortcut}}",
+    "from": "Kimden",
+    "to": "Kime",
+    "none": "(yok)",
+    "cc": "Bilgi",
+    "replyTo": "Yanıt adresi",
+    "date": "Tarih",
+    "external": {
+      "blocked_one": "Gizliliğinizi korumak için bir uzak resim engellendi.",
+      "blocked_other": "Gizliliğinizi korumak için {{count}} uzak resim engellendi.",
+      "desktopHint": "İzninizle uygulama bunları alır ve iletinin herhangi bir yere bağlanmasına izin vermeden gösterir.",
+      "demoHint": "(Tanıtımda var olmayan adreslere işaret ederler.)",
+      "show": "Uzak içeriği göster",
+      "alwaysFrom": "{{sender}} için her zaman göster",
+      "failed_one": "Bir uzak resim alınamadı.",
+      "failed_other": "{{count}} uzak resim alınamadı."
+    },
+    "attachments": {
+      "label": "Ekler",
+      "previewOrOpen": "Tıkla: önizleme · çift tıkla: {{module}} içinde aç",
+      "preview": "Önizleme",
+      "openCopyTitle": "{{module}} içinde düzenlenebilir kopya olarak aç",
+      "openIn": "{{module}} içinde aç",
+      "saveTitle": "Bu bilgisayara kaydet"
+    },
+    "content": "İleti içeriği",
+    "loadingContent": "İçerik yükleniyor…"
+  },
+  "compose": {
+    "errors": {
+      "saveDraft": "Taslak kaydedilemedi",
+      "noRecipients": "En az bir alıcı ekleyin.",
+      "send": "Gönderilemedi",
+      "attachmentsLarge": "Eklerin toplamı {{size}}; birçok sunucu {{max}} üzerindeki iletileri reddeder.",
+      "linkNotAllowed": "Yalnızca http(s), mailto ve tel bağlantılarına izin verilir."
+    },
+    "noSubject": {
+      "title": "Konu yok",
+      "text": "Bu iletinin konusu yok. Yine de gönderilsin mi?",
+      "fillIn": "Konu girin",
+      "sendWithout": "Konusuz gönder"
+    },
+    "forgotAttachment": {
+      "title": "Ek mi unuttunuz?",
+      "text": "İletiniz <strong>“{{word}}”</strong> sözcüğünü içeriyor ancak ek eklenmemiş.",
+      "sendAnyway": "Yine de gönder",
+      "keywords": "ek|ekte|ekli|ekteki|ek olarak"
+    },
+    "addAttachment": "Ek ekle",
+    "attachment": "Ekle",
+    "removeAttachment": "{{name}} kaldır",
+    "attachmentsSummary_one": "{{count}} ek · {{size}}",
+    "attachmentsSummary_other": "{{count}} ek · {{size}}",
+    "dropToAttach": "Ek olarak eklemek için bırakın",
+    "sent": "İleti gönderildi.",
+    "sentWithSubject": "İleti gönderildi: {{subject}}.",
+    "unsent": {
+      "title": "İleti gönderilmedi",
+      "text": "Bu iletiyi taslak olarak kaydetmek istiyor musunuz?",
+      "discard": "At",
+      "saveDraft": "Taslağı kaydet"
+    },
+    "label": "Oluştur: {{subject}}",
+    "newMessage": "Yeni ileti",
+    "send": "Gönder",
+    "sending": "Gönderiliyor…",
+    "sendTitle": "Gönder · {{shortcut}}",
+    "draft": "Taslak",
+    "savingDraft": "Kaydediliyor…",
+    "saveDraftTitle": "Taslak olarak kaydet · {{shortcut}}",
+    "dismissError": "İletiyi kapat",
+    "from": "Kimden",
+    "to": "Kime",
+    "cc": "Bilgi",
+    "bcc": "Gizli",
+    "subject": "Konu",
+    "body": "İleti metni",
+    "format": {
+      "label": "Biçimlendirme",
+      "withShortcut": "{{action}} · {{shortcut}}",
+      "bold": "Kalın",
+      "italic": "İtalik",
+      "underline": "Altı çizili",
+      "bullets": "Madde işaretleri",
+      "numbering": "Numaralandırma",
+      "link": "Bağlantı",
+      "insertLink": "Bağlantı ekle",
+      "clear": "Biçimlendirmeyi temizle",
+      "linkAddress": "Bağlantı adresi",
+      "insert": "Ekle"
+    }
+  },
+  "link": {
+    "browserFailed": "Tarayıcı açılamadı. Adresi kopyalayın: {{url}}",
+    "phoneTitle": "Telefon numarası",
+    "openTitle": "Bağlantı açılsın mı?",
+    "copied": "Adres kopyalandı.",
+    "copyFailed": "Kopyalama başarısız oldu; adresi el ile seçin.",
+    "copy": "Adresi kopyala",
+    "openInBrowser": "Tarayıcıda aç",
+    "phoneIntro": "Bu telefon numarası iletide geçiyor:",
+    "realTarget": "Bu bağlantı aslında şuraya gidiyor:",
+    "misleading": "İletideki metin <strong>{{shown}}</strong> diyor, ancak bağlantı <strong>{{actual}}</strong> adresine gidiyor. Bu bir kimlik avı olabilir.",
+    "unencrypted": "Not: bu bağlantı şifreli bağlantı (http) kullanmıyor."
+  },
+  "files": {
+    "saveUnsupported": "Masaüstü uygulamasının bu sürümü {{name}} dosyasını henüz kaydedemiyor. Eki bir modülde açın veya uygulamayı güncelleyin.",
+    "saved": "Kaydedildi: {{path}}",
+    "saveCancelled": "Kaydetme iptal edildi.",
+    "downloadRequested": "İndirme istendi. Dosyayı indirilenler klasörünüzde kontrol edin."
+  },
+  "quote": {
+    "unknownSender": "(bilinmiyor)",
+    "wroteOn": "{{date}} tarihinde {{sender}} şunu yazdı:",
+    "wrote": "{{sender}} şunu yazdı:",
+    "forwarded": "İletilen İleti",
+    "subject": "Konu: {{value}}",
+    "date": "Tarih: {{value}}",
+    "from": "Kimden: {{value}}",
+    "to": "Kime: {{value}}",
+    "cc": "Bilgi: {{value}}"
+  },
+  "demo": {
+    "banner": "Tanıtım — tarayıcıda gerçek e-posta mümkün değil; masaüstü uygulamasını kullanın.",
+    "accountName": "Tanıtım posta kutusu",
+    "folders": {
+      "notifications": "Bildirimler",
+      "drafts": "Taslaklar",
+      "sent": "Gönderilenler",
+      "archive": "Arşiv",
+      "junk": "İstenmeyen",
+      "trash": "Çöp kutusu"
+    },
+    "welcome": {
+      "subject": "OpenAEC Email Studio'ya hoş geldiniz",
+      "heading": "Hoş geldiniz!",
+      "intro": "Bu bir tanıtım posta kutusudur. Tarayıcıda Email Studio gerçek e-posta alamaz veya gönderemez; bunun için masaüstü uygulamasını kullanın.",
+      "introHtml": "Bu bir <strong>tanıtım posta kutusudur</strong>. Tarayıcıda Email Studio gerçek e-posta alamaz veya gönderemez; bunun için masaüstü uygulamasını kullanın.",
+      "tryIt": "Rahatça deneyin: yanıtlama, yıldızla işaretleme (S), arşive taşıma ve bir eki Metin veya Hesap tablosu içinde açma.",
+      "tryItHtml": "Rahatça deneyin: yanıtlama, yıldızla işaretleme (<kbd>S</kbd>), arşive taşıma ve bir eki Metin veya Hesap tablosu içinde açma.",
+      "logoText": "Aşağıdaki OpenAEC logosu bir ekten gelen satır içi resimdir (cid:).",
+      "logoAlt": "OpenAEC logosu",
+      "logoHtml": "Soldaki logo bir ekten gelen satır içi resimdir."
+    },
+    "errors": {
+      "accountNotFound": "Hesap yok.",
+      "messageNotFound": "İleti yok.",
+      "folderExists": "Bu klasör zaten var.",
+      "folderCannotRename": "Bu klasör yeniden adlandırılamaz.",
+      "specialFolderDelete": "Özel klasörler silinemez.",
+      "attachmentNotFound": "Ek yok.",
+      "targetFolderNotFound": "Hedef klasör yok.",
+      "noRecipients": "Alıcı belirtilmedi.",
+      "recipientRefused": "Tanıtım: sunucu {{domain}} alıcısını reddediyor.",
+      "attachmentsTooLarge": "Tanıtım: ekler {{max}} ile sınırlıdır."
+    },
+    "accountAdded": {
+      "subject": "Hesabınız eklendi (tanıtım)",
+      "text": "{{email}} hesabı tanıtıma eklendi. {{notice}}"
+    },
+    "discovery": {
+      "knownProvider": "Bilinen sağlayıcı (tanıtım).",
+      "mx": "{{domain}} alan adının MX kaydı mail.protection.outlook.com adresini gösteriyor (tanıtım).",
+      "ownServer": "{{name}} (kendi sunucusu)",
+      "autoconfig": "autoconfig.{{domain}} adresinde bulundu (tanıtım).",
+      "srv": "_imaps._tcp ve _submission._tcp (tanıtım).",
+      "ispdb": "Thunderbird veritabanından (tanıtım).",
+      "guessImapOk": "Yaygın sunucu adları; IMAP yoklaması başarılı oldu (tanıtım).",
+      "guessAlternative": "Alternatif sunucu adı (tanıtım)."
+    },
+    "test": {
+      "noServer": "{{protocol}} sunucusu belirtilmedi.",
+      "invalidPort": "Geçersiz bağlantı noktası.",
+      "unreachable": "Tanıtım: {{host}} adresine erişilemiyor.",
+      "simulated": "Tanıtım: bağlantı benzetildi.",
+      "simulatedUnencrypted": "Tanıtım: bağlantı benzetildi (şifrelenmemiş!)."
+    },
+    "oauthDesktopOnly": "Microsoft veya Google ile oturum açma yalnızca masaüstü uygulamasında mümkündür."
+  },
+  "preview": {
+    "loading": "Önizleme yükleniyor…",
+    "dialog": {
+      "attachments": "Ekler",
+      "previous": "Önceki ek",
+      "previousTitle": "Önceki ek (←)",
+      "next": "Sonraki ek",
+      "nextTitle": "Sonraki ek (→)",
+      "close": "Önizlemeyi kapat",
+      "closeTitle": "Kapat (Esc)",
+      "fetching": "Ek alınıyor…",
+      "fetchFailed": "Ek alınamadı: {{message}}"
+    },
+    "card": {
+      "fileName": "Dosya adı",
+      "size": "Boyut",
+      "openExternal": "Varsayılan uygulamayla aç",
+      "unknown": "bilinmiyor",
+      "attention": "Not",
+      "yes": "evet",
+      "no": "hayır"
+    },
+    "detection": {
+      "kinds": {
+        "pdf": "bir PDF",
+        "dwg": "bir DWG çizimi",
+        "dxf": "bir DXF çizimi",
+        "ifc": "bir IFC modeli",
+        "markdown": "Markdown",
+        "text": "metin",
+        "image": "bir resim",
+        "office": "bir Office belgesi",
+        "unknown": "bilinmeyen bir dosya"
+      },
+      "contentDiffers": "Ad {{kind}} olduğunu gösteriyor, ancak içerik başka bir şey.",
+      "mismatch": "Bu ekin adı “.{{extension}}” ({{named}}), ancak içerik {{actual}}.",
+      "mismatchSubtype": "Bu ekin adı “.{{extension}}” ({{named}}), ancak içerik {{actual}} ({{subtype}}).",
+      "contentBinary": "Ad {{kind}} olduğunu gösteriyor, ancak içerik ikili.",
+      "notSvg": "Ad bir SVG resmi olduğunu gösteriyor, ancak içerik SVG değil.",
+      "signatureMissing": "Ad {{kind}} olduğunu gösteriyor, ancak içerikte ilgili özellikler yok."
+    },
+    "image": {
+      "loadFailed": "Resim yüklenemedi: {{message}}",
+      "subtitle": "Resim",
+      "cannotDisplay": "Bu resim burada görüntülenemiyor (hasarlı veya desteklenmeyen bir tür).",
+      "tooLarge": "Bu resim {{size}} MB'tan büyük ve önizleme olarak gösterilmiyor.",
+      "tooManyPixels": "Bu resim {{width}} × {{height}} piksel ({{megapixels}} megapikselden fazla) ve önizleme olarak gösterilmiyor.",
+      "toolbar": "Resim",
+      "zoomOut": "Uzaklaştır",
+      "zoomOutTitle": "Uzaklaştır (−)",
+      "zoomIn": "Yakınlaştır",
+      "zoomInTitle": "Yakınlaştır (+)",
+      "fit": "Pencereye sığdır",
+      "fitTitle": "Pencereye sığdır (0)",
+      "actualSize": "Gerçek boyut (%100)",
+      "actualSizeTitle": "Gerçek boyut",
+      "rotate": "Saat yönünde döndür",
+      "rotateTitle": "Saat yönünde döndür (R)",
+      "area": "Resim önizlemesi"
+    },
+    "text": {
+      "loadFailed": "Metin yüklenemedi: {{message}}",
+      "toolbar": "Metin",
+      "encoding": "Kodlama: {{encoding}}",
+      "utf8Bom": "UTF-8 (BOM ile)",
+      "formatJson": "JSON'u biçimlendir",
+      "wrapLines": "Satırları kaydır",
+      "truncated": "{{size}} içinden ilk {{limit}} gösteriliyor. Tümünü görmek için dosyayı kaydedin.",
+      "contentOf": "{{name}} içeriği"
+    },
+    "markdown": {
+      "loadFailed": "Dosya yüklenemedi: {{message}}",
+      "linkNotOpened": "Bağlantı açılmadı: {{url}}",
+      "imageFallback": "Resim",
+      "externalBlocked": "{{alt}} (dış resim engellendi)",
+      "unavailable": "{{alt}} (kullanılamıyor)",
+      "view": "Görünüm",
+      "rendered": "İşlenmiş",
+      "source": "Kaynak",
+      "showExternalImages": "Dış resimleri göster",
+      "truncated": "{{size}} içinden ilk {{limit}} gösteriliyor.",
+      "confirmLabel": "Bağlantıyı aç",
+      "confirmQuestion": "Bu bağlantı Office Studio dışında açılsın mı?"
+    },
+    "pdf": {
+      "loadFailed": "PDF yüklenemedi: {{message}}",
+      "properties": "Özellikler",
+      "frameTitle": "PDF: {{name}}",
+      "linuxUnsupported": "Linux'taki web görünümü PDF'leri güvenilir şekilde gösteremez. Tam önizleme gelecekteki bir sürümde gelecek (Rust görüntüleyici).",
+      "cannotPreview": "Bu PDF burada önizlenemiyor. Tam önizleme gelecekteki bir sürümde gelecek (Rust görüntüleyici).",
+      "subtitle": "PDF belgesi",
+      "subtitleVersion": "PDF {{version}}",
+      "pages": "Sayfa",
+      "author": "Yazar",
+      "subject": "Konu",
+      "createdWith": "Oluşturan uygulama",
+      "created": "Oluşturulma",
+      "modified": "Değiştirilme",
+      "encrypted": "Şifreli",
+      "incomplete": "dosya eksik veya hasarlı görünüyor",
+      "showPreview": "Önizlemeyi göster"
+    },
+    "cad": {
+      "loadFailed": "Çizim yüklenemedi: {{message}}",
+      "previewLater": "Önizleme gelecekteki bir sürümde gelecek (Rust görüntüleyici).",
+      "tooLargeToParse": "Bu dosya burada çözümlenemeyecek kadar büyük. Önizleme gelecekteki bir sürümde gelecek (Rust görüntüleyici).",
+      "dwgSubtitle": "AutoCAD çizimi (DWG)",
+      "dxfSubtitle": "DXF çizimi",
+      "dxfBinarySubtitle": "İkili DXF çizimi",
+      "format": "Biçim",
+      "savedAs": "Kayıt biçimi",
+      "unknownAutocadVersion": "bilinmeyen AutoCAD sürümü",
+      "units": "Birimler",
+      "entities": "Varlıklar",
+      "blocks": "Bloklar",
+      "layers": "Katmanlar",
+      "thumbnailAlt": "Çizimin gömülü küçük resmi",
+      "thumbnailCaption": "Dosyadaki küçük resim",
+      "entitiesByType": "Türe göre varlıklar",
+      "layersCount": "Katmanlar ({{n}})",
+      "andMore": "… ve {{n}} tane daha",
+      "versionRange": "AutoCAD {{from}} – {{to}}",
+      "versionAndLater": "AutoCAD {{version}} ve sonrası",
+      "unitCode": "kod {{code}}",
+      "unitNames": {
+        "unitless": "birimsiz",
+        "inch": "inç",
+        "foot": "fit",
+        "mile": "mil",
+        "millimeter": "milimetre",
+        "centimeter": "santimetre",
+        "meter": "metre",
+        "kilometer": "kilometre",
+        "microinch": "mikroinç",
+        "mil": "mil (binde bir inç)",
+        "yard": "yarda",
+        "angstrom": "ångström",
+        "nanometer": "nanometre",
+        "micron": "mikron",
+        "decimeter": "desimetre",
+        "decameter": "dekametre",
+        "hectometer": "hektometre",
+        "gigameter": "gigametre",
+        "astronomicalUnit": "astronomik birim",
+        "lightYear": "ışık yılı",
+        "parsec": "parsek",
+        "usSurveyFoot": "ABD ölçme fiti",
+        "usSurveyInch": "ABD ölçme inçi",
+        "usSurveyYard": "ABD ölçme yardası",
+        "usSurveyMile": "ABD ölçme mili"
+      }
+    },
+    "ifc": {
+      "loadFailed": "Model yüklenemedi: {{message}}",
+      "previewLater": "3B önizleme gelecekteki bir sürümde gelecek (Rust görüntüleyici).",
+      "tooLarge": "Bu model {{size}} MB'tan büyük ve burada çözümlenmiyor.",
+      "analysing": "Model çözümleniyor… {{percent}}",
+      "cancelled": "Çözümleme iptal edildi.",
+      "retry": "Yeniden çözümle",
+      "failed": "Çözümleme başarısız oldu: {{message}}",
+      "subtitle": "IFC modeli",
+      "subtitleWithSchema": "IFC modeli · {{schemas}}",
+      "nameInFile": "Dosyadaki ad",
+      "timestamp": "Zaman damgası",
+      "author": "Yazar",
+      "organization": "Kuruluş",
+      "application": "Uygulama",
+      "description": "Açıklama",
+      "sites": "Arsalar",
+      "buildings": "Binalar",
+      "entities": "Varlıklar",
+      "incomplete": "dosya eksik görünüyor (END-ISO-10303-21 yok)",
+      "storeys": "Katlar ({{n}})",
+      "elementsHeading": "Yapı elemanları",
+      "allEntityTypes": "Tüm varlık türleri ({{n}})",
+      "elements": {
+        "wall": "Duvarlar",
+        "wallStandardCase": "Duvarlar (standart durum)",
+        "curtainWall": "Giydirme cepheler",
+        "slab": "Döşemeler ve plaklar",
+        "roof": "Çatılar",
+        "column": "Kolonlar",
+        "beam": "Kirişler",
+        "member": "Çubuk elemanlar",
+        "plate": "Plakalar",
+        "door": "Kapılar",
+        "window": "Pencereler",
+        "stair": "Merdivenler",
+        "ramp": "Rampalar",
+        "railing": "Korkuluklar",
+        "covering": "Kaplamalar",
+        "footing": "Temeller",
+        "pile": "Kazıklar",
+        "space": "Mekânlar",
+        "opening": "Boşluklar",
+        "furnishing": "Mobilyalar",
+        "flowSegment": "Kanal ve boru parçaları",
+        "flowTerminal": "Tesisat uç birimleri",
+        "proxy": "Diğer yapı elemanları",
+        "storey": "Katlar"
+      }
+    },
+    "office": {
+      "kinds": {
+        "document": "Metin belgesi",
+        "spreadsheet": "Hesap tablosu",
+        "presentation": "Sunu",
+        "database": "Veritabanı"
+      },
+      "genericDocument": "Office belgesi",
+      "type": "Tür",
+      "openFailed": "Açılamadı: {{message}}",
+      "openCopyHint": "{{module}} içinde düzenlenebilir bir kopya açın. E-postadaki özgün dosya değişmeden kalır.",
+      "cannotOpen": "Bu Office biçimi burada açılamaz.",
+      "opening": "Açılıyor…",
+      "openIn": "{{module}} içinde aç"
+    },
+    "unknown": {
+      "subtitle": "Önizleme yok",
+      "declaredType": "Bildirilen tür",
+      "extension": "Uzantı",
+      "none": "yok",
+      "message": "Bu dosya türü için önizleme gösterilemiyor. Dosyayı kaydedin ve yalnızca gönderene güveniyorsanız açın."
+    }
+  },
+  "backend": {
+    "accounts": {
+      "fileCorrupt": "{{path}} hesap dosyası bozuk.",
+      "fileUnreadable": "Hesap dosyası okunamadı.",
+      "fileWriteFailed": "Hesap dosyası yazılamadı.",
+      "invalidEmail": "Geçerli bir e-posta adresi girin.",
+      "invalidReplyTo": "Yanıt adresi geçerli bir e-posta adresi değil.",
+      "lineBreakInName": "Adlar satır sonu içeremez.",
+      "notFound": "Bu hesap artık yok.",
+      "saveFailed": "Hesaplar kaydedilemedi.",
+      "usernameMissing": "IMAP ve SMTP için kullanıcı adını girin."
+    },
+    "attachments": {
+      "blockedDatabase": "Güvenlik nedeniyle '{{name}}' otomatik olarak açılmaz. Access veritabanlarını Database Studio'da açın. Yine de görüntülemek istiyorsanız eki kaydedin.",
+      "blockedExecutable": "Güvenlik nedeniyle '{{name}}' otomatik olarak açılmaz. Bu dosya türü program çalıştırabilir. Yine de görüntülemek istiyorsanız eki kaydedin.",
+      "blockedMacros": "Güvenlik nedeniyle '{{name}}' otomatik olarak açılmaz. Bu belge makro içeriyor. Yine de görüntülemek istiyorsanız eki kaydedin.",
+      "blockedScripts": "Güvenlik nedeniyle '{{name}}' otomatik olarak açılmaz. Bu dosya türü betik içerebilir. Yine de görüntülemek istiyorsanız eki kaydedin.",
+      "emptyOrTooLarge": "Ek boş veya 100 MB'tan büyük.",
+      "executableContent": "'{{name}}' bir {{kind}} ve güvenlik nedeniyle açılmıyor.",
+      "invalidName": "Geçersiz dosya adı.",
+      "kind": {
+        "linuxProgram": "Linux programı (ELF)",
+        "macProgram": "macOS programı (Mach-O) veya Java sınıfı",
+        "script": "betik",
+        "windowsProgram": "Windows programı (PE)",
+        "windowsShortcut": "Windows kısayolu"
+      },
+      "nameMissing": "Dosya adı eksik.",
+      "noProgram": "Bu eki açacak bir program bulunamadı.",
+      "notFound": "{{index}}. ek bu iletide yok.",
+      "openFailed": "Açılamadı.",
+      "sendAsBinary": "Eki en fazla 100 MB'lık ikili veri olarak gönderin.",
+      "tempDirFailed": "Geçici bir klasör oluşturulamadı.",
+      "tempSaveFailed": "Ek geçici olarak kaydedilemedi."
+    },
+    "auth": {
+      "failed": "{{host}} oturum açma başarısız oldu: kullanıcı adı veya parola yanlış ({{detail}}). Gmail, Outlook, iCloud ve Yahoo uygulama parolası gerektirir.",
+      "noPassword": "Bu hesap için parola girilmedi veya kaydedilmedi.",
+      "noStoredPassword": "Bu hesap için kayıtlı parola yok. Parolayı hesap ayarlarına girin."
+    },
+    "autoconfig": {
+      "httpsRedirectOnly": "Yalnızca HTTPS'ye yönlendirmeler izlenir.",
+      "invalidEncoding": "Yapılandırma dosyasında geçersiz karakter kodlaması.",
+      "notFound": "Yapılandırma bulunamadı (HTTP {{status}}).",
+      "tooManyRedirects": "Çok fazla yönlendirme."
+    },
+    "common": {
+      "saveFailed": "Kaydetme başarısız oldu."
+    },
+    "compose": {
+      "attachmentCorrupt": "'{{name}}' eki bozuk.",
+      "attachmentsTooLarge": "Eklerin toplamı {{max}} MB'tan büyük. Büyük dosyaları paylaşım bağlantısıyla gönderin.",
+      "buildFailed": "İleti oluşturulamadı ({{detail}}).",
+      "field": {
+        "bcc": "Gizli",
+        "cc": "Bilgi",
+        "from": "Kimden",
+        "inReplyTo": "In-Reply-To",
+        "references": "References",
+        "replyTo": "Reply-To",
+        "subject": "Konu",
+        "to": "Kime"
+      },
+      "invalidAddress": "{{field}} içindeki '{{address}}' geçerli bir e-posta adresi değil.",
+      "invalidCharacters": "{{field}} geçersiz karakterler içeriyor.",
+      "invalidEnvelope": "Geçersiz zarf.",
+      "noRecipients": "En az bir alıcı girin."
+    },
+    "connection": {
+      "failed": "{{host}} ile bağlantı yok: {{detail}}",
+      "hostNotFound": "{{host}} sunucu adı bulunamadı.",
+      "refused": "{{host}} sunucusu bağlantıyı reddetti. Bağlantı noktasını ve güvenlik ayarını denetleyin.",
+      "reset": "{{host}} ile bağlantı beklenmedik şekilde kapandı. Güvenlik ayarı (SSL/TLS veya STARTTLS) bağlantı noktasıyla uyumlu mu?",
+      "timeout": "{{host}} sunucusu zamanında yanıt vermedi. Sunucu adını, bağlantı noktasını ve güvenlik duvarını denetleyin."
+    },
+    "files": {
+      "saveFailed": "Dosya kaydedilemedi."
+    },
+    "http": {
+      "invalidHttpResponse": "Geçersiz HTTP yanıtı.",
+      "invalidResponse": "Geçersiz yanıt.",
+      "invalidServerName": "Geçersiz sunucu adı {{host}}.",
+      "invalidUrl": "Geçersiz web adresi.",
+      "plainOnlyLocal": "Şifrelenmemiş HTTP'ye yalnızca bu bilgisayara izin verilir.",
+      "redirectWithoutLocation": "Adressiz yönlendirme.",
+      "responseTooLarge": "Sunucu yanıtı çok büyük."
+    },
+    "images": {
+      "credentialsInUrl": "Oturum açma bilgileri içeren adresler alınmaz.",
+      "hostNotFound": "{{host}} bulunamadı.",
+      "httpOnly": "Yalnızca http ve https adreslerine izin verilir.",
+      "invalidServerName": "Geçersiz sunucu adı.",
+      "notAnImage": "Bu adres bir resim döndürmüyor.",
+      "privateAddress": "İç veya yerel adreslerden dış içerik alınmaz.",
+      "timeout": "Resim 10 saniye içinde yüklenmedi.",
+      "tooLarge": "Resim 10 MB'tan büyük.",
+      "tooManyRedirects": "Çok fazla yönlendirme (en fazla 3).",
+      "unavailable": "Resim kullanılamıyor (HTTP {{status}}).",
+      "unknownRedirect": "Bilinmeyen yönlendirme.",
+      "unsupportedImage": "İçerik desteklenen bir resim değil."
+    },
+    "imap": {
+      "action": {
+        "copy": "Kopyala",
+        "countFolders": "Klasörleri say",
+        "createFolder": "Klasör oluştur",
+        "delete": "Sil",
+        "deleteFolder": "Klasörü sil",
+        "expunge": "Temizle",
+        "fetchMessage": "İletiyi al",
+        "fetchMessages": "İletileri al",
+        "flag": "İşaretle",
+        "listFolders": "Klasörleri al",
+        "move": "Taşı",
+        "openFolder": "Klasörü aç",
+        "openNamedFolder": "'{{folder}}' klasörünü aç",
+        "renameFolder": "Klasörü yeniden adlandır",
+        "saveToDrafts": "Taslaklara kaydet",
+        "saveToFolder": "Klasöre kaydet",
+        "saveToSent": "Gönderilenlere kaydet",
+        "search": "Ara",
+        "signIn": "Oturum aç",
+        "startTls": "STARTTLS"
+      },
+      "alreadyInTrash": "Bu iletiler zaten çöp kutusunda; kalıcı olarak silin.",
+      "appendRejected": "{{action}}: sunucu iletiyi reddetti.",
+      "badCommand": "{{action}}: sunucu komutu anlamadı ({{detail}}).",
+      "cannotDeleteInbox": "Gelen Kutusu silinemez.",
+      "cannotRenameInbox": "Gelen Kutusu yeniden adlandırılamaz.",
+      "closedImmediately": "{{host}} bağlantıyı hemen kapattı. Güvenlik ayarı (SSL/TLS veya STARTTLS) bağlantı noktasıyla uyumlu mu?",
+      "commandTimeout": "{{host}} {{seconds}} saniye içinde yanıt vermedi.",
+      "connectTimeout": "{{seconds}} saniye içinde {{host}}:{{port}} adresinden yanıt yok. Sunucu adını, bağlantı noktasını ve güvenlik duvarını denetleyin.",
+      "connectionLost": "{{host}} ile bağlantı kesildi.",
+      "draftsFolderMissing": "Sunucuda Taslaklar klasörü bulunamadı. Bu klasörü hesap ayarlarında seçin.",
+      "greetingRefused": "{{host}} bağlantıyı reddetti: {{detail}}",
+      "invalidFolderName": "Geçersiz klasör adı.",
+      "invalidMessage": "Geçersiz ileti.",
+      "invalidName": "{{action}}: adda geçersiz karakterler.",
+      "invalidSearchCharacters": "Arama metni geçersiz karakterler içeriyor.",
+      "messageGone": "Bu ileti artık yok (taşınmış veya silinmiş olabilir).",
+      "messageTooLarge": "İleti {{size}} MB; Email Studio en fazla {{max}} MB'lık iletileri açar.",
+      "noStarttls": "{{host}}, {{port}} bağlantı noktasında STARTTLS desteklemiyor. SSL/TLS seçin (genellikle bağlantı noktası 993).",
+      "noTrash": "Sunucuda çöp kutusu klasörü bulunamadı. Hesap ayarlarında bir çöp kutusu klasörü seçin veya kalıcı olarak silin.",
+      "noValidMessages": "Geçerli ileti belirtilmedi.",
+      "notFound": "{{action}}: {{detail}}",
+      "quotaExceeded": "{{action}}: posta kutusu dolu ({{detail}}).",
+      "refused": "{{action}}: sunucu reddetti ({{detail}}).",
+      "retryLater": "{{message}} (Email Studio, sunucu tarafından engellenmemek için {{retrySeconds}} saniye sonra yeniden deneyecek.)",
+      "searchTooLong": "Arama metni çok uzun.",
+      "sentFolderMissing": "Sunucuda Gönderilenler klasörü bulunamadı. Bu klasörü hesap ayarlarında seçin.",
+      "signInTimeout": "{{host}} oturum açma işlemi çok uzun sürdü.",
+      "specialFolderMissing": "Klasör sunucuda bulunamadı. Bu klasörü hesap ayarlarında seçin.",
+      "unexpectedError": "{{action}}: beklenmeyen hata.",
+      "unexpectedResponse": "{{action}}: sunucudan beklenmeyen yanıt.",
+      "unexpectedState": "Beklenmeyen bağlantı durumu."
+    },
+    "keychain": {
+      "notResponding": "Anahtar zinciri yanıt vermedi.",
+      "unavailable": "İşletim sisteminin anahtar zinciri kullanılamıyor. Email Studio parolaları asla düz metin olarak saklamaz; Linux'ta bir Secret Service gereklidir (örneğin GNOME Keyring veya KWallet).",
+      "unexpected": "Anahtar zinciri beklenmeyen bir hata döndürdü."
+    },
+    "links": {
+      "openFailed": "Bağlantı açılamadı.",
+      "unsupportedScheme": "Yalnızca http, https ve mailto bağlantıları açılabilir."
+    },
+    "messages": {
+      "invalidMime": "İleti okunamadı (geçersiz MIME yapısı).",
+      "unreadable": "İleti okunamadı."
+    },
+    "oauth": {
+      "browserFailed": "Oturum açmak için web tarayıcısı açılamadı.",
+      "cancelled": "Oturum açma iptal edildi.",
+      "cancelledOrDenied": "{{provider}} oturum açma işlemi iptal edildi veya reddedildi.",
+      "clientMisconfigured": "{{provider}} için OAuth istemcisi doğru yapılandırılmamış (istemci kimliği veya gizli anahtar).",
+      "emailUnknown": "Oturum açmanın e-posta adresi belirlenemedi; adresi girin ve yeniden deneyin.",
+      "invalidClientId": "Bu geçerli bir istemci kimliği değil.",
+      "invalidTokenEndpoint": "Geçersiz belirteç uç noktası.",
+      "noAccessToken": "{{provider}} erişim belirteci döndürmedi (HTTP {{status}}).",
+      "noFreePort": "Oturum açmak için geçici bağlantı noktası yok.",
+      "noPort": "Bağlantı noktası yok.",
+      "noRefreshToken": "{{provider}} yenileme belirteci döndürmedi; yeniden oturum açmayı deneyin.",
+      "noStoredSignIn": "{{provider}} için yeniden oturum açın: bu hesap için kayıtlı oturum yok.",
+      "notConfigured": {
+        "google": "Google ile oturum açma henüz ayarlanmadı: istemci kimliği yok. Google Cloud'da 'Masaüstü uygulaması' türünde bir OAuth istemcisi oluşturun (http://127.0.0.1 üzerinden yönlendirme), Gmail API'yi etkinleştirin ve izin ekranına https://mail.google.com/ kapsamını ekleyin. Ardından istemci kimliğini ve istemci gizli anahtarını girin (bkz. docs/email-oauth.md).",
+        "microsoft": "Microsoft ile oturum açma henüz ayarlanmadı: istemci kimliği yok. Microsoft Entra'da (Uygulama kayıtları) bir uygulamayı 'Genel istemci' olarak kaydedin, http://localhost yeniden yönlendirme URI'siyle 'Mobil ve masaüstü uygulamaları' platformunu ekleyin ve IMAP.AccessAsUser.All, SMTP.Send, offline_access, openid ve email temsilci izinlerini verin. Ardından istemci kimliğini girin (bkz. docs/email-oauth.md)."
+      },
+      "providerRefused": "{{provider}} oturum açmayı reddetti ({{detail}}).",
+      "randomUnavailable": "Güvenli rastgelelik kaynağı yok.",
+      "reauthenticate": "{{provider}} için yeniden oturum açın: iznin süresi doldu veya izin iptal edildi.",
+      "settingSaveFailed": "OAuth ayarı kaydedilemedi.",
+      "signInFirst": "Bu hesap OAuth2 kullanıyor: önce Microsoft veya Google ile oturum açın.",
+      "signInFirstToTest": "OAuth2'yi sınamak için önce Microsoft veya Google ile oturum açın.",
+      "signInTimeout": "{{provider}} oturum açma işlemi 5 dakikadan uzun sürdü ve durduruldu.",
+      "stateMismatch": "Oturum açma sayfasından gelen yanıt bu oturum açmaya ait değil (state uyuşmazlığı).",
+      "timeout": "{{provider}} zamanında yanıt vermedi.",
+      "tokenRefused": "{{provider}} belirteci reddetti ({{detail}}).",
+      "unexpectedResponse": "{{provider}} beklenmeyen bir yanıt döndürdü (HTTP {{status}})."
+    },
+    "security": {
+      "cramMd5SmtpUnsupported": "Şifreli parola (CRAM-MD5) SMTP için desteklenmiyor. 'Normal parola' seçin; SSL/TLS veya STARTTLS üzerinden parola da şifrelenir.",
+      "invalidServerName": "'{{host}}', {{protocol}} için geçerli bir sunucu adı değil.",
+      "notLocalhost": "{{host}} bu bilgisayar değil, bu nedenle şifrelenmemiş bağlantı reddedildi.",
+      "portMissing": "{{protocol}} için bağlantı noktası eksik.",
+      "unencryptedRefused": "{{host}} için şifrelenmemiş oturum açma reddedildi: parolanız ağ üzerinden okunabilir biçimde iletilirdi. SSL/TLS veya STARTTLS seçin. Şifrelenmemiş bağlantılara yalnızca bu bilgisayara (localhost) izin verilir, örneğin Proton Mail Bridge için."
+    },
+    "server": {
+      "noTimelyResponse": "{{host}} zamanında yanıt vermedi."
+    },
+    "smtp": {
+      "authMethodUnsupported": "Bu oturum açma yöntemi SMTP için desteklenmiyor.",
+      "error": "{{host}} SMTP hatası: {{detail}}",
+      "messageTooLarge": "{{host}} iletiyi çok büyük olduğu için reddediyor ({{detail}}).",
+      "noAuthMechanism": "{{host}}, Email Studio'nun desteklediği bir oturum açma yöntemi (PLAIN veya LOGIN) sunmuyor. STARTTLS veya SSL/TLS seçin; birçok sunucu oturum açmayı yalnızca şifrelemeden sonra sunar.",
+      "oauthRejected": "{{host}} OAuth2 belirtecini reddetti; yeniden oturum açmanız gerekebilir.",
+      "rejected": "{{host}} iletiyi reddetti ({{detail}}).",
+      "sendTimeout": "{{host}} üzerinden gönderme çok uzun sürdü.",
+      "tlsFailed": "{{host}} ile güvenli bağlantı kurulamadı ({{detail}}). Güvenlik ayarı bağlantı noktasıyla uyumlu mu?",
+      "tryLater": "{{host}} şu anda iletiyi kabul edemiyor; daha sonra yeniden deneyin ({{detail}})."
+    },
+    "storage": {
+      "appDataDirNotFound": "Uygulama veri klasörü bulunamadı.",
+      "dataDirCreateFailed": "Veri klasörü oluşturulamadı.",
+      "dataDirMissing": "Veri klasörü eksik."
+    },
+    "test": {
+      "signedIn": "{{host}} oturumu açıldı.",
+      "signedInUnencrypted": "{{host}} oturumu açıldı. Not: {{protocol}} bağlantısı şifreli değil. Buna yalnızca sunucu bu bilgisayarda çalıştığı için izin verilir."
+    },
+    "tls": {
+      "certificateRejected": "{{host}} ile güvenli bağlantı reddedildi: {{reason}}. Parolanızı korumak için Email Studio, kimliği doğrulanamayan bir sunucuya bağlanmaz.",
+      "handshakeFailed": "{{host}} ile güvenli bağlantı kurulamadı ({{detail}}). Güvenlik ayarı (SSL/TLS veya STARTTLS) bağlantı noktasıyla uyumlu mu?",
+      "handshakeTimeout": "{{host}} ile TLS el sıkışması çok uzun sürdü.",
+      "invalidServerName": "'{{host}}', TLS için geçerli bir sunucu adı değil.",
+      "reason": {
+        "expired": "sertifikanın süresi dolmuş",
+        "invalid": "sertifika geçersiz ({{detail}})",
+        "notYetValid": "sertifika henüz geçerli değil (bu bilgisayarın saati doğru mu?)",
+        "revoked": "sertifika iptal edilmiş",
+        "unknownIssuer": "sertifika güvenilir bir sertifika yetkilisi tarafından verilmemiş (muhtemelen kendinden imzalı)",
+        "wrongName": "sertifika {{host}} adına ait değil; sertifikada gösterilen sunucu adını kullanın"
+      }
+    }
+  }
+}

@@ -12,6 +12,7 @@
  * Alles in één taak is één ongedaan-maakstap (zie ../gedeeld/engine.ts).
  */
 import type { DocxEditorRef } from "@betteroffice/docx-react";
+import i18next from "../../i18n/config";
 import { begin, engine, klaar, ruw, voorstel, type Engine, type Sessie } from "../gedeeld/engine.ts";
 import {
   MIN_KOLOM,
@@ -87,7 +88,7 @@ export function tabelEmbed(s: Sessie, loc: TabelLoc) {
     }
     index += 1;
   }
-  throw new Error("De tabel is niet meer te vinden.");
+  throw new Error(i18next.t("writer:table.errors.tableGone"));
 }
 
 function zetEmbed(s: Sessie, loc: TabelLoc, sleutel: "rows" | "tblPr", waarde: unknown) {
@@ -124,9 +125,9 @@ export function tabelTeksten(s: Sessie, loc: TabelLoc): string[][] {
 
 function vereistPlek(e: Engine) {
   if (e.ref.commands.getState("editingMode").value === "suggesting")
-    throw new Error("Zet ‘Wijzigingen bijhouden’ uit om de tabelindeling te wijzigen; deze wijziging kan niet als voorstel worden bijgehouden.");
+    throw new Error(i18next.t("writer:table.errors.layoutTracking"));
   const plek = tabelPlek(e.sessie);
-  if (!plek) throw new Error("Zet de cursor eerst in een tabel.");
+  if (!plek) throw new Error(i18next.t("writer:table.errors.cursorInTable"));
   return plek;
 }
 
@@ -215,11 +216,11 @@ export function breedteBijCursor(e: Engine) {
  */
 export async function tabelInvoegen(ref: DocxEditorRef | null, rijen: number, kolommen: number) {
   const e = engine(ref);
-  if (!e.ref.commands.getState("insertTable").enabled) throw new Error("Hier kan geen tabel worden ingevoegd.");
+  if (!e.ref.commands.getState("insertTable").enabled) throw new Error(i18next.t("writer:table.errors.cannotInsert"));
   await e.ref.flushPendingInput();
   const s = e.sessie;
   const head = s.selection()?.head;
-  if (!head) throw new Error("Zet de cursor eerst in het document.");
+  if (!head) throw new Error(i18next.t("writer:table.errors.cursorInDocument"));
   const breedte = breedteBijCursor(e);
   const verhalen = [head.story];
   begin(e);
@@ -361,7 +362,7 @@ export function rijenGelijk(ref: DocxEditorRef | null) {
   const heel = plek.rijen[0] === plek.rijen[1];
   const [van, tot] = heel ? [0, payload.rows.length - 1] : plek.rijen;
   const hoogte = gemiddeldeRijhoogte(tabelHoogtePx(e, plek.tabel), payload.rows.length);
-  if (!hoogte) throw new Error("De tabel is nog niet ingedeeld; probeer het zo opnieuw.");
+  if (!hoogte) throw new Error(i18next.t("writer:table.errors.notLaidOut"));
   begin(e);
   try {
     zetEmbed(
@@ -451,7 +452,7 @@ export function sorteer(ref: DocxEditorRef | null, sleutels: readonly Sorteersle
     const s = e.sessie;
     const { payload } = tabelEmbed(s, plek.tabel);
     if (payload.rows.some((r) => r.cells.some((c) => Number(c.tcPr?.rowspan ?? 1) > 1 || c.tcPr?.vMerge)))
-      throw new Error("Een tabel met verticaal samengevoegde cellen kan niet worden gesorteerd.");
+      throw new Error(i18next.t("writer:table.errors.sortMerged"));
     const volgorde = sorteerVolgorde(tabelTeksten(s, plek.tabel), sleutels, kopregels);
     zetEmbed(s, plek.tabel, "rows", volgorde.map((i) => payload.rows[i]));
   });
@@ -462,7 +463,7 @@ export function tabelNaarTekst(ref: DocxEditorRef | null, scheiding: Scheiding) 
     const s = e.sessie;
     const regels = cellenNaarTekst(tabelTeksten(s, plek.tabel), scheiding).flatMap((r) => r.split("\n"));
     let doel: string | null = alineaNaTabel(s, plek.tabel);
-    if (!doel) throw new Error("Na de tabel staat geen alinea; de tabel kan niet worden omgezet.");
+    if (!doel) throw new Error(i18next.t("writer:table.errors.noParagraphAfter"));
     s.deleteTable(plek.tabel);
     const eerste = doel;
     for (const regel of regels) {
@@ -483,11 +484,11 @@ export function tabelNaarTekst(ref: DocxEditorRef | null, scheiding: Scheiding) 
 export async function tekstNaarTabel(ref: DocxEditorRef | null, scheiding: Scheiding, kolommen?: number) {
   const e = engine(ref);
   if (e.ref.commands.getState("editingMode").value === "suggesting")
-    throw new Error("Zet ‘Wijzigingen bijhouden’ uit om tekst naar een tabel om te zetten.");
+    throw new Error(i18next.t("writer:table.errors.fromTextTracking"));
   await e.ref.flushPendingInput();
   const alineas = geselecteerdeAlineas(e);
   const cellen = tekstNaarCellen(alineas.map((a) => a.text), scheiding, kolommen);
-  if (!cellen.length) throw new Error("Selecteer eerst de alinea’s die een tabel moeten worden.");
+  if (!cellen.length) throw new Error(i18next.t("writer:table.errors.selectParagraphs"));
   const s = e.sessie;
   const story = alineas[0].story;
   const breedte = breedteBijCursor(e);
@@ -582,13 +583,13 @@ function tekstBegin(s: Sessie, story: string, paraId: string) {
 /** Alinea's die de selectie raakt (accepted-weergave), met hun lengte in de sessie. */
 export function geselecteerdeAlineas(e: Engine) {
   const sel = e.sessie.selection();
-  if (!sel) throw new Error("Selecteer eerst tekst.");
-  if (sel.anchor.story !== sel.head.story) throw new Error("Selecteer tekst binnen één deel van het document.");
-  if (/:t\d+:r\d+c\d+$/.test(sel.anchor.story)) throw new Error("De selectie staat al in een tabel.");
+  if (!sel) throw new Error(i18next.t("writer:table.errors.selectText"));
+  if (sel.anchor.story !== sel.head.story) throw new Error(i18next.t("writer:table.errors.selectOnePart"));
+  if (/:t\d+:r\d+c\d+$/.test(sel.anchor.story)) throw new Error(i18next.t("writer:table.errors.alreadyInTable"));
   const alle = e.sessie.paragraphs(sel.anchor.story);
   const i = alle.findIndex((p) => p.paraId === sel.anchor.paraId),
     j = alle.findIndex((p) => p.paraId === sel.head.paraId);
-  if (i < 0 || j < 0) throw new Error("De selectie is niet meer te vinden.");
+  if (i < 0 || j < 0) throw new Error(i18next.t("writer:table.errors.selectionGone"));
   const [van, tot] = i <= j ? [i, j] : [j, i];
   return alle.slice(van, tot + 1).map((p) => ({
     story: sel.anchor.story,

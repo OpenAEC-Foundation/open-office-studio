@@ -1,0 +1,158 @@
+/* Meldingen rechtsonder (OpenAEC Blueprint, crates/openaec-ui widgets::toast):
+   verhoogd vlak met popup-schaduw, 10 px hoek, statusicoon, vet woord, tekst
+   en sluitknop. Logische eigenschappen: bij rechts-naar-links linksonder. */
+.office {
+  --melding-info: #2563eb;
+  --melding-succes: #15803d;
+  --melding-waarschuwing: #c2410c;
+  --melding-fout: var(--oa-shell-danger-color, #dc2626);
+}
+.office[data-office-thema="forge"] {
+  --melding-info: #60a5fa;
+  --melding-succes: #4ade80;
+  --melding-waarschuwing: #fb923c;
+}
+.office-meldingen {
+  position: absolute;
+  inset-inline-end: 12px;
+  inset-block-end: calc(var(--office-statushoogte, 22px) + 12px);
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  width: min(360px, calc(100% - 24px));
+  max-height: calc(100% - var(--office-statushoogte, 22px) - 96px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  /* Alleen de meldingen zelf vangen de muis; het document eronder blijft bruikbaar. */
+  pointer-events: none;
+  scrollbar-width: thin;
+}
+.office-meldingen[hidden] {
+  display: none;
+}
+.office-melding {
+  pointer-events: auto;
+  position: relative;
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr) 22px;
+  align-items: start;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--oa-shell-border, rgba(54, 54, 62, 0.12));
+  border-radius: 10px;
+  background: var(--oa-shell-surface, #fff);
+  color: var(--oa-shell-text, #36363e);
+  box-shadow: var(--oa-shell-popover-shadow, 0 8px 24px rgba(0, 0, 0, 0.15));
+  font-size: 12px;
+  line-height: 1.45;
+  animation: office-melding-in 160ms ease-out;
+}
+.office-melding::before {
+  /* Kleur is nooit het enige signaal: elke toon heeft ook een woord en icoon. */
+  content: "";
+  position: absolute;
+  inset-block: 10px;
+  inset-inline-start: 0;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--melding-kleur);
+}
+html[dir="rtl"] .office-melding::before {
+  border-radius: 3px 0 0 3px;
+}
+.office-melding[data-toon="info"] {
+  --melding-kleur: var(--melding-info);
+}
+.office-melding[data-toon="succes"] {
+  --melding-kleur: var(--melding-succes);
+}
+.office-melding[data-toon="waarschuwing"] {
+  --melding-kleur: var(--melding-waarschuwing);
+}
+.office-melding[data-toon="fout"] {
+  --melding-kleur: var(--melding-fout);
+}
+.office-melding-icoon {
+  margin-top: 1px;
+  color: var(--melding-kleur);
+}
+.office-melding-inhoud {
+  min-width: 0;
+}
+.office-melding-inhoud > strong {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.office-melding-inhoud > p {
+  margin: 0;
+  color: var(--oa-shell-text-secondary, rgba(54, 54, 62, 0.65));
+  overflow-wrap: anywhere;
+  max-height: 9.5em;
+  overflow-y: auto;
+}
+.office-melding-details {
+  margin-top: 6px;
+  color: var(--oa-shell-text-secondary, rgba(54, 54, 62, 0.65));
+}
+.office-melding-details .rapport-details ul {
+  max-height: 160px;
+}
+.office-melding-acties {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.office .office-melding-acties button,
+.office .office-melding-details .rapport-acties button {
+  height: 24px;
+  padding: 0 10px;
+  border: 1px solid var(--oa-shell-border, rgba(54, 54, 62, 0.12));
+  border-radius: 4px;
+  background: var(--oa-shell-btn-secondary-bg, #f5f5f4);
+  color: var(--oa-shell-btn-secondary-text, #36363e);
+  font-size: 12px;
+}
+.office .office-melding-acties button:hover,
+.office .office-melding-details .rapport-acties button:hover {
+  background: var(--oa-shell-btn-secondary-hover-bg, rgba(217, 119, 6, 0.1));
+  border-color: var(--oa-shell-btn-secondary-hover-border, rgba(217, 119, 6, 0.3));
+}
+.office .office-melding-sluiten {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--oa-shell-text-secondary, rgba(54, 54, 62, 0.65));
+}
+.office .office-melding-sluiten:hover {
+  background: var(--oa-shell-hover-strong, rgba(217, 119, 6, 0.15));
+  color: var(--oa-shell-text, #36363e);
+}
+@keyframes office-melding-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .office-melding {
+    animation: none;
+  }
+}
+@media (forced-colors: active) {
+  .office-melding {
+    border: 1px solid CanvasText;
+  }
+  .office-melding::before {
+    background: Highlight;
+  }
+}

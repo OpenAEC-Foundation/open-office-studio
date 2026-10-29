@@ -1,16 +1,19 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { ChevronDown, type LucideIcon } from "lucide-react";
-import { Lint, LintActie, type LintProps } from "./openaec-lint";
+import { useTranslation } from "react-i18next";
+import { Lint, LintActie, type LintProps, type LintTeksten } from "./openaec-lint";
 import { useInstellingen } from "./instellingen";
+import { InLintPlek } from "./lintplek";
 
 export const RibbonFout = createContext<(bericht: string) => void>(() => {});
+/** Engelse redenen uit de engines, vertaald naar de interfacetaal. */
 const opdrachtToelichtingen: Record<string, string> = {
-  "Nothing to undo.": "Er is niets om ongedaan te maken.",
-  "Nothing to redo.": "Er is niets om opnieuw uit te voeren.",
-  "There is nothing to undo.": "Er is niets om ongedaan te maken.",
-  "There is nothing to redo.": "Er is niets om opnieuw uit te voeren.",
-  "The presentation is still opening.": "De presentatie wordt nog geopend.",
-  "Select a shape first.": "Selecteer eerst een vorm.",
+  "Nothing to undo.": "ribbon.nothingToUndo",
+  "Nothing to redo.": "ribbon.nothingToRedo",
+  "There is nothing to undo.": "ribbon.nothingToUndo",
+  "There is nothing to redo.": "ribbon.nothingToRedo",
+  "The presentation is still opening.": "ribbon.presentationOpening",
+  "Select a shape first.": "ribbon.selectShapeFirst",
 };
 
 export { LintActie as Actie, LintGroep as Groep } from "./openaec-lint";
@@ -19,7 +22,28 @@ export type { LintTab as RibbonTab } from "./openaec-lint";
 /** Het OpenAEC-lint met de voorkeuren van Office Studio. */
 export function Ribbon(props: LintProps) {
   const { lint } = useInstellingen();
-  return <Lint compact={lint.compact} standaardIngeklapt={lint.ingeklapt} {...props} />;
+  const { t } = useTranslation("shell");
+  // Het lint-raamwerk is los van de app; de teksten komen hier uit i18n.
+  const teksten: LintTeksten = {
+    lint: t("ribbon.label"),
+    bestand: t("ribbon.file"),
+    verbergen: t("ribbon.hide"),
+    weergeven: t("ribbon.show"),
+    verbergenUitleg: t("ribbon.hideHint"),
+    naarLinks: t("ribbon.scrollLeft"),
+    naarRechts: t("ribbon.scrollRight"),
+  };
+  // In de schil staat het lint boven de documentbalk (zie lintplek.tsx).
+  return (
+    <InLintPlek>
+      <Lint
+        compact={lint.compact}
+        standaardIngeklapt={lint.ingeklapt}
+        {...props}
+        teksten={{ ...teksten, ...props.teksten }}
+      />
+    </InLintPlek>
+  );
 }
 
 export interface GebondenOpdracht {
@@ -43,14 +67,14 @@ export interface GebondenOpdracht {
 
 function useUitvoeren(opdracht: GebondenOpdracht) {
   const fout = useContext(RibbonFout);
+  const { t } = useTranslation("shell");
   return (args?: unknown) => {
     void opdracht
       .execute(args as never)
       .then((resultaat) => {
         if (!resultaat.ok)
           fout(
-            resultaat.failure?.message ??
-              "De opdracht kon niet worden uitgevoerd.",
+            resultaat.failure?.message ?? t("ribbon.commandFailed"),
           );
       })
       .catch((error) =>
@@ -69,12 +93,12 @@ export function OpdrachtKnop({
   groot?: boolean;
 }) {
   const uitvoeren = useUitvoeren(opdracht);
+  const { t } = useTranslation("shell");
   const toelichting = opdracht.state.enabled
     ? opdracht.shortcut
     : opdracht.state.disabledReason?.message;
-  const uitleg = toelichting
-    ? (opdrachtToelichtingen[toelichting] ?? toelichting)
-    : null;
+  const sleutel = toelichting ? opdrachtToelichtingen[toelichting] : undefined;
+  const uitleg = sleutel ? t(sleutel) : (toelichting ?? null);
   return (
     <LintActie
       {...props}

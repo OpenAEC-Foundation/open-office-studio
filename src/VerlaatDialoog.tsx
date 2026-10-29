@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { FileWarning } from "lucide-react";
+import { Trans, useTranslation } from "react-i18next";
 import type { VerlaatKeuze } from "./useTabbladen";
 
 export function VerlaatDialoog({
@@ -17,6 +18,7 @@ export function VerlaatDialoog({
   /** Aantal andere tabbladen met wijzigingen in dezelfde sluitopdracht. */
   overige?: number;
 }) {
+  const { t } = useTranslation(["backstage", "common"]);
   const dialoog = useRef<HTMLElement>(null);
   const eerste = useRef<HTMLButtonElement>(null);
   useEffect(() => {
@@ -56,52 +58,40 @@ export function VerlaatDialoog({
         <span className="office-dialoogicoon">
           <FileWarning size={25} strokeWidth={1.6} />
         </span>
-        <h2 id="verlaat-titel">Niet-opgeslagen wijzigingen</h2>
+        <h2 id="verlaat-titel">{t("leave.title")}</h2>
         <p id="verlaat-uitleg">
-          {kanOpslaan ? (
-            <>
-              Wil je de wijzigingen in <strong>{naam}</strong> opslaan voordat
-              je het sluit?
-            </>
-          ) : (
-            <>
-              <strong>{naam}</strong> bevat wijzigingen die nog niet zijn
-              opgeslagen. Sla het bestand eerst op als je ze wilt behouden.
-            </>
-          )}
-          {overige > 0 && (
-            <>
-              {" "}
-              Daarna {overige === 1 ? "volgt nog" : "volgen nog"} {overige}{" "}
-              {overige === 1 ? "ander document" : "andere documenten"} met
-              niet-opgeslagen wijzigingen.
-            </>
-          )}
+          <Trans
+            t={t}
+            i18nKey={kanOpslaan ? "leave.askSave" : "leave.unsaved"}
+            values={{ name: naam }}
+            components={{ strong: <strong /> }}
+          />
+          {overige > 0 && <> {t("leave.others", { count: overige })}</>}
         </p>
         <div className="office-dialoogacties">
           {kanOpslaan ? (
             <>
               <button ref={eerste} onClick={() => antwoord("annuleren")}>
-                Annuleren
+                {t("common:cancel")}
               </button>
-              <button onClick={() => antwoord("verwerpen")}>Niet opslaan</button>
+              <button onClick={() => antwoord("verwerpen")}>{t("leave.dontSave")}</button>
               <button
                 className="office-dialoogdoorgaan"
                 onClick={() => antwoord("opslaan")}
               >
-                Opslaan
+                {t("common:save")}
               </button>
             </>
           ) : (
             <>
               <button ref={eerste} onClick={() => antwoord("annuleren")}>
-                Annuleren
+                {t("common:cancel")}
               </button>
               <button
                 className="office-dialoogdoorgaan"
                 onClick={() => antwoord("verwerpen")}
               >
-                Wijzigingen verwerpen
+                {t("leave.discard")}
               </button>
             </>
           )}

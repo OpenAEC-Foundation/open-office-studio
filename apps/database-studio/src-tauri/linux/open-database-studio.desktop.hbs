@@ -1,0 +1,37 @@
+[Desktop Entry]
+# Gemaakt door scripts/maak-desktopbestanden.mjs uit src/i18n/locales/*/desktop.json; niet met de hand bewerken.
+# Tauri vult de Handlebars-variabelen in (bundle.linux.deb/rpm.desktopTemplate in tauri.conf.json).
+Type=Application
+Name={{name}}
+GenericName=Database viewer
+GenericName[nl]=Databaseviewer
+GenericName[de]=Datenbankbetrachter
+GenericName[fr]=Visionneuse de bases de données
+GenericName[es]=Visor de bases de datos
+GenericName[it]=Visualizzatore di database
+GenericName[pt_BR]=Visualizador de banco de dados
+GenericName[zh_CN]=数据库查看器
+Comment=Open old MDB and ACCDB databases locally
+Comment[nl]=Open oude MDB- en ACCDB-databases lokaal
+Comment[de]=Alte MDB- und ACCDB-Datenbanken lokal öffnen
+Comment[fr]=Ouvrir localement d’anciennes bases de données MDB et ACCDB
+Comment[es]=Abrir localmente bases de datos MDB y ACCDB antiguas
+Comment[it]=Apri localmente vecchi database MDB e ACCDB
+Comment[pt_BR]=Abra localmente bancos de dados MDB e ACCDB antigos
+Comment[zh_CN]=在本地打开旧的 MDB 和 ACCDB 数据库
+Keywords=database;table;query;access;
+Keywords[nl]=database;databank;tabel;query;
+Keywords[de]=Datenbank;Tabelle;Abfrage;Access;
+Keywords[fr]=base de données;table;requête;Access;
+Keywords[es]=base de datos;tabla;consulta;Access;
+Keywords[it]=database;tabella;query;Access;
+Keywords[pt_BR]=banco de dados;tabela;consulta;Access;
+Keywords[zh_CN]=数据库;表;查询;access;database;
+Exec={{exec}}
+StartupWMClass={{exec}}
+Icon={{icon}}
+Terminal=false
+Categories={{categories}}
+{{#if mime_type}}
+MimeType={{mime_type}}
+{{/if}}

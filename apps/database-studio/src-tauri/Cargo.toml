@@ -1,6 +1,6 @@
 [package]
 name = "open-database-studio"
-version = "2026.44.5"
+version = "2026.44.6"
 description = "Lokale browser voor oude MDB- en ACCDB-databases"
 edition = "2021"
 
@@ -12,3 +12,5 @@ tauri = { version = "2", features = [] }
 rfd = "0.15"
 tempfile = "3"
 percent-encoding = "2"
+# Native teksten uit src/i18n/locales/<taal>/desktop.json (gedeelde module taal.rs)
+serde_json = "1"

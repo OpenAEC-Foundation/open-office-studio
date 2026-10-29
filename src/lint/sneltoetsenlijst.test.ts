@@ -91,6 +91,26 @@ describe("sneltoetsenregister", () => {
   });
 });
 
+describe("sneltoetsen in de interfacetaal", () => {
+  it("vertaalt omschrijvingen bij het lezen; toetsen en ids blijven gelijk", async () => {
+    const { zetTaal } = await import("../i18n/config");
+    const vet = vasteSneltoetsen.find((i) => i.module === "tekst" && i.toets === "Ctrl+B")!;
+    const tab = vasteSneltoetsen.find((i) => i.toets === "Alt+3")!;
+    try {
+      await zetTaal("en");
+      expect(vet.omschrijving).toBe("Bold");
+      expect(tab.omschrijving).toBe("Tab 3");
+      expect(zoekSneltoetsen(vasteSneltoetsen, "autosum").map((i) => i.toets)).toEqual(["Alt+="]);
+      expect(toetsDelen("Ctrl+Space", false)).toEqual(["Ctrl", "Space"]);
+    } finally {
+      await zetTaal("nl");
+    }
+    expect(vet.omschrijving).toBe("Vet");
+    expect(vet.id).toBe("bold");
+    expect(tab.omschrijving).toBe("Tabblad 3");
+  });
+});
+
 describe("documentzoom en tekstprofiel", () => {
   const toets = (key: string, code: string, shiftKey: boolean) => ({ key, code, shiftKey, ctrlKey: true, metaKey: false, altKey: false });
   it("laat Ctrl+Shift+= en Ctrl+Shift+- in het Word-profiel aan super- en subscript", () => {

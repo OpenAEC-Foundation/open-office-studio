@@ -4,9 +4,12 @@
  * DoCmd-acties naar de interface, Stop en foutmeldingen met regelnummer.
  */
 import { useCallback, useEffect, useRef, useState } from "react";
+import i18next from "i18next";
+import { formatGetal } from "../../../../src/i18n/opmaak";
 import type { HostGebeurtenis, HostWaarde } from "../../../vba/src/host.ts";
 import type { VoerUitResultaat } from "../../../vba/src/protocol.ts";
 import type { OntbrekendModus } from "../../../vba/src/extern-typen.ts";
+import { Trans } from "react-i18next";
 import { msgBoxOpbouw, type Dialogen } from "./Dialoog.tsx";
 import { foutTekst, VbaSessie, vanHostWaarde, type VbaModule } from "./vba-sessie.ts";
 import type { BedienbareWerkkopie } from "./werkkopie-sessie.ts";
@@ -51,6 +54,8 @@ export interface VbaBediening {
   /** Telt elke Stop; een reeks vergelijkt dit om tussen procedures te stoppen. */
   stopnummer(): number;
 }
+
+const tr = (sleutel: string, opties?: Record<string, unknown>) => i18next.t(`database:vbaSession.${sleutel}`, opties);
 
 const ACCESS_RECORD: Record<number, string> = { 0: "vorige", 1: "volgende", 2: "eerste", 3: "laatste", 4: "naar", 5: "nieuw" };
 
@@ -113,11 +118,11 @@ export function useVba(
     };
     switch (g.soort) {
       case "OpenForm":
-        if (!tekst(0)) throw new Error("DoCmd.OpenForm zonder formuliernaam.");
+        if (!tekst(0)) throw new Error(tr("openFormWithoutName"));
         await a.openFormulier(tekst(0)!);
         return;
       case "OpenReport":
-        if (!tekst(0)) throw new Error("DoCmd.OpenReport zonder rapportnaam.");
+        if (!tekst(0)) throw new Error(tr("openReportWithoutName"));
         a.openRapport(tekst(0)!);
         return;
       case "OpenQuery":
@@ -138,7 +143,7 @@ export function useVba(
         return;
       case "GoToRecord": {
         const naam = tekst(1) || s.formulieren.actief;
-        if (!naam) throw new Error("DoCmd.GoToRecord: er is geen formulier geopend.");
+        if (!naam) throw new Error(tr("goToRecordNoForm"));
         const record = Number(vanHostWaarde(g.args[2] ?? null) ?? 1);
         const offset = Number(vanHostWaarde(g.args[3] ?? null) ?? 1);
         await s.formulieren.roepAan({ soort: "formulier", naam }, "gotorecord", [ACCESS_RECORD[record] ?? "volgende", offset]);
@@ -156,13 +161,13 @@ export function useVba(
       case "SelectObject":
         return;
       case "CancelEvent":
-        voeg({ soort: "info", tekst: "DoCmd.CancelEvent: gebeurtenis geannuleerd." });
+        voeg({ soort: "info", tekst: tr("cancelEvent") });
         return;
       case "Quit":
-        voeg({ soort: "info", tekst: "DoCmd.Quit genegeerd: Open Database Studio wordt niet door VBA afgesloten." });
+        voeg({ soort: "info", tekst: tr("quitIgnored") });
         return;
       default:
-        throw new Error(`DoCmd.${g.soort} wordt in Open Database Studio (nog) niet ondersteund.`);
+        throw new Error(tr("doCmdUnsupported", { action: g.soort }));
     }
   }
 
@@ -170,25 +175,24 @@ export function useVba(
     async (reden?: string) => {
       if (toestemming.current) return true;
       const ja = await recent.current.dialogen.bevestig({
-        titel: "VBA-code uitvoeren?",
+        titel: tr("permission.title"),
         tekst: (
           <>
             {reden && <p>{reden}</p>}
             <p>
-              VBA-code uit deze database draait <strong>afgeschermd</strong> in een eigen proces, uitsluitend op de werkkopie. Het origineel
-              blijft ongewijzigd.
+              <Trans i18nKey="database:vbaSession.permission.intro" components={{ strong: <strong /> }} />
             </p>
             <ul>
-              <li>Geen toegang tot bestanden, mappen, het register of de omgeving.</li>
-              <li>Geen COM/ActiveX (CreateObject), Shell, Windows-API (Declare) of SendKeys.</li>
-              <li>Tijdslimiet van 30 seconden per uitvoering en een Stop-knop.</li>
+              <li>{tr("permission.noFiles")}</li>
+              <li>{tr("permission.noCom")}</li>
+              <li>{tr("permission.timeLimit", { seconds: 30 })}</li>
             </ul>
-            <p>De code kan wel gegevens in de werkkopie wijzigen. Voer alleen code uit van een bron die je vertrouwt.</p>
-            <p className="muted">Deze vraag komt één keer per geopende database.</p>
+            <p>{tr("permission.trust")}</p>
+            <p className="muted">{tr("permission.once")}</p>
           </>
         ),
-        ja: "VBA toestaan",
-        nee: "Niet uitvoeren",
+        ja: tr("permission.allow"),
+        nee: tr("permission.deny"),
         standaardNee: true,
       });
       if (ja) {
@@ -205,18 +209,24 @@ export function useVba(
       const s = recent.current.sessie;
       if (!s) return null;
       if (loopt.current) {
-        voeg({ soort: "fout", tekst: `${module}.${procedure} niet gestart: ${loopt.current} loopt nog.` });
+        voeg({ soort: "fout", tekst: tr("notStarted", { task: `${module}.${procedure}`, running: loopt.current }) });
         return null;
       }
       if (!(await vraagToestemming())) return null;
       loopt.current = `${module}.${procedure}`;
       setBezig(loopt.current);
       const modus = opties.ontbrekend ?? ontbrekendRef.current;
-      voeg({ soort: "info", tekst: `▶ ${module}.${procedure}${modus === "stoppen" ? "" : ` (ontbrekende onderdelen: ${modus === "fout" ? "fout teruggeven" : "overslaan"})`}` });
+      voeg({
+        soort: "info",
+        tekst:
+          modus === "stoppen"
+            ? `▶ ${module}.${procedure}`
+            : tr(modus === "fout" ? "startedReturnError" : "startedSkip", { task: `${module}.${procedure}` }),
+      });
       try {
         const r = await s.voerUit(recent.current.modules, module, procedure, args, { ontbrekend: modus });
         for (const o of r.overgeslagen ?? []) voeg({ soort: "info", tekst: o.aantal > 1 ? `${o.melding} (${o.aantal}×)` : o.melding });
-        if (r.ok) voeg({ soort: "info", tekst: `■ Klaar (${r.stappen.toLocaleString("nl-NL")} stappen)` });
+        if (r.ok) voeg({ soort: "info", tekst: tr("done", { count: r.stappen, steps: formatGetal(r.stappen) }) });
         else voeg({ soort: "fout", tekst: foutTekst(r) });
         return r;
       } catch (e) {
@@ -235,7 +245,7 @@ export function useVba(
       const s = recent.current.sessie;
       if (!s) return null;
       if (loopt.current) {
-        voeg({ soort: "fout", tekst: `${label} niet gestart: ${loopt.current} loopt nog.` });
+        voeg({ soort: "fout", tekst: tr("notStarted", { task: label, running: loopt.current }) });
         return null;
       }
       loopt.current = label;
@@ -267,7 +277,7 @@ export function useVba(
     stop: () => {
       stops.current++;
       recent.current.sessie?.stop();
-      voeg({ soort: "info", tekst: "Uitvoering gestopt." });
+      voeg({ soort: "info", tekst: tr("stopped") });
     },
     wisUitvoer: () => setUitvoer([]),
   };

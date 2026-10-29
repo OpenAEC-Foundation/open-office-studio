@@ -5,6 +5,8 @@ import type {
   ShapeRect,
   ShapeSnapshot,
 } from "@betteroffice/pptx";
+import i18next from "../i18n/config";
+import { formatDatum, formatTijd } from "../i18n/opmaak";
 
 /** Bewerkingen op de presentatie die de engine wel kent, maar niet als lintopdracht. */
 export type DiaHandle = Pick<
@@ -113,41 +115,44 @@ export function vormBijKader(
   return beste;
 }
 
-const twee = (getal: number) => String(getal).padStart(2, "0");
-/** Vaste datum- en tijdnotatie zoals de Nederlandse standaard: 26-10-2026 en 14:05. */
+/**
+ * Korte datum en tijd in de interfacetaal, zoals PowerPoint bij Datum en tijd
+ * invoegen: in het Nederlands 26-10-2026 en 14:05, in het Engels 26/10/2026.
+ */
 export function datumTekst(moment: Date, soort: "datum" | "tijd"): string {
   return soort === "datum"
-    ? `${twee(moment.getDate())}-${twee(moment.getMonth() + 1)}-${moment.getFullYear()}`
-    : `${twee(moment.getHours())}:${twee(moment.getMinutes())}`;
+    ? formatDatum(moment, { day: "2-digit", month: "2-digit", year: "numeric" })
+    : formatTijd(moment, { hour: "2-digit", minute: "2-digit" });
 }
 
-export const specialeTekens: readonly { teken: string; naam: string }[] = [
-  { teken: "€", naam: "Euroteken" },
-  { teken: "©", naam: "Copyright" },
-  { teken: "®", naam: "Gedeponeerd" },
-  { teken: "™", naam: "Handelsmerk" },
-  { teken: "°", naam: "Graden" },
-  { teken: "±", naam: "Plus-min" },
-  { teken: "×", naam: "Maal" },
-  { teken: "÷", naam: "Gedeeld door" },
-  { teken: "≈", naam: "Ongeveer gelijk" },
-  { teken: "≤", naam: "Kleiner dan of gelijk" },
-  { teken: "≥", naam: "Groter dan of gelijk" },
-  { teken: "²", naam: "Kwadraat" },
-  { teken: "³", naam: "Derde macht" },
-  { teken: "½", naam: "Half" },
-  { teken: "µ", naam: "Micro" },
-  { teken: "Ø", naam: "Diameter" },
-  { teken: "–", naam: "Gedachtestreepje" },
-  { teken: "—", naam: "Lang streepje" },
-  { teken: "…", naam: "Weglatingsteken" },
-  { teken: "•", naam: "Opsommingsteken" },
-  { teken: "«", naam: "Aanhalingsteken links" },
-  { teken: "»", naam: "Aanhalingsteken rechts" },
-  { teken: "§", naam: "Paragraaf" },
-  { teken: "→", naam: "Pijl naar rechts" },
-  { teken: "←", naam: "Pijl naar links" },
-  { teken: "✓", naam: "Vinkje" },
+/** Speciale tekens; `sleutel` verwijst naar ribbon:presentation.characters.*. */
+export const specialeTekens: readonly { teken: string; sleutel: string }[] = [
+  { teken: "€", sleutel: "euro" },
+  { teken: "©", sleutel: "copyright" },
+  { teken: "®", sleutel: "registered" },
+  { teken: "™", sleutel: "trademark" },
+  { teken: "°", sleutel: "degree" },
+  { teken: "±", sleutel: "plusMinus" },
+  { teken: "×", sleutel: "multiply" },
+  { teken: "÷", sleutel: "divide" },
+  { teken: "≈", sleutel: "approximately" },
+  { teken: "≤", sleutel: "lessOrEqual" },
+  { teken: "≥", sleutel: "greaterOrEqual" },
+  { teken: "²", sleutel: "squared" },
+  { teken: "³", sleutel: "cubed" },
+  { teken: "½", sleutel: "half" },
+  { teken: "µ", sleutel: "micro" },
+  { teken: "Ø", sleutel: "diameter" },
+  { teken: "–", sleutel: "enDash" },
+  { teken: "—", sleutel: "emDash" },
+  { teken: "…", sleutel: "ellipsis" },
+  { teken: "•", sleutel: "bullet" },
+  { teken: "«", sleutel: "guillemetLeft" },
+  { teken: "»", sleutel: "guillemetRight" },
+  { teken: "§", sleutel: "section" },
+  { teken: "→", sleutel: "arrowRight" },
+  { teken: "←", sleutel: "arrowLeft" },
+  { teken: "✓", sleutel: "checkMark" },
 ];
 
 /** Voert directe bewerkingen uit als één eigen ongedaan-maakstap. */
@@ -169,7 +174,7 @@ export async function verwijderDia(
 ) {
   const dias = handle.snapshot().slides;
   if (dias.length < 2)
-    throw new Error("De enige dia kan niet worden verwijderd.");
+    throw new Error(i18next.t("ribbon:presentation.messages.onlySlide"));
   const dia = dias[index];
   if (!dia) return false;
   await alsStap(handle, toepassen, () => handle.deleteSlide(dia.id));
@@ -220,7 +225,12 @@ export async function voegTekstvakToe(
     height,
   };
   return alsStap(handle, toepassen, () =>
-    handle.addTextBox(dia.id, { name: "Datum", rect, text: tekst, style: {} }),
+    handle.addTextBox(dia.id, {
+      name: i18next.t("ribbon:presentation.dateShapeName"),
+      rect,
+      text: tekst,
+      style: {},
+    }),
   );
 }
 

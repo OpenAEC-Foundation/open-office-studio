@@ -1,0 +1,142 @@
+{
+  "dialogs": {
+    "cancel": "ביטול",
+    "saveAsEllipsis": "שמירה בשם…",
+    "officeFile": "קובץ משרדי",
+    "officeFiles": "קבצים משרדיים",
+    "untitled": "ללא שם",
+    "saveCopy": "שמירת עותק",
+    "saveAs": "שמירה בשם",
+    "openFile": "פתיחת קובץ",
+    "replaceFile": {
+      "title": "החלפת קובץ",
+      "message": "הקובץ {{path}} כבר קיים. להחליף אותו?"
+    },
+    "unsavedChanges": {
+      "title": "שינויים שלא נשמרו",
+      "message_one": "במסמך אחד בחלון זה יש שינויים שלא נשמרו. הם יאבדו. לסגור בכל זאת?",
+      "message_two": "בשני מסמכים בחלון זה יש שינויים שלא נשמרו. הם יאבדו. לסגור בכל זאת?",
+      "message_other": "ב־{{count}} מסמכים בחלון זה יש שינויים שלא נשמרו. הם יאבדו. לסגור בכל זאת?"
+    },
+    "fileChanged": {
+      "title": "הקובץ השתנה",
+      "missing": "{{name}} כבר לא נמצא במיקום המקורי שלו. ליצור אותו מחדש עם הגרסה שלך, או לשמור אותו במקום אחר?",
+      "changedExternally": "{{name}} שונה מחוץ ל־Open Office Studio מאז שפתחת אותו. דריסה תמחק את השינויים האלה.",
+      "overwrite": "דריסה"
+    },
+    "foreignFormat": {
+      "title": "שמירה כ־{{format}}",
+      "message": "{{name}} יעודכן בתבנית {{format}}. סביבת ההרצה המשרדית ממירה את המסמך לשם כך; עיצוב ש־{{format}} אינו תומך בו עלול ללכת לאיבוד.",
+      "hint": "בחרו „שמירה בשם…” כדי לשמור קובץ DOCX,‏ XLSX או PPTX.",
+      "update": "עדכון כ־{{format}}"
+    },
+    "chooseConverter": "בחירת תוכנית המרה (soffice)",
+    "databaseExport": {
+      "title": "שמירת ייצוא מסד נתונים",
+      "filter": "ייצוא מסד נתונים",
+      "sqliteFilter": "עותק עבודה של SQLite",
+      "replaceTitle": "החלפת ייצוא",
+      "replaceMessage": "קובץ הייצוא הזה כבר קיים. להחליף אותו?"
+    }
+  },
+  "errors": {
+    "file": {
+      "invalidBody": "הקובץ ריק, גדול מ־100 MB או לא נשלח כנתונים בינאריים.",
+      "emptyOrTooLarge": "הקובץ ריק או גדול מ־100 MB.",
+      "formatInfoMissing": "פרטי התבנית חסרים.",
+      "formatMissing": "התבנית חסרה.",
+      "targetFolderMissing": "תיקיית היעד חסרה.",
+      "nameMissing": "שם הקובץ חסר.",
+      "nameInvalidChars": "שם הקובץ מכיל תווים לא חוקיים.",
+      "unsupportedFormat": "תבנית קובץ לא נתמכת.",
+      "extensionMismatch": "הסיומת שנבחרה אינה תואמת את המסמך.",
+      "alreadyOpenedOrOtherWindow": "הקובץ הזה כבר פתוח או שאינו מיועד לחלון הזה.",
+      "notThisWindow": "הקובץ הזה אינו שייך לחלון הזה.",
+      "notLinked": "הקובץ הזה כבר אינו מקושר ללשונית הזו.",
+      "tokenMissing": "האסימון חסר.",
+      "openInOtherTab": "{{name}} פתוח בלשונית אחרת. סגרו אותו קודם או בחרו שם אחר.",
+      "readOnly": "אין הרשאת כתיבה בתיקייה זו או שהקובץ לקריאה בלבד ({{path}}). בחרו מיקום אחר.",
+      "notInRecentList": "הקובץ הזה כבר אינו ברשימה."
+    },
+    "preferences": {
+      "tooLarge": "ההעדפות גדולות מ־64 kB.",
+      "invalid": "ההעדפות אינן אובייקט JSON תקין.",
+      "configDirUnavailable": "תיקיית התצורה של היישום אינה זמינה.",
+      "pathInvalid": "נתיב לא חוקי להעדפות."
+    },
+    "font": {
+      "notInstalled": "הגופן {{family}} אינו מותקן במחשב זה.",
+      "notFound": "הגופן לא נמצא.",
+      "fileTooLarge": "קובץ הגופן הזה גדול מדי.",
+      "inCollection": "הגופן הזה הוא חלק מאוסף (.ttc) ואי אפשר להשתמש בו בנפרד.",
+      "unreadable": "לא ניתן היה לקרוא את קובץ הגופן.",
+      "nameInvalid": "שם גופן לא חוקי."
+    },
+    "recovery": {
+      "keyInvalid": "מפתח שחזור לא חוקי.",
+      "spaceFull": "השטח לעותקי שחזור (512 MB) מלא. שמרו את המסמכים שלכם.",
+      "sessionMissing": "ההפעלה חסרה.",
+      "keyMissing": "המפתח חסר.",
+      "dataInvalid": "נתוני שחזור לא חוקיים.",
+      "unknownDocumentType": "סוג מסמך לא ידוע.",
+      "sessionNotThisWindow": "הפעלת השחזור הזו אינה שייכת לחלון הזה.",
+      "sessionOtherWindow": "הפעלת השחזור הזו שייכת לחלון אחר.",
+      "sessionStillRunning": "ההפעלה הזו עדיין פועלת."
+    },
+    "window": {
+      "closed": "החלון הזה נסגר.",
+      "transferEmptyOrTooLarge": "ההעברה ריקה או גדולה מדי.",
+      "mainWindowUnavailable": "החלון הראשי אינו זמין.",
+      "openFailed": "לא ניתן היה לפתוח את החלון: {{error}}",
+      "transferExpired": "תוקף ההעברה הזו פג או שהיא כבר נלקחה.",
+      "transferAlreadyTaken": "ההעברה הזו כבר נלקחה.",
+      "transferUnknown": "ההעברה הזו אינה ידועה."
+    },
+    "conversion": {
+      "unknownModule": "מודול משרדי לא ידוע.",
+      "sourceFormatMismatch": "תבנית המקור אינה שייכת למודול הזה.",
+      "outputFormatUnsupported": "תבנית הפלט הזו אינה נתמכת.",
+      "outputFormatDirect": "תבנית הפלט הזו נוצרת ישירות ביישום, לא באמצעות המרה.",
+      "invalidOptions": "אפשרויות המרה לא חוקיות.",
+      "chooseSoffice": "בחרו את התוכנית soffice (ב־Windows:‏ soffice.exe) מתיקיית התוכניות של סביבת ההרצה המשרדית.",
+      "chosenFileMissing": "הקובץ שנבחר אינו קיים.",
+      "chosenPathNotFile": "הנתיב שנבחר אינו קובץ.",
+      "chosenFileNotExecutable": "הקובץ שנבחר אינו בר־הרצה.",
+      "appDataDirUnavailable": "תיקיית הנתונים של היישום אינה זמינה.",
+      "startFailed": "לא ניתן היה להתחיל את ההמרה: {{error}}",
+      "failed": "ההמרה נכשלה ({{reason}}). המקור נשמר.",
+      "exitCode": "קוד יציאה {{code}}",
+      "processAborted": "התהליך הופסק",
+      "timeout": "ההמרה חרגה ממגבלת הזמן והופסקה. המקור נשמר.",
+      "profilePathInvalid": "נתיב הפרופיל הזמני אינו חוקי.",
+      "inputSize": "בחרו קובץ שאינו ריק וגודלו 100 MB לכל היותר.",
+      "runtimeMissing": "תבנית זו דורשת סביבת הרצה משרדית (LibreOffice). היא לא נמצאה: התקינו אותה, בחרו את התוכנית ב„שמירה בשם” או הגדירו את OPENAEC_CONVERSIE_PROGRAMMA. ‏DOCX,‏ XLSX ו־PPTX עובדים ישירות.",
+      "notConverted": "לא ניתן היה להמיר את הקובץ הזה. ייתכן שהוא פגום או מוגן, או שמסנן התבנית חסר בסביבת ההרצה המקומית.",
+      "multipleOutputs": "ההמרה הפיקה יותר מקובץ אחד.",
+      "noUsableOutput": "ההמרה לא הפיקה קובץ שמיש בגודל של 100 MB לכל היותר."
+    },
+    "databaseExport": {
+      "emptyOrTooLarge": "הייצוא ריק או גדול מ־100 MB.",
+      "emptyInvalidOrTooLarge": "הייצוא ריק, לא חוקי או גדול מ־100 MB.",
+      "nameMissing": "שם הקובץ חסר.",
+      "nameInvalid": "שם קובץ לא חוקי.",
+      "notSqlite": "זה אינו עותק עבודה של SQLite.",
+      "typeNotAllowed": "מותרים רק ייצוא CSV, קוד מקור, דוח ועותק עבודה של SQLite. מסדי נתונים של Access לעולם אינם נדרסים.",
+      "textNotUtf8": "ייצוא טקסט חייב להיות טקסט UTF-8 תקין.",
+      "sendAsBinary": "שלחו את הייצוא כנתונים בינאריים בגודל של 100 MB לכל היותר.",
+      "extensionMismatch": "הסיומת שנבחרה אינה תואמת את הייצוא."
+    }
+  },
+  "launcher": {
+    "officeStudio": {
+      "genericName": "חבילה משרדית",
+      "comment": "סביבה משרדית מקומית של OpenAEC",
+      "keywords": "מעבד תמלילים;גיליון אלקטרוני;מצגת;מסד נתונים;דואר אלקטרוני;משרד;office;"
+    },
+    "databaseStudio": {
+      "genericName": "מציג מסדי נתונים",
+      "comment": "פתיחה מקומית של מסדי נתונים ישנים מסוג MDB ו־ACCDB",
+      "keywords": "מסד נתונים;טבלה;שאילתה;access;database;"
+    }
+  }
+}

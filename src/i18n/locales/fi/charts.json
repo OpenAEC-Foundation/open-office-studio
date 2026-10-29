@@ -1,0 +1,265 @@
+{
+  "types": {
+    "column": {
+      "name": "Pylväs",
+      "description": "Vertaa arvoja rinnakkain"
+    },
+    "stackedColumn": {
+      "name": "Pinottu pylväs",
+      "description": "Osat ja summa luokittain"
+    },
+    "percentColumn": {
+      "name": "100 % pylväs",
+      "description": "Osuudet luokittain"
+    },
+    "bar": {
+      "name": "Palkki",
+      "description": "Vaakasuuntainen, pitkille nimille"
+    },
+    "line": {
+      "name": "Viiva",
+      "description": "Kehitys ajan mittaan"
+    },
+    "lineMarkers": {
+      "name": "Viiva ja merkit",
+      "description": "Kehitys näkyvillä arvopisteillä"
+    },
+    "area": {
+      "name": "Aluekaavio",
+      "description": "Kehitys suuruutta korostaen"
+    },
+    "pie": {
+      "name": "Ympyrä",
+      "description": "Yksittäisen sarjan jakauma"
+    },
+    "doughnut": {
+      "name": "Rengas",
+      "description": "Jakauma avoimella keskustalla"
+    },
+    "scatter": {
+      "name": "Piste (XY)",
+      "description": "Kahden luvun välinen suhde"
+    },
+    "combo": {
+      "name": "Pylväs + viiva",
+      "description": "Viimeinen sarja viivana toissijaisella akselilla"
+    }
+  },
+  "unknownType": "Tuntematon tyyppi",
+  "busy": "Käsitellään…",
+  "defaults": {
+    "seriesName": "Sarja {{n}}",
+    "categoryName": "Luokka {{n}}",
+    "chartName": "Kaavio {{n}}",
+    "sheetName": "Kaavio {{n}}",
+    "true": "TOSI",
+    "false": "EPÄTOSI"
+  },
+  "ribbon": {
+    "charts": "Kaaviot",
+    "chart": "Kaavio",
+    "editChart": "Muokkaa kaaviota",
+    "allCharts": "Kaikki kaaviot",
+    "dataAndFormat": "Tiedot ja muotoilu",
+    "overview": "Yleiskatsaus",
+    "type": "Tyyppi",
+    "changeType": "Muuta kaaviotyyppiä",
+    "data": "Tiedot",
+    "selectData": "Valitse tiedot",
+    "layout": "Asettelu",
+    "titleAndLegend": "Otsikko ja selite",
+    "delete": "Poista",
+    "deleteChart": "Poista kaavio",
+    "withShortcut": "{{name}} · {{shortcut}}"
+  },
+  "dialog": {
+    "title": {
+      "insert": "Lisää kaavio",
+      "edit": "Muokkaa kaaviota"
+    },
+    "button": {
+      "insert": "Lisää",
+      "edit": "Päivitä"
+    },
+    "reloadNote": {
+      "insert": "Asiakirja ladataan uudelleen lisäämisen jälkeen. Sitä ennen tehtyjä muutoksia ei voi enää kumota.",
+      "edit": "Asiakirja ladataan uudelleen päivityksen jälkeen. Sitä ennen tehtyjä muutoksia ei voi enää kumota."
+    },
+    "closeTitle": "Sulje (Esc)",
+    "type": "Tyyppi",
+    "data": "Tiedot",
+    "cellRange": "Solualue",
+    "cellRangePlaceholder": "Esimerkiksi A1:D6",
+    "noContiguousRange": "Tämän kaavion viittaukset eivät muodosta yhtenäistä aluetta; tiedot pysyvät muuttumattomina, kunnes annat alueen.",
+    "firstRowNames": "Ensimmäinen rivi sisältää nimet",
+    "firstColumnNames": "Ensimmäinen sarake sisältää nimet",
+    "seriesIn": "Sarjat",
+    "columns": "sarakkeissa",
+    "rows": "riveillä",
+    "series": "Sarja",
+    "seriesNoNumbersTitle": "{{name}}: ei lukuja, ei mukana",
+    "noNumbers": "(ei lukuja)",
+    "enterRange": "Anna solualue, joka sisältää tiedot.",
+    "placeCursorInTable": "Sijoita ensin kohdistin taulukkoon, jossa on lukuja.",
+    "titles": "Otsikot",
+    "chartTitle": "Otsikko",
+    "subtitle": "Alaotsikko",
+    "categoryAxis": "Luokka-akseli",
+    "valueAxis": "Arvoakseli",
+    "horizontalAxis": "Vaaka-akseli",
+    "verticalAxis": "Pystyakseli",
+    "secondaryAxis": "Toissijainen akseli",
+    "format": "Muoto",
+    "legend": "Selite",
+    "gridlines": "Ruudukko",
+    "dataLabels": "Arvopisteiden otsikot",
+    "decimals": "Desimaalit",
+    "placement": "Sijoitus",
+    "besideData": "Tietojen viereen tässä taulukossa",
+    "newSheet": "Uuteen taulukkoon",
+    "sheetName": "Taulukon nimi",
+    "summary": {
+      "series_one": "{{n}} sarja",
+      "series_other": "{{n}} sarjaa",
+      "categories_one": "{{n}} luokka",
+      "categories_other": "{{n}} luokkaa",
+      "text": "{{series}} · {{categories}}",
+      "withSheet": "{{series}} · {{categories}} · {{sheet}}"
+    }
+  },
+  "legend": {
+    "bottom": "Alhaalla",
+    "right": "Oikealla",
+    "top": "Ylhäällä",
+    "left": "Vasemmalla",
+    "none": "Ei selitettä"
+  },
+  "dataSheet": {
+    "row": "Rivi",
+    "series": "Sarja",
+    "removeLastRow": "Poista viimeinen rivi",
+    "removeLastSeries": "Poista viimeinen sarja",
+    "paste": "Liitä",
+    "pasteTitle": "Liitä sarkaimin eroteltua tekstiä leikepöydältä, esimerkiksi laskentataulukosta kopioituna",
+    "fromTable": "Valitusta taulukosta",
+    "fromTableTitle": "Ottaa käyttöön taulukon, jossa kohdistin on",
+    "pasteNotAllowed": "Liittäminen painikkeella ei ole sallittua tässä. Napsauta solua ja käytä näppäinyhdistelmää Ctrl+V.",
+    "corner": "Kulmasolu",
+    "seriesNameLabel": "Sarjan {{n}} nimi",
+    "categoryLabel": "Luokka {{n}}",
+    "valueLabel": "Arvo rivi {{row}}, sarja {{series}}"
+  },
+  "preview": {
+    "label": "Esikatselu: {{title}}",
+    "untitled": "Esikatselu: nimetön kaavio"
+  },
+  "list": {
+    "title": "Tämän asiakirjan kaaviot",
+    "empty": "Tässä asiakirjassa ei ole vielä kaavioita.",
+    "edit": "Muokkaa",
+    "delete": "Poista",
+    "deleteLabel": "Poista {{name}}",
+    "place": {
+      "slide": "dia {{n}}",
+      "sheet": "taulukko {{name}}",
+      "text": "kaavio {{n}} tekstissä"
+    }
+  },
+  "deleteConfirm": {
+    "title": "Poista kaavio",
+    "text": "Poistetaanko ‘{{name}}’? Asiakirja ladataan sitten uudelleen; aiempia muutoksia ei voi enää kumota.",
+    "textSheet": "Poistetaanko ‘{{name}}’ taulukosta {{sheet}}? Asiakirja ladataan sitten uudelleen; aiempia muutoksia ei voi enää kumota.",
+    "button": "Poista"
+  },
+  "errors": {
+    "unknownType": "Tuntematon kaaviotyyppi.",
+    "noSeries": "Kaavio tarvitsee vähintään yhden arvosarjan.",
+    "tooManySeries": "Kaaviossa voi tässä olla enintään {{max}} sarjaa.",
+    "tooManyCategories": "Kaaviossa voi tässä olla enintään {{max}} luokkaa.",
+    "noCategories": "Kaavio tarvitsee vähintään yhden luokan.",
+    "valueCountMismatch": "Sarjassa ‘{{name}}’ ei ole yhtä monta arvoa kuin luokkia.",
+    "noNumbers": "Tiedoissa ei ole lukuja.",
+    "comboNeedsTwoSeries": "Yhdistelmäkaavio tarvitsee vähintään kaksi sarjaa: pylväät ja viivan.",
+    "scatterNeedsNumbers": "Pistekaavio tarvitsee lukuja X-arvoiksi ensimmäiseen sarakkeeseen tai riviin.",
+    "titleTooLong": "Otsikoiden enimmäispituus on {{max}} merkkiä.",
+    "invalidColor": "Väri ‘{{color}}’ ei ole kelvollinen väri.",
+    "noNumericColumn": "Mikään alueen sarakkeista ei sisällä lukuja, joten piirrettävää ei ole. Valitse alue, jossa on vähintään yksi lukusarake, tai aseta ‘Sarjat’-asetukseksi rivit.",
+    "noNumericRow": "Mikään alueen riveistä ei sisällä lukuja, joten piirrettävää ei ole. Valitse alue, jossa on vähintään yksi lukurivi, tai aseta ‘Sarjat’-asetukseksi sarakkeet.",
+    "chooseSeries": "Valitse kaavioon vähintään yksi sarja.",
+    "rangeTooLarge": "Alue on liian suuri: enintään {{max}} solua.",
+    "noDataBesideHeaders": "Alue ei sisällä tietoja otsikoiden lisäksi.",
+    "pasteTooLarge": "Liitetyt tiedot ovat liian suuret kaaviolle.",
+    "invalidRange": "Tämä ei ole kelvollinen solualue. Käytä esimerkiksi muotoa A1:D6 tai 'Taulukko 1'!A1:D6.",
+    "noSuchSheet": "Taulukkoa nimeltä ‘{{name}}’ ei ole.",
+    "spreadsheetNotReady": "Laskentataulukko ei ole vielä valmis.",
+    "spreadsheetReadOnly": "Laskentataulukko on vain luku -tilassa.",
+    "documentNotReady": "Asiakirja ei ole vielä valmis.",
+    "presentationNotEditable": "Esitystä ei voi muokata juuri nyt.",
+    "selectChartFirst": "Valitse ensin kaavio.",
+    "chartGone": "Kaaviota ei enää löydy.",
+    "notEditableHere": "Tätä kaaviota ei voi muokata tässä.",
+    "notEditable": "Tätä kaaviota ei voi muokata.",
+    "package": {
+      "tooLarge": "Asiakirja on liian suuri, jotta siinä voisi muokata kaaviota.",
+      "tooManyParts": "Asiakirjassa on liian monta tai liian suuria osia.",
+      "notZip": "Asiakirja ei ole kelvollinen Office-tiedosto (zip).",
+      "invalidPartName": "Asiakirjassa on virheellinen osan nimi.",
+      "noContentTypes": "Asiakirjasta puuttuu [Content_Types].xml.",
+      "missingPart": "Asiakirjasta puuttuu osa {{part}}.",
+      "noFreePartName": "Vapaita osien nimiä ei ole jäljellä."
+    },
+    "xml": {
+      "tooLarge": "XML-osa on liian suuri käsiteltäväksi.",
+      "damaged": "XML-osa on vahingoittunut.",
+      "doctype": "DOCTYPE-määrityksen sisältävää XML:ää ei käsitellä tietoturvasyistä.",
+      "tooDeep": "XML-osa on sisäkkäinen liian monella tasolla.",
+      "overlappingChanges": "Sisäinen virhe: päällekkäiset XML-muutokset."
+    },
+    "chartXml": {
+      "notDrawingML": "Tämä osa ei ole DrawingML-kaavio.",
+      "noPlotArea": "Kaaviossa ei ole piirtoaluetta.",
+      "unusualPrefix": "Tämä kaavio käyttää epätavallista XML-merkintää, eikä sitä voi muokata turvallisesti tässä."
+    },
+    "document": {
+      "noMainPart": "Asiakirjasta puuttuu pääosa.",
+      "tooManyCharts": "Tässä asiakirjassa on jo {{total}} kaaviota; useampia ei tueta.",
+      "invalidSheetName": "Virheellinen taulukon nimi: enintään 31 merkkiä, ilman merkkejä \\ / ? * [ ] :",
+      "sheetExists": "Taulukko nimeltä ‘{{name}}’ on jo olemassa.",
+      "noSheetList": "Työkirjassa ei ole taulukkoluetteloa.",
+      "drawingMissing": "Tämän taulukon piirros puuttuu tai on vahingoittunut.",
+      "noSuchWorksheet": "Valittua taulukkoa ei ole olemassa, tai se ei ole laskentataulukko.",
+      "notPlainWorksheet": "Kaavion voi sijoittaa vain tavalliseen laskentataulukkoon.",
+      "drawingDamaged": "Tämän taulukon piirros on vahingoittunut.",
+      "docxUnusualPrefix": "Tämä asiakirja käyttää epätavallista XML-merkintää; kaaviota ei voi lisätä turvallisesti.",
+      "noBody": "Asiakirjassa ei ole leipätekstiosaa.",
+      "tableTooLarge": "Taulukko on liian suuri kaaviolle.",
+      "noSuchSlide": "Valittua diaa ei ole olemassa.",
+      "slideUnusualPrefix": "Tämä dia käyttää epätavallista XML-merkintää; kaaviota ei voi lisätä turvallisesti.",
+      "noShapeTree": "Diassa ei ole muotopuuta.",
+      "chartRemoved": "Kaaviota ei enää ole asiakirjassa.",
+      "chartNotFound": "Kaaviota ei löytynyt.",
+      "cannotRemove": "Kaavio-objektia ei voi poistaa."
+    }
+  },
+  "read": {
+    "reasons": {
+      "extendedChart": "Tämä on laajennettu kaavio (kuten vesiputous- tai puukarttakaavio), jota ei voi muokata tässä.",
+      "unsupportedType": "Tämä kaavio käyttää tyyppiä, jota ei voi muokata tässä ({{types}}).",
+      "noReadableSeries": "Kaaviossa ei ole luettavia sarjoja.",
+      "unsupportedCombination": "Tämä kaavio yhdistää tyyppejä tavalla, jota ei voi muokata tässä.",
+      "noSeries": "Kaaviossa ei ole arvosarjoja.",
+      "invalid": "Tätä kaaviota ei voi muokata tässä: {{reason}}",
+      "unusualPrefix": "Tämä kaavio käyttää epätavallista XML-merkintää, eikä sitä voi muokata turvallisesti tässä."
+    },
+    "warnings": {
+      "stackedBars": "Pinotut palkit sijoitetaan muokattaessa rinnakkain.",
+      "stackedLines": "Pinotuista viivoista tulee muokattaessa erillisiä viivoja.",
+      "stackedAreas": "Pinotuista alueista tulee muokattaessa erillisiä alueita.",
+      "linesAfterColumns": "Viivasarjat sijoitetaan muokattaessa pylväiden jälkeen.",
+      "lastSeriesAsLine": "Muokattaessa vain viimeinen sarja piirretään viivana.",
+      "multiLevelCategories": "Monitasoisista luokista tulee muokattaessa yksitasoisia.",
+      "moreValuesThanCategories": "Sarjassa ‘{{name}}’ on enemmän arvoja kuin luokkia.",
+      "trendlinesDropped": "Trendiviivat ja virhepalkit poistetaan muokattaessa."
+    }
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "header": {
+    "homeTitle": "Gå till Start",
+    "homeLabel": "OpenAEC Office Studio · Start",
+    "version": "Version {{version}}",
+    "unsaved": "Osparade ändringar",
+    "unchanged": "Oförändrad",
+    "fileAndStart": "Arkiv och Start",
+    "openFileTitle": "Öppna en fil i en ny flik · Ctrl+O",
+    "openNotesBackupTitle": "Lägg till en säkerhetskopia av anteckningar · Ctrl+O",
+    "openDatabaseTitle": "Öppna databas · Ctrl+O",
+    "addBackup": "Lägg till säkerhetskopia",
+    "saveAs": "Spara som",
+    "saveAsTitle": "Spara som · F12 eller Ctrl+Shift+S (Ctrl+S sparar i den öppna filen)",
+    "busy": "Arbetar…"
+  },
+  "message": {
+    "close": "Stäng meddelandet",
+    "markdownNote": "Markdown bevarar text och struktur. Spara även en DOCX för sidlayout, bilder och spårade ändringar."
+  },
+  "loading": {
+    "editor": "Läser in redigeraren…",
+    "notes": "Läser in Anteckningar…",
+    "email": "Läser in Email Studio…",
+    "document": "Läser in dokumentet…",
+    "fonts": "Läser in teckensnitt…"
+  },
+  "errors": {
+    "editorFailed": "Redigeraren kunde inte öppna den här filen: {{error}}",
+    "openFailed": "Det gick inte att öppna: {{error}}",
+    "openFileFailed": "Det gick inte att öppna {{name}}: {{error}}",
+    "saveFailed": "Det gick inte att spara: {{error}}",
+    "printFailed": "Det gick inte att skriva ut: {{error}}",
+    "sendAsAttachmentFailed": "Det gick inte att skicka som bifogad fil: {{error}}",
+    "templateUnavailable": "Mallen är inte tillgänglig",
+    "exampleFailed": "Exemplet kunde inte öppnas.",
+    "fileSize": "Välj en fil som inte är tom och som är högst 100 MB.",
+    "unsupportedFormat": "{{name}}: det här formatet stöds inte.",
+    "emptyAttachment": "Den bifogade filen är tom.",
+    "databaseModifiedFile": "Database Studio har en ändrad arbetskopia. Spara eller stäng den först och öppna sedan filen igen.",
+    "databaseModifiedAttachment": "Database Studio har en ändrad arbetskopia. Spara eller stäng den först och öppna sedan den bifogade filen igen.",
+    "spreadsheetNotReady": "Kalkylbladet är inte klart än.",
+    "presentationNotReady": "Presentationen är inte klar än.",
+    "documentNotReady": "Dokumentet är inte klart än.",
+    "documentSaveFailed": "Dokumentet kunde inte sparas."
+  },
+  "tabs": {
+    "untitled": "Namnlös {{n}}",
+    "memoryWarning_one": "{{count}} dokument är öppet. Varje öppet dokument använder minne; stäng dokument som du inte längre behöver.",
+    "memoryWarning_other": "{{count}} dokument är öppna. Varje öppet dokument använder minne; stäng dokument som du inte längre behöver."
+  },
+  "tabBar": {
+    "label": "Öppna flikar",
+    "start": "Start",
+    "startTitle": "Start · nytt eller befintligt dokument, Anteckningar och Databas",
+    "tabTitleUnsaved": "{{name}} · osparade ändringar",
+    "dragOutHint": "Dra utåt för ett eget fönster",
+    "unsavedA11y": ", osparade ändringar",
+    "closeTab": "Stäng {{name}}",
+    "closeTitle": "Stäng · Ctrl+W",
+    "allTabs": "Alla öppna flikar",
+    "addTab": "Lägg till flik",
+    "addTabTitle": "Öppna ett nytt eller befintligt dokument, Anteckningar eller Databas",
+    "releaseOpensWindow": "Släpp för att öppna ett eget fönster",
+    "closeOthers": "Stäng andra",
+    "closeToRight": "Stäng flikar till höger"
+  },
+  "windowMenu": {
+    "button": "Öppna dokument",
+    "buttonTitle": "Öppna dokument · Ctrl+Tab eller Ctrl+F6 för att växla",
+    "empty": "Inga öppna dokument.",
+    "thisWindow": "Det här fönstret",
+    "mainWindow": "Huvudfönster",
+    "windowNumber": "Fönster {{number}}",
+    "unsavedTitle": "Osparade ändringar",
+    "modified": "ändrat",
+    "newWindow": "Nytt fönster"
+  },
+  "windows": {
+    "openInNewWindow": "Öppna i nytt fönster",
+    "backToMainWindow": "Tillbaka till huvudfönstret",
+    "databaseMovedHere": "Database Studio finns nu i det här fönstret. Öppna databasen här igen om du vill fortsätta arbeta.",
+    "documentMoved": "Dokumentet har flyttats, inklusive osparade ändringar. Historiken för Ångra följer inte med vid flytten.",
+    "linkUnavailable": "Fönsterkoppling är inte tillgänglig: {{error}}",
+    "closeGuardUnavailable": "Stängningsskydd är inte tillgängligt: {{error}}",
+    "databaseModified": "Database Studio kan inte flytta en ändrad arbetskopia till ett annat fönster. Exportera eller spara databasen först.",
+    "otherWindowFailed": "Det andra fönstret kunde inte öppna fliken.",
+    "mainWindowNoResponse": "Huvudfönstret svarar inte. Fliken förblir öppen här.",
+    "newWindowTimeout": "Det nya fönstret tog inte över dokumentet i tid. Fliken förblir öppen här.",
+    "alreadyMainWindow": "Det här är redan huvudfönstret.",
+    "popupBlocked": "Det nya fönstret kunde inte öppnas. Tillåt popup-fönster för den här sidan.",
+    "moveToWindow": "Flytta till {{window}}",
+    "newWindowFailed": "Det gick inte att öppna ett nytt fönster: {{error}}"
+  },
+  "dropZone": {
+    "release": "Släpp för att öppna",
+    "explanation": "Dokument, kalkylblad och presentationer öppnas var och en i en egen flik; MDB och ACCDB öppnas i Database Studio.",
+    "image": "{{name}} är en bild. Att dra infogar ännu inte bilder i ett dokument; använd Infoga › Bild.",
+    "unsupported": "{{name}} kan inte öppnas: .{{ext}} stöds inte. Open Office Studio öppnar dokument, kalkylblad, presentationer och Access-databaser."
+  },
+  "ribbon": {
+    "label": "Menyfliksområde",
+    "file": "Arkiv",
+    "hide": "Dölj menyfliksområdet",
+    "show": "Visa menyfliksområdet",
+    "hideHint": "Mer utrymme för dokumentet · Ctrl+F1",
+    "scrollLeft": "Rulla menyfliksområdet åt vänster",
+    "scrollRight": "Rulla menyfliksområdet åt höger",
+    "commandFailed": "Kommandot kunde inte utföras.",
+    "nothingToUndo": "Det finns inget att ångra.",
+    "nothingToRedo": "Det finns inget att göra om.",
+    "presentationOpening": "Presentationen håller fortfarande på att öppnas.",
+    "selectShapeFirst": "Markera en form först."
+  },
+  "theme": {
+    "light": "Ljust tema",
+    "forge": "Forge-tema"
+  },
+  "host": {
+    "conflict": "Någon annan har sparat dokumentet under tiden. Din version sparades som en kopia: {{name}}.",
+    "readOnly": "{{name}} öppnades skrivskyddat. Använd Spara som för att behålla dina ändringar.",
+    "openFailed": "Dokumentet från arbetsytan kunde inte öppnas: {{error}}"
+  },
+  "title": {
+    "document": "{{document}} — {{app}} ({{module}})",
+    "module": "{{app}} ({{module}})"
+  },
+  "titleBar": {
+    "quickAccess": "Snabbåtkomst",
+    "saveTitle": "Spara · Ctrl+S",
+    "settings": "Inställningar",
+    "minimize": "Minimera",
+    "maximize": "Maximera",
+    "restore": "Återställ",
+    "close": "Stäng fönstret"
+  },
+  "toasts": {
+    "region": "Aviseringar",
+    "info": "Info",
+    "success": "Klart",
+    "warning": "Obs",
+    "error": "Fel",
+    "details": "Detaljer",
+    "less": "Mindre"
+  }
+}

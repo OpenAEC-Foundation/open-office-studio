@@ -1,0 +1,1017 @@
+{
+  "accounts": {
+    "test": {
+      "test": "בדיקה",
+      "testConnection": "בדיקת חיבור",
+      "testing": "בודק…",
+      "retest": "בדיקה חוזרת",
+      "failed": "הבדיקה נכשלה"
+    },
+    "settings": {
+      "title": "הגדרות חשבון",
+      "noAccount": "עדיין אין חשבון.",
+      "addAccount": "הוספת חשבון",
+      "accountList": "חשבונות",
+      "saving": "שומר…",
+      "saved": "ההגדרות נשמרו.",
+      "saveFailed": "לא ניתן לשמור",
+      "tabs": {
+        "identity": "זהות",
+        "servers": "שרתים",
+        "folders": "תיקיות",
+        "fetching": "אחזור ופרטיות",
+        "advanced": "מתקדם"
+      },
+      "deleteAccount": {
+        "title": "הסרת חשבון",
+        "confirm": "האם להסיר את <strong>{{name}}</strong> ({{email}})? ההודעות שלכם נשארות בשרת; הסיסמה השמורה תוסר ממחזיק המפתחות.",
+        "button": "הסרת חשבון",
+        "failed": "לא ניתן להסיר את החשבון"
+      },
+      "identity": {
+        "accountName": "שם החשבון",
+        "accountNameHint": "רק בשבילכם, לדוגמה \"עבודה\" או \"אישי\".",
+        "yourName": "השם שלכם",
+        "email": "כתובת דוא״ל",
+        "replyTo": "כתובת לתשובה",
+        "replyToPlaceholder": "ריק = כתובת הדוא״ל שלכם",
+        "signature": "חתימה",
+        "signatureHint": "מתווספת מתחת להודעות חדשות ולתשובות, אחרי \"-- \"."
+      },
+      "oauthAccount": {
+        "signedInAs": "מחוברים בתור <strong>{{account}}</strong> באמצעות {{provider}}",
+        "noPasswordStored": "לא נשמרת סיסמה; הגישה מתבצעת באמצעות אסימון במחזיק המפתחות.",
+        "signInAgain": "התחברות מחדש",
+        "signedInAgain": "התחברתם מחדש בתור {{account}}."
+      },
+      "password": {
+        "change": "שינוי סיסמה",
+        "storedPlaceholder": "שמורה · השאירו ריק כדי לשמור עליה",
+        "noneStoredPlaceholder": "עדיין לא נשמרה סיסמה"
+      },
+      "folders": {
+        "hint": "בחרו היכן Email Studio שומר הודעות שנשלחו, טיוטות, הודעות שנמחקו והודעות בארכיון.",
+        "roles": {
+          "sent": "הודעות שנשלחו",
+          "drafts": "טיוטות",
+          "trash": "אשפה",
+          "archive": "ארכיון"
+        },
+        "automatic": "אוטומטי",
+        "automaticWithFolder": "אוטומטי ({{folder}})"
+      },
+      "fetching": {
+        "checkForNew": "בדיקת הודעות חדשות",
+        "manualOnly": "ידנית בלבד",
+        "everyMinutes_one": "כל דקה",
+        "everyMinutes_two": "כל {{count}} דקות",
+        "everyMinutes_other": "כל {{count}} דקות",
+        "externalContent": "תמיד להציג תמונות ותוכן מרוחקים",
+        "externalContentHint": "מומלץ לכבות: תמונות מרוחקות מגלות לשולחים מתי והיכן פתחתם הודעה.",
+        "trustedSenders": "שולחים שהתוכן המרוחק שלהם מוצג תמיד",
+        "forgetSender": "שכחת {{sender}}"
+      },
+      "advanced": {
+        "oauthIntro": "התחברות באמצעות Microsoft או Google משתמשת ב-OAuth2. הגדרות אלה חלות על כל החשבונות. מזהה לקוח משלכם נדרש רק אם האפליקציה אינה כוללת אחד; ראו <code>{{doc}}</code>.",
+        "ispdb": "לחשבון חדש, להתייעץ גם עם מסד הנתונים של Thunderbird",
+        "ispdbHint": "שם התחום יישלח אז ל-Mozilla. כבוי כברירת מחדל.",
+        "available": "זמין.",
+        "unavailable": "לא זמין.",
+        "loadingStatus": "טוען מצב…",
+        "clientId": "מזהה לקוח",
+        "clientSecret": "סוד לקוח (אופציונלי)",
+        "saveClientId": "שמירת מזהה לקוח",
+        "clientIdSaved": "מזהה הלקוח עבור {{provider}} נשמר.",
+        "clientIdSaveFailed": "לא ניתן לשמור את מזהה הלקוח",
+        "desktopOnly": "ניתן להגדיר מזהה לקוח משלכם רק באפליקציית שולחן העבודה."
+      }
+    },
+    "wizard": {
+      "title": "הוספת חשבון",
+      "intro": "השתמשו בכתובת הדוא״ל הקיימת שלכם. Email Studio עובד עם כל ספק שמציע IMAP ו-SMTP.",
+      "fullName": "השם המלא שלכם",
+      "fullNamePlaceholder": "שם פרטי שם משפחה",
+      "fullNameHint": "כך הנמענים יראו את שמכם.",
+      "email": "כתובת דוא״ל",
+      "emailPlaceholder": "name@example.com",
+      "password": "סיסמה",
+      "passwordHint": "משמשת רק כשאתם בוחרים בדיקה או סיום, ונשמרת רק במחזיק המפתחות של מערכת ההפעלה.",
+      "ispdb": "להתייעץ גם עם מסד הנתונים של Thunderbird",
+      "ispdbHint": "שם התחום (לא הכתובת או הסיסמה שלכם) יישלח אז ל-Mozilla.",
+      "oauthPrompt": "או התחברו ללא סיסמה באפליקציה:",
+      "enterNameAndEmailFirst": "הזינו תחילה את שמכם ואת כתובת הדוא״ל.",
+      "saving": "שומר…",
+      "done": "סיום",
+      "saveAnyway": "לשמור בכל זאת",
+      "saveTitle": "שמירת החשבון",
+      "saveUntestedTitle": "עדיין לא נבדק (בהצלחה); עדיין ניתן לשמור את החשבון",
+      "saveFailed": "לא ניתן לשמור את החשבון",
+      "foundSettings": "נמצאו הגדרות",
+      "serverSettings": "הגדרות שרת",
+      "serverSettingsFor": "הגדרות שרת עבור {{domain}}",
+      "enterEmailHint": "הזינו את כתובת הדוא״ל שלכם; Email Studio יחפש אז את השרתים המתאימים באופן אוטומטי.",
+      "searchFailed": "החיפוש נכשל",
+      "fillInManually": "הזינו בעצמכם את השרתים שלהלן.",
+      "nothingFound": "לא נמצאו הגדרות. הזינו בעצמכם את השרתים שלהלן; בקשו אותם מהספק אם צריך.",
+      "proposals": "הצעות",
+      "unencrypted": "לא מוצפן",
+      "manualConfiguration": "הגדרה ידנית",
+      "adjusted": "· נערך",
+      "fieldsAppear": "השדות יופיעו ברגע שתהיה כתובת דוא״ל חוקית.",
+      "bothServersFailed": "שני השרתים נכשלו. בדקו את הכתובת, הסיסמה ושמות השרתים."
+    },
+    "discovery": {
+      "steps": {
+        "builtIn": "רשימה מובנית",
+        "ownDomain": "תחום עצמי",
+        "dns": "DNS",
+        "ispdb": "מסד הנתונים של Thunderbird",
+        "probe": "בדיקת חיבור"
+      },
+      "stepStatus": {
+        "waiting": "ממתין",
+        "busy": "מתבצע…",
+        "found": "נמצא",
+        "nothing": "לא נמצא דבר",
+        "skipped": "לא הופעל"
+      },
+      "sources": {
+        "preset": "רשימה מובנית",
+        "autoconfig": "הגדרה מהתחום שלכם",
+        "srv": "רשומות DNS SRV",
+        "mx": "רשומות MX (הספק זוהה)",
+        "ispdb": "מסד הנתונים של Thunderbird",
+        "guess": "שמות שרתים נפוצים"
+      },
+      "unencrypted": "לא מוצפן",
+      "reachable": "נגיש",
+      "unreachable": "לא נגיש",
+      "untested": "לא נבדק"
+    },
+    "server": {
+      "incoming": "נכנס (IMAP)",
+      "outgoing": "יוצא (SMTP)",
+      "columns": {
+        "server": "שרת",
+        "port": "פורט",
+        "security": "אבטחה",
+        "authentication": "אימות",
+        "username": "שם משתמש"
+      },
+      "hostLabel": "שרת {{protocol}}",
+      "portLabel": "פורט {{protocol}}",
+      "securityLabel": "אבטחת {{protocol}}",
+      "authenticationLabel": "אימות {{protocol}}",
+      "usernameLabel": "שם משתמש {{protocol}}",
+      "imapPlaceholder": "imap.example.com",
+      "smtpPlaceholder": "smtp.example.com",
+      "securityNone": "ללא",
+      "authNormal": "סיסמה רגילה",
+      "authEncrypted": "סיסמה מוצפנת",
+      "unencryptedWarning": "<strong>חיבור לא מוצפן.</strong> הסיסמה וההודעות שלכם עוברות ברשת בצורה קריאה. בחרו SSL/TLS או STARTTLS אם הספק תומך בכך.",
+      "oauthHint": "OAuth2 יבקש מכם להתחבר אצל הספק בעת הבדיקה או בשימוש הראשון."
+    },
+    "oauth": {
+      "notSupported": "גרסה זו של האפליקציה עדיין אינה תומכת בהתחברות באמצעות Microsoft או Google.",
+      "signInFailed": "ההתחברות באמצעות {{provider}} נכשלה",
+      "signInWith": "התחברות באמצעות {{provider}}",
+      "recommended": "מומלץ",
+      "waitTitle": "השלימו את ההתחברות בדפדפן",
+      "waitText": "דף ההתחברות של {{provider}} נפתח בדפדפן. התחברו שם והעניקו גישה לדוא״ל; Email Studio ימשיך אז כאן.",
+      "unavailableTitle": "התחברות באמצעות {{provider}} אינה זמינה כאן.",
+      "unavailableHelp": "באפליקציית שולחן העבודה ניתן להגדיר מזהה לקוח משלכם עבור {{provider}} תחת <em>כלים › הגדרות חשבון › מתקדם</em>. אופן היצירה מתואר ב-<code>{{doc}}</code>. ניתן גם להמשיך עם סיסמה (של אפליקציה)."
+    }
+  },
+  "errors": {
+    "code": {
+      "connection": "אין חיבור לשרת. בדקו את החיבור לאינטרנט ואת שם השרת והפורט.",
+      "authentication": "ההתחברות נכשלה. בדקו את שם המשתמש והסיסמה (כלים › הגדרות חשבון).",
+      "certificate": "האישור של השרת אינו מהימן או אינו תואם לשם שרת זה.",
+      "timeout": "השרת לא הגיב בזמן. נסו שוב מאוחר יותר.",
+      "notFound": "ההודעה או התיקייה כבר לא קיימות בשרת.",
+      "refused": "השרת דחה את הפקודה.",
+      "tooLarge": "ההודעה גדולה מדי עבור השרת. הקטינו או הסירו קבצים מצורפים.",
+      "unavailable": "תכונה זו אינה זמינה כאן.",
+      "internal": "משהו השתבש."
+    },
+    "withDetail": "{{explanation}} ({{detail}})",
+    "withContext": "{{context}}: {{message}}",
+    "backendMissing": "גרסה זו של אפליקציית שולחן העבודה אינה כוללת את תכונת הדוא״ל.",
+    "unexpectedBinary": "פלט בינארי לא צפוי מהשרת האחורי."
+  },
+  "dialog": {
+    "closeEsc": "סגירה (Esc)"
+  },
+  "sendAsAttachment": {
+    "title": "שליחה כקובץ מצורף"
+  },
+  "ribbon": {
+    "tabs": {
+      "start": "בית",
+      "view": "תצוגה",
+      "tools": "כלים"
+    },
+    "groups": {
+      "new": "חדש",
+      "respond": "תגובה",
+      "delete": "מחיקה",
+      "mark": "תגיות",
+      "organize": "ארגון",
+      "layout": "פריסה",
+      "sort": "מיון",
+      "message": "הודעה",
+      "accounts": "חשבונות",
+      "folders": "תיקיות"
+    },
+    "withShortcut": "{{action}} · {{shortcut}}",
+    "fetch": "קבלת הודעות",
+    "fetchTitle": "קבלת הודעות · {{key}} או {{shortcut}}",
+    "readUnread": "נקרא/לא נקרא",
+    "readUnreadTitle": "נקרא או לא נקרא · {{shortcut}}",
+    "star": "כוכב",
+    "move": "העברה",
+    "moveTitle": "העברה לתיקייה",
+    "folderPane": "חלונית תיקיות",
+    "readingPane": "חלונית קריאה",
+    "resetLayout": "איפוס פריסה",
+    "sortBy": "מיון לפי",
+    "sort": {
+      "date": "תאריך",
+      "sender": "שולח",
+      "subject": "נושא",
+      "size": "גודל"
+    },
+    "ascending": "סדר עולה",
+    "descending": "סדר יורד",
+    "viewSource": "הצגת מקור",
+    "accountSettings": "הגדרות חשבון"
+  },
+  "studio": {
+    "errors": {
+      "loadAccounts": "לא ניתן לטעון את החשבונות",
+      "loadMessages": "לא ניתן לטעון את ההודעות",
+      "openMessage": "לא ניתן לפתוח את ההודעה",
+      "delete": "לא ניתן למחוק",
+      "move": "לא ניתן להעביר",
+      "mark": "לא ניתן לסמן",
+      "forwardAttachments": "לא ניתן לאחזר את הקבצים המצורפים להעברה",
+      "openFile": "לא ניתן לפתוח את {{name}}",
+      "saveFile": "לא ניתן לשמור את {{name}}",
+      "source": "לא ניתן לאחזר את המקור",
+      "updateFolder": "לא ניתן לעדכן את התיקייה",
+      "deleteFolder": "לא ניתן למחוק את התיקייה"
+    },
+    "accountAdded": "החשבון {{email}} נוסף.",
+    "addAccount": "הוספת חשבון",
+    "deletePermanently": {
+      "title": "מחיקה לצמיתות",
+      "text_one": "הודעה זו תימחק לצמיתות. לא ניתן לבטל פעולה זו.",
+      "text_two": "{{count}} הודעות יימחקו לצמיתות. לא ניתן לבטל פעולה זו.",
+      "text_other": "{{count}} הודעות יימחקו לצמיתות. לא ניתן לבטל פעולה זו.",
+      "confirm": "מחיקה לצמיתות"
+    },
+    "noArchiveFolder": "לחשבון זה אין תיקיית ארכיון. בחרו אחת בכלים › הגדרות חשבון › תיקיות.",
+    "fetched": "ההודעות התקבלו.",
+    "deleteFolder": {
+      "title": "מחיקת תיקייה",
+      "text": "התיקייה “{{folder}}” וכל ההודעות שבה יימחקו בשרת."
+    },
+    "welcome": {
+      "title": "עדיין אין חשבון דוא״ל",
+      "text": "הוסיפו את החשבון שלכם עם כתובת הדוא״ל והסיסמה. Email Studio ימצא את ההגדרות המתאימות."
+    },
+    "folderPaneWidth": "רוחב חלונית התיקיות",
+    "messageListWidth": "רוחב רשימת ההודעות",
+    "messageList": "רשימת הודעות",
+    "search": {
+      "in": "חיפוש ב-{{folder}}",
+      "label": "חיפוש הודעות ({{shortcut}})",
+      "clear": "ניקוי החיפוש"
+    },
+    "filter": {
+      "label": "מסנן מהיר",
+      "unread": "לא נקראו",
+      "unreadTitle": "רק לא נקראו",
+      "starred": "מסומנות בכוכב",
+      "starredTitle": "רק מסומנות בכוכב",
+      "attachment": "קובץ מצורף",
+      "attachmentTitle": "רק עם קובץ מצורף",
+      "body": "גוף",
+      "bodyTitle": "חיפוש גם בטקסט ההודעה (איטי יותר)"
+    },
+    "count": {
+      "filtered": "{{shown}} מתוך {{total}}",
+      "filteredLoaded": "{{shown}} מתוך {{loaded}} שנטענו",
+      "messages_one": "הודעה אחת",
+      "messages_two": "{{count}} הודעות",
+      "messages_other": "{{count}} הודעות",
+      "selected_one": "{{count}} נבחרה",
+      "selected_two": "{{count}} נבחרו",
+      "selected_other": "{{count}} נבחרו"
+    },
+    "noResults": "לא נמצאו הודעות.",
+    "emptyFolder": "תיקייה זו ריקה.",
+    "moveTo_one": "העברת ההודעה אל",
+    "moveTo_two": "העברת {{count}} הודעות אל",
+    "moveTo_other": "העברת {{count}} הודעות אל",
+    "folderDialog": {
+      "newTitle": "תיקייה חדשה",
+      "renameTitle": "שינוי שם התיקייה",
+      "create": "יצירה",
+      "rename": "שינוי שם",
+      "name": "שם",
+      "inside": "בתוך “{{folder}}”"
+    },
+    "source": {
+      "title": "מקור ההודעה",
+      "saveAs": "שמירה כ-{{extension}}"
+    }
+  },
+  "address": {
+    "invalid": "כתובת לא חוקית: {{address}}",
+    "remove": "הסרת {{address}}"
+  },
+  "list": {
+    "label": "הודעות",
+    "to": "אל: {{address}}",
+    "noRecipient": "(אין נמען)",
+    "replied": "נענתה",
+    "hasAttachment": "יש קובץ מצורף",
+    "noSubject": "(אין נושא)",
+    "star": "הוספת כוכב",
+    "unstar": "הסרת כוכב",
+    "loadingMore": "טוען הודעות נוספות…"
+  },
+  "folders": {
+    "label": "תיקיות",
+    "loading": "טוען תיקיות…",
+    "unread_one": "{{count}} לא נקראה",
+    "unread_two": "{{count}} לא נקראו",
+    "unread_other": "{{count}} לא נקראו",
+    "inbox": "דואר נכנס"
+  },
+  "reader": {
+    "loadingMessage": "טוען הודעה…",
+    "chooseMessage": "בחרו הודעה כדי לקרוא אותה.",
+    "label": "הודעה: {{subject}}",
+    "reply": "תגובה",
+    "replyTitle": "תגובה · {{shortcut}}",
+    "replyAll": "תגובה לכולם",
+    "replyAllTitle": "תגובה לכולם · {{shortcut}}",
+    "forward": "העברה",
+    "forwardTitle": "העברה · {{shortcut}}",
+    "archive": "העברה לארכיון",
+    "archiveTitle": "העברה לארכיון · {{shortcut}}",
+    "delete": "מחיקה",
+    "deleteTitle": "מחיקה · {{shortcut}}",
+    "starTitle": "כוכב · {{shortcut}}",
+    "from": "מאת",
+    "to": "אל",
+    "none": "(אין)",
+    "cc": "עותק",
+    "replyTo": "תשובה אל",
+    "date": "תאריך",
+    "external": {
+      "blocked_one": "תמונה מרוחקת אחת נחסמה כדי להגן על פרטיותכם.",
+      "blocked_two": "{{count}} תמונות מרוחקות נחסמו כדי להגן על פרטיותכם.",
+      "blocked_other": "{{count}} תמונות מרוחקות נחסמו כדי להגן על פרטיותכם.",
+      "desktopHint": "באישורכם האפליקציה מאחזרת אותן ומציגה אותן מבלי לאפשר להודעה להתחבר לשום מקום.",
+      "demoHint": "(בהדגמה הן מפנות לכתובות שאינן קיימות.)",
+      "show": "הצגת תוכן מרוחק",
+      "alwaysFrom": "תמיד להציג מ-{{sender}}",
+      "failed_one": "לא ניתן היה לאחזר תמונה מרוחקת אחת.",
+      "failed_two": "לא ניתן היה לאחזר {{count}} תמונות מרוחקות.",
+      "failed_other": "לא ניתן היה לאחזר {{count}} תמונות מרוחקות."
+    },
+    "attachments": {
+      "label": "קבצים מצורפים",
+      "previewOrOpen": "לחיצה: תצוגה מקדימה · לחיצה כפולה: פתיחה ב-{{module}}",
+      "preview": "תצוגה מקדימה",
+      "openCopyTitle": "פתיחה כעותק ניתן לעריכה ב-{{module}}",
+      "openIn": "פתיחה ב-{{module}}",
+      "saveTitle": "שמירה במחשב זה"
+    },
+    "content": "תוכן ההודעה",
+    "loadingContent": "טוען תוכן…"
+  },
+  "compose": {
+    "errors": {
+      "saveDraft": "לא ניתן לשמור את הטיוטה",
+      "noRecipients": "הוסיפו לפחות נמען אחד.",
+      "send": "לא ניתן לשלוח",
+      "attachmentsLarge": "סך הקבצים המצורפים הוא {{size}}; שרתים רבים דוחים הודעות מעל {{max}}.",
+      "linkNotAllowed": "מותרים רק קישורי http(s), mailto ו-tel."
+    },
+    "noSubject": {
+      "title": "אין נושא",
+      "text": "להודעה זו אין נושא. לשלוח בכל זאת?",
+      "fillIn": "הזינו נושא",
+      "sendWithout": "שליחה ללא נושא"
+    },
+    "forgotAttachment": {
+      "title": "שכחתם קובץ מצורף?",
+      "text": "ההודעה שלכם מזכירה <strong>“{{word}}”</strong>, אך לא נוסף קובץ מצורף.",
+      "sendAnyway": "לשלוח בכל זאת",
+      "keywords": "מצורף|מצורפת|מצורפים|קובץ מצורף|בצירוף"
+    },
+    "addAttachment": "הוספת קובץ מצורף",
+    "attachment": "צירוף",
+    "removeAttachment": "הסרת {{name}}",
+    "attachmentsSummary_one": "קובץ מצורף אחד · {{size}}",
+    "attachmentsSummary_two": "{{count}} קבצים מצורפים · {{size}}",
+    "attachmentsSummary_other": "{{count}} קבצים מצורפים · {{size}}",
+    "dropToAttach": "שחררו כדי להוסיף כקובץ מצורף",
+    "sent": "ההודעה נשלחה.",
+    "sentWithSubject": "ההודעה נשלחה: {{subject}}.",
+    "unsent": {
+      "title": "ההודעה לא נשלחה",
+      "text": "לשמור הודעה זו כטיוטה?",
+      "discard": "ביטול",
+      "saveDraft": "שמירת טיוטה"
+    },
+    "label": "כתיבה: {{subject}}",
+    "newMessage": "הודעה חדשה",
+    "send": "שליחה",
+    "sending": "שולח…",
+    "sendTitle": "שליחה · {{shortcut}}",
+    "draft": "טיוטה",
+    "savingDraft": "שומר…",
+    "saveDraftTitle": "שמירה כטיוטה · {{shortcut}}",
+    "dismissError": "סגירת ההודעה",
+    "from": "מאת",
+    "to": "אל",
+    "cc": "עותק",
+    "bcc": "עותק מוסתר",
+    "subject": "נושא",
+    "body": "טקסט ההודעה",
+    "format": {
+      "label": "עיצוב",
+      "withShortcut": "{{action}} · {{shortcut}}",
+      "bold": "מודגש",
+      "italic": "נטוי",
+      "underline": "קו תחתון",
+      "bullets": "תבליטים",
+      "numbering": "מספור",
+      "link": "קישור",
+      "insertLink": "הוספת קישור",
+      "clear": "ניקוי עיצוב",
+      "linkAddress": "כתובת הקישור",
+      "insert": "הוספה"
+    }
+  },
+  "link": {
+    "browserFailed": "לא ניתן לפתוח את הדפדפן. העתיקו את הכתובת: {{url}}",
+    "phoneTitle": "מספר טלפון",
+    "openTitle": "לפתוח את הקישור?",
+    "copied": "הכתובת הועתקה.",
+    "copyFailed": "ההעתקה נכשלה; בחרו את הכתובת ידנית.",
+    "copy": "העתקת הכתובת",
+    "openInBrowser": "פתיחה בדפדפן",
+    "phoneIntro": "מספר הטלפון הזה מופיע בהודעה:",
+    "realTarget": "הקישור הזה מוביל בפועל אל:",
+    "misleading": "הטקסט בהודעה מציין <strong>{{shown}}</strong>, אך הקישור מוביל אל <strong>{{actual}}</strong>. ייתכן שזו התחזות (פישינג).",
+    "unencrypted": "הערה: קישור זה אינו משתמש בחיבור מוצפן (http)."
+  },
+  "files": {
+    "saveUnsupported": "גרסה זו של אפליקציית שולחן העבודה עדיין אינה יכולה לשמור את {{name}}. פתחו את הקובץ המצורף במודול או עדכנו את האפליקציה.",
+    "saved": "נשמר: {{path}}",
+    "saveCancelled": "השמירה בוטלה.",
+    "downloadRequested": "ההורדה התבקשה. בדקו את הקובץ בתיקיית ההורדות."
+  },
+  "quote": {
+    "unknownSender": "(לא ידוע)",
+    "wroteOn": "ב-{{date}}, {{sender}} כתב/ה:",
+    "wrote": "{{sender}} כתב/ה:",
+    "forwarded": "הודעה שהועברה",
+    "subject": "נושא: {{value}}",
+    "date": "תאריך: {{value}}",
+    "from": "מאת: {{value}}",
+    "to": "אל: {{value}}",
+    "cc": "עותק: {{value}}"
+  },
+  "demo": {
+    "banner": "הדגמה — דוא״ל אמיתי אינו אפשרי בדפדפן; השתמשו באפליקציית שולחן העבודה.",
+    "accountName": "תיבת דואר להדגמה",
+    "folders": {
+      "notifications": "התראות",
+      "drafts": "טיוטות",
+      "sent": "פריטים שנשלחו",
+      "archive": "ארכיון",
+      "junk": "דואר זבל",
+      "trash": "אשפה"
+    },
+    "welcome": {
+      "subject": "ברוכים הבאים ל-OpenAEC Email Studio",
+      "heading": "ברוכים הבאים!",
+      "intro": "זוהי תיבת דואר להדגמה. בדפדפן Email Studio אינו יכול לאחזר או לשלוח דוא״ל אמיתי; השתמשו לשם כך באפליקציית שולחן העבודה.",
+      "introHtml": "זוהי <strong>תיבת דואר להדגמה</strong>. בדפדפן Email Studio אינו יכול לאחזר או לשלוח דוא״ל אמיתי; השתמשו לשם כך באפליקציית שולחן העבודה.",
+      "tryIt": "נסו בחופשיות: לענות, לסמן בכוכב (S), להעביר לארכיון ולפתוח קובץ מצורף בטקסט או בגיליון אלקטרוני.",
+      "tryItHtml": "נסו בחופשיות: לענות, לסמן בכוכב (<kbd>S</kbd>), להעביר לארכיון ולפתוח קובץ מצורף בטקסט או בגיליון אלקטרוני.",
+      "logoText": "הלוגו של OpenAEC שלמטה הוא תמונה מוטבעת מקובץ מצורף (cid:).",
+      "logoAlt": "הלוגו של OpenAEC",
+      "logoHtml": "הלוגו משמאל הוא תמונה מוטבעת מקובץ מצורף."
+    },
+    "errors": {
+      "accountNotFound": "החשבון אינו קיים.",
+      "messageNotFound": "ההודעה אינה קיימת.",
+      "folderExists": "תיקייה זו כבר קיימת.",
+      "folderCannotRename": "לא ניתן לשנות את שם התיקייה הזו.",
+      "specialFolderDelete": "לא ניתן למחוק תיקיות מיוחדות.",
+      "attachmentNotFound": "הקובץ המצורף אינו קיים.",
+      "targetFolderNotFound": "תיקיית היעד אינה קיימת.",
+      "noRecipients": "לא צוינו נמענים.",
+      "recipientRefused": "הדגמה: השרת דוחה את הנמען {{domain}}.",
+      "attachmentsTooLarge": "הדגמה: הקבצים המצורפים מוגבלים ל-{{max}}."
+    },
+    "accountAdded": {
+      "subject": "החשבון שלכם נוסף (הדגמה)",
+      "text": "החשבון {{email}} נוסף להדגמה. {{notice}}"
+    },
+    "discovery": {
+      "knownProvider": "ספק מוכר (הדגמה).",
+      "mx": "רשומת ה-MX של {{domain}} מפנה אל mail.protection.outlook.com (הדגמה).",
+      "ownServer": "{{name}} (שרת עצמי)",
+      "autoconfig": "נמצא ב-autoconfig.{{domain}} (הדגמה).",
+      "srv": "_imaps._tcp ו-_submission._tcp (הדגמה).",
+      "ispdb": "ממסד הנתונים של Thunderbird (הדגמה).",
+      "guessImapOk": "שמות שרתים נפוצים; בדיקת IMAP הצליחה (הדגמה).",
+      "guessAlternative": "שם שרת חלופי (הדגמה)."
+    },
+    "test": {
+      "noServer": "לא צוין שרת {{protocol}}.",
+      "invalidPort": "פורט לא חוקי.",
+      "unreachable": "הדגמה: {{host}} אינו נגיש.",
+      "simulated": "הדגמה: החיבור הודמה.",
+      "simulatedUnencrypted": "הדגמה: החיבור הודמה (לא מוצפן!)."
+    },
+    "oauthDesktopOnly": "התחברות באמצעות Microsoft או Google אפשרית רק באפליקציית שולחן העבודה."
+  },
+  "preview": {
+    "loading": "טוען תצוגה מקדימה…",
+    "dialog": {
+      "attachments": "קבצים מצורפים",
+      "previous": "הקובץ המצורף הקודם",
+      "previousTitle": "הקובץ המצורף הקודם (←)",
+      "next": "הקובץ המצורף הבא",
+      "nextTitle": "הקובץ המצורף הבא (→)",
+      "close": "סגירת התצוגה המקדימה",
+      "closeTitle": "סגירה (Esc)",
+      "fetching": "מאחזר קובץ מצורף…",
+      "fetchFailed": "לא ניתן היה לאחזר את הקובץ המצורף: {{message}}"
+    },
+    "card": {
+      "fileName": "שם הקובץ",
+      "size": "גודל",
+      "openExternal": "פתיחה באפליקציית ברירת המחדל",
+      "unknown": "לא ידוע",
+      "attention": "הערה",
+      "yes": "כן",
+      "no": "לא"
+    },
+    "detection": {
+      "kinds": {
+        "pdf": "קובץ PDF",
+        "dwg": "שרטוט DWG",
+        "dxf": "שרטוט DXF",
+        "ifc": "מודל IFC",
+        "markdown": "Markdown",
+        "text": "טקסט",
+        "image": "תמונה",
+        "office": "מסמך Office",
+        "unknown": "קובץ לא ידוע"
+      },
+      "contentDiffers": "השם מרמז על {{kind}}, אך התוכן הוא משהו אחר.",
+      "mismatch": "שם הקובץ המצורף הוא “.{{extension}}” ({{named}}), אך התוכן הוא {{actual}}.",
+      "mismatchSubtype": "שם הקובץ המצורף הוא “.{{extension}}” ({{named}}), אך התוכן הוא {{actual}} ({{subtype}}).",
+      "contentBinary": "השם מרמז על {{kind}}, אך התוכן בינארי.",
+      "notSvg": "השם מרמז על תמונת SVG, אך התוכן אינו SVG.",
+      "signatureMissing": "השם מרמז על {{kind}}, אך לתוכן חסרים המאפיינים המתאימים."
+    },
+    "image": {
+      "loadFailed": "לא ניתן היה לטעון את התמונה: {{message}}",
+      "subtitle": "תמונה",
+      "cannotDisplay": "לא ניתן להציג תמונה זו כאן (פגומה או בגרסה שאינה נתמכת).",
+      "tooLarge": "תמונה זו גדולה מ-{{size}} MB ואינה מוצגת בתצוגה מקדימה.",
+      "tooManyPixels": "תמונה זו בגודל {{width}} × {{height}} פיקסלים (יותר מ-{{megapixels}} מגה-פיקסלים) ואינה מוצגת בתצוגה מקדימה.",
+      "toolbar": "תמונה",
+      "zoomOut": "התרחקות",
+      "zoomOutTitle": "התרחקות (−)",
+      "zoomIn": "התקרבות",
+      "zoomInTitle": "התקרבות (+)",
+      "fit": "התאמה לחלון",
+      "fitTitle": "התאמה לחלון (0)",
+      "actualSize": "גודל אמיתי (100%)",
+      "actualSizeTitle": "גודל אמיתי",
+      "rotate": "סיבוב עם כיוון השעון",
+      "rotateTitle": "סיבוב עם כיוון השעון (R)",
+      "area": "תצוגה מקדימה של תמונה"
+    },
+    "text": {
+      "loadFailed": "לא ניתן היה לטעון את הטקסט: {{message}}",
+      "toolbar": "טקסט",
+      "encoding": "קידוד: {{encoding}}",
+      "utf8Bom": "UTF-8 (עם BOM)",
+      "formatJson": "עיצוב JSON",
+      "wrapLines": "גלישת שורות",
+      "truncated": "מוצגים {{limit}} הראשונים מתוך {{size}}. שמרו את הקובץ כדי לראות הכול.",
+      "contentOf": "התוכן של {{name}}"
+    },
+    "markdown": {
+      "loadFailed": "לא ניתן היה לטעון את הקובץ: {{message}}",
+      "linkNotOpened": "הקישור לא נפתח: {{url}}",
+      "imageFallback": "תמונה",
+      "externalBlocked": "{{alt}} (תמונה חיצונית נחסמה)",
+      "unavailable": "{{alt}} (לא זמין)",
+      "view": "תצוגה",
+      "rendered": "מעובד",
+      "source": "מקור",
+      "showExternalImages": "הצגת תמונות חיצוניות",
+      "truncated": "מוצגים {{limit}} הראשונים מתוך {{size}}.",
+      "confirmLabel": "פתיחת קישור",
+      "confirmQuestion": "לפתוח קישור זה מחוץ ל-Office Studio?"
+    },
+    "pdf": {
+      "loadFailed": "לא ניתן היה לטעון את ה-PDF: {{message}}",
+      "properties": "מאפיינים",
+      "frameTitle": "PDF: {{name}}",
+      "linuxUnsupported": "תצוגת האינטרנט ב-Linux אינה יכולה להציג קובצי PDF באופן אמין. תצוגה מקדימה מלאה תגיע בגרסה עתידית (מציג Rust).",
+      "cannotPreview": "לא ניתן להציג תצוגה מקדימה של PDF זה כאן. תצוגה מקדימה מלאה תגיע בגרסה עתידית (מציג Rust).",
+      "subtitle": "מסמך PDF",
+      "subtitleVersion": "PDF {{version}}",
+      "pages": "עמודים",
+      "author": "מחבר",
+      "subject": "נושא",
+      "createdWith": "נוצר באמצעות",
+      "created": "נוצר",
+      "modified": "שונה",
+      "encrypted": "מוצפן",
+      "incomplete": "נראה שהקובץ חלקי או פגום",
+      "showPreview": "הצגת תצוגה מקדימה"
+    },
+    "cad": {
+      "loadFailed": "לא ניתן היה לטעון את השרטוט: {{message}}",
+      "previewLater": "תצוגה מקדימה תגיע בגרסה עתידית (מציג Rust).",
+      "tooLargeToParse": "קובץ זה גדול מדי לניתוח כאן. תצוגה מקדימה תגיע בגרסה עתידית (מציג Rust).",
+      "dwgSubtitle": "שרטוט AutoCAD (DWG)",
+      "dxfSubtitle": "שרטוט DXF",
+      "dxfBinarySubtitle": "שרטוט DXF בינארי",
+      "format": "תבנית",
+      "savedAs": "נשמר כ",
+      "unknownAutocadVersion": "גרסת AutoCAD לא ידועה",
+      "units": "יחידות",
+      "entities": "ישויות",
+      "blocks": "בלוקים",
+      "layers": "שכבות",
+      "thumbnailAlt": "תמונה ממוזערת מוטבעת של השרטוט",
+      "thumbnailCaption": "תמונה ממוזערת מהקובץ",
+      "entitiesByType": "ישויות לפי סוג",
+      "layersCount": "שכבות ({{n}})",
+      "andMore": "… ועוד {{n}}",
+      "versionRange": "AutoCAD {{from}} עד {{to}}",
+      "versionAndLater": "AutoCAD {{version}} ואילך",
+      "unitCode": "קוד {{code}}",
+      "unitNames": {
+        "unitless": "ללא יחידה",
+        "inch": "אינץ׳",
+        "foot": "רגל",
+        "mile": "מייל",
+        "millimeter": "מילימטר",
+        "centimeter": "סנטימטר",
+        "meter": "מטר",
+        "kilometer": "קילומטר",
+        "microinch": "מיקרו-אינץ׳",
+        "mil": "מיל",
+        "yard": "יארד",
+        "angstrom": "אנגסטרום",
+        "nanometer": "ננומטר",
+        "micron": "מיקרון",
+        "decimeter": "דצימטר",
+        "decameter": "דקמטר",
+        "hectometer": "הקטומטר",
+        "gigameter": "גיגה-מטר",
+        "astronomicalUnit": "יחידה אסטרונומית",
+        "lightYear": "שנת אור",
+        "parsec": "פרסק",
+        "usSurveyFoot": "רגל מדידה אמריקנית",
+        "usSurveyInch": "אינץ׳ מדידה אמריקני",
+        "usSurveyYard": "יארד מדידה אמריקני",
+        "usSurveyMile": "מייל מדידה אמריקני"
+      }
+    },
+    "ifc": {
+      "loadFailed": "לא ניתן היה לטעון את המודל: {{message}}",
+      "previewLater": "תצוגה מקדימה בתלת-ממד תגיע בגרסה עתידית (מציג Rust).",
+      "tooLarge": "מודל זה גדול מ-{{size}} MB ואינו מנותח כאן.",
+      "analysing": "מנתח מודל… {{percent}}",
+      "cancelled": "הניתוח בוטל.",
+      "retry": "ניתוח חוזר",
+      "failed": "הניתוח נכשל: {{message}}",
+      "subtitle": "מודל IFC",
+      "subtitleWithSchema": "מודל IFC · {{schemas}}",
+      "nameInFile": "שם בקובץ",
+      "timestamp": "חותמת זמן",
+      "author": "מחבר",
+      "organization": "ארגון",
+      "application": "אפליקציה",
+      "description": "תיאור",
+      "sites": "אתרים",
+      "buildings": "מבנים",
+      "entities": "ישויות",
+      "incomplete": "נראה שהקובץ חלקי (אין END-ISO-10303-21)",
+      "storeys": "קומות ({{n}})",
+      "elementsHeading": "רכיבי בניין",
+      "allEntityTypes": "כל סוגי הישויות ({{n}})",
+      "elements": {
+        "wall": "קירות",
+        "wallStandardCase": "קירות (מקרה סטנדרטי)",
+        "curtainWall": "קירות מסך",
+        "slab": "רצפות ותקרות",
+        "roof": "גגות",
+        "column": "עמודים",
+        "beam": "קורות",
+        "member": "אברים",
+        "plate": "לוחות",
+        "door": "דלתות",
+        "window": "חלונות",
+        "stair": "מדרגות",
+        "ramp": "רמפות",
+        "railing": "מעקות",
+        "covering": "חיפויים",
+        "footing": "יסודות",
+        "pile": "כלונסאות",
+        "space": "חללים",
+        "opening": "פתחים",
+        "furnishing": "ריהוט",
+        "flowSegment": "קטעי תעלות וצנרת",
+        "flowTerminal": "מסופי מערכות",
+        "proxy": "רכיבי בניין אחרים",
+        "storey": "קומות"
+      }
+    },
+    "office": {
+      "kinds": {
+        "document": "מסמך טקסט",
+        "spreadsheet": "גיליון אלקטרוני",
+        "presentation": "מצגת",
+        "database": "מסד נתונים"
+      },
+      "genericDocument": "מסמך Office",
+      "type": "סוג",
+      "openFailed": "הפתיחה נכשלה: {{message}}",
+      "openCopyHint": "פתחו עותק ניתן לעריכה ב-{{module}}. המקור בדוא״ל נשאר ללא שינוי.",
+      "cannotOpen": "לא ניתן לפתוח תבנית Office זו כאן.",
+      "opening": "פותח…",
+      "openIn": "פתיחה ב-{{module}}"
+    },
+    "unknown": {
+      "subtitle": "אין תצוגה מקדימה זמינה",
+      "declaredType": "סוג מוצהר",
+      "extension": "סיומת",
+      "none": "אין",
+      "message": "לא ניתן להציג תצוגה מקדימה לסוג קובץ זה. שמרו אותו ופתחו אותו רק אם אתם סומכים על השולח."
+    }
+  },
+  "backend": {
+    "accounts": {
+      "fileCorrupt": "קובץ החשבונות {{path}} פגום.",
+      "fileUnreadable": "לא ניתן היה לקרוא את קובץ החשבונות.",
+      "fileWriteFailed": "לא ניתן היה לכתוב את קובץ החשבונות.",
+      "invalidEmail": "הזינו כתובת דוא״ל חוקית.",
+      "invalidReplyTo": "הכתובת לתשובה אינה כתובת דוא״ל חוקית.",
+      "lineBreakInName": "שמות אינם יכולים להכיל מעברי שורה.",
+      "notFound": "חשבון זה כבר אינו קיים.",
+      "saveFailed": "לא ניתן היה לשמור את החשבונות.",
+      "usernameMissing": "הזינו את שם המשתמש עבור IMAP ו-SMTP."
+    },
+    "attachments": {
+      "blockedDatabase": "מטעמי אבטחה '{{name}}' אינו נפתח אוטומטית. פתחו מסדי נתונים של Access ב-Database Studio. שמרו את הקובץ המצורף אם בכל זאת תרצו לצפות בו.",
+      "blockedExecutable": "מטעמי אבטחה '{{name}}' אינו נפתח אוטומטית. סוג קובץ זה יכול להריץ תוכניות. שמרו את הקובץ המצורף אם בכל זאת תרצו לצפות בו.",
+      "blockedMacros": "מטעמי אבטחה '{{name}}' אינו נפתח אוטומטית. מסמך זה מכיל פקודות מאקרו. שמרו את הקובץ המצורף אם בכל זאת תרצו לצפות בו.",
+      "blockedScripts": "מטעמי אבטחה '{{name}}' אינו נפתח אוטומטית. סוג קובץ זה יכול להכיל סקריפטים. שמרו את הקובץ המצורף אם בכל זאת תרצו לצפות בו.",
+      "emptyOrTooLarge": "הקובץ המצורף ריק או גדול מ-100 MB.",
+      "executableContent": "'{{name}}' הוא {{kind}} ואינו נפתח מטעמי אבטחה.",
+      "invalidName": "שם קובץ לא חוקי.",
+      "kind": {
+        "linuxProgram": "תוכנית Linux (ELF)",
+        "macProgram": "תוכנית macOS (Mach-O) או מחלקת Java",
+        "script": "סקריפט",
+        "windowsProgram": "תוכנית Windows (PE)",
+        "windowsShortcut": "קיצור דרך של Windows"
+      },
+      "nameMissing": "שם הקובץ חסר.",
+      "noProgram": "לא נמצאה תוכנית לפתיחת קובץ מצורף זה.",
+      "notFound": "קובץ מצורף {{index}} אינו קיים בהודעה זו.",
+      "openFailed": "הפתיחה נכשלה.",
+      "sendAsBinary": "שלחו את הקובץ המצורף כנתונים בינאריים של 100 MB לכל היותר.",
+      "tempDirFailed": "לא ניתן היה ליצור תיקייה זמנית.",
+      "tempSaveFailed": "לא ניתן היה לשמור את הקובץ המצורף באופן זמני."
+    },
+    "auth": {
+      "failed": "ההתחברות ל-{{host}} נכשלה: שם המשתמש או הסיסמה שגויים ({{detail}}). Gmail, Outlook, iCloud ו-Yahoo דורשים סיסמת אפליקציה.",
+      "noPassword": "לא הוזנה או נשמרה סיסמה עבור חשבון זה.",
+      "noStoredPassword": "לא נשמרה סיסמה עבור חשבון זה. הזינו את הסיסמה בהגדרות החשבון."
+    },
+    "autoconfig": {
+      "httpsRedirectOnly": "רק הפניות ל-HTTPS נעקבות.",
+      "invalidEncoding": "קידוד תווים לא חוקי בקובץ התצורה.",
+      "notFound": "לא נמצאה תצורה (HTTP {{status}}).",
+      "tooManyRedirects": "יותר מדי הפניות."
+    },
+    "common": {
+      "saveFailed": "השמירה נכשלה."
+    },
+    "compose": {
+      "attachmentCorrupt": "הקובץ המצורף '{{name}}' פגום.",
+      "attachmentsTooLarge": "הקבצים המצורפים גדולים מ-{{max}} MB בסך הכול. שלחו קבצים גדולים באמצעות קישור שיתוף.",
+      "buildFailed": "לא ניתן היה לחבר את ההודעה ({{detail}}).",
+      "field": {
+        "bcc": "עותק מוסתר",
+        "cc": "עותק",
+        "from": "מאת",
+        "inReplyTo": "In-Reply-To",
+        "references": "References",
+        "replyTo": "Reply-To",
+        "subject": "הנושא",
+        "to": "אל"
+      },
+      "invalidAddress": "'{{address}}' ב-{{field}} אינה כתובת דוא״ל חוקית.",
+      "invalidCharacters": "{{field}} מכיל תווים לא חוקיים.",
+      "invalidEnvelope": "מעטפה לא חוקית.",
+      "noRecipients": "הזינו לפחות נמען אחד."
+    },
+    "connection": {
+      "failed": "אין חיבור ל-{{host}}: {{detail}}",
+      "hostNotFound": "שם השרת {{host}} לא נמצא.",
+      "refused": "השרת {{host}} דחה את החיבור. בדקו את הפורט ואת הגדרת האבטחה.",
+      "reset": "החיבור ל-{{host}} נסגר באופן לא צפוי. האם הגדרת האבטחה (SSL/TLS או STARTTLS) תואמת לפורט?",
+      "timeout": "השרת {{host}} לא הגיב בזמן. בדקו את שם השרת, הפורט וחומת האש."
+    },
+    "files": {
+      "saveFailed": "לא ניתן היה לשמור את הקובץ."
+    },
+    "http": {
+      "invalidHttpResponse": "תגובת HTTP לא חוקית.",
+      "invalidResponse": "תגובה לא חוקית.",
+      "invalidServerName": "שם שרת לא חוקי {{host}}.",
+      "invalidUrl": "כתובת אינטרנט לא חוקית.",
+      "plainOnlyLocal": "HTTP לא מוצפן מותר רק אל מחשב זה.",
+      "redirectWithoutLocation": "הפניה ללא כתובת.",
+      "responseTooLarge": "תגובת השרת גדולה מדי."
+    },
+    "images": {
+      "credentialsInUrl": "כתובות המכילות פרטי התחברות אינן מאוחזרות.",
+      "hostNotFound": "{{host}} לא נמצא.",
+      "httpOnly": "מותרות רק כתובות http ו-https.",
+      "invalidServerName": "שם שרת לא חוקי.",
+      "notAnImage": "כתובת זו אינה מחזירה תמונה.",
+      "privateAddress": "תוכן חיצוני מכתובות פנימיות או מקומיות אינו מאוחזר.",
+      "timeout": "התמונה לא נטענה תוך 10 שניות.",
+      "tooLarge": "התמונה גדולה מ-10 MB.",
+      "tooManyRedirects": "יותר מדי הפניות (3 לכל היותר).",
+      "unavailable": "התמונה אינה זמינה (HTTP {{status}}).",
+      "unknownRedirect": "הפניה לא ידועה.",
+      "unsupportedImage": "התוכן אינו תמונה נתמכת."
+    },
+    "imap": {
+      "action": {
+        "copy": "העתקה",
+        "countFolders": "ספירת תיקיות",
+        "createFolder": "יצירת תיקייה",
+        "delete": "מחיקה",
+        "deleteFolder": "מחיקת תיקייה",
+        "expunge": "ניקוי",
+        "fetchMessage": "אחזור הודעה",
+        "fetchMessages": "אחזור הודעות",
+        "flag": "סימון",
+        "listFolders": "אחזור תיקיות",
+        "move": "העברה",
+        "openFolder": "פתיחת תיקייה",
+        "openNamedFolder": "פתיחת התיקייה '{{folder}}'",
+        "renameFolder": "שינוי שם תיקייה",
+        "saveToDrafts": "שמירה בטיוטות",
+        "saveToFolder": "שמירה בתיקייה",
+        "saveToSent": "שמירה בפריטים שנשלחו",
+        "search": "חיפוש",
+        "signIn": "התחברות",
+        "startTls": "STARTTLS"
+      },
+      "alreadyInTrash": "הודעות אלה כבר נמצאות באשפה; מחקו אותן לצמיתות.",
+      "appendRejected": "{{action}}: השרת דחה את ההודעה.",
+      "badCommand": "{{action}}: השרת לא הבין את הפקודה ({{detail}}).",
+      "cannotDeleteInbox": "לא ניתן למחוק את תיבת הדואר הנכנס.",
+      "cannotRenameInbox": "לא ניתן לשנות את שם תיבת הדואר הנכנס.",
+      "closedImmediately": "{{host}} סגר את החיבור מיד. האם הגדרת האבטחה (SSL/TLS או STARTTLS) תואמת לפורט?",
+      "commandTimeout": "{{host}} לא הגיב תוך {{seconds}} שניות.",
+      "connectTimeout": "אין תגובה מ-{{host}}:{{port}} תוך {{seconds}} שניות. בדקו את שם השרת, הפורט וחומת האש.",
+      "connectionLost": "החיבור ל-{{host}} אבד.",
+      "draftsFolderMissing": "לא נמצאה תיקיית טיוטות בשרת. בחרו תיקייה זו בהגדרות החשבון.",
+      "greetingRefused": "{{host}} דחה את החיבור: {{detail}}",
+      "invalidFolderName": "שם תיקייה לא חוקי.",
+      "invalidMessage": "הודעה לא חוקית.",
+      "invalidName": "{{action}}: תווים לא חוקיים בשם.",
+      "invalidSearchCharacters": "טקסט החיפוש מכיל תווים לא חוקיים.",
+      "messageGone": "הודעה זו כבר אינה קיימת (ייתכן שהועברה או נמחקה).",
+      "messageTooLarge": "גודל ההודעה {{size}} MB; Email Studio פותח הודעות עד {{max}} MB.",
+      "noStarttls": "{{host}} אינו תומך ב-STARTTLS בפורט {{port}}. בחרו SSL/TLS (בדרך כלל פורט 993).",
+      "noTrash": "לא נמצאה תיקיית אשפה בשרת. בחרו תיקיית אשפה בהגדרות החשבון או מחקו לצמיתות.",
+      "noValidMessages": "לא צוינו הודעות חוקיות.",
+      "notFound": "{{action}}: {{detail}}",
+      "quotaExceeded": "{{action}}: תיבת הדואר מלאה ({{detail}}).",
+      "refused": "{{action}}: השרת סירב ({{detail}}).",
+      "retryLater": "{{message}} (Email Studio ינסה שוב בעוד {{retrySeconds}} שניות כדי להימנע מחסימה על ידי השרת.)",
+      "searchTooLong": "טקסט החיפוש ארוך מדי.",
+      "sentFolderMissing": "לא נמצאה תיקיית פריטים שנשלחו בשרת. בחרו תיקייה זו בהגדרות החשבון.",
+      "signInTimeout": "ההתחברות ל-{{host}} נמשכה זמן רב מדי.",
+      "specialFolderMissing": "התיקייה לא נמצאה בשרת. בחרו תיקייה זו בהגדרות החשבון.",
+      "unexpectedError": "{{action}}: שגיאה לא צפויה.",
+      "unexpectedResponse": "{{action}}: תגובה לא צפויה מהשרת.",
+      "unexpectedState": "מצב חיבור לא צפוי."
+    },
+    "keychain": {
+      "notResponding": "מחזיק המפתחות לא הגיב.",
+      "unavailable": "מחזיק המפתחות של מערכת ההפעלה אינו זמין. Email Studio לעולם אינו שומר סיסמאות כטקסט גלוי; ב-Linux נדרש Secret Service (לדוגמה GNOME Keyring או KWallet).",
+      "unexpected": "מחזיק המפתחות החזיר שגיאה לא צפויה."
+    },
+    "links": {
+      "openFailed": "לא ניתן היה לפתוח את הקישור.",
+      "unsupportedScheme": "ניתן לפתוח רק קישורי http, https ו-mailto."
+    },
+    "messages": {
+      "invalidMime": "לא ניתן היה לקרוא את ההודעה (מבנה MIME לא חוקי).",
+      "unreadable": "לא ניתן היה לקרוא את ההודעה."
+    },
+    "oauth": {
+      "browserFailed": "לא ניתן היה לפתוח את דפדפן האינטרנט להתחברות.",
+      "cancelled": "ההתחברות בוטלה.",
+      "cancelledOrDenied": "ההתחברות ל-{{provider}} בוטלה או נדחתה.",
+      "clientMisconfigured": "לקוח ה-OAuth עבור {{provider}} אינו מוגדר כראוי (מזהה לקוח או סוד).",
+      "emailUnknown": "לא ניתן היה לקבוע את כתובת הדוא״ל של ההתחברות; הזינו את הכתובת ונסו שוב.",
+      "invalidClientId": "זה אינו מזהה לקוח חוקי.",
+      "invalidTokenEndpoint": "נקודת קצה לא חוקית לאסימונים.",
+      "noAccessToken": "{{provider}} לא החזיר אסימון גישה (HTTP {{status}}).",
+      "noFreePort": "אין פורט זמני זמין להתחברות.",
+      "noPort": "אין פורט.",
+      "noRefreshToken": "{{provider}} לא החזיר אסימון רענון; נסו להתחבר שוב.",
+      "noStoredSignIn": "התחברו שוב ל-{{provider}}: אין התחברות שמורה עבור חשבון זה.",
+      "notConfigured": {
+        "google": "התחברות באמצעות Google עדיין לא הוגדרה: אין מזהה לקוח. ב-Google Cloud צרו לקוח OAuth מסוג 'אפליקציית שולחן עבודה' (הפניה דרך http://127.0.0.1), הפעילו את Gmail API והוסיפו את ההיקף https://mail.google.com/ למסך ההסכמה. לאחר מכן הזינו את מזהה הלקוח ואת סוד הלקוח (ראו docs/email-oauth.md).",
+        "microsoft": "התחברות באמצעות Microsoft עדיין לא הוגדרה: אין מזהה לקוח. רשמו אפליקציה ב-Microsoft Entra (רישומי אפליקציות) כ'לקוח ציבורי', הוסיפו את הפלטפורמה 'אפליקציות לנייד ולשולחן העבודה' עם URI ההפניה http://localhost, והעניקו את ההרשאות המואצלות IMAP.AccessAsUser.All, SMTP.Send, offline_access, openid ו-email. לאחר מכן הזינו את מזהה הלקוח (ראו docs/email-oauth.md)."
+      },
+      "providerRefused": "{{provider}} דחה את ההתחברות ({{detail}}).",
+      "randomUnavailable": "אין מקור אקראיות מאובטח זמין.",
+      "reauthenticate": "התחברו שוב ל-{{provider}}: ההרשאה פגה או בוטלה.",
+      "settingSaveFailed": "לא ניתן היה לשמור את הגדרת ה-OAuth.",
+      "signInFirst": "חשבון זה משתמש ב-OAuth2: התחברו תחילה באמצעות Microsoft או Google.",
+      "signInFirstToTest": "התחברו תחילה באמצעות Microsoft או Google כדי לבדוק את OAuth2.",
+      "signInTimeout": "ההתחברות ל-{{provider}} נמשכה יותר מ-5 דקות ובוטלה.",
+      "stateMismatch": "התגובה מדף ההתחברות אינה שייכת להתחברות זו (אי-התאמה ב-state).",
+      "timeout": "{{provider}} לא הגיב בזמן.",
+      "tokenRefused": "{{provider}} דחה את האסימון ({{detail}}).",
+      "unexpectedResponse": "{{provider}} החזיר תגובה לא צפויה (HTTP {{status}})."
+    },
+    "security": {
+      "cramMd5SmtpUnsupported": "סיסמה מוצפנת (CRAM-MD5) אינה נתמכת עבור SMTP. בחרו 'סיסמה רגילה'; דרך SSL/TLS או STARTTLS גם הסיסמה מוצפנת.",
+      "invalidServerName": "'{{host}}' אינו שם שרת חוקי עבור {{protocol}}.",
+      "notLocalhost": "{{host}} אינו מחשב זה, ולכן נדחה חיבור לא מוצפן.",
+      "portMissing": "הפורט עבור {{protocol}} חסר.",
+      "unencryptedRefused": "התחברות לא מוצפנת ל-{{host}} נדחתה: הסיסמה שלכם הייתה עוברת ברשת בצורה קריאה. בחרו SSL/TLS או STARTTLS. חיבורים לא מוצפנים מותרים רק אל מחשב זה (localhost), לדוגמה עבור Proton Mail Bridge."
+    },
+    "server": {
+      "noTimelyResponse": "{{host}} לא הגיב בזמן."
+    },
+    "smtp": {
+      "authMethodUnsupported": "שיטת התחברות זו אינה נתמכת עבור SMTP.",
+      "error": "שגיאת SMTP ב-{{host}}: {{detail}}",
+      "messageTooLarge": "{{host}} דוחה את ההודעה כי היא גדולה מדי ({{detail}}).",
+      "noAuthMechanism": "{{host}} אינו מציע שיטת התחברות ש-Email Studio תומך בה (PLAIN או LOGIN). בחרו STARTTLS או SSL/TLS; שרתים רבים מציעים התחברות רק לאחר ההצפנה.",
+      "oauthRejected": "{{host}} דחה את אסימון ה-OAuth2; ייתכן שתצטרכו להתחבר שוב.",
+      "rejected": "{{host}} דחה את ההודעה ({{detail}}).",
+      "sendTimeout": "השליחה דרך {{host}} נמשכה זמן רב מדי.",
+      "tlsFailed": "לא ניתן היה ליצור את החיבור המאובטח ל-{{host}} ({{detail}}). האם הגדרת האבטחה תואמת לפורט?",
+      "tryLater": "{{host}} אינו יכול לקבל את ההודעה כרגע; נסו שוב מאוחר יותר ({{detail}})."
+    },
+    "storage": {
+      "appDataDirNotFound": "תיקיית הנתונים של האפליקציה לא נמצאה.",
+      "dataDirCreateFailed": "לא ניתן היה ליצור את תיקיית הנתונים.",
+      "dataDirMissing": "תיקיית הנתונים חסרה."
+    },
+    "test": {
+      "signedIn": "מחוברים ל-{{host}}.",
+      "signedInUnencrypted": "מחוברים ל-{{host}}. הערה: חיבור ה-{{protocol}} אינו מוצפן. הדבר מותר רק משום שהשרת פועל במחשב זה."
+    },
+    "tls": {
+      "certificateRejected": "החיבור המאובטח ל-{{host}} נדחה: {{reason}}. כדי להגן על הסיסמה שלכם, Email Studio אינו מתחבר לשרת שלא ניתן לאמת את זהותו.",
+      "handshakeFailed": "לא ניתן היה ליצור את החיבור המאובטח ל-{{host}} ({{detail}}). האם הגדרת האבטחה (SSL/TLS או STARTTLS) תואמת לפורט?",
+      "handshakeTimeout": "לחיצת היד של TLS עם {{host}} נמשכה זמן רב מדי.",
+      "invalidServerName": "'{{host}}' אינו שם שרת חוקי עבור TLS.",
+      "reason": {
+        "expired": "תוקף האישור פג",
+        "invalid": "האישור אינו חוקי ({{detail}})",
+        "notYetValid": "האישור עדיין אינו בתוקף (האם השעון של מחשב זה נכון?)",
+        "revoked": "האישור בוטל",
+        "unknownIssuer": "האישור לא הונפק על ידי רשות אישורים מהימנה (ייתכן שהוא בחתימה עצמית)",
+        "wrongName": "האישור אינו שייך לשם {{host}}; השתמשו בשם השרת המופיע באישור"
+      }
+    }
+  }
+}

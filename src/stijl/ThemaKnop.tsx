@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from "react";
 import { Moon, Sun } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useInstellingen, wijzigInstellingen } from "../instellingen";
 
 type Thema = "light" | "forge";
@@ -31,7 +32,8 @@ export function ThemaKnop({
   thema: Thema;
   wissel: () => void;
 }) {
-  const naam = thema === "forge" ? "Licht thema" : "Forge thema";
+  const { t } = useTranslation("shell");
+  const naam = thema === "forge" ? t("theme.light") : t("theme.forge");
   return (
     <button
       className="office-iconknop office-themaknop"

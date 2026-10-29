@@ -1,0 +1,263 @@
+{
+  "types": {
+    "column": {
+      "name": "Kolom",
+      "description": "Bandingkan nilai berdampingan"
+    },
+    "stackedColumn": {
+      "name": "Kolom bertumpuk",
+      "description": "Bagian dan total per kategori"
+    },
+    "percentColumn": {
+      "name": "Kolom 100%",
+      "description": "Porsi per kategori"
+    },
+    "bar": {
+      "name": "Batang",
+      "description": "Horizontal, untuk nama panjang"
+    },
+    "line": {
+      "name": "Garis",
+      "description": "Tren dari waktu ke waktu"
+    },
+    "lineMarkers": {
+      "name": "Garis dengan penanda",
+      "description": "Tren dengan titik data terlihat"
+    },
+    "area": {
+      "name": "Area",
+      "description": "Tren dengan penekanan pada besaran"
+    },
+    "pie": {
+      "name": "Pai",
+      "description": "Rincian satu seri"
+    },
+    "doughnut": {
+      "name": "Donat",
+      "description": "Rincian dengan bagian tengah terbuka"
+    },
+    "scatter": {
+      "name": "Sebar (XY)",
+      "description": "Hubungan antara dua angka"
+    },
+    "combo": {
+      "name": "Kolom + garis",
+      "description": "Seri terakhir sebagai garis pada sumbu sekunder"
+    }
+  },
+  "unknownType": "Jenis tidak dikenal",
+  "busy": "Memproses…",
+  "defaults": {
+    "seriesName": "Seri {{n}}",
+    "categoryName": "Kategori {{n}}",
+    "chartName": "Bagan {{n}}",
+    "sheetName": "Bagan {{n}}",
+    "true": "TRUE",
+    "false": "FALSE"
+  },
+  "ribbon": {
+    "charts": "Bagan",
+    "chart": "Bagan",
+    "editChart": "Edit bagan",
+    "allCharts": "Semua bagan",
+    "dataAndFormat": "Data dan pemformatan",
+    "overview": "Ikhtisar",
+    "type": "Jenis",
+    "changeType": "Ubah jenis bagan",
+    "data": "Data",
+    "selectData": "Pilih data",
+    "layout": "Tata letak",
+    "titleAndLegend": "Judul dan legenda",
+    "delete": "Hapus",
+    "deleteChart": "Hapus bagan",
+    "withShortcut": "{{name}} · {{shortcut}}"
+  },
+  "dialog": {
+    "title": {
+      "insert": "Sisipkan bagan",
+      "edit": "Edit bagan"
+    },
+    "button": {
+      "insert": "Sisipkan",
+      "edit": "Perbarui"
+    },
+    "reloadNote": {
+      "insert": "Dokumen dimuat ulang setelah disisipkan. Perubahan sebelum itu tidak dapat dibatalkan lagi.",
+      "edit": "Dokumen dimuat ulang setelah diperbarui. Perubahan sebelum itu tidak dapat dibatalkan lagi."
+    },
+    "closeTitle": "Tutup (Esc)",
+    "type": "Jenis",
+    "data": "Data",
+    "cellRange": "Rentang sel",
+    "cellRangePlaceholder": "Misalnya A1:D6",
+    "noContiguousRange": "Referensi bagan ini tidak membentuk rentang yang bersambung; data tetap tidak berubah sampai Anda memasukkan rentang.",
+    "firstRowNames": "Baris pertama berisi nama",
+    "firstColumnNames": "Kolom pertama berisi nama",
+    "seriesIn": "Seri dalam",
+    "columns": "kolom",
+    "rows": "baris",
+    "series": "Seri",
+    "seriesNoNumbersTitle": "{{name}}: tidak ada angka, tidak disertakan",
+    "noNumbers": "(tidak ada angka)",
+    "enterRange": "Masukkan rentang sel yang berisi data.",
+    "placeCursorInTable": "Letakkan kursor terlebih dahulu di tabel yang berisi angka.",
+    "titles": "Judul",
+    "chartTitle": "Judul",
+    "subtitle": "Subjudul",
+    "categoryAxis": "Sumbu kategori",
+    "valueAxis": "Sumbu nilai",
+    "horizontalAxis": "Sumbu horizontal",
+    "verticalAxis": "Sumbu vertikal",
+    "secondaryAxis": "Sumbu sekunder",
+    "format": "Format",
+    "legend": "Legenda",
+    "gridlines": "Garis kisi",
+    "dataLabels": "Label data",
+    "decimals": "Tempat desimal",
+    "placement": "Penempatan",
+    "besideData": "Di samping data pada lembar ini",
+    "newSheet": "Pada lembar baru",
+    "sheetName": "Nama lembar",
+    "summary": {
+      "series_other": "{{n}} seri",
+      "categories_other": "{{n}} kategori",
+      "text": "{{series}} · {{categories}}",
+      "withSheet": "{{series}} · {{categories}} · {{sheet}}"
+    }
+  },
+  "legend": {
+    "bottom": "Bawah",
+    "right": "Kanan",
+    "top": "Atas",
+    "left": "Kiri",
+    "none": "Tanpa legenda"
+  },
+  "dataSheet": {
+    "row": "Baris",
+    "series": "Seri",
+    "removeLastRow": "Hapus baris terakhir",
+    "removeLastSeries": "Hapus seri terakhir",
+    "paste": "Tempel",
+    "pasteTitle": "Tempel teks yang dipisahkan tab dari papan klip, misalnya disalin dari lembar kerja",
+    "fromTable": "Dari tabel yang dipilih",
+    "fromTableTitle": "Mengambil tabel tempat kursor berada",
+    "pasteNotAllowed": "Menempel dengan tombol tidak diizinkan di sini. Klik di sel dan gunakan Ctrl+V.",
+    "corner": "Sel sudut",
+    "seriesNameLabel": "Nama seri {{n}}",
+    "categoryLabel": "Kategori {{n}}",
+    "valueLabel": "Nilai baris {{row}}, seri {{series}}"
+  },
+  "preview": {
+    "label": "Pratinjau: {{title}}",
+    "untitled": "Pratinjau: bagan tanpa judul"
+  },
+  "list": {
+    "title": "Bagan dalam dokumen ini",
+    "empty": "Dokumen ini belum berisi bagan.",
+    "edit": "Edit",
+    "delete": "Hapus",
+    "deleteLabel": "Hapus {{name}}",
+    "place": {
+      "slide": "slide {{n}}",
+      "sheet": "lembar {{name}}",
+      "text": "bagan {{n}} dalam teks"
+    }
+  },
+  "deleteConfirm": {
+    "title": "Hapus bagan",
+    "text": "Hapus ‘{{name}}’? Dokumen kemudian dimuat ulang; perubahan sebelumnya tidak dapat dibatalkan lagi.",
+    "textSheet": "Hapus ‘{{name}}’ dari lembar {{sheet}}? Dokumen kemudian dimuat ulang; perubahan sebelumnya tidak dapat dibatalkan lagi.",
+    "button": "Hapus"
+  },
+  "errors": {
+    "unknownType": "Jenis bagan tidak dikenal.",
+    "noSeries": "Bagan memerlukan setidaknya satu seri data.",
+    "tooManySeries": "Bagan di sini dapat berisi paling banyak {{max}} seri.",
+    "tooManyCategories": "Bagan di sini dapat berisi paling banyak {{max}} kategori.",
+    "noCategories": "Bagan memerlukan setidaknya satu kategori.",
+    "valueCountMismatch": "Seri ‘{{name}}’ tidak memiliki nilai sebanyak jumlah kategori.",
+    "noNumbers": "Data tidak berisi angka.",
+    "comboNeedsTwoSeries": "Bagan kombinasi memerlukan setidaknya dua seri: kolom dan satu garis.",
+    "scatterNeedsNumbers": "Bagan sebar memerlukan angka sebagai nilai X di kolom atau baris pertama.",
+    "titleTooLong": "Judul paling panjang {{max}} karakter.",
+    "invalidColor": "Warna ‘{{color}}’ bukan warna yang valid.",
+    "noNumericColumn": "Tidak ada kolom dalam rentang yang berisi angka, jadi tidak ada yang dapat diplot. Pilih rentang dengan setidaknya satu kolom angka, atau atur ‘Seri dalam’ ke baris.",
+    "noNumericRow": "Tidak ada baris dalam rentang yang berisi angka, jadi tidak ada yang dapat diplot. Pilih rentang dengan setidaknya satu baris angka, atau atur ‘Seri dalam’ ke kolom.",
+    "chooseSeries": "Pilih setidaknya satu seri untuk bagan.",
+    "rangeTooLarge": "Rentang terlalu besar: paling banyak {{max}} sel.",
+    "noDataBesideHeaders": "Rentang tidak berisi data selain judul.",
+    "pasteTooLarge": "Data yang ditempel terlalu besar untuk bagan.",
+    "invalidRange": "Itu bukan rentang sel yang valid. Gunakan misalnya A1:D6 atau 'Lembar 1'!A1:D6.",
+    "noSuchSheet": "Tidak ada lembar bernama ‘{{name}}’.",
+    "spreadsheetNotReady": "Lembar kerja belum siap.",
+    "spreadsheetReadOnly": "Lembar kerja hanya-baca.",
+    "documentNotReady": "Dokumen belum siap.",
+    "presentationNotEditable": "Presentasi tidak dapat diedit saat ini.",
+    "selectChartFirst": "Pilih bagan terlebih dahulu.",
+    "chartGone": "Bagan tidak dapat ditemukan lagi.",
+    "notEditableHere": "Bagan ini tidak dapat diedit di sini.",
+    "notEditable": "Bagan ini tidak dapat diedit.",
+    "package": {
+      "tooLarge": "Dokumen terlalu besar untuk mengedit bagan di dalamnya.",
+      "tooManyParts": "Dokumen berisi terlalu banyak atau terlalu besar bagian.",
+      "notZip": "Dokumen bukan file Office yang valid (zip).",
+      "invalidPartName": "Dokumen berisi nama bagian yang tidak valid.",
+      "noContentTypes": "Dokumen tidak memiliki [Content_Types].xml.",
+      "missingPart": "Bagian {{part}} tidak ada dalam dokumen.",
+      "noFreePartName": "Tidak ada nama bagian bebas yang tersisa."
+    },
+    "xml": {
+      "tooLarge": "Bagian XML terlalu besar untuk diproses.",
+      "damaged": "Bagian XML rusak.",
+      "doctype": "XML dengan DOCTYPE tidak diproses demi keamanan.",
+      "tooDeep": "Bagian XML bersarang terlalu dalam.",
+      "overlappingChanges": "Galat internal: perubahan XML yang tumpang tindih."
+    },
+    "chartXml": {
+      "notDrawingML": "Bagian ini bukan bagan DrawingML.",
+      "noPlotArea": "Bagan tidak memiliki area plot.",
+      "unusualPrefix": "Bagan ini menggunakan notasi XML yang tidak biasa dan tidak dapat diedit dengan aman di sini."
+    },
+    "document": {
+      "noMainPart": "Dokumen tidak memiliki bagian utama.",
+      "tooManyCharts": "Dokumen ini sudah berisi {{total}} bagan; lebih banyak tidak didukung.",
+      "invalidSheetName": "Nama lembar tidak valid: paling banyak 31 karakter, tanpa \\ / ? * [ ] :",
+      "sheetExists": "Lembar bernama ‘{{name}}’ sudah ada.",
+      "noSheetList": "Buku kerja tidak memiliki daftar lembar.",
+      "drawingMissing": "Gambar lembar ini hilang atau rusak.",
+      "noSuchWorksheet": "Lembar yang dipilih tidak ada atau bukan lembar kerja.",
+      "notPlainWorksheet": "Bagan hanya dapat ditempatkan pada lembar kerja biasa.",
+      "drawingDamaged": "Gambar lembar ini rusak.",
+      "docxUnusualPrefix": "Dokumen ini menggunakan notasi XML yang tidak biasa; bagan tidak dapat disisipkan dengan aman.",
+      "noBody": "Dokumen tidak memiliki isi.",
+      "tableTooLarge": "Tabel terlalu besar untuk bagan.",
+      "noSuchSlide": "Slide yang dipilih tidak ada.",
+      "slideUnusualPrefix": "Slide ini menggunakan notasi XML yang tidak biasa; bagan tidak dapat disisipkan dengan aman.",
+      "noShapeTree": "Slide tidak memiliki pohon bentuk.",
+      "chartRemoved": "Bagan tidak lagi ada dalam dokumen.",
+      "chartNotFound": "Bagan tidak ditemukan.",
+      "cannotRemove": "Objek bagan tidak dapat dihapus."
+    }
+  },
+  "read": {
+    "reasons": {
+      "extendedChart": "Ini adalah bagan yang diperluas (seperti bagan air terjun atau treemap) yang tidak dapat diedit di sini.",
+      "unsupportedType": "Bagan ini menggunakan jenis yang tidak dapat diedit di sini ({{types}}).",
+      "noReadableSeries": "Bagan tidak berisi seri yang dapat dibaca.",
+      "unsupportedCombination": "Bagan ini menggabungkan jenis dengan cara yang tidak dapat diedit di sini.",
+      "noSeries": "Bagan tidak berisi seri data.",
+      "invalid": "Bagan ini tidak dapat diedit di sini: {{reason}}",
+      "unusualPrefix": "Bagan ini menggunakan notasi XML yang tidak biasa dan tidak dapat diedit dengan aman di sini."
+    },
+    "warnings": {
+      "stackedBars": "Batang bertumpuk ditempatkan berdampingan saat diedit.",
+      "stackedLines": "Garis bertumpuk menjadi garis terpisah saat diedit.",
+      "stackedAreas": "Area bertumpuk menjadi area terpisah saat diedit.",
+      "linesAfterColumns": "Seri garis ditempatkan setelah kolom saat diedit.",
+      "lastSeriesAsLine": "Saat diedit, hanya seri terakhir yang digambar sebagai garis.",
+      "multiLevelCategories": "Kategori bertingkat menjadi satu tingkat saat diedit.",
+      "moreValuesThanCategories": "Seri ‘{{name}}’ memiliki lebih banyak nilai daripada jumlah kategori.",
+      "trendlinesDropped": "Garis tren dan bilah galat dihapus saat diedit."
+    }
+  }
+}

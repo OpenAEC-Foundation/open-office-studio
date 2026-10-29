@@ -3,7 +3,7 @@ export { lex } from "./lexer.ts";
 export { parseerModule, parseerExpressie, type ParseerResultaat, type ModuleSoort } from "./parser.ts";
 export type * from "./ast.ts";
 export { VbaRuntime, type ModuleBron, type RuntimeOpties, type Uitkomst } from "./interpreter.ts";
-export { VbaFout, VbaAfbreking, VbaParseerFout, FOUTTEKSTEN, type Positie } from "./fouten.ts";
+export { VbaFout, VbaAfbreking, VbaParseerFout, foutTekst, foutTekstOfAlgemeen, type Positie } from "./fouten.ts";
 export type { VbaHost, FormulierHost, FormulierDoel, HostWaarde, HostGebeurtenis, MsgBoxVerzoek, InputBoxVerzoek } from "./host.ts";
 export { NEDERLANDS, ENGELS_VS, type Landinstelling } from "./land.ts";
 export { scanAfscherming, GEWEIGERDE_FUNCTIES, GEWEIGERDE_LEDEN, type Bevinding, type Afscherming } from "./afscherming.ts";

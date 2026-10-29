@@ -5,11 +5,14 @@
  * Het herstelinterval staat bij automatisch herstel (src/herstel.ts).
  */
 import { useSyncExternalStore } from "react";
+import { isTaalKeuze, type TaalKeuze } from "./i18n/talen";
 
 export type Thema = "light" | "forge" | "systeem";
 export type DocumentSoort = "docx" | "xlsx" | "pptx";
 
 export interface Instellingen {
+  /** Taal van de interface; "auto" volgt de systeemtaal (terugval Engels). Zie docs/i18n.md. */
+  taal: TaalKeuze;
   thema: Thema;
   /** Standaardformaat voor nieuwe documenten: OOXML of ODF. */
   opslagformaat: { docx: "docx" | "odt"; xlsx: "xlsx" | "ods"; pptx: "pptx" | "odp" };
@@ -41,6 +44,7 @@ export interface Instellingen {
 }
 
 export const standaardInstellingen: Instellingen = {
+  taal: "auto",
   thema: "forge",
   opslagformaat: { docx: "docx", xlsx: "xlsx", pptx: "pptx" },
   lint: { compact: false, ingeklapt: false },
@@ -85,6 +89,7 @@ export function normaliseerInstellingen(ruw: unknown): Instellingen {
   const spelling = isObject(r.spelling) ? r.spelling : {};
   const tekst = isObject(r.tekst) ? r.tekst : {};
   return {
+    taal: isTaalKeuze(r.taal) ? r.taal : s.taal,
     thema: kies(r.thema, ["light", "forge", "systeem"] as const, s.thema),
     opslagformaat: {
       docx: kies(formaat.docx, ["docx", "odt"] as const, "docx"),
@@ -119,7 +124,7 @@ export function normaliseerInstellingen(ruw: unknown): Instellingen {
   };
 }
 
-type Wijziging = {
+export type Wijziging = {
   [K in keyof Instellingen]?: Instellingen[K] extends object ? Partial<Instellingen[K]> : Instellingen[K];
 };
 
@@ -147,8 +152,15 @@ function leesLokaal(): Instellingen {
 }
 
 let huidig: Instellingen = typeof window === "undefined" ? standaardInstellingen : leesLokaal();
+/** Voorbeeld uit het instellingenvenster: zichtbaar, maar (nog) niet bewaard. */
+let voorbeeld: Instellingen | null = null;
 const luisteraars = new Set<() => void>();
 const meld = () => luisteraars.forEach((luisteraar) => luisteraar());
+
+/** Gebeurtenis waarmee losgemaakte vensters (Tauri) elkaars keuzes overnemen. */
+const GEBEURTENIS = "office-instellingen";
+/** Eigen afzender, zodat een venster zijn eigen gebeurtenis negeert. */
+const afzender = Math.random().toString(36).slice(2);
 
 function bewaar(waarde: Instellingen) {
   const json = JSON.stringify(waarde);
@@ -157,18 +169,59 @@ function bewaar(waarde: Instellingen) {
   } catch {
     // Zonder browseropslag gelden de keuzes alleen voor deze sessie.
   }
-  if (desktop())
+  if (desktop()) {
     void import("@tauri-apps/api/core")
       .then(({ invoke }) => invoke("bewaar_voorkeuren", { inhoud: json }))
       .catch((fout) => console.warn("Voorkeuren niet bewaard:", fout));
+    // De browser meldt localStorage zelf aan andere tabbladen ("storage");
+    // tussen Tauri-vensters gaat het via een app-gebeurtenis.
+    void import("@tauri-apps/api/event")
+      .then(({ emit }) => emit(GEBEURTENIS, { afzender, json }))
+      .catch(() => undefined);
+  }
+}
+
+/** Neemt keuzes over die een ander venster heeft bewaard. */
+export function neemOver(json: string | null) {
+  if (!json) return;
+  try {
+    const anders = normaliseerInstellingen(JSON.parse(json));
+    if (JSON.stringify(anders) === JSON.stringify(huidig)) return;
+    huidig = anders;
+    meld();
+  } catch {
+    // Beschadigde gegevens van buiten negeren.
+  }
 }
 
 export function leesInstellingen(): Instellingen {
+  return voorbeeld ?? huidig;
+}
+
+/** De bewaarde keuzes, zonder een eventueel voorbeeld. */
+export function leesBewaardeInstellingen(): Instellingen {
   return huidig;
 }
 
 export function wijzigInstellingen(wijziging: Wijziging) {
   huidig = pasToe(huidig, wijziging);
+  bewaar(huidig);
+  meld();
+}
+
+/**
+ * Toont keuzes als voorbeeld (instellingenvenster) zonder ze te bewaren;
+ * `null` beëindigt het voorbeeld. Andere vensters zien een voorbeeld niet.
+ */
+export function toonVoorbeeld(waarde: Instellingen | null) {
+  voorbeeld = waarde ? normaliseerInstellingen(waarde) : null;
+  meld();
+}
+
+/** Bewaart een complete set keuzes en beëindigt een voorbeeld. */
+export function bewaarInstellingen(waarde: Instellingen) {
+  huidig = normaliseerInstellingen(waarde);
+  voorbeeld = null;
   bewaar(huidig);
   meld();
 }
@@ -209,3 +262,24 @@ if (desktop())
     .catch(() => {
       // Zonder bestand blijven de lokale keuzes gelden.
     });
+
+// Andere tabbladen (browser) en losgemaakte vensters (desktop) volgen mee.
+if (typeof window !== "undefined") {
+  window.addEventListener("storage", (e) => {
+    if (e.key === SLEUTEL) neemOver(e.newValue);
+  });
+  if (desktop())
+    void import("@tauri-apps/api/event")
+      .then(({ listen }) =>
+        listen<{ afzender: string; json: string }>(GEBEURTENIS, ({ payload }) => {
+          if (payload?.afzender === afzender) return;
+          neemOver(payload?.json ?? null);
+          try {
+            if (payload?.json) localStorage.setItem(SLEUTEL, payload.json);
+          } catch {
+            // Alleen de snelle start.
+          }
+        }),
+      )
+      .catch(() => undefined);
+}

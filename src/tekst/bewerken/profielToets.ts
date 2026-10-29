@@ -11,9 +11,9 @@ import {
   type SneltoetsProfiel,
 } from "../../lint/sneltoetsenlijst";
 
-/** Omschrijvingen die per profiel anders heten maar hetzelfde doen. */
+/** Opdrachten (ids) die per profiel anders heten maar hetzelfde doen. */
 const ZELFDE: Record<string, string> = {
-  "Opmaak wissen": "Tekenopmaak wissen",
+  clearFormatting: "clearCharacterFormatting",
 };
 
 /** De toets voor dezelfde opdracht in het gekozen profiel; undefined als die er niet is. */
@@ -36,8 +36,10 @@ export function toetsVoorProfiel(
   // Toetsen die in elk profiel gelden of niet in het register staan: ongewijzigd.
   if (!standaard || profiel === "standaard") return toets;
   const omschrijving = standaard.omschrijving;
-  const gezocht = [omschrijving, ZELFDE[omschrijving]].filter(Boolean);
-  return tekst.find((i) => i.profiel === profiel && gezocht.includes(i.omschrijving))?.toets;
+  const zelfde = standaard.id ? ZELFDE[standaard.id] : undefined;
+  return tekst.find(
+    (i) => i.profiel === profiel && (i.omschrijving === omschrijving || (!!zelfde && i.id === zelfde)),
+  )?.toets;
 }
 
 export function useProfielToets() {

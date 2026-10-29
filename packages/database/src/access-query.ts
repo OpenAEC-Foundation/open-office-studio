@@ -1,5 +1,6 @@
 /** Reconstrueert opgeslagen Access-query’s uit MSysQueries. Eigen code; de betekenis van de
  * attribuutcodes volgt de openbare beschrijvingen van mdbtools en Jackcess. Er wordt niets uitgevoerd. */
+import i18next from "i18next";
 export interface QueryRij {
   Attribute: number;
   Expression: string | null;
@@ -97,7 +98,7 @@ function bevat(bron: Bron, naam: string): boolean {
 function bronTekst(bron: Bron, bovenste = true): string {
   if (bron.soort === "tabel") return bron.tekst;
   const type = joins[bron.type];
-  if (!type) throw new Error(`onbekend jointype ${bron.type}`);
+  if (!type) throw new Error(i18next.t("database:analysis.query.unknownJoinType", { type: bron.type }));
   const op = bron.op.length > 1 ? `(${bron.op.join(") AND (")})` : bron.op[0];
   const tekst = `${bronTekst(bron.links, false)}${type}${bronTekst(bron.rechts, false)} ON ${op}`;
   return bovenste ? tekst : `(${tekst})`;
@@ -113,7 +114,7 @@ export function reconstrueerQuery(
   const een = (attribuut: number) => {
     const lijst = met(attribuut);
     if (lijst.length > 1)
-      throw new Error(`meerdere rijen voor attribuut ${attribuut}`);
+      throw new Error(i18next.t("database:analysis.query.multipleRows", { attribute: attribuut }));
     return lijst[0];
   };
   const typeRij = een(1);
@@ -130,19 +131,19 @@ export function reconstrueerQuery(
   ];
   if (onbekend.length)
     beperkingen.push(
-      `Onbekende attribuutcodes genegeerd: ${onbekend.join(", ")}.`,
+      i18next.t("database:analysis.query.unknownAttributes", { codes: onbekend.join(", ") }),
     );
   try {
     if (soort === "ONBEKEND")
-      throw new Error(`onbekende querysoort (objectvlag ${objectVlaggen})`);
+      throw new Error(i18next.t("database:analysis.query.unknownKind", { flags: objectVlaggen }));
     if (soort === "PASSTHROUGH") {
       const verbinding = typeRij?.Name1 ?? een(4)?.Expression;
       if (verbinding)
         beperkingen.push(
-          "Pass-through-query: de ODBC-verbindingsreeks is aanwezig maar wordt niet getoond of geëxporteerd, omdat die inloggegevens kan bevatten.",
+          i18next.t("database:analysis.query.passthroughConnection"),
         );
       beperkingen.push(
-        "De SQL is bestemd voor een externe server en wordt niet uitgevoerd.",
+        i18next.t("database:analysis.query.passthroughNotRun"),
       );
       return {
         soort,
@@ -160,11 +161,11 @@ export function reconstrueerQuery(
     const heeft = (masker: number) => (vlag & masker) !== 0;
     if (met(2).some((r) => r.Flag === 0))
       beperkingen.push(
-        "Parametertype 0 is weergegeven als het ongetypeerde Access-type Value (zoals bij koppelquery’s van subformulieren).",
+        i18next.t("database:analysis.query.parameterTypeZero"),
       );
     const parameters = met(2).map((r) => {
       const type = parametertypen[r.Flag ?? -1];
-      if (!type) throw new Error(`onbekend parametertype ${r.Flag}`);
+      if (!type) throw new Error(i18next.t("database:analysis.query.unknownParameterType", { type: r.Flag }));
       return `${r.Name1} ${type}${r.Flag === 10 && (r.LvExtra ?? 0) > 0 ? `(${r.LvExtra})` : ""}`;
     });
     const orderBy = met(11).map(
@@ -211,7 +212,7 @@ export function reconstrueerQuery(
             links.op.unshift(join.Expression ?? "");
             continue;
           }
-          throw new Error(`tegenstrijdige joins tussen ${van} en ${naar}`);
+          throw new Error(i18next.t("database:analysis.query.conflictingJoins", { from: van, to: naar }));
         }
         lijst.push({
           soort: "join",
@@ -236,7 +237,7 @@ export function reconstrueerQuery(
         else if (heeft(0x08)) sql += "DISTINCTROW ";
         else if (heeft(0x10)) {
           const top = een(3)?.Name1;
-          if (!top) throw new Error("TOP-waarde ontbreekt");
+          if (!top) throw new Error(i18next.t("database:analysis.query.topMissing"));
           sql += `TOP ${top}${heeft(0x20) ? " PERCENT" : ""} `;
         }
       }
@@ -294,7 +295,7 @@ export function reconstrueerQuery(
       const transform = kolommen.filter((r) => ((r.Flag ?? 0) & 0x03) === 0);
       const pivot = kolommen.filter((r) => ((r.Flag ?? 0) & 0x01) !== 0);
       if (transform.length > 1 || pivot.length !== 1)
-        throw new Error("kruistabel zonder eenduidige TRANSFORM/PIVOT");
+        throw new Error(i18next.t("database:analysis.query.crosstabAmbiguous"));
       sql = transform[0]?.Expression
         ? `TRANSFORM ${transform[0].Expression}${alias(transform[0].Name1)}\n`
         : "";
@@ -308,7 +309,7 @@ export function reconstrueerQuery(
       const deel = (sleutel: string) => {
         const rij = met(5).find((r) => r.Name2 === sleutel);
         if (!rij?.Expression)
-          throw new Error(`UNION-deel ${sleutel} ontbreekt`);
+          throw new Error(i18next.t("database:analysis.query.unionPartMissing", { part: sleutel }));
         return rij.Expression.trim().replace(/[\r\n]+/g, "\n");
       };
       sql = `${deel("X7YZ_____1")}\nUNION ${heeft(0x02) ? "" : "ALL "}${deel("X7YZ_____2")}`;
@@ -318,12 +319,12 @@ export function reconstrueerQuery(
     if (heeft(0x04)) sql += "\nWITH OWNERACCESS OPTION";
     if (remote && (remote.Name1 || remote.Expression))
       beperkingen.push(
-        "De query verwijst naar een externe database; die bron is niet gecontroleerd.",
+        i18next.t("database:analysis.query.externalDatabase"),
       );
     return { soort, sql: sql + ";", beperkingen };
   } catch (fout) {
     beperkingen.push(
-      `SQL niet gereconstrueerd: ${fout instanceof Error ? fout.message : String(fout)}. De ruwe definitie is bewaard; er is niets gegokt.`,
+      i18next.t("database:analysis.query.notReconstructed", { error: fout instanceof Error ? fout.message : String(fout) }),
     );
     return { soort, sql: null, beperkingen };
   }

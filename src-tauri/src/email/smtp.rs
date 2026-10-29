@@ -4,10 +4,15 @@
 //! de Y-app-desktopimplementatie (zie herkomst in `mod.rs`).
 
 use super::accounts::{controleer_beveiliging, is_localhost};
-use super::fout::{servertekst, MailFout, Uitkomst};
+use super::fout::{
+    aanmelden_mislukt, geen_tls_naam, geen_wachtwoord, niet_lokaal, servertekst, MailFout,
+    Uitkomst,
+};
 use super::imap::kale_host;
 use super::mime::{adres_uit_tekst, met_haken};
-use super::{Account, Authenticatie, Beveiliging, Limieten, Opstelling, ServerInstelling};
+use super::{
+    Account, Authenticatie, Beveiliging, Deeluitkomst, Limieten, Opstelling, ServerInstelling,
+};
 use lettre::address::Envelope;
 use lettre::message::header::ContentType;
 use lettre::message::{Attachment, Mailbox, MultiPart, SinglePart};
@@ -37,27 +42,41 @@ impl std::fmt::Debug for Opgesteld {
     }
 }
 
+/// Vertaalsleutel van een veldnaam zoals die in meldingen staat.
+fn veldsleutel(veld: &str) -> &'static str {
+    match veld {
+        "Van" => "compose.field.from",
+        "Aan" => "compose.field.to",
+        "Cc" => "compose.field.cc",
+        "Bcc" => "compose.field.bcc",
+        "Antwoord aan" => "compose.field.replyTo",
+        "Het onderwerp" => "compose.field.subject",
+        "In-Reply-To" => "compose.field.inReplyTo",
+        _ => "compose.field.references",
+    }
+}
+
+fn ongeldig_adres(adres: String, veld: &str) -> MailFout {
+    MailFout::geweigerd(format!("'{adres}' in {veld} is geen geldig e-mailadres."))
+        .sleutel("compose.invalidAddress")
+        .waarde("address", adres)
+        .waarde("fieldKey", veldsleutel(veld))
+}
+
 fn mailbox(tekst: &str, veld: &str) -> Uitkomst<Mailbox> {
-    let a = adres_uit_tekst(tekst).ok_or_else(|| {
-        MailFout::geweigerd(format!(
-            "'{}' in {veld} is geen geldig e-mailadres.",
-            servertekst(tekst)
-        ))
-    })?;
-    let adres = a.adres.parse().map_err(|_| {
-        MailFout::geweigerd(format!(
-            "'{}' in {veld} is geen geldig e-mailadres.",
-            a.adres
-        ))
-    })?;
+    let a = adres_uit_tekst(tekst).ok_or_else(|| ongeldig_adres(servertekst(tekst), veld))?;
+    let adres = a
+        .adres
+        .parse()
+        .map_err(|_| ongeldig_adres(a.adres.clone(), veld))?;
     Ok(Mailbox::new((!a.naam.is_empty()).then_some(a.naam), adres))
 }
 
 fn kopwaarde(t: &str, veld: &str) -> Uitkomst<String> {
     if t.contains(['\r', '\n', '\0']) {
-        return Err(MailFout::geweigerd(format!(
-            "{veld} bevat ongeldige tekens."
-        )));
+        return Err(MailFout::geweigerd(format!("{veld} bevat ongeldige tekens."))
+            .sleutel("compose.invalidCharacters")
+            .waarde("fieldKey", veldsleutel(veld)));
     }
     Ok(t.trim().to_string())
 }
@@ -127,7 +146,9 @@ pub fn stel_op(
         }
     }
     if ontvangers == 0 && !concept {
-        return Err(MailFout::geweigerd("Vul minstens één ontvanger in."));
+        return Err(
+            MailFout::geweigerd("Vul minstens één ontvanger in.").sleutel("compose.noRecipients"),
+        );
     }
     if let Some(r) = account
         .antwoord_aan
@@ -170,17 +191,19 @@ pub fn stel_op(
         let bytes = base64::engine::general_purpose::STANDARD
             .decode(b.bytes.trim())
             .map_err(|_| {
-                MailFout::geweigerd(format!(
-                    "De bijlage '{}' is beschadigd.",
-                    bestandsnaam(&b.bestandsnaam)
-                ))
+                let naam = bestandsnaam(&b.bestandsnaam);
+                MailFout::geweigerd(format!("De bijlage '{naam}' is beschadigd."))
+                    .sleutel("compose.attachmentCorrupt")
+                    .waarde("name", naam)
             })?;
         totaal += bytes.len();
         if totaal > limieten.max_bijlagen {
+            let max = limieten.max_bijlagen / (1024 * 1024);
             return Err(MailFout::te_groot(format!(
-                "De bijlagen zijn samen groter dan {} MB. Verstuur grote bestanden via een deellink.",
-                limieten.max_bijlagen / (1024 * 1024)
-            )));
+                "De bijlagen zijn samen groter dan {max} MB. Verstuur grote bestanden via een deellink."
+            ))
+            .sleutel("compose.attachmentsTooLarge")
+            .waarde("max", max));
         }
         let soort = ContentType::parse(b.inhoudstype.trim()).unwrap_or_else(|_| {
             ContentType::parse("application/octet-stream").expect("geldig type")
@@ -205,17 +228,20 @@ pub fn stel_op(
     let mut met_bcc = builder.clone().keep_bcc();
     let mut zonder_bcc = builder;
     if ontvangers == 0 {
-        met_bcc = met_bcc
-            .envelope(concept_envelop().map_err(|_| MailFout::intern("Ongeldige envelop."))?);
-        zonder_bcc = zonder_bcc
-            .envelope(concept_envelop().map_err(|_| MailFout::intern("Ongeldige envelop."))?);
+        let fout = |_| MailFout::intern("Ongeldige envelop.").sleutel("compose.invalidEnvelope");
+        met_bcc = met_bcc.envelope(concept_envelop().map_err(fout)?);
+        zonder_bcc = zonder_bcc.envelope(concept_envelop().map_err(fout)?);
     }
     let bouw = |b: lettre::message::MessageBuilder| {
         match &lichaam {
             Ok(m) => b.multipart(m.clone()),
             Err(e) => b.singlepart(e.clone()),
         }
-        .map_err(|e| MailFout::geweigerd(format!("Het bericht kon niet worden opgesteld ({e}).")))
+        .map_err(|e| {
+            MailFout::geweigerd(format!("Het bericht kon niet worden opgesteld ({e})."))
+                .sleutel("compose.buildFailed")
+                .waarde("detail", e)
+        })
     };
     let met_bcc = bouw(met_bcc)?;
     let verstuurd = bouw(zonder_bcc)?;
@@ -241,7 +267,7 @@ pub fn server_bewaart_zelf(host: &str) -> bool {
 fn smtpfout(e: lettre::transport::smtp::Error, host: &str) -> MailFout {
     use std::error::Error as _;
     if e.is_timeout() {
-        return MailFout::tijdslimiet(format!("{host} reageerde niet op tijd."));
+        return geen_antwoord(host);
     }
     // TLS- en I/O-fouten zitten in de bronketen.
     let mut bron = e.source();
@@ -257,35 +283,52 @@ fn smtpfout(e: lettre::transport::smtp::Error, host: &str) -> MailFout {
     if let Some(code) = e.status() {
         let tekst = servertekst(&e.to_string());
         let c: u16 = code.to_string().parse().unwrap_or(0);
-        return match c {
-            530 | 534 | 535 | 454 => MailFout::aanmelding(format!(
-                "Aanmelden bij {host} is mislukt: gebruikersnaam of wachtwoord klopt niet ({tekst}). \
-                 Bij Gmail, Outlook, iCloud en Yahoo is een app-wachtwoord nodig."
-            )),
-            552 => MailFout::te_groot(format!("{host} weigert het bericht omdat het te groot is ({tekst}).")),
-            _ if e.is_transient() => MailFout::verbinding(format!("{host} kan het bericht nu niet aannemen; probeer het later opnieuw ({tekst}).")),
-            _ => MailFout::geweigerd(format!("{host} weigerde het bericht ({tekst}).")),
+        let f = match c {
+            530 | 534 | 535 | 454 => return aanmelden_mislukt(host, tekst),
+            552 => MailFout::te_groot(format!("{host} weigert het bericht omdat het te groot is ({tekst})."))
+                .sleutel("smtp.messageTooLarge"),
+            _ if e.is_transient() => MailFout::verbinding(format!("{host} kan het bericht nu niet aannemen; probeer het later opnieuw ({tekst})."))
+                .sleutel("smtp.tryLater"),
+            _ => MailFout::geweigerd(format!("{host} weigerde het bericht ({tekst})."))
+                .sleutel("smtp.rejected"),
         };
+        return f.waarde("host", host).waarde("detail", tekst);
     }
     let tekst = servertekst(&e.to_string());
     if e.is_tls() {
         return MailFout::verbinding(format!(
             "De beveiligde verbinding met {host} kwam niet tot stand ({tekst}). Past de beveiliging bij de poort?"
-        ));
+        ))
+        .sleutel("smtp.tlsFailed")
+        .waarde("host", host)
+        .waarde("detail", tekst);
     }
     if tekst.contains("does not expect a challenge") {
         // XOAUTH2 geweigerd: de server stuurt een foutuitdaging.
         return MailFout::aanmelding(format!(
             "{host} weigerde het OAuth2-token; opnieuw aanmelden kan nodig zijn."
-        ));
+        ))
+        .sleutel("smtp.oauthRejected")
+        .waarde("host", host);
     }
     if tekst.contains("No compatible authentication mechanism") {
         return MailFout::aanmelding(format!(
             "{host} biedt geen aanmeldmethode aan die Email Studio ondersteunt (PLAIN of LOGIN). \
              Kies STARTTLS of SSL/TLS; veel servers bieden aanmelden pas na versleuteling aan."
-        ));
+        ))
+        .sleutel("smtp.noAuthMechanism")
+        .waarde("host", host);
     }
     MailFout::verbinding(format!("SMTP-fout bij {host}: {tekst}"))
+        .sleutel("smtp.error")
+        .waarde("host", host)
+        .waarde("detail", tekst)
+}
+
+fn geen_antwoord(host: &str) -> MailFout {
+    MailFout::tijdslimiet(format!("{host} reageerde niet op tijd."))
+        .sleutel("server.noTimelyResponse")
+        .waarde("host", host)
 }
 
 async fn transport(
@@ -299,20 +342,17 @@ async fn transport(
         Authenticatie::Versleuteld => {
             return Err(MailFout::niet_beschikbaar(
                 "Deze aanmeldmethode wordt voor SMTP niet ondersteund.",
-            ))
+            )
+            .sleutel("smtp.authMethodUnsupported"))
         }
     };
     if wachtwoord.is_empty() {
-        return Err(MailFout::aanmelding(
-            "Er is geen wachtwoord ingevuld of opgeslagen voor dit account.",
-        ));
+        return Err(geen_wachtwoord());
     }
     let host = kale_host(&server.host).to_string();
     let tls = match server.beveiliging {
         Beveiliging::Ssl | Beveiliging::Starttls => {
-            let p = TlsParameters::new(host.clone()).map_err(|_| {
-                MailFout::verbinding(format!("'{host}' is geen geldige servernaam voor TLS."))
-            })?;
+            let p = TlsParameters::new(host.clone()).map_err(|_| geen_tls_naam(&host))?;
             if server.beveiliging == Beveiliging::Ssl {
                 Tls::Wrapper(p)
             } else {
@@ -329,9 +369,7 @@ async fn transport(
                 || !adressen.iter().all(|a| a.ip().is_loopback())
                 || !is_localhost(&host)
             {
-                return Err(MailFout::geweigerd(format!(
-                    "{host} is niet deze computer; een onversleutelde verbinding is daarom geweigerd."
-                )));
+                return Err(niet_lokaal(&host));
             }
             Tls::None
         }
@@ -351,19 +389,15 @@ async fn transport(
     )
 }
 
-pub async fn test(server: &ServerInstelling, wachtwoord: &str) -> Uitkomst<String> {
+pub async fn test(server: &ServerInstelling, wachtwoord: &str) -> Uitkomst<Deeluitkomst> {
     let waarschuwing = controleer_beveiliging(server, true)?;
     let host = kale_host(&server.host).to_string();
     let t = transport(server, wachtwoord).await?;
     tokio::time::timeout(SMTP_LIMIET, t.test_connection())
         .await
-        .map_err(|_| MailFout::tijdslimiet(format!("{host} reageerde niet op tijd.")))?
+        .map_err(|_| geen_antwoord(&host))?
         .map_err(|e| smtpfout(e, &host).zonder_geheim(wachtwoord))?;
-    let mut melding = format!("Aangemeld bij {host}.");
-    if let Some(w) = waarschuwing {
-        melding = format!("{melding} {w}");
-    }
-    Ok(melding)
+    Ok(Deeluitkomst::aangemeld(&host, "SMTP", waarschuwing))
 }
 
 pub async fn verstuur(server: &ServerInstelling, wachtwoord: &str, o: &Opgesteld) -> Uitkomst<()> {
@@ -371,7 +405,11 @@ pub async fn verstuur(server: &ServerInstelling, wachtwoord: &str, o: &Opgesteld
     let t = transport(server, wachtwoord).await?;
     tokio::time::timeout(VERSTUUR_LIMIET, t.send_raw(&o.envelop, &o.ruw))
         .await
-        .map_err(|_| MailFout::tijdslimiet(format!("Versturen via {host} duurde te lang.")))?
+        .map_err(|_| {
+            MailFout::tijdslimiet(format!("Versturen via {host} duurde te lang."))
+                .sleutel("smtp.sendTimeout")
+                .waarde("host", &host)
+        })?
         .map_err(|e| smtpfout(e, &host).zonder_geheim(wachtwoord))?;
     Ok(())
 }

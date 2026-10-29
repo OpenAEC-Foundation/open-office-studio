@@ -1,4 +1,6 @@
 /** Rasterlogica voor de tabelkiezer onder Invoegen → Tabel. */
+import i18next from "../i18n/config";
+import { formatGetal } from "../i18n/opmaak";
 
 export interface Tabelgrootte {
   rijen: number;
@@ -83,12 +85,19 @@ export const binnen = (
 export const afmetingTekst = (grootte: Tabelgrootte | null) =>
   grootte ? `${grootte.kolommen} × ${grootte.rijen}` : "";
 
-/** Voorleestekst bij een grootte. */
+/** Voorleestekst bij een grootte, in de interfacetaal ("2 kolommen bij 1 rij"). */
 export function afmetingUitleg(grootte: Tabelgrootte | null) {
-  if (!grootte) return "Kies een tabelgrootte";
-  const k = grootte.kolommen === 1 ? "kolom" : "kolommen";
-  const r = grootte.rijen === 1 ? "rij" : "rijen";
-  return `${grootte.kolommen} ${k} bij ${grootte.rijen} ${r}`;
+  if (!grootte) return i18next.t("ribbon:tablePicker.chooseSize");
+  return i18next.t("ribbon:tablePicker.sizeDescription", {
+    columns: i18next.t("ribbon:tablePicker.columns", {
+      count: grootte.kolommen,
+      n: formatGetal(grootte.kolommen),
+    }),
+    rows: i18next.t("ribbon:tablePicker.rows", {
+      count: grootte.rijen,
+      n: formatGetal(grootte.rijen),
+    }),
+  });
 }
 
 export const zelfdeGrootte = (a: Tabelgrootte | null, b: Tabelgrootte | null) =>

@@ -41,125 +41,138 @@ import {
   Stamp,
   type LucideIcon,
 } from "lucide-react";
+import type { TFunction } from "i18next";
+import { useTranslation } from "react-i18next";
 import { Groep, type RibbonTab } from "../../../Ribbon";
 import { EigenKnop } from "../../../lint/tekst-opdrachten";
-import { FORMATEN, MARGES, twipsNaarCm, type Formaat, type MargeVoorkeur } from "../secties.ts";
+import { FORMATEN, MARGES, type Formaat, type MargeVoorkeur } from "../secties.ts";
 import { Keuzemenu, type Menuregel } from "./Keuzemenu.tsx";
-import { HERLAAD_UITLEG, voorbeeldPaginanummer } from "./Dialogen.tsx";
+import { cmWeergave, voorbeeldPaginanummer } from "./Dialogen.tsx";
 import type { PaginaFuncties } from "./usePagina.tsx";
 
-const HERLAAD_KORT = "Herlaadt het document; eerdere stappen zijn daarna niet meer ongedaan te maken.";
-const cm = (t: number) => `${String(twipsNaarCm(t)).replace(".", ",")} cm`;
+type T = TFunction<"writer">;
+const cm = (t: number) => `${cmWeergave(t)} cm`;
 
-function paginanummerRegels(p: PaginaFuncties): Menuregel[] {
-  const uitlijningen: { waarde: "links" | "midden" | "rechts"; naam: string; icoon: LucideIcon }[] = [
-    { waarde: "links", naam: "Links", icoon: AlignLeft },
-    { waarde: "midden", naam: "Midden", icoon: AlignCenter },
-    { waarde: "rechts", naam: "Rechts", icoon: AlignRight },
+function paginanummerRegels(p: PaginaFuncties, t: T): Menuregel[] {
+  const uitlijningen: { waarde: "links" | "midden" | "rechts"; icoon: LucideIcon }[] = [
+    { waarde: "links", icoon: AlignLeft },
+    { waarde: "midden", icoon: AlignCenter },
+    { waarde: "rechts", icoon: AlignRight },
   ];
+  const PLEK = {
+    boven: { links: "topLeft", midden: "topCenter", rechts: "topRight" },
+    onder: { links: "bottomLeft", midden: "bottomCenter", rechts: "bottomRight" },
+  } as const;
   const plek = (positie: "boven" | "onder") =>
     uitlijningen.map((u) => ({
-      naam: `${positie === "boven" ? "Bovenaan" : "Onderaan"}, ${u.naam.toLowerCase()}`,
+      naam: t(`page.pageNumber.${PLEK[positie][u.waarde]}`),
       icoon: u.icoon,
       kies: () => p.paginanummer({ positie, uitlijning: u.waarde, vorm: "getal", opEerstePagina: true }),
     }));
   return [
-    { kop: "Boven aan de pagina" },
+    { kop: t("page.pageNumber.topOfPage") },
     ...plek("boven"),
-    { kop: "Onder aan de pagina" },
+    { kop: t("page.pageNumber.bottomOfPage") },
     ...plek("onder"),
     {
-      naam: "Onderaan: Pagina X van Y",
+      naam: t("page.pageNumber.bottomPageOf"),
       icoon: Hash,
       voorbeeld: voorbeeldPaginanummer("paginaVan"),
       kies: () => p.paginanummer({ positie: "onder", uitlijning: "midden", vorm: "paginaVan", opEerstePagina: true }),
     },
-    { naam: "Op de cursorpositie", uitleg: "Ook in een kop- of voettekst die u bewerkt", icoon: FileDigit, uit: !p.bewerkbaar && !p.kopVoet, kies: () => p.paginanummer({ positie: "cursor", uitlijning: "midden", vorm: "getal", opEerstePagina: true }) },
+    { naam: t("page.pageNumber.atCursor"), uitleg: t("page.pageNumber.atCursorHint"), icoon: FileDigit, uit: !p.bewerkbaar && !p.kopVoet, kies: () => p.paginanummer({ positie: "cursor", uitlijning: "midden", vorm: "getal", opEerstePagina: true }) },
     { scheiding: true },
-    { naam: "Paginanummers instellen…", uitleg: "Notatie 1/i/I/a, beginnen bij, eerste pagina", icoon: Settings2, kies: () => p.paginanummerVenster() },
-    { naam: "Paginanummers verwijderen", icoon: Trash2, kies: p.paginanummersWeg },
+    { naam: t("page.pageNumber.format"), uitleg: t("page.pageNumber.formatHint"), icoon: Settings2, kies: () => p.paginanummerVenster() },
+    { naam: t("page.pageNumber.remove"), icoon: Trash2, kies: p.paginanummersWeg },
   ];
 }
 
 export function PaginanummerKnop({ p, groot = true }: { p: PaginaFuncties; groot?: boolean }) {
-  return <Keuzemenu naam="Paginanummer" icoon={Hash} groot={groot} uit={!p.beschikbaar} regels={() => paginanummerRegels(p)} voet={HERLAAD_KORT} />;
+  const { t } = useTranslation("writer");
+  return <Keuzemenu naam={t("page.pageNumber.button")} icoon={Hash} groot={groot} uit={!p.beschikbaar} regels={() => paginanummerRegels(p, t)} voet={t("page.reload.short")} />;
 }
 
 /** Invoegen → Kop- en voettekst. */
 export function KopVoetInvoegenGroep({ p }: { p: PaginaFuncties }) {
+  const { t } = useTranslation("writer");
   return (
-    <Groep naam="Kop- en voettekst">
+    <Groep naam={t("page.headerFooter.group")}>
       <PaginanummerKnop p={p} />
       <div className="ribbon-stapel">
-        <EigenKnop naam="Koptekst" icoon={PanelTop} uitleg="Koptekst bewerken" disabled={!p.bewerkbaar && !p.kopVoet} onClick={() => p.bewerk("header")} />
-        <EigenKnop naam="Voettekst" icoon={PanelBottom} uitleg="Voettekst bewerken" disabled={!p.bewerkbaar && !p.kopVoet} onClick={() => p.bewerk("footer")} />
+        <EigenKnop naam={t("page.headerFooter.header")} icoon={PanelTop} uitleg={t("page.headerFooter.editHeader")} disabled={!p.bewerkbaar && !p.kopVoet} onClick={() => p.bewerk("header")} />
+        <EigenKnop naam={t("page.headerFooter.footer")} icoon={PanelBottom} uitleg={t("page.headerFooter.editFooter")} disabled={!p.bewerkbaar && !p.kopVoet} onClick={() => p.bewerk("footer")} />
       </div>
     </Groep>
   );
 }
 
-/** Het tabblad Kop- en voettekst. */
+/**
+ * Het tabblad Kop- en voettekst. Geen component: de teksten komen uit `p.t`
+ * (usePagina tekent de lintcomponent opnieuw bij een taalwissel).
+ */
 export function kopVoetTab(p: PaginaFuncties): RibbonTab {
   const stand = p.stand();
+  const t = p.t;
+  const herlaad = t("page.reload.short");
   return {
     id: "kopvoet",
-    naam: "Kop- en voettekst",
+    naam: t("page.headerFooter.tab"),
     inhoud: (
       <>
-        <Groep naam="Bewerken">
-          <EigenKnop naam="Koptekst bewerken" icoon={PanelTop} groot disabled={!p.bewerkbaar && !p.kopVoet} onClick={() => p.bewerk("header")} />
-          <EigenKnop naam="Voettekst bewerken" icoon={PanelBottom} groot disabled={!p.bewerkbaar && !p.kopVoet} onClick={() => p.bewerk("footer")} />
+        <Groep naam={t("page.headerFooter.groupEdit")}>
+          <EigenKnop naam={t("page.headerFooter.editHeader")} icoon={PanelTop} groot disabled={!p.bewerkbaar && !p.kopVoet} onClick={() => p.bewerk("header")} />
+          <EigenKnop naam={t("page.headerFooter.editFooter")} icoon={PanelBottom} groot disabled={!p.bewerkbaar && !p.kopVoet} onClick={() => p.bewerk("footer")} />
         </Groep>
-        <Groep naam="Invoegen">
+        <Groep naam={t("page.headerFooter.groupInsert")}>
           <PaginanummerKnop p={p} />
         </Groep>
-        <Groep naam="Opties">
+        <Groep naam={t("page.headerFooter.groupOptions")}>
           <div className="ribbon-stapel">
             <EigenKnop
-              naam="Eerste pagina anders"
+              naam={t("page.headerFooter.firstPageDifferent")}
               icoon={FileText}
               actief={stand.titelpagina}
-              uitleg={`Eigen kop- en voettekst op de eerste pagina van de sectie. ${HERLAAD_KORT}`}
+              uitleg={t("page.headerFooter.firstPageDifferentHint", { reload: herlaad })}
               disabled={!p.beschikbaar}
               onClick={() => p.eersteAnders(!stand.titelpagina)}
             />
             <EigenKnop
-              naam="Even en oneven anders"
+              naam={t("page.headerFooter.evenOddDifferent")}
               icoon={BookOpen}
               actief={stand.evenOneven}
-              uitleg={`Verschillende kop- en voettekst op even en oneven pagina's. ${HERLAAD_KORT}`}
+              uitleg={t("page.headerFooter.evenOddDifferentHint", { reload: herlaad })}
               disabled={!p.beschikbaar}
               onClick={() => p.evenOneven(!stand.evenOneven)}
             />
           </div>
         </Groep>
-        <Groep naam="Secties">
+        <Groep naam={t("page.headerFooter.groupSections")}>
           <Keuzemenu
-            naam="Koppelen aan vorige"
+            naam={t("page.headerFooter.linkToPrevious")}
             icoon={Link2}
             groot
             uit={!p.beschikbaar}
-            uitleg="Voor de sectie waarin de cursor staat"
-            voet={HERLAAD_KORT}
+            uitleg={t("page.headerFooter.linkToPreviousHint")}
+            voet={herlaad}
             regels={[
-              { naam: "Koptekst koppelen aan vorige", icoon: Link2, kies: () => p.koppel("header", true) },
-              { naam: "Koptekst loskoppelen", icoon: Link2Off, kies: () => p.koppel("header", false) },
-              { naam: "Voettekst koppelen aan vorige", icoon: Link2, kies: () => p.koppel("footer", true) },
-              { naam: "Voettekst loskoppelen", icoon: Link2Off, kies: () => p.koppel("footer", false) },
+              { naam: t("page.headerFooter.linkHeader"), icoon: Link2, kies: () => p.koppel("header", true) },
+              { naam: t("page.headerFooter.unlinkHeader"), icoon: Link2Off, kies: () => p.koppel("header", false) },
+              { naam: t("page.headerFooter.linkFooter"), icoon: Link2, kies: () => p.koppel("footer", true) },
+              { naam: t("page.headerFooter.unlinkFooter"), icoon: Link2Off, kies: () => p.koppel("footer", false) },
             ]}
           />
         </Groep>
-        <Groep naam="Positie">
-          <EigenKnop naam="Afstand vanaf rand" icoon={MoveVertical} groot uitleg="Afstand van kop- en voettekst tot de paginarand" disabled={!p.beschikbaar} onClick={() => void p.afstandVenster()} />
+        <Groep naam={t("page.headerFooter.groupPosition")}>
+          <EigenKnop naam={t("page.headerFooter.distance")} icoon={MoveVertical} groot uitleg={t("page.headerFooter.distanceHint")} disabled={!p.beschikbaar} onClick={() => void p.afstandVenster()} />
         </Groep>
-        <Groep naam="Verwijderen">
+        <Groep naam={t("page.headerFooter.groupRemove")}>
           <div className="ribbon-stapel">
-            <EigenKnop naam="Koptekst verwijderen" icoon={Trash2} disabled={!p.beschikbaar} onClick={() => p.kopVoetWeg("header")} />
-            <EigenKnop naam="Voettekst verwijderen" icoon={Trash2} disabled={!p.beschikbaar} onClick={() => p.kopVoetWeg("footer")} />
+            <EigenKnop naam={t("page.headerFooter.removeHeader")} icoon={Trash2} disabled={!p.beschikbaar} onClick={() => p.kopVoetWeg("header")} />
+            <EigenKnop naam={t("page.headerFooter.removeFooter")} icoon={Trash2} disabled={!p.beschikbaar} onClick={() => p.kopVoetWeg("footer")} />
           </div>
         </Groep>
-        <Groep naam="Sluiten">
-          <EigenKnop naam="Kop- en voettekst sluiten" icoon={X} groot uitleg="Terug naar de hoofdtekst · Esc" disabled={!p.kopVoet} onClick={p.sluitBewerken} />
+        <Groep naam={t("page.headerFooter.groupClose")}>
+          <EigenKnop naam={t("page.headerFooter.close")} icoon={X} groot uitleg={t("page.headerFooter.closeHint")} disabled={!p.kopVoet} onClick={p.sluitBewerken} />
         </Groep>
       </>
     ),
@@ -170,46 +183,48 @@ export function kopVoetTab(p: PaginaFuncties): RibbonTab {
 // Indeling
 
 export function PaginaIndelingKnoppen({ p }: { p: PaginaFuncties }) {
+  const { t } = useTranslation("writer");
   const stand = p.stand();
+  const herlaad = t("page.reload.short");
   const margeRegels = (): Menuregel[] => [
     ...(Object.keys(MARGES) as MargeVoorkeur[]).map((v) => {
       const m = MARGES[v].marges;
       const actief = !!stand.marges && stand.marges.boven === m.boven && stand.marges.onder === m.onder && stand.marges.links === m.links && stand.marges.rechts === m.rechts;
       return {
-        naam: MARGES[v].naam,
-        uitleg: `Boven ${cm(m.boven)} · onder ${cm(m.onder)} · links ${cm(m.links)} · rechts ${cm(m.rechts)}`,
+        naam: t(`page.layout.marginPresets.${MARGES[v].sleutel}`),
+        uitleg: t("page.layout.marginsHint", { top: cm(m.boven), bottom: cm(m.onder), left: cm(m.links), right: cm(m.rechts) }),
         actief,
         icoon: Square,
         kies: () => p.marges(v),
       };
     }),
     { scheiding: true },
-    { naam: "Aangepaste marges…", icoon: Settings2, kies: p.paginaInstelling },
+    { naam: t("page.layout.customMargins"), icoon: Settings2, kies: p.paginaInstelling },
   ];
   const formaatRegels = (): Menuregel[] => [
     ...(Object.keys(FORMATEN) as Formaat[]).map((f) => {
       const F = FORMATEN[f];
       const actief = !!stand.breedte && Math.min(stand.breedte, stand.hoogte ?? 0) === F.breedte && Math.max(stand.breedte, stand.hoogte ?? 0) === F.hoogte;
-      return { naam: F.naam, uitleg: F.uitleg, actief, icoon: FileText, kies: () => p.formaat(f) };
+      return { naam: F.naam, uitleg: t("page.layout.sizeHint", { width: cmWeergave(F.breedte), height: cmWeergave(F.hoogte) }), actief, icoon: FileText, kies: () => p.formaat(f) };
     }),
     { scheiding: true },
-    { naam: "Meer papierformaten…", icoon: Settings2, kies: p.paginaInstelling },
+    { naam: t("page.layout.moreSizes"), icoon: Settings2, kies: p.paginaInstelling },
   ];
   return (
     <>
-      <Keuzemenu naam="Marges" icoon={Maximize2} groot uit={!p.beschikbaar} regels={margeRegels} voet={HERLAAD_KORT} />
+      <Keuzemenu naam={t("page.layout.margins")} icoon={Maximize2} groot uit={!p.beschikbaar} regels={margeRegels} voet={herlaad} />
       <div className="ribbon-stapel">
         <Keuzemenu
-          naam="Afdrukstand"
+          naam={t("page.layout.orientation")}
           icoon={stand.liggend ? RectangleHorizontal : RectangleVertical}
           uit={!p.beschikbaar}
-          voet={HERLAAD_KORT}
+          voet={herlaad}
           regels={() => [
-            { naam: "Staand", icoon: RectangleVertical, actief: !stand.liggend, kies: () => p.afdrukstand("staand") },
-            { naam: "Liggend", icoon: RectangleHorizontal, actief: stand.liggend, kies: () => p.afdrukstand("liggend") },
+            { naam: t("page.layout.portrait"), icoon: RectangleVertical, actief: !stand.liggend, kies: () => p.afdrukstand("staand") },
+            { naam: t("page.layout.landscape"), icoon: RectangleHorizontal, actief: stand.liggend, kies: () => p.afdrukstand("liggend") },
           ]}
         />
-        <Keuzemenu naam="Formaat" icoon={Proportions} uit={!p.beschikbaar} regels={formaatRegels} voet={HERLAAD_KORT} />
+        <Keuzemenu naam={t("page.layout.size")} icoon={Proportions} uit={!p.beschikbaar} regels={formaatRegels} voet={herlaad} />
       </div>
     </>
   );
@@ -217,27 +232,29 @@ export function PaginaIndelingKnoppen({ p }: { p: PaginaFuncties }) {
 
 /** Watermerk (venster van de engine; zie usePagina voor de wijzigingsmelding). */
 export function WatermerkKnop({ p }: { p: PaginaFuncties }) {
-  return <EigenKnop naam="Watermerk" icoon={Stamp} groot disabled={!p.bewerkbaar} onClick={p.watermerk} />;
+  const { t } = useTranslation("writer");
+  return <EigenKnop naam={t("page.layout.watermark")} icoon={Stamp} groot disabled={!p.bewerkbaar} onClick={p.watermerk} />;
 }
 
 export function KolommenGroep({ p }: { p: PaginaFuncties }) {
+  const { t } = useTranslation("writer");
   const aantal = p.stand().kolommen;
   return (
-    <Groep naam="Kolommen">
+    <Groep naam={t("page.layout.columns")}>
       <Keuzemenu
-        naam="Kolommen"
+        naam={t("page.layout.columns")}
         icoon={Columns3}
         groot
         uit={!p.beschikbaar}
-        voet={HERLAAD_KORT}
+        voet={t("page.reload.short")}
         regels={() => [
-          { naam: "Eén", icoon: Square, actief: aantal === 1, kies: () => p.kolommen("een") },
-          { naam: "Twee", icoon: Columns2, actief: aantal === 2, kies: () => p.kolommen("twee") },
-          { naam: "Drie", icoon: Columns3, actief: aantal === 3, kies: () => p.kolommen("drie") },
-          { naam: "Links", uitleg: "Smalle kolom links", icoon: Columns, kies: () => p.kolommen("links") },
-          { naam: "Rechts", uitleg: "Smalle kolom rechts", icoon: Columns, kies: () => p.kolommen("rechts") },
+          { naam: t("page.layout.columnsOne"), icoon: Square, actief: aantal === 1, kies: () => p.kolommen("een") },
+          { naam: t("page.layout.columnsTwo"), icoon: Columns2, actief: aantal === 2, kies: () => p.kolommen("twee") },
+          { naam: t("page.layout.columnsThree"), icoon: Columns3, actief: aantal === 3, kies: () => p.kolommen("drie") },
+          { naam: t("page.layout.columnsLeft"), uitleg: t("page.layout.columnsLeftHint"), icoon: Columns, kies: () => p.kolommen("links") },
+          { naam: t("page.layout.columnsRight"), uitleg: t("page.layout.columnsRightHint"), icoon: Columns, kies: () => p.kolommen("rechts") },
           { scheiding: true },
-          { naam: "Meer kolommen…", uitleg: "Aantal, tussenruimte, lijn ertussen", icoon: Settings2, kies: () => void p.kolommenVenster() },
+          { naam: t("page.layout.moreColumns"), uitleg: t("page.layout.moreColumnsHint"), icoon: Settings2, kies: () => void p.kolommenVenster() },
         ]}
       />
     </Groep>
@@ -246,21 +263,24 @@ export function KolommenGroep({ p }: { p: PaginaFuncties }) {
 
 /** Sectie-einden op een nieuwe pagina en doorlopend (pakketroute, zie usePagina). */
 export function SectieEindes({ p }: { p: PaginaFuncties }) {
+  const { t } = useTranslation("writer");
+  const herlaad = t("page.reload.short");
   return (
     <div className="ribbon-stapel">
-      <EigenKnop naam="Sectie op nieuwe pagina" icoon={FilePlus2} uitleg={`Nieuwe sectie op de volgende pagina. ${HERLAAD_KORT}`} disabled={!p.bewerkbaar} onClick={() => p.sectieEinde("nextPage")} />
-      <EigenKnop naam="Doorlopende sectie" icoon={Columns2} uitleg={`Nieuwe sectie op dezelfde pagina, bijvoorbeeld voor kolommen. ${HERLAAD_KORT}`} disabled={!p.bewerkbaar} onClick={() => p.sectieEinde("continuous")} />
+      <EigenKnop naam={t("page.layout.sectionNextPage")} icoon={FilePlus2} uitleg={t("page.layout.sectionNextPageHint", { reload: herlaad })} disabled={!p.bewerkbaar} onClick={() => p.sectieEinde("nextPage")} />
+      <EigenKnop naam={t("page.layout.sectionContinuous")} icoon={Columns2} uitleg={t("page.layout.sectionContinuousHint", { reload: herlaad })} disabled={!p.bewerkbaar} onClick={() => p.sectieEinde("continuous")} />
     </div>
   );
 }
 
 /** Extra eindes: kolomeinde en sectie-einde op een even of oneven pagina. */
 export function ExtraEindes({ p }: { p: PaginaFuncties }) {
+  const { t } = useTranslation("writer");
   return (
     <div className="ribbon-stapel">
-      <EigenKnop naam="Kolomeinde" icoon={SquareSplitVertical} sneltoets="Ctrl+Shift+Enter" uitleg={HERLAAD_KORT} disabled={!p.bewerkbaar} onClick={p.kolomeinde} />
-      <EigenKnop naam="Sectie op even pagina" icoon={FilePlus2} uitleg="Nieuwe sectie op de volgende even pagina" disabled={!p.bewerkbaar} onClick={() => p.sectieEinde("evenPage")} />
-      <EigenKnop naam="Sectie op oneven pagina" icoon={FilePlus2} uitleg="Nieuwe sectie op de volgende oneven pagina" disabled={!p.bewerkbaar} onClick={() => p.sectieEinde("oddPage")} />
+      <EigenKnop naam={t("page.layout.columnBreak")} icoon={SquareSplitVertical} sneltoets="Ctrl+Shift+Enter" uitleg={t("page.reload.short")} disabled={!p.bewerkbaar} onClick={p.kolomeinde} />
+      <EigenKnop naam={t("page.layout.sectionEvenPage")} icoon={FilePlus2} uitleg={t("page.layout.sectionEvenPageHint")} disabled={!p.bewerkbaar} onClick={() => p.sectieEinde("evenPage")} />
+      <EigenKnop naam={t("page.layout.sectionOddPage")} icoon={FilePlus2} uitleg={t("page.layout.sectionOddPageHint")} disabled={!p.bewerkbaar} onClick={() => p.sectieEinde("oddPage")} />
     </div>
   );
 }
@@ -268,44 +288,48 @@ export function ExtraEindes({ p }: { p: PaginaFuncties }) {
 // ---------------------------------------------------------------------------
 // Verwijzingen
 
+/** Het tabblad Verwijzingen (teksten uit `p.t`, zie kopVoetTab). */
 export function verwijzingenTab(p: PaginaFuncties): RibbonTab {
+  const t = p.t;
+  // De titel komt in het document: in de interfacetaal op het moment van invoegen.
+  const automatisch = (niveaus: number) => () =>
+    void p.inhoudInvoegen({ niveaus, paginanummers: true, rechtsUitlijnen: true, opvulteken: "punt", hyperlinks: true, titel: t("page.toc.defaultTitle") });
   return {
     id: "verwijzingen",
-    naam: "Verwijzingen",
+    naam: t("page.references.tab"),
     inhoud: (
       <>
-        <Groep naam="Inhoudsopgave">
+        <Groep naam={t("page.toc.group")}>
           <Keuzemenu
-            naam="Inhoudsopgave"
+            naam={t("page.toc.button")}
             icoon={ListTree}
             groot
             uit={!p.beschikbaar}
-            voet={HERLAAD_UITLEG}
-            regels={[
-              { naam: "Automatisch: Kop 1 tot en met 3", uitleg: "Met puntjes en paginanummers", icoon: ListOrdered, uit: !p.bewerkbaar, kies: () => void p.inhoudInvoegen({ niveaus: 3, paginanummers: true, rechtsUitlijnen: true, opvulteken: "punt", hyperlinks: true, titel: "Inhoudsopgave" }) },
-              { naam: "Automatisch: Kop 1 en 2", uitleg: "Met puntjes en paginanummers", icoon: ListOrdered, uit: !p.bewerkbaar, kies: () => void p.inhoudInvoegen({ niveaus: 2, paginanummers: true, rechtsUitlijnen: true, opvulteken: "punt", hyperlinks: true, titel: "Inhoudsopgave" }) },
-              { naam: "Eenvoudig, zonder paginanummers", icoon: ListOrdered, uit: !p.bewerkbaar, kies: () => void p.inhoudInvoegen({ niveaus: 3, paginanummers: false, rechtsUitlijnen: false, opvulteken: "geen", hyperlinks: true, titel: "Inhoud" }) },
+            voet={t("page.reload.explanation")}
+            regels={() => [
+              { naam: t("page.toc.autoLevels3"), uitleg: t("page.toc.autoHint"), icoon: ListOrdered, uit: !p.bewerkbaar, kies: automatisch(3) },
+              { naam: t("page.toc.autoLevels2"), uitleg: t("page.toc.autoHint"), icoon: ListOrdered, uit: !p.bewerkbaar, kies: automatisch(2) },
+              { naam: t("page.toc.simple"), icoon: ListOrdered, uit: !p.bewerkbaar, kies: () => void p.inhoudInvoegen({ niveaus: 3, paginanummers: false, rechtsUitlijnen: false, opvulteken: "geen", hyperlinks: true, titel: t("page.toc.shortTitle") }) },
               { scheiding: true },
-              { naam: "Aangepaste inhoudsopgave…", uitleg: "Niveaus, opvulteken, titel", icoon: Settings2, kies: () => void p.inhoudVenster() },
-              { naam: "Inhoudsopgave verwijderen", icoon: Trash2, kies: p.inhoudWeg },
+              { naam: t("page.toc.custom"), uitleg: t("page.toc.customHint"), icoon: Settings2, kies: () => void p.inhoudVenster() },
+              { naam: t("page.toc.remove"), icoon: Trash2, kies: p.inhoudWeg },
             ]}
           />
-          <EigenKnop naam="Bijwerken" icoon={RefreshCw} groot uitleg="Inhoudsopgave bijwerken: alleen paginanummers of de hele tabel" disabled={!p.beschikbaar} onClick={() => void p.inhoudBijwerken()} />
+          <EigenKnop naam={t("page.toc.update")} icoon={RefreshCw} groot uitleg={t("page.toc.updateHint")} disabled={!p.beschikbaar} onClick={() => void p.inhoudBijwerken()} />
         </Groep>
-        <Groep naam="Voetnoten">
-          <EigenKnop naam="Voetnoot invoegen" icoon={Footprints} groot sneltoets="Ctrl+Alt+F" disabled={!p.bewerkbaar} onClick={() => p.noot("voetnoot")} />
+        <Groep naam={t("page.footnotes.group")}>
+          <EigenKnop naam={t("page.footnotes.insertFootnote")} icoon={Footprints} groot sneltoets="Ctrl+Alt+F" disabled={!p.bewerkbaar} onClick={() => p.noot("voetnoot")} />
           <div className="ribbon-stapel">
-            <EigenKnop naam="Eindnoot invoegen" icoon={StickyNote} sneltoets="Ctrl+Alt+D" disabled={!p.bewerkbaar} onClick={() => p.noot("eindnoot")} />
-            <EigenKnop naam="Volgende noot" icoon={ChevronRight} disabled={!p.beschikbaar} onClick={() => void p.volgendeNoot(1)} />
-            <EigenKnop naam="Vorige noot" icoon={ChevronLeft} disabled={!p.beschikbaar} onClick={() => void p.volgendeNoot(-1)} />
+            <EigenKnop naam={t("page.footnotes.insertEndnote")} icoon={StickyNote} sneltoets="Ctrl+Alt+D" disabled={!p.bewerkbaar} onClick={() => p.noot("eindnoot")} />
+            <EigenKnop naam={t("page.footnotes.next")} icoon={ChevronRight} disabled={!p.beschikbaar} onClick={() => void p.volgendeNoot(1)} />
+            <EigenKnop naam={t("page.footnotes.previous")} icoon={ChevronLeft} disabled={!p.beschikbaar} onClick={() => void p.volgendeNoot(-1)} />
           </div>
           <div className="ribbon-stapel">
-            <EigenKnop naam="Noten tonen" icoon={ArrowDownToLine} uitleg="Overzicht; naar verwijzing of noot springen" disabled={!p.beschikbaar} onClick={() => void p.notenLijst()} />
-            <EigenKnop naam="Notenopmaak" icoon={Ruler} uitleg="Nummering, notatie en plaats" disabled={!p.beschikbaar} onClick={() => void p.nootInstellingen()} />
+            <EigenKnop naam={t("page.footnotes.show")} icoon={ArrowDownToLine} uitleg={t("page.footnotes.showHint")} disabled={!p.beschikbaar} onClick={() => void p.notenLijst()} />
+            <EigenKnop naam={t("page.footnotes.format")} icoon={Ruler} uitleg={t("page.footnotes.formatHint")} disabled={!p.beschikbaar} onClick={() => void p.nootInstellingen()} />
           </div>
         </Groep>
       </>
     ),
   };
 }
-

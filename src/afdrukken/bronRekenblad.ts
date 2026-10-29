@@ -6,6 +6,7 @@
  * De cellen tekent de engine zelf via `printDisplayList` en `paintDisplayList`;
  * deze module bepaalt alleen welke cellen op welke pagina komen.
  */
+import i18next from "../i18n/config";
 import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
 import type { DisplayList, PrintMetrics } from "@betteroffice/xlsx";
 import { papierMaat, type AfdrukDocument, type AfdrukPagina, type TekstStuk } from "./model";
@@ -203,7 +204,9 @@ function bladPaginas(
   const volgorde = paginaVolgorde(verdeling, inst.volgorde);
   const s = verdeling.schaal;
   const totaal = volgorde.length;
-  const labels = volgorde.map((_, i) => `${naam}, pagina ${i + 1} van ${totaal}`);
+  const labels = volgorde.map((_, i) =>
+    i18next.t("print:pages.sheetPage", { sheet: naam, page: i + 1, total: totaal }),
+  );
 
   const paginas = volgorde.map(({ kolom, rij }, paginaIndex) => {
     const k1 = gebied.kol1 + kolom[0];
@@ -419,7 +422,7 @@ export async function rekenbladPaginas(
     if (keuze.omvang === "werkmap" && bladExport && bladExport.visibility !== "visible")
       continue;
     if (bladExport && bladExport.kind !== "worksheet") {
-      meldingen.push(`Blad ‘${info.sheetNames[blad]}’ is geen werkblad en wordt overgeslagen.`);
+      meldingen.push(i18next.t("print:errors.notAWorksheet", { name: info.sheetNames[blad] }));
       continue;
     }
     const inst = keuze.instellingen[blad];
@@ -430,7 +433,7 @@ export async function rekenbladPaginas(
     bladwijzers.push({ titel: naam, pagina: paginas.length });
     lijst.forEach((p, i) => paginas.push({ ...p, label: labels[i] }));
   }
-  if (!paginas.length) throw new Error("Er is niets om af te drukken: de bladen zijn leeg.");
+  if (!paginas.length) throw new Error(i18next.t("print:errors.sheetsEmpty"));
   return { titel: ctx.titel, paginas, bladwijzers, meldingen };
 }
 

@@ -5,7 +5,11 @@
  * - `VbaFout`: een runtimefout met een VBA-foutnummer (`Err.Number`), die met
  *   `On Error` af te vangen is.
  * - `VbaAfbreking`: stappenlimiet, annulering, afscherming of `End`; nooit af te vangen.
+ *
+ * Meldingen komen uit i18next (namespace `vba`) in de taal die actief is op
+ * het moment dat de fout ontstaat.
  */
+import i18next from "i18next";
 
 export interface Positie {
   module: string;
@@ -21,65 +25,41 @@ export class VbaParseerFout extends Error {
     readonly constructie: string = "syntaxis",
   ) {
     super(
-      `${positie.module}, regel ${positie.regel}, kolom ${positie.kolom}: ${melding}`,
+      i18next.t("vba:parse.atPosition", {
+        module: positie.module,
+        line: positie.regel,
+        column: positie.kolom,
+        message: melding,
+      }),
     );
     this.name = "VbaParseerFout";
+    this.#melding = melding;
   }
+  readonly #melding: string;
+  /** De melding zonder module en positie. */
   get kaleMelding() {
-    return this.message.replace(/^[^:]*: /, "");
+    return this.#melding;
   }
 }
 
-/** Standaardbeschrijvingen zoals een Nederlandstalige Access ze toont. */
-export const FOUTTEKSTEN: Record<number, string> = {
-  3: "Return zonder GoSub",
-  5: "Ongeldige procedureaanroep of ongeldig argument",
-  6: "Overloop",
-  9: "Subscript valt buiten het bereik",
-  10: "Deze matrix is vast of tijdelijk vergrendeld",
-  11: "Deling door nul",
-  13: "Typen komen niet overeen",
-  20: "Resume zonder fout",
-  28: "Onvoldoende stackruimte",
-  35: "Sub of Function is niet gedefinieerd",
-  48: "Fout bij het laden van de DLL",
-  52: "Ongeldige bestandsnaam of ongeldig bestandsnummer",
-  53: "Bestand niet gevonden",
-  68: "Apparaat niet beschikbaar",
-  70: "Toegang geweigerd",
-  75: "Fout bij toegang tot pad/bestand",
-  76: "Pad niet gevonden",
-  91: "Objectvariabele of With-blokvariabele is niet ingesteld",
-  92: "For-lus is niet geïnitialiseerd",
-  94: "Ongeldig gebruik van Null",
-  424: "Object vereist",
-  429: "ActiveX-onderdeel kan geen object maken",
-  438: "Deze eigenschap of methode wordt niet ondersteund door dit object",
-  440: "Automatiseringsfout",
-  449: "Argument is niet optioneel",
-  453: "Kan het opgegeven DLL-ingangspunt niet vinden",
-  490: "Kan het opgegeven bestand niet openen",
-  450: "Onjuist aantal argumenten of ongeldige eigenschapstoewijzing",
-  457: "Deze sleutel is al gekoppeld aan een element van deze verzameling",
-  2293: "Het e-mailbericht kan niet worden verzonden.",
-  2302: "De uitvoergegevens kunnen niet in het bestand worden opgeslagen.",
-  2450: "Access kan het formulier niet vinden.",
-  2451: "Access kan het rapport niet vinden.",
-  2456: "Het nummer dat u hebt opgegeven voor het formulier is ongeldig.",
-  2501: "De bewerking is geannuleerd.",
-  3010: "De tabel bestaat al.",
-  3020: "Update of CancelUpdate zonder AddNew of Edit.",
-  3021: "Geen huidige record.",
-  3024: "Kan het bestand niet vinden.",
-  3061: "Te weinig parameters.",
-  3075: "Syntaxisfout in de query-expressie.",
-  3078: "De tabel of query is niet gevonden.",
-  3251: "De bewerking wordt niet ondersteund voor dit type object.",
-  3265: "Item is niet gevonden in deze verzameling.",
-  3270: "Eigenschap niet gevonden.",
-  3367: "Kan niet toevoegen. Er bestaat al een object met die naam in de verzameling.",
-  3420: "Object is ongeldig of niet meer ingesteld.",
-};
+/** Foutnummers met een eigen standaardbeschrijving (sleutel `vba:runtime.e<nummer>`). */
+const BEKENDE_FOUTEN = new Set([
+  3, 5, 6, 9, 10, 11, 13, 20, 28, 35, 48, 52, 53, 68, 70, 75, 76, 91, 92, 94, 424, 429, 438, 440, 449, 450, 453, 457, 490,
+  2293, 2302, 2450, 2451, 2456, 2501, 3010, 3020, 3021, 3024, 3061, 3075, 3078, 3251, 3265, 3270, 3367, 3420,
+]);
+
+/**
+ * Standaardbeschrijving van een VBA-foutnummer in de actieve taal (in het
+ * Nederlands zoals een Nederlandstalige Access ze toont), of undefined als het
+ * nummer geen eigen tekst heeft. Wordt opgevraagd op het moment van de fout.
+ */
+export function foutTekst(nummer: number): string | undefined {
+  return BEKENDE_FOUTEN.has(nummer) ? i18next.t(`vba:runtime.e${nummer}`) : undefined;
+}
+
+/** Als `foutTekst`, met "Toepassingsfout <nummer>" als terugval. */
+export const foutTekstOfAlgemeen = (nummer: number) =>
+  foutTekst(nummer) ?? i18next.t("vba:runtime.applicationError", { number: nummer });
 
 export class VbaFout extends Error {
   /** Waar de fout optrad; wordt gevuld zodra de interpreter hem ziet. */
@@ -89,7 +69,7 @@ export class VbaFout extends Error {
     beschrijving?: string,
     readonly bron: string = "",
   ) {
-    super(beschrijving ?? FOUTTEKSTEN[nummer] ?? `Toepassingsfout ${nummer}`);
+    super(beschrijving ?? foutTekstOfAlgemeen(nummer));
     this.name = "VbaFout";
   }
   get beschrijving() {
@@ -126,5 +106,5 @@ export const fout = (nummer: number, beschrijving?: string) =>
 export const nietOndersteund = (wat: string) =>
   new VbaAfbreking(
     "niet-ondersteund",
-    `${wat} wordt door de VBA-runtime van Open Office Studio niet ondersteund.`,
+    i18next.t("vba:runtime.unsupported", { what: wat }),
   );

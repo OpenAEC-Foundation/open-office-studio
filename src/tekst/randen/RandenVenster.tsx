@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useOpmaak } from "../../i18n/opmaak";
 import { Dialoog } from "../../werkruimte/Dialoog";
 import "../../werkruimte/werkruimte.css";
 import type { AlineaOpmaak, RandZijde } from "../opmaak";
@@ -50,11 +52,12 @@ export function randenWijziging(begin: RandenBegin, nu: RandenBegin): RandenWijz
   return { alinea, pagina: Object.keys(pagina).length ? pagina : undefined };
 }
 
+/** Instellingen met de i18n-sleutel (namespace writer). */
 const instellingNamen: readonly (readonly [Instelling, string])[] = [
-  ["geen", "Geen"],
-  ["kader", "Kader"],
-  ["schaduw", "Schaduw"],
-  ["aangepast", "Aangepast"],
+  ["geen", "borders.setting.none"],
+  ["kader", "borders.setting.box"],
+  ["schaduw", "borders.setting.shadow"],
+  ["aangepast", "borders.setting.custom"],
 ];
 
 function RandBewerker({
@@ -68,6 +71,8 @@ function RandBewerker({
   zijden: readonly RandZijde[];
   afstandMax: number;
 }) {
+  const { t } = useTranslation("writer");
+  const { getal } = useOpmaak();
   const knop = (zijde: RandZijde) => (
     <button
       key={zijde}
@@ -76,25 +81,25 @@ function RandBewerker({
       aria-pressed={f.zijden[zijde]}
       onClick={() => zet(metZijde(f, zijde))}
     >
-      {zijdeNamen[zijde]}
+      {t(zijdeNamen[zijde])}
     </button>
   );
   const rand = cssRand(f);
   return (
     <>
-      <Sectie titel="Rand">
-        <Keuze label="Instelling" waarde={f.instelling} opties={instellingNamen} wijzig={(w) => zet(metInstelling(f, w))} />
-        <Keuze label="Stijl" waarde={f.stijl} opties={randStijlen} wijzig={(w) => zet({ ...f, stijl: w })} />
-        <KleurVeld label="Kleur" waarde={f.kleur} wijzig={(w) => zet({ ...f, kleur: w })} />
+      <Sectie titel={t("borders.border")}>
+        <Keuze label={t("borders.settingLabel")} waarde={f.instelling} opties={instellingNamen.map(([w, k]) => [w, t(k)] as const)} wijzig={(w) => zet(metInstelling(f, w))} />
+        <Keuze label={t("borders.styleLabel")} waarde={f.stijl} opties={randStijlen.map(([w, k]) => [w, t(k)] as const)} wijzig={(w) => zet({ ...f, stijl: w })} />
+        <KleurVeld label={t("borders.color")} automatisch={t("borders.automatic")} waarde={f.kleur} wijzig={(w) => zet({ ...f, kleur: w })} />
         <Keuze
-          label="Dikte"
+          label={t("borders.width")}
           waarde={String(f.dikte)}
-          opties={randDiktes.map((d) => [String(d), `${String(d).replace(".", ",")} pt`] as const)}
+          opties={randDiktes.map((d) => [String(d), `${getal(d)} pt`] as const)}
           wijzig={(w) => zet({ ...f, dikte: Number(w) })}
         />
-        <GetalVeld label="Afstand tot tekst" eenheid="pt" stap={1} decimalen={0} min={0} max={afstandMax} waarde={f.afstand} wijzig={(w) => zet({ ...f, afstand: w ?? 0 })} />
+        <GetalVeld label={t("borders.distanceFromText")} eenheid="pt" stap={1} decimalen={0} min={0} max={afstandMax} waarde={f.afstand} wijzig={(w) => zet({ ...f, afstand: w ?? 0 })} />
       </Sectie>
-      <div className="tekstopmaak-zijden" aria-label="Zijden">
+      <div className="tekstopmaak-zijden" aria-label={t("borders.sides")}>
         <span />
         {knop("top")}
         <span />
@@ -110,10 +115,10 @@ function RandBewerker({
             boxShadow: f.instelling === "schaduw" ? "3px 3px 0 #888" : undefined,
           }}
         >
-          Voorbeeldtekst voorbeeldtekst voorbeeldtekst voorbeeldtekst.
+          {t("borders.sample")}
           {zijden.includes("between") && (
             <div style={{ borderTop: f.zijden.between ? rand : "1px dashed #ccc", marginTop: 6, paddingTop: 6 }}>
-              Volgende alinea met dezelfde randen.
+              {t("borders.sampleNext")}
             </div>
           )}
         </div>
@@ -140,31 +145,32 @@ export function RandenVenster({
   toepassen: (wijziging: RandenWijziging) => void;
   sluit: () => void;
 }) {
+  const { t } = useTranslation(["writer", "common"]);
   const [tab, setTab] = useState<RandenTab>(beginTab);
   const [nu, setNu] = useState(begin);
   const wijziging = randenWijziging(begin, nu);
   const iets = Object.keys(wijziging.alinea).length > 0 || !!wijziging.pagina;
   return (
     <Dialoog
-      titel="Randen en arcering"
+      titel={t("borders.title")}
       sluit={sluit}
       className="tekstopmaak"
       acties={
         <>
           <button type="button" className="werkruimte-knop" onClick={sluit}>
-            Annuleren
+            {t("common:cancel")}
           </button>
           <button type="button" className="werkruimte-knop is-primair" onClick={() => (iets ? toepassen(wijziging) : sluit())}>
-            OK
+            {t("common:ok")}
           </button>
         </>
       }
     >
       <Tabbladen
         tabs={[
-          ["randen", "Randen"],
-          ["pagina", "Paginarand en -kleur"],
-          ["arcering", "Arcering"],
+          ["randen", t("borders.tabBorders")],
+          ["pagina", t("borders.tabPage")],
+          ["arcering", t("borders.tabShading")],
         ]}
         actief={tab}
         kies={setTab}
@@ -174,11 +180,11 @@ export function RandenVenster({
         )}
         {tab === "arcering" && (
           <>
-            <Sectie titel="Opvulling">
-              <KleurVeld label="Opvulkleur" automatisch="Geen" waarde={nu.arcering.opvulling} wijzig={(w) => setNu({ ...nu, arcering: { ...nu.arcering, opvulling: w } })} />
-              <Keuze label="Patroon" waarde={nu.arcering.patroon} opties={patroonNamen} wijzig={(w) => setNu({ ...nu, arcering: { ...nu.arcering, patroon: w } })} />
+            <Sectie titel={t("borders.fill")}>
+              <KleurVeld label={t("borders.fillColor")} automatisch={t("borders.noFill")} waarde={nu.arcering.opvulling} wijzig={(w) => setNu({ ...nu, arcering: { ...nu.arcering, opvulling: w } })} />
+              <Keuze label={t("borders.patternLabel")} waarde={nu.arcering.patroon} opties={patroonNamen.map(([w, k]) => [w, t(k)] as const)} wijzig={(w) => setNu({ ...nu, arcering: { ...nu.arcering, patroon: w } })} />
               {nu.arcering.patroon !== "clear" && (
-                <KleurVeld label="Patroonkleur" waarde={nu.arcering.patroonKleur} wijzig={(w) => setNu({ ...nu, arcering: { ...nu.arcering, patroonKleur: w } })} />
+                <KleurVeld label={t("borders.patternColor")} automatisch={t("borders.automatic")} waarde={nu.arcering.patroonKleur} wijzig={(w) => setNu({ ...nu, arcering: { ...nu.arcering, patroonKleur: w } })} />
               )}
             </Sectie>
             <div
@@ -186,35 +192,31 @@ export function RandenVenster({
               aria-hidden="true"
               style={{ background: nu.arcering.opvulling ? `#${nu.arcering.opvulling}` : "#fff" }}
             >
-              Voorbeeldtekst met arcering achter de hele alinea.
+              {t("borders.shadingSample")}
             </div>
           </>
         )}
         {tab === "pagina" &&
           (paginaBeschikbaar ? (
             <>
-              <p className="tekstopmaak-melding">
-                Paginarand en paginakleur worden in het bestand gezet. Het document wordt daarna opnieuw geladen; eerdere
-                stappen kun je dan niet meer ongedaan maken. De editor toont ze nog niet op het scherm; Word, LibreOffice
-                en andere tekstverwerkers wel.
-              </p>
+              <p className="tekstopmaak-melding">{t("borders.pageNotice")}</p>
               <RandBewerker f={nu.pagina} zet={(pagina) => setNu({ ...nu, pagina })} zijden={["top", "bottom", "left", "right"]} afstandMax={31} />
-              <Sectie titel="Pagina">
+              <Sectie titel={t("borders.page")}>
                 <Keuze<PaginaRandWeergave>
-                  label="Rand toepassen op"
+                  label={t("borders.applyTo")}
                   waarde={nu.paginaWeergave}
                   opties={[
-                    ["allPages", "Alle pagina’s"],
-                    ["firstPage", "Alleen de eerste pagina"],
-                    ["notFirstPage", "Alle behalve de eerste"],
+                    ["allPages", t("borders.allPages")],
+                    ["firstPage", t("borders.firstPageOnly")],
+                    ["notFirstPage", t("borders.allButFirst")],
                   ]}
                   wijzig={(w) => setNu({ ...nu, paginaWeergave: w })}
                 />
-                <KleurVeld label="Paginakleur" automatisch="Geen kleur" waarde={nu.paginakleur} wijzig={(w) => setNu({ ...nu, paginakleur: w })} />
+                <KleurVeld label={t("borders.pageColor")} automatisch={t("borders.noColor")} waarde={nu.paginakleur} wijzig={(w) => setNu({ ...nu, paginakleur: w })} />
               </Sectie>
             </>
           ) : (
-            <p className="tekstopmaak-melding">Paginarand en paginakleur zijn hier niet beschikbaar.</p>
+            <p className="tekstopmaak-melding">{t("borders.pageNotAvailable")}</p>
           ))}
       </Tabbladen>
     </Dialoog>

@@ -9,6 +9,8 @@ import {
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Code2, Columns2, Eye } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { useOpmaak } from "../i18n/opmaak";
 import { MAX_MARKDOWN_TEKENS } from "./model";
 import { bewerkMarkdown, type MarkdownOpdracht } from "./markdown-bewerking";
 import "./markdown.css";
@@ -20,15 +22,15 @@ export const MarkdownVoorbeeld = memo(function MarkdownVoorbeeld({
 }: {
   tekst: string;
 }) {
+  const { t } = useTranslation("notes");
   if (tekst.length > 100000)
     return (
       <p className="notities-md-uitleg">
-        Deze pagina is te groot voor het directe voorbeeld. Alle tekst blijft
-        beschikbaar in de editor en in je export.
+        {t("markdown.tooLargeForPreview")}
       </p>
     );
   return (
-    <div className="notities-md-inhoud">
+    <div className="notities-md-inhoud" dir="auto">
       <Markdown
         remarkPlugins={[remarkGfm]}
         components={{
@@ -42,7 +44,9 @@ export const MarkdownVoorbeeld = memo(function MarkdownVoorbeeld({
             ),
           img: ({ alt, src }) => (
             <span className="notities-md-afbeelding">
-              Afbeelding: {alt || "zonder beschrijving"}
+              {t("markdown.image", {
+                description: alt || t("markdown.noDescription"),
+              })}
               <small>{src}</small>
             </span>
           ),
@@ -65,6 +69,8 @@ export function MarkdownEditor({
   acties: RefObject<MarkdownActies | null>;
   alleenLezen?: boolean;
 }) {
+  const { t } = useTranslation("notes");
+  const opmaak = useOpmaak();
   const bron = useRef<HTMLTextAreaElement>(null);
   const [beeld, setBeeld] = useState<"bron" | "gedeeld" | "voorbeeld">(
     "gedeeld",
@@ -94,12 +100,12 @@ export function MarkdownEditor({
       <div className="notities-md-balk">
         <span>Markdown</span>
         {!alleenLezen && (
-          <div role="group" aria-label="Markdownweergave">
+          <div role="group" aria-label={t("markdown.viewLabel")}>
             {(
               [
-                ["bron", "Bron", Code2],
-                ["gedeeld", "Naast elkaar", Columns2],
-                ["voorbeeld", "Voorbeeld", Eye],
+                ["bron", t("markdown.source"), Code2],
+                ["gedeeld", t("markdown.sideBySide"), Columns2],
+                ["voorbeeld", t("markdown.preview"), Eye],
               ] as const
             ).map(([id, naam, Icoon]) => (
               <button
@@ -113,20 +119,24 @@ export function MarkdownEditor({
             ))}
           </div>
         )}
-        <small>{tekst.length.toLocaleString("nl-NL")} tekens</small>
+        <small>
+          {t("markdown.characters", {
+            count: tekst.length,
+            characters: opmaak.getal(tekst.length),
+          })}
+        </small>
       </div>
       <div className={`notities-md-panelen beeld-${gekozen}`}>
         {gekozen !== "voorbeeld" && (
           <label className="notities-md-bron">
-            <span>Broncode</span>
+            <span>{t("markdown.sourceCode")}</span>
             <textarea
               ref={bron}
-              aria-label="Markdowntekst"
+              dir="auto"
+              aria-label={t("markdown.textLabel")}
               value={tekst}
               maxLength={MAX_MARKDOWN_TEKENS}
-              placeholder={
-                "## Een nieuw idee\n\nSchrijf hier je notitie in Markdown…"
-              }
+              placeholder={t("markdown.placeholder")}
               spellCheck={false}
               onChange={(e) => wijzig(e.target.value)}
               onKeyDown={(e) => {
@@ -145,16 +155,18 @@ export function MarkdownEditor({
         {gekozen !== "bron" && (
           <section
             className="notities-md-voorbeeld"
-            aria-label="Markdownvoorbeeld"
+            aria-label={t("markdown.previewLabel")}
             aria-busy={voorbeeld !== tekst}
           >
-            <span className="notities-md-paneellabel">Voorbeeld</span>
+            <span className="notities-md-paneellabel">
+              {t("markdown.preview")}
+            </span>
             {tekst ? (
               <MarkdownVoorbeeld tekst={voorbeeld} />
             ) : (
               <p className="notities-md-leeg">
-                Je ideeën krijgen hier vorm.
-                <small>Gebruik # voor koppen, **vet** en - voor lijsten.</small>
+                {t("markdown.emptyTitle")}
+                <small>{t("markdown.emptyHint")}</small>
               </p>
             )}
           </section>

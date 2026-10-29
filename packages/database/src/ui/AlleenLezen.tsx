@@ -5,11 +5,14 @@
  */
 import { useEffect, useState } from "react";
 import { Search } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { formatGetal } from "../../../../src/i18n/opmaak.ts";
 import type { DatabaseObject } from "../model.ts";
 import type { DatabaseClient } from "../database-client.ts";
 import { Bron } from "./VbaPaneel.tsx";
 
 export function Details({ object }: { object: DatabaseObject }) {
+  const { t } = useTranslation("database");
   return (
     <>
       {!!object.eigenschappen?.length && (
@@ -23,7 +26,7 @@ export function Details({ object }: { object: DatabaseObject }) {
         </dl>
       )}
       {!!object.beperkingen?.length && (
-        <ul className="database-beperkingen" aria-label="Beperkingen">
+        <ul className="database-beperkingen" aria-label={t("readOnly.limitations")}>
           {object.beperkingen.map((b) => (
             <li key={b}>{b}</li>
           ))}
@@ -38,17 +41,18 @@ export function AlleenLezenObject({ object, lezer }: { object: DatabaseObject; l
   const [start, setStart] = useState(0);
   const [zoek, setZoek] = useState("");
   const [fout, setFout] = useState("");
+  const { t } = useTranslation("database");
   useEffect(() => {
     if (object.soort !== "Tabel" || !lezer) return;
     let actief = true;
     lezer.tabel(object.naam, start).then(
       (t) => actief && setTabel({ ...object, ...t }),
-      (e) => actief && setFout("Deze tabel kon niet worden gelezen: " + String(e)),
+      (e) => actief && setFout(t("readOnly.tableReadFailed", { error: String(e) })),
     );
     return () => {
       actief = false;
     };
-  }, [object, lezer, start]);
+  }, [object, lezer, start, t]);
 
   if (object.soort === "Query" || object.soort === "VBA")
     return (
@@ -57,7 +61,7 @@ export function AlleenLezenObject({ object, lezer }: { object: DatabaseObject; l
         {object.bron ? (
           <Bron bron={object.bron} taal={object.soort === "VBA" ? "vba" : "sql"} />
         ) : (
-          <p role="status">Er is geen bron beschikbaar. Er is niets teruggewonnen of gegokt; zie de beperking hierboven.</p>
+          <p role="status">{t("readOnly.noSource")}</p>
         )}
       </>
     );
@@ -72,12 +76,12 @@ export function AlleenLezenObject({ object, lezer }: { object: DatabaseObject; l
         </p>
       )}
       {!tabel ? (
-        <p role="status">Tabelpagina laden…</p>
+        <p role="status">{t("readOnly.loadingPage")}</p>
       ) : (
         <>
           <label className="zoek">
             <Search size={17} aria-hidden />
-            <input aria-label="Zoeken in geladen rijen" placeholder="Zoeken in deze pagina…" value={zoek} onChange={(e) => setZoek(e.target.value)} />
+            <input aria-label={t("readOnly.searchLabel")} placeholder={t("readOnly.searchPlaceholder")} value={zoek} onChange={(e) => setZoek(e.target.value)} />
           </label>
           <div className="table-wrap">
             <table>
@@ -103,17 +107,18 @@ export function AlleenLezenObject({ object, lezer }: { object: DatabaseObject; l
             </table>
           </div>
           <p className="muted">
-            {rijen.length} rijen getoond
-            {tabel.totaalRijen !== undefined && ` · pagina vanaf rij ${tabel.totaalRijen ? start + 1 : 0} van ${tabel.totaalRijen}`} · alleen
-            lezen
+            {t("readOnly.rowsShown", { count: rijen.length })}
+            {tabel.totaalRijen !== undefined &&
+              ` · ${t("readOnly.pageFrom", { start: formatGetal(tabel.totaalRijen ? start + 1 : 0), total: formatGetal(tabel.totaalRijen) })}`}
+            {` · ${t("readOnly.readOnly")}`}
           </p>
           {lezer && (
             <div className="database-paginering">
               <button disabled={start === 0} onClick={() => setStart(Math.max(0, start - 200))}>
-                Vorige pagina
+                {t("readOnly.previousPage")}
               </button>
               <button disabled={start + 200 >= (tabel.totaalRijen ?? 0)} onClick={() => setStart(start + 200)}>
-                Volgende pagina
+                {t("readOnly.nextPage")}
               </button>
             </div>
           )}

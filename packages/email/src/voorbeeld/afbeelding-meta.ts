@@ -3,6 +3,7 @@
  * decoderen. Zo kan een te grote afbeelding geweigerd worden vóór de browser
  * er geheugen aan besteedt.
  */
+import i18next from "../../../../src/i18n/config";
 import type { Afbeeldingtype } from "./herkenning";
 
 export interface Afmetingen {
@@ -119,19 +120,23 @@ export function browserVolgtExif(): boolean {
 
 export type Afbeeldingcontrole = { ok: true; afmetingen: Afmetingen | null } | { ok: false; melding: string };
 
-/** Controleert grootte en aantal pixels tegen de limieten. */
+/** Controleert grootte en aantal pixels tegen de limieten; de melding is in de interfacetaal van dat moment. */
 export function controleerAfbeelding(
   b: Uint8Array,
   type: Afbeeldingtype,
   limieten: { afbeeldingBytes: number; afbeeldingPixels: number },
 ): Afbeeldingcontrole {
   if (b.length > limieten.afbeeldingBytes)
-    return { ok: false, melding: `Deze afbeelding is groter dan ${Math.round(limieten.afbeeldingBytes / 1024 / 1024)} MB en wordt niet als voorbeeld getoond.` };
+    return { ok: false, melding: i18next.t("email:preview.image.tooLarge", { size: Math.round(limieten.afbeeldingBytes / 1024 / 1024) }) };
   const afmetingen = leesAfmetingen(b, type);
   if (afmetingen && afmetingen.breedte * afmetingen.hoogte > limieten.afbeeldingPixels)
     return {
       ok: false,
-      melding: `Deze afbeelding is ${afmetingen.breedte} × ${afmetingen.hoogte} pixels (meer dan ${Math.round(limieten.afbeeldingPixels / 1e6)} megapixel) en wordt niet als voorbeeld getoond.`,
+      melding: i18next.t("email:preview.image.tooManyPixels", {
+        width: afmetingen.breedte,
+        height: afmetingen.hoogte,
+        megapixels: Math.round(limieten.afbeeldingPixels / 1e6),
+      }),
     };
   return { ok: true, afmetingen };
 }

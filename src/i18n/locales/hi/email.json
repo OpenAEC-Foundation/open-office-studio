@@ -1,0 +1,1008 @@
+{
+  "accounts": {
+    "test": {
+      "test": "जाँचें",
+      "testConnection": "कनेक्शन जाँचें",
+      "testing": "जाँच हो रही है…",
+      "retest": "फिर से जाँचें",
+      "failed": "जाँच विफल"
+    },
+    "settings": {
+      "title": "खाता सेटिंग्स",
+      "noAccount": "अभी कोई खाता नहीं है।",
+      "addAccount": "खाता जोड़ें",
+      "accountList": "खाते",
+      "saving": "सहेजा जा रहा है…",
+      "saved": "सेटिंग्स सहेजी गईं।",
+      "saveFailed": "सहेजा नहीं जा सका",
+      "tabs": {
+        "identity": "पहचान",
+        "servers": "सर्वर",
+        "folders": "फ़ोल्डर",
+        "fetching": "प्राप्ति और गोपनीयता",
+        "advanced": "उन्नत"
+      },
+      "deleteAccount": {
+        "title": "खाता हटाएँ",
+        "confirm": "क्या आप वाकई <strong>{{name}}</strong> ({{email}}) को हटाना चाहते हैं? आपके संदेश सर्वर पर रहेंगे; सहेजा गया पासवर्ड कीचेन से हटा दिया जाएगा।",
+        "button": "खाता हटाएँ",
+        "failed": "खाता हटाया नहीं जा सका"
+      },
+      "identity": {
+        "accountName": "खाते का नाम",
+        "accountNameHint": "केवल आपके लिए, उदाहरण के लिए \"कार्य\" या \"व्यक्तिगत\"।",
+        "yourName": "आपका नाम",
+        "email": "ईमेल पता",
+        "replyTo": "उत्तर पता",
+        "replyToPlaceholder": "खाली = आपका ईमेल पता",
+        "signature": "हस्ताक्षर",
+        "signatureHint": "नए संदेशों और उत्तरों के नीचे, \"-- \" के बाद जोड़ा जाता है।"
+      },
+      "oauthAccount": {
+        "signedInAs": "{{provider}} के साथ <strong>{{account}}</strong> के रूप में साइन इन किया गया",
+        "noPasswordStored": "कोई पासवर्ड सहेजा नहीं जाता; पहुँच कीचेन में एक टोकन से होती है।",
+        "signInAgain": "फिर से साइन इन करें",
+        "signedInAgain": "{{account}} के रूप में फिर से साइन इन किया गया।"
+      },
+      "password": {
+        "change": "पासवर्ड बदलें",
+        "storedPlaceholder": "सहेजा गया · रखने के लिए खाली छोड़ें",
+        "noneStoredPlaceholder": "अभी कोई पासवर्ड सहेजा नहीं गया"
+      },
+      "folders": {
+        "hint": "चुनें कि Email Studio भेजे गए संदेश, ड्राफ़्ट, हटाए गए और संग्रहीत संदेश कहाँ रखे।",
+        "roles": {
+          "sent": "भेजे गए संदेश",
+          "drafts": "ड्राफ़्ट",
+          "trash": "ट्रैश",
+          "archive": "संग्रह"
+        },
+        "automatic": "स्वचालित",
+        "automaticWithFolder": "स्वचालित ({{folder}})"
+      },
+      "fetching": {
+        "checkForNew": "नए संदेशों की जाँच करें",
+        "manualOnly": "केवल मैन्युअल रूप से",
+        "everyMinutes_one": "हर {{count}} मिनट",
+        "everyMinutes_other": "हर {{count}} मिनट",
+        "externalContent": "दूरस्थ चित्र और सामग्री हमेशा दिखाएँ",
+        "externalContentHint": "बंद रखने की सलाह दी जाती है: दूरस्थ चित्र प्रेषकों को बताते हैं कि आपने संदेश कब और कहाँ खोला।",
+        "trustedSenders": "प्रेषक जिनकी दूरस्थ सामग्री हमेशा दिखाई जाती है",
+        "forgetSender": "{{sender}} को भूलें"
+      },
+      "advanced": {
+        "oauthIntro": "Microsoft या Google से साइन इन OAuth2 का उपयोग करता है। ये सेटिंग्स सभी खातों पर लागू होती हैं। आपकी अपनी क्लाइंट ID की ज़रूरत तभी है जब ऐप में कोई शामिल न हो; देखें <code>{{doc}}</code>।",
+        "ispdb": "नए खाते के लिए Thunderbird डेटाबेस से भी पूछें",
+        "ispdbHint": "तब डोमेन नाम Mozilla को भेजा जाता है। डिफ़ॉल्ट रूप से बंद।",
+        "available": "उपलब्ध।",
+        "unavailable": "उपलब्ध नहीं।",
+        "loadingStatus": "स्थिति लोड हो रही है…",
+        "clientId": "क्लाइंट ID",
+        "clientSecret": "क्लाइंट सीक्रेट (वैकल्पिक)",
+        "saveClientId": "क्लाइंट ID सहेजें",
+        "clientIdSaved": "{{provider}} के लिए क्लाइंट ID सहेजी गई।",
+        "clientIdSaveFailed": "क्लाइंट ID सहेजी नहीं जा सकी",
+        "desktopOnly": "आप अपनी क्लाइंट ID केवल डेस्कटॉप ऐप में सेट कर सकते हैं।"
+      }
+    },
+    "wizard": {
+      "title": "खाता जोड़ें",
+      "intro": "अपने मौजूदा ईमेल पते का उपयोग करें। Email Studio हर उस प्रदाता के साथ काम करता है जो IMAP और SMTP देता है।",
+      "fullName": "आपका पूरा नाम",
+      "fullNamePlaceholder": "पहला नाम उपनाम",
+      "fullNameHint": "प्राप्तकर्ता आपका नाम कैसे देखते हैं।",
+      "email": "ईमेल पता",
+      "emailPlaceholder": "name@example.com",
+      "password": "पासवर्ड",
+      "passwordHint": "केवल तब उपयोग होता है जब आप जाँचें या हो गया चुनते हैं, और केवल आपके ऑपरेटिंग सिस्टम की कीचेन में सहेजा जाता है।",
+      "ispdb": "Thunderbird डेटाबेस से भी पूछें",
+      "ispdbHint": "तब डोमेन नाम (आपका पता या पासवर्ड नहीं) Mozilla को भेजा जाता है।",
+      "oauthPrompt": "या ऐप में बिना पासवर्ड साइन इन करें:",
+      "enterNameAndEmailFirst": "पहले अपना नाम और ईमेल पता दर्ज करें।",
+      "saving": "सहेजा जा रहा है…",
+      "done": "हो गया",
+      "saveAnyway": "फिर भी सहेजें",
+      "saveTitle": "खाता सहेजें",
+      "saveUntestedTitle": "अभी तक (सफलतापूर्वक) जाँचा नहीं गया; आप फिर भी खाता सहेज सकते हैं",
+      "saveFailed": "खाता सहेजा नहीं जा सका",
+      "foundSettings": "सेटिंग्स मिलीं",
+      "serverSettings": "सर्वर सेटिंग्स",
+      "serverSettingsFor": "{{domain}} के लिए सर्वर सेटिंग्स",
+      "enterEmailHint": "अपना ईमेल पता दर्ज करें; Email Studio तब अपने आप सही सर्वर खोजेगा।",
+      "searchFailed": "खोज विफल",
+      "fillInManually": "नीचे सर्वर स्वयं दर्ज करें।",
+      "nothingFound": "कोई सेटिंग नहीं मिली। नीचे सर्वर स्वयं दर्ज करें; ज़रूरत हो तो अपने प्रदाता से पूछें।",
+      "proposals": "सुझाव",
+      "unencrypted": "अनएन्क्रिप्टेड",
+      "manualConfiguration": "मैन्युअल कॉन्फ़िगरेशन",
+      "adjusted": "· संपादित",
+      "fieldsAppear": "मान्य ईमेल पता होते ही फ़ील्ड दिखाई देंगे।",
+      "bothServersFailed": "दोनों सर्वर विफल रहे। पता, पासवर्ड और सर्वर नाम जाँचें।"
+    },
+    "discovery": {
+      "steps": {
+        "builtIn": "अंतर्निहित सूची",
+        "ownDomain": "अपना डोमेन",
+        "dns": "DNS",
+        "ispdb": "Thunderbird डेटाबेस",
+        "probe": "कनेक्शन जाँच"
+      },
+      "stepStatus": {
+        "waiting": "प्रतीक्षा में",
+        "busy": "जारी है…",
+        "found": "मिला",
+        "nothing": "कुछ नहीं मिला",
+        "skipped": "नहीं चलाया गया"
+      },
+      "sources": {
+        "preset": "अंतर्निहित सूची",
+        "autoconfig": "आपके अपने डोमेन से कॉन्फ़िगरेशन",
+        "srv": "DNS SRV रिकॉर्ड",
+        "mx": "MX रिकॉर्ड (प्रदाता पहचाना गया)",
+        "ispdb": "Thunderbird डेटाबेस",
+        "guess": "सामान्य सर्वर नाम"
+      },
+      "unencrypted": "अनएन्क्रिप्टेड",
+      "reachable": "पहुँच योग्य",
+      "unreachable": "पहुँच योग्य नहीं",
+      "untested": "जाँचा नहीं गया"
+    },
+    "server": {
+      "incoming": "आने वाला (IMAP)",
+      "outgoing": "जाने वाला (SMTP)",
+      "columns": {
+        "server": "सर्वर",
+        "port": "पोर्ट",
+        "security": "सुरक्षा",
+        "authentication": "प्रमाणीकरण",
+        "username": "उपयोगकर्ता नाम"
+      },
+      "hostLabel": "{{protocol}} सर्वर",
+      "portLabel": "{{protocol}} पोर्ट",
+      "securityLabel": "{{protocol}} सुरक्षा",
+      "authenticationLabel": "{{protocol}} प्रमाणीकरण",
+      "usernameLabel": "{{protocol}} उपयोगकर्ता नाम",
+      "imapPlaceholder": "imap.example.com",
+      "smtpPlaceholder": "smtp.example.com",
+      "securityNone": "कोई नहीं",
+      "authNormal": "सामान्य पासवर्ड",
+      "authEncrypted": "एन्क्रिप्टेड पासवर्ड",
+      "unencryptedWarning": "<strong>अनएन्क्रिप्टेड कनेक्शन।</strong> आपका पासवर्ड और संदेश नेटवर्क पर पढ़ने योग्य रूप में जाते हैं। यदि आपका प्रदाता समर्थन करता है तो SSL/TLS या STARTTLS चुनें।",
+      "oauthHint": "OAuth2 जाँच के समय या पहले उपयोग पर आपसे प्रदाता के साथ साइन इन करने को कहता है।"
+    },
+    "oauth": {
+      "notSupported": "ऐप का यह संस्करण अभी Microsoft या Google से साइन इन का समर्थन नहीं करता।",
+      "signInFailed": "{{provider}} से साइन इन विफल",
+      "signInWith": "{{provider}} से साइन इन करें",
+      "recommended": "अनुशंसित",
+      "waitTitle": "अपने ब्राउज़र में साइन इन पूरा करें",
+      "waitText": "{{provider}} का साइन-इन पृष्ठ आपके ब्राउज़र में खुल गया है। वहाँ साइन इन करें और ईमेल तक पहुँच दें; Email Studio फिर यहाँ जारी रखेगा।",
+      "unavailableTitle": "{{provider}} से साइन इन यहाँ उपलब्ध नहीं है।",
+      "unavailableHelp": "डेस्कटॉप ऐप में आप <em>टूल › खाता सेटिंग्स › उन्नत</em> में {{provider}} के लिए अपनी क्लाइंट ID सेट कर सकते हैं। इसे बनाने का तरीका <code>{{doc}}</code> में बताया गया है। आप (ऐप) पासवर्ड के साथ भी जारी रख सकते हैं।"
+    }
+  },
+  "errors": {
+    "code": {
+      "connection": "सर्वर से कोई कनेक्शन नहीं। अपना इंटरनेट कनेक्शन और सर्वर नाम व पोर्ट जाँचें।",
+      "authentication": "साइन इन विफल। अपना उपयोगकर्ता नाम और पासवर्ड जाँचें (टूल › खाता सेटिंग्स)।",
+      "certificate": "सर्वर का प्रमाणपत्र विश्वसनीय नहीं है या इस सर्वर नाम से मेल नहीं खाता।",
+      "timeout": "सर्वर ने समय पर जवाब नहीं दिया। कृपया बाद में फिर से प्रयास करें।",
+      "notFound": "संदेश या फ़ोल्डर अब सर्वर पर मौजूद नहीं है।",
+      "refused": "सर्वर ने कमांड अस्वीकार कर दी।",
+      "tooLarge": "संदेश सर्वर के लिए बहुत बड़ा है। अनुलग्नक छोटे करें या हटाएँ।",
+      "unavailable": "यह सुविधा यहाँ उपलब्ध नहीं है।",
+      "internal": "कुछ गलत हो गया।"
+    },
+    "withDetail": "{{explanation}} ({{detail}})",
+    "withContext": "{{context}}: {{message}}",
+    "backendMissing": "डेस्कटॉप ऐप के इस संस्करण में ईमेल सुविधा शामिल नहीं है।",
+    "unexpectedBinary": "बैकएंड से अप्रत्याशित बाइनरी आउटपुट।"
+  },
+  "dialog": {
+    "closeEsc": "बंद करें (Esc)"
+  },
+  "sendAsAttachment": {
+    "title": "अनुलग्नक के रूप में भेजें"
+  },
+  "ribbon": {
+    "tabs": {
+      "start": "होम",
+      "view": "दृश्य",
+      "tools": "टूल"
+    },
+    "groups": {
+      "new": "नया",
+      "respond": "उत्तर दें",
+      "delete": "हटाएँ",
+      "mark": "टैग",
+      "organize": "व्यवस्थित करें",
+      "layout": "लेआउट",
+      "sort": "क्रमबद्ध करें",
+      "message": "संदेश",
+      "accounts": "खाते",
+      "folders": "फ़ोल्डर"
+    },
+    "withShortcut": "{{action}} · {{shortcut}}",
+    "fetch": "संदेश प्राप्त करें",
+    "fetchTitle": "संदेश प्राप्त करें · {{key}} या {{shortcut}}",
+    "readUnread": "पढ़ा/अपठित",
+    "readUnreadTitle": "पढ़ा या अपठित · {{shortcut}}",
+    "star": "तारांकित",
+    "move": "ले जाएँ",
+    "moveTitle": "फ़ोल्डर में ले जाएँ",
+    "folderPane": "फ़ोल्डर फलक",
+    "readingPane": "पठन फलक",
+    "resetLayout": "लेआउट रीसेट करें",
+    "sortBy": "इसके अनुसार क्रमबद्ध करें",
+    "sort": {
+      "date": "दिनांक",
+      "sender": "प्रेषक",
+      "subject": "विषय",
+      "size": "आकार"
+    },
+    "ascending": "आरोही",
+    "descending": "अवरोही",
+    "viewSource": "स्रोत देखें",
+    "accountSettings": "खाता सेटिंग्स"
+  },
+  "studio": {
+    "errors": {
+      "loadAccounts": "खाते लोड नहीं किए जा सके",
+      "loadMessages": "संदेश लोड नहीं किए जा सके",
+      "openMessage": "संदेश खोला नहीं जा सका",
+      "delete": "हटाया नहीं जा सका",
+      "move": "ले जाया नहीं जा सका",
+      "mark": "चिह्नित नहीं किया जा सका",
+      "forwardAttachments": "अग्रेषण के लिए अनुलग्नक प्राप्त नहीं किए जा सके",
+      "openFile": "{{name}} खोला नहीं जा सका",
+      "saveFile": "{{name}} सहेजा नहीं जा सका",
+      "source": "स्रोत प्राप्त नहीं किया जा सका",
+      "updateFolder": "फ़ोल्डर अपडेट नहीं किया जा सका",
+      "deleteFolder": "फ़ोल्डर हटाया नहीं जा सका"
+    },
+    "accountAdded": "खाता {{email}} जोड़ा गया।",
+    "addAccount": "खाता जोड़ें",
+    "deletePermanently": {
+      "title": "स्थायी रूप से हटाएँ",
+      "text_one": "यह संदेश स्थायी रूप से हटा दिया जाएगा। इसे पूर्ववत नहीं किया जा सकता।",
+      "text_other": "{{count}} संदेश स्थायी रूप से हटा दिए जाएँगे। इसे पूर्ववत नहीं किया जा सकता।",
+      "confirm": "स्थायी रूप से हटाएँ"
+    },
+    "noArchiveFolder": "इस खाते में कोई संग्रह फ़ोल्डर नहीं है। टूल › खाता सेटिंग्स › फ़ोल्डर में एक चुनें।",
+    "fetched": "संदेश प्राप्त हुए।",
+    "deleteFolder": {
+      "title": "फ़ोल्डर हटाएँ",
+      "text": "फ़ोल्डर “{{folder}}” और उसके सभी संदेश सर्वर पर हटा दिए जाएँगे।"
+    },
+    "welcome": {
+      "title": "अभी कोई ईमेल खाता नहीं",
+      "text": "अपने ईमेल पते और पासवर्ड से अपना खाता जोड़ें। Email Studio सही सेटिंग्स ढूँढ लेता है।"
+    },
+    "folderPaneWidth": "फ़ोल्डर फलक की चौड़ाई",
+    "messageListWidth": "संदेश सूची की चौड़ाई",
+    "messageList": "संदेश सूची",
+    "search": {
+      "in": "{{folder}} में खोजें",
+      "label": "संदेश खोजें ({{shortcut}})",
+      "clear": "खोज साफ़ करें"
+    },
+    "filter": {
+      "label": "त्वरित फ़िल्टर",
+      "unread": "अपठित",
+      "unreadTitle": "केवल अपठित",
+      "starred": "तारांकित",
+      "starredTitle": "केवल तारांकित",
+      "attachment": "अनुलग्नक",
+      "attachmentTitle": "केवल अनुलग्नक वाले",
+      "body": "मुख्य भाग",
+      "bodyTitle": "संदेश पाठ में भी खोजें (धीमा)"
+    },
+    "count": {
+      "filtered": "{{total}} में से {{shown}}",
+      "filteredLoaded": "लोड किए गए {{loaded}} में से {{shown}}",
+      "messages_one": "{{count}} संदेश",
+      "messages_other": "{{count}} संदेश",
+      "selected_one": "{{count}} चयनित",
+      "selected_other": "{{count}} चयनित"
+    },
+    "noResults": "कोई संदेश नहीं मिला।",
+    "emptyFolder": "यह फ़ोल्डर खाली है।",
+    "moveTo_one": "संदेश को यहाँ ले जाएँ",
+    "moveTo_other": "{{count}} संदेशों को यहाँ ले जाएँ",
+    "folderDialog": {
+      "newTitle": "नया फ़ोल्डर",
+      "renameTitle": "फ़ोल्डर का नाम बदलें",
+      "create": "बनाएँ",
+      "rename": "नाम बदलें",
+      "name": "नाम",
+      "inside": "“{{folder}}” के अंदर"
+    },
+    "source": {
+      "title": "संदेश स्रोत",
+      "saveAs": "{{extension}} के रूप में सहेजें"
+    }
+  },
+  "address": {
+    "invalid": "अमान्य पता: {{address}}",
+    "remove": "{{address}} हटाएँ"
+  },
+  "list": {
+    "label": "संदेश",
+    "to": "प्रति: {{address}}",
+    "noRecipient": "(कोई प्राप्तकर्ता नहीं)",
+    "replied": "उत्तर दिया गया",
+    "hasAttachment": "अनुलग्नक है",
+    "noSubject": "(कोई विषय नहीं)",
+    "star": "तारा जोड़ें",
+    "unstar": "तारा हटाएँ",
+    "loadingMore": "और संदेश लोड हो रहे हैं…"
+  },
+  "folders": {
+    "label": "फ़ोल्डर",
+    "loading": "फ़ोल्डर लोड हो रहे हैं…",
+    "unread_one": "{{count}} अपठित",
+    "unread_other": "{{count}} अपठित",
+    "inbox": "इनबॉक्स"
+  },
+  "reader": {
+    "loadingMessage": "संदेश लोड हो रहा है…",
+    "chooseMessage": "पढ़ने के लिए कोई संदेश चुनें।",
+    "label": "संदेश: {{subject}}",
+    "reply": "उत्तर दें",
+    "replyTitle": "उत्तर दें · {{shortcut}}",
+    "replyAll": "सभी को उत्तर दें",
+    "replyAllTitle": "सभी को उत्तर दें · {{shortcut}}",
+    "forward": "अग्रेषित करें",
+    "forwardTitle": "अग्रेषित करें · {{shortcut}}",
+    "archive": "संग्रहीत करें",
+    "archiveTitle": "संग्रहीत करें · {{shortcut}}",
+    "delete": "हटाएँ",
+    "deleteTitle": "हटाएँ · {{shortcut}}",
+    "starTitle": "तारांकित · {{shortcut}}",
+    "from": "प्रेषक",
+    "to": "प्रति",
+    "none": "(कोई नहीं)",
+    "cc": "प्रतिलिपि",
+    "replyTo": "उत्तर भेजें",
+    "date": "दिनांक",
+    "external": {
+      "blocked_one": "आपकी गोपनीयता की सुरक्षा के लिए एक दूरस्थ चित्र अवरुद्ध किया गया।",
+      "blocked_other": "आपकी गोपनीयता की सुरक्षा के लिए {{count}} दूरस्थ चित्र अवरुद्ध किए गए।",
+      "desktopHint": "आपकी अनुमति से ऐप उन्हें प्राप्त करता है और संदेश को कहीं भी कनेक्ट होने दिए बिना दिखाता है।",
+      "demoHint": "(डेमो में वे ऐसे पतों की ओर इशारा करते हैं जो मौजूद नहीं हैं।)",
+      "show": "दूरस्थ सामग्री दिखाएँ",
+      "alwaysFrom": "{{sender}} से हमेशा दिखाएँ",
+      "failed_one": "एक दूरस्थ चित्र प्राप्त नहीं किया जा सका।",
+      "failed_other": "{{count}} दूरस्थ चित्र प्राप्त नहीं किए जा सके।"
+    },
+    "attachments": {
+      "label": "अनुलग्नक",
+      "previewOrOpen": "क्लिक: पूर्वावलोकन · डबल-क्लिक: {{module}} में खोलें",
+      "preview": "पूर्वावलोकन",
+      "openCopyTitle": "{{module}} में संपादन योग्य प्रति के रूप में खोलें",
+      "openIn": "{{module}} में खोलें",
+      "saveTitle": "इस कंप्यूटर पर सहेजें"
+    },
+    "content": "संदेश सामग्री",
+    "loadingContent": "सामग्री लोड हो रही है…"
+  },
+  "compose": {
+    "errors": {
+      "saveDraft": "ड्राफ़्ट सहेजा नहीं जा सका",
+      "noRecipients": "कम से कम एक प्राप्तकर्ता जोड़ें।",
+      "send": "भेजा नहीं जा सका",
+      "attachmentsLarge": "अनुलग्नकों का कुल आकार {{size}} है; कई सर्वर {{max}} से बड़े संदेश अस्वीकार करते हैं।",
+      "linkNotAllowed": "केवल http(s), mailto और tel लिंक की अनुमति है।"
+    },
+    "noSubject": {
+      "title": "कोई विषय नहीं",
+      "text": "इस संदेश का कोई विषय नहीं है। फिर भी भेजें?",
+      "fillIn": "विषय दर्ज करें",
+      "sendWithout": "बिना विषय भेजें"
+    },
+    "forgotAttachment": {
+      "title": "अनुलग्नक भूल गए?",
+      "text": "आपके संदेश में <strong>“{{word}}”</strong> का उल्लेख है, लेकिन कोई अनुलग्नक नहीं जोड़ा गया है।",
+      "sendAnyway": "फिर भी भेजें",
+      "keywords": "संलग्न|अनुलग्नक|संलग्नक|अटैचमेंट|संलग्न है"
+    },
+    "addAttachment": "अनुलग्नक जोड़ें",
+    "attachment": "संलग्न करें",
+    "removeAttachment": "{{name}} हटाएँ",
+    "attachmentsSummary_one": "{{count}} अनुलग्नक · {{size}}",
+    "attachmentsSummary_other": "{{count}} अनुलग्नक · {{size}}",
+    "dropToAttach": "अनुलग्नक के रूप में जोड़ने के लिए छोड़ें",
+    "sent": "संदेश भेजा गया।",
+    "sentWithSubject": "संदेश भेजा गया: {{subject}}।",
+    "unsent": {
+      "title": "संदेश नहीं भेजा गया",
+      "text": "क्या आप इस संदेश को ड्राफ़्ट के रूप में सहेजना चाहते हैं?",
+      "discard": "त्यागें",
+      "saveDraft": "ड्राफ़्ट सहेजें"
+    },
+    "label": "लिखें: {{subject}}",
+    "newMessage": "नया संदेश",
+    "send": "भेजें",
+    "sending": "भेजा जा रहा है…",
+    "sendTitle": "भेजें · {{shortcut}}",
+    "draft": "ड्राफ़्ट",
+    "savingDraft": "सहेजा जा रहा है…",
+    "saveDraftTitle": "ड्राफ़्ट के रूप में सहेजें · {{shortcut}}",
+    "dismissError": "सूचना बंद करें",
+    "from": "प्रेषक",
+    "to": "प्रति",
+    "cc": "प्रतिलिपि",
+    "bcc": "गुप्त प्रतिलिपि",
+    "subject": "विषय",
+    "body": "संदेश पाठ",
+    "format": {
+      "label": "फ़ॉर्मेटिंग",
+      "withShortcut": "{{action}} · {{shortcut}}",
+      "bold": "बोल्ड",
+      "italic": "इटैलिक",
+      "underline": "रेखांकित",
+      "bullets": "बुलेट",
+      "numbering": "क्रमांकन",
+      "link": "लिंक",
+      "insertLink": "लिंक सम्मिलित करें",
+      "clear": "फ़ॉर्मेटिंग साफ़ करें",
+      "linkAddress": "लिंक पता",
+      "insert": "सम्मिलित करें"
+    }
+  },
+  "link": {
+    "browserFailed": "ब्राउज़र खोला नहीं जा सका। पता कॉपी करें: {{url}}",
+    "phoneTitle": "फ़ोन नंबर",
+    "openTitle": "लिंक खोलें?",
+    "copied": "पता कॉपी किया गया।",
+    "copyFailed": "कॉपी करना विफल; पता मैन्युअल रूप से चुनें।",
+    "copy": "पता कॉपी करें",
+    "openInBrowser": "ब्राउज़र में खोलें",
+    "phoneIntro": "यह फ़ोन नंबर संदेश में है:",
+    "realTarget": "यह लिंक वास्तव में यहाँ जाता है:",
+    "misleading": "संदेश के पाठ में <strong>{{shown}}</strong> लिखा है, लेकिन लिंक <strong>{{actual}}</strong> पर जाता है। यह फ़िशिंग हो सकती है।",
+    "unencrypted": "ध्यान दें: यह लिंक एन्क्रिप्टेड कनेक्शन (http) का उपयोग नहीं करता।"
+  },
+  "files": {
+    "saveUnsupported": "डेस्कटॉप ऐप का यह संस्करण अभी {{name}} को सहेज नहीं सकता। अनुलग्नक को किसी मॉड्यूल में खोलें या ऐप अपडेट करें।",
+    "saved": "सहेजा गया: {{path}}",
+    "saveCancelled": "सहेजना रद्द किया गया।",
+    "downloadRequested": "डाउनलोड का अनुरोध किया गया। अपने डाउनलोड में फ़ाइल देखें।"
+  },
+  "quote": {
+    "unknownSender": "(अज्ञात)",
+    "wroteOn": "{{date}} को {{sender}} ने लिखा:",
+    "wrote": "{{sender}} ने लिखा:",
+    "forwarded": "अग्रेषित संदेश",
+    "subject": "विषय: {{value}}",
+    "date": "दिनांक: {{value}}",
+    "from": "प्रेषक: {{value}}",
+    "to": "प्रति: {{value}}",
+    "cc": "प्रतिलिपि: {{value}}"
+  },
+  "demo": {
+    "banner": "डेमो — ब्राउज़र में वास्तविक ईमेल संभव नहीं है; डेस्कटॉप ऐप का उपयोग करें।",
+    "accountName": "डेमो मेलबॉक्स",
+    "folders": {
+      "notifications": "सूचनाएँ",
+      "drafts": "ड्राफ़्ट",
+      "sent": "भेजे गए",
+      "archive": "संग्रह",
+      "junk": "जंक",
+      "trash": "ट्रैश"
+    },
+    "welcome": {
+      "subject": "OpenAEC Email Studio में आपका स्वागत है",
+      "heading": "स्वागत है!",
+      "intro": "यह एक डेमो मेलबॉक्स है। ब्राउज़र में Email Studio वास्तविक ईमेल प्राप्त या भेज नहीं सकता; इसके लिए डेस्कटॉप ऐप का उपयोग करें।",
+      "introHtml": "यह एक <strong>डेमो मेलबॉक्स</strong> है। ब्राउज़र में Email Studio वास्तविक ईमेल प्राप्त या भेज नहीं सकता; इसके लिए डेस्कटॉप ऐप का उपयोग करें।",
+      "tryIt": "बेझिझक आज़माएँ: उत्तर देना, तारांकित करना (S), संग्रह में ले जाना और किसी अनुलग्नक को टेक्स्ट या स्प्रेडशीट में खोलना।",
+      "tryItHtml": "बेझिझक आज़माएँ: उत्तर देना, तारांकित करना (<kbd>S</kbd>), संग्रह में ले जाना और किसी अनुलग्नक को टेक्स्ट या स्प्रेडशीट में खोलना।",
+      "logoText": "नीचे दिया OpenAEC लोगो एक अनुलग्नक से इनलाइन चित्र है (cid:)।",
+      "logoAlt": "OpenAEC लोगो",
+      "logoHtml": "बाईं ओर का लोगो एक अनुलग्नक से इनलाइन चित्र है।"
+    },
+    "errors": {
+      "accountNotFound": "खाता मौजूद नहीं है।",
+      "messageNotFound": "संदेश मौजूद नहीं है।",
+      "folderExists": "यह फ़ोल्डर पहले से मौजूद है।",
+      "folderCannotRename": "इस फ़ोल्डर का नाम बदला नहीं जा सकता।",
+      "specialFolderDelete": "विशेष फ़ोल्डर हटाए नहीं जा सकते।",
+      "attachmentNotFound": "अनुलग्नक मौजूद नहीं है।",
+      "targetFolderNotFound": "लक्ष्य फ़ोल्डर मौजूद नहीं है।",
+      "noRecipients": "कोई प्राप्तकर्ता निर्दिष्ट नहीं।",
+      "recipientRefused": "डेमो: सर्वर प्राप्तकर्ता {{domain}} को अस्वीकार करता है।",
+      "attachmentsTooLarge": "डेमो: अनुलग्नक {{max}} तक सीमित हैं।"
+    },
+    "accountAdded": {
+      "subject": "आपका खाता जोड़ा गया (डेमो)",
+      "text": "खाता {{email}} डेमो में जोड़ा गया। {{notice}}"
+    },
+    "discovery": {
+      "knownProvider": "ज्ञात प्रदाता (डेमो)।",
+      "mx": "{{domain}} का MX रिकॉर्ड mail.protection.outlook.com की ओर इशारा करता है (डेमो)।",
+      "ownServer": "{{name}} (अपना सर्वर)",
+      "autoconfig": "autoconfig.{{domain}} पर मिला (डेमो)।",
+      "srv": "_imaps._tcp और _submission._tcp (डेमो)।",
+      "ispdb": "Thunderbird डेटाबेस से (डेमो)।",
+      "guessImapOk": "सामान्य सर्वर नाम; IMAP जाँच सफल रही (डेमो)।",
+      "guessAlternative": "वैकल्पिक सर्वर नाम (डेमो)।"
+    },
+    "test": {
+      "noServer": "कोई {{protocol}} सर्वर निर्दिष्ट नहीं।",
+      "invalidPort": "अमान्य पोर्ट।",
+      "unreachable": "डेमो: {{host}} तक पहुँचा नहीं जा सकता।",
+      "simulated": "डेमो: कनेक्शन सिम्युलेट किया गया।",
+      "simulatedUnencrypted": "डेमो: कनेक्शन सिम्युलेट किया गया (अनएन्क्रिप्टेड!)।"
+    },
+    "oauthDesktopOnly": "Microsoft या Google से साइन इन केवल डेस्कटॉप ऐप में संभव है।"
+  },
+  "preview": {
+    "loading": "पूर्वावलोकन लोड हो रहा है…",
+    "dialog": {
+      "attachments": "अनुलग्नक",
+      "previous": "पिछला अनुलग्नक",
+      "previousTitle": "पिछला अनुलग्नक (←)",
+      "next": "अगला अनुलग्नक",
+      "nextTitle": "अगला अनुलग्नक (→)",
+      "close": "पूर्वावलोकन बंद करें",
+      "closeTitle": "बंद करें (Esc)",
+      "fetching": "अनुलग्नक प्राप्त किया जा रहा है…",
+      "fetchFailed": "अनुलग्नक प्राप्त नहीं किया जा सका: {{message}}"
+    },
+    "card": {
+      "fileName": "फ़ाइल नाम",
+      "size": "आकार",
+      "openExternal": "डिफ़ॉल्ट ऐप से खोलें",
+      "unknown": "अज्ञात",
+      "attention": "ध्यान दें",
+      "yes": "हाँ",
+      "no": "नहीं"
+    },
+    "detection": {
+      "kinds": {
+        "pdf": "एक PDF",
+        "dwg": "एक DWG ड्रॉइंग",
+        "dxf": "एक DXF ड्रॉइंग",
+        "ifc": "एक IFC मॉडल",
+        "markdown": "Markdown",
+        "text": "पाठ",
+        "image": "एक चित्र",
+        "office": "एक Office दस्तावेज़",
+        "unknown": "एक अज्ञात फ़ाइल"
+      },
+      "contentDiffers": "नाम से {{kind}} का संकेत मिलता है, लेकिन सामग्री कुछ और है।",
+      "mismatch": "इस अनुलग्नक का नाम “.{{extension}}” ({{named}}) है, लेकिन सामग्री {{actual}} है।",
+      "mismatchSubtype": "इस अनुलग्नक का नाम “.{{extension}}” ({{named}}) है, लेकिन सामग्री {{actual}} ({{subtype}}) है।",
+      "contentBinary": "नाम से {{kind}} का संकेत मिलता है, लेकिन सामग्री बाइनरी है।",
+      "notSvg": "नाम से SVG चित्र का संकेत मिलता है, लेकिन सामग्री SVG नहीं है।",
+      "signatureMissing": "नाम से {{kind}} का संकेत मिलता है, लेकिन सामग्री में संबंधित विशेषताएँ नहीं हैं।"
+    },
+    "image": {
+      "loadFailed": "चित्र लोड नहीं किया जा सका: {{message}}",
+      "subtitle": "चित्र",
+      "cannotDisplay": "यह चित्र यहाँ नहीं दिखाया जा सकता (क्षतिग्रस्त या असमर्थित प्रकार)।",
+      "tooLarge": "यह चित्र {{size}} MB से बड़ा है और पूर्वावलोकन में नहीं दिखाया जाता।",
+      "tooManyPixels": "यह चित्र {{width}} × {{height}} पिक्सेल ({{megapixels}} मेगापिक्सेल से अधिक) है और पूर्वावलोकन में नहीं दिखाया जाता।",
+      "toolbar": "चित्र",
+      "zoomOut": "ज़ूम आउट",
+      "zoomOutTitle": "ज़ूम आउट (−)",
+      "zoomIn": "ज़ूम इन",
+      "zoomInTitle": "ज़ूम इन (+)",
+      "fit": "विंडो में फ़िट करें",
+      "fitTitle": "विंडो में फ़िट करें (0)",
+      "actualSize": "वास्तविक आकार (100%)",
+      "actualSizeTitle": "वास्तविक आकार",
+      "rotate": "दक्षिणावर्त घुमाएँ",
+      "rotateTitle": "दक्षिणावर्त घुमाएँ (R)",
+      "area": "चित्र पूर्वावलोकन"
+    },
+    "text": {
+      "loadFailed": "पाठ लोड नहीं किया जा सका: {{message}}",
+      "toolbar": "पाठ",
+      "encoding": "एन्कोडिंग: {{encoding}}",
+      "utf8Bom": "UTF-8 (BOM के साथ)",
+      "formatJson": "JSON फ़ॉर्मेट करें",
+      "wrapLines": "पंक्तियाँ लपेटें",
+      "truncated": "{{size}} में से पहले {{limit}} दिखाए जा रहे हैं। सब देखने के लिए फ़ाइल सहेजें।",
+      "contentOf": "{{name}} की सामग्री"
+    },
+    "markdown": {
+      "loadFailed": "फ़ाइल लोड नहीं की जा सकी: {{message}}",
+      "linkNotOpened": "लिंक नहीं खोला गया: {{url}}",
+      "imageFallback": "चित्र",
+      "externalBlocked": "{{alt}} (बाहरी चित्र अवरुद्ध)",
+      "unavailable": "{{alt}} (उपलब्ध नहीं)",
+      "view": "दृश्य",
+      "rendered": "रेंडर किया गया",
+      "source": "स्रोत",
+      "showExternalImages": "बाहरी चित्र दिखाएँ",
+      "truncated": "{{size}} में से पहले {{limit}} दिखाए जा रहे हैं।",
+      "confirmLabel": "लिंक खोलें",
+      "confirmQuestion": "यह लिंक Office Studio के बाहर खोलें?"
+    },
+    "pdf": {
+      "loadFailed": "PDF लोड नहीं किया जा सका: {{message}}",
+      "properties": "गुण",
+      "frameTitle": "PDF: {{name}}",
+      "linuxUnsupported": "Linux पर वेबव्यू PDF को विश्वसनीय रूप से नहीं दिखा सकता। पूर्ण पूर्वावलोकन भविष्य के संस्करण में आएगा (Rust व्यूअर)।",
+      "cannotPreview": "इस PDF का पूर्वावलोकन यहाँ नहीं किया जा सकता। पूर्ण पूर्वावलोकन भविष्य के संस्करण में आएगा (Rust व्यूअर)।",
+      "subtitle": "PDF दस्तावेज़",
+      "subtitleVersion": "PDF {{version}}",
+      "pages": "पृष्ठ",
+      "author": "लेखक",
+      "subject": "विषय",
+      "createdWith": "इससे बनाया गया",
+      "created": "बनाया गया",
+      "modified": "संशोधित",
+      "encrypted": "एन्क्रिप्टेड",
+      "incomplete": "फ़ाइल अधूरी या क्षतिग्रस्त लगती है",
+      "showPreview": "पूर्वावलोकन दिखाएँ"
+    },
+    "cad": {
+      "loadFailed": "ड्रॉइंग लोड नहीं की जा सकी: {{message}}",
+      "previewLater": "पूर्वावलोकन भविष्य के संस्करण में आएगा (Rust व्यूअर)।",
+      "tooLargeToParse": "यह फ़ाइल यहाँ विश्लेषण के लिए बहुत बड़ी है। पूर्वावलोकन भविष्य के संस्करण में आएगा (Rust व्यूअर)।",
+      "dwgSubtitle": "AutoCAD ड्रॉइंग (DWG)",
+      "dxfSubtitle": "DXF ड्रॉइंग",
+      "dxfBinarySubtitle": "बाइनरी DXF ड्रॉइंग",
+      "format": "फ़ॉर्मेट",
+      "savedAs": "इस रूप में सहेजा गया",
+      "unknownAutocadVersion": "अज्ञात AutoCAD संस्करण",
+      "units": "इकाइयाँ",
+      "entities": "एंटिटी",
+      "blocks": "ब्लॉक",
+      "layers": "लेयर",
+      "thumbnailAlt": "ड्रॉइंग का एम्बेडेड थंबनेल",
+      "thumbnailCaption": "फ़ाइल से थंबनेल",
+      "entitiesByType": "प्रकार के अनुसार एंटिटी",
+      "layersCount": "लेयर ({{n}})",
+      "andMore": "… और {{n}} अन्य",
+      "versionRange": "AutoCAD {{from}} से {{to}}",
+      "versionAndLater": "AutoCAD {{version}} और बाद के",
+      "unitCode": "कोड {{code}}",
+      "unitNames": {
+        "unitless": "इकाई रहित",
+        "inch": "इंच",
+        "foot": "फ़ुट",
+        "mile": "मील",
+        "millimeter": "मिलीमीटर",
+        "centimeter": "सेंटीमीटर",
+        "meter": "मीटर",
+        "kilometer": "किलोमीटर",
+        "microinch": "माइक्रोइंच",
+        "mil": "मिल",
+        "yard": "गज़",
+        "angstrom": "एंगस्ट्रॉम",
+        "nanometer": "नैनोमीटर",
+        "micron": "माइक्रोन",
+        "decimeter": "डेसीमीटर",
+        "decameter": "डेकामीटर",
+        "hectometer": "हेक्टोमीटर",
+        "gigameter": "गीगामीटर",
+        "astronomicalUnit": "खगोलीय इकाई",
+        "lightYear": "प्रकाश वर्ष",
+        "parsec": "पारसेक",
+        "usSurveyFoot": "US सर्वे फ़ुट",
+        "usSurveyInch": "US सर्वे इंच",
+        "usSurveyYard": "US सर्वे गज़",
+        "usSurveyMile": "US सर्वे मील"
+      }
+    },
+    "ifc": {
+      "loadFailed": "मॉडल लोड नहीं किया जा सका: {{message}}",
+      "previewLater": "3D पूर्वावलोकन भविष्य के संस्करण में आएगा (Rust व्यूअर)।",
+      "tooLarge": "यह मॉडल {{size}} MB से बड़ा है और यहाँ विश्लेषित नहीं किया जाता।",
+      "analysing": "मॉडल का विश्लेषण हो रहा है… {{percent}}",
+      "cancelled": "विश्लेषण रद्द किया गया।",
+      "retry": "फिर से विश्लेषण करें",
+      "failed": "विश्लेषण विफल: {{message}}",
+      "subtitle": "IFC मॉडल",
+      "subtitleWithSchema": "IFC मॉडल · {{schemas}}",
+      "nameInFile": "फ़ाइल में नाम",
+      "timestamp": "टाइमस्टैम्प",
+      "author": "लेखक",
+      "organization": "संगठन",
+      "application": "ऐप्लिकेशन",
+      "description": "विवरण",
+      "sites": "साइट",
+      "buildings": "भवन",
+      "entities": "एंटिटी",
+      "incomplete": "फ़ाइल अधूरी लगती है (END-ISO-10303-21 नहीं)",
+      "storeys": "मंज़िलें ({{n}})",
+      "elementsHeading": "भवन तत्व",
+      "allEntityTypes": "सभी एंटिटी प्रकार ({{n}})",
+      "elements": {
+        "wall": "दीवारें",
+        "wallStandardCase": "दीवारें (मानक स्थिति)",
+        "curtainWall": "पर्दा दीवारें",
+        "slab": "फ़र्श और स्लैब",
+        "roof": "छतें",
+        "column": "स्तंभ",
+        "beam": "बीम",
+        "member": "सदस्य",
+        "plate": "प्लेटें",
+        "door": "दरवाज़े",
+        "window": "खिड़कियाँ",
+        "stair": "सीढ़ियाँ",
+        "ramp": "रैंप",
+        "railing": "रेलिंग",
+        "covering": "आवरण",
+        "footing": "नींव",
+        "pile": "पाइल",
+        "space": "स्थान",
+        "opening": "खुले भाग",
+        "furnishing": "फ़र्नीचर",
+        "flowSegment": "डक्ट और पाइप खंड",
+        "flowTerminal": "सेवा टर्मिनल",
+        "proxy": "अन्य भवन तत्व",
+        "storey": "मंज़िलें"
+      }
+    },
+    "office": {
+      "kinds": {
+        "document": "टेक्स्ट दस्तावेज़",
+        "spreadsheet": "स्प्रेडशीट",
+        "presentation": "प्रस्तुति",
+        "database": "डेटाबेस"
+      },
+      "genericDocument": "Office दस्तावेज़",
+      "type": "प्रकार",
+      "openFailed": "खोलना विफल: {{message}}",
+      "openCopyHint": "{{module}} में संपादन योग्य प्रति खोलें। ईमेल में मूल अपरिवर्तित रहता है।",
+      "cannotOpen": "यह Office फ़ॉर्मेट यहाँ नहीं खोला जा सकता।",
+      "opening": "खोला जा रहा है…",
+      "openIn": "{{module}} में खोलें"
+    },
+    "unknown": {
+      "subtitle": "कोई पूर्वावलोकन उपलब्ध नहीं",
+      "declaredType": "घोषित प्रकार",
+      "extension": "एक्सटेंशन",
+      "none": "कोई नहीं",
+      "message": "इस फ़ाइल प्रकार के लिए पूर्वावलोकन नहीं दिखाया जा सकता। इसे सहेजें और केवल तभी खोलें जब आप प्रेषक पर भरोसा करते हों।"
+    }
+  },
+  "backend": {
+    "accounts": {
+      "fileCorrupt": "खाता फ़ाइल {{path}} दूषित है।",
+      "fileUnreadable": "खाता फ़ाइल पढ़ी नहीं जा सकी।",
+      "fileWriteFailed": "खाता फ़ाइल लिखी नहीं जा सकी।",
+      "invalidEmail": "मान्य ईमेल पता दर्ज करें।",
+      "invalidReplyTo": "उत्तर पता मान्य ईमेल पता नहीं है।",
+      "lineBreakInName": "नामों में पंक्ति विराम नहीं हो सकते।",
+      "notFound": "यह खाता अब मौजूद नहीं है।",
+      "saveFailed": "खाते सहेजे नहीं जा सके।",
+      "usernameMissing": "IMAP और SMTP के लिए उपयोगकर्ता नाम दर्ज करें।"
+    },
+    "attachments": {
+      "blockedDatabase": "सुरक्षा कारणों से '{{name}}' अपने आप नहीं खोला जाता। Access डेटाबेस को Database Studio में खोलें। यदि आप फिर भी इसे देखना चाहते हैं तो अनुलग्नक सहेजें।",
+      "blockedExecutable": "सुरक्षा कारणों से '{{name}}' अपने आप नहीं खोला जाता। यह फ़ाइल प्रकार प्रोग्राम चला सकता है। यदि आप फिर भी इसे देखना चाहते हैं तो अनुलग्नक सहेजें।",
+      "blockedMacros": "सुरक्षा कारणों से '{{name}}' अपने आप नहीं खोला जाता। इस दस्तावेज़ में मैक्रो हैं। यदि आप फिर भी इसे देखना चाहते हैं तो अनुलग्नक सहेजें।",
+      "blockedScripts": "सुरक्षा कारणों से '{{name}}' अपने आप नहीं खोला जाता। इस फ़ाइल प्रकार में स्क्रिप्ट हो सकती हैं। यदि आप फिर भी इसे देखना चाहते हैं तो अनुलग्नक सहेजें।",
+      "emptyOrTooLarge": "अनुलग्नक खाली है या 100 MB से बड़ा है।",
+      "executableContent": "'{{name}}' एक {{kind}} है और सुरक्षा कारणों से नहीं खोला जाता।",
+      "invalidName": "अमान्य फ़ाइल नाम।",
+      "kind": {
+        "linuxProgram": "Linux प्रोग्राम (ELF)",
+        "macProgram": "macOS प्रोग्राम (Mach-O) या Java क्लास",
+        "script": "स्क्रिप्ट",
+        "windowsProgram": "Windows प्रोग्राम (PE)",
+        "windowsShortcut": "Windows शॉर्टकट"
+      },
+      "nameMissing": "फ़ाइल नाम गायब है।",
+      "noProgram": "इस अनुलग्नक को खोलने के लिए कोई प्रोग्राम नहीं मिला।",
+      "notFound": "अनुलग्नक {{index}} इस संदेश में मौजूद नहीं है।",
+      "openFailed": "खोलना विफल।",
+      "sendAsBinary": "अनुलग्नक को अधिकतम 100 MB के बाइनरी डेटा के रूप में भेजें।",
+      "tempDirFailed": "अस्थायी फ़ोल्डर नहीं बनाया जा सका।",
+      "tempSaveFailed": "अनुलग्नक को अस्थायी रूप से सहेजा नहीं जा सका।"
+    },
+    "auth": {
+      "failed": "{{host}} में साइन इन विफल: उपयोगकर्ता नाम या पासवर्ड गलत है ({{detail}})। Gmail, Outlook, iCloud और Yahoo के लिए ऐप पासवर्ड आवश्यक है।",
+      "noPassword": "इस खाते के लिए कोई पासवर्ड दर्ज या सहेजा नहीं गया है।",
+      "noStoredPassword": "इस खाते के लिए कोई पासवर्ड सहेजा नहीं गया है। खाता सेटिंग्स में पासवर्ड दर्ज करें।"
+    },
+    "autoconfig": {
+      "httpsRedirectOnly": "केवल HTTPS पर रीडायरेक्ट का पालन किया जाता है।",
+      "invalidEncoding": "कॉन्फ़िगरेशन फ़ाइल में अमान्य वर्ण एन्कोडिंग।",
+      "notFound": "कोई कॉन्फ़िगरेशन नहीं मिला (HTTP {{status}})।",
+      "tooManyRedirects": "बहुत अधिक रीडायरेक्ट।"
+    },
+    "common": {
+      "saveFailed": "सहेजना विफल।"
+    },
+    "compose": {
+      "attachmentCorrupt": "अनुलग्नक '{{name}}' दूषित है।",
+      "attachmentsTooLarge": "अनुलग्नक कुल मिलाकर {{max}} MB से बड़े हैं। बड़ी फ़ाइलें साझाकरण लिंक से भेजें।",
+      "buildFailed": "संदेश तैयार नहीं किया जा सका ({{detail}})।",
+      "field": {
+        "bcc": "गुप्त प्रतिलिपि",
+        "cc": "प्रतिलिपि",
+        "from": "प्रेषक",
+        "inReplyTo": "In-Reply-To",
+        "references": "References",
+        "replyTo": "Reply-To",
+        "subject": "विषय",
+        "to": "प्रति"
+      },
+      "invalidAddress": "{{field}} में '{{address}}' मान्य ईमेल पता नहीं है।",
+      "invalidCharacters": "{{field}} में अमान्य वर्ण हैं।",
+      "invalidEnvelope": "अमान्य लिफ़ाफ़ा।",
+      "noRecipients": "कम से कम एक प्राप्तकर्ता दर्ज करें।"
+    },
+    "connection": {
+      "failed": "{{host}} से कोई कनेक्शन नहीं: {{detail}}",
+      "hostNotFound": "सर्वर नाम {{host}} नहीं मिला।",
+      "refused": "सर्वर {{host}} ने कनेक्शन अस्वीकार कर दिया। पोर्ट और सुरक्षा सेटिंग जाँचें।",
+      "reset": "{{host}} से कनेक्शन अप्रत्याशित रूप से बंद हो गया। क्या सुरक्षा सेटिंग (SSL/TLS या STARTTLS) पोर्ट से मेल खाती है?",
+      "timeout": "सर्वर {{host}} ने समय पर जवाब नहीं दिया। सर्वर नाम, पोर्ट और फ़ायरवॉल जाँचें।"
+    },
+    "files": {
+      "saveFailed": "फ़ाइल सहेजी नहीं जा सकी।"
+    },
+    "http": {
+      "invalidHttpResponse": "अमान्य HTTP प्रतिक्रिया।",
+      "invalidResponse": "अमान्य प्रतिक्रिया।",
+      "invalidServerName": "अमान्य सर्वर नाम {{host}}।",
+      "invalidUrl": "अमान्य वेब पता।",
+      "plainOnlyLocal": "अनएन्क्रिप्टेड HTTP की अनुमति केवल इस कंप्यूटर के लिए है।",
+      "redirectWithoutLocation": "बिना पते का रीडायरेक्ट।",
+      "responseTooLarge": "सर्वर प्रतिक्रिया बहुत बड़ी है।"
+    },
+    "images": {
+      "credentialsInUrl": "लॉगिन क्रेडेंशियल वाले पते प्राप्त नहीं किए जाते।",
+      "hostNotFound": "{{host}} नहीं मिला।",
+      "httpOnly": "केवल http और https पतों की अनुमति है।",
+      "invalidServerName": "अमान्य सर्वर नाम।",
+      "notAnImage": "यह पता कोई चित्र नहीं लौटाता।",
+      "privateAddress": "आंतरिक या स्थानीय पतों से बाहरी सामग्री प्राप्त नहीं की जाती।",
+      "timeout": "चित्र 10 सेकंड में लोड नहीं हुआ।",
+      "tooLarge": "चित्र 10 MB से बड़ा है।",
+      "tooManyRedirects": "बहुत अधिक रीडायरेक्ट (अधिकतम 3)।",
+      "unavailable": "चित्र उपलब्ध नहीं है (HTTP {{status}})।",
+      "unknownRedirect": "अज्ञात रीडायरेक्ट।",
+      "unsupportedImage": "सामग्री समर्थित चित्र नहीं है।"
+    },
+    "imap": {
+      "action": {
+        "copy": "कॉपी करना",
+        "countFolders": "फ़ोल्डर गिनना",
+        "createFolder": "फ़ोल्डर बनाना",
+        "delete": "हटाना",
+        "deleteFolder": "फ़ोल्डर हटाना",
+        "expunge": "साफ़ करना",
+        "fetchMessage": "संदेश प्राप्त करना",
+        "fetchMessages": "संदेश प्राप्त करना",
+        "flag": "चिह्नित करना",
+        "listFolders": "फ़ोल्डर प्राप्त करना",
+        "move": "ले जाना",
+        "openFolder": "फ़ोल्डर खोलना",
+        "openNamedFolder": "फ़ोल्डर '{{folder}}' खोलना",
+        "renameFolder": "फ़ोल्डर का नाम बदलना",
+        "saveToDrafts": "ड्राफ़्ट में सहेजना",
+        "saveToFolder": "फ़ोल्डर में सहेजना",
+        "saveToSent": "भेजे गए में सहेजना",
+        "search": "खोजना",
+        "signIn": "साइन इन करना",
+        "startTls": "STARTTLS"
+      },
+      "alreadyInTrash": "ये संदेश पहले से ट्रैश में हैं; इन्हें स्थायी रूप से हटाएँ।",
+      "appendRejected": "{{action}}: सर्वर ने संदेश अस्वीकार कर दिया।",
+      "badCommand": "{{action}}: सर्वर कमांड नहीं समझ पाया ({{detail}})।",
+      "cannotDeleteInbox": "इनबॉक्स हटाया नहीं जा सकता।",
+      "cannotRenameInbox": "इनबॉक्स का नाम बदला नहीं जा सकता।",
+      "closedImmediately": "{{host}} ने कनेक्शन तुरंत बंद कर दिया। क्या सुरक्षा सेटिंग (SSL/TLS या STARTTLS) पोर्ट से मेल खाती है?",
+      "commandTimeout": "{{host}} ने {{seconds}} सेकंड में जवाब नहीं दिया।",
+      "connectTimeout": "{{seconds}} सेकंड में {{host}}:{{port}} से कोई जवाब नहीं। सर्वर नाम, पोर्ट और फ़ायरवॉल जाँचें।",
+      "connectionLost": "{{host}} से कनेक्शन टूट गया।",
+      "draftsFolderMissing": "सर्वर पर कोई ड्राफ़्ट फ़ोल्डर नहीं मिला। खाता सेटिंग्स में वह फ़ोल्डर चुनें।",
+      "greetingRefused": "{{host}} ने कनेक्शन अस्वीकार कर दिया: {{detail}}",
+      "invalidFolderName": "अमान्य फ़ोल्डर नाम।",
+      "invalidMessage": "अमान्य संदेश।",
+      "invalidName": "{{action}}: नाम में अमान्य वर्ण।",
+      "invalidSearchCharacters": "खोज पाठ में अमान्य वर्ण हैं।",
+      "messageGone": "यह संदेश अब मौजूद नहीं है (शायद इसे ले जाया या हटाया गया है)।",
+      "messageTooLarge": "संदेश {{size}} MB का है; Email Studio {{max}} MB तक के संदेश खोलता है।",
+      "noStarttls": "{{host}} पोर्ट {{port}} पर STARTTLS का समर्थन नहीं करता। SSL/TLS चुनें (आमतौर पर पोर्ट 993)।",
+      "noTrash": "सर्वर पर कोई ट्रैश फ़ोल्डर नहीं मिला। खाता सेटिंग्स में ट्रैश फ़ोल्डर चुनें या स्थायी रूप से हटाएँ।",
+      "noValidMessages": "कोई मान्य संदेश निर्दिष्ट नहीं।",
+      "notFound": "{{action}}: {{detail}}",
+      "quotaExceeded": "{{action}}: मेलबॉक्स भरा हुआ है ({{detail}})।",
+      "refused": "{{action}}: सर्वर ने मना कर दिया ({{detail}})।",
+      "retryLater": "{{message}} (सर्वर द्वारा अवरुद्ध होने से बचने के लिए Email Studio {{retrySeconds}} सेकंड में फिर से प्रयास करेगा।)",
+      "searchTooLong": "खोज पाठ बहुत लंबा है।",
+      "sentFolderMissing": "सर्वर पर कोई भेजे गए फ़ोल्डर नहीं मिला। खाता सेटिंग्स में वह फ़ोल्डर चुनें।",
+      "signInTimeout": "{{host}} में साइन इन करने में बहुत समय लगा।",
+      "specialFolderMissing": "फ़ोल्डर सर्वर पर नहीं मिला। खाता सेटिंग्स में वह फ़ोल्डर चुनें।",
+      "unexpectedError": "{{action}}: अप्रत्याशित त्रुटि।",
+      "unexpectedResponse": "{{action}}: सर्वर से अप्रत्याशित प्रतिक्रिया।",
+      "unexpectedState": "अप्रत्याशित कनेक्शन स्थिति।"
+    },
+    "keychain": {
+      "notResponding": "कीचेन ने जवाब नहीं दिया।",
+      "unavailable": "ऑपरेटिंग सिस्टम की कीचेन उपलब्ध नहीं है। Email Studio कभी भी पासवर्ड सादे पाठ में नहीं सहेजता; Linux पर Secret Service आवश्यक है (उदाहरण के लिए GNOME Keyring या KWallet)।",
+      "unexpected": "कीचेन ने अप्रत्याशित त्रुटि लौटाई।"
+    },
+    "links": {
+      "openFailed": "लिंक खोला नहीं जा सका।",
+      "unsupportedScheme": "केवल http, https और mailto लिंक खोले जा सकते हैं।"
+    },
+    "messages": {
+      "invalidMime": "संदेश पढ़ा नहीं जा सका (अमान्य MIME संरचना)।",
+      "unreadable": "संदेश पढ़ा नहीं जा सका।"
+    },
+    "oauth": {
+      "browserFailed": "साइन इन के लिए वेब ब्राउज़र खोला नहीं जा सका।",
+      "cancelled": "साइन इन रद्द किया गया।",
+      "cancelledOrDenied": "{{provider}} में साइन इन रद्द या अस्वीकार किया गया।",
+      "clientMisconfigured": "{{provider}} के लिए OAuth क्लाइंट सही ढंग से कॉन्फ़िगर नहीं है (क्लाइंट ID या सीक्रेट)।",
+      "emailUnknown": "साइन इन का ईमेल पता निर्धारित नहीं किया जा सका; पता दर्ज करें और फिर से प्रयास करें।",
+      "invalidClientId": "यह मान्य क्लाइंट ID नहीं है।",
+      "invalidTokenEndpoint": "अमान्य टोकन एंडपॉइंट।",
+      "noAccessToken": "{{provider}} ने कोई एक्सेस टोकन नहीं लौटाया (HTTP {{status}})।",
+      "noFreePort": "साइन इन के लिए कोई अस्थायी पोर्ट उपलब्ध नहीं है।",
+      "noPort": "कोई पोर्ट नहीं।",
+      "noRefreshToken": "{{provider}} ने कोई रीफ़्रेश टोकन नहीं लौटाया; फिर से साइन इन करके देखें।",
+      "noStoredSignIn": "{{provider}} में फिर से साइन इन करें: इस खाते के लिए कोई साइन-इन सहेजा नहीं गया है।",
+      "notConfigured": {
+        "google": "Google से साइन इन अभी सेट नहीं किया गया है: कोई क्लाइंट ID नहीं है। Google Cloud में 'डेस्कटॉप ऐप' प्रकार का OAuth क्लाइंट बनाएँ (http://127.0.0.1 के ज़रिए रीडायरेक्ट), Gmail API सक्षम करें और सहमति स्क्रीन में स्कोप https://mail.google.com/ जोड़ें। फिर क्लाइंट ID और क्लाइंट सीक्रेट दर्ज करें (देखें docs/email-oauth.md)।",
+        "microsoft": "Microsoft से साइन इन अभी सेट नहीं किया गया है: कोई क्लाइंट ID नहीं है। Microsoft Entra (ऐप पंजीकरण) में एक ऐप को 'सार्वजनिक क्लाइंट' के रूप में पंजीकृत करें, रीडायरेक्ट URI http://localhost के साथ 'मोबाइल और डेस्कटॉप ऐप्लिकेशन' प्लेटफ़ॉर्म जोड़ें, और प्रत्यायोजित अनुमतियाँ IMAP.AccessAsUser.All, SMTP.Send, offline_access, openid और email दें। फिर क्लाइंट ID दर्ज करें (देखें docs/email-oauth.md)।"
+      },
+      "providerRefused": "{{provider}} ने साइन इन अस्वीकार कर दिया ({{detail}})।",
+      "randomUnavailable": "कोई सुरक्षित यादृच्छिकता स्रोत उपलब्ध नहीं है।",
+      "reauthenticate": "{{provider}} में फिर से साइन इन करें: अनुमति की अवधि समाप्त हो गई है या उसे रद्द कर दिया गया है।",
+      "settingSaveFailed": "OAuth सेटिंग सहेजी नहीं जा सकी।",
+      "signInFirst": "यह खाता OAuth2 का उपयोग करता है: पहले Microsoft या Google से साइन इन करें।",
+      "signInFirstToTest": "OAuth2 जाँचने के लिए पहले Microsoft या Google से साइन इन करें।",
+      "signInTimeout": "{{provider}} में साइन इन करने में 5 मिनट से अधिक लगे और इसे रोक दिया गया।",
+      "stateMismatch": "साइन-इन पृष्ठ की प्रतिक्रिया इस साइन इन से संबंधित नहीं है (state मेल नहीं खाता)।",
+      "timeout": "{{provider}} ने समय पर जवाब नहीं दिया।",
+      "tokenRefused": "{{provider}} ने टोकन अस्वीकार कर दिया ({{detail}})।",
+      "unexpectedResponse": "{{provider}} ने अप्रत्याशित प्रतिक्रिया लौटाई (HTTP {{status}})।"
+    },
+    "security": {
+      "cramMd5SmtpUnsupported": "SMTP के लिए एन्क्रिप्टेड पासवर्ड (CRAM-MD5) समर्थित नहीं है। 'सामान्य पासवर्ड' चुनें; SSL/TLS या STARTTLS पर पासवर्ड भी एन्क्रिप्ट होता है।",
+      "invalidServerName": "'{{host}}' {{protocol}} के लिए मान्य सर्वर नाम नहीं है।",
+      "notLocalhost": "{{host}} यह कंप्यूटर नहीं है, इसलिए अनएन्क्रिप्टेड कनेक्शन अस्वीकार किया गया।",
+      "portMissing": "{{protocol}} के लिए पोर्ट गायब है।",
+      "unencryptedRefused": "{{host}} में अनएन्क्रिप्टेड साइन इन अस्वीकार किया गया: आपका पासवर्ड नेटवर्क पर पढ़ने योग्य रूप में जाता। SSL/TLS या STARTTLS चुनें। अनएन्क्रिप्टेड कनेक्शन केवल इस कंप्यूटर (localhost) के लिए अनुमत हैं, उदाहरण के लिए Proton Mail Bridge के लिए।"
+    },
+    "server": {
+      "noTimelyResponse": "{{host}} ने समय पर जवाब नहीं दिया।"
+    },
+    "smtp": {
+      "authMethodUnsupported": "यह साइन-इन विधि SMTP के लिए समर्थित नहीं है।",
+      "error": "{{host}} पर SMTP त्रुटि: {{detail}}",
+      "messageTooLarge": "{{host}} संदेश को बहुत बड़ा होने के कारण अस्वीकार करता है ({{detail}})।",
+      "noAuthMechanism": "{{host}} ऐसी कोई साइन-इन विधि नहीं देता जिसका Email Studio समर्थन करता है (PLAIN या LOGIN)। STARTTLS या SSL/TLS चुनें; कई सर्वर एन्क्रिप्शन के बाद ही साइन इन देते हैं।",
+      "oauthRejected": "{{host}} ने OAuth2 टोकन अस्वीकार कर दिया; आपको फिर से साइन इन करना पड़ सकता है।",
+      "rejected": "{{host}} ने संदेश अस्वीकार कर दिया ({{detail}})।",
+      "sendTimeout": "{{host}} के ज़रिए भेजने में बहुत समय लगा।",
+      "tlsFailed": "{{host}} से सुरक्षित कनेक्शन स्थापित नहीं किया जा सका ({{detail}})। क्या सुरक्षा सेटिंग पोर्ट से मेल खाती है?",
+      "tryLater": "{{host}} अभी संदेश स्वीकार नहीं कर सकता; बाद में फिर से प्रयास करें ({{detail}})।"
+    },
+    "storage": {
+      "appDataDirNotFound": "ऐप डेटा फ़ोल्डर नहीं मिला।",
+      "dataDirCreateFailed": "डेटा फ़ोल्डर नहीं बनाया जा सका।",
+      "dataDirMissing": "डेटा फ़ोल्डर गायब है।"
+    },
+    "test": {
+      "signedIn": "{{host}} में साइन इन किया गया।",
+      "signedInUnencrypted": "{{host}} में साइन इन किया गया। ध्यान दें: {{protocol}} कनेक्शन एन्क्रिप्टेड नहीं है। इसकी अनुमति केवल इसलिए है क्योंकि सर्वर इसी कंप्यूटर पर चल रहा है।"
+    },
+    "tls": {
+      "certificateRejected": "{{host}} से सुरक्षित कनेक्शन अस्वीकार किया गया: {{reason}}। आपके पासवर्ड की सुरक्षा के लिए Email Studio ऐसे सर्वर से कनेक्ट नहीं होता जिसकी पहचान सत्यापित नहीं की जा सकती।",
+      "handshakeFailed": "{{host}} से सुरक्षित कनेक्शन स्थापित नहीं किया जा सका ({{detail}})। क्या सुरक्षा सेटिंग (SSL/TLS या STARTTLS) पोर्ट से मेल खाती है?",
+      "handshakeTimeout": "{{host}} के साथ TLS हैंडशेक में बहुत समय लगा।",
+      "invalidServerName": "'{{host}}' TLS के लिए मान्य सर्वर नाम नहीं है।",
+      "reason": {
+        "expired": "प्रमाणपत्र की अवधि समाप्त हो गई है",
+        "invalid": "प्रमाणपत्र अमान्य है ({{detail}})",
+        "notYetValid": "प्रमाणपत्र अभी मान्य नहीं है (क्या इस कंप्यूटर की घड़ी सही है?)",
+        "revoked": "प्रमाणपत्र रद्द कर दिया गया है",
+        "unknownIssuer": "प्रमाणपत्र किसी विश्वसनीय प्रमाणन प्राधिकरण द्वारा जारी नहीं किया गया (संभवतः स्व-हस्ताक्षरित)",
+        "wrongName": "प्रमाणपत्र नाम {{host}} का नहीं है; प्रमाणपत्र पर दिखाए गए सर्वर नाम का उपयोग करें"
+      }
+    }
+  }
+}

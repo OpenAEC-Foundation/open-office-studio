@@ -1,0 +1,1044 @@
+{
+  "accounts": {
+    "test": {
+      "test": "اختبار",
+      "testConnection": "اختبار الاتصال",
+      "testing": "جارٍ الاختبار…",
+      "retest": "اختبار مرة أخرى",
+      "failed": "فشل الاختبار"
+    },
+    "settings": {
+      "title": "إعدادات الحساب",
+      "noAccount": "لا يوجد حساب بعد.",
+      "addAccount": "إضافة حساب",
+      "accountList": "الحسابات",
+      "saving": "جارٍ الحفظ…",
+      "saved": "تم حفظ الإعدادات.",
+      "saveFailed": "تعذّر الحفظ",
+      "tabs": {
+        "identity": "الهوية",
+        "servers": "الخوادم",
+        "folders": "المجلدات",
+        "fetching": "الجلب والخصوصية",
+        "advanced": "متقدم"
+      },
+      "deleteAccount": {
+        "title": "إزالة الحساب",
+        "confirm": "هل تريد بالتأكيد إزالة <strong>{{name}}</strong> ({{email}})؟ تبقى رسائلك على الخادم؛ وستُزال كلمة المرور المحفوظة من سلسلة المفاتيح.",
+        "button": "إزالة الحساب",
+        "failed": "تعذّرت إزالة الحساب"
+      },
+      "identity": {
+        "accountName": "اسم الحساب",
+        "accountNameHint": "لك وحدك، مثلًا \"العمل\" أو \"شخصي\".",
+        "yourName": "اسمك",
+        "email": "عنوان البريد الإلكتروني",
+        "replyTo": "عنوان الرد",
+        "replyToPlaceholder": "فارغ = عنوان بريدك الإلكتروني",
+        "signature": "التوقيع",
+        "signatureHint": "يُضاف أسفل الرسائل الجديدة والردود، بعد \"-- \"."
+      },
+      "oauthAccount": {
+        "signedInAs": "تم تسجيل الدخول باسم <strong>{{account}}</strong> عبر {{provider}}",
+        "noPasswordStored": "لا تُحفظ أي كلمة مرور؛ يتم الوصول برمز مميز في سلسلة المفاتيح.",
+        "signInAgain": "تسجيل الدخول مرة أخرى",
+        "signedInAgain": "تم تسجيل الدخول مرة أخرى باسم {{account}}."
+      },
+      "password": {
+        "change": "تغيير كلمة المرور",
+        "storedPlaceholder": "محفوظة · اتركها فارغة للإبقاء عليها",
+        "noneStoredPlaceholder": "لم تُحفظ كلمة مرور بعد"
+      },
+      "folders": {
+        "hint": "اختر أين يحتفظ Email Studio بالرسائل المرسلة والمسودات والرسائل المحذوفة والمؤرشفة.",
+        "roles": {
+          "sent": "الرسائل المرسلة",
+          "drafts": "المسودات",
+          "trash": "سلة المهملات",
+          "archive": "الأرشيف"
+        },
+        "automatic": "تلقائي",
+        "automaticWithFolder": "تلقائي ({{folder}})"
+      },
+      "fetching": {
+        "checkForNew": "التحقق من الرسائل الجديدة",
+        "manualOnly": "يدويًا فقط",
+        "everyMinutes_zero": "كل {{count}} دقيقة",
+        "everyMinutes_one": "كل دقيقة",
+        "everyMinutes_two": "كل دقيقتين",
+        "everyMinutes_few": "كل {{count}} دقائق",
+        "everyMinutes_many": "كل {{count}} دقيقة",
+        "everyMinutes_other": "كل {{count}} دقيقة",
+        "externalContent": "إظهار الصور والمحتوى البعيد دائمًا",
+        "externalContentHint": "يُوصى بإيقافه: تخبر الصور البعيدة المرسلين متى وأين تفتح رسالة.",
+        "trustedSenders": "المرسلون الذين يُعرض محتواهم البعيد دائمًا",
+        "forgetSender": "نسيان {{sender}}"
+      },
+      "advanced": {
+        "oauthIntro": "يستخدم تسجيل الدخول عبر Microsoft أو Google بروتوكول OAuth2. تنطبق هذه الإعدادات على كل الحسابات. لا تحتاج إلى معرّف عميل خاص بك إلا إذا لم يتضمن التطبيق واحدًا؛ راجع <code>{{doc}}</code>.",
+        "ispdb": "الرجوع أيضًا إلى قاعدة بيانات Thunderbird للحساب الجديد",
+        "ispdbHint": "يُرسل اسم النطاق حينئذٍ إلى Mozilla. متوقف افتراضيًا.",
+        "available": "متاح.",
+        "unavailable": "غير متاح.",
+        "loadingStatus": "جارٍ تحميل الحالة…",
+        "clientId": "معرّف العميل",
+        "clientSecret": "سر العميل (اختياري)",
+        "saveClientId": "حفظ معرّف العميل",
+        "clientIdSaved": "تم حفظ معرّف العميل لـ {{provider}}.",
+        "clientIdSaveFailed": "تعذّر حفظ معرّف العميل",
+        "desktopOnly": "لا يمكنك تعيين معرّف عميل خاص بك إلا في تطبيق سطح المكتب."
+      }
+    },
+    "wizard": {
+      "title": "إضافة حساب",
+      "intro": "استخدم عنوان بريدك الإلكتروني الحالي. يعمل Email Studio مع أي مزوّد يوفر IMAP وSMTP.",
+      "fullName": "اسمك الكامل",
+      "fullNamePlaceholder": "الاسم الأول اسم العائلة",
+      "fullNameHint": "كيف يرى المستلمون اسمك.",
+      "email": "عنوان البريد الإلكتروني",
+      "emailPlaceholder": "name@example.com",
+      "password": "كلمة المرور",
+      "passwordHint": "تُستخدم فقط عند اختيار اختبار أو تم، وتُحفظ فقط في سلسلة مفاتيح نظام التشغيل.",
+      "ispdb": "الرجوع أيضًا إلى قاعدة بيانات Thunderbird",
+      "ispdbHint": "يُرسل اسم النطاق (وليس عنوانك أو كلمة مرورك) حينئذٍ إلى Mozilla.",
+      "oauthPrompt": "أو سجّل الدخول دون كلمة مرور في التطبيق:",
+      "enterNameAndEmailFirst": "أدخل اسمك وعنوان بريدك الإلكتروني أولًا.",
+      "saving": "جارٍ الحفظ…",
+      "done": "تم",
+      "saveAnyway": "الحفظ على أي حال",
+      "saveTitle": "حفظ الحساب",
+      "saveUntestedTitle": "لم يُختبر (بنجاح) بعد؛ لا يزال بإمكانك حفظ الحساب",
+      "saveFailed": "تعذّر حفظ الحساب",
+      "foundSettings": "تم العثور على الإعدادات",
+      "serverSettings": "إعدادات الخادم",
+      "serverSettingsFor": "إعدادات الخادم لـ {{domain}}",
+      "enterEmailHint": "أدخل عنوان بريدك الإلكتروني؛ وسيبحث Email Studio تلقائيًا عن الخوادم المناسبة.",
+      "searchFailed": "فشل البحث",
+      "fillInManually": "أدخل الخوادم أدناه بنفسك.",
+      "nothingFound": "لم يُعثر على إعدادات. أدخل الخوادم أدناه بنفسك؛ واطلبها من مزوّدك عند الحاجة.",
+      "proposals": "اقتراحات",
+      "unencrypted": "غير مشفر",
+      "manualConfiguration": "إعداد يدوي",
+      "adjusted": "· معدَّل",
+      "fieldsAppear": "تظهر الحقول بمجرد وجود عنوان بريد إلكتروني صالح.",
+      "bothServersFailed": "فشل كلا الخادمين. تحقق من العنوان وكلمة المرور وأسماء الخوادم."
+    },
+    "discovery": {
+      "steps": {
+        "builtIn": "القائمة المضمّنة",
+        "ownDomain": "النطاق الخاص",
+        "dns": "DNS",
+        "ispdb": "قاعدة بيانات Thunderbird",
+        "probe": "فحص الاتصال"
+      },
+      "stepStatus": {
+        "waiting": "قيد الانتظار",
+        "busy": "قيد التنفيذ…",
+        "found": "تم العثور",
+        "nothing": "لم يُعثر على شيء",
+        "skipped": "لم يُشغَّل"
+      },
+      "sources": {
+        "preset": "القائمة المضمّنة",
+        "autoconfig": "إعداد من نطاقك الخاص",
+        "srv": "سجلات DNS SRV",
+        "mx": "سجلات MX (تم التعرف على المزوّد)",
+        "ispdb": "قاعدة بيانات Thunderbird",
+        "guess": "أسماء خوادم شائعة"
+      },
+      "unencrypted": "غير مشفر",
+      "reachable": "يمكن الوصول إليه",
+      "unreachable": "لا يمكن الوصول إليه",
+      "untested": "لم يُختبر"
+    },
+    "server": {
+      "incoming": "الوارد (IMAP)",
+      "outgoing": "الصادر (SMTP)",
+      "columns": {
+        "server": "الخادم",
+        "port": "المنفذ",
+        "security": "الأمان",
+        "authentication": "المصادقة",
+        "username": "اسم المستخدم"
+      },
+      "hostLabel": "خادم {{protocol}}",
+      "portLabel": "منفذ {{protocol}}",
+      "securityLabel": "أمان {{protocol}}",
+      "authenticationLabel": "مصادقة {{protocol}}",
+      "usernameLabel": "اسم مستخدم {{protocol}}",
+      "imapPlaceholder": "imap.example.com",
+      "smtpPlaceholder": "smtp.example.com",
+      "securityNone": "بلا",
+      "authNormal": "كلمة مرور عادية",
+      "authEncrypted": "كلمة مرور مشفرة",
+      "unencryptedWarning": "<strong>اتصال غير مشفر.</strong> تنتقل كلمة مرورك ورسائلك عبر الشبكة بشكل مقروء. اختر SSL/TLS أو STARTTLS إذا كان مزوّدك يدعم ذلك.",
+      "oauthHint": "يطلب OAuth2 منك تسجيل الدخول لدى المزوّد عند الاختبار أو عند أول استخدام."
+    },
+    "oauth": {
+      "notSupported": "لا يدعم هذا الإصدار من التطبيق تسجيل الدخول عبر Microsoft أو Google بعد.",
+      "signInFailed": "فشل تسجيل الدخول عبر {{provider}}",
+      "signInWith": "تسجيل الدخول عبر {{provider}}",
+      "recommended": "موصى به",
+      "waitTitle": "أكمل تسجيل الدخول في المتصفح",
+      "waitText": "فُتحت صفحة تسجيل الدخول لـ {{provider}} في متصفحك. سجّل الدخول هناك وامنح الوصول إلى البريد؛ وسيتابع Email Studio هنا بعد ذلك.",
+      "unavailableTitle": "تسجيل الدخول عبر {{provider}} غير متاح هنا.",
+      "unavailableHelp": "في تطبيق سطح المكتب يمكنك تعيين معرّف عميل خاص بك لـ {{provider}} من <em>أدوات › إعدادات الحساب › متقدم</em>. طريقة إنشائه موضحة في <code>{{doc}}</code>. يمكنك أيضًا المتابعة بكلمة مرور (تطبيق)."
+    }
+  },
+  "errors": {
+    "code": {
+      "connection": "لا يوجد اتصال بالخادم. تحقق من اتصالك بالإنترنت ومن اسم الخادم والمنفذ.",
+      "authentication": "فشل تسجيل الدخول. تحقق من اسم المستخدم وكلمة المرور (أدوات › إعدادات الحساب).",
+      "certificate": "شهادة الخادم غير موثوقة أو لا تطابق اسم هذا الخادم.",
+      "timeout": "لم يستجب الخادم في الوقت المناسب. يُرجى المحاولة لاحقًا.",
+      "notFound": "لم تعد الرسالة أو المجلد موجودًا على الخادم.",
+      "refused": "رفض الخادم الأمر.",
+      "tooLarge": "الرسالة كبيرة جدًا بالنسبة إلى الخادم. صغّر المرفقات أو أزلها.",
+      "unavailable": "هذه الميزة غير متاحة هنا.",
+      "internal": "حدث خطأ ما."
+    },
+    "withDetail": "{{explanation}} ({{detail}})",
+    "withContext": "{{context}}: {{message}}",
+    "backendMissing": "لا يتضمن هذا الإصدار من تطبيق سطح المكتب ميزة البريد الإلكتروني.",
+    "unexpectedBinary": "مخرجات ثنائية غير متوقعة من الواجهة الخلفية."
+  },
+  "dialog": {
+    "closeEsc": "إغلاق (Esc)"
+  },
+  "sendAsAttachment": {
+    "title": "إرسال كمرفق"
+  },
+  "ribbon": {
+    "tabs": {
+      "start": "الصفحة الرئيسية",
+      "view": "عرض",
+      "tools": "أدوات"
+    },
+    "groups": {
+      "new": "جديد",
+      "respond": "رد",
+      "delete": "حذف",
+      "mark": "وسوم",
+      "organize": "تنظيم",
+      "layout": "التخطيط",
+      "sort": "فرز",
+      "message": "رسالة",
+      "accounts": "الحسابات",
+      "folders": "المجلدات"
+    },
+    "withShortcut": "{{action}} · {{shortcut}}",
+    "fetch": "جلب الرسائل",
+    "fetchTitle": "جلب الرسائل · {{key}} أو {{shortcut}}",
+    "readUnread": "مقروءة/غير مقروءة",
+    "readUnreadTitle": "مقروءة أو غير مقروءة · {{shortcut}}",
+    "star": "نجمة",
+    "move": "نقل",
+    "moveTitle": "نقل إلى مجلد",
+    "folderPane": "جزء المجلدات",
+    "readingPane": "جزء القراءة",
+    "resetLayout": "إعادة تعيين التخطيط",
+    "sortBy": "الفرز حسب",
+    "sort": {
+      "date": "التاريخ",
+      "sender": "المرسل",
+      "subject": "الموضوع",
+      "size": "الحجم"
+    },
+    "ascending": "تصاعدي",
+    "descending": "تنازلي",
+    "viewSource": "عرض المصدر",
+    "accountSettings": "إعدادات الحساب"
+  },
+  "studio": {
+    "errors": {
+      "loadAccounts": "تعذّر تحميل الحسابات",
+      "loadMessages": "تعذّر تحميل الرسائل",
+      "openMessage": "تعذّر فتح الرسالة",
+      "delete": "تعذّر الحذف",
+      "move": "تعذّر النقل",
+      "mark": "تعذّر وضع العلامة",
+      "forwardAttachments": "تعذّر جلب المرفقات لإعادة التوجيه",
+      "openFile": "تعذّر فتح {{name}}",
+      "saveFile": "تعذّر حفظ {{name}}",
+      "source": "تعذّر جلب المصدر",
+      "updateFolder": "تعذّر تحديث المجلد",
+      "deleteFolder": "تعذّر حذف المجلد"
+    },
+    "accountAdded": "تمت إضافة الحساب {{email}}.",
+    "addAccount": "إضافة حساب",
+    "deletePermanently": {
+      "title": "حذف نهائي",
+      "text_zero": "ستُحذف هذه الرسالة نهائيًا. لا يمكن التراجع عن ذلك.",
+      "text_one": "ستُحذف هذه الرسالة نهائيًا. لا يمكن التراجع عن ذلك.",
+      "text_two": "ستُحذف رسالتان نهائيًا. لا يمكن التراجع عن ذلك.",
+      "text_few": "ستُحذف {{count}} رسائل نهائيًا. لا يمكن التراجع عن ذلك.",
+      "text_many": "ستُحذف {{count}} رسالة نهائيًا. لا يمكن التراجع عن ذلك.",
+      "text_other": "ستُحذف {{count}} رسالة نهائيًا. لا يمكن التراجع عن ذلك.",
+      "confirm": "حذف نهائي"
+    },
+    "noArchiveFolder": "لا يحتوي هذا الحساب على مجلد أرشيف. اختر واحدًا من أدوات › إعدادات الحساب › المجلدات.",
+    "fetched": "تم جلب الرسائل.",
+    "deleteFolder": {
+      "title": "حذف المجلد",
+      "text": "سيُحذف المجلد “{{folder}}” وكل الرسائل فيه من الخادم."
+    },
+    "welcome": {
+      "title": "لا يوجد حساب بريد إلكتروني بعد",
+      "text": "أضف حسابك باستخدام عنوان بريدك الإلكتروني وكلمة المرور. يجد Email Studio الإعدادات المناسبة."
+    },
+    "folderPaneWidth": "عرض جزء المجلدات",
+    "messageListWidth": "عرض قائمة الرسائل",
+    "messageList": "قائمة الرسائل",
+    "search": {
+      "in": "البحث في {{folder}}",
+      "label": "البحث في الرسائل ({{shortcut}})",
+      "clear": "مسح البحث"
+    },
+    "filter": {
+      "label": "عامل تصفية سريع",
+      "unread": "غير مقروءة",
+      "unreadTitle": "غير المقروءة فقط",
+      "starred": "ذات النجمة",
+      "starredTitle": "ذات النجمة فقط",
+      "attachment": "مرفق",
+      "attachmentTitle": "ذات المرفقات فقط",
+      "body": "النص",
+      "bodyTitle": "البحث أيضًا في نص الرسالة (أبطأ)"
+    },
+    "count": {
+      "filtered": "{{shown}} من {{total}}",
+      "filteredLoaded": "{{shown}} من {{loaded}} تم تحميلها",
+      "messages_zero": "{{count}} رسالة",
+      "messages_one": "رسالة واحدة",
+      "messages_two": "رسالتان",
+      "messages_few": "{{count}} رسائل",
+      "messages_many": "{{count}} رسالة",
+      "messages_other": "{{count}} رسالة",
+      "selected_zero": "تم تحديد {{count}}",
+      "selected_one": "تم تحديد {{count}}",
+      "selected_two": "تم تحديد {{count}}",
+      "selected_few": "تم تحديد {{count}}",
+      "selected_many": "تم تحديد {{count}}",
+      "selected_other": "تم تحديد {{count}}"
+    },
+    "noResults": "لم يُعثر على رسائل.",
+    "emptyFolder": "هذا المجلد فارغ.",
+    "moveTo_zero": "نقل الرسالة إلى",
+    "moveTo_one": "نقل الرسالة إلى",
+    "moveTo_two": "نقل الرسالتين إلى",
+    "moveTo_few": "نقل {{count}} رسائل إلى",
+    "moveTo_many": "نقل {{count}} رسالة إلى",
+    "moveTo_other": "نقل {{count}} رسالة إلى",
+    "folderDialog": {
+      "newTitle": "مجلد جديد",
+      "renameTitle": "إعادة تسمية المجلد",
+      "create": "إنشاء",
+      "rename": "إعادة تسمية",
+      "name": "الاسم",
+      "inside": "داخل “{{folder}}”"
+    },
+    "source": {
+      "title": "مصدر الرسالة",
+      "saveAs": "حفظ كـ {{extension}}"
+    }
+  },
+  "address": {
+    "invalid": "عنوان غير صالح: {{address}}",
+    "remove": "إزالة {{address}}"
+  },
+  "list": {
+    "label": "الرسائل",
+    "to": "إلى: {{address}}",
+    "noRecipient": "(بلا مستلم)",
+    "replied": "تم الرد",
+    "hasAttachment": "تحتوي على مرفق",
+    "noSubject": "(بلا موضوع)",
+    "star": "إضافة نجمة",
+    "unstar": "إزالة النجمة",
+    "loadingMore": "جارٍ تحميل مزيد من الرسائل…"
+  },
+  "folders": {
+    "label": "المجلدات",
+    "loading": "جارٍ تحميل المجلدات…",
+    "unread_zero": "{{count}} غير مقروءة",
+    "unread_one": "{{count}} غير مقروءة",
+    "unread_two": "{{count}} غير مقروءة",
+    "unread_few": "{{count}} غير مقروءة",
+    "unread_many": "{{count}} غير مقروءة",
+    "unread_other": "{{count}} غير مقروءة",
+    "inbox": "البريد الوارد"
+  },
+  "reader": {
+    "loadingMessage": "جارٍ تحميل الرسالة…",
+    "chooseMessage": "اختر رسالة لقراءتها.",
+    "label": "الرسالة: {{subject}}",
+    "reply": "رد",
+    "replyTitle": "رد · {{shortcut}}",
+    "replyAll": "رد على الكل",
+    "replyAllTitle": "رد على الكل · {{shortcut}}",
+    "forward": "إعادة توجيه",
+    "forwardTitle": "إعادة توجيه · {{shortcut}}",
+    "archive": "أرشفة",
+    "archiveTitle": "أرشفة · {{shortcut}}",
+    "delete": "حذف",
+    "deleteTitle": "حذف · {{shortcut}}",
+    "starTitle": "نجمة · {{shortcut}}",
+    "from": "من",
+    "to": "إلى",
+    "none": "(لا شيء)",
+    "cc": "نسخة",
+    "replyTo": "الرد إلى",
+    "date": "التاريخ",
+    "external": {
+      "blocked_zero": "تم حظر صورة بعيدة لحماية خصوصيتك.",
+      "blocked_one": "تم حظر صورة بعيدة لحماية خصوصيتك.",
+      "blocked_two": "تم حظر صورتين بعيدتين لحماية خصوصيتك.",
+      "blocked_few": "تم حظر {{count}} صور بعيدة لحماية خصوصيتك.",
+      "blocked_many": "تم حظر {{count}} صورة بعيدة لحماية خصوصيتك.",
+      "blocked_other": "تم حظر {{count}} صورة بعيدة لحماية خصوصيتك.",
+      "desktopHint": "بإذنك يجلبها التطبيق ويعرضها دون السماح للرسالة بالاتصال بأي مكان.",
+      "demoHint": "(في العرض التوضيحي تشير إلى عناوين غير موجودة.)",
+      "show": "إظهار المحتوى البعيد",
+      "alwaysFrom": "الإظهار دائمًا من {{sender}}",
+      "failed_zero": "تعذّر جلب صورة بعيدة.",
+      "failed_one": "تعذّر جلب صورة بعيدة.",
+      "failed_two": "تعذّر جلب صورتين بعيدتين.",
+      "failed_few": "تعذّر جلب {{count}} صور بعيدة.",
+      "failed_many": "تعذّر جلب {{count}} صورة بعيدة.",
+      "failed_other": "تعذّر جلب {{count}} صورة بعيدة."
+    },
+    "attachments": {
+      "label": "المرفقات",
+      "previewOrOpen": "نقرة: معاينة · نقرة مزدوجة: فتح في {{module}}",
+      "preview": "معاينة",
+      "openCopyTitle": "فتح كنسخة قابلة للتحرير في {{module}}",
+      "openIn": "فتح في {{module}}",
+      "saveTitle": "الحفظ على هذا الكمبيوتر"
+    },
+    "content": "محتوى الرسالة",
+    "loadingContent": "جارٍ تحميل المحتوى…"
+  },
+  "compose": {
+    "errors": {
+      "saveDraft": "تعذّر حفظ المسودة",
+      "noRecipients": "أضف مستلمًا واحدًا على الأقل.",
+      "send": "تعذّر الإرسال",
+      "attachmentsLarge": "مجموع حجم المرفقات {{size}}؛ ترفض خوادم كثيرة الرسائل التي تزيد على {{max}}.",
+      "linkNotAllowed": "يُسمح فقط بروابط http(s) وmailto وtel."
+    },
+    "noSubject": {
+      "title": "بلا موضوع",
+      "text": "لا تحتوي هذه الرسالة على موضوع. هل تريد إرسالها على أي حال؟",
+      "fillIn": "أدخل موضوعًا",
+      "sendWithout": "إرسال دون موضوع"
+    },
+    "forgotAttachment": {
+      "title": "هل نسيت مرفقًا؟",
+      "text": "تذكر رسالتك <strong>“{{word}}”</strong>، لكن لم تتم إضافة أي مرفق.",
+      "sendAnyway": "إرسال على أي حال",
+      "keywords": "مرفق|مرفقات|مرفقة|في المرفق|تجدون مرفقا"
+    },
+    "addAttachment": "إضافة مرفق",
+    "attachment": "إرفاق",
+    "removeAttachment": "إزالة {{name}}",
+    "attachmentsSummary_zero": "{{count}} مرفق · {{size}}",
+    "attachmentsSummary_one": "مرفق واحد · {{size}}",
+    "attachmentsSummary_two": "مرفقان · {{size}}",
+    "attachmentsSummary_few": "{{count}} مرفقات · {{size}}",
+    "attachmentsSummary_many": "{{count}} مرفقًا · {{size}}",
+    "attachmentsSummary_other": "{{count}} مرفق · {{size}}",
+    "dropToAttach": "أفلِت لإضافته كمرفق",
+    "sent": "تم إرسال الرسالة.",
+    "sentWithSubject": "تم إرسال الرسالة: {{subject}}.",
+    "unsent": {
+      "title": "لم تُرسل الرسالة",
+      "text": "هل تريد حفظ هذه الرسالة كمسودة؟",
+      "discard": "تجاهل",
+      "saveDraft": "حفظ المسودة"
+    },
+    "label": "إنشاء: {{subject}}",
+    "newMessage": "رسالة جديدة",
+    "send": "إرسال",
+    "sending": "جارٍ الإرسال…",
+    "sendTitle": "إرسال · {{shortcut}}",
+    "draft": "مسودة",
+    "savingDraft": "جارٍ الحفظ…",
+    "saveDraftTitle": "حفظ كمسودة · {{shortcut}}",
+    "dismissError": "إغلاق الرسالة",
+    "from": "من",
+    "to": "إلى",
+    "cc": "نسخة",
+    "bcc": "نسخة مخفية",
+    "subject": "الموضوع",
+    "body": "نص الرسالة",
+    "format": {
+      "label": "التنسيق",
+      "withShortcut": "{{action}} · {{shortcut}}",
+      "bold": "غامق",
+      "italic": "مائل",
+      "underline": "تسطير",
+      "bullets": "تعداد نقطي",
+      "numbering": "ترقيم",
+      "link": "ارتباط",
+      "insertLink": "إدراج ارتباط",
+      "clear": "مسح التنسيق",
+      "linkAddress": "عنوان الارتباط",
+      "insert": "إدراج"
+    }
+  },
+  "link": {
+    "browserFailed": "تعذّر فتح المتصفح. انسخ العنوان: {{url}}",
+    "phoneTitle": "رقم الهاتف",
+    "openTitle": "فتح الارتباط؟",
+    "copied": "تم نسخ العنوان.",
+    "copyFailed": "فشل النسخ؛ حدد العنوان يدويًا.",
+    "copy": "نسخ العنوان",
+    "openInBrowser": "فتح في المتصفح",
+    "phoneIntro": "يظهر رقم الهاتف هذا في الرسالة:",
+    "realTarget": "يؤدي هذا الارتباط فعليًا إلى:",
+    "misleading": "يذكر النص في الرسالة <strong>{{shown}}</strong>، لكن الارتباط يؤدي إلى <strong>{{actual}}</strong>. قد يكون هذا تصيّدًا احتياليًا.",
+    "unencrypted": "ملاحظة: لا يستخدم هذا الارتباط اتصالًا مشفرًا (http)."
+  },
+  "files": {
+    "saveUnsupported": "لا يستطيع هذا الإصدار من تطبيق سطح المكتب حفظ {{name}} بعد. افتح المرفق في وحدة أو حدّث التطبيق.",
+    "saved": "تم الحفظ: {{path}}",
+    "saveCancelled": "تم إلغاء الحفظ.",
+    "downloadRequested": "تم طلب التنزيل. تحقق من الملف في مجلد التنزيلات."
+  },
+  "quote": {
+    "unknownSender": "(غير معروف)",
+    "wroteOn": "في {{date}}، كتب {{sender}}:",
+    "wrote": "كتب {{sender}}:",
+    "forwarded": "رسالة معاد توجيهها",
+    "subject": "الموضوع: {{value}}",
+    "date": "التاريخ: {{value}}",
+    "from": "من: {{value}}",
+    "to": "إلى: {{value}}",
+    "cc": "نسخة: {{value}}"
+  },
+  "demo": {
+    "banner": "عرض توضيحي — البريد الحقيقي غير ممكن في المتصفح؛ استخدم تطبيق سطح المكتب.",
+    "accountName": "صندوق بريد تجريبي",
+    "folders": {
+      "notifications": "الإشعارات",
+      "drafts": "المسودات",
+      "sent": "المرسلة",
+      "archive": "الأرشيف",
+      "junk": "البريد غير الهام",
+      "trash": "سلة المهملات"
+    },
+    "welcome": {
+      "subject": "مرحبًا بك في OpenAEC Email Studio",
+      "heading": "مرحبًا!",
+      "intro": "هذا صندوق بريد تجريبي. في المتصفح لا يستطيع Email Studio جلب بريد حقيقي أو إرساله؛ استخدم تطبيق سطح المكتب لذلك.",
+      "introHtml": "هذا <strong>صندوق بريد تجريبي</strong>. في المتصفح لا يستطيع Email Studio جلب بريد حقيقي أو إرساله؛ استخدم تطبيق سطح المكتب لذلك.",
+      "tryIt": "جرّب بحرية: الرد، ووضع نجمة (S)، والنقل إلى الأرشيف، وفتح مرفق في نص أو جدول بيانات.",
+      "tryItHtml": "جرّب بحرية: الرد، ووضع نجمة (<kbd>S</kbd>)، والنقل إلى الأرشيف، وفتح مرفق في نص أو جدول بيانات.",
+      "logoText": "شعار OpenAEC أدناه صورة مضمّنة من مرفق (cid:).",
+      "logoAlt": "شعار OpenAEC",
+      "logoHtml": "الشعار على اليسار صورة مضمّنة من مرفق."
+    },
+    "errors": {
+      "accountNotFound": "الحساب غير موجود.",
+      "messageNotFound": "الرسالة غير موجودة.",
+      "folderExists": "هذا المجلد موجود بالفعل.",
+      "folderCannotRename": "لا يمكن إعادة تسمية هذا المجلد.",
+      "specialFolderDelete": "لا يمكن حذف المجلدات الخاصة.",
+      "attachmentNotFound": "المرفق غير موجود.",
+      "targetFolderNotFound": "المجلد الهدف غير موجود.",
+      "noRecipients": "لم يُحدد أي مستلم.",
+      "recipientRefused": "عرض توضيحي: يرفض الخادم المستلم {{domain}}.",
+      "attachmentsTooLarge": "عرض توضيحي: المرفقات محدودة بـ {{max}}."
+    },
+    "accountAdded": {
+      "subject": "تمت إضافة حسابك (عرض توضيحي)",
+      "text": "تمت إضافة الحساب {{email}} إلى العرض التوضيحي. {{notice}}"
+    },
+    "discovery": {
+      "knownProvider": "مزوّد معروف (عرض توضيحي).",
+      "mx": "يشير سجل MX للنطاق {{domain}} إلى mail.protection.outlook.com (عرض توضيحي).",
+      "ownServer": "{{name}} (خادم خاص)",
+      "autoconfig": "عُثر عليه في autoconfig.{{domain}} (عرض توضيحي).",
+      "srv": "_imaps._tcp و_submission._tcp (عرض توضيحي).",
+      "ispdb": "من قاعدة بيانات Thunderbird (عرض توضيحي).",
+      "guessImapOk": "أسماء خوادم شائعة؛ نجح فحص IMAP (عرض توضيحي).",
+      "guessAlternative": "اسم خادم بديل (عرض توضيحي)."
+    },
+    "test": {
+      "noServer": "لم يُحدد خادم {{protocol}}.",
+      "invalidPort": "منفذ غير صالح.",
+      "unreachable": "عرض توضيحي: لا يمكن الوصول إلى {{host}}.",
+      "simulated": "عرض توضيحي: تمت محاكاة الاتصال.",
+      "simulatedUnencrypted": "عرض توضيحي: تمت محاكاة الاتصال (غير مشفر!)."
+    },
+    "oauthDesktopOnly": "تسجيل الدخول عبر Microsoft أو Google ممكن فقط في تطبيق سطح المكتب."
+  },
+  "preview": {
+    "loading": "جارٍ تحميل المعاينة…",
+    "dialog": {
+      "attachments": "المرفقات",
+      "previous": "المرفق السابق",
+      "previousTitle": "المرفق السابق (←)",
+      "next": "المرفق التالي",
+      "nextTitle": "المرفق التالي (→)",
+      "close": "إغلاق المعاينة",
+      "closeTitle": "إغلاق (Esc)",
+      "fetching": "جارٍ جلب المرفق…",
+      "fetchFailed": "تعذّر جلب المرفق: {{message}}"
+    },
+    "card": {
+      "fileName": "اسم الملف",
+      "size": "الحجم",
+      "openExternal": "فتح بالتطبيق الافتراضي",
+      "unknown": "غير معروف",
+      "attention": "ملاحظة",
+      "yes": "نعم",
+      "no": "لا"
+    },
+    "detection": {
+      "kinds": {
+        "pdf": "ملف PDF",
+        "dwg": "رسم DWG",
+        "dxf": "رسم DXF",
+        "ifc": "نموذج IFC",
+        "markdown": "Markdown",
+        "text": "نص",
+        "image": "صورة",
+        "office": "مستند Office",
+        "unknown": "ملف غير معروف"
+      },
+      "contentDiffers": "يوحي الاسم بأنه {{kind}}، لكن المحتوى شيء آخر.",
+      "mismatch": "اسم هذا المرفق “.{{extension}}” ({{named}})، لكن المحتوى {{actual}}.",
+      "mismatchSubtype": "اسم هذا المرفق “.{{extension}}” ({{named}})، لكن المحتوى {{actual}} ({{subtype}}).",
+      "contentBinary": "يوحي الاسم بأنه {{kind}}، لكن المحتوى ثنائي.",
+      "notSvg": "يوحي الاسم بصورة SVG، لكن المحتوى ليس SVG.",
+      "signatureMissing": "يوحي الاسم بأنه {{kind}}، لكن المحتوى يفتقر إلى الخصائص المطابقة."
+    },
+    "image": {
+      "loadFailed": "تعذّر تحميل الصورة: {{message}}",
+      "subtitle": "صورة",
+      "cannotDisplay": "لا يمكن عرض هذه الصورة هنا (تالفة أو بصيغة غير مدعومة).",
+      "tooLarge": "هذه الصورة أكبر من {{size}} ميغابايت ولا تُعرض كمعاينة.",
+      "tooManyPixels": "أبعاد هذه الصورة {{width}} × {{height}} بكسل (أكثر من {{megapixels}} ميغابكسل) ولا تُعرض كمعاينة.",
+      "toolbar": "صورة",
+      "zoomOut": "تصغير",
+      "zoomOutTitle": "تصغير (−)",
+      "zoomIn": "تكبير",
+      "zoomInTitle": "تكبير (+)",
+      "fit": "احتواء في النافذة",
+      "fitTitle": "احتواء في النافذة (0)",
+      "actualSize": "الحجم الفعلي (100%)",
+      "actualSizeTitle": "الحجم الفعلي",
+      "rotate": "تدوير باتجاه عقارب الساعة",
+      "rotateTitle": "تدوير باتجاه عقارب الساعة (R)",
+      "area": "معاينة الصورة"
+    },
+    "text": {
+      "loadFailed": "تعذّر تحميل النص: {{message}}",
+      "toolbar": "نص",
+      "encoding": "الترميز: {{encoding}}",
+      "utf8Bom": "UTF-8 (مع BOM)",
+      "formatJson": "تنسيق JSON",
+      "wrapLines": "التفاف الأسطر",
+      "truncated": "يُعرض أول {{limit}} من {{size}}. احفظ الملف لرؤية كل شيء.",
+      "contentOf": "محتوى {{name}}"
+    },
+    "markdown": {
+      "loadFailed": "تعذّر تحميل الملف: {{message}}",
+      "linkNotOpened": "لم يُفتح الارتباط: {{url}}",
+      "imageFallback": "صورة",
+      "externalBlocked": "{{alt}} (تم حظر صورة خارجية)",
+      "unavailable": "{{alt}} (غير متاح)",
+      "view": "عرض",
+      "rendered": "معروض",
+      "source": "المصدر",
+      "showExternalImages": "إظهار الصور الخارجية",
+      "truncated": "يُعرض أول {{limit}} من {{size}}.",
+      "confirmLabel": "فتح الارتباط",
+      "confirmQuestion": "فتح هذا الارتباط خارج Office Studio؟"
+    },
+    "pdf": {
+      "loadFailed": "تعذّر تحميل ملف PDF: {{message}}",
+      "properties": "الخصائص",
+      "frameTitle": "PDF: {{name}}",
+      "linuxUnsupported": "لا يستطيع عرض الويب على Linux عرض ملفات PDF بشكل موثوق. ستتوفر المعاينة الكاملة في إصدار مستقبلي (عارض Rust).",
+      "cannotPreview": "لا يمكن معاينة ملف PDF هذا هنا. ستتوفر المعاينة الكاملة في إصدار مستقبلي (عارض Rust).",
+      "subtitle": "مستند PDF",
+      "subtitleVersion": "PDF {{version}}",
+      "pages": "الصفحات",
+      "author": "المؤلف",
+      "subject": "الموضوع",
+      "createdWith": "أُنشئ باستخدام",
+      "created": "تاريخ الإنشاء",
+      "modified": "تاريخ التعديل",
+      "encrypted": "مشفر",
+      "incomplete": "يبدو أن الملف غير مكتمل أو تالف",
+      "showPreview": "إظهار المعاينة"
+    },
+    "cad": {
+      "loadFailed": "تعذّر تحميل الرسم: {{message}}",
+      "previewLater": "ستتوفر المعاينة في إصدار مستقبلي (عارض Rust).",
+      "tooLargeToParse": "هذا الملف أكبر من أن يُحلل هنا. ستتوفر المعاينة في إصدار مستقبلي (عارض Rust).",
+      "dwgSubtitle": "رسم AutoCAD (DWG)",
+      "dxfSubtitle": "رسم DXF",
+      "dxfBinarySubtitle": "رسم DXF ثنائي",
+      "format": "التنسيق",
+      "savedAs": "محفوظ كـ",
+      "unknownAutocadVersion": "إصدار AutoCAD غير معروف",
+      "units": "الوحدات",
+      "entities": "الكيانات",
+      "blocks": "الكتل",
+      "layers": "الطبقات",
+      "thumbnailAlt": "صورة مصغرة مضمّنة للرسم",
+      "thumbnailCaption": "صورة مصغرة من الملف",
+      "entitiesByType": "الكيانات حسب النوع",
+      "layersCount": "الطبقات ({{n}})",
+      "andMore": "… و{{n}} أخرى",
+      "versionRange": "AutoCAD من {{from}} إلى {{to}}",
+      "versionAndLater": "AutoCAD {{version}} وما بعده",
+      "unitCode": "الرمز {{code}}",
+      "unitNames": {
+        "unitless": "بلا وحدة",
+        "inch": "بوصة",
+        "foot": "قدم",
+        "mile": "ميل",
+        "millimeter": "مليمتر",
+        "centimeter": "سنتيمتر",
+        "meter": "متر",
+        "kilometer": "كيلومتر",
+        "microinch": "ميكروبوصة",
+        "mil": "ميل (جزء من ألف من البوصة)",
+        "yard": "ياردة",
+        "angstrom": "أنغستروم",
+        "nanometer": "نانومتر",
+        "micron": "ميكرون",
+        "decimeter": "ديسيمتر",
+        "decameter": "ديكامتر",
+        "hectometer": "هكتومتر",
+        "gigameter": "غيغامتر",
+        "astronomicalUnit": "وحدة فلكية",
+        "lightYear": "سنة ضوئية",
+        "parsec": "فرسخ فلكي",
+        "usSurveyFoot": "قدم المسح الأمريكي",
+        "usSurveyInch": "بوصة المسح الأمريكية",
+        "usSurveyYard": "ياردة المسح الأمريكية",
+        "usSurveyMile": "ميل المسح الأمريكي"
+      }
+    },
+    "ifc": {
+      "loadFailed": "تعذّر تحميل النموذج: {{message}}",
+      "previewLater": "ستتوفر المعاينة ثلاثية الأبعاد في إصدار مستقبلي (عارض Rust).",
+      "tooLarge": "هذا النموذج أكبر من {{size}} ميغابايت ولا يُحلل هنا.",
+      "analysing": "جارٍ تحليل النموذج… {{percent}}",
+      "cancelled": "تم إلغاء التحليل.",
+      "retry": "تحليل مرة أخرى",
+      "failed": "فشل التحليل: {{message}}",
+      "subtitle": "نموذج IFC",
+      "subtitleWithSchema": "نموذج IFC · {{schemas}}",
+      "nameInFile": "الاسم في الملف",
+      "timestamp": "الطابع الزمني",
+      "author": "المؤلف",
+      "organization": "المؤسسة",
+      "application": "التطبيق",
+      "description": "الوصف",
+      "sites": "المواقع",
+      "buildings": "المباني",
+      "entities": "الكيانات",
+      "incomplete": "يبدو أن الملف غير مكتمل (لا يوجد END-ISO-10303-21)",
+      "storeys": "الطوابق ({{n}})",
+      "elementsHeading": "عناصر البناء",
+      "allEntityTypes": "كل أنواع الكيانات ({{n}})",
+      "elements": {
+        "wall": "الجدران",
+        "wallStandardCase": "الجدران (الحالة القياسية)",
+        "curtainWall": "الجدران الستارية",
+        "slab": "الأرضيات والبلاطات",
+        "roof": "الأسقف",
+        "column": "الأعمدة",
+        "beam": "الكمرات",
+        "member": "العناصر الإنشائية",
+        "plate": "الألواح",
+        "door": "الأبواب",
+        "window": "النوافذ",
+        "stair": "السلالم",
+        "ramp": "المنحدرات",
+        "railing": "الدرابزينات",
+        "covering": "الكسوات",
+        "footing": "الأساسات",
+        "pile": "الركائز",
+        "space": "الفراغات",
+        "opening": "الفتحات",
+        "furnishing": "الأثاث",
+        "flowSegment": "مقاطع القنوات والأنابيب",
+        "flowTerminal": "الأطراف الطرفية للخدمات",
+        "proxy": "عناصر بناء أخرى",
+        "storey": "الطوابق"
+      }
+    },
+    "office": {
+      "kinds": {
+        "document": "مستند نصي",
+        "spreadsheet": "جدول بيانات",
+        "presentation": "عرض تقديمي",
+        "database": "قاعدة بيانات"
+      },
+      "genericDocument": "مستند Office",
+      "type": "النوع",
+      "openFailed": "فشل الفتح: {{message}}",
+      "openCopyHint": "افتح نسخة قابلة للتحرير في {{module}}. يبقى الأصل في البريد دون تغيير.",
+      "cannotOpen": "لا يمكن فتح تنسيق Office هذا هنا.",
+      "opening": "جارٍ الفتح…",
+      "openIn": "فتح في {{module}}"
+    },
+    "unknown": {
+      "subtitle": "لا تتوفر معاينة",
+      "declaredType": "النوع المعلن",
+      "extension": "الامتداد",
+      "none": "لا شيء",
+      "message": "لا يمكن عرض معاينة لهذا النوع من الملفات. احفظه ولا تفتحه إلا إذا كنت تثق بالمرسل."
+    }
+  },
+  "backend": {
+    "accounts": {
+      "fileCorrupt": "ملف الحسابات {{path}} تالف.",
+      "fileUnreadable": "تعذّرت قراءة ملف الحسابات.",
+      "fileWriteFailed": "تعذّرت كتابة ملف الحسابات.",
+      "invalidEmail": "أدخل عنوان بريد إلكتروني صالحًا.",
+      "invalidReplyTo": "عنوان الرد ليس عنوان بريد إلكتروني صالحًا.",
+      "lineBreakInName": "لا يمكن أن تحتوي الأسماء على فواصل أسطر.",
+      "notFound": "هذا الحساب لم يعد موجودًا.",
+      "saveFailed": "تعذّر حفظ الحسابات.",
+      "usernameMissing": "أدخل اسم المستخدم لـ IMAP وSMTP."
+    },
+    "attachments": {
+      "blockedDatabase": "لأسباب أمنية لا يُفتح '{{name}}' تلقائيًا. افتح قواعد بيانات Access في Database Studio. احفظ المرفق إذا كنت لا تزال تريد عرضه.",
+      "blockedExecutable": "لأسباب أمنية لا يُفتح '{{name}}' تلقائيًا. يمكن لهذا النوع من الملفات تشغيل برامج. احفظ المرفق إذا كنت لا تزال تريد عرضه.",
+      "blockedMacros": "لأسباب أمنية لا يُفتح '{{name}}' تلقائيًا. يحتوي هذا المستند على وحدات ماكرو. احفظ المرفق إذا كنت لا تزال تريد عرضه.",
+      "blockedScripts": "لأسباب أمنية لا يُفتح '{{name}}' تلقائيًا. يمكن أن يحتوي هذا النوع من الملفات على نصوص برمجية. احفظ المرفق إذا كنت لا تزال تريد عرضه.",
+      "emptyOrTooLarge": "المرفق فارغ أو أكبر من 100 ميغابايت.",
+      "executableContent": "'{{name}}' هو {{kind}} ولا يُفتح لأسباب أمنية.",
+      "invalidName": "اسم ملف غير صالح.",
+      "kind": {
+        "linuxProgram": "برنامج Linux (ELF)",
+        "macProgram": "برنامج macOS (Mach-O) أو فئة Java",
+        "script": "نص برمجي",
+        "windowsProgram": "برنامج Windows (PE)",
+        "windowsShortcut": "اختصار Windows"
+      },
+      "nameMissing": "اسم الملف مفقود.",
+      "noProgram": "لم يُعثر على برنامج لفتح هذا المرفق.",
+      "notFound": "المرفق {{index}} غير موجود في هذه الرسالة.",
+      "openFailed": "فشل الفتح.",
+      "sendAsBinary": "أرسل المرفق كبيانات ثنائية لا تتجاوز 100 ميغابايت.",
+      "tempDirFailed": "تعذّر إنشاء مجلد مؤقت.",
+      "tempSaveFailed": "تعذّر حفظ المرفق مؤقتًا."
+    },
+    "auth": {
+      "failed": "فشل تسجيل الدخول إلى {{host}}: اسم المستخدم أو كلمة المرور غير صحيحة ({{detail}}). تتطلب Gmail وOutlook وiCloud وYahoo كلمة مرور تطبيق.",
+      "noPassword": "لم يتم إدخال كلمة مرور أو حفظها لهذا الحساب.",
+      "noStoredPassword": "لا توجد كلمة مرور محفوظة لهذا الحساب. أدخل كلمة المرور في إعدادات الحساب."
+    },
+    "autoconfig": {
+      "httpsRedirectOnly": "تُتبع فقط عمليات إعادة التوجيه إلى HTTPS.",
+      "invalidEncoding": "ترميز أحرف غير صالح في ملف الإعداد.",
+      "notFound": "لم يُعثر على إعداد (HTTP {{status}}).",
+      "tooManyRedirects": "عمليات إعادة توجيه كثيرة جدًا."
+    },
+    "common": {
+      "saveFailed": "فشل الحفظ."
+    },
+    "compose": {
+      "attachmentCorrupt": "المرفق '{{name}}' تالف.",
+      "attachmentsTooLarge": "يتجاوز مجموع المرفقات {{max}} ميغابايت. أرسل الملفات الكبيرة عبر ارتباط مشاركة.",
+      "buildFailed": "تعذّر إنشاء الرسالة ({{detail}}).",
+      "field": {
+        "bcc": "نسخة مخفية",
+        "cc": "نسخة",
+        "from": "من",
+        "inReplyTo": "In-Reply-To",
+        "references": "References",
+        "replyTo": "Reply-To",
+        "subject": "الموضوع",
+        "to": "إلى"
+      },
+      "invalidAddress": "'{{address}}' في {{field}} ليس عنوان بريد إلكتروني صالحًا.",
+      "invalidCharacters": "يحتوي {{field}} على أحرف غير صالحة.",
+      "invalidEnvelope": "مغلف غير صالح.",
+      "noRecipients": "أدخل مستلمًا واحدًا على الأقل."
+    },
+    "connection": {
+      "failed": "لا يوجد اتصال بـ {{host}}: {{detail}}",
+      "hostNotFound": "لم يُعثر على اسم الخادم {{host}}.",
+      "refused": "رفض الخادم {{host}} الاتصال. تحقق من المنفذ وإعداد الأمان.",
+      "reset": "أُغلق الاتصال بـ {{host}} بشكل غير متوقع. هل يطابق إعداد الأمان (SSL/TLS أو STARTTLS) المنفذ؟",
+      "timeout": "لم يستجب الخادم {{host}} في الوقت المناسب. تحقق من اسم الخادم والمنفذ وجدار الحماية."
+    },
+    "files": {
+      "saveFailed": "تعذّر حفظ الملف."
+    },
+    "http": {
+      "invalidHttpResponse": "استجابة HTTP غير صالحة.",
+      "invalidResponse": "استجابة غير صالحة.",
+      "invalidServerName": "اسم خادم غير صالح {{host}}.",
+      "invalidUrl": "عنوان ويب غير صالح.",
+      "plainOnlyLocal": "لا يُسمح بـ HTTP غير المشفر إلا إلى هذا الكمبيوتر.",
+      "redirectWithoutLocation": "إعادة توجيه دون عنوان.",
+      "responseTooLarge": "استجابة الخادم كبيرة جدًا."
+    },
+    "images": {
+      "credentialsInUrl": "لا تُجلب العناوين التي تحتوي على بيانات تسجيل الدخول.",
+      "hostNotFound": "لم يُعثر على {{host}}.",
+      "httpOnly": "يُسمح فقط بعناوين http وhttps.",
+      "invalidServerName": "اسم خادم غير صالح.",
+      "notAnImage": "لا يعيد هذا العنوان صورة.",
+      "privateAddress": "لا يُجلب المحتوى الخارجي من العناوين الداخلية أو المحلية.",
+      "timeout": "لم تُحمَّل الصورة خلال 10 ثوانٍ.",
+      "tooLarge": "الصورة أكبر من 10 ميغابايت.",
+      "tooManyRedirects": "عمليات إعادة توجيه كثيرة جدًا (3 كحد أقصى).",
+      "unavailable": "الصورة غير متاحة (HTTP {{status}}).",
+      "unknownRedirect": "إعادة توجيه غير معروفة.",
+      "unsupportedImage": "المحتوى ليس صورة مدعومة."
+    },
+    "imap": {
+      "action": {
+        "copy": "نسخ",
+        "countFolders": "عدّ المجلدات",
+        "createFolder": "إنشاء مجلد",
+        "delete": "حذف",
+        "deleteFolder": "حذف المجلد",
+        "expunge": "تنظيف",
+        "fetchMessage": "جلب الرسالة",
+        "fetchMessages": "جلب الرسائل",
+        "flag": "وضع علامة",
+        "listFolders": "جلب المجلدات",
+        "move": "نقل",
+        "openFolder": "فتح المجلد",
+        "openNamedFolder": "فتح المجلد '{{folder}}'",
+        "renameFolder": "إعادة تسمية المجلد",
+        "saveToDrafts": "الحفظ في المسودات",
+        "saveToFolder": "الحفظ في مجلد",
+        "saveToSent": "الحفظ في المرسلة",
+        "search": "بحث",
+        "signIn": "تسجيل الدخول",
+        "startTls": "STARTTLS"
+      },
+      "alreadyInTrash": "هذه الرسائل موجودة بالفعل في سلة المهملات؛ احذفها نهائيًا.",
+      "appendRejected": "{{action}}: رفض الخادم الرسالة.",
+      "badCommand": "{{action}}: لم يفهم الخادم الأمر ({{detail}}).",
+      "cannotDeleteInbox": "لا يمكن حذف البريد الوارد.",
+      "cannotRenameInbox": "لا يمكن إعادة تسمية البريد الوارد.",
+      "closedImmediately": "أغلق {{host}} الاتصال فورًا. هل يطابق إعداد الأمان (SSL/TLS أو STARTTLS) المنفذ؟",
+      "commandTimeout": "لم يستجب {{host}} خلال {{seconds}} ثانية.",
+      "connectTimeout": "لا استجابة من {{host}}:{{port}} خلال {{seconds}} ثانية. تحقق من اسم الخادم والمنفذ وجدار الحماية.",
+      "connectionLost": "انقطع الاتصال بـ {{host}}.",
+      "draftsFolderMissing": "لم يُعثر على مجلد مسودات على الخادم. اختر هذا المجلد في إعدادات الحساب.",
+      "greetingRefused": "رفض {{host}} الاتصال: {{detail}}",
+      "invalidFolderName": "اسم مجلد غير صالح.",
+      "invalidMessage": "رسالة غير صالحة.",
+      "invalidName": "{{action}}: أحرف غير صالحة في الاسم.",
+      "invalidSearchCharacters": "يحتوي نص البحث على أحرف غير صالحة.",
+      "messageGone": "هذه الرسالة لم تعد موجودة (ربما نُقلت أو حُذفت).",
+      "messageTooLarge": "حجم الرسالة {{size}} ميغابايت؛ يفتح Email Studio الرسائل حتى {{max}} ميغابايت.",
+      "noStarttls": "لا يدعم {{host}} بروتوكول STARTTLS على المنفذ {{port}}. اختر SSL/TLS (عادةً المنفذ 993).",
+      "noTrash": "لم يُعثر على مجلد سلة مهملات على الخادم. اختر مجلد سلة مهملات في إعدادات الحساب أو احذف نهائيًا.",
+      "noValidMessages": "لم تُحدد رسائل صالحة.",
+      "notFound": "{{action}}: {{detail}}",
+      "quotaExceeded": "{{action}}: صندوق البريد ممتلئ ({{detail}}).",
+      "refused": "{{action}}: رفض الخادم ({{detail}}).",
+      "retryLater": "{{message}} (سيحاول Email Studio مرة أخرى بعد {{retrySeconds}} ثانية لتجنب حظر الخادم.)",
+      "searchTooLong": "نص البحث طويل جدًا.",
+      "sentFolderMissing": "لم يُعثر على مجلد المرسلة على الخادم. اختر هذا المجلد في إعدادات الحساب.",
+      "signInTimeout": "استغرق تسجيل الدخول إلى {{host}} وقتًا طويلًا جدًا.",
+      "specialFolderMissing": "لم يُعثر على المجلد على الخادم. اختر هذا المجلد في إعدادات الحساب.",
+      "unexpectedError": "{{action}}: خطأ غير متوقع.",
+      "unexpectedResponse": "{{action}}: استجابة غير متوقعة من الخادم.",
+      "unexpectedState": "حالة اتصال غير متوقعة."
+    },
+    "keychain": {
+      "notResponding": "لم تستجب سلسلة المفاتيح.",
+      "unavailable": "سلسلة مفاتيح نظام التشغيل غير متاحة. لا يحفظ Email Studio كلمات المرور أبدًا كنص عادي؛ على Linux يلزم Secret Service (مثل GNOME Keyring أو KWallet).",
+      "unexpected": "أعادت سلسلة المفاتيح خطأً غير متوقع."
+    },
+    "links": {
+      "openFailed": "تعذّر فتح الارتباط.",
+      "unsupportedScheme": "يمكن فتح روابط http وhttps وmailto فقط."
+    },
+    "messages": {
+      "invalidMime": "تعذّرت قراءة الرسالة (بنية MIME غير صالحة).",
+      "unreadable": "تعذّرت قراءة الرسالة."
+    },
+    "oauth": {
+      "browserFailed": "تعذّر فتح متصفح الويب لتسجيل الدخول.",
+      "cancelled": "تم إلغاء تسجيل الدخول.",
+      "cancelledOrDenied": "تم إلغاء تسجيل الدخول إلى {{provider}} أو رفضه.",
+      "clientMisconfigured": "عميل OAuth لـ {{provider}} غير مُعدّ بشكل صحيح (معرّف العميل أو السر).",
+      "emailUnknown": "تعذّر تحديد عنوان البريد الإلكتروني لتسجيل الدخول؛ أدخل العنوان وحاول مرة أخرى.",
+      "invalidClientId": "هذا ليس معرّف عميل صالحًا.",
+      "invalidTokenEndpoint": "نقطة نهاية رمز مميز غير صالحة.",
+      "noAccessToken": "لم يُرجع {{provider}} رمز وصول (HTTP {{status}}).",
+      "noFreePort": "لا يتوفر منفذ مؤقت لتسجيل الدخول.",
+      "noPort": "لا يوجد منفذ.",
+      "noRefreshToken": "لم يُرجع {{provider}} رمز تحديث؛ حاول تسجيل الدخول مرة أخرى.",
+      "noStoredSignIn": "سجّل الدخول إلى {{provider}} مرة أخرى: لا يوجد تسجيل دخول محفوظ لهذا الحساب.",
+      "notConfigured": {
+        "google": "لم يتم إعداد تسجيل الدخول عبر Google بعد: لا يوجد معرّف عميل. في Google Cloud أنشئ عميل OAuth من نوع 'تطبيق سطح المكتب' (إعادة التوجيه عبر http://127.0.0.1)، وفعّل Gmail API، وأضف النطاق https://mail.google.com/ إلى شاشة الموافقة. ثم أدخل معرّف العميل وسر العميل (راجع docs/email-oauth.md).",
+        "microsoft": "لم يتم إعداد تسجيل الدخول عبر Microsoft بعد: لا يوجد معرّف عميل. سجّل تطبيقًا في Microsoft Entra (تسجيلات التطبيقات) بوصفه 'عميلًا عامًا'، وأضف النظام الأساسي 'تطبيقات الأجهزة المحمولة وسطح المكتب' مع عنوان URI لإعادة التوجيه http://localhost، وامنح الأذونات المفوضة IMAP.AccessAsUser.All وSMTP.Send وoffline_access وopenid وemail. ثم أدخل معرّف العميل (راجع docs/email-oauth.md)."
+      },
+      "providerRefused": "رفض {{provider}} تسجيل الدخول ({{detail}}).",
+      "randomUnavailable": "لا يتوفر مصدر عشوائية آمن.",
+      "reauthenticate": "سجّل الدخول إلى {{provider}} مرة أخرى: انتهت صلاحية الإذن أو أُلغي.",
+      "settingSaveFailed": "تعذّر حفظ إعداد OAuth.",
+      "signInFirst": "يستخدم هذا الحساب OAuth2: سجّل الدخول أولًا عبر Microsoft أو Google.",
+      "signInFirstToTest": "سجّل الدخول أولًا عبر Microsoft أو Google لاختبار OAuth2.",
+      "signInTimeout": "استغرق تسجيل الدخول إلى {{provider}} أكثر من 5 دقائق وأُلغي.",
+      "stateMismatch": "الاستجابة من صفحة تسجيل الدخول لا تخص تسجيل الدخول هذا (عدم تطابق state).",
+      "timeout": "لم يستجب {{provider}} في الوقت المناسب.",
+      "tokenRefused": "رفض {{provider}} الرمز المميز ({{detail}}).",
+      "unexpectedResponse": "أرجع {{provider}} استجابة غير متوقعة (HTTP {{status}})."
+    },
+    "security": {
+      "cramMd5SmtpUnsupported": "كلمة المرور المشفرة (CRAM-MD5) غير مدعومة لـ SMTP. اختر 'كلمة مرور عادية'؛ فعبر SSL/TLS أو STARTTLS تُشفَّر كلمة المرور أيضًا.",
+      "invalidServerName": "'{{host}}' ليس اسم خادم صالحًا لـ {{protocol}}.",
+      "notLocalhost": "{{host}} ليس هذا الكمبيوتر، لذا رُفض الاتصال غير المشفر.",
+      "portMissing": "منفذ {{protocol}} مفقود.",
+      "unencryptedRefused": "رُفض تسجيل الدخول غير المشفر إلى {{host}}: كانت كلمة مرورك ستنتقل عبر الشبكة بشكل مقروء. اختر SSL/TLS أو STARTTLS. لا يُسمح بالاتصالات غير المشفرة إلا إلى هذا الكمبيوتر (localhost)، مثلًا لـ Proton Mail Bridge."
+    },
+    "server": {
+      "noTimelyResponse": "لم يستجب {{host}} في الوقت المناسب."
+    },
+    "smtp": {
+      "authMethodUnsupported": "طريقة تسجيل الدخول هذه غير مدعومة لـ SMTP.",
+      "error": "خطأ SMTP لدى {{host}}: {{detail}}",
+      "messageTooLarge": "يرفض {{host}} الرسالة لأنها كبيرة جدًا ({{detail}}).",
+      "noAuthMechanism": "لا يوفر {{host}} طريقة تسجيل دخول يدعمها Email Studio (PLAIN أو LOGIN). اختر STARTTLS أو SSL/TLS؛ فكثير من الخوادم لا توفر تسجيل الدخول إلا بعد التشفير.",
+      "oauthRejected": "رفض {{host}} رمز OAuth2 المميز؛ قد تحتاج إلى تسجيل الدخول مرة أخرى.",
+      "rejected": "رفض {{host}} الرسالة ({{detail}}).",
+      "sendTimeout": "استغرق الإرسال عبر {{host}} وقتًا طويلًا جدًا.",
+      "tlsFailed": "تعذّر إنشاء الاتصال الآمن بـ {{host}} ({{detail}}). هل يطابق إعداد الأمان المنفذ؟",
+      "tryLater": "لا يستطيع {{host}} قبول الرسالة الآن؛ حاول لاحقًا ({{detail}})."
+    },
+    "storage": {
+      "appDataDirNotFound": "لم يُعثر على مجلد بيانات التطبيق.",
+      "dataDirCreateFailed": "تعذّر إنشاء مجلد البيانات.",
+      "dataDirMissing": "مجلد البيانات مفقود."
+    },
+    "test": {
+      "signedIn": "تم تسجيل الدخول إلى {{host}}.",
+      "signedInUnencrypted": "تم تسجيل الدخول إلى {{host}}. ملاحظة: اتصال {{protocol}} غير مشفر. يُسمح بذلك فقط لأن الخادم يعمل على هذا الكمبيوتر."
+    },
+    "tls": {
+      "certificateRejected": "رُفض الاتصال الآمن بـ {{host}}: {{reason}}. لحماية كلمة مرورك، لا يتصل Email Studio بخادم لا يمكن التحقق من هويته.",
+      "handshakeFailed": "تعذّر إنشاء الاتصال الآمن بـ {{host}} ({{detail}}). هل يطابق إعداد الأمان (SSL/TLS أو STARTTLS) المنفذ؟",
+      "handshakeTimeout": "استغرقت مصافحة TLS مع {{host}} وقتًا طويلًا جدًا.",
+      "invalidServerName": "'{{host}}' ليس اسم خادم صالحًا لـ TLS.",
+      "reason": {
+        "expired": "انتهت صلاحية الشهادة",
+        "invalid": "الشهادة غير صالحة ({{detail}})",
+        "notYetValid": "الشهادة ليست صالحة بعد (هل ساعة هذا الكمبيوتر صحيحة؟)",
+        "revoked": "أُلغيت الشهادة",
+        "unknownIssuer": "لم تُصدر الشهادة من جهة إصدار شهادات موثوقة (ربما موقّعة ذاتيًا)",
+        "wrongName": "لا تخص الشهادة الاسم {{host}}؛ استخدم اسم الخادم الظاهر على الشهادة"
+      }
+    }
+  }
+}

@@ -1,0 +1,471 @@
+{
+  "start": {
+    "backToWorkspace": "작업 공간으로 돌아가기",
+    "workspace": "작업 공간",
+    "home": "시작",
+    "saveTitle": "저장 · Ctrl+S",
+    "saveAs": "다른 이름으로 저장",
+    "saveAsTitle": "다른 이름으로 저장 · F12 또는 Ctrl+Shift+S",
+    "print": "인쇄",
+    "printTitle": "인쇄 미리 보기 및 인쇄 · Ctrl+P",
+    "info": "정보",
+    "infoTitle": "문서 속성, 통계 및 문서 검사",
+    "sendAsAttachment": "첨부 파일로 보내기",
+    "sendAsAttachmentTitle": "현재 문서를 새 전자 메일 메시지에 첨부합니다",
+    "email": "전자 메일",
+    "emailUnread_other": "전자 메일, 읽지 않음 {{count}}개",
+    "newFile": "새 파일",
+    "databaseTitle": "Database Studio · Access 데이터베이스를 편집 가능한 작업 사본으로",
+    "databaseSubtitle": "작업 사본 · 편집, 쿼리, VBA",
+    "settingsTitle": "설정 · Ctrl+,",
+    "shortcutsTitle": "바로 가기 키 · F1",
+    "tagline": "나만의 로컬 오피스",
+    "titleFile": "파일",
+    "titleWorkspace": "나의 작업 공간.",
+    "intro": "쓰고, 계산하고, 발표하고, 아이디어를 기록하세요.",
+    "addNotesBackup": "메모 백업 추가",
+    "openDatabase": "데이터베이스 열기",
+    "openFile": "파일 열기",
+    "openShortcut": "Ctrl O",
+    "newFileTitle": "새 파일",
+    "newFileHint": "도구를 선택하고 빈 파일로 시작하세요",
+    "notesHeading": "아이디어를 위한 공간.",
+    "notesText": "전자 필기장, 섹션 및 페이지. 로컬에 자동으로 저장됩니다.",
+    "openNotes": "메모 열기",
+    "emailText": "IMAP 및 SMTP를 통한 나만의 전자 메일. 첨부 파일을 문서, 스프레드시트, 프레젠테이션 또는 데이터베이스에서 바로 엽니다.",
+    "unread_other": "읽지 않음 {{count}}개",
+    "openEmail": "전자 메일 열기",
+    "examplesTitle": "무엇을 만들 수 있는지 알아보세요",
+    "examplesHint": "예제 파일",
+    "existingTitle": "기존 파일",
+    "browse": "이 컴퓨터 찾아보기",
+    "browseNotes": "OpenAEC 메모 백업을 추가합니다.",
+    "browseDatabase": "MDB 또는 ACCDB 데이터베이스나 SQLite 작업 사본을 엽니다.",
+    "browseDocuments": "문서, 스프레드시트 또는 프레젠테이션을 엽니다.",
+    "formatNotes": "메모",
+    "filesStayLocal": "파일은 사용자의 컴퓨터에 그대로 보관됩니다.",
+    "aboutVersion": "이 버전 정보",
+    "aboutText": "DOCX, XLSX 및 PPTX는 바로 사용할 수 있습니다. 변환 프로그램을 설정하면 데스크톱 버전에서 ODF 및 이전 형식도 변환할 수 있으며, 이때 서식이 달라질 수 있습니다. Database Studio는 MDB 또는 ACCDB 파일을 테이블, 쿼리, 폼, 보고서 및 VBA가 포함된 편집 가능한 SQLite 작업 사본으로 만듭니다. 원본은 변경되지 않습니다. 독립 실행형 앱은 Open Database Studio로 설치할 수 있습니다.",
+    "modules": {
+      "docx": {
+        "new": "새 문서",
+        "example": "설계 메모",
+        "exampleText": "텍스트, 스타일 및 표"
+      },
+      "xlsx": {
+        "new": "새 스프레드시트",
+        "example": "자재 목록",
+        "exampleText": "자재, 수식 및 합계"
+      },
+      "pptx": {
+        "new": "새 프레젠테이션",
+        "example": "디자인 비전",
+        "exampleText": "슬라이드, 도형 및 슬라이드 노트"
+      }
+    }
+  },
+  "recent": {
+    "title": "최근 항목",
+    "hintDesktop": "최근에 열거나 저장한 파일",
+    "hintBrowser": "이 브라우저는 이름만 기억합니다. 파일을 다시 선택하세요",
+    "clear": "목록 지우기",
+    "clearTitle": "목록 지우기. 고정된 파일은 유지됩니다",
+    "missing": "{{folder}}에서 {{name}}을(를) 더 이상 찾을 수 없습니다. ✕로 목록에서 제거하거나 찾아보기를 통해 여세요.",
+    "missingOriginalFolder": "원래 폴더에서 {{name}}을(를) 더 이상 찾을 수 없습니다. ✕로 목록에서 제거하거나 찾아보기를 통해 여세요.",
+    "notFound": "찾을 수 없음",
+    "notFoundIn": "찾을 수 없음 · {{location}}",
+    "openFrom": "{{folder}} · 열기",
+    "chooseFile": "파일 선택",
+    "nameOnly": "이름만 알려져 있음",
+    "pin": "{{name}} 고정",
+    "unpin": "{{name}} 고정 해제",
+    "pinTitle": "맨 위에 고정",
+    "unpinTitle": "고정 해제",
+    "remove": "목록에서 {{name}} 제거",
+    "removeTitle": "목록에서 제거(파일 자체는 유지됨)",
+    "today": "오늘 {{time}}",
+    "yesterday": "어제 {{time}}",
+    "todayInline": "오늘 {{time}}",
+    "yesterdayInline": "어제 {{time}}"
+  },
+  "recovery": {
+    "title": "문서 복구",
+    "explanation": "지난번에 Open Office Studio가 제대로 종료되지 않았습니다. 이 문서들의 복구 사본이 보관되어 있습니다. 복구하면 저장되지 않은 새 탭이 열리며, 원본 파일은 변경되지 않습니다.",
+    "copyFrom": "{{module}} · {{date}}의 복구 사본",
+    "restore": "복구",
+    "saveAs": "다른 이름으로 저장…",
+    "discard": "삭제",
+    "discardLabel": "{{name}}의 복구 사본 삭제",
+    "later": "나중에 결정",
+    "laterTitle": "사본은 다음 시작 때까지 보관됩니다",
+    "restoredFrom": "{{date}}의 복구 사본에서 복구했습니다. 원본 파일은 변경되지 않았습니다. 이 문서를 유지하려면 저장하세요.",
+    "restoreFailed": "{{name}} 복구 실패: {{error}}",
+    "copyFailed": "자동 복구에서 사본을 저장할 수 없습니다: {{error}}"
+  },
+  "leave": {
+    "title": "저장되지 않은 변경 내용",
+    "askSave": "<strong>{{name}}</strong>을(를) 닫기 전에 변경 내용을 저장하시겠습니까?",
+    "unsaved": "<strong>{{name}}</strong>에 아직 저장되지 않은 변경 내용이 있습니다. 변경 내용을 유지하려면 먼저 파일을 저장하세요.",
+    "others_other": "그다음에 저장되지 않은 변경 내용이 있는 문서가 {{count}}개 더 있습니다.",
+    "dontSave": "저장 안 함",
+    "discard": "변경 내용 취소"
+  },
+  "saveAs": {
+    "title": "다른 이름으로 저장",
+    "fileName": "파일 이름",
+    "browserInfo": "브라우저에서는 앱이 Markdown, CSV, HTML, 텍스트 및 PDF를 직접 만들고, 스프레드시트와 프레젠테이션의 경우 PNG도 만듭니다. “데스크톱 앱 전용”으로 표시된 형식에는 오피스 런타임이 있는 데스크톱 버전이 필요합니다.",
+    "runtimeSearching": "오피스 런타임을 찾는 중…",
+    "runtimeFound": "오피스 런타임: {{version}}",
+    "runtimeDetails": "({{source}}, {{profile}})",
+    "sourceEnvironment": "OPENAEC_CONVERSIE_PROGRAMMA에서",
+    "sourceSetting": "사용자가 선택",
+    "sourceAutomatic": "자동으로 감지됨",
+    "profileSafe": "안전 프로필: 매크로 해제",
+    "profileOwn": "사용자 프로필",
+    "runtimeMissing": "오피스 런타임(LibreOffice)을 찾을 수 없습니다. 런타임이 필요한 형식은 사용할 수 없습니다.",
+    "chooseConverter": "변환 프로그램 선택",
+    "format": "형식",
+    "groups": {
+      "own": "기본 형식",
+      "openDocument": "OpenDocument",
+      "legacyOffice": "이전 Office 형식",
+      "templates": "서식 파일",
+      "macro": "매크로 사용",
+      "webText": "웹 및 텍스트",
+      "pdfImage": "PDF 및 이미지"
+    },
+    "routes": {
+      "inApp": "앱에서",
+      "runtime": "오피스 런타임 사용",
+      "print": "인쇄 사용"
+    },
+    "runtimeMissingShort": "런타임 없음",
+    "desktopOnly": "데스크톱 앱 전용",
+    "separator": "구분 기호",
+    "separatorSemicolon": "세미콜론 ;",
+    "separatorComma": "쉼표 ,",
+    "separatorTab": "탭",
+    "separatorPipe": "세로 막대 |",
+    "encoding": "인코딩",
+    "encodingUtf8BomExcel": "BOM 포함 UTF-8(Excel)",
+    "encodingUtf8BomNotepad": "BOM 포함 UTF-8(메모장, Excel)",
+    "csvInfo": "선택한 시트만 수식 대신 값으로 저장합니다. =, +, - 또는 @로 시작하는 텍스트에는 아포스트로피가 붙어 스프레드시트 프로그램에서 수식으로 실행되지 않습니다.",
+    "sheet": "시트",
+    "activeSheet": "{{name}}(활성)",
+    "protect": "열기 암호로 보호",
+    "password": "암호",
+    "repeatPassword": "암호 확인",
+    "encryptionInfo": "ECMA-376(AES-256)에 따른 암호화로, Word, Excel, PowerPoint 및 LibreOffice에서 열 수 있습니다. 암호는 저장되지 않으며, 암호를 잊어버리면 파일을 더 이상 열 수 없습니다.",
+    "noEncryptionInfo": "이것은 쓰기 보호나 시트 보호가 아닙니다. 선택하지 않으면 파일이 암호화되지 않은 상태로 저장됩니다.",
+    "passwordMissing": "암호를 지정하세요.",
+    "passwordMismatch": "암호가 일치하지 않습니다.",
+    "passwordTooLong": "최대 {{max}}자입니다.",
+    "slide": "슬라이드",
+    "slideNumber": "슬라이드 {{number}}",
+    "currentSlide": "슬라이드 {{number}}(현재)",
+    "pdfVariant": "PDF 유형",
+    "pdfPlain": "표준 PDF",
+    "pdfA2b": "PDF/A-2b(보관용)",
+    "slides": "슬라이드",
+    "pages": "페이지",
+    "rangePlaceholder": "모두 또는 예: 1-3,5",
+    "bookmarks": "제목을 책갈피로",
+    "printRoute": "오피스 런타임이 없으면 PDF는 인쇄를 통해 만듭니다. 인쇄 대화 상자에서 프린터 <strong>PDF로 저장</strong>을 선택하세요(Windows: “Microsoft Print to PDF”). 레이아웃은 편집기에서 보이는 대로 따릅니다.",
+    "untitled": "제목 없음",
+    "copyInfo": "다른 형식의 사본입니다. 문서를 .{{ext}}(으)로 저장할 때까지 변경된 상태로 표시됩니다.",
+    "print": "인쇄…",
+    "formats": {
+      "docx": {
+        "docx": {
+          "name": "Word 문서",
+          "keeps": "편집 가능"
+        },
+        "odt": {
+          "name": "OpenDocument 텍스트",
+          "keeps": "편집 가능; 서식이 달라질 수 있음"
+        },
+        "fodt": {
+          "name": "OpenDocument 텍스트(플랫 XML)",
+          "keeps": "편집 가능; 서식이 달라질 수 있음"
+        },
+        "doc": {
+          "name": "Word 97–2003 문서",
+          "keeps": "편집 가능; 서식이 달라질 수 있음"
+        },
+        "dotx": {
+          "name": "Word 서식 파일",
+          "keeps": "편집 가능; 서식이 달라질 수 있음"
+        },
+        "dot": {
+          "name": "Word 97–2003 서식 파일",
+          "keeps": "편집 가능; 서식이 달라질 수 있음"
+        },
+        "ott": {
+          "name": "OpenDocument 텍스트 서식 파일",
+          "keeps": "편집 가능; 서식이 달라질 수 있음"
+        },
+        "docm": {
+          "name": "Word 매크로 사용 문서",
+          "keeps": "열린 매크로 파일에만 해당: VBA 프로젝트는 그대로 유지되며 매크로는 실행되지 않음"
+        },
+        "rtf": {
+          "name": "Rich Text Format",
+          "keeps": "편집 가능; 서식이 달라질 수 있음"
+        },
+        "txt": {
+          "name": "일반 텍스트(UTF-8)",
+          "keeps": "텍스트만; 서식, 표 및 그림은 손실됨"
+        },
+        "html": {
+          "name": "웹 페이지(HTML)",
+          "keeps": "서식이 달라질 수 있음; 그림 포함"
+        },
+        "xhtml": {
+          "name": "XHTML 웹 페이지",
+          "keeps": "서식이 달라질 수 있음"
+        },
+        "epub": {
+          "name": "EPUB 전자책",
+          "keeps": "읽기 전용; 페이지 레이아웃은 손실됨"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "텍스트 및 구조; 페이지 레이아웃, 그림 및 수정 내용은 손실됨"
+        },
+        "pdf": {
+          "name": "PDF 문서",
+          "keeps": "인쇄 미리 보기와 같은 모양; 텍스트 검색 가능"
+        },
+        "png": {
+          "name": "PNG 이미지(첫 페이지)",
+          "keeps": "보기 전용; 첫 페이지만"
+        }
+      },
+      "xlsx": {
+        "xlsx": {
+          "name": "Excel 통합 문서",
+          "keeps": "편집 가능"
+        },
+        "ods": {
+          "name": "OpenDocument 스프레드시트",
+          "keeps": "편집 가능; 서식이 달라질 수 있음"
+        },
+        "fods": {
+          "name": "OpenDocument 스프레드시트(플랫 XML)",
+          "keeps": "편집 가능; 서식이 달라질 수 있음"
+        },
+        "xls": {
+          "name": "Excel 97–2003 통합 문서",
+          "keeps": "편집 가능; 서식이 달라질 수 있음"
+        },
+        "xltx": {
+          "name": "Excel 서식 파일",
+          "keeps": "편집 가능; 서식이 달라질 수 있음"
+        },
+        "xlt": {
+          "name": "Excel 97–2003 서식 파일",
+          "keeps": "편집 가능; 서식이 달라질 수 있음"
+        },
+        "ots": {
+          "name": "OpenDocument 스프레드시트 서식 파일",
+          "keeps": "편집 가능; 서식이 달라질 수 있음"
+        },
+        "xlsm": {
+          "name": "Excel 매크로 사용 통합 문서",
+          "keeps": "열린 매크로 파일에만 해당: VBA 프로젝트는 그대로 유지되며 매크로는 실행되지 않음"
+        },
+        "csv": {
+          "name": "CSV(쉼표로 구분된 값)",
+          "keeps": "한 시트만; 수식과 서식 없이 값만"
+        },
+        "tsv": {
+          "name": "탭으로 구분된 텍스트(TSV)",
+          "keeps": "한 시트만; 수식과 서식 없이 값만"
+        },
+        "html": {
+          "name": "웹 페이지(HTML)",
+          "keeps": "보기 전용; 수식은 손실됨"
+        },
+        "dif": {
+          "name": "Data Interchange Format (DIF)",
+          "keeps": "첫 번째 시트만; 수식과 서식 없이 값만"
+        },
+        "slk": {
+          "name": "SYLK",
+          "keeps": "첫 번째 시트만; 수식은 유지되고 서식은 대부분 손실됨"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "값 보기만; 수식과 서식은 손실됨"
+        },
+        "pdf": {
+          "name": "PDF 문서",
+          "keeps": "인쇄 미리 보기와 같은 모양; 텍스트 검색 가능"
+        },
+        "png": {
+          "name": "PNG 이미지(시트)",
+          "keeps": "보기 전용; 한 시트의 사용 범위"
+        }
+      },
+      "pptx": {
+        "pptx": {
+          "name": "PowerPoint 프레젠테이션",
+          "keeps": "편집 가능"
+        },
+        "ppsx": {
+          "name": "PowerPoint 쇼",
+          "keeps": "편집 가능; 슬라이드 쇼로 열림; 서식이 달라질 수 있음"
+        },
+        "odp": {
+          "name": "OpenDocument 프레젠테이션",
+          "keeps": "편집 가능; 서식이 달라질 수 있음"
+        },
+        "fodp": {
+          "name": "OpenDocument 프레젠테이션(플랫 XML)",
+          "keeps": "편집 가능; 서식이 달라질 수 있음"
+        },
+        "ppt": {
+          "name": "PowerPoint 97–2003 프레젠테이션",
+          "keeps": "편집 가능; 서식이 달라질 수 있음"
+        },
+        "pps": {
+          "name": "PowerPoint 97–2003 쇼",
+          "keeps": "편집 가능; 서식이 달라질 수 있음"
+        },
+        "potx": {
+          "name": "PowerPoint 서식 파일",
+          "keeps": "편집 가능; 서식이 달라질 수 있음"
+        },
+        "pot": {
+          "name": "PowerPoint 97–2003 서식 파일",
+          "keeps": "편집 가능; 서식이 달라질 수 있음"
+        },
+        "otp": {
+          "name": "OpenDocument 프레젠테이션 서식 파일",
+          "keeps": "편집 가능; 서식이 달라질 수 있음"
+        },
+        "pptm": {
+          "name": "PowerPoint 매크로 사용 프레젠테이션",
+          "keeps": "열린 매크로 파일에만 해당: VBA 프로젝트는 그대로 유지되며 매크로는 실행되지 않음"
+        },
+        "html": {
+          "name": "웹 페이지(HTML)",
+          "keeps": "슬라이드별 텍스트만; 레이아웃과 그림은 손실됨"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "슬라이드별 텍스트만; 레이아웃과 그림은 손실됨"
+        },
+        "pdf": {
+          "name": "PDF 문서",
+          "keeps": "인쇄 미리 보기와 같은 모양; 텍스트 검색 가능"
+        },
+        "png": {
+          "name": "PNG 이미지(현재 슬라이드)",
+          "keeps": "보기 전용; 슬라이드 하나"
+        }
+      }
+    }
+  },
+  "saveResult": {
+    "saved": "저장됨: {{path}}",
+    "exported": "내보냄: {{path}}. 변경 내용을 유지하려면 편집 가능한 파일도 저장하세요.",
+    "cancelled": "저장이 취소되었습니다.",
+    "chooseLocation": "저장할 이름과 위치를 선택하세요.",
+    "download": "다운로드를 요청했습니다. 다운로드 폴더에서 파일을 확인하세요.",
+    "tooLarge": "파일이 비어 있거나 100 MB보다 큽니다.",
+    "needsDesktop": "이 형식에는 오피스 런타임(LibreOffice)이 있는 데스크톱 버전이 필요합니다."
+  },
+  "printPreview": {
+    "title": "인쇄 미리 보기 – {{title}}",
+    "notReady": "문서가 완전히 열리면 인쇄할 수 있습니다.",
+    "preparingPages": "페이지 준비 중…",
+    "preparingPrint": "인쇄 준비 중…",
+    "preparingPrintProgress": "인쇄 준비 중… {{done}}/{{total}}",
+    "printHint": "인쇄 대화 상자에서 프린터, 양면 인쇄 및 필요한 경우 ‘PDF로 저장’을 선택하세요.",
+    "makingPdf": "PDF 만드는 중…",
+    "makingPdfProgress": "PDF 만드는 중… {{done}}/{{total}}",
+    "pdfSaved": "PDF 저장됨: {{path}}",
+    "pdfDownloading": "PDF {{name}}을(를) 다운로드하는 중입니다.",
+    "layoutSaved": "페이지 설정이 통합 문서에 저장되었습니다. 이를 유지하려면 문서를 저장하세요.",
+    "saveAsPdf": "PDF로 저장",
+    "print": "인쇄",
+    "keyboardHelp": "Page Up 및 Page Down으로 페이지를 넘기고 Ctrl+P로 인쇄합니다.",
+    "settings": "인쇄 설정",
+    "pages": "페이지",
+    "rangePlaceholder": "모두 또는 예: 1-3, 5",
+    "copies": "매수",
+    "collate": "한 부씩 인쇄(1, 2, 3 – 1, 2, 3)",
+    "systemDialogHint": "프린터, 양면 인쇄 및 색은 그다음 시스템 인쇄 대화 상자에서 선택합니다.",
+    "printAs": "인쇄 대상",
+    "slides": "슬라이드",
+    "handouts": "유인물",
+    "notesPages": "슬라이드 노트",
+    "slidesPerPage": "페이지당 슬라이드 수",
+    "withLines": "{{number}}(줄 포함)",
+    "paper": "용지",
+    "slideSize": "슬라이드 크기",
+    "frameSlides": "슬라이드 테두리",
+    "report": "보고서",
+    "saveLayout": "페이지 설정을 통합 문서에 저장",
+    "pdf": "PDF",
+    "imageQuality": "이미지 품질",
+    "qualitySmall": "작은 파일(150 dpi)",
+    "qualityStandard": "표준(200 dpi)",
+    "qualityHigh": "높음, 무손실(300 dpi)",
+    "pdfHint": "텍스트는 선택 및 검색이 가능한 상태로 유지되며, PDF는 이 미리 보기와 정확히 같습니다.",
+    "toolbar": "페이지 이동 및 확대/축소",
+    "previousPage": "이전 페이지",
+    "nextPage": "다음 페이지",
+    "pageOf": "<input/>/{{total}} 페이지",
+    "pageNumber": "페이지 번호",
+    "zoomOut": "축소",
+    "zoom": "확대/축소",
+    "zoomIn": "확대",
+    "wholePage": "전체 페이지",
+    "pageWidth": "페이지 너비",
+    "preview": "페이지 미리 보기",
+    "pageImage": "{{number}}페이지 미리 보기",
+    "drawingPage": "페이지 그리는 중…",
+    "orientation": "용지 방향",
+    "portrait": "세로",
+    "landscape": "가로",
+    "activeSheet": "활성 시트",
+    "wholeWorkbook": "전체 통합 문서",
+    "selection": "선택 영역({{range}})",
+    "selectionNone": "선택 영역(선택한 항목 없음)",
+    "ignorePrintArea": "인쇄 영역 무시",
+    "pageSetup": "페이지 설정",
+    "sheet": "시트",
+    "scale": "배율",
+    "percentage": "백분율",
+    "fitPage": "한 페이지에 맞추기",
+    "fitWidth": "페이지 너비에 맞추기",
+    "pagesWide": "용지 너비",
+    "pagesTall": "용지 높이(0 = 자동)",
+    "marginTop": "위쪽(cm)",
+    "marginBottom": "아래쪽",
+    "marginLeft": "왼쪽",
+    "marginRight": "오른쪽",
+    "printArea": "인쇄 영역",
+    "printAreaPlaceholder": "사용 범위 또는 예: A1:H40",
+    "repeatRows": "반복할 행",
+    "repeatRowsPlaceholder": "예: 1:2",
+    "repeatColumns": "반복할 열",
+    "repeatColumnsPlaceholder": "예: A:B",
+    "gridlines": "눈금선 인쇄",
+    "headings": "행/열 머리글 인쇄",
+    "centerHorizontally": "가로 가운데 맞춤",
+    "pageOrder": "페이지 순서",
+    "downThenOver": "아래로, 다음 오른쪽으로",
+    "overThenDown": "오른쪽으로, 다음 아래로",
+    "header": "머리글",
+    "footer": "바닥글",
+    "sectionLeft": "왼쪽",
+    "sectionCenter": "가운데",
+    "sectionRight": "오른쪽",
+    "sectionLabel": "{{area}} {{section}}",
+    "fields": "필드: {{fields}}.",
+    "pageBreakPreview": "페이지 나누기 미리 보기…"
+  }
+}

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Dialoog } from "../../werkruimte/Dialoog";
 import "../../werkruimte/werkruimte.css";
 import { GetalVeld, Keuze, Sectie } from "../velden";
@@ -47,6 +48,10 @@ export function LijstVenster({
   toepassen: (keuze: LijstKeuze) => void;
   sluit: () => void;
 }) {
+  const { t } = useTranslation(["writer", "common"]);
+  // Opsommingen heten "Opsomming •"; nummervoorbeelden (1. 2. 3.) zijn geen tekst.
+  const sjabloonNaam = (s: LijstSjabloon) =>
+    s.soort === "opsomming" ? t("lists.bulletTemplate", { symbol: s.niveaus[0]?.lvlText ?? "" }) : s.naam;
   const [gekozen, setGekozen] = useState<string | null>(null);
   const [nieuwNiveau, setNieuwNiveau] = useState(niveau);
   const [nummeren, setNummeren] = useState<Nummeren>("ongewijzigd");
@@ -69,8 +74,8 @@ export function LijstVenster({
               key={s.id}
               type="button"
               aria-pressed={gekozen === s.id}
-              aria-label={s.naam}
-              title={s.naam}
+              aria-label={sjabloonNaam(s)}
+              title={sjabloonNaam(s)}
               disabled={!pakketBeschikbaar}
               onClick={() => setGekozen(gekozen === s.id ? null : s.id)}
             >
@@ -82,43 +87,43 @@ export function LijstVenster({
   );
   return (
     <Dialoog
-      titel="Lijstopties"
+      titel={t("lists.title")}
       sluit={sluit}
       className="tekstopmaak"
       acties={
         <>
           <button type="button" className="werkruimte-knop" onClick={sluit}>
-            Annuleren
+            {t("common:cancel")}
           </button>
           <button type="button" className="werkruimte-knop is-primair" onClick={() => (iets ? toepassen(keuze) : sluit())}>
-            OK
+            {t("common:ok")}
           </button>
         </>
       }
     >
-      {groep("opsomming", "Opsommingsteken")}
-      {groep("nummering", "Nummernotatie")}
-      {groep("niveaus", "Lijst met meerdere niveaus")}
-      <Sectie titel="Nummering">
+      {groep("opsomming", t("lists.bullets"))}
+      {groep("nummering", t("lists.numberFormat"))}
+      {groep("niveaus", t("lists.multilevel"))}
+      <Sectie titel={t("lists.numbering")}>
         <Keuze
-          label="Niveau"
+          label={t("lists.level")}
           waarde={String(nieuwNiveau)}
           uit={!inLijst}
-          opties={Array.from({ length: 9 }, (_, i) => [String(i), `Niveau ${i + 1}`] as const)}
+          opties={Array.from({ length: 9 }, (_, i) => [String(i), t("lists.levelN", { n: i + 1 })] as const)}
           wijzig={(w) => setNieuwNiveau(Number(w))}
         />
         <Keuze<Nummeren>
-          label="Nummeren"
+          label={t("lists.numberingMode")}
           waarde={nummeren}
           opties={[
-            ["ongewijzigd", "Zoals het is"],
-            ["doorgaan", "Doorgaan met de vorige lijst"],
-            ["opnieuw", gekozen ? "Beginnen bij" : "Opnieuw beginnen bij"],
+            ["ongewijzigd", t("lists.asIs")],
+            ["doorgaan", t("lists.continuePrevious")],
+            ["opnieuw", gekozen ? t("lists.startAt") : t("lists.restartAt")],
           ]}
           wijzig={setNummeren}
         />
         <GetalVeld
-          label="Beginwaarde"
+          label={t("lists.startValue")}
           stap={1}
           decimalen={0}
           min={0}
@@ -129,12 +134,9 @@ export function LijstVenster({
         />
       </Sectie>
       {herlaadt && (
-        <p className="tekstopmaak-melding">
-          Een nieuwe notatie of opnieuw beginnen wordt in het bestand gezet. Het document wordt daarna opnieuw geladen;
-          eerdere stappen kun je dan niet meer ongedaan maken.
-        </p>
+        <p className="tekstopmaak-melding">{t("lists.reloadNotice")}</p>
       )}
-      {!pakketBeschikbaar && <p className="tekstopmaak-melding">Nieuwe notaties zijn hier niet beschikbaar.</p>}
+      {!pakketBeschikbaar && <p className="tekstopmaak-melding">{t("lists.notAvailable")}</p>}
     </Dialoog>
   );
 }

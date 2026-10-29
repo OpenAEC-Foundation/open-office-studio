@@ -4,7 +4,10 @@
  * wijzigen, sleutel instellen, relatie maken) en uitkomsten als tekst.
  */
 import type { NieuweRelatie, StructuurResultaat, TabelSchema, VeldSchema, VeldWijziging, Veldsoort, Waarde } from "../werkkopie/contract.ts";
+import i18next from "i18next";
 import { bewerkTekst, leesInvoer } from "./invoer.ts";
+
+const t = (sleutel: string, opties?: Record<string, unknown>) => i18next.t(`database:tableDesign.${sleutel}`, opties);
 
 export interface ConceptVeld {
   sleutel: number;
@@ -33,19 +36,19 @@ export function conceptUitVeld(v: VeldSchema, sleutel: number): ConceptVeld {
 /** Eén conceptveld naar een `VeldSchema`, of de eerste fout. */
 export function conceptNaarVeld(v: ConceptVeld): { veld: VeldSchema } | { fout: string } {
   const naam = v.naam.trim();
-  if (!naam) return { fout: "Elk veld heeft een naam nodig." };
-  if (/[[\]!`.]/.test(naam)) return { fout: `‘${naam}’: een veldnaam mag geen [ ] ! \` of . bevatten.` };
+  if (!naam) return { fout: t("errors.nameRequired") };
+  if (/[[\]!`.]/.test(naam)) return { fout: t("errors.invalidName", { name: naam }) };
   const veld: VeldSchema = { naam, soort: v.soort };
   if (v.soort === "tekst") {
     const n = Number(v.lengte || 255);
-    if (!Number.isInteger(n) || n < 1 || n > 255) return { fout: `Lengte van ‘${naam}’ moet tussen 1 en 255 liggen.` };
+    if (!Number.isInteger(n) || n < 1 || n > 255) return { fout: t("errors.length", { name: naam }) };
     veld.lengte = n;
   }
   if (v.verplicht) veld.verplicht = true;
   if (v.primair) veld.primair = true;
   if (v.standaard.trim() && v.soort !== "autonummer" && v.soort !== "binair") {
     const r = leesInvoer(v.standaard, { ...veld, verplicht: false });
-    if (!r.ok) return { fout: `Standaardwaarde van ‘${naam}’: ${r.fout}` };
+    if (!r.ok) return { fout: t("errors.defaultValue", { name: naam, error: r.fout }) };
     if (r.waarde !== null) veld.standaard = r.waarde;
   }
   return { veld };
@@ -82,11 +85,26 @@ export function sleutelPlan(schema: TabelSchema, concepten: { naam: string; prim
   return nieuw;
 }
 
+/** Herkent de werkkopiemeldingen “n opgeslagen query’s noemen ‘veld’ …” in de actieve taal. */
+function queryMeldingPatroon(aantal: number): RegExp | null {
+  if (!aantal) return null;
+  const GAT = "\u0001";
+  const vormen = ["workingCopy.structure.queriesNotUpdated", "workingCopy.structure.queriesCheckAfterType"].map((sleutel) =>
+    i18next
+      .t(`database:${sleutel}`, { count: aantal, field: GAT })
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+      .replace(GAT, ".*"),
+  );
+  return new RegExp(`^(?:${vormen.join("|")})$`);
+}
+
 /** Leesbare uitkomst van een structuurwijziging, met query’s die het veld noemen. */
 export function structuurTekst(wat: string, r: StructuurResultaat): string {
-  const delen = [`${wat}${r.herbouwd ? " (tabel veilig herbouwd)" : ""}.`, ...r.meldingen.filter((m) => !/opgeslagen query/.test(m))];
+  // De werkkopiemelding over opgeslagen query’s maakt plaats voor de zin hieronder, met de namen erbij.
+  const queryMelding = queryMeldingPatroon(r.querys.length);
+  const delen = [r.herbouwd ? t("result.rebuilt", { what: wat }) : t("result.done", { what: wat }), ...r.meldingen.filter((m) => !queryMelding?.test(m))];
   if (r.querys.length)
-    delen.push(`Controleer ${r.querys.length === 1 ? "de query" : "de query’s"} ${r.querys.map((q) => `‘${q}’`).join(", ")}: ${r.querys.length === 1 ? "die noemt" : "die noemen"} dit veld en ${r.querys.length === 1 ? "is" : "zijn"} niet automatisch bijgewerkt.`);
+    delen.push(t("result.checkQueries", { count: r.querys.length, names: r.querys.map((q) => `‘${q}’`).join(", ") }));
   return delen.join(" ");
 }
 
@@ -103,9 +121,9 @@ export interface RelatieConcept {
 
 /** Relatieconcept (één veldpaar, zoals het venster het vraagt) naar `NieuweRelatie`. */
 export function relatieUitConcept(c: RelatieConcept): NieuweRelatie | { fout: string } {
-  if (!c.tabel || !c.naarTabel) return { fout: "Kies beide tabellen." };
-  if (!c.veld || !c.naarVeld) return { fout: "Kies aan beide kanten een veld." };
-  if (c.tabel === c.naarTabel && c.veld === c.naarVeld) return { fout: "Een veld kan niet naar zichzelf verwijzen." };
+  if (!c.tabel || !c.naarTabel) return { fout: i18next.t("database:relationships.errors.chooseTables") };
+  if (!c.veld || !c.naarVeld) return { fout: i18next.t("database:relationships.errors.chooseFields") };
+  if (c.tabel === c.naarTabel && c.veld === c.naarVeld) return { fout: i18next.t("database:relationships.errors.selfReference") };
   const relatie: NieuweRelatie = {
     tabel: c.tabel,
     velden: [c.veld],

@@ -1,0 +1,84 @@
+{
+  "formulaCheck": {
+    "titleWarning": "Kiểm tra công thức trong bảng tính này",
+    "titleInfo": "Ghi chú về công thức trong bảng tính này",
+    "cells_other": "{{count}} ô",
+    "examplesMore_other": "{{list}} và {{count}} mục khác",
+    "userFunction": "Hàm do người dùng xác định (macro hoặc phần bổ trợ)",
+    "function": "Hàm",
+    "notCalculated": "{{kind}} {{name}} không được tính ({{cells}}: {{examples}}). Kết quả đã lưu được giữ nguyên và không cập nhật; các ô phụ thuộc có thể đã lỗi thời.",
+    "recalculated_other": "{{cells}} có kết quả đã lưu bị lỗi thời và đã được tính lại khi mở ({{examples}}). Kết quả mới được giữ khi bạn lưu.",
+    "manualCalculation": "Tệp được lưu với chế độ tính thủ công; kết quả đã lưu có thể đã lỗi thời.",
+    "externalLinks_other": "Sổ làm việc tham chiếu đến {{count}} sổ làm việc bên ngoài; các giá trị đó không được cập nhật.",
+    "errorCells": "{{cells}} có giá trị lỗi: {{list}}.",
+    "errorItem": "{{error}} ({{examples}})",
+    "noCachedResult": "{{cells}} có công thức không có kết quả đã lưu ({{examples}}).",
+    "fullCalcOnLoad": "Tệp yêu cầu tính lại toàn bộ khi mở (fullCalcOnLoad); kết quả đã lưu có thể đã lỗi thời.",
+    "calcChain": "Chuỗi tính toán (calcChain) không được giữ khi lưu; Excel sẽ dựng lại.",
+    "tooLarge": "Bảng tính quá lớn để kiểm tra.",
+    "invalidWorkbook": "Không phải sổ làm việc XLSX hợp lệ."
+  },
+  "print": {
+    "pageLabel": "{{sheet}}, trang {{page}} / {{pages}}",
+    "notWorksheet": "Trang tính ‘{{name}}’ không phải là trang tính làm việc và được bỏ qua.",
+    "nothingToPrint": "Không có gì để in: các trang tính đều trống."
+  },
+  "export": {
+    "pngUnavailable": "Công cụ bảng tính này không thể tạo PNG."
+  },
+  "csvImport": {
+    "title": "Nhập {{name}}",
+    "import": "Nhập",
+    "separator": "Dấu phân cách",
+    "separatorSemicolon": "Dấu chấm phẩy ;",
+    "separatorComma": "Dấu phẩy ,",
+    "separatorTab": "Tab",
+    "separatorPipe": "Thanh dọc |",
+    "separatorCustom": "Ký tự khác…",
+    "customCharacter": "Ký tự khác",
+    "textQualifier": "Dấu bao văn bản",
+    "qualifierDouble": "Dấu ngoặc kép \"",
+    "qualifierSingle": "Dấu nháy đơn '",
+    "qualifierNone": "Không có",
+    "encoding": "Mã hóa ký tự",
+    "encodingAuto": "Tự động",
+    "encodingDetected": "{{name}} ({{encoding}})",
+    "encodingWindows1252": "Windows-1252 (Tây Âu)",
+    "numbers": "Số",
+    "numbersDutch": "Tiếng Hà Lan (1.234,56)",
+    "numbersEnglish": "Tiếng Anh (1,234.56)",
+    "dateOrder": "Thứ tự ngày",
+    "dateOrderDmy": "Ngày-tháng-năm (31-12-2026)",
+    "dateOrderMdy": "Tháng-ngày-năm (12/31/2026)",
+    "dateOrderYmd": "Năm-tháng-ngày (2026-12-31)",
+    "fromRow": "Từ hàng",
+    "headerRow": "Hàng đầu tiên là tiêu đề",
+    "previewLabel": "Xem trước 50 hàng đầu tiên",
+    "columnType": "Kiểu của cột {{number}}",
+    "columnTypes": {
+      "standaard": "Chung",
+      "tekst": "Văn bản",
+      "datum": "Ngày",
+      "overslaan": "Bỏ qua"
+    },
+    "detected_other": "{{separator}} làm dấu phân cách, {{count}} cột.",
+    "explanation": "Chọn <b>Văn bản</b> cho mã bưu chính, mã hàng và IBAN; số 0 ở đầu và số dài hơn 15 chữ số vốn đã giữ dạng văn bản trong Chung. Giá trị bắt đầu bằng =, +, - hoặc @ không bao giờ được đọc như công thức (dấu nháy trong bản xem trước).",
+    "separatorNames": {
+      "tab": "tab",
+      "semicolon": "dấu chấm phẩy",
+      "comma": "dấu phẩy",
+      "pipe": "thanh dọc",
+      "other": "“{{character}}”"
+    },
+    "report": {
+      "import": "Nhập",
+      "imported": "Đã đọc {{rows}} và {{columns}}; {{separator}} làm dấu phân cách, mã hóa {{encoding}}.",
+      "rows_other": "{{count}} hàng",
+      "columns_other": "{{count}} cột",
+      "formulaLike": "Văn bản giống công thức",
+      "formulaLikeCells_other": "{{count}} ô bắt đầu bằng =, +, - hoặc @ đã được nhập dưới dạng văn bản, không phải công thức (bảo vệ chống chèn mã CSV).",
+      "truncated": "Đã cắt bớt",
+      "truncatedText": "Tệp lớn hơn một trang tính ({{rows}} hàng hoặc {{columns}} cột); phần còn lại chưa được đọc."
+    }
+  }
+}

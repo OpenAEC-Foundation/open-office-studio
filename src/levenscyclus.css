@@ -43,7 +43,7 @@
   display: flex;
   align-items: center;
   gap: 2px;
-  padding-right: 6px;
+  padding-inline-end: 6px;
 }
 .start-recent-item + .start-recent-item {
   border-top: 1px solid #f0eeec;
@@ -60,7 +60,7 @@
   padding: 9px 12px;
   border: 0;
   background: none;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
   font: inherit;
 }
@@ -235,22 +235,22 @@
 .office-venstermenu-lijst {
   position: absolute;
   top: calc(100% + 6px);
-  right: 0;
+  inset-inline-end: 0;
   z-index: 900;
   width: min(320px, calc(100vw - 32px));
   max-height: 60vh;
   overflow: auto;
   padding: 6px;
-  border: 1px solid #e7e5e4;
+  border: 1px solid var(--oa-shell-border, #e7e5e4);
   border-radius: 8px;
-  background: #fff;
-  box-shadow: 0 12px 40px #15233833;
-  color: #36363e;
+  background: var(--oa-shell-surface, #fff);
+  box-shadow: var(--oa-shell-popover-shadow, 0 12px 40px #15233833);
+  color: var(--oa-shell-text, #36363e);
 }
 .office-venstermenu-lijst p {
   margin: 8px;
   font-size: 12px;
-  color: #78716c;
+  color: var(--oa-shell-text-secondary, #78716c);
 }
 .office-venstermenu-kop {
   display: block;
@@ -259,7 +259,7 @@
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #78716c;
+  color: var(--oa-shell-text-secondary, #78716c);
 }
 .office-venstermenu-lijst button {
   display: flex;
@@ -272,7 +272,7 @@
   background: none;
   color: inherit;
   font-size: 12px;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
 }
 .office-venstermenu-lijst button span {
@@ -284,12 +284,20 @@
 }
 .office-venstermenu-lijst button:hover,
 .office-venstermenu-lijst button:focus-visible {
-  background: #f5f5f4;
+  background: var(--oa-shell-hover-strong, #f5f5f4);
   outline: none;
 }
 .office-venstermenu-lijst button[aria-current="true"] {
-  background: #fff7ea;
-  box-shadow: inset 3px 0 #d97706;
+  background: var(--oa-shell-accent-soft, #fff7ea);
+  box-shadow: inset 3px 0 var(--oa-shell-accent, #d97706);
+}
+html[dir="rtl"] .office-venstermenu-lijst button[aria-current="true"] {
+  box-shadow: inset -3px 0 var(--oa-shell-accent, #d97706);
+}
+.office-venstermenu-lijst .office-venstermenu-nieuw {
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--oa-shell-border-subtle, #e7e5e4);
+  border-radius: 5px 5px 0 0;
 }
 .office-venstermenu-lijst button i {
   width: 7px;

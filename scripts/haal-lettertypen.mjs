@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /**
  * Extra open lettertypen (assets/lettertypen.json) zonder binaire bestanden in Git.
  *

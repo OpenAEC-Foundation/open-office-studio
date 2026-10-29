@@ -1,0 +1,145 @@
+{
+  "header": {
+    "homeTitle": "スタートへ移動",
+    "homeLabel": "OpenAEC Office Studio · スタート",
+    "version": "バージョン {{version}}",
+    "unsaved": "未保存の変更があります",
+    "unchanged": "変更なし",
+    "fileAndStart": "ファイルとスタート",
+    "openFileTitle": "新しいタブでファイルを開く · Ctrl+O",
+    "openNotesBackupTitle": "メモのバックアップを追加 · Ctrl+O",
+    "openDatabaseTitle": "データベースを開く · Ctrl+O",
+    "addBackup": "バックアップを追加",
+    "saveAs": "名前を付けて保存",
+    "saveAsTitle": "名前を付けて保存 · F12 または Ctrl+Shift+S（Ctrl+S は開いているファイルに上書き保存）",
+    "busy": "処理中…"
+  },
+  "message": {
+    "close": "メッセージを閉じる",
+    "markdownNote": "Markdown ではテキストと構造が保持されます。ページ レイアウト、画像、変更履歴を残すには DOCX でも保存してください。"
+  },
+  "loading": {
+    "editor": "エディターを読み込み中…",
+    "notes": "メモを読み込み中…",
+    "email": "Email Studio を読み込み中…",
+    "document": "ドキュメントを読み込み中…",
+    "fonts": "フォントを読み込み中…"
+  },
+  "errors": {
+    "editorFailed": "エディターでこのファイルを開けませんでした: {{error}}",
+    "openFailed": "開けませんでした: {{error}}",
+    "openFileFailed": "{{name}} を開けませんでした: {{error}}",
+    "saveFailed": "保存できませんでした: {{error}}",
+    "printFailed": "印刷できませんでした: {{error}}",
+    "sendAsAttachmentFailed": "添付ファイルとして送信できませんでした: {{error}}",
+    "templateUnavailable": "テンプレートを使用できません",
+    "exampleFailed": "サンプルを開けませんでした。",
+    "fileSize": "空ではない 100 MB 以下のファイルを選択してください。",
+    "unsupportedFormat": "{{name}}: この形式はサポートされていません。",
+    "emptyAttachment": "添付ファイルが空です。",
+    "databaseModifiedFile": "Database Studio に変更された作業コピーがあります。先に保存するか閉じてから、ファイルをもう一度開いてください。",
+    "databaseModifiedAttachment": "Database Studio に変更された作業コピーがあります。先に保存するか閉じてから、添付ファイルをもう一度開いてください。",
+    "spreadsheetNotReady": "表計算の準備がまだできていません。",
+    "presentationNotReady": "プレゼンテーションの準備がまだできていません。",
+    "documentNotReady": "ドキュメントの準備がまだできていません。",
+    "documentSaveFailed": "ドキュメントを保存できませんでした。"
+  },
+  "tabs": {
+    "untitled": "無題 {{n}}",
+    "memoryWarning_other": "{{count}} 個のドキュメントが開いています。開いているドキュメントはそれぞれメモリを使用します。不要になったドキュメントは閉じてください。"
+  },
+  "tabBar": {
+    "label": "開いているタブ",
+    "start": "スタート",
+    "startTitle": "スタート · 新規または既存のドキュメント、メモ、データベース",
+    "tabTitleUnsaved": "{{name}} · 未保存の変更があります",
+    "dragOutHint": "外へドラッグすると別のウィンドウで開きます",
+    "unsavedA11y": "、未保存の変更があります",
+    "closeTab": "{{name}} を閉じる",
+    "closeTitle": "閉じる · Ctrl+W",
+    "allTabs": "開いているすべてのタブ",
+    "addTab": "タブを追加",
+    "addTabTitle": "新規または既存のドキュメント、メモ、データベースを開く",
+    "releaseOpensWindow": "離すと別のウィンドウで開きます",
+    "closeOthers": "その他のタブを閉じる",
+    "closeToRight": "右側のタブを閉じる"
+  },
+  "windowMenu": {
+    "button": "開いているドキュメント",
+    "buttonTitle": "開いているドキュメント · Ctrl+Tab または Ctrl+F6 で切り替え",
+    "empty": "開いているドキュメントはありません。",
+    "thisWindow": "このウィンドウ",
+    "mainWindow": "メイン ウィンドウ",
+    "windowNumber": "ウィンドウ {{number}}",
+    "unsavedTitle": "未保存の変更があります",
+    "modified": "変更あり",
+    "newWindow": "新しいウィンドウ"
+  },
+  "windows": {
+    "openInNewWindow": "新しいウィンドウで開く",
+    "backToMainWindow": "メイン ウィンドウに戻す",
+    "databaseMovedHere": "Database Studio はこのウィンドウに移動しました。作業を続けるには、ここでデータベースをもう一度開いてください。",
+    "documentMoved": "ドキュメントは未保存の変更も含めて移動されました。［元に戻す］の履歴は移動されません。",
+    "linkUnavailable": "ウィンドウの連携を使用できません: {{error}}",
+    "closeGuardUnavailable": "終了時の保護を使用できません: {{error}}",
+    "databaseModified": "Database Studio では、変更された作業コピーを別のウィンドウに移動できません。先にデータベースをエクスポートまたは保存してください。",
+    "otherWindowFailed": "別のウィンドウでタブを開けませんでした。",
+    "mainWindowNoResponse": "メイン ウィンドウが応答しません。タブはここで開いたままになります。",
+    "newWindowTimeout": "新しいウィンドウが時間内にドキュメントを引き継ぎませんでした。タブはここで開いたままになります。",
+    "alreadyMainWindow": "これはすでにメイン ウィンドウです。",
+    "popupBlocked": "新しいウィンドウを開けませんでした。このページのポップアップ ウィンドウを許可してください。",
+    "moveToWindow": "{{window}} に移動",
+    "newWindowFailed": "新しいウィンドウを開けませんでした: {{error}}"
+  },
+  "dropZone": {
+    "release": "離すと開きます",
+    "explanation": "ドキュメント、表計算、プレゼンテーションはそれぞれ専用のタブで開きます。MDB と ACCDB は Database Studio で開きます。",
+    "image": "{{name}} は画像です。ドラッグでドキュメントに画像を挿入することはまだできません。［挿入 › 画像］を使用してください。",
+    "unsupported": "{{name}} を開けません: .{{ext}} はサポートされていません。Open Office Studio で開けるのは、ドキュメント、表計算、プレゼンテーション、Access データベースです。"
+  },
+  "ribbon": {
+    "label": "リボン",
+    "file": "ファイル",
+    "hide": "リボンを非表示",
+    "show": "リボンを表示",
+    "hideHint": "ドキュメントの表示領域を広げる · Ctrl+F1",
+    "scrollLeft": "リボンを左へスクロール",
+    "scrollRight": "リボンを右へスクロール",
+    "commandFailed": "コマンドを実行できませんでした。",
+    "nothingToUndo": "元に戻す操作はありません。",
+    "nothingToRedo": "やり直す操作はありません。",
+    "presentationOpening": "プレゼンテーションを開いています。",
+    "selectShapeFirst": "先に図形を選択してください。"
+  },
+  "theme": {
+    "light": "ライト テーマ",
+    "forge": "Forge テーマ"
+  },
+  "host": {
+    "conflict": "この文書は他のユーザーによって保存されました。あなたのバージョンはコピーとして保存されました: {{name}}。",
+    "readOnly": "{{name}} は読み取り専用で開かれました。変更を保持するには「名前を付けて保存」を使用してください。",
+    "openFailed": "ワークスペースの文書を開けませんでした: {{error}}"
+  },
+  "title": {
+    "document": "{{document}} — {{app}} ({{module}})",
+    "module": "{{app}} ({{module}})"
+  },
+  "titleBar": {
+    "quickAccess": "クイック アクセス",
+    "saveTitle": "保存 · Ctrl+S",
+    "settings": "設定",
+    "minimize": "最小化",
+    "maximize": "最大化",
+    "restore": "元のサイズに戻す",
+    "close": "ウィンドウを閉じる"
+  },
+  "toasts": {
+    "region": "通知",
+    "info": "情報",
+    "success": "完了",
+    "warning": "注意",
+    "error": "エラー",
+    "details": "詳細",
+    "less": "折りたたむ"
+  }
+}

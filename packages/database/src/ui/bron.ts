@@ -1,4 +1,5 @@
 /** Gegevens ophalen uit een tabel, opgeslagen query of losse Access-SQL, met parameterdialoog. */
+import i18next from "i18next";
 import type { QueryResultaat, Veldsoort, Waarde, Werkkopie } from "../werkkopie/contract.ts";
 import { parameterWaarde } from "./invoer.ts";
 import { isActiequery, querysoortVan } from "./sql.ts";
@@ -38,8 +39,8 @@ export async function laadBron(
   if (soort === "tabel") return werkkopie.query(`SELECT * FROM [${bron.replace(/]/g, "")}]`, { limiet });
   const q = soort === "query" ? (await werkkopie.querys()).find((x) => x.naam.toLowerCase() === bron.trim().toLowerCase()) : null;
   if (isActiequery(q ? q.soort : querysoortVan(bron)))
-    throw new Error("Een actiequery levert geen rijen en kan geen bron van een formulier of rapport zijn.");
-  const parameters = await vraagParameters(werkkopie, bron, dialogen, `Parameters voor ${soort === "query" ? bron : "de query"}`);
+    throw new Error(i18next.t("database:source.actionQuery"));
+  const parameters = await vraagParameters(werkkopie, bron, dialogen, soort === "query" ? i18next.t("database:source.parametersFor", { name: bron }) : i18next.t("database:source.parametersForQuery"));
   if (!parameters) return null;
   return werkkopie.query(bron, { parameters, limiet });
 }
@@ -57,7 +58,7 @@ export async function kolommenVan(
   if (tabel) return tabel.velden.map((v) => ({ naam: v.naam, soort: v.soort }));
   const q = (await werkkopie.querys()).find((x) => x.naam.toLowerCase() === k);
   const soort = q ? q.soort : querysoortVan(bron);
-  if (isActiequery(soort)) throw new Error("Een actiequery levert geen rijen en kan geen bron van een formulier of rapport zijn.");
+  if (isActiequery(soort)) throw new Error(i18next.t("database:source.actionQuery"));
   const namen = await werkkopie.parametersVan(bron);
   const r = await werkkopie.query(bron, { parameters: Object.fromEntries(namen.map((n) => [n, null])), limiet: 0 });
   return r.kolommen.map((naam, i) => ({ naam, soort: r.kolomsoorten?.[i] ?? null }));

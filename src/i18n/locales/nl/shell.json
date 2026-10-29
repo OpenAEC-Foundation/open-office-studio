@@ -1,0 +1,146 @@
+{
+  "header": {
+    "homeTitle": "Naar Start",
+    "homeLabel": "OpenAEC Office Studio · Start",
+    "version": "Versie {{version}}",
+    "unsaved": "Niet-opgeslagen wijzigingen",
+    "unchanged": "Ongewijzigd",
+    "fileAndStart": "Bestand en Start",
+    "openFileTitle": "Bestand openen in een nieuw tabblad · Ctrl+O",
+    "openNotesBackupTitle": "Notitieback-up toevoegen · Ctrl+O",
+    "openDatabaseTitle": "Database openen · Ctrl+O",
+    "addBackup": "Back-up toevoegen",
+    "saveAs": "Opslaan als",
+    "saveAsTitle": "Opslaan als · F12 of Ctrl+Shift+S (Ctrl+S slaat op in het geopende bestand)",
+    "busy": "Bezig…"
+  },
+  "message": {
+    "close": "Melding sluiten",
+    "markdownNote": "Markdown bewaart tekst en structuur. Bewaar ook een DOCX voor paginaopmaak, afbeeldingen en revisies."
+  },
+  "loading": {
+    "editor": "Editor laden…",
+    "notes": "Notities laden…",
+    "email": "Email Studio laden…",
+    "document": "Document laden…",
+    "fonts": "Lettertypen laden…"
+  },
+  "errors": {
+    "editorFailed": "De editor kon dit bestand niet openen: {{error}}",
+    "openFailed": "Openen mislukt: {{error}}",
+    "openFileFailed": "{{name}} openen mislukt: {{error}}",
+    "saveFailed": "Opslaan mislukt: {{error}}",
+    "printFailed": "Afdrukken mislukt: {{error}}",
+    "sendAsAttachmentFailed": "Verzenden als bijlage mislukt: {{error}}",
+    "templateUnavailable": "Sjabloon niet beschikbaar",
+    "exampleFailed": "Het voorbeeld kon niet worden geopend.",
+    "fileSize": "Kies een bestand van maximaal 100 MB dat niet leeg is.",
+    "unsupportedFormat": "{{name}}: dit formaat wordt niet ondersteund.",
+    "emptyAttachment": "De bijlage is leeg.",
+    "databaseModifiedFile": "Database Studio heeft een gewijzigde werkkopie. Bewaar of sluit die eerst en open het bestand daarna opnieuw.",
+    "databaseModifiedAttachment": "Database Studio heeft een gewijzigde werkkopie. Bewaar of sluit die eerst en open de bijlage daarna opnieuw.",
+    "spreadsheetNotReady": "Het rekenblad is nog niet gereed.",
+    "presentationNotReady": "De presentatie is nog niet gereed.",
+    "documentNotReady": "Het document is nog niet gereed.",
+    "documentSaveFailed": "Het document kon niet worden opgeslagen."
+  },
+  "tabs": {
+    "untitled": "Naamloos {{n}}",
+    "memoryWarning_one": "Er is {{count}} document geopend. Elk open document gebruikt geheugen; sluit documenten die je niet meer nodig hebt.",
+    "memoryWarning_other": "Er zijn {{count}} documenten geopend. Elk open document gebruikt geheugen; sluit documenten die je niet meer nodig hebt."
+  },
+  "tabBar": {
+    "label": "Geopende tabbladen",
+    "start": "Start",
+    "startTitle": "Start · nieuw of bestaand document, Notities en Database",
+    "tabTitleUnsaved": "{{name}} · niet-opgeslagen wijzigingen",
+    "dragOutHint": "Sleep naar buiten voor een eigen venster",
+    "unsavedA11y": ", niet-opgeslagen wijzigingen",
+    "closeTab": "{{name}} sluiten",
+    "closeTitle": "Sluiten · Ctrl+W",
+    "allTabs": "Alle geopende tabbladen",
+    "addTab": "Tabblad toevoegen",
+    "addTabTitle": "Nieuw of bestaand document, Notities of Database openen",
+    "releaseOpensWindow": "Loslaten opent een eigen venster",
+    "closeOthers": "Andere sluiten",
+    "closeToRight": "Rechts sluiten"
+  },
+  "windowMenu": {
+    "button": "Open documenten",
+    "buttonTitle": "Open documenten · Ctrl+Tab of Ctrl+F6 om te wisselen",
+    "empty": "Geen open documenten.",
+    "thisWindow": "Dit venster",
+    "mainWindow": "Hoofdvenster",
+    "windowNumber": "Venster {{number}}",
+    "unsavedTitle": "Niet-opgeslagen wijzigingen",
+    "modified": "gewijzigd",
+    "newWindow": "Nieuw venster"
+  },
+  "windows": {
+    "openInNewWindow": "In nieuw venster openen",
+    "backToMainWindow": "Terug naar hoofdvenster",
+    "databaseMovedHere": "Database Studio staat nu in dit venster. Open je database hier opnieuw als je verder wilt werken.",
+    "documentMoved": "Het document is verplaatst, inclusief niet-opgeslagen wijzigingen. De geschiedenis van Ongedaan maken gaat bij het verplaatsen niet mee.",
+    "linkUnavailable": "Vensterkoppeling niet beschikbaar: {{error}}",
+    "closeGuardUnavailable": "Sluitbeveiliging niet beschikbaar: {{error}}",
+    "databaseModified": "Database Studio kan een gewijzigde werkkopie niet naar een ander venster meenemen. Exporteer of bewaar de database eerst.",
+    "otherWindowFailed": "Het andere venster kon het tabblad niet openen.",
+    "mainWindowNoResponse": "Het hoofdvenster reageert niet. Het tabblad blijft hier open.",
+    "newWindowTimeout": "Het nieuwe venster heeft het document niet op tijd overgenomen. Het tabblad blijft hier open.",
+    "alreadyMainWindow": "Dit is al het hoofdvenster.",
+    "popupBlocked": "Het nieuwe venster kon niet worden geopend. Sta pop-upvensters toe voor deze pagina.",
+    "moveToWindow": "Verplaatsen naar {{window}}",
+    "newWindowFailed": "Er kon geen nieuw venster worden geopend: {{error}}"
+  },
+  "dropZone": {
+    "release": "Laat los om te openen",
+    "explanation": "Documenten, rekenbladen en presentaties openen elk in een eigen tabblad; MDB en ACCDB in Database Studio.",
+    "image": "{{name}} is een afbeelding. Slepen voegt nog geen afbeeldingen in een document in; gebruik Invoegen › Afbeelding.",
+    "unsupported": "{{name}} kan niet worden geopend: .{{ext}} wordt niet ondersteund. Open Office Studio opent documenten, rekenbladen, presentaties en Access-databases."
+  },
+  "ribbon": {
+    "label": "Lint",
+    "file": "Bestand",
+    "hide": "Lint verbergen",
+    "show": "Lint weergeven",
+    "hideHint": "Meer ruimte voor je document · Ctrl+F1",
+    "scrollLeft": "Lint naar links schuiven",
+    "scrollRight": "Lint naar rechts schuiven",
+    "commandFailed": "De opdracht kon niet worden uitgevoerd.",
+    "nothingToUndo": "Er is niets om ongedaan te maken.",
+    "nothingToRedo": "Er is niets om opnieuw uit te voeren.",
+    "presentationOpening": "De presentatie wordt nog geopend.",
+    "selectShapeFirst": "Selecteer eerst een vorm."
+  },
+  "theme": {
+    "light": "Licht thema",
+    "forge": "Forge thema"
+  },
+  "host": {
+    "conflict": "Iemand anders heeft dit document intussen opgeslagen. Je versie is bewaard als kopie: {{name}}.",
+    "readOnly": "{{name}} is alleen-lezen geopend. Bewaar je wijzigingen met Opslaan als.",
+    "openFailed": "Het document van de werkplek kon niet worden geopend: {{error}}"
+  },
+  "title": {
+    "document": "{{document}} — {{app}} ({{module}})",
+    "module": "{{app}} ({{module}})"
+  },
+  "titleBar": {
+    "quickAccess": "Snelle toegang",
+    "saveTitle": "Opslaan · Ctrl+S",
+    "settings": "Instellingen",
+    "minimize": "Minimaliseren",
+    "maximize": "Maximaliseren",
+    "restore": "Vorig formaat",
+    "close": "Venster sluiten"
+  },
+  "toasts": {
+    "region": "Meldingen",
+    "info": "Info",
+    "success": "Gelukt",
+    "warning": "Let op",
+    "error": "Fout",
+    "details": "Details",
+    "less": "Minder"
+  }
+}

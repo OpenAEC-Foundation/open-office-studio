@@ -1,10 +1,11 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";
 import { zlibSync } from "fflate";
-import { herkenSoort, lijktTekst } from "./herkenning";
+import { zetTaal } from "../../../../src/i18n/config";
+import { grootteTekst, herkenSoort, lijktTekst } from "./herkenning";
 import { decodeerTekst, detecteerCodering, isGeldigeUtf8 } from "./codering";
 import { leesPdfMeta, pdfDatum } from "./pdf-meta";
-import { DWG_VERSIES, dwgVersie, leesDwgMeta, leesDxfMeta } from "./cad-meta";
+import { DWG_VERSIES, dwgVersie, eenheidNaam, leesDwgMeta, leesDxfMeta } from "./cad-meta";
 import { IfcTeller, analyseerIfc, analyseerIfcSync, herstelUtf8, stepArgumenten, stepTekst } from "./ifc-meta";
 import { controleerAfbeelding, exifOrientatie, leesAfmetingen } from "./afbeelding-meta";
 import { herkenWebview } from "./platform";
@@ -421,5 +422,40 @@ describe("register van weergevers", () => {
     await b.bytes();
     await b.bytes();
     expect(n).toBe(1);
+  });
+});
+
+describe("meertalig", () => {
+  afterEach(async () => {
+    await zetTaal("nl");
+  });
+
+  it("toont waarschuwingen, meldingen en eenheden in het Engels", async () => {
+    await zetTaal("en");
+    expect(herkenSoort("vakantie.jpg", "image/jpeg", ascii("%PDF-1.4\n")).waarschuwing).toBe(
+      "This attachment is named “.jpg” (an image), but the content is a PDF.",
+    );
+    const groot = new Uint8Array(LIMIETEN.afbeeldingBytes + 1);
+    groot.set(png(10, 10));
+    const r = controleerAfbeelding(groot, "png", LIMIETEN);
+    expect(!r.ok && r.melding).toBe("This image is larger than 40 MB and is not shown as a preview.");
+    expect(eenheidNaam(4)).toBe("millimetre");
+    expect(dwgVersie("AC1015")?.autocad).toBe("AutoCAD 2000, 2000i and 2002");
+    expect(dwgVersie("AC1027")?.autocad).toBe("AutoCAD 2013 to 2017");
+    expect(grootteTekst(1.5 * 1024 * 1024)).toBe("1.5 MB");
+    expect(renderToStaticMarkup(<MarkdownWeergave tekst="![logo](https://x.nl/a.png)" externeAfbeeldingen={false} />)).toContain(
+      "logo (external image blocked)",
+    );
+  });
+
+  it("houdt de Nederlandse teksten gelijk", () => {
+    expect(herkenSoort("vakantie.jpg", "image/jpeg", ascii("%PDF-1.4\n")).waarschuwing).toBe(
+      "Deze bijlage heet “.jpg” (afbeelding), maar de inhoud is PDF.",
+    );
+    expect(dwgVersie("AC1015")?.autocad).toBe("AutoCAD 2000, 2000i en 2002");
+    expect(dwgVersie("AC1027")?.autocad).toBe("AutoCAD 2013 t/m 2017");
+    expect(dwgVersie("AC1032")?.autocad).toBe("AutoCAD 2018 en later");
+    expect(grootteTekst(1.5 * 1024 * 1024)).toBe("1,5 MB");
+    expect(grootteTekst(2 * 1024 * 1024)).toBe("2,0 MB");
   });
 });

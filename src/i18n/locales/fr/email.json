@@ -1,0 +1,1017 @@
+{
+  "accounts": {
+    "test": {
+      "test": "Tester",
+      "testConnection": "Tester la connexion",
+      "testing": "Test en cours…",
+      "retest": "Tester à nouveau",
+      "failed": "Échec du test"
+    },
+    "settings": {
+      "title": "Paramètres des comptes",
+      "noAccount": "Il n’y a pas encore de compte.",
+      "addAccount": "Ajouter un compte",
+      "accountList": "Comptes",
+      "saving": "Enregistrement…",
+      "saved": "Paramètres enregistrés.",
+      "saveFailed": "Impossible d’enregistrer",
+      "tabs": {
+        "identity": "Identité",
+        "servers": "Serveurs",
+        "folders": "Dossiers",
+        "fetching": "Relève et confidentialité",
+        "advanced": "Avancé"
+      },
+      "deleteAccount": {
+        "title": "Supprimer le compte",
+        "confirm": "Voulez-vous vraiment supprimer <strong>{{name}}</strong> ({{email}}) ? Vos messages restent sur le serveur ; le mot de passe enregistré sera supprimé du trousseau.",
+        "button": "Supprimer le compte",
+        "failed": "Impossible de supprimer le compte"
+      },
+      "identity": {
+        "accountName": "Nom du compte",
+        "accountNameHint": "Uniquement pour vous, par exemple « Travail » ou « Personnel ».",
+        "yourName": "Votre nom",
+        "email": "Adresse e-mail",
+        "replyTo": "Adresse de réponse",
+        "replyToPlaceholder": "Vide = votre adresse e-mail",
+        "signature": "Signature",
+        "signatureHint": "Ajoutée sous les nouveaux messages et les réponses, après « -- »."
+      },
+      "oauthAccount": {
+        "signedInAs": "Connecté en tant que <strong>{{account}}</strong> avec {{provider}}",
+        "noPasswordStored": "Aucun mot de passe n’est enregistré ; l’accès utilise un jeton dans le trousseau.",
+        "signInAgain": "Se reconnecter",
+        "signedInAgain": "Reconnecté en tant que {{account}}."
+      },
+      "password": {
+        "change": "Modifier le mot de passe",
+        "storedPlaceholder": "Enregistré · laisser vide pour le conserver",
+        "noneStoredPlaceholder": "Aucun mot de passe enregistré"
+      },
+      "folders": {
+        "hint": "Choisissez où Email Studio conserve les messages envoyés, les brouillons, les messages supprimés et archivés.",
+        "roles": {
+          "sent": "Messages envoyés",
+          "drafts": "Brouillons",
+          "trash": "Corbeille",
+          "archive": "Archives"
+        },
+        "automatic": "Automatique",
+        "automaticWithFolder": "Automatique ({{folder}})"
+      },
+      "fetching": {
+        "checkForNew": "Vérifier les nouveaux messages",
+        "manualOnly": "Manuellement uniquement",
+        "everyMinutes_one": "Toutes les {{count}} minute",
+        "everyMinutes_other": "Toutes les {{count}} minutes",
+        "everyMinutes_many": "Toutes les {{count}} minutes",
+        "externalContent": "Toujours afficher les images et contenus distants",
+        "externalContentHint": "Désactivé est recommandé : les images distantes indiquent aux expéditeurs quand et où vous ouvrez un message.",
+        "trustedSenders": "Expéditeurs dont le contenu distant est toujours affiché",
+        "forgetSender": "Oublier {{sender}}"
+      },
+      "advanced": {
+        "oauthIntro": "La connexion avec Microsoft ou Google utilise OAuth2. Ces paramètres s’appliquent à tous les comptes. Votre propre ID client n’est nécessaire que si l’application n’en fournit pas ; voir <code>{{doc}}</code>.",
+        "ispdb": "Consulter aussi la base de données de Thunderbird pour un nouveau compte",
+        "ispdbHint": "Le nom de domaine est alors envoyé à Mozilla. Désactivé par défaut.",
+        "available": "Disponible.",
+        "unavailable": "Non disponible.",
+        "loadingStatus": "Chargement de l’état…",
+        "clientId": "ID client",
+        "clientSecret": "Secret client (facultatif)",
+        "saveClientId": "Enregistrer l’ID client",
+        "clientIdSaved": "ID client pour {{provider}} enregistré.",
+        "clientIdSaveFailed": "Impossible d’enregistrer l’ID client",
+        "desktopOnly": "Vous ne pouvez définir votre propre ID client que dans l’application de bureau."
+      }
+    },
+    "wizard": {
+      "title": "Ajouter un compte",
+      "intro": "Utilisez votre adresse e-mail existante. Email Studio fonctionne avec tout fournisseur proposant IMAP et SMTP.",
+      "fullName": "Votre nom complet",
+      "fullNamePlaceholder": "Prénom Nom",
+      "fullNameHint": "Comment les destinataires voient votre nom.",
+      "email": "Adresse e-mail",
+      "emailPlaceholder": "nom@example.com",
+      "password": "Mot de passe",
+      "passwordHint": "Utilisé uniquement lorsque vous choisissez Tester ou Terminé, et enregistré uniquement dans le trousseau de votre système d’exploitation.",
+      "ispdb": "Consulter aussi la base de données de Thunderbird",
+      "ispdbHint": "Le nom de domaine (pas votre adresse ni votre mot de passe) est alors envoyé à Mozilla.",
+      "oauthPrompt": "Ou connectez-vous sans mot de passe dans l’application :",
+      "enterNameAndEmailFirst": "Saisissez d’abord votre nom et votre adresse e-mail.",
+      "saving": "Enregistrement…",
+      "done": "Terminé",
+      "saveAnyway": "Enregistrer quand même",
+      "saveTitle": "Enregistrer le compte",
+      "saveUntestedTitle": "Pas encore testé (avec succès) ; vous pouvez tout de même enregistrer le compte",
+      "saveFailed": "Impossible d’enregistrer le compte",
+      "foundSettings": "Paramètres trouvés",
+      "serverSettings": "Paramètres du serveur",
+      "serverSettingsFor": "Paramètres du serveur pour {{domain}}",
+      "enterEmailHint": "Saisissez votre adresse e-mail ; Email Studio recherchera alors automatiquement les bons serveurs.",
+      "searchFailed": "Échec de la recherche",
+      "fillInManually": "Saisissez vous-même les serveurs ci-dessous.",
+      "nothingFound": "Aucun paramètre n’a été trouvé. Saisissez vous-même les serveurs ci-dessous ; demandez-les à votre fournisseur si nécessaire.",
+      "proposals": "Suggestions",
+      "unencrypted": "non chiffré",
+      "manualConfiguration": "Configuration manuelle",
+      "adjusted": "· modifié",
+      "fieldsAppear": "Les champs apparaissent dès qu’une adresse e-mail valide est saisie.",
+      "bothServersFailed": "Les deux serveurs ont échoué. Vérifiez l’adresse, le mot de passe et les noms des serveurs."
+    },
+    "discovery": {
+      "steps": {
+        "builtIn": "Liste intégrée",
+        "ownDomain": "Domaine propre",
+        "dns": "DNS",
+        "ispdb": "Base de données de Thunderbird",
+        "probe": "Test de connexion"
+      },
+      "stepStatus": {
+        "waiting": "en attente",
+        "busy": "en cours…",
+        "found": "trouvé",
+        "nothing": "rien trouvé",
+        "skipped": "non exécuté"
+      },
+      "sources": {
+        "preset": "Liste intégrée",
+        "autoconfig": "Configuration de votre propre domaine",
+        "srv": "Enregistrements DNS SRV",
+        "mx": "Enregistrements MX (fournisseur reconnu)",
+        "ispdb": "Base de données de Thunderbird",
+        "guess": "Noms de serveur courants"
+      },
+      "unencrypted": "non chiffré",
+      "reachable": "joignable",
+      "unreachable": "non joignable",
+      "untested": "non testé"
+    },
+    "server": {
+      "incoming": "Entrant (IMAP)",
+      "outgoing": "Sortant (SMTP)",
+      "columns": {
+        "server": "Serveur",
+        "port": "Port",
+        "security": "Sécurité",
+        "authentication": "Authentification",
+        "username": "Nom d’utilisateur"
+      },
+      "hostLabel": "Serveur {{protocol}}",
+      "portLabel": "Port {{protocol}}",
+      "securityLabel": "Sécurité {{protocol}}",
+      "authenticationLabel": "Authentification {{protocol}}",
+      "usernameLabel": "Nom d’utilisateur {{protocol}}",
+      "imapPlaceholder": "imap.example.com",
+      "smtpPlaceholder": "smtp.example.com",
+      "securityNone": "Aucune",
+      "authNormal": "Mot de passe normal",
+      "authEncrypted": "Mot de passe chiffré",
+      "unencryptedWarning": "<strong>Connexion non chiffrée.</strong> Votre mot de passe et vos messages circulent sur le réseau de façon lisible. Choisissez SSL/TLS ou STARTTLS si votre fournisseur le prend en charge.",
+      "oauthHint": "OAuth2 vous demande de vous connecter auprès du fournisseur lors du test ou de la première utilisation."
+    },
+    "oauth": {
+      "notSupported": "Cette version de l’application ne prend pas encore en charge la connexion avec Microsoft ou Google.",
+      "signInFailed": "Échec de la connexion avec {{provider}}",
+      "signInWith": "Se connecter avec {{provider}}",
+      "recommended": "recommandé",
+      "waitTitle": "Terminez la connexion dans votre navigateur",
+      "waitText": "La page de connexion de {{provider}} s’est ouverte dans votre navigateur. Connectez-vous et autorisez l’accès aux e-mails ; Email Studio continuera ensuite ici.",
+      "unavailableTitle": "La connexion avec {{provider}} n’est pas disponible ici.",
+      "unavailableHelp": "Dans l’application de bureau, vous pouvez définir votre propre ID client pour {{provider}} sous <em>Outils › Paramètres des comptes › Avancé</em>. La procédure de création est décrite dans <code>{{doc}}</code>. Vous pouvez aussi continuer avec un mot de passe (d’application)."
+    }
+  },
+  "errors": {
+    "code": {
+      "connection": "Aucune connexion au serveur. Vérifiez votre connexion Internet ainsi que le nom et le port du serveur.",
+      "authentication": "Échec de la connexion. Vérifiez votre nom d’utilisateur et votre mot de passe (Outils › Paramètres des comptes).",
+      "certificate": "Le certificat du serveur n’est pas fiable ou ne correspond pas à ce nom de serveur.",
+      "timeout": "Le serveur n’a pas répondu à temps. Réessayez plus tard.",
+      "notFound": "Le message ou le dossier n’existe plus sur le serveur.",
+      "refused": "Le serveur a refusé la commande.",
+      "tooLarge": "Le message est trop volumineux pour le serveur. Réduisez ou supprimez les pièces jointes.",
+      "unavailable": "Cette fonctionnalité n’est pas disponible ici.",
+      "internal": "Une erreur s’est produite."
+    },
+    "withDetail": "{{explanation}} ({{detail}})",
+    "withContext": "{{context}} : {{message}}",
+    "backendMissing": "Cette version de l’application de bureau n’inclut pas la fonctionnalité e-mail.",
+    "unexpectedBinary": "Sortie binaire inattendue du backend."
+  },
+  "dialog": {
+    "closeEsc": "Fermer (Échap)"
+  },
+  "sendAsAttachment": {
+    "title": "Envoyer en pièce jointe"
+  },
+  "ribbon": {
+    "tabs": {
+      "start": "Accueil",
+      "view": "Affichage",
+      "tools": "Outils"
+    },
+    "groups": {
+      "new": "Nouveau",
+      "respond": "Répondre",
+      "delete": "Supprimer",
+      "mark": "Étiquettes",
+      "organize": "Organiser",
+      "layout": "Disposition",
+      "sort": "Trier",
+      "message": "Message",
+      "accounts": "Comptes",
+      "folders": "Dossiers"
+    },
+    "withShortcut": "{{action}} · {{shortcut}}",
+    "fetch": "Relever les messages",
+    "fetchTitle": "Relever les messages · {{key}} ou {{shortcut}}",
+    "readUnread": "Lu/non lu",
+    "readUnreadTitle": "Lu ou non lu · {{shortcut}}",
+    "star": "Suivi",
+    "move": "Déplacer",
+    "moveTitle": "Déplacer vers un dossier",
+    "folderPane": "Volet des dossiers",
+    "readingPane": "Volet de lecture",
+    "resetLayout": "Réinitialiser la disposition",
+    "sortBy": "Trier par",
+    "sort": {
+      "date": "Date",
+      "sender": "Expéditeur",
+      "subject": "Objet",
+      "size": "Taille"
+    },
+    "ascending": "Croissant",
+    "descending": "Décroissant",
+    "viewSource": "Afficher la source",
+    "accountSettings": "Paramètres des comptes"
+  },
+  "studio": {
+    "errors": {
+      "loadAccounts": "Impossible de charger les comptes",
+      "loadMessages": "Impossible de charger les messages",
+      "openMessage": "Impossible d’ouvrir le message",
+      "delete": "Impossible de supprimer",
+      "move": "Impossible de déplacer",
+      "mark": "Impossible de marquer",
+      "forwardAttachments": "Impossible de récupérer les pièces jointes pour le transfert",
+      "openFile": "Impossible d’ouvrir {{name}}",
+      "saveFile": "Impossible d’enregistrer {{name}}",
+      "source": "Impossible de récupérer la source",
+      "updateFolder": "Impossible de mettre à jour le dossier",
+      "deleteFolder": "Impossible de supprimer le dossier"
+    },
+    "accountAdded": "Compte {{email}} ajouté.",
+    "addAccount": "Ajouter un compte",
+    "deletePermanently": {
+      "title": "Supprimer définitivement",
+      "text_one": "Ce message sera supprimé définitivement. Cette action est irréversible.",
+      "text_other": "{{count}} messages seront supprimés définitivement. Cette action est irréversible.",
+      "text_many": "{{count}} messages seront supprimés définitivement. Cette action est irréversible.",
+      "confirm": "Supprimer définitivement"
+    },
+    "noArchiveFolder": "Ce compte n’a pas de dossier d’archives. Choisissez-en un dans Outils › Paramètres des comptes › Dossiers.",
+    "fetched": "Messages relevés.",
+    "deleteFolder": {
+      "title": "Supprimer le dossier",
+      "text": "Le dossier « {{folder}} » et tous ses messages seront supprimés sur le serveur."
+    },
+    "welcome": {
+      "title": "Pas encore de compte e-mail",
+      "text": "Ajoutez votre compte avec votre adresse e-mail et votre mot de passe. Email Studio trouve les bons paramètres."
+    },
+    "folderPaneWidth": "Largeur du volet des dossiers",
+    "messageListWidth": "Largeur de la liste des messages",
+    "messageList": "Liste des messages",
+    "search": {
+      "in": "Rechercher dans {{folder}}",
+      "label": "Rechercher des messages ({{shortcut}})",
+      "clear": "Effacer la recherche"
+    },
+    "filter": {
+      "label": "Filtre rapide",
+      "unread": "Non lus",
+      "unreadTitle": "Non lus uniquement",
+      "starred": "Suivis",
+      "starredTitle": "Suivis uniquement",
+      "attachment": "Pièce jointe",
+      "attachmentTitle": "Avec pièce jointe uniquement",
+      "body": "Corps",
+      "bodyTitle": "Rechercher aussi dans le texte des messages (plus lent)"
+    },
+    "count": {
+      "filtered": "{{shown}} sur {{total}}",
+      "filteredLoaded": "{{shown}} sur {{loaded}} chargés",
+      "messages_one": "{{count}} message",
+      "messages_other": "{{count}} messages",
+      "messages_many": "{{count}} messages",
+      "selected_one": "{{count}} sélectionné",
+      "selected_other": "{{count}} sélectionnés",
+      "selected_many": "{{count}} sélectionnés"
+    },
+    "noResults": "Aucun message trouvé.",
+    "emptyFolder": "Ce dossier est vide.",
+    "moveTo_one": "Déplacer le message vers",
+    "moveTo_other": "Déplacer {{count}} messages vers",
+    "moveTo_many": "Déplacer {{count}} messages vers",
+    "folderDialog": {
+      "newTitle": "Nouveau dossier",
+      "renameTitle": "Renommer le dossier",
+      "create": "Créer",
+      "rename": "Renommer",
+      "name": "Nom",
+      "inside": "Dans « {{folder}} »"
+    },
+    "source": {
+      "title": "Source du message",
+      "saveAs": "Enregistrer en {{extension}}"
+    }
+  },
+  "address": {
+    "invalid": "Adresse non valide : {{address}}",
+    "remove": "Supprimer {{address}}"
+  },
+  "list": {
+    "label": "Messages",
+    "to": "À : {{address}}",
+    "noRecipient": "(aucun destinataire)",
+    "replied": "Répondu",
+    "hasAttachment": "Avec pièce jointe",
+    "noSubject": "(sans objet)",
+    "star": "Ajouter le suivi",
+    "unstar": "Retirer le suivi",
+    "loadingMore": "Chargement d’autres messages…"
+  },
+  "folders": {
+    "label": "Dossiers",
+    "loading": "Chargement des dossiers…",
+    "unread_one": "{{count}} non lu",
+    "unread_other": "{{count}} non lus",
+    "unread_many": "{{count}} non lus",
+    "inbox": "Boîte de réception"
+  },
+  "reader": {
+    "loadingMessage": "Chargement du message…",
+    "chooseMessage": "Choisissez un message pour le lire.",
+    "label": "Message : {{subject}}",
+    "reply": "Répondre",
+    "replyTitle": "Répondre · {{shortcut}}",
+    "replyAll": "Répondre à tous",
+    "replyAllTitle": "Répondre à tous · {{shortcut}}",
+    "forward": "Transférer",
+    "forwardTitle": "Transférer · {{shortcut}}",
+    "archive": "Archiver",
+    "archiveTitle": "Archiver · {{shortcut}}",
+    "delete": "Supprimer",
+    "deleteTitle": "Supprimer · {{shortcut}}",
+    "starTitle": "Suivi · {{shortcut}}",
+    "from": "De",
+    "to": "À",
+    "none": "(aucun)",
+    "cc": "Cc",
+    "replyTo": "Répondre à",
+    "date": "Date",
+    "external": {
+      "blocked_one": "Une image distante a été bloquée pour protéger votre vie privée.",
+      "blocked_other": "{{count}} images distantes ont été bloquées pour protéger votre vie privée.",
+      "blocked_many": "{{count}} images distantes ont été bloquées pour protéger votre vie privée.",
+      "desktopHint": "Avec votre autorisation, l’application les récupère et les affiche sans laisser le message se connecter où que ce soit.",
+      "demoHint": "(Dans la démo, elles pointent vers des adresses qui n’existent pas.)",
+      "show": "Afficher le contenu distant",
+      "alwaysFrom": "Toujours afficher pour {{sender}}",
+      "failed_one": "Une image distante n’a pas pu être récupérée.",
+      "failed_other": "{{count}} images distantes n’ont pas pu être récupérées.",
+      "failed_many": "{{count}} images distantes n’ont pas pu être récupérées."
+    },
+    "attachments": {
+      "label": "Pièces jointes",
+      "previewOrOpen": "Clic : aperçu · double-clic : ouvrir dans {{module}}",
+      "preview": "Aperçu",
+      "openCopyTitle": "Ouvrir une copie modifiable dans {{module}}",
+      "openIn": "Ouvrir dans {{module}}",
+      "saveTitle": "Enregistrer sur cet ordinateur"
+    },
+    "content": "Contenu du message",
+    "loadingContent": "Chargement du contenu…"
+  },
+  "compose": {
+    "errors": {
+      "saveDraft": "Impossible d’enregistrer le brouillon",
+      "noRecipients": "Ajoutez au moins un destinataire.",
+      "send": "Impossible d’envoyer",
+      "attachmentsLarge": "Les pièces jointes totalisent {{size}} ; de nombreux serveurs refusent les messages de plus de {{max}}.",
+      "linkNotAllowed": "Seuls les liens http(s), mailto et tel sont autorisés."
+    },
+    "noSubject": {
+      "title": "Sans objet",
+      "text": "Ce message n’a pas d’objet. L’envoyer quand même ?",
+      "fillIn": "Saisir un objet",
+      "sendWithout": "Envoyer sans objet"
+    },
+    "forgotAttachment": {
+      "title": "Pièce jointe oubliée ?",
+      "text": "Votre message mentionne <strong>« {{word}} »</strong>, mais aucune pièce jointe n’a été ajoutée.",
+      "sendAnyway": "Envoyer quand même",
+      "keywords": "pièce jointe|pièces jointes|ci-joint|en annexe|joint"
+    },
+    "addAttachment": "Ajouter une pièce jointe",
+    "attachment": "Joindre",
+    "removeAttachment": "Supprimer {{name}}",
+    "attachmentsSummary_one": "{{count}} pièce jointe · {{size}}",
+    "attachmentsSummary_other": "{{count}} pièces jointes · {{size}}",
+    "attachmentsSummary_many": "{{count}} pièces jointes · {{size}}",
+    "dropToAttach": "Déposer pour ajouter en pièce jointe",
+    "sent": "Message envoyé.",
+    "sentWithSubject": "Message envoyé : {{subject}}.",
+    "unsent": {
+      "title": "Message non envoyé",
+      "text": "Voulez-vous enregistrer ce message comme brouillon ?",
+      "discard": "Abandonner",
+      "saveDraft": "Enregistrer le brouillon"
+    },
+    "label": "Rédaction : {{subject}}",
+    "newMessage": "Nouveau message",
+    "send": "Envoyer",
+    "sending": "Envoi…",
+    "sendTitle": "Envoyer · {{shortcut}}",
+    "draft": "Brouillon",
+    "savingDraft": "Enregistrement…",
+    "saveDraftTitle": "Enregistrer comme brouillon · {{shortcut}}",
+    "dismissError": "Fermer le message",
+    "from": "De",
+    "to": "À",
+    "cc": "Cc",
+    "bcc": "Cci",
+    "subject": "Objet",
+    "body": "Texte du message",
+    "format": {
+      "label": "Mise en forme",
+      "withShortcut": "{{action}} · {{shortcut}}",
+      "bold": "Gras",
+      "italic": "Italique",
+      "underline": "Souligné",
+      "bullets": "Puces",
+      "numbering": "Numérotation",
+      "link": "Lien",
+      "insertLink": "Insérer un lien",
+      "clear": "Effacer la mise en forme",
+      "linkAddress": "Adresse du lien",
+      "insert": "Insérer"
+    }
+  },
+  "link": {
+    "browserFailed": "Impossible d’ouvrir le navigateur. Copiez l’adresse : {{url}}",
+    "phoneTitle": "Numéro de téléphone",
+    "openTitle": "Ouvrir le lien ?",
+    "copied": "Adresse copiée.",
+    "copyFailed": "Échec de la copie ; sélectionnez l’adresse manuellement.",
+    "copy": "Copier l’adresse",
+    "openInBrowser": "Ouvrir dans le navigateur",
+    "phoneIntro": "Ce numéro de téléphone figure dans le message :",
+    "realTarget": "Ce lien mène en réalité à :",
+    "misleading": "Le texte du message mentionne <strong>{{shown}}</strong>, mais le lien mène à <strong>{{actual}}</strong>. Il pourrait s’agir d’hameçonnage.",
+    "unencrypted": "Remarque : ce lien n’utilise pas de connexion chiffrée (http)."
+  },
+  "files": {
+    "saveUnsupported": "Cette version de l’application de bureau ne peut pas encore enregistrer {{name}}. Ouvrez la pièce jointe dans un module ou mettez à jour l’application.",
+    "saved": "Enregistré : {{path}}",
+    "saveCancelled": "Enregistrement annulé.",
+    "downloadRequested": "Téléchargement demandé. Vérifiez le fichier dans vos téléchargements."
+  },
+  "quote": {
+    "unknownSender": "(inconnu)",
+    "wroteOn": "Le {{date}}, {{sender}} a écrit :",
+    "wrote": "{{sender}} a écrit :",
+    "forwarded": "Message transféré",
+    "subject": "Objet : {{value}}",
+    "date": "Date : {{value}}",
+    "from": "De : {{value}}",
+    "to": "À : {{value}}",
+    "cc": "Cc : {{value}}"
+  },
+  "demo": {
+    "banner": "Démo — aucun vrai e-mail n’est possible dans le navigateur ; utilisez l’application de bureau.",
+    "accountName": "Boîte de démonstration",
+    "folders": {
+      "notifications": "Notifications",
+      "drafts": "Brouillons",
+      "sent": "Envoyés",
+      "archive": "Archives",
+      "junk": "Indésirables",
+      "trash": "Corbeille"
+    },
+    "welcome": {
+      "subject": "Bienvenue dans OpenAEC Email Studio",
+      "heading": "Bienvenue !",
+      "intro": "Ceci est une boîte de démonstration. Dans le navigateur, Email Studio ne peut ni relever ni envoyer de vrais e-mails ; utilisez pour cela l’application de bureau.",
+      "introHtml": "Ceci est une <strong>boîte de démonstration</strong>. Dans le navigateur, Email Studio ne peut ni relever ni envoyer de vrais e-mails ; utilisez pour cela l’application de bureau.",
+      "tryIt": "N’hésitez pas à essayer : répondre, marquer d’un suivi (S), déplacer vers les archives et ouvrir une pièce jointe dans Texte ou Classeur.",
+      "tryItHtml": "N’hésitez pas à essayer : répondre, marquer d’un suivi (<kbd>S</kbd>), déplacer vers les archives et ouvrir une pièce jointe dans Texte ou Classeur.",
+      "logoText": "Le logo OpenAEC ci-dessous est une image intégrée provenant d’une pièce jointe (cid:).",
+      "logoAlt": "Logo OpenAEC",
+      "logoHtml": "Le logo à gauche est une image intégrée provenant d’une pièce jointe."
+    },
+    "errors": {
+      "accountNotFound": "Le compte n’existe pas.",
+      "messageNotFound": "Le message n’existe pas.",
+      "folderExists": "Ce dossier existe déjà.",
+      "folderCannotRename": "Ce dossier ne peut pas être renommé.",
+      "specialFolderDelete": "Les dossiers spéciaux ne peuvent pas être supprimés.",
+      "attachmentNotFound": "La pièce jointe n’existe pas.",
+      "targetFolderNotFound": "Le dossier de destination n’existe pas.",
+      "noRecipients": "Aucun destinataire indiqué.",
+      "recipientRefused": "Démo : le serveur refuse le destinataire {{domain}}.",
+      "attachmentsTooLarge": "Démo : les pièces jointes sont limitées à {{max}}."
+    },
+    "accountAdded": {
+      "subject": "Votre compte a été ajouté (démo)",
+      "text": "Le compte {{email}} a été ajouté à la démo. {{notice}}"
+    },
+    "discovery": {
+      "knownProvider": "Fournisseur connu (démo).",
+      "mx": "L’enregistrement MX de {{domain}} pointe vers mail.protection.outlook.com (démo).",
+      "ownServer": "{{name}} (serveur propre)",
+      "autoconfig": "Trouvé sur autoconfig.{{domain}} (démo).",
+      "srv": "_imaps._tcp et _submission._tcp (démo).",
+      "ispdb": "Depuis la base de données de Thunderbird (démo).",
+      "guessImapOk": "Noms de serveur courants ; le test IMAP a réussi (démo).",
+      "guessAlternative": "Nom de serveur alternatif (démo)."
+    },
+    "test": {
+      "noServer": "Aucun serveur {{protocol}} indiqué.",
+      "invalidPort": "Port non valide.",
+      "unreachable": "Démo : {{host}} est injoignable.",
+      "simulated": "Démo : connexion simulée.",
+      "simulatedUnencrypted": "Démo : connexion simulée (non chiffrée !)."
+    },
+    "oauthDesktopOnly": "La connexion avec Microsoft ou Google n’est possible que dans l’application de bureau."
+  },
+  "preview": {
+    "loading": "Chargement de l’aperçu…",
+    "dialog": {
+      "attachments": "Pièces jointes",
+      "previous": "Pièce jointe précédente",
+      "previousTitle": "Pièce jointe précédente (←)",
+      "next": "Pièce jointe suivante",
+      "nextTitle": "Pièce jointe suivante (→)",
+      "close": "Fermer l’aperçu",
+      "closeTitle": "Fermer (Échap)",
+      "fetching": "Récupération de la pièce jointe…",
+      "fetchFailed": "La pièce jointe n’a pas pu être récupérée : {{message}}"
+    },
+    "card": {
+      "fileName": "Nom du fichier",
+      "size": "Taille",
+      "openExternal": "Ouvrir avec l’application par défaut",
+      "unknown": "inconnu",
+      "attention": "Remarque",
+      "yes": "oui",
+      "no": "non"
+    },
+    "detection": {
+      "kinds": {
+        "pdf": "un PDF",
+        "dwg": "un dessin DWG",
+        "dxf": "un dessin DXF",
+        "ifc": "un modèle IFC",
+        "markdown": "Markdown",
+        "text": "texte",
+        "image": "une image",
+        "office": "un document Office",
+        "unknown": "un fichier inconnu"
+      },
+      "contentDiffers": "Le nom suggère {{kind}}, mais le contenu est autre chose.",
+      "mismatch": "Cette pièce jointe s’appelle « .{{extension}} » ({{named}}), mais le contenu est {{actual}}.",
+      "mismatchSubtype": "Cette pièce jointe s’appelle « .{{extension}} » ({{named}}), mais le contenu est {{actual}} ({{subtype}}).",
+      "contentBinary": "Le nom suggère {{kind}}, mais le contenu est binaire.",
+      "notSvg": "Le nom suggère une image SVG, mais le contenu n’est pas du SVG.",
+      "signatureMissing": "Le nom suggère {{kind}}, mais le contenu n’en présente pas les caractéristiques."
+    },
+    "image": {
+      "loadFailed": "L’image n’a pas pu être chargée : {{message}}",
+      "subtitle": "Image",
+      "cannotDisplay": "Cette image ne peut pas être affichée ici (endommagée ou variante non prise en charge).",
+      "tooLarge": "Cette image dépasse {{size}} Mo et n’est pas affichée en aperçu.",
+      "tooManyPixels": "Cette image fait {{width}} × {{height}} pixels (plus de {{megapixels}} mégapixels) et n’est pas affichée en aperçu.",
+      "toolbar": "Image",
+      "zoomOut": "Zoom arrière",
+      "zoomOutTitle": "Zoom arrière (−)",
+      "zoomIn": "Zoom avant",
+      "zoomInTitle": "Zoom avant (+)",
+      "fit": "Ajuster à la fenêtre",
+      "fitTitle": "Ajuster à la fenêtre (0)",
+      "actualSize": "Taille réelle (100 %)",
+      "actualSizeTitle": "Taille réelle",
+      "rotate": "Rotation horaire",
+      "rotateTitle": "Rotation horaire (R)",
+      "area": "Aperçu de l’image"
+    },
+    "text": {
+      "loadFailed": "Le texte n’a pas pu être chargé : {{message}}",
+      "toolbar": "Texte",
+      "encoding": "Encodage : {{encoding}}",
+      "utf8Bom": "UTF-8 (avec BOM)",
+      "formatJson": "Mettre en forme le JSON",
+      "wrapLines": "Retour à la ligne",
+      "truncated": "Affichage des {{limit}} premiers sur {{size}}. Enregistrez le fichier pour tout voir.",
+      "contentOf": "Contenu de {{name}}"
+    },
+    "markdown": {
+      "loadFailed": "Le fichier n’a pas pu être chargé : {{message}}",
+      "linkNotOpened": "Lien non ouvert : {{url}}",
+      "imageFallback": "Image",
+      "externalBlocked": "{{alt}} (image externe bloquée)",
+      "unavailable": "{{alt}} (non disponible)",
+      "view": "Affichage",
+      "rendered": "Rendu",
+      "source": "Source",
+      "showExternalImages": "Afficher les images externes",
+      "truncated": "Affichage des {{limit}} premiers sur {{size}}.",
+      "confirmLabel": "Ouvrir le lien",
+      "confirmQuestion": "Ouvrir ce lien en dehors d’Office Studio ?"
+    },
+    "pdf": {
+      "loadFailed": "Le PDF n’a pas pu être chargé : {{message}}",
+      "properties": "Propriétés",
+      "frameTitle": "PDF : {{name}}",
+      "linuxUnsupported": "La vue web sous Linux ne peut pas afficher les PDF de façon fiable. L’aperçu complet arrivera dans une version future (visionneuse Rust).",
+      "cannotPreview": "Ce PDF ne peut pas être prévisualisé ici. L’aperçu complet arrivera dans une version future (visionneuse Rust).",
+      "subtitle": "Document PDF",
+      "subtitleVersion": "PDF {{version}}",
+      "pages": "Pages",
+      "author": "Auteur",
+      "subject": "Objet",
+      "createdWith": "Créé avec",
+      "created": "Créé le",
+      "modified": "Modifié le",
+      "encrypted": "Chiffré",
+      "incomplete": "le fichier semble incomplet ou endommagé",
+      "showPreview": "Afficher l’aperçu"
+    },
+    "cad": {
+      "loadFailed": "Le dessin n’a pas pu être chargé : {{message}}",
+      "previewLater": "Un aperçu arrivera dans une version future (visionneuse Rust).",
+      "tooLargeToParse": "Ce fichier est trop volumineux pour être analysé ici. Un aperçu arrivera dans une version future (visionneuse Rust).",
+      "dwgSubtitle": "Dessin AutoCAD (DWG)",
+      "dxfSubtitle": "Dessin DXF",
+      "dxfBinarySubtitle": "Dessin DXF binaire",
+      "format": "Format",
+      "savedAs": "Enregistré en",
+      "unknownAutocadVersion": "version d’AutoCAD inconnue",
+      "units": "Unités",
+      "entities": "Entités",
+      "blocks": "Blocs",
+      "layers": "Calques",
+      "thumbnailAlt": "Miniature intégrée du dessin",
+      "thumbnailCaption": "Miniature issue du fichier",
+      "entitiesByType": "Entités par type",
+      "layersCount": "Calques ({{n}})",
+      "andMore": "… et {{n}} de plus",
+      "versionRange": "AutoCAD {{from}} à {{to}}",
+      "versionAndLater": "AutoCAD {{version}} et ultérieur",
+      "unitCode": "code {{code}}",
+      "unitNames": {
+        "unitless": "sans unité",
+        "inch": "pouce",
+        "foot": "pied",
+        "mile": "mile",
+        "millimeter": "millimètre",
+        "centimeter": "centimètre",
+        "meter": "mètre",
+        "kilometer": "kilomètre",
+        "microinch": "micropouce",
+        "mil": "mil",
+        "yard": "yard",
+        "angstrom": "ångström",
+        "nanometer": "nanomètre",
+        "micron": "micron",
+        "decimeter": "décimètre",
+        "decameter": "décamètre",
+        "hectometer": "hectomètre",
+        "gigameter": "gigamètre",
+        "astronomicalUnit": "unité astronomique",
+        "lightYear": "année-lumière",
+        "parsec": "parsec",
+        "usSurveyFoot": "pied d’arpentage US",
+        "usSurveyInch": "pouce d’arpentage US",
+        "usSurveyYard": "yard d’arpentage US",
+        "usSurveyMile": "mile d’arpentage US"
+      }
+    },
+    "ifc": {
+      "loadFailed": "Le modèle n’a pas pu être chargé : {{message}}",
+      "previewLater": "L’aperçu 3D arrivera dans une version future (visionneuse Rust).",
+      "tooLarge": "Ce modèle dépasse {{size}} Mo et n’est pas analysé ici.",
+      "analysing": "Analyse du modèle… {{percent}}",
+      "cancelled": "Analyse annulée.",
+      "retry": "Analyser à nouveau",
+      "failed": "L’analyse a échoué : {{message}}",
+      "subtitle": "Modèle IFC",
+      "subtitleWithSchema": "Modèle IFC · {{schemas}}",
+      "nameInFile": "Nom dans le fichier",
+      "timestamp": "Horodatage",
+      "author": "Auteur",
+      "organization": "Organisation",
+      "application": "Application",
+      "description": "Description",
+      "sites": "Sites",
+      "buildings": "Bâtiments",
+      "entities": "Entités",
+      "incomplete": "le fichier semble incomplet (pas de END-ISO-10303-21)",
+      "storeys": "Étages ({{n}})",
+      "elementsHeading": "Éléments de construction",
+      "allEntityTypes": "Tous les types d’entités ({{n}})",
+      "elements": {
+        "wall": "Murs",
+        "wallStandardCase": "Murs (cas standard)",
+        "curtainWall": "Murs-rideaux",
+        "slab": "Planchers et dalles",
+        "roof": "Toitures",
+        "column": "Poteaux",
+        "beam": "Poutres",
+        "member": "Membrures",
+        "plate": "Plaques",
+        "door": "Portes",
+        "window": "Fenêtres",
+        "stair": "Escaliers",
+        "ramp": "Rampes",
+        "railing": "Garde-corps",
+        "covering": "Revêtements",
+        "footing": "Fondations",
+        "pile": "Pieux",
+        "space": "Espaces",
+        "opening": "Ouvertures",
+        "furnishing": "Mobilier",
+        "flowSegment": "Segments de gaines et de tuyaux",
+        "flowTerminal": "Terminaux techniques",
+        "proxy": "Autres éléments de construction",
+        "storey": "Étages"
+      }
+    },
+    "office": {
+      "kinds": {
+        "document": "Document texte",
+        "spreadsheet": "Classeur",
+        "presentation": "Présentation",
+        "database": "Base de données"
+      },
+      "genericDocument": "Document Office",
+      "type": "Type",
+      "openFailed": "Échec de l’ouverture : {{message}}",
+      "openCopyHint": "Ouvrez une copie modifiable dans {{module}}. L’original dans l’e-mail reste inchangé.",
+      "cannotOpen": "Ce format Office ne peut pas être ouvert ici.",
+      "opening": "Ouverture…",
+      "openIn": "Ouvrir dans {{module}}"
+    },
+    "unknown": {
+      "subtitle": "Aucun aperçu disponible",
+      "declaredType": "Type déclaré",
+      "extension": "Extension",
+      "none": "aucune",
+      "message": "Aucun aperçu ne peut être affiché pour ce type de fichier. Enregistrez-le et ne l’ouvrez que si vous faites confiance à l’expéditeur."
+    }
+  },
+  "backend": {
+    "accounts": {
+      "fileCorrupt": "Le fichier des comptes {{path}} est endommagé.",
+      "fileUnreadable": "Le fichier des comptes n’a pas pu être lu.",
+      "fileWriteFailed": "Le fichier des comptes n’a pas pu être écrit.",
+      "invalidEmail": "Saisissez une adresse e-mail valide.",
+      "invalidReplyTo": "L’adresse de réponse n’est pas une adresse e-mail valide.",
+      "lineBreakInName": "Les noms ne peuvent pas contenir de sauts de ligne.",
+      "notFound": "Ce compte n’existe plus.",
+      "saveFailed": "Les comptes n’ont pas pu être enregistrés.",
+      "usernameMissing": "Saisissez le nom d’utilisateur pour IMAP et SMTP."
+    },
+    "attachments": {
+      "blockedDatabase": "Pour des raisons de sécurité, « {{name}} » n’est pas ouvert automatiquement. Ouvrez les bases de données Access dans Database Studio. Enregistrez la pièce jointe si vous souhaitez tout de même la consulter.",
+      "blockedExecutable": "Pour des raisons de sécurité, « {{name}} » n’est pas ouvert automatiquement. Ce type de fichier peut exécuter des programmes. Enregistrez la pièce jointe si vous souhaitez tout de même la consulter.",
+      "blockedMacros": "Pour des raisons de sécurité, « {{name}} » n’est pas ouvert automatiquement. Ce document contient des macros. Enregistrez la pièce jointe si vous souhaitez tout de même la consulter.",
+      "blockedScripts": "Pour des raisons de sécurité, « {{name}} » n’est pas ouvert automatiquement. Ce type de fichier peut contenir des scripts. Enregistrez la pièce jointe si vous souhaitez tout de même la consulter.",
+      "emptyOrTooLarge": "La pièce jointe est vide ou dépasse 100 Mo.",
+      "executableContent": "« {{name}} » est {{kind}} et n’est pas ouvert pour des raisons de sécurité.",
+      "invalidName": "Nom de fichier non valide.",
+      "kind": {
+        "linuxProgram": "un programme Linux (ELF)",
+        "macProgram": "un programme macOS (Mach-O) ou une classe Java",
+        "script": "un script",
+        "windowsProgram": "un programme Windows (PE)",
+        "windowsShortcut": "un raccourci Windows"
+      },
+      "nameMissing": "Le nom du fichier est manquant.",
+      "noProgram": "Aucun programme n’a été trouvé pour ouvrir cette pièce jointe.",
+      "notFound": "La pièce jointe {{index}} n’existe pas dans ce message.",
+      "openFailed": "Échec de l’ouverture.",
+      "sendAsBinary": "Envoyez la pièce jointe sous forme de données binaires de 100 Mo au maximum.",
+      "tempDirFailed": "Impossible de créer un dossier temporaire.",
+      "tempSaveFailed": "La pièce jointe n’a pas pu être enregistrée temporairement."
+    },
+    "auth": {
+      "failed": "La connexion à {{host}} a échoué : le nom d’utilisateur ou le mot de passe est incorrect ({{detail}}). Gmail, Outlook, iCloud et Yahoo exigent un mot de passe d’application.",
+      "noPassword": "Aucun mot de passe n’a été saisi ni enregistré pour ce compte.",
+      "noStoredPassword": "Aucun mot de passe n’est enregistré pour ce compte. Saisissez le mot de passe dans les paramètres du compte."
+    },
+    "autoconfig": {
+      "httpsRedirectOnly": "Seules les redirections vers HTTPS sont suivies.",
+      "invalidEncoding": "Encodage de caractères non valide dans le fichier de configuration.",
+      "notFound": "Aucune configuration trouvée (HTTP {{status}}).",
+      "tooManyRedirects": "Trop de redirections."
+    },
+    "common": {
+      "saveFailed": "Échec de l’enregistrement."
+    },
+    "compose": {
+      "attachmentCorrupt": "La pièce jointe « {{name}} » est endommagée.",
+      "attachmentsTooLarge": "Les pièces jointes dépassent {{max}} Mo au total. Envoyez les gros fichiers via un lien de partage.",
+      "buildFailed": "Le message n’a pas pu être composé ({{detail}}).",
+      "field": {
+        "bcc": "Cci",
+        "cc": "Cc",
+        "from": "De",
+        "inReplyTo": "In-Reply-To",
+        "references": "References",
+        "replyTo": "Reply-To",
+        "subject": "L’objet",
+        "to": "À"
+      },
+      "invalidAddress": "« {{address}} » dans {{field}} n’est pas une adresse e-mail valide.",
+      "invalidCharacters": "{{field}} contient des caractères non valides.",
+      "invalidEnvelope": "Enveloppe non valide.",
+      "noRecipients": "Saisissez au moins un destinataire."
+    },
+    "connection": {
+      "failed": "Aucune connexion à {{host}} : {{detail}}",
+      "hostNotFound": "Le nom de serveur {{host}} est introuvable.",
+      "refused": "Le serveur {{host}} a refusé la connexion. Vérifiez le port et le paramètre de sécurité.",
+      "reset": "La connexion à {{host}} a été fermée de façon inattendue. Le paramètre de sécurité (SSL/TLS ou STARTTLS) correspond-il au port ?",
+      "timeout": "Le serveur {{host}} n’a pas répondu à temps. Vérifiez le nom du serveur, le port et le pare-feu."
+    },
+    "files": {
+      "saveFailed": "Le fichier n’a pas pu être enregistré."
+    },
+    "http": {
+      "invalidHttpResponse": "Réponse HTTP non valide.",
+      "invalidResponse": "Réponse non valide.",
+      "invalidServerName": "Nom de serveur non valide {{host}}.",
+      "invalidUrl": "Adresse web non valide.",
+      "plainOnlyLocal": "Le HTTP non chiffré n’est autorisé que vers cet ordinateur.",
+      "redirectWithoutLocation": "Redirection sans adresse.",
+      "responseTooLarge": "La réponse du serveur est trop volumineuse."
+    },
+    "images": {
+      "credentialsInUrl": "Les adresses contenant des identifiants de connexion ne sont pas récupérées.",
+      "hostNotFound": "{{host}} est introuvable.",
+      "httpOnly": "Seules les adresses http et https sont autorisées.",
+      "invalidServerName": "Nom de serveur non valide.",
+      "notAnImage": "Cette adresse ne renvoie pas d’image.",
+      "privateAddress": "Le contenu externe provenant d’adresses internes ou locales n’est pas récupéré.",
+      "timeout": "L’image ne s’est pas chargée en 10 secondes.",
+      "tooLarge": "L’image dépasse 10 Mo.",
+      "tooManyRedirects": "Trop de redirections (3 au maximum).",
+      "unavailable": "L’image n’est pas disponible (HTTP {{status}}).",
+      "unknownRedirect": "Redirection inconnue.",
+      "unsupportedImage": "Le contenu n’est pas une image prise en charge."
+    },
+    "imap": {
+      "action": {
+        "copy": "Copier",
+        "countFolders": "Compter les dossiers",
+        "createFolder": "Créer un dossier",
+        "delete": "Supprimer",
+        "deleteFolder": "Supprimer le dossier",
+        "expunge": "Nettoyer",
+        "fetchMessage": "Récupérer le message",
+        "fetchMessages": "Récupérer les messages",
+        "flag": "Marquer",
+        "listFolders": "Récupérer les dossiers",
+        "move": "Déplacer",
+        "openFolder": "Ouvrir le dossier",
+        "openNamedFolder": "Ouvrir le dossier « {{folder}} »",
+        "renameFolder": "Renommer le dossier",
+        "saveToDrafts": "Enregistrer dans Brouillons",
+        "saveToFolder": "Enregistrer dans un dossier",
+        "saveToSent": "Enregistrer dans Envoyés",
+        "search": "Rechercher",
+        "signIn": "Se connecter",
+        "startTls": "STARTTLS"
+      },
+      "alreadyInTrash": "Ces messages sont déjà dans la corbeille ; supprimez-les définitivement.",
+      "appendRejected": "{{action}} : le serveur a rejeté le message.",
+      "badCommand": "{{action}} : le serveur n’a pas compris la commande ({{detail}}).",
+      "cannotDeleteInbox": "La boîte de réception ne peut pas être supprimée.",
+      "cannotRenameInbox": "La boîte de réception ne peut pas être renommée.",
+      "closedImmediately": "{{host}} a fermé la connexion immédiatement. Le paramètre de sécurité (SSL/TLS ou STARTTLS) correspond-il au port ?",
+      "commandTimeout": "{{host}} n’a pas répondu dans les {{seconds}} secondes.",
+      "connectTimeout": "Aucune réponse de {{host}}:{{port}} dans les {{seconds}} secondes. Vérifiez le nom du serveur, le port et le pare-feu.",
+      "connectionLost": "La connexion à {{host}} a été perdue.",
+      "draftsFolderMissing": "Aucun dossier Brouillons n’a été trouvé sur le serveur. Choisissez ce dossier dans les paramètres du compte.",
+      "greetingRefused": "{{host}} a refusé la connexion : {{detail}}",
+      "invalidFolderName": "Nom de dossier non valide.",
+      "invalidMessage": "Message non valide.",
+      "invalidName": "{{action}} : caractères non valides dans le nom.",
+      "invalidSearchCharacters": "Le texte de recherche contient des caractères non valides.",
+      "messageGone": "Ce message n’existe plus (il a peut-être été déplacé ou supprimé).",
+      "messageTooLarge": "Le message fait {{size}} Mo ; Email Studio ouvre les messages jusqu’à {{max}} Mo.",
+      "noStarttls": "{{host}} ne prend pas en charge STARTTLS sur le port {{port}}. Choisissez SSL/TLS (généralement le port 993).",
+      "noTrash": "Aucun dossier Corbeille n’a été trouvé sur le serveur. Choisissez un dossier Corbeille dans les paramètres du compte ou supprimez définitivement.",
+      "noValidMessages": "Aucun message valide indiqué.",
+      "notFound": "{{action}} : {{detail}}",
+      "quotaExceeded": "{{action}} : la boîte aux lettres est pleine ({{detail}}).",
+      "refused": "{{action}} : le serveur a refusé ({{detail}}).",
+      "retryLater": "{{message}} (Email Studio réessaiera dans {{retrySeconds}} secondes pour éviter d’être bloqué par le serveur.)",
+      "searchTooLong": "Le texte de recherche est trop long.",
+      "sentFolderMissing": "Aucun dossier Envoyés n’a été trouvé sur le serveur. Choisissez ce dossier dans les paramètres du compte.",
+      "signInTimeout": "La connexion à {{host}} a pris trop de temps.",
+      "specialFolderMissing": "Le dossier est introuvable sur le serveur. Choisissez ce dossier dans les paramètres du compte.",
+      "unexpectedError": "{{action}} : erreur inattendue.",
+      "unexpectedResponse": "{{action}} : réponse inattendue du serveur.",
+      "unexpectedState": "État de connexion inattendu."
+    },
+    "keychain": {
+      "notResponding": "Le trousseau n’a pas répondu.",
+      "unavailable": "Le trousseau du système d’exploitation n’est pas disponible. Email Studio n’enregistre jamais les mots de passe en clair ; sous Linux, un Secret Service est nécessaire (par exemple GNOME Keyring ou KWallet).",
+      "unexpected": "Le trousseau a renvoyé une erreur inattendue."
+    },
+    "links": {
+      "openFailed": "Le lien n’a pas pu être ouvert.",
+      "unsupportedScheme": "Seuls les liens http, https et mailto peuvent être ouverts."
+    },
+    "messages": {
+      "invalidMime": "Le message n’a pas pu être lu (structure MIME non valide).",
+      "unreadable": "Le message n’a pas pu être lu."
+    },
+    "oauth": {
+      "browserFailed": "Le navigateur web n’a pas pu être ouvert pour la connexion.",
+      "cancelled": "La connexion a été annulée.",
+      "cancelledOrDenied": "La connexion à {{provider}} a été annulée ou refusée.",
+      "clientMisconfigured": "Le client OAuth pour {{provider}} n’est pas configuré correctement (ID client ou secret).",
+      "emailUnknown": "L’adresse e-mail de la connexion n’a pas pu être déterminée ; saisissez l’adresse et réessayez.",
+      "invalidClientId": "Ce n’est pas un ID client valide.",
+      "invalidTokenEndpoint": "Point de terminaison de jeton non valide.",
+      "noAccessToken": "{{provider}} n’a pas renvoyé de jeton d’accès (HTTP {{status}}).",
+      "noFreePort": "Aucun port temporaire n’est disponible pour la connexion.",
+      "noPort": "Aucun port.",
+      "noRefreshToken": "{{provider}} n’a pas renvoyé de jeton d’actualisation ; reconnectez-vous.",
+      "noStoredSignIn": "Reconnectez-vous à {{provider}} : aucune connexion n’est enregistrée pour ce compte.",
+      "notConfigured": {
+        "google": "La connexion avec Google n’est pas encore configurée : il n’y a pas d’ID client. Dans Google Cloud, créez un client OAuth de type « Application de bureau » (redirection via http://127.0.0.1), activez la Gmail API et ajoutez la portée https://mail.google.com/ à l’écran de consentement. Saisissez ensuite l’ID client et le secret client (voir docs/email-oauth.md).",
+        "microsoft": "La connexion avec Microsoft n’est pas encore configurée : il n’y a pas d’ID client. Inscrivez une application dans Microsoft Entra (Inscriptions d’applications) en tant que « Client public », ajoutez la plateforme « Applications mobiles et de bureau » avec l’URI de redirection http://localhost, et accordez les autorisations déléguées IMAP.AccessAsUser.All, SMTP.Send, offline_access, openid et email. Saisissez ensuite l’ID client (voir docs/email-oauth.md)."
+      },
+      "providerRefused": "{{provider}} a refusé la connexion ({{detail}}).",
+      "randomUnavailable": "Aucune source d’aléa sûre disponible.",
+      "reauthenticate": "Reconnectez-vous à {{provider}} : l’autorisation a expiré ou a été révoquée.",
+      "settingSaveFailed": "Le paramètre OAuth n’a pas pu être enregistré.",
+      "signInFirst": "Ce compte utilise OAuth2 : connectez-vous d’abord avec Microsoft ou Google.",
+      "signInFirstToTest": "Connectez-vous d’abord avec Microsoft ou Google pour tester OAuth2.",
+      "signInTimeout": "La connexion à {{provider}} a pris plus de 5 minutes et a été interrompue.",
+      "stateMismatch": "La réponse de la page de connexion n’appartient pas à cette connexion (state différent).",
+      "timeout": "{{provider}} n’a pas répondu à temps.",
+      "tokenRefused": "{{provider}} a refusé le jeton ({{detail}}).",
+      "unexpectedResponse": "{{provider}} a renvoyé une réponse inattendue (HTTP {{status}})."
+    },
+    "security": {
+      "cramMd5SmtpUnsupported": "Le mot de passe chiffré (CRAM-MD5) n’est pas pris en charge pour SMTP. Choisissez « mot de passe normal » ; via SSL/TLS ou STARTTLS, le mot de passe est également chiffré.",
+      "invalidServerName": "« {{host}} » n’est pas un nom de serveur valide pour {{protocol}}.",
+      "notLocalhost": "{{host}} n’est pas cet ordinateur ; une connexion non chiffrée a donc été refusée.",
+      "portMissing": "Le port pour {{protocol}} est manquant.",
+      "unencryptedRefused": "La connexion non chiffrée à {{host}} a été refusée : votre mot de passe circulerait sur le réseau de façon lisible. Choisissez SSL/TLS ou STARTTLS. Les connexions non chiffrées ne sont autorisées que vers cet ordinateur (localhost), par exemple pour Proton Mail Bridge."
+    },
+    "server": {
+      "noTimelyResponse": "{{host}} n’a pas répondu à temps."
+    },
+    "smtp": {
+      "authMethodUnsupported": "Cette méthode de connexion n’est pas prise en charge pour SMTP.",
+      "error": "Erreur SMTP chez {{host}} : {{detail}}",
+      "messageTooLarge": "{{host}} rejette le message car il est trop volumineux ({{detail}}).",
+      "noAuthMechanism": "{{host}} ne propose aucune méthode de connexion prise en charge par Email Studio (PLAIN ou LOGIN). Choisissez STARTTLS ou SSL/TLS ; de nombreux serveurs ne proposent la connexion qu’après le chiffrement.",
+      "oauthRejected": "{{host}} a rejeté le jeton OAuth2 ; vous devrez peut-être vous reconnecter.",
+      "rejected": "{{host}} a rejeté le message ({{detail}}).",
+      "sendTimeout": "L’envoi via {{host}} a pris trop de temps.",
+      "tlsFailed": "La connexion sécurisée à {{host}} n’a pas pu être établie ({{detail}}). Le paramètre de sécurité correspond-il au port ?",
+      "tryLater": "{{host}} ne peut pas accepter le message pour le moment ; réessayez plus tard ({{detail}})."
+    },
+    "storage": {
+      "appDataDirNotFound": "Le dossier de données de l’application est introuvable.",
+      "dataDirCreateFailed": "Le dossier de données n’a pas pu être créé.",
+      "dataDirMissing": "Le dossier de données est manquant."
+    },
+    "test": {
+      "signedIn": "Connecté à {{host}}.",
+      "signedInUnencrypted": "Connecté à {{host}}. Remarque : la connexion {{protocol}} n’est pas chiffrée. Cela n’est autorisé que parce que le serveur s’exécute sur cet ordinateur."
+    },
+    "tls": {
+      "certificateRejected": "La connexion sécurisée à {{host}} a été refusée : {{reason}}. Pour protéger votre mot de passe, Email Studio ne se connecte pas à un serveur dont l’identité ne peut pas être vérifiée.",
+      "handshakeFailed": "La connexion sécurisée à {{host}} n’a pas pu être établie ({{detail}}). Le paramètre de sécurité (SSL/TLS ou STARTTLS) correspond-il au port ?",
+      "handshakeTimeout": "La négociation TLS avec {{host}} a pris trop de temps.",
+      "invalidServerName": "« {{host}} » n’est pas un nom de serveur valide pour TLS.",
+      "reason": {
+        "expired": "le certificat a expiré",
+        "invalid": "le certificat n’est pas valide ({{detail}})",
+        "notYetValid": "le certificat n’est pas encore valide (l’horloge de cet ordinateur est-elle correcte ?)",
+        "revoked": "le certificat a été révoqué",
+        "unknownIssuer": "le certificat n’a pas été émis par une autorité de certification de confiance (peut-être auto-signé)",
+        "wrongName": "le certificat n’appartient pas au nom {{host}} ; utilisez le nom de serveur indiqué sur le certificat"
+      }
+    }
+  }
+}

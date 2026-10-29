@@ -367,11 +367,14 @@ pub async fn haal_https(host: &str, poort: u16, pad: &str) -> Uitkomst<String> {
                 .await
                 .map_err(|_| {
                     MailFout::tijdslimiet(format!("{} reageerde niet op tijd.", doel.0))
+                        .sleutel("server.noTimelyResponse")
+                        .waarde("host", &doel.0)
                 })??;
         match status {
             200 => {
                 return String::from_utf8(lichaam).map_err(|_| {
                     MailFout::intern("Ongeldige tekencodering in het configuratiebestand.")
+                        .sleutel("autoconfig.invalidEncoding")
                 })
             }
             301 | 302 | 303 | 307 | 308 => {
@@ -379,19 +382,25 @@ pub async fn haal_https(host: &str, poort: u16, pad: &str) -> Uitkomst<String> {
                     .iter()
                     .find(|(k, _)| k.eq_ignore_ascii_case("location"))
                     .map(|(_, v)| v.clone())
-                    .ok_or_else(|| MailFout::niet_gevonden("Doorverwijzing zonder adres."))?;
+                    .ok_or_else(|| {
+                        MailFout::niet_gevonden("Doorverwijzing zonder adres.")
+                            .sleutel("http.redirectWithoutLocation")
+                    })?;
                 doel = ontleed_https_url(&locatie).ok_or_else(|| {
                     MailFout::geweigerd("Alleen doorverwijzingen naar HTTPS worden gevolgd.")
+                        .sleutel("autoconfig.httpsRedirectOnly")
                 })?;
             }
             _ => {
                 return Err(MailFout::niet_gevonden(format!(
                     "Geen configuratie gevonden (HTTP {status})."
-                )))
+                ))
+                .sleutel("autoconfig.notFound")
+                .waarde("status", status))
             }
         }
     }
-    Err(MailFout::geweigerd("Te veel doorverwijzingen."))
+    Err(MailFout::geweigerd("Te veel doorverwijzingen.").sleutel("autoconfig.tooManyRedirects"))
 }
 
 fn ontleed_https_url(url: &str) -> Option<(String, u16, String)> {
@@ -434,7 +443,7 @@ pub async fn http_verzoek(
     formulier: Option<&str>,
 ) -> Uitkomst<HttpAntwoord> {
     if pad.contains(['\r', '\n', ' ']) || host.contains(['\r', '\n', ' ', '/']) {
-        return Err(MailFout::geweigerd("Ongeldig webadres."));
+        return Err(MailFout::geweigerd("Ongeldig webadres.").sleutel("http.invalidUrl"));
     }
     let tcp = tokio::net::TcpStream::connect((super::imap::kale_host(host), poort))
         .await
@@ -452,7 +461,11 @@ pub async fn http_verzoek(
     }
     if tls {
         let naam = rustls::pki_types::ServerName::try_from(host.to_string())
-            .map_err(|_| MailFout::verbinding(format!("Ongeldige servernaam {host}.")))?;
+            .map_err(|_| {
+                MailFout::verbinding(format!("Ongeldige servernaam {host}."))
+                    .sleutel("http.invalidServerName")
+                    .waarde("host", host)
+            })?;
         let s = tokio_rustls::TlsConnector::from(super::imap::tls_instellingen())
             .connect(naam, tcp)
             .await
@@ -466,7 +479,8 @@ pub async fn http_verzoek(
         if !lokaal {
             return Err(MailFout::geweigerd(
                 "Onversleuteld HTTP is alleen toegestaan naar deze computer.",
-            ));
+            )
+            .sleutel("http.plainOnlyLocal"));
         }
         lees_antwoord(tcp, &verzoek, host).await
     }
@@ -488,9 +502,8 @@ async fn lees_antwoord<S: tokio::io::AsyncRead + tokio::io::AsyncWrite + Unpin>(
             Ok(n) => {
                 alles.extend_from_slice(&buf[..n]);
                 if alles.len() > HTTP_MAX_BYTES {
-                    return Err(MailFout::te_groot(
-                        "Het antwoord van de server is te groot.",
-                    ));
+                    return Err(MailFout::te_groot("Het antwoord van de server is te groot.")
+                        .sleutel("http.responseTooLarge"));
                 }
             }
             // Veel servers sluiten zonder TLS close_notify; wat binnen is telt.
@@ -498,7 +511,9 @@ async fn lees_antwoord<S: tokio::io::AsyncRead + tokio::io::AsyncWrite + Unpin>(
             Err(e) => return Err(super::fout::uit_io(&e, host)),
         }
     }
-    ontleed_http(&alles).ok_or_else(|| MailFout::intern("Ongeldig HTTP-antwoord."))
+    ontleed_http(&alles).ok_or_else(|| {
+        MailFout::intern("Ongeldig HTTP-antwoord.").sleutel("http.invalidHttpResponse")
+    })
 }
 
 fn ontleed_http(bytes: &[u8]) -> Option<HttpAntwoord> {

@@ -2,9 +2,10 @@
  * Runtimebibliotheek: de ingebouwde VBA-functies en -constanten. Access- en
  * DAO-onderdelen staan in access.ts en dao.ts; afgeschermde functies in afscherming.ts.
  */
+import i18next from "i18next";
 import { GEWEIGERDE_FUNCTIES, weiger } from "./afscherming.ts";
 import { dagenInMaand, delenVan, serieVan, serieVanJs, splits } from "./datum.ts";
-import { fout, FOUTTEKSTEN, VbaAfbreking } from "./fouten.ts";
+import { fout, foutTekst, VbaAfbreking } from "./fouten.ts";
 import { dagVanJaar, formatteer, langeDatum, vastGetal, weekdag, weekVanJaar } from "./format.ts";
 import type { Bibliotheek, Ingebouwd, VbaRuntime } from "./interpreter.ts";
 import { lijktOp, vergelijkTekst, type Vergelijking } from "./operatoren.ts";
@@ -646,7 +647,7 @@ const functies: Record<string, Ingebouwd> = {
       const err = rt.errObject() as unknown as ErrObject | undefined;
       if (ontbreekt(n)) return err?.beschrijving ?? "";
       const nummer = geheel(n, rt);
-      return nummer === 0 ? "" : (FOUTTEKSTEN[nummer] ?? "Toepassingsfout of door het object gedefinieerde fout");
+      return nummer === 0 ? "" : (foutTekst(nummer) ?? i18next.t("vba:runtime.applicationOrObjectError"));
     },
   },
   msgbox: {
@@ -664,7 +665,7 @@ const functies: Record<string, Ingebouwd> = {
       }
       throw new VbaAfbreking(
         "niet-ondersteund",
-        "MsgBox met keuzeknoppen vraagt een antwoord van de gebruiker, maar er is geen interface (host) gekoppeld.",
+        i18next.t("vba:library.msgBoxNeedsHost"),
       );
     },
   },
@@ -672,7 +673,7 @@ const functies: Record<string, Ingebouwd> = {
     params: ["Prompt", "Title", "Default", "XPos", "YPos", "HelpFile", "Context"],
     fn: async ([tekstW, titel, standaard], rt) => {
       if (!rt.host?.inputBox)
-        throw new VbaAfbreking("niet-ondersteund", "InputBox vraagt invoer van de gebruiker, maar er is geen interface (host) gekoppeld.");
+        throw new VbaAfbreking("niet-ondersteund", i18next.t("vba:library.inputBoxNeedsHost"));
       const r = await rt.host.inputBox({
         tekst: tekst(nodig(tekstW), rt),
         titel: ontbreekt(titel) ? "Microsoft Access" : tekst(titel, rt),
@@ -683,7 +684,7 @@ const functies: Record<string, Ingebouwd> = {
   },
   eval: {
     fn: () => {
-      throw new VbaAfbreking("niet-ondersteund", "Eval (een tekst als Access-expressie uitvoeren) wordt niet ondersteund.");
+      throw new VbaAfbreking("niet-ondersteund", i18next.t("vba:library.evalUnsupported"));
     },
   },
   callbyname: {

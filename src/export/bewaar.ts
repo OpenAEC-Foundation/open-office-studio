@@ -1,6 +1,7 @@
 import type { Soort } from "../editors";
 import type { BewaarUitkomst } from "../opslag";
-import { HOST_SOORTEN, officeHost } from "../host";
+import i18next from "../i18n/config";
+import { HOST_SOORTEN, bewaarBijHost, officeHost } from "../host";
 import { controleerPakket, risicoBeleid, type Risico } from "../pakketcontrole";
 import { opslagRapport, type Rapport } from "../import/rapport";
 import { MACROUITVOER, bereidOpslag, type Bronkenmerken } from "../import/bron";
@@ -217,11 +218,15 @@ export async function bewaarInFormaat(
   // Gehoste bouw: de host bewaart het document zelf (src/host.ts, #109).
   const host = officeHost();
   if (host && HOST_SOORTEN.includes(keuze.ext)) {
-    const uit = await host.save(bestandsnaam, uitvoer);
+    const uit = await bewaarBijHost(host, bestandsnaam, uitvoer);
+    const conflict = uit.conflict
+      ? i18next.t("shell:host.conflict", { name: uit.naam })
+      : "";
+    if (conflict) host.melding?.("waarschuwing", conflict);
     return {
       status: "opgeslagen",
-      pad: (uit && uit.naam) || bestandsnaam,
-      toelichting,
+      pad: uit.naam,
+      toelichting: [conflict, toelichting].filter(Boolean).join(" ") || undefined,
     };
   }
   const url = URL.createObjectURL(

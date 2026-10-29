@@ -21,6 +21,7 @@ import {
   leesXml,
   metPakket,
   nieuwOnderdeel,
+  ontsnap,
   openDocument,
   secties,
   vervang,
@@ -34,6 +35,7 @@ import {
   type WordDocument,
   type XmlElement,
 } from "./ooxml.ts";
+import { paginaTekst, paginaTekstDelen } from "./tekst.ts";
 import { pasSectPrAan, type Paginanotatie, type SectieDoel, doelIndexen } from "./secties.ts";
 import { zorgVoorStijlen } from "./ooxml.ts";
 
@@ -42,12 +44,20 @@ export type KopVoetType = "default" | "first" | "even";
 export const KOPVOET_TYPES: KopVoetType[] = ["default", "first", "even"];
 
 export type PaginanummerVorm = "getal" | "pagina" | "paginaVan" | "van";
-export const PAGINANUMMER_VORMEN: { waarde: PaginanummerVorm; naam: string; voorbeeld: string }[] = [
-  { waarde: "getal", naam: "Alleen het nummer", voorbeeld: "2" },
-  { waarde: "pagina", naam: "Pagina X", voorbeeld: "Pagina 2" },
-  { waarde: "paginaVan", naam: "Pagina X van Y", voorbeeld: "Pagina 2 van 3" },
-  { waarde: "van", naam: "X van Y", voorbeeld: "2 van 3" },
+/** `sleutel`: naam in `writer:page.pageNumber.forms`, tekst in het document in `…field`. */
+export const PAGINANUMMER_VORMEN: { waarde: PaginanummerVorm; sleutel: "number" | "page" | "pageOf" | "of" }[] = [
+  { waarde: "getal", sleutel: "number" },
+  { waarde: "pagina", sleutel: "page" },
+  { waarde: "paginaVan", sleutel: "pageOf" },
+  { waarde: "van", sleutel: "of" },
 ];
+const VELDTEKST = { getal: null, pagina: "page", paginaVan: "pageOf", van: "of" } as const;
+
+/** Het paginanummer als tekst, zoals het in de kop- of voettekst komt (voor voorbeelden). */
+export function paginanummerTekst(vorm: PaginanummerVorm, pagina: string, paginas = "3") {
+  const sleutel = VELDTEKST[vorm];
+  return sleutel ? paginaTekst(`pageNumber.field.${sleutel}`, { page: pagina, pages: paginas }) : pagina;
+}
 
 export interface PaginanummerOpties {
   positie: "boven" | "onder" | "cursor";
@@ -81,22 +91,18 @@ export function veldRuns(instructie: string, resultaat: string, rPr = "") {
     `<w:r>${rPr}<w:fldChar w:fldCharType="end"/></w:r>`
   );
 }
-const tekstRun = (tekst: string, rPr = "") => `<w:r>${rPr}<w:t xml:space="preserve">${tekst}</w:t></w:r>`;
+const tekstRun = (tekst: string, rPr = "") => `<w:r>${rPr}<w:t xml:space="preserve">${ontsnap(tekst)}</w:t></w:r>`;
 
 /** De runs voor een paginanummer in de gekozen vorm. */
 export function paginanummerRuns(vorm: PaginanummerVorm, rPr = "") {
   const pagina = veldRuns("PAGE", "1", rPr);
   const totaal = veldRuns("NUMPAGES \\* Arabic", "1", rPr);
-  switch (vorm) {
-    case "getal":
-      return pagina;
-    case "pagina":
-      return tekstRun("Pagina ", rPr) + pagina;
-    case "paginaVan":
-      return tekstRun("Pagina ", rPr) + pagina + tekstRun(" van ", rPr) + totaal;
-    case "van":
-      return pagina + tekstRun(" van ", rPr) + totaal;
-  }
+  const sleutel = VELDTEKST[vorm];
+  if (!sleutel) return pagina;
+  // Standaardtekst in de interfacetaal bij het invoegen (zoals Word), in de woordvolgorde van die taal.
+  return paginaTekstDelen(`pageNumber.field.${sleutel}`, ["page", "pages"])
+    .map((d) => (typeof d === "string" ? tekstRun(d, rPr) : d.plek === "page" ? pagina : totaal))
+    .join("");
 }
 
 const JC = { links: "left", midden: "center", rechts: "right" } as const;
@@ -287,14 +293,14 @@ function zetEvenOnevenInPakket(pakket: Pakket, docPad: string, aanzetten: boolea
 
 /** Paginanummer invoegen in kop- of voettekst (of bij een markering, zie `voegVeldInBijMarkering`). */
 export function voegPaginanummerIn(bytes: Uint8Array, opties: PaginanummerOpties): Uint8Array {
-  if (opties.positie === "cursor") throw new PaginaFout("Gebruik voor de cursorpositie het invoegen bij de cursor.");
+  if (opties.positie === "cursor") throw new PaginaFout(paginaTekst("errors.pageNumberUseCursor"));
   const soort: KopVoetSoort = opties.positie === "boven" ? "header" : "footer";
   const ander: KopVoetSoort = soort === "header" ? "footer" : "header";
   return metPakket(bytes, (pakket) => {
     zorgVoorStijlen(pakket, openDocument(pakket).pad, STIJLEN);
     let doc = openDocument(pakket);
     const doelen = doelIndexen(doc, opties.doel ?? "alle");
-    if (!doelen.length) throw new PaginaFout("Er is geen sectie om het paginanummer in te zetten.");
+    if (!doelen.length) throw new PaginaFout(paginaTekst("errors.noSectionForPageNumber"));
     const evenOneven = aan(kind(leesInstellingen(pakket, doc.pad), "evenAndOddHeaders"));
     const rp = rPrefix(doc);
 
@@ -403,7 +409,7 @@ export function verwijderPaginanummers(bytes: Uint8Array): Uint8Array {
         gewijzigd = true;
       }
     }
-    if (!gewijzigd) throw new PaginaFout("Er staan geen paginanummers in de kop- of voetteksten.");
+    if (!gewijzigd) throw new PaginaFout(paginaTekst("errors.noPageNumbers"));
     return pakket.inpakken();
   });
 }
@@ -412,7 +418,7 @@ export function verwijderPaginanummers(bytes: Uint8Array): Uint8Array {
 export function voegVeldInBijMarkering(bytes: Uint8Array, markering: string, vorm: PaginanummerVorm): Uint8Array {
   return metPakket(bytes, (pakket) => {
     const plek = vindMarkering(pakket, markering);
-    if (!plek) throw new PaginaFout("De cursorplek is niet gevonden.");
+    if (!plek) throw new PaginaFout(paginaTekst("errors.cursorNotFound"));
     pakket.schrijf(plek.pad, vervangMarkeringInline(plek, markering, (rPr) => paginanummerRuns(vorm, rPr)));
     return pakket.inpakken();
   });
@@ -452,7 +458,7 @@ export function koppelAanVorige(bytes: Uint8Array, sectie: number, soort: KopVoe
   return metPakket(bytes, (pakket) => {
     let doc = openDocument(pakket);
     const lijst = secties(doc);
-    if (sectie <= 0 || sectie >= lijst.length) throw new PaginaFout("De eerste sectie heeft geen vorige sectie om aan te koppelen.");
+    if (sectie <= 0 || sectie >= lijst.length) throw new PaginaFout(paginaTekst("errors.firstSectionNoPrevious"));
     const rp = rPrefix(doc) || "r";
     if (gekoppeld) {
       wijzigSectPrs(doc, [sectie], (s) => {

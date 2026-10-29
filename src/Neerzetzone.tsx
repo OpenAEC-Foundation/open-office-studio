@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { FileDown } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import i18next from "./i18n/config";
 import { kantoorModule } from "../packages/email/src/kantoor";
 import { bestandssoort } from "./formaten";
 import "./levenscyclus.css";
@@ -23,8 +25,8 @@ export function neerzetMelding(naam: string): string | null {
   const ext = /\.([^.]+)$/.exec(naam)?.[1]?.toLowerCase() ?? "";
   if (bestandssoort(ext) || kantoorModule(naam) === "database") return null;
   if (AFBEELDINGEN.has(ext))
-    return `${naam} is een afbeelding. Slepen voegt nog geen afbeeldingen in een document in; gebruik Invoegen › Afbeelding.`;
-  return `${naam} kan niet worden geopend: .${ext || "?"} wordt niet ondersteund. Open Office Studio opent documenten, rekenbladen, presentaties en Access-databases.`;
+    return i18next.t("shell:dropZone.image", { name: naam });
+  return i18next.t("shell:dropZone.unsupported", { name: naam, ext: ext || "?" });
 }
 
 /** Bevat het slepen bestanden (en niet bijv. tekst uit de editor)? */
@@ -46,6 +48,7 @@ interface Opties {
  * de browser komen de bestanden als File-objecten binnen.
  */
 export function useNeerzetten({ open, uit }: Opties) {
+  const { t } = useTranslation("shell");
   const [zichtbaar, setZichtbaar] = useState(false);
   const recent = useRef({ open, uit });
   recent.current = { open, uit };
@@ -113,11 +116,8 @@ export function useNeerzetten({ open, uit }: Opties) {
     <div className="office-neerzetzone" aria-hidden="true">
       <div>
         <FileDown size={34} strokeWidth={1.5} />
-        <strong>Laat los om te openen</strong>
-        <span>
-          Documenten, rekenbladen en presentaties openen elk in een eigen
-          tabblad; MDB en ACCDB in Database Studio.
-        </span>
+        <strong>{t("dropZone.release")}</strong>
+        <span>{t("dropZone.explanation")}</span>
       </div>
     </div>
   ) : null;

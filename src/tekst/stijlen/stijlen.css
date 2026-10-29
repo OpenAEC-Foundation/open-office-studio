@@ -36,7 +36,7 @@
   border: 0;
   background: transparent;
   color: inherit;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
 }
 .office .tekst-galerij-voorbeeld:hover:not(:disabled),
@@ -55,14 +55,14 @@
   line-height: 28px;
 }
 .office .tekst-galerij-teken {
-  margin-right: 4px;
+  margin-inline-end: 4px;
   opacity: 0.6;
 }
 .office .tekst-galerij-pijl {
   width: 15px;
   padding: 0;
   border: 0;
-  border-left: 1px solid #e6e8eb;
+  border-inline-start: 1px solid #e6e8eb;
   background: transparent;
   color: #5e636d;
   cursor: pointer;
@@ -134,7 +134,7 @@
   background: transparent;
   color: inherit;
   font: inherit;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
 }
 .tekst-contextmenu button:hover:not(:disabled),
@@ -206,7 +206,7 @@
   border-radius: 5px;
   background: transparent;
   color: inherit;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
 }
 .tekst-stijlenlijst button:hover:not(:disabled) {

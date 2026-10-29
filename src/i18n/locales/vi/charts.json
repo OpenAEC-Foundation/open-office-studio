@@ -1,0 +1,263 @@
+{
+  "types": {
+    "column": {
+      "name": "Cột",
+      "description": "So sánh các giá trị cạnh nhau"
+    },
+    "stackedColumn": {
+      "name": "Cột xếp chồng",
+      "description": "Các phần và tổng theo danh mục"
+    },
+    "percentColumn": {
+      "name": "Cột 100%",
+      "description": "Tỷ trọng theo danh mục"
+    },
+    "bar": {
+      "name": "Thanh",
+      "description": "Nằm ngang, cho tên dài"
+    },
+    "line": {
+      "name": "Đường",
+      "description": "Xu hướng theo thời gian"
+    },
+    "lineMarkers": {
+      "name": "Đường có điểm đánh dấu",
+      "description": "Xu hướng với các điểm dữ liệu hiển thị"
+    },
+    "area": {
+      "name": "Vùng",
+      "description": "Xu hướng nhấn mạnh độ lớn"
+    },
+    "pie": {
+      "name": "Tròn",
+      "description": "Phân tích một chuỗi"
+    },
+    "doughnut": {
+      "name": "Vành khuyên",
+      "description": "Phân tích với tâm mở"
+    },
+    "scatter": {
+      "name": "Phân tán (XY)",
+      "description": "Mối quan hệ giữa hai số"
+    },
+    "combo": {
+      "name": "Cột + đường",
+      "description": "Chuỗi cuối dưới dạng đường trên trục phụ"
+    }
+  },
+  "unknownType": "Kiểu không xác định",
+  "busy": "Đang xử lý…",
+  "defaults": {
+    "seriesName": "Chuỗi {{n}}",
+    "categoryName": "Danh mục {{n}}",
+    "chartName": "Biểu đồ {{n}}",
+    "sheetName": "Biểu đồ {{n}}",
+    "true": "TRUE",
+    "false": "FALSE"
+  },
+  "ribbon": {
+    "charts": "Biểu đồ",
+    "chart": "Biểu đồ",
+    "editChart": "Chỉnh sửa biểu đồ",
+    "allCharts": "Tất cả biểu đồ",
+    "dataAndFormat": "Dữ liệu và định dạng",
+    "overview": "Tổng quan",
+    "type": "Kiểu",
+    "changeType": "Thay đổi kiểu biểu đồ",
+    "data": "Dữ liệu",
+    "selectData": "Chọn dữ liệu",
+    "layout": "Bố cục",
+    "titleAndLegend": "Tiêu đề và chú giải",
+    "delete": "Xóa",
+    "deleteChart": "Xóa biểu đồ",
+    "withShortcut": "{{name}} · {{shortcut}}"
+  },
+  "dialog": {
+    "title": {
+      "insert": "Chèn biểu đồ",
+      "edit": "Chỉnh sửa biểu đồ"
+    },
+    "button": {
+      "insert": "Chèn",
+      "edit": "Cập nhật"
+    },
+    "reloadNote": {
+      "insert": "Tài liệu sẽ được tải lại sau khi chèn. Những thay đổi trước đó sẽ không thể hoàn tác nữa.",
+      "edit": "Tài liệu sẽ được tải lại sau khi cập nhật. Những thay đổi trước đó sẽ không thể hoàn tác nữa."
+    },
+    "closeTitle": "Đóng (Esc)",
+    "type": "Kiểu",
+    "data": "Dữ liệu",
+    "cellRange": "Phạm vi ô",
+    "cellRangePlaceholder": "Ví dụ A1:D6",
+    "noContiguousRange": "Các tham chiếu của biểu đồ này không tạo thành phạm vi liền kề; dữ liệu giữ nguyên cho đến khi bạn nhập một phạm vi.",
+    "firstRowNames": "Hàng đầu tiên chứa tên",
+    "firstColumnNames": "Cột đầu tiên chứa tên",
+    "seriesIn": "Chuỗi theo",
+    "columns": "cột",
+    "rows": "hàng",
+    "series": "Chuỗi",
+    "seriesNoNumbersTitle": "{{name}}: không có số, không được đưa vào",
+    "noNumbers": "(không có số)",
+    "enterRange": "Nhập phạm vi ô chứa dữ liệu.",
+    "placeCursorInTable": "Trước tiên hãy đặt con trỏ trong bảng có số.",
+    "titles": "Tiêu đề",
+    "chartTitle": "Tiêu đề",
+    "subtitle": "Tiêu đề phụ",
+    "categoryAxis": "Trục danh mục",
+    "valueAxis": "Trục giá trị",
+    "horizontalAxis": "Trục ngang",
+    "verticalAxis": "Trục dọc",
+    "secondaryAxis": "Trục phụ",
+    "format": "Định dạng",
+    "legend": "Chú giải",
+    "gridlines": "Đường lưới",
+    "dataLabels": "Nhãn dữ liệu",
+    "decimals": "Số chữ số thập phân",
+    "placement": "Vị trí",
+    "besideData": "Cạnh dữ liệu trên trang tính này",
+    "newSheet": "Trên trang tính mới",
+    "sheetName": "Tên trang tính",
+    "summary": {
+      "series_other": "{{n}} chuỗi",
+      "categories_other": "{{n}} danh mục",
+      "text": "{{series}} · {{categories}}",
+      "withSheet": "{{series}} · {{categories}} · {{sheet}}"
+    }
+  },
+  "legend": {
+    "bottom": "Dưới",
+    "right": "Phải",
+    "top": "Trên",
+    "left": "Trái",
+    "none": "Không có chú giải"
+  },
+  "dataSheet": {
+    "row": "Hàng",
+    "series": "Chuỗi",
+    "removeLastRow": "Xóa hàng cuối",
+    "removeLastSeries": "Xóa chuỗi cuối",
+    "paste": "Dán",
+    "pasteTitle": "Dán văn bản phân cách bằng tab từ bảng tạm, ví dụ sao chép từ bảng tính",
+    "fromTable": "Từ bảng đã chọn",
+    "fromTableTitle": "Lấy bảng có con trỏ",
+    "pasteNotAllowed": "Không được dán bằng nút ở đây. Bấm vào một ô và dùng Ctrl+V.",
+    "corner": "Ô góc",
+    "seriesNameLabel": "Tên chuỗi {{n}}",
+    "categoryLabel": "Danh mục {{n}}",
+    "valueLabel": "Giá trị hàng {{row}}, chuỗi {{series}}"
+  },
+  "preview": {
+    "label": "Xem trước: {{title}}",
+    "untitled": "Xem trước: biểu đồ không có tiêu đề"
+  },
+  "list": {
+    "title": "Biểu đồ trong tài liệu này",
+    "empty": "Tài liệu này chưa có biểu đồ nào.",
+    "edit": "Chỉnh sửa",
+    "delete": "Xóa",
+    "deleteLabel": "Xóa {{name}}",
+    "place": {
+      "slide": "trang chiếu {{n}}",
+      "sheet": "trang tính {{name}}",
+      "text": "biểu đồ {{n}} trong văn bản"
+    }
+  },
+  "deleteConfirm": {
+    "title": "Xóa biểu đồ",
+    "text": "Xóa ‘{{name}}’? Sau đó tài liệu sẽ được tải lại; những thay đổi trước đó không thể hoàn tác nữa.",
+    "textSheet": "Xóa ‘{{name}}’ khỏi trang tính {{sheet}}? Sau đó tài liệu sẽ được tải lại; những thay đổi trước đó không thể hoàn tác nữa.",
+    "button": "Xóa"
+  },
+  "errors": {
+    "unknownType": "Kiểu biểu đồ không xác định.",
+    "noSeries": "Biểu đồ cần ít nhất một chuỗi dữ liệu.",
+    "tooManySeries": "Ở đây, biểu đồ có thể chứa tối đa {{max}} chuỗi.",
+    "tooManyCategories": "Ở đây, biểu đồ có thể chứa tối đa {{max}} danh mục.",
+    "noCategories": "Biểu đồ cần ít nhất một danh mục.",
+    "valueCountMismatch": "Chuỗi ‘{{name}}’ không có số giá trị bằng số danh mục.",
+    "noNumbers": "Dữ liệu không chứa số nào.",
+    "comboNeedsTwoSeries": "Biểu đồ kết hợp cần ít nhất hai chuỗi: cột và một đường.",
+    "scatterNeedsNumbers": "Biểu đồ phân tán cần số làm giá trị X trong cột hoặc hàng đầu tiên.",
+    "titleTooLong": "Tiêu đề có thể dài tối đa {{max}} ký tự.",
+    "invalidColor": "Màu ‘{{color}}’ không phải là màu hợp lệ.",
+    "noNumericColumn": "Không cột nào trong phạm vi chứa số, nên không có gì để vẽ. Chọn phạm vi có ít nhất một cột số, hoặc đặt ‘Chuỗi theo’ thành hàng.",
+    "noNumericRow": "Không hàng nào trong phạm vi chứa số, nên không có gì để vẽ. Chọn phạm vi có ít nhất một hàng số, hoặc đặt ‘Chuỗi theo’ thành cột.",
+    "chooseSeries": "Chọn ít nhất một chuỗi cho biểu đồ.",
+    "rangeTooLarge": "Phạm vi quá lớn: tối đa {{max}} ô.",
+    "noDataBesideHeaders": "Phạm vi không chứa dữ liệu ngoài tiêu đề.",
+    "pasteTooLarge": "Dữ liệu đã dán quá lớn cho một biểu đồ.",
+    "invalidRange": "Đó không phải là phạm vi ô hợp lệ. Hãy dùng ví dụ A1:D6 hoặc 'Trang tính 1'!A1:D6.",
+    "noSuchSheet": "Không có trang tính nào tên ‘{{name}}’.",
+    "spreadsheetNotReady": "Bảng tính chưa sẵn sàng.",
+    "spreadsheetReadOnly": "Bảng tính ở chế độ chỉ đọc.",
+    "documentNotReady": "Tài liệu chưa sẵn sàng.",
+    "presentationNotEditable": "Hiện không thể chỉnh sửa bản trình chiếu.",
+    "selectChartFirst": "Trước tiên hãy chọn một biểu đồ.",
+    "chartGone": "Không còn tìm thấy biểu đồ.",
+    "notEditableHere": "Không thể chỉnh sửa biểu đồ này ở đây.",
+    "notEditable": "Không thể chỉnh sửa biểu đồ này.",
+    "package": {
+      "tooLarge": "Tài liệu quá lớn để chỉnh sửa biểu đồ trong đó.",
+      "tooManyParts": "Tài liệu chứa quá nhiều phần hoặc phần quá lớn.",
+      "notZip": "Tài liệu không phải là tệp Office hợp lệ (zip).",
+      "invalidPartName": "Tài liệu chứa tên phần không hợp lệ.",
+      "noContentTypes": "Tài liệu thiếu [Content_Types].xml.",
+      "missingPart": "Tài liệu thiếu phần {{part}}.",
+      "noFreePartName": "Không còn tên phần trống."
+    },
+    "xml": {
+      "tooLarge": "Một phần XML quá lớn để xử lý.",
+      "damaged": "Phần XML bị hỏng.",
+      "doctype": "XML có DOCTYPE không được xử lý vì lý do bảo mật.",
+      "tooDeep": "Phần XML lồng nhau quá sâu.",
+      "overlappingChanges": "Lỗi nội bộ: các thay đổi XML chồng chéo."
+    },
+    "chartXml": {
+      "notDrawingML": "Phần này không phải là biểu đồ DrawingML.",
+      "noPlotArea": "Biểu đồ không có vùng vẽ.",
+      "unusualPrefix": "Biểu đồ này dùng cách ghi XML bất thường và không thể chỉnh sửa an toàn ở đây."
+    },
+    "document": {
+      "noMainPart": "Tài liệu thiếu phần chính.",
+      "tooManyCharts": "Tài liệu này đã chứa {{total}} biểu đồ; không hỗ trợ thêm.",
+      "invalidSheetName": "Tên trang tính không hợp lệ: tối đa 31 ký tự, không có \\ / ? * [ ] :",
+      "sheetExists": "Đã có trang tính tên ‘{{name}}’.",
+      "noSheetList": "Sổ làm việc không có danh sách trang tính.",
+      "drawingMissing": "Bản vẽ của trang tính này bị thiếu hoặc hỏng.",
+      "noSuchWorksheet": "Trang tính đã chọn không tồn tại hoặc không phải là trang tính làm việc.",
+      "notPlainWorksheet": "Biểu đồ chỉ có thể đặt trên trang tính làm việc thông thường.",
+      "drawingDamaged": "Bản vẽ của trang tính này bị hỏng.",
+      "docxUnusualPrefix": "Tài liệu này dùng cách ghi XML bất thường; không thể chèn biểu đồ một cách an toàn.",
+      "noBody": "Tài liệu không có phần thân.",
+      "tableTooLarge": "Bảng quá lớn cho một biểu đồ.",
+      "noSuchSlide": "Trang chiếu đã chọn không tồn tại.",
+      "slideUnusualPrefix": "Trang chiếu này dùng cách ghi XML bất thường; không thể chèn biểu đồ một cách an toàn.",
+      "noShapeTree": "Trang chiếu không có cây hình dạng.",
+      "chartRemoved": "Biểu đồ không còn tồn tại trong tài liệu.",
+      "chartNotFound": "Không tìm thấy biểu đồ.",
+      "cannotRemove": "Không thể xóa đối tượng biểu đồ."
+    }
+  },
+  "read": {
+    "reasons": {
+      "extendedChart": "Đây là biểu đồ mở rộng (như biểu đồ thác nước hoặc treemap) không thể chỉnh sửa ở đây.",
+      "unsupportedType": "Biểu đồ này dùng kiểu không thể chỉnh sửa ở đây ({{types}}).",
+      "noReadableSeries": "Biểu đồ không chứa chuỗi nào đọc được.",
+      "unsupportedCombination": "Biểu đồ này kết hợp các kiểu theo cách không thể chỉnh sửa ở đây.",
+      "noSeries": "Biểu đồ không chứa chuỗi dữ liệu nào.",
+      "invalid": "Không thể chỉnh sửa biểu đồ này ở đây: {{reason}}",
+      "unusualPrefix": "Biểu đồ này dùng cách ghi XML bất thường và không thể chỉnh sửa an toàn ở đây."
+    },
+    "warnings": {
+      "stackedBars": "Khi chỉnh sửa, các thanh xếp chồng được đặt cạnh nhau.",
+      "stackedLines": "Khi chỉnh sửa, các đường xếp chồng trở thành các đường riêng biệt.",
+      "stackedAreas": "Khi chỉnh sửa, các vùng xếp chồng trở thành các vùng riêng biệt.",
+      "linesAfterColumns": "Khi chỉnh sửa, các chuỗi đường được đặt sau các cột.",
+      "lastSeriesAsLine": "Khi chỉnh sửa, chỉ chuỗi cuối được vẽ dưới dạng đường.",
+      "multiLevelCategories": "Khi chỉnh sửa, danh mục nhiều cấp trở thành một cấp.",
+      "moreValuesThanCategories": "Chuỗi ‘{{name}}’ có nhiều giá trị hơn số danh mục.",
+      "trendlinesDropped": "Khi chỉnh sửa, đường xu hướng và thanh sai số bị xóa."
+    }
+  }
+}

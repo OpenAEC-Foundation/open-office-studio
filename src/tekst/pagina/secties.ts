@@ -25,6 +25,7 @@ import {
   type WordDocument,
   type XmlElement,
 } from "./ooxml.ts";
+import { paginaTekst } from "./tekst.ts";
 
 /** 1 cm in twips. */
 export const CM = 1440 / 2.54;
@@ -37,22 +38,22 @@ export interface Marges {
   links: number;
   rechts: number;
 }
-/** Margevoorkeuzes zoals in Word (in twips). */
-export const MARGES: Record<"normaal" | "smal" | "gemiddeld" | "breed", { naam: string; marges: Marges }> = {
-  normaal: { naam: "Normaal", marges: { boven: 1440, onder: 1440, links: 1440, rechts: 1440 } },
-  smal: { naam: "Smal", marges: { boven: 720, onder: 720, links: 720, rechts: 720 } },
-  gemiddeld: { naam: "Gemiddeld", marges: { boven: 1440, onder: 1440, links: 1080, rechts: 1080 } },
-  breed: { naam: "Breed", marges: { boven: 1440, onder: 1440, links: 2880, rechts: 2880 } },
+/** Margevoorkeuzes zoals in Word (in twips); `sleutel`: naam in `writer:page.layout.marginPresets`. */
+export const MARGES: Record<"normaal" | "smal" | "gemiddeld" | "breed", { sleutel: "normal" | "narrow" | "moderate" | "wide"; marges: Marges }> = {
+  normaal: { sleutel: "normal", marges: { boven: 1440, onder: 1440, links: 1440, rechts: 1440 } },
+  smal: { sleutel: "narrow", marges: { boven: 720, onder: 720, links: 720, rechts: 720 } },
+  gemiddeld: { sleutel: "moderate", marges: { boven: 1440, onder: 1440, links: 1080, rechts: 1080 } },
+  breed: { sleutel: "wide", marges: { boven: 1440, onder: 1440, links: 2880, rechts: 2880 } },
 };
 export type MargeVoorkeur = keyof typeof MARGES;
 
-/** Papierformaten (staand, twips). */
-export const FORMATEN: Record<"A3" | "A4" | "A5" | "Letter" | "Legal", { naam: string; breedte: number; hoogte: number; uitleg: string }> = {
-  A3: { naam: "A3", breedte: 16838, hoogte: 23811, uitleg: "29,7 × 42 cm" },
-  A4: { naam: "A4", breedte: 11906, hoogte: 16838, uitleg: "21 × 29,7 cm" },
-  A5: { naam: "A5", breedte: 8391, hoogte: 11906, uitleg: "14,8 × 21 cm" },
-  Letter: { naam: "Letter", breedte: 12240, hoogte: 15840, uitleg: "21,59 × 27,94 cm" },
-  Legal: { naam: "Legal", breedte: 12240, hoogte: 20160, uitleg: "21,59 × 35,56 cm" },
+/** Papierformaten (staand, twips). De naam is de gangbare formaatnaam (niet vertaald). */
+export const FORMATEN: Record<"A3" | "A4" | "A5" | "Letter" | "Legal", { naam: string; breedte: number; hoogte: number }> = {
+  A3: { naam: "A3", breedte: 16838, hoogte: 23811 },
+  A4: { naam: "A4", breedte: 11906, hoogte: 16838 },
+  A5: { naam: "A5", breedte: 8391, hoogte: 11906 },
+  Letter: { naam: "Letter", breedte: 12240, hoogte: 15840 },
+  Legal: { naam: "Legal", breedte: 12240, hoogte: 20160 },
 };
 export type Formaat = keyof typeof FORMATEN;
 
@@ -301,9 +302,9 @@ export function voegSectieEindeIn(bytes: Uint8Array, markering: string, begin: "
   return metPakket(bytes, (pakket) => {
     const plek = vindMarkering(pakket, markering);
     const doc = openDocument(pakket);
-    if (!plek || plek.pad !== doc.pad) throw new PaginaFout("Een sectie-einde kan alleen in de hoofdtekst.");
+    if (!plek || plek.pad !== doc.pad) throw new PaginaFout(paginaTekst("errors.sectionBreakBodyOnly"));
     for (let o = plek.alinea.ouder; o; o = o.ouder)
-      if (o.lokaal === "tbl" || o.lokaal === "txbxContent") throw new PaginaFout("Een sectie-einde kan niet in een tabel of tekstvak.");
+      if (o.lokaal === "tbl" || o.lokaal === "txbxContent") throw new PaginaFout(paginaTekst("errors.sectionBreakNotInTable"));
     const lijst = secties(doc);
     const index = lijst.find((s) => s.alinea && plek.alinea.start <= s.alinea.start)?.index ?? lijst.length - 1;
     const huidig = lijst[index].el;
@@ -324,8 +325,8 @@ export function voegSectieEindeIn(bytes: Uint8Array, markering: string, begin: "
 export function voegKolomeindeIn(bytes: Uint8Array, markering: string): Uint8Array {
   return metPakket(bytes, (pakket) => {
     const plek = vindMarkering(pakket, markering);
-    if (!plek) throw new PaginaFout("De cursorplek is niet gevonden.");
-    if (!/document\.xml$/.test(plek.pad)) throw new PaginaFout("Een kolomeinde kan alleen in de hoofdtekst.");
+    if (!plek) throw new PaginaFout(paginaTekst("errors.cursorNotFound"));
+    if (!/document\.xml$/.test(plek.pad)) throw new PaginaFout(paginaTekst("errors.columnBreakBodyOnly"));
     // De eindealinea krijgt geen stijl van de kop eromheen (anders telt hij als lege kop).
     pakket.schrijf(plek.pad, splitsAlineaBijMarkering(plek, markering, () => `<w:p><w:r><w:br w:type="column"/></w:r></w:p>`));
     return pakket.inpakken();

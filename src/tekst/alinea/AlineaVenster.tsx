@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { useOpmaak } from "../../i18n/opmaak";
 import { Dialoog } from "../../werkruimte/Dialoog";
 import "../../werkruimte/werkruimte.css";
-import { regelSoortNamen, type EersteRegel, type RegelSoort, type Regelafstand } from "../eenheden";
+import type { EersteRegel, RegelSoort, Regelafstand } from "../eenheden";
 import type { AlineaOpmaak } from "../opmaak";
 import { GetalVeld, Keuze, Sectie, Tabbladen, Vink } from "../velden";
 import {
@@ -16,10 +18,21 @@ import {
 
 type Tab = "afstand" | "einden" | "tabs";
 
+/** Speciale inspringing met de i18n-sleutel (namespace writer). */
 const speciaalNamen: readonly (readonly [EersteRegel, string])[] = [
-  ["geen", "(geen)"],
-  ["eerste", "Eerste regel"],
-  ["verkeerd", "Verkeerd om"],
+  ["geen", "paragraph.special.none"],
+  ["eerste", "paragraph.special.firstLine"],
+  ["verkeerd", "paragraph.special.hanging"],
+];
+
+/** Regelafstandsoorten (`RegelSoort`) met de i18n-sleutel (namespace writer). */
+const regelSoortNamen: readonly (readonly [RegelSoort, string])[] = [
+  ["enkel", "paragraph.lineSpacingRule.single"],
+  ["anderhalf", "paragraph.lineSpacingRule.onePointFive"],
+  ["dubbel", "paragraph.lineSpacingRule.double"],
+  ["minimaal", "paragraph.lineSpacingRule.atLeast"],
+  ["exact", "paragraph.lineSpacingRule.exactly"],
+  ["meerdere", "paragraph.lineSpacingRule.multiple"],
 ];
 
 function nieuweRegel(soort: RegelSoort, oud: Regelafstand): Regelafstand {
@@ -34,11 +47,9 @@ function nieuweRegel(soort: RegelSoort, oud: Regelafstand): Regelafstand {
   }
 }
 
-const VOORBEELD =
-  "Voorbeeldtekst voorbeeldtekst voorbeeldtekst voorbeeldtekst voorbeeldtekst voorbeeldtekst voorbeeldtekst voorbeeldtekst voorbeeldtekst.";
-
 /** Een verkleinde alinea tussen grijze buren, zoals het voorbeeld in Word. */
 export function AlineaVoorbeeld({ f }: { f: AlineaFormulier }) {
+  const { t } = useTranslation("writer");
   const schaal = 4; // px per cm in het voorbeeld
   const regel =
     f.regel.soort === "anderhalf"
@@ -53,7 +64,7 @@ export function AlineaVoorbeeld({ f }: { f: AlineaFormulier }) {
   const eersteRegel = f.speciaal === "geen" ? 0 : (f.speciaal === "eerste" ? 1 : -1) * f.speciaalCm * schaal;
   return (
     <div className="tekstopmaak-voorbeeld" aria-hidden="true">
-      <p className="grijs">Vorige alinea vorige alinea vorige alinea vorige alinea vorige alinea.</p>
+      <p className="grijs">{t("paragraph.sample.previous")}</p>
       <p
         style={{
           textAlign: f.uitlijning === "both" ? "justify" : f.uitlijning,
@@ -65,9 +76,9 @@ export function AlineaVoorbeeld({ f }: { f: AlineaFormulier }) {
           lineHeight: regel ?? (f.regel.soort !== "enkel" && "pt" in f.regel ? `${f.regel.pt / 1.3}px` : undefined),
         }}
       >
-        {VOORBEELD}
+        {t("paragraph.sample.current")}
       </p>
-      <p className="grijs">Volgende alinea volgende alinea volgende alinea volgende alinea.</p>
+      <p className="grijs">{t("paragraph.sample.next")}</p>
     </div>
   );
 }
@@ -84,6 +95,9 @@ export function AlineaVenster({
   toepassen: (wijziging: AlineaOpmaak) => void;
   sluit: () => void;
 }) {
+  const { t } = useTranslation(["writer", "common"]);
+  const { getal } = useOpmaak();
+  const opties = <T extends string>(lijst: readonly (readonly [T, string])[]) => lijst.map(([w, k]) => [w, t(k)] as const);
   const [tab, setTab] = useState<Tab>("afstand");
   const [f, setF] = useState(begin);
   const [nieuweTab, setNieuweTab] = useState(() => volgendeTabPositie(begin.tabs));
@@ -92,49 +106,47 @@ export function AlineaVenster({
   const leeg = Object.keys(wijziging).length === 0;
   return (
     <Dialoog
-      titel="Alinea"
+      titel={t("paragraph.title")}
       sluit={sluit}
       className="tekstopmaak"
       acties={
         <>
           <button type="button" className="werkruimte-knop" onClick={sluit}>
-            Annuleren
+            {t("common:cancel")}
           </button>
           <button
             type="button"
             className="werkruimte-knop is-primair"
             onClick={() => (leeg ? sluit() : toepassen(wijziging))}
           >
-            OK
+            {t("common:ok")}
           </button>
         </>
       }
     >
       {meerdere && (
-        <p className="tekstopmaak-melding">
-          De selectie bevat meerdere alinea’s. Alleen wat je hier wijzigt, geldt voor allemaal.
-        </p>
+        <p className="tekstopmaak-melding">{t("paragraph.multipleSelected")}</p>
       )}
       <Tabbladen
         tabs={[
-          ["afstand", "Inspringen en afstand"],
-          ["einden", "Regel- en pagina-einden"],
-          ["tabs", "Tabs"],
+          ["afstand", t("paragraph.tabIndents")],
+          ["einden", t("paragraph.tabBreaks")],
+          ["tabs", t("paragraph.tabTabs")],
         ]}
         actief={tab}
         kies={setTab}
       >
         {tab === "afstand" && (
           <>
-            <Sectie titel="Algemeen">
-              <Keuze label="Uitlijning" waarde={f.uitlijning} wijzig={(w) => zet("uitlijning", w)} opties={uitlijningNamen} />
+            <Sectie titel={t("paragraph.general")}>
+              <Keuze label={t("paragraph.alignmentLabel")} waarde={f.uitlijning} wijzig={(w) => zet("uitlijning", w)} opties={opties(uitlijningNamen)} />
             </Sectie>
-            <Sectie titel="Inspringen">
-              <GetalVeld label="Links" eenheid="cm" waarde={f.links} min={-20} max={50} wijzig={(w) => zet("links", w ?? 0)} />
-              <GetalVeld label="Rechts" eenheid="cm" waarde={f.rechts} min={-20} max={50} wijzig={(w) => zet("rechts", w ?? 0)} />
-              <Keuze label="Speciaal" waarde={f.speciaal} wijzig={(w) => zet("speciaal", w)} opties={speciaalNamen} />
+            <Sectie titel={t("paragraph.indentation")}>
+              <GetalVeld label={t("paragraph.left")} eenheid="cm" waarde={f.links} min={-20} max={50} wijzig={(w) => zet("links", w ?? 0)} />
+              <GetalVeld label={t("paragraph.right")} eenheid="cm" waarde={f.rechts} min={-20} max={50} wijzig={(w) => zet("rechts", w ?? 0)} />
+              <Keuze label={t("paragraph.specialLabel")} waarde={f.speciaal} wijzig={(w) => zet("speciaal", w)} opties={opties(speciaalNamen)} />
               <GetalVeld
-                label="Met"
+                label={t("paragraph.by")}
                 eenheid="cm"
                 waarde={f.speciaalCm}
                 min={0}
@@ -143,18 +155,18 @@ export function AlineaVenster({
                 wijzig={(w) => zet("speciaalCm", w ?? 0)}
               />
             </Sectie>
-            <Sectie titel="Afstand">
-              <GetalVeld label="Voor" eenheid="pt" stap={6} decimalen={1} min={0} max={1584} waarde={f.voor} wijzig={(w) => zet("voor", w ?? 0)} />
-              <GetalVeld label="Na" eenheid="pt" stap={6} decimalen={1} min={0} max={1584} waarde={f.na} wijzig={(w) => zet("na", w ?? 0)} />
+            <Sectie titel={t("paragraph.spacing")}>
+              <GetalVeld label={t("paragraph.before")} eenheid="pt" stap={6} decimalen={1} min={0} max={1584} waarde={f.voor} wijzig={(w) => zet("voor", w ?? 0)} />
+              <GetalVeld label={t("paragraph.after")} eenheid="pt" stap={6} decimalen={1} min={0} max={1584} waarde={f.na} wijzig={(w) => zet("na", w ?? 0)} />
               <Keuze
-                label="Regelafstand"
+                label={t("paragraph.lineSpacing")}
                 waarde={f.regel.soort}
                 wijzig={(s) => zet("regel", nieuweRegel(s, f.regel))}
-                opties={Object.entries(regelSoortNamen) as [RegelSoort, string][]}
+                opties={opties(regelSoortNamen)}
               />
               {f.regel.soort === "meerdere" ? (
                 <GetalVeld
-                  label="Op"
+                  label={t("paragraph.at")}
                   eenheid="×"
                   stap={0.25}
                   min={0.06}
@@ -164,7 +176,7 @@ export function AlineaVenster({
                 />
               ) : f.regel.soort === "minimaal" || f.regel.soort === "exact" ? (
                 <GetalVeld
-                  label="Op"
+                  label={t("paragraph.at")}
                   eenheid="pt"
                   stap={1}
                   decimalen={1}
@@ -177,7 +189,7 @@ export function AlineaVenster({
                 <span />
               )}
               <Vink
-                label="Geen ruimte tussen alinea’s met dezelfde stijl"
+                label={t("paragraph.contextualSpacing")}
                 waarde={f.contextueel}
                 wijzig={(w) => zet("contextueel", w)}
               />
@@ -185,11 +197,11 @@ export function AlineaVenster({
           </>
         )}
         {tab === "einden" && (
-          <Sectie titel="Paginering">
-            <Vink label="Zwevende regels voorkomen" waarde={f.zwevend} wijzig={(w) => zet("zwevend", w)} />
-            <Vink label="Bij volgende alinea houden" waarde={f.volgende} wijzig={(w) => zet("volgende", w)} />
-            <Vink label="Regels bijeenhouden" waarde={f.bijeen} wijzig={(w) => zet("bijeen", w)} />
-            <Vink label="Pagina-einde ervoor" waarde={f.paginaEinde} wijzig={(w) => zet("paginaEinde", w)} />
+          <Sectie titel={t("paragraph.pagination")}>
+            <Vink label={t("paragraph.widowControl")} waarde={f.zwevend} wijzig={(w) => zet("zwevend", w)} />
+            <Vink label={t("paragraph.keepWithNext")} waarde={f.volgende} wijzig={(w) => zet("volgende", w)} />
+            <Vink label={t("paragraph.keepLinesTogether")} waarde={f.bijeen} wijzig={(w) => zet("bijeen", w)} />
+            <Vink label={t("paragraph.pageBreakBefore")} waarde={f.paginaEinde} wijzig={(w) => zet("paginaEinde", w)} />
           </Sectie>
         )}
         {tab === "tabs" && (
@@ -197,37 +209,37 @@ export function AlineaVenster({
             <table className="tekstopmaak-tabel">
               <thead>
                 <tr>
-                  <th>Positie</th>
-                  <th>Uitlijning</th>
-                  <th>Opvulteken</th>
+                  <th>{t("paragraph.tabs.position")}</th>
+                  <th>{t("paragraph.alignmentLabel")}</th>
+                  <th>{t("paragraph.tabs.leader")}</th>
                   <th />
                 </tr>
               </thead>
               <tbody>
                 {f.tabs.length === 0 && (
                   <tr>
-                    <td colSpan={4}>Geen eigen tabstops; de standaardtabs gelden.</td>
+                    <td colSpan={4}>{t("paragraph.tabs.none")}</td>
                   </tr>
                 )}
-                {f.tabs.map((t, i) => {
-                  const wijzigTab = (n: Partial<typeof t>) =>
+                {f.tabs.map((tab, i) => {
+                  const wijzigTab = (n: Partial<typeof tab>) =>
                     zet("tabs", f.tabs.map((x, j) => (j === i ? { ...x, ...n } : x)));
                   return (
                     <tr key={i}>
                       <td>
-                        <GetalVeld label={`Positie tab ${i + 1}`} eenheid="cm" min={0} max={55} waarde={t.cm} wijzig={(w) => wijzigTab({ cm: w ?? 0 })} />
+                        <GetalVeld label={t("paragraph.tabs.positionOf", { n: i + 1 })} eenheid="cm" min={0} max={55} waarde={tab.cm} wijzig={(w) => wijzigTab({ cm: w ?? 0 })} />
                       </td>
                       <td>
-                        <Keuze label="Uitlijning" waarde={t.uitlijning} opties={tabUitlijningNamen} wijzig={(w) => wijzigTab({ uitlijning: w })} />
+                        <Keuze label={t("paragraph.alignmentLabel")} waarde={tab.uitlijning} opties={opties(tabUitlijningNamen)} wijzig={(w) => wijzigTab({ uitlijning: w })} />
                       </td>
                       <td>
-                        <Keuze label="Opvulteken" waarde={t.opvul} opties={opvulNamen} wijzig={(w) => wijzigTab({ opvul: w })} />
+                        <Keuze label={t("paragraph.tabs.leader")} waarde={tab.opvul} opties={opties(opvulNamen)} wijzig={(w) => wijzigTab({ opvul: w })} />
                       </td>
                       <td>
                         <button
                           type="button"
                           className="werkruimte-knop"
-                          aria-label={`Tab op ${t.cm} cm verwijderen`}
+                          aria-label={t("paragraph.tabs.remove", { position: `${getal(tab.cm)} cm` })}
                           onClick={() => zet("tabs", f.tabs.filter((_, j) => j !== i))}
                         >
                           <Trash2 size={14} />
@@ -239,28 +251,28 @@ export function AlineaVenster({
               </tbody>
             </table>
             <div className="tekstopmaak-rij">
-              <GetalVeld label="Nieuwe tab op" eenheid="cm" min={0} max={55} waarde={nieuweTab} wijzig={(w) => setNieuweTab(w ?? 0)} />
+              <GetalVeld label={t("paragraph.tabs.newAt")} eenheid="cm" min={0} max={55} waarde={nieuweTab} wijzig={(w) => setNieuweTab(w ?? 0)} />
               <button
                 type="button"
                 className="werkruimte-knop"
                 onClick={() => {
-                  const tabs = [...f.tabs.filter((t) => t.cm !== nieuweTab), { cm: nieuweTab, uitlijning: "left" as const, opvul: "none" as const }].sort(
+                  const tabs = [...f.tabs.filter((x) => x.cm !== nieuweTab), { cm: nieuweTab, uitlijning: "left" as const, opvul: "none" as const }].sort(
                     (a, b) => a.cm - b.cm,
                   );
                   zet("tabs", tabs);
                   setNieuweTab(volgendeTabPositie(tabs));
                 }}
               >
-                <Plus size={14} /> Toevoegen
+                <Plus size={14} /> {t("paragraph.tabs.add")}
               </button>
               <button type="button" className="werkruimte-knop" disabled={!f.tabs.length} onClick={() => zet("tabs", [])}>
-                Alles wissen
+                {t("paragraph.tabs.clearAll")}
               </button>
             </div>
           </>
         )}
       </Tabbladen>
-      <p className="tekstopmaak-voorbeeld-titel">Voorbeeld</p>
+      <p className="tekstopmaak-voorbeeld-titel">{t("paragraph.preview")}</p>
       <AlineaVoorbeeld f={f} />
     </Dialoog>
   );

@@ -1,11 +1,12 @@
 /** IFC: metadatakaart uit de STEP-kop en een telling in een Web Worker. */
 import { useEffect, useState } from "react";
 import { Box } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { useOpmaak } from "../../../../../src/i18n/opmaak";
 import { LIMIETEN, type WeergeverProps } from "../contract";
 import { Geannuleerd, IFC_BOUWDELEN, analyseerIfc, type IfcMeta, type IfcStructuurdeel } from "../ifc-meta";
 import { BestandKnoppen, Fout, Kaart, Laden, basisRegels, getal, useBytes } from "./gemeenschappelijk";
 
-const RUST_MELDING = "Het 3D-voorbeeld volgt in een volgende versie (Rust-viewer).";
 const SCHEMANAAM: Record<string, string> = {
   IFC2X3: "IFC 2x3",
   IFC4: "IFC 4",
@@ -27,6 +28,8 @@ function naamVan(d: IfcStructuurdeel) {
 }
 
 export function IfcWeergever({ bron, acties }: WeergeverProps) {
+  const { t } = useTranslation("email");
+  const opmaak = useOpmaak();
   const geladen = useBytes(bron);
   const bytes = geladen.stand === "klaar" ? geladen.waarde : null;
   const [analyse, zetAnalyse] = useState<Analyse>({ stand: "bezig", voortgang: 0 });
@@ -52,69 +55,73 @@ export function IfcWeergever({ bron, acties }: WeergeverProps) {
   }, [bytes, poging]);
 
   if (geladen.stand === "laden") return <Laden />;
-  if (geladen.stand === "fout") return <Fout melding={`Het model kon niet worden geladen: ${geladen.melding}`} />;
+  if (geladen.stand === "fout") return <Fout melding={t("preview.ifc.loadFailed", { message: geladen.melding })} />;
   const grootte = geladen.waarde.length;
   const meta = analyse.stand === "klaar" ? analyse.meta : null;
   const kop = meta?.kop;
   const telling = new Map(meta?.entiteiten ?? []);
-  const bouwdelen = IFC_BOUWDELEN.filter(([t]) => telling.has(t));
+  const bouwdelen = IFC_BOUWDELEN.filter(([type]) => telling.has(type));
 
   let status: React.ReactNode = null;
-  if (grootte > LIMIETEN.ifcBytes) status = <p className="vb-melding">Dit model is groter dan {Math.round(LIMIETEN.ifcBytes / 1024 / 1024)} MB en wordt hier niet geanalyseerd.</p>;
+  if (grootte > LIMIETEN.ifcBytes) status = <p className="vb-melding">{t("preview.ifc.tooLarge", { size: Math.round(LIMIETEN.ifcBytes / 1024 / 1024) })}</p>;
   else if (analyse.stand === "bezig")
     status = (
       <div className="vb-voortgang">
         <label>
-          Model analyseren… {Math.round(analyse.voortgang * 100)}%
+          {t("preview.ifc.analysing", { percent: opmaak.procent(analyse.voortgang, { maximumFractionDigits: 0 }) })}
           <progress max={1} value={analyse.voortgang} />
         </label>
         <button type="button" className="vb-knop" onClick={() => afbreker?.abort()}>
-          Annuleren
+          {t("common:cancel")}
         </button>
       </div>
     );
   else if (analyse.stand === "geannuleerd")
     status = (
       <div className="vb-voortgang">
-        <span>Analyse geannuleerd.</span>
+        <span>{t("preview.ifc.cancelled")}</span>
         <button type="button" className="vb-knop" onClick={() => zetPoging((p) => p + 1)}>
-          Opnieuw analyseren
+          {t("preview.ifc.retry")}
         </button>
       </div>
     );
-  else if (analyse.stand === "fout") status = <p className="vb-melding">De analyse is mislukt: {analyse.melding}</p>;
+  else if (analyse.stand === "fout") status = <p className="vb-melding">{t("preview.ifc.failed", { message: analyse.melding })}</p>;
 
   return (
     <Kaart
       icoon={<Box size={26} />}
       titel={meta?.project ? naamVan(meta.project) : bron.bestandsnaam}
-      ondertitel={kop?.schema.length ? `IFC-model · ${kop.schema.map((s) => SCHEMANAAM[s.toUpperCase()] ?? s).join(", ")}` : "IFC-model"}
+      ondertitel={
+        kop?.schema.length
+          ? t("preview.ifc.subtitleWithSchema", { schemas: kop.schema.map((s) => SCHEMANAAM[s.toUpperCase()] ?? s).join(", ") })
+          : t("preview.ifc.subtitle")
+      }
       regels={[
         ...basisRegels(bron, grootte),
-        { label: "Naam in bestand", waarde: kop?.naam },
-        { label: "Tijdstip", waarde: kop?.tijdstip },
-        { label: "Auteur", waarde: kop?.auteurs.filter(Boolean).join(", ") },
-        { label: "Organisatie", waarde: kop?.organisaties.filter(Boolean).join(", ") },
-        { label: "Toepassing", waarde: kop?.toepassing || kop?.preprocessor },
-        { label: "Beschrijving", waarde: kop?.beschrijving.filter(Boolean).join("; ") },
-        { label: "Terreinen", waarde: meta?.terreinen.length ? meta.terreinen.map(naamVan).join(", ") : undefined },
-        { label: "Gebouwen", waarde: meta?.gebouwen.length ? meta.gebouwen.map(naamVan).join(", ") : undefined },
-        { label: "Entiteiten", waarde: meta ? getal(meta.totaal) : undefined },
-        { label: "Let op", waarde: meta && !meta.volledig ? "het bestand lijkt onvolledig (geen END-ISO-10303-21)" : undefined },
+        { label: t("preview.ifc.nameInFile"), waarde: kop?.naam },
+        { label: t("preview.ifc.timestamp"), waarde: kop?.tijdstip },
+        { label: t("preview.ifc.author"), waarde: kop?.auteurs.filter(Boolean).join(", ") },
+        { label: t("preview.ifc.organization"), waarde: kop?.organisaties.filter(Boolean).join(", ") },
+        { label: t("preview.ifc.application"), waarde: kop?.toepassing || kop?.preprocessor },
+        { label: t("preview.ifc.description"), waarde: kop?.beschrijving.filter(Boolean).join("; ") },
+        { label: t("preview.ifc.sites"), waarde: meta?.terreinen.length ? meta.terreinen.map(naamVan).join(", ") : undefined },
+        { label: t("preview.ifc.buildings"), waarde: meta?.gebouwen.length ? meta.gebouwen.map(naamVan).join(", ") : undefined },
+        { label: t("preview.ifc.entities"), waarde: meta ? getal(meta.totaal) : undefined },
+        { label: t("preview.card.attention"), waarde: meta && !meta.volledig ? t("preview.ifc.incomplete") : undefined },
       ]}
-      melding={RUST_MELDING}
+      melding={t("preview.ifc.previewLater")}
       knoppen={<BestandKnoppen bron={bron} acties={acties} />}
     >
       {status}
       {meta && meta.verdiepingen.length > 0 && (
         <details className="vb-details" open>
-          <summary>Verdiepingen ({getal(meta.verdiepingen.length)})</summary>
+          <summary>{t("preview.ifc.storeys", { n: getal(meta.verdiepingen.length) })}</summary>
           <table className="vb-tabel">
             <tbody>
               {meta.verdiepingen.map((v) => (
                 <tr key={v.id}>
                   <th scope="row">{naamVan(v)}</th>
-                  <td>{v.hoogte !== undefined ? v.hoogte.toLocaleString("nl-NL", { maximumFractionDigits: 3 }) : ""}</td>
+                  <td>{v.hoogte !== undefined ? opmaak.getal(v.hoogte, { maximumFractionDigits: 3 }) : ""}</td>
                 </tr>
               ))}
             </tbody>
@@ -123,15 +130,15 @@ export function IfcWeergever({ bron, acties }: WeergeverProps) {
       )}
       {bouwdelen.length > 0 && (
         <details className="vb-details" open>
-          <summary>Bouwdelen</summary>
+          <summary>{t("preview.ifc.elementsHeading")}</summary>
           <table className="vb-tabel">
             <tbody>
-              {bouwdelen.map(([t, naam]) => (
-                <tr key={t}>
-                  <th scope="row" title={t}>
-                    {naam}
+              {bouwdelen.map(([type, sleutel]) => (
+                <tr key={type}>
+                  <th scope="row" title={type}>
+                    {t(`preview.ifc.elements.${sleutel}`)}
                   </th>
-                  <td>{getal(telling.get(t)!)}</td>
+                  <td>{getal(telling.get(type)!)}</td>
                 </tr>
               ))}
             </tbody>
@@ -140,12 +147,12 @@ export function IfcWeergever({ bron, acties }: WeergeverProps) {
       )}
       {meta && meta.entiteiten.length > 0 && (
         <details className="vb-details">
-          <summary>Alle entiteittypen ({getal(meta.entiteiten.length)})</summary>
+          <summary>{t("preview.ifc.allEntityTypes", { n: getal(meta.entiteiten.length) })}</summary>
           <table className="vb-tabel">
             <tbody>
-              {meta.entiteiten.slice(0, 200).map(([t, n]) => (
-                <tr key={t}>
-                  <th scope="row">{t}</th>
+              {meta.entiteiten.slice(0, 200).map(([type, n]) => (
+                <tr key={type}>
+                  <th scope="row">{type}</th>
                   <td>{getal(n)}</td>
                 </tr>
               ))}

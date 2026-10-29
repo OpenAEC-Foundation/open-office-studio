@@ -6,8 +6,9 @@
  * stoppen (afbreking), fout (vangbare VBA-fout) of overslaan (standaardwaarde
  * of een plaatsvervangend object, met registratie).
  */
+import i18next from "i18next";
 import type { OvergeslagenCategorie } from "./extern-typen.ts";
-import { FOUTTEKSTEN, VbaAfbreking, VbaFout } from "./fouten.ts";
+import { foutTekstOfAlgemeen, VbaAfbreking, VbaFout } from "./fouten.ts";
 import { LEEG, VbaObject, type VbaWaarde } from "./waarden.ts";
 
 /** Wat de runtime hiervoor van de interpreter nodig heeft (geen import van interpreter.ts). */
@@ -70,8 +71,8 @@ export const NAGEBOOTSTE_PROGIDS = new Set(["scripting.dictionary"]);
 
 /** Vangbare fout voor de modus `fout`. */
 export function ontbrekendFout(nummer: number, wat: string): VbaFout {
-  const tekst = FOUTTEKSTEN[nummer] ?? `Toepassingsfout ${nummer}`;
-  return new VbaFout(nummer, `${tekst.replace(/\.$/, "")} (${wat} is in Open Office Studio niet beschikbaar).`, wat);
+  const tekst = foutTekstOfAlgemeen(nummer);
+  return new VbaFout(nummer, i18next.t("vba:runtime.notAvailable", { text: tekst.replace(/\.$/, ""), what: wat }), wat);
 }
 
 /** Gegevens van een afgeschermde weigering, of null als het geen weigering is. */

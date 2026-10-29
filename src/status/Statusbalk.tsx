@@ -1,6 +1,8 @@
 import { HardDrive, Maximize2, Minus, Plus } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useInstellingen } from "../instellingen";
 import { stap } from "../documentzoom";
+import { useOpmaak } from "../i18n/opmaak";
 import { useModuleStatus, useZoomBediening } from "./statusinfo";
 import { getal, schuifNaarZoom, zoomNaarSchuif } from "./berekening";
 import { TekstStatusExtra, TekstWeergaveKnoppen, useStatusbalkMenu } from "../tekst/info/StatusbalkItems";
@@ -19,34 +21,52 @@ export interface StatusbalkProps {
   versieLabel: string;
 }
 
-/** "1 teken", "4.613 tekens". */
-const aantal = (n: number, enkel: string, meer: string) => `${getal(n)} ${n === 1 ? enkel : meer}`;
-
 function ModuleInfo({ soort }: { soort: string | null }) {
   const info = useModuleStatus();
   const { statusbalk } = useInstellingen();
+  const { t } = useTranslation("statusbar");
+  const { taal } = useOpmaak();
+  const g = (n: number) => getal(n, taal);
   if (!info) return null;
-  if (info.soort === "tekst" && soort === "docx")
+  if (info.soort === "tekst" && soort === "docx") {
+    // "1 woord", "4.613 woorden"; met selectie "12 van 4.613 woorden".
+    const woorden =
+      info.woorden === null
+        ? ""
+        : info.selectie
+          ? t("text.selectedWords", {
+              count: info.woorden,
+              selected: g(info.selectie.woorden),
+              words: g(info.woorden),
+            })
+          : t("text.words", { count: info.woorden, words: g(info.woorden) });
+    const tekensAantal = info.selectie ? info.selectie.tekens : info.tekens;
     return (
       <span className="statusbalk-module">
         {statusbalk.tekst && (
-        <button type="button" onClick={info.naarPagina} title="Ga naar pagina">
-          Pagina {info.pagina}
-          {info.paginas ? ` van ${info.paginas}` : ""}
-        </button>
+          <button type="button" onClick={info.naarPagina} title={t("text.goToPage")}>
+            {info.paginas
+              ? t("text.pageOf", { page: g(info.pagina), pages: g(info.paginas) })
+              : t("text.page", { page: g(info.pagina) })}
+          </button>
         )}
         {statusbalk.tekst && info.woorden !== null && (
-          <button type="button" onClick={info.woordenTellen} title="Woorden tellen">
-            {info.selectie
-              ? `${getal(info.selectie.woorden)} van ${aantal(info.woorden, "woord", "woorden")}`
-              : aantal(info.woorden, "woord", "woorden")}
-            {info.tekens !== null &&
-              `, ${aantal(info.selectie ? info.selectie.tekens : info.tekens, "teken", "tekens")}`}
+          <button type="button" onClick={info.woordenTellen} title={t("text.wordCount")}>
+            {tekensAantal !== null
+              ? t("text.wordsAndCharacters", {
+                  words: woorden,
+                  characters: t("text.characters", {
+                    count: tekensAantal,
+                    characters: g(tekensAantal),
+                  }),
+                })
+              : woorden}
           </button>
         )}
         <TekstStatusExtra />
       </span>
     );
+  }
   if (info.soort === "rekenblad" && soort === "xlsx" && statusbalk.rekenblad) {
     const s = info.statistiek;
     if (!s || s.aantal < 2) return null;
@@ -55,22 +75,25 @@ function ModuleInfo({ soort }: { soort: string | null }) {
         className="statusbalk-module"
         title={
           s.minimum !== null && s.maximum !== null
-            ? `Minimum ${getal(s.minimum)} · Maximum ${getal(s.maximum)} · ${getal(s.getallen)} getallen`
+            ? t("spreadsheet.summary", {
+                count: s.getallen,
+                min: g(s.minimum),
+                max: g(s.maximum),
+                numbers: g(s.getallen),
+              })
             : undefined
         }
       >
-        {s.gemiddelde !== null && <span>Gemiddelde: {getal(s.gemiddelde)}</span>}
-        <span>Aantal: {getal(s.aantal)}</span>
-        {s.getallen > 0 && <span>Som: {getal(s.som)}</span>}
+        {s.gemiddelde !== null && <span>{t("spreadsheet.average", { value: g(s.gemiddelde) })}</span>}
+        <span>{t("spreadsheet.count", { value: g(s.aantal) })}</span>
+        {s.getallen > 0 && <span>{t("spreadsheet.sum", { value: g(s.som) })}</span>}
       </span>
     );
   }
   if (info.soort === "presentatie" && soort === "pptx" && statusbalk.presentatie)
     return (
       <span className="statusbalk-module">
-        <span>
-          Dia {info.dia} van {info.dias}
-        </span>
+        <span>{t("presentation.slideOf", { slide: g(info.dia), slides: g(info.dias) })}</span>
       </span>
     );
   return null;
@@ -78,15 +101,17 @@ function ModuleInfo({ soort }: { soort: string | null }) {
 
 function Zoomschuif({ zoom }: { zoom: number }) {
   const bediening = useZoomBediening();
+  const { t } = useTranslation("statusbar");
+  const opmaak = useOpmaak();
   if (!bediening) return null;
-  const procent = Math.round(zoom * 100);
+  const procent = opmaak.procent(Math.round(zoom * 100) / 100, { maximumFractionDigits: 0 });
   return (
-    <span className="statusbalk-zoom" role="group" aria-label="Zoom">
+    <span className="statusbalk-zoom" role="group" aria-label={t("zoom.label")}>
       <button
         type="button"
         className="statusbalk-icoon"
-        aria-label="Uitzoomen"
-        title="Uitzoomen · Ctrl+−"
+        aria-label={t("zoom.out")}
+        title={t("zoom.outTitle")}
         onClick={() => bediening.zet(stap(zoom, -1))}
       >
         <Minus size={12} />
@@ -97,16 +122,16 @@ function Zoomschuif({ zoom }: { zoom: number }) {
         max={100}
         step={0.5}
         value={zoomNaarSchuif(zoom)}
-        aria-label="Zoom"
-        aria-valuetext={`${procent}%`}
-        title="Ctrl + scrollwiel of Ctrl + = en Ctrl + − om te zoomen"
+        aria-label={t("zoom.label")}
+        aria-valuetext={procent}
+        title={t("zoom.sliderTitle")}
         onChange={(event) => bediening.zet(schuifNaarZoom(Number(event.target.value)))}
       />
       <button
         type="button"
         className="statusbalk-icoon"
-        aria-label="Inzoomen"
-        title="Inzoomen · Ctrl+="
+        aria-label={t("zoom.in")}
+        title={t("zoom.inTitle")}
         onClick={() => bediening.zet(stap(zoom, 1))}
       >
         <Plus size={12} />
@@ -114,17 +139,17 @@ function Zoomschuif({ zoom }: { zoom: number }) {
       <button
         type="button"
         className="statusbalk-procent"
-        aria-label={`Zoom ${procent}%, terug naar 100%`}
-        title="Terug naar 100% · Ctrl+0"
+        aria-label={t("zoom.resetLabel", { percent: procent })}
+        title={t("zoom.resetTitle")}
         onClick={() => bediening.zet(1)}
       >
-        {procent}%
+        {procent}
       </button>
       <button
         type="button"
         className="statusbalk-icoon"
-        aria-label="Passend"
-        title={bediening.passend ? "Passend in het venster" : "Passend is hier niet beschikbaar"}
+        aria-label={t("zoom.fit")}
+        title={bediening.passend ? t("zoom.fitTitle") : t("zoom.fitUnavailable")}
         disabled={!bediening.passend}
         onClick={() => bediening.passend?.()}
       >
@@ -145,30 +170,32 @@ export function Statusbalk({
   versieLabel,
 }: StatusbalkProps) {
   const { statusbalk } = useInstellingen();
+  const { t } = useTranslation("statusbar");
+  const { taal } = useOpmaak();
   const status = document
     ? !document.gereed
-      ? "Laden…"
+      ? t("common:loading")
       : document.gewijzigd
-        ? "Niet-opgeslagen wijzigingen"
-        : "Gereed"
+        ? t("status.unsaved")
+        : t("status.ready")
     : soort === "database" && databaseGewijzigd !== null && statusbalk.database
       ? databaseGewijzigd
-        ? "Werkkopie: niet-opgeslagen wijzigingen"
-        : "Werkkopie: ongewijzigd"
+        ? t("status.workingCopyUnsaved")
+        : t("status.workingCopyUnchanged")
       : soort === "email" && emailOngelezen
-        ? `${emailOngelezen} ongelezen in Postvak IN`
+        ? t("status.unreadInbox", { count: emailOngelezen, unread: getal(emailOngelezen, taal) })
         : aantalGewijzigd
-          ? `${aantalGewijzigd} ${aantalGewijzigd === 1 ? "tabblad" : "tabbladen"} met niet-opgeslagen wijzigingen`
-          : `Ontwikkelversie ${versieLabel}`;
+          ? t("status.unsavedTabs", { count: aantalGewijzigd, tabs: getal(aantalGewijzigd, taal) })
+          : t("status.devVersion", { version: versieLabel });
   // Rechtermuisknop: statusbalk-items aan of uit (src/tekst/info).
   const menu = useStatusbalkMenu();
   return (
-    <footer className="office-statusbalk" aria-label="Statusbalk" onContextMenu={menu.onContextMenu}>
+    <footer className="office-statusbalk" aria-label={t("label")} onContextMenu={menu.onContextMenu}>
       {menu.element}
       <span>
         <HardDrive size={12} aria-hidden="true" />
         <i aria-hidden="true" />
-        Lokaal
+        {t("storage.local")}
       </span>
       <span className="statusbalk-naam">{moduleNaam}</span>
       {document?.gereed && <ModuleInfo soort={soort} />}

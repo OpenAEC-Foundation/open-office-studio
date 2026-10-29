@@ -5,6 +5,8 @@
  */
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { FileImage, RotateCw, Scan, ZoomIn, ZoomOut } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { useOpmaak } from "../../../../../src/i18n/opmaak";
 import { LIMIETEN, type WeergeverProps } from "../contract";
 import { MIME_AFBEELDING } from "../herkenning";
 import { browserVolgtExif, controleerAfbeelding, exifOrientatie, orientatieTransform } from "../afbeelding-meta";
@@ -14,10 +16,18 @@ const MIN_ZOOM = 0.05;
 const MAX_ZOOM = 16;
 
 export function AfbeeldingWeergever({ bron, herkenning, acties, registreerToetsen }: WeergeverProps) {
+  const { t, i18n } = useTranslation("email");
+  const opmaak = useOpmaak();
   const geladen = useBytes(bron);
   const type = herkenning.afbeelding ?? "png";
   const bytes = geladen.stand === "klaar" ? geladen.waarde : null;
-  const controle = useMemo(() => (bytes ? controleerAfbeelding(bytes, type, LIMIETEN) : null), [bytes, type]);
+  // De taal hoort bij de afhankelijkheden: de melding van de controle is vertaald.
+  const taal = i18n.language;
+  const controle = useMemo(
+    () => (bytes ? controleerAfbeelding(bytes, type, LIMIETEN) : null),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [bytes, type, taal],
+  );
   const url = useBlobUrl(controle?.ok ? bytes : null, MIME_AFBEELDING[type]);
   const exif = useMemo(() => (bytes && type === "jpeg" && !browserVolgtExif() ? exifOrientatie(bytes) : 1), [bytes, type]);
 
@@ -78,13 +88,13 @@ export function AfbeeldingWeergever({ bron, herkenning, acties, registreerToetse
   );
 
   if (geladen.stand === "laden") return <Laden />;
-  if (geladen.stand === "fout") return <Fout melding={`De afbeelding kon niet worden geladen: ${geladen.melding}`} />;
+  if (geladen.stand === "fout") return <Fout melding={t("preview.image.loadFailed", { message: geladen.melding })} />;
   if (controle && !controle.ok)
     return (
       <Kaart
         icoon={<FileImage size={26} />}
         titel={bron.bestandsnaam}
-        ondertitel="Afbeelding"
+        ondertitel={t("preview.image.subtitle")}
         regels={basisRegels(bron, geladen.waarde.length)}
         melding={controle.melding}
         knoppen={<BestandKnoppen bron={bron} acties={acties} />}
@@ -95,9 +105,9 @@ export function AfbeeldingWeergever({ bron, herkenning, acties, registreerToetse
       <Kaart
         icoon={<FileImage size={26} />}
         titel={bron.bestandsnaam}
-        ondertitel="Afbeelding"
+        ondertitel={t("preview.image.subtitle")}
         regels={basisRegels(bron, geladen.waarde.length)}
-        melding="Deze afbeelding kan hier niet worden weergegeven (beschadigd of een niet-ondersteunde variant)."
+        melding={t("preview.image.cannotDisplay")}
         knoppen={<BestandKnoppen bron={bron} acties={acties} />}
       />
     );
@@ -105,14 +115,14 @@ export function AfbeeldingWeergever({ bron, herkenning, acties, registreerToetse
   const transform = `translate(-50%, -50%) rotate(${draai}deg) ${ex.transform}`.trim();
   return (
     <div className="vb-afbeelding">
-      <div className="vb-werkbalk" role="toolbar" aria-label="Afbeelding">
-        <button type="button" className="vb-iconknop" onClick={zoomUit} title="Uitzoomen (−)" aria-label="Uitzoomen">
+      <div className="vb-werkbalk" role="toolbar" aria-label={t("preview.image.toolbar")}>
+        <button type="button" className="vb-iconknop" onClick={zoomUit} title={t("preview.image.zoomOutTitle")} aria-label={t("preview.image.zoomOut")}>
           <ZoomOut size={16} />
         </button>
         <span className="vb-zoomwaarde" aria-live="polite">
-          {Math.round(schaal * 100)}%
+          {opmaak.procent(schaal, { maximumFractionDigits: 0, useGrouping: false })}
         </span>
-        <button type="button" className="vb-iconknop" onClick={zoomIn} title="Inzoomen (+)" aria-label="Inzoomen">
+        <button type="button" className="vb-iconknop" onClick={zoomIn} title={t("preview.image.zoomInTitle")} aria-label={t("preview.image.zoomIn")}>
           <ZoomIn size={16} />
         </button>
         <button
@@ -120,15 +130,15 @@ export function AfbeeldingWeergever({ bron, herkenning, acties, registreerToetse
           className="vb-iconknop"
           onClick={() => zetZoom("passend")}
           aria-pressed={zoom === "passend"}
-          title="Passend maken (0)"
-          aria-label="Passend maken"
+          title={t("preview.image.fitTitle")}
+          aria-label={t("preview.image.fit")}
         >
           <Scan size={16} />
         </button>
-        <button type="button" className="vb-iconknop" onClick={() => zetZoom(1)} title="Ware grootte" aria-label="Ware grootte (100%)">
+        <button type="button" className="vb-iconknop" onClick={() => zetZoom(1)} title={t("preview.image.actualSizeTitle")} aria-label={t("preview.image.actualSize")}>
           1:1
         </button>
-        <button type="button" className="vb-iconknop" onClick={draaiRechts} title="Rechtsom draaien (R)" aria-label="Rechtsom draaien">
+        <button type="button" className="vb-iconknop" onClick={draaiRechts} title={t("preview.image.rotateTitle")} aria-label={t("preview.image.rotate")}>
           <RotateCw size={16} />
         </button>
         {natuurlijk && (
@@ -137,7 +147,7 @@ export function AfbeeldingWeergever({ bron, herkenning, acties, registreerToetse
           </span>
         )}
       </div>
-      <div className="vb-afbeeldingvlak" ref={vlakRef} tabIndex={0} aria-label="Afbeeldingsvoorbeeld">
+      <div className="vb-afbeeldingvlak" ref={vlakRef} tabIndex={0} aria-label={t("preview.image.area")} dir="ltr">
         <div
           className="vb-afbeeldingdoek"
           style={{ width: Math.max(eb * schaal, vlak.b - 2), height: Math.max(eh * schaal, vlak.h - 2) }}

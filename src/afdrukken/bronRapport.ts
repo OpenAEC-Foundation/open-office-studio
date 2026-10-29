@@ -4,6 +4,7 @@
  * paginanummers. Zonder engine; tekent rechtstreeks op canvas.
  */
 import { papierMaat, mmNaarPt, type AfdrukDocument, type AfdrukPagina, type Stand, type TekstStuk } from "./model";
+import i18next from "../i18n/config";
 import { meter, paginaCanvas, schrijf } from "./tekenhulp";
 
 export interface RapportTabel {
@@ -76,7 +77,7 @@ export function rapportPaginas(tabel: RapportTabel, stand: Stand): AfdrukDocumen
   const paginas: AfdrukPagina[] = delen.map((deel, p) => ({
     breedte,
     hoogte,
-    label: `Pagina ${p + 1} van ${totaal}`,
+    label: i18next.t("print:pages.pageOfTotal", { page: p + 1, total: totaal }),
     teken: async (dpi) => {
       const { canvas, ctx } = paginaCanvas(breedte, hoogte, dpi);
       const tekst: TekstStuk[] = [];
@@ -141,7 +142,7 @@ export function rapportPaginas(tabel: RapportTabel, stand: Stand): AfdrukDocumen
       ctx.lineTo(RAND + vlakB, voetY - 12);
       ctx.stroke();
       zet(schrijf(ctx, tabel.voet ?? "", RAND, voetY, 8, { kleur: "#6b7280" }));
-      zet(schrijf(ctx, `Pagina ${p + 1} van ${totaal}`, breedte / 2, voetY, 8, { uitlijning: "midden", kleur: "#6b7280" }));
+      zet(schrijf(ctx, i18next.t("print:pages.pageOfTotal", { page: p + 1, total: totaal }), breedte / 2, voetY, 8, { uitlijning: "midden", kleur: "#6b7280" }));
       zet(schrijf(ctx, tabel.voetRechts ?? "", RAND + vlakB, voetY, 8, { uitlijning: "rechts", kleur: "#6b7280" }));
       return { canvas, tekst };
     },

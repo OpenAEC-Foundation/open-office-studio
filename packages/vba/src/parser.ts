@@ -1,3 +1,4 @@
+import i18next from "i18next";
 import type {
   Argument,
   CaseTest,
@@ -75,10 +76,27 @@ const BESTANDSSTATEMENTS = new Set([
   "name",
 ]);
 
+/** Soort naam die de parser verwacht (sleutel `vba:parse.expectedName.<soort>`). */
+type NaamSoort =
+  | "name"
+  | "compareMode"
+  | "letter"
+  | "typeName"
+  | "variableName"
+  | "constantName"
+  | "enumName"
+  | "enumMember"
+  | "procedureName"
+  | "parameterName"
+  | "exitTarget"
+  | "arrayName";
+
 class Parser {
   private p = 0;
   private inlineIf = 0;
   readonly fouten: VbaParseerFout[] = [];
+  /** Fouten "blok niet afgesloten": die breken het herstel binnen een blok af. */
+  private readonly blokFouten = new WeakSet<Error>();
 
   constructor(
     private readonly t: Token[],
@@ -99,6 +117,15 @@ class Parser {
       { module: this.module, regel: t.regel, kolom: t.kolom },
       constructie,
     );
+  }
+  private blokOntbreekt(wat: string, begin: Token): never {
+    const e = new VbaParseerFout(
+      i18next.t("vba:parse.blockNotClosed", { keyword: wat, line: begin.regel }),
+      { module: this.module, regel: begin.regel, kolom: begin.kolom },
+      `ontbrekend ${wat.toLowerCase()}`,
+    );
+    this.blokFouten.add(e);
+    throw e;
   }
   private isWoord(woord: string, o = 0) {
     const t = this.kijk(o);
@@ -124,19 +151,19 @@ class Parser {
   }
   private verwachtWoord(woord: string, wat = woord) {
     if (!this.neemWoord(woord))
-      this.fout(`‘${wat}’ verwacht, maar ‘${this.toon()}’ gevonden.`);
+      this.fout(i18next.t("vba:parse.expectedToken", { expected: wat, found: this.toon() }));
   }
   private verwachtOp(op: string) {
     if (!this.neemOp(op))
-      this.fout(`‘${op}’ verwacht, maar ‘${this.toon()}’ gevonden.`);
+      this.fout(i18next.t("vba:parse.expectedToken", { expected: op, found: this.toon() }));
   }
   private toon(t = this.kijk()) {
     return t.soort === "eol"
-      ? "regeleinde"
+      ? i18next.t("vba:parse.token.endOfLine")
       : t.soort === "eof"
-        ? "einde van de module"
+        ? i18next.t("vba:parse.token.endOfModule")
         : t.soort === "tekst"
-          ? "tekst"
+          ? i18next.t("vba:parse.token.string")
           : t.tekst;
   }
   /** Constructienaam voor statistieken; bevat nooit namen uit de bron. */
@@ -148,10 +175,10 @@ class Parser {
     if (t.soort === "op") return `teken ${t.tekst}`;
     return t.soort;
   }
-  private naam(wat = "naam"): string {
+  private naam(wat: NaamSoort = "name"): string {
     const t = this.kijk();
     if (t.soort !== "naam")
-      this.fout(`${wat} verwacht, maar ‘${this.toon()}’ gevonden.`);
+      this.fout(i18next.t(`vba:parse.expectedName.${wat}`, { found: this.toon() }));
     this.p++;
     return t.tekst;
   }
@@ -170,7 +197,7 @@ class Parser {
   private verwachtEinde() {
     if (!this.eindeStatement())
       this.fout(
-        `Einde van de instructie verwacht, maar ‘${this.toon()}’ gevonden.`,
+        i18next.t("vba:parse.expectedEndOfStatement", { found: this.toon() }),
         this.kijk(),
         this.constructieVan(),
       );
@@ -253,26 +280,26 @@ class Parser {
     const t = this.kijk();
     if (t.soort !== "naam" || t.haak)
       this.fout(
-        `Declaratie of procedure verwacht, maar ‘${this.toon()}’ gevonden.`,
+        i18next.t("vba:parse.expectedDeclarationOrProcedure", { found: this.toon() }),
         t,
         this.constructieVan(),
       );
     if (this.neemWoord("option")) {
       if (this.neemWoord("explicit")) m.opties.expliciet = true;
       else if (this.neemWoord("compare")) {
-        const w = this.naam("Binary, Text of Database").toLowerCase();
+        const w = this.naam("compareMode").toLowerCase();
         if (w !== "binary" && w !== "text" && w !== "database")
-          this.fout("Option Compare kent Binary, Text en Database.");
+          this.fout(i18next.t("vba:parse.optionCompareValues"));
         m.opties.vergelijk = w;
       } else if (this.neemWoord("base")) {
         const g = this.neem();
         if (g.soort !== "getal" || (g.getal !== 0 && g.getal !== 1))
-          this.fout("Option Base kent alleen 0 en 1.", g);
+          this.fout(i18next.t("vba:parse.optionBaseValues"), g);
         m.opties.basis = g.getal as 0 | 1;
       } else if (this.neemWoord("private")) {
         this.verwachtWoord("module");
         m.opties.priveModule = true;
-      } else this.fout("Onbekende Option-instructie.");
+      } else this.fout(i18next.t("vba:parse.unknownOption"));
       this.verwachtEinde();
       return;
     }
@@ -307,7 +334,7 @@ class Parser {
       m.procedures.push(this.procedure(zichtbaarheid ?? "public", statisch));
       return;
     }
-    if (statisch) this.fout("Static is op moduleniveau alleen toegestaan vóór een procedure.");
+    if (statisch) this.fout(i18next.t("vba:parse.staticAtModuleLevel"));
     if (this.neemWoord("declare")) {
       m.declares.push(this.declare());
       return;
@@ -339,20 +366,20 @@ class Parser {
     }
     if (this.isWoord("end") && this.kijk(1).soort === "naam")
       this.fout(
-        `End ${this.kijk(1).tekst} zonder bijbehorend begin.`,
+        i18next.t("vba:parse.endWithoutBlock", { keyword: this.kijk(1).tekst }),
         t,
         `sleutelwoord end ${this.kijk(1).klein}`,
       );
     this.fout(
-      `Op moduleniveau zijn alleen declaraties en procedures toegestaan (‘${this.toon()}’).`,
+      i18next.t("vba:parse.onlyDeclarationsAtModuleLevel", { found: this.toon() }),
       t,
       `moduleniveau: ${this.constructieVan()}`,
     );
   }
 
   private gestippeldeNaam() {
-    let naam = this.naam("typenaam");
-    while (this.neemOp(".")) naam += "." + this.naam("typenaam");
+    let naam = this.naam("typeName");
+    while (this.neemOp(".")) naam += "." + this.naam("typeName");
     return naam;
   }
 
@@ -390,7 +417,7 @@ class Parser {
   private variabele(): Variabele {
     const withEvents = this.neemWoord("withevents");
     const t = this.kijk();
-    const naam = this.naam("variabelenaam");
+    const naam = this.naam("variableName");
     const v: Variabele = { naam, ...this.plek(t) };
     if (withEvents) v.withEvents = true;
     if (this.isOp("(")) v.matrix = this.grenzen();
@@ -409,7 +436,7 @@ class Parser {
     const lijst: ConstDef[] = [];
     do {
       const t = this.kijk();
-      const naam = this.naam("constantenaam");
+      const naam = this.naam("constantName");
       const type = this.typeAanduiding() ?? this.typeUitTeken(t);
       this.verwachtOp("=");
       lijst.push({ naam, type, waarde: this.expressie(), ...this.plek(t) });
@@ -420,14 +447,14 @@ class Parser {
 
   private typeDef(publiek: boolean): TypeDef {
     const t = this.kijk();
-    const def: TypeDef = { naam: this.naam("typenaam"), publiek, velden: [], ...this.plek(t) };
+    const def: TypeDef = { naam: this.naam("typeName"), publiek, velden: [], ...this.plek(t) };
     this.verwachtEinde();
     for (;;) {
       if (this.kijk().soort === "eol" || this.isOp(":")) {
         this.p++;
         continue;
       }
-      if (this.kijk().soort === "eof") this.fout("End Type ontbreekt.", t);
+      if (this.kijk().soort === "eof") this.fout(i18next.t("vba:parse.endTypeMissing"), t);
       if (this.isWoord("end") && this.isWoord("type", 1)) {
         this.p += 2;
         break;
@@ -441,19 +468,19 @@ class Parser {
 
   private enumDef(publiek: boolean): EnumDef {
     const t = this.kijk();
-    const def: EnumDef = { naam: this.naam("enumnaam"), publiek, leden: [], ...this.plek(t) };
+    const def: EnumDef = { naam: this.naam("enumName"), publiek, leden: [], ...this.plek(t) };
     this.verwachtEinde();
     for (;;) {
       if (this.kijk().soort === "eol" || this.isOp(":")) {
         this.p++;
         continue;
       }
-      if (this.kijk().soort === "eof") this.fout("End Enum ontbreekt.", t);
+      if (this.kijk().soort === "eof") this.fout(i18next.t("vba:parse.endEnumMissing"), t);
       if (this.isWoord("end") && this.isWoord("enum", 1)) {
         this.p += 2;
         break;
       }
-      const naam = this.naam("enumlid");
+      const naam = this.naam("enumMember");
       def.leden.push(this.neemOp("=") ? { naam, waarde: this.expressie() } : { naam });
       this.verwachtEinde();
     }
@@ -466,8 +493,8 @@ class Parser {
     this.neemWoord("ptrsafe");
     const isFunctie = this.isWoord("function");
     if (!this.neemWoord("function") && !this.neemWoord("sub"))
-      this.fout("Declare verwacht Sub of Function.");
-    const naam = this.naam("procedurenaam");
+      this.fout(i18next.t("vba:parse.declareExpectsSubOrFunction"));
+    const naam = this.naam("procedureName");
     this.verwachtWoord("lib");
     const lib = this.neem();
     const alias = this.neemWoord("alias") ? this.neem().tekst : undefined;
@@ -489,7 +516,7 @@ class Parser {
       else this.neemWoord("byref");
       const paramArray = this.neemWoord("paramarray");
       const nt = this.kijk();
-      const naam = this.naam("parameternaam");
+      const naam = this.naam("parameterName");
       let matrix = false;
       if (this.neemOp("(")) {
         this.verwachtOp(")");
@@ -514,10 +541,10 @@ class Parser {
       if (this.neemWoord("get")) soort = "get";
       else if (this.neemWoord("let")) soort = "let";
       else if (this.neemWoord("set")) soort = "set";
-      else this.fout("Property verwacht Get, Let of Set.");
+      else this.fout(i18next.t("vba:parse.propertyExpectsGetLetSet"));
     }
     const nt = this.kijk();
-    const naam = this.naam("procedurenaam");
+    const naam = this.naam("procedureName");
     const parameters = this.isOp("(") ? this.parameters() : [];
     const type = this.typeAanduiding() ?? this.typeUitTeken(nt);
     this.verwachtEinde();
@@ -551,7 +578,7 @@ class Parser {
         continue;
       }
       if (t.soort === "eof")
-        this.fout(`‘${wat}’ ontbreekt voor het blok vanaf regel ${begin.regel}.`, begin, `ontbrekend ${wat.toLowerCase()}`);
+        this.blokOntbreekt(wat, begin);
       if (stop(this)) return lijst;
       // Een procedure-einde of nieuwe procedure in een open blok: blok is niet afgesloten.
       if (
@@ -561,13 +588,13 @@ class Parser {
             ((this.isWoord("private") || this.isWoord("public")) &&
               ["sub", "function", "property"].includes(this.kijk(1).klein))))
       )
-        this.fout(`‘${wat}’ ontbreekt voor het blok vanaf regel ${begin.regel}.`, begin, `ontbrekend ${wat.toLowerCase()}`);
+        this.blokOntbreekt(wat, begin);
       const start = this.p;
       try {
         lijst.push(...this.statement());
       } catch (e) {
         if (!(e instanceof VbaParseerFout) || !this.herstel) throw e;
-        if (/ontbreekt voor het blok/.test(e.message)) throw e;
+        if (this.blokFouten.has(e)) throw e;
         this.fouten.push(e);
         if (this.p === start) {
           this.p++;
@@ -656,9 +683,9 @@ class Parser {
           return this.withStatement();
         case "exit": {
           this.p++;
-          const w = this.naam("Sub, Function, Property, For of Do").toLowerCase();
+          const w = this.naam("exitTarget").toLowerCase();
           if (!["sub", "function", "property", "for", "do"].includes(w))
-            this.fout(`Exit ${w} wordt niet herkend.`, t, "exit");
+            this.fout(i18next.t("vba:parse.exitNotRecognized", { target: w }), t, "exit");
           return { k: "exit", wat: w as "sub" };
         }
         case "goto":
@@ -689,7 +716,7 @@ class Parser {
             this.p++;
             return { k: "end" };
           }
-          this.fout(`End ${this.kijk(1).tekst} zonder bijbehorend begin.`, t, `sleutelwoord end ${this.kijk(1).klein}`);
+          this.fout(i18next.t("vba:parse.endWithoutBlock", { keyword: this.kijk(1).tekst }), t, `sleutelwoord end ${this.kijk(1).klein}`);
           break;
         case "stop":
           this.p++;
@@ -714,7 +741,7 @@ class Parser {
         case "next":
         case "wend":
         case "case":
-          this.fout(`‘${t.tekst}’ zonder bijbehorend begin.`, t, `sleutelwoord ${t.klein}`);
+          this.fout(i18next.t("vba:parse.keywordWithoutBlock", { keyword: t.tekst }), t, `sleutelwoord ${t.klein}`);
           break;
         case "sub":
         case "function":
@@ -726,7 +753,7 @@ class Parser {
         case "public":
         case "global":
         case "option":
-          this.fout(`‘${t.tekst}’ is binnen een procedure niet toegestaan.`, t, `sleutelwoord ${t.klein} in procedure`);
+          this.fout(i18next.t("vba:parse.notAllowedInProcedure", { keyword: t.tekst }), t, `sleutelwoord ${t.klein} in procedure`);
           break;
       }
       if (BESTANDSSTATEMENTS.has(t.klein) && this.isBestandsStatement()) {
@@ -737,7 +764,7 @@ class Parser {
     }
     if (t.soort === "naam" || this.isOp(".") || this.isOp("!")) {
       if (t.soort === "naam" && !t.haak && GERESERVEERD.has(t.klein) && t.klein !== "me")
-        this.fout(`‘${t.tekst}’ kan hier niet staan.`, t, `sleutelwoord ${t.klein}`);
+        this.fout(i18next.t("vba:parse.notAllowedHere", { keyword: t.tekst }), t, `sleutelwoord ${t.klein}`);
       const doel = this.postfix(true);
       if (this.neemOp("=")) return { k: "let", doel, waarde: this.expressie() };
       if (
@@ -754,7 +781,7 @@ class Parser {
       return { k: "call", doel, args: this.argumenten(null), metCall: false };
     }
     void plek;
-    return this.fout(`Instructie verwacht, maar ‘${this.toon()}’ gevonden.`, t, this.constructieVan());
+    return this.fout(i18next.t("vba:parse.expectedStatement", { found: this.toon() }), t, this.constructieVan());
   }
 
   private isBestandsStatement() {
@@ -778,14 +805,14 @@ class Parser {
   private labelNaam() {
     const t = this.neem();
     if (t.soort === "getal" || (t.soort === "naam" && !t.haak)) return t.tekst;
-    return this.fout("Labelnaam verwacht.", t);
+    return this.fout(i18next.t("vba:parse.expectedLabel"), t);
   }
 
   private constStatement(): KaalStatement {
     const lijst: ConstDef[] = [];
     do {
       const t = this.kijk();
-      const naam = this.naam("constantenaam");
+      const naam = this.naam("constantName");
       const type = this.typeAanduiding() ?? this.typeUitTeken(t);
       this.verwachtOp("=");
       lijst.push({ naam, type, waarde: this.expressie(), ...this.plek(t) });
@@ -804,7 +831,7 @@ class Parser {
       if (this.isOp(".")) {
         this.p++;
         doel = { k: "lid", obj: null, naam: this.naam(), ...this.plek(t) };
-      } else doel = { k: "id", naam: this.naam("matrixnaam"), ...this.plek(t) };
+      } else doel = { k: "id", naam: this.naam("arrayName"), ...this.plek(t) };
       while (this.isOp(".")) {
         this.p++;
         doel = { k: "lid", obj: doel, naam: this.naam(), ...this.plek(t) };
@@ -911,7 +938,7 @@ class Parser {
       break;
     }
     while (!isEinde(this)) {
-      if (this.kijk().soort === "eof") this.fout("End Select ontbreekt.", begin, "ontbrekend end select");
+      if (this.kijk().soort === "eof") this.fout(i18next.t("vba:parse.endSelectMissing"), begin, "ontbrekend end select");
       this.verwachtWoord("case");
       if (this.neemWoord("else")) {
         this.neemOp(":");
@@ -923,7 +950,7 @@ class Parser {
         if (this.neemWoord("is")) {
           const op = this.neem();
           if (op.soort !== "op" || !["=", "<>", "<", ">", "<=", ">="].includes(op.tekst))
-            this.fout("Vergelijkingsteken verwacht na Case Is.", op);
+            this.fout(i18next.t("vba:parse.expectedComparisonAfterCaseIs"), op);
           tests.push({ soort: "is", op: op.tekst, van: this.expressie() });
         } else if (["=", "<>", "<", ">", "<=", ">="].includes(this.kijk().tekst) && this.kijk().soort === "op") {
           const op = this.neem().tekst;
@@ -994,7 +1021,7 @@ class Parser {
       const soort = this.neem().klein as "while";
       naTest = { soort, e: this.expressie() };
     }
-    if (voorTest && naTest) this.fout("Een Do-lus kan niet zowel aan het begin als aan het eind een voorwaarde hebben.", begin);
+    if (voorTest && naTest) this.fout(i18next.t("vba:parse.doLoopTwoConditions"), begin);
     return { k: "do", voorTest, naTest, body };
   }
 
@@ -1037,7 +1064,7 @@ class Parser {
     }
     this.slaStatementOver();
     void t;
-    return { k: "nietondersteund", wat: "On … GoTo/GoSub (berekende sprong)" };
+    return { k: "nietondersteund", wat: i18next.t("vba:parse.computedJump") };
   }
 
   // ---------- argumenten ----------
@@ -1102,7 +1129,7 @@ class Parser {
         e = { k: "id", naam: t.tekst, ...this.plek(t) };
         if (t.typeteken) e.typeteken = t.typeteken;
       }
-    } else return this.fout(`Naam verwacht, maar ‘${this.toon()}’ gevonden.`, t, this.constructieVan());
+    } else return this.fout(i18next.t("vba:parse.expectedNameCapital", { found: this.toon() }), t, this.constructieVan());
     for (;;) {
       const k = this.kijk();
       if (k.soort === "op" && k.tekst === "." && this.kijk(1).soort === "naam") {
@@ -1121,7 +1148,7 @@ class Parser {
 
   private lidNaam() {
     const t = this.neem();
-    if (t.soort !== "naam") this.fout("Lidnaam verwacht.", t);
+    if (t.soort !== "naam") this.fout(i18next.t("vba:parse.expectedMemberName"), t);
     return t.tekst;
   }
 
@@ -1288,11 +1315,11 @@ class Parser {
               return { k: "addressof", naam: this.gestippeldeNaam(), ...this.plek(t) };
           }
           if (GERESERVEERD.has(t.klein) && t.klein !== "me")
-            this.fout(`‘${t.tekst}’ kan niet in een expressie staan.`, t, `sleutelwoord ${t.klein} in expressie`);
+            this.fout(i18next.t("vba:parse.notAllowedInExpression", { keyword: t.tekst }), t, `sleutelwoord ${t.klein} in expressie`);
         }
         return this.postfix(false);
     }
-    return this.fout(`Expressie verwacht, maar ‘${this.toon()}’ gevonden.`, t, this.constructieVan());
+    return this.fout(i18next.t("vba:parse.expectedExpression", { found: this.toon() }), t, this.constructieVan());
   }
 
   /** Lidtoegang na `(expr)` of `New X`, bv. `(New Klasse).Methode`. */
@@ -1369,6 +1396,6 @@ export function parseerExpressie(bron: string, opties: LexOpties = {}): Expr {
   const p = new Parser(lex(bron, "expressie", opties), "expressie", false);
   const e = p.expressie();
   if (!p.isKlaar())
-    throw new VbaParseerFout("Onverwachte tekst na de expressie.", { module: "expressie", regel: 1, kolom: 1 });
+    throw new VbaParseerFout(i18next.t("vba:parse.unexpectedTextAfterExpression"), { module: "expressie", regel: 1, kolom: 1 });
   return e;
 }

@@ -1,0 +1,1008 @@
+{
+  "accounts": {
+    "test": {
+      "test": "Testaa",
+      "testConnection": "Testaa yhteys",
+      "testing": "Testataan…",
+      "retest": "Testaa uudelleen",
+      "failed": "Testi epäonnistui"
+    },
+    "settings": {
+      "title": "Tilin asetukset",
+      "noAccount": "Tilejä ei ole vielä.",
+      "addAccount": "Lisää tili",
+      "accountList": "Tilit",
+      "saving": "Tallennetaan…",
+      "saved": "Asetukset tallennettu.",
+      "saveFailed": "Tallennus epäonnistui",
+      "tabs": {
+        "identity": "Identiteetti",
+        "servers": "Palvelimet",
+        "folders": "Kansiot",
+        "fetching": "Nouto ja tietosuoja",
+        "advanced": "Lisäasetukset"
+      },
+      "deleteAccount": {
+        "title": "Poista tili",
+        "confirm": "Haluatko varmasti poistaa tilin <strong>{{name}}</strong> ({{email}})? Viestisi jäävät palvelimelle; tallennettu salasana poistetaan avainnipusta.",
+        "button": "Poista tili",
+        "failed": "Tilin poistaminen epäonnistui"
+      },
+      "identity": {
+        "accountName": "Tilin nimi",
+        "accountNameHint": "Vain sinua varten, esimerkiksi ”Työ” tai ”Henkilökohtainen”.",
+        "yourName": "Nimesi",
+        "email": "Sähköpostiosoite",
+        "replyTo": "Vastausosoite",
+        "replyToPlaceholder": "Tyhjä = sähköpostiosoitteesi",
+        "signature": "Allekirjoitus",
+        "signatureHint": "Lisätään uusien viestien ja vastausten alle merkkijonon ”-- ” jälkeen."
+      },
+      "oauthAccount": {
+        "signedInAs": "Kirjautunut käyttäjänä <strong>{{account}}</strong> palvelulla {{provider}}",
+        "noPasswordStored": "Salasanaa ei tallenneta; pääsy käyttää avainnipussa olevaa tunnusta.",
+        "signInAgain": "Kirjaudu uudelleen",
+        "signedInAgain": "Kirjauduttu uudelleen käyttäjänä {{account}}."
+      },
+      "password": {
+        "change": "Vaihda salasana",
+        "storedPlaceholder": "Tallennettu · jätä tyhjäksi säilyttääksesi",
+        "noneStoredPlaceholder": "Salasanaa ei ole vielä tallennettu"
+      },
+      "folders": {
+        "hint": "Valitse, minne Email Studio tallentaa lähetetyt viestit, luonnokset sekä poistetut ja arkistoidut viestit.",
+        "roles": {
+          "sent": "Lähetetyt viestit",
+          "drafts": "Luonnokset",
+          "trash": "Roskakori",
+          "archive": "Arkisto"
+        },
+        "automatic": "Automaattinen",
+        "automaticWithFolder": "Automaattinen ({{folder}})"
+      },
+      "fetching": {
+        "checkForNew": "Tarkista uudet viestit",
+        "manualOnly": "Vain manuaalisesti",
+        "everyMinutes_one": "{{count}} minuutin välein",
+        "everyMinutes_other": "{{count}} minuutin välein",
+        "externalContent": "Näytä aina etäkuvat ja -sisältö",
+        "externalContentHint": "Pois päältä on suositeltavaa: etäkuvat paljastavat lähettäjille, milloin ja missä avaat viestin.",
+        "trustedSenders": "Lähettäjät, joiden etäsisältö näytetään aina",
+        "forgetSender": "Unohda {{sender}}"
+      },
+      "advanced": {
+        "oauthIntro": "Kirjautuminen Microsoftilla tai Googlella käyttää OAuth2:ta. Nämä asetukset koskevat kaikkia tilejä. Oma client ID tarvitaan vain, jos sovellus ei sisällä sellaista; katso <code>{{doc}}</code>.",
+        "ispdb": "Hae uudelle tilille tietoja myös Thunderbird-tietokannasta",
+        "ispdbHint": "Verkkotunnuksen nimi lähetetään tällöin Mozillalle. Oletuksena pois päältä.",
+        "available": "Käytettävissä.",
+        "unavailable": "Ei käytettävissä.",
+        "loadingStatus": "Ladataan tilaa…",
+        "clientId": "Client ID",
+        "clientSecret": "Client secret (valinnainen)",
+        "saveClientId": "Tallenna client ID",
+        "clientIdSaved": "Palvelun {{provider}} client ID tallennettu.",
+        "clientIdSaveFailed": "Client ID:n tallennus epäonnistui",
+        "desktopOnly": "Voit asettaa oman client ID:n vain työpöytäsovelluksessa."
+      }
+    },
+    "wizard": {
+      "title": "Lisää tili",
+      "intro": "Käytä nykyistä sähköpostiosoitettasi. Email Studio toimii kaikkien IMAP- ja SMTP-palveluja tarjoavien palveluntarjoajien kanssa.",
+      "fullName": "Koko nimesi",
+      "fullNamePlaceholder": "Etunimi Sukunimi",
+      "fullNameHint": "Miten vastaanottajat näkevät nimesi.",
+      "email": "Sähköpostiosoite",
+      "emailPlaceholder": "name@example.com",
+      "password": "Salasana",
+      "passwordHint": "Käytetään vain, kun valitset Testaa tai Valmis, ja tallennetaan vain käyttöjärjestelmän avainnippuun.",
+      "ispdb": "Hae tietoja myös Thunderbird-tietokannasta",
+      "ispdbHint": "Verkkotunnuksen nimi (ei osoitettasi eikä salasanaasi) lähetetään tällöin Mozillalle.",
+      "oauthPrompt": "Tai kirjaudu ilman salasanaa sovelluksessa:",
+      "enterNameAndEmailFirst": "Anna ensin nimesi ja sähköpostiosoitteesi.",
+      "saving": "Tallennetaan…",
+      "done": "Valmis",
+      "saveAnyway": "Tallenna silti",
+      "saveTitle": "Tallenna tili",
+      "saveUntestedTitle": "Ei vielä testattu (onnistuneesti); voit silti tallentaa tilin",
+      "saveFailed": "Tilin tallennus epäonnistui",
+      "foundSettings": "Asetuksia löytyi",
+      "serverSettings": "Palvelimen asetukset",
+      "serverSettingsFor": "Palvelimen asetukset verkkotunnukselle {{domain}}",
+      "enterEmailHint": "Anna sähköpostiosoitteesi; Email Studio etsii sitten oikeat palvelimet automaattisesti.",
+      "searchFailed": "Haku epäonnistui",
+      "fillInManually": "Anna palvelimet itse alla.",
+      "nothingFound": "Asetuksia ei löytynyt. Anna palvelimet itse alla; kysy niitä tarvittaessa palveluntarjoajaltasi.",
+      "proposals": "Ehdotukset",
+      "unencrypted": "salaamaton",
+      "manualConfiguration": "Manuaalinen määritys",
+      "adjusted": "· muokattu",
+      "fieldsAppear": "Kentät tulevat näkyviin heti, kun sähköpostiosoite on kelvollinen.",
+      "bothServersFailed": "Molemmat palvelimet epäonnistuivat. Tarkista osoite, salasana ja palvelinten nimet."
+    },
+    "discovery": {
+      "steps": {
+        "builtIn": "Sisäänrakennettu luettelo",
+        "ownDomain": "Oma verkkotunnus",
+        "dns": "DNS",
+        "ispdb": "Thunderbird-tietokanta",
+        "probe": "Yhteyskokeilu"
+      },
+      "stepStatus": {
+        "waiting": "odottaa",
+        "busy": "käynnissä…",
+        "found": "löytyi",
+        "nothing": "mitään ei löytynyt",
+        "skipped": "ei suoritettu"
+      },
+      "sources": {
+        "preset": "Sisäänrakennettu luettelo",
+        "autoconfig": "Määritys omasta verkkotunnuksestasi",
+        "srv": "DNS SRV -tietueet",
+        "mx": "MX-tietueet (palveluntarjoaja tunnistettu)",
+        "ispdb": "Thunderbird-tietokanta",
+        "guess": "Yleiset palvelinnimet"
+      },
+      "unencrypted": "salaamaton",
+      "reachable": "tavoitettavissa",
+      "unreachable": "ei tavoitettavissa",
+      "untested": "ei testattu"
+    },
+    "server": {
+      "incoming": "Saapuva (IMAP)",
+      "outgoing": "Lähtevä (SMTP)",
+      "columns": {
+        "server": "Palvelin",
+        "port": "Portti",
+        "security": "Suojaus",
+        "authentication": "Todennus",
+        "username": "Käyttäjänimi"
+      },
+      "hostLabel": "{{protocol}}-palvelin",
+      "portLabel": "{{protocol}}-portti",
+      "securityLabel": "{{protocol}}-suojaus",
+      "authenticationLabel": "{{protocol}}-todennus",
+      "usernameLabel": "{{protocol}}-käyttäjänimi",
+      "imapPlaceholder": "imap.example.com",
+      "smtpPlaceholder": "smtp.example.com",
+      "securityNone": "Ei mitään",
+      "authNormal": "Tavallinen salasana",
+      "authEncrypted": "Salattu salasana",
+      "unencryptedWarning": "<strong>Salaamaton yhteys.</strong> Salasanasi ja viestisi kulkevat verkossa luettavassa muodossa. Valitse SSL/TLS tai STARTTLS, jos palveluntarjoajasi tukee sitä.",
+      "oauthHint": "OAuth2 pyytää sinua kirjautumaan palveluntarjoajalle testattaessa tai ensimmäisellä käyttökerralla."
+    },
+    "oauth": {
+      "notSupported": "Tämä sovelluksen versio ei vielä tue kirjautumista Microsoftilla tai Googlella.",
+      "signInFailed": "Kirjautuminen palvelulla {{provider}} epäonnistui",
+      "signInWith": "Kirjaudu palvelulla {{provider}}",
+      "recommended": "suositeltu",
+      "waitTitle": "Viimeistele kirjautuminen selaimessa",
+      "waitText": "Palvelun {{provider}} kirjautumissivu avautui selaimeen. Kirjaudu siellä ja anna pääsy sähköpostiin; Email Studio jatkaa sitten täällä.",
+      "unavailableTitle": "Kirjautuminen palvelulla {{provider}} ei ole käytettävissä täällä.",
+      "unavailableHelp": "Työpöytäsovelluksessa voit asettaa oman client ID:n palvelulle {{provider}} kohdassa <em>Työkalut › Tilin asetukset › Lisäasetukset</em>. Sen luominen on kuvattu tiedostossa <code>{{doc}}</code>. Voit myös jatkaa (sovellus)salasanalla."
+    }
+  },
+  "errors": {
+    "code": {
+      "connection": "Ei yhteyttä palvelimeen. Tarkista internetyhteys sekä palvelimen nimi ja portti.",
+      "authentication": "Kirjautuminen epäonnistui. Tarkista käyttäjänimi ja salasana (Työkalut › Tilin asetukset).",
+      "certificate": "Palvelimen varmenne ei ole luotettu tai ei vastaa tämän palvelimen nimeä.",
+      "timeout": "Palvelin ei vastannut ajoissa. Yritä myöhemmin uudelleen.",
+      "notFound": "Viestiä tai kansiota ei enää ole palvelimella.",
+      "refused": "Palvelin hylkäsi komennon.",
+      "tooLarge": "Viesti on liian suuri palvelimelle. Pienennä liitteitä tai poista ne.",
+      "unavailable": "Tämä toiminto ei ole käytettävissä täällä.",
+      "internal": "Jokin meni vikaan."
+    },
+    "withDetail": "{{explanation}} ({{detail}})",
+    "withContext": "{{context}}: {{message}}",
+    "backendMissing": "Tämä työpöytäsovelluksen versio ei sisällä sähköpostitoimintoa.",
+    "unexpectedBinary": "Odottamaton binaarituloste taustajärjestelmästä."
+  },
+  "dialog": {
+    "closeEsc": "Sulje (Esc)"
+  },
+  "sendAsAttachment": {
+    "title": "Lähetä liitteenä"
+  },
+  "ribbon": {
+    "tabs": {
+      "start": "Aloitus",
+      "view": "Näytä",
+      "tools": "Työkalut"
+    },
+    "groups": {
+      "new": "Uusi",
+      "respond": "Vastaa",
+      "delete": "Poista",
+      "mark": "Tunnisteet",
+      "organize": "Järjestä",
+      "layout": "Asettelu",
+      "sort": "Lajittele",
+      "message": "Viesti",
+      "accounts": "Tilit",
+      "folders": "Kansiot"
+    },
+    "withShortcut": "{{action}} · {{shortcut}}",
+    "fetch": "Nouda viestit",
+    "fetchTitle": "Nouda viestit · {{key}} tai {{shortcut}}",
+    "readUnread": "Luettu/lukematon",
+    "readUnreadTitle": "Luettu tai lukematon · {{shortcut}}",
+    "star": "Tähti",
+    "move": "Siirrä",
+    "moveTitle": "Siirrä kansioon",
+    "folderPane": "Kansioruutu",
+    "readingPane": "Lukuruutu",
+    "resetLayout": "Palauta asettelu",
+    "sortBy": "Lajitteluperuste",
+    "sort": {
+      "date": "Päivämäärä",
+      "sender": "Lähettäjä",
+      "subject": "Aihe",
+      "size": "Koko"
+    },
+    "ascending": "Nouseva",
+    "descending": "Laskeva",
+    "viewSource": "Näytä lähdekoodi",
+    "accountSettings": "Tilin asetukset"
+  },
+  "studio": {
+    "errors": {
+      "loadAccounts": "Tilien lataus epäonnistui",
+      "loadMessages": "Viestien lataus epäonnistui",
+      "openMessage": "Viestin avaaminen epäonnistui",
+      "delete": "Poisto epäonnistui",
+      "move": "Siirto epäonnistui",
+      "mark": "Merkitseminen epäonnistui",
+      "forwardAttachments": "Liitteiden nouto edelleenlähetystä varten epäonnistui",
+      "openFile": "Kohteen {{name}} avaaminen epäonnistui",
+      "saveFile": "Kohteen {{name}} tallennus epäonnistui",
+      "source": "Lähdekoodin nouto epäonnistui",
+      "updateFolder": "Kansion päivitys epäonnistui",
+      "deleteFolder": "Kansion poisto epäonnistui"
+    },
+    "accountAdded": "Tili {{email}} lisätty.",
+    "addAccount": "Lisää tili",
+    "deletePermanently": {
+      "title": "Poista pysyvästi",
+      "text_one": "Tämä viesti poistetaan pysyvästi. Tätä ei voi kumota.",
+      "text_other": "{{count}} viestiä poistetaan pysyvästi. Tätä ei voi kumota.",
+      "confirm": "Poista pysyvästi"
+    },
+    "noArchiveFolder": "Tällä tilillä ei ole arkistokansiota. Valitse sellainen kohdassa Työkalut › Tilin asetukset › Kansiot.",
+    "fetched": "Viestit noudettu.",
+    "deleteFolder": {
+      "title": "Poista kansio",
+      "text": "Kansio ”{{folder}}” ja kaikki sen viestit poistetaan palvelimelta."
+    },
+    "welcome": {
+      "title": "Ei vielä sähköpostitiliä",
+      "text": "Lisää tilisi sähköpostiosoitteella ja salasanalla. Email Studio löytää oikeat asetukset."
+    },
+    "folderPaneWidth": "Kansioruudun leveys",
+    "messageListWidth": "Viestiluettelon leveys",
+    "messageList": "Viestiluettelo",
+    "search": {
+      "in": "Hae kansiosta {{folder}}",
+      "label": "Hae viesteistä ({{shortcut}})",
+      "clear": "Tyhjennä haku"
+    },
+    "filter": {
+      "label": "Pikasuodatin",
+      "unread": "Lukemattomat",
+      "unreadTitle": "Vain lukemattomat",
+      "starred": "Tähdellä merkityt",
+      "starredTitle": "Vain tähdellä merkityt",
+      "attachment": "Liite",
+      "attachmentTitle": "Vain liitteelliset",
+      "body": "Runko",
+      "bodyTitle": "Hae myös viestin tekstistä (hitaampi)"
+    },
+    "count": {
+      "filtered": "{{shown}}/{{total}}",
+      "filteredLoaded": "{{shown}}/{{loaded}} ladattu",
+      "messages_one": "{{count}} viesti",
+      "messages_other": "{{count}} viestiä",
+      "selected_one": "{{count}} valittu",
+      "selected_other": "{{count}} valittu"
+    },
+    "noResults": "Viestejä ei löytynyt.",
+    "emptyFolder": "Tämä kansio on tyhjä.",
+    "moveTo_one": "Siirrä viesti kansioon",
+    "moveTo_other": "Siirrä {{count}} viestiä kansioon",
+    "folderDialog": {
+      "newTitle": "Uusi kansio",
+      "renameTitle": "Nimeä kansio uudelleen",
+      "create": "Luo",
+      "rename": "Nimeä uudelleen",
+      "name": "Nimi",
+      "inside": "Kansion ”{{folder}}” sisällä"
+    },
+    "source": {
+      "title": "Viestin lähdekoodi",
+      "saveAs": "Tallenna muodossa {{extension}}"
+    }
+  },
+  "address": {
+    "invalid": "Virheellinen osoite: {{address}}",
+    "remove": "Poista {{address}}"
+  },
+  "list": {
+    "label": "Viestit",
+    "to": "Vastaanottaja: {{address}}",
+    "noRecipient": "(ei vastaanottajaa)",
+    "replied": "Vastattu",
+    "hasAttachment": "Sisältää liitteen",
+    "noSubject": "(ei aihetta)",
+    "star": "Lisää tähti",
+    "unstar": "Poista tähti",
+    "loadingMore": "Ladataan lisää viestejä…"
+  },
+  "folders": {
+    "label": "Kansiot",
+    "loading": "Ladataan kansioita…",
+    "unread_one": "{{count}} lukematon",
+    "unread_other": "{{count}} lukematonta",
+    "inbox": "Saapuneet"
+  },
+  "reader": {
+    "loadingMessage": "Ladataan viestiä…",
+    "chooseMessage": "Valitse viesti lukeaksesi sen.",
+    "label": "Viesti: {{subject}}",
+    "reply": "Vastaa",
+    "replyTitle": "Vastaa · {{shortcut}}",
+    "replyAll": "Vastaa kaikille",
+    "replyAllTitle": "Vastaa kaikille · {{shortcut}}",
+    "forward": "Lähetä edelleen",
+    "forwardTitle": "Lähetä edelleen · {{shortcut}}",
+    "archive": "Arkistoi",
+    "archiveTitle": "Arkistoi · {{shortcut}}",
+    "delete": "Poista",
+    "deleteTitle": "Poista · {{shortcut}}",
+    "starTitle": "Tähti · {{shortcut}}",
+    "from": "Lähettäjä",
+    "to": "Vastaanottaja",
+    "none": "(ei mitään)",
+    "cc": "Kopio",
+    "replyTo": "Vastausosoite",
+    "date": "Päivämäärä",
+    "external": {
+      "blocked_one": "Yksi etäkuva estettiin yksityisyytesi suojaamiseksi.",
+      "blocked_other": "{{count}} etäkuvaa estettiin yksityisyytesi suojaamiseksi.",
+      "desktopHint": "Luvallasi sovellus noutaa ne ja näyttää ne antamatta viestin muodostaa yhteyttä minnekään.",
+      "demoHint": "(Demossa ne osoittavat osoitteisiin, joita ei ole olemassa.)",
+      "show": "Näytä etäsisältö",
+      "alwaysFrom": "Näytä aina lähettäjältä {{sender}}",
+      "failed_one": "Yhtä etäkuvaa ei voitu noutaa.",
+      "failed_other": "{{count}} etäkuvaa ei voitu noutaa."
+    },
+    "attachments": {
+      "label": "Liitteet",
+      "previewOrOpen": "Napsautus: esikatselu · kaksoisnapsautus: avaa moduulissa {{module}}",
+      "preview": "Esikatselu",
+      "openCopyTitle": "Avaa muokattavana kopiona moduulissa {{module}}",
+      "openIn": "Avaa moduulissa {{module}}",
+      "saveTitle": "Tallenna tähän tietokoneeseen"
+    },
+    "content": "Viestin sisältö",
+    "loadingContent": "Ladataan sisältöä…"
+  },
+  "compose": {
+    "errors": {
+      "saveDraft": "Luonnoksen tallennus epäonnistui",
+      "noRecipients": "Lisää vähintään yksi vastaanottaja.",
+      "send": "Lähetys epäonnistui",
+      "attachmentsLarge": "Liitteiden yhteiskoko on {{size}}; monet palvelimet hylkäävät yli {{max}} kokoiset viestit.",
+      "linkNotAllowed": "Vain http(s)-, mailto- ja tel-linkit ovat sallittuja."
+    },
+    "noSubject": {
+      "title": "Ei aihetta",
+      "text": "Tällä viestillä ei ole aihetta. Lähetetäänkö silti?",
+      "fillIn": "Anna aihe",
+      "sendWithout": "Lähetä ilman aihetta"
+    },
+    "forgotAttachment": {
+      "title": "Unohtuiko liite?",
+      "text": "Viestisi mainitsee <strong>”{{word}}”</strong>, mutta liitettä ei ole lisätty.",
+      "sendAnyway": "Lähetä silti",
+      "keywords": "liite|liitteenä|liitteessä|liitteet|liitän"
+    },
+    "addAttachment": "Lisää liite",
+    "attachment": "Liitä",
+    "removeAttachment": "Poista {{name}}",
+    "attachmentsSummary_one": "{{count}} liite · {{size}}",
+    "attachmentsSummary_other": "{{count}} liitettä · {{size}}",
+    "dropToAttach": "Pudota lisätäksesi liitteenä",
+    "sent": "Viesti lähetetty.",
+    "sentWithSubject": "Viesti lähetetty: {{subject}}.",
+    "unsent": {
+      "title": "Viestiä ei lähetetty",
+      "text": "Haluatko tallentaa tämän viestin luonnokseksi?",
+      "discard": "Hylkää",
+      "saveDraft": "Tallenna luonnos"
+    },
+    "label": "Kirjoita: {{subject}}",
+    "newMessage": "Uusi viesti",
+    "send": "Lähetä",
+    "sending": "Lähetetään…",
+    "sendTitle": "Lähetä · {{shortcut}}",
+    "draft": "Luonnos",
+    "savingDraft": "Tallennetaan…",
+    "saveDraftTitle": "Tallenna luonnokseksi · {{shortcut}}",
+    "dismissError": "Sulje ilmoitus",
+    "from": "Lähettäjä",
+    "to": "Vastaanottaja",
+    "cc": "Kopio",
+    "bcc": "Piilokopio",
+    "subject": "Aihe",
+    "body": "Viestin teksti",
+    "format": {
+      "label": "Muotoilu",
+      "withShortcut": "{{action}} · {{shortcut}}",
+      "bold": "Lihavointi",
+      "italic": "Kursivointi",
+      "underline": "Alleviivaus",
+      "bullets": "Luettelomerkit",
+      "numbering": "Numerointi",
+      "link": "Linkki",
+      "insertLink": "Lisää linkki",
+      "clear": "Poista muotoilu",
+      "linkAddress": "Linkin osoite",
+      "insert": "Lisää"
+    }
+  },
+  "link": {
+    "browserFailed": "Selaimen avaaminen epäonnistui. Kopioi osoite: {{url}}",
+    "phoneTitle": "Puhelinnumero",
+    "openTitle": "Avataanko linkki?",
+    "copied": "Osoite kopioitu.",
+    "copyFailed": "Kopiointi epäonnistui; valitse osoite manuaalisesti.",
+    "copy": "Kopioi osoite",
+    "openInBrowser": "Avaa selaimessa",
+    "phoneIntro": "Tämä puhelinnumero esiintyy viestissä:",
+    "realTarget": "Tämä linkki johtaa todellisuudessa kohteeseen:",
+    "misleading": "Viestin teksti mainitsee <strong>{{shown}}</strong>, mutta linkki johtaa kohteeseen <strong>{{actual}}</strong>. Kyseessä voi olla tietojenkalastelu.",
+    "unencrypted": "Huomautus: tämä linkki ei käytä salattua yhteyttä (http)."
+  },
+  "files": {
+    "saveUnsupported": "Tämä työpöytäsovelluksen versio ei vielä pysty tallentamaan kohdetta {{name}}. Avaa liite moduulissa tai päivitä sovellus.",
+    "saved": "Tallennettu: {{path}}",
+    "saveCancelled": "Tallennus peruutettu.",
+    "downloadRequested": "Lataus pyydetty. Tarkista tiedosto latauksistasi."
+  },
+  "quote": {
+    "unknownSender": "(tuntematon)",
+    "wroteOn": "{{date}} {{sender}} kirjoitti:",
+    "wrote": "{{sender}} kirjoitti:",
+    "forwarded": "Edelleenlähetetty viesti",
+    "subject": "Aihe: {{value}}",
+    "date": "Päivämäärä: {{value}}",
+    "from": "Lähettäjä: {{value}}",
+    "to": "Vastaanottaja: {{value}}",
+    "cc": "Kopio: {{value}}"
+  },
+  "demo": {
+    "banner": "Demo – oikea sähköposti ei ole mahdollista selaimessa; käytä työpöytäsovellusta.",
+    "accountName": "Demopostilaatikko",
+    "folders": {
+      "notifications": "Ilmoitukset",
+      "drafts": "Luonnokset",
+      "sent": "Lähetetyt",
+      "archive": "Arkisto",
+      "junk": "Roskaposti",
+      "trash": "Roskakori"
+    },
+    "welcome": {
+      "subject": "Tervetuloa OpenAEC Email Studioon",
+      "heading": "Tervetuloa!",
+      "intro": "Tämä on demopostilaatikko. Selaimessa Email Studio ei voi noutaa eikä lähettää oikeaa sähköpostia; käytä siihen työpöytäsovellusta.",
+      "introHtml": "Tämä on <strong>demopostilaatikko</strong>. Selaimessa Email Studio ei voi noutaa eikä lähettää oikeaa sähköpostia; käytä siihen työpöytäsovellusta.",
+      "tryIt": "Kokeile vapaasti: vastaamista, tähdellä merkitsemistä (S), arkistoon siirtämistä ja liitteen avaamista Teksti- tai Laskentataulukko-moduulissa.",
+      "tryItHtml": "Kokeile vapaasti: vastaamista, tähdellä merkitsemistä (<kbd>S</kbd>), arkistoon siirtämistä ja liitteen avaamista Teksti- tai Laskentataulukko-moduulissa.",
+      "logoText": "Alla oleva OpenAEC-logo on liitteestä upotettu kuva (cid:).",
+      "logoAlt": "OpenAEC-logo",
+      "logoHtml": "Vasemmalla oleva logo on liitteestä upotettu kuva."
+    },
+    "errors": {
+      "accountNotFound": "Tiliä ei ole olemassa.",
+      "messageNotFound": "Viestiä ei ole olemassa.",
+      "folderExists": "Tämä kansio on jo olemassa.",
+      "folderCannotRename": "Tätä kansiota ei voi nimetä uudelleen.",
+      "specialFolderDelete": "Erikoiskansioita ei voi poistaa.",
+      "attachmentNotFound": "Liitettä ei ole olemassa.",
+      "targetFolderNotFound": "Kohdekansiota ei ole olemassa.",
+      "noRecipients": "Vastaanottajia ei ole määritetty.",
+      "recipientRefused": "Demo: palvelin hylkää vastaanottajan {{domain}}.",
+      "attachmentsTooLarge": "Demo: liitteiden enimmäiskoko on {{max}}."
+    },
+    "accountAdded": {
+      "subject": "Tilisi on lisätty (demo)",
+      "text": "Tili {{email}} on lisätty demoon. {{notice}}"
+    },
+    "discovery": {
+      "knownProvider": "Tunnettu palveluntarjoaja (demo).",
+      "mx": "Verkkotunnuksen {{domain}} MX-tietue osoittaa kohteeseen mail.protection.outlook.com (demo).",
+      "ownServer": "{{name}} (oma palvelin)",
+      "autoconfig": "Löytyi osoitteesta autoconfig.{{domain}} (demo).",
+      "srv": "_imaps._tcp ja _submission._tcp (demo).",
+      "ispdb": "Thunderbird-tietokannasta (demo).",
+      "guessImapOk": "Yleiset palvelinnimet; IMAP-kokeilu onnistui (demo).",
+      "guessAlternative": "Vaihtoehtoinen palvelinnimi (demo)."
+    },
+    "test": {
+      "noServer": "{{protocol}}-palvelinta ei ole määritetty.",
+      "invalidPort": "Virheellinen portti.",
+      "unreachable": "Demo: {{host}} ei ole tavoitettavissa.",
+      "simulated": "Demo: yhteys simuloitu.",
+      "simulatedUnencrypted": "Demo: yhteys simuloitu (salaamaton!)."
+    },
+    "oauthDesktopOnly": "Kirjautuminen Microsoftilla tai Googlella on mahdollista vain työpöytäsovelluksessa."
+  },
+  "preview": {
+    "loading": "Ladataan esikatselua…",
+    "dialog": {
+      "attachments": "Liitteet",
+      "previous": "Edellinen liite",
+      "previousTitle": "Edellinen liite (←)",
+      "next": "Seuraava liite",
+      "nextTitle": "Seuraava liite (→)",
+      "close": "Sulje esikatselu",
+      "closeTitle": "Sulje (Esc)",
+      "fetching": "Noudetaan liitettä…",
+      "fetchFailed": "Liitteen nouto epäonnistui: {{message}}"
+    },
+    "card": {
+      "fileName": "Tiedostonimi",
+      "size": "Koko",
+      "openExternal": "Avaa oletussovelluksella",
+      "unknown": "tuntematon",
+      "attention": "Huomautus",
+      "yes": "kyllä",
+      "no": "ei"
+    },
+    "detection": {
+      "kinds": {
+        "pdf": "PDF-tiedosto",
+        "dwg": "DWG-piirustus",
+        "dxf": "DXF-piirustus",
+        "ifc": "IFC-malli",
+        "markdown": "Markdown",
+        "text": "teksti",
+        "image": "kuva",
+        "office": "Office-asiakirja",
+        "unknown": "tuntematon tiedosto"
+      },
+      "contentDiffers": "Nimen perusteella kyseessä on {{kind}}, mutta sisältö on jotain muuta.",
+      "mismatch": "Tämän liitteen nimi on ”.{{extension}}” ({{named}}), mutta sisältö on {{actual}}.",
+      "mismatchSubtype": "Tämän liitteen nimi on ”.{{extension}}” ({{named}}), mutta sisältö on {{actual}} ({{subtype}}).",
+      "contentBinary": "Nimen perusteella kyseessä on {{kind}}, mutta sisältö on binaarista.",
+      "notSvg": "Nimen perusteella kyseessä on SVG-kuva, mutta sisältö ei ole SVG:tä.",
+      "signatureMissing": "Nimen perusteella kyseessä on {{kind}}, mutta sisällöstä puuttuvat vastaavat tunnusmerkit."
+    },
+    "image": {
+      "loadFailed": "Kuvan lataus epäonnistui: {{message}}",
+      "subtitle": "Kuva",
+      "cannotDisplay": "Tätä kuvaa ei voi näyttää täällä (vahingoittunut tai muunnelma, jota ei tueta).",
+      "tooLarge": "Tämä kuva on suurempi kuin {{size}} Mt, eikä sitä näytetä esikatseluna.",
+      "tooManyPixels": "Tämä kuva on {{width}} × {{height}} kuvapistettä (yli {{megapixels}} megapikseliä), eikä sitä näytetä esikatseluna.",
+      "toolbar": "Kuva",
+      "zoomOut": "Loitonna",
+      "zoomOutTitle": "Loitonna (−)",
+      "zoomIn": "Lähennä",
+      "zoomInTitle": "Lähennä (+)",
+      "fit": "Sovita ikkunaan",
+      "fitTitle": "Sovita ikkunaan (0)",
+      "actualSize": "Todellinen koko (100 %)",
+      "actualSizeTitle": "Todellinen koko",
+      "rotate": "Kierrä myötäpäivään",
+      "rotateTitle": "Kierrä myötäpäivään (R)",
+      "area": "Kuvan esikatselu"
+    },
+    "text": {
+      "loadFailed": "Tekstin lataus epäonnistui: {{message}}",
+      "toolbar": "Teksti",
+      "encoding": "Koodaus: {{encoding}}",
+      "utf8Bom": "UTF-8 (BOM-merkillä)",
+      "formatJson": "Muotoile JSON",
+      "wrapLines": "Rivitä",
+      "truncated": "Näytetään ensimmäiset {{limit}} / {{size}}. Tallenna tiedosto nähdäksesi kaiken.",
+      "contentOf": "Kohteen {{name}} sisältö"
+    },
+    "markdown": {
+      "loadFailed": "Tiedoston lataus epäonnistui: {{message}}",
+      "linkNotOpened": "Linkkiä ei avattu: {{url}}",
+      "imageFallback": "Kuva",
+      "externalBlocked": "{{alt}} (ulkoinen kuva estetty)",
+      "unavailable": "{{alt}} (ei käytettävissä)",
+      "view": "Näytä",
+      "rendered": "Renderöity",
+      "source": "Lähdekoodi",
+      "showExternalImages": "Näytä ulkoiset kuvat",
+      "truncated": "Näytetään ensimmäiset {{limit}} / {{size}}.",
+      "confirmLabel": "Avaa linkki",
+      "confirmQuestion": "Avataanko tämä linkki Office Studion ulkopuolella?"
+    },
+    "pdf": {
+      "loadFailed": "PDF-tiedoston lataus epäonnistui: {{message}}",
+      "properties": "Ominaisuudet",
+      "frameTitle": "PDF: {{name}}",
+      "linuxUnsupported": "Linuxin webview ei pysty näyttämään PDF-tiedostoja luotettavasti. Täysi esikatselu tulee tulevassa versiossa (Rust-katseluohjelma).",
+      "cannotPreview": "Tätä PDF-tiedostoa ei voi esikatsella täällä. Täysi esikatselu tulee tulevassa versiossa (Rust-katseluohjelma).",
+      "subtitle": "PDF-asiakirja",
+      "subtitleVersion": "PDF {{version}}",
+      "pages": "Sivut",
+      "author": "Tekijä",
+      "subject": "Aihe",
+      "createdWith": "Luotu sovelluksella",
+      "created": "Luotu",
+      "modified": "Muokattu",
+      "encrypted": "Salattu",
+      "incomplete": "tiedosto näyttää olevan puutteellinen tai vahingoittunut",
+      "showPreview": "Näytä esikatselu"
+    },
+    "cad": {
+      "loadFailed": "Piirustuksen lataus epäonnistui: {{message}}",
+      "previewLater": "Esikatselu tulee tulevassa versiossa (Rust-katseluohjelma).",
+      "tooLargeToParse": "Tämä tiedosto on liian suuri analysoitavaksi täällä. Esikatselu tulee tulevassa versiossa (Rust-katseluohjelma).",
+      "dwgSubtitle": "AutoCAD-piirustus (DWG)",
+      "dxfSubtitle": "DXF-piirustus",
+      "dxfBinarySubtitle": "Binaarinen DXF-piirustus",
+      "format": "Muoto",
+      "savedAs": "Tallennettu muodossa",
+      "unknownAutocadVersion": "tuntematon AutoCAD-versio",
+      "units": "Yksiköt",
+      "entities": "Entiteetit",
+      "blocks": "Lohkot",
+      "layers": "Tasot",
+      "thumbnailAlt": "Piirustuksen upotettu pikkukuva",
+      "thumbnailCaption": "Pikkukuva tiedostosta",
+      "entitiesByType": "Entiteetit tyypeittäin",
+      "layersCount": "Tasot ({{n}})",
+      "andMore": "… ja {{n}} muuta",
+      "versionRange": "AutoCAD {{from}}–{{to}}",
+      "versionAndLater": "AutoCAD {{version}} ja uudemmat",
+      "unitCode": "koodi {{code}}",
+      "unitNames": {
+        "unitless": "yksikötön",
+        "inch": "tuuma",
+        "foot": "jalka",
+        "mile": "maili",
+        "millimeter": "millimetri",
+        "centimeter": "senttimetri",
+        "meter": "metri",
+        "kilometer": "kilometri",
+        "microinch": "mikrotuuma",
+        "mil": "mil",
+        "yard": "jaardi",
+        "angstrom": "ångström",
+        "nanometer": "nanometri",
+        "micron": "mikroni",
+        "decimeter": "desimetri",
+        "decameter": "dekametri",
+        "hectometer": "hehtometri",
+        "gigameter": "gigametri",
+        "astronomicalUnit": "astronominen yksikkö",
+        "lightYear": "valovuosi",
+        "parsec": "parsek",
+        "usSurveyFoot": "Yhdysvaltain maanmittausjalka",
+        "usSurveyInch": "Yhdysvaltain maanmittaustuuma",
+        "usSurveyYard": "Yhdysvaltain maanmittausjaardi",
+        "usSurveyMile": "Yhdysvaltain maanmittausmaili"
+      }
+    },
+    "ifc": {
+      "loadFailed": "Mallin lataus epäonnistui: {{message}}",
+      "previewLater": "3D-esikatselu tulee tulevassa versiossa (Rust-katseluohjelma).",
+      "tooLarge": "Tämä malli on suurempi kuin {{size}} Mt, eikä sitä analysoida täällä.",
+      "analysing": "Analysoidaan mallia… {{percent}}",
+      "cancelled": "Analyysi peruutettu.",
+      "retry": "Analysoi uudelleen",
+      "failed": "Analyysi epäonnistui: {{message}}",
+      "subtitle": "IFC-malli",
+      "subtitleWithSchema": "IFC-malli · {{schemas}}",
+      "nameInFile": "Nimi tiedostossa",
+      "timestamp": "Aikaleima",
+      "author": "Tekijä",
+      "organization": "Organisaatio",
+      "application": "Sovellus",
+      "description": "Kuvaus",
+      "sites": "Tontit",
+      "buildings": "Rakennukset",
+      "entities": "Entiteetit",
+      "incomplete": "tiedosto näyttää olevan puutteellinen (ei END-ISO-10303-21)",
+      "storeys": "Kerrokset ({{n}})",
+      "elementsHeading": "Rakennusosat",
+      "allEntityTypes": "Kaikki entiteettityypit ({{n}})",
+      "elements": {
+        "wall": "Seinät",
+        "wallStandardCase": "Seinät (vakiotapaus)",
+        "curtainWall": "Lasijulkisivut",
+        "slab": "Lattiat ja laatat",
+        "roof": "Katot",
+        "column": "Pilarit",
+        "beam": "Palkit",
+        "member": "Sauvat",
+        "plate": "Levyt",
+        "door": "Ovet",
+        "window": "Ikkunat",
+        "stair": "Portaat",
+        "ramp": "Rampit",
+        "railing": "Kaiteet",
+        "covering": "Verhoukset",
+        "footing": "Perustukset",
+        "pile": "Paalut",
+        "space": "Tilat",
+        "opening": "Aukot",
+        "furnishing": "Kalusteet",
+        "flowSegment": "Kanava- ja putkiosuudet",
+        "flowTerminal": "Talotekniikan päätelaitteet",
+        "proxy": "Muut rakennusosat",
+        "storey": "Kerrokset"
+      }
+    },
+    "office": {
+      "kinds": {
+        "document": "Tekstiasiakirja",
+        "spreadsheet": "Laskentataulukko",
+        "presentation": "Esitys",
+        "database": "Tietokanta"
+      },
+      "genericDocument": "Office-asiakirja",
+      "type": "Tyyppi",
+      "openFailed": "Avaaminen epäonnistui: {{message}}",
+      "openCopyHint": "Avaa muokattava kopio moduulissa {{module}}. Sähköpostissa oleva alkuperäinen säilyy muuttumattomana.",
+      "cannotOpen": "Tätä Office-muotoa ei voi avata täällä.",
+      "opening": "Avataan…",
+      "openIn": "Avaa moduulissa {{module}}"
+    },
+    "unknown": {
+      "subtitle": "Esikatselua ei ole saatavilla",
+      "declaredType": "Ilmoitettu tyyppi",
+      "extension": "Tiedostopääte",
+      "none": "ei mitään",
+      "message": "Tälle tiedostotyypille ei voi näyttää esikatselua. Tallenna se ja avaa se vain, jos luotat lähettäjään."
+    }
+  },
+  "backend": {
+    "accounts": {
+      "fileCorrupt": "Tilitiedosto {{path}} on vioittunut.",
+      "fileUnreadable": "Tilitiedoston lukeminen epäonnistui.",
+      "fileWriteFailed": "Tilitiedoston kirjoittaminen epäonnistui.",
+      "invalidEmail": "Anna kelvollinen sähköpostiosoite.",
+      "invalidReplyTo": "Vastausosoite ei ole kelvollinen sähköpostiosoite.",
+      "lineBreakInName": "Nimet eivät voi sisältää rivinvaihtoja.",
+      "notFound": "Tätä tiliä ei ole enää olemassa.",
+      "saveFailed": "Tilien tallennus epäonnistui.",
+      "usernameMissing": "Anna IMAP- ja SMTP-käyttäjänimi."
+    },
+    "attachments": {
+      "blockedDatabase": "Turvallisuussyistä kohdetta '{{name}}' ei avata automaattisesti. Avaa Access-tietokannat Database Studiossa. Tallenna liite, jos haluat silti tarkastella sitä.",
+      "blockedExecutable": "Turvallisuussyistä kohdetta '{{name}}' ei avata automaattisesti. Tämä tiedostotyyppi voi suorittaa ohjelmia. Tallenna liite, jos haluat silti tarkastella sitä.",
+      "blockedMacros": "Turvallisuussyistä kohdetta '{{name}}' ei avata automaattisesti. Tämä asiakirja sisältää makroja. Tallenna liite, jos haluat silti tarkastella sitä.",
+      "blockedScripts": "Turvallisuussyistä kohdetta '{{name}}' ei avata automaattisesti. Tämä tiedostotyyppi voi sisältää komentosarjoja. Tallenna liite, jos haluat silti tarkastella sitä.",
+      "emptyOrTooLarge": "Liite on tyhjä tai suurempi kuin 100 Mt.",
+      "executableContent": "'{{name}}' on {{kind}}, eikä sitä avata turvallisuussyistä.",
+      "invalidName": "Virheellinen tiedostonimi.",
+      "kind": {
+        "linuxProgram": "Linux-ohjelma (ELF)",
+        "macProgram": "macOS-ohjelma (Mach-O) tai Java-luokka",
+        "script": "komentosarja",
+        "windowsProgram": "Windows-ohjelma (PE)",
+        "windowsShortcut": "Windowsin pikakuvake"
+      },
+      "nameMissing": "Tiedostonimi puuttuu.",
+      "noProgram": "Tämän liitteen avaamiseen ei löytynyt ohjelmaa.",
+      "notFound": "Liitettä {{index}} ei ole tässä viestissä.",
+      "openFailed": "Avaaminen epäonnistui.",
+      "sendAsBinary": "Lähetä liite binaaritietona, enintään 100 Mt.",
+      "tempDirFailed": "Väliaikaisen kansion luominen epäonnistui.",
+      "tempSaveFailed": "Liitteen väliaikainen tallennus epäonnistui."
+    },
+    "auth": {
+      "failed": "Kirjautuminen palvelimelle {{host}} epäonnistui: käyttäjänimi tai salasana on väärä ({{detail}}). Gmail, Outlook, iCloud ja Yahoo vaativat sovellussalasanan.",
+      "noPassword": "Tälle tilille ei ole annettu eikä tallennettu salasanaa.",
+      "noStoredPassword": "Tälle tilille ei ole tallennettu salasanaa. Anna salasana tilin asetuksissa."
+    },
+    "autoconfig": {
+      "httpsRedirectOnly": "Vain HTTPS-uudelleenohjauksia seurataan.",
+      "invalidEncoding": "Virheellinen merkistökoodaus määritystiedostossa.",
+      "notFound": "Määritystä ei löytynyt (HTTP {{status}}).",
+      "tooManyRedirects": "Liian monta uudelleenohjausta."
+    },
+    "common": {
+      "saveFailed": "Tallennus epäonnistui."
+    },
+    "compose": {
+      "attachmentCorrupt": "Liite '{{name}}' on vioittunut.",
+      "attachmentsTooLarge": "Liitteet ovat yhteensä yli {{max}} Mt. Lähetä suuret tiedostot jakolinkin kautta.",
+      "buildFailed": "Viestin koostaminen epäonnistui ({{detail}}).",
+      "field": {
+        "bcc": "Piilokopio",
+        "cc": "Kopio",
+        "from": "Lähettäjä",
+        "inReplyTo": "In-Reply-To",
+        "references": "References",
+        "replyTo": "Reply-To",
+        "subject": "Aihe",
+        "to": "Vastaanottaja"
+      },
+      "invalidAddress": "'{{address}}' kentässä {{field}} ei ole kelvollinen sähköpostiosoite.",
+      "invalidCharacters": "{{field}} sisältää virheellisiä merkkejä.",
+      "invalidEnvelope": "Virheellinen kirjekuori.",
+      "noRecipients": "Anna vähintään yksi vastaanottaja."
+    },
+    "connection": {
+      "failed": "Ei yhteyttä palvelimeen {{host}}: {{detail}}",
+      "hostNotFound": "Palvelimen nimeä {{host}} ei löytynyt.",
+      "refused": "Palvelin {{host}} hylkäsi yhteyden. Tarkista portti ja suojausasetus.",
+      "reset": "Yhteys palvelimeen {{host}} katkesi odottamatta. Vastaako suojausasetus (SSL/TLS tai STARTTLS) porttia?",
+      "timeout": "Palvelin {{host}} ei vastannut ajoissa. Tarkista palvelimen nimi, portti ja palomuuri."
+    },
+    "files": {
+      "saveFailed": "Tiedoston tallennus epäonnistui."
+    },
+    "http": {
+      "invalidHttpResponse": "Virheellinen HTTP-vastaus.",
+      "invalidResponse": "Virheellinen vastaus.",
+      "invalidServerName": "Virheellinen palvelimen nimi {{host}}.",
+      "invalidUrl": "Virheellinen verkko-osoite.",
+      "plainOnlyLocal": "Salaamaton HTTP on sallittu vain tähän tietokoneeseen.",
+      "redirectWithoutLocation": "Uudelleenohjaus ilman osoitetta.",
+      "responseTooLarge": "Palvelimen vastaus on liian suuri."
+    },
+    "images": {
+      "credentialsInUrl": "Kirjautumistietoja sisältäviä osoitteita ei noudeta.",
+      "hostNotFound": "Kohdetta {{host}} ei löytynyt.",
+      "httpOnly": "Vain http- ja https-osoitteet ovat sallittuja.",
+      "invalidServerName": "Virheellinen palvelimen nimi.",
+      "notAnImage": "Tämä osoite ei palauta kuvaa.",
+      "privateAddress": "Ulkoista sisältöä sisäisistä tai paikallisista osoitteista ei noudeta.",
+      "timeout": "Kuva ei latautunut 10 sekunnissa.",
+      "tooLarge": "Kuva on suurempi kuin 10 Mt.",
+      "tooManyRedirects": "Liian monta uudelleenohjausta (enintään 3).",
+      "unavailable": "Kuva ei ole saatavilla (HTTP {{status}}).",
+      "unknownRedirect": "Tuntematon uudelleenohjaus.",
+      "unsupportedImage": "Sisältö ei ole tuettu kuva."
+    },
+    "imap": {
+      "action": {
+        "copy": "Kopiointi",
+        "countFolders": "Kansioiden laskenta",
+        "createFolder": "Kansion luonti",
+        "delete": "Poisto",
+        "deleteFolder": "Kansion poisto",
+        "expunge": "Siivous",
+        "fetchMessage": "Viestin nouto",
+        "fetchMessages": "Viestien nouto",
+        "flag": "Merkintä",
+        "listFolders": "Kansioiden nouto",
+        "move": "Siirto",
+        "openFolder": "Kansion avaus",
+        "openNamedFolder": "Kansion '{{folder}}' avaus",
+        "renameFolder": "Kansion uudelleennimeäminen",
+        "saveToDrafts": "Tallennus Luonnoksiin",
+        "saveToFolder": "Tallennus kansioon",
+        "saveToSent": "Tallennus Lähetettyihin",
+        "search": "Haku",
+        "signIn": "Kirjautuminen",
+        "startTls": "STARTTLS"
+      },
+      "alreadyInTrash": "Nämä viestit ovat jo roskakorissa; poista ne pysyvästi.",
+      "appendRejected": "{{action}}: palvelin hylkäsi viestin.",
+      "badCommand": "{{action}}: palvelin ei ymmärtänyt komentoa ({{detail}}).",
+      "cannotDeleteInbox": "Saapuneet-kansiota ei voi poistaa.",
+      "cannotRenameInbox": "Saapuneet-kansiota ei voi nimetä uudelleen.",
+      "closedImmediately": "{{host}} sulki yhteyden heti. Vastaako suojausasetus (SSL/TLS tai STARTTLS) porttia?",
+      "commandTimeout": "{{host}} ei vastannut {{seconds}} sekunnin kuluessa.",
+      "connectTimeout": "Ei vastausta kohteesta {{host}}:{{port}} {{seconds}} sekunnin kuluessa. Tarkista palvelimen nimi, portti ja palomuuri.",
+      "connectionLost": "Yhteys palvelimeen {{host}} katkesi.",
+      "draftsFolderMissing": "Palvelimelta ei löytynyt Luonnokset-kansiota. Valitse kyseinen kansio tilin asetuksissa.",
+      "greetingRefused": "{{host}} hylkäsi yhteyden: {{detail}}",
+      "invalidFolderName": "Virheellinen kansion nimi.",
+      "invalidMessage": "Virheellinen viesti.",
+      "invalidName": "{{action}}: virheellisiä merkkejä nimessä.",
+      "invalidSearchCharacters": "Hakuteksti sisältää virheellisiä merkkejä.",
+      "messageGone": "Tätä viestiä ei ole enää olemassa (se on ehkä siirretty tai poistettu).",
+      "messageTooLarge": "Viesti on {{size}} Mt; Email Studio avaa enintään {{max}} Mt:n viestejä.",
+      "noStarttls": "{{host}} ei tue STARTTLS:ää portissa {{port}}. Valitse SSL/TLS (yleensä portti 993).",
+      "noTrash": "Palvelimelta ei löytynyt roskakorikansiota. Valitse roskakorikansio tilin asetuksissa tai poista pysyvästi.",
+      "noValidMessages": "Kelvollisia viestejä ei ole määritetty.",
+      "notFound": "{{action}}: {{detail}}",
+      "quotaExceeded": "{{action}}: postilaatikko on täynnä ({{detail}}).",
+      "refused": "{{action}}: palvelin kieltäytyi ({{detail}}).",
+      "retryLater": "{{message}} (Email Studio yrittää uudelleen {{retrySeconds}} sekunnin kuluttua, jotta palvelin ei estäisi sitä.)",
+      "searchTooLong": "Hakuteksti on liian pitkä.",
+      "sentFolderMissing": "Palvelimelta ei löytynyt Lähetetyt-kansiota. Valitse kyseinen kansio tilin asetuksissa.",
+      "signInTimeout": "Kirjautuminen palvelimelle {{host}} kesti liian kauan.",
+      "specialFolderMissing": "Kansiota ei löytynyt palvelimelta. Valitse kyseinen kansio tilin asetuksissa.",
+      "unexpectedError": "{{action}}: odottamaton virhe.",
+      "unexpectedResponse": "{{action}}: odottamaton vastaus palvelimelta.",
+      "unexpectedState": "Odottamaton yhteyden tila."
+    },
+    "keychain": {
+      "notResponding": "Avainnippu ei vastannut.",
+      "unavailable": "Käyttöjärjestelmän avainnippu ei ole käytettävissä. Email Studio ei koskaan tallenna salasanoja selväkielisinä; Linuxissa tarvitaan Secret Service (esimerkiksi GNOME Keyring tai KWallet).",
+      "unexpected": "Avainnippu palautti odottamattoman virheen."
+    },
+    "links": {
+      "openFailed": "Linkin avaaminen epäonnistui.",
+      "unsupportedScheme": "Vain http-, https- ja mailto-linkkejä voi avata."
+    },
+    "messages": {
+      "invalidMime": "Viestin lukeminen epäonnistui (virheellinen MIME-rakenne).",
+      "unreadable": "Viestin lukeminen epäonnistui."
+    },
+    "oauth": {
+      "browserFailed": "Verkkoselaimen avaaminen kirjautumista varten epäonnistui.",
+      "cancelled": "Kirjautuminen peruutettiin.",
+      "cancelledOrDenied": "Kirjautuminen palveluun {{provider}} peruutettiin tai evättiin.",
+      "clientMisconfigured": "Palvelun {{provider}} OAuth-asiakasta ei ole määritetty oikein (client ID tai secret).",
+      "emailUnknown": "Kirjautumisen sähköpostiosoitetta ei voitu määrittää; anna osoite ja yritä uudelleen.",
+      "invalidClientId": "Tämä ei ole kelvollinen client ID.",
+      "invalidTokenEndpoint": "Virheellinen tunnuksen päätepiste.",
+      "noAccessToken": "{{provider}} ei palauttanut käyttötunnusta (HTTP {{status}}).",
+      "noFreePort": "Kirjautumiseen ei ole käytettävissä väliaikaista porttia.",
+      "noPort": "Ei porttia.",
+      "noRefreshToken": "{{provider}} ei palauttanut päivitystunnusta; yritä kirjautua uudelleen.",
+      "noStoredSignIn": "Kirjaudu uudelleen palveluun {{provider}}: tälle tilille ei ole tallennettu kirjautumista.",
+      "notConfigured": {
+        "google": "Google-kirjautumista ei ole vielä määritetty: client ID puuttuu. Luo Google Cloudissa OAuth-asiakas, jonka tyyppi on 'Työpöytäsovellus' (uudelleenohjaus osoitteen http://127.0.0.1 kautta), ota Gmail API käyttöön ja lisää käyttöalue https://mail.google.com/ suostumusnäyttöön. Anna sitten client ID ja client secret (katso docs/email-oauth.md).",
+        "microsoft": "Microsoft-kirjautumista ei ole vielä määritetty: client ID puuttuu. Rekisteröi sovellus Microsoft Entrassa (Sovellusrekisteröinnit) 'Julkiseksi asiakkaaksi', lisää alusta 'Mobiili- ja työpöytäsovellukset' uudelleenohjaus-URI:lla http://localhost ja myönnä delegoidut käyttöoikeudet IMAP.AccessAsUser.All, SMTP.Send, offline_access, openid ja email. Anna sitten client ID (katso docs/email-oauth.md)."
+      },
+      "providerRefused": "{{provider}} hylkäsi kirjautumisen ({{detail}}).",
+      "randomUnavailable": "Turvallista satunnaisuutta ei ole käytettävissä.",
+      "reauthenticate": "Kirjaudu uudelleen palveluun {{provider}}: käyttöoikeus on vanhentunut tai peruttu.",
+      "settingSaveFailed": "OAuth-asetuksen tallennus epäonnistui.",
+      "signInFirst": "Tämä tili käyttää OAuth2:ta: kirjaudu ensin Microsoftilla tai Googlella.",
+      "signInFirstToTest": "Kirjaudu ensin Microsoftilla tai Googlella testataksesi OAuth2:ta.",
+      "signInTimeout": "Kirjautuminen palveluun {{provider}} kesti yli 5 minuuttia ja keskeytettiin.",
+      "stateMismatch": "Kirjautumissivun vastaus ei kuulu tähän kirjautumiseen (state ei täsmää).",
+      "timeout": "{{provider}} ei vastannut ajoissa.",
+      "tokenRefused": "{{provider}} hylkäsi tunnuksen ({{detail}}).",
+      "unexpectedResponse": "{{provider}} palautti odottamattoman vastauksen (HTTP {{status}})."
+    },
+    "security": {
+      "cramMd5SmtpUnsupported": "Salattua salasanaa (CRAM-MD5) ei tueta SMTP:ssä. Valitse 'tavallinen salasana'; SSL/TLS- tai STARTTLS-yhteydessä myös salasana salataan.",
+      "invalidServerName": "'{{host}}' ei ole kelvollinen palvelimen nimi protokollalle {{protocol}}.",
+      "notLocalhost": "{{host}} ei ole tämä tietokone, joten salaamaton yhteys hylättiin.",
+      "portMissing": "Protokollan {{protocol}} portti puuttuu.",
+      "unencryptedRefused": "Salaamaton kirjautuminen palvelimelle {{host}} hylättiin: salasanasi kulkisi verkossa luettavassa muodossa. Valitse SSL/TLS tai STARTTLS. Salaamattomat yhteydet ovat sallittuja vain tähän tietokoneeseen (localhost), esimerkiksi Proton Mail Bridgea varten."
+    },
+    "server": {
+      "noTimelyResponse": "{{host}} ei vastannut ajoissa."
+    },
+    "smtp": {
+      "authMethodUnsupported": "Tätä kirjautumistapaa ei tueta SMTP:ssä.",
+      "error": "SMTP-virhe palvelimella {{host}}: {{detail}}",
+      "messageTooLarge": "{{host}} hylkää viestin, koska se on liian suuri ({{detail}}).",
+      "noAuthMechanism": "{{host}} ei tarjoa kirjautumistapaa, jota Email Studio tukee (PLAIN tai LOGIN). Valitse STARTTLS tai SSL/TLS; monet palvelimet tarjoavat kirjautumisen vasta salauksen jälkeen.",
+      "oauthRejected": "{{host}} hylkäsi OAuth2-tunnuksen; sinun on ehkä kirjauduttava uudelleen.",
+      "rejected": "{{host}} hylkäsi viestin ({{detail}}).",
+      "sendTimeout": "Lähettäminen palvelimen {{host}} kautta kesti liian kauan.",
+      "tlsFailed": "Suojattua yhteyttä palvelimeen {{host}} ei voitu muodostaa ({{detail}}). Vastaako suojausasetus porttia?",
+      "tryLater": "{{host}} ei voi vastaanottaa viestiä juuri nyt; yritä myöhemmin uudelleen ({{detail}})."
+    },
+    "storage": {
+      "appDataDirNotFound": "Sovelluksen datakansiota ei löytynyt.",
+      "dataDirCreateFailed": "Datakansion luominen epäonnistui.",
+      "dataDirMissing": "Datakansio puuttuu."
+    },
+    "test": {
+      "signedIn": "Kirjauduttu palvelimelle {{host}}.",
+      "signedInUnencrypted": "Kirjauduttu palvelimelle {{host}}. Huomautus: {{protocol}}-yhteys ei ole salattu. Tämä on sallittua vain, koska palvelin toimii tällä tietokoneella."
+    },
+    "tls": {
+      "certificateRejected": "Suojattu yhteys palvelimeen {{host}} hylättiin: {{reason}}. Salasanasi suojaamiseksi Email Studio ei muodosta yhteyttä palvelimeen, jonka identiteettiä ei voida varmistaa.",
+      "handshakeFailed": "Suojattua yhteyttä palvelimeen {{host}} ei voitu muodostaa ({{detail}}). Vastaako suojausasetus (SSL/TLS tai STARTTLS) porttia?",
+      "handshakeTimeout": "TLS-kättely palvelimen {{host}} kanssa kesti liian kauan.",
+      "invalidServerName": "'{{host}}' ei ole kelvollinen palvelimen nimi TLS:lle.",
+      "reason": {
+        "expired": "varmenne on vanhentunut",
+        "invalid": "varmenne on virheellinen ({{detail}})",
+        "notYetValid": "varmenne ei ole vielä voimassa (onko tämän tietokoneen kello oikeassa?)",
+        "revoked": "varmenne on peruutettu",
+        "unknownIssuer": "varmennetta ei ole myöntänyt luotettu varmentaja (mahdollisesti itse allekirjoitettu)",
+        "wrongName": "varmenne ei kuulu nimelle {{host}}; käytä varmenteessa näkyvää palvelimen nimeä"
+      }
+    }
+  }
+}

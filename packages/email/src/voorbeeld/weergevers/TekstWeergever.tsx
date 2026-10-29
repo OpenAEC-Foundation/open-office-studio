@@ -1,5 +1,6 @@
 /** Platte tekst (TXT, CSV, LOG, JSON, XML …) met codering, regelnummers en limiet. */
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { LIMIETEN, type WeergeverProps } from "../contract";
 import { CODERINGNAAM, decodeerTekst } from "../codering";
 import { grootteTekst } from "../herkenning";
@@ -16,6 +17,7 @@ export function regelnummers(tekst: string): string {
 }
 
 export function TekstWeergever({ bron, herkenning }: WeergeverProps) {
+  const { t } = useTranslation("email");
   const geladen = useBytes(bron);
   const [opgemaakt, zetOpgemaakt] = useState(false);
   const [afbreken, zetAfbreken] = useState(false);
@@ -32,29 +34,34 @@ export function TekstWeergever({ bron, herkenning }: WeergeverProps) {
   }, [isJson, gedecodeerd]);
 
   if (geladen.stand === "laden") return <Laden />;
-  if (geladen.stand === "fout") return <Fout melding={`De tekst kon niet worden geladen: ${geladen.melding}`} />;
+  if (geladen.stand === "fout") return <Fout melding={t("preview.text.loadFailed", { message: geladen.melding })} />;
   const tekst = (opgemaakt && json) || gedecodeerd!.tekst;
   const nummers = afbreken ? "" : regelnummers(tekst);
 
   return (
     <div className="vb-tekst">
-      <div className="vb-werkbalk" role="toolbar" aria-label="Tekst">
-        <span className="vb-werkbalkinfo">Codering: {CODERINGNAAM[gedecodeerd!.codering]}</span>
+      <div className="vb-werkbalk" role="toolbar" aria-label={t("preview.text.toolbar")}>
+        <span className="vb-werkbalkinfo">
+          {t("preview.text.encoding", {
+            // Alleen "met BOM" is taal; de rest zijn vaste coderingsnamen.
+            encoding: gedecodeerd!.codering === "utf-8-bom" ? t("preview.text.utf8Bom") : CODERINGNAAM[gedecodeerd!.codering],
+          })}
+        </span>
         {json && (
           <label className="vb-schakel">
-            <input type="checkbox" checked={opgemaakt} onChange={(e) => zetOpgemaakt(e.target.checked)} /> JSON opmaken
+            <input type="checkbox" checked={opgemaakt} onChange={(e) => zetOpgemaakt(e.target.checked)} /> {t("preview.text.formatJson")}
           </label>
         )}
         <label className="vb-schakel">
-          <input type="checkbox" checked={afbreken} onChange={(e) => zetAfbreken(e.target.checked)} /> Regels afbreken
+          <input type="checkbox" checked={afbreken} onChange={(e) => zetAfbreken(e.target.checked)} /> {t("preview.text.wrapLines")}
         </label>
       </div>
       {gedecodeerd!.afgekapt && (
         <p className="vb-band" role="note">
-          Eerste {grootteTekst(LIMIETEN.tekstBytes)} getoond van {grootteTekst(geladen.waarde.length)}. Sla het bestand op om alles te zien.
+          {t("preview.text.truncated", { limit: grootteTekst(LIMIETEN.tekstBytes), size: grootteTekst(geladen.waarde.length) })}
         </p>
       )}
-      <div className={`vb-tekstvlak${afbreken ? " is-afbreken" : ""}`} tabIndex={0} aria-label={`Inhoud van ${bron.bestandsnaam}`}>
+      <div className={`vb-tekstvlak${afbreken ? " is-afbreken" : ""}`} tabIndex={0} aria-label={t("preview.text.contentOf", { name: bron.bestandsnaam })} dir="ltr">
         {!afbreken && (
           <pre className="vb-regelnummers" aria-hidden>
             {nummers}

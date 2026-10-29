@@ -31,8 +31,10 @@ fn sleutelhangerfout(e: keyring::Error) -> MailFout {
             "De sleutelhanger van het besturingssysteem is niet beschikbaar. \
              Email Studio bewaart wachtwoorden nooit in platte tekst; \
              op Linux is een Secret Service nodig (bijvoorbeeld GNOME Keyring of KWallet).",
-        ),
-        _ => MailFout::intern("De sleutelhanger gaf een onverwachte fout."),
+        )
+        .sleutel("keychain.unavailable"),
+        _ => MailFout::intern("De sleutelhanger gaf een onverwachte fout.")
+            .sleutel("keychain.unexpected"),
     }
 }
 
@@ -109,18 +111,22 @@ pub fn controleer_beveiliging(s: &ServerInstelling, smtp: bool) -> Uitkomst<Opti
         return Err(MailFout::niet_beschikbaar(
             "Versleuteld wachtwoord (CRAM-MD5) wordt voor SMTP niet ondersteund. \
              Kies 'normaal wachtwoord'; over SSL/TLS of STARTTLS is het wachtwoord dan ook versleuteld.",
-        ));
+        )
+        .sleutel("security.cramMd5SmtpUnsupported"));
     }
     if !super::autoconfig::is_host(&s.host) {
         return Err(MailFout::geweigerd(format!(
             "'{}' is geen geldige servernaam voor {soort}.",
             s.host.trim()
-        )));
+        ))
+        .sleutel("security.invalidServerName")
+        .waarde("host", s.host.trim())
+        .waarde("protocol", soort));
     }
     if s.poort == 0 {
-        return Err(MailFout::geweigerd(format!(
-            "De poort voor {soort} ontbreekt."
-        )));
+        return Err(MailFout::geweigerd(format!("De poort voor {soort} ontbreekt."))
+            .sleutel("security.portMissing")
+            .waarde("protocol", soort));
     }
     if s.beveiliging == Beveiliging::Geen {
         if !is_localhost(&s.host) {
@@ -129,13 +135,24 @@ pub fn controleer_beveiliging(s: &ServerInstelling, smtp: bool) -> Uitkomst<Opti
                  Kies SSL/TLS of STARTTLS. Onversleuteld is alleen toegestaan naar deze computer (localhost), \
                  bijvoorbeeld voor Proton Mail Bridge.",
                 s.host.trim()
-            )));
+            ))
+            .sleutel("security.unencryptedRefused")
+            .waarde("host", s.host.trim()));
         }
         return Ok(Some(format!(
             "Let op: de {soort}-verbinding is niet versleuteld. Dat is alleen toegestaan omdat de server op deze computer draait."
         )));
     }
     Ok(None)
+}
+
+fn account_niet_gevonden() -> MailFout {
+    MailFout::niet_gevonden("Dit account bestaat niet (meer).").sleutel("accounts.notFound")
+}
+
+pub fn datamap_niet_aangemaakt() -> MailFout {
+    MailFout::intern("De datamap kon niet worden aangemaakt.")
+        .sleutel("storage.dataDirCreateFailed")
 }
 
 /// Accounts in een JSON-bestand; schrijven gebeurt atomair.
@@ -160,15 +177,16 @@ impl AccountOpslag {
     fn lees_ruw(&self) -> Uitkomst<Vec<Account>> {
         match std::fs::read(&self.pad) {
             Ok(b) => serde_json::from_slice(&b).map_err(|_| {
-                MailFout::intern(format!(
-                    "Het accountbestand {} is beschadigd.",
-                    self.pad.display()
-                ))
+                let pad = self.pad.display();
+                MailFout::intern(format!("Het accountbestand {pad} is beschadigd."))
+                    .sleutel("accounts.fileCorrupt")
+                    .waarde("path", pad)
             }),
             Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(Vec::new()),
-            Err(_) => Err(MailFout::intern(
-                "Het accountbestand kon niet worden gelezen.",
-            )),
+            Err(_) => Err(
+                MailFout::intern("Het accountbestand kon niet worden gelezen.")
+                    .sleutel("accounts.fileUnreadable"),
+            ),
         }
     }
 
@@ -176,9 +194,8 @@ impl AccountOpslag {
         let map = self
             .pad
             .parent()
-            .ok_or_else(|| MailFout::intern("De datamap ontbreekt."))?;
-        std::fs::create_dir_all(map)
-            .map_err(|_| MailFout::intern("De datamap kon niet worden aangemaakt."))?;
+            .ok_or_else(|| MailFout::intern("De datamap ontbreekt.").sleutel("storage.dataDirMissing"))?;
+        std::fs::create_dir_all(map).map_err(|_| datamap_niet_aangemaakt())?;
         // Nooit een wachtwoordvlag of wachtwoord op schijf.
         let schoon: Vec<Account> = accounts
             .iter()
@@ -188,15 +205,21 @@ impl AccountOpslag {
                 a
             })
             .collect();
-        let json = serde_json::to_vec_pretty(&schoon)
-            .map_err(|_| MailFout::intern("Accounts konden niet worden opgeslagen."))?;
-        let fout = |_| MailFout::intern("Het accountbestand kon niet worden geschreven.");
+        let json = serde_json::to_vec_pretty(&schoon).map_err(|_| {
+            MailFout::intern("Accounts konden niet worden opgeslagen.")
+                .sleutel("accounts.saveFailed")
+        })?;
+        let niet_geschreven = || {
+            MailFout::intern("Het accountbestand kon niet worden geschreven.")
+                .sleutel("accounts.fileWriteFailed")
+        };
+        let fout = |_| niet_geschreven();
         let mut tijdelijk = tempfile::NamedTempFile::new_in(map).map_err(fout)?;
         tijdelijk.write_all(&json).map_err(fout)?;
         tijdelijk.as_file().sync_all().map_err(fout)?;
         tijdelijk
             .persist(&self.pad)
-            .map_err(|_| MailFout::intern("Het accountbestand kon niet worden geschreven."))?;
+            .map_err(|_| niet_geschreven())?;
         Ok(())
     }
 
@@ -223,7 +246,7 @@ impl AccountOpslag {
             .into_iter()
             .find(|a| a.id == id)
             .map(|a| Self::met_vlag(a, kluis))
-            .ok_or_else(|| MailFout::niet_gevonden("Dit account bestaat niet (meer)."))
+            .ok_or_else(account_niet_gevonden)
     }
 
     pub fn bewaar(&self, invoer: AccountInvoer, kluis: &dyn Kluis) -> Uitkomst<Account> {
@@ -233,7 +256,7 @@ impl AccountOpslag {
         let id = match &invoer.id {
             Some(id) if !id.is_empty() => {
                 if !accounts.iter().any(|a| &a.id == id) {
-                    return Err(MailFout::niet_gevonden("Dit account bestaat niet (meer)."));
+                    return Err(account_niet_gevonden());
                 }
                 id.clone()
             }
@@ -265,7 +288,7 @@ impl AccountOpslag {
         let voor = accounts.len();
         accounts.retain(|a| a.id != id);
         if accounts.len() == voor {
-            return Err(MailFout::niet_gevonden("Dit account bestaat niet (meer)."));
+            return Err(account_niet_gevonden());
         }
         kluis.wis(id)?;
         kluis.wis(&super::oauth::vernieuw_sleutel(id))?;
@@ -275,26 +298,29 @@ impl AccountOpslag {
 
 pub fn valideer(a: &AccountInvoer) -> Uitkomst<()> {
     if !super::mime::is_adres(a.email.trim()) {
-        return Err(MailFout::geweigerd("Vul een geldig e-mailadres in."));
+        return Err(
+            MailFout::geweigerd("Vul een geldig e-mailadres in.").sleutel("accounts.invalidEmail"),
+        );
     }
     if let Some(r) = a.antwoord_aan.as_deref().filter(|r| !r.trim().is_empty()) {
         if super::mime::adres_uit_tekst(r).is_none() {
-            return Err(MailFout::geweigerd(
-                "Het antwoordadres is geen geldig e-mailadres.",
-            ));
+            return Err(
+                MailFout::geweigerd("Het antwoordadres is geen geldig e-mailadres.")
+                    .sleutel("accounts.invalidReplyTo"),
+            );
         }
     }
     if a.volledige_naam.contains(['\r', '\n']) || a.naam.contains(['\r', '\n']) {
-        return Err(MailFout::geweigerd(
-            "Namen mogen geen regeleinden bevatten.",
-        ));
+        return Err(MailFout::geweigerd("Namen mogen geen regeleinden bevatten.")
+            .sleutel("accounts.lineBreakInName"));
     }
     controleer_beveiliging(&a.imap, false)?;
     controleer_beveiliging(&a.smtp, true)?;
     if a.imap.gebruikersnaam.trim().is_empty() || a.smtp.gebruikersnaam.trim().is_empty() {
-        return Err(MailFout::geweigerd(
-            "Vul de gebruikersnaam in voor IMAP en SMTP.",
-        ));
+        return Err(
+            MailFout::geweigerd("Vul de gebruikersnaam in voor IMAP en SMTP.")
+                .sleutel("accounts.usernameMissing"),
+        );
     }
     Ok(())
 }

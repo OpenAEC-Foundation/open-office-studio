@@ -1,0 +1,37 @@
+[Desktop Entry]
+# Gemaakt door scripts/maak-desktopbestanden.mjs uit src/i18n/locales/*/desktop.json; niet met de hand bewerken.
+# Tauri vult de Handlebars-variabelen in (bundle.linux.deb/rpm.desktopTemplate in tauri.conf.json).
+Type=Application
+Name={{name}}
+GenericName=Office suite
+GenericName[nl]=Kantoorpakket
+GenericName[de]=Office-Paket
+GenericName[fr]=Suite bureautique
+GenericName[es]=Paquete ofimático
+GenericName[it]=Suite per ufficio
+GenericName[pt_BR]=Pacote de escritório
+GenericName[zh_CN]=办公套件
+Comment=Local OpenAEC office environment
+Comment[nl]=Lokale OpenAEC-kantooromgeving
+Comment[de]=Lokale OpenAEC-Büroumgebung
+Comment[fr]=Environnement bureautique local OpenAEC
+Comment[es]=Entorno ofimático local de OpenAEC
+Comment[it]=Ambiente per ufficio locale di OpenAEC
+Comment[pt_BR]=Ambiente de escritório local da OpenAEC
+Comment[zh_CN]=本地 OpenAEC 办公环境
+Keywords=word processor;spreadsheet;presentation;database;email;office;
+Keywords[nl]=tekstverwerker;rekenblad;presentatie;database;e-mail;kantoor;
+Keywords[de]=Textverarbeitung;Tabellenkalkulation;Präsentation;Datenbank;E-Mail;Büro;Office;
+Keywords[fr]=traitement de texte;tableur;présentation;base de données;courriel;bureautique;
+Keywords[es]=procesador de textos;hoja de cálculo;presentación;base de datos;correo;ofimática;
+Keywords[it]=elaboratore di testi;foglio di calcolo;presentazione;database;email;ufficio;
+Keywords[pt_BR]=processador de texto;planilha;apresentação;banco de dados;e-mail;escritório;
+Keywords[zh_CN]=文字处理;电子表格;演示文稿;数据库;电子邮件;办公;office;
+Exec={{exec}}
+StartupWMClass={{exec}}
+Icon={{icon}}
+Terminal=false
+Categories={{categories}}
+{{#if mime_type}}
+MimeType={{mime_type}}
+{{/if}}

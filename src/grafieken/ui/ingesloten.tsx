@@ -4,10 +4,12 @@
  */
 import { useCallback, useContext, useState, useSyncExternalStore, type ReactNode } from "react";
 import { ChartColumnBig, ListTree, Pencil } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import i18next from "../../i18n/config";
 import { Actie, Groep, RibbonFout } from "../../Ribbon";
 import { useEditorApi } from "../../lint/editorApi";
 import { geselecteerdeVorm, huidigeIndex } from "../../lint/presentatie-acties";
-import { rasterUitModel, standaardModel } from "../model.ts";
+import { rasterUitModel, standaardModel, toonGetal } from "../model.ts";
 import { GrafiekFout } from "../fouten.ts";
 import {
   bewerkGrafiek,
@@ -27,13 +29,25 @@ import { Bevestig, GrafiekenLijst } from "./Keuzevensters.tsx";
 const tekst = (e: unknown) => (e instanceof Error ? e.message : String(e));
 const leegAbonnement = () => () => {};
 
-export const VOORBEELDGEGEVENS = [
-  ["", "Reeks 1", "Reeks 2"],
-  ["Categorie 1", "4,3", "2,4"],
-  ["Categorie 2", "2,5", "4,4"],
-  ["Categorie 3", "3,5", "1,8"],
-  ["Categorie 4", "4,5", "2,8"],
+/** Waarden van de voorbeeldgrafiek (twee reeksen, vier categorieën). */
+const VOORBEELDWAARDEN = [
+  [4.3, 2.4],
+  [2.5, 4.4],
+  [3.5, 1.8],
+  [4.5, 2.8],
 ];
+
+/** Begingegevens van een nieuwe grafiek, met namen en getallen in de interfacetaal. */
+export function voorbeeldgegevens(): string[][] {
+  const reeks = (n: number) => i18next.t("charts:defaults.seriesName", { n });
+  return [
+    ["", reeks(1), reeks(2)],
+    ...VOORBEELDWAARDEN.map((rij, i) => [
+      i18next.t("charts:defaults.categoryName", { n: i + 1 }),
+      ...rij.map((w) => toonGetal(w, 1)),
+    ]),
+  ];
+}
 
 /** De grafiek die in de presentatie geselecteerd is (als pad van het grafiekonderdeel). */
 function geselecteerdeDiagrafiek(api: ReturnType<typeof useEditorApi>["presentatie"]) {
@@ -49,6 +63,7 @@ function geselecteerdeDiagrafiek(api: ReturnType<typeof useEditorApi>["presentat
 }
 
 export function useIngeslotenGrafieken(formaat: "docx" | "pptx") {
+  const { t } = useTranslation("charts");
   const apis = useEditorApi();
   const herlaad = apis.herlaad;
   const fout = useContext(RibbonFout);
@@ -68,10 +83,10 @@ export function useIngeslotenGrafieken(formaat: "docx" | "pptx") {
     else dia?.focus();
   };
   function vereist() {
-    if (!herlaad) throw new GrafiekFout("Het document is nog niet gereed.");
-    if (formaat === "docx" && !apis.tekst()?.getDocument()) throw new GrafiekFout("Het document is nog niet gereed.");
+    if (!herlaad) throw new GrafiekFout(t("errors.documentNotReady"));
+    if (formaat === "docx" && !apis.tekst()?.getDocument()) throw new GrafiekFout(t("errors.documentNotReady"));
     if (formaat === "pptx" && (!dia || !dia.commands.getState("insertSlide").enabled))
-      throw new GrafiekFout("De presentatie kan nu niet worden bewerkt.");
+      throw new GrafiekFout(t("errors.presentationNotEditable"));
     return herlaad;
   }
   const uitvoeren = (werk: () => Promise<void>) => {
@@ -86,12 +101,11 @@ export function useIngeslotenGrafieken(formaat: "docx" | "pptx") {
       const diaIndex = formaat === "pptx" ? huidigeIndex() : 0;
       setVenster(
         <GrafiekVenster
-          titel="Grafiek invoegen"
-          knop="Invoegen"
+          modus="insert"
           begin={standaardModel()}
           gegevens={{
             soort: "blad",
-            raster: VOORBEELDGEGEVENS,
+            raster: voorbeeldgegevens(),
             uitTabel:
               formaat === "docx" && selectie?.paraId
                 ? async () => tabelBijAlinea(await herlaad.bytes(), selectie.paraId!, selectie.paragraphText)
@@ -122,11 +136,10 @@ export function useIngeslotenGrafieken(formaat: "docx" | "pptx") {
   function bewerkVenster(bytes: Uint8Array, g: GrafiekVerwijzing) {
     const herlaad = vereist();
     const gelezen = leesGrafiek(bytes, g.chartPad);
-    if (!gelezen.bewerkbaar) throw new GrafiekFout(gelezen.reden ?? "Deze grafiek kan hier niet worden bewerkt.");
+    if (!gelezen.bewerkbaar) throw new GrafiekFout(gelezen.reden ?? t("errors.notEditableHere"));
     setVenster(
       <GrafiekVenster
-        titel="Grafiek bewerken"
-        knop="Bijwerken"
+        modus="edit"
         begin={gelezen.model}
         waarschuwingen={gelezen.waarschuwingen}
         gegevens={{ soort: "blad", raster: rasterUitModel(gelezen.model) }}
@@ -187,14 +200,14 @@ export function useIngeslotenGrafieken(formaat: "docx" | "pptx") {
   function vraagVerwijderen(g: GrafiekVerwijzing) {
     setVenster(
       <Bevestig
-        titel="Grafiek verwijderen"
-        tekst={`‘${g.titel || g.naam}’ verwijderen? Het document wordt daarna opnieuw geladen; ongedaan maken van eerdere wijzigingen is dan niet meer mogelijk.`}
-        knop="Verwijderen"
+        titel={t("deleteConfirm.title")}
+        tekst={t("deleteConfirm.text", { name: g.titel || g.naam })}
+        knop={t("deleteConfirm.button")}
         doe={async () => {
           const herlaad = vereist();
           const bytes = await herlaad.bytes();
           const actueel = lijstGrafieken(bytes, formaat).find((x) => x.chartPad === g.chartPad && x.houderPad === g.houderPad && x.rid === g.rid);
-          if (!actueel) throw new GrafiekFout("De grafiek is niet meer gevonden.");
+          if (!actueel) throw new GrafiekFout(t("errors.chartGone"));
           const nieuw = verwijderGrafiek(bytes, formaat, actueel);
           setVenster(null);
           herlaad.vervang(nieuw, formaat === "pptx" ? { dia: g.dia } : {});
@@ -221,25 +234,27 @@ function Knop({ naam, icoon, groot, uit, doe }: { naam: string; icoon: typeof Pe
 }
 
 export function GrafiekGroep({ g, uit }: { g: IngeslotenGrafieken; uit?: boolean }) {
+  const { t } = useTranslation("charts");
   return (
-    <Groep naam="Grafieken">
-      <Knop naam="Grafiek" icoon={ChartColumnBig} groot uit={uit || !g.beschikbaar} doe={g.invoegen} />
+    <Groep naam={t("ribbon.charts")}>
+      <Knop naam={t("ribbon.chart")} icoon={ChartColumnBig} groot uit={uit || !g.beschikbaar} doe={g.invoegen} />
       <div className="ribbon-stapel">
-        <Knop naam="Grafiek bewerken" icoon={Pencil} uit={uit || !g.beschikbaar} doe={g.bewerken} />
-        <Knop naam="Alle grafieken" icoon={ListTree} uit={!g.beschikbaar} doe={g.alleGrafieken} />
+        <Knop naam={t("ribbon.editChart")} icoon={Pencil} uit={uit || !g.beschikbaar} doe={g.bewerken} />
+        <Knop naam={t("ribbon.allCharts")} icoon={ListTree} uit={!g.beschikbaar} doe={g.alleGrafieken} />
       </div>
     </Groep>
   );
 }
 
 export function DiaGrafiekontwerp({ g, uit }: { g: IngeslotenGrafieken; uit?: boolean }) {
+  const { t } = useTranslation("charts");
   return (
     <>
-      <Groep naam="Grafiek">
-        <Knop naam="Gegevens en opmaak" icoon={Pencil} groot uit={uit} doe={g.bewerken} />
+      <Groep naam={t("ribbon.chart")}>
+        <Knop naam={t("ribbon.dataAndFormat")} icoon={Pencil} groot uit={uit} doe={g.bewerken} />
       </Groep>
-      <Groep naam="Overzicht">
-        <Knop naam="Alle grafieken" icoon={ListTree} groot doe={g.alleGrafieken} />
+      <Groep naam={t("ribbon.overview")}>
+        <Knop naam={t("ribbon.allCharts")} icoon={ListTree} groot doe={g.alleGrafieken} />
       </Groep>
     </>
   );

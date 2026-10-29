@@ -1,9 +1,29 @@
 {
   "bundle": {
-    "targets": ["nsis"],
-    "resources": { "resources/WebView2Loader.dll": "WebView2Loader.dll" },
+    "targets": [
+      "nsis"
+    ],
+    "resources": {
+      "resources/WebView2Loader.dll": "WebView2Loader.dll"
+    },
     "windows": {
-      "webviewInstallMode": { "type": "embedBootstrapper", "silent": true }
+      "webviewInstallMode": {
+        "type": "embedBootstrapper",
+        "silent": true
+      },
+      "nsis": {
+        "languages": [
+          "English",
+          "Dutch",
+          "German",
+          "French",
+          "Spanish",
+          "Italian",
+          "PortugueseBR",
+          "SimpChinese"
+        ],
+        "displayLanguageSelector": true
+      }
     }
   }
 }

@@ -1,0 +1,131 @@
+/* Titelbalk (OpenAEC Blueprint chrome::title_bar, 32 px; Style Book
+   TitleBar.css): snelle toegang links, titel in het midden, vensterknoppen
+   rechts. Bij rechts-naar-links spiegelt de volgorde vanzelf. */
+.office-titelbalk {
+  flex: 0 0 var(--office-kophoogte, 32px);
+  height: var(--office-kophoogte, 32px);
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(max-content, 1fr) minmax(0, auto) minmax(max-content, 1fr);
+  align-items: center;
+  gap: 8px;
+  padding-inline-start: 6px;
+  background: var(--oa-shell-bg-lighter, #fff);
+  color: var(--oa-shell-text, #36363e);
+  border-bottom: 1px solid var(--oa-shell-border-subtle, rgba(54, 54, 62, 0.06));
+  user-select: none;
+  -webkit-user-select: none;
+  z-index: 30;
+}
+.office-titelbalk-links,
+.office-titelbalk-rechts {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 2px;
+  min-width: 0;
+}
+.office-titelbalk-rechts {
+  justify-content: flex-end;
+}
+.office .office-titelbalk-merk {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+}
+.office-titelbalk-merk img {
+  width: 18px;
+  height: 20px;
+  object-fit: contain;
+}
+.office .office-titelbalk-merk:hover {
+  background: var(--oa-shell-hover-strong, rgba(217, 119, 6, 0.15));
+}
+.office-snelletoegang {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  height: 22px;
+  margin-inline-start: 4px;
+  padding-inline-start: 6px;
+  border-inline-start: 1px solid var(--oa-shell-border, rgba(54, 54, 62, 0.12));
+}
+.office-titelbalk-titel {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: var(--office-kophoogte, 32px);
+  color: var(--oa-shell-text, #36363e);
+}
+/* Knoppen in de titelbalk: 28 × 24 zoals de Blueprint `title_button`. */
+.office .office-titelbalk .office-iconknop,
+.office .office-snelknop {
+  width: 28px;
+  height: 24px;
+  min-height: 24px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background: transparent;
+  color: var(--oa-shell-text, #36363e);
+}
+.office .office-snelknop {
+  color: var(--oa-shell-accent, #d97706);
+}
+.office .office-titelbalk .office-iconknop:hover:not(:disabled),
+.office .office-snelknop:hover:not(:disabled) {
+  background: var(--oa-shell-ribbon-btn-hover, rgba(217, 119, 6, 0.1));
+  border-color: var(--oa-shell-ribbon-btn-hover-border, rgba(217, 119, 6, 0.25));
+  color: var(--oa-shell-ribbon-text-hover, #d97706);
+}
+.office .office-snelknop:disabled {
+  color: var(--oa-shell-text-faint, rgba(54, 54, 62, 0.35));
+  opacity: 1;
+}
+.office-vensterknoppen {
+  display: flex;
+  height: 100%;
+  margin-inline-start: 6px;
+}
+.office .office-vensterknoppen button {
+  width: 44px;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--oa-shell-text, #36363e);
+  cursor: default;
+}
+.office .office-vensterknoppen button:hover {
+  background: var(--oa-shell-ribbon-btn-hover, rgba(217, 119, 6, 0.1));
+}
+.office .office-vensterknoppen .office-vensterknop-sluiten:hover {
+  background: #c42b1c;
+  color: #fff;
+}
+.office .office-vensterknoppen button:focus-visible {
+  outline-offset: -2px;
+}
+/* Zonder vensterknoppen (browser) een beetje lucht aan de rand. */
+.office-titelbalk-rechts:not(:has(.office-vensterknoppen)) {
+  padding-inline-end: 6px;
+}
+@media (max-width: 720px) {
+  .office-titelbalk {
+    grid-template-columns: max-content minmax(0, 1fr) max-content;
+  }
+}

@@ -13,7 +13,8 @@
  * algemeen menu) toont de spellingcontrole een eigen menu (SpellingMenu.tsx).
  */
 import type { Menubron, MenubronItem } from "../../tekst/menu/bronnen";
-import { TALEN, type Taal } from "../talen";
+import i18next from "../../i18n/config";
+import { TALEN, taalNaam, type Taal } from "../talen";
 import type { SpellingSessie } from "./sessie";
 
 export interface SpellingMenuItem {
@@ -64,9 +65,10 @@ export function itemsVoorFout(
   sluit: () => void = () => {},
 ): SpellingMenuItem[] {
   const { alinea, fout } = doel;
+  const t = (sleutel: string) => i18next.t(`spelling:${sleutel}`);
   const items: SpellingMenuItem[] = [];
-  if (suggesties === null) items.push({ id: "spelling-laden", label: "Suggesties zoeken…", uitgeschakeld: true });
-  else if (!suggesties.length) items.push({ id: "spelling-geen", label: "(geen suggesties)", uitgeschakeld: true });
+  if (suggesties === null) items.push({ id: "spelling-laden", label: t("menu.searchingSuggestions"), uitgeschakeld: true });
+  else if (!suggesties.length) items.push({ id: "spelling-geen", label: t("actions.noSuggestions"), uitgeschakeld: true });
   else
     suggesties.forEach((s, i) =>
       items.push({
@@ -82,7 +84,7 @@ export function itemsVoorFout(
   items.push(
     {
       id: "spelling-alles-negeren",
-      label: "Alles negeren",
+      label: t("actions.ignoreAll"),
       scheiding: true,
       uitvoeren: () => {
         sluit();
@@ -91,7 +93,7 @@ export function itemsVoorFout(
     },
     {
       id: "spelling-toevoegen",
-      label: "Toevoegen aan woordenlijst",
+      label: t("actions.addToDictionary"),
       uitvoeren: () => {
         sluit();
         sessie.voegToe(fout.tekst);
@@ -102,7 +104,7 @@ export function itemsVoorFout(
   talen.forEach((taal, i) =>
     items.push({
       id: `spelling-taal-${taal}`,
-      label: taal === "geen" ? "Niet controleren" : (TALEN.find((t) => t.id === taal)?.naam ?? taal),
+      label: taalNaam(taal),
       scheiding: i === 0,
       gekozen: alinea.taal === taal,
       uitvoeren: () => {
@@ -113,7 +115,7 @@ export function itemsVoorFout(
   );
   items.push({
     id: "spelling-venster",
-    label: "Spelling en grammatica… (F7)",
+    label: i18next.t("spelling:menu.openDialog", { key: "F7" }),
     scheiding: true,
     uitvoeren: () => {
       sluit();

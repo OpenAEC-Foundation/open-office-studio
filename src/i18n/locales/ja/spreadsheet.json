@@ -1,0 +1,84 @@
+{
+  "formulaCheck": {
+    "titleWarning": "このスプレッドシートの数式を確認してください",
+    "titleInfo": "このスプレッドシートの数式に関する注意",
+    "cells_other": "{{count}} 個のセル",
+    "examplesMore_other": "{{list}} ほか {{count}} 件",
+    "userFunction": "ユーザー定義関数（マクロまたはアドイン）",
+    "function": "関数",
+    "notCalculated": "{{kind}} {{name}} は計算されません（{{cells}}: {{examples}}）。保存済みの結果はそのまま残り、更新されません。依存するセルが古い可能性があります。",
+    "recalculated_other": "{{cells}} の保存済みの結果が古かったため、開くときに再計算しました（{{examples}}）。保存すると新しい結果が保持されます。",
+    "manualCalculation": "このファイルは手動計算で保存されています。保存済みの結果が古い可能性があります。",
+    "externalLinks_other": "このブックは {{count}} 個の外部ブックを参照しています。それらの値は更新されません。",
+    "errorCells": "エラー値を含む {{cells}}: {{list}}。",
+    "errorItem": "{{error}}（{{examples}}）",
+    "noCachedResult": "保存済みの結果がない数式を含む {{cells}}（{{examples}}）。",
+    "fullCalcOnLoad": "このファイルは開くときの完全な再計算を要求しています（fullCalcOnLoad）。保存済みの結果が古い可能性があります。",
+    "calcChain": "計算チェーン（calcChain）は保存時に保持されません。Excel が再構築します。",
+    "tooLarge": "スプレッドシートが大きすぎるため確認できません。",
+    "invalidWorkbook": "有効な XLSX ブックではありません。"
+  },
+  "print": {
+    "pageLabel": "{{sheet}}、{{page}} / {{pages}} ページ",
+    "notWorksheet": "シート「{{name}}」はワークシートではないためスキップされます。",
+    "nothingToPrint": "印刷するものがありません。シートは空です。"
+  },
+  "export": {
+    "pngUnavailable": "このスプレッドシート エンジンでは PNG を作成できません。"
+  },
+  "csvImport": {
+    "title": "{{name}} をインポート",
+    "import": "インポート",
+    "separator": "区切り文字",
+    "separatorSemicolon": "セミコロン ;",
+    "separatorComma": "カンマ ,",
+    "separatorTab": "タブ",
+    "separatorPipe": "縦線 |",
+    "separatorCustom": "その他の文字…",
+    "customCharacter": "その他の文字",
+    "textQualifier": "文字列の引用符",
+    "qualifierDouble": "二重引用符 \"",
+    "qualifierSingle": "一重引用符 '",
+    "qualifierNone": "なし",
+    "encoding": "文字コード",
+    "encodingAuto": "自動",
+    "encodingDetected": "{{name}}（{{encoding}}）",
+    "encodingWindows1252": "Windows-1252（西ヨーロッパ）",
+    "numbers": "数値",
+    "numbersDutch": "オランダ語（1.234,56）",
+    "numbersEnglish": "英語（1,234.56）",
+    "dateOrder": "日付の順序",
+    "dateOrderDmy": "日-月-年（31-12-2026）",
+    "dateOrderMdy": "月-日-年（12/31/2026）",
+    "dateOrderYmd": "年-月-日（2026-12-31）",
+    "fromRow": "開始行",
+    "headerRow": "先頭行は見出し",
+    "previewLabel": "最初の 50 行のプレビュー",
+    "columnType": "列 {{number}} の種類",
+    "columnTypes": {
+      "standaard": "標準",
+      "tekst": "文字列",
+      "datum": "日付",
+      "overslaan": "スキップ"
+    },
+    "detected_other": "区切り文字 {{separator}}、{{count}} 列。",
+    "explanation": "郵便番号、品番、IBAN には<b>文字列</b>を選択してください。先頭のゼロや 15 桁を超える数値は、標準でもそのまま文字列になります。=、+、-、@ で始まる値は数式として読み込まれることはありません（プレビューではアポストロフィ付き）。",
+    "separatorNames": {
+      "tab": "タブ",
+      "semicolon": "セミコロン",
+      "comma": "カンマ",
+      "pipe": "縦線",
+      "other": "「{{character}}」"
+    },
+    "report": {
+      "import": "インポート",
+      "imported": "{{rows}}、{{columns}} を読み込みました。区切り文字 {{separator}}、文字コード {{encoding}}。",
+      "rows_other": "{{count}} 行",
+      "columns_other": "{{count}} 列",
+      "formulaLike": "数式のような文字列",
+      "formulaLikeCells_other": "=、+、-、@ で始まる {{count}} 個のセルを、数式ではなく文字列として取り込みました（CSV インジェクション対策）。",
+      "truncated": "切り捨て",
+      "truncatedText": "ファイルがワークシートより大きいため（{{rows}} 行または {{columns}} 列）、残りは読み込まれていません。"
+    }
+  }
+}

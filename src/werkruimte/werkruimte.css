@@ -172,9 +172,9 @@
   vertical-align: middle;
 }
 .werkruimte-sneltoetslijst td:last-child {
-  text-align: right;
+  text-align: end;
   white-space: nowrap;
-  padding-left: 12px;
+  padding-inline-start: 12px;
 }
 .werkruimte-sneltoetslijst tr[data-elders] {
   opacity: 0.6;
@@ -303,7 +303,7 @@
   gap: 8px;
 }
 .werkruimte-melding {
-  margin-right: auto;
+  margin-inline-end: auto;
   align-self: center;
   color: var(--w-tekst-zacht);
   font-size: 12px;

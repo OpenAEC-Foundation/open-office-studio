@@ -1,3 +1,12 @@
+import i18next, { intlLocale } from "../i18n/config";
+import { formatGetal } from "../i18n/opmaak";
+
+/** Vertaalt een sleutel uit de namespace `notes`. */
+const t = (sleutel: string, opties?: Record<string, unknown>) =>
+  i18next.t(`notes:${sleutel}`, opties ?? {}) as string;
+/** Maximale bestandsgrootte als tekst, bijvoorbeeld "10 MB". */
+export const megabytes = (mb: number) => `${formatGetal(mb)} MB`;
+
 export type BlokSoort = "tekst" | "kop" | "subkop" | "opsomming" | "taak";
 export type Blok = {
   id: string;
@@ -92,13 +101,9 @@ export class NotitieBewaring {
   }
   schrijf(data: Notities) {
     if (!this.geladen)
-      throw new Error(
-        "De bestaande notities konden niet worden gelezen en zijn niet overschreven.",
-      );
+      throw new Error(t("model.existingUnreadable"));
     if (this.opslag.getItem(OPSLAGSLEUTEL) !== this.verwacht)
-      throw new Error(
-        "De notities zijn in een ander venster gewijzigd. Maak een back-up van je huidige werk voordat je de lokale versie opnieuw opent.",
-      );
+      throw new Error(t("model.changedInOtherWindow"));
     const tekst = JSON.stringify(data);
     leesNotities(tekst);
     this.opslag.setItem(OPSLAGSLEUTEL, tekst);
@@ -116,7 +121,7 @@ export function nieuwBlok(tekst = "", soort: BlokSoort = "tekst"): Blok {
   };
 }
 export function nieuwePagina(
-  titel = "Naamloze pagina",
+  titel = t("defaults.untitledPage"),
   soort: SectieSoort = "canvas",
 ): Pagina {
   return {
@@ -136,30 +141,23 @@ export function nieuweNotities(): Notities {
     boeken: [
       {
         id: nieuwId(),
-        naam: "Mijn notitieboek",
+        naam: t("welcome.notebook"),
         secties: [
           {
             id: nieuwId(),
-            naam: "Ideeën",
+            naam: t("defaults.ideas"),
             soort: "canvas",
             paginas: [
               {
-                ...nieuwePagina("Ruimte voor je ideeën"),
+                ...nieuwePagina(t("welcome.page")),
                 vakken: [
                   nieuwTekstvak([
-                    nieuwBlok(
-                      "Een plek voor alles wat je wilt onthouden.",
-                      "subkop",
-                    ),
-                    nieuwBlok(
-                      "Verzamel je ideeën, maak een takenlijst of werk je overleg uit. Deel je notitieboek in met secties en pagina’s.",
-                    ),
-                    nieuwBlok("Vandaag", "kop"),
-                    nieuwBlok("Een eerste idee vastleggen", "taak"),
-                    nieuwBlok("Een eigen sectie aanmaken", "taak"),
-                    nieuwBlok(
-                      "Je notities blijven lokaal op deze computer. Maak regelmatig een back-up om ze mee te nemen naar een andere computer.",
-                    ),
+                    nieuwBlok(t("welcome.subheading"), "subkop"),
+                    nieuwBlok(t("welcome.intro")),
+                    nieuwBlok(t("welcome.today"), "kop"),
+                    nieuwBlok(t("welcome.firstTask"), "taak"),
+                    nieuwBlok(t("welcome.secondTask"), "taak"),
+                    nieuwBlok(t("welcome.local")),
                   ]),
                 ],
               },
@@ -174,37 +172,35 @@ export function nieuweNotities(): Notities {
 /** Accepteert uitsluitend tekstvelden en bekende bloktypen; invoer wordt nooit HTML. */
 export function leesNotities(tekst: string): Notities {
   if (new TextEncoder().encode(tekst).length > MAX_BACKUP_BYTES)
-    throw new Error("Kies een notitieback-up van maximaal 10 MB.");
+    throw new Error(t("model.backupTooLarge", { size: megabytes(10) }));
   const data: unknown = JSON.parse(tekst);
   const ids = new Set<string>();
   let aantalPaginas = 0,
     aantalBlokken = 0;
   const object = (v: unknown): Record<string, unknown> => {
     if (!v || typeof v !== "object" || Array.isArray(v))
-      throw new Error("Ongeldige notitiestructuur.");
+      throw new Error(t("model.invalidStructure"));
     return v as Record<string, unknown>;
   };
   const tekstveld = (v: unknown, max: number) => {
     if (typeof v !== "string" || v.length > max)
-      throw new Error("Een tekstveld ontbreekt of is te lang.");
+      throw new Error(t("model.invalidTextField"));
     return v;
   };
   const id = (v: unknown) => {
     const waarde = tekstveld(v, 100);
     if (!/^[a-zA-Z0-9_-]+$/.test(waarde) || ids.has(waarde))
-      throw new Error(
-        "Een onderdeel heeft een ontbrekende of dubbele identificatie.",
-      );
+      throw new Error(t("model.invalidId"));
     ids.add(waarde);
     return waarde;
   };
   const lijst = (v: unknown, max: number, magLeeg = false): unknown[] => {
     if (!Array.isArray(v) || (!v.length && !magLeeg) || v.length > max)
-      throw new Error("Een lijst is leeg of te groot.");
+      throw new Error(t("model.invalidList"));
     return v;
   };
   const jaNee = (v: unknown) => {
-    if (typeof v !== "boolean") throw new Error("Ongeldige markering.");
+    if (typeof v !== "boolean") throw new Error(t("model.invalidFlag"));
     return v;
   };
   const hoofd = object(data);
@@ -213,23 +209,23 @@ export function leesNotities(tekst: string): Notities {
     ![1, 2, 3].includes(Number(hoofd.versie)) ||
     typeof hoofd.versie !== "number"
   )
-    throw new Error("Dit is geen ondersteunde OpenAEC-notitieback-up.");
+    throw new Error(t("model.unsupportedBackup"));
   const getal = (v: unknown, min: number, max: number) => {
     if (typeof v !== "number" || !Number.isFinite(v) || v < min || v > max)
-      throw new Error("Ongeldige positie of afmeting van een tekstvak.");
+      throw new Error(t("model.invalidBox"));
     return v;
   };
   function leesBlokken(invoer: unknown): Blok[] {
     return lijst(invoer, 2000).map((invoer): Blok => {
       if (++aantalBlokken > 30000)
-        throw new Error("De back-up bevat te veel tekstblokken.");
+        throw new Error(t("model.tooManyBlocks"));
       const blok = object(invoer);
       if (
         !["tekst", "kop", "subkop", "opsomming", "taak"].includes(
           String(blok.soort),
         )
       )
-        throw new Error("Onbekend tekstblok.");
+        throw new Error(t("model.unknownBlock"));
       return {
         id: id(blok.id),
         soort: blok.soort as BlokSoort,
@@ -249,18 +245,18 @@ export function leesNotities(tekst: string): Notities {
         const sectie = object(invoer);
         const soort = hoofd.versie === 3 ? sectie.soort : "canvas";
         if (soort !== "canvas" && soort !== "markdown")
-          throw new Error("Onbekend sectietype.");
+          throw new Error(t("model.unknownSectionType"));
         return {
           id: id(sectie.id),
           naam: tekstveld(sectie.naam, 200),
           soort,
           paginas: lijst(sectie.paginas, 2000).map((invoer) => {
             if (++aantalPaginas > 5000)
-              throw new Error("De back-up bevat te veel pagina’s.");
+              throw new Error(t("model.tooManyPages"));
             const pagina = object(invoer);
             const bijgewerkt = tekstveld(pagina.bijgewerkt, 40);
             if (!Number.isFinite(Date.parse(bijgewerkt)))
-              throw new Error("Ongeldige wijzigingsdatum.");
+              throw new Error(t("model.invalidDate"));
             const paginaId = id(pagina.id);
             const vakken: Tekstvak[] =
               hoofd.versie === 1
@@ -285,7 +281,7 @@ export function leesNotities(tekst: string): Notities {
                     };
                   });
             if (vakken.reduce((a, v) => a + v.blokken.length, 0) > 2000)
-              throw new Error("De pagina bevat te veel tekstblokken.");
+              throw new Error(t("model.pageTooManyBlocks"));
             if (hoofd.versie === 1) {
               while (ids.has(vakken[0].id)) vakken[0].id = nieuwId();
               ids.add(vakken[0].id);
@@ -313,15 +309,15 @@ export function leesNotities(tekst: string): Notities {
 /** Import voegt toe met nieuwe identificaties; bestaande notities blijven behouden. */
 export function voegBackupToe(huidig: Notities, backup: Notities): Notities {
   const namen = new Set(
-    huidig.boeken.map((b) => b.naam.toLocaleLowerCase("nl")),
+    huidig.boeken.map((b) => b.naam.toLocaleLowerCase(intlLocale())),
   );
   function uniekeNaam(naam: string) {
-    const basis = naam || "Naamloos notitieboek";
+    const basis = naam || t("defaults.untitledNotebook");
     let resultaat = basis;
     let teller = 1;
-    while (namen.has(resultaat.toLocaleLowerCase("nl")))
+    while (namen.has(resultaat.toLocaleLowerCase(intlLocale())))
       resultaat = `${basis.slice(0, 185)} (${++teller})`;
-    namen.add(resultaat.toLocaleLowerCase("nl"));
+    namen.add(resultaat.toLocaleLowerCase(intlLocale()));
     return resultaat;
   }
   return {
@@ -367,7 +363,7 @@ export function zoekPaginas(
   prullenbak = false,
 ) {
   const woorden = zoekterm
-    .toLocaleLowerCase("nl")
+    .toLocaleLowerCase(intlLocale())
     .trim()
     .split(/\s+/)
     .filter(Boolean);
@@ -382,7 +378,7 @@ export function zoekPaginas(
         paginaTekst(pagina, sectie.soort),
       ]
         .join(" ")
-        .toLocaleLowerCase("nl");
+        .toLocaleLowerCase(intlLocale());
       return woorden.every((woord) => tekst.includes(woord));
     })
     .sort(
@@ -403,7 +399,7 @@ export function paginaAlsMarkdown(
   soort: SectieSoort = "canvas",
 ) {
   if (soort === "markdown") return pagina.markdown;
-  return `# ${ontsnapMarkdown(pagina.titel || "Naamloze pagina")}\n\n${canvasAlsMarkdown(pagina)}`;
+  return `# ${ontsnapMarkdown(pagina.titel || t("defaults.untitledPage"))}\n\n${canvasAlsMarkdown(pagina)}`;
 }
 const ontsnapMarkdown = (tekst: string) =>
   tekst.replace(/([\\`*_[\]<>])/g, "\\$1");
@@ -432,7 +428,7 @@ export function canvasAlsMarkdown(pagina: Pagina) {
 
 /** Een ander sectietype krijgt eigen pagina’s; de bron blijft geheel intact. */
 export function kopieerSectie(sectie: Sectie, soort: SectieSoort): Sectie {
-  if (soort === sectie.soort) throw new Error("Kies een ander sectietype.");
+  if (soort === sectie.soort) throw new Error(t("model.chooseOtherType"));
   function tekstBlokken(tekst: string) {
     const blokken: Blok[] = [];
     while (tekst.length > 100000) {
@@ -446,13 +442,18 @@ export function kopieerSectie(sectie: Sectie, soort: SectieSoort): Sectie {
   }
   return {
     id: nieuwId(),
-    naam: `${sectie.naam.slice(0, 180)} (${soort === "markdown" ? "Markdown" : "Canvas"})`,
+    naam: t("defaults.copyName", {
+      name: sectie.naam.slice(0, 180),
+      type: t(`sectionTypes.${soort}`),
+    }),
     soort,
     paginas: sectie.paginas.map((pagina) => {
       const markdown = soort === "markdown" ? canvasAlsMarkdown(pagina) : "";
       if (markdown.length > MAX_MARKDOWN_TEKENS)
         throw new Error(
-          "Een pagina is te groot voor een Markdown-kopie (maximaal 500.000 tekens).",
+          t("model.pageTooLargeForMarkdown", {
+            max: formatGetal(MAX_MARKDOWN_TEKENS),
+          }),
         );
       return {
         ...pagina,

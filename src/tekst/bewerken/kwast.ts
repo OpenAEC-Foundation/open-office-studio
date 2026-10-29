@@ -5,6 +5,7 @@
  * op zonder de kwast te activeren; Ctrl+Shift+V / Ctrl+Alt+V plakt hem.
  */
 import type { YrsInlineFormatDelta } from "@betteroffice/docx/yrs";
+import i18next from "../../i18n/config";
 
 export type KwastModus = "uit" | "eenmalig" | "blijvend";
 
@@ -106,16 +107,18 @@ export function positieUitBron(bron: BronOpmaak): Positie | null {
 
 /** Korte omschrijving voor de knopuitleg en de statusmelding. */
 export function omschrijfOpmaak(delta: YrsInlineFormatDelta | null): string {
-  if (!delta) return "geen opmaak";
+  const t = (sleutel: string, waarden?: Record<string, string>) =>
+    i18next.t(`writer:editing.formatPainter.describe.${sleutel}`, waarden);
+  if (!delta) return t("none");
   const delen: string[] = [];
   if (delta.fontFamily) delen.push(delta.fontFamily.ascii);
   if (delta.fontSize) delen.push(`${delta.fontSize} pt`);
-  if (delta.bold) delen.push("vet");
-  if (delta.italic) delen.push("cursief");
-  if (delta.underline) delen.push("onderstreept");
-  if (delta.strike) delen.push("doorgehaald");
+  if (delta.bold) delen.push(t("bold"));
+  if (delta.italic) delen.push(t("italic"));
+  if (delta.underline) delen.push(t("underline"));
+  if (delta.strike) delen.push(t("strike"));
   if (delta.color && "rgb" in delta.color && delta.color.rgb)
     delen.push(`#${delta.color.rgb}`);
-  if (delta.highlight) delen.push(`markering ${delta.highlight}`);
-  return delen.join(", ") || "standaardopmaak";
+  if (delta.highlight) delen.push(t("highlight", { color: String(delta.highlight) }));
+  return delen.join(t("separator")) || t("default");
 }

@@ -6,6 +6,8 @@
  */
 import { useContext, useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { Crop, ImageUp, Lock, LockOpen, Move, RefreshCcw, TextCursorInput } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import i18next from "../../i18n/config";
 import { useDocxCommand, type DocxEditorRef } from "@betteroffice/docx-react";
 import { Groep, RibbonFout } from "../../Ribbon";
 import { openVenster } from "../gedeeld/vensters";
@@ -55,15 +57,15 @@ function leesVergrendeld() {
 
 /** Leest een gekozen beeldbestand als data-URL met zijn pixelmaat. */
 async function leesBeeld(file: File) {
-  if (!ONDERSTEUNDE_BEELDEN.includes(file.type)) throw new Error("Kies een PNG-, JPEG-, GIF-, BMP- of WebP-afbeelding.");
-  if (file.size > 25 * 1024 * 1024) throw new Error("Kies een afbeelding van maximaal 25 MB.");
+  if (!ONDERSTEUNDE_BEELDEN.includes(file.type)) throw new Error(i18next.t("writer:picture.errors.unsupported"));
+  if (file.size > 25 * 1024 * 1024) throw new Error(i18next.t("writer:picture.errors.tooLarge", { size: "25 MB" }));
   const bytes = new Uint8Array(await file.arrayBuffer());
   const natuurlijk = beeldmaat(bytes);
-  if (!natuurlijk) throw new Error("Deze afbeelding kan niet worden gelezen.");
+  if (!natuurlijk) throw new Error(i18next.t("writer:picture.errors.unreadable"));
   const src = await new Promise<string>((klaar, fout) => {
     const lezer = new FileReader();
     lezer.onload = () => klaar(String(lezer.result));
-    lezer.onerror = () => fout(new Error("De afbeelding kon niet worden gelezen."));
+    lezer.onerror = () => fout(new Error(i18next.t("writer:picture.errors.readFailed")));
     lezer.readAsDataURL(file);
   });
   return { src, natuurlijk };
@@ -75,7 +77,7 @@ async function leesBeeld(file: File) {
  */
 export function kiesNieuweAfbeelding(api: () => DocxEditorRef | null, meld: (bericht: string) => void) {
   if (!afbeeldingStaat(api())) {
-    meld("Selecteer eerst een afbeelding.");
+    meld(i18next.t("writer:picture.errors.selectPicture"));
     return;
   }
   const invoer = document.createElement("input");
@@ -95,6 +97,7 @@ export function kiesNieuweAfbeelding(api: () => DocxEditorRef | null, meld: (ber
 }
 
 export function AfbeeldingGroepen() {
+  const { t } = useTranslation("writer");
   const tik = useEditorTik();
   const api = useEditorApi().tekst;
   const meld = useContext(RibbonFout);
@@ -131,15 +134,15 @@ export function AfbeeldingGroepen() {
 
   return (
     <>
-      <Groep naam="Grootte">
+      <Groep naam={t("picture.groups.size")}>
         <div className="ribbon-stapel tw-beeldmaat">
-          <MaatInvoer naam="Hoogte" waarde={hoogte} disabled={uit} kies={(cm) => maat("hoogte", cm)} />
-          <MaatInvoer naam="Breedte" waarde={breedte} disabled={uit} kies={(cm) => maat("breedte", cm)} />
+          <MaatInvoer naam={t("picture.size.height")} waarde={hoogte} disabled={uit} kies={(cm) => maat("hoogte", cm)} />
+          <MaatInvoer naam={t("picture.size.width")} waarde={breedte} disabled={uit} kies={(cm) => maat("breedte", cm)} />
           <EigenKnop
-            naam={vergrendeld ? "Verhouding vergrendeld" : "Verhouding vrij"}
+            naam={vergrendeld ? t("picture.size.locked") : t("picture.size.unlocked")}
             icoon={vergrendeld ? Lock : LockOpen}
             actief={vergrendeld}
-            uitleg="Bij het wijzigen van hoogte of breedte blijft de verhouding gelijk"
+            uitleg={t("picture.size.lockTip")}
             onClick={() => {
               setVergrendeld(!vergrendeld);
               try {
@@ -150,41 +153,41 @@ export function AfbeeldingGroepen() {
             }}
           />
         </div>
-        <EigenKnop naam="Bijsnijden" icoon={Crop} groot disabled={uit} uitleg="Bijsnijden met grepen of in centimeters" onClick={() => setVenster("bijsnijden")} />
+        <EigenKnop naam={t("picture.buttons.crop")} icoon={Crop} groot disabled={uit} uitleg={t("picture.buttons.cropTip")} onClick={() => setVenster("bijsnijden")} />
       </Groep>
-      <Groep naam="Aanpassen">
+      <Groep naam={t("picture.groups.adjust")}>
         <EigenKnop
-          naam="Afbeelding wijzigen"
+          naam={t("picture.buttons.change")}
           icoon={ImageUp}
           groot
           disabled={uit}
-          uitleg="Vervangt de afbeelding en behoudt grootte, positie en terugloop"
+          uitleg={t("picture.buttons.changeTip")}
           onClick={() => kiesNieuweAfbeelding(api, meld)}
         />
         <Keuzemenu
-          naam="Opnieuw instellen"
+          naam={t("picture.buttons.reset")}
           icoon={RefreshCcw}
           groot
           disabled={uit}
           items={[
-            { naam: "Afbeelding opnieuw instellen", uitleg: "Bijsnijding, draaiing en spiegeling weg", kies: () => herstel(false) },
-            { naam: "Afbeelding en grootte opnieuw instellen", uitleg: "Ook de oorspronkelijke grootte", kies: () => herstel(true) },
+            { naam: t("picture.buttons.resetPicture"), uitleg: t("picture.buttons.resetPictureTip"), kies: () => herstel(false) },
+            { naam: t("picture.buttons.resetPictureAndSize"), uitleg: t("picture.buttons.resetPictureAndSizeTip"), kies: () => herstel(true) },
           ]}
         />
       </Groep>
-      <Groep naam="Toegankelijkheid">
-        <EigenKnop naam="Alternatieve tekst" icoon={TextCursorInput} groot disabled={uit} onClick={() => setVenster("alt")} />
+      <Groep naam={t("picture.groups.accessibility")}>
+        <EigenKnop naam={t("picture.buttons.altText")} icoon={TextCursorInput} groot disabled={uit} onClick={() => setVenster("alt")} />
       </Groep>
-      <Groep naam="Schikken">
+      <Groep naam={t("picture.groups.arrange")}>
         <EigenKnop
-          naam="Positie"
+          naam={t("picture.buttons.position")}
           icoon={Move}
           groot
           disabled={uit || !ZWEVEND.has(String(plek?.attrs.wrapType))}
           uitleg={
             plek && !ZWEVEND.has(String(plek.attrs.wrapType))
-              ? "Kies eerst een tekstterugloop anders dan ‘In lijn met tekst’"
-              : "Positie ten opzichte van pagina, marge of alinea en afstand tot de tekst"
+              ? t("picture.buttons.positionInline")
+              : t("picture.buttons.positionTip")
           }
           onClick={() => setVenster("positie")}
         />
@@ -206,6 +209,7 @@ export function AfbeeldingVenster({ id, sluit }: { id: string; sluit: () => void
 }
 
 function MaatInvoer({ naam, waarde, disabled, kies }: { naam: string; waarde: number; disabled: boolean; kies: (cm: number) => void }) {
+  const { t } = useTranslation("writer");
   const [tekst, setTekst] = useState(toonGetal(pxNaarCm(waarde)));
   useEffect(() => setTekst(toonGetal(pxNaarCm(waarde))), [waarde]);
   const toepassen = () => {
@@ -214,7 +218,7 @@ function MaatInvoer({ naam, waarde, disabled, kies }: { naam: string; waarde: nu
     else setTekst(toonGetal(pxNaarCm(waarde)));
   };
   return (
-    <label className="tw-lintmaat" title={`${naam} in centimeters`}>
+    <label className="tw-lintmaat" title={t("picture.size.inCentimeters", { name: naam })}>
       <span>{naam}</span>
       <input
         type="number"
@@ -222,7 +226,7 @@ function MaatInvoer({ naam, waarde, disabled, kies }: { naam: string; waarde: nu
         step={0.1}
         value={tekst}
         disabled={disabled}
-        aria-label={`${naam} (cm)`}
+        aria-label={t("picture.size.withUnit", { name: naam, unit: "cm" })}
         onChange={(e) => setTekst(e.target.value)}
         onBlur={toepassen}
         onKeyDown={(e) => {
@@ -237,14 +241,15 @@ function MaatInvoer({ naam, waarde, disabled, kies }: { naam: string; waarde: nu
   );
 }
 
-function Acties({ ok, sluit, label = "OK", disabled }: { ok: () => void; sluit: () => void; label?: string; disabled?: boolean }) {
+function Acties({ ok, sluit, label, disabled }: { ok: () => void; sluit: () => void; label?: string; disabled?: boolean }) {
+  const { t } = useTranslation("common");
   return (
     <>
       <button type="button" className="werkruimte-knop" onClick={sluit}>
-        Annuleren
+        {t("cancel")}
       </button>
       <button type="button" className="werkruimte-knop is-primair" disabled={disabled} onClick={ok}>
-        {label}
+        {label ?? t("ok")}
       </button>
     </>
   );
@@ -254,6 +259,7 @@ const GREPEN: Greep[] = ["nw", "n", "no", "o", "zo", "z", "zw", "w"];
 
 /** Bijsnijden: het volle beeld met een kader en acht grepen, plus getallen in cm. */
 function BijsnijdVenster({ plek, sluit }: { plek: BeeldPlek; sluit: () => void }) {
+  const { t } = useTranslation("writer");
   const uitvoeren = useUitvoeren();
   const start = leesBijsnijding(plek.attrs);
   const [b, setB] = useState<Bijsnijding>(start);
@@ -302,7 +308,7 @@ function BijsnijdVenster({ plek, sluit }: { plek: BeeldPlek; sluit: () => void }
     uitvoeren((r) => bijsnijden(r, b));
   }
   return (
-    <Dialoog titel="Bijsnijden" sluit={sluit} className="tw-venster is-breed" acties={<Acties ok={ok} sluit={sluit} label="Bijsnijden" />}>
+    <Dialoog titel={t("picture.crop.title")} sluit={sluit} className="tw-venster is-breed" acties={<Acties ok={ok} sluit={sluit} label={t("picture.crop.ok")} />}>
       <div
         ref={vlak}
         className="tw-bijsnijden"
@@ -311,7 +317,7 @@ function BijsnijdVenster({ plek, sluit }: { plek: BeeldPlek; sluit: () => void }
         onPointerUp={() => (sleep.current = null)}
         onPointerCancel={() => (sleep.current = null)}
       >
-        {plek.attrs.src ? <img src={plek.attrs.src} alt="" draggable={false} /> : <div className="tw-bijsnijden-leeg">Geen voorbeeld</div>}
+        {plek.attrs.src ? <img src={plek.attrs.src} alt="" draggable={false} /> : <div className="tw-bijsnijden-leeg">{t("picture.crop.noPreview")}</div>}
         <div
           className="tw-bijsnijden-kader"
           style={{ left: `${b.left * 100}%`, top: `${b.top * 100}%`, right: `${b.right * 100}%`, bottom: `${b.bottom * 100}%` }}
@@ -332,7 +338,7 @@ function BijsnijdVenster({ plek, sluit }: { plek: BeeldPlek; sluit: () => void }
               key={g}
               type="button"
               className={`tw-greep tw-greep-${g}`}
-              aria-label={`Greep ${g.toUpperCase()}: pijltoetsen verschuiven (Shift = grotere stap)`}
+              aria-label={t(`picture.crop.handles.${g}`)}
               onPointerDown={(e) => omlaag(g, e)}
               onKeyDown={(e) => toetsGreep(g, e)}
             />
@@ -340,23 +346,30 @@ function BijsnijdVenster({ plek, sluit }: { plek: BeeldPlek; sluit: () => void }
         </div>
       </div>
       <div className="tw-raster2">
-        {veld("top", "Boven")}
-        {veld("bottom", "Onder")}
-        {veld("left", "Links")}
-        {veld("right", "Rechts")}
+        {veld("top", t("picture.sides.top"))}
+        {veld("bottom", t("picture.sides.bottom"))}
+        {veld("left", t("picture.sides.left"))}
+        {veld("right", t("picture.sides.right"))}
       </div>
       <p className="werkruimte-uitleg">
-        Zichtbaar deel: {toonGetal(pxNaarCm(zichtbaar.breedte))} × {toonGetal(pxNaarCm(zichtbaar.hoogte))} cm (volledig {toonGetal(volCm.breedte)} × {toonGetal(volCm.hoogte)} cm). Het
-        weggesneden deel blijft in het bestand; ‘Opnieuw instellen’ haalt het terug.
+        {t("picture.crop.visible", {
+          width: toonGetal(pxNaarCm(zichtbaar.breedte)),
+          height: toonGetal(pxNaarCm(zichtbaar.hoogte)),
+          fullWidth: toonGetal(volCm.breedte),
+          fullHeight: toonGetal(volCm.hoogte),
+          unit: "cm",
+          reset: t("picture.buttons.reset"),
+        })}
       </p>
       <button type="button" className="werkruimte-knop" onClick={() => setB({ top: 0, right: 0, bottom: 0, left: 0 })}>
-        Bijsnijding wissen
+        {t("picture.crop.clear")}
       </button>
     </Dialoog>
   );
 }
 
 function AltVenster({ plek, sluit }: { plek: BeeldPlek; sluit: () => void }) {
+  const { t } = useTranslation("writer");
   const uitvoeren = useUitvoeren();
   const [tekst, setTekst] = useState(String(plek.attrs.alt ?? ""));
   const [decoratief, setDecoratief] = useState(plek.attrs.decorative === true);
@@ -365,37 +378,27 @@ function AltVenster({ plek, sluit }: { plek: BeeldPlek; sluit: () => void }) {
     uitvoeren((r) => zetAltTekst(r, tekst, decoratief));
   }
   return (
-    <Dialoog titel="Alternatieve tekst" sluit={sluit} className="tw-venster" acties={<Acties ok={ok} sluit={sluit} />}>
-      <p className="werkruimte-uitleg">Beschrijf in een of twee zinnen wat er op de afbeelding staat, voor mensen die haar niet kunnen zien.</p>
+    <Dialoog titel={t("picture.alt.title")} sluit={sluit} className="tw-venster" acties={<Acties ok={ok} sluit={sluit} />}>
+      <p className="werkruimte-uitleg">{t("picture.alt.intro")}</p>
       <label className="werkruimte-veld tw-alt">
-        <span>Beschrijving</span>
+        <span>{t("picture.alt.description")}</span>
         <textarea rows={4} value={tekst} disabled={decoratief} data-autofocus="" onChange={(e) => setTekst(e.target.value)} />
       </label>
       <label className="werkruimte-vink">
         <input type="checkbox" checked={decoratief} onChange={(e) => setDecoratief(e.target.checked)} />
-        Markeren als decoratief (schermlezers slaan de afbeelding over)
+        {t("picture.alt.decorative")}
       </label>
-      {decoratief && (
-        <p className="werkruimte-uitleg">Het bestand krijgt dan een lege beschrijving; het aparte Word-kenmerk ‘decoratief’ wordt (nog) niet opgeslagen.</p>
-      )}
+      {decoratief && <p className="werkruimte-uitleg">{t("picture.alt.decorativeNote")}</p>}
     </Dialoog>
   );
 }
 
-const HORIZONTAAL: { waarde: HorizontaalTov; naam: string }[] = [
-  { waarde: "margin", naam: "Marge" },
-  { waarde: "page", naam: "Pagina" },
-  { waarde: "column", naam: "Kolom" },
-  { waarde: "character", naam: "Teken" },
-];
-const VERTICAAL: { waarde: VerticaalTov; naam: string }[] = [
-  { waarde: "margin", naam: "Marge" },
-  { waarde: "page", naam: "Pagina" },
-  { waarde: "paragraph", naam: "Alinea" },
-  { waarde: "line", naam: "Regel" },
-];
+/** Ten opzichte van: de waarde is ook de sleutel onder `writer:picture.position.relativeTo`. */
+const HORIZONTAAL: HorizontaalTov[] = ["margin", "page", "column", "character"];
+const VERTICAAL: VerticaalTov[] = ["margin", "page", "paragraph", "line"];
 
 function PositieVenster({ plek, sluit }: { plek: BeeldPlek; sluit: () => void }) {
+  const { t } = useTranslation("writer");
   const uitvoeren = useUitvoeren();
   const pos = plek.attrs.position;
   const [hSoort, setHSoort] = useState<"align" | "offset">(pos?.horizontal?.align ? "align" : "offset");
@@ -435,15 +438,15 @@ function PositieVenster({ plek, sluit }: { plek: BeeldPlek; sluit: () => void })
     setOffset: (s: string) => void,
     tov: string,
     setTov: (s: never) => void,
-    opties: { waarde: string; naam: string }[],
+    opties: string[],
   ) => (
     <fieldset>
       <legend>{titel}</legend>
       <div className="werkruimte-keuzes">
         <label>
-          <input type="radio" checked={soort === "align"} onChange={() => setSoort("align")} /> Uitlijning
+          <input type="radio" checked={soort === "align"} onChange={() => setSoort("align")} /> {t("picture.position.alignment")}
         </label>
-        <select aria-label={`${titel}: uitlijning`} value={align} disabled={soort !== "align"} onChange={(e) => setAlign(e.target.value)}>
+        <select aria-label={t("picture.position.alignmentLabel", { axis: titel })} value={align} disabled={soort !== "align"} onChange={(e) => setAlign(e.target.value)}>
           {uitlijningen.map(([w, n]) => (
             <option key={w} value={w}>
               {n}
@@ -451,19 +454,19 @@ function PositieVenster({ plek, sluit }: { plek: BeeldPlek; sluit: () => void })
           ))}
         </select>
         <label>
-          <input type="radio" checked={soort === "offset"} onChange={() => setSoort("offset")} /> Absolute positie
+          <input type="radio" checked={soort === "offset"} onChange={() => setSoort("offset")} /> {t("picture.position.absolute")}
         </label>
         <span className="werkruimte-eenheid">
-          <input type="number" step={0.1} aria-label={`${titel}: positie in cm`} value={offset} disabled={soort !== "offset"} onChange={(e) => setOffset(e.target.value)} />
+          <input type="number" step={0.1} aria-label={t("picture.position.offsetLabel", { axis: titel, unit: "cm" })} value={offset} disabled={soort !== "offset"} onChange={(e) => setOffset(e.target.value)} />
           cm
         </span>
       </div>
       <label className="werkruimte-veld">
-        <span>ten opzichte van</span>
+        <span>{t("picture.position.relativeToLabel")}</span>
         <select value={tov} onChange={(e) => setTov(e.target.value as never)}>
           {opties.map((o) => (
-            <option key={o.waarde} value={o.waarde}>
-              {o.naam}
+            <option key={o} value={o}>
+              {t(`picture.position.relativeTo.${o}`)}
             </option>
           ))}
         </select>
@@ -471,21 +474,21 @@ function PositieVenster({ plek, sluit }: { plek: BeeldPlek; sluit: () => void })
     </fieldset>
   );
   return (
-    <Dialoog titel="Positie" sluit={sluit} className="tw-venster is-breed" acties={<Acties ok={ok} sluit={sluit} />}>
-      {as("Horizontaal", hSoort, setHSoort, hAlign, setHAlign, [["left", "Links"], ["center", "Gecentreerd"], ["right", "Rechts"]], hOffset, setHOffset, hTov, setHTov as (s: never) => void, HORIZONTAAL)}
-      {as("Verticaal", vSoort, setVSoort, vAlign, setVAlign, [["top", "Boven"], ["center", "Gecentreerd"], ["bottom", "Onder"]], vOffset, setVOffset, vTov, setVTov as (s: never) => void, VERTICAAL)}
+    <Dialoog titel={t("picture.position.title")} sluit={sluit} className="tw-venster is-breed" acties={<Acties ok={ok} sluit={sluit} />}>
+      {as(t("picture.position.horizontal"), hSoort, setHSoort, hAlign, setHAlign, [["left", t("picture.sides.left")], ["center", t("picture.position.centered")], ["right", t("picture.sides.right")]], hOffset, setHOffset, hTov, setHTov as (s: never) => void, HORIZONTAAL)}
+      {as(t("picture.position.vertical"), vSoort, setVSoort, vAlign, setVAlign, [["top", t("picture.sides.top")], ["center", t("picture.position.centered")], ["bottom", t("picture.sides.bottom")]], vOffset, setVOffset, vTov, setVTov as (s: never) => void, VERTICAAL)}
       <fieldset>
-        <legend>Afstand tot de tekst</legend>
+        <legend>{t("picture.position.distance")}</legend>
         <div className="tw-raster2">
           {(
             [
-              ["distTop", "Boven"],
-              ["distBottom", "Onder"],
-              ["distLeft", "Links"],
-              ["distRight", "Rechts"],
+              ["distTop", "top"],
+              ["distBottom", "bottom"],
+              ["distLeft", "left"],
+              ["distRight", "right"],
             ] as const
           ).map(([k, n]) => (
-            <Maatveld key={k} label={n} waarde={afst[k]} wijzig={(v) => setAfst({ ...afst, [k]: v })} />
+            <Maatveld key={k} label={t(`picture.sides.${n}`)} waarde={afst[k]} wijzig={(v) => setAfst({ ...afst, [k]: v })} />
           ))}
         </div>
       </fieldset>

@@ -36,7 +36,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding-right: 6px;
+  padding-inline-end: 6px;
 }
 .afdruk-opties fieldset {
   border: 1px solid var(--w-rand, #e0e2e6);
@@ -110,6 +110,11 @@
   font-size: 12px;
   flex-wrap: wrap;
 }
+/* Rechts-naar-links: vorige/volgende pagina wijzen de leesrichting op; de pagina zelf spiegelt niet. */
+[dir="rtl"] .afdruk-balk .lucide-chevron-left,
+[dir="rtl"] .afdruk-balk .lucide-chevron-right {
+  transform: scaleX(-1);
+}
 .afdruk-balk button {
   padding: 4px 6px;
   border: 1px solid var(--w-rand, #e0e2e6);
@@ -139,7 +144,7 @@
   background: var(--w-rand, #e0e2e6);
 }
 .afdruk-label {
-  margin-left: auto;
+  margin-inline-start: auto;
   color: var(--w-tekst-zacht, #747780);
 }
 .afdruk-weergave {
@@ -181,7 +186,7 @@
   color: #b3261e;
 }
 .afdruk-bezig {
-  margin-right: auto;
+  margin-inline-end: auto;
   font-size: 12px;
   color: var(--w-tekst-zacht, #747780);
 }

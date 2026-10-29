@@ -1,0 +1,147 @@
+{
+  "header": {
+    "homeTitle": "Ir para o Início",
+    "homeLabel": "OpenAEC Office Studio · Início",
+    "version": "Versão {{version}}",
+    "unsaved": "Alterações não guardadas",
+    "unchanged": "Sem alterações",
+    "fileAndStart": "Ficheiro e Início",
+    "openFileTitle": "Abrir um ficheiro num novo separador · Ctrl+O",
+    "openNotesBackupTitle": "Adicionar uma cópia de segurança das notas · Ctrl+O",
+    "openDatabaseTitle": "Abrir base de dados · Ctrl+O",
+    "addBackup": "Adicionar cópia de segurança",
+    "saveAs": "Guardar como",
+    "saveAsTitle": "Guardar como · F12 ou Ctrl+Shift+S (Ctrl+S guarda no ficheiro aberto)",
+    "busy": "A processar…"
+  },
+  "message": {
+    "close": "Fechar mensagem",
+    "markdownNote": "O Markdown guarda o texto e a estrutura. Guarde também um DOCX para manter o esquema de página, as imagens e as revisões."
+  },
+  "loading": {
+    "editor": "A carregar o editor…",
+    "notes": "A carregar as Notas…",
+    "email": "A carregar o Email Studio…",
+    "document": "A carregar o documento…",
+    "fonts": "A carregar os tipos de letra…"
+  },
+  "errors": {
+    "editorFailed": "O editor não conseguiu abrir este ficheiro: {{error}}",
+    "openFailed": "Falha ao abrir: {{error}}",
+    "openFileFailed": "Falha ao abrir {{name}}: {{error}}",
+    "saveFailed": "Falha ao guardar: {{error}}",
+    "printFailed": "Falha ao imprimir: {{error}}",
+    "sendAsAttachmentFailed": "Falha ao enviar como anexo: {{error}}",
+    "templateUnavailable": "Modelo não disponível",
+    "exampleFailed": "Não foi possível abrir o exemplo.",
+    "fileSize": "Escolha um ficheiro que não esteja vazio e tenha no máximo 100 MB.",
+    "unsupportedFormat": "{{name}}: este formato não é suportado.",
+    "emptyAttachment": "O anexo está vazio.",
+    "databaseModifiedFile": "O Database Studio tem uma cópia de trabalho alterada. Guarde-a ou feche-a primeiro e, em seguida, abra novamente o ficheiro.",
+    "databaseModifiedAttachment": "O Database Studio tem uma cópia de trabalho alterada. Guarde-a ou feche-a primeiro e, em seguida, abra novamente o anexo.",
+    "spreadsheetNotReady": "A folha de cálculo ainda não está pronta.",
+    "presentationNotReady": "A apresentação ainda não está pronta.",
+    "documentNotReady": "O documento ainda não está pronto.",
+    "documentSaveFailed": "Não foi possível guardar o documento."
+  },
+  "tabs": {
+    "untitled": "Sem título {{n}}",
+    "memoryWarning_one": "Está {{count}} documento aberto. Cada documento aberto utiliza memória; feche os documentos de que já não precisa.",
+    "memoryWarning_many": "Estão {{count}} de documentos abertos. Cada documento aberto utiliza memória; feche os documentos de que já não precisa.",
+    "memoryWarning_other": "Estão {{count}} documentos abertos. Cada documento aberto utiliza memória; feche os documentos de que já não precisa."
+  },
+  "tabBar": {
+    "label": "Separadores abertos",
+    "start": "Início",
+    "startTitle": "Início · documento novo ou existente, Notas e Base de dados",
+    "tabTitleUnsaved": "{{name}} · alterações não guardadas",
+    "dragOutHint": "Arraste para fora para abrir numa janela própria",
+    "unsavedA11y": ", alterações não guardadas",
+    "closeTab": "Fechar {{name}}",
+    "closeTitle": "Fechar · Ctrl+W",
+    "allTabs": "Todos os separadores abertos",
+    "addTab": "Adicionar separador",
+    "addTabTitle": "Abrir um documento novo ou existente, Notas ou Base de dados",
+    "releaseOpensWindow": "Largue para abrir numa janela própria",
+    "closeOthers": "Fechar os outros",
+    "closeToRight": "Fechar separadores à direita"
+  },
+  "windowMenu": {
+    "button": "Documentos abertos",
+    "buttonTitle": "Documentos abertos · Ctrl+Tab ou Ctrl+F6 para alternar",
+    "empty": "Nenhum documento aberto.",
+    "thisWindow": "Esta janela",
+    "mainWindow": "Janela principal",
+    "windowNumber": "Janela {{number}}",
+    "unsavedTitle": "Alterações não guardadas",
+    "modified": "alterado",
+    "newWindow": "Nova janela"
+  },
+  "windows": {
+    "openInNewWindow": "Abrir numa nova janela",
+    "backToMainWindow": "Voltar à janela principal",
+    "databaseMovedHere": "O Database Studio está agora nesta janela. Abra novamente a base de dados aqui se quiser continuar a trabalhar.",
+    "documentMoved": "O documento foi movido, incluindo as alterações não guardadas. O histórico de Anular não é transferido com ele.",
+    "linkUnavailable": "Ligação entre janelas não disponível: {{error}}",
+    "closeGuardUnavailable": "Proteção ao fechar não disponível: {{error}}",
+    "databaseModified": "O Database Studio não consegue levar uma cópia de trabalho alterada para outra janela. Exporte ou guarde primeiro a base de dados.",
+    "otherWindowFailed": "A outra janela não conseguiu abrir o separador.",
+    "mainWindowNoResponse": "A janela principal não está a responder. O separador permanece aberto aqui.",
+    "newWindowTimeout": "A nova janela não assumiu o documento a tempo. O separador permanece aberto aqui.",
+    "alreadyMainWindow": "Esta já é a janela principal.",
+    "popupBlocked": "Não foi possível abrir a nova janela. Permita janelas de pop-up para esta página.",
+    "moveToWindow": "Mover para {{window}}",
+    "newWindowFailed": "Não foi possível abrir uma nova janela: {{error}}"
+  },
+  "dropZone": {
+    "release": "Largue para abrir",
+    "explanation": "Documentos, folhas de cálculo e apresentações abrem cada um no seu próprio separador; MDB e ACCDB abrem no Database Studio.",
+    "image": "{{name}} é uma imagem. Arrastar ainda não insere imagens num documento; utilize Inserir › Imagem.",
+    "unsupported": "Não é possível abrir {{name}}: .{{ext}} não é suportado. O Open Office Studio abre documentos, folhas de cálculo, apresentações e bases de dados do Access."
+  },
+  "ribbon": {
+    "label": "Friso",
+    "file": "Ficheiro",
+    "hide": "Ocultar o friso",
+    "show": "Mostrar o friso",
+    "hideHint": "Mais espaço para o seu documento · Ctrl+F1",
+    "scrollLeft": "Deslocar o friso para a esquerda",
+    "scrollRight": "Deslocar o friso para a direita",
+    "commandFailed": "Não foi possível executar o comando.",
+    "nothingToUndo": "Não há nada para anular.",
+    "nothingToRedo": "Não há nada para refazer.",
+    "presentationOpening": "A apresentação ainda está a ser aberta.",
+    "selectShapeFirst": "Selecione primeiro uma forma."
+  },
+  "theme": {
+    "light": "Tema claro",
+    "forge": "Tema Forge"
+  },
+  "host": {
+    "conflict": "Outra pessoa guardou este documento entretanto. A sua versão foi guardada como cópia: {{name}}.",
+    "readOnly": "{{name}} foi aberto só de leitura. Utilize Guardar como para manter as suas alterações.",
+    "openFailed": "Não foi possível abrir o documento da área de trabalho: {{error}}"
+  },
+  "title": {
+    "document": "{{document}} — {{app}} ({{module}})",
+    "module": "{{app}} ({{module}})"
+  },
+  "titleBar": {
+    "quickAccess": "Acesso rápido",
+    "saveTitle": "Guardar · Ctrl+S",
+    "settings": "Definições",
+    "minimize": "Minimizar",
+    "maximize": "Maximizar",
+    "restore": "Restaurar",
+    "close": "Fechar janela"
+  },
+  "toasts": {
+    "region": "Notificações",
+    "info": "Info",
+    "success": "Concluído",
+    "warning": "Atenção",
+    "error": "Erro",
+    "details": "Detalhes",
+    "less": "Menos"
+  }
+}

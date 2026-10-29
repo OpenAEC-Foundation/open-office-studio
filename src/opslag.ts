@@ -1,3 +1,4 @@
+import i18next from "./i18n/config";
 import type { Werkbestand } from "./werkbestand";
 
 export type BewaarUitkomst = (
@@ -69,7 +70,7 @@ export class DocumentOpslag {
       // Een oude editor mag na een documentwissel geen opslagdialoog openen.
       if (documentId !== this.documentId) return { status: "verouderd" };
       if (!bytes.byteLength || bytes.byteLength > 100 * 1024 * 1024)
-        throw new Error("Het bestand is leeg of groter dan 100 MB.");
+        throw new Error(i18next.t("backstage:saveResult.tooLarge"));
       const uitkomst = await bewaar(bytes);
       const actueel = documentId === this.documentId;
       const schoon =

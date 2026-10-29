@@ -1,0 +1,267 @@
+{
+  "types": {
+    "column": {
+      "name": "Coloană",
+      "description": "Comparați valorile una lângă alta"
+    },
+    "stackedColumn": {
+      "name": "Coloană stivuită",
+      "description": "Părți și total pe categorie"
+    },
+    "percentColumn": {
+      "name": "Coloană 100%",
+      "description": "Ponderi pe categorie"
+    },
+    "bar": {
+      "name": "Bară",
+      "description": "Orizontală, pentru nume lungi"
+    },
+    "line": {
+      "name": "Linie",
+      "description": "Evoluție în timp"
+    },
+    "lineMarkers": {
+      "name": "Linie cu marcaje",
+      "description": "Evoluție cu puncte de date vizibile"
+    },
+    "area": {
+      "name": "Zonă",
+      "description": "Evoluție cu accent pe mărime"
+    },
+    "pie": {
+      "name": "Radială",
+      "description": "Defalcarea unei singure serii"
+    },
+    "doughnut": {
+      "name": "Inel",
+      "description": "Defalcare cu centru gol"
+    },
+    "scatter": {
+      "name": "Prin puncte (XY)",
+      "description": "Relația dintre două numere"
+    },
+    "combo": {
+      "name": "Coloană + linie",
+      "description": "Ultima serie ca linie pe o axă secundară"
+    }
+  },
+  "unknownType": "Tip necunoscut",
+  "busy": "Se procesează…",
+  "defaults": {
+    "seriesName": "Seria {{n}}",
+    "categoryName": "Categoria {{n}}",
+    "chartName": "Diagrama {{n}}",
+    "sheetName": "Diagrama {{n}}",
+    "true": "ADEVĂRAT",
+    "false": "FALS"
+  },
+  "ribbon": {
+    "charts": "Diagrame",
+    "chart": "Diagramă",
+    "editChart": "Editați diagrama",
+    "allCharts": "Toate diagramele",
+    "dataAndFormat": "Date și formatare",
+    "overview": "Prezentare generală",
+    "type": "Tip",
+    "changeType": "Modificați tipul diagramei",
+    "data": "Date",
+    "selectData": "Selectați datele",
+    "layout": "Aspect",
+    "titleAndLegend": "Titlu și legendă",
+    "delete": "Ștergere",
+    "deleteChart": "Ștergeți diagrama",
+    "withShortcut": "{{name}} · {{shortcut}}"
+  },
+  "dialog": {
+    "title": {
+      "insert": "Inserați diagrama",
+      "edit": "Editați diagrama"
+    },
+    "button": {
+      "insert": "Inserare",
+      "edit": "Actualizare"
+    },
+    "reloadNote": {
+      "insert": "Documentul se reîncarcă după inserare. Modificările făcute înainte nu mai pot fi anulate.",
+      "edit": "Documentul se reîncarcă după actualizare. Modificările făcute înainte nu mai pot fi anulate."
+    },
+    "closeTitle": "Închidere (Esc)",
+    "type": "Tip",
+    "data": "Date",
+    "cellRange": "Zonă de celule",
+    "cellRangePlaceholder": "De exemplu A1:D6",
+    "noContiguousRange": "Referințele acestei diagrame nu formează o zonă continuă; datele rămân neschimbate până când introduceți o zonă.",
+    "firstRowNames": "Primul rând conține nume",
+    "firstColumnNames": "Prima coloană conține nume",
+    "seriesIn": "Serii în",
+    "columns": "coloane",
+    "rows": "rânduri",
+    "series": "Serie",
+    "seriesNoNumbersTitle": "{{name}}: fără numere, neinclusă",
+    "noNumbers": "(fără numere)",
+    "enterRange": "Introduceți zona de celule care conține datele.",
+    "placeCursorInTable": "Plasați mai întâi cursorul într-un tabel cu numere.",
+    "titles": "Titluri",
+    "chartTitle": "Titlu",
+    "subtitle": "Subtitlu",
+    "categoryAxis": "Axa categoriilor",
+    "valueAxis": "Axa valorilor",
+    "horizontalAxis": "Axa orizontală",
+    "verticalAxis": "Axa verticală",
+    "secondaryAxis": "Axa secundară",
+    "format": "Format",
+    "legend": "Legendă",
+    "gridlines": "Linii de grilă",
+    "dataLabels": "Etichete de date",
+    "decimals": "Zecimale",
+    "placement": "Amplasare",
+    "besideData": "Lângă datele din această foaie",
+    "newSheet": "Într-o foaie nouă",
+    "sheetName": "Numele foii",
+    "summary": {
+      "series_one": "{{n}} serie",
+      "series_few": "{{n}} serii",
+      "series_other": "{{n}} de serii",
+      "categories_one": "{{n}} categorie",
+      "categories_few": "{{n}} categorii",
+      "categories_other": "{{n}} de categorii",
+      "text": "{{series}} · {{categories}}",
+      "withSheet": "{{series}} · {{categories}} · {{sheet}}"
+    }
+  },
+  "legend": {
+    "bottom": "Jos",
+    "right": "Dreapta",
+    "top": "Sus",
+    "left": "Stânga",
+    "none": "Fără legendă"
+  },
+  "dataSheet": {
+    "row": "Rând",
+    "series": "Serie",
+    "removeLastRow": "Ștergeți ultimul rând",
+    "removeLastSeries": "Ștergeți ultima serie",
+    "paste": "Lipire",
+    "pasteTitle": "Lipiți din clipboard text separat prin tabulatori, de exemplu copiat dintr-o foaie de calcul",
+    "fromTable": "Din tabelul selectat",
+    "fromTableTitle": "Preia tabelul în care se află cursorul",
+    "pasteNotAllowed": "Lipirea cu butonul nu este permisă aici. Faceți clic într-o celulă și utilizați Ctrl+V.",
+    "corner": "Celulă de colț",
+    "seriesNameLabel": "Numele seriei {{n}}",
+    "categoryLabel": "Categoria {{n}}",
+    "valueLabel": "Valoare rândul {{row}}, seria {{series}}"
+  },
+  "preview": {
+    "label": "Previzualizare: {{title}}",
+    "untitled": "Previzualizare: diagramă fără titlu"
+  },
+  "list": {
+    "title": "Diagrame din acest document",
+    "empty": "Acest document nu conține încă nicio diagramă.",
+    "edit": "Editare",
+    "delete": "Ștergere",
+    "deleteLabel": "Ștergeți {{name}}",
+    "place": {
+      "slide": "diapozitivul {{n}}",
+      "sheet": "foaia {{name}}",
+      "text": "diagrama {{n}} din text"
+    }
+  },
+  "deleteConfirm": {
+    "title": "Ștergeți diagrama",
+    "text": "Ștergeți ‘{{name}}’? Documentul va fi apoi reîncărcat; modificările anterioare nu mai pot fi anulate.",
+    "textSheet": "Ștergeți ‘{{name}}’ din foaia {{sheet}}? Documentul va fi apoi reîncărcat; modificările anterioare nu mai pot fi anulate.",
+    "button": "Ștergere"
+  },
+  "errors": {
+    "unknownType": "Tip de diagramă necunoscut.",
+    "noSeries": "Diagrama are nevoie de cel puțin o serie de date.",
+    "tooManySeries": "O diagramă poate conține aici cel mult {{max}} serii.",
+    "tooManyCategories": "O diagramă poate conține aici cel mult {{max}} categorii.",
+    "noCategories": "Diagrama are nevoie de cel puțin o categorie.",
+    "valueCountMismatch": "Seria ‘{{name}}’ nu are tot atâtea valori câte categorii există.",
+    "noNumbers": "Datele nu conțin numere.",
+    "comboNeedsTwoSeries": "O diagramă combinată are nevoie de cel puțin două serii: coloane și o linie.",
+    "scatterNeedsNumbers": "O diagramă prin puncte are nevoie de numere ca valori X în prima coloană sau primul rând.",
+    "titleTooLong": "Titlurile pot avea cel mult {{max}} caractere.",
+    "invalidColor": "Culoarea ‘{{color}}’ nu este o culoare validă.",
+    "noNumericColumn": "Niciuna dintre coloanele zonei nu conține numere, deci nu există nimic de reprezentat. Alegeți o zonă cu cel puțin o coloană de numere sau setați ‘Serii în’ la rânduri.",
+    "noNumericRow": "Niciunul dintre rândurile zonei nu conține numere, deci nu există nimic de reprezentat. Alegeți o zonă cu cel puțin un rând de numere sau setați ‘Serii în’ la coloane.",
+    "chooseSeries": "Alegeți cel puțin o serie pentru diagramă.",
+    "rangeTooLarge": "Zona este prea mare: cel mult {{max}} celule.",
+    "noDataBesideHeaders": "Zona nu conține date în afară de anteturi.",
+    "pasteTooLarge": "Datele lipite sunt prea mari pentru o diagramă.",
+    "invalidRange": "Aceasta nu este o zonă de celule validă. Utilizați de exemplu A1:D6 sau 'Foaia 1'!A1:D6.",
+    "noSuchSheet": "Nu există nicio foaie numită ‘{{name}}’.",
+    "spreadsheetNotReady": "Foaia de calcul nu este încă pregătită.",
+    "spreadsheetReadOnly": "Foaia de calcul este doar în citire.",
+    "documentNotReady": "Documentul nu este încă pregătit.",
+    "presentationNotEditable": "Prezentarea nu poate fi editată momentan.",
+    "selectChartFirst": "Selectați mai întâi o diagramă.",
+    "chartGone": "Diagrama nu mai poate fi găsită.",
+    "notEditableHere": "Această diagramă nu poate fi editată aici.",
+    "notEditable": "Această diagramă nu poate fi editată.",
+    "package": {
+      "tooLarge": "Documentul este prea mare pentru a edita o diagramă în el.",
+      "tooManyParts": "Documentul conține prea multe părți sau părți prea mari.",
+      "notZip": "Documentul nu este un fișier Office valid (zip).",
+      "invalidPartName": "Documentul conține un nume de parte nevalid.",
+      "noContentTypes": "Din document lipsește [Content_Types].xml.",
+      "missingPart": "Din document lipsește partea {{part}}.",
+      "noFreePartName": "Nu a mai rămas niciun nume de parte liber."
+    },
+    "xml": {
+      "tooLarge": "O parte XML este prea mare pentru a fi procesată.",
+      "damaged": "Partea XML este deteriorată.",
+      "doctype": "Din motive de securitate, XML cu DOCTYPE nu este procesat.",
+      "tooDeep": "Partea XML este imbricată prea adânc.",
+      "overlappingChanges": "Eroare internă: modificări XML suprapuse."
+    },
+    "chartXml": {
+      "notDrawingML": "Această parte nu este o diagramă DrawingML.",
+      "noPlotArea": "Diagrama nu are suprafață de reprezentare.",
+      "unusualPrefix": "Această diagramă utilizează o notație XML neobișnuită și nu poate fi editată aici în siguranță."
+    },
+    "document": {
+      "noMainPart": "Din document lipsește partea principală.",
+      "tooManyCharts": "Acest document conține deja {{total}} diagrame; mai multe nu sunt acceptate.",
+      "invalidSheetName": "Nume de foaie nevalid: cel mult 31 de caractere, fără \\ / ? * [ ] :",
+      "sheetExists": "Există deja o foaie numită ‘{{name}}’.",
+      "noSheetList": "Registrul de lucru nu are o listă de foi.",
+      "drawingMissing": "Desenul acestei foi lipsește sau este deteriorat.",
+      "noSuchWorksheet": "Foaia aleasă nu există sau nu este o foaie de lucru.",
+      "notPlainWorksheet": "O diagramă poate fi plasată doar pe o foaie de lucru obișnuită.",
+      "drawingDamaged": "Desenul acestei foi este deteriorat.",
+      "docxUnusualPrefix": "Acest document utilizează o notație XML neobișnuită; diagrama nu poate fi inserată în siguranță.",
+      "noBody": "Documentul nu are corp.",
+      "tableTooLarge": "Tabelul este prea mare pentru o diagramă.",
+      "noSuchSlide": "Diapozitivul ales nu există.",
+      "slideUnusualPrefix": "Acest diapozitiv utilizează o notație XML neobișnuită; diagrama nu poate fi inserată în siguranță.",
+      "noShapeTree": "Diapozitivul nu are arbore de forme.",
+      "chartRemoved": "Diagrama nu mai există în document.",
+      "chartNotFound": "Diagrama nu a fost găsită.",
+      "cannotRemove": "Obiectul diagramă nu poate fi eliminat."
+    }
+  },
+  "read": {
+    "reasons": {
+      "extendedChart": "Aceasta este o diagramă extinsă (cum ar fi o diagramă cascadă sau treemap) care nu poate fi editată aici.",
+      "unsupportedType": "Această diagramă utilizează un tip care nu poate fi editat aici ({{types}}).",
+      "noReadableSeries": "Diagrama nu conține serii care pot fi citite.",
+      "unsupportedCombination": "Această diagramă combină tipuri într-un mod care nu poate fi editat aici.",
+      "noSeries": "Diagrama nu conține serii de date.",
+      "invalid": "Această diagramă nu poate fi editată aici: {{reason}}",
+      "unusualPrefix": "Această diagramă utilizează o notație XML neobișnuită și nu poate fi editată aici în siguranță."
+    },
+    "warnings": {
+      "stackedBars": "La editare, barele stivuite sunt plasate una lângă alta.",
+      "stackedLines": "La editare, liniile stivuite devin linii separate.",
+      "stackedAreas": "La editare, zonele stivuite devin zone separate.",
+      "linesAfterColumns": "La editare, seriile de tip linie sunt plasate după coloane.",
+      "lastSeriesAsLine": "La editare, doar ultima serie este desenată ca linie.",
+      "multiLevelCategories": "La editare, categoriile pe mai multe niveluri devin un singur nivel.",
+      "moreValuesThanCategories": "Seria ‘{{name}}’ are mai multe valori decât categorii.",
+      "trendlinesDropped": "La editare, liniile de tendință și barele de eroare sunt eliminate."
+    }
+  }
+}

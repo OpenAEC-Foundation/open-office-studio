@@ -21,6 +21,8 @@
   color: #465164;
 }
 .tabelkiezer-raster {
+  /* De cel onder de muis wordt in JS vanaf links berekend: het raster blijft LTR. */
+  direction: ltr;
   justify-self: start;
   display: grid;
   padding: 0;
@@ -53,7 +55,7 @@
   border-top: 1px solid #edf0f3;
   background: transparent;
   color: #333a46;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
 }
 .tabelkiezer-menu:hover,

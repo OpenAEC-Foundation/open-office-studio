@@ -1,0 +1,146 @@
+{
+  "header": {
+    "homeTitle": "Gå til Start",
+    "homeLabel": "OpenAEC Office Studio · Start",
+    "version": "Versjon {{version}}",
+    "unsaved": "Ulagrede endringer",
+    "unchanged": "Uendret",
+    "fileAndStart": "Fil og Start",
+    "openFileTitle": "Åpne en fil i en ny fane · Ctrl+O",
+    "openNotesBackupTitle": "Legg til en sikkerhetskopi av notater · Ctrl+O",
+    "openDatabaseTitle": "Åpne database · Ctrl+O",
+    "addBackup": "Legg til sikkerhetskopi",
+    "saveAs": "Lagre som",
+    "saveAsTitle": "Lagre som · F12 eller Ctrl+Shift+S (Ctrl+S lagrer i den åpne filen)",
+    "busy": "Arbeider…"
+  },
+  "message": {
+    "close": "Lukk meldingen",
+    "markdownNote": "Markdown beholder tekst og struktur. Lagre også en DOCX for sideoppsett, bilder og sporede endringer."
+  },
+  "loading": {
+    "editor": "Laster inn redigeringsprogrammet…",
+    "notes": "Laster inn Notater…",
+    "email": "Laster inn Email Studio…",
+    "document": "Laster inn dokumentet…",
+    "fonts": "Laster inn skrifter…"
+  },
+  "errors": {
+    "editorFailed": "Redigeringsprogrammet kunne ikke åpne denne filen: {{error}}",
+    "openFailed": "Kunne ikke åpne: {{error}}",
+    "openFileFailed": "Kunne ikke åpne {{name}}: {{error}}",
+    "saveFailed": "Kunne ikke lagre: {{error}}",
+    "printFailed": "Kunne ikke skrive ut: {{error}}",
+    "sendAsAttachmentFailed": "Kunne ikke sende som vedlegg: {{error}}",
+    "templateUnavailable": "Malen er ikke tilgjengelig",
+    "exampleFailed": "Eksemplet kunne ikke åpnes.",
+    "fileSize": "Velg en fil som ikke er tom og som er på maksimalt 100 MB.",
+    "unsupportedFormat": "{{name}}: dette formatet støttes ikke.",
+    "emptyAttachment": "Vedlegget er tomt.",
+    "databaseModifiedFile": "Database Studio har en endret arbeidskopi. Lagre eller lukk den først, og åpne deretter filen på nytt.",
+    "databaseModifiedAttachment": "Database Studio har en endret arbeidskopi. Lagre eller lukk den først, og åpne deretter vedlegget på nytt.",
+    "spreadsheetNotReady": "Regnearket er ikke klart ennå.",
+    "presentationNotReady": "Presentasjonen er ikke klar ennå.",
+    "documentNotReady": "Dokumentet er ikke klart ennå.",
+    "documentSaveFailed": "Dokumentet kunne ikke lagres."
+  },
+  "tabs": {
+    "untitled": "Uten navn {{n}}",
+    "memoryWarning_one": "{{count}} dokument er åpent. Hvert åpne dokument bruker minne; lukk dokumenter du ikke lenger trenger.",
+    "memoryWarning_other": "{{count}} dokumenter er åpne. Hvert åpne dokument bruker minne; lukk dokumenter du ikke lenger trenger."
+  },
+  "tabBar": {
+    "label": "Åpne faner",
+    "start": "Start",
+    "startTitle": "Start · nytt eller eksisterende dokument, Notater og Database",
+    "tabTitleUnsaved": "{{name}} · ulagrede endringer",
+    "dragOutHint": "Dra utenfor for et eget vindu",
+    "unsavedA11y": ", ulagrede endringer",
+    "closeTab": "Lukk {{name}}",
+    "closeTitle": "Lukk · Ctrl+W",
+    "allTabs": "Alle åpne faner",
+    "addTab": "Legg til fane",
+    "addTabTitle": "Åpne et nytt eller eksisterende dokument, Notater eller Database",
+    "releaseOpensWindow": "Slipp for å åpne et eget vindu",
+    "closeOthers": "Lukk andre",
+    "closeToRight": "Lukk faner til høyre"
+  },
+  "windowMenu": {
+    "button": "Åpne dokumenter",
+    "buttonTitle": "Åpne dokumenter · Ctrl+Tab eller Ctrl+F6 for å bytte",
+    "empty": "Ingen åpne dokumenter.",
+    "thisWindow": "Dette vinduet",
+    "mainWindow": "Hovedvindu",
+    "windowNumber": "Vindu {{number}}",
+    "unsavedTitle": "Ulagrede endringer",
+    "modified": "endret",
+    "newWindow": "Nytt vindu"
+  },
+  "windows": {
+    "openInNewWindow": "Åpne i nytt vindu",
+    "backToMainWindow": "Tilbake til hovedvinduet",
+    "databaseMovedHere": "Database Studio er nå i dette vinduet. Åpne databasen her på nytt hvis du vil fortsette å arbeide.",
+    "documentMoved": "Dokumentet er flyttet, inkludert ulagrede endringer. Historikken for Angre blir ikke med ved flyttingen.",
+    "linkUnavailable": "Vinduskobling er ikke tilgjengelig: {{error}}",
+    "closeGuardUnavailable": "Lukkebeskyttelse er ikke tilgjengelig: {{error}}",
+    "databaseModified": "Database Studio kan ikke flytte en endret arbeidskopi til et annet vindu. Eksporter eller lagre databasen først.",
+    "otherWindowFailed": "Det andre vinduet kunne ikke åpne fanen.",
+    "mainWindowNoResponse": "Hovedvinduet svarer ikke. Fanen forblir åpen her.",
+    "newWindowTimeout": "Det nye vinduet overtok ikke dokumentet i tide. Fanen forblir åpen her.",
+    "alreadyMainWindow": "Dette er allerede hovedvinduet.",
+    "popupBlocked": "Det nye vinduet kunne ikke åpnes. Tillat popup-vinduer for denne siden.",
+    "moveToWindow": "Flytt til {{window}}",
+    "newWindowFailed": "Kunne ikke åpne et nytt vindu: {{error}}"
+  },
+  "dropZone": {
+    "release": "Slipp for å åpne",
+    "explanation": "Dokumenter, regneark og presentasjoner åpnes hver i sin egen fane; MDB og ACCDB åpnes i Database Studio.",
+    "image": "{{name}} er et bilde. Dra og slipp setter ennå ikke inn bilder i et dokument; bruk Sett inn › Bilde.",
+    "unsupported": "{{name}} kan ikke åpnes: .{{ext}} støttes ikke. Open Office Studio åpner dokumenter, regneark, presentasjoner og Access-databaser."
+  },
+  "ribbon": {
+    "label": "Bånd",
+    "file": "Fil",
+    "hide": "Skjul båndet",
+    "show": "Vis båndet",
+    "hideHint": "Mer plass til dokumentet · Ctrl+F1",
+    "scrollLeft": "Rull båndet til venstre",
+    "scrollRight": "Rull båndet til høyre",
+    "commandFailed": "Kommandoen kunne ikke utføres.",
+    "nothingToUndo": "Det er ingenting å angre.",
+    "nothingToRedo": "Det er ingenting å gjøre om.",
+    "presentationOpening": "Presentasjonen åpnes fortsatt.",
+    "selectShapeFirst": "Merk en figur først."
+  },
+  "theme": {
+    "light": "Lyst tema",
+    "forge": "Forge-tema"
+  },
+  "host": {
+    "conflict": "Noen andre har lagret dokumentet i mellomtiden. Versjonen din ble lagret som en kopi: {{name}}.",
+    "readOnly": "{{name}} ble åpnet skrivebeskyttet. Bruk Lagre som for å beholde endringene.",
+    "openFailed": "Dokumentet fra arbeidsområdet kunne ikke åpnes: {{error}}"
+  },
+  "title": {
+    "document": "{{document}} — {{app}} ({{module}})",
+    "module": "{{app}} ({{module}})"
+  },
+  "titleBar": {
+    "quickAccess": "Hurtigtilgang",
+    "saveTitle": "Lagre · Ctrl+S",
+    "settings": "Innstillinger",
+    "minimize": "Minimer",
+    "maximize": "Maksimer",
+    "restore": "Gjenopprett",
+    "close": "Lukk vinduet"
+  },
+  "toasts": {
+    "region": "Varsler",
+    "info": "Info",
+    "success": "Ferdig",
+    "warning": "Merk",
+    "error": "Feil",
+    "details": "Detaljer",
+    "less": "Mindre"
+  }
+}

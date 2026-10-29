@@ -5,6 +5,7 @@
  */
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
+import { useTranslation } from "react-i18next";
 import {
   useDocxCommands,
   type DocxCommandArgs,
@@ -55,6 +56,8 @@ interface Item {
   sneltoets?: string;
   uit?: boolean;
   actief?: boolean;
+  /** Opent een venster: de focus niet terug naar het document. */
+  houdFocus?: boolean;
   doe: () => void;
 }
 
@@ -77,6 +80,7 @@ export function Contextmenu({
   lettertype: (punt?: { x: number; y: number }) => void;
   alinea: (punt?: { x: number; y: number }) => void;
 }) {
+  const { t } = useTranslation("writer");
   const store = useDocxCommands();
   const vak = useRef<HTMLDivElement>(null);
   const [positie, setPositie] = useState({ left: plek.x, top: plek.y });
@@ -95,28 +99,28 @@ export function Contextmenu({
   const secties: Sectie[] = [
     [
       {
-        naam: "Knippen",
+        naam: t("menu.context.cut"),
         icoon: Scissors,
         sneltoets: "Ctrl+X",
         uit: !bewerkbaar || !selectie,
         doe: () => opdrachten.klembord("cut"),
       },
       {
-        naam: "Kopiëren",
+        naam: t("menu.context.copy"),
         icoon: Copy,
         sneltoets: "Ctrl+C",
         uit: !selectie,
         doe: () => opdrachten.klembord("copy"),
       },
       {
-        naam: "Plakken",
+        naam: t("menu.context.paste"),
         icoon: ClipboardPaste,
         sneltoets: "Ctrl+V",
         uit: !bewerkbaar,
         doe: opdrachten.plakkenMetOpmaak,
       },
       {
-        naam: "Plakken als alleen tekst",
+        naam: t("menu.context.pasteText"),
         icoon: ClipboardType,
         sneltoets: "Ctrl+Shift+V",
         uit: !bewerkbaar,
@@ -124,20 +128,20 @@ export function Contextmenu({
       },
     ],
     [
-      { naam: "Lettertype…", icoon: Type, uit: !bewerkbaar, doe: () => lettertype(punt) },
-      { naam: "Alinea…", icoon: Pilcrow, uit: !bewerkbaar, doe: () => alinea(punt) },
-      { naam: "Opmaak kopiëren", icoon: Paintbrush, uit: !bewerkbaar, doe: kwastKlik },
+      { naam: t("menu.context.font"), icoon: Type, uit: !bewerkbaar, houdFocus: true, doe: () => lettertype(punt) },
+      { naam: t("menu.context.paragraph"), icoon: Pilcrow, uit: !bewerkbaar, houdFocus: true, doe: () => alinea(punt) },
+      { naam: t("menu.context.formatPainter"), icoon: Paintbrush, uit: !bewerkbaar, doe: kwastKlik },
     ],
     [
       {
-        naam: "Opsommingstekens",
+        naam: t("menu.context.bullets"),
         icoon: List,
         uit: !kan("bulletList"),
         actief: store.getState("bulletList").active === true,
         doe: () => voerUit("bulletList", null),
       },
       {
-        naam: "Nummering",
+        naam: t("menu.context.numbering"),
         icoon: ListOrdered,
         uit: !kan("numberedList"),
         actief: store.getState("numberedList").active === true,
@@ -146,69 +150,69 @@ export function Contextmenu({
     ],
     [
       {
-        naam: "Koppeling…",
+        naam: t("menu.context.link"),
         icoon: Link,
         sneltoets: "Ctrl+K",
         uit: !kan("insertLink"),
         doe: () => voerUit("insertLink", null),
       },
       {
-        naam: "Nieuwe opmerking",
+        naam: t("menu.context.newComment"),
         icoon: MessageSquarePlus,
         uit: !opdrachten.invoerbaar,
         doe: () => opdrachten.setDialoog("opmerking"),
       },
     ],
   ];
-  if (!plek.tabel && !plek.afbeelding && selectie) secties.push(aangemeld("Tekst converteren naar tabel…", Table2, "tabel.tekstNaarTabel"));
+  if (!plek.tabel && !plek.afbeelding && selectie) secties.push(aangemeld(t("menu.context.textToTable"), Table2, "tabel.tekstNaarTabel"));
   if (plek.tabel)
     secties.push(
       [
-        { naam: "Rij boven invoegen", icoon: Rows3, uit: !kanTabel("addRowAbove"), doe: tabel("addRowAbove") },
-        { naam: "Rij onder invoegen", icoon: Rows3, uit: !kanTabel("addRowBelow"), doe: tabel("addRowBelow") },
-        { naam: "Kolom links invoegen", icoon: Columns2, uit: !kanTabel("addColumnLeft"), doe: tabel("addColumnLeft") },
-        { naam: "Kolom rechts invoegen", icoon: Columns2, uit: !kanTabel("addColumnRight"), doe: tabel("addColumnRight") },
+        { naam: t("menu.context.insertRowAbove"), icoon: Rows3, uit: !kanTabel("addRowAbove"), doe: tabel("addRowAbove") },
+        { naam: t("menu.context.insertRowBelow"), icoon: Rows3, uit: !kanTabel("addRowBelow"), doe: tabel("addRowBelow") },
+        { naam: t("menu.context.insertColumnLeft"), icoon: Columns2, uit: !kanTabel("addColumnLeft"), doe: tabel("addColumnLeft") },
+        { naam: t("menu.context.insertColumnRight"), icoon: Columns2, uit: !kanTabel("addColumnRight"), doe: tabel("addColumnRight") },
       ],
       [
-        { naam: "Cellen samenvoegen", icoon: Merge, uit: !kanTabel("mergeCells"), doe: tabel("mergeCells") },
-        { naam: "Cel splitsen", icoon: Grid2X2, uit: !kanTabel("splitCell"), doe: tabel("splitCell") },
-        { naam: "Rij verwijderen", icoon: Trash2, uit: !kanTabel("deleteRow"), doe: tabel("deleteRow") },
-        { naam: "Kolom verwijderen", icoon: Trash2, uit: !kanTabel("deleteColumn"), doe: tabel("deleteColumn") },
-        { naam: "Tabel verwijderen", icoon: Trash2, uit: !kanTabel("deleteTable"), doe: tabel("deleteTable") },
+        { naam: t("menu.context.mergeCells"), icoon: Merge, uit: !kanTabel("mergeCells"), doe: tabel("mergeCells") },
+        { naam: t("menu.context.splitCell"), icoon: Grid2X2, uit: !kanTabel("splitCell"), doe: tabel("splitCell") },
+        { naam: t("menu.context.deleteRow"), icoon: Trash2, uit: !kanTabel("deleteRow"), doe: tabel("deleteRow") },
+        { naam: t("menu.context.deleteColumn"), icoon: Trash2, uit: !kanTabel("deleteColumn"), doe: tabel("deleteColumn") },
+        { naam: t("menu.context.deleteTable"), icoon: Trash2, uit: !kanTabel("deleteTable"), doe: tabel("deleteTable") },
         {
-          naam: "Tabeleigenschappen…",
+          naam: t("menu.context.tableProperties"),
           icoon: Table2,
           uit: !kanTabel({ type: "openTableProperties" }),
           doe: tabel({ type: "openTableProperties" }),
         },
       ],
       [
-        ...aangemeld("Rij-eigenschappen…", Rows3, "tabel.rij"),
-        ...aangemeld("Celmarges…", Table2, "tabel.marges"),
-        ...aangemeld("Kolommen gelijk verdelen", Columns2, "tabel.kolommenGelijk"),
-        ...aangemeld("Sorteren…", ArrowDownAZ, "tabel.sorteren"),
-        ...aangemeld("Converteren naar tekst…", Pilcrow, "tabel.naarTekst"),
-        ...aangemeld("Tabel splitsen", Grid2X2, "tabel.splitsen"),
+        ...aangemeld(t("menu.context.rowProperties"), Rows3, "tabel.rij"),
+        ...aangemeld(t("menu.context.cellMargins"), Table2, "tabel.marges"),
+        ...aangemeld(t("menu.context.distributeColumns"), Columns2, "tabel.kolommenGelijk"),
+        ...aangemeld(t("menu.context.sort"), ArrowDownAZ, "tabel.sorteren"),
+        ...aangemeld(t("menu.context.convertToText"), Pilcrow, "tabel.naarTekst"),
+        ...aangemeld(t("menu.context.splitTable"), Grid2X2, "tabel.splitsen"),
       ],
     );
   if (plek.afbeelding)
     secties.push([
       {
-        naam: "Afbeeldingseigenschappen…",
+        naam: t("menu.context.pictureProperties"),
         icoon: Image,
         uit: !kan("imageProperties"),
         doe: () => voerUit("imageProperties", null),
       },
       {
-        naam: "Rechtsom draaien",
+        naam: t("menu.context.rotateRight"),
         icoon: RotateCw,
         uit: !kan("imageTransform"),
         doe: () => voerUit("imageTransform", { action: "rotateCW" }),
       },
-      ...aangemeld("Bijsnijden…", Crop, "afbeelding.bijsnijden"),
-      ...aangemeld("Afbeelding wijzigen…", ImageUp, "afbeelding.wijzigen"),
-      ...aangemeld("Alternatieve tekst…", TextCursorInput, "afbeelding.alt"),
-      ...aangemeld("Positie…", Move, "afbeelding.positie"),
+      ...aangemeld(t("menu.context.crop"), Crop, "afbeelding.bijsnijden"),
+      ...aangemeld(t("menu.context.changePicture"), ImageUp, "afbeelding.wijzigen"),
+      ...aangemeld(t("menu.context.altText"), TextCursorInput, "afbeelding.alt"),
+      ...aangemeld(t("menu.context.position"), Move, "afbeelding.positie"),
     ]);
 
   // Binnen het venster houden.
@@ -304,7 +308,7 @@ export function Contextmenu({
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => {
               sluit();
-              if (item.naam !== "Lettertype…" && item.naam !== "Alinea…") opdrachten.api()?.focus();
+              if (!item.houdFocus) opdrachten.api()?.focus();
               item.doe();
             }}
           >
@@ -322,7 +326,7 @@ export function Contextmenu({
       className="tekst-menu"
       role="menu"
       tabIndex={-1}
-      aria-label="Opdrachten bij de selectie"
+      aria-label={t("menu.context.label")}
       style={positie}
       onKeyDown={pijl}
       onContextMenu={(e) => e.preventDefault()}

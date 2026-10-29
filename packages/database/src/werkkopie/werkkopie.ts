@@ -3,6 +3,7 @@
  * databaseworker, in een eigen worker van de VBA-runtime (via de
  * MessagePort-brug) en direct in Node voor tests en proeven.
  */
+import i18next from "i18next";
 import type MDBReader from "mdb-reader";
 import type { BindParams, Database, SqlJsStatic, SqlValue, Statement } from "sql.js";
 import {
@@ -72,6 +73,8 @@ export function sqliteFout(fout: unknown, context: string): WerkkopieFout {
 }
 
 const kl = (s: string) => s.toLowerCase();
+/** Melding van de werkkopie in de interfacetaal (namespace database, groep workingCopy). */
+const vt = (sleutel: string, opties?: Record<string, unknown>) => i18next.t(`database:workingCopy.${sleutel}`, opties);
 const isMeta = (naam: string) => /^(_openaec_|sqlite_)/i.test(naam);
 
 function naarSql(w: Waarde | undefined): SqlValue {
@@ -87,14 +90,14 @@ function parameterWaarde(w: Waarde, slot: ParameterSlot): SqlValue {
   const naam = slot.naam ?? `?${(slot.positie ?? 0) + 1}`;
   if (type === "datetime" || type === "date") {
     const ms = typeof w === "string" ? msUitTekst(w) : typeof w === "number" ? msUitWaarde(w) : null;
-    if (ms === null) throw new WerkkopieFout("syntaxis", `Parameter ‘${naam}’ verwacht een datum, niet ‘${String(w)}’.`);
+    if (ms === null) throw new WerkkopieFout("syntaxis", vt("errors.parameterExpectsDate", { name: naam, value: String(w) }));
     return isoUitMs(ms);
   }
   if (type === "bit") return typeof w === "string" ? (/^(true|waar|ja|yes|-1|1)$/i.test(w.trim()) ? 1 : 0) : w ? 1 : 0;
   if (["byte", "short", "long", "integer", "currency", "ieeesingle", "ieeedouble", "single", "double", "decimal"].includes(type)) {
     if (typeof w === "boolean") return w ? -1 : 0;
     const n = typeof w === "number" ? w : Number(String(w).trim().replace(",", "."));
-    if (!Number.isFinite(n)) throw new WerkkopieFout("syntaxis", `Parameter ‘${naam}’ verwacht een getal, niet ‘${String(w)}’.`);
+    if (!Number.isFinite(n)) throw new WerkkopieFout("syntaxis", vt("errors.parameterExpectsNumber", { name: naam, value: String(w) }));
     return ["byte", "short", "long", "integer"].includes(type) ? Math.round(n) : n;
   }
   if (type === "text" || type === "memo") return typeof w === "boolean" ? (w ? "Waar" : "Onwaar") : w instanceof Uint8Array ? w : String(w);
@@ -141,7 +144,7 @@ export class SqliteWerkkopie implements Werkkopie {
   }
 
   private get open(): Database {
-    if (!this.db) throw new WerkkopieFout("intern", "De werkkopie is gesloten.");
+    if (!this.db) throw new WerkkopieFout("intern", vt("errors.closed"));
     return this.db;
   }
 
@@ -202,7 +205,7 @@ export class SqliteWerkkopie implements Werkkopie {
 
   private tabelInfo(naam: string) {
     const t = this.schema().get(kl(naam));
-    if (!t) throw new WerkkopieFout("onbekend-object", `Tabel ‘${naam}’ bestaat niet in de werkkopie.`);
+    if (!t) throw new WerkkopieFout("onbekend-object", vt("errors.tableMissing", { name: naam }));
     return t;
   }
 
@@ -282,7 +285,7 @@ export class SqliteWerkkopie implements Werkkopie {
         try {
           return this.alle(sql, waarden(slots)).map((r) => r[0] as Waarde);
         } catch (fout) {
-          throw sqliteFout(fout, "Kolomkoppen van de kruistabel ophalen mislukt");
+          throw sqliteFout(fout, vt("context.crosstabHeadings"));
         }
       },
     };
@@ -305,8 +308,8 @@ export class SqliteWerkkopie implements Werkkopie {
         throw new WerkkopieFout(
           "parameter-ontbreekt",
           slot.naam === null
-            ? `Geef een waarde voor parameter ${(slot.positie ?? 0) + 1} (?).`
-            : `Geef een waarde voor parameter ‘${slot.naam}’.`,
+            ? vt("errors.parameterPositional", { n: (slot.positie ?? 0) + 1 })
+            : vt("errors.parameterNamed", { name: slot.naam }),
         );
       return parameterWaarde(w, slot);
     });
@@ -336,7 +339,7 @@ export class SqliteWerkkopie implements Werkkopie {
 
   async voerQueryUit(naam: string, parameters?: Record<string, Waarde>): Promise<QueryResultaat> {
     const q = this.queryKaart().get(kl(naam));
-    if (!q) throw new WerkkopieFout("onbekend-object", `Query ‘${naam}’ bestaat niet in de werkkopie.`);
+    if (!q) throw new WerkkopieFout("onbekend-object", vt("errors.queryMissing", { name: naam }));
     return this.voerVertaaldUit(q.sql, parameters, STANDAARD_LIMIET, q);
   }
 
@@ -364,7 +367,7 @@ export class SqliteWerkkopie implements Werkkopie {
       try {
         stmt = db.prepare(v.sql);
       } catch (fout) {
-        throw sqliteFout(fout, "De vertaalde query is ongeldig");
+        throw sqliteFout(fout, vt("context.translatedInvalid"));
       }
       try {
         stmt.bind(binding);
@@ -394,7 +397,7 @@ export class SqliteWerkkopie implements Werkkopie {
         if (metRowid) resultaat.bron = { tabel: v.rowidTabel!, rowids };
         return resultaat;
       } catch (fout) {
-        throw sqliteFout(fout, "Uitvoeren van de query mislukt");
+        throw sqliteFout(fout, vt("context.queryFailed"));
       } finally {
         stmt.free();
       }
@@ -415,7 +418,7 @@ export class SqliteWerkkopie implements Werkkopie {
     } catch (fout) {
       db.run("ROLLBACK TO openaec_query");
       db.run("RELEASE openaec_query");
-      throw sqliteFout(fout, "Uitvoeren van de actiequery mislukt; er is niets gewijzigd");
+      throw sqliteFout(fout, vt("context.actionQueryFailed"));
     }
   }
 
@@ -424,7 +427,7 @@ export class SqliteWerkkopie implements Werkkopie {
     const eerste = /^\s*(\w+)/.exec(sql)?.[1]?.toUpperCase() ?? "";
     const leest = ["SELECT", "WITH", "VALUES", "EXPLAIN"].includes(eerste) || (eerste === "PRAGMA" && !/=/.test(sql));
     if (!leest && /_openaec_|sqlite_master|sqlite_schema/i.test(sql))
-      throw new WerkkopieFout("alleen-lezen", "De metatabellen van de werkkopie zijn alleen via de werkkopiemethoden te wijzigen.");
+      throw new WerkkopieFout("alleen-lezen", vt("errors.metaTablesProtected"));
     let binding: BindParams = [];
     if (Array.isArray(parameters)) binding = parameters.map((w) => naarSql(w));
     else if (parameters)
@@ -433,7 +436,7 @@ export class SqliteWerkkopie implements Werkkopie {
     try {
       stmt = db.prepare(sql);
     } catch (fout) {
-      throw sqliteFout(fout, "SQLite weigert de opdracht");
+      throw sqliteFout(fout, vt("context.sqliteRefused"));
     }
     try {
       stmt.bind(binding);
@@ -453,7 +456,7 @@ export class SqliteWerkkopie implements Werkkopie {
       }
       return { kolommen, rijen, gewijzigd: leest ? 0 : db.getRowsModified(), afgekapt, uitgevoerd: sql };
     } catch (fout) {
-      throw sqliteFout(fout, "Uitvoeren mislukt");
+      throw sqliteFout(fout, vt("context.runFailed"));
     } finally {
       stmt.free();
     }
@@ -462,7 +465,7 @@ export class SqliteWerkkopie implements Werkkopie {
   // ------------------------------------------------------------- rijen
 
   private schrijfbaar(tabel: string) {
-    if (isMeta(tabel)) throw new WerkkopieFout("alleen-lezen", `‘${tabel}’ is een metatabel van de werkkopie.`);
+    if (isMeta(tabel)) throw new WerkkopieFout("alleen-lezen", vt("errors.isMetaTable", { name: tabel }));
     return this.tabelInfo(tabel);
   }
 
@@ -482,7 +485,7 @@ export class SqliteWerkkopie implements Werkkopie {
     let orde = " ORDER BY rowid";
     if (verzoek.sorteer) {
       const veld = t.velden.find((v) => kl(v.naam) === kl(verzoek.sorteer!.veld));
-      if (!veld) throw new WerkkopieFout("onbekend-object", `Veld ‘${verzoek.sorteer.veld}’ bestaat niet in tabel ‘${t.naam}’.`);
+      if (!veld) throw new WerkkopieFout("onbekend-object", vt("errors.fieldMissing", { field: verzoek.sorteer.veld, table: t.naam }));
       orde = ` ORDER BY ${citeer(veld.naam)}${verzoek.sorteer.aflopend ? " DESC" : ""}, rowid`;
     }
     const totaal = Number(this.alle(`SELECT COUNT(*) FROM ${citeer(t.naam)}${waar}`, params)[0][0]);
@@ -519,10 +522,10 @@ export class SqliteWerkkopie implements Werkkopie {
   private kolommenVoor(t: ReturnType<SqliteWerkkopie["tabelInfo"]>, waarden: Record<string, Waarde>) {
     return Object.entries(waarden).map(([naam, w]) => {
       const veld = t.velden.find((v) => kl(v.naam) === kl(naam));
-      if (!veld) throw new WerkkopieFout("onbekend-object", `Veld ‘${naam}’ bestaat niet in tabel ‘${t.naam}’.`);
+      if (!veld) throw new WerkkopieFout("onbekend-object", vt("errors.fieldMissing", { field: naam, table: t.naam }));
       if (veld.soort === "datum" && typeof w === "string" && w.trim()) {
         const ms = msUitTekst(w);
-        if (ms === null) throw new WerkkopieFout("syntaxis", `‘${w}’ is geen geldige datum voor veld ‘${veld.naam}’.`);
+        if (ms === null) throw new WerkkopieFout("syntaxis", vt("errors.invalidDateForField", { value: w, field: veld.naam }));
         return { veld, waarde: isoUitMs(ms) as SqlValue };
       }
       return { veld, waarde: naarSql(w) };
@@ -549,7 +552,7 @@ export class SqliteWerkkopie implements Werkkopie {
     const sql = paren.length
       ? `INSERT INTO ${citeer(t.naam)} (${paren.map((p) => citeer(p.veld.naam)).join(", ")}) VALUES (${paren.map(() => "?").join(", ")})`
       : `INSERT INTO ${citeer(t.naam)} DEFAULT VALUES`;
-    return this.schrijf(`Rij toevoegen aan ‘${t.naam}’ mislukt`, () => {
+    return this.schrijf(vt("context.insertFailed", { table: t.naam }), () => {
       this.open.run(sql, paren.map((p) => p.waarde));
       return Number(this.open.exec("SELECT last_insert_rowid()")[0].values[0][0]);
     });
@@ -559,36 +562,36 @@ export class SqliteWerkkopie implements Werkkopie {
     const t = this.schrijfbaar(tabel);
     const paren = this.kolommenVoor(t, waarden);
     if (!paren.length) return;
-    this.schrijf(`Rij in ‘${t.naam}’ wijzigen mislukt`, () => {
+    this.schrijf(vt("context.updateFailed", { table: t.naam }), () => {
       this.open.run(
         `UPDATE ${citeer(t.naam)} SET ${paren.map((p) => `${citeer(p.veld.naam)} = ?`).join(", ")} WHERE rowid = ?`,
         [...paren.map((p) => p.waarde), rowid],
       );
     });
-    if (!this.open.getRowsModified()) throw new WerkkopieFout("onbekend-object", `Rij ${rowid} bestaat niet in tabel ‘${t.naam}’.`);
+    if (!this.open.getRowsModified()) throw new WerkkopieFout("onbekend-object", vt("errors.rowMissing", { row: rowid, table: t.naam }));
   }
 
   async verwijder(tabel: string, rowid: number): Promise<void> {
     const t = this.schrijfbaar(tabel);
-    this.schrijf(`Rij uit ‘${t.naam}’ verwijderen mislukt`, () =>
+    this.schrijf(vt("context.deleteFailed", { table: t.naam }), () =>
       this.open.run(`DELETE FROM ${citeer(t.naam)} WHERE rowid = ?`, [rowid]),
     );
-    if (!this.open.getRowsModified()) throw new WerkkopieFout("onbekend-object", `Rij ${rowid} bestaat niet in tabel ‘${t.naam}’.`);
+    if (!this.open.getRowsModified()) throw new WerkkopieFout("onbekend-object", vt("errors.rowMissing", { row: rowid, table: t.naam }));
   }
 
   // ------------------------------------------------------------- tabellen
 
   async maakTabel(schema: Omit<TabelSchema, "aantal" | "herkomst">): Promise<void> {
     const naam = schema.naam?.trim();
-    if (!naam) throw new WerkkopieFout("syntaxis", "Geef de tabel een naam.");
-    if (isMeta(naam)) throw new WerkkopieFout("alleen-lezen", `‘${naam}’ is een gereserveerde naam van de werkkopie.`);
+    if (!naam) throw new WerkkopieFout("syntaxis", vt("errors.tableNameMissing"));
+    if (isMeta(naam)) throw new WerkkopieFout("alleen-lezen", vt("errors.reservedName", { name: naam }));
     if (this.schema().has(kl(naam)) || this.queryKaart().has(kl(naam)))
-      throw new WerkkopieFout("beperking", `Er bestaat al een tabel of query ‘${naam}’.`);
-    if (!schema.velden.length) throw new WerkkopieFout("syntaxis", "Een tabel heeft minstens één veld nodig.");
+      throw new WerkkopieFout("beperking", vt("errors.tableOrQueryExists", { name: naam }));
+    if (!schema.velden.length) throw new WerkkopieFout("syntaxis", vt("errors.tableNeedsField"));
     const namen = new Set<string>();
     for (const v of schema.velden) {
-      if (!v.naam?.trim()) throw new WerkkopieFout("syntaxis", "Elk veld heeft een naam nodig.");
-      if (namen.has(kl(v.naam))) throw new WerkkopieFout("syntaxis", `Veld ‘${v.naam}’ komt twee keer voor.`);
+      if (!v.naam?.trim()) throw new WerkkopieFout("syntaxis", vt("errors.fieldNameMissing"));
+      if (namen.has(kl(v.naam))) throw new WerkkopieFout("syntaxis", vt("errors.fieldDuplicate", { field: v.naam }));
       namen.add(kl(v.naam));
     }
     const primair = schema.velden.filter((v) => v.primair);
@@ -609,9 +612,9 @@ export class SqliteWerkkopie implements Werkkopie {
     if (verwijzend.length)
       throw new WerkkopieFout(
         "beperking",
-        `Tabel ‘${t.naam}’ kan niet worden verwijderd: relatie ‘${verwijzend[0][0]}’ vanuit ‘${verwijzend[0][1]}’ dwingt referentiële integriteit af.`,
+        vt("errors.tableReferenced", { table: t.naam, relationship: verwijzend[0][0], from: verwijzend[0][1] }),
       );
-    this.schrijf(`Tabel ‘${t.naam}’ verwijderen mislukt`, () => {
+    this.schrijf(vt("context.dropFailed", { table: t.naam }), () => {
       this.open.run("SAVEPOINT openaec_drop");
       try {
         this.open.run(`DROP TABLE ${citeer(t.naam)}`);
@@ -700,7 +703,7 @@ export class SqliteWerkkopie implements Werkkopie {
 
   private zoekVeld(t: ReturnType<SqliteWerkkopie["tabelInfo"]>, veld: string): VeldSchema {
     const v = t.velden.find((x) => kl(x.naam) === kl(String(veld ?? "")));
-    if (!v) throw new WerkkopieFout("onbekend-object", `Veld ‘${veld}’ bestaat niet in tabel ‘${t.naam}’.`);
+    if (!v) throw new WerkkopieFout("onbekend-object", vt("errors.fieldMissing", { field: veld, table: t.naam }));
     return v;
   }
 
@@ -735,10 +738,10 @@ export class SqliteWerkkopie implements Werkkopie {
   ): string[] {
     const db = this.open;
     if (this.transactie)
-      throw new WerkkopieFout("beperking", `De structuur van ‘${t.naam}’ kan niet worden gewijzigd tijdens een lopende transactie; bevestig of draai die eerst terug.`);
+      throw new WerkkopieFout("beperking", vt("errors.structureInTransaction", { table: t.naam }));
     const oudSql = String(this.alle("SELECT sql FROM sqlite_master WHERE type = 'table' AND name = ?", [t.naam])[0]?.[0] ?? "");
     if (/\)\s*WITHOUT\s+ROWID\s*;?\s*$/i.test(oudSql))
-      throw new WerkkopieFout("niet-ondersteund", `Tabel ‘${t.naam}’ is een WITHOUT ROWID-tabel; die kan de werkkopie niet herbouwen.`);
+      throw new WerkkopieFout("niet-ondersteund", vt("errors.withoutRowid", { table: t.naam }));
     const meldingen: string[] = [];
     const naarNieuw = new Map<string, string>();
     for (const k of kolommen) if (k.bron) naarNieuw.set(kl(k.bron), k.veld.naam);
@@ -750,7 +753,7 @@ export class SqliteWerkkopie implements Werkkopie {
     if (primair.length > 1) delen.push(`PRIMARY KEY (${primair.map(citeer).join(", ")})`);
     for (const u of this.uniekeSets(t.naam).filter((x) => x.beperking)) {
       const nieuw = u.kolommen.map(vertaal);
-      if (nieuw.some((k) => !k)) meldingen.push(`De UNIQUE-beperking op (${u.kolommen.join(", ")}) is vervallen.`);
+      if (nieuw.some((k) => !k)) meldingen.push(vt("structure.uniqueDropped", { columns: u.kolommen.join(", ") }));
       else delen.push(`UNIQUE (${nieuw.map((k) => citeer(k!)).join(", ")})`);
     }
     const fks = this.fkLijst(t.naam).filter((fk) => !opties.zonderFk?.(fk));
@@ -760,7 +763,7 @@ export class SqliteWerkkopie implements Werkkopie {
       const zelf = kl(fk.tabel) === kl(t.naam);
       const naar = fk.naar.map((n) => (n === null ? null : zelf ? vertaal(n) : n));
       if (van.some((k) => !k) || (zelf && naar.some((n, i) => n === null && fk.naar[i] !== null))) {
-        meldingen.push(`De verwijzing (${fk.van.join(", ")}) naar ‘${fk.tabel}’ is vervallen.`);
+        meldingen.push(vt("structure.foreignKeyDropped", { columns: fk.van.join(", "), table: fk.tabel }));
         continue;
       }
       const lijst = naar.every((n) => n !== null) ? ` (${(naar as string[]).map(citeer).join(", ")})` : "";
@@ -774,7 +777,7 @@ export class SqliteWerkkopie implements Werkkopie {
     const indexen: { naam: string; sql: string }[] = [];
     for (const [naam, sql] of this.alle("SELECT name, sql FROM sqlite_master WHERE type = 'index' AND tbl_name = ? AND sql IS NOT NULL", [t.naam])) {
       const kol = this.alle(`PRAGMA index_info(${citeer(String(naam))})`).map((k) => (k[2] === null ? null : String(k[2])));
-      if (kol.some((k) => k !== null && !vertaal(k))) meldingen.push(`Index ‘${String(naam)}’ is vervallen omdat een veld ervan is verwijderd.`);
+      if (kol.some((k) => k !== null && !vertaal(k))) meldingen.push(vt("structure.indexDropped", { name: String(naam) }));
       else indexen.push({ naam: String(naam), sql: String(sql) });
     }
     const triggers = this.alle("SELECT name, sql FROM sqlite_master WHERE type = 'trigger' AND tbl_name = ? AND sql IS NOT NULL", [t.naam]).map((r) => ({
@@ -785,7 +788,7 @@ export class SqliteWerkkopie implements Werkkopie {
     for (const weg of t.velden.filter((v) => !vertaal(v.naam)))
       for (const tr of triggers)
         if (naamPatroon(weg.naam).test(tr.sql))
-          throw new WerkkopieFout("beperking", `Trigger ‘${tr.naam}’ gebruikt veld ‘${weg.naam}’; pas eerst de trigger aan. Er is niets gewijzigd.`);
+          throw new WerkkopieFout("beperking", vt("errors.triggerUsesField", { trigger: tr.naam, field: weg.naam }));
     const betrokken = [t.naam, ...this.verwijzendNaar(t.naam).map((x) => x.tabel)];
     const schendingenVoor = this.fkSchendingen(betrokken);
 
@@ -824,7 +827,12 @@ export class SqliteWerkkopie implements Werkkopie {
             if (c.ok) waarden.push(c.waarde);
             else {
               goed = false;
-              probleem(`veld ‘${k.veld.naam}’: ${c.reden}${c.reden.startsWith("leeg") ? "" : ` (${soortNaam(k.veld.soort)})`}`, rowid);
+              probleem(
+                c.leeg
+                  ? vt("structure.fieldProblem", { field: k.veld.naam, reason: c.reden })
+                  : vt("structure.fieldProblemWithType", { field: k.veld.naam, reason: c.reden, type: soortNaam(k.veld.soort) }),
+                rowid,
+              );
             }
           });
           if (!goed) continue;
@@ -841,7 +849,7 @@ export class SqliteWerkkopie implements Werkkopie {
       }
       if (problemen.size) {
         const lijst = [...problemen].map(([reden, p]) => `${voorbeeldRowids(p.rowids, p.aantal)}: ${reden}`);
-        throw new WerkkopieFout("beperking", `De gegevens van ‘${t.naam}’ passen niet in de nieuwe structuur — ${lijst.join("; ")}. Er is niets gewijzigd.`);
+        throw new WerkkopieFout("beperking", vt("errors.dataDoesNotFit", { table: t.naam, problems: lijst.join("; ") }));
       }
       // AutoNummer zonder rowid-alias: lege waarden doornummeren.
       for (const k of kolommen)
@@ -865,13 +873,13 @@ export class SqliteWerkkopie implements Werkkopie {
         try {
           db.run(i.sql);
         } catch (fout) {
-          throw new WerkkopieFout("beperking", `Index ‘${i.naam}’ kan niet worden teruggezet (${melding(fout)}). Er is niets gewijzigd.`);
+          throw new WerkkopieFout("beperking", vt("errors.indexRestore", { name: i.naam, error: melding(fout) }));
         }
       for (const tr of triggers)
         try {
           db.run(tr.sql);
         } catch (fout) {
-          throw new WerkkopieFout("beperking", `Trigger ‘${tr.naam}’ past niet bij de nieuwe structuur (${melding(fout)}). Er is niets gewijzigd.`);
+          throw new WerkkopieFout("beperking", vt("errors.triggerRestore", { name: tr.naam, error: melding(fout) }));
         }
       this.ongeldig();
       const schendingenNa = this.fkSchendingen(betrokken);
@@ -884,7 +892,7 @@ export class SqliteWerkkopie implements Werkkopie {
       db.run("COMMIT");
     } catch (fout) {
       db.run("ROLLBACK");
-      throw sqliteFout(fout, `Tabel ‘${t.naam}’ herbouwen mislukt; er is niets gewijzigd`);
+      throw sqliteFout(fout, vt("context.rebuildFailed", { table: t.naam }));
     } finally {
       db.run("PRAGMA foreign_keys = ON");
       this.ongeldig();
@@ -899,27 +907,27 @@ export class SqliteWerkkopie implements Werkkopie {
     const nieuw: VeldSchema = { ...veld, naam: veld.naam.trim() };
     if (nieuw.soort !== "tekst") delete nieuw.lengte;
     if (t.velden.some((v) => kl(v.naam) === kl(nieuw.naam)))
-      throw new WerkkopieFout("beperking", `Tabel ‘${t.naam}’ heeft al een veld ‘${nieuw.naam}’.`);
+      throw new WerkkopieFout("beperking", vt("errors.fieldExists", { table: t.naam, field: nieuw.naam }));
     if (nieuw.primair)
-      throw new WerkkopieFout("niet-ondersteund", "Voeg het veld eerst toe en stel daarna de primaire sleutel in (zetPrimaireSleutel).");
+      throw new WerkkopieFout("niet-ondersteund", vt("errors.addFieldThenKey"));
     const aantal = Number(this.alle(`SELECT COUNT(*) FROM ${citeer(t.naam)}`)[0][0]);
     const zonderStandaard = nieuw.standaard === undefined || nieuw.standaard === null;
     if (nieuw.verplicht && zonderStandaard && nieuw.soort !== "autonummer" && aantal > 0)
       throw new WerkkopieFout(
         "beperking",
-        `Veld ‘${nieuw.naam}’ is verplicht maar heeft geen standaardwaarde, en ${aantal} bestaande rij(en) zouden leeg blijven. Geef een standaardwaarde of maak het veld (nog) niet verplicht.`,
+        vt("errors.requiredWithoutDefault", { field: nieuw.naam, count: aantal }),
       );
     if (nieuw.verplicht && zonderStandaard) {
       // ADD COLUMN … NOT NULL kan in SQLite alleen met een standaardwaarde: herbouwen.
       const meldingen = this.herbouw(t, [...t.velden.map((v) => ({ veld: v, bron: v.naam })), { veld: nieuw, bron: null }]);
       return { herbouwd: true, querys: [], meldingen };
     }
-    this.inSavepoint(`Veld ‘${nieuw.naam}’ toevoegen mislukt`, () => {
+    this.inSavepoint(vt("context.addFieldFailed", { field: nieuw.naam }), () => {
       this.open.run(`ALTER TABLE ${citeer(t.naam)} ADD COLUMN ${kolomDefinitie(nieuw, false)}`);
       if (nieuw.soort === "autonummer") this.open.run(`UPDATE ${citeer(t.naam)} SET ${citeer(nieuw.naam)} = rowid`);
     });
     this.ddlGewijzigd = true;
-    return { herbouwd: false, querys: [], meldingen: nieuw.soort === "autonummer" && aantal ? [`Bestaande rijen zijn doorgenummerd.`] : [] };
+    return { herbouwd: false, querys: [], meldingen: nieuw.soort === "autonummer" && aantal ? [vt("structure.rowsNumbered")] : [] };
   }
 
   async hernoemVeld(tabel: string, veld: string, nieuweNaam: string): Promise<StructuurResultaat> {
@@ -929,9 +937,9 @@ export class SqliteWerkkopie implements Werkkopie {
     controleerVeld({ ...v, naam });
     if (naam === v.naam) return { herbouwd: false, querys: [], meldingen: [] };
     if (kl(naam) !== kl(v.naam) && t.velden.some((x) => kl(x.naam) === kl(naam)))
-      throw new WerkkopieFout("beperking", `Tabel ‘${t.naam}’ heeft al een veld ‘${naam}’.`);
+      throw new WerkkopieFout("beperking", vt("errors.fieldExists", { table: t.naam, field: naam }));
     const querys = this.querysMetVeld(t.naam, v.naam);
-    this.inSavepoint(`Veld ‘${v.naam}’ hernoemen mislukt`, () => {
+    this.inSavepoint(vt("context.renameFieldFailed", { field: v.naam }), () => {
       const db = this.open;
       db.run(`ALTER TABLE ${citeer(t.naam)} RENAME COLUMN ${citeer(v.naam)} TO ${citeer(naam)}`);
       // Relatiemetadata en bijlagen volgen de nieuwe naam (FOREIGN KEY-teksten past SQLite zelf aan).
@@ -946,7 +954,7 @@ export class SqliteWerkkopie implements Werkkopie {
     return {
       herbouwd: false,
       querys,
-      meldingen: querys.length ? [`${querys.length} opgeslagen query(’s) noemen ‘${v.naam}’ en zijn niet bijgewerkt.`] : [],
+      meldingen: querys.length ? [vt("structure.queriesNotUpdated", { count: querys.length, field: v.naam })] : [],
     };
   }
 
@@ -955,12 +963,12 @@ export class SqliteWerkkopie implements Werkkopie {
     const namen: string[] = [];
     for (const r of this.alle("SELECT naam, tabel, velden, naarTabel, naarVelden FROM _openaec_relaties")) {
       const bevat = (tab: unknown, lijst: unknown) => kl(String(tab)) === kl(t.naam) && (JSON.parse(String(lijst)) as string[]).some((x) => kl(x) === kl(veld));
-      if (bevat(r[1], r[2]) || bevat(r[3], r[4])) namen.push(`relatie ‘${String(r[0])}’`);
+      if (bevat(r[1], r[2]) || bevat(r[3], r[4])) namen.push(vt("usage.relationship", { name: String(r[0]) }));
     }
     if (!namen.length) {
-      for (const fk of this.fkLijst(t.naam)) if (fk.van.some((x) => kl(x) === kl(veld))) namen.push(`de verwijzing naar ‘${fk.tabel}’`);
+      for (const fk of this.fkLijst(t.naam)) if (fk.van.some((x) => kl(x) === kl(veld))) namen.push(vt("usage.referenceTo", { table: fk.tabel }));
       for (const { tabel, fk } of this.verwijzendNaar(t.naam))
-        if (fk.naar.some((x, i) => (x === null ? kl(t.primair[i] ?? "") === kl(veld) : kl(x) === kl(veld)))) namen.push(`de verwijzing vanuit ‘${tabel}’`);
+        if (fk.naar.some((x, i) => (x === null ? kl(t.primair[i] ?? "") === kl(veld) : kl(x) === kl(veld)))) namen.push(vt("usage.referenceFrom", { table: tabel }));
     }
     return namen;
   }
@@ -968,17 +976,17 @@ export class SqliteWerkkopie implements Werkkopie {
   async verwijderVeld(tabel: string, veld: string): Promise<StructuurResultaat> {
     const t = this.schrijfbaar(tabel);
     const v = this.zoekVeld(t, veld);
-    if (t.velden.length === 1) throw new WerkkopieFout("beperking", `‘${v.naam}’ is het enige veld van ‘${t.naam}’; een tabel moet minstens één veld houden.`);
+    if (t.velden.length === 1) throw new WerkkopieFout("beperking", vt("errors.lastField", { field: v.naam, table: t.naam }));
     const relaties = this.relatiesMetVeld(t, v.naam);
     if (relaties.length)
-      throw new WerkkopieFout("beperking", `Veld ‘${v.naam}’ wordt gebruikt door ${relaties.join(", ")}. Verwijder eerst die relatie.`);
+      throw new WerkkopieFout("beperking", vt("errors.fieldInUse", { field: v.naam, users: relaties.join(", ") }));
     const querys = this.querysMetVeld(t.naam, v.naam);
-    const extra = querys.length ? [`${querys.length} opgeslagen query(’s) noemen ‘${v.naam}’ en zijn niet bijgewerkt.`] : [];
+    const extra = querys.length ? [vt("structure.queriesNotUpdated", { count: querys.length, field: v.naam })] : [];
     // Eerst ALTER TABLE DROP COLUMN; SQLite weigert dat bij een sleutel, index of beperking: dan herbouwen.
     let gelukt = false;
     if (!v.primair)
       try {
-        this.inSavepoint(`Veld ‘${v.naam}’ verwijderen mislukt`, () => {
+        this.inSavepoint(vt("context.deleteFieldFailed", { field: v.naam }), () => {
           this.open.run(`ALTER TABLE ${citeer(t.naam)} DROP COLUMN ${citeer(v.naam)}`);
           this.open.run("DELETE FROM _openaec_bijlagen WHERE lower(tabel) = lower(?) AND lower(veld) = lower(?)", [t.naam, v.naam]);
         });
@@ -996,7 +1004,7 @@ export class SqliteWerkkopie implements Werkkopie {
     const meldingen = this.herbouw(t, kolommen, {
       binnen: () => this.open.run("DELETE FROM _openaec_bijlagen WHERE lower(tabel) = lower(?) AND lower(veld) = lower(?)", [t.naam, v.naam]),
     });
-    if (v.primair) meldingen.unshift("De primaire sleutel is vervallen omdat een sleutelveld is verwijderd.");
+    if (v.primair) meldingen.unshift(vt("structure.keyDropped"));
     return { herbouwd: true, querys, meldingen: [...meldingen, ...extra] };
   }
 
@@ -1019,24 +1027,24 @@ export class SqliteWerkkopie implements Werkkopie {
     if (nieuw.soort !== v.soort) {
       const relaties = this.relatiesMetVeld(t, v.naam);
       if (relaties.length)
-        throw new WerkkopieFout("beperking", `Het gegevenstype van ‘${v.naam}’ kan niet wijzigen zolang ${relaties.join(", ")} het veld gebruikt. Verwijder eerst die relatie.`);
+        throw new WerkkopieFout("beperking", vt("errors.typeInUse", { field: v.naam, users: relaties.join(", ") }));
     }
     const querys = nieuw.soort !== v.soort ? this.querysMetVeld(t.naam, v.naam) : [];
     const meldingen = this.herbouw(
       t,
       t.velden.map((x) => ({ veld: x === v ? nieuw : x, bron: x.naam })),
     );
-    if (querys.length) meldingen.push(`${querys.length} opgeslagen query(’s) noemen ‘${v.naam}’; controleer ze na de typewijziging.`);
+    if (querys.length) meldingen.push(vt("structure.queriesCheckAfterType", { count: querys.length, field: v.naam }));
     return { herbouwd: true, querys, meldingen };
   }
 
   async zetPrimaireSleutel(tabel: string, velden: string[]): Promise<StructuurResultaat> {
     const t = this.schrijfbaar(tabel);
-    if (!Array.isArray(velden)) throw new WerkkopieFout("syntaxis", "Geef de sleutelvelden als lijst.");
+    if (!Array.isArray(velden)) throw new WerkkopieFout("syntaxis", vt("errors.keyFieldsList"));
     const sleutel = velden.map((n) => this.zoekVeld(t, n));
-    if (new Set(sleutel).size !== sleutel.length) throw new WerkkopieFout("syntaxis", "Een veld komt twee keer voor in de sleutel.");
+    if (new Set(sleutel).size !== sleutel.length) throw new WerkkopieFout("syntaxis", vt("errors.keyDuplicate"));
     if (sleutel.some((v) => v.soort === "memo" || v.soort === "binair"))
-      throw new WerkkopieFout("beperking", "Memo- en binaire velden kunnen geen primaire sleutel zijn.");
+      throw new WerkkopieFout("beperking", vt("errors.keyType"));
     const namen = sleutel.map((v) => v.naam);
     const huidig = new Set(t.primair.map(kl));
     if (namen.length === huidig.size && namen.every((n) => huidig.has(kl(n)))) return { herbouwd: false, querys: [], meldingen: [] };
@@ -1049,19 +1057,21 @@ export class SqliteWerkkopie implements Werkkopie {
       if (!blijft)
         throw new WerkkopieFout(
           "beperking",
-          `‘${van}’ verwijst met referentiële integriteit naar ${doel ? `(${doel.join(", ")})` : "de primaire sleutel"} van ‘${t.naam}’; die moet een sleutel of unieke index blijven. Verwijder eerst die relatie.`,
+          doel
+            ? vt("errors.keyReferencedFields", { from: van, fields: doel.join(", "), table: t.naam })
+            : vt("errors.keyReferenced", { from: van, table: t.naam }),
         );
     }
     if (namen.length) {
       const kol = namen.map(citeer);
       const leeg = this.alle(`SELECT rowid FROM ${citeer(t.naam)} WHERE ${kol.map((k) => `${k} IS NULL`).join(" OR ")} ORDER BY rowid`).map((r) => Number(r[0]));
       if (leeg.length)
-        throw new WerkkopieFout("beperking", `Primaire sleutel niet ingesteld: ${voorbeeldRowids(leeg)} hebben een leeg sleutelveld. Er is niets gewijzigd.`);
+        throw new WerkkopieFout("beperking", vt("errors.keyEmpty", { rows: voorbeeldRowids(leeg) }));
       const dubbel = this.alle(
         `SELECT rowid FROM ${citeer(t.naam)} WHERE (${kol.join(", ")}) IN (SELECT ${kol.join(", ")} FROM ${citeer(t.naam)} GROUP BY ${kol.join(", ")} HAVING COUNT(*) > 1) ORDER BY rowid`,
       ).map((r) => Number(r[0]));
       if (dubbel.length)
-        throw new WerkkopieFout("beperking", `Primaire sleutel niet ingesteld: ${voorbeeldRowids(dubbel)} hebben een dubbele sleutelwaarde. Er is niets gewijzigd.`);
+        throw new WerkkopieFout("beperking", vt("errors.keyDuplicateValues", { rows: voorbeeldRowids(dubbel) }));
     }
     const set = new Set(namen.map(kl));
     const meldingen = this.herbouw(
@@ -1079,24 +1089,29 @@ export class SqliteWerkkopie implements Werkkopie {
   // ------------------------------------------------------------- relaties
 
   async maakRelatie(relatie: NieuweRelatie): Promise<string> {
-    if (!relatie || typeof relatie !== "object") throw new WerkkopieFout("syntaxis", "Geef de relatie op.");
+    if (!relatie || typeof relatie !== "object") throw new WerkkopieFout("syntaxis", vt("errors.relationshipMissing"));
     const van = this.schrijfbaar(relatie.tabel);
     const naar = this.schrijfbaar(relatie.naarTabel);
     const velden = (relatie.velden ?? []).map((v) => this.zoekVeld(van, v));
     const naarVelden = (relatie.naarVelden ?? []).map((v) => this.zoekVeld(naar, v));
     if (!velden.length || velden.length !== naarVelden.length)
-      throw new WerkkopieFout("syntaxis", "Geef evenveel velden aan beide kanten van de relatie (minstens één).");
+      throw new WerkkopieFout("syntaxis", vt("errors.relationshipFieldCount"));
     velden.forEach((v, i) => {
       if (!passendeSoort(v.soort, naarVelden[i].soort))
         throw new WerkkopieFout(
           "beperking",
-          `‘${van.naam}.${v.naam}’ (${soortNaam(v.soort)}) en ‘${naar.naam}.${naarVelden[i].naam}’ (${soortNaam(naarVelden[i].soort)}) hebben geen passend gegevenstype.`,
+          vt("errors.relationshipTypes", {
+            from: `${van.naam}.${v.naam}`,
+            fromType: soortNaam(v.soort),
+            to: `${naar.naam}.${naarVelden[i].naam}`,
+            toType: soortNaam(naarVelden[i].soort),
+          }),
         );
     });
     const bestaand = new Set(this.alle("SELECT naam FROM _openaec_relaties").map((r) => kl(String(r[0]))));
     let naam = String(relatie.naam ?? "").trim();
     if (naam) {
-      if (bestaand.has(kl(naam))) throw new WerkkopieFout("beperking", `Er bestaat al een relatie ‘${naam}’.`);
+      if (bestaand.has(kl(naam))) throw new WerkkopieFout("beperking", vt("errors.relationshipExists", { name: naam }));
     } else {
       const basis = `${naar.naam}${van.naam}`;
       naam = basis;
@@ -1118,14 +1133,14 @@ export class SqliteWerkkopie implements Werkkopie {
     ];
     const leg = () => this.open.run("INSERT INTO _openaec_relaties VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", rij);
     if (!integriteit) {
-      this.schrijf("Relatie vastleggen mislukt", leg);
+      this.schrijf(vt("context.saveRelationshipFailed"), leg);
       this.ddlGewijzigd = true;
       return naam;
     }
     if (!this.isUniek(naar.naam, naarVelden.map((v) => v.naam), naar.primair))
       throw new WerkkopieFout(
         "beperking",
-        `Referentiële integriteit kan alleen naar een primaire sleutel of unieke index: (${naarVelden.map((v) => v.naam).join(", ")}) in ‘${naar.naam}’ is dat niet.`,
+        vt("errors.integrityNeedsKey", { fields: naarVelden.map((v) => v.naam).join(", "), table: naar.naam }),
       );
     const c = velden.map((v) => `c.${citeer(v.naam)}`);
     const schendingen = this.alle(
@@ -1134,7 +1149,7 @@ export class SqliteWerkkopie implements Werkkopie {
     if (schendingen.length)
       throw new WerkkopieFout(
         "beperking",
-        `Referentiële integriteit is niet mogelijk: ${voorbeeldRowids(schendingen)} in ‘${van.naam}’ verwijzen naar een niet-bestaande rij in ‘${naar.naam}’. Pas die gegevens aan of maak de relatie zonder integriteit.`,
+        vt("errors.integrityViolations", { rows: voorbeeldRowids(schendingen), from: van.naam, to: naar.naam }),
       );
     this.herbouw(van, van.velden.map((v) => ({ veld: v, bron: v.naam })), {
       extraFk: {
@@ -1151,13 +1166,13 @@ export class SqliteWerkkopie implements Werkkopie {
 
   async verwijderRelatie(naam: string): Promise<void> {
     const r = this.alle("SELECT naam, tabel, velden, naarTabel, integriteit FROM _openaec_relaties WHERE naam = ? COLLATE NOCASE", [String(naam ?? "")])[0];
-    if (!r) throw new WerkkopieFout("onbekend-object", `Relatie ‘${naam}’ bestaat niet in de werkkopie.`);
+    if (!r) throw new WerkkopieFout("onbekend-object", vt("errors.relationshipNotFound", { name: naam }));
     const weg = () => this.open.run("DELETE FROM _openaec_relaties WHERE naam = ?", [r[0]]);
     const tabel = this.schema().get(kl(String(r[1])));
     const velden = (JSON.parse(String(r[2])) as string[]).map(kl);
     const past = (fk: Fk) => kl(fk.tabel) === kl(String(r[3])) && fk.van.length === velden.length && fk.van.every((v, i) => kl(v) === velden[i]);
     if (!Number(r[4]) || !tabel || !this.fkLijst(tabel.naam).some(past)) {
-      this.schrijf("Relatie verwijderen mislukt", weg);
+      this.schrijf(vt("context.deleteRelationshipFailed"), weg);
     } else {
       const t = this.tabelInfo(tabel.naam);
       let verwijderd = false;
@@ -1184,11 +1199,11 @@ export class SqliteWerkkopie implements Werkkopie {
   async bewaarModule(module: Pick<VbaModuleRecord, "naam" | "soort" | "bron">): Promise<void> {
     const naam = String(module?.naam ?? "").trim();
     if (!/^[A-Za-z][A-Za-z0-9_]{0,63}$/.test(naam))
-      throw new WerkkopieFout("syntaxis", "Een modulenaam begint met een letter, gevolgd door letters, cijfers of _ (hoogstens 64 tekens).");
-    if (!["module", "klasse", "formulier"].includes(module.soort)) throw new WerkkopieFout("syntaxis", `Onbekende modulesoort ‘${String(module.soort)}’.`);
-    if (typeof module.bron !== "string") throw new WerkkopieFout("syntaxis", "De module heeft geen broncode.");
-    if (module.bron.length > 10_000_000) throw new WerkkopieFout("beperking", "De broncode is groter dan 10 MB.");
-    this.schrijf("Module bewaren mislukt", () =>
+      throw new WerkkopieFout("syntaxis", vt("errors.moduleName"));
+    if (!["module", "klasse", "formulier"].includes(module.soort)) throw new WerkkopieFout("syntaxis", vt("errors.moduleKind", { kind: String(module.soort) }));
+    if (typeof module.bron !== "string") throw new WerkkopieFout("syntaxis", vt("errors.moduleNoSource"));
+    if (module.bron.length > 10_000_000) throw new WerkkopieFout("beperking", vt("errors.moduleTooLarge"));
+    this.schrijf(vt("context.saveModuleFailed"), () =>
       this.open.run(
         "INSERT INTO _openaec_modules (naam, soort, bron, herkomst, gewijzigd) VALUES (?, ?, ?, 'werkkopie', ?) ON CONFLICT (naam) DO UPDATE SET soort = excluded.soort, bron = excluded.bron, gewijzigd = excluded.gewijzigd",
         [naam, module.soort, module.bron, new Date().toISOString()],
@@ -1199,7 +1214,7 @@ export class SqliteWerkkopie implements Werkkopie {
 
   async verwijderModule(naam: string): Promise<void> {
     this.open.run("DELETE FROM _openaec_modules WHERE naam = ? COLLATE NOCASE", [String(naam ?? "")]);
-    if (!this.open.getRowsModified()) throw new WerkkopieFout("onbekend-object", `Module ‘${naam}’ bestaat niet in de werkkopie.`);
+    if (!this.open.getRowsModified()) throw new WerkkopieFout("onbekend-object", vt("errors.moduleMissing", { name: naam }));
     this.ddlGewijzigd = true;
   }
 
@@ -1208,13 +1223,13 @@ export class SqliteWerkkopie implements Werkkopie {
   async bewaarQuery(query: OpgeslagenQuery): Promise<void> {
     const naam = query.naam?.trim();
     const soorten: OpgeslagenQuery["soort"][] = ["select", "crosstab", "delete", "update", "append", "maketable", "ddl", "union", "passthrough"];
-    if (!naam) throw new WerkkopieFout("syntaxis", "Geef de query een naam.");
-    if (!soorten.includes(query.soort)) throw new WerkkopieFout("syntaxis", `Onbekende querysoort ‘${String(query.soort)}’.`);
-    if (typeof query.sql !== "string" || !query.sql.trim()) throw new WerkkopieFout("syntaxis", "De query heeft geen SQL.");
-    if (this.schema().has(kl(naam))) throw new WerkkopieFout("beperking", `Er bestaat al een tabel ‘${naam}’; een query mag niet dezelfde naam hebben.`);
+    if (!naam) throw new WerkkopieFout("syntaxis", vt("errors.queryNameMissing"));
+    if (!soorten.includes(query.soort)) throw new WerkkopieFout("syntaxis", vt("errors.queryKind", { kind: String(query.soort) }));
+    if (typeof query.sql !== "string" || !query.sql.trim()) throw new WerkkopieFout("syntaxis", vt("errors.queryNoSql"));
+    if (this.schema().has(kl(naam))) throw new WerkkopieFout("beperking", vt("errors.queryNameIsTable", { name: naam }));
     // Access bewaart alleen ontleedbare SQL; pass-through-SQL is voor een externe server.
     if (query.soort !== "passthrough") ontleedAccessSql(query.sql);
-    this.schrijf("Query bewaren mislukt", () => {
+    this.schrijf(vt("context.saveQueryFailed"), () => {
       this.open.run("DELETE FROM _openaec_querys WHERE naam = ? COLLATE NOCASE", [naam]);
       this.open.run("INSERT INTO _openaec_querys (naam, sql, soort) VALUES (?, ?, ?)", [naam, query.sql, query.soort]);
     });
@@ -1224,7 +1239,7 @@ export class SqliteWerkkopie implements Werkkopie {
 
   async verwijderQuery(naam: string): Promise<void> {
     this.open.run("DELETE FROM _openaec_querys WHERE naam = ? COLLATE NOCASE", [naam]);
-    if (!this.open.getRowsModified()) throw new WerkkopieFout("onbekend-object", `Query ‘${naam}’ bestaat niet in de werkkopie.`);
+    if (!this.open.getRowsModified()) throw new WerkkopieFout("onbekend-object", vt("errors.queryMissing", { name: naam }));
     this.queryCache = null;
     this.ddlGewijzigd = true;
   }
@@ -1235,21 +1250,21 @@ export class SqliteWerkkopie implements Werkkopie {
 
   async begin(): Promise<void> {
     if (this.transactie)
-      throw new WerkkopieFout("beperking", "Er loopt al een transactie; geneste transacties worden niet ondersteund.");
+      throw new WerkkopieFout("beperking", vt("errors.transactionNested"));
     this.open.run("SAVEPOINT openaec_transactie");
     this.transactie = { wijzigingen: this.totaalWijzigingen(), ddl: this.ddlGewijzigd };
   }
 
   async bevestig(): Promise<void> {
-    if (!this.transactie) throw new WerkkopieFout("beperking", "Er loopt geen transactie om te bevestigen.");
-    this.schrijf("Transactie bevestigen mislukt", () => this.open.run("RELEASE openaec_transactie"));
+    if (!this.transactie) throw new WerkkopieFout("beperking", vt("errors.noTransactionCommit"));
+    this.schrijf(vt("context.commitFailed"), () => this.open.run("RELEASE openaec_transactie"));
     this.transactie = null;
   }
 
   async terugdraaien(): Promise<void> {
-    if (!this.transactie) throw new WerkkopieFout("beperking", "Er loopt geen transactie om terug te draaien.");
+    if (!this.transactie) throw new WerkkopieFout("beperking", vt("errors.noTransactionRollback"));
     const { wijzigingen, ddl } = this.transactie;
-    this.schrijf("Transactie terugdraaien mislukt", () => {
+    this.schrijf(vt("context.rollbackFailed"), () => {
       this.open.run("ROLLBACK TO openaec_transactie");
       this.open.run("RELEASE openaec_transactie");
     });
@@ -1273,15 +1288,15 @@ export class SqliteWerkkopie implements Werkkopie {
 
   async bewaarOntwerp(ontwerp: Ontwerp): Promise<void> {
     if (ontwerp.soort !== "formulier" && ontwerp.soort !== "rapport")
-      throw new WerkkopieFout("syntaxis", `Onbekende ontwerpsoort ‘${String(ontwerp.soort)}’.`);
-    if (!ontwerp.naam?.trim()) throw new WerkkopieFout("syntaxis", "Geef het ontwerp een naam.");
+      throw new WerkkopieFout("syntaxis", vt("errors.designKind", { kind: String(ontwerp.soort) }));
+    if (!ontwerp.naam?.trim()) throw new WerkkopieFout("syntaxis", vt("errors.designNameMissing"));
     let definitie: string;
     try {
       definitie = JSON.stringify(ontwerp.definitie ?? null);
     } catch (fout) {
-      throw new WerkkopieFout("beperking", `De ontwerpdefinitie is niet als JSON te bewaren: ${melding(fout)}`);
+      throw new WerkkopieFout("beperking", vt("errors.designJson", { error: melding(fout) }));
     }
-    this.schrijf("Ontwerp bewaren mislukt", () =>
+    this.schrijf(vt("context.saveDesignFailed"), () =>
       this.open.run("INSERT OR REPLACE INTO _openaec_ontwerpen (soort, naam, bron, definitie) VALUES (?, ?, ?, ?)", [
         ontwerp.soort,
         ontwerp.naam,
@@ -1294,7 +1309,7 @@ export class SqliteWerkkopie implements Werkkopie {
 
   async verwijderOntwerp(soort: Ontwerp["soort"], naam: string): Promise<void> {
     this.open.run("DELETE FROM _openaec_ontwerpen WHERE soort = ? AND naam = ?", [soort, naam]);
-    if (!this.open.getRowsModified()) throw new WerkkopieFout("onbekend-object", `Er is geen ${soort} ‘${naam}’.`);
+    if (!this.open.getRowsModified()) throw new WerkkopieFout("onbekend-object", vt("errors.designMissing", { kind: soort, name: naam }));
     this.ddlGewijzigd = true;
   }
 
@@ -1307,7 +1322,7 @@ export class SqliteWerkkopie implements Werkkopie {
   async exporteer(): Promise<Uint8Array> {
     const db = this.open;
     if (this.transactie)
-      throw new WerkkopieFout("beperking", "Rond eerst de lopende transactie af (bevestigen of terugdraaien) voordat je exporteert.");
+      throw new WerkkopieFout("beperking", vt("errors.exportInTransaction"));
     const wijzigingen = this.totaalWijzigingen() - this.basisWijzigingen;
     // sql.js heropent de verbinding bij export(): functies en pragma’s opnieuw zetten.
     const bytes = db.export();
@@ -1390,14 +1405,14 @@ export function isSqliteBestand(bytes: Uint8Array): boolean {
  */
 export function laadWerkkopie(SQL: SqlJsStatic, sqlite: Uint8Array, opties: LaadOpties = {}): SqliteWerkkopie {
   if (!isSqliteBestand(sqlite))
-    throw new WerkkopieFout("syntaxis", "Dit is geen SQLite-bestand (de kop ‘SQLite format 3’ ontbreekt). Kies een eerder bewaarde werkkopie (.sqlite).");
-  if (sqlite.byteLength > MAX_INVOER) throw new WerkkopieFout("beperking", "Kies een werkkopie van maximaal 100 MB.");
+    throw new WerkkopieFout("syntaxis", vt("errors.notSqlite"));
+  if (sqlite.byteLength > MAX_INVOER) throw new WerkkopieFout("beperking", vt("errors.tooLarge"));
   let db: Database;
   try {
     db = new SQL.Database(sqlite);
     db.exec("SELECT COUNT(*) FROM sqlite_master");
   } catch (fout) {
-    throw new WerkkopieFout("syntaxis", `Het SQLite-bestand is beschadigd of versleuteld en kan niet worden geopend: ${melding(fout)}`);
+    throw new WerkkopieFout("syntaxis", vt("errors.sqliteDamaged", { error: melding(fout) }));
   }
   try {
     const tabellen = new Set((db.exec("SELECT name FROM sqlite_master WHERE type = 'table'")[0]?.values ?? []).map((r) => String(r[0]).toLowerCase()));
@@ -1408,10 +1423,7 @@ export function laadWerkkopie(SQL: SqlJsStatic, sqlite: Uint8Array, opties: Laad
       .filter((sql) => !tabellen.has(/CREATE TABLE (\w+)/.exec(sql)![1].toLowerCase()));
     if (!tabellen.has("_openaec_meta")) {
       if (!opties.vreemdeSqlite)
-        throw new WerkkopieFout(
-          "niet-ondersteund",
-          `${VREEMDE_SQLITE} (de metatabel _openaec_meta ontbreekt). Open het alleen als je het als nieuwe werkkopie wilt gebruiken.`,
-        );
+        throw Object.assign(new WerkkopieFout("niet-ondersteund", vt("errors.foreignSqlite")), { vreemdeSqlite: true });
       const zonderRowid = (db.exec("SELECT name, sql FROM sqlite_master WHERE type = 'table'")[0]?.values ?? [])
         .filter((r) => /\)\s*WITHOUT\s+ROWID\s*;?\s*$/i.test(String(r[1] ?? "")))
         .map((r) => String(r[0]));
@@ -1427,28 +1439,30 @@ export function laadWerkkopie(SQL: SqlJsStatic, sqlite: Uint8Array, opties: Laad
       ])
         db.run("INSERT OR REPLACE INTO _openaec_meta (sleutel, waarde) VALUES (?, ?)", [sleutel, waarde]);
       laadmeldingen.push(
-        `${VREEMDE_SQLITE}; het is geopend als nieuwe werkkopie en de metatabellen van Open Database Studio zijn toegevoegd (pas na opslaan in het bestand). Relaties zijn niet overgenomen in het relatievenster.`,
+        vt("load.foreignSqliteOpened"),
       );
-      if (zonderRowid.length) laadmeldingen.push(`WITHOUT ROWID-tabellen zijn niet te bewerken: ${zonderRowid.join(", ")}.`);
-      if (views.length) laadmeldingen.push(`SQLite-views worden niet getoond en niet als query overgenomen: ${views.join(", ")}.`);
+      if (zonderRowid.length) laadmeldingen.push(vt("load.withoutRowid", { tables: zonderRowid.join(", ") }));
+      if (views.length) laadmeldingen.push(vt("load.views", { views: views.join(", ") }));
     } else {
       const meta = new Map(
         (db.exec("SELECT sleutel, waarde FROM _openaec_meta")[0]?.values ?? []).map((r) => [String(r[0]), String(r[1])]),
       );
       const versie = Number(meta.get("schemaversie") ?? NaN);
       if (!Number.isInteger(versie) || versie < 1)
-        throw new WerkkopieFout("syntaxis", `De werkkopie heeft een onbekende schemaversie (‘${meta.get("schemaversie") ?? "ontbreekt"}’).`);
+        throw new WerkkopieFout("syntaxis", meta.has("schemaversie")
+            ? vt("errors.schemaUnknown", { version: meta.get("schemaversie") })
+            : vt("errors.schemaMissing"));
       if (versie > SCHEMAVERSIE)
         throw new WerkkopieFout(
           "niet-ondersteund",
-          `Deze werkkopie is gemaakt met een nieuwere versie van Open Database Studio (schemaversie ${versie}; deze versie kent tot en met ${SCHEMAVERSIE}). Werk Open Database Studio bij.`,
+          vt("errors.schemaNewer", { version: versie, max: SCHEMAVERSIE }),
         );
       for (const sql of ontbrekend) db.run(sql);
       if (versie < SCHEMAVERSIE) {
         db.run("UPDATE _openaec_meta SET waarde = ? WHERE sleutel = 'schemaversie'", [String(SCHEMAVERSIE)]);
-        laadmeldingen.push(`De werkkopie is bijgewerkt van schemaversie ${versie} naar ${SCHEMAVERSIE} (o.a. VBA-modules in de werkkopie); bewaar hem om dat vast te leggen.`);
+        laadmeldingen.push(vt("load.schemaUpgraded", { from: versie, to: SCHEMAVERSIE }));
       } else if (ontbrekend.length)
-        laadmeldingen.push(`Ontbrekende metatabellen zijn opnieuw aangemaakt: ${ontbrekend.map((x) => /CREATE TABLE (\w+)/.exec(x)![1]).join(", ")}.`);
+        laadmeldingen.push(vt("load.metaRecreated", { tables: ontbrekend.map((x) => /CREATE TABLE (\w+)/.exec(x)![1]).join(", ") }));
     }
     const meta = new Map((db.exec("SELECT sleutel, waarde FROM _openaec_meta")[0]?.values ?? []).map((r) => [String(r[0]), String(r[1])]));
     let rapport: OpbouwRapport | null = null;
@@ -1461,6 +1475,6 @@ export function laadWerkkopie(SQL: SqlJsStatic, sqlite: Uint8Array, opties: Laad
   } catch (fout) {
     db.close();
     if (fout instanceof WerkkopieFout) throw fout;
-    throw new WerkkopieFout("syntaxis", `Dit is geen bruikbare werkkopie van Open Database Studio: ${melding(fout)}`);
+    throw new WerkkopieFout("syntaxis", vt("errors.notUsable", { error: melding(fout) }));
   }
 }

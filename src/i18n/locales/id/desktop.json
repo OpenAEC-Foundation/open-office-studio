@@ -1,0 +1,140 @@
+{
+  "dialogs": {
+    "cancel": "Batal",
+    "saveAsEllipsis": "Simpan sebagai…",
+    "officeFile": "Berkas office",
+    "officeFiles": "Berkas office",
+    "untitled": "Tanpa judul",
+    "saveCopy": "Simpan salinan",
+    "saveAs": "Simpan sebagai",
+    "openFile": "Buka berkas",
+    "replaceFile": {
+      "title": "Ganti berkas",
+      "message": "Berkas {{path}} sudah ada. Ganti?"
+    },
+    "unsavedChanges": {
+      "title": "Perubahan belum disimpan",
+      "message_other": "{{count}} dokumen di jendela ini memiliki perubahan yang belum disimpan. Perubahan tersebut akan hilang. Tetap tutup?"
+    },
+    "fileChanged": {
+      "title": "Berkas berubah",
+      "missing": "{{name}} tidak ada lagi di lokasi aslinya. Buat ulang dengan versi Anda, atau simpan di tempat lain?",
+      "changedExternally": "{{name}} telah diubah di luar Open Office Studio sejak Anda membukanya. Menimpa akan membuang perubahan tersebut.",
+      "overwrite": "Timpa"
+    },
+    "foreignFormat": {
+      "title": "Simpan sebagai {{format}}",
+      "message": "{{name}} akan diperbarui dalam format {{format}}. Runtime office mengonversi dokumen untuk ini; format yang tidak didukung {{format}} dapat hilang.",
+      "hint": "Pilih Simpan sebagai… untuk mempertahankan DOCX, XLSX, atau PPTX.",
+      "update": "Perbarui sebagai {{format}}"
+    },
+    "chooseConverter": "Pilih program konversi (soffice)",
+    "databaseExport": {
+      "title": "Simpan ekspor basis data",
+      "filter": "Ekspor basis data",
+      "sqliteFilter": "Salinan kerja SQLite",
+      "replaceTitle": "Ganti ekspor",
+      "replaceMessage": "Berkas ekspor ini sudah ada. Ganti?"
+    }
+  },
+  "errors": {
+    "file": {
+      "invalidBody": "Berkas kosong, lebih besar dari 100 MB, atau tidak dikirim sebagai data biner.",
+      "emptyOrTooLarge": "Berkas kosong atau lebih besar dari 100 MB.",
+      "formatInfoMissing": "Informasi format tidak ada.",
+      "formatMissing": "Format tidak ada.",
+      "targetFolderMissing": "Folder tujuan tidak ada.",
+      "nameMissing": "Nama berkas tidak ada.",
+      "nameInvalidChars": "Nama berkas berisi karakter yang tidak valid.",
+      "unsupportedFormat": "Format berkas tidak didukung.",
+      "extensionMismatch": "Ekstensi yang dipilih tidak cocok dengan dokumen.",
+      "alreadyOpenedOrOtherWindow": "Berkas ini sudah terbuka atau tidak ditujukan untuk jendela ini.",
+      "notThisWindow": "Berkas ini bukan milik jendela ini.",
+      "notLinked": "Berkas ini tidak lagi terhubung ke tab ini.",
+      "tokenMissing": "Token tidak ada.",
+      "openInOtherTab": "{{name}} terbuka di tab lain. Tutup terlebih dahulu atau pilih nama lain.",
+      "readOnly": "Tidak ada izin menulis di folder ini atau berkas hanya-baca ({{path}}). Pilih lokasi lain.",
+      "notInRecentList": "Berkas ini tidak lagi ada di daftar."
+    },
+    "preferences": {
+      "tooLarge": "Preferensi lebih besar dari 64 kB.",
+      "invalid": "Preferensi bukan objek JSON yang valid.",
+      "configDirUnavailable": "Folder konfigurasi aplikasi tidak tersedia.",
+      "pathInvalid": "Jalur preferensi tidak valid."
+    },
+    "font": {
+      "notInstalled": "Fon {{family}} tidak terpasang di komputer ini.",
+      "notFound": "Fon tidak ditemukan.",
+      "fileTooLarge": "Berkas fon ini terlalu besar.",
+      "inCollection": "Fon ini bagian dari koleksi (.ttc) dan tidak dapat digunakan sendiri.",
+      "unreadable": "Berkas fon tidak dapat dibaca.",
+      "nameInvalid": "Nama fon tidak valid."
+    },
+    "recovery": {
+      "keyInvalid": "Kunci pemulihan tidak valid.",
+      "spaceFull": "Ruang untuk salinan pemulihan (512 MB) penuh. Simpan dokumen Anda.",
+      "sessionMissing": "Sesi tidak ada.",
+      "keyMissing": "Kunci tidak ada.",
+      "dataInvalid": "Data pemulihan tidak valid.",
+      "unknownDocumentType": "Jenis dokumen tidak dikenal.",
+      "sessionNotThisWindow": "Sesi pemulihan ini bukan milik jendela ini.",
+      "sessionOtherWindow": "Sesi pemulihan ini milik jendela lain.",
+      "sessionStillRunning": "Sesi ini masih berjalan."
+    },
+    "window": {
+      "closed": "Jendela ini telah ditutup.",
+      "transferEmptyOrTooLarge": "Transfer kosong atau terlalu besar.",
+      "mainWindowUnavailable": "Jendela utama tidak tersedia.",
+      "openFailed": "Jendela tidak dapat dibuka: {{error}}",
+      "transferExpired": "Transfer ini telah kedaluwarsa atau sudah diambil.",
+      "transferAlreadyTaken": "Transfer ini sudah diambil.",
+      "transferUnknown": "Transfer ini tidak dikenal."
+    },
+    "conversion": {
+      "unknownModule": "Modul office tidak dikenal.",
+      "sourceFormatMismatch": "Format sumber bukan milik modul ini.",
+      "outputFormatUnsupported": "Format keluaran ini tidak didukung.",
+      "outputFormatDirect": "Format keluaran ini dibuat langsung di aplikasi, bukan melalui konversi.",
+      "invalidOptions": "Opsi konversi tidak valid.",
+      "chooseSoffice": "Pilih program soffice (Windows: soffice.exe) dari folder program runtime office.",
+      "chosenFileMissing": "Berkas yang dipilih tidak ada.",
+      "chosenPathNotFile": "Jalur yang dipilih bukan berkas.",
+      "chosenFileNotExecutable": "Berkas yang dipilih tidak dapat dijalankan.",
+      "appDataDirUnavailable": "Folder data aplikasi tidak tersedia.",
+      "startFailed": "Konversi tidak dapat dimulai: {{error}}",
+      "failed": "Konversi gagal ({{reason}}). Berkas asli tetap disimpan.",
+      "exitCode": "kode keluar {{code}}",
+      "processAborted": "proses dihentikan",
+      "timeout": "Konversi melebihi batas waktu dan dihentikan. Berkas asli tetap disimpan.",
+      "profilePathInvalid": "Jalur profil sementara tidak valid.",
+      "inputSize": "Pilih berkas tidak kosong yang berukuran paling besar 100 MB.",
+      "runtimeMissing": "Format ini memerlukan runtime office (LibreOffice). Runtime tidak ditemukan: pasang, pilih programnya di Simpan sebagai, atau atur OPENAEC_CONVERSIE_PROGRAMMA. DOCX, XLSX, dan PPTX langsung berfungsi.",
+      "notConverted": "Berkas ini tidak dapat dikonversi. Berkas mungkin rusak atau terlindungi, atau filter format tidak ada di runtime lokal.",
+      "multipleOutputs": "Konversi menghasilkan lebih dari satu berkas.",
+      "noUsableOutput": "Konversi tidak menghasilkan berkas yang dapat digunakan berukuran paling besar 100 MB."
+    },
+    "databaseExport": {
+      "emptyOrTooLarge": "Ekspor kosong atau lebih besar dari 100 MB.",
+      "emptyInvalidOrTooLarge": "Ekspor kosong, tidak valid, atau lebih besar dari 100 MB.",
+      "nameMissing": "Nama berkas tidak ada.",
+      "nameInvalid": "Nama berkas tidak valid.",
+      "notSqlite": "Ini bukan salinan kerja SQLite.",
+      "typeNotAllowed": "Hanya ekspor CSV, sumber, laporan, dan salinan kerja SQLite yang diizinkan. Basis data Access tidak pernah ditimpa.",
+      "textNotUtf8": "Ekspor teks harus berupa teks UTF-8 yang valid.",
+      "sendAsBinary": "Kirim ekspor sebagai data biner paling besar 100 MB.",
+      "extensionMismatch": "Ekstensi yang dipilih tidak cocok dengan ekspor."
+    }
+  },
+  "launcher": {
+    "officeStudio": {
+      "genericName": "Paket perkantoran",
+      "comment": "Lingkungan perkantoran OpenAEC lokal",
+      "keywords": "pengolah kata;lembar kerja;presentasi;basis data;email;kantor;office;"
+    },
+    "databaseStudio": {
+      "genericName": "Penampil basis data",
+      "comment": "Buka basis data MDB dan ACCDB lama secara lokal",
+      "keywords": "basis data;tabel;kueri;access;database;"
+    }
+  }
+}

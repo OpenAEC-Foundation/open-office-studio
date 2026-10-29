@@ -15,6 +15,8 @@ import {
   Check,
 } from "lucide-react";
 import type { Style } from "@betteroffice/docx/types/document";
+import { useTranslation } from "react-i18next";
+import { intlLocale } from "../../i18n/config";
 import { Actie, Groep } from "../../Ribbon";
 import { useOfficeThema } from "../../stijl/ThemaKnop";
 import { losOp, stijlNaam, voorbeeldStijl } from "./model";
@@ -48,7 +50,7 @@ export function galerijStijlen(
         // De standaardalineastijl vooraan, zoals in gangbare tekstverwerkers.
         Number(!(a.default && a.type === "paragraph")) - Number(!(b.default && b.type === "paragraph")) ||
         (a.uiPriority ?? 99) - (b.uiPriority ?? 99) ||
-        stijlNaam(a).localeCompare(stijlNaam(b), "nl"),
+        stijlNaam(a).localeCompare(stijlNaam(b), intlLocale()),
     );
 }
 
@@ -152,14 +154,15 @@ export function Contextmenu({
 
 /** Het menu bij een stijl, zoals in de galerij en het stijlenvenster. */
 export function useStijlMenu() {
+  const { t } = useTranslation("writer");
   const staat = useStijlen();
   const [menu, setMenu] = useState<{ x: number; y: number; stijl: Style } | null>(null);
   const items = (stijl: Style): MenuItem[] => {
     const naam = stijlNaam(stijl);
     return [
-      { naam: "Toepassen", icoon: Check, uit: !staat.bewerkbaar, uitvoeren: () => staat.pasToe(stijl.styleId) },
+      { naam: t("styles.menu.apply"), icoon: Check, uit: !staat.bewerkbaar, uitvoeren: () => staat.pasToe(stijl.styleId) },
       {
-        naam: `${naam} bijwerken zodat deze overeenkomt met de selectie`,
+        naam: t("styles.menu.updateToMatch", { name: naam }),
         icoon: RefreshCw,
         uit: !staat.kanHerladen,
         uitvoeren: () =>
@@ -167,8 +170,8 @@ export function useStijlMenu() {
             ? void staat.werkBij(stijl.styleId).catch(staat.fout)
             : staat.open({ soort: "bijwerken", styleId: stijl.styleId }),
       },
-      { naam: "Wijzigen…", icoon: PencilLine, uit: !staat.kanHerladen, uitvoeren: () => staat.open({ soort: "wijzig", styleId: stijl.styleId }) },
-      { naam: "Nieuwe stijl op basis van de selectie…", icoon: FilePlus2, uit: !staat.kanHerladen, uitvoeren: () => staat.open({ soort: "nieuw", uitSelectie: true }) },
+      { naam: t("styles.menu.modify"), icoon: PencilLine, uit: !staat.kanHerladen, uitvoeren: () => staat.open({ soort: "wijzig", styleId: stijl.styleId }) },
+      { naam: t("styles.menu.newFromSelection"), icoon: FilePlus2, uit: !staat.kanHerladen, uitvoeren: () => staat.open({ soort: "nieuw", uitSelectie: true }) },
     ];
   };
   return {
@@ -177,7 +180,7 @@ export function useStijlMenu() {
       <Contextmenu
         x={menu.x}
         y={menu.y}
-        label={`Stijl ${stijlNaam(menu.stijl)}`}
+        label={t("styles.menu.label", { name: stijlNaam(menu.stijl) })}
         items={items(menu.stijl)}
         sluit={() => setMenu(null)}
       />
@@ -186,6 +189,7 @@ export function useStijlMenu() {
 }
 
 function GalerijItem({ stijl, actief, menu }: { stijl: Style; actief: boolean; menu: ReturnType<typeof useStijlMenu> }) {
+  const { t } = useTranslation("writer");
   const staat = useStijlen();
   const opgelost = losOp(staat.stijlen, stijl.styleId, staat.thema);
   const naam = stijlNaam(stijl);
@@ -197,7 +201,9 @@ function GalerijItem({ stijl, actief, menu }: { stijl: Style; actief: boolean; m
         className="tekst-galerij-voorbeeld"
         aria-pressed={actief}
         disabled={!staat.bewerkbaar}
-        title={[naam, stijl.type === "character" ? "tekenstijl" : "alineastijl", sneltoets].filter(Boolean).join(" · ") + " · rechtermuisknop voor meer"}
+        title={t("styles.gallery.itemHint", {
+          details: [naam, stijl.type === "character" ? t("styles.characterStyle") : t("styles.paragraphStyle"), sneltoets].filter(Boolean).join(" · "),
+        })}
         onMouseDown={(e) => e.preventDefault()}
         onClick={() => staat.pasToe(stijl.styleId)}
         onContextMenu={(e) => {
@@ -214,9 +220,9 @@ function GalerijItem({ stijl, actief, menu }: { stijl: Style; actief: boolean; m
       <button
         type="button"
         className="tekst-galerij-pijl"
-        aria-label={`Menu voor stijl ${naam}`}
+        aria-label={t("styles.gallery.menuFor", { name: naam })}
         aria-haspopup="menu"
-        title={`Meer voor ${naam}`}
+        title={t("styles.gallery.moreFor", { name: naam })}
         onMouseDown={(e) => e.preventDefault()}
         onClick={(e) => {
           const vak = e.currentTarget.getBoundingClientRect();
@@ -231,30 +237,31 @@ function GalerijItem({ stijl, actief, menu }: { stijl: Style; actief: boolean; m
 
 /** De galerijgroep ‘Stijlen’ (Start en Stijlen). */
 export function StijlGalerij({ uitgebreid, extra }: { uitgebreid?: boolean; extra?: ReactNode }) {
+  const { t } = useTranslation("writer");
   const staat = useStijlen();
   const menu = useStijlMenu();
   const lijst = galerijStijlen(staat.stijlen?.styles, staat.gebruikt);
   const zichtbaar = lijst.slice(0, uitgebreid ? 12 : 6);
   return (
-    <Groep naam="Stijlen" className="ribbon-stijlen tekst-stijlgroep">
-      <div className="tekst-galerij" role="group" aria-label="Stijlengalerij">
+    <Groep naam={t("styles.gallery.group")} className="ribbon-stijlen tekst-stijlgroep">
+      <div className="tekst-galerij" role="group" aria-label={t("styles.gallery.label")}>
         {zichtbaar.length ? (
           zichtbaar.map((stijl) => (
             <GalerijItem key={stijl.styleId} stijl={stijl} actief={staat.alineastijl === stijl.styleId} menu={menu} />
           ))
         ) : (
-          <span className="tekst-galerij-leeg">Stijlen laden…</span>
+          <span className="tekst-galerij-leeg">{t("styles.gallery.loading")}</span>
         )}
       </div>
       <div className="tekst-galerij-acties">
         <button
           type="button"
           className="tekst-galerij-meer"
-          title="Stijlenvenster · Ctrl+Alt+Shift+S"
+          title={t("styles.gallery.paneHint", { shortcut: "Ctrl+Alt+Shift+S" })}
           onMouseDown={(e) => e.preventDefault()}
           onClick={() => staat.open({ soort: "venster" })}
         >
-          <ListTree size={14} aria-hidden="true" /> Alle stijlen…
+          <ListTree size={14} aria-hidden="true" /> {t("styles.gallery.allStyles")}
         </button>
         {extra}
       </div>
@@ -265,34 +272,35 @@ export function StijlGalerij({ uitgebreid, extra }: { uitgebreid?: boolean; extr
 
 /** Groep met stijlbeheer op het tabblad Stijlen. */
 export function StijlBeheerGroep() {
+  const { t } = useTranslation("writer");
   const staat = useStijlen();
   const huidig = staat.alineastijl;
   const stijl = staat.stijlen?.styles.find((s) => s.styleId === huidig);
   return (
-    <Groep naam="Stijlbeheer">
+    <Groep naam={t("styles.manage.group")}>
       <Actie
-        naam="Stijlenvenster"
+        naam={t("styles.manage.pane")}
         icoon={ListTree}
         groot
-        title="Stijlenvenster · Ctrl+Alt+Shift+S"
+        title={t("styles.gallery.paneHint", { shortcut: "Ctrl+Alt+Shift+S" })}
         onMouseDown={(e) => e.preventDefault()}
         onClick={() => staat.open({ soort: "venster" })}
       />
       <Actie
-        naam="Nieuwe stijl"
+        naam={t("styles.manage.newStyle")}
         icoon={FilePlus2}
         groot
         disabled={!staat.kanHerladen}
-        title="Nieuwe stijl op basis van de selectie"
+        title={t("styles.manage.newStyleHint")}
         onMouseDown={(e) => e.preventDefault()}
         onClick={() => staat.open({ soort: "nieuw", uitSelectie: true })}
       />
       <div className="ribbon-stapel">
         <Actie
-          naam={stijl ? `${stijlNaam(stijl)} bijwerken` : "Stijl bijwerken"}
+          naam={stijl ? t("styles.update.title", { name: stijlNaam(stijl) }) : t("styles.manage.updateStyle")}
           icoon={RefreshCw}
           disabled={!staat.kanHerladen || !stijl}
-          title="De stijl van de huidige alinea bijwerken zodat deze overeenkomt met de selectie"
+          title={t("styles.manage.updateHint")}
           onMouseDown={(e) => e.preventDefault()}
           onClick={() =>
             stijl &&
@@ -302,17 +310,17 @@ export function StijlBeheerGroep() {
           }
         />
         <Actie
-          naam={stijl ? `${stijlNaam(stijl)} wijzigen…` : "Stijl wijzigen…"}
+          naam={stijl ? t("styles.manage.modifyNamed", { name: stijlNaam(stijl) }) : t("styles.manage.modifyStyle")}
           icoon={PencilLine}
           disabled={!staat.kanHerladen || !stijl}
           onMouseDown={(e) => e.preventDefault()}
           onClick={() => stijl && staat.open({ soort: "wijzig", styleId: stijl.styleId })}
         />
         <Actie
-          naam="Stijlset en lettertypen…"
+          naam={t("styles.manage.styleSet")}
           icoon={Palette}
           disabled={!staat.kanHerladen}
-          title="Thema-lettertypen en alinea-afstand van het document"
+          title={t("styles.manage.styleSetHint")}
           onMouseDown={(e) => e.preventDefault()}
           onClick={() => staat.open({ soort: "sets" })}
         />

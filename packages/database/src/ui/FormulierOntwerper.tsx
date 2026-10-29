@@ -1,5 +1,6 @@
 /** Eenvoudige formulierontwerper: bron, velden (volgorde, labels, besturingsnamen) en knoppen. */
 import { useEffect, useId, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ArrowDown, ArrowUp, Eye, Plus, Save, Trash2 } from "lucide-react";
 import type { Veldsoort, Werkkopie } from "../werkkopie/contract.ts";
 import { leesbareFout } from "./invoer.ts";
@@ -29,6 +30,7 @@ export function FormulierOntwerper({
   onBewaard: (naam: string) => void;
   onOpenen: (naam: string) => void;
 }) {
+  const { t } = useTranslation("database");
   const dialogen = useDialogen();
   const id = useId();
   const [naam, setNaam] = useState(beginNaam);
@@ -63,22 +65,22 @@ export function FormulierOntwerper({
   async function bewaar(openen: boolean) {
     if (!def) return;
     const schoon = naam.trim();
-    if (!schoon) return setFout("Geef het formulier een naam.");
+    if (!schoon) return setFout(t("formDesigner.nameRequired"));
     const fouten = controleerDefinitie(def);
     if (fouten.length) return setFout(fouten.join(" "));
     if (schoon.toLowerCase() !== bewaardAls.toLowerCase() && bestaandeNamen.some((n) => n.toLowerCase() === schoon.toLowerCase())) {
-      const ja = await dialogen.bevestig({ titel: "Formulier vervangen", tekst: `Er bestaat al een formulier ‘${schoon}’. Vervangen?`, ja: "Vervangen", gevaarlijk: true });
+      const ja = await dialogen.bevestig({ titel: t("formDesigner.replaceTitle"), tekst: t("formDesigner.replaceText", { name: schoon }), ja: t("formDesigner.replace"), gevaarlijk: true });
       if (!ja) return;
     }
     try {
       await werkkopie.bewaarOntwerp({ naam: schoon, soort: "formulier", bron, definitie: { ...def, titel: def.titel || schoon } });
       setFout("");
-      setMelding(`Formulier ‘${schoon}’ opgeslagen in de werkkopie.`);
+      setMelding(t("formDesigner.saved", { name: schoon }));
       setBewaardAls(schoon);
       onBewaard(schoon);
       if (openen) onOpenen(schoon);
     } catch (e) {
-      setFout("Opslaan mislukt: " + leesbareFout(e));
+      setFout(t("formDesigner.saveFailed", { error: leesbareFout(e) }));
     }
   }
 
@@ -94,11 +96,11 @@ export function FormulierOntwerper({
     >
       <div className="database-ontwerper-raster">
         <label className="database-veld" htmlFor={`${id}-naam`}>
-          <span>Naam</span>
+          <span>{t("formDesigner.name")}</span>
           <input id={`${id}-naam`} value={naam} onChange={(e) => setNaam(e.target.value)} />
         </label>
         <label className="database-veld" htmlFor={`${id}-bron`}>
-          <span>Bron (tabel of query)</span>
+          <span>{t("formDesigner.source")}</span>
           <select
             id={`${id}-bron`}
             value={bron}
@@ -107,7 +109,7 @@ export function FormulierOntwerper({
               setDef(null);
             }}
           >
-            <option value="">Kies een bron…</option>
+            <option value="">{t("formDesigner.chooseSource")}</option>
             {bronnen.map((b) => (
               <option key={b} value={b}>
                 {b}
@@ -117,20 +119,19 @@ export function FormulierOntwerper({
         </label>
         {def && (
           <label className="database-veld" htmlFor={`${id}-titel`}>
-            <span>Titel</span>
+            <span>{t("formDesigner.title")}</span>
             <input id={`${id}-titel`} value={def.titel} onChange={(e) => zet({ titel: e.target.value })} />
           </label>
         )}
         {def && (
           <label className="database-veld database-veld-rij" htmlFor={`${id}-blad`}>
             <input id={`${id}-blad`} type="checkbox" checked={!!def.gegevensblad} onChange={(e) => zet({ gegevensblad: e.target.checked })} />
-            <span>Openen als gegevensblad</span>
+            <span>{t("formDesigner.openAsDatasheet")}</span>
           </label>
         )}
       </div>
       <p className="muted">
-        De naam bepaalt de koppeling met VBA: formulier ‘Klanten’ gebruikt module Form_Klanten. De besturingsnaam is de naam waarmee VBA
-        het veld aanspreekt (Me!txtNaam).
+        {t("formDesigner.vbaHint")}
       </p>
       {fout && (
         <p className="melding fout" role="alert">
@@ -140,16 +141,16 @@ export function FormulierOntwerper({
       {def && (
         <div className="database-ontwerper-delen">
           <fieldset className="is-breed">
-            <legend>Velden</legend>
+            <legend>{t("formDesigner.fields")}</legend>
             <div className="table-wrap">
               <table>
                 <thead>
                   <tr>
-                    <th scope="col">Veld</th>
-                    <th scope="col">Label</th>
-                    <th scope="col">Besturingsnaam (VBA)</th>
+                    <th scope="col">{t("formDesigner.field")}</th>
+                    <th scope="col">{t("formDesigner.label")}</th>
+                    <th scope="col">{t("formDesigner.controlName")}</th>
                     <th scope="col">
-                      <span className="sr-only">Acties</span>
+                      <span className="sr-only">{t("formDesigner.actions")}</span>
                     </th>
                   </tr>
                 </thead>
@@ -159,14 +160,14 @@ export function FormulierOntwerper({
                       <td>{v.veld}</td>
                       <td>
                         <input
-                          aria-label={`Label van ${v.veld}`}
+                          aria-label={t("formDesigner.labelOf", { field: v.veld })}
                           value={v.label}
                           onChange={(e) => zet({ velden: def.velden.map((x, j) => (j === i ? { ...x, label: e.target.value } : x)) })}
                         />
                       </td>
                       <td>
                         <input
-                          aria-label={`Besturingsnaam van ${v.veld}`}
+                          aria-label={t("formDesigner.controlNameOf", { field: v.veld })}
                           value={v.besturing}
                           onChange={(e) => zet({ velden: def.velden.map((x, j) => (j === i ? { ...x, besturing: e.target.value } : x)) })}
                         />
@@ -174,7 +175,7 @@ export function FormulierOntwerper({
                       <td className="database-rij-acties">
                         <button
                           type="button"
-                          aria-label={`${v.veld} omhoog`}
+                          aria-label={t("formDesigner.moveUp", { field: v.veld })}
                           disabled={i === 0}
                           onClick={() => {
                             const l = [...def.velden];
@@ -186,7 +187,7 @@ export function FormulierOntwerper({
                         </button>
                         <button
                           type="button"
-                          aria-label={`${v.veld} omlaag`}
+                          aria-label={t("formDesigner.moveDown", { field: v.veld })}
                           disabled={i === def.velden.length - 1}
                           onClick={() => {
                             const l = [...def.velden];
@@ -196,7 +197,7 @@ export function FormulierOntwerper({
                         >
                           <ArrowDown size={14} />
                         </button>
-                        <button type="button" aria-label={`${v.veld} weglaten`} onClick={() => zet({ velden: def.velden.filter((_, j) => j !== i) })}>
+                        <button type="button" aria-label={t("formDesigner.omit", { field: v.veld })} onClick={() => zet({ velden: def.velden.filter((_, j) => j !== i) })}>
                           <Trash2 size={14} />
                         </button>
                       </td>
@@ -220,35 +221,35 @@ export function FormulierOntwerper({
             )}
           </fieldset>
           <fieldset className="is-breed">
-            <legend>Knoppen</legend>
+            <legend>{t("formDesigner.buttons")}</legend>
             {def.knoppen.map((k, i) => (
               <div key={i} className="database-ontwerper-regel">
                 <input
-                  aria-label={`Naam van knop ${i + 1}`}
+                  aria-label={t("formDesigner.buttonName", { number: i + 1 })}
                   value={k.naam}
                   onChange={(e) => zet({ knoppen: def.knoppen.map((x, j) => (j === i ? { ...x, naam: e.target.value } : x)) })}
                 />
                 <input
-                  aria-label={`Tekst van knop ${i + 1}`}
+                  aria-label={t("formDesigner.buttonText", { number: i + 1 })}
                   value={k.label}
                   onChange={(e) => zet({ knoppen: def.knoppen.map((x, j) => (j === i ? { ...x, label: e.target.value } : x)) })}
                 />
-                <button type="button" aria-label={`Knop ${k.naam} verwijderen`} onClick={() => zet({ knoppen: def.knoppen.filter((_, j) => j !== i) })}>
+                <button type="button" aria-label={t("formDesigner.deleteButton", { name: k.naam })} onClick={() => zet({ knoppen: def.knoppen.filter((_, j) => j !== i) })}>
                   <Trash2 size={14} />
                 </button>
               </div>
             ))}
             <div className="database-knoppen">
-              <button type="button" onClick={() => zet({ knoppen: [...def.knoppen, { naam: `cmdKnop${def.knoppen.length + 1}`, label: "Knop" }] })}>
-                <Plus size={14} /> Knop toevoegen
+              <button type="button" onClick={() => zet({ knoppen: [...def.knoppen, { naam: `cmdKnop${def.knoppen.length + 1}`, label: t("formDesigner.defaultButtonLabel") }] })}>
+                <Plus size={14} /> {t("formDesigner.addButton")}
               </button>
               {voorgesteld.map((k) => (
                 <button type="button" key={k} onClick={() => zet({ knoppen: [...def.knoppen, { naam: k, label: k.replace(/^cmd/i, "") }] })}>
-                  <Plus size={14} /> {k} (uit VBA)
+                  <Plus size={14} /> {t("formDesigner.fromVba", { name: k })}
                 </button>
               ))}
             </div>
-            <p className="muted">Een knop voert bij klikken de VBA-procedure &lt;knopnaam&gt;_Click uit de formuliermodule uit.</p>
+            <p className="muted">{t("formDesigner.buttonHint", { button: t("formDesigner.buttonNamePlaceholder") })}</p>
           </fieldset>
         </div>
       )}
@@ -259,10 +260,10 @@ export function FormulierOntwerper({
       )}
       <div className="database-knoppen">
         <button type="submit" className="primary" disabled={!def}>
-          <Save size={16} /> Formulier opslaan
+          <Save size={16} /> {t("formDesigner.saveForm")}
         </button>
         <button type="button" disabled={!def} onClick={() => void bewaar(true)}>
-          <Eye size={16} /> Opslaan en openen
+          <Eye size={16} /> {t("formDesigner.saveAndOpen")}
         </button>
       </div>
     </form>

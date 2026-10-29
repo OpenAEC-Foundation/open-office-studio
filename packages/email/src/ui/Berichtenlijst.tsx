@@ -1,19 +1,27 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { Paperclip, Reply, Star } from "lucide-react";
 import type { BerichtKop } from "../contract";
+import { useTranslation } from "react-i18next";
 import { toonAdres } from "../adressen";
+import { formatDatum, formatTijd, useOpmaak } from "../../../../src/i18n/opmaak";
+import type { Taal } from "../../../../src/i18n/talen";
 
 const RIJHOOGTE = 58;
 const EXTRA = 8;
 
-function korteDatum(datum?: string) {
+/** Vandaag alleen de tijd, deze week dag + tijd, anders de datum (jaar alleen als het anders is). */
+export function korteDatum(datum: string | undefined, taal?: Taal, nu = new Date()) {
   if (!datum) return "";
   const d = new Date(datum);
   if (Number.isNaN(d.getTime())) return "";
-  const nu = new Date();
-  if (d.toDateString() === nu.toDateString()) return d.toLocaleTimeString("nl-NL", { hour: "2-digit", minute: "2-digit" });
-  if (nu.getTime() - d.getTime() < 6 * 86400_000) return d.toLocaleDateString("nl-NL", { weekday: "short", hour: "2-digit", minute: "2-digit" });
-  return d.toLocaleDateString("nl-NL", { day: "numeric", month: "short", year: d.getFullYear() === nu.getFullYear() ? undefined : "numeric" });
+  if (d.toDateString() === nu.toDateString()) return formatTijd(d, { hour: "2-digit", minute: "2-digit" }, taal);
+  if (nu.getTime() - d.getTime() < 6 * 86400_000)
+    return formatDatum(d, { weekday: "short", hour: "2-digit", minute: "2-digit" }, taal);
+  return formatDatum(
+    d,
+    { day: "numeric", month: "short", year: d.getFullYear() === nu.getFullYear() ? undefined : "numeric" },
+    taal,
+  );
 }
 
 /**
@@ -39,6 +47,8 @@ export function Berichtenlijst({
   toonOntvanger: boolean;
   lijstRef: RefObject<HTMLDivElement | null>;
 }) {
+  const { t } = useTranslation("email");
+  const { taal } = useOpmaak();
   const [scroll, setScroll] = useState(0);
   const [hoogte, setHoogte] = useState(600);
   useEffect(() => {
@@ -72,7 +82,7 @@ export function Berichtenlijst({
       ref={lijstRef}
       className="email-lijst"
       role="listbox"
-      aria-label="Berichten"
+      aria-label={t("list.label")}
       aria-multiselectable="true"
       tabIndex={0}
       aria-activedescendant={selectie.length ? `email-bericht-${selectie[selectie.length - 1]}` : undefined}
@@ -82,7 +92,7 @@ export function Berichtenlijst({
         {berichten.slice(eerste, laatste).map((b, i) => {
           const index = eerste + i;
           const gekozen = selectie.includes(b.uid);
-          const persoon = toonOntvanger ? (b.aan[0] ? `Aan: ${toonAdres(b.aan[0])}` : "(geen ontvanger)") : toonAdres(b.van[0]);
+          const persoon = toonOntvanger ? (b.aan[0] ? t("list.to", { address: toonAdres(b.aan[0]) }) : t("list.noRecipient")) : toonAdres(b.van[0]);
           return (
             <div
               key={`${b.map}:${b.uid}`}
@@ -101,18 +111,18 @@ export function Berichtenlijst({
               <span className="email-rij-kop">
                 <span className="email-rij-van">{persoon}</span>
                 <span className="email-rij-iconen">
-                  {b.beantwoord && <Reply size={12} aria-label="Beantwoord" />}
-                  {b.heeftBijlagen && <Paperclip size={12} aria-label="Met bijlage" />}
+                  {b.beantwoord && <Reply size={12} aria-label={t("list.replied")} />}
+                  {b.heeftBijlagen && <Paperclip size={12} aria-label={t("list.hasAttachment")} />}
                 </span>
                 <time className="email-rij-datum" dateTime={b.datum}>
-                  {korteDatum(b.datum)}
+                  {korteDatum(b.datum, taal)}
                 </time>
               </span>
               <span className="email-rij-onder">
-                <span className="email-rij-onderwerp">{b.onderwerp || "(geen onderwerp)"}</span>
+                <span className="email-rij-onderwerp">{b.onderwerp || t("list.noSubject")}</span>
                 <button
                   className={`email-sterknop ${b.gemarkeerd ? "is-ster" : ""}`}
-                  aria-label={b.gemarkeerd ? "Ster verwijderen" : "Ster toevoegen"}
+                  aria-label={b.gemarkeerd ? t("list.unstar") : t("list.star")}
                   aria-pressed={b.gemarkeerd}
                   tabIndex={-1}
                   onClick={(e) => {
@@ -128,7 +138,7 @@ export function Berichtenlijst({
         })}
         {meer && (
           <div className="email-rij is-laden" style={{ top: berichten.length * RIJHOOGTE, height: RIJHOOGTE }}>
-            Meer berichten laden…
+            {t("list.loadingMore")}
           </div>
         )}
       </div>

@@ -7,6 +7,7 @@ import {
 } from "react";
 import type { PptxEditorApi } from "@betteroffice/pptx-react";
 import type { LucideIcon } from "lucide-react";
+import i18next from "../i18n/config";
 import { Actie, RibbonFout } from "../Ribbon";
 import { useEditorApi, zichtbaarElement } from "./editorApi";
 import { useSneltoetsen, type Sneltoets } from "./sneltoetsen";
@@ -21,6 +22,10 @@ import {
   type Uitlijning,
   type Verplaatsing,
 } from "./presentatie-opdrachten";
+
+/** Meldingstekst in de interfacetaal, op het moment van de melding. */
+const melding = (sleutel: string) =>
+  i18next.t(`ribbon:presentation.messages.${sleutel}`);
 
 const wortel = () => zichtbaarElement<HTMLElement>(".office-presentatie");
 const canvas = () =>
@@ -136,7 +141,7 @@ export function useDiaActies() {
   const bewerken = (werk: (api: PptxEditorApi) => Promise<unknown> | unknown) =>
     uitvoeren((api) => {
       if (!api.commands.getState("insertSlide").enabled)
-        throw new Error("De presentatie kan nu niet worden bewerkt.");
+        throw new Error(melding("cannotEdit"));
       return werk(api);
     });
 
@@ -164,7 +169,7 @@ export function useDiaActies() {
   const vormVerwijderen = () =>
     bewerken(async (api) => {
       const keuze = geselecteerdeVorm(api);
-      if (!keuze) throw new Error("Selecteer eerst een object op de dia.");
+      if (!keuze) throw new Error(melding("selectObject"));
       await verwijderVorm(
         api.handle,
         toepassen(api),
@@ -175,11 +180,9 @@ export function useDiaActies() {
   const uitlijnen = (wijze: Uitlijning) =>
     bewerken(async (api) => {
       const keuze = geselecteerdeVorm(api);
-      if (!keuze) throw new Error("Selecteer eerst een object op de dia.");
+      if (!keuze) throw new Error(melding("selectObject"));
       if (keuze.vorm.rotationDeg)
-        throw new Error(
-          "Gedraaide objecten kunnen nog niet worden uitgelijnd.",
-        );
+        throw new Error(melding("rotatedAlign"));
       await lijnVormUit(
         api.handle,
         toepassen(api),
@@ -197,7 +200,7 @@ export function useDiaActies() {
       const vlak = wortel()?.querySelector<HTMLElement>("[role='application']");
       if (!bewerktTekst() || !vlak) {
         if (zonderCursor) return zonderCursor();
-        throw new Error("Plaats eerst de cursor in een tekstvak.");
+        throw new Error(melding("placeCursor"));
       }
       api.handle.addUndoBoundary();
       for (const key of Array.from(tekst))

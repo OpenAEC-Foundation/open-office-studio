@@ -4,6 +4,7 @@
  */
 import { useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { Trans, useTranslation } from "react-i18next";
 import { ArrowDownToLine, ChevronDown, ChevronUp, Replace, Search, X } from "lucide-react";
 import { useDocxCommand } from "@betteroffice/docx-react";
 import { Groep, RibbonFout } from "../../Ribbon";
@@ -18,40 +19,43 @@ import { usePaneelStaat, zetPaneel } from "./paneelstaat";
 import { gaNaar, vervang, zoek, type Resultaat, type ZoekIndex } from "./zoeken";
 import { heeftOpmaak, type Opmaakfilter, type ZoekOpties } from "./logica";
 import { doelen, huidigNummer, leesNummer, type Doel, type Doelsoort } from "./ganaar";
+import { formatGetal } from "../../i18n/opmaak";
 
+/** Speciale tekens: code, sleutel onder `writer:find.special` en of het alleen bij vervangen hoort. */
 const SPECIAAL: [string, string, boolean?][] = [
-  ["^p", "Alineamarkering"],
-  ["^t", "Tabteken"],
-  ["^l", "Regeleinde"],
-  ["^m", "Handmatig pagina-einde"],
-  ["^g", "Afbeelding"],
-  ["^?", "Willekeurig teken"],
-  ["^#", "Willekeurig cijfer"],
-  ["^$", "Willekeurige letter"],
-  ["^w", "Witruimte"],
-  ["^s", "Vaste spatie"],
-  ["^&", "Gevonden tekst (vervangen)", true],
-  ["^^", "Dakje"],
+  ["^p", "paragraphMark"],
+  ["^t", "tab"],
+  ["^l", "lineBreak"],
+  ["^m", "pageBreak"],
+  ["^g", "graphic"],
+  ["^?", "anyCharacter"],
+  ["^#", "anyDigit"],
+  ["^$", "anyLetter"],
+  ["^w", "whiteSpace"],
+  ["^s", "nonBreakingSpace"],
+  ["^&", "findWhatText", true],
+  ["^^", "caret"],
 ];
 
 /** Lintgroep Zoeken: navigatievenster, vervangen en Ga naar. */
 export function ZoekKnoppen({ groot }: { groot?: boolean }) {
   const api = useEditorApi().tekst;
+  const { t } = useTranslation("writer");
   const knoppen = (
     <>
-      <EigenKnop naam="Zoeken" icoon={Search} groot={groot} sneltoets="Ctrl+F" uitleg="In het navigatievenster, met resultatenlijst" onClick={() => zetPaneel(api, { zoeken: "zoeken" })} />
+      <EigenKnop naam={t("find.buttons.find")} icoon={Search} groot={groot} sneltoets="Ctrl+F" uitleg={t("find.buttons.findTip")} onClick={() => zetPaneel(api, { zoeken: "zoeken" })} />
       <EigenKnop
-        naam="Vervangen"
+        naam={t("find.buttons.replace")}
         icoon={Replace}
         groot={groot}
         sneltoets="Ctrl+H"
-        uitleg="Uitgebreid zoeken en vervangen: hoofdletters, hele woorden, jokertekens, speciale tekens en opmaak"
+        uitleg={t("find.buttons.replaceTip")}
         onClick={() => zetPaneel(api, { zoeken: "vervangen" })}
       />
-      <EigenKnop naam="Ga naar" icoon={ArrowDownToLine} groot={groot} sneltoets="Ctrl+G" uitleg="Pagina, sectie, regel, kop, tabel, afbeelding of opmerking" onClick={() => zetPaneel(api, { gaNaar: true })} />
+      <EigenKnop naam={t("find.buttons.goTo")} icoon={ArrowDownToLine} groot={groot} sneltoets="Ctrl+G" uitleg={t("find.buttons.goToTip")} onClick={() => zetPaneel(api, { gaNaar: true })} />
     </>
   );
-  return <Groep naam="Zoeken">{groot ? knoppen : <div className="ribbon-stapel">{knoppen}</div>}</Groep>;
+  return <Groep naam={t("find.group")}>{groot ? knoppen : <div className="ribbon-stapel">{knoppen}</div>}</Groep>;
 }
 
 function tekstVlak() {
@@ -66,6 +70,7 @@ export function ZoekHost() {
   const api = useEditorApi().tekst;
   const staat = usePaneelStaat(api);
   const zichtbaar = useEditorZichtbaar();
+  const { t } = useTranslation("writer");
   const vanSelectie = () => {
     const tekst = api()?.getSelectionInfo()?.selectedText ?? "";
     return tekst && tekst.length < 120 && !/\n/.test(tekst) ? tekst : undefined;
@@ -73,9 +78,9 @@ export function ZoekHost() {
   useSneltoetsen(
     tekstVlak,
     [
-      { toets: "Ctrl+F", uitvoeren: () => zetPaneel(api, { zoeken: "zoeken" }), omschrijving: "Zoeken in het navigatievenster" },
-      { toets: "Ctrl+H", uitvoeren: () => zetPaneel(api, { zoeken: "vervangen" }), omschrijving: "Uitgebreid zoeken en vervangen" },
-      { toets: "Ctrl+G", uitvoeren: () => zetPaneel(api, { gaNaar: true }), omschrijving: "Ga naar" },
+      { toets: "Ctrl+F", uitvoeren: () => zetPaneel(api, { zoeken: "zoeken" }), omschrijving: t("find.shortcuts.find") },
+      { toets: "Ctrl+H", uitvoeren: () => zetPaneel(api, { zoeken: "vervangen" }), omschrijving: t("find.shortcuts.replace") },
+      { toets: "Ctrl+G", uitvoeren: () => zetPaneel(api, { gaNaar: true }), omschrijving: t("find.shortcuts.goTo") },
     ],
     "tekst",
   );
@@ -93,6 +98,7 @@ const naarDrie = (d: Drie) => (d === "" ? undefined : d === "ja");
 
 function ZoekPaneel({ modus, verzoek, beginTekst }: { modus: "zoeken" | "vervangen"; verzoek: number; beginTekst: () => string | undefined }) {
   const api = useEditorApi().tekst;
+  const { t } = useTranslation("writer");
   const meld = useContext(RibbonFout);
   const [zoekTekst, setZoekTekst] = useState(() => beginTekst() ?? "");
   const [vervangTekst, setVervangTekst] = useState("");
@@ -184,7 +190,7 @@ function ZoekPaneel({ modus, verzoek, beginTekst }: { modus: "zoeken" | "vervang
         setResultaten(uit.resultaten);
         const nu = uit.resultaten.length ? (behoud ? Math.min(Math.max(huidig, 0), uit.resultaten.length - 1) : -1) : -1;
         setHuidig(nu);
-        if (!(behoud && naVervangen.current)) setMelding(uit.resultaten.length ? "" : "Geen resultaten.");
+        if (!(behoud && naVervangen.current)) setMelding(uit.resultaten.length ? "" : t("find.pane.noResults"));
         markeer(uit.resultaten, uit.index, nu);
       } catch (error) {
         setResultaten([]);
@@ -240,7 +246,7 @@ function ZoekPaneel({ modus, verzoek, beginTekst }: { modus: "zoeken" | "vervang
     try {
       await vervang(api(), index, [resultaten[huidig]], vervangTekst, opties);
       naVervangen.current = true;
-      setMelding("1 vervangen.");
+      setMelding(t("find.pane.replacedOne"));
       // De volgende treffer krijgt hetzelfde nummer na opnieuw zoeken.
       const ref = api();
       if (!ref) return;
@@ -261,7 +267,7 @@ function ZoekPaneel({ modus, verzoek, beginTekst }: { modus: "zoeken" | "vervang
       const uit = await vervang(api(), index, resultaten, vervangTekst, opties);
       await zoekNu(false);
       naVervangen.current = true;
-      setMelding(`${uit.aantal} ${uit.aantal === 1 ? "treffer" : "treffers"} vervangen; Ctrl+Z draait dit in één keer terug.`);
+      setMelding(t("find.pane.replacedAll", { count: uit.aantal, number: formatGetal(uit.aantal), undo: "Ctrl+Z" }));
     } catch (error) {
       setMelding(fout(error));
     }
@@ -288,9 +294,9 @@ function ZoekPaneel({ modus, verzoek, beginTekst }: { modus: "zoeken" | "vervang
     <label className="tw-zoek-opmaak">
       <span>{label}</span>
       <select value={waarde} onChange={(e) => zet(e.target.value as Drie)}>
-        <option value="">maakt niet uit</option>
-        <option value="ja">ja</option>
-        <option value="nee">nee</option>
+        <option value="">{t("find.pane.any")}</option>
+        <option value="ja">{t("find.pane.yes")}</option>
+        <option value="nee">{t("find.pane.no")}</option>
       </select>
     </label>
   );
@@ -299,7 +305,7 @@ function ZoekPaneel({ modus, verzoek, beginTekst }: { modus: "zoeken" | "vervang
     <aside
       className="tw-zoekpaneel"
       role="search"
-      aria-label="Zoeken en vervangen"
+      aria-label={t("find.pane.label")}
       style={{ left: plek.left, top: plek.top, maxHeight: plek.height }}
       onKeyDown={(e) => {
         if (e.key === "Escape") {
@@ -309,11 +315,11 @@ function ZoekPaneel({ modus, verzoek, beginTekst }: { modus: "zoeken" | "vervang
       }}
     >
       <header>
-        <h2>{vervangen ? "Zoeken en vervangen" : "Navigatie: zoeken"}</h2>
+        <h2>{vervangen ? t("find.pane.titleReplace") : t("find.pane.titleFind")}</h2>
         <button type="button" className="tw-zoek-wissel" onClick={() => zetPaneel(api, { zoeken: vervangen ? "zoeken" : "vervangen" })}>
-          {vervangen ? "Alleen zoeken" : "Vervangen…"}
+          {vervangen ? t("find.pane.findOnly") : t("find.pane.showReplace")}
         </button>
-        <button type="button" className="tw-zoek-sluit" aria-label="Sluiten" title="Sluiten · Esc" onClick={sluit}>
+        <button type="button" className="tw-zoek-sluit" aria-label={t("common:close")} title={t("common:closeEsc")} onClick={sluit}>
           <X size={15} />
         </button>
       </header>
@@ -321,8 +327,8 @@ function ZoekPaneel({ modus, verzoek, beginTekst }: { modus: "zoeken" | "vervang
         <input
           ref={zoekVeld}
           type="search"
-          aria-label="Zoeken naar"
-          placeholder="Zoeken in document"
+          aria-label={t("find.pane.findWhat")}
+          placeholder={t("find.pane.findPlaceholder")}
           value={zoekTekst}
           onFocus={(e) => (laatsteVeld.current = e.currentTarget)}
           onChange={(e) => setZoekTekst(e.target.value)}
@@ -334,10 +340,10 @@ function ZoekPaneel({ modus, verzoek, beginTekst }: { modus: "zoeken" | "vervang
             }
           }}
         />
-        <button type="button" aria-label="Vorige treffer" title="Vorige · Shift+Enter" onClick={vorige} disabled={!resultaten.length}>
+        <button type="button" aria-label={t("find.pane.previousResult")} title={t("find.pane.previousTitle", { key: "Shift+Enter" })} onClick={vorige} disabled={!resultaten.length}>
           <ChevronUp size={15} />
         </button>
-        <button type="button" aria-label="Volgende treffer" title="Volgende · Enter" onClick={volgende} disabled={!resultaten.length}>
+        <button type="button" aria-label={t("find.pane.nextResult")} title={t("find.pane.nextTitle", { key: "Enter" })} onClick={volgende} disabled={!resultaten.length}>
           <ChevronDown size={15} />
         </button>
       </div>
@@ -346,8 +352,8 @@ function ZoekPaneel({ modus, verzoek, beginTekst }: { modus: "zoeken" | "vervang
           <input
             ref={vervangVeld}
             type="text"
-            aria-label="Vervangen door"
-            placeholder="Vervangen door"
+            aria-label={t("find.pane.replaceWith")}
+            placeholder={t("find.pane.replaceWith")}
             value={vervangTekst}
             onFocus={(e) => (laatsteVeld.current = e.currentTarget)}
             onChange={(e) => setVervangTekst(e.target.value)}
@@ -363,48 +369,51 @@ function ZoekPaneel({ modus, verzoek, beginTekst }: { modus: "zoeken" | "vervang
       {vervangen && (
         <div className="tw-zoek-knoppen">
           <button type="button" disabled={!bewerkbaar || !resultaten.length} onClick={() => void vervangEen()}>
-            Vervangen
+            {t("find.pane.replace")}
           </button>
           <button type="button" disabled={!bewerkbaar || !resultaten.length} onClick={() => void vervangAlles()}>
-            Alles vervangen
+            {t("find.pane.replaceAll")}
           </button>
         </div>
       )}
       <div className="tw-zoek-opties">
         <label>
           <input type="checkbox" checked={!!opties.hoofdlettergevoelig} disabled={opties.jokertekens} onChange={(e) => setOpties({ ...opties, hoofdlettergevoelig: e.target.checked })} />
-          Hoofdlettergevoelig
+          {t("find.pane.matchCase")}
         </label>
         <label>
           <input type="checkbox" checked={!!opties.heleWoorden} disabled={opties.jokertekens} onChange={(e) => setOpties({ ...opties, heleWoorden: e.target.checked })} />
-          Alleen hele woorden
+          {t("find.pane.wholeWords")}
         </label>
         <label>
           <input type="checkbox" checked={!!opties.jokertekens} onChange={(e) => setOpties({ ...opties, jokertekens: e.target.checked, regex: false })} />
-          Jokertekens
+          {t("find.pane.wildcards")}
         </label>
         <label>
           <input type="checkbox" checked={!!opties.regex} onChange={(e) => setOpties({ ...opties, regex: e.target.checked, jokertekens: false })} />
-          Reguliere expressie
+          {t("find.pane.regex")}
         </label>
       </div>
       <details className="tw-zoek-meer" open={meer} onToggle={(e) => setMeer((e.target as HTMLDetailsElement).open)}>
-        <summary>Speciaal en opmaak{metOpmaak ? " (opmaak actief)" : ""}</summary>
-        <div className="tw-zoek-speciaal" role="group" aria-label="Speciale tekens invoegen">
-          {SPECIAAL.filter(([, , alleenVervangen]) => !alleenVervangen || vervangen).map(([code, naam]) => (
-            <button key={code} type="button" title={naam} onMouseDown={(e) => e.preventDefault()} onClick={() => voegIn(code)}>
-              <code>{code}</code> {naam}
-            </button>
-          ))}
+        <summary>{metOpmaak ? t("find.pane.specialAndFormatActive") : t("find.pane.specialAndFormat")}</summary>
+        <div className="tw-zoek-speciaal" role="group" aria-label={t("find.pane.insertSpecial")}>
+          {SPECIAAL.filter(([, , alleenVervangen]) => !alleenVervangen || vervangen).map(([code, sleutel]) => {
+            const naam = t(`find.special.${sleutel}`);
+            return (
+              <button key={code} type="button" title={naam} onMouseDown={(e) => e.preventDefault()} onClick={() => voegIn(code)}>
+                <code>{code}</code> {naam}
+              </button>
+            );
+          })}
         </div>
         <div className="tw-zoek-opmaakrij">
-          {keuze("Vet", vet, setVet)}
-          {keuze("Cursief", cursief, setCursief)}
-          {keuze("Onderstreept", onderstreept, setOnderstreept)}
+          {keuze(t("find.pane.bold"), vet, setVet)}
+          {keuze(t("find.pane.italic"), cursief, setCursief)}
+          {keuze(t("find.pane.underline"), onderstreept, setOnderstreept)}
           <label className="tw-zoek-opmaak">
-            <span>Stijl</span>
+            <span>{t("find.pane.style")}</span>
             <select value={stijl} onChange={(e) => setStijl(e.target.value)}>
-              <option value="">maakt niet uit</option>
+              <option value="">{t("find.pane.any")}</option>
               {stijlen.map((o) => (
                 <option key={o.args.styleId} value={o.args.styleId}>
                   {o.label}
@@ -414,15 +423,18 @@ function ZoekPaneel({ modus, verzoek, beginTekst }: { modus: "zoeken" | "vervang
           </label>
         </div>
         <p className="tw-zoek-hulp">
-          Jokertekens: <code>?</code> één teken, <code>*</code> willekeurig, <code>[a-z]</code>, <code>[!0-9]</code>, <code>{"{2,3}"}</code>, <code>@</code> één of meer, <code>&lt;</code> en <code>&gt;</code> woordbegin
-          en -einde, <code>( )</code> groep met <code>\1</code> in de vervangtekst. Zonder zoektekst zoekt u alleen op opmaak.
+          <Trans t={t} i18nKey="find.pane.wildcardHelp" shouldUnescape components={{ c: <code /> }} />
         </p>
       </details>
       <p className="tw-zoek-telling" role="status" aria-live="polite">
-        {resultaten.length ? `${huidig >= 0 ? `${huidig + 1} van ` : ""}${resultaten.length} ${resultaten.length === 1 ? "resultaat" : "resultaten"}` : melding}
+        {resultaten.length
+          ? huidig >= 0
+            ? t("find.pane.resultPosition", { count: resultaten.length, current: formatGetal(huidig + 1), number: formatGetal(resultaten.length) })
+            : t("find.pane.resultCount", { count: resultaten.length, number: formatGetal(resultaten.length) })
+          : melding}
         {resultaten.length > 0 && melding && <span> · {melding}</span>}
       </p>
-      <ol className="tw-zoek-resultaten" aria-label="Resultaten">
+      <ol className="tw-zoek-resultaten" aria-label={t("find.pane.results")}>
         {resultaten.slice(0, 500).map((r, i) => (
           <li key={i}>
             <button type="button" aria-current={i === huidig} onClick={() => ga(i)}>
@@ -435,35 +447,28 @@ function ZoekPaneel({ modus, verzoek, beginTekst }: { modus: "zoeken" | "vervang
             </button>
           </li>
         ))}
-        {resultaten.length > 500 && <li className="tw-zoek-plek">… en nog {resultaten.length - 500}</li>}
+        {resultaten.length > 500 && <li className="tw-zoek-plek">{t("find.pane.more", { number: formatGetal(resultaten.length - 500) })}</li>}
       </ol>
     </aside>,
     document.body,
   );
 }
 
-const SOORTEN: { soort: Doelsoort; naam: string; nummer: string; lijst: boolean }[] = [
-  { soort: "pagina", naam: "Pagina", nummer: "Paginanummer", lijst: false },
-  { soort: "sectie", naam: "Sectie", nummer: "Sectienummer", lijst: false },
-  { soort: "regel", naam: "Regel", nummer: "Regelnummer", lijst: false },
-  { soort: "kop", naam: "Kop", nummer: "Kopnummer", lijst: true },
-  { soort: "tabel", naam: "Tabel", nummer: "Tabelnummer", lijst: true },
-  { soort: "afbeelding", naam: "Afbeelding", nummer: "Afbeeldingsnummer", lijst: true },
-  { soort: "opmerking", naam: "Opmerking", nummer: "Opmerkingsnummer", lijst: true },
+/** Soorten met hun sleutel onder `writer:find.goTo.kinds` (name, number, list, none). */
+const SOORTEN: { soort: Doelsoort; sleutel: string; lijst: boolean }[] = [
+  { soort: "pagina", sleutel: "page", lijst: false },
+  { soort: "sectie", sleutel: "section", lijst: false },
+  { soort: "regel", sleutel: "line", lijst: false },
+  { soort: "kop", sleutel: "heading", lijst: true },
+  { soort: "tabel", sleutel: "table", lijst: true },
+  { soort: "afbeelding", sleutel: "picture", lijst: true },
+  { soort: "opmerking", sleutel: "comment", lijst: true },
 ];
-
-const MEERVOUD: Record<Doelsoort, string> = {
-  pagina: "pagina’s",
-  sectie: "secties",
-  regel: "regels",
-  kop: "koppen",
-  tabel: "tabellen",
-  afbeelding: "afbeeldingen",
-  opmerking: "opmerkingen",
-};
+const sleutelVan = (soort: Doelsoort) => SOORTEN.find((s) => s.soort === soort)!.sleutel;
 
 function GaNaarVenster({ sluit }: { sluit: () => void }) {
   const api = useEditorApi().tekst;
+  const { t } = useTranslation("writer");
   const [soort, setSoort] = useState<Doelsoort>("pagina");
   const [lijst, setLijst] = useState<Doel[]>([]);
   const [invoer, setInvoer] = useState("");
@@ -488,7 +493,7 @@ function GaNaarVenster({ sluit }: { sluit: () => void }) {
         setLijst(d);
         setGekozen(0);
         setBezocht(false);
-        setMelding(d.length ? "" : `Geen ${MEERVOUD[soort]} in dit document.`);
+        setMelding(d.length ? "" : t(`find.goTo.kinds.${sleutelVan(soort)}.none`));
       })
       .catch((e) => actief && setMelding(fout(e)));
     return () => {
@@ -510,13 +515,13 @@ function GaNaarVenster({ sluit }: { sluit: () => void }) {
   }
   function gaNaarInvoer() {
     if (huidigeSoort.lijst && !invoer.trim()) return ga(lijst[gekozen]);
-    if (nummer === null) return setMelding(`Typ een nummer van 1 tot en met ${lijst.length}, of +n/−n.`);
+    if (nummer === null) return setMelding(t("find.goTo.enterNumber", { max: lijst.length }));
     ga(lijst[nummer - 1]);
     sluit();
   }
   return (
     <Dialoog
-      titel="Ga naar"
+      titel={t("find.goTo.title")}
       sluit={sluit}
       className="tw-venster is-breed"
       acties={
@@ -525,37 +530,38 @@ function GaNaarVenster({ sluit }: { sluit: () => void }) {
             {melding}
           </span>
           <button type="button" className="werkruimte-knop" disabled={!lijst.length} onClick={() => stap(-1)}>
-            Vorige
+            {t("find.goTo.previous")}
           </button>
           <button type="button" className="werkruimte-knop" disabled={!lijst.length} onClick={() => stap(1)}>
-            Volgende
+            {t("find.goTo.next")}
           </button>
           <button type="button" className="werkruimte-knop is-primair" disabled={!lijst.length} onClick={gaNaarInvoer}>
-            Ga naar
+            {t("find.goTo.go")}
           </button>
         </>
       }
     >
       <div className="tw-ganaar">
-        <div role="listbox" aria-label="Ga naar wat" className="tw-ganaar-soorten">
+        <div role="listbox" aria-label={t("find.goTo.what")} className="tw-ganaar-soorten">
           {SOORTEN.map((s) => (
             <button key={s.soort} type="button" role="option" aria-selected={s.soort === soort} onClick={() => setSoort(s.soort)}>
-              {s.naam}
+              {t(`find.goTo.kinds.${s.sleutel}.name`)}
             </button>
           ))}
         </div>
         <div className="tw-ganaar-doel">
           <label className="werkruimte-veld">
             <span>
-              {huidigeSoort.nummer}
-              {lijst.length ? ` (1–${lijst.length})` : ""}
+              {lijst.length
+                ? t("find.goTo.numberWithRange", { label: t(`find.goTo.kinds.${huidigeSoort.sleutel}.number`), max: lijst.length })
+                : t(`find.goTo.kinds.${huidigeSoort.sleutel}.number`)}
             </span>
             <input
               type="text"
               inputMode="numeric"
               data-autofocus=""
               value={invoer}
-              placeholder={soort === "pagina" ? "bijv. 3, +2 of -1" : "nummer"}
+              placeholder={soort === "pagina" ? t("find.goTo.pagePlaceholder") : t("find.goTo.numberPlaceholder")}
               onChange={(e) => setInvoer(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
@@ -566,7 +572,7 @@ function GaNaarVenster({ sluit }: { sluit: () => void }) {
             />
           </label>
           {huidigeSoort.lijst && lijst.length > 0 && (
-            <ul className="tw-ganaar-lijst" aria-label={MEERVOUD[soort][0].toUpperCase() + MEERVOUD[soort].slice(1)}>
+            <ul className="tw-ganaar-lijst" aria-label={t(`find.goTo.kinds.${huidigeSoort.sleutel}.list`)}>
               {lijst.map((d, i) => (
                 <li key={i}>
                   <button type="button" aria-current={i === gekozen} onClick={() => ga(d)} onDoubleClick={() => (ga(d), sluit())}>

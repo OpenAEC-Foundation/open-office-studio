@@ -3,6 +3,7 @@
  * alinea) en, waar nodig, een nieuwe definitie in numbering.xml.
  */
 import { lijstBlok, lijstVan, restVanBlok, vorigeLijst } from "./model.ts";
+import { vertaal } from "../stijlen/vertaling.ts";
 import { sjabloon as zoekSjabloon, vrijeIds, type GelezenNummering, type NummeringWijziging } from "./nummering.ts";
 
 export type Nummering = "ongewijzigd" | "doorgaan" | { beginBij: number };
@@ -52,7 +53,7 @@ export function planLijst(
     const vorige = vorigeLijst(alle, van, huidig);
     // Een lijst die verderop in het document al doorloopt, hoeft niets te doen.
     const looptAlDoor = !!huidig && alle.slice(0, van).some((a) => lijstVan(a.properties)?.numId === huidig.numId);
-    if (vorige === null && !looptAlDoor) throw new Error("Er is geen eerdere lijst om bij aan te sluiten.");
+    if (vorige === null && !looptAlDoor) throw new Error(vertaal("writer:lists.errors.noPreviousList", "Er is geen eerdere lijst om bij aan te sluiten."));
     if (vorige !== null) {
       const blok = huidig ? restVanBlok(alle, van, tot) : range(van, tot);
       for (const i of blok) zet(i, vorige, plan.get(i)?.ilvl);
@@ -62,7 +63,7 @@ export function planLijst(
   const beginBij = typeof keuze.nummering === "object" ? Math.max(0, Math.round(keuze.nummering.beginBij)) : undefined;
   if (keuze.sjabloon) {
     const s = zoekSjabloon(keuze.sjabloon);
-    if (!s) throw new Error("Onbekende lijstnotatie.");
+    if (!s) throw new Error(vertaal("writer:lists.errors.unknownFormat", "Onbekende lijstnotatie."));
     const ids = vrijeIds(nummering);
     for (const i of lijstBlok(alle, van, tot)) {
       if (i < van || i > tot) if (!lijstVan(alle[i].properties)) continue;
@@ -70,9 +71,9 @@ export function planLijst(
     }
     pakket = { soort: "sjabloon", sjabloon: s, ...ids, beginBij: beginBij ?? 1 };
   } else if (beginBij !== undefined) {
-    if (!huidig) throw new Error("Zet de cursor eerst in een lijst om opnieuw te nummeren.");
+    if (!huidig) throw new Error(vertaal("writer:lists.errors.notInList", "Zet de cursor eerst in een lijst om opnieuw te nummeren."));
     const num = nummering.nums.get(huidig.numId);
-    if (!num) throw new Error("De nummering van deze lijst staat niet in het document.");
+    if (!num) throw new Error(vertaal("writer:lists.errors.numberingMissing", "De nummering van deze lijst staat niet in het document."));
     const { numId } = vrijeIds(nummering);
     for (const i of restVanBlok(alle, van, tot)) zet(i, numId, plan.get(i)?.ilvl);
     pakket = { soort: "opnieuw", numId, abstractNumId: num.abstractNumId, ilvl: huidig.ilvl, beginBij };

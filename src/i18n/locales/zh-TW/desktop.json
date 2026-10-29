@@ -1,0 +1,140 @@
+{
+  "dialogs": {
+    "cancel": "取消",
+    "saveAsEllipsis": "另存新檔…",
+    "officeFile": "辦公室檔案",
+    "officeFiles": "辦公室檔案",
+    "untitled": "未命名",
+    "saveCopy": "儲存複本",
+    "saveAs": "另存新檔",
+    "openFile": "開啟檔案",
+    "replaceFile": {
+      "title": "取代檔案",
+      "message": "檔案 {{path}} 已存在。要取代它嗎？"
+    },
+    "unsavedChanges": {
+      "title": "未儲存的變更",
+      "message_other": "此視窗中有 {{count}} 份文件含有未儲存的變更。這些變更將會遺失。仍要關閉嗎？"
+    },
+    "fileChanged": {
+      "title": "檔案已變更",
+      "missing": "{{name}} 已不在原本的位置。要用你的版本重新建立，還是儲存到其他位置？",
+      "changedExternally": "自你開啟 {{name}} 以來，它已在 Open Office Studio 之外被變更。覆寫將捨棄這些變更。",
+      "overwrite": "覆寫"
+    },
+    "foreignFormat": {
+      "title": "另存為 {{format}}",
+      "message": "{{name}} 將以 {{format}} 格式更新。辦公室執行環境會為此轉換文件；{{format}} 不支援的格式設定可能會遺失。",
+      "hint": "選擇「另存新檔…」可保留 DOCX、XLSX 或 PPTX 檔案。",
+      "update": "以 {{format}} 格式更新"
+    },
+    "chooseConverter": "選擇轉換程式 (soffice)",
+    "databaseExport": {
+      "title": "儲存資料庫匯出",
+      "filter": "資料庫匯出",
+      "sqliteFilter": "SQLite 工作複本",
+      "replaceTitle": "取代匯出",
+      "replaceMessage": "此匯出檔案已存在。要取代它嗎？"
+    }
+  },
+  "errors": {
+    "file": {
+      "invalidBody": "檔案為空、大於 100 MB，或未以二進位資料傳送。",
+      "emptyOrTooLarge": "檔案為空或大於 100 MB。",
+      "formatInfoMissing": "缺少格式資訊。",
+      "formatMissing": "缺少格式。",
+      "targetFolderMissing": "缺少目標資料夾。",
+      "nameMissing": "缺少檔案名稱。",
+      "nameInvalidChars": "檔案名稱包含無效字元。",
+      "unsupportedFormat": "不支援的檔案格式。",
+      "extensionMismatch": "所選的副檔名與文件不符。",
+      "alreadyOpenedOrOtherWindow": "此檔案已開啟，或不屬於此視窗。",
+      "notThisWindow": "此檔案不屬於此視窗。",
+      "notLinked": "此檔案已不再連結到此索引標籤。",
+      "tokenMissing": "缺少權杖。",
+      "openInOtherTab": "{{name}} 已在另一個索引標籤中開啟。請先關閉它或選擇其他名稱。",
+      "readOnly": "沒有此資料夾的寫入權限，或檔案為唯讀 ({{path}})。請選擇其他位置。",
+      "notInRecentList": "此檔案已不在清單中。"
+    },
+    "preferences": {
+      "tooLarge": "偏好設定大於 64 kB。",
+      "invalid": "偏好設定不是有效的 JSON 物件。",
+      "configDirUnavailable": "應用程式的設定資料夾無法使用。",
+      "pathInvalid": "偏好設定的路徑無效。"
+    },
+    "font": {
+      "notInstalled": "此電腦上未安裝字型 {{family}}。",
+      "notFound": "找不到字型。",
+      "fileTooLarge": "此字型檔案過大。",
+      "inCollection": "此字型屬於字型集 (.ttc)，無法單獨使用。",
+      "unreadable": "無法讀取字型檔案。",
+      "nameInvalid": "字型名稱無效。"
+    },
+    "recovery": {
+      "keyInvalid": "復原金鑰無效。",
+      "spaceFull": "復原複本的空間 (512 MB) 已滿。請儲存你的文件。",
+      "sessionMissing": "缺少工作階段。",
+      "keyMissing": "缺少金鑰。",
+      "dataInvalid": "復原資料無效。",
+      "unknownDocumentType": "未知的文件類型。",
+      "sessionNotThisWindow": "此復原工作階段不屬於此視窗。",
+      "sessionOtherWindow": "此復原工作階段屬於另一個視窗。",
+      "sessionStillRunning": "此工作階段仍在執行中。"
+    },
+    "window": {
+      "closed": "此視窗已關閉。",
+      "transferEmptyOrTooLarge": "傳輸內容為空或過大。",
+      "mainWindowUnavailable": "主視窗無法使用。",
+      "openFailed": "無法開啟視窗：{{error}}",
+      "transferExpired": "此傳輸已過期或已被取走。",
+      "transferAlreadyTaken": "此傳輸已被取走。",
+      "transferUnknown": "此傳輸不明。"
+    },
+    "conversion": {
+      "unknownModule": "未知的辦公室模組。",
+      "sourceFormatMismatch": "來源格式不屬於此模組。",
+      "outputFormatUnsupported": "不支援此輸出格式。",
+      "outputFormatDirect": "此輸出格式直接在應用程式中建立，而非透過轉換。",
+      "invalidOptions": "轉換選項無效。",
+      "chooseSoffice": "請從辦公室執行環境的程式資料夾中選擇 soffice 程式（Windows：soffice.exe）。",
+      "chosenFileMissing": "所選檔案不存在。",
+      "chosenPathNotFile": "所選路徑不是檔案。",
+      "chosenFileNotExecutable": "所選檔案無法執行。",
+      "appDataDirUnavailable": "應用程式資料資料夾無法使用。",
+      "startFailed": "無法開始轉換：{{error}}",
+      "failed": "轉換失敗 ({{reason}})。原始檔案已保留。",
+      "exitCode": "結束代碼 {{code}}",
+      "processAborted": "處理程序已中止",
+      "timeout": "轉換超過時間限制，已停止。原始檔案已保留。",
+      "profilePathInvalid": "暫存設定檔路徑無效。",
+      "inputSize": "請選擇不為空且不超過 100 MB 的檔案。",
+      "runtimeMissing": "此格式需要辦公室執行環境 (LibreOffice)，但找不到：請安裝它、在「另存新檔」中選擇程式，或設定 OPENAEC_CONVERSIE_PROGRAMMA。DOCX、XLSX 和 PPTX 可直接使用。",
+      "notConverted": "無法轉換此檔案。檔案可能已損毀或受保護，或本機執行環境缺少格式篩選器。",
+      "multipleOutputs": "轉換產生了多個檔案。",
+      "noUsableOutput": "轉換未產生不超過 100 MB 的可用檔案。"
+    },
+    "databaseExport": {
+      "emptyOrTooLarge": "匯出內容為空或大於 100 MB。",
+      "emptyInvalidOrTooLarge": "匯出內容為空、無效或大於 100 MB。",
+      "nameMissing": "缺少檔案名稱。",
+      "nameInvalid": "檔案名稱無效。",
+      "notSqlite": "這不是 SQLite 工作複本。",
+      "typeNotAllowed": "僅允許匯出 CSV、原始碼、報表和 SQLite 工作複本。絕不會覆寫 Access 資料庫。",
+      "textNotUtf8": "文字匯出必須是有效的 UTF-8 文字。",
+      "sendAsBinary": "請以不超過 100 MB 的二進位資料傳送匯出內容。",
+      "extensionMismatch": "所選的副檔名與匯出內容不符。"
+    }
+  },
+  "launcher": {
+    "officeStudio": {
+      "genericName": "辦公室套件",
+      "comment": "本機 OpenAEC 辦公室環境",
+      "keywords": "文書處理;試算表;簡報;資料庫;電子郵件;辦公室;office;"
+    },
+    "databaseStudio": {
+      "genericName": "資料庫檢視器",
+      "comment": "在本機開啟舊的 MDB 和 ACCDB 資料庫",
+      "keywords": "資料庫;資料表;查詢;access;database;"
+    }
+  }
+}

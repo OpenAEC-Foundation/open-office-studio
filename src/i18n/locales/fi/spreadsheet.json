@@ -1,0 +1,92 @@
+{
+  "formulaCheck": {
+    "titleWarning": "Tarkista tämän laskentataulukon kaavat",
+    "titleInfo": "Huomautuksia tämän laskentataulukon kaavoista",
+    "cells_one": "{{count}} solu",
+    "cells_other": "{{count}} solua",
+    "examplesMore_one": "{{list}} ja {{count}} muuta",
+    "examplesMore_other": "{{list}} ja {{count}} muuta",
+    "userFunction": "Käyttäjän määrittämä funktio (makro tai apuohjelma)",
+    "function": "Funktio",
+    "notCalculated": "{{kind}} {{name}} ei lasketa ({{cells}}: {{examples}}). Tallennettu tulos säilyy eikä päivity; riippuvat solut voivat olla vanhentuneita.",
+    "recalculated_one": "{{cells}} sisälsi vanhentuneen tallennetun tuloksen, ja se laskettiin uudelleen avattaessa ({{examples}}). Uudet tulokset säilyvät tallennettaessa.",
+    "recalculated_other": "{{cells}} sisälsi vanhentuneen tallennetun tuloksen, ja ne laskettiin uudelleen avattaessa ({{examples}}). Uudet tulokset säilyvät tallennettaessa.",
+    "manualCalculation": "Tiedosto tallennettiin manuaalisella laskennalla; tallennetut tulokset voivat olla vanhentuneita.",
+    "externalLinks_one": "Työkirja viittaa ulkoiseen työkirjaan; näitä arvoja ei päivitetä.",
+    "externalLinks_other": "Työkirja viittaa {{count}} ulkoiseen työkirjaan; näitä arvoja ei päivitetä.",
+    "errorCells": "{{cells}}, joissa on virhearvo: {{list}}.",
+    "errorItem": "{{error}} ({{examples}})",
+    "noCachedResult": "{{cells}}, joissa on kaava ilman tallennettua tulosta ({{examples}}).",
+    "fullCalcOnLoad": "Tiedosto pyytää täydellistä uudelleenlaskentaa avattaessa (fullCalcOnLoad); tallennetut tulokset voivat olla vanhentuneita.",
+    "calcChain": "Laskentaketjua (calcChain) ei säilytetä tallennettaessa; Excel muodostaa sen uudelleen.",
+    "tooLarge": "Laskentataulukko on liian suuri tarkistettavaksi.",
+    "invalidWorkbook": "Ei kelvollinen XLSX-työkirja."
+  },
+  "print": {
+    "pageLabel": "{{sheet}}, sivu {{page}}/{{pages}}",
+    "notWorksheet": "Taulukko ‘{{name}}’ ei ole laskentataulukko, joten se ohitetaan.",
+    "nothingToPrint": "Ei tulostettavaa: taulukot ovat tyhjiä."
+  },
+  "export": {
+    "pngUnavailable": "Tämä laskentataulukkomoottori ei voi luoda PNG-kuvaa."
+  },
+  "csvImport": {
+    "title": "Tuo {{name}}",
+    "import": "Tuonti",
+    "separator": "Erotin",
+    "separatorSemicolon": "Puolipiste ;",
+    "separatorComma": "Pilkku ,",
+    "separatorTab": "Sarkain",
+    "separatorPipe": "Pystyviiva |",
+    "separatorCustom": "Muu merkki…",
+    "customCharacter": "Muu merkki",
+    "textQualifier": "Tekstin tunniste",
+    "qualifierDouble": "Lainausmerkki \"",
+    "qualifierSingle": "Heittomerkki '",
+    "qualifierNone": "Ei mitään",
+    "encoding": "Merkistökoodaus",
+    "encodingAuto": "Automaattinen",
+    "encodingDetected": "{{name}} ({{encoding}})",
+    "encodingWindows1252": "Windows-1252 (länsieurooppalainen)",
+    "numbers": "Luvut",
+    "numbersDutch": "Hollanti (1.234,56)",
+    "numbersEnglish": "Englanti (1,234.56)",
+    "dateOrder": "Päivämäärän järjestys",
+    "dateOrderDmy": "Päivä-kuukausi-vuosi (31-12-2026)",
+    "dateOrderMdy": "Kuukausi-päivä-vuosi (12/31/2026)",
+    "dateOrderYmd": "Vuosi-kuukausi-päivä (2026-12-31)",
+    "fromRow": "Riviltä",
+    "headerRow": "Ensimmäinen rivi on otsikkorivi",
+    "previewLabel": "Ensimmäisten 50 rivin esikatselu",
+    "columnType": "Sarakkeen {{number}} tyyppi",
+    "columnTypes": {
+      "standaard": "Yleinen",
+      "tekst": "Teksti",
+      "datum": "Päivämäärä",
+      "overslaan": "Ohita"
+    },
+    "detected_one": "{{separator}} erottimena, {{count}} sarake.",
+    "detected_other": "{{separator}} erottimena, {{count}} saraketta.",
+    "explanation": "Valitse <b>Teksti</b> postinumeroille, tuotenumeroille ja IBAN-numeroille; alkunollat ja yli 15-numeroiset luvut pysyvät tekstinä jo Yleinen-tyypissä. Arvoja, jotka alkavat merkillä =, +, - tai @, ei koskaan lueta kaavoiksi (heittomerkki esikatselussa).",
+    "separatorNames": {
+      "tab": "sarkain",
+      "semicolon": "puolipiste",
+      "comma": "pilkku",
+      "pipe": "pystyviiva",
+      "other": "”{{character}}”"
+    },
+    "report": {
+      "import": "Tuo",
+      "imported": "{{rows}} ja {{columns}} luettu; {{separator}} erottimena, koodaus {{encoding}}.",
+      "rows_one": "{{count}} rivi",
+      "rows_other": "{{count}} riviä",
+      "columns_one": "{{count}} sarake",
+      "columns_other": "{{count}} saraketta",
+      "formulaLike": "Kaavalta näyttävä teksti",
+      "formulaLikeCells_one": "{{count}} solu, joka alkaa merkillä =, +, - tai @, otettiin mukaan tekstinä eikä kaavana (suojaus CSV-injektiota vastaan).",
+      "formulaLikeCells_other": "{{count}} solua, jotka alkavat merkillä =, +, - tai @, otettiin mukaan tekstinä eikä kaavana (suojaus CSV-injektiota vastaan).",
+      "truncated": "Katkaistu",
+      "truncatedText": "Tiedosto on suurempi kuin laskentataulukko ({{rows}} riviä tai {{columns}} saraketta); loppuosaa ei ole luettu."
+    }
+  }
+}

@@ -18,10 +18,11 @@
 //! besturingssysteem of de gebruiker zelf heeft aangewezen, nooit een
 //! willekeurig pad.
 //!
-//! Doelvenster: het hoofdvenster ("main"). Is dat gesloten terwijl losgemaakte
-//! documentvensters nog openstaan, dan het laatst actieve venster. Zo landt een
-//! dubbelklik voorspelbaar in één vast venster, en nooit in een venster dat al
-//! weg is; wachtende bestanden van een venster dat sluit, verhuizen mee.
+//! Doelvenster: het laatst actieve Office Studio-venster (alle vensters zijn
+//! volwaardig). Is dat er niet (meer), dan het hoofdvenster ("main"), anders
+//! een willekeurig open venster. Zo landt een dubbelklik in het venster waar
+//! je net werkte, en nooit in een venster dat al weg is; wachtende bestanden
+//! van een venster dat sluit, verhuizen mee.
 use std::{
     collections::BTreeMap,
     ffi::OsString,
@@ -140,25 +141,36 @@ pub fn startpaden(argumenten: impl Iterator<Item = OsString>, map: Option<&Path>
 pub fn lees_beperkt(pad: &Path) -> Result<Vec<u8>, String> {
     let grootte = std::fs::metadata(pad).map_err(|e| e.to_string())?.len();
     if grootte == 0 || grootte > MAX_GROOTTE {
-        return Err("Het bestand is leeg of groter dan 100 MB.".into());
+        return Err(crate::taal::t("errors.file.emptyOrTooLarge"));
     }
     std::fs::read(pad).map_err(|e| e.to_string())
 }
 
-/// Het venster dat nieuwe bestanden krijgt: hoofdvenster, anders het laatst actieve.
-fn doelvenster<R: tauri::Runtime>(app: &tauri::AppHandle<R>) -> Option<tauri::WebviewWindow<R>> {
-    if let Some(venster) = app.get_webview_window(HOOFDVENSTER) {
-        return Some(venster);
-    }
-    let laatst = app
-        .state::<Systeembestanden>()
+/// Kiest het doelvenster: het laatst actieve als dat nog open is, anders het
+/// hoofdvenster, anders het eerste open venster.
+pub fn kies_doelvenster(laatst: Option<&str>, open: &[String]) -> Option<String> {
+    laatst
+        .filter(|l| open.iter().any(|o| o == l))
+        .or_else(|| open.iter().map(String::as_str).find(|o| *o == HOOFDVENSTER))
+        .or_else(|| open.first().map(String::as_str))
+        .map(str::to_owned)
+}
+
+/// Het laatst actieve venster (focus), als bekend.
+pub fn laatst_actief<R: tauri::Runtime>(app: &tauri::AppHandle<R>) -> Option<String> {
+    app.state::<Systeembestanden>()
         .laatst_actief
         .lock()
         .ok()
-        .and_then(|l| l.clone());
-    laatst
+        .and_then(|l| l.clone())
+}
+
+/// Het venster dat nieuwe bestanden krijgt (zie `kies_doelvenster`).
+fn doelvenster<R: tauri::Runtime>(app: &tauri::AppHandle<R>) -> Option<tauri::WebviewWindow<R>> {
+    let mut open: Vec<String> = app.webview_windows().into_keys().collect();
+    open.sort();
+    kies_doelvenster(laatst_actief(app).as_deref(), &open)
         .and_then(|label| app.get_webview_window(&label))
-        .or_else(|| app.webview_windows().into_values().next())
 }
 
 fn naar_voren<R: tauri::Runtime>(venster: &tauri::WebviewWindow<R>) {
@@ -265,7 +277,7 @@ pub fn claim_systeembestand(
 ) -> Result<Claim, String> {
     let pad = staat
         .neem(id, venster.label())
-        .ok_or("Dit bestand is al geopend of niet voor dit venster bedoeld.")?;
+        .ok_or_else(|| crate::taal::t("errors.file.alreadyOpenedOrOtherWindow"))?;
     Ok(claim(&app, &werkbestanden, pad, venster.label()))
 }
 
@@ -398,5 +410,21 @@ mod tests {
         assert!(staat.verhuis("document-3", "main"));
         assert!(!staat.verhuis("document-3", "main"));
         assert_eq!(staat.voor_venster("main").len(), 1);
+    }
+
+    #[test]
+    fn nieuwe_bestanden_gaan_naar_het_laatst_actieve_venster() {
+        let open = |l: &[&str]| l.iter().map(|s| s.to_string()).collect::<Vec<_>>();
+        let alle = open(&["document-3", "main"]);
+        assert_eq!(kies_doelvenster(Some("document-3"), &alle).as_deref(), Some("document-3"));
+        // Zonder (geldig) laatst actief venster: het hoofdvenster.
+        assert_eq!(kies_doelvenster(None, &alle).as_deref(), Some("main"));
+        assert_eq!(kies_doelvenster(Some("document-9"), &alle).as_deref(), Some("main"));
+        // Hoofdvenster gesloten: een ander open venster.
+        assert_eq!(
+            kies_doelvenster(Some("document-9"), &open(&["document-4"])).as_deref(),
+            Some("document-4")
+        );
+        assert_eq!(kies_doelvenster(Some("main"), &[]), None);
     }
 }

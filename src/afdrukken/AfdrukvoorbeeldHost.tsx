@@ -4,6 +4,7 @@
  */
 import { Suspense, lazy, useEffect, useState } from "react";
 import { actieveKoppeling } from "../export/koppeling";
+import i18next from "../i18n/config";
 import { past } from "../lint/sneltoetsen";
 import type { AfdrukBron } from "./bron";
 import { AFDRUK_GEBEURTENIS, type AfdrukVerzoek } from "./openen";
@@ -22,7 +23,7 @@ export function AfdrukvoorbeeldHost({ meld }: { meld: (tekst: string) => void })
     const openen = (verzoek: AfdrukVerzoek) => {
       const bron = verzoek.bron ?? actieveKoppeling()?.afdrukbron?.();
       if (!bron) {
-        meld("Afdrukken kan zodra het document helemaal geopend is.");
+        meld(i18next.t("backstage:printPreview.notReady"));
         return;
       }
       setOpen({ bron, verzoek });

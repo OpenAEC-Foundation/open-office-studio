@@ -1,4 +1,5 @@
 /** Kleine tekenhulpen voor eigen pagina-onderdelen (kop- en voetteksten, notities, hand-outs). */
+import { formatDatum, formatTijd } from "../i18n/opmaak";
 import type { TekstStuk } from "./model";
 
 export const LETTER = '"Calibri", "Carlito", "Inter", "Liberation Sans", sans-serif';
@@ -91,7 +92,7 @@ export function meter(grootte: number, vet = false) {
   return (tekst: string) => ctx.measureText(tekst).width;
 }
 
-/** Datum en tijd zoals Nederlandse kantoorpakketten ze in kop- en voetteksten zetten. */
-export const datumTekst = (d = new Date()) => d.toLocaleDateString("nl-NL");
-export const tijdTekst = (d = new Date()) =>
-  d.toLocaleTimeString("nl-NL", { hour: "2-digit", minute: "2-digit" });
+/** Korte datum en tijd voor kop- en voetteksten, in de notatie van de interfacetaal (nl: 28-10-2026, 14:05). */
+export const datumTekst = (d = new Date()) =>
+  formatDatum(d, { day: "numeric", month: "numeric", year: "numeric" });
+export const tijdTekst = (d = new Date()) => formatTijd(d);

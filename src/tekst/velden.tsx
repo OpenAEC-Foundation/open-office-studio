@@ -1,9 +1,11 @@
 import { useEffect, useId, useState, type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { getalTekst, leesGetal, rond } from "./eenheden";
 import "./opmaak.css";
 
 /**
- * Getalveld met eenheid, Nederlandse notatie (komma) en pijltjestoetsen om
+ * Getalveld met eenheid, de getalnotatie van de interfacetaal (nl: komma; een
+ * punt wordt ook gelezen) en pijltjestoetsen om
  * met `stap` op of af te gaan. Geeft alleen geldige getallen door.
  */
 export function GetalVeld({
@@ -133,13 +135,15 @@ export function KleurVeld({
   label,
   waarde,
   wijzig,
-  automatisch = "Automatisch",
+  automatisch,
 }: {
   label: string;
   waarde: string | null;
   wijzig: (waarde: string | null) => void;
+  /** Tekst van de knop zonder kleur; standaard ‘Automatisch’. */
   automatisch?: string;
 }) {
+  const { t } = useTranslation("writer");
   const id = useId();
   return (
     <span className="tekstopmaak-veld">
@@ -157,7 +161,7 @@ export function KleurVeld({
           aria-pressed={waarde === null}
           onClick={() => wijzig(null)}
         >
-          {automatisch}
+          {automatisch ?? t("general.automatic")}
         </button>
       </span>
     </span>

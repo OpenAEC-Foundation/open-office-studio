@@ -5,10 +5,13 @@
  */
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { useTranslation } from "react-i18next";
+import { taalNaamKort, type Taal } from "../talen";
 import { itemsVoorFout } from "./menu";
 import type { MenuStand, SpellingSessie } from "./sessie";
 
 export function SpellingMenu({ sessie, stand }: { sessie: SpellingSessie; stand: MenuStand }) {
+  const { t } = useTranslation("spelling");
   const menu = useRef<HTMLDivElement>(null);
   const [plek, setPlek] = useState({ left: stand.x, top: stand.y });
   const sluit = () => sessie.sluitMenu();
@@ -71,7 +74,7 @@ export function SpellingMenu({ sessie, stand }: { sessie: SpellingSessie; stand:
       ref={menu}
       className="spelling-menu"
       role="menu"
-      aria-label={`Spelling: ${stand.fout.tekst}`}
+      aria-label={t("menu.label", { word: stand.fout.tekst })}
       style={plek}
       onContextMenu={(e) => e.preventDefault()}
       onKeyDown={(e) => {
@@ -89,8 +92,8 @@ export function SpellingMenu({ sessie, stand }: { sessie: SpellingSessie; stand:
         </div>
       ))}
       <hr />
-      <div className="spelling-menu-kop">Taal van deze alinea</div>
-      <div className="spelling-menu-talen" role="group" aria-label="Taal van deze alinea">
+      <div className="spelling-menu-kop">{t("actions.paragraphLanguage")}</div>
+      <div className="spelling-menu-talen" role="group" aria-label={t("actions.paragraphLanguage")}>
         {talen.map((i) => (
           <button
             key={i.id}
@@ -101,7 +104,7 @@ export function SpellingMenu({ sessie, stand }: { sessie: SpellingSessie; stand:
             data-id={i.id}
             onClick={i.uitvoeren}
           >
-            {i.label.replace("Engels (Verenigd Koninkrijk)", "Engels (VK)").replace("Engels (Verenigde Staten)", "Engels (VS)")}
+            {taalNaamKort(i.id.slice("spelling-taal-".length) as Taal)}
           </button>
         ))}
       </div>

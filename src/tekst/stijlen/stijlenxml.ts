@@ -24,6 +24,7 @@ import {
   metAttributen,
   type KindWijziging,
 } from "./ooxml.ts";
+import { vertaal } from "./vertaling.ts";
 
 export type StijlSoort = "paragraph" | "character";
 export type Uitlijning = "left" | "center" | "right" | "both";
@@ -242,7 +243,7 @@ function rPrWijzigingen(xml: string, p: string, rPr: XmlElement | null, e: Stijl
   zet("caps", schakel(p, "caps", e.hoofdletters));
   if (e.onderstreping !== undefined) {
     if (e.onderstreping !== null && !/^[A-Za-z]+$/.test(e.onderstreping))
-      throw new StijlFout("Onbekende onderstrepingsstijl.");
+      throw new StijlFout(vertaal("writer:styles.errors.unknownUnderline", "Onbekende onderstrepingsstijl."));
     const kleur = e.onderstrepingKleur && /^[0-9a-f]{6}$/i.test(e.onderstrepingKleur) ? ` ${p}color="${e.onderstrepingKleur.toUpperCase()}"` : "";
     zet("u", e.onderstreping === null ? null : `<${p}u ${p}val="${e.onderstreping}"${kleur}/>`);
   } else if (e.onderstreept !== undefined)
@@ -264,12 +265,12 @@ function rPrWijzigingen(xml: string, p: string, rPr: XmlElement | null, e: Stijl
     zet("vertAlign", e.verticaal === null ? null : `<${p}vertAlign ${p}val="${e.verticaal}"/>`);
   if (e.kleur !== undefined) {
     if (e.kleur !== null && !/^[0-9a-f]{6}$/i.test(e.kleur))
-      throw new StijlFout("Een kleur moet als zes hexadecimale tekens worden opgegeven.");
+      throw new StijlFout(vertaal("writer:styles.errors.invalidColor", "Een kleur moet als zes hexadecimale tekens worden opgegeven."));
     zet("color", e.kleur === null ? null : `<${p}color ${p}val="${e.kleur.toUpperCase()}"/>`);
   }
   if (e.taal !== undefined) {
     if (e.taal !== null && !/^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$/.test(e.taal))
-      throw new StijlFout(`‘${e.taal}’ is geen geldige taalcode.`);
+      throw new StijlFout(vertaal("writer:styles.errors.invalidLanguage", "‘{{code}}’ is geen geldige taalcode.", { code: e.taal }));
     zet("lang", metAttributen(xml, kind(rPr, "lang"), `${p}lang`, { [`${p}val`]: e.taal }));
   }
   return w;
@@ -392,17 +393,17 @@ export function wijzigStijl(xml: string, styleId: string, wijziging: StijlWijzig
   const wortel = leesXml(xml);
   const p = voorvoegsel(wortel);
   const stijl = stijlElement(wortel, styleId);
-  if (!stijl) throw new StijlFout(`De stijl ‘${styleId}’ bestaat niet in dit document.`);
+  if (!stijl) throw new StijlFout(vertaal("writer:styles.errors.styleNotFound", "De stijl ‘{{id}}’ bestaat niet in dit document.", { id: styleId }));
   const soort = attr(stijl, "type") ?? "paragraph";
   if (wijziging.gebaseerdOp) controleerBasis(wortel, styleId, wijziging.gebaseerdOp);
   const w: KindWijziging = new Map();
   if (wijziging.naam !== undefined) {
     const naam = wijziging.naam.trim();
-    if (!naam) throw new StijlFout("Geef de stijl een naam.");
+    if (!naam) throw new StijlFout(vertaal("writer:styles.errors.nameRequired", "Geef de stijl een naam."));
     const dubbel = kinderen(wortel, "style").find(
       (s) => s !== stijl && attr(kind(s, "name"), "val")?.toLowerCase() === naam.toLowerCase(),
     );
-    if (dubbel) throw new StijlFout(`Er is al een stijl met de naam ‘${naam}’.`);
+    if (dubbel) throw new StijlFout(vertaal("writer:styles.errors.nameExists", "Er is al een stijl met de naam ‘{{name}}’.", { name: naam }));
     w.set("name", `<${p}name ${p}val="${ontsnap(naam)}"/>`);
   }
   if (wijziging.gebaseerdOp !== undefined)
@@ -419,11 +420,11 @@ export function wijzigStijl(xml: string, styleId: string, wijziging: StijlWijzig
 
 /** Voorkomt een kring in `basedOn`. */
 function controleerBasis(wortel: XmlElement, styleId: string, basis: string) {
-  if (!stijlElement(wortel, basis)) throw new StijlFout(`De basisstijl ‘${basis}’ bestaat niet.`);
+  if (!stijlElement(wortel, basis)) throw new StijlFout(vertaal("writer:styles.errors.baseNotFound", "De basisstijl ‘{{id}}’ bestaat niet.", { id: basis }));
   let huidig: string | undefined = basis;
   for (let n = 0; huidig && n < 100; n++) {
     if (huidig === styleId)
-      throw new StijlFout("Een stijl kan niet (via een andere stijl) op zichzelf gebaseerd zijn.");
+      throw new StijlFout(vertaal("writer:styles.errors.circularBase", "Een stijl kan niet (via een andere stijl) op zichzelf gebaseerd zijn."));
     huidig = attr(kind(stijlElement(wortel, huidig), "basedOn"), "val");
   }
 }
@@ -458,13 +459,13 @@ export function nieuweStijl(xml: string, stijl: NieuweStijl): { xml: string; sty
   const wortel = leesXml(xml);
   const p = voorvoegsel(wortel);
   const naam = stijl.naam.trim();
-  if (!naam) throw new StijlFout("Geef de stijl een naam.");
-  if (naam.length > 253) throw new StijlFout("De naam van de stijl is te lang.");
+  if (!naam) throw new StijlFout(vertaal("writer:styles.errors.nameRequired", "Geef de stijl een naam."));
+  if (naam.length > 253) throw new StijlFout(vertaal("writer:styles.errors.nameTooLong", "De naam van de stijl is te lang."));
   if (kinderen(wortel, "style").some((s) => attr(kind(s, "name"), "val")?.toLowerCase() === naam.toLowerCase()))
-    throw new StijlFout(`Er is al een stijl met de naam ‘${naam}’.`);
+    throw new StijlFout(vertaal("writer:styles.errors.nameExists", "Er is al een stijl met de naam ‘{{name}}’.", { name: naam }));
   const styleId = vrijeStijlId(xml, naam);
   if (stijl.gebaseerdOp && !stijlElement(wortel, stijl.gebaseerdOp))
-    throw new StijlFout(`De basisstijl ‘${stijl.gebaseerdOp}’ bestaat niet.`);
+    throw new StijlFout(vertaal("writer:styles.errors.baseNotFound", "De basisstijl ‘{{id}}’ bestaat niet.", { id: stijl.gebaseerdOp }));
   const kop =
     `<${p}style ${p}type="${stijl.soort}" ${p}customStyle="1" ${p}styleId="${styleId}">` +
     `<${p}name ${p}val="${ontsnap(naam)}"/>` +
@@ -487,7 +488,7 @@ export function verwijderStijl(xml: string, styleId: string): string {
   const wortel = leesXml(xml);
   const stijl = stijlElement(wortel, styleId);
   if (!stijl) return xml;
-  if (attr(stijl, "default") === "1") throw new StijlFout("De standaardstijl kan niet worden verwijderd.");
+  if (attr(stijl, "default") === "1") throw new StijlFout(vertaal("writer:styles.errors.cannotDeleteDefault", "De standaardstijl kan niet worden verwijderd."));
   return vervang(xml, [{ start: stijl.start, eind: stijl.eind, tekst: "" }]);
 }
 
@@ -544,7 +545,7 @@ export function wijzigThemaLettertypen(
 ): string {
   const wortel = leesXml(themaXml);
   const schema = zoek(wortel, "fontScheme");
-  if (!schema) throw new StijlFout("Het thema van dit document heeft geen lettertypeschema.");
+  if (!schema) throw new StijlFout(vertaal("writer:styles.errors.noFontScheme", "Het thema van dit document heeft geen lettertypeschema."));
   const vervangingen: { start: number; eind: number; tekst: string }[] = [];
   for (const [soort, naam] of [
     ["majorFont", lettertypen.koppen],

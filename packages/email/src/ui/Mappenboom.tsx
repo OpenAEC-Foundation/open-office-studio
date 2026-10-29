@@ -13,7 +13,9 @@ import {
   Trash2,
   type LucideIcon,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import type { Account, Map } from "../contract";
+import { vergelijkTekst } from "../../../../src/i18n/opmaak";
 
 const ICONEN: Record<NonNullable<Map["speciaal"]>, LucideIcon> = {
   inbox: Inbox,
@@ -27,6 +29,11 @@ const ICONEN: Record<NonNullable<Map["speciaal"]>, LucideIcon> = {
 };
 const VOLGORDE: (Map["speciaal"] | undefined)[] = ["inbox", "concepten", "verzonden", "archief", "ongewenst", "prullenbak"];
 
+/** Weergavenaam: de inbox in de taal van de interface, andere mappen zoals de server ze noemt. */
+export function mapNaam(map: Pick<Map, "pad" | "naam" | "speciaal">, t: (sleutel: string) => string) {
+  return map.speciaal === "inbox" || map.pad.toUpperCase() === "INBOX" ? t("folders.inbox") : map.naam;
+}
+
 export interface MapKeuze {
   accountId: string;
   map: string;
@@ -38,7 +45,7 @@ function boom(mappen: Map[]) {
     const va = a.speciaal ? VOLGORDE.indexOf(a.speciaal) : -1;
     const vb = b.speciaal ? VOLGORDE.indexOf(b.speciaal) : -1;
     if (va >= 0 || vb >= 0) return (va < 0 ? 99 : va) - (vb < 0 ? 99 : vb);
-    return a.naam.localeCompare(b.naam, "nl");
+    return vergelijkTekst(a.naam, b.naam);
   };
   const uit: { map: Map; diepte: number }[] = [];
   const kinderen = (ouder: string | null, diepte: number) => {
@@ -75,9 +82,15 @@ export function Mappenboom({
   wisselInklap: (accountId: string) => void;
   ladenFout: Record<string, string>;
 }) {
-  const bomen = useMemo(() => Object.fromEntries(accounts.map((a) => [a.id, boom(mappen[a.id] ?? [])])), [accounts, mappen]);
+  const { t, i18n } = useTranslation("email");
+  // Sorteren volgt de taal; daarom ook opnieuw bij een taalwissel.
+  const bomen = useMemo(
+    () => Object.fromEntries(accounts.map((a) => [a.id, boom(mappen[a.id] ?? [])])),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [accounts, mappen, i18n.language],
+  );
   return (
-    <nav className="email-mappen" aria-label="Mappen">
+    <nav className="email-mappen" aria-label={t("folders.label")}>
       {accounts.map((account) => {
         const dicht = ingeklapt.has(account.id);
         const inbox = mappen[account.id]?.find((m) => m.speciaal === "inbox");
@@ -95,7 +108,7 @@ export function Mappenboom({
                     {ladenFout[account.id]}
                   </li>
                 )}
-                {!mappen[account.id] && !ladenFout[account.id] && <li className="email-mapladen">Mappen laden…</li>}
+                {!mappen[account.id] && !ladenFout[account.id] && <li className="email-mapladen">{t("folders.loading")}</li>}
                 {bomen[account.id]?.map(({ map, diepte }) => {
                   const Icoon = map.speciaal ? ICONEN[map.speciaal] : Folder;
                   const gekozen = actief?.accountId === account.id && actief.map === map.pad;
@@ -103,16 +116,16 @@ export function Mappenboom({
                     <li key={map.pad}>
                       <button
                         className={`email-map ${gekozen ? "is-gekozen" : ""} ${map.ongelezen ? "heeft-ongelezen" : ""}`}
-                        style={{ paddingLeft: 14 + diepte * 14 }}
+                        style={{ paddingInlineStart: 14 + diepte * 14 }}
                         disabled={!map.selecteerbaar}
                         aria-current={gekozen ? "true" : undefined}
                         onClick={() => kies({ accountId: account.id, map: map.pad })}
                         title={map.pad}
                       >
                         <Icoon size={15} strokeWidth={1.7} />
-                        <span>{map.naam}</span>
+                        <span>{mapNaam(map, t)}</span>
                         {!!map.ongelezen && (
-                          <b className="email-teller" aria-label={`${map.ongelezen} ongelezen`}>
+                          <b className="email-teller" aria-label={t("folders.unread", { count: map.ongelezen })}>
                             {map.ongelezen}
                           </b>
                         )}

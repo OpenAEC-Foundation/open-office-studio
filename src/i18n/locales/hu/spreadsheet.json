@@ -1,0 +1,92 @@
+{
+  "formulaCheck": {
+    "titleWarning": "Ellenőrizze a táblázat képleteit",
+    "titleInfo": "Megjegyzések a táblázat képleteihez",
+    "cells_one": "{{count}} cella",
+    "cells_other": "{{count}} cella",
+    "examplesMore_one": "{{list}} és még {{count}}",
+    "examplesMore_other": "{{list}} és még {{count}}",
+    "userFunction": "Felhasználó által definiált függvény (makró vagy bővítmény)",
+    "function": "Függvény",
+    "notCalculated": "{{kind}} {{name}} nincs kiszámítva ({{cells}}: {{examples}}). A mentett eredmény megmarad, és nem frissül; a függő cellák elavultak lehetnek.",
+    "recalculated_one": "{{cells}} elavult mentett eredményt tartalmazott, és megnyitáskor újra lett számolva ({{examples}}). Mentéskor az új eredmények megmaradnak.",
+    "recalculated_other": "{{cells}} elavult mentett eredményt tartalmazott, és megnyitáskor újra lett számolva ({{examples}}). Mentéskor az új eredmények megmaradnak.",
+    "manualCalculation": "A fájlt manuális számítással mentették; a mentett eredmények elavultak lehetnek.",
+    "externalLinks_one": "A munkafüzet egy külső munkafüzetre hivatkozik; ezek az értékek nem frissülnek.",
+    "externalLinks_other": "A munkafüzet {{count}} külső munkafüzetre hivatkozik; ezek az értékek nem frissülnek.",
+    "errorCells": "{{cells}} hibaértékkel: {{list}}.",
+    "errorItem": "{{error}} ({{examples}})",
+    "noCachedResult": "{{cells}} mentett eredmény nélküli képlettel ({{examples}}).",
+    "fullCalcOnLoad": "A fájl megnyitáskor teljes újraszámolást kér (fullCalcOnLoad); a mentett eredmények elavultak lehetnek.",
+    "calcChain": "A számítási lánc (calcChain) mentéskor nem marad meg; az Excel újraépíti.",
+    "tooLarge": "A táblázat túl nagy az ellenőrzéshez.",
+    "invalidWorkbook": "Nem érvényes XLSX-munkafüzet."
+  },
+  "print": {
+    "pageLabel": "{{sheet}}, {{page}}/{{pages}}. oldal",
+    "notWorksheet": "A(z) ‘{{name}}’ lap nem munkalap, ezért kimarad.",
+    "nothingToPrint": "Nincs mit nyomtatni: a lapok üresek."
+  },
+  "export": {
+    "pngUnavailable": "Ez a táblázatkezelő motor nem tud PNG-t létrehozni."
+  },
+  "csvImport": {
+    "title": "{{name}} importálása",
+    "import": "Importálás",
+    "separator": "Elválasztó",
+    "separatorSemicolon": "Pontosvessző ;",
+    "separatorComma": "Vessző ,",
+    "separatorTab": "Tabulátor",
+    "separatorPipe": "Függőleges vonal |",
+    "separatorCustom": "Egyéb karakter…",
+    "customCharacter": "Egyéb karakter",
+    "textQualifier": "Szövegjelölő",
+    "qualifierDouble": "Idézőjel \"",
+    "qualifierSingle": "Aposztróf '",
+    "qualifierNone": "Nincs",
+    "encoding": "Karakterkódolás",
+    "encodingAuto": "Automatikus",
+    "encodingDetected": "{{name}} ({{encoding}})",
+    "encodingWindows1252": "Windows-1252 (nyugat-európai)",
+    "numbers": "Számok",
+    "numbersDutch": "Holland (1.234,56)",
+    "numbersEnglish": "Angol (1,234.56)",
+    "dateOrder": "Dátumsorrend",
+    "dateOrderDmy": "Nap-hónap-év (31-12-2026)",
+    "dateOrderMdy": "Hónap-nap-év (12/31/2026)",
+    "dateOrderYmd": "Év-hónap-nap (2026-12-31)",
+    "fromRow": "Kezdő sor",
+    "headerRow": "Az első sor fejléc",
+    "previewLabel": "Az első 50 sor előnézete",
+    "columnType": "A(z) {{number}}. oszlop típusa",
+    "columnTypes": {
+      "standaard": "Általános",
+      "tekst": "Szöveg",
+      "datum": "Dátum",
+      "overslaan": "Kihagyás"
+    },
+    "detected_one": "{{separator}} elválasztóként, {{count}} oszlop.",
+    "detected_other": "{{separator}} elválasztóként, {{count}} oszlop.",
+    "explanation": "Irányítószámokhoz, cikkszámokhoz és IBAN-hoz válassza a <b>Szöveg</b> típust; a kezdő nullák és a 15 számjegynél hosszabb számok az Általános típusnál is szövegként maradnak. Az =, +, - vagy @ karakterrel kezdődő értékek soha nem lesznek képletként beolvasva (aposztróf az előnézetben).",
+    "separatorNames": {
+      "tab": "tabulátor",
+      "semicolon": "pontosvessző",
+      "comma": "vessző",
+      "pipe": "függőleges vonal",
+      "other": "„{{character}}”"
+    },
+    "report": {
+      "import": "Importálás",
+      "imported": "{{rows}} és {{columns}} beolvasva; {{separator}} elválasztóként, kódolás: {{encoding}}.",
+      "rows_one": "{{count}} sor",
+      "rows_other": "{{count}} sor",
+      "columns_one": "{{count}} oszlop",
+      "columns_other": "{{count}} oszlop",
+      "formulaLike": "Képletszerű szöveg",
+      "formulaLikeCells_one": "{{count}} =, +, - vagy @ karakterrel kezdődő cella szövegként, nem képletként lett beolvasva (védelem a CSV-injektálás ellen).",
+      "formulaLikeCells_other": "{{count}} =, +, - vagy @ karakterrel kezdődő cella szövegként, nem képletként lett beolvasva (védelem a CSV-injektálás ellen).",
+      "truncated": "Csonkolva",
+      "truncatedText": "A fájl nagyobb egy munkalapnál ({{rows}} sor vagy {{columns}} oszlop); a többi nem lett beolvasva."
+    }
+  }
+}

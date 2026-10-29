@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 /** Modale dialoog met focusval, Escape en terugzetten van de focus. */
 export function Dialoog({
@@ -19,6 +20,7 @@ export function Dialoog({
   className?: string;
   rol?: "dialog" | "alertdialog";
 }) {
+  const { t } = useTranslation("email");
   const ref = useRef<HTMLElement>(null);
   useEffect(() => {
     const vorige = document.activeElement instanceof HTMLElement ? document.activeElement : null;
@@ -64,7 +66,7 @@ export function Dialoog({
         <header className="email-dialoogkop">
           <h2>{titel}</h2>
           {sluit && (
-            <button className="email-dialoog-sluit" onClick={sluit} aria-label="Sluiten" title="Sluiten (Esc)">
+            <button className="email-dialoog-sluit" onClick={sluit} aria-label={t("common:close")} title={t("dialog.closeEsc")}>
               <X size={16} />
             </button>
           )}

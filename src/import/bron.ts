@@ -1,3 +1,4 @@
+import i18next from "../i18n/config";
 import type { Soort } from "../editors";
 import type { MacroOnderdelen } from "./macros";
 
@@ -40,21 +41,17 @@ export async function bereidOpslag(opties: {
   if (MACROUITVOER.has(opties.ext)) {
     if (!opties.bron?.macro)
       throw new Error(
-        `Opslaan als .${opties.ext} kan alleen voor een document dat als macrobestand is geopend.`,
+        i18next.t("import:errors.macroFileOnly", { ext: opties.ext }),
       );
     const { voegMacrosToe } = await import("./macros");
     bytes = voegMacrosToe(bytes, opties.bron.macro, opties.ext);
     if (opties.bron.macro.heeftVba)
-      toelichtingen.push(
-        "Het VBA-project is ongewijzigd teruggezet; macro’s zijn niet uitgevoerd.",
-      );
+      toelichtingen.push(i18next.t("import:saving.vbaRestored"));
   }
   if (opties.wachtwoord && VERSLEUTELBAAR.has(opties.ext)) {
     const { versleutel } = await import("./versleuteling");
     bytes = await versleutel(bytes, opties.wachtwoord);
-    toelichtingen.push(
-      "Bewaard met een wachtwoord (ECMA-376 Agile, AES-256). Zonder het wachtwoord is het bestand niet te openen.",
-    );
+    toelichtingen.push(i18next.t("import:saving.passwordSaved"));
   }
   return { bytes, toelichting: toelichtingen.join(" ") || undefined };
 }

@@ -7,6 +7,7 @@
  *
  * De uitkomst bevat geen broncode en geen verbindingsreeksen.
  */
+import i18next from "i18next";
 import type { Argument, Expr, ModuleAst, Procedure, Statement } from "./ast.ts";
 import { scanAfscherming, statements, expressiesVan, type AfschermingCategorie } from "./afscherming.ts";
 import { isFormulierLid } from "./access.ts";
@@ -39,6 +40,7 @@ interface Bibliotheek {
   /** Constanten/enums (op voorvoegsel). */
   constanten?: RegExp;
   progids?: RegExp;
+  /** Sleutel van de toelichting (`vba:extern.library.<sleutel>`); vertaald bij het opbouwen van het resultaat. */
   toelichting: string;
 }
 
@@ -49,7 +51,7 @@ const BIBLIOTHEKEN: Bibliotheek[] = [
     namen: ["vba"],
     guids: ["000204ef-0000-0000-c000-000000000046"],
     typen: ["collection", "errobject"],
-    toelichting: "Visual Basic for Applications: door de eigen interpreter nagebootst.",
+    toelichting: "vba",
   },
   {
     sleutel: "Access",
@@ -65,7 +67,7 @@ const BIBLIOTHEKEN: Bibliotheek[] = [
       "customcontrol", "chart", "pagebreak", "emptycell", "formatcondition", "formatconditions", "hyperlink", "tempvar", "tempvars",
     ].map((t) => t.toLowerCase()),
     progids: /^access\.application/i,
-    toelichting: "Access-objectmodel (DoCmd, Forms, CurrentProject …): door Open Office Studio nagebootst; formulieren via de host.",
+    toelichting: "access",
   },
   {
     sleutel: "DAO",
@@ -77,7 +79,7 @@ const BIBLIOTHEKEN: Bibliotheek[] = [
       "index", "indexes", "relation", "relations", "workspace", "workspaces", "dbengine", "parameter", "parameters",
       "property", "properties", "container", "containers", "document", "documents", "recordsets", "databases", "group", "user",
     ],
-    toelichting: "DAO / ACE-DAO: subset op de SQLite-werkkopie nagebootst.",
+    toelichting: "dao",
   },
   {
     sleutel: "stdole",
@@ -85,7 +87,7 @@ const BIBLIOTHEKEN: Bibliotheek[] = [
     namen: ["stdole"],
     guids: ["00020430-0000-0000-c000-000000000046"],
     typen: [],
-    toelichting: "OLE Automation (basistypen): geen eigen gedrag nodig.",
+    toelichting: "stdole",
   },
   {
     sleutel: "Scripting",
@@ -94,7 +96,7 @@ const BIBLIOTHEKEN: Bibliotheek[] = [
     guids: ["420b2830-e718-11cf-893d-00a0c9054228"],
     typen: ["filesystemobject", "textstream", "file", "folder", "drive", "files", "folders", "drives"],
     progids: /^scripting\./i,
-    toelichting: "Microsoft Scripting Runtime: alleen Dictionary is nagebootst; FileSystemObject, TextStream e.d. (bestanden) niet.",
+    toelichting: "scripting",
   },
   {
     sleutel: "Office",
@@ -103,7 +105,7 @@ const BIBLIOTHEKEN: Bibliotheek[] = [
     guids: ["2df8d04c-5bfa-101b-bde5-00aa0044de52"],
     typen: ["commandbar", "commandbars", "commandbarcontrol", "commandbarcontrols", "commandbarbutton", "commandbarpopup", "commandbarcombobox", "filedialog", "filedialogfilters", "filedialogselecteditems", "iribbonui", "iribboncontrol"],
     constanten: /^mso[A-Z]/,
-    toelichting: "Microsoft Office-objectbibliotheek (FileDialog, CommandBars, lint): niet beschikbaar.",
+    toelichting: "office",
   },
   {
     sleutel: "Excel",
@@ -113,7 +115,7 @@ const BIBLIOTHEKEN: Bibliotheek[] = [
     typen: ["workbook", "workbooks", "worksheet", "worksheets", "range", "sheets", "worksheetfunction", "pivottable", "chartobject", "listobject"],
     constanten: /^xl[A-Z]/,
     progids: /^excel\./i,
-    toelichting: "Microsoft Excel: niet beschikbaar (geen automatisering van andere programma’s).",
+    toelichting: "excel",
   },
   {
     sleutel: "Word",
@@ -123,7 +125,7 @@ const BIBLIOTHEKEN: Bibliotheek[] = [
     typen: ["paragraph", "paragraphs", "bookmarks", "contentcontrol"],
     constanten: /^wd[A-Z]/,
     progids: /^word\./i,
-    toelichting: "Microsoft Word: niet beschikbaar.",
+    toelichting: "word",
   },
   {
     sleutel: "Outlook",
@@ -133,7 +135,7 @@ const BIBLIOTHEKEN: Bibliotheek[] = [
     typen: ["mailitem", "appointmentitem", "contactitem", "taskitem", "mapifolder", "recipient", "recipients", "inspector", "explorer", "olkitem"],
     constanten: /^ol[A-Z]/,
     progids: /^outlook\./i,
-    toelichting: "Microsoft Outlook (e-mail, agenda): niet beschikbaar.",
+    toelichting: "outlook",
   },
   {
     sleutel: "PowerPoint",
@@ -143,7 +145,7 @@ const BIBLIOTHEKEN: Bibliotheek[] = [
     typen: ["presentation", "slide", "slides"],
     constanten: /^pp[A-Z]/,
     progids: /^powerpoint\./i,
-    toelichting: "Microsoft PowerPoint: niet beschikbaar.",
+    toelichting: "powerPoint",
   },
   {
     sleutel: "ADODB",
@@ -153,7 +155,7 @@ const BIBLIOTHEKEN: Bibliotheek[] = [
     typen: ["command", "stream", "adoconnection", "adorecordset"],
     constanten: /^ad[A-Z]/,
     progids: /^adodb\./i,
-    toelichting: "ActiveX Data Objects (ADO): niet nagebootst; gebruik DAO (CurrentDb).",
+    toelichting: "adodb",
   },
   {
     sleutel: "ADOX",
@@ -162,7 +164,7 @@ const BIBLIOTHEKEN: Bibliotheek[] = [
     guids: ["00000600-0000-0010-8000-00aa006d2ea4"],
     typen: ["catalog"],
     progids: /^adox\./i,
-    toelichting: "ADO Extensions (ADOX): niet beschikbaar.",
+    toelichting: "adox",
   },
   {
     sleutel: "MSXML",
@@ -171,7 +173,7 @@ const BIBLIOTHEKEN: Bibliotheek[] = [
     guids: ["f5078f18-c551-11d3-89b9-0000f81fe221", "f5078f1b-c551-11d3-89b9-0000f81fe221", "d63e0ce2-a0a2-11d0-9c02-00c04fc99c8e"],
     typen: ["domdocument", "domdocument60", "domdocument40", "domdocument30", "xmlhttp", "xmlhttp60", "serverxmlhttp", "serverxmlhttp60", "ixmldomnode", "ixmldomelement", "ixmldomnodelist", "ixmldomdocument", "ixmldomattribute"],
     progids: /^(msxml2?\.|microsoft\.xml)/i,
-    toelichting: "Microsoft XML (DOM, XMLHTTP): niet beschikbaar (geen netwerk of bestanden).",
+    toelichting: "msxml",
   },
   {
     sleutel: "Windows Script Host",
@@ -180,7 +182,7 @@ const BIBLIOTHEKEN: Bibliotheek[] = [
     guids: ["f935dc20-1cf0-11d0-adb9-00c04fd58a0b"],
     typen: ["wshshell", "iwshshell", "wshnetwork", "iwshshortcut", "wshshortcut"],
     progids: /^wscript\./i,
-    toelichting: "Windows Script Host (WScript.Shell, snelkoppelingen, register): niet beschikbaar.",
+    toelichting: "windowsScriptHost",
   },
   {
     sleutel: "VBIDE",
@@ -189,7 +191,7 @@ const BIBLIOTHEKEN: Bibliotheek[] = [
     guids: ["0002e157-0000-0000-c000-000000000046"],
     typen: ["vbcomponent", "vbcomponents", "vbproject", "codemodule"],
     constanten: /^vbext_/,
-    toelichting: "VBA-extensibiliteit (code die code bewerkt): niet beschikbaar.",
+    toelichting: "vbide",
   },
   {
     sleutel: "Shell32",
@@ -198,7 +200,7 @@ const BIBLIOTHEKEN: Bibliotheek[] = [
     guids: ["50a7e9b0-70ef-11d1-b75a-00a0c90564fe"],
     typen: ["shell32", "folder2", "folderitem", "folderitems"],
     progids: /^shell\.application/i,
-    toelichting: "Microsoft Shell Controls: niet beschikbaar.",
+    toelichting: "shell32",
   },
   {
     sleutel: "VBScript RegExp",
@@ -207,7 +209,7 @@ const BIBLIOTHEKEN: Bibliotheek[] = [
     guids: ["3f4daca7-160d-11d2-a8e9-00104b365c9f", "3f4daca0-160d-11d2-a8e9-00104b365c9f"],
     typen: ["regexp", "matchcollection", "match", "submatches"],
     progids: /^vbscript\.regexp/i,
-    toelichting: "Microsoft VBScript Regular Expressions: niet beschikbaar.",
+    toelichting: "vbscriptRegExp",
   },
   {
     sleutel: "CDO",
@@ -216,7 +218,7 @@ const BIBLIOTHEKEN: Bibliotheek[] = [
     guids: ["cd000000-8b95-11d1-82db-00c04fb1625d"],
     typen: [],
     progids: /^cdo\./i,
-    toelichting: "Collaboration Data Objects (e-mail versturen): niet beschikbaar.",
+    toelichting: "cdo",
   },
   {
     sleutel: "WinHTTP",
@@ -225,7 +227,7 @@ const BIBLIOTHEKEN: Bibliotheek[] = [
     guids: ["662901fc-6951-4854-9eb2-d9a2570f2b2e"],
     typen: ["winhttprequest"],
     progids: /^winhttp\./i,
-    toelichting: "WinHTTP (internetverzoeken): niet beschikbaar.",
+    toelichting: "winHttp",
   },
   {
     sleutel: "MSForms",
@@ -233,7 +235,7 @@ const BIBLIOTHEKEN: Bibliotheek[] = [
     namen: ["msforms"],
     guids: ["0d452ee1-e08f-101a-852e-02608c4d0bb4"],
     typen: ["dataobject", "userform"],
-    toelichting: "Microsoft Forms 2.0 (UserForms, klembord): niet beschikbaar.",
+    toelichting: "msForms",
   },
   {
     sleutel: "Common Controls (OCX)",
@@ -241,7 +243,7 @@ const BIBLIOTHEKEN: Bibliotheek[] = [
     namen: ["mscomctllib", "mscomctl", "comctllib", "mscomdlg", "mscomct2", "mscomctl2"],
     guids: ["831fdd16-0c5c-11d2-a9fc-0000f8754da1", "f9043c88-f6f2-101a-a3c9-08002b2f49fb", "86cf1d34-0c5f-11d2-a9fc-0000f8754da1", "6b7e6392-850a-101b-afc0-4210102a8da7"],
     typen: ["listitem", "listitems", "treeview", "listview", "imagelist", "progressbar", "statusbar", "commondialog", "columnheader", "node", "nodes", "slider", "dtpicker", "monthview"],
-    toelichting: "ActiveX-besturingselementen (OCX, Common Controls): niet beschikbaar.",
+    toelichting: "commonControls",
   },
 ];
 
@@ -285,7 +287,7 @@ function onbekendeBibliotheek(naam: string): Bibliotheek {
   const k = naam.toLowerCase();
   let b = ONBEKEND_CACHE.get(k);
   if (!b) {
-    b = { sleutel: naam, status: "ontbreekt", namen: [k], guids: [], typen: [], toelichting: "Onbekende bibliotheek: niet beschikbaar in Open Office Studio." };
+    b = { sleutel: naam, status: "ontbreekt", namen: [k], guids: [], typen: [], toelichting: "unknownLibrary" };
     ONBEKEND_CACHE.set(k, b);
   }
   return b;
@@ -429,12 +431,16 @@ export function analyseerExternGeparst(modules: GeparsteModule[], opties: Extern
       bibliotheek: b?.sleutel ?? v.naam,
       status,
       toelichting:
-        b?.toelichting ??
-        (soort === "Projectverwijzing"
-          ? "Verwijzing naar een ander Access-project of een bibliotheekdatabase: niet geladen."
-          : soort === "ActiveX-besturingselement"
-            ? "ActiveX-besturingselement (OCX): niet beschikbaar."
-            : "Onbekende typebibliotheek: niet beschikbaar in Open Office Studio."),
+        i18next.t(
+          `vba:extern.library.${
+            b?.toelichting ??
+            (soort === "Projectverwijzing"
+              ? "projectReference"
+              : soort === "ActiveX-besturingselement"
+                ? "activeXControl"
+                : "unknownTypeLibrary")
+          }`,
+        ),
       gebruiktDoor: [],
     };
   });
@@ -582,8 +588,8 @@ export function analyseerExternGeparst(modules: GeparsteModule[], opties: Extern
         naar.set(doel, (naar.get(doel) ?? true) && omz);
       };
       // Parameters en resultaattype
-      for (const x of p.parameters) if (x.type) voegType(x.type.naam, x.regel, { voorwaarde: false }, "parameter As");
-      if (p.type) voegType(p.type.naam, p.regel, { voorwaarde: false }, "resultaat As");
+      for (const x of p.parameters) if (x.type) voegType(x.type.naam, x.regel, { voorwaarde: false }, i18next.t("vba:extern.cause.parameterAs"));
+      if (p.type) voegType(p.type.naam, p.regel, { voorwaarde: false }, i18next.t("vba:extern.cause.returnAs"));
       // Bevindingen van de afscherming binnen deze procedure
       const ctxPerRegel = new Map<number, Context>();
       for (const [s, ctx] of metContext(p.body, { voorwaarde: false })) if (!ctxPerRegel.has(s.regel) || !ctx.voorwaarde) ctxPerRegel.set(s.regel, ctx);
@@ -662,9 +668,9 @@ export function analyseerExternGeparst(modules: GeparsteModule[], opties: Extern
               if (ql && /^(application\.)?vbe\./.test(ql) && e.obj?.k === "id")
                 voeg({ soort: "bibliotheek", naam: "VBE", bibliotheek: "VBIDE", status: "ontbreekt", regel }, ctx, "VBE (VBIDE)");
               if (/^(connect|refreshlink)$/i.test(e.naam))
-                voeg({ soort: "gekoppelde-tabel", naam: `TableDef.${e.naam}`, status: "ontbreekt", regel }, ctx, `TableDef.${e.naam} (koppeling)`);
+                voeg({ soort: "gekoppelde-tabel", naam: `TableDef.${e.naam}`, status: "ontbreekt", regel }, ctx, i18next.t("vba:extern.cause.tableDefLink", { member: `TableDef.${e.naam}` }));
               if (/^opendatabase$/i.test(e.naam))
-                voeg({ soort: "externe-database", naam: "OpenDatabase", status: "ontbreekt", regel, foutnummer: 3024 }, ctx, "OpenDatabase (externe database)");
+                voeg({ soort: "externe-database", naam: "OpenDatabase", status: "ontbreekt", regel, foutnummer: 3024 }, ctx, i18next.t("vba:extern.cause.openDatabase"));
             }
             if (e.k === "aanroep" && e.doel.k === "lid" && /^run$/i.test(e.doel.naam)) {
               const naam = letterlijk(e.args[0]);
@@ -674,7 +680,7 @@ export function analyseerExternGeparst(modules: GeparsteModule[], opties: Extern
               for (const { t, re } of gekoppeldePatronen)
                 if (re.test(e.w.v)) {
                   if (!t.gebruiktDoor.includes(sleutel)) t.gebruiktDoor.push(sleutel);
-                  voeg({ soort: "gekoppelde-tabel", naam: t.naam, status: t.status, regel }, ctx, `gekoppelde tabel ${t.naam}`);
+                  voeg({ soort: "gekoppelde-tabel", naam: t.naam, status: t.status, regel }, ctx, i18next.t("vba:extern.cause.linkedTable", { name: t.naam }));
                 }
           }
         if (s.k === "call" && s.doel.k === "lid" && /^run$/i.test(s.doel.naam)) {
@@ -698,7 +704,7 @@ export function analyseerExternGeparst(modules: GeparsteModule[], opties: Extern
         }
         if (k === "createobject" || k === "getobject") {
           const progid = letterlijk(args[0]) ?? (k === "getobject" ? letterlijk(args[1]) : null);
-          const label = progid ?? "(dynamisch)";
+          const label = progid ?? i18next.t("vba:extern.cause.dynamic");
           if (k === "createobject" && progid && NAGEBOOTSTE_PROGIDS.has(progid.toLowerCase())) {
             voeg({ soort: "createobject", naam: progid, bibliotheek: "Scripting", status: "ingebouwd", regel }, ctx, `CreateObject("${progid}")`);
             return;
@@ -715,14 +721,14 @@ export function analyseerExternGeparst(modules: GeparsteModule[], opties: Extern
         if (m.soort === "formulier" && (isFormulierLid(k) || !alsAanroep)) return;
         for (const b of BIBLIOTHEKEN)
           if (b.constanten?.test(naam) && b.status !== "ingebouwd") {
-            voeg({ soort: "bibliotheek", naam, bibliotheek: b.sleutel, status: b.status, regel }, ctx, `constante ${naam} (${b.sleutel})`);
+            voeg({ soort: "bibliotheek", naam, bibliotheek: b.sleutel, status: b.status, regel }, ctx, i18next.t("vba:extern.cause.constant", { name: naam, library: b.sleutel }));
             return;
           }
         if (alsAanroep || m.ast.opties.expliciet)
           voeg(
             { soort: "onbekend", naam, status: "ontbreekt", regel, foutnummer: alsAanroep ? 35 : 5 },
             ctx,
-            alsAanroep ? `onbekende functie ${naam}` : `onbekende naam ${naam}`,
+            alsAanroep ? i18next.t("vba:extern.cause.unknownFunction", { name: naam }) : i18next.t("vba:extern.cause.unknownName", { name: naam }),
           );
       }
     }
@@ -758,7 +764,7 @@ export function analyseerExternGeparst(modules: GeparsteModule[], opties: Extern
   const MAX_REDENEN = 25;
   for (const p of procedures) {
     const m = moduleNamen.get(p.module.toLowerCase())!;
-    if (m.parseerfout) p.redenen.push({ oorzaak: "syntaxisfout in de module", soort: "syntaxis", status: "ontbreekt", omzeilbaar: false, keten: [p.sleutel] });
+    if (m.parseerfout) p.redenen.push({ oorzaak: i18next.t("vba:extern.cause.moduleSyntaxError"), soort: "syntaxis", status: "ontbreekt", omzeilbaar: false, keten: [p.sleutel] });
     for (const { reden } of directe.get(p.sleutel) ?? []) p.redenen.push(reden);
   }
   for (let ronde = 0, veranderd = true; veranderd && ronde < 100; ronde++) {
@@ -819,13 +825,13 @@ export function oorzaakGroep(r: ProcedureReden): string {
     case "bibliotheek":
       return r.bibliotheek ?? "bibliotheek";
     case "createobject":
-      return r.bibliotheek ? `${r.bibliotheek} (CreateObject)` : "CreateObject (overig)";
+      return r.bibliotheek ? `${r.bibliotheek} (CreateObject)` : i18next.t("vba:extern.group.createObjectOther");
     case "declare":
-      return "Declare (Windows-API)";
+      return i18next.t("vba:extern.group.declare");
     case "onbekend":
-      return "onbekende naam of functie";
+      return i18next.t("vba:extern.group.unknown");
     case "syntaxis":
-      return "syntaxisfout";
+      return i18next.t("vba:extern.group.syntax");
     default:
       return r.soort;
   }

@@ -1,0 +1,1017 @@
+{
+  "accounts": {
+    "test": {
+      "test": "Testare",
+      "testConnection": "Testați conexiunea",
+      "testing": "Se testează…",
+      "retest": "Testați din nou",
+      "failed": "Testul a eșuat"
+    },
+    "settings": {
+      "title": "Setări cont",
+      "noAccount": "Nu există încă niciun cont.",
+      "addAccount": "Adăugați un cont",
+      "accountList": "Conturi",
+      "saving": "Se salvează…",
+      "saved": "Setările au fost salvate.",
+      "saveFailed": "Nu s-a putut salva",
+      "tabs": {
+        "identity": "Identitate",
+        "servers": "Servere",
+        "folders": "Foldere",
+        "fetching": "Preluare și confidențialitate",
+        "advanced": "Avansat"
+      },
+      "deleteAccount": {
+        "title": "Eliminați contul",
+        "confirm": "Sigur doriți să eliminați <strong>{{name}}</strong> ({{email}})? Mesajele rămân pe server; parola stocată va fi eliminată din portchei.",
+        "button": "Eliminați contul",
+        "failed": "Contul nu a putut fi eliminat"
+      },
+      "identity": {
+        "accountName": "Numele contului",
+        "accountNameHint": "Doar pentru dvs., de exemplu „Serviciu” sau „Personal”.",
+        "yourName": "Numele dvs.",
+        "email": "Adresă de e-mail",
+        "replyTo": "Adresă de răspuns",
+        "replyToPlaceholder": "Gol = adresa dvs. de e-mail",
+        "signature": "Semnătură",
+        "signatureHint": "Adăugată sub mesajele noi și răspunsuri, după „-- ”."
+      },
+      "oauthAccount": {
+        "signedInAs": "Conectat ca <strong>{{account}}</strong> cu {{provider}}",
+        "noPasswordStored": "Nu este stocată nicio parolă; accesul folosește un token din portchei.",
+        "signInAgain": "Conectați-vă din nou",
+        "signedInAgain": "Conectat din nou ca {{account}}."
+      },
+      "password": {
+        "change": "Schimbați parola",
+        "storedPlaceholder": "Stocată · lăsați gol pentru a o păstra",
+        "noneStoredPlaceholder": "Nicio parolă stocată încă"
+      },
+      "folders": {
+        "hint": "Alegeți unde păstrează Email Studio mesajele trimise, ciornele și mesajele șterse și arhivate.",
+        "roles": {
+          "sent": "Mesaje trimise",
+          "drafts": "Ciorne",
+          "trash": "Coș de gunoi",
+          "archive": "Arhivă"
+        },
+        "automatic": "Automat",
+        "automaticWithFolder": "Automat ({{folder}})"
+      },
+      "fetching": {
+        "checkForNew": "Verificați mesajele noi",
+        "manualOnly": "Doar manual",
+        "everyMinutes_one": "La fiecare {{count}} minut",
+        "everyMinutes_few": "La fiecare {{count}} minute",
+        "everyMinutes_other": "La fiecare {{count}} de minute",
+        "externalContent": "Afișați întotdeauna imaginile și conținutul la distanță",
+        "externalContentHint": "Se recomandă dezactivarea: imaginile la distanță le spun expeditorilor când și unde deschideți un mesaj.",
+        "trustedSenders": "Expeditori al căror conținut la distanță este afișat întotdeauna",
+        "forgetSender": "Uitați {{sender}}"
+      },
+      "advanced": {
+        "oauthIntro": "Conectarea cu Microsoft sau Google folosește OAuth2. Aceste setări se aplică tuturor conturilor. Propriul client ID este necesar doar dacă aplicația nu include unul; consultați <code>{{doc}}</code>.",
+        "ispdb": "Consultați și baza de date Thunderbird pentru un cont nou",
+        "ispdbHint": "Numele de domeniu este trimis atunci către Mozilla. Dezactivat implicit.",
+        "available": "Disponibil.",
+        "unavailable": "Indisponibil.",
+        "loadingStatus": "Se încarcă starea…",
+        "clientId": "Client ID",
+        "clientSecret": "Client secret (opțional)",
+        "saveClientId": "Salvați client ID-ul",
+        "clientIdSaved": "Client ID-ul pentru {{provider}} a fost salvat.",
+        "clientIdSaveFailed": "Client ID-ul nu a putut fi salvat",
+        "desktopOnly": "Vă puteți seta propriul client ID doar în aplicația desktop."
+      }
+    },
+    "wizard": {
+      "title": "Adăugați un cont",
+      "intro": "Folosiți adresa de e-mail existentă. Email Studio funcționează cu orice furnizor care oferă IMAP și SMTP.",
+      "fullName": "Numele complet",
+      "fullNamePlaceholder": "Prenume Nume",
+      "fullNameHint": "Cum vă văd destinatarii numele.",
+      "email": "Adresă de e-mail",
+      "emailPlaceholder": "name@example.com",
+      "password": "Parolă",
+      "passwordHint": "Folosită doar când alegeți Testare sau Gata și stocată doar în portcheiul sistemului de operare.",
+      "ispdb": "Consultați și baza de date Thunderbird",
+      "ispdbHint": "Numele de domeniu (nu adresa sau parola dvs.) este trimis atunci către Mozilla.",
+      "oauthPrompt": "Sau conectați-vă fără parolă în aplicație:",
+      "enterNameAndEmailFirst": "Introduceți mai întâi numele și adresa de e-mail.",
+      "saving": "Se salvează…",
+      "done": "Gata",
+      "saveAnyway": "Salvați oricum",
+      "saveTitle": "Salvați contul",
+      "saveUntestedTitle": "Netestat încă (cu succes); puteți totuși salva contul",
+      "saveFailed": "Contul nu a putut fi salvat",
+      "foundSettings": "Setări găsite",
+      "serverSettings": "Setări server",
+      "serverSettingsFor": "Setări server pentru {{domain}}",
+      "enterEmailHint": "Introduceți adresa de e-mail; Email Studio va căuta apoi automat serverele potrivite.",
+      "searchFailed": "Căutarea a eșuat",
+      "fillInManually": "Introduceți dvs. serverele de mai jos.",
+      "nothingFound": "Nu s-au găsit setări. Introduceți dvs. serverele de mai jos; dacă este nevoie, cereți-le furnizorului.",
+      "proposals": "Sugestii",
+      "unencrypted": "necriptat",
+      "manualConfiguration": "Configurare manuală",
+      "adjusted": "· editat",
+      "fieldsAppear": "Câmpurile apar imediat ce există o adresă de e-mail validă.",
+      "bothServersFailed": "Ambele servere au eșuat. Verificați adresa, parola și numele serverelor."
+    },
+    "discovery": {
+      "steps": {
+        "builtIn": "Listă integrată",
+        "ownDomain": "Domeniu propriu",
+        "dns": "DNS",
+        "ispdb": "Baza de date Thunderbird",
+        "probe": "Sondare conexiune"
+      },
+      "stepStatus": {
+        "waiting": "în așteptare",
+        "busy": "în curs…",
+        "found": "găsit",
+        "nothing": "nu s-a găsit nimic",
+        "skipped": "nerulat"
+      },
+      "sources": {
+        "preset": "Listă integrată",
+        "autoconfig": "Configurare din propriul domeniu",
+        "srv": "Înregistrări DNS SRV",
+        "mx": "Înregistrări MX (furnizor recunoscut)",
+        "ispdb": "Baza de date Thunderbird",
+        "guess": "Nume de server uzuale"
+      },
+      "unencrypted": "necriptat",
+      "reachable": "accesibil",
+      "unreachable": "inaccesibil",
+      "untested": "netestat"
+    },
+    "server": {
+      "incoming": "Intrare (IMAP)",
+      "outgoing": "Ieșire (SMTP)",
+      "columns": {
+        "server": "Server",
+        "port": "Port",
+        "security": "Securitate",
+        "authentication": "Autentificare",
+        "username": "Nume de utilizator"
+      },
+      "hostLabel": "Server {{protocol}}",
+      "portLabel": "Port {{protocol}}",
+      "securityLabel": "Securitate {{protocol}}",
+      "authenticationLabel": "Autentificare {{protocol}}",
+      "usernameLabel": "Nume de utilizator {{protocol}}",
+      "imapPlaceholder": "imap.example.com",
+      "smtpPlaceholder": "smtp.example.com",
+      "securityNone": "Niciuna",
+      "authNormal": "Parolă normală",
+      "authEncrypted": "Parolă criptată",
+      "unencryptedWarning": "<strong>Conexiune necriptată.</strong> Parola și mesajele dvs. circulă prin rețea în formă lizibilă. Alegeți SSL/TLS sau STARTTLS dacă furnizorul acceptă.",
+      "oauthHint": "OAuth2 vă cere să vă conectați la furnizor la testare sau la prima utilizare."
+    },
+    "oauth": {
+      "notSupported": "Această versiune a aplicației nu acceptă încă conectarea cu Microsoft sau Google.",
+      "signInFailed": "Conectarea cu {{provider}} a eșuat",
+      "signInWith": "Conectați-vă cu {{provider}}",
+      "recommended": "recomandat",
+      "waitTitle": "Finalizați conectarea în browser",
+      "waitText": "Pagina de conectare {{provider}} s-a deschis în browser. Conectați-vă acolo și acordați acces la e-mail; Email Studio va continua apoi aici.",
+      "unavailableTitle": "Conectarea cu {{provider}} nu este disponibilă aici.",
+      "unavailableHelp": "În aplicația desktop vă puteți seta propriul client ID pentru {{provider}} în <em>Instrumente › Setări cont › Avansat</em>. Modul de creare este descris în <code>{{doc}}</code>. Puteți continua și cu o parolă (de aplicație)."
+    }
+  },
+  "errors": {
+    "code": {
+      "connection": "Nicio conexiune la server. Verificați conexiunea la internet, numele serverului și portul.",
+      "authentication": "Conectarea a eșuat. Verificați numele de utilizator și parola (Instrumente › Setări cont).",
+      "certificate": "Certificatul serverului nu este de încredere sau nu corespunde acestui nume de server.",
+      "timeout": "Serverul nu a răspuns la timp. Încercați din nou mai târziu.",
+      "notFound": "Mesajul sau folderul nu mai există pe server.",
+      "refused": "Serverul a refuzat comanda.",
+      "tooLarge": "Mesajul este prea mare pentru server. Micșorați atașamentele sau eliminați-le.",
+      "unavailable": "Această funcție nu este disponibilă aici.",
+      "internal": "A apărut o problemă."
+    },
+    "withDetail": "{{explanation}} ({{detail}})",
+    "withContext": "{{context}}: {{message}}",
+    "backendMissing": "Această versiune a aplicației desktop nu include funcția de e-mail.",
+    "unexpectedBinary": "Ieșire binară neașteptată de la backend."
+  },
+  "dialog": {
+    "closeEsc": "Închidere (Esc)"
+  },
+  "sendAsAttachment": {
+    "title": "Trimiteți ca atașament"
+  },
+  "ribbon": {
+    "tabs": {
+      "start": "Pornire",
+      "view": "Vizualizare",
+      "tools": "Instrumente"
+    },
+    "groups": {
+      "new": "Nou",
+      "respond": "Răspundeți",
+      "delete": "Ștergere",
+      "mark": "Etichete",
+      "organize": "Organizare",
+      "layout": "Aspect",
+      "sort": "Sortare",
+      "message": "Mesaj",
+      "accounts": "Conturi",
+      "folders": "Foldere"
+    },
+    "withShortcut": "{{action}} · {{shortcut}}",
+    "fetch": "Preluați mesajele",
+    "fetchTitle": "Preluați mesajele · {{key}} sau {{shortcut}}",
+    "readUnread": "Citit/necitit",
+    "readUnreadTitle": "Citit sau necitit · {{shortcut}}",
+    "star": "Stea",
+    "move": "Mutare",
+    "moveTitle": "Mutați în folder",
+    "folderPane": "Panoul de foldere",
+    "readingPane": "Panoul de citire",
+    "resetLayout": "Resetați aspectul",
+    "sortBy": "Sortare după",
+    "sort": {
+      "date": "Dată",
+      "sender": "Expeditor",
+      "subject": "Subiect",
+      "size": "Dimensiune"
+    },
+    "ascending": "Crescător",
+    "descending": "Descrescător",
+    "viewSource": "Vizualizați sursa",
+    "accountSettings": "Setări cont"
+  },
+  "studio": {
+    "errors": {
+      "loadAccounts": "Conturile nu au putut fi încărcate",
+      "loadMessages": "Mesajele nu au putut fi încărcate",
+      "openMessage": "Mesajul nu a putut fi deschis",
+      "delete": "Nu s-a putut șterge",
+      "move": "Nu s-a putut muta",
+      "mark": "Nu s-a putut marca",
+      "forwardAttachments": "Atașamentele pentru redirecționare nu au putut fi preluate",
+      "openFile": "{{name}} nu a putut fi deschis",
+      "saveFile": "{{name}} nu a putut fi salvat",
+      "source": "Sursa nu a putut fi preluată",
+      "updateFolder": "Folderul nu a putut fi actualizat",
+      "deleteFolder": "Folderul nu a putut fi șters"
+    },
+    "accountAdded": "Contul {{email}} a fost adăugat.",
+    "addAccount": "Adăugați un cont",
+    "deletePermanently": {
+      "title": "Ștergeți definitiv",
+      "text_one": "Acest mesaj va fi șters definitiv. Acțiunea nu poate fi anulată.",
+      "text_few": "{{count}} mesaje vor fi șterse definitiv. Acțiunea nu poate fi anulată.",
+      "text_other": "{{count}} de mesaje vor fi șterse definitiv. Acțiunea nu poate fi anulată.",
+      "confirm": "Ștergeți definitiv"
+    },
+    "noArchiveFolder": "Acest cont nu are un folder de arhivă. Alegeți unul în Instrumente › Setări cont › Foldere.",
+    "fetched": "Mesajele au fost preluate.",
+    "deleteFolder": {
+      "title": "Ștergeți folderul",
+      "text": "Folderul „{{folder}}” și toate mesajele din el vor fi șterse de pe server."
+    },
+    "welcome": {
+      "title": "Încă niciun cont de e-mail",
+      "text": "Adăugați contul cu adresa de e-mail și parola. Email Studio găsește setările potrivite."
+    },
+    "folderPaneWidth": "Lățimea panoului de foldere",
+    "messageListWidth": "Lățimea listei de mesaje",
+    "messageList": "Listă de mesaje",
+    "search": {
+      "in": "Căutați în {{folder}}",
+      "label": "Căutați mesaje ({{shortcut}})",
+      "clear": "Ștergeți căutarea"
+    },
+    "filter": {
+      "label": "Filtru rapid",
+      "unread": "Necitite",
+      "unreadTitle": "Doar necitite",
+      "starred": "Cu stea",
+      "starredTitle": "Doar cu stea",
+      "attachment": "Atașament",
+      "attachmentTitle": "Doar cu atașament",
+      "body": "Corp",
+      "bodyTitle": "Căutați și în textul mesajului (mai lent)"
+    },
+    "count": {
+      "filtered": "{{shown}} din {{total}}",
+      "filteredLoaded": "{{shown}} din {{loaded}} încărcate",
+      "messages_one": "{{count}} mesaj",
+      "messages_few": "{{count}} mesaje",
+      "messages_other": "{{count}} de mesaje",
+      "selected_one": "{{count}} selectat",
+      "selected_few": "{{count}} selectate",
+      "selected_other": "{{count}} selectate"
+    },
+    "noResults": "Nu s-au găsit mesaje.",
+    "emptyFolder": "Acest folder este gol.",
+    "moveTo_one": "Mutați mesajul în",
+    "moveTo_few": "Mutați {{count}} mesaje în",
+    "moveTo_other": "Mutați {{count}} de mesaje în",
+    "folderDialog": {
+      "newTitle": "Folder nou",
+      "renameTitle": "Redenumiți folderul",
+      "create": "Creare",
+      "rename": "Redenumire",
+      "name": "Nume",
+      "inside": "În „{{folder}}”"
+    },
+    "source": {
+      "title": "Sursa mesajului",
+      "saveAs": "Salvați ca {{extension}}"
+    }
+  },
+  "address": {
+    "invalid": "Adresă nevalidă: {{address}}",
+    "remove": "Eliminați {{address}}"
+  },
+  "list": {
+    "label": "Mesaje",
+    "to": "Către: {{address}}",
+    "noRecipient": "(fără destinatar)",
+    "replied": "Răspuns trimis",
+    "hasAttachment": "Are atașament",
+    "noSubject": "(fără subiect)",
+    "star": "Adăugați stea",
+    "unstar": "Eliminați steaua",
+    "loadingMore": "Se încarcă mai multe mesaje…"
+  },
+  "folders": {
+    "label": "Foldere",
+    "loading": "Se încarcă folderele…",
+    "unread_one": "{{count}} necitit",
+    "unread_few": "{{count}} necitite",
+    "unread_other": "{{count}} necitite",
+    "inbox": "Mesaje primite"
+  },
+  "reader": {
+    "loadingMessage": "Se încarcă mesajul…",
+    "chooseMessage": "Alegeți un mesaj pentru a-l citi.",
+    "label": "Mesaj: {{subject}}",
+    "reply": "Răspundeți",
+    "replyTitle": "Răspundeți · {{shortcut}}",
+    "replyAll": "Răspundeți tuturor",
+    "replyAllTitle": "Răspundeți tuturor · {{shortcut}}",
+    "forward": "Redirecționați",
+    "forwardTitle": "Redirecționați · {{shortcut}}",
+    "archive": "Arhivați",
+    "archiveTitle": "Arhivați · {{shortcut}}",
+    "delete": "Ștergere",
+    "deleteTitle": "Ștergere · {{shortcut}}",
+    "starTitle": "Stea · {{shortcut}}",
+    "from": "De la",
+    "to": "Către",
+    "none": "(niciunul)",
+    "cc": "Cc",
+    "replyTo": "Răspuns către",
+    "date": "Dată",
+    "external": {
+      "blocked_one": "O imagine la distanță a fost blocată pentru a vă proteja confidențialitatea.",
+      "blocked_few": "{{count}} imagini la distanță au fost blocate pentru a vă proteja confidențialitatea.",
+      "blocked_other": "{{count}} de imagini la distanță au fost blocate pentru a vă proteja confidențialitatea.",
+      "desktopHint": "Cu permisiunea dvs., aplicația le preia și le afișează fără a lăsa mesajul să se conecteze undeva.",
+      "demoHint": "(În demonstrație, ele indică adrese care nu există.)",
+      "show": "Afișați conținutul la distanță",
+      "alwaysFrom": "Afișați întotdeauna de la {{sender}}",
+      "failed_one": "O imagine la distanță nu a putut fi preluată.",
+      "failed_few": "{{count}} imagini la distanță nu au putut fi preluate.",
+      "failed_other": "{{count}} de imagini la distanță nu au putut fi preluate."
+    },
+    "attachments": {
+      "label": "Atașamente",
+      "previewOrOpen": "Clic: previzualizare · dublu clic: deschidere în {{module}}",
+      "preview": "Previzualizare",
+      "openCopyTitle": "Deschideți ca o copie editabilă în {{module}}",
+      "openIn": "Deschideți în {{module}}",
+      "saveTitle": "Salvați pe acest computer"
+    },
+    "content": "Conținutul mesajului",
+    "loadingContent": "Se încarcă conținutul…"
+  },
+  "compose": {
+    "errors": {
+      "saveDraft": "Ciorna nu a putut fi salvată",
+      "noRecipients": "Adăugați cel puțin un destinatar.",
+      "send": "Nu s-a putut trimite",
+      "attachmentsLarge": "Atașamentele totalizează {{size}}; multe servere refuză mesajele de peste {{max}}.",
+      "linkNotAllowed": "Sunt permise doar linkuri http(s), mailto și tel."
+    },
+    "noSubject": {
+      "title": "Fără subiect",
+      "text": "Acest mesaj nu are subiect. Îl trimiteți oricum?",
+      "fillIn": "Introduceți un subiect",
+      "sendWithout": "Trimiteți fără subiect"
+    },
+    "forgotAttachment": {
+      "title": "Ați uitat un atașament?",
+      "text": "Mesajul menționează <strong>„{{word}}”</strong>, dar nu a fost adăugat niciun atașament.",
+      "sendAnyway": "Trimiteți oricum",
+      "keywords": "atașament|atașamente|atașat|anexat|în atașament"
+    },
+    "addAttachment": "Adăugați un atașament",
+    "attachment": "Atașați",
+    "removeAttachment": "Eliminați {{name}}",
+    "attachmentsSummary_one": "{{count}} atașament · {{size}}",
+    "attachmentsSummary_few": "{{count}} atașamente · {{size}}",
+    "attachmentsSummary_other": "{{count}} de atașamente · {{size}}",
+    "dropToAttach": "Plasați aici pentru a adăuga ca atașament",
+    "sent": "Mesaj trimis.",
+    "sentWithSubject": "Mesaj trimis: {{subject}}.",
+    "unsent": {
+      "title": "Mesajul nu a fost trimis",
+      "text": "Doriți să salvați acest mesaj ca ciornă?",
+      "discard": "Renunțați",
+      "saveDraft": "Salvați ciorna"
+    },
+    "label": "Compunere: {{subject}}",
+    "newMessage": "Mesaj nou",
+    "send": "Trimiteți",
+    "sending": "Se trimite…",
+    "sendTitle": "Trimiteți · {{shortcut}}",
+    "draft": "Ciornă",
+    "savingDraft": "Se salvează…",
+    "saveDraftTitle": "Salvați ca ciornă · {{shortcut}}",
+    "dismissError": "Închideți mesajul",
+    "from": "De la",
+    "to": "Către",
+    "cc": "Cc",
+    "bcc": "Bcc",
+    "subject": "Subiect",
+    "body": "Textul mesajului",
+    "format": {
+      "label": "Formatare",
+      "withShortcut": "{{action}} · {{shortcut}}",
+      "bold": "Aldin",
+      "italic": "Cursiv",
+      "underline": "Subliniat",
+      "bullets": "Marcatori",
+      "numbering": "Numerotare",
+      "link": "Link",
+      "insertLink": "Inserați un link",
+      "clear": "Ștergeți formatarea",
+      "linkAddress": "Adresa linkului",
+      "insert": "Inserare"
+    }
+  },
+  "link": {
+    "browserFailed": "Browserul nu a putut fi deschis. Copiați adresa: {{url}}",
+    "phoneTitle": "Număr de telefon",
+    "openTitle": "Deschideți linkul?",
+    "copied": "Adresa a fost copiată.",
+    "copyFailed": "Copierea a eșuat; selectați adresa manual.",
+    "copy": "Copiați adresa",
+    "openInBrowser": "Deschideți în browser",
+    "phoneIntro": "Acest număr de telefon apare în mesaj:",
+    "realTarget": "Acest link duce de fapt la:",
+    "misleading": "Textul mesajului menționează <strong>{{shown}}</strong>, dar linkul duce la <strong>{{actual}}</strong>. Ar putea fi phishing.",
+    "unencrypted": "Notă: acest link nu folosește o conexiune criptată (http)."
+  },
+  "files": {
+    "saveUnsupported": "Această versiune a aplicației desktop nu poate salva încă {{name}}. Deschideți atașamentul într-un modul sau actualizați aplicația.",
+    "saved": "Salvat: {{path}}",
+    "saveCancelled": "Salvare anulată.",
+    "downloadRequested": "Descărcare solicitată. Verificați fișierul în descărcări."
+  },
+  "quote": {
+    "unknownSender": "(necunoscut)",
+    "wroteOn": "Pe {{date}}, {{sender}} a scris:",
+    "wrote": "{{sender}} a scris:",
+    "forwarded": "Mesaj redirecționat",
+    "subject": "Subiect: {{value}}",
+    "date": "Dată: {{value}}",
+    "from": "De la: {{value}}",
+    "to": "Către: {{value}}",
+    "cc": "Cc: {{value}}"
+  },
+  "demo": {
+    "banner": "Demonstrație — e-mailul real nu este posibil în browser; folosiți aplicația desktop.",
+    "accountName": "Cutie poștală demonstrativă",
+    "folders": {
+      "notifications": "Notificări",
+      "drafts": "Ciorne",
+      "sent": "Trimise",
+      "archive": "Arhivă",
+      "junk": "Nedorite",
+      "trash": "Coș de gunoi"
+    },
+    "welcome": {
+      "subject": "Bun venit în OpenAEC Email Studio",
+      "heading": "Bun venit!",
+      "intro": "Aceasta este o cutie poștală demonstrativă. În browser, Email Studio nu poate primi sau trimite e-mail real; folosiți aplicația desktop pentru asta.",
+      "introHtml": "Aceasta este o <strong>cutie poștală demonstrativă</strong>. În browser, Email Studio nu poate primi sau trimite e-mail real; folosiți aplicația desktop pentru asta.",
+      "tryIt": "Încercați liniștit: răspunsul, marcarea cu stea (S), mutarea în arhivă și deschiderea unui atașament în Text sau Foaie de calcul.",
+      "tryItHtml": "Încercați liniștit: răspunsul, marcarea cu stea (<kbd>S</kbd>), mutarea în arhivă și deschiderea unui atașament în Text sau Foaie de calcul.",
+      "logoText": "Sigla OpenAEC de mai jos este o imagine încorporată dintr-un atașament (cid:).",
+      "logoAlt": "Sigla OpenAEC",
+      "logoHtml": "Sigla din stânga este o imagine încorporată dintr-un atașament."
+    },
+    "errors": {
+      "accountNotFound": "Contul nu există.",
+      "messageNotFound": "Mesajul nu există.",
+      "folderExists": "Acest folder există deja.",
+      "folderCannotRename": "Acest folder nu poate fi redenumit.",
+      "specialFolderDelete": "Folderele speciale nu pot fi șterse.",
+      "attachmentNotFound": "Atașamentul nu există.",
+      "targetFolderNotFound": "Folderul de destinație nu există.",
+      "noRecipients": "Nu s-au specificat destinatari.",
+      "recipientRefused": "Demonstrație: serverul refuză destinatarul {{domain}}.",
+      "attachmentsTooLarge": "Demonstrație: atașamentele sunt limitate la {{max}}."
+    },
+    "accountAdded": {
+      "subject": "Contul dvs. a fost adăugat (demonstrație)",
+      "text": "Contul {{email}} a fost adăugat la demonstrație. {{notice}}"
+    },
+    "discovery": {
+      "knownProvider": "Furnizor cunoscut (demonstrație).",
+      "mx": "Înregistrarea MX a {{domain}} indică mail.protection.outlook.com (demonstrație).",
+      "ownServer": "{{name}} (server propriu)",
+      "autoconfig": "Găsit la autoconfig.{{domain}} (demonstrație).",
+      "srv": "_imaps._tcp și _submission._tcp (demonstrație).",
+      "ispdb": "Din baza de date Thunderbird (demonstrație).",
+      "guessImapOk": "Nume de server uzuale; sondarea IMAP a reușit (demonstrație).",
+      "guessAlternative": "Nume de server alternativ (demonstrație)."
+    },
+    "test": {
+      "noServer": "Nu s-a specificat niciun server {{protocol}}.",
+      "invalidPort": "Port nevalid.",
+      "unreachable": "Demonstrație: {{host}} nu poate fi accesat.",
+      "simulated": "Demonstrație: conexiune simulată.",
+      "simulatedUnencrypted": "Demonstrație: conexiune simulată (necriptată!)."
+    },
+    "oauthDesktopOnly": "Conectarea cu Microsoft sau Google este posibilă doar în aplicația desktop."
+  },
+  "preview": {
+    "loading": "Se încarcă previzualizarea…",
+    "dialog": {
+      "attachments": "Atașamente",
+      "previous": "Atașamentul anterior",
+      "previousTitle": "Atașamentul anterior (←)",
+      "next": "Atașamentul următor",
+      "nextTitle": "Atașamentul următor (→)",
+      "close": "Închideți previzualizarea",
+      "closeTitle": "Închidere (Esc)",
+      "fetching": "Se preia atașamentul…",
+      "fetchFailed": "Atașamentul nu a putut fi preluat: {{message}}"
+    },
+    "card": {
+      "fileName": "Nume fișier",
+      "size": "Dimensiune",
+      "openExternal": "Deschideți cu aplicația implicită",
+      "unknown": "necunoscut",
+      "attention": "Notă",
+      "yes": "da",
+      "no": "nu"
+    },
+    "detection": {
+      "kinds": {
+        "pdf": "un PDF",
+        "dwg": "un desen DWG",
+        "dxf": "un desen DXF",
+        "ifc": "un model IFC",
+        "markdown": "Markdown",
+        "text": "text",
+        "image": "o imagine",
+        "office": "un document Office",
+        "unknown": "un fișier necunoscut"
+      },
+      "contentDiffers": "Numele sugerează {{kind}}, dar conținutul este altceva.",
+      "mismatch": "Acest atașament se numește „.{{extension}}” ({{named}}), dar conținutul este {{actual}}.",
+      "mismatchSubtype": "Acest atașament se numește „.{{extension}}” ({{named}}), dar conținutul este {{actual}} ({{subtype}}).",
+      "contentBinary": "Numele sugerează {{kind}}, dar conținutul este binar.",
+      "notSvg": "Numele sugerează o imagine SVG, dar conținutul nu este SVG.",
+      "signatureMissing": "Numele sugerează {{kind}}, dar conținutului îi lipsesc caracteristicile corespunzătoare."
+    },
+    "image": {
+      "loadFailed": "Imaginea nu a putut fi încărcată: {{message}}",
+      "subtitle": "Imagine",
+      "cannotDisplay": "Această imagine nu poate fi afișată aici (deteriorată sau variantă neacceptată).",
+      "tooLarge": "Această imagine depășește {{size}} MB și nu este afișată ca previzualizare.",
+      "tooManyPixels": "Această imagine are {{width}} × {{height}} pixeli (peste {{megapixels}} megapixeli) și nu este afișată ca previzualizare.",
+      "toolbar": "Imagine",
+      "zoomOut": "Micșorare",
+      "zoomOutTitle": "Micșorare (−)",
+      "zoomIn": "Mărire",
+      "zoomInTitle": "Mărire (+)",
+      "fit": "Potrivire la fereastră",
+      "fitTitle": "Potrivire la fereastră (0)",
+      "actualSize": "Dimensiune reală (100%)",
+      "actualSizeTitle": "Dimensiune reală",
+      "rotate": "Rotire în sens orar",
+      "rotateTitle": "Rotire în sens orar (R)",
+      "area": "Previzualizare imagine"
+    },
+    "text": {
+      "loadFailed": "Textul nu a putut fi încărcat: {{message}}",
+      "toolbar": "Text",
+      "encoding": "Codificare: {{encoding}}",
+      "utf8Bom": "UTF-8 (cu BOM)",
+      "formatJson": "Formatare JSON",
+      "wrapLines": "Încadrare rânduri",
+      "truncated": "Se afișează primii {{limit}} din {{size}}. Salvați fișierul pentru a vedea tot.",
+      "contentOf": "Conținutul {{name}}"
+    },
+    "markdown": {
+      "loadFailed": "Fișierul nu a putut fi încărcat: {{message}}",
+      "linkNotOpened": "Link nedeschis: {{url}}",
+      "imageFallback": "Imagine",
+      "externalBlocked": "{{alt}} (imagine externă blocată)",
+      "unavailable": "{{alt}} (indisponibil)",
+      "view": "Vizualizare",
+      "rendered": "Randat",
+      "source": "Sursă",
+      "showExternalImages": "Afișați imaginile externe",
+      "truncated": "Se afișează primii {{limit}} din {{size}}.",
+      "confirmLabel": "Deschideți linkul",
+      "confirmQuestion": "Deschideți acest link în afara Office Studio?"
+    },
+    "pdf": {
+      "loadFailed": "PDF-ul nu a putut fi încărcat: {{message}}",
+      "properties": "Proprietăți",
+      "frameTitle": "PDF: {{name}}",
+      "linuxUnsupported": "Webview-ul de pe Linux nu poate afișa fiabil PDF-uri. Previzualizarea completă va veni într-o versiune viitoare (vizualizator Rust).",
+      "cannotPreview": "Acest PDF nu poate fi previzualizat aici. Previzualizarea completă va veni într-o versiune viitoare (vizualizator Rust).",
+      "subtitle": "Document PDF",
+      "subtitleVersion": "PDF {{version}}",
+      "pages": "Pagini",
+      "author": "Autor",
+      "subject": "Subiect",
+      "createdWith": "Creat cu",
+      "created": "Creat",
+      "modified": "Modificat",
+      "encrypted": "Criptat",
+      "incomplete": "fișierul pare incomplet sau deteriorat",
+      "showPreview": "Afișați previzualizarea"
+    },
+    "cad": {
+      "loadFailed": "Desenul nu a putut fi încărcat: {{message}}",
+      "previewLater": "O previzualizare va veni într-o versiune viitoare (vizualizator Rust).",
+      "tooLargeToParse": "Acest fișier este prea mare pentru a fi analizat aici. O previzualizare va veni într-o versiune viitoare (vizualizator Rust).",
+      "dwgSubtitle": "Desen AutoCAD (DWG)",
+      "dxfSubtitle": "Desen DXF",
+      "dxfBinarySubtitle": "Desen DXF binar",
+      "format": "Format",
+      "savedAs": "Salvat ca",
+      "unknownAutocadVersion": "versiune AutoCAD necunoscută",
+      "units": "Unități",
+      "entities": "Entități",
+      "blocks": "Blocuri",
+      "layers": "Straturi",
+      "thumbnailAlt": "Miniatură încorporată a desenului",
+      "thumbnailCaption": "Miniatură din fișier",
+      "entitiesByType": "Entități după tip",
+      "layersCount": "Straturi ({{n}})",
+      "andMore": "… și încă {{n}}",
+      "versionRange": "AutoCAD {{from}} până la {{to}}",
+      "versionAndLater": "AutoCAD {{version}} și ulterior",
+      "unitCode": "cod {{code}}",
+      "unitNames": {
+        "unitless": "fără unitate",
+        "inch": "inch",
+        "foot": "picior",
+        "mile": "milă",
+        "millimeter": "milimetru",
+        "centimeter": "centimetru",
+        "meter": "metru",
+        "kilometer": "kilometru",
+        "microinch": "microinch",
+        "mil": "mil",
+        "yard": "yard",
+        "angstrom": "ångström",
+        "nanometer": "nanometru",
+        "micron": "micron",
+        "decimeter": "decimetru",
+        "decameter": "decametru",
+        "hectometer": "hectometru",
+        "gigameter": "gigametru",
+        "astronomicalUnit": "unitate astronomică",
+        "lightYear": "an-lumină",
+        "parsec": "parsec",
+        "usSurveyFoot": "picior topografic SUA",
+        "usSurveyInch": "inch topografic SUA",
+        "usSurveyYard": "yard topografic SUA",
+        "usSurveyMile": "milă topografică SUA"
+      }
+    },
+    "ifc": {
+      "loadFailed": "Modelul nu a putut fi încărcat: {{message}}",
+      "previewLater": "Previzualizarea 3D va veni într-o versiune viitoare (vizualizator Rust).",
+      "tooLarge": "Acest model depășește {{size}} MB și nu este analizat aici.",
+      "analysing": "Se analizează modelul… {{percent}}",
+      "cancelled": "Analiză anulată.",
+      "retry": "Analizați din nou",
+      "failed": "Analiza a eșuat: {{message}}",
+      "subtitle": "Model IFC",
+      "subtitleWithSchema": "Model IFC · {{schemas}}",
+      "nameInFile": "Nume în fișier",
+      "timestamp": "Marcaj de timp",
+      "author": "Autor",
+      "organization": "Organizație",
+      "application": "Aplicație",
+      "description": "Descriere",
+      "sites": "Amplasamente",
+      "buildings": "Clădiri",
+      "entities": "Entități",
+      "incomplete": "fișierul pare incomplet (lipsește END-ISO-10303-21)",
+      "storeys": "Niveluri ({{n}})",
+      "elementsHeading": "Elemente de construcție",
+      "allEntityTypes": "Toate tipurile de entități ({{n}})",
+      "elements": {
+        "wall": "Pereți",
+        "wallStandardCase": "Pereți (caz standard)",
+        "curtainWall": "Pereți cortină",
+        "slab": "Pardoseli și plăci",
+        "roof": "Acoperișuri",
+        "column": "Stâlpi",
+        "beam": "Grinzi",
+        "member": "Elemente structurale",
+        "plate": "Plăci",
+        "door": "Uși",
+        "window": "Ferestre",
+        "stair": "Scări",
+        "ramp": "Rampe",
+        "railing": "Balustrade",
+        "covering": "Placaje",
+        "footing": "Fundații",
+        "pile": "Piloți",
+        "space": "Spații",
+        "opening": "Goluri",
+        "furnishing": "Mobilier",
+        "flowSegment": "Segmente de conducte și țevi",
+        "flowTerminal": "Terminale de instalații",
+        "proxy": "Alte elemente de construcție",
+        "storey": "Niveluri"
+      }
+    },
+    "office": {
+      "kinds": {
+        "document": "Document text",
+        "spreadsheet": "Foaie de calcul",
+        "presentation": "Prezentare",
+        "database": "Bază de date"
+      },
+      "genericDocument": "Document Office",
+      "type": "Tip",
+      "openFailed": "Deschiderea a eșuat: {{message}}",
+      "openCopyHint": "Deschideți o copie editabilă în {{module}}. Originalul din e-mail rămâne neschimbat.",
+      "cannotOpen": "Acest format Office nu poate fi deschis aici.",
+      "opening": "Se deschide…",
+      "openIn": "Deschideți în {{module}}"
+    },
+    "unknown": {
+      "subtitle": "Nicio previzualizare disponibilă",
+      "declaredType": "Tip declarat",
+      "extension": "Extensie",
+      "none": "niciuna",
+      "message": "Nu se poate afișa o previzualizare pentru acest tip de fișier. Salvați-l și deschideți-l doar dacă aveți încredere în expeditor."
+    }
+  },
+  "backend": {
+    "accounts": {
+      "fileCorrupt": "Fișierul de conturi {{path}} este deteriorat.",
+      "fileUnreadable": "Fișierul de conturi nu a putut fi citit.",
+      "fileWriteFailed": "Fișierul de conturi nu a putut fi scris.",
+      "invalidEmail": "Introduceți o adresă de e-mail validă.",
+      "invalidReplyTo": "Adresa de răspuns nu este o adresă de e-mail validă.",
+      "lineBreakInName": "Numele nu pot conține întreruperi de rând.",
+      "notFound": "Acest cont nu mai există.",
+      "saveFailed": "Conturile nu au putut fi salvate.",
+      "usernameMissing": "Introduceți numele de utilizator pentru IMAP și SMTP."
+    },
+    "attachments": {
+      "blockedDatabase": "Din motive de securitate, '{{name}}' nu se deschide automat. Deschideți bazele de date Access în Database Studio. Salvați atașamentul dacă doriți totuși să-l vizualizați.",
+      "blockedExecutable": "Din motive de securitate, '{{name}}' nu se deschide automat. Acest tip de fișier poate rula programe. Salvați atașamentul dacă doriți totuși să-l vizualizați.",
+      "blockedMacros": "Din motive de securitate, '{{name}}' nu se deschide automat. Acest document conține macrocomenzi. Salvați atașamentul dacă doriți totuși să-l vizualizați.",
+      "blockedScripts": "Din motive de securitate, '{{name}}' nu se deschide automat. Acest tip de fișier poate conține scripturi. Salvați atașamentul dacă doriți totuși să-l vizualizați.",
+      "emptyOrTooLarge": "Atașamentul este gol sau depășește 100 MB.",
+      "executableContent": "'{{name}}' este {{kind}} și nu se deschide din motive de securitate.",
+      "invalidName": "Nume de fișier nevalid.",
+      "kind": {
+        "linuxProgram": "Program Linux (ELF)",
+        "macProgram": "Program macOS (Mach-O) sau clasă Java",
+        "script": "script",
+        "windowsProgram": "Program Windows (PE)",
+        "windowsShortcut": "Comandă rapidă Windows"
+      },
+      "nameMissing": "Lipsește numele fișierului.",
+      "noProgram": "Nu s-a găsit niciun program pentru a deschide acest atașament.",
+      "notFound": "Atașamentul {{index}} nu există în acest mesaj.",
+      "openFailed": "Deschiderea a eșuat.",
+      "sendAsBinary": "Trimiteți atașamentul ca date binare de cel mult 100 MB.",
+      "tempDirFailed": "Nu s-a putut crea un folder temporar.",
+      "tempSaveFailed": "Atașamentul nu a putut fi salvat temporar."
+    },
+    "auth": {
+      "failed": "Conectarea la {{host}} a eșuat: numele de utilizator sau parola este incorectă ({{detail}}). Gmail, Outlook, iCloud și Yahoo necesită o parolă de aplicație.",
+      "noPassword": "Nu a fost introdusă sau salvată nicio parolă pentru acest cont.",
+      "noStoredPassword": "Nu este salvată nicio parolă pentru acest cont. Introduceți parola în setările contului."
+    },
+    "autoconfig": {
+      "httpsRedirectOnly": "Sunt urmate doar redirecționările către HTTPS.",
+      "invalidEncoding": "Codificare a caracterelor nevalidă în fișierul de configurare.",
+      "notFound": "Nu s-a găsit nicio configurație (HTTP {{status}}).",
+      "tooManyRedirects": "Prea multe redirecționări."
+    },
+    "common": {
+      "saveFailed": "Salvarea a eșuat."
+    },
+    "compose": {
+      "attachmentCorrupt": "Atașamentul '{{name}}' este deteriorat.",
+      "attachmentsTooLarge": "Atașamentele depășesc în total {{max}} MB. Trimiteți fișierele mari printr-un link de partajare.",
+      "buildFailed": "Mesajul nu a putut fi compus ({{detail}}).",
+      "field": {
+        "bcc": "Bcc",
+        "cc": "Cc",
+        "from": "De la",
+        "inReplyTo": "In-Reply-To",
+        "references": "References",
+        "replyTo": "Reply-To",
+        "subject": "Subiectul",
+        "to": "Către"
+      },
+      "invalidAddress": "'{{address}}' din {{field}} nu este o adresă de e-mail validă.",
+      "invalidCharacters": "{{field}} conține caractere nevalide.",
+      "invalidEnvelope": "Plic nevalid.",
+      "noRecipients": "Introduceți cel puțin un destinatar."
+    },
+    "connection": {
+      "failed": "Nicio conexiune la {{host}}: {{detail}}",
+      "hostNotFound": "Numele serverului {{host}} nu a fost găsit.",
+      "refused": "Serverul {{host}} a refuzat conexiunea. Verificați portul și setarea de securitate.",
+      "reset": "Conexiunea la {{host}} a fost închisă neașteptat. Setarea de securitate (SSL/TLS sau STARTTLS) corespunde portului?",
+      "timeout": "Serverul {{host}} nu a răspuns la timp. Verificați numele serverului, portul și firewallul."
+    },
+    "files": {
+      "saveFailed": "Fișierul nu a putut fi salvat."
+    },
+    "http": {
+      "invalidHttpResponse": "Răspuns HTTP nevalid.",
+      "invalidResponse": "Răspuns nevalid.",
+      "invalidServerName": "Nume de server {{host}} nevalid.",
+      "invalidUrl": "Adresă web nevalidă.",
+      "plainOnlyLocal": "HTTP necriptat este permis doar către acest computer.",
+      "redirectWithoutLocation": "Redirecționare fără adresă.",
+      "responseTooLarge": "Răspunsul serverului este prea mare."
+    },
+    "images": {
+      "credentialsInUrl": "Adresele care conțin date de conectare nu sunt preluate.",
+      "hostNotFound": "{{host}} nu a fost găsit.",
+      "httpOnly": "Sunt permise doar adrese http și https.",
+      "invalidServerName": "Nume de server nevalid.",
+      "notAnImage": "Această adresă nu returnează o imagine.",
+      "privateAddress": "Conținutul extern de la adrese interne sau locale nu este preluat.",
+      "timeout": "Imaginea nu s-a încărcat în 10 secunde.",
+      "tooLarge": "Imaginea depășește 10 MB.",
+      "tooManyRedirects": "Prea multe redirecționări (maximum 3).",
+      "unavailable": "Imaginea nu este disponibilă (HTTP {{status}}).",
+      "unknownRedirect": "Redirecționare necunoscută.",
+      "unsupportedImage": "Conținutul nu este o imagine acceptată."
+    },
+    "imap": {
+      "action": {
+        "copy": "Copiere",
+        "countFolders": "Numărare foldere",
+        "createFolder": "Creare folder",
+        "delete": "Ștergere",
+        "deleteFolder": "Ștergere folder",
+        "expunge": "Curățare",
+        "fetchMessage": "Preluare mesaj",
+        "fetchMessages": "Preluare mesaje",
+        "flag": "Semnalizare",
+        "listFolders": "Preluare foldere",
+        "move": "Mutare",
+        "openFolder": "Deschidere folder",
+        "openNamedFolder": "Deschidere folder '{{folder}}'",
+        "renameFolder": "Redenumire folder",
+        "saveToDrafts": "Salvare în Ciorne",
+        "saveToFolder": "Salvare în folder",
+        "saveToSent": "Salvare în Trimise",
+        "search": "Căutare",
+        "signIn": "Conectare",
+        "startTls": "STARTTLS"
+      },
+      "alreadyInTrash": "Aceste mesaje sunt deja în coșul de gunoi; ștergeți-le definitiv.",
+      "appendRejected": "{{action}}: serverul a respins mesajul.",
+      "badCommand": "{{action}}: serverul nu a înțeles comanda ({{detail}}).",
+      "cannotDeleteInbox": "Mesaje primite nu poate fi șters.",
+      "cannotRenameInbox": "Mesaje primite nu poate fi redenumit.",
+      "closedImmediately": "{{host}} a închis imediat conexiunea. Setarea de securitate (SSL/TLS sau STARTTLS) corespunde portului?",
+      "commandTimeout": "{{host}} nu a răspuns în {{seconds}} secunde.",
+      "connectTimeout": "Niciun răspuns de la {{host}}:{{port}} în {{seconds}} secunde. Verificați numele serverului, portul și firewallul.",
+      "connectionLost": "Conexiunea la {{host}} s-a pierdut.",
+      "draftsFolderMissing": "Nu s-a găsit niciun folder Ciorne pe server. Alegeți acel folder în setările contului.",
+      "greetingRefused": "{{host}} a refuzat conexiunea: {{detail}}",
+      "invalidFolderName": "Nume de folder nevalid.",
+      "invalidMessage": "Mesaj nevalid.",
+      "invalidName": "{{action}}: caractere nevalide în nume.",
+      "invalidSearchCharacters": "Textul de căutare conține caractere nevalide.",
+      "messageGone": "Acest mesaj nu mai există (poate a fost mutat sau șters).",
+      "messageTooLarge": "Mesajul are {{size}} MB; Email Studio deschide mesaje de până la {{max}} MB.",
+      "noStarttls": "{{host}} nu acceptă STARTTLS pe portul {{port}}. Alegeți SSL/TLS (de obicei portul 993).",
+      "noTrash": "Nu s-a găsit niciun folder coș de gunoi pe server. Alegeți un folder coș de gunoi în setările contului sau ștergeți definitiv.",
+      "noValidMessages": "Nu s-au specificat mesaje valide.",
+      "notFound": "{{action}}: {{detail}}",
+      "quotaExceeded": "{{action}}: cutia poștală este plină ({{detail}}).",
+      "refused": "{{action}}: serverul a refuzat ({{detail}}).",
+      "retryLater": "{{message}} (Email Studio va încerca din nou peste {{retrySeconds}} secunde pentru a evita blocarea de către server.)",
+      "searchTooLong": "Textul de căutare este prea lung.",
+      "sentFolderMissing": "Nu s-a găsit niciun folder Trimise pe server. Alegeți acel folder în setările contului.",
+      "signInTimeout": "Conectarea la {{host}} a durat prea mult.",
+      "specialFolderMissing": "Folderul nu a fost găsit pe server. Alegeți acel folder în setările contului.",
+      "unexpectedError": "{{action}}: eroare neașteptată.",
+      "unexpectedResponse": "{{action}}: răspuns neașteptat de la server.",
+      "unexpectedState": "Stare neașteptată a conexiunii."
+    },
+    "keychain": {
+      "notResponding": "Portcheiul nu a răspuns.",
+      "unavailable": "Portcheiul sistemului de operare nu este disponibil. Email Studio nu stochează niciodată parolele ca text simplu; pe Linux este necesar un Secret Service (de exemplu GNOME Keyring sau KWallet).",
+      "unexpected": "Portcheiul a returnat o eroare neașteptată."
+    },
+    "links": {
+      "openFailed": "Linkul nu a putut fi deschis.",
+      "unsupportedScheme": "Pot fi deschise doar linkuri http, https și mailto."
+    },
+    "messages": {
+      "invalidMime": "Mesajul nu a putut fi citit (structură MIME nevalidă).",
+      "unreadable": "Mesajul nu a putut fi citit."
+    },
+    "oauth": {
+      "browserFailed": "Browserul web nu a putut fi deschis pentru conectare.",
+      "cancelled": "Conectarea a fost anulată.",
+      "cancelledOrDenied": "Conectarea la {{provider}} a fost anulată sau refuzată.",
+      "clientMisconfigured": "Clientul OAuth pentru {{provider}} nu este configurat corect (client ID sau secret).",
+      "emailUnknown": "Adresa de e-mail a conectării nu a putut fi determinată; introduceți adresa și încercați din nou.",
+      "invalidClientId": "Acesta nu este un client ID valid.",
+      "invalidTokenEndpoint": "Endpoint de token nevalid.",
+      "noAccessToken": "{{provider}} nu a returnat un token de acces (HTTP {{status}}).",
+      "noFreePort": "Nu este disponibil niciun port temporar pentru conectare.",
+      "noPort": "Niciun port.",
+      "noRefreshToken": "{{provider}} nu a returnat un token de reîmprospătare; încercați să vă conectați din nou.",
+      "noStoredSignIn": "Conectați-vă din nou la {{provider}}: nu este salvată nicio conectare pentru acest cont.",
+      "notConfigured": {
+        "google": "Conectarea cu Google nu este încă configurată: nu există client ID. În Google Cloud, creați un client OAuth de tip 'Aplicație desktop' (redirecționare prin http://127.0.0.1), activați Gmail API și adăugați domeniul https://mail.google.com/ la ecranul de consimțământ. Apoi introduceți client ID-ul și client secret-ul (consultați docs/email-oauth.md).",
+        "microsoft": "Conectarea cu Microsoft nu este încă configurată: nu există client ID. Înregistrați o aplicație în Microsoft Entra (Înregistrări aplicații) ca 'Client public', adăugați platforma 'Aplicații mobile și desktop' cu URI-ul de redirecționare http://localhost și acordați permisiunile delegate IMAP.AccessAsUser.All, SMTP.Send, offline_access, openid și email. Apoi introduceți client ID-ul (consultați docs/email-oauth.md)."
+      },
+      "providerRefused": "{{provider}} a refuzat conectarea ({{detail}}).",
+      "randomUnavailable": "Nu este disponibilă nicio sursă sigură de aleatoriu.",
+      "reauthenticate": "Conectați-vă din nou la {{provider}}: permisiunea a expirat sau a fost revocată.",
+      "settingSaveFailed": "Setarea OAuth nu a putut fi salvată.",
+      "signInFirst": "Acest cont folosește OAuth2: conectați-vă mai întâi cu Microsoft sau Google.",
+      "signInFirstToTest": "Conectați-vă mai întâi cu Microsoft sau Google pentru a testa OAuth2.",
+      "signInTimeout": "Conectarea la {{provider}} a durat peste 5 minute și a fost întreruptă.",
+      "stateMismatch": "Răspunsul paginii de conectare nu aparține acestei conectări (state nepotrivit).",
+      "timeout": "{{provider}} nu a răspuns la timp.",
+      "tokenRefused": "{{provider}} a refuzat tokenul ({{detail}}).",
+      "unexpectedResponse": "{{provider}} a returnat un răspuns neașteptat (HTTP {{status}})."
+    },
+    "security": {
+      "cramMd5SmtpUnsupported": "Parola criptată (CRAM-MD5) nu este acceptată pentru SMTP. Alegeți 'parolă normală'; prin SSL/TLS sau STARTTLS parola este de asemenea criptată.",
+      "invalidServerName": "'{{host}}' nu este un nume de server valid pentru {{protocol}}.",
+      "notLocalhost": "{{host}} nu este acest computer, așa că o conexiune necriptată a fost refuzată.",
+      "portMissing": "Lipsește portul pentru {{protocol}}.",
+      "unencryptedRefused": "Conectarea la {{host}} fără criptare a fost refuzată: parola dvs. ar circula prin rețea în formă lizibilă. Alegeți SSL/TLS sau STARTTLS. Conexiunile necriptate sunt permise doar către acest computer (localhost), de exemplu pentru Proton Mail Bridge."
+    },
+    "server": {
+      "noTimelyResponse": "{{host}} nu a răspuns la timp."
+    },
+    "smtp": {
+      "authMethodUnsupported": "Această metodă de conectare nu este acceptată pentru SMTP.",
+      "error": "Eroare SMTP la {{host}}: {{detail}}",
+      "messageTooLarge": "{{host}} respinge mesajul deoarece este prea mare ({{detail}}).",
+      "noAuthMechanism": "{{host}} nu oferă o metodă de conectare acceptată de Email Studio (PLAIN sau LOGIN). Alegeți STARTTLS sau SSL/TLS; multe servere oferă conectarea doar după criptare.",
+      "oauthRejected": "{{host}} a respins tokenul OAuth2; poate fi necesar să vă conectați din nou.",
+      "rejected": "{{host}} a respins mesajul ({{detail}}).",
+      "sendTimeout": "Trimiterea prin {{host}} a durat prea mult.",
+      "tlsFailed": "Conexiunea securizată la {{host}} nu a putut fi stabilită ({{detail}}). Setarea de securitate corespunde portului?",
+      "tryLater": "{{host}} nu poate accepta mesajul acum; încercați din nou mai târziu ({{detail}})."
+    },
+    "storage": {
+      "appDataDirNotFound": "Folderul de date al aplicației nu a fost găsit.",
+      "dataDirCreateFailed": "Folderul de date nu a putut fi creat.",
+      "dataDirMissing": "Lipsește folderul de date."
+    },
+    "test": {
+      "signedIn": "Conectat la {{host}}.",
+      "signedInUnencrypted": "Conectat la {{host}}. Notă: conexiunea {{protocol}} nu este criptată. Acest lucru este permis doar pentru că serverul rulează pe acest computer."
+    },
+    "tls": {
+      "certificateRejected": "Conexiunea securizată la {{host}} a fost refuzată: {{reason}}. Pentru a vă proteja parola, Email Studio nu se conectează la un server a cărui identitate nu poate fi verificată.",
+      "handshakeFailed": "Conexiunea securizată la {{host}} nu a putut fi stabilită ({{detail}}). Setarea de securitate (SSL/TLS sau STARTTLS) corespunde portului?",
+      "handshakeTimeout": "Handshake-ul TLS cu {{host}} a durat prea mult.",
+      "invalidServerName": "'{{host}}' nu este un nume de server valid pentru TLS.",
+      "reason": {
+        "expired": "certificatul a expirat",
+        "invalid": "certificatul este nevalid ({{detail}})",
+        "notYetValid": "certificatul nu este încă valid (ceasul acestui computer este corect?)",
+        "revoked": "certificatul a fost revocat",
+        "unknownIssuer": "certificatul nu a fost emis de o autoritate de certificare de încredere (posibil autosemnat)",
+        "wrongName": "certificatul nu aparține numelui {{host}}; folosiți numele serverului afișat pe certificat"
+      }
+    }
+  }
+}

@@ -10,6 +10,8 @@ import {
   type HerstelOpslag,
 } from "./herstel";
 import { HerstelDialoog } from "./HerstelDialoog";
+import i18next from "./i18n/config";
+import { formatDatumTijd } from "./i18n/opmaak";
 
 const tauri = "__TAURI_INTERNALS__" in window;
 /** Elke halve minuut kijken; een eerste kopie komt dus snel, daarna per interval. */
@@ -113,8 +115,9 @@ export function useHerstel({ tabs, bezig, opslaanAls }: Opties) {
             if (!gemeld.current) {
               gemeld.current = true;
               tabs.meld(
-                "Automatisch herstel kon geen kopie bewaren: " +
-                  (fout instanceof Error ? fout.message : String(fout)),
+                i18next.t("backstage:recovery.copyFailed", {
+                  error: fout instanceof Error ? fout.message : String(fout),
+                }),
                 tabblad.id,
               );
             }
@@ -159,14 +162,19 @@ export function useHerstel({ tabs, bezig, opslaanAls }: Opties) {
         bytes,
         exportFormaat: item.exportFormaat,
         gewijzigd: true,
-        melding: `Hersteld uit de herstelkopie van ${new Date(item.datum).toLocaleString("nl-NL")}. Het oorspronkelijke bestand is niet gewijzigd; sla dit document op om het te behouden.`,
+        melding: i18next.t("backstage:recovery.restoredFrom", {
+          date: formatDatumTijd(item.datum, { dateStyle: "short", timeStyle: "medium" }),
+        }),
       });
       await sessie().opslag.verwijder(item.sessie, item.sleutel);
       if (metOpslaanAls) naGereed.current = id;
       setAanbod((a) => a.filter((i) => i !== item));
     } catch (fout) {
       recent.current.tabs.meld(
-        `${item.naam} herstellen mislukt: ${fout instanceof Error ? fout.message : String(fout)}`,
+        i18next.t("backstage:recovery.restoreFailed", {
+          name: item.naam,
+          error: fout instanceof Error ? fout.message : String(fout),
+        }),
       );
     } finally {
       setWerkt(false);

@@ -3,6 +3,7 @@
  * kolomdefinities, SQL-literalen en de typeconversie bij het herbouwen van
  * een tabel. Geen databasetoegang; zie `werkkopie.ts` voor de procedure.
  */
+import i18next from "i18next";
 import { WerkkopieFout, type VeldSchema, type Veldsoort, type Waarde } from "./contract.ts";
 import { citeer, typeVoorSoort } from "./access-sql.ts";
 import { cstr, isoUitMs, msUitTekst, msUitWaarde, rondAf } from "./functies.ts";
@@ -15,7 +16,7 @@ export function sqlLiteraal(w: Waarde): string {
   if (w === null) return "NULL";
   if (typeof w === "boolean") return w ? "1" : "0";
   if (typeof w === "number") {
-    if (!Number.isFinite(w)) throw new WerkkopieFout("syntaxis", "Een standaardwaarde moet een eindig getal zijn.");
+    if (!Number.isFinite(w)) throw new WerkkopieFout("syntaxis", i18next.t("database:structure.defaultNotFinite"));
     return String(w);
   }
   if (w instanceof Uint8Array) return `X'${Array.from(w, (b) => b.toString(16).padStart(2, "0")).join("")}'`;
@@ -31,13 +32,13 @@ export function standaardUit(sql: string): Waarde {
 
 /** Controleert naam, soort en lengte van een veld; gooit een `WerkkopieFout`. */
 export function controleerVeld(v: VeldSchema) {
-  if (!v || typeof v.naam !== "string" || !v.naam.trim()) throw new WerkkopieFout("syntaxis", "Elk veld heeft een naam nodig.");
-  if (v.naam.length > 64) throw new WerkkopieFout("syntaxis", `Veldnaam ‘${v.naam.slice(0, 20)}…’ is langer dan 64 tekens.`);
+  if (!v || typeof v.naam !== "string" || !v.naam.trim()) throw new WerkkopieFout("syntaxis", i18next.t("database:structure.fieldNameRequired"));
+  if (v.naam.length > 64) throw new WerkkopieFout("syntaxis", i18next.t("database:structure.fieldNameTooLong", { name: v.naam.slice(0, 20) }));
   if (/^(_openaec_|sqlite_)/i.test(v.naam) || /[\u0000-\u001f\[\]!`]/.test(v.naam) || /^\s|\s$/.test(v.naam))
-    throw new WerkkopieFout("syntaxis", `‘${v.naam}’ is geen geldige veldnaam (geen [ ] ! \` of stuurtekens, niet beginnen of eindigen met een spatie).`);
-  if (!VELDSOORTEN.includes(v.soort)) throw new WerkkopieFout("syntaxis", `Onbekende veldsoort ‘${String(v.soort)}’.`);
+    throw new WerkkopieFout("syntaxis", i18next.t("database:structure.invalidFieldName", { name: v.naam }));
+  if (!VELDSOORTEN.includes(v.soort)) throw new WerkkopieFout("syntaxis", i18next.t("database:structure.unknownFieldType", { type: String(v.soort) }));
   if (v.soort === "tekst" && v.lengte !== undefined && (!Number.isInteger(v.lengte) || v.lengte < 1 || v.lengte > 255))
-    throw new WerkkopieFout("syntaxis", `De lengte van ‘${v.naam}’ moet een geheel getal van 1 tot en met 255 zijn.`);
+    throw new WerkkopieFout("syntaxis", i18next.t("database:structure.invalidLength", { name: v.naam }));
   if (v.standaard !== undefined) sqlLiteraal(v.standaard);
 }
 
@@ -52,21 +53,10 @@ export function kolomDefinitie(v: VeldSchema, enigePrimair: boolean): string {
   return sql;
 }
 
-export type Conversie = { ok: true; waarde: SqlCel } | { ok: false; reden: string };
+export type Conversie = { ok: true; waarde: SqlCel } | { ok: false; reden: string; leeg?: true };
 
-const SOORTNAAM: Record<Veldsoort, string> = {
-  tekst: "Tekst",
-  memo: "Memo",
-  geheel: "Geheel getal",
-  getal: "Getal",
-  valuta: "Valuta",
-  datum: "Datum/tijd",
-  jaNee: "Ja/nee",
-  autonummer: "AutoNummer",
-  binair: "Binair",
-  guid: "GUID",
-};
-export const soortNaam = (s: Veldsoort) => SOORTNAAM[s] ?? s;
+export const soortNaam = (s: Veldsoort): string =>
+  VELDSOORTEN.includes(s) ? i18next.t(`database:structure.fieldType.${s}`) : s;
 
 function leesGetal(s: string): number | null {
   const t = s.trim();
@@ -84,18 +74,18 @@ function leesGetal(s: string): number | null {
  */
 export function converteerWaarde(w: SqlCel, van: Veldsoort | null, naar: VeldSchema): Conversie {
   const leeg = (): Conversie =>
-    naar.verplicht && naar.soort !== "autonummer" ? { ok: false, reden: "leeg terwijl het veld verplicht is" } : { ok: true, waarde: null };
+    naar.verplicht && naar.soort !== "autonummer" ? { ok: false, reden: i18next.t("database:structure.conversion.emptyRequired"), leeg: true } : { ok: true, waarde: null };
   if (w === null || w === undefined) return leeg();
   const zelfde = van === naar.soort || (van === "autonummer" && naar.soort === "geheel") || (van === "geheel" && naar.soort === "autonummer");
-  if (w instanceof Uint8Array) return naar.soort === "binair" ? { ok: true, waarde: w } : { ok: false, reden: `binaire gegevens zijn niet om te zetten naar ${soortNaam(naar.soort)}` };
-  if (naar.soort === "binair") return { ok: false, reden: "tekst of getallen zijn niet om te zetten naar Binair" };
+  if (w instanceof Uint8Array) return naar.soort === "binair" ? { ok: true, waarde: w } : { ok: false, reden: i18next.t("database:structure.conversion.binaryTo", { type: soortNaam(naar.soort) }) };
+  if (naar.soort === "binair") return { ok: false, reden: i18next.t("database:structure.conversion.toBinary") };
   const isGetal = typeof w === "number";
   switch (naar.soort) {
     case "tekst":
     case "memo": {
       const waarde: SqlCel = zelfde || !isGetal ? w : van === "jaNee" ? (w ? "Waar" : "Onwaar") : cstr(w);
       const max = naar.soort === "tekst" ? (naar.lengte ?? 255) : Infinity;
-      if (String(waarde).length > max) return { ok: false, reden: `langer dan ${max} tekens` };
+      if (String(waarde).length > max) return { ok: false, reden: i18next.t("database:structure.conversion.tooLong", { count: max }) };
       return { ok: true, waarde };
     }
     case "geheel":
@@ -107,9 +97,9 @@ export function converteerWaarde(w: SqlCel, van: Veldsoort | null, naar: VeldSch
         if (!w.trim()) return leeg();
         n = leesGetal(w);
       }
-      if (n === null) return { ok: false, reden: `geen geheel getal` };
+      if (n === null) return { ok: false, reden: i18next.t("database:structure.conversion.notInteger") };
       const r = rondAf(n);
-      if (!Number.isSafeInteger(r)) return { ok: false, reden: "getal buiten het bereik van een geheel getal" };
+      if (!Number.isSafeInteger(r)) return { ok: false, reden: i18next.t("database:structure.conversion.integerRange") };
       return { ok: true, waarde: r };
     }
     case "getal":
@@ -121,7 +111,7 @@ export function converteerWaarde(w: SqlCel, van: Veldsoort | null, naar: VeldSch
         if (!w.trim()) return leeg();
         n = leesGetal(w);
       }
-      if (n === null) return { ok: false, reden: "geen getal" };
+      if (n === null) return { ok: false, reden: i18next.t("database:structure.conversion.notNumber") };
       return { ok: true, waarde: naar.soort === "valuta" ? rondAf(n, 4) : n };
     }
     case "jaNee": {
@@ -131,24 +121,24 @@ export function converteerWaarde(w: SqlCel, van: Veldsoort | null, naar: VeldSch
       if (!t) return leeg();
       if (/^(waar|ja|yes|true|-1|1|aan|on)$/i.test(t)) return { ok: true, waarde: 1 };
       if (/^(onwaar|nee|no|false|0|uit|off)$/i.test(t)) return { ok: true, waarde: 0 };
-      return { ok: false, reden: "geen ja/nee-waarde" };
+      return { ok: false, reden: i18next.t("database:structure.conversion.notYesNo") };
     }
     case "datum": {
       if (zelfde) return { ok: true, waarde: w };
       if (!isGetal && !w.trim()) return leeg();
       const ms = isGetal ? (van === "jaNee" ? null : msUitWaarde(w)) : msUitTekst(w, "dmj");
-      if (ms === null) return { ok: false, reden: "geen datum" };
+      if (ms === null) return { ok: false, reden: i18next.t("database:structure.conversion.notDate") };
       return { ok: true, waarde: isoUitMs(ms) };
     }
     case "guid": {
       if (zelfde) return { ok: true, waarde: w };
       const t = String(w).trim();
       if (!t) return leeg();
-      if (!/^\{?[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\}?$/i.test(t)) return { ok: false, reden: "geen GUID" };
+      if (!/^\{?[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\}?$/i.test(t)) return { ok: false, reden: i18next.t("database:structure.conversion.notGuid") };
       return { ok: true, waarde: t.startsWith("{") ? t : `{${t}}` };
     }
   }
-  return { ok: false, reden: "onbekende veldsoort" };
+  return { ok: false, reden: i18next.t("database:structure.conversion.unknownType") };
 }
 
 /** Veldsoorten die in een relatie op elkaar passen (AutoNummer ↔ Geheel getal). */
@@ -166,5 +156,7 @@ export function naamPatroon(naam: string): RegExp {
 /** Rijen samengevat voor een melding: aantal en hoogstens vijf voorbeeld-rowids, nooit inhoud. */
 export function voorbeeldRowids(rowids: number[], totaal = rowids.length): string {
   const lijst = rowids.slice(0, 5).join(", ");
-  return `${totaal} rij(en)${lijst ? `, bijvoorbeeld rowid ${lijst}` : ""}`;
+  return lijst
+    ? i18next.t("database:structure.rowidsExample", { count: totaal, list: lijst })
+    : i18next.t("database:structure.rowids", { count: totaal });
 }

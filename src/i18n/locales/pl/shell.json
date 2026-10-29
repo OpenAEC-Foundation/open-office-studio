@@ -1,0 +1,148 @@
+{
+  "header": {
+    "homeTitle": "Przejdź do ekranu Start",
+    "homeLabel": "OpenAEC Office Studio · Start",
+    "version": "Wersja {{version}}",
+    "unsaved": "Niezapisane zmiany",
+    "unchanged": "Bez zmian",
+    "fileAndStart": "Plik i Start",
+    "openFileTitle": "Otwórz plik na nowej karcie · Ctrl+O",
+    "openNotesBackupTitle": "Dodaj kopię zapasową notatek · Ctrl+O",
+    "openDatabaseTitle": "Otwórz bazę danych · Ctrl+O",
+    "addBackup": "Dodaj kopię zapasową",
+    "saveAs": "Zapisz jako",
+    "saveAsTitle": "Zapisz jako · F12 lub Ctrl+Shift+S (Ctrl+S zapisuje w otwartym pliku)",
+    "busy": "Przetwarzanie…"
+  },
+  "message": {
+    "close": "Zamknij komunikat",
+    "markdownNote": "Format Markdown zachowuje tekst i strukturę. Zapisz też plik DOCX, aby zachować układ strony, obrazy i poprawki."
+  },
+  "loading": {
+    "editor": "Wczytywanie edytora…",
+    "notes": "Wczytywanie Notatek…",
+    "email": "Wczytywanie Email Studio…",
+    "document": "Wczytywanie dokumentu…",
+    "fonts": "Wczytywanie czcionek…"
+  },
+  "errors": {
+    "editorFailed": "Edytor nie mógł otworzyć tego pliku: {{error}}",
+    "openFailed": "Nie udało się otworzyć: {{error}}",
+    "openFileFailed": "Nie udało się otworzyć {{name}}: {{error}}",
+    "saveFailed": "Nie udało się zapisać: {{error}}",
+    "printFailed": "Nie udało się wydrukować: {{error}}",
+    "sendAsAttachmentFailed": "Nie udało się wysłać jako załącznik: {{error}}",
+    "templateUnavailable": "Szablon jest niedostępny",
+    "exampleFailed": "Nie udało się otworzyć przykładu.",
+    "fileSize": "Wybierz niepusty plik o rozmiarze maksymalnie 100 MB.",
+    "unsupportedFormat": "{{name}}: ten format nie jest obsługiwany.",
+    "emptyAttachment": "Załącznik jest pusty.",
+    "databaseModifiedFile": "Database Studio ma zmienioną kopię roboczą. Najpierw ją zapisz lub zamknij, a następnie ponownie otwórz plik.",
+    "databaseModifiedAttachment": "Database Studio ma zmienioną kopię roboczą. Najpierw ją zapisz lub zamknij, a następnie ponownie otwórz załącznik.",
+    "spreadsheetNotReady": "Arkusz kalkulacyjny nie jest jeszcze gotowy.",
+    "presentationNotReady": "Prezentacja nie jest jeszcze gotowa.",
+    "documentNotReady": "Dokument nie jest jeszcze gotowy.",
+    "documentSaveFailed": "Nie udało się zapisać dokumentu."
+  },
+  "tabs": {
+    "untitled": "Bez tytułu {{n}}",
+    "memoryWarning_one": "Otwarty jest {{count}} dokument. Każdy otwarty dokument zużywa pamięć; zamknij dokumenty, których już nie potrzebujesz.",
+    "memoryWarning_few": "Otwarte są {{count}} dokumenty. Każdy otwarty dokument zużywa pamięć; zamknij dokumenty, których już nie potrzebujesz.",
+    "memoryWarning_many": "Otwartych jest {{count}} dokumentów. Każdy otwarty dokument zużywa pamięć; zamknij dokumenty, których już nie potrzebujesz.",
+    "memoryWarning_other": "Liczba otwartych dokumentów: {{count}}. Każdy otwarty dokument zużywa pamięć; zamknij dokumenty, których już nie potrzebujesz."
+  },
+  "tabBar": {
+    "label": "Otwarte karty",
+    "start": "Start",
+    "startTitle": "Start · nowy lub istniejący dokument, Notatki i Baza danych",
+    "tabTitleUnsaved": "{{name}} · niezapisane zmiany",
+    "dragOutHint": "Przeciągnij na zewnątrz, aby otworzyć w osobnym oknie",
+    "unsavedA11y": ", niezapisane zmiany",
+    "closeTab": "Zamknij {{name}}",
+    "closeTitle": "Zamknij · Ctrl+W",
+    "allTabs": "Wszystkie otwarte karty",
+    "addTab": "Dodaj kartę",
+    "addTabTitle": "Otwórz nowy lub istniejący dokument, Notatki lub Bazę danych",
+    "releaseOpensWindow": "Zwolnij, aby otworzyć w osobnym oknie",
+    "closeOthers": "Zamknij pozostałe",
+    "closeToRight": "Zamknij karty po prawej"
+  },
+  "windowMenu": {
+    "button": "Otwarte dokumenty",
+    "buttonTitle": "Otwarte dokumenty · Ctrl+Tab lub Ctrl+F6, aby przełączyć",
+    "empty": "Brak otwartych dokumentów.",
+    "thisWindow": "To okno",
+    "mainWindow": "Okno główne",
+    "windowNumber": "Okno {{number}}",
+    "unsavedTitle": "Niezapisane zmiany",
+    "modified": "zmieniony",
+    "newWindow": "Nowe okno"
+  },
+  "windows": {
+    "openInNewWindow": "Otwórz w nowym oknie",
+    "backToMainWindow": "Wróć do okna głównego",
+    "databaseMovedHere": "Database Studio jest teraz w tym oknie. Otwórz tu ponownie bazę danych, jeśli chcesz kontynuować pracę.",
+    "documentMoved": "Dokument został przeniesiony wraz z niezapisanymi zmianami. Historia operacji Cofnij nie jest przenoszona.",
+    "linkUnavailable": "Połączenie okien jest niedostępne: {{error}}",
+    "closeGuardUnavailable": "Ochrona przed zamknięciem jest niedostępna: {{error}}",
+    "databaseModified": "Database Studio nie może przenieść zmienionej kopii roboczej do innego okna. Najpierw wyeksportuj lub zapisz bazę danych.",
+    "otherWindowFailed": "Drugie okno nie mogło otworzyć karty.",
+    "mainWindowNoResponse": "Okno główne nie odpowiada. Karta pozostaje otwarta tutaj.",
+    "newWindowTimeout": "Nowe okno nie przejęło dokumentu na czas. Karta pozostaje otwarta tutaj.",
+    "alreadyMainWindow": "To już jest okno główne.",
+    "popupBlocked": "Nie udało się otworzyć nowego okna. Zezwól na wyskakujące okienka dla tej strony.",
+    "moveToWindow": "Przenieś do: {{window}}",
+    "newWindowFailed": "Nie udało się otworzyć nowego okna: {{error}}"
+  },
+  "dropZone": {
+    "release": "Zwolnij, aby otworzyć",
+    "explanation": "Dokumenty, arkusze kalkulacyjne i prezentacje otwierają się na osobnych kartach; pliki MDB i ACCDB w Database Studio.",
+    "image": "{{name}} to obraz. Przeciąganie nie wstawia jeszcze obrazów do dokumentu; użyj polecenia Wstawianie › Obraz.",
+    "unsupported": "Nie można otworzyć {{name}}: format .{{ext}} nie jest obsługiwany. Open Office Studio otwiera dokumenty, arkusze kalkulacyjne, prezentacje i bazy danych Access."
+  },
+  "ribbon": {
+    "label": "Wstążka",
+    "file": "Plik",
+    "hide": "Ukryj wstążkę",
+    "show": "Pokaż wstążkę",
+    "hideHint": "Więcej miejsca na dokument · Ctrl+F1",
+    "scrollLeft": "Przewiń wstążkę w lewo",
+    "scrollRight": "Przewiń wstążkę w prawo",
+    "commandFailed": "Nie udało się wykonać polecenia.",
+    "nothingToUndo": "Nie ma nic do cofnięcia.",
+    "nothingToRedo": "Nie ma nic do ponowienia.",
+    "presentationOpening": "Prezentacja jest jeszcze otwierana.",
+    "selectShapeFirst": "Najpierw zaznacz kształt."
+  },
+  "theme": {
+    "light": "Motyw jasny",
+    "forge": "Motyw Forge"
+  },
+  "host": {
+    "conflict": "Ktoś inny zapisał w międzyczasie ten dokument. Twoja wersja została zapisana jako kopia: {{name}}.",
+    "readOnly": "{{name}} otwarto tylko do odczytu. Użyj polecenia Zapisz jako, aby zachować zmiany.",
+    "openFailed": "Nie można otworzyć dokumentu z obszaru roboczego: {{error}}"
+  },
+  "title": {
+    "document": "{{document}} — {{app}} ({{module}})",
+    "module": "{{app}} ({{module}})"
+  },
+  "titleBar": {
+    "quickAccess": "Szybki dostęp",
+    "saveTitle": "Zapisz · Ctrl+S",
+    "settings": "Ustawienia",
+    "minimize": "Minimalizuj",
+    "maximize": "Maksymalizuj",
+    "restore": "Przywróć",
+    "close": "Zamknij okno"
+  },
+  "toasts": {
+    "region": "Powiadomienia",
+    "info": "Informacja",
+    "success": "Gotowe",
+    "warning": "Uwaga",
+    "error": "Błąd",
+    "details": "Szczegóły",
+    "less": "Mniej"
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "formulaCheck": {
+    "titleWarning": "Bu hesap tablosundaki formülleri denetleyin",
+    "titleInfo": "Bu hesap tablosundaki formüllerle ilgili notlar",
+    "cells_one": "{{count}} hücre",
+    "cells_other": "{{count}} hücre",
+    "examplesMore_one": "{{list}} ve {{count}} tane daha",
+    "examplesMore_other": "{{list}} ve {{count}} tane daha",
+    "userFunction": "Kullanıcı tanımlı işlev (makro veya eklenti)",
+    "function": "İşlev",
+    "notCalculated": "{{kind}} {{name}} hesaplanmıyor ({{cells}}: {{examples}}). Kaydedilmiş sonuç olduğu gibi kalır ve güncellenmez; bağımlı hücreler güncel olmayabilir.",
+    "recalculated_one": "{{cells}} güncel olmayan kaydedilmiş bir sonuca sahipti ve açılırken yeniden hesaplandı ({{examples}}). Kaydederken yeni sonuçlar saklanır.",
+    "recalculated_other": "{{cells}} güncel olmayan kaydedilmiş bir sonuca sahipti ve açılırken yeniden hesaplandı ({{examples}}). Kaydederken yeni sonuçlar saklanır.",
+    "manualCalculation": "Dosya el ile hesaplama ile kaydedilmiş; kaydedilmiş sonuçlar güncel olmayabilir.",
+    "externalLinks_one": "Çalışma kitabı harici bir çalışma kitabına başvuruyor; bu değerler güncellenmez.",
+    "externalLinks_other": "Çalışma kitabı {{count}} harici çalışma kitabına başvuruyor; bu değerler güncellenmez.",
+    "errorCells": "Hata değeri içeren {{cells}}: {{list}}.",
+    "errorItem": "{{error}} ({{examples}})",
+    "noCachedResult": "Kaydedilmiş sonucu olmayan formül içeren {{cells}} ({{examples}}).",
+    "fullCalcOnLoad": "Dosya açılırken tam yeniden hesaplama istiyor (fullCalcOnLoad); kaydedilmiş sonuçlar güncel olmayabilir.",
+    "calcChain": "Hesaplama zinciri (calcChain) kaydederken saklanmaz; Excel bunu yeniden oluşturur.",
+    "tooLarge": "Hesap tablosu denetim için çok büyük.",
+    "invalidWorkbook": "Geçerli bir XLSX çalışma kitabı değil."
+  },
+  "print": {
+    "pageLabel": "{{sheet}}, sayfa {{page}} / {{pages}}",
+    "notWorksheet": "‘{{name}}’ sayfası bir çalışma sayfası değil ve atlanıyor.",
+    "nothingToPrint": "Yazdırılacak bir şey yok: sayfalar boş."
+  },
+  "export": {
+    "pngUnavailable": "Bu hesap tablosu motoru PNG oluşturamıyor."
+  },
+  "csvImport": {
+    "title": "{{name}} içe aktar",
+    "import": "İçe aktar",
+    "separator": "Ayırıcı",
+    "separatorSemicolon": "Noktalı virgül ;",
+    "separatorComma": "Virgül ,",
+    "separatorTab": "Sekme",
+    "separatorPipe": "Dikey çizgi |",
+    "separatorCustom": "Başka karakter…",
+    "customCharacter": "Başka karakter",
+    "textQualifier": "Metin niteleyici",
+    "qualifierDouble": "Çift tırnak \"",
+    "qualifierSingle": "Tek tırnak '",
+    "qualifierNone": "Yok",
+    "encoding": "Karakter kodlaması",
+    "encodingAuto": "Otomatik",
+    "encodingDetected": "{{name}} ({{encoding}})",
+    "encodingWindows1252": "Windows-1252 (Batı Avrupa)",
+    "numbers": "Sayılar",
+    "numbersDutch": "Felemenkçe (1.234,56)",
+    "numbersEnglish": "İngilizce (1,234.56)",
+    "dateOrder": "Tarih sırası",
+    "dateOrderDmy": "Gün-ay-yıl (31-12-2026)",
+    "dateOrderMdy": "Ay-gün-yıl (12/31/2026)",
+    "dateOrderYmd": "Yıl-ay-gün (2026-12-31)",
+    "fromRow": "Başlangıç satırı",
+    "headerRow": "İlk satır başlık satırıdır",
+    "previewLabel": "İlk 50 satırın önizlemesi",
+    "columnType": "{{number}}. sütunun türü",
+    "columnTypes": {
+      "standaard": "Genel",
+      "tekst": "Metin",
+      "datum": "Tarih",
+      "overslaan": "Atla"
+    },
+    "detected_one": "Ayırıcı olarak {{separator}}, {{count}} sütun.",
+    "detected_other": "Ayırıcı olarak {{separator}}, {{count}} sütun.",
+    "explanation": "Posta kodları, ürün numaraları ve IBAN için <b>Metin</b> seçin; baştaki sıfırlar ve 15 basamaktan uzun sayılar Genel'de zaten metin olarak kalır. =, +, - veya @ ile başlayan değerler asla formül olarak okunmaz (önizlemede kesme işareti).",
+    "separatorNames": {
+      "tab": "sekme",
+      "semicolon": "noktalı virgül",
+      "comma": "virgül",
+      "pipe": "dikey çizgi",
+      "other": "“{{character}}”"
+    },
+    "report": {
+      "import": "İçe aktarma",
+      "imported": "{{rows}} ve {{columns}} okundu; ayırıcı olarak {{separator}}, kodlama {{encoding}}.",
+      "rows_one": "{{count}} satır",
+      "rows_other": "{{count}} satır",
+      "columns_one": "{{count}} sütun",
+      "columns_other": "{{count}} sütun",
+      "formulaLike": "Formüle benzeyen metin",
+      "formulaLikeCells_one": "=, +, - veya @ ile başlayan {{count}} hücre formül olarak değil, metin olarak alındı (CSV enjeksiyonuna karşı koruma).",
+      "formulaLikeCells_other": "=, +, - veya @ ile başlayan {{count}} hücre formül olarak değil, metin olarak alındı (CSV enjeksiyonuna karşı koruma).",
+      "truncated": "Kırpıldı",
+      "truncatedText": "Dosya bir çalışma sayfasından büyük ({{rows}} satır veya {{columns}} sütun); geri kalanı okunmadı."
+    }
+  }
+}

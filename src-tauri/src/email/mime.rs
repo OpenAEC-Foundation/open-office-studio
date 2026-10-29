@@ -126,14 +126,17 @@ fn veilige_naam(s: &str) -> String {
 }
 
 pub fn bijlage_bytes(bron: &[u8], index: u32) -> Uitkomst<Vec<u8>> {
-    let bericht =
-        ontleed(bron).ok_or_else(|| MailFout::intern("Het bericht kon niet worden gelezen."))?;
+    let bericht = ontleed(bron).ok_or_else(|| {
+        MailFout::intern("Het bericht kon niet worden gelezen.").sleutel("messages.unreadable")
+    })?;
     let deel = bericht
         .attachments()
         .nth(index as usize)
         .map(|d| d.contents().to_vec());
     deel.ok_or_else(|| {
         MailFout::niet_gevonden(format!("Bijlage {index} bestaat niet in dit bericht."))
+            .sleutel("attachments.notFound")
+            .waarde("index", index)
     })
 }
 
@@ -187,6 +190,7 @@ fn kop_uit(p: &Message<'_>, uid: u32, map: &str) -> BerichtKop {
 pub fn bericht(uid: u32, map: &str, bron: &[u8], vlaggen: Vlaggen) -> Uitkomst<Bericht> {
     let p = ontleed(bron).ok_or_else(|| {
         MailFout::intern("Het bericht kon niet worden gelezen (ongeldige MIME-opbouw).")
+            .sleutel("messages.invalidMime")
     })?;
     let mut kop = kop_uit(&p, uid, map);
     kop.gelezen = vlaggen.gelezen;

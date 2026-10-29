@@ -1,0 +1,232 @@
+{
+  "types": {
+    "column": { "name": "Kolom", "description": "Waarden naast elkaar vergelijken" },
+    "stackedColumn": { "name": "Gestapelde kolom", "description": "Delen en totaal per categorie" },
+    "percentColumn": { "name": "100%-kolom", "description": "Aandelen per categorie" },
+    "bar": { "name": "Staaf", "description": "Horizontaal, voor lange namen" },
+    "line": { "name": "Lijn", "description": "Verloop over de tijd" },
+    "lineMarkers": { "name": "Lijn met markeringen", "description": "Verloop met zichtbare meetpunten" },
+    "area": { "name": "Vlak", "description": "Verloop met nadruk op omvang" },
+    "pie": { "name": "Taart", "description": "Verdeling van één reeks" },
+    "doughnut": { "name": "Ring", "description": "Verdeling met een open midden" },
+    "scatter": { "name": "Spreiding (XY)", "description": "Verband tussen twee getallen" },
+    "combo": { "name": "Kolom + lijn", "description": "Laatste reeks als lijn op een tweede as" }
+  },
+  "unknownType": "Onbekende soort",
+  "busy": "Bezig…",
+  "defaults": {
+    "seriesName": "Reeks {{n}}",
+    "categoryName": "Categorie {{n}}",
+    "chartName": "Grafiek {{n}}",
+    "sheetName": "Grafiek {{n}}",
+    "true": "WAAR",
+    "false": "ONWAAR"
+  },
+  "ribbon": {
+    "charts": "Grafieken",
+    "chart": "Grafiek",
+    "editChart": "Grafiek bewerken",
+    "allCharts": "Alle grafieken",
+    "dataAndFormat": "Gegevens en opmaak",
+    "overview": "Overzicht",
+    "type": "Soort",
+    "changeType": "Soort wijzigen",
+    "data": "Gegevens",
+    "selectData": "Gegevens selecteren",
+    "layout": "Indeling",
+    "titleAndLegend": "Titel en legenda",
+    "delete": "Verwijderen",
+    "deleteChart": "Grafiek verwijderen",
+    "withShortcut": "{{name}} · {{shortcut}}"
+  },
+  "dialog": {
+    "title": {
+      "insert": "Grafiek invoegen",
+      "edit": "Grafiek bewerken"
+    },
+    "button": {
+      "insert": "Invoegen",
+      "edit": "Bijwerken"
+    },
+    "reloadNote": {
+      "insert": "Het document wordt na invoegen opnieuw geladen. Ongedaan maken van wijzigingen van vóór dat moment is daarna niet meer mogelijk.",
+      "edit": "Het document wordt na bijwerken opnieuw geladen. Ongedaan maken van wijzigingen van vóór dat moment is daarna niet meer mogelijk."
+    },
+    "closeTitle": "Sluiten (Esc)",
+    "type": "Soort",
+    "data": "Gegevens",
+    "cellRange": "Celbereik",
+    "cellRangePlaceholder": "Bijvoorbeeld A1:D6",
+    "noContiguousRange": "De verwijzingen van deze grafiek vormen geen aaneengesloten bereik; de gegevens blijven ongewijzigd tot je een bereik opgeeft.",
+    "firstRowNames": "Eerste rij bevat namen",
+    "firstColumnNames": "Eerste kolom bevat namen",
+    "seriesIn": "Reeksen in",
+    "columns": "kolommen",
+    "rows": "rijen",
+    "series": "Reeksen",
+    "seriesNoNumbersTitle": "{{name}}: geen getallen, telt niet mee",
+    "noNumbers": "(geen getallen)",
+    "enterRange": "Geef het celbereik met de gegevens op.",
+    "placeCursorInTable": "Zet de cursor eerst in een tabel met getallen.",
+    "titles": "Titels",
+    "chartTitle": "Titel",
+    "subtitle": "Ondertitel",
+    "categoryAxis": "Categorie-as",
+    "valueAxis": "Waardeas",
+    "horizontalAxis": "Horizontale as",
+    "verticalAxis": "Verticale as",
+    "secondaryAxis": "Tweede as",
+    "format": "Opmaak",
+    "legend": "Legenda",
+    "gridlines": "Rasterlijnen",
+    "dataLabels": "Gegevenslabels",
+    "decimals": "Decimalen",
+    "placement": "Plaatsing",
+    "besideData": "Naast de gegevens op dit blad",
+    "newSheet": "Op een nieuw blad",
+    "sheetName": "Naam van het blad",
+    "summary": {
+      "series_one": "{{n}} reeks",
+      "series_other": "{{n}} reeksen",
+      "categories_one": "{{n}} categorie",
+      "categories_other": "{{n}} categorieën",
+      "text": "{{series}} · {{categories}}",
+      "withSheet": "{{series}} · {{categories}} · {{sheet}}"
+    }
+  },
+  "legend": {
+    "bottom": "Onder",
+    "right": "Rechts",
+    "top": "Boven",
+    "left": "Links",
+    "none": "Geen legenda"
+  },
+  "dataSheet": {
+    "row": "Rij",
+    "series": "Reeks",
+    "removeLastRow": "Laatste rij verwijderen",
+    "removeLastSeries": "Laatste reeks verwijderen",
+    "paste": "Plakken",
+    "pasteTitle": "Tabgescheiden tekst uit het klembord plakken, bijvoorbeeld gekopieerd uit een rekenblad",
+    "fromTable": "Uit geselecteerde tabel",
+    "fromTableTitle": "Neemt de tabel over waarin de cursor staat",
+    "pasteNotAllowed": "Plakken via de knop is hier niet toegestaan. Klik in een cel en gebruik Ctrl+V.",
+    "corner": "Hoekcel",
+    "seriesNameLabel": "Naam van reeks {{n}}",
+    "categoryLabel": "Categorie {{n}}",
+    "valueLabel": "Waarde rij {{row}}, reeks {{series}}"
+  },
+  "preview": {
+    "label": "Voorbeeld: {{title}}",
+    "untitled": "Voorbeeld: grafiek zonder titel"
+  },
+  "list": {
+    "title": "Grafieken in dit document",
+    "empty": "Dit document bevat nog geen grafieken.",
+    "edit": "Bewerken",
+    "delete": "Verwijderen",
+    "deleteLabel": "{{name}} verwijderen",
+    "place": {
+      "slide": "dia {{n}}",
+      "sheet": "blad {{name}}",
+      "text": "grafiek {{n}} in de tekst"
+    }
+  },
+  "deleteConfirm": {
+    "title": "Grafiek verwijderen",
+    "text": "‘{{name}}’ verwijderen? Het document wordt daarna opnieuw geladen; ongedaan maken van eerdere wijzigingen is dan niet meer mogelijk.",
+    "textSheet": "‘{{name}}’ verwijderen van blad {{sheet}}? Het document wordt daarna opnieuw geladen; ongedaan maken van eerdere wijzigingen is dan niet meer mogelijk.",
+    "button": "Verwijderen"
+  },
+  "errors": {
+    "unknownType": "Onbekende grafieksoort.",
+    "noSeries": "De grafiek heeft minstens één gegevensreeks nodig.",
+    "tooManySeries": "Een grafiek kan hier hoogstens {{max}} reeksen bevatten.",
+    "tooManyCategories": "Een grafiek kan hier hoogstens {{max}} categorieën bevatten.",
+    "noCategories": "De grafiek heeft minstens één categorie nodig.",
+    "valueCountMismatch": "Reeks ‘{{name}}’ heeft niet evenveel waarden als er categorieën zijn.",
+    "noNumbers": "Er staan geen getallen in de gegevens.",
+    "comboNeedsTwoSeries": "Een combinatiegrafiek heeft minstens twee reeksen nodig: kolommen en een lijn.",
+    "scatterNeedsNumbers": "Een spreidingsgrafiek heeft getallen als X-waarden nodig in de eerste kolom of rij.",
+    "titleTooLong": "Titels mogen hoogstens {{max}} tekens lang zijn.",
+    "invalidColor": "Kleur ‘{{color}}’ is geen geldige kleur.",
+    "noNumericColumn": "Geen enkele kolom in het bereik bevat getallen, dus er is niets om te tekenen. Kies een bereik met minstens één kolom getallen, of zet ‘Reeksen in’ op rijen.",
+    "noNumericRow": "Geen enkele rij in het bereik bevat getallen, dus er is niets om te tekenen. Kies een bereik met minstens één rij getallen, of zet ‘Reeksen in’ op kolommen.",
+    "chooseSeries": "Kies minstens één reeks voor de grafiek.",
+    "rangeTooLarge": "Het bereik is te groot: hoogstens {{max}} cellen.",
+    "noDataBesideHeaders": "Het bereik bevat geen gegevens naast de kopteksten.",
+    "pasteTooLarge": "De geplakte gegevens zijn te groot voor een grafiek.",
+    "invalidRange": "Dat is geen geldig celbereik. Gebruik bijvoorbeeld A1:D6 of 'Blad 1'!A1:D6.",
+    "noSuchSheet": "Er is geen blad met de naam ‘{{name}}’.",
+    "spreadsheetNotReady": "Het rekenblad is nog niet gereed.",
+    "spreadsheetReadOnly": "Het rekenblad is alleen-lezen.",
+    "documentNotReady": "Het document is nog niet gereed.",
+    "presentationNotEditable": "De presentatie kan nu niet worden bewerkt.",
+    "selectChartFirst": "Selecteer eerst een grafiek.",
+    "chartGone": "De grafiek is niet meer gevonden.",
+    "notEditableHere": "Deze grafiek kan hier niet worden bewerkt.",
+    "notEditable": "Deze grafiek kan niet worden bewerkt.",
+    "package": {
+      "tooLarge": "Het document is te groot om er een grafiek in te bewerken.",
+      "tooManyParts": "Het document bevat te veel of te grote onderdelen.",
+      "notZip": "Het document is geen geldig Office-bestand (zip).",
+      "invalidPartName": "Het document bevat een ongeldige onderdeelnaam.",
+      "noContentTypes": "Het document mist [Content_Types].xml.",
+      "missingPart": "Onderdeel {{part}} ontbreekt in het document.",
+      "noFreePartName": "Er is geen vrije onderdeelnaam meer."
+    },
+    "xml": {
+      "tooLarge": "Een XML-onderdeel is te groot om te verwerken.",
+      "damaged": "Het XML-onderdeel is beschadigd.",
+      "doctype": "XML met een DOCTYPE wordt om veiligheidsredenen niet verwerkt.",
+      "tooDeep": "Het XML-onderdeel is te diep genest.",
+      "overlappingChanges": "Interne fout: overlappende XML-wijzigingen."
+    },
+    "chartXml": {
+      "notDrawingML": "Dit onderdeel is geen DrawingML-grafiek.",
+      "noPlotArea": "De grafiek heeft geen tekengebied.",
+      "unusualPrefix": "Deze grafiek gebruikt een afwijkende XML-schrijfwijze en kan hier niet veilig bewerkt worden."
+    },
+    "document": {
+      "noMainPart": "Het document mist zijn hoofdonderdeel.",
+      "tooManyCharts": "Dit document bevat al {{total}} grafieken; meer wordt niet ondersteund.",
+      "invalidSheetName": "Ongeldige bladnaam: hoogstens 31 tekens, zonder \\ / ? * [ ] :",
+      "sheetExists": "Er bestaat al een blad met de naam ‘{{name}}’.",
+      "noSheetList": "Het werkboek heeft geen bladenlijst.",
+      "drawingMissing": "De tekening van dit blad ontbreekt of is beschadigd.",
+      "noSuchWorksheet": "Het gekozen blad bestaat niet of is geen werkblad.",
+      "notPlainWorksheet": "Een grafiek kan alleen op een gewoon werkblad worden geplaatst.",
+      "drawingDamaged": "De tekening van dit blad is beschadigd.",
+      "docxUnusualPrefix": "Dit document gebruikt een afwijkende XML-schrijfwijze; de grafiek kan niet veilig worden ingevoegd.",
+      "noBody": "Het document heeft geen hoofdtekst.",
+      "tableTooLarge": "De tabel is te groot voor een grafiek.",
+      "noSuchSlide": "De gekozen dia bestaat niet.",
+      "slideUnusualPrefix": "Deze dia gebruikt een afwijkende XML-schrijfwijze; de grafiek kan niet veilig worden ingevoegd.",
+      "noShapeTree": "De dia heeft geen vormenlijst.",
+      "chartRemoved": "De grafiek bestaat niet meer in het document.",
+      "chartNotFound": "De grafiek is niet gevonden.",
+      "cannotRemove": "Het grafiekobject kan niet worden verwijderd."
+    }
+  },
+  "read": {
+    "reasons": {
+      "extendedChart": "Dit is een uitgebreide grafiek (zoals een waterval- of boomstructuurgrafiek) die hier niet bewerkt kan worden.",
+      "unsupportedType": "Deze grafiek gebruikt een soort die hier niet bewerkt kan worden ({{types}}).",
+      "noReadableSeries": "De grafiek bevat geen reeksen die we kunnen lezen.",
+      "unsupportedCombination": "Deze grafiek combineert soorten op een manier die hier niet bewerkt kan worden.",
+      "noSeries": "De grafiek bevat geen gegevensreeksen.",
+      "invalid": "Deze grafiek kan hier niet worden bewerkt: {{reason}}",
+      "unusualPrefix": "Deze grafiek gebruikt een afwijkende XML-schrijfwijze en kan hier niet veilig bewerkt worden."
+    },
+    "warnings": {
+      "stackedBars": "Gestapelde staven worden bij bewerken naast elkaar gezet.",
+      "stackedLines": "Gestapelde lijnen worden bij bewerken losse lijnen.",
+      "stackedAreas": "Gestapelde vlakken worden bij bewerken losse vlakken.",
+      "linesAfterColumns": "De lijnreeksen komen bij bewerken na de kolommen.",
+      "lastSeriesAsLine": "Bij bewerken wordt alleen de laatste reeks als lijn getekend.",
+      "multiLevelCategories": "Categorieën met meerdere niveaus worden bij bewerken één niveau.",
+      "moreValuesThanCategories": "Reeks ‘{{name}}’ heeft meer waarden dan er categorieën zijn.",
+      "trendlinesDropped": "Trendlijnen en foutbalken vervallen bij bewerken."
+    }
+  }
+}

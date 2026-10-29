@@ -4,6 +4,7 @@
  * eigen papiermaat (@page met naam), zodat de printer dezelfde paginering
  * krijgt als het voorbeeld en de PDF.
  */
+import i18next from "../i18n/config";
 import type { AfdrukPagina } from "./model";
 import { MM_PER_PT } from "./model";
 
@@ -15,7 +16,7 @@ export function canvasNaarBlob(
   return new Promise((klaar, mislukt) =>
     canvas.toBlob(
       (blob) =>
-        blob ? klaar(blob) : mislukt(new Error("De pagina kon niet worden omgezet.")),
+        blob ? klaar(blob) : mislukt(new Error(i18next.t("print:errors.pageConversionFailed"))),
       type,
       kwaliteit,
     ),
@@ -51,7 +52,7 @@ export async function drukPaginasAf(
   dpi = 200,
   voortgang?: AfdrukVoortgang,
 ) {
-  if (!volgorde.length) throw new Error("Er zijn geen pagina's gekozen.");
+  if (!volgorde.length) throw new Error(i18next.t("print:errors.noPagesSelected"));
   // Elke unieke pagina één keer tekenen; exemplaren delen dezelfde afbeelding.
   const urls = new Map<number, string>();
   const uniek = [...new Set(volgorde)];

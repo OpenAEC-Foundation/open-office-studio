@@ -5,6 +5,8 @@
  */
 import { useEffect, useState } from "react";
 import type { DocxEditorRef } from "@betteroffice/docx-react";
+import { useTranslation } from "react-i18next";
+import i18next from "../../i18n/config";
 import type { Herladen } from "../../lint/editorApi";
 import { Dialoog } from "../../werkruimte/Dialoog";
 import { inspecteer, schoonOp, type InspectieUitslag, type Opschonen } from "./inspectie";
@@ -26,12 +28,13 @@ export function InspectieVenster({
   const [keuze, setKeuze] = useState<Opschonen>({});
   const [fout, setFout] = useState("");
   const [bezig, setBezig] = useState(false);
+  const { t } = useTranslation("writer");
 
   useEffect(() => {
     let actief = true;
     void (async () => {
       try {
-        if (!herlaad) throw new Error("Inspecteren is hier niet beschikbaar.");
+        if (!herlaad) throw new Error(i18next.t("writer:info.inspect.notAvailable"));
         const u = inspecteer(await herlaad.bytes());
         if (actief) setUitslag(u);
       } catch (error) {
@@ -47,21 +50,39 @@ export function InspectieVenster({
   const persoonlijk = uitslag ? uitslag.personen.length + (p?.bedrijf ? 1 : 0) : 0;
   const rijen: { sleutel: keyof Opschonen; naam: string; aantal: number; uitleg: string; leeg: string }[] = uitslag
     ? [
-        { sleutel: "verborgenTekst", naam: "Verborgen tekst", aantal: uitslag.verborgenTekst, uitleg: `${uitslag.verborgenTekst} stuk(ken) tekst met de opmaak ‘verborgen’.`, leeg: "Geen verborgen tekst gevonden." },
-        { sleutel: "opmerkingen", naam: "Opmerkingen", aantal: uitslag.opmerkingen, uitleg: `${uitslag.opmerkingen} opmerking(en).`, leeg: "Geen opmerkingen gevonden." },
-        { sleutel: "revisies", naam: "Bijgehouden wijzigingen", aantal: uitslag.revisies, uitleg: `${uitslag.revisies} wijziging(en); verwijderen accepteert ze allemaal.`, leeg: "Geen bijgehouden wijzigingen gevonden." },
+        {
+          sleutel: "verborgenTekst",
+          naam: t("info.inspect.hiddenText.name"),
+          aantal: uitslag.verborgenTekst,
+          uitleg: t("info.inspect.hiddenText.detail", { count: uitslag.verborgenTekst }),
+          leeg: t("info.inspect.hiddenText.none"),
+        },
+        {
+          sleutel: "opmerkingen",
+          naam: t("info.inspect.comments.name"),
+          aantal: uitslag.opmerkingen,
+          uitleg: t("info.inspect.comments.detail", { count: uitslag.opmerkingen }),
+          leeg: t("info.inspect.comments.none"),
+        },
+        {
+          sleutel: "revisies",
+          naam: t("info.inspect.revisions.name"),
+          aantal: uitslag.revisies,
+          uitleg: t("info.inspect.revisions.detail", { count: uitslag.revisies }),
+          leeg: t("info.inspect.revisions.none"),
+        },
         {
           sleutel: "persoonlijk",
-          naam: "Persoonlijke gegevens",
+          naam: t("info.inspect.personal.name"),
           aantal: persoonlijk,
           uitleg: [
-            uitslag.personen.length ? `Namen: ${uitslag.personen.join(", ")}.` : "",
-            p?.bedrijf ? `Organisatie: ${p.bedrijf}.` : "",
-            "Verwijderen wist auteur, laatst gewijzigd door, organisatie en vervangt namen bij opmerkingen en wijzigingen door ‘Auteur’.",
+            uitslag.personen.length ? t("info.inspect.personal.names", { names: uitslag.personen.join(", ") }) : "",
+            p?.bedrijf ? t("info.inspect.personal.company", { company: p.bedrijf }) : "",
+            t("info.inspect.personal.detail", { author: t("info.inspect.personal.anonymousAuthor") }),
           ]
             .filter(Boolean)
             .join(" "),
-          leeg: "Geen namen of organisatie gevonden.",
+          leeg: t("info.inspect.personal.none"),
         },
       ]
     : [];
@@ -73,7 +94,8 @@ export function InspectieVenster({
     try {
       const ref = api();
       await ref?.flushPendingInput();
-      const nieuw = schoonOp(await herlaad.bytes(), keuze);
+      // Namen worden vervangen door ‘Auteur’ in de interfacetaal (zoals Word).
+      const nieuw = schoonOp(await herlaad.bytes(), keuze, i18next.t("writer:info.inspect.personal.anonymousAuthor"));
       // Een wachtende auteur uit Bestand › Info zou de naam bij opslaan terugzetten.
       if (keuze.persoonlijk) zetEigenschappen(herlaad, { auteur: "" });
       herlaad.vervang(nieuw, { paraId: ref?.getSelectionInfo()?.paraId ?? undefined });
@@ -86,23 +108,23 @@ export function InspectieVenster({
 
   return (
     <Dialoog
-      titel="Document inspecteren"
+      titel={t("info.inspect.title")}
       sluit={sluit}
       className="tekst-info"
       acties={
         <>
           {fout && <span className="werkruimte-melding werkruimte-fout" role="alert">{fout}</span>}
           <button type="button" className="werkruimte-knop" onClick={sluit}>
-            Sluiten
+            {t("common:close")}
           </button>
           <button type="button" className="werkruimte-knop is-primair" disabled={!iets || bezig} onClick={() => void verwijderen()}>
-            Geselecteerde verwijderen
+            {t("info.inspect.removeSelected")}
           </button>
         </>
       }
     >
       {!uitslag ? (
-        !fout && <p className="werkruimte-uitleg">Het document wordt geïnspecteerd…</p>
+        !fout && <p className="werkruimte-uitleg">{t("info.inspect.inspecting")}</p>
       ) : (
         <>
           <ul className="tekst-inspectie">
@@ -116,16 +138,13 @@ export function InspectieVenster({
                     onChange={(e) => setKeuze({ ...keuze, [r.sleutel]: e.target.checked })}
                   />
                   <strong>{r.naam}</strong>
-                  <span className={`tekst-inspectie-telling ${r.aantal ? "is-gevonden" : ""}`}>{r.aantal ? "gevonden" : "niets"}</span>
+                  <span className={`tekst-inspectie-telling ${r.aantal ? "is-gevonden" : ""}`}>{r.aantal ? t("info.inspect.found") : t("info.inspect.nothing")}</span>
                 </label>
                 <p className="werkruimte-uitleg">{r.aantal ? r.uitleg : r.leeg}</p>
               </li>
             ))}
           </ul>
-          <p className="werkruimte-uitleg">
-            Het document wordt daarna opnieuw geladen; eerdere wijzigingen kun je dan niet meer ongedaan maken. Sla daarna op om
-            het bestand zelf te wijzigen.
-          </p>
+          <p className="werkruimte-uitleg">{t("info.inspect.reloadNote")}</p>
         </>
       )}
     </Dialoog>

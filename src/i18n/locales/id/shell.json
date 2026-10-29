@@ -1,0 +1,145 @@
+{
+  "header": {
+    "homeTitle": "Ke Mulai",
+    "homeLabel": "OpenAEC Office Studio · Mulai",
+    "version": "Versi {{version}}",
+    "unsaved": "Perubahan belum disimpan",
+    "unchanged": "Tidak ada perubahan",
+    "fileAndStart": "File dan Mulai",
+    "openFileTitle": "Buka file di tab baru · Ctrl+O",
+    "openNotesBackupTitle": "Tambahkan cadangan catatan · Ctrl+O",
+    "openDatabaseTitle": "Buka basis data · Ctrl+O",
+    "addBackup": "Tambahkan cadangan",
+    "saveAs": "Simpan sebagai",
+    "saveAsTitle": "Simpan sebagai · F12 atau Ctrl+Shift+S (Ctrl+S menyimpan ke file yang terbuka)",
+    "busy": "Sedang bekerja…"
+  },
+  "message": {
+    "close": "Tutup pesan",
+    "markdownNote": "Markdown menyimpan teks dan struktur. Simpan juga DOCX untuk tata letak halaman, gambar, dan revisi."
+  },
+  "loading": {
+    "editor": "Memuat editor…",
+    "notes": "Memuat Catatan…",
+    "email": "Memuat Email Studio…",
+    "document": "Memuat dokumen…",
+    "fonts": "Memuat font…"
+  },
+  "errors": {
+    "editorFailed": "Editor tidak dapat membuka file ini: {{error}}",
+    "openFailed": "Gagal membuka: {{error}}",
+    "openFileFailed": "Gagal membuka {{name}}: {{error}}",
+    "saveFailed": "Gagal menyimpan: {{error}}",
+    "printFailed": "Gagal mencetak: {{error}}",
+    "sendAsAttachmentFailed": "Gagal mengirim sebagai lampiran: {{error}}",
+    "templateUnavailable": "Templat tidak tersedia",
+    "exampleFailed": "Contoh tidak dapat dibuka.",
+    "fileSize": "Pilih file yang tidak kosong dan tidak lebih dari 100 MB.",
+    "unsupportedFormat": "{{name}}: format ini tidak didukung.",
+    "emptyAttachment": "Lampiran kosong.",
+    "databaseModifiedFile": "Database Studio memiliki salinan kerja yang diubah. Simpan atau tutup dulu, lalu buka file lagi.",
+    "databaseModifiedAttachment": "Database Studio memiliki salinan kerja yang diubah. Simpan atau tutup dulu, lalu buka lampiran lagi.",
+    "spreadsheetNotReady": "Lembar kerja belum siap.",
+    "presentationNotReady": "Presentasi belum siap.",
+    "documentNotReady": "Dokumen belum siap.",
+    "documentSaveFailed": "Dokumen tidak dapat disimpan."
+  },
+  "tabs": {
+    "untitled": "Tanpa Judul {{n}}",
+    "memoryWarning_other": "{{count}} dokumen sedang terbuka. Setiap dokumen yang terbuka menggunakan memori; tutup dokumen yang tidak lagi Anda perlukan."
+  },
+  "tabBar": {
+    "label": "Tab yang terbuka",
+    "start": "Mulai",
+    "startTitle": "Mulai · dokumen baru atau yang sudah ada, Catatan, dan Basis Data",
+    "tabTitleUnsaved": "{{name}} · perubahan belum disimpan",
+    "dragOutHint": "Seret ke luar untuk jendela terpisah",
+    "unsavedA11y": ", perubahan belum disimpan",
+    "closeTab": "Tutup {{name}}",
+    "closeTitle": "Tutup · Ctrl+W",
+    "allTabs": "Semua tab yang terbuka",
+    "addTab": "Tambah tab",
+    "addTabTitle": "Buka dokumen baru atau yang sudah ada, Catatan, atau Basis Data",
+    "releaseOpensWindow": "Lepaskan untuk membuka jendela terpisah",
+    "closeOthers": "Tutup yang lain",
+    "closeToRight": "Tutup tab di sebelah kanan"
+  },
+  "windowMenu": {
+    "button": "Dokumen terbuka",
+    "buttonTitle": "Dokumen terbuka · Ctrl+Tab atau Ctrl+F6 untuk beralih",
+    "empty": "Tidak ada dokumen yang terbuka.",
+    "thisWindow": "Jendela ini",
+    "mainWindow": "Jendela utama",
+    "windowNumber": "Jendela {{number}}",
+    "unsavedTitle": "Perubahan belum disimpan",
+    "modified": "diubah",
+    "newWindow": "Jendela baru"
+  },
+  "windows": {
+    "openInNewWindow": "Buka di jendela baru",
+    "backToMainWindow": "Kembali ke jendela utama",
+    "databaseMovedHere": "Database Studio sekarang ada di jendela ini. Buka kembali basis data Anda di sini jika ingin melanjutkan pekerjaan.",
+    "documentMoved": "Dokumen telah dipindahkan, termasuk perubahan yang belum disimpan. Riwayat Urungkan tidak ikut dipindahkan.",
+    "linkUnavailable": "Tautan jendela tidak tersedia: {{error}}",
+    "closeGuardUnavailable": "Perlindungan penutupan tidak tersedia: {{error}}",
+    "databaseModified": "Database Studio tidak dapat memindahkan salinan kerja yang diubah ke jendela lain. Ekspor atau simpan basis data terlebih dahulu.",
+    "otherWindowFailed": "Jendela lain tidak dapat membuka tab.",
+    "mainWindowNoResponse": "Jendela utama tidak merespons. Tab tetap terbuka di sini.",
+    "newWindowTimeout": "Jendela baru tidak mengambil alih dokumen tepat waktu. Tab tetap terbuka di sini.",
+    "alreadyMainWindow": "Ini sudah jendela utama.",
+    "popupBlocked": "Jendela baru tidak dapat dibuka. Izinkan jendela pop-up untuk halaman ini.",
+    "moveToWindow": "Pindahkan ke {{window}}",
+    "newWindowFailed": "Jendela baru tidak dapat dibuka: {{error}}"
+  },
+  "dropZone": {
+    "release": "Lepaskan untuk membuka",
+    "explanation": "Dokumen, lembar kerja, dan presentasi masing-masing dibuka di tabnya sendiri; MDB dan ACCDB dibuka di Database Studio.",
+    "image": "{{name}} adalah gambar. Menyeret belum dapat menyisipkan gambar ke dokumen; gunakan Sisipkan › Gambar.",
+    "unsupported": "{{name}} tidak dapat dibuka: .{{ext}} tidak didukung. Open Office Studio membuka dokumen, lembar kerja, presentasi, dan basis data Access."
+  },
+  "ribbon": {
+    "label": "Pita",
+    "file": "File",
+    "hide": "Sembunyikan pita",
+    "show": "Tampilkan pita",
+    "hideHint": "Lebih banyak ruang untuk dokumen Anda · Ctrl+F1",
+    "scrollLeft": "Gulir pita ke kiri",
+    "scrollRight": "Gulir pita ke kanan",
+    "commandFailed": "Perintah tidak dapat dijalankan.",
+    "nothingToUndo": "Tidak ada yang dapat diurungkan.",
+    "nothingToRedo": "Tidak ada yang dapat diulangi.",
+    "presentationOpening": "Presentasi masih dibuka.",
+    "selectShapeFirst": "Pilih bentuk terlebih dahulu."
+  },
+  "theme": {
+    "light": "Tema terang",
+    "forge": "Tema Forge"
+  },
+  "host": {
+    "conflict": "Orang lain telah menyimpan dokumen ini sementara itu. Versi Anda disimpan sebagai salinan: {{name}}.",
+    "readOnly": "{{name}} dibuka hanya-baca. Gunakan Simpan Sebagai untuk menyimpan perubahan Anda.",
+    "openFailed": "Dokumen dari ruang kerja tidak dapat dibuka: {{error}}"
+  },
+  "title": {
+    "document": "{{document}} — {{app}} ({{module}})",
+    "module": "{{app}} ({{module}})"
+  },
+  "titleBar": {
+    "quickAccess": "Akses cepat",
+    "saveTitle": "Simpan · Ctrl+S",
+    "settings": "Pengaturan",
+    "minimize": "Perkecil",
+    "maximize": "Perbesar",
+    "restore": "Kembalikan",
+    "close": "Tutup jendela"
+  },
+  "toasts": {
+    "region": "Notifikasi",
+    "info": "Info",
+    "success": "Selesai",
+    "warning": "Perhatian",
+    "error": "Galat",
+    "details": "Detail",
+    "less": "Lebih sedikit"
+  }
+}

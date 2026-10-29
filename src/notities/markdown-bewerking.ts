@@ -1,3 +1,8 @@
+import i18next from "../i18n/config";
+import { formatDatum } from "../i18n/opmaak";
+
+const t = (sleutel: string) => i18next.t(`notes:insert.${sleutel}`) as string;
+
 export type MarkdownOpdracht =
   | "tekst"
   | "kop"
@@ -41,23 +46,22 @@ export function bewerkMarkdown(
     selectieEinde = start + vervanging.length;
   } else if (opdracht === "vet" || opdracht === "cursief") {
     const rand = opdracht === "vet" ? "**" : "*";
-    const inhoud = gekozen || "tekst";
+    const inhoud = gekozen || t("text");
     vervanging = rand + inhoud + rand;
     selectieStart = start + rand.length;
     selectieEinde = selectieStart + inhoud.length;
   } else if (opdracht === "link") {
-    vervanging = `[${gekozen || "link"}](https://)`;
-    selectieStart = start + (gekozen || "link").length + 3;
+    const label = gekozen || t("link");
+    vervanging = `[${label}](https://)`;
+    selectieStart = start + label.length + 3;
     selectieEinde = selectieStart + 8;
   } else {
     vervanging =
       opdracht === "code"
-        ? `\n\`\`\`\n${gekozen || "code"}\n\`\`\`\n`
+        ? `\n\`\`\`\n${gekozen || t("code")}\n\`\`\`\n`
         : opdracht === "tabel"
-          ? "\n| Onderdeel | Notitie |\n| --- | --- |\n| | |\n"
-          : new Intl.DateTimeFormat("nl-NL", { dateStyle: "long" }).format(
-              new Date(),
-            );
+          ? `\n| ${t("tableItem")} | ${t("tableNote")} |\n| --- | --- |\n| | |\n`
+          : formatDatum(new Date(), { dateStyle: "long" });
     selectieStart = start + vervanging.length;
     selectieEinde = selectieStart;
   }

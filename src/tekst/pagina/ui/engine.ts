@@ -7,6 +7,7 @@ import type { DocxEditorRef } from "@betteroffice/docx-react";
 import { zichtbaarElement } from "../../../lint/editorApi";
 import { isVerwijderd, koppenUitExport, type Kop, type PaginaExport } from "../inhoudsopgave.ts";
 import { nieuweMarkering } from "../ooxml.ts";
+import { paginaTekst } from "../tekst.ts";
 
 /** Zet een unieke markering op de cursor (aan het eind van een selectie). */
 export async function zetMarkering(api: DocxEditorRef) {
@@ -16,7 +17,7 @@ export async function zetMarkering(api: DocxEditorRef) {
   if (bereik.from !== bereik.to) {
     // In een kop- of voettekst zet `setSelection` de cursor op het begin van
     // het onderdeel (engine): dan liever niets doen dan op de verkeerde plek.
-    if (kopVoetActief()) throw new Error("Hef eerst de selectie op: zet de cursor op de plek in de kop- of voettekst.");
+    if (kopVoetActief()) throw new Error(paginaTekst("errors.clearSelectionFirst"));
     editor.setSelection(bereik.to);
   }
   const markering = nieuweMarkering();
@@ -58,7 +59,7 @@ async function pagedExport(api: DocxEditorRef, stories: ("body" | "footnotes" | 
     await wachtOpIndeling(api, 4000);
     r = await exporteer();
   }
-  if (!r.ok) throw new Error(`De pagina-indeling is niet beschikbaar: ${r.failure.message}`);
+  if (!r.ok) throw new Error(paginaTekst("errors.layoutUnavailable", { reason: r.failure.message }));
   return r.content;
 }
 

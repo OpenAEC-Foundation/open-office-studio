@@ -57,7 +57,7 @@ fn controleer(sessie: &str, sleutel: &str) -> Result<(), String> {
     if geldig(sessie) && geldig(sleutel) {
         Ok(())
     } else {
-        Err("Ongeldige herstelsleutel.".into())
+        Err(crate::taal::t("errors.recovery.keyInvalid"))
     }
 }
 
@@ -98,7 +98,7 @@ fn bewaar_binnen(
     let bin = map.join(format!("{sleutel}.bin"));
     let vorige = std::fs::metadata(&bin).map(|m| m.len()).unwrap_or(0);
     if mapgrootte(basis).saturating_sub(vorige) + bytes.len() as u64 > grens {
-        return Err("De ruimte voor herstelkopieën (512 MB) is vol. Sla je documenten op.".into());
+        return Err(crate::taal::t("errors.recovery.spaceFull"));
     }
     std::fs::create_dir_all(&map).map_err(|e| e.to_string())?;
     crate::schrijf_atomair(&bin, bytes)?;
@@ -229,16 +229,16 @@ pub async fn herstel_bewaar(
     venster: tauri::Window,
     request: tauri::ipc::Request<'_>,
 ) -> Result<(), String> {
-    let sessie = kop(&request, "x-office-sessie").ok_or("De sessie ontbreekt.")?;
-    let sleutel = kop(&request, "x-office-sleutel").ok_or("De sleutel ontbreekt.")?;
+    let sessie = kop(&request, "x-office-sessie").ok_or_else(|| crate::taal::t("errors.recovery.sessionMissing"))?;
+    let sleutel = kop(&request, "x-office-sleutel").ok_or_else(|| crate::taal::t("errors.recovery.keyMissing"))?;
     let mut meta: Meta = serde_json::from_str(&kop(&request, "x-office-meta").unwrap_or_default())
-        .map_err(|_| "Ongeldige herstelgegevens.")?;
+        .map_err(|_| crate::taal::t("errors.recovery.dataInvalid"))?;
     meta.naam = meta.naam.chars().take(255).collect();
     if !matches!(meta.soort.as_str(), "docx" | "xlsx" | "pptx") {
-        return Err("Onbekend documenttype.".into());
+        return Err(crate::taal::t("errors.recovery.unknownDocumentType"));
     }
     if app.state::<Herstel>().eigenaar(&sessie).as_deref() != Some(venster.label()) {
-        return Err("Deze herstelsessie hoort niet bij dit venster.".into());
+        return Err(crate::taal::t("errors.recovery.sessionNotThisWindow"));
     }
     let bytes = crate::lees_binaire_inhoud(request.body(), false)?;
     let basis = basis(&app)?;
@@ -258,7 +258,7 @@ pub fn herstel_verwijder(
 ) -> Result<(), String> {
     match staat.eigenaar(&sessie) {
         Some(label) if label != venster.label() => {
-            Err("Deze herstelsessie hoort bij een ander venster.".into())
+            Err(crate::taal::t("errors.recovery.sessionOtherWindow"))
         }
         _ => verwijder(&basis(&app)?, &sessie, &sleutel),
     }
@@ -279,7 +279,7 @@ pub async fn herstel_lees(
     sleutel: String,
 ) -> Result<tauri::ipc::Response, String> {
     if app.state::<Herstel>().eigenaar(&sessie).is_some() {
-        return Err("Deze sessie draait nog.".into());
+        return Err(crate::taal::t("errors.recovery.sessionStillRunning"));
     }
     let basis = basis(&app)?;
     tauri::async_runtime::spawn_blocking(move || {

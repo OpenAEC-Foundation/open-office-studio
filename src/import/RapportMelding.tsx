@@ -1,12 +1,18 @@
-import { useId, useState } from "react";
-import { ClipboardCopy, Download, Info, TriangleAlert, X } from "lucide-react";
+import { useState } from "react";
+import { ClipboardCopy, Download, TriangleAlert } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import i18next from "../i18n/config";
 import versie from "../../versie.json";
 import { rapportTekst, type Rapport } from "./rapport";
 import "./import.css";
 
 /** Bewaart het rapport als tekstbestand: native dialoog in de desktopapp, anders een download. */
 export async function bewaarRapport(tekst: string, bestandsnaam: string) {
-  const naam = `${bestandsnaam.replace(/\.[^.]+$/, "").replace(/[\\/:*?"<>|]+/g, "_") || "Document"} - rapport.txt`;
+  const naam = i18next.t("import:report.ui.fileName", {
+    name:
+      bestandsnaam.replace(/\.[^.]+$/, "").replace(/[\\/:*?"<>|]+/g, "_") ||
+      i18next.t("import:report.ui.defaultName"),
+  });
   const bytes = new TextEncoder().encode(tekst);
   if ("__TAURI_INTERNALS__" in window) {
     const { invoke } = await import("@tauri-apps/api/core");
@@ -35,6 +41,7 @@ export function Rapportdetails({
   rapport: Rapport;
   bestandsnaam: string;
 }) {
+  const { t } = useTranslation("import");
   const [status, setStatus] = useState("");
   const tekst = () => rapportTekst(rapport, bestandsnaam, versie.label);
   return (
@@ -52,65 +59,24 @@ export function Rapportdetails({
           onClick={() =>
             navigator.clipboard
               .writeText(tekst())
-              .then(() => setStatus("Rapport gekopieerd."))
-              .catch(() =>
-                setStatus("Kopiëren is niet toegestaan; gebruik Bewaren."),
-              )
+              .then(() => setStatus(t("report.ui.copied")))
+              .catch(() => setStatus(t("report.ui.copyNotAllowed")))
           }
         >
-          <ClipboardCopy size={13} /> Kopiëren
+          <ClipboardCopy size={13} /> {t("report.ui.copy")}
         </button>
         <button
           type="button"
           onClick={() =>
             bewaarRapport(tekst(), bestandsnaam).catch((e) =>
-              setStatus("Bewaren mislukt: " + String(e)),
+              setStatus(t("report.ui.saveFailed", { error: String(e) })),
             )
           }
         >
-          <Download size={13} /> Bewaren als tekst
+          <Download size={13} /> {t("report.ui.saveAsText")}
         </button>
         <span role="status">{status}</span>
       </div>
-    </div>
-  );
-}
-
-/** Niet-blokkerende melding na openen, met uitklapbare details. */
-export function RapportMelding({
-  rapport,
-  bestandsnaam,
-  sluit,
-}: {
-  rapport: Rapport;
-  bestandsnaam: string;
-  sluit: () => void;
-}) {
-  const [open, setOpen] = useState(false);
-  const id = useId();
-  return (
-    <div role="status" className="office-message rapport-melding">
-      <div className="rapport-kop">
-        <Info size={14} aria-hidden />
-        <span>{rapport.kop}</span>
-        <button
-          type="button"
-          className="rapport-wissel"
-          aria-expanded={open}
-          aria-controls={id}
-          onClick={() => setOpen(!open)}
-        >
-          {open ? "Minder" : "Details"}
-        </button>
-        <button type="button" onClick={sluit} aria-label="Rapport sluiten">
-          <X size={15} />
-        </button>
-      </div>
-      {open && (
-        <div id={id}>
-          <Rapportdetails rapport={rapport} bestandsnaam={bestandsnaam} />
-        </div>
-      )}
     </div>
   );
 }

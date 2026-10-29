@@ -1,27 +1,28 @@
 import { useEffect, useState } from "react";
 import { KeyRound, Plus, ShieldCheck, Trash2, UserRound } from "lucide-react";
+import { Trans, useTranslation } from "react-i18next";
 import type { Account, AccountInvoer, MailBackend, Map, OAuthProvider, TestUitkomst } from "../contract";
 import { kanOAuthClientBewaren, OAUTH_DOCUMENTATIE, PROVIDERNAAM } from "../oauth";
 import { OAuthWacht, useOAuth } from "./OAuth";
 import { isGeldigAdres } from "../adressen";
-import { foutTekst } from "../fouten";
+import { backendTekst, foutTekst } from "../fouten";
 import { Dialoog, useVraag } from "./Dialoog";
 import { ServerVelden } from "./ServerVelden";
 import { bewaarIspdb, leesIspdb, vergeetExterneAfzender, vertrouwdeAfzenders } from "./voorkeuren";
 
 type Tab = "identiteit" | "servers" | "mappen" | "ophalen" | "geavanceerd";
-const TABS: { id: Tab; naam: string }[] = [
-  { id: "identiteit", naam: "Identiteit" },
-  { id: "servers", naam: "Servers" },
-  { id: "mappen", naam: "Mappen" },
-  { id: "ophalen", naam: "Ophalen en privacy" },
-  { id: "geavanceerd", naam: "Geavanceerd" },
+const TABS: { id: Tab; sleutel: string }[] = [
+  { id: "identiteit", sleutel: "identity" },
+  { id: "servers", sleutel: "servers" },
+  { id: "mappen", sleutel: "folders" },
+  { id: "ophalen", sleutel: "fetching" },
+  { id: "geavanceerd", sleutel: "advanced" },
 ];
 const ROLLEN = [
-  { rol: "verzonden", naam: "Verzonden berichten" },
-  { rol: "concepten", naam: "Concepten" },
-  { rol: "prullenbak", naam: "Prullenbak" },
-  { rol: "archief", naam: "Archief" },
+  { rol: "verzonden", sleutel: "sent" },
+  { rol: "concepten", sleutel: "drafts" },
+  { rol: "prullenbak", sleutel: "trash" },
+  { rol: "archief", sleutel: "archive" },
 ] as const;
 
 /** Accountinstellingen achteraf, per account, met een lijst links zoals in Thunderbird. */
@@ -40,6 +41,7 @@ export function AccountInstellingen({
   gewijzigd: (accountId?: string) => void;
   nieuwAccount: () => void;
 }) {
+  const { t } = useTranslation("email");
   const [gekozen, setGekozen] = useState<string | undefined>(beginKeuze ?? accounts[0]?.id);
   const [tab, setTab] = useState<Tab>("identiteit");
   const origineel = accounts.find((a) => a.id === gekozen);
@@ -74,10 +76,10 @@ export function AccountInstellingen({
 
   if (!origineel || !concept)
     return (
-      <Dialoog titel="Accountinstellingen" sluit={sluit}>
-        <p>Er is nog geen account.</p>
+      <Dialoog titel={t("accounts.settings.title")} sluit={sluit}>
+        <p>{t("accounts.settings.noAccount")}</p>
         <button className="email-knop is-primair" onClick={nieuwAccount}>
-          <Plus size={14} /> Account toevoegen
+          <Plus size={14} /> {t("accounts.settings.addAccount")}
         </button>
       </Dialoog>
     );
@@ -94,10 +96,10 @@ export function AccountInstellingen({
     try {
       await backend.bewaarAccount({ ...concept!, wachtwoord: wachtwoord || undefined });
       setWachtwoord("");
-      setMelding("Instellingen opgeslagen.");
+      setMelding(t("accounts.settings.saved"));
       gewijzigd(origineel!.id);
     } catch (e) {
-      setFout(foutTekst(e, "Opslaan mislukt"));
+      setFout(foutTekst(e, t("accounts.settings.saveFailed")));
     } finally {
       setBezig("");
     }
@@ -105,16 +107,18 @@ export function AccountInstellingen({
 
   async function verwijder() {
     const keuze = await vraag({
-      titel: "Account verwijderen",
+      titel: t("accounts.settings.deleteAccount.title"),
       tekst: (
-        <>
-          Weet je zeker dat je <strong>{origineel!.naam}</strong> ({origineel!.email}) wilt verwijderen? De berichten blijven op de server staan; het opgeslagen
-          wachtwoord wordt uit de sleutelhanger verwijderd.
-        </>
+        <Trans
+          t={t}
+          i18nKey="accounts.settings.deleteAccount.confirm"
+          values={{ name: origineel!.naam, email: origineel!.email }}
+          components={{ strong: <strong /> }}
+        />
       ),
       knoppen: [
-        { waarde: "nee", label: "Annuleren" },
-        { waarde: "ja", label: "Account verwijderen", soort: "gevaar" },
+        { waarde: "nee", label: t("common:cancel") },
+        { waarde: "ja", label: t("accounts.settings.deleteAccount.button"), soort: "gevaar" },
       ],
       annuleer: "nee",
     });
@@ -124,7 +128,7 @@ export function AccountInstellingen({
       gewijzigd();
       setGekozen(accounts.find((a) => a.id !== origineel!.id)?.id);
     } catch (e) {
-      setFout(foutTekst(e, "Verwijderen mislukt"));
+      setFout(foutTekst(e, t("accounts.settings.deleteAccount.failed")));
     }
   }
 
@@ -135,7 +139,7 @@ export function AccountInstellingen({
     try {
       const account = await oauth.meldAan(origineel.oauth.provider, { ...concept, id: origineel.id, wachtwoord: undefined });
       if (account) {
-        setMelding(`Opnieuw aangemeld als ${account.oauth?.aangemeldAls ?? account.email}.`);
+        setMelding(t("accounts.settings.oauthAccount.signedInAgain", { account: account.oauth?.aangemeldAls ?? account.email }));
         gewijzigd(account.id);
       }
     } catch (e) {
@@ -149,10 +153,10 @@ export function AccountInstellingen({
     try {
       await backend.bewaarOAuthClient(provider, clients[provider].id.trim(), clients[provider].geheim.trim() || undefined);
       setClients({ ...clients, [provider]: { id: "", geheim: "" } });
-      setMelding(`Client-ID voor ${PROVIDERNAAM[provider]} opgeslagen.`);
+      setMelding(t("accounts.settings.advanced.clientIdSaved", { provider: PROVIDERNAAM[provider] }));
       oauth.ververs();
     } catch (e) {
-      setFout(foutTekst(e, "Client-ID opslaan mislukt"));
+      setFout(foutTekst(e, t("accounts.settings.advanced.clientIdSaveFailed")));
     }
   }
 
@@ -162,7 +166,7 @@ export function AccountInstellingen({
     try {
       setUitkomst(await backend.test({ ...concept!, wachtwoord: wachtwoord || undefined }));
     } catch (e) {
-      setFout(foutTekst(e, "Testen mislukt"));
+      setFout(foutTekst(e, t("accounts.test.failed")));
     } finally {
       setBezig("");
     }
@@ -171,7 +175,7 @@ export function AccountInstellingen({
   return (
     <>
       <Dialoog
-        titel="Accountinstellingen"
+        titel={t("accounts.settings.title")}
         sluit={sluit}
         breed="groot"
         className="email-instellingen"
@@ -180,60 +184,66 @@ export function AccountInstellingen({
             {melding && <span className="email-okregel" role="status">{melding}</span>}
             {fout && <span className="email-foutregel" role="alert">{fout}</span>}
             <button className="email-knop" onClick={sluit}>
-              Sluiten
+              {t("common:close")}
             </button>
             <button className="email-knop is-primair" disabled={!geldig || !!bezig} onClick={() => void bewaar()}>
-              {bezig === "bewaren" ? "Opslaan…" : "Opslaan"}
+              {bezig === "bewaren" ? t("accounts.settings.saving") : t("common:save")}
             </button>
           </>
         }
       >
         <div className="email-instellingen-indeling" inert={vraagOpen}>
-          <nav aria-label="Accounts">
+          <nav aria-label={t("accounts.settings.accountList")}>
             {accounts.map((a) => (
               <button key={a.id} className={a.id === gekozen ? "is-gekozen" : ""} aria-current={a.id === gekozen} onClick={() => setGekozen(a.id)}>
                 <UserRound size={15} />
                 <span>
                   {a.naam}
-                  <small>{a.email}</small>
+                  <small dir="ltr">{a.email}</small>
                 </span>
               </button>
             ))}
             <button className="email-account-nieuw" onClick={nieuwAccount}>
-              <Plus size={15} /> Account toevoegen
+              <Plus size={15} /> {t("accounts.settings.addAccount")}
             </button>
           </nav>
           <div className="email-instellingen-paneel">
             <div className="email-tabs" role="tablist">
-              {TABS.map((t) => (
-                <button key={t.id} role="tab" aria-selected={tab === t.id} onClick={() => setTab(t.id)}>
-                  {t.naam}
+              {TABS.map((tb) => (
+                <button key={tb.id} role="tab" aria-selected={tab === tb.id} onClick={() => setTab(tb.id)}>
+                  {t(`accounts.settings.tabs.${tb.sleutel}`)}
                 </button>
               ))}
             </div>
             {tab === "identiteit" && (
               <div className="email-formulier" role="tabpanel">
                 <label>
-                  Accountnaam
+                  {t("accounts.settings.identity.accountName")}
                   <input value={concept.naam} onChange={(e) => zet({ naam: e.target.value })} />
-                  <small>Alleen voor jezelf, bijvoorbeeld "Werk" of "Privé".</small>
+                  <small>{t("accounts.settings.identity.accountNameHint")}</small>
                 </label>
                 <label>
-                  Je naam
+                  {t("accounts.settings.identity.yourName")}
                   <input value={concept.volledigeNaam} onChange={(e) => zet({ volledigeNaam: e.target.value })} />
                 </label>
                 <label>
-                  E-mailadres
-                  <input value={concept.email} onChange={(e) => zet({ email: e.target.value.trim() })} spellCheck={false} />
+                  {t("accounts.settings.identity.email")}
+                  <input value={concept.email} onChange={(e) => zet({ email: e.target.value.trim() })} spellCheck={false} dir="ltr" />
                 </label>
                 <label>
-                  Antwoordadres (Reply-To)
-                  <input value={concept.antwoordAan ?? ""} onChange={(e) => zet({ antwoordAan: e.target.value.trim() || undefined })} placeholder="Leeg = je e-mailadres" spellCheck={false} />
+                  {t("accounts.settings.identity.replyTo")}
+                  <input
+                    value={concept.antwoordAan ?? ""}
+                    onChange={(e) => zet({ antwoordAan: e.target.value.trim() || undefined })}
+                    placeholder={t("accounts.settings.identity.replyToPlaceholder")}
+                    spellCheck={false}
+                    dir="ltr"
+                  />
                 </label>
                 <label>
-                  Handtekening
+                  {t("accounts.settings.identity.signature")}
                   <textarea rows={4} value={concept.handtekening ?? ""} onChange={(e) => zet({ handtekening: e.target.value })} />
-                  <small>Wordt onder nieuwe berichten en antwoorden gezet, na "-- ".</small>
+                  <small>{t("accounts.settings.identity.signatureHint")}</small>
                 </label>
               </div>
             )}
@@ -255,37 +265,54 @@ export function AccountInstellingen({
                     <div className="email-oauthaccount">
                       <ShieldCheck size={18} />
                       <span>
-                        Aangemeld als <strong>{origineel.oauth.aangemeldAls}</strong> bij {PROVIDERNAAM[origineel.oauth.provider]}
-                        <small>Er is geen wachtwoord opgeslagen; de toegang loopt via een token in de sleutelhanger.</small>
+                        <span>
+                          <Trans
+                            t={t}
+                            i18nKey="accounts.settings.oauthAccount.signedInAs"
+                            values={{ account: origineel.oauth.aangemeldAls, provider: PROVIDERNAAM[origineel.oauth.provider] }}
+                            components={{ strong: <strong /> }}
+                          />
+                        </span>
+                        <small>{t("accounts.settings.oauthAccount.noPasswordStored")}</small>
                       </span>
                       <button className="email-knop" onClick={() => void opnieuwAanmelden()}>
-                        Opnieuw aanmelden
+                        {t("accounts.settings.oauthAccount.signInAgain")}
                       </button>
                     </div>
                   )
                 ) : (
                 <label>
                   <span>
-                    <KeyRound size={13} /> Wachtwoord wijzigen
+                    <KeyRound size={13} /> {t("accounts.settings.password.change")}
                   </span>
-                  <input type="password" value={wachtwoord} onChange={(e) => setWachtwoord(e.target.value)} placeholder={origineel.wachtwoordOpgeslagen ? "Opgeslagen · leeg laten om te behouden" : "Nog geen wachtwoord opgeslagen"} autoComplete="new-password" />
+                  <input
+                    type="password"
+                    value={wachtwoord}
+                    onChange={(e) => setWachtwoord(e.target.value)}
+                    placeholder={origineel.wachtwoordOpgeslagen ? t("accounts.settings.password.storedPlaceholder") : t("accounts.settings.password.noneStoredPlaceholder")}
+                    autoComplete="new-password"
+                  />
                 </label>
                 )}
                 <div>
                   <button className="email-knop" disabled={!!bezig} onClick={() => void test()}>
-                    {bezig === "testen" ? "Testen…" : uitkomst ? "Opnieuw testen" : "Verbinding testen"}
+                    {bezig === "testen" ? t("accounts.test.testing") : uitkomst ? t("accounts.test.retest") : t("accounts.test.testConnection")}
                   </button>
                 </div>
               </div>
             )}
             {tab === "mappen" && (
               <div className="email-formulier" role="tabpanel">
-                <p className="email-hint">Kies waar Email Studio verzonden berichten, concepten, verwijderde en gearchiveerde berichten bewaart.</p>
-                {ROLLEN.map(({ rol, naam }) => (
+                <p className="email-hint">{t("accounts.settings.folders.hint")}</p>
+                {ROLLEN.map(({ rol, sleutel }) => {
+                  const automatisch = mappen.find((m) => m.speciaal === rol);
+                  return (
                   <label key={rol}>
-                    {naam}
+                    {t(`accounts.settings.folders.roles.${sleutel}`)}
                     <select value={concept.mappen?.[rol] ?? ""} onChange={(e) => zet({ mappen: { ...concept.mappen, [rol]: e.target.value || undefined } })}>
-                      <option value="">Automatisch{mappen.find((m) => m.speciaal === rol) ? ` (${mappen.find((m) => m.speciaal === rol)!.naam})` : ""}</option>
+                      <option value="">
+                        {automatisch ? t("accounts.settings.folders.automaticWithFolder", { folder: automatisch.naam }) : t("accounts.settings.folders.automatic")}
+                      </option>
                       {mappen
                         .filter((m) => m.selecteerbaar)
                         .map((m) => (
@@ -295,18 +322,19 @@ export function AccountInstellingen({
                         ))}
                     </select>
                   </label>
-                ))}
+                  );
+                })}
               </div>
             )}
             {tab === "ophalen" && (
               <div className="email-formulier" role="tabpanel">
                 <label>
-                  Nieuwe berichten controleren
+                  {t("accounts.settings.fetching.checkForNew")}
                   <select value={concept.controleerElke} onChange={(e) => zet({ controleerElke: Number(e.target.value) })}>
-                    <option value={0}>Alleen handmatig</option>
+                    <option value={0}>{t("accounts.settings.fetching.manualOnly")}</option>
                     {[1, 5, 10, 15, 30, 60].map((n) => (
                       <option key={n} value={n}>
-                        Elke {n} {n === 1 ? "minuut" : "minuten"}
+                        {t("accounts.settings.fetching.everyMinutes", { count: n })}
                       </option>
                     ))}
                   </select>
@@ -314,20 +342,20 @@ export function AccountInstellingen({
                 <label className="email-vinkje">
                   <input type="checkbox" checked={concept.externeInhoud} onChange={(e) => zet({ externeInhoud: e.target.checked })} />
                   <span>
-                    Externe afbeeldingen en inhoud altijd tonen
-                    <small>Uit aanbevolen: externe afbeeldingen verraden afzenders wanneer en waar je een bericht opent.</small>
+                    {t("accounts.settings.fetching.externalContent")}
+                    <small>{t("accounts.settings.fetching.externalContentHint")}</small>
                   </span>
                 </label>
                 {afzenders.length > 0 && (
                   <div className="email-afzenders">
-                    <span>Afzenders waarvan externe inhoud altijd wordt getoond</span>
+                    <span>{t("accounts.settings.fetching.trustedSenders")}</span>
                     <ul>
                       {afzenders.map((a) => (
                         <li key={a}>
                           {a}
                           <button
                             className="email-iconknop"
-                            aria-label={`${a} vergeten`}
+                            aria-label={t("accounts.settings.fetching.forgetSender", { sender: a })}
                             onClick={() => {
                               vergeetExterneAfzender(a);
                               setAfzenders(vertrouwdeAfzenders());
@@ -345,8 +373,7 @@ export function AccountInstellingen({
             {tab === "geavanceerd" && (
               <div className="email-formulier" role="tabpanel">
                 <p className="email-hint">
-                  Aanmelden met Microsoft of Google gebruikt OAuth2. Deze instellingen gelden voor alle accounts. Een eigen client-ID is alleen nodig als de app
-                  er geen meebrengt; zie <code>{OAUTH_DOCUMENTATIE}</code>.
+                  <Trans t={t} i18nKey="accounts.settings.advanced.oauthIntro" values={{ doc: OAUTH_DOCUMENTATIE }} components={{ code: <code /> }} />
                 </p>
                 <label className="email-vinkje">
                   <input
@@ -358,8 +385,8 @@ export function AccountInstellingen({
                     }}
                   />
                   <span>
-                    Bij een nieuw account ook de Thunderbird-database raadplegen
-                    <small>De domeinnaam gaat dan naar Mozilla. Standaard uit.</small>
+                    {t("accounts.settings.advanced.ispdb")}
+                    <small>{t("accounts.settings.advanced.ispdbHint")}</small>
                   </span>
                 </label>
                 {(["microsoft", "google"] as const).map((provider) => (
@@ -368,22 +395,23 @@ export function AccountInstellingen({
                     <p className={oauth.status?.[provider].beschikbaar ? "email-okregel" : "email-hint"}>
                       {oauth.status
                         ? oauth.status[provider].beschikbaar
-                          ? "Beschikbaar."
-                          : (oauth.status[provider].melding ?? "Niet beschikbaar.")
-                        : "Status laden…"}
+                          ? t("accounts.settings.advanced.available")
+                          : (backendTekst(oauth.status[provider]) || t("accounts.settings.advanced.unavailable"))
+                        : t("accounts.settings.advanced.loadingStatus")}
                     </p>
                     <label>
-                      Client-ID
+                      {t("accounts.settings.advanced.clientId")}
                       <input
                         value={clients[provider].id}
                         disabled={!kanOAuthClientBewaren(backend)}
                         spellCheck={false}
+                        dir="ltr"
                         onChange={(e) => setClients({ ...clients, [provider]: { ...clients[provider], id: e.target.value } })}
                       />
                     </label>
                     {provider === "google" && (
                       <label>
-                        Client-secret (optioneel)
+                        {t("accounts.settings.advanced.clientSecret")}
                         <input
                           type="password"
                           value={clients.google.geheim}
@@ -395,17 +423,17 @@ export function AccountInstellingen({
                     )}
                     <div>
                       <button className="email-knop" disabled={!kanOAuthClientBewaren(backend) || !clients[provider].id.trim()} onClick={() => void bewaarClient(provider)}>
-                        Client-ID opslaan
+                        {t("accounts.settings.advanced.saveClientId")}
                       </button>
                     </div>
                   </fieldset>
                 ))}
-                {!kanOAuthClientBewaren(backend) && <p className="email-hint">Een eigen client-ID instellen kan alleen in de desktopapp.</p>}
+                {!kanOAuthClientBewaren(backend) && <p className="email-hint">{t("accounts.settings.advanced.desktopOnly")}</p>}
               </div>
             )}
             <div className="email-gevarenzone">
               <button className="email-knop is-gevaar" onClick={() => void verwijder()}>
-                <Trash2 size={14} /> Account verwijderen
+                <Trash2 size={14} /> {t("accounts.settings.deleteAccount.button")}
               </button>
             </div>
           </div>

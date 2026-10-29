@@ -3,6 +3,7 @@
  * regels worden leeggemaakt, zodat regelnummers gelijk blijven. De runtime
  * gedraagt zich als 32-bits VBA7 op Windows: VBA7 en Win32 zijn waar, Win64 en Mac onwaar.
  */
+import i18next from "i18next";
 import type { Expr } from "./ast.ts";
 import { VbaParseerFout } from "./fouten.ts";
 import { NEDERLANDS } from "./land.ts";
@@ -42,7 +43,7 @@ function evalueer(e: Expr, c: Map<string, VbaWaarde>): VbaWaarde {
       return logisch(e.op, a, b, NEDERLANDS);
     }
   }
-  throw new Error("Ongeldige expressie in #If of #Const.");
+  throw new Error(i18next.t("vba:parse.invalidDirectiveExpression"));
 }
 
 /** `parseer` is parseerExpressie (doorgegeven om een importkringloop te vermijden). */
@@ -57,7 +58,7 @@ export function voorbewerk(bron: string, module: string, parseer: (t: string) =>
       const w = evalueer(parseer(tekst), constanten);
       return w === NULL ? false : naarBool(w);
     } catch (e) {
-      throw new VbaParseerFout(`Ongeldige voorwaarde in #If: ${(e as Error).message}`, { module, regel, kolom: 1 }, "voorwaardelijke compilatie");
+      throw new VbaParseerFout(i18next.t("vba:parse.invalidIfCondition", { message: (e as Error).message }), { module, regel, kolom: 1 }, "voorwaardelijke compilatie");
     }
   };
   for (let i = 0; i < regels.length; i += 2) {
@@ -71,22 +72,22 @@ export function voorbewerk(bron: string, module: string, parseer: (t: string) =>
       stapel.push({ actief: w, genomen: w, ouder });
     } else if ((m = /^#elseif\s+(.*?)\s+then$/i.exec(zonderCommentaar))) {
       const top = stapel[stapel.length - 1];
-      if (!top) throw new VbaParseerFout("#ElseIf zonder #If.", { module, regel, kolom: 1 }, "voorwaardelijke compilatie");
+      if (!top) throw new VbaParseerFout(i18next.t("vba:parse.elseIfWithoutIf"), { module, regel, kolom: 1 }, "voorwaardelijke compilatie");
       const w = top.ouder && !top.genomen && waar(m[1], regel);
       top.actief = w;
       top.genomen ||= w;
     } else if (/^#else$/i.test(zonderCommentaar)) {
       const top = stapel[stapel.length - 1];
-      if (!top) throw new VbaParseerFout("#Else zonder #If.", { module, regel, kolom: 1 }, "voorwaardelijke compilatie");
+      if (!top) throw new VbaParseerFout(i18next.t("vba:parse.elseWithoutIf"), { module, regel, kolom: 1 }, "voorwaardelijke compilatie");
       top.actief = top.ouder && !top.genomen;
       top.genomen = true;
     } else if (/^#end\s*if$/i.test(zonderCommentaar)) {
-      if (!stapel.pop()) throw new VbaParseerFout("#End If zonder #If.", { module, regel, kolom: 1 }, "voorwaardelijke compilatie");
+      if (!stapel.pop()) throw new VbaParseerFout(i18next.t("vba:parse.endIfWithoutIf"), { module, regel, kolom: 1 }, "voorwaardelijke compilatie");
     } else if ((m = /^#const\s+([A-Za-z_]\w*)\s*=\s*(.*)$/i.exec(zonderCommentaar))) {
       if (actief()) constanten.set(m[1].toLowerCase(), evalueer(parseer(m[2]), constanten));
     } else if (actief()) continue;
     regels[i] = "";
   }
-  if (stapel.length) throw new VbaParseerFout("#End If ontbreekt.", { module, regel: regels.length / 2, kolom: 1 }, "voorwaardelijke compilatie");
+  if (stapel.length) throw new VbaParseerFout(i18next.t("vba:parse.endIfMissing"), { module, regel: regels.length / 2, kolom: 1 }, "voorwaardelijke compilatie");
   return regels.join("");
 }

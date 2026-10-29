@@ -6,6 +6,8 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { Minus, Plus, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import i18next from "../../i18n/config";
 import type { DocxEditorRef } from "@betteroffice/docx-react";
 import type { Document, Style } from "@betteroffice/docx/types/document";
 import { markering, type Niveau, type NummerNotatie } from "../lijst/nummering";
@@ -38,7 +40,7 @@ function stukken(inhoud: unknown, uit: Stuk[], opmaak: Omit<Stuk, "tekst"> = {})
       const f = (k.formatting ?? {}) as { bold?: boolean; italic?: boolean; underline?: { style?: string }; hidden?: boolean };
       if (f.hidden) continue;
       stukken(k.content, uit, { vet: f.bold ?? opmaak.vet, cursief: f.italic ?? opmaak.cursief, onder: f.underline ? f.underline.style !== "none" : opmaak.onder });
-    } else if (k.type === "drawing" || k.type === "shape") uit.push({ tekst: "[afbeelding]", cursief: true });
+    } else if (k.type === "drawing" || k.type === "shape") uit.push({ tekst: i18next.t("writer:info.readMode.image"), cursief: true });
     else if (k.content) stukken(k.content, uit, opmaak);
   }
 }
@@ -206,7 +208,10 @@ export function Leesmodus({ api, sluit }: { api: () => DocxEditorRef | null; slu
   const [versie, setVersie] = useState(0);
   const sluitKnop = useRef<HTMLButtonElement>(null);
   const vlak = useRef<HTMLDivElement>(null);
-  const blokken = useMemo(() => leesBlokken(api()?.getDocument()), [api, versie]);
+  const { t, i18n } = useTranslation("writer");
+  // De taal hoort bij de afhankelijkheden: afbeeldingen staan er als ‘[afbeelding]’.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const blokken = useMemo(() => leesBlokken(api()?.getDocument()), [api, versie, i18n.language]);
   const titel = api()?.getDocument()?.package.properties?.title;
 
   useEffect(() => {
@@ -244,29 +249,29 @@ export function Leesmodus({ api, sluit }: { api: () => DocxEditorRef | null; slu
   }, []);
 
   return createPortal(
-    <div className="tekst-leesmodus" data-thema={voorkeur.thema} role="dialog" aria-modal="true" aria-label="Leesmodus">
+    <div className="tekst-leesmodus" data-thema={voorkeur.thema} role="dialog" aria-modal="true" aria-label={t("info.views.readMode")}>
       <header className="tekst-leesmodus-balk">
-        <span>Leesmodus{titel ? ` · ${titel}` : ""}</span>
-        <div role="group" aria-label="Weergave">
-          <button type="button" aria-label="Kleinere tekst" title="Kleinere tekst" onClick={() => setVoorkeur((v) => ({ ...v, grootte: Math.max(14, v.grootte - 1) }))}>
+        <span>{titel ? t("info.readMode.titleWithDocument", { title: titel }) : t("info.views.readMode")}</span>
+        <div role="group" aria-label={t("info.readMode.view")}>
+          <button type="button" aria-label={t("info.readMode.smaller")} title={t("info.readMode.smaller")} onClick={() => setVoorkeur((v) => ({ ...v, grootte: Math.max(14, v.grootte - 1) }))}>
             <Minus size={15} />
           </button>
-          <button type="button" aria-label="Grotere tekst" title="Grotere tekst" onClick={() => setVoorkeur((v) => ({ ...v, grootte: Math.min(30, v.grootte + 1) }))}>
+          <button type="button" aria-label={t("info.readMode.larger")} title={t("info.readMode.larger")} onClick={() => setVoorkeur((v) => ({ ...v, grootte: Math.min(30, v.grootte + 1) }))}>
             <Plus size={15} />
           </button>
-          {(["licht", "sepia", "donker"] as const).map((t) => (
-            <button key={t} type="button" aria-pressed={voorkeur.thema === t} onClick={() => setVoorkeur((v) => ({ ...v, thema: t }))}>
-              {t[0].toUpperCase() + t.slice(1)}
+          {(["licht", "sepia", "donker"] as const).map((thema) => (
+            <button key={thema} type="button" aria-pressed={voorkeur.thema === thema} onClick={() => setVoorkeur((v) => ({ ...v, thema }))}>
+              {t(`info.readMode.themes.${thema}`)}
             </button>
           ))}
-          <button ref={sluitKnop} type="button" className="tekst-leesmodus-sluit" title="Terug naar de afdrukweergave · Esc" onClick={sluit}>
-            <X size={15} /> Sluiten
+          <button ref={sluitKnop} type="button" className="tekst-leesmodus-sluit" title={t("info.readMode.backTip")} onClick={sluit}>
+            <X size={15} /> {t("common:close")}
           </button>
         </div>
       </header>
       <div ref={vlak} className="tekst-leesmodus-vlak" tabIndex={-1}>
         <article style={{ fontSize: `${voorkeur.grootte}px` }}>
-          {blokken.length ? <Blokken blokken={blokken} /> : <p>Dit document heeft geen tekst.</p>}
+          {blokken.length ? <Blokken blokken={blokken} /> : <p>{t("info.readMode.empty")}</p>}
         </article>
       </div>
     </div>,

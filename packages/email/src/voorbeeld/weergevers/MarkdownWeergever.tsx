@@ -7,6 +7,7 @@ import { useMemo, useState } from "react";
 import Markdown, { defaultUrlTransform } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Eye, FileCode, ImageOff } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { LIMIETEN, type WeergeverProps } from "../contract";
 import { decodeerTekst } from "../codering";
 import { grootteTekst } from "../herkenning";
@@ -28,6 +29,7 @@ export function MarkdownWeergave({
   /** Gebruiker klikte op een (veilige) link. */
   opLink?: (url: string) => void;
 }) {
+  const { t } = useTranslation("email");
   return (
     <Markdown
       remarkPlugins={[remarkGfm]}
@@ -52,7 +54,7 @@ export function MarkdownWeergave({
               {children}
             </a>
           ) : (
-            <span className="vb-md-link" title={href ? `Link niet geopend: ${href}` : undefined}>
+            <span className="vb-md-link" title={href ? t("preview.markdown.linkNotOpened", { url: href }) : undefined}>
               {children}
             </span>
           ),
@@ -63,8 +65,10 @@ export function MarkdownWeergave({
             return <img src={bron} alt={alt ?? ""} referrerPolicy="no-referrer" loading="lazy" />;
           return (
             <span className="vb-md-geblokkeerd" title={bron || undefined}>
-              <ImageOff size={14} aria-hidden /> {alt || "Afbeelding"}{" "}
-              {/^https?:/i.test(bron) ? "(externe afbeelding geblokkeerd)" : "(niet beschikbaar)"}
+              <ImageOff size={14} aria-hidden />{" "}
+              {t(/^https?:/i.test(bron) ? "preview.markdown.externalBlocked" : "preview.markdown.unavailable", {
+                alt: alt || t("preview.markdown.imageFallback"),
+              })}
             </span>
           );
         },
@@ -81,6 +85,7 @@ export function heeftExterneAfbeeldingen(tekst: string): boolean {
 }
 
 export function MarkdownWeergever({ bron, acties }: WeergeverProps) {
+  const { t } = useTranslation("email");
   const geladen = useBytes(bron);
   const [modus, zetModus] = useState<"weergave" | "bron">("weergave");
   const [extern, zetExtern] = useState(false);
@@ -90,37 +95,40 @@ export function MarkdownWeergever({ bron, acties }: WeergeverProps) {
   const externAanwezig = useMemo(() => (gedecodeerd ? heeftExterneAfbeeldingen(gedecodeerd.tekst) : false), [gedecodeerd]);
 
   if (geladen.stand === "laden") return <Laden />;
-  if (geladen.stand === "fout") return <Fout melding={`Het bestand kon niet worden geladen: ${geladen.melding}`} />;
+  if (geladen.stand === "fout") return <Fout melding={t("preview.markdown.loadFailed", { message: geladen.melding })} />;
   const tekst = gedecodeerd!.tekst;
 
   return (
     <div className="vb-markdown">
       <div className="vb-werkbalk" role="toolbar" aria-label="Markdown">
-        <div className="vb-segment" role="group" aria-label="Weergave">
+        <div className="vb-segment" role="group" aria-label={t("preview.markdown.view")}>
           <button type="button" aria-pressed={modus === "weergave"} onClick={() => zetModus("weergave")}>
-            <Eye size={15} aria-hidden /> Weergave
+            <Eye size={15} aria-hidden /> {t("preview.markdown.rendered")}
           </button>
           <button type="button" aria-pressed={modus === "bron"} onClick={() => zetModus("bron")}>
-            <FileCode size={15} aria-hidden /> Bron
+            <FileCode size={15} aria-hidden /> {t("preview.markdown.source")}
           </button>
         </div>
         {modus === "weergave" && externAanwezig && (
           <label className="vb-schakel">
-            <input type="checkbox" checked={extern} onChange={(e) => zetExtern(e.target.checked)} /> Externe afbeeldingen tonen
+            <input type="checkbox" checked={extern} onChange={(e) => zetExtern(e.target.checked)} /> {t("preview.markdown.showExternalImages")}
           </label>
         )}
       </div>
       {gedecodeerd!.afgekapt && (
         <p className="vb-band" role="note">
-          Eerste {grootteTekst(LIMIETEN.markdownBytes)} getoond van {grootteTekst(geladen.waarde.length)}.
+          {t("preview.markdown.truncated", {
+            limit: grootteTekst(LIMIETEN.markdownBytes),
+            size: grootteTekst(geladen.waarde.length),
+          })}
         </p>
       )}
       {teBevestigen && (
-        <div className="vb-band vb-bevestig" role="alertdialog" aria-label="Link openen">
+        <div className="vb-band vb-bevestig" role="alertdialog" aria-label={t("preview.markdown.confirmLabel")}>
           <span>
-            Deze link openen buiten Office Studio?
+            {t("preview.markdown.confirmQuestion")}
             <br />
-            <code>{teBevestigen}</code>
+            <code dir="ltr">{teBevestigen}</code>
           </span>
           <span className="vb-bandknoppen">
             <button
@@ -133,22 +141,22 @@ export function MarkdownWeergever({ bron, acties }: WeergeverProps) {
                 void (acties.openLink ?? standaardOpenLink)(url);
               }}
             >
-              Openen
+              {t("common:open")}
             </button>
             <button type="button" className="vb-knop" onClick={() => zetTeBevestigen(null)}>
-              Annuleren
+              {t("common:cancel")}
             </button>
           </span>
         </div>
       )}
       {modus === "weergave" ? (
         <div className="vb-markdownvlak" tabIndex={0}>
-          <article className="vb-md-inhoud">
+          <article className="vb-md-inhoud" dir="auto">
             <MarkdownWeergave tekst={tekst} externeAfbeeldingen={extern} opLink={zetTeBevestigen} />
           </article>
         </div>
       ) : (
-        <div className="vb-tekstvlak" tabIndex={0}>
+        <div className="vb-tekstvlak" tabIndex={0} dir="ltr">
           <pre className="vb-regelnummers" aria-hidden>
             {regelnummers(tekst)}
           </pre>

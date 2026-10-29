@@ -3,6 +3,7 @@
  * waar het in de brontekst staat, zodat we alleen gewijzigde stukken vervangen
  * en de rest van het onderdeel byte-voor-byte behouden.
  */
+import i18next from "../i18n/config";
 import { GrafiekFout } from "./fouten.ts";
 
 export interface XmlElement {
@@ -64,11 +65,11 @@ export function ontcijfer(tekst: string) {
 /** Ontleedt een XML-document en geeft het wortelelement terug. */
 export function leesXml(bron: string): XmlElement {
   if (bron.length > MAX_LENGTE)
-    throw new GrafiekFout("Een XML-onderdeel is te groot om te verwerken.");
+    throw new GrafiekFout(i18next.t("charts:errors.xml.tooLarge"));
   let i = 0;
   let wortel: XmlElement | null = null;
   const stapel: XmlElement[] = [];
-  const fout = (bericht = "Het XML-onderdeel is beschadigd.") => {
+  const fout = (bericht: string = i18next.t("charts:errors.xml.damaged")) => {
     throw new GrafiekFout(bericht);
   };
   while (i < bron.length) {
@@ -110,7 +111,7 @@ export function leesXml(bron: string): XmlElement {
       continue;
     }
     if (bron.startsWith("<!", i))
-      fout("XML met een DOCTYPE wordt om veiligheidsredenen niet verwerkt.");
+      fout(i18next.t("charts:errors.xml.doctype"));
     if (bron[i + 1] === "/") {
       const e = bron.indexOf(">", i);
       if (e < 0) fout();
@@ -166,7 +167,7 @@ export function leesXml(bron: string): XmlElement {
     else wortel = element;
     if (!leeg) {
       stapel.push(element);
-      if (stapel.length > MAX_DIEPTE) fout("Het XML-onderdeel is te diep genest.");
+      if (stapel.length > MAX_DIEPTE) fout(i18next.t("charts:errors.xml.tooDeep"));
     }
     i = tagEind;
   }
@@ -255,7 +256,7 @@ export function vervang(bron: string, vervangingen: Vervanging[]) {
   let positie = 0;
   for (const v of geordend) {
     if (v.start < positie)
-      throw new GrafiekFout("Interne fout: overlappende XML-wijzigingen.");
+      throw new GrafiekFout(i18next.t("charts:errors.xml.overlappingChanges"));
     uit += bron.slice(positie, v.start) + v.tekst;
     positie = v.eind;
   }

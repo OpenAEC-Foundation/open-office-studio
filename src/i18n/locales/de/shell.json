@@ -1,0 +1,146 @@
+{
+  "header": {
+    "homeTitle": "Zu Start",
+    "homeLabel": "OpenAEC Office Studio · Start",
+    "version": "Version {{version}}",
+    "unsaved": "Nicht gespeicherte Änderungen",
+    "unchanged": "Unverändert",
+    "fileAndStart": "Datei und Start",
+    "openFileTitle": "Datei in einer neuen Registerkarte öffnen · Ctrl+O",
+    "openNotesBackupTitle": "Notizensicherung hinzufügen · Ctrl+O",
+    "openDatabaseTitle": "Datenbank öffnen · Ctrl+O",
+    "addBackup": "Sicherung hinzufügen",
+    "saveAs": "Speichern unter",
+    "saveAsTitle": "Speichern unter · F12 oder Ctrl+Shift+S (Ctrl+S speichert in der geöffneten Datei)",
+    "busy": "Wird ausgeführt…"
+  },
+  "message": {
+    "close": "Meldung schließen",
+    "markdownNote": "Markdown speichert Text und Struktur. Speichern Sie zusätzlich eine DOCX-Datei für Seitenlayout, Bilder und Überarbeitungen."
+  },
+  "loading": {
+    "editor": "Editor wird geladen…",
+    "notes": "Notizen werden geladen…",
+    "email": "Email Studio wird geladen…",
+    "document": "Dokument wird geladen…",
+    "fonts": "Schriftarten werden geladen…"
+  },
+  "errors": {
+    "editorFailed": "Der Editor konnte diese Datei nicht öffnen: {{error}}",
+    "openFailed": "Öffnen fehlgeschlagen: {{error}}",
+    "openFileFailed": "{{name}} konnte nicht geöffnet werden: {{error}}",
+    "saveFailed": "Speichern fehlgeschlagen: {{error}}",
+    "printFailed": "Drucken fehlgeschlagen: {{error}}",
+    "sendAsAttachmentFailed": "Senden als Anlage fehlgeschlagen: {{error}}",
+    "templateUnavailable": "Vorlage nicht verfügbar",
+    "exampleFailed": "Das Beispiel konnte nicht geöffnet werden.",
+    "fileSize": "Wählen Sie eine nicht leere Datei mit höchstens 100 MB.",
+    "unsupportedFormat": "{{name}}: Dieses Format wird nicht unterstützt.",
+    "emptyAttachment": "Die Anlage ist leer.",
+    "databaseModifiedFile": "Database Studio hat eine geänderte Arbeitskopie. Speichern oder schließen Sie diese zuerst und öffnen Sie die Datei dann erneut.",
+    "databaseModifiedAttachment": "Database Studio hat eine geänderte Arbeitskopie. Speichern oder schließen Sie diese zuerst und öffnen Sie die Anlage dann erneut.",
+    "spreadsheetNotReady": "Die Tabelle ist noch nicht bereit.",
+    "presentationNotReady": "Die Präsentation ist noch nicht bereit.",
+    "documentNotReady": "Das Dokument ist noch nicht bereit.",
+    "documentSaveFailed": "Das Dokument konnte nicht gespeichert werden."
+  },
+  "tabs": {
+    "untitled": "Unbenannt {{n}}",
+    "memoryWarning_one": "Es ist {{count}} Dokument geöffnet. Jedes geöffnete Dokument belegt Arbeitsspeicher; schließen Sie Dokumente, die Sie nicht mehr benötigen.",
+    "memoryWarning_other": "Es sind {{count}} Dokumente geöffnet. Jedes geöffnete Dokument belegt Arbeitsspeicher; schließen Sie Dokumente, die Sie nicht mehr benötigen."
+  },
+  "tabBar": {
+    "label": "Geöffnete Registerkarten",
+    "start": "Start",
+    "startTitle": "Start · neues oder vorhandenes Dokument, Notizen und Datenbank",
+    "tabTitleUnsaved": "{{name}} · nicht gespeicherte Änderungen",
+    "dragOutHint": "Nach außen ziehen für ein eigenes Fenster",
+    "unsavedA11y": ", nicht gespeicherte Änderungen",
+    "closeTab": "{{name}} schließen",
+    "closeTitle": "Schließen · Ctrl+W",
+    "allTabs": "Alle geöffneten Registerkarten",
+    "addTab": "Registerkarte hinzufügen",
+    "addTabTitle": "Neues oder vorhandenes Dokument, Notizen oder Datenbank öffnen",
+    "releaseOpensWindow": "Loslassen öffnet ein eigenes Fenster",
+    "closeOthers": "Andere schließen",
+    "closeToRight": "Rechts schließen"
+  },
+  "windowMenu": {
+    "button": "Geöffnete Dokumente",
+    "buttonTitle": "Geöffnete Dokumente · Ctrl+Tab oder Ctrl+F6 zum Wechseln",
+    "empty": "Keine geöffneten Dokumente.",
+    "thisWindow": "Dieses Fenster",
+    "mainWindow": "Hauptfenster",
+    "windowNumber": "Fenster {{number}}",
+    "unsavedTitle": "Nicht gespeicherte Änderungen",
+    "modified": "geändert",
+    "newWindow": "Neues Fenster"
+  },
+  "windows": {
+    "openInNewWindow": "In neuem Fenster öffnen",
+    "backToMainWindow": "Zurück zum Hauptfenster",
+    "databaseMovedHere": "Database Studio befindet sich jetzt in diesem Fenster. Öffnen Sie Ihre Datenbank hier erneut, wenn Sie weiterarbeiten möchten.",
+    "documentMoved": "Das Dokument wurde einschließlich nicht gespeicherter Änderungen verschoben. Der Verlauf von Rückgängig wird beim Verschieben nicht übernommen.",
+    "linkUnavailable": "Fensterverknüpfung nicht verfügbar: {{error}}",
+    "closeGuardUnavailable": "Schließschutz nicht verfügbar: {{error}}",
+    "databaseModified": "Database Studio kann eine geänderte Arbeitskopie nicht in ein anderes Fenster mitnehmen. Exportieren oder speichern Sie die Datenbank zuerst.",
+    "otherWindowFailed": "Das andere Fenster konnte die Registerkarte nicht öffnen.",
+    "mainWindowNoResponse": "Das Hauptfenster reagiert nicht. Die Registerkarte bleibt hier geöffnet.",
+    "newWindowTimeout": "Das neue Fenster hat das Dokument nicht rechtzeitig übernommen. Die Registerkarte bleibt hier geöffnet.",
+    "alreadyMainWindow": "Dies ist bereits das Hauptfenster.",
+    "popupBlocked": "Das neue Fenster konnte nicht geöffnet werden. Lassen Sie Pop-up-Fenster für diese Seite zu.",
+    "moveToWindow": "Verschieben nach {{window}}",
+    "newWindowFailed": "Es konnte kein neues Fenster geöffnet werden: {{error}}"
+  },
+  "dropZone": {
+    "release": "Zum Öffnen loslassen",
+    "explanation": "Dokumente, Tabellen und Präsentationen werden jeweils in einer eigenen Registerkarte geöffnet; MDB und ACCDB in Database Studio.",
+    "image": "{{name}} ist ein Bild. Durch Ziehen werden noch keine Bilder in ein Dokument eingefügt; verwenden Sie Einfügen › Bild.",
+    "unsupported": "{{name}} kann nicht geöffnet werden: .{{ext}} wird nicht unterstützt. Open Office Studio öffnet Dokumente, Tabellen, Präsentationen und Access-Datenbanken."
+  },
+  "ribbon": {
+    "label": "Menüband",
+    "file": "Datei",
+    "hide": "Menüband ausblenden",
+    "show": "Menüband anzeigen",
+    "hideHint": "Mehr Platz für Ihr Dokument · Ctrl+F1",
+    "scrollLeft": "Menüband nach links verschieben",
+    "scrollRight": "Menüband nach rechts verschieben",
+    "commandFailed": "Der Befehl konnte nicht ausgeführt werden.",
+    "nothingToUndo": "Es gibt nichts rückgängig zu machen.",
+    "nothingToRedo": "Es gibt nichts wiederherzustellen.",
+    "presentationOpening": "Die Präsentation wird noch geöffnet.",
+    "selectShapeFirst": "Wählen Sie zuerst eine Form aus."
+  },
+  "theme": {
+    "light": "Helles Design",
+    "forge": "Design Forge"
+  },
+  "host": {
+    "conflict": "Jemand anderes hat dieses Dokument inzwischen gespeichert. Ihre Version wurde als Kopie gespeichert: {{name}}.",
+    "readOnly": "{{name}} wurde schreibgeschützt geöffnet. Speichern Sie Ihre Änderungen mit „Speichern unter“.",
+    "openFailed": "Das Dokument aus dem Arbeitsbereich konnte nicht geöffnet werden: {{error}}"
+  },
+  "title": {
+    "document": "{{document}} — {{app}} ({{module}})",
+    "module": "{{app}} ({{module}})"
+  },
+  "titleBar": {
+    "quickAccess": "Schnellzugriff",
+    "saveTitle": "Speichern · Strg+S",
+    "settings": "Einstellungen",
+    "minimize": "Minimieren",
+    "maximize": "Maximieren",
+    "restore": "Verkleinern",
+    "close": "Fenster schließen"
+  },
+  "toasts": {
+    "region": "Meldungen",
+    "info": "Info",
+    "success": "Erledigt",
+    "warning": "Achtung",
+    "error": "Fehler",
+    "details": "Details",
+    "less": "Weniger"
+  }
+}

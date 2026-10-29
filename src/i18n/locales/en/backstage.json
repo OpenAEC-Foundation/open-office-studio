@@ -1,0 +1,474 @@
+{
+  "start": {
+    "backToWorkspace": "Back to workspace",
+    "workspace": "WORKSPACE",
+    "home": "Home",
+    "saveTitle": "Save · Ctrl+S",
+    "saveAs": "Save as",
+    "saveAsTitle": "Save as · F12 or Ctrl+Shift+S",
+    "print": "Print",
+    "printTitle": "Print preview and print · Ctrl+P",
+    "info": "Info",
+    "infoTitle": "Document properties, statistics and inspect document",
+    "sendAsAttachment": "Send as attachment",
+    "sendAsAttachmentTitle": "Attach the current document to a new email message",
+    "email": "Email",
+    "emailUnread_one": "Email, {{count}} unread",
+    "emailUnread_other": "Email, {{count}} unread",
+    "newFile": "NEW FILE",
+    "databaseTitle": "Database Studio · Access database as an editable working copy",
+    "databaseSubtitle": "Working copy · editing, queries, VBA",
+    "settingsTitle": "Settings · Ctrl+,",
+    "shortcutsTitle": "Keyboard shortcuts · F1",
+    "tagline": "Your local office",
+    "titleFile": "File",
+    "titleWorkspace": "Your workspace.",
+    "intro": "Write, calculate, present and capture ideas.",
+    "addNotesBackup": "Add notes backup",
+    "openDatabase": "Open database",
+    "openFile": "Open file",
+    "openShortcut": "Ctrl O",
+    "newFileTitle": "New file",
+    "newFileHint": "Choose your tool and start with a blank file",
+    "notesHeading": "A place for your ideas.",
+    "notesText": "Notebooks, sections and pages. Saved locally and automatically.",
+    "openNotes": "Open Notes",
+    "emailText": "Your own email via IMAP and SMTP. Attachments open straight in Text, Spreadsheet, Presentation or Database.",
+    "unread_one": "{{count}} unread",
+    "unread_other": "{{count}} unread",
+    "openEmail": "Open Email",
+    "examplesTitle": "Discover what you can make",
+    "examplesHint": "Sample files",
+    "existingTitle": "Existing file",
+    "browse": "Browse this computer",
+    "browseNotes": "Add an OpenAEC notes backup.",
+    "browseDatabase": "Open an MDB or ACCDB database or a SQLite working copy.",
+    "browseDocuments": "Open a document, spreadsheet or presentation.",
+    "formatNotes": "NOTES",
+    "filesStayLocal": "Your files stay on your computer.",
+    "aboutVersion": "About this version",
+    "aboutText": "DOCX, XLSX and PPTX work directly. With a conversion program set up, the desktop version can also convert ODF and older formats; formatting may differ. Database Studio turns an MDB or ACCDB file into an editable SQLite working copy with tables, queries, forms, reports and VBA; the original stays unchanged. The standalone app can be installed as Open Database Studio.",
+    "modules": {
+      "docx": {
+        "new": "Blank document",
+        "example": "Design memo",
+        "exampleText": "Text, styles and a table"
+      },
+      "xlsx": {
+        "new": "Blank spreadsheet",
+        "example": "Materials overview",
+        "exampleText": "Materials, formulas and totals"
+      },
+      "pptx": {
+        "new": "Blank presentation",
+        "example": "Design vision",
+        "exampleText": "Slides, shapes and notes"
+      }
+    }
+  },
+  "recent": {
+    "title": "Recent",
+    "hintDesktop": "Recently opened and saved files",
+    "hintBrowser": "This browser only remembers names; choose the file again",
+    "clear": "Clear list",
+    "clearTitle": "Clear list; pinned files stay",
+    "missing": "{{name}} can no longer be found in {{folder}}. Remove it from the list with ✕ or open it via Browse.",
+    "missingOriginalFolder": "{{name}} can no longer be found in its original folder. Remove it from the list with ✕ or open it via Browse.",
+    "notFound": "Not found",
+    "notFoundIn": "Not found · {{location}}",
+    "openFrom": "{{folder}} · open",
+    "chooseFile": "Choose file",
+    "nameOnly": "Only the name is known",
+    "pin": "Pin {{name}}",
+    "unpin": "Unpin {{name}}",
+    "pinTitle": "Pin to top",
+    "unpinTitle": "Unpin",
+    "remove": "Remove {{name}} from the list",
+    "removeTitle": "Remove from the list (the file itself is kept)",
+    "today": "Today {{time}}",
+    "yesterday": "Yesterday {{time}}",
+    "todayInline": "today {{time}}",
+    "yesterdayInline": "yesterday {{time}}"
+  },
+  "recovery": {
+    "title": "Recover documents",
+    "explanation": "Open Office Studio was not closed properly last time. A recovery copy was kept of these documents. Recovering opens a new, unsaved tab; the original file stays unchanged.",
+    "copyFrom": "{{module}} · recovery copy from {{date}}",
+    "restore": "Recover",
+    "saveAs": "Save as…",
+    "discard": "Discard",
+    "discardLabel": "Discard recovery copy of {{name}}",
+    "later": "Decide later",
+    "laterTitle": "The copies are kept until the next start",
+    "restoredFrom": "Recovered from the recovery copy of {{date}}. The original file has not been changed; save this document to keep it.",
+    "restoreFailed": "Recovering {{name}} failed: {{error}}",
+    "copyFailed": "Automatic recovery could not save a copy: {{error}}"
+  },
+  "leave": {
+    "title": "Unsaved changes",
+    "askSave": "Do you want to save the changes to <strong>{{name}}</strong> before closing it?",
+    "unsaved": "<strong>{{name}}</strong> contains changes that have not been saved yet. Save the file first if you want to keep them.",
+    "others_one": "After that, {{count}} other document with unsaved changes follows.",
+    "others_other": "After that, {{count}} other documents with unsaved changes follow.",
+    "dontSave": "Don’t save",
+    "discard": "Discard changes"
+  },
+  "saveAs": {
+    "title": "Save as",
+    "fileName": "File name",
+    "browserInfo": "In the browser the app creates Markdown, CSV, HTML, text and PDF itself, plus PNG for spreadsheets and presentations. Formats marked “desktop app only” need the desktop version with an office runtime.",
+    "runtimeSearching": "Looking for office runtime…",
+    "runtimeFound": "Office runtime: {{version}}",
+    "runtimeDetails": "({{source}}, {{profile}})",
+    "sourceEnvironment": "from OPENAEC_CONVERSIE_PROGRAMMA",
+    "sourceSetting": "chosen by you",
+    "sourceAutomatic": "detected automatically",
+    "profileSafe": "safe profile: macros off",
+    "profileOwn": "own profile",
+    "runtimeMissing": "No office runtime (LibreOffice) found. Formats that need the runtime are not available.",
+    "chooseConverter": "Choose conversion program",
+    "format": "Format",
+    "groups": {
+      "own": "Native format",
+      "openDocument": "OpenDocument",
+      "legacyOffice": "Older Office formats",
+      "templates": "Templates",
+      "macro": "Macro-enabled",
+      "webText": "Web and text",
+      "pdfImage": "PDF and image"
+    },
+    "routes": {
+      "inApp": "in the app",
+      "runtime": "via office runtime",
+      "print": "via Print"
+    },
+    "runtimeMissingShort": "runtime missing",
+    "desktopOnly": "desktop app only",
+    "separator": "Delimiter",
+    "separatorSemicolon": "Semicolon ; (Dutch)",
+    "separatorComma": "Comma ,",
+    "separatorTab": "Tab",
+    "separatorPipe": "Vertical bar |",
+    "encoding": "Encoding",
+    "encodingUtf8BomExcel": "UTF-8 with BOM (Excel)",
+    "encodingUtf8BomNotepad": "UTF-8 with BOM (Notepad, Excel)",
+    "csvInfo": "Only the selected sheet, with values instead of formulas. Text starting with =, +, - or @ gets an apostrophe, so that a spreadsheet program does not run it as a formula.",
+    "sheet": "Sheet",
+    "activeSheet": "{{name}} (active)",
+    "protect": "Protect with a password to open",
+    "password": "Password",
+    "repeatPassword": "Repeat password",
+    "encryptionInfo": "Encryption according to ECMA-376 (AES-256), can be opened in Word, Excel, PowerPoint and LibreOffice. The password is not stored; if you lose it, the file can no longer be opened.",
+    "noEncryptionInfo": "This is not write or sheet protection: without the tick the file is saved unencrypted.",
+    "passwordMissing": "Choose a password.",
+    "passwordMismatch": "The passwords do not match.",
+    "passwordTooLong": "At most {{max}} characters.",
+    "slide": "Slide",
+    "slideNumber": "Slide {{number}}",
+    "currentSlide": "Slide {{number}} (current)",
+    "pdfVariant": "PDF variant",
+    "pdfPlain": "Standard PDF",
+    "pdfA2b": "PDF/A-2b (archive)",
+    "slides": "Slides",
+    "pages": "Pages",
+    "rangePlaceholder": "all, or e.g. 1-3,5",
+    "bookmarks": "Headings as bookmarks",
+    "printRoute": "Without an office runtime, PDF goes via Print: in the print dialogue choose the printer <strong>Save as PDF</strong> (Windows: “Microsoft Print to PDF”). The layout follows what you see in the editor.",
+    "untitled": "Untitled",
+    "copyInfo": "This is a copy in another format. The document stays marked as changed until you save it as .{{ext}}.",
+    "print": "Print…",
+    "formats": {
+      "docx": {
+        "docx": {
+          "name": "Word document",
+          "keeps": "editable"
+        },
+        "odt": {
+          "name": "OpenDocument Text",
+          "keeps": "editable; formatting may differ"
+        },
+        "fodt": {
+          "name": "OpenDocument Text (flat XML)",
+          "keeps": "editable; formatting may differ"
+        },
+        "doc": {
+          "name": "Word 97–2003 document",
+          "keeps": "editable; formatting may differ"
+        },
+        "dotx": {
+          "name": "Word template",
+          "keeps": "editable; formatting may differ"
+        },
+        "dot": {
+          "name": "Word 97–2003 template",
+          "keeps": "editable; formatting may differ"
+        },
+        "ott": {
+          "name": "OpenDocument Text template",
+          "keeps": "editable; formatting may differ"
+        },
+        "docm": {
+          "name": "Word macro-enabled document",
+          "keeps": "only for an opened macro file: VBA project kept unchanged, macros not run"
+        },
+        "rtf": {
+          "name": "Rich Text Format",
+          "keeps": "editable; formatting may differ"
+        },
+        "txt": {
+          "name": "Plain text (UTF-8)",
+          "keeps": "text only; formatting, tables and images are lost"
+        },
+        "html": {
+          "name": "Web page (HTML)",
+          "keeps": "formatting may differ; images embedded"
+        },
+        "xhtml": {
+          "name": "XHTML web page",
+          "keeps": "formatting may differ"
+        },
+        "epub": {
+          "name": "EPUB e-book",
+          "keeps": "read-only; page layout is lost"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "text and structure; page layout, images and revisions are lost"
+        },
+        "pdf": {
+          "name": "PDF document",
+          "keeps": "looks as in the print preview; text searchable"
+        },
+        "png": {
+          "name": "PNG image (first page)",
+          "keeps": "view only; first page only"
+        }
+      },
+      "xlsx": {
+        "xlsx": {
+          "name": "Excel workbook",
+          "keeps": "editable"
+        },
+        "ods": {
+          "name": "OpenDocument Spreadsheet",
+          "keeps": "editable; formatting may differ"
+        },
+        "fods": {
+          "name": "OpenDocument Spreadsheet (flat XML)",
+          "keeps": "editable; formatting may differ"
+        },
+        "xls": {
+          "name": "Excel 97–2003 workbook",
+          "keeps": "editable; formatting may differ"
+        },
+        "xltx": {
+          "name": "Excel template",
+          "keeps": "editable; formatting may differ"
+        },
+        "xlt": {
+          "name": "Excel 97–2003 template",
+          "keeps": "editable; formatting may differ"
+        },
+        "ots": {
+          "name": "OpenDocument Spreadsheet template",
+          "keeps": "editable; formatting may differ"
+        },
+        "xlsm": {
+          "name": "Excel macro-enabled workbook",
+          "keeps": "only for an opened macro file: VBA project kept unchanged, macros not run"
+        },
+        "csv": {
+          "name": "CSV (comma-separated values)",
+          "keeps": "one sheet only; values without formulas and formatting"
+        },
+        "tsv": {
+          "name": "Tab-separated text (TSV)",
+          "keeps": "one sheet only; values without formulas and formatting"
+        },
+        "html": {
+          "name": "Web page (HTML)",
+          "keeps": "view only; formulas are lost"
+        },
+        "dif": {
+          "name": "Data Interchange Format (DIF)",
+          "keeps": "first sheet only; values without formulas and formatting"
+        },
+        "slk": {
+          "name": "SYLK",
+          "keeps": "first sheet only; formulas kept, most formatting is not"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "view of values only; formulas and formatting are lost"
+        },
+        "pdf": {
+          "name": "PDF document",
+          "keeps": "looks as in the print preview; text searchable"
+        },
+        "png": {
+          "name": "PNG image (sheet)",
+          "keeps": "view only; used range of one sheet"
+        }
+      },
+      "pptx": {
+        "pptx": {
+          "name": "PowerPoint presentation",
+          "keeps": "editable"
+        },
+        "ppsx": {
+          "name": "PowerPoint show",
+          "keeps": "editable; opens as a slide show; formatting may differ"
+        },
+        "odp": {
+          "name": "OpenDocument Presentation",
+          "keeps": "editable; formatting may differ"
+        },
+        "fodp": {
+          "name": "OpenDocument Presentation (flat XML)",
+          "keeps": "editable; formatting may differ"
+        },
+        "ppt": {
+          "name": "PowerPoint 97–2003 presentation",
+          "keeps": "editable; formatting may differ"
+        },
+        "pps": {
+          "name": "PowerPoint 97–2003 show",
+          "keeps": "editable; formatting may differ"
+        },
+        "potx": {
+          "name": "PowerPoint template",
+          "keeps": "editable; formatting may differ"
+        },
+        "pot": {
+          "name": "PowerPoint 97–2003 template",
+          "keeps": "editable; formatting may differ"
+        },
+        "otp": {
+          "name": "OpenDocument Presentation template",
+          "keeps": "editable; formatting may differ"
+        },
+        "pptm": {
+          "name": "PowerPoint macro-enabled presentation",
+          "keeps": "only for an opened macro file: VBA project kept unchanged, macros not run"
+        },
+        "html": {
+          "name": "Web page (HTML)",
+          "keeps": "text per slide only; layout and images are lost"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "text per slide only; layout and images are lost"
+        },
+        "pdf": {
+          "name": "PDF document",
+          "keeps": "looks as in the print preview; text searchable"
+        },
+        "png": {
+          "name": "PNG image (current slide)",
+          "keeps": "view only; one slide"
+        }
+      }
+    }
+  },
+  "saveResult": {
+    "saved": "Saved: {{path}}",
+    "exported": "Exported: {{path}}. Also save your editable file to keep the changes.",
+    "cancelled": "Saving cancelled.",
+    "chooseLocation": "Choose a name and location to save to.",
+    "download": "Download requested. Check the file in your downloads.",
+    "tooLarge": "The file is empty or larger than 100 MB.",
+    "needsDesktop": "This format requires the desktop version with an office runtime (LibreOffice)."
+  },
+  "printPreview": {
+    "title": "Print preview – {{title}}",
+    "notReady": "You can print once the document has fully opened.",
+    "preparingPages": "Preparing pages…",
+    "preparingPrint": "Preparing print…",
+    "preparingPrintProgress": "Preparing print… {{done}} of {{total}}",
+    "printHint": "In the print dialogue, choose the printer, double-sided printing and, if you like, ‘Save as PDF’.",
+    "makingPdf": "Creating PDF…",
+    "makingPdfProgress": "Creating PDF… {{done}} of {{total}}",
+    "pdfSaved": "PDF saved: {{path}}",
+    "pdfDownloading": "PDF {{name}} is being downloaded.",
+    "layoutSaved": "The page setup has been stored in the workbook. Save the document to keep it.",
+    "saveAsPdf": "Save as PDF",
+    "print": "Print",
+    "keyboardHelp": "Page Up and Page Down move through the pages; Ctrl+P prints.",
+    "settings": "Print settings",
+    "pages": "Pages",
+    "rangePlaceholder": "all, or e.g. 1-3, 5",
+    "copies": "Copies",
+    "collate": "Collate (1, 2, 3 – 1, 2, 3)",
+    "systemDialogHint": "You choose the printer, double-sided printing and colour afterwards in the system print dialogue.",
+    "printAs": "Print as",
+    "slides": "Slides",
+    "handouts": "Handouts",
+    "notesPages": "Notes pages",
+    "slidesPerPage": "Slides per page",
+    "withLines": "{{number}} (with lines)",
+    "paper": "Paper",
+    "slideSize": "Slide size",
+    "frameSlides": "Frame slides",
+    "report": "Report",
+    "saveLayout": "Store page setup in workbook",
+    "pdf": "PDF",
+    "imageQuality": "Image quality",
+    "qualitySmall": "Small file (150 dpi)",
+    "qualityStandard": "Standard (200 dpi)",
+    "qualityHigh": "High, lossless (300 dpi)",
+    "pdfHint": "Text stays selectable and searchable; the PDF follows this preview exactly.",
+    "toolbar": "Browse and zoom",
+    "previousPage": "Previous page",
+    "nextPage": "Next page",
+    "pageOf": "Page <input/> of {{total}}",
+    "pageNumber": "Page number",
+    "zoomOut": "Zoom out",
+    "zoom": "Zoom",
+    "zoomIn": "Zoom in",
+    "wholePage": "Whole page",
+    "pageWidth": "Page width",
+    "preview": "Page preview",
+    "pageImage": "Preview of page {{number}}",
+    "drawingPage": "Drawing page…",
+    "orientation": "Orientation",
+    "portrait": "Portrait",
+    "landscape": "Landscape",
+    "activeSheet": "Active sheet",
+    "wholeWorkbook": "Entire workbook",
+    "selection": "Selection ({{range}})",
+    "selectionNone": "Selection (nothing selected)",
+    "ignorePrintArea": "Ignore print area",
+    "pageSetup": "Page setup",
+    "sheet": "Sheet",
+    "scale": "Scaling",
+    "percentage": "Percentage",
+    "fitPage": "Fit on one page",
+    "fitWidth": "Fit to page width",
+    "pagesWide": "Pages wide",
+    "pagesTall": "tall (0 = automatic)",
+    "marginTop": "Top (cm)",
+    "marginBottom": "Bottom",
+    "marginLeft": "Left",
+    "marginRight": "Right",
+    "printArea": "Print area",
+    "printAreaPlaceholder": "used range, or e.g. A1:H40",
+    "repeatRows": "Rows to repeat",
+    "repeatRowsPlaceholder": "e.g. 1:2",
+    "repeatColumns": "Columns to repeat",
+    "repeatColumnsPlaceholder": "e.g. A:B",
+    "gridlines": "Print gridlines",
+    "headings": "Print row and column headings",
+    "centerHorizontally": "Centre horizontally",
+    "pageOrder": "Page order",
+    "downThenOver": "Down, then over",
+    "overThenDown": "Over, then down",
+    "header": "Header",
+    "footer": "Footer",
+    "sectionLeft": "left",
+    "sectionCenter": "centre",
+    "sectionRight": "right",
+    "sectionLabel": "{{area}} {{section}}",
+    "fields": "Fields: {{fields}}.",
+    "pageBreakPreview": "Page break preview…"
+  }
+}

@@ -1,5 +1,6 @@
 import { strFromU8, unzipSync } from "fflate";
 import type { Soort } from "../editors";
+import i18next from "../i18n/config";
 import { cellenNaarCsv, codeer, type CsvCel, type CsvOpties } from "./csv";
 import { htmlDocument, htmlNaarTekst, markdownNaarHtml, ontsnap } from "./html";
 import { editorKoppeling } from "./koppeling";
@@ -40,8 +41,14 @@ function zonderAnkers(markdown: string) {
   return markdown
     .replace(/^<!-- (?:xlsx|pptx|docx)-export:\d+ -->\r?\n?/gm, "")
     .replace(/<!-- (?:xlsx|pptx|docx)-export:\d+ -->/g, "")
-    .replace(/^## Slide (\d+)$/gm, "## Dia $1")
-    .replace(/^\*\*Notes\*\*$/gm, "**Notities**")
+    .replace(
+      /^## Slide (\d+)$/gm,
+      `## ${i18next.t("presentation:export.markdownSlide")} $1`,
+    )
+    .replace(
+      /^\*\*Notes\*\*$/gm,
+      `**${i18next.t("presentation:export.markdownNotes")}**`,
+    )
     .replace(/\n{3,}/g, "\n\n")
     .replace(/^\n+|\n+$/g, "")
     .concat("\n");
@@ -154,7 +161,7 @@ async function rekenbladPng(bytes: Uint8Array, blad: number) {
   const xlsx = await import("@betteroffice/xlsx");
   await xlsx.initWasm();
   if (!xlsx.isPngExportAvailable())
-    throw new Error("Deze rekenbladengine kan geen PNG maken.");
+    throw new Error(i18next.t("spreadsheet:export.pngUnavailable"));
   const werkmap = xlsx.openWorkbook(bytes);
   try {
     werkmap.setActiveSheet(blad);
@@ -263,9 +270,7 @@ export async function maakExport(
   if (ext === "png" && soort === "pptx") {
     const koppeling = editorKoppeling("pptx");
     if (!koppeling?.diaPng)
-      throw new Error(
-        "Open de presentatie in de editor om een dia als PNG te bewaren.",
-      );
+      throw new Error(i18next.t("presentation:export.pngNeedsEditor"));
     const dia = opties.dia ?? koppeling.dias?.().huidig ?? 0;
     return { bytes: await koppeling.diaPng(dia, 2), mime };
   }

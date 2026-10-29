@@ -1,6 +1,8 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Trash2, Pencil } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import type { TFunction } from "i18next";
 import { soortNaam } from "../model.ts";
 import type { GrafiekVerwijzing } from "../documenten.ts";
 import "./grafieken.css";
@@ -16,6 +18,7 @@ function Venster({
   acties?: React.ReactNode;
   sluit: () => void;
 }) {
+  const { t } = useTranslation("charts");
   const id = useId();
   const vak = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -43,7 +46,7 @@ function Venster({
         {children}
         <div className="office-dialoogacties">
           {acties}
-          <button type="button" onClick={sluit}>{acties ? "Annuleren" : "Sluiten"}</button>
+          <button type="button" onClick={sluit}>{acties ? t("common:cancel") : t("common:close")}</button>
         </div>
       </div>
     </div>,
@@ -64,6 +67,7 @@ export function Bevestig({
   doe: () => Promise<void>;
   sluit: () => void;
 }) {
+  const { t } = useTranslation("charts");
   const [bezig, setBezig] = useState(false);
   const [fout, setFout] = useState("");
   return (
@@ -83,7 +87,7 @@ export function Bevestig({
             });
           }}
         >
-          {bezig ? "Bezig…" : knop}
+          {bezig ? t("busy") : knop}
         </button>
       }
     >
@@ -93,12 +97,12 @@ export function Bevestig({
   );
 }
 
-const plekVan = (g: GrafiekVerwijzing) =>
+const plekVan = (g: GrafiekVerwijzing, t: TFunction<"charts">) =>
   g.formaat === "pptx"
-    ? `dia ${(g.dia ?? 0) + 1}`
+    ? t("list.place.slide", { n: (g.dia ?? 0) + 1 })
     : g.formaat === "xlsx"
-      ? `blad ${g.bladNaam ?? ""}`
-      : `grafiek ${(g.volgnummer ?? 0) + 1} in de tekst`;
+      ? t("list.place.sheet", { name: g.bladNaam ?? "" })
+      : t("list.place.text", { n: (g.volgnummer ?? 0) + 1 });
 
 /** Lijst ‘Grafieken in dit document’ om er een te kiezen. */
 export function GrafiekenLijst({
@@ -112,8 +116,9 @@ export function GrafiekenLijst({
   verwijder: (g: GrafiekVerwijzing) => void;
   sluit: () => void;
 }) {
+  const { t } = useTranslation("charts");
   return (
-    <Venster titel="Grafieken in dit document" sluit={sluit}>
+    <Venster titel={t("list.title")} sluit={sluit}>
       {grafieken.length ? (
         <ul className="grafiek-lijst">
           {grafieken.map((g) => (
@@ -121,26 +126,26 @@ export function GrafiekenLijst({
               <button
                 type="button"
                 disabled={!g.bewerkbaar}
-                title={g.bewerkbaar ? "Bewerken" : g.reden}
+                title={g.bewerkbaar ? t("list.edit") : g.reden}
                 onClick={() => kies(g)}
               >
                 <Pencil size={15} />
                 <span>
                   <strong>{g.titel || g.naam}</strong>
                   <small>
-                    {g.soort ? soortNaam(g.soort) : "Onbekende soort"} · {plekVan(g)}
+                    {g.soort ? soortNaam(g.soort) : t("unknownType")} · {plekVan(g, t)}
                     {!g.bewerkbaar && g.reden ? ` · ${g.reden}` : ""}
                   </small>
                 </span>
               </button>
-              <button type="button" style={{ width: "auto" }} aria-label={`${g.titel || g.naam} verwijderen`} title="Verwijderen" onClick={() => verwijder(g)}>
+              <button type="button" style={{ width: "auto" }} aria-label={t("list.deleteLabel", { name: g.titel || g.naam })} title={t("list.delete")} onClick={() => verwijder(g)}>
                 <Trash2 size={15} />
               </button>
             </li>
           ))}
         </ul>
       ) : (
-        <p>Dit document bevat nog geen grafieken.</p>
+        <p>{t("list.empty")}</p>
       )}
     </Venster>
   );

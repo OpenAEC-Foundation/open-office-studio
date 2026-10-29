@@ -1,3 +1,5 @@
+import { intlLocale } from "../i18n/config";
+
 /** Inline objecten (afbeeldingen, velden, notenverwijzingen) in geprojecteerde tekst. */
 const OBJECT = "\uFFFC";
 
@@ -86,114 +88,121 @@ export function volgendeHoofdletters(tekst: string) {
   return tekst;
 }
 
-export function datumTekst(datum: Date, lang = false) {
+/**
+ * Datum en tijd die de lintknoppen Datum en Tijd als tekst in het document
+ * zetten. Zoals Word: in de notatie van de interfacetaal op het moment van
+ * invoegen (nl: 26-10-2026, 09:05).
+ */
+export function datumTekst(datum: Date, lang = false, locale = intlLocale()) {
   return lang
-    ? datum.toLocaleDateString("nl-NL", {
+    ? datum.toLocaleDateString(locale, {
         day: "numeric",
         month: "long",
         year: "numeric",
       })
-    : datum.toLocaleDateString("nl-NL", {
+    : datum.toLocaleDateString(locale, {
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
       });
 }
 
-export function tijdTekst(datum: Date) {
-  return datum.toLocaleTimeString("nl-NL", {
+export function tijdTekst(datum: Date, locale = intlLocale()) {
+  return datum.toLocaleTimeString(locale, {
     hour: "2-digit",
     minute: "2-digit",
   });
 }
 
+/** Een speciaal teken; de naam staat onder ribbon:writer.specialCharacter.characters.<id>. */
 export interface Teken {
   teken: string;
-  naam: string;
+  id: string;
 }
 
+/** Groepen van de dialoog Speciaal teken; `groep` is een sleutel onder ribbon:writer.specialCharacter.groups. */
 export const specialeTekens: { groep: string; tekens: Teken[] }[] = [
   {
-    groep: "Leestekens",
+    groep: "punctuation",
     tekens: [
-      { teken: "–", naam: "Kastlijn (en-streepje)" },
-      { teken: "—", naam: "Gedachtestreep (em-streepje)" },
-      { teken: "…", naam: "Weglatingsteken" },
-      { teken: "‘", naam: "Enkel aanhalingsteken openen" },
-      { teken: "’", naam: "Enkel aanhalingsteken sluiten" },
-      { teken: "“", naam: "Dubbel aanhalingsteken openen" },
-      { teken: "”", naam: "Dubbel aanhalingsteken sluiten" },
-      { teken: "„", naam: "Laag aanhalingsteken" },
-      { teken: "«", naam: "Guillemet links" },
-      { teken: "»", naam: "Guillemet rechts" },
-      { teken: "•", naam: "Opsommingsteken" },
-      { teken: "·", naam: "Middelpunt" },
-      { teken: "§", naam: "Paragraafteken" },
-      { teken: "¶", naam: "Alineateken" },
-      { teken: "†", naam: "Kruis" },
-      { teken: "\u00a0", naam: "Vaste spatie" },
-      { teken: "\u2011", naam: "Vast afbreekstreepje" },
-      { teken: "\u00ad", naam: "Zacht afbreekstreepje" },
+      { teken: "–", id: "enDash" },
+      { teken: "—", id: "emDash" },
+      { teken: "…", id: "ellipsis" },
+      { teken: "‘", id: "leftSingleQuote" },
+      { teken: "’", id: "rightSingleQuote" },
+      { teken: "“", id: "leftDoubleQuote" },
+      { teken: "”", id: "rightDoubleQuote" },
+      { teken: "„", id: "lowDoubleQuote" },
+      { teken: "«", id: "leftGuillemet" },
+      { teken: "»", id: "rightGuillemet" },
+      { teken: "•", id: "bullet" },
+      { teken: "·", id: "middleDot" },
+      { teken: "§", id: "section" },
+      { teken: "¶", id: "pilcrow" },
+      { teken: "†", id: "dagger" },
+      { teken: "\u00a0", id: "nonBreakingSpace" },
+      { teken: "\u2011", id: "nonBreakingHyphen" },
+      { teken: "\u00ad", id: "softHyphen" },
     ],
   },
   {
-    groep: "Valuta en symbolen",
+    groep: "currencySymbols",
     tekens: [
-      { teken: "€", naam: "Euroteken" },
-      { teken: "£", naam: "Pondteken" },
-      { teken: "$", naam: "Dollarteken" },
-      { teken: "¥", naam: "Yenteken" },
-      { teken: "©", naam: "Copyright" },
-      { teken: "®", naam: "Gedeponeerd handelsmerk" },
-      { teken: "™", naam: "Handelsmerk" },
-      { teken: "°", naam: "Graden" },
-      { teken: "‰", naam: "Promille" },
-      { teken: "✓", naam: "Vinkje" },
-      { teken: "✗", naam: "Kruisje" },
-      { teken: "★", naam: "Ster" },
+      { teken: "€", id: "euro" },
+      { teken: "£", id: "pound" },
+      { teken: "$", id: "dollar" },
+      { teken: "¥", id: "yen" },
+      { teken: "©", id: "copyright" },
+      { teken: "®", id: "registered" },
+      { teken: "™", id: "trademark" },
+      { teken: "°", id: "degree" },
+      { teken: "‰", id: "perMille" },
+      { teken: "✓", id: "checkMark" },
+      { teken: "✗", id: "ballotX" },
+      { teken: "★", id: "star" },
     ],
   },
   {
-    groep: "Wiskunde",
+    groep: "math",
     tekens: [
-      { teken: "±", naam: "Plus-min" },
-      { teken: "×", naam: "Maal" },
-      { teken: "÷", naam: "Gedeeld door" },
-      { teken: "−", naam: "Minteken" },
-      { teken: "≈", naam: "Ongeveer gelijk" },
-      { teken: "≠", naam: "Niet gelijk" },
-      { teken: "≤", naam: "Kleiner dan of gelijk" },
-      { teken: "≥", naam: "Groter dan of gelijk" },
-      { teken: "∞", naam: "Oneindig" },
-      { teken: "√", naam: "Wortel" },
-      { teken: "∑", naam: "Som" },
-      { teken: "∅", naam: "Lege verzameling / diameter" },
-      { teken: "²", naam: "Superscript twee" },
-      { teken: "³", naam: "Superscript drie" },
-      { teken: "½", naam: "Een half" },
-      { teken: "¼", naam: "Een kwart" },
-      { teken: "¾", naam: "Drie kwart" },
-      { teken: "µ", naam: "Micro" },
+      { teken: "±", id: "plusMinus" },
+      { teken: "×", id: "multiplication" },
+      { teken: "÷", id: "division" },
+      { teken: "−", id: "minus" },
+      { teken: "≈", id: "almostEqual" },
+      { teken: "≠", id: "notEqual" },
+      { teken: "≤", id: "lessOrEqual" },
+      { teken: "≥", id: "greaterOrEqual" },
+      { teken: "∞", id: "infinity" },
+      { teken: "√", id: "squareRoot" },
+      { teken: "∑", id: "summation" },
+      { teken: "∅", id: "emptySet" },
+      { teken: "²", id: "superscriptTwo" },
+      { teken: "³", id: "superscriptThree" },
+      { teken: "½", id: "oneHalf" },
+      { teken: "¼", id: "oneQuarter" },
+      { teken: "¾", id: "threeQuarters" },
+      { teken: "µ", id: "micro" },
     ],
   },
   {
-    groep: "Grieks en pijlen",
+    groep: "greekArrows",
     tekens: [
-      { teken: "α", naam: "Alfa" },
-      { teken: "β", naam: "Bèta" },
-      { teken: "γ", naam: "Gamma" },
-      { teken: "δ", naam: "Delta" },
-      { teken: "Δ", naam: "Hoofdletter delta" },
-      { teken: "λ", naam: "Lambda" },
-      { teken: "π", naam: "Pi" },
-      { teken: "σ", naam: "Sigma" },
-      { teken: "Ω", naam: "Omega" },
-      { teken: "→", naam: "Pijl naar rechts" },
-      { teken: "←", naam: "Pijl naar links" },
-      { teken: "↑", naam: "Pijl omhoog" },
-      { teken: "↓", naam: "Pijl omlaag" },
-      { teken: "↔", naam: "Pijl links-rechts" },
-      { teken: "⇒", naam: "Dubbele pijl naar rechts" },
+      { teken: "α", id: "alpha" },
+      { teken: "β", id: "beta" },
+      { teken: "γ", id: "gamma" },
+      { teken: "δ", id: "delta" },
+      { teken: "Δ", id: "capitalDelta" },
+      { teken: "λ", id: "lambda" },
+      { teken: "π", id: "pi" },
+      { teken: "σ", id: "sigma" },
+      { teken: "Ω", id: "omega" },
+      { teken: "→", id: "rightArrow" },
+      { teken: "←", id: "leftArrow" },
+      { teken: "↑", id: "upArrow" },
+      { teken: "↓", id: "downArrow" },
+      { teken: "↔", id: "leftRightArrow" },
+      { teken: "⇒", id: "rightDoubleArrow" },
     ],
   },
 ];

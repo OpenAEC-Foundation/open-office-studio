@@ -32,12 +32,15 @@ import {
   X,
   type LucideIcon,
 } from "lucide-react";
-import { rapportAlsTekst, VERSLEUTELD_MELDING, type DatabaseObject, type DatabaseSession, type Objectsoort } from "./model";
+import { useTranslation } from "react-i18next";
+import type { TFunction } from "i18next";
+import { useOpmaak } from "../../../src/i18n/opmaak";
+import { rapportAlsTekst, versleuteldMelding, type DatabaseObject, type DatabaseSession, type Objectsoort } from "./model";
 import { DatabaseClient, DatabaseFout, WerkkopieClient } from "./database-client";
 import { Ribbon, Groep, Actie } from "../../../src/Ribbon";
 import { past } from "../../../src/lint/sneltoetsen";
 import { downloadDatabaseUitvoer, type DatabaseUitvoer } from "./uitvoer";
-import { VREEMDE_SQLITE, type OpgeslagenQuery, type Ontwerp, type RelatieSchema, type TabelSchema, type Veldsoort, type Waarde } from "./werkkopie/contract";
+import { isVreemdeSqlite, type OpgeslagenQuery, type Ontwerp, type RelatieSchema, type TabelSchema, type Veldsoort, type Waarde } from "./werkkopie/contract";
 import { modulesUitAnalyse as analyseModules } from "./werkkopie/modules";
 import type { Voortgang } from "./werkkopie/opbouw";
 import { DialoogBron, useDialogen } from "./ui/Dialoog";
@@ -62,7 +65,7 @@ import { automatischFormulier, leesFormulierDefinitie } from "./ui/formulier-log
 import { leegRapport, leesRapportDefinitie, type RapportDefinitie } from "./ui/rapport-logica";
 import { kolommenVan } from "./ui/bron";
 import { leesbareFout } from "./ui/invoer";
-import { ACTIENAMEN, veiligeNaam } from "./ui/sql";
+import { actieNaam, veiligeNaam } from "./ui/sql";
 import { csvUitWaarden, downloadBinair, type DatabaseBinaireUitvoer } from "./ui/export";
 import { vulVoorbeeld, VOORBEELD_MODULES } from "./ui/voorbeeld";
 
@@ -92,17 +95,21 @@ interface Objecten {
 }
 const LEEG: Objecten = { tabellen: [], querys: [], ontwerpen: [], relaties: [] };
 
-const MEERVOUD: Record<Objectsoort, string> = {
-  Tabel: "Tabellen",
-  "Gekoppelde tabel": "Gekoppelde tabellen",
-  Query: "Query’s",
-  Relatie: "Relaties",
-  VBA: "VBA-modules",
-  Formulier: "Formulieren",
-  Rapport: "Rapporten",
-  Macro: "Macro’s",
+/** Sleutel per objectsoort (`objects.plural.*` / `objects.singular.*`); de soort zelf is een vaste code. */
+const SOORTSLEUTEL: Record<Objectsoort, string> = {
+  Tabel: "table",
+  "Gekoppelde tabel": "linkedTable",
+  Query: "query",
+  Relatie: "relationship",
+  VBA: "vba",
+  Formulier: "form",
+  Rapport: "report",
+  Macro: "macro",
 };
+const meervoud = (t: TFunction, soort: Objectsoort) => t(`database:objects.plural.${SOORTSLEUTEL[soort]}`);
+const enkelvoud = (t: TFunction, soort: Objectsoort) => t(`database:objects.singular.${SOORTSLEUTEL[soort]}`);
 
+/** Herkent versleuteling aan de (ruwe, vaak Engelse) foutmelding van de lezer of in de Nederlandse/Engelse melding. */
 const VERSLEUTELD = /versleuteld|wachtwoord|encrypt|password/i;
 
 /** Werkruimte voor Access-databases: werkkopie, query’s, formulieren, rapporten en VBA. */
@@ -152,6 +159,8 @@ function Werkruimte({
   setDonker: (d: boolean) => void;
 }) {
   const dialogen = useDialogen();
+  const { t } = useTranslation("database");
+  const opmaak = useOpmaak();
   const [analyse, setAnalyse] = useState<DatabaseSession | null>(null);
   const [sessie, setSessie] = useState<WerkkopieSessie | null>(null);
   const [objecten, setObjecten] = useState<Objecten>(LEEG);
@@ -183,13 +192,13 @@ function Werkruimte({
     openRapport: (naam) => void openRapport(naam),
     openQuery: (naam) => {
       const q = objecten.querys.find((x) => x.naam.toLowerCase() === naam.toLowerCase());
-      if (!q) throw new Error(`Query ‘${naam}’ bestaat niet.`);
+      if (!q) throw new Error(t("studio.errors.queryMissing", { name: naam }));
       toon({ soort: "query", naam: q.naam, nr: teller.current++ });
     },
     openTabel: (naam) => {
-      const t = objecten.tabellen.find((x) => x.naam.toLowerCase() === naam.toLowerCase());
-      if (!t) throw new Error(`Tabel ‘${naam}’ bestaat niet.`);
-      toon({ soort: "tabel", naam: t.naam, modus: "gegevens" });
+      const tabel = objecten.tabellen.find((x) => x.naam.toLowerCase() === naam.toLowerCase());
+      if (!tabel) throw new Error(t("studio.errors.tableMissing", { name: naam }));
+      toon({ soort: "tabel", naam: tabel.naam, modus: "gegevens" });
     },
     sluit: (soort, naam) =>
       setWeergave((w) =>
@@ -240,9 +249,9 @@ function Werkruimte({
       setModules((oud) => (JSON.stringify(oud) === JSON.stringify(nieuw) ? oud : nieuw));
       setGewijzigd(isGewijzigd || sessie?.herkomst === "nieuw");
     } catch (e) {
-      if (actief.current) setFout("De objectenlijst kon niet worden gelezen: " + leesbareFout(e));
+      if (actief.current) setFout(t("studio.errors.objectListFailed", { error: leesbareFout(e) }));
     }
-  }, [werkkopie, sessie?.herkomst]);
+  }, [werkkopie, sessie?.herkomst, t]);
   useEffect(() => {
     void vernieuw();
   }, [vernieuw]);
@@ -251,10 +260,10 @@ function Werkruimte({
   async function magVervangen(): Promise<boolean> {
     if (!werkkopie || !gewijzigd) return true;
     return dialogen.bevestig({
-      titel: "Werkkopie niet opgeslagen",
-      tekst: "De huidige werkkopie heeft wijzigingen die niet als .sqlite zijn bewaard. Die gaan verloren. Doorgaan?",
-      ja: "Doorgaan zonder opslaan",
-      nee: "Annuleren",
+      titel: t("studio.unsaved.title"),
+      tekst: t("studio.unsaved.text"),
+      ja: t("studio.unsaved.confirm"),
+      nee: t("common:cancel"),
       gevaarlijk: true,
     });
   }
@@ -288,11 +297,11 @@ function Werkruimte({
     try {
       return await WerkkopieClient.laad(bestand);
     } catch (e) {
-      if (!(e instanceof Error) || !e.message.startsWith(VREEMDE_SQLITE)) throw e;
+      if (!isVreemdeSqlite(e)) throw e;
       const ja = await dialogen.bevestig({
-        titel: "Geen werkkopie van Open Database Studio",
-        tekst: `‘${bestand.name}’ is een SQLite-bestand, maar niet door Open Database Studio gemaakt. Toch openen als nieuwe werkkopie? De metatabellen worden dan toegevoegd (pas in het bestand na opslaan); het bestand zelf wordt niet gewijzigd.`,
-        ja: "Toch openen",
+        titel: t("studio.foreignSqlite.title"),
+        tekst: t("studio.foreignSqlite.text", { name: bestand.name }),
+        ja: t("studio.foreignSqlite.confirm"),
         standaardNee: true,
       });
       if (!ja) return null;
@@ -310,7 +319,7 @@ function Werkruimte({
         if (!w) return;
         if (!actief.current) return void w.annuleer();
         setSessie({ werkkopie: w, herkomst: "sqlite", naam: bestand.name });
-        setMelding([`Werkkopie ‘${bestand.name}’ heropend (bron: ${w.bron.naam}).`, ...w.meldingen].join(" "));
+        setMelding([t("studio.messages.reopened", { name: bestand.name, source: w.bron.naam }), ...w.meldingen].join(" "));
         if (w.rapport) setWeergave({ soort: "opbouw" });
         return;
       }
@@ -339,7 +348,7 @@ function Werkruimte({
       bronBestand.current = bestand;
       await bouwWerkkopie(bestand, a);
     } catch (e) {
-      if (actief.current) setFout(e instanceof Error ? e.message : "Bestand kon niet worden gelezen.");
+      if (actief.current) setFout(e instanceof Error ? e.message : t("studio.errors.readFailed"));
     } finally {
       if (actief.current) setBezig(false);
     }
@@ -364,20 +373,22 @@ function Werkruimte({
       setWeergave({ soort: "welkom" });
       const overgeslagen = w.rapport?.tabellen.reduce((s, t) => s + t.overgeslagen, 0) ?? 0;
       const fouten = w.rapport?.meldingen.filter((m) => m.ernst !== "info").length ?? 0;
-      setMelding(
-        `Werkkopie opgebouwd: ${w.rapport?.tabellen.length ?? 0} tabellen, ${w.rapport?.querys.opgeslagen ?? 0} query’s` +
-          (overgeslagen || fouten ? ` · ${overgeslagen} rijen overgeslagen, ${fouten} meldingen (zie opbouwrapport)` : "") +
-          ".",
-      );
+      const aantallen = {
+        tables: t("objects.count.tables", { count: w.rapport?.tabellen.length ?? 0 }),
+        queries: t("objects.count.queries", { count: w.rapport?.querys.opgeslagen ?? 0 }),
+        skipped: t("objects.count.skippedRows", { count: overgeslagen }),
+        issues: t("objects.count.issues", { count: fouten }),
+      };
+      setMelding(t(overgeslagen || fouten ? "studio.messages.builtWithIssues" : "studio.messages.built", aantallen));
     } catch (e) {
       if (!actief.current) return;
       const tekst = leesbareFout(e);
       setFout(
         afbreken.signal.aborted
-          ? "De opbouw van de werkkopie is geannuleerd. Je bekijkt de database nu alleen-lezen."
-          : VERSLEUTELD.test(tekst)
-            ? VERSLEUTELD_MELDING + " Je bekijkt alleen wat zonder ontsleutelen leesbaar is."
-            : `De werkkopie kon niet worden opgebouwd: ${tekst} Je bekijkt de database nu alleen-lezen.`,
+          ? t("studio.errors.buildCancelled")
+          : VERSLEUTELD.test(tekst) || tekst === versleuteldMelding()
+            ? t("studio.errors.buildEncrypted", { message: versleuteldMelding() })
+            : t("studio.errors.buildFailed", { error: tekst }),
       );
     } finally {
       if (actief.current) setOpbouw(null);
@@ -386,13 +397,13 @@ function Werkruimte({
 
   async function nieuweDatabase(voorbeeld = false) {
     if (!(await magVervangen())) return;
-    let naam = "Voorbeelddatabase";
+    let naam = t("studio.sampleName");
     if (!voorbeeld) {
       const gekozen = await dialogen.vraag({
-        titel: "Nieuwe lege database",
-        label: "Naam van de database",
-        standaard: "Nieuwe database",
-        controleer: (w) => (w.trim() ? null : "Geef een naam."),
+        titel: t("studio.newDatabase.title"),
+        label: t("studio.newDatabase.label"),
+        standaard: t("studio.newDatabase.default"),
+        controleer: (w) => (w.trim() ? null : t("studio.newDatabase.nameRequired")),
       });
       if (!gekozen) return;
       naam = gekozen.trim();
@@ -408,14 +419,14 @@ function Werkruimte({
       if (!actief.current) return void w.annuleer();
       setSessie({ werkkopie: w, herkomst: voorbeeld ? "voorbeeld" : "nieuw", naam });
       if (voorbeeld) {
-        setMelding("Demonstratie met ingebouwde voorbeeldgegevens. Dit zijn geen gegevens uit een geopend databasebestand.");
+        setMelding(t("studio.messages.sample"));
         setWeergave({ soort: "tabel", naam: "Materialen", modus: "gegevens" });
       } else {
-        setMelding(`Nieuwe lege database ‘${naam}’. Maak een tabel via Maken › Tabel en bewaar het geheel via Start › Opslaan (.sqlite).`);
+        setMelding(t("studio.messages.newEmpty", { name: naam }));
         setWeergave({ soort: "nieuwe-tabel" });
       }
     } catch (e) {
-      setFout("De database kon niet worden gemaakt: " + leesbareFout(e));
+      setFout(t("studio.errors.createFailed", { error: leesbareFout(e) }));
     } finally {
       if (actief.current) setBezig(false);
     }
@@ -427,27 +438,31 @@ function Werkruimte({
     try {
       const r = await p;
       setMelding(
-        r.status === "opgeslagen" ? `${wat} opgeslagen: ${r.pad}` : r.status === "geannuleerd" ? "Exporteren geannuleerd." : `${wat}: download aangevraagd. Controleer je downloads.`,
+        r.status === "opgeslagen"
+          ? t("studio.messages.exportSaved", { what: wat, path: r.pad })
+          : r.status === "geannuleerd"
+            ? t("studio.messages.exportCancelled")
+            : t("studio.messages.exportDownload", { what: wat }),
       );
       return r.status !== "geannuleerd";
     } catch (e) {
-      setFout("Exporteren mislukt: " + (e instanceof Error ? e.message : String(e)));
+      setFout(t("studio.errors.exportFailed", { error: e instanceof Error ? e.message : String(e) }));
       return false;
     }
   }
-  const bewaarTekst = (naam: string, inhoud: string, type: string, wat = "Export") =>
+  const bewaarTekst = (naam: string, inhoud: string, type: string, wat = t("studio.exportKind.export")) =>
     meld(bewaarUitvoer(veiligeNaam(naam), inhoud, type), wat);
   const exporteerCsv = (naam: string, kolommen: string[], rijen: Waarde[][], soorten: (Veldsoort | null)[] = []) =>
-    bewaarTekst(`${naam}.csv`, csvUitWaarden(kolommen, rijen, soorten), "text/csv;charset=utf-8", "CSV");
+    bewaarTekst(`${naam}.csv`, csvUitWaarden(kolommen, rijen, soorten), "text/csv;charset=utf-8", t("studio.exportKind.csv"));
 
   async function exporteerTabel(naam: string) {
     if (!werkkopie) return;
     try {
-      const t = objecten.tabellen.find((x) => x.naam === naam);
+      const tabel = objecten.tabellen.find((x) => x.naam === naam);
       const r = await werkkopie.query(`SELECT * FROM [${naam}]`, { limiet: 1_000_000 });
-      await exporteerCsv(naam, r.kolommen, r.rijen, r.kolommen.map((k) => t?.velden.find((v) => v.naam === k)?.soort ?? null));
+      await exporteerCsv(naam, r.kolommen, r.rijen, r.kolommen.map((k) => tabel?.velden.find((v) => v.naam === k)?.soort ?? null));
     } catch (e) {
-      setFout("Exporteren mislukt: " + leesbareFout(e));
+      setFout(t("studio.errors.exportFailed", { error: leesbareFout(e) }));
     }
   }
 
@@ -455,10 +470,10 @@ function Werkruimte({
     if (!werkkopie) return;
     try {
       const bytes = await werkkopie.exporteer();
-      const basis = (sessie?.naam ?? "werkkopie").replace(/\.(mdb|accdb|sqlite|sqlite3|db)$/i, "");
-      if (await meld(bewaarBinair(veiligeNaam(`${basis}.sqlite`), bytes, "application/vnd.sqlite3"), "Werkkopie (SQLite)")) setGewijzigd(false);
+      const basis = (sessie?.naam ?? t("studio.fileSuffix.workingCopy")).replace(/\.(mdb|accdb|sqlite|sqlite3|db)$/i, "");
+      if (await meld(bewaarBinair(veiligeNaam(`${basis}.sqlite`), bytes, "application/vnd.sqlite3"), t("studio.exportKind.workingCopy"))) setGewijzigd(false);
     } catch (e) {
-      setFout("De werkkopie kon niet worden bewaard: " + leesbareFout(e));
+      setFout(t("studio.errors.saveFailed", { error: leesbareFout(e) }));
     }
   }
 
@@ -474,24 +489,24 @@ function Werkruimte({
     if (!r) return;
     const basis = r.bestand.replace(/\.[^.]+$/, "");
     void bewaarTekst(
-      `${basis}-compatibiliteit.${soort}`,
+      `${basis}-${t("studio.fileSuffix.compatibility")}.${soort}`,
       soort === "json" ? JSON.stringify(r, null, 2) : rapportAlsTekst(r),
       soort === "json" ? "application/json;charset=utf-8" : "text/plain;charset=utf-8",
-      "Compatibiliteitsrapport",
+      t("studio.exportKind.compatibility"),
     );
   }
   function exporteerOpbouw() {
     const r = werkkopie?.rapport;
     if (!r) return;
-    void bewaarTekst(`${r.bron.replace(/\.[^.]+$/, "")}-opbouwrapport.json`, JSON.stringify(r, null, 2), "application/json;charset=utf-8", "Opbouwrapport");
+    void bewaarTekst(`${r.bron.replace(/\.[^.]+$/, "")}-${t("studio.fileSuffix.build")}.json`, JSON.stringify(r, null, 2), "application/json;charset=utf-8", t("studio.exportKind.build"));
   }
   function exporteerBron() {
     if (weergave.soort === "vba") {
       const m = modules.find((x) => x.naam === weergave.module);
-      if (m) void bewaarTekst(`${m.naam}.bas`, m.bron.replace(/\r?\n/g, "\r\n"), "text/plain;charset=utf-8", "VBA-bron");
+      if (m) void bewaarTekst(`${m.naam}.bas`, m.bron.replace(/\r?\n/g, "\r\n"), "text/plain;charset=utf-8", t("studio.exportKind.vbaSource"));
     } else if (weergave.soort === "query" && weergave.naam) {
       const q = objecten.querys.find((x) => x.naam === weergave.naam);
-      if (q) void bewaarTekst(`${q.naam}.sql`, q.sql, "text/plain;charset=utf-8", "SQL");
+      if (q) void bewaarTekst(`${q.naam}.sql`, q.sql, "text/plain;charset=utf-8", t("studio.exportKind.sql"));
     }
   }
 
@@ -504,23 +519,21 @@ function Werkruimte({
     const o = zoek(objecten.ontwerpen) ?? (werkkopie ? zoek(await werkkopie.ontwerpen()) : undefined);
     if (!o) {
       const access = analyse?.objecten.some((x) => x.soort === "Formulier" && x.naam.toLowerCase() === naam.toLowerCase());
-      const tekst = access
-        ? `Formulier ‘${naam}’ bestaat in het Access-origineel, maar Access-formulierontwerpen zijn niet leesbaar. Maak een formulier met dezelfde naam via Maken › Formulierontwerp; dan wordt de VBA-module Form_${naam} eraan gekoppeld.`
-        : `Formulier ‘${naam}’ bestaat niet in de werkkopie.`;
+      const tekst = t(access ? "studio.errors.formNotReadable" : "studio.errors.formMissing", { name: naam });
       if (vanuitVba) throw new Error(tekst);
       setFout(tekst);
       return;
     }
     const module = formModule(o.naam);
     let metVba = false;
-    if (module) metVba = vanuitVba || (await vba.vraagToestemming(`Formulier ‘${o.naam}’ heeft VBA-code (module ${module.naam}). Gebeurtenissen zoals Form_Load en knopklikken uitvoeren?`));
+    if (module) metVba = vanuitVba || (await vba.vraagToestemming(t("studio.formVbaConsent", { name: o.naam, module: module.naam })));
     setFout("");
     setWeergave({ soort: "formulier", naam: o.naam, metVba, nr: teller.current++ });
   }
 
   function openRapport(naam: string) {
     const o = objecten.ontwerpen.find((x) => x.soort === "rapport" && x.naam.toLowerCase() === naam.toLowerCase());
-    if (!o) throw new Error(`Rapport ‘${naam}’ bestaat niet in de werkkopie (Access-rapportontwerpen zijn niet leesbaar).`);
+    if (!o) throw new Error(t("studio.errors.reportMissing", { name: naam }));
     setWeergave({ soort: "rapport", naam: o.naam, bron: o.bron, definitie: leesRapportDefinitie(o.definitie, o.naam), nr: teller.current++ });
   }
 
@@ -537,10 +550,10 @@ function Werkruimte({
       const kolommen = await kolommenVan(werkkopie, huidigeBron);
       await werkkopie.bewaarOntwerp({ naam, soort: "formulier", bron: huidigeBron, definitie: automatischFormulier(naam, kolommen) });
       await vernieuw();
-      setMelding(`Automatisch formulier ‘${naam}’ gemaakt voor ${huidigeBron}.`);
+      setMelding(t("studio.messages.autoFormCreated", { name: naam, source: huidigeBron }));
       setWeergave({ soort: "formulier", naam, metVba: false, nr: teller.current++ });
     } catch (e) {
-      setFout("Automatisch formulier maken mislukt: " + leesbareFout(e));
+      setFout(t("studio.errors.autoFormFailed", { error: leesbareFout(e) }));
     }
   }
 
@@ -549,8 +562,8 @@ function Werkruimte({
     let vrij = modules.length + 1;
     while (modules.some((m) => m.naam.toLowerCase() === `module${vrij}`)) vrij++;
     const naam = await dialogen.vraag({
-      titel: "Nieuwe VBA-module",
-      label: "Modulenaam (Form_<formulier> voor een formuliermodule)",
+      titel: t("studio.newModule.title"),
+      label: t("studio.newModule.label", { form: t("studio.newModule.formPlaceholder") }),
       standaard: `Module${vrij}`,
       controleer: (w) => controleerModulenaam(w, modules.map((m) => m.naam)),
     });
@@ -560,10 +573,10 @@ function Werkruimte({
     try {
       await werkkopie.bewaarModule({ naam: schoon, soort, bron: nieuweModuleBron(schoon, soort) });
       await vernieuw();
-      setMelding(`Module ‘${schoon}’ gemaakt in de werkkopie.`);
+      setMelding(t("studio.messages.moduleCreated", { name: schoon }));
       setWeergave({ soort: "vba", module: schoon });
     } catch (e) {
-      setFout("De module kon niet worden gemaakt: " + leesbareFout(e));
+      setFout(t("studio.errors.moduleCreateFailed", { error: leesbareFout(e) }));
     }
   }
 
@@ -571,15 +584,15 @@ function Werkruimte({
     if (!werkkopie) return;
     await werkkopie.bewaarModule({ naam: m.naam, soort: m.soort, bron });
     await vernieuw();
-    setMelding(`Module ‘${m.naam}’ opgeslagen in de werkkopie.`);
+    setMelding(t("studio.messages.moduleSaved", { name: m.naam }));
   }
 
   async function verwijderModule(m: VbaModule) {
     if (!werkkopie) return;
     const ja = await dialogen.bevestig({
-      titel: "Module verwijderen",
-      tekst: `VBA-module ‘${m.naam}’ uit de werkkopie verwijderen?${m.herkomst === "access" ? " Hij blijft in het Access-origineel staan; na opnieuw opbouwen is hij terug." : ""}`,
-      ja: "Verwijderen",
+      titel: t("studio.deleteModule.title"),
+      tekst: t(m.herkomst === "access" ? "studio.deleteModule.textAccess" : "studio.deleteModule.text", { name: m.naam }),
+      ja: t("common:delete"),
       gevaarlijk: true,
     });
     if (!ja) return;
@@ -587,9 +600,9 @@ function Werkruimte({
       await werkkopie.verwijderModule(m.naam);
       setWeergave({ soort: "welkom" });
       await vernieuw();
-      setMelding(`Module ‘${m.naam}’ verwijderd uit de werkkopie.`);
+      setMelding(t("studio.messages.moduleDeleted", { name: m.naam }));
     } catch (e) {
-      setFout("De module kon niet worden verwijderd: " + leesbareFout(e));
+      setFout(t("studio.errors.moduleDeleteFailed", { error: leesbareFout(e) }));
     }
   }
 
@@ -644,22 +657,22 @@ function Werkruimte({
   const analyseLijst = (soort: Objectsoort) => (analyse?.objecten ?? []).filter((o) => o.soort === soort);
 
   const objectbrowser = (
-    <aside aria-label="Databaseobjecten">
-      <h2>Databaseobjecten</h2>
-      <p className="bestandsnaam">{sessie?.naam ?? analyse?.naam ?? "Geen database geopend"}</p>
+    <aside aria-label={t("studio.browser.label")}>
+      <h2>{t("studio.browser.label")}</h2>
+      <p className="bestandsnaam">{sessie?.naam ?? analyse?.naam ?? t("studio.browser.noDatabase")}</p>
       {werkkopie ? (
         <>
-          <Sectie titel="Tabellen" leeg="Nog geen tabellen">
-            {objecten.tabellen.map((t) => (
-              <ObjectKnop key={t.naam} gekozen={weergave.soort === "tabel" && weergave.naam === t.naam} uit={bezig || !!opbouw} icoon={Table2} naam={t.naam} sub={t.aantal.toLocaleString("nl-NL")} doel={() => toon({ soort: "tabel", naam: t.naam, modus: "gegevens" })} />
+          <Sectie titel={meervoud(t, "Tabel")} leeg={t("studio.browser.noTables")}>
+            {objecten.tabellen.map((tabel) => (
+              <ObjectKnop key={tabel.naam} gekozen={weergave.soort === "tabel" && weergave.naam === tabel.naam} uit={bezig || !!opbouw} icoon={Table2} naam={tabel.naam} sub={opmaak.getal(tabel.aantal)} doel={() => toon({ soort: "tabel", naam: tabel.naam, modus: "gegevens" })} />
             ))}
           </Sectie>
-          <Sectie titel="Query’s" leeg="Geen opgeslagen query’s">
+          <Sectie titel={meervoud(t, "Query")} leeg={t("studio.browser.noQueries")}>
             {objecten.querys.filter((q) => !q.naam.startsWith("~")).map((q) => (
-              <ObjectKnop key={q.naam} gekozen={weergave.soort === "query" && weergave.naam === q.naam} uit={bezig || !!opbouw} icoon={Braces} naam={q.naam} sub={q.soort === "select" ? undefined : ACTIENAMEN[q.soort]} doel={() => toon({ soort: "query", naam: q.naam, nr: teller.current++ })} />
+              <ObjectKnop key={q.naam} gekozen={weergave.soort === "query" && weergave.naam === q.naam} uit={bezig || !!opbouw} icoon={Braces} naam={q.naam} sub={q.soort === "select" ? undefined : actieNaam(q.soort)} doel={() => toon({ soort: "query", naam: q.naam, nr: teller.current++ })} />
             ))}
           </Sectie>
-          <Sectie titel="Formulieren" leeg="Nog geen formulieren">
+          <Sectie titel={meervoud(t, "Formulier")} leeg={t("studio.browser.noForms")}>
             {formulieren.map((f) => (
               <ObjectKnop key={f.naam} gekozen={weergave.soort === "formulier" && weergave.naam === f.naam} uit={bezig || !!opbouw} icoon={LayoutTemplate} naam={f.naam} sub={formModule(f.naam) ? "VBA" : undefined} doel={() => void openFormulier(f.naam)} />
             ))}
@@ -669,7 +682,7 @@ function Werkruimte({
                 <ObjectKnop key={o.id} gekozen={weergave.soort === "analyse" && weergave.id === o.id} uit={bezig || !!opbouw} icoon={LayoutTemplate} naam={o.naam} sub="Access" doel={() => toon({ soort: "analyse", id: o.id })} />
               ))}
           </Sectie>
-          <Sectie titel="Rapporten" leeg="Nog geen rapporten">
+          <Sectie titel={meervoud(t, "Rapport")} leeg={t("studio.browser.noReports")}>
             {rapporten.map((r) => (
               <ObjectKnop key={r.naam} gekozen={weergave.soort === "rapport" && weergave.naam === r.naam} uit={bezig || !!opbouw} icoon={FileText} naam={r.naam} doel={() => openRapport(r.naam)} />
             ))}
@@ -680,29 +693,29 @@ function Werkruimte({
               ))}
           </Sectie>
           {accessFormulieren.some((o) => o.soort === "Macro") && (
-            <Sectie titel="Macro’s">
+            <Sectie titel={meervoud(t, "Macro")}>
               {accessFormulieren
                 .filter((o) => o.soort === "Macro")
                 .map((o) => (
-                  <ObjectKnop key={o.id} gekozen={weergave.soort === "analyse" && weergave.id === o.id} uit={bezig || !!opbouw} icoon={ClipboardList} naam={o.naam} sub="niet uitgevoerd" doel={() => toon({ soort: "analyse", id: o.id })} />
+                  <ObjectKnop key={o.id} gekozen={weergave.soort === "analyse" && weergave.id === o.id} uit={bezig || !!opbouw} icoon={ClipboardList} naam={o.naam} sub={t("studio.browser.notRun")} doel={() => toon({ soort: "analyse", id: o.id })} />
                 ))}
             </Sectie>
           )}
-          <Sectie titel="VBA-modules" leeg={analyse && analyseLijst("VBA").length ? "Geen leesbare VBA-bron" : "Geen modules"}>
+          <Sectie titel={meervoud(t, "VBA")} leeg={analyse && analyseLijst("VBA").length ? t("studio.browser.noReadableVba") : t("studio.browser.noModules")}>
             {modules.map((m) => (
-              <ObjectKnop key={m.naam} gekozen={geselecteerd({ soort: "vba", module: m.naam })} uit={bezig || !!opbouw} icoon={Code2} naam={m.naam} sub={m.soort === "formulier" ? "formulier" : m.soort === "klasse" ? "klasse" : undefined} doel={() => toon({ soort: "vba", module: m.naam })} />
+              <ObjectKnop key={m.naam} gekozen={geselecteerd({ soort: "vba", module: m.naam })} uit={bezig || !!opbouw} icoon={Code2} naam={m.naam} sub={m.soort === "formulier" ? t("studio.browser.formModule") : m.soort === "klasse" ? t("studio.browser.classModule") : undefined} doel={() => toon({ soort: "vba", module: m.naam })} />
             ))}
             {modules.length > 0 && (
-              <ObjectKnop gekozen={weergave.soort === "extern"} uit={bezig || !!opbouw} icoon={Unplug} naam="Externe verwijzingen" sub="analyse" doel={() => toon({ soort: "extern" })} />
+              <ObjectKnop gekozen={weergave.soort === "extern"} uit={bezig || !!opbouw} icoon={Unplug} naam={t("studio.browser.external")} sub={t("studio.browser.analysis")} doel={() => toon({ soort: "extern" })} />
             )}
           </Sectie>
-          <Sectie titel="Database">
-            <ObjectKnop gekozen={geselecteerd({ soort: "relaties" })} uit={bezig || !!opbouw} icoon={Link2} naam={`Relaties (${objecten.relaties.length})`} doel={() => toon({ soort: "relaties" })} />
+          <Sectie titel={t("studio.browser.database")}>
+            <ObjectKnop gekozen={geselecteerd({ soort: "relaties" })} uit={bezig || !!opbouw} icoon={Link2} naam={t("studio.browser.relationships", { count: objecten.relaties.length })} doel={() => toon({ soort: "relaties" })} />
             {werkkopie.rapport && (
-              <ObjectKnop gekozen={geselecteerd({ soort: "opbouw" })} uit={bezig || !!opbouw} icoon={ListTree} naam="Opbouwrapport" doel={() => toon({ soort: "opbouw" })} />
+              <ObjectKnop gekozen={geselecteerd({ soort: "opbouw" })} uit={bezig || !!opbouw} icoon={ListTree} naam={t("studio.browser.buildReport")} doel={() => toon({ soort: "opbouw" })} />
             )}
             {analyse?.rapport && (
-              <ObjectKnop gekozen={geselecteerd({ soort: "compat" })} uit={bezig || !!opbouw} icoon={ShieldCheck} naam="Compatibiliteitsrapport" doel={() => toon({ soort: "compat" })} />
+              <ObjectKnop gekozen={geselecteerd({ soort: "compat" })} uit={bezig || !!opbouw} icoon={ShieldCheck} naam={t("studio.browser.compatibilityReport")} doel={() => toon({ soort: "compat" })} />
             )}
           </Sectie>
         </>
@@ -712,7 +725,7 @@ function Werkruimte({
             const lijst = analyseLijst(soort);
             if (!lijst.length) return null;
             return (
-              <Sectie key={soort} titel={MEERVOUD[soort]}>
+              <Sectie key={soort} titel={meervoud(t, soort)}>
                 {lijst.map((o) => (
                   <ObjectKnop key={o.id} gekozen={weergave.soort === "analyse" && weergave.id === o.id} uit={bezig || !!opbouw} icoon={soort === "Tabel" ? Table2 : soort === "Query" ? Braces : soort === "VBA" ? Code2 : FileText} naam={o.naam} doel={() => toon({ soort: "analyse", id: o.id })} />
                 ))}
@@ -720,18 +733,18 @@ function Werkruimte({
             );
           })}
           {analyse.rapport && (
-            <Sectie titel="Compatibiliteit">
-              <ObjectKnop gekozen={geselecteerd({ soort: "compat" })} uit={bezig || !!opbouw} icoon={ShieldCheck} naam="Rapport" doel={() => toon({ soort: "compat" })} />
+            <Sectie titel={t("studio.browser.compatibility")}>
+              <ObjectKnop gekozen={geselecteerd({ soort: "compat" })} uit={bezig || !!opbouw} icoon={ShieldCheck} naam={t("studio.browser.report")} doel={() => toon({ soort: "compat" })} />
             </Sectie>
           )}
         </>
       ) : (
-        <p className="muted">Open een database, maak een nieuwe of verken het voorbeeld.</p>
+        <p className="muted">{t("studio.browser.empty")}</p>
       )}
       <div className="aside-note">
         {werkkopie
-          ? "Je werkt in een werkkopie. Het origineel blijft ongewijzigd; bewaar de werkkopie als .sqlite om wijzigingen te houden."
-          : "Formulieren, rapporten en macro’s uit Access worden alleen geïnventariseerd. Niets wordt automatisch uitgevoerd."}
+          ? t("studio.browser.noteWorkingCopy")
+          : t("studio.browser.noteReadOnly")}
       </div>
     </aside>
   );
@@ -756,15 +769,12 @@ function Werkruimte({
           <div className="object-toolbar">
             <h2>
               {o.naam}
-              <small>{o.soort} · uit het Access-origineel</small>
+              <small>{t("studio.analysisObject.fromOriginal", { kind: enkelvoud(t, o.soort) })}</small>
             </h2>
           </div>
           {(o.soort === "Formulier" || o.soort === "Rapport") && (
             <p className="melding">
-              Access-{o.soort === "Formulier" ? "formulier" : "rapport"}ontwerpen (indeling, besturingselementen) zijn in het bestand
-              opgeslagen in een niet-gedocumenteerde binaire vorm en kunnen niet worden gelezen. Maak in Open Database Studio een eigen{" "}
-              {o.soort === "Formulier" ? "formulier" : "rapport"} met dezelfde naam (Maken ›{" "}
-              {o.soort === "Formulier" ? "Formulierontwerp" : "Rapport"}){o.soort === "Formulier" ? `; de VBA-module Form_${o.naam} wordt dan gekoppeld.` : "."}
+              {t(o.soort === "Formulier" ? "studio.analysisObject.formNotReadable" : "studio.analysisObject.reportNotReadable", { name: o.naam })}
             </p>
           )}
           {(o.soort === "Formulier" || o.soort === "Rapport") && werkkopie && (
@@ -779,11 +789,11 @@ function Werkruimte({
                   )
                 }
               >
-                <Hammer size={16} /> {o.soort === "Formulier" ? "Formulier" : "Rapport"} ‘{o.naam}’ ontwerpen
+                <Hammer size={16} /> {t(o.soort === "Formulier" ? "studio.analysisObject.designForm" : "studio.analysisObject.designReport", { name: o.naam })}
               </button>
             </div>
           )}
-          {o.soort === "Macro" && <p className="melding">Macro’s worden alleen geïnventariseerd en nooit uitgevoerd.</p>}
+          {o.soort === "Macro" && <p className="melding">{t("studio.analysisObject.macroNote")}</p>}
           <AlleenLezenObject key={o.id} object={o} lezer={lezer.current} />
         </>
       );
@@ -794,16 +804,13 @@ function Werkruimte({
           <div className="db-icon">
             <Database size={40} />
           </div>
-          <h2>{analyse.naam} · alleen lezen</h2>
+          <h2>{t("studio.readOnly.title", { name: analyse.naam })}</h2>
           <p>{analyse.melding}</p>
-          <p>
-            Er is geen werkkopie: bewerken, query’s uitvoeren, formulieren, rapporten en VBA zijn daardoor niet beschikbaar. Kies links een
-            object om het alleen-lezen te bekijken.
-          </p>
+          <p>{t("studio.readOnly.noCopy")}</p>
           {bronBestand.current && analyse.objecten.length > 0 && (
             <div className="database-knoppen database-welkomknoppen">
               <button className="primary" disabled={bezig} onClick={() => void bouwWerkkopie(bronBestand.current!)}>
-                <RefreshCw size={16} /> Werkkopie alsnog opbouwen
+                <RefreshCw size={16} /> {t("studio.readOnly.buildNow")}
               </button>
             </div>
           )}
@@ -813,20 +820,20 @@ function Werkruimte({
     switch (weergave.soort) {
       case "tabel": {
         const schema = objecten.tabellen.find((t) => t.naam === weergave.naam);
-        if (!schema) return <p role="status">Tabel laden…</p>;
+        if (!schema) return <p role="status">{t("studio.loadingTable")}</p>;
         return (
           <>
             <div className="object-toolbar">
               <h2>
                 {schema.naam}
-                <small>Tabel · {schema.herkomst === "access" ? "uit Access" : "in de werkkopie"}</small>
+                <small>{t(schema.herkomst === "access" ? "studio.table.fromAccess" : "studio.table.inCopy")}</small>
               </h2>
-              <div className="database-weergavekeuze" role="group" aria-label="Weergave">
+              <div className="database-weergavekeuze" role="group" aria-label={t("studio.table.view")}>
                 <button aria-pressed={weergave.modus === "gegevens"} onClick={() => toon({ ...weergave, modus: "gegevens" })}>
-                  <Table2 size={16} /> Gegevens
+                  <Table2 size={16} /> {t("studio.table.data")}
                 </button>
                 <button aria-pressed={weergave.modus === "ontwerp"} onClick={() => toon({ ...weergave, modus: "ontwerp" })}>
-                  <TableProperties size={16} /> Ontwerp
+                  <TableProperties size={16} /> {t("studio.table.design")}
                 </button>
               </div>
             </div>
@@ -840,7 +847,7 @@ function Werkruimte({
                 onGewijzigd={structuurGewijzigd}
                 onVerwijderd={() => {
                   setWeergave({ soort: "welkom" });
-                  setMelding(`Tabel ‘${schema.naam}’ verwijderd uit de werkkopie.`);
+                  setMelding(t("studio.messages.tableDeleted", { name: schema.naam }));
                   void vernieuw();
                 }}
               />
@@ -852,13 +859,13 @@ function Werkruimte({
         return (
           <>
             <div className="object-toolbar">
-              <h2>Nieuwe tabel</h2>
+              <h2>{t("studio.newTable")}</h2>
             </div>
             <NieuweTabel
               werkkopie={werkkopie}
               onGemaakt={async (naam) => {
                 await vernieuw();
-                setMelding(`Tabel ‘${naam}’ gemaakt.`);
+                setMelding(t("studio.messages.tableCreated", { name: naam }));
                 toon({ soort: "tabel", naam, modus: "gegevens" });
               }}
             />
@@ -870,8 +877,8 @@ function Werkruimte({
           <>
             <div className="object-toolbar">
               <h2>
-                {q?.naam ?? "Nieuwe query"}
-                <small>{q ? `${ACTIENAMEN[q.soort]} · opgeslagen query` : "SQL-weergave"}</small>
+                {q?.naam ?? t("studio.query.new")}
+                <small>{q ? t("studio.query.saved", { kind: actieNaam(q.soort) }) : t("studio.query.sqlView")}</small>
               </h2>
             </div>
             <QueryEditor
@@ -895,7 +902,7 @@ function Werkruimte({
       }
       case "formulier": {
         const o = formulieren.find((x) => x.naam === weergave.naam);
-        if (!o) return <p role="status">Formulier laden…</p>;
+        if (!o) return <p role="status">{t("studio.loadingForm")}</p>;
         return (
           <Formulier
             key={weergave.nr}
@@ -920,8 +927,8 @@ function Werkruimte({
           <>
             <div className="object-toolbar">
               <h2>
-                {o ? `Ontwerp van ${o.naam}` : "Nieuw formulier"}
-                <small>Formulierontwerp</small>
+                {o ? t("studio.formDesign.designOf", { name: o.naam }) : t("studio.formDesign.new")}
+                <small>{t("studio.formDesign.subtitle")}</small>
               </h2>
             </div>
             <FormulierOntwerper
@@ -951,7 +958,7 @@ function Werkruimte({
             <div className="object-toolbar">
               <h2>
                 {weergave.naam}
-                <small>Afdrukvoorbeeld · bron {weergave.bron}</small>
+                <small>{t("studio.report.preview", { source: weergave.bron })}</small>
               </h2>
             </div>
             <RapportVoorbeeld
@@ -970,15 +977,15 @@ function Werkruimte({
           <>
             <div className="object-toolbar">
               <h2>
-                {o ? `Ontwerp van ${o.naam}` : "Nieuw rapport"}
-                <small>Rapportontwerp</small>
+                {o ? t("studio.report.designOf", { name: o.naam }) : t("studio.report.new")}
+                <small>{t("studio.report.subtitle")}</small>
               </h2>
             </div>
             <RapportOntwerper
               key={weergave.nr}
               werkkopie={werkkopie}
               bronnen={bronnen}
-              naam={o?.naam ?? weergave.naam ?? vrijeNaam("Rapport", rapporten.map((r) => r.naam))}
+              naam={o?.naam ?? weergave.naam ?? vrijeNaam(t("studio.report.defaultName"), rapporten.map((r) => r.naam))}
               nieuw={!o}
               bron={o?.bron ?? weergave.bron ?? ""}
               definitie={o ? leesRapportDefinitie(o.definitie, o.naam) : leegRapport("")}
@@ -997,9 +1004,7 @@ function Werkruimte({
             <div className="object-toolbar">
               <h2>
                 {m.naam}
-                <small>
-                  VBA-{m.soort === "formulier" ? "formuliermodule" : m.soort === "klasse" ? "klassemodule" : "module"} · afgeschermd uitvoeren op de werkkopie
-                </small>
+                <small>{t(m.soort === "formulier" ? "studio.vba.formModule" : m.soort === "klasse" ? "studio.vba.classModule" : "studio.vba.module")}</small>
               </h2>
             </div>
             <VbaPaneel
@@ -1025,7 +1030,7 @@ function Werkruimte({
             onSpring={(module, regel) => {
               const m = modules.find((x) => x.naam.toLowerCase() === module.toLowerCase());
               if (m) toon({ soort: "vba", module: m.naam, ...(regel ? { regel } : {}) });
-              else setFout(`Module ‘${module}’ staat niet in de werkkopie.`);
+              else setFout(t("studio.errors.moduleNotInCopy", { name: module }));
             }}
             onGewijzigd={() => void vernieuw()}
             onExporteer={(naam, inhoud, type, wat) => void bewaarTekst(naam, inhoud, type, wat)}
@@ -1043,16 +1048,25 @@ function Werkruimte({
             </div>
             <h2>{sessie?.naam}</h2>
             <p>
-              {objecten.tabellen.length} tabellen · {objecten.querys.length} query’s · {formulieren.length} formulieren · {rapporten.length} rapporten ·{" "}
-              {modules.length} VBA-modules
+              {t("studio.summary", {
+                tables: t("objects.count.tables", { count: objecten.tabellen.length }),
+                queries: t("objects.count.queries", { count: objecten.querys.length }),
+                forms: t("objects.count.forms", { count: formulieren.length }),
+                reports: t("objects.count.reports", { count: rapporten.length }),
+                modules: t("objects.count.modules", { count: modules.length }),
+              })}
             </p>
-            <p>Kies links een object, of gebruik het lint: Maken voor nieuwe tabellen, query’s, formulieren en rapporten.</p>
+            <p>{t("studio.hint")}</p>
           </div>
         );
     }
   }
 
-  const statusWerkkopie = werkkopie ? `Werkkopie — het origineel blijft ongewijzigd${gewijzigd ? " · niet-opgeslagen wijzigingen" : ""}` : analyse ? "Alleen lezen" : "";
+  const statusWerkkopie = werkkopie
+    ? t(gewijzigd ? "studio.status.workingCopyUnsaved" : "studio.status.workingCopy")
+    : analyse
+      ? t("studio.status.readOnly")
+      : "";
   const geenWk = !werkkopie || bezig || !!opbouw;
 
   return (
@@ -1063,28 +1077,28 @@ function Werkruimte({
         tabs={[
           {
             id: "start",
-            naam: "Start",
+            naam: t("ribbon.start"),
             inhoud: (
               <>
-                <Groep naam="Database">
-                  <Actie icoon={FolderOpen} naam={bezig ? "Bestand lezen…" : "Openen"} groot disabled={bezig || !!opbouw} onClick={() => invoer.current?.click()} title="Database of werkkopie openen (Ctrl+O)" />
-                  <Actie icoon={FilePlus2} naam="Nieuw" groot disabled={bezig || !!opbouw} onClick={() => void nieuweDatabase()} title="Nieuwe lege database" />
-                  <Actie icoon={Database} naam="Voorbeeld" disabled={bezig || !!opbouw} onClick={() => void nieuweDatabase(true)} title="Voorbeelddatabase verkennen" />
+                <Groep naam={t("ribbon.database")}>
+                  <Actie icoon={FolderOpen} naam={bezig ? t("ribbon.reading") : t("ribbon.open")} groot disabled={bezig || !!opbouw} onClick={() => invoer.current?.click()} title={t("ribbon.openTitle")} />
+                  <Actie icoon={FilePlus2} naam={t("ribbon.new")} groot disabled={bezig || !!opbouw} onClick={() => void nieuweDatabase()} title={t("ribbon.newTitle")} />
+                  <Actie icoon={Database} naam={t("ribbon.sample")} disabled={bezig || !!opbouw} onClick={() => void nieuweDatabase(true)} title={t("ribbon.sampleTitle")} />
                 </Groep>
-                <Groep naam="Klembord">
-                  <Actie icoon={Copy} naam="Kopiëren" groot disabled={!actiefRaster} onClick={() => actiefRaster?.kopieer()} title="Selectie kopiëren (Ctrl+C)" />
-                  <Actie icoon={ClipboardCopy} naam="Met kopteksten" disabled={!actiefRaster} onClick={() => actiefRaster?.kopieer(true)} title="Selectie kopiëren met kolomkoppen (Ctrl+Shift+C)" />
-                  <Actie icoon={ClipboardPaste} naam="Plakken" disabled={!actiefRaster?.kanPlakken} onClick={() => actiefRaster?.plak()} title="Plakken vanaf de actieve cel (Ctrl+V)" />
-                  <Actie icoon={BoxSelect} naam="Alles selecteren" disabled={!actiefRaster} onClick={() => actiefRaster?.selecteerAlles()} title="Alle rijen en kolommen selecteren (Ctrl+A)" />
+                <Groep naam={t("ribbon.clipboard")}>
+                  <Actie icoon={Copy} naam={t("ribbon.copy")} groot disabled={!actiefRaster} onClick={() => actiefRaster?.kopieer()} title={t("ribbon.copyTitle")} />
+                  <Actie icoon={ClipboardCopy} naam={t("ribbon.copyHeaders")} disabled={!actiefRaster} onClick={() => actiefRaster?.kopieer(true)} title={t("ribbon.copyHeadersTitle")} />
+                  <Actie icoon={ClipboardPaste} naam={t("ribbon.paste")} disabled={!actiefRaster?.kanPlakken} onClick={() => actiefRaster?.plak()} title={t("ribbon.pasteTitle")} />
+                  <Actie icoon={BoxSelect} naam={t("ribbon.selectAll")} disabled={!actiefRaster} onClick={() => actiefRaster?.selecteerAlles()} title={t("ribbon.selectAllTitle")} />
                 </Groep>
-                <Groep naam="Werkkopie">
-                  <Actie icoon={Save} naam="Opslaan" groot disabled={geenWk} onClick={() => void bewaarWerkkopie()} title="Werkkopie bewaren als .sqlite (Ctrl+S)" />
-                  <Actie icoon={RefreshCw} naam="Vernieuwen" disabled={geenWk} onClick={() => void vernieuw()} />
-                  <Actie icoon={X} naam="Sluiten" disabled={(!werkkopie && !analyse) || bezig || !!opbouw} onClick={() => void sluitDatabase()} />
+                <Groep naam={t("ribbon.workingCopy")}>
+                  <Actie icoon={Save} naam={t("ribbon.save")} groot disabled={geenWk} onClick={() => void bewaarWerkkopie()} title={t("ribbon.saveTitle")} />
+                  <Actie icoon={RefreshCw} naam={t("ribbon.refresh")} disabled={geenWk} onClick={() => void vernieuw()} />
+                  <Actie icoon={X} naam={t("ribbon.close")} disabled={(!werkkopie && !analyse) || bezig || !!opbouw} onClick={() => void sluitDatabase()} />
                 </Groep>
                 {weergave.soort === "query" && (
-                  <Groep naam="Query">
-                    <Actie icoon={Play} naam="Uitvoeren" groot onClick={() => queryUitvoeren.current?.()} title="Uitvoeren (F5 of Ctrl+Enter)" />
+                  <Groep naam={t("ribbon.query")}>
+                    <Actie icoon={Play} naam={t("ribbon.run")} groot onClick={() => queryUitvoeren.current?.()} title={t("ribbon.runTitle")} />
                   </Groep>
                 )}
               </>
@@ -1092,76 +1106,76 @@ function Werkruimte({
           },
           {
             id: "maken",
-            naam: "Maken",
+            naam: t("ribbon.create"),
             inhoud: (
               <>
-                <Groep naam="Tabellen">
-                  <Actie icoon={Table2} naam="Tabel" groot disabled={geenWk} onClick={() => toon({ soort: "nieuwe-tabel" })} />
+                <Groep naam={t("ribbon.tables")}>
+                  <Actie icoon={Table2} naam={t("ribbon.table")} groot disabled={geenWk} onClick={() => toon({ soort: "nieuwe-tabel" })} />
                 </Groep>
-                <Groep naam="Query’s">
-                  <Actie icoon={Braces} naam="Query" groot disabled={geenWk} onClick={() => toon({ soort: "query", naam: null, sql: huidigeBron ? `SELECT *\nFROM [${huidigeBron}];` : undefined, nr: teller.current++ })} title="Nieuwe query in SQL-weergave" />
+                <Groep naam={t("ribbon.queries")}>
+                  <Actie icoon={Braces} naam={t("ribbon.query")} groot disabled={geenWk} onClick={() => toon({ soort: "query", naam: null, sql: huidigeBron ? `SELECT *\nFROM [${huidigeBron}];` : undefined, nr: teller.current++ })} title={t("ribbon.newQueryTitle")} />
                 </Groep>
-                <Groep naam="Formulieren">
-                  <Actie icoon={LayoutTemplate} naam="Formulier" groot disabled={geenWk || !huidigeBron} onClick={() => void automatischFormulierMaken()} title={huidigeBron ? `Automatisch formulier voor ${huidigeBron}` : "Automatisch formulier"} />
-                  <Actie icoon={Hammer} naam="Formulierontwerp" disabled={geenWk} onClick={() => toon({ soort: "formulier-ontwerp", naam: null, bron: huidigeBron, nr: teller.current++ })} />
+                <Groep naam={t("ribbon.forms")}>
+                  <Actie icoon={LayoutTemplate} naam={t("ribbon.form")} groot disabled={geenWk || !huidigeBron} onClick={() => void automatischFormulierMaken()} title={huidigeBron ? t("ribbon.autoFormFor", { source: huidigeBron }) : t("ribbon.autoForm")} />
+                  <Actie icoon={Hammer} naam={t("ribbon.formDesign")} disabled={geenWk} onClick={() => toon({ soort: "formulier-ontwerp", naam: null, bron: huidigeBron, nr: teller.current++ })} />
                 </Groep>
-                <Groep naam="Rapporten">
-                  <Actie icoon={FileText} naam="Rapport" groot disabled={geenWk} onClick={() => toon({ soort: "rapport-ontwerp", naam: null, bron: huidigeBron, nr: teller.current++ })} title="Rapportontwerp" />
+                <Groep naam={t("ribbon.reports")}>
+                  <Actie icoon={FileText} naam={t("ribbon.report")} groot disabled={geenWk} onClick={() => toon({ soort: "rapport-ontwerp", naam: null, bron: huidigeBron, nr: teller.current++ })} title={t("ribbon.reportDesign")} />
                 </Groep>
-                <Groep naam="Code">
-                  <Actie icoon={FileCode2} naam="Module" groot disabled={geenWk} onClick={() => void nieuweModule()} title="Nieuwe VBA-module" />
+                <Groep naam={t("ribbon.code")}>
+                  <Actie icoon={FileCode2} naam={t("ribbon.module")} groot disabled={geenWk} onClick={() => void nieuweModule()} title={t("ribbon.newModule")} />
                 </Groep>
               </>
             ),
           },
           {
             id: "extern",
-            naam: "Externe gegevens",
+            naam: t("ribbon.externalData"),
             inhoud: (
               <>
-                <Groep naam="Exporteren">
-                  <Actie icoon={Download} naam="CSV" groot disabled={!csvMogelijk || bezig} onClick={exporteerHuidig} title="Huidige tabel of queryresultaat als CSV" />
-                  <Actie icoon={Database} naam="SQLite" groot disabled={geenWk} onClick={() => void bewaarWerkkopie()} title="Werkkopie als SQLite-bestand" />
+                <Groep naam={t("ribbon.export")}>
+                  <Actie icoon={Download} naam={t("ribbon.csv")} groot disabled={!csvMogelijk || bezig} onClick={exporteerHuidig} title={t("ribbon.csvTitle")} />
+                  <Actie icoon={Database} naam={t("ribbon.sqlite")} groot disabled={geenWk} onClick={() => void bewaarWerkkopie()} title={t("ribbon.sqliteTitle")} />
                   <Actie
                     icoon={FileCode2}
-                    naam="Bron (.sql/.bas)"
+                    naam={t("ribbon.source")}
                     disabled={!(weergave.soort === "vba" || (weergave.soort === "query" && !!weergave.naam))}
                     onClick={exporteerBron}
                   />
                 </Groep>
-                <Groep naam="Rapporten">
-                  <Actie icoon={FileJson} naam="Compatibiliteit (JSON)" disabled={!analyse?.rapport} onClick={() => exporteerCompat("json")} />
-                  <Actie icoon={FileText} naam="Compatibiliteit (tekst)" disabled={!analyse?.rapport} onClick={() => exporteerCompat("txt")} />
-                  <Actie icoon={ListTree} naam="Opbouwrapport (JSON)" disabled={!werkkopie?.rapport} onClick={exporteerOpbouw} />
+                <Groep naam={t("ribbon.reports")}>
+                  <Actie icoon={FileJson} naam={t("ribbon.compatJson")} disabled={!analyse?.rapport} onClick={() => exporteerCompat("json")} />
+                  <Actie icoon={FileText} naam={t("ribbon.compatText")} disabled={!analyse?.rapport} onClick={() => exporteerCompat("txt")} />
+                  <Actie icoon={ListTree} naam={t("ribbon.buildJson")} disabled={!werkkopie?.rapport} onClick={exporteerOpbouw} />
                 </Groep>
               </>
             ),
           },
           {
             id: "hulpmiddelen",
-            naam: "Databasehulpmiddelen",
+            naam: t("ribbon.tools"),
             inhoud: (
               <>
-                <Groep naam="Overzicht">
-                  <Actie icoon={Link2} naam="Relaties" groot disabled={geenWk} onClick={() => toon({ soort: "relaties" })} />
-                  <Actie icoon={ShieldCheck} naam="Compatibiliteit" groot disabled={!analyse?.rapport} actief={weergave.soort === "compat"} onClick={() => toon({ soort: "compat" })} />
-                  <Actie icoon={ListTree} naam="Opbouwrapport" groot disabled={!werkkopie?.rapport} actief={weergave.soort === "opbouw"} onClick={() => toon({ soort: "opbouw" })} />
+                <Groep naam={t("ribbon.overview")}>
+                  <Actie icoon={Link2} naam={t("ribbon.relationships")} groot disabled={geenWk} onClick={() => toon({ soort: "relaties" })} />
+                  <Actie icoon={ShieldCheck} naam={t("ribbon.compatibility")} groot disabled={!analyse?.rapport} actief={weergave.soort === "compat"} onClick={() => toon({ soort: "compat" })} />
+                  <Actie icoon={ListTree} naam={t("ribbon.buildReport")} groot disabled={!werkkopie?.rapport} actief={weergave.soort === "opbouw"} onClick={() => toon({ soort: "opbouw" })} />
                 </Groep>
-                <Groep naam="VBA">
-                  <Actie icoon={Terminal} naam="Visual Basic" groot disabled={geenWk || !modules.length} onClick={() => modules[0] && toon({ soort: "vba", module: modules[0].naam })} title="VBA-modules en procedures" />
-                  <Actie icoon={Unplug} naam="Externe verwijzingen" disabled={geenWk || !modules.length} actief={weergave.soort === "extern"} onClick={() => toon({ soort: "extern" })} title="Externe afhankelijkheden van de VBA-code en Uitvoeren wat werkt" />
-                  <Actie icoon={Square} naam="Stop" disabled={!vba.bezig} onClick={vba.stop} title="Lopende VBA stoppen" />
+                <Groep naam={t("ribbon.vba")}>
+                  <Actie icoon={Terminal} naam={t("ribbon.visualBasic")} groot disabled={geenWk || !modules.length} onClick={() => modules[0] && toon({ soort: "vba", module: modules[0].naam })} title={t("ribbon.visualBasicTitle")} />
+                  <Actie icoon={Unplug} naam={t("ribbon.external")} disabled={geenWk || !modules.length} actief={weergave.soort === "extern"} onClick={() => toon({ soort: "extern" })} title={t("ribbon.externalTitle")} />
+                  <Actie icoon={Square} naam={t("ribbon.stop")} disabled={!vba.bezig} onClick={vba.stop} title={t("ribbon.stopTitle")} />
                 </Groep>
               </>
             ),
           },
           {
             id: "beeld",
-            naam: "Beeld",
+            naam: t("ribbon.view"),
             inhoud: (
-              <Groep naam="Weergave">
-                <Actie icoon={Sun} naam="Licht" groot actief={!donker} onClick={() => setDonker(false)} />
-                <Actie icoon={Moon} naam="Donker" groot actief={donker} onClick={() => setDonker(true)} />
+              <Groep naam={t("ribbon.display")}>
+                <Actie icoon={Sun} naam={t("ribbon.light")} groot actief={!donker} onClick={() => setDonker(false)} />
+                <Actie icoon={Moon} naam={t("ribbon.dark")} groot actief={donker} onClick={() => setDonker(true)} />
               </Groep>
             ),
           },
@@ -1169,14 +1183,14 @@ function Werkruimte({
       />
       <div className="database-documentbalk">
         <Database size={15} aria-hidden />
-        <strong>{sessie?.naam ?? analyse?.naam ?? "Geen database geopend"}</strong>
+        <strong>{sessie?.naam ?? analyse?.naam ?? t("studio.browser.noDatabase")}</strong>
         {werkkopie ? (
           <span className="database-werkkopiestatus" role="status">
-            <ShieldCheck size={13} aria-hidden /> Werkkopie — het origineel blijft ongewijzigd
-            {gewijzigd && <em> · niet opgeslagen</em>}
+            <ShieldCheck size={13} aria-hidden /> {t("studio.status.workingCopy")}
+            {gewijzigd && <em> · {t("studio.status.notSaved")}</em>}
           </span>
         ) : (
-          <span>{analyse ? "Alleen lezen" : "Lokaal · geen uploads"}</span>
+          <span>{analyse ? t("studio.status.readOnly") : t("studio.status.local")}</span>
         )}
       </div>
       <input
@@ -1184,7 +1198,7 @@ function Werkruimte({
         hidden
         type="file"
         accept=".mdb,.accdb,.sqlite,.sqlite3,.db"
-        aria-label="Database of werkkopie kiezen"
+        aria-label={t("studio.fileInput")}
         onChange={(event) => {
           const bestand = event.target.files?.[0];
           event.target.value = "";
@@ -1194,7 +1208,7 @@ function Werkruimte({
       {fout && (
         <div role="alert" className="melding fout database-balkmelding">
           <span>{fout}</span>
-          <button aria-label="Melding sluiten" onClick={() => setFout("")}>
+          <button aria-label={t("studio.closeMessage")} onClick={() => setFout("")}>
             <X size={14} />
           </button>
         </div>
@@ -1204,10 +1218,10 @@ function Werkruimte({
           <span title={meldingOpen ? undefined : melding}>{melding}</span>
           {melding.length > 80 && (
             <button aria-expanded={meldingOpen} onClick={() => setMeldingOpen((o) => !o)}>
-              {meldingOpen ? "Minder" : "Meer"}
+              {meldingOpen ? t("studio.less") : t("studio.more")}
             </button>
           )}
-          <button aria-label="Melding sluiten" onClick={() => setMelding("")}>
+          <button aria-label={t("studio.closeMessage")} onClick={() => setMelding("")}>
             <X size={14} />
           </button>
         </div>
@@ -1221,8 +1235,8 @@ function Werkruimte({
       </main>
       <footer>
         <span>Open Database Studio</span>
-        <span>{statusWerkkopie || "Klaar om te beginnen"}</span>
-        <span>{vba.bezig ? `VBA: ${vba.bezig}` : "Geen uploads · VBA alleen op verzoek"}</span>
+        <span>{statusWerkkopie || t("studio.status.ready")}</span>
+        <span>{vba.bezig ? t("studio.status.vbaBusy", { task: vba.bezig }) : t("studio.status.noUploads")}</span>
       </footer>
     </div>
     </RasterRegister.Provider>
@@ -1261,6 +1275,7 @@ function ObjectKnop({
 }
 
 function Sectie({ titel, children, leeg }: { titel: string; children?: React.ReactNode; leeg?: string }) {
+  const { t } = useTranslation("database");
   const items = (Array.isArray(children) ? children.flat() : [children]).filter(Boolean);
   return (
     <section>
@@ -1272,54 +1287,50 @@ function Sectie({ titel, children, leeg }: { titel: string; children?: React.Rea
           ))}
         </ul>
       ) : (
-        <p className="muted">{leeg ?? "Niet aanwezig"}</p>
+        <p className="muted">{leeg ?? t("studio.browser.notPresent")}</p>
       )}
     </section>
   );
 }
 
 function Welkom({ bezig, openen, nieuw, voorbeeld }: { bezig: boolean; openen: () => void; nieuw: () => void; voorbeeld: () => void }) {
+  const { t } = useTranslation("database");
   return (
     <div className="welkom">
       <div className="db-icon">
         <Database size={44} />
       </div>
-      <h2>Geef oude databases een nieuwe werkplek</h2>
-      <p>
-        Open een .mdb- of .accdb-bestand: Open Database Studio bouwt er een bewerkbare werkkopie van. Het origineel blijft ongewijzigd.
-      </p>
+      <h2>{t("studio.welcome.title")}</h2>
+      <p>{t("studio.welcome.intro")}</p>
       <div className="database-knoppen database-welkomknoppen">
         <button className="primary" disabled={bezig} onClick={openen}>
-          <FolderOpen size={16} /> Database openen
+          <FolderOpen size={16} /> {t("studio.welcome.open")}
         </button>
         <button disabled={bezig} onClick={nieuw}>
-          <FilePlus2 size={16} /> Nieuwe lege database
+          <FilePlus2 size={16} /> {t("studio.welcome.new")}
         </button>
         <button disabled={bezig} onClick={voorbeeld}>
-          <Database size={16} /> Voorbeeld verkennen
+          <Database size={16} /> {t("studio.welcome.sample")}
         </button>
       </div>
       <div className="kaarten">
         <section>
           <Table2 />
-          <h3>Tabellen en query’s</h3>
-          <p>Gegevens bewerken met typecontrole, query’s in Access-SQL uitvoeren en resultaten als CSV bewaren.</p>
+          <h3>{t("studio.welcome.tablesTitle")}</h3>
+          <p>{t("studio.welcome.tablesText")}</p>
         </section>
         <section>
           <LayoutTemplate />
-          <h3>Formulieren en rapporten</h3>
-          <p>Automatische formulieren, een eenvoudige ontwerper en rapporten met groepen en totalen, af te drukken als PDF.</p>
+          <h3>{t("studio.welcome.formsTitle")}</h3>
+          <p>{t("studio.welcome.formsText")}</p>
         </section>
         <section>
           <Code2 />
-          <h3>VBA</h3>
-          <p>VBA-procedures afgeschermd uitvoeren op de werkkopie: alleen op verzoek, zonder bestanden, COM of Shell.</p>
+          <h3>{t("studio.welcome.vbaTitle")}</h3>
+          <p>{t("studio.welcome.vbaText")}</p>
         </section>
       </div>
-      <p className="melding">
-        Alles gebeurt lokaal. Macro’s, AutoExec en VBA worden nooit automatisch uitgevoerd. Bewaar je werk als .sqlite-werkkopie en heropen
-        die later via Openen.
-      </p>
+      <p className="melding">{t("studio.welcome.local")}</p>
     </div>
   );
 }

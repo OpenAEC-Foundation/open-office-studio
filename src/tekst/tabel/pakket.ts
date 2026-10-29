@@ -4,6 +4,7 @@
  * opnieuw. Alleen het gesplitste stuk XML verandert; de rest blijft
  * byte-gelijk. Herladen wist de ongedaan-maakgeschiedenis.
  */
+import i18next from "../../i18n/config";
 import { Pakket, REL } from "../../grafieken/pakket.ts";
 import { elementen, leesXml, vervang, type XmlElement } from "../../grafieken/xml.ts";
 
@@ -29,15 +30,15 @@ export function hoofdtabellen(body: XmlElement): XmlElement[] {
 export function splitsTabelXml(xml: string, tabelIndex: number, rij: number): string {
   const wortel = leesXml(xml);
   const body = elementen(wortel).find((e) => e.lokaal === "body");
-  if (!body) throw new Error("Het document heeft geen hoofdtekst.");
+  if (!body) throw new Error(i18next.t("writer:table.errors.noBody"));
   const tabel = hoofdtabellen(body)[tabelIndex];
-  if (!tabel) throw new Error("De tabel is niet gevonden in het document.");
+  if (!tabel) throw new Error(i18next.t("writer:table.errors.tableNotFound"));
   const rijen = elementen(tabel).filter((e) => e.lokaal === "tr");
-  if (rij < 1 || rij >= rijen.length) throw new Error("Zet de cursor in de rij die de eerste rij van de nieuwe tabel moet worden (niet de eerste rij).");
+  if (rij < 1 || rij >= rijen.length) throw new Error(i18next.t("writer:table.errors.splitRow"));
   const vervolg = (xml.slice(rijen[rij].start, rijen[rij].eind).match(/<[\w]*:?vMerge\b[^>]*>/g) ?? []).some(
     (tag) => !/val="restart"/.test(tag),
   );
-  if (vervolg) throw new Error("De tabel kan hier niet worden gesplitst: een samengevoegde cel loopt over deze rij.");
+  if (vervolg) throw new Error(i18next.t("writer:table.errors.splitMerged"));
   const v = tabel.voorvoegsel ? `${tabel.voorvoegsel}:` : "";
   const kop = elementen(tabel)
     .filter((e) => e.lokaal === "tblPr" || e.lokaal === "tblGrid")

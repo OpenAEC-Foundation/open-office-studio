@@ -1,0 +1,474 @@
+{
+  "start": {
+    "backToWorkspace": "Takaisin työtilaan",
+    "workspace": "TYÖTILA",
+    "home": "Aloitus",
+    "saveTitle": "Tallenna · Ctrl+S",
+    "saveAs": "Tallenna nimellä",
+    "saveAsTitle": "Tallenna nimellä · F12 tai Ctrl+Shift+S",
+    "print": "Tulosta",
+    "printTitle": "Tulostuksen esikatselu ja tulostus · Ctrl+P",
+    "info": "Tiedot",
+    "infoTitle": "Asiakirjan ominaisuudet, tilastot ja asiakirjan tarkistus",
+    "sendAsAttachment": "Lähetä liitteenä",
+    "sendAsAttachmentTitle": "Liitä nykyinen asiakirja uuteen sähköpostiviestiin",
+    "email": "Sähköposti",
+    "emailUnread_one": "Sähköposti, {{count}} lukematon",
+    "emailUnread_other": "Sähköposti, {{count}} lukematonta",
+    "newFile": "UUSI TIEDOSTO",
+    "databaseTitle": "Database Studio · Access-tietokanta muokattavana työkopiona",
+    "databaseSubtitle": "Työkopio · muokkaus, kyselyt, VBA",
+    "settingsTitle": "Asetukset · Ctrl+,",
+    "shortcutsTitle": "Pikanäppäimet · F1",
+    "tagline": "Paikallinen toimistosi",
+    "titleFile": "Tiedosto",
+    "titleWorkspace": "Työtilasi.",
+    "intro": "Kirjoita, laske, esitä ja tallenna ideasi.",
+    "addNotesBackup": "Lisää muistiinpanojen varmuuskopio",
+    "openDatabase": "Avaa tietokanta",
+    "openFile": "Avaa tiedosto",
+    "openShortcut": "Ctrl O",
+    "newFileTitle": "Uusi tiedosto",
+    "newFileHint": "Valitse työkalu ja aloita tyhjällä tiedostolla",
+    "notesHeading": "Paikka ideoillesi.",
+    "notesText": "Muistikirjat, osiot ja sivut. Tallennetaan automaattisesti paikallisesti.",
+    "openNotes": "Avaa Muistiinpanot",
+    "emailText": "Oma sähköpostisi IMAP- ja SMTP-yhteydellä. Liitteet avautuvat suoraan Tekstiin, Laskentataulukkoon, Esitykseen tai Tietokantaan.",
+    "unread_one": "{{count}} lukematon",
+    "unread_other": "{{count}} lukematonta",
+    "openEmail": "Avaa Sähköposti",
+    "examplesTitle": "Tutustu, mitä voit tehdä",
+    "examplesHint": "Esimerkkitiedostot",
+    "existingTitle": "Aiemmin luotu tiedosto",
+    "browse": "Selaa tätä tietokonetta",
+    "browseNotes": "Lisää OpenAEC-muistiinpanojen varmuuskopio.",
+    "browseDatabase": "Avaa MDB- tai ACCDB-tietokanta tai SQLite-työkopio.",
+    "browseDocuments": "Avaa asiakirja, laskentataulukko tai esitys.",
+    "formatNotes": "MUISTIINPANOT",
+    "filesStayLocal": "Tiedostosi pysyvät omalla tietokoneellasi.",
+    "aboutVersion": "Tietoja tästä versiosta",
+    "aboutText": "DOCX, XLSX ja PPTX toimivat suoraan. Työpöytäversio voi määritetyllä muunto-ohjelmalla muuntaa myös ODF- ja vanhempia muotoja. Muotoilu voi tällöin poiketa. Database Studio muuntaa MDB- tai ACCDB-tiedoston muokattavaksi SQLite-työkopioksi, jossa on taulut, kyselyt, lomakkeet, raportit ja VBA; alkuperäinen pysyy muuttumattomana. Erillisen sovelluksen voi asentaa nimellä Open Database Studio.",
+    "modules": {
+      "docx": {
+        "new": "Tyhjä asiakirja",
+        "example": "Suunnittelumuistio",
+        "exampleText": "Tekstiä, tyylejä ja taulukko"
+      },
+      "xlsx": {
+        "new": "Tyhjä laskentataulukko",
+        "example": "Materiaaliluettelo",
+        "exampleText": "Materiaalit, kaavat ja summat"
+      },
+      "pptx": {
+        "new": "Tyhjä esitys",
+        "example": "Suunnitteluvisio",
+        "exampleText": "Diat, muodot ja muistiinpanot"
+      }
+    }
+  },
+  "recent": {
+    "title": "Viimeisimmät",
+    "hintDesktop": "Äskettäin avatut ja tallennetut tiedostot",
+    "hintBrowser": "Tämä selain muistaa vain nimet; valitse tiedosto uudelleen",
+    "clear": "Tyhjennä luettelo",
+    "clearTitle": "Tyhjennä luettelo; kiinnitetyt tiedostot säilyvät",
+    "missing": "Tiedostoa {{name}} ei enää löydy kansiosta {{folder}}. Poista se luettelosta ✕-painikkeella tai avaa se Selaa-toiminnolla.",
+    "missingOriginalFolder": "Tiedostoa {{name}} ei enää löydy alkuperäisestä kansiosta. Poista se luettelosta ✕-painikkeella tai avaa se Selaa-toiminnolla.",
+    "notFound": "Ei löytynyt",
+    "notFoundIn": "Ei löytynyt · {{location}}",
+    "openFrom": "{{folder}} · avaa",
+    "chooseFile": "Valitse tiedosto",
+    "nameOnly": "Vain nimi on tiedossa",
+    "pin": "Kiinnitä {{name}}",
+    "unpin": "Irrota {{name}}",
+    "pinTitle": "Kiinnitä ylös",
+    "unpinTitle": "Irrota",
+    "remove": "Poista {{name}} luettelosta",
+    "removeTitle": "Poista luettelosta (tiedosto säilyy)",
+    "today": "Tänään {{time}}",
+    "yesterday": "Eilen {{time}}",
+    "todayInline": "tänään {{time}}",
+    "yesterdayInline": "eilen {{time}}"
+  },
+  "recovery": {
+    "title": "Asiakirjojen palautus",
+    "explanation": "Open Office Studiota ei edellisellä kerralla suljettu oikein. Näistä asiakirjoista on tallennettu palautuskopio. Palautus avaa uuden, tallentamattoman välilehden; alkuperäinen tiedosto pysyy muuttumattomana.",
+    "copyFrom": "{{module}} · palautuskopio ajalta {{date}}",
+    "restore": "Palauta",
+    "saveAs": "Tallenna nimellä…",
+    "discard": "Hylkää",
+    "discardLabel": "Hylkää tiedoston {{name}} palautuskopio",
+    "later": "Päätä myöhemmin",
+    "laterTitle": "Kopiot säilytetään seuraavaan käynnistykseen asti",
+    "restoredFrom": "Palautettu palautuskopiosta ajalta {{date}}. Alkuperäistä tiedostoa ei ole muutettu; tallenna tämä asiakirja säilyttääksesi sen.",
+    "restoreFailed": "Tiedoston {{name}} palautus epäonnistui: {{error}}",
+    "copyFailed": "Automaattinen palautus ei voinut tallentaa kopiota: {{error}}"
+  },
+  "leave": {
+    "title": "Tallentamattomat muutokset",
+    "askSave": "Haluatko tallentaa tiedostoon <strong>{{name}}</strong> tehdyt muutokset ennen sulkemista?",
+    "unsaved": "<strong>{{name}}</strong> sisältää muutoksia, joita ei ole vielä tallennettu. Tallenna tiedosto ensin, jos haluat säilyttää ne.",
+    "others_one": "Sen jälkeen on vielä {{count}} muu asiakirja, jossa on tallentamattomia muutoksia.",
+    "others_other": "Sen jälkeen on vielä {{count}} muuta asiakirjaa, joissa on tallentamattomia muutoksia.",
+    "dontSave": "Älä tallenna",
+    "discard": "Hylkää muutokset"
+  },
+  "saveAs": {
+    "title": "Tallenna nimellä",
+    "fileName": "Tiedostonimi",
+    "browserInfo": "Selaimessa sovellus luo itse Markdown-, CSV-, HTML-, teksti- ja PDF-tiedostot sekä PNG-kuvat laskentataulukoista ja esityksistä. Muodot, joissa lukee ”vain työpöytäsovelluksessa”, vaativat työpöytäversion ja toimistoajoympäristön.",
+    "runtimeSearching": "Etsitään toimistoajoympäristöä…",
+    "runtimeFound": "Toimistoajoympäristö: {{version}}",
+    "runtimeDetails": "({{source}}, {{profile}})",
+    "sourceEnvironment": "muuttujasta OPENAEC_CONVERSIE_PROGRAMMA",
+    "sourceSetting": "itse valittu",
+    "sourceAutomatic": "löydetty automaattisesti",
+    "profileSafe": "turvallinen profiili: makrot pois",
+    "profileOwn": "oma profiili",
+    "runtimeMissing": "Toimistoajoympäristöä (LibreOffice) ei löytynyt. Ajoympäristöä vaativat muodot eivät ole käytettävissä.",
+    "chooseConverter": "Valitse muunto-ohjelma",
+    "format": "Muoto",
+    "groups": {
+      "own": "Oma muoto",
+      "openDocument": "OpenDocument",
+      "legacyOffice": "Vanhemmat Office-muodot",
+      "templates": "Mallit",
+      "macro": "Makroja tukevat",
+      "webText": "Verkko ja teksti",
+      "pdfImage": "PDF ja kuva"
+    },
+    "routes": {
+      "inApp": "sovelluksessa",
+      "runtime": "toimistoajoympäristön kautta",
+      "print": "Tulosta-toiminnon kautta"
+    },
+    "runtimeMissingShort": "ajoympäristö puuttuu",
+    "desktopOnly": "vain työpöytäsovelluksessa",
+    "separator": "Erotin",
+    "separatorSemicolon": "Puolipiste ; (suomi)",
+    "separatorComma": "Pilkku ,",
+    "separatorTab": "Sarkain",
+    "separatorPipe": "Pystyviiva |",
+    "encoding": "Merkistö",
+    "encodingUtf8BomExcel": "UTF-8 ja BOM (Excel)",
+    "encodingUtf8BomNotepad": "UTF-8 ja BOM (Muistio, Excel)",
+    "csvInfo": "Vain valittu taulukko, kaavojen sijaan arvot. Merkeillä =, +, - tai @ alkavan tekstin eteen lisätään heittomerkki, jotta taulukkolaskentaohjelma ei suorita sitä kaavana.",
+    "sheet": "Taulukko",
+    "activeSheet": "{{name}} (aktiivinen)",
+    "protect": "Suojaa avaaminen salasanalla",
+    "password": "Salasana",
+    "repeatPassword": "Toista salasana",
+    "encryptionInfo": "Salaus ECMA-376-standardin mukaisesti (AES-256), avattavissa Wordissa, Excelissä, PowerPointissa ja LibreOfficessa. Salasanaa ei tallenneta; jos unohdat sen, tiedostoa ei voi enää avata.",
+    "noEncryptionInfo": "Tämä ei ole kirjoitus- tai taulukkosuojaus: ilman valintaa tiedosto tallennetaan salaamattomana.",
+    "passwordMissing": "Valitse salasana.",
+    "passwordMismatch": "Salasanat eivät täsmää.",
+    "passwordTooLong": "Enintään {{max}} merkkiä.",
+    "slide": "Dia",
+    "slideNumber": "Dia {{number}}",
+    "currentSlide": "Dia {{number}} (nykyinen)",
+    "pdfVariant": "PDF-muunnelma",
+    "pdfPlain": "Tavallinen PDF",
+    "pdfA2b": "PDF/A-2b (arkisto)",
+    "slides": "Diat",
+    "pages": "Sivut",
+    "rangePlaceholder": "kaikki, tai esim. 1-3,5",
+    "bookmarks": "Otsikot kirjanmerkeiksi",
+    "printRoute": "PDF ilman toimistoajoympäristöä tehdään Tulosta-toiminnolla: valitse tulostusikkunassa tulostin <strong>Tallenna PDF-muodossa</strong> (Windows: ”Microsoft Print to PDF”). Muotoilu noudattaa editorin näkymää.",
+    "untitled": "Nimetön",
+    "copyInfo": "Tämä on kopio toisessa muodossa. Asiakirja pysyy merkittynä muutetuksi, kunnes tallennat sen .{{ext}}-muodossa.",
+    "print": "Tulosta…",
+    "formats": {
+      "docx": {
+        "docx": {
+          "name": "Word-asiakirja",
+          "keeps": "muokattava"
+        },
+        "odt": {
+          "name": "OpenDocument-teksti",
+          "keeps": "muokattava; muotoilu voi poiketa"
+        },
+        "fodt": {
+          "name": "OpenDocument-teksti (litteä XML)",
+          "keeps": "muokattava; muotoilu voi poiketa"
+        },
+        "doc": {
+          "name": "Word 97–2003 -asiakirja",
+          "keeps": "muokattava; muotoilu voi poiketa"
+        },
+        "dotx": {
+          "name": "Word-malli",
+          "keeps": "muokattava; muotoilu voi poiketa"
+        },
+        "dot": {
+          "name": "Word 97–2003 -malli",
+          "keeps": "muokattava; muotoilu voi poiketa"
+        },
+        "ott": {
+          "name": "OpenDocument-tekstimalli",
+          "keeps": "muokattava; muotoilu voi poiketa"
+        },
+        "docm": {
+          "name": "Makroja sisältävä Word-asiakirja",
+          "keeps": "vain avatulle makrotiedostolle: VBA-projekti säilyy muuttumattomana, makroja ei suoriteta"
+        },
+        "rtf": {
+          "name": "Rich Text Format",
+          "keeps": "muokattava; muotoilu voi poiketa"
+        },
+        "txt": {
+          "name": "Pelkkä teksti (UTF-8)",
+          "keeps": "vain teksti; muotoilu, taulukot ja kuvat poistuvat"
+        },
+        "html": {
+          "name": "Verkkosivu (HTML)",
+          "keeps": "muotoilu voi poiketa; kuvat upotettu"
+        },
+        "xhtml": {
+          "name": "XHTML-verkkosivu",
+          "keeps": "muotoilu voi poiketa"
+        },
+        "epub": {
+          "name": "EPUB-e-kirja",
+          "keeps": "vain luku; sivun asettelu poistuu"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "teksti ja rakenne; sivun asettelu, kuvat ja muutosmerkinnät poistuvat"
+        },
+        "pdf": {
+          "name": "PDF-asiakirja",
+          "keeps": "näkymä kuten tulostuksen esikatselussa; teksti haettavissa"
+        },
+        "png": {
+          "name": "PNG-kuva (ensimmäinen sivu)",
+          "keeps": "vain näkymä; vain ensimmäinen sivu"
+        }
+      },
+      "xlsx": {
+        "xlsx": {
+          "name": "Excel-työkirja",
+          "keeps": "muokattava"
+        },
+        "ods": {
+          "name": "OpenDocument-laskentataulukko",
+          "keeps": "muokattava; muotoilu voi poiketa"
+        },
+        "fods": {
+          "name": "OpenDocument-laskentataulukko (litteä XML)",
+          "keeps": "muokattava; muotoilu voi poiketa"
+        },
+        "xls": {
+          "name": "Excel 97–2003 -työkirja",
+          "keeps": "muokattava; muotoilu voi poiketa"
+        },
+        "xltx": {
+          "name": "Excel-malli",
+          "keeps": "muokattava; muotoilu voi poiketa"
+        },
+        "xlt": {
+          "name": "Excel 97–2003 -malli",
+          "keeps": "muokattava; muotoilu voi poiketa"
+        },
+        "ots": {
+          "name": "OpenDocument-laskentataulukkomalli",
+          "keeps": "muokattava; muotoilu voi poiketa"
+        },
+        "xlsm": {
+          "name": "Makroja sisältävä Excel-työkirja",
+          "keeps": "vain avatulle makrotiedostolle: VBA-projekti säilyy muuttumattomana, makroja ei suoriteta"
+        },
+        "csv": {
+          "name": "CSV (erotellut arvot)",
+          "keeps": "vain yksi taulukko; arvot ilman kaavoja ja muotoilua"
+        },
+        "tsv": {
+          "name": "Sarkaimin eroteltu teksti (TSV)",
+          "keeps": "vain yksi taulukko; arvot ilman kaavoja ja muotoilua"
+        },
+        "html": {
+          "name": "Verkkosivu (HTML)",
+          "keeps": "vain näkymä; kaavat poistuvat"
+        },
+        "dif": {
+          "name": "Data Interchange Format (DIF)",
+          "keeps": "vain ensimmäinen taulukko; arvot ilman kaavoja ja muotoilua"
+        },
+        "slk": {
+          "name": "SYLK",
+          "keeps": "vain ensimmäinen taulukko; kaavat säilyvät, muotoilu enimmäkseen ei"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "vain arvojen näkymä; kaavat ja muotoilu poistuvat"
+        },
+        "pdf": {
+          "name": "PDF-asiakirja",
+          "keeps": "näkymä kuten tulostuksen esikatselussa; teksti haettavissa"
+        },
+        "png": {
+          "name": "PNG-kuva (taulukko)",
+          "keeps": "vain näkymä; yhden taulukon käytetty alue"
+        }
+      },
+      "pptx": {
+        "pptx": {
+          "name": "PowerPoint-esitys",
+          "keeps": "muokattava"
+        },
+        "ppsx": {
+          "name": "PowerPoint-diaesitys",
+          "keeps": "muokattava; avautuu diaesityksenä; muotoilu voi poiketa"
+        },
+        "odp": {
+          "name": "OpenDocument-esitys",
+          "keeps": "muokattava; muotoilu voi poiketa"
+        },
+        "fodp": {
+          "name": "OpenDocument-esitys (litteä XML)",
+          "keeps": "muokattava; muotoilu voi poiketa"
+        },
+        "ppt": {
+          "name": "PowerPoint 97–2003 -esitys",
+          "keeps": "muokattava; muotoilu voi poiketa"
+        },
+        "pps": {
+          "name": "PowerPoint 97–2003 -diaesitys",
+          "keeps": "muokattava; muotoilu voi poiketa"
+        },
+        "potx": {
+          "name": "PowerPoint-malli",
+          "keeps": "muokattava; muotoilu voi poiketa"
+        },
+        "pot": {
+          "name": "PowerPoint 97–2003 -malli",
+          "keeps": "muokattava; muotoilu voi poiketa"
+        },
+        "otp": {
+          "name": "OpenDocument-esitysmalli",
+          "keeps": "muokattava; muotoilu voi poiketa"
+        },
+        "pptm": {
+          "name": "Makroja sisältävä PowerPoint-esitys",
+          "keeps": "vain avatulle makrotiedostolle: VBA-projekti säilyy muuttumattomana, makroja ei suoriteta"
+        },
+        "html": {
+          "name": "Verkkosivu (HTML)",
+          "keeps": "vain teksti dioittain; asettelu ja kuvat poistuvat"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "vain teksti dioittain; asettelu ja kuvat poistuvat"
+        },
+        "pdf": {
+          "name": "PDF-asiakirja",
+          "keeps": "näkymä kuten tulostuksen esikatselussa; teksti haettavissa"
+        },
+        "png": {
+          "name": "PNG-kuva (nykyinen dia)",
+          "keeps": "vain näkymä; yksi dia"
+        }
+      }
+    }
+  },
+  "saveResult": {
+    "saved": "Tallennettu: {{path}}",
+    "exported": "Viety: {{path}}. Tallenna myös muokattava tiedostosi, jotta muutokset säilyvät.",
+    "cancelled": "Tallennus peruutettu.",
+    "chooseLocation": "Valitse tallennettavan tiedoston nimi ja sijainti.",
+    "download": "Lataus pyydetty. Tarkista tiedosto latauksista.",
+    "tooLarge": "Tiedosto on tyhjä tai suurempi kuin 100 Mt.",
+    "needsDesktop": "Tämä muoto vaatii työpöytäversion ja toimistoajoympäristön (LibreOffice)."
+  },
+  "printPreview": {
+    "title": "Tulostuksen esikatselu – {{title}}",
+    "notReady": "Tulostus on mahdollista, kun asiakirja on avautunut kokonaan.",
+    "preparingPages": "Valmistellaan sivuja…",
+    "preparingPrint": "Valmistellaan tulostusta…",
+    "preparingPrintProgress": "Valmistellaan tulostusta… {{done}}/{{total}}",
+    "printHint": "Valitse tulostusikkunassa tulostin, kaksipuolinen tulostus ja tarvittaessa ”Tallenna PDF-muodossa”.",
+    "makingPdf": "Luodaan PDF-tiedostoa…",
+    "makingPdfProgress": "Luodaan PDF-tiedostoa… {{done}}/{{total}}",
+    "pdfSaved": "PDF tallennettu: {{path}}",
+    "pdfDownloading": "PDF-tiedostoa {{name}} ladataan.",
+    "layoutSaved": "Sivun asetukset on tallennettu työkirjaan. Tallenna asiakirja, jotta muutos säilyy.",
+    "saveAsPdf": "Tallenna PDF-muodossa",
+    "print": "Tulosta",
+    "keyboardHelp": "Page Up ja Page Down selaavat sivuja; Ctrl+P tulostaa.",
+    "settings": "Tulostusasetukset",
+    "pages": "Sivut",
+    "rangePlaceholder": "kaikki, tai esim. 1-3, 5",
+    "copies": "Kopiot",
+    "collate": "Lajittele (1, 2, 3 – 1, 2, 3)",
+    "systemDialogHint": "Tulostin, kaksipuolisuus ja värit valitaan sen jälkeen järjestelmän tulostusikkunassa.",
+    "printAs": "Tulosta muodossa",
+    "slides": "Diat",
+    "handouts": "Monisteet",
+    "notesPages": "Muistiinpanosivut",
+    "slidesPerPage": "Dioja sivulla",
+    "withLines": "{{number}} (riveillä)",
+    "paper": "Paperi",
+    "slideSize": "Dian koko",
+    "frameSlides": "Kehys diojen ympärille",
+    "report": "Raportti",
+    "saveLayout": "Tallenna sivun asetukset työkirjaan",
+    "pdf": "PDF",
+    "imageQuality": "Kuvanlaatu",
+    "qualitySmall": "Pieni tiedosto (150 dpi)",
+    "qualityStandard": "Vakio (200 dpi)",
+    "qualityHigh": "Korkea, häviötön (300 dpi)",
+    "pdfHint": "Teksti pysyy valittavana ja haettavana; PDF vastaa tarkalleen tätä esikatselua.",
+    "toolbar": "Selaus ja zoomaus",
+    "previousPage": "Edellinen sivu",
+    "nextPage": "Seuraava sivu",
+    "pageOf": "Sivu <input/>/{{total}}",
+    "pageNumber": "Sivunumero",
+    "zoomOut": "Loitonna",
+    "zoom": "Zoomaus",
+    "zoomIn": "Lähennä",
+    "wholePage": "Koko sivu",
+    "pageWidth": "Sivun leveys",
+    "preview": "Sivun esikatselu",
+    "pageImage": "Sivun {{number}} esikatselu",
+    "drawingPage": "Piirretään sivua…",
+    "orientation": "Suunta",
+    "portrait": "Pysty",
+    "landscape": "Vaaka",
+    "activeSheet": "Aktiivinen taulukko",
+    "wholeWorkbook": "Koko työkirja",
+    "selection": "Valinta ({{range}})",
+    "selectionNone": "Valinta (ei valittu mitään)",
+    "ignorePrintArea": "Ohita tulostusalue",
+    "pageSetup": "Sivun asetukset",
+    "sheet": "Taulukko",
+    "scale": "Skaalaus",
+    "percentage": "Prosentti",
+    "fitPage": "Sovita yhdelle sivulle",
+    "fitWidth": "Sovita sivun leveyteen",
+    "pagesWide": "Sivua leveyssuunnassa",
+    "pagesTall": "korkeussuunnassa (0 = vapaa)",
+    "marginTop": "Ylä (cm)",
+    "marginBottom": "Ala",
+    "marginLeft": "Vasen",
+    "marginRight": "Oikea",
+    "printArea": "Tulostusalue",
+    "printAreaPlaceholder": "käytetty alue, tai esim. A1:H40",
+    "repeatRows": "Toistuvat rivit",
+    "repeatRowsPlaceholder": "esim. 1:2",
+    "repeatColumns": "Toistuvat sarakkeet",
+    "repeatColumnsPlaceholder": "esim. A:B",
+    "gridlines": "Tulosta ruudukko",
+    "headings": "Tulosta rivi- ja sarakeotsikot",
+    "centerHorizontally": "Keskitä vaakasuunnassa",
+    "pageOrder": "Sivujärjestys",
+    "downThenOver": "Ensin alas, sitten oikealle",
+    "overThenDown": "Ensin oikealle, sitten alas",
+    "header": "Ylätunniste",
+    "footer": "Alatunniste",
+    "sectionLeft": "vasen",
+    "sectionCenter": "keski",
+    "sectionRight": "oikea",
+    "sectionLabel": "{{area}} {{section}}",
+    "fields": "Kentät: {{fields}}.",
+    "pageBreakPreview": "Sivunvaihtojen esikatselu…"
+  }
+}

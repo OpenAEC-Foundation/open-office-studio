@@ -7,6 +7,8 @@
  * Gebruik: `const t = new IfcTeller(); t.voed(stuk); …; t.einde()` of
  * `analyseerIfc(bytes, { opVoortgang, signaal })` (Web Worker waar mogelijk).
  */
+import ifcWorkerUrl from "./ifc-worker.ts?worker&url";
+import { startWorker } from "../../../../src/startWorker";
 
 export interface IfcKop {
   beschrijving: string[];
@@ -42,32 +44,35 @@ export interface IfcMeta {
   volledig: boolean;
 }
 
-/** Bouwdelen die de kaart altijd in deze volgorde toont (als ze voorkomen). */
+/**
+ * Bouwdelen die de kaart altijd in deze volgorde toont (als ze voorkomen):
+ * entiteittype en sleutel onder `email:preview.ifc.elements`.
+ */
 export const IFC_BOUWDELEN: [string, string][] = [
-  ["IFCWALL", "Wanden"],
-  ["IFCWALLSTANDARDCASE", "Wanden (standaard)"],
-  ["IFCCURTAINWALL", "Vliesgevels"],
-  ["IFCSLAB", "Vloeren en platen"],
-  ["IFCROOF", "Daken"],
-  ["IFCCOLUMN", "Kolommen"],
-  ["IFCBEAM", "Liggers"],
-  ["IFCMEMBER", "Staven"],
-  ["IFCPLATE", "Platen"],
-  ["IFCDOOR", "Deuren"],
-  ["IFCWINDOW", "Ramen"],
-  ["IFCSTAIR", "Trappen"],
-  ["IFCRAMP", "Hellingbanen"],
-  ["IFCRAILING", "Leuningen"],
-  ["IFCCOVERING", "Afwerkingen"],
-  ["IFCFOOTING", "Funderingen"],
-  ["IFCPILE", "Palen"],
-  ["IFCSPACE", "Ruimten"],
-  ["IFCOPENINGELEMENT", "Sparingen"],
-  ["IFCFURNISHINGELEMENT", "Inrichting"],
-  ["IFCFLOWSEGMENT", "Leidingdelen"],
-  ["IFCFLOWTERMINAL", "Eindpunten installaties"],
-  ["IFCBUILDINGELEMENTPROXY", "Overige bouwdelen"],
-  ["IFCBUILDINGSTOREY", "Verdiepingen"],
+  ["IFCWALL", "wall"],
+  ["IFCWALLSTANDARDCASE", "wallStandardCase"],
+  ["IFCCURTAINWALL", "curtainWall"],
+  ["IFCSLAB", "slab"],
+  ["IFCROOF", "roof"],
+  ["IFCCOLUMN", "column"],
+  ["IFCBEAM", "beam"],
+  ["IFCMEMBER", "member"],
+  ["IFCPLATE", "plate"],
+  ["IFCDOOR", "door"],
+  ["IFCWINDOW", "window"],
+  ["IFCSTAIR", "stair"],
+  ["IFCRAMP", "ramp"],
+  ["IFCRAILING", "railing"],
+  ["IFCCOVERING", "covering"],
+  ["IFCFOOTING", "footing"],
+  ["IFCPILE", "pile"],
+  ["IFCSPACE", "space"],
+  ["IFCOPENINGELEMENT", "opening"],
+  ["IFCFURNISHINGELEMENT", "furnishing"],
+  ["IFCFLOWSEGMENT", "flowSegment"],
+  ["IFCFLOWTERMINAL", "flowTerminal"],
+  ["IFCBUILDINGELEMENTPROXY", "proxy"],
+  ["IFCBUILDINGSTOREY", "storey"],
 ];
 
 const MAX_STRUCTUUR = 500;
@@ -350,7 +355,7 @@ export function analyseerIfc(
   return new Promise<IfcMeta>((resolve, reject) => {
     let worker: Worker;
     try {
-      worker = new Worker(new URL("./ifc-worker.ts", import.meta.url), { type: "module", name: "ifc-voorbeeld" });
+      worker = startWorker(ifcWorkerUrl, { name: "ifc-voorbeeld" });
     } catch {
       analyseerInStukken(bytes, opties).then(resolve, reject);
       return;

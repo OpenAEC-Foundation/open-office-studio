@@ -1,10 +1,15 @@
 {
   "identifier": "main",
-  "description": "Alleen de lokale kantooromgeving; losgemaakte documentvensters krijgen dezelfde rechten",
+  "description": "Alleen de lokale kantooromgeving; alle vensters (ook losgemaakte en nieuwe) krijgen dezelfde rechten, inclusief de eigen titelbalk (slepen, minimaliseren, maximaliseren, sluiten)",
   "windows": ["main", "document-*"],
   "permissions": [
     "core:default",
     "core:window:allow-set-title",
-    "core:window:allow-close"
+    "core:window:allow-close",
+    "core:window:allow-minimize",
+    "core:window:allow-toggle-maximize",
+    "core:window:allow-internal-toggle-maximize",
+    "core:window:allow-start-dragging",
+    "core:window:allow-is-maximized"
   ]
 }

@@ -115,10 +115,7 @@ impl Vensters {
 
 /// Sluitmelding met het aantal documenten in dit venster.
 pub fn sluitvraag(aantal: u32) -> String {
-    match aantal {
-        0 | 1 => "Eén document in dit venster bevat wijzigingen die nog niet zijn opgeslagen. Die gaan verloren. Toch sluiten?".to_owned(),
-        n => format!("{n} documenten in dit venster bevatten wijzigingen die nog niet zijn opgeslagen. Die gaan verloren. Toch sluiten?"),
-    }
+    crate::taal::t_aantal("dialogs.unsavedChanges.message", u64::from(aantal.max(1)), &[])
 }
 
 #[tauri::command]
@@ -137,7 +134,7 @@ pub fn wijzigingsstatus(
 #[tauri::command]
 pub async fn bevestig_verlaten(aantal: Option<u32>) -> bool {
     rfd::AsyncMessageDialog::new()
-        .set_title("Niet-opgeslagen wijzigingen")
+        .set_title(crate::taal::t("dialogs.unsavedChanges.title"))
         .set_description(sluitvraag(aantal.unwrap_or(1)))
         .set_buttons(rfd::MessageButtons::YesNo)
         .show()
@@ -236,7 +233,7 @@ pub fn open_documenten(vensters: tauri::State<Vensters>) -> Vec<VensterInfo> {
 pub fn activeer_tabblad(app: tauri::AppHandle, venster: String, id: u32) -> Result<(), String> {
     let doel = app
         .get_webview_window(&venster)
-        .ok_or("Dit venster is gesloten.")?;
+        .ok_or_else(|| crate::taal::t("errors.window.closed"))?;
     let _ = doel.unminimize();
     let _ = doel.show();
     let _ = doel.set_focus();
@@ -261,7 +258,7 @@ pub async fn bied_overdracht(
 ) -> Result<String, String> {
     let bytes = match request.body() {
         tauri::ipc::InvokeBody::Raw(b) if b.len() >= 4 && b.len() <= MAX_PAKKET => b.clone(),
-        _ => return Err("De overdracht is leeg of te groot.".into()),
+        _ => return Err(crate::taal::t("errors.window.transferEmptyOrTooLarge")),
     };
     let doel = kop(&request, "x-office-doel").unwrap_or_else(|| "nieuw".into());
     let vensters = app.state::<Vensters>();
@@ -287,43 +284,125 @@ pub async fn bied_overdracht(
                 token,
             },
         );
+    // Losgelaten boven een ander Office Studio-venster: daarheen, niet naar een nieuw venster.
+    let positie = kop(&request, "x-office-x")
+        .zip(kop(&request, "x-office-y"))
+        .and_then(|(x, y)| Some((x.parse::<f64>().ok()?, y.parse::<f64>().ok()?)));
+    let doel = match (&label, positie) {
+        (Some(_), Some(punt)) => venster_onder_punt(&vensterrechthoeken(&app), punt, venster.label())
+            .unwrap_or(doel),
+        _ => doel,
+    };
+    let label = label.filter(|_| doel == "nieuw");
+    if let Some(p) = vensters
+        .pakketten
+        .lock()
+        .map_err(|e| e.to_string())?
+        .get_mut(&sleutel)
+    {
+        p.venster = label.clone();
+    }
     let resultaat = match &label {
         Some(label) => {
             let titel = kop(&request, "x-office-titel")
                 .map(|t| t.chars().take(200).collect::<String>())
-                .unwrap_or_else(|| "Open Office Studio".into());
-            let positie = kop(&request, "x-office-x")
-                .zip(kop(&request, "x-office-y"))
-                .and_then(|(x, y)| Some((x.parse::<f64>().ok()?, y.parse::<f64>().ok()?)));
-            maak_venster(&app, label, &titel, &sleutel, positie)
+                .unwrap_or_else(|| APPNAAM.into());
+            maak_venster(&app, label, &titel, Some(&sleutel), positie)
         }
-        None => {
-            if app.get_webview_window(&doel).is_none() {
-                Err("Het hoofdvenster is niet beschikbaar.".into())
-            } else {
+        None => match app.get_webview_window(&doel) {
+            None => Err(crate::taal::t("errors.window.mainWindowUnavailable")),
+            Some(doelvenster) => {
+                let _ = doelvenster.unminimize();
+                let _ = doelvenster.set_focus();
                 app.emit_to(doel.as_str(), "office-overdracht", sleutel.clone())
                     .map_err(|e| e.to_string())
             }
-        }
+        },
     };
     if let Err(fout) = resultaat {
         vensters.pakketten.lock().map_err(|e| e.to_string())?.remove(&sleutel);
-        return Err(format!("Het venster kon niet worden geopend: {fout}"));
+        return Err(crate::taal::t_met("errors.window.openFailed", &[("error", &fout)]));
     }
     Ok(sleutel)
 }
 
+/// Opent een leeg, volwaardig Office Studio-venster (venstermenu › Nieuw venster).
+#[tauri::command]
+pub fn nieuw_venster(app: tauri::AppHandle, vensters: tauri::State<Vensters>) -> Result<(), String> {
+    let label = format!("{VOORVOEGSEL}{}", vensters.volgende());
+    maak_venster(&app, &label, APPNAAM, None, None)
+}
+
+/// Een venster op het scherm, in logische pixels (zoals `screenX`/`screenY` in de webview).
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct Rechthoek {
+    x: f64,
+    y: f64,
+    breedte: f64,
+    hoogte: f64,
+}
+
+impl Rechthoek {
+    fn bevat(&self, (x, y): (f64, f64)) -> bool {
+        x >= self.x && y >= self.y && x < self.x + self.breedte && y < self.y + self.hoogte
+    }
+}
+
+/// Het Office Studio-venster onder het loslaatpunt, behalve het bronvenster zelf.
+/// Bij overlap wint het eerst genoemde venster (het laatst actieve vooraan).
+pub fn venster_onder_punt(
+    vensters: &[(String, Rechthoek)],
+    punt: (f64, f64),
+    bron: &str,
+) -> Option<String> {
+    vensters
+        .iter()
+        .find(|(label, r)| label != bron && r.bevat(punt))
+        .map(|(label, _)| label.clone())
+}
+
+/// Rechthoeken van alle zichtbare, niet-geminimaliseerde vensters; het laatst actieve eerst.
+fn vensterrechthoeken(app: &tauri::AppHandle) -> Vec<(String, Rechthoek)> {
+    let laatst = crate::systeembestanden::laatst_actief(app);
+    let mut lijst: Vec<(String, Rechthoek)> = app
+        .webview_windows()
+        .into_iter()
+        .filter(|(_, v)| v.is_visible().unwrap_or(false) && !v.is_minimized().unwrap_or(false))
+        .filter_map(|(label, v)| {
+            let schaal = v.scale_factor().ok()?;
+            let plek = v.outer_position().ok()?.to_logical::<f64>(schaal);
+            let maat = v.outer_size().ok()?.to_logical::<f64>(schaal);
+            Some((
+                label,
+                Rechthoek { x: plek.x, y: plek.y, breedte: maat.width, hoogte: maat.height },
+            ))
+        })
+        .collect();
+    lijst.sort_by_key(|(label, _)| Some(label.as_str()) != laatst.as_deref());
+    lijst
+}
+
+/// Naam van de app; de webview zet daarna zelf de volledige titel.
+const APPNAAM: &str = "Open Office Studio";
+
+/// Een Office Studio-venster zonder systeemtitelbalk: de webview tekent zelf
+/// de titelbalk met vensterknoppen (OpenAEC Blueprint). `sleutel`: het
+/// tabblad dat het venster bij de start overneemt.
 fn maak_venster(
     app: &tauri::AppHandle,
     label: &str,
     titel: &str,
-    sleutel: &str,
+    sleutel: Option<&str>,
     positie: Option<(f64, f64)>,
 ) -> Result<(), String> {
-    let url = format!("index.html?venster=document&overdracht={sleutel}");
+    let url = match sleutel {
+        Some(sleutel) => format!("index.html?venster=document&overdracht={sleutel}"),
+        None => "index.html?venster=document".to_owned(),
+    };
     let mut bouwer =
         tauri::WebviewWindowBuilder::new(app, label, tauri::WebviewUrl::App(url.into()))
             .title(titel)
+            .decorations(false)
             .inner_size(1200.0, 800.0)
             .min_inner_size(800.0, 600.0);
     bouwer = match positie {
@@ -343,9 +422,9 @@ pub fn neem_overdracht(
     let mut pakketten = vensters.pakketten.lock().map_err(|e| e.to_string())?;
     let pakket = pakketten
         .get_mut(&sleutel)
-        .ok_or("Deze overdracht is verlopen of al opgenomen.")?;
+        .ok_or_else(|| crate::taal::t("errors.window.transferExpired"))?;
     if pakket.geclaimd {
-        return Err("Deze overdracht is al opgenomen.".into());
+        return Err(crate::taal::t("errors.window.transferAlreadyTaken"));
     }
     pakket.geclaimd = true;
     Ok(tauri::ipc::Response::new(pakket.bytes.clone()))
@@ -364,7 +443,7 @@ pub fn bevestig_overdracht(
         .lock()
         .map_err(|e| e.to_string())?
         .remove(&sleutel)
-        .ok_or("Deze overdracht is onbekend.")?;
+        .ok_or_else(|| crate::taal::t("errors.window.transferUnknown"))?;
     if let Some(token) = &pakket.token {
         werkbestanden.herbind(token, venster.label());
     }
@@ -503,5 +582,28 @@ mod tests {
         assert_eq!(v.aantal_gewijzigd("document-1"), 0);
         v.vergeet("main");
         assert_eq!(v.aantal_gewijzigd("main"), 0);
+    }
+
+    #[test]
+    fn loslaten_boven_een_ander_venster_kiest_dat_venster() {
+        let r = |x, y, breedte, hoogte| Rechthoek { x, y, breedte, hoogte };
+        let vensters = vec![
+            ("document-4".to_owned(), r(900.0, 100.0, 800.0, 600.0)),
+            ("main".to_owned(), r(0.0, 0.0, 1440.0, 950.0)),
+        ];
+        // Overlap: het eerst genoemde (laatst actieve) venster wint.
+        assert_eq!(
+            venster_onder_punt(&vensters, (1000.0, 200.0), "document-7").as_deref(),
+            Some("document-4")
+        );
+        // Het bronvenster zelf telt niet mee.
+        assert_eq!(
+            venster_onder_punt(&vensters, (1000.0, 200.0), "document-4").as_deref(),
+            Some("main")
+        );
+        assert_eq!(venster_onder_punt(&vensters, (100.0, 100.0), "main"), None);
+        // Buiten alle vensters (of rand rechts/onder): een nieuw venster.
+        assert_eq!(venster_onder_punt(&vensters, (1440.0, 960.0), "document-4"), None);
+        assert_eq!(venster_onder_punt(&vensters, (-5.0, 10.0), "document-4"), None);
     }
 }

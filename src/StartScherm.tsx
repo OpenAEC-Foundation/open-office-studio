@@ -19,14 +19,21 @@ import {
   Save,
   Printer,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import type { Soort } from "./editors";
 import { toonInstellingen, toonSneltoetsen } from "./werkruimte/gebeurtenissen";
 import { RecenteBestanden } from "./RecenteBestanden";
 import "../packages/email/src/start.css";
 
+/**
+ * De drie documentmodules. De Nederlandse teksten zijn de brontekst voor wie
+ * `modules` elders gebruikt; Start toont ze vertaald via
+ * `backstage:start.modules.<soort>.*` en `common:modules.<module>`.
+ */
 export const modules = [
   {
     soort: "docx",
+    module: "tekst",
     naam: "Open Tekst Studio",
     kort: "Tekst",
     nieuw: "Leeg document",
@@ -37,6 +44,7 @@ export const modules = [
   },
   {
     soort: "xlsx",
+    module: "rekenblad",
     naam: "Open Rekenblad Studio",
     kort: "Rekenblad",
     nieuw: "Leeg rekenblad",
@@ -47,6 +55,7 @@ export const modules = [
   },
   {
     soort: "pptx",
+    module: "presentatie",
     naam: "Open Presentatie Studio",
     kort: "Presentatie",
     nieuw: "Lege presentatie",
@@ -58,10 +67,12 @@ export const modules = [
 ] as const;
 
 function Voorbeeld({ soort }: { soort: Soort }) {
+  const { t } = useTranslation("common");
+  const module = modules.find((m) => m.soort === soort);
   return (
     <div className={`start-voorbeeld voorbeeld-${soort}`} aria-hidden="true">
       <span className="voorbeeld-app">
-        {modules.find((module) => module.soort === soort)?.kort}
+        {module && t(`modules.${module.module}`)}
       </span>
       {soort === "docx" ? (
         <div className="voorbeeld-papier">
@@ -141,61 +152,62 @@ export function StartScherm({
   /** Ongelezen in de inbox; null = geen e-mailaccount ingesteld. */
   emailOngelezen?: number | null;
 }) {
+  const { t } = useTranslation(["backstage", "common"]);
   return (
     <div className="office-start">
       <aside className="start-navigatie">
         {terug && (
           <button className="start-terug" onClick={terug} autoFocus>
             <ArrowLeft size={18} />
-            Terug naar werkruimte
+            {t("start.backToWorkspace")}
           </button>
         )}
         <div className="start-navgroep">
-          <span className="start-label">WERKRUIMTE</span>
+          <span className="start-label">{t("start.workspace")}</span>
           <button className="geselecteerd" aria-current="page">
             <Home size={18} />
-            Start
+            {t("start.home")}
           </button>
           <button disabled={bezig} onClick={open}>
             <FolderOpen size={18} />
-            Openen
+            {t("common:open")}
           </button>
           {opslaan && (
-            <button disabled={bezig} onClick={opslaan} title="Opslaan · Ctrl+S">
+            <button disabled={bezig} onClick={opslaan} title={t("start.saveTitle")}>
               <Save size={18} />
-              Opslaan
+              {t("common:save")}
             </button>
           )}
           {bewaar && (
-            <button disabled={bezig} onClick={bewaar} title="Opslaan als · F12 of Ctrl+Shift+S">
+            <button disabled={bezig} onClick={bewaar} title={t("start.saveAsTitle")}>
               <HardDrive size={18} />
-              Opslaan als
+              {t("start.saveAs")}
             </button>
           )}
           {afdrukken && (
-            <button disabled={bezig} onClick={afdrukken} title="Afdrukvoorbeeld en afdrukken · Ctrl+P">
+            <button disabled={bezig} onClick={afdrukken} title={t("start.printTitle")}>
               <Printer size={18} />
-              Afdrukken
+              {t("start.print")}
             </button>
           )}
           {info && (
             <button
               disabled={bezig}
               onClick={info}
-              title="Documenteigenschappen, statistieken en document inspecteren"
+              title={t("start.infoTitle")}
             >
               <Info size={18} />
-              Info
+              {t("start.info")}
             </button>
           )}
           {verzend && (
             <button
               disabled={bezig}
               onClick={verzend}
-              title="Het huidige document als bijlage in een nieuw e-mailbericht zetten"
+              title={t("start.sendAsAttachmentTitle")}
             >
               <Send size={18} />
-              Verzenden als bijlage
+              {t("start.sendAsAttachment")}
             </button>
           )}
           <button
@@ -204,11 +216,13 @@ export function StartScherm({
             onClick={openEmail}
             title="OpenAEC Email Studio"
             aria-label={
-              emailOngelezen ? `E-mail, ${emailOngelezen} ongelezen` : "E-mail"
+              emailOngelezen
+                ? t("start.emailUnread", { count: emailOngelezen })
+                : t("start.email")
             }
           >
             <Mail size={18} />
-            <span>E-mail</span>
+            <span>{t("start.email")}</span>
             {!!emailOngelezen && (
               <b className="start-email-teller">
                 {emailOngelezen > 999 ? "999+" : emailOngelezen}
@@ -217,7 +231,7 @@ export function StartScherm({
           </button>
         </div>
         <div className="start-navgroep">
-          <span className="start-label">NIEUW BESTAND</span>
+          <span className="start-label">{t("start.newFile")}</span>
           {modules.map((module) => (
             <button
               key={module.soort}
@@ -227,7 +241,7 @@ export function StartScherm({
               title={module.naam}
             >
               <module.icoon size={18} />
-              <span>{module.kort}</span>
+              <span>{t(`common:modules.${module.module}`)}</span>
               <Plus size={13} className="nav-plus" />
             </button>
           ))}
@@ -237,7 +251,7 @@ export function StartScherm({
             title="Open Notities Studio"
           >
             <NotebookPen size={18} />
-            <span>Notities</span>
+            <span>{t("common:modules.notities")}</span>
             <Plus size={13} className="nav-plus" />
           </button>
         </div>
@@ -246,22 +260,22 @@ export function StartScherm({
             disabled={bezig}
             onClick={openDatabase}
             aria-label="Database Studio"
-            title="Database Studio · Access-database als bewerkbare werkkopie"
+            title={t("start.databaseTitle")}
           >
             <Database size={18} />
             <span>
-              Database Studio<small>Werkkopie · bewerken, query’s, VBA</small>
+              Database Studio<small>{t("start.databaseSubtitle")}</small>
             </span>
             <ArrowRight size={14} />
           </button>
           <div className="start-hulp">
-            <button onClick={toonInstellingen} title="Instellingen · Ctrl+,">
+            <button onClick={toonInstellingen} title={t("start.settingsTitle")}>
               <Settings size={16} />
-              <span>Instellingen</span>
+              <span>{t("common:settings")}</span>
             </button>
-            <button onClick={toonSneltoetsen} title="Sneltoetsen · F1">
+            <button onClick={toonSneltoetsen} title={t("start.shortcutsTitle")}>
               <Keyboard size={16} />
-              <span>Sneltoetsen</span>
+              <span>{t("common:shortcuts")}</span>
             </button>
           </div>
           <span className="start-openaec">OpenAEC Foundation</span>
@@ -271,10 +285,10 @@ export function StartScherm({
         <div className="start-kop">
           <div>
             <span className="start-welkom">
-              <span /> Jouw lokale kantoor
+              <span /> {t("start.tagline")}
             </span>
-            <h1>{terug ? "Bestand" : "Je werkruimte."}</h1>
-            <p>Schrijven, rekenen, presenteren en ideeën vastleggen.</p>
+            <h1>{terug ? t("start.titleFile") : t("start.titleWorkspace")}</h1>
+            <p>{t("start.intro")}</p>
           </div>
           <button
             className="office-knop office-primair"
@@ -283,11 +297,11 @@ export function StartScherm({
           >
             <FolderOpen size={17} />
             {notitiesActief
-              ? "Notitieback-up toevoegen"
+              ? t("start.addNotesBackup")
               : databaseActief
-                ? "Database openen"
-                : "Bestand openen"}
-            <kbd>Ctrl O</kbd>
+                ? t("start.openDatabase")
+                : t("start.openFile")}
+            <kbd>{t("start.openShortcut")}</kbd>
           </button>
         </div>
         {!notitiesActief && !databaseActief && (
@@ -295,8 +309,8 @@ export function StartScherm({
         )}
         <section className="start-nieuw" aria-labelledby="start-nieuw-titel">
           <div className="start-sectiekop">
-            <h2 id="start-nieuw-titel">Nieuw bestand</h2>
-            <span>Kies je gereedschap, begin met een leeg bestand</span>
+            <h2 id="start-nieuw-titel">{t("start.newFileTitle")}</h2>
+            <span>{t("start.newFileHint")}</span>
           </div>
           <div className="start-sjablonen">
             {modules.map((module) => (
@@ -313,8 +327,8 @@ export function StartScherm({
                     <module.icoon size={19} />
                   </span>
                   <div>
-                    <strong>{module.nieuw}</strong>
-                    <span>{module.kort}</span>
+                    <strong>{t(`start.modules.${module.soort}.new`)}</strong>
+                    <span>{t(`common:modules.${module.module}`)}</span>
                   </div>
                   <ArrowRight size={16} />
                 </div>
@@ -331,13 +345,11 @@ export function StartScherm({
             <NotebookPen size={27} strokeWidth={1.5} />
           </span>
           <span>
-            <strong>Een plek voor je ideeën.</strong>
-            <small>
-              Notitieboeken, secties en pagina’s. Automatisch lokaal bewaard.
-            </small>
+            <strong>{t("start.notesHeading")}</strong>
+            <small>{t("start.notesText")}</small>
           </span>
           <span className="start-notities-open">
-            Open Notities <ArrowRight size={15} />
+            {t("start.openNotes")} <ArrowRight size={15} />
           </span>
         </button>
         <button
@@ -350,13 +362,12 @@ export function StartScherm({
           </span>
           <span>
             <strong>OpenAEC Email Studio</strong>
-            <small>
-              Je eigen e-mail via IMAP en SMTP. Bijlagen openen direct in Tekst,
-              Rekenblad, Presentatie of Database.
-            </small>
+            <small>{t("start.emailText")}</small>
           </span>
           <span className="start-notities-open">
-            {emailOngelezen ? `${emailOngelezen} ongelezen` : "Open E-mail"}{" "}
+            {emailOngelezen
+              ? t("start.unread", { count: emailOngelezen })
+              : t("start.openEmail")}{" "}
             <ArrowRight size={15} />
           </span>
         </button>
@@ -365,8 +376,8 @@ export function StartScherm({
           aria-labelledby="start-voorbeelden-titel"
         >
           <div className="start-sectiekop">
-            <h2 id="start-voorbeelden-titel">Ontdek wat je kunt maken</h2>
-            <span>Voorbeeldbestanden</span>
+            <h2 id="start-voorbeelden-titel">{t("start.examplesTitle")}</h2>
+            <span>{t("start.examplesHint")}</span>
           </div>
           <div className="start-voorbeeldlijst">
             {modules.map((module) => (
@@ -380,8 +391,8 @@ export function StartScherm({
                   <module.icoon size={20} />
                 </span>
                 <span>
-                  <strong>{module.voorbeeld}</strong>
-                  <small>{module.voorbeeldtekst}</small>
+                  <strong>{t(`start.modules.${module.soort}.example`)}</strong>
+                  <small>{t(`start.modules.${module.soort}.exampleText`)}</small>
                 </span>
                 <ArrowUpRight size={17} />
               </button>
@@ -390,7 +401,7 @@ export function StartScherm({
         </section>
         <section className="start-openen" aria-labelledby="start-openen-titel">
           <div className="start-sectiekop">
-            <h2 id="start-openen-titel">Bestaand bestand</h2>
+            <h2 id="start-openen-titel">{t("start.existingTitle")}</h2>
           </div>
           <button
             className="start-bestand-openen"
@@ -401,18 +412,18 @@ export function StartScherm({
               <FolderOpen size={26} strokeWidth={1.4} />
             </span>
             <span>
-              <strong>Bladeren op deze computer</strong>
+              <strong>{t("start.browse")}</strong>
               <small>
                 {notitiesActief
-                  ? "Voeg een OpenAEC-notitieback-up toe."
+                  ? t("start.browseNotes")
                   : databaseActief
-                    ? "Open een MDB- of ACCDB-database of een SQLite-werkkopie."
-                    : "Open een document, rekenblad of presentatie."}
+                    ? t("start.browseDatabase")
+                    : t("start.browseDocuments")}
               </small>
             </span>
             <span className="bestandsformaten">
               {(notitiesActief
-                ? ["NOTITIES"]
+                ? [t("start.formatNotes")]
                 : databaseActief
                   ? ["MDB", "ACCDB", "SQLITE"]
                   : ["DOCX", "XLSX", "PPTX"]
@@ -426,19 +437,11 @@ export function StartScherm({
         <div className="start-onderkant">
           <span>
             <HardDrive size={15} />
-            Je bestanden blijven op jouw computer.
+            {t("start.filesStayLocal")}
           </span>
           <details>
-            <summary>Over deze versie</summary>
-            <p>
-              DOCX, XLSX en PPTX werken rechtstreeks. De desktopversie kan met
-              een ingesteld conversieprogramma ook ODF en oudere formaten
-              omzetten. Opmaak kan daarbij afwijken. Database Studio maakt van
-              een MDB- of ACCDB-bestand een bewerkbare SQLite-werkkopie met
-              tabellen, query’s, formulieren, rapporten en VBA; het origineel
-              blijft ongewijzigd. De afzonderlijke app is te installeren als
-              Open Database Studio.
-            </p>
+            <summary>{t("start.aboutVersion")}</summary>
+            <p>{t("start.aboutText")}</p>
           </details>
         </div>
       </main>

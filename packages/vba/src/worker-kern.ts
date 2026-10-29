@@ -2,6 +2,7 @@
  * Kern van de VBA-worker, los van `self`, zodat hij ook in tests (met een
  * MessageChannel) draait. Geen DOM: alleen berichten.
  */
+import i18next from "i18next";
 import type { Werkkopie } from "../../database/src/werkkopie/contract.ts";
 import { scanAfscherming } from "./afscherming.ts";
 import { naarHost, vanHost } from "./conversie.ts";
@@ -33,7 +34,11 @@ export function startVbaWorker(
   poort: WorkerPoort,
   werkkopieVanPoort?: (p: MessagePort) => Promise<Werkkopie>,
   /** Alleen voor een worker in hetzelfde proces (tests, proeven): breekt de runtime af bij beëindigen. */
-  extra: { signaal?: AbortSignal } = {},
+  extra: {
+    signaal?: AbortSignal;
+    /** Zet de taal van de meldingen in deze worker (vba-worker.ts; niet in tests in hetzelfde proces). */
+    zetTaal?: (taal: string) => Promise<void>;
+  } = {},
 ) {
   let opties: WorkerOpties = { host: { msgBox: false, inputBox: false, gebeurtenis: false, formulieren: false } };
   let werkkopie: Werkkopie | undefined;
@@ -88,9 +93,10 @@ export function startVbaWorker(
       switch (b.soort) {
         case "start": {
           opties = b.opties;
+          if (opties.taal && extra.zetTaal) await extra.zetTaal(opties.taal);
           const p = e.ports?.[0];
           if (b.metWerkkopie) {
-            if (!p || !werkkopieVanPoort) throw new Error("De werkkopie kon niet aan de VBA-worker worden gekoppeld.");
+            if (!p || !werkkopieVanPoort) throw new Error(i18next.t("vba:worker.workingCopyNotConnected"));
             werkkopie = await werkkopieVanPoort(p);
           }
           resultaat = true;
@@ -120,7 +126,7 @@ export function startVbaWorker(
           resultaat = runtime?.procedures() ?? [];
           break;
         case "voerUit": {
-          if (!runtime) throw new Error("Er zijn nog geen modules geladen.");
+          if (!runtime) throw new Error(i18next.t("vba:worker.noModulesLoaded"));
           const u = await runtime.voerUit(b.module, b.procedure, b.argumenten.map(vanHost), {
             ontbrekend: b.ontbrekend,
             stappenlimiet: b.stappenlimiet,
@@ -149,7 +155,7 @@ export function startVbaWorker(
           break;
         }
         case "analyseerExtern": {
-          if (!runtime) throw new Error("Er zijn nog geen modules geladen.");
+          if (!runtime) throw new Error(i18next.t("vba:worker.noModulesLoaded"));
           resultaat = analyseerExternGeparst(
             [...runtime.modules.values()].map((m) => ({ naam: m.naam, soort: m.soort, ast: m.ast, parseerfout: m.fouten.length > 0 })),
             { verwijzingen: b.verwijzingen, gekoppeldeTabellen: b.gekoppeldeTabellen },

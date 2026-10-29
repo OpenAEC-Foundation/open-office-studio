@@ -10,7 +10,17 @@
 
 export type OAuthProvider = "microsoft" | "google";
 
-export interface OAuthStatus {
+/**
+ * Tekst uit de backend: `melding` is Nederlands; `sleutel` + `waarden` maken
+ * hem vertaalbaar (`email:backend.<sleutel>`, zie `backendTekst` in fouten.ts).
+ */
+export interface BackendTekst {
+  melding?: string;
+  sleutel?: string;
+  waarden?: Record<string, string>;
+}
+
+export interface OAuthStatus extends BackendTekst {
   /** Is er een client-ID voor deze provider ingesteld (build of app-instelling)? */
   beschikbaar: boolean;
   /** Uitleg als het niet beschikbaar is. */
@@ -79,8 +89,8 @@ export interface ConfiguratieVoorstel {
 }
 
 export interface TestUitkomst {
-  imap: { ok: boolean; melding: string };
-  smtp: { ok: boolean; melding: string };
+  imap: { ok: boolean; melding: string } & BackendTekst;
+  smtp: { ok: boolean; melding: string } & BackendTekst;
 }
 
 export interface Map {
@@ -173,7 +183,7 @@ export type MailFoutcode =
   | "niet-beschikbaar"
   | "intern";
 
-export interface MailFout {
+export interface MailFout extends BackendTekst {
   code: MailFoutcode;
   melding: string;
 }

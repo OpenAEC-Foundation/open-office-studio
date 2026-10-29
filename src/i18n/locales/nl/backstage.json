@@ -1,0 +1,474 @@
+{
+  "start": {
+    "backToWorkspace": "Terug naar werkruimte",
+    "workspace": "WERKRUIMTE",
+    "home": "Start",
+    "saveTitle": "Opslaan · Ctrl+S",
+    "saveAs": "Opslaan als",
+    "saveAsTitle": "Opslaan als · F12 of Ctrl+Shift+S",
+    "print": "Afdrukken",
+    "printTitle": "Afdrukvoorbeeld en afdrukken · Ctrl+P",
+    "info": "Info",
+    "infoTitle": "Documenteigenschappen, statistieken en document inspecteren",
+    "sendAsAttachment": "Verzenden als bijlage",
+    "sendAsAttachmentTitle": "Het huidige document als bijlage in een nieuw e-mailbericht zetten",
+    "email": "E-mail",
+    "emailUnread_one": "E-mail, {{count}} ongelezen",
+    "emailUnread_other": "E-mail, {{count}} ongelezen",
+    "newFile": "NIEUW BESTAND",
+    "databaseTitle": "Database Studio · Access-database als bewerkbare werkkopie",
+    "databaseSubtitle": "Werkkopie · bewerken, query’s, VBA",
+    "settingsTitle": "Instellingen · Ctrl+,",
+    "shortcutsTitle": "Sneltoetsen · F1",
+    "tagline": "Jouw lokale kantoor",
+    "titleFile": "Bestand",
+    "titleWorkspace": "Je werkruimte.",
+    "intro": "Schrijven, rekenen, presenteren en ideeën vastleggen.",
+    "addNotesBackup": "Notitieback-up toevoegen",
+    "openDatabase": "Database openen",
+    "openFile": "Bestand openen",
+    "openShortcut": "Ctrl O",
+    "newFileTitle": "Nieuw bestand",
+    "newFileHint": "Kies je gereedschap, begin met een leeg bestand",
+    "notesHeading": "Een plek voor je ideeën.",
+    "notesText": "Notitieboeken, secties en pagina’s. Automatisch lokaal bewaard.",
+    "openNotes": "Open Notities",
+    "emailText": "Je eigen e-mail via IMAP en SMTP. Bijlagen openen direct in Tekst, Rekenblad, Presentatie of Database.",
+    "unread_one": "{{count}} ongelezen",
+    "unread_other": "{{count}} ongelezen",
+    "openEmail": "Open E-mail",
+    "examplesTitle": "Ontdek wat je kunt maken",
+    "examplesHint": "Voorbeeldbestanden",
+    "existingTitle": "Bestaand bestand",
+    "browse": "Bladeren op deze computer",
+    "browseNotes": "Voeg een OpenAEC-notitieback-up toe.",
+    "browseDatabase": "Open een MDB- of ACCDB-database of een SQLite-werkkopie.",
+    "browseDocuments": "Open een document, rekenblad of presentatie.",
+    "formatNotes": "NOTITIES",
+    "filesStayLocal": "Je bestanden blijven op jouw computer.",
+    "aboutVersion": "Over deze versie",
+    "aboutText": "DOCX, XLSX en PPTX werken rechtstreeks. De desktopversie kan met een ingesteld conversieprogramma ook ODF en oudere formaten omzetten. Opmaak kan daarbij afwijken. Database Studio maakt van een MDB- of ACCDB-bestand een bewerkbare SQLite-werkkopie met tabellen, query’s, formulieren, rapporten en VBA; het origineel blijft ongewijzigd. De afzonderlijke app is te installeren als Open Database Studio.",
+    "modules": {
+      "docx": {
+        "new": "Leeg document",
+        "example": "Ontwerpnotitie",
+        "exampleText": "Tekst, stijlen en een tabel"
+      },
+      "xlsx": {
+        "new": "Leeg rekenblad",
+        "example": "Materiaaloverzicht",
+        "exampleText": "Materialen, formules en totalen"
+      },
+      "pptx": {
+        "new": "Lege presentatie",
+        "example": "Ontwerpvisie",
+        "exampleText": "Dia’s, vormen en notities"
+      }
+    }
+  },
+  "recent": {
+    "title": "Recent",
+    "hintDesktop": "Recent geopende en opgeslagen bestanden",
+    "hintBrowser": "Deze browser onthoudt alleen namen; kies het bestand opnieuw",
+    "clear": "Lijst wissen",
+    "clearTitle": "Lijst wissen; vastgezette bestanden blijven staan",
+    "missing": "{{name}} is niet meer te vinden in {{folder}}. Haal het uit de lijst met ✕ of open het via Bladeren.",
+    "missingOriginalFolder": "{{name}} is niet meer te vinden in de oorspronkelijke map. Haal het uit de lijst met ✕ of open het via Bladeren.",
+    "notFound": "Niet gevonden",
+    "notFoundIn": "Niet gevonden · {{location}}",
+    "openFrom": "{{folder}} · openen",
+    "chooseFile": "Bestand kiezen",
+    "nameOnly": "Alleen de naam is bekend",
+    "pin": "{{name}} vastzetten",
+    "unpin": "{{name}} losmaken",
+    "pinTitle": "Bovenaan vastzetten",
+    "unpinTitle": "Losmaken",
+    "remove": "{{name}} uit de lijst halen",
+    "removeTitle": "Uit de lijst halen (het bestand blijft bestaan)",
+    "today": "Vandaag {{time}}",
+    "yesterday": "Gisteren {{time}}",
+    "todayInline": "vandaag {{time}}",
+    "yesterdayInline": "gisteren {{time}}"
+  },
+  "recovery": {
+    "title": "Documenten herstellen",
+    "explanation": "De vorige keer is Open Office Studio niet netjes afgesloten. Van deze documenten is een herstelkopie bewaard. Herstellen opent een nieuw, niet-opgeslagen tabblad; het oorspronkelijke bestand blijft ongewijzigd.",
+    "copyFrom": "{{module}} · herstelkopie van {{date}}",
+    "restore": "Herstellen",
+    "saveAs": "Opslaan als…",
+    "discard": "Weggooien",
+    "discardLabel": "Herstelkopie van {{name}} weggooien",
+    "later": "Later beslissen",
+    "laterTitle": "De kopieën blijven bewaard tot de volgende start",
+    "restoredFrom": "Hersteld uit de herstelkopie van {{date}}. Het oorspronkelijke bestand is niet gewijzigd; sla dit document op om het te behouden.",
+    "restoreFailed": "{{name}} herstellen mislukt: {{error}}",
+    "copyFailed": "Automatisch herstel kon geen kopie bewaren: {{error}}"
+  },
+  "leave": {
+    "title": "Niet-opgeslagen wijzigingen",
+    "askSave": "Wil je de wijzigingen in <strong>{{name}}</strong> opslaan voordat je het sluit?",
+    "unsaved": "<strong>{{name}}</strong> bevat wijzigingen die nog niet zijn opgeslagen. Sla het bestand eerst op als je ze wilt behouden.",
+    "others_one": "Daarna volgt nog {{count}} ander document met niet-opgeslagen wijzigingen.",
+    "others_other": "Daarna volgen nog {{count}} andere documenten met niet-opgeslagen wijzigingen.",
+    "dontSave": "Niet opslaan",
+    "discard": "Wijzigingen verwerpen"
+  },
+  "saveAs": {
+    "title": "Opslaan als",
+    "fileName": "Bestandsnaam",
+    "browserInfo": "In de browser maakt de app Markdown, CSV, HTML, tekst en PDF zelf, en PNG bij rekenbladen en presentaties. Formaten met “alleen in de desktopapp” vragen de desktopversie met een kantoorruntime.",
+    "runtimeSearching": "Kantoorruntime zoeken…",
+    "runtimeFound": "Kantoorruntime: {{version}}",
+    "runtimeDetails": "({{source}}, {{profile}})",
+    "sourceEnvironment": "uit OPENAEC_CONVERSIE_PROGRAMMA",
+    "sourceSetting": "zelf gekozen",
+    "sourceAutomatic": "automatisch gevonden",
+    "profileSafe": "veilig profiel: macro’s uit",
+    "profileOwn": "eigen profiel",
+    "runtimeMissing": "Geen kantoorruntime (LibreOffice) gevonden. Formaten via de runtime zijn niet beschikbaar.",
+    "chooseConverter": "Conversieprogramma kiezen",
+    "format": "Formaat",
+    "groups": {
+      "own": "Eigen formaat",
+      "openDocument": "OpenDocument",
+      "legacyOffice": "Oudere Office-formaten",
+      "templates": "Sjablonen",
+      "macro": "Macro-ingeschakeld",
+      "webText": "Web en tekst",
+      "pdfImage": "PDF en afbeelding"
+    },
+    "routes": {
+      "inApp": "in de app",
+      "runtime": "via kantoorruntime",
+      "print": "via Afdrukken"
+    },
+    "runtimeMissingShort": "runtime ontbreekt",
+    "desktopOnly": "alleen in de desktopapp",
+    "separator": "Scheidingsteken",
+    "separatorSemicolon": "Puntkomma ; (Nederlands)",
+    "separatorComma": "Komma ,",
+    "separatorTab": "Tab",
+    "separatorPipe": "Verticale streep |",
+    "encoding": "Codering",
+    "encodingUtf8BomExcel": "UTF-8 met BOM (Excel)",
+    "encodingUtf8BomNotepad": "UTF-8 met BOM (Kladblok, Excel)",
+    "csvInfo": "Alleen het gekozen blad, met waarden in plaats van formules. Tekst die met =, +, - of @ begint krijgt een apostrof, zodat een rekenprogramma die niet als formule uitvoert.",
+    "sheet": "Blad",
+    "activeSheet": "{{name}} (actief)",
+    "protect": "Beveiligen met een wachtwoord om te openen",
+    "password": "Wachtwoord",
+    "repeatPassword": "Herhaal wachtwoord",
+    "encryptionInfo": "Versleuteling volgens ECMA-376 (AES-256), te openen in Word, Excel, PowerPoint en LibreOffice. Het wachtwoord wordt niet bewaard; ben je het kwijt, dan is het bestand niet meer te openen.",
+    "noEncryptionInfo": "Dit is geen schrijf- of bladbeveiliging: zonder vinkje wordt het bestand onversleuteld bewaard.",
+    "passwordMissing": "Kies een wachtwoord.",
+    "passwordMismatch": "De wachtwoorden zijn niet gelijk.",
+    "passwordTooLong": "Hooguit {{max}} tekens.",
+    "slide": "Dia",
+    "slideNumber": "Dia {{number}}",
+    "currentSlide": "Dia {{number}} (huidige)",
+    "pdfVariant": "PDF-variant",
+    "pdfPlain": "Gewone PDF",
+    "pdfA2b": "PDF/A-2b (archief)",
+    "slides": "Dia’s",
+    "pages": "Pagina’s",
+    "rangePlaceholder": "alle, of bijv. 1-3,5",
+    "bookmarks": "Koppen als bladwijzers",
+    "printRoute": "PDF zonder kantoorruntime gaat via Afdrukken: kies in het afdrukvenster de printer <strong>Opslaan als PDF</strong> (Windows: “Microsoft Print to PDF”). Opmaak volgt de weergave in de editor.",
+    "untitled": "Naamloos",
+    "copyInfo": "Dit is een kopie in een ander formaat. Het document blijft als gewijzigd gemarkeerd tot je het als .{{ext}} bewaart.",
+    "print": "Afdrukken…",
+    "formats": {
+      "docx": {
+        "docx": {
+          "name": "Word-document",
+          "keeps": "bewerkbaar"
+        },
+        "odt": {
+          "name": "OpenDocument-tekst",
+          "keeps": "bewerkbaar; opmaak kan afwijken"
+        },
+        "fodt": {
+          "name": "OpenDocument-tekst (plat XML)",
+          "keeps": "bewerkbaar; opmaak kan afwijken"
+        },
+        "doc": {
+          "name": "Word 97–2003-document",
+          "keeps": "bewerkbaar; opmaak kan afwijken"
+        },
+        "dotx": {
+          "name": "Word-sjabloon",
+          "keeps": "bewerkbaar; opmaak kan afwijken"
+        },
+        "dot": {
+          "name": "Word 97–2003-sjabloon",
+          "keeps": "bewerkbaar; opmaak kan afwijken"
+        },
+        "ott": {
+          "name": "OpenDocument-tekstsjabloon",
+          "keeps": "bewerkbaar; opmaak kan afwijken"
+        },
+        "docm": {
+          "name": "Word-document met macro’s",
+          "keeps": "alleen voor een geopend macrobestand: VBA-project ongewijzigd behouden, macro’s niet uitgevoerd"
+        },
+        "rtf": {
+          "name": "Rich Text Format",
+          "keeps": "bewerkbaar; opmaak kan afwijken"
+        },
+        "txt": {
+          "name": "Platte tekst (UTF-8)",
+          "keeps": "alleen tekst; opmaak, tabellen en afbeeldingen vervallen"
+        },
+        "html": {
+          "name": "Webpagina (HTML)",
+          "keeps": "opmaak kan afwijken; afbeeldingen ingesloten"
+        },
+        "xhtml": {
+          "name": "XHTML-webpagina",
+          "keeps": "opmaak kan afwijken"
+        },
+        "epub": {
+          "name": "EPUB-e-boek",
+          "keeps": "alleen lezen; paginaopmaak vervalt"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "tekst en structuur; paginaopmaak, afbeeldingen en revisies vervallen"
+        },
+        "pdf": {
+          "name": "PDF-document",
+          "keeps": "weergave als in het afdrukvoorbeeld; tekst doorzoekbaar"
+        },
+        "png": {
+          "name": "PNG-afbeelding (eerste pagina)",
+          "keeps": "alleen weergave; alleen de eerste pagina"
+        }
+      },
+      "xlsx": {
+        "xlsx": {
+          "name": "Excel-werkmap",
+          "keeps": "bewerkbaar"
+        },
+        "ods": {
+          "name": "OpenDocument-rekenblad",
+          "keeps": "bewerkbaar; opmaak kan afwijken"
+        },
+        "fods": {
+          "name": "OpenDocument-rekenblad (plat XML)",
+          "keeps": "bewerkbaar; opmaak kan afwijken"
+        },
+        "xls": {
+          "name": "Excel 97–2003-werkmap",
+          "keeps": "bewerkbaar; opmaak kan afwijken"
+        },
+        "xltx": {
+          "name": "Excel-sjabloon",
+          "keeps": "bewerkbaar; opmaak kan afwijken"
+        },
+        "xlt": {
+          "name": "Excel 97–2003-sjabloon",
+          "keeps": "bewerkbaar; opmaak kan afwijken"
+        },
+        "ots": {
+          "name": "OpenDocument-rekenbladsjabloon",
+          "keeps": "bewerkbaar; opmaak kan afwijken"
+        },
+        "xlsm": {
+          "name": "Excel-werkmap met macro’s",
+          "keeps": "alleen voor een geopend macrobestand: VBA-project ongewijzigd behouden, macro’s niet uitgevoerd"
+        },
+        "csv": {
+          "name": "CSV (gescheiden waarden)",
+          "keeps": "alleen één blad; waarden zonder formules en opmaak"
+        },
+        "tsv": {
+          "name": "Tekst met tabs (TSV)",
+          "keeps": "alleen één blad; waarden zonder formules en opmaak"
+        },
+        "html": {
+          "name": "Webpagina (HTML)",
+          "keeps": "alleen weergave; formules vervallen"
+        },
+        "dif": {
+          "name": "Data Interchange Format (DIF)",
+          "keeps": "alleen eerste blad; waarden zonder formules en opmaak"
+        },
+        "slk": {
+          "name": "SYLK",
+          "keeps": "alleen eerste blad; formules blijven, opmaak grotendeels niet"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "alleen weergave van waarden; formules en opmaak vervallen"
+        },
+        "pdf": {
+          "name": "PDF-document",
+          "keeps": "weergave als in het afdrukvoorbeeld; tekst doorzoekbaar"
+        },
+        "png": {
+          "name": "PNG-afbeelding (blad)",
+          "keeps": "alleen weergave; gebruikt bereik van één blad"
+        }
+      },
+      "pptx": {
+        "pptx": {
+          "name": "PowerPoint-presentatie",
+          "keeps": "bewerkbaar"
+        },
+        "ppsx": {
+          "name": "PowerPoint-diavoorstelling",
+          "keeps": "bewerkbaar; opent als diavoorstelling; opmaak kan afwijken"
+        },
+        "odp": {
+          "name": "OpenDocument-presentatie",
+          "keeps": "bewerkbaar; opmaak kan afwijken"
+        },
+        "fodp": {
+          "name": "OpenDocument-presentatie (plat XML)",
+          "keeps": "bewerkbaar; opmaak kan afwijken"
+        },
+        "ppt": {
+          "name": "PowerPoint 97–2003-presentatie",
+          "keeps": "bewerkbaar; opmaak kan afwijken"
+        },
+        "pps": {
+          "name": "PowerPoint 97–2003-diavoorstelling",
+          "keeps": "bewerkbaar; opmaak kan afwijken"
+        },
+        "potx": {
+          "name": "PowerPoint-sjabloon",
+          "keeps": "bewerkbaar; opmaak kan afwijken"
+        },
+        "pot": {
+          "name": "PowerPoint 97–2003-sjabloon",
+          "keeps": "bewerkbaar; opmaak kan afwijken"
+        },
+        "otp": {
+          "name": "OpenDocument-presentatiesjabloon",
+          "keeps": "bewerkbaar; opmaak kan afwijken"
+        },
+        "pptm": {
+          "name": "PowerPoint-presentatie met macro’s",
+          "keeps": "alleen voor een geopend macrobestand: VBA-project ongewijzigd behouden, macro’s niet uitgevoerd"
+        },
+        "html": {
+          "name": "Webpagina (HTML)",
+          "keeps": "alleen tekst per dia; indeling en afbeeldingen vervallen"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "alleen tekst per dia; indeling en afbeeldingen vervallen"
+        },
+        "pdf": {
+          "name": "PDF-document",
+          "keeps": "weergave als in het afdrukvoorbeeld; tekst doorzoekbaar"
+        },
+        "png": {
+          "name": "PNG-afbeelding (huidige dia)",
+          "keeps": "alleen weergave; één dia"
+        }
+      }
+    }
+  },
+  "saveResult": {
+    "saved": "Opgeslagen: {{path}}",
+    "exported": "Geëxporteerd: {{path}}. Sla je bewerkbare bestand ook op om de wijzigingen te behouden.",
+    "cancelled": "Opslaan geannuleerd.",
+    "chooseLocation": "Kies een naam en plek om op te slaan.",
+    "download": "Download aangevraagd. Controleer het bestand in je downloads.",
+    "tooLarge": "Het bestand is leeg of groter dan 100 MB.",
+    "needsDesktop": "Dit formaat vereist de desktopversie met een kantoorruntime (LibreOffice)."
+  },
+  "printPreview": {
+    "title": "Afdrukvoorbeeld – {{title}}",
+    "notReady": "Afdrukken kan zodra het document helemaal geopend is.",
+    "preparingPages": "Pagina’s voorbereiden…",
+    "preparingPrint": "Afdruk voorbereiden…",
+    "preparingPrintProgress": "Afdruk voorbereiden… {{done}} van {{total}}",
+    "printHint": "Kies in het afdrukvenster de printer, dubbelzijdig afdrukken en eventueel ‘Opslaan als PDF’.",
+    "makingPdf": "PDF maken…",
+    "makingPdfProgress": "PDF maken… {{done}} van {{total}}",
+    "pdfSaved": "PDF bewaard: {{path}}",
+    "pdfDownloading": "PDF {{name}} wordt gedownload.",
+    "layoutSaved": "De pagina-indeling is in de werkmap opgeslagen. Bewaar het document om dit vast te leggen.",
+    "saveAsPdf": "Opslaan als PDF",
+    "print": "Afdrukken",
+    "keyboardHelp": "Page Up en Page Down bladeren door de pagina's; Ctrl+P drukt af.",
+    "settings": "Afdrukinstellingen",
+    "pages": "Pagina’s",
+    "rangePlaceholder": "alle, of bijv. 1-3, 5",
+    "copies": "Exemplaren",
+    "collate": "Sorteren (1, 2, 3 – 1, 2, 3)",
+    "systemDialogHint": "Printer, dubbelzijdig en kleur kies je daarna in het afdrukvenster van het systeem.",
+    "printAs": "Afdrukken als",
+    "slides": "Dia’s",
+    "handouts": "Hand-outs",
+    "notesPages": "Notitiepagina’s",
+    "slidesPerPage": "Dia’s per pagina",
+    "withLines": "{{number}} (met regels)",
+    "paper": "Papier",
+    "slideSize": "Diagrootte",
+    "frameSlides": "Kader om dia’s",
+    "report": "Rapport",
+    "saveLayout": "Pagina-indeling in werkmap opslaan",
+    "pdf": "PDF",
+    "imageQuality": "Beeldkwaliteit",
+    "qualitySmall": "Klein bestand (150 dpi)",
+    "qualityStandard": "Standaard (200 dpi)",
+    "qualityHigh": "Hoog, verliesvrij (300 dpi)",
+    "pdfHint": "Tekst blijft selecteerbaar en doorzoekbaar; de PDF volgt precies dit voorbeeld.",
+    "toolbar": "Bladeren en zoomen",
+    "previousPage": "Vorige pagina",
+    "nextPage": "Volgende pagina",
+    "pageOf": "Pagina <input/> van {{total}}",
+    "pageNumber": "Paginanummer",
+    "zoomOut": "Uitzoomen",
+    "zoom": "Zoom",
+    "zoomIn": "Inzoomen",
+    "wholePage": "Hele pagina",
+    "pageWidth": "Paginabreedte",
+    "preview": "Paginavoorbeeld",
+    "pageImage": "Voorbeeld van pagina {{number}}",
+    "drawingPage": "Pagina tekenen…",
+    "orientation": "Afdrukstand",
+    "portrait": "Staand",
+    "landscape": "Liggend",
+    "activeSheet": "Actief blad",
+    "wholeWorkbook": "Hele werkmap",
+    "selection": "Selectie ({{range}})",
+    "selectionNone": "Selectie (niets geselecteerd)",
+    "ignorePrintArea": "Afdrukbereik negeren",
+    "pageSetup": "Pagina-indeling",
+    "sheet": "Blad",
+    "scale": "Schaal",
+    "percentage": "Percentage",
+    "fitPage": "Passend op één pagina",
+    "fitWidth": "Passend op paginabreedte",
+    "pagesWide": "Pagina’s breed",
+    "pagesTall": "hoog (0 = vrij)",
+    "marginTop": "Boven (cm)",
+    "marginBottom": "Onder",
+    "marginLeft": "Links",
+    "marginRight": "Rechts",
+    "printArea": "Afdrukbereik",
+    "printAreaPlaceholder": "gebruikt bereik, of bijv. A1:H40",
+    "repeatRows": "Rijen herhalen",
+    "repeatRowsPlaceholder": "bijv. 1:2",
+    "repeatColumns": "Kolommen herhalen",
+    "repeatColumnsPlaceholder": "bijv. A:B",
+    "gridlines": "Rasterlijnen afdrukken",
+    "headings": "Rij- en kolomkoppen afdrukken",
+    "centerHorizontally": "Horizontaal centreren",
+    "pageOrder": "Paginavolgorde",
+    "downThenOver": "Eerst omlaag, dan over",
+    "overThenDown": "Eerst over, dan omlaag",
+    "header": "Koptekst",
+    "footer": "Voettekst",
+    "sectionLeft": "links",
+    "sectionCenter": "midden",
+    "sectionRight": "rechts",
+    "sectionLabel": "{{area}} {{section}}",
+    "fields": "Velden: {{fields}}.",
+    "pageBreakPreview": "Pagina-eindevoorbeeld…"
+  }
+}

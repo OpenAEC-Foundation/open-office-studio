@@ -40,25 +40,26 @@ export interface AlineaFormulier {
   tabs: TabRegel[];
 }
 
+/** Keuzes met hun i18n-sleutel (namespace writer); vertalen bij het tonen. */
 export const uitlijningNamen: readonly (readonly [Uitlijning, string])[] = [
-  ["left", "Links"],
-  ["center", "Gecentreerd"],
-  ["right", "Rechts"],
-  ["both", "Uitgevuld"],
+  ["left", "paragraph.alignment.left"],
+  ["center", "paragraph.alignment.center"],
+  ["right", "paragraph.alignment.right"],
+  ["both", "paragraph.alignment.justify"],
 ];
 export const tabUitlijningNamen: readonly (readonly [TabUitlijning, string])[] = [
-  ["left", "Links"],
-  ["center", "Centreren"],
-  ["right", "Rechts"],
-  ["decimal", "Decimaal"],
-  ["bar", "Staafje"],
+  ["left", "paragraph.tabAlignment.left"],
+  ["center", "paragraph.tabAlignment.center"],
+  ["right", "paragraph.tabAlignment.right"],
+  ["decimal", "paragraph.tabAlignment.decimal"],
+  ["bar", "paragraph.tabAlignment.bar"],
 ];
 export const opvulNamen: readonly (readonly [Opvulteken, string])[] = [
-  ["none", "Geen"],
-  ["dot", "Puntjes ……"],
-  ["hyphen", "Streepjes ------"],
-  ["underscore", "Lijn ______"],
-  ["middleDot", "Middenpunten ·····"],
+  ["none", "paragraph.leader.none"],
+  ["dot", "paragraph.leader.dots"],
+  ["hyphen", "paragraph.leader.hyphens"],
+  ["underscore", "paragraph.leader.line"],
+  ["middleDot", "paragraph.leader.middleDots"],
 ];
 
 const getal = (w: unknown, standaard = 0) => (typeof w === "number" && Number.isFinite(w) ? w : standaard);

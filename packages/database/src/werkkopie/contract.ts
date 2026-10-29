@@ -240,8 +240,18 @@ export interface Werkkopie {
   sluit(): Promise<void>;
 }
 
-/** Begin van de melding over een SQLite-bestand dat geen werkkopie is (herkenbaar voor de interface). */
+/** Begin van de (Nederlandse) melding over een SQLite-bestand dat geen werkkopie is. */
 export const VREEMDE_SQLITE = "Dit SQLite-bestand is geen werkkopie van Open Database Studio";
+
+/**
+ * Is dit de weigering van een SQLite-bestand dat geen werkkopie is? Taalonafhankelijk:
+ * de fout draagt `vreemdeSqlite: true` (ook na de workergrens); de Nederlandse
+ * meldingstekst blijft als terugval herkend.
+ */
+export function isVreemdeSqlite(e: unknown): boolean {
+  if (!(e instanceof Error)) return false;
+  return (e as { vreemdeSqlite?: unknown }).vreemdeSqlite === true || e.message.startsWith(VREEMDE_SQLITE);
+}
 
 /**
  * Fouten met een vaste code, zodat de interface en de VBA-runtime ze

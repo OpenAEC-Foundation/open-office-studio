@@ -2,6 +2,8 @@
  * Bijgehouden wijzigingen (#28): soorten, auteurs, filteren en de vraag of
  * een wijziging in de selectie ligt. Los van de engine.
  */
+import i18next from "../../i18n/config";
+import { formatDatumTijd, vergelijkTekst } from "../../i18n/opmaak";
 
 export interface Revisie {
   revisionId: string;
@@ -13,37 +15,30 @@ export interface Revisie {
   range: { story: string; start: { paraId: string; offset: number }; end: { paraId: string; offset: number } };
 }
 
-export const SOORTNAAM: Record<string, string> = {
-  insertion: "Ingevoegd",
-  deletion: "Verwijderd",
-  pPrIns: "Alinea ingevoegd",
-  pPrDel: "Alinea verwijderd",
-  pPrChange: "Alineaopmaak gewijzigd",
-  trIns: "Rij ingevoegd",
-  trDel: "Rij verwijderd",
-  tableIns: "Tabel ingevoegd",
-  tableDel: "Tabel verwijderd",
-};
-export const soortNaam = (kind: string) => SOORTNAAM[kind] ?? "Gewijzigd";
+/** Soorten met een eigen naam (`writer:changes.kinds.<soort>`). */
+const SOORTEN = new Set(["insertion", "deletion", "pPrIns", "pPrDel", "pPrChange", "trIns", "trDel", "tableIns", "tableDel"]);
+/** Weergavenaam van een revisiesoort in de interfacetaal. */
+export const soortNaam = (kind: string) => i18next.t(`writer:changes.kinds.${SOORTEN.has(kind) ? kind : "other"}`);
 
 export type Weergave = "alle" | "eenvoudig" | "geen" | "origineel";
-export const WEERGAVEN: { waarde: Weergave; naam: string; uitleg: string }[] = [
-  { waarde: "alle", naam: "Alle markeringen", uitleg: "Ingevoegde en verwijderde tekst gemarkeerd in het document" },
-  { waarde: "eenvoudig", naam: "Eenvoudige markering", uitleg: "Het eindresultaat met een rode streep in de marge bij gewijzigde regels (alleen-lezen voorbeeld)" },
-  { waarde: "geen", naam: "Geen markeringen", uitleg: "Het document alsof alle wijzigingen zijn geaccepteerd (alleen-lezen voorbeeld)" },
-  { waarde: "origineel", naam: "Origineel", uitleg: "Het document alsof alle wijzigingen zijn geweigerd (alleen-lezen voorbeeld)" },
-];
+/** Markeringsweergaven; naam en uitleg staan onder `writer:changes.views.<waarde>`. */
+export const WEERGAVEN: readonly Weergave[] = ["alle", "eenvoudig", "geen", "origineel"];
+export const weergaveNaam = (w: Weergave) => i18next.t(`writer:changes.views.${w}.name`);
+export const weergaveUitleg = (w: Weergave) => i18next.t(`writer:changes.views.${w}.tip`);
 
-/** Auteurs met het aantal wijzigingen, op naam gesorteerd. */
+/**
+ * Auteurs met het aantal wijzigingen, op naam gesorteerd. Een revisie zonder
+ * auteur telt onder de naam "" (de weergave toont dan ‘Onbekend’).
+ */
 export function auteurs(revisies: readonly Revisie[]) {
   const telling = new Map<string, number>();
-  for (const r of revisies) telling.set(r.author || "Onbekend", (telling.get(r.author || "Onbekend") ?? 0) + 1);
-  return [...telling].sort((a, b) => a[0].localeCompare(b[0], "nl")).map(([naam, aantal]) => ({ naam, aantal }));
+  for (const r of revisies) telling.set(r.author || "", (telling.get(r.author || "") ?? 0) + 1);
+  return [...telling].sort((a, b) => vergelijkTekst(a[0], b[0])).map(([naam, aantal]) => ({ naam, aantal }));
 }
 
 /** Revisies van de getoonde auteurs (een lege verborgen-set toont iedereen). */
 export function getoond(revisies: readonly Revisie[], verborgen: ReadonlySet<string>) {
-  return verborgen.size ? revisies.filter((r) => !verborgen.has(r.author || "Onbekend")) : [...revisies];
+  return verborgen.size ? revisies.filter((r) => !verborgen.has(r.author || "")) : [...revisies];
 }
 
 /** Telt per soort, voor de samenvatting in het deelvenster. */
@@ -76,9 +71,9 @@ export function inSelectie(r: Revisie, van: Plek, tot: Plek, volgorde: (story: s
   return a === b ? ra <= a && a <= rb : ra < b && rb > a;
 }
 
-/** Leesbare datum zoals ‘12 okt. 2026, 14:05’. */
+/** Leesbare datum in de interfacetaal, zoals ‘12 okt. 2026, 14:05’. */
 export function toonDatum(iso: string) {
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return "";
-  return d.toLocaleString("nl-NL", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
+  return formatDatumTijd(d, { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
 }

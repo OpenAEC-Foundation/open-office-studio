@@ -2,7 +2,9 @@
  * Formulierdefinitie (opgeslagen als `Ontwerp`) en de pure navigatielogica
  * voor één-record-tegelijk-formulieren.
  */
+import i18next from "i18next";
 import type { Veldsoort } from "../werkkopie/contract.ts";
+import { formatGetal } from "../../../../src/i18n/opmaak";
 
 export interface FormulierVeld {
   /** Bronveld (kolom van de tabel of query). */
@@ -45,15 +47,15 @@ export function controleerDefinitie(def: FormulierDefinitie): string[] {
   const gezien = new Set<string>();
   for (const v of def.velden)
     if (!v.besturing.trim() || !/^[^\]!.[]+$/.test(v.besturing))
-      fouten.push(`‘${v.besturing}’ is geen geldige naam voor een besturingselement (geen ! . [ of ]).`);
+      fouten.push(i18next.t("database:form.validation.invalidControlName", { name: v.besturing }));
   for (const naam of [...def.velden.map((v) => v.besturing), ...def.knoppen.map((k) => k.naam)]) {
     const k = naam.toLowerCase();
-    if (gezien.has(k)) fouten.push(`De naam ‘${naam}’ komt meer dan één keer voor.`);
+    if (gezien.has(k)) fouten.push(i18next.t("database:form.validation.duplicateName", { name: naam }));
     gezien.add(k);
   }
   for (const k of def.knoppen)
-    if (!geldigeNaam.test(k.naam)) fouten.push(`Knopnaam ‘${k.naam}’ moet met een letter beginnen en alleen letters, cijfers en _ bevatten.`);
-  if (!def.velden.length && !def.knoppen.length) fouten.push("Kies minstens één veld of knop.");
+    if (!geldigeNaam.test(k.naam)) fouten.push(i18next.t("database:form.validation.invalidButtonName", { name: k.naam }));
+  if (!def.velden.length && !def.knoppen.length) fouten.push(i18next.t("database:form.validation.empty"));
   return [...new Set(fouten)];
 }
 
@@ -125,6 +127,6 @@ export function naVerwijderen(n: Navigatie): Navigatie {
 }
 
 export function positieTekst(n: Navigatie) {
-  if (n.index >= n.totaal) return `Nieuw record (${n.totaal.toLocaleString("nl-NL")} bestaande)`;
-  return `Record ${(n.index + 1).toLocaleString("nl-NL")} van ${n.totaal.toLocaleString("nl-NL")}`;
+  if (n.index >= n.totaal) return i18next.t("database:form.position.newRecord", { count: n.totaal, total: formatGetal(n.totaal) });
+  return i18next.t("database:form.position.record", { current: formatGetal(n.index + 1), total: formatGetal(n.totaal) });
 }

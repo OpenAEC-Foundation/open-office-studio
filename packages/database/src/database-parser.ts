@@ -1,4 +1,5 @@
 import { Buffer } from "buffer";
+import i18next from "i18next";
 import browserProcess from "process";
 import type MDBReader from "mdb-reader";
 const omgeving = globalThis as unknown as {
@@ -13,7 +14,7 @@ export async function openDatabase(bytes: ArrayBuffer): Promise<MDBReader> {
     return new Lezer(Buffer.from(bytes));
   } catch (oorzaak) {
     throw new Error(
-      "Dit bestand is geen leesbare MDB- of ACCDB-database. Het kan beschadigd, beveiligd of niet ondersteund zijn.",
+      i18next.t("database:parser.unreadable"),
       { cause: oorzaak },
     );
   }

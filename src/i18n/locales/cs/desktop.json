@@ -1,0 +1,143 @@
+{
+  "dialogs": {
+    "cancel": "Zrušit",
+    "saveAsEllipsis": "Uložit jako…",
+    "officeFile": "Kancelářský soubor",
+    "officeFiles": "Kancelářské soubory",
+    "untitled": "Bez názvu",
+    "saveCopy": "Uložit kopii",
+    "saveAs": "Uložit jako",
+    "openFile": "Otevřít soubor",
+    "replaceFile": {
+      "title": "Nahradit soubor",
+      "message": "Soubor {{path}} již existuje. Chcete ho nahradit?"
+    },
+    "unsavedChanges": {
+      "title": "Neuložené změny",
+      "message_one": "Jeden dokument v tomto okně obsahuje změny, které ještě nebyly uloženy. Tyto změny budou ztraceny. Přesto zavřít?",
+      "message_few": "{{count}} dokumenty v tomto okně obsahují změny, které ještě nebyly uloženy. Tyto změny budou ztraceny. Přesto zavřít?",
+      "message_many": "{{count}} dokumentu v tomto okně obsahuje změny, které ještě nebyly uloženy. Tyto změny budou ztraceny. Přesto zavřít?",
+      "message_other": "{{count}} dokumentů v tomto okně obsahuje změny, které ještě nebyly uloženy. Tyto změny budou ztraceny. Přesto zavřít?"
+    },
+    "fileChanged": {
+      "title": "Soubor byl změněn",
+      "missing": "Soubor {{name}} již v původním umístění neexistuje. Vytvořit ho znovu s vaší verzí, nebo ho uložit jinam?",
+      "changedExternally": "Soubor {{name}} byl od otevření změněn mimo Open Office Studio. Přepsáním se tyto změny zahodí.",
+      "overwrite": "Přepsat"
+    },
+    "foreignFormat": {
+      "title": "Uložit jako {{format}}",
+      "message": "Soubor {{name}} bude aktualizován ve formátu {{format}}. Kancelářské běhové prostředí k tomu dokument převede; formátování, které {{format}} nepodporuje, se může ztratit.",
+      "hint": "Zvolte Uložit jako…, chcete-li zachovat soubor DOCX, XLSX nebo PPTX.",
+      "update": "Aktualizovat jako {{format}}"
+    },
+    "chooseConverter": "Zvolit převodní program (soffice)",
+    "databaseExport": {
+      "title": "Uložit export databáze",
+      "filter": "Export databáze",
+      "sqliteFilter": "Pracovní kopie SQLite",
+      "replaceTitle": "Nahradit export",
+      "replaceMessage": "Tento soubor exportu již existuje. Chcete ho nahradit?"
+    }
+  },
+  "errors": {
+    "file": {
+      "invalidBody": "Soubor je prázdný, větší než 100 MB nebo nebyl odeslán jako binární data.",
+      "emptyOrTooLarge": "Soubor je prázdný nebo větší než 100 MB.",
+      "formatInfoMissing": "Chybí informace o formátu.",
+      "formatMissing": "Chybí formát.",
+      "targetFolderMissing": "Chybí cílová složka.",
+      "nameMissing": "Chybí název souboru.",
+      "nameInvalidChars": "Název souboru obsahuje neplatné znaky.",
+      "unsupportedFormat": "Nepodporovaný formát souboru.",
+      "extensionMismatch": "Zvolená přípona neodpovídá dokumentu.",
+      "alreadyOpenedOrOtherWindow": "Tento soubor je již otevřen nebo není určen pro toto okno.",
+      "notThisWindow": "Tento soubor nepatří k tomuto oknu.",
+      "notLinked": "Tento soubor již není propojen s touto kartou.",
+      "tokenMissing": "Chybí token.",
+      "openInOtherTab": "Soubor {{name}} je otevřen na jiné kartě. Nejprve ho zavřete nebo zvolte jiný název.",
+      "readOnly": "V této složce nemáte oprávnění k zápisu nebo je soubor jen pro čtení ({{path}}). Zvolte jiné umístění.",
+      "notInRecentList": "Tento soubor již v seznamu není."
+    },
+    "preferences": {
+      "tooLarge": "Předvolby jsou větší než 64 kB.",
+      "invalid": "Předvolby nejsou platný objekt JSON.",
+      "configDirUnavailable": "Konfigurační složka aplikace není k dispozici.",
+      "pathInvalid": "Neplatná cesta k předvolbám."
+    },
+    "font": {
+      "notInstalled": "Písmo {{family}} není v tomto počítači nainstalováno.",
+      "notFound": "Písmo nebylo nalezeno.",
+      "fileTooLarge": "Tento soubor písma je příliš velký.",
+      "inCollection": "Toto písmo je součástí kolekce (.ttc) a nelze ho použít samostatně.",
+      "unreadable": "Soubor písma nelze přečíst.",
+      "nameInvalid": "Neplatný název písma."
+    },
+    "recovery": {
+      "keyInvalid": "Neplatný klíč pro obnovení.",
+      "spaceFull": "Prostor pro kopie pro obnovení (512 MB) je plný. Uložte své dokumenty.",
+      "sessionMissing": "Chybí relace.",
+      "keyMissing": "Chybí klíč.",
+      "dataInvalid": "Neplatná data pro obnovení.",
+      "unknownDocumentType": "Neznámý typ dokumentu.",
+      "sessionNotThisWindow": "Tato relace obnovení nepatří k tomuto oknu.",
+      "sessionOtherWindow": "Tato relace obnovení patří k jinému oknu.",
+      "sessionStillRunning": "Tato relace stále běží."
+    },
+    "window": {
+      "closed": "Toto okno bylo zavřeno.",
+      "transferEmptyOrTooLarge": "Přenos je prázdný nebo příliš velký.",
+      "mainWindowUnavailable": "Hlavní okno není k dispozici.",
+      "openFailed": "Okno nelze otevřít: {{error}}",
+      "transferExpired": "Platnost tohoto přenosu vypršela nebo již byl převzat.",
+      "transferAlreadyTaken": "Tento přenos již byl převzat.",
+      "transferUnknown": "Tento přenos je neznámý."
+    },
+    "conversion": {
+      "unknownModule": "Neznámý kancelářský modul.",
+      "sourceFormatMismatch": "Zdrojový formát nepatří k tomuto modulu.",
+      "outputFormatUnsupported": "Tento výstupní formát není podporován.",
+      "outputFormatDirect": "Tento výstupní formát se vytváří přímo v aplikaci, ne převodem.",
+      "invalidOptions": "Neplatné možnosti převodu.",
+      "chooseSoffice": "Zvolte program soffice (Windows: soffice.exe) ze složky program kancelářského běhového prostředí.",
+      "chosenFileMissing": "Zvolený soubor neexistuje.",
+      "chosenPathNotFile": "Zvolená cesta není soubor.",
+      "chosenFileNotExecutable": "Zvolený soubor není spustitelný.",
+      "appDataDirUnavailable": "Složka dat aplikace není k dispozici.",
+      "startFailed": "Převod nelze spustit: {{error}}",
+      "failed": "Převod se nezdařil ({{reason}}). Originál byl zachován.",
+      "exitCode": "návratový kód {{code}}",
+      "processAborted": "proces přerušen",
+      "timeout": "Převod překročil časový limit a byl zastaven. Originál byl zachován.",
+      "profilePathInvalid": "Cesta k dočasnému profilu je neplatná.",
+      "inputSize": "Zvolte soubor o velikosti nejvýše 100 MB, který není prázdný.",
+      "runtimeMissing": "Tento formát vyžaduje kancelářské běhové prostředí (LibreOffice). Nebylo nalezeno: nainstalujte ho, zvolte program v dialogu Uložit jako nebo nastavte OPENAEC_CONVERSIE_PROGRAMMA. DOCX, XLSX a PPTX fungují přímo.",
+      "notConverted": "Tento soubor nelze převést. Může být poškozený nebo chráněný, nebo v místním běhovém prostředí chybí filtr formátu.",
+      "multipleOutputs": "Převod vytvořil více než jeden soubor.",
+      "noUsableOutput": "Převod nevytvořil použitelný soubor o velikosti nejvýše 100 MB."
+    },
+    "databaseExport": {
+      "emptyOrTooLarge": "Export je prázdný nebo větší než 100 MB.",
+      "emptyInvalidOrTooLarge": "Export je prázdný, neplatný nebo větší než 100 MB.",
+      "nameMissing": "Chybí název souboru.",
+      "nameInvalid": "Neplatný název souboru.",
+      "notSqlite": "Toto není pracovní kopie SQLite.",
+      "typeNotAllowed": "Povoleny jsou pouze exporty CSV, zdrojů, sestav a pracovních kopií SQLite. Databáze Access se nikdy nepřepisují.",
+      "textNotUtf8": "Textový export musí být platný text v kódování UTF-8.",
+      "sendAsBinary": "Odešlete export jako binární data o velikosti nejvýše 100 MB.",
+      "extensionMismatch": "Zvolená přípona neodpovídá exportu."
+    }
+  },
+  "launcher": {
+    "officeStudio": {
+      "genericName": "Kancelářský balík",
+      "comment": "Místní kancelářské prostředí OpenAEC",
+      "keywords": "textový editor;tabulkový procesor;tabulka;prezentace;databáze;e-mail;pošta;kancelář;office;"
+    },
+    "databaseStudio": {
+      "genericName": "Prohlížeč databází",
+      "comment": "Otevírejte starší databáze MDB a ACCDB místně",
+      "keywords": "databáze;tabulka;dotaz;database;access;"
+    }
+  }
+}

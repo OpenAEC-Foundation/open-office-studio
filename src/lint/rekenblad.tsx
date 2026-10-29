@@ -1,4 +1,5 @@
 import { useContext, useEffect, useReducer, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { vraagAfdrukvoorbeeld } from "../afdrukken/openen";
 import {
   useXlsxCommand,
@@ -183,32 +184,33 @@ function CS<K extends XlsxCommandId>({
 }
 
 function RekenbladLettertype() {
+  const { t } = useTranslation("ribbon");
   const grootte = useXlsxCommand("fontSize"),
     kleur = useXlsxCommand("textColor"),
     vulling = useXlsxCommand("fillColor");
   return (
-    <Groep naam="Lettertype">
+    <Groep naam={t("spreadsheet.groups.font")}>
       <div className="ribbon-rij">
         <CL />
         <OpdrachtGetal
           opdracht={grootte}
-          naam="Tekengrootte"
+          naam={t("spreadsheet.commands.fontSize")}
           args={(points) => ({ points })}
         />
       </div>
       <div className="ribbon-rij ribbon-iconen">
-        <C id="bold" naam="Vet" icoon={Bold} />
-        <C id="italic" naam="Cursief" icoon={Italic} />
-        <C id="strikethrough" naam="Doorhalen" icoon={Strikethrough} />
+        <C id="bold" naam={t("spreadsheet.commands.bold")} icoon={Bold} />
+        <C id="italic" naam={t("spreadsheet.commands.italic")} icoon={Italic} />
+        <C id="strikethrough" naam={t("spreadsheet.commands.strikethrough")} icoon={Strikethrough} />
         <OpdrachtKleur
           opdracht={vulling}
-          naam="Opvulkleur"
+          naam={t("spreadsheet.commands.fillColor")}
           icoon={PaintBucket}
           args={(color) => ({ color })}
         />
         <OpdrachtKleur
           opdracht={kleur}
-          naam="Tekstkleur"
+          naam={t("spreadsheet.commands.textColor")}
           icoon={Type}
           args={(color) => ({ color })}
         />
@@ -217,67 +219,69 @@ function RekenbladLettertype() {
   );
 }
 function RekenbladUitlijning() {
+  const { t } = useTranslation("ribbon");
   return (
-    <Groep naam="Uitlijning">
+    <Groep naam={t("spreadsheet.groups.alignment")}>
       <div className="ribbon-rij ribbon-iconen">
         <CS
           id="horizontalAlignment"
           args={{ value: "left" }}
-          naam="Links uitlijnen"
+          naam={t("spreadsheet.commands.alignLeft")}
           icoon={AlignLeft}
           toets="Ctrl+L"
         />
         <CS
           id="horizontalAlignment"
           args={{ value: "center" }}
-          naam="Centreren"
+          naam={t("spreadsheet.commands.center")}
           icoon={AlignCenter}
           toets="Ctrl+E"
         />
         <CS
           id="horizontalAlignment"
           args={{ value: "right" }}
-          naam="Rechts uitlijnen"
+          naam={t("spreadsheet.commands.alignRight")}
           icoon={AlignRight}
           toets="Ctrl+R"
         />
         <C
           id="textWrapping"
           args={{ value: "wrap" }}
-          naam="Tekstterugloop"
+          naam={t("spreadsheet.commands.wrapText")}
           icoon={WrapText}
         />
       </div>
       <div className="ribbon-rij">
-        <CK id="verticalAlignment" naam="Verticaal uitlijnen" />
-        <CK id="merge" naam="Samenvoegen" />
+        <CK id="verticalAlignment" naam={t("spreadsheet.commands.verticalAlignment")} />
+        <CK id="merge" naam={t("spreadsheet.commands.merge")} />
       </div>
     </Groep>
   );
 }
 function RekenbladGetal({ uitgebreid }: { uitgebreid?: boolean }) {
+  const { t } = useTranslation("ribbon");
   return (
-    <Groep naam="Getal">
-      <CK id="numberFormat" naam="Getalnotatie" breed />
+    <Groep naam={t("spreadsheet.groups.number")}>
+      <CK id="numberFormat" naam={t("spreadsheet.commands.numberFormat")} breed />
       <div className="ribbon-rij ribbon-iconen">
         {uitgebreid && (
           <>
             <CS
               id="numberFormat"
               args={{ value: "number" }}
-              naam="Getal"
+              naam={t("spreadsheet.commands.formatNumber")}
               icoon={Hash}
               toets="Ctrl+Shift+1"
             />
             <CS
               id="numberFormat"
               args={{ value: "scientific" }}
-              naam="Wetenschappelijk"
+              naam={t("spreadsheet.commands.formatScientific")}
               icoon={FlaskConical}
               toets="Ctrl+Shift+2"
             />
             <A
-              naam="Datum"
+              naam={t("spreadsheet.commands.formatDate")}
               icoon={CalendarDays}
               toets="Ctrl+Shift+3"
               doe={datumnotatie}
@@ -287,14 +291,14 @@ function RekenbladGetal({ uitgebreid }: { uitgebreid?: boolean }) {
         <CS
           id="numberFormat"
           args={{ value: "currency" }}
-          naam="Valuta"
+          naam={t("spreadsheet.commands.formatCurrency")}
           icoon={Euro}
           toets="Ctrl+Shift+4"
         />
         <CS
           id="numberFormat"
           args={{ value: "percent" }}
-          naam="Percentage"
+          naam={t("spreadsheet.commands.formatPercent")}
           icoon={Percent}
           toets="Ctrl+Shift+5"
         />
@@ -302,7 +306,7 @@ function RekenbladGetal({ uitgebreid }: { uitgebreid?: boolean }) {
           <CS
             id="numberFormat"
             args={{ value: "automatic" }}
-            naam="Standaard"
+            naam={t("spreadsheet.commands.formatGeneral")}
             icoon={Baseline}
             toets="Ctrl+Shift+6"
           />
@@ -310,13 +314,13 @@ function RekenbladGetal({ uitgebreid }: { uitgebreid?: boolean }) {
         <C
           id="decimalPlaces"
           args={{ direction: "decrease" }}
-          naam="Minder decimalen"
+          naam={t("spreadsheet.commands.decreaseDecimal")}
           icoon={IndentDecrease}
         />
         <C
           id="decimalPlaces"
           args={{ direction: "increase" }}
-          naam="Meer decimalen"
+          naam={t("spreadsheet.commands.increaseDecimal")}
           icoon={IndentIncrease}
         />
       </div>
@@ -324,10 +328,11 @@ function RekenbladGetal({ uitgebreid }: { uitgebreid?: boolean }) {
   );
 }
 function Klembord() {
+  const { t } = useTranslation("ribbon");
   return (
-    <Groep naam="Klembord">
+    <Groep naam={t("spreadsheet.groups.clipboard")}>
       <A
-        naam="Plakken"
+        naam={t("spreadsheet.commands.paste")}
         icoon={ClipboardPaste}
         toets="Ctrl+V"
         groot
@@ -335,51 +340,52 @@ function Klembord() {
       />
       <div className="ribbon-stapel">
         <A
-          naam="Knippen"
+          naam={t("spreadsheet.commands.cut")}
           icoon={Scissors}
           toets="Ctrl+X"
           doe={(api) => klembord(api, "x")}
         />
         <A
-          naam="Kopiëren"
+          naam={t("spreadsheet.commands.copy")}
           icoon={Copy}
           toets="Ctrl+C"
           doe={(api) => klembord(api, "c")}
         />
       </div>
-      <C id="paintFormat" naam="Opmaak kopiëren" icoon={Paintbrush} groot />
+      <C id="paintFormat" naam={t("spreadsheet.commands.formatPainter")} icoon={Paintbrush} groot />
     </Groep>
   );
 }
 function Cellen({ uit }: { uit: boolean }) {
+  const { t } = useTranslation("ribbon");
   return (
     <>
-      <Groep naam="Rijen">
+      <Groep naam={t("spreadsheet.groups.rows")}>
         <div className="ribbon-stapel">
           <A
-            naam="Rijen boven invoegen"
+            naam={t("spreadsheet.commands.insertRowsAbove")}
             icoon={BetweenHorizontalStart}
             uit={uit}
             doe={(api) => rijenInvoegen(api, false)}
           />
           <A
-            naam="Rijen onder invoegen"
+            naam={t("spreadsheet.commands.insertRowsBelow")}
             icoon={BetweenHorizontalEnd}
             uit={uit}
             doe={(api) => rijenInvoegen(api, true)}
           />
         </div>
       </Groep>
-      <Groep naam="Kolommen">
+      <Groep naam={t("spreadsheet.groups.columns")}>
         <div className="ribbon-stapel">
           <A
-            naam="Kolommen links invoegen"
+            naam={t("spreadsheet.commands.insertColumnsLeft")}
             icoon={BetweenVerticalStart}
             uit={uit}
             doe={(api) => kolommenInvoegen(api, false)}
           />
           <A
-            naam="Kolommen rechts invoegen"
+            naam={t("spreadsheet.commands.insertColumnsRight")}
             icoon={BetweenVerticalEnd}
             uit={uit}
             doe={(api) => kolommenInvoegen(api, true)}
@@ -397,6 +403,7 @@ export function RekenbladRibbon({
   bestand: () => void;
   zoomKoppeling?: ZoomKoppeling;
 }) {
+  const { t } = useTranslation("ribbon");
   const zoom = useXlsxCommand("zoom"),
     randkleur = useXlsxCommand("borderColor");
   useDocumentZoom({
@@ -515,35 +522,35 @@ export function RekenbladRibbon({
   useSneltoetsen(rekenbladHost, api ? sneltoetsen : [], "rekenblad");
 
   const zoeken = (
-    <Groep naam="Zoeken">
+    <Groep naam={t("spreadsheet.groups.find")}>
       <Actie
-        naam="Zoeken en vervangen"
+        naam={t("spreadsheet.commands.findReplace")}
         icoon={Search}
         groot
         disabled={!api}
-        title="Zoeken en vervangen · Ctrl+H"
+        title={`${t("spreadsheet.commands.findReplace")} · Ctrl+H`}
         onMouseDown={(event) => event.preventDefault()}
         onClick={() => setPaneel("zoeken")}
       />
     </Groep>
   );
   const navigator = (
-    <Groep naam="Navigator">
+    <Groep naam={t("spreadsheet.groups.navigator")}>
       <Actie
-        naam="Navigator"
+        naam={t("spreadsheet.commands.navigator")}
         icoon={Compass}
         groot
         disabled={!api}
-        title="Navigator: ga naar cel of benoemd bereik · F5"
+        title={`${t("spreadsheet.commands.navigatorHint")} · F5`}
         onMouseDown={(event) => event.preventDefault()}
         onClick={() => setPaneel("ganaar")}
       />
     </Groep>
   );
   const functies = (
-    <Groep naam="Functie">
+    <Groep naam={t("spreadsheet.groups.function")}>
       <A
-        naam="AutoSom"
+        naam={t("spreadsheet.commands.autoSum")}
         icoon={Sigma}
         toets="Alt+="
         groot
@@ -552,14 +559,14 @@ export function RekenbladRibbon({
       />
       <div className="ribbon-stapel">
         <A
-          naam="Datum"
+          naam={t("spreadsheet.commands.insertDate")}
           icoon={CalendarDays}
           toets="Ctrl+;"
           uit={uit}
           doe={(a) => datumTijdInvoegen(a, false)}
         />
         <A
-          naam="Tijd"
+          naam={t("spreadsheet.commands.insertTime")}
           icoon={Clock}
           toets="Ctrl+Shift+;"
           uit={uit}
@@ -569,9 +576,9 @@ export function RekenbladRibbon({
     </Groep>
   );
   const bladen = (
-    <Groep naam="Blad">
+    <Groep naam={t("spreadsheet.groups.sheet")}>
       <A
-        naam="Blad invoegen"
+        naam={t("spreadsheet.commands.insertSheet")}
         icoon={SquarePlus}
         groot
         uit={uit}
@@ -579,13 +586,13 @@ export function RekenbladRibbon({
       />
       <div className="ribbon-stapel">
         <A
-          naam="Blad hernoemen"
+          naam={t("spreadsheet.commands.renameSheet")}
           icoon={PenLine}
           uit={uit}
           doe={() => setPaneel("hernoemen")}
         />
         <A
-          naam="Blad verwijderen"
+          naam={t("spreadsheet.commands.deleteSheet")}
           icoon={Trash2}
           uit={uit || (stand?.bladen ?? 0) < 2}
           doe={bladVerwijderen}
@@ -601,7 +608,7 @@ export function RekenbladRibbon({
         tabs={[
           {
             id: "start",
-            naam: "Start",
+            naam: t("spreadsheet.tabs.home"),
             inhoud: (
               <>
                 <Geschiedenis soort="rekenblad" />
@@ -609,10 +616,10 @@ export function RekenbladRibbon({
                 <RekenbladLettertype />
                 <RekenbladUitlijning />
                 <RekenbladGetal />
-                <Groep naam="Celranden">
+                <Groep naam={t("spreadsheet.groups.cellBorders")}>
                   <div className="ribbon-ingebouwd">
                     <RekenbladControl id="borderPreset" />
-                    <span>Randen</span>
+                    <span>{t("spreadsheet.commands.borders")}</span>
                   </div>
                 </Groep>
                 {zoeken}
@@ -621,7 +628,7 @@ export function RekenbladRibbon({
           },
           {
             id: "invoegen",
-            naam: "Invoegen",
+            naam: t("spreadsheet.tabs.insert"),
             inhoud: (
               <>
                 <Cellen uit={uit} />
@@ -633,13 +640,13 @@ export function RekenbladRibbon({
           },
           {
             id: "opmaak",
-            naam: "Opmaak",
+            naam: t("spreadsheet.tabs.format"),
             inhoud: (
               <>
-                <Groep naam="Opmaak">
+                <Groep naam={t("spreadsheet.groups.format")}>
                   <C
                     id="paintFormat"
-                    naam="Opmaak kopiëren"
+                    naam={t("spreadsheet.commands.formatPainter")}
                     icoon={Paintbrush}
                     groot
                   />
@@ -647,56 +654,56 @@ export function RekenbladRibbon({
                 <RekenbladLettertype />
                 <RekenbladUitlijning />
                 <RekenbladGetal uitgebreid />
-                <Groep naam="Celranden">
+                <Groep naam={t("spreadsheet.groups.cellBorders")}>
                   <div className="ribbon-stapel">
-                    <CK id="borderPreset" naam="Celranden" breed />
-                    <CK id="borderStyle" naam="Lijnstijl" breed />
+                    <CK id="borderPreset" naam={t("spreadsheet.commands.cellBorders")} breed />
+                    <CK id="borderStyle" naam={t("spreadsheet.commands.lineStyle")} breed />
                   </div>
                   <OpdrachtKleur
                     opdracht={randkleur}
-                    naam="Randkleur"
+                    naam={t("spreadsheet.commands.borderColor")}
                     icoon={Grid2X2}
                     args={(color) => ({ color })}
                   />
                 </Groep>
-                <Groep naam="Terugloop">
-                  <CK id="textWrapping" naam="Tekstterugloop" breed />
+                <Groep naam={t("spreadsheet.groups.wrap")}>
+                  <CK id="textWrapping" naam={t("spreadsheet.commands.wrapText")} breed />
                 </Groep>
               </>
             ),
           },
           {
             id: "blad",
-            naam: "Blad",
+            naam: t("spreadsheet.tabs.sheet"),
             inhoud: (
               <>
                 <Cellen uit={uit} />
-                <Groep naam="Verwijderen">
+                <Groep naam={t("spreadsheet.groups.delete")}>
                   <div className="ribbon-stapel">
                     <A
-                      naam="Rijen verwijderen"
+                      naam={t("spreadsheet.commands.deleteRows")}
                       icoon={Trash2}
                       uit={uit}
                       doe={rijenVerwijderen}
                     />
                     <A
-                      naam="Kolommen verwijderen"
+                      naam={t("spreadsheet.commands.deleteColumns")}
                       icoon={Trash2}
                       uit={uit}
                       doe={kolommenVerwijderen}
                     />
                   </div>
                 </Groep>
-                <Groep naam="Verbergen">
+                <Groep naam={t("spreadsheet.groups.hide")}>
                   <div className="ribbon-stapel">
                     <A
-                      naam="Rijen verbergen"
+                      naam={t("spreadsheet.commands.hideRows")}
                       icoon={EyeOff}
                       uit={uit}
                       doe={(a) => rijenZichtbaarheid(a, true)}
                     />
                     <A
-                      naam="Rijen tonen"
+                      naam={t("spreadsheet.commands.showRows")}
                       icoon={Eye}
                       uit={uit}
                       doe={(a) => rijenZichtbaarheid(a, false)}
@@ -704,13 +711,13 @@ export function RekenbladRibbon({
                   </div>
                   <div className="ribbon-stapel">
                     <A
-                      naam="Kolommen verbergen"
+                      naam={t("spreadsheet.commands.hideColumns")}
                       icoon={EyeOff}
                       uit={uit}
                       doe={(a) => kolommenZichtbaarheid(a, true)}
                     />
                     <A
-                      naam="Kolommen tonen"
+                      naam={t("spreadsheet.commands.showColumns")}
                       icoon={Eye}
                       uit={uit}
                       doe={(a) => kolommenZichtbaarheid(a, false)}
@@ -718,10 +725,10 @@ export function RekenbladRibbon({
                   </div>
                 </Groep>
                 {bladen}
-                <Groep naam="Navigeren">
+                <Groep naam={t("spreadsheet.groups.navigate")}>
                   <div className="ribbon-stapel">
                     <A
-                      naam="Vorig blad"
+                      naam={t("spreadsheet.commands.previousSheet")}
                       icoon={ChevronLeft}
                       toets="Ctrl+Page Up"
                       uit={!stand || stand.actief === 0}
@@ -730,7 +737,7 @@ export function RekenbladRibbon({
                       }
                     />
                     <A
-                      naam="Volgend blad"
+                      naam={t("spreadsheet.commands.nextSheet")}
                       icoon={ChevronRight}
                       toets="Ctrl+Page Down"
                       uit={!stand || stand.actief >= stand.bladen - 1}
@@ -745,28 +752,28 @@ export function RekenbladRibbon({
           },
           {
             id: "gegevens",
-            naam: "Gegevens",
+            naam: t("spreadsheet.tabs.data"),
             inhoud: (
               <>
-                <Groep naam="Sorteren">
+                <Groep naam={t("spreadsheet.groups.sort")}>
                   <A
-                    naam="Oplopend sorteren"
+                    naam={t("spreadsheet.commands.sortAscending")}
                     icoon={ArrowUpAZ}
                     groot
                     uit={uit}
                     doe={(a) => sorteren(a, false)}
                   />
                   <A
-                    naam="Aflopend sorteren"
+                    naam={t("spreadsheet.commands.sortDescending")}
                     icoon={ArrowDownZA}
                     groot
                     uit={uit}
                     doe={(a) => sorteren(a, true)}
                   />
                 </Groep>
-                <Groep naam="Doorvoeren">
+                <Groep naam={t("spreadsheet.groups.fill")}>
                   <A
-                    naam="Naar beneden"
+                    naam={t("spreadsheet.commands.fillDown")}
                     icoon={ArrowDownToLine}
                     toets="Ctrl+D"
                     groot
@@ -780,16 +787,16 @@ export function RekenbladRibbon({
           },
           {
             id: "beeld",
-            naam: "Beeld",
+            naam: t("spreadsheet.tabs.view"),
             inhoud: (
               <>
                 <Zoom opdracht={zoom} />
-                <Groep naam="Vensters fixeren">
+                <Groep naam={t("spreadsheet.groups.freezePanes")}>
                   <A
                     naam={
                       stand?.bevroren
-                        ? "Fixeren opheffen"
-                        : "Rijen en kolommen fixeren"
+                        ? t("spreadsheet.commands.unfreezePanes")
+                        : t("spreadsheet.commands.freezePanes")
                     }
                     icoon={Snowflake}
                     groot
@@ -800,13 +807,13 @@ export function RekenbladRibbon({
                   />
                   <div className="ribbon-stapel">
                     <A
-                      naam="Eerste rij fixeren"
+                      naam={t("spreadsheet.commands.freezeTopRow")}
                       icoon={PanelTop}
                       uit={uit}
                       doe={(a) => fixeren(a, "rij")}
                     />
                     <A
-                      naam="Eerste kolom fixeren"
+                      naam={t("spreadsheet.commands.freezeFirstColumn")}
                       icoon={PanelLeft}
                       uit={uit}
                       doe={(a) => fixeren(a, "kolom")}
@@ -814,17 +821,17 @@ export function RekenbladRibbon({
                   </div>
                 </Groep>
                 {navigator}
-                <Groep naam="Uitvoer">
+                <Groep naam={t("spreadsheet.groups.output")}>
                   <Actie
-                    naam="Afdrukken"
+                    naam={t("spreadsheet.commands.print")}
                     icoon={Printer}
-                    title="Afdrukvoorbeeld en afdrukken (Ctrl+P)"
+                    title={t("spreadsheet.commands.printHint", { shortcut: "Ctrl+P" })}
                     groot
                     onClick={() => vraagAfdrukvoorbeeld()}
                   />
                   <C
                     id="exportPng"
-                    naam="Afbeelding exporteren"
+                    naam={t("spreadsheet.commands.exportImage")}
                     icoon={Download}
                     groot
                   />
@@ -834,7 +841,7 @@ export function RekenbladRibbon({
           },
           {
             id: "extra",
-            naam: "Extra",
+            naam: t("spreadsheet.tabs.tools"),
             inhoud: (
               <>
                 {zoeken}
@@ -846,7 +853,7 @@ export function RekenbladRibbon({
             ? [
                 {
                   id: "grafiekontwerp",
-                  naam: "Grafiekontwerp",
+                  naam: t("spreadsheet.tabs.chartDesign"),
                   inhoud: <Grafiekontwerp g={grafieken} uit={uit} />,
                 },
               ]

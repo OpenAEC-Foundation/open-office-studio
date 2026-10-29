@@ -1,0 +1,141 @@
+{
+  "dialogs": {
+    "cancel": "İptal",
+    "saveAsEllipsis": "Farklı kaydet…",
+    "officeFile": "Ofis dosyası",
+    "officeFiles": "Ofis dosyaları",
+    "untitled": "Adsız",
+    "saveCopy": "Kopya kaydet",
+    "saveAs": "Farklı kaydet",
+    "openFile": "Dosya aç",
+    "replaceFile": {
+      "title": "Dosyayı değiştir",
+      "message": "{{path}} dosyası zaten var. Değiştirilsin mi?"
+    },
+    "unsavedChanges": {
+      "title": "Kaydedilmemiş değişiklikler",
+      "message_one": "Bu penceredeki bir belgede kaydedilmemiş değişiklikler var. Bunlar kaybolacak. Yine de kapatılsın mı?",
+      "message_other": "Bu penceredeki {{count}} belgede kaydedilmemiş değişiklikler var. Bunlar kaybolacak. Yine de kapatılsın mı?"
+    },
+    "fileChanged": {
+      "title": "Dosya değişti",
+      "missing": "{{name}} artık özgün konumunda yok. Kendi sürümünüzle yeniden oluşturulsun mu, yoksa başka bir yere mi kaydedilsin?",
+      "changedExternally": "{{name}}, siz açtıktan sonra Open Office Studio dışında değiştirildi. Üzerine yazmak bu değişiklikleri siler.",
+      "overwrite": "Üzerine yaz"
+    },
+    "foreignFormat": {
+      "title": "{{format}} olarak kaydet",
+      "message": "{{name}}, {{format}} biçiminde güncellenecek. Ofis çalışma ortamı belgeyi bunun için dönüştürür; {{format}} biçiminin desteklemediği biçimlendirmeler kaybolabilir.",
+      "hint": "DOCX, XLSX veya PPTX dosyasını korumak için Farklı kaydet… seçeneğini kullanın.",
+      "update": "{{format}} olarak güncelle"
+    },
+    "chooseConverter": "Dönüştürme programını seçin (soffice)",
+    "databaseExport": {
+      "title": "Veritabanı dışa aktarımını kaydet",
+      "filter": "Veritabanı dışa aktarımı",
+      "sqliteFilter": "SQLite çalışma kopyası",
+      "replaceTitle": "Dışa aktarımı değiştir",
+      "replaceMessage": "Bu dışa aktarım dosyası zaten var. Değiştirilsin mi?"
+    }
+  },
+  "errors": {
+    "file": {
+      "invalidBody": "Dosya boş, 100 MB'tan büyük veya ikili veri olarak gönderilmedi.",
+      "emptyOrTooLarge": "Dosya boş veya 100 MB'tan büyük.",
+      "formatInfoMissing": "Biçim bilgisi eksik.",
+      "formatMissing": "Biçim eksik.",
+      "targetFolderMissing": "Hedef klasör eksik.",
+      "nameMissing": "Dosya adı eksik.",
+      "nameInvalidChars": "Dosya adı geçersiz karakterler içeriyor.",
+      "unsupportedFormat": "Desteklenmeyen dosya biçimi.",
+      "extensionMismatch": "Seçilen uzantı belgeyle eşleşmiyor.",
+      "alreadyOpenedOrOtherWindow": "Bu dosya zaten açık veya bu pencere için değil.",
+      "notThisWindow": "Bu dosya bu pencereye ait değil.",
+      "notLinked": "Bu dosya artık bu sekmeye bağlı değil.",
+      "tokenMissing": "Belirteç eksik.",
+      "openInOtherTab": "{{name}} başka bir sekmede açık. Önce onu kapatın veya farklı bir ad seçin.",
+      "readOnly": "Bu klasörde yazma izni yok veya dosya salt okunur ({{path}}). Farklı bir konum seçin.",
+      "notInRecentList": "Bu dosya artık listede değil."
+    },
+    "preferences": {
+      "tooLarge": "Tercihler 64 kB'tan büyük.",
+      "invalid": "Tercihler geçerli bir JSON nesnesi değil.",
+      "configDirUnavailable": "Uygulamanın yapılandırma klasörü kullanılamıyor.",
+      "pathInvalid": "Tercihler için geçersiz yol."
+    },
+    "font": {
+      "notInstalled": "{{family}} yazı tipi bu bilgisayarda yüklü değil.",
+      "notFound": "Yazı tipi bulunamadı.",
+      "fileTooLarge": "Bu yazı tipi dosyası çok büyük.",
+      "inCollection": "Bu yazı tipi bir koleksiyonun (.ttc) parçası ve tek başına kullanılamaz.",
+      "unreadable": "Yazı tipi dosyası okunamadı.",
+      "nameInvalid": "Geçersiz yazı tipi adı."
+    },
+    "recovery": {
+      "keyInvalid": "Geçersiz kurtarma anahtarı.",
+      "spaceFull": "Kurtarma kopyaları için ayrılan alan (512 MB) dolu. Belgelerinizi kaydedin.",
+      "sessionMissing": "Oturum eksik.",
+      "keyMissing": "Anahtar eksik.",
+      "dataInvalid": "Geçersiz kurtarma verisi.",
+      "unknownDocumentType": "Bilinmeyen belge türü.",
+      "sessionNotThisWindow": "Bu kurtarma oturumu bu pencereye ait değil.",
+      "sessionOtherWindow": "Bu kurtarma oturumu başka bir pencereye ait.",
+      "sessionStillRunning": "Bu oturum hâlâ çalışıyor."
+    },
+    "window": {
+      "closed": "Bu pencere kapatıldı.",
+      "transferEmptyOrTooLarge": "Aktarım boş veya çok büyük.",
+      "mainWindowUnavailable": "Ana pencere kullanılamıyor.",
+      "openFailed": "Pencere açılamadı: {{error}}",
+      "transferExpired": "Bu aktarımın süresi doldu veya zaten alındı.",
+      "transferAlreadyTaken": "Bu aktarım zaten alındı.",
+      "transferUnknown": "Bu aktarım bilinmiyor."
+    },
+    "conversion": {
+      "unknownModule": "Bilinmeyen ofis modülü.",
+      "sourceFormatMismatch": "Kaynak biçim bu modüle ait değil.",
+      "outputFormatUnsupported": "Bu çıktı biçimi desteklenmiyor.",
+      "outputFormatDirect": "Bu çıktı biçimi dönüştürmeyle değil, doğrudan uygulamada oluşturulur.",
+      "invalidOptions": "Geçersiz dönüştürme seçenekleri.",
+      "chooseSoffice": "Ofis çalışma ortamının program klasöründen soffice programını (Windows: soffice.exe) seçin.",
+      "chosenFileMissing": "Seçilen dosya yok.",
+      "chosenPathNotFile": "Seçilen yol bir dosya değil.",
+      "chosenFileNotExecutable": "Seçilen dosya çalıştırılabilir değil.",
+      "appDataDirUnavailable": "Uygulama veri klasörü kullanılamıyor.",
+      "startFailed": "Dönüştürme başlatılamadı: {{error}}",
+      "failed": "Dönüştürme başarısız oldu ({{reason}}). Özgün dosya korundu.",
+      "exitCode": "çıkış kodu {{code}}",
+      "processAborted": "işlem durduruldu",
+      "timeout": "Dönüştürme süre sınırını aştı ve durduruldu. Özgün dosya korundu.",
+      "profilePathInvalid": "Geçici profil yolu geçersiz.",
+      "inputSize": "Boş olmayan ve en fazla 100 MB olan bir dosya seçin.",
+      "runtimeMissing": "Bu biçim bir ofis çalışma ortamı (LibreOffice) gerektirir. Bulunamadı: yükleyin, Farklı kaydet'te programı seçin veya OPENAEC_CONVERSIE_PROGRAMMA değişkenini ayarlayın. DOCX, XLSX ve PPTX doğrudan çalışır.",
+      "notConverted": "Bu dosya dönüştürülemedi. Hasarlı veya korumalı olabilir ya da biçim filtresi yerel çalışma ortamında eksik olabilir.",
+      "multipleOutputs": "Dönüştürme birden fazla dosya üretti.",
+      "noUsableOutput": "Dönüştürme, en fazla 100 MB olan kullanılabilir bir dosya üretmedi."
+    },
+    "databaseExport": {
+      "emptyOrTooLarge": "Dışa aktarım boş veya 100 MB'tan büyük.",
+      "emptyInvalidOrTooLarge": "Dışa aktarım boş, geçersiz veya 100 MB'tan büyük.",
+      "nameMissing": "Dosya adı eksik.",
+      "nameInvalid": "Geçersiz dosya adı.",
+      "notSqlite": "Bu bir SQLite çalışma kopyası değil.",
+      "typeNotAllowed": "Yalnızca CSV, kaynak, rapor ve SQLite çalışma kopyası dışa aktarımlarına izin verilir. Access veritabanlarının üzerine asla yazılmaz.",
+      "textNotUtf8": "Metin dışa aktarımı geçerli UTF-8 metni olmalıdır.",
+      "sendAsBinary": "Dışa aktarımı en fazla 100 MB ikili veri olarak gönderin.",
+      "extensionMismatch": "Seçilen uzantı dışa aktarımla eşleşmiyor."
+    }
+  },
+  "launcher": {
+    "officeStudio": {
+      "genericName": "Ofis paketi",
+      "comment": "Yerel OpenAEC ofis ortamı",
+      "keywords": "kelime işlemci;elektronik tablo;sunum;veritabanı;e-posta;ofis;office;"
+    },
+    "databaseStudio": {
+      "genericName": "Veritabanı görüntüleyici",
+      "comment": "Eski MDB ve ACCDB veritabanlarını yerel olarak açın",
+      "keywords": "veritabanı;tablo;sorgu;access;database;"
+    }
+  }
+}

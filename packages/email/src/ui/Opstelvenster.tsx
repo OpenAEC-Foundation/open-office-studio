@@ -13,6 +13,7 @@ import {
   X,
   TriangleAlert,
 } from "lucide-react";
+import { Trans, useTranslation } from "react-i18next";
 import type { Account, Adres, MailBackend, Opstelling } from "../contract";
 import { formatAdres, isGeldigAdres } from "../adressen";
 import type { OpstelBegin } from "../citaat";
@@ -56,6 +57,7 @@ export function Opstelvenster({
   onOnverzonden: (waarde: boolean) => void;
   registreer?: (acties: OpstelActies | null) => void;
 }) {
+  const { t, i18n } = useTranslation("email");
   const [accountId, setAccountId] = useState(beginAccount);
   const account = accounts.find((a) => a.id === accountId) ?? accounts[0];
   const [aan, setAan] = useState<Adres[]>(begin.aan ?? []);
@@ -143,7 +145,7 @@ export function Opstelvenster({
       onOnverzonden(false);
       return true;
     } catch (e) {
-      setFout(foutTekst(e, "Concept bewaren mislukt"));
+      setFout(foutTekst(e, t("compose.errors.saveDraft")));
       return false;
     } finally {
       setBezig("");
@@ -160,22 +162,22 @@ export function Opstelvenster({
     setFout("");
     const ontvangers = [...aan, ...cc, ...bcc];
     if (!ontvangers.length) {
-      setFout("Voeg minstens één ontvanger toe.");
+      setFout(t("compose.errors.noRecipients"));
       return;
     }
     const ongeldig = ontvangers.filter((a) => !isGeldigAdres(a.adres));
     if (ongeldig.length) {
-      setFout(`Ongeldig adres: ${ongeldig.map((a) => a.adres).join(", ")}`);
+      setFout(t("address.invalid", { address: ongeldig.map((a) => a.adres).join(", ") }));
       return;
     }
     const inhoud = opstelling();
     if (!inhoud.onderwerp) {
       const keuze = await vraag({
-        titel: "Geen onderwerp",
-        tekst: "Dit bericht heeft geen onderwerp. Toch verzenden?",
+        titel: t("compose.noSubject.title"),
+        tekst: t("compose.noSubject.text"),
         knoppen: [
-          { waarde: "terug", label: "Onderwerp invullen" },
-          { waarde: "verzend", label: "Zonder onderwerp verzenden", soort: "primair" },
+          { waarde: "terug", label: t("compose.noSubject.fillIn") },
+          { waarde: "verzend", label: t("compose.noSubject.sendWithout"), soort: "primair" },
         ],
         annuleer: "terug",
       });
@@ -184,15 +186,11 @@ export function Opstelvenster({
     const woord = vergetenBijlage(inhoud.tekst, inhoud.onderwerp, bijlagen.length);
     if (woord) {
       const keuze = await vraag({
-        titel: "Bijlage vergeten?",
-        tekst: (
-          <>
-            Je bericht noemt <strong>“{woord}”</strong>, maar er is geen bijlage toegevoegd.
-          </>
-        ),
+        titel: t("compose.forgotAttachment.title"),
+        tekst: <Trans t={t} i18nKey="compose.forgotAttachment.text" values={{ word: woord }} components={{ strong: <strong /> }} />,
         knoppen: [
-          { waarde: "toevoegen", label: "Bijlage toevoegen" },
-          { waarde: "verzend", label: "Toch verzenden", soort: "primair" },
+          { waarde: "toevoegen", label: t("compose.addAttachment") },
+          { waarde: "verzend", label: t("compose.forgotAttachment.sendAnyway"), soort: "primair" },
         ],
         annuleer: "terug",
       });
@@ -205,10 +203,10 @@ export function Opstelvenster({
       if (begin.bron && begin.bron.modus !== "doorsturen")
         await backend.markeer(begin.bron.accountId, begin.bron.map, [begin.bron.uid], "beantwoord", true).catch(() => {});
       onOnverzonden(false);
-      verzonden(`Bericht verzonden${inhoud.onderwerp ? `: ${inhoud.onderwerp}` : ""}.`);
+      verzonden(inhoud.onderwerp ? t("compose.sentWithSubject", { subject: inhoud.onderwerp }) : t("compose.sent"));
       sluit();
     } catch (e) {
-      setFout(foutTekst(e, "Verzenden mislukt"));
+      setFout(foutTekst(e, t("compose.errors.send")));
     } finally {
       setBezig("");
     }
@@ -221,12 +219,12 @@ export function Opstelvenster({
       return;
     }
     const keuze = await vraag({
-      titel: "Bericht niet verzonden",
-      tekst: "Wil je dit bericht als concept bewaren?",
+      titel: t("compose.unsent.title"),
+      tekst: t("compose.unsent.text"),
       knoppen: [
-        { waarde: "annuleer", label: "Annuleren" },
-        { waarde: "verwerp", label: "Verwerpen", soort: "gevaar" },
-        { waarde: "bewaar", label: "Concept bewaren", soort: "primair" },
+        { waarde: "annuleer", label: t("common:cancel") },
+        { waarde: "verwerp", label: t("compose.unsent.discard"), soort: "gevaar" },
+        { waarde: "bewaar", label: t("compose.unsent.saveDraft"), soort: "primair" },
       ],
       annuleer: "annuleer",
     });
@@ -243,7 +241,7 @@ export function Opstelvenster({
     if (!nieuw.length) return;
     const totaal = [...bijlagen, ...nieuw].reduce((som, b) => som + b.bytes.length, 0);
     if (totaal > MAX_BIJLAGEN)
-      setFout(`De bijlagen zijn samen ${grootteTekst(totaal)}; veel servers weigeren berichten boven 25 MB.`);
+      setFout(t("compose.errors.attachmentsLarge", { size: grootteTekst(totaal), max: "25 MB" }));
     setBijlagen((huidig) => [...huidig, ...nieuw]);
     markeerGewijzigd();
   }
@@ -263,7 +261,7 @@ export function Opstelvenster({
     if (!koppeling) return;
     const url = veiligeLink(koppeling.url.trim());
     if (!url) {
-      setFout("Alleen http(s)-, mailto- en tel-koppelingen zijn toegestaan.");
+      setFout(t("compose.errors.linkNotAllowed"));
       return;
     }
     editor.current?.focus();
@@ -285,7 +283,7 @@ export function Opstelvenster({
         className={`email-opstelvenster ${slepen ? "is-slepen" : ""}`}
         role="dialog"
         aria-modal="true"
-        aria-label={onderwerp ? `Opstellen: ${onderwerp}` : "Nieuw bericht"}
+        aria-label={onderwerp ? t("compose.label", { subject: onderwerp }) : t("compose.newMessage")}
         inert={vraagOpen}
         onKeyDown={(e) => {
           e.stopPropagation();
@@ -315,18 +313,18 @@ export function Opstelvenster({
         }}
       >
         <header className="email-opstelkop">
-          <h2>{onderwerp || "Nieuw bericht"}</h2>
+          <h2>{onderwerp || t("compose.newMessage")}</h2>
           <div className="email-opstelknoppen">
-            <button className="email-knop is-primair" disabled={!!bezig} onClick={() => void verzend()} title="Verzenden · Ctrl+Enter">
-              <Send size={15} /> {bezig === "verzenden" ? "Verzenden…" : "Verzenden"}
+            <button className="email-knop is-primair" disabled={!!bezig} onClick={() => void verzend()} title={t("compose.sendTitle", { shortcut: "Ctrl+Enter" })}>
+              <Send size={15} /> {bezig === "verzenden" ? t("compose.sending") : t("compose.send")}
             </button>
-            <button className="email-knop" disabled={!!bezig} onClick={() => void bewaarConcept()} title="Als concept bewaren · Ctrl+S">
-              <Save size={15} /> {bezig === "bewaren" ? "Bewaren…" : "Concept"}
+            <button className="email-knop" disabled={!!bezig} onClick={() => void bewaarConcept()} title={t("compose.saveDraftTitle", { shortcut: "Ctrl+S" })}>
+              <Save size={15} /> {bezig === "bewaren" ? t("compose.savingDraft") : t("compose.draft")}
             </button>
-            <button className="email-knop" onClick={() => bestandskiezer.current?.click()} title="Bijlage toevoegen">
-              <Paperclip size={15} /> Bijlage
+            <button className="email-knop" onClick={() => bestandskiezer.current?.click()} title={t("compose.addAttachment")}>
+              <Paperclip size={15} /> {t("compose.attachment")}
             </button>
-            <button className="email-iconknop" onClick={() => void probeerSluiten()} aria-label="Sluiten" title="Sluiten (Esc)">
+            <button className="email-iconknop" onClick={() => void probeerSluiten()} aria-label={t("common:close")} title={t("dialog.closeEsc")}>
               <X size={17} />
             </button>
           </div>
@@ -335,7 +333,7 @@ export function Opstelvenster({
           <div className="email-opstelfout" role="alert">
             <TriangleAlert size={15} />
             <span>{fout}</span>
-            <button onClick={() => setFout("")} aria-label="Melding sluiten">
+            <button onClick={() => setFout("")} aria-label={t("compose.dismissError")}>
               <X size={13} />
             </button>
           </div>
@@ -343,7 +341,7 @@ export function Opstelvenster({
         <div className="email-opstelvelden">
           <div className="email-veldrij">
             <label className="email-veldlabel" htmlFor="email-van">
-              Van
+              {t("compose.from")}
             </label>
             <select id="email-van" value={accountId} onChange={(e) => wisselAccount(e.target.value)}>
               {accounts.map((a) => (
@@ -356,22 +354,22 @@ export function Opstelvenster({
             <span className="email-ccknoppen">
               {!toonCc && (
                 <button type="button" onClick={() => setToonCc(true)}>
-                  Cc
+                  {t("compose.cc")}
                 </button>
               )}
               {!toonBcc && (
                 <button type="button" onClick={() => setToonBcc(true)}>
-                  Bcc
+                  {t("compose.bcc")}
                 </button>
               )}
             </span>
           </div>
-          <Adresveld label="Aan" waarde={aan} wijzig={(a) => (setAan(a), markeerGewijzigd())} backend={backend} accountId={account.id} autoFocus={!begin.aan?.length} />
-          {toonCc && <Adresveld label="Cc" waarde={cc} wijzig={(a) => (setCc(a), markeerGewijzigd())} backend={backend} accountId={account.id} />}
-          {toonBcc && <Adresveld label="Bcc" waarde={bcc} wijzig={(a) => (setBcc(a), markeerGewijzigd())} backend={backend} accountId={account.id} />}
+          <Adresveld label={t("compose.to")} waarde={aan} wijzig={(a) => (setAan(a), markeerGewijzigd())} backend={backend} accountId={account.id} autoFocus={!begin.aan?.length} />
+          {toonCc && <Adresveld label={t("compose.cc")} waarde={cc} wijzig={(a) => (setCc(a), markeerGewijzigd())} backend={backend} accountId={account.id} />}
+          {toonBcc && <Adresveld label={t("compose.bcc")} waarde={bcc} wijzig={(a) => (setBcc(a), markeerGewijzigd())} backend={backend} accountId={account.id} />}
           <div className="email-veldrij">
             <label className="email-veldlabel" htmlFor="email-onderwerp">
-              Onderwerp
+              {t("compose.subject")}
             </label>
             <input
               id="email-onderwerp"
@@ -383,34 +381,34 @@ export function Opstelvenster({
             />
           </div>
         </div>
-        <div className="email-opmaakbalk" role="toolbar" aria-label="Opmaak">
-          <button onMouseDown={(e) => e.preventDefault()} onClick={() => opmaak("bold")} aria-label="Vet" title="Vet · Ctrl+B">
+        <div className="email-opmaakbalk" role="toolbar" aria-label={t("compose.format.label")}>
+          <button onMouseDown={(e) => e.preventDefault()} onClick={() => opmaak("bold")} aria-label={t("compose.format.bold")} title={t("compose.format.withShortcut", { action: t("compose.format.bold"), shortcut: "Ctrl+B" })}>
             <Bold size={15} />
           </button>
-          <button onMouseDown={(e) => e.preventDefault()} onClick={() => opmaak("italic")} aria-label="Cursief" title="Cursief · Ctrl+I">
+          <button onMouseDown={(e) => e.preventDefault()} onClick={() => opmaak("italic")} aria-label={t("compose.format.italic")} title={t("compose.format.withShortcut", { action: t("compose.format.italic"), shortcut: "Ctrl+I" })}>
             <Italic size={15} />
           </button>
-          <button onMouseDown={(e) => e.preventDefault()} onClick={() => opmaak("underline")} aria-label="Onderstrepen" title="Onderstrepen · Ctrl+U">
+          <button onMouseDown={(e) => e.preventDefault()} onClick={() => opmaak("underline")} aria-label={t("compose.format.underline")} title={t("compose.format.withShortcut", { action: t("compose.format.underline"), shortcut: "Ctrl+U" })}>
             <Underline size={15} />
           </button>
           <i />
-          <button onMouseDown={(e) => e.preventDefault()} onClick={() => opmaak("insertUnorderedList")} aria-label="Opsomming" title="Opsomming">
+          <button onMouseDown={(e) => e.preventDefault()} onClick={() => opmaak("insertUnorderedList")} aria-label={t("compose.format.bullets")} title={t("compose.format.bullets")}>
             <List size={15} />
           </button>
-          <button onMouseDown={(e) => e.preventDefault()} onClick={() => opmaak("insertOrderedList")} aria-label="Nummering" title="Nummering">
+          <button onMouseDown={(e) => e.preventDefault()} onClick={() => opmaak("insertOrderedList")} aria-label={t("compose.format.numbering")} title={t("compose.format.numbering")}>
             <ListOrdered size={15} />
           </button>
-          <button onMouseDown={(e) => e.preventDefault()} onClick={startKoppeling} aria-label="Koppeling" title="Koppeling invoegen">
+          <button onMouseDown={(e) => e.preventDefault()} onClick={startKoppeling} aria-label={t("compose.format.link")} title={t("compose.format.insertLink")}>
             <Link size={15} />
           </button>
-          <button onMouseDown={(e) => e.preventDefault()} onClick={() => opmaak("removeFormat")} aria-label="Opmaak wissen" title="Opmaak wissen">
+          <button onMouseDown={(e) => e.preventDefault()} onClick={() => opmaak("removeFormat")} aria-label={t("compose.format.clear")} title={t("compose.format.clear")}>
             <RemoveFormatting size={15} />
           </button>
           {koppeling && (
             <span className="email-koppelingsinvoer">
               <input
                 autoFocus
-                aria-label="Adres van de koppeling"
+                aria-label={t("compose.format.linkAddress")}
                 value={koppeling.url}
                 onChange={(e) => setKoppeling({ ...koppeling, url: e.target.value })}
                 onKeyDown={(e) => {
@@ -426,7 +424,7 @@ export function Opstelvenster({
                 }}
               />
               <button className="email-knop" onClick={plaatsKoppeling}>
-                Invoegen
+                {t("compose.format.insert")}
               </button>
             </span>
           )}
@@ -438,9 +436,9 @@ export function Opstelvenster({
           suppressContentEditableWarning
           role="textbox"
           aria-multiline="true"
-          aria-label="Berichttekst"
+          aria-label={t("compose.body")}
           spellCheck
-          lang="nl"
+          lang={i18n.language}
           onInput={markeerGewijzigd}
           onPaste={(e) => {
             // Geplakte HTML gaat door de sanitizer; externe afbeeldingen vallen weg.
@@ -456,15 +454,15 @@ export function Opstelvenster({
           }}
         />
         {bijlagen.length > 0 && (
-          <div className="email-opstelbijlagen" aria-label="Bijlagen">
+          <div className="email-opstelbijlagen" aria-label={t("reader.attachments.label")}>
             <span>
-              <Paperclip size={13} /> {bijlagen.length} {bijlagen.length === 1 ? "bijlage" : "bijlagen"} · {grootteTekst(totaal)}
+              <Paperclip size={13} /> {t("compose.attachmentsSummary", { count: bijlagen.length, size: grootteTekst(totaal) })}
             </span>
             {bijlagen.map((b, i) => (
               <span key={b.bestandsnaam + i} className="email-chip">
                 {b.bestandsnaam} <small>{grootteTekst(b.bytes.length)}</small>
                 <button
-                  aria-label={`${b.bestandsnaam} verwijderen`}
+                  aria-label={t("compose.removeAttachment", { name: b.bestandsnaam })}
                   onClick={() => {
                     setBijlagen(bijlagen.filter((_, j) => j !== i));
                     markeerGewijzigd();
@@ -476,7 +474,7 @@ export function Opstelvenster({
             ))}
           </div>
         )}
-        {slepen && <div className="email-sleepvlak">Laat los om als bijlage toe te voegen</div>}
+        {slepen && <div className="email-sleepvlak">{t("compose.dropToAttach")}</div>}
         <input
           ref={bestandskiezer}
           type="file"

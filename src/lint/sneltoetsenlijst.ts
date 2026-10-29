@@ -2,7 +2,12 @@
  * Centraal register van sneltoetsen: de vaste lijst (app, lint en engines)
  * plus wat `useSneltoetsen` op dit moment in een module heeft geregistreerd.
  * Het overzicht (F1 of Ctrl+/) en de botsingentest lezen hieruit.
+ *
+ * Omschrijvingen staan als sleutel in `ribbon:shortcuts.commands.*`;
+ * `omschrijving` vertaalt bij het lezen in de interfacetaal van dat moment.
+ * Toetsen en ids (`id`, `actie`) zijn vast.
  */
+import i18next from "../i18n/config";
 import { ontleed, past } from "./sneltoetsen";
 
 export type SneltoetsModule =
@@ -14,14 +19,29 @@ export type SneltoetsModule =
   | "email"
   | "notities";
 
+/** Modulenamen in de interfacetaal (getters: vertaald bij het lezen). */
 export const moduleNamen: Record<SneltoetsModule, string> = {
-  algemeen: "Algemeen",
-  tekst: "Tekst",
-  rekenblad: "Rekenblad",
-  presentatie: "Presentatie",
-  database: "Database",
-  email: "E-mail",
-  notities: "Notities",
+  get algemeen() {
+    return i18next.t("ribbon:shortcuts.modules.algemeen");
+  },
+  get tekst() {
+    return i18next.t("ribbon:shortcuts.modules.tekst");
+  },
+  get rekenblad() {
+    return i18next.t("ribbon:shortcuts.modules.rekenblad");
+  },
+  get presentatie() {
+    return i18next.t("ribbon:shortcuts.modules.presentatie");
+  },
+  get database() {
+    return i18next.t("ribbon:shortcuts.modules.database");
+  },
+  get email() {
+    return i18next.t("ribbon:shortcuts.modules.email");
+  },
+  get notities() {
+    return i18next.t("ribbon:shortcuts.modules.notities");
+  },
 };
 
 /**
@@ -32,13 +52,23 @@ export const moduleNamen: Record<SneltoetsModule, string> = {
 export type SneltoetsProfiel = "standaard" | "word";
 
 export const profielNamen: Record<SneltoetsProfiel, string> = {
-  standaard: "Standaard (zoals LibreOffice)",
-  word: "Word",
+  get standaard() {
+    return i18next.t("ribbon:shortcuts.profiles.standaard");
+  },
+  get word() {
+    return i18next.t("ribbon:shortcuts.profiles.word");
+  },
 };
 
 export interface SneltoetsInfo {
   toets: string;
+  /** Omschrijving in de interfacetaal (bij de vaste lijst vertaald bij het lezen). */
   omschrijving: string;
+  /**
+   * Vaste id van de omschrijving (sleutel onder `ribbon:shortcuts.commands`);
+   * gelijk in elke taal. Ontbreekt bij geregistreerde toetsen buiten de lijst.
+   */
+  id?: string;
   module: SneltoetsModule;
   /** Wie de toets afhandelt: de app, het lint van de module of de engine. */
   bron: "app" | "lint" | "engine";
@@ -57,41 +87,51 @@ export interface SneltoetsInfo {
 
 const documenten: SneltoetsModule[] = ["tekst", "rekenblad", "presentatie"];
 
+/**
+ * Eén toets uit de vaste lijst. De omschrijving is een getter, zodat elke
+ * lezer (overzicht, zoeken, knopuitleg) de tekst in de huidige taal krijgt.
+ */
+function maak(
+  toets: string,
+  id: string,
+  module: SneltoetsModule,
+  bron: SneltoetsInfo["bron"],
+  extra: Partial<Omit<SneltoetsInfo, "omschrijving" | "id">> = {},
+  waarden?: Record<string, string | number>,
+): SneltoetsInfo {
+  return {
+    toets,
+    id,
+    module,
+    bron,
+    ...extra,
+    get omschrijving() {
+      return i18next.t(`ribbon:shortcuts.commands.${id}`, waarden);
+    },
+  };
+}
+
 const algemeen = (
   toets: string,
-  omschrijving: string,
-  extra: Partial<SneltoetsInfo> = {},
-): SneltoetsInfo => ({ toets, omschrijving, module: "algemeen", bron: "app", ...extra });
-const lint = (module: SneltoetsModule) => (toets: string, omschrijving: string): SneltoetsInfo => ({
-  toets,
-  omschrijving,
-  module,
-  bron: "lint",
-});
-const engine = (module: SneltoetsModule) => (toets: string, omschrijving: string): SneltoetsInfo => ({
-  toets,
-  omschrijving,
-  module,
-  bron: "engine",
-});
+  id: string,
+  extra: Partial<Omit<SneltoetsInfo, "omschrijving" | "id">> = {},
+  waarden?: Record<string, string | number>,
+): SneltoetsInfo => maak(toets, id, "algemeen", "app", extra, waarden);
+const lint = (module: SneltoetsModule) => (toets: string, id: string): SneltoetsInfo =>
+  maak(toets, id, module, "lint");
+const engine = (module: SneltoetsModule) => (toets: string, id: string): SneltoetsInfo =>
+  maak(toets, id, module, "engine");
 
 const tekst = lint("tekst");
 /** Tekst, alleen in het standaardprofiel (LibreOffice-achtig). */
-const tekstStandaard = (toets: string, omschrijving: string): SneltoetsInfo => ({
-  ...tekst(toets, omschrijving),
-  profiel: "standaard",
-});
+const tekstStandaard = (toets: string, id: string): SneltoetsInfo =>
+  maak(toets, id, "tekst", "lint", { profiel: "standaard" });
 /** Tekst, alleen in het Word-profiel, met de opdracht uit `src/tekst/bewerken`. */
-const tekstWord = (toets: string, omschrijving: string, actie: string): SneltoetsInfo => ({
-  ...tekst(toets, omschrijving),
-  profiel: "word",
-  actie,
-});
+const tekstWord = (toets: string, id: string, actie: string): SneltoetsInfo =>
+  maak(toets, id, "tekst", "lint", { profiel: "word", actie });
 /** Tekst, in elk profiel, met de opdracht uit `src/tekst/bewerken`. */
-const tekstBewerken = (toets: string, omschrijving: string, actie: string): SneltoetsInfo => ({
-  ...tekst(toets, omschrijving),
-  actie,
-});
+const tekstBewerken = (toets: string, id: string, actie: string): SneltoetsInfo =>
+  maak(toets, id, "tekst", "lint", { actie });
 const rekenblad = lint("rekenblad");
 const presentatie = lint("presentatie");
 const tekstEngine = engine("tekst");
@@ -100,179 +140,179 @@ const presentatieEngine = engine("presentatie");
 
 /** Klembord en selecteren: in elke editor via de engine en de webview. */
 const klembord = (maak: ReturnType<typeof engine>) => [
-  maak("Ctrl+X", "Knippen"),
-  maak("Ctrl+C", "Kopiëren"),
-  maak("Ctrl+V", "Plakken"),
-  maak("Ctrl+A", "Alles selecteren"),
+  maak("Ctrl+X", "cut"),
+  maak("Ctrl+C", "copy"),
+  maak("Ctrl+V", "paste"),
+  maak("Ctrl+A", "selectAll"),
 ];
 
 export const vasteSneltoetsen: readonly SneltoetsInfo[] = [
   // Werkruimte (src/useTabSneltoetsen.ts, src/useDocumentZoom.ts, het lint).
-  algemeen("Ctrl+S", "Opslaan in het laatst gekozen formaat"),
-  algemeen("Ctrl+Shift+S", "Opslaan als", { alleen: documenten }),
-  algemeen("F12", "Opslaan als", { alleen: documenten }),
-  algemeen("Ctrl+O", "Openen"),
-  algemeen("Ctrl+W", "Tabblad sluiten"),
-  algemeen("Ctrl+F4", "Tabblad sluiten"),
-  algemeen("Ctrl+Tab", "Volgend tabblad"),
-  algemeen("Ctrl+Shift+Tab", "Vorig tabblad"),
-  algemeen("Ctrl+F6", "Volgend tabblad"),
-  algemeen("Ctrl+Shift+F6", "Vorig tabblad"),
-  algemeen("Ctrl+PageDown", "Volgend tabblad", { behalve: ["rekenblad"] }),
-  algemeen("Ctrl+PageUp", "Vorig tabblad", { behalve: ["rekenblad"] }),
-  ...[1, 2, 3, 4, 5, 6, 7, 8].map((n) => algemeen(`Alt+${n}`, `Tabblad ${n}`)),
-  algemeen("Alt+9", "Laatste tabblad"),
-  algemeen("Escape", "Terug van Start naar het vorige tabblad"),
-  algemeen("Ctrl+0", "Zoom 100%", { alleen: documenten }),
-  algemeen("Ctrl+=", "Inzoomen", { alleen: documenten }),
-  algemeen("Ctrl+-", "Uitzoomen", { alleen: documenten }),
-  algemeen("F1", "Dit overzicht van sneltoetsen"),
-  algemeen("Ctrl+/", "Dit overzicht van sneltoetsen"),
-  algemeen("Ctrl+,", "Instellingen"),
-  algemeen("F10", "Toetstips in het lint tonen of verbergen (ook: Alt los indrukken)"),
-  algemeen("Ctrl+F1", "Lint verbergen of weergeven"),
-  algemeen("F6", "Naar het volgende deel van het venster"),
-  algemeen("Shift+F6", "Naar het vorige deel van het venster"),
+  algemeen("Ctrl+S", "saveLastFormat"),
+  algemeen("Ctrl+Shift+S", "saveAs", { alleen: documenten }),
+  algemeen("F12", "saveAs", { alleen: documenten }),
+  algemeen("Ctrl+O", "open"),
+  algemeen("Ctrl+W", "closeTab"),
+  algemeen("Ctrl+F4", "closeTab"),
+  algemeen("Ctrl+Tab", "nextTab"),
+  algemeen("Ctrl+Shift+Tab", "previousTab"),
+  algemeen("Ctrl+F6", "nextTab"),
+  algemeen("Ctrl+Shift+F6", "previousTab"),
+  algemeen("Ctrl+PageDown", "nextTab", { behalve: ["rekenblad"] }),
+  algemeen("Ctrl+PageUp", "previousTab", { behalve: ["rekenblad"] }),
+  ...[1, 2, 3, 4, 5, 6, 7, 8].map((n) => algemeen(`Alt+${n}`, "tabNumber", {}, { number: n })),
+  algemeen("Alt+9", "lastTab"),
+  algemeen("Escape", "backFromStart"),
+  algemeen("Ctrl+0", "zoom100", { alleen: documenten }),
+  algemeen("Ctrl+=", "zoomIn", { alleen: documenten }),
+  algemeen("Ctrl+-", "zoomOut", { alleen: documenten }),
+  algemeen("F1", "shortcutOverview"),
+  algemeen("Ctrl+/", "shortcutOverview"),
+  algemeen("Ctrl+,", "settings"),
+  algemeen("F10", "toggleKeyTips"),
+  algemeen("Ctrl+F1", "toggleRibbon"),
+  algemeen("F6", "nextPane"),
+  algemeen("Shift+F6", "previousPane"),
 
   // Tekst: lint (src/lint/tekst-opdrachten.tsx).
-  tekstStandaard("Ctrl+1", "Kop 1"),
-  tekstStandaard("Ctrl+2", "Kop 2"),
-  tekstStandaard("Ctrl+3", "Kop 3"),
-  tekstStandaard("Ctrl+Shift+P", "Superscript"),
-  tekstStandaard("Ctrl+Shift+B", "Subscript"),
-  tekstStandaard("Ctrl+D", "Dubbel onderstrepen"),
-  tekstStandaard("Ctrl+M", "Opmaak wissen"),
-  tekst("Shift+F3", "Hoofdletters wisselen"),
-  tekst("Ctrl+Enter", "Pagina-einde"),
-  tekst("Ctrl+F12", "Tabel invoegen"),
-  tekstStandaard("Ctrl+Alt+C", "Opmerking invoegen"),
-  tekstStandaard("Ctrl+Shift+C", "Wijzigingen bijhouden aan of uit"),
+  tekstStandaard("Ctrl+1", "heading1"),
+  tekstStandaard("Ctrl+2", "heading2"),
+  tekstStandaard("Ctrl+3", "heading3"),
+  tekstStandaard("Ctrl+Shift+P", "superscript"),
+  tekstStandaard("Ctrl+Shift+B", "subscript"),
+  tekstStandaard("Ctrl+D", "doubleUnderline"),
+  tekstStandaard("Ctrl+M", "clearFormatting"),
+  tekst("Shift+F3", "changeCase"),
+  tekst("Ctrl+Enter", "pageBreak"),
+  tekst("Ctrl+F12", "insertTable"),
+  tekstStandaard("Ctrl+Alt+C", "insertComment"),
+  tekstStandaard("Ctrl+Shift+C", "toggleTrackChanges"),
   // Tekst: bewerken in elk profiel (src/tekst/bewerken).
-  tekstBewerken("Ctrl+Shift+>", "Lettergrootte vergroten", "groter"),
-  tekstBewerken("Ctrl+Shift+<", "Lettergrootte verkleinen", "kleiner"),
-  tekstBewerken("Ctrl+]", "Lettergrootte 1 punt groter", "puntGroter"),
-  tekstBewerken("Ctrl+[", "Lettergrootte 1 punt kleiner", "puntKleiner"),
-  tekstBewerken("Ctrl+Shift+V", "Plakken als alleen tekst", "plakkenTekst"),
-  tekstBewerken("F4", "Laatste opmaak herhalen", "herhalen"),
+  tekstBewerken("Ctrl+Shift+>", "growFont", "groter"),
+  tekstBewerken("Ctrl+Shift+<", "shrinkFont", "kleiner"),
+  tekstBewerken("Ctrl+]", "growFontOnePoint", "puntGroter"),
+  tekstBewerken("Ctrl+[", "shrinkFontOnePoint", "puntKleiner"),
+  tekstBewerken("Ctrl+Shift+V", "pasteTextOnly", "plakkenTekst"),
+  tekstBewerken("F4", "repeatLastFormatting", "herhalen"),
   // Tekst: Word-profiel (src/tekst/bewerken/acties.ts).
-  tekstWord("Ctrl+1", "Regelafstand enkel", "regelafstand1"),
-  tekstWord("Ctrl+2", "Regelafstand dubbel", "regelafstand2"),
-  tekstWord("Ctrl+5", "Regelafstand 1,5", "regelafstand15"),
-  tekstWord("Ctrl+Alt+1", "Kop 1", "kop1"),
-  tekstWord("Ctrl+Alt+2", "Kop 2", "kop2"),
-  tekstWord("Ctrl+Alt+3", "Kop 3", "kop3"),
-  tekstWord("Ctrl+Shift+N", "Standaardstijl", "standaardstijl"),
-  tekstWord("Ctrl+Space", "Tekenopmaak wissen", "opmaakWissen"),
-  tekstWord("Ctrl+Q", "Alineaopmaak wissen", "alineaOpmaakWissen"),
-  tekstWord("Ctrl+Shift+E", "Wijzigingen bijhouden aan of uit", "bijhouden"),
-  tekstWord("Ctrl+Alt+C", "Opmaak kopiëren", "kwastKopieren"),
-  tekstWord("Ctrl+Alt+V", "Opmaak plakken", "kwastPlakken"),
-  tekstWord("Ctrl+Shift+C", "Opmaak kopiëren (klassiek)", "kwastKopieren"),
-  tekstWord("Ctrl+Shift++", "Superscript", "superscript"),
-  tekstWord("Ctrl+Shift+=", "Superscript (klassiek)", "superscript"),
-  tekstWord("Ctrl+Shift+-", "Subscript", "subscript"),
-  tekstWord("Ctrl+M", "Meer inspringen", "inspringen"),
-  tekstWord("Ctrl+Shift+M", "Minder inspringen", "minderInspringen"),
-  tekstWord("Ctrl+Shift+L", "Opsomming", "opsomming"),
-  tekstWord("Ctrl+Alt+M", "Opmerking invoegen", "opmerking"),
-  tekstWord("Ctrl+D", "Lettertype…", "lettertype"),
-  tekstWord("Ctrl+Shift+F", "Lettertype…", "lettertype"),
-  tekstWord("Ctrl+Shift+D", "Dubbel onderstrepen", "dubbelOnderstrepen"),
-  tekst("Ctrl+P", "Afdrukken (afdrukvoorbeeld)"),
-  tekst("Ctrl+Shift+O", "Afdrukvoorbeeld"),
-  tekst("F5", "Navigatievenster"),
-  tekst("F7", "Spelling en grammatica"),
-  tekst("Ctrl+Shift+R", "Liniaal tonen of verbergen"),
-  tekst("F11", "Alle stijlen"),
+  tekstWord("Ctrl+1", "lineSpacingSingle", "regelafstand1"),
+  tekstWord("Ctrl+2", "lineSpacingDouble", "regelafstand2"),
+  tekstWord("Ctrl+5", "lineSpacingOneAndHalf", "regelafstand15"),
+  tekstWord("Ctrl+Alt+1", "heading1", "kop1"),
+  tekstWord("Ctrl+Alt+2", "heading2", "kop2"),
+  tekstWord("Ctrl+Alt+3", "heading3", "kop3"),
+  tekstWord("Ctrl+Shift+N", "normalStyle", "standaardstijl"),
+  tekstWord("Ctrl+Space", "clearCharacterFormatting", "opmaakWissen"),
+  tekstWord("Ctrl+Q", "clearParagraphFormatting", "alineaOpmaakWissen"),
+  tekstWord("Ctrl+Shift+E", "toggleTrackChanges", "bijhouden"),
+  tekstWord("Ctrl+Alt+C", "copyFormatting", "kwastKopieren"),
+  tekstWord("Ctrl+Alt+V", "pasteFormatting", "kwastPlakken"),
+  tekstWord("Ctrl+Shift+C", "copyFormattingClassic", "kwastKopieren"),
+  tekstWord("Ctrl+Shift++", "superscript", "superscript"),
+  tekstWord("Ctrl+Shift+=", "superscriptClassic", "superscript"),
+  tekstWord("Ctrl+Shift+-", "subscript", "subscript"),
+  tekstWord("Ctrl+M", "increaseIndent", "inspringen"),
+  tekstWord("Ctrl+Shift+M", "decreaseIndent", "minderInspringen"),
+  tekstWord("Ctrl+Shift+L", "bullets", "opsomming"),
+  tekstWord("Ctrl+Alt+M", "insertComment", "opmerking"),
+  tekstWord("Ctrl+D", "fontDialog", "lettertype"),
+  tekstWord("Ctrl+Shift+F", "fontDialog", "lettertype"),
+  tekstWord("Ctrl+Shift+D", "doubleUnderline", "dubbelOnderstrepen"),
+  tekst("Ctrl+P", "printWithPreview"),
+  tekst("Ctrl+Shift+O", "printPreview"),
+  tekst("F5", "navigationPane"),
+  tekst("F7", "spellingGrammar"),
+  tekst("Ctrl+Shift+R", "toggleRuler"),
+  tekst("F11", "allStyles"),
   // Tekst: Word-functies (src/tekst/**).
-  tekst("Ctrl+F", "Zoeken in het navigatievenster"),
-  tekst("Ctrl+H", "Uitgebreid zoeken en vervangen"),
-  tekst("Ctrl+G", "Ga naar"),
-  tekst("Ctrl+Alt+Shift+S", "Stijlenvenster"),
+  tekst("Ctrl+F", "findInNavigationPane"),
+  tekst("Ctrl+H", "advancedFindReplace"),
+  tekst("Ctrl+G", "goTo"),
+  tekst("Ctrl+Alt+Shift+S", "stylesPane"),
   // Tekst: opmaakvensters (src/tekst/TekstOpmaak.tsx).
   // Lettertype… en Alinea… zijn ook aangemeld bij src/tekst/menu/opdrachten.ts
   // (rechtermuismenu, en in het Word-profiel Ctrl+D en Ctrl+Shift+F).
-  tekst("Ctrl+Shift+J", "Alinea…"),
-  tekst("Ctrl+Shift+A", "Alle hoofdletters"),
-  tekst("Ctrl+Shift+K", "Kleinkapitalen"),
-  tekst("Ctrl+Shift+H", "Verborgen tekst"),
+  tekst("Ctrl+Shift+J", "paragraphDialog"),
+  tekst("Ctrl+Shift+A", "allCaps"),
+  tekst("Ctrl+Shift+K", "smallCaps"),
+  tekst("Ctrl+Shift+H", "hiddenText"),
   // Tekst: paginafuncties (src/tekst/pagina/ui/usePagina.tsx).
-  tekst("Ctrl+Alt+F", "Voetnoot invoegen"),
-  tekst("Ctrl+Alt+D", "Eindnoot invoegen"),
-  tekst("Ctrl+Shift+Enter", "Kolomeinde"),
+  tekst("Ctrl+Alt+F", "insertFootnote"),
+  tekst("Ctrl+Alt+D", "insertEndnote"),
+  tekst("Ctrl+Shift+Enter", "columnBreak"),
   // Tekst: engine (@betteroffice/docx-react).
-  tekstEngine("Ctrl+B", "Vet"),
-  tekstEngine("Ctrl+I", "Cursief"),
-  tekstEngine("Ctrl+U", "Onderstrepen"),
-  tekstEngine("Ctrl+Z", "Ongedaan maken"),
-  tekstEngine("Ctrl+Y", "Opnieuw; zonder iets om opnieuw te doen: laatste opmaak herhalen"),
-  tekstEngine("Ctrl+Shift+Z", "Opnieuw"),
-  tekstEngine("Ctrl+K", "Koppeling invoegen"),
-  tekstEngine("Ctrl+L", "Links uitlijnen"),
-  tekstEngine("Ctrl+E", "Centreren"),
-  tekstEngine("Ctrl+R", "Rechts uitlijnen"),
-  tekstEngine("Ctrl+J", "Uitvullen"),
+  tekstEngine("Ctrl+B", "bold"),
+  tekstEngine("Ctrl+I", "italic"),
+  tekstEngine("Ctrl+U", "underline"),
+  tekstEngine("Ctrl+Z", "undo"),
+  tekstEngine("Ctrl+Y", "redoOrRepeat"),
+  tekstEngine("Ctrl+Shift+Z", "redo"),
+  tekstEngine("Ctrl+K", "insertLink"),
+  tekstEngine("Ctrl+L", "alignLeft"),
+  tekstEngine("Ctrl+E", "center"),
+  tekstEngine("Ctrl+R", "alignRight"),
+  tekstEngine("Ctrl+J", "justify"),
   ...klembord(tekstEngine),
 
   // Rekenblad: lint (src/lint/rekenblad.tsx).
-  rekenblad("Ctrl+L", "Links uitlijnen"),
-  rekenblad("Ctrl+E", "Centreren"),
-  rekenblad("Ctrl+R", "Rechts uitlijnen"),
-  rekenblad("Ctrl+Shift+1", "Getalnotatie"),
-  rekenblad("Ctrl+Shift+2", "Wetenschappelijke notatie"),
-  rekenblad("Ctrl+Shift+3", "Datumnotatie"),
-  rekenblad("Ctrl+Shift+4", "Valutanotatie"),
-  rekenblad("Ctrl+Shift+5", "Percentage"),
-  rekenblad("Ctrl+Shift+6", "Standaardnotatie"),
-  rekenblad("Alt+=", "AutoSom"),
-  rekenblad("Ctrl+;", "Datum van vandaag"),
-  rekenblad("Ctrl+Shift+;", "Huidige tijd"),
-  rekenblad("Ctrl+Shift+:", "Huidige tijd"),
-  rekenblad("Ctrl+D", "Doorvoeren omlaag"),
-  rekenblad("Ctrl+PageUp", "Vorig werkblad"),
-  rekenblad("Ctrl+PageDown", "Volgend werkblad"),
-  rekenblad("Ctrl+F", "Zoeken"),
-  rekenblad("Ctrl+H", "Zoeken en vervangen"),
-  rekenblad("F5", "Ga naar"),
-  rekenblad("Ctrl+Shift+F5", "Ga naar"),
-  rekenblad("Ctrl+P", "Afdrukken (afdrukvoorbeeld en pagina-indeling)"),
-  rekenblad("Ctrl+Shift+O", "Afdrukvoorbeeld"),
-  rekenblad("Alt+F1", "Grafiek op dit blad"),
-  rekenblad("F11", "Grafiek op een nieuw blad"),
+  rekenblad("Ctrl+L", "alignLeft"),
+  rekenblad("Ctrl+E", "center"),
+  rekenblad("Ctrl+R", "alignRight"),
+  rekenblad("Ctrl+Shift+1", "numberFormat"),
+  rekenblad("Ctrl+Shift+2", "scientificFormat"),
+  rekenblad("Ctrl+Shift+3", "dateFormat"),
+  rekenblad("Ctrl+Shift+4", "currencyFormat"),
+  rekenblad("Ctrl+Shift+5", "percentFormat"),
+  rekenblad("Ctrl+Shift+6", "generalFormat"),
+  rekenblad("Alt+=", "autoSum"),
+  rekenblad("Ctrl+;", "todaysDate"),
+  rekenblad("Ctrl+Shift+;", "currentTime"),
+  rekenblad("Ctrl+Shift+:", "currentTime"),
+  rekenblad("Ctrl+D", "fillDown"),
+  rekenblad("Ctrl+PageUp", "previousSheet"),
+  rekenblad("Ctrl+PageDown", "nextSheet"),
+  rekenblad("Ctrl+F", "find"),
+  rekenblad("Ctrl+H", "findReplace"),
+  rekenblad("F5", "goTo"),
+  rekenblad("Ctrl+Shift+F5", "goTo"),
+  rekenblad("Ctrl+P", "printWithPreviewLayout"),
+  rekenblad("Ctrl+Shift+O", "printPreview"),
+  rekenblad("Alt+F1", "chartOnSheet"),
+  rekenblad("F11", "chartNewSheet"),
   // Rekenblad: engine (@betteroffice/xlsx-react).
-  rekenbladEngine("Ctrl+B", "Vet"),
-  rekenbladEngine("Ctrl+I", "Cursief"),
-  rekenbladEngine("Ctrl+Z", "Ongedaan maken"),
-  rekenbladEngine("Ctrl+Y", "Opnieuw"),
-  rekenbladEngine("Ctrl+Shift+Z", "Opnieuw"),
+  rekenbladEngine("Ctrl+B", "bold"),
+  rekenbladEngine("Ctrl+I", "italic"),
+  rekenbladEngine("Ctrl+Z", "undo"),
+  rekenbladEngine("Ctrl+Y", "redo"),
+  rekenbladEngine("Ctrl+Shift+Z", "redo"),
   ...klembord(rekenbladEngine),
 
   // Presentatie: lint (src/lint/presentatie-acties.tsx).
-  presentatie("F5", "Diavoorstelling vanaf het begin"),
-  presentatie("Shift+F5", "Diavoorstelling vanaf de huidige dia"),
-  presentatie("Ctrl+M", "Nieuwe dia"),
-  presentatie("Ctrl+L", "Links uitlijnen"),
-  presentatie("Ctrl+E", "Centreren"),
-  presentatie("Ctrl+R", "Rechts uitlijnen"),
-  presentatie("Ctrl+J", "Uitvullen"),
-  presentatie("PageUp", "Vorige dia"),
-  presentatie("PageDown", "Volgende dia"),
-  presentatie("Home", "Eerste dia"),
-  presentatie("End", "Laatste dia"),
-  presentatie("Ctrl+Shift+PageUp", "Dia omhoog verplaatsen"),
-  presentatie("Ctrl+Shift+PageDown", "Dia omlaag verplaatsen"),
-  presentatie("Ctrl+Shift+Home", "Dia naar het begin"),
-  presentatie("Ctrl+Shift+End", "Dia naar het einde"),
-  presentatie("Delete", "Vorm of dia verwijderen"),
+  presentatie("F5", "slideshowFromBeginning"),
+  presentatie("Shift+F5", "slideshowFromCurrent"),
+  presentatie("Ctrl+M", "newSlide"),
+  presentatie("Ctrl+L", "alignLeft"),
+  presentatie("Ctrl+E", "center"),
+  presentatie("Ctrl+R", "alignRight"),
+  presentatie("Ctrl+J", "justify"),
+  presentatie("PageUp", "previousSlide"),
+  presentatie("PageDown", "nextSlide"),
+  presentatie("Home", "firstSlide"),
+  presentatie("End", "lastSlide"),
+  presentatie("Ctrl+Shift+PageUp", "moveSlideUp"),
+  presentatie("Ctrl+Shift+PageDown", "moveSlideDown"),
+  presentatie("Ctrl+Shift+Home", "moveSlideToStart"),
+  presentatie("Ctrl+Shift+End", "moveSlideToEnd"),
+  presentatie("Delete", "deleteShapeOrSlide"),
   // Presentatie: afdrukvoorbeeld van de app (src/afdrukken/AfdrukvoorbeeldHost.tsx).
-  { toets: "Ctrl+P", omschrijving: "Afdrukken: dia's, hand-outs of notitiepagina's", module: "presentatie", bron: "app" },
-  { toets: "Ctrl+Shift+O", omschrijving: "Afdrukvoorbeeld", module: "presentatie", bron: "app" },
+  maak("Ctrl+P", "printSlides", "presentatie", "app"),
+  maak("Ctrl+Shift+O", "printPreview", "presentatie", "app"),
   // Presentatie: engine (@betteroffice/pptx-react).
-  presentatieEngine("Ctrl+B", "Vet"),
-  presentatieEngine("Ctrl+I", "Cursief"),
-  presentatieEngine("Ctrl+U", "Onderstrepen"),
-  presentatieEngine("Ctrl+Z", "Ongedaan maken"),
-  presentatieEngine("Ctrl+Shift+Z", "Opnieuw"),
+  presentatieEngine("Ctrl+B", "bold"),
+  presentatieEngine("Ctrl+I", "italic"),
+  presentatieEngine("Ctrl+U", "underline"),
+  presentatieEngine("Ctrl+Z", "undo"),
+  presentatieEngine("Ctrl+Shift+Z", "redo"),
   ...klembord(presentatieEngine),
 ];
 
@@ -301,7 +341,7 @@ export function toetsDelen(toets: string, mac = isMac()): string[] {
     PageUp: "Page Up",
     PageDown: "Page Down",
     Delete: "Delete",
-    Space: "Spatie",
+    Space: i18next.t("ribbon:shortcuts.keys.space"),
   };
   const plus = toets.endsWith("++");
   const delen = (plus ? toets.slice(0, -2) : toets).split("+");

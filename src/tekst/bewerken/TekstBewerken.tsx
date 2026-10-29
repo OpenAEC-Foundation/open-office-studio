@@ -25,6 +25,8 @@ import {
 } from "@betteroffice/docx-react";
 import type { YrsLoc } from "@betteroffice/docx/yrs";
 import { AArrowDown, AArrowUp, CalendarClock, Paintbrush } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import i18next from "../../i18n/config";
 import type { useTekstOpdrachten } from "../../lint/tekst-opdrachten";
 import { EigenKnop } from "../../lint/tekst-opdrachten";
 import { Actie } from "../../Ribbon";
@@ -135,13 +137,12 @@ const opPagina = (doel: EventTarget | null) => {
 
 /** Opent een lintkeuze als terugval voor een venster dat (nog) niet bestaat. */
 function toonInLint(tab: string, selector: string) {
-  const lint = zichtbaarElement(".office-tekst .ribbon");
+  const lint = zichtbaarElement(".office-lintplek[data-soort=\"docx\"] .ribbon, .office-tekst .ribbon");
   if (!lint) return;
   const inhoud = lint.querySelector<HTMLElement>(".ribbon-inhoud");
   if (inhoud?.hidden) lint.querySelector<HTMLButtonElement>(".ribbon-inklap")?.click();
-  [...lint.querySelectorAll<HTMLButtonElement>("[role='tab']")]
-    .find((t) => t.textContent === tab)
-    ?.click();
+  // Tabbladen op hun vaste id (`<basis>-<tab>`), niet op de vertaalde naam.
+  lint.querySelector<HTMLButtonElement>(`[role='tab'][id$='-${tab}']`)?.click();
   let pogingen = 0;
   const focus = () => {
     const doel = lint.querySelector<HTMLElement>(selector);
@@ -280,7 +281,7 @@ export function TekstBewerken({
     const nieuw = punt ? puntStap(huidig, richting) : volgendeGrootte(huidig, richting);
     if (nieuw !== huidig) voerUit("fontSize", { points: nieuw });
     geheugen.onthoud({
-      naam: richting === 1 ? "Lettergrootte vergroten" : "Lettergrootte verkleinen",
+      naam: i18next.t(richting === 1 ? "writer:editing.repeat.growFont" : "writer:editing.repeat.shrinkFont"),
       uitvoeren: () => grootte(richting, punt),
     });
   }
@@ -303,7 +304,7 @@ export function TekstBewerken({
       return;
     }
     const opmaak = neemOpmaakOp();
-    if (!opmaak) return fout(new Error("Zet de cursor eerst in de tekst met de gewenste opmaak."));
+    if (!opmaak) return fout(new Error(i18next.t("writer:editing.formatPainter.noSource")));
     setKwast((k) => kwastStap(k, { soort: "klik", opmaak }));
   }
   function kwastDubbelklik() {
@@ -313,11 +314,11 @@ export function TekstBewerken({
   }
   function kwastKopieren() {
     const opmaak = neemOpmaakOp();
-    if (!opmaak) return fout(new Error("Zet de cursor eerst in de tekst met de gewenste opmaak."));
+    if (!opmaak) return fout(new Error(i18next.t("writer:editing.formatPainter.noSource")));
     setKwast((k) => kwastStap(k, { soort: "kopieer", opmaak }));
   }
   function kwastToepassen(opmaak: GekopieerdeOpmaak | null) {
-    if (!opmaak) return fout(new Error("Kopieer eerst opmaak (Ctrl+Alt+C of de opmaakkwast)."));
+    if (!opmaak) return fout(new Error(i18next.t("writer:editing.formatPainter.nothingCopied", { key: "Ctrl+Alt+C" })));
     const ref = api();
     const b = huidigBereik(ref);
     if (!b) return;
@@ -325,7 +326,7 @@ export function TekstBewerken({
     if (doel.leeg) return;
     try {
       pasOpmaakToe(ref, doel, opmaak);
-      geheugen.onthoud({ naam: "Opmaak plakken", uitvoeren: () => kwastToepassen(opmaak) });
+      geheugen.onthoud({ naam: i18next.t("writer:editing.formatPainter.paste"), uitvoeren: () => kwastToepassen(opmaak) });
     } catch (error) {
       melding(error);
     }
@@ -367,7 +368,7 @@ export function TekstBewerken({
 
   // --- Herhalen -----------------------------------------------------------
   function herhaal() {
-    if (!geheugen.herhaal()) fout(new Error("Er is nog geen opmaak om te herhalen."));
+    if (!geheugen.herhaal()) fout(new Error(i18next.t("writer:editing.repeat.nothing")));
   }
 
   // --- Plakken en plakopties ----------------------------------------------
@@ -616,12 +617,12 @@ export function TekstBewerken({
   // --- Terugval voor vensters van andere onderdelen ------------------------
   function lettertype(punt?: { x: number; y: number }) {
     voerOpdrachtUit("lettertype", { punt }, () =>
-      toonInLint("Start", ".lettertypekeuze-knop, select[aria-label='Lettertype']"),
+      toonInLint("start", ".lettertypekeuze-knop"),
     );
   }
   function alinea(punt?: { x: number; y: number }) {
     voerOpdrachtUit("alinea", { punt }, () =>
-      toonInLint("Opmaak", "select[aria-label='Regelafstand']"),
+      toonInLint("opmaak", `select[aria-label="${i18next.t("ribbon:writer.commands.lineSpacing").replace(/["\\]/g, "\\$&")}"]`),
     );
   }
 
@@ -659,9 +660,9 @@ export function TekstBewerken({
         },
       });
       grens();
-      if (!gelukt) fout(new Error("De alineaopmaak kon hier niet worden gewist."));
+      if (!gelukt) fout(new Error(i18next.t("writer:editing.repeat.clearParagraphFailed")));
       else
-        geheugen.onthoud({ naam: "Alineaopmaak wissen", uitvoeren: () => handlers.alineaOpmaakWissen() });
+        geheugen.onthoud({ naam: i18next.t("writer:editing.repeat.clearParagraph"), uitvoeren: () => handlers.alineaOpmaakWissen() });
     },
     bijhouden: () => opdrachten.wisselOpnemen(),
     kwastKopieren,
@@ -778,19 +779,22 @@ export function TekstBewerken({
 /** Opmaakkwast: klik = één keer, dubbelklik = blijvend (Esc stopt). */
 export function KwastKnop({ groot }: { groot?: boolean }) {
   const b = useBewerken();
+  const { t } = useTranslation("writer");
   const word = useInstellingen().tekst.sneltoetsprofiel === "word";
   const actief = b.kwast.modus !== "uit";
   const uitleg = actief
-    ? `Selecteer tekst om ${omschrijfOpmaak(b.kwast.opmaak?.delta ?? null)} toe te passen${b.kwast.modus === "blijvend" ? "; Esc stopt" : ""}`
-    : "Klik: één keer plakken; dubbelklik: blijven plakken tot Esc";
+    ? t(b.kwast.modus === "blijvend" ? "editing.formatPainter.hintActiveSticky" : "editing.formatPainter.hintActive", {
+        format: omschrijfOpmaak(b.kwast.opmaak?.delta ?? null),
+      })
+    : t("editing.formatPainter.hintIdle");
   return (
     <Actie
-      naam="Opmaak kopiëren"
+      naam={t("editing.formatPainter.name")}
       icoon={Paintbrush}
       groot={groot}
       actief={actief}
       disabled={!b.opdrachten.bewerkbaar}
-      title={`Opmaak kopiëren en plakken · ${uitleg}${word ? " · Ctrl+Alt+C / Ctrl+Alt+V" : ""}`}
+      title={`${t("editing.formatPainter.title", { hint: uitleg })}${word ? " · Ctrl+Alt+C / Ctrl+Alt+V" : ""}`}
       onMouseDown={(event) => event.preventDefault()}
       onClick={(event) => {
         // De tweede klik van een dubbelklik telt niet als ‘uitzetten’.
@@ -805,19 +809,20 @@ export function KwastKnop({ groot }: { groot?: boolean }) {
 /** Lettergrootte vergroten en verkleinen volgens de Word-reeks. */
 export function GrootteKnoppen() {
   const b = useBewerken();
+  const { t } = useTranslation("writer");
   const grootte = useDocxCommand("fontSize");
   const uit = !grootte.state.enabled;
   return (
     <span className="ribbon-iconen tekst-grootteknoppen">
       <EigenKnop
-        naam="Tekengrootte vergroten"
+        naam={t("editing.fontSize.grow")}
         icoon={AArrowUp}
         sneltoets="Ctrl+Shift+>"
         disabled={uit}
         onClick={() => b.grootte(1)}
       />
       <EigenKnop
-        naam="Tekengrootte verkleinen"
+        naam={t("editing.fontSize.shrink")}
         icoon={AArrowDown}
         sneltoets="Ctrl+Shift+<"
         disabled={uit}
@@ -830,12 +835,13 @@ export function GrootteKnoppen() {
 /** Datum en tijd invoegen met notatiekeuze (en eventueel als veld). */
 export function DatumTijdKnop({ groot }: { groot?: boolean }) {
   const b = useBewerken();
+  const { t } = useTranslation("writer");
   return (
     <EigenKnop
-      naam="Datum en tijd"
+      naam={t("editing.dateTime.button")}
       icoon={CalendarClock}
       groot={groot}
-      uitleg="Notatie kiezen; desgewenst automatisch bijwerken"
+      uitleg={t("editing.dateTime.buttonTip")}
       disabled={!b.opdrachten.bewerkbaar}
       onClick={b.datumTijd}
     />

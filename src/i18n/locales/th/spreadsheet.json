@@ -1,0 +1,84 @@
+{
+  "formulaCheck": {
+    "titleWarning": "ตรวจสอบสูตรในสเปรดชีตนี้",
+    "titleInfo": "หมายเหตุเกี่ยวกับสูตรในสเปรดชีตนี้",
+    "cells_other": "{{count}} เซลล์",
+    "examplesMore_other": "{{list}} และอีก {{count}} รายการ",
+    "userFunction": "ฟังก์ชันที่ผู้ใช้กำหนด (แมโครหรือ Add-in)",
+    "function": "ฟังก์ชัน",
+    "notCalculated": "{{kind}} {{name}} ไม่ถูกคำนวณ ({{cells}}: {{examples}}) ผลลัพธ์ที่บันทึกไว้ยังคงอยู่และไม่ได้อัปเดต เซลล์ที่อ้างอิงอาจไม่เป็นปัจจุบัน",
+    "recalculated_other": "{{cells}} มีผลลัพธ์ที่บันทึกไว้ซึ่งล้าสมัยและถูกคำนวณใหม่เมื่อเปิด ({{examples}}) ผลลัพธ์ใหม่จะถูกเก็บไว้เมื่อบันทึก",
+    "manualCalculation": "ไฟล์ถูกบันทึกด้วยการคำนวณด้วยตนเอง ผลลัพธ์ที่บันทึกไว้อาจล้าสมัย",
+    "externalLinks_other": "เวิร์กบุ๊กอ้างอิงถึงเวิร์กบุ๊กภายนอก {{count}} รายการ ค่าเหล่านั้นจะไม่ถูกอัปเดต",
+    "errorCells": "{{cells}} ที่มีค่าข้อผิดพลาด: {{list}}",
+    "errorItem": "{{error}} ({{examples}})",
+    "noCachedResult": "{{cells}} ที่มีสูตรแต่ไม่มีผลลัพธ์ที่บันทึกไว้ ({{examples}})",
+    "fullCalcOnLoad": "ไฟล์ขอให้คำนวณใหม่ทั้งหมดเมื่อเปิด (fullCalcOnLoad) ผลลัพธ์ที่บันทึกไว้อาจล้าสมัย",
+    "calcChain": "ลำดับการคำนวณ (calcChain) จะไม่ถูกเก็บเมื่อบันทึก Excel จะสร้างขึ้นใหม่",
+    "tooLarge": "สเปรดชีตใหญ่เกินกว่าจะตรวจสอบได้",
+    "invalidWorkbook": "ไม่ใช่เวิร์กบุ๊ก XLSX ที่ถูกต้อง"
+  },
+  "print": {
+    "pageLabel": "{{sheet}} หน้า {{page}} จาก {{pages}}",
+    "notWorksheet": "ชีต ‘{{name}}’ ไม่ใช่เวิร์กชีตและจะถูกข้าม",
+    "nothingToPrint": "ไม่มีอะไรให้พิมพ์: ชีตว่างเปล่า"
+  },
+  "export": {
+    "pngUnavailable": "เอนจินสเปรดชีตนี้สร้าง PNG ไม่ได้"
+  },
+  "csvImport": {
+    "title": "นำเข้า {{name}}",
+    "import": "นำเข้า",
+    "separator": "ตัวคั่น",
+    "separatorSemicolon": "อัฒภาค ;",
+    "separatorComma": "จุลภาค ,",
+    "separatorTab": "แท็บ",
+    "separatorPipe": "เส้นตั้ง |",
+    "separatorCustom": "อักขระอื่น…",
+    "customCharacter": "อักขระอื่น",
+    "textQualifier": "ตัวระบุข้อความ",
+    "qualifierDouble": "อัญประกาศคู่ \"",
+    "qualifierSingle": "อัญประกาศเดี่ยว '",
+    "qualifierNone": "ไม่มี",
+    "encoding": "การเข้ารหัสอักขระ",
+    "encodingAuto": "อัตโนมัติ",
+    "encodingDetected": "{{name}} ({{encoding}})",
+    "encodingWindows1252": "Windows-1252 (ยุโรปตะวันตก)",
+    "numbers": "ตัวเลข",
+    "numbersDutch": "ดัตช์ (1.234,56)",
+    "numbersEnglish": "อังกฤษ (1,234.56)",
+    "dateOrder": "ลำดับวันที่",
+    "dateOrderDmy": "วัน-เดือน-ปี (31-12-2026)",
+    "dateOrderMdy": "เดือน-วัน-ปี (12/31/2026)",
+    "dateOrderYmd": "ปี-เดือน-วัน (2026-12-31)",
+    "fromRow": "เริ่มจากแถว",
+    "headerRow": "แถวแรกเป็นส่วนหัว",
+    "previewLabel": "ตัวอย่าง 50 แถวแรก",
+    "columnType": "ชนิดของคอลัมน์ {{number}}",
+    "columnTypes": {
+      "standaard": "ทั่วไป",
+      "tekst": "ข้อความ",
+      "datum": "วันที่",
+      "overslaan": "ข้าม"
+    },
+    "detected_other": "{{separator}} เป็นตัวคั่น, {{count}} คอลัมน์",
+    "explanation": "เลือก <b>ข้อความ</b> สำหรับรหัสไปรษณีย์ หมายเลขสินค้า และ IBAN เลขศูนย์นำหน้าและตัวเลขที่ยาวกว่า 15 หลักจะยังเป็นข้อความในแบบทั่วไปอยู่แล้ว ค่าที่ขึ้นต้นด้วย =, +, - หรือ @ จะไม่ถูกอ่านเป็นสูตร (มีอะพอสทรอฟีในตัวอย่าง)",
+    "separatorNames": {
+      "tab": "แท็บ",
+      "semicolon": "อัฒภาค",
+      "comma": "จุลภาค",
+      "pipe": "เส้นตั้ง",
+      "other": "“{{character}}”"
+    },
+    "report": {
+      "import": "นำเข้า",
+      "imported": "อ่าน {{rows}} และ {{columns}} แล้ว; {{separator}} เป็นตัวคั่น, การเข้ารหัส {{encoding}}",
+      "rows_other": "{{count}} แถว",
+      "columns_other": "{{count}} คอลัมน์",
+      "formulaLike": "ข้อความที่คล้ายสูตร",
+      "formulaLikeCells_other": "เซลล์ {{count}} เซลล์ที่ขึ้นต้นด้วย =, +, - หรือ @ ถูกนำเข้าเป็นข้อความ ไม่ใช่สูตร (ป้องกันการแทรกโค้ดผ่าน CSV)",
+      "truncated": "ถูกตัด",
+      "truncatedText": "ไฟล์ใหญ่กว่าเวิร์กชีต ({{rows}} แถวหรือ {{columns}} คอลัมน์) ส่วนที่เหลือไม่ได้ถูกอ่าน"
+    }
+  }
+}

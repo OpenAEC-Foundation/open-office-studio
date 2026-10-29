@@ -31,6 +31,9 @@ import {
   Code2,
   Link,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import i18next from "../i18n/config";
+import { useOpmaak } from "../i18n/opmaak";
 import { Actie, Groep, Ribbon } from "../Ribbon";
 import {
   allePaginas,
@@ -47,6 +50,7 @@ import {
   paginaBlokken,
   paginaTekst,
   kopieerSectie,
+  megabytes,
   MAX_MARKDOWN_TEKENS,
   voegBackupToe,
   zoekPaginas,
@@ -74,7 +78,9 @@ async function bewaarBestand(naam: string, tekst: string) {
     const pad = await invoke<string | null>("bewaar_kopie", bytes, {
       headers: { "x-office-naam": encodeURIComponent(naam) },
     });
-    return pad ? `Opgeslagen: ${pad}` : "Opslaan geannuleerd.";
+    return pad
+      ? i18next.t("notes:file.savedTo", { path: pad })
+      : i18next.t("notes:file.saveCancelled");
   }
   const url = URL.createObjectURL(
     new Blob([bytes], {
@@ -90,7 +96,7 @@ async function bewaarBestand(naam: string, tekst: string) {
   link.click();
   link.remove();
   setTimeout(() => URL.revokeObjectURL(url), 60000);
-  return "Download aangevraagd. Controleer het bestand in je downloads.";
+  return i18next.t("notes:file.downloadRequested");
 }
 
 export default function NotitiesStudio({
@@ -104,6 +110,8 @@ export default function NotitiesStudio({
   registreer: (acties: NotitieActies | null) => void;
   onOnopgeslagen: (waarde: boolean) => void;
 }) {
+  const { t } = useTranslation("notes");
+  const opmaak = useOpmaak();
   const [start] = useState(() => {
     let opslag: NotitieBewaring | null = null;
     try {
@@ -115,7 +123,7 @@ export default function NotitiesStudio({
         opslag,
         data: null,
         nieuw: false,
-        fout: `Lokale notities konden niet worden gelezen: ${String(e)}. Bestaande gegevens zijn niet overschreven.`,
+        fout: i18next.t("notes:errors.readLocal", { error: String(e) }),
       };
     }
   });
@@ -126,7 +134,9 @@ export default function NotitiesStudio({
   const [fout, setFout] = useState(start.fout),
     [melding, setMelding] = useState(""),
     [status, setStatus] = useState(
-      start.data ? "Lokaal opgeslagen" : "Opslag niet beschikbaar",
+      start.data
+        ? i18next.t("notes:status.savedLocally")
+        : i18next.t("notes:status.storageUnavailable"),
     );
   const eerste = start.data
     ? (allePaginas(start.data).find(({ pagina }) => !pagina.verwijderd) ??
@@ -183,7 +193,7 @@ export default function NotitiesStudio({
     vuil.current = true;
     onOnopgeslagen(true);
     setData(nieuw);
-    setStatus("Opslaan…");
+    setStatus(t("status.saving"));
   }
   function wijzigen(nieuw: Notities, groep = "") {
     if (dataRef.current) historie.current.bewaar(dataRef.current, groep);
@@ -215,18 +225,16 @@ export default function NotitiesStudio({
     if (!vuil.current) return true;
     try {
       if (!dataRef.current || !opslag.current)
-        throw new Error("Lokale opslag is niet beschikbaar.");
+        throw new Error(t("errors.localStorageUnavailable"));
       opslag.current.schrijf(dataRef.current);
       vuil.current = false;
       onOnopgeslagen(false);
-      setStatus("Lokaal opgeslagen");
+      setStatus(t("status.savedLocally"));
       setFout("");
       return true;
     } catch (e) {
-      setFout(
-        `Automatisch opslaan mislukt: ${String(e)} Maak een back-up om je huidige werk te bewaren.`,
-      );
-      setStatus("Niet opgeslagen");
+      setFout(t("errors.autosaveFailed", { error: String(e) }));
+      setStatus(t("status.notSaved"));
       return false;
     }
   }
@@ -254,9 +262,7 @@ export default function NotitiesStudio({
     const extern = (e: StorageEvent) => {
       if (e.key !== OPSLAGSLEUTEL && e.key !== null) return;
       if (vuil.current) {
-        setFout(
-          "Een ander venster heeft de lokale notities gewijzigd. Je huidige werk is behouden; maak een back-up voordat je de lokale versie opnieuw opent.",
-        );
+        setFout(i18next.t("notes:errors.changedInOtherWindow"));
         return;
       }
       try {
@@ -265,12 +271,10 @@ export default function NotitiesStudio({
           historie.current.wis();
           dataRef.current = nieuw;
           setData(nieuw);
-          setMelding("Lokale notities bijgewerkt vanuit een ander venster.");
+          setMelding(i18next.t("notes:messages.updatedFromOtherWindow"));
         }
       } catch (e) {
-        setFout(
-          `Notities uit het andere venster konden niet worden gelezen: ${String(e)}`,
-        );
+        setFout(i18next.t("notes:errors.readOtherWindow", { error: String(e) }));
       }
     };
     const toetsen = (e: KeyboardEvent) => {
@@ -461,30 +465,28 @@ export default function NotitiesStudio({
     if (soort === "sectie") {
       setNaamveld({
         soort,
-        waarde: "Nieuwe sectie",
+        waarde: t("defaults.newSection"),
         sectieSoort: "canvas",
         nieuw: true,
       });
       return;
     }
     const p = nieuwePagina(
-      "Naamloze pagina",
+      t("defaults.untitledPage"),
       soort === "pagina" ? sectie.soort : "canvas",
     );
     const s: Sectie = {
       id: nieuwId(),
-      naam: "Ideeën",
+      naam: t("defaults.ideas"),
       soort: "canvas",
       paginas: [p],
     };
-    const b = { id: nieuwId(), naam: "Nieuw notitieboek", secties: [s] };
+    const b = { id: nieuwId(), naam: t("defaults.newNotebook"), secties: [s] };
     if (
       (soort === "boek" && data.boeken.length >= 100) ||
       allePaginas(data).length >= 5000
     ) {
-      setFout(
-        "De maximale omvang is bereikt. Maak een back-up en gebruik een apart notitieboekbestand.",
-      );
+      setFout(t("errors.maximumReached"));
       return;
     }
     wijzigen({
@@ -529,14 +531,14 @@ export default function NotitiesStudio({
     ) {
       try {
         if (boek.secties.length >= 200)
-          throw new Error("Dit notitieboek bevat al 200 secties.");
+          throw new Error(t("errors.tooManySections", { max: 200 }));
         const soort = naamveld.sectieSoort ?? sectie.soort;
         const nieuw: Sectie = naamveld.nieuw
           ? {
               id: nieuwId(),
               naam: naamveld.waarde.trim(),
               soort,
-              paginas: [nieuwePagina("Naamloze pagina", soort)],
+              paginas: [nieuwePagina(t("defaults.untitledPage"), soort)],
             }
           : kopieerSectie(sectie, soort);
         if (!naamveld.nieuw && naamveld.waarde.trim() !== sectie.naam)
@@ -562,10 +564,12 @@ export default function NotitiesStudio({
         setPrullenbak(false);
         if (!naamveld.nieuw)
           setMelding(
-            `Een ${soort === "markdown" ? "Markdown" : "Canvas"}-kopie is gemaakt. De oorspronkelijke sectie is behouden.${soort === "canvas" ? " Markdownbron is als tekst overgenomen." : ""}`,
+            soort === "markdown"
+              ? t("messages.markdownCopyMade")
+              : t("messages.canvasCopyMade"),
           );
       } catch (e) {
-        setFout(`Sectie niet toegevoegd: ${String(e)}`);
+        setFout(t("errors.sectionNotAdded", { error: String(e) }));
       }
       setNaamveld(null);
       return;
@@ -600,14 +604,14 @@ export default function NotitiesStudio({
             ? JSON.stringify(dataRef.current)
             : null;
       if (tekst === null)
-        throw new Error("Er zijn geen notities beschikbaar voor een back-up.");
+        throw new Error(t("errors.nothingToBackUp"));
       const naam =
         markdown && pagina
-          ? `${(pagina.titel || "Notitie").replace(/[^\p{L}\p{N}\s_-]/gu, "").slice(0, 100)}.md`
-          : `Notities-${new Date().toISOString().slice(0, 10)}.openaec-notities`;
+          ? `${(pagina.titel || t("file.noteName")).replace(/[^\p{L}\p{N}\s_-]/gu, "").slice(0, 100)}.md`
+          : `${t("file.backupName", { date: new Date().toISOString().slice(0, 10) })}.openaec-notities`;
       setMelding(await bewaarBestand(naam, tekst));
     } catch (e) {
-      setFout(`Exporteren mislukt: ${String(e)}`);
+      setFout(t("errors.exportFailed", { error: String(e) }));
     } finally {
       setExportBezig(false);
     }
@@ -634,67 +638,70 @@ export default function NotitiesStudio({
         tabs={[
           {
             id: "start",
-            naam: "Start",
+            naam: t("ribbon.tabs.home"),
             inhoud: (
               <>
-                <Groep naam="Bewerken" className="notities-historie">
+                <Groep
+                  naam={t("ribbon.groups.edit")}
+                  className="notities-historie"
+                >
                   <Actie
                     icoon={Undo2}
-                    naam="Ongedaan maken"
+                    naam={t("ribbon.actions.undo")}
                     disabled={!historie.current.kanTerug}
                     onClick={() => herstelStap()}
                   />
                   <Actie
                     icoon={Redo2}
-                    naam="Opnieuw"
+                    naam={t("ribbon.actions.redo")}
                     disabled={!historie.current.kanVooruit}
                     onClick={() => herstelStap(true)}
                   />
                 </Groep>
-                <Groep naam="Organiseren">
+                <Groep naam={t("ribbon.groups.organize")}>
                   <Actie
                     icoon={NotebookPen}
-                    naam="Notitieboek"
+                    naam={t("ribbon.actions.notebook")}
                     groot
                     disabled={!data}
                     onClick={() => nieuweInhoud("boek")}
                   />
                   <Actie
                     icoon={FolderPlus}
-                    naam="Sectie"
+                    naam={t("ribbon.actions.section")}
                     groot
                     disabled={!data}
                     onClick={() => nieuweInhoud("sectie")}
                   />
                   <Actie
                     icoon={FilePlus2}
-                    naam="Pagina"
+                    naam={t("ribbon.actions.page")}
                     groot
                     disabled={!data}
                     onClick={() => nieuweInhoud("pagina")}
                   />
                 </Groep>
                 <Groep
-                  naam="Tekst"
+                  naam={t("ribbon.groups.text")}
                   className={isMarkdown ? "notities-md-opmaak" : ""}
                 >
                   <Actie
                     icoon={Type}
-                    naam="Tekst"
+                    naam={t("ribbon.actions.text")}
                     disabled={!bewerkbaar || (!isMarkdown && !actiefBlok)}
                     onMouseDown={(e) => e.preventDefault()}
                     onClick={knoppen("tekst")}
                   />
                   <Actie
                     icoon={Heading2}
-                    naam="Kop"
+                    naam={t("ribbon.actions.heading")}
                     disabled={!bewerkbaar || (!isMarkdown && !actiefBlok)}
                     onMouseDown={(e) => e.preventDefault()}
                     onClick={knoppen("kop")}
                   />
                   <Actie
                     icoon={Bold}
-                    naam="Vet"
+                    naam={t("ribbon.actions.bold")}
                     actief={actiefBlok?.vet}
                     disabled={!bewerkbaar || (!isMarkdown && !actiefBlok)}
                     onMouseDown={(e) => e.preventDefault()}
@@ -711,7 +718,7 @@ export default function NotitiesStudio({
                   />
                   <Actie
                     icoon={Italic}
-                    naam="Cursief"
+                    naam={t("ribbon.actions.italic")}
                     actief={actiefBlok?.cursief}
                     disabled={!bewerkbaar || (!isMarkdown && !actiefBlok)}
                     onMouseDown={(e) => e.preventDefault()}
@@ -729,10 +736,14 @@ export default function NotitiesStudio({
                     }}
                   />
                 </Groep>
-                <Groep naam="Invoegen">
+                <Groep naam={t("ribbon.groups.insert")}>
                   <Actie
                     icoon={isMarkdown ? Table2 : TextCursorInput}
-                    naam={isMarkdown ? "Tabel" : "Tekstvak"}
+                    naam={
+                      isMarkdown
+                        ? t("ribbon.actions.table")
+                        : t("ribbon.actions.textBox")
+                    }
                     groot
                     disabled={!bewerkbaar}
                     onMouseDown={(e) => e.preventDefault()}
@@ -744,7 +755,7 @@ export default function NotitiesStudio({
                   />
                   <Actie
                     icoon={CheckSquare}
-                    naam="Taak"
+                    naam={t("ribbon.actions.task")}
                     groot
                     disabled={!bewerkbaar}
                     onMouseDown={(e) => e.preventDefault()}
@@ -756,7 +767,7 @@ export default function NotitiesStudio({
                   />
                   <Actie
                     icoon={List}
-                    naam="Opsomming"
+                    naam={t("ribbon.actions.list")}
                     groot
                     disabled={!bewerkbaar}
                     onMouseDown={(e) => e.preventDefault()}
@@ -768,7 +779,7 @@ export default function NotitiesStudio({
                   />
                   <Actie
                     icoon={CalendarDays}
-                    naam="Datum"
+                    naam={t("ribbon.actions.date")}
                     groot
                     disabled={!bewerkbaar}
                     onMouseDown={(e) => e.preventDefault()}
@@ -777,9 +788,7 @@ export default function NotitiesStudio({
                         ? markdownActies.current?.voerUit("datum")
                         : voegBlokToe(
                             "tekst",
-                            new Intl.DateTimeFormat("nl-NL", {
-                              dateStyle: "full",
-                            }).format(new Date()),
+                            opmaak.datum(new Date(), { dateStyle: "full" }),
                           )
                     }
                   />
@@ -787,7 +796,7 @@ export default function NotitiesStudio({
                     <>
                       <Actie
                         icoon={Code2}
-                        naam="Code"
+                        naam={t("ribbon.actions.code")}
                         groot
                         disabled={!bewerkbaar}
                         onMouseDown={(e) => e.preventDefault()}
@@ -795,7 +804,7 @@ export default function NotitiesStudio({
                       />
                       <Actie
                         icoon={Link}
-                        naam="Link"
+                        naam={t("ribbon.actions.link")}
                         groot
                         disabled={!bewerkbaar}
                         onMouseDown={(e) => e.preventDefault()}
@@ -804,18 +813,18 @@ export default function NotitiesStudio({
                     </>
                   )}
                 </Groep>
-                <Groep naam="Pagina">
+                <Groep naam={t("ribbon.groups.page")}>
                   <Actie
                     icoon={PanelLeft}
-                    naam="Navigatie"
+                    naam={t("ribbon.actions.navigation")}
                     groot
                     actief={toonPanelen}
-                    title="Notitieboeken en paginalijst weergeven of verbergen"
+                    title={t("ribbon.actions.navigationTitle")}
                     onClick={() => setToonPanelen(!toonPanelen)}
                   />
                   <Actie
                     icoon={Pin}
-                    naam="Vastzetten"
+                    naam={t("ribbon.actions.pin")}
                     actief={pagina?.vastgezet}
                     groot
                     disabled={!bewerkbaar}
@@ -825,7 +834,11 @@ export default function NotitiesStudio({
                   />
                   <Actie
                     icoon={pagina?.verwijderd ? RotateCcw : Trash2}
-                    naam={pagina?.verwijderd ? "Herstellen" : "Prullenbak"}
+                    naam={
+                      pagina?.verwijderd
+                        ? t("ribbon.actions.restore")
+                        : t("ribbon.actions.trash")
+                    }
                     groot
                     disabled={!pagina}
                     onClick={() => {
@@ -839,30 +852,30 @@ export default function NotitiesStudio({
           },
           {
             id: "beeld",
-            naam: "Beeld",
+            naam: t("ribbon.tabs.view"),
             inhoud: (
               <>
-                <Groep naam="Pagina">
+                <Groep naam={t("ribbon.groups.page")}>
                   <Actie
                     icoon={Grid2X2}
-                    naam="Raster"
+                    naam={t("ribbon.actions.grid")}
                     groot
                     disabled={isMarkdown}
                     actief={raster}
                     onClick={() => setRaster(!raster)}
                   />
                 </Groep>
-                <Groep naam="Zoom">
+                <Groep naam={t("ribbon.groups.zoom")}>
                   <label className="ribbon-keuze">
                     <select
-                      aria-label="Pagina zoom"
+                      aria-label={t("ribbon.actions.pageZoom")}
                       disabled={isMarkdown}
                       value={zoom}
                       onChange={(e) => setZoom(Number(e.target.value))}
                     >
                       {[0.5, 0.75, 1, 1.25, 1.5, 2].map((waarde) => (
                         <option key={waarde} value={waarde}>
-                          {Math.round(waarde * 100)}%
+                          {opmaak.procent(waarde)}
                         </option>
                       ))}
                     </select>
@@ -871,18 +884,15 @@ export default function NotitiesStudio({
                 <p className="notities-bewaaruitleg">
                   {isMarkdown ? (
                     <>
-                      Kies Bron, Naast elkaar of Voorbeeld boven de
-                      Markdown-editor.
+                      {t("ribbon.help.markdownViews")}
                       <br />
-                      Ctrl+B: vet · Ctrl+I: cursief · Ctrl+K: link.
+                      {t("ribbon.help.markdownKeys")}
                     </>
                   ) : (
                     <>
-                      Sleep tekstvakken aan de bovenrand. Wijzig de grootte
-                      rechtsonder.
+                      {t("ribbon.help.canvasMove")}
                       <br />
-                      Je kunt de verplaatsgrepen ook met de pijltjestoetsen
-                      bedienen.
+                      {t("ribbon.help.canvasKeys")}
                     </>
                   )}
                 </p>
@@ -891,30 +901,30 @@ export default function NotitiesStudio({
           },
           {
             id: "bewaren",
-            naam: "Bewaren",
+            naam: t("ribbon.tabs.keep"),
             inhoud: (
               <>
-                <Groep naam="Back-up">
+                <Groep naam={t("ribbon.groups.backup")}>
                   <Actie
                     icoon={Download}
-                    naam="Back-up opslaan"
+                    naam={t("ribbon.actions.saveBackup")}
                     groot
                     disabled={!data || exportBezig}
                     onClick={() => void exporteer()}
                   />
                   <Actie
                     icoon={Upload}
-                    naam="Back-up toevoegen"
+                    naam={t("ribbon.actions.addBackup")}
                     groot
                     disabled={!data || exportBezig}
                     onClick={() => invoer.current?.click()}
                   />
                 </Groep>
-                <Groep naam="Exporteren">
+                <Groep naam={t("ribbon.groups.export")}>
                   {isMarkdown && (
                     <Actie
                       icoon={Upload}
-                      naam="Markdown openen"
+                      naam={t("ribbon.actions.openMarkdown")}
                       groot
                       disabled={!data || exportBezig || prullenbak}
                       onClick={() => markdownInvoer.current?.click()}
@@ -922,25 +932,25 @@ export default function NotitiesStudio({
                   )}
                   <Actie
                     icoon={Download}
-                    naam="Pagina als Markdown"
+                    naam={t("ribbon.actions.pageAsMarkdown")}
                     groot
                     disabled={!pagina || exportBezig}
                     onClick={() => void exporteer(true)}
                   />
                 </Groep>
-                <Groep naam="Lokale opslag">
+                <Groep naam={t("ribbon.groups.localStorage")}>
                   <Actie
                     icoon={ShieldCheck}
-                    naam="Nu opslaan"
+                    naam={t("ribbon.actions.saveNow")}
                     groot
                     disabled={!data}
                     onClick={() => bewaren()}
                   />
                 </Groep>
                 <p className="notities-bewaaruitleg">
-                  Je notities worden automatisch lokaal opgeslagen.
+                  {t("ribbon.help.autosave")}
                   <br />
-                  Een back-up bevat alle notitieboeken, ook de prullenbak.
+                  {t("ribbon.help.backupContents")}
                 </p>
               </>
             ),
@@ -960,20 +970,22 @@ export default function NotitiesStudio({
             doelSectie = sectie.id;
           try {
             if (file.size > MAX_MARKDOWN_TEKENS * 4)
-              throw new Error("Kies een Markdownbestand van maximaal 2 MB.");
+              throw new Error(
+                t("errors.markdownFileTooLarge", { size: megabytes(2) }),
+              );
             const tekst = await file.text();
             if (tekst.length > MAX_MARKDOWN_TEKENS)
               throw new Error(
-                "Een Markdownpagina mag maximaal 500.000 tekens bevatten.",
+                t("errors.markdownTooLong", {
+                  max: opmaak.getal(MAX_MARKDOWN_TEKENS),
+                }),
               );
             const huidig = dataRef.current;
             const doel = huidig?.boeken
               .find((b) => b.id === doelBoek)
               ?.secties.find((s) => s.id === doelSectie);
             if (!huidig || doel?.soort !== "markdown")
-              throw new Error(
-                "Kies een Markdownsectie om het bestand toe te voegen.",
-              );
+              throw new Error(t("errors.chooseMarkdownSection"));
             const nieuw = {
               ...nieuwePagina(
                 file.name.replace(/\.(md|markdown)$/i, "").slice(0, 300),
@@ -1003,11 +1015,9 @@ export default function NotitiesStudio({
             setPaginaId(nieuw.id);
             setZoekterm("");
             setPrullenbak(false);
-            setMelding(
-              "Markdown als nieuwe pagina toegevoegd. Bestaande pagina’s zijn behouden.",
-            );
+            setMelding(t("messages.markdownAdded"));
           } catch (e) {
-            setFout(`Markdown niet toegevoegd: ${String(e)}`);
+            setFout(t("errors.markdownNotAdded", { error: String(e) }));
           }
         }}
       />
@@ -1023,7 +1033,7 @@ export default function NotitiesStudio({
           if (!file || !dataRef.current) return;
           try {
             if (!file.size || file.size > MAX_BACKUP_BYTES)
-              throw new Error("Kies een niet-lege back-up van maximaal 10 MB.");
+              throw new Error(t("errors.backupSize", { size: megabytes(10) }));
             const backup = leesNotities(await file.text());
             const samen = voegBackupToe(dataRef.current, backup);
             leesNotities(JSON.stringify(samen));
@@ -1036,10 +1046,10 @@ export default function NotitiesStudio({
             setZoekterm("");
             setPrullenbak(false);
             setMelding(
-              `${backup.boeken.length} notitieboek(en) toegevoegd. Bestaande notities zijn behouden.`,
+              t("messages.backupAdded", { count: backup.boeken.length }),
             );
           } catch (e) {
-            setFout(`Back-up niet toegevoegd: ${String(e)}`);
+            setFout(t("errors.backupNotAdded", { error: String(e) }));
           }
         }}
       />
@@ -1048,15 +1058,15 @@ export default function NotitiesStudio({
           <AlertCircle size={17} />
           <span>{fout}</span>
           {data ? (
-            <button onClick={() => bewaren()}>Opnieuw opslaan</button>
+            <button onClick={() => bewaren()}>{t("alerts.saveAgain")}</button>
           ) : (
             <button onClick={() => void exporteer(false, true)}>
-              Bestaande gegevens exporteren
+              {t("alerts.exportExisting")}
             </button>
           )}
           {data && (
             <button
-              aria-label="Notitiefout sluiten"
+              aria-label={t("alerts.closeError")}
               onClick={() => setFout("")}
             >
               <X size={15} />
@@ -1068,7 +1078,7 @@ export default function NotitiesStudio({
         <div className="notities-melding" role="status">
           <span>{melding}</span>
           <button
-            aria-label="Notitiemelding sluiten"
+            aria-label={t("alerts.closeMessage")}
             onClick={() => setMelding("")}
           >
             <X size={15} />
@@ -1081,13 +1091,13 @@ export default function NotitiesStudio({
         >
           <aside
             className="notities-boeken"
-            aria-label="Notitieboeken en secties"
+            aria-label={t("sidebar.label")}
           >
-            <div className="notities-zijlabel">MIJN NOTITIEBOEKEN</div>
+            <div className="notities-zijlabel">{t("sidebar.myNotebooks")}</div>
             <div className="notities-boekkiezer">
               <NotebookPen size={19} />
               <select
-                aria-label="Notitieboek kiezen"
+                aria-label={t("sidebar.chooseNotebook")}
                 value={boek?.id}
                 onChange={(e) => {
                   const b = data.boeken.find((b) => b.id === e.target.value)!;
@@ -1104,12 +1114,12 @@ export default function NotitiesStudio({
               >
                 {data.boeken.map((b) => (
                   <option key={b.id} value={b.id}>
-                    {b.naam || "Naamloos notitieboek"}
+                    {b.naam || t("defaults.untitledNotebook")}
                   </option>
                 ))}
               </select>
               <button
-                aria-label="Notitieboek hernoemen"
+                aria-label={t("sidebar.renameNotebook")}
                 onClick={() =>
                   boek && setNaamveld({ soort: "boek", waarde: boek.naam })
                 }
@@ -1121,26 +1131,29 @@ export default function NotitiesStudio({
               <Search size={16} />
               <input
                 ref={zoekveld}
-                aria-label="Alle notities doorzoeken"
-                placeholder="Zoeken in alle notities"
+                aria-label={t("sidebar.searchLabel")}
+                placeholder={t("sidebar.searchPlaceholder")}
                 value={zoekterm}
                 onChange={(e) => setZoekterm(e.target.value)}
               />
             </div>
             <div className="notities-zijlabel notities-sectiekop">
-              SECTIES
+              {t("sidebar.sections")}
               <button
-                aria-label="Nieuwe sectie"
+                aria-label={t("sidebar.newSection")}
                 onClick={() => nieuweInhoud("sectie")}
               >
                 <Plus size={15} />
               </button>
             </div>
-            <nav aria-label="Secties">
+            <nav aria-label={t("sidebar.sectionsNav")}>
               {boek?.secties.map((s, i) => (
                 <button
                   key={s.id}
-                  title={`${s.naam} · ${s.soort === "markdown" ? "Markdown" : "Canvas"}`}
+                  title={t("sidebar.sectionTitle", {
+                    name: s.naam,
+                    type: t(`sectionTypes.${s.soort}`),
+                  })}
                   className={
                     s.id === sectie?.id && !zoekterm && !prullenbak
                       ? "is-geselecteerd"
@@ -1162,9 +1175,9 @@ export default function NotitiesStudio({
                       ],
                     }}
                   />
-                  <span>{s.naam || "Naamloze sectie"}</span>
+                  <span>{s.naam || t("defaults.untitledSection")}</span>
                   {s.soort === "markdown" && (
-                    <Code2 size={12} aria-label="Markdownsectie" />
+                    <Code2 size={12} aria-label={t("sidebar.markdownSection")} />
                   )}
                   <small>{s.paginas.filter((p) => !p.verwijderd).length}</small>
                 </button>
@@ -1174,7 +1187,7 @@ export default function NotitiesStudio({
               className="notities-nieuwboek"
               onClick={() => nieuweInhoud("boek")}
             >
-              <Plus size={15} /> Notitieboek toevoegen
+              <Plus size={15} /> {t("sidebar.addNotebook")}
             </button>
             <div className="notities-zijvoet">
               <button
@@ -1184,7 +1197,7 @@ export default function NotitiesStudio({
                   setZoekterm("");
                 }}
               >
-                <Trash2 size={15} /> Prullenbak
+                <Trash2 size={15} /> {t("sidebar.trash")}
                 <span>
                   {
                     allePaginas(data).filter(({ pagina }) => pagina.verwijderd)
@@ -1193,31 +1206,31 @@ export default function NotitiesStudio({
                 </span>
               </button>
               <p>
-                <ShieldCheck size={14} /> Alleen op jouw computer
+                <ShieldCheck size={14} /> {t("sidebar.localOnly")}
               </p>
             </div>
           </aside>
-          <aside className="notities-paginas" aria-label="Pagina’s">
+          <aside className="notities-paginas" aria-label={t("pages.label")}>
             <div className="notities-lijstkop">
               <div>
                 <span>
                   {zoekterm
-                    ? "ZOEKRESULTATEN"
+                    ? t("pages.searchResults")
                     : prullenbak
-                      ? "HERSTEL JE PAGINA’S"
-                      : "PAGINA’S"}
+                      ? t("pages.restorePages")
+                      : t("pages.pages")}
                 </span>
                 <h2>
                   {zoekterm
-                    ? "Alle notities"
+                    ? t("pages.allNotes")
                     : prullenbak
-                      ? "Prullenbak"
+                      ? t("pages.trash")
                       : sectie?.naam}
                 </h2>
               </div>
               {!zoekterm && !prullenbak && (
                 <button
-                  aria-label="Sectie hernoemen"
+                  aria-label={t("pages.renameSection")}
                   onClick={() =>
                     sectie &&
                     setNaamveld({ soort: "sectie", waarde: sectie.naam })
@@ -1229,9 +1242,9 @@ export default function NotitiesStudio({
             </div>
             {!zoekterm && !prullenbak && sectie && (
               <label className="notities-sectietype">
-                Sectietype
+                {t("pages.sectionType")}
                 <select
-                  aria-label="Sectietype"
+                  aria-label={t("pages.sectionType")}
                   value={sectie.soort}
                   onChange={(e) =>
                     setNaamveld({
@@ -1241,8 +1254,8 @@ export default function NotitiesStudio({
                     })
                   }
                 >
-                  <option value="canvas">Canvas</option>
-                  <option value="markdown">Markdown</option>
+                  <option value="canvas">{t("sectionTypes.canvas")}</option>
+                  <option value="markdown">{t("sectionTypes.markdown")}</option>
                 </select>
               </label>
             )}
@@ -1251,7 +1264,7 @@ export default function NotitiesStudio({
                 className="notities-nieuwepagina"
                 onClick={() => nieuweInhoud("pagina")}
               >
-                <Plus size={15} /> Nieuwe pagina
+                <Plus size={15} /> {t("pages.newPage")}
               </button>
             )}
             <div className="notities-paginalijst">
@@ -1263,29 +1276,29 @@ export default function NotitiesStudio({
                 >
                   <strong>
                     {p.vastgezet && <Pin size={12} />}
-                    {p.titel || "Naamloze pagina"}
+                    {p.titel || t("defaults.untitledPage")}
                   </strong>
                   <span>
                     {paginaTekst(p, s.soort).slice(0, 90) ||
-                      "Een lege pagina, klaar voor je ideeën."}
+                      t("pages.emptyPreview")}
                   </span>
                   <small>
                     {zoekterm || prullenbak
-                      ? `${b.naam} / ${s.naam}`
-                      : new Intl.DateTimeFormat("nl-NL", {
+                      ? t("pages.location", { notebook: b.naam, section: s.naam })
+                      : opmaak.datum(p.bijgewerkt, {
                           day: "numeric",
                           month: "short",
-                        }).format(new Date(p.bijgewerkt))}
+                        })}
                   </small>
                 </button>
               ))}
               {!resultaten.length && (
                 <p className="notities-geenresultaten">
                   {zoekterm
-                    ? "Geen pagina’s gevonden."
+                    ? t("pages.noResults")
                     : prullenbak
-                      ? "Je prullenbak is leeg."
-                      : "Begin met een nieuwe pagina."}
+                      ? t("pages.trashEmpty")
+                      : t("pages.startNew")}
                 </p>
               )}
             </div>
@@ -1300,20 +1313,21 @@ export default function NotitiesStudio({
                     {selectie?.sectie.naam}
                   </span>
                   <button
-                    title="Deze pagina als Markdown bewaren"
+                    title={t("page.saveAsMarkdownTitle")}
                     disabled={exportBezig}
                     onClick={() => void exporteer(true)}
                   >
-                    <Download size={15} /> Markdown
+                    <Download size={15} /> {t("page.markdown")}
                   </button>
                 </div>
                 <input
                   className="notities-paginatitel"
-                  aria-label="Paginatitel"
+                  dir="auto"
+                  aria-label={t("page.titleLabel")}
                   value={pagina.titel}
                   maxLength={300}
                   readOnly={pagina.verwijderd}
-                  placeholder="Naamloze pagina"
+                  placeholder={t("defaults.untitledPage")}
                   onChange={(e) =>
                     wijzigPagina(
                       { titel: e.target.value },
@@ -1323,31 +1337,30 @@ export default function NotitiesStudio({
                 />
                 <div className="notities-paginadatum">
                   <CalendarDays size={13} />
-                  {new Intl.DateTimeFormat("nl-NL", {
+                  {opmaak.datumTijd(pagina.bijgewerkt, {
                     dateStyle: "long",
                     timeStyle: "short",
-                  }).format(new Date(pagina.bijgewerkt))}
+                  })}
                   <span>·</span>
-                  {
-                    paginaTekst(pagina, paginaSoort)
+                  {t(isMarkdown ? "page.wordsInSource" : "page.words", {
+                    count: paginaTekst(pagina, paginaSoort)
                       .trim()
                       .split(/\s+/)
-                      .filter(Boolean).length
-                  }{" "}
-                  {isMarkdown ? "woorden in bron" : "woorden"}
+                      .filter(Boolean).length,
+                  })}
                 </div>
                 {pagina.verwijderd ? (
                   <>
                     <div className="notities-herstel">
                       <Trash2 size={18} />
-                      <span>Deze pagina staat in de prullenbak.</span>
+                      <span>{t("page.inTrash")}</span>
                       <button
                         onClick={() => {
                           wijzigPagina({ verwijderd: false });
                           setPrullenbak(false);
                         }}
                       >
-                        Pagina herstellen
+                        {t("page.restorePage")}
                       </button>
                     </div>
                     {isMarkdown ? (
@@ -1426,7 +1439,7 @@ export default function NotitiesStudio({
                             focusBlok(blok.id);
                           }}
                         >
-                          <Plus size={13} /> Tekst toevoegen
+                          <Plus size={13} /> {t("page.addText")}
                         </button>
                       </>
                     )}
@@ -1436,10 +1449,10 @@ export default function NotitiesStudio({
             ) : (
               <div className="notities-legepagina">
                 <NotebookPen size={38} />
-                <h2>Ruimte voor een nieuw idee.</h2>
-                <p>Kies een pagina of begin een nieuwe notitie.</p>
+                <h2>{t("page.emptyTitle")}</h2>
+                <p>{t("page.emptyText")}</p>
                 <button onClick={() => nieuweInhoud("pagina")}>
-                  <Plus size={16} /> Nieuwe pagina
+                  <Plus size={16} /> {t("page.newPage")}
                 </button>
               </div>
             )}
@@ -1451,9 +1464,14 @@ export default function NotitiesStudio({
         {status}
         <span>
           {isMarkdown
-            ? "Markdown"
-            : `${pagina?.vakken.length ?? 0} tekstvakken · ${Math.round(zoom * 100)}%`}{" "}
-          · Ctrl+Z ongedaan maken
+            ? t("sectionTypes.markdown")
+            : t("status.canvasSummary", {
+                boxes: t("status.textBoxes", {
+                  count: pagina?.vakken.length ?? 0,
+                }),
+                zoom: opmaak.procent(zoom),
+              })}{" "}
+          · {t("status.undoHint")}
         </span>
       </div>
       {naamveld && (
@@ -1487,13 +1505,13 @@ export default function NotitiesStudio({
           >
             <h2 id="notities-naam-titel">
               {naamveld.soort === "boek"
-                ? "Notitieboek een naam geven"
+                ? t("nameDialog.notebookTitle")
                 : naamveld.nieuw
-                  ? "Nieuwe sectie"
-                  : "Sectie instellen"}
+                  ? t("nameDialog.newSection")
+                  : t("nameDialog.sectionSettings")}
             </h2>
             <label>
-              Naam
+              {t("nameDialog.name")}
               <input
                 autoFocus
                 maxLength={200}
@@ -1507,9 +1525,9 @@ export default function NotitiesStudio({
             {naamveld.soort === "sectie" && (
               <>
                 <label>
-                  Sectietype
+                  {t("nameDialog.sectionType")}
                   <select
-                    aria-label="Type voor sectie"
+                    aria-label={t("nameDialog.typeLabel")}
                     value={naamveld.sectieSoort ?? sectie?.soort ?? "canvas"}
                     onChange={(e) =>
                       setNaamveld({
@@ -1518,11 +1536,9 @@ export default function NotitiesStudio({
                       })
                     }
                   >
-                    <option value="canvas">
-                      Canvas — vrij geplaatste tekstvakken
-                    </option>
+                    <option value="canvas">{t("nameDialog.canvasOption")}</option>
                     <option value="markdown">
-                      Markdown — tekst met direct voorbeeld
+                      {t("nameDialog.markdownOption")}
                     </option>
                   </select>
                 </label>
@@ -1530,17 +1546,16 @@ export default function NotitiesStudio({
                   naamveld.sectieSoort &&
                   naamveld.sectieSoort !== sectie?.soort && (
                     <p>
-                      Dit maakt een kopie van de sectie. De oorspronkelijke
-                      pagina’s en canvasindeling blijven behouden.{" "}
+                      {t("nameDialog.copyInfo")}{" "}
                       {naamveld.sectieSoort === "canvas" &&
-                        "Markdownbron wordt als tekst in een tekstvak overgenomen."}
+                        t("nameDialog.copyInfoCanvas")}
                     </p>
                   )}
               </>
             )}
             <div>
               <button type="button" onClick={() => setNaamveld(null)}>
-                Annuleren
+                {t("common:cancel")}
               </button>
               <button type="submit" disabled={!naamveld.waarde.trim()}>
                 <Check size={15} />{" "}
@@ -1548,10 +1563,10 @@ export default function NotitiesStudio({
                 !naamveld.nieuw &&
                 naamveld.sectieSoort &&
                 naamveld.sectieSoort !== sectie?.soort
-                  ? "Maak kopie"
+                  ? t("nameDialog.makeCopy")
                   : naamveld.nieuw
-                    ? "Toevoegen"
-                    : "Opslaan"}
+                    ? t("nameDialog.add")
+                    : t("common:save")}
               </button>
             </div>
           </form>

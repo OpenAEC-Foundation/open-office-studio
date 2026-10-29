@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { zetTaal } from "../i18n/config";
 import {
   datumTekst,
   selectieBegin,
@@ -64,6 +65,15 @@ describe("datum en tijd", () => {
     expect(datumTekst(moment)).toBe("26-10-2026");
     expect(datumTekst(moment, true)).toBe("26 oktober 2026");
     expect(tijdTekst(moment)).toBe("09:05");
+  });
+  it("volgt de interfacetaal op het moment van invoegen", async () => {
+    await zetTaal("en");
+    try {
+      expect(datumTekst(moment)).toBe("26/10/2026");
+    } finally {
+      await zetTaal("nl");
+    }
+    expect(datumTekst(moment)).toBe("26-10-2026");
   });
 });
 

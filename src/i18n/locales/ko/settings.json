@@ -1,0 +1,141 @@
+{
+  "title": "설정",
+  "resetToDefaults": "기본값 복원",
+  "resetConfirm": "모든 설정을 기본값으로 되돌리시겠습니까? [저장]을 클릭해야 저장됩니다.",
+  "saveFailed": "설정을 저장할 수 없습니다.",
+  "tabs": {
+    "algemeen": "일반",
+    "uiterlijk": "모양",
+    "bewerken": "편집",
+    "email": "전자 메일",
+    "over": "정보"
+  },
+  "general": {
+    "application": "응용 프로그램",
+    "language": "언어",
+    "languageAuto": "자동({{language}})",
+    "languageSearch": "언어 검색…",
+    "languageNone": "언어를 찾을 수 없음",
+    "machineTranslation": "이 번역은 자동으로 생성되었으며 아직 원어민의 검토를 거치지 않았습니다.",
+    "saving": "저장",
+    "formatsHelp": "새 문서의 기본 형식입니다. ODF를 사용하려면 변환 프로그램(데스크톱 앱)이 필요합니다. [다른 이름으로 저장]에서는 언제든지 다른 형식을 선택할 수 있습니다.",
+    "format": {
+      "docx": "문서",
+      "xlsx": "스프레드시트",
+      "pptx": "프레젠테이션"
+    },
+    "recoveryInterval": "복구 지점 간격",
+    "minutes": "분",
+    "recoveryHelp": "예기치 않게 종료된 후 복구할 수 있도록 변경된 문서의 복구 사본을 만드는 간격(1~60분)입니다.",
+    "authorName": "메모에 표시할 이름",
+    "converter": "변환 프로그램",
+    "converterBrowser": "변환 프로그램(LibreOffice)은 데스크톱 앱에서 선택합니다. 브라우저에서는 자체 형식만 사용할 수 있습니다.",
+    "converterLoading": "상태 확인 중…",
+    "converterFoundChosen": "찾음: {{path}}{{version}}, 직접 선택함.",
+    "converterFoundAuto": "찾음: {{path}}{{version}}, 자동으로 감지됨.",
+    "converterMissing": "변환 프로그램을 찾을 수 없습니다. ODF 및 이전 형식을 열고 저장하려면 LibreOffice의 soffice를 선택하세요.",
+    "converterChoose": "프로그램 선택…",
+    "converterAuto": "자동 감지"
+  },
+  "languages": {
+    "nl": "네덜란드어",
+    "en": "영어",
+    "de": "독일어",
+    "fr": "프랑스어",
+    "es": "스페인어",
+    "it": "이탈리아어",
+    "pt-BR": "포르투갈어(브라질)",
+    "pt-PT": "포르투갈어(포르투갈)",
+    "pl": "폴란드어",
+    "cs": "체코어",
+    "sk": "슬로바키아어",
+    "hu": "헝가리어",
+    "ro": "루마니아어",
+    "el": "그리스어",
+    "sv": "스웨덴어",
+    "da": "덴마크어",
+    "nb": "노르웨이어(보크몰)",
+    "fi": "핀란드어",
+    "tr": "튀르키예어",
+    "ru": "러시아어",
+    "uk": "우크라이나어",
+    "ar": "아랍어",
+    "he": "히브리어",
+    "hi": "힌디어",
+    "id": "인도네시아어",
+    "vi": "베트남어",
+    "th": "태국어",
+    "zh-CN": "중국어(간체)",
+    "zh-TW": "중국어(번체)",
+    "ja": "일본어",
+    "ko": "한국어"
+  },
+  "appearance": {
+    "theme": "테마",
+    "themes": {
+      "light": "밝게",
+      "forge": "Forge(어둡게)",
+      "systeem": "시스템 설정 사용"
+    },
+    "ribbon": "리본",
+    "ribbonCompact": "간단한 리본: 작은 단추에는 아이콘만 표시",
+    "ribbonCollapsed": "기본적으로 리본 축소(탭만 표시, Ctrl+F1로 전환)",
+    "statusbar": "상태 표시줄",
+    "status": {
+      "zoom": "확대/축소 슬라이더",
+      "tekst": "문서: 페이지, 단어 수 및 문자 수",
+      "taal": "문서: 언어(및 맞춤법)",
+      "bijhouden": "문서: 변경 내용 추적",
+      "weergave": "문서: 보기 단추(인쇄 모양, 읽기 모드)",
+      "rekenblad": "스프레드시트: 선택 영역의 합계, 평균 및 개수",
+      "presentatie": "프레젠테이션: 슬라이드 x/y",
+      "database": "데이터베이스: 작업 사본 상태"
+    }
+  },
+  "editing": {
+    "text": "문서",
+    "shortcutProfile": "바로 가기 키",
+    "profiles": {
+      "standaard": "표준(LibreOffice와 동일)",
+      "word": "Word"
+    },
+    "profilesHelp": {
+      "standaard": "Ctrl+1 = 제목 1, Ctrl+2 = 제목 2 등.",
+      "word": "Ctrl+1 = 줄 간격 1줄, Ctrl+Alt+1 = 제목 1."
+    },
+    "miniToolbar": "텍스트를 선택할 때 미니 도구 모음 표시",
+    "spelling": "맞춤법 및 자동 고침",
+    "spellingOptions": {
+      "controleren": "입력할 때 자동으로 맞춤법 검사(빨간색 물결선)",
+      "hoofdletterwoordenNegeren": "모두 대문자인 단어 무시",
+      "cijferwoordenNegeren": "숫자가 포함된 단어 무시",
+      "autocorrectie": "자동 고침: 첫 두 글자 대문자(TWo INitial CApitals) 수정, 문장의 첫 글자를 대문자로, 자주 발생하는 오타 수정"
+    },
+    "spellingHelp": "사전: OpenTaal(네덜란드어) 및 SCOWL(영어, 영국 및 미국). 밑줄이 그어진 단어를 마우스 오른쪽 단추로 클릭하면 추천 단어가 표시됩니다. F7을 누르면 [맞춤법 및 문법] 창이 열립니다.",
+    "personalDictionary_other": "개인 사전({{count}}개 단어)…",
+    "personalDictionaryLabel": "개인 사전",
+    "personalDictionaryEmpty": "아직 추가된 단어가 없습니다.",
+    "removeWord": "{{word}} 제거",
+    "remove": "제거",
+    "keyboard": "키보드",
+    "showShortcuts": "바로 가기 키 보기 · F1"
+  },
+  "email": {
+    "privacy": "개인 정보",
+    "externalImages": "전자 메일의 외부 이미지",
+    "external": {
+      "account": "계정별 설정 따르기",
+      "nooit": "자동으로 로드하지 않음(메시지별로 허용할 수 있음)"
+    }
+  },
+  "about": {
+    "appName": "Open Office Studio",
+    "version": "버전",
+    "framework": "사용 기술",
+    "design": "디자인",
+    "licenses": "라이선스",
+    "licensesLink": "사용된 구성 요소의 라이선스",
+    "description": "OpenAEC Foundation이 만든 문서, 스프레드시트, 프레젠테이션, 데이터베이스, 전자 메일을 하나로 모은 로컬 작업 공간입니다. 파일은 사용자의 컴퓨터에 그대로 보관됩니다.",
+    "translations": "네덜란드어가 원본 언어입니다. 다른 언어는 OpenAEC의 기계 번역이며 아직 검토 중입니다. 개선 제안을 환영합니다."
+  }
+}

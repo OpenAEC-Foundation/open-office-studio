@@ -1,0 +1,1008 @@
+{
+  "accounts": {
+    "test": {
+      "test": "Tesztelés",
+      "testConnection": "Kapcsolat tesztelése",
+      "testing": "Tesztelés…",
+      "retest": "Újratesztelés",
+      "failed": "A teszt sikertelen"
+    },
+    "settings": {
+      "title": "Fiókbeállítások",
+      "noAccount": "Még nincs fiók.",
+      "addAccount": "Fiók hozzáadása",
+      "accountList": "Fiókok",
+      "saving": "Mentés…",
+      "saved": "Beállítások mentve.",
+      "saveFailed": "Nem sikerült menteni",
+      "tabs": {
+        "identity": "Identitás",
+        "servers": "Kiszolgálók",
+        "folders": "Mappák",
+        "fetching": "Letöltés és adatvédelem",
+        "advanced": "Speciális"
+      },
+      "deleteAccount": {
+        "title": "Fiók eltávolítása",
+        "confirm": "Biztosan eltávolítja a következőt: <strong>{{name}}</strong> ({{email}})? Az üzenetei a kiszolgálón maradnak; a tárolt jelszó törlődik a kulcstartóból.",
+        "button": "Fiók eltávolítása",
+        "failed": "Nem sikerült eltávolítani a fiókot"
+      },
+      "identity": {
+        "accountName": "Fiók neve",
+        "accountNameHint": "Csak az Ön számára, például „Munka” vagy „Személyes”.",
+        "yourName": "Az Ön neve",
+        "email": "E-mail-cím",
+        "replyTo": "Válaszcím",
+        "replyToPlaceholder": "Üres = az Ön e-mail-címe",
+        "signature": "Aláírás",
+        "signatureHint": "Az új üzenetek és válaszok alá kerül, a „-- ” után."
+      },
+      "oauthAccount": {
+        "signedInAs": "Bejelentkezve mint <strong>{{account}}</strong>, szolgáltató: {{provider}}",
+        "noPasswordStored": "Nincs tárolt jelszó; a hozzáférés a kulcstartóban lévő tokennel történik.",
+        "signInAgain": "Újbóli bejelentkezés",
+        "signedInAgain": "Újra bejelentkezve mint {{account}}."
+      },
+      "password": {
+        "change": "Jelszó módosítása",
+        "storedPlaceholder": "Tárolva · hagyja üresen a megtartáshoz",
+        "noneStoredPlaceholder": "Még nincs tárolt jelszó"
+      },
+      "folders": {
+        "hint": "Válassza ki, hová mentse az Email Studio az elküldött üzeneteket, a piszkozatokat, valamint a törölt és archivált üzeneteket.",
+        "roles": {
+          "sent": "Elküldött üzenetek",
+          "drafts": "Piszkozatok",
+          "trash": "Lomtár",
+          "archive": "Archívum"
+        },
+        "automatic": "Automatikus",
+        "automaticWithFolder": "Automatikus ({{folder}})"
+      },
+      "fetching": {
+        "checkForNew": "Új üzenetek ellenőrzése",
+        "manualOnly": "Csak kézzel",
+        "everyMinutes_one": "{{count}} percenként",
+        "everyMinutes_other": "{{count}} percenként",
+        "externalContent": "Távoli képek és tartalmak mindig megjelenítése",
+        "externalContentHint": "Kikapcsolva ajánlott: a távoli képek elárulják a feladóknak, mikor és hol nyit meg egy üzenetet.",
+        "trustedSenders": "Feladók, akiknek a távoli tartalmai mindig megjelennek",
+        "forgetSender": "{{sender}} elfelejtése"
+      },
+      "advanced": {
+        "oauthIntro": "A Microsofttal vagy Google-lel történő bejelentkezés OAuth2-t használ. Ezek a beállítások minden fiókra érvényesek. Saját client ID csak akkor szükséges, ha az alkalmazás nem tartalmaz ilyet; lásd: <code>{{doc}}</code>.",
+        "ispdb": "Új fióknál a Thunderbird-adatbázis lekérdezése is",
+        "ispdbHint": "A tartománynév ekkor elküldésre kerül a Mozillának. Alapértelmezés szerint kikapcsolva.",
+        "available": "Elérhető.",
+        "unavailable": "Nem érhető el.",
+        "loadingStatus": "Állapot betöltése…",
+        "clientId": "Client ID",
+        "clientSecret": "Client secret (nem kötelező)",
+        "saveClientId": "Client ID mentése",
+        "clientIdSaved": "A(z) {{provider}} client ID-ja mentve.",
+        "clientIdSaveFailed": "Nem sikerült menteni a client ID-t",
+        "desktopOnly": "Saját client ID-t csak az asztali alkalmazásban állíthat be."
+      }
+    },
+    "wizard": {
+      "title": "Fiók hozzáadása",
+      "intro": "Használja meglévő e-mail-címét. Az Email Studio bármely IMAP-ot és SMTP-t kínáló szolgáltatóval működik.",
+      "fullName": "Teljes neve",
+      "fullNamePlaceholder": "Vezetéknév Keresztnév",
+      "fullNameHint": "Így látják a címzettek a nevét.",
+      "email": "E-mail-cím",
+      "emailPlaceholder": "name@example.com",
+      "password": "Jelszó",
+      "passwordHint": "Csak akkor használjuk, ha a Tesztelés vagy a Kész gombot választja, és csak az operációs rendszer kulcstartójában tároljuk.",
+      "ispdb": "A Thunderbird-adatbázis lekérdezése is",
+      "ispdbHint": "A tartománynév (nem a címe vagy a jelszava) ekkor elküldésre kerül a Mozillának.",
+      "oauthPrompt": "Vagy jelentkezzen be jelszó nélkül az alkalmazásban:",
+      "enterNameAndEmailFirst": "Előbb adja meg a nevét és az e-mail-címét.",
+      "saving": "Mentés…",
+      "done": "Kész",
+      "saveAnyway": "Mentés mégis",
+      "saveTitle": "Fiók mentése",
+      "saveUntestedTitle": "Még nincs (sikeresen) tesztelve; a fiókot így is mentheti",
+      "saveFailed": "Nem sikerült menteni a fiókot",
+      "foundSettings": "Talált beállítások",
+      "serverSettings": "Kiszolgálóbeállítások",
+      "serverSettingsFor": "Kiszolgálóbeállítások a következőhöz: {{domain}}",
+      "enterEmailHint": "Adja meg az e-mail-címét; az Email Studio ezután automatikusan megkeresi a megfelelő kiszolgálókat.",
+      "searchFailed": "A keresés sikertelen",
+      "fillInManually": "Adja meg saját maga az alábbi kiszolgálókat.",
+      "nothingFound": "Nem található beállítás. Adja meg saját maga az alábbi kiszolgálókat; szükség esetén kérdezze meg őket a szolgáltatójától.",
+      "proposals": "Javaslatok",
+      "unencrypted": "titkosítatlan",
+      "manualConfiguration": "Kézi beállítás",
+      "adjusted": "· szerkesztve",
+      "fieldsAppear": "A mezők akkor jelennek meg, amikor érvényes e-mail-cím van megadva.",
+      "bothServersFailed": "Mindkét kiszolgáló hibát jelzett. Ellenőrizze a címet, a jelszót és a kiszolgálóneveket."
+    },
+    "discovery": {
+      "steps": {
+        "builtIn": "Beépített lista",
+        "ownDomain": "Saját tartomány",
+        "dns": "DNS",
+        "ispdb": "Thunderbird-adatbázis",
+        "probe": "Kapcsolatpróba"
+      },
+      "stepStatus": {
+        "waiting": "várakozás",
+        "busy": "folyamatban…",
+        "found": "megtalálva",
+        "nothing": "nincs találat",
+        "skipped": "nem futott"
+      },
+      "sources": {
+        "preset": "Beépített lista",
+        "autoconfig": "Beállítás a saját tartományából",
+        "srv": "DNS SRV-rekordok",
+        "mx": "MX-rekordok (szolgáltató felismerve)",
+        "ispdb": "Thunderbird-adatbázis",
+        "guess": "Gyakori kiszolgálónevek"
+      },
+      "unencrypted": "titkosítatlan",
+      "reachable": "elérhető",
+      "unreachable": "nem érhető el",
+      "untested": "nincs tesztelve"
+    },
+    "server": {
+      "incoming": "Bejövő (IMAP)",
+      "outgoing": "Kimenő (SMTP)",
+      "columns": {
+        "server": "Kiszolgáló",
+        "port": "Port",
+        "security": "Biztonság",
+        "authentication": "Hitelesítés",
+        "username": "Felhasználónév"
+      },
+      "hostLabel": "{{protocol}}-kiszolgáló",
+      "portLabel": "{{protocol}}-port",
+      "securityLabel": "{{protocol}}-biztonság",
+      "authenticationLabel": "{{protocol}}-hitelesítés",
+      "usernameLabel": "{{protocol}}-felhasználónév",
+      "imapPlaceholder": "imap.example.com",
+      "smtpPlaceholder": "smtp.example.com",
+      "securityNone": "Nincs",
+      "authNormal": "Normál jelszó",
+      "authEncrypted": "Titkosított jelszó",
+      "unencryptedWarning": "<strong>Titkosítatlan kapcsolat.</strong> A jelszava és az üzenetei olvasható formában haladnak át a hálózaton. Válassza az SSL/TLS vagy a STARTTLS lehetőséget, ha a szolgáltatója támogatja.",
+      "oauthHint": "Az OAuth2 teszteléskor vagy első használatkor bejelentkezést kér a szolgáltatónál."
+    },
+    "oauth": {
+      "notSupported": "Az alkalmazás ezen verziója még nem támogatja a Microsofttal vagy Google-lel történő bejelentkezést.",
+      "signInFailed": "A bejelentkezés a következővel sikertelen: {{provider}}",
+      "signInWith": "Bejelentkezés a következővel: {{provider}}",
+      "recommended": "ajánlott",
+      "waitTitle": "Fejezze be a bejelentkezést a böngészőben",
+      "waitText": "A(z) {{provider}} bejelentkezési oldala megnyílt a böngészőben. Jelentkezzen be ott, és adjon hozzáférést az e-mailekhez; az Email Studio ezután itt folytatja.",
+      "unavailableTitle": "A(z) {{provider}} bejelentkezés itt nem érhető el.",
+      "unavailableHelp": "Az asztali alkalmazásban saját client ID-t állíthat be a(z) {{provider}} számára itt: <em>Eszközök › Fiókbeállítások › Speciális</em>. A létrehozás módját a(z) <code>{{doc}}</code> írja le. Folytathatja (alkalmazás)jelszóval is."
+    }
+  },
+  "errors": {
+    "code": {
+      "connection": "Nincs kapcsolat a kiszolgálóval. Ellenőrizze az internetkapcsolatot, a kiszolgáló nevét és a portot.",
+      "authentication": "A bejelentkezés sikertelen. Ellenőrizze a felhasználónevet és a jelszót (Eszközök › Fiókbeállítások).",
+      "certificate": "A kiszolgáló tanúsítványa nem megbízható, vagy nem egyezik ezzel a kiszolgálónévvel.",
+      "timeout": "A kiszolgáló nem válaszolt időben. Próbálkozzon újra később.",
+      "notFound": "Az üzenet vagy a mappa már nem létezik a kiszolgálón.",
+      "refused": "A kiszolgáló elutasította a parancsot.",
+      "tooLarge": "Az üzenet túl nagy a kiszolgáló számára. Csökkentse a mellékletek méretét, vagy távolítsa el őket.",
+      "unavailable": "Ez a funkció itt nem érhető el.",
+      "internal": "Hiba történt."
+    },
+    "withDetail": "{{explanation}} ({{detail}})",
+    "withContext": "{{context}}: {{message}}",
+    "backendMissing": "Az asztali alkalmazás ezen verziója nem tartalmazza az e-mail funkciót.",
+    "unexpectedBinary": "Váratlan bináris kimenet a háttérrendszertől."
+  },
+  "dialog": {
+    "closeEsc": "Bezárás (Esc)"
+  },
+  "sendAsAttachment": {
+    "title": "Küldés mellékletként"
+  },
+  "ribbon": {
+    "tabs": {
+      "start": "Kezdőlap",
+      "view": "Nézet",
+      "tools": "Eszközök"
+    },
+    "groups": {
+      "new": "Új",
+      "respond": "Válasz",
+      "delete": "Törlés",
+      "mark": "Címkék",
+      "organize": "Rendszerezés",
+      "layout": "Elrendezés",
+      "sort": "Rendezés",
+      "message": "Üzenet",
+      "accounts": "Fiókok",
+      "folders": "Mappák"
+    },
+    "withShortcut": "{{action}} · {{shortcut}}",
+    "fetch": "Üzenetek letöltése",
+    "fetchTitle": "Üzenetek letöltése · {{key}} vagy {{shortcut}}",
+    "readUnread": "Olvasott/olvasatlan",
+    "readUnreadTitle": "Olvasott vagy olvasatlan · {{shortcut}}",
+    "star": "Csillag",
+    "move": "Áthelyezés",
+    "moveTitle": "Áthelyezés mappába",
+    "folderPane": "Mappaablak",
+    "readingPane": "Olvasóablak",
+    "resetLayout": "Elrendezés visszaállítása",
+    "sortBy": "Rendezés szempontja",
+    "sort": {
+      "date": "Dátum",
+      "sender": "Feladó",
+      "subject": "Tárgy",
+      "size": "Méret"
+    },
+    "ascending": "Növekvő",
+    "descending": "Csökkenő",
+    "viewSource": "Forrás megtekintése",
+    "accountSettings": "Fiókbeállítások"
+  },
+  "studio": {
+    "errors": {
+      "loadAccounts": "Nem sikerült betölteni a fiókokat",
+      "loadMessages": "Nem sikerült betölteni az üzeneteket",
+      "openMessage": "Nem sikerült megnyitni az üzenetet",
+      "delete": "Nem sikerült törölni",
+      "move": "Nem sikerült áthelyezni",
+      "mark": "Nem sikerült megjelölni",
+      "forwardAttachments": "Nem sikerült letölteni a mellékleteket a továbbításhoz",
+      "openFile": "Nem sikerült megnyitni: {{name}}",
+      "saveFile": "Nem sikerült menteni: {{name}}",
+      "source": "Nem sikerült letölteni a forrást",
+      "updateFolder": "Nem sikerült frissíteni a mappát",
+      "deleteFolder": "Nem sikerült törölni a mappát"
+    },
+    "accountAdded": "{{email}} fiók hozzáadva.",
+    "addAccount": "Fiók hozzáadása",
+    "deletePermanently": {
+      "title": "Végleges törlés",
+      "text_one": "Ez az üzenet véglegesen törlődik. Ez nem vonható vissza.",
+      "text_other": "{{count}} üzenet véglegesen törlődik. Ez nem vonható vissza.",
+      "confirm": "Végleges törlés"
+    },
+    "noArchiveFolder": "Ennek a fióknak nincs archívummappája. Válasszon egyet itt: Eszközök › Fiókbeállítások › Mappák.",
+    "fetched": "Üzenetek letöltve.",
+    "deleteFolder": {
+      "title": "Mappa törlése",
+      "text": "A(z) „{{folder}}” mappa és a benne lévő összes üzenet törlődik a kiszolgálón."
+    },
+    "welcome": {
+      "title": "Még nincs e-mail-fiók",
+      "text": "Adja hozzá fiókját e-mail-címével és jelszavával. Az Email Studio megtalálja a megfelelő beállításokat."
+    },
+    "folderPaneWidth": "Mappaablak szélessége",
+    "messageListWidth": "Üzenetlista szélessége",
+    "messageList": "Üzenetlista",
+    "search": {
+      "in": "Keresés itt: {{folder}}",
+      "label": "Üzenetek keresése ({{shortcut}})",
+      "clear": "Keresés törlése"
+    },
+    "filter": {
+      "label": "Gyorsszűrő",
+      "unread": "Olvasatlan",
+      "unreadTitle": "Csak olvasatlan",
+      "starred": "Csillagozott",
+      "starredTitle": "Csak csillagozott",
+      "attachment": "Melléklet",
+      "attachmentTitle": "Csak melléklettel",
+      "body": "Törzs",
+      "bodyTitle": "Keresés az üzenet szövegében is (lassabb)"
+    },
+    "count": {
+      "filtered": "{{shown}}/{{total}}",
+      "filteredLoaded": "{{shown}}/{{loaded}} betöltve",
+      "messages_one": "{{count}} üzenet",
+      "messages_other": "{{count}} üzenet",
+      "selected_one": "{{count}} kijelölve",
+      "selected_other": "{{count}} kijelölve"
+    },
+    "noResults": "Nem található üzenet.",
+    "emptyFolder": "Ez a mappa üres.",
+    "moveTo_one": "Üzenet áthelyezése ide:",
+    "moveTo_other": "{{count}} üzenet áthelyezése ide:",
+    "folderDialog": {
+      "newTitle": "Új mappa",
+      "renameTitle": "Mappa átnevezése",
+      "create": "Létrehozás",
+      "rename": "Átnevezés",
+      "name": "Név",
+      "inside": "A(z) „{{folder}}” mappán belül"
+    },
+    "source": {
+      "title": "Üzenet forrása",
+      "saveAs": "Mentés {{extension}} formátumban"
+    }
+  },
+  "address": {
+    "invalid": "Érvénytelen cím: {{address}}",
+    "remove": "{{address}} eltávolítása"
+  },
+  "list": {
+    "label": "Üzenetek",
+    "to": "Címzett: {{address}}",
+    "noRecipient": "(nincs címzett)",
+    "replied": "Megválaszolva",
+    "hasAttachment": "Mellékletet tartalmaz",
+    "noSubject": "(nincs tárgy)",
+    "star": "Csillag hozzáadása",
+    "unstar": "Csillag eltávolítása",
+    "loadingMore": "További üzenetek betöltése…"
+  },
+  "folders": {
+    "label": "Mappák",
+    "loading": "Mappák betöltése…",
+    "unread_one": "{{count}} olvasatlan",
+    "unread_other": "{{count}} olvasatlan",
+    "inbox": "Beérkezett üzenetek"
+  },
+  "reader": {
+    "loadingMessage": "Üzenet betöltése…",
+    "chooseMessage": "Válasszon ki egy üzenetet az olvasáshoz.",
+    "label": "Üzenet: {{subject}}",
+    "reply": "Válasz",
+    "replyTitle": "Válasz · {{shortcut}}",
+    "replyAll": "Válasz mindenkinek",
+    "replyAllTitle": "Válasz mindenkinek · {{shortcut}}",
+    "forward": "Továbbítás",
+    "forwardTitle": "Továbbítás · {{shortcut}}",
+    "archive": "Archiválás",
+    "archiveTitle": "Archiválás · {{shortcut}}",
+    "delete": "Törlés",
+    "deleteTitle": "Törlés · {{shortcut}}",
+    "starTitle": "Csillag · {{shortcut}}",
+    "from": "Feladó",
+    "to": "Címzett",
+    "none": "(nincs)",
+    "cc": "Másolat",
+    "replyTo": "Válaszcím",
+    "date": "Dátum",
+    "external": {
+      "blocked_one": "Egy távoli kép le lett tiltva az adatai védelme érdekében.",
+      "blocked_other": "{{count}} távoli kép le lett tiltva az adatai védelme érdekében.",
+      "desktopHint": "Az Ön engedélyével az alkalmazás letölti és megjeleníti őket anélkül, hogy az üzenet bárhová csatlakozna.",
+      "demoHint": "(A bemutatóban nem létező címekre mutatnak.)",
+      "show": "Távoli tartalom megjelenítése",
+      "alwaysFrom": "Mindig megjelenítés tőle: {{sender}}",
+      "failed_one": "Egy távoli képet nem sikerült letölteni.",
+      "failed_other": "{{count}} távoli képet nem sikerült letölteni."
+    },
+    "attachments": {
+      "label": "Mellékletek",
+      "previewOrOpen": "Kattintás: előnézet · dupla kattintás: megnyitás itt: {{module}}",
+      "preview": "Előnézet",
+      "openCopyTitle": "Megnyitás szerkeszthető másolatként itt: {{module}}",
+      "openIn": "Megnyitás itt: {{module}}",
+      "saveTitle": "Mentés erre a számítógépre"
+    },
+    "content": "Üzenet tartalma",
+    "loadingContent": "Tartalom betöltése…"
+  },
+  "compose": {
+    "errors": {
+      "saveDraft": "Nem sikerült menteni a piszkozatot",
+      "noRecipients": "Adjon meg legalább egy címzettet.",
+      "send": "Nem sikerült elküldeni",
+      "attachmentsLarge": "A mellékletek összesen {{size}} méretűek; sok kiszolgáló elutasítja a(z) {{max}} feletti üzeneteket.",
+      "linkNotAllowed": "Csak http(s)-, mailto- és tel-hivatkozások engedélyezettek."
+    },
+    "noSubject": {
+      "title": "Nincs tárgy",
+      "text": "Ennek az üzenetnek nincs tárgya. Elküldi mégis?",
+      "fillIn": "Tárgy megadása",
+      "sendWithout": "Küldés tárgy nélkül"
+    },
+    "forgotAttachment": {
+      "title": "Elfelejtett egy mellékletet?",
+      "text": "Az üzenet említi ezt: <strong>„{{word}}”</strong>, de nincs hozzáadva melléklet.",
+      "sendAnyway": "Küldés mégis",
+      "keywords": "melléklet|mellékelten|mellékelve|csatolva|csatoltan"
+    },
+    "addAttachment": "Melléklet hozzáadása",
+    "attachment": "Csatolás",
+    "removeAttachment": "{{name}} eltávolítása",
+    "attachmentsSummary_one": "{{count}} melléklet · {{size}}",
+    "attachmentsSummary_other": "{{count}} melléklet · {{size}}",
+    "dropToAttach": "Engedje el a melléklet hozzáadásához",
+    "sent": "Üzenet elküldve.",
+    "sentWithSubject": "Üzenet elküldve: {{subject}}.",
+    "unsent": {
+      "title": "Az üzenet nem lett elküldve",
+      "text": "Menti ezt az üzenetet piszkozatként?",
+      "discard": "Elvetés",
+      "saveDraft": "Piszkozat mentése"
+    },
+    "label": "Írás: {{subject}}",
+    "newMessage": "Új üzenet",
+    "send": "Küldés",
+    "sending": "Küldés…",
+    "sendTitle": "Küldés · {{shortcut}}",
+    "draft": "Piszkozat",
+    "savingDraft": "Mentés…",
+    "saveDraftTitle": "Mentés piszkozatként · {{shortcut}}",
+    "dismissError": "Üzenet bezárása",
+    "from": "Feladó",
+    "to": "Címzett",
+    "cc": "Másolat",
+    "bcc": "Titkos másolat",
+    "subject": "Tárgy",
+    "body": "Üzenet szövege",
+    "format": {
+      "label": "Formázás",
+      "withShortcut": "{{action}} · {{shortcut}}",
+      "bold": "Félkövér",
+      "italic": "Dőlt",
+      "underline": "Aláhúzott",
+      "bullets": "Felsorolás",
+      "numbering": "Számozás",
+      "link": "Hivatkozás",
+      "insertLink": "Hivatkozás beszúrása",
+      "clear": "Formázás törlése",
+      "linkAddress": "Hivatkozás címe",
+      "insert": "Beszúrás"
+    }
+  },
+  "link": {
+    "browserFailed": "Nem sikerült megnyitni a böngészőt. Másolja ki a címet: {{url}}",
+    "phoneTitle": "Telefonszám",
+    "openTitle": "Megnyitja a hivatkozást?",
+    "copied": "Cím kimásolva.",
+    "copyFailed": "A másolás sikertelen; jelölje ki a címet kézzel.",
+    "copy": "Cím másolása",
+    "openInBrowser": "Megnyitás böngészőben",
+    "phoneIntro": "Ez a telefonszám szerepel az üzenetben:",
+    "realTarget": "Ez a hivatkozás valójában ide vezet:",
+    "misleading": "Az üzenet szövege ezt említi: <strong>{{shown}}</strong>, de a hivatkozás ide vezet: <strong>{{actual}}</strong>. Ez adathalászat lehet.",
+    "unencrypted": "Megjegyzés: ez a hivatkozás nem használ titkosított kapcsolatot (http)."
+  },
+  "files": {
+    "saveUnsupported": "Az asztali alkalmazás ezen verziója még nem tudja menteni ezt: {{name}}. Nyissa meg a mellékletet egy modulban, vagy frissítse az alkalmazást.",
+    "saved": "Mentve: {{path}}",
+    "saveCancelled": "Mentés megszakítva.",
+    "downloadRequested": "Letöltés kérve. Ellenőrizze a fájlt a letöltések között."
+  },
+  "quote": {
+    "unknownSender": "(ismeretlen)",
+    "wroteOn": "{{date}} időpontban {{sender}} ezt írta:",
+    "wrote": "{{sender}} ezt írta:",
+    "forwarded": "Továbbított üzenet",
+    "subject": "Tárgy: {{value}}",
+    "date": "Dátum: {{value}}",
+    "from": "Feladó: {{value}}",
+    "to": "Címzett: {{value}}",
+    "cc": "Másolat: {{value}}"
+  },
+  "demo": {
+    "banner": "Bemutató — valódi e-mail nem lehetséges a böngészőben; használja az asztali alkalmazást.",
+    "accountName": "Bemutató postafiók",
+    "folders": {
+      "notifications": "Értesítések",
+      "drafts": "Piszkozatok",
+      "sent": "Elküldött",
+      "archive": "Archívum",
+      "junk": "Levélszemét",
+      "trash": "Lomtár"
+    },
+    "welcome": {
+      "subject": "Üdvözli az OpenAEC Email Studio",
+      "heading": "Üdvözöljük!",
+      "intro": "Ez egy bemutató postafiók. A böngészőben az Email Studio nem tud valódi e-mailt fogadni vagy küldeni; ehhez használja az asztali alkalmazást.",
+      "introHtml": "Ez egy <strong>bemutató postafiók</strong>. A böngészőben az Email Studio nem tud valódi e-mailt fogadni vagy küldeni; ehhez használja az asztali alkalmazást.",
+      "tryIt": "Próbálja ki nyugodtan: válaszolás, csillagozás (S), áthelyezés az archívumba és melléklet megnyitása a Szöveg vagy a Táblázat modulban.",
+      "tryItHtml": "Próbálja ki nyugodtan: válaszolás, csillagozás (<kbd>S</kbd>), áthelyezés az archívumba és melléklet megnyitása a Szöveg vagy a Táblázat modulban.",
+      "logoText": "Az alábbi OpenAEC-logó egy mellékletből beágyazott kép (cid:).",
+      "logoAlt": "OpenAEC-logó",
+      "logoHtml": "A bal oldali logó egy mellékletből beágyazott kép."
+    },
+    "errors": {
+      "accountNotFound": "A fiók nem létezik.",
+      "messageNotFound": "Az üzenet nem létezik.",
+      "folderExists": "Ez a mappa már létezik.",
+      "folderCannotRename": "Ez a mappa nem nevezhető át.",
+      "specialFolderDelete": "A speciális mappák nem törölhetők.",
+      "attachmentNotFound": "A melléklet nem létezik.",
+      "targetFolderNotFound": "A célmappa nem létezik.",
+      "noRecipients": "Nincs megadva címzett.",
+      "recipientRefused": "Bemutató: a kiszolgáló elutasítja a(z) {{domain}} címzettet.",
+      "attachmentsTooLarge": "Bemutató: a mellékletek mérete legfeljebb {{max}} lehet."
+    },
+    "accountAdded": {
+      "subject": "A fiókja hozzáadva (bemutató)",
+      "text": "A(z) {{email}} fiók hozzáadva a bemutatóhoz. {{notice}}"
+    },
+    "discovery": {
+      "knownProvider": "Ismert szolgáltató (bemutató).",
+      "mx": "A(z) {{domain}} MX-rekordja a mail.protection.outlook.com címre mutat (bemutató).",
+      "ownServer": "{{name}} (saját kiszolgáló)",
+      "autoconfig": "Megtalálva itt: autoconfig.{{domain}} (bemutató).",
+      "srv": "_imaps._tcp és _submission._tcp (bemutató).",
+      "ispdb": "A Thunderbird-adatbázisból (bemutató).",
+      "guessImapOk": "Gyakori kiszolgálónevek; az IMAP-próba sikeres volt (bemutató).",
+      "guessAlternative": "Alternatív kiszolgálónév (bemutató)."
+    },
+    "test": {
+      "noServer": "Nincs megadva {{protocol}}-kiszolgáló.",
+      "invalidPort": "Érvénytelen port.",
+      "unreachable": "Bemutató: {{host}} nem érhető el.",
+      "simulated": "Bemutató: szimulált kapcsolat.",
+      "simulatedUnencrypted": "Bemutató: szimulált kapcsolat (titkosítatlan!)."
+    },
+    "oauthDesktopOnly": "A Microsofttal vagy Google-lel történő bejelentkezés csak az asztali alkalmazásban lehetséges."
+  },
+  "preview": {
+    "loading": "Előnézet betöltése…",
+    "dialog": {
+      "attachments": "Mellékletek",
+      "previous": "Előző melléklet",
+      "previousTitle": "Előző melléklet (←)",
+      "next": "Következő melléklet",
+      "nextTitle": "Következő melléklet (→)",
+      "close": "Előnézet bezárása",
+      "closeTitle": "Bezárás (Esc)",
+      "fetching": "Melléklet letöltése…",
+      "fetchFailed": "Nem sikerült letölteni a mellékletet: {{message}}"
+    },
+    "card": {
+      "fileName": "Fájlnév",
+      "size": "Méret",
+      "openExternal": "Megnyitás az alapértelmezett alkalmazással",
+      "unknown": "ismeretlen",
+      "attention": "Megjegyzés",
+      "yes": "igen",
+      "no": "nem"
+    },
+    "detection": {
+      "kinds": {
+        "pdf": "PDF-fájl",
+        "dwg": "DWG-rajz",
+        "dxf": "DXF-rajz",
+        "ifc": "IFC-modell",
+        "markdown": "Markdown",
+        "text": "szöveg",
+        "image": "kép",
+        "office": "Office-dokumentum",
+        "unknown": "ismeretlen fájl"
+      },
+      "contentDiffers": "A név alapján ez {{kind}}, de a tartalom más.",
+      "mismatch": "Ennek a mellékletnek a neve „.{{extension}}” ({{named}}), de a tartalma {{actual}}.",
+      "mismatchSubtype": "Ennek a mellékletnek a neve „.{{extension}}” ({{named}}), de a tartalma {{actual}} ({{subtype}}).",
+      "contentBinary": "A név alapján ez {{kind}}, de a tartalom bináris.",
+      "notSvg": "A név alapján ez SVG-kép, de a tartalom nem SVG.",
+      "signatureMissing": "A név alapján ez {{kind}}, de a tartalomból hiányoznak a megfelelő jellemzők."
+    },
+    "image": {
+      "loadFailed": "Nem sikerült betölteni a képet: {{message}}",
+      "subtitle": "Kép",
+      "cannotDisplay": "Ez a kép itt nem jeleníthető meg (sérült vagy nem támogatott változat).",
+      "tooLarge": "Ez a kép nagyobb, mint {{size}} MB, ezért nem jelenik meg előnézetként.",
+      "tooManyPixels": "Ez a kép {{width}} × {{height}} képpont (több mint {{megapixels}} megapixel), ezért nem jelenik meg előnézetként.",
+      "toolbar": "Kép",
+      "zoomOut": "Kicsinyítés",
+      "zoomOutTitle": "Kicsinyítés (−)",
+      "zoomIn": "Nagyítás",
+      "zoomInTitle": "Nagyítás (+)",
+      "fit": "Ablakhoz igazítás",
+      "fitTitle": "Ablakhoz igazítás (0)",
+      "actualSize": "Tényleges méret (100%)",
+      "actualSizeTitle": "Tényleges méret",
+      "rotate": "Forgatás jobbra",
+      "rotateTitle": "Forgatás jobbra (R)",
+      "area": "Kép előnézete"
+    },
+    "text": {
+      "loadFailed": "Nem sikerült betölteni a szöveget: {{message}}",
+      "toolbar": "Szöveg",
+      "encoding": "Kódolás: {{encoding}}",
+      "utf8Bom": "UTF-8 (BOM-mal)",
+      "formatJson": "JSON formázása",
+      "wrapLines": "Sortörés",
+      "truncated": "Az első {{limit}} látható ebből: {{size}}. Mentse a fájlt, hogy mindent lásson.",
+      "contentOf": "{{name}} tartalma"
+    },
+    "markdown": {
+      "loadFailed": "Nem sikerült betölteni a fájlt: {{message}}",
+      "linkNotOpened": "A hivatkozás nem lett megnyitva: {{url}}",
+      "imageFallback": "Kép",
+      "externalBlocked": "{{alt}} (külső kép letiltva)",
+      "unavailable": "{{alt}} (nem érhető el)",
+      "view": "Nézet",
+      "rendered": "Megjelenített",
+      "source": "Forrás",
+      "showExternalImages": "Külső képek megjelenítése",
+      "truncated": "Az első {{limit}} látható ebből: {{size}}.",
+      "confirmLabel": "Hivatkozás megnyitása",
+      "confirmQuestion": "Megnyitja ezt a hivatkozást az Office Studión kívül?"
+    },
+    "pdf": {
+      "loadFailed": "Nem sikerült betölteni a PDF-et: {{message}}",
+      "properties": "Tulajdonságok",
+      "frameTitle": "PDF: {{name}}",
+      "linuxUnsupported": "A Linuxos webview nem tudja megbízhatóan megjeleníteni a PDF-eket. A teljes előnézet egy későbbi verzióban érkezik (Rust-megjelenítő).",
+      "cannotPreview": "Ennek a PDF-nek az előnézete itt nem jeleníthető meg. A teljes előnézet egy későbbi verzióban érkezik (Rust-megjelenítő).",
+      "subtitle": "PDF-dokumentum",
+      "subtitleVersion": "PDF {{version}}",
+      "pages": "Oldalak",
+      "author": "Szerző",
+      "subject": "Tárgy",
+      "createdWith": "Létrehozó alkalmazás",
+      "created": "Létrehozva",
+      "modified": "Módosítva",
+      "encrypted": "Titkosított",
+      "incomplete": "a fájl hiányosnak vagy sérültnek tűnik",
+      "showPreview": "Előnézet megjelenítése"
+    },
+    "cad": {
+      "loadFailed": "Nem sikerült betölteni a rajzot: {{message}}",
+      "previewLater": "Az előnézet egy későbbi verzióban érkezik (Rust-megjelenítő).",
+      "tooLargeToParse": "Ez a fájl túl nagy ahhoz, hogy itt elemezzük. Az előnézet egy későbbi verzióban érkezik (Rust-megjelenítő).",
+      "dwgSubtitle": "AutoCAD-rajz (DWG)",
+      "dxfSubtitle": "DXF-rajz",
+      "dxfBinarySubtitle": "Bináris DXF-rajz",
+      "format": "Formátum",
+      "savedAs": "Mentve mint",
+      "unknownAutocadVersion": "ismeretlen AutoCAD-verzió",
+      "units": "Mértékegységek",
+      "entities": "Entitások",
+      "blocks": "Blokkok",
+      "layers": "Rétegek",
+      "thumbnailAlt": "A rajz beágyazott miniatűrje",
+      "thumbnailCaption": "Miniatűr a fájlból",
+      "entitiesByType": "Entitások típus szerint",
+      "layersCount": "Rétegek ({{n}})",
+      "andMore": "… és még {{n}}",
+      "versionRange": "AutoCAD {{from}}–{{to}}",
+      "versionAndLater": "AutoCAD {{version}} és újabb",
+      "unitCode": "kód: {{code}}",
+      "unitNames": {
+        "unitless": "mértékegység nélkül",
+        "inch": "hüvelyk",
+        "foot": "láb",
+        "mile": "mérföld",
+        "millimeter": "milliméter",
+        "centimeter": "centiméter",
+        "meter": "méter",
+        "kilometer": "kilométer",
+        "microinch": "mikrohüvelyk",
+        "mil": "mil",
+        "yard": "yard",
+        "angstrom": "ångström",
+        "nanometer": "nanométer",
+        "micron": "mikron",
+        "decimeter": "deciméter",
+        "decameter": "dekaméter",
+        "hectometer": "hektométer",
+        "gigameter": "gigaméter",
+        "astronomicalUnit": "csillagászati egység",
+        "lightYear": "fényév",
+        "parsec": "parszek",
+        "usSurveyFoot": "amerikai földmérési láb",
+        "usSurveyInch": "amerikai földmérési hüvelyk",
+        "usSurveyYard": "amerikai földmérési yard",
+        "usSurveyMile": "amerikai földmérési mérföld"
+      }
+    },
+    "ifc": {
+      "loadFailed": "Nem sikerült betölteni a modellt: {{message}}",
+      "previewLater": "A 3D előnézet egy későbbi verzióban érkezik (Rust-megjelenítő).",
+      "tooLarge": "Ez a modell nagyobb, mint {{size}} MB, ezért itt nem kerül elemzésre.",
+      "analysing": "Modell elemzése… {{percent}}",
+      "cancelled": "Elemzés megszakítva.",
+      "retry": "Újbóli elemzés",
+      "failed": "Az elemzés sikertelen: {{message}}",
+      "subtitle": "IFC-modell",
+      "subtitleWithSchema": "IFC-modell · {{schemas}}",
+      "nameInFile": "Név a fájlban",
+      "timestamp": "Időbélyeg",
+      "author": "Szerző",
+      "organization": "Szervezet",
+      "application": "Alkalmazás",
+      "description": "Leírás",
+      "sites": "Telkek",
+      "buildings": "Épületek",
+      "entities": "Entitások",
+      "incomplete": "a fájl hiányosnak tűnik (nincs END-ISO-10303-21)",
+      "storeys": "Szintek ({{n}})",
+      "elementsHeading": "Épületelemek",
+      "allEntityTypes": "Összes entitástípus ({{n}})",
+      "elements": {
+        "wall": "Falak",
+        "wallStandardCase": "Falak (általános eset)",
+        "curtainWall": "Függönyfalak",
+        "slab": "Padlók és födémek",
+        "roof": "Tetők",
+        "column": "Oszlopok",
+        "beam": "Gerendák",
+        "member": "Rúdelemek",
+        "plate": "Lemezek",
+        "door": "Ajtók",
+        "window": "Ablakok",
+        "stair": "Lépcsők",
+        "ramp": "Rámpák",
+        "railing": "Korlátok",
+        "covering": "Burkolatok",
+        "footing": "Alapok",
+        "pile": "Cölöpök",
+        "space": "Helyiségek",
+        "opening": "Nyílások",
+        "furnishing": "Berendezési tárgyak",
+        "flowSegment": "Légcsatorna- és csőszakaszok",
+        "flowTerminal": "Épületgépészeti végelemek",
+        "proxy": "Egyéb épületelemek",
+        "storey": "Szintek"
+      }
+    },
+    "office": {
+      "kinds": {
+        "document": "Szöveges dokumentum",
+        "spreadsheet": "Táblázat",
+        "presentation": "Bemutató",
+        "database": "Adatbázis"
+      },
+      "genericDocument": "Office-dokumentum",
+      "type": "Típus",
+      "openFailed": "A megnyitás sikertelen: {{message}}",
+      "openCopyHint": "Szerkeszthető másolat megnyitása itt: {{module}}. Az e-mailben lévő eredeti változatlan marad.",
+      "cannotOpen": "Ez az Office-formátum itt nem nyitható meg.",
+      "opening": "Megnyitás…",
+      "openIn": "Megnyitás itt: {{module}}"
+    },
+    "unknown": {
+      "subtitle": "Nincs elérhető előnézet",
+      "declaredType": "Deklarált típus",
+      "extension": "Kiterjesztés",
+      "none": "nincs",
+      "message": "Ehhez a fájltípushoz nem jeleníthető meg előnézet. Mentse, és csak akkor nyissa meg, ha megbízik a feladóban."
+    }
+  },
+  "backend": {
+    "accounts": {
+      "fileCorrupt": "A(z) {{path}} fiókfájl sérült.",
+      "fileUnreadable": "Nem sikerült olvasni a fiókfájlt.",
+      "fileWriteFailed": "Nem sikerült írni a fiókfájlt.",
+      "invalidEmail": "Adjon meg érvényes e-mail-címet.",
+      "invalidReplyTo": "A válaszcím nem érvényes e-mail-cím.",
+      "lineBreakInName": "A nevek nem tartalmazhatnak sortörést.",
+      "notFound": "Ez a fiók már nem létezik.",
+      "saveFailed": "Nem sikerült menteni a fiókokat.",
+      "usernameMissing": "Adja meg az IMAP- és SMTP-felhasználónevet."
+    },
+    "attachments": {
+      "blockedDatabase": "Biztonsági okokból a(z) '{{name}}' nem nyílik meg automatikusan. Az Access-adatbázisokat a Database Studióban nyissa meg. Mentse a mellékletet, ha mégis meg szeretné tekinteni.",
+      "blockedExecutable": "Biztonsági okokból a(z) '{{name}}' nem nyílik meg automatikusan. Ez a fájltípus programokat futtathat. Mentse a mellékletet, ha mégis meg szeretné tekinteni.",
+      "blockedMacros": "Biztonsági okokból a(z) '{{name}}' nem nyílik meg automatikusan. Ez a dokumentum makrókat tartalmaz. Mentse a mellékletet, ha mégis meg szeretné tekinteni.",
+      "blockedScripts": "Biztonsági okokból a(z) '{{name}}' nem nyílik meg automatikusan. Ez a fájltípus szkripteket tartalmazhat. Mentse a mellékletet, ha mégis meg szeretné tekinteni.",
+      "emptyOrTooLarge": "A melléklet üres vagy nagyobb, mint 100 MB.",
+      "executableContent": "A(z) '{{name}}' {{kind}}, ezért biztonsági okokból nem nyílik meg.",
+      "invalidName": "Érvénytelen fájlnév.",
+      "kind": {
+        "linuxProgram": "Linux-program (ELF)",
+        "macProgram": "macOS-program (Mach-O) vagy Java-osztály",
+        "script": "szkript",
+        "windowsProgram": "Windows-program (PE)",
+        "windowsShortcut": "Windows-parancsikon"
+      },
+      "nameMissing": "Hiányzik a fájlnév.",
+      "noProgram": "Nem található program a melléklet megnyitásához.",
+      "notFound": "A(z) {{index}}. melléklet nem létezik ebben az üzenetben.",
+      "openFailed": "A megnyitás sikertelen.",
+      "sendAsBinary": "A mellékletet legfeljebb 100 MB-os bináris adatként küldje.",
+      "tempDirFailed": "Nem sikerült ideiglenes mappát létrehozni.",
+      "tempSaveFailed": "Nem sikerült ideiglenesen menteni a mellékletet."
+    },
+    "auth": {
+      "failed": "A bejelentkezés ide sikertelen: {{host}}: a felhasználónév vagy a jelszó hibás ({{detail}}). A Gmail, az Outlook, az iCloud és a Yahoo alkalmazásjelszót igényel.",
+      "noPassword": "Ehhez a fiókhoz nincs megadva vagy mentve jelszó.",
+      "noStoredPassword": "Ehhez a fiókhoz nincs mentett jelszó. Adja meg a jelszót a fiókbeállításokban."
+    },
+    "autoconfig": {
+      "httpsRedirectOnly": "Csak a HTTPS-re mutató átirányítások követése történik meg.",
+      "invalidEncoding": "Érvénytelen karakterkódolás a konfigurációs fájlban.",
+      "notFound": "Nem található konfiguráció (HTTP {{status}}).",
+      "tooManyRedirects": "Túl sok átirányítás."
+    },
+    "common": {
+      "saveFailed": "A mentés sikertelen."
+    },
+    "compose": {
+      "attachmentCorrupt": "A(z) '{{name}}' melléklet sérült.",
+      "attachmentsTooLarge": "A mellékletek összesen nagyobbak, mint {{max}} MB. A nagy fájlokat megosztási hivatkozással küldje.",
+      "buildFailed": "Nem sikerült összeállítani az üzenetet ({{detail}}).",
+      "field": {
+        "bcc": "Titkos másolat",
+        "cc": "Másolat",
+        "from": "Feladó",
+        "inReplyTo": "In-Reply-To",
+        "references": "References",
+        "replyTo": "Reply-To",
+        "subject": "A tárgy",
+        "to": "Címzett"
+      },
+      "invalidAddress": "A(z) '{{address}}' a(z) {{field}} mezőben nem érvényes e-mail-cím.",
+      "invalidCharacters": "{{field}} érvénytelen karaktereket tartalmaz.",
+      "invalidEnvelope": "Érvénytelen boríték.",
+      "noRecipients": "Adjon meg legalább egy címzettet."
+    },
+    "connection": {
+      "failed": "Nincs kapcsolat ezzel: {{host}}: {{detail}}",
+      "hostNotFound": "A(z) {{host}} kiszolgálónév nem található.",
+      "refused": "A(z) {{host}} kiszolgáló elutasította a kapcsolatot. Ellenőrizze a portot és a biztonsági beállítást.",
+      "reset": "A(z) {{host}} kapcsolat váratlanul megszakadt. Megfelel a biztonsági beállítás (SSL/TLS vagy STARTTLS) a portnak?",
+      "timeout": "A(z) {{host}} kiszolgáló nem válaszolt időben. Ellenőrizze a kiszolgáló nevét, a portot és a tűzfalat."
+    },
+    "files": {
+      "saveFailed": "Nem sikerült menteni a fájlt."
+    },
+    "http": {
+      "invalidHttpResponse": "Érvénytelen HTTP-válasz.",
+      "invalidResponse": "Érvénytelen válasz.",
+      "invalidServerName": "Érvénytelen kiszolgálónév: {{host}}.",
+      "invalidUrl": "Érvénytelen webcím.",
+      "plainOnlyLocal": "Titkosítatlan HTTP csak ehhez a számítógéphez engedélyezett.",
+      "redirectWithoutLocation": "Átirányítás cím nélkül.",
+      "responseTooLarge": "A kiszolgáló válasza túl nagy."
+    },
+    "images": {
+      "credentialsInUrl": "A bejelentkezési adatokat tartalmazó címek nem kerülnek letöltésre.",
+      "hostNotFound": "{{host}} nem található.",
+      "httpOnly": "Csak http- és https-címek engedélyezettek.",
+      "invalidServerName": "Érvénytelen kiszolgálónév.",
+      "notAnImage": "Ez a cím nem ad vissza képet.",
+      "privateAddress": "A belső vagy helyi címekről származó külső tartalom nem kerül letöltésre.",
+      "timeout": "A kép nem töltődött be 10 másodpercen belül.",
+      "tooLarge": "A kép nagyobb, mint 10 MB.",
+      "tooManyRedirects": "Túl sok átirányítás (legfeljebb 3).",
+      "unavailable": "A kép nem érhető el (HTTP {{status}}).",
+      "unknownRedirect": "Ismeretlen átirányítás.",
+      "unsupportedImage": "A tartalom nem támogatott kép."
+    },
+    "imap": {
+      "action": {
+        "copy": "Másolás",
+        "countFolders": "Mappák számlálása",
+        "createFolder": "Mappa létrehozása",
+        "delete": "Törlés",
+        "deleteFolder": "Mappa törlése",
+        "expunge": "Tisztítás",
+        "fetchMessage": "Üzenet letöltése",
+        "fetchMessages": "Üzenetek letöltése",
+        "flag": "Megjelölés",
+        "listFolders": "Mappák letöltése",
+        "move": "Áthelyezés",
+        "openFolder": "Mappa megnyitása",
+        "openNamedFolder": "A(z) '{{folder}}' mappa megnyitása",
+        "renameFolder": "Mappa átnevezése",
+        "saveToDrafts": "Mentés a Piszkozatokba",
+        "saveToFolder": "Mentés mappába",
+        "saveToSent": "Mentés az Elküldöttekbe",
+        "search": "Keresés",
+        "signIn": "Bejelentkezés",
+        "startTls": "STARTTLS"
+      },
+      "alreadyInTrash": "Ezek az üzenetek már a Lomtárban vannak; törölje őket véglegesen.",
+      "appendRejected": "{{action}}: a kiszolgáló elutasította az üzenetet.",
+      "badCommand": "{{action}}: a kiszolgáló nem értette a parancsot ({{detail}}).",
+      "cannotDeleteInbox": "A Beérkezett üzenetek mappa nem törölhető.",
+      "cannotRenameInbox": "A Beérkezett üzenetek mappa nem nevezhető át.",
+      "closedImmediately": "{{host}} azonnal bontotta a kapcsolatot. Megfelel a biztonsági beállítás (SSL/TLS vagy STARTTLS) a portnak?",
+      "commandTimeout": "{{host}} nem válaszolt {{seconds}} másodpercen belül.",
+      "connectTimeout": "Nem érkezett válasz innen: {{host}}:{{port}} {{seconds}} másodpercen belül. Ellenőrizze a kiszolgáló nevét, a portot és a tűzfalat.",
+      "connectionLost": "A(z) {{host}} kapcsolat megszakadt.",
+      "draftsFolderMissing": "Nem található Piszkozatok mappa a kiszolgálón. Válassza ki ezt a mappát a fiókbeállításokban.",
+      "greetingRefused": "{{host}} elutasította a kapcsolatot: {{detail}}",
+      "invalidFolderName": "Érvénytelen mappanév.",
+      "invalidMessage": "Érvénytelen üzenet.",
+      "invalidName": "{{action}}: érvénytelen karakterek a névben.",
+      "invalidSearchCharacters": "A keresett szöveg érvénytelen karaktereket tartalmaz.",
+      "messageGone": "Ez az üzenet már nem létezik (lehet, hogy áthelyezték vagy törölték).",
+      "messageTooLarge": "Az üzenet mérete {{size}} MB; az Email Studio legfeljebb {{max}} MB-os üzeneteket nyit meg.",
+      "noStarttls": "{{host}} nem támogatja a STARTTLS-t a(z) {{port}} porton. Válassza az SSL/TLS-t (általában a 993-as port).",
+      "noTrash": "Nem található lomtármappa a kiszolgálón. Válasszon lomtármappát a fiókbeállításokban, vagy töröljön véglegesen.",
+      "noValidMessages": "Nincs megadva érvényes üzenet.",
+      "notFound": "{{action}}: {{detail}}",
+      "quotaExceeded": "{{action}}: a postafiók megtelt ({{detail}}).",
+      "refused": "{{action}}: a kiszolgáló elutasította ({{detail}}).",
+      "retryLater": "{{message}} (Az Email Studio {{retrySeconds}} másodperc múlva újrapróbálja, hogy a kiszolgáló ne tiltsa le.)",
+      "searchTooLong": "A keresett szöveg túl hosszú.",
+      "sentFolderMissing": "Nem található Elküldött mappa a kiszolgálón. Válassza ki ezt a mappát a fiókbeállításokban.",
+      "signInTimeout": "A bejelentkezés ide túl sokáig tartott: {{host}}.",
+      "specialFolderMissing": "A mappa nem található a kiszolgálón. Válassza ki ezt a mappát a fiókbeállításokban.",
+      "unexpectedError": "{{action}}: váratlan hiba.",
+      "unexpectedResponse": "{{action}}: váratlan válasz a kiszolgálótól.",
+      "unexpectedState": "Váratlan kapcsolati állapot."
+    },
+    "keychain": {
+      "notResponding": "A kulcstartó nem válaszolt.",
+      "unavailable": "Az operációs rendszer kulcstartója nem érhető el. Az Email Studio soha nem tárol jelszavakat egyszerű szövegként; Linuxon Secret Service szükséges (például GNOME Keyring vagy KWallet).",
+      "unexpected": "A kulcstartó váratlan hibát adott vissza."
+    },
+    "links": {
+      "openFailed": "Nem sikerült megnyitni a hivatkozást.",
+      "unsupportedScheme": "Csak http-, https- és mailto-hivatkozások nyithatók meg."
+    },
+    "messages": {
+      "invalidMime": "Nem sikerült olvasni az üzenetet (érvénytelen MIME-szerkezet).",
+      "unreadable": "Nem sikerült olvasni az üzenetet."
+    },
+    "oauth": {
+      "browserFailed": "Nem sikerült megnyitni a webböngészőt a bejelentkezéshez.",
+      "cancelled": "A bejelentkezés megszakítva.",
+      "cancelledOrDenied": "A(z) {{provider}} bejelentkezés megszakadt vagy el lett utasítva.",
+      "clientMisconfigured": "A(z) {{provider}} OAuth-kliense nincs megfelelően beállítva (client ID vagy secret).",
+      "emailUnknown": "Nem sikerült megállapítani a bejelentkezés e-mail-címét; adja meg a címet, és próbálja újra.",
+      "invalidClientId": "Ez nem érvényes client ID.",
+      "invalidTokenEndpoint": "Érvénytelen tokenvégpont.",
+      "noAccessToken": "{{provider}} nem adott vissza hozzáférési tokent (HTTP {{status}}).",
+      "noFreePort": "Nincs elérhető ideiglenes port a bejelentkezéshez.",
+      "noPort": "Nincs port.",
+      "noRefreshToken": "{{provider}} nem adott vissza frissítési tokent; próbáljon újra bejelentkezni.",
+      "noStoredSignIn": "Jelentkezzen be újra ide: {{provider}}: ehhez a fiókhoz nincs mentett bejelentkezés.",
+      "notConfigured": {
+        "google": "A Google-bejelentkezés még nincs beállítva: nincs client ID. A Google Cloudban hozzon létre 'Asztali alkalmazás' típusú OAuth-klienst (átirányítás a http://127.0.0.1 címen keresztül), engedélyezze a Gmail API-t, és adja hozzá a https://mail.google.com/ hatókört a hozzájárulási képernyőhöz. Ezután adja meg a client ID-t és a client secretet (lásd: docs/email-oauth.md).",
+        "microsoft": "A Microsoft-bejelentkezés még nincs beállítva: nincs client ID. Regisztráljon egy alkalmazást a Microsoft Entrában (Alkalmazásregisztrációk) 'Nyilvános ügyfél'-ként, adja hozzá a 'Mobil- és asztali alkalmazások' platformot a http://localhost átirányítási URI-val, és adja meg az IMAP.AccessAsUser.All, SMTP.Send, offline_access, openid és email delegált engedélyeket. Ezután adja meg a client ID-t (lásd: docs/email-oauth.md)."
+      },
+      "providerRefused": "{{provider}} elutasította a bejelentkezést ({{detail}}).",
+      "randomUnavailable": "Nem érhető el biztonságos véletlenforrás.",
+      "reauthenticate": "Jelentkezzen be újra ide: {{provider}}: az engedély lejárt vagy visszavonták.",
+      "settingSaveFailed": "Nem sikerült menteni az OAuth-beállítást.",
+      "signInFirst": "Ez a fiók OAuth2-t használ: előbb jelentkezzen be a Microsofttal vagy a Google-lel.",
+      "signInFirstToTest": "Az OAuth2 teszteléséhez előbb jelentkezzen be a Microsofttal vagy a Google-lel.",
+      "signInTimeout": "A(z) {{provider}} bejelentkezés több mint 5 percig tartott, ezért megszakadt.",
+      "stateMismatch": "A bejelentkezési oldal válasza nem ehhez a bejelentkezéshez tartozik (state-eltérés).",
+      "timeout": "{{provider}} nem válaszolt időben.",
+      "tokenRefused": "{{provider}} elutasította a tokent ({{detail}}).",
+      "unexpectedResponse": "{{provider}} váratlan választ adott (HTTP {{status}})."
+    },
+    "security": {
+      "cramMd5SmtpUnsupported": "A titkosított jelszó (CRAM-MD5) SMTP esetén nem támogatott. Válassza a 'normál jelszó' lehetőséget; SSL/TLS vagy STARTTLS használatával a jelszó is titkosítva van.",
+      "invalidServerName": "A(z) '{{host}}' nem érvényes kiszolgálónév a(z) {{protocol}} számára.",
+      "notLocalhost": "{{host}} nem ez a számítógép, ezért a titkosítatlan kapcsolat el lett utasítva.",
+      "portMissing": "Hiányzik a(z) {{protocol}} portja.",
+      "unencryptedRefused": "A titkosítás nélküli bejelentkezés ide el lett utasítva: {{host}}: a jelszava olvasható formában haladna át a hálózaton. Válassza az SSL/TLS-t vagy a STARTTLS-t. Titkosítatlan kapcsolat csak ehhez a számítógéphez (localhost) engedélyezett, például a Proton Mail Bridge-hez."
+    },
+    "server": {
+      "noTimelyResponse": "{{host}} nem válaszolt időben."
+    },
+    "smtp": {
+      "authMethodUnsupported": "Ez a bejelentkezési módszer SMTP esetén nem támogatott.",
+      "error": "SMTP-hiba itt: {{host}}: {{detail}}",
+      "messageTooLarge": "{{host}} elutasítja az üzenetet, mert túl nagy ({{detail}}).",
+      "noAuthMechanism": "{{host}} nem kínál olyan bejelentkezési módszert, amelyet az Email Studio támogat (PLAIN vagy LOGIN). Válassza a STARTTLS-t vagy az SSL/TLS-t; sok kiszolgáló csak titkosítás után kínál bejelentkezést.",
+      "oauthRejected": "{{host}} elutasította az OAuth2-tokent; lehet, hogy újra be kell jelentkeznie.",
+      "rejected": "{{host}} elutasította az üzenetet ({{detail}}).",
+      "sendTimeout": "A küldés ezen keresztül túl sokáig tartott: {{host}}.",
+      "tlsFailed": "Nem sikerült biztonságos kapcsolatot létesíteni ezzel: {{host}} ({{detail}}). Megfelel a biztonsági beállítás a portnak?",
+      "tryLater": "{{host}} most nem tudja fogadni az üzenetet; próbálkozzon később ({{detail}})."
+    },
+    "storage": {
+      "appDataDirNotFound": "Az alkalmazás adatmappája nem található.",
+      "dataDirCreateFailed": "Nem sikerült létrehozni az adatmappát.",
+      "dataDirMissing": "Hiányzik az adatmappa."
+    },
+    "test": {
+      "signedIn": "Bejelentkezve ide: {{host}}.",
+      "signedInUnencrypted": "Bejelentkezve ide: {{host}}. Megjegyzés: a(z) {{protocol}}-kapcsolat nincs titkosítva. Ez csak azért engedélyezett, mert a kiszolgáló ezen a számítógépen fut."
+    },
+    "tls": {
+      "certificateRejected": "A biztonságos kapcsolat ezzel el lett utasítva: {{host}}: {{reason}}. A jelszava védelme érdekében az Email Studio nem csatlakozik olyan kiszolgálóhoz, amelynek személyazonossága nem ellenőrizhető.",
+      "handshakeFailed": "Nem sikerült biztonságos kapcsolatot létesíteni ezzel: {{host}} ({{detail}}). Megfelel a biztonsági beállítás (SSL/TLS vagy STARTTLS) a portnak?",
+      "handshakeTimeout": "A TLS-kézfogás ezzel túl sokáig tartott: {{host}}.",
+      "invalidServerName": "A(z) '{{host}}' nem érvényes kiszolgálónév a TLS számára.",
+      "reason": {
+        "expired": "a tanúsítvány lejárt",
+        "invalid": "a tanúsítvány érvénytelen ({{detail}})",
+        "notYetValid": "a tanúsítvány még nem érvényes (helyesen jár a számítógép órája?)",
+        "revoked": "a tanúsítványt visszavonták",
+        "unknownIssuer": "a tanúsítványt nem megbízható hitelesítésszolgáltató állította ki (valószínűleg önaláírt)",
+        "wrongName": "a tanúsítvány nem a(z) {{host}} névhez tartozik; használja a tanúsítványon szereplő kiszolgálónevet"
+      }
+    }
+  }
+}

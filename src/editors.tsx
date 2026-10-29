@@ -5,17 +5,15 @@ import { XlsxEditor, type XlsxEditorApi } from "@betteroffice/xlsx-react";
 import { PptxEditor, type PptxEditorApi } from "@betteroffice/pptx-react";
 import type { PptxFontFace } from "@betteroffice/pptx";
 import "@betteroffice/docx-react/styles.css";
+import { useTranslation } from "react-i18next";
+import i18next from "./i18n/config";
 import {
   TekstRibbon,
   RekenbladRibbon,
   PresentatieRibbon,
 } from "./editor-ribbons";
 import { RibbonFout } from "./Ribbon";
-import {
-  tekstNlVolledig as tekstNl,
-  rekenbladNlVolledig as rekenbladNl,
-  diaNlVolledig as diaNl,
-} from "./nederlands-toegankelijk";
+import { useEngineVertaling } from "./i18n/engine";
 import { RekenbladKoppen } from "./RekenbladKoppen";
 import {
   EditorApi,
@@ -54,6 +52,8 @@ export interface EditorProps {
   naam: string;
   gewijzigd: () => void;
   fout: (f: Error) => void;
+  /** Melding rechtsonder met een eigen toon; zonder valt het terug op `fout`. */
+  melding?: (tekst: string, toon: "info" | "waarschuwing") => void;
   registreer: (opslaan: (() => Promise<Uint8Array>) | null) => void;
   opslaan: () => void;
   bestandsmenu: () => void;
@@ -64,6 +64,9 @@ export interface EditorProps {
   zoom: (zoom: number | null) => void;
 }
 export default function OfficeEditor(props: EditorProps) {
+  // Engine-teksten in de interfacetaal; wisselt live mee zonder het document te herladen.
+  const engineTaal = useEngineVertaling();
+  const { t } = useTranslation("shell");
   const docx = useRef<DocxEditorRef>(null);
   const exporteren = useRef(false);
   const [fontFaces, setFontFaces] = useState<PptxFontFace[]>([]);
@@ -81,6 +84,10 @@ export default function OfficeEditor(props: EditorProps) {
   useEffect(() => () => stopDiaWijzigingen.current?.(), []);
   const recent = useRef(props);
   recent.current = props;
+  const meldEditor = (tekst: string, toon: "info" | "waarschuwing") =>
+    recent.current.melding
+      ? recent.current.melding(tekst, toon)
+      : recent.current.fout(new Error(tekst));
   // Grafieken bewerken het pakket zelf en laden de editor daarna opnieuw.
   const herladen = useHerladen({
     bytes: props.bytes,
@@ -93,23 +100,23 @@ export default function OfficeEditor(props: EditorProps) {
     },
     serialiseer: async () => {
       if (props.soort === "xlsx") {
-        if (!rekenbladApi) throw new Error("Het rekenblad is nog niet gereed.");
+        if (!rekenbladApi) throw new Error(i18next.t("shell:errors.spreadsheetNotReady"));
         await rekenbladApi.version();
         return rekenbladApi.save();
       }
       if (props.soort === "pptx") {
         if (!presentatieApi)
-          throw new Error("De presentatie is nog niet gereed.");
+          throw new Error(i18next.t("shell:errors.presentationNotReady"));
         await presentatieApi.flushPendingInput();
         return presentatieApi.save();
       }
       if (!docx.current?.getDocument())
-        throw new Error("Het document is nog niet gereed.");
+        throw new Error(i18next.t("shell:errors.documentNotReady"));
       exporteren.current = true;
       try {
         await docx.current.flushPendingInput();
         const bytes = await docx.current.save();
-        if (!bytes) throw new Error("Het document kon niet worden opgeslagen.");
+        if (!bytes) throw new Error(i18next.t("shell:errors.documentSaveFailed"));
         // Wachtende eigenschappen uit Bestand › Info gaan mee door het herladen.
         return werkEigenschappenBij(herladenRecent.current.api, docx.current, new Uint8Array(bytes), false);
       } finally {
@@ -178,11 +185,11 @@ export default function OfficeEditor(props: EditorProps) {
     if (props.soort !== "docx" || !documentGereed) return;
     props.registreer(async () => {
       if (!docx.current?.getDocument())
-        throw new Error("Het document is nog niet gereed.");
+        throw new Error(i18next.t("shell:errors.documentNotReady"));
       exporteren.current = true;
       try {
         const bytes = await docx.current.save();
-        if (!bytes) throw new Error("Het document kon niet worden opgeslagen.");
+        if (!bytes) throw new Error(i18next.t("shell:errors.documentSaveFailed"));
         // docProps (Bestand › Info, statistieken, bewerkingstijd) bijwerken.
         return werkEigenschappenBij(herladen.api, docx.current, new Uint8Array(bytes), true);
       } finally {
@@ -229,7 +236,12 @@ export default function OfficeEditor(props: EditorProps) {
       }
       if (props.soort === "xlsx") await lt.registreerVervangers(info);
       const melding = vervangingsMelding(info.vervangingen);
-      if (melding && actief) recent.current.fout(new Error(melding));
+      // Metrisch gelijke vervangers veranderen de opmaak niet: alleen ter
+      // informatie. Een benadering kan regels laten verschuiven: blijft staan.
+      const toon = info.vervangingen.some((v) => v.soort === "benadering")
+        ? "waarschuwing"
+        : "info";
+      if (melding && actief) meldEditor(melding, toon);
     })().catch((e) => {
       if (actief) recent.current.fout(e);
     });
@@ -259,8 +271,9 @@ export default function OfficeEditor(props: EditorProps) {
               vergelijkCache(controle, leesUitWerkboek(api.handle, controle)),
             );
             if (melding?.ernst === "waarschuwing")
-              recent.current.fout(
-                new Error(`${melding.titel}. ${melding.regels.join(" ")}`),
+              meldEditor(
+                `${melding.titel}. ${melding.regels.join(" ")}`,
+                "waarschuwing",
               );
           },
         )
@@ -326,13 +339,13 @@ export default function OfficeEditor(props: EditorProps) {
                 herladenRecent.current.naDocx(docx.current);
               }}
               loadingIndicator={
-                <p className="office-loading">Document laden…</p>
+                <p className="office-loading">{t("loading.document")}</p>
               }
               showRuler={liniaal}
               showOutline={navigatie}
               showOutlineButton={false}
               colorMode="light"
-              i18n={tekstNl}
+              i18n={engineTaal.tekst}
               className="office-tekst"
               readOnly={props.inactief}
               toolbar={
@@ -367,7 +380,7 @@ export default function OfficeEditor(props: EditorProps) {
                 onReady={gereedXlsx}
                 onChange={props.gewijzigd}
                 onSave={props.opslaan}
-                i18n={rekenbladNl}
+                i18n={engineTaal.rekenblad}
                 className="office-rekenblad"
                 readOnly={props.inactief}
                 toolbar={
@@ -384,7 +397,7 @@ export default function OfficeEditor(props: EditorProps) {
         </EditorApi.Provider>
       </RibbonFout.Provider>
     );
-  if (!fontFaces.length) return <p role="status">Lettertypen laden…</p>;
+  if (!fontFaces.length) return <p role="status">{t("loading.fonts")}</p>;
   return (
     <RibbonFout.Provider value={(bericht) => props.fout(new Error(bericht))}>
       <EditorApi.Provider value={apis}>
@@ -401,7 +414,7 @@ export default function OfficeEditor(props: EditorProps) {
             onChange={props.gewijzigd}
             onError={props.fout}
             onSave={props.opslaan}
-            i18n={diaNl}
+            i18n={engineTaal.dia}
             className="office-presentatie"
             readOnly={props.inactief}
             toolbar={

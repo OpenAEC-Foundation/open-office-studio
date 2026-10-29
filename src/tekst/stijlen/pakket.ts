@@ -7,6 +7,7 @@ import { Pakket } from "../../grafieken/pakket.ts";
 import { GrafiekFout } from "../../grafieken/fouten.ts";
 import type { HerlaadDoel, Herladen } from "../../lint/editorApi";
 import { StijlFout } from "./stijlenxml.ts";
+import { vertaal } from "./vertaling.ts";
 
 const REL_STIJLEN = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles";
 const REL_THEMA = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme";
@@ -49,12 +50,12 @@ export function bewerkStijlOnderdelen(
     throw new StijlFout(
       fout instanceof GrafiekFout
         ? fout.message.replace("om er een grafiek in te bewerken", "om de stijlen te bewerken")
-        : "Het document kon niet worden gelezen.",
+        : vertaal("writer:styles.errors.unreadableDocument", "Het document kon niet worden gelezen."),
     );
   }
   const document = hoofddocument(pakket);
   const stijlPad = onderdeelPad(pakket, document, REL_STIJLEN, "word/styles.xml");
-  if (!stijlPad || !pakket.heeft(stijlPad)) throw new StijlFout("Dit document heeft geen stijldefinities (styles.xml).");
+  if (!stijlPad || !pakket.heeft(stijlPad)) throw new StijlFout(vertaal("writer:styles.errors.noStylesPart", "Dit document heeft geen stijldefinities ({{part}}).", { part: "styles.xml" }));
   const themaPad = onderdeelPad(pakket, document, REL_THEMA, "word/theme/theme1.xml");
   const huidig: StijlOnderdelen = {
     stijlen: pakket.lees(stijlPad),

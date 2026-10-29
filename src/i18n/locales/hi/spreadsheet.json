@@ -1,0 +1,92 @@
+{
+  "formulaCheck": {
+    "titleWarning": "इस स्प्रेडशीट के सूत्र जाँचें",
+    "titleInfo": "इस स्प्रेडशीट के सूत्रों के बारे में टिप्पणियाँ",
+    "cells_one": "{{count}} सेल",
+    "cells_other": "{{count}} सेल",
+    "examplesMore_one": "{{list}} और {{count}} अन्य",
+    "examplesMore_other": "{{list}} और {{count}} अन्य",
+    "userFunction": "उपयोगकर्ता-परिभाषित फ़ंक्शन (मैक्रो या ऐड-इन)",
+    "function": "फ़ंक्शन",
+    "notCalculated": "{{kind}} {{name}} की गणना नहीं की जाती ({{cells}}: {{examples}})। सहेजा गया परिणाम बना रहता है और अपडेट नहीं होता; निर्भर सेल पुराने हो सकते हैं।",
+    "recalculated_one": "{{cells}} का सहेजा गया परिणाम पुराना था और खोलते समय उसकी दोबारा गणना की गई ({{examples}})। सहेजने पर नए परिणाम रखे जाते हैं।",
+    "recalculated_other": "{{cells}} के सहेजे गए परिणाम पुराने थे और खोलते समय उनकी दोबारा गणना की गई ({{examples}})। सहेजने पर नए परिणाम रखे जाते हैं।",
+    "manualCalculation": "फ़ाइल मैन्युअल गणना के साथ सहेजी गई थी; सहेजे गए परिणाम पुराने हो सकते हैं।",
+    "externalLinks_one": "वर्कबुक एक बाहरी वर्कबुक को संदर्भित करती है; वे मान अपडेट नहीं होते।",
+    "externalLinks_other": "वर्कबुक {{count}} बाहरी वर्कबुक को संदर्भित करती है; वे मान अपडेट नहीं होते।",
+    "errorCells": "त्रुटि मान वाले {{cells}}: {{list}}।",
+    "errorItem": "{{error}} ({{examples}})",
+    "noCachedResult": "बिना सहेजे परिणाम वाले सूत्र के साथ {{cells}} ({{examples}})।",
+    "fullCalcOnLoad": "फ़ाइल खोलते समय पूर्ण पुनर्गणना माँगती है (fullCalcOnLoad); सहेजे गए परिणाम पुराने हो सकते हैं।",
+    "calcChain": "गणना शृंखला (calcChain) सहेजते समय नहीं रखी जाती; Excel इसे फिर से बनाता है।",
+    "tooLarge": "स्प्रेडशीट जाँच के लिए बहुत बड़ी है।",
+    "invalidWorkbook": "यह मान्य XLSX वर्कबुक नहीं है।"
+  },
+  "print": {
+    "pageLabel": "{{sheet}}, पृष्ठ {{page}} / {{pages}}",
+    "notWorksheet": "शीट ‘{{name}}’ वर्कशीट नहीं है और छोड़ दी गई है।",
+    "nothingToPrint": "मुद्रित करने के लिए कुछ नहीं है: शीटें खाली हैं।"
+  },
+  "export": {
+    "pngUnavailable": "यह स्प्रेडशीट इंजन PNG नहीं बना सकता।"
+  },
+  "csvImport": {
+    "title": "{{name}} आयात करें",
+    "import": "आयात करें",
+    "separator": "विभाजक",
+    "separatorSemicolon": "अर्धविराम ;",
+    "separatorComma": "अल्पविराम ,",
+    "separatorTab": "टैब",
+    "separatorPipe": "खड़ी रेखा |",
+    "separatorCustom": "अन्य वर्ण…",
+    "customCharacter": "अन्य वर्ण",
+    "textQualifier": "पाठ क्वालिफ़ायर",
+    "qualifierDouble": "दोहरा उद्धरण चिह्न \"",
+    "qualifierSingle": "एकल उद्धरण चिह्न '",
+    "qualifierNone": "कोई नहीं",
+    "encoding": "वर्ण एन्कोडिंग",
+    "encodingAuto": "स्वचालित",
+    "encodingDetected": "{{name}} ({{encoding}})",
+    "encodingWindows1252": "Windows-1252 (पश्चिमी यूरोपीय)",
+    "numbers": "संख्याएँ",
+    "numbersDutch": "डच (1.234,56)",
+    "numbersEnglish": "अंग्रेज़ी (1,234.56)",
+    "dateOrder": "दिनांक क्रम",
+    "dateOrderDmy": "दिन-माह-वर्ष (31-12-2026)",
+    "dateOrderMdy": "माह-दिन-वर्ष (12/31/2026)",
+    "dateOrderYmd": "वर्ष-माह-दिन (2026-12-31)",
+    "fromRow": "पंक्ति से",
+    "headerRow": "पहली पंक्ति शीर्षक है",
+    "previewLabel": "पहली 50 पंक्तियों का पूर्वावलोकन",
+    "columnType": "स्तंभ {{number}} का प्रकार",
+    "columnTypes": {
+      "standaard": "सामान्य",
+      "tekst": "पाठ",
+      "datum": "दिनांक",
+      "overslaan": "छोड़ें"
+    },
+    "detected_one": "विभाजक {{separator}}, {{count}} स्तंभ।",
+    "detected_other": "विभाजक {{separator}}, {{count}} स्तंभ।",
+    "explanation": "पिन कोड, आइटम नंबर और IBAN के लिए <b>पाठ</b> चुनें; आगे के शून्य और 15 अंकों से लंबी संख्याएँ सामान्य में पहले से ही पाठ रहती हैं। =, +, - या @ से शुरू होने वाले मान कभी सूत्र के रूप में नहीं पढ़े जाते (पूर्वावलोकन में एपॉस्ट्रॉफ़ी)।",
+    "separatorNames": {
+      "tab": "टैब",
+      "semicolon": "अर्धविराम",
+      "comma": "अल्पविराम",
+      "pipe": "खड़ी रेखा",
+      "other": "“{{character}}”"
+    },
+    "report": {
+      "import": "आयात",
+      "imported": "{{rows}} और {{columns}} पढ़े गए; विभाजक {{separator}}, एन्कोडिंग {{encoding}}।",
+      "rows_one": "{{count}} पंक्ति",
+      "rows_other": "{{count}} पंक्तियाँ",
+      "columns_one": "{{count}} स्तंभ",
+      "columns_other": "{{count}} स्तंभ",
+      "formulaLike": "सूत्र जैसा पाठ",
+      "formulaLikeCells_one": "=, +, - या @ से शुरू होने वाला {{count}} सेल सूत्र के रूप में नहीं, पाठ के रूप में लिया गया (CSV इंजेक्शन से सुरक्षा)।",
+      "formulaLikeCells_other": "=, +, - या @ से शुरू होने वाले {{count}} सेल सूत्र के रूप में नहीं, पाठ के रूप में लिए गए (CSV इंजेक्शन से सुरक्षा)।",
+      "truncated": "काटा गया",
+      "truncatedText": "फ़ाइल वर्कशीट से बड़ी है ({{rows}} पंक्तियाँ या {{columns}} स्तंभ); शेष नहीं पढ़ा गया।"
+    }
+  }
+}

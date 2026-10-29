@@ -1,0 +1,263 @@
+{
+  "types": {
+    "column": {
+      "name": "縦棒",
+      "description": "値を並べて比較"
+    },
+    "stackedColumn": {
+      "name": "積み上げ縦棒",
+      "description": "カテゴリごとの内訳と合計"
+    },
+    "percentColumn": {
+      "name": "100% 積み上げ縦棒",
+      "description": "カテゴリごとの割合"
+    },
+    "bar": {
+      "name": "横棒",
+      "description": "横向き、長い名前向け"
+    },
+    "line": {
+      "name": "折れ線",
+      "description": "時間の経過による推移"
+    },
+    "lineMarkers": {
+      "name": "マーカー付き折れ線",
+      "description": "データ ポイントが見える推移"
+    },
+    "area": {
+      "name": "面",
+      "description": "大きさを強調した推移"
+    },
+    "pie": {
+      "name": "円",
+      "description": "1 つの系列の内訳"
+    },
+    "doughnut": {
+      "name": "ドーナツ",
+      "description": "中央が空いた内訳"
+    },
+    "scatter": {
+      "name": "散布図 (XY)",
+      "description": "2 つの数値の関係"
+    },
+    "combo": {
+      "name": "縦棒 + 折れ線",
+      "description": "最後の系列を第 2 軸の折れ線として表示"
+    }
+  },
+  "unknownType": "不明な種類",
+  "busy": "処理中…",
+  "defaults": {
+    "seriesName": "系列 {{n}}",
+    "categoryName": "カテゴリ {{n}}",
+    "chartName": "グラフ {{n}}",
+    "sheetName": "グラフ {{n}}",
+    "true": "TRUE",
+    "false": "FALSE"
+  },
+  "ribbon": {
+    "charts": "グラフ",
+    "chart": "グラフ",
+    "editChart": "グラフの編集",
+    "allCharts": "すべてのグラフ",
+    "dataAndFormat": "データと書式",
+    "overview": "概要",
+    "type": "種類",
+    "changeType": "グラフの種類の変更",
+    "data": "データ",
+    "selectData": "データの選択",
+    "layout": "レイアウト",
+    "titleAndLegend": "タイトルと凡例",
+    "delete": "削除",
+    "deleteChart": "グラフの削除",
+    "withShortcut": "{{name}} · {{shortcut}}"
+  },
+  "dialog": {
+    "title": {
+      "insert": "グラフの挿入",
+      "edit": "グラフの編集"
+    },
+    "button": {
+      "insert": "挿入",
+      "edit": "更新"
+    },
+    "reloadNote": {
+      "insert": "挿入後にドキュメントが再読み込みされます。それ以前の変更は元に戻せなくなります。",
+      "edit": "更新後にドキュメントが再読み込みされます。それ以前の変更は元に戻せなくなります。"
+    },
+    "closeTitle": "閉じる (Esc)",
+    "type": "種類",
+    "data": "データ",
+    "cellRange": "セル範囲",
+    "cellRangePlaceholder": "例: A1:D6",
+    "noContiguousRange": "このグラフの参照は連続した範囲になっていません。範囲を入力するまでデータは変更されません。",
+    "firstRowNames": "先頭行に名前を含む",
+    "firstColumnNames": "先頭列に名前を含む",
+    "seriesIn": "系列の方向",
+    "columns": "列",
+    "rows": "行",
+    "series": "系列",
+    "seriesNoNumbersTitle": "{{name}}: 数値なし、含まれません",
+    "noNumbers": "（数値なし）",
+    "enterRange": "データを含むセル範囲を入力してください。",
+    "placeCursorInTable": "まず、数値を含む表にカーソルを置いてください。",
+    "titles": "タイトル",
+    "chartTitle": "タイトル",
+    "subtitle": "サブタイトル",
+    "categoryAxis": "項目軸",
+    "valueAxis": "値軸",
+    "horizontalAxis": "横軸",
+    "verticalAxis": "縦軸",
+    "secondaryAxis": "第 2 軸",
+    "format": "書式",
+    "legend": "凡例",
+    "gridlines": "目盛線",
+    "dataLabels": "データ ラベル",
+    "decimals": "小数点以下の桁数",
+    "placement": "配置",
+    "besideData": "このシートのデータの横",
+    "newSheet": "新しいシート",
+    "sheetName": "シート名",
+    "summary": {
+      "series_other": "{{n}} 系列",
+      "categories_other": "{{n}} カテゴリ",
+      "text": "{{series}} · {{categories}}",
+      "withSheet": "{{series}} · {{categories}} · {{sheet}}"
+    }
+  },
+  "legend": {
+    "bottom": "下",
+    "right": "右",
+    "top": "上",
+    "left": "左",
+    "none": "凡例なし"
+  },
+  "dataSheet": {
+    "row": "行",
+    "series": "系列",
+    "removeLastRow": "最後の行を削除",
+    "removeLastSeries": "最後の系列を削除",
+    "paste": "貼り付け",
+    "pasteTitle": "クリップボードからタブ区切りのテキストを貼り付けます（例: スプレッドシートからコピーしたもの）",
+    "fromTable": "選択した表から",
+    "fromTableTitle": "カーソルがある表を取り込みます",
+    "pasteNotAllowed": "ここではボタンでの貼り付けは許可されていません。セルをクリックして Ctrl+V を使用してください。",
+    "corner": "左上のセル",
+    "seriesNameLabel": "系列 {{n}} の名前",
+    "categoryLabel": "カテゴリ {{n}}",
+    "valueLabel": "値 行 {{row}}、系列 {{series}}"
+  },
+  "preview": {
+    "label": "プレビュー: {{title}}",
+    "untitled": "プレビュー: 無題のグラフ"
+  },
+  "list": {
+    "title": "このドキュメント内のグラフ",
+    "empty": "このドキュメントにはまだグラフがありません。",
+    "edit": "編集",
+    "delete": "削除",
+    "deleteLabel": "{{name}} を削除",
+    "place": {
+      "slide": "スライド {{n}}",
+      "sheet": "シート {{name}}",
+      "text": "本文中のグラフ {{n}}"
+    }
+  },
+  "deleteConfirm": {
+    "title": "グラフの削除",
+    "text": "「{{name}}」を削除しますか？その後ドキュメントが再読み込みされ、それ以前の変更は元に戻せなくなります。",
+    "textSheet": "シート {{sheet}} から「{{name}}」を削除しますか？その後ドキュメントが再読み込みされ、それ以前の変更は元に戻せなくなります。",
+    "button": "削除"
+  },
+  "errors": {
+    "unknownType": "不明なグラフの種類です。",
+    "noSeries": "グラフには少なくとも 1 つのデータ系列が必要です。",
+    "tooManySeries": "ここではグラフに含められる系列は最大 {{max}} 個です。",
+    "tooManyCategories": "ここではグラフに含められるカテゴリは最大 {{max}} 個です。",
+    "noCategories": "グラフには少なくとも 1 つのカテゴリが必要です。",
+    "valueCountMismatch": "系列「{{name}}」の値の数がカテゴリの数と一致しません。",
+    "noNumbers": "データに数値が含まれていません。",
+    "comboNeedsTwoSeries": "組み合わせグラフには少なくとも 2 つの系列（縦棒と折れ線）が必要です。",
+    "scatterNeedsNumbers": "散布図には、先頭の列または行に X 値として数値が必要です。",
+    "titleTooLong": "タイトルは最大 {{max}} 文字です。",
+    "invalidColor": "色「{{color}}」は有効な色ではありません。",
+    "noNumericColumn": "範囲内のどの列にも数値がないため、描画するものがありません。数値の列を 1 つ以上含む範囲を選択するか、「系列の方向」を行に設定してください。",
+    "noNumericRow": "範囲内のどの行にも数値がないため、描画するものがありません。数値の行を 1 つ以上含む範囲を選択するか、「系列の方向」を列に設定してください。",
+    "chooseSeries": "グラフの系列を 1 つ以上選択してください。",
+    "rangeTooLarge": "範囲が大きすぎます。最大 {{max}} セルです。",
+    "noDataBesideHeaders": "範囲には見出し以外のデータがありません。",
+    "pasteTooLarge": "貼り付けたデータはグラフには大きすぎます。",
+    "invalidRange": "有効なセル範囲ではありません。A1:D6 や 'Sheet 1'!A1:D6 のように指定してください。",
+    "noSuchSheet": "「{{name}}」という名前のシートはありません。",
+    "spreadsheetNotReady": "スプレッドシートはまだ準備ができていません。",
+    "spreadsheetReadOnly": "スプレッドシートは読み取り専用です。",
+    "documentNotReady": "ドキュメントはまだ準備ができていません。",
+    "presentationNotEditable": "現在プレゼンテーションを編集できません。",
+    "selectChartFirst": "まずグラフを選択してください。",
+    "chartGone": "グラフが見つからなくなりました。",
+    "notEditableHere": "このグラフはここでは編集できません。",
+    "notEditable": "このグラフは編集できません。",
+    "package": {
+      "tooLarge": "ドキュメントが大きすぎるため、グラフを編集できません。",
+      "tooManyParts": "ドキュメントに含まれるパーツが多すぎるか、大きすぎます。",
+      "notZip": "ドキュメントは有効な Office ファイル (zip) ではありません。",
+      "invalidPartName": "ドキュメントに無効なパーツ名が含まれています。",
+      "noContentTypes": "ドキュメントに [Content_Types].xml がありません。",
+      "missingPart": "ドキュメントにパーツ {{part}} がありません。",
+      "noFreePartName": "使用できるパーツ名が残っていません。"
+    },
+    "xml": {
+      "tooLarge": "XML パーツが大きすぎて処理できません。",
+      "damaged": "XML パーツが破損しています。",
+      "doctype": "DOCTYPE を含む XML はセキュリティ上の理由で処理されません。",
+      "tooDeep": "XML パーツの入れ子が深すぎます。",
+      "overlappingChanges": "内部エラー: XML の変更が重なっています。"
+    },
+    "chartXml": {
+      "notDrawingML": "このパーツは DrawingML グラフではありません。",
+      "noPlotArea": "グラフにプロット エリアがありません。",
+      "unusualPrefix": "このグラフは通常と異なる XML 表記を使用しているため、ここでは安全に編集できません。"
+    },
+    "document": {
+      "noMainPart": "ドキュメントにメイン パーツがありません。",
+      "tooManyCharts": "このドキュメントにはすでに {{total}} 個のグラフがあります。これ以上はサポートされていません。",
+      "invalidSheetName": "無効なシート名です。31 文字以内で、\\ / ? * [ ] : は使用できません",
+      "sheetExists": "「{{name}}」という名前のシートはすでに存在します。",
+      "noSheetList": "ブックにシートの一覧がありません。",
+      "drawingMissing": "このシートの描画がないか、破損しています。",
+      "noSuchWorksheet": "選択したシートは存在しないか、ワークシートではありません。",
+      "notPlainWorksheet": "グラフは通常のワークシートにのみ配置できます。",
+      "drawingDamaged": "このシートの描画が破損しています。",
+      "docxUnusualPrefix": "このドキュメントは通常と異なる XML 表記を使用しているため、グラフを安全に挿入できません。",
+      "noBody": "ドキュメントに本文がありません。",
+      "tableTooLarge": "表が大きすぎるためグラフにできません。",
+      "noSuchSlide": "選択したスライドは存在しません。",
+      "slideUnusualPrefix": "このスライドは通常と異なる XML 表記を使用しているため、グラフを安全に挿入できません。",
+      "noShapeTree": "スライドに図形ツリーがありません。",
+      "chartRemoved": "グラフはドキュメントに存在しなくなりました。",
+      "chartNotFound": "グラフが見つかりません。",
+      "cannotRemove": "グラフ オブジェクトを削除できません。"
+    }
+  },
+  "read": {
+    "reasons": {
+      "extendedChart": "これは拡張グラフ（ウォーターフォールやツリーマップなど）のため、ここでは編集できません。",
+      "unsupportedType": "このグラフはここで編集できない種類を使用しています（{{types}}）。",
+      "noReadableSeries": "グラフに読み取り可能な系列がありません。",
+      "unsupportedCombination": "このグラフはここで編集できない方法で種類を組み合わせています。",
+      "noSeries": "グラフにデータ系列がありません。",
+      "invalid": "このグラフはここでは編集できません: {{reason}}",
+      "unusualPrefix": "このグラフは通常と異なる XML 表記を使用しているため、ここでは安全に編集できません。"
+    },
+    "warnings": {
+      "stackedBars": "編集時、積み上げ横棒は横に並べて配置されます。",
+      "stackedLines": "編集時、積み上げ折れ線は個別の折れ線になります。",
+      "stackedAreas": "編集時、積み上げ面は個別の面になります。",
+      "linesAfterColumns": "編集時、折れ線系列は縦棒の後に配置されます。",
+      "lastSeriesAsLine": "編集時、折れ線として描画されるのは最後の系列だけです。",
+      "multiLevelCategories": "編集時、複数レベルのカテゴリは 1 レベルになります。",
+      "moreValuesThanCategories": "系列「{{name}}」の値がカテゴリの数より多くなっています。",
+      "trendlinesDropped": "編集時、近似曲線と誤差範囲は削除されます。"
+    }
+  }
+}

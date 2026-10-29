@@ -1,5 +1,6 @@
 import type { Beveiliging, ConfiguratieVoorstel, OAuthProvider } from "./contract";
 import { isGeldigAdres } from "./adressen";
+import i18next from "../../../src/i18n/config";
 
 /**
  * Automatisch zoeken naar mailservers terwijl de gebruiker het adres typt:
@@ -70,21 +71,33 @@ export class ServerZoeker {
 
 // ---- Kaartlogica ----
 
-export const BRONNAAM: Record<ConfiguratieVoorstel["bron"], string> = {
-  voorinstelling: "Ingebouwde lijst",
-  autoconfig: "Configuratie van het eigen domein",
-  srv: "DNS-SRV-records",
-  mx: "MX-records (provider herkend)",
-  ispdb: "Thunderbird-database",
-  gok: "Gangbare servernamen",
+const BRONSLEUTEL: Record<ConfiguratieVoorstel["bron"], string> = {
+  voorinstelling: "preset",
+  autoconfig: "autoconfig",
+  srv: "srv",
+  mx: "mx",
+  ispdb: "ispdb",
+  gok: "guess",
 };
 
-const BEVEILIGINGNAAM: Record<Beveiliging, string> = { ssl: "SSL/TLS", starttls: "STARTTLS", geen: "onversleuteld" };
+/** Omschrijving van de bron van een voorstel, in de huidige interfacetaal. */
+export function bronNaam(bron: ConfiguratieVoorstel["bron"]): string {
+  return i18next.t(`email:accounts.discovery.sources.${BRONSLEUTEL[bron]}`);
+}
+
+function beveiligingNaam(beveiliging: Beveiliging): string {
+  return beveiliging === "ssl" ? "SSL/TLS" : beveiliging === "starttls" ? "STARTTLS" : i18next.t("email:accounts.discovery.unencrypted");
+}
 
 export function bereikbaarTekst(waarde: boolean | null | undefined) {
-  if (waarde === true) return { teken: "✓", tekst: "bereikbaar" };
-  if (waarde === false) return { teken: "✗", tekst: "niet bereikbaar" };
-  return { teken: "?", tekst: "niet getest" };
+  if (waarde === true) return { teken: "✓", tekst: i18next.t("email:accounts.discovery.reachable") };
+  if (waarde === false) return { teken: "✗", tekst: i18next.t("email:accounts.discovery.unreachable") };
+  return { teken: "?", tekst: i18next.t("email:accounts.discovery.untested") };
+}
+
+/** Taalonafhankelijke CSS-soort bij `bereikbaarTekst` (op het teken). */
+export function bereikbaarSoort(teken: string): "bereikbaar" | "niet-bereikbaar" | "niet-getest" {
+  return teken === "✓" ? "bereikbaar" : teken === "✗" ? "niet-bereikbaar" : "niet-getest";
 }
 
 export interface Kaart {
@@ -116,18 +129,19 @@ export function maakKaarten(voorstellen: ConfiguratieVoorstel[], domein: string)
     const sleutel = serverSleutel(voorstel);
     const bestaand = kaarten.find((k) => k.sleutel === sleutel);
     if (bestaand) {
-      if (!bestaand.bron.includes(BRONNAAM[voorstel.bron])) bestaand.bron += ` + ${BRONNAAM[voorstel.bron]}`;
+      const bron = bronNaam(voorstel.bron);
+      if (!bestaand.bron.includes(bron)) bestaand.bron += ` + ${bron}`;
       bestaand.oauth ??= voorstel.oauth;
       // Een geslaagde proef uit een andere bron telt mee.
       if (voorstel.bereikbaar?.imap === true) bestaand.imapBereikbaar = bereikbaarTekst(true);
       if (voorstel.bereikbaar?.smtp === true) bestaand.smtpBereikbaar = bereikbaarTekst(true);
       continue;
     }
-    const regel = (x: ConfiguratieVoorstel["imap"]) => `${x.host}:${x.poort} · ${BEVEILIGINGNAAM[x.beveiliging]}`;
+    const regel = (x: ConfiguratieVoorstel["imap"]) => `${x.host}:${x.poort} · ${beveiligingNaam(x.beveiliging)}`;
     kaarten.push({
       sleutel,
       titel: voorstel.provider ?? domein,
-      bron: BRONNAAM[voorstel.bron],
+      bron: bronNaam(voorstel.bron),
       toelichting: voorstel.toelichting,
       imap: regel(voorstel.imap),
       smtp: regel(voorstel.smtp),
@@ -143,29 +157,33 @@ export function maakKaarten(voorstellen: ConfiguratieVoorstel[], domein: string)
 
 export type StapStatus = "wacht" | "bezig" | "gevonden" | "niets" | "overgeslagen";
 export interface ZoekStap {
+  /** Naam in de huidige interfacetaal; ook de sleutel voor `metVoortgang`. */
   naam: string;
   status: StapStatus;
 }
 
+type StapId = "builtIn" | "ownDomain" | "dns" | "ispdb" | "probe";
+const stapNaam = (id: StapId) => i18next.t(`email:accounts.discovery.steps.${id}`);
+
 /** Stappenindicator, afgeleid uit de uitkomst (de backend meldt geen tussenstappen). */
 export function zoekStappen(uitkomst: ZoekUitkomst, metIspdb: boolean): ZoekStap[] {
-  const namen = ["Ingebouwde lijst", "Eigen domein", "DNS", ...(metIspdb ? ["Thunderbird-database"] : []), "Verbindingsproef"];
-  if (uitkomst.status === "leeg" || uitkomst.status === "wacht") return namen.map((naam) => ({ naam, status: "wacht" }));
-  if (uitkomst.status === "bezig") return namen.map((naam) => ({ naam, status: "bezig" }));
+  const ids: StapId[] = ["builtIn", "ownDomain", "dns", ...(metIspdb ? (["ispdb"] as const) : []), "probe"];
+  if (uitkomst.status === "leeg" || uitkomst.status === "wacht") return ids.map((id) => ({ naam: stapNaam(id), status: "wacht" }));
+  if (uitkomst.status === "bezig") return ids.map((id) => ({ naam: stapNaam(id), status: "bezig" }));
   const voorstellen = uitkomst.status === "klaar" ? uitkomst.voorstellen : [];
   const heeft = (...bronnen: ConfiguratieVoorstel["bron"][]) => voorstellen.some((v) => bronnen.includes(v.bron));
   const proef = voorstellen.some((v) => v.bereikbaar && (v.bereikbaar.imap !== null || v.bereikbaar.smtp !== null));
   const status = (ok: boolean): StapStatus => (uitkomst.status === "fout" ? "niets" : ok ? "gevonden" : "niets");
-  return namen.map((naam) => ({
-    naam,
+  return ids.map((id) => ({
+    naam: stapNaam(id),
     status:
-      naam === "Ingebouwde lijst"
+      id === "builtIn"
         ? status(heeft("voorinstelling"))
-        : naam === "Eigen domein"
+        : id === "ownDomain"
           ? status(heeft("autoconfig"))
-          : naam === "DNS"
+          : id === "dns"
             ? status(heeft("srv", "mx"))
-            : naam === "Thunderbird-database"
+            : id === "ispdb"
               ? status(heeft("ispdb"))
               : proef
                 ? "gevonden"
@@ -182,18 +200,18 @@ export interface ZoekVoortgang {
 /** Vertaalt de stap- en statusnamen van de backend naar de stappen van de indicator. */
 export function voortgangNaarStap(event: ZoekVoortgang): { naam: string; status: StapStatus } | null {
   const stap = event.stap.toLowerCase();
-  const naam = /voorinstel|lijst|preset/.test(stap)
-    ? "Ingebouwde lijst"
+  const id: StapId | null = /voorinstel|lijst|preset/.test(stap)
+    ? "builtIn"
     : /autoconfig|domein/.test(stap)
-      ? "Eigen domein"
+      ? "ownDomain"
       : /srv|mx|dns/.test(stap)
-        ? "DNS"
+        ? "dns"
         : /ispdb|thunderbird/.test(stap)
-          ? "Thunderbird-database"
+          ? "ispdb"
           : /proef|probe|verbinding/.test(stap)
-            ? "Verbindingsproef"
+            ? "probe"
             : null;
-  if (!naam) return null;
+  if (!id) return null;
   const s = event.status.toLowerCase();
   const status: StapStatus = /bezig|gestart|start|loopt/.test(s)
     ? "bezig"
@@ -202,7 +220,7 @@ export function voortgangNaarStap(event: ZoekVoortgang): { naam: string; status:
       : /overgeslagen|uit/.test(s)
         ? "overgeslagen"
         : "niets";
-  return { naam, status };
+  return { naam: stapNaam(id), status };
 }
 
 /** Tijdens het zoeken: echte voortgang uit de backend gaat voor de afgeleide "bezig". */

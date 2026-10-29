@@ -36,6 +36,7 @@ import {
   zorgVoorStijlen,
   type Pakket,
 } from "./ooxml.ts";
+import { paginaTekst } from "./tekst.ts";
 
 export type NootSoort = "voetnoot" | "eindnoot";
 export type NootNotatie = "decimal" | "lowerRoman" | "upperRoman" | "lowerLetter" | "upperLetter" | "chicago";
@@ -164,10 +165,10 @@ export function voegNootIn(bytes: Uint8Array, markering: string, soort: NootSoor
   const s = SOORT[soort];
   return metPakket(bytes, (pakket) => {
     const plek = vindMarkering(pakket, markering);
-    if (!plek) throw new PaginaFout("De cursorplek is niet gevonden.");
+    if (!plek) throw new PaginaFout(paginaTekst("errors.cursorNotFound"));
     const doc = openDocument(pakket);
     if (plek.pad !== doc.pad)
-      throw new PaginaFout(`Een ${soort} kan alleen in de hoofdtekst worden ingevoegd, niet in een kop- of voettekst of een andere noot.`);
+      throw new PaginaFout(paginaTekst(soort === "voetnoot" ? "errors.footnoteBodyOnly" : "errors.endnoteBodyOnly"));
     zorgVoorStijlen(pakket, doc.pad, STIJLEN);
     const pad = notendeel(pakket, doc.pad, s);
     const xml = pakket.lees(pad);
@@ -249,9 +250,9 @@ function prKinderen(s: (typeof SOORT)[NootSoort], w: NootInstellingen) {
 /** Zet notatie, beginnummer, herstart en positie in de instellingen en in elke sectie. */
 export function zetNootInstellingen(bytes: Uint8Array, soort: NootSoort, w: NootInstellingen): Uint8Array {
   const s = SOORT[soort];
-  if (soort === "voetnoot" && (w.positie === "sectEnd" || w.positie === "docEnd")) throw new PaginaFout("Voetnoten staan onderaan de pagina of onder de tekst.");
-  if (soort === "eindnoot" && (w.positie === "pageBottom" || w.positie === "beneathText")) throw new PaginaFout("Eindnoten staan aan het eind van de sectie of het document.");
-  if (soort === "eindnoot" && w.herstart === "eachPage") throw new PaginaFout("Eindnoten kunnen niet per pagina opnieuw beginnen.");
+  if (soort === "voetnoot" && (w.positie === "sectEnd" || w.positie === "docEnd")) throw new PaginaFout(paginaTekst("errors.footnotePosition"));
+  if (soort === "eindnoot" && (w.positie === "pageBottom" || w.positie === "beneathText")) throw new PaginaFout(paginaTekst("errors.endnotePosition"));
+  if (soort === "eindnoot" && w.herstart === "eachPage") throw new PaginaFout(paginaTekst("errors.endnoteRestartPerPage"));
   return metPakket(bytes, (pakket) => {
     const doc = openDocument(pakket);
     // De instellingen houden alleen de verwijzingen naar de scheidingslijnen; de

@@ -11,22 +11,14 @@ import type { YrsInlineFormatDelta } from "@betteroffice/docx/yrs";
 
 export type PlakKeuze = "behouden" | "samenvoegen" | "tekst";
 
-export const PLAKKEUZES: readonly { keuze: PlakKeuze; naam: string; uitleg: string }[] = [
-  {
-    keuze: "behouden",
-    naam: "Bronopmaak behouden",
-    uitleg: "Vet, cursief, kleur, lettertype en grootte zoals gekopieerd",
-  },
-  {
-    keuze: "samenvoegen",
-    naam: "Opmaak samenvoegen",
-    uitleg: "Opmaak van de omringende tekst; vet, cursief en onderstrepen blijven",
-  },
-  {
-    keuze: "tekst",
-    naam: "Alleen tekst behouden",
-    uitleg: "Zonder opmaak, in de opmaak van de omringende tekst",
-  },
+/**
+ * De keuzes in volgorde; `sleutel` verwijst naar `writer:editing.paste.<sleutel>`
+ * (naam) en `<sleutel>Tip` (uitleg), vertaald bij het tekenen.
+ */
+export const PLAKKEUZES: readonly { keuze: PlakKeuze; sleutel: string }[] = [
+  { keuze: "behouden", sleutel: "keepSource" },
+  { keuze: "samenvoegen", sleutel: "merge" },
+  { keuze: "tekst", sleutel: "textOnly" },
 ];
 
 /** Platte tekst uit het klembord, met Windows-regeleinden genormaliseerd. */

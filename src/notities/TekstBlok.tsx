@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import type { Blok } from "./model";
 
 export function TekstBlok({
@@ -16,6 +17,7 @@ export function TekstBlok({
   splits: (positie: number, einde: number) => void;
   verwijder: () => void;
 }) {
+  const { t } = useTranslation("notes");
   const veld = useRef<HTMLTextAreaElement>(null);
   function pasHoogteAan() {
     if (!veld.current) return;
@@ -49,7 +51,9 @@ export function TekstBlok({
           type="checkbox"
           checked={blok.klaar}
           onChange={(e) => wijzig({ klaar: e.target.checked })}
-          aria-label={`Taak afronden: ${blok.tekst || "Naamloos"}`}
+          aria-label={t("block.completeTask", {
+            text: blok.tekst || t("defaults.untitled"),
+          })}
         />
       )}
       {blok.soort === "opsomming" && (
@@ -59,18 +63,21 @@ export function TekstBlok({
       )}
       <textarea
         ref={veld}
+        dir="auto"
         aria-label={
           blok.soort === "taak"
-            ? "Taaktekst"
+            ? t("block.taskText")
             : blok.soort === "kop" || blok.soort === "subkop"
-              ? "Koptekst"
-              : "Notitietekst"
+              ? t("block.headingText")
+              : t("block.noteText")
         }
         value={blok.tekst}
         maxLength={100000}
         rows={1}
         placeholder={
-          blok.soort === "taak" ? "Wat wil je doen?" : "Schrijf iets…"
+          blok.soort === "taak"
+            ? t("block.taskPlaceholder")
+            : t("block.placeholder")
         }
         style={{
           fontWeight: blok.vet ? 700 : undefined,

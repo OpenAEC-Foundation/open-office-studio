@@ -1,0 +1,141 @@
+{
+  "dialogs": {
+    "cancel": "Mégse",
+    "saveAsEllipsis": "Mentés másként…",
+    "officeFile": "Irodai fájl",
+    "officeFiles": "Irodai fájlok",
+    "untitled": "Névtelen",
+    "saveCopy": "Másolat mentése",
+    "saveAs": "Mentés másként",
+    "openFile": "Fájl megnyitása",
+    "replaceFile": {
+      "title": "Fájl cseréje",
+      "message": "A(z) {{path}} fájl már létezik. Lecseréli?"
+    },
+    "unsavedChanges": {
+      "title": "Nem mentett módosítások",
+      "message_one": "Az ablak egyik dokumentuma még nem mentett módosításokat tartalmaz. Ezek elvesznek. Mégis bezárja?",
+      "message_other": "Az ablak {{count}} dokumentuma még nem mentett módosításokat tartalmaz. Ezek elvesznek. Mégis bezárja?"
+    },
+    "fileChanged": {
+      "title": "A fájl módosult",
+      "missing": "A(z) {{name}} már nem található az eredeti helyén. Újra létrehozza a saját verziójával, vagy máshová menti?",
+      "changedExternally": "A(z) {{name}} fájlt a megnyitása óta az Open Office Studión kívül módosították. A felülírás elveti ezeket a módosításokat.",
+      "overwrite": "Felülírás"
+    },
+    "foreignFormat": {
+      "title": "Mentés {{format}} formátumban",
+      "message": "A(z) {{name}} {{format}} formátumban frissül. Ehhez az irodai futtatókörnyezet átalakítja a dokumentumot; a {{format}} által nem támogatott formázás elveszhet.",
+      "hint": "DOCX, XLSX vagy PPTX fájl megtartásához válassza a Mentés másként… lehetőséget.",
+      "update": "Frissítés {{format}} formátumban"
+    },
+    "chooseConverter": "Átalakítóprogram kiválasztása (soffice)",
+    "databaseExport": {
+      "title": "Adatbázis-exportálás mentése",
+      "filter": "Adatbázis-exportálás",
+      "sqliteFilter": "SQLite-munkapéldány",
+      "replaceTitle": "Exportálás cseréje",
+      "replaceMessage": "Ez az exportfájl már létezik. Lecseréli?"
+    }
+  },
+  "errors": {
+    "file": {
+      "invalidBody": "A fájl üres, nagyobb 100 MB-nál, vagy nem bináris adatként lett elküldve.",
+      "emptyOrTooLarge": "A fájl üres vagy nagyobb 100 MB-nál.",
+      "formatInfoMissing": "Hiányzik a formátumra vonatkozó információ.",
+      "formatMissing": "Hiányzik a formátum.",
+      "targetFolderMissing": "Hiányzik a célmappa.",
+      "nameMissing": "Hiányzik a fájlnév.",
+      "nameInvalidChars": "A fájlnév érvénytelen karaktereket tartalmaz.",
+      "unsupportedFormat": "Nem támogatott fájlformátum.",
+      "extensionMismatch": "A választott kiterjesztés nem illik a dokumentumhoz.",
+      "alreadyOpenedOrOtherWindow": "Ez a fájl már meg van nyitva, vagy nem ennek az ablaknak szól.",
+      "notThisWindow": "Ez a fájl nem ehhez az ablakhoz tartozik.",
+      "notLinked": "Ez a fájl már nincs ehhez a laphoz kapcsolva.",
+      "tokenMissing": "Hiányzik a token.",
+      "openInOtherTab": "A(z) {{name}} egy másik lapon meg van nyitva. Először zárja be, vagy válasszon másik nevet.",
+      "readOnly": "Nincs írási jogosultsága ebben a mappában, vagy a fájl csak olvasható ({{path}}). Válasszon másik helyet.",
+      "notInRecentList": "Ez a fájl már nem szerepel a listában."
+    },
+    "preferences": {
+      "tooLarge": "A beállítások mérete meghaladja a 64 kB-ot.",
+      "invalid": "A beállítások nem érvényes JSON-objektumot alkotnak.",
+      "configDirUnavailable": "Az alkalmazás konfigurációs mappája nem érhető el.",
+      "pathInvalid": "Érvénytelen elérési út a beállításokhoz."
+    },
+    "font": {
+      "notInstalled": "A(z) {{family}} betűtípus nincs telepítve ezen a számítógépen.",
+      "notFound": "A betűtípus nem található.",
+      "fileTooLarge": "Ez a betűtípusfájl túl nagy.",
+      "inCollection": "Ez a betűtípus egy gyűjtemény (.ttc) része, ezért önállóan nem használható.",
+      "unreadable": "A betűtípusfájlt nem sikerült beolvasni.",
+      "nameInvalid": "Érvénytelen betűtípusnév."
+    },
+    "recovery": {
+      "keyInvalid": "Érvénytelen helyreállítási kulcs.",
+      "spaceFull": "A helyreállítási másolatok tárhelye (512 MB) megtelt. Mentse a dokumentumait.",
+      "sessionMissing": "Hiányzik a munkamenet.",
+      "keyMissing": "Hiányzik a kulcs.",
+      "dataInvalid": "Érvénytelen helyreállítási adatok.",
+      "unknownDocumentType": "Ismeretlen dokumentumtípus.",
+      "sessionNotThisWindow": "Ez a helyreállítási munkamenet nem ehhez az ablakhoz tartozik.",
+      "sessionOtherWindow": "Ez a helyreállítási munkamenet egy másik ablakhoz tartozik.",
+      "sessionStillRunning": "Ez a munkamenet még fut."
+    },
+    "window": {
+      "closed": "Ez az ablak be lett zárva.",
+      "transferEmptyOrTooLarge": "Az átadás üres vagy túl nagy.",
+      "mainWindowUnavailable": "A főablak nem érhető el.",
+      "openFailed": "Az ablakot nem sikerült megnyitni: {{error}}",
+      "transferExpired": "Ez az átadás lejárt, vagy már átvették.",
+      "transferAlreadyTaken": "Ezt az átadást már átvették.",
+      "transferUnknown": "Ez az átadás ismeretlen."
+    },
+    "conversion": {
+      "unknownModule": "Ismeretlen irodai modul.",
+      "sourceFormatMismatch": "A forrásformátum nem ehhez a modulhoz tartozik.",
+      "outputFormatUnsupported": "Ez a kimeneti formátum nem támogatott.",
+      "outputFormatDirect": "Ez a kimeneti formátum közvetlenül az alkalmazásban készül, nem átalakítással.",
+      "invalidOptions": "Érvénytelen átalakítási beállítások.",
+      "chooseSoffice": "Válassza ki a soffice programot (Windows: soffice.exe) az irodai futtatókörnyezet program mappájából.",
+      "chosenFileMissing": "A kiválasztott fájl nem létezik.",
+      "chosenPathNotFile": "A kiválasztott elérési út nem fájl.",
+      "chosenFileNotExecutable": "A kiválasztott fájl nem futtatható.",
+      "appDataDirUnavailable": "Az alkalmazás adatmappája nem érhető el.",
+      "startFailed": "Az átalakítást nem sikerült elindítani: {{error}}",
+      "failed": "Az átalakítás sikertelen ({{reason}}). Az eredeti fájl megmaradt.",
+      "exitCode": "kilépési kód: {{code}}",
+      "processAborted": "a folyamat megszakadt",
+      "timeout": "Az átalakítás túllépte az időkorlátot, ezért leállt. Az eredeti fájl megmaradt.",
+      "profilePathInvalid": "Az ideiglenes profil elérési útja érvénytelen.",
+      "inputSize": "Válasszon egy legfeljebb 100 MB-os, nem üres fájlt.",
+      "runtimeMissing": "Ehhez a formátumhoz irodai futtatókörnyezet (LibreOffice) szükséges, de nem található: telepítse, válassza ki a programot a Mentés másként párbeszédpanelen, vagy állítsa be az OPENAEC_CONVERSIE_PROGRAMMA változót. A DOCX, XLSX és PPTX fájlok közvetlenül működnek.",
+      "notConverted": "Ezt a fájlt nem sikerült átalakítani. Lehet, hogy sérült vagy védett, vagy a helyi futtatókörnyezetből hiányzik a formátumszűrő.",
+      "multipleOutputs": "Az átalakítás egynél több fájlt hozott létre.",
+      "noUsableOutput": "Az átalakítás nem hozott létre használható, legfeljebb 100 MB-os fájlt."
+    },
+    "databaseExport": {
+      "emptyOrTooLarge": "Az exportálás üres vagy nagyobb 100 MB-nál.",
+      "emptyInvalidOrTooLarge": "Az exportálás üres, érvénytelen vagy nagyobb 100 MB-nál.",
+      "nameMissing": "Hiányzik a fájlnév.",
+      "nameInvalid": "Érvénytelen fájlnév.",
+      "notSqlite": "Ez nem SQLite-munkapéldány.",
+      "typeNotAllowed": "Csak CSV-, forrás-, jelentés- és SQLite-munkapéldány-exportálás engedélyezett. Az Access-adatbázisok soha nem íródnak felül.",
+      "textNotUtf8": "A szöveges exportálásnak érvényes UTF-8 szövegnek kell lennie.",
+      "sendAsBinary": "Az exportálást legfeljebb 100 MB-os bináris adatként küldje el.",
+      "extensionMismatch": "A választott kiterjesztés nem illik az exportáláshoz."
+    }
+  },
+  "launcher": {
+    "officeStudio": {
+      "genericName": "Irodai programcsomag",
+      "comment": "Helyi OpenAEC irodai környezet",
+      "keywords": "szövegszerkesztő;táblázatkezelő;táblázat;bemutató;prezentáció;adatbázis;e-mail;iroda;office;"
+    },
+    "databaseStudio": {
+      "genericName": "Adatbázis-megjelenítő",
+      "comment": "Régi MDB- és ACCDB-adatbázisok megnyitása helyben",
+      "keywords": "adatbázis;tábla;lekérdezés;database;access;"
+    }
+  }
+}

@@ -1,0 +1,474 @@
+{
+  "start": {
+    "backToWorkspace": "Tillbaka till arbetsytan",
+    "workspace": "ARBETSYTA",
+    "home": "Start",
+    "saveTitle": "Spara · Ctrl+S",
+    "saveAs": "Spara som",
+    "saveAsTitle": "Spara som · F12 eller Ctrl+Shift+S",
+    "print": "Skriv ut",
+    "printTitle": "Förhandsgranska och skriv ut · Ctrl+P",
+    "info": "Info",
+    "infoTitle": "Dokumentegenskaper, statistik och granska dokument",
+    "sendAsAttachment": "Skicka som bifogad fil",
+    "sendAsAttachmentTitle": "Bifoga det aktuella dokumentet i ett nytt e-postmeddelande",
+    "email": "E-post",
+    "emailUnread_one": "E-post, {{count}} oläst",
+    "emailUnread_other": "E-post, {{count}} olästa",
+    "newFile": "NY FIL",
+    "databaseTitle": "Database Studio · Access-databas som redigerbar arbetskopia",
+    "databaseSubtitle": "Arbetskopia · redigering, frågor, VBA",
+    "settingsTitle": "Inställningar · Ctrl+,",
+    "shortcutsTitle": "Kortkommandon · F1",
+    "tagline": "Ditt lokala kontor",
+    "titleFile": "Arkiv",
+    "titleWorkspace": "Din arbetsyta.",
+    "intro": "Skriv, räkna, presentera och fånga idéer.",
+    "addNotesBackup": "Lägg till säkerhetskopia av anteckningar",
+    "openDatabase": "Öppna databas",
+    "openFile": "Öppna fil",
+    "openShortcut": "Ctrl O",
+    "newFileTitle": "Ny fil",
+    "newFileHint": "Välj ditt verktyg och börja med en tom fil",
+    "notesHeading": "En plats för dina idéer.",
+    "notesText": "Anteckningsböcker, avsnitt och sidor. Sparas automatiskt lokalt.",
+    "openNotes": "Öppna Anteckningar",
+    "emailText": "Din egen e-post via IMAP och SMTP. Bifogade filer öppnas direkt i Text, Kalkylblad, Presentation eller Databas.",
+    "unread_one": "{{count}} oläst",
+    "unread_other": "{{count}} olästa",
+    "openEmail": "Öppna E-post",
+    "examplesTitle": "Upptäck vad du kan skapa",
+    "examplesHint": "Exempelfiler",
+    "existingTitle": "Befintlig fil",
+    "browse": "Bläddra på den här datorn",
+    "browseNotes": "Lägg till en säkerhetskopia av OpenAEC-anteckningar.",
+    "browseDatabase": "Öppna en MDB- eller ACCDB-databas eller en SQLite-arbetskopia.",
+    "browseDocuments": "Öppna ett dokument, ett kalkylblad eller en presentation.",
+    "formatNotes": "ANTECKNINGAR",
+    "filesStayLocal": "Dina filer stannar på din dator.",
+    "aboutVersion": "Om den här versionen",
+    "aboutText": "DOCX, XLSX och PPTX fungerar direkt. Med ett konfigurerat konverteringsprogram kan skrivbordsversionen även konvertera ODF och äldre format; formateringen kan avvika. Database Studio gör om en MDB- eller ACCDB-fil till en redigerbar SQLite-arbetskopia med tabeller, frågor, formulär, rapporter och VBA; originalet förblir oförändrat. Den fristående appen kan installeras som Open Database Studio.",
+    "modules": {
+      "docx": {
+        "new": "Tomt dokument",
+        "example": "Designpromemoria",
+        "exampleText": "Text, format och en tabell"
+      },
+      "xlsx": {
+        "new": "Tomt kalkylblad",
+        "example": "Materialöversikt",
+        "exampleText": "Material, formler och summor"
+      },
+      "pptx": {
+        "new": "Tom presentation",
+        "example": "Designvision",
+        "exampleText": "Bilder, former och anteckningar"
+      }
+    }
+  },
+  "recent": {
+    "title": "Senaste",
+    "hintDesktop": "Nyligen öppnade och sparade filer",
+    "hintBrowser": "Den här webbläsaren kommer bara ihåg namn; välj filen igen",
+    "clear": "Rensa listan",
+    "clearTitle": "Rensa listan; fästa filer finns kvar",
+    "missing": "{{name}} finns inte längre i {{folder}}. Ta bort den från listan med ✕ eller öppna den via Bläddra.",
+    "missingOriginalFolder": "{{name}} finns inte längre i den ursprungliga mappen. Ta bort den från listan med ✕ eller öppna den via Bläddra.",
+    "notFound": "Hittades inte",
+    "notFoundIn": "Hittades inte · {{location}}",
+    "openFrom": "{{folder}} · öppna",
+    "chooseFile": "Välj fil",
+    "nameOnly": "Bara namnet är känt",
+    "pin": "Fäst {{name}}",
+    "unpin": "Lossa {{name}}",
+    "pinTitle": "Fäst överst",
+    "unpinTitle": "Lossa",
+    "remove": "Ta bort {{name}} från listan",
+    "removeTitle": "Ta bort från listan (filen finns kvar)",
+    "today": "I dag {{time}}",
+    "yesterday": "I går {{time}}",
+    "todayInline": "i dag {{time}}",
+    "yesterdayInline": "i går {{time}}"
+  },
+  "recovery": {
+    "title": "Återställ dokument",
+    "explanation": "Förra gången stängdes Open Office Studio inte korrekt. En återställningskopia av de här dokumenten har sparats. Återställning öppnar en ny, osparad flik; originalfilen förblir oförändrad.",
+    "copyFrom": "{{module}} · återställningskopia från {{date}}",
+    "restore": "Återställ",
+    "saveAs": "Spara som…",
+    "discard": "Släng",
+    "discardLabel": "Släng återställningskopian av {{name}}",
+    "later": "Bestäm senare",
+    "laterTitle": "Kopiorna sparas till nästa start",
+    "restoredFrom": "Återställd från återställningskopian från {{date}}. Originalfilen har inte ändrats; spara det här dokumentet för att behålla det.",
+    "restoreFailed": "Det gick inte att återställa {{name}}: {{error}}",
+    "copyFailed": "Automatisk återställning kunde inte spara en kopia: {{error}}"
+  },
+  "leave": {
+    "title": "Osparade ändringar",
+    "askSave": "Vill du spara ändringarna i <strong>{{name}}</strong> innan du stänger det?",
+    "unsaved": "<strong>{{name}}</strong> innehåller ändringar som inte har sparats ännu. Spara filen först om du vill behålla dem.",
+    "others_one": "Därefter följer ytterligare {{count}} dokument med osparade ändringar.",
+    "others_other": "Därefter följer ytterligare {{count}} dokument med osparade ändringar.",
+    "dontSave": "Spara inte",
+    "discard": "Ignorera ändringar"
+  },
+  "saveAs": {
+    "title": "Spara som",
+    "fileName": "Filnamn",
+    "browserInfo": "I webbläsaren skapar appen själv Markdown, CSV, HTML, text och PDF, samt PNG för kalkylblad och presentationer. Format märkta ”bara i skrivbordsappen” kräver skrivbordsversionen med en körmiljö för kontorsprogram.",
+    "runtimeSearching": "Söker efter körmiljö för kontorsprogram…",
+    "runtimeFound": "Körmiljö för kontorsprogram: {{version}}",
+    "runtimeDetails": "({{source}}, {{profile}})",
+    "sourceEnvironment": "från OPENAEC_CONVERSIE_PROGRAMMA",
+    "sourceSetting": "valt av dig",
+    "sourceAutomatic": "identifierades automatiskt",
+    "profileSafe": "säker profil: makron av",
+    "profileOwn": "egen profil",
+    "runtimeMissing": "Ingen körmiljö för kontorsprogram (LibreOffice) hittades. Format via körmiljön är inte tillgängliga.",
+    "chooseConverter": "Välj konverteringsprogram",
+    "format": "Format",
+    "groups": {
+      "own": "Eget format",
+      "openDocument": "OpenDocument",
+      "legacyOffice": "Äldre Office-format",
+      "templates": "Mallar",
+      "macro": "Makroaktiverade",
+      "webText": "Webb och text",
+      "pdfImage": "PDF och bild"
+    },
+    "routes": {
+      "inApp": "i appen",
+      "runtime": "via körmiljö för kontorsprogram",
+      "print": "via Skriv ut"
+    },
+    "runtimeMissingShort": "körmiljö saknas",
+    "desktopOnly": "bara i skrivbordsappen",
+    "separator": "Avgränsare",
+    "separatorSemicolon": "Semikolon ; (svenska)",
+    "separatorComma": "Komma ,",
+    "separatorTab": "Tabb",
+    "separatorPipe": "Lodstreck |",
+    "encoding": "Kodning",
+    "encodingUtf8BomExcel": "UTF-8 med BOM (Excel)",
+    "encodingUtf8BomNotepad": "UTF-8 med BOM (Anteckningar, Excel)",
+    "csvInfo": "Bara det valda bladet, med värden i stället för formler. Text som börjar med =, +, - eller @ får en apostrof, så att ett kalkylprogram inte kör den som en formel.",
+    "sheet": "Blad",
+    "activeSheet": "{{name}} (aktivt)",
+    "protect": "Skydda med ett lösenord för att öppna",
+    "password": "Lösenord",
+    "repeatPassword": "Upprepa lösenordet",
+    "encryptionInfo": "Kryptering enligt ECMA-376 (AES-256), kan öppnas i Word, Excel, PowerPoint och LibreOffice. Lösenordet sparas inte; om du tappar bort det kan filen inte längre öppnas.",
+    "noEncryptionInfo": "Detta är inte skriv- eller bladskydd: utan bock sparas filen okrypterad.",
+    "passwordMissing": "Välj ett lösenord.",
+    "passwordMismatch": "Lösenorden stämmer inte överens.",
+    "passwordTooLong": "Högst {{max}} tecken.",
+    "slide": "Bild",
+    "slideNumber": "Bild {{number}}",
+    "currentSlide": "Bild {{number}} (aktuell)",
+    "pdfVariant": "PDF-variant",
+    "pdfPlain": "Vanlig PDF",
+    "pdfA2b": "PDF/A-2b (arkiv)",
+    "slides": "Bilder",
+    "pages": "Sidor",
+    "rangePlaceholder": "alla, eller t.ex. 1-3,5",
+    "bookmarks": "Rubriker som bokmärken",
+    "printRoute": "PDF utan körmiljö för kontorsprogram går via Skriv ut: välj skrivaren <strong>Spara som PDF</strong> i utskriftsfönstret (Windows: ”Microsoft Print to PDF”). Formateringen följer visningen i redigeraren.",
+    "untitled": "Namnlös",
+    "copyInfo": "Det här är en kopia i ett annat format. Dokumentet förblir markerat som ändrat tills du sparar det som .{{ext}}.",
+    "print": "Skriv ut…",
+    "formats": {
+      "docx": {
+        "docx": {
+          "name": "Word-dokument",
+          "keeps": "redigerbart"
+        },
+        "odt": {
+          "name": "OpenDocument-text",
+          "keeps": "redigerbart; formateringen kan avvika"
+        },
+        "fodt": {
+          "name": "OpenDocument-text (platt XML)",
+          "keeps": "redigerbart; formateringen kan avvika"
+        },
+        "doc": {
+          "name": "Word 97–2003-dokument",
+          "keeps": "redigerbart; formateringen kan avvika"
+        },
+        "dotx": {
+          "name": "Word-mall",
+          "keeps": "redigerbart; formateringen kan avvika"
+        },
+        "dot": {
+          "name": "Word 97–2003-mall",
+          "keeps": "redigerbart; formateringen kan avvika"
+        },
+        "ott": {
+          "name": "OpenDocument-textmall",
+          "keeps": "redigerbart; formateringen kan avvika"
+        },
+        "docm": {
+          "name": "Word-dokument med makron",
+          "keeps": "bara för en öppnad makrofil: VBA-projektet behålls oförändrat, makron körs inte"
+        },
+        "rtf": {
+          "name": "Rich Text Format",
+          "keeps": "redigerbart; formateringen kan avvika"
+        },
+        "txt": {
+          "name": "Oformaterad text (UTF-8)",
+          "keeps": "bara text; formatering, tabeller och bilder försvinner"
+        },
+        "html": {
+          "name": "Webbsida (HTML)",
+          "keeps": "formateringen kan avvika; bilder inbäddade"
+        },
+        "xhtml": {
+          "name": "XHTML-webbsida",
+          "keeps": "formateringen kan avvika"
+        },
+        "epub": {
+          "name": "EPUB-e-bok",
+          "keeps": "bara läsning; sidlayouten försvinner"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "text och struktur; sidlayout, bilder och revisioner försvinner"
+        },
+        "pdf": {
+          "name": "PDF-dokument",
+          "keeps": "visning som i förhandsgranskningen; sökbar text"
+        },
+        "png": {
+          "name": "PNG-bild (första sidan)",
+          "keeps": "bara visning; bara första sidan"
+        }
+      },
+      "xlsx": {
+        "xlsx": {
+          "name": "Excel-arbetsbok",
+          "keeps": "redigerbar"
+        },
+        "ods": {
+          "name": "OpenDocument-kalkylblad",
+          "keeps": "redigerbart; formateringen kan avvika"
+        },
+        "fods": {
+          "name": "OpenDocument-kalkylblad (platt XML)",
+          "keeps": "redigerbart; formateringen kan avvika"
+        },
+        "xls": {
+          "name": "Excel 97–2003-arbetsbok",
+          "keeps": "redigerbar; formateringen kan avvika"
+        },
+        "xltx": {
+          "name": "Excel-mall",
+          "keeps": "redigerbar; formateringen kan avvika"
+        },
+        "xlt": {
+          "name": "Excel 97–2003-mall",
+          "keeps": "redigerbar; formateringen kan avvika"
+        },
+        "ots": {
+          "name": "OpenDocument-kalkylbladsmall",
+          "keeps": "redigerbar; formateringen kan avvika"
+        },
+        "xlsm": {
+          "name": "Excel-arbetsbok med makron",
+          "keeps": "bara för en öppnad makrofil: VBA-projektet behålls oförändrat, makron körs inte"
+        },
+        "csv": {
+          "name": "CSV (avgränsade värden)",
+          "keeps": "bara ett blad; värden utan formler och formatering"
+        },
+        "tsv": {
+          "name": "Tabbavgränsad text (TSV)",
+          "keeps": "bara ett blad; värden utan formler och formatering"
+        },
+        "html": {
+          "name": "Webbsida (HTML)",
+          "keeps": "bara visning; formler försvinner"
+        },
+        "dif": {
+          "name": "Data Interchange Format (DIF)",
+          "keeps": "bara första bladet; värden utan formler och formatering"
+        },
+        "slk": {
+          "name": "SYLK",
+          "keeps": "bara första bladet; formler behålls, formatering till största delen inte"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "bara visning av värden; formler och formatering försvinner"
+        },
+        "pdf": {
+          "name": "PDF-dokument",
+          "keeps": "visning som i förhandsgranskningen; sökbar text"
+        },
+        "png": {
+          "name": "PNG-bild (blad)",
+          "keeps": "bara visning; använt område i ett blad"
+        }
+      },
+      "pptx": {
+        "pptx": {
+          "name": "PowerPoint-presentation",
+          "keeps": "redigerbar"
+        },
+        "ppsx": {
+          "name": "PowerPoint-bildspel",
+          "keeps": "redigerbart; öppnas som bildspel; formateringen kan avvika"
+        },
+        "odp": {
+          "name": "OpenDocument-presentation",
+          "keeps": "redigerbar; formateringen kan avvika"
+        },
+        "fodp": {
+          "name": "OpenDocument-presentation (platt XML)",
+          "keeps": "redigerbar; formateringen kan avvika"
+        },
+        "ppt": {
+          "name": "PowerPoint 97–2003-presentation",
+          "keeps": "redigerbar; formateringen kan avvika"
+        },
+        "pps": {
+          "name": "PowerPoint 97–2003-bildspel",
+          "keeps": "redigerbart; formateringen kan avvika"
+        },
+        "potx": {
+          "name": "PowerPoint-mall",
+          "keeps": "redigerbar; formateringen kan avvika"
+        },
+        "pot": {
+          "name": "PowerPoint 97–2003-mall",
+          "keeps": "redigerbar; formateringen kan avvika"
+        },
+        "otp": {
+          "name": "OpenDocument-presentationsmall",
+          "keeps": "redigerbar; formateringen kan avvika"
+        },
+        "pptm": {
+          "name": "PowerPoint-presentation med makron",
+          "keeps": "bara för en öppnad makrofil: VBA-projektet behålls oförändrat, makron körs inte"
+        },
+        "html": {
+          "name": "Webbsida (HTML)",
+          "keeps": "bara text per bild; layout och bilder försvinner"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "bara text per bild; layout och bilder försvinner"
+        },
+        "pdf": {
+          "name": "PDF-dokument",
+          "keeps": "visning som i förhandsgranskningen; sökbar text"
+        },
+        "png": {
+          "name": "PNG-bild (aktuell bild)",
+          "keeps": "bara visning; en bild"
+        }
+      }
+    }
+  },
+  "saveResult": {
+    "saved": "Sparad: {{path}}",
+    "exported": "Exporterad: {{path}}. Spara även din redigerbara fil för att behålla ändringarna.",
+    "cancelled": "Sparandet avbröts.",
+    "chooseLocation": "Välj ett namn och en plats att spara på.",
+    "download": "Nedladdning begärd. Kontrollera filen bland dina nedladdningar.",
+    "tooLarge": "Filen är tom eller större än 100 MB.",
+    "needsDesktop": "Det här formatet kräver skrivbordsversionen med en körmiljö för kontorsprogram (LibreOffice)."
+  },
+  "printPreview": {
+    "title": "Förhandsgranskning – {{title}}",
+    "notReady": "Du kan skriva ut när dokumentet har öppnats helt.",
+    "preparingPages": "Förbereder sidor…",
+    "preparingPrint": "Förbereder utskrift…",
+    "preparingPrintProgress": "Förbereder utskrift… {{done}} av {{total}}",
+    "printHint": "Välj skrivare, dubbelsidig utskrift och eventuellt ”Spara som PDF” i utskriftsfönstret.",
+    "makingPdf": "Skapar PDF…",
+    "makingPdfProgress": "Skapar PDF… {{done}} av {{total}}",
+    "pdfSaved": "PDF sparad: {{path}}",
+    "pdfDownloading": "PDF-filen {{name}} laddas ned.",
+    "layoutSaved": "Utskriftsformatet har lagrats i arbetsboken. Spara dokumentet för att behålla det.",
+    "saveAsPdf": "Spara som PDF",
+    "print": "Skriv ut",
+    "keyboardHelp": "Page Up och Page Down bläddrar mellan sidorna; Ctrl+P skriver ut.",
+    "settings": "Utskriftsinställningar",
+    "pages": "Sidor",
+    "rangePlaceholder": "alla, eller t.ex. 1-3, 5",
+    "copies": "Exemplar",
+    "collate": "Sortera (1, 2, 3 – 1, 2, 3)",
+    "systemDialogHint": "Skrivare, dubbelsidig utskrift och färg väljer du sedan i systemets utskriftsfönster.",
+    "printAs": "Skriv ut som",
+    "slides": "Bilder",
+    "handouts": "Åhörarkopior",
+    "notesPages": "Anteckningssidor",
+    "slidesPerPage": "Bilder per sida",
+    "withLines": "{{number}} (med linjer)",
+    "paper": "Papper",
+    "slideSize": "Bildstorlek",
+    "frameSlides": "Ram runt bilder",
+    "report": "Rapport",
+    "saveLayout": "Lagra utskriftsformat i arbetsboken",
+    "pdf": "PDF",
+    "imageQuality": "Bildkvalitet",
+    "qualitySmall": "Liten fil (150 dpi)",
+    "qualityStandard": "Standard (200 dpi)",
+    "qualityHigh": "Hög, förlustfri (300 dpi)",
+    "pdfHint": "Texten förblir markerbar och sökbar; PDF-filen följer exakt den här förhandsgranskningen.",
+    "toolbar": "Bläddra och zooma",
+    "previousPage": "Föregående sida",
+    "nextPage": "Nästa sida",
+    "pageOf": "Sida <input/> av {{total}}",
+    "pageNumber": "Sidnummer",
+    "zoomOut": "Zooma ut",
+    "zoom": "Zoom",
+    "zoomIn": "Zooma in",
+    "wholePage": "Hela sidan",
+    "pageWidth": "Sidbredd",
+    "preview": "Sidförhandsvisning",
+    "pageImage": "Förhandsvisning av sida {{number}}",
+    "drawingPage": "Ritar sidan…",
+    "orientation": "Orientering",
+    "portrait": "Stående",
+    "landscape": "Liggande",
+    "activeSheet": "Aktivt blad",
+    "wholeWorkbook": "Hela arbetsboken",
+    "selection": "Markering ({{range}})",
+    "selectionNone": "Markering (inget markerat)",
+    "ignorePrintArea": "Ignorera utskriftsområde",
+    "pageSetup": "Utskriftsformat",
+    "sheet": "Blad",
+    "scale": "Skalning",
+    "percentage": "Procent",
+    "fitPage": "Anpassa till en sida",
+    "fitWidth": "Anpassa till sidbredd",
+    "pagesWide": "Sidor brett",
+    "pagesTall": "högt (0 = automatiskt)",
+    "marginTop": "Överkant (cm)",
+    "marginBottom": "Nederkant",
+    "marginLeft": "Vänster",
+    "marginRight": "Höger",
+    "printArea": "Utskriftsområde",
+    "printAreaPlaceholder": "använt område, eller t.ex. A1:H40",
+    "repeatRows": "Rader att upprepa",
+    "repeatRowsPlaceholder": "t.ex. 1:2",
+    "repeatColumns": "Kolumner att upprepa",
+    "repeatColumnsPlaceholder": "t.ex. A:B",
+    "gridlines": "Skriv ut stödlinjer",
+    "headings": "Skriv ut rad- och kolumnrubriker",
+    "centerHorizontally": "Centrera vågrätt",
+    "pageOrder": "Sidordning",
+    "downThenOver": "Nedåt, sedan över",
+    "overThenDown": "Över, sedan nedåt",
+    "header": "Sidhuvud",
+    "footer": "Sidfot",
+    "sectionLeft": "vänster",
+    "sectionCenter": "mitten",
+    "sectionRight": "höger",
+    "sectionLabel": "{{area}} {{section}}",
+    "fields": "Fält: {{fields}}.",
+    "pageBreakPreview": "Förhandsgranska sidbrytningar…"
+  }
+}

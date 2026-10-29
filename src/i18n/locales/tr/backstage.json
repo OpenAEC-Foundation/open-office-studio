@@ -1,0 +1,474 @@
+{
+  "start": {
+    "backToWorkspace": "Çalışma alanına dön",
+    "workspace": "ÇALIŞMA ALANI",
+    "home": "Giriş",
+    "saveTitle": "Kaydet · Ctrl+S",
+    "saveAs": "Farklı Kaydet",
+    "saveAsTitle": "Farklı Kaydet · F12 veya Ctrl+Shift+S",
+    "print": "Yazdır",
+    "printTitle": "Baskı önizleme ve yazdırma · Ctrl+P",
+    "info": "Bilgi",
+    "infoTitle": "Belge özellikleri, istatistikler ve belgeyi denetleme",
+    "sendAsAttachment": "Ek olarak gönder",
+    "sendAsAttachmentTitle": "Geçerli belgeyi yeni bir e-posta iletisine ek olarak ekle",
+    "email": "E-posta",
+    "emailUnread_one": "E-posta, {{count}} okunmamış",
+    "emailUnread_other": "E-posta, {{count}} okunmamış",
+    "newFile": "YENİ DOSYA",
+    "databaseTitle": "Database Studio · Düzenlenebilir çalışma kopyası olarak Access veritabanı",
+    "databaseSubtitle": "Çalışma kopyası · düzenleme, sorgular, VBA",
+    "settingsTitle": "Ayarlar · Ctrl+,",
+    "shortcutsTitle": "Klavye kısayolları · F1",
+    "tagline": "Yerel ofisiniz",
+    "titleFile": "Dosya",
+    "titleWorkspace": "Çalışma alanınız.",
+    "intro": "Yazın, hesaplayın, sunun ve fikirlerinizi kaydedin.",
+    "addNotesBackup": "Not yedeği ekle",
+    "openDatabase": "Veritabanı aç",
+    "openFile": "Dosya aç",
+    "openShortcut": "Ctrl O",
+    "newFileTitle": "Yeni dosya",
+    "newFileHint": "Aracınızı seçin, boş bir dosyayla başlayın",
+    "notesHeading": "Fikirleriniz için bir yer.",
+    "notesText": "Not defterleri, bölümler ve sayfalar. Otomatik olarak yerel kaydedilir.",
+    "openNotes": "Notlar'ı aç",
+    "emailText": "IMAP ve SMTP ile kendi e-postanız. Ekler doğrudan Metin, Hesap tablosu, Sunu veya Veritabanı'nda açılır.",
+    "unread_one": "{{count}} okunmamış",
+    "unread_other": "{{count}} okunmamış",
+    "openEmail": "E-posta'yı aç",
+    "examplesTitle": "Neler oluşturabileceğinizi keşfedin",
+    "examplesHint": "Örnek dosyalar",
+    "existingTitle": "Mevcut dosya",
+    "browse": "Bu bilgisayara göz at",
+    "browseNotes": "Bir OpenAEC not yedeği ekleyin.",
+    "browseDatabase": "Bir MDB veya ACCDB veritabanı ya da SQLite çalışma kopyası açın.",
+    "browseDocuments": "Bir belge, hesap tablosu veya sunu açın.",
+    "formatNotes": "NOTLAR",
+    "filesStayLocal": "Dosyalarınız kendi bilgisayarınızda kalır.",
+    "aboutVersion": "Bu sürüm hakkında",
+    "aboutText": "DOCX, XLSX ve PPTX doğrudan çalışır. Masaüstü sürümü, ayarlanmış bir dönüştürme programıyla ODF ve daha eski biçimleri de dönüştürebilir. Bu durumda biçimlendirme farklı olabilir. Database Studio, bir MDB veya ACCDB dosyasını tablolar, sorgular, formlar, raporlar ve VBA içeren düzenlenebilir bir SQLite çalışma kopyasına dönüştürür; özgün dosya değişmeden kalır. Ayrı uygulama Open Database Studio olarak yüklenebilir.",
+    "modules": {
+      "docx": {
+        "new": "Boş belge",
+        "example": "Tasarım notu",
+        "exampleText": "Metin, stiller ve bir tablo"
+      },
+      "xlsx": {
+        "new": "Boş hesap tablosu",
+        "example": "Malzeme listesi",
+        "exampleText": "Malzemeler, formüller ve toplamlar"
+      },
+      "pptx": {
+        "new": "Boş sunu",
+        "example": "Tasarım vizyonu",
+        "exampleText": "Slaytlar, şekiller ve notlar"
+      }
+    }
+  },
+  "recent": {
+    "title": "Son kullanılanlar",
+    "hintDesktop": "Son açılan ve kaydedilen dosyalar",
+    "hintBrowser": "Bu tarayıcı yalnızca adları hatırlar; dosyayı yeniden seçin",
+    "clear": "Listeyi temizle",
+    "clearTitle": "Listeyi temizle; sabitlenmiş dosyalar kalır",
+    "missing": "{{name}} artık {{folder}} içinde bulunamıyor. ✕ ile listeden kaldırın veya Göz at ile açın.",
+    "missingOriginalFolder": "{{name}} artık özgün klasörde bulunamıyor. ✕ ile listeden kaldırın veya Göz at ile açın.",
+    "notFound": "Bulunamadı",
+    "notFoundIn": "Bulunamadı · {{location}}",
+    "openFrom": "{{folder}} · aç",
+    "chooseFile": "Dosya seç",
+    "nameOnly": "Yalnızca ad biliniyor",
+    "pin": "{{name}} öğesini sabitle",
+    "unpin": "{{name}} öğesinin sabitlemesini kaldır",
+    "pinTitle": "En üste sabitle",
+    "unpinTitle": "Sabitlemeyi kaldır",
+    "remove": "{{name}} öğesini listeden kaldır",
+    "removeTitle": "Listeden kaldır (dosya silinmez)",
+    "today": "Bugün {{time}}",
+    "yesterday": "Dün {{time}}",
+    "todayInline": "bugün {{time}}",
+    "yesterdayInline": "dün {{time}}"
+  },
+  "recovery": {
+    "title": "Belgeleri kurtar",
+    "explanation": "Open Office Studio son seferde düzgün kapatılmadı. Bu belgelerin kurtarma kopyası saklandı. Kurtarma, kaydedilmemiş yeni bir sekme açar; özgün dosya değişmeden kalır.",
+    "copyFrom": "{{module}} · {{date}} tarihli kurtarma kopyası",
+    "restore": "Kurtar",
+    "saveAs": "Farklı Kaydet…",
+    "discard": "At",
+    "discardLabel": "{{name}} kurtarma kopyasını at",
+    "later": "Daha sonra karar ver",
+    "laterTitle": "Kopyalar bir sonraki başlatmaya kadar saklanır",
+    "restoredFrom": "{{date}} tarihli kurtarma kopyasından kurtarıldı. Özgün dosya değiştirilmedi; korumak için bu belgeyi kaydedin.",
+    "restoreFailed": "{{name}} kurtarılamadı: {{error}}",
+    "copyFailed": "Otomatik kurtarma bir kopya saklayamadı: {{error}}"
+  },
+  "leave": {
+    "title": "Kaydedilmemiş değişiklikler",
+    "askSave": "Kapatmadan önce <strong>{{name}}</strong> içindeki değişiklikleri kaydetmek istiyor musunuz?",
+    "unsaved": "<strong>{{name}}</strong> henüz kaydedilmemiş değişiklikler içeriyor. Bunları korumak istiyorsanız önce dosyayı kaydedin.",
+    "others_one": "Ardından kaydedilmemiş değişiklikleri olan {{count}} belge daha var.",
+    "others_other": "Ardından kaydedilmemiş değişiklikleri olan {{count}} belge daha var.",
+    "dontSave": "Kaydetme",
+    "discard": "Değişiklikleri at"
+  },
+  "saveAs": {
+    "title": "Farklı Kaydet",
+    "fileName": "Dosya adı",
+    "browserInfo": "Tarayıcıda uygulama Markdown, CSV, HTML, metin ve PDF dosyalarını, hesap tabloları ile sunularda ise PNG'yi kendisi oluşturur. “Yalnızca masaüstü uygulamasında” yazan biçimler, ofis çalışma ortamı bulunan masaüstü sürümünü gerektirir.",
+    "runtimeSearching": "Ofis çalışma ortamı aranıyor…",
+    "runtimeFound": "Ofis çalışma ortamı: {{version}}",
+    "runtimeDetails": "({{source}}, {{profile}})",
+    "sourceEnvironment": "OPENAEC_CONVERSIE_PROGRAMMA değişkeninden",
+    "sourceSetting": "kendiniz seçtiniz",
+    "sourceAutomatic": "otomatik bulundu",
+    "profileSafe": "güvenli profil: makrolar kapalı",
+    "profileOwn": "kendi profiliniz",
+    "runtimeMissing": "Ofis çalışma ortamı (LibreOffice) bulunamadı. Çalışma ortamı gerektiren biçimler kullanılamıyor.",
+    "chooseConverter": "Dönüştürme programı seç",
+    "format": "Biçim",
+    "groups": {
+      "own": "Kendi biçimi",
+      "openDocument": "OpenDocument",
+      "legacyOffice": "Eski Office biçimleri",
+      "templates": "Şablonlar",
+      "macro": "Makro içerebilen",
+      "webText": "Web ve metin",
+      "pdfImage": "PDF ve resim"
+    },
+    "routes": {
+      "inApp": "uygulamada",
+      "runtime": "ofis çalışma ortamıyla",
+      "print": "Yazdır ile"
+    },
+    "runtimeMissingShort": "çalışma ortamı yok",
+    "desktopOnly": "yalnızca masaüstü uygulamasında",
+    "separator": "Ayırıcı",
+    "separatorSemicolon": "Noktalı virgül ; (Türkçe)",
+    "separatorComma": "Virgül ,",
+    "separatorTab": "Sekme",
+    "separatorPipe": "Dikey çizgi |",
+    "encoding": "Kodlama",
+    "encodingUtf8BomExcel": "BOM ile UTF-8 (Excel)",
+    "encodingUtf8BomNotepad": "BOM ile UTF-8 (Not Defteri, Excel)",
+    "csvInfo": "Yalnızca seçili sayfa, formüller yerine değerlerle. =, +, - veya @ ile başlayan metnin başına kesme işareti eklenir; böylece hesap tablosu programı bunu formül olarak çalıştırmaz.",
+    "sheet": "Sayfa",
+    "activeSheet": "{{name}} (etkin)",
+    "protect": "Açmak için parolayla koru",
+    "password": "Parola",
+    "repeatPassword": "Parolayı yineleyin",
+    "encryptionInfo": "ECMA-376'ya göre şifreleme (AES-256); Word, Excel, PowerPoint ve LibreOffice'te açılabilir. Parola saklanmaz; unutursanız dosya artık açılamaz.",
+    "noEncryptionInfo": "Bu bir yazma veya sayfa koruması değildir: işaretlenmezse dosya şifrelenmeden kaydedilir.",
+    "passwordMissing": "Bir parola seçin.",
+    "passwordMismatch": "Parolalar eşleşmiyor.",
+    "passwordTooLong": "En fazla {{max}} karakter.",
+    "slide": "Slayt",
+    "slideNumber": "Slayt {{number}}",
+    "currentSlide": "Slayt {{number}} (geçerli)",
+    "pdfVariant": "PDF türü",
+    "pdfPlain": "Standart PDF",
+    "pdfA2b": "PDF/A-2b (arşiv)",
+    "slides": "Slaytlar",
+    "pages": "Sayfalar",
+    "rangePlaceholder": "tümü veya örn. 1-3,5",
+    "bookmarks": "Başlıkları yer işareti yap",
+    "printRoute": "Ofis çalışma ortamı olmadan PDF, Yazdır ile oluşturulur: yazdırma penceresinde <strong>PDF olarak kaydet</strong> yazıcısını seçin (Windows: “Microsoft Print to PDF”). Biçimlendirme düzenleyicideki görünümü izler.",
+    "untitled": "Adsız",
+    "copyInfo": "Bu, başka bir biçimde bir kopyadır. Belge, .{{ext}} olarak kaydedene kadar değiştirilmiş olarak işaretli kalır.",
+    "print": "Yazdır…",
+    "formats": {
+      "docx": {
+        "docx": {
+          "name": "Word belgesi",
+          "keeps": "düzenlenebilir"
+        },
+        "odt": {
+          "name": "OpenDocument metni",
+          "keeps": "düzenlenebilir; biçimlendirme farklı olabilir"
+        },
+        "fodt": {
+          "name": "OpenDocument metni (düz XML)",
+          "keeps": "düzenlenebilir; biçimlendirme farklı olabilir"
+        },
+        "doc": {
+          "name": "Word 97–2003 belgesi",
+          "keeps": "düzenlenebilir; biçimlendirme farklı olabilir"
+        },
+        "dotx": {
+          "name": "Word şablonu",
+          "keeps": "düzenlenebilir; biçimlendirme farklı olabilir"
+        },
+        "dot": {
+          "name": "Word 97–2003 şablonu",
+          "keeps": "düzenlenebilir; biçimlendirme farklı olabilir"
+        },
+        "ott": {
+          "name": "OpenDocument metin şablonu",
+          "keeps": "düzenlenebilir; biçimlendirme farklı olabilir"
+        },
+        "docm": {
+          "name": "Makro içerebilen Word belgesi",
+          "keeps": "yalnızca açık bir makro dosyası için: VBA projesi değiştirilmeden korunur, makrolar çalıştırılmaz"
+        },
+        "rtf": {
+          "name": "Rich Text Format",
+          "keeps": "düzenlenebilir; biçimlendirme farklı olabilir"
+        },
+        "txt": {
+          "name": "Düz metin (UTF-8)",
+          "keeps": "yalnızca metin; biçimlendirme, tablolar ve resimler kaybolur"
+        },
+        "html": {
+          "name": "Web sayfası (HTML)",
+          "keeps": "biçimlendirme farklı olabilir; resimler gömülü"
+        },
+        "xhtml": {
+          "name": "XHTML web sayfası",
+          "keeps": "biçimlendirme farklı olabilir"
+        },
+        "epub": {
+          "name": "EPUB e-kitap",
+          "keeps": "yalnızca okuma; sayfa düzeni kaybolur"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "metin ve yapı; sayfa düzeni, resimler ve düzeltmeler kaybolur"
+        },
+        "pdf": {
+          "name": "PDF belgesi",
+          "keeps": "baskı önizlemedeki görünüm; metin aranabilir"
+        },
+        "png": {
+          "name": "PNG resmi (ilk sayfa)",
+          "keeps": "yalnızca görünüm; yalnızca ilk sayfa"
+        }
+      },
+      "xlsx": {
+        "xlsx": {
+          "name": "Excel çalışma kitabı",
+          "keeps": "düzenlenebilir"
+        },
+        "ods": {
+          "name": "OpenDocument hesap tablosu",
+          "keeps": "düzenlenebilir; biçimlendirme farklı olabilir"
+        },
+        "fods": {
+          "name": "OpenDocument hesap tablosu (düz XML)",
+          "keeps": "düzenlenebilir; biçimlendirme farklı olabilir"
+        },
+        "xls": {
+          "name": "Excel 97–2003 çalışma kitabı",
+          "keeps": "düzenlenebilir; biçimlendirme farklı olabilir"
+        },
+        "xltx": {
+          "name": "Excel şablonu",
+          "keeps": "düzenlenebilir; biçimlendirme farklı olabilir"
+        },
+        "xlt": {
+          "name": "Excel 97–2003 şablonu",
+          "keeps": "düzenlenebilir; biçimlendirme farklı olabilir"
+        },
+        "ots": {
+          "name": "OpenDocument hesap tablosu şablonu",
+          "keeps": "düzenlenebilir; biçimlendirme farklı olabilir"
+        },
+        "xlsm": {
+          "name": "Makro içerebilen Excel çalışma kitabı",
+          "keeps": "yalnızca açık bir makro dosyası için: VBA projesi değiştirilmeden korunur, makrolar çalıştırılmaz"
+        },
+        "csv": {
+          "name": "CSV (ayrılmış değerler)",
+          "keeps": "yalnızca bir sayfa; formül ve biçimlendirme olmadan değerler"
+        },
+        "tsv": {
+          "name": "Sekmeyle ayrılmış metin (TSV)",
+          "keeps": "yalnızca bir sayfa; formül ve biçimlendirme olmadan değerler"
+        },
+        "html": {
+          "name": "Web sayfası (HTML)",
+          "keeps": "yalnızca görünüm; formüller kaybolur"
+        },
+        "dif": {
+          "name": "Data Interchange Format (DIF)",
+          "keeps": "yalnızca ilk sayfa; formül ve biçimlendirme olmadan değerler"
+        },
+        "slk": {
+          "name": "SYLK",
+          "keeps": "yalnızca ilk sayfa; formüller korunur, biçimlendirme büyük ölçüde korunmaz"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "yalnızca değerlerin görünümü; formüller ve biçimlendirme kaybolur"
+        },
+        "pdf": {
+          "name": "PDF belgesi",
+          "keeps": "baskı önizlemedeki görünüm; metin aranabilir"
+        },
+        "png": {
+          "name": "PNG resmi (sayfa)",
+          "keeps": "yalnızca görünüm; bir sayfanın kullanılan aralığı"
+        }
+      },
+      "pptx": {
+        "pptx": {
+          "name": "PowerPoint sunusu",
+          "keeps": "düzenlenebilir"
+        },
+        "ppsx": {
+          "name": "PowerPoint slayt gösterisi",
+          "keeps": "düzenlenebilir; slayt gösterisi olarak açılır; biçimlendirme farklı olabilir"
+        },
+        "odp": {
+          "name": "OpenDocument sunusu",
+          "keeps": "düzenlenebilir; biçimlendirme farklı olabilir"
+        },
+        "fodp": {
+          "name": "OpenDocument sunusu (düz XML)",
+          "keeps": "düzenlenebilir; biçimlendirme farklı olabilir"
+        },
+        "ppt": {
+          "name": "PowerPoint 97–2003 sunusu",
+          "keeps": "düzenlenebilir; biçimlendirme farklı olabilir"
+        },
+        "pps": {
+          "name": "PowerPoint 97–2003 slayt gösterisi",
+          "keeps": "düzenlenebilir; biçimlendirme farklı olabilir"
+        },
+        "potx": {
+          "name": "PowerPoint şablonu",
+          "keeps": "düzenlenebilir; biçimlendirme farklı olabilir"
+        },
+        "pot": {
+          "name": "PowerPoint 97–2003 şablonu",
+          "keeps": "düzenlenebilir; biçimlendirme farklı olabilir"
+        },
+        "otp": {
+          "name": "OpenDocument sunu şablonu",
+          "keeps": "düzenlenebilir; biçimlendirme farklı olabilir"
+        },
+        "pptm": {
+          "name": "Makro içerebilen PowerPoint sunusu",
+          "keeps": "yalnızca açık bir makro dosyası için: VBA projesi değiştirilmeden korunur, makrolar çalıştırılmaz"
+        },
+        "html": {
+          "name": "Web sayfası (HTML)",
+          "keeps": "yalnızca slayt başına metin; düzen ve resimler kaybolur"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "yalnızca slayt başına metin; düzen ve resimler kaybolur"
+        },
+        "pdf": {
+          "name": "PDF belgesi",
+          "keeps": "baskı önizlemedeki görünüm; metin aranabilir"
+        },
+        "png": {
+          "name": "PNG resmi (geçerli slayt)",
+          "keeps": "yalnızca görünüm; tek slayt"
+        }
+      }
+    }
+  },
+  "saveResult": {
+    "saved": "Kaydedildi: {{path}}",
+    "exported": "Dışa aktarıldı: {{path}}. Değişiklikleri korumak için düzenlenebilir dosyanızı da kaydedin.",
+    "cancelled": "Kaydetme iptal edildi.",
+    "chooseLocation": "Kaydetmek için bir ad ve konum seçin.",
+    "download": "İndirme istendi. Dosyayı indirilenler klasörünüzde kontrol edin.",
+    "tooLarge": "Dosya boş veya 100 MB'tan büyük.",
+    "needsDesktop": "Bu biçim, ofis çalışma ortamı (LibreOffice) bulunan masaüstü sürümünü gerektirir."
+  },
+  "printPreview": {
+    "title": "Baskı önizleme – {{title}}",
+    "notReady": "Belge tamamen açıldığında yazdırılabilir.",
+    "preparingPages": "Sayfalar hazırlanıyor…",
+    "preparingPrint": "Baskı hazırlanıyor…",
+    "preparingPrintProgress": "Baskı hazırlanıyor… {{done}} / {{total}}",
+    "printHint": "Yazdırma penceresinde yazıcıyı, çift taraflı yazdırmayı ve gerekirse “PDF olarak kaydet” seçeneğini belirleyin.",
+    "makingPdf": "PDF oluşturuluyor…",
+    "makingPdfProgress": "PDF oluşturuluyor… {{done}} / {{total}}",
+    "pdfSaved": "PDF kaydedildi: {{path}}",
+    "pdfDownloading": "{{name}} PDF dosyası indiriliyor.",
+    "layoutSaved": "Sayfa yapısı çalışma kitabına kaydedildi. Bunu kalıcı hâle getirmek için belgeyi kaydedin.",
+    "saveAsPdf": "PDF olarak kaydet",
+    "print": "Yazdır",
+    "keyboardHelp": "Page Up ve Page Down sayfalar arasında gezinir; Ctrl+P yazdırır.",
+    "settings": "Yazdırma ayarları",
+    "pages": "Sayfalar",
+    "rangePlaceholder": "tümü veya örn. 1-3, 5",
+    "copies": "Kopya sayısı",
+    "collate": "Harmanla (1, 2, 3 – 1, 2, 3)",
+    "systemDialogHint": "Yazıcıyı, çift taraflı yazdırmayı ve rengi ardından sistemin yazdırma penceresinde seçersiniz.",
+    "printAs": "Yazdırma biçimi",
+    "slides": "Slaytlar",
+    "handouts": "Dinleyici notları",
+    "notesPages": "Not sayfaları",
+    "slidesPerPage": "Sayfa başına slayt",
+    "withLines": "{{number}} (satırlı)",
+    "paper": "Kâğıt",
+    "slideSize": "Slayt boyutu",
+    "frameSlides": "Slaytları çerçevele",
+    "report": "Rapor",
+    "saveLayout": "Sayfa yapısını çalışma kitabına kaydet",
+    "pdf": "PDF",
+    "imageQuality": "Resim kalitesi",
+    "qualitySmall": "Küçük dosya (150 dpi)",
+    "qualityStandard": "Standart (200 dpi)",
+    "qualityHigh": "Yüksek, kayıpsız (300 dpi)",
+    "pdfHint": "Metin seçilebilir ve aranabilir kalır; PDF tam olarak bu önizlemeyi izler.",
+    "toolbar": "Gezinme ve yakınlaştırma",
+    "previousPage": "Önceki sayfa",
+    "nextPage": "Sonraki sayfa",
+    "pageOf": "Sayfa <input/> / {{total}}",
+    "pageNumber": "Sayfa numarası",
+    "zoomOut": "Uzaklaştır",
+    "zoom": "Yakınlaştırma",
+    "zoomIn": "Yakınlaştır",
+    "wholePage": "Tam sayfa",
+    "pageWidth": "Sayfa genişliği",
+    "preview": "Sayfa önizlemesi",
+    "pageImage": "{{number}}. sayfanın önizlemesi",
+    "drawingPage": "Sayfa çiziliyor…",
+    "orientation": "Yönlendirme",
+    "portrait": "Dikey",
+    "landscape": "Yatay",
+    "activeSheet": "Etkin sayfa",
+    "wholeWorkbook": "Tüm çalışma kitabı",
+    "selection": "Seçim ({{range}})",
+    "selectionNone": "Seçim (hiçbir şey seçili değil)",
+    "ignorePrintArea": "Yazdırma alanını yoksay",
+    "pageSetup": "Sayfa yapısı",
+    "sheet": "Sayfa",
+    "scale": "Ölçek",
+    "percentage": "Yüzde",
+    "fitPage": "Tek sayfaya sığdır",
+    "fitWidth": "Sayfa genişliğine sığdır",
+    "pagesWide": "Genişlik (sayfa)",
+    "pagesTall": "yükseklik (0 = serbest)",
+    "marginTop": "Üst (cm)",
+    "marginBottom": "Alt",
+    "marginLeft": "Sol",
+    "marginRight": "Sağ",
+    "printArea": "Yazdırma alanı",
+    "printAreaPlaceholder": "kullanılan aralık veya örn. A1:H40",
+    "repeatRows": "Yinelenecek satırlar",
+    "repeatRowsPlaceholder": "örn. 1:2",
+    "repeatColumns": "Yinelenecek sütunlar",
+    "repeatColumnsPlaceholder": "örn. A:B",
+    "gridlines": "Kılavuz çizgilerini yazdır",
+    "headings": "Satır ve sütun başlıklarını yazdır",
+    "centerHorizontally": "Yatay olarak ortala",
+    "pageOrder": "Sayfa sırası",
+    "downThenOver": "Önce aşağı, sonra yana",
+    "overThenDown": "Önce yana, sonra aşağı",
+    "header": "Üst bilgi",
+    "footer": "Alt bilgi",
+    "sectionLeft": "sol",
+    "sectionCenter": "orta",
+    "sectionRight": "sağ",
+    "sectionLabel": "{{area}} {{section}}",
+    "fields": "Alanlar: {{fields}}.",
+    "pageBreakPreview": "Sayfa sonu önizlemesi…"
+  }
+}

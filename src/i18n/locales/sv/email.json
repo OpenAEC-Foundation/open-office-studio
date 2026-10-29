@@ -1,0 +1,1008 @@
+{
+  "accounts": {
+    "test": {
+      "test": "Testa",
+      "testConnection": "Testa anslutning",
+      "testing": "Testar…",
+      "retest": "Testa igen",
+      "failed": "Testet misslyckades"
+    },
+    "settings": {
+      "title": "Kontoinställningar",
+      "noAccount": "Det finns inget konto ännu.",
+      "addAccount": "Lägg till konto",
+      "accountList": "Konton",
+      "saving": "Sparar…",
+      "saved": "Inställningarna har sparats.",
+      "saveFailed": "Det gick inte att spara",
+      "tabs": {
+        "identity": "Identitet",
+        "servers": "Servrar",
+        "folders": "Mappar",
+        "fetching": "Hämtning och integritet",
+        "advanced": "Avancerat"
+      },
+      "deleteAccount": {
+        "title": "Ta bort konto",
+        "confirm": "Vill du verkligen ta bort <strong>{{name}}</strong> ({{email}})? Dina meddelanden finns kvar på servern; det lagrade lösenordet tas bort från nyckelringen.",
+        "button": "Ta bort konto",
+        "failed": "Det gick inte att ta bort kontot"
+      },
+      "identity": {
+        "accountName": "Kontonamn",
+        "accountNameHint": "Bara för dig själv, till exempel ”Jobb” eller ”Privat”.",
+        "yourName": "Ditt namn",
+        "email": "E-postadress",
+        "replyTo": "Svarsadress",
+        "replyToPlaceholder": "Tom = din e-postadress",
+        "signature": "Signatur",
+        "signatureHint": "Läggs till under nya meddelanden och svar, efter ”-- ”."
+      },
+      "oauthAccount": {
+        "signedInAs": "Inloggad som <strong>{{account}}</strong> med {{provider}}",
+        "noPasswordStored": "Inget lösenord lagras; åtkomsten använder en token i nyckelringen.",
+        "signInAgain": "Logga in igen",
+        "signedInAgain": "Inloggad igen som {{account}}."
+      },
+      "password": {
+        "change": "Ändra lösenord",
+        "storedPlaceholder": "Lagrat · lämna tomt för att behålla",
+        "noneStoredPlaceholder": "Inget lösenord lagrat ännu"
+      },
+      "folders": {
+        "hint": "Välj var Email Studio sparar skickade meddelanden, utkast samt borttagna och arkiverade meddelanden.",
+        "roles": {
+          "sent": "Skickade meddelanden",
+          "drafts": "Utkast",
+          "trash": "Papperskorg",
+          "archive": "Arkiv"
+        },
+        "automatic": "Automatiskt",
+        "automaticWithFolder": "Automatiskt ({{folder}})"
+      },
+      "fetching": {
+        "checkForNew": "Sök efter nya meddelanden",
+        "manualOnly": "Endast manuellt",
+        "everyMinutes_one": "Med {{count}} minuts intervall",
+        "everyMinutes_other": "Med {{count}} minuters intervall",
+        "externalContent": "Visa alltid fjärrbilder och fjärrinnehåll",
+        "externalContentHint": "Av rekommenderas: fjärrbilder avslöjar för avsändare när och var du öppnar ett meddelande.",
+        "trustedSenders": "Avsändare vars fjärrinnehåll alltid visas",
+        "forgetSender": "Glöm {{sender}}"
+      },
+      "advanced": {
+        "oauthIntro": "Inloggning med Microsoft eller Google använder OAuth2. Dessa inställningar gäller alla konton. Ett eget klient-ID behövs bara om appen inte innehåller något; se <code>{{doc}}</code>.",
+        "ispdb": "Fråga även Thunderbird-databasen för ett nytt konto",
+        "ispdbHint": "Domännamnet skickas då till Mozilla. Av som standard.",
+        "available": "Tillgänglig.",
+        "unavailable": "Inte tillgänglig.",
+        "loadingStatus": "Läser in status…",
+        "clientId": "Klient-ID",
+        "clientSecret": "Klienthemlighet (valfritt)",
+        "saveClientId": "Spara klient-ID",
+        "clientIdSaved": "Klient-ID för {{provider}} har sparats.",
+        "clientIdSaveFailed": "Det gick inte att spara klient-ID:t",
+        "desktopOnly": "Du kan bara ange ett eget klient-ID i skrivbordsappen."
+      }
+    },
+    "wizard": {
+      "title": "Lägg till konto",
+      "intro": "Använd din befintliga e-postadress. Email Studio fungerar med alla leverantörer som erbjuder IMAP och SMTP.",
+      "fullName": "Ditt fullständiga namn",
+      "fullNamePlaceholder": "Förnamn Efternamn",
+      "fullNameHint": "Hur mottagarna ser ditt namn.",
+      "email": "E-postadress",
+      "emailPlaceholder": "name@example.com",
+      "password": "Lösenord",
+      "passwordHint": "Används bara när du väljer Testa eller Klar och lagras bara i operativsystemets nyckelring.",
+      "ispdb": "Fråga även Thunderbird-databasen",
+      "ispdbHint": "Domännamnet (inte din adress eller ditt lösenord) skickas då till Mozilla.",
+      "oauthPrompt": "Eller logga in utan lösenord i appen:",
+      "enterNameAndEmailFirst": "Ange först ditt namn och din e-postadress.",
+      "saving": "Sparar…",
+      "done": "Klar",
+      "saveAnyway": "Spara ändå",
+      "saveTitle": "Spara konto",
+      "saveUntestedTitle": "Inte (framgångsrikt) testat ännu; du kan ändå spara kontot",
+      "saveFailed": "Det gick inte att spara kontot",
+      "foundSettings": "Inställningar hittades",
+      "serverSettings": "Serverinställningar",
+      "serverSettingsFor": "Serverinställningar för {{domain}}",
+      "enterEmailHint": "Ange din e-postadress; Email Studio söker sedan automatiskt efter rätt servrar.",
+      "searchFailed": "Sökningen misslyckades",
+      "fillInManually": "Ange servrarna nedan själv.",
+      "nothingFound": "Inga inställningar hittades. Ange servrarna nedan själv; fråga din leverantör vid behov.",
+      "proposals": "Förslag",
+      "unencrypted": "okrypterad",
+      "manualConfiguration": "Manuell konfiguration",
+      "adjusted": "· redigerad",
+      "fieldsAppear": "Fälten visas så snart det finns en giltig e-postadress.",
+      "bothServersFailed": "Båda servrarna misslyckades. Kontrollera adressen, lösenordet och servernamnen."
+    },
+    "discovery": {
+      "steps": {
+        "builtIn": "Inbyggd lista",
+        "ownDomain": "Egen domän",
+        "dns": "DNS",
+        "ispdb": "Thunderbird-databas",
+        "probe": "Anslutningstest"
+      },
+      "stepStatus": {
+        "waiting": "väntar",
+        "busy": "pågår…",
+        "found": "hittad",
+        "nothing": "inget hittades",
+        "skipped": "inte körd"
+      },
+      "sources": {
+        "preset": "Inbyggd lista",
+        "autoconfig": "Konfiguration från din egen domän",
+        "srv": "DNS SRV-poster",
+        "mx": "MX-poster (leverantör igenkänd)",
+        "ispdb": "Thunderbird-databas",
+        "guess": "Vanliga servernamn"
+      },
+      "unencrypted": "okrypterad",
+      "reachable": "nåbar",
+      "unreachable": "inte nåbar",
+      "untested": "inte testad"
+    },
+    "server": {
+      "incoming": "Inkommande (IMAP)",
+      "outgoing": "Utgående (SMTP)",
+      "columns": {
+        "server": "Server",
+        "port": "Port",
+        "security": "Säkerhet",
+        "authentication": "Autentisering",
+        "username": "Användarnamn"
+      },
+      "hostLabel": "{{protocol}}-server",
+      "portLabel": "{{protocol}}-port",
+      "securityLabel": "{{protocol}}-säkerhet",
+      "authenticationLabel": "{{protocol}}-autentisering",
+      "usernameLabel": "{{protocol}}-användarnamn",
+      "imapPlaceholder": "imap.example.com",
+      "smtpPlaceholder": "smtp.example.com",
+      "securityNone": "Ingen",
+      "authNormal": "Normalt lösenord",
+      "authEncrypted": "Krypterat lösenord",
+      "unencryptedWarning": "<strong>Okrypterad anslutning.</strong> Ditt lösenord och dina meddelanden färdas över nätverket i läsbar form. Välj SSL/TLS eller STARTTLS om din leverantör stöder det.",
+      "oauthHint": "Med OAuth2 ombeds du logga in hos leverantören vid test eller första användning."
+    },
+    "oauth": {
+      "notSupported": "Den här versionen av appen stöder ännu inte inloggning med Microsoft eller Google.",
+      "signInFailed": "Inloggningen med {{provider}} misslyckades",
+      "signInWith": "Logga in med {{provider}}",
+      "recommended": "rekommenderas",
+      "waitTitle": "Slutför inloggningen i webbläsaren",
+      "waitText": "Inloggningssidan för {{provider}} har öppnats i webbläsaren. Logga in där och ge åtkomst till e-post; Email Studio fortsätter sedan här.",
+      "unavailableTitle": "Inloggning med {{provider}} är inte tillgänglig här.",
+      "unavailableHelp": "I skrivbordsappen kan du ange ett eget klient-ID för {{provider}} under <em>Verktyg › Kontoinställningar › Avancerat</em>. Hur du skapar ett beskrivs i <code>{{doc}}</code>. Du kan också fortsätta med ett (app)lösenord."
+    }
+  },
+  "errors": {
+    "code": {
+      "connection": "Ingen anslutning till servern. Kontrollera internetanslutningen samt servernamnet och porten.",
+      "authentication": "Inloggningen misslyckades. Kontrollera användarnamn och lösenord (Verktyg › Kontoinställningar).",
+      "certificate": "Serverns certifikat är inte betrott eller matchar inte det här servernamnet.",
+      "timeout": "Servern svarade inte i tid. Försök igen senare.",
+      "notFound": "Meddelandet eller mappen finns inte längre på servern.",
+      "refused": "Servern avvisade kommandot.",
+      "tooLarge": "Meddelandet är för stort för servern. Gör bilagorna mindre eller ta bort dem.",
+      "unavailable": "Den här funktionen är inte tillgänglig här.",
+      "internal": "Något gick fel."
+    },
+    "withDetail": "{{explanation}} ({{detail}})",
+    "withContext": "{{context}}: {{message}}",
+    "backendMissing": "Den här versionen av skrivbordsappen innehåller inte e-postfunktionen.",
+    "unexpectedBinary": "Oväntade binära utdata från backend."
+  },
+  "dialog": {
+    "closeEsc": "Stäng (Esc)"
+  },
+  "sendAsAttachment": {
+    "title": "Skicka som bilaga"
+  },
+  "ribbon": {
+    "tabs": {
+      "start": "Start",
+      "view": "Visa",
+      "tools": "Verktyg"
+    },
+    "groups": {
+      "new": "Nytt",
+      "respond": "Svara",
+      "delete": "Ta bort",
+      "mark": "Taggar",
+      "organize": "Ordna",
+      "layout": "Layout",
+      "sort": "Sortera",
+      "message": "Meddelande",
+      "accounts": "Konton",
+      "folders": "Mappar"
+    },
+    "withShortcut": "{{action}} · {{shortcut}}",
+    "fetch": "Hämta meddelanden",
+    "fetchTitle": "Hämta meddelanden · {{key}} eller {{shortcut}}",
+    "readUnread": "Läst/oläst",
+    "readUnreadTitle": "Läst eller oläst · {{shortcut}}",
+    "star": "Stjärna",
+    "move": "Flytta",
+    "moveTitle": "Flytta till mapp",
+    "folderPane": "Mappfönster",
+    "readingPane": "Läsfönster",
+    "resetLayout": "Återställ layout",
+    "sortBy": "Sortera efter",
+    "sort": {
+      "date": "Datum",
+      "sender": "Avsändare",
+      "subject": "Ämne",
+      "size": "Storlek"
+    },
+    "ascending": "Stigande",
+    "descending": "Fallande",
+    "viewSource": "Visa källa",
+    "accountSettings": "Kontoinställningar"
+  },
+  "studio": {
+    "errors": {
+      "loadAccounts": "Det gick inte att läsa in kontona",
+      "loadMessages": "Det gick inte att läsa in meddelandena",
+      "openMessage": "Det gick inte att öppna meddelandet",
+      "delete": "Det gick inte att ta bort",
+      "move": "Det gick inte att flytta",
+      "mark": "Det gick inte att markera",
+      "forwardAttachments": "Det gick inte att hämta bilagorna för vidarebefordran",
+      "openFile": "Det gick inte att öppna {{name}}",
+      "saveFile": "Det gick inte att spara {{name}}",
+      "source": "Det gick inte att hämta källan",
+      "updateFolder": "Det gick inte att uppdatera mappen",
+      "deleteFolder": "Det gick inte att ta bort mappen"
+    },
+    "accountAdded": "Kontot {{email}} har lagts till.",
+    "addAccount": "Lägg till konto",
+    "deletePermanently": {
+      "title": "Ta bort permanent",
+      "text_one": "Det här meddelandet tas bort permanent. Detta kan inte ångras.",
+      "text_other": "{{count}} meddelanden tas bort permanent. Detta kan inte ångras.",
+      "confirm": "Ta bort permanent"
+    },
+    "noArchiveFolder": "Det här kontot har ingen arkivmapp. Välj en under Verktyg › Kontoinställningar › Mappar.",
+    "fetched": "Meddelanden hämtade.",
+    "deleteFolder": {
+      "title": "Ta bort mapp",
+      "text": "Mappen ”{{folder}}” och alla meddelanden i den tas bort på servern."
+    },
+    "welcome": {
+      "title": "Inget e-postkonto ännu",
+      "text": "Lägg till ditt konto med din e-postadress och ditt lösenord. Email Studio hittar rätt inställningar."
+    },
+    "folderPaneWidth": "Bredd på mappfönster",
+    "messageListWidth": "Bredd på meddelandelista",
+    "messageList": "Meddelandelista",
+    "search": {
+      "in": "Sök i {{folder}}",
+      "label": "Sök i meddelanden ({{shortcut}})",
+      "clear": "Rensa sökning"
+    },
+    "filter": {
+      "label": "Snabbfilter",
+      "unread": "Olästa",
+      "unreadTitle": "Endast olästa",
+      "starred": "Stjärnmärkta",
+      "starredTitle": "Endast stjärnmärkta",
+      "attachment": "Bilaga",
+      "attachmentTitle": "Endast med bilaga",
+      "body": "Brödtext",
+      "bodyTitle": "Sök även i meddelandetexten (långsammare)"
+    },
+    "count": {
+      "filtered": "{{shown}} av {{total}}",
+      "filteredLoaded": "{{shown}} av {{loaded}} inlästa",
+      "messages_one": "{{count}} meddelande",
+      "messages_other": "{{count}} meddelanden",
+      "selected_one": "{{count}} markerat",
+      "selected_other": "{{count}} markerade"
+    },
+    "noResults": "Inga meddelanden hittades.",
+    "emptyFolder": "Den här mappen är tom.",
+    "moveTo_one": "Flytta meddelande till",
+    "moveTo_other": "Flytta {{count}} meddelanden till",
+    "folderDialog": {
+      "newTitle": "Ny mapp",
+      "renameTitle": "Byt namn på mapp",
+      "create": "Skapa",
+      "rename": "Byt namn",
+      "name": "Namn",
+      "inside": "Inuti ”{{folder}}”"
+    },
+    "source": {
+      "title": "Meddelandekälla",
+      "saveAs": "Spara som {{extension}}"
+    }
+  },
+  "address": {
+    "invalid": "Ogiltig adress: {{address}}",
+    "remove": "Ta bort {{address}}"
+  },
+  "list": {
+    "label": "Meddelanden",
+    "to": "Till: {{address}}",
+    "noRecipient": "(ingen mottagare)",
+    "replied": "Besvarat",
+    "hasAttachment": "Har bilaga",
+    "noSubject": "(inget ämne)",
+    "star": "Lägg till stjärna",
+    "unstar": "Ta bort stjärna",
+    "loadingMore": "Läser in fler meddelanden…"
+  },
+  "folders": {
+    "label": "Mappar",
+    "loading": "Läser in mappar…",
+    "unread_one": "{{count}} oläst",
+    "unread_other": "{{count}} olästa",
+    "inbox": "Inkorg"
+  },
+  "reader": {
+    "loadingMessage": "Läser in meddelande…",
+    "chooseMessage": "Välj ett meddelande för att läsa det.",
+    "label": "Meddelande: {{subject}}",
+    "reply": "Svara",
+    "replyTitle": "Svara · {{shortcut}}",
+    "replyAll": "Svara alla",
+    "replyAllTitle": "Svara alla · {{shortcut}}",
+    "forward": "Vidarebefordra",
+    "forwardTitle": "Vidarebefordra · {{shortcut}}",
+    "archive": "Arkivera",
+    "archiveTitle": "Arkivera · {{shortcut}}",
+    "delete": "Ta bort",
+    "deleteTitle": "Ta bort · {{shortcut}}",
+    "starTitle": "Stjärna · {{shortcut}}",
+    "from": "Från",
+    "to": "Till",
+    "none": "(ingen)",
+    "cc": "Kopia",
+    "replyTo": "Svara till",
+    "date": "Datum",
+    "external": {
+      "blocked_one": "En fjärrbild blockerades för att skydda din integritet.",
+      "blocked_other": "{{count}} fjärrbilder blockerades för att skydda din integritet.",
+      "desktopHint": "Med ditt tillstånd hämtar appen dem och visar dem utan att låta meddelandet ansluta någonstans.",
+      "demoHint": "(I demon pekar de på adresser som inte finns.)",
+      "show": "Visa fjärrinnehåll",
+      "alwaysFrom": "Visa alltid från {{sender}}",
+      "failed_one": "En fjärrbild kunde inte hämtas.",
+      "failed_other": "{{count}} fjärrbilder kunde inte hämtas."
+    },
+    "attachments": {
+      "label": "Bilagor",
+      "previewOrOpen": "Klick: förhandsgranska · dubbelklick: öppna i {{module}}",
+      "preview": "Förhandsgranska",
+      "openCopyTitle": "Öppna som redigerbar kopia i {{module}}",
+      "openIn": "Öppna i {{module}}",
+      "saveTitle": "Spara på den här datorn"
+    },
+    "content": "Meddelandeinnehåll",
+    "loadingContent": "Läser in innehåll…"
+  },
+  "compose": {
+    "errors": {
+      "saveDraft": "Det gick inte att spara utkastet",
+      "noRecipients": "Lägg till minst en mottagare.",
+      "send": "Det gick inte att skicka",
+      "attachmentsLarge": "Bilagorna är totalt {{size}}; många servrar avvisar meddelanden över {{max}}.",
+      "linkNotAllowed": "Endast http(s)-, mailto- och tel-länkar är tillåtna."
+    },
+    "noSubject": {
+      "title": "Inget ämne",
+      "text": "Det här meddelandet har inget ämne. Skicka ändå?",
+      "fillIn": "Ange ett ämne",
+      "sendWithout": "Skicka utan ämne"
+    },
+    "forgotAttachment": {
+      "title": "Glömt en bilaga?",
+      "text": "Ditt meddelande nämner <strong>”{{word}}”</strong>, men ingen bilaga har lagts till.",
+      "sendAnyway": "Skicka ändå",
+      "keywords": "bilaga|bilagor|bifogad|bifogat|bifogar|se bifogad"
+    },
+    "addAttachment": "Lägg till bilaga",
+    "attachment": "Bifoga",
+    "removeAttachment": "Ta bort {{name}}",
+    "attachmentsSummary_one": "{{count}} bilaga · {{size}}",
+    "attachmentsSummary_other": "{{count}} bilagor · {{size}}",
+    "dropToAttach": "Släpp för att lägga till som bilaga",
+    "sent": "Meddelandet har skickats.",
+    "sentWithSubject": "Meddelandet har skickats: {{subject}}.",
+    "unsent": {
+      "title": "Meddelandet skickades inte",
+      "text": "Vill du spara det här meddelandet som utkast?",
+      "discard": "Ignorera",
+      "saveDraft": "Spara utkast"
+    },
+    "label": "Skriv: {{subject}}",
+    "newMessage": "Nytt meddelande",
+    "send": "Skicka",
+    "sending": "Skickar…",
+    "sendTitle": "Skicka · {{shortcut}}",
+    "draft": "Utkast",
+    "savingDraft": "Sparar…",
+    "saveDraftTitle": "Spara som utkast · {{shortcut}}",
+    "dismissError": "Stäng meddelande",
+    "from": "Från",
+    "to": "Till",
+    "cc": "Kopia",
+    "bcc": "Hemlig kopia",
+    "subject": "Ämne",
+    "body": "Meddelandetext",
+    "format": {
+      "label": "Formatering",
+      "withShortcut": "{{action}} · {{shortcut}}",
+      "bold": "Fet",
+      "italic": "Kursiv",
+      "underline": "Understruken",
+      "bullets": "Punktlista",
+      "numbering": "Numrering",
+      "link": "Länk",
+      "insertLink": "Infoga länk",
+      "clear": "Rensa formatering",
+      "linkAddress": "Länkadress",
+      "insert": "Infoga"
+    }
+  },
+  "link": {
+    "browserFailed": "Det gick inte att öppna webbläsaren. Kopiera adressen: {{url}}",
+    "phoneTitle": "Telefonnummer",
+    "openTitle": "Öppna länken?",
+    "copied": "Adressen har kopierats.",
+    "copyFailed": "Kopieringen misslyckades; markera adressen manuellt.",
+    "copy": "Kopiera adress",
+    "openInBrowser": "Öppna i webbläsaren",
+    "phoneIntro": "Det här telefonnumret förekommer i meddelandet:",
+    "realTarget": "Den här länken går egentligen till:",
+    "misleading": "Texten i meddelandet nämner <strong>{{shown}}</strong>, men länken går till <strong>{{actual}}</strong>. Det kan vara nätfiske.",
+    "unencrypted": "Obs! Den här länken använder inte en krypterad anslutning (http)."
+  },
+  "files": {
+    "saveUnsupported": "Den här versionen av skrivbordsappen kan inte spara {{name}} ännu. Öppna bilagan i en modul eller uppdatera appen.",
+    "saved": "Sparat: {{path}}",
+    "saveCancelled": "Sparandet avbröts.",
+    "downloadRequested": "Nedladdning begärd. Kontrollera filen bland dina nedladdningar."
+  },
+  "quote": {
+    "unknownSender": "(okänd)",
+    "wroteOn": "Den {{date}} skrev {{sender}}:",
+    "wrote": "{{sender}} skrev:",
+    "forwarded": "Vidarebefordrat meddelande",
+    "subject": "Ämne: {{value}}",
+    "date": "Datum: {{value}}",
+    "from": "Från: {{value}}",
+    "to": "Till: {{value}}",
+    "cc": "Kopia: {{value}}"
+  },
+  "demo": {
+    "banner": "Demo – riktig e-post är inte möjlig i webbläsaren; använd skrivbordsappen.",
+    "accountName": "Demobrevlåda",
+    "folders": {
+      "notifications": "Aviseringar",
+      "drafts": "Utkast",
+      "sent": "Skickat",
+      "archive": "Arkiv",
+      "junk": "Skräppost",
+      "trash": "Papperskorg"
+    },
+    "welcome": {
+      "subject": "Välkommen till OpenAEC Email Studio",
+      "heading": "Välkommen!",
+      "intro": "Det här är en demobrevlåda. I webbläsaren kan Email Studio inte hämta eller skicka riktig e-post; använd skrivbordsappen för det.",
+      "introHtml": "Det här är en <strong>demobrevlåda</strong>. I webbläsaren kan Email Studio inte hämta eller skicka riktig e-post; använd skrivbordsappen för det.",
+      "tryIt": "Prova gärna: svara, stjärnmärka (S), flytta till arkivet och öppna en bilaga i Text eller Kalkylblad.",
+      "tryItHtml": "Prova gärna: svara, stjärnmärka (<kbd>S</kbd>), flytta till arkivet och öppna en bilaga i Text eller Kalkylblad.",
+      "logoText": "OpenAEC-logotypen nedan är en infogad bild från en bilaga (cid:).",
+      "logoAlt": "OpenAEC-logotyp",
+      "logoHtml": "Logotypen till vänster är en infogad bild från en bilaga."
+    },
+    "errors": {
+      "accountNotFound": "Kontot finns inte.",
+      "messageNotFound": "Meddelandet finns inte.",
+      "folderExists": "Den här mappen finns redan.",
+      "folderCannotRename": "Den här mappen kan inte byta namn.",
+      "specialFolderDelete": "Specialmappar kan inte tas bort.",
+      "attachmentNotFound": "Bilagan finns inte.",
+      "targetFolderNotFound": "Målmappen finns inte.",
+      "noRecipients": "Inga mottagare angivna.",
+      "recipientRefused": "Demo: servern avvisar mottagaren {{domain}}.",
+      "attachmentsTooLarge": "Demo: bilagor är begränsade till {{max}}."
+    },
+    "accountAdded": {
+      "subject": "Ditt konto har lagts till (demo)",
+      "text": "Kontot {{email}} har lagts till i demon. {{notice}}"
+    },
+    "discovery": {
+      "knownProvider": "Känd leverantör (demo).",
+      "mx": "MX-posten för {{domain}} pekar på mail.protection.outlook.com (demo).",
+      "ownServer": "{{name}} (egen server)",
+      "autoconfig": "Hittades på autoconfig.{{domain}} (demo).",
+      "srv": "_imaps._tcp och _submission._tcp (demo).",
+      "ispdb": "Från Thunderbird-databasen (demo).",
+      "guessImapOk": "Vanliga servernamn; IMAP-testet lyckades (demo).",
+      "guessAlternative": "Alternativt servernamn (demo)."
+    },
+    "test": {
+      "noServer": "Ingen {{protocol}}-server angiven.",
+      "invalidPort": "Ogiltig port.",
+      "unreachable": "Demo: {{host}} kan inte nås.",
+      "simulated": "Demo: anslutning simulerad.",
+      "simulatedUnencrypted": "Demo: anslutning simulerad (okrypterad!)."
+    },
+    "oauthDesktopOnly": "Inloggning med Microsoft eller Google är bara möjlig i skrivbordsappen."
+  },
+  "preview": {
+    "loading": "Läser in förhandsgranskning…",
+    "dialog": {
+      "attachments": "Bilagor",
+      "previous": "Föregående bilaga",
+      "previousTitle": "Föregående bilaga (←)",
+      "next": "Nästa bilaga",
+      "nextTitle": "Nästa bilaga (→)",
+      "close": "Stäng förhandsgranskning",
+      "closeTitle": "Stäng (Esc)",
+      "fetching": "Hämtar bilaga…",
+      "fetchFailed": "Det gick inte att hämta bilagan: {{message}}"
+    },
+    "card": {
+      "fileName": "Filnamn",
+      "size": "Storlek",
+      "openExternal": "Öppna med standardprogrammet",
+      "unknown": "okänd",
+      "attention": "Obs!",
+      "yes": "ja",
+      "no": "nej"
+    },
+    "detection": {
+      "kinds": {
+        "pdf": "en PDF",
+        "dwg": "en DWG-ritning",
+        "dxf": "en DXF-ritning",
+        "ifc": "en IFC-modell",
+        "markdown": "Markdown",
+        "text": "text",
+        "image": "en bild",
+        "office": "ett Office-dokument",
+        "unknown": "en okänd fil"
+      },
+      "contentDiffers": "Namnet antyder {{kind}}, men innehållet är något annat.",
+      "mismatch": "Den här bilagan heter ”.{{extension}}” ({{named}}), men innehållet är {{actual}}.",
+      "mismatchSubtype": "Den här bilagan heter ”.{{extension}}” ({{named}}), men innehållet är {{actual}} ({{subtype}}).",
+      "contentBinary": "Namnet antyder {{kind}}, men innehållet är binärt.",
+      "notSvg": "Namnet antyder en SVG-bild, men innehållet är inte SVG.",
+      "signatureMissing": "Namnet antyder {{kind}}, men innehållet saknar motsvarande kännetecken."
+    },
+    "image": {
+      "loadFailed": "Det gick inte att läsa in bilden: {{message}}",
+      "subtitle": "Bild",
+      "cannotDisplay": "Den här bilden kan inte visas här (skadad eller en variant som inte stöds).",
+      "tooLarge": "Den här bilden är större än {{size}} MB och visas inte som förhandsgranskning.",
+      "tooManyPixels": "Den här bilden är {{width}} × {{height}} pixlar (mer än {{megapixels}} megapixlar) och visas inte som förhandsgranskning.",
+      "toolbar": "Bild",
+      "zoomOut": "Zooma ut",
+      "zoomOutTitle": "Zooma ut (−)",
+      "zoomIn": "Zooma in",
+      "zoomInTitle": "Zooma in (+)",
+      "fit": "Anpassa till fönster",
+      "fitTitle": "Anpassa till fönster (0)",
+      "actualSize": "Faktisk storlek (100 %)",
+      "actualSizeTitle": "Faktisk storlek",
+      "rotate": "Rotera medurs",
+      "rotateTitle": "Rotera medurs (R)",
+      "area": "Förhandsgranskning av bild"
+    },
+    "text": {
+      "loadFailed": "Det gick inte att läsa in texten: {{message}}",
+      "toolbar": "Text",
+      "encoding": "Kodning: {{encoding}}",
+      "utf8Bom": "UTF-8 (med BOM)",
+      "formatJson": "Formatera JSON",
+      "wrapLines": "Radbryt",
+      "truncated": "Visar de första {{limit}} av {{size}}. Spara filen för att se allt.",
+      "contentOf": "Innehåll i {{name}}"
+    },
+    "markdown": {
+      "loadFailed": "Det gick inte att läsa in filen: {{message}}",
+      "linkNotOpened": "Länken öppnades inte: {{url}}",
+      "imageFallback": "Bild",
+      "externalBlocked": "{{alt}} (extern bild blockerad)",
+      "unavailable": "{{alt}} (inte tillgänglig)",
+      "view": "Visa",
+      "rendered": "Renderad",
+      "source": "Källa",
+      "showExternalImages": "Visa externa bilder",
+      "truncated": "Visar de första {{limit}} av {{size}}.",
+      "confirmLabel": "Öppna länk",
+      "confirmQuestion": "Öppna den här länken utanför Office Studio?"
+    },
+    "pdf": {
+      "loadFailed": "Det gick inte att läsa in PDF-filen: {{message}}",
+      "properties": "Egenskaper",
+      "frameTitle": "PDF: {{name}}",
+      "linuxUnsupported": "Webbvyn i Linux kan inte visa PDF-filer på ett tillförlitligt sätt. Fullständig förhandsgranskning kommer i en framtida version (Rust-visare).",
+      "cannotPreview": "Den här PDF-filen kan inte förhandsgranskas här. Fullständig förhandsgranskning kommer i en framtida version (Rust-visare).",
+      "subtitle": "PDF-dokument",
+      "subtitleVersion": "PDF {{version}}",
+      "pages": "Sidor",
+      "author": "Författare",
+      "subject": "Ämne",
+      "createdWith": "Skapad med",
+      "created": "Skapad",
+      "modified": "Ändrad",
+      "encrypted": "Krypterad",
+      "incomplete": "filen verkar vara ofullständig eller skadad",
+      "showPreview": "Visa förhandsgranskning"
+    },
+    "cad": {
+      "loadFailed": "Det gick inte att läsa in ritningen: {{message}}",
+      "previewLater": "En förhandsgranskning kommer i en framtida version (Rust-visare).",
+      "tooLargeToParse": "Den här filen är för stor för att analyseras här. En förhandsgranskning kommer i en framtida version (Rust-visare).",
+      "dwgSubtitle": "AutoCAD-ritning (DWG)",
+      "dxfSubtitle": "DXF-ritning",
+      "dxfBinarySubtitle": "Binär DXF-ritning",
+      "format": "Format",
+      "savedAs": "Sparad som",
+      "unknownAutocadVersion": "okänd AutoCAD-version",
+      "units": "Enheter",
+      "entities": "Entiteter",
+      "blocks": "Block",
+      "layers": "Lager",
+      "thumbnailAlt": "Inbäddad miniatyr av ritningen",
+      "thumbnailCaption": "Miniatyr från filen",
+      "entitiesByType": "Entiteter per typ",
+      "layersCount": "Lager ({{n}})",
+      "andMore": "… och {{n}} till",
+      "versionRange": "AutoCAD {{from}} till {{to}}",
+      "versionAndLater": "AutoCAD {{version}} och senare",
+      "unitCode": "kod {{code}}",
+      "unitNames": {
+        "unitless": "enhetslös",
+        "inch": "tum",
+        "foot": "fot",
+        "mile": "mile",
+        "millimeter": "millimeter",
+        "centimeter": "centimeter",
+        "meter": "meter",
+        "kilometer": "kilometer",
+        "microinch": "mikrotum",
+        "mil": "mil (tusendels tum)",
+        "yard": "yard",
+        "angstrom": "ångström",
+        "nanometer": "nanometer",
+        "micron": "mikron",
+        "decimeter": "decimeter",
+        "decameter": "dekameter",
+        "hectometer": "hektometer",
+        "gigameter": "gigameter",
+        "astronomicalUnit": "astronomisk enhet",
+        "lightYear": "ljusår",
+        "parsec": "parsec",
+        "usSurveyFoot": "amerikansk lantmäterifot",
+        "usSurveyInch": "amerikansk lantmäteritum",
+        "usSurveyYard": "amerikansk lantmäteriyard",
+        "usSurveyMile": "amerikansk lantmäterimile"
+      }
+    },
+    "ifc": {
+      "loadFailed": "Det gick inte att läsa in modellen: {{message}}",
+      "previewLater": "3D-förhandsgranskningen kommer i en framtida version (Rust-visare).",
+      "tooLarge": "Den här modellen är större än {{size}} MB och analyseras inte här.",
+      "analysing": "Analyserar modell… {{percent}}",
+      "cancelled": "Analysen avbröts.",
+      "retry": "Analysera igen",
+      "failed": "Analysen misslyckades: {{message}}",
+      "subtitle": "IFC-modell",
+      "subtitleWithSchema": "IFC-modell · {{schemas}}",
+      "nameInFile": "Namn i filen",
+      "timestamp": "Tidsstämpel",
+      "author": "Författare",
+      "organization": "Organisation",
+      "application": "Program",
+      "description": "Beskrivning",
+      "sites": "Platser",
+      "buildings": "Byggnader",
+      "entities": "Entiteter",
+      "incomplete": "filen verkar vara ofullständig (ingen END-ISO-10303-21)",
+      "storeys": "Våningar ({{n}})",
+      "elementsHeading": "Byggnadsdelar",
+      "allEntityTypes": "Alla entitetstyper ({{n}})",
+      "elements": {
+        "wall": "Väggar",
+        "wallStandardCase": "Väggar (standardfall)",
+        "curtainWall": "Glasfasader",
+        "slab": "Golv och bjälklag",
+        "roof": "Tak",
+        "column": "Pelare",
+        "beam": "Balkar",
+        "member": "Stänger",
+        "plate": "Plattor",
+        "door": "Dörrar",
+        "window": "Fönster",
+        "stair": "Trappor",
+        "ramp": "Ramper",
+        "railing": "Räcken",
+        "covering": "Beklädnader",
+        "footing": "Grundsulor",
+        "pile": "Pålar",
+        "space": "Utrymmen",
+        "opening": "Öppningar",
+        "furnishing": "Inredning",
+        "flowSegment": "Kanal- och rörsegment",
+        "flowTerminal": "Installationsdon",
+        "proxy": "Övriga byggnadsdelar",
+        "storey": "Våningar"
+      }
+    },
+    "office": {
+      "kinds": {
+        "document": "Textdokument",
+        "spreadsheet": "Kalkylblad",
+        "presentation": "Presentation",
+        "database": "Databas"
+      },
+      "genericDocument": "Office-dokument",
+      "type": "Typ",
+      "openFailed": "Det gick inte att öppna: {{message}}",
+      "openCopyHint": "Öppna en redigerbar kopia i {{module}}. Originalet i e-postmeddelandet förblir oförändrat.",
+      "cannotOpen": "Det här Office-formatet kan inte öppnas här.",
+      "opening": "Öppnar…",
+      "openIn": "Öppna i {{module}}"
+    },
+    "unknown": {
+      "subtitle": "Ingen förhandsgranskning tillgänglig",
+      "declaredType": "Angiven typ",
+      "extension": "Filändelse",
+      "none": "ingen",
+      "message": "Ingen förhandsgranskning kan visas för den här filtypen. Spara den och öppna den bara om du litar på avsändaren."
+    }
+  },
+  "backend": {
+    "accounts": {
+      "fileCorrupt": "Kontofilen {{path}} är skadad.",
+      "fileUnreadable": "Det gick inte att läsa kontofilen.",
+      "fileWriteFailed": "Det gick inte att skriva kontofilen.",
+      "invalidEmail": "Ange en giltig e-postadress.",
+      "invalidReplyTo": "Svarsadressen är inte en giltig e-postadress.",
+      "lineBreakInName": "Namn får inte innehålla radbrytningar.",
+      "notFound": "Det här kontot finns inte längre.",
+      "saveFailed": "Det gick inte att spara kontona.",
+      "usernameMissing": "Ange användarnamnet för IMAP och SMTP."
+    },
+    "attachments": {
+      "blockedDatabase": "Av säkerhetsskäl öppnas '{{name}}' inte automatiskt. Öppna Access-databaser i Database Studio. Spara bilagan om du ändå vill visa den.",
+      "blockedExecutable": "Av säkerhetsskäl öppnas '{{name}}' inte automatiskt. Den här filtypen kan köra program. Spara bilagan om du ändå vill visa den.",
+      "blockedMacros": "Av säkerhetsskäl öppnas '{{name}}' inte automatiskt. Det här dokumentet innehåller makron. Spara bilagan om du ändå vill visa den.",
+      "blockedScripts": "Av säkerhetsskäl öppnas '{{name}}' inte automatiskt. Den här filtypen kan innehålla skript. Spara bilagan om du ändå vill visa den.",
+      "emptyOrTooLarge": "Bilagan är tom eller större än 100 MB.",
+      "executableContent": "'{{name}}' är {{kind}} och öppnas inte av säkerhetsskäl.",
+      "invalidName": "Ogiltigt filnamn.",
+      "kind": {
+        "linuxProgram": "Linux-program (ELF)",
+        "macProgram": "macOS-program (Mach-O) eller Java-klass",
+        "script": "skript",
+        "windowsProgram": "Windows-program (PE)",
+        "windowsShortcut": "Windows-genväg"
+      },
+      "nameMissing": "Filnamnet saknas.",
+      "noProgram": "Inget program hittades för att öppna den här bilagan.",
+      "notFound": "Bilaga {{index}} finns inte i det här meddelandet.",
+      "openFailed": "Det gick inte att öppna.",
+      "sendAsBinary": "Skicka bilagan som binära data på högst 100 MB.",
+      "tempDirFailed": "Det gick inte att skapa en tillfällig mapp.",
+      "tempSaveFailed": "Det gick inte att spara bilagan tillfälligt."
+    },
+    "auth": {
+      "failed": "Inloggningen på {{host}} misslyckades: användarnamnet eller lösenordet är felaktigt ({{detail}}). Gmail, Outlook, iCloud och Yahoo kräver ett applösenord.",
+      "noPassword": "Inget lösenord har angetts eller sparats för det här kontot.",
+      "noStoredPassword": "Inget lösenord har sparats för det här kontot. Ange lösenordet i kontoinställningarna."
+    },
+    "autoconfig": {
+      "httpsRedirectOnly": "Endast omdirigeringar till HTTPS följs.",
+      "invalidEncoding": "Ogiltig teckenkodning i konfigurationsfilen.",
+      "notFound": "Ingen konfiguration hittades (HTTP {{status}}).",
+      "tooManyRedirects": "För många omdirigeringar."
+    },
+    "common": {
+      "saveFailed": "Det gick inte att spara."
+    },
+    "compose": {
+      "attachmentCorrupt": "Bilagan '{{name}}' är skadad.",
+      "attachmentsTooLarge": "Bilagorna är totalt större än {{max}} MB. Skicka stora filer via en delningslänk.",
+      "buildFailed": "Det gick inte att skapa meddelandet ({{detail}}).",
+      "field": {
+        "bcc": "Hemlig kopia",
+        "cc": "Kopia",
+        "from": "Från",
+        "inReplyTo": "In-Reply-To",
+        "references": "References",
+        "replyTo": "Reply-To",
+        "subject": "Ämnet",
+        "to": "Till"
+      },
+      "invalidAddress": "'{{address}}' i {{field}} är inte en giltig e-postadress.",
+      "invalidCharacters": "{{field}} innehåller ogiltiga tecken.",
+      "invalidEnvelope": "Ogiltigt kuvert.",
+      "noRecipients": "Ange minst en mottagare."
+    },
+    "connection": {
+      "failed": "Ingen anslutning till {{host}}: {{detail}}",
+      "hostNotFound": "Servernamnet {{host}} hittades inte.",
+      "refused": "Servern {{host}} avvisade anslutningen. Kontrollera porten och säkerhetsinställningen.",
+      "reset": "Anslutningen till {{host}} stängdes oväntat. Matchar säkerhetsinställningen (SSL/TLS eller STARTTLS) porten?",
+      "timeout": "Servern {{host}} svarade inte i tid. Kontrollera servernamnet, porten och brandväggen."
+    },
+    "files": {
+      "saveFailed": "Det gick inte att spara filen."
+    },
+    "http": {
+      "invalidHttpResponse": "Ogiltigt HTTP-svar.",
+      "invalidResponse": "Ogiltigt svar.",
+      "invalidServerName": "Ogiltigt servernamn {{host}}.",
+      "invalidUrl": "Ogiltig webbadress.",
+      "plainOnlyLocal": "Okrypterad HTTP är bara tillåten till den här datorn.",
+      "redirectWithoutLocation": "Omdirigering utan adress.",
+      "responseTooLarge": "Serverns svar är för stort."
+    },
+    "images": {
+      "credentialsInUrl": "Adresser som innehåller inloggningsuppgifter hämtas inte.",
+      "hostNotFound": "{{host}} hittades inte.",
+      "httpOnly": "Endast http- och https-adresser är tillåtna.",
+      "invalidServerName": "Ogiltigt servernamn.",
+      "notAnImage": "Den här adressen returnerar ingen bild.",
+      "privateAddress": "Externt innehåll från interna eller lokala adresser hämtas inte.",
+      "timeout": "Bilden lästes inte in inom 10 sekunder.",
+      "tooLarge": "Bilden är större än 10 MB.",
+      "tooManyRedirects": "För många omdirigeringar (högst 3).",
+      "unavailable": "Bilden är inte tillgänglig (HTTP {{status}}).",
+      "unknownRedirect": "Okänd omdirigering.",
+      "unsupportedImage": "Innehållet är inte en bild som stöds."
+    },
+    "imap": {
+      "action": {
+        "copy": "Kopiera",
+        "countFolders": "Räkna mappar",
+        "createFolder": "Skapa mapp",
+        "delete": "Ta bort",
+        "deleteFolder": "Ta bort mapp",
+        "expunge": "Rensa",
+        "fetchMessage": "Hämta meddelande",
+        "fetchMessages": "Hämta meddelanden",
+        "flag": "Flagga",
+        "listFolders": "Hämta mappar",
+        "move": "Flytta",
+        "openFolder": "Öppna mapp",
+        "openNamedFolder": "Öppna mappen '{{folder}}'",
+        "renameFolder": "Byt namn på mapp",
+        "saveToDrafts": "Spara i Utkast",
+        "saveToFolder": "Spara i mapp",
+        "saveToSent": "Spara i Skickat",
+        "search": "Sök",
+        "signIn": "Logga in",
+        "startTls": "STARTTLS"
+      },
+      "alreadyInTrash": "Dessa meddelanden finns redan i papperskorgen; ta bort dem permanent.",
+      "appendRejected": "{{action}}: servern avvisade meddelandet.",
+      "badCommand": "{{action}}: servern förstod inte kommandot ({{detail}}).",
+      "cannotDeleteInbox": "Inkorgen kan inte tas bort.",
+      "cannotRenameInbox": "Inkorgen kan inte byta namn.",
+      "closedImmediately": "{{host}} stängde anslutningen direkt. Matchar säkerhetsinställningen (SSL/TLS eller STARTTLS) porten?",
+      "commandTimeout": "{{host}} svarade inte inom {{seconds}} sekunder.",
+      "connectTimeout": "Inget svar från {{host}}:{{port}} inom {{seconds}} sekunder. Kontrollera servernamnet, porten och brandväggen.",
+      "connectionLost": "Anslutningen till {{host}} bröts.",
+      "draftsFolderMissing": "Ingen utkastmapp hittades på servern. Välj den mappen i kontoinställningarna.",
+      "greetingRefused": "{{host}} avvisade anslutningen: {{detail}}",
+      "invalidFolderName": "Ogiltigt mappnamn.",
+      "invalidMessage": "Ogiltigt meddelande.",
+      "invalidName": "{{action}}: ogiltiga tecken i namnet.",
+      "invalidSearchCharacters": "Söktexten innehåller ogiltiga tecken.",
+      "messageGone": "Det här meddelandet finns inte längre (det kan ha flyttats eller tagits bort).",
+      "messageTooLarge": "Meddelandet är {{size}} MB; Email Studio öppnar meddelanden på upp till {{max}} MB.",
+      "noStarttls": "{{host}} stöder inte STARTTLS på port {{port}}. Välj SSL/TLS (vanligtvis port 993).",
+      "noTrash": "Ingen papperskorgsmapp hittades på servern. Välj en papperskorgsmapp i kontoinställningarna eller ta bort permanent.",
+      "noValidMessages": "Inga giltiga meddelanden angivna.",
+      "notFound": "{{action}}: {{detail}}",
+      "quotaExceeded": "{{action}}: brevlådan är full ({{detail}}).",
+      "refused": "{{action}}: servern vägrade ({{detail}}).",
+      "retryLater": "{{message}} (Email Studio försöker igen om {{retrySeconds}} sekunder för att inte blockeras av servern.)",
+      "searchTooLong": "Söktexten är för lång.",
+      "sentFolderMissing": "Ingen mapp för skickade meddelanden hittades på servern. Välj den mappen i kontoinställningarna.",
+      "signInTimeout": "Inloggningen på {{host}} tog för lång tid.",
+      "specialFolderMissing": "Mappen hittades inte på servern. Välj den mappen i kontoinställningarna.",
+      "unexpectedError": "{{action}}: oväntat fel.",
+      "unexpectedResponse": "{{action}}: oväntat svar från servern.",
+      "unexpectedState": "Oväntat anslutningstillstånd."
+    },
+    "keychain": {
+      "notResponding": "Nyckelringen svarade inte.",
+      "unavailable": "Operativsystemets nyckelring är inte tillgänglig. Email Studio lagrar aldrig lösenord i klartext; i Linux krävs en Secret Service (till exempel GNOME Keyring eller KWallet).",
+      "unexpected": "Nyckelringen returnerade ett oväntat fel."
+    },
+    "links": {
+      "openFailed": "Det gick inte att öppna länken.",
+      "unsupportedScheme": "Endast http-, https- och mailto-länkar kan öppnas."
+    },
+    "messages": {
+      "invalidMime": "Det gick inte att läsa meddelandet (ogiltig MIME-struktur).",
+      "unreadable": "Det gick inte att läsa meddelandet."
+    },
+    "oauth": {
+      "browserFailed": "Det gick inte att öppna webbläsaren för inloggning.",
+      "cancelled": "Inloggningen avbröts.",
+      "cancelledOrDenied": "Inloggningen hos {{provider}} avbröts eller nekades.",
+      "clientMisconfigured": "OAuth-klienten för {{provider}} är inte korrekt konfigurerad (klient-ID eller hemlighet).",
+      "emailUnknown": "Det gick inte att fastställa inloggningens e-postadress; ange adressen och försök igen.",
+      "invalidClientId": "Det här är inte ett giltigt klient-ID.",
+      "invalidTokenEndpoint": "Ogiltig tokenslutpunkt.",
+      "noAccessToken": "{{provider}} returnerade ingen åtkomsttoken (HTTP {{status}}).",
+      "noFreePort": "Ingen tillfällig port är tillgänglig för inloggning.",
+      "noPort": "Ingen port.",
+      "noRefreshToken": "{{provider}} returnerade ingen uppdateringstoken; försök logga in igen.",
+      "noStoredSignIn": "Logga in hos {{provider}} igen: ingen inloggning har sparats för det här kontot.",
+      "notConfigured": {
+        "google": "Inloggning med Google har inte konfigurerats ännu: det finns inget klient-ID. Skapa i Google Cloud en OAuth-klient av typen 'Datorprogram' (omdirigering via http://127.0.0.1), aktivera Gmail API och lägg till omfånget https://mail.google.com/ på medgivandeskärmen. Ange sedan klient-ID och klienthemlighet (se docs/email-oauth.md).",
+        "microsoft": "Inloggning med Microsoft har inte konfigurerats ännu: det finns inget klient-ID. Registrera en app i Microsoft Entra (Appregistreringar) som 'Offentlig klient', lägg till plattformen 'Mobil- och skrivbordsprogram' med omdirigerings-URI:n http://localhost och bevilja de delegerade behörigheterna IMAP.AccessAsUser.All, SMTP.Send, offline_access, openid och email. Ange sedan klient-ID:t (se docs/email-oauth.md)."
+      },
+      "providerRefused": "{{provider}} avvisade inloggningen ({{detail}}).",
+      "randomUnavailable": "Ingen säker slumpkälla tillgänglig.",
+      "reauthenticate": "Logga in hos {{provider}} igen: behörigheten har gått ut eller återkallats.",
+      "settingSaveFailed": "Det gick inte att spara OAuth-inställningen.",
+      "signInFirst": "Det här kontot använder OAuth2: logga först in med Microsoft eller Google.",
+      "signInFirstToTest": "Logga först in med Microsoft eller Google för att testa OAuth2.",
+      "signInTimeout": "Inloggningen hos {{provider}} tog mer än 5 minuter och avbröts.",
+      "stateMismatch": "Svaret från inloggningssidan hör inte till den här inloggningen (state stämmer inte).",
+      "timeout": "{{provider}} svarade inte i tid.",
+      "tokenRefused": "{{provider}} avvisade token ({{detail}}).",
+      "unexpectedResponse": "{{provider}} returnerade ett oväntat svar (HTTP {{status}})."
+    },
+    "security": {
+      "cramMd5SmtpUnsupported": "Krypterat lösenord (CRAM-MD5) stöds inte för SMTP. Välj 'normalt lösenord'; via SSL/TLS eller STARTTLS krypteras lösenordet också.",
+      "invalidServerName": "'{{host}}' är inte ett giltigt servernamn för {{protocol}}.",
+      "notLocalhost": "{{host}} är inte den här datorn, så en okrypterad anslutning nekades.",
+      "portMissing": "Porten för {{protocol}} saknas.",
+      "unencryptedRefused": "Inloggning på {{host}} utan kryptering nekades: ditt lösenord skulle färdas över nätverket i läsbar form. Välj SSL/TLS eller STARTTLS. Okrypterade anslutningar är bara tillåtna till den här datorn (localhost), till exempel för Proton Mail Bridge."
+    },
+    "server": {
+      "noTimelyResponse": "{{host}} svarade inte i tid."
+    },
+    "smtp": {
+      "authMethodUnsupported": "Den här inloggningsmetoden stöds inte för SMTP.",
+      "error": "SMTP-fel hos {{host}}: {{detail}}",
+      "messageTooLarge": "{{host}} avvisar meddelandet eftersom det är för stort ({{detail}}).",
+      "noAuthMechanism": "{{host}} erbjuder ingen inloggningsmetod som Email Studio stöder (PLAIN eller LOGIN). Välj STARTTLS eller SSL/TLS; många servrar erbjuder inloggning först efter kryptering.",
+      "oauthRejected": "{{host}} avvisade OAuth2-token; du kan behöva logga in igen.",
+      "rejected": "{{host}} avvisade meddelandet ({{detail}}).",
+      "sendTimeout": "Skickandet via {{host}} tog för lång tid.",
+      "tlsFailed": "Den säkra anslutningen till {{host}} kunde inte upprättas ({{detail}}). Matchar säkerhetsinställningen porten?",
+      "tryLater": "{{host}} kan inte ta emot meddelandet just nu; försök igen senare ({{detail}})."
+    },
+    "storage": {
+      "appDataDirNotFound": "Appens datamapp hittades inte.",
+      "dataDirCreateFailed": "Det gick inte att skapa datamappen.",
+      "dataDirMissing": "Datamappen saknas."
+    },
+    "test": {
+      "signedIn": "Inloggad på {{host}}.",
+      "signedInUnencrypted": "Inloggad på {{host}}. Obs! {{protocol}}-anslutningen är inte krypterad. Det är bara tillåtet eftersom servern körs på den här datorn."
+    },
+    "tls": {
+      "certificateRejected": "Den säkra anslutningen till {{host}} nekades: {{reason}}. För att skydda ditt lösenord ansluter Email Studio inte till en server vars identitet inte kan verifieras.",
+      "handshakeFailed": "Den säkra anslutningen till {{host}} kunde inte upprättas ({{detail}}). Matchar säkerhetsinställningen (SSL/TLS eller STARTTLS) porten?",
+      "handshakeTimeout": "TLS-handskakningen med {{host}} tog för lång tid.",
+      "invalidServerName": "'{{host}}' är inte ett giltigt servernamn för TLS.",
+      "reason": {
+        "expired": "certifikatet har gått ut",
+        "invalid": "certifikatet är ogiltigt ({{detail}})",
+        "notYetValid": "certifikatet är inte giltigt ännu (går datorns klocka rätt?)",
+        "revoked": "certifikatet har återkallats",
+        "unknownIssuer": "certifikatet har inte utfärdats av en betrodd certifikatutfärdare (möjligen självsignerat)",
+        "wrongName": "certifikatet hör inte till namnet {{host}}; använd servernamnet som anges i certifikatet"
+      }
+    }
+  }
+}

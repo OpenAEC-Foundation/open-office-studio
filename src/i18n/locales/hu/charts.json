@@ -1,0 +1,265 @@
+{
+  "types": {
+    "column": {
+      "name": "Oszlop",
+      "description": "Értékek összehasonlítása egymás mellett"
+    },
+    "stackedColumn": {
+      "name": "Halmozott oszlop",
+      "description": "Részek és összeg kategóriánként"
+    },
+    "percentColumn": {
+      "name": "100%-os oszlop",
+      "description": "Arányok kategóriánként"
+    },
+    "bar": {
+      "name": "Sáv",
+      "description": "Vízszintes, hosszú nevekhez"
+    },
+    "line": {
+      "name": "Vonal",
+      "description": "Alakulás az idő függvényében"
+    },
+    "lineMarkers": {
+      "name": "Vonal jelölőkkel",
+      "description": "Alakulás látható adatpontokkal"
+    },
+    "area": {
+      "name": "Terület",
+      "description": "Alakulás a nagyság hangsúlyozásával"
+    },
+    "pie": {
+      "name": "Kör",
+      "description": "Egyetlen adatsor megoszlása"
+    },
+    "doughnut": {
+      "name": "Perec",
+      "description": "Megoszlás üres középpel"
+    },
+    "scatter": {
+      "name": "Pont (XY)",
+      "description": "Két szám közötti kapcsolat"
+    },
+    "combo": {
+      "name": "Oszlop + vonal",
+      "description": "Utolsó adatsor vonalként másodlagos tengelyen"
+    }
+  },
+  "unknownType": "Ismeretlen típus",
+  "busy": "Feldolgozás…",
+  "defaults": {
+    "seriesName": "{{n}}. adatsor",
+    "categoryName": "{{n}}. kategória",
+    "chartName": "{{n}}. diagram",
+    "sheetName": "{{n}}. diagram",
+    "true": "IGAZ",
+    "false": "HAMIS"
+  },
+  "ribbon": {
+    "charts": "Diagramok",
+    "chart": "Diagram",
+    "editChart": "Diagram szerkesztése",
+    "allCharts": "Összes diagram",
+    "dataAndFormat": "Adatok és formázás",
+    "overview": "Áttekintés",
+    "type": "Típus",
+    "changeType": "Diagramtípus módosítása",
+    "data": "Adatok",
+    "selectData": "Adatok kijelölése",
+    "layout": "Elrendezés",
+    "titleAndLegend": "Cím és jelmagyarázat",
+    "delete": "Törlés",
+    "deleteChart": "Diagram törlése",
+    "withShortcut": "{{name}} · {{shortcut}}"
+  },
+  "dialog": {
+    "title": {
+      "insert": "Diagram beszúrása",
+      "edit": "Diagram szerkesztése"
+    },
+    "button": {
+      "insert": "Beszúrás",
+      "edit": "Frissítés"
+    },
+    "reloadNote": {
+      "insert": "Beszúrás után a dokumentum újratöltődik. Az előtte végzett módosítások már nem vonhatók vissza.",
+      "edit": "Frissítés után a dokumentum újratöltődik. Az előtte végzett módosítások már nem vonhatók vissza."
+    },
+    "closeTitle": "Bezárás (Esc)",
+    "type": "Típus",
+    "data": "Adatok",
+    "cellRange": "Cellatartomány",
+    "cellRangePlaceholder": "Például A1:D6",
+    "noContiguousRange": "A diagram hivatkozásai nem alkotnak összefüggő tartományt; az adatok változatlanok maradnak, amíg meg nem ad egy tartományt.",
+    "firstRowNames": "Az első sor neveket tartalmaz",
+    "firstColumnNames": "Az első oszlop neveket tartalmaz",
+    "seriesIn": "Adatsorok helye",
+    "columns": "oszlopokban",
+    "rows": "sorokban",
+    "series": "Adatsor",
+    "seriesNoNumbersTitle": "{{name}}: nincsenek számok, nincs benne",
+    "noNumbers": "(nincsenek számok)",
+    "enterRange": "Adja meg az adatokat tartalmazó cellatartományt.",
+    "placeCursorInTable": "Előbb helyezze a kurzort egy számokat tartalmazó táblázatba.",
+    "titles": "Címek",
+    "chartTitle": "Cím",
+    "subtitle": "Alcím",
+    "categoryAxis": "Kategóriatengely",
+    "valueAxis": "Értéktengely",
+    "horizontalAxis": "Vízszintes tengely",
+    "verticalAxis": "Függőleges tengely",
+    "secondaryAxis": "Másodlagos tengely",
+    "format": "Formátum",
+    "legend": "Jelmagyarázat",
+    "gridlines": "Rácsvonalak",
+    "dataLabels": "Adatfeliratok",
+    "decimals": "Tizedesjegyek",
+    "placement": "Elhelyezés",
+    "besideData": "Az adatok mellett ezen a lapon",
+    "newSheet": "Új lapon",
+    "sheetName": "Lap neve",
+    "summary": {
+      "series_one": "{{n}} adatsor",
+      "series_other": "{{n}} adatsor",
+      "categories_one": "{{n}} kategória",
+      "categories_other": "{{n}} kategória",
+      "text": "{{series}} · {{categories}}",
+      "withSheet": "{{series}} · {{categories}} · {{sheet}}"
+    }
+  },
+  "legend": {
+    "bottom": "Lent",
+    "right": "Jobbra",
+    "top": "Fent",
+    "left": "Balra",
+    "none": "Nincs jelmagyarázat"
+  },
+  "dataSheet": {
+    "row": "Sor",
+    "series": "Adatsor",
+    "removeLastRow": "Utolsó sor törlése",
+    "removeLastSeries": "Utolsó adatsor törlése",
+    "paste": "Beillesztés",
+    "pasteTitle": "Tabulátorokkal elválasztott szöveg beillesztése a vágólapról, például egy táblázatból másolva",
+    "fromTable": "A kijelölt táblázatból",
+    "fromTableTitle": "Átveszi azt a táblázatot, amelyben a kurzor áll",
+    "pasteNotAllowed": "A gombbal való beillesztés itt nem engedélyezett. Kattintson egy cellába, és használja a Ctrl+V billentyűkombinációt.",
+    "corner": "Sarokcella",
+    "seriesNameLabel": "A(z) {{n}}. adatsor neve",
+    "categoryLabel": "{{n}}. kategória",
+    "valueLabel": "Érték: {{row}}. sor, {{series}}. adatsor"
+  },
+  "preview": {
+    "label": "Előnézet: {{title}}",
+    "untitled": "Előnézet: névtelen diagram"
+  },
+  "list": {
+    "title": "Diagramok ebben a dokumentumban",
+    "empty": "Ez a dokumentum még nem tartalmaz diagramot.",
+    "edit": "Szerkesztés",
+    "delete": "Törlés",
+    "deleteLabel": "{{name}} törlése",
+    "place": {
+      "slide": "{{n}}. dia",
+      "sheet": "{{name}} lap",
+      "text": "{{n}}. diagram a szövegben"
+    }
+  },
+  "deleteConfirm": {
+    "title": "Diagram törlése",
+    "text": "Törli a következőt: ‘{{name}}’? A dokumentum ezután újratöltődik; a korábbi módosítások már nem vonhatók vissza.",
+    "textSheet": "Törli a következőt a(z) {{sheet}} lapról: ‘{{name}}’? A dokumentum ezután újratöltődik; a korábbi módosítások már nem vonhatók vissza.",
+    "button": "Törlés"
+  },
+  "errors": {
+    "unknownType": "Ismeretlen diagramtípus.",
+    "noSeries": "A diagramhoz legalább egy adatsor szükséges.",
+    "tooManySeries": "Egy diagram itt legfeljebb {{max}} adatsort tartalmazhat.",
+    "tooManyCategories": "Egy diagram itt legfeljebb {{max}} kategóriát tartalmazhat.",
+    "noCategories": "A diagramhoz legalább egy kategória szükséges.",
+    "valueCountMismatch": "A(z) ‘{{name}}’ adatsornak nincs annyi értéke, ahány kategória van.",
+    "noNumbers": "Az adatok nem tartalmaznak számokat.",
+    "comboNeedsTwoSeries": "A kombinált diagramhoz legalább két adatsor szükséges: oszlopok és egy vonal.",
+    "scatterNeedsNumbers": "A pontdiagramhoz számok szükségesek X értékként az első oszlopban vagy sorban.",
+    "titleTooLong": "A címek legfeljebb {{max}} karakter hosszúak lehetnek.",
+    "invalidColor": "A(z) ‘{{color}}’ szín nem érvényes szín.",
+    "noNumericColumn": "A tartomány egyik oszlopa sem tartalmaz számokat, így nincs mit ábrázolni. Válasszon legalább egy számoszlopot tartalmazó tartományt, vagy állítsa az ‘Adatsorok helye’ beállítást sorokra.",
+    "noNumericRow": "A tartomány egyik sora sem tartalmaz számokat, így nincs mit ábrázolni. Válasszon legalább egy számsort tartalmazó tartományt, vagy állítsa az ‘Adatsorok helye’ beállítást oszlopokra.",
+    "chooseSeries": "Válasszon legalább egy adatsort a diagramhoz.",
+    "rangeTooLarge": "A tartomány túl nagy: legfeljebb {{max}} cella.",
+    "noDataBesideHeaders": "A tartomány a fejléceken kívül nem tartalmaz adatot.",
+    "pasteTooLarge": "A beillesztett adatok túl nagyok egy diagramhoz.",
+    "invalidRange": "Ez nem érvényes cellatartomány. Használja például az A1:D6 vagy a 'Munka1'!A1:D6 formát.",
+    "noSuchSheet": "Nincs ‘{{name}}’ nevű lap.",
+    "spreadsheetNotReady": "A táblázat még nem áll készen.",
+    "spreadsheetReadOnly": "A táblázat írásvédett.",
+    "documentNotReady": "A dokumentum még nem áll készen.",
+    "presentationNotEditable": "A bemutató jelenleg nem szerkeszthető.",
+    "selectChartFirst": "Előbb jelöljön ki egy diagramot.",
+    "chartGone": "A diagram már nem található.",
+    "notEditableHere": "Ez a diagram itt nem szerkeszthető.",
+    "notEditable": "Ez a diagram nem szerkeszthető.",
+    "package": {
+      "tooLarge": "A dokumentum túl nagy ahhoz, hogy diagramot szerkesszen benne.",
+      "tooManyParts": "A dokumentum túl sok vagy túl nagy részt tartalmaz.",
+      "notZip": "A dokumentum nem érvényes Office-fájl (zip).",
+      "invalidPartName": "A dokumentum érvénytelen résznevet tartalmaz.",
+      "noContentTypes": "A dokumentumból hiányzik a [Content_Types].xml.",
+      "missingPart": "A dokumentumból hiányzik a(z) {{part}} rész.",
+      "noFreePartName": "Nem maradt szabad résznév."
+    },
+    "xml": {
+      "tooLarge": "Egy XML-rész túl nagy a feldolgozáshoz.",
+      "damaged": "Az XML-rész sérült.",
+      "doctype": "Biztonsági okokból a DOCTYPE-ot tartalmazó XML nem kerül feldolgozásra.",
+      "tooDeep": "Az XML-rész túl mélyen van beágyazva.",
+      "overlappingChanges": "Belső hiba: egymást átfedő XML-módosítások."
+    },
+    "chartXml": {
+      "notDrawingML": "Ez a rész nem DrawingML-diagram.",
+      "noPlotArea": "A diagramnak nincs rajzterülete.",
+      "unusualPrefix": "Ez a diagram szokatlan XML-jelölést használ, és itt nem szerkeszthető biztonságosan."
+    },
+    "document": {
+      "noMainPart": "A dokumentumból hiányzik a fő rész.",
+      "tooManyCharts": "Ez a dokumentum már {{total}} diagramot tartalmaz; többet nem támogat.",
+      "invalidSheetName": "Érvénytelen lapnév: legfeljebb 31 karakter, a következők nélkül: \\ / ? * [ ] :",
+      "sheetExists": "Már létezik ‘{{name}}’ nevű lap.",
+      "noSheetList": "A munkafüzetnek nincs laplistája.",
+      "drawingMissing": "Ennek a lapnak a rajza hiányzik vagy sérült.",
+      "noSuchWorksheet": "A kiválasztott lap nem létezik, vagy nem munkalap.",
+      "notPlainWorksheet": "Diagram csak normál munkalapra helyezhető.",
+      "drawingDamaged": "Ennek a lapnak a rajza sérült.",
+      "docxUnusualPrefix": "Ez a dokumentum szokatlan XML-jelölést használ; a diagram nem szúrható be biztonságosan.",
+      "noBody": "A dokumentumnak nincs törzse.",
+      "tableTooLarge": "A táblázat túl nagy egy diagramhoz.",
+      "noSuchSlide": "A kiválasztott dia nem létezik.",
+      "slideUnusualPrefix": "Ez a dia szokatlan XML-jelölést használ; a diagram nem szúrható be biztonságosan.",
+      "noShapeTree": "A diának nincs alakzatfája.",
+      "chartRemoved": "A diagram már nem létezik a dokumentumban.",
+      "chartNotFound": "A diagram nem található.",
+      "cannotRemove": "A diagramobjektum nem távolítható el."
+    }
+  },
+  "read": {
+    "reasons": {
+      "extendedChart": "Ez egy bővített diagram (például vízesés- vagy fatérkép-diagram), amely itt nem szerkeszthető.",
+      "unsupportedType": "Ez a diagram olyan típust használ, amely itt nem szerkeszthető ({{types}}).",
+      "noReadableSeries": "A diagram nem tartalmaz olvasható adatsort.",
+      "unsupportedCombination": "Ez a diagram olyan módon kombinálja a típusokat, amely itt nem szerkeszthető.",
+      "noSeries": "A diagram nem tartalmaz adatsort.",
+      "invalid": "Ez a diagram itt nem szerkeszthető: {{reason}}",
+      "unusualPrefix": "Ez a diagram szokatlan XML-jelölést használ, és itt nem szerkeszthető biztonságosan."
+    },
+    "warnings": {
+      "stackedBars": "Szerkesztéskor a halmozott sávok egymás mellé kerülnek.",
+      "stackedLines": "Szerkesztéskor a halmozott vonalak külön vonalakká válnak.",
+      "stackedAreas": "Szerkesztéskor a halmozott területek külön területekké válnak.",
+      "linesAfterColumns": "Szerkesztéskor a vonalas adatsorok az oszlopok után kerülnek.",
+      "lastSeriesAsLine": "Szerkesztéskor csak az utolsó adatsor jelenik meg vonalként.",
+      "multiLevelCategories": "Szerkesztéskor a többszintű kategóriák egyszintűvé válnak.",
+      "moreValuesThanCategories": "A(z) ‘{{name}}’ adatsornak több értéke van, mint ahány kategória.",
+      "trendlinesDropped": "Szerkesztéskor a trendvonalak és a hibasávok eltávolításra kerülnek."
+    }
+  }
+}

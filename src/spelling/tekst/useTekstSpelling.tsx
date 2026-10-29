@@ -10,6 +10,8 @@
  */
 import type { DocxEditorRef, DocxPluginError } from "@betteroffice/docx-react";
 import { useEffect, useMemo, useRef, useSyncExternalStore } from "react";
+import i18next from "../../i18n/config";
+import { formatGetal } from "../../i18n/opmaak";
 import { leesInstellingen, volgInstellingen } from "../../instellingen";
 import { SCHEIDING } from "../autocorrectie";
 import { spellingControleur } from "../dienst";
@@ -27,10 +29,10 @@ const INVOER = ".paged-editor__yrs-input";
 /** Korte spellingstatus voor de statusbalk, of null als de controle uit staat. */
 export function spellingStatus(sessie: { aan: boolean; aantal: number | null; probleem: string | null }): string | null {
   if (!sessie.aan) return null;
-  if (sessie.probleem) return "spelling niet beschikbaar";
-  if (sessie.aantal === null) return "spelling controleren…";
-  if (sessie.aantal === 0) return "geen spelfouten";
-  return `${sessie.aantal} ${sessie.aantal === 1 ? "spelfout" : "spelfouten"}`;
+  if (sessie.probleem) return i18next.t("spelling:status.unavailable");
+  if (sessie.aantal === null) return i18next.t("spelling:status.checking");
+  if (sessie.aantal === 0) return i18next.t("spelling:status.noErrors");
+  return i18next.t("spelling:status.errors", { count: sessie.aantal, errors: formatGetal(sessie.aantal) });
 }
 
 /** Een plug-infout van de engine (de plug-in staat dan uit): melden in de console. */

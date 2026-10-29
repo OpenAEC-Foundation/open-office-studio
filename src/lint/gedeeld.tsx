@@ -17,6 +17,8 @@ import {
   type PptxSelectCommandId,
 } from "@betteroffice/pptx-react";
 import { Undo2, Redo2, ZoomIn, type LucideIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { formatProcent } from "../i18n/opmaak";
 import { LettertypeKeuze } from "../lettertypen/LettertypeKeuze";
 import {
   presentatieVoorbeeld,
@@ -108,40 +110,44 @@ export function Geschiedenis({
 }: {
   soort: "tekst" | "rekenblad" | "dia";
 }) {
+  const { t } = useTranslation("ribbon");
+  const ongedaan = t("common.undo"),
+    opnieuw = t("common.redo");
   return (
-    <Groep naam="Bewerken">
+    <Groep naam={t("common.edit")}>
       <div className="ribbon-stapel">
         {soort === "tekst" ? (
           <>
-            <W id="undo" naam="Ongedaan" icoon={Undo2} />
-            <W id="redo" naam="Opnieuw" icoon={Redo2} />
+            <W id="undo" naam={ongedaan} icoon={Undo2} />
+            <W id="redo" naam={opnieuw} icoon={Redo2} />
           </>
         ) : soort === "rekenblad" ? (
           <>
-            <C id="undo" naam="Ongedaan" icoon={Undo2} />
-            <C id="redo" naam="Opnieuw" icoon={Redo2} />
+            <C id="undo" naam={ongedaan} icoon={Undo2} />
+            <C id="redo" naam={opnieuw} icoon={Redo2} />
           </>
         ) : (
           <>
-            <P id="undo" naam="Ongedaan" icoon={Undo2} />
-            <P id="redo" naam="Opnieuw" icoon={Redo2} />
+            <P id="undo" naam={ongedaan} icoon={Undo2} />
+            <P id="redo" naam={opnieuw} icoon={Redo2} />
           </>
         )}
       </div>
     </Groep>
   );
 }
-/** Zoomwaarde buiten de vaste stappen (Ctrl+wiel, schuif): als percentage tonen. */
+/** Zoomwaarde buiten de vaste stappen (Ctrl+wiel, schuif): als percentage in de notatie van de taal. */
 export function zoomTekst(waarde: unknown) {
   if (typeof waarde !== "number" || !Number.isFinite(waarde) || waarde <= 0) return undefined;
-  return `${Math.round(waarde <= 10 ? waarde * 100 : waarde)}%`;
+  return formatProcent(Math.round(waarde <= 10 ? waarde * 100 : waarde) / 100);
 }
 export function Zoom({ opdracht }: { opdracht: GebondenOpdracht }) {
+  const { t } = useTranslation("ribbon");
   return (
-    <Groep naam="Zoom">
+    <Groep naam={t("common.zoom")}>
       <div className="ribbon-stapel">
         <ZoomIn size={24} strokeWidth={1.5} />
-        <OpdrachtKeuze opdracht={opdracht} naam="Zoomniveau" waardeTekst={zoomTekst} />
+        <OpdrachtKeuze opdracht={opdracht} naam={t("common.zoomLevel")} waardeTekst={zoomTekst} />
       </div>
     </Groep>
   );

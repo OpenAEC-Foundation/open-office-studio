@@ -146,23 +146,27 @@ const GEWEIGERD: &[&str] = &[
 ];
 
 /// Herkent uitvoerbare inhoud aan de eerste bytes, ongeacht de extensie.
-pub fn uitvoerbare_inhoud(b: &[u8]) -> Option<&'static str> {
+/// Geeft de Nederlandse omschrijving en de vertaalsleutel daarvan.
+pub fn uitvoerbare_inhoud(b: &[u8]) -> Option<(&'static str, &'static str)> {
     let begint = |p: &[u8]| b.starts_with(p);
     if begint(b"MZ") {
-        Some("Windows-programma (PE)")
+        Some(("Windows-programma (PE)", "attachments.kind.windowsProgram"))
     } else if begint(b"\x7fELF") {
-        Some("Linux-programma (ELF)")
+        Some(("Linux-programma (ELF)", "attachments.kind.linuxProgram"))
     } else if begint(&[0xfe, 0xed, 0xfa, 0xce])
         || begint(&[0xfe, 0xed, 0xfa, 0xcf])
         || begint(&[0xce, 0xfa, 0xed, 0xfe])
         || begint(&[0xcf, 0xfa, 0xed, 0xfe])
         || begint(&[0xca, 0xfe, 0xba, 0xbe])
     {
-        Some("macOS-programma (Mach-O) of Java-klasse")
+        Some((
+            "macOS-programma (Mach-O) of Java-klasse",
+            "attachments.kind.macProgram",
+        ))
     } else if begint(b"#!") {
-        Some("script")
+        Some(("script", "attachments.kind.script"))
     } else if begint(&[0x4c, 0x00, 0x00, 0x00, 0x01, 0x14, 0x02, 0x00]) {
-        Some("Windows-snelkoppeling")
+        Some(("Windows-snelkoppeling", "attachments.kind.windowsShortcut"))
     } else {
         None
     }
@@ -171,9 +175,10 @@ pub fn uitvoerbare_inhoud(b: &[u8]) -> Option<&'static str> {
 /// Mag deze bijlage met het standaardprogramma worden geopend?
 pub fn controleer_openen(naam: &str, bytes: &[u8]) -> Uitkomst<String> {
     if bytes.is_empty() || bytes.len() > MAX_BESTAND {
-        return Err(MailFout::te_groot(
-            "De bijlage is leeg of groter dan 100 MB.",
-        ));
+        return Err(
+            MailFout::te_groot("De bijlage is leeg of groter dan 100 MB.")
+                .sleutel("attachments.emptyOrTooLarge"),
+        );
     }
     let naam = veilige_naam(naam);
     let ext = Path::new(&naam)
@@ -182,21 +187,35 @@ pub fn controleer_openen(naam: &str, bytes: &[u8]) -> Uitkomst<String> {
         .unwrap_or("")
         .to_ascii_lowercase();
     if GEWEIGERD.contains(&ext.as_str()) {
-        let uitleg = match ext.as_str() {
-            "accdb" | "mdb" | "accde" | "mde" => " Open Access-databases in Database Studio.",
-            "html" | "htm" | "xhtml" | "svg" | "xml" => " Dit bestandstype kan scripts bevatten.",
+        let (uitleg, sleutel) = match ext.as_str() {
+            "accdb" | "mdb" | "accde" | "mde" => (
+                " Open Access-databases in Database Studio.",
+                "attachments.blockedDatabase",
+            ),
+            "html" | "htm" | "xhtml" | "svg" | "xml" => (
+                " Dit bestandstype kan scripts bevatten.",
+                "attachments.blockedScripts",
+            ),
             "docm" | "dotm" | "xlsm" | "xltm" | "xlam" | "pptm" | "potm" | "ppam" | "ppsm"
-            | "sldm" => " Dit document bevat macro's.",
-            _ => " Dit bestandstype kan programma's uitvoeren.",
+            | "sldm" => (" Dit document bevat macro's.", "attachments.blockedMacros"),
+            _ => (
+                " Dit bestandstype kan programma's uitvoeren.",
+                "attachments.blockedExecutable",
+            ),
         };
         return Err(MailFout::geweigerd(format!(
             "'{naam}' wordt om veiligheidsredenen niet automatisch geopend.{uitleg} Sla de bijlage op als je hem toch wilt bekijken."
-        )));
+        ))
+        .sleutel(sleutel)
+        .waarde("name", naam));
     }
-    if let Some(soort) = uitvoerbare_inhoud(bytes) {
+    if let Some((soort, soort_sleutel)) = uitvoerbare_inhoud(bytes) {
         return Err(MailFout::geweigerd(format!(
             "'{naam}' is een {soort} en wordt om veiligheidsredenen niet geopend."
-        )));
+        ))
+        .sleutel("attachments.executableContent")
+        .waarde("name", naam)
+        .waarde("kindKey", soort_sleutel));
     }
     Ok(naam)
 }
@@ -224,7 +243,10 @@ fn tijdelijke_map() -> Uitkomst<&'static Path> {
             Some(map)
         })
         .as_deref()
-        .ok_or_else(|| MailFout::intern("Er kon geen tijdelijke map worden gemaakt."))
+        .ok_or_else(|| {
+            MailFout::intern("Er kon geen tijdelijke map worden gemaakt.")
+                .sleutel("attachments.tempDirFailed")
+        })
 }
 
 /// Restanten van eerdere sessies (ouder dan 12 uur) opruimen.
@@ -281,18 +303,19 @@ fn verwijder_map(map: &Path) {
 pub fn schrijf_tijdelijk(naam: &str, bytes: &[u8]) -> Uitkomst<PathBuf> {
     let naam = controleer_openen(naam, bytes)?;
     let map = tijdelijke_map()?;
+    let fout = |_| {
+        MailFout::intern("De bijlage kon niet tijdelijk worden opgeslagen.")
+            .sleutel("attachments.tempSaveFailed")
+    };
     // Eigen submap per bijlage, zodat gelijke namen niet botsen.
     let sub = tempfile::Builder::new()
         .prefix("b")
         .tempdir_in(map)
-        .map_err(|_| MailFout::intern("De bijlage kon niet tijdelijk worden opgeslagen."))?
+        .map_err(fout)?
         .keep();
     let pad = sub.join(&naam);
-    std::fs::write(&pad, bytes)
-        .map_err(|_| MailFout::intern("De bijlage kon niet tijdelijk worden opgeslagen."))?;
-    let mut rechten = std::fs::metadata(&pad)
-        .map_err(|_| MailFout::intern("De bijlage kon niet tijdelijk worden opgeslagen."))?
-        .permissions();
+    std::fs::write(&pad, bytes).map_err(fout)?;
+    let mut rechten = std::fs::metadata(&pad).map_err(fout)?.permissions();
     rechten.set_readonly(true);
     let _ = std::fs::set_permissions(&pad, rechten);
     Ok(pad)
@@ -306,9 +329,10 @@ pub fn controleer_link(url: &str) -> Uitkomst<()> {
         .iter()
         .any(|s| u.len() > s.len() && u[..s.len()].eq_ignore_ascii_case(s));
     if !schema_ok || u.len() > 8192 || u.chars().any(|c| c.is_control() || c.is_whitespace()) {
-        return Err(MailFout::geweigerd(
-            "Alleen http-, https- en mailto-links kunnen worden geopend.",
-        ));
+        return Err(
+            MailFout::geweigerd("Alleen http-, https- en mailto-links kunnen worden geopend.")
+                .sleutel("links.unsupportedScheme"),
+        );
     }
     Ok(())
 }
@@ -384,7 +408,10 @@ struct Doel {
 }
 
 fn ontleed(url: &str) -> Uitkomst<Doel> {
-    let fout = || MailFout::geweigerd("Alleen http- en https-adressen zijn toegestaan.");
+    let fout = || {
+        MailFout::geweigerd("Alleen http- en https-adressen zijn toegestaan.")
+            .sleutel("images.httpOnly")
+    };
     let (tls, rest) = if let Some(r) = url.strip_prefix("https://") {
         (true, r)
     } else if let Some(r) = url.strip_prefix("http://") {
@@ -400,9 +427,10 @@ fn ontleed(url: &str) -> Uitkomst<Doel> {
         None => (rest, "/"),
     };
     if gezag.contains('@') {
-        return Err(MailFout::geweigerd(
-            "Adressen met inloggegevens worden niet opgehaald.",
-        ));
+        return Err(
+            MailFout::geweigerd("Adressen met inloggegevens worden niet opgehaald.")
+                .sleutel("images.credentialsInUrl"),
+        );
     }
     let pad = pad.split('#').next().unwrap_or("/");
     let pad = if pad.starts_with('/') {
@@ -445,12 +473,17 @@ fn ontleed(url: &str) -> Uitkomst<Doel> {
 async fn publiek_adres(host: &str, poort: u16) -> Uitkomst<SocketAddr> {
     let adressen: Vec<SocketAddr> = tokio::net::lookup_host((host, poort))
         .await
-        .map_err(|_| MailFout::niet_gevonden(format!("{host} is niet gevonden.")))?
+        .map_err(|_| {
+            MailFout::niet_gevonden(format!("{host} is niet gevonden."))
+                .sleutel("images.hostNotFound")
+                .waarde("host", host)
+        })?
         .collect();
     if adressen.is_empty() || adressen.iter().any(|a| !is_publiek(a.ip())) {
         return Err(MailFout::geweigerd(
             "Externe inhoud van interne of lokale adressen wordt niet opgehaald.",
-        ));
+        )
+        .sleutel("images.privateAddress"));
     }
     Ok(adressen[0])
 }
@@ -466,7 +499,9 @@ async fn een_get(d: &Doel) -> Uitkomst<(u16, Vec<(String, String)>, Vec<u8>)> {
     );
     if d.tls {
         let naam = rustls::pki_types::ServerName::try_from(d.host.clone())
-            .map_err(|_| MailFout::geweigerd("Ongeldige servernaam."))?;
+            .map_err(|_| {
+                MailFout::geweigerd("Ongeldige servernaam.").sleutel("images.invalidServerName")
+            })?;
         let s = tokio_rustls::TlsConnector::from(super::imap::tls_instellingen())
             .connect(naam, tcp)
             .await
@@ -493,29 +528,34 @@ async fn lees<S: tokio::io::AsyncRead + tokio::io::AsyncWrite + Unpin>(
             Ok(n) => {
                 alles.extend_from_slice(&buf[..n]);
                 if alles.len() > MAX_AFBEELDING + 64 * 1024 {
-                    return Err(MailFout::te_groot("De afbeelding is groter dan 10 MB."));
+                    return Err(te_grote_afbeelding());
                 }
             }
             Err(e) if e.kind() == std::io::ErrorKind::UnexpectedEof => break,
             Err(e) => return Err(super::fout::uit_io(&e, host)),
         }
     }
+    let ongeldig = || MailFout::verbinding("Ongeldig antwoord.").sleutel("http.invalidResponse");
     let eind = alles
         .windows(4)
         .position(|w| w == b"\r\n\r\n")
-        .ok_or_else(|| MailFout::verbinding("Ongeldig antwoord."))?;
+        .ok_or_else(ongeldig)?;
     let kop = String::from_utf8_lossy(&alles[..eind]).to_string();
     let mut regels = kop.split("\r\n");
     let status: u16 = regels
         .next()
         .and_then(|r| r.split_whitespace().nth(1))
         .and_then(|s| s.parse().ok())
-        .ok_or_else(|| MailFout::verbinding("Ongeldig antwoord."))?;
+        .ok_or_else(ongeldig)?;
     let koppen = regels
         .filter_map(|r| r.split_once(':'))
         .map(|(k, v)| (k.trim().to_ascii_lowercase(), servertekst(v)))
         .collect();
     Ok((status, koppen, alles[eind + 4..].to_vec()))
+}
+
+fn te_grote_afbeelding() -> MailFout {
+    MailFout::te_groot("De afbeelding is groter dan 10 MB.").sleutel("images.tooLarge")
 }
 
 #[derive(Debug, Serialize)]
@@ -536,14 +576,16 @@ pub async fn haal_afbeelding(url: &str) -> Uitkomst<ExterneInhoud> {
             match status {
                 200 => {
                     if lichaam.len() > MAX_AFBEELDING {
-                        return Err(MailFout::te_groot("De afbeelding is groter dan 10 MB."));
+                        return Err(te_grote_afbeelding());
                     }
                     let opgegeven = kop("content-type").unwrap_or_default().to_ascii_lowercase();
                     if !opgegeven.starts_with("image/") {
-                        return Err(MailFout::geweigerd("Dit adres levert geen afbeelding."));
+                        return Err(MailFout::geweigerd("Dit adres levert geen afbeelding.")
+                            .sleutel("images.notAnImage"));
                     }
                     let soort = afbeeldingstype(&lichaam).ok_or_else(|| {
                         MailFout::geweigerd("De inhoud is geen ondersteunde afbeelding.")
+                            .sleutel("images.unsupportedImage")
                     })?;
                     return Ok(ExterneInhoud {
                         bytes: base64::engine::general_purpose::STANDARD.encode(&lichaam),
@@ -552,7 +594,10 @@ pub async fn haal_afbeelding(url: &str) -> Uitkomst<ExterneInhoud> {
                 }
                 301 | 302 | 303 | 307 | 308 => {
                     let locatie = kop("location")
-                        .ok_or_else(|| MailFout::niet_gevonden("Doorverwijzing zonder adres."))?;
+                        .ok_or_else(|| {
+                            MailFout::niet_gevonden("Doorverwijzing zonder adres.")
+                                .sleutel("http.redirectWithoutLocation")
+                        })?;
                     doel = if locatie.starts_with("http://") || locatie.starts_with("https://") {
                         ontleed(&locatie)?
                     } else if locatie.starts_with('/') && !locatie.starts_with("//") {
@@ -561,23 +606,28 @@ pub async fn haal_afbeelding(url: &str) -> Uitkomst<ExterneInhoud> {
                             ..doel
                         }
                     } else {
-                        return Err(MailFout::geweigerd("Onbekende doorverwijzing."));
+                        return Err(MailFout::geweigerd("Onbekende doorverwijzing.")
+                            .sleutel("images.unknownRedirect"));
                     };
                 }
                 _ => {
                     return Err(MailFout::niet_gevonden(format!(
                         "De afbeelding is niet beschikbaar (HTTP {status})."
-                    )))
+                    ))
+                    .sleutel("images.unavailable")
+                    .waarde("status", status))
                 }
             }
         }
-        Err(MailFout::geweigerd(
-            "Te veel doorverwijzingen (maximaal 3).",
-        ))
+        Err(MailFout::geweigerd("Te veel doorverwijzingen (maximaal 3).")
+            .sleutel("images.tooManyRedirects"))
     };
     tokio::time::timeout(AFBEELDING_LIMIET, werk)
         .await
-        .map_err(|_| MailFout::tijdslimiet("De afbeelding laadde niet binnen 10 seconden."))?
+        .map_err(|_| {
+            MailFout::tijdslimiet("De afbeelding laadde niet binnen 10 seconden.")
+                .sleutel("images.timeout")
+        })?
 }
 
 /* ─── Tauri-opdrachten ─── */
@@ -588,17 +638,22 @@ fn lees_verzoek(request: &tauri::ipc::Request<'_>) -> Uitkomst<(String, Vec<u8>)
         _ => {
             return Err(MailFout::te_groot(
                 "Stuur de bijlage als binaire gegevens van maximaal 100 MB.",
-            ))
+            )
+            .sleutel("attachments.sendAsBinary"))
         }
     };
     let kop = request
         .headers()
         .get("x-email-naam")
         .and_then(|n| n.to_str().ok())
-        .ok_or_else(|| MailFout::geweigerd("De bestandsnaam ontbreekt."))?;
+        .ok_or_else(|| {
+            MailFout::geweigerd("De bestandsnaam ontbreekt.").sleutel("attachments.nameMissing")
+        })?;
     let naam = percent_encoding::percent_decode_str(kop)
         .decode_utf8()
-        .map_err(|_| MailFout::geweigerd("Ongeldige bestandsnaam."))?;
+        .map_err(|_| {
+            MailFout::geweigerd("Ongeldige bestandsnaam.").sleutel("attachments.invalidName")
+        })?;
     Ok((veilige_naam(&naam), bytes))
 }
 
@@ -632,11 +687,14 @@ pub async fn email_bewaar_bestand(request: tauri::ipc::Request<'_>) -> Uitkomst<
     // Het doel komt uitsluitend uit de native dialoog; atomair vervangen.
     tauri::async_runtime::spawn_blocking(move || {
         crate::schrijf_atomair(&pad, &bytes)
-            .map_err(|_| MailFout::intern("Het bestand kon niet worden opgeslagen."))?;
+            .map_err(|_| {
+                MailFout::intern("Het bestand kon niet worden opgeslagen.")
+                    .sleutel("files.saveFailed")
+            })?;
         Ok(Some(pad.to_string_lossy().into_owned()))
     })
     .await
-    .map_err(|_| MailFout::intern("Opslaan mislukt."))?
+    .map_err(|_| MailFout::intern("Opslaan mislukt.").sleutel("common.saveFailed"))?
 }
 
 /// Bijlage openen met het standaardprogramma (na de veiligheidscontrole).
@@ -645,9 +703,10 @@ pub async fn email_open_extern(request: tauri::ipc::Request<'_>) -> Uitkomst<()>
     let (naam, bytes) = lees_verzoek(&request)?;
     let pad = tauri::async_runtime::spawn_blocking(move || schrijf_tijdelijk(&naam, &bytes))
         .await
-        .map_err(|_| MailFout::intern("Openen mislukt."))??;
+        .map_err(|_| MailFout::intern("Openen mislukt.").sleutel("attachments.openFailed"))??;
     open::that_detached(&pad).map_err(|_| {
         MailFout::niet_beschikbaar("Er is geen programma gevonden om deze bijlage te openen.")
+            .sleutel("attachments.noProgram")
     })
 }
 
@@ -661,7 +720,9 @@ pub async fn email_externe_inhoud(url: String) -> Uitkomst<ExterneInhoud> {
 pub async fn email_open_link(url: String) -> Uitkomst<()> {
     controleer_link(&url)?;
     open::that_detached(url.trim())
-        .map_err(|_| MailFout::niet_beschikbaar("De link kon niet worden geopend."))
+        .map_err(|_| {
+            MailFout::niet_beschikbaar("De link kon niet worden geopend.").sleutel("links.openFailed")
+        })
 }
 
 #[cfg(test)]

@@ -1,0 +1,141 @@
+{
+  "dialogs": {
+    "cancel": "Abbrechen",
+    "saveAsEllipsis": "Speichern unter…",
+    "officeFile": "Office-Datei",
+    "officeFiles": "Office-Dateien",
+    "untitled": "Unbenannt",
+    "saveCopy": "Kopie speichern",
+    "saveAs": "Speichern unter",
+    "openFile": "Datei öffnen",
+    "replaceFile": {
+      "title": "Datei ersetzen",
+      "message": "Die Datei {{path}} ist bereits vorhanden. Ersetzen?"
+    },
+    "unsavedChanges": {
+      "title": "Nicht gespeicherte Änderungen",
+      "message_one": "Ein Dokument in diesem Fenster enthält Änderungen, die noch nicht gespeichert wurden. Sie gehen verloren. Trotzdem schließen?",
+      "message_other": "{{count}} Dokumente in diesem Fenster enthalten Änderungen, die noch nicht gespeichert wurden. Sie gehen verloren. Trotzdem schließen?"
+    },
+    "fileChanged": {
+      "title": "Datei geändert",
+      "missing": "{{name}} ist am ursprünglichen Speicherort nicht mehr vorhanden. Mit Ihrer Version neu anlegen oder an anderer Stelle speichern?",
+      "changedExternally": "{{name}} wurde seit dem Öffnen außerhalb von Open Office Studio geändert. Beim Überschreiben gehen diese Änderungen verloren.",
+      "overwrite": "Überschreiben"
+    },
+    "foreignFormat": {
+      "title": "Speichern als {{format}}",
+      "message": "{{name}} wird im Format {{format}} aktualisiert. Die Office-Laufzeit konvertiert das Dokument dafür; Formatierungen, die {{format}} nicht kennt, können verloren gehen.",
+      "hint": "Wählen Sie Speichern unter…, um eine DOCX-, XLSX- oder PPTX-Datei zu behalten.",
+      "update": "Als {{format}} aktualisieren"
+    },
+    "chooseConverter": "Konvertierungsprogramm auswählen (soffice)",
+    "databaseExport": {
+      "title": "Datenbankexport speichern",
+      "filter": "Datenbankexport",
+      "sqliteFilter": "SQLite-Arbeitskopie",
+      "replaceTitle": "Export ersetzen",
+      "replaceMessage": "Diese Exportdatei ist bereits vorhanden. Ersetzen?"
+    }
+  },
+  "errors": {
+    "file": {
+      "invalidBody": "Die Datei ist leer, größer als 100 MB oder wurde nicht als Binärdaten gesendet.",
+      "emptyOrTooLarge": "Die Datei ist leer oder größer als 100 MB.",
+      "formatInfoMissing": "Die Formatangaben fehlen.",
+      "formatMissing": "Das Format fehlt.",
+      "targetFolderMissing": "Der Zielordner fehlt.",
+      "nameMissing": "Der Dateiname fehlt.",
+      "nameInvalidChars": "Der Dateiname enthält ungültige Zeichen.",
+      "unsupportedFormat": "Nicht unterstütztes Dateiformat.",
+      "extensionMismatch": "Die gewählte Dateiendung passt nicht zum Dokument.",
+      "alreadyOpenedOrOtherWindow": "Diese Datei ist bereits geöffnet oder nicht für dieses Fenster bestimmt.",
+      "notThisWindow": "Diese Datei gehört nicht zu diesem Fenster.",
+      "notLinked": "Diese Datei ist nicht (mehr) mit dieser Registerkarte verknüpft.",
+      "tokenMissing": "Das Token fehlt.",
+      "openInOtherTab": "{{name}} ist in einer anderen Registerkarte geöffnet. Schließen Sie diese zuerst oder wählen Sie einen anderen Namen.",
+      "readOnly": "Keine Schreibrechte in diesem Ordner oder die Datei ist schreibgeschützt ({{path}}). Wählen Sie einen anderen Speicherort.",
+      "notInRecentList": "Diese Datei steht nicht (mehr) in der Liste."
+    },
+    "preferences": {
+      "tooLarge": "Die Einstellungen sind größer als 64 kB.",
+      "invalid": "Die Einstellungen sind kein gültiges JSON-Objekt.",
+      "configDirUnavailable": "Der Konfigurationsordner der App ist nicht verfügbar.",
+      "pathInvalid": "Ungültiger Pfad für die Einstellungen."
+    },
+    "font": {
+      "notInstalled": "Die Schriftart {{family}} ist auf diesem Computer nicht vorhanden.",
+      "notFound": "Schriftart nicht gefunden.",
+      "fileTooLarge": "Diese Schriftdatei ist zu groß.",
+      "inCollection": "Diese Schriftart gehört zu einer Sammlung (.ttc) und kann nicht einzeln verwendet werden.",
+      "unreadable": "Die Schriftdatei konnte nicht gelesen werden.",
+      "nameInvalid": "Ungültiger Schriftartname."
+    },
+    "recovery": {
+      "keyInvalid": "Ungültiger Wiederherstellungsschlüssel.",
+      "spaceFull": "Der Speicherplatz für Wiederherstellungskopien (512 MB) ist voll. Speichern Sie Ihre Dokumente.",
+      "sessionMissing": "Die Sitzung fehlt.",
+      "keyMissing": "Der Schlüssel fehlt.",
+      "dataInvalid": "Ungültige Wiederherstellungsdaten.",
+      "unknownDocumentType": "Unbekannter Dokumenttyp.",
+      "sessionNotThisWindow": "Diese Wiederherstellungssitzung gehört nicht zu diesem Fenster.",
+      "sessionOtherWindow": "Diese Wiederherstellungssitzung gehört zu einem anderen Fenster.",
+      "sessionStillRunning": "Diese Sitzung läuft noch."
+    },
+    "window": {
+      "closed": "Dieses Fenster wurde geschlossen.",
+      "transferEmptyOrTooLarge": "Die Übergabe ist leer oder zu groß.",
+      "mainWindowUnavailable": "Das Hauptfenster ist nicht verfügbar.",
+      "openFailed": "Das Fenster konnte nicht geöffnet werden: {{error}}",
+      "transferExpired": "Diese Übergabe ist abgelaufen oder wurde bereits übernommen.",
+      "transferAlreadyTaken": "Diese Übergabe wurde bereits übernommen.",
+      "transferUnknown": "Diese Übergabe ist unbekannt."
+    },
+    "conversion": {
+      "unknownModule": "Unbekanntes Office-Modul.",
+      "sourceFormatMismatch": "Das Quellformat gehört nicht zu diesem Modul.",
+      "outputFormatUnsupported": "Dieses Ausgabeformat wird nicht unterstützt.",
+      "outputFormatDirect": "Dieses Ausgabeformat wird direkt in der App erstellt, nicht per Konvertierung.",
+      "invalidOptions": "Ungültige Konvertierungsoptionen.",
+      "chooseSoffice": "Wählen Sie das Programm soffice (Windows: soffice.exe) aus dem Ordner program der Office-Laufzeit.",
+      "chosenFileMissing": "Die gewählte Datei existiert nicht.",
+      "chosenPathNotFile": "Der gewählte Pfad ist keine Datei.",
+      "chosenFileNotExecutable": "Die gewählte Datei ist nicht ausführbar.",
+      "appDataDirUnavailable": "Der Datenordner der App ist nicht verfügbar.",
+      "startFailed": "Die Konvertierung konnte nicht gestartet werden: {{error}}",
+      "failed": "Die Konvertierung ist fehlgeschlagen ({{reason}}). Das Original bleibt erhalten.",
+      "exitCode": "Exitcode {{code}}",
+      "processAborted": "Prozess abgebrochen",
+      "timeout": "Die Konvertierung hat das Zeitlimit überschritten und wurde beendet. Das Original bleibt erhalten.",
+      "profilePathInvalid": "Der temporäre Profilpfad ist ungültig.",
+      "inputSize": "Wählen Sie eine nicht leere Datei mit höchstens 100 MB.",
+      "runtimeMissing": "Für dieses Format ist eine Office-Laufzeit (LibreOffice) erforderlich. Sie wurde nicht gefunden: Installieren Sie sie, wählen Sie das Programm unter Speichern unter aus oder setzen Sie OPENAEC_CONVERSIE_PROGRAMMA. DOCX, XLSX und PPTX funktionieren direkt.",
+      "notConverted": "Diese Datei konnte nicht konvertiert werden. Sie ist möglicherweise beschädigt oder geschützt, oder der Formatfilter fehlt in der lokalen Laufzeit.",
+      "multipleOutputs": "Die Konvertierung hat mehr als eine Datei erzeugt.",
+      "noUsableOutput": "Die Konvertierung hat keine brauchbare Datei mit höchstens 100 MB erzeugt."
+    },
+    "databaseExport": {
+      "emptyOrTooLarge": "Der Export ist leer oder größer als 100 MB.",
+      "emptyInvalidOrTooLarge": "Der Export ist leer, ungültig oder größer als 100 MB.",
+      "nameMissing": "Dateiname fehlt.",
+      "nameInvalid": "Ungültiger Dateiname.",
+      "notSqlite": "Dies ist keine SQLite-Arbeitskopie.",
+      "typeNotAllowed": "Nur CSV-, Quelltext-, Bericht- und SQLite-Arbeitskopie-Exporte sind zulässig. Access-Datenbanken werden nicht überschrieben.",
+      "textNotUtf8": "Ein Textexport muss gültiger UTF-8-Text sein.",
+      "sendAsBinary": "Senden Sie den Export als Binärdaten von höchstens 100 MB.",
+      "extensionMismatch": "Die gewählte Dateiendung passt nicht zum Export."
+    }
+  },
+  "launcher": {
+    "officeStudio": {
+      "genericName": "Office-Paket",
+      "comment": "Lokale OpenAEC-Büroumgebung",
+      "keywords": "Textverarbeitung;Tabellenkalkulation;Präsentation;Datenbank;E-Mail;Büro;Office;"
+    },
+    "databaseStudio": {
+      "genericName": "Datenbankbetrachter",
+      "comment": "Alte MDB- und ACCDB-Datenbanken lokal öffnen",
+      "keywords": "Datenbank;Tabelle;Abfrage;Access;"
+    }
+  }
+}

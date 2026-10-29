@@ -3,6 +3,7 @@
  * relaties en inhoudstypen. Ongewijzigde onderdelen blijven byte-gelijk.
  */
 import { strFromU8, strToU8, unzipSync, zipSync, type Zippable } from "fflate";
+import i18next from "../i18n/config";
 import { GrafiekFout, LIMIETEN } from "./fouten.ts";
 import { attr, attrTekst, kinderen, leesXml, ontsnap, vervang } from "./xml.ts";
 
@@ -37,7 +38,7 @@ export class Pakket {
 
   constructor(bytes: Uint8Array) {
     if (bytes.byteLength > LIMIETEN.pakketBytes)
-      throw new GrafiekFout("Het document is te groot om er een grafiek in te bewerken.");
+      throw new GrafiekFout(i18next.t("charts:errors.package.tooLarge"));
     let totaal = 0;
     let aantal = 0;
     let bestanden: Record<string, Uint8Array>;
@@ -47,25 +48,25 @@ export class Pakket {
           aantal++;
           totaal += f.originalSize;
           if (aantal > LIMIETEN.onderdelen || totaal > LIMIETEN.uitgepaktBytes)
-            throw new GrafiekFout("Het document bevat te veel of te grote onderdelen.");
+            throw new GrafiekFout(i18next.t("charts:errors.package.tooManyParts"));
           return true;
         },
       });
     } catch (e) {
       if (e instanceof GrafiekFout) throw e;
-      throw new GrafiekFout("Het document is geen geldig Office-bestand (zip).");
+      throw new GrafiekFout(i18next.t("charts:errors.package.notZip"));
     }
     this.onderdelen = new Map();
     this.volgorde = [];
     for (const [naam, inhoud] of Object.entries(bestanden)) {
       if (naam.endsWith("/")) continue;
       if (naam.includes("\\") || naam.split("/").includes(".."))
-        throw new GrafiekFout("Het document bevat een ongeldige onderdeelnaam.");
+        throw new GrafiekFout(i18next.t("charts:errors.package.invalidPartName"));
       this.onderdelen.set(naam, inhoud);
       this.volgorde.push(naam);
     }
     if (!this.onderdelen.has("[Content_Types].xml"))
-      throw new GrafiekFout("Het document mist [Content_Types].xml.");
+      throw new GrafiekFout(i18next.t("charts:errors.package.noContentTypes"));
   }
 
   heeft(pad: string) {
@@ -78,7 +79,7 @@ export class Pakket {
     const t = this.tekst.get(pad);
     if (t !== undefined) return t;
     const b = this.onderdelen.get(pad);
-    if (!b) throw new GrafiekFout(`Onderdeel ${pad} ontbreekt in het document.`);
+    if (!b) throw new GrafiekFout(i18next.t("charts:errors.package.missingPart", { part: pad }));
     let s = strFromU8(b);
     if (s.charCodeAt(0) === 0xfeff) s = s.slice(1);
     return s;
@@ -109,7 +110,7 @@ export class Pakket {
       const pad = patroon.replace("#", String(n));
       if (!bezet.has(pad.toLowerCase())) return pad;
     }
-    throw new GrafiekFout("Er is geen vrije onderdeelnaam meer.");
+    throw new GrafiekFout(i18next.t("charts:errors.package.noFreePartName"));
   }
 
   // --- Relaties --------------------------------------------------------

@@ -1,0 +1,471 @@
+{
+  "start": {
+    "backToWorkspace": "返回工作区",
+    "workspace": "工作区",
+    "home": "开始",
+    "saveTitle": "保存 · Ctrl+S",
+    "saveAs": "另存为",
+    "saveAsTitle": "另存为 · F12 或 Ctrl+Shift+S",
+    "print": "打印",
+    "printTitle": "打印预览和打印 · Ctrl+P",
+    "info": "信息",
+    "infoTitle": "文档属性、统计信息和检查文档",
+    "sendAsAttachment": "作为附件发送",
+    "sendAsAttachmentTitle": "将当前文档作为附件添加到新电子邮件中",
+    "email": "电子邮件",
+    "emailUnread_other": "电子邮件，{{count}} 封未读",
+    "newFile": "新建文件",
+    "databaseTitle": "Database Studio · 将 Access 数据库作为可编辑的工作副本",
+    "databaseSubtitle": "工作副本 · 编辑、查询、VBA",
+    "settingsTitle": "设置 · Ctrl+,",
+    "shortcutsTitle": "键盘快捷键 · F1",
+    "tagline": "您的本地办公室",
+    "titleFile": "文件",
+    "titleWorkspace": "您的工作区。",
+    "intro": "写作、计算、演示和记录想法。",
+    "addNotesBackup": "添加笔记备份",
+    "openDatabase": "打开数据库",
+    "openFile": "打开文件",
+    "openShortcut": "Ctrl O",
+    "newFileTitle": "新建文件",
+    "newFileHint": "选择工具，从空白文件开始",
+    "notesHeading": "记录想法的地方。",
+    "notesText": "笔记本、分区和页面。自动保存在本地。",
+    "openNotes": "打开笔记",
+    "emailText": "通过 IMAP 和 SMTP 使用您自己的电子邮件。附件可直接在文字、电子表格、演示文稿或数据库中打开。",
+    "unread_other": "{{count}} 封未读",
+    "openEmail": "打开电子邮件",
+    "examplesTitle": "看看您能创建什么",
+    "examplesHint": "示例文件",
+    "existingTitle": "现有文件",
+    "browse": "浏览此电脑",
+    "browseNotes": "添加 OpenAEC 笔记备份。",
+    "browseDatabase": "打开 MDB 或 ACCDB 数据库，或 SQLite 工作副本。",
+    "browseDocuments": "打开文档、电子表格或演示文稿。",
+    "formatNotes": "笔记",
+    "filesStayLocal": "您的文件始终保存在您的计算机上。",
+    "aboutVersion": "关于此版本",
+    "aboutText": "DOCX、XLSX 和 PPTX 可直接使用。设置转换程序后，桌面版还可以转换 ODF 和较旧的格式，格式可能会有差异。Database Studio 会将 MDB 或 ACCDB 文件转换为可编辑的 SQLite 工作副本，包含表、查询、窗体、报表和 VBA；原始文件保持不变。独立应用可作为 Open Database Studio 安装。",
+    "modules": {
+      "docx": {
+        "new": "空白文档",
+        "example": "设计说明",
+        "exampleText": "文字、样式和表格"
+      },
+      "xlsx": {
+        "new": "空白电子表格",
+        "example": "材料清单",
+        "exampleText": "材料、公式和合计"
+      },
+      "pptx": {
+        "new": "空白演示文稿",
+        "example": "设计愿景",
+        "exampleText": "幻灯片、形状和备注"
+      }
+    }
+  },
+  "recent": {
+    "title": "最近",
+    "hintDesktop": "最近打开和保存的文件",
+    "hintBrowser": "此浏览器只记住文件名；请重新选择文件",
+    "clear": "清除列表",
+    "clearTitle": "清除列表；已固定的文件会保留",
+    "missing": "在 {{folder}} 中找不到 {{name}}。可用 ✕ 将其从列表中删除，或通过“浏览”打开。",
+    "missingOriginalFolder": "在原始文件夹中找不到 {{name}}。可用 ✕ 将其从列表中删除，或通过“浏览”打开。",
+    "notFound": "未找到",
+    "notFoundIn": "未找到 · {{location}}",
+    "openFrom": "{{folder}} · 打开",
+    "chooseFile": "选择文件",
+    "nameOnly": "仅知道文件名",
+    "pin": "固定 {{name}}",
+    "unpin": "取消固定 {{name}}",
+    "pinTitle": "固定到顶部",
+    "unpinTitle": "取消固定",
+    "remove": "从列表中删除 {{name}}",
+    "removeTitle": "从列表中删除（文件本身会保留）",
+    "today": "今天 {{time}}",
+    "yesterday": "昨天 {{time}}",
+    "todayInline": "今天 {{time}}",
+    "yesterdayInline": "昨天 {{time}}"
+  },
+  "recovery": {
+    "title": "恢复文档",
+    "explanation": "上次 Open Office Studio 未正常关闭。已为这些文档保留了恢复副本。恢复会打开一个新的未保存标签页；原始文件保持不变。",
+    "copyFrom": "{{module}} · {{date}} 的恢复副本",
+    "restore": "恢复",
+    "saveAs": "另存为…",
+    "discard": "丢弃",
+    "discardLabel": "丢弃 {{name}} 的恢复副本",
+    "later": "稍后决定",
+    "laterTitle": "这些副本会保留到下次启动",
+    "restoredFrom": "已从 {{date}} 的恢复副本中恢复。原始文件未更改；请保存此文档以保留它。",
+    "restoreFailed": "恢复 {{name}} 失败：{{error}}",
+    "copyFailed": "自动恢复无法保存副本：{{error}}"
+  },
+  "leave": {
+    "title": "未保存的更改",
+    "askSave": "是否在关闭前保存对 <strong>{{name}}</strong> 的更改？",
+    "unsaved": "<strong>{{name}}</strong> 包含尚未保存的更改。如要保留这些更改，请先保存文件。",
+    "others_other": "之后还有 {{count}} 个包含未保存更改的文档。",
+    "dontSave": "不保存",
+    "discard": "放弃更改"
+  },
+  "saveAs": {
+    "title": "另存为",
+    "fileName": "文件名",
+    "browserInfo": "在浏览器中，应用会自行生成 Markdown、CSV、HTML、文本和 PDF，以及电子表格和演示文稿的 PNG。标有“仅限桌面应用”的格式需要带办公运行时的桌面版。",
+    "runtimeSearching": "正在查找办公运行时…",
+    "runtimeFound": "办公运行时：{{version}}",
+    "runtimeDetails": "（{{source}}，{{profile}}）",
+    "sourceEnvironment": "来自 OPENAEC_CONVERSIE_PROGRAMMA",
+    "sourceSetting": "由您选择",
+    "sourceAutomatic": "自动检测",
+    "profileSafe": "安全配置文件：宏已关闭",
+    "profileOwn": "自己的配置文件",
+    "runtimeMissing": "未找到办公运行时（LibreOffice）。需要运行时的格式不可用。",
+    "chooseConverter": "选择转换程序",
+    "format": "格式",
+    "groups": {
+      "own": "本机格式",
+      "openDocument": "OpenDocument",
+      "legacyOffice": "较旧的 Office 格式",
+      "templates": "模板",
+      "macro": "启用宏",
+      "webText": "网页和文本",
+      "pdfImage": "PDF 和图像"
+    },
+    "routes": {
+      "inApp": "在应用中",
+      "runtime": "通过办公运行时",
+      "print": "通过打印"
+    },
+    "runtimeMissingShort": "缺少运行时",
+    "desktopOnly": "仅限桌面应用",
+    "separator": "分隔符",
+    "separatorSemicolon": "分号 ;",
+    "separatorComma": "逗号 ,",
+    "separatorTab": "制表符",
+    "separatorPipe": "竖线 |",
+    "encoding": "编码",
+    "encodingUtf8BomExcel": "带 BOM 的 UTF-8（Excel）",
+    "encodingUtf8BomNotepad": "带 BOM 的 UTF-8（记事本、Excel）",
+    "csvInfo": "仅导出所选工作表，使用值而不是公式。以 =、+、- 或 @ 开头的文本会加上撇号，以免电子表格程序将其作为公式执行。",
+    "sheet": "工作表",
+    "activeSheet": "{{name}}（活动）",
+    "protect": "用密码保护以打开",
+    "password": "密码",
+    "repeatPassword": "重复密码",
+    "encryptionInfo": "按照 ECMA-376（AES-256）加密，可在 Word、Excel、PowerPoint 和 LibreOffice 中打开。密码不会被保存；如果忘记密码，将无法再打开该文件。",
+    "noEncryptionInfo": "这不是写保护或工作表保护：不勾选时，文件将以未加密方式保存。",
+    "passwordMissing": "请设置密码。",
+    "passwordMismatch": "两次输入的密码不一致。",
+    "passwordTooLong": "最多 {{max}} 个字符。",
+    "slide": "幻灯片",
+    "slideNumber": "幻灯片 {{number}}",
+    "currentSlide": "幻灯片 {{number}}（当前）",
+    "pdfVariant": "PDF 类型",
+    "pdfPlain": "标准 PDF",
+    "pdfA2b": "PDF/A-2b（存档）",
+    "slides": "幻灯片",
+    "pages": "页面",
+    "rangePlaceholder": "全部，或例如 1-3,5",
+    "bookmarks": "将标题作为书签",
+    "printRoute": "没有办公运行时时，PDF 通过打印生成：在打印对话框中选择打印机 <strong>另存为 PDF</strong>（Windows：“Microsoft Print to PDF”）。版式与编辑器中的显示一致。",
+    "untitled": "无标题",
+    "copyInfo": "这是另一种格式的副本。在您将文档保存为 .{{ext}} 之前，它会一直标记为已更改。",
+    "print": "打印…",
+    "formats": {
+      "docx": {
+        "docx": {
+          "name": "Word 文档",
+          "keeps": "可编辑"
+        },
+        "odt": {
+          "name": "OpenDocument 文本",
+          "keeps": "可编辑；格式可能有差异"
+        },
+        "fodt": {
+          "name": "OpenDocument 文本（平面 XML）",
+          "keeps": "可编辑；格式可能有差异"
+        },
+        "doc": {
+          "name": "Word 97–2003 文档",
+          "keeps": "可编辑；格式可能有差异"
+        },
+        "dotx": {
+          "name": "Word 模板",
+          "keeps": "可编辑；格式可能有差异"
+        },
+        "dot": {
+          "name": "Word 97–2003 模板",
+          "keeps": "可编辑；格式可能有差异"
+        },
+        "ott": {
+          "name": "OpenDocument 文本模板",
+          "keeps": "可编辑；格式可能有差异"
+        },
+        "docm": {
+          "name": "启用宏的 Word 文档",
+          "keeps": "仅适用于已打开的宏文件：VBA 项目原样保留，宏不会运行"
+        },
+        "rtf": {
+          "name": "Rich Text Format",
+          "keeps": "可编辑；格式可能有差异"
+        },
+        "txt": {
+          "name": "纯文本（UTF-8）",
+          "keeps": "仅文本；格式、表格和图像将丢失"
+        },
+        "html": {
+          "name": "网页（HTML）",
+          "keeps": "格式可能有差异；图像已嵌入"
+        },
+        "xhtml": {
+          "name": "XHTML 网页",
+          "keeps": "格式可能有差异"
+        },
+        "epub": {
+          "name": "EPUB 电子书",
+          "keeps": "仅供阅读；页面布局将丢失"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "文本和结构；页面布局、图像和修订将丢失"
+        },
+        "pdf": {
+          "name": "PDF 文档",
+          "keeps": "外观与打印预览一致；文本可搜索"
+        },
+        "png": {
+          "name": "PNG 图像（第一页）",
+          "keeps": "仅供查看；仅第一页"
+        }
+      },
+      "xlsx": {
+        "xlsx": {
+          "name": "Excel 工作簿",
+          "keeps": "可编辑"
+        },
+        "ods": {
+          "name": "OpenDocument 电子表格",
+          "keeps": "可编辑；格式可能有差异"
+        },
+        "fods": {
+          "name": "OpenDocument 电子表格（平面 XML）",
+          "keeps": "可编辑；格式可能有差异"
+        },
+        "xls": {
+          "name": "Excel 97–2003 工作簿",
+          "keeps": "可编辑；格式可能有差异"
+        },
+        "xltx": {
+          "name": "Excel 模板",
+          "keeps": "可编辑；格式可能有差异"
+        },
+        "xlt": {
+          "name": "Excel 97–2003 模板",
+          "keeps": "可编辑；格式可能有差异"
+        },
+        "ots": {
+          "name": "OpenDocument 电子表格模板",
+          "keeps": "可编辑；格式可能有差异"
+        },
+        "xlsm": {
+          "name": "启用宏的 Excel 工作簿",
+          "keeps": "仅适用于已打开的宏文件：VBA 项目原样保留，宏不会运行"
+        },
+        "csv": {
+          "name": "CSV（逗号分隔值）",
+          "keeps": "仅一个工作表；只有值，没有公式和格式"
+        },
+        "tsv": {
+          "name": "制表符分隔文本（TSV）",
+          "keeps": "仅一个工作表；只有值，没有公式和格式"
+        },
+        "html": {
+          "name": "网页（HTML）",
+          "keeps": "仅供查看；公式将丢失"
+        },
+        "dif": {
+          "name": "Data Interchange Format (DIF)",
+          "keeps": "仅第一个工作表；只有值，没有公式和格式"
+        },
+        "slk": {
+          "name": "SYLK",
+          "keeps": "仅第一个工作表；保留公式，大部分格式不保留"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "仅显示值；公式和格式将丢失"
+        },
+        "pdf": {
+          "name": "PDF 文档",
+          "keeps": "外观与打印预览一致；文本可搜索"
+        },
+        "png": {
+          "name": "PNG 图像（工作表）",
+          "keeps": "仅供查看；一个工作表的已用区域"
+        }
+      },
+      "pptx": {
+        "pptx": {
+          "name": "PowerPoint 演示文稿",
+          "keeps": "可编辑"
+        },
+        "ppsx": {
+          "name": "PowerPoint 放映",
+          "keeps": "可编辑；以幻灯片放映方式打开；格式可能有差异"
+        },
+        "odp": {
+          "name": "OpenDocument 演示文稿",
+          "keeps": "可编辑；格式可能有差异"
+        },
+        "fodp": {
+          "name": "OpenDocument 演示文稿（平面 XML）",
+          "keeps": "可编辑；格式可能有差异"
+        },
+        "ppt": {
+          "name": "PowerPoint 97–2003 演示文稿",
+          "keeps": "可编辑；格式可能有差异"
+        },
+        "pps": {
+          "name": "PowerPoint 97–2003 放映",
+          "keeps": "可编辑；格式可能有差异"
+        },
+        "potx": {
+          "name": "PowerPoint 模板",
+          "keeps": "可编辑；格式可能有差异"
+        },
+        "pot": {
+          "name": "PowerPoint 97–2003 模板",
+          "keeps": "可编辑；格式可能有差异"
+        },
+        "otp": {
+          "name": "OpenDocument 演示文稿模板",
+          "keeps": "可编辑；格式可能有差异"
+        },
+        "pptm": {
+          "name": "启用宏的 PowerPoint 演示文稿",
+          "keeps": "仅适用于已打开的宏文件：VBA 项目原样保留，宏不会运行"
+        },
+        "html": {
+          "name": "网页（HTML）",
+          "keeps": "仅每张幻灯片的文本；版式和图像将丢失"
+        },
+        "md": {
+          "name": "Markdown",
+          "keeps": "仅每张幻灯片的文本；版式和图像将丢失"
+        },
+        "pdf": {
+          "name": "PDF 文档",
+          "keeps": "外观与打印预览一致；文本可搜索"
+        },
+        "png": {
+          "name": "PNG 图像（当前幻灯片）",
+          "keeps": "仅供查看；一张幻灯片"
+        }
+      }
+    }
+  },
+  "saveResult": {
+    "saved": "已保存：{{path}}",
+    "exported": "已导出：{{path}}。请同时保存可编辑的文件以保留更改。",
+    "cancelled": "已取消保存。",
+    "chooseLocation": "请选择保存的名称和位置。",
+    "download": "已请求下载。请在下载文件夹中检查该文件。",
+    "tooLarge": "文件为空或大于 100 MB。",
+    "needsDesktop": "此格式需要带办公运行时（LibreOffice）的桌面版。"
+  },
+  "printPreview": {
+    "title": "打印预览 – {{title}}",
+    "notReady": "文档完全打开后即可打印。",
+    "preparingPages": "正在准备页面…",
+    "preparingPrint": "正在准备打印…",
+    "preparingPrintProgress": "正在准备打印… {{done}}/{{total}}",
+    "printHint": "在打印对话框中选择打印机、双面打印，也可以选择“另存为 PDF”。",
+    "makingPdf": "正在创建 PDF…",
+    "makingPdfProgress": "正在创建 PDF… {{done}}/{{total}}",
+    "pdfSaved": "PDF 已保存：{{path}}",
+    "pdfDownloading": "正在下载 PDF {{name}}。",
+    "layoutSaved": "页面设置已存储在工作簿中。请保存文档以保留此设置。",
+    "saveAsPdf": "另存为 PDF",
+    "print": "打印",
+    "keyboardHelp": "按 Page Up 和 Page Down 翻页；按 Ctrl+P 打印。",
+    "settings": "打印设置",
+    "pages": "页面",
+    "rangePlaceholder": "全部，或例如 1-3, 5",
+    "copies": "份数",
+    "collate": "逐份打印（1, 2, 3 – 1, 2, 3）",
+    "systemDialogHint": "打印机、双面打印和颜色随后在系统打印对话框中选择。",
+    "printAs": "打印内容",
+    "slides": "幻灯片",
+    "handouts": "讲义",
+    "notesPages": "备注页",
+    "slidesPerPage": "每页幻灯片数",
+    "withLines": "{{number}}（带横线）",
+    "paper": "纸张",
+    "slideSize": "幻灯片大小",
+    "frameSlides": "幻灯片加框",
+    "report": "报表",
+    "saveLayout": "将页面设置存储在工作簿中",
+    "pdf": "PDF",
+    "imageQuality": "图像质量",
+    "qualitySmall": "小文件（150 dpi）",
+    "qualityStandard": "标准（200 dpi）",
+    "qualityHigh": "高，无损（300 dpi）",
+    "pdfHint": "文本保持可选择和可搜索；PDF 与此预览完全一致。",
+    "toolbar": "翻页和缩放",
+    "previousPage": "上一页",
+    "nextPage": "下一页",
+    "pageOf": "第 <input/> 页，共 {{total}} 页",
+    "pageNumber": "页码",
+    "zoomOut": "缩小",
+    "zoom": "缩放",
+    "zoomIn": "放大",
+    "wholePage": "整页",
+    "pageWidth": "页宽",
+    "preview": "页面预览",
+    "pageImage": "第 {{number}} 页的预览",
+    "drawingPage": "正在绘制页面…",
+    "orientation": "方向",
+    "portrait": "纵向",
+    "landscape": "横向",
+    "activeSheet": "活动工作表",
+    "wholeWorkbook": "整个工作簿",
+    "selection": "选定区域（{{range}}）",
+    "selectionNone": "选定区域（未选择任何内容）",
+    "ignorePrintArea": "忽略打印区域",
+    "pageSetup": "页面设置",
+    "sheet": "工作表",
+    "scale": "缩放",
+    "percentage": "百分比",
+    "fitPage": "调整为一页",
+    "fitWidth": "调整为页宽",
+    "pagesWide": "页宽",
+    "pagesTall": "页高（0 = 自动）",
+    "marginTop": "上（厘米）",
+    "marginBottom": "下",
+    "marginLeft": "左",
+    "marginRight": "右",
+    "printArea": "打印区域",
+    "printAreaPlaceholder": "已用区域，或例如 A1:H40",
+    "repeatRows": "重复行",
+    "repeatRowsPlaceholder": "例如 1:2",
+    "repeatColumns": "重复列",
+    "repeatColumnsPlaceholder": "例如 A:B",
+    "gridlines": "打印网格线",
+    "headings": "打印行号列标",
+    "centerHorizontally": "水平居中",
+    "pageOrder": "打印顺序",
+    "downThenOver": "先列后行",
+    "overThenDown": "先行后列",
+    "header": "页眉",
+    "footer": "页脚",
+    "sectionLeft": "左",
+    "sectionCenter": "中",
+    "sectionRight": "右",
+    "sectionLabel": "{{area}}{{section}}",
+    "fields": "字段：{{fields}}。",
+    "pageBreakPreview": "分页预览…"
+  }
+}

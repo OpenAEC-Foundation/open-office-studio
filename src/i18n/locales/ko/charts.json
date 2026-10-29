@@ -1,0 +1,263 @@
+{
+  "types": {
+    "column": {
+      "name": "세로 막대형",
+      "description": "값을 나란히 비교"
+    },
+    "stackedColumn": {
+      "name": "누적 세로 막대형",
+      "description": "범주별 부분과 합계"
+    },
+    "percentColumn": {
+      "name": "100% 기준 누적 세로 막대형",
+      "description": "범주별 비율"
+    },
+    "bar": {
+      "name": "가로 막대형",
+      "description": "가로 방향, 긴 이름에 적합"
+    },
+    "line": {
+      "name": "꺾은선형",
+      "description": "시간에 따른 추세"
+    },
+    "lineMarkers": {
+      "name": "표식이 있는 꺾은선형",
+      "description": "데이터 요소가 보이는 추세"
+    },
+    "area": {
+      "name": "영역형",
+      "description": "크기를 강조한 추세"
+    },
+    "pie": {
+      "name": "원형",
+      "description": "단일 계열의 구성"
+    },
+    "doughnut": {
+      "name": "도넛형",
+      "description": "가운데가 빈 구성"
+    },
+    "scatter": {
+      "name": "분산형(XY)",
+      "description": "두 숫자 간의 관계"
+    },
+    "combo": {
+      "name": "세로 막대형 + 꺾은선형",
+      "description": "마지막 계열을 보조 축의 꺾은선으로 표시"
+    }
+  },
+  "unknownType": "알 수 없는 형식",
+  "busy": "처리 중…",
+  "defaults": {
+    "seriesName": "계열 {{n}}",
+    "categoryName": "범주 {{n}}",
+    "chartName": "차트 {{n}}",
+    "sheetName": "차트 {{n}}",
+    "true": "TRUE",
+    "false": "FALSE"
+  },
+  "ribbon": {
+    "charts": "차트",
+    "chart": "차트",
+    "editChart": "차트 편집",
+    "allCharts": "모든 차트",
+    "dataAndFormat": "데이터 및 서식",
+    "overview": "개요",
+    "type": "형식",
+    "changeType": "차트 종류 변경",
+    "data": "데이터",
+    "selectData": "데이터 선택",
+    "layout": "레이아웃",
+    "titleAndLegend": "제목 및 범례",
+    "delete": "삭제",
+    "deleteChart": "차트 삭제",
+    "withShortcut": "{{name}} · {{shortcut}}"
+  },
+  "dialog": {
+    "title": {
+      "insert": "차트 삽입",
+      "edit": "차트 편집"
+    },
+    "button": {
+      "insert": "삽입",
+      "edit": "업데이트"
+    },
+    "reloadNote": {
+      "insert": "삽입한 후 문서를 다시 불러옵니다. 그 전의 변경 내용은 더 이상 실행 취소할 수 없습니다.",
+      "edit": "업데이트한 후 문서를 다시 불러옵니다. 그 전의 변경 내용은 더 이상 실행 취소할 수 없습니다."
+    },
+    "closeTitle": "닫기(Esc)",
+    "type": "형식",
+    "data": "데이터",
+    "cellRange": "셀 범위",
+    "cellRangePlaceholder": "예: A1:D6",
+    "noContiguousRange": "이 차트의 참조는 연속된 범위가 아닙니다. 범위를 입력할 때까지 데이터는 변경되지 않습니다.",
+    "firstRowNames": "첫 행에 이름 포함",
+    "firstColumnNames": "첫 열에 이름 포함",
+    "seriesIn": "계열 방향",
+    "columns": "열",
+    "rows": "행",
+    "series": "계열",
+    "seriesNoNumbersTitle": "{{name}}: 숫자 없음, 포함되지 않음",
+    "noNumbers": "(숫자 없음)",
+    "enterRange": "데이터가 있는 셀 범위를 입력하세요.",
+    "placeCursorInTable": "먼저 숫자가 있는 표에 커서를 두세요.",
+    "titles": "제목",
+    "chartTitle": "제목",
+    "subtitle": "부제목",
+    "categoryAxis": "범주 축",
+    "valueAxis": "값 축",
+    "horizontalAxis": "가로 축",
+    "verticalAxis": "세로 축",
+    "secondaryAxis": "보조 축",
+    "format": "서식",
+    "legend": "범례",
+    "gridlines": "눈금선",
+    "dataLabels": "데이터 레이블",
+    "decimals": "소수 자릿수",
+    "placement": "배치",
+    "besideData": "이 시트의 데이터 옆",
+    "newSheet": "새 시트",
+    "sheetName": "시트 이름",
+    "summary": {
+      "series_other": "계열 {{n}}개",
+      "categories_other": "범주 {{n}}개",
+      "text": "{{series}} · {{categories}}",
+      "withSheet": "{{series}} · {{categories}} · {{sheet}}"
+    }
+  },
+  "legend": {
+    "bottom": "아래쪽",
+    "right": "오른쪽",
+    "top": "위쪽",
+    "left": "왼쪽",
+    "none": "범례 없음"
+  },
+  "dataSheet": {
+    "row": "행",
+    "series": "계열",
+    "removeLastRow": "마지막 행 삭제",
+    "removeLastSeries": "마지막 계열 삭제",
+    "paste": "붙여넣기",
+    "pasteTitle": "클립보드에서 탭으로 구분된 텍스트를 붙여넣습니다(예: 스프레드시트에서 복사한 내용)",
+    "fromTable": "선택한 표에서",
+    "fromTableTitle": "커서가 있는 표를 가져옵니다",
+    "pasteNotAllowed": "여기서는 단추로 붙여넣을 수 없습니다. 셀을 클릭하고 Ctrl+V를 사용하세요.",
+    "corner": "모서리 셀",
+    "seriesNameLabel": "계열 {{n}}의 이름",
+    "categoryLabel": "범주 {{n}}",
+    "valueLabel": "값 행 {{row}}, 계열 {{series}}"
+  },
+  "preview": {
+    "label": "미리 보기: {{title}}",
+    "untitled": "미리 보기: 제목 없는 차트"
+  },
+  "list": {
+    "title": "이 문서의 차트",
+    "empty": "이 문서에는 아직 차트가 없습니다.",
+    "edit": "편집",
+    "delete": "삭제",
+    "deleteLabel": "{{name}} 삭제",
+    "place": {
+      "slide": "슬라이드 {{n}}",
+      "sheet": "시트 {{name}}",
+      "text": "본문의 차트 {{n}}"
+    }
+  },
+  "deleteConfirm": {
+    "title": "차트 삭제",
+    "text": "‘{{name}}’을(를) 삭제할까요? 그러면 문서를 다시 불러오며, 이전 변경 내용은 더 이상 실행 취소할 수 없습니다.",
+    "textSheet": "시트 {{sheet}}에서 ‘{{name}}’을(를) 삭제할까요? 그러면 문서를 다시 불러오며, 이전 변경 내용은 더 이상 실행 취소할 수 없습니다.",
+    "button": "삭제"
+  },
+  "errors": {
+    "unknownType": "알 수 없는 차트 형식입니다.",
+    "noSeries": "차트에는 데이터 계열이 하나 이상 필요합니다.",
+    "tooManySeries": "여기서 차트에는 계열을 최대 {{max}}개까지 넣을 수 있습니다.",
+    "tooManyCategories": "여기서 차트에는 범주를 최대 {{max}}개까지 넣을 수 있습니다.",
+    "noCategories": "차트에는 범주가 하나 이상 필요합니다.",
+    "valueCountMismatch": "계열 ‘{{name}}’의 값 개수가 범주 개수와 같지 않습니다.",
+    "noNumbers": "데이터에 숫자가 없습니다.",
+    "comboNeedsTwoSeries": "콤보 차트에는 계열이 두 개 이상(세로 막대와 꺾은선) 필요합니다.",
+    "scatterNeedsNumbers": "분산형 차트에는 첫 열 또는 첫 행에 X 값으로 사용할 숫자가 필요합니다.",
+    "titleTooLong": "제목은 최대 {{max}}자까지 입력할 수 있습니다.",
+    "invalidColor": "색 ‘{{color}}’은(는) 유효한 색이 아닙니다.",
+    "noNumericColumn": "범위의 어느 열에도 숫자가 없으므로 그릴 내용이 없습니다. 숫자 열이 하나 이상 있는 범위를 선택하거나 ‘계열 방향’을 행으로 설정하세요.",
+    "noNumericRow": "범위의 어느 행에도 숫자가 없으므로 그릴 내용이 없습니다. 숫자 행이 하나 이상 있는 범위를 선택하거나 ‘계열 방향’을 열로 설정하세요.",
+    "chooseSeries": "차트에 사용할 계열을 하나 이상 선택하세요.",
+    "rangeTooLarge": "범위가 너무 큽니다. 최대 {{max}}개 셀입니다.",
+    "noDataBesideHeaders": "범위에 머리글 외의 데이터가 없습니다.",
+    "pasteTooLarge": "붙여넣은 데이터가 차트에 비해 너무 큽니다.",
+    "invalidRange": "유효한 셀 범위가 아닙니다. 예를 들어 A1:D6 또는 'Sheet 1'!A1:D6을 사용하세요.",
+    "noSuchSheet": "이름이 ‘{{name}}’인 시트가 없습니다.",
+    "spreadsheetNotReady": "스프레드시트가 아직 준비되지 않았습니다.",
+    "spreadsheetReadOnly": "스프레드시트가 읽기 전용입니다.",
+    "documentNotReady": "문서가 아직 준비되지 않았습니다.",
+    "presentationNotEditable": "지금은 프레젠테이션을 편집할 수 없습니다.",
+    "selectChartFirst": "먼저 차트를 선택하세요.",
+    "chartGone": "차트를 더 이상 찾을 수 없습니다.",
+    "notEditableHere": "이 차트는 여기서 편집할 수 없습니다.",
+    "notEditable": "이 차트는 편집할 수 없습니다.",
+    "package": {
+      "tooLarge": "문서가 너무 커서 차트를 편집할 수 없습니다.",
+      "tooManyParts": "문서에 부분이 너무 많거나 너무 큽니다.",
+      "notZip": "문서가 유효한 Office 파일(zip)이 아닙니다.",
+      "invalidPartName": "문서에 잘못된 부분 이름이 있습니다.",
+      "noContentTypes": "문서에 [Content_Types].xml이 없습니다.",
+      "missingPart": "문서에 부분 {{part}}이(가) 없습니다.",
+      "noFreePartName": "사용 가능한 부분 이름이 남아 있지 않습니다."
+    },
+    "xml": {
+      "tooLarge": "XML 부분이 너무 커서 처리할 수 없습니다.",
+      "damaged": "XML 부분이 손상되었습니다.",
+      "doctype": "보안상의 이유로 DOCTYPE이 있는 XML은 처리하지 않습니다.",
+      "tooDeep": "XML 부분이 너무 깊게 중첩되어 있습니다.",
+      "overlappingChanges": "내부 오류: XML 변경 내용이 겹칩니다."
+    },
+    "chartXml": {
+      "notDrawingML": "이 부분은 DrawingML 차트가 아닙니다.",
+      "noPlotArea": "차트에 그림 영역이 없습니다.",
+      "unusualPrefix": "이 차트는 일반적이지 않은 XML 표기를 사용하므로 여기서 안전하게 편집할 수 없습니다."
+    },
+    "document": {
+      "noMainPart": "문서에 기본 부분이 없습니다.",
+      "tooManyCharts": "이 문서에는 이미 차트가 {{total}}개 있습니다. 더 이상은 지원되지 않습니다.",
+      "invalidSheetName": "잘못된 시트 이름: 최대 31자, \\ / ? * [ ] : 사용 불가",
+      "sheetExists": "이름이 ‘{{name}}’인 시트가 이미 있습니다.",
+      "noSheetList": "통합 문서에 시트 목록이 없습니다.",
+      "drawingMissing": "이 시트의 그리기 개체가 없거나 손상되었습니다.",
+      "noSuchWorksheet": "선택한 시트가 없거나 워크시트가 아닙니다.",
+      "notPlainWorksheet": "차트는 일반 워크시트에만 배치할 수 있습니다.",
+      "drawingDamaged": "이 시트의 그리기 개체가 손상되었습니다.",
+      "docxUnusualPrefix": "이 문서는 일반적이지 않은 XML 표기를 사용하므로 차트를 안전하게 삽입할 수 없습니다.",
+      "noBody": "문서에 본문이 없습니다.",
+      "tableTooLarge": "표가 너무 커서 차트로 만들 수 없습니다.",
+      "noSuchSlide": "선택한 슬라이드가 없습니다.",
+      "slideUnusualPrefix": "이 슬라이드는 일반적이지 않은 XML 표기를 사용하므로 차트를 안전하게 삽입할 수 없습니다.",
+      "noShapeTree": "슬라이드에 도형 트리가 없습니다.",
+      "chartRemoved": "차트가 더 이상 문서에 없습니다.",
+      "chartNotFound": "차트를 찾을 수 없습니다.",
+      "cannotRemove": "차트 개체를 제거할 수 없습니다."
+    }
+  },
+  "read": {
+    "reasons": {
+      "extendedChart": "여기서 편집할 수 없는 확장 차트(예: 폭포 차트 또는 트리맵 차트)입니다.",
+      "unsupportedType": "이 차트는 여기서 편집할 수 없는 형식을 사용합니다({{types}}).",
+      "noReadableSeries": "차트에 읽을 수 있는 계열이 없습니다.",
+      "unsupportedCombination": "이 차트는 여기서 편집할 수 없는 방식으로 형식을 결합합니다.",
+      "noSeries": "차트에 데이터 계열이 없습니다.",
+      "invalid": "이 차트는 여기서 편집할 수 없습니다: {{reason}}",
+      "unusualPrefix": "이 차트는 일반적이지 않은 XML 표기를 사용하므로 여기서 안전하게 편집할 수 없습니다."
+    },
+    "warnings": {
+      "stackedBars": "편집하면 누적 가로 막대가 나란히 배치됩니다.",
+      "stackedLines": "편집하면 누적 꺾은선이 개별 꺾은선이 됩니다.",
+      "stackedAreas": "편집하면 누적 영역이 개별 영역이 됩니다.",
+      "linesAfterColumns": "편집하면 꺾은선 계열이 세로 막대 뒤에 배치됩니다.",
+      "lastSeriesAsLine": "편집하면 마지막 계열만 꺾은선으로 그려집니다.",
+      "multiLevelCategories": "편집하면 다단계 범주가 단일 수준이 됩니다.",
+      "moreValuesThanCategories": "계열 ‘{{name}}’의 값이 범주 수보다 많습니다.",
+      "trendlinesDropped": "편집하면 추세선과 오차 막대가 제거됩니다."
+    }
+  }
+}

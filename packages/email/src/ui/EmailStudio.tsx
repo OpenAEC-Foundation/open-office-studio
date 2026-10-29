@@ -30,16 +30,18 @@ import {
   Columns3,
   Mail,
 } from "lucide-react";
+import { Trans, useTranslation } from "react-i18next";
 import { Actie, Groep, Ribbon } from "../../../../src/Ribbon";
+import { vergelijkTekst } from "../../../../src/i18n/opmaak";
 import type { Account, Bericht, BerichtKop, BijlageInfo, MailBackend, Map } from "../contract";
 import { bewaarBestand, kiesBackend, openExtern } from "../backend";
-import { DEMO_MELDING } from "../demo-backend";
+import { demoMelding } from "../demo-backend";
 import { bouwAntwoord, type AntwoordModus, type OpstelBegin } from "../citaat";
 import { foutTekst } from "../fouten";
 import { parseAdressen } from "../adressen";
 import { veiligeLink } from "../sanitizer";
 import { Dialoog, useVraag } from "./Dialoog";
-import { Mappenboom, type MapKeuze } from "./Mappenboom";
+import { Mappenboom, mapNaam, type MapKeuze } from "./Mappenboom";
 import { Berichtenlijst } from "./Berichtenlijst";
 import { Leesvenster } from "./Leesvenster";
 import { Opstelvenster, type OpstelActies } from "./Opstelvenster";
@@ -72,6 +74,7 @@ export interface EmailStudioProps {
 }
 
 export default function EmailStudio(props: EmailStudioProps) {
+  const { t } = useTranslation("email");
   const backend = useMemo(() => props.backend ?? kiesBackend(), [props.backend]);
   const [accounts, setAccounts] = useState<Account[] | null>(null);
   const [accountFout, setAccountFout] = useState("");
@@ -151,7 +154,7 @@ export default function EmailStudio(props: EmailStudioProps) {
       setAccountFout("");
       return lijst;
     } catch (e) {
-      setAccountFout(foutTekst(e, "Accounts laden mislukt"));
+      setAccountFout(foutTekst(e, t("studio.errors.loadAccounts")));
       setAccounts([]);
       return [];
     }
@@ -208,7 +211,7 @@ export default function EmailStudio(props: EmailStudioProps) {
           return [...huidig, ...uitkomst.berichten.filter((b) => !bekend.has(b.uid))];
         });
       } catch (e) {
-        if (verzoek === lijstVerzoek.current) setLijstFout(foutTekst(e, "Berichten laden mislukt"));
+        if (verzoek === lijstVerzoek.current) setLijstFout(foutTekst(e, t("studio.errors.loadMessages")));
       } finally {
         if (verzoek === lijstVerzoek.current) setLijstLaden(false);
       }
@@ -243,7 +246,7 @@ export default function EmailStudio(props: EmailStudioProps) {
     return [...uit].sort((a, b) => {
       const x = sleutel(a);
       const y = sleutel(b);
-      return (typeof x === "number" && typeof y === "number" ? x - y : String(x).localeCompare(String(y), "nl")) * richting;
+      return (typeof x === "number" && typeof y === "number" ? x - y : vergelijkTekst(String(x), String(y))) * richting;
     });
   }, [lijst, filter.ster, filter.bijlage, sorteer]);
 
@@ -269,7 +272,7 @@ export default function EmailStudio(props: EmailStudioProps) {
           }));
         }
       } catch (e) {
-        if (verzoek === berichtVerzoek.current) setBerichtFout(foutTekst(e, "Bericht openen mislukt"));
+        if (verzoek === berichtVerzoek.current) setBerichtFout(foutTekst(e, t("studio.errors.openMessage")));
       } finally {
         if (verzoek === berichtVerzoek.current) setBerichtLaden(false);
       }
@@ -333,11 +336,11 @@ export default function EmailStudio(props: EmailStudioProps) {
     const definitief = actief.map === specialeMap(actief.accountId, "prullenbak");
     if (definitief) {
       const keuze = await vraag({
-        titel: "Definitief verwijderen",
-        tekst: `${uids.length === 1 ? "Dit bericht wordt" : `${uids.length} berichten worden`} definitief verwijderd. Dit kan niet ongedaan worden gemaakt.`,
+        titel: t("studio.deletePermanently.title"),
+        tekst: t("studio.deletePermanently.text", { count: uids.length }),
         knoppen: [
-          { waarde: "nee", label: "Annuleren" },
-          { waarde: "ja", label: "Definitief verwijderen", soort: "gevaar" },
+          { waarde: "nee", label: t("common:cancel") },
+          { waarde: "ja", label: t("studio.deletePermanently.confirm"), soort: "gevaar" },
         ],
         annuleer: "nee",
       });
@@ -348,7 +351,7 @@ export default function EmailStudio(props: EmailStudioProps) {
       haalWeg(uids);
       void laadMappen(actief.accountId);
     } catch (e) {
-      props.melding(foutTekst(e, "Verwijderen mislukt"));
+      props.melding(foutTekst(e, t("studio.errors.delete")));
     }
   }
 
@@ -360,7 +363,7 @@ export default function EmailStudio(props: EmailStudioProps) {
       haalWeg(uids);
       void laadMappen(actief.accountId);
     } catch (e) {
-      props.melding(foutTekst(e, "Verplaatsen mislukt"));
+      props.melding(foutTekst(e, t("studio.errors.move")));
     }
   }
 
@@ -368,7 +371,7 @@ export default function EmailStudio(props: EmailStudioProps) {
     if (!actief || !selectie.length) return;
     const doel = specialeMap(actief.accountId, "archief");
     if (!doel) {
-      props.melding("Dit account heeft geen archiefmap. Kies er een in Extra › Accountinstellingen › Mappen.");
+      props.melding(t("studio.noArchiveFolder"));
       return;
     }
     if (doel === actief.map) return;
@@ -385,7 +388,7 @@ export default function EmailStudio(props: EmailStudioProps) {
       setBericht((b) => (b && uids.includes(b.uid) ? { ...b, [vlag]: aan } : b));
       if (vlag === "gelezen") void laadMappen(actief.accountId);
     } catch (e) {
-      props.melding(foutTekst(e, "Markeren mislukt"));
+      props.melding(foutTekst(e, t("studio.errors.mark")));
     }
   }
 
@@ -411,7 +414,7 @@ export default function EmailStudio(props: EmailStudioProps) {
             .map(async (b) => ({ bestandsnaam: b.bestandsnaam, inhoudstype: b.inhoudstype, bytes: await backend.bijlage(actief.accountId, bericht.map, bericht.uid, b.index) })),
         );
       } catch (e) {
-        props.melding(foutTekst(e, "Bijlagen ophalen voor doorsturen mislukt"));
+        props.melding(foutTekst(e, t("studio.errors.forwardAttachments")));
       }
     }
     setOpstellen({ accountId: actief.accountId, begin, sleutel: Date.now() });
@@ -429,7 +432,7 @@ export default function EmailStudio(props: EmailStudioProps) {
       if (!accounts?.length) return;
       await Promise.all(accounts.map((a) => laadMappen(a.id)));
       await laadLijst(lijst.length, true);
-      if (!stil) props.melding("Berichten opgehaald.");
+      if (!stil) props.melding(t("studio.fetched"));
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [accounts, laadMappen, laadLijst, lijst.length],
@@ -450,7 +453,7 @@ export default function EmailStudio(props: EmailStudioProps) {
       const bytes = await backend.bijlage(actief.accountId, bericht.map, bericht.uid, b.index);
       props.openInKantoor(b.bestandsnaam, bytes);
     } catch (e) {
-      props.melding(foutTekst(e, `${b.bestandsnaam} openen mislukt`));
+      props.melding(foutTekst(e, t("studio.errors.openFile", { name: b.bestandsnaam })));
     }
   }
   async function bewaarBijlage(b: BijlageInfo) {
@@ -459,7 +462,7 @@ export default function EmailStudio(props: EmailStudioProps) {
       const bytes = await backend.bijlage(actief.accountId, bericht.map, bericht.uid, b.index);
       props.melding(await bewaarBestand(b.bestandsnaam, bytes, b.inhoudstype));
     } catch (e) {
-      props.melding(foutTekst(e, `${b.bestandsnaam} opslaan mislukt`));
+      props.melding(foutTekst(e, t("studio.errors.saveFile", { name: b.bestandsnaam })));
     }
   }
   function volgLink(href: string, tekst: string) {
@@ -485,7 +488,7 @@ export default function EmailStudio(props: EmailStudioProps) {
       const naam = `${(bericht.onderwerp || "bericht").replace(/[\\/:*?"<>|]+/g, "_").slice(0, 80)}.eml`;
       setBron({ tekst: new TextDecoder("utf-8").decode(bytes), bytes, naam });
     } catch (e) {
-      props.melding(foutTekst(e, "Bron ophalen mislukt"));
+      props.melding(foutTekst(e, t("studio.errors.source")));
     }
   }
 
@@ -508,17 +511,17 @@ export default function EmailStudio(props: EmailStudioProps) {
       setMapDialoog(null);
       void laadMappen(actief.accountId);
     } catch (e) {
-      props.melding(foutTekst(e, "Map bijwerken mislukt"));
+      props.melding(foutTekst(e, t("studio.errors.updateFolder")));
     }
   }
   async function verwijderMap() {
     if (!actief || !huidigeMap || huidigeMap.speciaal) return;
     const keuze = await vraag({
-      titel: "Map verwijderen",
-      tekst: `De map “${huidigeMap.naam}” en alle berichten erin worden op de server verwijderd.`,
+      titel: t("studio.deleteFolder.title"),
+      tekst: t("studio.deleteFolder.text", { folder: mapNaam(huidigeMap, t) }),
       knoppen: [
-        { waarde: "nee", label: "Annuleren" },
-        { waarde: "ja", label: "Map verwijderen", soort: "gevaar" },
+        { waarde: "nee", label: t("common:cancel") },
+        { waarde: "ja", label: t("studio.deleteFolder.title"), soort: "gevaar" },
       ],
       annuleer: "nee",
     });
@@ -529,7 +532,7 @@ export default function EmailStudio(props: EmailStudioProps) {
       const inbox = lijst.find((m) => m.speciaal === "inbox") ?? lijst[0];
       setActief(inbox ? { accountId: actief.accountId, map: inbox.pad } : null);
     } catch (e) {
-      props.melding(foutTekst(e, "Map verwijderen mislukt"));
+      props.melding(foutTekst(e, t("studio.errors.deleteFolder")));
     }
   }
 
@@ -572,9 +575,10 @@ export default function EmailStudio(props: EmailStudioProps) {
     const start = e.clientX;
     const begin = indeling[kolom];
     const doel = e.currentTarget as HTMLElement;
+    const richting = getComputedStyle(doel).direction === "rtl" ? -1 : 1;
     doel.setPointerCapture(e.pointerId);
     const beweeg = (ev: PointerEvent) => {
-      const breedte = Math.round(Math.min(kolom === "mappen" ? 420 : 760, Math.max(kolom === "mappen" ? 150 : 240, begin + ev.clientX - start)));
+      const breedte = Math.round(Math.min(kolom === "mappen" ? 420 : 760, Math.max(kolom === "mappen" ? 150 : 240, begin + (ev.clientX - start) * richting)));
       setIndelingState((h) => ({ ...h, [kolom]: breedte }));
     };
     const los = () => {
@@ -601,7 +605,9 @@ export default function EmailStudio(props: EmailStudioProps) {
         if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
           e.preventDefault();
           e.stopPropagation();
-          setIndeling({ [kolom]: Math.max(150, indeling[kolom] + (e.key === "ArrowLeft" ? -16 : 16)) });
+          const rtl = getComputedStyle(e.currentTarget).direction === "rtl";
+          const smaller = (e.key === "ArrowLeft") !== rtl;
+          setIndeling({ [kolom]: Math.max(150, indeling[kolom] + (smaller ? -16 : 16)) });
         }
       }}
     />
@@ -615,77 +621,77 @@ export default function EmailStudio(props: EmailStudioProps) {
   const tabs = [
     {
       id: "start",
-      naam: "Start",
+      naam: t("ribbon.tabs.start"),
       inhoud: (
         <>
-          <Groep naam="Nieuw">
-            <Actie icoon={MailPlus} naam="Nieuw bericht" groot title="Nieuw bericht · Ctrl+N" onClick={() => nieuw()} disabled={!accounts} />
-            <Actie icoon={RefreshCw} naam="Ophalen" title="Berichten ophalen · F5 of Ctrl+T" onClick={() => void ophalen()} disabled={!accounts?.length} />
+          <Groep naam={t("ribbon.groups.new")}>
+            <Actie icoon={MailPlus} naam={t("compose.newMessage")} groot title={t("ribbon.withShortcut", { action: t("compose.newMessage"), shortcut: "Ctrl+N" })} onClick={() => nieuw()} disabled={!accounts} />
+            <Actie icoon={RefreshCw} naam={t("ribbon.fetch")} title={t("ribbon.fetchTitle", { key: "F5", shortcut: "Ctrl+T" })} onClick={() => void ophalen()} disabled={!accounts?.length} />
           </Groep>
-          <Groep naam="Reageren">
-            <Actie icoon={Reply} naam="Beantwoorden" groot title="Beantwoorden · Ctrl+R" disabled={!heeftBericht} onClick={() => void beantwoord("antwoord")} />
-            <Actie icoon={ReplyAll} naam="Allen" title="Allen beantwoorden · Ctrl+Shift+R" disabled={!heeftBericht} onClick={() => void beantwoord("allen")} />
-            <Actie icoon={Forward} naam="Doorsturen" title="Doorsturen · Ctrl+L" disabled={!heeftBericht} onClick={() => void beantwoord("doorsturen")} />
+          <Groep naam={t("ribbon.groups.respond")}>
+            <Actie icoon={Reply} naam={t("reader.reply")} groot title={t("reader.replyTitle", { shortcut: "Ctrl+R" })} disabled={!heeftBericht} onClick={() => void beantwoord("antwoord")} />
+            <Actie icoon={ReplyAll} naam={t("reader.replyAll")} title={t("reader.replyAllTitle", { shortcut: "Ctrl+Shift+R" })} disabled={!heeftBericht} onClick={() => void beantwoord("allen")} />
+            <Actie icoon={Forward} naam={t("reader.forward")} title={t("reader.forwardTitle", { shortcut: "Ctrl+L" })} disabled={!heeftBericht} onClick={() => void beantwoord("doorsturen")} />
           </Groep>
-          <Groep naam="Verwijderen">
-            <Actie icoon={Trash2} naam="Verwijderen" groot title="Verwijderen · Del" disabled={!heeftSelectie} onClick={() => void verwijder()} />
-            <Actie icoon={Archive} naam="Archiveren" title="Archiveren · A" disabled={!heeftSelectie} onClick={() => void archiveer()} />
+          <Groep naam={t("ribbon.groups.delete")}>
+            <Actie icoon={Trash2} naam={t("reader.delete")} groot title={t("reader.deleteTitle", { shortcut: "Del" })} disabled={!heeftSelectie} onClick={() => void verwijder()} />
+            <Actie icoon={Archive} naam={t("reader.archive")} title={t("reader.archiveTitle", { shortcut: "A" })} disabled={!heeftSelectie} onClick={() => void archiveer()} />
           </Groep>
-          <Groep naam="Markeren">
-            <Actie icoon={MailCheck} naam="Gelezen/ongelezen" title="Gelezen of ongelezen · M" disabled={!heeftSelectie} onClick={() => void markeer("gelezen")} />
-            <Actie icoon={Star} naam="Ster" title="Ster · S" disabled={!heeftSelectie} actief={!!bericht?.gemarkeerd} onClick={() => void markeer("gemarkeerd")} />
+          <Groep naam={t("ribbon.groups.mark")}>
+            <Actie icoon={MailCheck} naam={t("ribbon.readUnread")} title={t("ribbon.readUnreadTitle", { shortcut: "M" })} disabled={!heeftSelectie} onClick={() => void markeer("gelezen")} />
+            <Actie icoon={Star} naam={t("ribbon.star")} title={t("reader.starTitle", { shortcut: "S" })} disabled={!heeftSelectie} actief={!!bericht?.gemarkeerd} onClick={() => void markeer("gemarkeerd")} />
           </Groep>
-          <Groep naam="Ordenen">
-            <Actie icoon={FolderInput} naam="Verplaatsen" groot title="Verplaatsen naar map" disabled={!heeftSelectie} onClick={() => setVerplaatsen(true)} />
+          <Groep naam={t("ribbon.groups.organize")}>
+            <Actie icoon={FolderInput} naam={t("ribbon.move")} groot title={t("ribbon.moveTitle")} disabled={!heeftSelectie} onClick={() => setVerplaatsen(true)} />
           </Groep>
         </>
       ),
     },
     {
       id: "beeld",
-      naam: "Beeld",
+      naam: t("ribbon.tabs.view"),
       inhoud: (
         <>
-          <Groep naam="Indeling">
-            <Actie icoon={PanelLeft} naam="Mappenpaneel" actief={indeling.toonMappen} onClick={() => setIndeling({ toonMappen: !indeling.toonMappen })} />
-            <Actie icoon={PanelRight} naam="Leesvenster" actief={indeling.toonLeesvenster} onClick={() => setIndeling({ toonLeesvenster: !indeling.toonLeesvenster })} />
-            <Actie icoon={Columns3} naam="Indeling herstellen" onClick={() => setIndeling(STANDAARD_INDELING)} />
+          <Groep naam={t("ribbon.groups.layout")}>
+            <Actie icoon={PanelLeft} naam={t("ribbon.folderPane")} actief={indeling.toonMappen} onClick={() => setIndeling({ toonMappen: !indeling.toonMappen })} />
+            <Actie icoon={PanelRight} naam={t("ribbon.readingPane")} actief={indeling.toonLeesvenster} onClick={() => setIndeling({ toonLeesvenster: !indeling.toonLeesvenster })} />
+            <Actie icoon={Columns3} naam={t("ribbon.resetLayout")} onClick={() => setIndeling(STANDAARD_INDELING)} />
           </Groep>
-          <Groep naam="Sorteren">
-            <label className="ribbon-keuze" title="Sorteren op">
-              <select aria-label="Sorteren op" value={sorteer.veld} onChange={(e) => setSorteer({ ...sorteer, veld: e.target.value as Sorteerveld })}>
-                <option value="datum">Datum</option>
-                <option value="van">Afzender</option>
-                <option value="onderwerp">Onderwerp</option>
-                <option value="grootte">Grootte</option>
+          <Groep naam={t("ribbon.groups.sort")}>
+            <label className="ribbon-keuze" title={t("ribbon.sortBy")}>
+              <select aria-label={t("ribbon.sortBy")} value={sorteer.veld} onChange={(e) => setSorteer({ ...sorteer, veld: e.target.value as Sorteerveld })}>
+                <option value="datum">{t("ribbon.sort.date")}</option>
+                <option value="van">{t("ribbon.sort.sender")}</option>
+                <option value="onderwerp">{t("ribbon.sort.subject")}</option>
+                <option value="grootte">{t("ribbon.sort.size")}</option>
               </select>
               <ChevronDown size={12} />
             </label>
             <Actie
               icoon={sorteer.oplopend ? ArrowUpNarrowWide : ArrowDownWideNarrow}
-              naam={sorteer.oplopend ? "Oplopend" : "Aflopend"}
+              naam={sorteer.oplopend ? t("ribbon.ascending") : t("ribbon.descending")}
               onClick={() => setSorteer({ ...sorteer, oplopend: !sorteer.oplopend })}
             />
           </Groep>
-          <Groep naam="Bericht">
-            <Actie icoon={Code} naam="Bron bekijken" disabled={!heeftBericht} onClick={() => void toonBron()} />
+          <Groep naam={t("ribbon.groups.message")}>
+            <Actie icoon={Code} naam={t("ribbon.viewSource")} disabled={!heeftBericht} onClick={() => void toonBron()} />
           </Groep>
         </>
       ),
     },
     {
       id: "extra",
-      naam: "Extra",
+      naam: t("ribbon.tabs.tools"),
       inhoud: (
         <>
-          <Groep naam="Accounts">
-            <Actie icoon={Settings} naam="Accountinstellingen" groot onClick={() => setInstellingen(actief?.accountId)} disabled={!accounts} />
-            <Actie icoon={UserPlus} naam="Account toevoegen" onClick={() => setWizard(true)} />
+          <Groep naam={t("ribbon.groups.accounts")}>
+            <Actie icoon={Settings} naam={t("ribbon.accountSettings")} groot onClick={() => setInstellingen(actief?.accountId)} disabled={!accounts} />
+            <Actie icoon={UserPlus} naam={t("studio.addAccount")} onClick={() => setWizard(true)} />
           </Groep>
-          <Groep naam="Mappen">
-            <Actie icoon={FolderPlus} naam="Nieuwe map" disabled={!actief} onClick={() => setMapDialoog({ soort: "nieuw", naam: "", binnen: false })} />
-            <Actie icoon={FolderPen} naam="Hernoemen" disabled={!huidigeMap || !!huidigeMap.speciaal} onClick={() => setMapDialoog({ soort: "hernoem", naam: huidigeMap?.naam ?? "", binnen: false })} />
-            <Actie icoon={FolderX} naam="Map verwijderen" disabled={!huidigeMap || !!huidigeMap.speciaal} onClick={() => void verwijderMap()} />
+          <Groep naam={t("ribbon.groups.folders")}>
+            <Actie icoon={FolderPlus} naam={t("studio.folderDialog.newTitle")} disabled={!actief} onClick={() => setMapDialoog({ soort: "nieuw", naam: "", binnen: false })} />
+            <Actie icoon={FolderPen} naam={t("studio.folderDialog.rename")} disabled={!huidigeMap || !!huidigeMap.speciaal} onClick={() => setMapDialoog({ soort: "hernoem", naam: huidigeMap?.naam ?? "", binnen: false })} />
+            <Actie icoon={FolderX} naam={t("studio.deleteFolder.title")} disabled={!huidigeMap || !!huidigeMap.speciaal} onClick={() => void verwijderMap()} />
           </Groep>
         </>
       ),
@@ -704,7 +710,7 @@ export default function EmailStudio(props: EmailStudioProps) {
       <Ribbon tabs={tabs} bestand={props.bestandsmenu} />
       {backend.soort === "demo" && (
         <div className="email-demobalk" role="note">
-          <TriangleAlert size={14} /> {DEMO_MELDING}
+          <TriangleAlert size={14} /> {demoMelding()}
         </div>
       )}
       {accountFout && (
@@ -715,10 +721,10 @@ export default function EmailStudio(props: EmailStudioProps) {
       {geenAccount && !wizard ? (
         <div className="email-welkom">
           <Mail size={40} strokeWidth={1.2} />
-          <h2>Nog geen e-mailaccount</h2>
-          <p>Voeg je account toe met je e-mailadres en wachtwoord. Email Studio zoekt de juiste instellingen.</p>
+          <h2>{t("studio.welcome.title")}</h2>
+          <p>{t("studio.welcome.text")}</p>
           <button className="email-knop is-primair" onClick={() => setWizard(true)}>
-            <UserPlus size={15} /> Account toevoegen
+            <UserPlus size={15} /> {t("studio.addAccount")}
           </button>
         </div>
       ) : (
@@ -741,10 +747,10 @@ export default function EmailStudio(props: EmailStudioProps) {
                 }
                 ladenFout={mapFout}
               />
-              {splitter("mappen", "Breedte mappenpaneel")}
+              {splitter("mappen", t("studio.folderPaneWidth"))}
             </>
           )}
-          <section className="email-lijstpaneel" aria-label="Berichtenlijst">
+          <section className="email-lijstpaneel" aria-label={t("studio.messageList")}>
             <div className="email-lijstkop">
               <div className="email-zoek">
                 <Search size={14} />
@@ -752,8 +758,8 @@ export default function EmailStudio(props: EmailStudioProps) {
                   ref={zoekveld}
                   type="search"
                   value={zoek}
-                  placeholder={huidigeMap ? `Zoeken in ${huidigeMap.naam}` : "Zoeken"}
-                  aria-label="Berichten zoeken (Ctrl+F)"
+                  placeholder={huidigeMap ? t("studio.search.in", { folder: mapNaam(huidigeMap, t) }) : t("common:search")}
+                  aria-label={t("studio.search.label", { shortcut: "Ctrl+F" })}
                   onChange={(e) => setZoek(e.target.value)}
                   onKeyDown={(e) => {
                     if (e.key === "Escape" && zoek) {
@@ -768,34 +774,36 @@ export default function EmailStudio(props: EmailStudioProps) {
                   }}
                 />
                 {zoek && (
-                  <button className="email-iconknop" aria-label="Zoekopdracht wissen" onClick={() => setZoek("")}>
+                  <button className="email-iconknop" aria-label={t("studio.search.clear")} onClick={() => setZoek("")}>
                     <X size={13} />
                   </button>
                 )}
               </div>
-              <div className="email-snelfilter" role="group" aria-label="Snelfilter">
-                <button aria-pressed={filter.ongelezen} onClick={() => setFilter({ ...filter, ongelezen: !filter.ongelezen })} title="Alleen ongelezen">
-                  <Eye size={13} /> Ongelezen
+              <div className="email-snelfilter" role="group" aria-label={t("studio.filter.label")}>
+                <button aria-pressed={filter.ongelezen} onClick={() => setFilter({ ...filter, ongelezen: !filter.ongelezen })} title={t("studio.filter.unreadTitle")}>
+                  <Eye size={13} /> {t("studio.filter.unread")}
                 </button>
-                <button aria-pressed={filter.ster} onClick={() => setFilter({ ...filter, ster: !filter.ster })} title="Alleen met ster">
-                  <Star size={13} /> Ster
+                <button aria-pressed={filter.ster} onClick={() => setFilter({ ...filter, ster: !filter.ster })} title={t("studio.filter.starredTitle")}>
+                  <Star size={13} /> {t("studio.filter.starred")}
                 </button>
-                <button aria-pressed={filter.bijlage} onClick={() => setFilter({ ...filter, bijlage: !filter.bijlage })} title="Alleen met bijlage">
-                  <Paperclip size={13} /> Bijlage
+                <button aria-pressed={filter.bijlage} onClick={() => setFilter({ ...filter, bijlage: !filter.bijlage })} title={t("studio.filter.attachmentTitle")}>
+                  <Paperclip size={13} /> {t("studio.filter.attachment")}
                 </button>
-                <label className="email-zoekinhoud" title="Ook in de berichttekst zoeken (trager)">
-                  <input type="checkbox" checked={zoekInhoud} onChange={(e) => setZoekInhoud(e.target.checked)} /> Inhoud
+                <label className="email-zoekinhoud" title={t("studio.filter.bodyTitle")}>
+                  <input type="checkbox" checked={zoekInhoud} onChange={(e) => setZoekInhoud(e.target.checked)} /> {t("studio.filter.body")}
                 </label>
               </div>
               <div className="email-lijstinfo" aria-live="polite">
-                <strong>{huidigeMap?.naam ?? "—"}</strong>
+                <strong>{huidigeMap ? mapNaam(huidigeMap, t) : "—"}</strong>
                 <span>
                   {lijstLaden && !lijst.length
-                    ? "Laden…"
+                    ? t("common:loading")
                     : clientFilter
-                      ? `${zichtbaar.length} van ${lijst.length < totaal ? `${lijst.length} geladen` : totaal}`
-                      : `${totaal} ${totaal === 1 ? "bericht" : "berichten"}`}
-                  {selectie.length > 1 ? ` · ${selectie.length} geselecteerd` : ""}
+                      ? lijst.length < totaal
+                        ? t("studio.count.filteredLoaded", { shown: zichtbaar.length, loaded: lijst.length })
+                        : t("studio.count.filtered", { shown: zichtbaar.length, total: totaal })
+                      : t("studio.count.messages", { count: totaal })}
+                  {selectie.length > 1 ? ` · ${t("studio.count.selected", { count: selectie.length })}` : ""}
                 </span>
               </div>
             </div>
@@ -803,12 +811,12 @@ export default function EmailStudio(props: EmailStudioProps) {
               <div className="email-leeg" role="alert">
                 <p>{lijstFout}</p>
                 <button className="email-knop" onClick={() => void laadLijst(0)}>
-                  Opnieuw proberen
+                  {t("common:retry")}
                 </button>
               </div>
             ) : !lijstLaden && !zichtbaar.length && actief ? (
               <div className="email-leeg">
-                <p>{zoekTerm || clientFilter || filter.ongelezen ? "Geen berichten gevonden." : "Deze map is leeg."}</p>
+                <p>{zoekTerm || clientFilter || filter.ongelezen ? t("studio.noResults") : t("studio.emptyFolder")}</p>
               </div>
             ) : (
               <Berichtenlijst
@@ -825,8 +833,8 @@ export default function EmailStudio(props: EmailStudioProps) {
           </section>
           {indeling.toonLeesvenster && (
             <>
-              {splitter("lijst", "Breedte berichtenlijst")}
-              <section className="email-leespaneel" aria-label="Leesvenster">
+              {splitter("lijst", t("studio.messageListWidth"))}
+              <section className="email-leespaneel" aria-label={t("ribbon.readingPane")}>
                 {account ? (
                   <Leesvenster
                     backend={backend}
@@ -842,10 +850,10 @@ export default function EmailStudio(props: EmailStudioProps) {
                     bewaarBijlage={(b) => void bewaarBijlage(b)}
                     link={volgLink}
                     openBytes={props.openInKantoor}
-                    bewaarBytes={(naam, bytes, type) => void bewaarBestand(naam, bytes, type).then(props.melding, (e) => props.melding(foutTekst(e, `${naam} opslaan mislukt`)))}
+                    bewaarBytes={(naam, bytes, type) => void bewaarBestand(naam, bytes, type).then(props.melding, (e) => props.melding(foutTekst(e, t("studio.errors.saveFile", { name: naam }))))}
                     openLink={(url) => {
                       const veilig = veiligeLink(url);
-                      if (veilig) void openExtern(veilig).then((ok) => ok || props.melding(`Kon de browser niet openen. Kopieer het adres: ${veilig}`));
+                      if (veilig) void openExtern(veilig).then((ok) => ok || props.melding(t("link.browserFailed", { url: veilig })));
                     }}
                     voorbeeldOpen={setVoorbeeldOpen}
                   />
@@ -893,7 +901,7 @@ export default function EmailStudio(props: EmailStudioProps) {
             const lijst = await laadMappen(nieuwAccount.id);
             const inbox = lijst.find((m) => m.speciaal === "inbox") ?? lijst[0];
             if (inbox) setActief({ accountId: nieuwAccount.id, map: inbox.pad });
-            props.melding(`Account ${nieuwAccount.email} toegevoegd.`);
+            props.melding(t("studio.accountAdded", { email: nieuwAccount.email }));
           }}
         />
       )}
@@ -923,7 +931,7 @@ export default function EmailStudio(props: EmailStudioProps) {
         />
       )}
       {verplaatsen && actief && (
-        <Dialoog titel={`${selectie.length === 1 ? "Bericht" : `${selectie.length} berichten`} verplaatsen naar`} sluit={() => setVerplaatsen(false)}>
+        <Dialoog titel={t("studio.moveTo", { count: selectie.length })} sluit={() => setVerplaatsen(false)}>
           <ul className="email-mapkeuze">
             {(mappen[actief.accountId] ?? [])
               .filter((m) => m.selecteerbaar && m.pad !== actief.map)
@@ -936,7 +944,10 @@ export default function EmailStudio(props: EmailStudioProps) {
                       void verplaats(m.pad);
                     }}
                   >
-                    <FolderInput size={14} /> {m.pad.split(m.scheiding || "/").join(" › ")}
+                    <FolderInput size={14} /> {m.pad
+                      .split(m.scheiding || "/")
+                      .map((deel, i) => (i === 0 && deel.toUpperCase() === "INBOX" ? t("folders.inbox") : deel))
+                      .join(" › ")}
                   </button>
                 </li>
               ))}
@@ -945,15 +956,15 @@ export default function EmailStudio(props: EmailStudioProps) {
       )}
       {mapDialoog && (
         <Dialoog
-          titel={mapDialoog.soort === "nieuw" ? "Nieuwe map" : "Map hernoemen"}
+          titel={mapDialoog.soort === "nieuw" ? t("studio.folderDialog.newTitle") : t("studio.folderDialog.renameTitle")}
           sluit={() => setMapDialoog(null)}
           acties={
             <>
               <button className="email-knop" onClick={() => setMapDialoog(null)}>
-                Annuleren
+                {t("common:cancel")}
               </button>
               <button className="email-knop is-primair" disabled={!mapDialoog.naam.trim()} onClick={() => void bevestigMap()}>
-                {mapDialoog.soort === "nieuw" ? "Maken" : "Hernoemen"}
+                {mapDialoog.soort === "nieuw" ? t("studio.folderDialog.create") : t("studio.folderDialog.rename")}
               </button>
             </>
           }
@@ -966,13 +977,13 @@ export default function EmailStudio(props: EmailStudioProps) {
             }}
           >
             <label>
-              Naam
+              {t("studio.folderDialog.name")}
               <input autoFocus value={mapDialoog.naam} onChange={(e) => setMapDialoog({ ...mapDialoog, naam: e.target.value })} />
             </label>
             {mapDialoog.soort === "nieuw" && huidigeMap && (
               <label className="email-vinkje">
                 <input type="checkbox" checked={mapDialoog.binnen} onChange={(e) => setMapDialoog({ ...mapDialoog, binnen: e.target.checked })} />
-                <span>Binnen “{huidigeMap.naam}”</span>
+                <span>{t("studio.folderDialog.inside", { folder: mapNaam(huidigeMap, t) })}</span>
               </label>
             )}
           </form>
@@ -980,16 +991,16 @@ export default function EmailStudio(props: EmailStudioProps) {
       )}
       {bron && (
         <Dialoog
-          titel="Berichtbron"
+          titel={t("studio.source.title")}
           breed="groot"
           sluit={() => setBron(null)}
           acties={
             <>
               <button className="email-knop" onClick={() => void bewaarBestand(bron.naam, bron.bytes, "message/rfc822").then(props.melding, (e) => props.melding(foutTekst(e)))}>
-                <Download size={14} /> Opslaan als .eml
+                <Download size={14} /> {t("studio.source.saveAs", { extension: ".eml" })}
               </button>
               <button className="email-knop is-primair" onClick={() => setBron(null)}>
-                Sluiten
+                {t("common:close")}
               </button>
             </>
           }
@@ -1021,27 +1032,28 @@ function LinkDialoog({ href, tekst, sluit, melding }: { href: string; tekst: str
   const zichtbaarDomein = /^(?:https?:\/\/)?((?:[a-z0-9-]+\.)+[a-z]{2,})(?:[/:?#]|$)/i.exec(tekst)?.[1]?.toLowerCase();
   const misleidend = !!zichtbaarDomein && !!doel && !doel.hostname.toLowerCase().endsWith(zichtbaarDomein.replace(/^www\./, ""));
   const tel = href.startsWith("tel:");
+  const { t } = useTranslation("email");
   return (
     <Dialoog
-      titel={tel ? "Telefoonnummer" : "Koppeling openen?"}
+      titel={tel ? t("link.phoneTitle") : t("link.openTitle")}
       sluit={sluit}
       rol="alertdialog"
       acties={
         <>
           <button className="email-knop" onClick={sluit}>
-            Annuleren
+            {t("common:cancel")}
           </button>
           <button
             className="email-knop"
             onClick={() => {
               void navigator.clipboard?.writeText(tel ? href.slice(4) : href).then(
-                () => melding("Adres gekopieerd."),
-                () => melding("Kopiëren is niet gelukt; selecteer het adres handmatig."),
+                () => melding(t("link.copied")),
+                () => melding(t("link.copyFailed")),
               );
               sluit();
             }}
           >
-            Adres kopiëren
+            {t("link.copy")}
           </button>
           {!tel && (
             <button
@@ -1049,19 +1061,19 @@ function LinkDialoog({ href, tekst, sluit, melding }: { href: string; tekst: str
               autoFocus
               onClick={() => {
                 void openExtern(href).then((gelukt) => {
-                  if (!gelukt) melding(`Kon de browser niet openen. Kopieer het adres: ${href}`);
+                  if (!gelukt) melding(t("link.browserFailed", { url: href }));
                 });
                 sluit();
               }}
             >
-              Openen in browser
+              {t("link.openInBrowser")}
             </button>
           )}
         </>
       }
     >
-      <p>{tel ? "Dit telefoonnummer staat in het bericht:" : "Deze koppeling gaat werkelijk naar:"}</p>
-      <code className="email-linkdoel">
+      <p>{tel ? t("link.phoneIntro") : t("link.realTarget")}</p>
+      <code className="email-linkdoel" dir="ltr">
         {doel ? (
           <>
             {doel.protocol}//<strong>{doel.hostname}</strong>
@@ -1078,11 +1090,16 @@ function LinkDialoog({ href, tekst, sluit, melding }: { href: string; tekst: str
         <p className="email-waarschuwing" role="alert">
           <TriangleAlert size={15} />
           <span>
-            De tekst in het bericht noemt <strong>{zichtbaarDomein}</strong>, maar de koppeling gaat naar <strong>{doel!.hostname}</strong>. Dit kan phishing zijn.
+            <Trans
+              t={t}
+              i18nKey="link.misleading"
+              values={{ shown: zichtbaarDomein, actual: doel!.hostname }}
+              components={{ strong: <strong /> }}
+            />
           </span>
         </p>
       )}
-      {doel?.protocol === "http:" && <p className="email-hint">Let op: deze koppeling gebruikt geen versleutelde verbinding (http).</p>}
+      {doel?.protocol === "http:" && <p className="email-hint">{t("link.unencrypted")}</p>}
     </Dialoog>
   );
 }

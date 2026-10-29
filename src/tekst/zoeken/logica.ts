@@ -8,6 +8,10 @@
  * U+0001 (^g) en ander inline object als U+FFFC. Een handmatig pagina-einde
  * vóór een alinea staat als `\f` (^m) aan het begin van die alinea.
  */
+import i18next from "../../i18n/config";
+
+/** Melding uit `writer:find.errors`, vertaald op het moment van gebruik. */
+const melding = (sleutel: string, waarden?: Record<string, unknown>) => i18next.t(`writer:find.errors.${sleutel}`, waarden);
 
 export const TEKEN = {
   alinea: "\n",
@@ -68,7 +72,7 @@ export function jokertekensNaarRegex(patroon: string): string {
     const c = patroon[i];
     if (c === "^" && i + 1 < patroon.length) {
       const v = patroon[++i];
-      if (!(v in SPECIAAL) || v === "?" || v === "#" || v === "$") throw new ZoekFout(`^${v} kan niet met jokertekens worden gebruikt.`);
+      if (!(v in SPECIAAL) || v === "?" || v === "#" || v === "$") throw new ZoekFout(melding("wildcardSpecial", { code: `^${v}` }));
       uit += SPECIAAL[v];
     } else if (c === "\\" && i + 1 < patroon.length) {
       const v = patroon[++i];
@@ -80,7 +84,7 @@ export function jokertekensNaarRegex(patroon: string): string {
     else if (c === ">") uit += "(?<=[\\p{L}\\p{N}_])(?![\\p{L}\\p{N}_])";
     else if (c === "[") {
       const eind = patroon.indexOf("]", i + 1);
-      if (eind < 0) throw new ZoekFout("Een [ zonder bijbehorende ].");
+      if (eind < 0) throw new ZoekFout(melding("unmatchedBracket"));
       let inhoud = patroon.slice(i + 1, eind);
       const niet = inhoud.startsWith("!");
       if (niet) inhoud = inhoud.slice(1);
@@ -88,9 +92,9 @@ export function jokertekensNaarRegex(patroon: string): string {
       i = eind;
     } else if (c === "{") {
       const eind = patroon.indexOf("}", i + 1);
-      if (eind < 0) throw new ZoekFout("Een { zonder bijbehorende }.");
+      if (eind < 0) throw new ZoekFout(melding("unmatchedBrace"));
       const inhoud = patroon.slice(i + 1, eind).replace(/;/g, ",");
-      if (!/^\d+(,\d*)?$/.test(inhoud)) throw new ZoekFout(`Ongeldig aantal: {${patroon.slice(i + 1, eind)}}.`);
+      if (!/^\d+(,\d*)?$/.test(inhoud)) throw new ZoekFout(melding("invalidCount", { value: `{${patroon.slice(i + 1, eind)}}` }));
       uit += `{${inhoud}}`;
       i = eind;
     } else if (c === "(" || c === ")") uit += c;
@@ -119,7 +123,7 @@ export function tekstNaarRegex(tekst: string): string {
 
 /** De reguliere expressie voor een zoekopdracht (altijd globaal en unicode). */
 export function maakPatroon(zoek: string, opties: ZoekOpties = {}): RegExp {
-  if (!zoek) throw new ZoekFout("Typ eerst iets om te zoeken.");
+  if (!zoek) throw new ZoekFout(melding("typeFirst"));
   let bron: string;
   // In een regex staan ^ en $ voor begin en einde van een alinea (vlag m);
   // gebruik \n voor de alineamarkering.
@@ -131,12 +135,12 @@ export function maakPatroon(zoek: string, opties: ZoekOpties = {}): RegExp {
   const vlaggen = `gu${opties.regex ? "m" : ""}${opties.hoofdlettergevoelig || opties.jokertekens ? "" : "i"}`;
   try {
     const patroon = new RegExp(bron, vlaggen);
-    if (patroon.test("")) throw new ZoekFout("Deze zoekopdracht vindt lege tekst; maak hem specifieker.");
+    if (patroon.test("")) throw new ZoekFout(melding("emptyMatch"));
     patroon.lastIndex = 0;
     return patroon;
   } catch (e) {
     if (e instanceof ZoekFout) throw e;
-    throw new ZoekFout(`Ongeldige zoekopdracht: ${(e as Error).message.replace(/^Invalid regular expression: /, "")}`);
+    throw new ZoekFout(melding("invalidQuery", { message: (e as Error).message.replace(/^Invalid regular expression: /, "") }));
   }
 }
 

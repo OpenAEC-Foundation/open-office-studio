@@ -180,7 +180,7 @@ pub fn open_recent(
         .met(&app, false, |lijst| {
             lijst.iter().find(|i| self::id(&i.pad) == id).map(|i| i.pad.clone())
         })
-        .ok_or("Dit bestand staat niet (meer) in de lijst.")?;
+        .ok_or_else(|| crate::taal::t("errors.file.notInRecentList"))?;
     if !pad.is_file() {
         return Ok(false);
     }

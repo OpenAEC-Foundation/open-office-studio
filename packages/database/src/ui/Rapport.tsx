@@ -5,6 +5,8 @@
  */
 import { Suspense, lazy, useEffect, useId, useMemo, useState } from "react";
 import { ArrowDown, ArrowUp, Eye, Pencil, Plus, Printer, Save, Trash2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { formatGetal, useOpmaak } from "../../../../src/i18n/opmaak";
 import type { QueryResultaat, Veldsoort, Werkkopie } from "../werkkopie/contract.ts";
 import { leesbareFout, toonWaarde } from "./invoer.ts";
 import { bouwRapport, FUNCTIENAMEN, type RapportDefinitie, type Totaal, type Totaalfunctie } from "./rapport-logica.ts";
@@ -20,7 +22,7 @@ function totaalTekst(totalen: Totaal[], kolom: string, soort: Veldsoort | null) 
     .filter((t) => t.veld.toLowerCase() === kolom.toLowerCase())
     .map(
       (t) =>
-        `${FUNCTIENAMEN[t.functie]} ${t.waarde === null ? "–" : t.functie === "aantal" ? t.waarde.toLocaleString("nl-NL") : toonWaarde(Math.round(t.waarde * 100) / 100, soort === "valuta" ? "valuta" : "getal")}`,
+        `${FUNCTIENAMEN[t.functie]} ${t.waarde === null ? "–" : t.functie === "aantal" ? formatGetal(t.waarde) : toonWaarde(Math.round(t.waarde * 100) / 100, soort === "valuta" ? "valuta" : "getal")}`,
     )
     .join(" · ");
 }
@@ -47,6 +49,7 @@ export function RapportOntwerper({
   onBewaard: (naam: string) => void;
   onVoorbeeld: (naam: string, bron: string, def: RapportDefinitie) => void;
 }) {
+  const { t } = useTranslation("database");
   const dialogen = useDialogen();
   const id = useId();
   const [naam, setNaam] = useState(beginNaam);
@@ -95,20 +98,20 @@ export function RapportOntwerper({
 
   async function bewaar() {
     const schoon = naam.trim();
-    if (!schoon) return setFout("Geef het rapport een naam.");
-    if (!bron) return setFout("Kies een bron.");
+    if (!schoon) return setFout(t("report.nameRequired"));
+    if (!bron) return setFout(t("report.sourceRequired"));
     if (schoon.toLowerCase() !== bewaardAls.toLowerCase() && bestaandeNamen.some((n) => n.toLowerCase() === schoon.toLowerCase())) {
-      const ja = await dialogen.bevestig({ titel: "Rapport vervangen", tekst: `Er bestaat al een rapport ‘${schoon}’. Vervangen?`, ja: "Vervangen", gevaarlijk: true });
+      const ja = await dialogen.bevestig({ titel: t("report.replaceTitle"), tekst: t("report.replaceText", { name: schoon }), ja: t("report.replace"), gevaarlijk: true });
       if (!ja) return;
     }
     try {
       await werkkopie.bewaarOntwerp({ naam: schoon, soort: "rapport", bron, definitie: { ...def, titel: def.titel || schoon } });
-      setMelding(`Rapport ‘${schoon}’ opgeslagen in de werkkopie.`);
+      setMelding(t("report.saved", { name: schoon }));
       setBewaardAls(schoon);
       setFout("");
       onBewaard(schoon);
     } catch (e) {
-      setFout("Opslaan mislukt: " + leesbareFout(e));
+      setFout(t("report.saveFailed", { error: leesbareFout(e) }));
     }
   }
 
@@ -122,11 +125,11 @@ export function RapportOntwerper({
     >
       <div className="database-ontwerper-raster">
         <label className="database-veld" htmlFor={`${id}-naam`}>
-          <span>Naam</span>
+          <span>{t("report.name")}</span>
           <input id={`${id}-naam`} value={naam} onChange={(e) => setNaam(e.target.value)} />
         </label>
         <label className="database-veld" htmlFor={`${id}-bron`}>
-          <span>Bron (tabel of query)</span>
+          <span>{t("report.source")}</span>
           <select
             id={`${id}-bron`}
             value={bron}
@@ -135,7 +138,7 @@ export function RapportOntwerper({
               zet({ velden: [], groepeer: null, sorteer: [], totalen: [] });
             }}
           >
-            <option value="">Kies een bron…</option>
+            <option value="">{t("report.chooseSource")}</option>
             {bronnen.map((b) => (
               <option key={b} value={b}>
                 {b}
@@ -144,20 +147,20 @@ export function RapportOntwerper({
           </select>
         </label>
         <label className="database-veld" htmlFor={`${id}-titel`}>
-          <span>Titel</span>
+          <span>{t("report.title")}</span>
           <input id={`${id}-titel`} value={def.titel} onChange={(e) => zet({ titel: e.target.value })} />
         </label>
         <label className="database-veld" htmlFor={`${id}-kop`}>
-          <span>Kop (tekst boven het rapport)</span>
+          <span>{t("report.header")}</span>
           <input id={`${id}-kop`} value={def.kop} onChange={(e) => zet({ kop: e.target.value })} />
         </label>
         <label className="database-veld" htmlFor={`${id}-voet`}>
-          <span>Voet (tekst onder het rapport)</span>
+          <span>{t("report.footer")}</span>
           <input id={`${id}-voet`} value={def.voet} onChange={(e) => zet({ voet: e.target.value })} />
         </label>
         <label className="database-veld database-veld-rij" htmlFor={`${id}-liggend`}>
           <input id={`${id}-liggend`} type="checkbox" checked={!!def.liggend} onChange={(e) => zet({ liggend: e.target.checked })} />
-          <span>Liggend afdrukken</span>
+          <span>{t("report.landscape")}</span>
         </label>
       </div>
       {fout && (
@@ -168,17 +171,17 @@ export function RapportOntwerper({
       {!!kolommen.length && (
         <div className="database-ontwerper-delen">
           <fieldset>
-            <legend>Velden en volgorde</legend>
+            <legend>{t("report.fieldsAndOrder")}</legend>
             <ul className="database-keuzelijst">
               {gekozen.map((v, i) => (
                 <li key={v}>
                   <label>
                     <input type="checkbox" checked onChange={() => wisselVeld(v, false)} /> {v}
                   </label>
-                  <button type="button" aria-label={`${v} omhoog`} disabled={i === 0} onClick={() => verplaats(i, -1)}>
+                  <button type="button" aria-label={t("report.moveUp", { field: v })} disabled={i === 0} onClick={() => verplaats(i, -1)}>
                     <ArrowUp size={14} />
                   </button>
-                  <button type="button" aria-label={`${v} omlaag`} disabled={i === gekozen.length - 1} onClick={() => verplaats(i, 1)}>
+                  <button type="button" aria-label={t("report.moveDown", { field: v })} disabled={i === gekozen.length - 1} onClick={() => verplaats(i, 1)}>
                     <ArrowDown size={14} />
                   </button>
                 </li>
@@ -195,11 +198,11 @@ export function RapportOntwerper({
             </ul>
           </fieldset>
           <fieldset>
-            <legend>Groeperen en sorteren</legend>
+            <legend>{t("report.groupAndSort")}</legend>
             <label className="database-veld" htmlFor={`${id}-groep`}>
-              <span>Groeperen op</span>
+              <span>{t("report.groupBy")}</span>
               <select id={`${id}-groep`} value={def.groepeer ?? ""} onChange={(e) => zet({ groepeer: e.target.value || null })}>
-                <option value="">(niet groeperen)</option>
+                <option value="">{t("report.noGrouping")}</option>
                 {kolommen.map((k) => (
                   <option key={k.naam} value={k.naam}>
                     {k.naam}
@@ -210,7 +213,7 @@ export function RapportOntwerper({
             {def.sorteer.map((s, i) => (
               <div key={i} className="database-ontwerper-regel">
                 <select
-                  aria-label={`Sorteerveld ${i + 1}`}
+                  aria-label={t("report.sortField", { number: i + 1 })}
                   value={s.veld}
                   onChange={(e) => zet({ sorteer: def.sorteer.map((x, j) => (j === i ? { ...x, veld: e.target.value } : x)) })}
                 >
@@ -221,29 +224,29 @@ export function RapportOntwerper({
                   ))}
                 </select>
                 <select
-                  aria-label={`Sorteervolgorde ${i + 1}`}
+                  aria-label={t("report.sortOrder", { number: i + 1 })}
                   value={s.aflopend ? "af" : "op"}
                   onChange={(e) => zet({ sorteer: def.sorteer.map((x, j) => (j === i ? { ...x, aflopend: e.target.value === "af" } : x)) })}
                 >
-                  <option value="op">Oplopend</option>
-                  <option value="af">Aflopend</option>
+                  <option value="op">{t("report.ascending")}</option>
+                  <option value="af">{t("report.descending")}</option>
                 </select>
-                <button type="button" aria-label={`Sortering ${i + 1} verwijderen`} onClick={() => zet({ sorteer: def.sorteer.filter((_, j) => j !== i) })}>
+                <button type="button" aria-label={t("report.deleteSort", { number: i + 1 })} onClick={() => zet({ sorteer: def.sorteer.filter((_, j) => j !== i) })}>
                   <Trash2 size={14} />
                 </button>
               </div>
             ))}
             <button type="button" onClick={() => zet({ sorteer: [...def.sorteer, { veld: kolommen[0].naam, aflopend: false }] })}>
-              <Plus size={14} /> Sortering toevoegen
+              <Plus size={14} /> {t("report.addSort")}
             </button>
           </fieldset>
           <fieldset>
-            <legend>Totalen (per groep en eindtotaal)</legend>
-            {def.totalen.map((t, i) => (
+            <legend>{t("report.totals")}</legend>
+            {def.totalen.map((tot, i) => (
               <div key={i} className="database-ontwerper-regel">
                 <select
-                  aria-label={`Functie van totaal ${i + 1}`}
-                  value={t.functie}
+                  aria-label={t("report.totalFunction", { number: i + 1 })}
+                  value={tot.functie}
                   onChange={(e) => zet({ totalen: def.totalen.map((x, j) => (j === i ? { ...x, functie: e.target.value as Totaalfunctie } : x)) })}
                 >
                   {(Object.keys(FUNCTIENAMEN) as Totaalfunctie[]).map((f) => (
@@ -253,17 +256,17 @@ export function RapportOntwerper({
                   ))}
                 </select>
                 <select
-                  aria-label={`Veld van totaal ${i + 1}`}
-                  value={t.veld}
+                  aria-label={t("report.totalField", { number: i + 1 })}
+                  value={tot.veld}
                   onChange={(e) => zet({ totalen: def.totalen.map((x, j) => (j === i ? { ...x, veld: e.target.value } : x)) })}
                 >
-                  {(t.functie === "aantal" ? kolommen : getallen).map((k) => (
+                  {(tot.functie === "aantal" ? kolommen : getallen).map((k) => (
                     <option key={k.naam} value={k.naam}>
                       {k.naam}
                     </option>
                   ))}
                 </select>
-                <button type="button" aria-label={`Totaal ${i + 1} verwijderen`} onClick={() => zet({ totalen: def.totalen.filter((_, j) => j !== i) })}>
+                <button type="button" aria-label={t("report.deleteTotal", { number: i + 1 })} onClick={() => zet({ totalen: def.totalen.filter((_, j) => j !== i) })}>
                   <Trash2 size={14} />
                 </button>
               </div>
@@ -272,7 +275,7 @@ export function RapportOntwerper({
               type="button"
               onClick={() => zet({ totalen: [...def.totalen, { veld: (getallen[0] ?? kolommen[0]).naam, functie: getallen.length ? "som" : "aantal" }] })}
             >
-              <Plus size={14} /> Totaal toevoegen
+              <Plus size={14} /> {t("report.addTotal")}
             </button>
           </fieldset>
         </div>
@@ -284,10 +287,10 @@ export function RapportOntwerper({
       )}
       <div className="database-knoppen">
         <button type="submit" className="primary">
-          <Save size={16} /> Rapport opslaan
+          <Save size={16} /> {t("report.saveReport")}
         </button>
-        <button type="button" disabled={!bron} onClick={() => onVoorbeeld(naam.trim() || "Rapport", bron, { ...def, titel: def.titel || naam })}>
-          <Eye size={16} /> Afdrukvoorbeeld
+        <button type="button" disabled={!bron} onClick={() => onVoorbeeld(naam.trim() || t("report.defaultName"), bron, { ...def, titel: def.titel || naam })}>
+          <Eye size={16} /> {t("report.printPreview")}
         </button>
       </div>
     </form>
@@ -295,13 +298,14 @@ export function RapportOntwerper({
 }
 
 function TotaalCel({ totalen, kolom, soort }: { totalen: Totaal[]; kolom: string; soort: Veldsoort | null }) {
+  const { getal } = useOpmaak();
   const lijst = totalen.filter((t) => t.veld.toLowerCase() === kolom.toLowerCase());
   return (
     <td className="database-totaal">
       {lijst.map((t, i) => (
         <div key={i}>
           <small>{FUNCTIENAMEN[t.functie]}</small>{" "}
-          {t.waarde === null ? "–" : t.functie === "aantal" ? t.waarde.toLocaleString("nl-NL") : toonWaarde(Math.round(t.waarde * 100) / 100, soort === "valuta" ? "valuta" : "getal")}
+          {t.waarde === null ? "–" : t.functie === "aantal" ? getal(t.waarde) : toonWaarde(Math.round(t.waarde * 100) / 100, soort === "valuta" ? "valuta" : "getal")}
         </div>
       ))}
     </td>
@@ -321,6 +325,8 @@ export function RapportVoorbeeld({
   definitie: RapportDefinitie;
   onOntwerp?: () => void;
 }) {
+  const { t } = useTranslation("database");
+  const opmaak = useOpmaak();
   const dialogen = useDialogen();
   const [data, setData] = useState<QueryResultaat | null>(null);
   const [fout, setFout] = useState("");
@@ -363,7 +369,7 @@ export function RapportVoorbeeld({
       titel: definitie.titel || naam,
       kop: definitie.kop || undefined,
       voet: definitie.voet || undefined,
-      voetRechts: `${rapport.aantal.toLocaleString("nl-NL")} records · ${new Date().toLocaleDateString("nl-NL")}${data.afgekapt ? " · afgekapt op 50.000 records" : ""}`,
+      voetRechts: voetTekst(rapport.aantal, !!data.afgekapt),
       kolommen: rapport.kolommen,
       rechts: rapport.indexen.map((idx) => {
         const soort = data.kolomsoorten?.[idx];
@@ -372,7 +378,7 @@ export function RapportVoorbeeld({
       secties: rapport.groepen.map((g) => ({
         kop:
           g.sleutel !== undefined
-            ? `${definitie.groepeer}: ${g.sleutel === null ? "(leeg)" : toonWaarde(g.sleutel, groepSoort)}`
+            ? `${definitie.groepeer}: ${g.sleutel === null ? t("report.empty") : toonWaarde(g.sleutel, groepSoort)}`
             : undefined,
         rijen: g.rijen.map((rij) => rapport.indexen.map((idx) => toonWaarde(rij[idx], data.kolomsoorten?.[idx] ?? null))),
         totaal:
@@ -394,7 +400,12 @@ export function RapportVoorbeeld({
       },
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rapport, data, definitie, naam]);
+  }, [rapport, data, definitie, naam, opmaak, t]);
+
+  function voetTekst(aantal: number, afgekapt: boolean) {
+    const tekst = t("report.recordCount", { count: aantal, total: opmaak.getal(aantal), date: opmaak.datum(new Date(), { day: "numeric", month: "numeric", year: "numeric" }) });
+    return afgekapt ? t("report.recordCountTruncated", { text: tekst, limit: opmaak.getal(50_000) }) : tekst;
+  }
 
   async function bewaarPdf(bytes: Uint8Array, bestandsnaam: string, mime: string) {
     const { bewaarBytes } = await import("../../../../src/afdrukken/bewaren");
@@ -403,16 +414,16 @@ export function RapportVoorbeeld({
 
   return (
     <div className="database-rapportvoorbeeld">
-      <div className="database-werkbalk" role="toolbar" aria-label="Afdrukvoorbeeld">
+      <div className="database-werkbalk" role="toolbar" aria-label={t("report.printPreview")}>
         <button className="primary" onClick={() => setVoorbeeld(true)} disabled={!afdrukbron}>
-          <Printer size={16} /> Afdrukken of PDF
+          <Printer size={16} /> {t("report.printOrPdf")}
         </button>
         {onOntwerp && (
           <button onClick={onOntwerp}>
-            <Pencil size={16} /> Ontwerp
+            <Pencil size={16} /> {t("report.design")}
           </button>
         )}
-        <span className="muted">Afdrukvoorbeeld met afdrukken en PDF (zelfde pagina’s).</span>
+        <span className="muted">{t("report.previewHint")}</span>
       </div>
       {afdrukMelding && <p role="status">{afdrukMelding}</p>}
       {voorbeeld && afdrukbron && (
@@ -430,16 +441,16 @@ export function RapportVoorbeeld({
           {fout}
         </p>
       )}
-      {geannuleerd && <p role="status">Geen gegevens: het opgeven van parameters is geannuleerd.</p>}
-      {!rapport && !fout && !geannuleerd && <p role="status">Rapport opbouwen…</p>}
+      {geannuleerd && <p role="status">{t("report.parametersCancelled")}</p>}
+      {!rapport && !fout && !geannuleerd && <p role="status">{t("report.building")}</p>}
       {rapport && (
-        <div className={`database-afdruk ${definitie.liggend ? "is-liggend" : ""}`} aria-label={`Afdrukvoorbeeld van ${naam}`}>
+        <div className={`database-afdruk ${definitie.liggend ? "is-liggend" : ""}`} aria-label={t("report.previewOf", { name: naam })}>
           <header className="database-afdrukkop">
             <h1>{definitie.titel || naam}</h1>
             {definitie.kop && <p>{definitie.kop}</p>}
           </header>
           {!!rapport.ontbrekend.length && (
-            <p className="melding fout">Deze velden komen niet (meer) voor in de bron: {rapport.ontbrekend.join(", ")}.</p>
+            <p className="melding fout">{t("report.missingFields", { fields: rapport.ontbrekend.join(", ") })}</p>
           )}
           <table>
             <thead>
@@ -456,7 +467,7 @@ export function RapportVoorbeeld({
                 {g.sleutel !== undefined && (
                   <tr className="database-groepkop">
                     <th colSpan={rapport.kolommen.length} scope="rowgroup">
-                      {definitie.groepeer}: {g.sleutel === null ? "(leeg)" : toonWaarde(g.sleutel, groepSoort)}
+                      {definitie.groepeer}: {g.sleutel === null ? t("report.empty") : toonWaarde(g.sleutel, groepSoort)}
                     </th>
                   </tr>
                 )}
@@ -490,18 +501,18 @@ export function RapportVoorbeeld({
           </table>
           {rapport.eindtotalen.some((t) => !rapport.kolommen.some((k) => k.toLowerCase() === t.veld.toLowerCase())) && (
             <p className="muted">
-              Totalen van niet-getoonde velden:{" "}
-              {rapport.eindtotalen
-                .filter((t) => !rapport.kolommen.some((k) => k.toLowerCase() === t.veld.toLowerCase()))
-                .map((t) => `${FUNCTIENAMEN[t.functie]} ${t.veld}: ${t.waarde === null ? "–" : t.waarde.toLocaleString("nl-NL")}`)
-                .join(" · ")}
+              {t("report.hiddenTotals", {
+                totals: rapport.eindtotalen
+                  .filter((x) => !rapport.kolommen.some((k) => k.toLowerCase() === x.veld.toLowerCase()))
+                  .map((x) => `${FUNCTIENAMEN[x.functie]} ${x.veld}: ${x.waarde === null ? "–" : opmaak.getal(x.waarde)}`)
+                  .join(" · "),
+              })}
             </p>
           )}
           <footer className="database-afdrukvoet">
             <span>{definitie.voet}</span>
             <span>
-              {rapport.aantal.toLocaleString("nl-NL")} records · {new Date().toLocaleDateString("nl-NL")}
-              {data?.afgekapt ? " · afgekapt op 50.000 records" : ""}
+              {voetTekst(rapport.aantal, !!data?.afgekapt)}
             </span>
           </footer>
         </div>

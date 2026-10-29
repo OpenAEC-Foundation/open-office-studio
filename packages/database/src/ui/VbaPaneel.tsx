@@ -1,6 +1,7 @@
 /** VBA-module: bron, procedures met “Uitvoeren”, en het uitvoervenster. */
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { Code2, Eraser, Pencil, Play, Save, Square, Trash2, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import type { LaadResultaat, ProcedureInfo } from "../../../vba/src/protocol.ts";
 import { kleurTokens } from "../syntaxis.ts";
 import type { VbaModule } from "./vba-sessie.ts";
@@ -41,15 +42,16 @@ export function Bron({ bron, taal, markeer }: { bron: string; taal: "vba" | "sql
   );
 }
 
+/** Sleutel per categorie afgeschermde constructies (`vbaPanel.category.*`). */
 const CATEGORIE: Record<string, string> = {
-  proces: "processen starten",
-  bestand: "bestanden",
-  com: "COM/ActiveX",
-  "windows-api": "Windows-API",
-  toetsenbord: "toetsenbord",
-  omgeving: "omgeving",
-  register: "register",
-  hyperlink: "hyperlinks",
+  proces: "process",
+  bestand: "file",
+  com: "com",
+  "windows-api": "windowsApi",
+  toetsenbord: "keyboard",
+  omgeving: "environment",
+  register: "registry",
+  hyperlink: "hyperlink",
   export: "export",
 };
 
@@ -71,6 +73,7 @@ export function VbaPaneel({
   /** Verwijdert de module uit de werkkopie (na bevestiging door de aanroeper). */
   onVerwijder?: () => void | Promise<void>;
 }) {
+  const { t } = useTranslation("database");
   const [info, setInfo] = useState<{ procedures: ProcedureInfo[]; laad: LaadResultaat } | null>(null);
   const [fout, setFout] = useState("");
   const [bewaarFout, setBewaarFout] = useState("");
@@ -108,13 +111,13 @@ export function VbaPaneel({
 
   return (
     <div className="database-vba">
-      <section className="database-vba-procedures" aria-label="Procedures">
-        <h3>Procedures</h3>
-        {!sessie && <p className="muted">Open eerst een werkkopie om VBA uit te voeren.</p>}
+      <section className="database-vba-procedures" aria-label={t("vbaPanel.procedures")}>
+        <h3>{t("vbaPanel.procedures")}</h3>
+        {!sessie && <p className="muted">{t("vbaPanel.noSession")}</p>}
         {sessie && (
           <div className="database-vba-modus">
             <label>
-              Bij ontbrekende onderdelen
+              {t("vbaPanel.whenMissing")}
               <select
                 value={vba.ontbrekend}
                 disabled={!!vba.bezig}
@@ -128,10 +131,10 @@ export function VbaPaneel({
                 ))}
               </select>
             </label>
-            <small id={modusId}>{MODI.find((m) => m.waarde === vba.ontbrekend)?.uitleg} Er wordt nooit iets buiten de werkkopie aangesproken.</small>
+            <small id={modusId}>{t("vbaPanel.modeHint", { description: MODI.find((m) => m.waarde === vba.ontbrekend)?.uitleg ?? "" })}</small>
           </div>
         )}
-        {sessie && !info && !fout && <p role="status">Module ontleden…</p>}
+        {sessie && !info && !fout && <p role="status">{t("vbaPanel.parsing")}</p>}
         {fout && (
           <p className="melding fout" role="alert">
             {fout}
@@ -139,18 +142,21 @@ export function VbaPaneel({
         )}
         {parseerfouten.map((f, i) => (
           <p key={i} className="melding fout" role="alert">
-            Syntaxisfout op regel {f.regel ?? "?"}: {f.beschrijving}. Deze module kan niet worden uitgevoerd.
+            {t("vbaPanel.syntaxError", { line: f.regel ?? "?", description: f.beschrijving })}
           </p>
         ))}
         {!!afgeschermd.length && (
           <p className="melding">
-            Deze module gebruikt {afgeschermd.length} afgeschermde {afgeschermd.length === 1 ? "constructie" : "constructies"} (
-            {[...new Set(afgeschermd.map((b) => `${b.naam} (${CATEGORIE[b.categorie] ?? b.categorie})`))].slice(0, 6).join(", ")}). Die worden
-            geweigerd als ze worden bereikt.
+            {t("vbaPanel.sandboxed", {
+              count: afgeschermd.length,
+              list: [...new Set(afgeschermd.map((b) => `${b.naam} (${CATEGORIE[b.categorie] ? t(`vbaPanel.category.${CATEGORIE[b.categorie]}`) : b.categorie})`))]
+                .slice(0, 6)
+                .join(", "),
+            })}
           </p>
         )}
         {info && !eigen.length && !parseerfouten.length && (
-          <p className="muted">Geen publieke procedures zonder verplichte parameters in deze module.</p>
+          <p className="muted">{t("vbaPanel.noProcedures")}</p>
         )}
         <ul>
           {eigen.map((p) => {
@@ -161,19 +167,19 @@ export function VbaPaneel({
                   <Code2 size={14} aria-hidden /> {p.naam}
                   <small>
                     {p.type === "function" ? "Function" : "Sub"}
-                    {p.gebeurtenis ? " · gebeurtenis" : ""}
+                    {p.gebeurtenis ? ` · ${t("vbaPanel.event")}` : ""}
                   </small>
                 </span>
                 {uitvoerbaar ? (
                   <button
                     disabled={!!vba.bezig}
                     onClick={() => void vba.voerUit(module.naam, p.naam)}
-                    aria-label={`${p.naam} uitvoeren`}
+                    aria-label={t("vbaPanel.runLabel", { name: p.naam })}
                   >
-                    <Play size={14} /> Uitvoeren
+                    <Play size={14} /> {t("vbaPanel.run")}
                   </button>
                 ) : (
-                  <small className="muted">{formulier ? `Via formulier ‘${formulier}’` : module.soort === "klasse" ? "Klassemodule" : "Gebeurtenis"}</small>
+                  <small className="muted">{formulier ? t("vbaPanel.viaForm", { name: formulier }) : module.soort === "klasse" ? t("vbaPanel.classModule") : t("vbaPanel.eventProcedure")}</small>
                 )}
               </li>
             );
@@ -181,15 +187,13 @@ export function VbaPaneel({
         </ul>
         {formulier && (
           <p className="muted">
-            Gebeurtenissen van deze formuliermodule (Form_Load, Form_Current, knop_Click) worden uitgevoerd wanneer je het formulier ‘
-            {formulier}’ opent en gebruikt. Maak daarvoor een formulier met deze naam (Maken › Formulier); het Access-formulierontwerp
-            zelf is niet leesbaar.
+            {t("vbaPanel.formModuleHint", { name: formulier })}
           </p>
         )}
       </section>
-      <section className="database-vba-bron" aria-label="Broncode">
+      <section className="database-vba-bron" aria-label={t("vbaPanel.sourceCode")}>
         <div className="database-werkbalk">
-          <h3>Broncode</h3>
+          <h3>{t("vbaPanel.sourceCode")}</h3>
           {bewerken ? (
             <>
               <button
@@ -208,7 +212,7 @@ export function VbaPaneel({
                   }
                 }}
               >
-                <Save size={14} /> Opslaan in werkkopie
+                <Save size={14} /> {t("vbaPanel.saveInWorkingCopy")}
               </button>
               <button
                 disabled={bewaren}
@@ -218,17 +222,17 @@ export function VbaPaneel({
                   setBewaarFout("");
                 }}
               >
-                <X size={14} /> Annuleren
+                <X size={14} /> {t("common:cancel")}
               </button>
             </>
           ) : (
             <>
               <button onClick={() => setBewerken(true)}>
-                <Pencil size={14} /> Bewerken
+                <Pencil size={14} /> {t("common:edit")}
               </button>
               {onVerwijder && (
                 <button className="is-gevaar" onClick={() => void onVerwijder()}>
-                  <Trash2 size={14} /> Module verwijderen
+                  <Trash2 size={14} /> {t("vbaPanel.deleteModule")}
                 </button>
               )}
             </>
@@ -240,21 +244,20 @@ export function VbaPaneel({
           </p>
         )}
         {bewerken ? (
-          <textarea className="database-vba-editor" aria-label={`Broncode van ${module.naam}`} spellCheck={false} value={concept} onChange={(e) => setConcept(e.target.value)} />
+          <textarea className="database-vba-editor" aria-label={t("vbaPanel.sourceCodeOf", { name: module.naam })} spellCheck={false} value={concept} onChange={(e) => setConcept(e.target.value)} />
         ) : (
           <>
-            {!!regel && <p className="muted">Regel {regel} is gemarkeerd.</p>}
+            {!!regel && <p className="muted">{t("vbaPanel.lineMarked", { line: regel })}</p>}
             <Bron bron={module.bron} taal="vba" markeer={regel} />
           </>
         )}
         <p className="muted">
           {module.herkomst === "access"
             ? module.gewijzigd
-              ? "Uit het Access-origineel, bewerkt in de werkkopie."
-              : "Uit het Access-origineel."
-            : "Gemaakt in de werkkopie."}{" "}
-          Opslaan bewaart de module in de werkkopie (_openaec_modules); bewaar de werkkopie als .sqlite om de wijziging te houden. Het
-          origineel blijft ongewijzigd.
+              ? t("vbaPanel.origin.accessEdited")
+              : t("vbaPanel.origin.access")
+            : t("vbaPanel.origin.own")}{" "}
+          {t("vbaPanel.saveHint")}
         </p>
       </section>
     </div>
@@ -262,25 +265,26 @@ export function VbaPaneel({
 }
 
 export function VbaUitvoer({ vba }: { vba: VbaBediening }) {
+  const { t } = useTranslation("database");
   const lijst = useRef<HTMLDivElement>(null);
   useEffect(() => {
     lijst.current?.scrollTo({ top: lijst.current.scrollHeight });
   }, [vba.uitvoer.length]);
   if (!vba.uitvoer.length && !vba.bezig) return null;
   return (
-    <section className="database-vba-uitvoer" aria-label="Uitvoervenster">
+    <section className="database-vba-uitvoer" aria-label={t("vbaPanel.outputWindow")}>
       <div className="database-werkbalk">
-        <h3>Directvenster</h3>
+        <h3>{t("vbaPanel.immediateWindow")}</h3>
         {vba.bezig && (
           <span role="status" className="database-vba-bezig">
-            Bezig: {vba.bezig}
+            {t("vbaPanel.busy", { task: vba.bezig })}
           </span>
         )}
         <button onClick={vba.stop} disabled={!vba.bezig} className={vba.bezig ? "is-gevaar" : ""}>
-          <Square size={14} /> Stop
+          <Square size={14} /> {t("vbaPanel.stop")}
         </button>
         <button onClick={vba.wisUitvoer} disabled={!!vba.bezig}>
-          <Eraser size={14} /> Wissen
+          <Eraser size={14} /> {t("vbaPanel.clear")}
         </button>
       </div>
       <div ref={lijst} className="database-vba-log" role="log" aria-live="polite">

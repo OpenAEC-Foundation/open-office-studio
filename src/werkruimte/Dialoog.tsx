@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { focusbare } from "../openaec-lint";
 import { useOfficeThema } from "../stijl/ThemaKnop";
 
@@ -39,6 +40,7 @@ export function Dialoog({
   sluitRef.current = sluit;
   // Het venster staat buiten .office; neem het thema van de werkruimte over.
   const { thema } = useOfficeThema();
+  const { t } = useTranslation("common");
 
   useEffect(() => {
     const vorige =
@@ -111,8 +113,8 @@ export function Dialoog({
           <button
             type="button"
             className="werkruimte-sluit"
-            aria-label="Sluiten"
-            title="Sluiten · Esc"
+            aria-label={t("common:close")}
+            title={t("common:closeEsc")}
             onClick={() => sluitRef.current()}
           >
             <X size={16} />

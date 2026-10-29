@@ -1,0 +1,145 @@
+{
+  "header": {
+    "homeTitle": "转到“开始”",
+    "homeLabel": "OpenAEC Office Studio · 开始",
+    "version": "版本 {{version}}",
+    "unsaved": "有未保存的更改",
+    "unchanged": "未更改",
+    "fileAndStart": "文件和开始",
+    "openFileTitle": "在新选项卡中打开文件 · Ctrl+O",
+    "openNotesBackupTitle": "添加笔记备份 · Ctrl+O",
+    "openDatabaseTitle": "打开数据库 · Ctrl+O",
+    "addBackup": "添加备份",
+    "saveAs": "另存为",
+    "saveAsTitle": "另存为 · F12 或 Ctrl+Shift+S（Ctrl+S 保存到当前打开的文件）",
+    "busy": "正在处理…"
+  },
+  "message": {
+    "close": "关闭消息",
+    "markdownNote": "Markdown 会保留文本和结构。如需保留页面布局、图片和修订，请另存一份 DOCX。"
+  },
+  "loading": {
+    "editor": "正在加载编辑器…",
+    "notes": "正在加载笔记…",
+    "email": "正在加载 Email Studio…",
+    "document": "正在加载文档…",
+    "fonts": "正在加载字体…"
+  },
+  "errors": {
+    "editorFailed": "编辑器无法打开此文件：{{error}}",
+    "openFailed": "打开失败：{{error}}",
+    "openFileFailed": "打开 {{name}} 失败：{{error}}",
+    "saveFailed": "保存失败：{{error}}",
+    "printFailed": "打印失败：{{error}}",
+    "sendAsAttachmentFailed": "作为附件发送失败：{{error}}",
+    "templateUnavailable": "模板不可用",
+    "exampleFailed": "无法打开示例。",
+    "fileSize": "请选择一个非空且不超过 100 MB 的文件。",
+    "unsupportedFormat": "{{name}}：不支持此格式。",
+    "emptyAttachment": "附件为空。",
+    "databaseModifiedFile": "Database Studio 中有已更改的工作副本。请先保存或关闭它，然后重新打开该文件。",
+    "databaseModifiedAttachment": "Database Studio 中有已更改的工作副本。请先保存或关闭它，然后重新打开该附件。",
+    "spreadsheetNotReady": "电子表格尚未就绪。",
+    "presentationNotReady": "演示文稿尚未就绪。",
+    "documentNotReady": "文档尚未就绪。",
+    "documentSaveFailed": "无法保存文档。"
+  },
+  "tabs": {
+    "untitled": "无标题 {{n}}",
+    "memoryWarning_other": "已打开 {{count}} 个文档。每个打开的文档都会占用内存；请关闭不再需要的文档。"
+  },
+  "tabBar": {
+    "label": "已打开的选项卡",
+    "start": "开始",
+    "startTitle": "开始 · 新建或现有文档、笔记和数据库",
+    "tabTitleUnsaved": "{{name}} · 有未保存的更改",
+    "dragOutHint": "拖到外面可在单独的窗口中打开",
+    "unsavedA11y": "，有未保存的更改",
+    "closeTab": "关闭 {{name}}",
+    "closeTitle": "关闭 · Ctrl+W",
+    "allTabs": "所有已打开的选项卡",
+    "addTab": "添加选项卡",
+    "addTabTitle": "打开新建或现有文档、笔记或数据库",
+    "releaseOpensWindow": "松开即可在单独的窗口中打开",
+    "closeOthers": "关闭其他选项卡",
+    "closeToRight": "关闭右侧的选项卡"
+  },
+  "windowMenu": {
+    "button": "打开的文档",
+    "buttonTitle": "打开的文档 · 按 Ctrl+Tab 或 Ctrl+F6 切换",
+    "empty": "没有打开的文档。",
+    "thisWindow": "此窗口",
+    "mainWindow": "主窗口",
+    "windowNumber": "窗口 {{number}}",
+    "unsavedTitle": "有未保存的更改",
+    "modified": "已更改",
+    "newWindow": "新建窗口"
+  },
+  "windows": {
+    "openInNewWindow": "在新窗口中打开",
+    "backToMainWindow": "返回主窗口",
+    "databaseMovedHere": "Database Studio 现在位于此窗口中。如需继续工作，请在此处重新打开数据库。",
+    "documentMoved": "文档已移动，包括未保存的更改。“撤消”历史记录不会随之移动。",
+    "linkUnavailable": "窗口链接不可用：{{error}}",
+    "closeGuardUnavailable": "关闭保护不可用：{{error}}",
+    "databaseModified": "Database Studio 无法将已更改的工作副本移到其他窗口。请先导出或保存数据库。",
+    "otherWindowFailed": "另一个窗口无法打开该选项卡。",
+    "mainWindowNoResponse": "主窗口没有响应。选项卡将保留在此处。",
+    "newWindowTimeout": "新窗口未能及时接管文档。选项卡将保留在此处。",
+    "alreadyMainWindow": "这已经是主窗口。",
+    "popupBlocked": "无法打开新窗口。请允许此页面显示弹出窗口。",
+    "moveToWindow": "移到{{window}}",
+    "newWindowFailed": "无法打开新窗口：{{error}}"
+  },
+  "dropZone": {
+    "release": "松开即可打开",
+    "explanation": "文档、电子表格和演示文稿各自在单独的选项卡中打开；MDB 和 ACCDB 在 Database Studio 中打开。",
+    "image": "{{name}} 是图片。拖放暂不能将图片插入文档；请使用“插入 › 图片”。",
+    "unsupported": "无法打开 {{name}}：不支持 .{{ext}}。Open Office Studio 可以打开文档、电子表格、演示文稿和 Access 数据库。"
+  },
+  "ribbon": {
+    "label": "功能区",
+    "file": "文件",
+    "hide": "隐藏功能区",
+    "show": "显示功能区",
+    "hideHint": "为文档留出更多空间 · Ctrl+F1",
+    "scrollLeft": "向左滚动功能区",
+    "scrollRight": "向右滚动功能区",
+    "commandFailed": "无法执行该命令。",
+    "nothingToUndo": "没有可撤消的操作。",
+    "nothingToRedo": "没有可恢复的操作。",
+    "presentationOpening": "演示文稿仍在打开中。",
+    "selectShapeFirst": "请先选择一个形状。"
+  },
+  "theme": {
+    "light": "浅色主题",
+    "forge": "Forge 主题"
+  },
+  "host": {
+    "conflict": "其他人在此期间保存了此文档。你的版本已另存为副本：{{name}}。",
+    "readOnly": "{{name}} 以只读方式打开。请使用“另存为”保留你的更改。",
+    "openFailed": "无法打开工作区中的文档：{{error}}"
+  },
+  "title": {
+    "document": "{{document}} — {{app}} ({{module}})",
+    "module": "{{app}} ({{module}})"
+  },
+  "titleBar": {
+    "quickAccess": "快速访问",
+    "saveTitle": "保存 · Ctrl+S",
+    "settings": "设置",
+    "minimize": "最小化",
+    "maximize": "最大化",
+    "restore": "向下还原",
+    "close": "关闭窗口"
+  },
+  "toasts": {
+    "region": "通知",
+    "info": "信息",
+    "success": "完成",
+    "warning": "注意",
+    "error": "错误",
+    "details": "详细信息",
+    "less": "收起"
+  }
+}

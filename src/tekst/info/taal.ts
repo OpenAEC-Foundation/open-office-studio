@@ -1,5 +1,6 @@
-/** Taal van de tekst op de cursor en Nederlandse taalnamen. */
+/** Taal van de tekst op de cursor en taalnamen in de interfacetaal. */
 import type { Document, TextFormatting } from "@betteroffice/docx/types/document";
+import { intlLocale } from "../../i18n/config";
 import { runOpPositie, vindAlinea } from "../stijlen/model";
 
 export const TALEN = [
@@ -7,15 +8,27 @@ export const TALEN = [
   "it-IT", "pt-PT", "da-DK", "sv-SE", "nb-NO", "fi-FI", "pl-PL", "tr-TR",
 ] as const;
 
-let namen: Intl.DisplayNames | null = null;
-/** "Nederlands (Nederland)" voor nl-NL. */
-export function taalNaam(code: string): string {
-  // Intl noemt nl-BE ‘Vlaams’; tekstverwerkers tonen ‘Nederlands (België)’.
-  if (code.toLowerCase() === "nl-be") return "Nederlands (België)";
+const namen = new Map<string, Intl.DisplayNames | null>();
+/**
+ * Naam van een taal in de interfacetaal (of in `locale`), zoals
+ * "Nederlands (Nederland)" voor nl-NL in het Nederlands of "Dutch
+ * (Netherlands)" in het Engels.
+ */
+export function taalNaam(code: string, locale: string = intlLocale()): string {
+  let notatie = namen.get(locale);
+  if (notatie === undefined) {
+    try {
+      // `standard`: Intl noemt nl-BE anders ‘Vlaams’; tekstverwerkers tonen
+      // ‘Nederlands (België)’.
+      notatie = new Intl.DisplayNames([locale], { type: "language", languageDisplay: "standard" });
+    } catch {
+      notatie = null;
+    }
+    namen.set(locale, notatie);
+  }
   try {
-    namen ??= new Intl.DisplayNames(["nl"], { type: "language" });
-    const naam = namen.of(code);
-    if (naam) return naam.charAt(0).toUpperCase() + naam.slice(1);
+    const naam = notatie?.of(code);
+    if (naam) return naam.charAt(0).toLocaleUpperCase(locale) + naam.slice(1);
   } catch {
     // Onbekende code: de code zelf.
   }

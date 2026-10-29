@@ -4,7 +4,9 @@
  * HTML (Nederlandse notatie), plakken met typecontrole per veld en de
  * berekening van het zichtbare deel bij virtualisatie. Zonder DOM.
  */
+import i18next from "i18next";
 import type { VeldSchema, Veldsoort, Waarde } from "../werkkopie/contract.ts";
+import { formatGetal } from "../../../../src/i18n/opmaak.ts";
 import { bewerkbaar, bewerkTekst, leesInvoer, SOORTNAMEN, toonWaarde } from "./invoer.ts";
 
 // ---------------------------------------------------------------- selectie
@@ -101,10 +103,14 @@ export function statistiek(rijen: Waarde[][], soorten: (Veldsoort | null)[]): St
   return { aantal, getallen, som, gemiddelde: getallen ? som / getallen : null };
 }
 
-const statGetal = new Intl.NumberFormat("nl-NL", { maximumFractionDigits: 4 });
 export function statistiekTekst(s: Statistiek): string {
-  const delen = [`Aantal: ${s.aantal.toLocaleString("nl-NL")}`];
-  if (s.getallen) delen.push(`Som: ${statGetal.format(s.som)}`, `Gemiddelde: ${statGetal.format(s.gemiddelde ?? 0)}`);
+  const getal = (n: number) => formatGetal(n, { maximumFractionDigits: 4 });
+  const delen = [i18next.t("database:grid.stats.count", { value: formatGetal(s.aantal) })];
+  if (s.getallen)
+    delen.push(
+      i18next.t("database:grid.stats.sum", { value: getal(s.som) }),
+      i18next.t("database:grid.stats.average", { value: getal(s.gemiddelde ?? 0) }),
+    );
   return delen.join(" · ");
 }
 
@@ -283,10 +289,9 @@ export function maakPlakPlan(
     });
     if (nieuw && iets) plan.nieuweRijen.push(nieuweRij);
   });
-  if (overgeslagen.size) plan.waarschuwingen.push(`Niet bewerkbaar en overgeslagen: ${[...overgeslagen].join(", ")}.`);
-  if (buiten) plan.waarschuwingen.push(`${buiten} ${buiten === 1 ? "waarde valt" : "waarden vallen"} rechts buiten de kolommen en ${buiten === 1 ? "wordt" : "worden"} niet geplakt.`);
-  if (buitenRijen)
-    plan.waarschuwingen.push(`${buitenRijen} ${buitenRijen === 1 ? "rij valt" : "rijen vallen"} onder het einde en ${buitenRijen === 1 ? "wordt" : "worden"} niet geplakt (hier kunnen geen rijen worden toegevoegd).`);
+  if (overgeslagen.size) plan.waarschuwingen.push(i18next.t("database:grid.paste.skipped", { fields: [...overgeslagen].join(", ") }));
+  if (buiten) plan.waarschuwingen.push(i18next.t("database:grid.paste.outsideColumns", { count: buiten }));
+  if (buitenRijen) plan.waarschuwingen.push(i18next.t("database:grid.paste.outsideRows", { count: buitenRijen }));
   return plan;
 }
 

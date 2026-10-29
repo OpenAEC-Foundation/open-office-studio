@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { zichtbaarElement } from "./editorApi";
 import {
   usePptxCommand,
@@ -87,25 +88,26 @@ function PT<K extends PptxCommandId>({
 }
 
 function DiaLettertype() {
+  const { t } = useTranslation("ribbon");
   const grootte = usePptxCommand("fontSize"),
     kleur = usePptxCommand("textColor");
   return (
-    <Groep naam="Lettertype">
+    <Groep naam={t("presentation.groups.font")}>
       <div className="ribbon-rij">
         <PL />
         <OpdrachtGetal
           opdracht={grootte}
-          naam="Tekengrootte"
+          naam={t("presentation.commands.fontSize")}
           args={(points) => ({ points })}
         />
       </div>
       <div className="ribbon-rij ribbon-iconen">
-        <P id="bold" naam="Vet" icoon={Bold} />
-        <P id="italic" naam="Cursief" icoon={Italic} />
-        <P id="underline" naam="Onderstrepen" icoon={Underline} />
+        <P id="bold" naam={t("presentation.commands.bold")} icoon={Bold} />
+        <P id="italic" naam={t("presentation.commands.italic")} icoon={Italic} />
+        <P id="underline" naam={t("presentation.commands.underline")} icoon={Underline} />
         <OpdrachtKleur
           opdracht={kleur}
-          naam="Tekstkleur"
+          naam={t("presentation.commands.textColor")}
           icoon={Type}
           args={(color) => ({ color })}
         />
@@ -114,34 +116,35 @@ function DiaLettertype() {
   );
 }
 function DiaUitlijning() {
+  const { t } = useTranslation("ribbon");
   return (
-    <Groep naam="Alinea">
+    <Groep naam={t("presentation.groups.paragraph")}>
       <div className="ribbon-rij ribbon-iconen">
         <PT
           id="alignment"
           args={{ value: "l" }}
-          naam="Links uitlijnen"
+          naam={t("presentation.commands.alignLeft")}
           icoon={AlignLeft}
           toets="Ctrl+L"
         />
         <PT
           id="alignment"
           args={{ value: "ctr" }}
-          naam="Centreren"
+          naam={t("presentation.commands.center")}
           icoon={AlignCenter}
           toets="Ctrl+E"
         />
         <PT
           id="alignment"
           args={{ value: "r" }}
-          naam="Rechts uitlijnen"
+          naam={t("presentation.commands.alignRight")}
           icoon={AlignRight}
           toets="Ctrl+R"
         />
         <PT
           id="alignment"
           args={{ value: "just" }}
-          naam="Uitvullen"
+          naam={t("presentation.commands.justify")}
           icoon={AlignJustify}
           toets="Ctrl+J"
         />
@@ -150,25 +153,27 @@ function DiaUitlijning() {
   );
 }
 function NieuweDia() {
+  const { t } = useTranslation("ribbon");
   return (
     <>
       <PT
         id="insertSlide"
         args={{}}
-        naam="Nieuwe dia"
+        naam={t("presentation.commands.newSlide")}
         icoon={FilePlus2}
         toets="Ctrl+M"
         groot
       />
-      <PK id="insertSlide" naam="Nieuwe dia met indeling" breed />
+      <PK id="insertSlide" naam={t("presentation.commands.newSlideWithLayout")} breed />
     </>
   );
 }
 function Voorstelling({ acties }: { acties: DiaActies }) {
+  const { t } = useTranslation("ribbon");
   return (
-    <Groep naam="Diavoorstelling">
+    <Groep naam={t("presentation.groups.slideShow")}>
       <DiaKnop
-        naam="Vanaf eerste dia"
+        naam={t("presentation.commands.fromBeginning")}
         icoon={MonitorPlay}
         toets="F5"
         groot
@@ -176,7 +181,7 @@ function Voorstelling({ acties }: { acties: DiaActies }) {
         onClick={() => acties.voorstelling(true)}
       />
       <DiaKnop
-        naam="Vanaf huidige dia"
+        naam={t("presentation.commands.fromCurrentSlide")}
         icoon={Play}
         toets="Shift+F5"
         groot
@@ -187,30 +192,32 @@ function Voorstelling({ acties }: { acties: DiaActies }) {
   );
 }
 function DiaVerwijderen({ acties }: { acties: DiaActies }) {
+  const { t } = useTranslation("ribbon");
   return (
     <DiaKnop
-      naam="Dia verwijderen"
+      naam={t("presentation.commands.deleteSlide")}
       icoon={Trash2}
-      toets="Delete in het diapaneel"
+      toets={t("presentation.commands.deleteSlideShortcut")}
       uit={!acties.bewerkbaar}
       onClick={acties.diaVerwijderen}
     />
   );
 }
 function DiaVerplaatsen({ acties }: { acties: DiaActies }) {
+  const { t } = useTranslation("ribbon");
   const uit = !acties.bewerkbaar;
   return (
-    <Groep naam="Dia verplaatsen">
+    <Groep naam={t("presentation.groups.moveSlide")}>
       <div className="ribbon-stapel">
         <DiaKnop
-          naam="Naar begin"
+          naam={t("presentation.commands.moveToBeginning")}
           icoon={ChevronsUp}
           toets="Ctrl+Shift+Home"
           uit={uit}
           onClick={() => acties.verplaatsen("begin")}
         />
         <DiaKnop
-          naam="Omhoog"
+          naam={t("presentation.commands.moveUp")}
           icoon={ChevronUp}
           toets="Ctrl+Shift+Page Up"
           uit={uit}
@@ -219,14 +226,14 @@ function DiaVerplaatsen({ acties }: { acties: DiaActies }) {
       </div>
       <div className="ribbon-stapel">
         <DiaKnop
-          naam="Omlaag"
+          naam={t("presentation.commands.moveDown")}
           icoon={ChevronDown}
           toets="Ctrl+Shift+Page Down"
           uit={uit}
           onClick={() => acties.verplaatsen("omlaag")}
         />
         <DiaKnop
-          naam="Naar einde"
+          naam={t("presentation.commands.moveToEnd")}
           icoon={ChevronsDown}
           toets="Ctrl+Shift+End"
           uit={uit}
@@ -237,19 +244,20 @@ function DiaVerplaatsen({ acties }: { acties: DiaActies }) {
   );
 }
 function DiaNavigatie({ acties }: { acties: DiaActies }) {
+  const { t } = useTranslation("ribbon");
   const uit = !acties.actief;
   return (
-    <Groep naam="Navigeren">
+    <Groep naam={t("presentation.groups.navigate")}>
       <div className="ribbon-stapel">
         <DiaKnop
-          naam="Eerste dia"
+          naam={t("presentation.commands.firstSlide")}
           icoon={ChevronFirst}
           toets="Home"
           uit={uit}
           onClick={() => acties.naarDia(() => 0)}
         />
         <DiaKnop
-          naam="Vorige dia"
+          naam={t("presentation.commands.previousSlide")}
           icoon={ChevronLeft}
           toets="Page Up"
           uit={uit}
@@ -258,14 +266,14 @@ function DiaNavigatie({ acties }: { acties: DiaActies }) {
       </div>
       <div className="ribbon-stapel">
         <DiaKnop
-          naam="Volgende dia"
+          naam={t("presentation.commands.nextSlide")}
           icoon={ChevronRight}
           toets="Page Down"
           uit={uit}
           onClick={() => acties.naarDia((i) => i + 1)}
         />
         <DiaKnop
-          naam="Laatste dia"
+          naam={t("presentation.commands.lastSlide")}
           icoon={ChevronLast}
           toets="End"
           uit={uit}
@@ -276,19 +284,20 @@ function DiaNavigatie({ acties }: { acties: DiaActies }) {
   );
 }
 function Rangschikken() {
+  const { t } = useTranslation("ribbon");
   return (
-    <Groep naam="Rangschikken">
+    <Groep naam={t("presentation.groups.arrange")}>
       <div className="ribbon-stapel">
         <P
           id="zOrder"
           args={{ value: "front" }}
-          naam="Naar voorgrond"
+          naam={t("presentation.commands.bringToFront")}
           icoon={BringToFront}
         />
         <P
           id="zOrder"
           args={{ value: "back" }}
-          naam="Naar achtergrond"
+          naam={t("presentation.commands.sendToBack")}
           icoon={SendToBack}
         />
       </div>
@@ -296,13 +305,13 @@ function Rangschikken() {
         <P
           id="zOrder"
           args={{ value: "forward" }}
-          naam="Naar voren"
+          naam={t("presentation.commands.bringForward")}
           icoon={ArrowUpToLine}
         />
         <P
           id="zOrder"
           args={{ value: "backward" }}
-          naam="Naar achteren"
+          naam={t("presentation.commands.sendBackward")}
           icoon={ArrowDownToLine}
         />
       </div>
@@ -310,6 +319,7 @@ function Rangschikken() {
   );
 }
 function ObjectUitlijnen({ acties }: { acties: DiaActies }) {
+  const { t } = useTranslation("ribbon");
   const uit = !acties.bewerkbaar;
   const knop = (
     naam: string,
@@ -324,35 +334,38 @@ function ObjectUitlijnen({ acties }: { acties: DiaActies }) {
     />
   );
   return (
-    <Groep naam="Uitlijnen op dia">
+    <Groep naam={t("presentation.groups.alignToSlide")}>
       <div className="ribbon-rij ribbon-iconen">
-        {knop("Links uitlijnen op dia", AlignStartVertical, "links")}
-        {knop("Horizontaal centreren op dia", AlignCenterVertical, "centreren")}
-        {knop("Rechts uitlijnen op dia", AlignEndVertical, "rechts")}
+        {knop(t("presentation.commands.alignLeftToSlide"), AlignStartVertical, "links")}
+        {knop(t("presentation.commands.alignCenterToSlide"), AlignCenterVertical, "centreren")}
+        {knop(t("presentation.commands.alignRightToSlide"), AlignEndVertical, "rechts")}
       </div>
       <div className="ribbon-rij ribbon-iconen">
-        {knop("Boven uitlijnen op dia", AlignStartHorizontal, "boven")}
-        {knop("Verticaal centreren op dia", AlignCenterHorizontal, "midden")}
-        {knop("Onder uitlijnen op dia", AlignEndHorizontal, "onder")}
+        {knop(t("presentation.commands.alignTopToSlide"), AlignStartHorizontal, "boven")}
+        {knop(t("presentation.commands.alignMiddleToSlide"), AlignCenterHorizontal, "midden")}
+        {knop(t("presentation.commands.alignBottomToSlide"), AlignEndHorizontal, "onder")}
       </div>
     </Groep>
   );
 }
 function SpeciaalTeken({ acties }: { acties: DiaActies }) {
+  const { t } = useTranslation("ribbon");
   return (
-    <label className="ribbon-keuze ribbon-keuze-breed" title="Speciaal teken">
+    <label className="ribbon-keuze ribbon-keuze-breed" title={t("presentation.commands.specialCharacter")}>
       <select
-        aria-label="Speciaal teken"
+        aria-label={t("presentation.commands.specialCharacter")}
         value=""
         disabled={!acties.bewerkbaar}
         onChange={(event) => {
           if (event.target.value) acties.tekstInvoegen(event.target.value);
         }}
       >
-        <option value="">Speciaal teken…</option>
-        {specialeTekens.map(({ teken, naam }) => (
+        <option value="">
+          {t("presentation.commands.specialCharacterPlaceholder")}
+        </option>
+        {specialeTekens.map(({ teken, sleutel }) => (
           <option key={teken} value={teken}>
-            {teken} {naam}
+            {teken} {t(`presentation.characters.${sleutel}`)}
           </option>
         ))}
       </select>
@@ -383,6 +396,7 @@ export function PresentatieRibbon({
   /** Diabreedte bij 100%, in CSS-pixels. */
   diaBreedte?: number;
 }) {
+  const { t } = useTranslation("ribbon");
   const zoom = usePptxCommand("zoom"),
     vulling = usePptxCommand("shapeFill"),
     rand = usePptxCommand("shapeStrokeColor");
@@ -412,41 +426,41 @@ export function PresentatieRibbon({
       tabs={[
         {
           id: "start",
-          naam: "Start",
+          naam: t("presentation.tabs.home"),
           inhoud: (
             <>
               <Geschiedenis soort="dia" />
-              <Groep naam="Dia’s">
+              <Groep naam={t("presentation.groups.slides")}>
                 <NieuweDia />
               </Groep>
               <DiaLettertype />
               <DiaUitlijning />
-              <Groep naam="Tekenen">
+              <Groep naam={t("presentation.groups.drawing")}>
                 <P
                   id="tool"
                   args={{ value: "select" }}
-                  naam="Selecteren"
+                  naam={t("presentation.commands.select")}
                   icoon={MousePointer2}
                   groot
                 />
                 <P
                   id="tool"
                   args={{ value: "textBox" }}
-                  naam="Tekstvak"
+                  naam={t("presentation.commands.textBox")}
                   icoon={Type}
                   groot
                 />
                 <P
                   id="tool"
                   args={{ value: "shape:rect" }}
-                  naam="Vorm"
+                  naam={t("presentation.commands.shape")}
                   icoon={Square}
                   groot
                 />
               </Groep>
-              <Groep naam="Presenteren">
+              <Groep naam={t("presentation.groups.present")}>
                 <DiaKnop
-                  naam="Diavoorstelling"
+                  naam={t("presentation.commands.slideShow")}
                   icoon={MonitorPlay}
                   toets="F5"
                   groot
@@ -459,36 +473,36 @@ export function PresentatieRibbon({
         },
         {
           id: "invoegen",
-          naam: "Invoegen",
+          naam: t("presentation.tabs.insert"),
           inhoud: (
             <>
-              <Groep naam="Dia’s">
+              <Groep naam={t("presentation.groups.slides")}>
                 <NieuweDia />
               </Groep>
-              <Groep naam="Illustraties">
-                <P id="insertImage" naam="Afbeelding" icoon={Image} groot />
+              <Groep naam={t("presentation.groups.illustrations")}>
+                <P id="insertImage" naam={t("presentation.commands.picture")} icoon={Image} groot />
                 <div className="ribbon-stapel">
-                  <PK id="tool" naam="Vormen en gereedschap" breed />
+                  <PK id="tool" naam={t("presentation.commands.shapesAndTools")} breed />
                 </div>
               </Groep>
               <GrafiekGroep g={grafieken} uit={!acties.bewerkbaar} />
-              <Groep naam="Tekst">
+              <Groep naam={t("presentation.groups.text")}>
                 <P
                   id="tool"
                   args={{ value: "textBox" }}
-                  naam="Tekstvak"
+                  naam={t("presentation.commands.textBox")}
                   icoon={Type}
                   groot
                 />
                 <div className="ribbon-stapel">
                   <DiaKnop
-                    naam="Datum"
+                    naam={t("presentation.commands.date")}
                     icoon={CalendarDays}
                     uit={!acties.bewerkbaar}
                     onClick={() => acties.datum("datum")}
                   />
                   <DiaKnop
-                    naam="Tijd"
+                    naam={t("presentation.commands.time")}
                     icoon={Clock}
                     uit={!acties.bewerkbaar}
                     onClick={() => acties.datum("tijd")}
@@ -498,25 +512,25 @@ export function PresentatieRibbon({
                   <SpeciaalTeken acties={acties} />
                 </div>
               </Groep>
-              <Groep naam="Basisvormen">
+              <Groep naam={t("presentation.groups.basicShapes")}>
                 <P
                   id="tool"
                   args={{ value: "shape:rect" }}
-                  naam="Rechthoek"
+                  naam={t("presentation.commands.rectangle")}
                   icoon={Square}
                   groot
                 />
                 <P
                   id="tool"
                   args={{ value: "shape:ellipse" }}
-                  naam="Ovaal"
+                  naam={t("presentation.commands.oval")}
                   icoon={Circle}
                   groot
                 />
                 <P
                   id="tool"
                   args={{ value: "shape:roundRect" }}
-                  naam="Afgeronde vorm"
+                  naam={t("presentation.commands.roundedRectangle")}
                   icoon={RectangleHorizontal}
                   groot
                 />
@@ -526,10 +540,10 @@ export function PresentatieRibbon({
         },
         {
           id: "dia",
-          naam: "Dia",
+          naam: t("presentation.tabs.slide"),
           inhoud: (
             <>
-              <Groep naam="Dia’s">
+              <Groep naam={t("presentation.groups.slides")}>
                 <NieuweDia />
                 <DiaVerwijderen acties={acties} />
               </Groep>
@@ -540,20 +554,20 @@ export function PresentatieRibbon({
         },
         {
           id: "vormopmaak",
-          naam: "Vormopmaak",
+          naam: t("presentation.tabs.shapeFormat"),
           inhoud: (
             <>
-              <Groep naam="Vormstijl">
+              <Groep naam={t("presentation.groups.shapeStyle")}>
                 <div className="ribbon-stapel">
                   <OpdrachtKleur
                     opdracht={vulling}
-                    naam="Vormopvulling"
+                    naam={t("presentation.commands.shapeFill")}
                     icoon={PaintBucket}
                     args={(color) => ({ color })}
                   />
                   <OpdrachtKleur
                     opdracht={rand}
-                    naam="Vormcontour"
+                    naam={t("presentation.commands.shapeOutline")}
                     icoon={Square}
                     args={(color) => ({ color })}
                   />
@@ -562,21 +576,21 @@ export function PresentatieRibbon({
                   <P
                     id="shapeFill"
                     args={{ color: null }}
-                    naam="Geen opvulling"
+                    naam={t("presentation.commands.noFill")}
                     icoon={Eraser}
                   />
                   <P
                     id="shapeStrokeColor"
                     args={{ color: null }}
-                    naam="Geen contour"
+                    naam={t("presentation.commands.noOutline")}
                     icoon={Square}
                   />
                 </div>
               </Groep>
-              <Groep naam="Lijndikte">
-                <PK id="shapeStrokeWidth" naam="Lijndikte" breed />
+              <Groep naam={t("presentation.groups.lineWeight")}>
+                <PK id="shapeStrokeWidth" naam={t("presentation.commands.lineWeight")} breed />
               </Groep>
-              <Groep naam="Vorm aanpassen">
+              <Groep naam={t("presentation.groups.editShape")}>
                 <DiaControl id="shapeAdjustment" />
               </Groep>
               <DiaLettertype />
@@ -586,14 +600,14 @@ export function PresentatieRibbon({
         },
         {
           id: "schikken",
-          naam: "Schikken",
+          naam: t("presentation.tabs.arrange"),
           inhoud: (
             <>
               <Rangschikken />
               <ObjectUitlijnen acties={acties} />
-              <Groep naam="Object">
+              <Groep naam={t("presentation.groups.object")}>
                 <DiaKnop
-                  naam="Verwijderen"
+                  naam={t("presentation.commands.delete")}
                   icoon={X}
                   toets="Delete"
                   groot
@@ -606,20 +620,20 @@ export function PresentatieRibbon({
         },
         {
           id: "beeld",
-          naam: "Beeld",
+          naam: t("presentation.tabs.view"),
           inhoud: (
             <>
               <Zoom opdracht={zoom} />
-              <Groep naam="Werkruimte">
+              <Groep naam={t("presentation.groups.workspace")}>
                 <P
                   id="zoom"
                   args={{ scale: "fit" }}
-                  naam="Passend maken"
+                  naam={t("presentation.commands.fit")}
                   icoon={Maximize}
                   groot
                 />
                 <DiaKnop
-                  naam="Notities"
+                  naam={t("presentation.commands.notes")}
                   icoon={StickyNote}
                   groot
                   aan={notities}
@@ -629,30 +643,30 @@ export function PresentatieRibbon({
                 <P
                   id="tool"
                   args={{ value: "select" }}
-                  naam="Selecteren"
+                  naam={t("presentation.commands.select")}
                   icoon={MousePointer2}
                   groot
                 />
               </Groep>
               <DiaNavigatie acties={acties} />
-              <Groep naam="Uitvoer">
+              <Groep naam={t("presentation.groups.output")}>
                 <P
                   id="exportPng"
-                  naam="Dia exporteren"
+                  naam={t("presentation.commands.exportSlide")}
                   icoon={Download}
                   groot
                 />
                 <Actie
-                  naam="Afdrukken"
+                  naam={t("presentation.commands.print")}
                   icoon={Printer}
-                  title="Afdrukvoorbeeld: dia’s, hand-outs of notitiepagina’s (Ctrl+P)"
+                  title={t("presentation.commands.printHint", { shortcut: "Ctrl+P" })}
                   groot
                   onClick={() => vraagAfdrukvoorbeeld()}
                 />
                 <Actie
-                  naam="Notitiepagina’s"
+                  naam={t("presentation.commands.notesPages")}
                   icoon={NotebookText}
-                  title="Notitiepagina’s afdrukken of als PDF bewaren"
+                  title={t("presentation.commands.notesPagesHint")}
                   groot
                   onClick={() => vraagAfdrukvoorbeeld({ indeling: "notities" })}
                 />
@@ -662,21 +676,21 @@ export function PresentatieRibbon({
         },
         {
           id: "diavoorstelling",
-          naam: "Diavoorstelling",
+          naam: t("presentation.tabs.slideShow"),
           inhoud: (
             <>
               <Voorstelling acties={acties} />
-              <Groep naam="Voorbereiden">
+              <Groep naam={t("presentation.groups.prepare")}>
                 <P
                   id="zoom"
                   args={{ scale: "fit" }}
-                  naam="Dia passend maken"
+                  naam={t("presentation.commands.fitSlide")}
                   icoon={Maximize}
                   groot
                 />
                 <P
                   id="exportPng"
-                  naam="Dia exporteren"
+                  naam={t("presentation.commands.exportSlide")}
                   icoon={Download}
                   groot
                 />
@@ -688,7 +702,7 @@ export function PresentatieRibbon({
           ? [
               {
                 id: "grafiekontwerp",
-                naam: "Grafiekontwerp",
+                naam: t("presentation.tabs.chartDesign"),
                 inhoud: (
                   <DiaGrafiekontwerp g={grafieken} uit={!acties.bewerkbaar} />
                 ),

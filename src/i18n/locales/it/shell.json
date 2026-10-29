@@ -1,0 +1,147 @@
+{
+  "header": {
+    "homeTitle": "Vai a Home",
+    "homeLabel": "OpenAEC Office Studio · Home",
+    "version": "Versione {{version}}",
+    "unsaved": "Modifiche non salvate",
+    "unchanged": "Nessuna modifica",
+    "fileAndStart": "File e Home",
+    "openFileTitle": "Apri un file in una nuova scheda · Ctrl+O",
+    "openNotesBackupTitle": "Aggiungi un backup delle note · Ctrl+O",
+    "openDatabaseTitle": "Apri database · Ctrl+O",
+    "addBackup": "Aggiungi backup",
+    "saveAs": "Salva con nome",
+    "saveAsTitle": "Salva con nome · F12 o Ctrl+Shift+S (Ctrl+S salva nel file aperto)",
+    "busy": "Elaborazione in corso…"
+  },
+  "message": {
+    "close": "Chiudi messaggio",
+    "markdownNote": "Markdown conserva il testo e la struttura. Salva anche un DOCX per il layout di pagina, le immagini e le revisioni."
+  },
+  "loading": {
+    "editor": "Caricamento dell'editor…",
+    "notes": "Caricamento di Note…",
+    "email": "Caricamento di Email Studio…",
+    "document": "Caricamento del documento…",
+    "fonts": "Caricamento dei tipi di carattere…"
+  },
+  "errors": {
+    "editorFailed": "L'editor non è riuscito ad aprire questo file: {{error}}",
+    "openFailed": "Apertura non riuscita: {{error}}",
+    "openFileFailed": "Apertura di {{name}} non riuscita: {{error}}",
+    "saveFailed": "Salvataggio non riuscito: {{error}}",
+    "printFailed": "Stampa non riuscita: {{error}}",
+    "sendAsAttachmentFailed": "Invio come allegato non riuscito: {{error}}",
+    "templateUnavailable": "Modello non disponibile",
+    "exampleFailed": "Impossibile aprire l'esempio.",
+    "fileSize": "Scegli un file non vuoto di massimo 100 MB.",
+    "unsupportedFormat": "{{name}}: questo formato non è supportato.",
+    "emptyAttachment": "L'allegato è vuoto.",
+    "databaseModifiedFile": "Database Studio ha una copia di lavoro modificata. Salvala o chiudila prima, quindi riapri il file.",
+    "databaseModifiedAttachment": "Database Studio ha una copia di lavoro modificata. Salvala o chiudila prima, quindi riapri l'allegato.",
+    "spreadsheetNotReady": "Il foglio di calcolo non è ancora pronto.",
+    "presentationNotReady": "La presentazione non è ancora pronta.",
+    "documentNotReady": "Il documento non è ancora pronto.",
+    "documentSaveFailed": "Impossibile salvare il documento."
+  },
+  "tabs": {
+    "untitled": "Senza titolo {{n}}",
+    "memoryWarning_one": "È aperto {{count}} documento. Ogni documento aperto utilizza memoria; chiudi i documenti che non ti servono più.",
+    "memoryWarning_many": "Sono aperti {{count}} di documenti. Ogni documento aperto utilizza memoria; chiudi i documenti che non ti servono più.",
+    "memoryWarning_other": "Sono aperti {{count}} documenti. Ogni documento aperto utilizza memoria; chiudi i documenti che non ti servono più."
+  },
+  "tabBar": {
+    "label": "Schede aperte",
+    "start": "Home",
+    "startTitle": "Home · documento nuovo o esistente, Note e Database",
+    "tabTitleUnsaved": "{{name}} · modifiche non salvate",
+    "dragOutHint": "Trascina all'esterno per una finestra separata",
+    "unsavedA11y": ", modifiche non salvate",
+    "closeTab": "Chiudi {{name}}",
+    "closeTitle": "Chiudi · Ctrl+W",
+    "allTabs": "Tutte le schede aperte",
+    "addTab": "Aggiungi scheda",
+    "addTabTitle": "Apri un documento nuovo o esistente, Note o Database",
+    "releaseOpensWindow": "Rilascia per aprire una finestra separata",
+    "closeOthers": "Chiudi le altre",
+    "closeToRight": "Chiudi le schede a destra"
+  },
+  "windowMenu": {
+    "button": "Documenti aperti",
+    "buttonTitle": "Documenti aperti · Ctrl+Tab o Ctrl+F6 per passare da uno all'altro",
+    "empty": "Nessun documento aperto.",
+    "thisWindow": "Questa finestra",
+    "mainWindow": "Finestra principale",
+    "windowNumber": "Finestra {{number}}",
+    "unsavedTitle": "Modifiche non salvate",
+    "modified": "modificato",
+    "newWindow": "Nuova finestra"
+  },
+  "windows": {
+    "openInNewWindow": "Apri in una nuova finestra",
+    "backToMainWindow": "Torna alla finestra principale",
+    "databaseMovedHere": "Database Studio ora si trova in questa finestra. Riapri qui il database se vuoi continuare a lavorare.",
+    "documentMoved": "Il documento è stato spostato, incluse le modifiche non salvate. La cronologia di Annulla non viene trasferita con lo spostamento.",
+    "linkUnavailable": "Collegamento tra finestre non disponibile: {{error}}",
+    "closeGuardUnavailable": "Protezione alla chiusura non disponibile: {{error}}",
+    "databaseModified": "Database Studio non può trasferire una copia di lavoro modificata in un'altra finestra. Esporta o salva prima il database.",
+    "otherWindowFailed": "L'altra finestra non è riuscita ad aprire la scheda.",
+    "mainWindowNoResponse": "La finestra principale non risponde. La scheda resta aperta qui.",
+    "newWindowTimeout": "La nuova finestra non ha preso in carico il documento in tempo. La scheda resta aperta qui.",
+    "alreadyMainWindow": "Questa è già la finestra principale.",
+    "popupBlocked": "Impossibile aprire la nuova finestra. Consenti le finestre popup per questa pagina.",
+    "moveToWindow": "Sposta in {{window}}",
+    "newWindowFailed": "Impossibile aprire una nuova finestra: {{error}}"
+  },
+  "dropZone": {
+    "release": "Rilascia per aprire",
+    "explanation": "Documenti, fogli di calcolo e presentazioni si aprono ciascuno in una scheda separata; MDB e ACCDB in Database Studio.",
+    "image": "{{name}} è un'immagine. Il trascinamento non inserisce ancora immagini in un documento; usa Inserisci › Immagine.",
+    "unsupported": "Impossibile aprire {{name}}: .{{ext}} non è supportato. Open Office Studio apre documenti, fogli di calcolo, presentazioni e database Access."
+  },
+  "ribbon": {
+    "label": "Barra multifunzione",
+    "file": "File",
+    "hide": "Nascondi barra multifunzione",
+    "show": "Mostra barra multifunzione",
+    "hideHint": "Più spazio per il documento · Ctrl+F1",
+    "scrollLeft": "Scorri la barra multifunzione a sinistra",
+    "scrollRight": "Scorri la barra multifunzione a destra",
+    "commandFailed": "Impossibile eseguire il comando.",
+    "nothingToUndo": "Non c'è nulla da annullare.",
+    "nothingToRedo": "Non c'è nulla da ripetere.",
+    "presentationOpening": "La presentazione è ancora in fase di apertura.",
+    "selectShapeFirst": "Seleziona prima una forma."
+  },
+  "theme": {
+    "light": "Tema chiaro",
+    "forge": "Tema Forge"
+  },
+  "host": {
+    "conflict": "Qualcun altro ha salvato questo documento nel frattempo. La tua versione è stata salvata come copia: {{name}}.",
+    "readOnly": "{{name}} è stato aperto in sola lettura. Usa Salva con nome per conservare le modifiche.",
+    "openFailed": "Impossibile aprire il documento dall’area di lavoro: {{error}}"
+  },
+  "title": {
+    "document": "{{document}} — {{app}} ({{module}})",
+    "module": "{{app}} ({{module}})"
+  },
+  "titleBar": {
+    "quickAccess": "Accesso rapido",
+    "saveTitle": "Salva · Ctrl+S",
+    "settings": "Impostazioni",
+    "minimize": "Riduci a icona",
+    "maximize": "Ingrandisci",
+    "restore": "Ripristina",
+    "close": "Chiudi finestra"
+  },
+  "toasts": {
+    "region": "Notifiche",
+    "info": "Info",
+    "success": "Fatto",
+    "warning": "Attenzione",
+    "error": "Errore",
+    "details": "Dettagli",
+    "less": "Meno"
+  }
+}

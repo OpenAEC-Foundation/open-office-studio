@@ -6,6 +6,7 @@
  */
 import type { DocxEditorRef } from "@betteroffice/docx-react";
 import { createYrsSession, saveYrsDocx } from "@betteroffice/docx/yrs";
+import i18next from "../../i18n/config";
 import { begin, engine, klaar, type Sessie } from "../gedeeld/engine.ts";
 import { getoond, inSelectie, type Revisie } from "./logica.ts";
 
@@ -42,7 +43,7 @@ export function besluit(ref: DocxEditorRef | null, wat: Besluit, reikwijdte: Rei
   }
   if (reikwijdte.selectie) {
     const sel = s.selection();
-    if (!sel) throw new Error("Selecteer eerst de tekst met de wijzigingen.");
+    if (!sel) throw new Error(i18next.t("writer:changes.selectFirst"));
     const volgordes = new Map<string, Map<string, number>>();
     const volgorde = (story: string, paraId: string) => {
       let m = volgordes.get(story);

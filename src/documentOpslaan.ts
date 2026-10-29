@@ -1,19 +1,19 @@
+import i18next from "./i18n/config";
 import type { BewaarUitkomst } from "./opslag";
 
 /** Melding na Opslaan (als) voor het tabblad dat is bewaard. */
 export function opslagMelding(uitkomst: BewaarUitkomst) {
+  const t = (sleutel: string, waarden?: Record<string, string>) => i18next.t(sleutel, waarden);
   return (
     (uitkomst.status === "opgeslagen"
-      ? "Opgeslagen: " + uitkomst.pad
+      ? t("backstage:saveResult.saved", { path: uitkomst.pad })
       : uitkomst.status === "geëxporteerd"
-        ? "Geëxporteerd: " +
-          uitkomst.pad +
-          ". Sla je bewerkbare bestand ook op om de wijzigingen te behouden."
+        ? t("backstage:saveResult.exported", { path: uitkomst.pad })
         : uitkomst.status === "geannuleerd"
-          ? "Opslaan geannuleerd."
+          ? t("backstage:saveResult.cancelled")
           : uitkomst.status === "opslaan-als"
-            ? "Kies een naam en plek om op te slaan."
-          : "Download aangevraagd. Controleer het bestand in je downloads.") +
+            ? t("backstage:saveResult.chooseLocation")
+            : t("backstage:saveResult.download")) +
     (uitkomst.toelichting ? " " + uitkomst.toelichting : "")
   );
 }

@@ -1,6 +1,9 @@
 /** Gedeelde bouwstenen voor de weergevers: bytes laden, blob-URL's, kaart. */
 import { useEffect, useState, type ReactNode } from "react";
 import { Download, ExternalLink, LoaderCircle, TriangleAlert } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import i18next from "../../../../../src/i18n/config";
+import { formatDatumTijd, formatGetal } from "../../../../../src/i18n/opmaak";
 import type { VoorbeeldActies, VoorbeeldBron } from "../contract";
 import { grootteTekst } from "../herkenning";
 
@@ -38,11 +41,12 @@ export function useBlobUrl(bytes: Uint8Array | null | undefined, type: string): 
   return url;
 }
 
-export function Laden({ tekst = "Voorbeeld laden…" }: { tekst?: string }) {
+export function Laden({ tekst }: { tekst?: string }) {
+  const { t } = useTranslation("email");
   return (
     <div className="vb-midden" role="status">
       <LoaderCircle className="vb-draai" size={22} aria-hidden />
-      <span>{tekst}</span>
+      <span>{tekst ?? t("preview.loading")}</span>
     </div>
   );
 }
@@ -120,34 +124,39 @@ export function BestandKnoppen({
   acties: VoorbeeldActies;
   extern?: boolean;
 }) {
+  const { t } = useTranslation("email");
   return (
     <>
       {extern && acties.openExtern && (
         <button type="button" className="vb-knop" onClick={() => void acties.openExtern!(bron)}>
-          <ExternalLink size={15} aria-hidden /> Openen met standaardprogramma
+          <ExternalLink size={15} aria-hidden /> {t("preview.card.openExternal")}
         </button>
       )}
       {acties.opslaan && (
         <button type="button" className="vb-knop" onClick={() => void acties.opslaan!(bron)}>
-          <Download size={15} aria-hidden /> Opslaan
+          <Download size={15} aria-hidden /> {t("common:save")}
         </button>
       )}
     </>
   );
 }
 
+/**
+ * Bestandsnaam en grootte. Tijdens het tekenen aanroepen (niet bewaren): de
+ * labels volgen de interfacetaal van dat moment.
+ */
 export function basisRegels(bron: VoorbeeldBron, echteGrootte?: number): KaartRegel[] {
   return [
-    { label: "Bestandsnaam", waarde: bron.bestandsnaam },
-    { label: "Grootte", waarde: grootteTekst(echteGrootte ?? bron.grootte) },
+    { label: i18next.t("email:preview.card.fileName"), waarde: bron.bestandsnaam },
+    { label: i18next.t("email:preview.card.size"), waarde: grootteTekst(echteGrootte ?? bron.grootte) },
   ];
 }
 
 export function datumTekst(d: Date | undefined): string | undefined {
   if (!d) return undefined;
-  return d.toLocaleString("nl-NL", { dateStyle: "long", timeStyle: "short" });
+  return formatDatumTijd(d, { dateStyle: "long", timeStyle: "short" });
 }
 
 export function getal(n: number): string {
-  return n.toLocaleString("nl-NL");
+  return formatGetal(n);
 }

@@ -1,14 +1,15 @@
 /** DWG en DXF: metadatakaart; de tekening zelf volgt via de Rust-viewer. */
 import { useMemo } from "react";
 import { DraftingCompass } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { LIMIETEN, type WeergeverProps } from "../contract";
-import { leesDwgMeta, leesDxfMeta } from "../cad-meta";
+import { autocadNaam, eenheidNaam, leesDwgMeta, leesDxfMeta } from "../cad-meta";
 import { BestandKnoppen, Fout, Kaart, Laden, basisRegels, getal, useBlobUrl, useBytes } from "./gemeenschappelijk";
 
-const RUST_MELDING = "Voorbeeld volgt in een volgende versie (Rust-viewer).";
 const MAX_LAGEN = 40;
 
 export function CadWeergever({ bron, soort, acties }: WeergeverProps) {
+  const { t } = useTranslation("email");
   const geladen = useBytes(bron);
   const bytes = geladen.stand === "klaar" ? geladen.waarde : null;
   const dwg = useMemo(() => (bytes && soort === "dwg" ? leesDwgMeta(bytes) : null), [bytes, soort]);
@@ -23,7 +24,7 @@ export function CadWeergever({ bron, soort, acties }: WeergeverProps) {
   const miniatuur = useBlobUrl(dwg?.miniatuur?.bytes, dwg?.miniatuur?.type ?? "image/png");
 
   if (geladen.stand === "laden") return <Laden />;
-  if (geladen.stand === "fout") return <Fout melding={`De tekening kon niet worden geladen: ${geladen.melding}`} />;
+  if (geladen.stand === "fout") return <Fout melding={t("preview.cad.loadFailed", { message: geladen.melding })} />;
   const grootte = geladen.waarde.length;
 
   if (soort === "dwg") {
@@ -31,19 +32,25 @@ export function CadWeergever({ bron, soort, acties }: WeergeverProps) {
       <Kaart
         icoon={<DraftingCompass size={26} />}
         titel={bron.bestandsnaam}
-        ondertitel="AutoCAD-tekening (DWG)"
+        ondertitel={t("preview.cad.dwgSubtitle")}
         regels={[
           ...basisRegels(bron, grootte),
-          { label: "Formaat", waarde: dwg?.code ? `${dwg.code}${dwg.versie ? ` (${dwg.versie.release})` : ""}` : "onbekend" },
-          { label: "Opgeslagen als", waarde: dwg?.versie?.autocad ?? (dwg?.code ? "onbekende AutoCAD-versie" : undefined) },
+          {
+            label: t("preview.cad.format"),
+            waarde: dwg?.code ? `${dwg.code}${dwg.versie ? ` (${dwg.versie.release})` : ""}` : t("preview.card.unknown"),
+          },
+          {
+            label: t("preview.cad.savedAs"),
+            waarde: dwg?.code ? (autocadNaam(dwg.code) ?? t("preview.cad.unknownAutocadVersion")) : undefined,
+          },
         ]}
-        melding={RUST_MELDING}
+        melding={t("preview.cad.previewLater")}
         knoppen={<BestandKnoppen bron={bron} acties={acties} />}
       >
         {miniatuur && (
           <figure className="vb-miniatuur">
-            <img src={miniatuur} alt="Ingebed miniatuurvoorbeeld van de tekening" />
-            <figcaption>Miniatuur uit het bestand</figcaption>
+            <img src={miniatuur} alt={t("preview.cad.thumbnailAlt")} />
+            <figcaption>{t("preview.cad.thumbnailCaption")}</figcaption>
           </figure>
         )}
       </Kaart>
@@ -55,25 +62,25 @@ export function CadWeergever({ bron, soort, acties }: WeergeverProps) {
     <Kaart
       icoon={<DraftingCompass size={26} />}
       titel={bron.bestandsnaam}
-      ondertitel={dxf?.binair ? "Binaire DXF-tekening" : "DXF-tekening"}
+      ondertitel={dxf?.binair ? t("preview.cad.dxfBinarySubtitle") : t("preview.cad.dxfSubtitle")}
       regels={[
         ...basisRegels(bron, grootte),
-        { label: "Formaat", waarde: dxf?.acadver ? `${dxf.acadver}${dxf.versie ? ` (${dxf.versie.autocad})` : ""}` : undefined },
-        { label: "Eenheden", waarde: dxf?.eenheid },
-        { label: "Entiteiten", waarde: dxf && !dxf.binair ? getal(dxf.totaalEntiteiten) : undefined },
-        { label: "Blokken", waarde: dxf?.blokken ? getal(dxf.blokken) : undefined },
-        { label: "Lagen", waarde: lagen.length ? getal(lagen.length) : undefined },
+        {
+          label: t("preview.cad.format"),
+          waarde: dxf?.acadver ? `${dxf.acadver}${dxf.versie ? ` (${autocadNaam(dxf.acadver)})` : ""}` : undefined,
+        },
+        // Opnieuw uit de code, zodat de eenheid de interfacetaal volgt.
+        { label: t("preview.cad.units"), waarde: dxf?.insunits !== undefined ? eenheidNaam(dxf.insunits) : undefined },
+        { label: t("preview.cad.entities"), waarde: dxf && !dxf.binair ? getal(dxf.totaalEntiteiten) : undefined },
+        { label: t("preview.cad.blocks"), waarde: dxf?.blokken ? getal(dxf.blokken) : undefined },
+        { label: t("preview.cad.layers"), waarde: lagen.length ? getal(lagen.length) : undefined },
       ]}
-      melding={
-        !dxf && grootte > LIMIETEN.dxfBytes
-          ? `Dit bestand is te groot om hier te ontleden. ${RUST_MELDING}`
-          : RUST_MELDING
-      }
+      melding={!dxf && grootte > LIMIETEN.dxfBytes ? t("preview.cad.tooLargeToParse") : t("preview.cad.previewLater")}
       knoppen={<BestandKnoppen bron={bron} acties={acties} />}
     >
       {dxf && dxf.entiteiten.length > 0 && (
         <details className="vb-details" open>
-          <summary>Entiteiten per type</summary>
+          <summary>{t("preview.cad.entitiesByType")}</summary>
           <table className="vb-tabel">
             <tbody>
               {dxf.entiteiten.slice(0, 30).map(([type, n]) => (
@@ -88,12 +95,12 @@ export function CadWeergever({ bron, soort, acties }: WeergeverProps) {
       )}
       {lagen.length > 0 && (
         <details className="vb-details">
-          <summary>Lagen ({getal(lagen.length)})</summary>
+          <summary>{t("preview.cad.layersCount", { n: getal(lagen.length) })}</summary>
           <ul className="vb-lijst">
             {lagen.slice(0, MAX_LAGEN).map((l) => (
               <li key={l}>{l}</li>
             ))}
-            {lagen.length > MAX_LAGEN && <li>… en nog {getal(lagen.length - MAX_LAGEN)}</li>}
+            {lagen.length > MAX_LAGEN && <li>{t("preview.cad.andMore", { n: getal(lagen.length - MAX_LAGEN) })}</li>}
           </ul>
         </details>
       )}

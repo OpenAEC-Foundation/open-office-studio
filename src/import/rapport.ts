@@ -3,12 +3,16 @@
  * opslaan. Het rapport is niet-blokkerend bij openen en staat vóór opslaan
  * in het venster Opslaan als. Het is te kopiëren of als tekst te bewaren,
  * zodat het bij een foutmelding kan worden gevoegd.
+ *
+ * De teksten volgen de interfacetaal op het moment dat het rapport wordt
+ * gemaakt (namespace `import`); een vaste `id` op een regel dient voor
+ * vergelijkingen, zodat die niet van de taal afhangen.
  */
+import i18next from "../i18n/config";
 import type { Soort } from "../editors";
 import type { Uitvoerformaat } from "../formaten";
 import {
   MATRIXVERLIES,
-  risiconaam,
   type Opslagroute,
   type Risico,
 } from "../pakketcontrole";
@@ -20,6 +24,8 @@ export interface Rapportregel {
   gevolg: string;
   /** Alleen ter informatie (bijv. herkende codering); niet in de kopregel. */
   info?: boolean;
+  /** Vaste, taalonafhankelijke aanduiding (bijv. "macros", "omzetting"). */
+  id?: string;
 }
 
 export interface Rapport {
@@ -29,11 +35,36 @@ export interface Rapport {
   regels: Rapportregel[];
 }
 
-const MODULENAAM: Record<Soort, string> = {
-  docx: "de teksteditor",
-  xlsx: "het rekenblad",
-  pptx: "de presentatie-editor",
+const t = (sleutel: string, opties?: Record<string, unknown>) =>
+  i18next.t(`import:${sleutel}`, opties ?? {});
+
+/** Sleutel per risico in `import:report.risks`. */
+const RISICOSLEUTEL: Record<Risico, string> = {
+  revisies: "revisions",
+  opmerkingen: "comments",
+  voetnoten: "footnotes",
+  kop_voettekst: "headersFooters",
+  custom_xml: "customXml",
+  onbekende_onderdelen: "unknownParts",
+  onbekende_extensies: "unknownExtensions",
+  notities: "speakerNotes",
+  animaties: "animations",
+  overgangen: "transitions",
+  ingebedde_objecten: "embeddedObjects",
+  grafieken: "charts",
+  besturingselementen: "controls",
+  handtekening: "signature",
+  draaitabellen: "pivotTables",
+  slicers: "slicers",
+  externe_koppelingen: "externalLinks",
+  gegevensverbindingen: "dataConnections",
+  beveiliging: "protection",
 };
+
+/** Leesbare naam van een risico in de interfacetaal (kleine letter, voor in een zin). */
+function risiconaam(risico: Risico) {
+  return t(`report.risks.${RISICOSLEUTEL[risico]}`);
+}
 
 /** Alleen de eerste letter klein, en niet bij een afkorting (VBA, XML). */
 function kleineLetter(tekst: string) {
@@ -53,34 +84,37 @@ function hoofdletter(tekst: string) {
  */
 function bijOpenen(risico: Risico, soort: Soort): string | null {
   // Bij DOCX en PPTX is het behoud via de engine in de testmatrix gemeten.
-  const behoud =
+  const behoud = () =>
     soort === "xlsx"
-      ? "Behoud bij opslaan is voor rekenbladen nog niet gemeten; bewaar het origineel."
-      : "Ze blijven bij opslaan als ." + soort + " behouden.";
+      ? t("report.open.keptSpreadsheet")
+      : t("report.open.kept", { format: soort });
   switch (risico) {
     case "ingebedde_objecten":
-      return `Worden alleen als voorbeeldafbeelding getoond en kunnen hier niet worden bewerkt. ${behoud}`;
+      return t("report.open.embeddedObjects", { kept: behoud() });
     case "grafieken":
-      return `Worden getoond zoals ${MODULENAAM[soort]} ze kan tekenen; onbekende grafiektypen of opmaak kunnen afwijken. ${behoud}`;
+      return t("report.open.charts", {
+        module: t(`report.modules.${soort}`),
+        kept: behoud(),
+      });
     case "onbekende_onderdelen":
     case "onbekende_extensies":
-      return `Worden niet getoond of bewerkt. ${behoud}`;
+      return t("report.open.unknownParts", { kept: behoud() });
     case "custom_xml":
-      return `Worden niet getoond; gekoppelde inhoudsbesturingselementen worden niet bijgewerkt. ${behoud}`;
+      return t("report.open.customXml", { kept: behoud() });
     case "besturingselementen":
-      return `Worden niet uitgevoerd en kunnen niet worden bediend. ${behoud}`;
+      return t("report.open.controls", { kept: behoud() });
     case "handtekening":
-      return "Wordt niet gecontroleerd. Na wijzigen en opslaan is de handtekening niet meer geldig.";
+      return t("report.open.signature");
     case "draaitabellen":
-      return "Worden als gewone cellen getoond en niet vernieuwd.";
+      return t("report.open.pivotTables");
     case "slicers":
-      return "Worden niet getoond en filteren niet.";
+      return t("report.open.slicers");
     case "externe_koppelingen":
-      return "Worden niet bijgewerkt; de laatst opgeslagen waarden blijven staan.";
+      return t("report.open.externalLinks");
     case "gegevensverbindingen":
-      return "Worden nooit uitgevoerd of vernieuwd.";
+      return t("report.open.dataConnections");
     case "beveiliging":
-      return "Dit is geen versleuteling: het bestand opent zonder wachtwoord. De app dwingt de beveiliging niet af en bewaart de instelling ongewijzigd.";
+      return t("report.open.protection");
     default:
       return null;
   }
@@ -107,8 +141,12 @@ export function openRapport(kenmerken: OpenKenmerken): Rapport | null {
   const regels: Rapportregel[] = [];
   if (route === "conversie") {
     regels.push({
-      onderdeel: "Omzetting",
-      gevolg: `Het .${kenmerken.bronformaat}-bestand is via de kantoorruntime omgezet naar een bewerkbare .${soort}-kopie. Het origineel is niet gewijzigd. Opmaak kan afwijken; macro’s en actieve inhoud zijn niet uitgevoerd en worden niet overgenomen.`,
+      id: OMZETTING_ID,
+      onderdeel: t("report.parts.conversion"),
+      gevolg: t("report.open.conversion", {
+        source: kenmerken.bronformaat,
+        format: soort,
+      }),
     });
     const verlies = kenmerken.risicos.filter((r) =>
       MATRIXVERLIES[soort].conversie.includes(r),
@@ -116,8 +154,7 @@ export function openRapport(kenmerken: OpenKenmerken): Rapport | null {
     if (verlies.length)
       regels.push({
         onderdeel: hoofdletter(verlies.map(risiconaam).join(", ")),
-        gevolg:
-          "Aanwezig in het origineel; die gaan bij omzetten verloren (aangetoond in de testmatrix).",
+        gevolg: t("report.open.conversionLoss"),
       });
   } else if (route === "engine") {
     for (const risico of kenmerken.risicos) {
@@ -127,32 +164,44 @@ export function openRapport(kenmerken: OpenKenmerken): Rapport | null {
     }
   }
   regels.push(...(kenmerken.extra ?? []));
-  if (kenmerken.macros && !regels.some((r) => r.onderdeel === MACROS))
+  if (kenmerken.macros && !regels.some((r) => r.id === MACRO_ID))
     regels.push({
-      onderdeel: MACROS,
+      id: MACRO_ID,
+      onderdeel: macronaam(),
       gevolg:
         route === "engine"
-          ? "Worden nooit uitgevoerd."
-          : "Worden nooit uitgevoerd en niet overgenomen in deze kopie. Bewaar het origineel.",
+          ? t("report.open.macrosNeverRun")
+          : t("report.open.macrosNotCopied"),
     });
   if (!regels.length) return null;
   const namen = regels
-    .filter((r) => r.onderdeel !== "Omzetting" && !r.info)
+    .filter((r) => r.id !== OMZETTING_ID && !r.info)
     .map((r) => kleineLetter(r.onderdeel));
+  const items = namen.join(", ");
   const kop =
     route === "conversie"
-      ? "Geïmporteerd als bewerkbare kopie; het origineel is behouden." +
-        (namen.length ? ` Let op: ${namen.join(", ")}.` : "")
+      ? namen.length
+        ? t("report.head.conversionWithItems", { items })
+        : t("report.head.conversion")
       : route === "import"
-        ? `Omgezet naar een bewerkbare .${soort}-kopie; het origineel is behouden.` +
-          (namen.length ? ` Let op: ${namen.join(", ")}.` : "")
+        ? namen.length
+          ? t("report.head.importWithItems", { format: soort, items })
+          : t("report.head.import", { format: soort })
         : namen.length
-          ? `Niet alles wordt volledig ondersteund: ${namen.join(", ")}.`
+          ? t("report.head.partial", { items })
           : regels[0].gevolg;
   return { moment: "openen", kop, regels };
 }
 
-export const MACROS = "VBA-macro’s";
+/** Vaste id van de regel over VBA-macro’s. */
+export const MACRO_ID = "macros";
+/** Vaste id van de regel over een omzetting via de kantoorruntime. */
+const OMZETTING_ID = "omzetting";
+
+/** "VBA-macro’s" in de interfacetaal. */
+export function macronaam() {
+  return t("report.parts.macros");
+}
 
 /** Binaire Office 97–2003-uitvoerformaten. */
 const OUD = new Set(["doc", "dot", "xls", "xlt", "ppt", "pps", "pot"]);
@@ -201,14 +250,14 @@ export function opslagRapport(kenmerken: OpslaanKenmerken): Rapport | null {
   const macroformaat = MACROFORMATEN.has(formaat.ext);
   if (kenmerken.macros && !macroformaat && route !== "afdrukken")
     regels.push({
-      onderdeel: MACROS,
-      gevolg: `.${formaat.ext} kan geen macro’s bevatten; het VBA-project wordt niet bewaard. Kies een macro-ingeschakeld formaat om het te behouden.`,
+      id: MACRO_ID,
+      onderdeel: macronaam(),
+      gevolg: t("report.save.macrosLost", { ext: formaat.ext }),
     });
   if (kenmerken.wordtOnversleuteld)
     regels.push({
-      onderdeel: "Wachtwoordbeveiliging",
-      gevolg:
-        "Het origineel was met een wachtwoord versleuteld; deze kopie wordt zonder wachtwoord bewaard en is voor iedereen leesbaar.",
+      onderdeel: t("report.parts.passwordProtection"),
+      gevolg: t("report.save.unencrypted"),
     });
   const opgeslagenRoute: Opslagroute | null =
     eigen || macroformaat
@@ -225,8 +274,8 @@ export function opslagRapport(kenmerken: OpslaanKenmerken): Rapport | null {
         onderdeel: hoofdletter(verlies.map(risiconaam).join(", ")),
         gevolg:
           opgeslagenRoute === "engine"
-            ? "De editor behoudt deze bij opslaan niet (aangetoond in de testmatrix); opslaan wordt geweigerd."
-            : "Gaan bij omzetten verloren (aangetoond in de testmatrix). Het origineel blijft ongewijzigd.",
+            ? t("report.save.engineLoss")
+            : t("report.save.conversionLoss"),
       });
     if (opgeslagenRoute === "conversie") {
       // Wat de matrix voor deze module niet heeft gemeten, noemen we eerlijk ongemeten.
@@ -236,19 +285,18 @@ export function opslagRapport(kenmerken: OpslaanKenmerken): Rapport | null {
       if (soort === "xlsx" && ongemeten.length)
         regels.push({
           onderdeel: hoofdletter(ongemeten.map(risiconaam).join(", ")),
-          gevolg:
-            "Behoud bij omzetten via de kantoorruntime is niet gemeten; controleer de kopie.",
+          gevolg: t("report.save.notMeasured"),
         });
     }
     if (risicos.includes("handtekening") && (!eigen || route !== "engine"))
       regels.push({
-        onderdeel: "Digitale handtekening",
-        gevolg: "Wordt niet overgenomen of is na opslaan niet meer geldig.",
+        onderdeel: t("report.parts.digitalSignature"),
+        gevolg: t("report.save.signature"),
       });
     if (OUD.has(formaat.ext))
       regels.push({
-        onderdeel: "Ouder binair formaat",
-        gevolg: `.${formaat.ext} (Office 97–2003) kent nieuwere opmaak, grootte en functies niet allemaal; die kunnen veranderen of verdwijnen. Kies .${soort} om alles te behouden.`,
+        onderdeel: t("report.parts.olderBinaryFormat"),
+        gevolg: t("report.save.olderFormat", { ext: formaat.ext, format: soort }),
       });
   } else if (
     route === "tekst" ||
@@ -256,21 +304,23 @@ export function opslagRapport(kenmerken: OpslaanKenmerken): Rapport | null {
     formaat.groep === "web-tekst"
   ) {
     regels.push({
-      onderdeel: `Formaat .${formaat.ext}`,
+      onderdeel: t("report.parts.format", { ext: formaat.ext }),
       gevolg: hoofdletter(formaat.behoud) + ".",
     });
     const weg = risicos.filter((r) => r !== "onbekende_extensies");
     if (weg.length)
       regels.push({
         onderdeel: hoofdletter(weg.map(risiconaam).join(", ")),
-        gevolg:
-          "Aanwezig in het document; die komen niet of alleen als tekst in dit formaat.",
+        gevolg: t("report.save.textFormatLoss"),
       });
   }
   if (!regels.length) return null;
   return {
     moment: "opslaan",
-    kop: `Bij opslaan als .${formaat.ext}: ${regels.map((r) => kleineLetter(r.onderdeel)).join(", ")}.`,
+    kop: t("report.head.save", {
+      ext: formaat.ext,
+      items: regels.map((r) => kleineLetter(r.onderdeel)).join(", "),
+    }),
     regels,
   };
 }
@@ -282,10 +332,15 @@ export function rapportTekst(
   versie = "",
   datum = new Date(),
 ) {
+  const app = `OpenAEC Office Studio${versie ? " " + versie : ""}`;
   const regels = [
-    `OpenAEC Office Studio${versie ? " " + versie : ""} — rapport bij ${rapport.moment}`,
-    `Bestand: ${bestandsnaam}`,
-    `Datum: ${datum.toISOString().slice(0, 19).replace("T", " ")} (UTC)`,
+    rapport.moment === "openen"
+      ? t("report.text.titleOpen", { app })
+      : t("report.text.titleSave", { app }),
+    t("report.text.file", { name: bestandsnaam }),
+    t("report.text.date", {
+      date: datum.toISOString().slice(0, 19).replace("T", " "),
+    }),
     "",
     rapport.kop,
     "",

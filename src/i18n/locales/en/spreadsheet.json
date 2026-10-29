@@ -1,0 +1,92 @@
+{
+  "formulaCheck": {
+    "titleWarning": "Check the formulas in this spreadsheet",
+    "titleInfo": "Notes on the formulas in this spreadsheet",
+    "cells_one": "{{count}} cell",
+    "cells_other": "{{count}} cells",
+    "examplesMore_one": "{{list}} and {{count}} more",
+    "examplesMore_other": "{{list}} and {{count}} more",
+    "userFunction": "User-defined function (macro or add-in)",
+    "function": "Function",
+    "notCalculated": "{{kind}} {{name}} is not calculated ({{cells}}: {{examples}}). The saved result stays in place and is not updated; dependent cells may be out of date.",
+    "recalculated_one": "{{cells}} had an outdated saved result and was recalculated on opening ({{examples}}). The new results are kept when you save.",
+    "recalculated_other": "{{cells}} had an outdated saved result and were recalculated on opening ({{examples}}). The new results are kept when you save.",
+    "manualCalculation": "The file was saved with manual calculation; saved results may be out of date.",
+    "externalLinks_one": "The workbook refers to an external workbook; those values are not updated.",
+    "externalLinks_other": "The workbook refers to {{count}} external workbooks; those values are not updated.",
+    "errorCells": "{{cells}} with an error value: {{list}}.",
+    "errorItem": "{{error}} ({{examples}})",
+    "noCachedResult": "{{cells}} with a formula without a saved result ({{examples}}).",
+    "fullCalcOnLoad": "The file asks for a full recalculation on opening (fullCalcOnLoad); the saved results may be out of date.",
+    "calcChain": "The calculation chain (calcChain) is not kept when saving; Excel rebuilds it.",
+    "tooLarge": "The spreadsheet is too large to check.",
+    "invalidWorkbook": "Not a valid XLSX workbook."
+  },
+  "print": {
+    "pageLabel": "{{sheet}}, page {{page}} of {{pages}}",
+    "notWorksheet": "Sheet ‘{{name}}’ is not a worksheet and is skipped.",
+    "nothingToPrint": "There is nothing to print: the sheets are empty."
+  },
+  "export": {
+    "pngUnavailable": "This spreadsheet engine cannot create PNG."
+  },
+  "csvImport": {
+    "title": "Import {{name}}",
+    "import": "Import",
+    "separator": "Delimiter",
+    "separatorSemicolon": "Semicolon ;",
+    "separatorComma": "Comma ,",
+    "separatorTab": "Tab",
+    "separatorPipe": "Vertical bar |",
+    "separatorCustom": "Other character…",
+    "customCharacter": "Other character",
+    "textQualifier": "Text qualifier",
+    "qualifierDouble": "Double quote \"",
+    "qualifierSingle": "Single quote '",
+    "qualifierNone": "None",
+    "encoding": "Character encoding",
+    "encodingAuto": "Automatic",
+    "encodingDetected": "{{name}} ({{encoding}})",
+    "encodingWindows1252": "Windows-1252 (Western European)",
+    "numbers": "Numbers",
+    "numbersDutch": "Dutch (1.234,56)",
+    "numbersEnglish": "English (1,234.56)",
+    "dateOrder": "Date order",
+    "dateOrderDmy": "Day-month-year (31-12-2026)",
+    "dateOrderMdy": "Month-day-year (12/31/2026)",
+    "dateOrderYmd": "Year-month-day (2026-12-31)",
+    "fromRow": "From row",
+    "headerRow": "First row is header",
+    "previewLabel": "Preview of the first 50 rows",
+    "columnType": "Type of column {{number}}",
+    "columnTypes": {
+      "standaard": "General",
+      "tekst": "Text",
+      "datum": "Date",
+      "overslaan": "Skip"
+    },
+    "detected_one": "{{separator}} as delimiter, {{count}} column.",
+    "detected_other": "{{separator}} as delimiter, {{count}} columns.",
+    "explanation": "Choose <b>Text</b> for postcodes, article numbers and IBAN; leading zeros and numbers of more than 15 digits already stay text in General. Values starting with =, +, - or @ are never read as a formula (apostrophe in the preview).",
+    "separatorNames": {
+      "tab": "tab",
+      "semicolon": "semicolon",
+      "comma": "comma",
+      "pipe": "vertical bar",
+      "other": "“{{character}}”"
+    },
+    "report": {
+      "import": "Import",
+      "imported": "{{rows}} and {{columns}} read; {{separator}} as delimiter, encoding {{encoding}}.",
+      "rows_one": "{{count}} row",
+      "rows_other": "{{count}} rows",
+      "columns_one": "{{count}} column",
+      "columns_other": "{{count}} columns",
+      "formulaLike": "Formula-like text",
+      "formulaLikeCells_one": "{{count}} cell starting with =, +, - or @ was included as text, not as a formula (protection against CSV injection).",
+      "formulaLikeCells_other": "{{count}} cells starting with =, +, - or @ were included as text, not as a formula (protection against CSV injection).",
+      "truncated": "Truncated",
+      "truncatedText": "The file is larger than a worksheet ({{rows}} rows or {{columns}} columns); the rest has not been read."
+    }
+  }
+}

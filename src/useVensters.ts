@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import i18next from "./i18n/config";
 import type { useTabbladen } from "./useTabbladen";
 import type { MenuItem } from "./TabBalk";
 import type { Tabblad } from "./tabbladen";
@@ -10,8 +11,8 @@ import {
   type Overdracht,
   type Positie,
   type Vensterkanaal,
-  venstertitel,
 } from "./vensteroverdracht";
+import { andereVensters, type AnderVenster } from "./VensterMenu";
 
 const tauri = "__TAURI_INTERNALS__" in window;
 const GEMELD = "openaec-office-losmaken-gemeld";
@@ -59,10 +60,7 @@ export function useVensters({ tabs, voorOverdracht }: Opties) {
       if (overdracht.type === "module") {
         const id = tabs.openModule(overdracht.module);
         if (overdracht.module === "database")
-          tabs.meld(
-            "Database Studio staat nu in dit venster. Open je database hier opnieuw als je verder wilt werken.",
-            id,
-          );
+          tabs.meld(i18next.t("shell:windows.databaseMovedHere"), id, "waarschuwing");
         return true;
       }
       // De zoom gaat via het geheugen per document mee naar de nieuwe editor.
@@ -79,9 +77,7 @@ export function useVensters({ tabs, voorOverdracht }: Opties) {
         gewijzigd: overdracht.gewijzigd,
         vingerafdruk: overdracht.vingerafdruk,
         werkbestand: overdracht.werkbestand ?? null,
-        melding: eersteKeer()
-          ? "Het document is verplaatst, inclusief niet-opgeslagen wijzigingen. De geschiedenis van Ongedaan maken gaat bij het verplaatsen niet mee."
-          : "",
+        melding: eersteKeer() ? i18next.t("shell:windows.documentMoved") : "",
       });
       return true;
     } catch {
@@ -104,7 +100,9 @@ export function useVensters({ tabs, voorOverdracht }: Opties) {
       })
       .catch((e) =>
         recent.current.tabs.meld(
-          "Vensterkoppeling niet beschikbaar: " + String(e),
+          i18next.t("shell:windows.linkUnavailable", { error: String(e) }),
+          null,
+          "fout",
         ),
       );
     return () => {
@@ -118,9 +116,7 @@ export function useVensters({ tabs, voorOverdracht }: Opties) {
     voorOverdracht(tabblad);
     if (tabblad.type === "module") {
       if (tabblad.module === "database" && tabs.isGewijzigd(tabblad))
-        throw new Error(
-          "Database Studio kan een gewijzigde werkkopie niet naar een ander venster meenemen. Exporteer of bewaar de database eerst.",
-        );
+        throw new Error(i18next.t("shell:windows.databaseModified"));
       return { type: "module", module: tabblad.module };
     }
     const serialiseer = tabs.serialiseerder(tabblad.id);
@@ -155,55 +151,64 @@ export function useVensters({ tabs, voorOverdracht }: Opties) {
         positie,
       );
       if (uitkomst.status === "mislukt") {
-        tabs.meld(uitkomst.fout, id);
+        tabs.meld(uitkomst.fout, id, "fout");
         return;
       }
-      // Een leeg documentvenster sluit vanzelf na het terugbrengen.
-      if (
-        doel === "hoofd" &&
-        !kanaal.hoofdvenster &&
-        !tabs.toestandRef.current.tabbladen.length
-      )
+      // Een losgemaakt venster dat zo leeg raakt, sluit vanzelf.
+      if (!kanaal.hoofdvenster && !tabs.toestandRef.current.tabbladen.length)
         await sluitDitVenster();
     } finally {
       bezig.current = false;
     }
   }
 
-  const actief = tabs.actief;
-  const vensterTitel = actief
-    ? actief.type === "document"
-      ? venstertitel({ ...actief, type: "document", gewijzigd: false })
-      : venstertitel({ type: "module", module: actief.module })
-    : null;
-  useEffect(() => {
-    if (!kanaal || kanaal.hoofdvenster) return;
-    // Losgemaakte vensters dragen de naam van hun actieve tabblad.
-    const tekst = vensterTitel ?? "Open Office Studio";
-    document.title = tekst;
-    if (tauri)
-      void import("@tauri-apps/api/window")
-        .then(({ getCurrentWindow }) => getCurrentWindow().setTitle(tekst))
-        .catch(() => undefined);
-  }, [kanaal, vensterTitel]);
-
   return {
     hoofdvenster: kanaal?.hoofdvenster ?? true,
+    /** Zet de OS-venstertitel en `document.title` (elk venster, ook het hoofdvenster). */
+    zetTitel(tekst: string) {
+      zetVenstertitel(tekst);
+    },
+    /** Opent een leeg, volwaardig Office Studio-venster (desktopapp). */
+    nieuwVenster: tauri
+      ? () => {
+          void import("@tauri-apps/api/core")
+            .then(({ invoke }) => invoke("nieuw_venster"))
+            .catch((e) =>
+              recent.current.tabs.meld(
+                i18next.t("shell:windows.newWindowFailed", { error: String(e) }),
+                null,
+                "fout",
+              ),
+            );
+        }
+      : undefined,
     menu: kanaal
-      ? (tabblad: Tabblad): MenuItem[] => [
-          {
-            label: "In nieuw venster openen",
+      ? (tabblad: Tabblad): MenuItem[] | Promise<MenuItem[]> => {
+          const nieuw: MenuItem = {
+            label: i18next.t("shell:windows.openInNewWindow"),
             actie: () => void brengNaar(tabblad.id, "nieuw"),
-          },
-          ...(kanaal.hoofdvenster
-            ? []
-            : [
-                {
-                  label: "Terug naar hoofdvenster",
-                  actie: () => void brengNaar(tabblad.id, "hoofd"),
-                },
-              ]),
-        ]
+          };
+          if (!tauri)
+            return kanaal.hoofdvenster
+              ? [nieuw]
+              : [
+                  nieuw,
+                  {
+                    label: i18next.t("shell:windows.backToMainWindow"),
+                    actie: () => void brengNaar(tabblad.id, "hoofd"),
+                  },
+                ];
+          // Desktop: ook naar elk ander open venster verplaatsen.
+          return andereVensters()
+            .catch((): AnderVenster[] => [])
+            .then((vensters) => [
+              nieuw,
+              ...vensters.map((venster) => ({
+                label: i18next.t("shell:windows.moveToWindow", { window: venster.naam }),
+                actie: () => void brengNaar(tabblad.id, { venster: venster.label }),
+              })),
+            ]);
+        }
       : undefined,
     // In de browser is de muispositie buiten het venster niet betrouwbaar;
     // daar alleen via het menu "In nieuw venster openen".
@@ -221,11 +226,23 @@ export function useVensters({ tabs, voorOverdracht }: Opties) {
         )
         .catch((e) =>
           recent.current.tabs.meld(
-            "Sluitbeveiliging niet beschikbaar: " + String(e),
+            i18next.t("shell:windows.closeGuardUnavailable", { error: String(e) }),
+            null,
+            "fout",
           ),
         );
     },
   };
+}
+
+let laatsteTitel = "";
+function zetVenstertitel(tekst: string) {
+  document.title = tekst;
+  if (!tauri || tekst === laatsteTitel) return;
+  laatsteTitel = tekst;
+  void import("@tauri-apps/api/window")
+    .then(({ getCurrentWindow }) => getCurrentWindow().setTitle(tekst))
+    .catch(() => undefined);
 }
 
 async function sluitDitVenster() {

@@ -1,0 +1,84 @@
+{
+  "formulaCheck": {
+    "titleWarning": "请检查此电子表格中的公式",
+    "titleInfo": "关于此电子表格中公式的说明",
+    "cells_other": "{{count}} 个单元格",
+    "examplesMore_other": "{{list}} 及其他 {{count}} 个",
+    "userFunction": "用户定义函数（宏或加载项）",
+    "function": "函数",
+    "notCalculated": "{{kind}} {{name}} 不会被计算（{{cells}}：{{examples}}）。已保存的结果保持不变且不会更新；相关单元格可能已过时。",
+    "recalculated_other": "{{cells}} 的已保存结果已过时，打开时已重新计算（{{examples}}）。保存时将保留新结果。",
+    "manualCalculation": "该文件以手动计算方式保存；已保存的结果可能已过时。",
+    "externalLinks_other": "该工作簿引用了 {{count}} 个外部工作簿；这些值不会更新。",
+    "errorCells": "含错误值的 {{cells}}：{{list}}。",
+    "errorItem": "{{error}}（{{examples}}）",
+    "noCachedResult": "含公式但没有已保存结果的 {{cells}}（{{examples}}）。",
+    "fullCalcOnLoad": "该文件要求在打开时完全重新计算（fullCalcOnLoad）；已保存的结果可能已过时。",
+    "calcChain": "保存时不保留计算链（calcChain）；Excel 会重新生成。",
+    "tooLarge": "电子表格太大，无法检查。",
+    "invalidWorkbook": "不是有效的 XLSX 工作簿。"
+  },
+  "print": {
+    "pageLabel": "{{sheet}}，第 {{page}} 页，共 {{pages}} 页",
+    "notWorksheet": "工作表“{{name}}”不是普通工作表，已跳过。",
+    "nothingToPrint": "没有可打印的内容：工作表为空。"
+  },
+  "export": {
+    "pngUnavailable": "此电子表格引擎无法生成 PNG。"
+  },
+  "csvImport": {
+    "title": "导入 {{name}}",
+    "import": "导入",
+    "separator": "分隔符",
+    "separatorSemicolon": "分号 ;",
+    "separatorComma": "逗号 ,",
+    "separatorTab": "制表符",
+    "separatorPipe": "竖线 |",
+    "separatorCustom": "其他字符…",
+    "customCharacter": "其他字符",
+    "textQualifier": "文本识别符号",
+    "qualifierDouble": "双引号 \"",
+    "qualifierSingle": "单引号 '",
+    "qualifierNone": "无",
+    "encoding": "字符编码",
+    "encodingAuto": "自动",
+    "encodingDetected": "{{name}}（{{encoding}}）",
+    "encodingWindows1252": "Windows-1252（西欧）",
+    "numbers": "数字",
+    "numbersDutch": "荷兰语（1.234,56）",
+    "numbersEnglish": "英语（1,234.56）",
+    "dateOrder": "日期顺序",
+    "dateOrderDmy": "日-月-年（31-12-2026）",
+    "dateOrderMdy": "月-日-年（12/31/2026）",
+    "dateOrderYmd": "年-月-日（2026-12-31）",
+    "fromRow": "起始行",
+    "headerRow": "第一行为标题行",
+    "previewLabel": "前 50 行预览",
+    "columnType": "第 {{number}} 列的类型",
+    "columnTypes": {
+      "standaard": "常规",
+      "tekst": "文本",
+      "datum": "日期",
+      "overslaan": "跳过"
+    },
+    "detected_other": "分隔符为 {{separator}}，共 {{count}} 列。",
+    "explanation": "邮政编码、商品编号和 IBAN 请选择<b>文本</b>；前导零和超过 15 位的数字在“常规”中已会保留为文本。以 =、+、- 或 @ 开头的值绝不会被读取为公式（预览中显示撇号）。",
+    "separatorNames": {
+      "tab": "制表符",
+      "semicolon": "分号",
+      "comma": "逗号",
+      "pipe": "竖线",
+      "other": "“{{character}}”"
+    },
+    "report": {
+      "import": "导入",
+      "imported": "已读取 {{rows}}、{{columns}}；分隔符为 {{separator}}，编码为 {{encoding}}。",
+      "rows_other": "{{count}} 行",
+      "columns_other": "{{count}} 列",
+      "formulaLike": "类似公式的文本",
+      "formulaLikeCells_other": "{{count}} 个以 =、+、- 或 @ 开头的单元格已作为文本而非公式导入（防止 CSV 注入）。",
+      "truncated": "已截断",
+      "truncatedText": "文件超出工作表大小（{{rows}} 行或 {{columns}} 列）；其余部分未读取。"
+    }
+  }
+}

@@ -1,5 +1,6 @@
 /** Ingebouwde VBA-objecten: Err, Debug, Collection en Scripting.Dictionary. */
-import { fout, FOUTTEKSTEN, VbaAfbreking, VbaFout } from "./fouten.ts";
+import i18next from "i18next";
+import { fout, foutTekstOfAlgemeen, VbaAfbreking, VbaFout } from "./fouten.ts";
 import type { VbaRuntime } from "./interpreter.ts";
 import { vergelijkTekst } from "./operatoren.ts";
 import {
@@ -61,7 +62,7 @@ export class ErrObject extends VbaObject {
       case "raise": {
         if (ontbreekt(args[0])) throw fout(449);
         const n = Math.round(naarGetal(args[0], r.land));
-        const beschrijving = ontbreekt(args[2]) ? (FOUTTEKSTEN[n] ?? `Toepassingsfout ${n}`) : naarTekst(args[2], r.land);
+        const beschrijving = ontbreekt(args[2]) ? foutTekstOfAlgemeen(n) : naarTekst(args[2], r.land);
         throw new VbaFout(n, beschrijving, ontbreekt(args[1]) ? "" : naarTekst(args[1], r.land));
       }
     }
@@ -89,7 +90,7 @@ export class DebugObject extends VbaObject {
     }
     if (naam === "assert") {
       if (!r.alsBool(args[0] ?? true)) {
-        r.debugPrint("[Debug.Assert mislukt; de uitvoering is beëindigd.]", true);
+        r.debugPrint(i18next.t("vba:objects.assertFailed"), true);
         throw new VbaAfbreking("end", "Debug.Assert");
       }
       return LEEG;
@@ -194,7 +195,7 @@ export class Woordenboek extends VbaObject {
         return new VbaMatrix([{ onder: 0, boven: this.waarden.length - 1 }], [...this.waarden], "Variant");
       case "remove": {
         const i = this.zoek(args[0], r);
-        if (i < 0) throw fout(32811, "Element niet gevonden.");
+        if (i < 0) throw fout(32811, i18next.t("vba:objects.elementNotFound"));
         this.sleutels.splice(i, 1);
         this.waarden.splice(i, 1);
         return LEEG;
@@ -216,7 +217,7 @@ export class Woordenboek extends VbaObject {
     }
     if (naam === "key") {
       const i = this.zoek(args[0], rt as VbaRuntime);
-      if (i < 0) throw fout(32811, "Element niet gevonden.");
+      if (i < 0) throw fout(32811, i18next.t("vba:objects.elementNotFound"));
       this.sleutels[i] = waarde;
       return;
     }
