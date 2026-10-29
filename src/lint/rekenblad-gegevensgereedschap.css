@@ -1,0 +1,36 @@
+/* Gegevensgereedschap: duplicaten, tekst naar kolommen, doelzoeken, statistiek. */
+.rekenblad-keuzes,
+.rekenblad-kolomkeuze {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--w-rand, #d3d9e0);
+  border-radius: 8px;
+}
+.rekenblad-keuzes label,
+.rekenblad-kolomlijst label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.rekenblad-keuzes:disabled,
+.rekenblad-kolomkeuze:disabled {
+  opacity: 0.6;
+}
+.rekenblad-kolomknoppen {
+  display: flex;
+  gap: 6px;
+}
+.rekenblad-kolomlijst {
+  display: grid;
+  gap: 2px;
+  max-height: 180px;
+  overflow: auto;
+  padding: 2px;
+}
+.rekenblad-kolomlijst label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

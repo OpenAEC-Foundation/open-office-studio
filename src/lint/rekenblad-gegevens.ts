@@ -65,7 +65,7 @@ import {
 const melding = (sleutel: string, opties?: Record<string, unknown>) =>
   i18next.t(`spreadsheet:data.messages.${sleutel}`, opties) as string;
 
-const doel = (sheetId: string, b: Bereik): XlsxRangeTarget => ({
+export const doel = (sheetId: string, b: Bereik): XlsxRangeTarget => ({
   sheetId,
   range: { kind: "rowCol", start: { row: b.top, col: b.left }, end: { row: b.bottom, col: b.right } },
 });
@@ -77,23 +77,23 @@ const foutcodes: Record<string, string> = {
   "limit-exceeded": "tooLarge",
 };
 
-async function bewerk(api: XlsxEditorApi, steps: XlsxEditStep[], versie?: string) {
+export async function bewerk(api: XlsxEditorApi, steps: XlsxEditStep[], versie?: string) {
   if (!steps.length) return;
   const r = await api.applyEdits({ expectVersion: versie ?? (await api.version()), steps });
   if (!r.ok) throw new Melding(foutcodes[r.failure.code] ? melding(foutcodes[r.failure.code]) : r.failure.message);
 }
 
-async function controleer(api: XlsxEditorApi, steps: XlsxEditStep[]) {
+export async function controleer(api: XlsxEditorApi, steps: XlsxEditStep[]) {
   if (!steps.length) return;
   const r = await api.validateEdits({ expectVersion: await api.version(), steps });
   if (!r.ok) throw new Melding(foutcodes[r.failure.code] ? melding(foutcodes[r.failure.code]) : r.failure.message);
 }
 
-function schrijfbaar(api: XlsxEditorApi) {
+export function schrijfbaar(api: XlsxEditorApi) {
   if (alleenLezen(api)) throw new Melding(melding("readOnly"));
 }
 
-async function lees(api: XlsxEditorApi, sheetId: string, b: Bereik): Promise<XlsxCellRead[][]> {
+export async function lees(api: XlsxEditorApi, sheetId: string, b: Bereik): Promise<XlsxCellRead[][]> {
   const r = await api.readCells({ ranges: [doel(sheetId, b)] });
   if (!r.ok) throw new Melding(r.failure.message);
   return r.ranges[0].cells;
@@ -204,7 +204,7 @@ const zonderNotatie = (f: unknown) => {
  * als er meer dan de getalnotatie verschilt (vooraf, eigen stap), anders als
  * `setNumberFormat`-stappen in de batch. Geeft de batchstappen terug.
  */
-async function opmaakNaar(
+export async function opmaakNaar(
   api: XlsxEditorApi,
   blad: number,
   sheetId: string,

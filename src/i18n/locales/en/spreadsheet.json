@@ -383,5 +383,46 @@
     "result": "Result:",
     "resultUnavailable": "no preview available",
     "insert": "Insert"
+  },
+  "dataTools": {
+    "group": "Data Tools",
+    "ok": "OK",
+    "range": "Range: {{range}}",
+    "header": "My data has headers",
+    "selectAll": "Select all",
+    "selectNone": "Select none",
+    "messages": {
+      "needRows": "The range contains no data rows.",
+      "needColumns": "Choose at least one column."
+    },
+    "duplicates": {
+      "button": "Remove Duplicates",
+      "title": "Remove Duplicates",
+      "action": "Action",
+      "actions": {
+        "verwijderen": "Remove duplicates",
+        "markerenDubbel": "Highlight duplicate values",
+        "markerenUniek": "Highlight unique values",
+        "filteren": "Show unique rows only (filter)"
+      },
+      "run": {
+        "verwijderen": "Remove",
+        "markerenDubbel": "Highlight",
+        "markerenUniek": "Highlight",
+        "filteren": "Filter"
+      },
+      "columns": "Columns to compare",
+      "none": "No duplicate values found. Unique rows: {{rows}}.",
+      "result": {
+        "verwijderen_one": "{{number}} duplicate removed; unique rows remaining: {{rows}}.",
+        "verwijderen_other": "{{number}} duplicates removed; unique rows remaining: {{rows}}.",
+        "markerenDubbel_one": "{{number}} row with duplicate values highlighted (of {{rows}}).",
+        "markerenDubbel_other": "{{number}} rows with duplicate values highlighted (of {{rows}}).",
+        "markerenUniek_one": "{{number}} unique row highlighted (of {{rows}}).",
+        "markerenUniek_other": "{{number}} unique rows highlighted (of {{rows}}).",
+        "filteren_one": "{{number}} duplicate row hidden; visible unique rows: {{rows}}. Show Rows makes it visible again.",
+        "filteren_other": "{{number}} duplicate rows hidden; visible unique rows: {{rows}}. Show Rows makes them visible again."
+      }
+    }
   }
 }

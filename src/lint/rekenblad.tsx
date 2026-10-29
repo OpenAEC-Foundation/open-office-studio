@@ -110,6 +110,7 @@ import {
 } from "./rekenblad-gegevens";
 import { abonneerFilters, bladFilter, heeftCriteria } from "./rekenblad-filter";
 import { ReeksVenster, SorteerVenster } from "./rekenblad-vensters";
+import { GereedschapGroepen, GereedschapVenster, type GereedschapSoort } from "./rekenblad-gegevensgereedschap";
 import {
   Formulebalk,
   FunctieVenster,
@@ -129,7 +130,7 @@ import { kopieer, leesKlembord, plak } from "../rekenblad/klembord";
 import { optimaleBreedte, optimaleHoogte } from "../rekenblad/structuur";
 import { valutaNotatie } from "../rekenblad/notatieOpdrachten";
 
-type Paneel = "zoeken" | "ganaar" | "hernoemen" | "sorteren" | "reeks" | null;
+type Paneel = "zoeken" | "ganaar" | "hernoemen" | "sorteren" | "reeks" | GereedschapSoort | null;
 
 function useStand(api: XlsxEditorApi | null) {
   const [, ververs] = useReducer((n: number) => n + 1, 0);
@@ -957,6 +958,7 @@ export function RekenbladRibbon({
                     doe={() => setPaneel("reeks")}
                   />
                 </Groep>
+                <GereedschapGroepen uit={uit} open={setPaneel} />
                 {functies}
               </>
             ),
@@ -1047,6 +1049,9 @@ export function RekenbladRibbon({
       )}
       {api && paneel === "sorteren" && <SorteerVenster api={api} sluit={sluiten} />}
       {api && paneel === "reeks" && <ReeksVenster api={api} sluit={sluiten} />}
+      {api && paneel && !["zoeken", "ganaar", "hernoemen", "sorteren", "reeks"].includes(paneel) && (
+        <GereedschapVenster soort={paneel as GereedschapSoort} api={api} sluit={sluiten} />
+      )}
       {api && functiePlek && (
         <FunctieVenster
           api={api}
