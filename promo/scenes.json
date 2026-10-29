@@ -1,0 +1,164 @@
+{
+  "voice": "en-GB-RyanNeural",
+  "rate": "-4%",
+  "fps": 24,
+  "scenes": [
+    {
+      "id": "intro",
+      "duration": 6.0,
+      "layout": "intro",
+      "eyebrow": "",
+      "title": ["Open Office Studio"],
+      "detail": "Part of the OpenAEC Foundation",
+      "voice": "Open Office Studio. Part of the OpenAEC Foundation.",
+      "voice_at": 2.0
+    },
+    {
+      "id": "one-tool",
+      "duration": 7.5,
+      "layout": "collapse",
+      "eyebrow": "01 / ONE WORKSPACE",
+      "title": ["One tool. Everything in it."],
+      "voice": "Stop juggling separate programs. Documents, spreadsheets, databases and email now share one window."
+    },
+    {
+      "id": "writer",
+      "duration": 12.0,
+      "layout": "app",
+      "eyebrow": "02 / TEXT",
+      "title": ["Write the way you're used to."],
+      "voice": "Write the way you're used to. Preview fonts before you choose, watch a table take shape at your cursor, and fix typos with a right-click.",
+      "clips": [{ "take": "writer" }],
+      "camera": [
+        { "at": ["typen", 0], "x": 900, "y": 360, "zoom": 1.45 },
+        { "at": ["lettertype", 0.4], "x": 760, "y": 400, "zoom": 1.25 },
+        { "at": ["tabel", 0.0], "x": 760, "y": 400, "zoom": 1.25 },
+        { "at": ["tabel", 1.2], "x": 620, "y": 380, "zoom": 1.2 },
+        { "at": ["spelling", 0], "x": 900, "y": 470, "zoom": 1.35 }
+      ],
+      "short_camera": [
+        { "at": ["typen", 0], "x": 860, "y": 420, "zoom": 1.25 },
+        { "at": ["lettertype", 0.3], "x": 560, "y": 430, "zoom": 1.05 },
+        { "at": ["tabel", 0.0], "x": 560, "y": 430, "zoom": 1.05 },
+        { "at": ["tabel", 1.0], "x": 480, "y": 420, "zoom": 1.0 },
+        { "at": ["spelling", 0], "x": 900, "y": 560, "zoom": 1.15 }
+      ]
+    },
+    {
+      "id": "layout",
+      "duration": 9.5,
+      "layout": "app",
+      "eyebrow": "03 / LAYOUT",
+      "title": ["Layout in one click."],
+      "voice": "Heading styles, page numbers and a table of contents. Each one is just a click away.",
+      "clips": [{ "take": "layout" }],
+      "camera": [
+        { "at": ["stijlen", 0], "x": 860, "y": 380, "zoom": 1.2 },
+        { "at": ["paginanummer", 0], "x": 860, "y": 380, "zoom": 1.2 },
+        { "at": ["inhoud", 0], "x": 760, "y": 380, "zoom": 1.2 },
+        { "at": ["inhoud", 2.4], "x": 960, "y": 470, "zoom": 1.35 }
+      ]
+    },
+    {
+      "id": "sheet",
+      "duration": 9.0,
+      "layout": "app",
+      "eyebrow": "04 / SPREADSHEET",
+      "title": ["From numbers to charts."],
+      "voice": "Select your numbers, pick a chart, and preview it before it lands on the sheet.",
+      "clips": [{ "take": "sheet" }],
+      "camera": [
+        { "at": ["selecteren", 0], "x": 560, "y": 330, "zoom": 1.45 },
+        { "at": ["grafiek", 0.2], "x": 560, "y": 330, "zoom": 1.3 },
+        { "at": ["grafiek", 1.4], "x": 960, "y": 520, "zoom": 1.08 },
+        { "at": ["grafiek", 7.6], "x": 960, "y": 520, "zoom": 1.08 },
+        { "at": ["grafiek", 8.6], "x": 560, "y": 400, "zoom": 1.35 }
+      ],
+      "short_camera": [
+        { "at": ["selecteren", 0], "x": 420, "y": 380, "zoom": 1.2 },
+        { "at": ["grafiek", 0.2], "x": 420, "y": 380, "zoom": 1.1 },
+        { "at": ["grafiek", 1.4], "x": 960, "y": 560, "zoom": 0.98 },
+        { "at": ["grafiek", 7.6], "x": 960, "y": 560, "zoom": 0.98 },
+        { "at": ["grafiek", 8.6], "x": 480, "y": 430, "zoom": 1.1 }
+      ]
+    },
+    {
+      "id": "database",
+      "duration": 10.0,
+      "layout": "app",
+      "eyebrow": "05 / DATABASE",
+      "title": ["Your Access files work again."],
+      "voice": "Open old Access databases as a safe working copy. Run saved queries, and VBA only runs when you allow it.",
+      "clips": [{ "take": "database" }],
+      "camera": [
+        { "at": ["openen", 0], "x": 900, "y": 470, "zoom": 1.2 },
+        { "at": ["query", 0], "x": 700, "y": 470, "zoom": 1.25 },
+        { "at": ["vba", 0], "x": 760, "y": 520, "zoom": 1.2 },
+        { "at": ["vba", 2.0], "x": 960, "y": 560, "zoom": 1.3 }
+      ]
+    },
+    {
+      "id": "email",
+      "duration": 10.0,
+      "layout": "app",
+      "eyebrow": "06 / EMAIL",
+      "title": ["Email, without the hassle."],
+      "voice": "Add an email account, and the server settings are suggested for you. Preview PDF attachments without leaving the app.",
+      "clips": [{ "take": "email" }],
+      "camera": [
+        { "at": ["account", 0], "x": 700, "y": 400, "zoom": 1.15 },
+        { "at": ["account", 2.5], "x": 960, "y": 520, "zoom": 1.15 },
+        { "at": ["bijlage", 0], "x": 700, "y": 420, "zoom": 1.2 },
+        { "at": ["bijlage", 3.0], "x": 760, "y": 600, "zoom": 1.15 }
+      ]
+    },
+    {
+      "id": "formats",
+      "duration": 10.0,
+      "layout": "app",
+      "eyebrow": "07 / WINDOWS & FORMATS",
+      "title": ["Open formats. Your choice."],
+      "voice": "Give any tab its own window. Save as Word or PDF, or as OpenDocument with LibreOffice on your desktop. Your choice.",
+      "clips": [{ "take": "tabs" }],
+      "camera": [
+        { "at": ["wisselen", 0], "x": 760, "y": 300, "zoom": 1.25 },
+        { "at": ["venster", 0], "x": 760, "y": 300, "zoom": 1.25 },
+        { "at": ["einde-venster", 0], "x": 960, "y": 520, "zoom": 1.0 },
+        { "at": ["opslaan", 0.6], "x": 960, "y": 540, "zoom": 1.12 }
+      ]
+    },
+    {
+      "id": "ecosystem",
+      "duration": 7.5,
+      "layout": "ecosystem",
+      "eyebrow": "08 / ECOSYSTEM",
+      "title": ["Part of the OpenAEC ecosystem."],
+      "voice": "Open Office Studio is part of the OpenAEC ecosystem, alongside Open PDF Studio, Open BIM Studio and more.",
+      "tools": [
+        "Open PDF Studio", "Open BIM Studio", "Open Planner Studio", "Open Calc Studio",
+        "Open 3D Studio", "Open Paint Studio", "Open Energy Studio", "Open Heatloss Studio",
+        "Open Pointcloud Studio", "Open Speech Studio", "Open Field Studio", "Open Frame Studio",
+        "Open Geotechniek Studio", "Open Structural Calculation Studio", "Pile Plan Studio"
+      ]
+    },
+    {
+      "id": "outro",
+      "duration": 7.0,
+      "layout": "end",
+      "eyebrow": "OPENAEC FOUNDATION",
+      "title": ["Open Office Studio."],
+      "detail": "Download it free.",
+      "facts": "Free · Open source · Windows · macOS · Linux",
+      "url": "github.com/OpenAEC-Foundation/open-office-studio",
+      "voice": "Free and open source, for Windows, macOS and Linux. Open Office Studio. Download it free."
+    }
+  ],
+  "short": {
+    "scenes": ["writer", "sheet"],
+    "intro": { "duration": 2.5 },
+    "end": {
+      "duration": 4.5,
+      "voice": "Open Office Studio. Free and open source. Download it free."
+    }
+  }
+}
