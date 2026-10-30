@@ -54,3 +54,10 @@ De onderstaande beelden zijn op 22 oktober 2026 vastgelegd uit de lokale Vite-pr
 - `bestandsmenu-0.4.3.jpg`: bestandsmenu over de geopende ontwerpnotitie, na herstel van de laagvolgorde.
 
 Werk screenshots opnieuw bij na een zichtbare interfacewijziging en controleer ze voor opname in de hoofd-README.
+
+## Aanvullende vrijgaveproeven 2026-W44.8
+
+- `test-notition-overdracht-2026-W44.8.jpg`: echte Markdownpagina na het toevoegen van een back-up aan een gescheiden profiel. De back-up bevat ook een canvas; broninhoud en posities zijn onafhankelijk vergeleken.
+- `test-writer-tabeltelling-2026-W44.8.jpg`: echte tabel met vier gevulde cellen en de bevestigde afwijking in het venster Woorden tellen. De DOCX-download bevat de vier celwaarden correct.
+
+Zie het [definitieve controleverslag](../tests/2026-10-30-vrijgavecontrole.md). De gegevens in deze beelden zijn synthetisch.

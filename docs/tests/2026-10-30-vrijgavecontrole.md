@@ -15,6 +15,8 @@ De lokale uitvoer staat in `.local/controle-2026-10-30/` en wordt niet meegecomm
 | Oorspronkelijke frontendproeven | 1.472 geslaagd, vier externe corpusgevallen overgeslagen. |
 | Pad van de versleutelingsproeven hersteld | Alle veertien versleutelingsproeven geslaagd, inclusief de vier echte externe bestanden. Hun bronrevisies en hashes zijn nu in een CI-manifest vastgelegd. |
 | Definitieve frontendset met studio-, configuratie- en publicatiepoortproeven | 1.509 geslaagd, zonder overgeslagen gevallen. |
+| Frontend in de vrijgavebouw op elk van de drie platformen | 1.503 geslaagd en zes optionele gevallen overgeslagen: drie databasecorpusproeven en drie spelling-WASM-proeven. Deze zes zijn lokaal wel uitgevoerd. De externe corpusbestanden ontbreken in de schone runner; de spellingmodule wordt daar pas tijdens de latere bouw gemaakt. De veertien versleutelingsproeven draaien wel volledig in CI. |
+| Zelfstandige Database-backend | Acht Rust-proeven geslaagd. |
 | Native Rust-proeven | 109 geslaagd; de vijf optionele runtimeproeven vervolgens apart uitgevoerd en alle vijf geslaagd. |
 | Python-pakket- en bestandscontroles | 44 geslaagd. |
 | TypeScript, weekversie en vertalingen | Typecontrole en versiecontrole geslaagd; acht talen × 21 namespaces in orde, 23 waarschuwingen over voorbereide taalbestanden buiten de aangeboden talen. |
@@ -51,9 +53,15 @@ Eigen browserprofielen op afzonderlijke lokale poorten; de bestaande gebruikerst
 - **Presentation:** eigen naam en startscherm; ontwerpvisie geopend; sprekersnotitie gewijzigd. De echte PPTX-download bevat die notitie in het notitieonderdeel.
 - **Email:** begint in de e-mailmodule; demopostvak met zes berichten; bericht in afgeschermd leesvenster geopend. Er is geen echte mail verzonden, geen eigen account aangemeld en geen nieuwe providerverbinding getest.
 - **Notition:** begint in de notitieboeken; titel en vrije tekst gewijzigd; Ctrl+S en herladen. Titel en tekst zijn na herladen behouden.
-- In deze vijf werkruimtes gaf de browserconsole bij de proeven geen fouten. De [schermafbeeldingen](../studios.md#in-beeld) tonen echte applicatievensters.
+- Bij deze eerste vijf moduleproeven gaf de browserconsole geen fouten. De aanvullende overdrachtsproef vond later wel een maatobserverfout in Notition, hieronder beschreven. De [schermafbeeldingen](../studios.md#in-beeld) tonen echte applicatievensters.
 
 Dit zijn gerichte gebruiksproeven. Niet iedere opdracht in elk lint, iedere dialoogcombinatie of ieder openbaar corpusbestand is opnieuw via de GUI bediend.
+
+## Aanvullende notitieoverdracht tussen gescheiden profielen
+
+In twee eigen browserprofielen zijn een canvas met twee vrije tekstvakken en een Markdownsectie gemaakt, geëxporteerd en aan een bestaand notitieboek toegevoegd. De opnieuw gedownloade back-up behoudt de volledige tekst, letterlijke Markdown, sectietypen en de positie/grootte van het tweede tekstvak: `(78, 70, 360, 80)`. De bestaande doelpagina blijft staan, geïmporteerde onderdelen krijgen nieuwe ids en beide boeken blijven na herladen aanwezig. De proef gebruikt synthetische gegevens en de echte back-upknoppen.
+
+[Markdown na overdracht](../screenshots/test-notition-overdracht-2026-W44.8.jpg).
 
 ## Bevestigde fout: rekenkern crasht bij ontbrekend weekargument
 
@@ -67,7 +75,23 @@ De eerste bewerking geeft `RuntimeError: unreachable`; de tweede geeft `recursiv
 
 ## Bevestigde afwijking: woordtelling van een document met alleen een tabel
 
-In de gerichte Writer-GUI is `Naam\tAantal\nHout\t3` omgezet naar een tabel van 2×2. Na ongedaan maken en opnieuw uitvoeren tonen zowel de statusbalk als het venster **Woorden tellen** nul woorden, tekens en alinea’s. De vier celwaarden staan wel correct in het document en de onafhankelijk gelezen DOCX-download. Dit is een fout in de telling; deze distributiewijziging lost hem niet op.
+In de gerichte Writer-GUI is `Naam\tAantal\nHout\t3` omgezet naar een tabel van 2×2. Na ongedaan maken en opnieuw uitvoeren tonen zowel de statusbalk als het venster **Woorden tellen** nul woorden, tekens en alinea’s. De vier celwaarden staan wel correct in het document en de onafhankelijk gelezen DOCX-download. Dit is een fout in de telling; deze distributiewijziging lost hem niet op. [GUI-bewijs](../screenshots/test-writer-tabeltelling-2026-W44.8.jpg).
+
+## Bevestigde consolefout: maatobserver bij notitiesectiewissel
+
+Bij het wisselen van het geïmporteerde canvas naar Markdown geeft de browserconsole eenmaal `TypeError: Cannot read properties of null (reading 'offsetHeight')` vanuit de maatobserver in `src/notities/TekstCanvas.tsx`. De callback leest `kader.current` nadat het schermonderdeel verwijderd is. De pagina blijft bruikbaar; de onafhankelijke back-upcontrole en het herladen tonen behoud van de gegevens. Deze release herstelt de observer nog niet.
+
+## Definitieve uitgave en platformpoorten
+
+[Release 2026-W44.8](https://github.com/OpenAEC-Foundation/open-office-studio/releases/tag/v2026.44.8) is openbaar. De gebouwde bron is `0fc4d2bbf94bb6025d8d8517d53631d5f830cd1e`; de releasewijziging is gemerged als `33e27b30cf9175dade85d6a6ec8f36061d7738bb`. De twee revisies hebben dezelfde bestandsinhoud. De [volledige releasebouw](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41033563527) is geslaagd.
+
+- Windows x64: alle zeven NSIS-installers, geïnstalleerde programma's en uninstallers hebben een geldige Authenticode-handtekening met tijdstempel. Stil installeren en verwijderen zijn uitgevoerd; uitgevermetadata en WebView2-loader gecontroleerd. Dit is geen handmatige native GUI-proef.
+- macOS ARM64: de zeven DMG's geopend; iedere app gecontroleerd met `codesign`, Gatekeeper en `stapler`. Ondertekening en notarisatie zijn geldig.
+- Linux x64: alle zeven DEB's en zeven AppImages werkelijk uitgepakt; architectuur, programma, bibliotheken, snelkoppeling, pictogrammen en toepasselijke MIME-typen gecontroleerd.
+- De 60 GitHub-uitgavebestanden zijn vóór publicatie teruggedownload: 28 installers, 14 pakketrapporten en de verificatiebestanden. Alle pakketrapporten en 58 checksumregels passen bij de bytes; 15 OpenPGP-handtekeningen zijn opnieuw geldig bevonden met fingerprint `13F6D414ADEE4ED4CD09AC60601D86C93C504D29`.
+- Na publicatie zijn de releasepagina en alle 28 directe installerlinks zonder aanmelding bereikbaar: HTTP 200, met de juiste bestandsgrootte. De publieke versie-tag wijst naar de werkelijk gebouwde bron.
+
+De gedownloade bewijzen staan lokaal in `.local/releases/v2026.44.8/`; de pakketrapporten en verificatiebestanden zijn ook aan de release gehecht. Het IFCX-voorstel is afzonderlijk werk en verandert de standaardopslag van deze installers niet.
 
 ## Hersteld tijdens de releasebouw
 
