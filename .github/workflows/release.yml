@@ -3,6 +3,11 @@ on:
   push:
     tags: ["v*"]
   workflow_dispatch:
+    inputs:
+      publiceren:
+        description: Maak na alle controles een concept-uitgave van deze bronrevisie
+        type: boolean
+        default: false
 permissions:
   contents: read
 concurrency:
@@ -63,7 +68,7 @@ jobs:
     env:
       WIN_SIGN: ${{ secrets.AZURE_CLIENT_ID != '' && secrets.AZURE_ENDPOINT != '' && secrets.AZURE_TRUSTED_SIGNING_ACCOUNT_NAME != '' }}
       MAC_SIGN: ${{ secrets.APPLE_CERTIFICATE != '' && secrets.APPLE_SIGNING_IDENTITY != '' && secrets.APPLE_API_KEY != '' }}
-      ONDERTEKENEN_VERPLICHT: ${{ github.ref_type == 'tag' }}
+      ONDERTEKENEN_VERPLICHT: ${{ github.ref_type == 'tag' || inputs.publiceren == true }}
       # Updaters (#26, docs/updates.md): alleen met het organisatiegeheim én een publieke sleutel
       # in tauri.conf.json. Ontbreekt een van beide, dan wordt gewoon zonder updater-artefacten
       # gebouwd en staat de updatefunctie in die versie uit.
@@ -130,9 +135,12 @@ jobs:
           key: woordenboeken-${{ hashFiles('assets/woordenboeken.json') }}
       - run: node scripts/haal-woordenboeken.mjs
       - run: pnpm versie:check
+      - name: Vastgelegde versleutelde proefbestanden ophalen
+        run: node scripts/corpus-download.mjs docs/tests/versleuteling-manifest.json
       - run: pnpm test
       - run: python -m unittest discover -s tests -v
       - run: node scripts/test-kantoor-engines.mjs
+      - run: pnpm test:opdrachten
       - name: Windows-loader voorbereiden
         if: runner.os == 'Windows'
         shell: pwsh
@@ -179,7 +187,12 @@ jobs:
           else
             pnpm desktop:build --bundles ${{ matrix.bundels }}
           fi
+          node scripts/verzamel-studio.mjs office
           pnpm database:desktop:build --bundles ${{ matrix.bundels }}
+          node scripts/verzamel-studio.mjs database
+          for studio in writer spreadsheet presentation email notition; do
+            node scripts/bouw-studio.mjs "$studio" --bundles ${{ matrix.bundels }}
+          done
       # Tauri roept signCommand aan voor het programma, de uninstaller en de installer.
       - name: Pakket bouwen (Windows, ondertekend)
         if: runner.os == 'Windows' && env.WIN_SIGN == 'true'
@@ -199,8 +212,17 @@ jobs:
           }
           pnpm desktop:build --bundles ${{ matrix.bundels }} --config "$env:OPS_SIGN_CONFIG" @updater
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node scripts/verzamel-studio.mjs office
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           Remove-Item Env:TAURI_SIGNING_PRIVATE_KEY, Env:TAURI_SIGNING_PRIVATE_KEY_PASSWORD -ErrorAction SilentlyContinue
           pnpm database:desktop:build --bundles ${{ matrix.bundels }} --config "$env:OPS_SIGN_CONFIG"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node scripts/verzamel-studio.mjs database
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          foreach ($studio in @('writer', 'spreadsheet', 'presentation', 'email', 'notition')) {
+            node scripts/bouw-studio.mjs $studio --bundles ${{ matrix.bundels }} --config "$env:OPS_SIGN_CONFIG"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
       - name: Pakket bouwen (macOS, ondertekend en genotariseerd)
         if: runner.os == 'macOS' && env.MAC_SIGN == 'true'
         env:
@@ -220,7 +242,12 @@ jobs:
           else
             pnpm desktop:build --bundles ${{ matrix.bundels }}
           fi
+          node scripts/verzamel-studio.mjs office
           pnpm database:desktop:build --bundles ${{ matrix.bundels }}
+          node scripts/verzamel-studio.mjs database
+          for studio in writer spreadsheet presentation email notition; do
+            node scripts/bouw-studio.mjs "$studio" --bundles ${{ matrix.bundels }}
+          done
 
       # Poort: installer, geïnstalleerd programma en uninstaller dragen een geldige
       # handtekening met tijdstempel. Het programma wordt gecontroleerd zoals het in
@@ -240,7 +267,7 @@ jobs:
           }
           # Office Studio en de zelfstandige Database Studio, elk met eigen installer.
           function ControleerApp($bundel, $naam, $programma) {
-            $setup = Get-ChildItem "$env:GITHUB_WORKSPACE/$bundel/nsis/*-setup.exe" | Select-Object -First 1
+            $setup = Get-ChildItem "$env:GITHUB_WORKSPACE/$bundel/nsis/$($naam)_*-setup.exe" | Select-Object -First 1
             if ($null -eq $setup) { throw "Geen *-setup.exe gebouwd voor $naam." }
             Controleer "installer $naam" $setup.FullName
             $p = Start-Process -FilePath $setup.FullName -ArgumentList '/S' -Wait -PassThru
@@ -259,14 +286,18 @@ jobs:
             $u = Start-Process -FilePath $uninstaller -ArgumentList '/S' -Wait -PassThru
             if ($u.ExitCode -ne 0) { Write-Host "::warning::Stil verwijderen van $naam gaf $($u.ExitCode)." }
           }
-          ControleerApp 'src-tauri/target/release/bundle' 'Open Office Studio' 'open-office-studio'
-          ControleerApp 'apps/database-studio/src-tauri/target/release/bundle' 'Open Database Studio' 'open-database-studio'
+          ControleerApp 'dist-installers/office' 'Open Office Studio' 'open-office-studio'
+          ControleerApp 'dist-installers/database' 'Open Database Studio' 'open-database-studio'
+          $studios = Get-Content assets/studios.json -Raw | ConvertFrom-Json
+          foreach ($studio in $studios | Where-Object { $_.sleutel -notin @('office', 'database') }) {
+            ControleerApp "dist-installers/$($studio.sleutel)" $studio.naam $studio.programma
+          }
       # De .app uit de DMG: handtekening, Gatekeeper en het geniete notarisatieticket.
       - name: Handtekening en notarisatie controleren (macOS)
         if: runner.os == 'macOS' && env.MAC_SIGN == 'true'
         run: |
           set -euo pipefail
-          for bundel in src-tauri/target/release/bundle apps/database-studio/src-tauri/target/release/bundle; do
+          for bundel in dist-installers/*; do
             dmg="$(find "$bundel/dmg" -name '*.dmg' -print -quit)"
             test -n "$dmg"
             koppel="$(mktemp -d)"
@@ -284,27 +315,33 @@ jobs:
       - name: Linux-installers werkelijk uitpakken en controleren
         if: runner.os == 'Linux'
         run: |
-          python scripts/controleer-installers.py --platform linux --rapport .local/pakketcontrole-Linux.json
-          python scripts/controleer-installers.py --platform linux --programma open-database-studio --bundels apps/database-studio/src-tauri/target/release/bundle --rapport .local/pakketcontrole-Database-Linux.json
+          python scripts/controleer-installers.py --platform linux --bundels dist-installers/office --rapport .local/pakketcontrole-Linux.json
+          python scripts/controleer-installers.py --platform linux --programma open-database-studio --bundels dist-installers/database --rapport .local/pakketcontrole-Database-Linux.json
+          for studio in writer spreadsheet presentation email notition; do
+            python scripts/controleer-installers.py --platform linux --programma "open-$studio-studio" --bundels "dist-installers/$studio" --rapport ".local/pakketcontrole-$studio-Linux.json"
+          done
       - name: Windows-installer werkelijk uitpakken en controleren
         if: runner.os == 'Windows'
         run: |
-          python scripts/controleer-installers.py --platform windows --rapport .local/pakketcontrole-Windows.json
-          python scripts/controleer-installers.py --platform windows --programma open-database-studio --bundels apps/database-studio/src-tauri/target/release/bundle --rapport .local/pakketcontrole-Database-Windows.json
+          python scripts/controleer-installers.py --platform windows --bundels dist-installers/office --rapport .local/pakketcontrole-Windows.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python scripts/controleer-installers.py --platform windows --programma open-database-studio --bundels dist-installers/database --rapport .local/pakketcontrole-Database-Windows.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $studios = Get-Content assets/studios.json -Raw | ConvertFrom-Json
+          foreach ($studio in $studios | Where-Object { $_.sleutel -notin @('office', 'database') }) {
+            python scripts/controleer-installers.py --platform windows --programma $studio.programma --bundels "dist-installers/$($studio.sleutel)" --rapport ".local/pakketcontrole-$($studio.sleutel)-Windows.json"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
       - uses: actions/upload-artifact@v4
         with:
           name: uitgave-${{ matrix.label }}
           path: |
-            src-tauri/target/release/bundle/**/*.deb
-            src-tauri/target/release/bundle/**/*.AppImage
-            src-tauri/target/release/bundle/**/*-setup.exe
-            src-tauri/target/release/bundle/**/*.dmg
-            src-tauri/target/release/bundle/**/*.sig
-            src-tauri/target/release/bundle/macos/*.app.tar.gz
-            apps/database-studio/src-tauri/target/release/bundle/**/*.deb
-            apps/database-studio/src-tauri/target/release/bundle/**/*.AppImage
-            apps/database-studio/src-tauri/target/release/bundle/**/*-setup.exe
-            apps/database-studio/src-tauri/target/release/bundle/**/*.dmg
+            dist-installers/**/*.deb
+            dist-installers/**/*.AppImage
+            dist-installers/**/*-setup.exe
+            dist-installers/**/*.dmg
+            dist-installers/**/*.sig
+            dist-installers/**/macos/*.app.tar.gz
             .local/pakketcontrole-*.json
           include-hidden-files: true
           if-no-files-found: error
@@ -313,7 +350,7 @@ jobs:
   # bediend voordat de uitgave openbaar wordt.
   publiceren:
     needs: [versie, bouwen]
-    if: github.ref_type == 'tag'
+    if: github.ref_type == 'tag' || inputs.publiceren == true
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -321,13 +358,15 @@ jobs:
       # Alleen het script voor het updatemanifest.
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: scripts
+          sparse-checkout: |
+            scripts
+            assets
       - uses: actions/download-artifact@v4
         with:
           path: artefacten
       - name: Bestanden, updatemanifest en SHA256SUMS verzamelen
         env:
-          TAG: ${{ github.ref_name }}
+          TAG: v${{ needs.versie.outputs.versie }}
           VERSIE: ${{ needs.versie.outputs.versie }}
         run: |
           mkdir uitgave
@@ -336,17 +375,39 @@ jobs:
           # GitHub vervangt spaties in namen van uitgavebestanden door punten;
           # zelf hernoemen houdt SHA256SUMS gelijk aan de downloadnamen.
           for bestand in *' '*; do [ -e "$bestand" ] && mv -- "$bestand" "${bestand// /.}"; done
+          node ../scripts/controleer-uitgave.mjs . "$VERSIE"
           # latest.json voor de updater (#26); zonder handtekeningen (geen geheim) wordt het overgeslagen.
           node ../scripts/maak-latest-json.mjs . "$VERSIE" "$TAG" "Open Office Studio $VERSIE: zie de uitgavenpagina voor de wijzigingen."
+      - name: Linux-pakketten en checksums ondertekenen en verifiëren
+        env:
+          OPENAEC_GPG_PRIVATE_KEY: ${{ secrets.OPENAEC_GPG_PRIVATE_KEY }}
+          OPENAEC_GPG_PASSPHRASE: ${{ secrets.OPENAEC_GPG_PASSPHRASE }}
+          GNUPGHOME: ${{ runner.temp }}/openaec-uitgave-gnupg
+        run: |
+          set -euo pipefail
+          test -n "$OPENAEC_GPG_PRIVATE_KEY" || { echo '::error::OpenAEC-OpenPGP-sleutel ontbreekt.'; exit 1; }
+          mkdir -m 700 "$GNUPGHOME"
+          printf '%s' "$OPENAEC_GPG_PRIVATE_KEY" | gpg --batch --import
+          sleutel=13F6D414ADEE4ED4CD09AC60601D86C93C504D29
+          gpg --batch --list-secret-keys "$sleutel" >/dev/null
+          cd uitgave
+          for bestand in *.deb *.AppImage; do
+            printf '%s' "$OPENAEC_GPG_PASSPHRASE" | gpg --batch --yes --pinentry-mode loopback --passphrase-fd 0 --local-user "$sleutel" --armor --detach-sign "$bestand"
+            gpg --batch --verify "$bestand.asc" "$bestand"
+          done
+          gpg --armor --export "$sleutel" > openaec-signing-public-key.asc
+          printf '%s\n' "$sleutel" > openaec-signing-fingerprint.txt
           sha256sum -- * > ../SHA256SUMS
           mv ../SHA256SUMS .
-          cat SHA256SUMS
+          printf '%s' "$OPENAEC_GPG_PASSPHRASE" | gpg --batch --yes --pinentry-mode loopback --passphrase-fd 0 --local-user "$sleutel" --armor --detach-sign SHA256SUMS
+          gpg --batch --verify SHA256SUMS.asc SHA256SUMS
+          sha256sum --check SHA256SUMS
       - name: Concept-uitgave aanmaken
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.ref_name }}
+          TAG: v${{ needs.versie.outputs.versie }}
           VERSIE: ${{ needs.versie.outputs.versie }}
         run: |
-          gh release create "$TAG" uitgave/* --repo "$GITHUB_REPOSITORY" --verify-tag --draft --prerelease \
+          gh release create "$TAG" uitgave/* --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --draft --prerelease \
             --title "Open Office Studio $VERSIE" \
-            --notes "Ontwikkelversie $VERSIE van Open Office Studio en de zelfstandige Open Database Studio. Windows x64 (ondertekend), macOS Apple Silicon (ondertekend en genotariseerd), Linux x64 (DEB en AppImage). Pakketrapporten en SHA256SUMS zijn bijgevoegd."
+            --notes "Ontwikkelversie $VERSIE: Open Office Studio, Open Writer Studio, Open Spreadsheet Studio, Open Presentation Studio, Open Email Studio, Open Notition Studio en Open Database Studio. Iedere app heeft een eigen installer en profiel. Windows x64 (ondertekend), macOS Apple Silicon (ondertekend en genotariseerd), Linux x64 (DEB en AppImage). Pakketrapporten en SHA256SUMS zijn bijgevoegd. Dit zijn ontwikkelversies; zie de controleverslagen voor beperkingen en nog niet geteste functies."

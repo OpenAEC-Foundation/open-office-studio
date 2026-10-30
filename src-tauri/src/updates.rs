@@ -152,7 +152,9 @@ fn publieke_sleutel<R: tauri::Runtime>(app: &tauri::AppHandle<R>) -> Option<Stri
 }
 
 fn reden<R: tauri::Runtime>(app: &tauri::AppHandle<R>) -> Option<Reden> {
-    if beheerd_uit(std::env::var(BEHEER_VARIABELE).ok().as_deref()) {
+    // De gerichte apps mogen nooit het updatepakket van de volledige suite installeren.
+    if app.config().identifier != "org.openaec.office-studio"
+        || beheerd_uit(std::env::var(BEHEER_VARIABELE).ok().as_deref()) {
         Some(Reden::Beheerd)
     } else if publieke_sleutel(app).is_none() {
         Some(Reden::GeenSleutel)

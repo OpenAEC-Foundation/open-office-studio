@@ -1,6 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import openaecSymbool from "./stijl/openaec-symbol.svg";
+import { studio } from "./studios/gekozen";
 import "./titelbalk.css";
 
 const tauri = typeof window !== "undefined" && "__TAURI_INTERNALS__" in window;
@@ -34,7 +35,7 @@ export function Titelbalk({
           className="office-titelbalk-merk"
           onClick={naarStart}
           title={t("header.homeTitle")}
-          aria-label={t("header.homeLabel")}
+          aria-label={studio.module ? studio.naam : t("header.homeLabel")}
         >
           <img src={openaecSymbool} alt="" />
         </button>

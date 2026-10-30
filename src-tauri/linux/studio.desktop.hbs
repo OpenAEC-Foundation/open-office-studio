@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name={{name}}
+Exec={{exec}}{{#if mime_type}} %F{{/if}}
+StartupWMClass={{exec}}
+Icon={{icon}}
+Terminal=false
+Categories={{categories}}
+{{#if mime_type}}
+MimeType={{mime_type}}
+{{/if}}

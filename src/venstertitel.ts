@@ -37,8 +37,12 @@ type Vertaal = (sleutel: string, waarden?: Record<string, string>) => string;
  * module "Open Office Studio (Notities)" en op Start alleen de appnaam. Zelfde
  * tekst voor de OS-venstertitel, `document.title` en de eigen titelbalk.
  */
-export function venstertitel(bron: Titelbron, t: Vertaal): string {
-  const app = t("common:appName");
+export function venstertitel(
+  bron: Titelbron,
+  t: Vertaal,
+  appnaam?: string,
+): string {
+  const app = appnaam ?? t("common:appName");
   const module = titelModule(bron);
   if (!bron || !module) return app;
   const moduleNaam = t(`common:modules.${module}`);
@@ -62,6 +66,11 @@ export function titelbron(
 ): Titelbron {
   if (!tabblad) return null;
   return tabblad.type === "document"
-    ? { type: "document", naam: tabblad.naam, soort: tabblad.soort, gewijzigd: tabblad.gewijzigd }
+    ? {
+        type: "document",
+        naam: tabblad.naam,
+        soort: tabblad.soort,
+        gewijzigd: tabblad.gewijzigd,
+      }
     : { type: "module", module: tabblad.module, gewijzigd: tabblad.gewijzigd };
 }

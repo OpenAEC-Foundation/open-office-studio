@@ -3,6 +3,7 @@ import type { Soort } from "./editors";
 import type { ModuleNaam } from "./tabbladen";
 import type { Werkbestand } from "./werkbestand";
 import { titelbron, venstertitel as maakTitel } from "./venstertitel";
+import { studio } from "./studios/gekozen";
 
 /**
  * Een tabblad dat naar een ander venster gaat. Documenten gaan mét hun
@@ -66,6 +67,7 @@ export function venstertitel(overdracht: Overdracht) {
         : { ...overdracht, gewijzigd: false },
     ),
     (sleutel, waarden) => i18next.t(sleutel, waarden),
+    studio.module ? studio.naam : undefined,
   );
 }
 
@@ -98,7 +100,10 @@ export function pakUit(pakket: Uint8Array): Overdracht {
   ) as Record<string, unknown>;
   if (kop.type === "module")
     return { type: "module", module: kop.module as ModuleNaam };
-  if (kop.type !== "document" || !["docx", "xlsx", "pptx"].includes(kop.soort as string))
+  if (
+    kop.type !== "document" ||
+    !["docx", "xlsx", "pptx"].includes(kop.soort as string)
+  )
     throw new Error("Onbekende overdracht.");
   return {
     ...(kop as Omit<Extract<Overdracht, { type: "document" }>, "bytes">),
@@ -181,7 +186,10 @@ export function browserkanaal(omgeving: BrowserOmgeving): Vensterkanaal {
   let ontvanger: ((overdracht: Overdracht) => boolean) | null = null;
   const wachtOpBegin = new Map<string, (o: Overdracht | null) => boolean>();
   const antwoord = (sleutel: string, ok: boolean) =>
-    bc.postMessage({ type: ok ? "bevestigd" : "geweigerd", sleutel } satisfies Bericht);
+    bc.postMessage({
+      type: ok ? "bevestigd" : "geweigerd",
+      sleutel,
+    } satisfies Bericht);
 
   bc.addEventListener("message", (event: Event) => {
     const bericht = (event as MessageEvent<Bericht>).data;
@@ -190,7 +198,11 @@ export function browserkanaal(omgeving: BrowserOmgeving): Vensterkanaal {
       const open = uitstaand.get(bericht.sleutel);
       if (!open) return;
       if (open.geclaimd || (open.naar && open.naar !== bericht.van)) {
-        bc.postMessage({ type: "vervallen", sleutel: bericht.sleutel, naar: bericht.van });
+        bc.postMessage({
+          type: "vervallen",
+          sleutel: bericht.sleutel,
+          naar: bericht.van,
+        });
         return;
       }
       open.geclaimd = true;
@@ -254,7 +266,12 @@ export function browserkanaal(omgeving: BrowserOmgeving): Vensterkanaal {
             klaar(new Error(i18next.t("shell:windows.alreadyMainWindow")));
             return;
           }
-          uitstaand.set(sleutel, { overdracht, naar: hoofdId, geclaimd: true, klaar });
+          uitstaand.set(sleutel, {
+            overdracht,
+            naar: hoofdId,
+            geclaimd: true,
+            klaar,
+          });
           bc.postMessage({
             type: "aanbod",
             sleutel,
@@ -263,12 +280,15 @@ export function browserkanaal(omgeving: BrowserOmgeving): Vensterkanaal {
           } satisfies Bericht);
           return;
         }
-        uitstaand.set(sleutel, { overdracht, naar: null, geclaimd: false, klaar });
+        uitstaand.set(sleutel, {
+          overdracht,
+          naar: null,
+          geclaimd: false,
+          klaar,
+        });
         const url = `${omgeving.pad}?venster=document&overdracht=${encodeURIComponent(sleutel)}&bron=${encodeURIComponent(hoofdId ?? mijnId)}`;
         if (!omgeving.open(url, positie))
-          klaar(
-            new Error(i18next.t("shell:windows.popupBlocked")),
-          );
+          klaar(new Error(i18next.t("shell:windows.popupBlocked")));
       });
     },
     begin(open) {
@@ -284,7 +304,11 @@ export function browserkanaal(omgeving: BrowserOmgeving): Vensterkanaal {
           resolve(geopend);
           return geopend;
         });
-        bc.postMessage({ type: "vraag", sleutel: startSleutel, van: mijnId } satisfies Bericht);
+        bc.postMessage({
+          type: "vraag",
+          sleutel: startSleutel,
+          van: mijnId,
+        } satisfies Bericht);
       });
     },
     luister(open) {
@@ -297,9 +321,9 @@ export function browserkanaal(omgeving: BrowserOmgeving): Vensterkanaal {
 }
 
 /** Het hoofdvenster in de browser krijgt zijn id mee in de URL van nieuwe vensters. */
-export function standaardBrowserkanaal() {
+export function standaardBrowserkanaal(naam = KANAALNAAM) {
   return browserkanaal({
-    kanaal: () => new BroadcastChannel(KANAALNAAM),
+    kanaal: () => new BroadcastChannel(naam),
     open: (url, positie) =>
       window.open(
         url,

@@ -60,10 +60,14 @@ def elf_x64(pad):
 
 def verwachte_mime_typen(programma):
     """MimeType-regel volgens tauri.linux.conf.json (alleen Office Studio koppelt bestanden)."""
-    if programma != "open-office-studio":
-        return None
     conf = json.loads(Path("src-tauri/tauri.linux.conf.json").read_text(encoding="utf-8"))
-    return [k["mimeType"] for k in conf["bundle"]["fileAssociations"]]
+    if programma == "open-office-studio":
+        return [k["mimeType"] for k in conf["bundle"]["fileAssociations"]]
+    studios = json.loads(Path("assets/studios.json").read_text(encoding="utf-8"))
+    studio = next((s for s in studios if s["programma"] == programma), None)
+    catalogus = json.loads(Path("src/formaten.json").read_text(encoding="utf-8"))
+    invoer = catalogus.get(studio["module"], {}).get("invoer", []) if studio else []
+    return [k["mimeType"] for k in conf["bundle"]["fileAssociations"] if any(e in invoer for e in k["ext"])] or None
 
 
 def snelkoppeling(pad, wortel, programma="open-office-studio"):
@@ -116,7 +120,7 @@ def deb(pakket, map, versie, programma="open-office-studio"):
     elf_x64(map / f"usr/bin/{programma}")
     snelkoppeling(een((map / "usr/share/applications").glob("*.desktop"), "Linux-snelkoppeling"), map, programma)
     controles = ["DEB-versie en architectuur", "runtime-afhankelijkheden opgegeven", "ELF x64 en bibliotheken gevonden", "snelkoppeling en pictogram aanwezig"]
-    if verwachte_mime_typen(programma):
+    if programma == "open-office-studio":
         # De AppImage registreert zelf geen MIME-typen; het DEB-pakket installeert de ACCDB-aanvulling.
         eis((map / "usr/share/mime/packages/open-office-studio.xml").is_file(),
             "Het MIME-pakket (ACCDB) ontbreekt in het DEB-pakket.")
@@ -146,12 +150,13 @@ def appimage(pakket, map, programma="open-office-studio"):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--platform", choices=["windows", "linux"], required=True)
-    parser.add_argument("--programma", choices=["open-office-studio", "open-database-studio"], default="open-office-studio")
+    studios = json.loads(Path("assets/studios.json").read_text(encoding="utf-8"))
+    parser.add_argument("--programma", choices=[s["programma"] for s in studios], default="open-office-studio")
     parser.add_argument("--bundels", type=Path, default=Path("src-tauri/target/release/bundle"))
     parser.add_argument("--versie", default=json.loads(Path("package.json").read_text())["version"])
     parser.add_argument("--rapport", type=Path, required=True)
     opties = parser.parse_args()
-    product = "Open*Database*Studio" if opties.programma == "open-database-studio" else "Open*Office*Studio"
+    product = next(s["naam"] for s in studios if s["programma"] == opties.programma).replace(" ", "*")
     patronen = ([f"{product}_{opties.versie}_x64-setup.exe"] if opties.platform == "windows" else
                 [f"{product}_{opties.versie}_amd64.deb", f"{product}_{opties.versie}_amd64.AppImage"])
     uitkomsten = []

@@ -1,6 +1,6 @@
 {
   "name": "@openaec/office-studio",
-  "version": "2026.44.7",
+  "version": "2026.44.8",
   "private": true,
   "license": "Apache-2.0",
   "type": "module",
@@ -17,6 +17,7 @@
     "predev": "node scripts/kopieer-assets.mjs",
     "prebuild": "node scripts/kopieer-assets.mjs",
     "test:engines": "node scripts/test-kantoor-engines.mjs",
+    "test:opdrachten": "node scripts/test-opdrachten.mjs",
     "versie:week": "node scripts/weekversie.mjs",
     "versie:check": "node scripts/controleer-weekversie.mjs",
     "i18n:check": "node scripts/controleer-i18n.mjs",
@@ -24,7 +25,8 @@
     "predatabase:build": "node scripts/kopieer-licenties.mjs --database",
     "database:build": "tsc --noEmit && vite build --config apps/database-studio/vite.config.ts && node scripts/controleer-database-bundel.mjs",
     "database:desktop:dev": "cd apps/database-studio && pnpm exec tauri dev",
-    "database:desktop:build": "cd apps/database-studio && pnpm exec tauri build"
+    "database:desktop:build": "cd apps/database-studio && pnpm exec tauri build",
+    "studio:build": "node scripts/bouw-studio.mjs"
   },
   "dependencies": {
     "@betteroffice/docx": "0.4.3",

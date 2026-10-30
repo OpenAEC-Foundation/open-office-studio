@@ -1,5 +1,7 @@
 # Schermafbeeldingen
 
+De vijf beelden `studio-writer-2026-W44.8.jpg`, `studio-spreadsheet-2026-W44.8.jpg`, `studio-presentation-2026-W44.8.jpg`, `studio-email-2026-W44.8.jpg` en `studio-notition-2026-W44.8.jpg` tonen de gerichte productiebuilds op 30 oktober 2026. Ze zijn op 1280 × 720 rechtstreeks uit de GUI opgeslagen, met eigen of fictieve voorbeeldgegevens. Writer, Spreadsheet en Presentation tonen de wijzigingsstip na een werkelijke bewerking en browserdownload; de browser bevestigt een download niet als native schijfopslag. Notition is na opslaan herladen. Email toont uitsluitend de gemarkeerde demomailbox. Zie [het studio-overzicht](../studios.md#in-beeld) en de [vrijgavecontrole](../tests/2026-10-30-vrijgavecontrole.md).
+
 ## README (2026-W44.5)
 
 De hoofd-README ([Engels](../../README.md), [Nederlands](../../README.nl.md)) gebruikt vier beelden die op **28 oktober 2026** zijn vastgelegd uit de lokale productiebuild van **2026-W44.5** (`pnpm build` en `vite preview`, headless Chromium, 1440 × 900 pixels, taal nl-NL). De beelden zijn alleen naar JPG omgezet, niet bewerkt.

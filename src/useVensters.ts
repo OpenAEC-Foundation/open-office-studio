@@ -13,6 +13,8 @@ import {
   type Vensterkanaal,
 } from "./vensteroverdracht";
 import { andereVensters, type AnderVenster } from "./VensterMenu";
+import { studio } from "./studios/gekozen";
+import { staatDocumentToe } from "./studios/model";
 
 const tauri = "__TAURI_INTERNALS__" in window;
 const GEMELD = "openaec-office-losmaken-gemeld";
@@ -22,7 +24,9 @@ let kanaalBelofte: Promise<Vensterkanaal> | null = null;
 function vensterkanaal() {
   kanaalBelofte ??= tauri
     ? import("./tauriVensters").then((m) => m.tauriKanaal())
-    : Promise.resolve(standaardBrowserkanaal());
+    : Promise.resolve(
+        standaardBrowserkanaal(studio.module ? studio.programma : undefined),
+      );
   return kanaalBelofte;
 }
 let beginGedaan = false;
@@ -58,11 +62,22 @@ export function useVensters({ tabs, voorOverdracht }: Opties) {
     const { tabs } = recent.current;
     try {
       if (overdracht.type === "module") {
+        if (
+          studio.module &&
+          overdracht.module !== studio.module &&
+          !(studio.module === "email" && overdracht.module === "database")
+        )
+          return false;
         const id = tabs.openModule(overdracht.module);
         if (overdracht.module === "database")
-          tabs.meld(i18next.t("shell:windows.databaseMovedHere"), id, "waarschuwing");
+          tabs.meld(
+            i18next.t("shell:windows.databaseMovedHere"),
+            id,
+            "waarschuwing",
+          );
         return true;
       }
+      if (!staatDocumentToe(studio, overdracht.soort)) return false;
       // De zoom gaat via het geheugen per document mee naar de nieuwe editor.
       if (overdracht.zoom && overdracht.zoom !== 1)
         bewaarZoom(
@@ -175,7 +190,9 @@ export function useVensters({ tabs, voorOverdracht }: Opties) {
             .then(({ invoke }) => invoke("nieuw_venster"))
             .catch((e) =>
               recent.current.tabs.meld(
-                i18next.t("shell:windows.newWindowFailed", { error: String(e) }),
+                i18next.t("shell:windows.newWindowFailed", {
+                  error: String(e),
+                }),
                 null,
                 "fout",
               ),
@@ -204,8 +221,11 @@ export function useVensters({ tabs, voorOverdracht }: Opties) {
             .then((vensters) => [
               nieuw,
               ...vensters.map((venster) => ({
-                label: i18next.t("shell:windows.moveToWindow", { window: venster.naam }),
-                actie: () => void brengNaar(tabblad.id, { venster: venster.label }),
+                label: i18next.t("shell:windows.moveToWindow", {
+                  window: venster.naam,
+                }),
+                actie: () =>
+                  void brengNaar(tabblad.id, { venster: venster.label }),
               })),
             ]);
         }
@@ -214,9 +234,9 @@ export function useVensters({ tabs, voorOverdracht }: Opties) {
     // daar alleen via het menu "In nieuw venster openen".
     losgesleept:
       kanaal && tauri
-      ? (id: number, x: number, y: number) =>
-          void brengNaar(id, "nieuw", { x, y })
-      : undefined,
+        ? (id: number, x: number, y: number) =>
+            void brengNaar(id, "nieuw", { x, y })
+        : undefined,
     brengNaar,
     meldWijzigingen(aantal: number) {
       if (!tauri) return;
@@ -226,7 +246,9 @@ export function useVensters({ tabs, voorOverdracht }: Opties) {
         )
         .catch((e) =>
           recent.current.tabs.meld(
-            i18next.t("shell:windows.closeGuardUnavailable", { error: String(e) }),
+            i18next.t("shell:windows.closeGuardUnavailable", {
+              error: String(e),
+            }),
             null,
             "fout",
           ),

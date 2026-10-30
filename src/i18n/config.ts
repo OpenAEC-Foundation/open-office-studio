@@ -15,6 +15,7 @@ import { initReactI18next } from "react-i18next";
 import { leesInstellingen, volgInstellingen } from "../instellingen";
 import { meldDesktopTaal } from "./desktop";
 import { zetUiLettertypen } from "./lettertypen";
+import { studio } from "../studios/gekozen";
 import {
   bepaalTaal,
   BRONTAAL,
@@ -30,9 +31,30 @@ import {
   type TaalKeuze,
 } from "./talen";
 
-export { TAALCODES, TAALNAMEN, TERUGVALTAAL, BRONTAAL, bepaalTaal, isRtl, type Taal, type TaalKeuze };
+export {
+  TAALCODES,
+  TAALNAMEN,
+  TERUGVALTAAL,
+  BRONTAAL,
+  bepaalTaal,
+  isRtl,
+  type Taal,
+  type TaalKeuze,
+};
 
 type Bundel = Record<string, unknown>;
+
+/** Productnamen zijn merknamen en blijven gelijk bij het wisselen van interfacetaal. */
+function productBundel(ns: string, bundel: Bundel): Bundel {
+  if (!studio.module) return bundel;
+  if (ns === "common") return { ...bundel, appName: studio.naam };
+  if (ns === "settings")
+    return {
+      ...bundel,
+      about: { ...(bundel.about as Bundel), appName: studio.naam },
+    };
+  return bundel;
+}
 
 const PAD = /\.\/locales\/([^/]+)\/([^/]+)\.json$/;
 const direct = import.meta.glob<{ default: Bundel }>(
@@ -40,13 +62,16 @@ const direct = import.meta.glob<{ default: Bundel }>(
   { eager: true },
 );
 // Alleen de aangeboden talen (INTERFACETALEN in talen.ts); voorbereide talen komen niet in de bundel.
-const lui = import.meta.glob<{ default: Bundel }>(["./locales/{de,fr,es,it,pt-BR,zh-CN}/*.json"]);
+const lui = import.meta.glob<{ default: Bundel }>([
+  "./locales/{de,fr,es,it,pt-BR,zh-CN}/*.json",
+]);
 
 /** Vertalingen die al geladen zijn, per taal en namespace. */
 const resources: Record<string, Record<string, Bundel>> = {};
 for (const [pad, module] of Object.entries(direct)) {
   const [, taal, ns] = PAD.exec(pad) ?? [];
-  if (taal && ns) (resources[taal] ??= {})[ns] = module.default;
+  if (taal && ns)
+    (resources[taal] ??= {})[ns] = productBundel(ns, module.default);
 }
 
 /** Namespaces die bestaan (in de brontaal Nederlands). */
@@ -60,18 +85,29 @@ export function laadTaal(taal: Taal): Promise<void> {
   if (geladen.has(taal)) return Promise.resolve();
   let belofte = bezig.get(taal);
   if (!belofte) {
-    const bestanden = Object.entries(lui).filter(([pad]) => PAD.exec(pad)?.[1] === taal);
+    const bestanden = Object.entries(lui).filter(
+      ([pad]) => PAD.exec(pad)?.[1] === taal,
+    );
     belofte = Promise.all(
       bestanden.map(async ([pad, laad]) => {
         const ns = PAD.exec(pad)![2];
-        i18next.addResourceBundle(taal, ns, (await laad()).default, true, true);
+        i18next.addResourceBundle(
+          taal,
+          ns,
+          productBundel(ns, (await laad()).default),
+          true,
+          true,
+        );
       }),
     )
       .then(() => {
         geladen.add(taal);
       })
       .catch((fout) => {
-        console.warn(`Vertalingen voor ${taal} niet geladen; Engels gebruikt.`, fout);
+        console.warn(
+          `Vertalingen voor ${taal} niet geladen; Engels gebruikt.`,
+          fout,
+        );
       })
       .finally(() => bezig.delete(taal));
     bezig.set(taal, belofte);
@@ -111,7 +147,9 @@ void i18next.use(initReactI18next).init({
   // Tijdens ontwikkelen meteen zien welke sleutel ontbreekt.
   saveMissing: import.meta.env?.DEV === true,
   missingKeyHandler: (talen, ns, sleutel) =>
-    console.warn(`[i18n] ontbrekende sleutel ${ns}:${sleutel} (${talen.join(", ")})`),
+    console.warn(
+      `[i18n] ontbrekende sleutel ${ns}:${sleutel} (${talen.join(", ")})`,
+    ),
 });
 
 i18next.on("languageChanged", zetDocumentTaal);
@@ -149,6 +187,7 @@ export const gereed: Promise<void> = zetTaal(leesInstellingen().taal);
 // bepalen de taal; bij "auto" volgt een gewijzigde systeemtaal.
 const volg = () => void zetTaal(leesInstellingen().taal);
 volgInstellingen(volg);
-if (typeof window !== "undefined") window.addEventListener("languagechange", volg);
+if (typeof window !== "undefined")
+  window.addEventListener("languagechange", volg);
 
 export default i18next;

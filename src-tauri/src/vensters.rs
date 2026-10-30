@@ -306,7 +306,7 @@ pub async fn bied_overdracht(
         Some(label) => {
             let titel = kop(&request, "x-office-titel")
                 .map(|t| t.chars().take(200).collect::<String>())
-                .unwrap_or_else(|| APPNAAM.into());
+                .unwrap_or_else(|| appnaam(&app).into());
             maak_venster(&app, label, &titel, Some(&sleutel), positie)
         }
         None => match app.get_webview_window(&doel) {
@@ -330,7 +330,7 @@ pub async fn bied_overdracht(
 #[tauri::command]
 pub fn nieuw_venster(app: tauri::AppHandle, vensters: tauri::State<Vensters>) -> Result<(), String> {
     let label = format!("{VOORVOEGSEL}{}", vensters.volgende());
-    maak_venster(&app, &label, APPNAAM, None, None)
+    maak_venster(&app, &label, appnaam(&app), None, None)
 }
 
 /// Een venster op het scherm, in logische pixels (zoals `screenX`/`screenY` in de webview).
@@ -383,7 +383,9 @@ fn vensterrechthoeken(app: &tauri::AppHandle) -> Vec<(String, Rechthoek)> {
 }
 
 /// Naam van de app; de webview zet daarna zelf de volledige titel.
-const APPNAAM: &str = "Open Office Studio";
+fn appnaam(app: &tauri::AppHandle) -> &str {
+    app.config().product_name.as_deref().unwrap_or("Open Office Studio")
+}
 
 /// Een Office Studio-venster zonder systeemtitelbalk: de webview tekent zelf
 /// de titelbalk met vensterknoppen (OpenAEC Blueprint). `sleutel`: het
