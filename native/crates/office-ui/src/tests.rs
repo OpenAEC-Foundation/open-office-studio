@@ -256,3 +256,37 @@ fn geannuleerde_ifcx_export_verandert_de_huidige_bestandssoort_niet() {
     assert!(!app.tab().unwrap().export_ifcx);
     assert_eq!(app.tab().unwrap().naam, naam);
 }
+
+#[test]
+fn alleen_lezen_laat_selecteren_toe_en_weigert_tekstwijziging() {
+    let mut app = app_met_document(
+        Module::Email,
+        b"Subject: Selecteerbare tekst\r\n\r\nBericht",
+    );
+    let origineel = app.tab().unwrap().editor.text();
+    let _ = app.update(Msg::Invoer(text_editor::Action::SelectAll));
+    assert_eq!(
+        app.tab().unwrap().editor.selection().as_deref(),
+        Some(origineel.as_str())
+    );
+    let _ = app.update(Msg::Invoer(text_editor::Action::Edit(
+        text_editor::Edit::Insert('x'),
+    )));
+    assert_eq!(app.tab().unwrap().editor.text(), origineel);
+    assert!(!app.tab().unwrap().concept);
+}
+
+#[test]
+fn venster_sluiten_vanuit_instellingen_toont_een_bereikbare_sluitvraag() {
+    let mut app = app_met_document(
+        Module::Notition,
+        &Sessie::nieuw(Module::Notition).unwrap().bron(),
+    );
+    app.instellingen = true;
+    let _ = app.update(Msg::SluitVenster);
+    assert!(!app.instellingen);
+    assert_eq!(app.sluiten, Some(1));
+    let _ = app.update(Msg::Annuleer);
+    assert_eq!(app.tabs.len(), 1);
+    assert!(!app.venster_sluiten);
+}

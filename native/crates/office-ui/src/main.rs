@@ -393,7 +393,7 @@ impl App {
             Msg::Invoer(actie) => {
                 if let Some(t) = self.tab_mut()
                     && !t.bezig
-                    && t.veld().is_some_and(|v| v.bewerkbaar)
+                    && (!actie.is_edit() || t.veld().is_some_and(|v| v.bewerkbaar))
                 {
                     let bewerkt = actie.is_edit();
                     t.editor.perform(actie);
@@ -545,6 +545,7 @@ impl App {
                 }
             }
             Msg::SluitVenster => {
+                self.instellingen = false;
                 self.venster_sluiten = true;
                 return self.verder_sluiten();
             }
