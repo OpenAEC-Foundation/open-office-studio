@@ -165,6 +165,21 @@ for (const doc of documenten)
     doc.bytes,
     `Bronbytes ${doc.kind}`,
   );
+const mailvoorbeeld = controleerDossier(
+  JSON.parse(
+    await readFile(
+      new URL("./email-bewaarproef.ifcx", import.meta.url),
+      "utf8",
+    ),
+  ),
+);
+assert.equal(mailvoorbeeld.length, 1);
+assert.equal(mailvoorbeeld[0].kind, "email");
+assert.deepEqual(
+  mailvoorbeeld[0].bytes,
+  eml,
+  "Meegeleverde e-mailbron moet bytegelijk blijven",
+);
 
 const beschadig = (wijzig) => {
   const kopie = structuredClone(terug);
