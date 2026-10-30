@@ -249,3 +249,29 @@ fn ifcx_herschrijven_bewaart_onbekende_attributen() {
         data["data"][1]["attributes"]["voorbeeld::extra"]
     );
 }
+
+#[test]
+fn presentatie_behoudt_opmaak_en_bewerkt_alineas_met_unicode() {
+    let mut s = Sessie::open(
+        Module::Presentation,
+        include_bytes!("fixtures/presentation-rijk.pptx").to_vec(),
+    )
+    .unwrap();
+    let id = s.weergave(0).unwrap().velden[0].id.clone();
+    for tekst in [
+        "Native nieuwe presentatiecontrole",
+        "Native nieuwe presentatiecontrole\nTweede regel 🏠",
+        "Native laatste 🏠 tekst",
+    ] {
+        s.bewerk(
+            0,
+            Bewerking::Tekst {
+                id: id.clone(),
+                tekst: tekst.into(),
+            },
+        )
+        .unwrap();
+        assert_eq!(s.weergave(0).unwrap().velden[0].tekst, tekst);
+    }
+    bewaar("presentation-rijk.pptx", &s.bron());
+}

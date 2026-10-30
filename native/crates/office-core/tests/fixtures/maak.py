@@ -34,3 +34,9 @@ slide.shapes.add_textbox(Inches(1), Inches(3), Inches(7), Inches(1)).text = 'Bew
 slide2 = deck.slides.add_slide(deck.slide_layouts[6])
 slide2.shapes.add_textbox(Inches(1), Inches(1), Inches(8), Inches(2)).text = 'Tweede dia blijft bewaard'
 deck.save(map/'presentation.pptx')
+rijk = Presentation()
+s = rijk.slides.add_slide(rijk.slide_layouts[6])
+p = s.shapes.add_textbox(Inches(1), Inches(1), Inches(8), Inches(2)).text_frame.paragraphs[0]
+r = p.add_run(); r.text = 'Native '; r.font.bold = True
+r = p.add_run(); r.text = 'presentatiecontrole'; r.font.italic = True
+rijk.save(map/'presentation-rijk.pptx')

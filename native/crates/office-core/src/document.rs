@@ -187,45 +187,7 @@ impl Document {
                 .map_err(fout)?;
             }
             (Self::Presentation(d), Bewerking::Tekst { id, tekst }) => {
-                let verhaal = d.story(&id).map_err(fout)?;
-                let ctx = pptx::EditCtx::local("OpenAEC");
-                d.add_undo_barrier();
-                let stijl = verhaal
-                    .paragraphs
-                    .first()
-                    .and_then(|p| p.runs.first())
-                    .map(|r| r.style.clone())
-                    .unwrap_or_default();
-                let mut offset = 0;
-                let mut grenzen = Vec::new();
-                for p in &verhaal.paragraphs {
-                    let lengte = p
-                        .runs
-                        .iter()
-                        .map(|r| r.text.encode_utf16().count() as u32)
-                        .sum::<u32>();
-                    grenzen.push((offset, offset + lengte));
-                    offset += lengte + 1;
-                }
-                for (start, einde) in grenzen.into_iter().rev() {
-                    if start < einde {
-                        d.delete_text(&ctx, &id, start, einde).map_err(fout)?;
-                    }
-                }
-                for _ in 1..verhaal.paragraphs.len() {
-                    d.delete_paragraph_break(&ctx, &id, 0).map_err(fout)?;
-                }
-                let regels: Vec<_> = tekst.split('\n').collect();
-                let mut positie = 0;
-                for (i, regel) in regels.iter().enumerate() {
-                    d.insert_text(&ctx, &id, positie, regel, &stijl)
-                        .map_err(fout)?;
-                    positie += regel.encode_utf16().count() as u32;
-                    if i + 1 < regels.len() {
-                        d.insert_paragraph_break(&ctx, &id, positie).map_err(fout)?;
-                        positie += 1;
-                    }
-                }
+                crate::presentatie_tekst::vervang(d, &id, &tekst)?;
             }
             (Self::Presentation(d), Bewerking::DiaNotities(tekst)) => {
                 let ids = d.slide_ids().map_err(fout)?;

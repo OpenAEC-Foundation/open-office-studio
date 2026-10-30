@@ -29,4 +29,8 @@ assert len(ppt.slides) == 2
 assert any(s.has_text_frame and s.text == 'Gewijzigde diatekst' for s in ppt.slides[0].shapes)
 assert 'Sprekersnotities' in ppt.slides[0].notes_slide.notes_text_frame.text
 assert any(s.has_text_frame and s.text == 'Tweede dia blijft bewaard' for s in ppt.slides[1].shapes)
+rijk = Presentation(map/'presentation-rijk.pptx')
+p = rijk.slides[0].shapes[0].text_frame.paragraphs[0]
+assert p.text == 'Native laatste 🏠 tekst'
+assert p.runs[0].text == 'Native ' and p.runs[0].font.bold
 print('Native DOCX/XLSX/PPTX: inhoud, stijlen, formules, rekenwaarden, tabellen, notities en tweede blad/dia onafhankelijk goedgekeurd.')
