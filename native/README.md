@@ -23,6 +23,8 @@ De uitvoer staat in `native/target/release/open-office-studio-native` (Windows:
 `.exe`). De workflow `native-rust.yml` controleert en bouwt Windows, Linux en
 macOS. De zip is een draagbare preview met licenties en herbouwbare bron; dit is
 nog geen ondertekende installer of vervanging van de bestaande suite.
+In het uitgepakte pakket staat de bron onder `bron/`; voer de bouwopdrachten
+vanuit die map uit. Het programma staat direct naast `LEESMIJ.md`.
 Op Linux zijn een grafische sessie, de X11/Wayland-bibliotheken en libxkbcommon
 nodig. Er wordt een software-renderer gebruikt. `--features gpu` is optioneel en
 valt buiten de standaardtestmatrix.
@@ -99,7 +101,7 @@ lettertypen als vervanging; dit kan afwijken van de documentlettertypen.
 OpenAEC Blueprint `29471a376eaec40bfbadcf3f1d52b463c91ab561`. De verificatie weigert
 wijzigingen. De applicatiecode staat onder Apache-2.0. De gedeelde UI heeft eigen
 LGPL-3.0-only-, CC-BY-SA-4.0-, OFL-1.1- en Apache-2.0-onderdelen: lees
-`vendor/openaec-ui/LICENSE.md`, `NOTICE.md` en `licenses/`. De bron en fontnotices
+`vendor/openaec-ui/LICENSE.md`, `NOTICE.md` en `licenses/`. De bron, fontnotices en gevonden licentieteksten van de Rust-afhankelijkheden
 gaan mee in het previewpakket. De native documentengines zijn Apache-2.0 en
 vastgelegd op versie 0.5.1 in Cargo.lock. De layoutadapter volgt het openbare
 native-viewer-voorbeeld van openooxml/betteroffice; de bronverwijzing staat in

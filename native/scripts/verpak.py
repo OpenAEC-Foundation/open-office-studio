@@ -42,8 +42,25 @@ with (pakket/'licenties/afhankelijkheden.csv').open('w', newline='', encoding='u
     w.writerow(['pakket', 'versie', 'licentie', 'bron'])
     for p in sorted(metadata['packages'], key=lambda p:(p['name'],p['version'])):
         w.writerow([p['name'],p['version'],p.get('license') or p.get('license_file') or '',p.get('repository') or p.get('source') or 'meegeleverde bron'])
+        # Neem de daadwerkelijke notices mee, niet uitsluitend licentiecodes.
+        pakketbron = Path(p['manifest_path']).parent
+        licentiemap = pakket/'licenties/rust'/f"{p['name']}-{p['version']}"
+        for document in pakketbron.iterdir():
+            klein = document.name.casefold()
+            if document.is_file() and klein.startswith(('license', 'licence', 'notice', 'copying', 'copyright')):
+                licentiemap.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(document, licentiemap/document.name)
+            elif document.is_dir() and klein in ('license', 'licenses', 'licence', 'licences'):
+                shutil.copytree(document, licentiemap/document.name, dirs_exist_ok=True)
+        if p.get('license_file'):
+            document = Path(p['license_file'])
+            if not document.is_absolute(): document = pakketbron/document
+            if document.is_file():
+                licentiemap.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(document, licentiemap/document.name)
+
 zip_pad = uit/f'{naam}.zip'
-with zipfile.ZipFile(zip_pad, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=6) as z:
+with zipfile.ZipFile(zip_pad, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=6, strict_timestamps=False) as z:
     for p in sorted(pakket.rglob('*')):
         if p.is_file(): z.write(p, p.relative_to(pakket.parent))
 hash = hashlib.sha256(zip_pad.read_bytes()).hexdigest()

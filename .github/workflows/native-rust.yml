@@ -47,6 +47,7 @@ jobs:
           python native/crates/office-core/tests/fixtures/controleer.py "${{ env.OFFICE_TEST_UITVOER }}"
       - run: cargo build --manifest-path native/Cargo.toml --locked --release
       - run: python native/scripts/verpak.py
+      - run: python native/scripts/controleer-pakket.py
       - uses: actions/upload-artifact@v4
         with:
           name: native-rust-${{ runner.os }}
