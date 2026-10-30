@@ -290,3 +290,18 @@ fn venster_sluiten_vanuit_instellingen_toont_een_bereikbare_sluitvraag() {
     assert_eq!(app.tabs.len(), 1);
     assert!(!app.venster_sluiten);
 }
+
+#[test]
+fn mislukte_eerste_weergave_ruimt_de_achtergrondsessie_op() {
+    let mut app = App::default();
+    let voer = |w: Werker, o| iced::futures::executor::block_on(w.voer_uit(1, o));
+    assert!(voer(app.werker.clone(), Opdracht::Nieuw(Module::Notition)).is_ok());
+    app.tabs.push(Tab::nieuw(1, "Onleesbaar document".into()));
+    let _ = app.update(Msg::Gereed(1, Err("Weergave mislukt".into())));
+    assert!(app.tabs.is_empty());
+    let resultaat = voer(app.werker.clone(), Opdracht::Deel(0));
+    assert!(
+        resultaat.is_err(),
+        "De gesloten achtergrondbron mag geen geheugen blijven vasthouden"
+    );
+}

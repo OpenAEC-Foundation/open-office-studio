@@ -335,8 +335,7 @@ impl App {
                     }
                 }
                 if fout && self.tabs.iter().any(|t| t.id == id && t.antwoord.is_none()) {
-                    self.tabs.retain(|t| t.id != id);
-                    self.actief = self.actief.min(self.tabs.len().saturating_sub(1));
+                    self.verwijder(id);
                 }
                 if let Some(als) = vervolg {
                     return self.update(Msg::Opslaan(id, als));
