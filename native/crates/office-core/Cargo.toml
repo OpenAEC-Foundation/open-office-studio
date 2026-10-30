@@ -1,0 +1,26 @@
+[package]
+name = "office-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+description = "Gedeelde native documentkern van Open Office Studio"
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+sha2.workspace = true
+base64.workspace = true
+tempfile.workspace = true
+betteroffice-docx.workspace = true
+betteroffice-xlsx.workspace = true
+betteroffice-pptx.workspace = true
+mail-parser = "0.11"
+
+docx-edit = { package = "betteroffice-docx-edit", version = "=0.5.1" }
+docx-layout = { package = "betteroffice-docx-layout", version = "=0.5.1" }
+docx-parse = { package = "betteroffice-docx-parse", version = "=0.5.1" }
+docx-raster = { package = "betteroffice-docx-raster", version = "=0.5.1" }
+ooxml-text = { package = "betteroffice-ooxml-text", version = "=0.5.1" }
+ooxml-opc = { package = "betteroffice-opc", version = "=0.5.1" }

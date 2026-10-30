@@ -1,0 +1,77 @@
+{
+  "openaec::office::collection": {
+    "value": {
+      "dataType": "Object",
+      "objectRestrictions": {
+        "values": {
+          "profileVersion": {
+            "dataType": "String"
+          },
+          "title": {
+            "dataType": "String"
+          }
+        }
+      }
+    }
+  },
+  "openaec::office::document": {
+    "value": {
+      "dataType": "Object",
+      "objectRestrictions": {
+        "values": {
+          "kind": {
+            "dataType": "Enum",
+            "enumRestrictions": {
+              "options": [
+                "writer",
+                "spreadsheet",
+                "presentation",
+                "email",
+                "notition",
+                "database"
+              ]
+            }
+          },
+          "title": {
+            "dataType": "String"
+          },
+          "source": {
+            "dataType": "Reference"
+          }
+        }
+      }
+    }
+  },
+  "openaec::office::payload": {
+    "value": {
+      "dataType": "Object",
+      "objectRestrictions": {
+        "values": {
+          "fileName": {
+            "dataType": "String"
+          },
+          "mediaType": {
+            "dataType": "String"
+          },
+          "byteLength": {
+            "dataType": "Integer"
+          },
+          "sha256": {
+            "dataType": "String"
+          },
+          "encoding": {
+            "dataType": "Enum",
+            "enumRestrictions": {
+              "options": [
+                "base64"
+              ]
+            }
+          },
+          "content": {
+            "dataType": "String"
+          }
+        }
+      }
+    }
+  }
+}

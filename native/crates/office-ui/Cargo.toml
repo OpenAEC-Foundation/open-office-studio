@@ -1,0 +1,28 @@
+[package]
+name = "open-office-studio-native"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+description = "Native Rust-interface van Open Office Studio"
+
+[[bin]]
+name = "open-office-studio-native"
+path = "src/main.rs"
+
+[features]
+gpu = ["openaec-ui/gpu-renderer"]
+
+[dependencies]
+office-core.workspace = true
+openaec-ui = { path = "../../vendor/openaec-ui" }
+serde.workspace = true
+serde_json.workspace = true
+rfd = "0.15"
+image = { version = "0.25", default-features = false, features = ["png"] }
+
+futures-channel = "0.3"
+
+[dev-dependencies]
+iced_tiny_skia = "0.14"
+tiny-skia = "0.11"

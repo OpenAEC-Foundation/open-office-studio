@@ -1,2 +1,4 @@
 # Deze upstreamteksten hebben een vastgelegde SHA-256 en moeten bytegelijk blijven.
 docs/licenties/npm/*.txt text eol=lf
+# De native UI-snapshot wordt ook op Windows op zijn exacte bronhash gecontroleerd.
+native/vendor/openaec-ui/** -text -whitespace
