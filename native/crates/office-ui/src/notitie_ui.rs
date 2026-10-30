@@ -167,6 +167,20 @@ pub fn weergave<'a>(app: &'a App, t: &'a Tab, a: &'a Antwoord) -> Element<'a, Ms
         openaec_ui::design::a11y::named(
             text_editor(&t.editor)
                 .on_action(Msg::Invoer)
+                .font(iced::Font {
+                    weight: if t.veld().is_some_and(|v| v.opmaak.vet) {
+                        iced::font::Weight::Bold
+                    } else {
+                        iced::font::Weight::Normal
+                    },
+                    style: if t.veld().is_some_and(|v| v.opmaak.cursief) {
+                        iced::font::Style::Italic
+                    } else {
+                        iced::font::Style::Normal
+                    },
+                    ..fonts::BODY
+                })
+                .size(14)
                 .padding(12)
                 .height(hoogte),
             openaec_ui::design::a11y::Role::TextField,
@@ -303,7 +317,11 @@ pub fn weergave<'a>(app: &'a App, t: &'a Tab, a: &'a Antwoord) -> Element<'a, Ms
                 vak.index,
                 g,
                 t.zoom,
-                !t.bezig && !t.concept && !app.instellingen && app.sluiten.is_none(),
+                !t.bezig
+                    && !t.concept
+                    && a.beeld.velden.iter().any(|v| v.bewerkbaar)
+                    && !app.instellingen
+                    && app.sluiten.is_none(),
             );
             kaarten.push(
                 pin(kaart)

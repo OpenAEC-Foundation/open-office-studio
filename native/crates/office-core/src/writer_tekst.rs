@@ -63,6 +63,46 @@ fn inhoud(s: &str) -> Vec<R> {
     }
     uit
 }
+
+/// Knipt runs op een Unicode-grens; beide helften behouden hun eigen runopmaak.
+pub(crate) fn splits_inhoud(p: &docx::Paragraph, positie: usize) -> (Vec<P>, Vec<P>) {
+    let mut links = Vec::new();
+    let mut rechts = Vec::new();
+    let mut rest = positie;
+    for c in &p.content {
+        if let P::Inline(I::Run(run)) = c {
+            let tekens: Vec<_> = tekst(run).chars().collect();
+            let knip = rest.min(tekens.len());
+            rest -= knip;
+            if knip > 0 {
+                let mut r = run.clone();
+                r.content = inhoud(&tekens[..knip].iter().collect::<String>());
+                links.push(P::Inline(I::Run(r)));
+            }
+            if knip < tekens.len() {
+                let mut r = run.clone();
+                r.content = inhoud(&tekens[knip..].iter().collect::<String>());
+                rechts.push(P::Inline(I::Run(r)));
+            }
+        }
+    }
+    // Ook een lege nieuwe alinea houdt de opmaak bij de splitspositie.
+    if links.is_empty()
+        && let Some(P::Inline(I::Run(r))) = p.content.first()
+    {
+        let mut r = r.clone();
+        r.content.clear();
+        links.push(P::Inline(I::Run(r)));
+    }
+    if rechts.is_empty()
+        && let Some(P::Inline(I::Run(r))) = p.content.last()
+    {
+        let mut r = r.clone();
+        r.content.clear();
+        rechts.push(P::Inline(I::Run(r)));
+    }
+    (links, rechts)
+}
 pub fn vervang(d: &mut docx::Document, id: &str, nieuw: &str) -> Resultaat<()> {
     if nieuw.len() > 500_000 {
         return Err(Fout::Document(

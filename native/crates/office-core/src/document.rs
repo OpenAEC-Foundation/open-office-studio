@@ -87,6 +87,7 @@ pub struct Weergave {
     pub melding: String,
     pub pagina: Pagina,
     pub notitie: Option<crate::notities::NotitiePagina>,
+    pub voorkeursveld: Option<String>,
 }
 #[derive(Debug, Clone)]
 pub enum Bewerking {
@@ -106,6 +107,10 @@ pub enum Bewerking {
         actie: crate::rekenblad::Structuur,
     },
     Dia(crate::presentatie::DiaActie),
+    Alinea {
+        id: String,
+        actie: crate::writer::AlineaActie,
+    },
     Notitie(crate::notities::NotitieActie),
 }
 
@@ -202,6 +207,9 @@ impl Document {
     }
     pub fn bewerk(&mut self, deel: usize, bewerking: Bewerking) -> Resultaat<()> {
         match (self, bewerking) {
+            (Self::Writer(d), Bewerking::Alinea { id, actie }) => {
+                crate::writer::alinea(d, &id, actie)?
+            }
             (
                 Self::Writer(d),
                 Bewerking::Opmaak {
@@ -233,7 +241,11 @@ impl Document {
                 crate::writer_tekst::vervang(d, &id, &tekst)?;
             }
             (Self::Spreadsheet(d), Bewerking::Tekst { id, tekst }) => {
-                let adres = xlsx::CellRef::parse_a1(&id).map_err(fout)?;
+                let adres = crate::rekenblad::ankercel(
+                    d,
+                    deel,
+                    xlsx::CellRef::parse_a1(&id).map_err(fout)?,
+                )?;
                 d.edit_cell(
                     xlsx::SheetId(deel as u32),
                     adres,
@@ -274,6 +286,14 @@ impl Document {
         self.weergave_in(deel, RasterVenster::default())
     }
     fn weergave_in(&self, deel: usize, venster: RasterVenster) -> Resultaat<Weergave> {
+        self.weergave_van_bron(deel, venster, None)
+    }
+    fn weergave_van_bron(
+        &self,
+        deel: usize,
+        venster: RasterVenster,
+        bron: Option<&[u8]>,
+    ) -> Resultaat<Weergave> {
         let mut beeld = Weergave {
             module: Module::Writer,
             onderdelen: vec![],
@@ -282,11 +302,16 @@ impl Document {
             melding: String::new(),
             pagina: Pagina::default(),
             notitie: None,
+            voorkeursveld: None,
         };
         match self {
             Self::Writer(d) => {
+                let bron = match bron {
+                    Some(b) => std::borrow::Cow::Borrowed(b),
+                    None => std::borrow::Cow::Owned(d.save().map_err(fout)?),
+                };
                 let (png, paginas, overgeslagen, pagina) =
-                    crate::writer_beeld::pagina(&d.save().map_err(fout)?, deel)?;
+                    crate::writer_beeld::pagina(&bron, deel)?;
                 beeld.afbeelding = Some(png);
                 beeld.pagina = pagina;
                 beeld.onderdelen = (0..paginas).map(|i| format!("Pagina {}", i + 1)).collect();
@@ -468,6 +493,10 @@ impl Sessie {
             return Err(fout("Celadres hoort bij een rekenblad"));
         }
         let cel = crate::rekenblad::bereik(adres)?.start;
+        let Document::Spreadsheet(d) = &self.document else {
+            unreachable!()
+        };
+        let anker = crate::rekenblad::ankercel(d, deel, cel)?;
         let oud = self.venster;
         self.venster = RasterVenster {
             rij: cel.row.saturating_sub(3),
@@ -475,7 +504,10 @@ impl Sessie {
         };
         self.beelden.borrow_mut().clear();
         match self.weergave(deel) {
-            Ok(b) => Ok(b),
+            Ok(mut b) => {
+                b.voorkeursveld = Some(anker.to_a1());
+                Ok(b)
+            }
             Err(e) => {
                 self.venster = oud;
                 self.beelden.borrow_mut().clear();
@@ -496,8 +528,12 @@ impl Sessie {
     ) -> Resultaat<Weergave> {
         let resultaat = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
             self.document.bewerk(deel, bewerking)?;
-            let beeld = self.document.weergave_in(deel, self.venster)?;
-            Ok((self.document.bytes()?, beeld))
+            // Serialiseer één keer; de renderer toont precies de te bewaren bron.
+            let bytes = self.document.bytes()?;
+            let beeld = self
+                .document
+                .weergave_van_bron(deel, self.venster, Some(&bytes))?;
+            Ok((bytes, beeld))
         }));
         match resultaat {
             Ok(Ok((bytes, beeld))) => {

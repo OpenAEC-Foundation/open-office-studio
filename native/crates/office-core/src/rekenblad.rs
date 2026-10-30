@@ -34,6 +34,35 @@ pub fn bereik(adres: &str) -> Resultaat<x::CellRange> {
     }
     Ok(r)
 }
+pub fn ankercel(d: &x::Workbook, deel: usize, cel: x::CellRef) -> Resultaat<x::CellRef> {
+    Ok(
+        d.merged_ranges(x::SheetId(deel as u32), x::CellRange::new(cel, cel))
+            .map_err(fout)?
+            .first()
+            .map(|m| m.start)
+            .unwrap_or(cel),
+    )
+}
+fn veld(d: &x::Workbook, sheet: x::SheetId, cel: x::CellRef) -> Resultaat<Veld> {
+    let inhoud = d.cell(sheet, cel).map_err(fout)?;
+    let staat = d
+        .selection_formatting(sheet, x::CellRange::new(cel, cel))
+        .map_err(fout)?;
+    Ok(Veld {
+        id: cel.to_a1(),
+        naam: cel.to_a1(),
+        tekst: inhoud.input,
+        bewerkbaar: true,
+        opmaak: OpmaakStaat {
+            vet: staat.bold.unwrap_or(false),
+            cursief: staat.italic.unwrap_or(false),
+            doorhalen: staat.strikethrough.unwrap_or(false),
+            grootte: staat.font_size,
+            lettertype: staat.font_family,
+            ..Default::default()
+        },
+    })
+}
 pub fn toon(
     d: &x::Workbook,
     deel: usize,
@@ -58,54 +87,42 @@ pub fn toon(
         vlakken: vec![],
     };
     let merges = d.merged_ranges(sheet, range).map_err(fout)?;
+    let mut cellen = Vec::new();
     for rij in venster.rij..=einde.row {
         for kolom in venster.kolom..=einde.col {
             let cel = x::CellRef::new(rij, kolom);
-            let inhoud = d.cell(sheet, cel).map_err(fout)?;
-            let staat = d
-                .selection_formatting(sheet, x::CellRange::new(cel, cel))
-                .map_err(fout)?;
-            beeld.velden.push(Veld {
-                id: cel.to_a1(),
-                naam: cel.to_a1(),
-                tekst: inhoud.input,
-                bewerkbaar: true,
-                opmaak: OpmaakStaat {
-                    vet: staat.bold.unwrap_or(false),
-                    cursief: staat.italic.unwrap_or(false),
-                    doorhalen: staat.strikethrough.unwrap_or(false),
-                    grootte: staat.font_size,
-                    lettertype: staat.font_family,
-                    ..Default::default()
-                },
-            });
-            let merge = merges.iter().find(|m| {
+            if merges.iter().any(|m| {
                 rij >= m.start.row && rij <= m.end.row && kolom >= m.start.col && kolom <= m.end.col
-            });
-            if merge.is_some_and(|m| m.start != cel) {
+            }) {
                 continue;
             }
-            let mut rect = d.cell_rect(sheet, cel).map_err(fout)?;
-            if let Some(m) = merge {
-                let eind = d.cell_rect(sheet, m.end).map_err(fout)?;
-                rect.w = eind.x + eind.w - rect.x;
-                rect.h = eind.y + eind.h - rect.y;
-            }
-            let x = (rect.x - viewport.x).max(0.);
-            let y = (rect.y - viewport.y).max(0.);
-            let rechts = (rect.x + rect.w - viewport.x).min(png.width as f32);
-            let onder = (rect.y + rect.h - viewport.y).min(png.height as f32);
-            if rechts > x && onder > y {
-                beeld.pagina.vlakken.push(Raakvlak {
-                    id: cel.to_a1(),
-                    grens: Rechthoek {
-                        x,
-                        y,
-                        breedte: rechts - x,
-                        hoogte: onder - y,
-                    },
-                });
-            }
+            cellen.push((cel, cel));
+        }
+    }
+    // Een zichtbare samenvoeging heeft één canoniek tekstveld en raakvlak,
+    // ook wanneer de ankercel boven of links buiten het werkvenster ligt.
+    cellen.extend(merges.iter().map(|m| (m.start, m.end)));
+    cellen.sort_by_key(|(cel, _)| (cel.row, cel.col));
+    for (cel, einde) in cellen {
+        beeld.velden.push(veld(d, sheet, cel)?);
+        let mut rect = d.cell_rect(sheet, cel).map_err(fout)?;
+        let eind = d.cell_rect(sheet, einde).map_err(fout)?;
+        rect.w = eind.x + eind.w - rect.x;
+        rect.h = eind.y + eind.h - rect.y;
+        let x = (rect.x - viewport.x).max(0.);
+        let y = (rect.y - viewport.y).max(0.);
+        let rechts = (rect.x + rect.w - viewport.x).min(png.width as f32);
+        let onder = (rect.y + rect.h - viewport.y).min(png.height as f32);
+        if rechts > x && onder > y {
+            beeld.pagina.vlakken.push(Raakvlak {
+                id: cel.to_a1(),
+                grens: Rechthoek {
+                    x,
+                    y,
+                    breedte: rechts - x,
+                    hoogte: onder - y,
+                },
+            });
         }
     }
     beeld.afbeelding = Some(png.bytes);

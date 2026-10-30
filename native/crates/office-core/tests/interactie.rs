@@ -294,3 +294,131 @@ fn writer_puntgrootte_wordt_als_halve_punten_opgeslagen() {
     );
     bewaar("writer-lettergrootte.docx", &s.bron());
 }
+
+#[test]
+fn dubbele_alinea_ids_mogen_nooit_een_andere_alinea_wijzigen() {
+    let mut s = Sessie::open(
+        Module::Writer,
+        include_bytes!("fixtures/writer-dubbele-ids.docx").to_vec(),
+    )
+    .unwrap();
+    let b = s.weergave(0).unwrap();
+    let doel = b
+        .velden
+        .iter()
+        .find(|v| v.tekst == "Bewerkbare oorspronkelijke alinea.")
+        .unwrap()
+        .id
+        .clone();
+    s.bewerk(
+        0,
+        Bewerking::Tekst {
+            id: doel,
+            tekst: "Alleen deze alinea wijzigt.".into(),
+        },
+    )
+    .unwrap();
+    let b = s.weergave(0).unwrap();
+    assert!(
+        b.velden
+            .iter()
+            .any(|v| v.tekst == "Native documentcontrole")
+    );
+    assert_eq!(
+        b.velden
+            .iter()
+            .filter(|v| v.tekst == "Alleen deze alinea wijzigt.")
+            .count(),
+        1
+    );
+    bewaar("writer-dubbele-ids.docx", &s.bron());
+}
+
+#[test]
+fn lettercache_blijft_correct_na_een_ander_document_en_externe_wisactie() {
+    let a = Document::open(Module::Writer, include_bytes!("fixtures/writer.docx")).unwrap();
+    let beeld = a.weergave(0).unwrap().afbeelding.unwrap();
+    assert_eq!(a.weergave(0).unwrap().afbeelding.unwrap(), beeld);
+    let mut b = Document::open(Module::Writer, include_bytes!("fixtures/writer.docx")).unwrap();
+    let v = b
+        .weergave(0)
+        .unwrap()
+        .velden
+        .iter()
+        .find(|v| v.tekst == "Bewerkbare oorspronkelijke alinea.")
+        .unwrap()
+        .clone();
+    b.bewerk(
+        0,
+        Bewerking::Opmaak {
+            id: v.id,
+            begin: 0,
+            einde: v.tekst.chars().count(),
+            stijl: Opmaak::Lettertype("Gelasio".into()),
+        },
+    )
+    .unwrap();
+    assert_ne!(b.weergave(0).unwrap().afbeelding.unwrap(), beeld);
+    assert_eq!(a.weergave(0).unwrap().afbeelding.unwrap(), beeld);
+    docx_layout::clear_measure_fonts();
+    assert_eq!(a.weergave(0).unwrap().afbeelding.unwrap(), beeld);
+}
+
+#[test]
+fn samengevoegde_cel_buiten_werkvenster_blijft_aanklikbaar_en_bewerkbaar() {
+    let mut s = Sessie::nieuw(Module::Spreadsheet).unwrap();
+    s.bewerk(
+        0,
+        Bewerking::Tekst {
+            id: "A1".into(),
+            tekst: "Ankertekst".into(),
+        },
+    )
+    .unwrap();
+    s.bewerk(
+        0,
+        Bewerking::Structuur {
+            adres: "A1:Z150".into(),
+            actie: Structuur::Samenvoegen,
+        },
+    )
+    .unwrap();
+    let bron = s.bron();
+    let beeld = s.naar_cel(0, "H100").unwrap();
+    assert_eq!(*s.bron(), *bron);
+    assert_eq!(beeld.voorkeursveld.as_deref(), Some("A1"));
+    assert_eq!(beeld.velden.len(), 1);
+    assert_eq!(beeld.velden[0].id, "A1");
+    assert_eq!(beeld.velden[0].tekst, "Ankertekst");
+    assert_eq!(beeld.pagina.vlakken.len(), 1);
+    assert_eq!(
+        beeld
+            .pagina
+            .raak(beeld.pagina.breedte / 2., beeld.pagina.hoogte / 2.),
+        Some("A1")
+    );
+    s.bewerk(
+        0,
+        Bewerking::Tekst {
+            id: "H100".into(),
+            tekst: "Gewijzigd via gedekt adres".into(),
+        },
+    )
+    .unwrap();
+    let Document::Spreadsheet(d) = Document::open(Module::Spreadsheet, &s.bron()).unwrap() else {
+        panic!()
+    };
+    assert_eq!(
+        d.cell(
+            betteroffice_xlsx::SheetId(0),
+            betteroffice_xlsx::CellRef::parse_a1("A1").unwrap()
+        )
+        .unwrap()
+        .input,
+        "Gewijzigd via gedekt adres"
+    );
+    bewaar("spreadsheet-anker.xlsx", &s.bron());
+    s.terug().unwrap();
+    assert_eq!(*s.bron(), *bron);
+    assert_eq!(s.weergave(0).unwrap().velden[0].tekst, "Ankertekst");
+}

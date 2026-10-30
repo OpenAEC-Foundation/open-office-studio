@@ -46,7 +46,10 @@ pub fn ribbon(app: &App) -> Option<Element<'_, Msg>> {
             openaec_ui::design::a11y::named(
                 text_input("Lettertype", &t.lettertype)
                     .on_input(Msg::Lettertype)
-                    .on_submit(Msg::Opmaak(Opmaak::Lettertype(t.lettertype.clone())))
+                    .on_submit_maybe(
+                        (kan && !t.lettertype.trim().is_empty())
+                            .then(|| Msg::Opmaak(Opmaak::Lettertype(t.lettertype.clone())))
+                    )
                     .width(140)
                     .padding(5),
                 openaec_ui::design::a11y::Role::TextField,
@@ -287,6 +290,30 @@ pub fn ribbon(app: &App) -> Option<Element<'_, Msg>> {
             ],
         ));
     } else {
+        groepen.push(w::ribbon_group(
+            l,
+            "Alinea",
+            vec![
+                column![
+                    w::ribbon_small(
+                        l,
+                        icoon(Icon::New),
+                        "Splitsen bij cursor",
+                        false,
+                        kan.then_some(Msg::SplitsAlinea)
+                    ),
+                    w::ribbon_small(
+                        l,
+                        icoon(Icon::Rename),
+                        "Volgende samenvoegen",
+                        false,
+                        kan.then_some(Msg::VoegAlineasSamen)
+                    ),
+                ]
+                .spacing(2)
+                .into(),
+            ],
+        ));
         groepen.push(w::ribbon_group(
             l,
             "Exporteren",

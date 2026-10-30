@@ -51,3 +51,35 @@ assert s['B3'].font.bold and s['C4'].font.bold
 assert s['B3'].fill.fgColor.rgb.upper().endswith('FFF2CC')
 assert structuur['Tweede blad']['A1'].value == 'Bewaar ook dit blad'
 print('Native uitbreidingen: tekstbereikopmaak, halve punten en celstijl/rij-invoeging onafhankelijk goedgekeurd.')
+
+dubbel = Document(map/'writer-dubbele-ids.docx')
+assert dubbel.paragraphs[0].text == 'Native documentcontrole'
+assert dubbel.paragraphs[1].text == 'Alleen deze alinea wijzigt.'
+print('Herhaalde alinea-identiteiten: uitsluitend de bedoelde alinea is veranderd.')
+
+gesplitst = Document(map/'writer-gesplitst.docx')
+assert [p.text for p in gesplitst.paragraphs][:3] == ['Voor de rijke alinea', 'Links 🏠 ', 'café rechts']
+assert gesplitst.paragraphs[1].runs[0].bold
+assert gesplitst.paragraphs[2].runs[0].italic
+assert len(gesplitst.sections) == 2
+samengevoegd = Document(map/'writer-samengevoegd.docx')
+assert samengevoegd.paragraphs[1].text == 'Links 🏠 café rechts'
+assert samengevoegd.paragraphs[1].runs[0].bold
+assert samengevoegd.paragraphs[1].runs[-1].italic
+assert len(samengevoegd.sections) == 2
+assert samengevoegd.sections[0].header.paragraphs[0].text == 'Vaste koptekst'
+assert samengevoegd.sections[0].footer.paragraphs[0].text == 'Vaste voettekst'
+cel = Document(map/'writer-celstructuur.docx').tables[0]
+assert [p.text for p in cel.cell(0,0).paragraphs] == ['Cel één', 'Tweede celalinea']
+assert cel.cell(0,1).text == 'Cel twee'
+print('Writer-alineastructuur: echte alinea’s, Unicode, runs, secties, kop/voettekst en celgrenzen onafhankelijk goedgekeurd.')
+
+anker=load_workbook(map/'spreadsheet-anker.xlsx',data_only=False).active
+assert anker['A1'].value == 'Gewijzigd via gedekt adres'
+assert anker['H100'].value is None
+assert 'A1:Z150' in [str(r) for r in anker.merged_cells.ranges]
+korter=Document(map/'writer-pagina-weg.docx')
+assert len(korter.paragraphs)==2
+assert 'Bewerkbare oorspronkelijke alinea.' in korter.paragraphs[0].text
+assert len(korter.tables)==1
+print('Celanker buiten beeld en verdwijnen van de laatste Writer-pagina onafhankelijk teruggelezen.')

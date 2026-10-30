@@ -55,7 +55,10 @@ fn blad_klikken_schaalt_correct_en_respecteert_het_scrollvenster() {
         iced::Color::BLACK,
         Msg::Raak,
     );
-    let r = iced_tiny_skia::Renderer::new(fonts::BODY, iced::Pixels(12.));
+    let r = iced_tiny_skia::Renderer::new(
+        ui_instellingen().default_font,
+        ui_instellingen().default_text_size,
+    );
     let mut tree = Tree::new(&element);
     let node = element.as_widget_mut().layout(
         &mut tree,
@@ -100,7 +103,10 @@ fn canvas_slepen_geeft_een_enkele_definitieve_bewerking() {
         1.,
         true,
     );
-    let r = iced_tiny_skia::Renderer::new(fonts::BODY, iced::Pixels(12.));
+    let r = iced_tiny_skia::Renderer::new(
+        ui_instellingen().default_font,
+        ui_instellingen().default_text_size,
+    );
     let mut tree = Tree::new(&element);
     let node = element.as_widget_mut().layout(
         &mut tree,
@@ -240,6 +246,143 @@ fn app_met_document(module: Module, bytes: &[u8]) -> App {
     app.volgend = 2;
     app
 }
+
+/// Voer de echte Iced-taken en werkdraad uit zonder systeemvenster of dialoog.
+fn voer_interface_uit(app: &mut App, msg: Msg) {
+    use iced::futures::StreamExt;
+    let mut taken = std::collections::VecDeque::from([app.update(msg)]);
+    let mut aantal = 0;
+    while let Some(taak) = taken.pop_front() {
+        aantal += 1;
+        assert!(aantal < 64, "Onbegrensde vervolgopdrachten");
+        let Some(mut stroom) = iced_runtime::task::into_stream(taak) else {
+            continue;
+        };
+        let berichten = iced::futures::executor::block_on(async move {
+            let mut berichten = Vec::new();
+            while let Some(actie) = stroom.next().await {
+                match actie {
+                    iced_runtime::Action::Output(msg) => berichten.push(msg),
+                    ander => panic!("Onverwachte systeemopdracht tijdens documenttest: {ander:?}"),
+                }
+            }
+            berichten
+        });
+        for msg in berichten {
+            taken.push_back(app.update(msg));
+        }
+    }
+}
+fn app_met_werkdraad(module: Module, bytes: &[u8]) -> App {
+    let mut app = App::default();
+    let antwoord = iced::futures::executor::block_on(
+        app.werker
+            .clone()
+            .voer_uit(1, Opdracht::Open(module, bytes.to_vec())),
+    )
+    .unwrap();
+    app.tabs
+        .push(Tab::nieuw(1, format!("Rondgang.{}", module.extensie())));
+    app.volgend = 2;
+    voer_interface_uit(&mut app, Msg::Gereed(1, Ok(antwoord)));
+    app
+}
+
+#[test]
+fn writer_interface_splitsen_samenvoegen_en_undo_via_echte_werkdraad() {
+    let mut app = app_met_werkdraad(
+        Module::Writer,
+        include_bytes!("../../office-core/tests/fixtures/writer-structuur.docx"),
+    );
+    let index = app
+        .tab()
+        .unwrap()
+        .antwoord
+        .as_ref()
+        .unwrap()
+        .beeld
+        .velden
+        .iter()
+        .position(|v| v.tekst == "Links 🏠 café rechts")
+        .unwrap();
+    voer_interface_uit(&mut app, Msg::Veld(index));
+    let oorspronkelijk = app.tab().unwrap().antwoord.as_ref().unwrap().bron.clone();
+    voer_interface_uit(
+        &mut app,
+        Msg::Invoer(text_editor::Action::Move(
+            text_editor::Motion::DocumentStart,
+        )),
+    );
+    for _ in 0..8 {
+        voer_interface_uit(
+            &mut app,
+            Msg::Invoer(text_editor::Action::Move(text_editor::Motion::Right)),
+        );
+    }
+    voer_interface_uit(&mut app, Msg::SplitsAlinea);
+    let t = app.tab().unwrap();
+    assert!(!t.bezig);
+    assert_eq!(t.editor.text(), "Links 🏠 ");
+    assert_eq!(
+        t.antwoord.as_ref().unwrap().beeld.velden[index + 1].tekst,
+        "café rechts"
+    );
+    let gesplitst = t.antwoord.as_ref().unwrap().bron.clone();
+    voer_interface_uit(&mut app, Msg::VoegAlineasSamen);
+    assert_eq!(app.tab().unwrap().editor.text(), "Links 🏠 café rechts");
+    voer_interface_uit(&mut app, Msg::Terug);
+    assert_eq!(
+        *app.tab().unwrap().antwoord.as_ref().unwrap().bron,
+        *gesplitst
+    );
+    voer_interface_uit(&mut app, Msg::Terug);
+    assert_eq!(
+        *app.tab().unwrap().antwoord.as_ref().unwrap().bron,
+        *oorspronkelijk
+    );
+    voer_interface_uit(&mut app, Msg::Vooruit);
+    assert_eq!(
+        *app.tab().unwrap().antwoord.as_ref().unwrap().bron,
+        *gesplitst
+    );
+}
+
+#[test]
+fn spreadsheet_interface_selecteert_anker_buiten_werkvenster_via_echte_werkdraad() {
+    let mut app = app_met_werkdraad(
+        Module::Spreadsheet,
+        &Sessie::nieuw(Module::Spreadsheet).unwrap().bron(),
+    );
+    voer_interface_uit(&mut app, Msg::Formule("Anker via interface".into()));
+    voer_interface_uit(&mut app, Msg::PasToe);
+    voer_interface_uit(&mut app, Msg::Adres("A1:Z150".into()));
+    voer_interface_uit(&mut app, Msg::Structuur(Structuur::Samenvoegen));
+    let oorspronkelijk = app.tab().unwrap().antwoord.as_ref().unwrap().bron.clone();
+    voer_interface_uit(&mut app, Msg::Adres("H100".into()));
+    voer_interface_uit(&mut app, Msg::GaNaar);
+    let t = app.tab().unwrap();
+    assert_eq!(t.adres, "A1");
+    assert_eq!(t.editor.text(), "Anker via interface");
+    assert!(!t.bezig);
+    assert_eq!(*t.antwoord.as_ref().unwrap().bron, *oorspronkelijk);
+    voer_interface_uit(
+        &mut app,
+        Msg::Formule("Gewijzigd anker via interface".into()),
+    );
+    voer_interface_uit(&mut app, Msg::PasToe);
+    let bron = app.tab().unwrap().antwoord.as_ref().unwrap().bron.clone();
+    let d = office_core::document::Document::open(Module::Spreadsheet, &bron).unwrap();
+    assert_eq!(
+        d.weergave(0)
+            .unwrap()
+            .velden
+            .iter()
+            .find(|v| v.id == "A1")
+            .unwrap()
+            .tekst,
+        "Gewijzigd anker via interface"
+    );
+}
 #[test]
 fn concept_wordt_niet_stil_weggegooid_bij_selectie_of_sluiten() {
     let mut app = app_met_document(
@@ -319,7 +462,10 @@ fn lettertypen() {
 fn toegankelijkheid(app: &App) -> Collect {
     lettertypen();
     let mut element = app.view();
-    let r = iced_tiny_skia::Renderer::new(fonts::BODY, iced::Pixels(12.));
+    let r = iced_tiny_skia::Renderer::new(
+        ui_instellingen().default_font,
+        ui_instellingen().default_text_size,
+    );
     let mut tree = Tree::new(&element);
     let node = element.as_widget_mut().layout(
         &mut tree,
@@ -356,7 +502,10 @@ fn render_grootte(app: &App, breedte: u32, hoogte: u32) -> tiny_skia::Pixmap {
     lettertypen();
     let size = Size::new(breedte as f32, hoogte as f32);
     let mut element = app.view();
-    let mut renderer = iced_tiny_skia::Renderer::new(fonts::BODY, iced::Pixels(12.));
+    let mut renderer = iced_tiny_skia::Renderer::new(
+        ui_instellingen().default_font,
+        ui_instellingen().default_text_size,
+    );
     let mut tree = Tree::new(&element);
     let node = element.as_widget_mut().layout(
         &mut tree,
@@ -491,6 +640,32 @@ fn alleen_lezen_laat_selecteren_toe_en_weigert_tekstwijziging() {
     )));
     assert_eq!(app.tab().unwrap().editor.text(), origineel);
     assert!(!app.tab().unwrap().concept);
+}
+
+#[test]
+fn alineaopdracht_weigert_concept_selectie_en_alleen_lezen() {
+    let mut app = app_met_document(
+        Module::Writer,
+        include_bytes!("../../office-core/tests/fixtures/writer-structuur.docx"),
+    );
+    let bron = app.tab().unwrap().antwoord.as_ref().unwrap().bron.clone();
+    let _ = app.update(Msg::Invoer(text_editor::Action::Edit(
+        text_editor::Edit::Insert('x'),
+    )));
+    assert_eq!(app.update(Msg::SplitsAlinea).units(), 0);
+    assert!(app.tab().unwrap().concept);
+    assert!(!app.tab().unwrap().bezig);
+    assert_eq!(*app.tab().unwrap().antwoord.as_ref().unwrap().bron, *bron);
+    let _ = app.update(Msg::Terug);
+    let _ = app.update(Msg::Invoer(text_editor::Action::SelectAll));
+    assert_eq!(app.update(Msg::SplitsAlinea).units(), 0);
+    assert_eq!(app.update(Msg::VoegAlineasSamen).units(), 0);
+    assert!(app.melding.contains("zonder tekstselectie"));
+    let mut mail = app_met_document(Module::Email, b"Subject: Alleen lezen\r\n\r\nBericht");
+    assert_eq!(mail.update(Msg::SplitsAlinea).units(), 0);
+    assert_eq!(mail.update(Msg::VoegAlineasSamen).units(), 0);
+    assert!(!mail.tab().unwrap().bezig);
+    assert_eq!(mail.tab().unwrap().editor.text(), "Alleen lezen");
 }
 
 #[test]

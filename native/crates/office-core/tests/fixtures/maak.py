@@ -1,5 +1,7 @@
 """Synthetische bronbestanden voor onafhankelijke native rondgangcontroles."""
 from pathlib import Path
+from zipfile import ZipFile, ZIP_DEFLATED
+import re
 from docx import Document
 from openpyxl import Workbook
 from pptx import Presentation
@@ -14,6 +16,29 @@ p.add_run('deze cursieve tekst.').italic = True
 t = writer.add_table(rows=2, cols=2)
 for c, tekst in zip([c for r in t.rows for c in r.cells], ['Tabel kop', 'Waarde', 'Tabel inhoud', '42']): c.text = tekst
 writer.save(map/'writer.docx')
+# Twee secties, runopmaak, tabelcelgrenzen en niet-bewerkte pakketdelen.
+structuur = Document()
+structuur.sections[0].header.paragraphs[0].text = 'Vaste koptekst'
+structuur.sections[0].footer.paragraphs[0].text = 'Vaste voettekst'
+structuur.add_paragraph('Voor de rijke alinea')
+p = structuur.add_paragraph()
+p.add_run('Links 🏠 ').bold = True
+p.add_run('café rechts').italic = True
+t = structuur.add_table(rows=1, cols=2)
+t.cell(0,0).text = 'Cel één'
+t.cell(0,0).add_paragraph('Tweede celalinea')
+t.cell(0,1).text = 'Cel twee'
+structuur.add_section()
+structuur.add_paragraph('Andere sectie')
+structuur.save(map/'writer-structuur.docx')
+with ZipFile(map/'writer-structuur.docx','a',ZIP_DEFLATED) as z:
+    z.writestr('office-test/blijft.xml', '<bewaren waarde="ongewijzigd"/>')
+with ZipFile(map/'writer.docx') as bron, ZipFile(map/'writer-dubbele-ids.docx','w',ZIP_DEFLATED) as doel:
+    for info in bron.infolist():
+        data = bron.read(info.filename)
+        if info.filename == 'word/document.xml':
+            data = re.sub(r'<w:p(?=[ >])', '<w:p w14:paraId="1234ABCD"', data.decode('utf-8'), count=2).encode('utf-8')
+        doel.writestr(info, data)
 tabel = Document()
 t = tabel.add_table(rows=1, cols=1)
 t.cell(0,0).text = 'Vier woorden in tabel'

@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.2**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.3**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -36,7 +36,7 @@ valt buiten de standaardtestmatrix.
 | Onderdeel | Native implementatie | Nog over te zetten |
 |---|---|---|
 | Venster | OpenAEC-ribbon, documenttabbladen, vijf thema’s, sneltoetsen, Bestand, openen/opslaan/opslaan als, sluitvragen | Herstelkopieën, recente bestanden, afgesplitste vensters, updater, vertalingen |
-| Writer | Native paginering, klikbare alinea’s, linialen, zoom, tekstbereikopmaak en uitlijning, woorden inclusief tabellen, Markdown-export | Directe rich-text-cursor op de pagina, alineastructuur, velden/links/revisies bewerken, volledige ribbon, tabellen invoegen, spelling en afdrukken |
+| Writer | Native paginering, klikbare alinea’s, linialen, zoom, tekstbereikopmaak en uitlijning, splitsen bij de editorcursor en samenvoegen van aangrenzende alinea’s, woorden inclusief tabellen, Markdown-export | Directe rich-text-cursor op de pagina, volledige pagina- en alineabediening, velden/links/revisies bewerken, volledige ribbon, tabellen invoegen, spelling en afdrukken |
 | Spreadsheet | Klikbare cellen, formulebalk, verplaatsbaar werkvenster via celadres/bereik, bereikopmaak, rijen/kolommen invoegen/verwijderen, samenvoegen/splitsen, herberekenen en bladen wisselen | Doorlopend raster met volledige toetsenbord- en sleepbediening, zoeken, sorteren/filteren, klembordbereiken, CSV en grafieken |
 | Presentation | Native diaweergave, niet-geroteerde tekstvakken aanklikken, tekstbereikopmaak, dia’s toevoegen/verwijderen, tekstvakken invoegen, sprekersnotities bewerken | Directe cursor en vormbediening, geroteerde/gegroepeerde objecten, volledige ribbon en presentatiemodus |
 | Notition | Versies 1–3 openen, boeken/secties/pagina’s toevoegen, vrij canvas met tekstvakken slepen/vergroten, Markdown-preview, bloktekst en vet/cursief, prullenbak herstellen; onbekende bronvelden behouden | Automatische lokale opslag/herstel, zoeken, boeken/secties hernoemen/verplaatsen, volledige blok- en taakbediening en import/export |
@@ -48,8 +48,11 @@ De native versie heeft dus nog **geen functiepariteit** met de bestaande suite.
 Een uitgebreide documentweergave betekent niet dat elke zichtbare eigenschap al
 bewerkbaar is. Writer weigert tekstvervanging bij inline objecten, velden, links en revisies;
 de vorige bron blijft dan intact. Gewone tekst met meerdere opmaakruns houdt
-de opmaak van ongewijzigde tekstdelen. Regeleinden worden zachte regelovergangen
-binnen de alinea; nieuwe alinea’s invoegen volgt nog.
+de opmaak van ongewijzigde tekstdelen. Enter in de teksteditor blijft een zachte
+regelovergang binnen de alinea. Gebruik **Splitsen bij cursor** voor een echte
+nieuwe alinea; **Volgende samenvoegen** verwijdert de aangrenzende alineagrens.
+Deze opdrachten blijven binnen dezelfde tekst of tabelcel en weigeren revisies,
+inhoudsbesturingen en samenvoegen over een sectie-einde.
 
 ![Vrij native notitiecanvas](docs/screenshots/notition-canvas.png)
 
@@ -58,7 +61,9 @@ binnen de alinea; nieuwe alinea’s invoegen volgt nog.
 ## Bewaring en snelheid
 
 De engines werken op één aparte werkdraad. De interface ontvangt een begrensde
-weergave en blijft los van parser, rasterizer en bestands-I/O. Bestanden worden
+weergave en blijft los van parser, rasterizer en bestands-I/O. Writer hergebruikt
+de lettertypecache per werkdraad zolang fontvereisten en registergeneratie gelijk
+blijven. Bestanden worden
 uit het volledige enginemodel opgeslagen, nooit uit de tekstvelden of afbeelding
 van het venster. Ongedaan maken bewaart maximaal 32 bronnen en 64 MB per document.
 Dit is een eerste betrouwbaarheidskeuze; grote documenten vragen nog gerichte
@@ -79,6 +84,10 @@ bij herschrijven behouden. IFCX is archivering van de bron; de semantische
 bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
+
+Het [controlerapport voor alpha 3](docs/controle-2026-10-30-alpha3.md) beschrijft
+de 55 lokaal geslaagde Rust-tests, vier beeldcontrole-tests en de grenzen van
+die controle. Het eerdere alpha-1-rapport blijft een historisch verslag.
 
 ```sh
 python3 native/scripts/controleer-bron.py
@@ -118,8 +127,11 @@ native-viewer-voorbeeld van openooxml/betteroffice; de bronverwijzing staat in
 ## Visuele vergelijking en vrijgave
 
 `native/scripts/vergelijk-schermen.py` vergelijkt echte PNG-bronbeelden op
-hetzelfde viewportformaat, zonder schalen of uitlijnen. Standaard is geen enkel
-afwijkend pixel toegestaan. Hiervoor is Pillow nodig. Een geslaagde native
+hetzelfde viewportformaat, zonder schalen of uitlijnen. Het werkelijke bronformaat
+moet PNG zijn; een JPEG met een andere extensie wordt geweigerd. Omzetten van een
+JPEG naar PNG maakt die opname nog geen verliesvrije referentie. Ook verschillen
+in transparantie tellen mee. Standaard is geen enkel afwijkend pixel toegestaan.
+Hiervoor is Pillow nodig. Een geslaagde native
 rendertest is dus geen bewijs dat het beeld gelijk is aan de bestaande suite.
 
 ```sh
@@ -132,3 +144,9 @@ De vrijgavecontrole is momenteel terecht **niet geslaagd**: de native suite mist
 nog functies en de UI is nog niet pixelgelijk. Alpha-pakketten blijven als
 preview beschikbaar; een stabiel pakket wordt door `verpak.py` geweigerd zolang
 de acceptatiegebieden openstaan.
+
+De huidige browserkoppeling levert JPEG-opnamen. Die zijn bruikbaar om het
+uiterlijk te beoordelen, maar vormen geen geldige referentie voor een numerieke
+pixelcontrole. Een eerdere telling op zo’n opname is daarom geen pixelbewijs.
+Een oorspronkelijke verliesvrije referentie van de bestaande volledige interface
+is nog nodig voordat die controle geldig kan slagen.

@@ -12,10 +12,8 @@ pub fn pagina(
     bron: &[u8],
     nummer: usize,
 ) -> Resultaat<(Vec<u8>, usize, usize, crate::interactie::Pagina)> {
-    // De engine heeft een gedeelde fontregistratie; layout en raster krijgen
-    // onder deze vergrendeling dezelfde font-id's, ook bij parallelle tests.
-    static REGISTRATIE: std::sync::Mutex<()> = std::sync::Mutex::new(());
-    let _slot = REGISTRATIE.lock().unwrap_or_else(|e| e.into_inner());
+    // De engine heeft per draad een fontregister. Dezelfde fontset kan daarom
+    // tussen opeenvolgende paginabeelden behouden blijven, zonder globale blokkade.
     let parsed = docx_parse::parse_docx_s9_wire(bron, docx_parse::S9ParseOptions::default())
         .map_err(fout)?;
     let package = parsed.document.package;
@@ -50,67 +48,114 @@ pub fn pagina(
             .layout_font_requirements_json(&verzoek.to_string())
             .map_err(fout)?,
     )?;
-    docx_layout::clear_measure_fonts();
-    let mut fonts = ooxml_text::FontStore::new();
-    let mut geregistreerd = HashMap::<usize, ooxml_text::FontId>::new();
-    let mut meten = BTreeMap::<String, Vec<u32>>::new();
-    let mut tekenen = HashMap::new();
-    for eis in benodigd
-        .as_array()
-        .ok_or_else(|| fout("Ongeldige fontvereisten"))?
-    {
-        let key = eis["key"]
-            .as_str()
-            .ok_or_else(|| fout("Fontvereiste zonder sleutel"))?;
-        let familie = eis["family"].as_str().unwrap_or("Calibri");
-        let scripts = eis["scripts"]
-            .as_array()
-            .map(Vec::as_slice)
-            .unwrap_or_default();
-        let mut chain = Vec::new();
-        for letter in crate::lettertypen::keten(
-            familie,
-            eis["bold"].as_bool().unwrap_or(false),
-            eis["italic"].as_bool().unwrap_or(false),
-            scripts,
-        ) {
-            let ptr = letter.bytes.as_ptr() as usize;
-            let id = if let Some(id) = geregistreerd.get(&ptr) {
-                *id
-            } else {
-                let id = docx_layout::register_measure_font_bytes(letter.bytes).map_err(fout)?;
-                let raster = fonts.register(letter.bytes.to_vec()).map_err(fout)?;
-                if id != raster.to_u32() {
-                    return Err(fout("Fontregistraties wijken af"));
-                }
-                geregistreerd.insert(ptr, raster);
-                raster
-            };
-            chain.push(id);
+    LETTERCACHE.with(|cel| {
+        let mut slot = cel.borrow_mut();
+        let sleutel = benodigd.to_string();
+        let generatie = docx_layout::measure_fonts_generation();
+        if slot
+            .as_ref()
+            .is_none_or(|c| c.sleutel != sleutel || c.generatie != generatie)
+        {
+            *slot = Some(Lettercache::nieuw(&benodigd, sleutel)?);
         }
-        meten.insert(key.into(), chain.iter().map(|id| id.to_u32()).collect());
-        tekenen.insert(key.into(), chain);
+        let cache = slot.as_ref().expect("zojuist aangemaakte lettercache");
+        let Lettercache {
+            fonts,
+            meten,
+            tekenen,
+            ..
+        } = cache;
+        verzoek["measurement"] = json!({
+            "fontChains": meten,
+            "defaults": {"fontSize": 11, "fontFamily": "Inter"},
+            "authoritativeShaping": true
+        });
+        engine
+            .layout_document_with_regions_retained_json(&verzoek.to_string())
+            .map_err(fout)?;
+        engine
+            .build_display_list_frame(&json!({"fontChains": meten}).to_string(), 0)
+            .map_err(fout)?;
+        let dl = engine
+            .with_display_list(Clone::clone)
+            .ok_or_else(|| fout("Geen paginabeeld"))?;
+        let aantal = dl.pages.len();
+        // Een geldige bewerking kan de laatst bekeken pagina laten verdwijnen.
+        // Toon dan de nieuwe laatste pagina in plaats van de bewerking af te breken.
+        let nummer = nummer.min(aantal.saturating_sub(1));
+        let afbeeldingen = afbeeldingen(bron)?;
+        let resources = docx_raster::RenderResources::new(fonts, tekenen, &afbeeldingen);
+        let render = docx_raster::render_page(&dl, nummer, &resources).map_err(fout)?;
+        let pagina = raakvlakken(
+            dl.pages
+                .get(nummer)
+                .ok_or_else(|| fout("Pagina bestaat niet"))?,
+        );
+        Ok((render.bytes, aantal, render.skipped_images, pagina))
+    })
+}
+
+struct Lettercache {
+    sleutel: String,
+    generatie: (u64, usize),
+    fonts: ooxml_text::FontStore,
+    meten: BTreeMap<String, Vec<u32>>,
+    tekenen: docx_raster::FontChains,
+}
+thread_local! {static LETTERCACHE: std::cell::RefCell<Option<Lettercache>> = const {std::cell::RefCell::new(None)};}
+impl Lettercache {
+    fn nieuw(benodigd: &Value, sleutel: String) -> Resultaat<Self> {
+        docx_layout::clear_measure_fonts();
+        let mut fonts = ooxml_text::FontStore::new();
+        let mut geregistreerd = HashMap::<usize, ooxml_text::FontId>::new();
+        let mut meten = BTreeMap::<String, Vec<u32>>::new();
+        let mut tekenen = HashMap::new();
+        for eis in benodigd
+            .as_array()
+            .ok_or_else(|| fout("Ongeldige fontvereisten"))?
+        {
+            let key = eis["key"]
+                .as_str()
+                .ok_or_else(|| fout("Fontvereiste zonder sleutel"))?;
+            let familie = eis["family"].as_str().unwrap_or("Calibri");
+            let scripts = eis["scripts"]
+                .as_array()
+                .map(Vec::as_slice)
+                .unwrap_or_default();
+            let mut chain = Vec::new();
+            for letter in crate::lettertypen::keten(
+                familie,
+                eis["bold"].as_bool().unwrap_or(false),
+                eis["italic"].as_bool().unwrap_or(false),
+                scripts,
+            ) {
+                let ptr = letter.bytes.as_ptr() as usize;
+                let id = if let Some(id) = geregistreerd.get(&ptr) {
+                    *id
+                } else {
+                    let id =
+                        docx_layout::register_measure_font_bytes(letter.bytes).map_err(fout)?;
+                    let raster = fonts.register(letter.bytes.to_vec()).map_err(fout)?;
+                    if id != raster.to_u32() {
+                        return Err(fout("Fontregistraties wijken af"));
+                    }
+                    geregistreerd.insert(ptr, raster);
+                    raster
+                };
+                chain.push(id);
+            }
+            meten.insert(key.into(), chain.iter().map(|id| id.to_u32()).collect());
+            tekenen.insert(key.into(), chain);
+        }
+
+        Ok(Self {
+            sleutel,
+            generatie: docx_layout::measure_fonts_generation(),
+            fonts,
+            meten,
+            tekenen,
+        })
     }
-    verzoek["measurement"] = json!({"fontChains":meten,"defaults":{"fontSize":11,"fontFamily":"Inter"},"authoritativeShaping":true});
-    engine
-        .layout_document_with_regions_retained_json(&verzoek.to_string())
-        .map_err(fout)?;
-    engine
-        .build_display_list_frame(&json!({"fontChains":meten}).to_string(), 0)
-        .map_err(fout)?;
-    let dl = engine
-        .with_display_list(Clone::clone)
-        .ok_or_else(|| fout("Geen paginabeeld"))?;
-    let aantal = dl.pages.len();
-    let afbeeldingen = afbeeldingen(bron)?;
-    let resources = docx_raster::RenderResources::new(&fonts, &tekenen, &afbeeldingen);
-    let render = docx_raster::render_page(&dl, nummer, &resources).map_err(fout)?;
-    let pagina = raakvlakken(
-        dl.pages
-            .get(nummer)
-            .ok_or_else(|| fout("Pagina bestaat niet"))?,
-    );
-    Ok((render.bytes, aantal, render.skipped_images, pagina))
 }
 
 fn raakvlakken(blad: &docx_layout::display_list::DisplayPage) -> crate::interactie::Pagina {

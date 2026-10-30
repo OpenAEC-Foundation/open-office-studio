@@ -70,6 +70,8 @@ enum Msg {
     Raak(String),
     Opmaak(Opmaak),
     Structuur(Structuur),
+    SplitsAlinea,
+    VoegAlineasSamen,
     Dia(office_core::presentatie::DiaActie),
     Formule(String),
     Panelen,
@@ -192,12 +194,12 @@ impl Tab {
             self.editor = text_editor::Content::with_text(&veld.tekst);
             self.adres = veld.id.clone();
             self.concept = false;
-            self.grootte = veld.opmaak.grootte.unwrap_or(11.).to_string();
-            self.lettertype = veld
+            self.grootte = veld
                 .opmaak
-                .lettertype
-                .clone()
-                .unwrap_or_else(|| "Inter".into());
+                .grootte
+                .map(|n| n.to_string())
+                .unwrap_or_default();
+            self.lettertype = veld.opmaak.lettertype.clone().unwrap_or_default();
         }
     }
 }
@@ -421,7 +423,11 @@ impl App {
                                     .saturating_sub(1),
                             );
                             let bereik = tab.doel_cel.take().unwrap_or_else(|| tab.adres.clone());
-                            let doel = bereik.split(':').next().unwrap_or_default();
+                            let doel = tab
+                                .antwoord
+                                .as_ref()
+                                .and_then(|a| a.beeld.voorkeursveld.as_deref())
+                                .unwrap_or_else(|| bereik.split(':').next().unwrap_or_default());
                             let keuze = tab
                                 .antwoord
                                 .as_ref()
@@ -604,6 +610,41 @@ impl App {
                     let opdracht = Opdracht::Bewerk(t.deel, Bewerking::Dia(actie));
                     let id = t.id;
                     return self.opdracht(id, opdracht);
+                }
+            }
+            Msg::SplitsAlinea | Msg::VoegAlineasSamen => {
+                if let Some(t) = self.tab_mut() {
+                    if t.bezig || t.concept {
+                        return self.waarschuwing("Pas de ingevoerde tekst eerst toe");
+                    }
+                    if let Some(v) = t.veld()
+                        && v.bewerkbaar
+                        && t.antwoord
+                            .as_ref()
+                            .is_some_and(|a| a.beeld.module == Module::Writer)
+                    {
+                        if t.editor.cursor().selection.is_some() {
+                            return self.waarschuwing(
+                                "Plaats de cursor zonder tekstselectie voor deze alineabewerking",
+                            );
+                        }
+                        let actie = if matches!(msg, Msg::SplitsAlinea) {
+                            office_core::writer::AlineaActie::Splits {
+                                positie: lint::tekenoffset(&t.editor, t.editor.cursor().position),
+                            }
+                        } else {
+                            office_core::writer::AlineaActie::VoegVolgendeSamen
+                        };
+                        let opdracht = Opdracht::Bewerk(
+                            t.deel,
+                            Bewerking::Alinea {
+                                id: v.id.clone(),
+                                actie,
+                            },
+                        );
+                        let id = t.id;
+                        return self.opdracht(id, opdracht);
+                    }
                 }
             }
             Msg::Grootte(g) => {
@@ -1818,6 +1859,13 @@ fn doelhash(p: &std::path::Path) -> Result<Option<String>, String> {
         Err(e) => Err(e.to_string()),
     }
 }
+fn ui_instellingen() -> iced::Settings {
+    iced::Settings {
+        default_font: fonts::BODY,
+        default_text_size: iced::Pixels(12.),
+        ..Default::default()
+    }
+}
 fn main() -> iced::Result {
     let argumenten: Vec<_> = std::env::args().skip(1).collect();
     if argumenten.first().is_some_and(|a| a == "--version") {
@@ -1861,7 +1909,7 @@ fn main() -> iced::Result {
     .title("Open Office Studio")
     .subscription(App::subscription)
     .theme(|app: &App| app.thema.iced())
-    .default_font(fonts::BODY);
+    .settings(ui_instellingen());
     fonts::FILES
         .iter()
         .fold(builder, |b, f| b.font(*f))
