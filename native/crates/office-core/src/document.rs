@@ -1,5 +1,9 @@
 //! De native engines blijven eigenaar van het document. De interface ontvangt
 //! uitsluitend een begrensde weergave; opslaan bouwt nooit een bestand uit die weergave.
+use crate::{
+    interactie::{Pagina, RasterVenster},
+    opmaak::{Opmaak, OpmaakStaat},
+};
 use betteroffice_docx as docx;
 use betteroffice_pptx as pptx;
 use betteroffice_xlsx as xlsx;
@@ -72,6 +76,7 @@ pub struct Veld {
     pub naam: String,
     pub tekst: String,
     pub bewerkbaar: bool,
+    pub opmaak: OpmaakStaat,
 }
 #[derive(Debug, Clone)]
 pub struct Weergave {
@@ -80,11 +85,28 @@ pub struct Weergave {
     pub velden: Vec<Veld>,
     pub afbeelding: Option<Vec<u8>>,
     pub melding: String,
+    pub pagina: Pagina,
+    pub notitie: Option<crate::notities::NotitiePagina>,
 }
 #[derive(Debug, Clone)]
 pub enum Bewerking {
-    Tekst { id: String, tekst: String },
+    Tekst {
+        id: String,
+        tekst: String,
+    },
     DiaNotities(String),
+    Opmaak {
+        id: String,
+        begin: usize,
+        einde: usize,
+        stijl: Opmaak,
+    },
+    Structuur {
+        adres: String,
+        actie: crate::rekenblad::Structuur,
+    },
+    Dia(crate::presentatie::DiaActie),
+    Notitie(crate::notities::NotitieActie),
 }
 
 pub enum Document {
@@ -111,25 +133,29 @@ impl Document {
             )),
             Module::Presentation => {
                 let mut doc = pptx::Presentation::open(bytes).map_err(fout)?;
-                // Dezelfde meegeleverde basisletter als de native interface.
-                doc.register_font(
-                    "Inter",
-                    false,
-                    false,
-                    include_bytes!("../../../vendor/openaec-ui/assets/fonts/Inter-Regular.ttf"),
-                )
-                .map_err(fout)?;
+                // De oorspronkelijke families worden ook bij native rasteren gebruikt.
+                // Grote CJK-letters laden alleen wanneer de presentatie die tekens bevat.
+                let snapshot = doc.snapshot().map_err(fout)?;
+                let tekst = serde_json::to_string(&snapshot)?;
+                let cjk = tekst
+                    .chars()
+                    .any(|c| matches!(c as u32,0x2e80..=0x9fff|0xac00..=0xd7ff|0xf900..=0xfaff));
+                for letter in crate::lettertypen::LETTERTYPEN {
+                    if letter.bytes.len() > 2_000_000 && !cjk {
+                        continue;
+                    }
+                    doc.register_font(letter.familie, letter.vet, letter.cursief, letter.bytes)
+                        .map_err(fout)?;
+                    if letter.alias != letter.familie {
+                        doc.register_font(letter.alias, letter.vet, letter.cursief, letter.bytes)
+                            .map_err(fout)?;
+                    }
+                }
                 Self::Presentation(Box::new(doc))
             }
             Module::Notition => {
                 let waarde: serde_json::Value = serde_json::from_slice(bytes)?;
-                if waarde["formaat"] != "openaec-notities"
-                    || waarde["versie"] != 3
-                    || !waarde["boeken"].is_array()
-                {
-                    return Err(fout("Geen ondersteund notitieboek (versie 3 vereist)"));
-                }
-                Self::Notition(waarde)
+                Self::Notition(crate::notities::open(waarde)?)
             }
             Module::Email => {
                 if mail_parser::MessageParser::default().parse(bytes).is_none() {
@@ -153,7 +179,10 @@ impl Document {
             Self::Writer(d) => d.save().map_err(fout),
             Self::Spreadsheet(d) => d.save().map_err(fout),
             Self::Presentation(d) => d.save().map_err(fout),
-            Self::Notition(d) => Ok(serde_json::to_vec_pretty(d)?),
+            Self::Notition(d) => {
+                crate::notities::controleer(d)?;
+                Ok(serde_json::to_vec_pretty(d)?)
+            }
             Self::Email(d) => Ok(d.clone()),
         }
     }
@@ -173,6 +202,33 @@ impl Document {
     }
     pub fn bewerk(&mut self, deel: usize, bewerking: Bewerking) -> Resultaat<()> {
         match (self, bewerking) {
+            (
+                Self::Writer(d),
+                Bewerking::Opmaak {
+                    id,
+                    begin,
+                    einde,
+                    stijl,
+                },
+            ) => crate::writer_tekst::opmaak(d, &id, begin, einde, &stijl)?,
+            (Self::Spreadsheet(d), Bewerking::Opmaak { id, stijl, .. }) => {
+                crate::rekenblad::opmaak(d, deel, &id, &stijl)?
+            }
+            (Self::Spreadsheet(d), Bewerking::Structuur { adres, actie }) => {
+                crate::rekenblad::structuur(d, deel, &adres, actie)?
+            }
+            (
+                Self::Presentation(d),
+                Bewerking::Opmaak {
+                    id,
+                    begin,
+                    einde,
+                    stijl,
+                },
+            ) => crate::presentatie::opmaak(d, &id, begin, einde, &stijl)?,
+            (Self::Presentation(d), Bewerking::Dia(actie)) => {
+                crate::presentatie::actie(d, deel, actie)?
+            }
             (Self::Writer(d), Bewerking::Tekst { id, tekst }) => {
                 crate::writer_tekst::vervang(d, &id, &tekst)?;
             }
@@ -186,6 +242,12 @@ impl Document {
                 )
                 .map_err(fout)?;
             }
+            (Self::Presentation(d), Bewerking::Tekst { id, tekst }) if id == "__dia_notities" => {
+                let ids = d.slide_ids().map_err(fout)?;
+                let id = ids.get(deel).ok_or_else(|| fout("Dia bestaat niet"))?;
+                d.set_slide_notes(&pptx::EditCtx::local("OpenAEC"), id, &tekst)
+                    .map_err(fout)?;
+            }
             (Self::Presentation(d), Bewerking::Tekst { id, tekst }) => {
                 crate::presentatie_tekst::vervang(d, &id, &tekst)?;
             }
@@ -195,41 +257,45 @@ impl Document {
                 d.set_slide_notes(&pptx::EditCtx::local("OpenAEC"), id, &tekst)
                     .map_err(fout)?;
             }
+            (Self::Notition(d), Bewerking::Notitie(actie)) => {
+                crate::notities::bewerk(d, deel, actie)?
+            }
+            (Self::Notition(d), Bewerking::Opmaak { id, stijl, .. }) => {
+                crate::notities::opmaak(d, deel, &id, &stijl)?
+            }
             (Self::Notition(d), Bewerking::Tekst { id, tekst }) => {
-                let veld = d
-                    .pointer_mut(&id)
-                    .ok_or_else(|| fout("Notitieveld bestaat niet"))?;
-                if !veld.is_string() {
-                    return Err(fout("Geen tekstveld"));
-                }
-                if tekst.len() > 500_000 {
-                    return Err(fout("Notitietekst te lang"));
-                }
-                *veld = tekst.into();
+                crate::notities::tekst(d, deel, &id, &tekst)?
             }
             _ => return Err(fout("Deze bewerking is niet beschikbaar")),
         }
         Ok(())
     }
     pub fn weergave(&self, deel: usize) -> Resultaat<Weergave> {
+        self.weergave_in(deel, RasterVenster::default())
+    }
+    fn weergave_in(&self, deel: usize, venster: RasterVenster) -> Resultaat<Weergave> {
         let mut beeld = Weergave {
             module: Module::Writer,
             onderdelen: vec![],
             velden: vec![],
             afbeelding: None,
             melding: String::new(),
+            pagina: Pagina::default(),
+            notitie: None,
         };
         match self {
             Self::Writer(d) => {
-                let (png, paginas, overgeslagen) =
+                let (png, paginas, overgeslagen, pagina) =
                     crate::writer_beeld::pagina(&d.save().map_err(fout)?, deel)?;
                 beeld.afbeelding = Some(png);
+                beeld.pagina = pagina;
                 beeld.onderdelen = (0..paginas).map(|i| format!("Pagina {}", i + 1)).collect();
-                for (i, p) in d.paragraphs().into_iter().take(2000).enumerate() {
+                for (i, p) in d.paragraphs().into_iter().enumerate() {
                     beeld.velden.push(Veld {
                         id: p.para_id.clone().unwrap_or_default(),
                         naam: format!("Alinea {}", i + 1),
                         tekst: docx::get_paragraph_text(p),
+                        opmaak: crate::writer_tekst::staat(p),
                         bewerkbaar: p.para_id.is_some() && crate::writer_tekst::ondersteund(p),
                     });
                 }
@@ -246,34 +312,12 @@ impl Document {
             Self::Spreadsheet(d) => {
                 beeld.module = Module::Spreadsheet;
                 beeld.onderdelen = d.model().sheets.iter().map(|s| s.name.clone()).collect();
-                let sheet = xlsx::SheetId(deel as u32);
-                for rij in 0..30 {
-                    for kolom in 0..12 {
-                        let cel = xlsx::CellRef::new(rij, kolom);
-                        let inhoud = d.cell(sheet, cel).map_err(fout)?;
-                        beeld.velden.push(Veld {
-                            id: cel.to_a1(),
-                            naam: cel.to_a1(),
-                            tekst: inhoud.input,
-                            bewerkbaar: true,
-                        });
-                    }
-                }
-                let opties = xlsx::RenderOptions {
-                    range: Some(xlsx::CellRange::new(
-                        xlsx::CellRef::new(0, 0),
-                        xlsx::CellRef::new(29, 11),
-                    )),
-                    max_width: Some(1600),
-                    max_height: Some(1400),
-                    ..Default::default()
-                };
-                beeld.afbeelding = Some(d.render_sheet(sheet, &opties).map_err(fout)?.bytes);
-                beeld.melding = "Berekening en opslag in Rust · bereik A1:L30".into();
+                crate::rekenblad::toon(d, deel, venster, &mut beeld)?;
             }
             Self::Presentation(d) => {
                 beeld.module = Module::Presentation;
                 let deck = d.snapshot().map_err(fout)?;
+                let deel = deel.min(deck.slides.len().saturating_sub(1));
                 beeld.onderdelen = deck
                     .slides
                     .iter()
@@ -297,12 +341,21 @@ impl Document {
                                 naam: shape.name.clone(),
                                 tekst: story.plain_text(),
                                 bewerkbaar: true,
+                                opmaak: crate::presentatie::staat(story),
                             });
                         }
                         verzamel(&shape.children, velden);
                     }
                 }
                 verzamel(&dia.shapes, &mut beeld.velden);
+                beeld.velden.push(Veld {
+                    id: "__dia_notities".into(),
+                    naam: "Sprekersnotities".into(),
+                    tekst: dia.notes.clone(),
+                    bewerkbaar: true,
+                    opmaak: OpmaakStaat::default(),
+                });
+                beeld.pagina = crate::presentatie::geometrie(d, deel)?;
                 let render = d
                     .render_png(deel, &pptx::RenderOptions::default())
                     .map_err(fout)?;
@@ -318,38 +371,7 @@ impl Document {
             }
             Self::Notition(d) => {
                 beeld.module = Module::Notition;
-                beeld.onderdelen = vec!["Notitieboek".into()];
-                fn vind(v: &serde_json::Value, pad: &str, velden: &mut Vec<Veld>) {
-                    match v {
-                        serde_json::Value::Object(map) => {
-                            for (naam, waarde) in map {
-                                let p = format!("{pad}/{naam}");
-                                if matches!(naam.as_str(), "markdown" | "tekst" | "titel" | "naam")
-                                {
-                                    if let Some(t) = waarde.as_str() {
-                                        velden.push(Veld {
-                                            id: p.clone(),
-                                            naam: naam.clone(),
-                                            tekst: t.into(),
-                                            bewerkbaar: true,
-                                        });
-                                    }
-                                } else {
-                                    vind(waarde, &p, velden);
-                                }
-                            }
-                        }
-                        serde_json::Value::Array(lijst) => {
-                            for (i, waarde) in lijst.iter().enumerate() {
-                                vind(waarde, &format!("{pad}/{i}"), velden);
-                            }
-                        }
-                        _ => {}
-                    }
-                }
-                vind(d, "", &mut beeld.velden);
-                beeld.melding =
-                    "Notitieboek versie 3 · bronvelden en canvasposities blijven bewaard".into();
+                crate::notities::toon(d, deel, &mut beeld)?;
             }
             Self::Email(bytes) => {
                 beeld.module = Module::Email;
@@ -374,6 +396,7 @@ impl Document {
                         naam: naam.into(),
                         tekst,
                         bewerkbaar: false,
+                        opmaak: OpmaakStaat::default(),
                     });
                 }
                 beeld.melding = format!(
@@ -393,6 +416,7 @@ pub struct Sessie {
     document: Document,
     bron: std::sync::Arc<Vec<u8>>,
     bron_hash: String,
+    venster: RasterVenster,
     beelden: std::cell::RefCell<Vec<(usize, Weergave)>>,
     terug: Vec<std::sync::Arc<Vec<u8>>>,
     vooruit: Vec<std::sync::Arc<Vec<u8>>>,
@@ -403,6 +427,7 @@ impl Sessie {
             document: Document::open(module, &bytes)?,
             module,
             bron_hash: crate::opslag::hash(&bytes),
+            venster: RasterVenster::default(),
             beelden: std::cell::RefCell::new(vec![]),
             bron: std::sync::Arc::new(bytes),
             terug: vec![],
@@ -429,13 +454,34 @@ impl Sessie {
         if let Some((_, b)) = self.beelden.borrow().iter().find(|(n, _)| *n == deel) {
             return Ok(b.clone());
         }
-        let beeld = self.document.weergave(deel)?;
+        let beeld = self.document.weergave_in(deel, self.venster)?;
         let mut cache = self.beelden.borrow_mut();
         if cache.len() >= 3 {
             cache.remove(0);
         }
         cache.push((deel, beeld.clone()));
         Ok(beeld)
+    }
+    /// Verplaats alleen de weergave; een navigatie hoort niet in de bewerkingsgeschiedenis.
+    pub fn naar_cel(&mut self, deel: usize, adres: &str) -> Resultaat<Weergave> {
+        if self.module != Module::Spreadsheet {
+            return Err(fout("Celadres hoort bij een rekenblad"));
+        }
+        let cel = crate::rekenblad::bereik(adres)?.start;
+        let oud = self.venster;
+        self.venster = RasterVenster {
+            rij: cel.row.saturating_sub(3),
+            kolom: cel.col.saturating_sub(2),
+        };
+        self.beelden.borrow_mut().clear();
+        match self.weergave(deel) {
+            Ok(b) => Ok(b),
+            Err(e) => {
+                self.venster = oud;
+                self.beelden.borrow_mut().clear();
+                Err(e)
+            }
+        }
     }
     pub fn markdown(&self) -> Resultaat<String> {
         self.document.markdown()
@@ -450,7 +496,7 @@ impl Sessie {
     ) -> Resultaat<Weergave> {
         let resultaat = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
             self.document.bewerk(deel, bewerking)?;
-            let beeld = self.document.weergave(deel)?;
+            let beeld = self.document.weergave_in(deel, self.venster)?;
             Ok((self.document.bytes()?, beeld))
         }));
         match resultaat {

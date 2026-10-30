@@ -138,6 +138,11 @@ pub fn vervang(d: &mut docx::Document, id: &str, nieuw: &str) -> Resultaat<()> {
         positie = einde;
     }
     p.content = uit;
+    schrijf(d, id, &p);
+    Ok(())
+}
+
+fn schrijf(d: &mut docx::Document, id: &str, p: &docx::Paragraph) {
     fn pas_toe(blokken: &mut [docx::BlockContent], id: &str, p: &docx::Paragraph) {
         for blok in blokken {
             match blok {
@@ -157,11 +162,140 @@ pub fn vervang(d: &mut docx::Document, id: &str, nieuw: &str) -> Resultaat<()> {
         }
     }
     let model = d.model_mut();
-    pas_toe(&mut model.body.content, id, &p);
+    pas_toe(&mut model.body.content, id, p);
     if let Some(secties) = &mut model.body.sections {
         for sectie in secties {
-            pas_toe(&mut sectie.content, id, &p);
+            pas_toe(&mut sectie.content, id, p);
         }
     }
+}
+
+/// Aantallen in Unicode-tekens; nooit bytes of halve UTF-16-surrogaten.
+pub fn opmaak(
+    d: &mut docx::Document,
+    id: &str,
+    begin: usize,
+    einde: usize,
+    stijl: &crate::opmaak::Opmaak,
+) -> Resultaat<()> {
+    use crate::opmaak::{Opmaak as O, Uitlijning as U};
+    stijl.controleer()?;
+    let mut p = d
+        .paragraph(id)
+        .ok_or_else(|| Fout::Document("Alinea bestaat niet".into()))?
+        .clone();
+    if !ondersteund(&p) {
+        return Err(fout());
+    }
+    let lengte = docx::get_paragraph_text(&p).chars().count();
+    if begin > einde || einde > lengte {
+        return Err(Fout::Document("Tekstselectie valt buiten de alinea".into()));
+    }
+    if let O::Uitlijning(a) = stijl {
+        p.formatting.get_or_insert_with(Default::default).alignment = Some(
+            match a {
+                U::Links => "left",
+                U::Midden => "center",
+                U::Rechts => "right",
+                U::Uitvullen => "both",
+            }
+            .into(),
+        );
+    } else {
+        // Een lege selectie op een niet-lege alinea mag geen schijnbewerking zijn.
+        if begin == einde {
+            return Err(Fout::Document(
+                "Selecteer tekst om de opmaak te wijzigen".into(),
+            ));
+        }
+        let mut uit = Vec::new();
+        let mut offset = 0;
+        for item in &p.content {
+            let P::Inline(I::Run(run)) = item else {
+                return Err(fout());
+            };
+            let chars: Vec<char> = tekst(run).chars().collect();
+            let eind = offset + chars.len();
+            let links = begin.saturating_sub(offset).min(chars.len());
+            let rechts = einde.saturating_sub(offset).min(chars.len());
+            for (a, b, pas_aan) in [
+                (0, links, false),
+                (links, rechts, true),
+                (rechts, chars.len(), false),
+            ] {
+                if a >= b {
+                    continue;
+                }
+                let mut r = run.clone();
+                r.content = inhoud(&chars[a..b].iter().collect::<String>());
+                if pas_aan {
+                    let f = r.formatting.get_or_insert_with(Default::default);
+                    match stijl {
+                        O::Vet(v) => {
+                            f.bold = Some(*v);
+                            f.bold_cs = Some(*v);
+                        }
+                        O::Cursief(v) => {
+                            f.italic = Some(*v);
+                            f.italic_cs = Some(*v);
+                        }
+                        O::Onderstrepen(v) => {
+                            f.underline = Some(docx_parse::scalars::UnderlineValue {
+                                style: if *v { "single" } else { "none" }.into(),
+                                color: None,
+                            })
+                        }
+                        O::Doorhalen(v) => f.strike = Some(*v),
+                        O::Lettergrootte(v) => {
+                            f.font_size = Some(*v * 2.);
+                            f.font_size_cs = Some(*v * 2.);
+                        }
+                        O::Lettertype(v) => {
+                            let fam = f.font_family.get_or_insert_with(Default::default);
+                            fam.ascii = Some(v.clone());
+                            fam.h_ansi = Some(v.clone());
+                            fam.ascii_theme = None;
+                            fam.h_ansi_theme = None;
+                        }
+                        O::Kleur(v) => {
+                            f.color = Some(docx_parse::scalars::ColorValue::from_attribute(&v[1..]))
+                        }
+                        O::Achtergrond(v) => {
+                            let shade = f.shading.get_or_insert_with(Default::default);
+                            shade.fill =
+                                Some(docx_parse::scalars::ColorValue::from_attribute(&v[1..]));
+                        }
+                        _ => {
+                            return Err(Fout::Document(
+                                "Deze tekstopmaak wordt nog niet ondersteund".into(),
+                            ));
+                        }
+                    }
+                }
+                uit.push(P::Inline(I::Run(r)));
+            }
+            offset = eind;
+        }
+        p.content = uit;
+    }
+    schrijf(d, id, &p);
     Ok(())
+}
+pub fn staat(p: &docx::Paragraph) -> crate::opmaak::OpmaakStaat {
+    let f = p.content.iter().find_map(|c| match c {
+        P::Inline(I::Run(r)) => r.formatting.as_ref(),
+        _ => None,
+    });
+    crate::opmaak::OpmaakStaat {
+        vet: f.and_then(|f| f.bold).unwrap_or(false),
+        cursief: f.and_then(|f| f.italic).unwrap_or(false),
+        onderstrepen: f
+            .and_then(|f| f.underline.as_ref())
+            .is_some_and(|v| v.style != "none"),
+        doorhalen: f.and_then(|f| f.strike).unwrap_or(false),
+        grootte: f.and_then(|f| f.font_size).map(|n| n / 2.),
+        lettertype: f
+            .and_then(|f| f.font_family.as_ref())
+            .and_then(|v| v.ascii.clone()),
+    }
 }

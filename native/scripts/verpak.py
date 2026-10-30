@@ -12,6 +12,9 @@ import zipfile
 root = Path(__file__).resolve().parents[1]
 repo = root.parent
 versie = tomllib.loads((root/'Cargo.toml').read_text(encoding='utf-8'))['workspace']['package']['version']
+if '-' not in versie:
+    import sys
+    subprocess.run([sys.executable, str(root/'scripts/controleer-migratie.py'), '--vrijgave'], check=True)
 exe = 'open-office-studio-native' + ('.exe' if platform.system() == 'Windows' else '')
 bron = root/'target/release'/exe
 assert bron.is_file(), f'Ontbrekende releasebuild: {bron}'
@@ -28,6 +31,8 @@ shutil.copytree(root/'docs', pakket/'docs')
 shutil.copytree(root/'vendor/openaec-ui/licenses', pakket/'licenties')
 shutil.copy2(root/'vendor/openaec-ui/LICENSE.md', pakket/'licenties/OpenAEC-UI-LICENSE.md')
 shutil.copy2(root/'vendor/openaec-ui/NOTICE.md', pakket/'licenties/OpenAEC-UI-NOTICE.md')
+shutil.copytree(root/'vendor/document-fonts/LICENSES', pakket/'licenties/documentletters')
+shutil.copytree(root/'vendor/document-fonts/LICENSES-CJK', pakket/'licenties/documentletters-cjk')
 for bestand in ['Cargo.toml', 'Cargo.lock', 'README.md']:
     doel = pakket/'bron/native'/bestand
     doel.parent.mkdir(parents=True, exist_ok=True)

@@ -8,7 +8,10 @@ fn fout(e: impl std::fmt::Display) -> Fout {
     Fout::Document(e.to_string())
 }
 
-pub fn pagina(bron: &[u8], nummer: usize) -> Resultaat<(Vec<u8>, usize, usize)> {
+pub fn pagina(
+    bron: &[u8],
+    nummer: usize,
+) -> Resultaat<(Vec<u8>, usize, usize, crate::interactie::Pagina)> {
     // De engine heeft een gedeelde fontregistratie; layout en raster krijgen
     // onder deze vergrendeling dezelfde font-id's, ook bij parallelle tests.
     static REGISTRATIE: std::sync::Mutex<()> = std::sync::Mutex::new(());
@@ -49,19 +52,7 @@ pub fn pagina(bron: &[u8], nummer: usize) -> Resultaat<(Vec<u8>, usize, usize)> 
     )?;
     docx_layout::clear_measure_fonts();
     let mut fonts = ooxml_text::FontStore::new();
-    let mut ids = Vec::new();
-    for bytes in [
-        include_bytes!("../../../vendor/openaec-ui/assets/fonts/Inter-Regular.ttf").as_slice(),
-        include_bytes!("../../../vendor/openaec-ui/assets/fonts/Inter-SemiBold.ttf").as_slice(),
-        include_bytes!("../../../vendor/openaec-ui/assets/fonts/NotoSans-Regular.ttf").as_slice(),
-    ] {
-        let id = docx_layout::register_measure_font_bytes(bytes).map_err(fout)?;
-        let raster = fonts.register(bytes.to_vec()).map_err(fout)?;
-        if id != raster.to_u32() {
-            return Err(fout("Fontregistraties wijken af"));
-        }
-        ids.push(raster);
-    }
+    let mut geregistreerd = HashMap::<usize, ooxml_text::FontId>::new();
     let mut meten = BTreeMap::<String, Vec<u32>>::new();
     let mut tekenen = HashMap::new();
     for eis in benodigd
@@ -71,10 +62,32 @@ pub fn pagina(bron: &[u8], nummer: usize) -> Resultaat<(Vec<u8>, usize, usize)> 
         let key = eis["key"]
             .as_str()
             .ok_or_else(|| fout("Fontvereiste zonder sleutel"))?;
-        let chain = vec![
-            ids[usize::from(eis["bold"].as_bool().unwrap_or(false))],
-            ids[2],
-        ];
+        let familie = eis["family"].as_str().unwrap_or("Calibri");
+        let scripts = eis["scripts"]
+            .as_array()
+            .map(Vec::as_slice)
+            .unwrap_or_default();
+        let mut chain = Vec::new();
+        for letter in crate::lettertypen::keten(
+            familie,
+            eis["bold"].as_bool().unwrap_or(false),
+            eis["italic"].as_bool().unwrap_or(false),
+            scripts,
+        ) {
+            let ptr = letter.bytes.as_ptr() as usize;
+            let id = if let Some(id) = geregistreerd.get(&ptr) {
+                *id
+            } else {
+                let id = docx_layout::register_measure_font_bytes(letter.bytes).map_err(fout)?;
+                let raster = fonts.register(letter.bytes.to_vec()).map_err(fout)?;
+                if id != raster.to_u32() {
+                    return Err(fout("Fontregistraties wijken af"));
+                }
+                geregistreerd.insert(ptr, raster);
+                raster
+            };
+            chain.push(id);
+        }
         meten.insert(key.into(), chain.iter().map(|id| id.to_u32()).collect());
         tekenen.insert(key.into(), chain);
     }
@@ -92,7 +105,96 @@ pub fn pagina(bron: &[u8], nummer: usize) -> Resultaat<(Vec<u8>, usize, usize)> 
     let afbeeldingen = afbeeldingen(bron)?;
     let resources = docx_raster::RenderResources::new(&fonts, &tekenen, &afbeeldingen);
     let render = docx_raster::render_page(&dl, nummer, &resources).map_err(fout)?;
-    Ok((render.bytes, aantal, render.skipped_images))
+    let pagina = raakvlakken(
+        dl.pages
+            .get(nummer)
+            .ok_or_else(|| fout("Pagina bestaat niet"))?,
+    );
+    Ok((render.bytes, aantal, render.skipped_images, pagina))
+}
+
+fn raakvlakken(blad: &docx_layout::display_list::DisplayPage) -> crate::interactie::Pagina {
+    use crate::interactie::{Pagina, Raakvlak, Rechthoek};
+    use docx_layout::display_list::Primitive;
+    let n = |v: &serde_json::Number| v.as_f64().unwrap_or_default() as f32;
+    let mut pagina = Pagina {
+        inhoud: blad
+            .content_bounds
+            .as_ref()
+            .map(|g| crate::interactie::Rechthoek {
+                x: n(&g.x),
+                y: n(&g.y),
+                breedte: n(&g.width),
+                hoogte: n(&g.height),
+            }),
+        breedte: n(&blad.width),
+        hoogte: n(&blad.height),
+        vlakken: vec![],
+    };
+    for primitief in &blad.primitives {
+        let (attrs, grens) = match primitief {
+            Primitive::Rect(r) => (
+                &r.attrs,
+                Rechthoek {
+                    x: n(&r.x),
+                    y: n(&r.y),
+                    breedte: n(&r.w),
+                    hoogte: n(&r.h),
+                },
+            ),
+            Primitive::Text(r) => (
+                &r.attrs,
+                Rechthoek {
+                    x: n(&r.x),
+                    y: n(&r.baseline_y) - 16.,
+                    breedte: n(&r.width).max(8.),
+                    hoogte: 22.,
+                },
+            ),
+            Primitive::GlyphRun(r) if !r.glyphs.is_empty() => {
+                let links = r
+                    .glyphs
+                    .iter()
+                    .map(|g| g.x.min(g.x + g.advance))
+                    .fold(f64::INFINITY, f64::min);
+                let rechts = r
+                    .glyphs
+                    .iter()
+                    .map(|g| g.x.max(g.x + g.advance))
+                    .fold(f64::NEG_INFINITY, f64::max);
+                let boven = r
+                    .glyphs
+                    .iter()
+                    .map(|g| g.y - r.size)
+                    .fold(f64::INFINITY, f64::min);
+                let onder = r
+                    .glyphs
+                    .iter()
+                    .map(|g| g.y + r.size * 0.3)
+                    .fold(f64::NEG_INFINITY, f64::max);
+                (
+                    &r.attrs,
+                    Rechthoek {
+                        x: links as f32,
+                        y: boven as f32,
+                        breedte: (rechts - links).max(8.) as f32,
+                        hoogte: (onder - boven) as f32,
+                    },
+                )
+            }
+            _ => continue,
+        };
+        if let Some(id) = &attrs.para_id
+            && grens.breedte > 0.
+            && grens.hoogte > 0.
+        {
+            pagina.vlakken.push(Raakvlak {
+                id: id.clone(),
+                grens,
+            });
+        }
+    }
+    pagina
 }
 
 fn afbeeldingen(bron: &[u8]) -> Resultaat<docx_raster::ImageMap> {

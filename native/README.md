@@ -3,7 +3,9 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele gelijkwaardigheid.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.2**; de volledige migratie is nog open.
+
+[migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
 ![Native Writer, gerenderd door Iced](docs/screenshots/writer.png)
 
@@ -34,10 +36,10 @@ valt buiten de standaardtestmatrix.
 | Onderdeel | Native implementatie | Nog over te zetten |
 |---|---|---|
 | Venster | OpenAEC-ribbon, documenttabbladen, vijf thema’s, sneltoetsen, Bestand, openen/opslaan/opslaan als, sluitvragen | Herstelkopieën, recente bestanden, afgesplitste vensters, updater, vertalingen |
-| Writer | Native paginering en rasterbeeld, woorden inclusief tabellen, alinea’s met gemengde tekstopmaak bewerken, Markdown-export | Directe cursor op de pagina, velden/links/revisies bewerken, volledige opmaakribbon, tabellen invoegen, spelling, revisies, afdrukken |
-| Spreadsheet | Native rasterbeeld, A1:L30 selecteren en bewerken, formules herberekenen, bladen wisselen | Directe selectie in het raster, scrollen buiten het eerste bereik, opmaakribbon, rij/kolombewerkingen, CSV, grafieken |
-| Presentation | Native diaweergave, dia’s wisselen en tekstvelden bewerken; kern ondersteunt sprekersnotities | Directe selectie en verslepen, volledige vorm- en diaribbon, presentatiemodus |
-| Notition | Bestaande notitieboeken versie 3 openen/bewerken; onbekende velden en canvascoördinaten behouden | Canvasbediening, boeken/secties/pagina’s toevoegen, Markdown-preview, automatische opslag |
+| Writer | Native paginering, klikbare alinea’s, linialen, zoom, tekstbereikopmaak en uitlijning, woorden inclusief tabellen, Markdown-export | Directe rich-text-cursor op de pagina, alineastructuur, velden/links/revisies bewerken, volledige ribbon, tabellen invoegen, spelling en afdrukken |
+| Spreadsheet | Klikbare cellen, formulebalk, verplaatsbaar werkvenster via celadres/bereik, bereikopmaak, rijen/kolommen invoegen/verwijderen, samenvoegen/splitsen, herberekenen en bladen wisselen | Doorlopend raster met volledige toetsenbord- en sleepbediening, zoeken, sorteren/filteren, klembordbereiken, CSV en grafieken |
+| Presentation | Native diaweergave, niet-geroteerde tekstvakken aanklikken, tekstbereikopmaak, dia’s toevoegen/verwijderen, tekstvakken invoegen, sprekersnotities bewerken | Directe cursor en vormbediening, geroteerde/gegroepeerde objecten, volledige ribbon en presentatiemodus |
+| Notition | Versies 1–3 openen, boeken/secties/pagina’s toevoegen, vrij canvas met tekstvakken slepen/vergroten, Markdown-preview, bloktekst en vet/cursief, prullenbak herstellen; onbekende bronvelden behouden | Automatische lokale opslag/herstel, zoeken, boeken/secties hernoemen/verplaatsen, volledige blok- en taakbediening en import/export |
 | Email | Lokale EML lezen, originele bytes met bijlagen behouden; opslaan in IFCX | IMAP/SMTP/OAuth en accounts verbinden met het native venster |
 | Database | Bestaande aparte app blijft beschikbaar | Native database-interface; laagste prioriteit |
 | Formaten | DOCX, XLSX, PPTX, notitie-JSON, EML, IFCX-bewaarprofiel | Overige import/export en conversie aansluiten |
@@ -48,6 +50,10 @@ bewerkbaar is. Writer weigert tekstvervanging bij inline objecten, velden, links
 de vorige bron blijft dan intact. Gewone tekst met meerdere opmaakruns houdt
 de opmaak van ongewijzigde tekstdelen. Regeleinden worden zachte regelovergangen
 binnen de alinea; nieuwe alinea’s invoegen volgt nog.
+
+![Vrij native notitiecanvas](docs/screenshots/notition-canvas.png)
+
+![Native Markdown-werkruimte](docs/screenshots/notition-markdown.png)
 
 ## Bewaring en snelheid
 
@@ -92,8 +98,10 @@ Nog niet vrijgegeven: volledige native GUI-bediening, schone installatie,
 platformintegratie, toegankelijkheid met een echte schermlezer, realistische
 mailaccounts, grote-documentprestaties en het volledige bestaande bestandencorpus.
 De UI-bibliotheek bewaart toegankelijkheidsnamen maar heeft nog geen werkende
-schermlezerbrug. De huidige paginaweergave gebruikt de meegeleverde Inter/Noto-
-lettertypen als vervanging; dit kan afwijken van de documentlettertypen.
+schermlezerbrug. Writer en Presentation gebruiken dezelfde bundel van 70 open
+lettertypen als de bestaande suite, met stijl- en taalgebonden resolutie.
+Onbekende families kunnen nog steeds een terugval krijgen. Systeemletters en
+volledige visuele gelijkwaardigheid zijn nog niet aangetoond.
 
 ## Bron en licenties
 
@@ -106,3 +114,21 @@ gaan mee in het previewpakket. De native documentengines zijn Apache-2.0 en
 vastgelegd op versie 0.5.1 in Cargo.lock. De layoutadapter volgt het openbare
 native-viewer-voorbeeld van openooxml/betteroffice; de bronverwijzing staat in
 `crates/office-core/src/writer_beeld.rs`.
+
+## Visuele vergelijking en vrijgave
+
+`native/scripts/vergelijk-schermen.py` vergelijkt echte PNG-bronbeelden op
+hetzelfde viewportformaat, zonder schalen of uitlijnen. Standaard is geen enkel
+afwijkend pixel toegestaan. Hiervoor is Pillow nodig. Een geslaagde native
+rendertest is dus geen bewijs dat het beeld gelijk is aan de bestaande suite.
+
+```sh
+python3 native/scripts/controleer-migratie.py
+python3 native/scripts/controleer-migratie.py --vrijgave
+python3 native/scripts/vergelijk-schermen.py referentie.png native.png --uitvoer pixelcontrole
+```
+
+De vrijgavecontrole is momenteel terecht **niet geslaagd**: de native suite mist
+nog functies en de UI is nog niet pixelgelijk. Alpha-pakketten blijven als
+preview beschikbaar; een stabiel pakket wordt door `verpak.py` geweigerd zolang
+de acceptatiegebieden openstaan.

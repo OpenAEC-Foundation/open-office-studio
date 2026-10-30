@@ -6,6 +6,207 @@ use iced::advanced::{
 use office_core::document::Sessie;
 use openaec_ui::design::a11y::Collect;
 
+#[test]
+fn unicode_selectie_wordt_van_iced_bytes_naar_documenttekens_vertaald() {
+    use iced::advanced::text::editor::Position;
+    let inhoud = text_editor::Content::with_text("café 🏠\ntweede regel");
+    assert_eq!(
+        lint::tekenoffset(&inhoud, Position { line: 0, column: 5 }),
+        4
+    );
+    assert_eq!(
+        lint::tekenoffset(
+            &inhoud,
+            Position {
+                line: 0,
+                column: 10
+            }
+        ),
+        6
+    );
+    assert_eq!(
+        lint::tekenoffset(&inhoud, Position { line: 1, column: 6 }),
+        13
+    );
+}
+#[test]
+fn blad_klikken_schaalt_correct_en_respecteert_het_scrollvenster() {
+    use iced::{Rectangle, mouse};
+    use office_core::interactie::{Pagina, Raakvlak, Rechthoek};
+    lettertypen();
+    let p = Pagina {
+        inhoud: None,
+        breedte: 200.,
+        hoogte: 100.,
+        vlakken: vec![Raakvlak {
+            id: "rechts".into(),
+            grens: Rechthoek {
+                x: 100.,
+                y: 0.,
+                breedte: 100.,
+                hoogte: 100.,
+            },
+        }],
+    };
+    let mut element = documentblad::blad(
+        container(iced::widget::Space::new()).width(100).height(50),
+        &p,
+        None,
+        iced::Color::BLACK,
+        Msg::Raak,
+    );
+    let r = iced_tiny_skia::Renderer::new(fonts::BODY, iced::Pixels(12.));
+    let mut tree = Tree::new(&element);
+    let node = element.as_widget_mut().layout(
+        &mut tree,
+        &r,
+        &layout::Limits::new(Size::ZERO, Size::new(500., 500.)),
+    );
+    let mut berichten = vec![];
+    for breedte in [50., 500.] {
+        let mut shell = iced::advanced::Shell::new(&mut berichten);
+        element.as_widget_mut().update(
+            &mut tree,
+            &iced::Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
+            Layout::new(&node),
+            mouse::Cursor::Available(iced::Point::new(75., 20.)),
+            &r,
+            &mut iced::advanced::clipboard::Null,
+            &mut shell,
+            &Rectangle::new(iced::Point::ORIGIN, Size::new(breedte, 500.)),
+        );
+    }
+    assert_eq!(berichten.len(), 1);
+    assert!(matches!(&berichten[0],Msg::Raak(id) if id=="rechts"));
+}
+#[test]
+fn canvas_slepen_geeft_een_enkele_definitieve_bewerking() {
+    use iced::{Rectangle, mouse};
+    use office_core::interactie::Rechthoek;
+    let grens = Rechthoek {
+        x: 40.,
+        y: 32.,
+        breedte: 560.,
+        hoogte: 160.,
+    };
+    let mut element = sleepvak::vak(
+        container(iced::widget::Space::new())
+            .width(560)
+            .height(160)
+            .into(),
+        1,
+        0,
+        grens,
+        1.,
+        true,
+    );
+    let r = iced_tiny_skia::Renderer::new(fonts::BODY, iced::Pixels(12.));
+    let mut tree = Tree::new(&element);
+    let node = element.as_widget_mut().layout(
+        &mut tree,
+        &r,
+        &layout::Limits::new(Size::ZERO, Size::new(1000., 1000.)),
+    );
+    let mut berichten = vec![];
+    for (event, punt) in [
+        (
+            mouse::Event::ButtonPressed(mouse::Button::Left),
+            iced::Point::new(10., 10.),
+        ),
+        (
+            mouse::Event::CursorMoved {
+                position: iced::Point::new(250., 310.),
+            },
+            iced::Point::new(250., 310.),
+        ),
+        (
+            mouse::Event::ButtonReleased(mouse::Button::Left),
+            iced::Point::new(250., 310.),
+        ),
+    ] {
+        let mut shell = iced::advanced::Shell::new(&mut berichten);
+        element.as_widget_mut().update(
+            &mut tree,
+            &iced::Event::Mouse(event),
+            Layout::new(&node),
+            mouse::Cursor::Available(punt),
+            &r,
+            &mut iced::advanced::clipboard::Null,
+            &mut shell,
+            &Rectangle::with_size(Size::new(1000., 1000.)),
+        );
+    }
+    assert_eq!(
+        berichten
+            .iter()
+            .filter(|m| matches!(m, Msg::NotitiePlaats(_, _, true)))
+            .count(),
+        1
+    );
+    assert!(
+        matches!(berichten.last(),Some(Msg::NotitiePlaats(0,g,true)) if g.x==280. && g.y==332.)
+    );
+    let g = sleepvak::verschuif(grens, -100., 40_000., false);
+    assert_eq!((g.x, g.y), (0., 20000.));
+    let g = sleepvak::verschuif(grens, -1000., 10000., true);
+    assert_eq!((g.breedte, g.hoogte), (200., 5000.));
+}
+#[test]
+fn notitie_canvas_en_markdown_renderen_met_benoemde_bediening() {
+    use office_core::notities::NotitieActie as N;
+    let mut s = Sessie::nieuw(Module::Notition).unwrap();
+    s.bewerk(0, Bewerking::Notitie(N::Sectiesoort { markdown: false }))
+        .unwrap();
+    for (x, y, tekst) in [
+        (40., 32., "Een vrij tekstvak"),
+        (660., 240., "Een idee op een andere plek"),
+    ] {
+        s.bewerk(0, Bewerking::Notitie(N::NieuwVak { x, y }))
+            .unwrap();
+        let b = s.weergave(0).unwrap();
+        let id = b.velden.last().unwrap().id.clone();
+        s.bewerk(
+            0,
+            Bewerking::Tekst {
+                id,
+                tekst: tekst.into(),
+            },
+        )
+        .unwrap();
+    }
+    for (naam, markdown) in [("notition-canvas", false), ("notition-markdown", true)] {
+        s.bewerk(0, Bewerking::Notitie(N::Sectiesoort { markdown }))
+            .unwrap();
+        let app = app_met_document(Module::Notition, &s.bron());
+        assert!(toegankelijkheid(&app).unnamed.is_empty());
+        let png = render(&app);
+        if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+            std::fs::create_dir_all(&map).unwrap();
+            png.save_png(PathBuf::from(map).join(format!("{naam}.png")))
+                .unwrap();
+        }
+    }
+}
+#[test]
+fn huidige_writer_referentie_renderen_op_browserformaat() {
+    let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") else {
+        return;
+    };
+    let mut app = app_met_document(
+        Module::Writer,
+        include_bytes!("../../../../docs/voorbeelden/Ontwerpnotitie.docx"),
+    );
+    app.thema = ThemeId::Dark;
+    app.venster_grootte = Size::new(1058., 892.);
+    let t = app.tab_mut().unwrap();
+    t.naam = "Ontwerpnotitie.docx".into();
+    t.panelen = false;
+    t.opgeslagen = Some(t.antwoord.as_ref().unwrap().hash.clone());
+    let png = render_grootte(&app, 1058, 892);
+    png.save_png(PathBuf::from(map).join("writer-native-referentie.png"))
+        .unwrap();
+}
+
 fn app_met_document(module: Module, bytes: &[u8]) -> App {
     let mut app = App {
         thema: ThemeId::Light,
@@ -14,7 +215,15 @@ fn app_met_document(module: Module, bytes: &[u8]) -> App {
     let sessie = Sessie::open(module, bytes.to_vec()).unwrap();
     let mut tab = Tab::nieuw(1, format!("Voorbeeld.{}", module.extensie()));
     tab.bezig = false;
-    let beeld = sessie.weergave(0).unwrap();
+    let mut beeld = sessie.weergave(0).unwrap();
+    lint::vul_beeldmaat(&mut beeld);
+    tab.panelen = module != Module::Spreadsheet;
+    tab.markdown = beeld
+        .velden
+        .iter()
+        .find(|v| v.naam == "Markdown")
+        .map(|v| iced::widget::markdown::parse(&v.tekst).collect())
+        .unwrap_or_default();
     tab.afbeelding = beeld
         .afbeelding
         .as_ref()
@@ -98,7 +307,11 @@ fn lettertypen() {
         let mut s = iced_tiny_skia::graphics::text::font_system()
             .write()
             .unwrap();
-        for b in fonts::FILES {
+        for b in fonts::FILES.into_iter().chain([
+            office_core::lettertypen::kies("Inter", true, false).bytes,
+            office_core::lettertypen::kies("Inter", false, true).bytes,
+            office_core::lettertypen::kies("Inter", true, true).bytes,
+        ]) {
             s.load_font(std::borrow::Cow::Borrowed(b));
         }
     });
@@ -135,10 +348,13 @@ fn benoemde_bediening_in_document_bestand_en_instellingen() {
 }
 /// Dezelfde software-renderer als de app; draait zonder scherm of webbrowser.
 fn render(app: &App) -> tiny_skia::Pixmap {
+    render_grootte(app, 1440, 900)
+}
+fn render_grootte(app: &App, breedte: u32, hoogte: u32) -> tiny_skia::Pixmap {
     use iced::advanced::renderer;
     use iced::{Color, Rectangle, mouse};
     lettertypen();
-    let size = Size::new(1440., 900.);
+    let size = Size::new(breedte as f32, hoogte as f32);
     let mut element = app.view();
     let mut renderer = iced_tiny_skia::Renderer::new(fonts::BODY, iced::Pixels(12.));
     let mut tree = Tree::new(&element);
@@ -175,20 +391,21 @@ fn render(app: &App) -> tiny_skia::Pixmap {
         mouse::Cursor::Unavailable,
         &Rectangle::with_size(size),
     );
-    let mut bytes = vec![0; 1440 * 900 * 4];
-    let mut pixels = tiny_skia::PixmapMut::from_bytes(&mut bytes, 1440, 900).unwrap();
-    let mut mask = tiny_skia::Mask::new(1440, 900).unwrap();
+    let mut bytes = vec![0; breedte as usize * hoogte as usize * 4];
+    let mut pixels = tiny_skia::PixmapMut::from_bytes(&mut bytes, breedte, hoogte).unwrap();
+    let mut mask = tiny_skia::Mask::new(breedte, hoogte).unwrap();
     renderer.draw(
         &mut pixels,
         &mut mask,
-        &iced_tiny_skia::graphics::Viewport::with_physical_size(Size::new(1440, 900), 1.),
+        &iced_tiny_skia::graphics::Viewport::with_physical_size(Size::new(breedte, hoogte), 1.),
         &[Rectangle::with_size(size)],
         Color::WHITE,
     );
     for pixel in bytes.as_chunks_mut::<4>().0 {
         pixel.swap(0, 2);
     }
-    tiny_skia::Pixmap::from_vec(bytes, tiny_skia::IntSize::from_wh(1440, 900).unwrap()).unwrap()
+    tiny_skia::Pixmap::from_vec(bytes, tiny_skia::IntSize::from_wh(breedte, hoogte).unwrap())
+        .unwrap()
 }
 #[test]
 fn native_schermen_renderen() {

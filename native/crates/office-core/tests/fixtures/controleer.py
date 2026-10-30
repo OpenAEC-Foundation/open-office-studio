@@ -34,3 +34,20 @@ p = rijk.slides[0].shapes[0].text_frame.paragraphs[0]
 assert p.text == 'Native laatste 🏠 tekst'
 assert p.runs[0].text == 'Native ' and p.runs[0].font.bold
 print('Native DOCX/XLSX/PPTX: inhoud, stijlen, formules, rekenwaarden, tabellen, notities en tweede blad/dia onafhankelijk goedgekeurd.')
+
+opmaak = Document(map/'writer-opmaak.docx')
+p = next(p for p in opmaak.paragraphs if p.text == 'Behoud deze cursieve tekst.')
+assert p.runs[0].text == 'Behoud ' and p.runs[0].bold
+assert next(r for r in p.runs if r.text == 'deze').underline
+assert next(r for r in p.runs if r.text == 'deze').italic
+assert int(p.alignment) == 1
+letter = Document(map/'writer-lettergrootte.docx')
+p = next(p for p in letter.paragraphs if p.text == 'Bewerkbare oorspronkelijke alinea.')
+assert p.runs[0].font.size.pt == 10.5
+structuur = load_workbook(map/'spreadsheet-structuur.xlsx', data_only=False)
+s = structuur['Begroting']
+assert s['D3'].value == '=B3*C3'
+assert s['B3'].font.bold and s['C4'].font.bold
+assert s['B3'].fill.fgColor.rgb.upper().endswith('FFF2CC')
+assert structuur['Tweede blad']['A1'].value == 'Bewaar ook dit blad'
+print('Native uitbreidingen: tekstbereikopmaak, halve punten en celstijl/rij-invoeging onafhankelijk goedgekeurd.')

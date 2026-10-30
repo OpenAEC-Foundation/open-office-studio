@@ -17,6 +17,8 @@ betteroffice-docx.workspace = true
 betteroffice-xlsx.workspace = true
 betteroffice-pptx.workspace = true
 mail-parser = "0.11"
+uuid = { version = "1", features = ["v4"] }
+chrono = { version = "0.4", default-features = false, features = ["clock"] }
 
 docx-edit = { package = "betteroffice-docx-edit", version = "=0.5.1" }
 docx-layout = { package = "betteroffice-docx-layout", version = "=0.5.1" }

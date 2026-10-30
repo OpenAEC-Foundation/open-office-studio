@@ -18,6 +18,7 @@ pub enum Opdracht {
     Nieuw(Module),
     Open(Module, Vec<u8>),
     Deel(usize),
+    Cel(usize, String),
     Bewerk(usize, Bewerking),
     Terug,
     Vooruit,
@@ -71,8 +72,9 @@ impl Werker {
                                 beeld=Some(sessie.weergave(n).map_err(|e| e.to_string())?);
                                 *deel = n;
                             }
+                            Opdracht::Cel(n,adres) => {beeld=Some(sessie.naar_cel(n,&adres).map_err(|e|e.to_string())?);*deel=n;}
                             Opdracht::Bewerk(n, b) => {
-                                beeld=Some(sessie.bewerk_met_weergave(n, b).map_err(|e| e.to_string())?)
+                                let b=sessie.bewerk_met_weergave(n,b).map_err(|e|e.to_string())?;*deel=n.min(b.onderdelen.len().saturating_sub(1));beeld=Some(b);
                             }
                             Opdracht::Terug => sessie.terug().map_err(|e| e.to_string())?,
                             Opdracht::Vooruit => sessie.vooruit().map_err(|e| e.to_string())?,

@@ -1,10 +1,19 @@
 #![cfg_attr(all(windows, not(debug_assertions)), windows_subsystem = "windows")]
 //! Volledig native venster: geen browser, React, JavaScript of Tauri-runtime.
+mod documentblad;
+mod lineaal;
+mod lint;
+mod notitie_ui;
+mod sleepvak;
+mod stijl;
 mod werker;
 use iced::widget::{column, container, image, row, scrollable, text_editor, text_input};
 use office_core::{
     document::{Bewerking, Module, Veld},
-    ifcx, opslag,
+    ifcx,
+    opmaak::Opmaak,
+    opslag,
+    rekenblad::Structuur,
 };
 use openaec_ui::design::{
     Look, ThemeId,
@@ -21,7 +30,26 @@ use openaec_ui::{
 use std::path::PathBuf;
 use werker::{Antwoord, Opdracht, Werker};
 fn icoon(i: Icon) -> &'static str {
-    std::str::from_utf8(i.bytes()).expect("meegeleverd SVG")
+    // De vaste semantische SVG's gebruiken zwart; Blueprint kleurt currentColor.
+    // Een eenmalige adapter maakt dezelfde bron ook leesbaar in donkere thema's.
+    static BRONNEN: std::sync::OnceLock<Vec<(Icon, &'static str)>> = std::sync::OnceLock::new();
+    BRONNEN
+        .get_or_init(|| {
+            Icon::ALL
+                .into_iter()
+                .map(|icoon| {
+                    let tekst = std::str::from_utf8(icoon.bytes())
+                        .expect("meegeleverd SVG")
+                        .replace("\"#000\"", "\"currentColor\"")
+                        .replace("\"#000000\"", "\"currentColor\"");
+                    (icoon, &*Box::leak(tekst.into_boxed_str()))
+                })
+                .collect()
+        })
+        .iter()
+        .find(|(icoon, _)| *icoon == i)
+        .expect("icoon in vaste catalogus")
+        .1
 }
 #[derive(Debug, Clone)]
 enum Msg {
@@ -39,6 +67,21 @@ enum Msg {
     Veld(usize),
     Adres(String),
     GaNaar,
+    Raak(String),
+    Opmaak(Opmaak),
+    Structuur(Structuur),
+    Dia(office_core::presentatie::DiaActie),
+    Formule(String),
+    Panelen,
+    Notitie(office_core::notities::NotitieActie),
+    NotitiePlaats(usize, office_core::interactie::Rechthoek, bool),
+    CanvasAnnuleer,
+    Koppeling(String),
+    Grootte(String),
+    Lettertype(String),
+    Zoom(f32),
+    VensterGrootte(Size),
+    Schuif(iced::Point),
     Invoer(text_editor::Action),
     PasToe,
     Opslaan(u64, bool),
@@ -90,6 +133,15 @@ struct Tab {
     editor: text_editor::Content,
     concept: bool,
     adres: String,
+    doel_cel: Option<String>,
+    zoom: f32,
+    grootte: String,
+    lettertype: String,
+    panelen: bool,
+    canvas_voorbeeld: Option<(usize, office_core::interactie::Rechthoek)>,
+    markdown: Vec<iced::widget::markdown::Item>,
+    notitie_invoer: bool,
+    scroll: iced::Point,
     na_bewerking: Option<bool>, // Opslaan; bool geeft Opslaan als aan.
 }
 impl Tab {
@@ -112,6 +164,15 @@ impl Tab {
             editor: text_editor::Content::new(),
             concept: false,
             adres: "A1".into(),
+            doel_cel: None,
+            zoom: 1.,
+            grootte: "11".into(),
+            lettertype: "Inter".into(),
+            panelen: true,
+            canvas_voorbeeld: None,
+            markdown: vec![],
+            notitie_invoer: false,
+            scroll: iced::Point::ORIGIN,
             na_bewerking: None,
         }
     }
@@ -131,6 +192,12 @@ impl Tab {
             self.editor = text_editor::Content::with_text(&veld.tekst);
             self.adres = veld.id.clone();
             self.concept = false;
+            self.grootte = veld.opmaak.grootte.unwrap_or(11.).to_string();
+            self.lettertype = veld
+                .opmaak
+                .lettertype
+                .clone()
+                .unwrap_or_else(|| "Inter".into());
         }
     }
 }
@@ -147,6 +214,7 @@ struct App {
     melding: String,
     sluiten: Option<u64>,
     venster_sluiten: bool,
+    venster_grootte: Size,
 }
 impl Default for App {
     fn default() -> Self {
@@ -165,16 +233,19 @@ impl Default for App {
             melding: "Gereed".into(),
             sluiten: None,
             venster_sluiten: false,
+            venster_grootte: Size::new(1440., 900.),
         }
     }
 }
 impl App {
     fn look(&self) -> Look {
-        Display {
-            theme: self.thema,
-            ..self.display
-        }
-        .look()
+        stijl::office(
+            Display {
+                theme: self.thema,
+                ..self.display
+            }
+            .look(),
+        )
     }
     fn tab(&self) -> Option<&Tab> {
         self.tabs.get(self.actief)
@@ -212,6 +283,7 @@ impl App {
                     | Msg::Annuleer
                     | Msg::Doel(..)
                     | Msg::Geschreven(..)
+                    | Msg::VensterGrootte(..)
                     | Msg::Gereed(..)
                     | Msg::Opslaan(..)
             )
@@ -316,20 +388,73 @@ impl App {
                 if let Some(tab) = self.tabs.iter_mut().find(|t| t.id == id) {
                     tab.bezig = false;
                     match resultaat {
-                        Ok(antwoord) => {
+                        Ok(mut antwoord) => {
+                            lint::vul_beeldmaat(&mut antwoord.beeld);
+                            if tab.antwoord.is_none()
+                                && antwoord.beeld.module == Module::Spreadsheet
+                            {
+                                tab.panelen = false;
+                            }
                             self.melding = antwoord.beeld.melding.clone();
                             tab.afbeelding = antwoord
                                 .beeld
                                 .afbeelding
                                 .as_ref()
                                 .map(|b| image::Handle::from_bytes(b.clone()));
+                            tab.canvas_voorbeeld = None;
+                            tab.notitie_invoer = false;
+                            tab.markdown = antwoord
+                                .beeld
+                                .velden
+                                .iter()
+                                .find(|v| v.naam == "Markdown")
+                                .map(|v| iced::widget::markdown::parse(&v.tekst).collect())
+                                .unwrap_or_default();
                             tab.antwoord = Some(antwoord);
-                            tab.toon_veld(tab.gekozen);
+                            tab.deel = tab.deel.min(
+                                tab.antwoord
+                                    .as_ref()
+                                    .unwrap()
+                                    .beeld
+                                    .onderdelen
+                                    .len()
+                                    .saturating_sub(1),
+                            );
+                            let bereik = tab.doel_cel.take().unwrap_or_else(|| tab.adres.clone());
+                            let doel = bereik.split(':').next().unwrap_or_default();
+                            let keuze = tab
+                                .antwoord
+                                .as_ref()
+                                .and_then(|a| {
+                                    a.beeld
+                                        .velden
+                                        .iter()
+                                        .position(|v| v.id.eq_ignore_ascii_case(doel))
+                                })
+                                .unwrap_or(
+                                    tab.gekozen.min(
+                                        tab.antwoord
+                                            .as_ref()
+                                            .unwrap()
+                                            .beeld
+                                            .velden
+                                            .len()
+                                            .saturating_sub(1),
+                                    ),
+                                );
+                            tab.toon_veld(keuze);
+                            if bereik.contains(':')
+                                && tab.antwoord.as_ref().unwrap().beeld.module
+                                    == Module::Spreadsheet
+                            {
+                                tab.adres = bereik;
+                            }
                             vervolg = tab.na_bewerking.take();
                         }
                         Err(e) => {
                             self.melding = e;
                             tab.na_bewerking = None;
+                            tab.canvas_voorbeeld = None;
                             fout = true;
                         }
                     }
@@ -368,6 +493,7 @@ impl App {
                         );
                     }
                     t.toon_veld(n);
+                    t.notitie_invoer = true;
                 }
             }
             Msg::Adres(a) => {
@@ -375,18 +501,201 @@ impl App {
                     t.adres = a;
                 }
             }
-            Msg::GaNaar => {
-                if let Some(t) = self.tab() {
-                    if let Some(n) = t.antwoord.as_ref().and_then(|a| {
-                        a.beeld
-                            .velden
-                            .iter()
-                            .position(|v| v.id.eq_ignore_ascii_case(t.adres.trim()))
-                    }) {
-                        return self.update(Msg::Veld(n));
+            Msg::Raak(id) => {
+                if let Some(n) = self
+                    .tab()
+                    .and_then(|t| t.antwoord.as_ref())
+                    .and_then(|a| a.beeld.velden.iter().position(|v| v.id == id))
+                {
+                    return self.update(Msg::Veld(n));
+                }
+            }
+            Msg::VensterGrootte(g) => {
+                self.venster_grootte = g;
+            }
+            Msg::Schuif(p) => {
+                if let Some(t) = self.tab_mut() {
+                    t.scroll = p;
+                }
+            }
+            Msg::Zoom(z) => {
+                if let Some(t) = self.tab_mut() {
+                    t.zoom = z.clamp(0.25, 3.);
+                }
+            }
+            Msg::CanvasAnnuleer => {
+                if let Some(t) = self.tab_mut() {
+                    t.canvas_voorbeeld = None;
+                }
+            }
+            Msg::NotitiePlaats(vak, grens, vast) => {
+                if let Some(t) = self.tab_mut() {
+                    if t.bezig || t.concept {
+                        return Task::none();
                     }
-                    return self
-                        .waarschuwing("Dit celadres valt buiten het zichtbare bereik A1:L30");
+                    t.canvas_voorbeeld = Some((vak, grens));
+                    if vast {
+                        return self.update(Msg::Notitie(
+                            office_core::notities::NotitieActie::Plaats { vak, grens },
+                        ));
+                    }
+                }
+            }
+            Msg::Notitie(actie) => {
+                if let Some(t) = self.tab_mut() {
+                    if t.bezig || t.concept {
+                        return self.waarschuwing("Pas de huidige tekst eerst toe");
+                    }
+                    let opdracht = Opdracht::Bewerk(t.deel, Bewerking::Notitie(actie));
+                    let id = t.id;
+                    return self.opdracht(id, opdracht);
+                }
+            }
+            Msg::Koppeling(uri) => {
+                if uri.starts_with("https://") || uri.starts_with("http://") {
+                    return Task::perform(
+                        async move {
+                            std::thread::spawn(move || {
+                                #[cfg(target_os = "windows")]
+                                let opdracht = "explorer.exe";
+                                #[cfg(target_os = "macos")]
+                                let opdracht = "open";
+                                #[cfg(not(any(target_os = "windows", target_os = "macos")))]
+                                let opdracht = "xdg-open";
+                                std::process::Command::new(opdracht)
+                                    .arg(uri)
+                                    .status()
+                                    .map_err(|e| e.to_string())
+                                    .and_then(|s| {
+                                        if s.success() {
+                                            Ok("Koppeling geopend".into())
+                                        } else {
+                                            Err("Koppeling kon niet worden geopend".into())
+                                        }
+                                    })
+                            })
+                            .join()
+                            .unwrap_or_else(|_| Err("Koppeling kon niet worden geopend".into()))
+                        },
+                        Msg::ExportKlaar,
+                    );
+                }
+                return self.waarschuwing("Alleen webkoppelingen kunnen worden geopend");
+            }
+            Msg::Panelen => {
+                if let Some(t) = self.tab_mut() {
+                    t.panelen = !t.panelen;
+                }
+            }
+            Msg::Formule(tekst) => {
+                if let Some(t) = self.tab_mut()
+                    && !t.bezig
+                    && t.veld().is_some_and(|v| v.bewerkbaar)
+                {
+                    t.editor = text_editor::Content::with_text(&tekst);
+                    t.concept = true;
+                }
+            }
+            Msg::Dia(actie) => {
+                if let Some(t) = self.tab_mut() {
+                    if t.bezig || t.concept {
+                        return self.waarschuwing("Pas de ingevoerde tekst eerst toe");
+                    }
+                    let opdracht = Opdracht::Bewerk(t.deel, Bewerking::Dia(actie));
+                    let id = t.id;
+                    return self.opdracht(id, opdracht);
+                }
+            }
+            Msg::Grootte(g) => {
+                if let Some(t) = self.tab_mut() {
+                    t.grootte = g;
+                }
+            }
+            Msg::Lettertype(g) => {
+                if let Some(t) = self.tab_mut() {
+                    t.lettertype = g;
+                }
+            }
+            Msg::Opmaak(stijl) => {
+                if let Some(t) = self.tab_mut() {
+                    if t.bezig || t.concept {
+                        return self.waarschuwing("Pas de ingevoerde tekst eerst toe");
+                    }
+                    if let Some(v) = t.veld() {
+                        let module = t.antwoord.as_ref().unwrap().beeld.module;
+                        let id = if module == Module::Spreadsheet {
+                            t.adres.clone()
+                        } else {
+                            v.id.clone()
+                        };
+                        let cursor = t.editor.cursor();
+                        let offset = |p: iced::advanced::text::editor::Position| {
+                            lint::tekenoffset(&t.editor, p)
+                        };
+                        let (begin, einde) = if let Some(anchor) = cursor.selection {
+                            let a = offset(anchor);
+                            let b = offset(cursor.position);
+                            (a.min(b), a.max(b))
+                        } else {
+                            (0, v.tekst.chars().count())
+                        };
+                        let opdracht = Opdracht::Bewerk(
+                            t.deel,
+                            Bewerking::Opmaak {
+                                id,
+                                begin,
+                                einde,
+                                stijl,
+                            },
+                        );
+                        let id = t.id;
+                        return self.opdracht(id, opdracht);
+                    }
+                }
+            }
+            Msg::Structuur(actie) => {
+                if let Some(t) = self.tab_mut() {
+                    if t.bezig || t.concept {
+                        return self.waarschuwing("Pas de ingevoerde tekst eerst toe");
+                    }
+                    let id = t.id;
+                    let opdracht = Opdracht::Bewerk(
+                        t.deel,
+                        Bewerking::Structuur {
+                            adres: t.adres.clone(),
+                            actie,
+                        },
+                    );
+                    return self.opdracht(id, opdracht);
+                }
+            }
+            Msg::GaNaar => {
+                if let Some(t) = self.tab_mut() {
+                    if t.bezig || t.concept {
+                        return self.waarschuwing(
+                            "Pas de huidige tekst eerst toe of maak de invoer ongedaan",
+                        );
+                    }
+                    let adres = t.adres.trim().to_ascii_uppercase();
+                    match office_core::rekenblad::bereik(&adres) {
+                        Ok(r) => {
+                            let cel = r.start.to_a1();
+                            if let Some(n) = t
+                                .antwoord
+                                .as_ref()
+                                .and_then(|a| a.beeld.velden.iter().position(|v| v.id == cel))
+                            {
+                                t.toon_veld(n);
+                                t.adres = adres;
+                            } else {
+                                let id = t.id;
+                                t.doel_cel = Some(adres.clone());
+                                let opdracht = Opdracht::Cel(t.deel, adres);
+                                return self.opdracht(id, opdracht);
+                            }
+                        }
+                        Err(e) => return self.waarschuwing(&e.to_string()),
+                    }
                 }
             }
             Msg::Invoer(actie) => {
@@ -749,6 +1058,7 @@ impl App {
             openaec_ui::keyboard::presses().map(Msg::Toets),
             openaec_ui::keyboard::navigation().map(Msg::Navigeer),
             iced::window::close_requests().map(|_| Msg::SluitVenster),
+            iced::window::resize_events().map(|(_, g)| Msg::VensterGrootte(g)),
         ])
     }
     fn view(&self) -> Element<'_, Msg> {
@@ -928,6 +1238,9 @@ impl App {
         iced::widget::Stack::with_children(lagen).into()
     }
     fn ribbon(&self) -> Element<'_, Msg> {
+        if let Some(lint) = lint::ribbon(self) {
+            return lint;
+        }
         let l = self.look();
         if self.lint == 1 {
             return w::ribbon(
@@ -1178,147 +1491,276 @@ impl App {
             .collect();
         let t = self.tab().unwrap();
         let werk: Element<_> = if let Some(a) = &t.antwoord {
-            let mut nav = column![w::mono_label(l, a.beeld.module.naam())].spacing(6);
-            for (i, naam) in a.beeld.onderdelen.iter().enumerate() {
-                nav = nav.push(w::button(
-                    l,
-                    naam,
-                    if i == t.deel { K::Secondary } else { K::Quiet },
-                    D::Compact,
-                    None,
-                    (!t.bezig).then_some(Msg::Deel(i)),
-                ));
-            }
-            let navigator = w::panel(
-                l,
-                "Navigatie",
-                190.,
-                vec![],
-                scrollable(nav.padding(12)).into(),
-            );
-            let inhoud: Element<_> = if let Some(afbeelding) = &t.afbeelding {
-                container(image(afbeelding.clone()).width(Length::Fill))
-                    .width(Length::Fill)
-                    .padding(28)
-                    .into()
+            if a.beeld.module == Module::Notition {
+                notitie_ui::weergave(self, t, a)
             } else {
-                let mut blad =
-                    column![w::mono_label(l, "OPENAEC"), w::heading(l, &t.naam, 26.)].spacing(14);
-                for (i, veld) in a.beeld.velden.iter().enumerate() {
-                    if !veld.tekst.is_empty() || veld.bewerkbaar {
-                        let tekst = if veld.tekst.is_empty() {
-                            "Klik om te schrijven"
-                        } else {
-                            &veld.tekst
-                        };
-                        blad = blad.push(w::button(
-                            l,
-                            tekst,
-                            if i == t.gekozen {
-                                K::Secondary
-                            } else {
-                                K::Quiet
-                            },
-                            D::Regular,
-                            None,
-                            Some(Msg::Veld(i)),
-                        ));
-                    }
+                let mut nav = column![w::mono_label(l, a.beeld.module.naam())].spacing(6);
+                for (i, naam) in a.beeld.onderdelen.iter().enumerate() {
+                    nav = nav.push(w::button(
+                        l,
+                        naam,
+                        if i == t.deel { K::Secondary } else { K::Quiet },
+                        D::Compact,
+                        None,
+                        (!t.bezig).then_some(Msg::Deel(i)),
+                    ));
                 }
-                container(blad.padding(38))
-                    .max_width(820)
-                    .width(Length::Fill)
-                    .style(move |_| w::panel_style(l))
-                    .into()
-            };
-            let midden = container(scrollable(inhoud).height(Length::Fill))
-                .padding(20)
-                .width(Length::Fill)
-                .height(Length::Fill)
-                .style(move |_| container::Style {
-                    background: Some(c.workspace.into()),
-                    ..Default::default()
-                });
-            let mut velden = column![].spacing(3);
-            for (i, veld) in a.beeld.velden.iter().enumerate() {
-                let label = if a.beeld.module == Module::Spreadsheet {
-                    format!("{}  {}", veld.naam, veld.tekst)
-                } else {
-                    format!(
-                        "{}  {}",
-                        veld.naam,
-                        veld.tekst.chars().take(36).collect::<String>()
-                    )
-                };
-                velden = velden.push(tekstknop(
+                let navigator = w::panel(
                     l,
-                    label,
-                    if i == t.gekozen {
-                        K::Secondary
-                    } else {
-                        K::Quiet
-                    },
-                    D::Compact,
-                    None,
-                    (!t.bezig).then_some(Msg::Veld(i)),
-                ));
-            }
-            let veld = t.veld();
-            let mut editor = column![w::mono_label(l, "TEKST BEWERKEN")].spacing(10);
-            if a.beeld.module == Module::Spreadsheet {
-                editor = editor.push(
-                    row![
-                        openaec_ui::design::a11y::named(
-                            text_input("Celadres", &t.adres)
-                                .on_input(Msg::Adres)
-                                .on_submit(Msg::GaNaar),
-                            openaec_ui::design::a11y::Role::TextField,
-                            "Celadres"
-                        ),
-                        w::button(l, "Ga", K::Secondary, D::Compact, None, Some(Msg::GaNaar))
-                    ]
-                    .spacing(4),
+                    "Navigatie",
+                    190.,
+                    vec![],
+                    scrollable(nav.padding(12)).into(),
                 );
-            }
-            editor = editor.push(w::body(
-                l,
-                veld.map(|v| v.naam.as_str()).unwrap_or("Geen tekstveld"),
-            ));
-            let bewerkbaar = veld.is_some_and(|v| v.bewerkbaar) && !t.bezig;
-            editor = editor.push(openaec_ui::design::a11y::named(
-                text_editor(&t.editor)
-                    .on_action(Msg::Invoer)
-                    .height(190)
-                    .padding(12),
-                openaec_ui::design::a11y::Role::TextField,
-                "Tekst van geselecteerd veld",
-            ));
-            editor = editor.push(w::button(
-                l,
-                if t.bezig { "Verwerken…" } else { "Toepassen" },
-                K::Primary,
-                D::Regular,
-                Some(icoon(Icon::Check)),
-                (bewerkbaar && t.concept).then_some(Msg::PasToe),
-            ));
-            editor = editor.push(w::secondary(
-                l,
-                if t.concept {
-                    "Tekst is nog niet toegepast"
-                } else if !bewerkbaar {
-                    "Alleen lezen"
+                let inhoud: Element<_> = if let Some(afbeelding) = &t.afbeelding {
+                    let pagina = &a.beeld.pagina;
+                    let inhoud = image(afbeelding.clone())
+                        .width((pagina.breedte * t.zoom).max(1.))
+                        .height((pagina.hoogte * t.zoom).max(1.))
+                        .content_fit(iced::ContentFit::Fill);
+                    container(
+                        container(documentblad::blad(
+                            inhoud,
+                            pagina,
+                            t.veld().map(|v| v.id.as_str()),
+                            c.accent,
+                            Msg::Raak,
+                        ))
+                        .style(|_| container::Style {
+                            background: Some(iced::Color::WHITE.into()),
+                            border: iced::Border {
+                                color: iced::Color::from_rgb8(231, 229, 228),
+                                width: 1.,
+                                radius: 0.into(),
+                            },
+                            shadow: iced::Shadow {
+                                color: iced::Color::from_rgba8(0, 0, 0, 0.06),
+                                offset: iced::Vector::new(0., 1.),
+                                blur_radius: 4.,
+                            },
+                            ..Default::default()
+                        }),
+                    )
+                    .padding(iced::Padding {
+                        top: 23.,
+                        bottom: 24.,
+                        left: 24.,
+                        right: 24.,
+                    })
+                    .width(
+                        (self.venster_grootte.width
+                            - if t.panelen { 490. } else { 0. }
+                            - if a.beeld.module == Module::Writer {
+                                18.
+                            } else {
+                                40.
+                            })
+                        .max(pagina.breedte * t.zoom + 48.),
+                    )
+                    .align_x(iced::Alignment::Center)
+                    .into()
                 } else {
-                    "Selecteer een tekstveld of cel"
-                },
-            ));
-            editor = editor.push(scrollable(velden).height(Length::Fill));
-            row![
-                navigator,
-                midden,
-                w::panel(l, "Inhoud", 300., vec![], editor.padding(14).into())
-            ]
-            .height(Length::Fill)
-            .into()
+                    let mut blad =
+                        column![w::mono_label(l, "OPENAEC"), w::heading(l, &t.naam, 26.)]
+                            .spacing(14);
+                    for (i, veld) in a.beeld.velden.iter().enumerate() {
+                        if !veld.tekst.is_empty() || veld.bewerkbaar {
+                            let tekst = if veld.tekst.is_empty() {
+                                "Klik om te schrijven"
+                            } else {
+                                &veld.tekst
+                            };
+                            blad = blad.push(w::button(
+                                l,
+                                tekst,
+                                if i == t.gekozen {
+                                    K::Secondary
+                                } else {
+                                    K::Quiet
+                                },
+                                D::Regular,
+                                None,
+                                Some(Msg::Veld(i)),
+                            ));
+                        }
+                    }
+                    container(blad.padding(38))
+                        .max_width(820)
+                        .width(Length::Fill)
+                        .style(move |_| w::panel_style(l))
+                        .into()
+                };
+                let pagina = &a.beeld.pagina;
+                let scroller = scrollable(inhoud)
+                    .direction(scrollable::Direction::Both {
+                        horizontal: Default::default(),
+                        vertical: Default::default(),
+                    })
+                    .on_scroll(|vp| {
+                        let p = vp.absolute_offset();
+                        Msg::Schuif(iced::Point::new(p.x, p.y))
+                    })
+                    .height(Length::Fill);
+                let midden: Element<_> = if a.beeld.module == Module::Writer {
+                    container(
+                        column![
+                            row![
+                                iced::widget::Space::new().width(18),
+                                lineaal::lineaal(pagina, t.zoom, t.scroll, true)
+                            ],
+                            row![lineaal::lineaal(pagina, t.zoom, t.scroll, false), scroller]
+                                .height(Length::Fill)
+                        ]
+                        .height(Length::Fill),
+                    )
+                    .width(Length::Fill)
+                    .height(Length::Fill)
+                    .style(|_| container::Style {
+                        background: Some(iced::Color::from_rgb8(245, 245, 243).into()),
+                        ..Default::default()
+                    })
+                    .into()
+                } else {
+                    container(scroller)
+                        .padding(20)
+                        .width(Length::Fill)
+                        .height(Length::Fill)
+                        .style(move |_| container::Style {
+                            background: Some(c.workspace.into()),
+                            ..Default::default()
+                        })
+                        .into()
+                };
+                let mut velden = column![].spacing(3);
+                for (i, veld) in a.beeld.velden.iter().enumerate() {
+                    let label = if a.beeld.module == Module::Spreadsheet {
+                        format!("{}  {}", veld.naam, veld.tekst)
+                    } else {
+                        format!(
+                            "{}  {}",
+                            veld.naam,
+                            veld.tekst.chars().take(36).collect::<String>()
+                        )
+                    };
+                    velden = velden.push(tekstknop(
+                        l,
+                        label,
+                        if i == t.gekozen {
+                            K::Secondary
+                        } else {
+                            K::Quiet
+                        },
+                        D::Compact,
+                        None,
+                        (!t.bezig).then_some(Msg::Veld(i)),
+                    ));
+                }
+                let veld = t.veld();
+                let mut editor = column![w::mono_label(l, "TEKST BEWERKEN")].spacing(10);
+                if a.beeld.module == Module::Spreadsheet {
+                    editor = editor.push(
+                        row![
+                            openaec_ui::design::a11y::named(
+                                text_input("Celadres", &t.adres)
+                                    .on_input(Msg::Adres)
+                                    .on_submit(Msg::GaNaar),
+                                openaec_ui::design::a11y::Role::TextField,
+                                "Celadres"
+                            ),
+                            w::button(l, "Ga", K::Secondary, D::Compact, None, Some(Msg::GaNaar))
+                        ]
+                        .spacing(4),
+                    );
+                }
+                editor = editor.push(w::body(
+                    l,
+                    veld.map(|v| v.naam.as_str()).unwrap_or("Geen tekstveld"),
+                ));
+                let bewerkbaar = veld.is_some_and(|v| v.bewerkbaar) && !t.bezig;
+                editor = editor.push(openaec_ui::design::a11y::named(
+                    text_editor(&t.editor)
+                        .on_action(Msg::Invoer)
+                        .height(190)
+                        .padding(12),
+                    openaec_ui::design::a11y::Role::TextField,
+                    "Tekst van geselecteerd veld",
+                ));
+                editor = editor.push(w::button(
+                    l,
+                    if t.bezig { "Verwerken…" } else { "Toepassen" },
+                    K::Primary,
+                    D::Regular,
+                    Some(icoon(Icon::Check)),
+                    (bewerkbaar && t.concept).then_some(Msg::PasToe),
+                ));
+                editor = editor.push(w::secondary(
+                    l,
+                    if t.concept {
+                        "Tekst is nog niet toegepast"
+                    } else if !bewerkbaar {
+                        "Alleen lezen"
+                    } else {
+                        "Selecteer een tekstveld of cel"
+                    },
+                ));
+                editor = editor.push(scrollable(velden).height(Length::Fill));
+                let inhoudspaneel = w::panel(l, "Inhoud", 300., vec![], editor.padding(14).into());
+                let werkvlak: Element<_> = if t.panelen {
+                    row![navigator, midden, inhoudspaneel]
+                        .height(Length::Fill)
+                        .into()
+                } else {
+                    midden
+                };
+                if a.beeld.module == Module::Spreadsheet {
+                    let formule = openaec_ui::design::a11y::named(
+                        text_input("Waarde of formule", &t.editor.text())
+                            .on_input_maybe((!t.bezig).then_some(Msg::Formule))
+                            .on_submit(Msg::PasToe)
+                            .padding(6)
+                            .width(Length::Fill),
+                        openaec_ui::design::a11y::Role::TextField,
+                        "Formulebalk",
+                    );
+                    let adres = openaec_ui::design::a11y::named(
+                        text_input("Cel of bereik", &t.adres)
+                            .on_input(Msg::Adres)
+                            .on_submit(Msg::GaNaar)
+                            .width(110)
+                            .padding(6),
+                        openaec_ui::design::a11y::Role::TextField,
+                        "Cel of bereik",
+                    );
+                    let bladen = row(a.beeld.onderdelen.iter().enumerate().map(|(n, naam)| {
+                        w::button(
+                            l,
+                            naam,
+                            if n == t.deel { K::Secondary } else { K::Quiet },
+                            D::Compact,
+                            None,
+                            (!t.bezig).then_some(Msg::Deel(n)),
+                        )
+                    }))
+                    .spacing(4)
+                    .padding(4);
+                    column![
+                        container(
+                            row![adres, w::mono_label(l, "ƒx"), formule]
+                                .align_y(iced::Alignment::Center)
+                                .spacing(10)
+                        )
+                        .padding(5)
+                        .style(move |_| w::panel_style(l)),
+                        werkvlak,
+                        scrollable(bladen)
+                            .direction(scrollable::Direction::Horizontal(Default::default()))
+                    ]
+                    .height(Length::Fill)
+                    .into()
+                } else {
+                    werkvlak
+                }
+            }
         } else {
             container(w::heading(l, "Document openen…", 22.))
                 .center(Length::Fill)
@@ -1423,6 +1865,9 @@ fn main() -> iced::Result {
     fonts::FILES
         .iter()
         .fold(builder, |b, f| b.font(*f))
+        .font(office_core::lettertypen::kies("Inter", true, false).bytes)
+        .font(office_core::lettertypen::kies("Inter", false, true).bytes)
+        .font(office_core::lettertypen::kies("Inter", true, true).bytes)
         .window(iced::window::Settings {
             size: Size::new(1440., 900.),
             min_size: Some(Size::new(1024., 650.)),
