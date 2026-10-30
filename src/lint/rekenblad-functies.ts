@@ -531,3 +531,21 @@ export function wisselAbsoluut(
   }
   return { tekst, begin: nieuwBegin, eind: nieuwEind };
 }
+
+// ------------------------------------------------------------ bereik kiezen met de muis
+
+/**
+ * Vervangt de tekst tussen `begin` en `eind` door een verwijzing. Het resultaat
+ * noemt het begin van die verwijzing en de cursor erachter, zodat een volgende
+ * stap tijdens het slepen precies de vorige verwijzing vervangt: `A1` wordt
+ * dan vanzelf `A1:B3`.
+ */
+export function vervangVerwijzing(tekst: string, begin: number, eind: number, verwijzing: string) {
+  const van = Math.max(0, Math.min(begin, tekst.length));
+  const tot = Math.max(van, Math.min(eind, tekst.length));
+  return {
+    tekst: `${tekst.slice(0, van)}${verwijzing}${tekst.slice(tot)}`,
+    begin: van,
+    eind: van + verwijzing.length,
+  };
+}

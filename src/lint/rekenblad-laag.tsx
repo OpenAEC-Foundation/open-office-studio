@@ -23,7 +23,7 @@ import { RibbonFout } from "../Ribbon";
 import { abonneerFilters, bladFilter, laadFilters, leesAutoFilters } from "./rekenblad-filter";
 import { doelBereik, vul, vulTotEinde, type VulKeuze, type VulRichting } from "./rekenblad-gegevens";
 import { alleenLezen, bewerktTekst, Melding, rekenbladHost } from "./rekenblad-opdrachten";
-import { kolomLetters, type Bereik } from "./rekenblad-logica";
+import { kolomLetters, type Bereik, type Cel } from "./rekenblad-logica";
 import { FilterMenu } from "./rekenblad-filtermenu";
 import "./rekenblad-gereedschap.css";
 
@@ -43,6 +43,27 @@ export interface RekenbladLaag {
   abonneer: (luisteraar: () => void) => () => void;
   /** Verwijzingen van de formule die bewerkt wordt (of leeg). */
   zetMarkeringen: (lijst: Markering[]) => void;
+  /** De cel onder een schermpunt; null buiten het raster. */
+  celBijPunt: (x: number, y: number) => Cel | null;
+}
+
+/**
+ * De cel onder een schermpunt, uit het raster van de getekende frame. Dezelfde
+ * berekening als de vulgreep, zodat een verwijzing kiezen dezelfde cel raakt als
+ * slepen met de vulgreep.
+ */
+function celOpPunt(api: XlsxEditorApi, geometry: XlsxPluginGeometry, x: number, y: number): Cel | null {
+  const host = rekenbladHost();
+  const laagEl = host?.querySelector<HTMLElement>('[data-testid="plugin-overlays"]');
+  const scroll = host?.querySelector<HTMLElement>('[data-testid="xlsx-scroll"]');
+  if (!laagEl || !scroll) return null;
+  const vak = scroll.getBoundingClientRect();
+  const px = Math.min(Math.max(x, vak.left + 1), vak.left + scroll.clientWidth - 2);
+  const py = Math.min(Math.max(y, vak.top + 1), vak.top + scroll.clientHeight - 2);
+  const l = geometry.layout;
+  const grid = api.handle.displayList(l.viewport).grid;
+  const oorsprong = laagEl.getBoundingClientRect();
+  return cellAtPoint(grid, (px - oorsprong.left) / l.zoom, (py - oorsprong.top) / l.zoom);
 }
 
 const normaal = (s: NonNullable<XlsxPluginSelection>["cells"]): Bereik | null =>
@@ -59,6 +80,7 @@ const normaal = (s: NonNullable<XlsxPluginSelection>["cells"]): Bereik | null =>
 export function maakRekenbladLaag(): RekenbladLaag {
   let selectie: XlsxPluginSelection = null;
   let markeringen: Markering[] = [];
+  let celBijPunt: RekenbladLaag["celBijPunt"] = () => null;
   const luisteraars = new Set<() => void>();
   const meld = () => luisteraars.forEach((l) => l());
 
@@ -89,6 +111,8 @@ export function maakRekenbladLaag(): RekenbladLaag {
     const info = api.handle.sheetInfo();
     const blad = info.sheetIds.indexOf(sheetId);
     const sel = selectie?.sheetId === sheetId ? selectie : null;
+    // Voor het kiezen van een bereik met de muis tijdens het bewerken (#58).
+    celBijPunt = (x, y) => celOpPunt(api, geometry, x, y);
     return (
       <>
         {markeringen
@@ -147,6 +171,7 @@ export function maakRekenbladLaag(): RekenbladLaag {
       markeringen = lijst;
       meld();
     },
+    celBijPunt: (x, y) => celBijPunt(x, y),
   };
 }
 

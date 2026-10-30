@@ -27,7 +27,7 @@ import "../werkruimte/werkruimte.css";
 import { RibbonFout } from "../Ribbon";
 import { leesNederlands } from "../rekenbladinvoer";
 import { alleenLezen, benoemdeBereiken, gaNaar, Melding, rekenbladHost } from "./rekenblad-opdrachten";
-import { adres, ontleedVerwijzing, serieleDatum, type Cel } from "./rekenblad-logica";
+import { adres, bereikA1, ontleedVerwijzing, serieleDatum, type Bereik, type Cel } from "./rekenblad-logica";
 import {
   aanvullingen,
   argumentBij,
@@ -36,6 +36,7 @@ import {
   functie,
   FUNCTIES,
   syntaxis,
+  vervangVerwijzing,
   verwijzingenIn,
   wisselAbsoluut,
   woordBijCursor,
@@ -544,6 +545,87 @@ function Naamvak({ api, laag }: { api: XlsxEditorApi; laag: RekenbladLaag | null
   );
 }
 
+/**
+ * Een bereik kiezen met de muis tijdens het bewerken van een formule (#58):
+ * wijst de gebruiker in het raster, dan komt de verwijzing op de plaats van de
+ * cursor in de formule te staan en blijft het veld in bewerkmodus. Slepen over
+ * meer cellen vervangt die verwijzing door het grotere bereik (`A1` wordt
+ * `A1:B3`).
+ *
+ * De klik wordt vóór de engine afgevangen: anders legt die de bewerking vast en
+ * is er niets meer in te voegen. De selectie van de engine laten we met rust —
+ * `selectCells` schrijft de openstaande invoer weg, en een half afgemaakte
+ * formule belandt dan als tekst met een apostrophe in de cel. Het gekozen
+ * bereik licht toch op: `useFormuleHulp` leidt de verwijzingskleuren uit de
+ * tekst af en tekent ze bij elke invoer opnieuw.
+ */
+export function useBereikKiezen(laag: RekenbladLaag | null | undefined) {
+  /** Het anker van de sleepbeweging; blijft staan op de cel waar de klik begon. */
+  const sleep = useRef<{ anker: Cel; laatste: Cel; begin: number; eind: number } | null>(null);
+  /** De verwijzing van de vorige klik, zolang de gebruiker niets bijtypte. */
+  const vorigeKlik = useRef<{ tekst: string; begin: number; eind: number } | null>(null);
+  useEffect(() => {
+    if (!laag) return;
+
+    /** Het veld waarin een formule bewerkt wordt, of null. */
+    const formuleVeld = () => {
+      const veld = document.activeElement;
+      return isVeld(veld) && veld.value.startsWith("=") && !!rekenbladHost()?.contains(veld) ? veld : null;
+    };
+    const inRaster = (doel: EventTarget | null) => {
+      const host = rekenbladHost();
+      return !!host && doel instanceof Node && host.contains(doel) && !isVeld(doel);
+    };
+    const kies = (e: PointerEvent) => {
+      const veld = formuleVeld();
+      if (!veld || !inRaster(e.target)) return;
+      const cel = laag.celBijPunt(e.clientX, e.clientY);
+      if (!cel) return;
+      const sleepNu = sleep.current;
+      // Dezelfde cel nog eens aanwijzen verandert niets; dat scheelt een invoer
+      // per muisbeweging tijdens het slepen.
+      if (sleepNu && sleepNu.laatste.row === cel.row && sleepNu.laatste.col === cel.col) return;
+      e.preventDefault();
+      e.stopPropagation();
+      // Het anker blijft de cel waar de klik begon, ook als de wijzer verder
+      // schuift; anders wordt elk tussenstapje een eigen bereik.
+      const anker = sleepNu?.anker ?? cel;
+      const bereik: Bereik = {
+        top: Math.min(anker.row, cel.row),
+        left: Math.min(anker.col, cel.col),
+        bottom: Math.max(anker.row, cel.row),
+        right: Math.max(anker.col, cel.col),
+      };
+      // Een klik meteen na een klik vervangt die verwijzing, zoals een gangbaar
+      // rekenblad doet; wie eerst iets typt, krijgt er een tweede verwijzing bij.
+      const vorige = sleepNu ? null : vorigeKlik.current;
+      const hergebruik = vorige?.tekst === veld.value ? vorige : null;
+      const begin = sleepNu?.begin ?? hergebruik?.begin ?? veld.selectionStart ?? veld.value.length;
+      const eind = sleepNu?.eind ?? hergebruik?.eind ?? begin;
+      const r = vervangVerwijzing(veld.value, begin, eind, bereikA1(bereik));
+      zetVeld(veld, r.tekst, r.eind);
+      sleep.current = { anker, laatste: cel, begin: r.begin, eind: r.eind };
+      vorigeKlik.current = { tekst: r.tekst, begin: r.begin, eind: r.eind };
+    };
+    const beweeg = (e: PointerEvent) => {
+      if (sleep.current) kies(e);
+    };
+    const stop = () => {
+      sleep.current = null;
+    };
+    document.addEventListener("pointerdown", kies, true);
+    document.addEventListener("pointermove", beweeg, true);
+    document.addEventListener("pointerup", stop, true);
+    document.addEventListener("pointercancel", stop, true);
+    return () => {
+      document.removeEventListener("pointerdown", kies, true);
+      document.removeEventListener("pointermove", beweeg, true);
+      document.removeEventListener("pointerup", stop, true);
+      document.removeEventListener("pointercancel", stop, true);
+    };
+  }, [laag]);
+}
+
 /** Formulebalk met eigen naamvak, fx-knop en uitvouwen; de invoer zelf is die van de engine. */
 export function Formulebalk({
   api,
@@ -556,6 +638,7 @@ export function Formulebalk({
 }) {
   const { t } = useTranslation("spreadsheet");
   const [uitgevouwen, setUitgevouwen] = useState(false);
+  useBereikKiezen(laag);
   return (
     <div className={`office-formulebalk${uitgevouwen ? " is-uitgevouwen" : ""}`}>
       {api && <Naamvak api={api} laag={laag} />}
