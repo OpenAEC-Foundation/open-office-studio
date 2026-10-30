@@ -11,7 +11,7 @@ import tomllib
 import zipfile
 root = Path(__file__).resolve().parents[1]
 repo = root.parent
-versie = tomllib.loads((root/'Cargo.toml').read_text())['workspace']['package']['version']
+versie = tomllib.loads((root/'Cargo.toml').read_text(encoding='utf-8'))['workspace']['package']['version']
 exe = 'open-office-studio-native' + ('.exe' if platform.system() == 'Windows' else '')
 bron = root/'target/release'/exe
 assert bron.is_file(), f'Ontbrekende releasebuild: {bron}'
@@ -36,7 +36,7 @@ for map in ['crates', 'vendor', 'scripts', 'docs']:
     shutil.copytree(root/map, pakket/'bron/native'/map, ignore=shutil.ignore_patterns('__pycache__'))
 shutil.copytree(repo/'public/templates', pakket/'bron/public/templates')
 shutil.copy2(repo/'LICENSE', pakket/'bron/LICENSE')
-metadata = json.loads(subprocess.check_output(['cargo', 'metadata', '--manifest-path', str(root/'Cargo.toml'), '--locked', '--format-version', '1'], text=True))
+metadata = json.loads(subprocess.check_output(['cargo', 'metadata', '--manifest-path', str(root/'Cargo.toml'), '--locked', '--format-version', '1'], text=True, encoding='utf-8'))
 with (pakket/'licenties/afhankelijkheden.csv').open('w', newline='', encoding='utf-8') as f:
     w = csv.writer(f)
     w.writerow(['pakket', 'versie', 'licentie', 'bron'])
@@ -64,5 +64,5 @@ with zipfile.ZipFile(zip_pad, 'w', compression=zipfile.ZIP_DEFLATED, compresslev
     for p in sorted(pakket.rglob('*')):
         if p.is_file(): z.write(p, p.relative_to(pakket.parent))
 hash = hashlib.sha256(zip_pad.read_bytes()).hexdigest()
-(uit/f'{naam}.sha256').write_text(f'{hash}  {zip_pad.name}\n')
+(uit/f'{naam}.sha256').write_text(f'{hash}  {zip_pad.name}\n', encoding='utf-8')
 print(zip_pad)

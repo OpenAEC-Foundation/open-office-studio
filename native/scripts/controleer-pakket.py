@@ -10,7 +10,7 @@ import tomllib
 import zipfile
 root = Path(__file__).resolve().parents[1]
 for pakket in sorted((root/'target/distributie').glob('*.zip')):
-    verwacht = pakket.with_suffix('.sha256').read_text().split()[0]
+    verwacht = pakket.with_suffix('.sha256').read_text(encoding='utf-8').split()[0]
     assert hashlib.sha256(pakket.read_bytes()).hexdigest() == verwacht, 'Pakkethash wijkt af'
     with tempfile.TemporaryDirectory(prefix='office-native-controle-') as tijdelijk:
         map = Path(tijdelijk)
@@ -22,7 +22,7 @@ for pakket in sorted((root/'target/distributie').glob('*.zip')):
         assert len(inhoud) == 1 and inhoud[0].is_dir()
         map = inhoud[0]
         bron = map/'bron/native'
-        versie = tomllib.loads((bron/'Cargo.toml').read_text())['workspace']['package']['version']
+        versie = tomllib.loads((bron/'Cargo.toml').read_text(encoding='utf-8'))['workspace']['package']['version']
         assert (bron/'Cargo.lock').is_file()
         assert (map/'licenties/OpenAEC-UI-LICENSE.md').is_file()
         notices = list((map/'licenties/rust').rglob('*'))
@@ -32,6 +32,6 @@ for pakket in sorted((root/'target/distributie').glob('*.zip')):
             assert (map/f'bron/public/templates/nieuw.{ext}').is_file()
         exe = map/('open-office-studio-native' + ('.exe' if platform.system() == 'Windows' else ''))
         exe.chmod(exe.stat().st_mode | 0o100)
-        resultaat = subprocess.check_output([str(exe), '--version'], text=True).strip()
+        resultaat = subprocess.check_output([str(exe), '--version'], text=True, encoding='utf-8').strip()
         assert resultaat == f'Open Office Studio {versie} (native)', resultaat
         print(f'{pakket.name}: CRC, SHA-256, bron, notices en uitgepakte programmaversie gecontroleerd.')
