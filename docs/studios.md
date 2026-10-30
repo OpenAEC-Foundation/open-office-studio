@@ -51,3 +51,5 @@ Echte schermafbeeldingen van de vijf gerichte browserbuilds, op 30 oktober 2026.
 ![Open Email Studio met gemarkeerde demomailbox](screenshots/studio-email-2026-W44.8.jpg)
 
 ![Open Notition Studio na opslaan en herladen](screenshots/studio-notition-2026-W44.8.jpg)
+
+De bouwstraat bewaart iedere app direct na het bundelen met `node scripts/verzamel-studio.mjs <sleutel>`. Een volgende Tauri-build kan de gedeelde bundelmap opruimen. Pakketcontroles en publicatie lezen daarom uitsluitend `dist-installers/<sleutel>/`.

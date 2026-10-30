@@ -1,8 +1,9 @@
 /** Bouw één van de gerichte apps, met een eigen webview-profiel en installer. */
-import { cp, mkdir, readdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve, join } from "node:path";
 import { spawnSync } from "node:child_process";
 import { studios, studioConfig } from "./studio-config.mjs";
+import { verzamelStudio } from "./verzamel-studio.mjs";
 
 const [sleutel, ...argumenten] = process.argv.slice(2);
 const studio = studios.find((s) => s.sleutel === sleutel);
@@ -53,35 +54,5 @@ if (frontend) {
     config,
     ...argumenten,
   ]);
-  const bron = "src-tauri/target/release/bundle";
-  const doel = `dist-installers/${sleutel}`;
-  const versie = JSON.parse(await readFile("versie.json", "utf8")).versie;
-  let gevonden = 0;
-  for (const map of await readdir(bron, { withFileTypes: true })) {
-    if (!map.isDirectory()) continue;
-    for (const bestand of await readdir(join(bron, map.name), {
-      withFileTypes: true,
-    })) {
-      // Alleen pakketten van déze app en versie, geen overblijfselen van vorige builds.
-      if (
-        !(
-          bestand.name.startsWith(`${studio.naam}_${versie}_`) ||
-          bestand.name === `${studio.naam}.app` ||
-          bestand.name === `${studio.naam}.app.tar.gz` ||
-          bestand.name === `${studio.naam}.app.tar.gz.sig`
-        )
-      )
-        continue;
-      await mkdir(join(doel, map.name), { recursive: true });
-      await cp(
-        join(bron, map.name, bestand.name),
-        join(doel, map.name, bestand.name),
-        { recursive: true, verbatimSymlinks: true },
-      );
-      gevonden++;
-    }
-  }
-  if (!gevonden)
-    throw new Error(`Geen installers van ${studio.naam} ${versie} gevonden.`);
-  console.log(`Installers van ${studio.naam}: ${doel}`);
+  await verzamelStudio(sleutel);
 }

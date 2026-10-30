@@ -6,7 +6,7 @@
 // (src/tekst/**), opslaan, de XML controleren, heropenen met de engine en
 // (optioneel) met LibreOffice naar PDF renderen ter controle.
 //
-// Gebruik: node scripts/test-tekst-word.mjs [--zonder-libreoffice] [functie…]
+// Gebruik: node scripts/test-opdrachten.mjs tekst [--zonder-libreoffice] [functie…]
 //   functie: tabel, afbeelding, zoeken, wijzigingen, vergelijken (standaard: alle)
 import { mkdir, rm, writeFile } from "node:fs/promises";
 import { spawnSync } from "node:child_process";
@@ -50,6 +50,8 @@ function nepRef(s, { modus = "editing", layout = null } = {}) {
     relayout: () => {},
     getLayout: () => layout,
     getSelectionRange: () => null,
+    // Deze proef heeft geen schermlay-out; de opdracht gebruikt de sectiebreedte.
+    yrsLocToDisplayPosition: () => null,
   };
   return {
     getEditorRef: () => weergave,

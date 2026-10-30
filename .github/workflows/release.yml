@@ -140,6 +140,7 @@ jobs:
       - run: pnpm test
       - run: python -m unittest discover -s tests -v
       - run: node scripts/test-kantoor-engines.mjs
+      - run: pnpm test:opdrachten
       - name: Windows-loader voorbereiden
         if: runner.os == 'Windows'
         shell: pwsh
@@ -186,7 +187,9 @@ jobs:
           else
             pnpm desktop:build --bundles ${{ matrix.bundels }}
           fi
+          node scripts/verzamel-studio.mjs office
           pnpm database:desktop:build --bundles ${{ matrix.bundels }}
+          node scripts/verzamel-studio.mjs database
           for studio in writer spreadsheet presentation email notition; do
             node scripts/bouw-studio.mjs "$studio" --bundles ${{ matrix.bundels }}
           done
@@ -209,8 +212,12 @@ jobs:
           }
           pnpm desktop:build --bundles ${{ matrix.bundels }} --config "$env:OPS_SIGN_CONFIG" @updater
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node scripts/verzamel-studio.mjs office
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           Remove-Item Env:TAURI_SIGNING_PRIVATE_KEY, Env:TAURI_SIGNING_PRIVATE_KEY_PASSWORD -ErrorAction SilentlyContinue
           pnpm database:desktop:build --bundles ${{ matrix.bundels }} --config "$env:OPS_SIGN_CONFIG"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node scripts/verzamel-studio.mjs database
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           foreach ($studio in @('writer', 'spreadsheet', 'presentation', 'email', 'notition')) {
             node scripts/bouw-studio.mjs $studio --bundles ${{ matrix.bundels }} --config "$env:OPS_SIGN_CONFIG"
@@ -235,7 +242,9 @@ jobs:
           else
             pnpm desktop:build --bundles ${{ matrix.bundels }}
           fi
+          node scripts/verzamel-studio.mjs office
           pnpm database:desktop:build --bundles ${{ matrix.bundels }}
+          node scripts/verzamel-studio.mjs database
           for studio in writer spreadsheet presentation email notition; do
             node scripts/bouw-studio.mjs "$studio" --bundles ${{ matrix.bundels }}
           done
@@ -277,8 +286,8 @@ jobs:
             $u = Start-Process -FilePath $uninstaller -ArgumentList '/S' -Wait -PassThru
             if ($u.ExitCode -ne 0) { Write-Host "::warning::Stil verwijderen van $naam gaf $($u.ExitCode)." }
           }
-          ControleerApp 'src-tauri/target/release/bundle' 'Open Office Studio' 'open-office-studio'
-          ControleerApp 'apps/database-studio/src-tauri/target/release/bundle' 'Open Database Studio' 'open-database-studio'
+          ControleerApp 'dist-installers/office' 'Open Office Studio' 'open-office-studio'
+          ControleerApp 'dist-installers/database' 'Open Database Studio' 'open-database-studio'
           $studios = Get-Content assets/studios.json -Raw | ConvertFrom-Json
           foreach ($studio in $studios | Where-Object { $_.sleutel -notin @('office', 'database') }) {
             ControleerApp "dist-installers/$($studio.sleutel)" $studio.naam $studio.programma
@@ -288,12 +297,8 @@ jobs:
         if: runner.os == 'macOS' && env.MAC_SIGN == 'true'
         run: |
           set -euo pipefail
-          for bundel in src-tauri/target/release/bundle apps/database-studio/src-tauri/target/release/bundle dist-installers/*; do
-            if [ "$bundel" = src-tauri/target/release/bundle ]; then
-              dmg="$(find "$bundel/dmg" -name 'Open Office Studio_*.dmg' -print -quit)"
-            else
-              dmg="$(find "$bundel/dmg" -name '*.dmg' -print -quit)"
-            fi
+          for bundel in dist-installers/*; do
+            dmg="$(find "$bundel/dmg" -name '*.dmg' -print -quit)"
             test -n "$dmg"
             koppel="$(mktemp -d)"
             hdiutil attach -nobrowse -readonly -mountpoint "$koppel" "$dmg"
@@ -310,16 +315,18 @@ jobs:
       - name: Linux-installers werkelijk uitpakken en controleren
         if: runner.os == 'Linux'
         run: |
-          python scripts/controleer-installers.py --platform linux --rapport .local/pakketcontrole-Linux.json
-          python scripts/controleer-installers.py --platform linux --programma open-database-studio --bundels apps/database-studio/src-tauri/target/release/bundle --rapport .local/pakketcontrole-Database-Linux.json
+          python scripts/controleer-installers.py --platform linux --bundels dist-installers/office --rapport .local/pakketcontrole-Linux.json
+          python scripts/controleer-installers.py --platform linux --programma open-database-studio --bundels dist-installers/database --rapport .local/pakketcontrole-Database-Linux.json
           for studio in writer spreadsheet presentation email notition; do
             python scripts/controleer-installers.py --platform linux --programma "open-$studio-studio" --bundels "dist-installers/$studio" --rapport ".local/pakketcontrole-$studio-Linux.json"
           done
       - name: Windows-installer werkelijk uitpakken en controleren
         if: runner.os == 'Windows'
         run: |
-          python scripts/controleer-installers.py --platform windows --rapport .local/pakketcontrole-Windows.json
-          python scripts/controleer-installers.py --platform windows --programma open-database-studio --bundels apps/database-studio/src-tauri/target/release/bundle --rapport .local/pakketcontrole-Database-Windows.json
+          python scripts/controleer-installers.py --platform windows --bundels dist-installers/office --rapport .local/pakketcontrole-Windows.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python scripts/controleer-installers.py --platform windows --programma open-database-studio --bundels dist-installers/database --rapport .local/pakketcontrole-Database-Windows.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           $studios = Get-Content assets/studios.json -Raw | ConvertFrom-Json
           foreach ($studio in $studios | Where-Object { $_.sleutel -notin @('office', 'database') }) {
             python scripts/controleer-installers.py --platform windows --programma $studio.programma --bundels "dist-installers/$($studio.sleutel)" --rapport ".local/pakketcontrole-$($studio.sleutel)-Windows.json"
@@ -329,20 +336,12 @@ jobs:
         with:
           name: uitgave-${{ matrix.label }}
           path: |
-            src-tauri/target/release/bundle/**/*.deb
-            src-tauri/target/release/bundle/**/*.AppImage
-            src-tauri/target/release/bundle/**/*-setup.exe
-            src-tauri/target/release/bundle/**/*.dmg
-            src-tauri/target/release/bundle/**/*.sig
-            src-tauri/target/release/bundle/macos/*.app.tar.gz
-            apps/database-studio/src-tauri/target/release/bundle/**/*.deb
-            apps/database-studio/src-tauri/target/release/bundle/**/*.AppImage
-            apps/database-studio/src-tauri/target/release/bundle/**/*-setup.exe
-            apps/database-studio/src-tauri/target/release/bundle/**/*.dmg
             dist-installers/**/*.deb
             dist-installers/**/*.AppImage
             dist-installers/**/*-setup.exe
             dist-installers/**/*.dmg
+            dist-installers/**/*.sig
+            dist-installers/**/macos/*.app.tar.gz
             .local/pakketcontrole-*.json
           include-hidden-files: true
           if-no-files-found: error
