@@ -3,6 +3,7 @@
 from pathlib import Path
 import hashlib
 import platform
+import re
 import subprocess
 import sys
 import tempfile
@@ -37,8 +38,23 @@ for pakket in pakketten:
         subprocess.run([sys.executable, str(bron/'scripts/controleer-bron.py')], check=True)
         for ext in ['docx', 'xlsx', 'pptx']:
             assert (map/f'bron/public/templates/nieuw.{ext}').is_file()
+        # Ook tests moeten uit de meegeleverde bron kunnen worden gebouwd.
+        # Controleer eigen letterlijke compileerinclusies, inclusief de echte
+        # voorbeelddocumenten buiten de native werkruimte.
+        aantal = 0
+        for rs in (bron/'crates').rglob('*.rs'):
+            for _, pad in re.findall(r'include_(bytes|str)!\s*\(\s*"([^"\n]+)"',rs.read_text(encoding='utf-8')):
+                assert (rs.parent/pad).is_file(), f'Compileerbron ontbreekt: {rs.relative_to(bron)} → {pad}'
+                aantal += 1
+        assert aantal > 70, 'Compileerinclusies zijn niet volledig gecontroleerd'
         exe = map/('open-office-studio-native' + ('.exe' if platform.system() == 'Windows' else ''))
         exe.chmod(exe.stat().st_mode | 0o100)
         resultaat = subprocess.check_output([str(exe), '--version'], text=True, encoding='utf-8').strip()
         assert resultaat == f'Open Office Studio {versie} (native)', resultaat
+        if (bron/'crates/office-core/src/bin/controleer-bestand.rs').is_file():
+            helper = map/('controleer-bestand' + ('.exe' if platform.system() == 'Windows' else ''))
+            assert helper.is_file(), 'Het bronpakket noemt een ontbrekend controleprogramma'
+            helper.chmod(helper.stat().st_mode | 0o100)
+            hulpversie = subprocess.check_output([str(helper), '--version'], text=True, encoding='utf-8').strip()
+            assert hulpversie == f'Open Office native bestandscontrole {versie} (release)', hulpversie
         print(f'{pakket.name}: CRC, SHA-256, bron, notices en uitgepakte programmaversie gecontroleerd.')

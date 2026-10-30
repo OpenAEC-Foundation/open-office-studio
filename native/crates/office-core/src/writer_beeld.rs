@@ -38,16 +38,29 @@ pub fn pagina(
     ] {
         for noot in inhoud.unwrap_or_default() {
             if !noot.is_separator() {
-                noten.push(json!({"id":noot.id,"noteKind":soort,"height":0}));
+                // Het bronmodel gebruikt f64, de layoutaanvraag een geheel ID.
+                // Onveilige of gebroken nummers mogen nooit worden afgerond.
+                if !noot.id.is_finite()
+                    || noot.id.fract() != 0.
+                    || noot.id.abs() > 9_007_199_254_740_991.
+                {
+                    return Err(fout("Ongeldig voet- of eindnootnummer"));
+                }
+                noten.push(json!({"id":noot.id as i64,"noteKind":soort,"height":0}));
             }
         }
     }
     let mut verzoek = json!({"bodyStory":"body","options":{"pageGap":24},"regions":{"sections":secties,"settings":package.settings,"watermark":laatste["watermark"]},"notes":{"contents":noten},"renderEnv":{}});
-    let benodigd: Value = serde_json::from_str(
+    let mut benodigd: Value = serde_json::from_str(
         &engine
             .layout_font_requirements_json(&verzoek.to_string())
             .map_err(fout)?,
     )?;
+    // Gewone documenten gebruiken uitsluitend de daadwerkelijk gevraagde
+    // fonts; ongebruikte families uit fontTable mogen openen niet vertragen.
+    if !package.chart_entries.is_empty() {
+        aanvullende_lettertypen(&mut benodigd, &package.theme, &package.font_table)?;
+    }
     LETTERCACHE.with(|cel| {
         let mut slot = cel.borrow_mut();
         let sleutel = benodigd.to_string();
@@ -67,7 +80,7 @@ pub fn pagina(
         } = cache;
         verzoek["measurement"] = json!({
             "fontChains": meten,
-            "defaults": {"fontSize": 11, "fontFamily": "Inter"},
+            "defaults": {"fontSize": 11, "fontFamily": "Calibri"},
             "authoritativeShaping": true
         });
         engine
@@ -93,6 +106,80 @@ pub fn pagina(
         );
         Ok((render.bytes, aantal, render.skipped_images, pagina))
     })
+}
+
+/// Grafiektekst staat buiten de gewone alineaverzameling van de fontquery.
+/// Vul de in het pakket genoemde families en themasleutels aan vóór de layout,
+/// zodat meten en rasteren dezelfde registraties en stijlen kunnen gebruiken.
+fn aanvullende_lettertypen(
+    benodigd: &mut Value,
+    theme: &docx_parse::Theme,
+    tabel: &docx_parse::fonts::FontTable,
+) -> Resultaat<()> {
+    let eisen = benodigd
+        .as_array_mut()
+        .ok_or_else(|| fout("Ongeldige fontvereisten"))?;
+    let mut sleutels = std::collections::HashSet::new();
+    let mut scripts = std::collections::BTreeSet::new();
+    for eis in eisen.iter() {
+        if let Some(key) = eis["key"].as_str() {
+            sleutels.insert(key.to_string());
+        }
+        for script in eis["scripts"]
+            .as_array()
+            .into_iter()
+            .flatten()
+            .filter_map(Value::as_str)
+        {
+            scripts.insert(script.to_string());
+        }
+    }
+    let mut families = BTreeMap::from([
+        ("Calibri".to_string(), "Calibri".to_string()),
+        ("Inter".to_string(), "Inter".to_string()),
+    ]);
+    for font in &tabel.fonts {
+        // Gewone familienamen zijn geen themaverwijzingen: ze houden hun naam.
+        families.insert(font.name.clone(), font.name.clone());
+        if let Some(alt) = &font.alt_name {
+            families.insert(alt.clone(), alt.clone());
+        }
+    }
+    for alias in ["+mn-lt", "+mj-lt", "+mn-ea", "+mj-ea", "+mn-cs", "+mj-cs"] {
+        families.insert(
+            alias.into(),
+            docx_parse::theme::resolve_theme_font_ref(Some(theme), alias),
+        );
+    }
+    if families.len() > 2048 || eisen.len() > 8192 {
+        return Err(fout(
+            "Te veel verschillende lettertypecombinaties in dit document",
+        ));
+    }
+    for (alias, familie) in families {
+        if alias.is_empty() {
+            continue;
+        }
+        for vet in [false, true] {
+            for cursief in [false, true] {
+                let key = format!(
+                    "{}|{}|{}",
+                    alias.to_lowercase(),
+                    u8::from(vet),
+                    u8::from(cursief)
+                );
+                if sleutels.insert(key.clone()) {
+                    if eisen.len() >= 8192 {
+                        return Err(fout(
+                            "Te veel verschillende lettertypecombinaties in dit document",
+                        ));
+                    }
+                    eisen.push(json!({"key":key,"family":familie,"bold":vet,"italic":cursief,"scripts":scripts}));
+                }
+            }
+        }
+    }
+    Ok(())
 }
 
 struct Lettercache {

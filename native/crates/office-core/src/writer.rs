@@ -3,6 +3,43 @@ use crate::document::{Fout, Resultaat};
 use betteroffice_docx::{self as docx, BlockContent as B, InlineNode as I, ParagraphContent as P};
 use std::sync::Arc;
 
+/// De bronparser leest numerieke voorvoegsels. Nootnummers zijn gehele
+/// verwijzingen: controleer de oorspronkelijke waarde vóór die interpretatie.
+pub(crate) fn controleer_nootnummers(bytes: &[u8]) -> Resultaat<()> {
+    let delen =
+        ooxml_opc::unzip_parts_where(bytes, ooxml_opc::MAX_TOTAL_UNCOMPRESSED_BYTES, |naam| {
+            naam.eq_ignore_ascii_case("word/footnotes.xml")
+                || naam.eq_ignore_ascii_case("word/endnotes.xml")
+        })
+        .map_err(|e| fout(&e))?;
+    let limieten = docx_parse::xml::ParseLimits::default();
+    for (naam, xml) in delen {
+        let document = docx_parse::parse_xml(
+            &xml,
+            &naam,
+            &mut docx_parse::xml::ParseBudget::new(&limieten),
+        )
+        .map_err(|e| fout(&e.to_string()))?;
+        if let Some(root) = document.root() {
+            for noot in root
+                .child_elements()
+                .filter(|n| matches!(n.local_name(), "footnote" | "endnote"))
+            {
+                let id = noot
+                    .attribute(Some("w"), "id")
+                    .and_then(|v| v.trim().parse::<i64>().ok())
+                    .ok_or_else(|| fout("Ongeldig geheel voet- of eindnootnummer in de bron"))?;
+                if id.unsigned_abs() > 9_007_199_254_740_991 {
+                    return Err(fout(
+                        "Voet- of eindnootnummer valt buiten het betrouwbare getalbereik",
+                    ));
+                }
+            }
+        }
+    }
+    Ok(())
+}
+
 #[derive(Debug, Clone)]
 pub enum AlineaActie {
     /// Positie telt Unicode-tekens, inclusief tabs en zachte regelovergangen.

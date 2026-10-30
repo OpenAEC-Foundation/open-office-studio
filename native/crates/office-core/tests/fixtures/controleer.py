@@ -83,3 +83,19 @@ assert len(korter.paragraphs)==2
 assert 'Bewerkbare oorspronkelijke alinea.' in korter.paragraphs[0].text
 assert len(korter.tables)==1
 print('Celanker buiten beeld en verdwijnen van de laatste Writer-pagina onafhankelijk teruggelezen.')
+
+from zipfile import ZipFile
+import xml.etree.ElementTree as ET
+noot=Document(map/'writer-voetnoot.docx')
+assert noot.paragraphs[0].text=='Tekst met een voetnoot.'
+with ZipFile(map/'writer-voetnoot.docx') as z:
+    wortel=ET.fromstring(z.read('word/footnotes.xml'))
+    ns={'w':'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
+    n=wortel.find('w:footnote',ns)
+    assert n.attrib['{'+ns['w']+'}id']=='1'
+    assert ''.join(n.itertext())=='Natieve voetnoot'
+with ZipFile(map/'writer-grafiek-lettertype.docx') as z:
+    xml=z.read('word/charts/chart1.xml')
+    assert b'typeface="Gelasio"' in xml
+    assert b'<c:v>2</c:v>' in xml and b'<c:v>4</c:v>' in xml
+print('Voetnootnummer, noottekst en grafiekbron met eigen lettertype onafhankelijk teruggelezen.')

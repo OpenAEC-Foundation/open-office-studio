@@ -65,3 +65,6 @@ p = s.shapes.add_textbox(Inches(1), Inches(1), Inches(8), Inches(2)).text_frame.
 r = p.add_run(); r.text = 'Native '; r.font.bold = True
 r = p.add_run(); r.text = 'presentatiecontrole'; r.font.italic = True
 rijk.save(map/'presentation-rijk.pptx')
+
+import runpy
+runpy.run_path(str(map/'maak-weergave.py'), run_name='__main__')

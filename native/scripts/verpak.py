@@ -21,6 +21,11 @@ bron = root/'target/release'/exe
 assert bron.is_file(), f'Ontbrekende releasebuild: {bron}'
 programma = subprocess.check_output([str(bron), '--version'], text=True, encoding='utf-8').strip()
 assert programma == f'Open Office Studio {versie} (native)', 'Releaseprogramma en bronversie verschillen; bouw eerst de actuele versie'
+controleur = 'controleer-bestand' + ('.exe' if platform.system() == 'Windows' else '')
+controlebron = root/'target/release'/controleur
+assert controlebron.is_file(), 'Ontbrekende bestandscontrole; bouw de volledige native werkruimte'
+controleversie = subprocess.check_output([str(controlebron), '--version'], text=True, encoding='utf-8').strip()
+assert controleversie == f'Open Office native bestandscontrole {versie} (release)', 'Bestandscontrole en bronversie verschillen'
 naam = f'Open-Office-Studio-native-{versie}-{platform.system()}-{platform.machine()}'
 uit = root/'target/distributie'
 uit.mkdir(parents=True, exist_ok=True)
@@ -28,6 +33,7 @@ pakket = root/'target/pakket'/naam
 if pakket.exists(): shutil.rmtree(pakket)
 pakket.mkdir(parents=True)
 shutil.copy2(bron, pakket/exe)
+shutil.copy2(controlebron, pakket/controleur)
 shutil.copy2(repo/'LICENSE', pakket/'LICENSE')
 shutil.copy2(root/'README.md', pakket/'LEESMIJ.md')
 shutil.copytree(root/'docs', pakket/'docs')
@@ -43,6 +49,7 @@ for bestand in ['Cargo.toml', 'Cargo.lock', 'README.md']:
 for map in ['crates', 'vendor', 'scripts', 'docs']:
     shutil.copytree(root/map, pakket/'bron/native'/map, ignore=shutil.ignore_patterns('__pycache__'))
 shutil.copytree(repo/'public/templates', pakket/'bron/public/templates')
+shutil.copytree(repo/'docs/voorbeelden', pakket/'bron/docs/voorbeelden')
 shutil.copy2(repo/'LICENSE', pakket/'bron/LICENSE')
 metadata = json.loads(subprocess.check_output(['cargo', 'metadata', '--manifest-path', str(root/'Cargo.toml'), '--locked', '--format-version', '1'], text=True, encoding='utf-8'))
 with (pakket/'licenties/afhankelijkheden.csv').open('w', newline='', encoding='utf-8') as f:

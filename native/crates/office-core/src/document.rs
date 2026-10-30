@@ -128,6 +128,7 @@ impl Document {
         }
         Ok(match module {
             Module::Writer => {
+                crate::writer::controleer_nootnummers(bytes)?;
                 let mut d = docx::Document::open(bytes).map_err(fout)?;
                 alinea_ids(&mut d);
                 Self::Writer(Box::new(d))

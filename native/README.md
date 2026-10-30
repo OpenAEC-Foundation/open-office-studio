@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.3**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.4**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -16,8 +16,8 @@ synthetische documenten. Ze tonen deze preview, niet de bestaande webinterface.
 
 ```sh
 cargo run --manifest-path native/Cargo.toml
-cargo test --manifest-path native/Cargo.toml --locked
-cargo build --manifest-path native/Cargo.toml --locked --release
+cargo test --manifest-path native/Cargo.toml --workspace --locked
+cargo build --manifest-path native/Cargo.toml --workspace --locked --release
 python3 native/scripts/verpak.py
 ```
 
@@ -85,16 +85,16 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
-Het [controlerapport voor alpha 3](docs/controle-2026-10-30-alpha3.md) beschrijft
-de 55 lokaal geslaagde Rust-tests, vier beeldcontrole-tests en de grenzen van
-die controle. Het eerdere alpha-1-rapport blijft een historisch verslag.
+Het [controlerapport voor alpha 4](docs/controle-2026-10-30-alpha4.md) beschrijft
+de 58 lokaal geslaagde Rust-tests, vier beeldcontrole-tests en de grenzen van
+die controle. De eerdere rapporten blijven historische verslagen.
 
 ```sh
 python3 native/scripts/controleer-bron.py
 cargo fmt --manifest-path native/Cargo.toml -p office-core -p open-office-studio-native --check
-cargo clippy --manifest-path native/Cargo.toml --all-targets -- -D warnings
+cargo clippy --manifest-path native/Cargo.toml --workspace --all-targets -- -D warnings
 OFFICE_TEST_UITVOER=/tmp/native-rondgang OFFICE_TEST_SCHERMEN=/tmp/native-schermen \
-  cargo test --manifest-path native/Cargo.toml --locked
+  cargo test --manifest-path native/Cargo.toml --workspace --locked
 python3 native/crates/office-core/tests/fixtures/controleer.py /tmp/native-rondgang
 ```
 
@@ -111,6 +111,39 @@ schermlezerbrug. Writer en Presentation gebruiken dezelfde bundel van 70 open
 lettertypen als de bestaande suite, met stijl- en taalgebonden resolutie.
 Onbekende families kunnen nog steeds een terugval krijgen. Systeemletters en
 volledige visuele gelijkwaardigheid zijn nog niet aangetoond.
+
+### Bestandscontrole zonder venster
+
+De volledige werkruimte bouwt ook `controleer-bestand` (`.exe` op Windows).
+Dit programma leest één bron, maakt de eerste werkweergave, bewaart in geheugen
+en vergelijkt de zichtbare tekstvelden na opnieuw openen. Het wijzigt het
+bronbestand niet. De JSON-uitvoer vermeldt versie, bouwprofiel, bronhash en fase
+bij een fout. Dit is geen volledige inhouds-, formule-, stijl- of pixelcontrole.
+
+```sh
+native/target/release/controleer-bestand --version
+native/target/release/controleer-bestand document.docx
+python3 native/scripts/corpus.py \
+  --programma native/target/release/controleer-bestand \
+  --manifest .local/corpus/manifest.json \
+  --uitvoer .local/native-corpus.json
+```
+
+Een corpusmanifest bevat `bestanden`, met per bron `bestand`, `extensie` en
+`sha256`. Relatieve paden tellen vanaf `--bronmap` (standaard de huidige map).
+De runner bewaart voortgang atomair en weigert hervatten met een ander programma
+of manifest. `--hervat` vervolgt dezelfde ronde. Per bron geldt standaard
+30 seconden; maximaal twee processen draaien tegelijk. Op Linux begrenst
+`prlimit`, indien aanwezig, ook de adresruimte tot 3 GiB per kindproces. De
+uitvoer vermeldt expliciet of die grens geldt. Een weigering, tijdslimiet of
+afwijking geeft geen volledig geslaagde ronde. De debugtijden zijn geen bewijs
+voor prestaties van de releasebuild.
+
+De [historische alpha-3-corpusronde](docs/corpus-2026-10-30-alpha3.json) bevat
+648 openbare DOCX/XLSX/PPTX-bronnen: 554 geslaagde rondgangen, 80 weigeringen en
+14 tijdslimieten. Die weigeringen moeten per bron worden beoordeeld; sommige
+bronnen zijn beschadigd, versleuteld of nog niet ondersteund. Deze uitkomst
+bewijst geen volledige controle van alpha 4 of van de andere bestandsformaten.
 
 ## Bron en licenties
 
