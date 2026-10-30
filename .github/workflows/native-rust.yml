@@ -53,18 +53,22 @@ jobs:
         uses: actions/cache/save@v4
         if: steps.native-cache.outputs.cache-hit != 'true'
         continue-on-error: true
+        timeout-minutes: 5
         with:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
             native/target
           key: ${{ steps.native-cache.outputs.cache-primary-key }}
-      - run: python native/scripts/verpak.py
-      - run: python native/scripts/controleer-pakket.py
+      - id: verpakken
+        run: python native/scripts/verpak.py
+      - run: python native/scripts/controleer-pakket.py "${{ steps.verpakken.outputs.pakket }}"
       - uses: actions/upload-artifact@v4
         with:
           name: native-rust-${{ runner.os }}
-          path: native/target/distributie/*
+          path: |
+            ${{ steps.verpakken.outputs.pakket }}
+            ${{ steps.verpakken.outputs.controlehash }}
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
         if: always()

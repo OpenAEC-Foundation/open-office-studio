@@ -4,6 +4,7 @@ from pathlib import Path
 import csv
 import hashlib
 import json
+import os
 import platform
 import shutil
 import subprocess
@@ -18,6 +19,8 @@ if '-' not in versie:
 exe = 'open-office-studio-native' + ('.exe' if platform.system() == 'Windows' else '')
 bron = root/'target/release'/exe
 assert bron.is_file(), f'Ontbrekende releasebuild: {bron}'
+programma = subprocess.check_output([str(bron), '--version'], text=True, encoding='utf-8').strip()
+assert programma == f'Open Office Studio {versie} (native)', 'Releaseprogramma en bronversie verschillen; bouw eerst de actuele versie'
 naam = f'Open-Office-Studio-native-{versie}-{platform.system()}-{platform.machine()}'
 uit = root/'target/distributie'
 uit.mkdir(parents=True, exist_ok=True)
@@ -70,4 +73,7 @@ with zipfile.ZipFile(zip_pad, 'w', compression=zipfile.ZIP_DEFLATED, compresslev
         if p.is_file(): z.write(p, p.relative_to(pakket.parent))
 hash = hashlib.sha256(zip_pad.read_bytes()).hexdigest()
 (uit/f'{naam}.sha256').write_text(f'{hash}  {zip_pad.name}\n', encoding='utf-8')
+if os.environ.get('GITHUB_OUTPUT'):
+    with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as f:
+        f.write(f'pakket={zip_pad}\ncontrolehash={uit/f"{naam}.sha256"}\n')
 print(zip_pad)
