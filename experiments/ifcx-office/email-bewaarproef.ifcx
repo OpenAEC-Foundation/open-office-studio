@@ -1,0 +1,124 @@
+{
+  "header": {
+    "id": "urn:example:openaec:office:bewaarproef",
+    "ifcxVersion": "ifcx_alpha",
+    "dataVersion": "1.0.0",
+    "author": "OpenAEC",
+    "timestamp": "2026-10-30T00:00:00Z"
+  },
+  "imports": [],
+  "schemas": {
+    "openaec::office::collection": {
+      "value": {
+        "dataType": "Object",
+        "objectRestrictions": {
+          "values": {
+            "profileVersion": {
+              "dataType": "String"
+            },
+            "title": {
+              "dataType": "String"
+            }
+          }
+        }
+      }
+    },
+    "openaec::office::document": {
+      "value": {
+        "dataType": "Object",
+        "objectRestrictions": {
+          "values": {
+            "kind": {
+              "dataType": "Enum",
+              "enumRestrictions": {
+                "options": [
+                  "writer",
+                  "spreadsheet",
+                  "presentation",
+                  "email",
+                  "notition",
+                  "database"
+                ]
+              }
+            },
+            "title": {
+              "dataType": "String"
+            },
+            "source": {
+              "dataType": "Reference"
+            }
+          }
+        }
+      }
+    },
+    "openaec::office::payload": {
+      "value": {
+        "dataType": "Object",
+        "objectRestrictions": {
+          "values": {
+            "fileName": {
+              "dataType": "String"
+            },
+            "mediaType": {
+              "dataType": "String"
+            },
+            "byteLength": {
+              "dataType": "Integer"
+            },
+            "sha256": {
+              "dataType": "String"
+            },
+            "encoding": {
+              "dataType": "Enum",
+              "enumRestrictions": {
+                "options": [
+                  "base64"
+                ]
+              }
+            },
+            "content": {
+              "dataType": "String"
+            }
+          }
+        }
+      }
+    }
+  },
+  "data": [
+    {
+      "path": "/office/voorbeeld",
+      "children": {
+        "email": "/office/document/email"
+      },
+      "attributes": {
+        "openaec::office::collection": {
+          "profileVersion": "0.1.0-draft.1",
+          "title": "Office-bewaarproef"
+        }
+      }
+    },
+    {
+      "path": "/office/document/email",
+      "attributes": {
+        "openaec::office::document": {
+          "kind": "email",
+          "title": "Bewaarproef e-mail",
+          "source": "/office/payload/c9eeb91069031566ccc962ac575f6dcc103cdc0c31fc6c0939806b1496f2283a"
+        }
+      }
+    },
+    {
+      "path": "/office/payload/c9eeb91069031566ccc962ac575f6dcc103cdc0c31fc6c0939806b1496f2283a",
+      "attributes": {
+        "openaec::office::payload": {
+          "fileName": "bericht.eml",
+          "mediaType": "message/rfc822",
+          "byteLength": 670,
+          "sha256": "c9eeb91069031566ccc962ac575f6dcc103cdc0c31fc6c0939806b1496f2283a",
+          "encoding": "base64",
+          "content": "RnJvbTogYWZ6ZW5kZXJAZXhhbXBsZS5pbnZhbGlkDQpUbzogb250dmFuZ2VyQGV4YW1wbGUuaW52YWxpZA0KRGF0ZTogRnJpLCAzMCBPY3QgMjAyNiAxMDowMDowMCArMDEwMA0KTWVzc2FnZS1JRDogPHByb2VmMUBleGFtcGxlLmludmFsaWQ+DQpTdWJqZWN0OiBCZXdhYXJwcm9lZg0KWC1Qcm9lZjogZWVyc3RlDQpYLVByb2VmOiB0d2VlZGUNClgtR2V2b3V3ZW46IHJlZ2VsIGVlbg0KIHJlZ2VsIHR3ZWUNCk1JTUUtVmVyc2lvbjogMS4wDQpDb250ZW50LVR5cGU6IG11bHRpcGFydC9taXhlZDsgYm91bmRhcnk9Im9wZW5hZWMtcHJvZWYiDQoNCi0tb3BlbmFlYy1wcm9lZg0KQ29udGVudC1UeXBlOiB0ZXh0L3BsYWluOyBjaGFyc2V0PSJ1dGYtOCINCkNvbnRlbnQtVHJhbnNmZXItRW5jb2Rpbmc6IHF1b3RlZC1wcmludGFibGUNCg0KRWVuIHZvbGxlZGlnZSBlLW1haWxicm9uIG1ldCBiaWpsYWdlLg0KLS1vcGVuYWVjLXByb2VmDQpDb250ZW50LVR5cGU6IHRleHQvY3N2OyBjaGFyc2V0PSJ1dGYtOCINCkNvbnRlbnQtRGlzcG9zaXRpb246IGF0dGFjaG1lbnQ7IGZpbGVuYW1lPSJob2V2ZWVsaGVkZW4uY3N2Ig0KQ29udGVudC1UcmFuc2Zlci1FbmNvZGluZzogYmFzZTY0DQoNClRXRjBaWEpwWVdGc0xFRmhiblJoYkEwS1NHOTFkQ3d6RFFvPQ0KLS1vcGVuYWVjLXByb2VmLS0NCg=="
+        }
+      }
+    }
+  ]
+}
