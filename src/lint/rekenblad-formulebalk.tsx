@@ -91,8 +91,11 @@ const leegWerkboek = () =>
  * komt. Null als dat niet lukt of te groot is.
  */
 export async function voorbeeldResultaat(api: XlsxEditorApi, formule: string, blad: number, cel: Cel): Promise<string | null> {
-  // Deze functie laat de rekenkern vastlopen (docs/tests/2026-10-26-rekenbladen.md).
-  if (/ISOWEEKNUM/i.test(formule) || !formule.trim()) return null;
+  // `ISOWEEKNUM()` zonder argument laat de rekenkern vastlopen en maakt het
+  // werkboek onbruikbaar (docs/tests/2026-10-26-rekenbladen.md). Met een
+  // argument rekent de engine gewoon (`ISOWEEKNUM(1)` → #NUM!), dus alleen de
+  // lege aanroep overslaan.
+  if (/ISOWEEKNUM\s*\(\s*\)/i.test(formule) || !formule.trim()) return null;
   const refs = verwijzingenIn(`=${formule}`);
   const cellen = refs.reduce(
     (n, r) => n + (r.bereik.bottom - r.bereik.top + 1) * (r.bereik.right - r.bereik.left + 1),

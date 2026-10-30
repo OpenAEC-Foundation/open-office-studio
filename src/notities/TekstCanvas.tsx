@@ -51,11 +51,14 @@ function VrijTekstvak({
   const meetRef = useRef(meet);
   meetRef.current = meet;
   useEffect(() => {
-    if (!kader.current) return;
-    const observer = new ResizeObserver(() =>
-      meetRef.current(kader.current!.offsetHeight),
-    );
-    observer.observe(kader.current);
+    const vakEl = kader.current;
+    if (!vakEl) return;
+    const observer = new ResizeObserver(() => {
+      // Het vak kan al verwijderd zijn als de waarnemer nog afloopt
+      // (notitiesectie gewisseld); dan is er niets meer te meten.
+      if (vakEl.isConnected) meetRef.current(vakEl.offsetHeight);
+    });
+    observer.observe(vakEl);
     return () => observer.disconnect();
   }, []);
   const plaats = voorvertoning ?? vak;
@@ -229,14 +232,16 @@ export function TekstCanvas({
   const [maten, setMaten] = useState<Record<string, number>>({});
   const [zicht, setZicht] = useState({ breedte: 800, hoogte: 600 });
   useEffect(() => {
-    if (!venster.current) return;
-    const observer = new ResizeObserver(() =>
+    const vensterEl = venster.current;
+    if (!vensterEl) return;
+    const observer = new ResizeObserver(() => {
+      if (!vensterEl.isConnected) return;
       setZicht({
-        breedte: venster.current!.clientWidth,
-        hoogte: venster.current!.clientHeight,
-      }),
-    );
-    observer.observe(venster.current);
+        breedte: vensterEl.clientWidth,
+        hoogte: vensterEl.clientHeight,
+      });
+    });
+    observer.observe(vensterEl);
     return () => observer.disconnect();
   }, [venster]);
   const breedte = Math.max(

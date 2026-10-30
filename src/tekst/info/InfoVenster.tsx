@@ -12,6 +12,7 @@ import i18next from "../../i18n/config";
 import { formatDatumTijd, formatGetal } from "../../i18n/opmaak";
 import type { Herladen } from "../../lint/editorApi";
 import { telTekst } from "../../lint/tekst-logica";
+import { leesAlleAlineas } from "../gedeeld/engine";
 import { Dialoog } from "../../werkruimte/Dialoog";
 import { leesEigenschappen, type DocumentEigenschappen, type KernEigenschappen } from "./docprops";
 import { sessieMinuten, wachtendeEigenschappen, zetEigenschappen } from "./opslaan";
@@ -77,9 +78,9 @@ export function InfoVenster({
         });
         const ref = api();
         if (ref) {
-          const gelezen = await ref.readParagraphs({ view: "accepted" });
-          if (gelezen.ok && actief) {
-            const t = telTekst(gelezen.paragraphs.map((a) => a.text));
+          const alineas = await leesAlleAlineas(ref).catch(() => null);
+          if (alineas && actief) {
+            const t = telTekst(alineas.map((a) => a.text));
             setTelling({ woorden: t.woorden, tekens: t.tekensZonderSpaties, tekensMetSpaties: t.tekens, alineas: t.alineas, paginas: ref.getTotalPages() || ref.getCurrentPage() });
           }
         }

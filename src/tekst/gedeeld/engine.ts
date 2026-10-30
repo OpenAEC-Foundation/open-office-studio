@@ -116,3 +116,35 @@ export function ruw(sessie: Sessie, verhaal: string, bewerkingen: readonly unkno
 }
 
 export const fout =(error: unknown) => (error instanceof Error ? error.message : String(error));
+
+/**
+ * Alle alinea's voor het tellen en voor de documenteigenschappen: de hoofdtekst
+ * én de cellen van elke tabel daarin, want elke tabelcel is een eigen verhaal
+ * (`body:t0:r0c0`). Lees je alleen de hoofdtekst, dan telt een document dat
+ * alleen uit een tabel bestaat nul woorden terwijl de cellen wel tekst bevatten
+ * (bevestigde afwijking in docs/tests/2026-10-30-vrijgavecontrole.md).
+ *
+ * Kop- en voetteksten en noten tellen niet mee, net als bij de spellingcontrole.
+ * Gooit een fout als er niets te lezen is; slagen slechts enkele verhalen, dan
+ * tellen die.
+ */
+export async function leesAlleAlineas(ref: DocxEditorRef) {
+  const { sessie } = engine(ref);
+  let verhalen: string[];
+  try {
+    const ids = sessie.storyIds?.() ?? ["body"];
+    verhalen = ids.filter((id) => id === "body" || /^body:t\d+:r\d+c\d+/.test(id));
+    if (!verhalen.includes("body")) verhalen = ["body", ...verhalen];
+  } catch {
+    verhalen = ["body"];
+  }
+  const gelezen = await Promise.all(
+    verhalen.map(async (story) => {
+      const r = await ref.readParagraphs({ view: "accepted", story });
+      return r.ok ? r.paragraphs : null;
+    }),
+  );
+  const gelukt = gelezen.filter((a): a is NonNullable<typeof a> => a !== null);
+  if (!gelukt.length) throw new Error(i18next.t("ribbon:writer.errors.documentUnreadable"));
+  return gelukt.flat();
+}
