@@ -10,6 +10,7 @@ import {
   functie,
   FUNCTIES,
   syntaxis,
+  vervangVerwijzing,
   verwijzingenIn,
   wisselAbsoluut,
   woordBijCursor,
@@ -98,5 +99,30 @@ describe("verwijzingen", () => {
     expect(wisselAbsoluut("=A1+B2", 0, 6)).toEqual({ tekst: "=$A$1+$B$2", begin: 0, eind: 10 });
     expect(wisselAbsoluut("=SUM(", 5)).toBeNull();
     expect(wisselAbsoluut("A1", 2)).toBeNull();
+  });
+});
+
+describe("vervangVerwijzing", () => {
+  it("zet de verwijzing op de cursor en laat de cursor erachter staan", () => {
+    expect(vervangVerwijzing("=SUM(", 5, 5, "A1")).toEqual({ tekst: "=SUM(A1", begin: 5, eind: 7 });
+    expect(vervangVerwijzing("=SUM()", 5, 5, "A1")).toEqual({ tekst: "=SUM(A1)", begin: 5, eind: 7 });
+  });
+
+  it("vervangt de vorige verwijzing, zodat slepen A1 in A1:B3 verandert", () => {
+    const eerste = vervangVerwijzing("=SUM(", 5, 5, "A1");
+    expect(vervangVerwijzing(eerste.tekst, eerste.begin, eerste.eind, "A1:B3")).toEqual({
+      tekst: "=SUM(A1:B3",
+      begin: 5,
+      eind: 10,
+    });
+  });
+
+  it("laat een selectie in de formule staan als begin en eind verschillen", () => {
+    expect(vervangVerwijzing("=A1+B2", 1, 3, "C5")).toEqual({ tekst: "=C5+B2", begin: 1, eind: 3 });
+  });
+
+  it("klemt posities buiten de tekst op de tekst", () => {
+    expect(vervangVerwijzing("=A1", 40, 90, "B2")).toEqual({ tekst: "=A1B2", begin: 3, eind: 5 });
+    expect(vervangVerwijzing("=A1", -5, -1, "B2")).toEqual({ tekst: "B2=A1", begin: 0, eind: 2 });
   });
 });
