@@ -13,6 +13,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { modules } from "./StartScherm";
+import { studio } from "./studios/gekozen";
 import { titel, type Tabblad } from "./tabbladen";
 import "./tabbalk.css";
 
@@ -127,21 +128,23 @@ export function TabBalk(props: Props) {
     const index = tabbladen.indexOf(tabblad);
     const extra = props.extraMenu?.(tabblad) ?? [];
     const basis: MenuItem[] = [
-        { label: t("common:close"), actie: () => props.sluit([tabblad.id]) },
-        {
-          label: t("tabBar.closeOthers"),
-          uit: tabbladen.length < 2,
-          actie: () =>
-            props.sluit(
-              tabbladen.filter((tab) => tab.id !== tabblad.id).map((tab) => tab.id),
-            ),
-        },
-        {
-          label: t("tabBar.closeToRight"),
-          uit: index === tabbladen.length - 1,
-          actie: () =>
-            props.sluit(tabbladen.slice(index + 1).map((tab) => tab.id)),
-        },
+      { label: t("common:close"), actie: () => props.sluit([tabblad.id]) },
+      {
+        label: t("tabBar.closeOthers"),
+        uit: tabbladen.length < 2,
+        actie: () =>
+          props.sluit(
+            tabbladen
+              .filter((tab) => tab.id !== tabblad.id)
+              .map((tab) => tab.id),
+          ),
+      },
+      {
+        label: t("tabBar.closeToRight"),
+        uit: index === tabbladen.length - 1,
+        actie: () =>
+          props.sluit(tabbladen.slice(index + 1).map((tab) => tab.id)),
+      },
     ];
     const toon = (items: MenuItem[]) => setMenu({ x, y, terug, items });
     if (Array.isArray(extra)) toon([...basis, ...extra]);
@@ -150,7 +153,9 @@ export function TabBalk(props: Props) {
       toon(basis);
       void extra.then((items) =>
         setMenu((menu) =>
-          menu && menu.terug === terug ? { ...menu, items: [...basis, ...items] } : menu,
+          menu && menu.terug === terug
+            ? { ...menu, items: [...basis, ...items] }
+            : menu,
         ),
       );
     }
@@ -192,7 +197,9 @@ export function TabBalk(props: Props) {
   }
 
   function rtl() {
-    return !!lijst.current && getComputedStyle(lijst.current).direction === "rtl";
+    return (
+      !!lijst.current && getComputedStyle(lijst.current).direction === "rtl"
+    );
   }
 
   function isBuiten(event: React.PointerEvent) {
@@ -281,8 +288,10 @@ export function TabBalk(props: Props) {
           aria-selected={actief == null}
           aria-controls={paneelId(null)}
           tabIndex={actief == null ? 0 : -1}
-          className={"office-tab office-starttab" + (actief == null ? " is-actief" : "")}
-          title={t("tabBar.startTitle")}
+          className={
+            "office-tab office-starttab" + (actief == null ? " is-actief" : "")
+          }
+          title={studio.module ? studio.naam : t("tabBar.startTitle")}
           onClick={() => props.activeer(null)}
           onKeyDown={(event) => toets(event, null)}
         >
@@ -408,13 +417,15 @@ export function TabBalk(props: Props) {
         className="office-tabknop"
         onClick={props.nieuw}
         aria-label={t("tabBar.addTab")}
-        title={t("tabBar.addTabTitle")}
+        title={studio.module ? studio.naam : t("tabBar.addTabTitle")}
       >
         <Plus size={15} />
       </button>
       {gesleept && GesleeptIcoon && sleep && (
         <div
-          className={"office-tabvoorvertoning" + (sleep.buiten ? " is-buiten" : "")}
+          className={
+            "office-tabvoorvertoning" + (sleep.buiten ? " is-buiten" : "")
+          }
           style={{ left: sleep.x, top: sleep.y }}
           aria-hidden
         >

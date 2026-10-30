@@ -19,6 +19,9 @@ function fontsUitPublic(): Plugin {
 }
 
 export default defineConfig({
+  define: {
+    "import.meta.env.VITE_STUDIO_VARIANT": JSON.stringify(process.env.VITE_STUDIO_VARIANT || "office"),
+  },
   plugins: [fontsUitPublic()],
   // Worktrees van agents en lokale proefuitvoer niet dubbel meetellen.
   test: {

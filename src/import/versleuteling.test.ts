@@ -1,4 +1,5 @@
 import { existsSync, readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { strToU8, zipSync } from "fflate";
 import { describe, expect, it } from "vitest";
 import { isCfb, leesCfb } from "../../packages/database/src/cfb";
@@ -139,7 +140,9 @@ describe("Versleutelen en ontsleutelen (Agile)", () => {
 });
 
 // Testbestanden van Apache POI met bekende wachtwoorden (alleen lokaal aanwezig).
-const corpus = "../../../.local/corpus/bestanden/";
+const corpus = fileURLToPath(
+  new URL("../../.local/corpus/bestanden/", import.meta.url),
+);
 const poi = [
   ["poi-71c6b4cbe81e7591ee9a96d6d2a2bf461615f746.xlsx", "Test001!!", "agile"],
   [

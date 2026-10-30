@@ -18,7 +18,13 @@
 
 Open Office Studio is a local office environment for Windows, macOS and Linux. It opens and saves Word, Excel and PowerPoint files directly, opens old Microsoft Access databases as an editable copy, and includes a notes module and an email client. Everything runs on your own computer; there is no account and no cloud service.
 
-> **Status:** Open Office Studio is under active development. Releases are published as *pre-releases* (development builds). Test it with copies of your files before relying on it. The user interface is currently in Dutch; support for more languages, starting with English, is being worked on.
+> **Status:** Open Office Studio is under active development. Releases are published as *pre-releases* (development builds). Test it with copies of your files before relying on it. Eight interface languages are available. See the [release audit and known limitations](docs/tests/2026-10-30-vrijgavecontrole.md), including a confirmed spreadsheet engine crash with `=ISOWEEKNUM()` without an argument.
+
+## Suite or a separate app
+
+Version **2026-W44.8** provides seven installation choices: **Open Office Studio**, **Open Writer Studio**, **Open Spreadsheet Studio**, **Open Presentation Studio**, **Open Email Studio**, **Open Notition Studio** and **Open Database Studio**. Each has its own installer, application identity and local profile. The suite retains all modules; the dedicated apps open their own workspace. See [the application list, builds, data transfer and screenshots](docs/studios.md).
+
+Office and Notition have separate note storage: use a `.openaec-notities` backup to transfer your notebooks. Dedicated apps currently use manual installer updates, so they cannot accidentally install a suite update.
 
 ## Screenshots
 
@@ -86,7 +92,7 @@ Download the files from the [releases page](https://github.com/OpenAEC-Foundatio
 | Linux x64 (any distribution) | `Open.Office.Studio_VERSION_amd64.AppImage` | `chmod +x` the file and start it. |
 | All | `SHA256SUMS`, `pakketcontrole-*.json` | Checksums and the package-check reports of the build. |
 
-The release workflow can also build the standalone Open Database Studio; when a release contains it, its installers are listed next to the Office Studio files. No RPM package is published. You can build one yourself, see [Build from source](#build-from-source).
+The release workflow builds all seven apps: replace `Open.Office.Studio` in the filenames above with the corresponding product name, such as `Open.Writer.Studio` or `Open.Notition.Studio`. Each release contains 28 installers and fourteen Windows/Linux package reports. Linux packages have detached OpenPGP signatures; the release also includes the public key, fingerprint, checksums and a signature for the checksum file. No RPM package is published. See [the build and release details](docs/studios.md).
 
 ### Check your download
 

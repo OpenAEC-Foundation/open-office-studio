@@ -18,7 +18,13 @@
 
 Open Office Studio is een lokale kantooromgeving voor Windows, macOS en Linux. De app opent en bewaart Word-, Excel- en PowerPoint-bestanden rechtstreeks, opent oude Microsoft Access-databases als bewerkbare kopie en heeft een notitiemodule en een e-mailprogramma. Alles draait op je eigen computer; er is geen account en geen clouddienst.
 
-> **Status:** Open Office Studio wordt actief ontwikkeld. Uitgaven verschijnen als *pre-release* (ontwikkelversie). Probeer de app eerst met kopieën van je bestanden. De interface is nu Nederlandstalig; ondersteuning voor meer talen, te beginnen met Engels, is in ontwikkeling.
+> **Status:** Open Office Studio wordt actief ontwikkeld. Uitgaven verschijnen als *pre-release* (ontwikkelversie). Probeer de app eerst met kopieën van je bestanden. Acht interfacetalen zijn beschikbaar. Lees de [vrijgavecontrole en bekende beperkingen](docs/tests/2026-10-30-vrijgavecontrole.md), waaronder een bevestigde crash van de rekenkern bij `=ISOWEEKNUM()` zonder argument.
+
+## De suite of een aparte app
+
+Versie **2026-W44.8** biedt zeven installatiekeuzes: **Open Office Studio**, **Open Writer Studio**, **Open Spreadsheet Studio**, **Open Presentation Studio**, **Open Email Studio**, **Open Notition Studio** en **Open Database Studio**. Elke app heeft een eigen installer, applicatie-id en lokaal profiel. De suite behoudt alle modules; de gerichte apps openen hun eigen werkruimte. Zie [het appoverzicht, bouwen, gegevens overzetten en screenshots](docs/studios.md).
+
+Office en Notition bewaren notities in afzonderlijke profielen: gebruik een `.openaec-notities`-back-up om je notitieboeken over te zetten. De gerichte apps worden voorlopig met hun eigen nieuwe installer bijgewerkt, zodat ze niet per ongeluk een suite-update installeren.
 
 ## Schermafbeeldingen
 
