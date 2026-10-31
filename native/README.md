@@ -140,7 +140,11 @@ de opbouw van alle pagina's; dit is geen vergelijking met de webinterface.
 De engines werken op één aparte werkdraad. De interface ontvangt een begrensde
 weergave en blijft los van parser, rasterizer en bestands-I/O. Writer hergebruikt
 de lettertypecache per werkdraad zolang fontvereisten en registergeneratie gelijk
-blijven. Bestanden worden
+blijven. Daarnaast blijft maximaal één Writer-layoutengine per werkdraad behouden,
+gebonden aan document, bronhash en fontgeneratie. Ook paginawissels buiten de drie
+bewaarde paginabeelden hoeven dezelfde engine dan niet opnieuw op te bouwen.
+Bewerken, undo, een andere bron of gewijzigde fonts dwingen een nieuwe opbouw af.
+Zelfstandige documentcontroles blijven verse berekeningen. Bestanden worden
 uit het volledige enginemodel opgeslagen, nooit uit de tekstvelden of afbeelding
 van het venster. Ongedaan maken bewaart maximaal 32 bronnen en 64 MB per document.
 Dit is een eerste betrouwbaarheidskeuze; grote documenten vragen nog gerichte
@@ -162,13 +166,16 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
-Het [controlerapport voor alpha 10](docs/controle-2026-10-31-alpha10.md) beschrijft
-171 reguliere Rust-tests, zes expliciete runtimeproeven en zeven Python-tests,
-opmaak uit de renderengine, Unicode-selecties en opmaaksneltoetsen. De volledig
-afgeronde platform- en corpusronde betreft [alpha 9](docs/controle-2026-10-31-alpha9.md).
-De nieuwe platformvergelijking controleert bronbytes en native beelden voortaan
-ook automatisch in CI; dat is nog geen vergelijking met de bestaande interface.
-De eerdere rapporten blijven historische verslagen.
+Het [controlerapport voor alpha 11](docs/controle-2026-10-31-alpha11.md) beschrijft
+175 reguliere Rust-tests, zeven Python-tests en de exacte vergelijking tussen
+verse Writer-pagina’s en sessiepaginering. Alle zes aparte runtimeproeven en de
+onafhankelijke conversiecontrole zijn geslaagd. De nieuwe release- en platformronde
+zijn nog niet afgerond. De [alpha-10-platformronde](docs/controle-2026-10-31-alpha10.md) is afgerond:
+alle vijf CI-jobs groen, alle 673 verpakte bronbestanden bytegelijk op elk platform
+en 66 native beeldparen exact gelijk. De brede corpusronde betreft nog
+[alpha 9](docs/controle-2026-10-31-alpha9.md). De platformvergelijking is geen bewijs
+van gelijkheid met de bestaande interface. Eerdere rapporten blijven historische
+verslagen.
 
 ```sh
 python3 native/scripts/controleer-bron.py
@@ -295,3 +302,19 @@ bundel en registreert de hoofdbestandhashes; dat vervangt geen buildattest.
 node native/scripts/maak-webreferentie.mjs /pad/naar/webbundel /pad/naar/chromium .local/webreferentie
 # Optioneel als vierde argument: writer, spreadsheet, presentation of notition.
 ```
+
+### Writer-paginawissels meten
+
+Gebruik dezelfde releasecontroleur voor twee afzonderlijke processen. De
+vergelijking weigert afwijkende beelden, klikgebieden, velden of bronhashes;
+de gemeten tijden hebben geen harde snelheidsgrens.
+
+```sh
+python3 native/scripts/meet-paginas.py \
+  --programma native/target/release/controleer-bestand \
+  --bron native/crates/office-core/tests/fixtures/writer-cachepaginas.docx \
+  --paginas 0,1,2,3,4,0,5 --uitvoer native/target/paginameting.json
+```
+
+Op Windows heeft de controleur de extensie `.exe`. Dit is een paginaproef,
+geen fysieke GUI-, volledige inhouds- of pariteitscontrole.

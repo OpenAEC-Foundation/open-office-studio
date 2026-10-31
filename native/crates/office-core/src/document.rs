@@ -308,13 +308,14 @@ impl Document {
         self.weergave_in(deel, RasterVenster::default())
     }
     fn weergave_in(&self, deel: usize, venster: RasterVenster) -> Resultaat<Weergave> {
-        self.weergave_van_bron(deel, venster, None)
+        self.weergave_van_bron(deel, venster, None, None)
     }
     fn weergave_van_bron(
         &self,
         deel: usize,
         venster: RasterVenster,
         bron: Option<&[u8]>,
+        eigenaar: Option<u64>,
     ) -> Resultaat<Weergave> {
         let mut beeld = Weergave {
             module: Module::Writer,
@@ -334,8 +335,8 @@ impl Document {
                     Some(b) => std::borrow::Cow::Borrowed(b),
                     None => std::borrow::Cow::Owned(d.save().map_err(fout)?),
                 };
-                let (png, paginas, overgeslagen, pagina, mut opmaak) =
-                    crate::writer_beeld::pagina_met_opmaak(&bron, deel)?;
+                let (png, paginas, overgeslagen, pagina, opmaak) =
+                    crate::writer_beeld::pagina_met_opmaak(&bron, deel, eigenaar)?;
                 beeld.afbeelding = Some(png);
                 beeld.pagina = pagina;
                 beeld.onderdelen = (0..paginas).map(|i| format!("Pagina {}", i + 1)).collect();
@@ -344,7 +345,7 @@ impl Document {
                     let id = p.para_id.clone().unwrap_or_default();
                     let tekst = crate::writer_tekst::alinea_tekst(p);
                     let mut staat = crate::writer_tekst::staat(p);
-                    if let Some(gevonden) = opmaak.remove(&id)
+                    if let Some(gevonden) = opmaak.get(&id)
                         && gevonden.tekst == tekst
                     {
                         if let Some(opmaak) = crate::writer_opmaak::selectie(
@@ -354,7 +355,7 @@ impl Document {
                         ) {
                             staat = opmaak;
                         }
-                        bereiken.insert(id.clone(), gevonden.bereiken);
+                        bereiken.insert(id.clone(), gevonden.bereiken.clone());
                     }
                     beeld.velden.push(Veld {
                         id,
@@ -492,6 +493,7 @@ impl Document {
 /// De interface ziet een fout en een bruikbaar document, nooit een half resultaat.
 pub struct Sessie {
     pub module: Module,
+    layout_eigenaar: u64,
     document: Document,
     bron: std::sync::Arc<Vec<u8>>,
     bron_hash: String,
@@ -500,11 +502,18 @@ pub struct Sessie {
     terug: Vec<std::sync::Arc<Vec<u8>>>,
     vooruit: Vec<std::sync::Arc<Vec<u8>>>,
 }
+static VOLGENDE_LAYOUT: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(1);
+impl Drop for Sessie {
+    fn drop(&mut self) {
+        crate::writer_beeld::wis(self.layout_eigenaar);
+    }
+}
 impl Sessie {
     pub fn open(module: Module, bytes: Vec<u8>) -> Resultaat<Self> {
         Ok(Self {
             document: Document::open(module, &bytes)?,
             module,
+            layout_eigenaar: VOLGENDE_LAYOUT.fetch_add(1, std::sync::atomic::Ordering::Relaxed),
             bron_hash: crate::opslag::hash(&bytes),
             venster: RasterVenster::default(),
             beelden: std::cell::RefCell::new(vec![]),
@@ -533,7 +542,12 @@ impl Sessie {
         if let Some((_, b)) = self.beelden.borrow().iter().find(|(n, _)| *n == deel) {
             return Ok(b.clone());
         }
-        let beeld = self.document.weergave_in(deel, self.venster)?;
+        let beeld = self.document.weergave_van_bron(
+            deel,
+            self.venster,
+            None,
+            Some(self.layout_eigenaar),
+        )?;
         let mut cache = self.beelden.borrow_mut();
         if cache.len() >= 3 {
             cache.remove(0);
@@ -587,9 +601,12 @@ impl Sessie {
             self.document.bewerk(deel, bewerking)?;
             // Serialiseer één keer; de renderer toont precies de te bewaren bron.
             let bytes = self.document.bytes()?;
-            let beeld = self
-                .document
-                .weergave_van_bron(deel, self.venster, Some(&bytes))?;
+            let beeld = self.document.weergave_van_bron(
+                deel,
+                self.venster,
+                Some(&bytes),
+                Some(self.layout_eigenaar),
+            )?;
             Ok((bytes, beeld))
         }));
         match resultaat {

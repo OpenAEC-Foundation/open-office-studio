@@ -75,11 +75,24 @@ blijven rood: Writer 126.880, Spreadsheet 595.469, Presentation 563.547 en
 Notition 666.025 afwijkende pixels, steeds op 943.736 pixels. Geen maskers,
 herschaling of versoepeling. Verschillen zijn geen percentages functievoltooiing.
 
-De nieuwe release- en platformronde worden afzonderlijk gecontroleerd. De
-laatst afgeronde ronde is [alpha 9](controle-2026-10-31-alpha9.md): vier CI-jobs
-groen en alle 650 bronbytesets gelijk; de brede corpusronde heeft nog 68
-weigeringen en twee overschrijdingen van 30 seconden. De drie grote bronnen
-slagen apart met meer tijd. Dit blijft onvolledig bewijs voor het hele corpus.
+Alle vijf [CI-jobs van alpha 10](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41177523545)
+zijn geslaagd. De [platformcontrole](platformen-2026-10-31-alpha10.json) bevestigt
+alle 673 bronbestanden bytegelijk op elk platform en 66 volledige native
+beeldparen exact gelijk. De geteste mergecheckout `523a842a2ead6e590a99adbcbb77753e6b772894`
+heeft dezelfde bronbomen voor native, publieke bestanden, documentatie en
+Git-attributen als branchcommit `1a6a62ab509454c31045f94fef5b602e4e6b77c0`.
+
+Ook de lokale releasebuild is afgerond en uit het draagbare pakket gecontroleerd:
+673 bronbestanden exact gelijk aan een Git-archief van die branchcommit,
+zip-CRC en SHA-256 goed, beide uitgepakte programmaversies juist en notices
+meegeleverd. De [vaste bronregressie](bronregressie-2026-10-31-alpha10-release.json)
+slaagt met de lokale releasecontroleur. Dit zijn previewpakketten, geen native
+installers of stabiele suitevervanging.
+
+De laatst afgeronde brede corpusronde betreft nog
+[alpha 9](controle-2026-10-31-alpha9.md): 68 weigeringen en twee overschrijdingen
+van 30 seconden. De drie grote bronnen slagen apart met meer tijd. Dit blijft
+onvolledig bewijs voor het hele corpus.
 
 Directe rijke paginainvoer, volledige ribbons, continue spreadsheetbediening,
 presentatieobjecten, automatisch notitieherstel, complete mailbediening,

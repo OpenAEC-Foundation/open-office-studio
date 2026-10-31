@@ -104,6 +104,14 @@ jobs:
       - run: cargo build --manifest-path native/Cargo.toml --workspace --locked --release
       - name: Vastgepinde bronregressie met het releaseprogramma controleren
         run: python native/scripts/controleer-bronregressies.py --programma "native/target/release/controleer-bestand${{ runner.os == 'Windows' && '.exe' || '' }}" --uitvoer "${{ env.OFFICE_TEST_UITVOER }}/bronregressie.json"
+      - name: Sessiepaginering exact vergelijken met verse releaseberekeningen
+        run: python native/scripts/meet-paginas.py --programma "native/target/release/controleer-bestand${{ runner.os == 'Windows' && '.exe' || '' }}" --bron native/crates/office-core/tests/fixtures/writer-cachepaginas.docx --paginas 0,1,2,3,4,0,5 --seconden 120 --uitvoer "${{ env.OFFICE_TEST_UITVOER }}/paginameting.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-paginametingen-${{ runner.os }}
+          path: ${{ env.OFFICE_TEST_UITVOER }}/paginameting.json
+          if-no-files-found: warn
       - uses: actions/upload-artifact@v4
         if: always()
         with:
