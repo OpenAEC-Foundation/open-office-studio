@@ -194,24 +194,62 @@ fn notitie_canvas_en_markdown_renderen_met_benoemde_bediening() {
     }
 }
 
-#[test]
-fn huidige_writer_referentie_renderen_op_browserformaat() {
-    let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") else {
-        return;
-    };
-    let mut app = app_met_document(
-        Module::Writer,
-        include_bytes!("../../../../docs/voorbeelden/Ontwerpnotitie.docx"),
-    );
+fn referentie_renderen(module: Module, bron: &[u8], naam: &str, uitvoernaam: &str) {
+    let mut app = app_met_document(module, bron);
     app.thema = ThemeId::Dark;
     app.venster_grootte = Size::new(1058., 892.);
     let t = app.tab_mut().unwrap();
-    t.naam = "Ontwerpnotitie.docx".into();
+    t.naam = naam.into();
     t.panelen = false;
+    // De webreferentie toont de voorbeeldpresentatie op 65%; de andere
+    // documenten op 100%. Hetzelfde zoomniveau is ook native bedienbaar.
+    if module == Module::Presentation {
+        t.zoom = 0.65;
+    }
     t.opgeslagen = Some(t.antwoord.as_ref().unwrap().hash.clone());
+    assert!(toegankelijkheid(&app).unnamed.is_empty());
     let png = render_grootte(&app, 1058, 892);
-    png.save_png(PathBuf::from(map).join("writer-native-referentie.png"))
-        .unwrap();
+    assert_eq!((png.width(), png.height()), (1058, 892));
+    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        std::fs::create_dir_all(&map).unwrap();
+        png.save_png(PathBuf::from(map).join(uitvoernaam)).unwrap();
+    }
+}
+
+#[test]
+fn huidige_writer_referentie_renderen_op_browserformaat() {
+    referentie_renderen(
+        Module::Writer,
+        include_bytes!("../../../../docs/voorbeelden/Ontwerpnotitie.docx"),
+        "Ontwerpnotitie.docx",
+        "writer-native-referentie.png",
+    );
+}
+
+#[test]
+fn overige_documentreferenties_renderen_op_browserformaat() {
+    for (module, bron, naam, uitvoernaam) in [
+        (
+            Module::Spreadsheet,
+            include_bytes!("../../../../docs/voorbeelden/Materiaaloverzicht.xlsx").as_slice(),
+            "Materiaaloverzicht.xlsx",
+            "spreadsheet-native-referentie.png",
+        ),
+        (
+            Module::Presentation,
+            include_bytes!("../../../../docs/voorbeelden/Ontwerpvisie.pptx").as_slice(),
+            "Ontwerpvisie.pptx",
+            "presentation-native-referentie.png",
+        ),
+        (
+            Module::Notition,
+            include_bytes!("../../../../docs/voorbeelden/Notitieboek.json").as_slice(),
+            "Notitieboek.json",
+            "notition-native-referentie.png",
+        ),
+    ] {
+        referentie_renderen(module, bron, naam, uitvoernaam);
+    }
 }
 
 pub(super) fn app_met_document(module: Module, bytes: &[u8]) -> App {

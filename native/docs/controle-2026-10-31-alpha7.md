@@ -88,7 +88,7 @@ release moet opnieuw met het echte bestandscontroleprogramma worden gemeten.
 
 ## Uitgevoerde controles
 
-- **160 reguliere Rust-tests geslaagd**, zes runtimeproeven standaard apart.
+- **161 reguliere Rust-tests geslaagd**, zes runtimeproeven standaard apart.
 - **Alle zes runtimeproeven afzonderlijk geslaagd** op deze versie: vijf
   conversieproeven en de native exportketen voor PDF en CSV.
 - Vier Python-regressietests voor strikte beeldvergelijking geslaagd.
@@ -102,8 +102,11 @@ De conversieteruglezing draait nu ook in de aparte Linux-CI-taak. Testuitvoer
 krijgt per bouwronde en platform een eigen map. Buildcaches bevatten alleen
 debug- en release-uitvoer, geen oude testbeelden of distributiepakketten.
 
-De 28 schermopnamen zijn door de echte Iced software-renderer gemaakt. De nieuwe
-Writer-indeling, zichtbare kop-/voettekst en symboolweergave zijn visueel bekeken.
+De 31 schermopnamen zijn door de echte Iced software-renderer gemaakt. De nieuwe
+Writer-indeling, zichtbare kop-/voettekst, symboolweergave en de drie aanvullende
+voorbeeldschermen zijn visueel bekeken. De referentietests tekenen nu ook zonder
+uitvoermap werkelijk het scherm; het ontbreken van die map slaat de weergave
+niet meer over.
 Dit is geen fysieke GUI-, systeemdialoog-, IME- of schermlezertest. De mailproeven
 blijven lokale nepservers gebruiken.
 
@@ -114,6 +117,46 @@ de oorspronkelijke, herhaalbare referentie-PNG van de bestaande suite met
 hetzelfde document en viewport. **350.978 van 943.736 pixels wijken af**.
 Tolerantie en toegestaan aantal afwijkingen zijn nul; de vergelijking faalt.
 Het rapport legt ook de hashes van beide werkelijke bronbeelden vast.
+
+Er zijn nu ook verliesvrije referenties voor Spreadsheet, Presentation en
+Notition, telkens op 1058 × 892 pixels, in het donkere thema en met dezelfde
+vaste bron voor de native opname. Writer, Spreadsheet en Notition staan op 100%;
+Presentation op 65%. De native zijpanelen staan uit. De bestaande suite heeft
+andere modulepanelen; die nog ontbrekende indeling is een zichtbaar verschil,
+geen weggeknipt gebied. Notition laadt het eigen JSON-voorbeeld als lokale
+bewaring in uitsluitend het tijdelijke browserprofiel, terwijl native datzelfde
+voorbeeld als bestand opent. Dit bewijst geen importhandeling in de webversie.
+
+| Module | Afwijkende pixels van 943.736 | Resultaat bij nul tolerantie |
+| --- | ---: | --- |
+| Writer | 350.978 | Niet gelijk |
+| Spreadsheet | 624.298 | Niet gelijk |
+| Presentation | 592.529 | Niet gelijk |
+| Notition | 695.640 | Niet gelijk |
+
+De oorspronkelijke PNG's, herkomst en verschilbeelden staan naast dit rapport.
+Alle vier browseropnamen blijven bij herhaling byte-gelijk. De testbrowser heeft
+een vaste tijdzone. Het afsluiten ruimt alleen het eigen profiel op, met een
+korte herhaling wanneer een renderer zijn bestanden nog afsluit.
+
+## Grote documenten met de echte release
+
+De lokale releasebuild is geslaagd in 26 minuten en 28 seconden. De twee
+vastgezette releaseprogramma's melden alpha 7. De eerste nieuwe corpusronde en
+de uitgebreidere platformrondes worden hieronder nog afzonderlijk vastgelegd.
+Een afzonderlijke vergelijking gebruikt exact dezelfde twee bronhashes,
+één controleproces, 120 seconden per bron en 3 GiB adresruimte per proces:
+
+| Bron | Alpha 6 | Alpha 7 |
+| --- | --- | --- |
+| 953 alinea's | Rondgang 99.021 ms, eerste weergave 48.730 ms | Rondgang 3.385 ms, eerste weergave 1.507 ms |
+| 15.935 alinea's | Afgebroken bij de geheugenlimiet | Rondgang 29.186 ms, eerste weergave 12.361 ms |
+
+Dit zijn afzonderlijke lokale metingen, geen gegarandeerde snelheid op andere
+apparaten. De eerdere build liep nog tijdens de alpha-6-meting; bij alpha 7 was
+de build klaar. De controle vergelijkt de zichtbare tekstvelden en
+onderdeelstructuur na bewaren en teruglezen, niet alle pagina's of opmaak.
+De aparte faseproef hierboven is niet gebruikt als productbenchmark.
 
 De [laatste volledige releasecorpusronde](corpus-2026-10-31-alpha5-release.json)
 betreft nog alpha 5: 648 geselecteerde OOXML-bronnen, 578 geslaagde rondgangen,

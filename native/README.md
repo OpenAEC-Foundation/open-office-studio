@@ -149,7 +149,7 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 ## Controles
 
 Het [controlerapport voor alpha 7](docs/controle-2026-10-31-alpha7.md) beschrijft
-de 158 reguliere Rust-tests en zes expliciete runtimeproeven, pagina-instelling, symboolterugval en conversie-export
+de 161 reguliere Rust-tests en zes expliciete runtimeproeven, pagina-instelling, symboolterugval en conversie-export
 en de grenzen van de actuele controle. De eerdere
 rapporten blijven historische verslagen.
 
@@ -262,8 +262,12 @@ Twee opeenvolgende opnamen zijn pixelgelijk. De [alpha-7-vergelijking](docs/pixe
 met de native Writer meet **350.978 afwijkende pixels van 943.736**.
 Deze ene vastgelegde toestand bewijst dus expliciet dat de UI nog niet gelijk is.
 De [herkomst](docs/referentie-2026-W44.8/writer.json) vermeldt bron-, bundel- en
-beeldhashes, browser, viewport, thema en taal. De overige schermtoestanden en
-platforms moeten nog op dezelfde manier met de bestaande suite worden vergeleken.
+beeldhashes, browser, viewport, thema en taal. Ook voor
+[Spreadsheet](docs/referentie-2026-W44.8/spreadsheet.png),
+[Presentation](docs/referentie-2026-W44.8/presentation.png) en
+[Notition](docs/referentie-2026-W44.8/notition.png) zijn nu vaste PNG-referenties
+vastgelegd. De eerste native vergelijkingen daarvan falen eveneens; indeling,
+panelen en overige schermtoestanden blijven over te zetten en te controleren.
 
 De referentieopname gebruikt alleen een nieuw tijdelijk browserprofiel en eigen
 luisterpoorten; bestaande browservensters blijven met rust. Hiervoor is Node 24
@@ -273,4 +277,5 @@ bundel en registreert de hoofdbestandhashes; dat vervangt geen buildattest.
 
 ```sh
 node native/scripts/maak-webreferentie.mjs /pad/naar/webbundel /pad/naar/chromium .local/webreferentie
+# Optioneel als vierde argument: writer, spreadsheet, presentation of notition.
 ```
