@@ -74,12 +74,14 @@ gebruikt zijn ingebouwde letter met synthetische vet-/cursiefvormen. De
 familie en opmaak worden wel bewaard en de cel-editor gebruikt de vastgepinde
 documentletters. Dat voorvertoningsverschil moet nog worden opgelost.
 
-De nieuwe release- en platformronde zijn nog niet afgerond. De
-[alpha-13-platformronde](controle-2026-10-31-alpha13.md) is volledig groen:
-vijf CI-jobs, 741 verpakte bronbestanden bytegelijk per platform, 70 exacte
-native beeldparen en zeven exacte paginabezoeken op elk van de drie platforms.
-Het Linux-CI-pakket is ook lokaal uitgepakt en gecontroleerd. Dit platformbewijs
-betreft alpha 13; de afzonderlijke lokale alpha-13-build loopt nog.
+De [alpha-14-platformronde](platformen-2026-10-31-alpha14.json) is afgerond:
+vijf CI-jobs groen, 761 verpakte bronbestanden bytegelijk per platform en 74
+exacte native beeldparen. Zeven paginabezoeken per platform zijn exact tussen
+verse en behouden sessies. De afzonderlijke lokale alpha-14-releasebuild en
+pakketcontrole zijn ook geslaagd; beide binaries zijn onveranderlijk apart
+bewaard. De [vaste bronregressie](bronregressie-2026-10-31-alpha14-release.json)
+is met die lokale releasecontroleur geslaagd. Dit is geen stabiele vrijgave.
+De lokale alpha-13-build en pakketcontrole zijn eveneens afgerond.
 
 Bereikselecties/-klembord, slepen, filteren/sorteren, grafieken, volledige
 bescherming en overige spreadsheetopdrachten blijven open. Ook de overige

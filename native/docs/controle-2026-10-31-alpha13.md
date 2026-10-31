@@ -75,7 +75,10 @@ of gelijkheid met de bestaande interface.
 Het Linux-CI-pakket is ook lokaal uitgepakt en gecontroleerd: CRC, SHA-256,
 alle 741 bronbestanden tegen het vaste Git-archief, bronpinnen, notices,
 compileerinclusies en beide programmaversies. De afzonderlijke lokale
-releasebuild vanaf dat archief is nog niet afgerond.
+releasebuild vanaf dat archief is inmiddels afgerond. Ook het lokale pakket
+is uitgepakt en op alle 741 bronbestanden, notices, bronpinnen en beide
+programmaversies gecontroleerd. De [vastgepinde bronregressie](bronregressie-2026-10-31-alpha13-release.json)
+slaagt met de daadwerkelijk gebouwde lokale controleur.
 
 De lokale alpha-12-release heeft 579 geslaagde, 68 geweigerde bronnen en één
 time-out uit 648 geselecteerde OOXML-bestanden. Dat brede corpusbewijs betreft

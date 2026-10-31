@@ -9,6 +9,7 @@ pub mod opslag;
 pub mod presentatie;
 mod presentatie_tekst;
 pub mod rekenblad;
+mod rekenblad_beeld;
 pub mod writer;
 mod writer_beeld;
 pub mod writer_document;

@@ -181,3 +181,15 @@ assert syntaxis['A10'].value == '=1+' and syntaxis['A10'].data_type == 's'
 assert syntaxis['B10'].value == '=1+' and syntaxis['B10'].data_type == 's'
 assert syntaxis['B10'].number_format == '@'
 print('Directe celbewerking: bron, formules, herberekening en letterlijke formuletekst onafhankelijk goedgekeurd.')
+
+letters = load_workbook(map/'spreadsheet-lettertypen.xlsx', data_only=False)
+s = letters['Begroting']
+assert s['A10'].value == 'iii WWW café'
+assert s['A10'].font.name == 'Courier New'
+assert s['A10'].font.bold and s['A10'].font.italic
+assert s['A10'].font.sz == 18
+assert 'A10:E12' in [str(r) for r in s.merged_cells.ranges]
+assert s['B2'].value == 3 and s['D2'].value == '=B2*C2'
+assert s['D4'].value == '=SUM(D2:D3)' and s['D4'].number_format == '0.00'
+assert letters['Tweede blad']['A1'].value == 'Bewaar ook dit blad'
+print('Spreadsheetletters: familie, echte stijlkeuze, grootte, samenvoeging en overige gegevens onafhankelijk teruggelezen.')

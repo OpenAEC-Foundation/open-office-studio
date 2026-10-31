@@ -164,7 +164,7 @@ pub fn toon(
         x::viewport_for_range(d.sheet(sheet).map_err(fout)?, &d.model().styles, range);
     viewport.width = viewport.width.clamp(1., 1600.);
     viewport.height = viewport.height.clamp(1., 1400.);
-    let png = d.render_png_for(sheet, &viewport).map_err(fout)?;
+    let png = crate::rekenblad_beeld::teken(d, sheet, &viewport)?;
     beeld.pagina = Pagina {
         inhoud: None,
         breedte: png.width as f32,

@@ -51,3 +51,17 @@ werkelijk = {p.relative_to(presentatiemap).as_posix(): hashlib.sha256(p.read_byt
              for p in presentatiemap.rglob('*') if p.is_file()}
 assert werkelijk == verwacht, 'Presentatiefacade wijkt af van de vastgelegde bron en aansluiting'
 print(f"Presentatiefacade: {len(werkelijk)} bronbestanden en {len(presentatie['aanpassingen'])} vastgelegde aansluiting geverifieerd.")
+
+rastermap = root/'vendor/xlsx-raster'
+raster = json.loads((root/'vendor/xlsx-raster-bron.json').read_text(encoding='utf-8'))
+verwacht = dict(raster['oorspronkelijke_bestanden'])
+for naam, wijziging in raster['aanpassingen'].items():
+    assert naam in verwacht, f'Onbekende rasteraanpassing: {naam}'
+    verwacht[naam] = wijziging['sha256']
+for naam, aanvulling in raster['aanvullingen'].items():
+    assert naam not in verwacht, f'Dubbel rasterbestand: {naam}'
+    verwacht[naam] = aanvulling['sha256']
+werkelijk = {p.relative_to(rastermap).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
+             for p in rastermap.rglob('*') if p.is_file()}
+assert werkelijk == verwacht, 'Rasterbron of oorspronkelijke PNG-bronbeelden wijken af van de vastgelegde bron'
+print(f"Spreadsheetraster: {len(werkelijk)} bronbestanden en {len(raster['aanpassingen'])} vastgelegde aansluitingen geverifieerd.")
