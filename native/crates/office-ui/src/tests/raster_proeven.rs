@@ -863,3 +863,122 @@ fn echte_writer_en_bestand_deelhertekeningen_zijn_gelijk_aan_verse_hele_beelden(
         "Gedeeltelijke native hertekening laat andere pixels achter"
     );
 }
+
+#[test]
+fn writer_zoeken_vervangen_via_lint_werkdraad_unicode_en_undo() {
+    use crate::zoeken_ui::Bericht as Z;
+    let bron = include_bytes!("../../../office-core/tests/fixtures/writer-structuur.docx");
+    let mut p = Proef::met_app(app_met_werkdraad(Module::Writer, bron));
+    let c = p.toegankelijkheid();
+    let zoek = c
+        .nodes
+        .iter()
+        .find(|n| n.node.name == "Zoeken" && n.node.role == openaec_ui::design::a11y::Role::Button)
+        .expect("Zoekopdracht in het echte lint");
+    p.klik(iced::Point::new(
+        zoek.bounds.center_x(),
+        zoek.bounds.center_y(),
+    ));
+    assert!(p.app.zoeken.is_some());
+    assert!(p.focusoperaties > 0);
+    p.bericht(Msg::Zoeken(Z::Open(true)));
+    p.bericht(Msg::Zoeken(Z::Tekst("café".into())));
+    assert_eq!(
+        p.app.tab().unwrap().editor.selection().as_deref(),
+        Some("café")
+    );
+    let c = p.toegankelijkheid();
+    assert!(
+        c.unnamed.is_empty(),
+        "Zoekbediening mist namen: {:?}",
+        c.unnamed
+    );
+    if let Some(pad) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        let pad = PathBuf::from(pad);
+        std::fs::create_dir_all(&pad).unwrap();
+        p.verbeeld()
+            .save_png(pad.join("writer-zoeken.png"))
+            .unwrap();
+    }
+    p.bericht(Msg::Zoeken(Z::Vervangtekst("gebouw 🏠".into())));
+    p.bericht(Msg::Zoeken(Z::Vervang(false)));
+    assert_eq!(
+        p.app.tab().unwrap().antwoord.as_ref().unwrap().beeld.velden[1].tekst,
+        "Links 🏠 gebouw 🏠 rechts"
+    );
+    let nieuw = p.bron();
+    if let Some(pad) = std::env::var_os("OFFICE_TEST_UITVOER") {
+        let pad = PathBuf::from(pad);
+        std::fs::create_dir_all(&pad).unwrap();
+        std::fs::write(pad.join("writer-zoeken-ui.docx"), nieuw.as_slice()).unwrap();
+    }
+    p.bericht(Msg::Terug);
+    assert_eq!(p.bron().as_slice(), bron.as_slice());
+    p.bericht(Msg::Vooruit);
+    assert_eq!(p.bron(), nieuw);
+    p.bericht(Msg::Terug);
+    p.bericht(Msg::Zoeken(Z::Tekst("cel".into())));
+    p.bericht(Msg::Zoeken(Z::Vervangtekst("vlak".into())));
+    p.bericht(Msg::Zoeken(Z::Vervang(true)));
+    let velden = &p.app.tab().unwrap().antwoord.as_ref().unwrap().beeld.velden;
+    for tekst in ["vlak één", "Tweede vlakalinea", "vlak twee"] {
+        assert!(
+            velden.iter().any(|v| v.tekst == tekst),
+            "Ontbrekende tabelvervanging {tekst}"
+        );
+    }
+    p.bericht(Msg::Terug);
+    assert_eq!(p.bron().as_slice(), bron.as_slice());
+    p.bericht(Msg::Zoeken(Z::Sluit));
+    assert!(p.app.zoeken.is_none());
+}
+
+#[test]
+fn vervangen_gaat_voorbij_nieuw_ingevoegde_zoektekst_naar_de_volgende_treffer() {
+    use crate::zoeken_ui::Bericht as Z;
+    let mut p = Proef::met_app(app_met_werkdraad(
+        Module::Writer,
+        include_bytes!("../../../office-core/tests/fixtures/writer-structuur.docx"),
+    ));
+    p.bericht(Msg::Zoeken(Z::Open(true)));
+    p.bericht(Msg::Zoeken(Z::Tekst("e".into())));
+    p.bericht(Msg::Zoeken(Z::Vervangtekst("ee".into())));
+    p.bericht(Msg::Zoeken(Z::Vervang(false)));
+    let t = p.app.tab().unwrap();
+    assert_eq!(t.editor.text(), "Voor dee rijke alinea");
+    assert_eq!(t.editor.selection().as_deref(), Some("e"));
+    assert_eq!(
+        lint::tekenoffset(&t.editor, t.editor.cursor().selection.unwrap()),
+        13
+    );
+}
+
+#[test]
+fn enter_in_het_zoekveld_navigeert_en_een_resultaat_zet_echte_editorfocus() {
+    use crate::zoeken_ui::Bericht as Z;
+    let mut p = Proef::met_app(app_met_werkdraad(
+        Module::Writer,
+        include_bytes!("../../../office-core/tests/fixtures/writer-structuur.docx"),
+    ));
+    let bron = p.bron();
+    p.bericht(Msg::Zoeken(Z::Open(false)));
+    p.bericht(Msg::Zoeken(Z::Tekst("e".into())));
+    let t = p.app.tab().unwrap();
+    assert_eq!(
+        lint::tekenoffset(&t.editor, t.editor.cursor().selection.unwrap()),
+        6
+    );
+    p.named(iced::keyboard::key::Named::Enter);
+    let t = p.app.tab().unwrap();
+    assert_eq!(
+        lint::tekenoffset(&t.editor, t.editor.cursor().selection.unwrap()),
+        12
+    );
+    let voor = p.focusoperaties;
+    p.bericht(Msg::Zoeken(Z::Kies(0)));
+    assert!(p.focusoperaties > voor);
+    p.plak("E");
+    assert!(p.app.tab().unwrap().concept);
+    assert_eq!(p.app.tab().unwrap().editor.text(), "Voor dE rijke alinea");
+    assert_eq!(p.bron(), bron);
+}

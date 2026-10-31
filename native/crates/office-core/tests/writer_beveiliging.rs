@@ -22,6 +22,7 @@ fn bron(kenmerken: &str) -> Vec<u8> {
 }
 fn opdrachten(id: &str) -> Vec<Bewerking> {
     vec![
+        Bewerking::TekstReeksen(vec![]),
         Bewerking::TekstReeks {
             id: id.into(),
             bron: "".into(),
@@ -129,5 +130,105 @@ fn niet_afgedwongen_beveiliging_blijft_bewerkbaar_en_behoudt_de_instelling() {
         );
         s.terug().unwrap();
         assert_eq!(s.bron().as_slice(), bytes);
+    }
+}
+
+#[test]
+fn geldige_gezamenlijke_vervanging_wordt_bij_bronbeveiliging_geweigerd() {
+    let bytes = bron("w:enforcement=\"1\"");
+    let mut d = Document::open(Module::Writer, &bytes).unwrap();
+    let b = d.weergave(0).unwrap();
+    let v = b.velden.iter().find(|v| !v.tekst.is_empty()).unwrap();
+    let voor = d.bytes().unwrap();
+    let tekst = format!("{}!", v.tekst);
+    let reeks = office_core::document::TekstReeks {
+        id: v.id.clone(),
+        bron: v.tekst.clone(),
+        tekst,
+        stappen: vec![office_core::document::TekstStap {
+            begin: v.tekst.chars().count(),
+            einde: v.tekst.chars().count(),
+            verwacht: String::new(),
+            tekst: "!".into(),
+        }],
+    };
+    assert!(
+        d.bewerk(0, Bewerking::TekstReeksen(vec![reeks]))
+            .unwrap_err()
+            .to_string()
+            .contains("documentbeveiliging")
+    );
+    assert_eq!(d.bytes().unwrap(), voor);
+}
+#[test]
+fn bijhouden_en_inhoudssloten_worden_niet_stil_genegeerd() {
+    for (deel, xml, vergrendeld, reden) in [
+        (
+            "word/settings.xml",
+            "<w:trackRevisions/>",
+            true,
+            "wijzigingen bijhouden",
+        ),
+        (
+            "word/settings.xml",
+            "<w:trackRevisions w:val=\"true\"/>",
+            true,
+            "wijzigingen bijhouden",
+        ),
+        (
+            "word/settings.xml",
+            "<w:trackRevisions w:val=\"onbekend\"/>",
+            true,
+            "wijzigingen bijhouden",
+        ),
+        (
+            "word/settings.xml",
+            "<w:trackRevisions w:val=\"false\"/>",
+            false,
+            "",
+        ),
+        (
+            "word/document.xml",
+            "<w:sdt><w:sdtPr><w:lock w:val=\"contentLocked\"/></w:sdtPr><w:sdtContent><w:p><w:r><w:t>Eigen inhoud</w:t></w:r></w:p></w:sdtContent></w:sdt>",
+            true,
+            "inhoudsbesturing",
+        ),
+        (
+            "word/document.xml",
+            "<w:sdt><w:sdtPr><w:lock w:val=\"onbekend\"/></w:sdtPr><w:sdtContent><w:p><w:r><w:t>Eigen inhoud</w:t></w:r></w:p></w:sdtContent></w:sdt>",
+            true,
+            "inhoudsbesturing",
+        ),
+    ] {
+        let mut delen = ooxml_opc::unzip_parts(BRON).unwrap();
+        let (_, bytes) = delen.iter_mut().find(|(n, _)| n == deel).unwrap();
+        let s = String::from_utf8(bytes.clone()).unwrap();
+        let eind = if deel.ends_with("settings.xml") {
+            "</w:settings>"
+        } else {
+            "<w:sectPr"
+        };
+        assert!(s.contains(eind));
+        *bytes = s.replacen(eind, &format!("{xml}{eind}"), 1).into_bytes();
+        let bron = ooxml_opc::rezip_parts(&delen).unwrap();
+        let mut d = Document::open(Module::Writer, &bron).unwrap();
+        let b = d.weergave(0).unwrap();
+        assert_eq!(b.bewerkingsbeperking.is_some(), vergrendeld);
+        if vergrendeld {
+            assert!(b.bewerkingsbeperking.unwrap().contains(reden));
+            assert!(b.velden.iter().all(|v| !v.bewerkbaar));
+            let voor = d.bytes().unwrap();
+            assert!(
+                d.bewerk(
+                    0,
+                    Bewerking::Tekst {
+                        id: b.velden[0].id.clone(),
+                        tekst: "Andere eigen tekst".into()
+                    }
+                )
+                .is_err()
+            );
+            assert_eq!(d.bytes().unwrap(), voor);
+        }
     }
 }

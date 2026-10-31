@@ -40,7 +40,7 @@ impl DerefMut for WriterDocument {
 
 fn lees_beperking(bron: &[u8]) -> Resultaat<Option<String>> {
     let delen = ooxml_opc::unzip_parts_where(bron, ooxml_opc::MAX_TOTAL_UNCOMPRESSED_BYTES, |n| {
-        n.eq_ignore_ascii_case("word/settings.xml")
+        n.eq_ignore_ascii_case("word/settings.xml") || n.eq_ignore_ascii_case("word/document.xml")
     })
     .map_err(|e| Fout::Document(e.to_string()))?;
     let limieten = docx_parse::xml::ParseLimits::default();
@@ -53,6 +53,27 @@ fn lees_beperking(bron: &[u8]) -> Resultaat<Option<String>> {
         .map_err(|e| Fout::Document(e.to_string()))?;
         let mut lijst = d.root().into_iter().collect::<Vec<_>>();
         while let Some(n) = lijst.pop() {
+            if naam.eq_ignore_ascii_case("word/settings.xml") && n.local_name() == "trackRevisions"
+            {
+                let waarde = n
+                    .attributes
+                    .iter()
+                    .find(|(naam, _)| docx_parse::xml::local_name(naam) == "val")
+                    .map(|(_, v)| v.as_str());
+                if waarde.is_none_or(|v| docx_parse::xml::parse_on_off(v) != Some(false)) {
+                    return Ok(Some("Alleen lezen: wijzigingen bijhouden staat aan; nieuwe revisies worden nog niet veilig native gemaakt.".into()));
+                }
+            }
+            if naam.eq_ignore_ascii_case("word/document.xml") && n.local_name() == "lock" {
+                let waarde = n
+                    .attributes
+                    .iter()
+                    .find(|(naam, _)| docx_parse::xml::local_name(naam) == "val")
+                    .map(|(_, v)| v.as_str());
+                if !matches!(waarde, Some("unlocked" | "sdtLocked")) {
+                    return Ok(Some("Alleen lezen: vergrendelde of onbekende inhoudsbesturing. Bewerkbare uitzonderingen worden nog niet ondersteund.".into()));
+                }
+            }
             if n.local_name() == "documentProtection" {
                 for (naam, waarde) in &n.attributes {
                     if docx_parse::xml::local_name(naam) != "enforcement" {

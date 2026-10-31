@@ -201,3 +201,29 @@ assert ''.join(c for c, _, _ in letters) == '?Links 🏠 café rechts!'
 assert all(vet is True and cursief is not True for _, vet, cursief in letters[1:9])
 assert all(vet is not True and cursief is True for _, vet, cursief in letters[9:20])
 print('Writer-conceptreeks: de ongewijzigde vette en cursieve tekstdelen onafhankelijk teruggelezen.')
+
+zoekbron = Document(Path(__file__).parent/'writer-structuur.docx')
+zoekuit = Document(map/'writer-zoekvervang.docx')
+assert len(zoekbron.paragraphs) == len(zoekuit.paragraphs)
+for oud, nieuw in zip(zoekbron.paragraphs, zoekuit.paragraphs):
+    assert nieuw.text == oud.text.replace('e', 'Ω').replace('E', 'Ω')
+    a = [(c, r.bold is True, r.italic is True) for r in oud.runs for c in r.text]
+    b = [(c, r.bold is True, r.italic is True) for r in nieuw.runs for c in r.text]
+    assert [(v, c) for _, v, c in a] == [(v, c) for _, v, c in b]
+assert len(zoekbron.tables) == len(zoekuit.tables)
+for oud, nieuw in zip(zoekbron.tables, zoekuit.tables):
+    assert len(oud.rows) == len(nieuw.rows)
+    for a, b in zip(oud.rows, nieuw.rows):
+        assert len(a.cells) == len(b.cells)
+        for a, b in zip(a.cells, b.cells):
+            assert b.text == a.text.replace('e', 'Ω').replace('E', 'Ω')
+zoekui = Document(map/'writer-zoeken-ui.docx')
+assert zoekui.paragraphs[1].text == 'Links 🏠 gebouw 🏠 rechts'
+letters = [(c, r.bold is True, r.italic is True) for r in zoekui.paragraphs[1].runs for c in r.text]
+assert all(vet and not cursief for _, vet, cursief in letters[:8])
+assert all(not vet and cursief for _, vet, cursief in letters[8:])
+print('Writer-zoeken: gezamenlijke vervanging, tabelstructuur, runopmaak en Unicode-GUI-vervanging onafhankelijk teruggelezen.')
+zoekgroot = Document(map/'writer-zoekvervang-groot.docx')
+assert len(zoekgroot.paragraphs) == 256
+assert [p.text for p in zoekgroot.paragraphs] == [f'Lokaal werk {i} café 🏠' for i in range(256)]
+print('Writer-zoeken: 256 gezamenlijke alineavervangingen onafhankelijk teruggelezen.')

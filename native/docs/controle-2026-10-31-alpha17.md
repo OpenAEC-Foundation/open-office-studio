@@ -57,7 +57,14 @@ De [alpha-16-CI-ronde](platformen-2026-10-31-alpha16.json) is op vijf jobs groen
 met 821 bytegelijke bronbestanden per platform, 74 exacte native beeldparen en
 zeven paginabezoeken per platform tussen verse en behouden sessies. De lokale
 releasebuilds van alpha 15 en 16 en hun pakket-/broncontroles zijn afgerond.
-De alpha-17-release- en platformronde zijn nog niet afgerond.
+De [alpha-17-platformronde](platformen-2026-10-31-alpha17.json) is volledig
+geslaagd: vijf CI-jobs groen, 877 verpakte bronbestanden bytegelijk per platform,
+74 exacte native beeldparen en zeven exacte paginabezoeken per platform. Het
+Linux-CI-pakket is lokaal tegen het vaste bronarchief gecontroleerd. Ook de
+lokale alpha-17-releasebuild is afgerond (47 minuten): beide programma's zijn
+op versie gecontroleerd en onveranderlijk vastgezet. Het pakket bevat dezelfde
+877 bronbestanden; alle pakketcontroles en de [werkelijke bronregressie](bronregressie-2026-10-31-alpha17-release.json)
+slagen. De Git-archiefbron blijft afzonderlijk behouden.
 
 De [echte alpha-17-Linux-debugvensterproef](vensterproef-2026-10-31-alpha17/LEESMIJ.md)
 controleert invoer, behoud van vet/cursief, het systeemklembord, bewaren en
@@ -65,6 +72,13 @@ herstel van de oorspronkelijke bronbytes via twee undo-stappen. De totale
 ronde blijft afgekeurd: de aansluitende Bestand-klik toont binnen de
 controletijd geen Bestand-werkvlak. De oorzaak staat nog open; de releasebuild
 moet afzonderlijk worden onderzocht. Dit geldt niet als volledige GUI-goedkeuring.
+
+De latere [Linux-CI-releasevensterproef](vensterproef-2026-10-31-alpha17-release/LEESMIJ.md)
+is geheel geslaagd: dezelfde invoer-/klembord-/bewaar-/undo-reeks, Bestand
+zichtbaar zonder grijze tekenresten, Escape terug en sluiten met procescode
+nul. Alle 877 verpakte bronbestanden en de Rust-bronhashes uit de vensterproef
+zijn tegen de vaste alpha-17-commit gecontroleerd. Dit keurt alleen deze
+gerichte Linux/X11-releaseronde goed; de mislukte debugproef blijft bewaard.
 
 De [brede alpha-16-corpusronde](corpus-2026-10-31-alpha16-release.json) heeft
 580 geslaagde en 68 geweigerde bronnen, zonder time-outs, op 648 geselecteerde

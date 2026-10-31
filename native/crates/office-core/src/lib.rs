@@ -16,4 +16,5 @@ pub mod writer_document;
 pub mod writer_opmaak;
 pub mod writer_pagina;
 mod writer_tekst;
+pub mod writer_zoeken;
 pub const VERSIE: &str = env!("CARGO_PKG_VERSION");

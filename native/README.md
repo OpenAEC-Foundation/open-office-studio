@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.17**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.18**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -65,6 +65,12 @@ lint en de tekstbewerking blijven geblokkeerd; selecteren en kopiëren blijven
 mogelijk. Niet-afgedwongen instellingen blijven behouden bij gewone bewerkingen.
 Beveiligde uitzonderingen, formulieren en het opheffen van beveiliging zijn
 nog niet geïmplementeerd.
+
+Ook actieve revisieregistratie en vergrendelde of onbekende inhoudsbesturingen
+openen voorlopig alleen-lezen. De native editor mag zulke instellingen niet
+stil negeren en ongeregistreerde wijzigingen bewaren. Bestaande alinea- en
+runrevisies zijn niet rechtstreeks bewerkbaar. De uitzonderingen binnen een
+gedeeltelijk beschermd document zijn nog niet overgezet.
 
 ![Beschermde Writer-bron met leesmelding](docs/screenshots/writer-beveiligd.png)
 
@@ -158,6 +164,37 @@ blijven open.
 
 ![Native Writer-pagina-instelling](docs/screenshots/writer-indeling.png)
 
+## Writer: zoeken en vervangen
+
+**Start → Zoeken**, Ctrl/Cmd+F en Ctrl/Cmd+H openen het zoekpaneel.
+Letterlijk zoeken omvat alle hoofdtekst- en tabelalinea's, met Unicode,
+hoofdlettergevoeligheid en hele woorden. Vorige/Volgende doorloopt de resultaten;
+een resultaat selecteert de gevonden tekst in de alinea-editor. Zoeken en
+verwerken van late antwoorden blokkeren de documentwerkdraad niet. Een nieuwe
+query, een andere bronversie of een gesloten paneel mag geen oud resultaat
+overnemen. Per paneel loopt hoogstens één zoektaak; nieuwe invoer vervangt het
+wachtende verzoek.
+
+Vervangen en Alles vervangen gebruiken expliciete Unicode-tekststappen.
+Ongewijzigde opmaak blijft behouden. Alle geraakte alineakopieën worden vóór
+de eerste modelwijziging gecontroleerd; de gezamenlijke vervanging vormt één
+undo-stap. Ook de rechtstreekse document-API blijft ongewijzigd bij een late
+fout. Identieke vervangingen maken geen schijnbewerking. De volgende treffer
+begint na de ingevoegde vervangtekst. Een alleen-lezen resultaat wordt niet
+stil overgeslagen.
+
+De limieten zijn 16 MiB doorzoekbare tekst, 4096 treffers en een begrensd
+vervangbudget. Bij overschrijding volgt een fout, geen afgekapt resultaat dat
+als volledige vervanging telt. Het paneel bouwt maximaal 75 resultaatknoppen;
+Vorige/Volgende blijft de volledige resultatenlijst doorlopen.
+
+Dit is nog geen volledige zoekpariteit: kop-/voetteksten, noten, tekstvakken,
+zoeken over alineagrenzen, reguliere expressies, jokertekens en opmaakfilters
+zijn niet aangesloten. Op de documentpagina ontbreekt nog een rijke cursor
+en de zoektreffer navigeert nog niet naar een andere documentpagina.
+
+![Zoeken en vervangen in native Writer](docs/screenshots/writer-zoeken.png)
+
 ## Conversie-export
 
 **Bestand → Exporteren** maakt voor Writer, Spreadsheet en Presentation een
@@ -224,18 +261,25 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
-Het [controlerapport voor alpha 17](docs/controle-2026-10-31-alpha17.md) beschrijft
-207 reguliere Rust-tests, inclusief 53 GUI-tests, zes aparte runtimeproeven en
+Het [controlerapport voor alpha 18](docs/controle-2026-10-31-alpha18.md) beschrijft
+219 reguliere Rust-tests, inclusief 58 GUI-tests, zes aparte runtimeproeven en
 zeven Python-tests. De bestandsuitvoer is onafhankelijk teruggelezen en 37
-native schermen zijn vastgelegd. Gerichte proeven vergelijken nu ook herhaalde
+native schermen plus het Writer-zoekpaneel zijn vastgelegd. Gerichte proeven vergelijken nu ook herhaalde
 gedeeltelijke hertekeningen met verse volledige beelden. Dat vond fouten die
 de oorspronkelijke losse screenshots niet controleerden.
-De alpha-17-release- en platformronde zijn nog niet afgerond.
-De [alpha-16-platformronde](docs/platformen-2026-10-31-alpha16.json) is volledig
-geslaagd: vijf CI-jobs groen, alle 821 bronbestanden bytegelijk op elk platform,
+De alpha-18-controles zijn nog niet afgerond.
+De [alpha-17-platformronde](docs/platformen-2026-10-31-alpha17.json) is volledig
+geslaagd: vijf CI-jobs groen, alle 877 bronbestanden bytegelijk op elk platform,
 74 exacte native beeldparen en zeven exacte paginabezoeken op alle drie
 platforms. De platformvergelijking bewijst geen gelijkheid met de bestaande
 interface. Eerdere rapporten blijven historische verslagen.
+
+De [gerichte echte Linux-releasevensterproef van alpha 17](docs/vensterproef-2026-10-31-alpha17-release/LEESMIJ.md)
+slaagt op tekstinvoer, vet/cursief, systeemklembord, snelle selectie/knippen,
+bewaren, exacte bronherstelling via undo, Bestand zonder grijze tekenresten,
+Escape terug en sluiten. De eerdere afgekeurde debugproef blijft behouden.
+Deze eigen Xvfb-/D-Bus-sessie keurt fysieke hardware, de overige modules,
+Windows/macOS-bediening, IME-compositie, systeemdialogen en schermlezers niet goed.
 
 ```sh
 python3 native/scripts/controleer-bron.py
@@ -354,15 +398,15 @@ Een afzonderlijke Chromium-testbrowser heeft inmiddels een oorspronkelijke
 navigatie gepauzeerd om de knipperfase vast te leggen; meldingen zijn via hun
 sluitknoppen gesloten. De opname is niet geschaald, uitgelijnd of nabewerkt.
 Twee opeenvolgende referentieopnamen zijn pixelgelijk. De
-[alpha-17-vergelijking](docs/pixelcontrole-alpha17/writer/rapport.json)
-met de native Writer meet **107.809 afwijkende pixels van 943.736**.
+[alpha-18-vergelijking](docs/pixelcontrole-alpha18/writer/rapport.json)
+met de native Writer meet **108.314 afwijkende pixels van 943.736**.
 Deze ene vastgelegde toestand bewijst dus expliciet dat de UI nog niet gelijk is.
 De [herkomst](docs/referentie-2026-W44.8/writer.json) vermeldt bron-, bundel- en
 beeldhashes, browser, viewport, thema en taal. Ook voor
 [Spreadsheet](docs/referentie-2026-W44.8/spreadsheet.png),
 [Presentation](docs/referentie-2026-W44.8/presentation.png) en
 [Notition](docs/referentie-2026-W44.8/notition.png) zijn nu vaste PNG-referenties
-vastgelegd. De [vier alpha-17-vergelijkingen](docs/pixelcontrole-alpha17/rapport.json)
+vastgelegd. De [vier alpha-18-vergelijkingen](docs/pixelcontrole-alpha18/rapport.json)
 falen; indeling, panelen en overige schermtoestanden blijven over te zetten.
 De browser- en nativevenstertoestanden zijn vastgelegd. Een vergelijking in
 dezelfde desktopvenstertoestand staat nog open.

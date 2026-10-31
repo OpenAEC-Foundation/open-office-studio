@@ -445,6 +445,20 @@ pub fn ribbon(app: &App) -> Option<Element<'_, Msg>> {
             ],
         ));
     }
+    if module == Module::Writer {
+        groepen.push(w::ribbon_group(
+            l,
+            "Zoeken",
+            vec![w::ribbon_large(
+                l,
+                icoon(Icon::Search),
+                "Zoeken",
+                false,
+                (!t.bezig && !t.concept && !t.schrijft)
+                    .then_some(Msg::Zoeken(crate::zoeken_ui::Bericht::Open(false))),
+            )],
+        ));
+    }
     Some(w::ribbon(l, groepen))
 }
 

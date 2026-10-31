@@ -81,20 +81,26 @@ fn fout() -> Fout {
     Fout::Document("Deze alinea bevat een object, veld, link of revisie die nog niet veilig native kan worden bewerkt".into())
 }
 pub fn ondersteund(p: &docx::Paragraph) -> bool {
-    p.content.iter().all(|c| match c {
-        P::Inline(I::Run(r)) => r.content.iter().all(|c| {
-            matches!(
-                c,
-                R::Text { .. }
-                    | R::Tab
-                    | R::Break {
-                        break_type: None,
-                        clear: None
-                    }
-            )
-        }),
-        _ => false,
-    })
+    p.property_changes.is_none()
+        && p.p_pr_ins.is_none()
+        && p.p_pr_del.is_none()
+        && p.content.iter().all(|c| match c {
+            P::Inline(I::Run(r)) => {
+                r.property_changes.is_none()
+                    && r.content.iter().all(|c| {
+                        matches!(
+                            c,
+                            R::Text { .. }
+                                | R::Tab
+                                | R::Break {
+                                    break_type: None,
+                                    clear: None
+                                }
+                        )
+                    })
+            }
+            _ => false,
+        })
 }
 fn tekst(r: &docx::Run) -> String {
     r.content
@@ -265,6 +271,88 @@ pub fn reeks(
     resultaat: &str,
     stappen: &[crate::document::TekstStap],
 ) -> Resultaat<()> {
+    let p = bereid_reeks(d, id, bron, resultaat, stappen)?;
+    schrijf(d, id, &p);
+    Ok(())
+}
+
+/// Controleer alle alinea's vóór de eerste modelwijziging. Een late fout mag
+/// ook bij rechtstreekse documentbediening geen eerdere vervanging achterlaten.
+pub(crate) fn reeksen(
+    d: &mut docx::Document,
+    reeksen: &[crate::document::TekstReeks],
+) -> Resultaat<()> {
+    let omvang = reeksen.iter().try_fold(0usize, |n, r| {
+        n.checked_add(r.bron.len())?.checked_add(r.tekst.len())
+    });
+    let werk = reeksen.iter().try_fold(0usize, |n, r| {
+        n.checked_add(r.bron.len().checked_mul(r.stappen.len())?)
+    });
+    let gewijzigd = reeksen
+        .iter()
+        .flat_map(|r| &r.stappen)
+        .try_fold(0usize, |n, s| {
+            n.checked_add(s.tekst.len())?.checked_add(s.verwacht.len())
+        });
+    let stappen = reeksen
+        .iter()
+        .try_fold(0usize, |n, r| n.checked_add(r.stappen.len()));
+    if reeksen.is_empty()
+        || reeksen.len() > 4096
+        || omvang.is_none_or(|n| n > 16 * 1024 * 1024)
+        || stappen.is_none_or(|n| n > 4096)
+        || werk.is_none_or(|n| n > 32 * 1024 * 1024)
+        || gewijzigd.is_none_or(|n| n > 16 * 1024 * 1024)
+    {
+        return Err(Fout::Document(
+            "Vervangopdracht overschrijdt de bewerkingslimiet".into(),
+        ));
+    }
+    let mut paragrafen = std::collections::HashMap::new();
+    for p in d.paragraphs() {
+        if let Some(id) = p.para_id.as_deref()
+            && paragrafen.insert(id, p).is_some()
+        {
+            return Err(Fout::Document("Alinea-adres is niet uniek".into()));
+        }
+    }
+    let mut klaar = std::collections::HashMap::new();
+    for r in reeksen {
+        if klaar.contains_key(r.id.as_str()) {
+            return Err(Fout::Document(
+                "Een vervangopdracht bevat dezelfde alinea tweemaal".into(),
+            ));
+        }
+        let p = paragrafen
+            .get(r.id.as_str())
+            .ok_or_else(|| Fout::Document("Alinea bestaat niet".into()))?;
+        klaar.insert(
+            r.id.as_str(),
+            Arc::new(bereid_alinea(p, &r.bron, &r.tekst, &r.stappen)?),
+        );
+    }
+    schrijf_lijst(d, &klaar);
+    Ok(())
+}
+
+fn bereid_reeks(
+    d: &docx::Document,
+    id: &str,
+    bron: &str,
+    resultaat: &str,
+    stappen: &[crate::document::TekstStap],
+) -> Resultaat<docx::Paragraph> {
+    let p = d
+        .paragraph(id)
+        .ok_or_else(|| Fout::Document("Alinea bestaat niet".into()))?;
+    bereid_alinea(p, bron, resultaat, stappen)
+}
+fn bereid_alinea(
+    p: &docx::Paragraph,
+    bron: &str,
+    resultaat: &str,
+    stappen: &[crate::document::TekstStap],
+) -> Resultaat<docx::Paragraph> {
     if bron.len() > 500_000
         || resultaat.len() > 500_000
         || stappen.len() > 4096
@@ -279,10 +367,7 @@ pub fn reeks(
             "Tekstconcept overschrijdt de bewerkingslimiet".into(),
         ));
     }
-    let mut p = d
-        .paragraph(id)
-        .ok_or_else(|| Fout::Document("Alinea bestaat niet".into()))?
-        .clone();
+    let mut p = p.clone();
     if !ondersteund(&p) {
         return Err(fout());
     }
@@ -322,8 +407,7 @@ pub fn reeks(
             "Tekststappen leveren niet het zichtbare concept op".into(),
         ));
     }
-    schrijf(d, id, &p);
-    Ok(())
+    Ok(p)
 }
 fn vervang_bereik(p: &mut docx::Paragraph, begin: usize, einde: usize, nieuw: &str) {
     let mut runs: Vec<_> = p
@@ -396,29 +480,47 @@ fn vervang_bereik(p: &mut docx::Paragraph, begin: usize, einde: usize, nieuw: &s
 }
 
 fn schrijf(d: &mut docx::Document, id: &str, p: &docx::Paragraph) {
-    fn pas_toe(blokken: &mut [docx::BlockContent], id: &str, p: &docx::Paragraph) {
+    schrijf_lijst(
+        d,
+        &std::collections::HashMap::from([(id, Arc::new(p.clone()))]),
+    );
+}
+/// Eén doorloop, ook bij duizenden geraakte alinea's. De afzonderlijke
+/// sectiebeelden moeten naar precies dezelfde nieuwe alineakopieën verwijzen.
+fn schrijf_lijst(
+    d: &mut docx::Document,
+    nieuw: &std::collections::HashMap<&str, Arc<docx::Paragraph>>,
+) {
+    fn pas_toe(
+        blokken: &mut [docx::BlockContent],
+        nieuw: &std::collections::HashMap<&str, Arc<docx::Paragraph>>,
+    ) {
         for blok in blokken {
             match blok {
-                docx::BlockContent::Paragraph(alinea) if alinea.para_id.as_deref() == Some(id) => {
-                    *alinea = Arc::new(p.clone())
+                docx::BlockContent::Paragraph(p) => {
+                    if let Some(id) = p.para_id.as_deref()
+                        && let Some(n) = nieuw.get(id)
+                    {
+                        *p = n.clone();
+                    }
                 }
                 docx::BlockContent::Table(t) => {
                     for rij in &mut Arc::make_mut(t).rows {
                         for cel in &mut rij.cells {
-                            pas_toe(&mut cel.content, id, p);
+                            pas_toe(&mut cel.content, nieuw);
                         }
                     }
                 }
-                docx::BlockContent::BlockSdt(s) => pas_toe(&mut Arc::make_mut(s).content, id, p),
+                docx::BlockContent::BlockSdt(s) => pas_toe(&mut Arc::make_mut(s).content, nieuw),
                 _ => {}
             }
         }
     }
     let model = d.model_mut();
-    pas_toe(&mut model.body.content, id, p);
+    pas_toe(&mut model.body.content, nieuw);
     if let Some(secties) = &mut model.body.sections {
-        for sectie in secties {
-            pas_toe(&mut sectie.content, id, p);
+        for s in secties {
+            pas_toe(&mut s.content, nieuw);
         }
     }
 }

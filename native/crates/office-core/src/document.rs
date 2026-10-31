@@ -102,8 +102,17 @@ pub struct TekstStap {
     pub verwacht: String,
     pub tekst: String,
 }
+/// Eén alineaconcept binnen een gezamenlijke, atomaire vervanging.
+#[derive(Debug, Clone)]
+pub struct TekstReeks {
+    pub id: String,
+    pub bron: String,
+    pub tekst: String,
+    pub stappen: Vec<TekstStap>,
+}
 #[derive(Debug, Clone)]
 pub enum Bewerking {
+    TekstReeksen(Vec<TekstReeks>),
     TekstReeks {
         id: String,
         bron: String,
@@ -242,6 +251,9 @@ impl Document {
             d.controleer_bewerking()?;
         }
         match (self, bewerking) {
+            (Self::Writer(d), Bewerking::TekstReeksen(reeksen)) => {
+                crate::writer_tekst::reeksen(d, &reeksen)?;
+            }
             (Self::Writer(d), Bewerking::Pagina { id, actie }) => {
                 crate::writer_pagina::pagina(d, &id, actie)?;
             }

@@ -15,6 +15,7 @@ mod sleepvak;
 mod stijl;
 mod werker;
 mod writer_invoer;
+mod zoeken_ui;
 use iced::widget::{column, container, image, row, scrollable, text_editor, text_input};
 use office_core::{
     document::{Bewerking, Module, Veld},
@@ -61,6 +62,11 @@ fn icoon(i: Icon) -> &'static str {
 }
 #[derive(Debug, Clone)]
 enum Msg {
+    Zoeken(zoeken_ui::Bericht),
+    ZoekGereed(
+        zoeken_ui::Doel,
+        Result<Vec<office_core::writer_zoeken::Treffer>, String>,
+    ),
     ExportMenu,
     Export(export_ui::Bericht),
     ExportPad(export_ui::Plan, Option<PathBuf>),
@@ -266,6 +272,7 @@ enum LintSoort {
     Weergave,
 }
 struct App {
+    zoeken: Option<zoeken_ui::Zoekpaneel>,
     exportblad: Option<export_ui::Exportblad>,
     export_bezig: bool,
     postvak: mail_ui::Postvak,
@@ -290,6 +297,7 @@ impl Default for App {
         let pad = display::settings_path("open-office-studio-native");
         let display = pad.as_ref().map(|p| Display::load(p)).unwrap_or_default();
         Self {
+            zoeken: None,
             exportblad: None,
             export_bezig: false,
             postvak: mail_ui::Postvak::default(),
@@ -426,6 +434,7 @@ impl App {
                     | Msg::Minimaliseer
                     | Msg::Maximaliseer
                     | Msg::Gereed(..)
+                    | Msg::ZoekGereed(..)
                     | Msg::Gelezen(..)
                     | Msg::Geschreven(..)
                     | Msg::Doel(..)
@@ -448,6 +457,7 @@ impl App {
                         | mail_ui::BerichtUi::Gereed(_)
                 ) | Msg::VensterGrootte(_)
                     | Msg::Gereed(..)
+                    | Msg::ZoekGereed(..)
                     | Msg::Gelezen(..)
                     | Msg::Geschreven(..)
                     | Msg::ExportKlaar(..)
@@ -473,6 +483,7 @@ impl App {
                     | Msg::Geschreven(..)
                     | Msg::VensterGrootte(..)
                     | Msg::Gereed(..)
+                    | Msg::ZoekGereed(..)
                     | Msg::Opslaan(..)
                     | Msg::ExportVoltooid(..)
                     | Msg::ExportPad(..)
@@ -482,6 +493,8 @@ impl App {
             return Task::none();
         }
         match msg {
+            Msg::Zoeken(m) => return zoeken_ui::update(self, m),
+            Msg::ZoekGereed(doel, resultaat) => return zoeken_ui::gereed(self, doel, resultaat),
             Msg::ExportMenu => {
                 if self.export_bezig {
                     return self.waarschuwing("Er loopt al een export");
@@ -1364,6 +1377,7 @@ impl App {
                     return Task::none();
                 }
                 if k.key == Key::Named(Named::Escape) {
+                    self.zoeken = None;
                     self.instellingen = false;
                     self.bestand = false;
                     return Task::none();
@@ -1375,6 +1389,8 @@ impl App {
                     && let Key::Character(s) = k.key
                 {
                     let msg = match s.to_lowercase().as_str() {
+                        "f" => Some(Msg::Zoeken(zoeken_ui::Bericht::Open(false))),
+                        "h" => Some(Msg::Zoeken(zoeken_ui::Bericht::Open(true))),
                         "o" => Some(Msg::Open),
                         "n" => Some(Msg::Nieuw(Module::Writer)),
                         "s" => self.tab().map(|t| Msg::Opslaan(t.id, k.modifiers.shift())),
@@ -1404,7 +1420,7 @@ impl App {
             Msg::Navigeer(n) => return openaec_ui::keyboard::navigate(n),
             Msg::Pad(None) | Msg::MarkdownDoel(_, None) => {}
         }
-        Task::none()
+        zoeken_ui::bij_document(self)
     }
     fn waarschuwing(&mut self, m: &str) -> Task<Msg> {
         self.melding = m.into();
@@ -1478,6 +1494,17 @@ impl App {
     }
     fn subscription(&self) -> Subscription<Msg> {
         Subscription::batch([
+            if self.zoeken.is_some()
+                && !self.postvak_zichtbaar
+                && !self.bestand
+                && !self.instellingen
+                && self.exportblad.is_none()
+                && self.sluiten.is_none()
+            {
+                iced::event::listen_with(zoeken_ui::afgevangen_escape)
+            } else {
+                Subscription::none()
+            },
             openaec_ui::keyboard::presses().map(Msg::Toets),
             openaec_ui::keyboard::navigation().map(Msg::Navigeer),
             iced::window::close_requests().map(|_| Msg::SluitVenster),
@@ -1609,6 +1636,22 @@ impl App {
             }),
             modaal,
         )];
+        if !modaal
+            && !self.bestand
+            && !self.postvak_zichtbaar
+            && let Some(z) = &self.zoeken
+        {
+            lagen.push(
+                container(z.view(self))
+                    .padding(iced::Padding {
+                        top: 194.,
+                        left: 8.,
+                        right: 0.,
+                        bottom: 0.,
+                    })
+                    .into(),
+            );
+        }
         if let Some(b) = &self.exportblad {
             lagen.push(w::overlay(look, b.view(look).map(Msg::Export)));
         }
@@ -2279,6 +2322,7 @@ impl App {
                     let bewerkbaar = veld.is_some_and(|v| v.bewerkbaar) && !t.bezig;
                     editor = editor.push(openaec_ui::design::a11y::named(
                         text_editor(&t.editor)
+                            .id("document-tekst-editor")
                             .key_binding(klembord::toets)
                             .on_action(Msg::Invoer)
                             .height(190)
