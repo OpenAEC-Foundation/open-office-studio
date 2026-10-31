@@ -1,0 +1,153 @@
+{
+  "versie": "2026.44.9-alpha.26",
+  "geslaagd": true,
+  "omvang": "Exacte vergelijking van de pure UI-sprongfunctie met de werkmapkern voor achttien bronvensters: normaal, samenvoegingen/verborgen assen, afgekapte grote afmetingen, zeer kleine positieve afmetingen en standaard verborgen rijen met twee uitzonderingen. Geen kwantitatieve functiedekking of snelheidsbenchmark.",
+  "kernproeven": [
+    "snelle_celsprongen_geven_hetzelfde_doel_als_de_kern_bij_merges_verborgen_en_geknipte_assen",
+    "snelle_celsprongen_raden_nooit_een_ontbrekend_of_te_klein_doel",
+    "snelle_celsprongen_weigeren_dubbelzinnige_of_ongeldige_geometrie",
+    "snelle_navigatie_bewaart_het_schaarse_blad_na_invoer_en_bronexacte_undo"
+  ],
+  "ui_proeven": [
+    "raster_snelle_pijl_binnen_het_werkvenster_vergt_geen_rasteropdracht",
+    "raster_snelle_invoerronde_navigeert_typt_en_bevestigt_in_de_nieuwe_cel",
+    "raster_snelle_f2_en_pijl_bewerken_de_nieuwe_cel_in_dezelfde_invoerronde",
+    "raster_snelle_invoerronde_omzeilt_nooit_de_bronbeveiliging",
+    "raster_late_lokale_focus_neemt_geen_nieuwe_editor_of_dialoog_over"
+  ],
+  "lokale_doelen_exact_geverifieerd": 54430,
+  "teruggevallen_op_kern": 1362,
+  "metingen": [
+    {
+      "lokaal_geverifieerd": 5676,
+      "teruggevallen_op_kern": 84,
+      "variant": 0,
+      "venster": "A1",
+      "zichtbare_velden": 1440
+    },
+    {
+      "lokaal_geverifieerd": 5652,
+      "teruggevallen_op_kern": 108,
+      "variant": 0,
+      "venster": "A7",
+      "zichtbare_velden": 1440
+    },
+    {
+      "lokaal_geverifieerd": 5616,
+      "teruggevallen_op_kern": 144,
+      "variant": 0,
+      "venster": "F1",
+      "zichtbare_velden": 1440
+    },
+    {
+      "lokaal_geverifieerd": 62,
+      "teruggevallen_op_kern": 18,
+      "variant": 0,
+      "venster": "XFC1048575",
+      "zichtbare_velden": 20
+    },
+    {
+      "lokaal_geverifieerd": 5214,
+      "teruggevallen_op_kern": 82,
+      "variant": 1,
+      "venster": "A1",
+      "zichtbare_velden": 1324
+    },
+    {
+      "lokaal_geverifieerd": 5238,
+      "teruggevallen_op_kern": 102,
+      "variant": 1,
+      "venster": "A7",
+      "zichtbare_velden": 1335
+    },
+    {
+      "lokaal_geverifieerd": 5206,
+      "teruggevallen_op_kern": 138,
+      "variant": 1,
+      "venster": "F1",
+      "zichtbare_velden": 1336
+    },
+    {
+      "lokaal_geverifieerd": 62,
+      "teruggevallen_op_kern": 18,
+      "variant": 1,
+      "venster": "XFC1048575",
+      "zichtbare_velden": 20
+    },
+    {
+      "lokaal_geverifieerd": 134,
+      "teruggevallen_op_kern": 46,
+      "variant": 2,
+      "venster": "A1",
+      "zichtbare_velden": 45
+    },
+    {
+      "lokaal_geverifieerd": 178,
+      "teruggevallen_op_kern": 62,
+      "variant": 2,
+      "venster": "A7",
+      "zichtbare_velden": 60
+    },
+    {
+      "lokaal_geverifieerd": 4206,
+      "teruggevallen_op_kern": 114,
+      "variant": 2,
+      "venster": "F1",
+      "zichtbare_velden": 1080
+    },
+    {
+      "lokaal_geverifieerd": 62,
+      "teruggevallen_op_kern": 18,
+      "variant": 2,
+      "venster": "XFC1048575",
+      "zichtbare_velden": 20
+    },
+    {
+      "lokaal_geverifieerd": 5676,
+      "teruggevallen_op_kern": 84,
+      "variant": 3,
+      "venster": "A1",
+      "zichtbare_velden": 1440
+    },
+    {
+      "lokaal_geverifieerd": 5652,
+      "teruggevallen_op_kern": 108,
+      "variant": 3,
+      "venster": "A7",
+      "zichtbare_velden": 1440
+    },
+    {
+      "lokaal_geverifieerd": 5616,
+      "teruggevallen_op_kern": 144,
+      "variant": 3,
+      "venster": "F1",
+      "zichtbare_velden": 1440
+    },
+    {
+      "lokaal_geverifieerd": 62,
+      "teruggevallen_op_kern": 18,
+      "variant": 3,
+      "venster": "XFC1048575",
+      "zichtbare_velden": 20
+    },
+    {
+      "lokaal_geverifieerd": 71,
+      "teruggevallen_op_kern": 25,
+      "variant": 4,
+      "venster": "A1",
+      "zichtbare_velden": 24
+    },
+    {
+      "lokaal_geverifieerd": 47,
+      "teruggevallen_op_kern": 49,
+      "variant": 4,
+      "venster": "A1000000",
+      "zichtbare_velden": 24
+    }
+  ],
+  "testlog_sha256": "9a31614a2a5d8b583f5884dbe259d3d9cf04a02f298d97cb5e587a296f44d4cf",
+  "onafhankelijke_controle_sha256": "a81bde7c913bf624a2048145305cc7ae72aa8cc88a92751542e4715bff474cb3",
+  "bronmanifest": "schermen-2026-11-01-alpha26.json",
+  "bekende_modeluitvoerbeperking": "modeluitvoer-diagnose-2026-11-01/rapport.json",
+  "echte_alpha26_releasevensterproef_afgerond": false
+}

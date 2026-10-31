@@ -269,3 +269,22 @@ assert s['B2'].value == 3 and s['D2'].value == '=B2*C2'
 assert s['D4'].value == '=SUM(D2:D3)' and s['D4'].number_format == '0.00'
 assert symbool['Tweede blad']['A1'].value == 'Bewaar ook dit blad'
 print('Spreadsheet-symbool: astrale Unicode uit echte GUI-celinvoer, oorspronkelijke formules en tweede blad onafhankelijk teruggelezen; geen bewijs voor rasterweergave.')
+
+snel=load_workbook(map/'spreadsheet-snelle-invoer.xlsx',data_only=False)
+s=snel['Begroting']
+assert s['B2'].value==3 and s['B3'].value==78
+assert s['D2'].value=='=B2*C2' and s['D3'].value=='=B3*C3' and s['D4'].value=='=SUM(D2:D3)'
+# B3=78 maal C3=15 geeft 1170; met D2=3 maal 12,5 wordt het totaal 1207,5.
+waarden=load_workbook(map/'spreadsheet-snelle-invoer.xlsx',data_only=True)['Begroting']
+assert waarden['D2'].value==37.5 and waarden['D3'].value==1170 and waarden['D4'].value==1207.5
+assert snel['Tweede blad']['A1'].value=='Bewaar ook dit blad'
+print('Snelle Spreadsheet-invoerronde: de bedoelde nieuwe cel, oorspronkelijke cel, formules, herberekening en tweede blad onafhankelijk goedgekeurd.')
+
+for naam in ['spreadsheet-navigatie-bron-4.xlsx','spreadsheet-schaars-bewerkt.xlsx']:
+    wb=load_workbook(map/naam,data_only=False)
+    blad=wb['Begroting']
+    assert blad.sheet_format.zeroHeight
+    assert blad.row_dimensions[1].height==15 and blad.row_dimensions[1000000].height==15
+    assert wb['Tweede blad']['A1'].value=='Bewaar ook dit blad'
+    if naam=='spreadsheet-schaars-bewerkt.xlsx':assert blad['A1'].value=='café 🏠'
+print('Schaars Spreadsheet: zeroHeight en twee hoogte-uitzonderingen blijven na broninvoer, Unicode-bewerking en bewaren onafhankelijk leesbaar.')

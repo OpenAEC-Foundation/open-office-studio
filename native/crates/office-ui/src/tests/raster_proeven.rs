@@ -1043,6 +1043,179 @@ fn spreadsheet_opgeslagen_symbool_staat_in_het_raster_en_undo_herstelt_de_bron()
     assert_eq!(*p.bron(), *bron);
 }
 
+fn ruwe_rastertoets(key: iced::keyboard::Key, tekst: Option<&str>) -> iced::Event {
+    use iced::keyboard as k;
+    iced::Event::Keyboard(k::Event::KeyPressed {
+        modified_key: key.clone(),
+        key,
+        physical_key: k::key::Physical::Unidentified(k::key::NativeCode::Unidentified),
+        location: k::Location::Standard,
+        modifiers: k::Modifiers::empty(),
+        text: tekst.map(Into::into),
+        repeat: false,
+    })
+}
+#[test]
+fn raster_snelle_pijl_binnen_het_werkvenster_vergt_geen_rasteropdracht() {
+    use office_core::rekenblad::Richting;
+    let mut p = Proef::nieuw();
+    p.cel("B2", false);
+    let bron = p.bron();
+    let beeld = p
+        .app
+        .tab()
+        .unwrap()
+        .antwoord
+        .as_ref()
+        .unwrap()
+        .beeld
+        .afbeelding
+        .as_ref()
+        .unwrap()
+        .as_ptr();
+    let taak = p
+        .app
+        .update(Msg::Raster(raster_ui::Bericht::Verplaats(Richting::Onder)));
+    assert!(
+        !p.app.tab().unwrap().bezig,
+        "Een zichtbare buurcel moet direct bereikbaar zijn"
+    );
+    assert_eq!(p.app.tab().unwrap().adres, "B3");
+    assert_eq!(
+        p.app
+            .tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .beeld
+            .afbeelding
+            .as_ref()
+            .unwrap()
+            .as_ptr(),
+        beeld
+    );
+    assert_eq!(*p.bron(), *bron);
+    assert!(!p.app.tab().unwrap().antwoord.as_ref().unwrap().terug);
+    p.taak(taak);
+}
+#[test]
+fn raster_snelle_invoerronde_navigeert_typt_en_bevestigt_in_de_nieuwe_cel() {
+    use iced::keyboard::{Key, key::Named};
+    let mut p = Proef::nieuw();
+    p.cel("B2", false);
+    let bron = p.bron();
+    // Zoals een vensterronde: alle widgets zien nog dezelfde oude weergave.
+    // Pas daarna verwerkt de toepassing de gepubliceerde berichten in volgorde.
+    p.gebeurtenissen([
+        ruwe_rastertoets(Key::Named(Named::ArrowDown), None),
+        ruwe_rastertoets(Key::Character("7".into()), Some("7")),
+        ruwe_rastertoets(Key::Character("8".into()), Some("8")),
+        ruwe_rastertoets(Key::Named(Named::Enter), None),
+    ]);
+    assert_eq!(p.app.tab().unwrap().adres, "B4");
+    assert!(!p.app.tab().unwrap().concept);
+    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
+        .unwrap()
+        .weergave(0)
+        .unwrap();
+    assert_eq!(b.velden.iter().find(|v| v.id == "B2").unwrap().tekst, "3");
+    assert_eq!(b.velden.iter().find(|v| v.id == "B3").unwrap().tekst, "78");
+    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
+        std::fs::create_dir_all(&map).unwrap();
+        std::fs::write(
+            PathBuf::from(map).join("spreadsheet-snelle-invoer.xlsx"),
+            p.bron().as_slice(),
+        )
+        .unwrap();
+    }
+    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        std::fs::create_dir_all(&map).unwrap();
+        p.verbeeld()
+            .save_png(PathBuf::from(map).join("spreadsheet-snelle-invoer.png"))
+            .unwrap();
+    }
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *bron);
+}
+
+#[test]
+fn raster_snelle_f2_en_pijl_bewerken_de_nieuwe_cel_in_dezelfde_invoerronde() {
+    use iced::keyboard::{Key, key::Named};
+    let mut p = Proef::nieuw();
+    p.cel("B2", false);
+    let bron = p.bron();
+    p.gebeurtenissen([
+        ruwe_rastertoets(Key::Named(Named::ArrowDown), None),
+        ruwe_rastertoets(Key::Named(Named::F2), None),
+        ruwe_rastertoets(Key::Character("7".into()), Some("7")),
+        ruwe_rastertoets(Key::Named(Named::ArrowLeft), None),
+        ruwe_rastertoets(Key::Character("8".into()), Some("8")),
+        ruwe_rastertoets(Key::Named(Named::Enter), None),
+    ]);
+    assert_eq!(p.app.tab().unwrap().adres, "B4");
+    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
+        .unwrap()
+        .weergave(0)
+        .unwrap();
+    assert_eq!(b.velden.iter().find(|v| v.id == "B3").unwrap().tekst, "287");
+    assert_eq!(b.velden.iter().find(|v| v.id == "B2").unwrap().tekst, "3");
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *bron);
+}
+#[test]
+fn raster_snelle_invoerronde_omzeilt_nooit_de_bronbeveiliging() {
+    use iced::keyboard::{Key, key::Named};
+    let mut p = Proef::met_app(app_met_werkdraad(
+        Module::Spreadsheet,
+        include_bytes!("../../../office-core/tests/fixtures/spreadsheet-beveiligd.xlsx"),
+    ));
+    p.cel("B2", false);
+    let bron = p.bron();
+    p.gebeurtenissen([
+        ruwe_rastertoets(Key::Named(Named::ArrowDown), None),
+        ruwe_rastertoets(Key::Character("7".into()), Some("7")),
+        ruwe_rastertoets(Key::Character("8".into()), Some("8")),
+        ruwe_rastertoets(Key::Named(Named::Enter), None),
+    ]);
+    assert_eq!(p.app.tab().unwrap().adres, "B4");
+    assert!(!p.app.tab().unwrap().concept && !p.app.tab().unwrap().raster.bewerken);
+    assert_eq!(*p.bron(), *bron);
+    assert!(!p.app.tab().unwrap().antwoord.as_ref().unwrap().terug);
+}
+
+#[test]
+fn raster_late_lokale_focus_neemt_geen_nieuwe_editor_of_dialoog_over() {
+    use office_core::rekenblad::Richting;
+    for dialoog in [false, true] {
+        let mut p = Proef::nieuw();
+        p.cel("B2", false);
+        let taak = p
+            .app
+            .update(Msg::Raster(raster_ui::Bericht::Verplaats(Richting::Onder)));
+        assert!(!p.app.tab().unwrap().bezig);
+        if dialoog {
+            p.app.bestand = true;
+        } else {
+            p.bericht(Msg::Raster(raster_ui::Bericht::Begin {
+                id: "B3".into(),
+                vervang: Some("7".into()),
+                alles: false,
+            }));
+        }
+        let aantal = p.focusoperaties;
+        p.taak(taak);
+        assert_eq!(
+            p.focusoperaties, aantal,
+            "Een oude lokale focusactie nam een latere bediening over"
+        );
+        if !dialoog {
+            assert!(p.app.tab().unwrap().raster.bewerken);
+            assert_eq!(p.app.tab().unwrap().editor.text(), "7");
+        }
+    }
+}
+
 impl Proef {
     fn nieuw() -> Self {
         lettertypen();
@@ -1581,28 +1754,33 @@ fn raster_koppen_blijven_staan_en_cellen_klikken_correct_na_scroll_en_zoom() {
 }
 #[test]
 fn raster_werkdraad_steelt_geen_focus_van_een_later_geopend_venster() {
-    for soort in 0..3 {
-        let mut p = Proef::nieuw();
-        p.cel("B2", false);
-        let origineel = p.bron();
-        let taak = p.app.update(Msg::Raster(raster_ui::Bericht::Verplaats(
-            office_core::rekenblad::Richting::Rechts,
-        )));
-        // Het antwoord is nog niet door de interface verwerkt.
-        match soort {
-            0 => p.app.instellingen = true,
-            1 => p.app.bestand = true,
-            _ => p.app.sluiten = p.app.tab().map(|t| t.id),
+    for cel in ["B2", "X2"] {
+        for soort in 0..3 {
+            let mut p = Proef::nieuw();
+            // Binnen het werkvenster is dit nu lokaal; op de rand blijft het
+            // een echte werkdraadopdracht. Beide late paden blijven afgedekt.
+            p.bericht(Msg::Raster(raster_ui::Bericht::Kies(cel.into())));
+            let origineel = p.bron();
+            let taak = p.app.update(Msg::Raster(raster_ui::Bericht::Verplaats(
+                office_core::rekenblad::Richting::Rechts,
+            )));
+            assert_eq!(p.app.tab().unwrap().bezig, cel == "X2");
+            match soort {
+                0 => p.app.instellingen = true,
+                1 => p.app.bestand = true,
+                _ => p.app.sluiten = p.app.tab().map(|t| t.id),
+            }
+            let aantal = p.focusoperaties;
+            p.taak(taak);
+            assert_eq!(
+                p.focusoperaties, aantal,
+                "Een laat rasterantwoord of lokale taak verlegde de modale focus"
+            );
+            assert_eq!(p.bron().as_slice(), origineel.as_slice());
         }
-        let aantal = p.focusoperaties;
-        p.taak(taak);
-        assert_eq!(
-            p.focusoperaties, aantal,
-            "Een laat rasterantwoord verlegde de modale focus"
-        );
-        assert!(p.bron().as_slice() == origineel.as_slice());
     }
 }
+
 #[test]
 fn raster_dubbelklik_schaalt_ime_annuleren_en_late_lege_plakreactie() {
     use iced::keyboard::key::Named;

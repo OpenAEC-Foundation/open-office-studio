@@ -21,7 +21,17 @@ pub struct Staat {
 }
 #[derive(Debug, Clone)]
 pub enum Bericht {
+    Focus {
+        document: u64,
+        editerversie: u64,
+    },
     Kies(String),
+    Typ(String),
+    BewerkActief,
+    Pijl {
+        richting: Richting,
+        selecteer: bool,
+    },
     BreidUit(String),
     Vergroot(Richting),
     Begin {
@@ -51,6 +61,15 @@ fn toegankelijk(app: &App) -> bool {
                 .is_some_and(|a| a.beeld.module == Module::Spreadsheet)
         })
 }
+fn vraag_focus(app: &App) -> Task<Msg> {
+    let Some(t) = app.tab() else {
+        return Task::none();
+    };
+    Task::done(Msg::Raster(Bericht::Focus {
+        document: t.id,
+        editerversie: t.editerversie,
+    }))
+}
 pub fn update(app: &mut App, bericht: Bericht) -> Task<Msg> {
     if !beschikbaar(app) {
         if toegankelijk(app)
@@ -63,6 +82,8 @@ pub fn update(app: &mut App, bericht: Bericht) -> Task<Msg> {
                     | Bericht::BreidUit(_)
                     | Bericht::Vergroot(_)
                     | Bericht::Verplaats(_)
+                    | Bericht::Pijl { .. }
+                    | Bericht::Voltooi(_)
             )
         {
             // Slepen bewaart alleen het laatste absolute doel. Relatieve
@@ -81,6 +102,80 @@ pub fn update(app: &mut App, bericht: Bericht) -> Task<Msg> {
         return Task::none();
     }
     match bericht {
+        Bericht::Focus {
+            document,
+            editerversie,
+        } => {
+            // Een oude navigatietaak mag geen latere editor, ander tabblad of
+            // inmiddels geopend modaal venster opnieuw focus afpakken.
+            if app.tab().is_some_and(|t| {
+                t.id == document
+                    && t.editerversie == editerversie
+                    && t.raster.focus
+                    && !t.raster.bewerken
+            }) {
+                iced::widget::operation::focus(RASTER_ID)
+            } else {
+                Task::none()
+            }
+        }
+        Bericht::Typ(tekst) => {
+            if app.tab().is_some_and(|t| t.raster.bewerken) {
+                return app.update(Msg::Invoer(text_editor::Action::Edit(
+                    text_editor::Edit::Paste(std::sync::Arc::new(tekst)),
+                )));
+            }
+            let Some(id) = app.tab().and_then(Tab::veld).map(|v| v.id.clone()) else {
+                return Task::none();
+            };
+            update(
+                app,
+                Bericht::Begin {
+                    id,
+                    vervang: Some(tekst),
+                    alles: false,
+                },
+            )
+        }
+        Bericht::BewerkActief => {
+            let Some(id) = app.tab().and_then(Tab::veld).map(|v| v.id.clone()) else {
+                return Task::none();
+            };
+            update(
+                app,
+                Bericht::Begin {
+                    id,
+                    vervang: None,
+                    alles: false,
+                },
+            )
+        }
+        Bericht::Pijl {
+            richting,
+            selecteer,
+        } => {
+            if app.tab().is_some_and(|t| t.raster.bewerken) {
+                let motion = match richting {
+                    Richting::Links => text_editor::Motion::Left,
+                    Richting::Rechts => text_editor::Motion::Right,
+                    Richting::Boven => text_editor::Motion::Up,
+                    Richting::Onder => text_editor::Motion::Down,
+                };
+                return app.update(Msg::Invoer(if selecteer {
+                    text_editor::Action::Select(motion)
+                } else {
+                    text_editor::Action::Move(motion)
+                }));
+            }
+            update(
+                app,
+                if selecteer {
+                    Bericht::Vergroot(richting)
+                } else {
+                    Bericht::Verplaats(richting)
+                },
+            )
+        }
         Bericht::Kies(id) => {
             let t = app.tab_mut().unwrap();
             if t.concept {
@@ -104,7 +199,7 @@ pub fn update(app: &mut App, bericht: Bericht) -> Task<Msg> {
             };
             t.toon_veld(n);
             t.raster.focus = true;
-            iced::widget::operation::focus(RASTER_ID)
+            vraag_focus(app)
         }
         Bericht::Begin { id, vervang, alles } => {
             let t = app.tab_mut().unwrap();
@@ -155,8 +250,27 @@ pub fn update(app: &mut App, bericht: Bericht) -> Task<Msg> {
             let Some(v) = t.veld() else {
                 return Task::none();
             };
-            let opdracht = Opdracht::VerplaatsCel(t.deel, v.id.clone(), richting);
-            t.adres = v.id.clone();
+            let van = v.id.clone();
+            let lokaal = t
+                .antwoord
+                .as_ref()
+                .and_then(|a| super::raster_navigatie::volgende(&a.beeld, &van, richting));
+            if let Some(doel) = lokaal
+                && let Some(n) = t
+                    .antwoord
+                    .as_ref()
+                    .unwrap()
+                    .beeld
+                    .velden
+                    .iter()
+                    .position(|v| v.id == doel)
+            {
+                t.toon_veld(n);
+                t.raster.focus = true;
+                return vraag_focus(app);
+            }
+            let opdracht = Opdracht::VerplaatsCel(t.deel, van.clone(), richting);
+            t.adres = van;
             t.raster.selectie = None;
             let id = t.id;
             t.raster.focus = true;
@@ -165,7 +279,7 @@ pub fn update(app: &mut App, bericht: Bericht) -> Task<Msg> {
         Bericht::Voltooi(richting) => {
             let t = app.tab_mut().unwrap();
             if !t.raster.bewerken {
-                return Task::none();
+                return update(app, Bericht::Verplaats(richting));
             }
             if t.concept {
                 t.raster.na_richting = Some(richting);
@@ -184,7 +298,7 @@ pub fn update(app: &mut App, bericht: Bericht) -> Task<Msg> {
                 app.update(Msg::PasToe)
             } else {
                 t.raster.bewerken = false;
-                iced::widget::operation::focus(RASTER_ID)
+                vraag_focus(app)
             }
         }
         Bericht::Annuleer => {
@@ -199,7 +313,7 @@ pub fn update(app: &mut App, bericht: Bericht) -> Task<Msg> {
                 t.adres = v.id.clone();
                 t.raster.selectie = None;
             }
-            iced::widget::operation::focus(RASTER_ID)
+            vraag_focus(app)
         }
     }
 }
@@ -236,7 +350,7 @@ pub fn vervolg(app: &mut App) -> Task<Msg> {
         return Task::none();
     }
     let Some(b) = app.tab_mut().and_then(|t| t.raster.wachtend.pop_front()) else {
-        return iced::widget::operation::focus(RASTER_ID);
+        return vraag_focus(app);
     };
     let taak = update(app, b);
     if app
@@ -503,58 +617,40 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Raster<'_> {
             use iced::keyboard::{Key, key::Named};
             let bericht = match key {
                 Key::Named(k) if !modifiers.command() && !modifiers.alt() => match k {
-                    Named::ArrowLeft => Some(if modifiers.shift() {
-                        Bericht::Vergroot(Richting::Links)
-                    } else {
-                        Bericht::Verplaats(Richting::Links)
+                    Named::ArrowLeft => Some(Bericht::Pijl {
+                        richting: Richting::Links,
+                        selecteer: modifiers.shift(),
                     }),
-                    Named::ArrowRight => Some(if modifiers.shift() {
-                        Bericht::Vergroot(Richting::Rechts)
-                    } else {
-                        Bericht::Verplaats(Richting::Rechts)
+                    Named::ArrowRight => Some(Bericht::Pijl {
+                        richting: Richting::Rechts,
+                        selecteer: modifiers.shift(),
                     }),
-                    Named::ArrowUp => Some(if modifiers.shift() {
-                        Bericht::Vergroot(Richting::Boven)
-                    } else {
-                        Bericht::Verplaats(Richting::Boven)
+                    Named::ArrowUp => Some(Bericht::Pijl {
+                        richting: Richting::Boven,
+                        selecteer: modifiers.shift(),
                     }),
-                    Named::ArrowDown => Some(if modifiers.shift() {
-                        Bericht::Vergroot(Richting::Onder)
-                    } else {
-                        Bericht::Verplaats(Richting::Onder)
+                    Named::ArrowDown => Some(Bericht::Pijl {
+                        richting: Richting::Onder,
+                        selecteer: modifiers.shift(),
                     }),
-                    Named::Enter => Some(Bericht::Verplaats(if modifiers.shift() {
+                    Named::Enter => Some(Bericht::Voltooi(if modifiers.shift() {
                         Richting::Boven
                     } else {
                         Richting::Onder
                     })),
-                    Named::Tab => Some(Bericht::Verplaats(if modifiers.shift() {
+                    Named::Tab => Some(Bericht::Voltooi(if modifiers.shift() {
                         Richting::Links
                     } else {
                         Richting::Rechts
                     })),
-                    Named::F2 => self.gekozen.map(|id| Bericht::Begin {
-                        id: id.into(),
-                        vervang: None,
-                        alles: false,
-                    }),
+                    Named::F2 => self.gekozen.map(|_| Bericht::BewerkActief),
                     _ => None,
                 },
-                Key::Named(Named::F2) => self.gekozen.map(|id| Bericht::Begin {
-                    id: id.into(),
-                    vervang: None,
-                    alles: false,
-                }),
+                Key::Named(Named::F2) => self.gekozen.map(|_| Bericht::BewerkActief),
                 _ if !modifiers.command() || (modifiers.control() && modifiers.alt()) => text
                     .as_ref()
                     .filter(|tekst| tekst.chars().any(|c| !c.is_control()))
-                    .and_then(|tekst| {
-                        self.gekozen.map(|id| Bericht::Begin {
-                            id: id.into(),
-                            vervang: Some(tekst.to_string()),
-                            alles: false,
-                        })
-                    }),
+                    .and_then(|tekst| self.gekozen.map(|_| Bericht::Typ(tekst.to_string()))),
                 _ => None,
             };
             if let Some(b) = bericht {

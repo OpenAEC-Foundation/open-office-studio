@@ -1,0 +1,73 @@
+{
+  "versie": "Open Office Studio 2026.44.9-alpha.25 (native)",
+  "programma_sha256": "796856c265a96ed84fb5ba89e1b84267cdf9e6cc385bd71b634230a6550af948",
+  "broncommit": "3aa197019e8d5b07702252a8bc4a50701c7c59aa",
+  "proefbron_sha256": "53af9a47b818d9ef7b89942ec4e7b5062fff0ea13ccd7c771f24d2a697fcba98",
+  "geslaagd": true,
+  "omvang": "Echt native Linux-venster, X11-muis/toetsen en systeemklembord, in eigen Xvfb en vooraf geïsoleerde sessie-D-Bus/XDG-profielen. Geen fysieke hardware, andere platforms, volledige suite, IME-compositie of systeemdialoog.",
+  "stappen": [
+    {
+      "stap": "Eigen XLSX geopend in het echte native venster",
+      "beeld": {
+        "bestand": "spreadsheet-open.png",
+        "sha256": "809b9ea847978477cdefaf174e7e85159c4ebd7a50fe8b0c5b5089f3069b3b4f"
+      }
+    },
+    {
+      "stap": "Echte muissleep selecteert B2:D4; adresveld via systeemklembord bevestigd",
+      "beeld": {
+        "bestand": "spreadsheet-bereik.png",
+        "sha256": "b8707c0d5793921c0930d55a4855181b3e8855c56f947909e0f98095d76336c1"
+      }
+    },
+    {
+      "stap": "Lintopmaak en bewaren: alle negen cellen vet, oorspronkelijke formules behouden",
+      "beeld": {
+        "bestand": "spreadsheet-bereik-opmaak.png",
+        "sha256": "a60b058b5a5280944dc8ad7c7f533b7a8071ed7557058106d509ef110aa06afe"
+      }
+    },
+    {
+      "stap": "Snelle Shift-pijlen, Shift-klik en extra uitbreiding bewaren het oorspronkelijke anker D4"
+    },
+    {
+      "stap": "Bereikopmaak met één undo bronexact hersteld"
+    },
+    {
+      "stap": "Unicode-systeemklembord in cel G10, afzonderlijk bevestigd en bewaard; XML-waarde klopt",
+      "beeld": {
+        "bestand": "spreadsheet-unicode.png",
+        "sha256": "84d49743e7dbaa57a8d050afbf10a1855190d81e62ba5cea2d01f27c7ae72b40"
+      }
+    },
+    {
+      "stap": "Celbewerking met één undo bronexact hersteld"
+    },
+    {
+      "stap": "Bestand geopend en gesloten met behoud van de oorspronkelijke bron"
+    },
+    {
+      "stap": "Eigen venster schoon gesloten",
+      "procescode": 0
+    },
+    {
+      "stap": "Bewaarde Unicode-bron opnieuw in een nieuw echt venster geopend",
+      "bron_sha256": "e6e8ceb7bcaa2a795605877e67dfe0e9a15824acf29518249d720aaecf20a866",
+      "beeld": {
+        "bestand": "spreadsheet-unicode-heropend.png",
+        "sha256": "6661a7f20a24ede675014185dc090487c56c5d314c98bc4ca6ac71bcb5ad8ea7"
+      }
+    },
+    {
+      "stap": "Heropende cel via F2 en systeemklembord exact gecontroleerd, Escape behoudt bron",
+      "beeld": {
+        "bestand": "spreadsheet-unicode-heropend-gecontroleerd.png",
+        "sha256": "848f86663461ca687ec4bfca2639b924793318a7b3cb4344897474a069cdd542"
+      }
+    },
+    {
+      "stap": "Ook het heropende eigen venster schoon gesloten",
+      "procescode": 0
+    }
+  ]
+}

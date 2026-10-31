@@ -48,8 +48,18 @@ pub struct RasterKop {
     pub begin: f32,
     pub omvang: f32,
 }
+#[derive(Debug, Clone, PartialEq)]
+pub struct RasterSamenvoeging {
+    pub anker: String,
+    pub einde: String,
+}
 #[derive(Debug, Clone, Default, PartialEq)]
 pub struct RasterKoppen {
     pub rijen: Vec<RasterKop>,
     pub kolommen: Vec<RasterKop>,
+    /// Dezelfde bronrange en volledige samenvoegingen als het getekende raster.
+    pub bereik: String,
+    pub samenvoegingen: Vec<RasterSamenvoeging>,
+    pub verborgen_rijen: Vec<(u32, u32)>,
+    pub verborgen_kolommen: Vec<(u32, u32)>,
 }

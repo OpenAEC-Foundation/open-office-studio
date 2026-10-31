@@ -10,6 +10,7 @@ mod mail_ui;
 mod notitie_ui;
 mod pagina_ui;
 mod raster_koppen;
+mod raster_navigatie;
 mod raster_ui;
 mod sleepvak;
 mod stijl;

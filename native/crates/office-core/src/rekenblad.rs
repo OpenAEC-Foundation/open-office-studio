@@ -1,7 +1,9 @@
 //! Venstering, bereikopmaak en structuurwijzigingen boven de native werkmap.
 use crate::{
     document::{Fout, Resultaat, Veld, Weergave},
-    interactie::{Pagina, Raakvlak, RasterKop, RasterKoppen, RasterVenster, Rechthoek},
+    interactie::{
+        Pagina, Raakvlak, RasterKop, RasterKoppen, RasterSamenvoeging, RasterVenster, Rechthoek,
+    },
     opmaak::{Opmaak, OpmaakStaat, Uitlijning},
 };
 use betteroffice_xlsx as x;
@@ -242,8 +244,23 @@ pub fn toon(
             });
         }
     }
-    beeld.raster = Some(koppen);
     let merges = d.merged_ranges(sheet, range).map_err(fout)?;
+    koppen.bereik = format!("{}:{}", range.start.to_a1(), range.end.to_a1());
+    koppen.samenvoegingen = merges
+        .iter()
+        .map(|m| RasterSamenvoeging {
+            anker: m.start.to_a1(),
+            einde: m.end.to_a1(),
+        })
+        .collect();
+    let blad = d.sheet(sheet).map_err(fout)?;
+    koppen.verborgen_rijen = blad
+        .hidden_row_spans(range.start.row..=range.end.row)
+        .collect();
+    koppen.verborgen_kolommen = blad
+        .hidden_col_spans(range.start.col..=range.end.col)
+        .collect();
+    beeld.raster = Some(koppen);
     let mut cellen = Vec::new();
     for rij in venster.rij..=einde.row {
         for kolom in venster.kolom..=einde.col {
