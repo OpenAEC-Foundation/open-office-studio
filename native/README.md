@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.7**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.8**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -148,8 +148,9 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
-Het [controlerapport voor alpha 7](docs/controle-2026-10-31-alpha7.md) beschrijft
-de 161 reguliere Rust-tests en zes expliciete runtimeproeven, pagina-instelling, symboolterugval en conversie-export
+Het [controlerapport voor alpha 8](docs/controle-2026-10-31-alpha8.md) beschrijft
+de 161 reguliere Rust-tests, zes expliciete runtimeproeven en vijf Python-tests,
+de kop-/voettekstregressie, kleur- en liniaalcorrecties en conversie-export
 en de grenzen van de actuele controle. De eerdere
 rapporten blijven historische verslagen.
 
@@ -204,12 +205,11 @@ uitvoer vermeldt expliciet of die grens geldt. Een weigering, tijdslimiet of
 afwijking geeft geen volledig geslaagde ronde. De debugtijden zijn geen bewijs
 voor prestaties van de releasebuild.
 
-De [laatste volledige releasecorpusronde, alpha 5](docs/corpus-2026-10-31-alpha5-release.json)
-bevat 648 geselecteerde OOXML-bronnen: 578 geslaagde rondgangen, 68 weigeringen
-en twee tijdslimieten, zonder rondgangverschil. Dit is nog geen corpuscontrole
-van alpha 7. De andere 918 manifestbronnen vallen buiten deze native ronde.
-Weigeringen bevatten onder meer beschadigde, versleutelde en nog niet
-ondersteunde bronnen; de twee grote-documentgevallen blijven open.
+De [laatste volledige releasecorpusronde, alpha 7](docs/corpus-2026-10-31-alpha7-release.json)
+bevat 648 bronnen: 578 geslaagd, 69 geweigerd en één tijdslimiet, zonder gemeld
+rondgangverschil. De extra kop-/voettekstweigering wordt in alpha 8 hersteld;
+de volledige alpha-8-releasecorpusronde volgt nog. De andere 918 manifestbronnen
+vallen buiten deze native ronde.
 
 ## Bron en licenties
 
@@ -258,8 +258,8 @@ Een afzonderlijke Chromium-testbrowser heeft inmiddels een oorspronkelijke
 1058 × 892 pixels, met hetzelfde document en thema. CSS-animaties zijn vóór
 navigatie gepauzeerd om de knipperfase vast te leggen; meldingen zijn via hun
 sluitknoppen gesloten. De opname is niet geschaald, uitgelijnd of nabewerkt.
-Twee opeenvolgende opnamen zijn pixelgelijk. De [alpha-7-vergelijking](docs/pixelcontrole-alpha7/rapport.json)
-met de native Writer meet **350.978 afwijkende pixels van 943.736**.
+Twee opeenvolgende opnamen zijn pixelgelijk. De [alpha-8-vergelijking](docs/pixelcontrole-alpha8/writer/rapport.json)
+met de native Writer meet **126.880 afwijkende pixels van 943.736**.
 Deze ene vastgelegde toestand bewijst dus expliciet dat de UI nog niet gelijk is.
 De [herkomst](docs/referentie-2026-W44.8/writer.json) vermeldt bron-, bundel- en
 beeldhashes, browser, viewport, thema en taal. Ook voor

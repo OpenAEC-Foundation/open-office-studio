@@ -11,6 +11,8 @@ use iced::{
     },
     mouse,
 };
+pub const BOVENRUIMTE: f32 = 24.;
+
 pub fn lineaal(
     pagina: &office_core::interactie::Pagina,
     zoom: f32,
@@ -53,20 +55,19 @@ impl Widget<Msg, Theme, Renderer> for Lineaal<'_> {
         vp: &Rectangle,
     ) {
         let b = l.bounds();
-        let bg = Color::from_rgb8(238, 240, 244);
-        let fg = Color::from_rgb8(100, 105, 114);
-        r.fill_quad(
-            renderer::Quad {
-                bounds: b,
-                ..Default::default()
-            },
-            bg,
-        );
+        let Some(clip) = vp.intersection(&b) else {
+            return;
+        };
         let breedte = self.pagina.breedte * self.zoom;
+        let lengte = if self.horizontaal {
+            breedte
+        } else {
+            self.pagina.hoogte * self.zoom
+        };
         let offset = if self.horizontaal {
             (b.width.max(breedte + 48.) - breedte) / 2. - self.scroll.x
         } else {
-            23. - self.scroll.y
+            BOVENRUIMTE - self.scroll.y
         };
         let marge = self
             .pagina
@@ -74,60 +75,110 @@ impl Widget<Msg, Theme, Renderer> for Lineaal<'_> {
             .map(|g| if self.horizontaal { g.x } else { g.y })
             .unwrap_or(0.)
             * self.zoom;
-        let stap = 96. / 2.54 / 5. * self.zoom;
-        let clip = vp.intersection(&b).unwrap_or_default();
-        for n in -50i32..200 {
-            let p = offset + marge + n as f32 * stap;
-            let max = if self.horizontaal { b.width } else { b.height };
-            if p < 0. || p > max {
-                continue;
-            }
-            let groot = n % 5 == 0;
-            let bounds = if self.horizontaal {
-                Rectangle {
-                    x: b.x + p,
-                    y: b.y + if groot { 17. } else { 20. },
-                    width: 1.,
-                    height: if groot { 6. } else { 3. },
+        let inhoud = self
+            .pagina
+            .inhoud
+            .map(|g| {
+                if self.horizontaal {
+                    g.breedte
+                } else {
+                    g.hoogte
                 }
-            } else {
-                Rectangle {
-                    x: b.x + if groot { 11. } else { 14. },
-                    y: b.y + p,
-                    width: if groot { 6. } else { 3. },
-                    height: 1.,
+            })
+            .unwrap_or(lengte / self.zoom)
+            * self.zoom;
+        // De schaal en kleuren volgen tekst/liniaal/model.ts en liniaal.css:
+        // kwartcentimeters, halve centimeters en cijfers bij hele centimeters.
+        let stap = 96. / 2.54 / 4. * self.zoom;
+        r.with_layer(clip, |r| {
+            let vlak = |langs: f32, maat: f32| {
+                if self.horizontaal {
+                    Rectangle {
+                        x: b.x + langs,
+                        y: b.y + 3.,
+                        width: maat,
+                        height: b.height - 6.,
+                    }
+                } else {
+                    Rectangle {
+                        x: b.x + 3.,
+                        y: b.y + langs,
+                        width: b.width - 6.,
+                        height: maat,
+                    }
                 }
             };
-            r.fill_quad(
-                renderer::Quad {
-                    bounds,
-                    ..Default::default()
-                },
-                fg,
-            );
-            if groot && n != 0 {
-                let punt = if self.horizontaal {
-                    iced::Point::new(b.x + p, b.y + 8.)
-                } else {
-                    iced::Point::new(b.x + 5., b.y + p)
-                };
-                r.fill_text(
-                    text::Text {
-                        content: (n / 5).abs().to_string(),
-                        bounds: Size::new(16., 16.),
-                        size: iced::Pixels(9.),
-                        line_height: text::LineHeight::Relative(1.),
-                        font: fonts::BODY,
-                        align_x: text::Alignment::Center,
-                        align_y: iced::alignment::Vertical::Center,
-                        shaping: text::Shaping::Basic,
-                        wrapping: text::Wrapping::None,
+            let mut vul = |grens, kleur| {
+                r.fill_quad(
+                    renderer::Quad {
+                        bounds: grens,
+                        ..Default::default()
                     },
-                    punt,
-                    fg,
-                    clip,
-                );
+                    kleur,
+                )
+            };
+            vul(b, Color::from_rgb8(237, 240, 243));
+            if lengte <= 0. {
+                return;
             }
-        }
+            vul(vlak(offset, lengte), Color::from_rgb8(217, 221, 227));
+            vul(vlak(offset + marge, inhoud), Color::WHITE);
+            let begin = (-marge / stap).ceil() as i32;
+            let einde = ((lengte - marge) / stap).floor() as i32;
+            for n in (begin..=einde).take(2000) {
+                let p = offset + marge + n as f32 * stap;
+                let max = if self.horizontaal { b.width } else { b.height };
+                if n == 0 || p < 0. || p > max {
+                    continue;
+                }
+                if n % 4 != 0 {
+                    let maat = if n % 2 == 0 { 5. } else { 2. };
+                    let bounds = if self.horizontaal {
+                        Rectangle {
+                            x: b.x + p,
+                            y: b.y + (b.height - maat) / 2.,
+                            width: 1.,
+                            height: maat,
+                        }
+                    } else {
+                        Rectangle {
+                            x: b.x + (b.width - maat) / 2.,
+                            y: b.y + p,
+                            width: maat,
+                            height: 1.,
+                        }
+                    };
+                    r.fill_quad(
+                        renderer::Quad {
+                            bounds,
+                            ..Default::default()
+                        },
+                        Color::from_rgb8(122, 128, 138),
+                    );
+                } else {
+                    let punt = if self.horizontaal {
+                        iced::Point::new(b.x + p, b.center_y())
+                    } else {
+                        iced::Point::new(b.center_x(), b.y + p)
+                    };
+                    r.fill_text(
+                        text::Text {
+                            content: (n / 4).abs().to_string(),
+                            bounds: Size::new(16., 16.),
+                            size: iced::Pixels(9.),
+                            line_height: text::LineHeight::Relative(1.),
+                            font: fonts::BODY,
+                            align_x: text::Alignment::Center,
+                            align_y: iced::alignment::Vertical::Center,
+                            shaping: text::Shaping::Basic,
+                            wrapping: text::Wrapping::None,
+                        },
+                        punt,
+                        Color::from_rgb8(74, 80, 90),
+                        clip,
+                    );
+                }
+            }
+        });
     }
 }

@@ -65,6 +65,13 @@ fn pagina_binnen<const ALLEEN_GEVRAAGD: bool>(
     )?;
     // Gewone documenten gebruiken uitsluitend de daadwerkelijk gevraagde
     // fonts; ongebruikte families uit fontTable mogen openen niet vertragen.
+    // Gegenereerde tekst in kop-/voetteksten kan het standaardfont pas bij
+    // de tekenopbouw gebruiken, ook wanneer de fontquery het niet noemt.
+    // Dezelfde vier standaardstijlen moeten bij meten en tekenen beschikbaar zijn.
+    voeg_letterfamilies_toe(
+        &mut benodigd,
+        BTreeMap::from([("Calibri".into(), "Calibri".into())]),
+    )?;
     if !package.chart_entries.is_empty() {
         aanvullende_lettertypen(&mut benodigd, &package.theme, &package.font_table)?;
     }
@@ -132,6 +139,30 @@ fn aanvullende_lettertypen(
     theme: &docx_parse::Theme,
     tabel: &docx_parse::fonts::FontTable,
 ) -> Resultaat<()> {
+    let mut families = BTreeMap::from([
+        ("Calibri".to_string(), "Calibri".to_string()),
+        ("Inter".to_string(), "Inter".to_string()),
+    ]);
+    for font in &tabel.fonts {
+        // Gewone familienamen zijn geen themaverwijzingen: ze houden hun naam.
+        families.insert(font.name.clone(), font.name.clone());
+        if let Some(alt) = &font.alt_name {
+            families.insert(alt.clone(), alt.clone());
+        }
+    }
+    for alias in ["+mn-lt", "+mj-lt", "+mn-ea", "+mj-ea", "+mn-cs", "+mj-cs"] {
+        families.insert(
+            alias.into(),
+            docx_parse::theme::resolve_theme_font_ref(Some(theme), alias),
+        );
+    }
+    voeg_letterfamilies_toe(benodigd, families)
+}
+
+fn voeg_letterfamilies_toe(
+    benodigd: &mut Value,
+    families: BTreeMap<String, String>,
+) -> Resultaat<()> {
     let eisen = benodigd
         .as_array_mut()
         .ok_or_else(|| fout("Ongeldige fontvereisten"))?;
@@ -149,23 +180,6 @@ fn aanvullende_lettertypen(
         {
             scripts.insert(script.to_string());
         }
-    }
-    let mut families = BTreeMap::from([
-        ("Calibri".to_string(), "Calibri".to_string()),
-        ("Inter".to_string(), "Inter".to_string()),
-    ]);
-    for font in &tabel.fonts {
-        // Gewone familienamen zijn geen themaverwijzingen: ze houden hun naam.
-        families.insert(font.name.clone(), font.name.clone());
-        if let Some(alt) = &font.alt_name {
-            families.insert(alt.clone(), alt.clone());
-        }
-    }
-    for alias in ["+mn-lt", "+mj-lt", "+mn-ea", "+mj-ea", "+mn-cs", "+mj-cs"] {
-        families.insert(
-            alias.into(),
-            docx_parse::theme::resolve_theme_font_ref(Some(theme), alias),
-        );
     }
     if families.len() > 2048 || eisen.len() > 8192 {
         return Err(fout(

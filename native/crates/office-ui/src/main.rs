@@ -1924,7 +1924,11 @@ impl App {
                         }),
                     )
                     .padding(iced::Padding {
-                        top: 23.,
+                        top: if a.beeld.module == Module::Writer {
+                            lineaal::BOVENRUIMTE
+                        } else {
+                            23.
+                        },
                         bottom: 24.,
                         left: 24.,
                         right: 24.,
@@ -1998,7 +2002,7 @@ impl App {
                     .width(Length::Fill)
                     .height(Length::Fill)
                     .style(|_| container::Style {
-                        background: Some(iced::Color::from_rgb8(245, 245, 243).into()),
+                        background: Some(iced::Color::from_rgb8(245, 245, 244).into()),
                         ..Default::default()
                     })
                     .into()

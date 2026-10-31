@@ -158,13 +158,46 @@ de build klaar. De controle vergelijkt de zichtbare tekstvelden en
 onderdeelstructuur na bewaren en teruglezen, niet alle pagina's of opmaak.
 De aparte faseproef hierboven is niet gebruikt als productbenchmark.
 
-De [laatste volledige releasecorpusronde](corpus-2026-10-31-alpha5-release.json)
-betreft nog alpha 5: 648 geselecteerde OOXML-bronnen, 578 geslaagde rondgangen,
-68 weigeringen en twee tijdslimieten. Dit is geen corpuscontrole van alpha 7.
-De andere 918 manifestbronnen en de grote-documentproblemen blijven open.
+De [volledige releasecorpusronde voor alpha 7](corpus-2026-10-31-alpha7-release.json)
+heeft 648 geselecteerde OOXML-bronnen doorlopen met 30 seconden per bron en twee
+processen: **578 geslaagd, 69 geweigerd en één tijdslimiet**, zonder gemeld
+rondgangverschil. De andere 918 manifestbronnen blijven buiten deze native ronde.
+Het grootste document slaagt wel bij de afzonderlijke limiet van 120 seconden.
 
-Alpha 6 is op Windows, Linux en macOS gebouwd en uitgepakt gecontroleerd in
-[bouwronde 41155324619](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41155324619).
-De alpha-7-releasebuilds en platformmetingen moeten afzonderlijk worden
-vastgelegd. De huidige wijzigingen leveren nog geen stabiele native vrijgave,
-schone installers of de volledige losse edities op.
+Vergeleken met alpha 5 slaagt het document met 953 alinea's nu. Eén eerder
+getoonde bron wordt met de nieuwe kop-/voettekstweergave juist geweigerd:
+`test-data/integration/stress023.docx`, wegens de ontbrekende sleutel
+`calibri|0|0` in de fontregistratie. Alpha 8 pakt deze regressie op. Weigeringen
+blijven weigeringen; beschadigde, begrensde en versleutelde bronnen zijn niet
+stil tot geslaagde rondgangen omgedoopt.
+
+De [onafhankelijke volledige tekstcontrole](grote-writer-2026-10-31-alpha7-tekstcontrole.json)
+gebruikt de werkelijk gebouwde alpha-7-kern om de twee grote bronnen naar nieuwe
+bestanden te bewaren. Een afzonderlijke XML-lezer vergelijkt alle alineateksten
+en veldinstructies in document, kop/voet, noten en opmerkingen, plus tabel-/
+veldaantallen en alle mediabytes. De 953 respectievelijk 15.935 body-alinea's en
+alle gecontroleerde onderdelen zijn gelijk. Dit bewijst nog geen volledige
+stijl- of paginagetrouwheid.
+
+## Platformpakketten
+
+De [uitgebreide bouwronde 41165440161](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41165440161)
+is geslaagd voor Windows x64, Linux x64 en macOS ARM64, plus de afzonderlijke
+conversieruntime. De bron hoort bij commit `4cb1ddc20532286df0c8fee1dbfd1073318875e9`;
+de productiecode is ongewijzigd ten opzichte van `187a69f`.
+
+Alle drie [pakketten](pakketten-2026-10-31-alpha7.json) zijn op SHA-256, ZIP-CRC,
+bronversie en architectuur van beide programma's gecontroleerd. CI controleert
+op ieder eigen platform de werkelijk uitgepakte programmaversies, bron en
+licenties. Het Linux-CI-pakket is daarnaast lokaal met die volledige controle
+uitgepakt. De lokale Linux-release is eveneens verpakt en uitgepakt gecontroleerd.
+
+De 31 Iced-schermbeelden zijn allemaal pixelgelijk tussen lokaal en
+[Linux](nativebeelden-2026-10-31-alpha7-Linux.json),
+[Windows](nativebeelden-2026-10-31-alpha7-Windows.json) en
+[macOS](nativebeelden-2026-10-31-alpha7-macOS.json). Dat is uitsluitend een
+vergelijking van native renderers onderling. De vier vergelijkingen met de
+bestaande webinterface hierboven blijven rood.
+
+Dit is nog geen stabiele native vrijgave, schone-installatieproef of volledige
+reeks losse applicaties. De stabiele suite blijft 2026-W44.8.

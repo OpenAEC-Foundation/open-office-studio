@@ -17,9 +17,9 @@ pub fn office(mut look: Look) -> Look {
     };
     let c = &mut look.color;
     c.frame = if donker {
-        rgb(54, 54, 62)
+        rgb(68, 68, 76)
     } else {
-        rgb(250, 250, 249)
+        Color::WHITE
     };
     c.panel = if donker {
         rgb(54, 54, 62)
@@ -54,7 +54,10 @@ pub fn office(mut look: Look) -> Look {
         ..tekst
     };
     c.text_muted = Color { a: 0.5, ..tekst };
-    c.text_disabled = Color { a: 0.35, ..tekst };
+    c.text_disabled = Color {
+        a: if donker { 0.4 } else { 0.35 },
+        ..tekst
+    };
     c.border = if donker {
         Color {
             a: 0.25,
@@ -63,7 +66,14 @@ pub fn office(mut look: Look) -> Look {
     } else {
         Color { a: 0.12, ..tekst }
     };
-    c.border_subtle = Color { a: 0.06, ..tekst };
+    c.border_subtle = if donker {
+        Color {
+            a: 0.15,
+            ..rgb(217, 119, 6)
+        }
+    } else {
+        Color { a: 0.06, ..tekst }
+    };
     c.accent = rgb(217, 119, 6);
     c.accent_hover = rgb(234, 88, 12);
     c.accent_text = c.accent;
