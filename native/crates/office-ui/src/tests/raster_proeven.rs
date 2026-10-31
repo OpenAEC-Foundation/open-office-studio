@@ -725,6 +725,168 @@ fn cursor_undo_na_invoer_aan_de_regelgrens_herstelt_ook_de_zichtbare_affiniteit(
     assert_eq!(t.writer_direct.geometrie(t).unwrap().cursor, Some(vlak));
     assert!(p.bron().as_slice() == bron.as_slice());
 }
+#[test]
+fn celbereik_shiftpijlen_behouden_anker_bron_en_bestaande_bereikopmaak() {
+    use iced::keyboard::{Key, Modifiers, key::Named};
+    let mut p = Proef::nieuw();
+    let bron = p.bron();
+    p.cel("D4", false);
+    p.toets(Key::Named(Named::ArrowLeft), Modifiers::SHIFT, None);
+    p.toets(Key::Named(Named::ArrowUp), Modifiers::SHIFT, None);
+    assert_eq!(p.app.tab().unwrap().adres, "C3:D4");
+    assert_eq!(
+        p.app.tab().unwrap().raster.selectie.as_ref().unwrap().anker,
+        "D4"
+    );
+    p.toets(Key::Named(Named::ArrowLeft), Modifiers::SHIFT, None);
+    assert_eq!(p.app.tab().unwrap().adres, "B3:D4");
+    assert_eq!(*p.bron(), *bron);
+    assert!(!p.app.tab().unwrap().antwoord.as_ref().unwrap().terug);
+    p.bericht(Msg::Opmaak(office_core::opmaak::Opmaak::Vet(true)));
+    assert_eq!(p.app.tab().unwrap().adres, "B3:D4");
+    let office_core::document::Document::Spreadsheet(d) =
+        office_core::document::Document::open(Module::Spreadsheet, &p.bron()).unwrap()
+    else {
+        panic!()
+    };
+    // De GUI voert de echte bereikopdracht uit, ook voor de niet-actieve cellen.
+    for v in p
+        .app
+        .tab()
+        .unwrap()
+        .antwoord
+        .as_ref()
+        .unwrap()
+        .beeld
+        .velden
+        .iter()
+        .filter(|v| ["B3", "C3", "D3", "B4", "C4", "D4"].contains(&v.id.as_str()))
+    {
+        assert!(v.opmaak.vet, "{}", v.id);
+    }
+    drop(d);
+    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        std::fs::create_dir_all(&map).unwrap();
+        p.verbeeld()
+            .save_png(PathBuf::from(map).join("spreadsheet-bereikselectie.png"))
+            .unwrap();
+    }
+    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
+        std::fs::create_dir_all(&map).unwrap();
+        std::fs::write(
+            PathBuf::from(map).join("spreadsheet-bereikselectie.xlsx"),
+            p.bron().as_slice(),
+        )
+        .unwrap();
+    }
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *bron);
+    p.named(Named::ArrowRight);
+    assert_eq!(p.app.tab().unwrap().adres, "C3");
+    assert!(p.app.tab().unwrap().raster.selectie.is_none());
+}
+#[test]
+fn celbereik_snellen_toetsen_blijven_in_volgorde_tijdens_werkvensterwissel() {
+    use office_core::rekenblad::Richting;
+    let mut p = Proef::nieuw();
+    p.cel("B2", false);
+    let bron = p.bron();
+    p.bericht(Msg::Adres("X59".into()));
+    p.bericht(Msg::GaNaar);
+    let taak = p
+        .app
+        .update(Msg::Raster(raster_ui::Bericht::Vergroot(Richting::Rechts)));
+    assert!(p.app.tab().unwrap().bezig);
+    for r in [
+        Richting::Onder,
+        Richting::Onder,
+        Richting::Rechts,
+        Richting::Boven,
+    ] {
+        let t = p.app.update(Msg::Raster(raster_ui::Bericht::Vergroot(r)));
+        p.taak(t);
+    }
+    assert_eq!(p.app.tab().unwrap().raster.wachtend.len(), 4);
+    p.taak(taak);
+    let t = p.app.tab().unwrap();
+    assert_eq!(t.adres, "X59:Z60");
+    assert_eq!(t.raster.selectie.as_ref().unwrap().anker, "X59");
+    assert!(t.raster.wachtend.is_empty());
+    assert_eq!(*p.bron(), *bron);
+    assert!(!t.antwoord.as_ref().unwrap().terug);
+}
+#[test]
+fn celbereik_muis_slepen_shiftklik_en_zoom_volgen_de_echte_rastergeometrie() {
+    use iced::{
+        Event,
+        keyboard::{Event as K, Modifiers},
+        mouse::{Button, Event as M},
+    };
+    for zoom in [0.75, 1., 1.5] {
+        let mut p = Proef::nieuw();
+        p.bericht(Msg::Zoom(zoom));
+        let bron = p.bron();
+        p.cel("B2", false);
+        p.gebeurtenis(Event::Keyboard(K::ModifiersChanged(Modifiers::empty())));
+        p.gebeurtenis(Event::Mouse(M::ButtonPressed(Button::Left)));
+        let groep = p
+            .toegankelijkheid()
+            .nodes
+            .into_iter()
+            .find(|n| n.node.name == "Werkbladraster")
+            .unwrap()
+            .bounds;
+        let b = &p.app.tab().unwrap().antwoord.as_ref().unwrap().beeld;
+        let r = b
+            .pagina
+            .vlakken
+            .iter()
+            .find(|r| r.id == "D5")
+            .unwrap()
+            .grens;
+        p.muis = iced::Point::new(
+            groep.x + (r.x + r.breedte / 2.) * zoom,
+            groep.y + (r.y + r.hoogte / 2.) * zoom,
+        );
+        p.gebeurtenis(Event::Mouse(M::CursorMoved { position: p.muis }));
+        p.gebeurtenis(Event::Mouse(M::ButtonReleased(Button::Left)));
+        assert_eq!(p.app.tab().unwrap().adres, "B2:D5", "zoom {zoom}");
+        p.gebeurtenis(Event::Keyboard(K::ModifiersChanged(Modifiers::SHIFT)));
+        p.cel("C3", false);
+        assert_eq!(p.app.tab().unwrap().adres, "B2:C3");
+        p.gebeurtenis(Event::Keyboard(K::ModifiersChanged(Modifiers::empty())));
+        p.cel("A1", false);
+        assert_eq!(p.app.tab().unwrap().adres, "A1");
+        assert_eq!(*p.bron(), *bron);
+    }
+}
+#[test]
+fn celbereik_samenvoeging_fout_en_bestandsvenster_laten_bron_en_focus_intact() {
+    use office_core::rekenblad::{Richting, Structuur};
+    let mut p = Proef::nieuw();
+    p.bericht(Msg::Adres("B2:D3".into()));
+    p.bericht(Msg::GaNaar);
+    p.bericht(Msg::Structuur(Structuur::Samenvoegen));
+    let bron = p.bron();
+    p.cel("B2", false);
+    p.bericht(Msg::Raster(raster_ui::Bericht::Vergroot(Richting::Rechts)));
+    assert_eq!(p.app.tab().unwrap().adres, "B2:E3");
+    let taak = p
+        .app
+        .update(Msg::Raster(raster_ui::Bericht::BreidUit("A10001".into())));
+    p.taak(taak);
+    assert!(p.app.melding.contains("10.000"));
+    assert_eq!(p.app.tab().unwrap().adres, "B2:E3");
+    let taak = p
+        .app
+        .update(Msg::Raster(raster_ui::Bericht::Vergroot(Richting::Onder)));
+    p.app.bestand = true;
+    let n = p.focusoperaties;
+    p.taak(taak);
+    assert_eq!(p.focusoperaties, n);
+    assert_eq!(*p.bron(), *bron);
+}
+
 impl Proef {
     fn nieuw() -> Self {
         lettertypen();

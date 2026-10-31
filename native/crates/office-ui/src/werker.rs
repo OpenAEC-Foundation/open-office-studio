@@ -8,6 +8,7 @@ use std::{
 #[derive(Debug, Clone)]
 pub struct Antwoord {
     pub deel: usize,
+    pub raster_selectie: Option<office_core::rekenblad::CelSelectie>,
     pub writer_cursor: Option<office_core::writer_navigatie::CursorDoel>,
     pub writer_markering: Option<office_core::writer_cursor::TekstMarkering>,
     pub beeld: Weergave,
@@ -31,6 +32,12 @@ pub enum Opdracht {
     Deel(usize),
     Cel(usize, String),
     VerplaatsCel(usize, String, office_core::rekenblad::Richting),
+    SelecteerCellen {
+        deel: usize,
+        anker: String,
+        doel: String,
+        richting: Option<office_core::rekenblad::Richting>,
+    },
     Bewerk(usize, Bewerking),
     Terug(usize),
     Vooruit(usize),
@@ -96,12 +103,13 @@ impl Werker {
                             .get_mut(&taak.id)
                             .ok_or("Document niet meer geopend")?;
                         let mut beeld=None;
+                        let mut raster_selectie=None;
                         match taak.opdracht {
                             Opdracht::WriterCursor {deel:n,hash,punt,richting,voorkeur,doel_x}=>{
                                 let cursor=sessie.verplaats_cursor(n,&hash,&punt,richting,voorkeur.as_ref(),doel_x).map_err(|e|e.to_string())?;
                                 let pagina=cursor.pagina;let mut beeld=sessie.weergave(pagina).map_err(|e|e.to_string())?;beeld.voorkeursveld=Some(cursor.punt.id.clone());
                                 *deel=pagina;
-                                return Ok(Antwoord {deel:pagina,writer_cursor:Some(cursor),writer_markering:None,beeld,bron:sessie.bron(),hash:sessie.bron_hash().into(),terug:sessie.kan_terug(),vooruit:sessie.kan_vooruit()});
+                                return Ok(Antwoord {deel:pagina,raster_selectie:None,writer_cursor:Some(cursor),writer_markering:None,beeld,bron:sessie.bron(),hash:sessie.bron_hash().into(),terug:sessie.kan_terug(),vooruit:sessie.kan_vooruit()});
                             }
                             Opdracht::Deel(n) => {
                                 beeld=Some(sessie.weergave(n).map_err(|e| e.to_string())?);
@@ -109,6 +117,10 @@ impl Werker {
                             }
                             Opdracht::Cel(n,adres) => {beeld=Some(sessie.naar_cel(n,&adres).map_err(|e|e.to_string())?);*deel=n;}
                             Opdracht::VerplaatsCel(n,adres,richting) => {beeld=Some(sessie.verplaats_cel(n,&adres,richting).map_err(|e|e.to_string())?);*deel=n;}
+                            Opdracht::SelecteerCellen {deel:n,anker,doel,richting} => {
+                                let (b,s)=sessie.selecteer_cellen(n,&anker,&doel,richting).map_err(|e|e.to_string())?;
+                                beeld=Some(b);raster_selectie=Some(s);*deel=n;
+                            }
                             Opdracht::Bewerk(n, b) => {
                                 let b=sessie.bewerk_met_weergave(n,b).map_err(|e|e.to_string())?;*deel=n.min(b.onderdelen.len().saturating_sub(1));beeld=Some(b);
                             }
@@ -120,7 +132,7 @@ impl Werker {
                                 };
                                 // De interface accepteert het doel pas na haar versie-/focuscontrole.
                                 // Een oud navigatieantwoord mag het werkdraaddeel niet verplaatsen.
-                                return Ok(Antwoord{deel:pagina,writer_markering,writer_cursor:None,beeld,bron:sessie.bron(),hash:sessie.bron_hash().into(),terug:sessie.kan_terug(),vooruit:sessie.kan_vooruit()});
+                                return Ok(Antwoord{deel:pagina,raster_selectie:None,writer_markering,writer_cursor:None,beeld,bron:sessie.bron(),hash:sessie.bron_hash().into(),terug:sessie.kan_terug(),vooruit:sessie.kan_vooruit()});
                             }
                             Opdracht::WriterInvoer {deel:n,hash,groep,reeks,positie} => {
                                 if hash!=sessie.bron_hash() {return Err("Deze invoer hoort bij een verouderde documentversie".into());}
@@ -147,6 +159,7 @@ impl Werker {
                                 beeld.melding = sessie.markdown().map_err(|e| e.to_string())?;
                                 return Ok(Antwoord {
                                     deel:*deel,
+                                    raster_selectie:None,
                                     writer_markering:None,writer_cursor:None,
                                     beeld,
                                     hash:sessie.bron_hash().into(),
@@ -159,6 +172,7 @@ impl Werker {
                         }
                         Ok(Antwoord {
                             deel:*deel,
+                            raster_selectie,
                             writer_markering:None,writer_cursor:None,
                             beeld: match beeld {Some(b)=>b,None=>sessie.weergave(*deel).map_err(|e| e.to_string())?},
                             hash:sessie.bron_hash().into(),

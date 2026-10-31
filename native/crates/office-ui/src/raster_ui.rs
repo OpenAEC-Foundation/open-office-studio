@@ -16,10 +16,14 @@ pub struct Staat {
     pub focus: bool,
     pub na_bewerking: Option<String>,
     pub na_richting: Option<Richting>,
+    pub selectie: Option<office_core::rekenblad::CelSelectie>,
+    pub wachtend: std::collections::VecDeque<Bericht>,
 }
 #[derive(Debug, Clone)]
 pub enum Bericht {
     Kies(String),
+    BreidUit(String),
+    Vergroot(Richting),
     Begin {
         id: String,
         vervang: Option<String>,
@@ -32,6 +36,9 @@ pub enum Bericht {
     Annuleer,
 }
 pub(super) fn beschikbaar(app: &App) -> bool {
+    toegankelijk(app) && app.tab().is_some_and(|t| !t.bezig && !t.schrijft)
+}
+fn toegankelijk(app: &App) -> bool {
     !app.postvak_zichtbaar
         && !app.bestand
         && !app.instellingen
@@ -39,15 +46,38 @@ pub(super) fn beschikbaar(app: &App) -> bool {
         && app.sluiten.is_none()
         && app.exportblad.is_none()
         && app.tab().is_some_and(|t| {
-            !t.bezig
-                && !t.schrijft
-                && t.antwoord
-                    .as_ref()
-                    .is_some_and(|a| a.beeld.module == Module::Spreadsheet)
+            t.antwoord
+                .as_ref()
+                .is_some_and(|a| a.beeld.module == Module::Spreadsheet)
         })
 }
 pub fn update(app: &mut App, bericht: Bericht) -> Task<Msg> {
     if !beschikbaar(app) {
+        if toegankelijk(app)
+            && let Some(t) = app
+                .tab_mut()
+                .filter(|t| t.bezig && !t.schrijft && !t.concept)
+            && matches!(
+                bericht,
+                Bericht::Kies(_)
+                    | Bericht::BreidUit(_)
+                    | Bericht::Vergroot(_)
+                    | Bericht::Verplaats(_)
+            )
+        {
+            // Slepen bewaart alleen het laatste absolute doel. Relatieve
+            // toetsstappen blijven in volgorde, ook tijdens een paginaraster.
+            if matches!(bericht, Bericht::BreidUit(_))
+                && matches!(t.raster.wachtend.back(), Some(Bericht::BreidUit(_)))
+            {
+                t.raster.wachtend.pop_back();
+            }
+            if t.raster.wachtend.len() >= 256 {
+                return app
+                    .waarschuwing("De navigatiewachtrij is vol; wacht tot het raster gereed is");
+            }
+            t.raster.wachtend.push_back(bericht);
+        }
         return Task::none();
     }
     match bericht {
@@ -103,6 +133,13 @@ pub fn update(app: &mut App, bericht: Bericht) -> Task<Msg> {
             registreer_letters(t);
             iced::widget::operation::focus(EDITOR_ID)
         }
+        Bericht::BreidUit(doel) => selecteer(app, doel, None),
+        Bericht::Vergroot(richting) => {
+            let Some(doel) = app.tab().and_then(Tab::veld).map(|v| v.id.clone()) else {
+                return Task::none();
+            };
+            selecteer(app, doel, Some(richting))
+        }
         Bericht::Invoer(actie) => {
             if app.tab().is_some_and(|t| t.raster.bewerken) {
                 app.update(Msg::Invoer(actie))
@@ -119,6 +156,8 @@ pub fn update(app: &mut App, bericht: Bericht) -> Task<Msg> {
                 return Task::none();
             };
             let opdracht = Opdracht::VerplaatsCel(t.deel, v.id.clone(), richting);
+            t.adres = v.id.clone();
+            t.raster.selectie = None;
             let id = t.id;
             t.raster.focus = true;
             app.opdracht(id, opdracht)
@@ -156,9 +195,57 @@ pub fn update(app: &mut App, bericht: Bericht) -> Task<Msg> {
                 t.raster.na_bewerking = None;
                 t.raster.na_richting = None;
                 t.raster.focus = true;
+            } else if let Some(v) = t.veld() {
+                t.adres = v.id.clone();
+                t.raster.selectie = None;
             }
             iced::widget::operation::focus(RASTER_ID)
         }
+    }
+}
+fn selecteer(app: &mut App, doel: String, richting: Option<Richting>) -> Task<Msg> {
+    let t = app.tab_mut().unwrap();
+    if t.concept || t.raster.bewerken {
+        return app.waarschuwing("Pas de huidige invoer eerst toe of maak haar ongedaan");
+    }
+    let Some(anker) = t
+        .raster
+        .selectie
+        .as_ref()
+        .map(|s| s.anker.clone())
+        .or_else(|| {
+            office_core::rekenblad::bereik(&t.adres)
+                .ok()
+                .map(|r| r.start.to_a1())
+        })
+    else {
+        return Task::none();
+    };
+    t.raster.focus = true;
+    let id = t.id;
+    let opdracht = Opdracht::SelecteerCellen {
+        deel: t.deel,
+        anker,
+        doel,
+        richting,
+    };
+    app.opdracht(id, opdracht)
+}
+pub fn vervolg(app: &mut App) -> Task<Msg> {
+    if !beschikbaar(app) {
+        return Task::none();
+    }
+    let Some(b) = app.tab_mut().and_then(|t| t.raster.wachtend.pop_front()) else {
+        return iced::widget::operation::focus(RASTER_ID);
+    };
+    let taak = update(app, b);
+    if app
+        .tab()
+        .is_some_and(|t| !t.bezig && !t.raster.wachtend.is_empty())
+    {
+        Task::batch([taak, vervolg(app)])
+    } else {
+        taak
     }
 }
 pub fn registreer_letters(t: &Tab) {
@@ -292,6 +379,8 @@ pub fn blad<'a>(app: &'a App, t: &'a Tab, inhoud: Element<'a, Msg>) -> Element<'
         pagina: &b.pagina,
         gekozen: t.veld().map(|v| v.id.as_str()),
         bewerken: t.raster.bewerken,
+        bereik: &t.adres,
+        accent: app.look().color.accent,
     };
     openaec_ui::design::a11y::node(
         Element::new(widget),
@@ -306,6 +395,8 @@ struct Focus {
     actief: bool,
     klik: Option<mouse::Click>,
     id: String,
+    slepen: bool,
+    modifiers: iced::keyboard::Modifiers,
 }
 impl iced::advanced::widget::operation::Focusable for Focus {
     fn is_focused(&self) -> bool {
@@ -323,6 +414,8 @@ struct Raster<'a> {
     pagina: &'a office_core::interactie::Pagina,
     gekozen: Option<&'a str>,
     bewerken: bool,
+    bereik: &'a str,
+    accent: iced::Color,
 }
 impl Widget<Msg, iced::Theme, iced::Renderer> for Raster<'_> {
     fn tag(&self) -> tree::Tag {
@@ -364,6 +457,35 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Raster<'_> {
         s: &mut iced::advanced::Shell<'_, Msg>,
         vp: &iced::Rectangle,
     ) {
+        if let iced::Event::Keyboard(iced::keyboard::Event::ModifiersChanged(m)) = e {
+            t.state.downcast_mut::<Focus>().modifiers = *m;
+        }
+        if matches!(
+            e,
+            iced::Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left))
+        ) {
+            t.state.downcast_mut::<Focus>().slepen = false;
+        }
+        if matches!(e, iced::Event::Mouse(mouse::Event::CursorMoved { .. }))
+            && t.state.downcast_ref::<Focus>().slepen
+            && !self.bewerken
+            && c.is_over(*vp)
+            && l.bounds().width > 0.
+            && l.bounds().height > 0.
+            && let Some(p) = c.position_in(l.bounds())
+            && let Some(id) = self.pagina.raak(
+                p.x * self.pagina.breedte / l.bounds().width,
+                p.y * self.pagina.hoogte / l.bounds().height,
+            )
+            && t.state.downcast_ref::<Focus>().id != id
+        {
+            let staat = t.state.downcast_mut::<Focus>();
+            staat.id = id.into();
+            staat.klik = None;
+            s.publish(Msg::Raster(Bericht::BreidUit(id.into())));
+            s.capture_event();
+            return;
+        }
         if matches!(e, iced::Event::Keyboard(_) | iced::Event::InputMethod(_)) {
             // Een klik na typen of navigeren begint een nieuwe klikreeks.
             // De vorige selectie mag geen toevallige dubbelklik opleveren.
@@ -381,10 +503,26 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Raster<'_> {
             use iced::keyboard::{Key, key::Named};
             let bericht = match key {
                 Key::Named(k) if !modifiers.command() && !modifiers.alt() => match k {
-                    Named::ArrowLeft => Some(Bericht::Verplaats(Richting::Links)),
-                    Named::ArrowRight => Some(Bericht::Verplaats(Richting::Rechts)),
-                    Named::ArrowUp => Some(Bericht::Verplaats(Richting::Boven)),
-                    Named::ArrowDown => Some(Bericht::Verplaats(Richting::Onder)),
+                    Named::ArrowLeft => Some(if modifiers.shift() {
+                        Bericht::Vergroot(Richting::Links)
+                    } else {
+                        Bericht::Verplaats(Richting::Links)
+                    }),
+                    Named::ArrowRight => Some(if modifiers.shift() {
+                        Bericht::Vergroot(Richting::Rechts)
+                    } else {
+                        Bericht::Verplaats(Richting::Rechts)
+                    }),
+                    Named::ArrowUp => Some(if modifiers.shift() {
+                        Bericht::Vergroot(Richting::Boven)
+                    } else {
+                        Bericht::Verplaats(Richting::Boven)
+                    }),
+                    Named::ArrowDown => Some(if modifiers.shift() {
+                        Bericht::Vergroot(Richting::Onder)
+                    } else {
+                        Bericht::Verplaats(Richting::Onder)
+                    }),
                     Named::Enter => Some(Bericht::Verplaats(if modifiers.shift() {
                         Richting::Boven
                     } else {
@@ -446,7 +584,10 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Raster<'_> {
             );
             staat.id = id.into();
             staat.klik = Some(klik);
-            let bericht = if klik.kind() == mouse::click::Kind::Single {
+            staat.slepen = !self.bewerken;
+            let bericht = if staat.modifiers.shift() && !self.bewerken {
+                Bericht::BreidUit(id.into())
+            } else if klik.kind() == mouse::click::Kind::Single {
                 Bericht::Kies(id.into())
             } else {
                 Bericht::Begin {
@@ -488,5 +629,72 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Raster<'_> {
         self.inhoud
             .as_widget()
             .draw(&t.children[0], r, theme, style, l, c, vp);
+        if !self.bewerken && self.bereik.contains(':') {
+            teken_selectie(r, self.pagina, self.bereik, self.accent, l.bounds(), *vp);
+        }
     }
+}
+fn teken_selectie(
+    r: &mut iced::Renderer,
+    pagina: &office_core::interactie::Pagina,
+    adres: &str,
+    accent: iced::Color,
+    bounds: iced::Rectangle,
+    vp: iced::Rectangle,
+) {
+    use iced::advanced::Renderer as _;
+    let Ok(bereik) = office_core::rekenblad::bereik(adres) else {
+        return;
+    };
+    if pagina.breedte <= 0. || pagina.hoogte <= 0. {
+        return;
+    }
+    let Some(clip) = bounds.intersection(&vp) else {
+        return;
+    };
+    let sx = bounds.width / pagina.breedte;
+    let sy = bounds.height / pagina.hoogte;
+    let mut totaal: Option<iced::Rectangle> = None;
+    r.with_layer(clip, |r| {
+        for v in &pagina.vlakken {
+            let Ok(c) = office_core::rekenblad::bereik(&v.id) else {
+                continue;
+            };
+            if c.start.row < bereik.start.row
+                || c.start.row > bereik.end.row
+                || c.start.col < bereik.start.col
+                || c.start.col > bereik.end.col
+            {
+                continue;
+            }
+            let b = iced::Rectangle {
+                x: bounds.x + v.grens.x * sx,
+                y: bounds.y + v.grens.y * sy,
+                width: v.grens.breedte * sx,
+                height: v.grens.hoogte * sy,
+            };
+            totaal = Some(totaal.map(|a| a.union(&b)).unwrap_or(b));
+            r.fill_quad(
+                renderer::Quad {
+                    bounds: b,
+                    ..Default::default()
+                },
+                iced::Color { a: 0.12, ..accent },
+            );
+        }
+        if let Some(b) = totaal {
+            r.fill_quad(
+                renderer::Quad {
+                    bounds: b,
+                    border: iced::Border {
+                        color: accent,
+                        width: 1.5,
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                },
+                iced::Color::TRANSPARENT,
+            );
+        }
+    });
 }

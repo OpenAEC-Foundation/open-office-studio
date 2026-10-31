@@ -240,3 +240,14 @@ assert [[[c.text for c in r.cells] for r in t.rows] for t in pagina.tables] == [
 with ZipFile(Path(__file__).parent/'writer-structuur.docx') as oud, ZipFile(map/'writer-pagina-ime.docx') as nieuw:
     assert oud.read('office-test/blijft.xml') == nieuw.read('office-test/blijft.xml')
 print('Writer-pagina-invoer: Japanse IME-commit, astrale tekens, runopmaak, secties, tabellen, kop/voet en onbekend pakketdeel onafhankelijk teruggelezen.')
+
+selectie = load_workbook(map/'spreadsheet-bereikselectie.xlsx', data_only=False)
+blad = selectie['Begroting']
+for rij in range(3, 5):
+    for kolom in range(2, 5):
+        assert blad.cell(rij, kolom).font.bold
+assert blad['B2'].value == 3
+assert blad['D3'].value == '=B3*C3'
+assert blad['D4'].value == '=SUM(D2:D3)'
+assert selectie['Tweede blad']['A1'].value == 'Bewaar ook dit blad'
+print('Spreadsheet-bereikselectie: zes opgemaakte cellen, oorspronkelijke formules en tweede blad onafhankelijk teruggelezen.')

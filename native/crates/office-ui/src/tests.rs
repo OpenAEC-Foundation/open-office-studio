@@ -275,6 +275,7 @@ pub(super) fn app_met_document(module: Module, bytes: &[u8]) -> App {
         .as_ref()
         .map(|b| image::Handle::from_bytes(b.clone()));
     tab.antwoord = Some(Antwoord {
+        raster_selectie: None,
         deel: 0,
         writer_markering: None,
         writer_cursor: None,

@@ -1,0 +1,28 @@
+{
+  "versie": "2026.44.9-alpha.23",
+  "geslaagd": true,
+  "omvang": "Drie kernproeven en vier GUI-proeven voor rechthoekige selectie met muisslepen, Shift+klik en Shift+pijlen, vaste ankerpositie in beide richtingen, aangesneden samenvoegingen, 10.000-cellenbudget, werkvensterwissels, geordende toetsstappen, modale focus en bereikopmaak. Geen systeemmuisproef, automatisch slepend scrollen, bereikplakken, volledige rastervirtualisatie of volledige functiepariteit.",
+  "kernproeven": [
+    "celbereik_sluit_aangesneden_samenvoegingen_in_beide_richtingen",
+    "celbereik_volgt_werkvenster_zonder_bron_of_geschiedenis_te_veranderen",
+    "celbereik_weigert_overschrijding_en_verkeerde_module_zonder_gedeeltelijke_navigatie"
+  ],
+  "gui_proeven": [
+    "celbereik_shiftpijlen_behouden_anker_bron_en_bestaande_bereikopmaak",
+    "celbereik_snellen_toetsen_blijven_in_volgorde_tijdens_werkvensterwissel",
+    "celbereik_muis_slepen_shiftklik_en_zoom_volgen_de_echte_rastergeometrie",
+    "celbereik_samenvoeging_fout_en_bestandsvenster_laten_bron_en_focus_intact"
+  ],
+  "reguliere_tests": 265,
+  "gui_tests": 80,
+  "bronbestanden": 99,
+  "bronmanifest": "schermen-2026-10-31-alpha23.json",
+  "testlog_sha256": "8a542ba2b11f4724a426833cc7a0a7cb7fcf4c158c11b6764231df3f00e3991f",
+  "onafhankelijke_uitvoer_sha256": "98a1c139837bfe451fa5dca0be9c6e3fe677db2bb571ce6b67d54cb3cc9e7d08",
+  "xlsx_sha256": "e5aea7214df092551f6da6721b11f37735605edda666d009e000cfd5309d7adf",
+  "eerste_diagnose": {
+    "geslaagd": false,
+    "log_sha256": "20c1c3d0fd92e9cfca9d9b11feb1ee59467414a0a5e1b3189dfd0397487d1ab8",
+    "reden": "De laatste testverwachting ging onterecht van D3 uit. Na uitbreiden vanaf D4 ligt de actieve doelcel op B3; een gewone stap naar rechts geeft C3. De verwachting is naar C3 gecorrigeerd. Alle bereikopmaak-, bron-, anker- en undo-controles blijven behouden; de volledige huidige bron slaagt."
+  }
+}

@@ -847,6 +847,29 @@ impl Sessie {
             self.naar_cel(deel, &doel)
         }
     }
+    /// Alleen selectie en werkvenster veranderen; bron en geschiedenis blijven intact.
+    pub fn selecteer_cellen(
+        &mut self,
+        deel: usize,
+        anker: &str,
+        doel: &str,
+        richting: Option<crate::rekenblad::Richting>,
+    ) -> Resultaat<(Weergave, crate::rekenblad::CelSelectie)> {
+        let Document::Spreadsheet(d) = &self.document else {
+            return Err(fout("Celbereikselectie hoort bij een rekenblad"));
+        };
+        let doel = match richting {
+            Some(r) => crate::rekenblad::volgende_cel(d, deel, doel, r)?,
+            None => doel.to_string(),
+        };
+        let selectie = crate::rekenblad::selectie(d, deel, anker, &doel)?;
+        let mut beeld = self.weergave(deel)?;
+        if !beeld.pagina.vlakken.iter().any(|v| v.id == selectie.doel) {
+            beeld = self.naar_cel(deel, &selectie.doel)?;
+        }
+        beeld.voorkeursveld = Some(selectie.doel.clone());
+        Ok((beeld, selectie))
+    }
     pub fn markdown(&self) -> Resultaat<String> {
         self.document.markdown()
     }

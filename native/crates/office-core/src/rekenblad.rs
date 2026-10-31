@@ -27,6 +27,44 @@ pub enum Richting {
     Boven,
     Onder,
 }
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct CelSelectie {
+    pub anker: String,
+    pub doel: String,
+    pub adres: String,
+}
+/// Een rechthoekige selectie neemt elke aangesneden samenvoeging volledig mee.
+/// Ook ketens worden gesloten; een te groot resultaat wordt nooit afgekapt.
+pub fn selectie(d: &x::Workbook, deel: usize, anker: &str, doel: &str) -> Resultaat<CelSelectie> {
+    let a = ankercel(d, deel, x::CellRef::parse_a1(anker).map_err(fout)?)?;
+    let b = ankercel(d, deel, x::CellRef::parse_a1(doel).map_err(fout)?)?;
+    let mut r = x::CellRange::new(
+        x::CellRef::new(a.row.min(b.row), a.col.min(b.col)),
+        x::CellRef::new(a.row.max(b.row), a.col.max(b.col)),
+    );
+    loop {
+        let adres = format!("{}:{}", r.start.to_a1(), r.end.to_a1());
+        bereik(&adres)?;
+        let vorig = r;
+        for m in d.merged_ranges(x::SheetId(deel as u32), r).map_err(fout)? {
+            r.start.row = r.start.row.min(m.start.row);
+            r.start.col = r.start.col.min(m.start.col);
+            r.end.row = r.end.row.max(m.end.row);
+            r.end.col = r.end.col.max(m.end.col);
+        }
+        if r == vorig {
+            return Ok(CelSelectie {
+                anker: a.to_a1(),
+                doel: b.to_a1(),
+                adres: if r.start == r.end {
+                    r.start.to_a1()
+                } else {
+                    adres
+                },
+            });
+        }
+    }
+}
 /// Eén zichtbare stap, voorbij de volledige samenvoeging en verborgen assen.
 pub fn volgende_cel(
     d: &x::Workbook,

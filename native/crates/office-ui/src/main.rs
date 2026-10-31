@@ -285,6 +285,7 @@ impl Tab {
             self.gekozen = n;
             self.editerversie = self.editerversie.wrapping_add(1);
             self.raster.bewerken = false;
+            self.raster.selectie = None;
             self.editor = text_editor::Content::with_text(&veld.tekst);
             self.writer_stappen.clear();
             self.adres = veld.id.clone();
@@ -777,6 +778,19 @@ impl App {
                                 .find(|v| v.naam == "Markdown")
                                 .map(|v| iced::widget::markdown::parse(&v.tekst).collect())
                                 .unwrap_or_default();
+                            let raster_selectie = antwoord.raster_selectie.clone().or_else(|| {
+                                tab.raster.selectie.clone().filter(|s| {
+                                    s.adres == tab.adres
+                                        && tab.deel == antwoord.deel
+                                        && tab
+                                            .antwoord
+                                            .as_ref()
+                                            .is_some_and(|a| a.hash != antwoord.hash)
+                                })
+                            });
+                            if let Some(s) = &raster_selectie {
+                                antwoord.beeld.voorkeursveld = Some(s.doel.clone());
+                            }
                             tab.antwoord = Some(antwoord);
                             tab.deel = tab.antwoord.as_ref().unwrap().deel.min(
                                 tab.antwoord
@@ -826,7 +840,12 @@ impl App {
                             let grid_focus = tab.raster.focus;
                             tab.toon_veld(keuze);
                             tab.raster.focus = grid_focus;
+                            if let Some(s) = raster_selectie {
+                                tab.adres = s.adres.clone();
+                                tab.raster.selectie = Some(s);
+                            }
                             if bereik.contains(':')
+                                && tab.raster.selectie.is_none()
                                 && tab.antwoord.as_ref().unwrap().beeld.module
                                     == Module::Spreadsheet
                             {
@@ -839,6 +858,7 @@ impl App {
                             tab.na_bewerking = None;
                             tab.raster.na_bewerking = None;
                             tab.raster.na_richting = None;
+                            tab.raster.wachtend.clear();
                             tab.canvas_voorbeeld = None;
                             fout = true;
                         }
@@ -857,7 +877,7 @@ impl App {
                     return self.update(Msg::Raster(raster_ui::Bericht::Verplaats(richting)));
                 }
                 if raster_focus && !fout && raster_ui::beschikbaar(self) {
-                    return iced::widget::operation::focus(raster_ui::RASTER_ID);
+                    return raster_ui::vervolg(self);
                 }
             }
             Msg::Selecteer(n) => {
