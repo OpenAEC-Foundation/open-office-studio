@@ -9,7 +9,7 @@ import { describe, expect, it } from "vitest";
 import { DESKTOPTALEN, maakAlle } from "../../scripts/maak-desktopbestanden.mjs";
 import { TAALCODES } from "./talen";
 
-const NSIS: Record<string, string> = { nl: "Dutch", en: "English", de: "German", fr: "French", es: "Spanish", it: "Italian", "pt-BR": "PortugueseBR", "zh-CN": "SimpChinese" };
+const NSIS: Record<string, string> = { nl: "Dutch", en: "English", de: "German", fr: "French", es: "Spanish", it: "Italian", "pt-BR": "PortugueseBR", "zh-CN": "SimpChinese", "lo": "Lao" };
 const talen = (DESKTOPTALEN as string[]).filter((t) => (TAALCODES as readonly string[]).includes(t));
 
 const APPS = ["src-tauri", "apps/database-studio/src-tauri"];

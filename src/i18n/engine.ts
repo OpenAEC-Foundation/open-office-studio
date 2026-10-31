@@ -47,9 +47,11 @@ const PAKKETTEN: Partial<Record<Taal, Lader>> = {
     drie(import("@betteroffice/docx-i18n/pt-BR"), import("@betteroffice/xlsx-i18n/pt-BR"), import("@betteroffice/pptx-i18n/pt-BR")),
   "zh-CN": () =>
     drie(import("@betteroffice/docx-i18n/zh-CN"), import("@betteroffice/xlsx-i18n/zh-CN"), import("@betteroffice/pptx-i18n/zh-CN")),
+  lo: () =>
+      drie(import("@betteroffice/docx-i18n/lo"), import("@betteroffice/xlsx-i18n/lo"), import("@betteroffice/pptx-i18n/lo")),
 };
 /** Talen die (voorlopig) de engine-vertaling van een verwante taal lenen. */
-const LEEN: Partial<Record<Taal, Taal>> = { "pt-PT": "pt-BR" };
+const LEEN: Partial<Record<Taal, Taal>> = { "pt-PT": "pt-BR", "lo": "en" };
 
 /** Herkomst per taal; ook voor tests en documentatie. */
 export const ENGINE_BRON: Record<Taal, "eigen" | "engine" | "enginepakket" | "geleend" | "terugval"> =

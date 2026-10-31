@@ -50,12 +50,14 @@ describe("taalkeuze", () => {
     expect(zoekTaal("nn-NO")).toBe("nb");
     expect(zoekTaal("iw")).toBe("he");
     expect(zoekTaal("en_US")).toBe("en");
+    expect(zoekTaal("lo-LA")).toBe("lo");
+    expect(zoekTaal("lo")).toBe("lo");
     expect(zoekTaal("NL-be")).toBe("nl");
     expect(zoekTaal("xx")).toBeNull();
   });
 
-  it("heeft 31 talen met een eigen naam en RTL voor ar en he", () => {
-    expect(TAALCODES).toHaveLength(31);
+  it("heeft 32 talen met een eigen naam en RTL voor ar en he", () => {
+    expect(TAALCODES).toHaveLength(32);
     for (const code of TAALCODES) expect(TAALNAMEN[code]).toBeTruthy();
     expect(isRtl("ar")).toBe(true);
     expect(isRtl("he")).toBe(true);
@@ -196,6 +198,7 @@ describe("controle-script", () => {
       woord_one: "{{count}} woord",
       woord_other: "{{count}} woorden",
     });
+    await schrijf("lo", { a: "ສະບາຍດີ {{naam}}", b: { c: "ຂໍ້ຄວາມ" }, woord_one: "{{count}} ຂໍ້ຄວາມ", woord_other: "{{count}} ຂໍ້ຄວາມ" });
     await schrijf("en", {
       a: "Hello {{naam}}",
       b: { c: "Text" },
