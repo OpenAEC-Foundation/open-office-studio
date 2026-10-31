@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.12**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.13**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -37,7 +37,7 @@ valt buiten de standaardtestmatrix.
 |---|---|---|
 | Venster | OpenAEC-ribbon, documenttabbladen, vijf thema’s, sneltoetsen, Bestand, openen/opslaan/opslaan als, sluitvragen | Herstelkopieën, recente bestanden, afgesplitste vensters, updater, vertalingen |
 | Writer | Native paginering, klikbare alinea’s, linialen, zoom, tekstbereikopmaak en uitlijning, splitsen bij de editorcursor en samenvoegen van aangrenzende alinea’s, woorden inclusief tabellen, Markdown-export, papierformaat/afdrukstand/marge- en kolomvoorkeuzes per sectie, zichtbare kop- en voetteksten (eerste/even/oneven), opmaakstatus uit dezelfde engine voor stijlen en Unicode-selecties, Ctrl/Cmd+B/I/U | Directe rich-text-cursor op de pagina, kop/voet bewerken, aangepaste pagina-instelling en volledige alineabediening, velden/links/revisies bewerken, volledige ribbon, tabellen invoegen, spelling en afdrukken |
-| Spreadsheet | Klikbare cellen, formulebalk, verplaatsbaar werkvenster via celadres/bereik, bereikopmaak, rijen/kolommen invoegen/verwijderen, samenvoegen/splitsen, herberekenen en bladen wisselen | Doorlopend raster met volledige toetsenbord- en sleepbediening, zoeken, sorteren/filteren, klembordbereiken, CSV-import en grafieken |
+| Spreadsheet | Directe celbewerking via dubbelklik/F2/typen, Enter/Tab/Escape, enkele-celnavigatie met pijltjestoetsen en werkvensterverplaatsing, formulebalk, bereikopmaak, rijen/kolommen invoegen/verwijderen, samenvoegen/splitsen, herberekenen en bladen wisselen | Volledige rasterweergave met koppen, bereikselecties en sleepbediening, zoeken, sorteren/filteren, klembordbereiken, CSV-import en grafieken |
 | Presentation | Native diaweergave, niet-geroteerde tekstvakken aanklikken, tekstbereikopmaak, dia’s toevoegen/verwijderen, tekstvakken invoegen, sprekersnotities bewerken | Directe cursor en vormbediening, geroteerde/gegroepeerde objecten, volledige ribbon en presentatiemodus |
 | Notition | Versies 1–3 openen, boeken/secties/pagina’s toevoegen, vrij canvas met tekstvakken slepen/vergroten, Markdown-preview, bloktekst en vet/cursief, prullenbak herstellen; onbekende bronvelden behouden | Automatische lokale opslag/herstel, zoeken, boeken/secties hernoemen/verplaatsen, volledige blok- en taakbediening en import/export |
 | Email | Losse Rust-mailkern, native accountformulier, IMAP-mappen/berichtlijst, zoeken en tekstlezer; volledige MIME-bron met bijlagen openen als IFCX-dossier | OAuth en automatisch serverzoeken in de GUI, opstellen/verzenden, concepten, antwoorden, berichtacties, bijlagen opslaan en HTML-weergave |
@@ -90,6 +90,25 @@ de bestaande suite. Een opgehaalde MIME-bron opent als nieuw IFCX-dossier;
 **Opslaan** bewaart het dossier daadwerkelijk op schijf. HTML-weergave,
 opstellen/verzenden, OAuth-aanmelding in de GUI en de overige berichtacties
 zijn nog niet aangesloten. De netwerkproeven gebruiken lokale nepservers.
+
+## Spreadsheet: direct bewerken en navigeren
+
+Klik een cel aan en typ om haar inhoud te vervangen. Dubbelklik of F2 opent
+de bestaande inhoud in een editor op de cel. Enter bevestigt en gaat omlaag;
+Shift+Enter gaat omhoog. Tab en Shift+Tab bevestigen naar rechts en links.
+Escape verwerpt het concept. De formulebalk en de cel gebruiken dezelfde
+tekstinhoud. Herberekening en undo lopen door de documentwerkdraad.
+
+Pijltjestoetsen verplaatsen de enkele-celselectie. Buiten het huidige
+werkvenster verplaatst ook het zichtbare deel. Samengevoegde en verborgen
+rij-/kolombereiken worden overgeslagen zonder elke cel afzonderlijk te openen.
+Navigeren verandert geen bestandsbytes en maakt geen undo-stap.
+
+Een onvolledige formule wordt vóór wijziging geweigerd en blijft als concept
+in beeld. Een geldige formule met een rekenfout blijft toegestaan. Een cel met
+tekstopmaak of invoer met een voorafgaande apostrof blijft letterlijke tekst.
+Dit is geen volledige spreadsheetbediening: onder meer rasterkoppen,
+bereikselectie, bereikplakken, slepen en volledige bescherming staan nog open.
 
 ## Writer: pagina-indeling
 
@@ -174,14 +193,13 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
-Het [controlerapport voor alpha 12](docs/controle-2026-10-31-alpha12.md) beschrijft
-179 reguliere Rust-tests, zes aparte runtimeproeven en zeven Python-tests.
-Na de laatste letterstapcorrecties zijn alle 40 GUI-tests opnieuw geslaagd.
-De bestandsuitvoer is onafhankelijk teruggelezen; 34 native schermen zijn
+Het [controlerapport voor alpha 13](docs/controle-2026-10-31-alpha13.md) beschrijft
+187 reguliere Rust-tests, zes aparte runtimeproeven en zeven Python-tests.
+De bestandsuitvoer is onafhankelijk teruggelezen; 35 native schermen zijn
 vastgelegd. De nieuwe release- en platformronde zijn nog niet afgerond.
-De [alpha-11-platformronde](docs/controle-2026-10-31-alpha11.md) is volledig
-geslaagd: vijf CI-jobs groen, alle 691 bronbestanden bytegelijk op elk platform,
-66 exacte native beeldparen en zeven exacte paginabezoeken op alle drie
+De [alpha-12-platformronde](docs/controle-2026-10-31-alpha12.md) is volledig
+geslaagd: vijf CI-jobs groen, alle 718 bronbestanden bytegelijk op elk platform,
+68 exacte native beeldparen en zeven exacte paginabezoeken op alle drie
 platforms. De platformvergelijking bewijst geen gelijkheid met de bestaande
 interface. Eerdere rapporten blijven historische verslagen.
 

@@ -1821,3 +1821,6 @@ fn compacte_opmaakrij_bedient_doorhalen_uitvullen_en_letterstappen() {
         bron
     );
 }
+
+#[path = "tests/raster_proeven.rs"]
+mod raster_proeven;

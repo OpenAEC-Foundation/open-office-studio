@@ -163,3 +163,21 @@ assert p.runs[0].font.strike is True
 assert p.runs[0].font.size.pt == 11
 assert int(p.alignment) == 3
 print('Klembordtekst, cursieve resttekst, tabellen, secties, kop/voet, doorhalen, uitvullen en letterstappen onafhankelijk teruggelezen.')
+
+inline = load_workbook(map/'spreadsheet-inline.xlsx', data_only=False)
+s = inline['Begroting']
+assert s['B2'].value == 7
+assert s['D2'].value == '=B2*C2'
+assert s['D4'].value == '=SUM(D2:D3)'
+assert s['D4'].number_format == '0.00'
+assert s['A1'].font.bold
+assert inline['Tweede blad']['A1'].value == 'Bewaar ook dit blad'
+waarden = load_workbook(map/'spreadsheet-inline.xlsx', data_only=True)['Begroting']
+# B2=7 maal C2=12,5 geeft 87,5; plus B3=2 maal C3=15 geeft 117,5.
+assert waarden['D2'].value == 87.5
+assert waarden['D4'].value == 117.5
+syntaxis = load_workbook(map/'spreadsheet-formulesyntaxis.xlsx', data_only=False)['Begroting']
+assert syntaxis['A10'].value == '=1+' and syntaxis['A10'].data_type == 's'
+assert syntaxis['B10'].value == '=1+' and syntaxis['B10'].data_type == 's'
+assert syntaxis['B10'].number_format == '@'
+print('Directe celbewerking: bron, formules, herberekening en letterlijke formuletekst onafhankelijk goedgekeurd.')

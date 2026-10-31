@@ -50,3 +50,35 @@ impl cosmic_text::Fallback for Terugval {
         self.platform.script_fallback(script, locale)
     }
 }
+
+/// Laad uitsluitend de gebruikte letterbestanden in het UI-lettersysteem.
+/// Aanroepen vanuit de berichtafhandeling, voordat layout of tekenen een slot neemt.
+pub fn registreer_tekst(familie: &str, vet: bool, cursief: bool, tekst: &str) {
+    use unicode_script::{Script, UnicodeScript};
+    static GELADEN: std::sync::OnceLock<std::sync::Mutex<std::collections::HashSet<usize>>> =
+        std::sync::OnceLock::new();
+    let scripts: std::collections::BTreeSet<_> = tekst
+        .chars()
+        .filter_map(|c| match c.script() {
+            Script::Han => Some("han"),
+            Script::Hiragana | Script::Katakana => Some("japanese"),
+            Script::Hangul => Some("korean"),
+            Script::Arabic => Some("arabic"),
+            Script::Hebrew => Some("hebrew"),
+            _ => None,
+        })
+        .collect();
+    let scripts: Vec<_> = scripts.into_iter().map(serde_json::Value::from).collect();
+    let mut geladen = GELADEN
+        .get_or_init(Default::default)
+        .lock()
+        .expect("letterregistratie");
+    for f in office_core::lettertypen::keten(familie, vet, cursief, &scripts) {
+        if geladen.insert(f.bytes.as_ptr() as usize) {
+            font_system()
+                .write()
+                .expect("lettertypesysteem")
+                .load_font(std::borrow::Cow::Borrowed(f.bytes));
+        }
+    }
+}

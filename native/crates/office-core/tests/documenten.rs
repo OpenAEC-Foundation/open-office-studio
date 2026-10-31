@@ -95,6 +95,93 @@ fn spreadsheet_formules_bladen_en_herstel_na_ongeldige_formule() {
     assert_eq!(&png[..8], b"\x89PNG\r\n\x1a\n");
 }
 #[test]
+fn spreadsheet_formulesyntaxis_is_transactioneel_en_tekst_blijft_tekst() {
+    use office_core::opmaak::Opmaak;
+    let mut s = Sessie::open(
+        Module::Spreadsheet,
+        include_bytes!("fixtures/spreadsheet.xlsx").to_vec(),
+    )
+    .unwrap();
+    let origineel = s.bron();
+    for tekst in ["=", "=1+", "=SUM(", "=1 2"] {
+        let fout = s
+            .bewerk(
+                0,
+                Bewerking::Tekst {
+                    id: "B2".into(),
+                    tekst: tekst.into(),
+                },
+            )
+            .unwrap_err();
+        assert!(fout.to_string().contains("formule"));
+        assert!(
+            s.bron().as_slice() == origineel.as_slice(),
+            "Geweigerde formule veranderde de bron"
+        );
+        assert!(!s.kan_terug());
+    }
+    // Een berekeningsfout is geldige invoer en moet zichtbaar kunnen blijven.
+    s.bewerk(
+        0,
+        Bewerking::Tekst {
+            id: "A10".into(),
+            tekst: "=1/0".into(),
+        },
+    )
+    .unwrap();
+    assert_eq!(
+        s.weergave(0)
+            .unwrap()
+            .velden
+            .iter()
+            .find(|v| v.id == "A10")
+            .unwrap()
+            .tekst,
+        "=1/0"
+    );
+    s.terug().unwrap();
+    assert!(s.bron().as_slice() == origineel.as_slice());
+    s.bewerk(
+        0,
+        Bewerking::Tekst {
+            id: "A10".into(),
+            tekst: "'=1+".into(),
+        },
+    )
+    .unwrap();
+    s.bewerk(
+        0,
+        Bewerking::Opmaak {
+            id: "B10".into(),
+            begin: 0,
+            einde: 0,
+            stijl: Opmaak::Getal("@".into()),
+        },
+    )
+    .unwrap();
+    s.bewerk(
+        0,
+        Bewerking::Tekst {
+            id: "B10".into(),
+            tekst: "=1+".into(),
+        },
+    )
+    .unwrap();
+    bewaar("spreadsheet-formulesyntaxis.xlsx", &s.bron());
+    let Document::Spreadsheet(d) = Document::open(Module::Spreadsheet, &s.bron()).unwrap() else {
+        panic!()
+    };
+    for id in ["A10", "B10"] {
+        let cel = d
+            .cell(
+                betteroffice_xlsx::SheetId(0),
+                betteroffice_xlsx::CellRef::parse_a1(id).unwrap(),
+            )
+            .unwrap();
+        assert_eq!(cel.input, "'=1+");
+    }
+}
+#[test]
 fn presentatie_bewerken_renderen_en_opnieuw_openen() {
     let mut s = Sessie::open(
         Module::Presentation,

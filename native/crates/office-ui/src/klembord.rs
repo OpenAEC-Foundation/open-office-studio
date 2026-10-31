@@ -9,6 +9,7 @@ pub enum Actie {
 #[derive(Debug, Clone, PartialEq)]
 pub struct Doel {
     document: u64,
+    editerversie: u64,
     deel: usize,
     veld: String,
     bron_hash: String,
@@ -19,6 +20,7 @@ impl Doel {
     fn van_tab(t: &Tab) -> Option<Self> {
         Some(Self {
             document: t.id,
+            editerversie: t.editerversie,
             deel: t.deel,
             veld: t.veld()?.id.clone(),
             bron_hash: t.antwoord.as_ref()?.hash.clone(),
@@ -54,6 +56,29 @@ pub fn kan(app: &App, actie: Actie) -> bool {
 }
 pub fn voer_uit(app: &mut App, actie: Actie) -> Task<Msg> {
     if !kan(app, actie) {
+        return Task::none();
+    }
+    if matches!(actie, Actie::Plak)
+        && app
+            .tab()
+            .is_some_and(|t| t.raster.focus && !t.raster.bewerken && !t.concept)
+    {
+        let id = app
+            .tab()
+            .and_then(Tab::veld)
+            .map(|v| v.id.clone())
+            .unwrap_or_default();
+        let focus = raster_ui::update(
+            app,
+            raster_ui::Bericht::Begin {
+                id,
+                vervang: None,
+                alles: true,
+            },
+        );
+        if app.tab().is_some_and(|t| t.raster.bewerken) {
+            return Task::batch([focus, voer_uit(app, actie)]);
+        }
         return Task::none();
     }
     let t = app.tab().expect("actieve editor zojuist gecontroleerd");

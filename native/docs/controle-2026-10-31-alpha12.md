@@ -69,12 +69,32 @@ Presentation **560.034** en Notition **666.025** afwijkende pixels, telkens
 op 943.736 pixels. Geen maskers, herschaling of versoepeling. Ook het
 documentvlak en andere schermtoestanden vragen nog werk.
 
-De nieuwe release- en platformronde zijn nog niet afgerond. De
-[afgeronde alpha-11-ronde](controle-2026-10-31-alpha11.md) heeft alle vijf
-CI-jobs groen, alle 691 verpakte bronbestanden bytegelijk op elk platform,
-66 exacte native beeldparen en zeven exacte paginabezoeken op alle drie
-platforms. Dat platformbewijs betreft alpha 11. De brede corpusronde van
-alpha 11 heeft 579 geslaagde, 68 geweigerde bronnen en één time-out.
+De [alpha-12-platformronde](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41184367055)
+is afgerond: alle vijf jobs groen. De [pakket- en beeldcontrole](platformen-2026-10-31-alpha12.json)
+bevestigt **718 verpakte bronbestanden bytegelijk op elk platform**, de juiste
+programmaarchitecturen, bronregressie en **68 exacte native beeldparen**.
+Zeven bezoeken aan de eigen bron met zes pagina’s zijn op
+[Linux](paginameting-2026-10-31-alpha12-Linux.json),
+[Windows](paginameting-2026-10-31-alpha12-Windows.json) en
+[macOS](paginameting-2026-10-31-alpha12-macOS.json) exact gelijk tussen verse en
+behouden engines. De rapporten zijn aan de werkelijk verpakte controleur gekoppeld.
+Dit is geen fysieke platform- of installatieproef en bewijst geen gelijkheid
+met de bestaande interface.
+
+De lokale Linux-release is vanaf het vaste Git-archief van commit
+`7ac7af40c4cf94b2ef2002bfbdcab46658a66be0` gebouwd. Het uitgepakte pakket
+is op alle 718 bronbestanden, controlesommen, bronpinnen, licentieteksten en
+beide programmaversies gecontroleerd. De
+[vastgepinde bronregressie](bronregressie-2026-10-31-alpha12-release.json)
+slaagt ook met deze lokale release.
+
+De [brede corpusronde met de lokale alpha-12-release](corpus-2026-10-31-alpha12-release.json)
+heeft **579 geslaagde, 68 geweigerde bronnen en één time-out**, uit 648
+geselecteerde OOXML-bronnen. Eén proces, 30 seconden en 3 GiB adresruimte
+per bron; er draaiden andere controles mee. De drie grote bronnen slagen
+[afzonderlijk binnen 120 seconden](corpus-2026-10-31-alpha12-grote-bronnen.json).
+Dit is geen volledige inhouds-, stijl- of functiecontrole; de overige 918
+bestanden zijn hiermee niet native getest.
 
 Directe rijke paginainvoer, volledige ribbons, doorlopende spreadsheetbediening,
 presentatieobjecten, automatisch notitieherstel, volledige mailbediening,

@@ -248,6 +248,72 @@ fn rekenblad_samenvoeging_klikt_naar_ankercel() {
 }
 
 #[test]
+fn rekenblad_navigatie_slaat_samenvoegingen_en_verborgen_assen_over() {
+    use betteroffice_xlsx as x;
+    use office_core::rekenblad::{Richting::*, volgende_cel};
+    let Document::Spreadsheet(d) = Document::nieuw(Module::Spreadsheet).unwrap() else {
+        panic!()
+    };
+    let mut model = d.model().clone();
+    let mut blad = x::Sheet::new("Navigatie");
+    blad.merges.push(x::CellRange::parse_a1("B2:D3").unwrap());
+    blad.col_widths.insert(4, 0.);
+    blad.row_heights.insert(3, 0.);
+    model.sheets[0] = blad;
+    let d = x::Workbook::from_model(model.clone()).unwrap();
+    for (van, richting, naar) in [
+        ("B2", Rechts, "F2"),
+        ("F2", Links, "B2"),
+        ("B2", Onder, "B5"),
+        ("B5", Boven, "B2"),
+        ("C3", Rechts, "F2"),
+        ("B2", Links, "A2"),
+        ("B2", Boven, "B1"),
+        ("A1", Links, "A1"),
+        ("A1", Boven, "A1"),
+        ("XFD1048576", Rechts, "XFD1048576"),
+        ("XFD1048576", Onder, "XFD1048576"),
+    ] {
+        assert_eq!(volgende_cel(&d, 0, van, richting).unwrap(), naar);
+    }
+    // Een vrijwel geheel verborgen blad wordt in bereiken overgeslagen;
+    // geen miljoen afzonderlijke cel- of renderaanvragen per toets.
+    let mut blad = x::Sheet::new("Schaars");
+    blad.format.zero_height = true;
+    blad.row_heights.insert(0, 15.);
+    blad.row_heights.insert(999_999, 15.);
+    model.sheets[0] = blad;
+    let d = x::Workbook::from_model(model).unwrap();
+    assert_eq!(volgende_cel(&d, 0, "A1", Onder).unwrap(), "A1000000");
+    assert_eq!(volgende_cel(&d, 0, "A1000000", Boven).unwrap(), "A1");
+    assert_eq!(volgende_cel(&d, 0, "A1000000", Onder).unwrap(), "A1000000");
+}
+
+#[test]
+fn rekenblad_navigatie_verplaatst_het_venster_zonder_bestandswijziging() {
+    use office_core::rekenblad::Richting;
+    let mut s = Sessie::open(
+        Module::Spreadsheet,
+        include_bytes!("fixtures/spreadsheet.xlsx").to_vec(),
+    )
+    .unwrap();
+    let origineel = s.bron();
+    assert_eq!(
+        s.verplaats_cel(0, "L30", Richting::Rechts)
+            .unwrap()
+            .voorkeursveld
+            .as_deref(),
+        Some("M30")
+    );
+    let beeld = s.verplaats_cel(0, "M30", Richting::Onder).unwrap();
+    assert_eq!(beeld.voorkeursveld.as_deref(), Some("M31"));
+    assert!(beeld.pagina.vlakken.iter().any(|v| v.id == "M31"));
+    assert!(s.bron().as_slice() == origineel.as_slice());
+    assert!(!s.kan_terug());
+    assert!(!s.kan_vooruit());
+}
+
+#[test]
 fn writer_puntgrootte_wordt_als_halve_punten_opgeslagen() {
     let mut s = Sessie::open(
         Module::Writer,

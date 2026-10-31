@@ -20,6 +20,67 @@ pub enum Structuur {
     BladToevoegen(String),
     BladHernoemen(String),
 }
+#[derive(Debug, Clone, Copy)]
+pub enum Richting {
+    Links,
+    Rechts,
+    Boven,
+    Onder,
+}
+/// Eén zichtbare stap, voorbij de volledige samenvoeging en verborgen assen.
+pub fn volgende_cel(
+    d: &x::Workbook,
+    deel: usize,
+    adres: &str,
+    richting: Richting,
+) -> Resultaat<String> {
+    let cel = ankercel(d, deel, x::CellRef::parse_a1(adres).map_err(fout)?)?;
+    let blad = x::SheetId(deel as u32);
+    let samen = d
+        .merged_ranges(blad, x::CellRange::new(cel, cel))
+        .map_err(fout)?
+        .into_iter()
+        .next()
+        .unwrap_or(x::CellRange::new(cel, cel));
+    let (verticaal, vooruit, index, grens) = match richting {
+        Richting::Links => (false, false, samen.start.col.checked_sub(1), x::MAX_COLS),
+        Richting::Rechts => (false, true, samen.end.col.checked_add(1), x::MAX_COLS),
+        Richting::Boven => (true, false, samen.start.row.checked_sub(1), x::MAX_ROWS),
+        Richting::Onder => (true, true, samen.end.row.checked_add(1), x::MAX_ROWS),
+    };
+    let Some(mut index) = index.filter(|i| *i < grens) else {
+        return Ok(cel.to_a1());
+    };
+    let sheet = d.sheet(blad).map_err(fout)?;
+    let verborgen = if verticaal {
+        sheet
+            .hidden_row_spans(0..=grens - 1)
+            .take_while(|(begin, _)| *begin <= index)
+            .find(|(_, einde)| index <= *einde)
+    } else {
+        sheet
+            .hidden_col_spans(0..=grens - 1)
+            .take_while(|(begin, _)| *begin <= index)
+            .find(|(_, einde)| index <= *einde)
+    };
+    if let Some((begin, einde)) = verborgen {
+        let doel = if vooruit {
+            einde.checked_add(1)
+        } else {
+            begin.checked_sub(1)
+        };
+        let Some(doel) = doel.filter(|i| *i < grens) else {
+            return Ok(cel.to_a1());
+        };
+        index = doel;
+    }
+    let doel = if verticaal {
+        x::CellRef::new(index, cel.col)
+    } else {
+        x::CellRef::new(cel.row, index)
+    };
+    Ok(ankercel(d, deel, doel)?.to_a1())
+}
 pub fn bereik(adres: &str) -> Resultaat<x::CellRange> {
     let r = x::CellRange::parse_a1(&adres.trim().to_ascii_uppercase()).map_err(fout)?;
     if r.start.row > r.end.row
@@ -42,6 +103,30 @@ pub fn ankercel(d: &x::Workbook, deel: usize, cel: x::CellRef) -> Resultaat<x::C
             .map(|m| m.start)
             .unwrap_or(cel),
     )
+}
+/// Dezelfde grammatica als de rekenkern, vóór enige wijziging van de werkmap.
+/// Een geldige formule met een rekenfout blijft toegestaan. Tekstcellen en
+/// invoer met een apostrof worden door de engine als letterlijke tekst bewaard.
+pub fn controleer_invoer(
+    d: &x::Workbook,
+    deel: usize,
+    cel: x::CellRef,
+    tekst: &str,
+) -> Resultaat<()> {
+    let Some(formule) = tekst.strip_prefix('=') else {
+        return Ok(());
+    };
+    let opmaak = d
+        .selection_formatting(x::SheetId(deel as u32), x::CellRange::new(cel, cel))
+        .map_err(fout)?;
+    if opmaak.number_format == Some(x::NumberFormatKind::PlainText)
+        || opmaak.number_format_pattern.as_deref() == Some("@")
+    {
+        return Ok(());
+    }
+    xlsx_calc::parse_formula(formule)
+        .map(|_| ())
+        .map_err(|e| fout(format!("Onvolledige of ongeldige formule: {e}")))
 }
 fn veld(d: &x::Workbook, sheet: x::SheetId, cel: x::CellRef) -> Resultaat<Veld> {
     let inhoud = d.cell(sheet, cel).map_err(fout)?;

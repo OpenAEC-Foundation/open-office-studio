@@ -19,6 +19,7 @@ pub enum Opdracht {
     Open(Module, Vec<u8>),
     Deel(usize),
     Cel(usize, String),
+    VerplaatsCel(usize, String, office_core::rekenblad::Richting),
     Bewerk(usize, Bewerking),
     Terug,
     Vooruit,
@@ -77,6 +78,7 @@ impl Werker {
                                 *deel = n;
                             }
                             Opdracht::Cel(n,adres) => {beeld=Some(sessie.naar_cel(n,&adres).map_err(|e|e.to_string())?);*deel=n;}
+                            Opdracht::VerplaatsCel(n,adres,richting) => {beeld=Some(sessie.verplaats_cel(n,&adres,richting).map_err(|e|e.to_string())?);*deel=n;}
                             Opdracht::Bewerk(n, b) => {
                                 let b=sessie.bewerk_met_weergave(n,b).map_err(|e|e.to_string())?;*deel=n.min(b.onderdelen.len().saturating_sub(1));beeld=Some(b);
                             }

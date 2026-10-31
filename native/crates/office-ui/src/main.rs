@@ -9,6 +9,7 @@ mod lint;
 mod mail_ui;
 mod notitie_ui;
 mod pagina_ui;
+mod raster_ui;
 mod sleepvak;
 mod stijl;
 mod werker;
@@ -79,6 +80,7 @@ enum Msg {
     Adres(String),
     GaNaar,
     Raak(String),
+    Raster(raster_ui::Bericht),
     Opmaak(Opmaak),
     Structuur(Structuur),
     Pagina(office_core::writer_pagina::PaginaActie),
@@ -147,6 +149,8 @@ struct Tab {
     deel: usize,
     gekozen: usize,
     editor: text_editor::Content,
+    editerversie: u64,
+    raster: raster_ui::Staat,
     concept: bool,
     adres: String,
     doel_cel: Option<String>,
@@ -178,6 +182,8 @@ impl Tab {
             deel: 0,
             gekozen: 0,
             editor: text_editor::Content::new(),
+            editerversie: 0,
+            raster: raster_ui::Staat::default(),
             concept: false,
             adres: "A1".into(),
             doel_cel: None,
@@ -239,6 +245,8 @@ impl Tab {
     fn toon_veld(&mut self, n: usize) {
         if let Some(veld) = self.antwoord.as_ref().and_then(|a| a.beeld.velden.get(n)) {
             self.gekozen = n;
+            self.editerversie = self.editerversie.wrapping_add(1);
+            self.raster.bewerken = false;
             self.editor = text_editor::Content::with_text(&veld.tekst);
             self.adres = veld.id.clone();
             self.concept = false;
@@ -671,6 +679,9 @@ impl App {
             Msg::Gereed(id, resultaat) => {
                 let mut vervolg = None;
                 let mut fout = false;
+                let mut raster_focus = false;
+                let mut raster_richting = None;
+                let actief_id = self.tab().map(|t| t.id);
                 if let Some(tab) = self.tabs.iter_mut().find(|t| t.id == id) {
                     tab.bezig = false;
                     match resultaat {
@@ -706,7 +717,17 @@ impl App {
                                     .len()
                                     .saturating_sub(1),
                             );
-                            let bereik = tab.doel_cel.take().unwrap_or_else(|| tab.adres.clone());
+                            raster_focus = tab.raster.focus && actief_id == Some(id);
+                            let richting = tab.raster.na_richting.take();
+                            if raster_focus {
+                                raster_richting = richting;
+                            }
+                            let bereik = tab
+                                .raster
+                                .na_bewerking
+                                .take()
+                                .or_else(|| tab.doel_cel.take())
+                                .unwrap_or_else(|| tab.adres.clone());
                             let doel = tab
                                 .antwoord
                                 .as_ref()
@@ -732,7 +753,9 @@ impl App {
                                             .saturating_sub(1),
                                     ),
                                 );
+                            let grid_focus = tab.raster.focus;
                             tab.toon_veld(keuze);
+                            tab.raster.focus = grid_focus;
                             if bereik.contains(':')
                                 && tab.antwoord.as_ref().unwrap().beeld.module
                                     == Module::Spreadsheet
@@ -744,6 +767,8 @@ impl App {
                         Err(e) => {
                             self.melding = e;
                             tab.na_bewerking = None;
+                            tab.raster.na_bewerking = None;
+                            tab.raster.na_richting = None;
                             tab.canvas_voorbeeld = None;
                             fout = true;
                         }
@@ -754,6 +779,14 @@ impl App {
                 }
                 if let Some(als) = vervolg {
                     return self.update(Msg::Opslaan(id, als));
+                }
+                if let Some(richting) = raster_richting
+                    && raster_ui::beschikbaar(self)
+                {
+                    return self.update(Msg::Raster(raster_ui::Bericht::Verplaats(richting)));
+                }
+                if raster_focus && !fout && raster_ui::beschikbaar(self) {
+                    return iced::widget::operation::focus(raster_ui::RASTER_ID);
                 }
             }
             Msg::Selecteer(n) => {
@@ -791,6 +824,7 @@ impl App {
                     t.adres = a;
                 }
             }
+            Msg::Raster(bericht) => return raster_ui::update(self, bericht),
             Msg::Raak(id) => {
                 if let Some(n) = self
                     .tab()
@@ -883,7 +917,11 @@ impl App {
                     && t.veld().is_some_and(|v| v.bewerkbaar)
                 {
                     t.editor = text_editor::Content::with_text(&tekst);
+                    t.editerversie = t.editerversie.wrapping_add(1);
+                    t.raster.bewerken = false;
+                    t.raster.focus = false;
                     t.concept = true;
+                    raster_ui::registreer_letters(t);
                 }
             }
             Msg::Dia(actie) => {
@@ -1049,6 +1087,11 @@ impl App {
                     let selectie = !bewerkt && !matches!(actie, text_editor::Action::Scroll { .. });
                     t.editor.perform(actie);
                     t.concept |= bewerkt;
+                    if t.raster.bewerken {
+                        raster_ui::registreer_letters(t);
+                    } else {
+                        t.raster.focus = false;
+                    }
                     if selectie {
                         t.werk_opmaak_bij();
                     }
@@ -2028,29 +2071,31 @@ impl App {
                         .width((pagina.breedte * t.zoom).max(1.))
                         .height((pagina.hoogte * t.zoom).max(1.))
                         .content_fit(iced::ContentFit::Fill);
-                    container(
-                        container(documentblad::blad(
+                    let blad = if a.beeld.module == Module::Spreadsheet {
+                        raster_ui::blad(self, t, inhoud.into())
+                    } else {
+                        documentblad::blad(
                             inhoud,
                             pagina,
                             t.veld().map(|v| v.id.as_str()),
                             c.accent,
                             Msg::Raak,
-                        ))
-                        .style(|_| container::Style {
-                            background: Some(iced::Color::WHITE.into()),
-                            border: iced::Border {
-                                color: iced::Color::from_rgb8(231, 229, 228),
-                                width: 1.,
-                                radius: 0.into(),
-                            },
-                            shadow: iced::Shadow {
-                                color: iced::Color::from_rgba8(0, 0, 0, 0.06),
-                                offset: iced::Vector::new(0., 1.),
-                                blur_radius: 4.,
-                            },
-                            ..Default::default()
-                        }),
-                    )
+                        )
+                    };
+                    container(container(blad).style(|_| container::Style {
+                        background: Some(iced::Color::WHITE.into()),
+                        border: iced::Border {
+                            color: iced::Color::from_rgb8(231, 229, 228),
+                            width: 1.,
+                            radius: 0.into(),
+                        },
+                        shadow: iced::Shadow {
+                            color: iced::Color::from_rgba8(0, 0, 0, 0.06),
+                            offset: iced::Vector::new(0., 1.),
+                            blur_radius: 4.,
+                        },
+                        ..Default::default()
+                    }))
                     .padding(iced::Padding {
                         top: if a.beeld.module == Module::Writer {
                             lineaal::BOVENRUIMTE

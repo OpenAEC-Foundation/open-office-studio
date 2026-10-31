@@ -268,6 +268,7 @@ impl Document {
                     deel,
                     xlsx::CellRef::parse_a1(&id).map_err(fout)?,
                 )?;
+                crate::rekenblad::controleer_invoer(d, deel, adres, &tekst)?;
                 d.edit_cell(
                     xlsx::SheetId(deel as u32),
                     adres,
@@ -581,6 +582,24 @@ impl Sessie {
                 self.beelden.borrow_mut().clear();
                 Err(e)
             }
+        }
+    }
+    pub fn verplaats_cel(
+        &mut self,
+        deel: usize,
+        adres: &str,
+        richting: crate::rekenblad::Richting,
+    ) -> Resultaat<Weergave> {
+        let Document::Spreadsheet(d) = &self.document else {
+            return Err(fout("Celnavigatie hoort bij een rekenblad"));
+        };
+        let doel = crate::rekenblad::volgende_cel(d, deel, adres, richting)?;
+        let mut beeld = self.weergave(deel)?;
+        if beeld.pagina.vlakken.iter().any(|v| v.id == doel) {
+            beeld.voorkeursveld = Some(doel);
+            Ok(beeld)
+        } else {
+            self.naar_cel(deel, &doel)
         }
     }
     pub fn markdown(&self) -> Resultaat<String> {

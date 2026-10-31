@@ -159,7 +159,7 @@ jobs:
           pattern: native-*
           path: native/target/platformartefacten
       - name: Bronbytes, architecturen en volledige native beelden vergelijken
-        run: python native/scripts/controleer-platformen.py --artefacten native/target/platformartefacten --uitvoer native/target/platformvergelijking/rapport.json --verwachte-schermen 34
+        run: python native/scripts/controleer-platformen.py --artefacten native/target/platformartefacten --uitvoer native/target/platformvergelijking/rapport.json --verwachte-schermen 35
       - uses: actions/upload-artifact@v4
         if: always()
         with:
