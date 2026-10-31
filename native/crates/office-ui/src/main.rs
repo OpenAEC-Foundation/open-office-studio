@@ -2279,6 +2279,7 @@ impl App {
                     let bewerkbaar = veld.is_some_and(|v| v.bewerkbaar) && !t.bezig;
                     editor = editor.push(openaec_ui::design::a11y::named(
                         text_editor(&t.editor)
+                            .key_binding(klembord::toets)
                             .on_action(Msg::Invoer)
                             .height(190)
                             .padding(12),

@@ -166,6 +166,7 @@ pub fn weergave<'a>(app: &'a App, t: &'a Tab, a: &'a Antwoord) -> Element<'a, Ms
     let editor = |hoogte| {
         openaec_ui::design::a11y::named(
             text_editor(&t.editor)
+                .key_binding(klembord::toets)
                 .on_action(Msg::Invoer)
                 .font(iced::Font {
                     weight: if t.veld().is_some_and(|v| v.opmaak.vet) {

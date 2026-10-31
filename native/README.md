@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.16**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.17**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -77,7 +77,10 @@ invoer op de pagina en invoegopmaak voor lege alinea's zijn nog niet overgezet.
 Het compacte lint heeft nu tekstklembordknoppen en letterstappen. Kopiëren,
 Knippen en Plakken gebruiken uitsluitend platte tekst in de actieve editor;
 rijke inhoud en celbereiken zijn nog niet overgezet. Vertraagde plakantwoorden
-mogen geen gewijzigd doel bewerken. **Bestand** bevat export, Markdown en IFCX;
+mogen geen gewijzigd doel bewerken. Ook snel opeenvolgende selectie- en
+klembordtoetsen worden in de volgorde van de applicatieberichten verwerkt;
+knippen mag geen tekst verwijderen voordat de selectie is gekopieerd.
+**Bestand** bevat export, Markdown en IFCX;
 zoom en panelen staan voor de drie documentmodules onder **Weergave**.
 
 ![Zichtbaar klembordconcept vóór toepassen](docs/screenshots/writer-klembord-concept.png)
@@ -221,14 +224,16 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
-Het [controlerapport voor alpha 14](docs/controle-2026-10-31-alpha14.md) beschrijft
-189 reguliere Rust-tests, zes aparte runtimeproeven en zeven Python-tests.
-De laatste 46 GUI-tests zijn ook afzonderlijk opnieuw geslaagd.
-De bestandsuitvoer is onafhankelijk teruggelezen; 37 native schermen zijn
-vastgelegd. De nieuwe release- en platformronde zijn nog niet afgerond.
-De [alpha-13-platformronde](docs/controle-2026-10-31-alpha13.md) is volledig
-geslaagd: vijf CI-jobs groen, alle 741 bronbestanden bytegelijk op elk platform,
-70 exacte native beeldparen en zeven exacte paginabezoeken op alle drie
+Het [controlerapport voor alpha 17](docs/controle-2026-10-31-alpha17.md) beschrijft
+207 reguliere Rust-tests, inclusief 53 GUI-tests, zes aparte runtimeproeven en
+zeven Python-tests. De bestandsuitvoer is onafhankelijk teruggelezen en 37
+native schermen zijn vastgelegd. Gerichte proeven vergelijken nu ook herhaalde
+gedeeltelijke hertekeningen met verse volledige beelden. Dat vond fouten die
+de oorspronkelijke losse screenshots niet controleerden.
+De alpha-17-release- en platformronde zijn nog niet afgerond.
+De [alpha-16-platformronde](docs/platformen-2026-10-31-alpha16.json) is volledig
+geslaagd: vijf CI-jobs groen, alle 821 bronbestanden bytegelijk op elk platform,
+74 exacte native beeldparen en zeven exacte paginabezoeken op alle drie
 platforms. De platformvergelijking bewijst geen gelijkheid met de bestaande
 interface. Eerdere rapporten blijven historische verslagen.
 
@@ -283,11 +288,13 @@ uitvoer vermeldt expliciet of die grens geldt. Een weigering, tijdslimiet of
 afwijking geeft geen volledig geslaagde ronde. De debugtijden zijn geen bewijs
 voor prestaties van de releasebuild.
 
-De [laatste afgeronde brede releasecorpusronde, alpha 12](docs/corpus-2026-10-31-alpha12-release.json)
-bevat 648 geselecteerde bronnen: 579 geslaagd, 68 geweigerd en één time-out.
-De bron met 177 pagina's overschrijdt de grens van 30 seconden. Alle drie
-[grote bronnen slagen afzonderlijk](docs/corpus-2026-10-31-alpha12-grote-bronnen.json)
-met 120 seconden en één proces. De kop-/voettekstweigering uit alpha 7 is
+De [laatste afgeronde brede releasecorpusronde, alpha 16](docs/corpus-2026-10-31-alpha16-release.json)
+bevat 648 geselecteerde bronnen: 580 geslaagd, 68 geweigerd en geen time-outs,
+met één proces, 30 seconden per bron en 3 GiB adresruimte. De geweigerde
+bron-ID's zijn gelijk aan alpha 12. Alle drie
+[grote bronnen slagen afzonderlijk](docs/corpus-2026-10-31-alpha16-grote-bronnen.json)
+met 120 seconden en één proces. De looptijden zijn door verschillende
+bouwbelasting geen onderlinge snelheidsvergelijking. De kop-/voettekstweigering uit alpha 7 is
 hersteld en wordt apart als vaste bronregressie gecontroleerd. De andere 918
 manifestbronnen vallen buiten deze native ronde. Dit is geen volledige
 inhouds-, stijl- of functiecontrole.
@@ -310,6 +317,11 @@ glyph-terugvalregistratie; de bron en wijziging staan in `vendor/pptx-bron.json`
 aanvullende symboolfont. De bronbestanden blijven ongewijzigd. De spreadsheetrasterizer heeft een beperkte
 fontaansluiting, vastgelegd in `vendor/xlsx-raster-bron.json`; de oorspronkelijke
 goldenbeelden en standaardaanroep blijven behouden.
+De software-renderer heeft twee afgebakende upstreamcorrecties voor schaduw-
+en editorafkapping, plus één correctie voor identieke quad-randpixels bij
+hertekenen. De oorspronkelijke bron, MIT-licentie en wijzigingen staan in
+`vendor/iced-tiny-skia-bron.json`. De [hertekenproeven](docs/hertekenen-2026-10-31-alpha17.json)
+vergelijken steeds volledige buffers zonder kleurtolerantie.
 De layoutadapter volgt het openbare
 native-viewer-voorbeeld van openooxml/betteroffice; de bronverwijzing staat in
 `crates/office-core/src/writer_beeld.rs`.
@@ -342,15 +354,15 @@ Een afzonderlijke Chromium-testbrowser heeft inmiddels een oorspronkelijke
 navigatie gepauzeerd om de knipperfase vast te leggen; meldingen zijn via hun
 sluitknoppen gesloten. De opname is niet geschaald, uitgelijnd of nabewerkt.
 Twee opeenvolgende referentieopnamen zijn pixelgelijk. De
-[alpha-16-vergelijking](docs/pixelcontrole-alpha16/writer/rapport.json)
-met de native Writer meet **120.587 afwijkende pixels van 943.736**.
+[alpha-17-vergelijking](docs/pixelcontrole-alpha17/writer/rapport.json)
+met de native Writer meet **107.809 afwijkende pixels van 943.736**.
 Deze ene vastgelegde toestand bewijst dus expliciet dat de UI nog niet gelijk is.
 De [herkomst](docs/referentie-2026-W44.8/writer.json) vermeldt bron-, bundel- en
 beeldhashes, browser, viewport, thema en taal. Ook voor
 [Spreadsheet](docs/referentie-2026-W44.8/spreadsheet.png),
 [Presentation](docs/referentie-2026-W44.8/presentation.png) en
 [Notition](docs/referentie-2026-W44.8/notition.png) zijn nu vaste PNG-referenties
-vastgelegd. De [vier alpha-16-vergelijkingen](docs/pixelcontrole-alpha16/rapport.json)
+vastgelegd. De [vier alpha-17-vergelijkingen](docs/pixelcontrole-alpha17/rapport.json)
 falen; indeling, panelen en overige schermtoestanden blijven over te zetten.
 De browser- en nativevenstertoestanden zijn vastgelegd. Een vergelijking in
 dezelfde desktopvenstertoestand staat nog open.

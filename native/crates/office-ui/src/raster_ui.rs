@@ -248,7 +248,7 @@ pub fn blad<'a>(app: &'a App, t: &'a Tab, inhoud: Element<'a, Msg>) -> Element<'
                             Richting::Rechts
                         }),
                     ))),
-                    _ => text_editor::Binding::from_key_press(k),
+                    _ => klembord::toets(k),
                 }
             })
             .style(move |_, _| text_editor::Style {

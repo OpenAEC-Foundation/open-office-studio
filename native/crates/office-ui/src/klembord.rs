@@ -121,3 +121,16 @@ pub fn plak(app: &mut App, doel: Doel, tekst: Option<String>) -> Task<Msg> {
         text_editor::Edit::Paste(std::sync::Arc::new(tekst)),
     )))
 }
+
+/// De editor publiceert selectiewijzigingen als berichten. Laat het klembord
+/// daarom in dezelfde berichtenreeks volgen, in plaats van de oude selectie
+/// al tijdens de widgetgebeurtenis uit te lezen. Dit geldt ook voor Knippen.
+pub fn toets(k: text_editor::KeyPress) -> Option<text_editor::Binding<Msg>> {
+    use text_editor::Binding as B;
+    Some(match B::from_key_press(k)? {
+        B::Copy => B::Custom(Msg::Klembord(Actie::Kopieer)),
+        B::Cut => B::Custom(Msg::Klembord(Actie::Knip)),
+        B::Paste => B::Custom(Msg::Klembord(Actie::Plak)),
+        anders => anders,
+    })
+}

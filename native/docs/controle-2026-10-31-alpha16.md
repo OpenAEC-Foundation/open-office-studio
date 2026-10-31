@@ -71,10 +71,23 @@ Presentation **560.034** en Notition **666.021** afwijkende pixels op elk
 943.736 pixels. Geen maskers, herschaling of nieuwe referentiebeelden.
 Dit zijn geen voltooiingspercentages.
 
-De laatste volledig geslaagde [platformronde betreft alpha 14](platformen-2026-10-31-alpha14.json).
-De lokale alpha-15-releasebuild loopt vanaf een afzonderlijk Git-archief.
-Alpha 16 heeft nog een eigen release- en platformronde nodig. Geen bewijs van
-een eerdere versie wordt aan deze versie toegeschreven.
+De [alpha-16-platformronde](platformen-2026-10-31-alpha16.json) is volledig
+geslaagd: vijf CI-jobs groen, 821 verpakte bronbestanden bytegelijk per platform,
+74 exacte native beeldparen en zeven exacte paginabezoeken per platform tussen
+verse en behouden sessies. Het Linux-CI-pakket is ook lokaal volledig
+gecontroleerd tegen het vaste Git-archief.
+
+De afzonderlijke lokale alpha-15- en alpha-16-releasebuilds, pakketcontroles
+en bronregressies zijn inmiddels afgerond. Beide binaries zijn telkens vóór
+de volgende releasebuild onveranderlijk vastgezet. Dat bewijst geen gelijke
+binaire hashes tussen verschillende bouwmachines.
+
+De [echte Linux-vensterproef](vensterproef-2026-10-31-alpha16/LEESMIJ.md)
+controleert eigen tekstinvoer, opmaakbehoud, systeemklembord, bewaren en undo.
+De aansluitende visuele Bestand-controle keurt de ronde af wegens grijze
+tekenresten bij gedeeltelijk hertekenen. De oorspronkelijke volledige
+CI-beelden misten dit; de afzonderlijke rendererproeven van alpha 17 vullen
+deze controle aan. De bronproef en onbewerkte foutbeelden blijven bewaard.
 
 Directe rijke Writer-invoer, volledige ribbons, rastervirtualisatie en
 bereikbediening, presentatieobjecten, automatisch notitieherstel, complete

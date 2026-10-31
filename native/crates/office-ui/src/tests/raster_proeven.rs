@@ -31,11 +31,15 @@ struct Proef {
 impl Proef {
     fn nieuw() -> Self {
         lettertypen();
+        Self::met_app(app_met_werkdraad(
+            Module::Spreadsheet,
+            include_bytes!("../../../office-core/tests/fixtures/spreadsheet.xlsx"),
+        ))
+    }
+    fn met_app(app: App) -> Self {
+        lettertypen();
         Self {
-            app: app_met_werkdraad(
-                Module::Spreadsheet,
-                include_bytes!("../../../office-core/tests/fixtures/spreadsheet.xlsx"),
-            ),
+            app,
             boom: Tree::empty(),
             renderer: iced_tiny_skia::Renderer::new(
                 ui_instellingen().default_font,
@@ -647,4 +651,215 @@ fn raster_foute_formule_blijft_concept_en_muiswissel_past_een_geldige_cel_toe() 
         "De bron wijkt af van het oorspronkelijke bestand"
     );
     assert!(!p.app.tab().unwrap().concept);
+}
+
+#[test]
+fn snelle_selectie_gevolgd_door_kopieren_en_knippen_bewaart_de_juiste_tekst() {
+    use iced::keyboard as k;
+    let mut uitkomsten = Vec::new();
+    for raster in [false, true] {
+        for toets in ["c", "x"] {
+            let mut p = if raster {
+                let mut p = Proef::nieuw();
+                p.cel("B2", true);
+                p
+            } else {
+                Proef::met_app(app_met_werkdraad(
+                    Module::Writer,
+                    include_bytes!("../../../office-core/tests/fixtures/writer-structuur.docx"),
+                ))
+            };
+            let oorspronkelijk = p.app.tab().unwrap().editor.text();
+            let bron = p.app.tab().unwrap().antwoord.as_ref().unwrap().bron.clone();
+            if !raster {
+                let b = p
+                    .toegankelijkheid()
+                    .nodes
+                    .into_iter()
+                    .find(|n| n.node.name == "Tekst van geselecteerd veld")
+                    .unwrap()
+                    .bounds;
+                p.muis = iced::Point::new(b.x + 20., b.y + 20.);
+                p.gebeurtenis(iced::Event::Mouse(iced::mouse::Event::ButtonPressed(
+                    iced::mouse::Button::Left,
+                )));
+                p.gebeurtenis(iced::Event::Mouse(iced::mouse::Event::ButtonReleased(
+                    iced::mouse::Button::Left,
+                )));
+            }
+            let key = |s: &str| {
+                iced::Event::Keyboard(k::Event::KeyPressed {
+                    key: k::Key::Character(s.into()),
+                    modified_key: k::Key::Character(s.into()),
+                    physical_key: k::key::Physical::Unidentified(k::key::NativeCode::Unidentified),
+                    location: k::Location::Standard,
+                    modifiers: k::Modifiers::COMMAND,
+                    text: None,
+                    repeat: false,
+                })
+            };
+            // Beide toetsen kunnen vóór de volgende GUI-update worden ontvangen.
+            // Selecteren publiceert een actie; kopiëren mag de oude selectie niet lezen.
+            p.gebeurtenissen([key("a"), key(toets)]);
+            assert_eq!(
+                p.app
+                    .tab()
+                    .unwrap()
+                    .antwoord
+                    .as_ref()
+                    .unwrap()
+                    .bron
+                    .as_slice(),
+                bron.as_slice()
+            );
+            uitkomsten.push((
+                toets.to_owned(),
+                p.klembord.tekst,
+                p.app.tab().unwrap().editor.text(),
+                oorspronkelijk,
+            ));
+        }
+    }
+    for (toets, klembord, editor, bron) in uitkomsten {
+        assert_eq!(
+            klembord.as_deref(),
+            Some(bron.as_str()),
+            "Ctrl+A gevolgd door Ctrl+{toets} verliest de geselecteerde tekst"
+        );
+        assert_eq!(editor, if toets == "x" { "" } else { bron.as_str() });
+    }
+}
+
+#[test]
+fn beschermde_widget_knipt_niet_en_mag_de_selectie_wel_kopieren() {
+    use iced::keyboard as k;
+    let mut p = Proef::met_app(app_met_werkdraad(
+        Module::Writer,
+        include_bytes!("../../../office-core/tests/fixtures/writer-beveiligd.docx"),
+    ));
+    let voor = p.app.tab().unwrap().editor.text();
+    assert!(!voor.is_empty());
+    let bron = p.app.tab().unwrap().antwoord.as_ref().unwrap().bron.clone();
+    let b = p
+        .toegankelijkheid()
+        .nodes
+        .into_iter()
+        .find(|n| n.node.name == "Tekst van geselecteerd veld")
+        .unwrap()
+        .bounds;
+    p.muis = iced::Point::new(b.x + 20., b.y + 20.);
+    p.gebeurtenis(iced::Event::Mouse(iced::mouse::Event::ButtonPressed(
+        iced::mouse::Button::Left,
+    )));
+    p.gebeurtenis(iced::Event::Mouse(iced::mouse::Event::ButtonReleased(
+        iced::mouse::Button::Left,
+    )));
+    p.klembord.tekst = Some("Eigen vorig klembord".into());
+    p.toets(k::Key::Character("a".into()), k::Modifiers::COMMAND, None);
+    p.toets(k::Key::Character("x".into()), k::Modifiers::COMMAND, None);
+    assert_eq!(p.klembord.tekst.as_deref(), Some("Eigen vorig klembord"));
+    assert_eq!(p.app.tab().unwrap().editor.text(), voor);
+    assert!(!p.app.tab().unwrap().concept);
+    p.toets(k::Key::Character("c".into()), k::Modifiers::COMMAND, None);
+    assert_eq!(p.klembord.tekst.as_deref(), Some(voor.as_str()));
+    assert_eq!(
+        p.app
+            .tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .bron
+            .as_slice(),
+        bron.as_slice()
+    );
+}
+
+#[test]
+fn echte_writer_en_bestand_deelhertekeningen_zijn_gelijk_aan_verse_hele_beelden() {
+    let mut p = Proef::met_app(app_met_werkdraad(
+        Module::Writer,
+        include_bytes!("../../../office-core/tests/fixtures/writer-structuur.docx"),
+    ));
+    let volledig = p.verbeeld();
+    let oude_lagen = p.renderer.layers().to_vec();
+    let mut deel = volledig.clone();
+    for px in deel.data_mut().as_chunks_mut::<4>().0 {
+        px.swap(0, 2);
+    }
+    let mut masker = tiny_skia::Mask::new(1440, 900).unwrap();
+    let viewport = iced_tiny_skia::graphics::Viewport::with_physical_size(Size::new(1440, 900), 1.);
+    // Ongewijzigde inhoud: ook na meerdere kleine werkvlak-/editorupdates
+    // moet ieder bestaand pixel behouden blijven.
+    for _ in 0..3 {
+        for gebied in [
+            iced::Rectangle::new(iced::Point::new(1190., 290.), Size::new(8., 18.)),
+            iced::Rectangle::new(iced::Point::new(450., 350.), Size::new(20., 20.)),
+        ] {
+            p.renderer.draw(
+                &mut deel.as_mut(),
+                &mut masker,
+                &viewport,
+                &[gebied],
+                iced::Color::WHITE,
+            );
+        }
+    }
+    let mut writer_deel = deel.clone();
+    for px in writer_deel.data_mut().as_chunks_mut::<4>().0 {
+        px.swap(0, 2);
+    }
+    let tel = |a: &tiny_skia::Pixmap, b: &tiny_skia::Pixmap| {
+        a.data()
+            .as_chunks::<4>()
+            .0
+            .iter()
+            .zip(b.data().as_chunks::<4>().0.iter())
+            .filter(|(a, b)| a != b)
+            .count()
+    };
+    let writer_verschil = tel(&volledig, &writer_deel);
+    p.bericht(Msg::Bestand(true));
+    let bestand_vol = p.verbeeld();
+    let nieuwe_lagen = p.renderer.layers().to_vec();
+    // Dezelfde damage-berekening als de echte compositor, zonder normalisatie.
+    let schade = iced_tiny_skia::graphics::damage::diff(
+        &oude_lagen,
+        &nieuwe_lagen,
+        |l| vec![l.bounds],
+        iced_tiny_skia::Layer::damage,
+    );
+    let schade = iced_tiny_skia::graphics::damage::group(
+        schade,
+        iced::Rectangle::with_size(Size::new(1440., 900.)),
+    );
+    p.renderer.draw(
+        &mut deel.as_mut(),
+        &mut masker,
+        &viewport,
+        &schade,
+        iced::Color::WHITE,
+    );
+    for px in deel.data_mut().as_chunks_mut::<4>().0 {
+        px.swap(0, 2);
+    }
+    let bestand_verschil = tel(&bestand_vol, &deel);
+    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
+        let map = PathBuf::from(map);
+        std::fs::create_dir_all(&map).unwrap();
+        for (naam, png) in [
+            ("writer-vol", &volledig),
+            ("writer-deel", &writer_deel),
+            ("bestand-vol", &bestand_vol),
+            ("bestand-deel", &deel),
+        ] {
+            png.save_png(map.join(format!("hertekenen-{naam}.png")))
+                .unwrap();
+        }
+    }
+    assert_eq!(
+        (writer_verschil, bestand_verschil),
+        (0, 0),
+        "Gedeeltelijke native hertekening laat andere pixels achter"
+    );
 }

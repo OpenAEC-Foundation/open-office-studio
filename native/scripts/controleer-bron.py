@@ -65,3 +65,18 @@ werkelijk = {p.relative_to(rastermap).as_posix(): hashlib.sha256(p.read_bytes())
              for p in rastermap.rglob('*') if p.is_file()}
 assert werkelijk == verwacht, 'Rasterbron of oorspronkelijke PNG-bronbeelden wijken af van de vastgelegde bron'
 print(f"Spreadsheetraster: {len(werkelijk)} bronbestanden en {len(raster['aanpassingen'])} vastgelegde aansluitingen geverifieerd.")
+
+# De software-renderer behoudt de gepubliceerde bron met twee upstreamfixes.
+renderermap = root/'vendor/iced-tiny-skia'
+renderer = json.loads((root/'vendor/iced-tiny-skia-bron.json').read_text(encoding='utf-8'))
+verwacht = dict(renderer['oorspronkelijke_bestanden'])
+for naam, wijziging in renderer['aanpassingen'].items():
+    assert naam in verwacht, f'Onbekende rendereraanpassing: {naam}'
+    verwacht[naam] = wijziging['sha256']
+for naam, aanvulling in renderer['aanvullingen'].items():
+    assert naam not in verwacht, f'Dubbel rendererbestand: {naam}'
+    verwacht[naam] = aanvulling['sha256']
+werkelijk = {p.relative_to(renderermap).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
+             for p in renderermap.rglob('*') if p.is_file()}
+assert werkelijk == verwacht, 'Software-renderer wijkt af van de vastgelegde bron en upstreamcorrecties'
+print(f"Software-renderer: {len(werkelijk)} bronbestanden, twee upstreamcorrecties en consistente quad-afkapping geverifieerd.")

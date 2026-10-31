@@ -1931,3 +1931,6 @@ fn writer_invoer_graphemen_selectie_regels_en_tabs_volgen_de_werkelijke_editor()
         bron
     );
 }
+
+#[path = "tests/schaduw_proeven.rs"]
+mod schaduw_proeven;
