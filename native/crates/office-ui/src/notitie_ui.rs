@@ -229,7 +229,22 @@ pub fn weergave<'a>(app: &'a App, t: &'a Tab, a: &'a Antwoord) -> Element<'a, Ms
                 .unwrap_or(vak.grens);
             breedte = breedte.max(g.x + g.breedte + 80.);
             hoogte = hoogte.max(g.y + g.hoogte + 80.);
-            let mut inhoud = column![w::mono_label(l, "⠿  TEKSTVAK")].spacing(5);
+            // Bedieningssymbolen zijn vectoren, zodat systeembackupfonts de
+            // vorm en maat op een ander besturingssysteem niet veranderen.
+            // De gedeelde SVG-helper verwacht een ondoorzichtige kleur.
+            // Meng de tekstkleur vooraf met de kaart, zodat de greep even
+            // gedempt blijft als het bijbehorende label, in ieder thema.
+            let greep = openaec_ui::design::mix(c.text_muted, c.text_muted.a, c.panel);
+            let hoek = openaec_ui::design::mix(c.text_secondary, c.text_secondary.a, c.panel);
+            let mut inhoud = column![
+                row![
+                    w::glyph(include_str!("../assets/sleepgreep.svg"), 10., greep, greep),
+                    w::mono_label(l, "TEKSTVAK")
+                ]
+                .spacing(8)
+                .align_y(iced::Alignment::Center)
+            ]
+            .spacing(5);
             for &n in &vak.velden {
                 let veld = &a.beeld.velden[n];
                 if n == t.gekozen && t.notitie_invoer {
@@ -294,7 +309,7 @@ pub fn weergave<'a>(app: &'a App, t: &'a Tab, a: &'a Antwoord) -> Element<'a, Ms
                             .then_some(Msg::Notitie(A::VerwijderVak(vak.index)))
                     ),
                     Space::new().width(Length::Fill),
-                    w::secondary(l, "◢")
+                    w::glyph(include_str!("../assets/formaatgreep.svg"), 12., hoek, hoek)
                 ]
                 .spacing(4),
             );

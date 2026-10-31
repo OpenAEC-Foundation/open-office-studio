@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.5**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.6**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -37,12 +37,12 @@ valt buiten de standaardtestmatrix.
 |---|---|---|
 | Venster | OpenAEC-ribbon, documenttabbladen, vijf thema’s, sneltoetsen, Bestand, openen/opslaan/opslaan als, sluitvragen | Herstelkopieën, recente bestanden, afgesplitste vensters, updater, vertalingen |
 | Writer | Native paginering, klikbare alinea’s, linialen, zoom, tekstbereikopmaak en uitlijning, splitsen bij de editorcursor en samenvoegen van aangrenzende alinea’s, woorden inclusief tabellen, Markdown-export | Directe rich-text-cursor op de pagina, volledige pagina- en alineabediening, velden/links/revisies bewerken, volledige ribbon, tabellen invoegen, spelling en afdrukken |
-| Spreadsheet | Klikbare cellen, formulebalk, verplaatsbaar werkvenster via celadres/bereik, bereikopmaak, rijen/kolommen invoegen/verwijderen, samenvoegen/splitsen, herberekenen en bladen wisselen | Doorlopend raster met volledige toetsenbord- en sleepbediening, zoeken, sorteren/filteren, klembordbereiken, CSV en grafieken |
+| Spreadsheet | Klikbare cellen, formulebalk, verplaatsbaar werkvenster via celadres/bereik, bereikopmaak, rijen/kolommen invoegen/verwijderen, samenvoegen/splitsen, herberekenen en bladen wisselen | Doorlopend raster met volledige toetsenbord- en sleepbediening, zoeken, sorteren/filteren, klembordbereiken, CSV-import en grafieken |
 | Presentation | Native diaweergave, niet-geroteerde tekstvakken aanklikken, tekstbereikopmaak, dia’s toevoegen/verwijderen, tekstvakken invoegen, sprekersnotities bewerken | Directe cursor en vormbediening, geroteerde/gegroepeerde objecten, volledige ribbon en presentatiemodus |
 | Notition | Versies 1–3 openen, boeken/secties/pagina’s toevoegen, vrij canvas met tekstvakken slepen/vergroten, Markdown-preview, bloktekst en vet/cursief, prullenbak herstellen; onbekende bronvelden behouden | Automatische lokale opslag/herstel, zoeken, boeken/secties hernoemen/verplaatsen, volledige blok- en taakbediening en import/export |
 | Email | Losse Rust-mailkern, native accountformulier, IMAP-mappen/berichtlijst, zoeken en tekstlezer; volledige MIME-bron met bijlagen openen als IFCX-dossier | OAuth en automatisch serverzoeken in de GUI, opstellen/verzenden, concepten, antwoorden, berichtacties, bijlagen opslaan en HTML-weergave |
 | Database | Bestaande aparte app blijft beschikbaar | Native database-interface; laagste prioriteit |
-| Formaten | DOCX, XLSX, PPTX, notitie-JSON, EML, IFCX-bewaarprofiel | Overige import/export en conversie aansluiten |
+| Formaten | DOCX, XLSX, PPTX, notitie-JSON, EML, IFCX-bewaarprofiel; aparte conversie-export voor 34 doelkeuzes, waaronder PDF/PDF-A, ODF en oudere formaten | Overige import, afdrukken en conversie-instellingen aansluiten |
 
 De native versie heeft dus nog **geen functiepariteit** met de bestaande suite.
 Een uitgebreide documentweergave betekent niet dat elke zichtbare eigenschap al
@@ -68,6 +68,36 @@ de bestaande suite. Een opgehaalde MIME-bron opent als nieuw IFCX-dossier;
 **Opslaan** bewaart het dossier daadwerkelijk op schijf. HTML-weergave,
 opstellen/verzenden, OAuth-aanmelding in de GUI en de overige berichtacties
 zijn nog niet aangesloten. De netwerkproeven gebruiken lokale nepservers.
+
+## Conversie-export
+
+**Bestand → Exporteren** maakt voor Writer, Spreadsheet en Presentation een
+apart bestand vanuit de vastgelegde documentbron. De dialoog biedt respectievelijk
+13, 12 en 9 doelkeuzes. CSV ondersteunt scheidingsteken, codering en bladnummer;
+TSV gebruikt altijd een tab. PDF ondersteunt paginabereik, bladwijzers en
+PDF/A-1b, -2b of -3b. De export verandert de opslagstatus van het document niet
+en weigert het oorspronkelijke bestand als exportdoel.
+
+Hiervoor is een geïnstalleerde kantoorruntime nodig; die wordt automatisch
+gezocht en zit niet in het draagbare pakket. De afzonderlijke Rust-kern gebruikt
+hetzelfde afgeschermde profiel als de bestaande suite: macro-uitvoering uit,
+externe koppelingen niet verversen en een tijdelijk profiel per opdracht.
+De PDF-layout komt van die runtime en kan afwijken van de native paginering.
+Dit is geen bewijs van foutloze conversie voor willekeurige documenten of
+van een inhoudelijk volledige PDF/A-validatie. De overige importformaten zijn
+nog niet met de native interface verbonden.
+
+![Native exportdialoog](docs/screenshots/export-pdf.png)
+
+De daadwerkelijke runtimeproeven staan apart omdat zij een geïnstalleerd
+conversieprogramma vereisen. De Linux-CI heeft hiervoor een eigen bouwtaak.
+
+```sh
+OFFICE_TEST_UIT=/tmp/native-conversie \
+  cargo test --manifest-path native/Cargo.toml -p office-conversie --locked -- --include-ignored --test-threads=1
+cargo test --manifest-path native/Cargo.toml -p open-office-studio-native --locked \
+  native_export_via_interface_en_werkdraad -- --include-ignored
+```
 
 ## Bewaring en snelheid
 
@@ -96,14 +126,14 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
-Het [controlerapport voor alpha 5](docs/controle-2026-10-31-alpha5.md) beschrijft
-de 124 lokaal geslaagde Rust-tests, veldcorrecties, native mail en de grenzen
-van de actuele controle. De eerdere
+Het [controlerapport voor alpha 6](docs/controle-2026-10-31-alpha6.md) beschrijft
+de 142 reguliere Rust-tests en zes expliciete runtimeproeven, conversie-export
+en de grenzen van de actuele controle. De eerdere
 rapporten blijven historische verslagen.
 
 ```sh
 python3 native/scripts/controleer-bron.py
-cargo fmt --manifest-path native/Cargo.toml -p office-core -p open-office-studio-native -p office-mail --check
+cargo fmt --manifest-path native/Cargo.toml -p office-core -p open-office-studio-native -p office-mail -p office-conversie --check
 cargo clippy --manifest-path native/Cargo.toml --workspace --all-targets -- -D warnings
 OFFICE_TEST_UITVOER=/tmp/native-rondgang OFFICE_TEST_SCHERMEN=/tmp/native-schermen \
   cargo test --manifest-path native/Cargo.toml --workspace --locked

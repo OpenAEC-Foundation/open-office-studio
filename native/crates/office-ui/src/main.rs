@@ -1,6 +1,7 @@
 #![cfg_attr(all(windows, not(debug_assertions)), windows_subsystem = "windows")]
 //! Volledig native venster: geen browser, React, JavaScript of Tauri-runtime.
 mod documentblad;
+mod export_ui;
 mod lineaal;
 mod lint;
 mod mail_ui;
@@ -54,6 +55,10 @@ fn icoon(i: Icon) -> &'static str {
 }
 #[derive(Debug, Clone)]
 enum Msg {
+    ExportMenu,
+    Export(export_ui::Bericht),
+    ExportPad(export_ui::Plan, Option<PathBuf>),
+    ExportVoltooid(Result<PathBuf, String>),
     Postvak(bool),
     Mail(mail_ui::BerichtUi),
     Nieuw(Module),
@@ -207,6 +212,8 @@ impl Tab {
     }
 }
 struct App {
+    exportblad: Option<export_ui::Exportblad>,
+    export_bezig: bool,
     postvak: mail_ui::Postvak,
     postvak_zichtbaar: bool,
     tabs: Vec<Tab>,
@@ -225,9 +232,12 @@ struct App {
 }
 impl Default for App {
     fn default() -> Self {
+        office_conversie::taal::zet("nl");
         let pad = display::settings_path("open-office-studio-native");
         let display = pad.as_ref().map(|p| Display::load(p)).unwrap_or_default();
         Self {
+            exportblad: None,
+            export_bezig: false,
             postvak: mail_ui::Postvak::default(),
             postvak_zichtbaar: false,
             tabs: vec![],
@@ -271,6 +281,10 @@ impl App {
         })
     }
     fn verder_sluiten(&mut self) -> Task<Msg> {
+        if self.export_bezig {
+            self.venster_sluiten = false;
+            return self.waarschuwing("Wacht tot de export gereed is");
+        }
         if self.postvak.bezig {
             self.venster_sluiten = false;
             return self.waarschuwing("Wacht tot de mailtaak gereed is");
@@ -293,6 +307,31 @@ impl App {
         }
     }
     fn update(&mut self, msg: Msg) -> Task<Msg> {
+        if self.exportblad.is_some()
+            && !matches!(
+                msg,
+                Msg::Export(_)
+                    | Msg::Toets(_)
+                    | Msg::Navigeer(_)
+                    | Msg::SluitVenster
+                    | Msg::VensterGrootte(_)
+                    | Msg::Sleep
+                    | Msg::Minimaliseer
+                    | Msg::Maximaliseer
+                    | Msg::Gereed(..)
+                    | Msg::Gelezen(..)
+                    | Msg::Geschreven(..)
+                    | Msg::Doel(..)
+                    | Msg::Mail(mail_ui::BerichtUi::Gereed(_))
+                    | Msg::ExportVoltooid(_)
+                    | Msg::ExportPad(..)
+                    | Msg::ExportKlaar(_)
+                    | Msg::MarkdownKlaar(_)
+                    | Msg::MarkdownDoel(..)
+            )
+        {
+            return Task::none();
+        }
         if self.postvak.sluitvraag
             && !matches!(
                 msg,
@@ -305,6 +344,8 @@ impl App {
                     | Msg::Gelezen(..)
                     | Msg::Geschreven(..)
                     | Msg::ExportKlaar(..)
+                    | Msg::ExportVoltooid(..)
+                    | Msg::ExportPad(..)
                     | Msg::MarkdownKlaar(..)
                     | Msg::MarkdownDoel(..)
                     | Msg::Doel(..)
@@ -326,12 +367,79 @@ impl App {
                     | Msg::VensterGrootte(..)
                     | Msg::Gereed(..)
                     | Msg::Opslaan(..)
+                    | Msg::ExportVoltooid(..)
+                    | Msg::ExportPad(..)
                     | Msg::Mail(mail_ui::BerichtUi::Gereed(_))
             )
         {
             return Task::none();
         }
         match msg {
+            Msg::ExportMenu => {
+                if self.export_bezig {
+                    return self.waarschuwing("Er loopt al een export");
+                }
+                let Some(t) = self.tab() else {
+                    return Task::none();
+                };
+                match export_ui::Exportblad::nieuw(t) {
+                    Ok(b) => {
+                        self.exportblad = Some(b);
+                        self.bestand = false;
+                        self.instellingen = false;
+                    }
+                    Err(e) => self.melding = e,
+                }
+            }
+            Msg::Export(export_ui::Bericht::Annuleer) => self.exportblad = None,
+            Msg::Export(export_ui::Bericht::Opslaan) => {
+                let Some(b) = &self.exportblad else {
+                    return Task::none();
+                };
+                let plan = match b.plan() {
+                    Ok(p) => p,
+                    Err(e) => return self.waarschuwing(&e),
+                };
+                self.exportblad = None;
+                self.export_bezig = true;
+                let terug = plan.clone();
+                return Task::perform(
+                    async move {
+                        rfd::AsyncFileDialog::new()
+                            .set_file_name(&plan.naam)
+                            .add_filter(&plan.formaat.naam, &[plan.formaat.extensie.as_str()])
+                            .save_file()
+                            .await
+                            .map(|f| f.path().to_path_buf())
+                    },
+                    move |p| Msg::ExportPad(terug.clone(), p),
+                );
+            }
+            Msg::Export(m) => {
+                if let Some(b) = &mut self.exportblad {
+                    b.update(m);
+                }
+            }
+            Msg::ExportPad(plan, Some(pad)) => {
+                self.melding = "Document exporteren…".into();
+                return Task::perform(werker::achtergrond(move || plan.schrijf(pad)), |r| {
+                    Msg::ExportVoltooid(r.and_then(|r| r))
+                });
+            }
+            Msg::ExportPad(_, None) => {
+                self.export_bezig = false;
+                self.melding = "Export geannuleerd".into();
+            }
+            Msg::ExportVoltooid(r) => {
+                self.export_bezig = false;
+                self.melding = match r {
+                    Ok(p) => format!(
+                        "Export opgeslagen: {}",
+                        p.file_name().unwrap_or_default().to_string_lossy()
+                    ),
+                    Err(e) => e,
+                };
+            }
             Msg::Postvak(zichtbaar) => {
                 self.postvak_zichtbaar = zichtbaar;
                 self.bestand = false;
@@ -976,6 +1084,7 @@ impl App {
                 }
             }
             Msg::SluitVenster => {
+                self.exportblad = None;
                 self.instellingen = false;
                 self.venster_sluiten = true;
                 return self.verder_sluiten();
@@ -1073,6 +1182,12 @@ impl App {
             }
             Msg::Toets(k) => {
                 use iced::keyboard::{Key, key::Named};
+                if self.exportblad.is_some() {
+                    if k.key == Key::Named(Named::Escape) {
+                        self.exportblad = None;
+                    }
+                    return Task::none();
+                }
                 if self.postvak_zichtbaar {
                     // Documentopdrachten mogen het verborgen werkblad niet
                     // veranderen. Terug bewaart het accountformulier in geheugen.
@@ -1309,7 +1424,7 @@ impl App {
             )
         ]
         .height(Length::Fill);
-        let modaal = self.sluiten.is_some() || self.instellingen;
+        let modaal = self.sluiten.is_some() || self.instellingen || self.exportblad.is_some();
         let mut lagen = vec![focus::inert(
             container(scherm).style(move |_| container::Style {
                 background: Some(c.frame.into()),
@@ -1317,6 +1432,9 @@ impl App {
             }),
             modaal,
         )];
+        if let Some(b) = &self.exportblad {
+            lagen.push(w::overlay(look, b.view(look).map(Msg::Export)));
+        }
         if self.sluiten.is_some() {
             let naam = self
                 .sluiten
@@ -1575,6 +1693,23 @@ impl App {
             None,
             Some(Msg::Postvak(true)),
         ));
+        if self.tab().is_some_and(|t| {
+            t.antwoord.as_ref().is_some_and(|a| {
+                matches!(
+                    a.beeld.module,
+                    Module::Writer | Module::Spreadsheet | Module::Presentation
+                )
+            })
+        }) {
+            acties = acties.push(w::button(
+                l,
+                "Exporteren…",
+                K::Secondary,
+                D::Regular,
+                Some(icoon(Icon::Export)),
+                (!self.export_bezig).then_some(Msg::ExportMenu),
+            ));
+        }
         if let Some(t) = self.tab() {
             acties = acties.push(w::button(
                 l,

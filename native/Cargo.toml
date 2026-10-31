@@ -1,11 +1,11 @@
 [workspace]
-members = ["crates/office-core", "crates/office-ui", "crates/office-mail"]
+members = ["crates/office-core", "crates/office-ui", "crates/office-mail", "crates/office-conversie"]
 default-members = ["crates/office-ui"]
 exclude = ["vendor/openaec-ui", "vendor/docx-parse"]
 resolver = "3"
 
 [workspace.package]
-version = "2026.44.9-alpha.5"
+version = "2026.44.9-alpha.6"
 edition = "2024"
 license = "Apache-2.0"
 publish = false

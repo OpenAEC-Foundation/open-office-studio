@@ -9,6 +9,32 @@ on:
 permissions:
   contents: read
 jobs:
+  conversie-runtime:
+    name: Conversie met geïnstalleerde kantoorruntime
+    runs-on: ubuntu-24.04
+    env:
+      CARGO_BUILD_JOBS: 2
+      OFFICE_TEST_UIT: ${{ github.workspace }}/native/target/conversie-runtime
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Kantoorruntime installeren
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libreoffice-writer libreoffice-calc libreoffice-impress
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            native/target
+          key: conversie-runtime-${{ runner.os }}-${{ hashFiles('native/Cargo.lock') }}
+          restore-keys: conversie-runtime-${{ runner.os }}-
+      - name: Ook de daadwerkelijke conversies uitvoeren
+        run: cargo test --manifest-path native/Cargo.toml -p office-conversie --locked -- --include-ignored --test-threads=1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-conversie-runtime
+          path: native/target/conversie-runtime/
+          if-no-files-found: warn
   native:
     strategy:
       fail-fast: false
@@ -41,7 +67,7 @@ jobs:
           restore-keys: native-${{ runner.os }}-
       - run: python native/scripts/controleer-bron.py
       - run: python native/scripts/controleer-migratie.py
-      - run: cargo fmt --manifest-path native/Cargo.toml -p office-core -p open-office-studio-native -p office-mail --check
+      - run: cargo fmt --manifest-path native/Cargo.toml -p office-core -p open-office-studio-native -p office-mail -p office-conversie --check
       - run: cargo clippy --manifest-path native/Cargo.toml --workspace --locked --all-targets -- -D warnings
       - run: cargo test --manifest-path native/Cargo.toml --workspace --locked
       - name: Native uitvoer onafhankelijk teruglezen

@@ -317,12 +317,34 @@ pub fn ribbon(app: &App) -> Option<Element<'_, Msg>> {
         groepen.push(w::ribbon_group(
             l,
             "Exporteren",
+            vec![
+                w::ribbon_large(
+                    l,
+                    icoon(Icon::Export),
+                    "Exporteren",
+                    false,
+                    (!t.bezig && !t.concept && !app.export_bezig).then_some(Msg::ExportMenu),
+                ),
+                w::ribbon_large(
+                    l,
+                    icoon(Icon::Export),
+                    "Markdown",
+                    false,
+                    (!t.bezig).then_some(Msg::Markdown),
+                ),
+            ],
+        ));
+    }
+    if module != Module::Writer {
+        groepen.push(w::ribbon_group(
+            l,
+            "Exporteren",
             vec![w::ribbon_large(
                 l,
                 icoon(Icon::Export),
-                "Markdown",
+                "Exporteren",
                 false,
-                (!t.bezig).then_some(Msg::Markdown),
+                (!t.bezig && !t.concept && !app.export_bezig).then_some(Msg::ExportMenu),
             )],
         ));
     }

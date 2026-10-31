@@ -214,7 +214,7 @@ fn huidige_writer_referentie_renderen_op_browserformaat() {
         .unwrap();
 }
 
-fn app_met_document(module: Module, bytes: &[u8]) -> App {
+pub(super) fn app_met_document(module: Module, bytes: &[u8]) -> App {
     let mut app = App {
         thema: ThemeId::Light,
         ..App::default()
@@ -800,4 +800,98 @@ fn documentwerkdraad_opent_diepe_velden_zonder_de_vensterdraad_te_gebruiken() {
     assert_eq!(antwoord.beeld.velden[0].tekst, "Diep resultaat café 🏠");
     assert!(!antwoord.bron.is_empty());
     werker.sluit(1);
+}
+
+#[test]
+fn exportdialoog_blokkeert_verborgen_acties_en_wijzigt_geen_opslagstatus() {
+    let mut app = app_met_document(
+        Module::Writer,
+        include_bytes!("../../office-core/tests/fixtures/writer.docx"),
+    );
+    let opgeslagen = app.tab().unwrap().opgeslagen.clone();
+    let _ = app.update(Msg::ExportMenu);
+    assert!(app.exportblad.is_some());
+    let _ = app.update(Msg::Nieuw(Module::Writer));
+    assert_eq!(app.tabs.len(), 1);
+    assert!(toegankelijkheid(&app).unnamed.is_empty());
+    let png = render(&app);
+    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        std::fs::create_dir_all(&map).unwrap();
+        png.save_png(PathBuf::from(map).join("export-pdf.png"))
+            .unwrap();
+    }
+    let _ = app.update(Msg::Export(export_ui::Bericht::Annuleer));
+    assert!(app.exportblad.is_none());
+    app.export_bezig = true;
+    let _ = app.update(Msg::SluitVenster);
+    assert!(!app.venster_sluiten);
+    app.sluiten = Some(1);
+    let _ = app.update(Msg::ExportVoltooid(Err("Proeffout".into())));
+    assert!(!app.export_bezig);
+    assert_eq!(app.sluiten, Some(1));
+    assert_eq!(app.tab().unwrap().opgeslagen, opgeslagen);
+}
+
+#[test]
+#[ignore = "Vereist een geïnstalleerde kantoorruntime"]
+fn native_export_via_interface_en_werkdraad_slaat_pdf_en_csv_op_zonder_documentopslag() {
+    let uniek = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap()
+        .as_nanos();
+    let map = std::env::temp_dir().join(format!(
+        "office-export-proef-{}-{uniek}",
+        std::process::id()
+    ));
+    std::fs::create_dir(&map).unwrap();
+    for module in [Module::Writer, Module::Spreadsheet] {
+        let bytes = if module == Module::Writer {
+            include_bytes!("../../office-core/tests/fixtures/writer.docx").as_slice()
+        } else {
+            include_bytes!("../../office-core/tests/fixtures/spreadsheet.xlsx").as_slice()
+        };
+        let mut app = app_met_document(module, bytes);
+        let bron = app.tab().unwrap().antwoord.as_ref().unwrap().bron.clone();
+        let opgeslagen = app.tab().unwrap().opgeslagen.clone();
+        let _ = app.update(Msg::ExportMenu);
+        if module == Module::Spreadsheet {
+            let csv = office_conversie::conversie::exportformaten("xlsx")
+                .into_iter()
+                .find(|f| f.extensie == "csv")
+                .unwrap();
+            for m in [
+                export_ui::Bericht::Formaat(csv),
+                export_ui::Bericht::Scheiding("Komma"),
+                export_ui::Bericht::Codering("UTF-8 met BOM"),
+            ] {
+                let _ = app.update(Msg::Export(m));
+            }
+        }
+        let plan = app.exportblad.as_ref().unwrap().plan().unwrap();
+        let pad = map.join(&plan.naam);
+        app.exportblad = None;
+        app.export_bezig = true;
+        voer_interface_uit(&mut app, Msg::ExportPad(plan, Some(pad.clone())));
+        let uit = std::fs::read(pad).unwrap();
+        if module == Module::Writer {
+            assert!(uit.starts_with(b"%PDF-"));
+        } else {
+            assert!(uit.starts_with(&[0xef, 0xbb, 0xbf]));
+            let tekst = String::from_utf8(uit).unwrap();
+            let kop: Vec<_> = tekst
+                .trim_start_matches('\u{feff}')
+                .lines()
+                .next()
+                .unwrap()
+                .split(',')
+                .map(|s| s.trim_matches('"'))
+                .collect();
+            assert_eq!(kop, ["Omschrijving", "Aantal", "Prijs", "Totaal"]);
+        }
+        assert!(!app.export_bezig);
+        assert!(app.melding.starts_with("Export opgeslagen:"));
+        assert_eq!(*app.tab().unwrap().antwoord.as_ref().unwrap().bron, *bron);
+        assert_eq!(app.tab().unwrap().opgeslagen, opgeslagen);
+    }
+    std::fs::remove_dir_all(map).unwrap();
 }
