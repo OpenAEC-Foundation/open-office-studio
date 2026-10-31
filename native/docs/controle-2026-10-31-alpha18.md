@@ -70,8 +70,23 @@ niet bewijzen. De oorspronkelijke bytes en geschiedenis blijven intact.
 - [Dertien gedeelde documentbeelden](documentbeelden-2026-10-31-alpha18.json) blijven bytegelijk aan alpha 17; de acht spreadsheetletterbeelden blijven afzonderlijk gecontroleerd.
 
 Dit zijn echte widget- en werkdraadgebeurtenissen met een eigen testklembord
-en synthetische IME-Commit. De alpha-18-release- en platformronde, de echte
-zoekvensterproef en fysieke platformbediening zijn nog niet afgerond.
+en synthetische IME-Commit. De [echte Linux-releasevensterproef](vensterproef-2026-10-31-alpha18-release/LEESMIJ.md)
+slaagt op twaalf gerichte stappen, inclusief zoeken, echt systeemklembord,
+Unicode-vervanging, runopmaak en exacte bronherstelling. Dit keurt fysieke
+platformbediening of andere modules niet goed.
+
+De lokale alpha-18-release uit vast Git-archief is na 46 minuten en 21 seconden
+afgerond. Beide binaries zijn met versie en SHA-256 vóór de volgende release
+onveranderlijk vastgezet; pakketcontrole en de [echte bronregressie](bronregressie-2026-10-31-alpha18-lokaal.json)
+slagen. De oorspronkelijke CI-ronde `41210659697` heeft drie geslaagde
+platformbuilds en een geslaagde runtimecontrole. Alleen de laatste vergelijking
+faalt op een verouderde verwachting van 37 schermen; het nieuwe zoekpaneel
+maakt er 38. De telling is in een afzonderlijke commit aangepast; de
+[herhaalde platformvergelijking](platformen-2026-10-31-alpha18.json) is geheel groen:
+vijf CI-jobs, 911 bytegelijke bronbestanden per platform en 76 volledige native
+beeldparen met nul verschil. Alle [21 paginabezoeken](paginametingen-2026-10-31-alpha18.json)
+blijven gelijk aan verse berekeningen met dezelfde releasecontroleur. De geteste
+mergebron is bytegelijk aan de PR-bron voor de verpakte native onderdelen.
 
 De [alpha-17-platformronde](platformen-2026-10-31-alpha17.json) is geheel groen:
 vijf CI-jobs, 877 bytegelijke bronbestanden per platform, 74 exacte native

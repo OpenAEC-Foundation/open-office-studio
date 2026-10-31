@@ -274,6 +274,7 @@ pub(super) fn app_met_document(module: Module, bytes: &[u8]) -> App {
         .as_ref()
         .map(|b| image::Handle::from_bytes(b.clone()));
     tab.antwoord = Some(Antwoord {
+        deel: 0,
         beeld,
         hash: sessie.bron_hash().into(),
         bron: sessie.bron(),
@@ -312,7 +313,7 @@ fn voer_interface_uit(app: &mut App, msg: Msg) {
         }
     }
 }
-fn app_met_werkdraad(module: Module, bytes: &[u8]) -> App {
+pub(super) fn app_met_werkdraad(module: Module, bytes: &[u8]) -> App {
     let mut app = App::default();
     let antwoord = iced::futures::executor::block_on(
         app.werker

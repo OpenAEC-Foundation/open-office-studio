@@ -36,6 +36,8 @@ pub struct Zoekpaneel {
     vervangen: bool,
     treffers: Vec<Treffer>,
     gekozen: usize,
+    nav_bezig: bool,
+    nav_wacht: Option<NavigatieDoel>,
     na_vervanging: Option<(String, usize, usize)>,
     fout: String,
 }
@@ -55,6 +57,8 @@ impl Zoekpaneel {
             vervangen,
             treffers: vec![],
             gekozen: 0,
+            nav_bezig: false,
+            nav_wacht: None,
             na_vervanging: None,
             fout: String::new(),
         }
@@ -467,6 +471,27 @@ fn positie(tekst: &str, n: usize) -> iced::advanced::text::editor::Position {
     }
     iced::advanced::text::editor::Position { line, column }
 }
+#[derive(Debug, Clone)]
+pub struct NavigatieDoel {
+    paneel: u64,
+    generatie: u64,
+    document: u64,
+    hash: String,
+    editerversie: u64,
+    cursor: iced::advanced::text::editor::Cursor,
+    scroll: iced::Point,
+    treffer: Treffer,
+}
+fn selecteer(t: &mut Tab, v: &Treffer) {
+    t.toon_veld(v.veld);
+    t.panelen = true;
+    let tekst = t.editor.text();
+    t.editor.move_to(iced::advanced::text::editor::Cursor {
+        position: positie(&tekst, v.einde),
+        selection: Some(positie(&tekst, v.begin)),
+    });
+    t.werk_opmaak_bij();
+}
 fn kies(app: &mut App, n: usize, focus: bool) -> Task<Msg> {
     let Some(t) = tab_gereed(app) else {
         return app.waarschuwing("Pas de huidige invoer eerst toe");
@@ -481,21 +506,98 @@ fn kies(app: &mut App, n: usize, focus: bool) -> Task<Msg> {
     let Some(v) = z.treffers.get(n).cloned() else {
         return Task::none();
     };
+    let (paneel, generatie, hash) = (z.id, z.generatie, a.hash.clone());
+    let t = app.tab_mut().unwrap();
+    selecteer(t, &v);
+    let doel = NavigatieDoel {
+        paneel,
+        generatie,
+        document: t.id,
+        hash,
+        editerversie: t.editerversie,
+        cursor: t.editor.cursor(),
+        scroll: t.scroll,
+        treffer: v,
+    };
     let z = app.zoeken.as_mut().unwrap();
     z.gekozen = n;
-    let t = app.tab_mut().unwrap();
-    t.toon_veld(v.veld);
-    t.panelen = true;
-    let tekst = t.editor.text();
-    t.editor.move_to(iced::advanced::text::editor::Cursor {
-        position: positie(&tekst, v.einde),
-        selection: Some(positie(&tekst, v.begin)),
-    });
-    t.werk_opmaak_bij();
+    z.nav_wacht = Some(doel);
+    let nav = start_navigatie(app);
+    // De alinea-editor is onmiddellijk bruikbaar. Een achtergrondaanvraag
+    // mag nieuwe invoer niet blokkeren of achteraf haar selectie overnemen.
     if focus {
-        iced::widget::operation::focus("document-tekst-editor")
+        Task::batch([nav, iced::widget::operation::focus("document-tekst-editor")])
     } else {
-        Task::none()
+        nav
+    }
+}
+fn geldig(app: &App, d: &NavigatieDoel) -> bool {
+    tab_gereed(app).is_some_and(|t| {
+        t.id == d.document
+            && t.editerversie == d.editerversie
+            && t.editor.cursor() == d.cursor
+            && t.scroll == d.scroll
+            && t.antwoord.as_ref().is_some_and(|a| a.hash == d.hash)
+    }) && app
+        .zoeken
+        .as_ref()
+        .is_some_and(|z| z.id == d.paneel && z.generatie == d.generatie && z.document == d.document)
+}
+fn start_navigatie(app: &mut App) -> Task<Msg> {
+    let Some(z) = app.zoeken.as_mut() else {
+        return Task::none();
+    };
+    if z.nav_bezig {
+        return Task::none();
+    }
+    let Some(d) = z.nav_wacht.take() else {
+        return Task::none();
+    };
+    if !geldig(app, &d) {
+        return Task::none();
+    }
+    app.zoeken.as_mut().unwrap().nav_bezig = true;
+    let opdracht = Opdracht::NaarTekst {
+        id: d.treffer.id.clone(),
+        hash: d.hash.clone(),
+        begin: d.treffer.begin,
+        einde: d.treffer.einde,
+    };
+    Task::perform(
+        app.werker.clone().voer_uit(d.document, opdracht),
+        move |r| Msg::ZoekNavigatie(d.clone(), r),
+    )
+}
+pub fn navigatie_gereed(app: &mut App, d: NavigatieDoel, r: Result<Antwoord, String>) -> Task<Msg> {
+    let Some(z) = app.zoeken.as_mut().filter(|z| z.id == d.paneel) else {
+        return Task::none();
+    };
+    z.nav_bezig = false;
+    if z.nav_wacht.is_some() {
+        return start_navigatie(app);
+    }
+    if !geldig(app, &d) {
+        return Task::none();
+    }
+    match r {
+        Ok(a) if a.hash == d.hash => {
+            let taak = app.update(Msg::Gereed(d.document, Ok(a)));
+            if let Some(t) = app.tab_mut() {
+                selecteer(t, &d.treffer);
+                t.scroll = iced::Point::ORIGIN;
+            }
+            Task::batch([
+                taak,
+                iced::widget::operation::scroll_to(
+                    "document-scroll",
+                    scrollable::AbsoluteOffset { x: 0., y: 0. },
+                ),
+            ])
+        }
+        Ok(_) => Task::none(),
+        Err(e) => app.waarschuwing(&format!(
+            "Treffer in de alinea-editor geselecteerd; pagina niet beschikbaar: {e}"
+        )),
     }
 }
 
@@ -569,5 +671,110 @@ mod proeven {
         let _ = update(&mut a, Bericht::Vervang(false));
         assert!(!a.tab().unwrap().bezig);
         assert!(a.melding.contains("Zoek opnieuw"));
+    }
+    fn navigatieproef() -> (App, NavigatieDoel, Antwoord) {
+        let mut a = crate::tests::app_met_werkdraad(
+            Module::Writer,
+            include_bytes!("../../office-core/tests/fixtures/writer-cachepaginas.docx"),
+        );
+        let _ = update(&mut a, Bericht::Open(false));
+        let o = Zoekopdracht {
+            tekst: "cachepagina 5".into(),
+            ..Default::default()
+        };
+        let t = kern::zoek(
+            &a.tab().unwrap().antwoord.as_ref().unwrap().beeld.velden,
+            &o,
+        )
+        .unwrap();
+        let z = a.zoeken.as_mut().unwrap();
+        z.opdracht = o;
+        z.treffers = t;
+        z.bezig = false;
+        let _ = kies(&mut a, 0, false);
+        let z = a.zoeken.as_ref().unwrap();
+        let t = a.tab().unwrap();
+        let v = z.treffers[0].clone();
+        let d = NavigatieDoel {
+            paneel: z.id,
+            generatie: z.generatie,
+            document: t.id,
+            hash: z.hash.clone(),
+            editerversie: t.editerversie,
+            cursor: t.editor.cursor(),
+            scroll: t.scroll,
+            treffer: v,
+        };
+        let r = iced::futures::executor::block_on(a.werker.clone().voer_uit(
+            d.document,
+            Opdracht::NaarTekst {
+                id: d.treffer.id.clone(),
+                hash: d.hash.clone(),
+                begin: d.treffer.begin,
+                einde: d.treffer.einde,
+            },
+        ))
+        .unwrap();
+        assert_eq!(r.deel, 5);
+        (a, d, r)
+    }
+    #[test]
+    fn late_paginanavigatie_verplaatst_geen_gewijzigde_selectie_invoer_of_venster() {
+        for geval in 0..6 {
+            let (mut a, d, r) = navigatieproef();
+            let bron = a.tab().unwrap().antwoord.as_ref().unwrap().bron.clone();
+            match geval {
+                0 => {
+                    let _ = a.update(Msg::Invoer(text_editor::Action::Edit(
+                        text_editor::Edit::Insert('X'),
+                    )));
+                    assert!(a.tab().unwrap().concept);
+                }
+                1 => a.tab_mut().unwrap().toon_veld(0),
+                2 => a.tab_mut().unwrap().scroll = iced::Point::new(0., 160.),
+                3 => a.instellingen = true,
+                4 => a.zoeken = None,
+                _ => a.zoeken.as_mut().unwrap().generatie += 1,
+            }
+            let tekst = a.tab().unwrap().editor.text();
+            let _ = a.update(Msg::ZoekNavigatie(d, Ok(r)));
+            assert_eq!(a.tab().unwrap().deel, 0, "Geval {geval}");
+            assert_eq!(a.tab().unwrap().editor.text(), tekst);
+            assert_eq!(*a.tab().unwrap().antwoord.as_ref().unwrap().bron, *bron);
+            if geval == 0 {
+                assert!(a.tab().unwrap().concept);
+            }
+            if let Some(z) = &a.zoeken {
+                assert!(!z.nav_bezig, "Een afgehandeld antwoord blijft niet hangen");
+            }
+        }
+    }
+    #[test]
+    fn snelle_navigatie_bewaart_hoogstens_een_lopend_en_het_laatste_wachtende_doel() {
+        let (mut a, oud, r) = navigatieproef();
+        for i in 0..8 {
+            let taak = kies(&mut a, 0, false);
+            assert!(
+                iced_runtime::task::into_stream(taak).is_none(),
+                "Geen extra documenttaak bij een reeds lopende navigatie"
+            );
+            assert!(a.zoeken.as_ref().unwrap().nav_bezig);
+            assert!(a.zoeken.as_ref().unwrap().nav_wacht.is_some());
+            assert!(a.tab().unwrap().editerversie > oud.editerversie + i);
+        }
+        let laatste = a
+            .zoeken
+            .as_ref()
+            .unwrap()
+            .nav_wacht
+            .as_ref()
+            .unwrap()
+            .editerversie;
+        let _ = navigatie_gereed(&mut a, oud, Ok(r));
+        let z = a.zoeken.as_ref().unwrap();
+        assert!(z.nav_bezig);
+        assert!(z.nav_wacht.is_none());
+        assert_eq!(a.tab().unwrap().deel, 0);
+        assert_eq!(a.tab().unwrap().editerversie, laatste);
     }
 }

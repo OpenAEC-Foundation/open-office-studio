@@ -7,6 +7,7 @@ use std::{
 };
 #[derive(Debug, Clone)]
 pub struct Antwoord {
+    pub deel: usize,
     pub beeld: Weergave,
     pub bron: Arc<Vec<u8>>,
     pub hash: String,
@@ -21,9 +22,15 @@ pub enum Opdracht {
     Cel(usize, String),
     VerplaatsCel(usize, String, office_core::rekenblad::Richting),
     Bewerk(usize, Bewerking),
-    Terug,
-    Vooruit,
-    Markdown,
+    Terug(usize),
+    Vooruit(usize),
+    Markdown(usize),
+    NaarTekst {
+        id: String,
+        hash: String,
+        begin: usize,
+        einde: usize,
+    },
     Sluit,
 }
 type Resultaat = Result<Antwoord, String>;
@@ -82,13 +89,21 @@ impl Werker {
                             Opdracht::Bewerk(n, b) => {
                                 let b=sessie.bewerk_met_weergave(n,b).map_err(|e|e.to_string())?;*deel=n.min(b.onderdelen.len().saturating_sub(1));beeld=Some(b);
                             }
-                            Opdracht::Terug => sessie.terug().map_err(|e| e.to_string())?,
-                            Opdracht::Vooruit => sessie.vooruit().map_err(|e| e.to_string())?,
-                            Opdracht::Markdown => {
+                            Opdracht::NaarTekst{id,hash,begin,einde} => {
+                                let (pagina,beeld)=sessie.naar_tekstbereik(&id,&hash,begin,einde).map_err(|e|e.to_string())?;
+                                // De interface accepteert het doel pas na haar versie-/focuscontrole.
+                                // Een oud navigatieantwoord mag het werkdraaddeel niet verplaatsen.
+                                return Ok(Antwoord{deel:pagina,beeld,bron:sessie.bron(),hash:sessie.bron_hash().into(),terug:sessie.kan_terug(),vooruit:sessie.kan_vooruit()});
+                            }
+                            Opdracht::Terug(n) => {sessie.terug().map_err(|e| e.to_string())?;*deel=n;},
+                            Opdracht::Vooruit(n) => {sessie.vooruit().map_err(|e| e.to_string())?;*deel=n;},
+                            Opdracht::Markdown(n) => {
+                                *deel=n;
                                 let mut beeld =
                                     sessie.weergave(*deel).map_err(|e| e.to_string())?;
                                 beeld.melding = sessie.markdown().map_err(|e| e.to_string())?;
                                 return Ok(Antwoord {
+                                    deel:*deel,
                                     beeld,
                                     hash:sessie.bron_hash().into(),
                             bron: sessie.bron(),
@@ -99,6 +114,7 @@ impl Werker {
                             _ => {}
                         }
                         Ok(Antwoord {
+                            deel:*deel,
                             beeld: match beeld {Some(b)=>b,None=>sessie.weergave(*deel).map_err(|e| e.to_string())?},
                             hash:sessie.bron_hash().into(),
                             bron: sessie.bron(),

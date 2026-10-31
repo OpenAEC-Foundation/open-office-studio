@@ -62,13 +62,22 @@ pub(crate) fn pagina_met_opmaak(
         let (png, aantal, overgeslagen, pagina) = c.pagina::<true>(nummer)?;
         return Ok((png, aantal, overgeslagen, pagina, c.opmaak));
     };
+    met_context(bron, eigenaar, |c| {
+        let (png, aantal, overgeslagen, pagina) = c.pagina::<true>(nummer)?;
+        Ok((png, aantal, overgeslagen, pagina, c.opmaak.clone()))
+    })
+}
+fn met_context<T>(
+    bron: &[u8],
+    eigenaar: u64,
+    lees: impl FnOnce(&mut Context) -> Resultaat<T>,
+) -> Resultaat<T> {
     let bron_hash = crate::opslag::hash(bron);
     let generatie = docx_layout::measure_fonts_generation();
     let mut oud = PAGINACACHE.with(|cel| cel.borrow_mut().take());
     if oud.as_ref().is_some_and(|c| {
         c.eigenaar != eigenaar || c.bron_hash != bron_hash || c.generatie != generatie
     }) {
-        // Een gewijzigde bron of fontregistratie mag geen oude layout gebruiken.
         oud = None;
     }
     let mut c = match oud {
@@ -80,18 +89,74 @@ pub(crate) fn pagina_met_opmaak(
             context: Context::nieuw(bron, true)?,
         },
     };
-    let (png, aantal, overgeslagen, pagina) = c.context.pagina::<true>(nummer)?;
-    let opmaak = c.context.opmaak.clone();
+    let resultaat = lees(&mut c.context);
     c.generatie = docx_layout::measure_fonts_generation();
     PAGINACACHE.with(|cel| *cel.borrow_mut() = Some(c));
-    Ok((png, aantal, overgeslagen, pagina, opmaak))
+    resultaat
 }
+/// De pagina komt uit dezelfde behouden layout als het beeld, ook voor
+/// tabelcellen en alinea's die over meerdere pagina's doorlopen.
+pub(crate) fn pagina_van_tekst(
+    bron: &[u8],
+    eigenaar: u64,
+    id: &str,
+    positie_utf16: u32,
+    lengte_utf16: u32,
+) -> Resultaat<usize> {
+    use docx_edit::structured::{FragmentSlice, PageExportOptions, RevisionView, StorySelection};
+    met_context(bron, eigenaar, |c| {
+        if c.paginakaart.is_none() {
+            // Alleen de eerste aanvraag moet de behouden layout opbouwen.
+            // De paginakaart zelf bouwt geen volledige paginabeeldenreeks.
+            if c.engine.with_display_list(|_| ()).is_none() {
+                c.pagina::<true>(0)?;
+            }
+            let mut opties = PageExportOptions::new(RevisionView::Accepted);
+            opties.stories = Some(vec![StorySelection::Body]);
+            opties.include_formatting = Some(false);
+            opties.include_geometry = Some(false);
+            let r = c
+                .engine
+                .export_structured_with_pages_for(&opties, &c.verzoek.to_string())
+                .map_err(|e| fout(format!("Geen betrouwbare paginakaart: {e:?}")))?;
+            if r.content.layout.truncated || r.content.structured.truncated {
+                return Err(fout(
+                    "Paginakaart overschrijdt de leeslimiet; er wordt niet naar een geschatte pagina gesprongen",
+                ));
+            }
+            c.paginakaart = Some(r.content.layout);
+        }
+        c.paginakaart
+            .as_ref()
+            .unwrap()
+            .fragments
+            .iter()
+            .filter(|f| !f.repeated_table_header)
+            .filter_map(|f| match &f.slice {
+                FragmentSlice::Text { range }
+                    if range.start.para_id == id
+                        && range.end.para_id == id
+                        && range.start.offset <= positie_utf16
+                        && (positie_utf16 < range.end.offset
+                            || (positie_utf16 == lengte_utf16
+                                && positie_utf16 == range.end.offset)) =>
+                {
+                    Some(f.page_index as usize)
+                }
+                _ => None,
+            })
+            .min()
+            .ok_or_else(|| fout("Deze tekstpositie heeft nog geen betrouwbare zichtbare pagina"))
+    })
+}
+
 struct Context {
     engine: docx_edit::EngineSession,
     verzoek: Value,
     benodigd: Value,
     afbeeldingen: docx_raster::ImageMap,
     opmaak: std::sync::Arc<crate::writer_opmaak::Alineas>,
+    paginakaart: Option<docx_edit::structured::DocxLayoutMap>,
 }
 impl Context {
     fn nieuw(bron: &[u8], met_opmaak: bool) -> Resultaat<Self> {
@@ -120,7 +185,11 @@ impl Context {
             .map(serde_json::to_value)
             .transpose()?
             .unwrap_or(json!({}));
-        secties.push(json!({"sectionId":laatste["sectionId"],"properties":laatste}));
+        // De parser levert ook de laatste sectie al in de opgeloste lijst.
+        // De afzonderlijke broneigenschappen zijn geen extra sectie.
+        if secties.is_empty() {
+            secties.push(json!({"sectionId":laatste["sectionId"],"properties":laatste}));
+        }
         let mut noten = Vec::new();
         for (soort, inhoud) in [
             ("footnote", package.footnotes.as_deref()),
@@ -164,6 +233,7 @@ impl Context {
             benodigd,
             afbeeldingen: afbeeldingen(bron)?,
             opmaak,
+            paginakaart: None,
         })
     }
     fn pagina<const ALLEEN_GEVRAAGD: bool>(&mut self, nummer: usize) -> Resultaat<Blad> {
@@ -709,5 +779,116 @@ mod cacheproeven {
         assert_eq!(s.bron().as_slice(), bytes);
         assert!(pagina_met_opmaak(b"Geen document", 0, Some(u64::MAX)).is_err());
         assert!(PAGINACACHE.with(|c| c.borrow().is_none()));
+    }
+}
+
+#[cfg(test)]
+mod paginakaart_proeven {
+    use super::*;
+    #[test]
+    fn bestaande_rust_engine_levert_een_getypeerde_paginakaart_voor_body_en_tabel() {
+        use docx_edit::structured::{PageExportOptions, RevisionView, StorySelection};
+        let d = crate::document::Document::open(
+            crate::document::Module::Writer,
+            include_bytes!("../tests/fixtures/writer-structuur.docx"),
+        )
+        .unwrap();
+        let bron = d.bytes().unwrap();
+        let mut c = Context::nieuw(&bron, true).unwrap();
+        c.pagina::<true>(0).unwrap();
+        let mut opties = PageExportOptions::new(RevisionView::Accepted);
+        opties.stories = Some(vec![StorySelection::Body]);
+        opties.include_geometry = Some(true);
+        assert_eq!(
+            c.verzoek["regions"]["sections"].as_array().unwrap().len(),
+            2
+        );
+        let r = c
+            .engine
+            .export_structured_with_pages_for(&opties, &c.verzoek.to_string())
+            .unwrap();
+        assert!(!r.content.layout.truncated);
+        assert_eq!(r.content.layout.pages.len(), 2);
+        assert!(!r.content.layout.fragments.is_empty());
+        if let Some(p) = std::env::var_os("OFFICE_TEST_UITVOER") {
+            let p = std::path::PathBuf::from(p);
+            std::fs::create_dir_all(&p).unwrap();
+            std::fs::write(
+                p.join("writer-paginakaart.json"),
+                serde_json::to_vec_pretty(&r.content).unwrap(),
+            )
+            .unwrap();
+        }
+    }
+}
+
+#[cfg(test)]
+mod unicode_navigatieproeven {
+    use super::*;
+    #[test]
+    fn navigatie_na_veel_astrale_tekens_komt_op_de_werkelijk_getekende_pagina() {
+        use crate::document::{Document, Module, Sessie};
+        let mut delen =
+            ooxml_opc::unzip_parts(include_bytes!("../tests/fixtures/writer.docx")).unwrap();
+        let (_, xml) = delen
+            .iter_mut()
+            .find(|(n, _)| n == "word/document.xml")
+            .unwrap();
+        let oud = String::from_utf8(xml.clone()).unwrap();
+        let a = oud.find("<w:body>").unwrap() + "<w:body>".len();
+        let b = oud.find("<w:sectPr").unwrap();
+        let regels = (0..140)
+            .map(|i| format!("<w:r><w:t>🏠🏠🏠🏠🏠 Regel{i:03} café</w:t><w:br/></w:r>"))
+            .collect::<String>();
+        *xml = format!("{}<w:p>{regels}</w:p>{}", &oud[..a], &oud[b..]).into_bytes();
+        let bron = ooxml_opc::rezip_parts(&delen).unwrap();
+        let d = Document::open(Module::Writer, &bron).unwrap();
+        let canoniek = d.bytes().unwrap();
+        let mut c = Context::nieuw(&canoniek, true).unwrap();
+        c.pagina::<false>(0).unwrap();
+        // De verwachting komt uit de onafhankelijk opgebouwde volledige
+        // tekenlijst, niet uit de te toetsen geprojecteerde paginakaart.
+        let marker = c
+            .engine
+            .with_display_list(|dl| {
+                assert!(dl.pages.len() > 1);
+                if let Some(p) = std::env::var_os("OFFICE_TEST_UITVOER") {
+                    let p = std::path::PathBuf::from(p);
+                    std::fs::create_dir_all(&p).unwrap();
+                    std::fs::write(
+                        p.join("unicode-getekend.json"),
+                        serde_json::to_vec_pretty(dl).unwrap(),
+                    )
+                    .unwrap();
+                }
+                dl.pages[1]
+                    .primitives
+                    .iter()
+                    .filter_map(|p| match p {
+                        docx_layout::display_list::Primitive::Text(t) => Some(t.text.as_str()),
+                        docx_layout::display_list::Primitive::GlyphRun(t) => Some(t.text.as_str()),
+                        _ => None,
+                    })
+                    // Een gevormde tekenreeks kan per glyf zijn opgesplitst.
+                    // Lees de getekende tekst eerst in tekenvolgorde terug.
+                    .collect::<String>()
+                    .split_whitespace()
+                    .find(|s| s.starts_with("Regel"))
+                    .unwrap()
+                    .to_owned()
+            })
+            .unwrap();
+        let s = Sessie::open(Module::Writer, bron.clone()).unwrap();
+        let beeld = s.weergave(0).unwrap();
+        let v = &beeld.velden[0];
+        let byte = v.tekst.find(&marker).unwrap();
+        let begin = v.tekst[..byte].chars().count();
+        assert!(v.tekst[..byte].encode_utf16().count() > begin + 100);
+        let (pagina, _) = s
+            .naar_tekstbereik(&v.id, s.bron_hash(), begin, begin + marker.chars().count())
+            .unwrap();
+        assert_eq!(pagina, 1);
+        assert_eq!(s.bron().as_slice(), bron.as_slice());
+        assert!(!s.kan_terug());
     }
 }

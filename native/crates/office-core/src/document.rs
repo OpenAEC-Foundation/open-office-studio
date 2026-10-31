@@ -639,6 +639,53 @@ impl Sessie {
         }
         resultaat
     }
+    /// Navigatie verandert geen bronbytes en maakt geen undo-stap. De hele
+    /// zoekbronversie blijft onderdeel van het doel, niet alleen de alineatekst.
+    pub fn naar_tekstbereik(
+        &self,
+        id: &str,
+        verwacht_hash: &str,
+        begin: usize,
+        einde: usize,
+    ) -> Resultaat<(usize, Weergave)> {
+        if verwacht_hash != self.bron_hash {
+            return Err(fout(
+                "Het zoekresultaat hoort bij een andere documentversie",
+            ));
+        }
+        let Document::Writer(d) = &self.document else {
+            return Err(fout("Tekstnavigatie hoort bij Writer"));
+        };
+        let p = d
+            .paragraph(id)
+            .ok_or_else(|| fout("De gezochte alinea ontbreekt"))?;
+        if !crate::writer_tekst::ondersteund(p) {
+            return Err(fout(
+                "Pagina-adressering van deze bijzondere alineainhoud wordt nog niet ondersteund",
+            ));
+        }
+        let tekst = crate::writer_tekst::alinea_tekst(p);
+        let aantal = tekst.chars().count();
+        if begin > einde || einde > aantal {
+            return Err(fout("Zoekselectie valt buiten de alinea"));
+        }
+        let offset = tekst
+            .chars()
+            .take(begin)
+            .map(char::len_utf16)
+            .sum::<usize>();
+        let lengte = tekst.encode_utf16().count();
+        let pagina = crate::writer_beeld::pagina_van_tekst(
+            &d.save().map_err(fout)?,
+            self.layout_eigenaar,
+            id,
+            offset as u32,
+            lengte as u32,
+        )?;
+        let mut beeld = self.weergave(pagina)?;
+        beeld.voorkeursveld = Some(id.into());
+        Ok((pagina, beeld))
+    }
     pub fn verplaats_cel(
         &mut self,
         deel: usize,

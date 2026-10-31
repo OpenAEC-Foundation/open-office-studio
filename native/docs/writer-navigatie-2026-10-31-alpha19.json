@@ -1,0 +1,27 @@
+{
+  "versie": "2026.44.9-alpha.19",
+  "omvang": "Behoud van bron en undo bij navigatie naar echte Writer-pagina’s; enginepaginakaart en getekende Unicode-tekst, echte Iced-widget- en werkdraadberichten. Geen directe paginacursor, fysieke GUI, volledige inhouds- of pixelpariteit.",
+  "geslaagd": true,
+  "nieuwe_kernproeven": 5,
+  "nieuwe_gui_proeven": 3,
+  "gevallen": [
+    "Zes pagina’s in een afwijkende volgorde, exacte bronbytes en geen undo-stap",
+    "Tabelcellen, een andere sessiecache, nieuwe bronversie, bewerken en undo",
+    "Ongeldige tekstgrenzen, ontbrekend ID, verouderde bron en verkeerde module",
+    "Twee bronsecties leveren twee opgeloste sectierecords en een volledige body-/tabelpaginakaart",
+    "De tweede werkelijk getekende pagina binnen één lange alinea met astrale tekens; scalaire invoer naar UTF-16",
+    "Zoekresultaat op de zesde pagina, echte widgetfocus/plakken, bewerken, undo/redo behouden het getoonde deel",
+    "Late antwoorden na nieuwe invoer, selectie, scroll, instellingen, paneelsluiting en querygeneratie",
+    "Snelle navigatie maakt hoogstens één actieve documenttaak en bewaart alleen het laatste wachtende doel"
+  ],
+  "bronbestanden": {
+    "native/crates/office-core/src/document.rs": "b09866624d230aa1f960bf2a1cf1f65cd1aa5612ef692467722fcdeb50420f06",
+    "native/crates/office-core/src/writer_beeld.rs": "b926003f7d305b838cc71d6dd358c0a59d0837b7a69d49a08c61ca41c63bb484",
+    "native/crates/office-core/tests/writer_navigatie.rs": "e46413c9131d1e018d6d575a148e6730868d1a5eb282e3c6fc272f929c6914d7",
+    "native/crates/office-ui/src/zoeken_ui.rs": "aa689b9a64979aeda38c69f3992c9914ce941a892b0b7c439b844b7ffc1b5785",
+    "native/crates/office-ui/src/werker.rs": "ba7c3c9d4f6dcaa76833d5abf8c29f1704d8bdcecd81cfa569e79b13d306f420",
+    "native/crates/office-ui/src/main.rs": "9d5ea52e3522b5d89e3cb529df15ff29e4c465954da7ee25ed000fbc98afdf1f",
+    "native/crates/office-ui/src/tests/raster_proeven.rs": "a6d9f5f3d40a7290797afc44bbc9e692f0a1c498c5c6149b0b6a69b695e9127c"
+  },
+  "testlog_sha256": "b70e1881fc6c952f5fe18d135657797d09e9250848d1bb969ecc6c474b018fdf"
+}

@@ -63,6 +63,7 @@ fn icoon(i: Icon) -> &'static str {
 #[derive(Debug, Clone)]
 enum Msg {
     Zoeken(zoeken_ui::Bericht),
+    ZoekNavigatie(zoeken_ui::NavigatieDoel, Result<Antwoord, String>),
     ZoekGereed(
         zoeken_ui::Doel,
         Result<Vec<office_core::writer_zoeken::Treffer>, String>,
@@ -435,6 +436,7 @@ impl App {
                     | Msg::Maximaliseer
                     | Msg::Gereed(..)
                     | Msg::ZoekGereed(..)
+                    | Msg::ZoekNavigatie(..)
                     | Msg::Gelezen(..)
                     | Msg::Geschreven(..)
                     | Msg::Doel(..)
@@ -458,6 +460,7 @@ impl App {
                 ) | Msg::VensterGrootte(_)
                     | Msg::Gereed(..)
                     | Msg::ZoekGereed(..)
+                    | Msg::ZoekNavigatie(..)
                     | Msg::Gelezen(..)
                     | Msg::Geschreven(..)
                     | Msg::ExportKlaar(..)
@@ -484,6 +487,7 @@ impl App {
                     | Msg::VensterGrootte(..)
                     | Msg::Gereed(..)
                     | Msg::ZoekGereed(..)
+                    | Msg::ZoekNavigatie(..)
                     | Msg::Opslaan(..)
                     | Msg::ExportVoltooid(..)
                     | Msg::ExportPad(..)
@@ -494,6 +498,7 @@ impl App {
         }
         match msg {
             Msg::Zoeken(m) => return zoeken_ui::update(self, m),
+            Msg::ZoekNavigatie(doel, r) => return zoeken_ui::navigatie_gereed(self, doel, r),
             Msg::ZoekGereed(doel, resultaat) => return zoeken_ui::gereed(self, doel, resultaat),
             Msg::ExportMenu => {
                 if self.export_bezig {
@@ -737,7 +742,7 @@ impl App {
                                 .map(|v| iced::widget::markdown::parse(&v.tekst).collect())
                                 .unwrap_or_default();
                             tab.antwoord = Some(antwoord);
-                            tab.deel = tab.deel.min(
+                            tab.deel = tab.antwoord.as_ref().unwrap().deel.min(
                                 tab.antwoord
                                     .as_ref()
                                     .unwrap()
@@ -1233,7 +1238,8 @@ impl App {
                     }
                     if !t.bezig && t.antwoord.as_ref().is_some_and(|a| a.terug) {
                         let id = t.id;
-                        return self.opdracht(id, Opdracht::Terug);
+                        let deel = t.deel;
+                        return self.opdracht(id, Opdracht::Terug(deel));
                     }
                 }
             }
@@ -1244,7 +1250,8 @@ impl App {
                     && t.antwoord.as_ref().is_some_and(|a| a.vooruit)
                 {
                     let id = t.id;
-                    return self.opdracht(id, Opdracht::Vooruit);
+                    let deel = t.deel;
+                    return self.opdracht(id, Opdracht::Vooruit(deel));
                 }
             }
             Msg::Sluit(n) => {
@@ -1317,7 +1324,7 @@ impl App {
                     }
                     let id = t.id;
                     return Task::perform(
-                        self.werker.clone().voer_uit(id, Opdracht::Markdown),
+                        self.werker.clone().voer_uit(id, Opdracht::Markdown(t.deel)),
                         Msg::MarkdownKlaar,
                     );
                 }

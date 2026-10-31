@@ -982,3 +982,38 @@ fn enter_in_het_zoekveld_navigeert_en_een_resultaat_zet_echte_editorfocus() {
     assert_eq!(p.app.tab().unwrap().editor.text(), "Voor dE rijke alinea");
     assert_eq!(p.bron(), bron);
 }
+
+#[test]
+fn zoeknavigatie_verplaatst_naar_de_echte_pagina_en_undo_blijft_op_dat_deel() {
+    use crate::zoeken_ui::Bericht as Z;
+    let bron = include_bytes!("../../../office-core/tests/fixtures/writer-cachepaginas.docx");
+    let mut p = Proef::met_app(app_met_werkdraad(Module::Writer, bron));
+    p.bericht(Msg::Zoeken(Z::Open(false)));
+    p.bericht(Msg::Zoeken(Z::Tekst("cachepagina 5".into())));
+    assert_eq!(p.app.tab().unwrap().deel, 5);
+    assert_eq!(
+        p.app.tab().unwrap().editor.selection().as_deref(),
+        Some("cachepagina 5")
+    );
+    assert_eq!(p.bron().as_slice(), bron.as_slice());
+    assert!(!p.app.tab().unwrap().antwoord.as_ref().unwrap().terug);
+    if let Some(pad) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        let pad = PathBuf::from(pad);
+        std::fs::create_dir_all(&pad).unwrap();
+        p.verbeeld()
+            .save_png(pad.join("writer-zoeken-pagina.png"))
+            .unwrap();
+    }
+    p.bericht(Msg::Zoeken(Z::Kies(0)));
+    p.plak("ander eigen deel");
+    p.bericht(Msg::PasToe);
+    assert_eq!(p.app.tab().unwrap().deel, 5);
+    let gewijzigd = p.bron();
+    assert_ne!(gewijzigd.as_slice(), bron.as_slice());
+    p.bericht(Msg::Terug);
+    assert_eq!(p.app.tab().unwrap().deel, 5);
+    assert_eq!(p.bron().as_slice(), bron.as_slice());
+    p.bericht(Msg::Vooruit);
+    assert_eq!(p.app.tab().unwrap().deel, 5);
+    assert_eq!(p.bron(), gewijzigd);
+}
