@@ -44,11 +44,11 @@ const SYSTEEM_CJK: Record<Variant, string[]> = {
   KR: ["Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans CJK KR", "Source Han Sans KR"],
 };
 /** Thai en Devanagari: alleen systeemlettertypen. */
-const SYSTEEM_OVERIG = ["Leelawadee UI", "Thonburi", "Noto Sans Thai", "Nirmala UI", "Kohinoor Devanagari", "Noto Sans Devanagari"];
+const SYSTEEM_OVERIG = ["Saysettha OT", "Phetsarath OT", "Noto Sans Lao", "Leelawadee UI", "Thonburi", "Noto Sans Thai", "Nirmala UI", "Kohinoor Devanagari", "Noto Sans Devanagari"];
 
 /** Volgorde van de CJK-varianten per taal; de eerste wint bij gedeelde tekens. */
 export function cjkVolgorde(taal: Taal): Variant[] {
-  const voorkeur: Partial<Record<Taal, Variant>> = { ja: "JP", ko: "KR", "zh-TW": "TC", "zh-CN": "SC" };
+  const voorkeur: Partial<Record<Taal, Variant>> = { ja: "JP", ko: "KR", lo: "LA", "zh-TW": "TC", "zh-CN": "SC" };
   const alle: Variant[] = ["SC", "TC", "JP", "KR"];
   const eerst = voorkeur[taal];
   return eerst ? [eerst, ...alle.filter((f) => f !== eerst)] : alle;
