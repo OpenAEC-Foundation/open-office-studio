@@ -104,6 +104,7 @@ fn writer_paginacursor_klikken_schalen_typen_en_een_exacte_undo() {
         if zoom == 1.
             && let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN")
         {
+            std::fs::create_dir_all(&map).unwrap();
             p.verbeeld()
                 .save_png(PathBuf::from(map).join("writer-pagina-invoer.png"))
                 .unwrap();
@@ -255,6 +256,7 @@ fn writer_late_paginaklik_wordt_alleen_door_eigen_invoerstappen_verplaatst() {
             B::Punt {
                 hash,
                 punt: office_core::writer_cursor::TekstPunt { id, positie: 12 },
+                cursor: None,
                 selecteren: false,
             },
             B::Invoer(A::Edit(E::Insert('!'))),
@@ -522,6 +524,206 @@ fn writer_pagina_kernweigering_bewaart_concept_en_wachtrij_tot_expliciet_verwerp
     assert!(!t.concept && !t.gewijzigd() && !t.writer_direct.heeft_werk());
     assert_eq!(t.editor.text(), tekst);
     assert!(p.app.melding.contains("op jouw verzoek verworpen"));
+}
+fn lange_paginaproef() -> Proef {
+    let mut s = Sessie::open(
+        Module::Writer,
+        include_bytes!("../../../office-core/tests/fixtures/writer-structuur.docx").to_vec(),
+    )
+    .unwrap();
+    let b = s.weergave(0).unwrap();
+    s.bewerk(
+        0,
+        Bewerking::Tekst {
+            id: b.velden[0].id.clone(),
+            tekst: "Lange 🏠 regel met café ".repeat(12),
+        },
+    )
+    .unwrap();
+    Proef::met_app(app_met_werkdraad(Module::Writer, &s.bron()))
+}
+fn tweede_regel(p: &Proef) -> office_core::writer_navigatie::CursorDoel {
+    let t = p.app.tab().unwrap();
+    let a = t.antwoord.as_ref().unwrap();
+    let v = &a.beeld.velden[0];
+    let f = a.beeld.writer_frame.as_ref().unwrap();
+    let eerste = f.cursordoel(&v.id, 0).unwrap();
+    (1..v.tekst.chars().count())
+        .map(|n| f.cursordoel(&v.id, n).unwrap())
+        .find(|c| c.regel != eerste.regel)
+        .unwrap()
+}
+#[test]
+fn cursor_paginapijlen_verwerken_snellen_toetsen_zonder_bronwijziging_of_undo() {
+    use iced::keyboard::key::Named;
+    use office_core::writer_navigatie::Richting as R;
+    use writer_direct::Bericht as B;
+    let mut p = Proef::met_app(app_met_werkdraad(
+        Module::Writer,
+        include_bytes!("../../../office-core/tests/fixtures/writer-cachepaginas.docx"),
+    ));
+    let bron = p.bron();
+    let tekst = p.app.tab().unwrap().antwoord.as_ref().unwrap().beeld.velden[0]
+        .tekst
+        .clone();
+    let punt = writer_punt(&mut p, &tekst, 0);
+    p.klik(punt);
+    let t = p.app.tab_mut().unwrap();
+    t.opgeslagen = Some(t.antwoord.as_ref().unwrap().hash.clone());
+    let taak = p
+        .app
+        .update(Msg::WriterDirect(1, B::Beweeg(R::Omlaag, false)));
+    assert!(
+        !p.app.tab().unwrap().gewijzigd(),
+        "Een lopende navigatie is geen bronwijziging"
+    );
+    p.taak(taak);
+    writer_snel(&mut p, (0..3).map(|_| B::Beweeg(R::Omlaag, false)));
+    assert_eq!(p.app.tab().unwrap().deel, 4);
+    assert!(
+        p.app
+            .tab()
+            .unwrap()
+            .veld()
+            .unwrap()
+            .tekst
+            .contains("cachepagina 4")
+    );
+    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        std::fs::create_dir_all(&map).unwrap();
+        p.verbeeld()
+            .save_png(PathBuf::from(map).join("writer-pagina-navigatie.png"))
+            .unwrap();
+    }
+    p.named(Named::ArrowDown);
+    assert_eq!(p.app.tab().unwrap().deel, 5);
+    p.named(Named::ArrowDown);
+    assert_eq!(p.app.tab().unwrap().deel, 5);
+    p.named(Named::ArrowUp);
+    assert_eq!(p.app.tab().unwrap().deel, 4);
+    assert!(p.bron().as_slice() == bron.as_slice());
+    assert!(!p.app.tab().unwrap().antwoord.as_ref().unwrap().terug);
+    assert!(!p.app.tab().unwrap().gewijzigd());
+}
+#[test]
+fn cursor_home_end_shiftselectie_en_klembord_volgen_de_werkelijke_documentregel() {
+    use iced::keyboard::{Key, Modifiers, key::Named};
+    let mut p = lange_paginaproef();
+    let bron = p.bron();
+    let tweede = tweede_regel(&p);
+    let tekst = p.app.tab().unwrap().antwoord.as_ref().unwrap().beeld.velden[0]
+        .tekst
+        .clone();
+    let punt = writer_punt(&mut p, &tekst, 2);
+    p.klik(punt);
+    let eerste = p
+        .app
+        .tab()
+        .unwrap()
+        .writer_direct
+        .geometrie(p.app.tab().unwrap())
+        .unwrap()
+        .cursor
+        .unwrap();
+    p.named(Named::End);
+    let t = p.app.tab().unwrap();
+    assert_eq!(
+        lint::tekenoffset(&t.editor, t.editor.cursor().position),
+        tweede.punt.positie
+    );
+    assert_eq!(
+        t.writer_direct.geometrie(t).unwrap().cursor.unwrap().y,
+        eerste.y
+    );
+    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        std::fs::create_dir_all(&map).unwrap();
+        p.verbeeld()
+            .save_png(PathBuf::from(map).join("writer-regelgrens.png"))
+            .unwrap();
+    }
+    p.named(Named::ArrowDown);
+    p.named(Named::Home);
+    let t = p.app.tab().unwrap();
+    assert_eq!(
+        lint::tekenoffset(&t.editor, t.editor.cursor().position),
+        tweede.punt.positie
+    );
+    assert_eq!(
+        t.writer_direct.geometrie(t).unwrap().cursor.unwrap().y,
+        tweede.cursor.y
+    );
+    p.toets(Key::Named(Named::End), Modifiers::SHIFT, None);
+    let t = p.app.tab().unwrap();
+    let eind = lint::tekenoffset(&t.editor, t.editor.cursor().position);
+    let verwacht: String = tekst
+        .chars()
+        .skip(tweede.punt.positie)
+        .take(eind - tweede.punt.positie)
+        .collect();
+    assert!(!verwacht.is_empty());
+    assert_eq!(t.editor.selection().as_deref(), Some(verwacht.as_str()));
+    p.toets(Key::Character("c".into()), Modifiers::COMMAND, None);
+    assert_eq!(p.klembord.tekst.as_deref(), Some(verwacht.as_str()));
+    assert!(p.bron().as_slice() == bron.as_slice());
+}
+#[test]
+fn cursor_snelle_regelnavigatie_en_typen_behouden_de_juist_geadresseerde_tekst() {
+    use office_core::writer_navigatie::Richting as R;
+    use text_editor::{Action as A, Edit as E};
+    use writer_direct::Bericht as B;
+    let mut p = lange_paginaproef();
+    let bron = p.bron();
+    let tweede = tweede_regel(&p);
+    let tekst = p.app.tab().unwrap().antwoord.as_ref().unwrap().beeld.velden[0]
+        .tekst
+        .clone();
+    let punt = writer_punt(&mut p, &tekst, 2);
+    p.klik(punt);
+    writer_snel(
+        &mut p,
+        [
+            B::Beweeg(R::RegelEinde, false),
+            B::Beweeg(R::Omlaag, false),
+            B::Beweeg(R::RegelBegin, false),
+            B::Invoer(A::Edit(E::Insert('!'))),
+        ],
+    );
+    let mut verwacht: Vec<_> = tekst.chars().collect();
+    verwacht.insert(tweede.punt.positie, '!');
+    let verwacht: String = verwacht.into_iter().collect();
+    assert_eq!(p.app.tab().unwrap().editor.text(), verwacht);
+    let b = Sessie::open(Module::Writer, p.bron().as_ref().clone())
+        .unwrap()
+        .weergave(0)
+        .unwrap();
+    assert_eq!(b.velden[0].tekst, verwacht);
+    p.bericht(Msg::Terug);
+    assert!(p.bron().as_slice() == bron.as_slice());
+}
+#[test]
+fn cursor_undo_na_invoer_aan_de_regelgrens_herstelt_ook_de_zichtbare_affiniteit() {
+    use iced::keyboard::key::Named;
+    let mut p = lange_paginaproef();
+    let bron = p.bron();
+    let tekst = p.app.tab().unwrap().antwoord.as_ref().unwrap().beeld.velden[0]
+        .tekst
+        .clone();
+    let punt = writer_punt(&mut p, &tekst, 2);
+    p.klik(punt);
+    p.named(Named::End);
+    let t = p.app.tab().unwrap();
+    let cursor = t.editor.cursor();
+    let vlak = t.writer_direct.geometrie(t).unwrap().cursor.unwrap();
+    p.toets(
+        iced::keyboard::Key::Character("!".into()),
+        iced::keyboard::Modifiers::empty(),
+        Some("!"),
+    );
+    p.bericht(Msg::Terug);
+    let t = p.app.tab().unwrap();
+    assert_eq!(t.editor.cursor(), cursor);
+    assert_eq!(t.writer_direct.geometrie(t).unwrap().cursor, Some(vlak));
+    assert!(p.bron().as_slice() == bron.as_slice());
 }
 impl Proef {
     fn nieuw() -> Self {

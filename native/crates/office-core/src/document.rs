@@ -775,6 +775,60 @@ impl Sessie {
         let positie = crate::writer_cursor::utf16_naar_scalar(&tekst, offset)?;
         Ok(Some(crate::writer_cursor::TekstPunt { id, positie }))
     }
+    pub fn verplaats_cursor(
+        &self,
+        pagina: usize,
+        verwacht_hash: &str,
+        punt: &crate::writer_cursor::TekstPunt,
+        richting: crate::writer_navigatie::Richting,
+        voorkeur: Option<&crate::writer_navigatie::CursorDoel>,
+        doel_x: Option<f64>,
+    ) -> Resultaat<crate::writer_navigatie::CursorDoel> {
+        if verwacht_hash != self.bron_hash {
+            return Err(fout("Cursoropdracht hoort bij een andere documentversie"));
+        }
+        let Document::Writer(d) = &self.document else {
+            return Err(fout("Regelnavigatie hoort bij Writer"));
+        };
+        let p = d
+            .paragraph(&punt.id)
+            .filter(|p| crate::writer_tekst::ondersteund(p))
+            .ok_or_else(|| fout("Deze alinea ondersteunt nog geen betrouwbare cursornavigatie"))?;
+        let tekst = crate::writer_tekst::alinea_tekst(p);
+        let positie = crate::writer_cursor::scalar_naar_utf16(&tekst, punt.positie)?;
+        let vorige =
+            crate::writer_cursor::scalar_naar_utf16(&tekst, punt.positie.saturating_sub(1))?;
+        if voorkeur.is_some_and(|v| v.pagina != pagina || v.punt != *punt) {
+            return Err(fout("Voorkeurcursor en vertrekpunt komen niet overeen"));
+        }
+        let (k, offset, doel_x) = crate::writer_beeld::verplaats_cursor(
+            &d.layoutbron()?,
+            self.layout_eigenaar,
+            crate::writer_beeld::CursorVraag {
+                pagina,
+                id: &punt.id,
+                positie,
+                vorige,
+                richting,
+                voorkeur,
+                doel_x,
+            },
+        )?;
+        let doel = d
+            .paragraph(&k.id)
+            .filter(|p| crate::writer_tekst::ondersteund(p))
+            .ok_or_else(|| fout("De doelalinea is nog niet veilig adresseerbaar"))?;
+        let tekst = crate::writer_tekst::alinea_tekst(doel);
+        let positie = crate::writer_cursor::utf16_naar_scalar(&tekst, offset)?;
+        Ok(crate::writer_navigatie::CursorDoel {
+            pagina: k.pagina,
+            punt: crate::writer_cursor::TekstPunt { id: k.id, positie },
+            cursor: k.cursor,
+            regel: k.regel,
+            basislijn: k.basislijn,
+            doel_x,
+        })
+    }
     pub fn verplaats_cel(
         &mut self,
         deel: usize,

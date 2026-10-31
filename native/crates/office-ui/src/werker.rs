@@ -8,6 +8,7 @@ use std::{
 #[derive(Debug, Clone)]
 pub struct Antwoord {
     pub deel: usize,
+    pub writer_cursor: Option<office_core::writer_navigatie::CursorDoel>,
     pub writer_markering: Option<office_core::writer_cursor::TekstMarkering>,
     pub beeld: Weergave,
     pub bron: Arc<Vec<u8>>,
@@ -17,6 +18,14 @@ pub struct Antwoord {
 }
 #[derive(Debug, Clone)]
 pub enum Opdracht {
+    WriterCursor {
+        deel: usize,
+        hash: String,
+        punt: office_core::writer_cursor::TekstPunt,
+        richting: office_core::writer_navigatie::Richting,
+        voorkeur: Option<office_core::writer_navigatie::CursorDoel>,
+        doel_x: Option<f64>,
+    },
     Nieuw(Module),
     Open(Module, Vec<u8>),
     Deel(usize),
@@ -88,6 +97,12 @@ impl Werker {
                             .ok_or("Document niet meer geopend")?;
                         let mut beeld=None;
                         match taak.opdracht {
+                            Opdracht::WriterCursor {deel:n,hash,punt,richting,voorkeur,doel_x}=>{
+                                let cursor=sessie.verplaats_cursor(n,&hash,&punt,richting,voorkeur.as_ref(),doel_x).map_err(|e|e.to_string())?;
+                                let pagina=cursor.pagina;let mut beeld=sessie.weergave(pagina).map_err(|e|e.to_string())?;beeld.voorkeursveld=Some(cursor.punt.id.clone());
+                                *deel=pagina;
+                                return Ok(Antwoord {deel:pagina,writer_cursor:Some(cursor),writer_markering:None,beeld,bron:sessie.bron(),hash:sessie.bron_hash().into(),terug:sessie.kan_terug(),vooruit:sessie.kan_vooruit()});
+                            }
                             Opdracht::Deel(n) => {
                                 beeld=Some(sessie.weergave(n).map_err(|e| e.to_string())?);
                                 *deel = n;
@@ -105,7 +120,7 @@ impl Werker {
                                 };
                                 // De interface accepteert het doel pas na haar versie-/focuscontrole.
                                 // Een oud navigatieantwoord mag het werkdraaddeel niet verplaatsen.
-                                return Ok(Antwoord{deel:pagina,writer_markering,beeld,bron:sessie.bron(),hash:sessie.bron_hash().into(),terug:sessie.kan_terug(),vooruit:sessie.kan_vooruit()});
+                                return Ok(Antwoord{deel:pagina,writer_markering,writer_cursor:None,beeld,bron:sessie.bron(),hash:sessie.bron_hash().into(),terug:sessie.kan_terug(),vooruit:sessie.kan_vooruit()});
                             }
                             Opdracht::WriterInvoer {deel:n,hash,groep,reeks,positie} => {
                                 if hash!=sessie.bron_hash() {return Err("Deze invoer hoort bij een verouderde documentversie".into());}
@@ -132,7 +147,7 @@ impl Werker {
                                 beeld.melding = sessie.markdown().map_err(|e| e.to_string())?;
                                 return Ok(Antwoord {
                                     deel:*deel,
-                                    writer_markering:None,
+                                    writer_markering:None,writer_cursor:None,
                                     beeld,
                                     hash:sessie.bron_hash().into(),
                             bron: sessie.bron(),
@@ -144,7 +159,7 @@ impl Werker {
                         }
                         Ok(Antwoord {
                             deel:*deel,
-                            writer_markering:None,
+                            writer_markering:None,writer_cursor:None,
                             beeld: match beeld {Some(b)=>b,None=>sessie.weergave(*deel).map_err(|e| e.to_string())?},
                             hash:sessie.bron_hash().into(),
                             bron: sessie.bron(),

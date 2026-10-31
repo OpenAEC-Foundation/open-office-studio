@@ -95,6 +95,64 @@ impl InteractieFrame {
     pub fn tekst(&self, id: &str) -> Option<&str> {
         self.teksten.get(id).map(|t| t.as_ref())
     }
+    pub fn cursordoel(
+        &self,
+        id: &str,
+        positie: usize,
+    ) -> Resultaat<crate::writer_navigatie::CursorDoel> {
+        let tekst = self
+            .tekst(id)
+            .ok_or_else(|| fout("Geen betrouwbare brontekst voor deze cursor"))?;
+        let pos = self
+            .adressen
+            .positie(id, scalar_naar_utf16(tekst, positie)?)?;
+        let k = crate::writer_navigatie::kies(&self.lijst, id, pos, 0, None)?;
+        Ok(crate::writer_navigatie::CursorDoel {
+            pagina: self.pagina,
+            punt: TekstPunt {
+                id: id.into(),
+                positie,
+            },
+            cursor: k.cursor,
+            regel: k.regel,
+            basislijn: k.basislijn,
+            doel_x: None,
+        })
+    }
+    pub fn cursorpunt(
+        &self,
+        x: f64,
+        y: f64,
+    ) -> Resultaat<Option<crate::writer_navigatie::CursorDoel>> {
+        let Some(punt) = self.punt(x, y)? else {
+            return Ok(None);
+        };
+        let tekst = self.tekst(&punt.id).unwrap();
+        let pos = self
+            .adressen
+            .positie(&punt.id, scalar_naar_utf16(tekst, punt.positie)?)?;
+        let k = crate::writer_navigatie::klik(&self.lijst, &punt.id, pos, x, y)?;
+        Ok(Some(crate::writer_navigatie::CursorDoel {
+            pagina: self.pagina,
+            punt,
+            cursor: k.cursor,
+            regel: k.regel,
+            basislijn: k.basislijn,
+            doel_x: None,
+        }))
+    }
+    pub fn controleer_cursor(&self, v: &crate::writer_navigatie::CursorDoel) -> Resultaat<()> {
+        if v.pagina != self.pagina {
+            return Err(fout("Cursor hoort bij een andere zichtbare pagina"));
+        }
+        let tekst = self
+            .tekst(&v.punt.id)
+            .ok_or_else(|| fout("Geen brontekst voor deze voorkeurcursor"))?;
+        let pos = self
+            .adressen
+            .positie(&v.punt.id, scalar_naar_utf16(tekst, v.punt.positie)?)?;
+        crate::writer_navigatie::kies(&self.lijst, &v.punt.id, pos, 0, Some(v)).map(|_| ())
+    }
     pub fn punt(&self, x: f64, y: f64) -> Resultaat<Option<TekstPunt>> {
         if !x.is_finite() || !y.is_finite() {
             return Err(fout("Geen eindige klikpositie"));
@@ -135,6 +193,33 @@ fn fout(tekst: &str) -> Fout {
     Fout::Document(tekst.into())
 }
 impl AdresKaart {
+    pub(crate) fn positie(&self, id: &str, offset: u32) -> Resultaat<i64> {
+        let a = self
+            .ids
+            .get(id)
+            .and_then(|&n| self.adressen.get(n))
+            .ok_or_else(|| fout("Geen betrouwbaar tekstadres voor deze alinea"))?;
+        let pos = a
+            .van
+            .checked_add(i64::from(offset))
+            .ok_or_else(|| fout("Tekstpositie te groot"))?;
+        if pos > a.tot {
+            return Err(fout("Cursor valt buiten het tekstadres"));
+        }
+        Ok(pos)
+    }
+    pub(crate) fn punt_voor_positie(&self, pos: i64) -> Resultaat<Option<(String, u32)>> {
+        let i = self.adressen.partition_point(|a| a.van <= pos);
+        let Some(a) = i
+            .checked_sub(1)
+            .and_then(|i| self.adressen.get(i))
+            .filter(|a| pos <= a.tot)
+        else {
+            return Ok(None);
+        };
+        let offset = u32::try_from(pos - a.van).map_err(|_| fout("Tekstpositie te groot"))?;
+        Ok(Some((a.id.clone(), offset)))
+    }
     pub(crate) fn nieuw(engine: &docx_edit::EngineSession) -> Resultaat<Self> {
         let docx_edit::GeometryRead::Value(omtrek) = engine.doc().geometry_position_outline("body")
         else {
@@ -267,16 +352,7 @@ impl AdresKaart {
             return Ok(None);
         }
         let Some(pos) = h.pos else { return Ok(None) };
-        let i = self.adressen.partition_point(|a| a.van <= pos);
-        let Some(a) = i
-            .checked_sub(1)
-            .and_then(|i| self.adressen.get(i))
-            .filter(|a| pos <= a.tot)
-        else {
-            return Ok(None);
-        };
-        let offset = u32::try_from(pos - a.van).map_err(|_| fout("Tekstpositie te groot"))?;
-        Ok(Some((a.id.clone(), offset)))
+        self.punt_voor_positie(pos)
     }
 }
 fn rechthoek(x: f64, y: f64, breedte: f64, hoogte: f64) -> Resultaat<Rechthoek> {

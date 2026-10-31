@@ -94,14 +94,14 @@ impl Blad<'_> {
         l: Layout<'_>,
         c: mouse::Cursor,
         vp: &Rectangle,
-    ) -> Option<office_core::writer_cursor::TekstPunt> {
+    ) -> Option<office_core::writer_navigatie::CursorDoel> {
         if !c.is_over(*vp) || self.breedte <= 0. || self.hoogte <= 0. {
             return None;
         }
         let p = c.position_in(l.bounds())?;
         let b = l.bounds();
         self.frame
-            .punt(
+            .cursorpunt(
                 f64::from(p.x * self.breedte / b.width),
                 f64::from(p.y * self.hoogte / b.height),
             )
@@ -193,7 +193,8 @@ impl Widget<Msg, Theme, Renderer> for Blad<'_> {
                     f.slepen = true;
                     bericht = Some(writer_direct::Bericht::Punt {
                         hash: self.hash.into(),
-                        punt,
+                        punt: punt.punt.clone(),
+                        cursor: Some(punt),
                         selecteren: f.modifiers.shift(),
                     });
                 } else {
@@ -204,7 +205,8 @@ impl Widget<Msg, Theme, Renderer> for Blad<'_> {
                 if let Some(punt) = self.punt(l, c, vp) {
                     bericht = Some(writer_direct::Bericht::Punt {
                         hash: self.hash.into(),
-                        punt,
+                        punt: punt.punt.clone(),
+                        cursor: Some(punt),
                         selecteren: true,
                     });
                 }
@@ -274,6 +276,34 @@ impl Widget<Msg, Theme, Renderer> for Blad<'_> {
                             } else {
                                 A::Move(M::Right)
                             }),
+                            Named::ArrowUp => {
+                                bericht = Some(writer_direct::Bericht::Beweeg(
+                                    office_core::writer_navigatie::Richting::Omhoog,
+                                    modifiers.shift(),
+                                ));
+                                None
+                            }
+                            Named::ArrowDown => {
+                                bericht = Some(writer_direct::Bericht::Beweeg(
+                                    office_core::writer_navigatie::Richting::Omlaag,
+                                    modifiers.shift(),
+                                ));
+                                None
+                            }
+                            Named::Home => {
+                                bericht = Some(writer_direct::Bericht::Beweeg(
+                                    office_core::writer_navigatie::Richting::RegelBegin,
+                                    modifiers.shift(),
+                                ));
+                                None
+                            }
+                            Named::End => {
+                                bericht = Some(writer_direct::Bericht::Beweeg(
+                                    office_core::writer_navigatie::Richting::RegelEinde,
+                                    modifiers.shift(),
+                                ));
+                                None
+                            }
                             Named::Backspace => Some(A::Edit(E::Backspace)),
                             Named::Delete => Some(A::Edit(E::Delete)),
                             Named::Enter => Some(A::Edit(E::Enter)),

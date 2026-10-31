@@ -1,5 +1,6 @@
 //! Directe pagina-invoer wordt geordend verwerkt; een lopend beeld mag geen toetsen laten verdwijnen.
 use super::*;
+use office_core::writer_navigatie::{CursorDoel, Richting};
 use office_core::{
     document::{TekstReeks, TekstStap},
     writer_cursor::{TekstMarkering, TekstPunt},
@@ -18,8 +19,10 @@ pub enum Bericht {
     Punt {
         hash: String,
         punt: TekstPunt,
+        cursor: Option<CursorDoel>,
         selecteren: bool,
     },
+    Beweeg(Richting, bool),
     Invoer(text_editor::Action),
     Klembord(klembord::Actie),
     Opslaan(bool),
@@ -38,12 +41,27 @@ pub struct Doel {
 struct Cursor {
     id: String,
     cursor: iced::advanced::text::editor::Cursor,
+    voorkeur: Option<(String, CursorDoel)>,
 }
 impl Cursor {
-    fn van(t: &Tab) -> Option<Self> {
+    fn van(t: &Tab, st: &Staat) -> Option<Self> {
+        let id = t.veld()?.id.clone();
+        let cursor = t.editor.cursor();
+        let pos = lint::tekenoffset(&t.editor, cursor.position);
+        let voorkeur = st
+            .voorkeur
+            .as_ref()
+            .filter(|(hash, c)| {
+                t.antwoord.as_ref().is_some_and(|a| &a.hash == hash)
+                    && c.punt.id == id
+                    && c.punt.positie == pos
+                    && c.pagina == t.deel
+            })
+            .cloned();
         Some(Self {
-            id: t.veld()?.id.clone(),
-            cursor: t.editor.cursor(),
+            id,
+            cursor,
+            voorkeur,
         })
     }
 }
@@ -64,9 +82,12 @@ enum Soort {
     Invoer {
         groep: u64,
         reeks: TekstReeks,
-        voor: Cursor,
+        voor: Box<Cursor>,
     },
     Navigatie,
+    Cursor {
+        selecteren: bool,
+    },
     Opmaak,
     Terug,
     Vooruit,
@@ -90,6 +111,8 @@ pub struct Staat {
     pub versie: u64,
     pub markering: Option<TekstMarkering>,
     marker_hash: String,
+    voorkeur: Option<(String, CursorDoel)>,
+    doel_x: Option<f64>,
     veranderingen: VecDeque<Wijziging>,
     geschiedenis: VecDeque<Geschiedenis>,
     fout: bool,
@@ -98,13 +121,17 @@ impl Staat {
     pub fn heeft_invoer(&self) -> bool {
         self.vlucht
             .as_ref()
-            .is_some_and(|v| !matches!(v.soort, Soort::Navigatie))
+            .is_some_and(|v| !matches!(v.soort, Soort::Navigatie | Soort::Cursor { .. }))
             || self.klembord.is_some()
             || self.rij.iter().any(|(b, _)| {
                 matches!(b,Bericht::Invoer(a) if a.is_edit())
                     || matches!(
                         b,
                         Bericht::Klembord(klembord::Actie::Knip | klembord::Actie::Plak)
+                            | Bericht::Opmaak(_)
+                            | Bericht::OpmaakToets(_)
+                            | Bericht::Terug
+                            | Bericht::Vooruit
                     )
             })
     }
@@ -121,6 +148,8 @@ impl Staat {
     }
     pub fn verlaat(&mut self) {
         self.actief = false;
+        self.voorkeur = None;
+        self.doel_x = None;
         self.nieuwe_groep();
         self.markering = None;
     }
@@ -152,6 +181,14 @@ impl Staat {
         self.markering = f.markering(&v.id, p.min(q), p.max(q)).ok();
         if let Some(m) = self.markering.as_mut() {
             m.cursor = f.markering(&v.id, p, p).ok().and_then(|m| m.cursor);
+            if let Some((hash, c)) = &self.voorkeur
+                && hash == &a.hash
+                && c.punt.id == v.id
+                && c.punt.positie == p
+                && f.controleer_cursor(c).is_ok()
+            {
+                m.cursor = Some(c.cursor);
+            }
         }
         self.marker_hash = a.hash.clone();
     }
@@ -315,6 +352,7 @@ fn verwerk(app: &mut App, id: u64) -> Task<Msg> {
                 Bericht::Punt {
                     hash,
                     mut punt,
+                    cursor,
                     selecteren,
                 } => {
                     if t.concept {
@@ -356,6 +394,10 @@ fn verwerk(app: &mut App, id: u64) -> Task<Msg> {
                     });
                     t.werk_opmaak_bij();
                     st.actief = true;
+                    st.doel_x = None;
+                    st.voorkeur = cursor
+                        .filter(|c| hash == t.antwoord.as_ref().unwrap().hash && c.punt == punt)
+                        .map(|c| (hash.clone(), c));
                     st.nieuwe_groep();
                     st.ververs(t);
                     if st.markering.is_none() {
@@ -367,7 +409,7 @@ fn verwerk(app: &mut App, id: u64) -> Task<Msg> {
                         st.vlucht = Some(Vlucht {
                             doel: d.clone(),
                             hash: hash.clone(),
-                            cursor: Cursor::van(t).unwrap(),
+                            cursor: Cursor::van(t, &st).unwrap(),
                             soort: Soort::Navigatie,
                         });
                         t.bezig = true;
@@ -401,8 +443,10 @@ fn verwerk(app: &mut App, id: u64) -> Task<Msg> {
                         st.nieuwe_groep();
                     }
                     if bewerkt && st.oorsprong.is_none() {
-                        st.oorsprong = Cursor::van(t);
+                        st.oorsprong = Cursor::van(t, &st);
                     }
+                    st.voorkeur = None;
+                    st.doel_x = None;
                     if let Err(e) = writer_invoer::voer_uit(t, a) {
                         fout = Some(e);
                         break;
@@ -415,6 +459,47 @@ fn verwerk(app: &mut App, id: u64) -> Task<Msg> {
                     }
                     t.werk_opmaak_bij();
                     st.ververs(t);
+                }
+                Bericht::Beweeg(richting, selecteren) => {
+                    if !st.actief {
+                        continue;
+                    }
+                    let Some(cursor) = Cursor::van(t, &st) else {
+                        continue;
+                    };
+                    let a = t.antwoord.as_ref().unwrap();
+                    let punt = TekstPunt {
+                        id: cursor.id.clone(),
+                        positie: lint::tekenoffset(&t.editor, cursor.cursor.position),
+                    };
+                    let voorkeur = st
+                        .voorkeur
+                        .as_ref()
+                        .filter(|(h, c)| h == &a.hash && c.punt == punt && c.pagina == t.deel)
+                        .map(|(_, c)| c.clone());
+                    let d = Doel {
+                        document: id,
+                        volgnummer: nummer(),
+                    };
+                    let hash = a.hash.clone();
+                    let opdracht = Opdracht::WriterCursor {
+                        deel: t.deel,
+                        hash: hash.clone(),
+                        punt,
+                        richting,
+                        voorkeur,
+                        doel_x: st.doel_x,
+                    };
+                    st.vlucht = Some(Vlucht {
+                        doel: d.clone(),
+                        hash,
+                        cursor,
+                        soort: Soort::Cursor { selecteren },
+                    });
+                    st.nieuwe_groep();
+                    t.bezig = true;
+                    resultaat = Uitkomst::Werk(d, opdracht);
+                    break;
                 }
                 Bericht::Klembord(klembord::Actie::Kopieer | klembord::Actie::Knip) => {
                     st.nieuwe_groep();
@@ -471,7 +556,7 @@ fn verwerk(app: &mut App, id: u64) -> Task<Msg> {
                     let Some((begin, einde)) = t.tekstbereik() else {
                         continue;
                     };
-                    let cursor = Cursor::van(t).unwrap();
+                    let cursor = Cursor::van(t, &st).unwrap();
                     let hash = t.antwoord.as_ref().unwrap().hash.clone();
                     let d = Doel {
                         document: id,
@@ -515,7 +600,7 @@ fn verwerk(app: &mut App, id: u64) -> Task<Msg> {
                             }
                         })
                         .map(|g| if terug { g.voor.clone() } else { g.na.clone() })
-                        .or_else(|| Cursor::van(t))
+                        .or_else(|| Cursor::van(t, &st))
                         .unwrap();
                     let d = Doel {
                         document: id,
@@ -591,7 +676,7 @@ fn verwerk(app: &mut App, id: u64) -> Task<Msg> {
 }
 fn start_invoer(t: &mut Tab, st: &mut Staat) -> Uitkomst {
     let v = t.veld().unwrap();
-    let c = Cursor::van(t).unwrap();
+    let c = Cursor::van(t, st).unwrap();
     let hash = t.antwoord.as_ref().unwrap().hash.clone();
     let reeks = TekstReeks {
         id: v.id.clone(),
@@ -626,7 +711,7 @@ fn start_invoer(t: &mut Tab, st: &mut Staat) -> Uitkomst {
         soort: Soort::Invoer {
             groep: st.groep,
             reeks,
-            voor,
+            voor: Box::new(voor),
         },
     });
     t.bezig = true;
@@ -655,7 +740,7 @@ pub fn gereed(app: &mut App, d: Doel, r: Result<Antwoord, String>) -> Task<Msg> 
     let Some(i) = app.tabs.iter().position(|t| t.id == d.document) else {
         return Task::none();
     };
-    let Some(v) = app.tabs[i].writer_direct.vlucht.take() else {
+    let Some(mut v) = app.tabs[i].writer_direct.vlucht.take() else {
         return Task::none();
     };
     if v.doel.volgnummer != d.volgnummer {
@@ -675,6 +760,41 @@ pub fn gereed(app: &mut App, d: Doel, r: Result<Antwoord, String>) -> Task<Msg> 
             return Task::none();
         }
     };
+    let cursor_doel = a.writer_cursor.clone();
+    if let Soort::Cursor { selecteren } = v.soort {
+        let Some(c) = &cursor_doel else {
+            app.tabs[i].bezig = false;
+            app.melding = "De navigatie leverde geen cursor op".into();
+            return Task::none();
+        };
+        if selecteren && c.punt.id != v.cursor.id {
+            let t = &mut app.tabs[i];
+            t.bezig = false;
+            t.writer_direct.fout = true;
+            t.writer_focus.store(false, Ordering::Relaxed);
+            app.melding="Selecties over meerdere alinea’s zijn nog niet aangesloten. De bron blijft ongewijzigd; Ctrl+Z verwerpt wachtende invoer.".into();
+            return Task::none();
+        }
+        let Some(veld) = a.beeld.velden.iter().find(|f| f.id == c.punt.id) else {
+            app.tabs[i].bezig = false;
+            app.melding = "De doelalinea ontbreekt in het navigatiebeeld".into();
+            return Task::none();
+        };
+        let selectie = selecteren.then_some(
+            v.cursor
+                .cursor
+                .selection
+                .unwrap_or(v.cursor.cursor.position),
+        );
+        v.cursor = Cursor {
+            id: c.punt.id.clone(),
+            voorkeur: Some((a.hash.clone(), c.clone())),
+            cursor: iced::advanced::text::editor::Cursor {
+                position: plek(&veld.tekst, c.punt.positie),
+                selection: selectie,
+            },
+        };
+    }
     let nieuw = a.hash.clone();
     let actief = app.tab().is_some_and(|t| t.id == d.document);
     let melding = app.melding.clone();
@@ -687,6 +807,11 @@ pub fn gereed(app: &mut App, d: Doel, r: Result<Antwoord, String>) -> Task<Msg> 
     let t = &mut app.tabs[i];
     herstel(t, &v.cursor);
     let mut st = std::mem::take(&mut t.writer_direct);
+    st.voorkeur = v.cursor.voorkeur.clone();
+    if let Some(c) = cursor_doel {
+        st.doel_x = c.doel_x;
+        st.voorkeur = Some((nieuw.clone(), c));
+    }
     match v.soort {
         Soort::Invoer { groep, reeks, voor } => {
             if let Some(g) = st.geschiedenis.iter_mut().rev().find(|g| g.groep == groep) {
@@ -697,7 +822,7 @@ pub fn gereed(app: &mut App, d: Doel, r: Result<Antwoord, String>) -> Task<Msg> 
                     groep,
                     voor_hash: v.hash.clone(),
                     na_hash: nieuw.clone(),
-                    voor,
+                    voor: *voor,
                     na: v.cursor.clone(),
                 });
             }
@@ -729,6 +854,7 @@ pub fn gereed(app: &mut App, d: Doel, r: Result<Antwoord, String>) -> Task<Msg> 
             }
         }
         Soort::Navigatie => {}
+        Soort::Cursor { .. } => {}
     }
     st.ververs(t);
     t.writer_direct = st;

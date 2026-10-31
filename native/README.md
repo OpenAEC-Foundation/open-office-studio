@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.21**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.22**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -36,7 +36,7 @@ valt buiten de standaardtestmatrix.
 | Onderdeel | Native implementatie | Nog over te zetten |
 |---|---|---|
 | Venster | OpenAEC-ribbon, documenttabbladen, vijf thema’s, sneltoetsen, Bestand, openen/opslaan/opslaan als, sluitvragen | Herstelkopieën, recente bestanden, afgesplitste vensters, updater, vertalingen |
-| Writer | Native paginering, klikbare alinea’s, linialen, zoom, tekstbereikopmaak en uitlijning, splitsen bij de editorcursor en samenvoegen van aangrenzende alinea’s, woorden inclusief tabellen, Markdown-export, papierformaat/afdrukstand/marge- en kolomvoorkeuzes per sectie, zichtbare kop- en voetteksten (eerste/even/oneven), opmaakstatus uit dezelfde engine voor stijlen en Unicode-selecties, Ctrl/Cmd+B/I/U, letterlijk zoeken/vervangen en navigatie/markering op de echte trefferpagina, directe pagina-invoer en selectie binnen ondersteunde alinea’s met invoerwachtrij, gegroepeerde undo en brongebonden klikpunten | Volledige rijke paginacursor, invoegopmaak, verticale regelnavigatie en selecties over alinea’s, kop/voet bewerken, aangepaste pagina-instelling en volledige alineabediening, velden/links/revisies bewerken, volledige ribbon, tabellen invoegen, spelling en afdrukken |
+| Writer | Native paginering, klikbare alinea’s, linialen, zoom, tekstbereikopmaak en uitlijning, splitsen bij de editorcursor en samenvoegen van aangrenzende alinea’s, woorden inclusief tabellen, Markdown-export, papierformaat/afdrukstand/marge- en kolomvoorkeuzes per sectie, zichtbare kop- en voetteksten (eerste/even/oneven), opmaakstatus uit dezelfde engine voor stijlen en Unicode-selecties, Ctrl/Cmd+B/I/U, letterlijk zoeken/vervangen en navigatie/markering op de echte trefferpagina, directe pagina-invoer en selectie binnen ondersteunde alinea’s met invoerwachtrij, gegroepeerde undo en brongebonden klikpunten, omhoog/omlaag en Home/End via echte documentregels en paginaovergangen | Volledige rijke paginacursor, invoegopmaak en selecties over alinea’s, kop/voet bewerken, aangepaste pagina-instelling en volledige alineabediening, velden/links/revisies bewerken, volledige ribbon, tabellen invoegen, spelling en afdrukken |
 | Spreadsheet | Raster met vaste rij-/kolomkoppen, directe celbewerking via dubbelklik/F2/typen, Enter/Tab/Escape, enkele-celnavigatie met pijltjestoetsen en werkvensterverplaatsing, formulebalk, bereikopmaak, rijen/kolommen invoegen/verwijderen, samenvoegen/splitsen, herberekenen en bladen wisselen | Doorlopend virtueel raster, bereikselecties en sleepbediening, zoeken, sorteren/filteren, klembordbereiken, CSV-import en grafieken |
 | Presentation | Native diaweergave, niet-geroteerde tekstvakken aanklikken, tekstbereikopmaak, dia’s toevoegen/verwijderen, tekstvakken invoegen, sprekersnotities bewerken | Directe cursor en vormbediening, geroteerde/gegroepeerde objecten, volledige ribbon en presentatiemodus |
 | Notition | Versies 1–3 openen, boeken/secties/pagina’s toevoegen, vrij canvas met tekstvakken slepen/vergroten, Markdown-preview, bloktekst en vet/cursief, prullenbak herstellen; onbekende bronvelden behouden | Automatische lokale opslag/herstel, zoeken, boeken/secties hernoemen/verplaatsen, volledige blok- en taakbediening en import/export |
@@ -74,7 +74,7 @@ gedeeltelijk beschermd document zijn nog niet overgezet.
 ![Beschermde Writer-bron met leesmelding](docs/screenshots/writer-beveiligd.png)
 
 Het Writer-lint volgt nu de opgeloste opmaak van de expliciete selectie. Zonder
-selectie bedienen de huidige opmaakopdrachten de hele alinea. Directe pagina-invoer binnen ondersteunde alinea’s is aangesloten; invoegopmaak, verticale navigatie, structurele Enter en selecties over alinea’s blijven open.
+selectie bedienen de huidige opmaakopdrachten de hele alinea. Directe pagina-invoer binnen ondersteunde alinea’s is aangesloten; invoegopmaak, structurele Enter en selecties over alinea’s blijven open.
 
 ![Directe invoer op de Writer-pagina](docs/screenshots/writer-pagina-invoer.png)
 
@@ -204,7 +204,7 @@ Vorige/Volgende blijft de volledige resultatenlijst doorlopen.
 
 Dit is nog geen volledige zoekpariteit: kop-/voetteksten, noten, tekstvakken,
 zoeken over alineagrenzen, reguliere expressies, jokertekens en opmaakfilters
-zijn niet aangesloten. De documentpagina gebruikt brongebonden klikpunten voor directe invoer en selectie binnen ondersteunde alinea’s. De volledige rijke cursor, selecties over alinea’s en verticale regelnavigatie blijven open.
+zijn niet aangesloten. De documentpagina gebruikt brongebonden klikpunten voor directe invoer en selectie binnen ondersteunde alinea’s. De volledige rijke cursor, selecties over alinea’s blijven open. Omhoog/omlaag en Home/End volgen nu de echte documentregels en pagina’s, inclusief de twee zichtbare posities op één bronpositie bij automatische regelafbreking.
 
 ![Gevormde zoekmarkering in native Writer](docs/screenshots/writer-zoeken-markering.png)
 
@@ -276,11 +276,11 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
-Het [controlerapport voor alpha 21](docs/controle-2026-10-31-alpha21.md) beschrijft **250 reguliere Rust-tests**, inclusief **72 GUI-tests**, zes aparte runtimeproeven en zeven Python-tests. Rustfmt, Clippy met waarschuwingen als fouten en bronhashcontroles slagen. De bestandsuitvoer en conversies zijn onafhankelijk teruggelezen; **41 native schermen** zijn vastgelegd. De nieuwe paginacursor en Unicode-invoer zijn op drie zoomstanden gecontroleerd. Een herberekening mag geen toetsen verliezen of de invoergroepering door haar wachttijd veranderen.
+Het [controlerapport voor alpha 22](docs/controle-2026-10-31-alpha22.md) beschrijft **258 reguliere Rust-tests**, inclusief **76 GUI-tests**, zes aparte runtimeproeven en zeven Python-tests. Rustfmt, Clippy met waarschuwingen als fouten en bronhashcontroles slagen. De bestandsuitvoer en conversies zijn onafhankelijk teruggelezen; **43 native schermen** zijn vastgelegd. De nieuwe proeven controleren documentregelnavigatie, paginaovergangen, tabelcellen, gedeelde bronposities aan automatische regelgrenzen, snelle navigatie/invoer en zichtbare undo-affiniteit.
 
-De alpha-21-releasebuild en platformronde zijn nog niet afgerond. De [alpha-20-platformronde](docs/platformen-2026-10-31-alpha20.json) slaagt op alle vijf taken, met 987 bronbestanden per pakket, 80 volledige beeldparen zonder tolerantie en [21 paginabezoeken](docs/paginametingen-2026-10-31-alpha20.json). De vaste widgetklok lost het eerdere alpha-19-verschil van 17 zoekcursorpixels op; de [afgekeurde ronde](docs/platformen-2026-10-31-alpha19-afgekeurd.json) blijft bewaard.
+De alpha-22-releasebuild en platformronde moeten nog worden uitgevoerd. De [alpha-21-platformronde](docs/platformen-2026-10-31-alpha21.json) slaagt op alle vijf taken, met 1039 bronbestanden per pakket, 82 volledige beeldparen zonder tolerantie en [21 paginabezoeken](docs/paginametingen-2026-10-31-alpha21.json). De [lokale releasebouw](docs/bouw-2026-10-31-alpha21-lokaal.json) slaagt in 38m02s; beide programma’s zijn met hun versies, bronmanifest en hashes vastgezet.
 
-De [echte alpha-20-Linux-releasevensterproef](docs/vensterproef-2026-10-31-alpha20-release/LEESMIJ.md) slaagt op twaalf gerichte stappen. Een vast documentblok met de zoekmarkering is pixelgelijk aan de widgetreferentie. De [afzonderlijke paginavensterproef](docs/paginavenster-2026-10-31-alpha20-release/LEESMIJ.md) controleert pagina 5 → 0 → 5, echte bronselecties en ongewijzigde bytes, met de twee eerdere mislukte proefopzetten behouden. Beide proeven gebruiken eigen Xvfb-/D-Bus- en XDG-mappen. Zij bewijzen die alpha-20-bediening; geen alpha-21-vensterbediening, fysieke hardware, overige modules, Windows/macOS-bediening, echte IME-compositie, systeemdialogen of schermlezers.
+De [echte alpha-21-Linux-releasevensterproef](docs/vensterproef-2026-10-31-alpha21-release/LEESMIJ.md) slaagt op elf gerichte stappen met directe paginatoetsen, systeemklembord, Unicode, onmiddellijk bewaren, opmaakbehoud, bronexacte undo, knippen/plakken, zoekfocus na Escape, Bestand en schoon sluiten. De eerste afgekeurde proefopzet blijft toegelicht bewaard. Deze proef gebruikt een eigen Xvfb, D-Bus en XDG-mappen. Geen alpha-22-venstergoedkeuring, fysieke hardware, Windows/macOS-bediening, echte IME-compositie, systeemdialogen of schermlezers.
 
 ```sh
 python3 native/scripts/controleer-bron.py
@@ -399,15 +399,15 @@ Een afzonderlijke Chromium-testbrowser heeft inmiddels een oorspronkelijke
 navigatie gepauzeerd om de knipperfase vast te leggen; meldingen zijn via hun
 sluitknoppen gesloten. De opname is niet geschaald, uitgelijnd of nabewerkt.
 Twee opeenvolgende referentieopnamen zijn pixelgelijk. De
-[alpha-21-vergelijking](docs/pixelcontrole-alpha21/writer/rapport.json)
-met de native Writer meet **108.316 afwijkende pixels van 943.736**.
+[alpha-22-vergelijking](docs/pixelcontrole-alpha22/writer/rapport.json)
+met de native Writer meet **108.318 afwijkende pixels van 943.736**.
 Deze ene vastgelegde toestand bewijst dus expliciet dat de UI nog niet gelijk is.
 De [herkomst](docs/referentie-2026-W44.8/writer.json) vermeldt bron-, bundel- en
 beeldhashes, browser, viewport, thema en taal. Ook voor
 [Spreadsheet](docs/referentie-2026-W44.8/spreadsheet.png),
 [Presentation](docs/referentie-2026-W44.8/presentation.png) en
 [Notition](docs/referentie-2026-W44.8/notition.png) zijn nu vaste PNG-referenties
-vastgelegd. De [vier alpha-21-vergelijkingen](docs/pixelcontrole-alpha21/rapport.json)
+vastgelegd. De [vier alpha-22-vergelijkingen](docs/pixelcontrole-alpha22/rapport.json)
 falen; indeling, panelen en overige schermtoestanden blijven over te zetten.
 De browser- en nativevenstertoestanden zijn vastgelegd. Een vergelijking in
 dezelfde desktopvenstertoestand staat nog open.
@@ -439,4 +439,4 @@ python3 native/scripts/meet-paginas.py \
 Op Windows heeft de controleur de extensie `.exe`. Dit is een paginaproef,
 geen fysieke GUI-, volledige inhouds- of pariteitscontrole.
 
-De [controle van alpha 21](docs/controle-2026-10-31-alpha21.md) legt de huidige lokale tests en nog open acceptatie vast. Historische platform- en vensterproeven blijven aan hun eigen broncommit en programmaversie gekoppeld.
+De [controle van alpha 22](docs/controle-2026-10-31-alpha22.md) legt de huidige lokale tests en nog open acceptatie vast. Historische platform- en vensterproeven blijven aan hun eigen broncommit en programmaversie gekoppeld.

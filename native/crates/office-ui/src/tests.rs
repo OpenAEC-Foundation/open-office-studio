@@ -277,6 +277,7 @@ pub(super) fn app_met_document(module: Module, bytes: &[u8]) -> App {
     tab.antwoord = Some(Antwoord {
         deel: 0,
         writer_markering: None,
+        writer_cursor: None,
         beeld,
         hash: sessie.bron_hash().into(),
         bron: sessie.bron(),

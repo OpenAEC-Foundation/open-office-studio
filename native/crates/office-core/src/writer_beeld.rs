@@ -230,6 +230,65 @@ struct Context {
     paginakaart: Option<docx_edit::structured::DocxLayoutMap>,
     adressen: Option<std::sync::Arc<crate::writer_cursor::AdresKaart>>,
 }
+pub(crate) struct CursorVraag<'a> {
+    pub pagina: usize,
+    pub id: &'a str,
+    pub positie: u32,
+    pub vorige: u32,
+    pub richting: crate::writer_navigatie::Richting,
+    pub voorkeur: Option<&'a crate::writer_navigatie::CursorDoel>,
+    pub doel_x: Option<f64>,
+}
+pub(crate) fn verplaats_cursor(
+    bron: &[u8],
+    eigenaar: u64,
+    vraag: CursorVraag<'_>,
+) -> Resultaat<(crate::writer_navigatie::Kandidaat, u32, Option<f64>)> {
+    let CursorVraag {
+        pagina,
+        id,
+        positie,
+        vorige,
+        richting,
+        voorkeur,
+        doel_x,
+    } = vraag;
+    met_context(bron, eigenaar, |c| {
+        c.tekstpagina(pagina)?;
+        let aantal = c.engine.with_display_list(|d| d.pages.len()).unwrap_or(0);
+        let paginas: Vec<_> = (pagina.saturating_sub(1)..(pagina + 2).min(aantal)).collect();
+        c.engine
+            .build_display_pages_frame(&paginas, 0)
+            .map_err(fout)?;
+        let adressen = c.adressen.as_ref().unwrap();
+        let pos = adressen.positie(id, positie)?;
+        let vorig = adressen.positie(id, vorige)?;
+        c.engine
+            .with_display_list(|dl| {
+                let (k, pos, x) = crate::writer_navigatie::verplaats(
+                    dl,
+                    adressen,
+                    crate::writer_navigatie::Vraag {
+                        pagina,
+                        id,
+                        pos,
+                        vorige: vorig,
+                        richting,
+                        voorkeur,
+                        doel_x,
+                    },
+                )?;
+                let Some((doel_id, offset)) = adressen.punt_voor_positie(pos)? else {
+                    return Err(fout("Geen tekstadres bij de doelcursor"));
+                };
+                if doel_id != k.id {
+                    return Err(fout("Doelcursor en bronalinea komen niet overeen"));
+                }
+                Ok((k, offset, x))
+            })
+            .ok_or_else(|| fout("Geen behouden navigatiegeometrie"))?
+    })
+}
 impl Context {
     fn nieuw(bron: &[u8], met_opmaak: bool) -> Resultaat<Self> {
         #[cfg(test)]

@@ -14,6 +14,7 @@ pub mod writer;
 mod writer_beeld;
 pub mod writer_cursor;
 pub mod writer_document;
+pub mod writer_navigatie;
 pub mod writer_opmaak;
 pub mod writer_pagina;
 mod writer_tekst;
