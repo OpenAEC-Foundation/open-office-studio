@@ -9,6 +9,7 @@ mod lint;
 mod mail_ui;
 mod notitie_ui;
 mod pagina_ui;
+mod raster_koppen;
 mod raster_ui;
 mod sleepvak;
 mod stijl;
@@ -693,11 +694,22 @@ impl App {
                                 tab.panelen = false;
                             }
                             self.melding = antwoord.beeld.melding.clone();
-                            tab.afbeelding = antwoord
-                                .beeld
-                                .afbeelding
-                                .as_ref()
-                                .map(|b| image::Handle::from_bytes(b.clone()));
+                            // Een nieuwe handle krijgt een unieke decoderidentiteit.
+                            // Een selectiestap met hetzelfde paginabeeld houdt de
+                            // bestaande decodeer- en rendercache daarom intact.
+                            if tab.afbeelding.is_none()
+                                || tab
+                                    .antwoord
+                                    .as_ref()
+                                    .and_then(|a| a.beeld.afbeelding.as_deref())
+                                    != antwoord.beeld.afbeelding.as_deref()
+                            {
+                                tab.afbeelding = antwoord
+                                    .beeld
+                                    .afbeelding
+                                    .as_ref()
+                                    .map(|b| image::Handle::from_bytes(b.clone()));
+                            }
                             tab.canvas_voorbeeld = None;
                             tab.notitie_invoer = false;
                             tab.markdown = antwoord
@@ -1058,11 +1070,12 @@ impl App {
                     match office_core::rekenblad::bereik(&adres) {
                         Ok(r) => {
                             let cel = r.start.to_a1();
-                            if let Some(n) = t
-                                .antwoord
-                                .as_ref()
-                                .and_then(|a| a.beeld.velden.iter().position(|v| v.id == cel))
-                            {
+                            if let Some(n) = t.antwoord.as_ref().and_then(|a| {
+                                a.beeld.velden.iter().position(|v| {
+                                    v.id == cel
+                                        && a.beeld.pagina.vlakken.iter().any(|r| r.id == v.id)
+                                })
+                            }) {
                                 t.toon_veld(n);
                                 t.adres = adres;
                             } else {
@@ -2047,24 +2060,26 @@ impl App {
             if a.beeld.module == Module::Notition {
                 notitie_ui::weergave(self, t, a)
             } else {
-                let mut nav = column![w::mono_label(l, a.beeld.module.naam())].spacing(6);
-                for (i, naam) in a.beeld.onderdelen.iter().enumerate() {
-                    nav = nav.push(w::button(
+                let navigator = || {
+                    let mut nav = column![w::mono_label(l, a.beeld.module.naam())].spacing(6);
+                    for (i, naam) in a.beeld.onderdelen.iter().enumerate() {
+                        nav = nav.push(w::button(
+                            l,
+                            naam,
+                            if i == t.deel { K::Secondary } else { K::Quiet },
+                            D::Compact,
+                            None,
+                            (!t.bezig).then_some(Msg::Deel(i)),
+                        ));
+                    }
+                    w::panel(
                         l,
-                        naam,
-                        if i == t.deel { K::Secondary } else { K::Quiet },
-                        D::Compact,
-                        None,
-                        (!t.bezig).then_some(Msg::Deel(i)),
-                    ));
-                }
-                let navigator = w::panel(
-                    l,
-                    "Navigatie",
-                    190.,
-                    vec![],
-                    scrollable(nav.padding(12)).into(),
-                );
+                        "Navigatie",
+                        190.,
+                        vec![],
+                        scrollable(nav.padding(12)).into(),
+                    )
+                };
                 let inhoud: Element<_> = if let Some(afbeelding) = &t.afbeelding {
                     let pagina = &a.beeld.pagina;
                     let inhoud = image(afbeelding.clone())
@@ -2072,7 +2087,7 @@ impl App {
                         .height((pagina.hoogte * t.zoom).max(1.))
                         .content_fit(iced::ContentFit::Fill);
                     let blad = if a.beeld.module == Module::Spreadsheet {
-                        raster_ui::blad(self, t, inhoud.into())
+                        raster_koppen::omlijst(self, t, raster_ui::blad(self, t, inhoud.into()))
                     } else {
                         documentblad::blad(
                             inhoud,
@@ -2082,42 +2097,55 @@ impl App {
                             Msg::Raak,
                         )
                     };
-                    container(container(blad).style(|_| container::Style {
-                        background: Some(iced::Color::WHITE.into()),
-                        border: iced::Border {
-                            color: iced::Color::from_rgb8(231, 229, 228),
-                            width: 1.,
-                            radius: 0.into(),
-                        },
-                        shadow: iced::Shadow {
-                            color: iced::Color::from_rgba8(0, 0, 0, 0.06),
-                            offset: iced::Vector::new(0., 1.),
-                            blur_radius: 4.,
-                        },
-                        ..Default::default()
-                    }))
-                    .padding(iced::Padding {
-                        top: if a.beeld.module == Module::Writer {
-                            lineaal::BOVENRUIMTE
-                        } else {
-                            23.
-                        },
-                        bottom: 24.,
-                        left: 24.,
-                        right: 24.,
-                    })
-                    .width(
-                        (self.venster_grootte.width
-                            - if t.panelen { 490. } else { 0. }
-                            - if a.beeld.module == Module::Writer {
-                                18.
-                            } else {
-                                40.
+                    if a.beeld.module == Module::Spreadsheet {
+                        container(blad)
+                            .width(
+                                (self.venster_grootte.width - if t.panelen { 490. } else { 0. })
+                                    .max(pagina.breedte * t.zoom + raster_koppen::LINKS),
+                            )
+                            .style(|_| container::Style {
+                                background: Some(iced::Color::WHITE.into()),
+                                ..Default::default()
                             })
-                        .max(pagina.breedte * t.zoom + 48.),
-                    )
-                    .align_x(iced::Alignment::Center)
-                    .into()
+                            .into()
+                    } else {
+                        container(container(blad).style(|_| container::Style {
+                            background: Some(iced::Color::WHITE.into()),
+                            border: iced::Border {
+                                color: iced::Color::from_rgb8(231, 229, 228),
+                                width: 1.,
+                                radius: 0.into(),
+                            },
+                            shadow: iced::Shadow {
+                                color: iced::Color::from_rgba8(0, 0, 0, 0.06),
+                                offset: iced::Vector::new(0., 1.),
+                                blur_radius: 4.,
+                            },
+                            ..Default::default()
+                        }))
+                        .padding(iced::Padding {
+                            top: if a.beeld.module == Module::Writer {
+                                lineaal::BOVENRUIMTE
+                            } else {
+                                23.
+                            },
+                            bottom: 24.,
+                            left: 24.,
+                            right: 24.,
+                        })
+                        .width(
+                            (self.venster_grootte.width
+                                - if t.panelen { 490. } else { 0. }
+                                - if a.beeld.module == Module::Writer {
+                                    18.
+                                } else {
+                                    40.
+                                })
+                            .max(pagina.breedte * t.zoom + 48.),
+                        )
+                        .align_x(iced::Alignment::Center)
+                        .into()
+                    }
                 } else {
                     let mut blad =
                         column![w::mono_label(l, "OPENAEC"), w::heading(l, &t.naam, 26.)]
@@ -2151,6 +2179,7 @@ impl App {
                 };
                 let pagina = &a.beeld.pagina;
                 let scroller = scrollable(inhoud)
+                    .id("document-scroll")
                     .direction(scrollable::Direction::Both {
                         horizontal: Default::default(),
                         vertical: Default::default(),
@@ -2181,91 +2210,110 @@ impl App {
                     .into()
                 } else {
                     container(scroller)
-                        .padding(20)
+                        .padding(if a.beeld.module == Module::Spreadsheet {
+                            0
+                        } else {
+                            20
+                        })
                         .width(Length::Fill)
                         .height(Length::Fill)
                         .style(move |_| container::Style {
-                            background: Some(c.workspace.into()),
+                            background: Some(
+                                if a.beeld.module == Module::Spreadsheet {
+                                    iced::Color::WHITE
+                                } else {
+                                    c.workspace
+                                }
+                                .into(),
+                            ),
                             ..Default::default()
                         })
                         .into()
                 };
-                let mut velden = column![].spacing(3);
-                for (i, veld) in a.beeld.velden.iter().enumerate() {
-                    let label = if a.beeld.module == Module::Spreadsheet {
-                        format!("{}  {}", veld.naam, veld.tekst)
-                    } else {
-                        format!(
-                            "{}  {}",
-                            veld.naam,
-                            veld.tekst.chars().take(36).collect::<String>()
-                        )
-                    };
-                    velden = velden.push(tekstknop(
-                        l,
-                        label,
-                        if i == t.gekozen {
-                            K::Secondary
-                        } else {
-                            K::Quiet
-                        },
-                        D::Compact,
-                        None,
-                        (!t.bezig).then_some(Msg::Veld(i)),
-                    ));
-                }
-                let veld = t.veld();
-                let mut editor = column![w::mono_label(l, "TEKST BEWERKEN")].spacing(10);
-                if a.beeld.module == Module::Spreadsheet {
-                    editor = editor.push(
-                        row![
-                            openaec_ui::design::a11y::named(
-                                text_input("Celadres", &t.adres)
-                                    .on_input(Msg::Adres)
-                                    .on_submit(Msg::GaNaar),
-                                openaec_ui::design::a11y::Role::TextField,
-                                "Celadres"
-                            ),
-                            w::button(l, "Ga", K::Secondary, D::Compact, None, Some(Msg::GaNaar))
-                        ]
-                        .spacing(4),
-                    );
-                }
-                editor = editor.push(w::body(
-                    l,
-                    veld.map(|v| v.naam.as_str()).unwrap_or("Geen tekstveld"),
-                ));
-                let bewerkbaar = veld.is_some_and(|v| v.bewerkbaar) && !t.bezig;
-                editor = editor.push(openaec_ui::design::a11y::named(
-                    text_editor(&t.editor)
-                        .on_action(Msg::Invoer)
-                        .height(190)
-                        .padding(12),
-                    openaec_ui::design::a11y::Role::TextField,
-                    "Tekst van geselecteerd veld",
-                ));
-                editor = editor.push(w::button(
-                    l,
-                    if t.bezig { "Verwerken…" } else { "Toepassen" },
-                    K::Primary,
-                    D::Regular,
-                    Some(icoon(Icon::Check)),
-                    (bewerkbaar && t.concept).then_some(Msg::PasToe),
-                ));
-                editor = editor.push(w::secondary(
-                    l,
-                    if t.concept {
-                        "Tekst is nog niet toegepast"
-                    } else if !bewerkbaar {
-                        "Alleen lezen"
-                    } else {
-                        "Selecteer een tekstveld of cel"
-                    },
-                ));
-                editor = editor.push(scrollable(velden).height(Length::Fill));
-                let inhoudspaneel = w::panel(l, "Inhoud", 300., vec![], editor.padding(14).into());
                 let werkvlak: Element<_> = if t.panelen {
-                    row![navigator, midden, inhoudspaneel]
+                    let mut velden = column![].spacing(3);
+                    for (i, veld) in a.beeld.velden.iter().enumerate() {
+                        let label = if a.beeld.module == Module::Spreadsheet {
+                            format!("{}  {}", veld.naam, veld.tekst)
+                        } else {
+                            format!(
+                                "{}  {}",
+                                veld.naam,
+                                veld.tekst.chars().take(36).collect::<String>()
+                            )
+                        };
+                        velden = velden.push(tekstknop(
+                            l,
+                            label,
+                            if i == t.gekozen {
+                                K::Secondary
+                            } else {
+                                K::Quiet
+                            },
+                            D::Compact,
+                            None,
+                            (!t.bezig).then_some(Msg::Veld(i)),
+                        ));
+                    }
+                    let veld = t.veld();
+                    let mut editor = column![w::mono_label(l, "TEKST BEWERKEN")].spacing(10);
+                    if a.beeld.module == Module::Spreadsheet {
+                        editor = editor.push(
+                            row![
+                                openaec_ui::design::a11y::named(
+                                    text_input("Celadres", &t.adres)
+                                        .on_input(Msg::Adres)
+                                        .on_submit(Msg::GaNaar),
+                                    openaec_ui::design::a11y::Role::TextField,
+                                    "Celadres"
+                                ),
+                                w::button(
+                                    l,
+                                    "Ga",
+                                    K::Secondary,
+                                    D::Compact,
+                                    None,
+                                    Some(Msg::GaNaar)
+                                )
+                            ]
+                            .spacing(4),
+                        );
+                    }
+                    editor = editor.push(w::body(
+                        l,
+                        veld.map(|v| v.naam.as_str()).unwrap_or("Geen tekstveld"),
+                    ));
+                    let bewerkbaar = veld.is_some_and(|v| v.bewerkbaar) && !t.bezig;
+                    editor = editor.push(openaec_ui::design::a11y::named(
+                        text_editor(&t.editor)
+                            .on_action(Msg::Invoer)
+                            .height(190)
+                            .padding(12),
+                        openaec_ui::design::a11y::Role::TextField,
+                        "Tekst van geselecteerd veld",
+                    ));
+                    editor = editor.push(w::button(
+                        l,
+                        if t.bezig { "Verwerken…" } else { "Toepassen" },
+                        K::Primary,
+                        D::Regular,
+                        Some(icoon(Icon::Check)),
+                        (bewerkbaar && t.concept).then_some(Msg::PasToe),
+                    ));
+                    editor = editor.push(w::secondary(
+                        l,
+                        if t.concept {
+                            "Tekst is nog niet toegepast"
+                        } else if !bewerkbaar {
+                            "Alleen lezen"
+                        } else {
+                            "Selecteer een tekstveld of cel"
+                        },
+                    ));
+                    editor = editor.push(scrollable(velden).height(Length::Fill));
+                    let inhoudspaneel =
+                        w::panel(l, "Inhoud", 300., vec![], editor.padding(14).into());
+                    row![navigator(), midden, inhoudspaneel]
                         .height(Length::Fill)
                         .into()
                 } else {

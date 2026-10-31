@@ -60,13 +60,26 @@ op 943.736 pixels. Geen maskers, herschaling of versoepeling.
 
 ## Bouwstatus en resterend werk
 
-De nieuwe release- en platformronde zijn nog niet afgerond. De
-[afgeronde alpha-12-ronde](controle-2026-10-31-alpha12.md) heeft vijf CI-jobs
-groen, alle 718 verpakte bronbestanden bytegelijk per platform, 68 exacte
-native beeldparen en zeven exacte paginabezoeken op elk van de drie platforms.
+De [alpha-13-platformronde](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41189791621)
+is afgerond: alle vijf jobs groen. De [pakket- en beeldcontrole](platformen-2026-10-31-alpha13.json)
+bevestigt **741 verpakte bronbestanden bytegelijk per platform**, de juiste
+architecturen, bronregressie en **70 exacte native beeldparen**. Zeven
+paginabezoeken zijn op [Linux](paginameting-2026-10-31-alpha13-Linux.json),
+[Windows](paginameting-2026-10-31-alpha13-Windows.json) en
+[macOS](paginameting-2026-10-31-alpha13-macOS.json) exact gelijk tussen verse
+en behouden engines; de programmahashes komen overeen met de verpakte controleurs.
+De relevante Git-bomen van de CI-mergecheckout en de broncommit zijn gelijk.
+Dit bewijst geen fysieke GUI, schone installatie, binaire reproduceerbaarheid
+of gelijkheid met de bestaande interface.
+
+Het Linux-CI-pakket is ook lokaal uitgepakt en gecontroleerd: CRC, SHA-256,
+alle 741 bronbestanden tegen het vaste Git-archief, bronpinnen, notices,
+compileerinclusies en beide programmaversies. De afzonderlijke lokale
+releasebuild vanaf dat archief is nog niet afgerond.
+
 De lokale alpha-12-release heeft 579 geslaagde, 68 geweigerde bronnen en één
-time-out uit 648 geselecteerde OOXML-bestanden. Dit platform- en corpusbewijs
-betreft alpha 12.
+time-out uit 648 geselecteerde OOXML-bestanden. Dat brede corpusbewijs betreft
+alpha 12 en is geen volledige inhouds-, stijl- of functiecontrole.
 
 Rasterkoppen, bereikselecties en -klembord, sleepbediening, volledige
 bescherming en overige spreadsheetopdrachten blijven open. Ook directe rijke

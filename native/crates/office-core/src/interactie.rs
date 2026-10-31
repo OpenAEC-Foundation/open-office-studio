@@ -41,3 +41,15 @@ pub struct RasterVenster {
     pub rij: u32,
     pub kolom: u32,
 }
+#[derive(Debug, Clone, PartialEq)]
+pub struct RasterKop {
+    /// Nulgetelde rij of kolom; de naam wordt daaruit afgeleid.
+    pub index: u32,
+    pub begin: f32,
+    pub omvang: f32,
+}
+#[derive(Debug, Clone, Default, PartialEq)]
+pub struct RasterKoppen {
+    pub rijen: Vec<RasterKop>,
+    pub kolommen: Vec<RasterKop>,
+}

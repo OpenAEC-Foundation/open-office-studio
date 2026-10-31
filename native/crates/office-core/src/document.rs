@@ -86,6 +86,7 @@ pub struct Weergave {
     pub afbeelding: Option<Vec<u8>>,
     pub melding: String,
     pub pagina: Pagina,
+    pub raster: Option<crate::interactie::RasterKoppen>,
     pub notitie: Option<crate::notities::NotitiePagina>,
     pub voorkeursveld: Option<String>,
     pub bewerkingsbeperking: Option<String>,
@@ -325,6 +326,7 @@ impl Document {
             afbeelding: None,
             melding: String::new(),
             pagina: Pagina::default(),
+            raster: None,
             notitie: None,
             voorkeursveld: None,
             bewerkingsbeperking: None,
@@ -572,17 +574,32 @@ impl Sessie {
             kolom: cel.col.saturating_sub(2),
         };
         self.beelden.borrow_mut().clear();
-        match self.weergave(deel) {
-            Ok(mut b) => {
-                b.voorkeursveld = Some(anker.to_a1());
-                Ok(b)
-            }
-            Err(e) => {
-                self.venster = oud;
+        let resultaat = (|| {
+            let mut b = self.weergave(deel)?;
+            let id = anker.to_a1();
+            if !b.pagina.vlakken.iter().any(|r| r.id == id) {
+                // Een brede voorafgaande kolom kan de doelcel buiten de
+                // rasterlimiet houden. Probeer dan zonder voorafgaande cellen.
+                self.venster = RasterVenster {
+                    rij: cel.row,
+                    kolom: cel.col,
+                };
                 self.beelden.borrow_mut().clear();
-                Err(e)
+                b = self.weergave(deel)?;
             }
+            if !b.pagina.vlakken.iter().any(|r| r.id == id) {
+                return Err(fout(
+                    "Deze cel heeft geen zichtbare afmetingen; controleer verborgen rijen en kolommen",
+                ));
+            }
+            b.voorkeursveld = Some(id);
+            Ok(b)
+        })();
+        if resultaat.is_err() {
+            self.venster = oud;
+            self.beelden.borrow_mut().clear();
         }
+        resultaat
     }
     pub fn verplaats_cel(
         &mut self,

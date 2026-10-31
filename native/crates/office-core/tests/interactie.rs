@@ -299,18 +299,113 @@ fn rekenblad_navigatie_verplaatst_het_venster_zonder_bestandswijziging() {
     .unwrap();
     let origineel = s.bron();
     assert_eq!(
-        s.verplaats_cel(0, "L30", Richting::Rechts)
+        s.verplaats_cel(0, "X60", Richting::Rechts)
             .unwrap()
             .voorkeursveld
             .as_deref(),
-        Some("M30")
+        Some("Y60")
     );
-    let beeld = s.verplaats_cel(0, "M30", Richting::Onder).unwrap();
-    assert_eq!(beeld.voorkeursveld.as_deref(), Some("M31"));
-    assert!(beeld.pagina.vlakken.iter().any(|v| v.id == "M31"));
+    let beeld = s.verplaats_cel(0, "Y60", Richting::Onder).unwrap();
+    assert_eq!(beeld.voorkeursveld.as_deref(), Some("Y61"));
+    assert!(beeld.pagina.vlakken.iter().any(|v| v.id == "Y61"));
     assert!(s.bron().as_slice() == origineel.as_slice());
     assert!(!s.kan_terug());
     assert!(!s.kan_vooruit());
+}
+
+#[test]
+fn rasterkoppen_delen_celgeometrie_ook_bij_verborgen_en_brede_assen() {
+    use betteroffice_xlsx as x;
+    let Document::Spreadsheet(d) = Document::nieuw(Module::Spreadsheet).unwrap() else {
+        panic!()
+    };
+    let mut model = d.model().clone();
+    let mut blad = x::Sheet::new("Koppen");
+    blad.col_widths.insert(1, 0.);
+    blad.row_heights.insert(1, 0.);
+    blad.merges.push(x::CellRange::parse_a1("A1:D3").unwrap());
+    model.sheets[0] = blad;
+    let bytes = x::Workbook::from_model(model.clone())
+        .unwrap()
+        .save()
+        .unwrap();
+    let mut s = Sessie::open(Module::Spreadsheet, bytes).unwrap();
+    let bron = s.bron();
+    let beeld = s.weergave(0).unwrap();
+    let koppen = beeld.raster.as_ref().unwrap();
+    assert!(!koppen.kolommen.iter().any(|k| k.index == 1));
+    assert!(!koppen.rijen.iter().any(|k| k.index == 1));
+    let samen = beeld
+        .pagina
+        .vlakken
+        .iter()
+        .find(|v| v.id == "A1")
+        .unwrap()
+        .grens;
+    let breedte: f32 = koppen
+        .kolommen
+        .iter()
+        .filter(|k| k.index <= 3)
+        .map(|k| k.omvang)
+        .sum();
+    let hoogte: f32 = koppen
+        .rijen
+        .iter()
+        .filter(|k| k.index <= 2)
+        .map(|k| k.omvang)
+        .sum();
+    assert!((samen.breedte - breedte).abs() < 0.01);
+    assert!((samen.hoogte - hoogte).abs() < 0.01);
+    let ver = s.naar_cel(0, "AZ1000").unwrap();
+    let rect = ver
+        .pagina
+        .vlakken
+        .iter()
+        .find(|v| v.id == "AZ1000")
+        .unwrap()
+        .grens;
+    let koppen = ver.raster.as_ref().unwrap();
+    assert_eq!(
+        koppen
+            .kolommen
+            .iter()
+            .find(|k| k.index == 51)
+            .unwrap()
+            .begin,
+        rect.x
+    );
+    assert_eq!(
+        koppen.rijen.iter().find(|k| k.index == 999).unwrap().begin,
+        rect.y
+    );
+    assert!(s.bron().as_slice() == bron.as_slice());
+    assert!(!s.kan_terug());
+
+    let mut blad = x::Sheet::new("Breed");
+    blad.col_widths.insert(0, 255.);
+    blad.col_widths.insert(1, 255.);
+    blad.row_heights.insert(10, 0.);
+    model.sheets[0] = blad;
+    let bytes = x::Workbook::from_model(model).unwrap().save().unwrap();
+    let mut s = Sessie::open(Module::Spreadsheet, bytes).unwrap();
+    let bron = s.bron();
+    let beeld = s.naar_cel(0, "C2").unwrap();
+    assert_eq!(beeld.voorkeursveld.as_deref(), Some("C2"));
+    assert!(beeld.pagina.vlakken.iter().any(|v| v.id == "C2"));
+    assert!(
+        s.naar_cel(0, "C11").is_err(),
+        "Een verborgen cel mag niet stil naar een andere cel verwijzen"
+    );
+    assert!(
+        s.weergave(0)
+            .unwrap()
+            .pagina
+            .vlakken
+            .iter()
+            .any(|v| v.id == "C2")
+    );
+    assert!(s.bron().as_slice() == bron.as_slice());
+    assert!(!s.kan_terug());
 }
 
 #[test]
@@ -453,10 +548,14 @@ fn samengevoegde_cel_buiten_werkvenster_blijft_aanklikbaar_en_bewerkbaar() {
     let beeld = s.naar_cel(0, "H100").unwrap();
     assert_eq!(*s.bron(), *bron);
     assert_eq!(beeld.voorkeursveld.as_deref(), Some("A1"));
-    assert_eq!(beeld.velden.len(), 1);
+    assert_eq!(beeld.velden.iter().filter(|v| v.id == "A1").count(), 1);
+    assert!(!beeld.velden.iter().any(|v| v.id == "H100"));
     assert_eq!(beeld.velden[0].id, "A1");
     assert_eq!(beeld.velden[0].tekst, "Ankertekst");
-    assert_eq!(beeld.pagina.vlakken.len(), 1);
+    assert_eq!(
+        beeld.pagina.vlakken.iter().filter(|v| v.id == "A1").count(),
+        1
+    );
     assert_eq!(
         beeld
             .pagina

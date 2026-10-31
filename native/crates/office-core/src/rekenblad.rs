@@ -1,7 +1,7 @@
 //! Venstering, bereikopmaak en structuurwijzigingen boven de native werkmap.
 use crate::{
     document::{Fout, Resultaat, Veld, Weergave},
-    interactie::{Pagina, Raakvlak, RasterVenster, Rechthoek},
+    interactie::{Pagina, Raakvlak, RasterKop, RasterKoppen, RasterVenster, Rechthoek},
     opmaak::{Opmaak, OpmaakStaat, Uitlijning},
 };
 use betteroffice_xlsx as x;
@@ -156,8 +156,8 @@ pub fn toon(
 ) -> Resultaat<()> {
     let sheet = x::SheetId(deel as u32);
     let einde = x::CellRef::new(
-        (venster.rij + 29).min(x::MAX_ROWS - 1),
-        (venster.kolom + 11).min(x::MAX_COLS - 1),
+        (venster.rij + 59).min(x::MAX_ROWS - 1),
+        (venster.kolom + 23).min(x::MAX_COLS - 1),
     );
     let range = x::CellRange::new(x::CellRef::new(venster.rij, venster.kolom), einde);
     let mut viewport =
@@ -171,6 +171,34 @@ pub fn toon(
         hoogte: png.height as f32,
         vlakken: vec![],
     };
+    let mut koppen = RasterKoppen::default();
+    for kolom in venster.kolom..=einde.col {
+        let rect = d
+            .cell_rect(sheet, x::CellRef::new(venster.rij, kolom))
+            .map_err(fout)?;
+        let begin = rect.x - viewport.x;
+        if rect.w > 0. && begin < png.width as f32 && begin + rect.w > 0. {
+            koppen.kolommen.push(RasterKop {
+                index: kolom,
+                begin,
+                omvang: rect.w,
+            });
+        }
+    }
+    for rij in venster.rij..=einde.row {
+        let rect = d
+            .cell_rect(sheet, x::CellRef::new(rij, venster.kolom))
+            .map_err(fout)?;
+        let begin = rect.y - viewport.y;
+        if rect.h > 0. && begin < png.height as f32 && begin + rect.h > 0. {
+            koppen.rijen.push(RasterKop {
+                index: rij,
+                begin,
+                omvang: rect.h,
+            });
+        }
+    }
+    beeld.raster = Some(koppen);
     let merges = d.merged_ranges(sheet, range).map_err(fout)?;
     let mut cellen = Vec::new();
     for rij in venster.rij..=einde.row {
@@ -189,7 +217,6 @@ pub fn toon(
     cellen.extend(merges.iter().map(|m| (m.start, m.end)));
     cellen.sort_by_key(|(cel, _)| (cel.row, cel.col));
     for (cel, einde) in cellen {
-        beeld.velden.push(veld(d, sheet, cel)?);
         let mut rect = d.cell_rect(sheet, cel).map_err(fout)?;
         let eind = d.cell_rect(sheet, einde).map_err(fout)?;
         rect.w = eind.x + eind.w - rect.x;
@@ -199,6 +226,7 @@ pub fn toon(
         let rechts = (rect.x + rect.w - viewport.x).min(png.width as f32);
         let onder = (rect.y + rect.h - viewport.y).min(png.height as f32);
         if rechts > x && onder > y {
+            beeld.velden.push(veld(d, sheet, cel)?);
             beeld.pagina.vlakken.push(Raakvlak {
                 id: cel.to_a1(),
                 grens: Rechthoek {

@@ -100,6 +100,9 @@ impl Proef {
         }
     }
     fn gebeurtenis(&mut self, event: iced::Event) {
+        self.gebeurtenissen([event]);
+    }
+    fn gebeurtenissen(&mut self, events: impl IntoIterator<Item = iced::Event>) {
         let berichten = {
             let mut element = self.app.view();
             self.boom.diff(element.as_widget());
@@ -109,17 +112,19 @@ impl Proef {
                 &layout::Limits::new(Size::ZERO, Size::new(1440., 900.)),
             );
             let mut berichten = vec![];
-            let mut shell = iced::advanced::Shell::new(&mut berichten);
-            element.as_widget_mut().update(
-                &mut self.boom,
-                &event,
-                Layout::new(&node),
-                iced::mouse::Cursor::Available(self.muis),
-                &self.renderer,
-                &mut self.klembord,
-                &mut shell,
-                &iced::Rectangle::with_size(Size::new(1440., 900.)),
-            );
+            for event in events {
+                let mut shell = iced::advanced::Shell::new(&mut berichten);
+                element.as_widget_mut().update(
+                    &mut self.boom,
+                    &event,
+                    Layout::new(&node),
+                    iced::mouse::Cursor::Available(self.muis),
+                    &self.renderer,
+                    &mut self.klembord,
+                    &mut shell,
+                    &iced::Rectangle::with_size(Size::new(1440., 900.)),
+                );
+            }
             berichten
         };
         for bericht in berichten {
@@ -127,7 +132,8 @@ impl Proef {
         }
     }
     fn cel(&mut self, adres: &str, dubbel: bool) {
-        let groep = toegankelijkheid(&self.app)
+        let groep = self
+            .toegankelijkheid()
             .nodes
             .into_iter()
             .find(|n| n.node.name == "Werkbladraster")
@@ -148,14 +154,19 @@ impl Proef {
         self.gebeurtenis(iced::Event::Mouse(iced::mouse::Event::CursorMoved {
             position: self.muis,
         }));
+        let mut events = vec![];
+        // Een dubbelklik is één korte invoerreeks. Werkdraad-/focuslayout
+        // tussen beide klikken zou onder bouwbelasting de echte 300 ms-grens
+        // kunstmatig overschrijden; die productgrens wordt niet versoepeld.
         for _ in 0..if dubbel { 2 } else { 1 } {
-            self.gebeurtenis(iced::Event::Mouse(iced::mouse::Event::ButtonPressed(
+            events.push(iced::Event::Mouse(iced::mouse::Event::ButtonPressed(
                 iced::mouse::Button::Left,
             )));
-            self.gebeurtenis(iced::Event::Mouse(iced::mouse::Event::ButtonReleased(
+            events.push(iced::Event::Mouse(iced::mouse::Event::ButtonReleased(
                 iced::mouse::Button::Left,
             )));
         }
+        self.gebeurtenissen(events);
         assert_eq!(self.app.tab().unwrap().veld().unwrap().id, adres);
     }
     fn toets(
@@ -207,6 +218,89 @@ impl Proef {
             .unwrap()
             .bron
             .clone()
+    }
+    fn toegankelijkheid(&mut self) -> Collect {
+        let mut element = self.app.view();
+        self.boom.diff(element.as_widget());
+        let node = element.as_widget_mut().layout(
+            &mut self.boom,
+            &self.renderer,
+            &layout::Limits::new(Size::ZERO, Size::new(1440., 900.)),
+        );
+        let mut gevonden = Collect::default();
+        element.as_widget_mut().operate(
+            &mut self.boom,
+            Layout::new(&node),
+            &self.renderer,
+            &mut gevonden,
+        );
+        gevonden
+    }
+    fn verbeeld(&mut self) -> tiny_skia::Pixmap {
+        use iced::advanced::renderer::Renderer as _;
+        let maat = Size::new(1440., 900.);
+        let viewport = iced::Rectangle::with_size(maat);
+        self.renderer.reset(viewport);
+        let mut element = self.app.view();
+        self.boom.diff(element.as_widget());
+        let node = element.as_widget_mut().layout(
+            &mut self.boom,
+            &self.renderer,
+            &layout::Limits::new(Size::ZERO, maat),
+        );
+        let mut berichten = vec![];
+        let mut shell = iced::advanced::Shell::new(&mut berichten);
+        element.as_widget_mut().update(
+            &mut self.boom,
+            &iced::Event::Window(iced::window::Event::RedrawRequested(
+                std::time::Instant::now(),
+            )),
+            Layout::new(&node),
+            iced::mouse::Cursor::Unavailable,
+            &self.renderer,
+            &mut self.klembord,
+            &mut shell,
+            &viewport,
+        );
+        let thema = self.app.thema.iced();
+        element.as_widget().draw(
+            &self.boom,
+            &mut self.renderer,
+            &thema,
+            &iced::advanced::renderer::Style {
+                text_color: thema.palette().text,
+            },
+            Layout::new(&node),
+            iced::mouse::Cursor::Unavailable,
+            &viewport,
+        );
+        let mut bytes = vec![0; 1440 * 900 * 4];
+        let mut pixels = tiny_skia::PixmapMut::from_bytes(&mut bytes, 1440, 900).unwrap();
+        let mut masker = tiny_skia::Mask::new(1440, 900).unwrap();
+        self.renderer.draw(
+            &mut pixels,
+            &mut masker,
+            &iced_tiny_skia::graphics::Viewport::with_physical_size(Size::new(1440, 900), 1.),
+            &[viewport],
+            iced::Color::WHITE,
+        );
+        drop(element);
+        for bericht in berichten {
+            self.bericht(bericht);
+        }
+        for pixel in bytes.as_chunks_mut::<4>().0 {
+            pixel.swap(0, 2);
+        }
+        tiny_skia::Pixmap::from_vec(bytes, tiny_skia::IntSize::from_wh(1440, 900).unwrap()).unwrap()
+    }
+    fn klik(&mut self, punt: iced::Point) {
+        self.muis = punt;
+        self.gebeurtenis(iced::Event::Mouse(iced::mouse::Event::ButtonPressed(
+            iced::mouse::Button::Left,
+        )));
+        self.gebeurtenis(iced::Event::Mouse(iced::mouse::Event::ButtonReleased(
+            iced::mouse::Button::Left,
+        )));
     }
 }
 #[test]
@@ -265,6 +359,10 @@ fn raster_f2_bewerkt_de_echte_cel_bevestigt_herberekening_en_undo() {
     );
     p.cel("B2", false);
     assert_eq!(p.app.tab().unwrap().veld().unwrap().tekst, "3");
+    assert!(
+        !p.app.tab().unwrap().raster.bewerken,
+        "Een enkele klik na toetsenbordbewerking mag geen dubbelklik worden"
+    );
 }
 #[test]
 fn raster_toetsen_navigeren_voorbij_het_venster_en_tab_bevestigt() {
@@ -281,12 +379,12 @@ fn raster_toetsen_navigeren_voorbij_het_venster_en_tab_bevestigt() {
         p.named(toets);
         assert_eq!(p.app.tab().unwrap().adres, adres);
     }
-    p.bericht(Msg::Adres("L30".into()));
+    p.bericht(Msg::Adres("X60".into()));
     p.bericht(Msg::GaNaar);
     p.named(Named::ArrowRight);
-    assert_eq!(p.app.tab().unwrap().adres, "M30");
+    assert_eq!(p.app.tab().unwrap().adres, "Y60");
     p.named(Named::ArrowDown);
-    assert_eq!(p.app.tab().unwrap().adres, "M31");
+    assert_eq!(p.app.tab().unwrap().adres, "Y61");
     assert!(
         p.app
             .tab()
@@ -298,22 +396,122 @@ fn raster_toetsen_navigeren_voorbij_het_venster_en_tab_bevestigt() {
             .pagina
             .vlakken
             .iter()
-            .any(|v| v.id == "M31")
+            .any(|v| v.id == "Y61")
     );
     assert!(p.bron().as_slice() == origineel.as_slice());
     assert!(!p.app.tab().unwrap().antwoord.as_ref().unwrap().terug);
     p.named(Named::F2);
     p.plak("Eigen celtekst");
     p.named(Named::Tab);
-    assert_eq!(p.app.tab().unwrap().adres, "N31");
+    assert_eq!(p.app.tab().unwrap().adres, "Z61");
     p.toets(Key::Named(Named::Tab), Modifiers::SHIFT, None);
-    assert_eq!(p.app.tab().unwrap().adres, "M31");
+    assert_eq!(p.app.tab().unwrap().adres, "Y61");
     assert_eq!(p.app.tab().unwrap().veld().unwrap().tekst, "Eigen celtekst");
     p.named(Named::F2);
     p.toets(Key::Named(Named::Enter), Modifiers::SHIFT, None);
-    assert_eq!(p.app.tab().unwrap().adres, "M30");
+    assert_eq!(p.app.tab().unwrap().adres, "Y60");
     p.bericht(Msg::Terug);
     assert!(p.bron().as_slice() == origineel.as_slice());
+}
+#[test]
+fn raster_koppen_blijven_staan_en_cellen_klikken_correct_na_scroll_en_zoom() {
+    use iced::keyboard::key::Named;
+    let mut p = Proef::nieuw();
+    let bron = p.bron();
+    p.cel("B2", false);
+    let handle = p.app.tab().unwrap().afbeelding.as_ref().unwrap().id();
+    p.named(Named::ArrowRight);
+    assert_eq!(
+        p.app.tab().unwrap().afbeelding.as_ref().unwrap().id(),
+        handle,
+        "Navigatie mag hetzelfde beeld niet opnieuw laten decoderen"
+    );
+    p.bericht(Msg::Zoom(1.5));
+    let collect = p.toegankelijkheid();
+    assert!(collect.unnamed.is_empty());
+    let kop = collect
+        .nodes
+        .iter()
+        .find(|n| n.node.name == "Kolom A")
+        .unwrap()
+        .bounds;
+    assert_eq!(kop.height, raster_koppen::BOVEN);
+    let rij = collect
+        .nodes
+        .iter()
+        .find(|n| n.node.name == "Rij 1")
+        .unwrap()
+        .bounds;
+    assert_eq!(rij.width, raster_koppen::LINKS);
+    let voor = p.verbeeld();
+    let hoek = iced::Point::new(10., kop.y + 10.);
+    let pixel = voor.pixel(hoek.x as u32, hoek.y as u32).unwrap();
+    assert_eq!((pixel.red(), pixel.green(), pixel.blue()), (237, 240, 243));
+    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        std::fs::create_dir_all(&map).unwrap();
+        voor.save_png(PathBuf::from(map).join("spreadsheet-koppen-zoom.png"))
+            .unwrap();
+    }
+    p.taak(iced::widget::operation::scroll_to(
+        "document-scroll",
+        iced::widget::operation::AbsoluteOffset {
+            x: Some(150.),
+            y: Some(240.),
+        },
+    ));
+    let na = p.verbeeld();
+    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        na.save_png(PathBuf::from(map).join("spreadsheet-koppen-scroll.png"))
+            .unwrap();
+    }
+    assert_eq!(
+        voor.pixel(hoek.x as u32, hoek.y as u32),
+        na.pixel(hoek.x as u32, hoek.y as u32)
+    );
+    let adres = p.app.tab().unwrap().adres.clone();
+    p.klik(iced::Point::new(200., kop.center_y()));
+    assert_eq!(
+        p.app.tab().unwrap().adres,
+        adres,
+        "Een vaste kop mag geen onderliggende cel aanklikken"
+    );
+    let b = p
+        .toegankelijkheid()
+        .nodes
+        .into_iter()
+        .find(|n| n.node.name == "Werkbladraster")
+        .unwrap()
+        .bounds;
+    let punt = iced::Point::new(180., kop.y + 150.);
+    let scroll = p.app.tab().unwrap().scroll;
+    assert_eq!(scroll, iced::Point::new(150., 240.));
+    // Iced levert operatiegrenzen in inhoudscoördinaten. De werkelijke
+    // viewportoffset komt uit het gewone on_scroll-antwoord van de widget.
+    let verwacht = p
+        .app
+        .tab()
+        .unwrap()
+        .antwoord
+        .as_ref()
+        .unwrap()
+        .beeld
+        .pagina
+        .raak(
+            (punt.x - b.x + scroll.x) / 1.5,
+            (punt.y - b.y + scroll.y) / 1.5,
+        )
+        .unwrap()
+        .to_string();
+    assert_eq!(verwacht, "D13");
+    p.klik(punt);
+    assert_eq!(p.app.tab().unwrap().adres, verwacht);
+    assert!(p.bron().as_slice() == bron.as_slice());
+    let beeld = p.verbeeld();
+    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        beeld
+            .save_png(PathBuf::from(map).join("spreadsheet-koppen-scroll.png"))
+            .unwrap();
+    }
 }
 #[test]
 fn raster_werkdraad_steelt_geen_focus_van_een_later_geopend_venster() {

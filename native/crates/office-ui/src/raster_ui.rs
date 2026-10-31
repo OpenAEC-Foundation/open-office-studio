@@ -363,6 +363,11 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Raster<'_> {
         s: &mut iced::advanced::Shell<'_, Msg>,
         vp: &iced::Rectangle,
     ) {
+        if matches!(e, iced::Event::Keyboard(_) | iced::Event::InputMethod(_)) {
+            // Een klik na typen of navigeren begint een nieuwe klikreeks.
+            // De vorige selectie mag geen toevallige dubbelklik opleveren.
+            t.state.downcast_mut::<Focus>().klik = None;
+        }
         if let iced::Event::Keyboard(iced::keyboard::Event::KeyPressed {
             key,
             text,

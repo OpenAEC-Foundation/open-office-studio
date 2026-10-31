@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.13**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.14**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -37,7 +37,7 @@ valt buiten de standaardtestmatrix.
 |---|---|---|
 | Venster | OpenAEC-ribbon, documenttabbladen, vijf thema’s, sneltoetsen, Bestand, openen/opslaan/opslaan als, sluitvragen | Herstelkopieën, recente bestanden, afgesplitste vensters, updater, vertalingen |
 | Writer | Native paginering, klikbare alinea’s, linialen, zoom, tekstbereikopmaak en uitlijning, splitsen bij de editorcursor en samenvoegen van aangrenzende alinea’s, woorden inclusief tabellen, Markdown-export, papierformaat/afdrukstand/marge- en kolomvoorkeuzes per sectie, zichtbare kop- en voetteksten (eerste/even/oneven), opmaakstatus uit dezelfde engine voor stijlen en Unicode-selecties, Ctrl/Cmd+B/I/U | Directe rich-text-cursor op de pagina, kop/voet bewerken, aangepaste pagina-instelling en volledige alineabediening, velden/links/revisies bewerken, volledige ribbon, tabellen invoegen, spelling en afdrukken |
-| Spreadsheet | Directe celbewerking via dubbelklik/F2/typen, Enter/Tab/Escape, enkele-celnavigatie met pijltjestoetsen en werkvensterverplaatsing, formulebalk, bereikopmaak, rijen/kolommen invoegen/verwijderen, samenvoegen/splitsen, herberekenen en bladen wisselen | Volledige rasterweergave met koppen, bereikselecties en sleepbediening, zoeken, sorteren/filteren, klembordbereiken, CSV-import en grafieken |
+| Spreadsheet | Raster met vaste rij-/kolomkoppen, directe celbewerking via dubbelklik/F2/typen, Enter/Tab/Escape, enkele-celnavigatie met pijltjestoetsen en werkvensterverplaatsing, formulebalk, bereikopmaak, rijen/kolommen invoegen/verwijderen, samenvoegen/splitsen, herberekenen en bladen wisselen | Doorlopend virtueel raster, bereikselecties en sleepbediening, zoeken, sorteren/filteren, klembordbereiken, CSV-import en grafieken |
 | Presentation | Native diaweergave, niet-geroteerde tekstvakken aanklikken, tekstbereikopmaak, dia’s toevoegen/verwijderen, tekstvakken invoegen, sprekersnotities bewerken | Directe cursor en vormbediening, geroteerde/gegroepeerde objecten, volledige ribbon en presentatiemodus |
 | Notition | Versies 1–3 openen, boeken/secties/pagina’s toevoegen, vrij canvas met tekstvakken slepen/vergroten, Markdown-preview, bloktekst en vet/cursief, prullenbak herstellen; onbekende bronvelden behouden | Automatische lokale opslag/herstel, zoeken, boeken/secties hernoemen/verplaatsen, volledige blok- en taakbediening en import/export |
 | Email | Losse Rust-mailkern, native accountformulier, IMAP-mappen/berichtlijst, zoeken en tekstlezer; volledige MIME-bron met bijlagen openen als IFCX-dossier | OAuth en automatisch serverzoeken in de GUI, opstellen/verzenden, concepten, antwoorden, berichtacties, bijlagen opslaan en HTML-weergave |
@@ -107,8 +107,28 @@ Navigeren verandert geen bestandsbytes en maakt geen undo-stap.
 Een onvolledige formule wordt vóór wijziging geweigerd en blijft als concept
 in beeld. Een geldige formule met een rekenfout blijft toegestaan. Een cel met
 tekstopmaak of invoer met een voorafgaande apostrof blijft letterlijke tekst.
-Dit is geen volledige spreadsheetbediening: onder meer rasterkoppen,
-bereikselectie, bereikplakken, slepen en volledige bescherming staan nog open.
+Dit is geen volledige spreadsheetbediening: onder meer bereikselectie,
+bereikplakken, slepen en volledige bescherming staan nog open.
+
+Het raster begint linksboven in het werkvlak. De rij- en kolomkoppen volgen
+dezelfde geometrie als de cellen en blijven in beeld bij scrollen. De cellen
+schalen met de documentzoom; de koppen houden hun leesbare UI-maat. Het
+werkvenster bevat maximaal 60 rijen en 24 kolommen, met een rasterbeeld tot
+1600 × 1400 pixels. Dit is nog geen volledige virtualisatie. Koppen selecteren
+nog geen volledige rij of kolom.
+
+Een identiek paginabeeld houdt zijn Iced-imagehandle, zodat selectienavigatie
+geen nieuwe afbeeldingsdecoder maakt. Verborgen zijpanelen worden niet meer
+opgebouwd. Een zeer brede voorafgaande kolom krijgt bij navigatie een tweede
+poging vanaf de doelcel; onzichtbare doelen worden expliciet geweigerd.
+
+De huidige spreadsheet-rasterizer tekent nog met zijn ingebouwde letter en
+synthetische vette/cursieve vormen; hij negeert de opgeslagen familie bij het
+tekenen. Die familie en de andere opmaak worden wel in het document bewaard,
+en de cel-editor gebruikt de vastgepinde documentletters. Dit verschil blijft
+onderdeel van de open visuele acceptatie.
+
+![Native spreadsheet met rij- en kolomkoppen](docs/screenshots/spreadsheet-native-referentie.png)
 
 ## Writer: pagina-indeling
 
@@ -193,13 +213,14 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
-Het [controlerapport voor alpha 13](docs/controle-2026-10-31-alpha13.md) beschrijft
-187 reguliere Rust-tests, zes aparte runtimeproeven en zeven Python-tests.
-De bestandsuitvoer is onafhankelijk teruggelezen; 35 native schermen zijn
+Het [controlerapport voor alpha 14](docs/controle-2026-10-31-alpha14.md) beschrijft
+189 reguliere Rust-tests, zes aparte runtimeproeven en zeven Python-tests.
+De laatste 46 GUI-tests zijn ook afzonderlijk opnieuw geslaagd.
+De bestandsuitvoer is onafhankelijk teruggelezen; 37 native schermen zijn
 vastgelegd. De nieuwe release- en platformronde zijn nog niet afgerond.
-De [alpha-12-platformronde](docs/controle-2026-10-31-alpha12.md) is volledig
-geslaagd: vijf CI-jobs groen, alle 718 bronbestanden bytegelijk op elk platform,
-68 exacte native beeldparen en zeven exacte paginabezoeken op alle drie
+De [alpha-13-platformronde](docs/controle-2026-10-31-alpha13.md) is volledig
+geslaagd: vijf CI-jobs groen, alle 741 bronbestanden bytegelijk op elk platform,
+70 exacte native beeldparen en zeven exacte paginabezoeken op alle drie
 platforms. De platformvergelijking bewijst geen gelijkheid met de bestaande
 interface. Eerdere rapporten blijven historische verslagen.
 
