@@ -110,3 +110,17 @@ with ZipFile(map/'writer-velden.docx') as z:
     assert teksten==['Inhoud café 42 🏠','Einde inhoud','Verwijzing 7']
     assert any('PAGEREF hoofdstuk' in (t.text or '') for t in wortel.iter('{'+ns['w']+'}instrText'))
 print('Geneste velden: Unicode-resultaten, instructies en geneste veldstructuur onafhankelijk teruggelezen.')
+
+# Pagina-instelling verandert uitsluitend sectie 1. De kop/voettekst van
+# sectie 2 blijft geërfd; die verwijzingen mogen niet opnieuw worden ingebakken.
+pagina = Document(map/'writer-pagina.docx')
+assert len(pagina.sections) == 2
+assert pagina.sections[0].page_width.twips == 16838
+assert pagina.sections[0].page_height.twips == 11906
+assert pagina.sections[1].page_width.twips == 12240
+assert pagina.sections[1].page_height.twips == 15840
+assert not pagina.sections[0].header.is_linked_to_previous
+assert pagina.sections[1].header.is_linked_to_previous
+assert pagina.sections[0].header.paragraphs[0].text == 'Vaste koptekst'
+assert pagina.sections[1].footer.paragraphs[0].text == 'Vaste voettekst'
+print('Writer-pagina-instelling: papier, stand en sectiegebonden kop-/voettekst onafhankelijk teruggelezen.')

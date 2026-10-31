@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Vergelijk echte referentie- en native PNG's; verander nooit de schaal of inhoud."""
 import argparse
+import hashlib
 import json
 from pathlib import Path
 from PIL import Image, ImageChops
@@ -35,7 +36,10 @@ if a.size != b.size:
     weiger(f'Verschillende viewports: {a.size} en {b.size}; maak vergelijkbare bronbeelden')
 verschil = ImageChops.difference(a, b)
 afwijkend = sum(max(pixel) > args.kanaalverschil for pixel in verschil.getdata())
-rapport = {'referentie': str(args.referentie), 'native': str(args.native), 'meetbaar': True, 'breedte': a.width,
+rapport = {'referentie': str(args.referentie), 'native': str(args.native),
+           'referentie_sha256': hashlib.sha256(args.referentie.read_bytes()).hexdigest(),
+           'native_sha256': hashlib.sha256(args.native.read_bytes()).hexdigest(),
+           'meetbaar': True, 'breedte': a.width,
            'hoogte': a.height, 'pixels': a.width*a.height, 'afwijkende_pixels': afwijkend,
            'kanaalverschil_toegestaan': args.kanaalverschil,
            'max_afwijkende_pixels': args.max_afwijkende_pixels,

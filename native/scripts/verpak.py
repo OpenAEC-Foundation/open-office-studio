@@ -42,6 +42,7 @@ shutil.copy2(root/'vendor/openaec-ui/LICENSE.md', pakket/'licenties/OpenAEC-UI-L
 shutil.copy2(root/'vendor/openaec-ui/NOTICE.md', pakket/'licenties/OpenAEC-UI-NOTICE.md')
 shutil.copytree(root/'vendor/document-fonts/LICENSES', pakket/'licenties/documentletters')
 shutil.copytree(root/'vendor/document-fonts/LICENSES-CJK', pakket/'licenties/documentletters-cjk')
+shutil.copy2(root/'vendor/symbolen/OFL.txt', pakket/'licenties/documentletters/NotoSansSymbols2-OFL.txt')
 for bestand in ['Cargo.toml', 'Cargo.lock', 'README.md']:
     doel = pakket/'bron/native'/bestand
     doel.parent.mkdir(parents=True, exist_ok=True)

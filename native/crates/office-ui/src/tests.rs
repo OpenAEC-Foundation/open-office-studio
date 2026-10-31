@@ -447,7 +447,7 @@ fn modale_sluitvraag_blokkeert_sneltoetsen_en_achterliggende_acties() {
 fn lettertypen() {
     static EEN: std::sync::Once = std::sync::Once::new();
     EEN.call_once(|| {
-        fonts::install_fallback();
+        lettertypen_ui::installeer();
         let mut s = iced_tiny_skia::graphics::text::font_system()
             .write()
             .unwrap();
@@ -894,4 +894,128 @@ fn native_export_via_interface_en_werkdraad_slaat_pdf_en_csv_op_zonder_documento
         assert_eq!(app.tab().unwrap().opgeslagen, opgeslagen);
     }
     std::fs::remove_dir_all(map).unwrap();
+}
+
+#[test]
+fn writer_indeling_bedient_de_echte_werkdraad_en_bewaart_de_actieve_sectie() {
+    use office_core::writer_pagina::{PaginaActie as A, Papier};
+    let bytes = include_bytes!("../../office-core/tests/fixtures/writer-structuur.docx");
+    let mut app = app_met_werkdraad(Module::Writer, bytes);
+    app.thema = ThemeId::Light;
+    voer_interface_uit(&mut app, Msg::Lint(1));
+    assert_eq!(app.lint_index(), 1);
+    let namen = toegankelijkheid(&app);
+    assert!(namen.unnamed.is_empty());
+    for naam in ["Staand", "Liggend", "A4", "Smal", "Twee kolommen"] {
+        assert!(namen.nodes.iter().any(|n| n.node.name == naam), "{naam}");
+    }
+    for actie in [A::Papier(Papier::A4), A::Liggend(true)] {
+        voer_interface_uit(&mut app, Msg::Pagina(actie));
+    }
+    let t = app.tab().unwrap();
+    let a = t.antwoord.as_ref().unwrap();
+    assert!((a.beeld.pagina.breedte - 16838. / 15.).abs() < 0.1);
+    assert!((a.beeld.pagina.hoogte - 11906. / 15.).abs() < 0.1);
+    assert!(a.terug);
+    assert!(t.gewijzigd());
+    let office_core::document::Document::Writer(d) =
+        office_core::document::Document::open(Module::Writer, &a.bron).unwrap()
+    else {
+        unreachable!()
+    };
+    assert_eq!(
+        d.body()
+            .final_section_properties
+            .as_ref()
+            .unwrap()
+            .page_width,
+        Some(12240.)
+    );
+    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        let map = PathBuf::from(map);
+        std::fs::create_dir_all(&map).unwrap();
+        render(&app)
+            .save_png(map.join("writer-indeling.png"))
+            .unwrap();
+    }
+    voer_interface_uit(&mut app, Msg::Terug);
+    voer_interface_uit(&mut app, Msg::Terug);
+    assert_eq!(
+        app.tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .bron
+            .as_slice(),
+        bytes
+    );
+}
+#[test]
+fn writer_paginaopdracht_weigert_concept_en_verdwijnt_bij_andere_module() {
+    use office_core::writer_pagina::PaginaActie as A;
+    let mut app = app_met_document(
+        Module::Writer,
+        include_bytes!("../../office-core/tests/fixtures/writer.docx"),
+    );
+    let bron = app.tab().unwrap().antwoord.as_ref().unwrap().bron.clone();
+    app.tab_mut().unwrap().concept = true;
+    voer_interface_uit(&mut app, Msg::Pagina(A::Liggend(true)));
+    assert_eq!(
+        app.tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .bron
+            .as_slice(),
+        bron.as_slice()
+    );
+    assert!(app.tab().unwrap().concept);
+    let mut app = app_met_document(
+        Module::Spreadsheet,
+        include_bytes!("../../office-core/tests/fixtures/spreadsheet.xlsx"),
+    );
+    let bron = app.tab().unwrap().antwoord.as_ref().unwrap().bron.clone();
+    app.lint = 2;
+    assert_eq!(app.lint_index(), 0);
+    assert!(!app.lint_titels().contains(&"Indeling"));
+    voer_interface_uit(&mut app, Msg::Pagina(A::Liggend(true)));
+    assert_eq!(
+        app.tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .bron
+            .as_slice(),
+        bron.as_slice()
+    );
+}
+
+#[test]
+fn symbool_in_bediening_gebruikt_het_gepinde_font_bij_ieder_lintgewicht() {
+    use iced::advanced::graphics::text::cosmic_text::{
+        Attrs, Buffer, Family, Metrics, Shaping, Weight,
+    };
+    lettertypen();
+    let mut systeem = iced_tiny_skia::graphics::text::font_system()
+        .write()
+        .unwrap();
+    let raw = systeem.raw();
+    for gewicht in [400, 500, 600, 700] {
+        let attrs = Attrs::new()
+            .family(Family::Name("Inter"))
+            .weight(Weight(gewicht));
+        let mut buffer = Buffer::new(raw, Metrics::new(14., 20.));
+        buffer.set_text(raw, "🏠", &attrs, Shaping::Advanced, None);
+        buffer.shape_until_scroll(raw, false);
+        let glyph = &buffer.layout_runs().next().expect("symboolregel").glyphs[0];
+        let gezicht = raw.db().face(glyph.font_id).unwrap();
+        assert_eq!(
+            gezicht.families[0].0,
+            office_core::lettertypen::SYMBOLEN.familie
+        );
+        assert_ne!(glyph.glyph_id, 0);
+    }
 }

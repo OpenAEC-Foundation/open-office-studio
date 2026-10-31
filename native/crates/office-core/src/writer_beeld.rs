@@ -12,6 +12,13 @@ pub fn pagina(
     bron: &[u8],
     nummer: usize,
 ) -> Resultaat<(Vec<u8>, usize, usize, crate::interactie::Pagina)> {
+    pagina_binnen::<true>(bron, nummer)
+}
+
+fn pagina_binnen<const ALLEEN_GEVRAAGD: bool>(
+    bron: &[u8],
+    nummer: usize,
+) -> Resultaat<(Vec<u8>, usize, usize, crate::interactie::Pagina)> {
     // De engine heeft per draad een fontregister. Dezelfde fontset kan daarom
     // tussen opeenvolgende paginabeelden behouden blijven, zonder globale blokkade.
     let parsed = docx_parse::parse_docx_s9_wire(bron, docx_parse::S9ParseOptions::default())
@@ -83,19 +90,28 @@ pub fn pagina(
             "defaults": {"fontSize": 11, "fontFamily": "Calibri"},
             "authoritativeShaping": true
         });
-        engine
-            .layout_document_with_regions_retained_json(&verzoek.to_string())
+        let meta = engine
+            .layout_document_with_regions_retained_meta(&verzoek.to_string())
             .map_err(fout)?;
+        // De hele bron blijft gepagineerd: paginatelling, velden, noten en
+        // secties houden hun volledige context. Alleen de tekenopdrachten
+        // buiten de zichtbare pagina hoeven niet opgebouwd te worden.
+        // Na een bewerking kan de vorige laatste pagina verdwenen zijn.
+        let nummer = nummer.min(meta.page_count.saturating_sub(1));
+        if ALLEEN_GEVRAAGD {
+            engine.set_display_window(Some(nummer..nummer + 1));
+        }
+        let mut extra = json!({"fontChains": meten});
+        if let Some(payload) = engine.retained_headers_footers_json().map_err(fout)? {
+            extra["headersFooters"] = serde_json::from_str(&payload)?;
+        }
         engine
-            .build_display_list_frame(&json!({"fontChains": meten}).to_string(), 0)
+            .build_display_list_frame(&extra.to_string(), 0)
             .map_err(fout)?;
         let dl = engine
             .with_display_list(Clone::clone)
             .ok_or_else(|| fout("Geen paginabeeld"))?;
         let aantal = dl.pages.len();
-        // Een geldige bewerking kan de laatst bekeken pagina laten verdwijnen.
-        // Toon dan de nieuwe laatste pagina in plaats van de bewerking af te breken.
-        let nummer = nummer.min(aantal.saturating_sub(1));
         let afbeeldingen = afbeeldingen(bron)?;
         let resources = docx_raster::RenderResources::new(fonts, tekenen, &afbeeldingen);
         let render = docx_raster::render_page(&dl, nummer, &resources).map_err(fout)?;
@@ -393,4 +409,72 @@ fn afbeeldingen(bron: &[u8]) -> Resultaat<docx_raster::ImageMap> {
         }
     }
     Ok(images)
+}
+
+#[cfg(test)]
+mod vensterproeven {
+    use super::*;
+
+    fn vergelijk(bron: &[u8], nummer: usize) -> usize {
+        let (png, aantal, overgeslagen, raak) = pagina(bron, nummer).unwrap();
+        // Deze referentie bouwt alle pagina's. Geen schaling, masker of tolerantie.
+        let (volledig, totaal, ontbrekend, gebieden) =
+            pagina_binnen::<false>(bron, nummer).unwrap();
+        assert_eq!(aantal, totaal);
+        assert_eq!(overgeslagen, ontbrekend);
+        assert_eq!(png, volledig, "Afwijkend paginabeeld op pagina {nummer}");
+        assert_eq!(raak.breedte, gebieden.breedte);
+        assert_eq!(raak.hoogte, gebieden.hoogte);
+        assert_eq!(raak.inhoud, gebieden.inhoud);
+        assert_eq!(raak.vlakken.len(), gebieden.vlakken.len());
+        for (a, b) in raak.vlakken.iter().zip(&gebieden.vlakken) {
+            assert_eq!(a.id, b.id);
+            assert_eq!(a.grens, b.grens);
+        }
+        aantal
+    }
+
+    #[test]
+    fn tekenvenster_behoudt_beeld_noten_tabellen_grafiek_en_klikgebieden() {
+        for bron in [
+            include_bytes!("../tests/fixtures/writer.docx").as_slice(),
+            include_bytes!("../tests/fixtures/tabel.docx").as_slice(),
+            include_bytes!("../tests/fixtures/writer-structuur.docx").as_slice(),
+            include_bytes!("../tests/fixtures/writer-voetnoot.docx").as_slice(),
+            include_bytes!("../tests/fixtures/writer-grafiek.docx").as_slice(),
+            include_bytes!("../tests/fixtures/writer-velden.docx").as_slice(),
+            include_bytes!("../tests/fixtures/writer-diepe-velden.docx").as_slice(),
+        ] {
+            let aantal = vergelijk(bron, 0);
+            if aantal > 1 {
+                vergelijk(bron, aantal - 1);
+            }
+        }
+    }
+
+    #[test]
+    fn tekenvenster_behoudt_paginavelden_kopvoetvarianten_en_laatste_pagina() {
+        let mut delen =
+            ooxml_opc::unzip_parts(include_bytes!("../tests/fixtures/writer-kopvoet.docx"))
+                .unwrap();
+        let veld = r#"<w:p><w:fldSimple w:instr="PAGE"><w:r><w:t>1</w:t></w:r></w:fldSimple><w:r><w:t> / </w:t></w:r><w:fldSimple w:instr="NUMPAGES"><w:r><w:t>3</w:t></w:r></w:fldSimple></w:p>"#;
+        for (naam, xml) in &mut delen {
+            if naam.starts_with("word/header") && naam.ends_with(".xml") {
+                let tekst = String::from_utf8(xml.clone()).unwrap();
+                assert!(tekst.contains("</w:hdr>"));
+                *xml = tekst
+                    .replace("</w:hdr>", &format!("{veld}</w:hdr>"))
+                    .into_bytes();
+            }
+        }
+        let bron = ooxml_opc::rezip_parts(&delen).unwrap();
+        for nummer in 0..3 {
+            assert_eq!(vergelijk(&bron, nummer), 3);
+        }
+        assert_eq!(vergelijk(&bron, usize::MAX), 3);
+        assert_eq!(
+            pagina(&bron, usize::MAX).unwrap().0,
+            pagina(&bron, 2).unwrap().0
+        );
+    }
 }

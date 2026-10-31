@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.6**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.7**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -36,7 +36,7 @@ valt buiten de standaardtestmatrix.
 | Onderdeel | Native implementatie | Nog over te zetten |
 |---|---|---|
 | Venster | OpenAEC-ribbon, documenttabbladen, vijf thema’s, sneltoetsen, Bestand, openen/opslaan/opslaan als, sluitvragen | Herstelkopieën, recente bestanden, afgesplitste vensters, updater, vertalingen |
-| Writer | Native paginering, klikbare alinea’s, linialen, zoom, tekstbereikopmaak en uitlijning, splitsen bij de editorcursor en samenvoegen van aangrenzende alinea’s, woorden inclusief tabellen, Markdown-export | Directe rich-text-cursor op de pagina, volledige pagina- en alineabediening, velden/links/revisies bewerken, volledige ribbon, tabellen invoegen, spelling en afdrukken |
+| Writer | Native paginering, klikbare alinea’s, linialen, zoom, tekstbereikopmaak en uitlijning, splitsen bij de editorcursor en samenvoegen van aangrenzende alinea’s, woorden inclusief tabellen, Markdown-export, papierformaat/afdrukstand/marge- en kolomvoorkeuzes per sectie, zichtbare kop- en voetteksten (eerste/even/oneven) | Directe rich-text-cursor op de pagina, kop/voet bewerken, aangepaste pagina-instelling en volledige alineabediening, velden/links/revisies bewerken, volledige ribbon, tabellen invoegen, spelling en afdrukken |
 | Spreadsheet | Klikbare cellen, formulebalk, verplaatsbaar werkvenster via celadres/bereik, bereikopmaak, rijen/kolommen invoegen/verwijderen, samenvoegen/splitsen, herberekenen en bladen wisselen | Doorlopend raster met volledige toetsenbord- en sleepbediening, zoeken, sorteren/filteren, klembordbereiken, CSV-import en grafieken |
 | Presentation | Native diaweergave, niet-geroteerde tekstvakken aanklikken, tekstbereikopmaak, dia’s toevoegen/verwijderen, tekstvakken invoegen, sprekersnotities bewerken | Directe cursor en vormbediening, geroteerde/gegroepeerde objecten, volledige ribbon en presentatiemodus |
 | Notition | Versies 1–3 openen, boeken/secties/pagina’s toevoegen, vrij canvas met tekstvakken slepen/vergroten, Markdown-preview, bloktekst en vet/cursief, prullenbak herstellen; onbekende bronvelden behouden | Automatische lokale opslag/herstel, zoeken, boeken/secties hernoemen/verplaatsen, volledige blok- en taakbediening en import/export |
@@ -68,6 +68,23 @@ de bestaande suite. Een opgehaalde MIME-bron opent als nieuw IFCX-dossier;
 **Opslaan** bewaart het dossier daadwerkelijk op schijf. HTML-weergave,
 opstellen/verzenden, OAuth-aanmelding in de GUI en de overige berichtacties
 zijn nog niet aangesloten. De netwerkproeven gebruiken lokale nepservers.
+
+## Writer: pagina-indeling
+
+Het tabblad **Indeling** heeft vijf papierformaten, staand/liggend, vier
+margevoorkeuzes en één, twee of drie tekstkolommen. De opdrachten gelden voor
+de sectie van de gekozen body-alinea, ook als die alinea in een tabel staat.
+Andere secties en geërfde kop-/voettekstverwijzingen blijven behouden. De
+sessie weigert deze opdrachten bij actieve documentbeveiliging, sectierevisies,
+wijzigingen bijhouden of een alinea binnen een inhoudsbesturing. Ongedaan maken
+herstelt de volledige vorige bron.
+
+Kop- en voetteksten worden nu ook daadwerkelijk in het paginabeeld getekend.
+De beeldproeven controleren overerving en de afzonderlijke eerste, even en
+oneven varianten. Bewerken van deze tekstgebieden en volledige paginafuncties
+blijven open.
+
+![Native Writer-pagina-instelling](docs/screenshots/writer-indeling.png)
 
 ## Conversie-export
 
@@ -101,6 +118,11 @@ cargo test --manifest-path native/Cargo.toml -p open-office-studio-native --lock
 
 ## Bewaring en snelheid
 
+Writer pagineert de hele bron, maar bouwt alleen de tekenopdrachten van de
+gevraagde pagina. De paginatelling en documentvelden houden hun volledige
+context. Regressieproeven vergelijken het beeld en alle klikgebieden exact met
+de opbouw van alle pagina's; dit is geen vergelijking met de webinterface.
+
 De engines werken op één aparte werkdraad. De interface ontvangt een begrensde
 weergave en blijft los van parser, rasterizer en bestands-I/O. Writer hergebruikt
 de lettertypecache per werkdraad zolang fontvereisten en registergeneratie gelijk
@@ -126,8 +148,8 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
-Het [controlerapport voor alpha 6](docs/controle-2026-10-31-alpha6.md) beschrijft
-de 142 reguliere Rust-tests en zes expliciete runtimeproeven, conversie-export
+Het [controlerapport voor alpha 7](docs/controle-2026-10-31-alpha7.md) beschrijft
+de 158 reguliere Rust-tests en zes expliciete runtimeproeven, pagina-instelling, symboolterugval en conversie-export
 en de grenzen van de actuele controle. De eerdere
 rapporten blijven historische verslagen.
 
@@ -149,8 +171,9 @@ Nog niet vrijgegeven: volledige native GUI-bediening, schone installatie,
 platformintegratie, toegankelijkheid met een echte schermlezer, realistische
 mailaccounts, grote-documentprestaties en het volledige bestaande bestandencorpus.
 De UI-bibliotheek bewaart toegankelijkheidsnamen maar heeft nog geen werkende
-schermlezerbrug. Writer en Presentation gebruiken dezelfde bundel van 70 open
-lettertypen als de bestaande suite, met stijl- en taalgebonden resolutie.
+schermlezerbrug. Writer en Presentation gebruiken dezelfde 70 oorspronkelijke
+fontbestanden als de bestaande suite, plus één afzonderlijk gepinde monochrome
+symboolterugval, met stijl- en taalgebonden resolutie.
 Onbekende families kunnen nog steeds een terugval krijgen. Systeemletters en
 volledige visuele gelijkwaardigheid zijn nog niet aangetoond.
 
@@ -181,11 +204,12 @@ uitvoer vermeldt expliciet of die grens geldt. Een weigering, tijdslimiet of
 afwijking geeft geen volledig geslaagde ronde. De debugtijden zijn geen bewijs
 voor prestaties van de releasebuild.
 
-De [historische alpha-3-corpusronde](docs/corpus-2026-10-30-alpha3.json) bevat
-648 openbare DOCX/XLSX/PPTX-bronnen: 554 geslaagde rondgangen, 80 weigeringen en
-14 tijdslimieten. Die weigeringen moeten per bron worden beoordeeld; sommige
-bronnen zijn beschadigd, versleuteld of nog niet ondersteund. Deze uitkomst
-bewijst geen volledige controle van alpha 4 of van de andere bestandsformaten.
+De [laatste volledige releasecorpusronde, alpha 5](docs/corpus-2026-10-31-alpha5-release.json)
+bevat 648 geselecteerde OOXML-bronnen: 578 geslaagde rondgangen, 68 weigeringen
+en twee tijdslimieten, zonder rondgangverschil. Dit is nog geen corpuscontrole
+van alpha 7. De andere 918 manifestbronnen vallen buiten deze native ronde.
+Weigeringen bevatten onder meer beschadigde, versleutelde en nog niet
+ondersteunde bronnen; de twee grote-documentgevallen blijven open.
 
 ## Bron en licenties
 
@@ -199,6 +223,10 @@ vastgelegd op versie 0.5.1 in Cargo.lock. De DOCX-parser heeft één lokale
 serializercorrectie voor geneste velden; oorspronkelijke hashes, revisie en
 wijziging staan in `vendor/document-engine-bron.json`. De mailkern behoudt de
 MIT-herkomstvermelding en licentie naast de Apache-2.0-licentie van de suite.
+Ook de getypeerde presentatiefacade heeft één aansluiting voor de bestaande
+glyph-terugvalregistratie; de bron en wijziging staan in `vendor/pptx-bron.json`.
+`vendor/symbolen/bron.json` bevat revisie, hashes en OFL-licentie van het
+aanvullende symboolfont. De bronbestanden blijven ongewijzigd.
 De layoutadapter volgt het openbare
 native-viewer-voorbeeld van openooxml/betteroffice; de bronverwijzing staat in
 `crates/office-core/src/writer_beeld.rs`.
@@ -230,8 +258,8 @@ Een afzonderlijke Chromium-testbrowser heeft inmiddels een oorspronkelijke
 1058 × 892 pixels, met hetzelfde document en thema. CSS-animaties zijn vóór
 navigatie gepauzeerd om de knipperfase vast te leggen; meldingen zijn via hun
 sluitknoppen gesloten. De opname is niet geschaald, uitgelijnd of nabewerkt.
-Twee opeenvolgende opnamen zijn pixelgelijk. De [alpha-6-vergelijking](docs/writer-alpha6-pixelcontrole.json)
-met de native Writer meet **350.976 afwijkende pixels van 943.736**.
+Twee opeenvolgende opnamen zijn pixelgelijk. De [alpha-7-vergelijking](docs/pixelcontrole-alpha7/rapport.json)
+met de native Writer meet **350.978 afwijkende pixels van 943.736**.
 Deze ene vastgelegde toestand bewijst dus expliciet dat de UI nog niet gelijk is.
 De [herkomst](docs/referentie-2026-W44.8/writer.json) vermeldt bron-, bundel- en
 beeldhashes, browser, viewport, thema en taal. De overige schermtoestanden en

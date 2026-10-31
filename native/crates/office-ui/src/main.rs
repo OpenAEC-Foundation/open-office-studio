@@ -2,10 +2,12 @@
 //! Volledig native venster: geen browser, React, JavaScript of Tauri-runtime.
 mod documentblad;
 mod export_ui;
+mod lettertypen_ui;
 mod lineaal;
 mod lint;
 mod mail_ui;
 mod notitie_ui;
+mod pagina_ui;
 mod sleepvak;
 mod stijl;
 mod werker;
@@ -78,6 +80,7 @@ enum Msg {
     Raak(String),
     Opmaak(Opmaak),
     Structuur(Structuur),
+    Pagina(office_core::writer_pagina::PaginaActie),
     SplitsAlinea,
     VoegAlineasSamen,
     Dia(office_core::presentatie::DiaActie),
@@ -211,6 +214,12 @@ impl Tab {
         }
     }
 }
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum LintSoort {
+    Start,
+    Indeling,
+    Weergave,
+}
 struct App {
     exportblad: Option<export_ui::Exportblad>,
     export_bezig: bool,
@@ -257,6 +266,35 @@ impl Default for App {
     }
 }
 impl App {
+    fn lint_titels(&self) -> &'static [&'static str] {
+        if self
+            .tab()
+            .and_then(|t| t.antwoord.as_ref())
+            .is_some_and(|a| a.beeld.module == Module::Writer)
+        {
+            &["Start", "Indeling", "Weergave"]
+        } else {
+            &["Start", "Weergave"]
+        }
+    }
+    fn lint_index(&self) -> usize {
+        if self.lint < self.lint_titels().len() {
+            self.lint
+        } else {
+            0
+        }
+    }
+    fn lint_soort(&self) -> LintSoort {
+        let writer = self
+            .tab()
+            .and_then(|t| t.antwoord.as_ref())
+            .is_some_and(|a| a.beeld.module == Module::Writer);
+        match (writer, self.lint_index()) {
+            (true, 1) => LintSoort::Indeling,
+            (true, 2) | (false, 1) => LintSoort::Weergave,
+            _ => LintSoort::Start,
+        }
+    }
     fn look(&self) -> Look {
         stijl::office(
             Display {
@@ -802,6 +840,30 @@ impl App {
                     return self.opdracht(id, opdracht);
                 }
             }
+            Msg::Pagina(actie) => {
+                if let Some(t) = self.tab_mut() {
+                    if t.bezig || t.concept {
+                        return self.waarschuwing(
+                            "Pas de ingevoerde tekst eerst toe en wacht tot het document gereed is",
+                        );
+                    }
+                    if t.antwoord
+                        .as_ref()
+                        .is_some_and(|a| a.beeld.module == Module::Writer)
+                        && let Some(v) = t.veld()
+                    {
+                        let opdracht = Opdracht::Bewerk(
+                            t.deel,
+                            Bewerking::Pagina {
+                                id: v.id.clone(),
+                                actie,
+                            },
+                        );
+                        let id = t.id;
+                        return self.opdracht(id, opdracht);
+                    }
+                }
+            }
             Msg::SplitsAlinea | Msg::VoegAlineasSamen => {
                 if let Some(t) = self.tab_mut() {
                     if t.bezig || t.concept {
@@ -1107,6 +1169,9 @@ impl App {
             }
             Msg::Bestand(b) => self.bestand = b,
             Msg::Lint(n) => {
+                if n >= self.lint_titels().len() {
+                    return Task::none();
+                }
                 self.lint = n;
                 self.bestand = false;
             }
@@ -1411,8 +1476,8 @@ impl App {
                     look,
                     "Bestand",
                     Some(Msg::Bestand(!self.bestand)),
-                    &["Start", "Weergave"],
-                    self.lint,
+                    self.lint_titels(),
+                    self.lint_index(),
                     Msg::Lint,
                 )
             },
@@ -1522,7 +1587,7 @@ impl App {
             return lint;
         }
         let l = self.look();
-        if self.lint == 1 {
+        if self.lint_soort() == LintSoort::Weergave {
             return w::ribbon(
                 l,
                 vec![w::ribbon_group(
@@ -2170,7 +2235,7 @@ fn main() -> iced::Result {
     } else {
         argumenten.first().map(|a| Msg::Pad(Some(PathBuf::from(a))))
     };
-    fonts::install_fallback();
+    lettertypen_ui::installeer();
     let init = std::sync::Mutex::new(Some(App::default()));
     let builder = iced::application(
         move || {

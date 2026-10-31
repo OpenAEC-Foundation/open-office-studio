@@ -11,6 +11,14 @@ pub struct Lettertype {
 #[path = "lettertype_data.rs"]
 mod data;
 pub use data::LETTERTYPEN;
+/// Aanvullende monochrome symbolen, afzonderlijk gepind met OFL-licentie.
+pub static SYMBOLEN: Lettertype = Lettertype {
+    familie: "Noto Sans Symbols 2",
+    alias: "Noto Sans Symbols2",
+    vet: false,
+    cursief: false,
+    bytes: include_bytes!("../../../vendor/symbolen/NotoSansSymbols2-Regular.ttf"),
+};
 pub fn kies(familie: &str, vet: bool, cursief: bool) -> &'static Lettertype {
     let naam = familie.trim().trim_matches(['\'', '"']);
     let alias = match naam.to_ascii_lowercase().as_str() {
@@ -19,6 +27,7 @@ pub fn kies(familie: &str, vet: bool, cursief: bool) -> &'static Lettertype {
     };
     LETTERTYPEN
         .iter()
+        .chain(std::iter::once(&SYMBOLEN))
         .filter(|f| f.familie.eq_ignore_ascii_case(alias) || f.alias.eq_ignore_ascii_case(alias))
         .min_by_key(|f| u8::from(f.vet != vet) * 2 + u8::from(f.cursief != cursief))
         .unwrap_or_else(|| {
@@ -49,6 +58,9 @@ pub fn keten(
         if !keten.iter().any(|k| std::ptr::eq(*k, f)) {
             keten.push(f);
         }
+    }
+    if !keten.iter().any(|f| std::ptr::eq(*f, &SYMBOLEN)) {
+        keten.push(&SYMBOLEN);
     }
     keten
 }

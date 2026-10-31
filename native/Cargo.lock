@@ -628,8 +628,6 @@ dependencies = [
 [[package]]
 name = "betteroffice-pptx"
 version = "0.5.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1a7f1d703356e7d8990f987cea7bf53291aedc31ee548b252874f3bf972f71e7"
 dependencies = [
  "betteroffice-pptx-edit",
  "betteroffice-pptx-parse",
@@ -3718,7 +3716,7 @@ dependencies = [
 
 [[package]]
 name = "office-conversie"
-version = "2026.44.9-alpha.6"
+version = "2026.44.9-alpha.7"
 dependencies = [
  "libc",
  "serde_json",
@@ -3728,7 +3726,7 @@ dependencies = [
 
 [[package]]
 name = "office-core"
-version = "2026.44.9-alpha.6"
+version = "2026.44.9-alpha.7"
 dependencies = [
  "base64 0.22.1",
  "betteroffice-docx",
@@ -3752,7 +3750,7 @@ dependencies = [
 
 [[package]]
 name = "office-mail"
-version = "2026.44.9-alpha.6"
+version = "2026.44.9-alpha.7"
 dependencies = [
  "async-imap",
  "base64 0.22.1",
@@ -3797,7 +3795,7 @@ dependencies = [
 
 [[package]]
 name = "open-office-studio-native"
-version = "2026.44.9-alpha.6"
+version = "2026.44.9-alpha.7"
 dependencies = [
  "futures-channel",
  "iced",
@@ -3812,6 +3810,7 @@ dependencies = [
  "serde",
  "serde_json",
  "tiny-skia 0.11.4",
+ "unicode-script",
 ]
 
 [[package]]

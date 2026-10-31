@@ -22,10 +22,14 @@ pub fn ribbon(app: &App) -> Option<Element<'_, Msg>> {
     let t = app.tab()?;
     let a = t.antwoord.as_ref()?;
     let module = a.beeld.module;
-    if module == Module::Notition && app.lint == 0 {
+    let lint = app.lint_soort();
+    if module == Module::Writer && lint == LintSoort::Indeling {
+        return Some(super::pagina_ui::ribbon(app, t));
+    }
+    if module == Module::Notition && lint == LintSoort::Start {
         return Some(super::notitie_ui::ribbon(app, t));
     }
-    if app.lint != 0
+    if lint != LintSoort::Start
         || !matches!(
             module,
             Module::Writer | Module::Spreadsheet | Module::Presentation

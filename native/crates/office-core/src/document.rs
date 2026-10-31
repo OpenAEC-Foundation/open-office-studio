@@ -107,6 +107,10 @@ pub enum Bewerking {
         actie: crate::rekenblad::Structuur,
     },
     Dia(crate::presentatie::DiaActie),
+    Pagina {
+        id: String,
+        actie: crate::writer_pagina::PaginaActie,
+    },
     Alinea {
         id: String,
         actie: crate::writer::AlineaActie,
@@ -146,7 +150,10 @@ impl Document {
                 let cjk = tekst
                     .chars()
                     .any(|c| matches!(c as u32,0x2e80..=0x9fff|0xac00..=0xd7ff|0xf900..=0xfaff));
-                for letter in crate::lettertypen::LETTERTYPEN {
+                for letter in crate::lettertypen::LETTERTYPEN
+                    .iter()
+                    .chain(std::iter::once(&crate::lettertypen::SYMBOLEN))
+                {
                     if letter.bytes.len() > 2_000_000 && !cjk {
                         continue;
                     }
@@ -157,6 +164,9 @@ impl Document {
                             .map_err(fout)?;
                     }
                 }
+                let symbolen = &crate::lettertypen::SYMBOLEN;
+                doc.register_fallback_font(symbolen.familie, false, false, symbolen.bytes)
+                    .map_err(fout)?;
                 Self::Presentation(Box::new(doc))
             }
             Module::Notition => {
@@ -208,6 +218,9 @@ impl Document {
     }
     pub fn bewerk(&mut self, deel: usize, bewerking: Bewerking) -> Resultaat<()> {
         match (self, bewerking) {
+            (Self::Writer(d), Bewerking::Pagina { id, actie }) => {
+                crate::writer_pagina::pagina(d, &id, actie)?;
+            }
             (Self::Writer(d), Bewerking::Alinea { id, actie }) => {
                 crate::writer::alinea(d, &id, actie)?
             }
@@ -531,6 +544,9 @@ impl Sessie {
         deel: usize,
         bewerking: Bewerking,
     ) -> Resultaat<Weergave> {
+        if matches!(bewerking, Bewerking::Pagina { .. }) {
+            crate::writer_pagina::controleer_bron(&self.bron)?;
+        }
         let resultaat = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
             self.document.bewerk(deel, bewerking)?;
             // Serialiseer één keer; de renderer toont precies de te bewaren bron.

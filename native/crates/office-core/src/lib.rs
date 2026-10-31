@@ -11,5 +11,6 @@ mod presentatie_tekst;
 pub mod rekenblad;
 pub mod writer;
 mod writer_beeld;
+pub mod writer_pagina;
 mod writer_tekst;
 pub const VERSIE: &str = env!("CARGO_PKG_VERSION");

@@ -28,3 +28,26 @@ werkelijk = {p.relative_to(root/'vendor/docx-parse').as_posix(): hashlib.sha256(
              for p in (root/'vendor/docx-parse').rglob('*') if p.is_file()}
 assert werkelijk == verwacht, 'De documentparser wijkt af van de vastgelegde bron en correcties'
 print(f"Documentparser: {len(werkelijk)} bronbestanden en {len(enginemanifest['aanpassingen'])} vastgelegde correctie geverifieerd.")
+
+symbolenmap = root/'vendor/symbolen'
+symbolen = json.loads((symbolenmap/'bron.json').read_text(encoding='utf-8'))
+werkelijk = {p.name for p in symbolenmap.iterdir() if p.is_file() and p.name != 'bron.json'}
+assert werkelijk == set(symbolen['bestanden']), 'Onverwachte symboollettertypebestanden'
+for naam, bewijs in symbolen['bestanden'].items():
+    data = (symbolenmap/naam).read_bytes()
+    assert hashlib.sha256(data).hexdigest() == bewijs['sha256'] and len(data) == bewijs['bytes'], f'Symboollettertype gewijzigd: {naam}'
+print(f"Symboollettertype: {len(werkelijk)} bestanden geverifieerd, revisie {symbolen['revisie']}.")
+
+presentatiemap = root/'vendor/pptx'
+presentatie = json.loads((root/'vendor/pptx-bron.json').read_text(encoding='utf-8'))
+verwacht = dict(presentatie['oorspronkelijke_bestanden'])
+for naam, wijziging in presentatie['aanpassingen'].items():
+    assert naam in verwacht, 'Onbekende presentatiecorrectie'
+    verwacht[naam] = wijziging['sha256']
+for naam, aanvulling in presentatie['aanvullingen'].items():
+    assert naam not in verwacht, 'Dubbel presentatiebestand'
+    verwacht[naam] = aanvulling['sha256']
+werkelijk = {p.relative_to(presentatiemap).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
+             for p in presentatiemap.rglob('*') if p.is_file()}
+assert werkelijk == verwacht, 'Presentatiefacade wijkt af van de vastgelegde bron en aansluiting'
+print(f"Presentatiefacade: {len(werkelijk)} bronbestanden en {len(presentatie['aanpassingen'])} vastgelegde aansluiting geverifieerd.")

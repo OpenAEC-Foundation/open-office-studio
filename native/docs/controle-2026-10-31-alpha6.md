@@ -67,8 +67,8 @@ uit. De interfacetest met PDF en CSV is lokaal expliciet uitgevoerd.
 
 De systeemfonttekens voor slepen en vergroten van notitieblokken zijn vervangen
 door eigen SVG-iconen. De 27 schermopnamen komen uit de echte Iced-renderer;
-de exportdialoog en aangepaste notitiegrepen zijn visueel bekeken. Vergelijking
-met Windows en macOS moet nog bevestigen dat de eerdere tekenafwijking weg is.
+de exportdialoog en aangepaste notitiegrepen zijn visueel bekeken. De afgeronde vergelijking
+met Windows en macOS bevestigt dat de eerdere tekenafwijking weg is.
 Dit bewijst geen pixelgelijkheid met de bestaande webinterface.
 
 De [alpha-5-corpusronde](corpus-2026-10-31-alpha5-release.json) blijft de laatst
@@ -114,15 +114,18 @@ uitgepakte pakket slaagt voor programmaversies, ZIP-CRC, SHA-256, bronhashes,
 compileerinclusies en licenties. Codecommit
 `7340c91f1f472d141b31c8d02c50a314e9defab9` wordt gecontroleerd in
 [bouwronde 41155324619](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41155324619).
-Linux en macOS zijn daarin gebouwd, getest en verpakt; Windows bouwt op het
-moment van dit verslag nog. De afzonderlijke Linux-conversietaak slaagt.
+Windows, Linux en macOS zijn daarin gebouwd, getest, verpakt en op hun eigen
+platform uitgepakt gecontroleerd. De afzonderlijke Linux-conversietaak slaagt.
+[De teruggedownloade pakketten](pakketten-2026-10-31-alpha6.json) zijn lokaal
+aanvullend gecontroleerd op SHA-256, ZIP-CRC, bronversie en beide programma-architecturen.
 De CI-uitvoer is aanvullend onafhankelijk teruggelezen: zes voorbeeldrondgangen
 houden tekst, tabellen, celinhoud/formules en diatekst gelijk, drie PDF's hebben
 de verwachte handtekening. Zie [metingen en omvang](conversie-2026-10-31-alpha6-ci.json).
 
-Alle 27 lokale native beelden zijn pixelgelijk aan zowel Linux-CI als macOS-CI.
+Alle 27 lokale native beelden zijn pixelgelijk aan Linux-CI, Windows-CI en macOS-CI.
 De [Linux-meting](nativebeelden-2026-10-31-alpha6-Linux.json) en
-[macOS-meting](nativebeelden-2026-10-31-alpha6-macOS.json) bevestigen ook dat de
+[macOS-meting](nativebeelden-2026-10-31-alpha6-macOS.json) en
+[Windows-meting](nativebeelden-2026-10-31-alpha6-Windows.json) bevestigen ook dat de
 eerdere systeemfontafwijking van de notitiegrepen is verdwenen. Dit vergelijkt
 native builds onderling; de hierboven vastgelegde vergelijking met de bestaande
 Writer blijft rood. Schone installatie en fysieke GUI-bediening zijn hiermee
