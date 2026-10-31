@@ -81,3 +81,49 @@ Directe documentinvoer, de volledige modulelinten, herstelkopieën, overige
 mailbediening, de database-interface, schone installers, echte GUI/IME- en
 schermlezertests en de overige acceptatiepunten blijven noodzakelijk.
 Een stabiele native vrijgave blijft daarom geblokkeerd.
+
+## Verliesvrije referentie van de bestaande Writer
+
+Een afzonderlijk Chromium-profiel opent de ongewijzigde webbundel van de
+referentiesuite met het eigen voorbeelddocument. De viewport is 1058 × 892 bij
+schaal 1, de taal Nederlands en het thema Forge. `Page.captureScreenshot` levert
+de oorspronkelijke PNG. `Animation.setPlaybackRate(0)` vóór navigatie bevriest
+de CSS-knipperfase; de gewone sluitknoppen sluiten documentmeldingen. Er worden
+geen pixels vervangen, geen regio's gemaskeerd en geen beelden geschaald.
+
+Twee opeenvolgende oorspronkelijke opnamen verschillen nul pixels. Deze
+[referentie en herkomst](referentie-2026-W44.8/writer.json) is bruikbaar voor
+één vaste toestand. De native Writer-opname gebruikt dezelfde documentbron,
+viewport en het donkere thema. De [vergelijking](writer-alpha6-pixelcontrole.json)
+meet 350.976 afwijkende pixels van 943.736, met nultolerantie. Dit is een
+mislukte pariteitscontrole; met name lint, tabbladen, linialen en statusbalk
+verschillen. Het is geen controle van alle interfacefuncties of documenten.
+De eerdere JPEG-beperking van de in-app browser geldt nog steeds, maar verhindert
+deze afzonderlijke oorspronkelijke PNG-route niet meer.
+
+Het meegeleverde `scripts/maak-webreferentie.mjs` maakt dezelfde opname zonder
+extra JavaScript-pakketten (Node 24 en een lokaal Chromium zijn vereist).
+Een herhaling met dit script in een tweede nieuw profiel levert eveneens exact
+dezelfde PNG-bytes en nul afwijkende pixels. De bundelversie en hashes staan in
+het rapport; het script verifieert geen volledige buildherkomst.
+
+## Build- en pakketcontrole
+
+De lokale Linux-releasebuild slaagt in 25 minuten en 12 seconden. Het
+uitgepakte pakket slaagt voor programmaversies, ZIP-CRC, SHA-256, bronhashes,
+compileerinclusies en licenties. Codecommit
+`7340c91f1f472d141b31c8d02c50a314e9defab9` wordt gecontroleerd in
+[bouwronde 41155324619](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41155324619).
+Linux en macOS zijn daarin gebouwd, getest en verpakt; Windows bouwt op het
+moment van dit verslag nog. De afzonderlijke Linux-conversietaak slaagt.
+De CI-uitvoer is aanvullend onafhankelijk teruggelezen: zes voorbeeldrondgangen
+houden tekst, tabellen, celinhoud/formules en diatekst gelijk, drie PDF's hebben
+de verwachte handtekening. Zie [metingen en omvang](conversie-2026-10-31-alpha6-ci.json).
+
+Alle 27 lokale native beelden zijn pixelgelijk aan zowel Linux-CI als macOS-CI.
+De [Linux-meting](nativebeelden-2026-10-31-alpha6-Linux.json) en
+[macOS-meting](nativebeelden-2026-10-31-alpha6-macOS.json) bevestigen ook dat de
+eerdere systeemfontafwijking van de notitiegrepen is verdwenen. Dit vergelijkt
+native builds onderling; de hierboven vastgelegde vergelijking met de bestaande
+Writer blijft rood. Schone installatie en fysieke GUI-bediening zijn hiermee
+niet bewezen.

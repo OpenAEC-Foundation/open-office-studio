@@ -224,8 +224,25 @@ nog functies en de UI is nog niet pixelgelijk. Alpha-pakketten blijven als
 preview beschikbaar; een stabiel pakket wordt door `verpak.py` geweigerd zolang
 de acceptatiegebieden openstaan.
 
-De huidige browserkoppeling levert JPEG-opnamen. Die zijn bruikbaar om het
-uiterlijk te beoordelen, maar vormen geen geldige referentie voor een numerieke
-pixelcontrole. Een eerdere telling op zo’n opname is daarom geen pixelbewijs.
-Een oorspronkelijke verliesvrije referentie van de bestaande volledige interface
-is nog nodig voordat die controle geldig kan slagen.
+De in-app browserkoppeling levert JPEG-opnamen; die tellen niet als pixelbewijs.
+Een afzonderlijke Chromium-testbrowser heeft inmiddels een oorspronkelijke
+[Writer-PNG van de referentie](docs/referentie-2026-W44.8/writer.png) gemaakt op
+1058 × 892 pixels, met hetzelfde document en thema. CSS-animaties zijn vóór
+navigatie gepauzeerd om de knipperfase vast te leggen; meldingen zijn via hun
+sluitknoppen gesloten. De opname is niet geschaald, uitgelijnd of nabewerkt.
+Twee opeenvolgende opnamen zijn pixelgelijk. De [alpha-6-vergelijking](docs/writer-alpha6-pixelcontrole.json)
+met de native Writer meet **350.976 afwijkende pixels van 943.736**.
+Deze ene vastgelegde toestand bewijst dus expliciet dat de UI nog niet gelijk is.
+De [herkomst](docs/referentie-2026-W44.8/writer.json) vermeldt bron-, bundel- en
+beeldhashes, browser, viewport, thema en taal. De overige schermtoestanden en
+platforms moeten nog op dezelfde manier met de bestaande suite worden vergeleken.
+
+De referentieopname gebruikt alleen een nieuw tijdelijk browserprofiel en eigen
+luisterpoorten; bestaande browservensters blijven met rust. Hiervoor is Node 24
+en een lokaal Chromium-programma nodig, naast een apart gebouwde webbundel van
+de vastgelegde referentieversie. De tool controleert het versienummer van de
+bundel en registreert de hoofdbestandhashes; dat vervangt geen buildattest.
+
+```sh
+node native/scripts/maak-webreferentie.mjs /pad/naar/webbundel /pad/naar/chromium .local/webreferentie
+```
