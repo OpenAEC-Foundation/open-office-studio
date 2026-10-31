@@ -811,7 +811,7 @@ fn document_sneltoetsen_veranderen_geen_verborgen_editor_in_het_postvak() {
     tab.editor = text_editor::Content::with_text("Niet toegepaste documenttekst");
     tab.concept = true;
     app.tabs.push(tab);
-    for letter in ["s", "z", "n", "o", "y", "b", "i", "u"] {
+    for letter in ["s", "z", "n", "o", "y", "b", "i", "u", "c", "x", "v"] {
         let taak = app.update(Msg::Toets(openaec_ui::keyboard::KeyPress {
             key: iced::keyboard::Key::Character(letter.into()),
             modifiers: iced::keyboard::Modifiers::COMMAND,
@@ -1409,4 +1409,415 @@ fn writer_opmaak_in_het_lint_volgt_selectie_en_past_de_echte_knop_op_hetzelfde_b
     }
     let staat = app.tab().unwrap().opmaak_van_selectie().unwrap();
     assert!(!staat.vet && staat.cursief && staat.onderstrepen);
+}
+
+/// Handel uitsluitend eigen testtekst af; het systeemklembord wordt niet benaderd.
+fn klembordtaak(taak: Task<Msg>, leestekst: Option<&str>) -> (Vec<String>, Vec<Msg>) {
+    use iced::futures::StreamExt;
+    let Some(mut stroom) = iced_runtime::task::into_stream(taak) else {
+        return (vec![], vec![]);
+    };
+    iced::futures::executor::block_on(async move {
+        let mut geschreven = vec![];
+        let mut berichten = vec![];
+        while let Some(actie) = stroom.next().await {
+            match actie {
+                iced_runtime::Action::Clipboard(iced_runtime::clipboard::Action::Read {
+                    channel,
+                    target,
+                }) => {
+                    assert_eq!(target, iced::advanced::clipboard::Kind::Standard);
+                    channel.send(leestekst.map(str::to_string)).unwrap();
+                }
+                iced_runtime::Action::Clipboard(iced_runtime::clipboard::Action::Write {
+                    contents,
+                    target,
+                }) => {
+                    assert_eq!(target, iced::advanced::clipboard::Kind::Standard);
+                    geschreven.push(contents);
+                }
+                iced_runtime::Action::Output(msg) => berichten.push(msg),
+                ander => panic!("Onverwachte systeemopdracht in klembordproef: {ander:?}"),
+            }
+        }
+        (geschreven, berichten)
+    })
+}
+/// Verkrijg de opdracht via echte muisgebeurtenissen op de benoemde lintknop.
+fn knopbericht(app: &App, naam: &str) -> Msg {
+    use iced::mouse;
+    lettertypen();
+    let doel = toegankelijkheid(app)
+        .nodes
+        .into_iter()
+        .find(|n| n.node.name == naam)
+        .unwrap()
+        .bounds
+        .center();
+    let renderer = iced_tiny_skia::Renderer::new(
+        ui_instellingen().default_font,
+        ui_instellingen().default_text_size,
+    );
+    let mut element = app.view();
+    let mut tree = Tree::new(&element);
+    let grootte = Size::new(1440., 900.);
+    let node = element.as_widget_mut().layout(
+        &mut tree,
+        &renderer,
+        &layout::Limits::new(Size::ZERO, grootte),
+    );
+    let mut berichten = vec![];
+    for event in [
+        mouse::Event::CursorMoved { position: doel },
+        mouse::Event::ButtonPressed(mouse::Button::Left),
+        mouse::Event::ButtonReleased(mouse::Button::Left),
+    ] {
+        let mut shell = iced::advanced::Shell::new(&mut berichten);
+        element.as_widget_mut().update(
+            &mut tree,
+            &iced::Event::Mouse(event),
+            Layout::new(&node),
+            mouse::Cursor::Available(doel),
+            &renderer,
+            &mut iced::advanced::clipboard::Null,
+            &mut shell,
+            &iced::Rectangle::with_size(grootte),
+        );
+    }
+    assert_eq!(berichten.len(), 1, "{naam}");
+    berichten.pop().unwrap()
+}
+fn klembord_alinea(app: &mut App) -> usize {
+    let index = app
+        .tab()
+        .unwrap()
+        .antwoord
+        .as_ref()
+        .unwrap()
+        .beeld
+        .velden
+        .iter()
+        .position(|v| v.tekst == "Links 🏠 café rechts")
+        .unwrap();
+    voer_interface_uit(app, Msg::Veld(index));
+    voer_interface_uit(
+        app,
+        Msg::Invoer(text_editor::Action::Move(
+            text_editor::Motion::DocumentStart,
+        )),
+    );
+    for _ in 0..8 {
+        voer_interface_uit(
+            app,
+            Msg::Invoer(text_editor::Action::Select(text_editor::Motion::Right)),
+        );
+    }
+    assert_eq!(
+        app.tab().unwrap().editor.selection().as_deref(),
+        Some("Links 🏠 ")
+    );
+    index
+}
+#[test]
+fn klembord_lintknoppen_behouden_unicode_bron_opmaak_en_ongedaan_maken() {
+    let bron = include_bytes!("../../office-core/tests/fixtures/writer-structuur.docx");
+    let mut app = app_met_werkdraad(Module::Writer, bron);
+    let index = klembord_alinea(&mut app);
+    let gewijzigd = app.tab().unwrap().gewijzigd();
+    let bericht = knopbericht(&app, "Kopiëren");
+    let (geschreven, berichten) = klembordtaak(app.update(bericht), None);
+    assert_eq!(geschreven, vec!["Links 🏠 "]);
+    assert!(berichten.is_empty());
+    assert_eq!(app.tab().unwrap().gewijzigd(), gewijzigd);
+    let taak = app.update(Msg::Toets(openaec_ui::keyboard::KeyPress {
+        key: iced::keyboard::Key::Character("c".into()),
+        modifiers: iced::keyboard::Modifiers::COMMAND,
+    }));
+    let (geschreven, berichten) = klembordtaak(taak, None);
+    assert_eq!(geschreven, vec!["Links 🏠 "]);
+    assert!(berichten.is_empty());
+    let bericht = knopbericht(&app, "Plakken");
+    let (geschreven, berichten) = klembordtaak(app.update(bericht), Some("Nieuw 🏠 "));
+    assert!(geschreven.is_empty());
+    assert_eq!(berichten.len(), 1);
+    for bericht in berichten {
+        voer_interface_uit(&mut app, bericht);
+    }
+    let t = app.tab().unwrap();
+    assert!(t.concept);
+    assert_eq!(t.editor.text(), "Nieuw 🏠 café rechts");
+    assert_eq!(t.antwoord.as_ref().unwrap().bron.as_slice(), bron);
+    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        std::fs::create_dir_all(&map).unwrap();
+        render(&app)
+            .save_png(PathBuf::from(map).join("writer-klembord-concept.png"))
+            .unwrap();
+    }
+    klik_bediening(&mut app, "Tekst toepassen");
+    let t = app.tab().unwrap();
+    let a = t.antwoord.as_ref().unwrap();
+    assert_eq!(a.beeld.velden[index].tekst, "Nieuw 🏠 café rechts");
+    let bereiken = &a.beeld.writer_opmaak[&a.beeld.velden[index].id];
+    assert!(
+        office_core::writer_opmaak::selectie(bereiken, 8, "Nieuw 🏠 café rechts".chars().count())
+            .unwrap()
+            .cursief
+    );
+    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
+        std::fs::create_dir_all(&map).unwrap();
+        std::fs::write(
+            PathBuf::from(map).join("writer-klembord.docx"),
+            a.bron.as_slice(),
+        )
+        .unwrap();
+    }
+    voer_interface_uit(&mut app, Msg::Terug);
+    assert_eq!(
+        app.tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .bron
+            .as_slice(),
+        bron
+    );
+    klembord_alinea(&mut app);
+    let bericht = knopbericht(&app, "Knippen");
+    let (geschreven, berichten) = klembordtaak(app.update(bericht), None);
+    assert_eq!(geschreven, vec!["Links 🏠 "]);
+    assert!(berichten.is_empty());
+    assert_eq!(app.tab().unwrap().editor.text(), "café rechts");
+    assert!(app.tab().unwrap().concept);
+    assert_eq!(
+        app.tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .bron
+            .as_slice(),
+        bron
+    );
+    klik_bediening(&mut app, "Tekst toepassen");
+    voer_interface_uit(&mut app, Msg::Terug);
+    assert_eq!(
+        app.tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .bron
+            .as_slice(),
+        bron
+    );
+}
+#[test]
+fn klembord_vertraagd_antwoord_verandert_geen_andere_editor_of_selectie() {
+    let bron = include_bytes!("../../office-core/tests/fixtures/writer-structuur.docx");
+    let mut app = app_met_werkdraad(Module::Writer, bron);
+    klembord_alinea(&mut app);
+    let (_, mut berichten) = klembordtaak(
+        app.update(Msg::Klembord(klembord::Actie::Plak)),
+        Some("Vertraagde eigen tekst"),
+    );
+    assert_eq!(berichten.len(), 1);
+    voer_interface_uit(
+        &mut app,
+        Msg::Invoer(text_editor::Action::Move(
+            text_editor::Motion::DocumentStart,
+        )),
+    );
+    voer_interface_uit(&mut app, berichten.pop().unwrap());
+    assert!(!app.tab().unwrap().concept);
+    assert_eq!(app.tab().unwrap().editor.text(), "Links 🏠 café rechts");
+    assert!(app.melding.contains("selectie is gewijzigd"));
+    let (_, mut berichten) = klembordtaak(
+        app.update(Msg::Klembord(klembord::Actie::Plak)),
+        Some("Vertraagde eigen tekst"),
+    );
+    voer_interface_uit(&mut app, Msg::Nieuw(Module::Writer));
+    let ongewijzigd = app.tab().unwrap().antwoord.as_ref().unwrap().bron.clone();
+    voer_interface_uit(&mut app, berichten.pop().unwrap());
+    assert_eq!(
+        app.tab().unwrap().antwoord.as_ref().unwrap().bron,
+        ongewijzigd
+    );
+    assert!(!app.tab().unwrap().concept);
+    for leeg in [None, Some("")] {
+        let (_, berichten) = klembordtaak(app.update(Msg::Klembord(klembord::Actie::Plak)), leeg);
+        for bericht in berichten {
+            voer_interface_uit(&mut app, bericht);
+        }
+        assert!(!app.tab().unwrap().concept);
+    }
+}
+#[test]
+fn klembord_respecteert_beveiliging_en_verborgen_of_modale_editors() {
+    let bron = include_bytes!("../../office-core/tests/fixtures/writer-beveiligd.docx");
+    let mut app = app_met_werkdraad(Module::Writer, bron);
+    voer_interface_uit(&mut app, Msg::Invoer(text_editor::Action::SelectAll));
+    let selectie = app.tab().unwrap().editor.selection().unwrap();
+    let (geschreven, berichten) =
+        klembordtaak(app.update(Msg::Klembord(klembord::Actie::Kopieer)), None);
+    assert_eq!(geschreven, vec![selectie]);
+    assert!(berichten.is_empty());
+    for actie in [klembord::Actie::Knip, klembord::Actie::Plak] {
+        let (a, b) = klembordtaak(app.update(Msg::Klembord(actie)), Some("Eigen tekst"));
+        assert!(a.is_empty() && b.is_empty());
+    }
+    let boom = toegankelijkheid(&app);
+    for naam in ["Knippen", "Plakken"] {
+        assert!(
+            boom.nodes
+                .iter()
+                .find(|n| n.node.name == naam)
+                .unwrap()
+                .node
+                .state
+                .disabled
+        );
+    }
+    for toestand in 0..6 {
+        app.bestand = toestand == 0;
+        app.instellingen = toestand == 1;
+        app.postvak_zichtbaar = toestand == 2;
+        app.sluiten = (toestand == 3).then_some(1);
+        app.postvak.sluitvraag = toestand == 4;
+        app.tab_mut().unwrap().bezig = toestand == 5;
+        for actie in [
+            klembord::Actie::Kopieer,
+            klembord::Actie::Knip,
+            klembord::Actie::Plak,
+        ] {
+            let (a, b) = klembordtaak(app.update(Msg::Klembord(actie)), Some("Eigen tekst"));
+            assert!(a.is_empty() && b.is_empty(), "toestand {toestand}");
+        }
+        assert_eq!(
+            app.tab()
+                .unwrap()
+                .antwoord
+                .as_ref()
+                .unwrap()
+                .bron
+                .as_slice(),
+            bron
+        );
+        assert!(!app.tab().unwrap().concept);
+    }
+}
+#[test]
+fn compacte_opmaakrij_bedient_doorhalen_uitvullen_en_letterstappen() {
+    let bron = include_bytes!("../../office-core/tests/fixtures/writer.docx");
+    let mut app = app_met_werkdraad(Module::Writer, bron);
+    voer_interface_uit(&mut app, Msg::Veld(1));
+    assert!(toegankelijkheid(&app).unnamed.is_empty());
+    klik_bediening(&mut app, "Doorhalen");
+    assert!(app.tab().unwrap().veld().unwrap().opmaak.doorhalen);
+    klik_bediening(&mut app, "Uitvullen");
+    klik_bediening(&mut app, "Lettertype vergroten");
+    assert_eq!(app.tab().unwrap().veld().unwrap().opmaak.grootte, Some(12.));
+    klik_bediening(&mut app, "Lettertype verkleinen");
+    assert_eq!(app.tab().unwrap().veld().unwrap().opmaak.grootte, Some(11.));
+    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
+        std::fs::create_dir_all(&map).unwrap();
+        std::fs::write(
+            PathBuf::from(map).join("writer-lintuitbreiding.docx"),
+            app.tab()
+                .unwrap()
+                .antwoord
+                .as_ref()
+                .unwrap()
+                .bron
+                .as_slice(),
+        )
+        .unwrap();
+    }
+    for _ in 0..4 {
+        voer_interface_uit(&mut app, Msg::Terug);
+    }
+    assert_eq!(
+        app.tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .bron
+            .as_slice(),
+        bron
+    );
+
+    voer_tekstveld_in(&mut app, "Lettergrootte", "80");
+    klik_bediening(&mut app, "Lettertype verkleinen");
+    assert_eq!(app.tab().unwrap().veld().unwrap().opmaak.grootte, Some(79.));
+    klik_bediening(&mut app, "Lettertype vergroten");
+    assert_eq!(app.tab().unwrap().veld().unwrap().opmaak.grootte, Some(80.));
+    for _ in 0..3 {
+        voer_interface_uit(&mut app, Msg::Terug);
+    }
+    assert_eq!(
+        app.tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .bron
+            .as_slice(),
+        bron
+    );
+    voer_tekstveld_in(&mut app, "Lettergrootte", "1");
+    assert!(
+        toegankelijkheid(&app)
+            .nodes
+            .iter()
+            .find(|n| n.node.name == "Lettertype verkleinen")
+            .unwrap()
+            .node
+            .state
+            .disabled
+    );
+    klik_bediening(&mut app, "Lettertype vergroten");
+    assert_eq!(app.tab().unwrap().veld().unwrap().opmaak.grootte, Some(2.));
+    klik_bediening(&mut app, "Lettertype verkleinen");
+    assert_eq!(app.tab().unwrap().veld().unwrap().opmaak.grootte, Some(1.));
+    for _ in 0..3 {
+        voer_interface_uit(&mut app, Msg::Terug);
+    }
+    assert_eq!(
+        app.tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .bron
+            .as_slice(),
+        bron
+    );
+    voer_interface_uit(&mut app, Msg::Lint(2));
+    let panelen = app.tab().unwrap().panelen;
+    klik_bediening(&mut app, "Inzoomen");
+    assert!((app.tab().unwrap().zoom - 1.1).abs() < 0.0001);
+    klik_bediening(&mut app, "100%");
+    assert_eq!(app.tab().unwrap().zoom, 1.);
+    klik_bediening(&mut app, "Panelen");
+    assert_eq!(app.tab().unwrap().panelen, !panelen);
+    klik_bediening(&mut app, "Panelen");
+    assert_eq!(app.tab().unwrap().panelen, panelen);
+    klik_bediening(&mut app, "Bestand");
+    assert!(matches!(
+        knopbericht(&app, "Bewaren als IFCX…"),
+        Msg::Archiveer
+    ));
+    assert!(matches!(knopbericht(&app, "Markdown…"), Msg::Markdown));
+    assert!(matches!(knopbericht(&app, "Exporteren…"), Msg::ExportMenu));
+    assert_eq!(
+        app.tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .bron
+            .as_slice(),
+        bron
+    );
 }

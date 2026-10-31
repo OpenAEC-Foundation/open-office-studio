@@ -89,10 +89,15 @@ meegeleverd. De [vaste bronregressie](bronregressie-2026-10-31-alpha10-release.j
 slaagt met de lokale releasecontroleur. Dit zijn previewpakketten, geen native
 installers of stabiele suitevervanging.
 
-De laatst afgeronde brede corpusronde betreft nog
-[alpha 9](controle-2026-10-31-alpha9.md): 68 weigeringen en twee overschrijdingen
-van 30 seconden. De drie grote bronnen slagen apart met meer tijd. Dit blijft
-onvolledig bewijs voor het hele corpus.
+De [brede alpha-10-releasecorpusronde](corpus-2026-10-31-alpha10-release.json)
+is afgerond: **579 geslaagd, 68 geweigerd en één time-out** uit 648 geselecteerde
+OOXML-bronnen, met 30 seconden per bron, twee processen en 3 GiB adresruimte
+per proces. De bron met 177 pagina's overschrijdt die grens. Alle drie
+[grote bronnen slagen afzonderlijk](grote-bronnen-2026-10-31-alpha10.json) met
+120 seconden en één proces. De ronde controleert één werkweergave en zichtbare
+tekstvelden na bewaren; geen volledige inhouds- of stijlcontrole. De overige
+918 formaten zijn hiermee niet native getest. Er draaiden andere lokale taken
+mee; de tijden vormen geen geïsoleerde benchmark.
 
 Directe rijke paginainvoer, volledige ribbons, continue spreadsheetbediening,
 presentatieobjecten, automatisch notitieherstel, complete mailbediening,

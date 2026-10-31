@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.10**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.12**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -67,6 +67,14 @@ selectie bedienen de huidige opmaakopdrachten de hele alinea. Directe rijke
 invoer op de pagina en invoegopmaak voor lege alinea's zijn nog niet overgezet.
 
 ![Werkelijke Writer-selectie met bijbehorende lintstatus](docs/screenshots/writer-selectie-opmaak.png)
+
+Het compacte lint heeft nu tekstklembordknoppen en letterstappen. Kopiëren,
+Knippen en Plakken gebruiken uitsluitend platte tekst in de actieve editor;
+rijke inhoud en celbereiken zijn nog niet overgezet. Vertraagde plakantwoorden
+mogen geen gewijzigd doel bewerken. **Bestand** bevat export, Markdown en IFCX;
+zoom en panelen staan voor de drie documentmodules onder **Weergave**.
+
+![Zichtbaar klembordconcept vóór toepassen](docs/screenshots/writer-klembord-concept.png)
 
 ![Vrij native notitiecanvas](docs/screenshots/notition-canvas.png)
 
@@ -166,21 +174,21 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
-Het [controlerapport voor alpha 11](docs/controle-2026-10-31-alpha11.md) beschrijft
-175 reguliere Rust-tests, zeven Python-tests en de exacte vergelijking tussen
-verse Writer-pagina’s en sessiepaginering. Alle zes aparte runtimeproeven en de
-onafhankelijke conversiecontrole zijn geslaagd. De nieuwe release- en platformronde
-zijn nog niet afgerond. De [alpha-10-platformronde](docs/controle-2026-10-31-alpha10.md) is afgerond:
-alle vijf CI-jobs groen, alle 673 verpakte bronbestanden bytegelijk op elk platform
-en 66 native beeldparen exact gelijk. De brede corpusronde betreft nog
-[alpha 9](docs/controle-2026-10-31-alpha9.md). De platformvergelijking is geen bewijs
-van gelijkheid met de bestaande interface. Eerdere rapporten blijven historische
-verslagen.
+Het [controlerapport voor alpha 12](docs/controle-2026-10-31-alpha12.md) beschrijft
+179 reguliere Rust-tests, zes aparte runtimeproeven en zeven Python-tests.
+Na de laatste letterstapcorrecties zijn alle 40 GUI-tests opnieuw geslaagd.
+De bestandsuitvoer is onafhankelijk teruggelezen; 34 native schermen zijn
+vastgelegd. De nieuwe release- en platformronde zijn nog niet afgerond.
+De [alpha-11-platformronde](docs/controle-2026-10-31-alpha11.md) is volledig
+geslaagd: vijf CI-jobs groen, alle 691 bronbestanden bytegelijk op elk platform,
+66 exacte native beeldparen en zeven exacte paginabezoeken op alle drie
+platforms. De platformvergelijking bewijst geen gelijkheid met de bestaande
+interface. Eerdere rapporten blijven historische verslagen.
 
 ```sh
 python3 native/scripts/controleer-bron.py
 cargo fmt --manifest-path native/Cargo.toml -p office-core -p open-office-studio-native -p office-mail -p office-conversie --check
-cargo clippy --manifest-path native/Cargo.toml --workspace --all-targets -- -D warnings
+cargo clippy --manifest-path native/Cargo.toml --workspace --locked --all-targets -- -D warnings
 OFFICE_TEST_UITVOER=/tmp/native-rondgang OFFICE_TEST_SCHERMEN=/tmp/native-schermen \
   cargo test --manifest-path native/Cargo.toml --workspace --locked
 python3 native/crates/office-core/tests/fixtures/controleer.py /tmp/native-rondgang
@@ -228,11 +236,14 @@ uitvoer vermeldt expliciet of die grens geldt. Een weigering, tijdslimiet of
 afwijking geeft geen volledig geslaagde ronde. De debugtijden zijn geen bewijs
 voor prestaties van de releasebuild.
 
-De [laatste volledige releasecorpusronde, alpha 7](docs/corpus-2026-10-31-alpha7-release.json)
-bevat 648 bronnen: 578 geslaagd, 69 geweigerd en één tijdslimiet, zonder gemeld
-rondgangverschil. De extra kop-/voettekstweigering wordt in alpha 8 hersteld;
-de volledige alpha-8-releasecorpusronde volgt nog. De andere 918 manifestbronnen
-vallen buiten deze native ronde.
+De [laatste afgeronde brede releasecorpusronde, alpha 11](docs/corpus-2026-10-31-alpha11-release.json)
+bevat 648 geselecteerde bronnen: 579 geslaagd, 68 geweigerd en één time-out.
+De bron met 177 pagina's overschrijdt de grens van 30 seconden. Alle drie
+[grote bronnen slagen afzonderlijk](docs/grote-bronnen-2026-10-31-alpha11.json)
+met 120 seconden en één proces. De kop-/voettekstweigering uit alpha 7 is
+hersteld en wordt apart als vaste bronregressie gecontroleerd. De andere 918
+manifestbronnen vallen buiten deze native ronde. Dit is geen volledige
+inhouds-, stijl- of functiecontrole.
 
 ## Bron en licenties
 
@@ -281,16 +292,19 @@ Een afzonderlijke Chromium-testbrowser heeft inmiddels een oorspronkelijke
 1058 × 892 pixels, met hetzelfde document en thema. CSS-animaties zijn vóór
 navigatie gepauzeerd om de knipperfase vast te leggen; meldingen zijn via hun
 sluitknoppen gesloten. De opname is niet geschaald, uitgelijnd of nabewerkt.
-Twee opeenvolgende opnamen zijn pixelgelijk. De [alpha-8-vergelijking](docs/pixelcontrole-alpha8/writer/rapport.json)
-met de native Writer meet **126.880 afwijkende pixels van 943.736**.
+Twee opeenvolgende referentieopnamen zijn pixelgelijk. De
+[alpha-12-vergelijking](docs/pixelcontrole-alpha12/writer/rapport.json)
+met de native Writer meet **120.590 afwijkende pixels van 943.736**.
 Deze ene vastgelegde toestand bewijst dus expliciet dat de UI nog niet gelijk is.
 De [herkomst](docs/referentie-2026-W44.8/writer.json) vermeldt bron-, bundel- en
 beeldhashes, browser, viewport, thema en taal. Ook voor
 [Spreadsheet](docs/referentie-2026-W44.8/spreadsheet.png),
 [Presentation](docs/referentie-2026-W44.8/presentation.png) en
 [Notition](docs/referentie-2026-W44.8/notition.png) zijn nu vaste PNG-referenties
-vastgelegd. De eerste native vergelijkingen daarvan falen eveneens; indeling,
-panelen en overige schermtoestanden blijven over te zetten en te controleren.
+vastgelegd. De [vier alpha-12-vergelijkingen](docs/pixelcontrole-alpha12/rapport.json)
+falen; indeling, panelen en overige schermtoestanden blijven over te zetten.
+De browser- en nativevenstertoestanden zijn vastgelegd. Een vergelijking in
+dezelfde desktopvenstertoestand staat nog open.
 
 De referentieopname gebruikt alleen een nieuw tijdelijk browserprofiel en eigen
 luisterpoorten; bestaande browservensters blijven met rust. Hiervoor is Node 24

@@ -60,100 +60,160 @@ pub fn ribbon(app: &App) -> Option<Element<'_, Msg>> {
     let staat = selectie.as_ref();
     let kan =
         !t.bezig && !t.concept && veld.is_some_and(|v| v.bewerkbaar && v.id != "__dia_notities");
-    let opmaak = |r, naam, actief, o| {
-        w::ribbon_small(l, svg(r), naam, actief, kan.then_some(Msg::Opmaak(o)))
+    let knop = |bron, naam, actief, bericht| {
+        w::with_tooltip(
+            l,
+            w::icon_button(l, bron, 22., actief, naam, bericht),
+            naam,
+            None,
+        )
     };
-    let tekst = column![
-        row![
-            openaec_ui::design::a11y::node(
-                text_input("Lettertype", &t.lettertype)
-                    .on_input_maybe(kan.then_some(Msg::Lettertype))
-                    .on_submit_maybe(
-                        (kan && !t.lettertype.trim().is_empty())
-                            .then(|| Msg::Opmaak(Opmaak::Lettertype(t.lettertype.clone())))
-                    )
-                    .width(140)
-                    .padding(5),
-                openaec_ui::design::a11y::Node::new(
-                    openaec_ui::design::a11y::Role::TextField,
-                    "Lettertype"
-                )
-                .disabled(!kan)
-            ),
-            openaec_ui::design::a11y::node(
-                text_input("Grootte", &t.grootte)
-                    .on_input_maybe(kan.then_some(Msg::Grootte))
-                    .on_submit_maybe(
-                        kan.then(|| lettergrootte(&t.grootte))
-                            .flatten()
-                            .map(|n| Msg::Opmaak(Opmaak::Lettergrootte(n)))
-                    )
-                    .width(54)
-                    .padding(5),
-                openaec_ui::design::a11y::Node::new(
-                    openaec_ui::design::a11y::Role::TextField,
-                    "Lettergrootte"
-                )
-                .disabled(!kan)
-            )
-        ]
-        .spacing(5),
-        row![
-            opmaak(
-                R::TextBold,
-                "Vet",
-                staat.is_some_and(|s| s.vet),
-                Opmaak::Vet(!staat.is_some_and(|s| s.vet))
-            ),
-            opmaak(
-                R::TextItalic,
-                "Cursief",
-                staat.is_some_and(|s| s.cursief),
-                Opmaak::Cursief(!staat.is_some_and(|s| s.cursief))
-            ),
-        ]
-        .spacing(3),
-        if module != Module::Spreadsheet {
-            opmaak(
-                R::TextUnderline,
-                "Onderstrepen",
-                staat.is_some_and(|s| s.onderstrepen),
-                Opmaak::Onderstrepen(!staat.is_some_and(|s| s.onderstrepen)),
-            )
-        } else {
-            w::ribbon_small(
+    let compact = |bron, naam, actief, o| {
+        w::with_tooltip(
+            l,
+            w::icon_button_with(
                 l,
-                svg(R::TextUnderline),
-                "Doorhalen",
-                staat.is_some_and(|s| s.doorhalen),
-                kan.then_some(Msg::Opmaak(Opmaak::Doorhalen(
-                    !staat.is_some_and(|s| s.doorhalen),
-                ))),
-            )
-        }
-    ]
-    .spacing(3);
-    let uitlijning = column![
-        opmaak(
-            R::TextAlignLeft,
-            "Links",
-            false,
-            Opmaak::Uitlijning(Uitlijning::Links)
+                bron,
+                26.,
+                actief,
+                openaec_ui::design::a11y::Node::new(
+                    openaec_ui::design::a11y::Role::ToggleButton,
+                    naam,
+                )
+                .checked(actief)
+                .disabled(!kan),
+                kan.then_some(Msg::Opmaak(o)),
+            ),
+            naam,
+            None,
+        )
+    };
+    let mut tekstopmaak = row![
+        compact(
+            svg(R::TextBold),
+            "Vet",
+            staat.is_some_and(|s| s.vet),
+            Opmaak::Vet(!staat.is_some_and(|s| s.vet))
         ),
-        opmaak(
-            R::TextAlignCenter,
-            "Centreren",
-            false,
-            Opmaak::Uitlijning(Uitlijning::Midden)
-        ),
-        opmaak(
-            R::TextAlignRight,
-            "Rechts",
-            false,
-            Opmaak::Uitlijning(Uitlijning::Rechts)
-        ),
+        compact(
+            svg(R::TextItalic),
+            "Cursief",
+            staat.is_some_and(|s| s.cursief),
+            Opmaak::Cursief(!staat.is_some_and(|s| s.cursief))
+        )
     ]
     .spacing(2);
+    if module != Module::Spreadsheet {
+        tekstopmaak = tekstopmaak.push(compact(
+            svg(R::TextUnderline),
+            "Onderstrepen",
+            staat.is_some_and(|s| s.onderstrepen),
+            Opmaak::Onderstrepen(!staat.is_some_and(|s| s.onderstrepen)),
+        ));
+    }
+    if module != Module::Presentation {
+        tekstopmaak = tekstopmaak.push(compact(
+            DOORHALEN,
+            "Doorhalen",
+            staat.is_some_and(|s| s.doorhalen),
+            Opmaak::Doorhalen(!staat.is_some_and(|s| s.doorhalen)),
+        ));
+    }
+    let invoer = row![
+        openaec_ui::design::a11y::node(
+            text_input("Lettertype", &t.lettertype)
+                .on_input_maybe(kan.then_some(Msg::Lettertype))
+                .on_submit_maybe(
+                    (kan && !t.lettertype.trim().is_empty())
+                        .then(|| Msg::Opmaak(Opmaak::Lettertype(t.lettertype.clone())))
+                )
+                .width(152)
+                .padding(5),
+            openaec_ui::design::a11y::Node::new(
+                openaec_ui::design::a11y::Role::TextField,
+                "Lettertype"
+            )
+            .disabled(!kan)
+        ),
+        openaec_ui::design::a11y::node(
+            text_input("Grootte", &t.grootte)
+                .on_input_maybe(kan.then_some(Msg::Grootte))
+                .on_submit_maybe(
+                    kan.then(|| lettergrootte(&t.grootte))
+                        .flatten()
+                        .map(|n| Msg::Opmaak(Opmaak::Lettergrootte(n)))
+                )
+                .width(54)
+                .padding(5),
+            openaec_ui::design::a11y::Node::new(
+                openaec_ui::design::a11y::Role::TextField,
+                "Lettergrootte"
+            )
+            .disabled(!kan)
+        )
+    ]
+    .spacing(3);
+    let maat = staat.and_then(|s| s.grootte);
+    let tekst = column![
+        row![
+            invoer,
+            knop(
+                GROTER,
+                "Lettertype vergroten",
+                false,
+                kan.then(|| maat.and_then(|n| volgende_grootte(n, true)))
+                    .flatten()
+                    .map(|n| Msg::Opmaak(Opmaak::Lettergrootte(n)))
+            ),
+            knop(
+                KLEINER,
+                "Lettertype verkleinen",
+                false,
+                kan.then(|| maat.and_then(|n| volgende_grootte(n, false)))
+                    .flatten()
+                    .map(|n| Msg::Opmaak(Opmaak::Lettergrootte(n)))
+            )
+        ]
+        .spacing(2)
+        .width(266),
+        tekstopmaak
+    ]
+    .spacing(6);
+    // Zonder opgeloste alineastatus zijn dit opdrachten, geen onterecht
+    // uitgeschakelde wisselknoppen voor de huidige uitlijning.
+    let alinea = |bron, naam, o| {
+        w::with_tooltip(
+            l,
+            w::icon_button(l, bron, 26., false, naam, kan.then_some(Msg::Opmaak(o))),
+            naam,
+            None,
+        )
+    };
+    let mut uitlijning = row![
+        alinea(
+            svg(R::TextAlignLeft),
+            "Links",
+            Opmaak::Uitlijning(Uitlijning::Links)
+        ),
+        alinea(
+            svg(R::TextAlignCenter),
+            "Centreren",
+            Opmaak::Uitlijning(Uitlijning::Midden)
+        ),
+        alinea(
+            svg(R::TextAlignRight),
+            "Rechts",
+            Opmaak::Uitlijning(Uitlijning::Rechts)
+        )
+    ]
+    .spacing(2);
+    if module != Module::Spreadsheet {
+        uitlijning = uitlijning.push(alinea(
+            UITVULLEN,
+            "Uitvullen",
+            Opmaak::Uitlijning(Uitlijning::Uitvullen),
+        ));
+    }
     let bewaren = column![
         w::ribbon_small(
             l,
@@ -196,30 +256,74 @@ pub fn ribbon(app: &App) -> Option<Element<'_, Msg>> {
         ),
     ]
     .spacing(2);
-    let zoom = column![
-        w::ribbon_small(
-            l,
-            icoon(Icon::ZoomIn),
-            "Inzoomen",
-            false,
-            (t.zoom < 3.).then_some(Msg::Zoom(t.zoom + 0.1))
-        ),
-        w::ribbon_small(
-            l,
-            icoon(Icon::ZoomOut),
-            "Uitzoomen",
-            false,
-            (t.zoom > 0.25).then_some(Msg::Zoom(t.zoom - 0.1))
-        ),
-        w::button(l, "100%", K::Quiet, D::Compact, None, Some(Msg::Zoom(1.))),
-    ]
-    .spacing(2);
-    let mut groepen = vec![
-        w::ribbon_group(l, "Bestand", vec![bewaren.into()]),
-        w::ribbon_group(l, "Bewerken", vec![geschiedenis.into()]),
+    let klembord = w::ribbon_group(
+        l,
+        "Klembord",
+        vec![
+            w::ribbon_large(
+                l,
+                svg(R::ClipboardPaste),
+                "Plakken",
+                false,
+                klembord::kan(app, klembord::Actie::Plak)
+                    .then_some(Msg::Klembord(klembord::Actie::Plak)),
+            ),
+            column![
+                knop(
+                    svg(R::ClipboardCut),
+                    "Knippen",
+                    false,
+                    klembord::kan(app, klembord::Actie::Knip)
+                        .then_some(Msg::Klembord(klembord::Actie::Knip))
+                ),
+                knop(
+                    svg(R::ClipboardCopy),
+                    "Kopiëren",
+                    false,
+                    klembord::kan(app, klembord::Actie::Kopieer)
+                        .then_some(Msg::Klembord(klembord::Actie::Kopieer))
+                )
+            ]
+            .spacing(4)
+            .width(26)
+            .into(),
+        ],
+    );
+    let mut groepen = vec![];
+    if module == Module::Writer {
+        let historie = column![
+            knop(
+                icoon(Icon::Undo),
+                "Ongedaan maken",
+                false,
+                (!t.bezig && (t.concept || a.terug)).then_some(Msg::Terug)
+            ),
+            knop(
+                icoon(Icon::Redo),
+                "Opnieuw",
+                false,
+                (!t.bezig && !t.concept && a.vooruit).then_some(Msg::Vooruit)
+            ),
+            knop(
+                icoon(Icon::Check),
+                "Tekst toepassen",
+                false,
+                (!t.bezig && t.concept).then_some(Msg::PasToe)
+            )
+        ]
+        .spacing(2)
+        .width(55)
+        .align_x(iced::Alignment::Center);
+        groepen.push(w::ribbon_group(l, "Bewerken", vec![historie.into()]));
+    } else {
+        groepen.push(w::ribbon_group(l, "Bestand", vec![bewaren.into()]));
+        groepen.push(w::ribbon_group(l, "Bewerken", vec![geschiedenis.into()]));
+    }
+    groepen.push(klembord);
+    groepen.extend(vec![
         w::ribbon_group(l, "Lettertype", vec![tekst.into()]),
         w::ribbon_group(l, "Uitlijning", vec![uitlijning.into()]),
-    ];
+    ]);
     if module == Module::Spreadsheet {
         let actie = |naam, actie| {
             w::ribbon_small(
@@ -340,54 +444,7 @@ pub fn ribbon(app: &App) -> Option<Element<'_, Msg>> {
                 .into(),
             ],
         ));
-        groepen.push(w::ribbon_group(
-            l,
-            "Exporteren",
-            vec![
-                w::ribbon_large(
-                    l,
-                    icoon(Icon::Export),
-                    "Exporteren",
-                    false,
-                    (!t.bezig && !t.concept && !app.export_bezig).then_some(Msg::ExportMenu),
-                ),
-                w::ribbon_large(
-                    l,
-                    icoon(Icon::Export),
-                    "Markdown",
-                    false,
-                    (!t.bezig).then_some(Msg::Markdown),
-                ),
-            ],
-        ));
     }
-    if module != Module::Writer {
-        groepen.push(w::ribbon_group(
-            l,
-            "Exporteren",
-            vec![w::ribbon_large(
-                l,
-                icoon(Icon::Export),
-                "Exporteren",
-                false,
-                (!t.bezig && !t.concept && !app.export_bezig).then_some(Msg::ExportMenu),
-            )],
-        ));
-    }
-    groepen.push(w::ribbon_group(
-        l,
-        "Weergave",
-        vec![
-            zoom.into(),
-            w::ribbon_large(
-                l,
-                icoon(Icon::Settings),
-                "Panelen",
-                t.panelen,
-                Some(Msg::Panelen),
-            ),
-        ],
-    ));
     Some(w::ribbon(l, groepen))
 }
 
@@ -411,4 +468,40 @@ pub fn tekenoffset(
                     .count()
             })
             .unwrap_or_default()
+}
+
+// Eigen lijniconen voor opdrachten buiten de vaste catalogus.
+const DOORHALEN: &str = r#"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M17 5c-1-1-3-2-5-2-3 0-5 2-5 4 0 1 1 2 2 3m6 4c2 1 3 2 3 3 0 3-3 4-6 4-2 0-4-1-5-2"/></svg>"#;
+const UITVULLEN: &str = r#"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5h16M4 10h16M4 15h16M4 20h16"/></svg>"#;
+const GROTER: &str = r#"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 19 4-12 4 12m-6-4h4m9-10v9m-3-6 3-3 3 3"/></svg>"#;
+const KLEINER: &str = r#"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 19 4-12 4 12m-6-4h4m9-10v9m-3-3 3 3 3-3"/></svg>"#;
+fn volgende_grootte(n: f64, groter: bool) -> Option<f64> {
+    if !n.is_finite() || !(1.0..=400.0).contains(&n) {
+        return None;
+    }
+    let reeks = [
+        1., 2., 3., 4., 5., 6., 7., 8., 9., 10., 11., 12., 14., 16., 18., 20., 22., 24., 26., 28.,
+        36., 48., 72.,
+    ];
+    // Boven de keuzereeks blijven de stappen één punt; verkleinen mag
+    // bijvoorbeeld 80 punt niet ineens naar 72 punt laten springen.
+    let doel = if n > 72. {
+        if groter {
+            (n + 1.).min(400.)
+        } else {
+            (n - 1.).max(72.)
+        }
+    } else if groter {
+        reeks
+            .into_iter()
+            .find(|v| *v > n)
+            .unwrap_or((n + 1.).min(400.))
+    } else {
+        reeks
+            .into_iter()
+            .rev()
+            .find(|v| *v < n)
+            .unwrap_or((n - 1.).max(1.))
+    };
+    (doel != n).then_some(doel)
 }

@@ -147,3 +147,19 @@ for nummer, grootte in enumerate([10, 10.5, 10.5]):
     p = next(p for p in doc.paragraphs if p.text == 'Bewerkbare oorspronkelijke alinea.')
     assert p.runs[0].font.size.pt == grootte
 print('Afgeronde halve punten komen overeen met de weergegeven fontgrootte.')
+
+# De klembordknop verandert alleen de gekozen tekst; bronstructuur en overige opmaak blijven behouden.
+klembord = Document(map/'writer-klembord.docx')
+p = next(p for p in klembord.paragraphs if p.text == 'Nieuw 🏠 café rechts')
+assert any(r.italic for r in p.runs if 'café rechts' in r.text)
+origineel = Document(Path(__file__).parent/'writer-structuur.docx')
+assert len(klembord.sections) == len(origineel.sections) == 2
+assert klembord.sections[0].header.paragraphs[0].text == 'Vaste koptekst'
+assert klembord.sections[0].footer.paragraphs[0].text == 'Vaste voettekst'
+assert [[[c.text for c in r.cells] for r in t.rows] for t in klembord.tables] == [[[c.text for c in r.cells] for r in t.rows] for t in origineel.tables]
+lint = Document(map/'writer-lintuitbreiding.docx')
+p = next(p for p in lint.paragraphs if p.text == 'Bewerkbare oorspronkelijke alinea.')
+assert p.runs[0].font.strike is True
+assert p.runs[0].font.size.pt == 11
+assert int(p.alignment) == 3
+print('Klembordtekst, cursieve resttekst, tabellen, secties, kop/voet, doorhalen, uitvullen en letterstappen onafhankelijk teruggelezen.')

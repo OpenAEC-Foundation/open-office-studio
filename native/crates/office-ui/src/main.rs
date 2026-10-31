@@ -2,6 +2,7 @@
 //! Volledig native venster: geen browser, React, JavaScript of Tauri-runtime.
 mod documentblad;
 mod export_ui;
+mod klembord;
 mod lettertypen_ui;
 mod lineaal;
 mod lint;
@@ -96,6 +97,8 @@ enum Msg {
     VensterGrootte(Size),
     Schuif(iced::Point),
     Invoer(text_editor::Action),
+    Klembord(klembord::Actie),
+    KlembordGelezen(klembord::Doel, Option<String>),
     PasToe,
     Opslaan(u64, bool),
     Doel(u64, Option<PathBuf>),
@@ -391,7 +394,9 @@ impl App {
         Some(Msg::Opmaak(match toets {
             "b" => Opmaak::Vet(!staat.vet),
             "i" => Opmaak::Cursief(!staat.cursief),
-            "u" => Opmaak::Onderstrepen(!staat.onderstrepen),
+            "u" if t.antwoord.as_ref()?.beeld.module != Module::Spreadsheet => {
+                Opmaak::Onderstrepen(!staat.onderstrepen)
+            }
             _ => return None,
         }))
     }
@@ -1033,6 +1038,8 @@ impl App {
                     }
                 }
             }
+            Msg::Klembord(actie) => return klembord::voer_uit(self, actie),
+            Msg::KlembordGelezen(doel, tekst) => return klembord::plak(self, doel, tekst),
             Msg::Invoer(actie) => {
                 if let Some(t) = self.tab_mut()
                     && !t.bezig
@@ -1328,6 +1335,13 @@ impl App {
                             Msg::Terug
                         }),
                         "y" => Some(Msg::Vooruit),
+                        toets @ ("c" | "x" | "v") if !k.modifiers.shift() && !k.modifiers.alt() => {
+                            Some(Msg::Klembord(match toets {
+                                "c" => klembord::Actie::Kopieer,
+                                "x" => klembord::Actie::Knip,
+                                _ => klembord::Actie::Plak,
+                            }))
+                        }
                         toets @ ("b" | "i" | "u") if !k.modifiers.shift() && !k.modifiers.alt() => {
                             self.opmaaksneltoets(toets)
                         }
@@ -1637,30 +1651,74 @@ impl App {
         }
         let l = self.look();
         if self.lint_soort() == LintSoort::Weergave {
-            return w::ribbon(
-                l,
-                vec![w::ribbon_group(
+            let mut groepen = vec![];
+            if let Some(t) = self.tab().filter(|t| {
+                t.antwoord.as_ref().is_some_and(|a| {
+                    matches!(
+                        a.beeld.module,
+                        Module::Writer | Module::Spreadsheet | Module::Presentation
+                    )
+                })
+            }) {
+                groepen.push(w::ribbon_group(
                     l,
-                    "Thema",
-                    ThemeId::ALL
-                        .iter()
-                        .map(|&t| {
-                            w::button(
+                    "Zoom",
+                    vec![
+                        column![
+                            w::ribbon_small(
                                 l,
-                                t.name(),
-                                if self.thema == t {
-                                    K::Secondary
-                                } else {
-                                    K::Quiet
-                                },
-                                D::Compact,
-                                None,
-                                Some(Msg::Thema(t)),
-                            )
-                        })
-                        .collect(),
-                )],
-            );
+                                icoon(Icon::ZoomIn),
+                                "Inzoomen",
+                                false,
+                                (t.zoom < 3.).then_some(Msg::Zoom(t.zoom + 0.1))
+                            ),
+                            w::ribbon_small(
+                                l,
+                                icoon(Icon::ZoomOut),
+                                "Uitzoomen",
+                                false,
+                                (t.zoom > 0.25).then_some(Msg::Zoom(t.zoom - 0.1))
+                            ),
+                            w::button(l, "100%", K::Quiet, D::Compact, None, Some(Msg::Zoom(1.)))
+                        ]
+                        .spacing(2)
+                        .into(),
+                    ],
+                ));
+                groepen.push(w::ribbon_group(
+                    l,
+                    "Panelen",
+                    vec![w::ribbon_large(
+                        l,
+                        icoon(Icon::Settings),
+                        "Panelen",
+                        t.panelen,
+                        Some(Msg::Panelen),
+                    )],
+                ));
+            }
+            groepen.push(w::ribbon_group(
+                l,
+                "Thema",
+                ThemeId::ALL
+                    .iter()
+                    .map(|&t| {
+                        w::button(
+                            l,
+                            t.name(),
+                            if self.thema == t {
+                                K::Secondary
+                            } else {
+                                K::Quiet
+                            },
+                            D::Compact,
+                            None,
+                            Some(Msg::Thema(t)),
+                        )
+                    })
+                    .collect(),
+            ));
+            return w::ribbon(l, groepen);
         }
         let nieuw = column(
             Module::ALLE
@@ -1827,6 +1885,27 @@ impl App {
         if let Some(t) = self.tab() {
             acties = acties.push(w::button(
                 l,
+                "Bewaren als IFCX…",
+                K::Secondary,
+                D::Regular,
+                Some(icoon(Icon::Export)),
+                (!t.bezig && !t.schrijft).then_some(Msg::Archiveer),
+            ));
+            if t.antwoord
+                .as_ref()
+                .is_some_and(|a| a.beeld.module == Module::Writer)
+            {
+                acties = acties.push(w::button(
+                    l,
+                    "Markdown…",
+                    K::Secondary,
+                    D::Regular,
+                    Some(icoon(Icon::Export)),
+                    (!t.bezig && !t.concept).then_some(Msg::Markdown),
+                ));
+            }
+            acties = acties.push(w::button(
+                l,
                 "Opslaan als…",
                 K::Primary,
                 D::Regular,
@@ -1834,7 +1913,7 @@ impl App {
                 Some(Msg::Opslaan(t.id, true)),
             ));
         }
-        container(acties)
+        container(scrollable(acties))
             .padding(40)
             .height(Length::Fill)
             .width(Length::Fill)

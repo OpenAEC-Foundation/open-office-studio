@@ -66,7 +66,13 @@ conversiecatalogus en PDF/CSV-export via de interface en werkdraad. De
 bevestigt zes inhoudsrondgangen en drie PDF-handtekeningen. Een eerste losse
 runtimeopdracht miste de vereiste uitvoermap `OFFICE_TEST_UIT`; deze opzetfout
 is hersteld en de volledige ronde is met een eigen uitvoermap uitgevoerd.
-De lokale releasebuild en nieuwe platformronde zijn nog niet afgerond.
+De lokale releasebuild en alle vijf CI-jobs zijn inmiddels afgerond en geslaagd.
+Het lokale draagbare pakket is uitgepakt en gecontroleerd: alle **691**
+bronbestanden bytegelijk aan het Git-archief van branchcommit
+`28c1f96cfe2232fe4a3225ef4da28d5f37de517e`, geldige zip-CRC en SHA-256,
+juiste uitgepakte programmaversies en meegeleverde notices. De
+[vaste bronregressie](bronregressie-2026-10-31-alpha11-release.json) slaagt
+met de lokale releasecontroleur.
 
 ## Visuele en functionele grenzen
 
@@ -77,10 +83,44 @@ afwijkende pixels, telkens op 943.736 pixels. De diagnose gebruikt geen maskers
 of herschaling. Ook het documentvlak bevat nog pixelverschillen; alleen
 bovenbalken aanpassen zou de vergelijking niet laten slagen.
 
-De [afgeronde alpha-10-platformronde](platformen-2026-10-31-alpha10.json)
-bevestigt 673 bronbestanden bytegelijk op alle drie platforms en 66 exacte
-native beeldparen. Dat bewijs betreft alpha 10 en wordt niet als platformbewijs
-voor alpha 11 gebruikt. De brede corpusronde betreft voorlopig alpha 9.
+De [afgeronde alpha-11-platformronde](platformen-2026-10-31-alpha11.json)
+bevestigt alle **691** bronbestanden bytegelijk op Linux, Windows en macOS,
+beide programmaarchitecturen en 66 exacte native beeldparen. De werkelijke
+mergecheckout `66722203c29b77da47c43d33c5e206f058b3c808` heeft dezelfde relevante
+Git-bomen als de branchcommit. De zeven paginabezoeken aan de eigen zesbladige
+bron zijn ook op [Linux](paginameting-2026-10-31-alpha11-Linux.json),
+[Windows](paginameting-2026-10-31-alpha11-Windows.json) en
+[macOS](paginameting-2026-10-31-alpha11-macOS.json) exact gelijk tussen verse
+en behouden engines. De meetprogrammahash is op elk platform gelijk aan de
+werkelijk verpakte controleur.
+
+De [brede releasecorpusronde](corpus-2026-10-31-alpha11-release.json) heeft
+**579 geslaagde, 68 geweigerde bronnen en één time-out** uit 648 geselecteerde
+OOXML-bestanden. De grens blijft 30 seconden, twee processen en 3 GiB
+adresruimte per proces. De bron met 177 pagina's overschrijdt die grens. Alle drie
+[grote bronnen slagen apart](grote-bronnen-2026-10-31-alpha11.json) met 120 seconden
+en één proces; de overschrijding in de brede ronde blijft geregistreerd.
+De overige 918 formaten zijn hiermee niet native getest. Deze ronde is geen
+volledige inhouds-, stijl- of functiecontrole.
+
+## Paginameting met grote bronnen
+
+Het gedownloade Linux-CI-pakket is ook lokaal uitgepakt en volledig tegen het
+Git-archief gecontroleerd. Met precies die releasecontroleur zijn verse en
+behouden paginaberekeningen in afzonderlijke processen vergeleken, inclusief
+bezoeken buiten de drie bewaarde beelden en aan de laatste pagina:
+
+| Bron | Bezoeken | Verse berekeningen totaal | Sessie totaal | Exacte beelden, klikgebieden en velden |
+| --- | --- | --- | --- | --- |
+| [Eigen zesbladige bron](paginameting-2026-10-31-alpha11-klein.json) | 7 | 1.856 ms | 612 ms | gelijk |
+| [953 alinea's, 53 pagina's](paginameting-2026-10-31-alpha11-953.json) | 7 | 14.040 ms | 5.098 ms | gelijk |
+| [15.935 alinea's, 177 pagina's](paginameting-2026-10-31-alpha11-15935.json) | 7 | 121.882 ms | 31.893 ms | gelijk |
+
+Deze tijden omvatten openen en alle gevraagde paginabezoeken. Er draaiden andere
+lokale taken mee; dit zijn geen geïsoleerde benchmarks of vaste
+snelheidsgaranties. De grote bron heeft nog 3.058 ms openen en 14.109 ms voor het
+eerste sessiebeeld nodig; vervolgbeelden nemen in deze ronde 1.045–2.802 ms.
+De meting toont geen volledige inhoudscontrole van alle 177 pagina's.
 
 Directe rijke paginainvoer, volledige ribbons, doorlopende spreadsheetbediening,
 presentatieobjecten, automatisch notitieherstel, volledige mailbediening,
