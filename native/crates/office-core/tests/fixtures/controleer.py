@@ -124,3 +124,26 @@ assert pagina.sections[1].header.is_linked_to_previous
 assert pagina.sections[0].header.paragraphs[0].text == 'Vaste koptekst'
 assert pagina.sections[1].footer.paragraphs[0].text == 'Vaste voettekst'
 print('Writer-pagina-instelling: papier, stand en sectiegebonden kop-/voettekst onafhankelijk teruggelezen.')
+
+# Stijlketen en de opdracht uit een echt bediende lintknop.
+erfenis = Document(map/'writer-stijlerfenis.docx')
+assert [p.text for p in erfenis.paragraphs] == ['Overgeërfde kop', 'Tekenstijl keert vet om', 'Directe opmaak']
+assert erfenis.paragraphs[0].style.style_id == 'EigenKop'
+assert erfenis.paragraphs[0].runs[0].bold is False
+assert erfenis.styles['Eigen kop'].base_style.style_id == 'EigenBasis'
+assert erfenis.styles['Eigen basis'].font.bold is True
+assert erfenis.styles['Eigen kop'].font.size.pt == 18
+assert erfenis.paragraphs[1].runs[0].style.style_id == 'EigenNadruk'
+assert erfenis.paragraphs[2].runs[0].font.size.pt == 10.5
+with ZipFile(map/'writer-stijlerfenis-bron.docx') as origineel, ZipFile(map/'writer-stijlerfenis.docx') as bewerkt:
+    assert origineel.read('word/styles.xml') == bewerkt.read('word/styles.xml')
+selectie = Document(map/'writer-selectie-lint.docx')
+p = next(p for p in selectie.paragraphs if p.text == 'Links 🏠 café rechts')
+assert p.runs[0].text == 'Links 🏠 ' and p.runs[0].bold is False
+assert p.runs[-1].italic is True
+print('Overgeërfde stijlen en Unicode-selectie via de echte lintknop onafhankelijk teruggelezen.')
+for nummer, grootte in enumerate([10, 10.5, 10.5]):
+    doc = Document(map/f'writer-letterprecisie-{nummer}.docx')
+    p = next(p for p in doc.paragraphs if p.text == 'Bewerkbare oorspronkelijke alinea.')
+    assert p.runs[0].font.size.pt == grootte
+print('Afgeronde halve punten komen overeen met de weergegeven fontgrootte.')

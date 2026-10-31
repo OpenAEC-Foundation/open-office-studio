@@ -361,7 +361,9 @@ pub fn opmaak(
                         }
                         O::Doorhalen(v) => f.strike = Some(*v),
                         O::Lettergrootte(v) => {
-                            f.font_size = Some(*v * 2.);
+                            // Dezelfde positieve halvepuntenafronding als de
+                            // vaste serializer: model en bewaarde bron blijven gelijk.
+                            f.font_size = Some((*v * 2. + 0.5).floor());
                             f.font_size_cs = Some(*v * 2.);
                         }
                         O::Lettertype(v) => {

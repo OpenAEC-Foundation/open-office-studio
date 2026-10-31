@@ -41,7 +41,7 @@ impl Opmaak {
         }
     }
 }
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, Default, PartialEq)]
 pub struct OpmaakStaat {
     pub vet: bool,
     pub cursief: bool,

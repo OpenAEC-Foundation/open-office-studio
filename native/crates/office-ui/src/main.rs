@@ -199,19 +199,48 @@ impl Tab {
     fn veld(&self) -> Option<&Veld> {
         self.antwoord.as_ref()?.beeld.velden.get(self.gekozen)
     }
+    /// De bestaande opdrachten bedienen zonder expliciete selectie de hele
+    /// alinea. Status en opdracht gebruiken daarom exact dezelfde tekengrenzen.
+    fn tekstbereik(&self) -> Option<(usize, usize)> {
+        let veld = self.veld()?;
+        let cursor = self.editor.cursor();
+        Some(if let Some(anchor) = cursor.selection {
+            let a = lint::tekenoffset(&self.editor, anchor);
+            let b = lint::tekenoffset(&self.editor, cursor.position);
+            (a.min(b), a.max(b))
+        } else {
+            (0, veld.tekst.chars().count())
+        })
+    }
+    fn opmaak_van_selectie(&self) -> Option<office_core::opmaak::OpmaakStaat> {
+        let veld = self.veld()?;
+        let a = self.antwoord.as_ref()?;
+        if a.beeld.module == Module::Writer
+            && !self.concept
+            && let Some(bereiken) = a.beeld.writer_opmaak.get(&veld.id)
+            && let Some((begin, einde)) = self.tekstbereik()
+            && let Some(staat) = office_core::writer_opmaak::selectie(bereiken, begin, einde)
+        {
+            return Some(staat);
+        }
+        Some(veld.opmaak.clone())
+    }
+    fn werk_opmaak_bij(&mut self) {
+        if !self.concept
+            && let Some(staat) = self.opmaak_van_selectie()
+        {
+            self.grootte = staat.grootte.map(|n| n.to_string()).unwrap_or_default();
+            self.lettertype = staat.lettertype.unwrap_or_default();
+        }
+    }
     fn toon_veld(&mut self, n: usize) {
         if let Some(veld) = self.antwoord.as_ref().and_then(|a| a.beeld.velden.get(n)) {
             self.gekozen = n;
             self.editor = text_editor::Content::with_text(&veld.tekst);
             self.adres = veld.id.clone();
             self.concept = false;
-            self.grootte = veld
-                .opmaak
-                .grootte
-                .map(|n| n.to_string())
-                .unwrap_or_default();
-            self.lettertype = veld.opmaak.lettertype.clone().unwrap_or_default();
         }
+        self.werk_opmaak_bij();
     }
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -343,6 +372,28 @@ impl App {
         } else {
             iced::exit()
         }
+    }
+    fn opmaaksneltoets(&self, toets: &str) -> Option<Msg> {
+        let t = self.tab()?;
+        let veld = t.veld()?;
+        if t.bezig
+            || t.concept
+            || !veld.bewerkbaar
+            || veld.id == "__dia_notities"
+            || !matches!(
+                t.antwoord.as_ref()?.beeld.module,
+                Module::Writer | Module::Spreadsheet | Module::Presentation
+            )
+        {
+            return None;
+        }
+        let staat = t.opmaak_van_selectie()?;
+        Some(Msg::Opmaak(match toets {
+            "b" => Opmaak::Vet(!staat.vet),
+            "i" => Opmaak::Cursief(!staat.cursief),
+            "u" => Opmaak::Onderstrepen(!staat.onderstrepen),
+            _ => return None,
+        }))
     }
     fn update(&mut self, msg: Msg) -> Task<Msg> {
         if self.exportblad.is_some()
@@ -922,17 +973,7 @@ impl App {
                         } else {
                             v.id.clone()
                         };
-                        let cursor = t.editor.cursor();
-                        let offset = |p: iced::advanced::text::editor::Position| {
-                            lint::tekenoffset(&t.editor, p)
-                        };
-                        let (begin, einde) = if let Some(anchor) = cursor.selection {
-                            let a = offset(anchor);
-                            let b = offset(cursor.position);
-                            (a.min(b), a.max(b))
-                        } else {
-                            (0, v.tekst.chars().count())
-                        };
+                        let (begin, einde) = t.tekstbereik().expect("gekozen tekstveld");
                         let opdracht = Opdracht::Bewerk(
                             t.deel,
                             Bewerking::Opmaak {
@@ -998,8 +1039,12 @@ impl App {
                     && (!actie.is_edit() || t.veld().is_some_and(|v| v.bewerkbaar))
                 {
                     let bewerkt = actie.is_edit();
+                    let selectie = !bewerkt && !matches!(actie, text_editor::Action::Scroll { .. });
                     t.editor.perform(actie);
                     t.concept |= bewerkt;
+                    if selectie {
+                        t.werk_opmaak_bij();
+                    }
                 }
             }
             Msg::PasToe => {
@@ -1283,6 +1328,9 @@ impl App {
                             Msg::Terug
                         }),
                         "y" => Some(Msg::Vooruit),
+                        toets @ ("b" | "i" | "u") if !k.modifiers.shift() && !k.modifiers.alt() => {
+                            self.opmaaksneltoets(toets)
+                        }
                         _ => None,
                     };
                     if let Some(m) = msg {

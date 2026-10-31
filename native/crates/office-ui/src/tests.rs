@@ -811,7 +811,7 @@ fn document_sneltoetsen_veranderen_geen_verborgen_editor_in_het_postvak() {
     tab.editor = text_editor::Content::with_text("Niet toegepaste documenttekst");
     tab.concept = true;
     app.tabs.push(tab);
-    for letter in ["s", "z", "n", "o"] {
+    for letter in ["s", "z", "n", "o", "y", "b", "i", "u"] {
         let taak = app.update(Msg::Toets(openaec_ui::keyboard::KeyPress {
             key: iced::keyboard::Key::Character(letter.into()),
             modifiers: iced::keyboard::Modifiers::COMMAND,
@@ -1112,6 +1112,18 @@ fn writer_beveiliging_blijft_zichtbaar_en_weigert_interfaceopdrachten() {
         Msg::SplitsAlinea,
         Msg::VoegAlineasSamen,
         Msg::PasToe,
+        Msg::Toets(openaec_ui::keyboard::KeyPress {
+            key: iced::keyboard::Key::Character("b".into()),
+            modifiers: iced::keyboard::Modifiers::COMMAND,
+        }),
+        Msg::Toets(openaec_ui::keyboard::KeyPress {
+            key: iced::keyboard::Key::Character("i".into()),
+            modifiers: iced::keyboard::Modifiers::COMMAND,
+        }),
+        Msg::Toets(openaec_ui::keyboard::KeyPress {
+            key: iced::keyboard::Key::Character("u".into()),
+            modifiers: iced::keyboard::Modifiers::COMMAND,
+        }),
     ] {
         voer_interface_uit(&mut app, msg);
         let t = app.tab().unwrap();
@@ -1193,12 +1205,6 @@ fn nederlandse_lettergrootte_komt_via_de_werkdraad_in_alle_drie_documentmodellen
 /// Dit is geen proef met een fysiek venster of invoermethode van het systeem.
 fn voer_tekstveld_in(app: &mut App, naam: &str, invoer: &str) {
     use iced::{keyboard as k, mouse};
-    lettertypen();
-    let renderer = iced_tiny_skia::Renderer::new(
-        ui_instellingen().default_font,
-        ui_instellingen().default_text_size,
-    );
-    let grootte = Size::new(1440., 900.);
     let doel = toegankelijkheid(app)
         .nodes
         .into_iter()
@@ -1238,6 +1244,39 @@ fn voer_tekstveld_in(app: &mut App, naam: &str, invoer: &str) {
         k::Modifiers::empty(),
         None,
     ));
+    voer_widgetgebeurtenissen_uit(app, doel, gebeurtenissen);
+}
+fn klik_bediening(app: &mut App, naam: &str) {
+    use iced::mouse;
+    let doel = toegankelijkheid(app)
+        .nodes
+        .into_iter()
+        .find(|n| n.node.name == naam)
+        .unwrap()
+        .bounds
+        .center();
+    voer_widgetgebeurtenissen_uit(
+        app,
+        doel,
+        vec![
+            iced::Event::Mouse(mouse::Event::CursorMoved { position: doel }),
+            iced::Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
+            iced::Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)),
+        ],
+    );
+}
+fn voer_widgetgebeurtenissen_uit(
+    app: &mut App,
+    doel: iced::Point,
+    gebeurtenissen: Vec<iced::Event>,
+) {
+    use iced::mouse;
+    lettertypen();
+    let renderer = iced_tiny_skia::Renderer::new(
+        ui_instellingen().default_font,
+        ui_instellingen().default_text_size,
+    );
+    let grootte = Size::new(1440., 900.);
     let mut boom = Tree::empty();
     for gebeurtenis in gebeurtenissen {
         let berichten = {
@@ -1266,4 +1305,108 @@ fn voer_tekstveld_in(app: &mut App, naam: &str, invoer: &str) {
             voer_interface_uit(app, bericht);
         }
     }
+}
+
+#[test]
+fn writer_opmaak_in_het_lint_volgt_selectie_en_past_de_echte_knop_op_hetzelfde_bereik_toe() {
+    use text_editor::{Action as A, Motion as M};
+    let app = app_met_werkdraad(
+        Module::Writer,
+        include_bytes!("../../office-core/tests/fixtures/writer.docx"),
+    );
+    assert_eq!(app.tab().unwrap().grootte, "26");
+    assert_eq!(app.tab().unwrap().lettertype, "Calibri");
+    let bron = include_bytes!("../../office-core/tests/fixtures/writer-structuur.docx");
+    let mut app = app_met_werkdraad(Module::Writer, bron);
+    let index = app
+        .tab()
+        .unwrap()
+        .antwoord
+        .as_ref()
+        .unwrap()
+        .beeld
+        .velden
+        .iter()
+        .position(|v| v.tekst == "Links 🏠 café rechts")
+        .unwrap();
+    voer_interface_uit(&mut app, Msg::Veld(index));
+    assert!(!app.tab().unwrap().opmaak_van_selectie().unwrap().vet);
+    voer_interface_uit(&mut app, Msg::Invoer(A::Move(M::DocumentStart)));
+    for _ in "Links 🏠 ".chars() {
+        voer_interface_uit(&mut app, Msg::Invoer(A::Select(M::Right)));
+    }
+    assert_eq!(
+        app.tab().unwrap().editor.selection().as_deref(),
+        Some("Links 🏠 ")
+    );
+    assert_eq!(app.tab().unwrap().tekstbereik(), Some((0, 8)));
+    assert!(app.tab().unwrap().opmaak_van_selectie().unwrap().vet);
+    let boom = toegankelijkheid(&app);
+    assert_eq!(
+        boom.nodes
+            .iter()
+            .find(|n| n.node.name == "Vet")
+            .unwrap()
+            .node
+            .state
+            .checked,
+        Some(true)
+    );
+    let beeld = render(&app);
+    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        std::fs::create_dir_all(&map).unwrap();
+        beeld
+            .save_png(PathBuf::from(map).join("writer-selectie-opmaak.png"))
+            .unwrap();
+    }
+    klik_bediening(&mut app, "Vet");
+    let t = app.tab().unwrap();
+    let a = t.antwoord.as_ref().unwrap();
+    let id = &a.beeld.velden[index].id;
+    let bereiken = &a.beeld.writer_opmaak[id];
+    assert!(
+        !office_core::writer_opmaak::selectie(bereiken, 0, 8)
+            .unwrap()
+            .vet
+    );
+    assert!(
+        office_core::writer_opmaak::selectie(bereiken, 8, "Links 🏠 café rechts".chars().count())
+            .unwrap()
+            .cursief
+    );
+    assert_eq!(a.beeld.velden[index].tekst, "Links 🏠 café rechts");
+    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
+        std::fs::create_dir_all(&map).unwrap();
+        std::fs::write(
+            PathBuf::from(map).join("writer-selectie-lint.docx"),
+            a.bron.as_slice(),
+        )
+        .unwrap();
+    }
+    voer_interface_uit(&mut app, Msg::Terug);
+    assert_eq!(
+        app.tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .bron
+            .as_slice(),
+        bron
+    );
+    voer_interface_uit(&mut app, Msg::Invoer(A::SelectAll));
+    assert!(!app.tab().unwrap().opmaak_van_selectie().unwrap().vet);
+    klik_bediening(&mut app, "Vet");
+    assert!(app.tab().unwrap().opmaak_van_selectie().unwrap().vet);
+    for letter in ["b", "i", "u"] {
+        voer_interface_uit(
+            &mut app,
+            Msg::Toets(openaec_ui::keyboard::KeyPress {
+                key: iced::keyboard::Key::Character(letter.into()),
+                modifiers: iced::keyboard::Modifiers::COMMAND,
+            }),
+        );
+    }
+    let staat = app.tab().unwrap().opmaak_van_selectie().unwrap();
+    assert!(!staat.vet && staat.cursief && staat.onderstrepen);
 }

@@ -8,16 +8,34 @@ fn fout(e: impl std::fmt::Display) -> Fout {
     Fout::Document(e.to_string())
 }
 
+#[cfg(test)]
 pub fn pagina(
     bron: &[u8],
     nummer: usize,
 ) -> Resultaat<(Vec<u8>, usize, usize, crate::interactie::Pagina)> {
-    pagina_binnen::<true>(bron, nummer)
+    pagina_binnen::<true>(bron, nummer, None)
+}
+
+pub(crate) fn pagina_met_opmaak(
+    bron: &[u8],
+    nummer: usize,
+) -> Resultaat<(
+    Vec<u8>,
+    usize,
+    usize,
+    crate::interactie::Pagina,
+    crate::writer_opmaak::Alineas,
+)> {
+    let mut opmaak = crate::writer_opmaak::Alineas::new();
+    let (png, aantal, overgeslagen, pagina) =
+        pagina_binnen::<true>(bron, nummer, Some(&mut opmaak))?;
+    Ok((png, aantal, overgeslagen, pagina, opmaak))
 }
 
 fn pagina_binnen<const ALLEEN_GEVRAAGD: bool>(
     bron: &[u8],
     nummer: usize,
+    opmaak: Option<&mut crate::writer_opmaak::Alineas>,
 ) -> Resultaat<(Vec<u8>, usize, usize, crate::interactie::Pagina)> {
     // De engine heeft per draad een fontregister. Dezelfde fontset kan daarom
     // tussen opeenvolgende paginabeelden behouden blijven, zonder globale blokkade.
@@ -26,6 +44,9 @@ fn pagina_binnen<const ALLEEN_GEVRAAGD: bool>(
     let package = parsed.document.package;
     let engine = docx_edit::EngineSession::new(424242);
     docx_edit::seed_from_docx(engine.doc(), bron).map_err(fout)?;
+    if let Some(opmaak) = opmaak {
+        *opmaak = crate::writer_opmaak::lees(engine.doc())?;
+    }
     let mut secties = Vec::new();
     for sectie in package.document.sections.as_deref().unwrap_or_default() {
         secties.push(json!({"sectionId":sectie.id,"properties":sectie.properties}));
@@ -433,7 +454,7 @@ mod vensterproeven {
         let (png, aantal, overgeslagen, raak) = pagina(bron, nummer).unwrap();
         // Deze referentie bouwt alle pagina's. Geen schaling, masker of tolerantie.
         let (volledig, totaal, ontbrekend, gebieden) =
-            pagina_binnen::<false>(bron, nummer).unwrap();
+            pagina_binnen::<false>(bron, nummer, None).unwrap();
         assert_eq!(aantal, totaal);
         assert_eq!(overgeslagen, ontbrekend);
         assert_eq!(png, volledig, "Afwijkend paginabeeld op pagina {nummer}");

@@ -56,7 +56,8 @@ pub fn ribbon(app: &App) -> Option<Element<'_, Msg>> {
     }
     let l = app.look();
     let veld = t.veld();
-    let staat = veld.map(|v| &v.opmaak);
+    let selectie = t.opmaak_van_selectie();
+    let staat = selectie.as_ref();
     let kan =
         !t.bezig && !t.concept && veld.is_some_and(|v| v.bewerkbaar && v.id != "__dia_notities");
     let opmaak = |r, naam, actief, o| {

@@ -89,6 +89,8 @@ pub struct Weergave {
     pub notitie: Option<crate::notities::NotitiePagina>,
     pub voorkeursveld: Option<String>,
     pub bewerkingsbeperking: Option<String>,
+    pub writer_opmaak:
+        std::sync::Arc<std::collections::HashMap<String, Vec<crate::writer_opmaak::OpmaakBereik>>>,
 }
 #[derive(Debug, Clone)]
 pub enum Bewerking {
@@ -324,6 +326,7 @@ impl Document {
             notitie: None,
             voorkeursveld: None,
             bewerkingsbeperking: None,
+            writer_opmaak: Default::default(),
         };
         match self {
             Self::Writer(d) => {
@@ -331,20 +334,37 @@ impl Document {
                     Some(b) => std::borrow::Cow::Borrowed(b),
                     None => std::borrow::Cow::Owned(d.save().map_err(fout)?),
                 };
-                let (png, paginas, overgeslagen, pagina) =
-                    crate::writer_beeld::pagina(&bron, deel)?;
+                let (png, paginas, overgeslagen, pagina, mut opmaak) =
+                    crate::writer_beeld::pagina_met_opmaak(&bron, deel)?;
                 beeld.afbeelding = Some(png);
                 beeld.pagina = pagina;
                 beeld.onderdelen = (0..paginas).map(|i| format!("Pagina {}", i + 1)).collect();
+                let mut bereiken = std::collections::HashMap::new();
                 for (i, p) in d.paragraphs().into_iter().enumerate() {
+                    let id = p.para_id.clone().unwrap_or_default();
+                    let tekst = crate::writer_tekst::alinea_tekst(p);
+                    let mut staat = crate::writer_tekst::staat(p);
+                    if let Some(gevonden) = opmaak.remove(&id)
+                        && gevonden.tekst == tekst
+                    {
+                        if let Some(opmaak) = crate::writer_opmaak::selectie(
+                            &gevonden.bereiken,
+                            0,
+                            tekst.chars().count(),
+                        ) {
+                            staat = opmaak;
+                        }
+                        bereiken.insert(id.clone(), gevonden.bereiken);
+                    }
                     beeld.velden.push(Veld {
-                        id: p.para_id.clone().unwrap_or_default(),
+                        id,
                         naam: format!("Alinea {}", i + 1),
-                        tekst: crate::writer_tekst::alinea_tekst(p),
-                        opmaak: crate::writer_tekst::staat(p),
+                        tekst,
+                        opmaak: staat,
                         bewerkbaar: p.para_id.is_some() && crate::writer_tekst::ondersteund(p),
                     });
                 }
+                beeld.writer_opmaak = std::sync::Arc::new(bereiken);
                 let woorden = d
                     .paragraphs()
                     .iter()

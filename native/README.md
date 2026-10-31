@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.9**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.10**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -36,7 +36,7 @@ valt buiten de standaardtestmatrix.
 | Onderdeel | Native implementatie | Nog over te zetten |
 |---|---|---|
 | Venster | OpenAEC-ribbon, documenttabbladen, vijf thema’s, sneltoetsen, Bestand, openen/opslaan/opslaan als, sluitvragen | Herstelkopieën, recente bestanden, afgesplitste vensters, updater, vertalingen |
-| Writer | Native paginering, klikbare alinea’s, linialen, zoom, tekstbereikopmaak en uitlijning, splitsen bij de editorcursor en samenvoegen van aangrenzende alinea’s, woorden inclusief tabellen, Markdown-export, papierformaat/afdrukstand/marge- en kolomvoorkeuzes per sectie, zichtbare kop- en voetteksten (eerste/even/oneven) | Directe rich-text-cursor op de pagina, kop/voet bewerken, aangepaste pagina-instelling en volledige alineabediening, velden/links/revisies bewerken, volledige ribbon, tabellen invoegen, spelling en afdrukken |
+| Writer | Native paginering, klikbare alinea’s, linialen, zoom, tekstbereikopmaak en uitlijning, splitsen bij de editorcursor en samenvoegen van aangrenzende alinea’s, woorden inclusief tabellen, Markdown-export, papierformaat/afdrukstand/marge- en kolomvoorkeuzes per sectie, zichtbare kop- en voetteksten (eerste/even/oneven), opmaakstatus uit dezelfde engine voor stijlen en Unicode-selecties, Ctrl/Cmd+B/I/U | Directe rich-text-cursor op de pagina, kop/voet bewerken, aangepaste pagina-instelling en volledige alineabediening, velden/links/revisies bewerken, volledige ribbon, tabellen invoegen, spelling en afdrukken |
 | Spreadsheet | Klikbare cellen, formulebalk, verplaatsbaar werkvenster via celadres/bereik, bereikopmaak, rijen/kolommen invoegen/verwijderen, samenvoegen/splitsen, herberekenen en bladen wisselen | Doorlopend raster met volledige toetsenbord- en sleepbediening, zoeken, sorteren/filteren, klembordbereiken, CSV-import en grafieken |
 | Presentation | Native diaweergave, niet-geroteerde tekstvakken aanklikken, tekstbereikopmaak, dia’s toevoegen/verwijderen, tekstvakken invoegen, sprekersnotities bewerken | Directe cursor en vormbediening, geroteerde/gegroepeerde objecten, volledige ribbon en presentatiemodus |
 | Notition | Versies 1–3 openen, boeken/secties/pagina’s toevoegen, vrij canvas met tekstvakken slepen/vergroten, Markdown-preview, bloktekst en vet/cursief, prullenbak herstellen; onbekende bronvelden behouden | Automatische lokale opslag/herstel, zoeken, boeken/secties hernoemen/verplaatsen, volledige blok- en taakbediening en import/export |
@@ -61,6 +61,12 @@ Beveiligde uitzonderingen, formulieren en het opheffen van beveiliging zijn
 nog niet geïmplementeerd.
 
 ![Beschermde Writer-bron met leesmelding](docs/screenshots/writer-beveiligd.png)
+
+Het Writer-lint volgt nu de opgeloste opmaak van de expliciete selectie. Zonder
+selectie bedienen de huidige opmaakopdrachten de hele alinea. Directe rijke
+invoer op de pagina en invoegopmaak voor lege alinea's zijn nog niet overgezet.
+
+![Werkelijke Writer-selectie met bijbehorende lintstatus](docs/screenshots/writer-selectie-opmaak.png)
 
 ![Vrij native notitiecanvas](docs/screenshots/notition-canvas.png)
 
@@ -156,12 +162,13 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
-Het [controlerapport voor alpha 9](docs/controle-2026-10-31-alpha9.md) beschrijft
-166 reguliere Rust-tests, zes expliciete runtimeproeven en zeven Python-tests,
-Writer-beveiliging, Nederlandse lettergrootteinvoer en strengere bronpakketten.
-De volledig afgeronde platform- en corpusronde betreft
-[alpha 8](docs/controle-2026-10-31-alpha8.md); de nieuwe alpha-9-platformronde
-wordt afzonderlijk gecontroleerd. De eerdere rapporten blijven historische verslagen.
+Het [controlerapport voor alpha 10](docs/controle-2026-10-31-alpha10.md) beschrijft
+171 reguliere Rust-tests, zes expliciete runtimeproeven en zeven Python-tests,
+opmaak uit de renderengine, Unicode-selecties en opmaaksneltoetsen. De volledig
+afgeronde platform- en corpusronde betreft [alpha 9](docs/controle-2026-10-31-alpha9.md).
+De nieuwe platformvergelijking controleert bronbytes en native beelden voortaan
+ook automatisch in CI; dat is nog geen vergelijking met de bestaande interface.
+De eerdere rapporten blijven historische verslagen.
 
 ```sh
 python3 native/scripts/controleer-bron.py
