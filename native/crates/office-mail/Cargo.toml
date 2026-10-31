@@ -1,0 +1,29 @@
+[package]
+name="office-mail"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+description = "Zelfstandige Rust-mailkern zonder webview of hostkoppeling"
+license="Apache-2.0 AND MIT"
+[dependencies]
+serde={version="1",features=["derive"]}
+serde_json="1"
+tokio={version="1",features=["net", "time", "io-util", "sync", "rt-multi-thread", "macros"]}
+futures="0.3"
+async-imap={version="0.11.3",default-features=false,features=["runtime-tokio"]}
+tokio-rustls={version="0.26",default-features=false,features=["ring", "logging", "tls12"]}
+rustls={version="0.23",default-features=false,features=["ring", "std", "tls12", "logging"]}
+webpki-roots="1"
+mail-parser="0.11"
+lettre={version="0.11.23",default-features=false,features=["smtp-transport", "builder", "tokio1-rustls-tls"]}
+keyring="4.1.6"
+uuid={version="1",features=["v4"]}
+base64="0.22"
+quick-xml="0.41"
+ring="0.17"
+open="5.4"
+hickory-resolver={version="0.26",default-features=false,features=["system-config", "tokio"]}
+percent-encoding="2"
+tempfile="3"
+[dev-dependencies]
+tokio={version="1",features=["rt-multi-thread","macros","net","time","io-util","sync"]}

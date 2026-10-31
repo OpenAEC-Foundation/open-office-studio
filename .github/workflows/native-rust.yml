@@ -1,0 +1,168 @@
+name: Native Rust controleren en bouwen
+on:
+  pull_request:
+    paths: [".gitattributes", "native/**", "public/templates/**", ".github/workflows/native-rust.yml"]
+  push:
+    branches: [main]
+    paths: [".gitattributes", "native/**", "public/templates/**", ".github/workflows/native-rust.yml"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  conversie-runtime:
+    name: Conversie met geïnstalleerde kantoorruntime
+    runs-on: ubuntu-24.04
+    env:
+      CARGO_BUILD_JOBS: 2
+      CARGO_PROFILE_DEV_DEBUG: "0"
+      CARGO_PROFILE_TEST_DEBUG: "0"
+      OFFICE_TEST_UIT: ${{ github.workspace }}/native/target/conversie-runtime-${{ github.run_id }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Kantoorruntime installeren
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libreoffice-writer libreoffice-calc libreoffice-impress
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            native/target/debug
+            native/target/release
+            native/target/bronstempels.json
+          key: conversie-runtime-v2-${{ runner.os }}-${{ hashFiles('native/Cargo.lock', 'native/crates/**', 'native/scripts/**') }}
+          restore-keys: conversie-runtime-v2-${{ runner.os }}-
+      - run: python native/scripts/ci-bronstempels.py herstellen
+      - name: Ook de daadwerkelijke conversies uitvoeren
+        run: cargo test --manifest-path native/Cargo.toml -p office-conversie --locked -- --include-ignored --test-threads=1
+      - name: Voorbeeldconversies onafhankelijk teruglezen
+        run: |
+          python -m pip install python-docx==1.2.0 openpyxl==3.1.5 python-pptx==1.0.2 Pillow==13.0.0
+          python native/crates/office-conversie/tests/controleer.py "${{ env.OFFICE_TEST_UIT }}"
+      - run: python native/scripts/ci-bronstempels.py opslaan
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-conversie-runtime
+          path: ${{ env.OFFICE_TEST_UIT }}/
+          if-no-files-found: warn
+  native:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      CARGO_BUILD_JOBS: 2
+      CARGO_PROFILE_DEV_DEBUG: "0"
+      CARGO_PROFILE_TEST_DEBUG: "0"
+      OFFICE_TEST_UITVOER: ${{ github.workspace }}/native/target/controle-${{ github.run_id }}-${{ matrix.os }}
+      OFFICE_TEST_SCHERMEN: ${{ github.workspace }}/native/target/schermen-${{ github.run_id }}-${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Linux-vensterafhankelijkheden
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libxkbcommon-dev libwayland-dev libx11-dev libxcb1-dev
+      - uses: actions/cache/restore@v4
+        id: native-cache
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            native/target/debug
+            native/target/release
+            native/target/bronstempels.json
+          key: native-v2-${{ runner.os }}-${{ hashFiles('native/Cargo.lock', 'native/crates/**', 'native/vendor/**', 'native/scripts/**', 'public/templates/**', 'docs/voorbeelden/**') }}
+          restore-keys: native-v2-${{ runner.os }}-
+      - run: python native/scripts/ci-bronstempels.py herstellen
+      - run: python native/scripts/controleer-bron.py
+      - run: python native/scripts/controleer-migratie.py
+      - run: cargo fmt --manifest-path native/Cargo.toml -p office-core -p open-office-studio-native -p office-mail -p office-conversie --check
+      - run: cargo clippy --manifest-path native/Cargo.toml --workspace --locked --all-targets -- -D warnings
+      - run: cargo test --manifest-path native/Cargo.toml --workspace --locked
+      - name: Native uitvoer onafhankelijk teruglezen
+        run: |
+          python -m pip install python-docx==1.2.0 openpyxl==3.1.5 python-pptx==1.0.2 Pillow==13.0.0
+          python native/crates/office-core/tests/fixtures/controleer.py "${{ env.OFFICE_TEST_UITVOER }}"
+          python -m unittest discover -s native/scripts -p 'test_*.py'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-controle-${{ runner.os }}
+          path: |
+            ${{ env.OFFICE_TEST_SCHERMEN }}/*.png
+            ${{ env.OFFICE_TEST_UITVOER }}/*
+          if-no-files-found: warn
+      - run: cargo build --manifest-path native/Cargo.toml --workspace --locked --release
+      - name: Vastgepinde bronregressie met het releaseprogramma controleren
+        run: python native/scripts/controleer-bronregressies.py --programma "native/target/release/controleer-bestand${{ runner.os == 'Windows' && '.exe' || '' }}" --uitvoer "${{ env.OFFICE_TEST_UITVOER }}/bronregressie.json"
+      - name: Sessiepaginering exact vergelijken met verse releaseberekeningen
+        run: python native/scripts/meet-paginas.py --programma "native/target/release/controleer-bestand${{ runner.os == 'Windows' && '.exe' || '' }}" --bron native/crates/office-core/tests/fixtures/writer-cachepaginas.docx --paginas 0,1,2,3,4,0,5 --seconden 120 --uitvoer "${{ env.OFFICE_TEST_UITVOER }}/paginameting.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-paginametingen-${{ runner.os }}
+          path: ${{ env.OFFICE_TEST_UITVOER }}/paginameting.json
+          if-no-files-found: warn
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-bronregressies-${{ runner.os }}
+          path: ${{ env.OFFICE_TEST_UITVOER }}/bronregressie.json
+          if-no-files-found: warn
+      - run: python native/scripts/ci-bronstempels.py opslaan
+      - name: Gecompileerde afhankelijkheden bewaren vóór het verpakken
+        uses: actions/cache/save@v4
+        if: steps.native-cache.outputs.cache-hit != 'true'
+        continue-on-error: true
+        timeout-minutes: 5
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            native/target/debug
+            native/target/release
+            native/target/bronstempels.json
+          key: ${{ steps.native-cache.outputs.cache-primary-key }}
+      - id: verpakken
+        run: python native/scripts/verpak.py
+      - run: python native/scripts/controleer-pakket.py "${{ steps.verpakken.outputs.pakket }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: native-rust-${{ runner.os }}
+          path: |
+            ${{ steps.verpakken.outputs.pakket }}
+            ${{ steps.verpakken.outputs.controlehash }}
+          if-no-files-found: error
+  platformvergelijking:
+    name: Native beelden en pakketbron tussen platforms
+    needs: native
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Dezelfde PNG-decoder als de gecontroleerde native matrix installeren
+        run: python -m pip install Pillow==13.0.0
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: native-*
+          path: native/target/platformartefacten
+      - name: Bronbytes, architecturen en volledige native beelden vergelijken
+        run: python native/scripts/controleer-platformen.py --artefacten native/target/platformartefacten --uitvoer native/target/platformvergelijking/rapport.json --verwachte-schermen 40
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-platformvergelijking
+          path: native/target/platformvergelijking/
+          if-no-files-found: warn

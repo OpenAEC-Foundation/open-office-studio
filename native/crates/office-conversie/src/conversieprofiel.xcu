@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Veilig standaardprofiel voor headless conversie (OpenAEC Office Studio).
+  Wordt per conversie in een nieuw, tijdelijk gebruikersprofiel geplaatst wanneer
+  OPENAEC_CONVERSIE_PROFIEL niet is ingesteld.
+  - Macro's: hoogste beveiligingsniveau, uitvoering volledig uitgeschakeld, geen vertrouwde locaties.
+  - DisableActiveContent wordt bewust NIET gezet: in LibreOffice 24.2 breekt de
+    PDF-export van DOCX met grafieken dan af met SIGABRT (procescode 134; 29 van 30
+    DOCX met grafiek in de grafiekencorpusproef, en tests/fixtures/grafiek.docx).
+    Grafieken zijn ingesloten objecten. Macro's blijven uit via MacroSecurityLevel en
+    DisableMacrosExecution; externe koppelingen worden niet bijgewerkt.
+  - Koppelingen naar externe bestanden/bronnen worden bij laden niet bijgewerkt.
+  - Hyperlinks uit niet-vertrouwde documenten worden geblokkeerd.
+  - Geen updatecontrole, geen eerste-startassistent, geen documentherstel.
+-->
+<oor:items xmlns:oor="http://openoffice.org/2001/registry" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<item oor:path="/org.openoffice.Office.Common/Security/Scripting"><prop oor:name="MacroSecurityLevel" oor:op="fuse"><value>3</value></prop></item>
+<item oor:path="/org.openoffice.Office.Common/Security/Scripting"><prop oor:name="DisableMacrosExecution" oor:op="fuse"><value>true</value></prop></item>
+<item oor:path="/org.openoffice.Office.Common/Security/Scripting"><prop oor:name="BlockUntrustedRefererLinks" oor:op="fuse"><value>true</value></prop></item>
+<item oor:path="/org.openoffice.Office.Common/Security/Scripting"><prop oor:name="SecureURL" oor:op="fuse"><value/></prop></item>
+<item oor:path="/org.openoffice.Office.Calc/Content/Update"><prop oor:name="Link" oor:op="fuse"><value>1</value></prop></item>
+<item oor:path="/org.openoffice.Office.Writer/Content/Update"><prop oor:name="Link" oor:op="fuse"><value>0</value></prop></item>
+<item oor:path="/org.openoffice.Office.Jobs/Jobs/org.openoffice.Office.Jobs:Job['UpdateCheck']/Arguments"><prop oor:name="AutoCheckEnabled" oor:op="fuse"><value>false</value></prop></item>
+<item oor:path="/org.openoffice.Setup/Office"><prop oor:name="ooSetupInstCompleted" oor:op="fuse"><value>true</value></prop></item>
+<item oor:path="/org.openoffice.Office.Common/Misc"><prop oor:name="FirstRun" oor:op="fuse"><value>false</value></prop></item>
+<item oor:path="/org.openoffice.Office.Recovery/RecoveryInfo"><prop oor:name="Enabled" oor:op="fuse"><value>false</value></prop></item>
+</oor:items>

@@ -1,0 +1,142 @@
+{
+  "dialogs": {
+    "cancel": "Cancelar",
+    "saveAsEllipsis": "Guardar como…",
+    "officeFile": "Archivo de Office",
+    "officeFiles": "Archivos de Office",
+    "untitled": "Sin título",
+    "saveCopy": "Guardar una copia",
+    "saveAs": "Guardar como",
+    "openFile": "Abrir archivo",
+    "replaceFile": {
+      "title": "Reemplazar archivo",
+      "message": "El archivo {{path}} ya existe. ¿Reemplazarlo?"
+    },
+    "unsavedChanges": {
+      "title": "Cambios sin guardar",
+      "message_one": "Un documento de esta ventana tiene cambios que aún no se han guardado. Se perderán. ¿Cerrar de todos modos?",
+      "message_many": "{{count}} documentos de esta ventana tienen cambios que aún no se han guardado. Se perderán. ¿Cerrar de todos modos?",
+      "message_other": "{{count}} documentos de esta ventana tienen cambios que aún no se han guardado. Se perderán. ¿Cerrar de todos modos?"
+    },
+    "fileChanged": {
+      "title": "Archivo modificado",
+      "missing": "{{name}} ya no existe en su ubicación original. ¿Volver a crearlo con su versión o guardarlo en otro lugar?",
+      "changedExternally": "{{name}} se ha modificado fuera de Open Office Studio desde que lo abrió. Al sobrescribirlo se descartan esos cambios.",
+      "overwrite": "Sobrescribir"
+    },
+    "foreignFormat": {
+      "title": "Guardar como {{format}}",
+      "message": "{{name}} se actualizará en formato {{format}}. El motor de ofimática convierte el documento para ello; el formato que {{format}} no admite puede perderse.",
+      "hint": "Elija Guardar como… para conservar un DOCX, XLSX o PPTX.",
+      "update": "Actualizar como {{format}}"
+    },
+    "chooseConverter": "Elegir programa de conversión (soffice)",
+    "databaseExport": {
+      "title": "Guardar exportación de base de datos",
+      "filter": "Exportación de base de datos",
+      "sqliteFilter": "Copia de trabajo SQLite",
+      "replaceTitle": "Reemplazar exportación",
+      "replaceMessage": "Este archivo de exportación ya existe. ¿Reemplazarlo?"
+    }
+  },
+  "errors": {
+    "file": {
+      "invalidBody": "El archivo está vacío, supera los 100 MB o no se envió como datos binarios.",
+      "emptyOrTooLarge": "El archivo está vacío o supera los 100 MB.",
+      "formatInfoMissing": "Falta la información del formato.",
+      "formatMissing": "Falta el formato.",
+      "targetFolderMissing": "Falta la carpeta de destino.",
+      "nameMissing": "Falta el nombre del archivo.",
+      "nameInvalidChars": "El nombre del archivo contiene caracteres no válidos.",
+      "unsupportedFormat": "Formato de archivo no admitido.",
+      "extensionMismatch": "La extensión elegida no corresponde al documento.",
+      "alreadyOpenedOrOtherWindow": "Este archivo ya está abierto o no es para esta ventana.",
+      "notThisWindow": "Este archivo no pertenece a esta ventana.",
+      "notLinked": "Este archivo ya no está vinculado a esta pestaña.",
+      "tokenMissing": "Falta el token.",
+      "openInOtherTab": "{{name}} está abierto en otra pestaña. Ciérrelo primero o elija otro nombre.",
+      "readOnly": "No hay permisos de escritura en esta carpeta o el archivo es de solo lectura ({{path}}). Elija otra ubicación.",
+      "notInRecentList": "Este archivo ya no está en la lista."
+    },
+    "preferences": {
+      "tooLarge": "Las preferencias superan los 64 kB.",
+      "invalid": "Las preferencias no son un objeto JSON válido.",
+      "configDirUnavailable": "La carpeta de configuración de la aplicación no está disponible.",
+      "pathInvalid": "Ruta no válida para las preferencias."
+    },
+    "font": {
+      "notInstalled": "La fuente {{family}} no está instalada en este equipo.",
+      "notFound": "Fuente no encontrada.",
+      "fileTooLarge": "Este archivo de fuente es demasiado grande.",
+      "inCollection": "Esta fuente forma parte de una colección (.ttc) y no se puede usar por separado.",
+      "unreadable": "No se pudo leer el archivo de fuente.",
+      "nameInvalid": "Nombre de fuente no válido."
+    },
+    "recovery": {
+      "keyInvalid": "Clave de recuperación no válida.",
+      "spaceFull": "El espacio para copias de recuperación (512 MB) está lleno. Guarde sus documentos.",
+      "sessionMissing": "Falta la sesión.",
+      "keyMissing": "Falta la clave.",
+      "dataInvalid": "Datos de recuperación no válidos.",
+      "unknownDocumentType": "Tipo de documento desconocido.",
+      "sessionNotThisWindow": "Esta sesión de recuperación no pertenece a esta ventana.",
+      "sessionOtherWindow": "Esta sesión de recuperación pertenece a otra ventana.",
+      "sessionStillRunning": "Esta sesión sigue en curso."
+    },
+    "window": {
+      "closed": "Esta ventana se ha cerrado.",
+      "transferEmptyOrTooLarge": "La transferencia está vacía o es demasiado grande.",
+      "mainWindowUnavailable": "La ventana principal no está disponible.",
+      "openFailed": "No se pudo abrir la ventana: {{error}}",
+      "transferExpired": "Esta transferencia ha caducado o ya se ha recogido.",
+      "transferAlreadyTaken": "Esta transferencia ya se ha recogido.",
+      "transferUnknown": "Esta transferencia es desconocida."
+    },
+    "conversion": {
+      "unknownModule": "Módulo de ofimática desconocido.",
+      "sourceFormatMismatch": "El formato de origen no pertenece a este módulo.",
+      "outputFormatUnsupported": "Este formato de salida no es compatible.",
+      "outputFormatDirect": "Este formato de salida se crea directamente en la aplicación, no mediante conversión.",
+      "invalidOptions": "Opciones de conversión no válidas.",
+      "chooseSoffice": "Elija el programa soffice (Windows: soffice.exe) en la carpeta program del motor de ofimática.",
+      "chosenFileMissing": "El archivo elegido no existe.",
+      "chosenPathNotFile": "La ruta elegida no es un archivo.",
+      "chosenFileNotExecutable": "El archivo elegido no es ejecutable.",
+      "appDataDirUnavailable": "La carpeta de datos de la aplicación no está disponible.",
+      "startFailed": "No se pudo iniciar la conversión: {{error}}",
+      "failed": "La conversión ha fallado ({{reason}}). Se ha conservado el original.",
+      "exitCode": "código de salida {{code}}",
+      "processAborted": "proceso interrumpido",
+      "timeout": "La conversión superó el tiempo límite y se detuvo. Se ha conservado el original.",
+      "profilePathInvalid": "La ruta del perfil temporal no es válida.",
+      "inputSize": "Elija un archivo no vacío de 100 MB como máximo.",
+      "runtimeMissing": "Este formato necesita un motor de ofimática (LibreOffice). No se encontró: instálelo, elija el programa en Guardar como o defina OPENAEC_CONVERSIE_PROGRAMMA. DOCX, XLSX y PPTX funcionan directamente.",
+      "notConverted": "No se pudo convertir este archivo. Puede estar dañado o protegido, o falta el filtro de formato en el motor local.",
+      "multipleOutputs": "La conversión produjo más de un archivo.",
+      "noUsableOutput": "La conversión no produjo un archivo utilizable de 100 MB como máximo."
+    },
+    "databaseExport": {
+      "emptyOrTooLarge": "La exportación está vacía o supera los 100 MB.",
+      "emptyInvalidOrTooLarge": "La exportación está vacía, no es válida o supera los 100 MB.",
+      "nameMissing": "Falta el nombre del archivo.",
+      "nameInvalid": "Nombre de archivo no válido.",
+      "notSqlite": "No es una copia de trabajo SQLite.",
+      "typeNotAllowed": "Solo se permiten exportaciones CSV, de código fuente, de informe y de copia de trabajo SQLite. Las bases de datos de Access nunca se sobrescriben.",
+      "textNotUtf8": "Una exportación de texto debe ser texto UTF-8 válido.",
+      "sendAsBinary": "Envíe la exportación como datos binarios de 100 MB como máximo.",
+      "extensionMismatch": "La extensión elegida no corresponde a la exportación."
+    }
+  },
+  "launcher": {
+    "officeStudio": {
+      "genericName": "Paquete ofimático",
+      "comment": "Entorno ofimático local de OpenAEC",
+      "keywords": "procesador de textos;hoja de cálculo;presentación;base de datos;correo;ofimática;"
+    },
+    "databaseStudio": {
+      "genericName": "Visor de bases de datos",
+      "comment": "Abrir localmente bases de datos MDB y ACCDB antiguas",
+      "keywords": "base de datos;tabla;consulta;Access;"
+    }
+  }
+}

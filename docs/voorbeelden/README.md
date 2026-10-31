@@ -5,5 +5,6 @@ Eigen, fictieve inhoud om de interface te bekijken en openen, bewerken en opslaa
 - [Ontwerpnotitie.docx](Ontwerpnotitie.docx): titel, koppen, alinea’s en een tabel.
 - [Materiaaloverzicht.xlsx](Materiaaloverzicht.xlsx): opgemaakte cellen, vastgezette bovenste rijen, prijsberekeningen en een totaalsom. Prijzen en hoeveelheden zijn fictief. Totaal: € 3.068,00.
 - [Ontwerpvisie.pptx](Ontwerpvisie.pptx): drie dia’s met bewerkbare tekst, vectorvormen en sprekersnotities.
+- [Notitieboek.json](Notitieboek.json): een canvas met twee vrij geplaatste tekstvakken en een afzonderlijke Markdown-sectie. Het voorbeeld gebruikt vaste fictieve namen en een vaste datum voor herhaalbare visuele controles.
 
 De bestanden bevatten geen macro’s, externe koppelingen of gegevens van een project of klant. Ze vallen onder de licentie van deze repository. Het zijn voorbeelden, geen volledig compatibiliteitscorpus.

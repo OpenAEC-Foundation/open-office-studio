@@ -1,0 +1,26 @@
+[package]
+name = "betteroffice-pptx"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+publish = ["crates-io"]
+description = "Typed native Rust facade for parsing, editing, rendering, and saving PPTX presentations."
+readme = "README.md"
+keywords = ["pptx", "powerpoint", "ooxml", "presentationml"]
+categories = ["parser-implementations", "rendering"]
+
+[features]
+default = []
+raster = ["dep:pptx-raster"]
+
+[dependencies]
+pptx-edit.workspace = true
+pptx-parse.workspace = true
+pptx-raster = { workspace = true, optional = true }
+pptx-render.workspace = true
+
+[dev-dependencies]
+ooxml-opc.workspace = true
+png = "0.18"

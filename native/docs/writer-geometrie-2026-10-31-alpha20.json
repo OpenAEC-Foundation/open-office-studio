@@ -1,0 +1,40 @@
+{
+  "versie": "2026.44.9-alpha.20",
+  "geslaagd": true,
+  "nieuwe_kernproeven": 7,
+  "nieuwe_gui_proeven": 1,
+  "uitgebreide_bestaande_proeven": [
+    "Lange alinea met astrale tekens over paginagrenzen: markeringen en echte tekstpunten op de tweede pagina"
+  ],
+  "omvang": "Brongebonden tekstgeometrie uit dezelfde behouden engine; eigen Iced-widget-, focus- en werkdraadgebeurtenissen. Functionele zoomproef vergelijkt getekende selectie aan/uit met oppervlakbanden, geen legacy- of fysieke GUI-pariteitsgoedkeuring.",
+  "markering_zoom": {
+    "afwijkende_pixels_zonder_markering": [
+      475,
+      285,
+      1064
+    ],
+    "schalen": [
+      1.0,
+      0.75,
+      1.5
+    ]
+  },
+  "canonieke_broncache_max_bytes": 16777216,
+  "markeerbudget_utf16": 8192,
+  "max_markeervlakken": 8192,
+  "max_tekstkaart_alineas": 100000,
+  "testklok": "Vaste redraw-instant vóór focus; eerste cursorfase, geen beeldnabewerking",
+  "testlog_sha256": "f0d844eca2a86e69fbfbae0415389c8dfa8f82cbc70a765aa38150367465fa3b",
+  "bronbestanden": {
+    "native/crates/office-core/src/writer_cursor.rs": "cc4b41cb3c96df53bc26728da720914bde5c56d6a4826c2e18bf494daf44a7f4",
+    "native/crates/office-core/src/writer_document.rs": "55630b67323565017e10f9af8fffea2f886f3d849bdf31add2813761329ba5ac",
+    "native/crates/office-core/src/writer_beeld.rs": "3b240f08aa376ac55f5846f71ed8694b33915da9278301e78b980d3635cb847d",
+    "native/crates/office-core/src/document.rs": "796376140fa0d9d85dea592b3675d4d106de4ac1baaf2928de090e1f2393204b",
+    "native/crates/office-core/tests/writer_cursor.rs": "394aa391948f5a460c9980cae3deeb41774f424542681aeb1f0f906828e6d3f2",
+    "native/crates/office-ui/src/documentblad.rs": "e84d2a9a16f034dd800e2d1a453f609467a434928977a246433a8d3a9988bea0",
+    "native/crates/office-ui/src/main.rs": "5c16b8fc33153303e8b6c52a55d0309dea9ebd578d70f06805fb5416a03bb941",
+    "native/crates/office-ui/src/zoeken_ui.rs": "14b737ce59aca1f1982c99aa3978a933b88a0ed4073546d5762b2064165bc08f",
+    "native/crates/office-ui/src/werker.rs": "a6c92559b4a9d581d262340eb5483c81dc1893c19e48079efd925bc3f62e759f",
+    "native/crates/office-ui/src/tests/raster_proeven.rs": "7782076849e1795ddc41dabb96f9ab9962a9bf30692f87166966d9e5a8a6aa8f"
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "dialogs": {
+    "cancel": "Annuler",
+    "saveAsEllipsis": "Enregistrer sous…",
+    "officeFile": "Fichier Office",
+    "officeFiles": "Fichiers Office",
+    "untitled": "Sans titre",
+    "saveCopy": "Enregistrer une copie",
+    "saveAs": "Enregistrer sous",
+    "openFile": "Ouvrir un fichier",
+    "replaceFile": {
+      "title": "Remplacer le fichier",
+      "message": "Le fichier {{path}} existe déjà. Le remplacer ?"
+    },
+    "unsavedChanges": {
+      "title": "Modifications non enregistrées",
+      "message_one": "Un document de cette fenêtre contient des modifications non enregistrées. Elles seront perdues. Fermer quand même ?",
+      "message_many": "{{count}} documents de cette fenêtre contiennent des modifications non enregistrées. Elles seront perdues. Fermer quand même ?",
+      "message_other": "{{count}} documents de cette fenêtre contiennent des modifications non enregistrées. Elles seront perdues. Fermer quand même ?"
+    },
+    "fileChanged": {
+      "title": "Fichier modifié",
+      "missing": "{{name}} n’existe plus à son emplacement d’origine. Le recréer avec votre version, ou l’enregistrer ailleurs ?",
+      "changedExternally": "{{name}} a été modifié en dehors d’Open Office Studio depuis que vous l’avez ouvert. Écraser le fichier supprime ces modifications.",
+      "overwrite": "Écraser"
+    },
+    "foreignFormat": {
+      "title": "Enregistrer au format {{format}}",
+      "message": "{{name}} sera mis à jour au format {{format}}. Le moteur bureautique convertit le document pour cela ; la mise en forme que {{format}} ne prend pas en charge peut être perdue.",
+      "hint": "Choisissez Enregistrer sous… pour conserver un fichier DOCX, XLSX ou PPTX.",
+      "update": "Mettre à jour au format {{format}}"
+    },
+    "chooseConverter": "Choisir le programme de conversion (soffice)",
+    "databaseExport": {
+      "title": "Enregistrer l’export de base de données",
+      "filter": "Export de base de données",
+      "sqliteFilter": "Copie de travail SQLite",
+      "replaceTitle": "Remplacer l’export",
+      "replaceMessage": "Ce fichier d’export existe déjà. Le remplacer ?"
+    }
+  },
+  "errors": {
+    "file": {
+      "invalidBody": "Le fichier est vide, dépasse 100 Mo ou n’a pas été envoyé sous forme de données binaires.",
+      "emptyOrTooLarge": "Le fichier est vide ou dépasse 100 Mo.",
+      "formatInfoMissing": "Les informations de format sont manquantes.",
+      "formatMissing": "Le format est manquant.",
+      "targetFolderMissing": "Le dossier de destination est manquant.",
+      "nameMissing": "Le nom du fichier est manquant.",
+      "nameInvalidChars": "Le nom du fichier contient des caractères non valides.",
+      "unsupportedFormat": "Format de fichier non pris en charge.",
+      "extensionMismatch": "L’extension choisie ne correspond pas au document.",
+      "alreadyOpenedOrOtherWindow": "Ce fichier est déjà ouvert ou n’est pas destiné à cette fenêtre.",
+      "notThisWindow": "Ce fichier n’appartient pas à cette fenêtre.",
+      "notLinked": "Ce fichier n’est (plus) lié à cet onglet.",
+      "tokenMissing": "Le jeton est manquant.",
+      "openInOtherTab": "{{name}} est ouvert dans un autre onglet. Fermez-le d’abord ou choisissez un autre nom.",
+      "readOnly": "Pas de droits d’écriture dans ce dossier ou le fichier est en lecture seule ({{path}}). Choisissez un autre emplacement.",
+      "notInRecentList": "Ce fichier ne figure (plus) dans la liste."
+    },
+    "preferences": {
+      "tooLarge": "Les préférences dépassent 64 Ko.",
+      "invalid": "Les préférences ne sont pas un objet JSON valide.",
+      "configDirUnavailable": "Le dossier de configuration de l’application n’est pas disponible.",
+      "pathInvalid": "Chemin non valide pour les préférences."
+    },
+    "font": {
+      "notInstalled": "La police {{family}} n’est pas installée sur cet ordinateur.",
+      "notFound": "Police introuvable.",
+      "fileTooLarge": "Ce fichier de police est trop volumineux.",
+      "inCollection": "Cette police fait partie d’une collection (.ttc) et ne peut pas être utilisée seule.",
+      "unreadable": "Le fichier de police n’a pas pu être lu.",
+      "nameInvalid": "Nom de police non valide."
+    },
+    "recovery": {
+      "keyInvalid": "Clé de récupération non valide.",
+      "spaceFull": "L’espace réservé aux copies de récupération (512 Mo) est plein. Enregistrez vos documents.",
+      "sessionMissing": "La session est manquante.",
+      "keyMissing": "La clé est manquante.",
+      "dataInvalid": "Données de récupération non valides.",
+      "unknownDocumentType": "Type de document inconnu.",
+      "sessionNotThisWindow": "Cette session de récupération n’appartient pas à cette fenêtre.",
+      "sessionOtherWindow": "Cette session de récupération appartient à une autre fenêtre.",
+      "sessionStillRunning": "Cette session est toujours en cours."
+    },
+    "window": {
+      "closed": "Cette fenêtre a été fermée.",
+      "transferEmptyOrTooLarge": "Le transfert est vide ou trop volumineux.",
+      "mainWindowUnavailable": "La fenêtre principale n’est pas disponible.",
+      "openFailed": "La fenêtre n’a pas pu être ouverte : {{error}}",
+      "transferExpired": "Ce transfert a expiré ou a déjà été repris.",
+      "transferAlreadyTaken": "Ce transfert a déjà été repris.",
+      "transferUnknown": "Ce transfert est inconnu."
+    },
+    "conversion": {
+      "unknownModule": "Module bureautique inconnu.",
+      "sourceFormatMismatch": "Le format source n’appartient pas à ce module.",
+      "outputFormatUnsupported": "Ce format de sortie n’est pas pris en charge.",
+      "outputFormatDirect": "Ce format de sortie est créé directement dans l’application, sans conversion.",
+      "invalidOptions": "Options de conversion non valides.",
+      "chooseSoffice": "Choisissez le programme soffice (Windows : soffice.exe) dans le dossier program du moteur bureautique.",
+      "chosenFileMissing": "Le fichier choisi n’existe pas.",
+      "chosenPathNotFile": "Le chemin choisi n’est pas un fichier.",
+      "chosenFileNotExecutable": "Le fichier choisi n’est pas exécutable.",
+      "appDataDirUnavailable": "Le dossier de données de l’application n’est pas disponible.",
+      "startFailed": "La conversion n’a pas pu démarrer : {{error}}",
+      "failed": "La conversion a échoué ({{reason}}). L’original a été conservé.",
+      "exitCode": "code de sortie {{code}}",
+      "processAborted": "processus interrompu",
+      "timeout": "La conversion a dépassé le délai imparti et a été arrêtée. L’original a été conservé.",
+      "profilePathInvalid": "Le chemin du profil temporaire n’est pas valide.",
+      "inputSize": "Choisissez un fichier non vide de 100 Mo maximum.",
+      "runtimeMissing": "Ce format nécessite un moteur bureautique (LibreOffice). Il est introuvable : installez-le, choisissez le programme dans Enregistrer sous ou définissez OPENAEC_CONVERSIE_PROGRAMMA. DOCX, XLSX et PPTX fonctionnent directement.",
+      "notConverted": "Ce fichier n’a pas pu être converti. Il est peut-être endommagé ou protégé, ou le filtre de format manque dans le moteur local.",
+      "multipleOutputs": "La conversion a produit plus d’un fichier.",
+      "noUsableOutput": "La conversion n’a pas produit de fichier exploitable de 100 Mo maximum."
+    },
+    "databaseExport": {
+      "emptyOrTooLarge": "L’export est vide ou dépasse 100 Mo.",
+      "emptyInvalidOrTooLarge": "L’export est vide, non valide ou dépasse 100 Mo.",
+      "nameMissing": "Nom de fichier manquant.",
+      "nameInvalid": "Nom de fichier non valide.",
+      "notSqlite": "Ce n’est pas une copie de travail SQLite.",
+      "typeNotAllowed": "Seuls les exports CSV, source, rapport et copie de travail SQLite sont autorisés. Les bases de données Access ne sont jamais écrasées.",
+      "textNotUtf8": "Un export texte doit être un texte UTF-8 valide.",
+      "sendAsBinary": "Envoyez l’export sous forme de données binaires de 100 Mo maximum.",
+      "extensionMismatch": "L’extension choisie ne correspond pas à l’export."
+    }
+  },
+  "launcher": {
+    "officeStudio": {
+      "genericName": "Suite bureautique",
+      "comment": "Environnement bureautique local OpenAEC",
+      "keywords": "traitement de texte;tableur;présentation;base de données;courriel;bureautique;"
+    },
+    "databaseStudio": {
+      "genericName": "Visionneuse de bases de données",
+      "comment": "Ouvrir localement d’anciennes bases de données MDB et ACCDB",
+      "keywords": "base de données;table;requête;Access;"
+    }
+  }
+}

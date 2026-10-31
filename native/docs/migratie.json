@@ -1,0 +1,89 @@
+{
+  "referentie": {
+    "versie": "2026.44.8",
+    "commit": "b5492ef79b0e7cd7c70134924fd5250e78bdfe28"
+  },
+  "betekenis": "Acceptatiegebieden voor de gehele suite. Dit is geen telling van losse functies of testdekking; elk gebied vraagt ook de bestaande opdrachten, bestandsfixtures en GUI-toestanden.",
+  "gebieden": [
+    {
+      "id": "schil",
+      "naam": "Venster, ribbon, tabbladen en navigatie",
+      "functioneel_gelijk": false,
+      "alle_functies_getest": false,
+      "visueel_gelijk": false,
+      "resterend": "Modulelinten volledig overzetten; inklappen, responsief lint, losse vensters en alle sneltoetsen."
+    },
+    {
+      "id": "bestanden",
+      "naam": "Openen, opslaan, import, export en afdrukken",
+      "functioneel_gelijk": false,
+      "alle_functies_getest": false,
+      "visueel_gelijk": false,
+      "resterend": "Overige import, conversie-instellingen, afdrukken, versleuteling en het volledige bestandencorpus aansluiten. Native conversie-export voor 34 doelkeuzes is verbonden; PDF kan afwijken van de native paginering."
+    },
+    {
+      "id": "writer",
+      "naam": "Writer",
+      "functioneel_gelijk": false,
+      "alle_functies_getest": false,
+      "visueel_gelijk": false,
+      "resterend": "Directe rich-text-invoer en invoegopmaak op lege alinea’s, volledige alinea-/sectiebediening, stijlen toepassen, lijsten, tabellen/objecten, verwijzingen, revisies, opmerkingen, uitgebreide zoek-/vervangopties en de volledige bestaande ribbon. Opgeloste opmaakstatus voor niet-lege body-alinea’s en expliciete Unicode-selecties is aangesloten. Platte-tekstklembord voor de actieve editor en compacte opmaakknoppen zijn aangesloten; rijke klembordinhoud blijft open. De GUI bewaart nu expliciete Unicode-tekststappen per concept, inclusief zachte regelovergangen; dit vervangt de directe rijke pagina-invoer niet. Letterlijk zoeken in hoofdtekst en tabellen, Unicode, hoofdletters/hele woorden en atomaire gezamenlijke vervanging zijn aangesloten. Zoektreffers navigeren via dezelfde behouden layout naar hun werkelijke pagina; nieuwe invoer, selectie en scroll maken late navigatieantwoorden ongeldig. Voor ondersteunde alinea’s gebruikt de treffer de werkelijk gevormde markeervlakken op de pagina; nieuwe invoer of selectie maakt de markering ongeldig. Koppen, noten, zoeken over alineagrenzen, opmaakfilters en scrollen naar de gevonden regel blijven open. De brongebonden tekstpunt-API is getest; directe rijke pagina-invoer is nog niet aangesloten. Actieve revisieregistratie en vergrendelde/onbekende inhoudsbesturingen blijven alleen-lezen."
+    },
+    {
+      "id": "spreadsheet",
+      "naam": "Spreadsheet",
+      "functioneel_gelijk": false,
+      "alle_functies_getest": false,
+      "visueel_gelijk": false,
+      "resterend": "Volledige virtualisatie, bereikselecties, sleepbediening, klembordbereiken, sorteren/filteren, grafieken, fixeren, validatie, bescherming en overige ribbonopdrachten. Directe celbewerking, enkele-celnavigatie en vaste rij-/kolomkoppen zijn aangesloten. De navigatie slaat samenvoegingen en verborgen assen over. De paginarasterizer gebruikt nu de opgeslagen familie en beschikbare vaste stijlgezichten. Volledige glyph-terugval, gemengde scripts en systeemletters blijven open. Dit is geen volledige raster- of visuele pariteit."
+    },
+    {
+      "id": "presentation",
+      "naam": "Presentation",
+      "functioneel_gelijk": false,
+      "alle_functies_getest": false,
+      "visueel_gelijk": false,
+      "resterend": "Directe tekstinvoer, vormselectie/rotatie/slepen/vergroten, afbeeldingen, tabellen/grafieken, thema/layout, overgangen en presentatiemodus."
+    },
+    {
+      "id": "notition",
+      "naam": "Notition",
+      "functioneel_gelijk": false,
+      "alle_functies_getest": false,
+      "visueel_gelijk": false,
+      "resterend": "Automatische lokale bewaring/herstel, zoeken, boeken en secties hernoemen/verplaatsen, volledige blokopmaak en taken, import/export en bestaande GUI exact overnemen."
+    },
+    {
+      "id": "email",
+      "naam": "Email",
+      "functioneel_gelijk": false,
+      "alle_functies_getest": false,
+      "visueel_gelijk": false,
+      "resterend": "OAuth-aanmelding en automatisch serverzoeken in de native GUI, opstellen/verzenden, concepten, antwoorden, bijlagen opslaan, berichtacties, synchronisatie, accountverwijdering en bestaande interface exact overnemen. De losse Rust-kern en handmatig accountbeheer, IMAP-mappen/lijst/zoeken/lezer en MIME-bron naar IFCX zijn aangesloten."
+    },
+    {
+      "id": "database",
+      "naam": "Database",
+      "functioneel_gelijk": false,
+      "alle_functies_getest": false,
+      "visueel_gelijk": false,
+      "resterend": "Native interface voor oude databases, werkkopie, schema's, query's, formulieren, rapporten en gesandboxte scripts. Laagste prioriteit."
+    },
+    {
+      "id": "integratie",
+      "naam": "Voorkeuren, herstel, vertalingen en toegankelijkheid",
+      "functioneel_gelijk": false,
+      "alle_functies_getest": false,
+      "visueel_gelijk": false,
+      "resterend": "Recente bestanden, herstelkopieën, spelling, systeemletters, vertalingen en een echte schermlezerbrug testen."
+    },
+    {
+      "id": "distributie",
+      "naam": "Suite en losse applicaties op alle platforms",
+      "functioneel_gelijk": false,
+      "alle_functies_getest": false,
+      "visueel_gelijk": false,
+      "resterend": "Native installers en losse edities, associaties, single-instance, updater, ondertekening en schone installatie/upgrade testen."
+    }
+  ]
+}

@@ -20,6 +20,15 @@ Open Office Studio is een lokale kantooromgeving voor Windows, macOS en Linux. D
 
 > **Status:** Open Office Studio wordt actief ontwikkeld. Uitgaven verschijnen als *pre-release* (ontwikkelversie). Probeer de app eerst met kopieën van je bestanden. Acht interfacetalen zijn beschikbaar. Lees de [vrijgavecontrole en bekende beperkingen](docs/tests/2026-10-30-vrijgavecontrole.md), waaronder een bevestigde crash van de rekenkern bij `=ISOWEEKNUM()` zonder argument.
 
+## Native Rust-migratie
+
+De afzonderlijke preview in [`native/`](native/README.md) verplaatst ook de
+interface naar Rust, met Iced en de gedeelde OpenAEC Blueprint-ribbon. Werkende
+DOCX/XLSX/PPTX-rondgangen en IFCX-bronarchivering zijn aanwezig; e-mailbronnen
+worden volledig bewaard. De native app is **nog geen vervanging voor de huidige
+suite**. Zie de [functievergelijking en resterende omzetting](native/README.md#huidige-omvang).
+De bestaande release blijft 2026-W44.8.
+
 ## De suite of een aparte app
 
 Versie **2026-W44.8** biedt zeven installatiekeuzes: **Open Office Studio**, **Open Writer Studio**, **Open Spreadsheet Studio**, **Open Presentation Studio**, **Open Email Studio**, **Open Notition Studio** en **Open Database Studio**. Elke app heeft een eigen installer, applicatie-id en lokaal profiel. De suite behoudt alle modules; de gerichte apps openen hun eigen werkruimte. Zie [het appoverzicht, bouwen, gegevens overzetten en screenshots](docs/studios.md).

@@ -1,0 +1,1084 @@
+{
+  "bouwronde": 41170415375,
+  "codecommit": "c0f1bd59ea6c31f80144e49a826a502577083806",
+  "geteste_checkout": "25d11407a64748bf0b80e931552ff927df9d576f",
+  "gitbomen_gelijk_aan_codecommit": {
+    "native": "9ff93ec8bb13d68fca4f0dae8da1db6e684135f9",
+    "public": "3953f3cf66f521887977f41ff94275a0da3515c8",
+    "docs": "acaf22f2a1d8349da7eb89927852240f9927f947"
+  },
+  "omvang": "Pakkethash, ZIP-CRC, alle verpakte bronbytes en architectuur lokaal gelezen; programmaversies, notices en bronregressie op het eigen CI-platform uitgevoerd. Geen schone installatie, binaire reproduceerbaarheid of fysieke GUI-test.",
+  "pakketten": [
+    {
+      "platform": "Linux",
+      "pakket": "Open-Office-Studio-native-2026.44.9-alpha.8-Linux-x86_64.zip",
+      "versie": "2026.44.9-alpha.8",
+      "sha256": "f18a72b675de329c6e1a6038e957e0828349249dcd6c371ed43ff237171d19b9",
+      "zip_crc_geldig": true,
+      "bronversie_geldig": true,
+      "alle_bronbytes_gelijk": true,
+      "binaire_en_gepinde_vendorbytes_gelijk": true,
+      "broninhoud_afgezien_van_regelafbreking_gelijk": true,
+      "regelafbrekingsverschillen": [],
+      "bronbestanden": 625,
+      "programmas": [
+        {
+          "bestand": "open-office-studio-native",
+          "soort": "ELF64 x86_64",
+          "bytes": 129966488,
+          "sha256": "0b81679cf6733f889bee571df83d29eb28e40f39b3c1e6bc2e3dbfe124af7e74"
+        },
+        {
+          "bestand": "controleer-bestand",
+          "soort": "ELF64 x86_64",
+          "bytes": 97602656,
+          "sha256": "9fde35068fb3fbada4e8a8992314707cf4c23bd4c1ad5ec7860b9a73d46909f6"
+        }
+      ],
+      "uitgepakte_programmaversie_in_eigen_ci_gecontroleerd": true,
+      "bronregressie_met_exact_verpakte_controleur_geslaagd": true
+    },
+    {
+      "platform": "Windows",
+      "pakket": "Open-Office-Studio-native-2026.44.9-alpha.8-Windows-AMD64.zip",
+      "versie": "2026.44.9-alpha.8",
+      "sha256": "7515945e1744eb41cd95ee73bc0d5bc8e3c70908309f61f25f36f044a4ba91c5",
+      "zip_crc_geldig": true,
+      "bronversie_geldig": true,
+      "alle_bronbytes_gelijk": false,
+      "binaire_en_gepinde_vendorbytes_gelijk": true,
+      "broninhoud_afgezien_van_regelafbreking_gelijk": true,
+      "regelafbrekingsverschillen": [
+        {
+          "bestand": "native/crates/office-conversie/LICENSE",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5",
+          "git_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+        },
+        {
+          "bestand": "native/crates/office-conversie/Cargo.toml",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "e285702f1ec74403df9de17609e65fec02bd6791b14972ea38d7a0a07f6a7528",
+          "git_sha256": "3620ad9b03f52cf32f432bed1b36b096da3e1dc18a132495a0d00b69e980a356"
+        },
+        {
+          "bestand": "native/crates/office-core/Cargo.toml",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "d806e13b8ad91af7ce48f5d6ba1b60f608a8fcf9fa93fa24afa6bb3ec8471b68",
+          "git_sha256": "d7f04d7dc1cf6d135a546e9e7448e90140da734adbc561bf3cd960fb8c5cc0fe"
+        },
+        {
+          "bestand": "native/crates/office-ui/Cargo.toml",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "a2091e30e62973f8112362cccfd57facf211c73ba707313f55434b3ae4fd7463",
+          "git_sha256": "7181e1afa4e0ae06440dfb615040eff9b64a20a87c6da2e37a8c851e6841dd10"
+        },
+        {
+          "bestand": "native/crates/office-mail/LICENSE-MIT",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "bb963c42f25c6a44fb6741a9290339e101acc737212538f18fe85a1c4562be2f",
+          "git_sha256": "2af12f6942621232804d98dbf5fd23fa37a62bb7e7567910a137751720b7d4c5"
+        },
+        {
+          "bestand": "native/crates/office-mail/LICENSE-Apache-2.0",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5",
+          "git_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+        },
+        {
+          "bestand": "native/crates/office-mail/Cargo.toml",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "c6046473f853bc99315a715352261286456cc53f94afb69699bbf8da8cde4243",
+          "git_sha256": "519be82ec4c498c83d33b0d437f3ae0b56f83b7c519d7817685d5f8826611cbe"
+        },
+        {
+          "bestand": "native/crates/office-conversie/src/taal.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "a61754de5909403ed8e0d64c1f07da98fc9e1a9861a7c22e1027ecfce6d0ae09",
+          "git_sha256": "72a997090d95f5e80960a2ebfc18ba8fece8eac8a5f524b9da8d94184276d1c7"
+        },
+        {
+          "bestand": "native/crates/office-conversie/src/formaten.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "c52a4ee33ec822b40401bccb22d6d25ae9887e8340c98a431d998320a7eba46b",
+          "git_sha256": "1f28691cc3f4f304d335b8da5d5a91a58341635ed972dfdac57b7f821862f1fd"
+        },
+        {
+          "bestand": "native/crates/office-conversie/src/lib.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "bfcd08fb12e22ba2f04920aafde03f8b0a8ae406e519bfb4a0c7ea3dce7cfcf9",
+          "git_sha256": "2dd4bb27d0729f0ca399d97075506763b4888ecd8bd9dff85aae11a86bf9f086"
+        },
+        {
+          "bestand": "native/crates/office-conversie/src/conversie.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "67e6cec124dd0e091bf5e3ad56a85644bc4f1937048d8080ac8565efa779202d",
+          "git_sha256": "e80b91a3c8d76adfa56ddcbac9e5d91662d7da16a0f944380bc379e62b8d4a4f"
+        },
+        {
+          "bestand": "native/crates/office-conversie/src/conversieprofiel.xcu",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "9fedba382045ddbbe7044c0ebf576c97a8df4556878b89a12efe02c99b18cb18",
+          "git_sha256": "118eee4917a14fb29e7a34329d5448233a2e6e7e4748afecf1e7a57444dfa1b7"
+        },
+        {
+          "bestand": "native/crates/office-conversie/tests/controleer.py",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "47026b7fceed649c012af4acf83965bed520e1a5eceec367ea0f3c1904ced3cb",
+          "git_sha256": "52c3c8aceabe79989cb788db015c7f7acf24307abbcf1ed0753807d0c3947153"
+        },
+        {
+          "bestand": "native/crates/office-conversie/locales/zh-CN/desktop.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "6db7fa06b62f53053f552f65c6ff2cf4d2bec516817781be51004633187c7db6",
+          "git_sha256": "57128dabebba7e3e5f1f4f25e6f97aced6ba9f6bba8ee1913cbfe7efc2b74f13"
+        },
+        {
+          "bestand": "native/crates/office-conversie/locales/de/desktop.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "60ab5e57193d5328629fb2efddba930bb4ec14c10d9014d8664d195682f026d9",
+          "git_sha256": "56beab2519ce90b2a1a3a4e8aedfb5d875baf26fe450689d96355c42a75ce092"
+        },
+        {
+          "bestand": "native/crates/office-conversie/locales/fr/desktop.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "d627c5a523a816859cbdf93c5355f312d67d29bfdbc0b598fc26061ccc06d984",
+          "git_sha256": "3723919a7552b1651471edfafefb574ddb673980dfbe339e6c947016b8c86fce"
+        },
+        {
+          "bestand": "native/crates/office-conversie/locales/it/desktop.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "38c3fcb8ee2099c618674296172bfbd84c08f21b08a524363add493a68d2d9b5",
+          "git_sha256": "5b7615027891818c2488af8704f47b261debee1e4f0ef75b3938806c2da31366"
+        },
+        {
+          "bestand": "native/crates/office-conversie/locales/en/desktop.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "0694c60d81ac725017a5eade72c060c7d4450b75375b58f430add8d0ddb62909",
+          "git_sha256": "8f835524381bdb968d88fd47da9c6e315c1e16cbbc1d63060f4ac77ade46adec"
+        },
+        {
+          "bestand": "native/crates/office-conversie/locales/nl/desktop.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "5a9db7d5722709ad2638d2bc5f280c5911721eb8924c120c4d4ef6666776d9d4",
+          "git_sha256": "d40df89d7d1dc6060b5206c09a3eb04089afe5ee243ba9cdd5f1f79fb84a8f7b"
+        },
+        {
+          "bestand": "native/crates/office-conversie/locales/es/desktop.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "331096c2b8cef20226aa304e5ff098da3e07e9ba2d12c8858b2345b700c77e36",
+          "git_sha256": "f5cc519412d40f5cc7a108964c24f1ecd89fa6d0e745a3411faaf35c5a3714fd"
+        },
+        {
+          "bestand": "native/crates/office-conversie/locales/pt-BR/desktop.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "b15dfde206720b3fde2640075b829e6ed812aa7b78c6e268f76f7db8fda3f2ec",
+          "git_sha256": "d452a6061f46d5d8fcc65e3e0ae45ede49b781e0ad578d73389da4f820be9434"
+        },
+        {
+          "bestand": "native/crates/office-conversie/tests/voorbeelden/README.md",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "dd64489b1d280fcbf9da959480577c034f0163374fc90cfaad5b86639393cfe4",
+          "git_sha256": "97745746579f2c5a4a4c8a648e11ded1e420a64df9ba291bc6e1eb71de1bc249"
+        },
+        {
+          "bestand": "native/crates/office-core/src/presentatie.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "0cb5567d4fda422fd3aae27183a90b44d12d508cb5a131429c4420867ba48a2f",
+          "git_sha256": "5fca5d17c3a1491d41c0c841af029416dec67c1f94f72537ccb0d084dced0692"
+        },
+        {
+          "bestand": "native/crates/office-core/src/opslag.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "af8a5de2d4343e6234d0294b7d960b6b06adbfa671bd0d8de95ba82c9fc95dfd",
+          "git_sha256": "a2e921b704014e77f42548383cbb56a1f2c010578a4f3e78ee1484af00aa089c"
+        },
+        {
+          "bestand": "native/crates/office-core/src/writer_pagina.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "d4840c815db2f83b98e9d0cb3c5c7ab685c12b3355c2840df0419b9b8626cabb",
+          "git_sha256": "ee4949a1cc70b308facf710b9195ec6ed6c0dccb858468887f7a31dedfbb390f"
+        },
+        {
+          "bestand": "native/crates/office-core/src/writer_tekst.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "14216f35f8ab21d7d6de9e355df19c54e4fae598e92f2b06f65edaf434e64c64",
+          "git_sha256": "889016545bdd786af97b015016b2f900e4d433672cb301b54a1f1c36380388b0"
+        },
+        {
+          "bestand": "native/crates/office-core/src/rekenblad.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "94d5f3ce6c2feca23cec275201a1402035512f4879ca37da0d04ec4252bc3957",
+          "git_sha256": "4818e9c1fe047f24684261bf6a01ab5403b50fe63c172de414db8c9d2ca2b0f6"
+        },
+        {
+          "bestand": "native/crates/office-core/src/interactie.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "fdc74f1507c0b9a480d371aec13d035e34035e1bb58d8bd61ea53d01ac6ccf96",
+          "git_sha256": "a6b4dee52a5c36745c0472a89ecf1a261dae223de69df103abb85702e70d9651"
+        },
+        {
+          "bestand": "native/crates/office-core/src/writer_beeld.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "6083ab0c5c1f59c55f786310d4248cc8cf1fc72495ddd0a4fcc9409810af26f5",
+          "git_sha256": "90538c3d7644a45319fa8faa50eba6fe97c7f443f9957c42289f87c1d5f5469f"
+        },
+        {
+          "bestand": "native/crates/office-core/src/writer.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "576152880f1c6ab86f615e8eed635a1ed929abfa7001784310cdbb77ddf3d610",
+          "git_sha256": "1de8557446b8c6d736d60a6a9acda48ab66e352cda4ca03c06eb567e33fc2b71"
+        },
+        {
+          "bestand": "native/crates/office-core/src/lettertypen.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "7ee45ba2bd155cca22b3005ac4fcc6f2d1f637f27b5471142f73b506c86a4be7",
+          "git_sha256": "df1fbd3644022c5d99addafb36d994fa079cc749b6e876857bfa7ae7adfd4785"
+        },
+        {
+          "bestand": "native/crates/office-core/src/opmaak.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "7130d1ed2347a5cdb46739f452ab020e00fb24015b3c25b6cd06dc1350e5a433",
+          "git_sha256": "7ffdd62122187bfef905bd4dbf73163cda024bf161d010e2ff91fb0c9d2a0cb5"
+        },
+        {
+          "bestand": "native/crates/office-core/src/lib.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "4f6fa4a91ff972034f8cd7a62a5a3ae4ea7c948fb804109551a6835e969d1f86",
+          "git_sha256": "c25f1b088b64c5408334be10bbfac675c2ac67afc762486fb697171e61d48783"
+        },
+        {
+          "bestand": "native/crates/office-core/src/document.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "a6153ee248278ebc88819a41b433501da99b5e2a4abc669eb6ee2d5c2dccd412",
+          "git_sha256": "b6f24e61bef84879868978bb1948f2e6c27494931f4bee91593f8cbdccbd167f"
+        },
+        {
+          "bestand": "native/crates/office-core/src/lettertype_data.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "e560574ddd3cf78f29a871606ae97bfb2a3cf91e71f5179d5fe7dca337df6845",
+          "git_sha256": "8a42823e6e9e8f73efa97fdb580c05fb20ec6fac752bbbbcf0794c5bcd015021"
+        },
+        {
+          "bestand": "native/crates/office-core/src/ifcx-schema.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "606403238965a3dd86310ac595fcd2226a13d4cb971a0647c09752eb0b82dd63",
+          "git_sha256": "48b5e602ba3f58ea3a5289641ae9e0a69fb02f65553551e1e77c1975fb87cf13"
+        },
+        {
+          "bestand": "native/crates/office-core/src/notities.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "20829ae89eafe49282588a4140aae07945d1610e4e886ef175b6c6efb08db3d6",
+          "git_sha256": "2e8ffd3b9b9e4c4c6ec1d3c503df2ed8c6ecdea4f253a71cc1c87161bc318578"
+        },
+        {
+          "bestand": "native/crates/office-core/src/presentatie_tekst.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "dcf5cc0a4309a865d73d0a53fbe70c82599374a8740f55134feb8b0ddca4a9b6",
+          "git_sha256": "7f86cadc5e2cecfabd3a98adddaae009bb6cddeb26641f6cc69d3dcc006a0d63"
+        },
+        {
+          "bestand": "native/crates/office-core/src/ifcx.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "7a214ce71762492da824c4892e0d9f1a09fe411b0ecbb372d78ba136dc2b276b",
+          "git_sha256": "a3747dbd9d80476ae2ed080914a89d01ded1448ff6229e4d7542fd9a692d1f74"
+        },
+        {
+          "bestand": "native/crates/office-core/tests/writer_structuur.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "453052a9f44044791bb92407760f35bb0311efbfcb51b1a450dfeeec3bbaa825",
+          "git_sha256": "398b294a6d06bf542f13f756ab0515b68e1720e4fd9b5d5bf4a302c53e6ac72d"
+        },
+        {
+          "bestand": "native/crates/office-core/tests/writer_pagina.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "fcbe5d322e14f1cf5c28b1507901afa72601beef25ab194e768f8b8e1312d38b",
+          "git_sha256": "5c97095f6b890c7e205f5496db07d5bbe14ad3f0cd3c91db946844f5ec443ceb"
+        },
+        {
+          "bestand": "native/crates/office-core/tests/documenten.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "c3d4ba40143ba387c4bb02c664530c2d429a7f72a1943ffa6dc4f67002c4846d",
+          "git_sha256": "f1a0f558184ae123d469b51e1175eb1139dfdb7cb0f88098a3b6957a266648f7"
+        },
+        {
+          "bestand": "native/crates/office-core/tests/writer_velden.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "3f4958edab259584466859b6a22bd5bc14b753a545916c756a7f28a8fcf3e1ff",
+          "git_sha256": "fcd24208efad4f4e2482b2679d2e756b702586df92a836e950e784cd8ebbf2ab"
+        },
+        {
+          "bestand": "native/crates/office-core/tests/notities_presentatie.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "ffb2f078498da072438b04ea679a81745505ef064230421e50ac4d92edf571d4",
+          "git_sha256": "40efc40047a5dd4ab2369509eb8561a47859828fb6b39c67b6cf3236a062db42"
+        },
+        {
+          "bestand": "native/crates/office-core/tests/interactie.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "812ec68dc7978cc1fe1549f74984859934e79a1a2c318f7f9f1b06c95475d5ac",
+          "git_sha256": "eb6662ebf125ab3cd44c755e8aa1cc47a72d220193b33094b17674958f9e4482"
+        },
+        {
+          "bestand": "native/crates/office-core/tests/lettertypen.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "b033d9671b37e4186e0254c725ed4427acfd24412e5f18f3cb8cdf6edf44b5f6",
+          "git_sha256": "bcb22fb3b93564717ded045b9b827f3c83194649b05d42d87ed67cca3ccd8b53"
+        },
+        {
+          "bestand": "native/crates/office-core/tests/writer_weergave.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "29b95f7d765bc7c19e1a1f209b17aa6e890865891919bb203932be740a395450",
+          "git_sha256": "f5e530a5f5063e51550b2a385ad7e3dcb3e0a1de73e877ac78481ba33ff50cc0"
+        },
+        {
+          "bestand": "native/crates/office-core/examples/meet.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "8a20fe1ebc618221b7a2c8787d7dee05f47e3d40f1d5028c12bd9c49d9afd973",
+          "git_sha256": "7bf82b80e31b86c3ee0965d086cf135bc08a38a150b90d4789ba4c945251f30f"
+        },
+        {
+          "bestand": "native/crates/office-core/src/bin/controleer-bestand.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "078039dcf29a8eb2be33eca7ec6ee4c73586977106806ff4b0e37a0f6d9bcd73",
+          "git_sha256": "ea2d5133aa2cc590e4f37724846644679865e52249d61e39895ee676fee6ebc4"
+        },
+        {
+          "bestand": "native/crates/office-core/tests/fixtures/maak-weergave.py",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "b37a75afa8adde9f9e6ce46df200dbe043841a99a33136bbc9593746525f05cb",
+          "git_sha256": "2101749b17c2c1fa9d00b130847efb0c2cb587de557a61e2cab57ea236a381dc"
+        },
+        {
+          "bestand": "native/crates/office-core/tests/fixtures/maak-kopvoet.py",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "1ccfb410ace455974cf13c0751c1494aa844b61ed46e4d638785a5f83ab5c622",
+          "git_sha256": "0a4f0221914dede4fa8410440bb0c10bc5f9e45c1fc4a08a6a81d56bbf040295"
+        },
+        {
+          "bestand": "native/crates/office-core/tests/fixtures/controleer.py",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "0e9fb3905c5ed7bbec67e2aed733f3d22e86cf96cb3492b3f60fa5664ac3afcc",
+          "git_sha256": "b1514cd452d517babed47b16a7780a6b00a86a981d2fe4c50fb3ecffaf0e6b9b"
+        },
+        {
+          "bestand": "native/crates/office-core/tests/fixtures/maak.py",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "48d471b0ee887eace068c80031c882404e0cf2b0d751ada9e86e2d08d53599e7",
+          "git_sha256": "94c355a034dade36441fac5ceecbd75125501e4606fb43df60e81339606d58b8"
+        },
+        {
+          "bestand": "native/crates/office-core/tests/fixtures/maak-velden.py",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "c2bdf3f6da968665c99047055ca1a0f81413a28898ad20b325c2dcc8d69be325",
+          "git_sha256": "74e3d3f84c131992b9a30d037aef5d020ab627229104c90409256312f29dd68b"
+        },
+        {
+          "bestand": "native/crates/office-ui/assets/formaatgreep.svg",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "e837fadbf8ab0b1b7e22b175f8ae39bf0a827b909c789c7c9d65a45854beca32",
+          "git_sha256": "d6d767100d116a8f5a959404d647df6a70d4a66a0312ce9d7b2f3840f2ff71d3"
+        },
+        {
+          "bestand": "native/crates/office-ui/assets/sleepgreep.svg",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "c5d5ef1a54deebbbbc0fd2fd67e8795fc2f2df9b67565e6e12079e4165f26039",
+          "git_sha256": "784d9799d31a521e2200ef40245e2e26c7ed705edb0f4ae8a14ac8cc243fa119"
+        },
+        {
+          "bestand": "native/crates/office-ui/src/export_ui.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "6e6c3cc08c8a6c31a8b371b0d9c48624c8cd0da0bd3be622594ab508cd1a37a4",
+          "git_sha256": "0cd4aa573a0365d80d714b55813bb12ef852f6d7309bdb1e97275770fb452029"
+        },
+        {
+          "bestand": "native/crates/office-ui/src/main.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "6eca6df56221197bbb136488fc106b354384c4ee057c8994524a77eedd910224",
+          "git_sha256": "a1240013e933a6d1c08f34b029a3866f4ea0a79eb8768e39ee5f9a2f9d604472"
+        },
+        {
+          "bestand": "native/crates/office-ui/src/tests.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "848bce2b683538b6714ee06dbfa938c32a50e326d42b0e70476cb12b18b8cefd",
+          "git_sha256": "07426310a4b61162b50ccd2cb68ccafb729ae91ebc9e2e47c9536a82b4c7cc7a"
+        },
+        {
+          "bestand": "native/crates/office-ui/src/lint.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "78c8768a426fa6c5e736578e419fe6349dfd6326db99cc008ad6a8873df089d3",
+          "git_sha256": "f5a22ae6ae7e49729309ef373416f141d41e05f9f082e14430f7428fe2138e47"
+        },
+        {
+          "bestand": "native/crates/office-ui/src/werker.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "85b14036f33fd9e5bd2ffb2684018282bde41ea3e6272961be34a31bda734d74",
+          "git_sha256": "bbe5c9677c4bc58d7965cdd4228e87752187620f6f678d47477917f2571a72a2"
+        },
+        {
+          "bestand": "native/crates/office-ui/src/documentblad.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "6b6b877a21e4d0a6d9da5fd44b96128ed5bcdfcbaa4a6e970fdc5c6bfc968af1",
+          "git_sha256": "39191626d815911612878b862ebe46f86f60b9d5461be9f706ee202c078466a6"
+        },
+        {
+          "bestand": "native/crates/office-ui/src/mail_ui.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "4ba3e146cdb516e4c0bce8d2d33c3314fef15f8bb377962e64cb2e30106fc991",
+          "git_sha256": "a4194843c3a6576f89e146974c33addccff45bb601e86eb5beb66fe02901bdfb"
+        },
+        {
+          "bestand": "native/crates/office-ui/src/stijl.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "624c752100d042778be679fda77ee4bbdb95cbe5cb6559ccd58b6dad562351b4",
+          "git_sha256": "6dd960682e733d7c55baa65722002ff7f368a26ef726b121cd435f7795a48c8d"
+        },
+        {
+          "bestand": "native/crates/office-ui/src/sleepvak.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "5683cf05001502cae9f233d948ae0f580d324c7b6d2f0d33322a203fbccbe03c",
+          "git_sha256": "79aec13324a4876c8ce468c170eea3c8ec66df8642f9304a7f2e264e3d81f206"
+        },
+        {
+          "bestand": "native/crates/office-ui/src/lettertypen_ui.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "01f075bd460aac262c84b6aa8bac8ca5c0d3c658618585079cb59dae3ad947d4",
+          "git_sha256": "24b826e90c788fc44043da074eb44dcc965d2e8715b88b721e190f5723871804"
+        },
+        {
+          "bestand": "native/crates/office-ui/src/notitie_ui.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "c4ef3b4c41a06fb9942439928098294dfd38aa0daee418c07a3ef2f16815dd2e",
+          "git_sha256": "ece7292d680c6c2e4e4573f842fa576decd71472a23e3dc05712d5f5c7c9f484"
+        },
+        {
+          "bestand": "native/crates/office-ui/src/pagina_ui.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "a6af1e581dfe22146a64a069cfd896c9c8465a9adb55f765f71d2035e7d76278",
+          "git_sha256": "4f4fd10b87ab7f15a1ba0c557b79f6c34fb91c47a4d88d97f3a2bb207db42453"
+        },
+        {
+          "bestand": "native/crates/office-ui/src/lineaal.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "4b7c1305ecec1fa657c493c15950a9a5e13abbf9c443cf078c8b1a67ea18b4f1",
+          "git_sha256": "d5a0751ab8bf2a9ea428dff743447dbea4a2dd3de1d7985afe6f6de182adaa25"
+        },
+        {
+          "bestand": "native/crates/office-mail/src/dienst.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "b411879961bfb78152035306c576c3116ca9168cde6fb684819ce458f78a5f8f",
+          "git_sha256": "f2e7ece04b28bab5f28c1ad75d05e9f8ae66c0e4827296b19792cea388f6385b"
+        },
+        {
+          "bestand": "native/crates/office-mail/src/lib.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "a25576ba1d00dc71635292c18cc909cfdfea38973a4be972f620418a952f5d49",
+          "git_sha256": "9796efe6e551291abb82f8ce156d54c620dc095a338f345b4a24a87223f08cb4"
+        },
+        {
+          "bestand": "native/crates/office-mail/src/email/accounts.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "e3899535e61519279aefb95cef3a8a1a35bb9f6fa74c97b97d42880822ee4f4e",
+          "git_sha256": "0763369e68e1bebeb29166f49c621dfca29ab04d555f5d502411a56fab760f4d"
+        },
+        {
+          "bestand": "native/crates/office-mail/src/email/zoeken.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "bd81cf083f8b2393d7c174211106bcf81ae76841fb7e21f8968e5a46bec6a8e7",
+          "git_sha256": "b9db4d0a672703d980a262edac23284467d12bdce9d2fcc0c0cbf286ad8c6c7a"
+        },
+        {
+          "bestand": "native/crates/office-mail/src/email/mime.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "8d1b47470ccca8a065e56a36986d3cf79b609e83700a19705bc463db82672907",
+          "git_sha256": "ff5f3000801c61685ff711f5eaf5a3e056fdaf65daf5612ec7991e2a037053c0"
+        },
+        {
+          "bestand": "native/crates/office-mail/src/email/oauth.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "1d92b180b84928d11ca8494ac77e26151c0a0cdc0318af217616c8facd290a60",
+          "git_sha256": "f2d68ba39d540b07d89340c1c0f29d7fb839698455c722c4b05db33ddf1c99da"
+        },
+        {
+          "bestand": "native/crates/office-mail/src/email/imap.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "3f52bd777dfb17d70cba71d812b0823b0d6bf0364c8f4cce5285e4bb0d3f209a",
+          "git_sha256": "1f887ad88e857cd8afe5589a17314759e072547918f9d305df02de810114f072"
+        },
+        {
+          "bestand": "native/crates/office-mail/src/email/bestanden.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "9709c90e334aaa6477fe567024f5a30bc20002b485ae69093909e64325c1d9b2",
+          "git_sha256": "7ccde4e1e2176ace9f75d979de40596141ce3b95058057ab4b511408cc30efbd"
+        },
+        {
+          "bestand": "native/crates/office-mail/src/email/autoconfig.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "669b7ab26d85eb10a0eecbd1d9f716e36c3028733dbfe5ca38a6d886c9adc14b",
+          "git_sha256": "1184099e5aaa9f373bb7090dae15d5fb1a7287b2a801401ca3e943ec8c571318"
+        },
+        {
+          "bestand": "native/crates/office-mail/src/email/fout.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "fe77547e33f40add49c9f91d00c23ffcfc693fed0de2db90de54b4059d0f1971",
+          "git_sha256": "4357cd3c6fa772d1dbe2e542293a4f8e083f1440d79d56aadabe0451175f3755"
+        },
+        {
+          "bestand": "native/crates/office-mail/src/email/smtp.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "235c6faa5e9a8be88c18cfd4929a5bea89d83f7a359a8ccc514eece682776346",
+          "git_sha256": "6848689653797044796ff4171bac2b4b734d742dde2bcca35b7e11e3e2a39bf1"
+        },
+        {
+          "bestand": "native/crates/office-mail/src/email/mod.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "29c9589a81bf88d4df6c79258e07422131fa068693052624b2b764fc391dcc93",
+          "git_sha256": "78d6c5ed203c3f423ff6b10eb2e991d604a00684227a2526d29a3505416abee9"
+        },
+        {
+          "bestand": "native/crates/office-mail/src/email/nepserver.rs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "b99629710325120f16f8b968c35a524ef0a9b488b7f4861a13dba6aa1ec581f6",
+          "git_sha256": "bdcb82c0ce2a64034402005f527e56f091d7fa0465f15925df30d546081588ed"
+        },
+        {
+          "bestand": "native/vendor/document-engine-bron.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "ea51cb8f5052bbd1ece3ccca1e1bbf0abb4fd8910c602f7d140872aa30219b78",
+          "git_sha256": "02d19849917e669cc56001e93b240eaa28fdd11fc946b8d0bdab089aa7cb25a1"
+        },
+        {
+          "bestand": "native/vendor/pptx-bron.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "9024bec3f9cd30249cc44d291e9280f6585c8fc5501e75ec8a88a1cb75aa0686",
+          "git_sha256": "39670b67bc8606ee092d43a5b8544511da644851f5deaef0fd9b9f527d7e2625"
+        },
+        {
+          "bestand": "native/vendor/blueprint-bron.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "2ab708d3bc1351a62def3ff93ceb313ce9d878a2a11e6e8ea524aa2b0a997c55",
+          "git_sha256": "dce7d586e6a6c99f2b7ebb4bd8c73073a74b51e536ea26e4b5d3bdbc1c27cf86"
+        },
+        {
+          "bestand": "native/scripts/controleer-bronregressies.py",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "50dcdac3e46255bccbfcb2dbee99ed672f670f084e3ae971d67cbf4f98051a91",
+          "git_sha256": "5180271573cc5fbcb3467855d6582239c3b096763e3e3628f6c4b61b7032f19f"
+        },
+        {
+          "bestand": "native/scripts/ci-bronstempels.py",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "401e786a47673daa5589c07ecd4a2b7b3b77e40059e4f17e79e74ec15e526bab",
+          "git_sha256": "6c38d02bfbf087dd3fa5e4dad9e4cf303bbe6d118dab80e98ad3e415b06eee49"
+        },
+        {
+          "bestand": "native/scripts/maak-webreferentie.mjs",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "30b380172be569aef9e4878f64d0f011ef09069275e84b1197aeccee10fdc1d0",
+          "git_sha256": "95bd945966985a8c4d0e81e9f7676d290a3a5db126cee9ced6d5323bfe92bd61"
+        },
+        {
+          "bestand": "native/scripts/test_ci_bronstempels.py",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "bf553557e0f9902cbd051839df73d332fbfacf452306c638c1122bede050e719",
+          "git_sha256": "433462832c2d188e768813c82b659bff6a5d70d0432e6be2f40397493f5047ad"
+        },
+        {
+          "bestand": "native/scripts/vergelijk-schermen.py",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "d7cb270f7029c992cdf8225b9b79d0e0efa4a82664d2b0d7b208f40163855b56",
+          "git_sha256": "717191d15b62f5ebf12f3d5e03b636d2134569bdf33960d5472fddc40d20c90c"
+        },
+        {
+          "bestand": "native/scripts/controleer-migratie.py",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "af28024ad6341e0c002f228b002bf70f1577d1abe42db05189311ef510376a17",
+          "git_sha256": "a3b18f4ba8d429e1c6269b9899e719fdf26cd5942d130a1e627adb1a14f78bfc"
+        },
+        {
+          "bestand": "native/scripts/verpak.py",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "49ddf29ddace9b64864bcc6c1464b2714f53547e748189f2ebf49ba0155390a8",
+          "git_sha256": "e07038d8fdd599c79a1c864ac49527ce39967f6483642c5eea71f374aca00116"
+        },
+        {
+          "bestand": "native/scripts/corpus.py",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "3e1bfa7ac7c86976d6928d8fb95957a0af19d01e07b5efc698e7343aa437799d",
+          "git_sha256": "9c7ad08c500c2597714138a85f3e12b771188a46569e2af06ed98657146b50f8"
+        },
+        {
+          "bestand": "native/scripts/controleer-bron.py",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "a98073011e528da460f3f20e4311e2bf7d69076df8ac28d703552db148df055b",
+          "git_sha256": "36f225eefae100d51d8fe4d9cc364d6713f0846e0dd0a8bd32e8578d38216991"
+        },
+        {
+          "bestand": "native/scripts/test_schermvergelijking.py",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "dce92d60656363167661edcbf5f15a771fe99e01501ca232e79798648363e828",
+          "git_sha256": "5146d08e04036c477eb27c5273f486ee102739c1ee275582223a8db7bf2673ca"
+        },
+        {
+          "bestand": "native/scripts/controleer-pakket.py",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "280bc95bc5cc47c2a35f35bfbbccfdd1835d5af8c41d09df37b4354a21860c1d",
+          "git_sha256": "968bd105826ab2618269cb56b420eae9379c3dafa7ae9ed7aa5393d172b0176f"
+        },
+        {
+          "bestand": "native/docs/nativebeelden-2026-10-31-alpha7-Windows.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "514f5e8401e490c2f48b69baf1149e6d9f103f7e86b039eb0f6a81cac838192a",
+          "git_sha256": "4f82541472d3d10b7607d3e43a1d58edab31bef140e9631255239590c1d1c99e"
+        },
+        {
+          "bestand": "native/docs/controle-2026-10-31-alpha7.md",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "0352d5e09a6fb8e2a0de75dd98add41331ed3a2610492a50635dc1828f71369f",
+          "git_sha256": "9e77a11a65394cc1e07de66d86d0bff8e1fdd231684d24f244ddf05fd023fd0a"
+        },
+        {
+          "bestand": "native/docs/nativebeelden-2026-10-31-alpha6-Linux.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "9eb0d62644fb484090180102f3504d29b763d3ab684f29cb346f89239911df93",
+          "git_sha256": "0bd8c2719b543ab69657af4a8efc9d2597b0a318970c4baa27ab8c0ddd2b4b8a"
+        },
+        {
+          "bestand": "native/docs/nativebeelden-2026-10-31-alpha5-Linux.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "b5f8c7228085efb8a87036eb1915fe3f36abbd61b52723c92e981c755b62b2e3",
+          "git_sha256": "1545703ab1047567464f22926324a1f995dc181675b1edf67c42fcc7a8c379ca"
+        },
+        {
+          "bestand": "native/docs/conversie-2026-10-31-alpha6-ci.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "371bdaec6fbfa622aa22121730ee1e6089320113027a72525c8ee55c0cafb546",
+          "git_sha256": "4948f3148aa989f98dac02c245bddc5ed1165d52374a9ebd7a1a1e9143711514"
+        },
+        {
+          "bestand": "native/docs/nativebeelden-2026-10-31-alpha5-Windows.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "a23d7931315af9367a24fb1f17fab4bad9fd603638d2ad3bd639cb281a6eebc5",
+          "git_sha256": "f4f9a675317169ddbeec70b15b9adaf9741fd95dc6e58abee447a1dac42620dd"
+        },
+        {
+          "bestand": "native/docs/nativebeelden-2026-10-31-alpha5-macOS.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "424875acc719355f913b303331d177abdd3c529709a4caaec36717cc5c3b7ce9",
+          "git_sha256": "394bb4a5cbb7e44f98cda5b8c7d6fd16e4fb45429bd996990882f6baea03572d"
+        },
+        {
+          "bestand": "native/docs/grote-writer-2026-10-31-alpha7.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "eb64f48febaee5062f929490d9c7d36ac016eae33a6bf8e9424417ea72c13a99",
+          "git_sha256": "3487652f87b8990011ab51919a7ca0bb291e58fc6a9306517f983a73ecd0d694"
+        },
+        {
+          "bestand": "native/docs/writer-referentie-herhaalcontrole.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "df6d01379a7ea99399b173ac2350af359a552380ba64ad5c4ffc010017b0d3c9",
+          "git_sha256": "d07a32b6cf72ea235fb61f04dd79a69514375f7dbe60a7041bc4d99790d943df"
+        },
+        {
+          "bestand": "native/docs/corpus-2026-10-31-alpha4-release.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "d959778d5a8bb9e1817f72db934c8882c9b6465ef91855c02e1024e88da6b3b1",
+          "git_sha256": "5d745ed07f61534213398af99cf5146a56e4a84b4cc3d749b8d97ae6bd2a15a2"
+        },
+        {
+          "bestand": "native/docs/writer-alpha6-pixelcontrole.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "7c2e519e51e8989e2513fd8aadb0365594ab4f29b7578b8da56d66d9e512e387",
+          "git_sha256": "c6f7598e2cdbbc380fc5bce0ca34f942aad993e1954b4d615e19b4c3871fcb75"
+        },
+        {
+          "bestand": "native/docs/corpus-2026-10-31-alpha7-release.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "0dc6bb2facfa303d6ca7f011c26bd2d9dc46a981c1de937ae24bf731f299f662",
+          "git_sha256": "e67e19a63cef9788217b2b3875ade75270115a048b8d8462ab06c864ebb273e7"
+        },
+        {
+          "bestand": "native/docs/controle-2026-10-30.md",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "1c4231cd385ab74c0533564349293d466f5e3f88c44f10a5288878c96758e442",
+          "git_sha256": "201f42294a7f6fb3911e174be652dfd60b4fa858c081a9a714ff1989180062d9"
+        },
+        {
+          "bestand": "native/docs/controle-2026-10-31-alpha8.md",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "9ba1e0e3e34bd1a85d9e647e2cad56fd90ff81347ecf802d956a8c97ddce1cf1",
+          "git_sha256": "cba845997c4adfacfc18f76e12df2335325438079d1f5f87bc0e33dc8cf6f870"
+        },
+        {
+          "bestand": "native/docs/nativebeelden-2026-10-31-alpha7-Linux.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "6bb83b6cc518ff4744bc5637d830442a55697742563e7b76ebf5005c61489295",
+          "git_sha256": "647486ef5f0efb27733f521dd087936d39af4a81d4dc1e0b9fa9a8844f8ab352"
+        },
+        {
+          "bestand": "native/docs/nativebeelden-2026-10-31-alpha6-macOS.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "143a381d8878f35f99c63c3447366c0e3ef344591f04dee3aecc76a2ed4b6c93",
+          "git_sha256": "a972dedf5aad95704f29649ff8debfcc2d02040479bc0377ba8b4b711373f90e"
+        },
+        {
+          "bestand": "native/docs/tekenvenster-2026-10-31-alpha7.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "33f4906a7c903a4765f6e0782e90eb1e87b498c8c20a6bd0f534cfd6ff3ab527",
+          "git_sha256": "64f32a8be353cf3dbf4f0f7c0960f2dc2f6e5d821cba730b1f3c775a6148bb3d"
+        },
+        {
+          "bestand": "native/docs/corpus-2026-10-30-alpha3.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "4c126bf639bfb018bade1f0a4a3a987b607e1eaed37493916df479e695d4e535",
+          "git_sha256": "8fb74d84db947ccffb74951ffaaee921f8c3e5c01ec3bb0398bac2eb99ca8cce"
+        },
+        {
+          "bestand": "native/docs/corpus-2026-10-31-alpha5-release.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "2d5c6417719de4d9d39fe0f6b1743cadbbcce3b03b0dac123095d730426be14d",
+          "git_sha256": "5ea878e41df5791cc5a5e1fd84ceb7d05b8b821738762c1f45adb94c4ad0f645"
+        },
+        {
+          "bestand": "native/docs/pakketten-2026-10-31-alpha7.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "65c0fb993b0a46d3c030ca1d5e542c8d7cb0ab2917f88b138a87c91d78d5b78e",
+          "git_sha256": "c8e76aefac3d489827372b359e8ed1f681606f3ea0ac64c9da3745c91ba936f1"
+        },
+        {
+          "bestand": "native/docs/conversie-2026-10-31-alpha7-ci.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "8bbeae73f9cc6785364639982b07de8e465581bae83e58347f5252083b666c10",
+          "git_sha256": "dd24fb5bf06d1cf68862fbb9f4d33aab82259c99e1c5248f81627aa89be24b7b"
+        },
+        {
+          "bestand": "native/docs/controle-2026-10-31-alpha5.md",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "74c338bb2d8e3ed01cf90828700275272755dd5b0bc8deedd9c0547e87e7a472",
+          "git_sha256": "194059719d4ad10b5461719e69bd977ed6725fb43447d8b053c919e1a82c2adf"
+        },
+        {
+          "bestand": "native/docs/grote-writer-2026-10-31-alpha7-tekstcontrole.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "2b69b4742008ee2c4edaddc28f9498652ac1f1a1c596eb03d0a5b12e503a4efa",
+          "git_sha256": "55ca957944ad6c49ec1ad4a30c38bfdd6a9889a997d3311531659e1e9b0adc20"
+        },
+        {
+          "bestand": "native/docs/controle-2026-10-30-alpha3.md",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "04a8983de13cdf9ff5290df202c7c9c6aa19a83e517c730c017dc338425d1075",
+          "git_sha256": "422ebb59c861bb61f668e1826356ae32c6c88a4647e2e016859c181cd2e70539"
+        },
+        {
+          "bestand": "native/docs/migratie.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "b2476af07371c75705968d3250995932e3bb0b024b6d6abe4394d588579f3529",
+          "git_sha256": "742e88b3be8429fd74d36b65f1e8c29866870f680ddd2a2b08c0e5a8e6c128c4"
+        },
+        {
+          "bestand": "native/docs/nativebeelden-2026-10-31-alpha7-macOS.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "3cb231030bf90c84ce4e4406d708db83c5a3622e6f9cbd292208997de2c54592",
+          "git_sha256": "63f6963893a8dbd16ef631ece3356b6f64274f7190067bb54f774e3dfe1d2bb8"
+        },
+        {
+          "bestand": "native/docs/controle-2026-10-31-alpha6.md",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "d438dffdb179e560d08c431004a69d548cf5a43225927de9739268db6657d188",
+          "git_sha256": "346306c96df1fa338c41d891c17354608704e57e96e2332fec93965d0bcdbc01"
+        },
+        {
+          "bestand": "native/docs/referenties-2026-10-31-alpha7.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "26b3c7b8a2f0fbaaeb0f78d633e2725b746c9a3e4942dd9070671d2ef1fe2d9f",
+          "git_sha256": "0fd51d051e40602897c460c535c2aabcfa933d1fbd1c143d1bacbab2fa92382c"
+        },
+        {
+          "bestand": "native/docs/pakketten-2026-10-31-alpha6.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "e3a1f216c872f9a3917d998e352b69c32bc4662273d6ee4a02a279704e04240a",
+          "git_sha256": "e4d080408fb44223ba45b56a5960cf700f830bc4d669f0107b9918a95d456fc6"
+        },
+        {
+          "bestand": "native/docs/bronregressie-2026-10-31-alpha8-debug.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "703887d2b8de1f44e6320a7249f5f6afd9ea05cf5a202c2dacfa23bf99bf0630",
+          "git_sha256": "a495d793de4f0947de7cac90bed9fc27329868f692a6a64ee5e4d4dacff83247"
+        },
+        {
+          "bestand": "native/docs/nativebeelden-2026-10-31-alpha6-Windows.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "76e1fcb836c50d83971c979a5030e5b7a915d379b75981f996cdfbd5aa43754b",
+          "git_sha256": "eda972ce921ea571480fd2f2dfa8d5bd9fdf8dc8b89be0c9abf0c20496db44a0"
+        },
+        {
+          "bestand": "native/docs/controle-2026-10-30-alpha4.md",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "c4b780ec45b000269b00dcb8cd6979ec941244c406da12b2dd236a4533c6f36e",
+          "git_sha256": "99c4a3d4acb996ea3c1138e98b591f9201c93c2f7f1515bb2c25783abe6962ee"
+        },
+        {
+          "bestand": "native/docs/referentie-2026-W44.8/writer.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "a47774e189dfca0f6a8a37a4a9189dfe0beb18a1e47b143f3d1edaffc97bc15a",
+          "git_sha256": "a99b286bcc280bb34a1332efb3a2c4110f360d53eed593b151efc78644dc8a2c"
+        },
+        {
+          "bestand": "native/docs/referentie-2026-W44.8/notition.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "22d5890b2135d6fb48bdbb1c77f2883b809e717291bb344a0548a087707e3fc4",
+          "git_sha256": "6dadc36012eefe38aff926c923f085225838b5f9ba35bc0801ef8d946185bd3a"
+        },
+        {
+          "bestand": "native/docs/referentie-2026-W44.8/spreadsheet.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "a25e8b8949bc187847dacc1241861cfdfbd00311b5c676d3139ac36273453294",
+          "git_sha256": "8b2d9ccbac5c1a4af7c3ef118c0df645843b53a8e1aec93c65316fcd9acf1ffc"
+        },
+        {
+          "bestand": "native/docs/referentie-2026-W44.8/presentation.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "38fb1adbe560aba2923697fcdf043e804a7fb32c8266b3f71356877ef445dc9d",
+          "git_sha256": "67a4b5a01180b1becfe0bbfeac348cefb95cc371e1e870cf7b85a7c0932c84ab"
+        },
+        {
+          "bestand": "native/docs/pixelcontrole-alpha7/rapport.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "d129994fe4f1e8b8cf8b9ab19b3910c50c80f6577c6d55582e9cc1f2e77b9ca7",
+          "git_sha256": "95f847ee1c91ba6153ff06cf0e7af5adf8c1608d70a59e54abf0b6032488d256"
+        },
+        {
+          "bestand": "native/docs/pixelcontrole-alpha7/spreadsheet/rapport.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "768596c6ecb46b50b1ac2f69b82b1b1dd870b4949e27b4e939ac9f7fc8c1c94d",
+          "git_sha256": "fa172f916e0fb25f7d0783c1b0a69e024920f8a1d703583b74a32cbede18becd"
+        },
+        {
+          "bestand": "native/docs/pixelcontrole-alpha7/presentation/rapport.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "8a37b36c6c8a083f18413c5396a8122786210c5bb41e01d7c475fd29cf3ece0e",
+          "git_sha256": "d95231d3f52a74a4163f4fd984d1232bd7abce6f9df5b64174f224f48ee69914"
+        },
+        {
+          "bestand": "native/docs/pixelcontrole-alpha7/notition/rapport.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "1c2ff628aeb91f257710e66b1a421c943709fef16c74273d55683c4e13eae5ad",
+          "git_sha256": "64c35628032f96100ce37114811267e0f36486c4d5b9f4078e02889ab53aab26"
+        },
+        {
+          "bestand": "native/docs/pixelcontrole-alpha8/spreadsheet/rapport.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "076d15ba15f620f5e2c7e8bfe2e19aa4481581c0aa8a631930111061fb37f8a5",
+          "git_sha256": "b948e9015e117c09ef65c3ef0ec0d63d695cff7e298d37bcab77d56775d4989b"
+        },
+        {
+          "bestand": "native/docs/pixelcontrole-alpha8/presentation/rapport.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "ba01cd966009ad14df6dfba4989256da66fc4a1c2c2a98d622bceff69ab522f5",
+          "git_sha256": "8f3b10927f92a0a6169a12bf287d7675b397c77a1c8d42dc5bb485356935894e"
+        },
+        {
+          "bestand": "native/docs/pixelcontrole-alpha8/notition/rapport.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "204dc34a7bde8391c9b833422e29b04ebc4e15bdccd26d122ae003fcc20ef8bb",
+          "git_sha256": "cb6c2a30ed67e728cd09f3d07c0106cb0590451dec6c250cbb28b0f120406f62"
+        },
+        {
+          "bestand": "native/docs/pixelcontrole-alpha8/writer/rapport.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "99a2ed2020eca7a74e11f213edfdbe5e61b91f114550170cc7c03173e6c73c06",
+          "git_sha256": "add21b7b4df0cbe9981eaeb11f8fb4a4e59980dd49469684c61de86cd24991c1"
+        },
+        {
+          "bestand": "docs/voorbeelden/Notitieboek.json",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "cddbf4b4f519b4cbfe3e0dca999830949a7bafb4ebb138d2c77d569ab12b35fb",
+          "git_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c"
+        },
+        {
+          "bestand": "docs/voorbeelden/README.md",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "a94c40216f39baa629ff9ccd769441bec42f7d69ab243fae84e3e9d2529a24c8",
+          "git_sha256": "069528594ffa97d62433e9036304893162d043fc11962c0a38de1fec0905a8a5"
+        },
+        {
+          "bestand": "native/Cargo.toml",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "f2bf6f8b0280c3da31063a121b6c98c06bcf2a5b4744eefc48f787a193ae44aa",
+          "git_sha256": "2656cbfb8e78c992fd70e27a22a889d62a2d0e2837203b9a179ce9461f775ad6"
+        },
+        {
+          "bestand": "native/Cargo.lock",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "7d008c0fdbcb2d31db8fb0fa7afc7eb41cfd9b5c8dbb4265e20a0850d0c40230",
+          "git_sha256": "8071b985becb1585682c998fe824dc71c875b22650c800073db3e78d6dd93059"
+        },
+        {
+          "bestand": "native/README.md",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "fe7f31e6f32d1dac4deba163c744fb151877bdec573fe1ea99c0b0e77a3a9fa2",
+          "git_sha256": "c924c2a53eb05d7f985d4d7799a3d1fc6ba85716ffedaeb8b5f8df25b160feaf"
+        },
+        {
+          "bestand": "LICENSE",
+          "uitsluitend_crlf_lf": true,
+          "verpakt_sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5",
+          "git_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+        }
+      ],
+      "bronbestanden": 625,
+      "programmas": [
+        {
+          "bestand": "open-office-studio-native.exe",
+          "soort": "PE64 AMD64",
+          "bytes": 115060224,
+          "sha256": "eb67ace374d290741da16ba6ad33076b9f146f08c7685b9b7da78d5e73a3894d"
+        },
+        {
+          "bestand": "controleer-bestand.exe",
+          "soort": "PE64 AMD64",
+          "bytes": 94400512,
+          "sha256": "ee97674be426da22c5ed5f19cc118e590355f13233270e466e8b88c8f786ea16"
+        }
+      ],
+      "uitgepakte_programmaversie_in_eigen_ci_gecontroleerd": true,
+      "bronregressie_met_exact_verpakte_controleur_geslaagd": true
+    },
+    {
+      "platform": "macOS",
+      "pakket": "Open-Office-Studio-native-2026.44.9-alpha.8-Darwin-arm64.zip",
+      "versie": "2026.44.9-alpha.8",
+      "sha256": "818946a374dc08c5eab8d9c79f173b66c917cebdcba9379df3e2e80a671bee54",
+      "zip_crc_geldig": true,
+      "bronversie_geldig": true,
+      "alle_bronbytes_gelijk": true,
+      "binaire_en_gepinde_vendorbytes_gelijk": true,
+      "broninhoud_afgezien_van_regelafbreking_gelijk": true,
+      "regelafbrekingsverschillen": [],
+      "bronbestanden": 625,
+      "programmas": [
+        {
+          "bestand": "open-office-studio-native",
+          "soort": "Mach-O64 ARM64",
+          "bytes": 110808256,
+          "sha256": "d51b7888b9aebce234ca89848665c0a25d96d20f6cb6508145e9f8d1ec12f314"
+        },
+        {
+          "bestand": "controleer-bestand",
+          "soort": "Mach-O64 ARM64",
+          "bytes": 91437952,
+          "sha256": "9082b7296abcdb4d1a4216ca4fb8ff4c7724d4e816eae24df4426b259f938ad1"
+        }
+      ],
+      "uitgepakte_programmaversie_in_eigen_ci_gecontroleerd": true,
+      "bronregressie_met_exact_verpakte_controleur_geslaagd": true
+    }
+  ],
+  "bronregressies": [
+    {
+      "platform": "Linux",
+      "omvang": "Vastgepinde kop-/voettekstbron: openen, eerste weergave, bewaren en zichtbare tekst/onderdeelstructuur teruglezen; geen volledige opmaak- of pixelcontrole",
+      "programma": "Open Office native bestandscontrole 2026.44.9-alpha.8 (release)",
+      "programma_sha256": "9fde35068fb3fbada4e8a8992314707cf4c23bd4c1ad5ec7860b9a73d46909f6",
+      "bron": {
+        "id": "kopvoet-standaardfont",
+        "url": "https://raw.githubusercontent.com/apache/poi/d91a76448f0963a93b6cd95fb97fbe1d8bad82c6/test-data/integration/stress023.docx",
+        "sha256": "32b036e66eb701f37e8b64a3c491bf1d6234be3cee1e6e36d2e8435f4516cc94"
+      },
+      "bouwronde": "41170415375",
+      "geteste_checkout": "25d11407a64748bf0b80e931552ff927df9d576f",
+      "geslaagd": true,
+      "gelezen_bron_bytes": 358387,
+      "gelezen_bron_sha256": "32b036e66eb701f37e8b64a3c491bf1d6234be3cee1e6e36d2e8435f4516cc94",
+      "adresruimte_bytes": 3221225472,
+      "looptijd_seconden": 0.451,
+      "meting": {
+        "bewaard_bytes": 352743,
+        "bouwprofiel": "release",
+        "bron_bytes": 358387,
+        "bron_sha256": "32b036e66eb701f37e8b64a3c491bf1d6234be3cee1e6e36d2e8435f4516cc94",
+        "eerste_weergave_ms": 201,
+        "module": "Writer",
+        "native_versie": "2026.44.9-alpha.8",
+        "omvang": "Openen, eerste werkweergave, serialiseren en teruglezen; geen volledige functie-, inhouds-, stijl- of pixelcontrole",
+        "onderdelen": 14,
+        "open_ms": 24,
+        "status": "geslaagd",
+        "tekstcontrole_sha256": "089c99bec4898664d4e7cdb8e79c94aaa238ff2fff46dac8480473c05b307de8",
+        "totaal_ms": 403,
+        "weergaves_getest": 1,
+        "zichtbare_velden": 178
+      }
+    },
+    {
+      "platform": "Windows",
+      "omvang": "Vastgepinde kop-/voettekstbron: openen, eerste weergave, bewaren en zichtbare tekst/onderdeelstructuur teruglezen; geen volledige opmaak- of pixelcontrole",
+      "programma": "Open Office native bestandscontrole 2026.44.9-alpha.8 (release)",
+      "programma_sha256": "ee97674be426da22c5ed5f19cc118e590355f13233270e466e8b88c8f786ea16",
+      "bron": {
+        "id": "kopvoet-standaardfont",
+        "url": "https://raw.githubusercontent.com/apache/poi/d91a76448f0963a93b6cd95fb97fbe1d8bad82c6/test-data/integration/stress023.docx",
+        "sha256": "32b036e66eb701f37e8b64a3c491bf1d6234be3cee1e6e36d2e8435f4516cc94"
+      },
+      "bouwronde": "41170415375",
+      "geteste_checkout": "25d11407a64748bf0b80e931552ff927df9d576f",
+      "geslaagd": true,
+      "gelezen_bron_bytes": 358387,
+      "gelezen_bron_sha256": "32b036e66eb701f37e8b64a3c491bf1d6234be3cee1e6e36d2e8435f4516cc94",
+      "adresruimte_bytes": null,
+      "looptijd_seconden": 0.438,
+      "meting": {
+        "bewaard_bytes": 352743,
+        "bouwprofiel": "release",
+        "bron_bytes": 358387,
+        "bron_sha256": "32b036e66eb701f37e8b64a3c491bf1d6234be3cee1e6e36d2e8435f4516cc94",
+        "eerste_weergave_ms": 201,
+        "module": "Writer",
+        "native_versie": "2026.44.9-alpha.8",
+        "omvang": "Openen, eerste werkweergave, serialiseren en teruglezen; geen volledige functie-, inhouds-, stijl- of pixelcontrole",
+        "onderdelen": 14,
+        "open_ms": 24,
+        "status": "geslaagd",
+        "tekstcontrole_sha256": "089c99bec4898664d4e7cdb8e79c94aaa238ff2fff46dac8480473c05b307de8",
+        "totaal_ms": 405,
+        "weergaves_getest": 1,
+        "zichtbare_velden": 178
+      }
+    },
+    {
+      "platform": "macOS",
+      "omvang": "Vastgepinde kop-/voettekstbron: openen, eerste weergave, bewaren en zichtbare tekst/onderdeelstructuur teruglezen; geen volledige opmaak- of pixelcontrole",
+      "programma": "Open Office native bestandscontrole 2026.44.9-alpha.8 (release)",
+      "programma_sha256": "9082b7296abcdb4d1a4216ca4fb8ff4c7724d4e816eae24df4426b259f938ad1",
+      "bron": {
+        "id": "kopvoet-standaardfont",
+        "url": "https://raw.githubusercontent.com/apache/poi/d91a76448f0963a93b6cd95fb97fbe1d8bad82c6/test-data/integration/stress023.docx",
+        "sha256": "32b036e66eb701f37e8b64a3c491bf1d6234be3cee1e6e36d2e8435f4516cc94"
+      },
+      "bouwronde": "41170415375",
+      "geteste_checkout": "25d11407a64748bf0b80e931552ff927df9d576f",
+      "geslaagd": true,
+      "gelezen_bron_bytes": 358387,
+      "gelezen_bron_sha256": "32b036e66eb701f37e8b64a3c491bf1d6234be3cee1e6e36d2e8435f4516cc94",
+      "adresruimte_bytes": null,
+      "looptijd_seconden": 0.338,
+      "meting": {
+        "bewaard_bytes": 352743,
+        "bouwprofiel": "release",
+        "bron_bytes": 358387,
+        "bron_sha256": "32b036e66eb701f37e8b64a3c491bf1d6234be3cee1e6e36d2e8435f4516cc94",
+        "eerste_weergave_ms": 164,
+        "module": "Writer",
+        "native_versie": "2026.44.9-alpha.8",
+        "omvang": "Openen, eerste werkweergave, serialiseren en teruglezen; geen volledige functie-, inhouds-, stijl- of pixelcontrole",
+        "onderdelen": 14,
+        "open_ms": 23,
+        "status": "geslaagd",
+        "tekstcontrole_sha256": "089c99bec4898664d4e7cdb8e79c94aaa238ff2fff46dac8480473c05b307de8",
+        "totaal_ms": 324,
+        "weergaves_getest": 1,
+        "zichtbare_velden": 178
+      }
+    }
+  ]
+}

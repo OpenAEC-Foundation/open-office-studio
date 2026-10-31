@@ -1,0 +1,423 @@
+{
+  "docx": {
+    "invoer": [
+      "docx",
+      "doc",
+      "dot",
+      "dotx",
+      "docm",
+      "dotm",
+      "odt",
+      "ott",
+      "fodt",
+      "rtf",
+      "txt",
+      "htm",
+      "html",
+      "xhtml",
+      "md",
+      "markdown",
+      "abw",
+      "zabw",
+      "sxw",
+      "stw",
+      "wpd",
+      "wps",
+      "wri",
+      "hwp",
+      "lwp",
+      "pages",
+      "fb2",
+      "epub",
+      "psw",
+      "sdw",
+      "uot"
+    ],
+    "uitvoer": {
+      "docx": {
+        "naam": "Word-document",
+        "groep": "eigen",
+        "route": "engine",
+        "behoud": "bewerkbaar",
+        "filter": "MS Word 2007 XML"
+      },
+      "odt": {
+        "naam": "OpenDocument-tekst",
+        "groep": "opendocument",
+        "route": "runtime",
+        "behoud": "bewerkbaar; opmaak kan afwijken",
+        "filter": "writer8"
+      },
+      "fodt": {
+        "naam": "OpenDocument-tekst (plat XML)",
+        "groep": "opendocument",
+        "route": "runtime",
+        "behoud": "bewerkbaar; opmaak kan afwijken",
+        "filter": "OpenDocument Text Flat XML"
+      },
+      "doc": {
+        "naam": "Word 97–2003-document",
+        "groep": "office-oud",
+        "route": "runtime",
+        "behoud": "bewerkbaar; opmaak kan afwijken",
+        "filter": "MS Word 97"
+      },
+      "dotx": {
+        "naam": "Word-sjabloon",
+        "groep": "sjablonen",
+        "route": "runtime",
+        "behoud": "bewerkbaar; opmaak kan afwijken",
+        "filter": "MS Word 2007 XML Template"
+      },
+      "dot": {
+        "naam": "Word 97–2003-sjabloon",
+        "groep": "sjablonen",
+        "route": "runtime",
+        "behoud": "bewerkbaar; opmaak kan afwijken",
+        "filter": "MS Word 97 Vorlage"
+      },
+      "ott": {
+        "naam": "OpenDocument-tekstsjabloon",
+        "groep": "sjablonen",
+        "route": "runtime",
+        "behoud": "bewerkbaar; opmaak kan afwijken",
+        "filter": "writer8_template"
+      },
+      "docm": {
+        "naam": "Word-document met macro’s",
+        "groep": "macro",
+        "route": "engine",
+        "behoud": "alleen voor een geopend macrobestand: VBA-project ongewijzigd behouden, macro’s niet uitgevoerd"
+      },
+      "rtf": {
+        "naam": "Rich Text Format",
+        "groep": "web-tekst",
+        "route": "runtime",
+        "behoud": "bewerkbaar; opmaak kan afwijken",
+        "filter": "Rich Text Format"
+      },
+      "txt": {
+        "naam": "Platte tekst (UTF-8)",
+        "groep": "web-tekst",
+        "route": "runtime",
+        "behoud": "alleen tekst; opmaak, tabellen en afbeeldingen vervallen",
+        "filter": "Text (encoded)",
+        "opties": "UTF8",
+        "zonderRuntime": "tekst"
+      },
+      "html": {
+        "naam": "Webpagina (HTML)",
+        "groep": "web-tekst",
+        "route": "runtime",
+        "behoud": "opmaak kan afwijken; afbeeldingen ingesloten",
+        "filter": "HTML (StarWriter)",
+        "opties": "EmbedImages",
+        "zonderRuntime": "html"
+      },
+      "xhtml": {
+        "naam": "XHTML-webpagina",
+        "groep": "web-tekst",
+        "route": "runtime",
+        "behoud": "opmaak kan afwijken",
+        "filter": "XHTML Writer File"
+      },
+      "epub": {
+        "naam": "EPUB-e-boek",
+        "groep": "web-tekst",
+        "route": "runtime",
+        "behoud": "alleen lezen; paginaopmaak vervalt",
+        "filter": "EPUB"
+      },
+      "md": {
+        "naam": "Markdown",
+        "groep": "web-tekst",
+        "route": "engine",
+        "behoud": "tekst en structuur; paginaopmaak, afbeeldingen en revisies vervallen"
+      },
+      "pdf": {
+        "naam": "PDF-document",
+        "groep": "pdf-afbeelding",
+        "route": "engine",
+        "behoud": "weergave als in het afdrukvoorbeeld; tekst doorzoekbaar",
+        "filter": "writer_pdf_Export"
+      },
+      "png": {
+        "naam": "PNG-afbeelding (eerste pagina)",
+        "groep": "pdf-afbeelding",
+        "route": "runtime",
+        "behoud": "alleen weergave; alleen de eerste pagina",
+        "filter": "writer_png_Export"
+      }
+    }
+  },
+  "xlsx": {
+    "invoer": [
+      "xlsx",
+      "xls",
+      "xlt",
+      "xltx",
+      "xlsm",
+      "xltm",
+      "xlsb",
+      "ods",
+      "ots",
+      "fods",
+      "csv",
+      "tsv",
+      "tab",
+      "dif",
+      "slk",
+      "sylk",
+      "sxc",
+      "stc",
+      "dbf",
+      "gnumeric",
+      "gnm",
+      "numbers",
+      "wk1",
+      "wk3",
+      "wk4",
+      "wks",
+      "123",
+      "wb1",
+      "wb2",
+      "wq1",
+      "wq2",
+      "et",
+      "ett",
+      "uos"
+    ],
+    "uitvoer": {
+      "xlsx": {
+        "naam": "Excel-werkmap",
+        "groep": "eigen",
+        "route": "engine",
+        "behoud": "bewerkbaar",
+        "filter": "Calc MS Excel 2007 XML"
+      },
+      "ods": {
+        "naam": "OpenDocument-rekenblad",
+        "groep": "opendocument",
+        "route": "runtime",
+        "behoud": "bewerkbaar; opmaak kan afwijken",
+        "filter": "calc8"
+      },
+      "fods": {
+        "naam": "OpenDocument-rekenblad (plat XML)",
+        "groep": "opendocument",
+        "route": "runtime",
+        "behoud": "bewerkbaar; opmaak kan afwijken",
+        "filter": "OpenDocument Spreadsheet Flat XML"
+      },
+      "xls": {
+        "naam": "Excel 97–2003-werkmap",
+        "groep": "office-oud",
+        "route": "runtime",
+        "behoud": "bewerkbaar; opmaak kan afwijken",
+        "filter": "MS Excel 97"
+      },
+      "xltx": {
+        "naam": "Excel-sjabloon",
+        "groep": "sjablonen",
+        "route": "runtime",
+        "behoud": "bewerkbaar; opmaak kan afwijken",
+        "filter": "Calc MS Excel 2007 XML Template"
+      },
+      "xlt": {
+        "naam": "Excel 97–2003-sjabloon",
+        "groep": "sjablonen",
+        "route": "runtime",
+        "behoud": "bewerkbaar; opmaak kan afwijken",
+        "filter": "MS Excel 97 Vorlage/Template"
+      },
+      "ots": {
+        "naam": "OpenDocument-rekenbladsjabloon",
+        "groep": "sjablonen",
+        "route": "runtime",
+        "behoud": "bewerkbaar; opmaak kan afwijken",
+        "filter": "calc8_template"
+      },
+      "xlsm": {
+        "naam": "Excel-werkmap met macro’s",
+        "groep": "macro",
+        "route": "engine",
+        "behoud": "alleen voor een geopend macrobestand: VBA-project ongewijzigd behouden, macro’s niet uitgevoerd"
+      },
+      "csv": {
+        "naam": "CSV (gescheiden waarden)",
+        "groep": "web-tekst",
+        "route": "engine",
+        "behoud": "alleen één blad; waarden zonder formules en opmaak",
+        "filter": "Text - txt - csv (StarCalc)",
+        "opties": "59,34,76,1,,0,false,true,false,false,false,0,false,true"
+      },
+      "tsv": {
+        "naam": "Tekst met tabs (TSV)",
+        "groep": "web-tekst",
+        "route": "engine",
+        "behoud": "alleen één blad; waarden zonder formules en opmaak",
+        "filter": "Text - txt - csv (StarCalc)",
+        "opties": "9,34,76,1,,0,false,true,false,false,false,0,false,true"
+      },
+      "html": {
+        "naam": "Webpagina (HTML)",
+        "groep": "web-tekst",
+        "route": "runtime",
+        "behoud": "alleen weergave; formules vervallen",
+        "filter": "HTML (StarCalc)",
+        "zonderRuntime": "html"
+      },
+      "dif": {
+        "naam": "Data Interchange Format (DIF)",
+        "groep": "web-tekst",
+        "route": "runtime",
+        "behoud": "alleen eerste blad; waarden zonder formules en opmaak",
+        "filter": "DIF"
+      },
+      "slk": {
+        "naam": "SYLK",
+        "groep": "web-tekst",
+        "route": "runtime",
+        "behoud": "alleen eerste blad; formules blijven, opmaak grotendeels niet",
+        "filter": "SYLK"
+      },
+      "md": {
+        "naam": "Markdown",
+        "groep": "web-tekst",
+        "route": "engine",
+        "behoud": "alleen weergave van waarden; formules en opmaak vervallen"
+      },
+      "pdf": {
+        "naam": "PDF-document",
+        "groep": "pdf-afbeelding",
+        "route": "engine",
+        "behoud": "weergave als in het afdrukvoorbeeld; tekst doorzoekbaar",
+        "filter": "calc_pdf_Export"
+      },
+      "png": {
+        "naam": "PNG-afbeelding (blad)",
+        "groep": "pdf-afbeelding",
+        "route": "engine",
+        "behoud": "alleen weergave; gebruikt bereik van één blad"
+      }
+    }
+  },
+  "pptx": {
+    "invoer": [
+      "pptx",
+      "ppt",
+      "pps",
+      "pot",
+      "pptm",
+      "potm",
+      "ppsx",
+      "potx",
+      "odp",
+      "otp",
+      "fodp",
+      "sxi",
+      "sti",
+      "dps",
+      "dpt",
+      "key",
+      "sdd",
+      "uop"
+    ],
+    "uitvoer": {
+      "pptx": {
+        "naam": "PowerPoint-presentatie",
+        "groep": "eigen",
+        "route": "engine",
+        "behoud": "bewerkbaar",
+        "filter": "Impress MS PowerPoint 2007 XML"
+      },
+      "ppsx": {
+        "naam": "PowerPoint-diavoorstelling",
+        "groep": "eigen",
+        "route": "runtime",
+        "behoud": "bewerkbaar; opent als diavoorstelling; opmaak kan afwijken",
+        "filter": "Impress MS PowerPoint 2007 XML AutoPlay"
+      },
+      "odp": {
+        "naam": "OpenDocument-presentatie",
+        "groep": "opendocument",
+        "route": "runtime",
+        "behoud": "bewerkbaar; opmaak kan afwijken",
+        "filter": "impress8"
+      },
+      "fodp": {
+        "naam": "OpenDocument-presentatie (plat XML)",
+        "groep": "opendocument",
+        "route": "runtime",
+        "behoud": "bewerkbaar; opmaak kan afwijken",
+        "filter": "OpenDocument Presentation Flat XML"
+      },
+      "ppt": {
+        "naam": "PowerPoint 97–2003-presentatie",
+        "groep": "office-oud",
+        "route": "runtime",
+        "behoud": "bewerkbaar; opmaak kan afwijken",
+        "filter": "MS PowerPoint 97"
+      },
+      "pps": {
+        "naam": "PowerPoint 97–2003-diavoorstelling",
+        "groep": "office-oud",
+        "route": "runtime",
+        "behoud": "bewerkbaar; opmaak kan afwijken",
+        "filter": "MS PowerPoint 97 AutoPlay"
+      },
+      "potx": {
+        "naam": "PowerPoint-sjabloon",
+        "groep": "sjablonen",
+        "route": "runtime",
+        "behoud": "bewerkbaar; opmaak kan afwijken",
+        "filter": "Impress MS PowerPoint 2007 XML Template"
+      },
+      "pot": {
+        "naam": "PowerPoint 97–2003-sjabloon",
+        "groep": "sjablonen",
+        "route": "runtime",
+        "behoud": "bewerkbaar; opmaak kan afwijken",
+        "filter": "MS PowerPoint 97 Vorlage"
+      },
+      "otp": {
+        "naam": "OpenDocument-presentatiesjabloon",
+        "groep": "sjablonen",
+        "route": "runtime",
+        "behoud": "bewerkbaar; opmaak kan afwijken",
+        "filter": "impress8_template"
+      },
+      "pptm": {
+        "naam": "PowerPoint-presentatie met macro’s",
+        "groep": "macro",
+        "route": "engine",
+        "behoud": "alleen voor een geopend macrobestand: VBA-project ongewijzigd behouden, macro’s niet uitgevoerd"
+      },
+      "html": {
+        "naam": "Webpagina (HTML)",
+        "groep": "web-tekst",
+        "route": "engine",
+        "behoud": "alleen tekst per dia; indeling en afbeeldingen vervallen"
+      },
+      "md": {
+        "naam": "Markdown",
+        "groep": "web-tekst",
+        "route": "engine",
+        "behoud": "alleen tekst per dia; indeling en afbeeldingen vervallen"
+      },
+      "pdf": {
+        "naam": "PDF-document",
+        "groep": "pdf-afbeelding",
+        "route": "engine",
+        "behoud": "weergave als in het afdrukvoorbeeld; tekst doorzoekbaar",
+        "filter": "impress_pdf_Export"
+      },
+      "png": {
+        "naam": "PNG-afbeelding (huidige dia)",
+        "groep": "pdf-afbeelding",
+        "route": "engine",
+        "behoud": "alleen weergave; één dia"
+      }
+    }
+  }
+}

@@ -20,6 +20,15 @@ Open Office Studio is a local office environment for Windows, macOS and Linux. I
 
 > **Status:** Open Office Studio is under active development. Releases are published as *pre-releases* (development builds). Test it with copies of your files before relying on it. Eight interface languages are available. See the [release audit and known limitations](docs/tests/2026-10-30-vrijgavecontrole.md), including a confirmed spreadsheet engine crash with `=ISOWEEKNUM()` without an argument.
 
+## Native Rust migration
+
+The native preview in [`native/`](native/README.md) also moves the complete UI
+to Rust, using Iced and the shared OpenAEC Blueprint ribbon. It has working
+DOCX/XLSX/PPTX round trips and IFCX source archives, including complete email
+sources. It is **not yet a replacement for the current suite**; the
+[feature comparison and remaining work](native/README.md#huidige-omvang) describe
+the migration boundary. Version 2026-W44.8 remains the existing release.
+
 ## Suite or a separate app
 
 Version **2026-W44.8** provides seven installation choices: **Open Office Studio**, **Open Writer Studio**, **Open Spreadsheet Studio**, **Open Presentation Studio**, **Open Email Studio**, **Open Notition Studio** and **Open Database Studio**. Each has its own installer, application identity and local profile. The suite retains all modules; the dedicated apps open their own workspace. See [the application list, builds, data transfer and screenshots](docs/studios.md).

@@ -1,0 +1,34 @@
+{
+  "pakket": "betteroffice-pptx",
+  "versie": "0.5.1",
+  "licentie": "Apache-2.0",
+  "bron": "https://github.com/openooxml/betteroffice",
+  "revisie": "4e982c3aea0065578604c3fe7727938533888f66",
+  "crates_io_sha256": "1a7f1d703356e7d8990f987cea7bf53291aedc31ee548b252874f3bf972f71e7",
+  "oorspronkelijke_bestanden": {
+    ".cargo_vcs_info.json": "004fccd7ce75720312e9a3291498453606d3682cc54f376f7c268e6aa3010725",
+    "Cargo.lock": "2a42af490def5b38c7bf1bd143407c4d0dd0e7e0cd00f3f9084302003a3a3adb",
+    "Cargo.toml": "6b647d3752da6299bf60131bc2fe807d91d1ed77494f3bea0d851d8b44ea4ac4",
+    "Cargo.toml.orig": "934c96206d205d1a7921c8670241d7c7852932242e22d9d310c624cfe28d7680",
+    "README.md": "065627bbda7acfd27fc627daa07cf278deda316e20056a65c2a0d0fa0d675397",
+    "src/error.rs": "4a5cb2e64f8b2a63151d24f5cda31bd8ba64a1083abd828789b3ffd3da748dda",
+    "src/lib.rs": "30bb42f703c483c4dbc9b5a70b9b89e5a7c7a86e06f2050c6e470efd1603fcee",
+    "src/presentation.rs": "a4765bd2fb9af832f99d9886613253b1a07197186cb8c027e2452b3053441a52",
+    "src/render.rs": "7836a5df2ac9f3ffd4fc82b0d433a895ec73fbe1af546ff00b39502a9b09678f",
+    "src/types.rs": "957b66dfb90e4c96815cdcf1fa0dfed62bd0556305db19d32301cfb8cfa0a1c1",
+    "tests/facade.rs": "4af824433c0d4eb1f3a33bdb55bd18b91c11c27ad022adc7b605c3a9a7bb4928",
+    "tests/render.rs": "6a79b96807d1d3bfdf15d4cd45e19e73c5177edbcaddb17b2614322bf0c338d5"
+  },
+  "aanpassingen": {
+    "src/presentation.rs": {
+      "sha256": "a53ecf9249b3aae984ac73128beb9ceb928c6d411d1326fd9f2849deb1ee95a1",
+      "reden": "Maak de bestaande glyph-terugvalregistratie van SlideRenderer beschikbaar via de getypeerde native facade; de bronfamilienamen veranderen niet."
+    }
+  },
+  "aanvullingen": {
+    "LICENSE-UPSTREAM": {
+      "sha256": "db17c7e4531fd3e1a376cd87ad1ddf9a195118e47fde7f26b9feb657c8c114af",
+      "bron": "https://github.com/openooxml/betteroffice/blob/4e982c3aea0065578604c3fe7727938533888f66/LICENSE"
+    }
+  }
+}

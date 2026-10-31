@@ -1,0 +1,46 @@
+{
+  "pakket": "betteroffice-xlsx-raster",
+  "versie": "0.5.1",
+  "licentie": "Apache-2.0",
+  "bron": "https://github.com/openooxml/betteroffice",
+  "revisie": "4e982c3aea0065578604c3fe7727938533888f66",
+  "crates_io_sha256": "ae8a1dc5f25f7ca94e1980dfa81c678337190bca54b7e701c40916a01a1ae020",
+  "oorspronkelijke_bestanden": {
+    ".cargo_vcs_info.json": "2a21937c0a00e0dfd494b8e185589a52b631fb2ff73962ab6a5acdaa241acba8",
+    "Cargo.lock": "2cca18edc49f5124cd74d1ee192a7bc4fce050d2930fc55bdd7d8e6153d098a6",
+    "Cargo.toml": "9d58ac456d6a2c33776bd6c95ed0d1a7b54a9c1789014493b32e8710dc85af6c",
+    "Cargo.toml.orig": "cdf586c65fcbf7fe3dff316e2b87635ae5dea68de0d4aebe1f03c4373560f938",
+    "README.md": "1cf1aa01edd153021b9d842c80d181e3e09c0aa11ec8dd9cc3467524418167d9",
+    "assets/Carlito-Regular.ttf": "f6418f708baede9789daef5d458c0f53d2a888af9820e8062934e504fedc6595",
+    "assets/OFL.txt": "58402f82a7c332a700294988fe7554fbb0a63a8d27ccc1ee3bbc640311990a00",
+    "assets/README.md": "c693d6a00ce9f74d4334c0f29931042e5e909974700cb24eaeb3c29cf6fd03c9",
+    "src/font.rs": "442414a52d5f4491865af1d4973464e3f291b8cbadaa2783515679524ab192d3",
+    "src/lib.rs": "57a4d4ad30d87a0b68087947a836f1d8d973ba7d1ee42b9815ceffe43b67c72f",
+    "tests/golden/align.png": "5f34f1d28af7e2e25847253b8d5c389991a47f859bb53e430599299dee5e8925",
+    "tests/golden/clipped.png": "1ef23d85478d7cdcad2abc3462ae8d6018fcffce1ac360b0d481b46ea1d069fd",
+    "tests/golden/mixed.png": "cf9523a29249cf0329b0b1758ae3de5fbe0502798824524871477f7c7bf45e55",
+    "tests/golden/styled.png": "305b025200530172628fa3b3046bacc78e63b0858fefe31853cbc9fb30d86f4c",
+    "tests/golden/unicode.png": "fe965f16d76a3ee8ef000499e1ee50be2c58a610a3572201c8294a76d749802b",
+    "tests/golden.rs": "7483bd38a2e5483af2201f27eb1a6e2cf0ada3dea39f5f1509321a4853b8bfda"
+  },
+  "aanpassingen": {
+    "src/lib.rs": {
+      "sha256": "2c6e307ce2c0b12055b410ca3ce2beab9a10d454e3331eaa516db068989f1fa3",
+      "reden": "Voeg expliciete fontleveranciers en een scoped facadeaanroep toe; gebruik de gekozen letter bij meten, regelterugloop, getalopmaak en tekenen. De standaardaanroep behoudt de ingebouwde letter."
+    },
+    "src/font.rs": {
+      "sha256": "1ace8f04a1bdff440f5d4ceefd282df56e4c5619d61371e06ac89c66da337505",
+      "reden": "Geef de gekozen letter expliciet door aan tekst, gedraaide en gestapelde tekst; echte stijlgezichten gebruiken geen dubbele synthetische vet-/cursiefvorm."
+    }
+  },
+  "aanvullingen": {
+    "LICENSE-UPSTREAM": {
+      "sha256": "db17c7e4531fd3e1a376cd87ad1ddf9a195118e47fde7f26b9feb657c8c114af",
+      "bron": "https://github.com/openooxml/betteroffice/blob/4e982c3aea0065578604c3fe7727938533888f66/LICENSE"
+    },
+    "src/resources.rs": {
+      "sha256": "ed5587341ae3ff272de2392ee988054e962134358efd1f47323641cc6efcce92",
+      "reden": "Getypeerde fontresources en een per draad scoped leverancier die ook na fouten en paniek wordt hersteld."
+    }
+  }
+}

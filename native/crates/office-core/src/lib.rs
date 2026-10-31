@@ -1,0 +1,21 @@
+//! Documenten en veilige bestandsopslag zonder webinterface.
+pub mod document;
+pub mod ifcx;
+pub mod interactie;
+pub mod lettertypen;
+pub mod notities;
+pub mod opmaak;
+pub mod opslag;
+pub mod presentatie;
+mod presentatie_tekst;
+pub mod rekenblad;
+mod rekenblad_beeld;
+pub mod writer;
+mod writer_beeld;
+pub mod writer_cursor;
+pub mod writer_document;
+pub mod writer_opmaak;
+pub mod writer_pagina;
+mod writer_tekst;
+pub mod writer_zoeken;
+pub const VERSIE: &str = env!("CARGO_PKG_VERSION");
