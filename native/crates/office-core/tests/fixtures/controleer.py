@@ -193,3 +193,11 @@ assert s['B2'].value == 3 and s['D2'].value == '=B2*C2'
 assert s['D4'].value == '=SUM(D2:D3)' and s['D4'].number_format == '0.00'
 assert letters['Tweede blad']['A1'].value == 'Bewaar ook dit blad'
 print('Spreadsheetletters: familie, echte stijlkeuze, grootte, samenvoeging en overige gegevens onafhankelijk teruggelezen.')
+
+concept = Document(map/'writer-conceptreeks.docx')
+alinea = next(p for p in concept.paragraphs if p.text == '?Links 🏠 café rechts!')
+letters = [(c, r.bold, r.italic) for r in alinea.runs for c in r.text]
+assert ''.join(c for c, _, _ in letters) == '?Links 🏠 café rechts!'
+assert all(vet is True and cursief is not True for _, vet, cursief in letters[1:9])
+assert all(vet is not True and cursief is True for _, vet, cursief in letters[9:20])
+print('Writer-conceptreeks: de ongewijzigde vette en cursieve tekstdelen onafhankelijk teruggelezen.')

@@ -93,8 +93,23 @@ pub struct Weergave {
     pub writer_opmaak:
         std::sync::Arc<std::collections::HashMap<String, Vec<crate::writer_opmaak::OpmaakBereik>>>,
 }
+/// Eén vervanging in Unicode-tekens, ten opzichte van de vorige stap.
+/// De verwachte tekst voorkomt dat een verouderd concept een ander bereik raakt.
+#[derive(Debug, Clone)]
+pub struct TekstStap {
+    pub begin: usize,
+    pub einde: usize,
+    pub verwacht: String,
+    pub tekst: String,
+}
 #[derive(Debug, Clone)]
 pub enum Bewerking {
+    TekstReeks {
+        id: String,
+        bron: String,
+        tekst: String,
+        stappen: Vec<TekstStap>,
+    },
     Tekst {
         id: String,
         tekst: String,
@@ -259,6 +274,17 @@ impl Document {
             ) => crate::presentatie::opmaak(d, &id, begin, einde, &stijl)?,
             (Self::Presentation(d), Bewerking::Dia(actie)) => {
                 crate::presentatie::actie(d, deel, actie)?
+            }
+            (
+                Self::Writer(d),
+                Bewerking::TekstReeks {
+                    id,
+                    bron,
+                    tekst,
+                    stappen,
+                },
+            ) => {
+                crate::writer_tekst::reeks(d, &id, &bron, &tekst, &stappen)?;
             }
             (Self::Writer(d), Bewerking::Tekst { id, tekst }) => {
                 crate::writer_tekst::vervang(d, &id, &tekst)?;

@@ -256,6 +256,145 @@ pub fn vervang(d: &mut docx::Document, id: &str, nieuw: &str) -> Resultaat<()> {
     Ok(())
 }
 
+/// Voer de werkelijk geregistreerde invoerstappen uit op een lokale alineakopie.
+/// Schrijf pas na de laatste controle, zodat ook de directe document-API atomair is.
+pub fn reeks(
+    d: &mut docx::Document,
+    id: &str,
+    bron: &str,
+    resultaat: &str,
+    stappen: &[crate::document::TekstStap],
+) -> Resultaat<()> {
+    if bron.len() > 500_000
+        || resultaat.len() > 500_000
+        || stappen.len() > 4096
+        || stappen
+            .iter()
+            .try_fold(0usize, |n, s| {
+                n.checked_add(s.tekst.len())?.checked_add(s.verwacht.len())
+            })
+            .is_none_or(|n| n > 16 * 1024 * 1024)
+    {
+        return Err(Fout::Document(
+            "Tekstconcept overschrijdt de bewerkingslimiet".into(),
+        ));
+    }
+    let mut p = d
+        .paragraph(id)
+        .ok_or_else(|| Fout::Document("Alinea bestaat niet".into()))?
+        .clone();
+    if !ondersteund(&p) {
+        return Err(fout());
+    }
+    if alinea_tekst(&p) != bron {
+        return Err(Fout::Document(
+            "Het tekstconcept hoort bij een andere alineaversie".into(),
+        ));
+    }
+    for stap in stappen {
+        let oud: Vec<_> = alinea_tekst(&p).chars().collect();
+        if stap.begin > stap.einde
+            || stap.einde > oud.len()
+            || oud[stap.begin..stap.einde].iter().collect::<String>() != stap.verwacht
+        {
+            return Err(Fout::Document(
+                "Tekststap past niet bij het verwachte bereik".into(),
+            ));
+        }
+        let nieuw_bytes = oud[..stap.begin]
+            .iter()
+            .map(|c| c.len_utf8())
+            .sum::<usize>()
+            + stap.tekst.len()
+            + oud[stap.einde..]
+                .iter()
+                .map(|c| c.len_utf8())
+                .sum::<usize>();
+        if nieuw_bytes > 500_000 {
+            return Err(Fout::Document(
+                "Alinea groter dan de bewerkingslimiet".into(),
+            ));
+        }
+        vervang_bereik(&mut p, stap.begin, stap.einde, &stap.tekst);
+    }
+    if alinea_tekst(&p) != resultaat {
+        return Err(Fout::Document(
+            "Tekststappen leveren niet het zichtbare concept op".into(),
+        ));
+    }
+    schrijf(d, id, &p);
+    Ok(())
+}
+fn vervang_bereik(p: &mut docx::Paragraph, begin: usize, einde: usize, nieuw: &str) {
+    let mut runs: Vec<_> = p
+        .content
+        .iter()
+        .filter_map(|c| {
+            if let P::Inline(I::Run(r)) = c {
+                Some(r.clone())
+            } else {
+                None
+            }
+        })
+        .collect();
+    if runs.is_empty() {
+        runs.push(docx::Run {
+            node_type: docx_parse::inline::RunType::Run,
+            formatting: None,
+            property_changes: None,
+            content: vec![],
+        });
+    }
+    let mut offset = 0;
+    // Vervangen neemt de eerste geselecteerde run; invoegen de linkerbuur.
+    // Zo kan een selectie aan een opmaakgrens niet de vorige run overnemen.
+    let stijl = runs
+        .iter()
+        .find(|r| {
+            offset += tekst(r).chars().count();
+            if begin == einde {
+                offset >= begin
+            } else {
+                offset > begin
+            }
+        })
+        .unwrap_or_else(|| runs.last().unwrap())
+        .clone();
+    let mut uit = Vec::new();
+    let mut positie = 0;
+    let mut ingevoegd = false;
+    for run in runs {
+        let t: Vec<_> = tekst(&run).chars().collect();
+        let voor = begin.saturating_sub(positie).min(t.len());
+        if voor > 0 {
+            let mut r = run.clone();
+            r.content = inhoud(&t[..voor].iter().collect::<String>());
+            uit.push(P::Inline(I::Run(r)));
+        }
+        if !ingevoegd && positie + t.len() >= begin {
+            if !nieuw.is_empty() {
+                let mut r = stijl.clone();
+                r.content = inhoud(nieuw);
+                uit.push(P::Inline(I::Run(r)));
+            }
+            ingevoegd = true;
+        }
+        let na = einde.saturating_sub(positie).min(t.len()).max(voor);
+        if na < t.len() {
+            let mut r = run;
+            r.content = inhoud(&t[na..].iter().collect::<String>());
+            uit.push(P::Inline(I::Run(r)));
+        }
+        positie += t.len();
+    }
+    if uit.is_empty() {
+        let mut r = stijl;
+        r.content.clear();
+        uit.push(P::Inline(I::Run(r)));
+    }
+    p.content = uit;
+}
+
 fn schrijf(d: &mut docx::Document, id: &str, p: &docx::Paragraph) {
     fn pas_toe(blokken: &mut [docx::BlockContent], id: &str, p: &docx::Paragraph) {
         for blok in blokken {

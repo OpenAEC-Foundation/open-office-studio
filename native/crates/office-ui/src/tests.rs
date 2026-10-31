@@ -1824,3 +1824,110 @@ fn compacte_opmaakrij_bedient_doorhalen_uitvullen_en_letterstappen() {
 
 #[path = "tests/raster_proeven.rs"]
 mod raster_proeven;
+
+#[test]
+fn writer_meerdere_conceptbewerkingen_behouden_de_opmaak_tussen_de_wijzigingen() {
+    let bron = include_bytes!("../../office-core/tests/fixtures/writer-structuur.docx");
+    let mut app = app_met_werkdraad(Module::Writer, bron);
+    let n = app
+        .tab()
+        .unwrap()
+        .antwoord
+        .as_ref()
+        .unwrap()
+        .beeld
+        .velden
+        .iter()
+        .position(|v| v.tekst == "Links 🏠 café rechts")
+        .unwrap();
+    voer_interface_uit(&mut app, Msg::Veld(n));
+    for actie in [
+        text_editor::Action::Move(text_editor::Motion::DocumentEnd),
+        text_editor::Action::Edit(text_editor::Edit::Insert('!')),
+        text_editor::Action::Move(text_editor::Motion::DocumentStart),
+        text_editor::Action::Edit(text_editor::Edit::Insert('?')),
+    ] {
+        voer_interface_uit(&mut app, Msg::Invoer(actie));
+    }
+    voer_interface_uit(&mut app, Msg::PasToe);
+    let t = app.tab().unwrap();
+    let v = t.veld().unwrap();
+    assert_eq!(v.tekst, "?Links 🏠 café rechts!");
+    let a = t.antwoord.as_ref().unwrap();
+    let bereiken = &a.beeld.writer_opmaak[&v.id];
+    let links = office_core::writer_opmaak::selectie(bereiken, 1, 9).unwrap();
+    let rechts = office_core::writer_opmaak::selectie(bereiken, 9, 20).unwrap();
+    assert!(
+        links.vet && !links.cursief,
+        "De ongewijzigde vette tekst verliest opmaak"
+    );
+    assert!(
+        !rechts.vet && rechts.cursief,
+        "De ongewijzigde cursieve tekst verliest opmaak"
+    );
+    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
+        std::fs::create_dir_all(&map).unwrap();
+        std::fs::write(
+            PathBuf::from(map).join("writer-conceptreeks.docx"),
+            &*a.bron,
+        )
+        .unwrap();
+    }
+    voer_interface_uit(&mut app, Msg::Terug);
+    let t = app.tab().unwrap();
+    assert_eq!(t.antwoord.as_ref().unwrap().bron.as_slice(), bron);
+    assert!(!t.antwoord.as_ref().unwrap().terug);
+}
+
+#[test]
+fn writer_invoer_graphemen_selectie_regels_en_tabs_volgen_de_werkelijke_editor() {
+    let bron = include_bytes!("../../office-core/tests/fixtures/writer-structuur.docx");
+    let mut app = app_met_werkdraad(Module::Writer, bron);
+    let n = app
+        .tab()
+        .unwrap()
+        .antwoord
+        .as_ref()
+        .unwrap()
+        .beeld
+        .velden
+        .iter()
+        .position(|v| v.tekst == "Links 🏠 café rechts")
+        .unwrap();
+    voer_interface_uit(&mut app, Msg::Veld(n));
+    use text_editor::{Action as A, Edit as E, Motion as M};
+    let melding = app.melding.clone();
+    // Verwijder een astrale letter met Backspace en een gecombineerd grafeem
+    // met Delete. De bewaarde coördinaten zijn Unicode-tekens, geen bytes.
+    for actie in [
+        A::Move(M::DocumentStart),
+        A::Select(M::DocumentEnd),
+        A::Edit(E::Paste(std::sync::Arc::new("🏠e\u{301}\nRechts".into()))),
+        A::Move(M::DocumentStart),
+        A::Move(M::Right),
+        A::Edit(E::Backspace),
+        A::Edit(E::Delete),
+        A::Edit(E::Paste(std::sync::Arc::new("🛠é".into()))),
+        A::SelectAll,
+        A::Edit(E::Indent),
+        A::Edit(E::Unindent),
+    ] {
+        voer_interface_uit(&mut app, Msg::Invoer(actie));
+        assert_eq!(app.melding, melding, "Invoer werd geweigerd");
+    }
+    let concept = app.tab().unwrap().editor.text();
+    assert_eq!(concept, "🛠é\nRechts");
+    voer_interface_uit(&mut app, Msg::PasToe);
+    assert_eq!(app.tab().unwrap().veld().unwrap().tekst, concept);
+    voer_interface_uit(&mut app, Msg::Terug);
+    assert_eq!(
+        app.tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .bron
+            .as_slice(),
+        bron
+    );
+}

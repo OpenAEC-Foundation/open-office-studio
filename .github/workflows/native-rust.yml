@@ -1,10 +1,10 @@
 name: Native Rust controleren en bouwen
 on:
   pull_request:
-    paths: ["native/**", "public/templates/**", ".github/workflows/native-rust.yml"]
+    paths: [".gitattributes", "native/**", "public/templates/**", ".github/workflows/native-rust.yml"]
   push:
     branches: [main]
-    paths: ["native/**", "public/templates/**", ".github/workflows/native-rust.yml"]
+    paths: [".gitattributes", "native/**", "public/templates/**", ".github/workflows/native-rust.yml"]
   workflow_dispatch:
 permissions:
   contents: read

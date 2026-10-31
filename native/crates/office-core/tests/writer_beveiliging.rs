@@ -22,6 +22,12 @@ fn bron(kenmerken: &str) -> Vec<u8> {
 }
 fn opdrachten(id: &str) -> Vec<Bewerking> {
     vec![
+        Bewerking::TekstReeks {
+            id: id.into(),
+            bron: "".into(),
+            tekst: "".into(),
+            stappen: vec![],
+        },
         Bewerking::Tekst {
             id: id.into(),
             tekst: "Een eigen gewijzigde alinea.".into(),

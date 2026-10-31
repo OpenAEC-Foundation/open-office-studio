@@ -61,3 +61,10 @@ Directe rijke Writer-invoer, volledige ribbons, rastervirtualisatie,
 bereikselecties, presentatieobjecten, automatisch notitieherstel, complete
 mailbediening, database-interface, native installers en fysieke platformproeven
 blijven open. Er is geen stabiele native vrijgave gemaakt.
+
+De eerste CI-ronde van alpha 15 heeft de Windows-broncontrole afgekeurd:
+Git zette de tekstbestanden van de nieuw meegeleverde rasterizer om naar CRLF.
+De bestaande bronhashcontrole is behouden. Alpha 16 voegt voor deze map de
+ontbrekende `-text`-instelling toe; een lokale checkout met `core.autocrlf=true`
+slaagt daarna op alle vastgepinde bronbestanden. Dat is nog geen geslaagde
+Windows-bouwronde van alpha 16.

@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.15**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.16**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -48,7 +48,13 @@ De native versie heeft dus nog **geen functiepariteit** met de bestaande suite.
 Een uitgebreide documentweergave betekent niet dat elke zichtbare eigenschap al
 bewerkbaar is. Writer weigert tekstvervanging bij inline objecten, velden, links en revisies;
 de vorige bron blijft dan intact. Gewone tekst met meerdere opmaakruns houdt
-de opmaak van ongewijzigde tekstdelen. Enter in de teksteditor blijft een zachte
+de opmaak van ongewijzigde tekstdelen. De GUI registreert elke wijziging
+met Unicode-grenzen en de verwachte brontekst. Daardoor behouden ook
+tussenliggende tekstdelen hun eigen opmaak wanneer één concept meerdere
+wijzigingen bevat. Herhaalde gelijke tekens worden op de echte cursorpositie
+verwijderd. Het concept vormt één undo-stap; een foutieve of verouderde reeks
+wordt zonder gedeeltelijke documentwijziging geweigerd. Dit is nog steeds de
+platte alinea-editor, geen rijke cursor op de pagina. Enter in de teksteditor blijft een zachte
 regelovergang binnen de alinea. Gebruik **Splitsen bij cursor** voor een echte
 nieuwe alinea; **Volgende samenvoegen** verwijdert de aangrenzende alineagrens.
 Deze opdrachten blijven binnen dezelfde tekst of tabelcel en weigeren revisies,
@@ -336,15 +342,15 @@ Een afzonderlijke Chromium-testbrowser heeft inmiddels een oorspronkelijke
 navigatie gepauzeerd om de knipperfase vast te leggen; meldingen zijn via hun
 sluitknoppen gesloten. De opname is niet geschaald, uitgelijnd of nabewerkt.
 Twee opeenvolgende referentieopnamen zijn pixelgelijk. De
-[alpha-15-vergelijking](docs/pixelcontrole-alpha15/writer/rapport.json)
-met de native Writer meet **120.589 afwijkende pixels van 943.736**.
+[alpha-16-vergelijking](docs/pixelcontrole-alpha16/writer/rapport.json)
+met de native Writer meet **120.587 afwijkende pixels van 943.736**.
 Deze ene vastgelegde toestand bewijst dus expliciet dat de UI nog niet gelijk is.
 De [herkomst](docs/referentie-2026-W44.8/writer.json) vermeldt bron-, bundel- en
 beeldhashes, browser, viewport, thema en taal. Ook voor
 [Spreadsheet](docs/referentie-2026-W44.8/spreadsheet.png),
 [Presentation](docs/referentie-2026-W44.8/presentation.png) en
 [Notition](docs/referentie-2026-W44.8/notition.png) zijn nu vaste PNG-referenties
-vastgelegd. De [vier alpha-15-vergelijkingen](docs/pixelcontrole-alpha15/rapport.json)
+vastgelegd. De [vier alpha-16-vergelijkingen](docs/pixelcontrole-alpha16/rapport.json)
 falen; indeling, panelen en overige schermtoestanden blijven over te zetten.
 De browser- en nativevenstertoestanden zijn vastgelegd. Een vergelijking in
 dezelfde desktopvenstertoestand staat nog open.
@@ -376,4 +382,4 @@ python3 native/scripts/meet-paginas.py \
 Op Windows heeft de controleur de extensie `.exe`. Dit is een paginaproef,
 geen fysieke GUI-, volledige inhouds- of pariteitscontrole.
 
-De [controle van alpha 15](docs/controle-2026-10-31-alpha15.md) legt de huidige lokale tests en nog open acceptatie vast. De laatste afgeronde platformronde betreft [alpha 14](docs/platformen-2026-10-31-alpha14.json).
+De [controle van alpha 16](docs/controle-2026-10-31-alpha16.md) legt de huidige lokale tests en nog open acceptatie vast. De laatste afgeronde platformronde betreft [alpha 14](docs/platformen-2026-10-31-alpha14.json).

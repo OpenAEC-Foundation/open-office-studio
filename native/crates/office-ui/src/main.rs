@@ -14,6 +14,7 @@ mod raster_ui;
 mod sleepvak;
 mod stijl;
 mod werker;
+mod writer_invoer;
 use iced::widget::{column, container, image, row, scrollable, text_editor, text_input};
 use office_core::{
     document::{Bewerking, Module, Veld},
@@ -151,6 +152,7 @@ struct Tab {
     gekozen: usize,
     editor: text_editor::Content,
     editerversie: u64,
+    writer_stappen: Vec<office_core::document::TekstStap>,
     raster: raster_ui::Staat,
     concept: bool,
     adres: String,
@@ -184,6 +186,7 @@ impl Tab {
             gekozen: 0,
             editor: text_editor::Content::new(),
             editerversie: 0,
+            writer_stappen: Vec::new(),
             raster: raster_ui::Staat::default(),
             concept: false,
             adres: "A1".into(),
@@ -249,6 +252,7 @@ impl Tab {
             self.editerversie = self.editerversie.wrapping_add(1);
             self.raster.bewerken = false;
             self.editor = text_editor::Content::with_text(&veld.tekst);
+            self.writer_stappen.clear();
             self.adres = veld.id.clone();
             self.concept = false;
         }
@@ -1098,7 +1102,9 @@ impl App {
                 {
                     let bewerkt = actie.is_edit();
                     let selectie = !bewerkt && !matches!(actie, text_editor::Action::Scroll { .. });
-                    t.editor.perform(actie);
+                    if let Err(e) = writer_invoer::voer_uit(t, actie) {
+                        return self.waarschuwing(&e);
+                    }
                     t.concept |= bewerkt;
                     if t.raster.bewerken {
                         raster_ui::registreer_letters(t);
@@ -1115,15 +1121,9 @@ impl App {
                     if t.bezig || !t.concept {
                         return Task::none();
                     }
-                    if let Some(v) = t.veld() {
+                    if t.veld().is_some() {
                         let id = t.id;
-                        let opdracht = Opdracht::Bewerk(
-                            t.deel,
-                            Bewerking::Tekst {
-                                id: v.id.clone(),
-                                tekst: t.editor.text(),
-                            },
-                        );
+                        let opdracht = Opdracht::Bewerk(t.deel, t.tekst_opdracht());
                         return self.opdracht(id, opdracht);
                     }
                 }
@@ -1135,14 +1135,7 @@ impl App {
                     }
                     if t.concept {
                         t.na_bewerking = Some(als);
-                        let v = t.veld().unwrap();
-                        let opdracht = Opdracht::Bewerk(
-                            t.deel,
-                            Bewerking::Tekst {
-                                id: v.id.clone(),
-                                tekst: t.editor.text(),
-                            },
-                        );
+                        let opdracht = Opdracht::Bewerk(t.deel, t.tekst_opdracht());
                         return self.opdracht(id, opdracht);
                     }
                     if t.antwoord.is_none() {

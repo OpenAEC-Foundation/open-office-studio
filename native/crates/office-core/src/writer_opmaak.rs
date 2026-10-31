@@ -76,7 +76,14 @@ pub(crate) fn lees(doc: &docx_edit::EditingDoc) -> Resultaat<Alineas> {
             .story_segments(&verhaal.story)
             .map_err(|e| Fout::Document(e.to_string()))?
         {
-            match segment.content {
+            // De engine bewaart een zachte regelovergang als een break-embed.
+            // Die telt in de gewone alinea-editor als één Unicode-teken; andere
+            // objecten houden hun onbewerkbare vervangteken.
+            let inhoud = match segment.content {
+                S::OtherEmbed { kind, .. } if kind == "break" => S::Text("\n".into()),
+                anders => anders,
+            };
+            match inhoud {
                 S::Text(tekst) => {
                     let einde = positie + tekst.chars().count();
                     if einde > positie {
