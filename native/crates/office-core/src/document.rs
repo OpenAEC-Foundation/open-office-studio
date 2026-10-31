@@ -88,6 +88,7 @@ pub struct Weergave {
     pub pagina: Pagina,
     pub notitie: Option<crate::notities::NotitiePagina>,
     pub voorkeursveld: Option<String>,
+    pub bewerkingsbeperking: Option<String>,
 }
 #[derive(Debug, Clone)]
 pub enum Bewerking {
@@ -119,7 +120,7 @@ pub enum Bewerking {
 }
 
 pub enum Document {
-    Writer(Box<docx::Document>),
+    Writer(Box<crate::writer_document::WriterDocument>),
     Spreadsheet(Box<xlsx::Workbook>),
     Presentation(Box<pptx::Presentation>),
     Notition(serde_json::Value),
@@ -135,7 +136,9 @@ impl Document {
                 crate::writer::controleer_nootnummers(bytes)?;
                 let mut d = docx::Document::open(bytes).map_err(fout)?;
                 alinea_ids(&mut d);
-                Self::Writer(Box::new(d))
+                Self::Writer(Box::new(crate::writer_document::WriterDocument::nieuw(
+                    d, bytes,
+                )?))
             }
             Module::Spreadsheet => Self::Spreadsheet(Box::new(
                 xlsx::Workbook::open_recalculated(bytes, xlsx::CalculationOptions::default())
@@ -217,6 +220,9 @@ impl Document {
         }
     }
     pub fn bewerk(&mut self, deel: usize, bewerking: Bewerking) -> Resultaat<()> {
+        if let Self::Writer(d) = self {
+            d.controleer_bewerking()?;
+        }
         match (self, bewerking) {
             (Self::Writer(d), Bewerking::Pagina { id, actie }) => {
                 crate::writer_pagina::pagina(d, &id, actie)?;
@@ -317,6 +323,7 @@ impl Document {
             pagina: Pagina::default(),
             notitie: None,
             voorkeursveld: None,
+            bewerkingsbeperking: None,
         };
         match self {
             Self::Writer(d) => {
@@ -446,6 +453,15 @@ impl Document {
                     "{} bijlagen · volledige oorspronkelijke MIME-bron bewaard",
                     bericht.attachments().count()
                 );
+            }
+        }
+        if let Self::Writer(d) = self {
+            beeld.bewerkingsbeperking = d.bewerkingsbeperking().map(str::to_owned);
+            if beeld.bewerkingsbeperking.is_some() {
+                for veld in &mut beeld.velden {
+                    veld.bewerkbaar = false;
+                }
+                beeld.melding.push_str(" · alleen lezen");
             }
         }
         Ok(beeld)

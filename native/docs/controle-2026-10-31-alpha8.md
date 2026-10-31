@@ -19,7 +19,10 @@ openbare bronrevisie en controleert de verplichte SHA-256 vóór het document wo
 geopend. Ook de echte downloadroute is uitgevoerd; een verkeerde bron wordt
 voor documentopening geweigerd. De oorspronkelijke bron blijft buiten de repo
 en distributiepakketten. CI krijgt deze proef ook met de echte releasebinary op
-ieder platform; die ronde moet nog worden afgerond.
+ieder platform. Die ronde is afgerond: dezelfde bron slaagt op Linux, Windows
+en macOS met precies de controleur uit het bijbehorende pakket. Zie de
+[pakket- en bronregressies](pakketten-2026-10-31-alpha8.json). Ook de
+[lokale releaseproef](bronregressie-2026-10-31-alpha8-release.json) slaagt.
 
 ## Schil en liniaal
 
@@ -50,11 +53,46 @@ maskers, verschoven referentiebeelden of versoepelde pixeltoleranties gebruikt.
   byte-gelijk aan alpha 7; de nieuwe standaardregistratie verandert deze
   bestaande documentvoorbeelden niet.
 
-De laatst afgeronde platformronde betreft nog [alpha 7](controle-2026-10-31-alpha7.md):
-Windows x64, Linux x64 en macOS ARM64, alle 31 native schermbeelden gelijk.
-De alpha-8-releasepakketten, bronregressies en beelden moeten ook afzonderlijk
-worden gecontroleerd. Fysieke GUI-, systeemdialoog-, IME-, schermlezer- en
+Bouwronde **41170415375** is volledig groen: Windows x64, Linux x64, macOS
+ARM64 en de aparte conversieruntime. De 31 native beelden zijn op elk platform
+pixelgelijk aan de lokale native uitvoer:
+[Linux](nativebeelden-2026-10-31-alpha8-Linux.json),
+[Windows](nativebeelden-2026-10-31-alpha8-Windows.json) en
+[macOS](nativebeelden-2026-10-31-alpha8-macOS.json). Dit is geen pixelpariteit
+met de bestaande suite.
+
+[Pakketcontrole](pakketten-2026-10-31-alpha8.json) controleert ZIP-CRC, SHA-256,
+beide programmaheaders en alle 625 verpakte bronbestanden. Linux en macOS zijn
+byte-gelijk aan het Git-archief. Windows heeft **146 tekstbestanden met CRLF**;
+alle overige bytes zijn gelijk. Dit wordt als verschil vastgelegd, niet als
+volledige bytegelijkheid. Alpha 9 legt LF voor eigen bron vast en neemt de
+Git-instellingen mee in het bronpakket. De oorspronkelijke alpha-8-artefacten
+blijven behouden.
+
+CI testte de tijdelijke PR-mergecommit `25d11407a64748bf0b80e931552ff927df9d576f`.
+De Git-bomen van native, public en docs zijn gecontroleerd gelijk aan broncommit
+`c0f1bd59ea6c31f80144e49a826a502577083806`; Windows-checkoutregelafbrekingen
+zijn hierboven afzonderlijk vermeld. Beide uitgepakte programmaversies en de
+bron/notices zijn ook op het eigen CI-platform gecontroleerd. De
+[conversie-uitvoer](conversie-2026-10-31-alpha8-ci.json) is onafhankelijk
+teruggelezen. Fysieke GUI-, systeemdialoog-, IME-, schermlezer- en
 schone-installatieproeven blijven open.
+
+## Brede bestandsronde
+
+De [lokale releasecontrole](corpus-2026-10-31-alpha8-release.json) selecteert
+648 OOXML-bronnen uit het manifest met 1.566 bestanden: **579 rondgangen slagen,
+68 worden geweigerd en één overschrijdt 30 seconden**. De overige 918 formaten
+zijn hiermee niet native gecontroleerd. Er zijn geen gevonden rondgangverschillen
+in de vergeleken tekstvelden. De ronde controleert de eerste werkweergave en
+zichtbare velden, niet alle pagina's, stijlen of functies.
+
+De [twee grote Writer-bronnen](grote-writer-2026-10-31-alpha8.json), met 953 en
+15.935 alinea's, slagen afzonderlijk met één bestandsproces en 120 seconden per
+bron. Het grootste document kost ongeveer 16,6 seconden voor de eerste
+weergave en 37,6 seconden voor de hele rondgang. Andere controles liepen tegelijk;
+dit is geen geïsoleerde benchmark. De grens van 30 seconden blijft in de brede
+ronde terecht als mislukte tijdscontrole staan.
 
 ## Strikte vergelijking met de bestaande suite
 

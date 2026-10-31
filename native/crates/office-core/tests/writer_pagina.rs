@@ -2,7 +2,7 @@ use betteroffice_docx as docx;
 use office_core::document;
 use office_core::writer_pagina::{PaginaActie as A, Papier, pagina};
 const BRON: &[u8] = include_bytes!("fixtures/writer-structuur.docx");
-fn open() -> Box<docx::Document> {
+fn open() -> Box<office_core::writer_document::WriterDocument> {
     match document::Document::open(document::Module::Writer, BRON).unwrap() {
         document::Document::Writer(d) => d,
         _ => unreachable!(),

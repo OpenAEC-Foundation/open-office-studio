@@ -1057,3 +1057,213 @@ fn symbool_in_bediening_gebruikt_het_gepinde_font_bij_ieder_lintgewicht() {
         assert_ne!(glyph.glyph_id, 0);
     }
 }
+
+#[test]
+fn writer_beveiliging_blijft_zichtbaar_en_weigert_interfaceopdrachten() {
+    let bytes = include_bytes!("../../office-core/tests/fixtures/writer-beveiligd.docx");
+    let mut app = App::default();
+    voer_interface_uit(
+        &mut app,
+        Msg::Gelezen(
+            1,
+            PathBuf::from("Beveiligd.docx"),
+            Ok(Geopend {
+                module: Module::Writer,
+                bytes: bytes.to_vec(),
+                hash: opslag::hash(bytes),
+                archief: None,
+            }),
+        ),
+    );
+    let opgeslagen = app.tab().unwrap().opgeslagen.clone();
+    let origineel = app.tab().unwrap().editor.text();
+    for lint in [0, 1] {
+        voer_interface_uit(&mut app, Msg::Lint(lint));
+        let boom = toegankelijkheid(&app);
+        assert!(boom.unnamed.is_empty());
+        assert!(
+            boom.nodes
+                .iter()
+                .any(|n| n.node.name.contains("actieve documentbeveiliging"))
+        );
+        let namen: &[&str] = if lint == 0 {
+            &["Vet", "Cursief", "Lettertype", "Lettergrootte"]
+        } else {
+            &["Liggend", "A4", "Smal", "Twee kolommen"]
+        };
+        for naam in namen {
+            let n = boom.nodes.iter().find(|n| &n.node.name == naam).unwrap();
+            assert!(n.node.state.disabled, "{naam}");
+        }
+    }
+    voer_interface_uit(&mut app, Msg::Lint(0));
+    let grootte = app.tab().unwrap().grootte.clone();
+    voer_tekstveld_in(&mut app, "Lettergrootte", "10,5");
+    assert_eq!(app.tab().unwrap().grootte, grootte);
+    voer_interface_uit(&mut app, Msg::Invoer(text_editor::Action::SelectAll));
+    assert_eq!(
+        app.tab().unwrap().editor.selection().as_deref(),
+        Some(origineel.as_str())
+    );
+    for msg in [
+        Msg::Invoer(text_editor::Action::Edit(text_editor::Edit::Insert('x'))),
+        Msg::Opmaak(Opmaak::Vet(false)),
+        Msg::Pagina(office_core::writer_pagina::PaginaActie::Liggend(true)),
+        Msg::SplitsAlinea,
+        Msg::VoegAlineasSamen,
+        Msg::PasToe,
+    ] {
+        voer_interface_uit(&mut app, msg);
+        let t = app.tab().unwrap();
+        let a = t.antwoord.as_ref().unwrap();
+        assert_eq!(a.bron.as_slice(), bytes);
+        assert!(!a.terug && !a.vooruit);
+        assert!(!t.concept && !t.gewijzigd());
+        assert_eq!(t.opgeslagen, opgeslagen);
+        assert_eq!(t.editor.text(), origineel);
+    }
+    let beeld = render(&app);
+    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        std::fs::create_dir_all(&map).unwrap();
+        beeld
+            .save_png(PathBuf::from(map).join("writer-beveiligd.png"))
+            .unwrap();
+    }
+}
+
+#[test]
+fn nederlandse_lettergrootte_komt_via_de_werkdraad_in_alle_drie_documentmodellen() {
+    for (invoer, verwacht) in [("10,5", 10.5), (" 12.5 ", 12.5), ("1", 1.), ("400", 400.)] {
+        assert_eq!(lint::lettergrootte(invoer), Some(verwacht));
+    }
+    for invoer in [
+        "", "NaN", "inf", "0", "400,1", "1.000,5", "1,2.3", "1e2", "-1", "10 5",
+    ] {
+        assert_eq!(lint::lettergrootte(invoer), None, "{invoer}");
+    }
+    for (module, bytes) in [
+        (
+            Module::Writer,
+            include_bytes!("../../office-core/tests/fixtures/writer.docx").as_slice(),
+        ),
+        (
+            Module::Spreadsheet,
+            include_bytes!("../../office-core/tests/fixtures/spreadsheet.xlsx").as_slice(),
+        ),
+        (
+            Module::Presentation,
+            include_bytes!("../../office-core/tests/fixtures/presentation.pptx").as_slice(),
+        ),
+    ] {
+        let mut app = app_met_werkdraad(module, bytes);
+        let veld = app.tab().unwrap().gekozen;
+        voer_tekstveld_in(&mut app, "Lettergrootte", "10,5");
+        let t = app.tab().unwrap();
+        assert!(
+            t.antwoord.as_ref().unwrap().terug,
+            "{module:?}: invoer={} melding={}",
+            t.grootte,
+            app.melding
+        );
+        let opnieuw =
+            Sessie::open(module, t.antwoord.as_ref().unwrap().bron.as_ref().clone()).unwrap();
+        assert_eq!(
+            opnieuw.weergave(t.deel).unwrap().velden[veld]
+                .opmaak
+                .grootte,
+            Some(10.5),
+            "{module:?}"
+        );
+        voer_interface_uit(&mut app, Msg::Terug);
+        assert_eq!(
+            app.tab()
+                .unwrap()
+                .antwoord
+                .as_ref()
+                .unwrap()
+                .bron
+                .as_slice(),
+            bytes
+        );
+    }
+}
+
+/// Bedien de echte Iced-widgets met muis- en toetsgebeurtenissen. De widgetboom
+/// behoudt zijn focus/selectie tussen de opnieuw opgebouwde appweergaven.
+/// Dit is geen proef met een fysiek venster of invoermethode van het systeem.
+fn voer_tekstveld_in(app: &mut App, naam: &str, invoer: &str) {
+    use iced::{keyboard as k, mouse};
+    lettertypen();
+    let renderer = iced_tiny_skia::Renderer::new(
+        ui_instellingen().default_font,
+        ui_instellingen().default_text_size,
+    );
+    let grootte = Size::new(1440., 900.);
+    let doel = toegankelijkheid(app)
+        .nodes
+        .into_iter()
+        .find(|n| n.node.name == naam)
+        .unwrap()
+        .bounds
+        .center();
+    let toets = |key: k::Key, modifiers, tekst: Option<&str>| {
+        iced::Event::Keyboard(k::Event::KeyPressed {
+            modified_key: key.clone(),
+            key,
+            physical_key: k::key::Physical::Unidentified(k::key::NativeCode::Unidentified),
+            location: k::Location::Standard,
+            modifiers,
+            text: tekst.map(Into::into),
+            repeat: false,
+        })
+    };
+    let mut gebeurtenissen = vec![
+        iced::Event::Mouse(mouse::Event::CursorMoved { position: doel }),
+        iced::Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
+        iced::Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)),
+        iced::Event::Keyboard(k::Event::ModifiersChanged(k::Modifiers::COMMAND)),
+        toets(k::Key::Character("a".into()), k::Modifiers::COMMAND, None),
+        iced::Event::Keyboard(k::Event::ModifiersChanged(k::Modifiers::empty())),
+    ];
+    gebeurtenissen.extend(invoer.chars().map(|c| {
+        let tekst = c.to_string();
+        toets(
+            k::Key::Character(tekst.clone().into()),
+            k::Modifiers::empty(),
+            Some(&tekst),
+        )
+    }));
+    gebeurtenissen.push(toets(
+        k::Key::Named(k::key::Named::Enter),
+        k::Modifiers::empty(),
+        None,
+    ));
+    let mut boom = Tree::empty();
+    for gebeurtenis in gebeurtenissen {
+        let berichten = {
+            let mut element = app.view();
+            boom.diff(element.as_widget());
+            let node = element.as_widget_mut().layout(
+                &mut boom,
+                &renderer,
+                &layout::Limits::new(Size::ZERO, grootte),
+            );
+            let mut berichten = vec![];
+            let mut shell = iced::advanced::Shell::new(&mut berichten);
+            element.as_widget_mut().update(
+                &mut boom,
+                &gebeurtenis,
+                Layout::new(&node),
+                mouse::Cursor::Available(doel),
+                &renderer,
+                &mut iced::advanced::clipboard::Null,
+                &mut shell,
+                &iced::Rectangle::with_size(grootte),
+            );
+            berichten
+        };
+        for bericht in berichten {
+            voer_interface_uit(app, bericht);
+        }
+    }
+}

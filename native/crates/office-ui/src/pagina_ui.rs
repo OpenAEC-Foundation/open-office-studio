@@ -8,7 +8,12 @@ fn svg(r: R) -> &'static str {
 }
 pub fn ribbon<'a>(app: &'a App, t: &'a Tab) -> Element<'a, Msg> {
     let l = app.look();
-    let kan = !t.bezig && !t.concept && t.veld().is_some();
+    let kan = !t.bezig
+        && !t.concept
+        && t.veld().is_some()
+        && t.antwoord
+            .as_ref()
+            .is_some_and(|a| a.beeld.bewerkingsbeperking.is_none());
     let actie = |naam, r, a| w::ribbon_small(l, svg(r), naam, false, kan.then_some(Msg::Pagina(a)));
     let papier = |p: Papier| actie(p.naam(), R::ReportPortrait, A::Papier(p));
     let marge = |naam, boven, onder, links, rechts| {

@@ -52,6 +52,7 @@ for map in ['crates', 'vendor', 'scripts', 'docs']:
 shutil.copytree(repo/'public/templates', pakket/'bron/public/templates')
 shutil.copytree(repo/'docs/voorbeelden', pakket/'bron/docs/voorbeelden')
 shutil.copy2(repo/'LICENSE', pakket/'bron/LICENSE')
+shutil.copy2(repo/'.gitattributes', pakket/'bron/.gitattributes')
 metadata = json.loads(subprocess.check_output(['cargo', 'metadata', '--manifest-path', str(root/'Cargo.toml'), '--locked', '--format-version', '1'], text=True, encoding='utf-8'))
 with (pakket/'licenties/afhankelijkheden.csv').open('w', newline='', encoding='utf-8') as f:
     w = csv.writer(f)

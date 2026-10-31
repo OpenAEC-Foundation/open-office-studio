@@ -847,10 +847,9 @@ impl App {
                             "Pas de ingevoerde tekst eerst toe en wacht tot het document gereed is",
                         );
                     }
-                    if t.antwoord
-                        .as_ref()
-                        .is_some_and(|a| a.beeld.module == Module::Writer)
-                        && let Some(v) = t.veld()
+                    if t.antwoord.as_ref().is_some_and(|a| {
+                        a.beeld.module == Module::Writer && a.beeld.bewerkingsbeperking.is_none()
+                    }) && let Some(v) = t.veld()
                     {
                         let opdracht = Opdracht::Bewerk(
                             t.deel,
@@ -914,7 +913,9 @@ impl App {
                     if t.bezig || t.concept {
                         return self.waarschuwing("Pas de ingevoerde tekst eerst toe");
                     }
-                    if let Some(v) = t.veld() {
+                    if let Some(v) = t.veld()
+                        && v.bewerkbaar
+                    {
                         let module = t.antwoord.as_ref().unwrap().beeld.module;
                         let id = if module == Module::Spreadsheet {
                             t.adres.clone()
@@ -2152,6 +2153,21 @@ impl App {
                 .center(Length::Fill)
                 .into()
         };
+        let beperking: Element<'_, Msg> = match self
+            .tab()
+            .and_then(|t| t.antwoord.as_ref())
+            .and_then(|a| a.beeld.bewerkingsbeperking.as_deref())
+        {
+            Some(reden) => w::banner(
+                l,
+                w::Tone::Info,
+                icoon(Icon::Help),
+                reden,
+                icoon(Icon::Close),
+                None,
+            ),
+            None => iced::widget::Space::new().height(0).into(),
+        };
         column![
             w::document_tabs(
                 l,
@@ -2162,6 +2178,7 @@ impl App {
                 Msg::Sluit,
                 Msg::Selecteer
             ),
+            beperking,
             werk
         ]
         .height(Length::Fill)

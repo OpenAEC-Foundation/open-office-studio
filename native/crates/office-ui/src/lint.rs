@@ -6,6 +6,23 @@ use openaec_ui::ribbon_icons::RibbonIcon as R;
 fn svg(r: R) -> &'static str {
     std::str::from_utf8(r.bytes()).expect("meegeleverd linticoon")
 }
+/// Een komma en een punt zijn toegestaan; duizendtallen horen niet in dit veld.
+pub fn lettergrootte(tekst: &str) -> Option<f64> {
+    let tekst = tekst.trim();
+    if tekst.is_empty()
+        || !tekst
+            .chars()
+            .all(|c| c.is_ascii_digit() || matches!(c, ',' | '.'))
+        || tekst.chars().filter(|c| matches!(c, ',' | '.')).count() > 1
+    {
+        return None;
+    }
+    tekst
+        .replace(',', ".")
+        .parse::<f64>()
+        .ok()
+        .filter(|n| n.is_finite() && (1.0..=400.).contains(n))
+}
 pub fn vul_beeldmaat(beeld: &mut Weergave) {
     if beeld.pagina.breedte > 0. {
         return;
@@ -47,32 +64,36 @@ pub fn ribbon(app: &App) -> Option<Element<'_, Msg>> {
     };
     let tekst = column![
         row![
-            openaec_ui::design::a11y::named(
+            openaec_ui::design::a11y::node(
                 text_input("Lettertype", &t.lettertype)
-                    .on_input(Msg::Lettertype)
+                    .on_input_maybe(kan.then_some(Msg::Lettertype))
                     .on_submit_maybe(
                         (kan && !t.lettertype.trim().is_empty())
                             .then(|| Msg::Opmaak(Opmaak::Lettertype(t.lettertype.clone())))
                     )
                     .width(140)
                     .padding(5),
-                openaec_ui::design::a11y::Role::TextField,
-                "Lettertype"
+                openaec_ui::design::a11y::Node::new(
+                    openaec_ui::design::a11y::Role::TextField,
+                    "Lettertype"
+                )
+                .disabled(!kan)
             ),
-            openaec_ui::design::a11y::named(
+            openaec_ui::design::a11y::node(
                 text_input("Grootte", &t.grootte)
-                    .on_input(Msg::Grootte)
+                    .on_input_maybe(kan.then_some(Msg::Grootte))
                     .on_submit_maybe(
-                        t.grootte
-                            .parse::<f64>()
-                            .ok()
-                            .filter(|n| n.is_finite() && (1.0..=400.).contains(n))
+                        kan.then(|| lettergrootte(&t.grootte))
+                            .flatten()
                             .map(|n| Msg::Opmaak(Opmaak::Lettergrootte(n)))
                     )
                     .width(54)
                     .padding(5),
-                openaec_ui::design::a11y::Role::TextField,
-                "Lettergrootte"
+                openaec_ui::design::a11y::Node::new(
+                    openaec_ui::design::a11y::Role::TextField,
+                    "Lettergrootte"
+                )
+                .disabled(!kan)
             )
         ]
         .spacing(5),

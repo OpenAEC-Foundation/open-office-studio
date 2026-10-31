@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.8**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.9**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -53,6 +53,14 @@ regelovergang binnen de alinea. Gebruik **Splitsen bij cursor** voor een echte
 nieuwe alinea; **Volgende samenvoegen** verwijdert de aangrenzende alineagrens.
 Deze opdrachten blijven binnen dezelfde tekst of tabelcel en weigeren revisies,
 inhoudsbesturingen en samenvoegen over een sectie-einde.
+
+Actieve documentbeveiliging wordt in Writer als alleen-lezen geopend. Het
+lint en de tekstbewerking blijven geblokkeerd; selecteren en kopiëren blijven
+mogelijk. Niet-afgedwongen instellingen blijven behouden bij gewone bewerkingen.
+Beveiligde uitzonderingen, formulieren en het opheffen van beveiliging zijn
+nog niet geïmplementeerd.
+
+![Beschermde Writer-bron met leesmelding](docs/screenshots/writer-beveiligd.png)
 
 ![Vrij native notitiecanvas](docs/screenshots/notition-canvas.png)
 
@@ -148,11 +156,12 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
-Het [controlerapport voor alpha 8](docs/controle-2026-10-31-alpha8.md) beschrijft
-de 161 reguliere Rust-tests, zes expliciete runtimeproeven en vijf Python-tests,
-de kop-/voettekstregressie, kleur- en liniaalcorrecties en conversie-export
-en de grenzen van de actuele controle. De eerdere
-rapporten blijven historische verslagen.
+Het [controlerapport voor alpha 9](docs/controle-2026-10-31-alpha9.md) beschrijft
+166 reguliere Rust-tests, zes expliciete runtimeproeven en zeven Python-tests,
+Writer-beveiliging, Nederlandse lettergrootteinvoer en strengere bronpakketten.
+De volledig afgeronde platform- en corpusronde betreft
+[alpha 8](docs/controle-2026-10-31-alpha8.md); de nieuwe alpha-9-platformronde
+wordt afzonderlijk gecontroleerd. De eerdere rapporten blijven historische verslagen.
 
 ```sh
 python3 native/scripts/controleer-bron.py
