@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.24**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.25**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -279,9 +279,9 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
-Het [controlerapport voor alpha 24](docs/controle-2026-10-31-alpha24.md) beschrijft **272 reguliere Rust-tests**, inclusief **82 GUI-tests**, zes aparte runtimeproeven en zeven Python-tests. Rustfmt, Clippy met waarschuwingen als fouten en bronhashcontroles slagen. Bestandsuitvoer en conversies zijn onafhankelijk teruggelezen; **45 native schermen** zijn vastgelegd. Het bronmanifest legt nu ook alle fixtures, templates en voorbeeldbestanden vast: **178 bestanden**. De nieuwe proeven controleren blad-/werkmapbeveiliging, bronexacte weigeringen, afwijkende relatiedoelen, ongebruikte delen, indexgrenzen, streamend lezen en een onjuist bewerkbaar frontendveld.
+Het [controlerapport voor alpha 25](docs/controle-2026-10-31-alpha25.md) beschrijft **275 reguliere Rust-tests**, inclusief **83 GUI-tests**, zes aparte runtimeproeven en zeven Python-tests. Rustfmt, Clippy met waarschuwingen als fouten en bronhashcontroles slagen. Bestandsuitvoer en conversies zijn onafhankelijk teruggelezen; **46 native schermen** zijn vastgelegd. Het bronmanifest omvat **606 repositorybestanden** inclusief de gepinde renderer-/fontbron en sluit lokale gegenereerde uitvoer uit. Spreadsheet tekent ontbrekende monochrome symbolen nu vanuit het vastgepinde aanvullende gezicht, met eigen glyphschaal en consistente uitlijning, clipping en breedtemeting. De [afgekeurde afrondingsproeven en aparte renderercontrole](docs/symbolen-diagnose-alpha25/LEESMIJ.md) blijven bewaard. Volledige Unicode- en functiepariteit zijn nog open.
 
-De alpha-24-releasebuild en platformronde moeten nog worden uitgevoerd. De [lokale alpha-23-releasebouw](docs/bouw-2026-10-31-alpha23-lokaal.json) slaagt in 33m15s; beide programma’s zijn met versies en hashes vastgezet. De [echte Spreadsheet-vensterproef](docs/vensterproef-2026-10-31-alpha23-spreadsheet/LEESMIJ.md) heeft negen geslaagde functionele stappen, maar is **visueel afgekeurd**: een correct opgeslagen huisteken ontbreekt in het raster. De alpha-23-platformronde wordt afzonderlijk vastgelegd. De [alpha-22-platformronde](docs/platformen-2026-10-31-alpha22.json) slaagt op alle vijf taken met 1074 bronbestanden per pakket, 86 volledige beeldparen zonder tolerantie en [21 paginabezoeken](docs/paginametingen-2026-10-31-alpha22.json). De [lokale releasebouw](docs/bouw-2026-10-31-alpha22-lokaal.json) slaagt in 34m15s en de [echte Linux-vensterproef](docs/vensterproef-2026-10-31-alpha22-release/LEESMIJ.md) op achttien gerichte stappen. Beide programma’s zijn met versies en hashes vastgezet. De [alpha-21-platformronde](docs/platformen-2026-10-31-alpha21.json) slaagt op alle vijf taken, met 1039 bronbestanden per pakket, 82 volledige beeldparen zonder tolerantie en [21 paginabezoeken](docs/paginametingen-2026-10-31-alpha21.json). De [lokale releasebouw](docs/bouw-2026-10-31-alpha21-lokaal.json) slaagt in 38m02s; beide programma’s zijn met hun versies, bronmanifest en hashes vastgezet.
+De alpha-25-releasebuild en platformronde moeten nog worden afgerond. De [alpha-24-releasebouw](docs/bouw-2026-10-31-alpha24-lokaal.json) slaagt in 29m50s; beide programma’s zijn vastgezet en pakket-/broncontroles slagen. De [echte beschermingsproef](docs/vensterproef-2026-10-31-alpha24-release/LEESMIJ.md) slaagt na afgeronde navigatie, met eerdere mislukkingen en de snelle sleepsessie nog open. De [volledige alpha-24-platformronde](docs/platformen-2026-10-31-alpha24.json) slaagt op vijf taken met 1145 bronbestanden per pakket, 90 volledige native beeldparen en 21 paginabezoeken. De echte alpha-23-vensterproef met het ontbrekende huisteken blijft historisch visueel afgekeurd; alpha 25 moet nog met het echte releasevenster worden hertest.
 
 De [echte alpha-21-Linux-releasevensterproef](docs/vensterproef-2026-10-31-alpha21-release/LEESMIJ.md) slaagt op elf gerichte stappen met directe paginatoetsen, systeemklembord, Unicode, onmiddellijk bewaren, opmaakbehoud, bronexacte undo, knippen/plakken, zoekfocus na Escape, Bestand en schoon sluiten. De eerste afgekeurde proefopzet blijft toegelicht bewaard. Deze proef gebruikt een eigen Xvfb, D-Bus en XDG-mappen. Geen alpha-23-venstergoedkeuring, fysieke hardware, Windows/macOS-bediening, echte IME-compositie, systeemdialogen of schermlezers.
 
@@ -402,15 +402,15 @@ Een afzonderlijke Chromium-testbrowser heeft inmiddels een oorspronkelijke
 navigatie gepauzeerd om de knipperfase vast te leggen; meldingen zijn via hun
 sluitknoppen gesloten. De opname is niet geschaald, uitgelijnd of nabewerkt.
 Twee opeenvolgende referentieopnamen zijn pixelgelijk. De
-[alpha-24-vergelijking](docs/pixelcontrole-alpha24/writer/rapport.json)
-met de native Writer meet **108.312 afwijkende pixels van 943.736**.
+[alpha-25-vergelijking](docs/pixelcontrole-alpha25/writer/rapport.json)
+met de native Writer meet **108.318 afwijkende pixels van 943.736**.
 Deze ene vastgelegde toestand bewijst dus expliciet dat de UI nog niet gelijk is.
 De [herkomst](docs/referentie-2026-W44.8/writer.json) vermeldt bron-, bundel- en
 beeldhashes, browser, viewport, thema en taal. Ook voor
 [Spreadsheet](docs/referentie-2026-W44.8/spreadsheet.png),
 [Presentation](docs/referentie-2026-W44.8/presentation.png) en
 [Notition](docs/referentie-2026-W44.8/notition.png) zijn nu vaste PNG-referenties
-vastgelegd. De [vier alpha-24-vergelijkingen](docs/pixelcontrole-alpha24/rapport.json)
+vastgelegd. De [vier alpha-25-vergelijkingen](docs/pixelcontrole-alpha25/rapport.json)
 falen; indeling, panelen en overige schermtoestanden blijven over te zetten.
 De browser- en nativevenstertoestanden zijn vastgelegd. Een vergelijking in
 dezelfde desktopvenstertoestand staat nog open.
@@ -442,4 +442,10 @@ python3 native/scripts/meet-paginas.py \
 Op Windows heeft de controleur de extensie `.exe`. Dit is een paginaproef,
 geen fysieke GUI-, volledige inhouds- of pariteitscontrole.
 
-De [controle van alpha 24](docs/controle-2026-10-31-alpha24.md) legt de huidige lokale tests en nog open acceptatie vast. Historische platform- en vensterproeven blijven aan hun eigen broncommit en programmaversie gekoppeld.
+De [controle van alpha 25](docs/controle-2026-10-31-alpha25.md) legt de huidige lokale tests en nog open acceptatie vast. Historische platform- en vensterproeven blijven aan hun eigen broncommit en programmaversie gekoppeld.
+
+### Ontbrekende symbolen in Spreadsheet
+
+![Huisteken na bevestigde invoer, heropenen en bronexacte undo gecontroleerd](docs/screenshots/spreadsheet-symbool-raster.png)
+
+[De symboolproeven](docs/spreadsheet-symbolen-2026-10-31-alpha25.json) onderscheiden een werkelijk getekend huisteken van een ontbrekend-glyph. Vier stijlen, drie uitlijningen, celafkapping, stapeling, regelterugloop en zichtbare rotatie worden gecontroleerd. De bron houdt de Unicode-tekst, oorspronkelijke formules en het tweede blad. Dit is een monochrome aanvulling, geen volledige CJK-, BiDi-, emoji- of systeemletterdekking.

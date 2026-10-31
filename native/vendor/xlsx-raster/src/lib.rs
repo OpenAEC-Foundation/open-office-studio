@@ -2,6 +2,7 @@
 //! server-side twin of the browser's canvas backend; never enters the wasm build.
 
 mod font;
+mod font_fallback;
 mod resources;
 use std::collections::{HashMap, hash_map::Entry};
 
@@ -223,8 +224,10 @@ pub fn render_png_with_fonts(dl: &DisplayList, fonts: &dyn FontProvider) -> Resu
                 wrap,
             } => {
                 let selected_font = fonts.resolve(font_family.as_deref(), *bold, *italic)?;
+                let fallback_fonts = fonts.fallbacks(font_family.as_deref(), *bold, *italic, text)?;
                 let run = font::TextRun {
                     face: &selected_font.face,
+                    fallbacks: &fallback_fonts,
                     x: *x,
                     y: *y,
                     text,
@@ -262,7 +265,7 @@ pub fn render_png_with_fonts(dl: &DisplayList, fonts: &dyn FontProvider) -> Resu
                         text,
                         layout,
                         *align,
-                        |literal| font::measure_text_with_face(run.face, literal, *font_size),
+                        |literal| font::measure_run(&run, literal),
                         |literal, x| {
                             font::paint_text(
                                 &mut pixmap,
@@ -277,7 +280,7 @@ pub fn render_png_with_fonts(dl: &DisplayList, fonts: &dyn FontProvider) -> Resu
                     );
                 } else if let Some(wrap) = wrap {
                     let lines = xlsx_render::wrap::wrap_lines(text, wrap.width, |line| {
-                        font::measure_text_with_face(run.face, line, *font_size)
+                        font::measure_run(&run, line)
                     });
                     for (index, line) in lines.iter().enumerate() {
                         font::paint_text(

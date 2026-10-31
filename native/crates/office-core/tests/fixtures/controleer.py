@@ -261,3 +261,11 @@ assert wb['Begroting']['B2'].value == 3
 assert wb['Begroting']['D2'].value == '=B2*C2'
 assert wb['Tweede blad']['A1'].value == 'Bewaar ook dit blad'
 print('Spreadsheet-beveiliging: bron na GUI-weigeringen exact gelijk; beveiligd tweede blad, eerste blad, formules en waarden onafhankelijk teruggelezen.')
+
+symbool = load_workbook(map/'spreadsheet-symbool.xlsx', data_only=False)
+s = symbool['Begroting']
+assert s['G10'].value == 'café 🏠'
+assert s['B2'].value == 3 and s['D2'].value == '=B2*C2'
+assert s['D4'].value == '=SUM(D2:D3)' and s['D4'].number_format == '0.00'
+assert symbool['Tweede blad']['A1'].value == 'Bewaar ook dit blad'
+print('Spreadsheet-symbool: astrale Unicode uit echte GUI-celinvoer, oorspronkelijke formules en tweede blad onafhankelijk teruggelezen; geen bewijs voor rasterweergave.')

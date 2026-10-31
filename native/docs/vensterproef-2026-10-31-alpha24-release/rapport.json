@@ -1,0 +1,44 @@
+{
+  "versie": "Open Office Studio 2026.44.9-alpha.24 (native)",
+  "programma_sha256": "312752802bc3afd587ee7cc81463686a6bfe553285623b6d1ce4d84ae584016a",
+  "broncommit": "1155f3676bef9573b5d2d67fb7cb58149545a6e4",
+  "proefbron_sha256": "eed8232ebad0c127a68165c4e14172dd78075ed1a51d1c6f285be1cb2fca965c",
+  "geslaagd": true,
+  "omvang": "Echt native Linux-venster, X11-muis/toetsen en systeemklembord, in eigen Xvfb en vooraf geïsoleerde sessie-D-Bus/XDG-profielen. Geen fysieke hardware, andere platforms, volledige suite, IME-compositie of systeemdialoog.",
+  "stappen": [
+    {
+      "stap": "Eigen XLSX geopend in het echte native venster",
+      "beeld": {
+        "bestand": "spreadsheet-open.png",
+        "sha256": "5de8e9f056da9c778a56db57f6bbf0d3eb7206b6a2b423c320a57cece5e766cf"
+      }
+    },
+    {
+      "stap": "F2, typen, Enter en bewaren wijzigen de beschermde werkmap niet",
+      "beeld": {
+        "bestand": "spreadsheet-beveiligd-invoer.png",
+        "sha256": "eab7de7a6915b72de8221cfd2e29a53ad000d1229d912c54f0f796ba57ba0589"
+      }
+    },
+    {
+      "stap": "Systeemklembord plakken en bewaren wijzigen de beschermde werkmap niet"
+    },
+    {
+      "stap": "Muissleep en bereikbaar adresveld blijven beschikbaar bij alleen-lezen",
+      "beeld": {
+        "bestand": "spreadsheet-beveiligd-bereik.png",
+        "sha256": "6d4c47c4b283d7e2039493b9a972fcddd660a52b2e840e68b13d0d3204801c13"
+      }
+    },
+    {
+      "stap": "Opmaakknop wijzigt de beschermde selectie niet"
+    },
+    {
+      "stap": "Bestand geopend en gesloten met exact bronbehoud"
+    },
+    {
+      "stap": "Eigen venster schoon gesloten",
+      "procescode": 0
+    }
+  ]
+}

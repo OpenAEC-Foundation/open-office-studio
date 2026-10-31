@@ -1,0 +1,11 @@
+# Afgekeurde glyphafronding en aparte rendererproef
+
+De eerste twee vergelijkingen vonden 84 en 78 verschillende randpixels, telkens met één kanaalstap verschil. De onbewerkte PNG-paren en hun hashes blijven bewaard; deze proeven zijn niet naar geslaagd omgezet. De eerste afwijking kwam door een extra alfalaag bij tekst die geheel binnen de cel paste. De tweede kwam door een andere keuze tussen direct tekenen en een afkaplaag: ook de fontdaling moet in die keuze meetellen wanneer de zichtbare contour zelf nog past. De uiteindelijke bron corrigeert beide routes zonder tolerantie toe te voegen.
+
+De aparte rendererproef slaagt op 18 oorspronkelijke unitproeven, vijf oorspronkelijke PNG-goldens en één aanvullende proef met 48 combinaties van vier stijlen, drie uitlijningen en gewone/afgekapte/gestapelde/teruglopende symbolen. De rendererbron is bytegelijk aan die van de suite, maar deze proef gebruikt het oorspronkelijke vendorlockbestand in een eigen pakket. Deze 24 tests zijn **niet** meegeteld bij de 275 reguliere workspace-tests. De uitgebreide workspace-kerntests controleren ook rotatie en voeren hun eigen bron-/afhankelijkhedencontrole uit.
+
+De volledige losse vendorunittarget kon aanvankelijk niet compileren doordat de gepubliceerde crate een fixture buiten zijn eigen pakket verwacht. [padfixture.json](padfixture.json) komt uit de vastgepinde upstreamrevisie; bron, revisie en SHA-256 staan in [rapport.json](rapport.json). Alleen de privéproef kreeg die aanvullende fixture. De originele vendorbestanden en lockfile in de repository zijn daardoor niet herschreven.
+
+Herhalen kan in een tijdelijke monorepo-opzet: kopieer `native/vendor/xlsx-raster` naar `crates/xlsx-raster`, kopieer het vastgepinde symboolfont uit `native/vendor/symbolen` naar de `assets` van die kopie, plaats [proefbron.rs](proefbron.rs) als `tests/symbolen.rs` en voeg in de tijdelijke `Cargo.toml` een `[[test]]` met die naam en dat pad toe. Plaats de padfixture onder `packages/xlsx/test-fixtures/path-backend-agreement.json`. Voer in die kopie `cargo test --locked -j1` uit. De vijf oorspronkelijke goldens mogen niet worden bijgewerkt.
+
+Dit is een rendererdiagnose, geen volledige UI-referentievergelijking, echte releasevensterproef, volledige Unicode-dekking of suitegoedkeuring.

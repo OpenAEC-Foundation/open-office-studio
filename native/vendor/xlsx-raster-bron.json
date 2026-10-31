@@ -25,12 +25,12 @@
   },
   "aanpassingen": {
     "src/lib.rs": {
-      "sha256": "2c6e307ce2c0b12055b410ca3ce2beab9a10d454e3331eaa516db068989f1fa3",
-      "reden": "Voeg expliciete fontleveranciers en een scoped facadeaanroep toe; gebruik de gekozen letter bij meten, regelterugloop, getalopmaak en tekenen. De standaardaanroep behoudt de ingebouwde letter."
+      "sha256": "f733927068a6de9f65e8035ced3fa72340b680bbea5ce713bb77f5e95e75b72f",
+      "reden": "Voeg expliciete fontleveranciers en een scoped facadeaanroep toe; gebruik de gekozen letter bij meten, regelterugloop, getalopmaak en tekenen. De standaardaanroep behoudt de ingebouwde letter. Ontbrekende gevormde clusters gebruiken expliciete aanvullende gezichten; meten, afbreken, uitlijnen en schilderen volgen dezelfde glyphkeuze. De bestaande standaardroute blijft behouden."
     },
     "src/font.rs": {
-      "sha256": "1ace8f04a1bdff440f5d4ceefd282df56e4c5619d61371e06ac89c66da337505",
-      "reden": "Geef de gekozen letter expliciet door aan tekst, gedraaide en gestapelde tekst; echte stijlgezichten gebruiken geen dubbele synthetische vet-/cursiefvorm."
+      "sha256": "9ceef12ac0cd6ca543aeb0cf4beb4f7aeea7beef998b2d1609a392bf721036aa",
+      "reden": "Geef de gekozen letter expliciet door aan tekst, gedraaide en gestapelde tekst; echte stijlgezichten gebruiken geen dubbele synthetische vet-/cursiefvorm. Ontbrekende gevormde clusters gebruiken expliciete aanvullende gezichten; meten, afbreken, uitlijnen en schilderen volgen dezelfde glyphkeuze. De bestaande standaardroute blijft behouden."
     }
   },
   "aanvullingen": {
@@ -39,8 +39,12 @@
       "bron": "https://github.com/openooxml/betteroffice/blob/4e982c3aea0065578604c3fe7727938533888f66/LICENSE"
     },
     "src/resources.rs": {
-      "sha256": "ed5587341ae3ff272de2392ee988054e962134358efd1f47323641cc6efcce92",
-      "reden": "Getypeerde fontresources en een per draad scoped leverancier die ook na fouten en paniek wordt hersteld."
+      "sha256": "473c34002e5115fa903922317bf80e0a4bb052eb0a03cf7de095d6b4212934ab",
+      "reden": "Getypeerde fontresources en een per draad scoped leverancier die ook na fouten en paniek wordt hersteld. De leverancier kan nu aanvullende gezichten aanbieden zonder de standaardletter te wijzigen."
+    },
+    "src/font_fallback.rs": {
+      "sha256": "45347ceb88c58e23d4756164312c3cfa3429649163044eca01924cafea60c469",
+      "reden": "Vervang alleen ontbrekende gevormde clusters door echte aanvullende glyphs met hun eigen schaal en stijl. Houd kerning, gezamenlijke lijnbreedte, decoraties en celclipping consistent."
     }
   }
 }

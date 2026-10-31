@@ -17,6 +17,18 @@ pub trait FontProvider: Send + Sync {
         bold: bool,
         italic: bool,
     ) -> Result<ResolvedFont, String>;
+
+    /// Aanvullende gezichten voor ontbrekende clusters. De standaardfacade
+    /// houdt haar oorspronkelijke, enkele ingebouwde letter.
+    fn fallbacks(
+        &self,
+        _family: Option<&str>,
+        _bold: bool,
+        _italic: bool,
+        _text: &str,
+    ) -> Result<Vec<ResolvedFont>, String> {
+        Ok(Vec::new())
+    }
 }
 
 thread_local! {

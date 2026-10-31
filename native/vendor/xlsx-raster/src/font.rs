@@ -10,8 +10,8 @@ use unicode_segmentation::UnicodeSegmentation;
 use xlsx_render::{Align, NumberFormatLayout, Rect as DlRect, TextValign};
 
 // synthetic bold nudges a second glyph pass right; synthetic italic shears.
-const BOLD_OFFSET_PX: f32 = 0.35;
-const ITALIC_SHEAR: f32 = 0.21;
+pub(crate) const BOLD_OFFSET_PX: f32 = 0.35;
+pub(crate) const ITALIC_SHEAR: f32 = 0.21;
 
 const FONT_BYTES: &[u8] = include_bytes!("../assets/Carlito-Regular.ttf");
 
@@ -23,7 +23,7 @@ pub(crate) fn embedded_face() -> Arc<rustybuzz::Face<'static>> {
     Arc::clone(&FACE)
 }
 
-const PX_PER_PT: f32 = 96.0 / 72.0;
+pub(crate) const PX_PER_PT: f32 = 96.0 / 72.0;
 pub const STACKED_LINE_HEIGHT_RATIO: f32 = 1.2;
 const STACKED_ASCENT_RATIO: f32 = 0.8;
 
@@ -47,9 +47,16 @@ pub fn measure_text_with_face(face: &rustybuzz::Face<'_>, text: &str, font_size_
     total as f32 * scale
 }
 
+pub(crate) fn measure_run(run: &TextRun, text: &str) -> f32 {
+    crate::font_fallback::shape(run, text)
+        .map(|g| g.width)
+        .unwrap_or_else(|| measure_text_with_face(run.face, text, run.font_size_pt))
+}
+
 /// a single-line text run; `x`/`y` are the align anchor and alphabetic baseline.
 pub struct TextRun<'a> {
     pub face: &'a rustybuzz::Face<'static>,
+    pub fallbacks: &'a [crate::resources::ResolvedFont],
     pub x: f32,
     pub y: f32,
     pub text: &'a str,
@@ -68,6 +75,11 @@ pub struct TextRun<'a> {
 /// paint one shaped, single-line run, clipped strictly to the run's clip rect.
 pub fn paint_text(pixmap: &mut Pixmap, run: &TextRun) {
     if run.clip.w <= 0.0 || run.clip.h <= 0.0 {
+        return;
+    }
+
+    if let Some(glyphs) = crate::font_fallback::shape(run, run.text) {
+        crate::font_fallback::paint(pixmap, run, &glyphs);
         return;
     }
 
@@ -153,7 +165,7 @@ fn paint_run(
 }
 
 #[allow(clippy::too_many_arguments)]
-fn paint_highlight(
+pub(crate) fn paint_highlight(
     target: &mut Pixmap,
     face: &rustybuzz::Face<'_>,
     run: &TextRun,
@@ -215,7 +227,7 @@ fn paint_glyphs(
 }
 
 #[allow(clippy::too_many_arguments)]
-fn paint_decorations(
+pub(crate) fn paint_decorations(
     target: &mut Pixmap,
     face: &rustybuzz::Face<'_>,
     run: &TextRun,
@@ -291,19 +303,19 @@ pub fn paint_rotated_text(
                 run.text,
                 &effective,
                 run.align,
-                |literal| measure_text_with_face(face, literal, run.font_size_pt),
+                |literal| measure_run(run, literal),
                 |literal, x| raw.push((literal.to_owned(), x)),
             );
             if raw.is_empty() {
                 (
                     vec![(run.text.to_owned(), 0.0)],
-                    measure_text_with_face(face, run.text, run.font_size_pt),
+                    measure_run(run, run.text),
                 )
             } else {
                 let min_x = raw.iter().map(|(_, x)| *x).fold(f32::INFINITY, f32::min);
                 let max_x = raw
                     .iter()
-                    .map(|(text, x)| x + measure_text_with_face(face, text, run.font_size_pt))
+                    .map(|(text, x)| x + measure_run(run, text))
                     .fold(f32::NEG_INFINITY, f32::max);
                 let segments = raw
                     .into_iter()
@@ -314,7 +326,7 @@ pub fn paint_rotated_text(
         }
         None => (
             vec![(run.text.to_owned(), 0.0)],
-            measure_text_with_face(face, run.text, run.font_size_pt),
+            measure_run(run, run.text),
         ),
     };
     let ascent = face.ascender() as f32 * scale;
@@ -366,6 +378,13 @@ pub fn paint_rotated_text(
         0.0
     };
     for (segment, segment_offset) in &segments {
+        if let Some(glyphs) = crate::font_fallback::shape(run, segment) {
+            crate::font_fallback::paint_rotated_segment(
+                &mut scratch, run, &glyphs, *segment_offset, run_width,
+                center_y_local, cos, sin, cx - ox, cy - oy, &paint,
+            );
+            continue;
+        }
         let glyphs = shape(face, segment);
         let mut pen = 0.0_f32;
         for (info, pos) in glyphs.glyph_infos().iter().zip(glyphs.glyph_positions()) {
@@ -453,7 +472,7 @@ pub fn paint_stacked_text(pixmap: &mut Pixmap, run: &TextRun, cell: &DlRect, val
         if line_top + line_h <= clip_top || line_top >= clip_bottom {
             continue;
         }
-        let w = measure_text_with_face(run.face, cluster, run.font_size_pt);
+        let w = measure_run(run, cluster);
         let x = match run.align {
             Align::Left => cell.x,
             Align::Center => cell.x + (cell.w - w) / 2.0,
@@ -464,6 +483,7 @@ pub fn paint_stacked_text(pixmap: &mut Pixmap, run: &TextRun, cell: &DlRect, val
         }
         let sub = TextRun {
             face: run.face,
+            fallbacks: run.fallbacks,
             x,
             y: line_top + ascent,
             text: cluster,
@@ -482,13 +502,13 @@ pub fn paint_stacked_text(pixmap: &mut Pixmap, run: &TextRun, cell: &DlRect, val
     }
 }
 
-fn shape<'a>(face: &rustybuzz::Face<'a>, text: &str) -> rustybuzz::GlyphBuffer {
+pub(crate) fn shape<'a>(face: &rustybuzz::Face<'a>, text: &str) -> rustybuzz::GlyphBuffer {
     let mut buffer = rustybuzz::UnicodeBuffer::new();
     buffer.push_str(text);
     rustybuzz::shape(face, &[], buffer)
 }
 
-fn glyph_path(face: &ttf_parser::Face, glyph_id: u16) -> Option<Path> {
+pub(crate) fn glyph_path(face: &ttf_parser::Face, glyph_id: u16) -> Option<Path> {
     let mut builder = PathCollector {
         pb: PathBuilder::new(),
     };

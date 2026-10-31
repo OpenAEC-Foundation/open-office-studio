@@ -1,0 +1,32 @@
+{
+  "versie": "Open Office Studio 2026.44.9-alpha.24 (native)",
+  "programma_sha256": "312752802bc3afd587ee7cc81463686a6bfe553285623b6d1ce4d84ae584016a",
+  "broncommit": "1155f3676bef9573b5d2d67fb7cb58149545a6e4",
+  "proefbron_sha256": "c6e444af667518249de0698c912fcb7cf02b8a5a785ac19ef350108952c65165",
+  "geslaagd": false,
+  "omvang": "Echt native Linux-venster, X11-muis/toetsen en systeemklembord, in eigen Xvfb en vooraf geïsoleerde sessie-D-Bus/XDG-profielen. Geen fysieke hardware, andere platforms, volledige suite, IME-compositie of systeemdialoog.",
+  "stappen": [
+    {
+      "stap": "Eigen XLSX geopend in het echte native venster",
+      "beeld": {
+        "bestand": "spreadsheet-open.png",
+        "sha256": "5de8e9f056da9c778a56db57f6bbf0d3eb7206b6a2b423c320a57cece5e766cf"
+      }
+    },
+    {
+      "stap": "F2, typen, Enter en bewaren wijzigen de beschermde werkmap niet",
+      "beeld": {
+        "bestand": "spreadsheet-beveiligd-invoer.png",
+        "sha256": "e39e09208c36fba80dbf9fcb07c355ba3677dd22c6811b791249e9973721dc00"
+      }
+    },
+    {
+      "stap": "Systeemklembord plakken en bewaren wijzigen de beschermde werkmap niet"
+    }
+  ],
+  "fout": "Command '['xdotool', 'mousemove', '--sync', '134', '305']' timed out after 10 seconds",
+  "foutbeeld": {
+    "bestand": "spreadsheet-fout.png",
+    "sha256": "a8fc80938c7257d24725288d7c01abc19e526b95b72276c589bf98104f3215ab"
+  }
+}

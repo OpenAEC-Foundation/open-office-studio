@@ -31,12 +31,16 @@ fn ontbrekend_huissymbool_krijgt_een_echt_glyph_met_tekenbaar_contour() {
 }
 
 #[test]
-fn writer_en_presentatie_rasteren_een_symbool_in_plaats_van_een_ontbrekend_teken() {
+fn documentmodules_rasteren_een_symbool_in_plaats_van_een_ontbrekend_teken() {
     use office_core::document::{Bewerking, Module, Sessie};
     for (module, bytes) in [
         (
             Module::Writer,
             include_bytes!("fixtures/writer.docx").as_slice(),
+        ),
+        (
+            Module::Spreadsheet,
+            include_bytes!("fixtures/spreadsheet.xlsx").as_slice(),
         ),
         (
             Module::Presentation,

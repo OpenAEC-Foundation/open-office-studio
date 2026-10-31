@@ -1,0 +1,9 @@
+# Spreadsheet-releasevensterproef alpha 24
+
+De lokale release `2026.44.9-alpha.24` slaagt op **zeven gerichte stappen** in een eigen Xvfb-/sessie-D-Bus-omgeving. Configuratie, gegevens, cache en runtime zijn vóór de sessiebus op afzonderlijke paden gezet. Het programma komt uit Git-archief `1155f3676bef9573b5d2d67fb7cb58149545a6e4`; beide releaseprogramma’s zijn met versie en SHA-256 vastgezet vóór volgende builds.
+
+De proef opent een synthetische werkmap met een beschermd tweede blad. De zichtbare alleen-lezenmelding staat ook op het eerste blad. F2, typen, Enter, plakken uit het systeemklembord, opmaak en bewaren wijzigen de bronbytes niet. Muisselectie B2:D4 blijft beschikbaar en is via het adresveld en systeemklembord gecontroleerd. Bestand opent en sluit met Escape; het eigen venster sluit met procescode 0. De beelden zijn volledig en onbewerkt.
+
+De drie eerdere pogingen blijven in afzonderlijke mappen bewaard. Poging 1 gebruikte de oude rasterhoogte; de nieuwe melding verplaatst het raster en adresveld 32 pixels. Poging 2 bleef hangen op `xdotool mousemove --sync` bij een reeds bereikte positie; de derde bron voorkomt dat. Poging 3 kreeg na de voorafgaande toetsen en muissleep nog B4 in plaats van B2:D4. De oorzaak is niet bewezen. De vierde, geslaagde proef controleert eerst de afgeronde navigatie en wacht vóór de sleep. **Dit bewijst geen foutloze snelle invoer of sleepsessie tijdens een lopend antwoord**; deze beperking blijft open. Geen mislukte proef is naar geslaagd omgezet.
+
+[rapport.json](rapport.json), [herkomst.json](herkomst.json), [proefbron.py](proefbron.py) en [startbron.py](startbron.py) leggen resultaten, hashes en de proefopzet vast. De scripts bevatten lokale controlepaden. Geen volledige suitebediening, fysieke hardware, Windows/macOS-bediening, echte IME-compositie, systeemdialoog, schermlezer of volledige functie-/pixelpariteit.

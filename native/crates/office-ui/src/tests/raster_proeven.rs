@@ -970,6 +970,79 @@ fn bladbeveiliging_kern_weigert_ook_bij_een_onjuist_bewerkbaar_frontendveld() {
     assert!(!p.app.tab().unwrap().antwoord.as_ref().unwrap().terug);
 }
 
+#[test]
+fn spreadsheet_opgeslagen_symbool_staat_in_het_raster_en_undo_herstelt_de_bron() {
+    use iced::keyboard::key::Named;
+    let mut p = Proef::nieuw();
+    let bron = p.bron();
+    p.cel("G10", false);
+    p.named(Named::F2);
+    p.selecteer_alles();
+    p.plak("café 🏠");
+    p.named(Named::Enter);
+    let echt = p
+        .app
+        .tab()
+        .unwrap()
+        .antwoord
+        .as_ref()
+        .unwrap()
+        .beeld
+        .afbeelding
+        .clone()
+        .unwrap();
+    let heropend = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone()).unwrap();
+    assert_eq!(
+        heropend
+            .weergave(0)
+            .unwrap()
+            .velden
+            .iter()
+            .find(|v| v.id == "G10")
+            .unwrap()
+            .tekst,
+        "café 🏠"
+    );
+    assert_eq!(
+        heropend.weergave(0).unwrap().afbeelding.as_ref().unwrap(),
+        &echt
+    );
+    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        std::fs::create_dir_all(&map).unwrap();
+        p.verbeeld()
+            .save_png(PathBuf::from(map).join("spreadsheet-symbool-raster.png"))
+            .unwrap();
+    }
+    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
+        std::fs::create_dir_all(&map).unwrap();
+        std::fs::write(
+            PathBuf::from(map).join("spreadsheet-symbool.xlsx"),
+            p.bron().as_slice(),
+        )
+        .unwrap();
+    }
+    p.named(Named::F2);
+    p.selecteer_alles();
+    p.plak("café \u{f0000}");
+    p.named(Named::Enter);
+    assert_ne!(
+        p.app
+            .tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .beeld
+            .afbeelding
+            .as_ref()
+            .unwrap(),
+        &echt
+    );
+    p.bericht(Msg::Terug);
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *bron);
+}
+
 impl Proef {
     fn nieuw() -> Self {
         lettertypen();

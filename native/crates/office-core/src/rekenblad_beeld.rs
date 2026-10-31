@@ -10,6 +10,28 @@ thread_local! {
     static LETTERS: RefCell<HashMap<Sleutel, Arc<FontFace<'static>>>> = RefCell::default();
 }
 struct Documentletters;
+fn gezicht(
+    f: &'static crate::lettertypen::Lettertype,
+    bold: bool,
+    italic: bool,
+) -> Result<ResolvedFont, String> {
+    let sleutel = (f.bytes.as_ptr() as usize, bold, italic);
+    let face = LETTERS.with(|slot| {
+        if let Some(face) = slot.borrow().get(&sleutel) {
+            return Ok(Arc::clone(face));
+        }
+        let face = FontFace::from_slice(f.bytes, 0)
+            .ok_or_else(|| format!("Documentletter kan niet worden gelezen: {}", f.familie))?;
+        let face = Arc::new(face);
+        slot.borrow_mut().insert(sleutel, Arc::clone(&face));
+        Ok::<_, String>(face)
+    })?;
+    Ok(ResolvedFont {
+        face,
+        synthetic_bold: bold && !f.vet,
+        synthetic_italic: italic && !f.cursief,
+    })
+}
 impl FontProvider for Documentletters {
     fn resolve(
         &self,
@@ -17,23 +39,35 @@ impl FontProvider for Documentletters {
         bold: bool,
         italic: bool,
     ) -> Result<ResolvedFont, String> {
-        let f = crate::lettertypen::kies(family.unwrap_or("Calibri"), bold, italic);
-        let sleutel = (f.bytes.as_ptr() as usize, bold, italic);
-        let face = LETTERS.with(|slot| {
-            if let Some(face) = slot.borrow().get(&sleutel) {
-                return Ok(Arc::clone(face));
-            }
-            let face = FontFace::from_slice(f.bytes, 0)
-                .ok_or_else(|| format!("Documentletter kan niet worden gelezen: {}", f.familie))?;
-            let face = Arc::new(face);
-            slot.borrow_mut().insert(sleutel, Arc::clone(&face));
-            Ok::<_, String>(face)
-        })?;
-        Ok(ResolvedFont {
-            face,
-            synthetic_bold: bold && !f.vet,
-            synthetic_italic: italic && !f.cursief,
-        })
+        gezicht(
+            crate::lettertypen::kies(family.unwrap_or("Calibri"), bold, italic),
+            bold,
+            italic,
+        )
+    }
+    fn fallbacks(
+        &self,
+        family: Option<&str>,
+        bold: bool,
+        italic: bool,
+        text: &str,
+    ) -> Result<Vec<ResolvedFont>, String> {
+        let hoofd = self.resolve(family, bold, italic)?;
+        if text
+            .chars()
+            .all(|c| hoofd.face.glyph_index(c).is_some_and(|g| g.0 != 0))
+        {
+            return Ok(vec![]);
+        }
+        let symbool = gezicht(&crate::lettertypen::SYMBOLEN, bold, italic)?;
+        if text.chars().any(|c| {
+            hoofd.face.glyph_index(c).is_none_or(|g| g.0 == 0)
+                && symbool.face.glyph_index(c).is_some_and(|g| g.0 != 0)
+        }) {
+            Ok(vec![symbool])
+        } else {
+            Ok(vec![])
+        }
     }
 }
 pub fn teken(
@@ -141,5 +175,178 @@ mod proeven {
         assert!(d.save().unwrap() == bron);
         let v = venster(&d);
         assert!(!teken(&d, id, &v).unwrap().bytes.is_empty());
+    }
+}
+
+#[cfg(test)]
+mod symboolproeven {
+    use super::*;
+    use xlsx_render::{Align, DisplayList, DrawCmd, GridMeta, Rect};
+    struct AlleenSymbolen;
+    impl FontProvider for AlleenSymbolen {
+        fn resolve(
+            &self,
+            _: Option<&str>,
+            vet: bool,
+            cursief: bool,
+        ) -> Result<ResolvedFont, String> {
+            gezicht(&crate::lettertypen::SYMBOLEN, vet, cursief)
+        }
+    }
+    fn vlak(tekst: &str, align: Align, vet: bool, cursief: bool) -> DisplayList {
+        DisplayList {
+            width: 180.,
+            height: 70.,
+            truncated: false,
+            grid: GridMeta::default(),
+            hyperlinks: vec![],
+            charts: vec![],
+            commands: vec![DrawCmd::Text {
+                x: match align {
+                    Align::Left => 20.,
+                    Align::Center => 90.,
+                    Align::Right => 160.,
+                },
+                y: 45.,
+                text: tekst.into(),
+                font_size: 22.,
+                color: "#123456".into(),
+                clip: Rect {
+                    x: 10.,
+                    y: 5.,
+                    w: 160.,
+                    h: 60.,
+                },
+                align,
+                bold: vet,
+                italic: cursief,
+                underline: false,
+                strike: false,
+                highlight: None,
+                dashed_underline: false,
+                font_family: Some("Calibri".into()),
+                number_format: None,
+                ghost: false,
+                chart: false,
+                rotation_deg: None,
+                rotation_box: None,
+                rotation_valign: None,
+                stacked: false,
+                wrap: None,
+            }],
+        }
+    }
+    #[test]
+    fn spreadsheet_aanvullend_huisglyph_heeft_dezelfde_schaal_uitlijning_en_stijl_als_zijn_eigen_font()
+     {
+        let hoofd = Documentletters
+            .resolve(Some("Calibri"), false, false)
+            .unwrap();
+        assert!(hoofd.face.glyph_index('🏠').is_none_or(|id| id.0 == 0));
+        for (vet, cursief) in [(false, false), (true, false), (false, true), (true, true)] {
+            let extra = Documentletters
+                .fallbacks(Some("Calibri"), vet, cursief, "café 🏠")
+                .unwrap();
+            assert_eq!(extra.len(), 1);
+            let id = extra[0].face.glyph_index('🏠').unwrap();
+            assert_ne!(id.0, 0);
+            assert!(extra[0].face.glyph_bounding_box(id).is_some());
+            assert_eq!(
+                (extra[0].synthetic_bold, extra[0].synthetic_italic),
+                (vet, cursief)
+            );
+            for align in [Align::Left, Align::Center, Align::Right] {
+                let beeld = vlak("🏠", align, vet, cursief);
+                assert_eq!(
+                    xlsx_raster::render_png_with_fonts(&beeld, &Documentletters).unwrap(),
+                    xlsx_raster::render_png_with_fonts(&beeld, &AlleenSymbolen).unwrap(),
+                    "Het aanvullende glyph moet zijn eigen schaal en gezamenlijke uitlijning gebruiken"
+                );
+                let mut afgesneden = beeld.clone();
+                let DrawCmd::Text { clip, .. } = &mut afgesneden.commands[0] else {
+                    panic!()
+                };
+                *clip = Rect {
+                    x: 25.,
+                    y: 10.,
+                    w: 8.,
+                    h: 40.,
+                };
+                assert_eq!(
+                    xlsx_raster::render_png_with_fonts(&afgesneden, &Documentletters).unwrap(),
+                    xlsx_raster::render_png_with_fonts(&afgesneden, &AlleenSymbolen).unwrap(),
+                    "Een aanvullend glyph mag niet buiten de celclip tekenen"
+                );
+            }
+        }
+        assert!(
+            Documentletters
+                .fallbacks(None, false, false, "café AV")
+                .unwrap()
+                .is_empty()
+        );
+        assert!(
+            Documentletters
+                .fallbacks(None, false, false, "\u{f0000}")
+                .unwrap()
+                .is_empty()
+        );
+    }
+    #[test]
+    fn spreadsheet_aanvullend_glyph_blijft_zichtbaar_bij_rotatie_stapeling_en_regelterugloop() {
+        for (vet, cursief) in [(false, false), (true, false), (false, true), (true, true)] {
+            for align in [Align::Left, Align::Center, Align::Right] {
+                for variant in 0..5 {
+                    let mut beelden = vec![];
+                    for tekst in ["🏠🏠", "\u{f0000}\u{f0000}"] {
+                        let mut beeld = vlak(tekst, align, vet, cursief);
+                        let DrawCmd::Text {
+                            rotation_deg,
+                            rotation_box,
+                            stacked,
+                            wrap,
+                            ..
+                        } = &mut beeld.commands[0]
+                        else {
+                            panic!()
+                        };
+                        match variant {
+                            0..=2 => {
+                                *rotation_deg = Some([-45., 45., 90.][variant]);
+                                *rotation_box = Some(Rect {
+                                    x: 10.,
+                                    y: 5.,
+                                    w: 160.,
+                                    h: 60.,
+                                });
+                            }
+                            3 => *stacked = true,
+                            _ => {
+                                *wrap = Some(xlsx_render::TextWrap {
+                                    width: 28.,
+                                    line_height: 30.,
+                                    valign: xlsx_render::TextValign::Center,
+                                })
+                            }
+                        }
+                        let png =
+                            xlsx_raster::render_png_with_fonts(&beeld, &Documentletters).unwrap();
+                        if variant >= 3 && tekst == "🏠🏠" {
+                            assert_eq!(
+                                png,
+                                xlsx_raster::render_png_with_fonts(&beeld, &AlleenSymbolen)
+                                    .unwrap(),
+                                "Stapeling/terugloop variant {variant}, vet {vet}, cursief {cursief}, uitlijning {align:?} moet de eigen glyphbreedte en pixelafronding gebruiken"
+                            );
+                        }
+                        beelden.push(png);
+                    }
+                    assert_ne!(
+                        beelden[0], beelden[1],
+                        "Variant {variant}, vet {vet}, cursief {cursief}, uitlijning {align:?} tekent nog het ontbrekende glyph"
+                    );
+                }
+            }
+        }
     }
 }
