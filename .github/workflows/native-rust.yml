@@ -41,7 +41,7 @@ jobs:
           restore-keys: native-${{ runner.os }}-
       - run: python native/scripts/controleer-bron.py
       - run: python native/scripts/controleer-migratie.py
-      - run: cargo fmt --manifest-path native/Cargo.toml -p office-core -p open-office-studio-native --check
+      - run: cargo fmt --manifest-path native/Cargo.toml -p office-core -p open-office-studio-native -p office-mail --check
       - run: cargo clippy --manifest-path native/Cargo.toml --workspace --locked --all-targets -- -D warnings
       - run: cargo test --manifest-path native/Cargo.toml --workspace --locked
       - name: Native uitvoer onafhankelijk teruglezen

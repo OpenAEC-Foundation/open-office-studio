@@ -6,6 +6,12 @@ license.workspace = true
 publish.workspace = true
 description = "Gedeelde native documentkern van Open Office Studio"
 
+# Draai de relevante oorspronkelijke enginecontroles met dezelfde gepatchte
+# parser en afhankelijkheden als de suite, zonder de vendorbron te veranderen.
+[[test]]
+name = "engine_velden"
+path = "../../vendor/docx-parse/tests/nested_fields.rs"
+
 [dependencies]
 serde.workspace = true
 serde_json.workspace = true

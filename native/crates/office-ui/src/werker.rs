@@ -40,6 +40,10 @@ impl Werker {
         let (zender, ontvanger) = mpsc::channel::<Taak>();
         std::thread::Builder::new()
             .name("office-documenten".into())
+            // De gepinde parser gebruikt bij diepe veldbomen meer stapelruimte
+            // dan een standaard Windows-werkdraad. Dit reserveert adresruimte;
+            // alleen daadwerkelijk gebruikte stapelpagina's kosten geheugen.
+            .stack_size(64 * 1024 * 1024)
             .spawn(move || {
                 let mut sessies = HashMap::<u64, (Sessie, usize)>::new();
                 for taak in ontvanger {

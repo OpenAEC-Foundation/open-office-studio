@@ -64,19 +64,32 @@ fn main() {
         println!("Open Office native bestandscontrole {VERSIE} ({profiel})");
         return;
     }
-    let mut fase = "invoer";
-    let resultaat = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-        controleer(pad.into(), &mut fase)
-    }));
-    let mut v = match resultaat {
-        Ok(Ok(v)) => v,
-        Ok(Err(e)) => json!({"status":"geweigerd","fase":fase,"fout":e.to_string()}),
-        Err(_) => json!({"status":"enginepaniek","fase":fase}),
-    };
+    let resultaat = std::thread::Builder::new()
+        .name("office-bestandscontrole".into())
+        .stack_size(64 * 1024 * 1024)
+        .spawn(move || rapporteer(pad.into()))
+        .and_then(|t| {
+            t.join()
+                .map_err(|_| std::io::Error::other("Bestandscontrole afgebroken"))
+        });
+    let mut v = resultaat.unwrap_or_else(
+        |e| json!({"status":"enginepaniek","fase":"werkdraad","fout":e.to_string()}),
+    );
     v["native_versie"] = json!(VERSIE);
     v["bouwprofiel"] = json!(profiel);
     v["omvang"] = json!(
         "Openen, eerste werkweergave, serialiseren en teruglezen; geen volledige functie-, inhouds-, stijl- of pixelcontrole"
     );
     println!("{v}");
+}
+
+fn rapporteer(pad: PathBuf) -> Value {
+    let mut fase = "invoer";
+    let resultaat =
+        std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| controleer(pad, &mut fase)));
+    match resultaat {
+        Ok(Ok(v)) => v,
+        Ok(Err(e)) => json!({"status":"geweigerd","fase":fase,"fout":e.to_string()}),
+        Err(_) => json!({"status":"enginepaniek","fase":fase}),
+    }
 }

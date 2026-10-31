@@ -320,7 +320,7 @@ impl Document {
                     beeld.velden.push(Veld {
                         id: p.para_id.clone().unwrap_or_default(),
                         naam: format!("Alinea {}", i + 1),
-                        tekst: docx::get_paragraph_text(p),
+                        tekst: crate::writer_tekst::alinea_tekst(p),
                         opmaak: crate::writer_tekst::staat(p),
                         bewerkbaar: p.para_id.is_some() && crate::writer_tekst::ondersteund(p),
                     });
@@ -328,7 +328,11 @@ impl Document {
                 let woorden = d
                     .paragraphs()
                     .iter()
-                    .map(|p| docx::get_paragraph_text(p).split_whitespace().count())
+                    .map(|p| {
+                        crate::writer_tekst::alinea_tekst(p)
+                            .split_whitespace()
+                            .count()
+                    })
                     .sum::<usize>();
                 beeld.melding = format!(
                     "{woorden} woorden · {} tabellen · {paginas} pagina’s · {overgeslagen} afbeeldingen overgeslagen",

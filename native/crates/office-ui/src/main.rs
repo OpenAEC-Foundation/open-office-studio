@@ -3,6 +3,7 @@
 mod documentblad;
 mod lineaal;
 mod lint;
+mod mail_ui;
 mod notitie_ui;
 mod sleepvak;
 mod stijl;
@@ -53,6 +54,8 @@ fn icoon(i: Icon) -> &'static str {
 }
 #[derive(Debug, Clone)]
 enum Msg {
+    Postvak(bool),
+    Mail(mail_ui::BerichtUi),
     Nieuw(Module),
     Open,
     Pad(Option<PathBuf>),
@@ -204,6 +207,8 @@ impl Tab {
     }
 }
 struct App {
+    postvak: mail_ui::Postvak,
+    postvak_zichtbaar: bool,
     tabs: Vec<Tab>,
     actief: usize,
     volgend: u64,
@@ -223,6 +228,8 @@ impl Default for App {
         let pad = display::settings_path("open-office-studio-native");
         let display = pad.as_ref().map(|p| Display::load(p)).unwrap_or_default();
         Self {
+            postvak: mail_ui::Postvak::default(),
+            postvak_zichtbaar: false,
             tabs: vec![],
             actief: 0,
             volgend: 1,
@@ -264,6 +271,15 @@ impl App {
         })
     }
     fn verder_sluiten(&mut self) -> Task<Msg> {
+        if self.postvak.bezig {
+            self.venster_sluiten = false;
+            return self.waarschuwing("Wacht tot de mailtaak gereed is");
+        }
+        if self.postvak.concept() {
+            self.postvak.sluitvraag = true;
+            self.postvak_zichtbaar = true;
+            return Task::none();
+        }
         if let Some(t) = self.tabs.iter().find(|t| t.bezig || t.schrijft) {
             self.melding = format!("Wacht tot {} gereed is", t.naam);
             self.venster_sluiten = false;
@@ -277,6 +293,28 @@ impl App {
         }
     }
     fn update(&mut self, msg: Msg) -> Task<Msg> {
+        if self.postvak.sluitvraag
+            && !matches!(
+                msg,
+                Msg::Mail(
+                    mail_ui::BerichtUi::AnnuleerSluiten
+                        | mail_ui::BerichtUi::VerwerpEnSluit
+                        | mail_ui::BerichtUi::Gereed(_)
+                ) | Msg::VensterGrootte(_)
+                    | Msg::Gereed(..)
+                    | Msg::Gelezen(..)
+                    | Msg::Geschreven(..)
+                    | Msg::ExportKlaar(..)
+                    | Msg::MarkdownKlaar(..)
+                    | Msg::MarkdownDoel(..)
+                    | Msg::Doel(..)
+                    | Msg::Sleep
+                    | Msg::Minimaliseer
+                    | Msg::Maximaliseer
+            )
+        {
+            return Task::none();
+        }
         // Een modale sluitvraag blokkeert ook sneltoetsen achter de overlay.
         if self.sluiten.is_some()
             && !matches!(
@@ -288,19 +326,60 @@ impl App {
                     | Msg::VensterGrootte(..)
                     | Msg::Gereed(..)
                     | Msg::Opslaan(..)
+                    | Msg::Mail(mail_ui::BerichtUi::Gereed(_))
             )
         {
             return Task::none();
         }
         match msg {
-            Msg::Nieuw(module) => {
+            Msg::Postvak(zichtbaar) => {
+                self.postvak_zichtbaar = zichtbaar;
+                self.bestand = false;
+                if zichtbaar {
+                    return self
+                        .postvak
+                        .update(mail_ui::BerichtUi::Laden)
+                        .map(Msg::Mail);
+                }
+            }
+            Msg::Mail(mail_ui::BerichtUi::VerwerpEnSluit) => {
+                self.postvak.verwerp();
+                return self.update(Msg::SluitVenster);
+            }
+            Msg::Mail(mail_ui::BerichtUi::AnnuleerSluiten) => {
+                self.venster_sluiten = false;
+                return self
+                    .postvak
+                    .update(mail_ui::BerichtUi::AnnuleerSluiten)
+                    .map(Msg::Mail);
+            }
+            Msg::Mail(mail_ui::BerichtUi::Gereed(Ok(antwoord)))
+                if matches!(*antwoord, office_mail::dienst::Antwoord::Bron(_)) =>
+            {
+                let office_mail::dienst::Antwoord::Bron(bytes) = *antwoord else {
+                    unreachable!()
+                };
+                let _ = self.postvak.update(mail_ui::BerichtUi::Gereed(Ok(Box::new(
+                    office_mail::dienst::Antwoord::Bron(vec![]),
+                ))));
                 let id = self.volgend;
                 self.volgend += 1;
-                let mut tab = Tab::nieuw(id, format!("Naamloos {id}.{}", module.extensie()));
+                let mut tab = Tab::nieuw(id, format!("E-mail {id}.ifcx"));
+                tab.ifcx = true;
+                self.tabs.push(tab);
+                self.actief = self.tabs.len() - 1;
+                self.postvak_zichtbaar = false;
+                return self.opdracht(id, Opdracht::Open(Module::Email, bytes));
+            }
+            Msg::Mail(m) => return self.postvak.update(m).map(Msg::Mail),
+            Msg::Nieuw(module) => {
                 if module == Module::Email {
-                    tab.ifcx = true;
-                    tab.naam = format!("Naamloos {id}.ifcx");
+                    return self.update(Msg::Postvak(true));
                 }
+                self.postvak_zichtbaar = false;
+                let id = self.volgend;
+                self.volgend += 1;
+                let tab = Tab::nieuw(id, format!("Naamloos {id}.{}", module.extensie()));
                 self.tabs.push(tab);
                 self.actief = self.tabs.len() - 1;
                 self.bestand = false;
@@ -359,6 +438,9 @@ impl App {
                 );
             }
             Msg::Gelezen(id, pad, Ok(bron)) => {
+                if !self.postvak.sluitvraag {
+                    self.postvak_zichtbaar = false;
+                }
                 let mut tab = Tab::nieuw(
                     id,
                     pad.file_name().unwrap_or_default().to_string_lossy().into(),
@@ -991,6 +1073,14 @@ impl App {
             }
             Msg::Toets(k) => {
                 use iced::keyboard::{Key, key::Named};
+                if self.postvak_zichtbaar {
+                    // Documentopdrachten mogen het verborgen werkblad niet
+                    // veranderen. Terug bewaart het accountformulier in geheugen.
+                    if k.key == Key::Named(Named::Escape) && !self.postvak.sluitvraag {
+                        self.postvak_zichtbaar = false;
+                    }
+                    return Task::none();
+                }
                 if k.key == Key::Named(Named::Escape) {
                     self.instellingen = false;
                     self.bestand = false;
@@ -1105,16 +1195,19 @@ impl App {
     fn view(&self) -> Element<'_, Msg> {
         let look = self.look();
         let c = look.color;
-        let titel = self
-            .tab()
-            .map(|t| {
-                format!(
-                    "{}{} · Open Office Studio",
-                    t.naam,
-                    if t.gewijzigd() { " •" } else { "" }
-                )
-            })
-            .unwrap_or("Open Office Studio".into());
+        let titel = if self.postvak_zichtbaar {
+            "Email Studio · Open Office Studio".into()
+        } else {
+            self.tab()
+                .map(|t| {
+                    format!(
+                        "{}{} · Open Office Studio",
+                        t.naam,
+                        if t.gewijzigd() { " •" } else { "" }
+                    )
+                })
+                .unwrap_or("Open Office Studio".into())
+        };
         let knop = |i, label, msg| {
             w::with_tooltip(
                 look,
@@ -1129,14 +1222,17 @@ impl App {
                 Icon::Save,
                 "Opslaan",
                 self.tab()
-                    .filter(|t| !t.bezig && !t.schrijft)
+                    .filter(|t| !self.postvak_zichtbaar && !t.bezig && !t.schrijft)
                     .map(|t| Msg::Opslaan(t.id, false)),
             ),
             knop(
                 Icon::Undo,
                 "Ongedaan maken",
                 self.tab()
-                    .filter(|t| t.concept || t.antwoord.as_ref().is_some_and(|a| a.terug))
+                    .filter(|t| {
+                        !self.postvak_zichtbaar
+                            && (t.concept || t.antwoord.as_ref().is_some_and(|a| a.terug))
+                    })
                     .map(|_| Msg::Terug),
             ),
         ];
@@ -1163,7 +1259,28 @@ impl App {
                 close: icoon(Icon::Close),
             },
         );
-        let inhoud = if self.bestand {
+        let inhoud = if self.postvak_zichtbaar {
+            column![
+                container(
+                    row![
+                        w::button(
+                            look,
+                            "Terug naar documenten",
+                            K::Secondary,
+                            D::Compact,
+                            None,
+                            Some(Msg::Postvak(false))
+                        ),
+                        w::heading(look, "Email Studio", 20.)
+                    ]
+                    .spacing(20)
+                )
+                .padding(14),
+                self.postvak.view(look).map(Msg::Mail)
+            ]
+            .height(Length::Fill)
+            .into()
+        } else if self.bestand {
             self.bestand_view()
         } else {
             column![self.ribbon(), self.documenten()]
@@ -1172,14 +1289,18 @@ impl App {
         };
         let scherm = column![
             balk,
-            w::ribbon_tabs(
-                look,
-                "Bestand",
-                Some(Msg::Bestand(!self.bestand)),
-                &["Start", "Weergave"],
-                self.lint,
-                Msg::Lint
-            ),
+            if self.postvak_zichtbaar {
+                container(iced::widget::Space::new().height(0)).into()
+            } else {
+                w::ribbon_tabs(
+                    look,
+                    "Bestand",
+                    Some(Msg::Bestand(!self.bestand)),
+                    &["Start", "Weergave"],
+                    self.lint,
+                    Msg::Lint,
+                )
+            },
             inhoud,
             w::status_bar(
                 look,
@@ -1446,6 +1567,14 @@ impl App {
                 Some(Msg::Nieuw(m)),
             ));
         }
+        acties = acties.push(w::button(
+            l,
+            "E-mailaccounts en postvak",
+            K::Secondary,
+            D::Regular,
+            None,
+            Some(Msg::Postvak(true)),
+        ));
         if let Some(t) = self.tab() {
             acties = acties.push(w::button(
                 l,
@@ -1478,12 +1607,16 @@ impl App {
                             Module::Spreadsheet => "Rekenbladen en formules",
                             Module::Presentation => "Dia’s en presentaties",
                             Module::Notition => "Notitieboeken",
-                            Module::Email => "Lokale e-mailarchieven",
+                            Module::Email => "Postvak en e-mailarchieven",
                         }
                     ),
                     w::button(
                         l,
-                        "Nieuw",
+                        if m == Module::Email {
+                            "Postvak openen"
+                        } else {
+                            "Nieuw"
+                        },
                         K::Secondary,
                         D::Regular,
                         None,
@@ -1512,6 +1645,14 @@ impl App {
                         D::Regular,
                         Some(icoon(Icon::Open)),
                         Some(Msg::Open)
+                    ),
+                    w::button(
+                        l,
+                        "E-mailaccounts en postvak",
+                        K::Secondary,
+                        D::Regular,
+                        None,
+                        Some(Msg::Postvak(true))
                     )
                 ]
                 .spacing(22),

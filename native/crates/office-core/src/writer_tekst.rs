@@ -3,6 +3,80 @@
 use crate::document::{Fout, Resultaat};
 use betteroffice_docx::{self as docx, InlineNode as I, ParagraphContent as P, RunContent as R};
 use std::sync::Arc;
+
+/// Lees de resultaatboom van velden, niet de vlakke reservekopie. Die kopie
+/// bevat bij een genest veld niet alle zichtbare tekst. Hyperlinks kunnen
+/// eveneens zo'n veld bevatten. De expliciete stapel voorkomt diepe recursie.
+pub fn alinea_tekst(p: &docx::Paragraph) -> String {
+    enum Stap<'a> {
+        Inline(&'a I, bool),
+        Run(&'a docx::Run, bool),
+    }
+    let mut uit = String::new();
+    let mut stappen: Vec<_> = p
+        .content
+        .iter()
+        .rev()
+        .filter_map(|c| {
+            if let P::Inline(i) = c {
+                Some(Stap::Inline(i, true))
+            } else {
+                None
+            }
+        })
+        .collect();
+    while let Some(stap) = stappen.pop() {
+        match stap {
+            Stap::Run(r, scheiding) => {
+                for c in &r.content {
+                    match c {
+                        R::Text { text, .. } => uit.push_str(text),
+                        R::Tab if scheiding => uit.push('\t'),
+                        R::Break { break_type, .. } if scheiding => {
+                            uit.push(if break_type.as_deref() == Some("page") {
+                                '\u{000c}'
+                            } else {
+                                '\n'
+                            })
+                        }
+                        _ => {}
+                    }
+                }
+            }
+            Stap::Inline(i, scheiding) => match i {
+                I::Run(r) => stappen.push(Stap::Run(r, scheiding)),
+                I::Hyperlink(h) => stappen.extend(
+                    h.structured_children
+                        .as_ref()
+                        .unwrap_or(&h.children)
+                        .iter()
+                        .rev()
+                        .map(|i| Stap::Inline(i, false)),
+                ),
+                I::SimpleField(f) => {
+                    if let Some(inline) =
+                        f.structured_result.as_ref().and_then(|s| s.inline.as_ref())
+                    {
+                        stappen.extend(inline.iter().rev().map(|i| Stap::Inline(i, false)));
+                    } else {
+                        stappen.extend(f.content.iter().rev().map(|r| Stap::Run(r, false)));
+                    }
+                }
+                I::ComplexField(f) => {
+                    if let Some(inline) =
+                        f.structured_result.as_ref().and_then(|s| s.inline.as_ref())
+                    {
+                        stappen.extend(inline.iter().rev().map(|i| Stap::Inline(i, false)));
+                    } else {
+                        stappen.extend(f.field_result.iter().rev().map(|r| Stap::Run(r, false)));
+                    }
+                }
+                _ => {}
+            },
+        }
+    }
+    uit
+}
 fn fout() -> Fout {
     Fout::Document("Deze alinea bevat een object, veld, link of revisie die nog niet veilig native kan worden bewerkt".into())
 }

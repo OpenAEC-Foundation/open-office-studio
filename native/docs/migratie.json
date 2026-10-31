@@ -1,16 +1,89 @@
 {
-  "referentie": {"versie": "2026.44.8", "commit": "b5492ef79b0e7cd7c70134924fd5250e78bdfe28"},
+  "referentie": {
+    "versie": "2026.44.8",
+    "commit": "b5492ef79b0e7cd7c70134924fd5250e78bdfe28"
+  },
   "betekenis": "Acceptatiegebieden voor de gehele suite. Dit is geen telling van losse functies of testdekking; elk gebied vraagt ook de bestaande opdrachten, bestandsfixtures en GUI-toestanden.",
   "gebieden": [
-    {"id":"schil", "naam":"Venster, ribbon, tabbladen en navigatie", "functioneel_gelijk":false, "alle_functies_getest":false, "visueel_gelijk":false, "resterend":"Modulelinten volledig overzetten; inklappen, responsief lint, losse vensters en alle sneltoetsen."},
-    {"id":"bestanden", "naam":"Openen, opslaan, import, export en afdrukken", "functioneel_gelijk":false, "alle_functies_getest":false, "visueel_gelijk":false, "resterend":"Alle conversieroutes, afdrukken/PDF, versleuteling en het volledige bestandencorpus aansluiten."},
-    {"id":"writer", "naam":"Writer", "functioneel_gelijk":false, "alle_functies_getest":false, "visueel_gelijk":false, "resterend":"Directe rich-text-invoer, alinea- en paginastructuur, stijlen, lijsten, tabellen/objecten, verwijzingen, revisies, opmerkingen, zoeken/vervangen en de volledige bestaande ribbon."},
-    {"id":"spreadsheet", "naam":"Spreadsheet", "functioneel_gelijk":false, "alle_functies_getest":false, "visueel_gelijk":false, "resterend":"Doorlopend interactief raster, slepen, klembordbereiken, meerdere selecties, sorteren/filteren, grafieken, fixeren, validatie, bescherming en overige ribbonopdrachten."},
-    {"id":"presentation", "naam":"Presentation", "functioneel_gelijk":false, "alle_functies_getest":false, "visueel_gelijk":false, "resterend":"Directe tekstinvoer, vormselectie/rotatie/slepen/vergroten, afbeeldingen, tabellen/grafieken, thema/layout, overgangen en presentatiemodus."},
-    {"id":"notition", "naam":"Notition", "functioneel_gelijk":false, "alle_functies_getest":false, "visueel_gelijk":false, "resterend":"Automatische lokale bewaring/herstel, zoeken, boeken en secties hernoemen/verplaatsen, volledige blokopmaak en taken, import/export en bestaande GUI exact overnemen."},
-    {"id":"email", "naam":"Email", "functioneel_gelijk":false, "alle_functies_getest":false, "visueel_gelijk":false, "resterend":"Bestaande Rust-mailkern losmaken van de host en accounts, IMAP/SMTP/OAuth, mappen, berichtlijst/lezer, opstellen, concepten, bijlagen en IFCX-archivering aansluiten."},
-    {"id":"database", "naam":"Database", "functioneel_gelijk":false, "alle_functies_getest":false, "visueel_gelijk":false, "resterend":"Native interface voor oude databases, werkkopie, schema's, query's, formulieren, rapporten en gesandboxte scripts. Laagste prioriteit."},
-    {"id":"integratie", "naam":"Voorkeuren, herstel, vertalingen en toegankelijkheid", "functioneel_gelijk":false, "alle_functies_getest":false, "visueel_gelijk":false, "resterend":"Recente bestanden, herstelkopieën, spelling, systeemletters, vertalingen en een echte schermlezerbrug testen."},
-    {"id":"distributie", "naam":"Suite en losse applicaties op alle platforms", "functioneel_gelijk":false, "alle_functies_getest":false, "visueel_gelijk":false, "resterend":"Native installers en losse edities, associaties, single-instance, updater, ondertekening en schone installatie/upgrade testen."}
+    {
+      "id": "schil",
+      "naam": "Venster, ribbon, tabbladen en navigatie",
+      "functioneel_gelijk": false,
+      "alle_functies_getest": false,
+      "visueel_gelijk": false,
+      "resterend": "Modulelinten volledig overzetten; inklappen, responsief lint, losse vensters en alle sneltoetsen."
+    },
+    {
+      "id": "bestanden",
+      "naam": "Openen, opslaan, import, export en afdrukken",
+      "functioneel_gelijk": false,
+      "alle_functies_getest": false,
+      "visueel_gelijk": false,
+      "resterend": "Alle conversieroutes, afdrukken/PDF, versleuteling en het volledige bestandencorpus aansluiten."
+    },
+    {
+      "id": "writer",
+      "naam": "Writer",
+      "functioneel_gelijk": false,
+      "alle_functies_getest": false,
+      "visueel_gelijk": false,
+      "resterend": "Directe rich-text-invoer, alinea- en paginastructuur, stijlen, lijsten, tabellen/objecten, verwijzingen, revisies, opmerkingen, zoeken/vervangen en de volledige bestaande ribbon."
+    },
+    {
+      "id": "spreadsheet",
+      "naam": "Spreadsheet",
+      "functioneel_gelijk": false,
+      "alle_functies_getest": false,
+      "visueel_gelijk": false,
+      "resterend": "Doorlopend interactief raster, slepen, klembordbereiken, meerdere selecties, sorteren/filteren, grafieken, fixeren, validatie, bescherming en overige ribbonopdrachten."
+    },
+    {
+      "id": "presentation",
+      "naam": "Presentation",
+      "functioneel_gelijk": false,
+      "alle_functies_getest": false,
+      "visueel_gelijk": false,
+      "resterend": "Directe tekstinvoer, vormselectie/rotatie/slepen/vergroten, afbeeldingen, tabellen/grafieken, thema/layout, overgangen en presentatiemodus."
+    },
+    {
+      "id": "notition",
+      "naam": "Notition",
+      "functioneel_gelijk": false,
+      "alle_functies_getest": false,
+      "visueel_gelijk": false,
+      "resterend": "Automatische lokale bewaring/herstel, zoeken, boeken en secties hernoemen/verplaatsen, volledige blokopmaak en taken, import/export en bestaande GUI exact overnemen."
+    },
+    {
+      "id": "email",
+      "naam": "Email",
+      "functioneel_gelijk": false,
+      "alle_functies_getest": false,
+      "visueel_gelijk": false,
+      "resterend": "OAuth-aanmelding en automatisch serverzoeken in de native GUI, opstellen/verzenden, concepten, antwoorden, bijlagen opslaan, berichtacties, synchronisatie, accountverwijdering en bestaande interface exact overnemen. De losse Rust-kern en handmatig accountbeheer, IMAP-mappen/lijst/zoeken/lezer en MIME-bron naar IFCX zijn aangesloten."
+    },
+    {
+      "id": "database",
+      "naam": "Database",
+      "functioneel_gelijk": false,
+      "alle_functies_getest": false,
+      "visueel_gelijk": false,
+      "resterend": "Native interface voor oude databases, werkkopie, schema's, query's, formulieren, rapporten en gesandboxte scripts. Laagste prioriteit."
+    },
+    {
+      "id": "integratie",
+      "naam": "Voorkeuren, herstel, vertalingen en toegankelijkheid",
+      "functioneel_gelijk": false,
+      "alle_functies_getest": false,
+      "visueel_gelijk": false,
+      "resterend": "Recente bestanden, herstelkopieën, spelling, systeemletters, vertalingen en een echte schermlezerbrug testen."
+    },
+    {
+      "id": "distributie",
+      "naam": "Suite en losse applicaties op alle platforms",
+      "functioneel_gelijk": false,
+      "alle_functies_getest": false,
+      "visueel_gelijk": false,
+      "resterend": "Native installers en losse edities, associaties, single-instance, updater, ondertekening en schone installatie/upgrade testen."
+    }
   ]
 }

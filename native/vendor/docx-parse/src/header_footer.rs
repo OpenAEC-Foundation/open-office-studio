@@ -1,0 +1,784 @@
+//! Header/footer story ownership built on the shared block dispatcher.
+
+use indexmap::IndexMap;
+use serde::{Deserialize, Serialize};
+
+use crate::block::{BlockContent, StoryParser};
+use crate::chart::ChartPartsMap;
+use crate::media::MediaMap;
+use crate::numbering::NumberingMap;
+use crate::paragraph::HexIdAllocator;
+use crate::relationships::{
+    Relationship, RelationshipMap, RelationshipTarget, office_document_path, parse_relationships,
+    relationship_part_path, relationship_types, resolve_relationship_target,
+};
+use crate::smart_art::SmartArtContext;
+use crate::styles::{DocDefaults, StyleMap};
+use crate::theme::Theme;
+use crate::vml::{Watermark, extract_watermark};
+use crate::xml::{ParseBudget, ParseError, XmlElement, parse_xml};
+
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct HeaderFooter {
+    #[serde(rename = "type")]
+    pub story_type: String,
+    pub hdr_ftr_type: String,
+    pub content: Vec<BlockContent>,
+    /// Root namespace bindings and attributes retained outside the standard boilerplate.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub custom_root_bindings: Vec<crate::paragraph::RawAttribute>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub watermark: Option<Watermark>,
+}
+
+/// Relationships of one kind that target one part, in document.xml.rels order; the first is the canonical story.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct HeaderFooterAliasGroup {
+    pub is_header: bool,
+    pub part_path: String,
+    pub relationship_ids: Vec<String>,
+}
+
+/// Parse one `w:hdr` or `w:ftr` root through the same dispatcher used by the
+/// document body, tables, SDTs, notes, comments, and text boxes.
+pub fn parse_header_footer(
+    root: &XmlElement,
+    is_header: bool,
+    hdr_ftr_type: &str,
+    parser: &mut StoryParser<'_, '_>,
+) -> Result<HeaderFooter, ParseError> {
+    let expected = if is_header { "hdr" } else { "ftr" };
+    let content = if root.local_name() == expected {
+        parser.parse_blocks(root, 0, true)?
+    } else {
+        Vec::new()
+    };
+    // VML watermarks are extracted only from headers. Footer VML remains
+    // ordinary story content (where supported) and never becomes the
+    // dedicated package watermark field.
+    let watermark = is_header
+        .then(|| extract_watermark(Some(root), parser.relationships, Some(parser.media)))
+        .flatten();
+    Ok(HeaderFooter {
+        story_type: if is_header { "header" } else { "footer" }.to_owned(),
+        hdr_ftr_type: normalize_header_footer_type(Some(hdr_ftr_type)).to_owned(),
+        content,
+        custom_root_bindings: crate::document::custom_root_bindings(root),
+        watermark,
+    })
+}
+
+pub fn normalize_header_footer_type(value: Option<&str>) -> &'static str {
+    match value {
+        Some("first") => "first",
+        Some("even") => "even",
+        _ => "default",
+    }
+}
+
+/// Parses headers and footers in relationship order with document fallbacks.
+#[allow(clippy::too_many_arguments)]
+pub fn parse_related_header_footers(
+    parts: &[(String, Vec<u8>)],
+    document_relationships: &RelationshipMap,
+    theme: Option<&Theme>,
+    styles: Option<&StyleMap>,
+    doc_defaults: Option<&DocDefaults>,
+    numbering: Option<&NumberingMap>,
+    media: &MediaMap,
+    charts: &ChartPartsMap,
+    smart_art: &mut SmartArtContext,
+    budget: &mut ParseBudget<'_>,
+    ids: &mut HexIdAllocator,
+) -> Result<
+    (
+        IndexMap<String, HeaderFooter>,
+        IndexMap<String, HeaderFooter>,
+    ),
+    ParseError,
+> {
+    let (headers, footers, _) = parse_related_header_footers_with_aliases(
+        parts,
+        document_relationships,
+        theme,
+        styles,
+        doc_defaults,
+        numbering,
+        media,
+        charts,
+        smart_art,
+        budget,
+        ids,
+    )?;
+    Ok((headers, footers))
+}
+
+/// Parses related headers and footers with alias groups.
+#[allow(clippy::too_many_arguments)]
+pub fn parse_related_header_footers_with_aliases(
+    parts: &[(String, Vec<u8>)],
+    document_relationships: &RelationshipMap,
+    theme: Option<&Theme>,
+    styles: Option<&StyleMap>,
+    doc_defaults: Option<&DocDefaults>,
+    numbering: Option<&NumberingMap>,
+    media: &MediaMap,
+    charts: &ChartPartsMap,
+    smart_art: &mut SmartArtContext,
+    budget: &mut ParseBudget<'_>,
+    ids: &mut HexIdAllocator,
+) -> Result<
+    (
+        IndexMap<String, HeaderFooter>,
+        IndexMap<String, HeaderFooter>,
+        Vec<HeaderFooterAliasGroup>,
+    ),
+    ParseError,
+> {
+    let mut headers = IndexMap::new();
+    let mut footers = IndexMap::new();
+    let mut aliases = IndexMap::new();
+    let document_path = office_document_path(parts, budget)?;
+    for (relationship_id, relationship) in document_relationships {
+        let Some((is_header, expected_path, part_path, xml)) =
+            related_header_footer_part(parts, &document_path, relationship)?
+        else {
+            continue;
+        };
+        let relationships_path = relationship_part_path(part_path);
+        let part_relationships = find_part_case_insensitive(parts, &relationships_path)
+            .map(|(path, xml)| parse_relationships(xml, path, budget))
+            .transpose()?;
+        let relationships = part_relationships
+            .as_ref()
+            .unwrap_or(document_relationships);
+        let document = parse_xml(xml, part_path, budget)?;
+        let Some(root) = document.root() else {
+            continue;
+        };
+        let mut parser = StoryParser {
+            relationships: Some(relationships),
+            theme,
+            styles,
+            doc_defaults,
+            numbering,
+            media,
+            charts,
+            smart_art: &mut *smart_art,
+            budget,
+            ids,
+            part: part_path,
+        };
+        let story = parse_header_footer(root, is_header, "default", &mut parser)?;
+        if is_header {
+            headers.insert(relationship_id.clone(), story);
+        } else {
+            footers.insert(relationship_id.clone(), story);
+        }
+        record_alias(
+            &mut aliases,
+            parts,
+            is_header,
+            &expected_path,
+            part_path,
+            relationship_id,
+        );
+    }
+    Ok((headers, footers, alias_groups(aliases)))
+}
+
+fn related_header_footer_part<'a>(
+    parts: &'a [(String, Vec<u8>)],
+    document_path: &str,
+    relationship: &Relationship,
+) -> Result<Option<(bool, String, &'a str, &'a [u8])>, ParseError> {
+    let is_header = relationship.relationship_type == relationship_types::HEADER;
+    if !is_header && relationship.relationship_type != relationship_types::FOOTER {
+        return Ok(None);
+    }
+    let RelationshipTarget::Internal(expected_path) =
+        resolve_relationship_target(document_path, relationship)?
+    else {
+        return Ok(None);
+    };
+    Ok(find_part_case_insensitive(parts, &expected_path)
+        .map(|(part_path, xml)| (is_header, expected_path, part_path, xml)))
+}
+
+fn record_alias(
+    aliases: &mut IndexMap<(bool, String), Vec<String>>,
+    parts: &[(String, Vec<u8>)],
+    is_header: bool,
+    expected_path: &str,
+    part_path: &str,
+    relationship_id: &str,
+) {
+    if part_path != expected_path
+        || parts
+            .iter()
+            .filter(|(path, _)| path.eq_ignore_ascii_case(part_path))
+            .take(2)
+            .count()
+            != 1
+    {
+        return;
+    }
+    aliases
+        .entry((is_header, part_path.to_owned()))
+        .or_default()
+        .push(relationship_id.to_owned());
+}
+
+fn alias_groups(aliases: IndexMap<(bool, String), Vec<String>>) -> Vec<HeaderFooterAliasGroup> {
+    aliases
+        .into_iter()
+        .filter(|(_, relationship_ids)| relationship_ids.len() >= 2)
+        .map(
+            |((is_header, part_path), relationship_ids)| HeaderFooterAliasGroup {
+                is_header,
+                part_path,
+                relationship_ids,
+            },
+        )
+        .collect()
+}
+
+fn find_part_case_insensitive<'a>(
+    parts: &'a [(String, Vec<u8>)],
+    expected: &str,
+) -> Option<(&'a str, &'a [u8])> {
+    parts
+        .iter()
+        .find(|(path, _)| path.eq_ignore_ascii_case(expected))
+        .map(|(path, bytes)| (path.as_str(), bytes.as_slice()))
+}
+
+/// Selects first, then even, then default page stories.
+pub fn select_for_page<'a>(
+    stories: &'a IndexMap<String, HeaderFooter>,
+    page_number: usize,
+    is_first_page: bool,
+    different_first_page: bool,
+    different_odd_even: bool,
+) -> Option<&'a HeaderFooter> {
+    if is_first_page
+        && different_first_page
+        && let Some(story) = by_type(stories, "first")
+    {
+        return Some(story);
+    }
+    if different_odd_even
+        && page_number.is_multiple_of(2)
+        && let Some(story) = by_type(stories, "even")
+    {
+        return Some(story);
+    }
+    by_type(stories, "default")
+}
+
+fn by_type<'a>(
+    stories: &'a IndexMap<String, HeaderFooter>,
+    story_type: &str,
+) -> Option<&'a HeaderFooter> {
+    stories
+        .values()
+        .find(|story| story.hdr_ftr_type == story_type)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::chart::ChartPartsMap;
+    use crate::media::MediaMap;
+    use crate::paragraph::HexIdAllocator;
+    use crate::relationships::{Relationship, TargetMode};
+    use crate::smart_art::SmartArtContext;
+    use crate::xml::{ParseBudget, ParseLimits, parse_xml};
+
+    fn parse(xml: &str, is_header: bool) -> HeaderFooter {
+        let limits = ParseLimits::default();
+        let mut budget = ParseBudget::new(&limits);
+        let document = parse_xml(xml.as_bytes(), "word/header1.xml", &mut budget).unwrap();
+        let media = MediaMap::new();
+        let charts = ChartPartsMap::new();
+        let mut smart_art = SmartArtContext::default();
+        let mut ids = HexIdAllocator::from_sha256(&"0".repeat(64)).unwrap();
+        let mut parser = StoryParser {
+            relationships: None,
+            theme: None,
+            styles: None,
+            doc_defaults: None,
+            numbering: None,
+            media: &media,
+            charts: &charts,
+            smart_art: &mut smart_art,
+            budget: &mut budget,
+            ids: &mut ids,
+            part: "word/header1.xml",
+        };
+        parse_header_footer(document.root().unwrap(), is_header, "future", &mut parser).unwrap()
+    }
+
+    fn relationships(entries: &[(&str, &str, &str, Option<TargetMode>)]) -> RelationshipMap {
+        entries
+            .iter()
+            .map(|(id, kind, target, target_mode)| {
+                (
+                    (*id).to_owned(),
+                    Relationship {
+                        id: (*id).to_owned(),
+                        relationship_type: (*kind).to_owned(),
+                        target: (*target).to_owned(),
+                        target_mode: *target_mode,
+                    },
+                )
+            })
+            .collect()
+    }
+
+    fn related_stories(
+        parts: &[(String, Vec<u8>)],
+        relationships: &RelationshipMap,
+    ) -> (
+        IndexMap<String, HeaderFooter>,
+        IndexMap<String, HeaderFooter>,
+        Vec<HeaderFooterAliasGroup>,
+    ) {
+        let limits = ParseLimits::default();
+        let mut budget = ParseBudget::new(&limits);
+        let media = MediaMap::new();
+        let charts = ChartPartsMap::new();
+        let mut smart_art = SmartArtContext::default();
+        let mut ids = HexIdAllocator::from_sha256(&"0".repeat(64)).unwrap();
+        parse_related_header_footers_with_aliases(
+            parts,
+            relationships,
+            None,
+            None,
+            None,
+            None,
+            &media,
+            &charts,
+            &mut smart_art,
+            &mut budget,
+            &mut ids,
+        )
+        .unwrap()
+    }
+
+    #[test]
+    fn legacy_related_header_footers_keeps_the_two_tuple_and_stories() {
+        let parts = vec![
+            (
+                "word/header1.xml".to_owned(),
+                br#"<w:hdr xmlns:w="w"><w:p><w:r><w:t>Header</w:t></w:r></w:p></w:hdr>"#.to_vec(),
+            ),
+            (
+                "word/footer1.xml".to_owned(),
+                br#"<w:ftr xmlns:w="w"><w:p><w:r><w:t>Footer</w:t></w:r></w:p></w:ftr>"#.to_vec(),
+            ),
+        ];
+        let relationships = relationships(&[
+            ("rId7", relationship_types::HEADER, "header1.xml", None),
+            ("rId9", relationship_types::HEADER, "./header1.xml", None),
+            ("rId11", relationship_types::FOOTER, "footer1.xml", None),
+            (
+                "rId13",
+                relationship_types::FOOTER,
+                "/word/footer1.xml",
+                None,
+            ),
+            ("rMissing", relationship_types::HEADER, "missing.xml", None),
+            (
+                "rExternal",
+                relationship_types::FOOTER,
+                "footer1.xml",
+                Some(TargetMode::External),
+            ),
+        ]);
+        let limits = ParseLimits::default();
+        let mut budget = ParseBudget::new(&limits);
+        let media = MediaMap::new();
+        let charts = ChartPartsMap::new();
+        let mut smart_art = SmartArtContext::default();
+        let mut ids = HexIdAllocator::from_sha256(&"0".repeat(64)).unwrap();
+        let legacy: (
+            IndexMap<String, HeaderFooter>,
+            IndexMap<String, HeaderFooter>,
+        ) = parse_related_header_footers(
+            &parts,
+            &relationships,
+            None,
+            None,
+            None,
+            None,
+            &media,
+            &charts,
+            &mut smart_art,
+            &mut budget,
+            &mut ids,
+        )
+        .unwrap();
+        let (headers, footers, aliases) = related_stories(&parts, &relationships);
+        assert_eq!(legacy, (headers, footers));
+        assert_eq!(
+            legacy.0.keys().map(String::as_str).collect::<Vec<_>>(),
+            ["rId7", "rId9"]
+        );
+        assert_eq!(
+            legacy.1.keys().map(String::as_str).collect::<Vec<_>>(),
+            ["rId11", "rId13"]
+        );
+        assert_eq!(aliases.len(), 2);
+    }
+
+    #[test]
+    fn header_aliases_keep_two_and_three_relationships_in_document_order() {
+        let parts = vec![(
+            "word/header1.xml".to_owned(),
+            br#"<w:hdr xmlns:w="w"><w:p/></w:hdr>"#.to_vec(),
+        )];
+        let entries = [
+            ("rId9", relationship_types::HEADER, "header1.xml", None),
+            ("rId7", relationship_types::HEADER, "header1.xml", None),
+            ("rId2", relationship_types::HEADER, "header1.xml", None),
+        ];
+        for count in [2, 3] {
+            let (headers, footers, aliases) =
+                related_stories(&parts, &relationships(&entries[..count]));
+            let ids = entries[..count]
+                .iter()
+                .map(|(id, _, _, _)| (*id).to_owned())
+                .collect::<Vec<_>>();
+            assert_eq!(headers.keys().cloned().collect::<Vec<_>>(), ids);
+            assert!(footers.is_empty());
+            assert_eq!(
+                aliases,
+                vec![HeaderFooterAliasGroup {
+                    is_header: true,
+                    part_path: "word/header1.xml".to_owned(),
+                    relationship_ids: ids,
+                }]
+            );
+            assert_eq!(aliases[0].relationship_ids[0], "rId9");
+            assert!(headers.values().all(|story| story.content.len() == 1));
+        }
+    }
+
+    #[test]
+    fn header_aliases_normalize_relative_and_absolute_targets() {
+        let parts = vec![(
+            "word/header1.xml".to_owned(),
+            br#"<w:hdr xmlns:w="w"/>"#.to_vec(),
+        )];
+        let relationships = relationships(&[
+            ("rId9", relationship_types::HEADER, "header1.xml", None),
+            ("rId7", relationship_types::HEADER, "./header1.xml", None),
+            (
+                "rId2",
+                relationship_types::HEADER,
+                "/word/header1.xml",
+                None,
+            ),
+        ]);
+        let (headers, _, aliases) = related_stories(&parts, &relationships);
+        assert_eq!(headers.len(), 3);
+        assert_eq!(
+            aliases,
+            vec![HeaderFooterAliasGroup {
+                is_header: true,
+                part_path: "word/header1.xml".to_owned(),
+                relationship_ids: vec!["rId9".to_owned(), "rId7".to_owned(), "rId2".to_owned()],
+            }]
+        );
+    }
+
+    #[test]
+    fn header_and_footer_alias_groups_remain_separate() {
+        let parts = vec![
+            (
+                "word/header1.xml".to_owned(),
+                br#"<w:hdr xmlns:w="w"/>"#.to_vec(),
+            ),
+            (
+                "word/footer1.xml".to_owned(),
+                br#"<w:ftr xmlns:w="w"/>"#.to_vec(),
+            ),
+        ];
+        for footer_target in ["footer1.xml", "header1.xml"] {
+            let relationships = relationships(&[
+                ("rId9", relationship_types::FOOTER, footer_target, None),
+                ("rId7", relationship_types::HEADER, "header1.xml", None),
+                ("rId2", relationship_types::FOOTER, footer_target, None),
+                ("rId1", relationship_types::HEADER, "header1.xml", None),
+            ]);
+            let (headers, footers, aliases) = related_stories(&parts, &relationships);
+            assert_eq!((headers.len(), footers.len()), (2, 2));
+            assert_eq!(
+                aliases,
+                vec![
+                    HeaderFooterAliasGroup {
+                        is_header: false,
+                        part_path: format!("word/{footer_target}"),
+                        relationship_ids: vec!["rId9".to_owned(), "rId2".to_owned()],
+                    },
+                    HeaderFooterAliasGroup {
+                        is_header: true,
+                        part_path: "word/header1.xml".to_owned(),
+                        relationship_ids: vec!["rId7".to_owned(), "rId1".to_owned()],
+                    },
+                ]
+            );
+        }
+    }
+
+    #[test]
+    fn one_header_and_one_footer_targeting_one_part_are_not_aliases() {
+        let parts = vec![(
+            "word/header1.xml".to_owned(),
+            br#"<w:hdr xmlns:w="w"/>"#.to_vec(),
+        )];
+        let relationships = relationships(&[
+            ("rId9", relationship_types::HEADER, "header1.xml", None),
+            ("rId7", relationship_types::FOOTER, "header1.xml", None),
+        ]);
+        let (headers, footers, aliases) = related_stories(&parts, &relationships);
+        assert_eq!((headers.len(), footers.len()), (1, 1));
+        assert!(aliases.is_empty());
+    }
+
+    #[test]
+    fn case_variant_targets_are_parsed_but_not_grouped() {
+        let parts = vec![(
+            "word/header1.xml".to_owned(),
+            br#"<w:hdr xmlns:w="w"/>"#.to_vec(),
+        )];
+        let relationships = relationships(&[
+            ("rId9", relationship_types::HEADER, "header1.xml", None),
+            ("rId7", relationship_types::HEADER, "Header1.xml", None),
+            ("rId2", relationship_types::HEADER, "Header1.xml", None),
+        ]);
+        let (headers, _, aliases) = related_stories(&parts, &relationships);
+        assert_eq!(headers.len(), 3);
+        assert!(aliases.is_empty());
+    }
+
+    #[test]
+    fn case_colliding_members_are_not_grouped_in_either_archive_order() {
+        let mut parts = vec![
+            (
+                "word/header1.xml".to_owned(),
+                br#"<w:hdr xmlns:w="w"/>"#.to_vec(),
+            ),
+            (
+                "word/Header1.xml".to_owned(),
+                br#"<w:hdr xmlns:w="w"/>"#.to_vec(),
+            ),
+        ];
+        let relationships = relationships(&[
+            ("rId9", relationship_types::HEADER, "header1.xml", None),
+            ("rId7", relationship_types::HEADER, "header1.xml", None),
+        ]);
+        for _ in 0..2 {
+            let (headers, _, aliases) = related_stories(&parts, &relationships);
+            assert_eq!(headers.len(), 2);
+            assert!(aliases.is_empty());
+            parts.reverse();
+        }
+    }
+
+    #[test]
+    fn external_missing_rootless_and_other_relationships_do_not_enter_groups() {
+        let parts = vec![
+            (
+                "word/header1.xml".to_owned(),
+                br#"<w:hdr xmlns:w="w"/>"#.to_vec(),
+            ),
+            ("word/empty.xml".to_owned(), b"<!-- empty -->".to_vec()),
+        ];
+        let relationships = relationships(&[
+            ("rId9", relationship_types::HEADER, "header1.xml", None),
+            (
+                "rExternal",
+                relationship_types::HEADER,
+                "header1.xml",
+                Some(TargetMode::External),
+            ),
+            ("rMissing1", relationship_types::HEADER, "missing.xml", None),
+            ("rEmpty1", relationship_types::HEADER, "empty.xml", None),
+            ("rImage", relationship_types::IMAGE, "header1.xml", None),
+            ("rMissing2", relationship_types::HEADER, "missing.xml", None),
+            ("rEmpty2", relationship_types::HEADER, "empty.xml", None),
+            ("rId7", relationship_types::HEADER, "header1.xml", None),
+        ]);
+        let (headers, footers, aliases) = related_stories(&parts, &relationships);
+        assert_eq!(
+            headers.keys().map(String::as_str).collect::<Vec<_>>(),
+            ["rId9", "rId7"]
+        );
+        assert!(footers.is_empty());
+        assert_eq!(
+            aliases,
+            vec![HeaderFooterAliasGroup {
+                is_header: true,
+                part_path: "word/header1.xml".to_owned(),
+                relationship_ids: vec!["rId9".to_owned(), "rId7".to_owned()],
+            }]
+        );
+    }
+
+    #[test]
+    fn aliases_resolve_against_the_office_document_part() {
+        let parts = vec![
+            (
+                "_rels/.rels".to_owned(),
+                format!(
+                    r#"<Relationships><Relationship Id="rDocument" Type="{}" Target="stories/document.xml"/></Relationships>"#,
+                    crate::relationships::relationship_types::OFFICE_DOCUMENT,
+                )
+                .into_bytes(),
+            ),
+            (
+                "stories/document.xml".to_owned(),
+                br#"<w:document xmlns:w="w"><w:body/></w:document>"#.to_vec(),
+            ),
+            (
+                "stories/header1.xml".to_owned(),
+                br#"<w:hdr xmlns:w="w"/>"#.to_vec(),
+            ),
+        ];
+        let relationships = relationships(&[
+            ("rId9", relationship_types::HEADER, "header1.xml", None),
+            ("rId7", relationship_types::HEADER, "./header1.xml", None),
+        ]);
+        let (_, _, aliases) = related_stories(&parts, &relationships);
+        assert_eq!(
+            aliases,
+            vec![HeaderFooterAliasGroup {
+                is_header: true,
+                part_path: "stories/header1.xml".to_owned(),
+                relationship_ids: vec!["rId9".to_owned(), "rId7".to_owned()],
+            }]
+        );
+    }
+
+    #[test]
+    fn owner_uses_shared_dispatcher_for_full_block_grammar() {
+        let header = parse(
+            r#"<w:hdr xmlns:w="w"><w:p><w:r><w:t>before</w:t></w:r></w:p><w:tbl><w:tr><w:tc><w:p/></w:tc></w:tr></w:tbl><w:sdt><w:sdtContent><w:p/></w:sdtContent></w:sdt></w:hdr>"#,
+            true,
+        );
+        assert_eq!(header.story_type, "header");
+        assert_eq!(header.hdr_ftr_type, "default");
+        assert_eq!(
+            header
+                .content
+                .iter()
+                .map(BlockContent::node_type)
+                .collect::<Vec<_>>(),
+            ["paragraph", "table", "blockSdt"]
+        );
+    }
+
+    #[test]
+    fn first_page_type_has_precedence_over_even_then_default() {
+        let mut stories = IndexMap::new();
+        for kind in ["default", "even", "first"] {
+            stories.insert(
+                kind.to_owned(),
+                HeaderFooter {
+                    story_type: "header".to_owned(),
+                    hdr_ftr_type: kind.to_owned(),
+                    content: Vec::new(),
+                    watermark: None,
+                    custom_root_bindings: Vec::new(),
+                },
+            );
+        }
+        assert_eq!(
+            select_for_page(&stories, 2, true, true, true)
+                .unwrap()
+                .hdr_ftr_type,
+            "first"
+        );
+        assert_eq!(
+            select_for_page(&stories, 2, false, true, true)
+                .unwrap()
+                .hdr_ftr_type,
+            "even"
+        );
+        assert_eq!(
+            select_for_page(&stories, 3, false, true, true)
+                .unwrap()
+                .hdr_ftr_type,
+            "default"
+        );
+    }
+
+    #[test]
+    fn relationship_id_resolution_uses_the_owning_part_relationships() {
+        let parts = vec![
+            (
+                "WORD/Header1.XML".to_owned(),
+                br#"<w:hdr xmlns:w="w" xmlns:r="r"><w:p><w:hyperlink r:id="rLink"><w:r><w:t>link</w:t></w:r></w:hyperlink></w:p></w:hdr>"#.to_vec(),
+            ),
+            (
+                "word/_rels/header1.xml.rels".to_owned(),
+                br#"<Relationships><Relationship Id="rLink" Type="hyperlink" Target="https://header.example/" TargetMode="External"/></Relationships>"#.to_vec(),
+            ),
+        ];
+        let document_relationships = RelationshipMap::from([
+            (
+                "rHeader".to_owned(),
+                Relationship {
+                    id: "rHeader".to_owned(),
+                    relationship_type: relationship_types::HEADER.to_owned(),
+                    target: "header1.xml".to_owned(),
+                    target_mode: None,
+                },
+            ),
+            (
+                "rLink".to_owned(),
+                Relationship {
+                    id: "rLink".to_owned(),
+                    relationship_type: relationship_types::HYPERLINK.to_owned(),
+                    target: "https://document.example/".to_owned(),
+                    target_mode: Some(TargetMode::External),
+                },
+            ),
+        ]);
+        let limits = ParseLimits::default();
+        let mut budget = ParseBudget::new(&limits);
+        let media = MediaMap::new();
+        let charts = ChartPartsMap::new();
+        let mut smart_art = SmartArtContext::default();
+        let mut ids = HexIdAllocator::from_sha256(&"0".repeat(64)).unwrap();
+        let (headers, footers, aliases) = parse_related_header_footers_with_aliases(
+            &parts,
+            &document_relationships,
+            None,
+            None,
+            None,
+            None,
+            &media,
+            &charts,
+            &mut smart_art,
+            &mut budget,
+            &mut ids,
+        )
+        .unwrap();
+        assert!(footers.is_empty());
+        assert!(aliases.is_empty());
+        let BlockContent::Paragraph(paragraph) = &headers["rHeader"].content[0] else {
+            panic!("paragraph")
+        };
+        let crate::paragraph::ParagraphContent::Inline(crate::inline::InlineNode::Hyperlink(link)) =
+            &paragraph.content[0]
+        else {
+            panic!("hyperlink")
+        };
+        assert_eq!(link.href.as_deref(), Some("https://header.example/"));
+    }
+}

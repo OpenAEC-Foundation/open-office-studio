@@ -99,3 +99,14 @@ with ZipFile(map/'writer-grafiek-lettertype.docx') as z:
     assert b'typeface="Gelasio"' in xml
     assert b'<c:v>2</c:v>' in xml and b'<c:v>4</c:v>' in xml
 print('Voetnootnummer, noottekst en grafiekbron met eigen lettertype onafhankelijk teruggelezen.')
+
+with ZipFile(map/'writer-velden.docx') as z:
+    wortel=ET.fromstring(z.read('word/document.xml'))
+    velden=wortel.findall('.//w:fldSimple',ns)
+    assert len(velden)==2
+    assert velden[0].find('w:fldSimple',ns) is not None
+    assert ''.join(t.text or '' for t in velden[0].iter('{'+ns['w']+'}t'))=='Verwijzing 7'
+    teksten=[''.join(t.text or '' for t in p.iter('{'+ns['w']+'}t')) for p in wortel.findall('w:body/w:p',ns)]
+    assert teksten==['Inhoud café 42 🏠','Einde inhoud','Verwijzing 7']
+    assert any('PAGEREF hoofdstuk' in (t.text or '') for t in wortel.iter('{'+ns['w']+'}instrText'))
+print('Geneste velden: Unicode-resultaten, instructies en geneste veldstructuur onafhankelijk teruggelezen.')

@@ -193,6 +193,7 @@ fn notitie_canvas_en_markdown_renderen_met_benoemde_bediening() {
         }
     }
 }
+
 #[test]
 fn huidige_writer_referentie_renderen_op_browserformaat() {
     let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") else {
@@ -696,4 +697,107 @@ fn mislukte_eerste_weergave_ruimt_de_achtergrondsessie_op() {
         resultaat.is_err(),
         "De gesloten achtergrondbron mag geen geheugen blijven vasthouden"
     );
+}
+
+#[test]
+fn native_postvak_en_accountformulier_renderen_met_sluitbeveiliging() {
+    let mut app = App {
+        postvak: mail_ui::testvoorbeeld(),
+        postvak_zichtbaar: true,
+        thema: ThemeId::Light,
+        ..App::default()
+    };
+    for naam in ["email-postvak", "email-account", "email-sluiten"] {
+        if naam == "email-account" {
+            let _ = app.update(Msg::Mail(mail_ui::BerichtUi::Wijzig));
+            let _ = app.update(Msg::Mail(mail_ui::BerichtUi::Invoer(
+                mail_ui::Veld::Naam,
+                "Eigen account".into(),
+            )));
+        }
+        if naam == "email-sluiten" {
+            let _ = app.update(Msg::SluitVenster);
+            assert!(app.postvak.sluitvraag);
+            assert!(app.postvak.concept());
+        }
+        for thema in ThemeId::ALL {
+            app.thema = thema;
+            assert!(toegankelijkheid(&app).unnamed.is_empty());
+            let png = render(&app);
+            if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+                std::fs::create_dir_all(&map).unwrap();
+                png.save_png(PathBuf::from(map).join(format!("{naam}-{}.png", thema.key())))
+                    .unwrap();
+            }
+        }
+    }
+    let _ = app.update(Msg::Mail(mail_ui::BerichtUi::AnnuleerSluiten));
+    let _ = app.update(Msg::Postvak(false));
+    assert!(app.postvak.concept());
+}
+
+#[test]
+fn mail_sluitvraag_verliest_geen_antwoord_van_de_documentwerkdraad() {
+    let mut app = App {
+        postvak: mail_ui::testvoorbeeld(),
+        postvak_zichtbaar: true,
+        ..App::default()
+    };
+    app.tabs.push(Tab::nieuw(1, "Voorbeeld.docx".into()));
+    let _ = app.update(Msg::Mail(mail_ui::BerichtUi::Wijzig));
+    let _ = app.update(Msg::Mail(mail_ui::BerichtUi::Invoer(
+        mail_ui::Veld::Naam,
+        "Eigen account".into(),
+    )));
+    let _ = app.update(Msg::SluitVenster);
+    assert!(app.postvak.sluitvraag);
+    let _ = app.update(Msg::Gereed(1, Err("Afgebroken testtaak".into())));
+    // Een mislukte eerste weergave ruimt het lege tabblad op; het antwoord
+    // mag niet door de maildialoog worden weggefilterd en bezig blijven.
+    assert!(app.tabs.is_empty());
+    let _ = app.update(Msg::Postvak(false));
+    assert!(app.postvak_zichtbaar);
+    let _ = app.update(Msg::Mail(mail_ui::BerichtUi::AnnuleerSluiten));
+    assert!(!app.venster_sluiten);
+    assert!(app.postvak.concept());
+}
+
+#[test]
+fn document_sneltoetsen_veranderen_geen_verborgen_editor_in_het_postvak() {
+    let mut app = App {
+        postvak_zichtbaar: true,
+        ..App::default()
+    };
+    let mut tab = Tab::nieuw(1, "Voorbeeld.docx".into());
+    tab.bezig = false;
+    tab.editor = text_editor::Content::with_text("Niet toegepaste documenttekst");
+    tab.concept = true;
+    app.tabs.push(tab);
+    for letter in ["s", "z", "n", "o"] {
+        let taak = app.update(Msg::Toets(openaec_ui::keyboard::KeyPress {
+            key: iced::keyboard::Key::Character(letter.into()),
+            modifiers: iced::keyboard::Modifiers::COMMAND,
+        }));
+        assert_eq!(taak.units(), 0);
+        assert!(app.tabs[0].concept);
+        assert_eq!(app.tabs[0].editor.text(), "Niet toegepaste documenttekst");
+        assert_eq!(app.tabs.len(), 1);
+        assert!(app.postvak_zichtbaar);
+    }
+}
+
+#[test]
+fn documentwerkdraad_opent_diepe_velden_zonder_de_vensterdraad_te_gebruiken() {
+    let werker = Werker::start();
+    let antwoord = iced::futures::executor::block_on(werker.clone().voer_uit(
+        1,
+        Opdracht::Open(
+            Module::Writer,
+            include_bytes!("../../office-core/tests/fixtures/writer-diepe-velden.docx").to_vec(),
+        ),
+    ))
+    .unwrap();
+    assert_eq!(antwoord.beeld.velden[0].tekst, "Diep resultaat café 🏠");
+    assert!(!antwoord.bron.is_empty());
+    werker.sluit(1);
 }

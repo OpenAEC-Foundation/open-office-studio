@@ -15,3 +15,16 @@ for face in lettermanifest['bestanden']:
     assert hashlib.sha256(font.read_bytes()).hexdigest() == face['sha256'], f"Documentletter gewijzigd: {face['file']}"
     assert font.stat().st_size == face['byteLength'], f"Documentletter afgebroken: {face['file']}"
 print(f"Documentletters: {len(lettermanifest['bestanden'])} oorspronkelijke fontbestanden geverifieerd.")
+
+enginemanifest = json.loads((root/'vendor/document-engine-bron.json').read_text(encoding='utf-8'))
+verwacht = dict(enginemanifest['oorspronkelijke_bestanden'])
+for naam, wijziging in enginemanifest['aanpassingen'].items():
+    assert naam in verwacht, f'Onbekend aangepast enginebestand: {naam}'
+    verwacht[naam] = wijziging['sha256']
+for naam, toevoeging in enginemanifest.get('aanvullingen', {}).items():
+    assert naam not in verwacht, f'Dubbel enginebestand: {naam}'
+    verwacht[naam] = toevoeging['sha256']
+werkelijk = {p.relative_to(root/'vendor/docx-parse').as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
+             for p in (root/'vendor/docx-parse').rglob('*') if p.is_file()}
+assert werkelijk == verwacht, 'De documentparser wijkt af van de vastgelegde bron en correcties'
+print(f"Documentparser: {len(werkelijk)} bronbestanden en {len(enginemanifest['aanpassingen'])} vastgelegde correctie geverifieerd.")

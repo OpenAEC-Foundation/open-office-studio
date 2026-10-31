@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.4**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.5**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -40,7 +40,7 @@ valt buiten de standaardtestmatrix.
 | Spreadsheet | Klikbare cellen, formulebalk, verplaatsbaar werkvenster via celadres/bereik, bereikopmaak, rijen/kolommen invoegen/verwijderen, samenvoegen/splitsen, herberekenen en bladen wisselen | Doorlopend raster met volledige toetsenbord- en sleepbediening, zoeken, sorteren/filteren, klembordbereiken, CSV en grafieken |
 | Presentation | Native diaweergave, niet-geroteerde tekstvakken aanklikken, tekstbereikopmaak, dia’s toevoegen/verwijderen, tekstvakken invoegen, sprekersnotities bewerken | Directe cursor en vormbediening, geroteerde/gegroepeerde objecten, volledige ribbon en presentatiemodus |
 | Notition | Versies 1–3 openen, boeken/secties/pagina’s toevoegen, vrij canvas met tekstvakken slepen/vergroten, Markdown-preview, bloktekst en vet/cursief, prullenbak herstellen; onbekende bronvelden behouden | Automatische lokale opslag/herstel, zoeken, boeken/secties hernoemen/verplaatsen, volledige blok- en taakbediening en import/export |
-| Email | Lokale EML lezen, originele bytes met bijlagen behouden; opslaan in IFCX | IMAP/SMTP/OAuth en accounts verbinden met het native venster |
+| Email | Losse Rust-mailkern, native accountformulier, IMAP-mappen/berichtlijst, zoeken en tekstlezer; volledige MIME-bron met bijlagen openen als IFCX-dossier | OAuth en automatisch serverzoeken in de GUI, opstellen/verzenden, concepten, antwoorden, berichtacties, bijlagen opslaan en HTML-weergave |
 | Database | Bestaande aparte app blijft beschikbaar | Native database-interface; laagste prioriteit |
 | Formaten | DOCX, XLSX, PPTX, notitie-JSON, EML, IFCX-bewaarprofiel | Overige import/export en conversie aansluiten |
 
@@ -57,6 +57,17 @@ inhoudsbesturingen en samenvoegen over een sectie-einde.
 ![Vrij native notitiecanvas](docs/screenshots/notition-canvas.png)
 
 ![Native Markdown-werkruimte](docs/screenshots/notition-markdown.png)
+
+![Native postvak met synthetisch bericht](docs/screenshots/email-postvak.png)
+
+![Native accountinstellingen](docs/screenshots/email-account.png)
+
+Het postvak opent via de Email-kaart, **E-mailaccounts en postvak** of
+`--module email`. De native mailgegevens staan in een eigen map, gescheiden van
+de bestaande suite. Een opgehaalde MIME-bron opent als nieuw IFCX-dossier;
+**Opslaan** bewaart het dossier daadwerkelijk op schijf. HTML-weergave,
+opstellen/verzenden, OAuth-aanmelding in de GUI en de overige berichtacties
+zijn nog niet aangesloten. De netwerkproeven gebruiken lokale nepservers.
 
 ## Bewaring en snelheid
 
@@ -85,13 +96,14 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
-Het [controlerapport voor alpha 4](docs/controle-2026-10-30-alpha4.md) beschrijft
-de 58 lokaal geslaagde Rust-tests, vier beeldcontrole-tests en de grenzen van
-die controle. De eerdere rapporten blijven historische verslagen.
+Het [controlerapport voor alpha 5](docs/controle-2026-10-31-alpha5.md) beschrijft
+de 124 lokaal geslaagde Rust-tests, veldcorrecties, native mail en de grenzen
+van de actuele controle. De eerdere
+rapporten blijven historische verslagen.
 
 ```sh
 python3 native/scripts/controleer-bron.py
-cargo fmt --manifest-path native/Cargo.toml -p office-core -p open-office-studio-native --check
+cargo fmt --manifest-path native/Cargo.toml -p office-core -p open-office-studio-native -p office-mail --check
 cargo clippy --manifest-path native/Cargo.toml --workspace --all-targets -- -D warnings
 OFFICE_TEST_UITVOER=/tmp/native-rondgang OFFICE_TEST_SCHERMEN=/tmp/native-schermen \
   cargo test --manifest-path native/Cargo.toml --workspace --locked
@@ -153,7 +165,11 @@ wijzigingen. De applicatiecode staat onder Apache-2.0. De gedeelde UI heeft eige
 LGPL-3.0-only-, CC-BY-SA-4.0-, OFL-1.1- en Apache-2.0-onderdelen: lees
 `vendor/openaec-ui/LICENSE.md`, `NOTICE.md` en `licenses/`. De bron, fontnotices en gevonden licentieteksten van de Rust-afhankelijkheden
 gaan mee in het previewpakket. De native documentengines zijn Apache-2.0 en
-vastgelegd op versie 0.5.1 in Cargo.lock. De layoutadapter volgt het openbare
+vastgelegd op versie 0.5.1 in Cargo.lock. De DOCX-parser heeft één lokale
+serializercorrectie voor geneste velden; oorspronkelijke hashes, revisie en
+wijziging staan in `vendor/document-engine-bron.json`. De mailkern behoudt de
+MIT-herkomstvermelding en licentie naast de Apache-2.0-licentie van de suite.
+De layoutadapter volgt het openbare
 native-viewer-voorbeeld van openooxml/betteroffice; de bronverwijzing staat in
 `crates/office-core/src/writer_beeld.rs`.
 

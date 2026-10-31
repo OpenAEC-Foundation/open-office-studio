@@ -53,8 +53,12 @@ De tijdslimieten gelden voor afzonderlijke debugprocessen met 30 seconden en
 3 GiB adresruimte; dit is geen releaseprestatiemeting. De overige 918 bronnen
 uit het oorspronkelijke manifest vallen buiten deze native OOXML-ronde.
 
-Een nieuwe kandidaat-hercontrole loopt apart. Zij gebruikt een opgenomen
-programmahash en wordt niet als volledige alpha-4-goedkeuring gepresenteerd.
+De definitieve release-hercontrole is vastgelegd in
+[corpus-2026-10-31-alpha4-release.json](corpus-2026-10-31-alpha4-release.json):
+577 rondgangen slagen, 68 bronnen worden geweigerd, twee bereiken de
+tijdslimiet en één heeft een verschil in zichtbare veldtekst.
+[Het vervolgonderzoek](controle-2026-10-31-alpha5.md) beschrijft die afwijking.
+Dit is geen volledige alpha-4-goedkeuring.
 Het meegeleverde `controleer-bestand` en `scripts/corpus.py` maken nieuwe
 metingen reproduceerbaar; [de README](../README.md#bestandscontrole-zonder-venster)
 beschrijft de bediening en grenzen.
@@ -68,13 +72,13 @@ ook `docs/voorbeelden`. De controle verifieert iedere letterlijke
 `include_bytes!`/`include_str!`-verwijzing in de eigen Rust-code. Ook de
 programmaversie van de uitgepakte bestandscontrole wordt gecontroleerd.
 
-De laatste volledig bevestigde platformronde betreft alpha 3 op commit
-`89916765660090b1fdb914f5bdb9837430fa7b31`: Windows, Linux en macOS slagen in
-[bouwronde 41136274309](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41136274309).
-De lokale alpha-3-Linux-release en pakketcontrole slagen eveneens. Dat is geen
-bewijs van een alpha-4-build. Alpha-4-builds en de uitgebreidere pakketcontrole
-worden apart gevolgd in de
-[native bouwstraat](https://github.com/OpenAEC-Foundation/open-office-studio/actions/workflows/native-rust.yml).
+De alpha-4-platformronde op commit
+`20d3a0833dd81eda5da49f1e8bf4d5a6f53c698a` slaagt voor Windows, Linux en macOS,
+inclusief tests, releasebuild en de uitgebreidere pakketcontrole:
+[bouwronde 41141651476](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41141651476).
+De lokale Linux-release, uitpakken, CRC/SHA-256, bronnen, licenties en beide
+uitgepakte programmaversies zijn eveneens gecontroleerd. Dit betreft draagbare
+alpha-pakketten; schone installatie en fysieke GUI-bediening zijn niet bewezen.
 
 ## Vrijgavegrens
 

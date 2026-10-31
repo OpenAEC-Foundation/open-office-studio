@@ -1,0 +1,3070 @@
+//! Paragraphs and tracked inline structures.
+
+use ooxml_drawingml::SymbolFont;
+use serde::{Deserialize, Serialize};
+
+use crate::block::transparent_children;
+use crate::chart::{ChartPartsMap, DrawingChart, parse_chart_from_drawing};
+use crate::formatting::{
+    ParagraphFormatting, ParagraphFrame, SpacingExplicit, parse_paragraph_properties,
+};
+use crate::image::{is_text_box_drawing, parse_drawing};
+use crate::inline::{
+    ContentPosition, Hyperlink, InlineNode, InlineSdt, InlineSdtType, MathEquation, MathType,
+    OpenComplexField, Run, RunContent, SimpleField, SimpleFieldType, StructuredFieldContent,
+    StructuredFieldTree, absorb_beyond_field_nesting, check_container_beyond_field_nesting,
+    field_depth_error, has_bookmark_id, parse_bookmark_end, parse_bookmark_start, parse_field_type,
+    parse_hyperlink, parse_run, parse_sdt_properties, run_content_length,
+};
+use crate::media::MediaMap;
+use crate::numbering::{ListRendering, NumberingMap, compute_list_rendering};
+use crate::paragraph_identity::parse_paragraph_id;
+use crate::relationships::RelationshipMap;
+use crate::section::{SectionProperties, parse_section_properties};
+use crate::shape::{
+    Shape, is_shape_drawing, parse_shape_from_drawing, resolve_shape_fill_pictures,
+};
+use crate::smart_art::{SmartArtContext, is_smart_art_drawing, parse_smart_art_from_drawing};
+use crate::styles::{DocDefaults, StyleMap};
+use crate::theme::Theme;
+use crate::vml::{parse_horizontal_rule, vml_image_content, vml_image_contents};
+use crate::xml::{ParseBudget, ParseError, XmlElement, XmlNode, parse_javascript_integer_prefix};
+
+const MAX_HEX_ID_EXCLUSIVE: u32 = 0x7fff_ffff;
+
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+pub struct TrackedChangeInfo {
+    pub id: f64,
+    pub author: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub date: Option<String>,
+}
+
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ParagraphPropertyChange {
+    #[serde(rename = "type")]
+    pub node_type: String,
+    pub info: TrackedChangeInfo,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub previous_formatting: Option<ParagraphFormatting>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub current_formatting: Option<ParagraphFormatting>,
+}
+
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+pub struct TrackedInline {
+    #[serde(rename = "type")]
+    pub node_type: String,
+    pub info: TrackedChangeInfo,
+    pub content: Vec<InlineNode>,
+}
+
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+pub struct RangeStart {
+    #[serde(rename = "type")]
+    pub node_type: String,
+    pub id: f64,
+    pub name: String,
+}
+
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+pub struct RangeEnd {
+    #[serde(rename = "type")]
+    pub node_type: String,
+    pub id: f64,
+}
+
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+pub struct CommentRange {
+    #[serde(rename = "type")]
+    pub node_type: String,
+    pub id: f64,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub offset: Option<f64>,
+}
+
+#[derive(Clone, Debug, PartialEq, Serialize)]
+#[serde(untagged)]
+pub enum ParagraphContent {
+    Inline(InlineNode),
+    Tracked(TrackedInline),
+    RangeStart(RangeStart),
+    RangeEnd(RangeEnd),
+    CommentRange(CommentRange),
+}
+
+impl<'de> Deserialize<'de> for ParagraphContent {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let value = serde_json::Value::deserialize(deserializer)?;
+        let node_type = value
+            .get("type")
+            .and_then(serde_json::Value::as_str)
+            .ok_or_else(|| serde::de::Error::custom("paragraph content requires a string type"))?;
+        let decoded = match node_type {
+            "insertion" | "deletion" | "moveFrom" | "moveTo" => serde_json::to_string(&(value))
+                .and_then(|s| serde_json::from_str(&s))
+                .map(Self::Tracked),
+            "moveFromRangeStart" | "moveToRangeStart" => serde_json::to_string(&(value))
+                .and_then(|s| serde_json::from_str(&s))
+                .map(Self::RangeStart),
+            "moveFromRangeEnd" | "moveToRangeEnd" => serde_json::to_string(&(value))
+                .and_then(|s| serde_json::from_str(&s))
+                .map(Self::RangeEnd),
+            "commentRangeStart" | "commentRangeEnd" => serde_json::to_string(&(value))
+                .and_then(|s| serde_json::from_str(&s))
+                .map(Self::CommentRange),
+            _ => serde_json::to_string(&(value))
+                .and_then(|s| serde_json::from_str(&s))
+                .map(Self::Inline),
+        };
+        decoded.map_err(serde::de::Error::custom)
+    }
+}
+
+impl ParagraphContent {
+    pub fn node_type(&self) -> &str {
+        match self {
+            Self::Inline(node) => node.node_type(),
+            Self::Tracked(node) => &node.node_type,
+            Self::RangeStart(node) => &node.node_type,
+            Self::RangeEnd(node) => &node.node_type,
+            Self::CommentRange(node) => &node.node_type,
+        }
+    }
+}
+
+/// One attribute kept exactly as authored, prefixed name and all.
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+pub struct RawAttribute {
+    pub name: String,
+    pub value: String,
+}
+
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Paragraph {
+    #[serde(rename = "type")]
+    pub node_type: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub para_id: Option<String>,
+    /// Set when `para_id` repeats a paragraph ID that occurs earlier in the
+    /// package; it is still this paragraph's authored identity.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub repeated_para_id: Option<bool>,
+    /// The extra attribute that holds an invalid Word 2010 `paraId` under a
+    /// prefix other than `w14`; a save that sets `para_id` replaces it.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub para_id_attribute: Option<String>,
+    /// This paragraph's `w:p` occurrence in its part, when the parse records
+    /// source ordinals.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub source_ordinal: Option<u32>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub text_id: Option<String>,
+    /// Attributes the model does not type, kept in authored form so a save
+    /// re-emits them; dropping an attribute the parser never read is a loss.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub extra_attributes: Vec<RawAttribute>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub formatting: Option<ParagraphFormatting>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub property_changes: Option<Vec<ParagraphPropertyChange>>,
+    #[serde(rename = "pPrIns", skip_serializing_if = "Option::is_none")]
+    pub p_pr_ins: Option<TrackedChangeInfo>,
+    #[serde(rename = "pPrDel", skip_serializing_if = "Option::is_none")]
+    pub p_pr_del: Option<TrackedChangeInfo>,
+    pub content: Vec<ParagraphContent>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub list_rendering: Option<ListRendering>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub rendered_page_break_before: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub section_properties: Option<SectionProperties>,
+}
+
+#[derive(Clone, Debug)]
+pub struct HexIdAllocator {
+    state: u32,
+}
+
+pub struct DrawingContext<'a> {
+    pub media: &'a MediaMap,
+    pub charts: &'a ChartPartsMap,
+    pub smart_art: &'a mut SmartArtContext,
+}
+
+struct ComposedDrawingContext<'a> {
+    media: &'a MediaMap,
+    charts: &'a ChartPartsMap,
+    smart_art: &'a mut SmartArtContext,
+    group_text_boxes: Option<&'a mut GroupTextBoxParser<'a>>,
+}
+
+type GroupTextBoxParser<'a> = dyn FnMut(
+        &mut Shape,
+        &XmlElement,
+        &mut ParseBudget<'_>,
+        &mut SmartArtContext,
+    ) -> Result<(), ParseError>
+    + 'a;
+
+impl<'a> ComposedDrawingContext<'a> {
+    fn new(context: &'a mut DrawingContext<'_>) -> Self {
+        Self {
+            media: context.media,
+            charts: context.charts,
+            smart_art: &mut *context.smart_art,
+            group_text_boxes: None,
+        }
+    }
+}
+
+impl HexIdAllocator {
+    pub fn from_sha256(seed: &str) -> Result<Self, ParseError> {
+        if seed.len() != 64 || !seed.bytes().all(|byte| byte.is_ascii_hexdigit()) {
+            return Err(ParseError::Canonical(
+                "canonical determinism seed must be a SHA-256 hex digest".to_owned(),
+            ));
+        }
+        let mut state = 0u32;
+        for offset in (0..64).step_by(8) {
+            let word = u32::from_str_radix(&seed[offset..offset + 8], 16)
+                .map_err(|error| ParseError::Canonical(error.to_string()))?;
+            state ^= word;
+        }
+        if state == 0 {
+            state = 0x6d2b_79f5;
+        }
+        Ok(Self { state })
+    }
+
+    pub fn allocate(&mut self) -> String {
+        self.state ^= self.state << 13;
+        self.state ^= self.state >> 17;
+        self.state ^= self.state << 5;
+        format!("{:08X}", self.state % MAX_HEX_ID_EXCLUSIVE)
+    }
+}
+
+/// Everything on `w:p` the model does not consume itself. A paragraph ID the
+/// model does not take as identity stays here verbatim, so a save keeps it.
+fn extra_paragraph_attributes(element: &XmlElement, para_id: Option<&str>) -> Vec<RawAttribute> {
+    element
+        .attributes
+        .iter()
+        .filter(|(name, _)| {
+            !matches!(name.as_str(), "w14:textId" | "w:textId") && Some(name.as_str()) != para_id
+        })
+        .map(|(name, value)| RawAttribute {
+            name: name.clone(),
+            value: value.clone(),
+        })
+        .collect()
+}
+
+#[allow(clippy::too_many_arguments)]
+pub fn parse_paragraph(
+    element: &XmlElement,
+    relationships: Option<&RelationshipMap>,
+    theme: Option<&Theme>,
+    styles: Option<&StyleMap>,
+    doc_defaults: Option<&DocDefaults>,
+    numbering: Option<&NumberingMap>,
+    part: &str,
+    budget: &mut ParseBudget<'_>,
+    ids: &mut HexIdAllocator,
+    drawing: Option<&mut DrawingContext<'_>>,
+    in_header_footer: bool,
+    depth: usize,
+) -> Result<Paragraph, ParseError> {
+    budget.check_nesting_depth(depth, part)?;
+    budget.charge_paragraph(part)?;
+    let para_id = element
+        .para_id_attribute
+        .as_deref()
+        .into_iter()
+        .chain(["paraId", "w:paraId"])
+        .find_map(|name| Some((name, element.attributes.get(name)?.as_str())))
+        .filter(|(_, value)| parse_paragraph_id(value).is_some());
+    let mut paragraph = Paragraph {
+        node_type: "paragraph".to_owned(),
+        extra_attributes: extra_paragraph_attributes(element, para_id.map(|(name, _)| name)),
+        para_id: para_id.map(|(_, value)| value.to_owned()),
+        repeated_para_id: None,
+        para_id_attribute: element.para_id_attribute.clone().filter(|name| {
+            name != "w14:paraId" && para_id.map(|(consumed, _)| consumed) != Some(name.as_str())
+        }),
+        source_ordinal: element
+            .paragraph_ordinal
+            .filter(|_| budget.records_source_ordinals()),
+        text_id: normalize_hex_id(
+            element
+                .attribute(Some("w14"), "textId")
+                .or_else(|| element.attribute(Some("w"), "textId")),
+            ids,
+        ),
+        formatting: None,
+        property_changes: None,
+        p_pr_ins: None,
+        p_pr_del: None,
+        content: Vec::new(),
+        list_rendering: None,
+        rendered_page_break_before: (!in_header_footer
+            && paragraph_starts_with_rendered_page_break(element))
+        .then_some(true),
+        section_properties: None,
+    };
+    let properties = element.child("w", "pPr");
+    if let Some(properties) = properties {
+        paragraph.formatting = parse_document_paragraph_properties(properties, theme, styles);
+        paragraph.property_changes = parse_paragraph_property_changes(
+            properties,
+            theme,
+            styles,
+            paragraph.formatting.as_ref(),
+        );
+        if let Some(mark) = properties.child("w", "rPr") {
+            paragraph.p_pr_ins = mark.child("w", "ins").and_then(parse_paragraph_mark_change);
+            paragraph.p_pr_del = mark.child("w", "del").and_then(parse_paragraph_mark_change);
+        }
+        paragraph.section_properties = properties
+            .child("w", "sectPr")
+            .map(|section| parse_section_properties(Some(section)));
+    }
+    let resources = drawing
+        .as_ref()
+        .map(|context| (context.media, context.charts));
+    let mut enrich = |shape: &mut Shape,
+                      source: &XmlElement,
+                      budget: &mut ParseBudget<'_>,
+                      smart_art: &mut SmartArtContext|
+     -> Result<(), ParseError> {
+        let Some((media, charts)) = resources else {
+            return Ok(());
+        };
+        let warnings =
+            crate::shape::enrich_group_text_boxes(shape, source, budget, |container, budget| {
+                let mut parser = crate::block::StoryParser {
+                    relationships,
+                    theme,
+                    styles,
+                    doc_defaults,
+                    numbering,
+                    media,
+                    charts,
+                    smart_art: &mut *smart_art,
+                    budget,
+                    ids: &mut *ids,
+                    part,
+                };
+                parser.parse_text_box_content(container, depth)
+            })?;
+        for warning in warnings {
+            if !smart_art.warnings.iter().any(|known| known == warning) {
+                smart_art.warnings.push(warning.to_owned());
+            }
+        }
+        Ok(())
+    };
+    let mut drawing = drawing.map(|context| ComposedDrawingContext {
+        media: context.media,
+        charts: context.charts,
+        smart_art: &mut *context.smart_art,
+        group_text_boxes: Some(&mut enrich),
+    });
+    paragraph.content = parse_paragraph_contents(
+        element,
+        relationships,
+        theme,
+        styles,
+        doc_defaults,
+        part,
+        budget,
+        drawing.as_mut(),
+        depth,
+        false,
+        false,
+        in_header_footer,
+    )?;
+    apply_list_rendering(&mut paragraph, properties, styles, numbering);
+    Ok(paragraph)
+}
+
+pub fn parse_document_paragraph_properties(
+    properties: &XmlElement,
+    theme: Option<&Theme>,
+    styles: Option<&StyleMap>,
+) -> Option<ParagraphFormatting> {
+    let mut value = parse_paragraph_properties(Some(properties), theme).unwrap_or_default();
+    if let Some(spacing) = properties.child("w", "spacing") {
+        let before = spacing
+            .parse_numeric_attribute(Some("w"), "before", 1.0)
+            .or(value.space_before_lines)
+            .map(|_| true);
+        let after = spacing
+            .parse_numeric_attribute(Some("w"), "after", 1.0)
+            .or(value.space_after_lines)
+            .map(|_| true);
+        if before.is_some() || after.is_some() {
+            value.spacing_explicit = Some(SpacingExplicit { before, after });
+        }
+    }
+    if let Some(indent) = properties.child("w", "ind") {
+        if value.indent_left.is_none() {
+            value.indent_left = indent.parse_numeric_attribute(Some("w"), "start", 1.0);
+        }
+        if value.indent_right.is_none() {
+            value.indent_right = indent.parse_numeric_attribute(Some("w"), "end", 1.0);
+        }
+    }
+    if let Some(frame) = properties.child("w", "framePr") {
+        value.frame = parse_frame(frame);
+    }
+    if let Some(run_properties) = properties.child("w", "rPr") {
+        let shell = XmlElement {
+            name: "w:r".to_owned(),
+            attributes: Default::default(),
+            children: vec![XmlNode::Element(run_properties.clone())],
+            paragraph_ordinal: None,
+            para_id_attribute: None,
+            bookmark_xml: None,
+        };
+        value.run_properties = parse_run(&shell, theme, styles, None).run.formatting;
+    }
+    let creates_empty_bag = properties.child("w", "shd").is_some()
+        || properties.child("w", "tabs").is_some()
+        || properties.child("w", "framePr").is_some()
+        || properties.child("w", "rPr").is_some();
+    (value != ParagraphFormatting::default() || creates_empty_bag).then_some(value)
+}
+
+fn parse_frame(element: &XmlElement) -> Option<ParagraphFrame> {
+    let value = ParagraphFrame {
+        width: element.parse_numeric_attribute(Some("w"), "w", 1.0),
+        height: element.parse_numeric_attribute(Some("w"), "h", 1.0),
+        h_anchor: enum_attribute(element, "hAnchor", &["text", "margin", "page"]),
+        v_anchor: enum_attribute(element, "vAnchor", &["text", "margin", "page"]),
+        x: element.parse_numeric_attribute(Some("w"), "x", 1.0),
+        y: element.parse_numeric_attribute(Some("w"), "y", 1.0),
+        x_align: nonempty_attribute(element, "xAlign"),
+        y_align: nonempty_attribute(element, "yAlign"),
+        wrap: nonempty_attribute(element, "wrap"),
+    };
+    (value != ParagraphFrame::default()).then_some(value)
+}
+
+fn parse_paragraph_property_changes(
+    properties: &XmlElement,
+    theme: Option<&Theme>,
+    styles: Option<&StyleMap>,
+    current: Option<&ParagraphFormatting>,
+) -> Option<Vec<ParagraphPropertyChange>> {
+    let changes: Vec<_> = properties
+        .children_named("w", "pPrChange")
+        .filter_map(|change| {
+            let previous = change.child("w", "pPr").and_then(|properties| {
+                parse_document_paragraph_properties(properties, theme, styles)
+            });
+            let current = current.cloned();
+            (previous.is_some() || current.is_some()).then(|| ParagraphPropertyChange {
+                node_type: "paragraphPropertyChange".to_owned(),
+                info: parse_tracked_change_info(change),
+                previous_formatting: previous,
+                current_formatting: current,
+            })
+        })
+        .collect();
+    (!changes.is_empty()).then_some(changes)
+}
+
+fn parse_paragraph_mark_change(element: &XmlElement) -> Option<TrackedChangeInfo> {
+    let id = parse_javascript_integer_prefix(element.attribute(Some("w"), "id")?)?;
+    Some(TrackedChangeInfo {
+        id,
+        author: element
+            .attribute(Some("w"), "author")
+            .unwrap_or_default()
+            .to_owned(),
+        date: element
+            .attribute(Some("w"), "date")
+            .filter(|date| !date.is_empty())
+            .map(str::to_owned),
+    })
+}
+
+pub(crate) fn parse_tracked_change_info(element: &XmlElement) -> TrackedChangeInfo {
+    let parsed = element
+        .attribute(Some("w"), "id")
+        .and_then(parse_javascript_integer_prefix)
+        .filter(|id| id.fract() == 0.0 && *id >= 0.0)
+        .unwrap_or(0.0);
+    let author = element
+        .attribute(Some("w"), "author")
+        .unwrap_or_default()
+        .trim();
+    let date = element
+        .attribute(Some("w"), "date")
+        .unwrap_or_default()
+        .trim();
+    TrackedChangeInfo {
+        id: parsed,
+        author: if author.is_empty() { "Unknown" } else { author }.to_owned(),
+        date: (!date.is_empty()).then(|| date.to_owned()),
+    }
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+enum TrackedContext {
+    Default,
+    Deletion,
+}
+
+#[allow(clippy::too_many_arguments)]
+fn parse_paragraph_contents(
+    element: &XmlElement,
+    relationships: Option<&RelationshipMap>,
+    theme: Option<&Theme>,
+    styles: Option<&StyleMap>,
+    doc_defaults: Option<&DocDefaults>,
+    part: &str,
+    budget: &mut ParseBudget<'_>,
+    mut drawing: Option<&mut ComposedDrawingContext<'_>>,
+    depth: usize,
+    deletion: bool,
+    in_control: bool,
+    in_header_footer: bool,
+) -> Result<Vec<ParagraphContent>, ParseError> {
+    budget.check_nesting_depth(depth, part)?;
+    let tracked_context = if deletion {
+        TrackedContext::Deletion
+    } else {
+        TrackedContext::Default
+    };
+    let mut output = Vec::new();
+    let mut fields: Vec<OpenComplexField> = Vec::new();
+    let mut beyond_nesting = 0;
+    for child in transparent_children(element, false) {
+        let normalized;
+        let child = if tracked_context == TrackedContext::Deletion
+            && (in_control || matches!(child.local_name(), "r" | "sdt"))
+        {
+            normalized = normalize_deletion_element(child);
+            &normalized
+        } else {
+            child
+        };
+        check_container_beyond_field_nesting(beyond_nesting, child, part)?;
+        match child.local_name() {
+            "r" => {
+                let run = parse_run_with_context(
+                    child,
+                    relationships,
+                    theme,
+                    styles,
+                    doc_defaults,
+                    budget,
+                    drawing.as_deref_mut(),
+                    in_header_footer,
+                )?;
+                process_field_run(run, &mut fields, &mut beyond_nesting, &mut output, part)?;
+            }
+            "hyperlink" => {
+                let hyperlink = parse_hyperlink_composed(
+                    child,
+                    relationships,
+                    theme,
+                    styles,
+                    doc_defaults,
+                    part,
+                    budget,
+                    drawing.as_deref_mut(),
+                    depth + 1,
+                    in_header_footer,
+                )?;
+                if let Some(active) = fields.last_mut() {
+                    let runs: Vec<Run> = hyperlink
+                        .children
+                        .iter()
+                        .filter_map(|node| match node {
+                            InlineNode::Run(run) => Some(run.clone()),
+                            _ => None,
+                        })
+                        .collect();
+                    active.absorb(InlineNode::Hyperlink(Box::new(hyperlink)), runs);
+                } else {
+                    output.push(ParagraphContent::Inline(InlineNode::Hyperlink(Box::new(
+                        hyperlink,
+                    ))));
+                }
+            }
+            "bookmarkStart" => {
+                if !has_bookmark_id(child) {
+                    continue;
+                }
+                let node = InlineNode::BookmarkStart(parse_bookmark_start(child));
+                match fields.last_mut() {
+                    Some(active) => active.absorb(node, Vec::new()),
+                    None => output.push(ParagraphContent::Inline(node)),
+                }
+            }
+            "bookmarkEnd" => {
+                if !has_bookmark_id(child) {
+                    continue;
+                }
+                let node = InlineNode::BookmarkEnd(parse_bookmark_end(child));
+                match fields.last_mut() {
+                    Some(active) => active.absorb(node, Vec::new()),
+                    None => output.push(ParagraphContent::Inline(node)),
+                }
+            }
+            "fldSimple" => {
+                let field = parse_simple_field_composed(
+                    child,
+                    relationships,
+                    theme,
+                    styles,
+                    doc_defaults,
+                    part,
+                    budget,
+                    drawing.as_deref_mut(),
+                    depth + 1,
+                    in_header_footer,
+                )?;
+                if let Some(active) = fields.last_mut() {
+                    let runs = field.content.clone();
+                    active.absorb(InlineNode::SimpleField(Box::new(field)), runs);
+                } else {
+                    output.push(ParagraphContent::Inline(InlineNode::SimpleField(Box::new(
+                        field,
+                    ))));
+                }
+            }
+            "sdt" => {
+                if let Some(container) = child.child("w", "sdtContent") {
+                    let parsed = parse_paragraph_contents(
+                        container,
+                        relationships,
+                        theme,
+                        styles,
+                        doc_defaults,
+                        part,
+                        budget,
+                        drawing.as_deref_mut(),
+                        depth + 1,
+                        tracked_context == TrackedContext::Deletion,
+                        true,
+                        in_header_footer,
+                    )?;
+                    output.push(ParagraphContent::Inline(InlineNode::InlineSdt(Box::new(
+                        InlineSdt {
+                            node_type: InlineSdtType::InlineSdt,
+                            properties: parse_sdt_properties(
+                                child.child("w", "sdtPr"),
+                                child.child("w", "sdtEndPr"),
+                                theme,
+                            ),
+                            content: filter_field_inline(parsed, true),
+                        },
+                    ))));
+                }
+            }
+            "ins" | "del" | "moveFrom" | "moveTo" => {
+                let is_deletion = matches!(child.local_name(), "del" | "moveFrom");
+                let content = parse_paragraph_contents(
+                    child,
+                    relationships,
+                    theme,
+                    styles,
+                    doc_defaults,
+                    part,
+                    budget,
+                    drawing.as_deref_mut(),
+                    depth + 1,
+                    is_deletion,
+                    in_control,
+                    in_header_footer,
+                )?;
+                let content = if in_control {
+                    filter_field_inline(content, true)
+                } else {
+                    content
+                        .into_iter()
+                        .filter_map(|content| match content {
+                            ParagraphContent::Inline(
+                                node @ (InlineNode::Run(_)
+                                | InlineNode::Hyperlink(_)
+                                | InlineNode::InlineSdt(_)),
+                            ) => Some(node),
+                            ParagraphContent::Tracked(change) => {
+                                let node = InlineNode::Tracked(Box::new(change));
+                                node.has_tracked_control(false, true).then_some(node)
+                            }
+                            _ => None,
+                        })
+                        .collect()
+                };
+                let node_type = match child.local_name() {
+                    "ins" => "insertion",
+                    "del" => "deletion",
+                    "moveFrom" => "moveFrom",
+                    _ => "moveTo",
+                };
+                output.push(ParagraphContent::Tracked(TrackedInline {
+                    node_type: node_type.to_owned(),
+                    info: parse_tracked_change_info(child),
+                    content,
+                }));
+            }
+            "moveFromRangeStart" | "moveToRangeStart" => {
+                if let Some(id) = range_id(child) {
+                    output.push(ParagraphContent::RangeStart(RangeStart {
+                        node_type: child.local_name().to_owned(),
+                        id,
+                        name: child
+                            .attribute(Some("w"), "name")
+                            .unwrap_or_default()
+                            .to_owned(),
+                    }));
+                }
+            }
+            "moveFromRangeEnd" | "moveToRangeEnd" => {
+                if let Some(id) = range_id(child) {
+                    output.push(ParagraphContent::RangeEnd(RangeEnd {
+                        node_type: child.local_name().to_owned(),
+                        id,
+                    }));
+                }
+            }
+            "commentRangeStart" | "commentRangeEnd" => {
+                if let Some(id) = range_id(child) {
+                    output.push(ParagraphContent::CommentRange(CommentRange {
+                        node_type: child.local_name().to_owned(),
+                        id,
+                        offset: None,
+                    }));
+                }
+            }
+            "oMath" | "oMathPara" => output.push(ParagraphContent::Inline(InlineNode::Math(
+                parse_math(child),
+            ))),
+            // Paragraph properties are handled by the orchestrator.
+            "pPr" | "proofErr" | "permStart" | "permEnd" => {}
+            _ => {
+                if let Some(raw) = crate::inline::raw_foreign_node(child, budget) {
+                    output.push(ParagraphContent::Inline(InlineNode::RawXml(Box::new(raw))));
+                }
+            }
+        }
+    }
+    if beyond_nesting > 0 {
+        return Err(field_depth_error(part));
+    }
+    while let Some(field) = fields.pop() {
+        let completed = field.finish();
+        if let Some(parent) = fields.last_mut() {
+            parent.absorb_nested(completed);
+        } else {
+            output.push(ParagraphContent::Inline(InlineNode::ComplexField(
+                Box::new(completed),
+            )));
+        }
+    }
+    assign_marker_offsets(&mut output);
+    Ok(output)
+}
+
+fn process_field_run(
+    run: Run,
+    fields: &mut Vec<OpenComplexField>,
+    beyond_nesting: &mut usize,
+    output: &mut Vec<ParagraphContent>,
+    part: &str,
+) -> Result<(), ParseError> {
+    let mut has_begin = false;
+    let mut has_separate = false;
+    let mut has_end = false;
+    let mut instruction = String::new();
+    for content in &run.content {
+        match content {
+            RunContent::FieldChar { char_type, .. } if char_type == "begin" => has_begin = true,
+            RunContent::FieldChar { char_type, .. } if char_type == "separate" => {
+                has_separate = true
+            }
+            RunContent::FieldChar { char_type, .. } if char_type == "end" => has_end = true,
+            RunContent::InstrText { text } => instruction.push_str(text),
+            _ => {}
+        }
+    }
+    let Some(run) = absorb_beyond_field_nesting(fields, beyond_nesting, run, part)? else {
+        return Ok(());
+    };
+    if has_begin {
+        fields.push(OpenComplexField::opening(&run));
+    }
+    if let Some(active) = fields.last_mut() {
+        active.append_instruction(&instruction);
+        active.adopt_formatting(&run);
+        if has_separate {
+            active.switch_to_result();
+        }
+        if !has_begin && !has_separate && !has_end {
+            active.absorb(InlineNode::Run(run.clone()), vec![run]);
+        }
+        if has_end {
+            let completed = fields.pop().unwrap().finish();
+            if let Some(parent) = fields.last_mut() {
+                parent.absorb_nested(completed);
+            } else {
+                output.push(ParagraphContent::Inline(InlineNode::ComplexField(
+                    Box::new(completed),
+                )));
+            }
+        }
+    } else {
+        output.push(ParagraphContent::Inline(InlineNode::Run(run)));
+    }
+    Ok(())
+}
+
+#[allow(clippy::too_many_arguments)]
+fn parse_simple_field_composed(
+    element: &XmlElement,
+    relationships: Option<&RelationshipMap>,
+    theme: Option<&Theme>,
+    styles: Option<&StyleMap>,
+    doc_defaults: Option<&DocDefaults>,
+    part: &str,
+    budget: &mut ParseBudget<'_>,
+    drawing: Option<&mut ComposedDrawingContext<'_>>,
+    depth: usize,
+    in_header_footer: bool,
+) -> Result<SimpleField, ParseError> {
+    let instruction = element
+        .attribute(Some("w"), "instr")
+        .unwrap_or_default()
+        .to_owned();
+    let result = filter_field_inline(
+        parse_paragraph_contents(
+            element,
+            relationships,
+            theme,
+            styles,
+            doc_defaults,
+            part,
+            budget,
+            drawing,
+            depth,
+            false,
+            false,
+            in_header_footer,
+        )?,
+        false,
+    );
+    let content = result
+        .iter()
+        .filter_map(|node| match node {
+            InlineNode::Run(run) => Some(run.clone()),
+            _ => None,
+        })
+        .collect();
+    let structured_result = (!result.is_empty()).then(|| StructuredFieldContent {
+        inline: Some(result),
+        blocks: None,
+    });
+    let field_tree = structured_result
+        .as_ref()
+        .map(|result| StructuredFieldTree {
+            version: Some(1.0),
+            code: None,
+            result: (!result.holds_field()).then(|| result.clone()),
+            children: None,
+            display_mode: None,
+        });
+    Ok(SimpleField {
+        node_type: SimpleFieldType::SimpleField,
+        field_type: parse_field_type(&instruction),
+        instruction,
+        content,
+        fld_lock: (element.parse_boolean_attribute(Some("w"), "fldLock") == Some(true))
+            .then_some(true),
+        dirty: (element.parse_boolean_attribute(Some("w"), "dirty") == Some(true)).then_some(true),
+        structured_result,
+        field_tree,
+    })
+}
+
+#[allow(clippy::too_many_arguments)]
+fn parse_hyperlink_composed(
+    element: &XmlElement,
+    relationships: Option<&RelationshipMap>,
+    theme: Option<&Theme>,
+    styles: Option<&StyleMap>,
+    doc_defaults: Option<&DocDefaults>,
+    part: &str,
+    budget: &mut ParseBudget<'_>,
+    mut drawing: Option<&mut ComposedDrawingContext<'_>>,
+    depth: usize,
+    in_header_footer: bool,
+) -> Result<Hyperlink, ParseError> {
+    budget.check_nesting_depth(depth, part)?;
+    let mut hyperlink = parse_hyperlink(
+        element,
+        relationships,
+        theme,
+        styles,
+        doc_defaults,
+        part,
+        budget,
+    )?;
+    let mut children = Vec::new();
+    let mut structured = Vec::new();
+    for child in element.child_elements().take(10_000) {
+        let node = match child.local_name() {
+            "r" => Some(InlineNode::Run(parse_run_with_context(
+                child,
+                relationships,
+                theme,
+                styles,
+                doc_defaults,
+                budget,
+                drawing.as_deref_mut(),
+                in_header_footer,
+            )?)),
+            "bookmarkStart" => has_bookmark_id(child)
+                .then(|| InlineNode::BookmarkStart(parse_bookmark_start(child))),
+            "bookmarkEnd" => {
+                has_bookmark_id(child).then(|| InlineNode::BookmarkEnd(parse_bookmark_end(child)))
+            }
+            "fldSimple" => Some(InlineNode::SimpleField(Box::new(
+                parse_simple_field_composed(
+                    child,
+                    relationships,
+                    theme,
+                    styles,
+                    doc_defaults,
+                    part,
+                    budget,
+                    drawing.as_deref_mut(),
+                    depth + 1,
+                    in_header_footer,
+                )?,
+            ))),
+            "sdt" => parse_inline_sdt_composed(
+                child,
+                relationships,
+                theme,
+                styles,
+                doc_defaults,
+                part,
+                budget,
+                drawing.as_deref_mut(),
+                depth + 1,
+                false,
+                in_header_footer,
+            )?
+            .map(|sdt| InlineNode::InlineSdt(Box::new(sdt))),
+            "oMath" | "oMathPara" => Some(InlineNode::Math(parse_math(child))),
+            _ => None,
+        };
+        if let Some(node) = node {
+            if matches!(
+                node,
+                InlineNode::Run(_) | InlineNode::BookmarkStart(_) | InlineNode::BookmarkEnd(_)
+            ) {
+                children.push(node.clone());
+            }
+            structured.push(node);
+        }
+    }
+    hyperlink.children = children;
+    hyperlink.structured_children = structured
+        .iter()
+        .any(|node| !matches!(node, InlineNode::Run(_)))
+        .then_some(structured);
+    Ok(hyperlink)
+}
+
+#[allow(clippy::too_many_arguments)]
+fn parse_inline_sdt_composed(
+    element: &XmlElement,
+    relationships: Option<&RelationshipMap>,
+    theme: Option<&Theme>,
+    styles: Option<&StyleMap>,
+    doc_defaults: Option<&DocDefaults>,
+    part: &str,
+    budget: &mut ParseBudget<'_>,
+    drawing: Option<&mut ComposedDrawingContext<'_>>,
+    depth: usize,
+    property_theme: bool,
+    in_header_footer: bool,
+) -> Result<Option<InlineSdt>, ParseError> {
+    let Some(container) = element.child("w", "sdtContent") else {
+        return Ok(None);
+    };
+    let content = filter_field_inline(
+        parse_paragraph_contents(
+            container,
+            relationships,
+            theme,
+            styles,
+            doc_defaults,
+            part,
+            budget,
+            drawing,
+            depth,
+            false,
+            true,
+            in_header_footer,
+        )?,
+        true,
+    );
+    Ok(Some(InlineSdt {
+        node_type: InlineSdtType::InlineSdt,
+        // Pinned hyperlink quirk: the SDT's own run properties omit theme.
+        properties: parse_sdt_properties(
+            element.child("w", "sdtPr"),
+            element.child("w", "sdtEndPr"),
+            property_theme.then_some(theme).flatten(),
+        ),
+        content,
+    }))
+}
+
+fn filter_field_inline(content: Vec<ParagraphContent>, control: bool) -> Vec<InlineNode> {
+    content
+        .into_iter()
+        .filter_map(|content| match content {
+            ParagraphContent::Inline(
+                node @ (InlineNode::Run(_)
+                | InlineNode::Hyperlink(_)
+                | InlineNode::SimpleField(_)
+                | InlineNode::ComplexField(_)
+                | InlineNode::InlineSdt(_)
+                | InlineNode::Math(_)),
+            ) => Some(node),
+            ParagraphContent::Tracked(change) => {
+                let node = InlineNode::Tracked(Box::new(change));
+                (control || node.has_tracked_control(false, false)).then_some(node)
+            }
+            _ => None,
+        })
+        .collect()
+}
+
+pub(crate) fn normalize_deletion_element(element: &XmlElement) -> XmlElement {
+    let local = element.local_name();
+    let mapped = match local {
+        "delText" => Some("t"),
+        "delInstrText" => Some("instrText"),
+        _ => None,
+    };
+    let name = mapped.map_or_else(
+        || element.name.clone(),
+        |local| match element.name.split_once(':') {
+            Some((prefix, _)) => format!("{prefix}:{local}"),
+            None => local.to_owned(),
+        },
+    );
+    XmlElement {
+        name,
+        attributes: element.attributes.clone(),
+        paragraph_ordinal: element.paragraph_ordinal,
+        para_id_attribute: element.para_id_attribute.clone(),
+        bookmark_xml: element.bookmark_xml.clone(),
+        children: element
+            .children
+            .iter()
+            .map(|node| match node {
+                XmlNode::Element(child) => XmlNode::Element(normalize_deletion_element(child)),
+                _ => node.clone(),
+            })
+            .collect(),
+    }
+}
+
+fn range_id(element: &XmlElement) -> Option<f64> {
+    element
+        .attribute(Some("w"), "id")
+        .and_then(parse_javascript_integer_prefix)
+}
+
+fn parse_math(element: &XmlElement) -> MathEquation {
+    let mut text = String::new();
+    append_math_text(element, &mut text);
+    MathEquation {
+        node_type: MathType::MathEquation,
+        display: if element.local_name() == "oMathPara" {
+            "block"
+        } else {
+            "inline"
+        }
+        .to_owned(),
+        omml_xml: element.to_raw_inline_xml(),
+        plain_text: (!text.is_empty()).then_some(text),
+    }
+}
+
+fn append_math_text(element: &XmlElement, output: &mut String) {
+    for child in element.child_elements() {
+        if child.local_name() == "t" {
+            for node in &child.children {
+                if let XmlNode::Text(text) = node {
+                    output.push_str(text);
+                }
+            }
+        } else {
+            append_math_text(child, output);
+        }
+    }
+}
+
+#[allow(clippy::too_many_arguments)]
+pub(crate) fn parse_run_composed(
+    element: &XmlElement,
+    relationships: Option<&RelationshipMap>,
+    theme: Option<&Theme>,
+    styles: Option<&StyleMap>,
+    doc_defaults: Option<&DocDefaults>,
+    budget: &mut ParseBudget<'_>,
+    drawing: Option<&mut DrawingContext<'_>>,
+    in_header_footer: bool,
+) -> Result<Run, ParseError> {
+    let mut drawing = drawing.map(ComposedDrawingContext::new);
+    parse_run_with_context(
+        element,
+        relationships,
+        theme,
+        styles,
+        doc_defaults,
+        budget,
+        drawing.as_mut(),
+        in_header_footer,
+    )
+}
+
+#[allow(clippy::too_many_arguments)]
+fn parse_run_with_context(
+    element: &XmlElement,
+    relationships: Option<&RelationshipMap>,
+    theme: Option<&Theme>,
+    styles: Option<&StyleMap>,
+    doc_defaults: Option<&DocDefaults>,
+    budget: &mut ParseBudget<'_>,
+    mut drawing: Option<&mut ComposedDrawingContext<'_>>,
+    in_header_footer: bool,
+) -> Result<Run, ParseError> {
+    let mut run = parse_run(element, theme, styles, doc_defaults).run;
+    let mut replacements = Vec::new();
+    for child in element.child_elements() {
+        match child.local_name() {
+            "drawing" | "pict" | "object" => replacements.push(parse_drawing_owned(
+                child,
+                relationships,
+                budget,
+                drawing.as_deref_mut(),
+                in_header_footer,
+            )?),
+            "AlternateContent" if contains_drawing_owned_content(child) => {
+                let parsed = parse_alternate_content(
+                    child,
+                    relationships,
+                    budget,
+                    drawing.as_deref_mut(),
+                    in_header_footer,
+                )?;
+                let modeled = parsed.iter().any(|content| match content {
+                    RunContent::OpaqueDrawing { previews, .. } => !previews.is_empty(),
+                    _ => true,
+                });
+                if !modeled && !alternate_content_has_text_box(child) {
+                    let preview = parsed.into_iter().find_map(|content| match content {
+                        RunContent::OpaqueDrawing { preview, .. } => preview,
+                        _ => None,
+                    });
+                    replacements.push(vec![RunContent::OpaqueDrawing {
+                        kind: "alternateContent".to_owned(),
+                        xml: child.to_raw_inline_xml(),
+                        preview,
+                        previews: Vec::new(),
+                        text_box: None,
+                    }]);
+                } else {
+                    replacements.push(parsed);
+                }
+            }
+            _ => {}
+        }
+    }
+    let mut replacement = replacements.into_iter();
+    let mut content = Vec::new();
+    for item in run.content {
+        if matches!(item, RunContent::OpaqueDrawing { .. }) {
+            content.extend(replacement.next().unwrap_or_default());
+        } else {
+            content.push(item);
+        }
+    }
+    run.content = content;
+    Ok(run)
+}
+
+fn parse_drawing_owned(
+    element: &XmlElement,
+    relationships: Option<&RelationshipMap>,
+    budget: &mut ParseBudget<'_>,
+    mut drawing: Option<&mut ComposedDrawingContext<'_>>,
+    in_header_footer: bool,
+) -> Result<Vec<RunContent>, ParseError> {
+    if matches!(element.local_name(), "pict" | "object") {
+        if let Some(rule) = parse_horizontal_rule(element) {
+            return Ok(vec![RunContent::HorizontalRule {
+                rule: Box::new(rule),
+            }]);
+        }
+        let media = drawing.as_ref().map(|context| context.media);
+        if element.local_name() == "object" || has_ole_object(element, 0) {
+            return Ok(vec![RunContent::OpaqueDrawing {
+                kind: element.local_name().to_owned(),
+                xml: element.to_raw_inline_xml(),
+                preview: vml_image_content(element, relationships, media, Some(budget))
+                    .map(Box::new),
+                previews: Vec::new(),
+                text_box: None,
+            }]);
+        }
+        let images = vml_image_contents(element, relationships, media, Some(budget));
+        if images.len() == 1 && find_descendant_by_name(element, "v:group", 0).is_none() {
+            return Ok(images
+                .into_iter()
+                .map(|image| RunContent::Drawing {
+                    image: Box::new(image),
+                })
+                .collect());
+        }
+        if !images.is_empty() {
+            return Ok(vec![RunContent::OpaqueDrawing {
+                kind: element.local_name().to_owned(),
+                xml: element.to_raw_inline_xml(),
+                preview: None,
+                previews: images,
+                text_box: None,
+            }]);
+        }
+        if !has_vml_image_data(element, 0) || !in_header_footer {
+            return Ok(vec![RunContent::OpaqueDrawing {
+                kind: element.local_name().to_owned(),
+                xml: element.to_raw_inline_xml(),
+                preview: None,
+                previews: Vec::new(),
+                text_box: None,
+            }]);
+        }
+        return Ok(Vec::new());
+    }
+    if is_text_box_drawing(element) {
+        return Ok(Vec::new());
+    }
+    let charts = drawing.as_ref().map(|context| context.charts);
+    match parse_chart_from_drawing(element, relationships, charts)? {
+        DrawingChart::Chart(chart) => return Ok(vec![RunContent::Chart { chart }]),
+        DrawingChart::Unread => {
+            return Ok(vec![RunContent::OpaqueDrawing {
+                kind: "drawing".to_owned(),
+                xml: element.to_raw_inline_xml(),
+                preview: None,
+                previews: Vec::new(),
+                text_box: None,
+            }]);
+        }
+        DrawingChart::None => {}
+    }
+    if is_smart_art_drawing(element) {
+        let shape = match drawing {
+            Some(context) => parse_smart_art_from_drawing(
+                element,
+                relationships,
+                Some(&mut *context.smart_art),
+                budget,
+            )?,
+            None => None,
+        };
+        return Ok(shape
+            .map(|mut shape| {
+                apply_shape_metadata(&mut shape, element);
+                RunContent::Shape {
+                    shape: Box::new(shape),
+                }
+            })
+            .into_iter()
+            .collect());
+    }
+    if is_shape_drawing(element) {
+        if let Some(mut shape) = parse_shape_from_drawing(element) {
+            if shape.scene.is_some()
+                && let Some(context) = drawing.as_deref_mut()
+                && let Some(enrich) = context.group_text_boxes.as_deref_mut()
+            {
+                enrich(&mut shape, element, budget, context.smart_art)?;
+            }
+            let media = drawing.as_ref().map(|context| context.media);
+            resolve_shape_fill_pictures(&mut shape, relationships, media);
+            apply_shape_metadata(&mut shape, element);
+            return Ok(vec![RunContent::Shape {
+                shape: Box::new(shape),
+            }]);
+        }
+        return Ok(Vec::new());
+    }
+    let media = drawing.as_ref().map(|context| context.media);
+    Ok(parse_drawing(element, relationships, media)
+        .map(|image| RunContent::Drawing {
+            image: Box::new(image),
+        })
+        .into_iter()
+        .collect())
+}
+
+fn parse_alternate_content(
+    element: &XmlElement,
+    relationships: Option<&RelationshipMap>,
+    budget: &mut ParseBudget<'_>,
+    drawing: Option<&mut ComposedDrawingContext<'_>>,
+    in_header_footer: bool,
+) -> Result<Vec<RunContent>, ParseError> {
+    Ok(parse_alternate_content_branch_with_context(
+        element,
+        relationships,
+        budget,
+        drawing,
+        in_header_footer,
+    )?
+    .map(|(_, parsed)| parsed)
+    .unwrap_or_default())
+}
+
+pub fn parse_alternate_content_branch<'a>(
+    element: &'a XmlElement,
+    relationships: Option<&RelationshipMap>,
+    budget: &mut ParseBudget<'_>,
+    drawing: Option<&mut DrawingContext<'_>>,
+    in_header_footer: bool,
+) -> Result<Option<(&'a XmlElement, Vec<RunContent>)>, ParseError> {
+    let mut drawing = drawing.map(ComposedDrawingContext::new);
+    parse_alternate_content_branch_with_context(
+        element,
+        relationships,
+        budget,
+        drawing.as_mut(),
+        in_header_footer,
+    )
+}
+
+fn parse_alternate_content_branch_with_context<'a>(
+    element: &'a XmlElement,
+    relationships: Option<&RelationshipMap>,
+    budget: &mut ParseBudget<'_>,
+    mut drawing: Option<&mut ComposedDrawingContext<'_>>,
+    in_header_footer: bool,
+) -> Result<Option<(&'a XmlElement, Vec<RunContent>)>, ParseError> {
+    let has_media = drawing.is_some();
+    let is_resolved_image = |image: &crate::image::Image| {
+        image.src.is_some() || (!has_media && !image.relationship_id.is_empty())
+    };
+    let mut saw_text_box = false;
+    let mut unsupported = None;
+    for branch_name in ["Choice", "Fallback"] {
+        for branch in element
+            .child_elements()
+            .filter(|branch| branch.local_name() == branch_name)
+        {
+            let mut parsed = Vec::new();
+            let mut branch_text_box = false;
+            let mut unsupported_drawings_only = true;
+            for child in branch.child_elements() {
+                if child.local_name() == "drawing" && is_text_box_drawing(child) {
+                    branch_text_box = true;
+                }
+                if matches!(child.local_name(), "drawing" | "pict" | "object") {
+                    let child_parsed = match parse_drawing_owned(
+                        child,
+                        relationships,
+                        budget,
+                        drawing.as_deref_mut(),
+                        in_header_footer,
+                    ) {
+                        Ok(parsed) => parsed,
+                        Err(_) if unsupported.is_some() => return Ok(unsupported),
+                        Err(error) => return Err(error),
+                    };
+                    if !child_parsed.is_empty() {
+                        unsupported_drawings_only &= child_parsed.iter().all(|content| {
+                            matches!(content, RunContent::Drawing { image }
+                                if !is_resolved_image(image))
+                        });
+                    }
+                    parsed.extend(child_parsed);
+                }
+            }
+            if !parsed.is_empty() {
+                if saw_text_box && unsupported.is_none() {
+                    parsed.retain(|content| {
+                        !matches!(
+                            content,
+                            RunContent::OpaqueDrawing { kind, .. }
+                                if kind == "pict" || kind == "object"
+                        )
+                    });
+                    if parsed.is_empty() {
+                        return Ok(unsupported);
+                    }
+                }
+                if unsupported.is_some() {
+                    let grouped = parsed.iter().any(|content| {
+                        matches!(content, RunContent::OpaqueDrawing { previews, .. } if !previews.is_empty())
+                    });
+                    let mut images = parsed
+                        .into_iter()
+                        .flat_map(|content| match content {
+                            RunContent::Drawing { image } => vec![*image],
+                            RunContent::OpaqueDrawing {
+                                preview, previews, ..
+                            } => preview
+                                .map(|image| *image)
+                                .into_iter()
+                                .chain(previews)
+                                .collect(),
+                            _ => Vec::new(),
+                        })
+                        .filter(|image| is_resolved_image(image));
+                    let (preview, previews) = if grouped {
+                        (None, images.collect::<Vec<_>>())
+                    } else {
+                        (images.next().map(Box::new), Vec::new())
+                    };
+                    if preview.is_some() || !previews.is_empty() {
+                        return Ok(Some((
+                            branch,
+                            vec![RunContent::OpaqueDrawing {
+                                kind: "alternateContent".to_owned(),
+                                xml: element.to_raw_inline_xml(),
+                                preview,
+                                previews,
+                                text_box: None,
+                            }],
+                        )));
+                    }
+                } else if !unsupported_drawings_only {
+                    return Ok(Some((branch, parsed)));
+                } else {
+                    unsupported = Some((branch, parsed));
+                }
+            }
+            saw_text_box |= branch_text_box;
+        }
+    }
+    Ok(unsupported)
+}
+
+fn contains_drawing_owned_content(element: &XmlElement) -> bool {
+    element.child_elements().any(|child| {
+        matches!(child.local_name(), "drawing" | "pict" | "object")
+            || contains_drawing_owned_content(child)
+    })
+}
+
+fn has_vml_image_data(element: &XmlElement, depth: usize) -> bool {
+    if depth > 64 {
+        return false;
+    }
+    element
+        .child_elements()
+        .any(|child| child.local_name() == "imagedata" || has_vml_image_data(child, depth + 1))
+}
+
+pub(crate) fn has_ole_object(element: &XmlElement, depth: usize) -> bool {
+    if depth > 64 {
+        return false;
+    }
+    element
+        .child_elements()
+        .any(|child| child.local_name() == "OLEObject" || has_ole_object(child, depth + 1))
+}
+
+fn alternate_content_has_text_box(element: &XmlElement) -> bool {
+    element.child_elements().any(|branch| {
+        matches!(branch.local_name(), "Choice" | "Fallback")
+            && branch
+                .child_elements()
+                .any(|child| child.local_name() == "drawing" && is_text_box_drawing(child))
+    })
+}
+
+pub fn apply_shape_metadata(shape: &mut Shape, drawing: &XmlElement) {
+    let doc_properties = find_descendant_by_name(drawing, "wp:docPr", 0);
+    let non_visual = find_descendant_by_name(drawing, "a:cNvPr", 0);
+    let title = doc_properties
+        .and_then(|element| element.attribute(None, "title"))
+        .or_else(|| non_visual.and_then(|element| element.attribute(None, "title")))
+        .filter(|value| !value.is_empty())
+        .map(|value| value.chars().take(4096).collect::<String>());
+    let description = doc_properties
+        .and_then(|element| element.attribute(None, "descr"))
+        .or_else(|| non_visual.and_then(|element| element.attribute(None, "descr")))
+        .filter(|value| !value.is_empty())
+        .map(|value| value.chars().take(4096).collect::<String>());
+    let decorative = doc_properties
+        .is_some_and(|element| element.parse_boolean_attribute(None, "decorative") == Some(true))
+        || find_descendant_by_name(drawing, "adec:decorative", 0).is_some();
+    let hidden = doc_properties
+        .is_some_and(|element| element.parse_boolean_attribute(None, "hidden") == Some(true))
+        || non_visual
+            .is_some_and(|element| element.parse_boolean_attribute(None, "hidden") == Some(true));
+    let relative_height = find_descendant_by_name(drawing, "wp:anchor", 0)
+        .and_then(|anchor| anchor.attribute(None, "relativeHeight"))
+        .and_then(|raw| raw.parse::<f64>().ok())
+        .filter(|value| value.is_finite());
+    if let Some(title) = title {
+        shape.title = Some(title);
+    }
+    if let Some(description) = description {
+        shape.description = Some(description);
+    }
+    if decorative {
+        shape.decorative = Some(true);
+    }
+    if hidden {
+        shape.hidden = Some(true);
+    }
+    if let Some(relative_height) = relative_height {
+        shape.relative_height = Some(relative_height);
+    }
+    let mut scene = shape.scene.take().map(|scene| *scene).unwrap_or_default();
+    scene.version = Some(1.0);
+    scene.title.clone_from(&shape.title);
+    scene.description.clone_from(&shape.description);
+    scene.decorative = shape.decorative;
+    scene.hidden = shape.hidden;
+    shape.scene = Some(Box::new(scene));
+}
+
+fn find_descendant_by_name<'a>(
+    element: &'a XmlElement,
+    full_name: &str,
+    depth: usize,
+) -> Option<&'a XmlElement> {
+    if depth > 64 {
+        return None;
+    }
+    if element.name == full_name {
+        return Some(element);
+    }
+    element
+        .child_elements()
+        .find_map(|child| find_descendant_by_name(child, full_name, depth + 1))
+}
+
+fn assign_marker_offsets(content: &mut [ParagraphContent]) {
+    let mut offset = 0usize;
+    for node in content {
+        match node {
+            ParagraphContent::Inline(InlineNode::BookmarkStart(bookmark)) => {
+                bookmark.position = Some(ContentPosition {
+                    offset: Some(offset as f64),
+                });
+            }
+            ParagraphContent::Inline(InlineNode::BookmarkEnd(bookmark)) => {
+                bookmark.position = Some(ContentPosition {
+                    offset: Some(offset as f64),
+                });
+            }
+            ParagraphContent::CommentRange(marker) => marker.offset = Some(offset as f64),
+            _ => offset = offset.saturating_add(paragraph_content_length(node)),
+        }
+    }
+}
+
+fn paragraph_content_length(content: &ParagraphContent) -> usize {
+    match content {
+        ParagraphContent::Inline(node) => inline_node_length(node),
+        ParagraphContent::Tracked(change) => change.content.iter().map(inline_node_length).sum(),
+        ParagraphContent::RangeStart(_)
+        | ParagraphContent::RangeEnd(_)
+        | ParagraphContent::CommentRange(_) => 0,
+    }
+}
+
+fn inline_node_length(node: &InlineNode) -> usize {
+    match node {
+        InlineNode::RawXml(_) => 0,
+        InlineNode::Run(run) => run.content.iter().map(run_content_length).sum(),
+        InlineNode::Hyperlink(hyperlink) => hyperlink
+            .children
+            .iter()
+            .filter(|child| matches!(child, InlineNode::Run(_)))
+            .map(inline_node_length)
+            .sum(),
+        InlineNode::SimpleField(field) => field
+            .content
+            .iter()
+            .cloned()
+            .map(InlineNode::Run)
+            .map(|node| inline_node_length(&node))
+            .sum(),
+        InlineNode::ComplexField(field) => field
+            .field_result
+            .iter()
+            .cloned()
+            .map(InlineNode::Run)
+            .map(|node| inline_node_length(&node))
+            .sum(),
+        InlineNode::InlineSdt(sdt) => sdt.content.iter().map(inline_node_length).sum(),
+        InlineNode::Tracked(change) => change.content.iter().map(inline_node_length).sum(),
+        InlineNode::Math(_) => 1,
+        InlineNode::BookmarkStart(_) | InlineNode::BookmarkEnd(_) => 0,
+    }
+}
+
+fn apply_list_rendering(
+    paragraph: &mut Paragraph,
+    direct_properties: Option<&XmlElement>,
+    styles: Option<&StyleMap>,
+    numbering: Option<&NumberingMap>,
+) {
+    let mut effective = paragraph
+        .formatting
+        .as_ref()
+        .and_then(|formatting| formatting.num_pr.clone());
+    let mut from_style = false;
+    if effective.is_none()
+        && let (Some(style_id), Some(styles)) = (
+            paragraph
+                .formatting
+                .as_ref()
+                .and_then(|formatting| formatting.style_id.as_deref()),
+            styles,
+        )
+        && let Some(numbering) = styles
+            .get(style_id)
+            .and_then(|style| style.p_pr.as_ref())
+            .and_then(|formatting| formatting.num_pr.clone())
+    {
+        from_style = true;
+        paragraph
+            .formatting
+            .get_or_insert_with(ParagraphFormatting::default)
+            .num_pr = Some(numbering.clone());
+        paragraph.formatting.as_mut().unwrap().num_pr_from_style = Some(numbering.clone());
+        effective = Some(numbering);
+    }
+    let (Some(properties), Some(numbering)) = (effective, numbering) else {
+        return;
+    };
+    let Some(mut rendering) = compute_list_rendering(properties.num_id, properties.ilvl, numbering)
+    else {
+        return;
+    };
+    if rendering.is_bullet {
+        rendering.marker =
+            convert_list_bullet(&rendering.marker, rendering.marker_font_family.as_deref());
+    }
+    let level = numbering.get_level(rendering.num_id, rendering.level);
+    if let Some(level_properties) = level.and_then(|level| level.p_pr) {
+        let style_indents = if from_style {
+            style_chain_ind(
+                paragraph
+                    .formatting
+                    .as_ref()
+                    .and_then(|formatting| formatting.style_id.as_deref()),
+                styles,
+            )
+        } else {
+            (false, false)
+        };
+        let direct_indent = direct_properties.and_then(|properties| properties.child("w", "ind"));
+        let direct_left = direct_indent.is_some_and(|indent| {
+            ["left", "start", "leftChars", "startChars"]
+                .iter()
+                .any(|name| indent.attribute(Some("w"), name).is_some())
+        });
+        let direct_first = direct_indent.is_some_and(|indent| {
+            ["firstLine", "hanging", "firstLineChars", "hangingChars"]
+                .iter()
+                .any(|name| {
+                    indent.attribute(Some("w"), name).is_some_and(|raw| {
+                        parse_javascript_integer_prefix(raw).is_none_or(|value| value != 0.0)
+                    })
+                })
+        });
+        if !direct_left && !style_indents.0 {
+            rendering.indent_left = level_properties.indent_left;
+        }
+        if !direct_first && !style_indents.1 {
+            rendering.indent_first_line = level_properties.indent_first_line;
+            rendering.hanging_indent = level_properties.hanging_indent;
+        }
+    }
+    paragraph.list_rendering = Some(rendering);
+}
+
+fn style_chain_ind(style_id: Option<&str>, styles: Option<&StyleMap>) -> (bool, bool) {
+    let (Some(mut current), Some(styles)) = (style_id, styles) else {
+        return (false, false);
+    };
+    let mut seen = Vec::new();
+    let mut result = (false, false);
+    while !seen.contains(&current) {
+        seen.push(current);
+        let Some(style) = styles.get(current) else {
+            break;
+        };
+        if let Some(properties) = &style.p_pr {
+            result.0 |= properties.indent_left.is_some() || properties.indent_left_chars.is_some();
+            result.1 |= properties.indent_first_line.is_some()
+                || properties.hanging_indent.is_some()
+                || properties.indent_first_line_chars.is_some();
+        }
+        if result.0 && result.1 {
+            break;
+        }
+        let Some(parent) = style.based_on.as_deref() else {
+            break;
+        };
+        current = parent;
+    }
+    result
+}
+
+/// A symbol face addresses glyphs by font position, either the raw byte or `U+F0xx`, so the same
+/// character means a different shape there than in a text face.
+fn convert_list_bullet(value: &str, font: Option<&str>) -> String {
+    let mut characters = value.trim_ascii().chars();
+    if let Some(face) = font.and_then(SymbolFont::named)
+        && let (Some(character), None) = (characters.next(), characters.next())
+        && let Some(shape) = face.shape(character)
+    {
+        return shape.to_string();
+    }
+    convert_bullet_to_unicode(value)
+}
+
+pub fn convert_bullet_to_unicode(value: &str) -> String {
+    let trimmed = value.trim();
+    if trimmed.is_empty() {
+        return "•".to_owned();
+    }
+    let first = value.encode_utf16().next().unwrap_or_default();
+    match first {
+        0x00b7 | 0xf0b7 | 0x2022 => "•".to_owned(),
+        0x006f | 0x0071 | 0xf06f | 0x25cb => "○".to_owned(),
+        0x00a7 | 0x006e | 0xf06e | 0xf0a7 | 0x25a0 => "■".to_owned(),
+        0x00fc | 0x00a8 | 0x00fb | 0x00fe | 0xf0fc => "✓".to_owned(),
+        0x0075 | 0x25c6 => "◆".to_owned(),
+        0x0076 | 0xf076 => "❖".to_owned(),
+        0x25cf => "●".to_owned(),
+        0x25a1 => "□".to_owned(),
+        0x25c7 => "◇".to_owned(),
+        0x2013 => "–".to_owned(),
+        0x2014 => "—".to_owned(),
+        0x003e => ">".to_owned(),
+        0x002d => "-".to_owned(),
+        0xe000..=0xf8ff | 0..=31 | 127..=159 => "•".to_owned(),
+        _ => value.to_owned(),
+    }
+}
+
+pub fn paragraph_starts_with_rendered_page_break(element: &XmlElement) -> bool {
+    fn visit(element: &XmlElement, saw: &mut bool) -> Option<bool> {
+        for child in element.child_elements() {
+            let name = child.local_name();
+            if matches!(
+                name,
+                "pPr"
+                    | "proofErr"
+                    | "bookmarkStart"
+                    | "bookmarkEnd"
+                    | "commentRangeStart"
+                    | "commentRangeEnd"
+                    | "commentReference"
+                    | "permStart"
+                    | "permEnd"
+                    | "rsidR"
+            ) {
+                continue;
+            }
+            if name == "lastRenderedPageBreak" {
+                *saw = true;
+                continue;
+            }
+            if name == "r" {
+                for run_child in child.child_elements() {
+                    let run_name = run_child.local_name();
+                    if run_name == "rPr" {
+                        continue;
+                    }
+                    if run_name == "lastRenderedPageBreak" {
+                        *saw = true;
+                        continue;
+                    }
+                    if run_name == "br" && run_child.attribute(Some("w"), "type") == Some("page") {
+                        return Some(true);
+                    }
+                    if matches!(
+                        run_name,
+                        "t" | "tab"
+                            | "br"
+                            | "cr"
+                            | "sym"
+                            | "drawing"
+                            | "pict"
+                            | "object"
+                            | "softHyphen"
+                            | "noBreakHyphen"
+                            | "fldChar"
+                            | "instrText"
+                            | "pgNum"
+                            | "separator"
+                            | "continuationSeparator"
+                            | "footnoteRef"
+                            | "endnoteRef"
+                            | "footnoteReference"
+                            | "endnoteReference"
+                            | "ptab"
+                            | "monthShort"
+                            | "monthLong"
+                            | "yearShort"
+                            | "yearLong"
+                            | "dayShort"
+                            | "dayLong"
+                    ) {
+                        return Some(false);
+                    }
+                }
+                continue;
+            }
+            if matches!(
+                name,
+                "hyperlink"
+                    | "smartTag"
+                    | "sdt"
+                    | "sdtContent"
+                    | "fldSimple"
+                    | "customXml"
+                    | "ins"
+                    | "del"
+                    | "moveFrom"
+                    | "moveTo"
+            ) && let Some(result) = visit(child, saw)
+            {
+                return Some(result);
+            }
+        }
+        None
+    }
+    let mut saw = false;
+    match visit(element, &mut saw) {
+        Some(true) => true,
+        Some(false) => saw,
+        None => false,
+    }
+}
+
+fn normalize_hex_id(value: Option<&str>, ids: &mut HexIdAllocator) -> Option<String> {
+    let value = value?;
+    let valid = value.len() == 8
+        && value.bytes().all(|byte| byte.is_ascii_hexdigit())
+        && u32::from_str_radix(value, 16).is_ok_and(|value| value < MAX_HEX_ID_EXCLUSIVE);
+    Some(if valid {
+        value.to_owned()
+    } else {
+        ids.allocate()
+    })
+}
+
+fn enum_attribute(element: &XmlElement, name: &str, allowed: &[&str]) -> Option<String> {
+    element
+        .attribute(Some("w"), name)
+        .filter(|value| allowed.contains(value))
+        .map(str::to_owned)
+}
+
+fn nonempty_attribute(element: &XmlElement, name: &str) -> Option<String> {
+    element
+        .attribute(Some("w"), name)
+        .filter(|value| !value.is_empty())
+        .map(str::to_owned)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::xml::{ParseLimits, parse_xml};
+
+    #[test]
+    fn wingdings_bullets_draw_the_shape_of_their_font_position() {
+        for (marker, font, expected) in [
+            ("\u{f0a8}", Some("Wingdings"), "□"),
+            ("\u{a8}", Some("Wingdings"), "□"),
+            ("o", Some("Wingdings"), "□"),
+            ("q", Some(" wingdings "), "□"),
+            ("\u{f0a7}", Some("Wingdings"), "▪"),
+            ("\u{f0d8}", Some("Wingdings"), "►"),
+            ("\u{f075}", Some("Wingdings"), "♦"),
+            ("\u{f06d}", Some("Wingdings"), "○"),
+            ("\u{f0d9}", Some("Wingdings"), "▲"),
+            ("\u{f075}", Some("Wingdings 3"), "►"),
+            ("\u{f076}", Some("Wingdings"), "❖"),
+            ("\u{f0fc}", Some("Wingdings"), "✓"),
+            ("\u{f0b7}", Some("Symbol"), "•"),
+            ("o", Some("Courier New"), "○"),
+            ("\u{f0a8}", None, "•"),
+            ("\u{f0e0}", Some("Wingdings"), "•"),
+        ] {
+            assert_eq!(
+                convert_list_bullet(marker, font),
+                expected,
+                "{marker:?} in {font:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn list_bullets_draw_every_slot_of_the_shared_symbol_table() {
+        for name in ["Wingdings", "Wingdings 2", "Wingdings 3", "Webdings"] {
+            let face = SymbolFont::named(name).expect("symbol face");
+            for slot in 0x21..=0xffu32 {
+                let private_use = char::from_u32(0xf000 + slot).expect("private-use char");
+                let Some(shape) = face.shape(private_use) else {
+                    continue;
+                };
+                let byte = char::from_u32(slot).expect("byte char");
+                for marker in [private_use, byte] {
+                    assert_eq!(
+                        convert_list_bullet(&marker.to_string(), Some(name)),
+                        shape.to_string(),
+                        "{marker:?} in {name}"
+                    );
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn drawing_context_preserves_three_field_struct_literals() {
+        let media = MediaMap::new();
+        let charts = ChartPartsMap::new();
+        let mut smart_art = SmartArtContext::default();
+        let context = DrawingContext {
+            media: &media,
+            charts: &charts,
+            smart_art: &mut smart_art,
+        };
+        assert!(context.media.is_empty());
+        assert!(context.charts.is_empty());
+    }
+
+    const ALTERNATE_PICTURE: &str = r#"<a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic><pic:blipFill><a:blip r:embed="rIdFallback"/></pic:blipFill><pic:spPr><a:prstGeom prst="rect"/></pic:spPr></pic:pic></a:graphicData>"#;
+    const CHARTEX_CHOICE: &str = r#"<a:graphicData uri="http://schemas.microsoft.com/office/drawing/2014/chartex"><cx:chart r:id="rIdChartEx"/></a:graphicData>"#;
+
+    fn alternate_drawing(payload: &str, container: &str) -> String {
+        let position = if container == "anchor" {
+            r#"<wp:positionH relativeFrom="column"><wp:posOffset>0</wp:posOffset></wp:positionH><wp:positionV relativeFrom="paragraph"><wp:posOffset>0</wp:posOffset></wp:positionV>"#
+        } else {
+            ""
+        };
+        format!(
+            r#"<w:drawing><wp:{container}>{position}<wp:extent cx="914400" cy="457200"/><wp:docPr id="7" name="Drawing"/><a:graphic>{payload}</a:graphic></wp:{container}></w:drawing>"#
+        )
+    }
+
+    fn alternate_document(choice: &str, container: &str, requires: &str) -> (Vec<u8>, String) {
+        let choice = alternate_drawing(choice, container);
+        let fallback = alternate_drawing(ALTERNATE_PICTURE, container);
+        let alternate = format!(
+            r#"<mc:AlternateContent><mc:Choice Requires="{requires}">{choice}</mc:Choice><mc:Fallback>{fallback}</mc:Fallback></mc:AlternateContent>"#
+        );
+        let parts = [
+            ("[Content_Types].xml", r#"<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Default Extension="png" ContentType="image/png"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/charts/chart1.xml" ContentType="application/vnd.openxmlformats-officedocument.drawingml.chart+xml"/><Override PartName="/word/charts/chartEx1.xml" ContentType="application/vnd.ms-office.chartex+xml"/></Types>"#.to_owned()),
+            ("_rels/.rels", r#"<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="doc" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>"#.to_owned()),
+            ("word/_rels/document.xml.rels", r#"<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rIdChartEx" Type="http://schemas.microsoft.com/office/2014/relationships/chartEx" Target="charts/chartEx1.xml"/><Relationship Id="rIdChart" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart" Target="charts/chart1.xml"/><Relationship Id="rIdFallback" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/fallback.png"/><Relationship Id="rIdChoice" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/fallback.png"/></Relationships>"#.to_owned()),
+            ("word/charts/chartEx1.xml", r#"<cx:chartSpace xmlns:cx="http://schemas.microsoft.com/office/drawing/2014/chartex"><cx:chart/></cx:chartSpace>"#.to_owned()),
+            ("word/charts/chart1.xml", r#"<c:chartSpace xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart"><c:chart><c:plotArea><c:barChart><c:barDir val="col"/></c:barChart></c:plotArea></c:chart></c:chartSpace>"#.to_owned()),
+            ("word/document.xml", format!(r#"<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart" xmlns:cx="http://schemas.microsoft.com/office/drawing/2014/chartex" xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture" xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"><w:body><w:p w14:paraId="11111111"><w:r><w:t>Before</w:t></w:r></w:p><w:p w14:paraId="22222222"><w:r>{alternate}</w:r></w:p></w:body></w:document>"#)),
+        ];
+        let mut parts: Vec<_> = parts
+            .into_iter()
+            .map(|(path, xml)| (path.to_owned(), xml.into_bytes()))
+            .collect();
+        parts.push((
+            "word/media/fallback.png".to_owned(),
+            vec![
+                137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 1, 0, 0, 0,
+                1, 8, 6, 0, 0, 0, 31, 21, 196, 137, 0, 0, 0, 11, 73, 68, 65, 84, 120, 156, 99, 96,
+                0, 2, 0, 0, 5, 0, 1, 169, 245, 232, 39, 0, 0, 0, 0, 73, 69, 78, 68, 174, 66, 96,
+                130,
+            ],
+        ));
+        (ooxml_opc::rezip_parts(&parts).unwrap(), alternate)
+    }
+
+    fn alternate_run(content: &[crate::block::BlockContent]) -> &[RunContent] {
+        let crate::block::BlockContent::Paragraph(paragraph) = &content[1] else {
+            panic!("expected drawing paragraph");
+        };
+        assert_eq!(paragraph.content.len(), 1);
+        let ParagraphContent::Inline(InlineNode::Run(run)) = &paragraph.content[0] else {
+            panic!("expected drawing run");
+        };
+        &run.content
+    }
+
+    #[test]
+    fn standalone_chartex_drawings_remain_images() {
+        for container in ["inline", "anchor"] {
+            let (bytes, alternate) = alternate_document(CHARTEX_CHOICE, container, "cx");
+            let drawing = alternate_drawing(CHARTEX_CHOICE, container);
+            let mut parts = ooxml_opc::unzip_parts(&bytes).unwrap();
+            let source = &mut parts
+                .iter_mut()
+                .find(|(path, _)| path == "word/document.xml")
+                .unwrap()
+                .1;
+            *source = std::str::from_utf8(source)
+                .unwrap()
+                .replace(&alternate, &drawing)
+                .into_bytes();
+            let bytes = ooxml_opc::rezip_parts(&parts).unwrap();
+            let wire = crate::s9::parse_docx_s9_wire(&bytes, Default::default()).unwrap();
+            let projection = crate::s8::parse_docx_s8_projection(&bytes).unwrap();
+            for content in [
+                wire.document.package.document.content.as_slice(),
+                projection.body.content.as_slice(),
+            ] {
+                let parsed = alternate_run(content);
+                assert_eq!(parsed.len(), 1);
+                let RunContent::Drawing { image } = &parsed[0] else {
+                    panic!("expected standalone ChartEx image");
+                };
+                assert_eq!(image.image_type, "image");
+                assert!(image.relationship_id.is_empty());
+                assert!(image.src.is_none());
+                assert_eq!(image.id.as_deref(), Some("7"));
+                assert_eq!(image.name.as_deref(), Some("Drawing"));
+                assert_eq!(image.size.width, 914400.0);
+                assert_eq!(image.size.height, 457200.0);
+                assert_eq!(image.position.is_some(), container == "anchor");
+                assert_eq!(
+                    image.wrap.wrap_type,
+                    if container == "anchor" {
+                        "inFront"
+                    } else {
+                        "inline"
+                    }
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn unsupported_alternate_content_keeps_first_branch_without_usable_fallback() {
+        let first = alternate_drawing(CHARTEX_CHOICE, "inline");
+        let later = alternate_drawing(CHARTEX_CHOICE, "anchor");
+        let shape = alternate_drawing(
+            r#"<a:graphicData uri="http://schemas.microsoft.com/office/word/2010/wordprocessingShape"><wps:wsp><wps:cNvSpPr/><wps:spPr><a:prstGeom prst="rect"/></wps:spPr><wps:bodyPr/></wps:wsp></a:graphicData>"#,
+            "anchor",
+        );
+        for fallback in [
+            String::new(),
+            "<mc:Fallback/>".to_owned(),
+            format!("<mc:Fallback>{later}</mc:Fallback>"),
+            "<mc:Fallback><w:pict/></mc:Fallback>".to_owned(),
+            format!("<mc:Fallback>{shape}</mc:Fallback>"),
+        ] {
+            let xml = format!(
+                r#"<mc:AlternateContent><mc:Choice Requires="cx">{first}</mc:Choice>{fallback}</mc:AlternateContent>"#
+            );
+            let limits = ParseLimits::default();
+            let mut budget = ParseBudget::new(&limits);
+            let document = parse_xml(xml.as_bytes(), "word/document.xml", &mut budget).unwrap();
+            let (branch, parsed) = parse_alternate_content_branch(
+                document.root().unwrap(),
+                None,
+                &mut budget,
+                None,
+                false,
+            )
+            .unwrap()
+            .unwrap();
+            assert_eq!(branch.local_name(), "Choice");
+            assert_eq!(parsed.len(), 1);
+            let RunContent::Drawing { image } = &parsed[0] else {
+                panic!("expected original unsupported image");
+            };
+            assert!(image.relationship_id.is_empty());
+            assert!(image.src.is_none());
+            assert_eq!(image.id.as_deref(), Some("7"));
+            assert_eq!(image.name.as_deref(), Some("Drawing"));
+            assert_eq!(image.size.width, 914400.0);
+            assert_eq!(image.size.height, 457200.0);
+            assert_eq!(image.wrap.wrap_type, "inline");
+        }
+    }
+
+    #[test]
+    fn unsupported_alternate_content_skips_unusable_branches_before_picture_fallback() {
+        let first = alternate_drawing(CHARTEX_CHOICE, "inline");
+        let fallback = alternate_drawing(ALTERNATE_PICTURE, "anchor");
+        let shape = alternate_drawing(
+            r#"<a:graphicData uri="http://schemas.microsoft.com/office/word/2010/wordprocessingShape"><wps:wsp><wps:cNvSpPr/><wps:spPr><a:prstGeom prst="rect"/></wps:spPr><wps:bodyPr/></wps:wsp></a:graphicData>"#,
+            "inline",
+        );
+        for later in ["<w:pict/>", "<w:object/>", shape.as_str()] {
+            let xml = format!(
+                r#"<mc:AlternateContent><mc:Choice Requires="cx">{first}</mc:Choice><mc:Choice Requires="wps">{later}</mc:Choice><mc:Fallback>{fallback}</mc:Fallback></mc:AlternateContent>"#
+            );
+            let limits = ParseLimits::default();
+            let mut budget = ParseBudget::new(&limits);
+            let document = parse_xml(xml.as_bytes(), "word/document.xml", &mut budget).unwrap();
+            let (branch, parsed) = parse_alternate_content_branch(
+                document.root().unwrap(),
+                None,
+                &mut budget,
+                None,
+                false,
+            )
+            .unwrap()
+            .unwrap();
+            assert_eq!(branch.local_name(), "Fallback");
+            assert_eq!(parsed.len(), 1);
+            let RunContent::OpaqueDrawing {
+                kind,
+                xml: raw,
+                preview,
+                ..
+            } = &parsed[0]
+            else {
+                panic!("expected opaque drawing with fallback preview");
+            };
+            assert_eq!(kind, "alternateContent");
+            assert_eq!(raw, &xml);
+            let image = preview.as_ref().unwrap();
+            assert_eq!(image.relationship_id, "rIdFallback");
+            assert!(image.src.is_none());
+            assert!(image.position.is_some());
+        }
+    }
+
+    #[test]
+    fn unsupported_alternate_content_keeps_first_branch_with_dangling_picture_fallback() {
+        for container in ["inline", "anchor"] {
+            let (bytes, _) = alternate_document(CHARTEX_CHOICE, container, "cx");
+            let mut parts = ooxml_opc::unzip_parts(&bytes).unwrap();
+            let source = &mut parts
+                .iter_mut()
+                .find(|(path, _)| path == "word/document.xml")
+                .unwrap()
+                .1;
+            *source = std::str::from_utf8(source)
+                .unwrap()
+                .replace("rIdFallback", "rIdMissing")
+                .into_bytes();
+            let bytes = ooxml_opc::rezip_parts(&parts).unwrap();
+            let wire = crate::s9::parse_docx_s9_wire(&bytes, Default::default()).unwrap();
+            let projection = crate::s8::parse_docx_s8_projection(&bytes).unwrap();
+            for content in [
+                wire.document.package.document.content.as_slice(),
+                projection.body.content.as_slice(),
+            ] {
+                let parsed = alternate_run(content);
+                assert_eq!(parsed.len(), 1);
+                let RunContent::Drawing { image } = &parsed[0] else {
+                    panic!("expected original unsupported image");
+                };
+                assert!(image.relationship_id.is_empty());
+                assert!(image.src.is_none());
+                assert_eq!(image.id.as_deref(), Some("7"));
+                assert_eq!(image.name.as_deref(), Some("Drawing"));
+                assert_eq!(image.size.width, 914400.0);
+                assert_eq!(image.size.height, 457200.0);
+                assert_eq!(image.position.is_some(), container == "anchor");
+            }
+        }
+    }
+
+    #[test]
+    fn unsupported_alternate_content_keeps_first_branch_when_later_branch_is_broken() {
+        let (bytes, _) = alternate_document(CHARTEX_CHOICE, "inline", "cx");
+        let fallback = alternate_drawing(ALTERNATE_PICTURE, "inline");
+        let broken = alternate_drawing(
+            r#"<a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/diagram"><dgm:relIds xmlns:dgm="http://schemas.openxmlformats.org/drawingml/2006/diagram" r:dm="rIdDiagram"/></a:graphicData>"#,
+            "inline",
+        );
+        for (branch_name, requires) in [("Choice", r#" Requires="dgm""#), ("Fallback", "")] {
+            let mut parts = ooxml_opc::unzip_parts(&bytes).unwrap();
+            for (path, source) in &mut parts {
+                if path.as_str() == "word/document.xml" {
+                    *source = std::str::from_utf8(source)
+                        .unwrap()
+                        .replace(
+                            &format!("<mc:Fallback>{fallback}</mc:Fallback>"),
+                            &format!("<mc:{branch_name}{requires}>{broken}</mc:{branch_name}>"),
+                        )
+                        .into_bytes();
+                } else if path.as_str() == "word/_rels/document.xml.rels" {
+                    *source = std::str::from_utf8(source)
+                        .unwrap()
+                        .replace(
+                            "</Relationships>",
+                            r#"<Relationship Id="rIdDiagram" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/diagramData" Target="diagrams/data1.xml"/></Relationships>"#,
+                        )
+                        .into_bytes();
+                }
+            }
+            parts.push((
+                "word/diagrams/data1.xml".to_owned(),
+                br#"<dgm:dataModel xmlns:dgm="http://schemas.openxmlformats.org/drawingml/2006/diagram"/>"#.to_vec(),
+            ));
+            parts.push((
+                "word/diagrams/drawing1.xml".to_owned(),
+                b"<drawing><spTree></drawing>".to_vec(),
+            ));
+            let bytes = ooxml_opc::rezip_parts(&parts).unwrap();
+            let wire = crate::s9::parse_docx_s9_wire(&bytes, Default::default()).unwrap();
+            let projection = crate::s8::parse_docx_s8_projection(&bytes).unwrap();
+            for content in [
+                wire.document.package.document.content.as_slice(),
+                projection.body.content.as_slice(),
+            ] {
+                let parsed = alternate_run(content);
+                assert_eq!(parsed.len(), 1);
+                let RunContent::Drawing { image } = &parsed[0] else {
+                    panic!("expected original unsupported image");
+                };
+                assert!(image.relationship_id.is_empty());
+                assert!(image.src.is_none());
+                assert_eq!(image.wrap.wrap_type, "inline");
+            }
+            let source = &mut parts
+                .iter_mut()
+                .find(|(path, _)| path == "word/document.xml")
+                .unwrap()
+                .1;
+            *source = std::str::from_utf8(source)
+                .unwrap()
+                .replace(
+                    &format!(
+                        r#"<mc:Choice Requires="cx">{}</mc:Choice>"#,
+                        alternate_drawing(CHARTEX_CHOICE, "inline")
+                    ),
+                    "",
+                )
+                .into_bytes();
+            let bytes = ooxml_opc::rezip_parts(&parts).unwrap();
+            assert!(crate::s8::parse_docx_s8_projection(&bytes).is_err());
+        }
+    }
+
+    #[test]
+    fn alternate_content_keeps_stored_branch_when_text_box_filter_empties_fallback() {
+        let drawing = alternate_drawing(CHARTEX_CHOICE, "inline");
+        let text_box = alternate_drawing(
+            r#"<a:graphicData><wps:wsp><wps:txbx><w:txbxContent/></wps:txbx></wps:wsp></a:graphicData>"#,
+            "inline",
+        );
+        for fallback in ["<w:pict/>", "<w:object/>"] {
+            let xml = format!(
+                r#"<mc:AlternateContent><mc:Choice Requires="cx wps">{text_box}{drawing}</mc:Choice><mc:Fallback>{fallback}</mc:Fallback></mc:AlternateContent>"#
+            );
+            let limits = ParseLimits::default();
+            let mut budget = ParseBudget::new(&limits);
+            let document = parse_xml(xml.as_bytes(), "word/document.xml", &mut budget).unwrap();
+            let (branch, parsed) = parse_alternate_content_branch(
+                document.root().unwrap(),
+                None,
+                &mut budget,
+                None,
+                false,
+            )
+            .unwrap()
+            .unwrap();
+            assert_eq!(branch.local_name(), "Choice");
+            assert_eq!(parsed.len(), 1);
+            assert!(matches!(
+                &parsed[0],
+                RunContent::Drawing { image }
+                    if image.relationship_id.is_empty() && image.src.is_none()
+            ));
+        }
+    }
+
+    #[test]
+    fn unsupported_alternate_content_drawings_use_resolved_picture_fallback() {
+        let dangling_picture = ALTERNATE_PICTURE.replace("rIdFallback", "rIdMissing");
+        let dangling_linked_picture = dangling_picture.replace("r:embed", "r:link");
+        for choice in [
+            CHARTEX_CHOICE,
+            r#"<a:graphicData uri="urn:unsupported"><x:payload xmlns:x="urn:unsupported"/></a:graphicData>"#,
+            r#"<a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic><pic:blipFill><a:blip/></pic:blipFill></pic:pic></a:graphicData>"#,
+            dangling_picture.as_str(),
+            dangling_linked_picture.as_str(),
+        ] {
+            for container in ["inline", "anchor"] {
+                let (bytes, alternate) = alternate_document(choice, container, "cx");
+                let wire = crate::s9::parse_docx_s9_wire(&bytes, Default::default()).unwrap();
+                let projection = crate::s8::parse_docx_s8_projection(&bytes).unwrap();
+                for content in [
+                    wire.document.package.document.content.as_slice(),
+                    projection.body.content.as_slice(),
+                ] {
+                    let parsed = alternate_run(content);
+                    assert_eq!(parsed.len(), 1);
+                    let RunContent::OpaqueDrawing {
+                        kind, xml, preview, ..
+                    } = &parsed[0]
+                    else {
+                        panic!("expected opaque drawing with fallback preview");
+                    };
+                    assert_eq!(kind, "alternateContent");
+                    assert_eq!(xml, &alternate);
+                    let image = preview.as_ref().unwrap();
+                    assert_eq!(image.relationship_id, "rIdFallback");
+                    assert!(
+                        image
+                            .src
+                            .as_deref()
+                            .unwrap()
+                            .starts_with("data:image/png;base64,")
+                    );
+                    assert_eq!(image.size.width, 914400.0);
+                    assert_eq!(image.size.height, 457200.0);
+                    assert_eq!(image.position.is_some(), container == "anchor");
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn unsupported_alternate_content_uses_vml_group_fallback_pictures() {
+        let (bytes, alternate) = alternate_document(CHARTEX_CHOICE, "inline", "cx");
+        let fallback_start = alternate.find("<mc:Fallback>").unwrap();
+        let group = r#"<mc:Fallback><w:pict><v:group xmlns:v="urn:schemas-microsoft-com:vml" coordsize="1000,1000" style="width:100pt;height:50pt"><v:shape style="position:absolute;left:0;top:0;width:500;height:1000"><v:imagedata r:id="rIdFallback"/></v:shape><v:shape style="position:absolute;left:500;top:0;width:500;height:1000"><v:imagedata r:id="rIdChoice"/></v:shape></v:group></w:pict></mc:Fallback></mc:AlternateContent>"#;
+        let grouped = format!("{}{group}", &alternate[..fallback_start]);
+        let mut parts = ooxml_opc::unzip_parts(&bytes).unwrap();
+        let source = &mut parts
+            .iter_mut()
+            .find(|(path, _)| path == "word/document.xml")
+            .unwrap()
+            .1;
+        *source = std::str::from_utf8(source)
+            .unwrap()
+            .replace(&alternate, &grouped)
+            .into_bytes();
+        let bytes = ooxml_opc::rezip_parts(&parts).unwrap();
+        let wire = crate::s9::parse_docx_s9_wire(&bytes, Default::default()).unwrap();
+        let projection = crate::s8::parse_docx_s8_projection(&bytes).unwrap();
+        for content in [
+            wire.document.package.document.content.as_slice(),
+            projection.body.content.as_slice(),
+        ] {
+            let [
+                RunContent::OpaqueDrawing {
+                    kind,
+                    xml,
+                    preview,
+                    previews,
+                    ..
+                },
+            ] = alternate_run(content)
+            else {
+                panic!("expected opaque drawing with fallback previews");
+            };
+            assert_eq!(kind, "alternateContent");
+            assert_eq!(xml, &grouped);
+            assert!(preview.is_none());
+            assert_eq!(
+                previews
+                    .iter()
+                    .map(|image| image.relationship_id.as_str())
+                    .collect::<Vec<_>>(),
+                ["rIdFallback", "rIdChoice"]
+            );
+            assert!(previews.iter().all(|image| {
+                image
+                    .src
+                    .as_deref()
+                    .is_some_and(|src| src.starts_with("data:image/png;base64,"))
+            }));
+        }
+    }
+
+    #[test]
+    fn supported_alternate_content_choices_skip_picture_fallback() {
+        let picture = ALTERNATE_PICTURE.replace("rIdFallback", "rIdChoice");
+        let linked_picture = picture.replace("r:embed", "r:link");
+        for (choice, requires, expected) in [
+            (
+                r#"<a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/chart"><c:chart r:id="rIdChart"/></a:graphicData>"#,
+                "c",
+                "chart",
+            ),
+            (
+                r#"<a:graphicData uri="http://schemas.microsoft.com/office/word/2010/wordprocessingShape"><wps:wsp><wps:cNvSpPr/><wps:spPr><a:prstGeom prst="rect"/></wps:spPr><wps:bodyPr/></wps:wsp></a:graphicData>"#,
+                "wps",
+                "shape",
+            ),
+            (picture.as_str(), "pic", "picture"),
+            (linked_picture.as_str(), "pic", "picture"),
+        ] {
+            for container in ["inline", "anchor"] {
+                let (bytes, _) = alternate_document(choice, container, requires);
+                let wire = crate::s9::parse_docx_s9_wire(&bytes, Default::default()).unwrap();
+                let parsed = alternate_run(&wire.document.package.document.content);
+                assert_eq!(parsed.len(), 1);
+                match (&parsed[0], expected) {
+                    (RunContent::Chart { chart }, "chart") => {
+                        assert_eq!(chart.relationship_id.as_deref(), Some("rIdChart"));
+                        assert_eq!(chart.chart_type, "column");
+                    }
+                    (RunContent::Shape { shape }, "shape") => {
+                        assert_eq!(shape.shape_type, "rect");
+                    }
+                    (RunContent::Drawing { image }, "picture") => {
+                        assert_eq!(image.relationship_id, "rIdChoice");
+                        assert!(image.src.is_some());
+                    }
+                    _ => panic!("expected supported {expected} choice"),
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn alternate_content_fallback_keeps_source_on_save() {
+        use crate::serializer::s13::{S13SaveRequest, write_docx_s13};
+        use serde_json::json;
+
+        let (bytes, alternate) = alternate_document(CHARTEX_CHOICE, "inline", "cx");
+        let mut parts = ooxml_opc::unzip_parts(&bytes).unwrap();
+        let source = &mut parts
+            .iter_mut()
+            .find(|(path, _)| path == "word/document.xml")
+            .unwrap()
+            .1;
+        *source = std::str::from_utf8(source)
+            .unwrap()
+            .replace(
+                &format!("{alternate}</w:r>"),
+                &format!("{alternate}<w:t>Same paragraph</w:t></w:r>"),
+            )
+            .into_bytes();
+        let bytes = ooxml_opc::rezip_parts(&parts).unwrap();
+        let wire = crate::s9::parse_docx_s9_wire(&bytes, Default::default()).unwrap();
+        let projection = crate::s8::parse_docx_s8_projection(&bytes).unwrap();
+        let body = serde_json::to_value(projection.body).unwrap();
+        for (edited_paragraph, selective) in [
+            (None, json!({"changedParaIds": []})),
+            (Some(0), json!({"changedParaIds": ["11111111"]})),
+            (Some(1), json!(null)),
+            (Some(1), json!({"changedParaIds": ["22222222"]})),
+        ] {
+            let mut body = body.clone();
+            if edited_paragraph == Some(0) {
+                body["content"][0]["content"][0]["content"][0]["text"] = json!("After");
+            } else if edited_paragraph == Some(1) {
+                body["content"][1]["content"][0]["content"][1]["text"] = json!("After");
+            }
+            let request: S13SaveRequest = serde_json::from_value(json!({
+                "determinism": {
+                    "seed": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+                    "now": "2030-01-02T03:04:05.006Z"
+                },
+                "document": body,
+                "relationshipEntries": wire.document.package.relationship_entries,
+                "options": {"updateModifiedDate": false},
+                "selective": selective
+            }))
+            .unwrap();
+            let saved = write_docx_s13(request, &bytes).unwrap();
+            let parts = ooxml_opc::unzip_parts(&saved).unwrap();
+            for (path, source) in ooxml_opc::unzip_parts(&bytes).unwrap() {
+                let output = &parts.iter().find(|(name, _)| name == &path).unwrap().1;
+                if edited_paragraph.is_some() && path == "word/document.xml" {
+                    let xml = std::str::from_utf8(output).unwrap();
+                    assert!(xml.contains(&alternate));
+                    assert!(xml.contains("<mc:AlternateContent>"));
+                    assert!(xml.contains(r#"<cx:chart r:id="rIdChartEx"/>"#));
+                    assert!(xml.contains("<w:t>After</w:t>"));
+                } else {
+                    assert_eq!(output, &source, "{path}");
+                }
+            }
+            let reopened = crate::s9::parse_docx_s9_wire(&saved, Default::default()).unwrap();
+            let parsed = alternate_run(&reopened.document.package.document.content);
+            assert_eq!(parsed.len(), 2);
+            let RunContent::OpaqueDrawing { xml, preview, .. } = &parsed[0] else {
+                panic!("expected opaque drawing with fallback preview after save");
+            };
+            assert_eq!(xml, &alternate);
+            let image = preview.as_ref().unwrap();
+            assert_eq!(image.relationship_id, "rIdFallback");
+            assert!(image.src.is_some());
+            let RunContent::Text { text, .. } = &parsed[1] else {
+                panic!("expected text in drawing paragraph");
+            };
+            assert_eq!(
+                text,
+                if edited_paragraph == Some(1) {
+                    "After"
+                } else {
+                    "Same paragraph"
+                }
+            );
+            let relationships = &parts
+                .iter()
+                .find(|(path, _)| path == "word/_rels/document.xml.rels")
+                .unwrap()
+                .1;
+            let relationships = std::str::from_utf8(relationships).unwrap();
+            assert!(relationships.contains(r#"Id="rIdChartEx""#));
+            assert!(relationships.contains(r#"Target="charts/chartEx1.xml""#));
+        }
+    }
+
+    fn parse(xml: &str) -> Paragraph {
+        let limits = ParseLimits::default();
+        let mut budget = ParseBudget::new(&limits);
+        let document = parse_xml(xml.as_bytes(), "word/document.xml", &mut budget).unwrap();
+        let mut ids = HexIdAllocator::from_sha256(&"0".repeat(64)).unwrap();
+        parse_paragraph(
+            document.root().unwrap(),
+            None,
+            None,
+            None,
+            None,
+            None,
+            "word/document.xml",
+            &mut budget,
+            &mut ids,
+            None,
+            false,
+            0,
+        )
+        .unwrap()
+    }
+
+    #[test]
+    fn vml_group_pictures_keep_mapped_geometry_and_separate_picts() {
+        let paragraph = parse(
+            r#"<w:p xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><w:r><w:pict><v:group coordorigin="100,200" coordsize="1200,600" style="position:absolute;margin-left:12pt;margin-top:24pt;width:300pt;height:90pt;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"><v:shape style="position:absolute;left:100;top:200;width:300;height:150"><v:imagedata r:id="rId1"/></v:shape><v:shape style="position:absolute;left:500;top:250;width:360;height:200"><v:imagedata r:id="rId2"/></v:shape><v:shape style="position:absolute;left:900;top:400;width:240;height:300"><v:imagedata r:id="rId3"/></v:shape></v:group></w:pict><w:pict><v:shape style="width:72pt;height:36pt"><v:imagedata r:id="rId4"/></v:shape></w:pict></w:r></w:p>"#,
+        );
+        let ParagraphContent::Inline(InlineNode::Run(run)) = &paragraph.content[0] else {
+            panic!("expected picture run");
+        };
+        let images: Vec<_> = run
+            .content
+            .iter()
+            .flat_map(|content| match content {
+                RunContent::Drawing { image } => vec![&**image],
+                RunContent::OpaqueDrawing { previews, .. } => previews.iter().collect(),
+                _ => Vec::new(),
+            })
+            .collect();
+        assert_eq!(images.len(), 4);
+        for (image, (id, x, y, width, height)) in images.iter().zip([
+            ("rId1", 16.0, 32.0, 100.0, 30.0),
+            ("rId2", 16.0 + 400.0 / 3.0, 42.0, 120.0, 40.0),
+            ("rId3", 16.0 + 800.0 / 3.0, 72.0, 80.0, 60.0),
+        ]) {
+            assert_eq!(image.relationship_id, id);
+            assert_eq!(image.size.width, (width * 9_525.0_f64).round());
+            assert_eq!(image.size.height, (height * 9_525.0_f64).round());
+            let position = image.position.as_ref().unwrap();
+            assert_eq!(position.horizontal.relative_to, "page");
+            assert_eq!(position.vertical.relative_to, "page");
+            assert_eq!(
+                position.horizontal.pos_offset,
+                Some((x * 9_525.0_f64).round())
+            );
+            assert_eq!(
+                position.vertical.pos_offset,
+                Some((y * 9_525.0_f64).round())
+            );
+            assert_eq!(position.horizontal.offset, position.horizontal.pos_offset);
+            assert_eq!(position.vertical.offset, position.vertical.pos_offset);
+        }
+        assert_eq!(images[3].relationship_id, "rId4");
+        assert_eq!(images[3].size.width, 914_400.0);
+        assert_eq!(images[3].size.height, 457_200.0);
+        assert_eq!(images[3].wrap.wrap_type, "inline");
+        assert_eq!(images[3].position, None);
+    }
+
+    #[test]
+    fn vml_textbox_picture_stays_a_drawing() {
+        let paragraph = parse(
+            r#"<w:p xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><w:r><w:pict><v:shape style="position:absolute;width:200pt;height:100pt"><v:textbox><w:txbxContent><w:p><w:r><w:pict><v:shape style="width:72pt;height:36pt"><v:imagedata r:id="rId4"/></v:shape></w:pict></w:r></w:p></w:txbxContent></v:textbox></v:shape></w:pict></w:r></w:p>"#,
+        );
+        let ParagraphContent::Inline(InlineNode::Run(run)) = &paragraph.content[0] else {
+            panic!("expected picture run");
+        };
+        let [RunContent::Drawing { image }] = run.content.as_slice() else {
+            panic!("expected one drawing, got {:?}", run.content);
+        };
+        assert_eq!(image.relationship_id, "rId4");
+        assert_eq!(image.size.width, 914_400.0);
+        assert_eq!(image.size.height, 457_200.0);
+    }
+
+    #[test]
+    fn unmodeled_drawings_survive_as_opaque_drawings() {
+        let paragraph = parse(
+            r#"<w:p xmlns:w="w" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:v="urn:schemas-microsoft-com:vml">
+              <w:r><w:object><o:OLEObject Type="Embed" ProgID="Equation.DSMT4" ShapeID="_1" DrawAspect="Content" ObjectID="_1"/></w:object></w:r>
+              <w:r><mc:AlternateContent><mc:Choice Requires="wps"><w:pict><v:rect style="width:10pt;height:10pt"/></w:pict></mc:Choice><mc:Fallback><w:pict><v:rect style="width:10pt;height:10pt"/></w:pict></mc:Fallback></mc:AlternateContent></w:r>
+            </w:p>"#,
+        );
+        let kinds: Vec<_> = paragraph
+            .content
+            .iter()
+            .filter_map(|content| match content {
+                ParagraphContent::Inline(InlineNode::Run(run)) => Some(run),
+                _ => None,
+            })
+            .flat_map(|run| run.content.iter())
+            .filter_map(|content| match content {
+                RunContent::OpaqueDrawing { kind, xml, .. } => Some((kind.as_str(), xml.as_str())),
+                _ => None,
+            })
+            .collect();
+        assert_eq!(kinds.len(), 2);
+        assert_eq!(kinds[0].0, "object");
+        assert!(kinds[0].1.contains("OLEObject"));
+        assert_eq!(kinds[1].0, "alternateContent");
+        assert!(kinds[1].1.contains("AlternateContent"));
+    }
+
+    #[test]
+    fn alternate_content_ole_keeps_selected_preview_and_wrapper_xml() {
+        let fallback = r#"<w:object><v:shape style="width:72pt;height:36pt"><v:imagedata r:id="rIdImg"/></v:shape><o:OLEObject Type="Embed" ProgID="Equation.DSMT4" r:id="rIdOle"/></w:object>"#;
+        for (choice, expected_size) in [
+            ("", Some((72.0, 36.0))),
+            (
+                r#"<w:object><v:shape style="width:144pt;height:72pt"><v:imagedata r:id="rIdChoice"/></v:shape><o:OLEObject Type="Embed" ProgID="Equation.DSMT4" r:id="rIdOle"/></w:object>"#,
+                Some((144.0, 72.0)),
+            ),
+            (
+                r#"<w:object><o:OLEObject Type="Embed" ProgID="Equation.DSMT4" r:id="rIdOle"/></w:object>"#,
+                None,
+            ),
+        ] {
+            let choice = if choice.is_empty() {
+                r#"<mc:Choice Requires="wps"/>"#.to_owned()
+            } else {
+                format!(r#"<mc:Choice Requires="wps">{choice}</mc:Choice>"#)
+            };
+            let wrapper = format!(
+                r#"<mc:AlternateContent>{choice}<mc:Fallback>{fallback}</mc:Fallback></mc:AlternateContent>"#
+            );
+            let paragraph = parse(&format!(
+                r#"<w:p xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><w:r>{wrapper}</w:r></w:p>"#
+            ));
+            assert_eq!(paragraph.content.len(), 1);
+            let ParagraphContent::Inline(InlineNode::Run(run)) = &paragraph.content[0] else {
+                panic!("expected OLE run");
+            };
+            assert_eq!(run.content.len(), 1);
+            let RunContent::OpaqueDrawing {
+                kind, xml, preview, ..
+            } = &run.content[0]
+            else {
+                panic!("expected opaque AlternateContent");
+            };
+            assert_eq!(kind, "alternateContent");
+            assert_eq!(xml, &wrapper);
+            assert_eq!(
+                preview
+                    .as_ref()
+                    .map(|image| (image.size.width, image.size.height)),
+                expected_size.map(|(width, height)| (width * 12_700.0, height * 12_700.0))
+            );
+        }
+    }
+
+    #[test]
+    fn ole_objects_and_unresolved_picts_stay_opaque() {
+        let paragraph = parse(
+            r#"<w:p xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
+              <w:r><w:object><v:shape style="width:72pt;height:36pt"><v:imagedata r:id="rIdImg"/></v:shape><o:OLEObject Type="Embed" ProgID="Equation.DSMT4" ShapeID="_1" DrawAspect="Content" ObjectID="_1" r:id="rIdOle"/></w:object></w:r>
+              <w:r><w:pict><v:shape id="PowerPlusWaterMarkObject1" style="width:72pt;height:36pt"><v:imagedata r:id="rIdImg"/></v:shape></w:pict></w:r>
+              <w:r><w:pict><v:shape style="width:72pt;height:36pt"><v:imagedata r:id=""/></v:shape></w:pict></w:r>
+            </w:p>"#,
+        );
+        let opaques: Vec<_> = paragraph
+            .content
+            .iter()
+            .filter_map(|content| match content {
+                ParagraphContent::Inline(InlineNode::Run(run)) => Some(run),
+                _ => None,
+            })
+            .map(|run| {
+                run.content
+                    .iter()
+                    .filter_map(|content| match content {
+                        RunContent::OpaqueDrawing {
+                            kind, xml, preview, ..
+                        } => Some((kind.as_str(), xml.as_str(), preview.as_deref())),
+                        _ => None,
+                    })
+                    .collect::<Vec<_>>()
+            })
+            .collect();
+        assert_eq!(opaques.len(), 3);
+        assert_eq!(opaques[0].len(), 1);
+        assert_eq!(opaques[0][0].0, "object");
+        assert_eq!(
+            opaques[0][0].1,
+            r#"<w:object><v:shape style="width:72pt;height:36pt"><v:imagedata r:id="rIdImg"/></v:shape><o:OLEObject Type="Embed" ProgID="Equation.DSMT4" ShapeID="_1" DrawAspect="Content" ObjectID="_1" r:id="rIdOle"/></w:object>"#
+        );
+        let preview = opaques[0][0]
+            .2
+            .expect("OLE image fallback must remain visible");
+        assert_eq!(preview.size.width, 72.0 * 12_700.0);
+        assert_eq!(preview.size.height, 36.0 * 12_700.0);
+        assert_eq!(opaques[1].len(), 1);
+        assert_eq!(opaques[1][0].0, "pict");
+        assert!(opaques[1][0].1.contains("imagedata"));
+        assert!(opaques[1][0].2.is_none());
+        assert_eq!(opaques[2].len(), 1);
+        assert_eq!(opaques[2][0].0, "pict");
+        assert!(opaques[2][0].2.is_none());
+    }
+
+    #[test]
+    fn imageless_picts_stay_opaque_while_textbox_drawings_stay_dropped() {
+        let paragraph = parse(
+            r#"<w:p xmlns:w="w" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:r="r" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape">
+              <w:r><w:pict><v:shape style="width:72pt;height:36pt"><v:imagedata r:id=""/></v:shape></w:pict></w:r>
+              <w:r><w:drawing><wp:inline><wp:extent cx="914400" cy="457200"/><wp:docPr id="41" name="Text Box 41"/><a:graphic><a:graphicData uri="http://schemas.microsoft.com/office/word/2010/wordprocessingShape"><wps:wsp><wps:cNvSpPr txBox="1"/><wps:spPr><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></wps:spPr><wps:txbx><w:txbxContent><w:p><w:r><w:t>inner</w:t></w:r></w:p></w:txbxContent></wps:txbx><wps:bodyPr rot="0" vert="horz"/></wps:wsp></a:graphicData></a:graphic></wp:inline></w:drawing></w:r>
+            </w:p>"#,
+        );
+        let ParagraphContent::Inline(InlineNode::Run(pict)) = &paragraph.content[0] else {
+            panic!("expected pict run");
+        };
+        assert!(
+            pict.content.iter().any(|content| matches!(
+                content,
+                RunContent::OpaqueDrawing { kind, .. } if kind == "pict"
+            )),
+            "imageless picts round-trip verbatim instead of vanishing"
+        );
+        let ParagraphContent::Inline(InlineNode::Run(textbox)) = &paragraph.content[1] else {
+            panic!("expected textbox run");
+        };
+        assert!(
+            textbox
+                .content
+                .iter()
+                .all(|content| !matches!(content, RunContent::OpaqueDrawing { .. })),
+            "textbox drawings keep their existing owners"
+        );
+    }
+
+    #[test]
+    fn pins_paragraph_mark_changes_and_inline_section_properties() {
+        let paragraph = parse(
+            r#"<w:p xmlns:w="w" xmlns:r="r">
+              <w:pPr>
+                <w:rPr>
+                  <w:ins w:id="12tail" w:author="  A  " w:date="2024-01-02"/>
+                  <w:del w:author="missing-id"/>
+                </w:rPr>
+                <w:sectPr><w:type w:val="continuous"/><w:headerReference w:type="default" r:id="rH"/></w:sectPr>
+              </w:pPr>
+            </w:p>"#,
+        );
+        let insertion = paragraph.p_pr_ins.unwrap();
+        assert_eq!(insertion.id, 12.0);
+        // Paragraph-mark metadata is deliberately not trimmed/defaulted.
+        assert_eq!(insertion.author, "  A  ");
+        assert!(paragraph.p_pr_del.is_none());
+        let section = paragraph.section_properties.unwrap();
+        assert_eq!(section.section_start.as_deref(), Some("continuous"));
+        assert_eq!(
+            section.header_references.as_ref().unwrap()[0].relationship_id,
+            "rH"
+        );
+    }
+
+    #[test]
+    fn parses_deletion_fields_and_utf16_marker_offsets() {
+        let paragraph = parse(
+            r#"<w:p xmlns:w="w">
+              <w:bookmarkStart w:id="7" w:name="start"/>
+              <w:r><w:t>A😀</w:t></w:r>
+              <w:del w:id="8"><w:r><w:delText>B</w:delText></w:r></w:del>
+              <w:commentRangeStart w:id="9"/>
+              <w:r><w:fldChar w:fldCharType="begin"/></w:r>
+              <w:r><w:instrText> PAGE </w:instrText></w:r>
+              <w:r><w:fldChar w:fldCharType="separate"/></w:r>
+              <w:r><w:t>4</w:t></w:r>
+              <w:r><w:fldChar w:fldCharType="end"/></w:r>
+              <w:bookmarkEnd w:id="7"/>
+            </w:p>"#,
+        );
+        let ParagraphContent::Inline(InlineNode::BookmarkStart(start)) = &paragraph.content[0]
+        else {
+            panic!("bookmark start")
+        };
+        assert_eq!(start.position.as_ref().unwrap().offset, Some(0.0));
+        let ParagraphContent::Tracked(deletion) = &paragraph.content[2] else {
+            panic!("deletion")
+        };
+        let InlineNode::Run(run) = &deletion.content[0] else {
+            panic!("deleted run")
+        };
+        assert!(matches!(
+            &run.content[0],
+            RunContent::Text { text, .. } if text == "B"
+        ));
+        let ParagraphContent::CommentRange(comment) = &paragraph.content[3] else {
+            panic!("comment marker")
+        };
+        // A, an astral emoji, and deleted B span four UTF-16 code units.
+        assert_eq!(comment.offset, Some(4.0));
+        let ParagraphContent::Inline(InlineNode::ComplexField(field)) = &paragraph.content[4]
+        else {
+            panic!("complex field")
+        };
+        assert_eq!(field.instruction, "PAGE");
+        assert_eq!(field.field_type, "PAGE");
+        assert_eq!(field.field_result.len(), 1);
+        let ParagraphContent::Inline(InlineNode::BookmarkEnd(end)) = &paragraph.content[5] else {
+            panic!("bookmark end")
+        };
+        assert_eq!(end.position.as_ref().unwrap().offset, Some(5.0));
+    }
+
+    #[test]
+    fn embeds_count_as_one_unit_in_marker_offsets() {
+        let paragraph = parse(
+            r#"<w:p xmlns:w="w" xmlns:o="urn:schemas-microsoft-com:office:office">
+              <w:r><w:t>ab</w:t></w:r>
+              <w:r><w:object><o:OLEObject Type="Embed" ProgID="Equation.DSMT4" ShapeID="_1" DrawAspect="Content" ObjectID="_1"/></w:object></w:r>
+              <w:r><w:t>cd</w:t></w:r>
+              <w:bookmarkStart w:id="7" w:name="afterOpaque"/>
+              <w:r><w:t>ef</w:t></w:r>
+              <w:bookmarkEnd w:id="7"/>
+              <w:commentRangeStart w:id="9"/>
+              <w:r><w:footnoteReference w:id="2"/></w:r>
+              <w:r><w:br/></w:r>
+              <w:commentRangeEnd w:id="9"/>
+            </w:p>"#,
+        );
+        let offsets: Vec<f64> = paragraph
+            .content
+            .iter()
+            .filter_map(|content| match content {
+                ParagraphContent::Inline(InlineNode::BookmarkStart(bookmark)) => {
+                    bookmark.position.as_ref()?.offset
+                }
+                ParagraphContent::Inline(InlineNode::BookmarkEnd(bookmark)) => {
+                    bookmark.position.as_ref()?.offset
+                }
+                ParagraphContent::CommentRange(marker) => marker.offset,
+                _ => None,
+            })
+            .collect();
+        assert_eq!(offsets, [5.0, 7.0, 7.0, 9.0]);
+    }
+
+    fn run_texts(paragraph: &Paragraph) -> Vec<&str> {
+        paragraph
+            .content
+            .iter()
+            .filter_map(|content| match content {
+                ParagraphContent::Inline(InlineNode::Run(run)) => {
+                    run.content.iter().find_map(|content| match content {
+                        RunContent::Text { text, .. } => Some(text.as_str()),
+                        _ => None,
+                    })
+                }
+                _ => None,
+            })
+            .collect()
+    }
+
+    #[test]
+    fn smart_tag_wrapped_runs_keep_their_text() {
+        let paragraph = parse(
+            r#"<w:p xmlns:w="w">
+              <w:r><w:t>in </w:t></w:r>
+              <w:smartTag w:uri="urn:schemas-microsoft-com:office:smarttags" w:element="place">
+                <w:smartTagPr><w:attr w:name="k" w:val="v"/></w:smartTagPr>
+                <w:r><w:t>Paris</w:t></w:r>
+              </w:smartTag>
+            </w:p>"#,
+        );
+        assert_eq!(run_texts(&paragraph), ["in ", "Paris"]);
+        assert_eq!(paragraph.content.len(), 2);
+    }
+
+    #[test]
+    fn custom_xml_wrapped_runs_and_nested_smart_tags_keep_document_order() {
+        let paragraph = parse(
+            r#"<w:p xmlns:w="w">
+              <w:r><w:t>a</w:t></w:r>
+              <w:customXml w:uri="urn:x" w:element="e">
+                <w:customXmlPr><w:placeholder w:val="p"/></w:customXmlPr>
+                <w:r><w:t>b</w:t></w:r>
+                <w:smartTag w:element="date"><w:r><w:t>c</w:t></w:r></w:smartTag>
+              </w:customXml>
+              <w:r><w:t>d</w:t></w:r>
+            </w:p>"#,
+        );
+        assert_eq!(run_texts(&paragraph), ["a", "b", "c", "d"]);
+        assert_eq!(paragraph.content.len(), 4);
+    }
+
+    #[test]
+    fn keeps_comment_range_zero_and_drops_ranges_without_an_id() {
+        let paragraph = parse(
+            r#"<w:p xmlns:w="w">
+              <w:commentRangeStart/>
+              <w:commentRangeStart w:id="0"/>
+              <w:r><w:t>a</w:t></w:r>
+              <w:commentRangeEnd w:id="0"/>
+              <w:commentRangeEnd w:id="x"/>
+            </w:p>"#,
+        );
+        let ranges: Vec<_> = paragraph
+            .content
+            .iter()
+            .filter_map(|content| match content {
+                ParagraphContent::CommentRange(range) => Some((range.node_type.as_str(), range.id)),
+                _ => None,
+            })
+            .collect();
+        assert_eq!(
+            ranges,
+            [("commentRangeStart", 0.0), ("commentRangeEnd", 0.0)]
+        );
+    }
+
+    #[test]
+    fn keeps_move_range_zero_and_drops_ranges_without_an_id() {
+        for name in [
+            "moveFromRangeStart",
+            "moveToRangeStart",
+            "moveFromRangeEnd",
+            "moveToRangeEnd",
+        ] {
+            let paragraph = parse(&format!(
+                r#"<w:p xmlns:w="w"><w:{name}/><w:{name} w:id="0"/><w:{name} w:id="x"/></w:p>"#,
+            ));
+            assert_eq!(paragraph.content.len(), 1, "{name}");
+            let (node_type, id) = match &paragraph.content[0] {
+                ParagraphContent::RangeStart(range) => (range.node_type.as_str(), range.id),
+                ParagraphContent::RangeEnd(range) => (range.node_type.as_str(), range.id),
+                _ => panic!("move range"),
+            };
+            assert_eq!(node_type, name);
+            assert_eq!(id, 0.0);
+        }
+    }
+
+    #[test]
+    fn keeps_bookmark_zero_and_drops_bookmarks_without_an_id() {
+        let content = r#"<w:bookmarkStart/><w:bookmarkStart w:id="x"/><w:bookmarkStart w:id="0" w:name="zero"/><w:r><w:t>A😀</w:t></w:r><w:bookmarkEnd w:id="0"/><w:bookmarkEnd/><w:bookmarkEnd w:id="x"/>"#;
+        for hyperlink in [false, true] {
+            let paragraph = parse(&if hyperlink {
+                format!(
+                    r#"<w:p xmlns:w="w"><w:hyperlink w:anchor="zero">{content}</w:hyperlink></w:p>"#
+                )
+            } else {
+                format!(r#"<w:p xmlns:w="w">{content}</w:p>"#)
+            });
+            let nodes: Vec<_> = if hyperlink {
+                assert_eq!(paragraph.content.len(), 1);
+                let ParagraphContent::Inline(InlineNode::Hyperlink(link)) = &paragraph.content[0]
+                else {
+                    panic!("hyperlink")
+                };
+                assert_eq!(link.children.len(), 3);
+                assert_eq!(link.structured_children.as_ref().unwrap(), &link.children);
+                link.children.iter().collect()
+            } else {
+                paragraph
+                    .content
+                    .iter()
+                    .map(|content| match content {
+                        ParagraphContent::Inline(node) => node,
+                        _ => panic!("inline"),
+                    })
+                    .collect()
+            };
+            assert_eq!(nodes.len(), 3);
+            let InlineNode::BookmarkStart(start) = nodes[0] else {
+                panic!("bookmark start")
+            };
+            assert_eq!(start.id, 0.0);
+            assert_eq!(start.name, "zero");
+            let InlineNode::BookmarkEnd(end) = nodes[2] else {
+                panic!("bookmark end")
+            };
+            assert_eq!(end.id, 0.0);
+            if !hyperlink {
+                assert_eq!(start.position.as_ref().unwrap().offset, Some(0.0));
+                assert_eq!(end.position.as_ref().unwrap().offset, Some(3.0));
+            }
+        }
+    }
+
+    #[test]
+    fn paragraph_content_wire_uses_the_type_discriminator_for_same_shape_markers() {
+        let comment: ParagraphContent =
+            serde_json::from_str(r#"{"type":"commentRangeStart","id":7}"#).unwrap();
+        assert!(matches!(comment, ParagraphContent::CommentRange(_)));
+        let movement: ParagraphContent =
+            serde_json::from_str(r#"{"type":"moveFromRangeEnd","id":8}"#).unwrap();
+        assert!(matches!(movement, ParagraphContent::RangeEnd(_)));
+    }
+
+    #[test]
+    fn enforces_paragraph_budget_before_allocating_content() {
+        let mut limits = ParseLimits::default();
+        limits.max_paragraphs = 0;
+        let mut budget = ParseBudget::new(&limits);
+        let document = parse_xml(
+            br#"<w:p xmlns:w="w"><w:r><w:t>x</w:t></w:r></w:p>"#,
+            "word/document.xml",
+            &mut budget,
+        )
+        .unwrap();
+        let mut ids = HexIdAllocator::from_sha256(&"0".repeat(64)).unwrap();
+        let error = parse_paragraph(
+            document.root().unwrap(),
+            None,
+            None,
+            None,
+            None,
+            None,
+            "word/document.xml",
+            &mut budget,
+            &mut ids,
+            None,
+            false,
+            0,
+        )
+        .unwrap_err();
+        assert!(matches!(
+            error,
+            ParseError::ResourceLimit {
+                kind: "paragraphs",
+                ..
+            }
+        ));
+    }
+}

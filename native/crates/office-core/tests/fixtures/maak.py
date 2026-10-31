@@ -68,3 +68,4 @@ rijk.save(map/'presentation-rijk.pptx')
 
 import runpy
 runpy.run_path(str(map/'maak-weergave.py'), run_name='__main__')
+runpy.run_path(str(map/'maak-velden.py'), run_name='__main__')
