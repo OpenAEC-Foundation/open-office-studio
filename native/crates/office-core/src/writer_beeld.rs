@@ -171,6 +171,28 @@ pub(crate) fn tekstmarkering(
             .ok_or_else(|| fout("Geen behouden paginabeeld voor tekstmarkering"))?
     })
 }
+
+pub(crate) fn interactie_frame(
+    bron: &[u8],
+    eigenaar: u64,
+    pagina: usize,
+) -> Resultaat<crate::writer_cursor::InteractieFrame> {
+    met_context(bron, eigenaar, |c| {
+        c.tekstpagina(pagina)?;
+        let lijst = c
+            .engine
+            .with_display_list(|dl| docx_layout::display_list::DisplayList {
+                contract_version: dl.contract_version,
+                pages: vec![dl.pages[pagina].clone()],
+            })
+            .ok_or_else(|| fout("Geen zichtbaar interactiebeeld"))?;
+        Ok(crate::writer_cursor::InteractieFrame::nieuw(
+            lijst,
+            c.adressen.as_ref().unwrap().clone(),
+            pagina,
+        ))
+    })
+}
 pub(crate) fn tekstpunt(
     bron: &[u8],
     eigenaar: u64,
@@ -206,7 +228,7 @@ struct Context {
     afbeeldingen: docx_raster::ImageMap,
     opmaak: std::sync::Arc<crate::writer_opmaak::Alineas>,
     paginakaart: Option<docx_edit::structured::DocxLayoutMap>,
-    adressen: Option<crate::writer_cursor::AdresKaart>,
+    adressen: Option<std::sync::Arc<crate::writer_cursor::AdresKaart>>,
 }
 impl Context {
     fn nieuw(bron: &[u8], met_opmaak: bool) -> Resultaat<Self> {
@@ -303,7 +325,9 @@ impl Context {
             return Err(fout("Deze exacte tekstpagina bestaat niet"));
         }
         if self.adressen.is_none() {
-            self.adressen = Some(crate::writer_cursor::AdresKaart::nieuw(&self.engine)?);
+            self.adressen = Some(std::sync::Arc::new(
+                crate::writer_cursor::AdresKaart::nieuw(&self.engine)?,
+            ));
         }
         Ok(())
     }

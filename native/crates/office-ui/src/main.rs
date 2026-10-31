@@ -14,7 +14,9 @@ mod raster_ui;
 mod sleepvak;
 mod stijl;
 mod werker;
+mod writer_direct;
 mod writer_invoer;
+mod writer_paginablad;
 mod zoeken_ui;
 use iced::widget::{column, container, image, row, scrollable, text_editor, text_input};
 use office_core::{
@@ -62,6 +64,9 @@ fn icoon(i: Icon) -> &'static str {
 }
 #[derive(Debug, Clone)]
 enum Msg {
+    WriterDirect(u64, writer_direct::Bericht),
+    WriterGereed(writer_direct::Doel, Result<Antwoord, String>),
+    WriterPlak(u64, u64, Option<String>),
     Zoeken(zoeken_ui::Bericht),
     ZoekNavigatie(zoeken_ui::NavigatieDoel, Result<Antwoord, String>),
     ZoekGereed(
@@ -167,6 +172,8 @@ struct Tab {
     editerversie: u64,
     writer_stappen: Vec<office_core::document::TekstStap>,
     writer_markering: Option<WriterMarkering>,
+    writer_direct: writer_direct::Staat,
+    writer_focus: std::sync::Arc<std::sync::atomic::AtomicBool>,
     raster: raster_ui::Staat,
     concept: bool,
     adres: String,
@@ -202,6 +209,8 @@ impl Tab {
             editerversie: 0,
             writer_stappen: Vec::new(),
             writer_markering: None,
+            writer_direct: writer_direct::Staat::default(),
+            writer_focus: Default::default(),
             raster: raster_ui::Staat::default(),
             concept: false,
             adres: "A1".into(),
@@ -219,6 +228,7 @@ impl Tab {
     }
     fn gewijzigd(&self) -> bool {
         self.concept
+            || self.writer_direct.heeft_invoer()
             || self
                 .antwoord
                 .as_ref()
@@ -454,6 +464,8 @@ impl App {
                     | Msg::Gereed(..)
                     | Msg::ZoekGereed(..)
                     | Msg::ZoekNavigatie(..)
+                    | Msg::WriterGereed(..)
+                    | Msg::WriterPlak(..)
                     | Msg::Gelezen(..)
                     | Msg::Geschreven(..)
                     | Msg::Doel(..)
@@ -478,6 +490,8 @@ impl App {
                     | Msg::Gereed(..)
                     | Msg::ZoekGereed(..)
                     | Msg::ZoekNavigatie(..)
+                    | Msg::WriterGereed(..)
+                    | Msg::WriterPlak(..)
                     | Msg::Gelezen(..)
                     | Msg::Geschreven(..)
                     | Msg::ExportKlaar(..)
@@ -505,6 +519,8 @@ impl App {
                     | Msg::Gereed(..)
                     | Msg::ZoekGereed(..)
                     | Msg::ZoekNavigatie(..)
+                    | Msg::WriterGereed(..)
+                    | Msg::WriterPlak(..)
                     | Msg::Opslaan(..)
                     | Msg::ExportVoltooid(..)
                     | Msg::ExportPad(..)
@@ -514,6 +530,9 @@ impl App {
             return Task::none();
         }
         match msg {
+            Msg::WriterDirect(id, b) => return writer_direct::update(self, id, b),
+            Msg::WriterGereed(d, r) => return writer_direct::gereed(self, d, r),
+            Msg::WriterPlak(id, n, s) => return writer_direct::plak(self, id, n, s),
             Msg::Zoeken(m) => return zoeken_ui::update(self, m),
             Msg::ZoekNavigatie(doel, r) => return zoeken_ui::navigatie_gereed(self, doel, r),
             Msg::ZoekGereed(doel, resultaat) => return zoeken_ui::gereed(self, doel, resultaat),
@@ -824,6 +843,7 @@ impl App {
                             fout = true;
                         }
                     }
+                    writer_direct::gewone_opdracht_gereed(tab);
                 }
                 if fout && self.tabs.iter().any(|t| t.id == id && t.antwoord.is_none()) {
                     self.verwijder(id);
@@ -1054,6 +1074,16 @@ impl App {
                 }
             }
             Msg::Opmaak(stijl) => {
+                if let Some(t) = self.tab().filter(|t| {
+                    !t.writer_direct.delegeert
+                        && (t.writer_direct.actief || t.writer_direct.heeft_werk())
+                }) {
+                    return writer_direct::update(
+                        self,
+                        t.id,
+                        writer_direct::Bericht::Opmaak(stijl),
+                    );
+                }
                 if let Some(t) = self.tab_mut() {
                     if t.bezig || t.concept {
                         return self.waarschuwing("Pas de ingevoerde tekst eerst toe");
@@ -1128,13 +1158,30 @@ impl App {
                     }
                 }
             }
-            Msg::Klembord(actie) => return klembord::voer_uit(self, actie),
+            Msg::Klembord(actie) => {
+                if let Some(t) = self.tab().filter(|t| {
+                    t.writer_focus.load(std::sync::atomic::Ordering::Relaxed)
+                        || t.writer_direct.heeft_werk()
+                }) {
+                    return writer_direct::update(
+                        self,
+                        t.id,
+                        writer_direct::Bericht::Klembord(actie),
+                    );
+                }
+                return klembord::voer_uit(self, actie);
+            }
             Msg::KlembordGelezen(doel, tekst) => return klembord::plak(self, doel, tekst),
             Msg::Invoer(actie) => {
                 if let Some(t) = self.tab_mut()
                     && !t.bezig
+                    && !t.schrijft
+                    && !t.writer_direct.heeft_werk()
                     && (!actie.is_edit() || t.veld().is_some_and(|v| v.bewerkbaar))
                 {
+                    t.writer_focus
+                        .store(false, std::sync::atomic::Ordering::Relaxed);
+                    t.writer_direct.verlaat();
                     let bewerkt = actie.is_edit();
                     let selectie = !bewerkt && !matches!(actie, text_editor::Action::Scroll { .. });
                     if let Err(e) = writer_invoer::voer_uit(t, actie) {
@@ -1164,6 +1211,13 @@ impl App {
                 }
             }
             Msg::Opslaan(id, als) => {
+                if self.tabs.iter().any(|t| {
+                    t.id == id
+                        && !t.writer_direct.delegeert
+                        && (t.writer_direct.actief || t.writer_direct.heeft_werk())
+                }) {
+                    return writer_direct::update(self, id, writer_direct::Bericht::Opslaan(als));
+                }
                 if let Some(t) = self.tabs.iter_mut().find(|t| t.id == id) {
                     if t.bezig || t.schrijft {
                         return self.waarschuwing("Dit document wordt nog verwerkt");
@@ -1247,6 +1301,12 @@ impl App {
                 }
             }
             Msg::Terug => {
+                if let Some(t) = self
+                    .tab()
+                    .filter(|t| t.writer_direct.actief || t.writer_direct.heeft_werk())
+                {
+                    return writer_direct::update(self, t.id, writer_direct::Bericht::Terug);
+                }
                 if let Some(t) = self.tab_mut() {
                     if t.concept {
                         let n = t.gekozen;
@@ -1261,6 +1321,12 @@ impl App {
                 }
             }
             Msg::Vooruit => {
+                if let Some(t) = self
+                    .tab()
+                    .filter(|t| t.writer_direct.actief || t.writer_direct.heeft_werk())
+                {
+                    return writer_direct::update(self, t.id, writer_direct::Bericht::Vooruit);
+                }
                 if let Some(t) = self.tab()
                     && !t.bezig
                     && !t.concept
@@ -1401,6 +1467,9 @@ impl App {
                     return Task::none();
                 }
                 if k.key == Key::Named(Named::Escape) {
+                    if self.zoeken.is_some() {
+                        return zoeken_ui::update(self, zoeken_ui::Bericht::Sluit);
+                    }
                     self.zoeken = None;
                     self.instellingen = false;
                     self.bestand = false;
@@ -1444,7 +1513,18 @@ impl App {
             Msg::Navigeer(n) => return openaec_ui::keyboard::navigate(n),
             Msg::Pad(None) | Msg::MarkdownDoel(_, None) => {}
         }
-        zoeken_ui::bij_document(self)
+        let zoek = zoeken_ui::bij_document(self);
+        let ids: Vec<_> = self
+            .tabs
+            .iter()
+            .filter(|t| t.writer_direct.heeft_werk())
+            .map(|t| t.id)
+            .collect();
+        let mut taken = vec![zoek];
+        for id in ids {
+            taken.push(writer_direct::hervat(self, id));
+        }
+        Task::batch(taken)
     }
     fn waarschuwing(&mut self, m: &str) -> Task<Msg> {
         self.melding = m.into();
@@ -2149,14 +2229,23 @@ impl App {
                     let blad = if a.beeld.module == Module::Spreadsheet {
                         raster_koppen::omlijst(self, t, raster_ui::blad(self, t, inhoud.into()))
                     } else {
-                        documentblad::blad(
+                        let blad = documentblad::blad(
                             inhoud,
                             pagina,
                             t.veld().map(|v| v.id.as_str()),
-                            t.tekstmarkering(),
+                            if t.writer_focus.load(std::sync::atomic::Ordering::Relaxed) {
+                                None
+                            } else {
+                                t.tekstmarkering()
+                            },
                             c.accent,
                             Msg::Raak,
-                        )
+                        );
+                        if a.beeld.module == Module::Writer {
+                            writer_paginablad::blad(t, blad, c.accent)
+                        } else {
+                            blad
+                        }
                     };
                     if a.beeld.module == Module::Spreadsheet {
                         container(blad)

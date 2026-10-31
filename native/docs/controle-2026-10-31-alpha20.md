@@ -55,7 +55,7 @@ De widgetproef krijgt daarom een vaste redraw-klok van vóór de focusoperatie.
 De echte widget tekent zo haar eerste knipperfase, onafhankelijk van de
 duur van layout op het platform. Productiebediening blijft haar normale klok
 gebruiken. Er worden geen pixels verwijderd, gemaskeerd of met tolerantie
-geaccepteerd. De nieuwe volledige platformronde moet dit nog bevestigen.
+geaccepteerd. De [alpha-20-platformronde](platformen-2026-10-31-alpha20.json) bevestigt dit voor alle 80 volledige beeldparen: nul afwijkende pixels tussen Linux en Windows/macOS. Alle 987 bronbestanden per pakket zijn gecontroleerd; de CI-checkout is voor de verpakte bron bytegelijk aan commit `963258d7b6b24b30912f1cd21e5a29882d638c80`. Dit bewijst geen legacypariteit.
 
 ## Uitgevoerde controles
 
@@ -70,11 +70,9 @@ geaccepteerd. De nieuwe volledige platformronde moet dit nog bevestigen.
 
 ![Markering uit de gevormde documenttekst](screenshots/writer-zoeken-markering.png)
 
-Er is nog geen alpha-20-release- of platformgoedkeuring en geen echte
-alpha-20-vensterproef. De [echte alpha-19-twaalfstappenproef](vensterproef-2026-10-31-alpha19-release/LEESMIJ.md),
-[afzonderlijke paginavensterproef](paginavenster-2026-10-31-alpha19-release/LEESMIJ.md)
-en [lokale releasebouw](bouw-2026-10-31-alpha19-lokaal.json) blijven historisch
-aan die bron en binaries gekoppeld. Zij bewijzen geen bediening van alpha 20.
+De [lokale releasebouw](bouw-2026-10-31-alpha20-lokaal.json) en [bronregressies](bronregressie-2026-10-31-alpha20-lokaal.json) slagen vanuit het vaste Git-archief. Beide programma’s zijn vóór volgende builds met versie en SHA-256 vastgezet. Rust-bouwduur: 37m17s; geen geïsoleerde snelheidsbenchmark.
+
+De [echte Linux-twaalfstappenproef](vensterproef-2026-10-31-alpha20-release/LEESMIJ.md), [zoekmarkering tegenover de widgetreferentie](vensterproef-2026-10-31-alpha20-release/markeervergelijking.json) en [afzonderlijke paginavensterproef](paginavenster-2026-10-31-alpha20-release/LEESMIJ.md) zijn geslaagd. De laatste bevat ook de twee mislukte proefopzetten met uitleg; editorfocus na sluiten van zoeken wordt in de volgende bouwstap verbeterd. De [21 releasepaginabezoeken](paginametingen-2026-10-31-alpha20.json) slagen over de drie CI-platforms. Geen fysieke Windows/macOS-bediening of stabiele native vrijgave.
 
 ## Visuele vergelijking en open werk
 

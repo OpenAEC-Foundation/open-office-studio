@@ -29,6 +29,500 @@ struct Proef {
     focusoperaties: usize,
     klok: std::time::Instant,
 }
+
+fn writer_paginaproef() -> Proef {
+    Proef::met_app(app_met_werkdraad(
+        Module::Writer,
+        include_bytes!("../../../office-core/tests/fixtures/writer-structuur.docx"),
+    ))
+}
+fn writer_punt(p: &mut Proef, tekst: &str, positie: usize) -> iced::Point {
+    let bounds = p
+        .toegankelijkheid()
+        .nodes
+        .into_iter()
+        .find(|n| n.node.name == "Writer-documentpagina")
+        .expect("Benoemde documentpagina")
+        .bounds;
+    let a = p.app.tab().unwrap().antwoord.as_ref().unwrap();
+    let id = &a.beeld.velden.iter().find(|v| v.tekst == tekst).unwrap().id;
+    let m = a
+        .beeld
+        .writer_frame
+        .as_ref()
+        .unwrap()
+        .markering(id, positie, positie)
+        .unwrap();
+    let r = m.cursor.unwrap();
+    iced::Point::new(
+        bounds.x + r.x * bounds.width / a.beeld.pagina.breedte,
+        bounds.y + (r.y + r.hoogte * 0.5) * bounds.height / a.beeld.pagina.hoogte,
+    )
+}
+fn writer_snel(p: &mut Proef, berichten: impl IntoIterator<Item = writer_direct::Bericht>) {
+    // Laat alle berichten bij dezelfde oude zichtbare bron aankomen, vóór de
+    // eerste werkdraadreactie. De proef maakt de wachtrij daardoor echt nodig.
+    let id = p.app.tab().unwrap().id;
+    let taken: Vec<_> = berichten
+        .into_iter()
+        .map(|b| p.app.update(Msg::WriterDirect(id, b)))
+        .collect();
+    for taak in taken {
+        p.taak(taak);
+    }
+    assert!(!p.app.tab().unwrap().bezig);
+    assert!(!p.app.tab().unwrap().writer_direct.heeft_werk());
+}
+#[test]
+fn writer_paginacursor_klikken_schalen_typen_en_een_exacte_undo() {
+    use iced::keyboard::key::Named;
+    for zoom in [0.75, 1., 1.5] {
+        let mut p = writer_paginaproef();
+        let origineel = p.bron();
+        p.bericht(Msg::Zoom(zoom));
+        let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+        p.klik(punt);
+        let t = p.app.tab().unwrap();
+        assert!(t.writer_focus.load(std::sync::atomic::Ordering::Relaxed));
+        assert_eq!(lint::tekenoffset(&t.editor, t.editor.cursor().position), 8);
+        let voor = p.verbeeld();
+        p.toets(
+            iced::keyboard::Key::Character("é".into()),
+            iced::keyboard::Modifiers::empty(),
+            Some("é"),
+        );
+        let t = p.app.tab().unwrap();
+        assert_eq!(t.editor.text(), "Links 🏠 écafé rechts");
+        assert!(!t.concept);
+        assert!(!t.bezig);
+        let b = Sessie::open(Module::Writer, p.bron().as_ref().clone())
+            .unwrap()
+            .weergave(0)
+            .unwrap();
+        assert!(b.velden.iter().any(|v| v.tekst == "Links 🏠 écafé rechts"));
+        assert_ne!(voor.data(), p.verbeeld().data());
+        if zoom == 1.
+            && let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN")
+        {
+            p.verbeeld()
+                .save_png(PathBuf::from(map).join("writer-pagina-invoer.png"))
+                .unwrap();
+        }
+        p.toets(
+            iced::keyboard::Key::Character("z".into()),
+            iced::keyboard::Modifiers::COMMAND,
+            None,
+        );
+        assert_eq!(p.bron().as_slice(), origineel.as_slice());
+        let t = p.app.tab().unwrap();
+        assert_eq!(lint::tekenoffset(&t.editor, t.editor.cursor().position), 8);
+        p.named(Named::ArrowRight);
+        let t = p.app.tab().unwrap();
+        assert_eq!(lint::tekenoffset(&t.editor, t.editor.cursor().position), 9);
+    }
+}
+#[test]
+fn writer_paginawachtrij_bewaart_snellen_unicode_selectie_knip_plak_en_undo() {
+    use text_editor::{Action as A, Edit as E};
+    use writer_direct::Bericht as B;
+    let mut p = writer_paginaproef();
+    let origineel = p.bron();
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    p.klik(punt);
+    writer_snel(
+        &mut p,
+        ["é", "🏠", "abc"]
+            .into_iter()
+            .map(|s| B::Invoer(A::Edit(E::Paste(std::sync::Arc::new(s.into()))))),
+    );
+    assert_eq!(
+        p.app.tab().unwrap().editor.text(),
+        "Links 🏠 é🏠abccafé rechts"
+    );
+    let na = p.bron();
+    p.bericht(Msg::Terug);
+    assert_eq!(p.bron().as_slice(), origineel.as_slice());
+    p.bericht(Msg::Vooruit);
+    assert_eq!(p.bron().as_slice(), na.as_slice());
+    p.klembord.tekst = Some("vooraf gewijzigde klembordtekst".into());
+    writer_snel(
+        &mut p,
+        [
+            B::Invoer(A::SelectAll),
+            B::Klembord(klembord::Actie::Knip),
+            B::Klembord(klembord::Actie::Plak),
+        ],
+    );
+    assert_eq!(
+        p.klembord.tekst.as_deref(),
+        Some("Links 🏠 é🏠abccafé rechts")
+    );
+    assert_eq!(
+        p.app.tab().unwrap().editor.text(),
+        "Links 🏠 é🏠abccafé rechts"
+    );
+    p.bericht(Msg::Terug);
+    assert_eq!(p.app.tab().unwrap().editor.text(), "");
+    p.bericht(Msg::Terug);
+    assert_eq!(p.bron().as_slice(), na.as_slice());
+}
+#[test]
+fn writer_paginaselectie_via_slepen_kopieert_bron_en_ime_commit_bewaart_opmaak() {
+    let mut p = writer_paginaproef();
+    let origineel = p.bron();
+    let a = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    let b = writer_punt(&mut p, "Links 🏠 café rechts", 12);
+    p.muis = a;
+    p.gebeurtenis(iced::Event::Mouse(iced::mouse::Event::ButtonPressed(
+        iced::mouse::Button::Left,
+    )));
+    p.muis = b;
+    p.gebeurtenis(iced::Event::Mouse(iced::mouse::Event::CursorMoved {
+        position: b,
+    }));
+    p.gebeurtenis(iced::Event::Mouse(iced::mouse::Event::ButtonReleased(
+        iced::mouse::Button::Left,
+    )));
+    assert_eq!(
+        p.app.tab().unwrap().editor.selection().as_deref(),
+        Some("café")
+    );
+    p.toets(
+        iced::keyboard::Key::Character("c".into()),
+        iced::keyboard::Modifiers::COMMAND,
+        None,
+    );
+    assert_eq!(p.klembord.tekst.as_deref(), Some("café"));
+    p.gebeurtenis(iced::Event::InputMethod(
+        iced::advanced::input_method::Event::Opened,
+    ));
+    p.gebeurtenis(iced::Event::InputMethod(
+        iced::advanced::input_method::Event::Preedit("仮".into(), Some(0..3)),
+    ));
+    assert_eq!(p.bron().as_slice(), origineel.as_slice());
+    p.gebeurtenis(iced::Event::InputMethod(
+        iced::advanced::input_method::Event::Commit("日本🏠".into()),
+    ));
+    assert_eq!(p.app.tab().unwrap().editor.text(), "Links 🏠 日本🏠 rechts");
+    p.gebeurtenis(iced::Event::InputMethod(
+        iced::advanced::input_method::Event::Closed,
+    ));
+    let bron = p.bron();
+    let d = Sessie::open(Module::Writer, bron.as_ref().clone())
+        .unwrap()
+        .weergave(0)
+        .unwrap();
+    let v = d
+        .velden
+        .iter()
+        .find(|v| v.tekst == "Links 🏠 日本🏠 rechts")
+        .unwrap();
+    let stijl = &d.writer_opmaak[&v.id];
+    assert!(
+        office_core::writer_opmaak::selectie(stijl, 0, 8)
+            .unwrap()
+            .vet
+    );
+    assert!(
+        office_core::writer_opmaak::selectie(stijl, 8, 11)
+            .unwrap()
+            .cursief
+    );
+    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
+        std::fs::write(
+            PathBuf::from(map).join("writer-pagina-ime.docx"),
+            bron.as_slice(),
+        )
+        .unwrap();
+    }
+    p.bericht(Msg::Terug);
+    assert_eq!(p.bron().as_slice(), origineel.as_slice());
+}
+#[test]
+fn writer_late_paginaklik_wordt_alleen_door_eigen_invoerstappen_verplaatst() {
+    use text_editor::{Action as A, Edit as E};
+    use writer_direct::Bericht as B;
+    let mut p = writer_paginaproef();
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    p.klik(punt);
+    let t = p.app.tab().unwrap();
+    let hash = t.antwoord.as_ref().unwrap().hash.clone();
+    let id = t.veld().unwrap().id.clone();
+    writer_snel(
+        &mut p,
+        [
+            B::Invoer(A::Edit(E::Paste(std::sync::Arc::new("AB".into())))),
+            B::Punt {
+                hash,
+                punt: office_core::writer_cursor::TekstPunt { id, positie: 12 },
+                selecteren: false,
+            },
+            B::Invoer(A::Edit(E::Insert('!'))),
+        ],
+    );
+    assert_eq!(
+        p.app.tab().unwrap().editor.text(),
+        "Links 🏠 ABcafé! rechts"
+    );
+}
+#[test]
+fn writer_pagina_verliest_focus_naar_zijeditor_en_weigert_alleen_lezen_invoer() {
+    let mut p = writer_paginaproef();
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    p.klik(punt);
+    p.klik(iced::Point::new(1220., 300.));
+    assert!(
+        !p.app
+            .tab()
+            .unwrap()
+            .writer_focus
+            .load(std::sync::atomic::Ordering::Relaxed)
+    );
+    p.toets(
+        iced::keyboard::Key::Character("!".into()),
+        iced::keyboard::Modifiers::empty(),
+        Some("!"),
+    );
+    assert!(p.app.tab().unwrap().concept);
+    let bron = p.bron();
+    p.klik(punt);
+    assert_eq!(p.bron().as_slice(), bron.as_slice());
+    assert!(p.app.melding.contains("eerst toe"));
+    let mut p = writer_paginaproef();
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    p.klik(punt);
+    let bron = p.bron();
+    let t = p.app.tab_mut().unwrap();
+    let n = t.gekozen;
+    t.antwoord.as_mut().unwrap().beeld.velden[n].bewerkbaar = false;
+    p.toets(
+        iced::keyboard::Key::Character("!".into()),
+        iced::keyboard::Modifiers::empty(),
+        Some("!"),
+    );
+    assert_eq!(p.bron().as_slice(), bron.as_slice());
+    assert!(p.app.melding.contains("alleen-lezen"));
+}
+#[test]
+fn writer_pagina_opslaan_wacht_op_invoer_en_laat_latere_tekst_gewijzigd() {
+    use text_editor::{Action as A, Edit as E};
+    use writer_direct::Bericht as B;
+    let mut p = writer_paginaproef();
+    let oud = p.bron();
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    p.klik(punt);
+    let uniek = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap()
+        .as_nanos();
+    let pad = std::env::temp_dir().join(format!("office-pagina-{uniek}.docx"));
+    std::fs::write(&pad, oud.as_slice()).unwrap();
+    let t = p.app.tab_mut().unwrap();
+    t.pad = Some(pad.clone());
+    t.verwacht = Some(opslag::hash(oud.as_slice()));
+    writer_snel(
+        &mut p,
+        [
+            B::Invoer(A::Edit(E::Insert('!'))),
+            B::Opslaan(false),
+            B::Invoer(A::Edit(E::Insert('?'))),
+        ],
+    );
+    let bewaard = std::fs::read(&pad).unwrap();
+    let b = Sessie::open(Module::Writer, bewaard)
+        .unwrap()
+        .weergave(0)
+        .unwrap();
+    assert!(b.velden.iter().any(|v| v.tekst == "Links 🏠 !café rechts"));
+    assert_eq!(p.app.tab().unwrap().editor.text(), "Links 🏠 !?café rechts");
+    assert!(p.app.tab().unwrap().gewijzigd());
+    p.bericht(Msg::Opslaan(1, false));
+    assert_eq!(std::fs::read(&pad).unwrap(), *p.bron());
+    assert!(!p.app.tab().unwrap().gewijzigd());
+    std::fs::remove_file(pad).unwrap();
+}
+#[test]
+fn writer_pagina_achtergrondzoeken_en_dubbele_reactie_nemen_cursor_niet_over() {
+    use text_editor::{Action as A, Edit as E};
+    use writer_direct::Bericht as B;
+    let mut p = writer_paginaproef();
+    p.bericht(Msg::Zoeken(zoeken_ui::Bericht::Open(false)));
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    p.klik(punt);
+    p.bericht(Msg::Zoeken(zoeken_ui::Bericht::Tekst("café".into())));
+    let t = p.app.tab().unwrap();
+    assert_eq!(lint::tekenoffset(&t.editor, t.editor.cursor().position), 8);
+    assert!(t.editor.selection().is_none());
+    let taak = p
+        .app
+        .update(Msg::WriterDirect(1, B::Invoer(A::Edit(E::Insert('!')))));
+    let mut stroom = iced_runtime::task::into_stream(taak).unwrap();
+    let actie = iced::futures::executor::block_on(stroom.next()).unwrap();
+    let iced_runtime::Action::Output(reactie @ Msg::WriterGereed(..)) = actie else {
+        panic!("Geen eigen werkdraadreactie")
+    };
+    p.bericht(reactie.clone());
+    let na = p.bron();
+    let cursor = p.app.tab().unwrap().editor.cursor();
+    let operaties = p.focusoperaties;
+    p.bericht(reactie);
+    p.bericht(Msg::WriterPlak(
+        1,
+        u64::MAX,
+        Some("oude klembordtekst".into()),
+    ));
+    assert_eq!(*p.bron(), *na);
+    assert_eq!(p.app.tab().unwrap().editor.cursor(), cursor);
+    assert_eq!(p.focusoperaties, operaties);
+    assert_eq!(p.app.tab().unwrap().editor.text(), "Links 🏠 !café rechts");
+    assert!(
+        p.app
+            .tab()
+            .unwrap()
+            .writer_focus
+            .load(std::sync::atomic::Ordering::Relaxed)
+    );
+}
+#[test]
+fn writer_zoekpaneel_sluiten_behoudt_de_werkelijke_editorfocus() {
+    use iced::keyboard::{Key, Modifiers, key::Named};
+    use zoeken_ui::Bericht as Z;
+    let mut p = writer_paginaproef();
+    p.bericht(Msg::Zoeken(Z::Open(false)));
+    p.bericht(Msg::Zoeken(Z::Tekst("café".into())));
+    p.bericht(Msg::Zoeken(Z::Kies(0)));
+    p.named(Named::Escape);
+    assert!(p.app.zoeken.is_none());
+    p.toets(Key::Character("!".into()), Modifiers::empty(), Some("!"));
+    assert!(p.app.tab().unwrap().concept);
+    assert_eq!(p.app.tab().unwrap().editor.text(), "Links 🏠 ! rechts");
+    let mut p = writer_paginaproef();
+    p.bericht(Msg::Zoeken(Z::Open(false)));
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    p.klik(punt);
+    p.bericht(Msg::Zoeken(Z::Sluit));
+    p.toets(Key::Character("!".into()), Modifiers::empty(), Some("!"));
+    assert!(!p.app.tab().unwrap().concept);
+    assert_eq!(p.app.tab().unwrap().editor.text(), "Links 🏠 !café rechts");
+}
+#[test]
+fn writer_pagina_opmaak_sneltoets_bewaart_cursor_en_onderbreekt_invoerundo() {
+    use text_editor::{Action as A, Edit as E};
+    use writer_direct::Bericht as B;
+    let mut p = writer_paginaproef();
+    let bron = p.bron();
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    p.klik(punt);
+    writer_snel(
+        &mut p,
+        [
+            B::Invoer(A::Edit(E::Insert('!'))),
+            B::OpmaakToets('u'),
+            B::Invoer(A::Edit(E::Insert('?'))),
+        ],
+    );
+    assert_eq!(p.app.tab().unwrap().editor.text(), "Links 🏠 !?café rechts");
+    let t = p.app.tab().unwrap();
+    assert_eq!(lint::tekenoffset(&t.editor, t.editor.cursor().position), 10);
+    assert!(t.opmaak_van_selectie().unwrap().onderstrepen);
+    p.bericht(Msg::Terug);
+    assert_eq!(p.app.tab().unwrap().editor.text(), "Links 🏠 !café rechts");
+    assert!(
+        p.app
+            .tab()
+            .unwrap()
+            .opmaak_van_selectie()
+            .unwrap()
+            .onderstrepen
+    );
+    p.bericht(Msg::Terug);
+    assert!(
+        !p.app
+            .tab()
+            .unwrap()
+            .opmaak_van_selectie()
+            .unwrap()
+            .onderstrepen
+    );
+    assert_eq!(p.app.tab().unwrap().editor.text(), "Links 🏠 !café rechts");
+    p.bericht(Msg::Terug);
+    assert!(
+        p.bron().as_slice() == bron.as_slice(),
+        "Derde undo moet de exacte oorspronkelijke bron herstellen"
+    );
+    p.toets(
+        iced::keyboard::Key::Character("u".into()),
+        iced::keyboard::Modifiers::COMMAND,
+        None,
+    );
+    assert!(
+        p.app
+            .tab()
+            .unwrap()
+            .opmaak_van_selectie()
+            .unwrap()
+            .onderstrepen
+    );
+    assert_eq!(
+        lint::tekenoffset(
+            &p.app.tab().unwrap().editor,
+            p.app.tab().unwrap().editor.cursor().position
+        ),
+        8
+    );
+}
+#[test]
+fn writer_pagina_kernweigering_bewaart_concept_en_wachtrij_tot_expliciet_verwerpen() {
+    use text_editor::{Action as A, Edit as E};
+    use writer_direct::Bericht as B;
+    let mut p = Proef::met_app(app_met_werkdraad(
+        Module::Writer,
+        include_bytes!("../../../office-core/tests/fixtures/writer-beveiligd.docx"),
+    ));
+    let origineel = p.bron();
+    let tekst = p.app.tab().unwrap().veld().unwrap().tekst.clone();
+    let punt = writer_punt(&mut p, &tekst, 0);
+    p.klik(punt);
+    let t = p.app.tab_mut().unwrap();
+    t.opgeslagen = Some(t.antwoord.as_ref().unwrap().hash.clone());
+    let n = t.gekozen;
+    // Simuleer een onjuiste frontendstatus: de onafhankelijke kern moet de
+    // bronbeveiliging alsnog handhaven en het plaatselijke concept behouden.
+    t.antwoord.as_mut().unwrap().beeld.velden[n].bewerkbaar = true;
+    let eerste = p
+        .app
+        .update(Msg::WriterDirect(1, B::Invoer(A::Edit(E::Insert('!')))));
+    let tweede = p
+        .app
+        .update(Msg::WriterDirect(1, B::Invoer(A::Edit(E::Insert('?')))));
+    p.taak(eerste);
+    p.taak(tweede);
+    assert!(
+        p.bron().as_slice() == origineel.as_slice(),
+        "Geweigerde invoer wijzigde de bron"
+    );
+    let t = p.app.tab().unwrap();
+    assert!(t.concept && t.gewijzigd());
+    assert_eq!(t.editor.text(), format!("!{tekst}"));
+    assert!(t.writer_direct.heeft_werk());
+    assert!(!t.bezig);
+    assert!(p.app.melding.contains("Niet toegepast"));
+    p.bericht(Msg::Opslaan(1, false));
+    assert!(!p.app.tab().unwrap().schrijft);
+    assert!(p.app.tab().unwrap().concept);
+    let kern =
+        iced::futures::executor::block_on(p.app.werker.clone().voer_uit(1, Opdracht::Deel(0)))
+            .unwrap();
+    assert!(
+        kern.bron.as_slice() == origineel.as_slice(),
+        "De kern heeft de bron toch gewijzigd"
+    );
+    p.bericht(Msg::Terug);
+    let t = p.app.tab().unwrap();
+    assert!(!t.concept && !t.gewijzigd() && !t.writer_direct.heeft_werk());
+    assert_eq!(t.editor.text(), tekst);
+    assert!(p.app.melding.contains("op jouw verzoek verworpen"));
+}
 impl Proef {
     fn nieuw() -> Self {
         lettertypen();
@@ -109,6 +603,12 @@ impl Proef {
         self.gebeurtenissen([event]);
     }
     fn gebeurtenissen(&mut self, events: impl IntoIterator<Item = iced::Event>) {
+        let zoek_escape = self.app.zoeken.is_some()
+            && !self.app.postvak_zichtbaar
+            && !self.app.bestand
+            && !self.app.instellingen
+            && self.app.exportblad.is_none()
+            && self.app.sluiten.is_none();
         let berichten = {
             let mut element = self.app.view();
             self.boom.diff(element.as_widget());
@@ -130,6 +630,44 @@ impl Proef {
                     &mut shell,
                     &iced::Rectangle::with_size(Size::new(1440., 900.)),
                 );
+                // Ook de toepassingsabonnementen verwerken de echte
+                // afhandelstatus van de widgetboom, zoals in het venster.
+                let gevangen = shell.is_event_captured();
+                if zoek_escape
+                    && let Some(m) = zoeken_ui::afgevangen_escape(
+                        event.clone(),
+                        if gevangen {
+                            iced::event::Status::Captured
+                        } else {
+                            iced::event::Status::Ignored
+                        },
+                        iced::window::Id::unique(),
+                    )
+                {
+                    berichten.push(m);
+                }
+                if !gevangen
+                    && let iced::Event::Keyboard(iced::keyboard::Event::KeyPressed {
+                        key,
+                        modifiers,
+                        ..
+                    }) = event
+                {
+                    if key == iced::keyboard::Key::Named(iced::keyboard::key::Named::Tab)
+                        && !modifiers.command()
+                        && !modifiers.alt()
+                    {
+                        berichten.push(Msg::Navigeer(if modifiers.shift() {
+                            openaec_ui::keyboard::Navigation::Previous
+                        } else {
+                            openaec_ui::keyboard::Navigation::Next
+                        }));
+                    }
+                    berichten.push(Msg::Toets(openaec_ui::keyboard::KeyPress {
+                        key,
+                        modifiers,
+                    }));
+                }
             }
             berichten
         };

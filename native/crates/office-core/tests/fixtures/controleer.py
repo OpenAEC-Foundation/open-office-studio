@@ -227,3 +227,16 @@ zoekgroot = Document(map/'writer-zoekvervang-groot.docx')
 assert len(zoekgroot.paragraphs) == 256
 assert [p.text for p in zoekgroot.paragraphs] == [f'Lokaal werk {i} café 🏠' for i in range(256)]
 print('Writer-zoeken: 256 gezamenlijke alineavervangingen onafhankelijk teruggelezen.')
+
+pagina = Document(map/'writer-pagina-ime.docx')
+p = next(p for p in pagina.paragraphs if p.text == 'Links 🏠 日本🏠 rechts')
+letters = [(c, r.bold is True, r.italic is True) for r in p.runs for c in r.text]
+assert all(vet and not cursief for _, vet, cursief in letters[:8])
+assert all(not vet and cursief for _, vet, cursief in letters[8:])
+assert len(pagina.sections) == len(zoekbron.sections) == 2
+assert pagina.sections[0].header.paragraphs[0].text == 'Vaste koptekst'
+assert pagina.sections[0].footer.paragraphs[0].text == 'Vaste voettekst'
+assert [[[c.text for c in r.cells] for r in t.rows] for t in pagina.tables] == [[[c.text for c in r.cells] for r in t.rows] for t in zoekbron.tables]
+with ZipFile(Path(__file__).parent/'writer-structuur.docx') as oud, ZipFile(map/'writer-pagina-ime.docx') as nieuw:
+    assert oud.read('office-test/blijft.xml') == nieuw.read('office-test/blijft.xml')
+print('Writer-pagina-invoer: Japanse IME-commit, astrale tekens, runopmaak, secties, tabellen, kop/voet en onbekend pakketdeel onafhankelijk teruggelezen.')

@@ -32,6 +32,13 @@ pub enum Opdracht {
         begin: usize,
         einde: usize,
     },
+    WriterInvoer {
+        deel: usize,
+        hash: String,
+        groep: u64,
+        reeks: office_core::document::TekstReeks,
+        positie: usize,
+    },
     Sluit,
 }
 type Resultaat = Result<Antwoord, String>;
@@ -99,6 +106,22 @@ impl Werker {
                                 // De interface accepteert het doel pas na haar versie-/focuscontrole.
                                 // Een oud navigatieantwoord mag het werkdraaddeel niet verplaatsen.
                                 return Ok(Antwoord{deel:pagina,writer_markering,beeld,bron:sessie.bron(),hash:sessie.bron_hash().into(),terug:sessie.kan_terug(),vooruit:sessie.kan_vooruit()});
+                            }
+                            Opdracht::WriterInvoer {deel:n,hash,groep,reeks,positie} => {
+                                if hash!=sessie.bron_hash() {return Err("Deze invoer hoort bij een verouderde documentversie".into());}
+                                if positie>reeks.tekst.chars().count() {return Err("De invoercursor valt buiten de nieuwe alinea".into());}
+                                let id=reeks.id.clone();
+                                let mut b=sessie.bewerk_tekstgroep(n,groep,reeks).map_err(|e|e.to_string())?;
+                                let mut pagina=n.min(b.onderdelen.len().saturating_sub(1));
+                                let zichtbaar=b.writer_frame.as_ref().is_some_and(|f| f.markering(&id,positie,positie).is_ok());
+                                if !zichtbaar {
+                                    match sessie.naar_tekstbereik(&id,sessie.bron_hash(),positie,positie) {
+                                        Ok((p,nieuw))=>{pagina=p;b=nieuw;},
+                                        Err(e)=>b.melding.push_str(&format!(" · Tekst toegepast; cursorplaatsing niet beschikbaar: {e}")),
+                                    }
+                                }
+                                b.voorkeursveld=Some(id);
+                                *deel=pagina;beeld=Some(b);
                             }
                             Opdracht::Terug(n) => {sessie.terug().map_err(|e| e.to_string())?;*deel=n;},
                             Opdracht::Vooruit(n) => {sessie.vooruit().map_err(|e| e.to_string())?;*deel=n;},

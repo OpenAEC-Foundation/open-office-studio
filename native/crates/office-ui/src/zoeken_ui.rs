@@ -331,6 +331,13 @@ pub fn gereed(app: &mut App, doel: Doel, resultaat: Result<Vec<Treffer>, String>
             z.treffers.clear();
         }
     }
+    // Een achtergrondzoekronde mag de actieve paginacursor niet overnemen.
+    if app
+        .tab()
+        .is_some_and(|t| t.writer_focus.load(std::sync::atomic::Ordering::Relaxed))
+    {
+        return Task::none();
+    }
     let keuze = app.zoeken.as_ref().map(|z| z.gekozen).unwrap_or(0);
     kies(app, keuze, false)
 }
@@ -363,8 +370,15 @@ pub fn bij_document(app: &mut App) -> Task<Msg> {
 pub fn update(app: &mut App, m: Bericht) -> Task<Msg> {
     match m {
         Bericht::Sluit => {
+            let pagina = app
+                .tab()
+                .is_some_and(|t| t.writer_focus.load(std::sync::atomic::Ordering::Relaxed));
             app.zoeken = None;
-            return Task::none();
+            return iced::widget::operation::focus(if pagina {
+                "writer-pagina-invoer"
+            } else {
+                "document-tekst-editor"
+            });
         }
         Bericht::Open(vervangen) => {
             let Some(t) = tab_gereed(app) else {

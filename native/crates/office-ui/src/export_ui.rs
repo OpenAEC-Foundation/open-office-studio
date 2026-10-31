@@ -86,7 +86,7 @@ impl Exportblad {
             .antwoord
             .as_ref()
             .ok_or("Wacht tot het document is geopend")?;
-        if t.bezig || t.schrijft || t.concept {
+        if t.bezig || t.schrijft || t.concept || t.writer_direct.heeft_werk() {
             return Err(
                 "Pas de huidige invoer eerst toe en wacht tot het document gereed is".into(),
             );

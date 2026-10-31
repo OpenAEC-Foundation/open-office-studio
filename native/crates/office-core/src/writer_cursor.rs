@@ -18,14 +18,118 @@ pub struct TekstPunt {
     /// Aantal scalaire Unicode-tekens vanaf het begin van de bronalinea.
     pub positie: usize,
 }
+#[derive(Debug)]
 struct Adres {
     id: String,
     van: i64,
     tot: i64,
 }
+#[derive(Debug)]
 pub(crate) struct AdresKaart {
     adressen: Vec<Adres>,
     ids: HashMap<String, usize>,
+}
+
+/// Een onveranderlijk interactiebeeld van precies de getekende pagina.
+/// Pointerbediening leest dit zichtbare frame synchroon; zij hoeft niet te
+/// wachten op een werkdraad die inmiddels een nieuw documentbeeld kan bouwen.
+#[derive(Debug, Clone)]
+pub struct InteractieFrame {
+    pub pagina: usize,
+    lijst: std::sync::Arc<DisplayList>,
+    adressen: std::sync::Arc<AdresKaart>,
+    teksten: HashMap<String, std::sync::Arc<str>>,
+}
+impl InteractieFrame {
+    pub(crate) fn nieuw(
+        lijst: DisplayList,
+        adressen: std::sync::Arc<AdresKaart>,
+        pagina: usize,
+    ) -> Self {
+        Self {
+            pagina,
+            lijst: std::sync::Arc::new(lijst),
+            adressen,
+            teksten: HashMap::new(),
+        }
+    }
+    pub(crate) fn bind_teksten(&mut self, velden: &[crate::document::Veld]) -> Resultaat<()> {
+        use docx_layout::display_list::Primitive;
+        let zichtbaar = self.lijst.pages[0]
+            .primitives
+            .iter()
+            .filter_map(|p| match p {
+                Primitive::Text(p) => p.attrs.para_id.as_deref(),
+                Primitive::GlyphRun(p) => p.attrs.para_id.as_deref(),
+                Primitive::Rect(p) => p.attrs.para_id.as_deref(),
+                _ => None,
+            })
+            .collect::<std::collections::HashSet<_>>();
+        let mut totaal = 0usize;
+        for v in velden
+            .iter()
+            .filter(|v| v.bewerkbaar && zichtbaar.contains(v.id.as_str()))
+        {
+            let Some(a) = self
+                .adressen
+                .ids
+                .get(&v.id)
+                .and_then(|&i| self.adressen.adressen.get(i))
+            else {
+                continue;
+            };
+            if a.tot - a.van != v.tekst.encode_utf16().count() as i64 {
+                continue;
+            }
+            totaal = totaal
+                .checked_add(v.tekst.len())
+                .ok_or_else(|| fout("Te veel tekst voor het interactiebeeld"))?;
+            if totaal > 16 * 1024 * 1024 {
+                return Err(fout("Het interactiebeeld overschrijdt de tekstlimiet"));
+            }
+            self.teksten
+                .insert(v.id.clone(), std::sync::Arc::from(v.tekst.as_str()));
+        }
+        Ok(())
+    }
+    pub fn tekst(&self, id: &str) -> Option<&str> {
+        self.teksten.get(id).map(|t| t.as_ref())
+    }
+    pub fn punt(&self, x: f64, y: f64) -> Resultaat<Option<TekstPunt>> {
+        if !x.is_finite() || !y.is_finite() {
+            return Err(fout("Geen eindige klikpositie"));
+        }
+        let p = &self.lijst.pages[0];
+        if x < 0.
+            || y < 0.
+            || x >= p.width.as_f64().unwrap_or(0.)
+            || y >= p.height.as_f64().unwrap_or(0.)
+        {
+            return Ok(None);
+        }
+        let Some((id, offset)) = self.adressen.punt(&self.lijst, 0, x, y)? else {
+            return Ok(None);
+        };
+        let Some(tekst) = self.tekst(&id) else {
+            return Ok(None);
+        };
+        let positie = utf16_naar_scalar(tekst, offset)?;
+        Ok(Some(TekstPunt { id, positie }))
+    }
+    pub fn markering(&self, id: &str, begin: usize, einde: usize) -> Resultaat<TekstMarkering> {
+        if begin > einde {
+            return Err(fout("Ongeldige tekstselectie"));
+        }
+        let tekst = self
+            .tekst(id)
+            .ok_or_else(|| fout("Geen bruikbare brontekst voor dit interactiepunt"))?;
+        let a = scalar_naar_utf16(tekst, begin)?;
+        let b = scalar_naar_utf16(tekst, einde)?;
+        let n = scalar_naar_utf16(tekst, tekst.chars().count())?;
+        let mut m = self.adressen.markering(&self.lijst, 0, id, a, b, n)?;
+        m.pagina = self.pagina;
+        Ok(m)
+    }
 }
 fn fout(tekst: &str) -> Fout {
     Fout::Document(tekst.into())

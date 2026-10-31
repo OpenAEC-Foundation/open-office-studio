@@ -92,6 +92,7 @@ pub struct Weergave {
     pub bewerkingsbeperking: Option<String>,
     pub writer_opmaak:
         std::sync::Arc<std::collections::HashMap<String, Vec<crate::writer_opmaak::OpmaakBereik>>>,
+    pub writer_frame: Option<std::sync::Arc<crate::writer_cursor::InteractieFrame>>,
 }
 /// Eén vervanging in Unicode-tekens, ten opzichte van de vorige stap.
 /// De verwachte tekst voorkomt dat een verouderd concept een ander bereik raakt.
@@ -222,7 +223,7 @@ impl Document {
     }
     pub fn bytes(&self) -> Resultaat<Vec<u8>> {
         match self {
-            Self::Writer(d) => d.save().map_err(fout),
+            Self::Writer(d) => Ok(d.layoutbron()?.as_ref().clone()),
             Self::Spreadsheet(d) => d.save().map_err(fout),
             Self::Presentation(d) => d.save().map_err(fout),
             Self::Notition(d) => {
@@ -369,6 +370,7 @@ impl Document {
             voorkeursveld: None,
             bewerkingsbeperking: None,
             writer_opmaak: Default::default(),
+            writer_frame: None,
         };
         match self {
             Self::Writer(d) => {
@@ -424,6 +426,20 @@ impl Document {
                     "{woorden} woorden · {} tabellen · {paginas} pagina’s · {overgeslagen} afbeeldingen overgeslagen",
                     d.tables().len()
                 );
+                if let Some(eigenaar) = eigenaar {
+                    let pagina = deel.min(paginas.saturating_sub(1));
+                    match crate::writer_beeld::interactie_frame(bron, eigenaar, pagina).and_then(
+                        |mut f| {
+                            f.bind_teksten(&beeld.velden)?;
+                            Ok(f)
+                        },
+                    ) {
+                        Ok(f) => beeld.writer_frame = Some(std::sync::Arc::new(f)),
+                        Err(e) => beeld
+                            .melding
+                            .push_str(&format!(" · Paginacursor niet beschikbaar: {e}")),
+                    }
+                }
             }
             Self::Spreadsheet(d) => {
                 beeld.module = Module::Spreadsheet;
@@ -546,6 +562,7 @@ pub struct Sessie {
     beelden: std::cell::RefCell<Vec<(usize, Weergave)>>,
     terug: Vec<std::sync::Arc<Vec<u8>>>,
     vooruit: Vec<std::sync::Arc<Vec<u8>>>,
+    tekstgroep: Option<(u64, String, String)>,
 }
 static VOLGENDE_LAYOUT: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(1);
 impl Drop for Sessie {
@@ -565,6 +582,7 @@ impl Sessie {
             bron: std::sync::Arc::new(bytes),
             terug: vec![],
             vooruit: vec![],
+            tekstgroep: None,
         })
     }
     pub fn nieuw(module: Module) -> Resultaat<Self> {
@@ -786,6 +804,46 @@ impl Sessie {
         deel: usize,
         bewerking: Bewerking,
     ) -> Resultaat<Weergave> {
+        self.bewerk_in(deel, bewerking, None)
+    }
+    /// Aansluitende invoerbatches binnen dezelfde alinea vormen één undo-stap.
+    /// Een gewone opdracht, fout, undo/redo of andere groep onderbreekt dit.
+    pub fn bewerk_tekstgroep(
+        &mut self,
+        deel: usize,
+        groep: u64,
+        reeks: TekstReeks,
+    ) -> Resultaat<Weergave> {
+        if self.module != Module::Writer {
+            return Err(fout("Een tekstgroep hoort bij Writer"));
+        }
+        let id = reeks.id.clone();
+        self.bewerk_in(
+            deel,
+            Bewerking::TekstReeks {
+                id: reeks.id,
+                bron: reeks.bron,
+                tekst: reeks.tekst,
+                stappen: reeks.stappen,
+            },
+            Some((groep, id)),
+        )
+    }
+    pub fn sluit_tekstgroep(&mut self) {
+        self.tekstgroep = None;
+    }
+    fn bewerk_in(
+        &mut self,
+        deel: usize,
+        bewerking: Bewerking,
+        groep: Option<(u64, String)>,
+    ) -> Resultaat<Weergave> {
+        let aansluitend = groep.as_ref().is_some_and(|(g, id)| {
+            self.tekstgroep.as_ref().is_some_and(|(oud, alinea, hash)| {
+                oud == g && alinea == id && hash == &self.bron_hash
+            })
+        });
+        self.tekstgroep = None;
         if matches!(bewerking, Bewerking::Pagina { .. }) {
             crate::writer_pagina::controleer_bron(&self.bron)?;
         }
@@ -803,7 +861,9 @@ impl Sessie {
         }));
         match resultaat {
             Ok(Ok((bytes, beeld))) => {
-                self.terug.push(self.bron.clone());
+                if !aansluitend {
+                    self.terug.push(self.bron.clone());
+                }
                 // Maximaal 32 volledige bronnen en 64 MB geschiedenis per document.
                 while self.terug.len() > 32
                     || self.terug.iter().map(|b| b.len()).sum::<usize>() > 64 * 1024 * 1024
@@ -813,6 +873,7 @@ impl Sessie {
                 self.vooruit.clear();
                 self.bron_hash = crate::opslag::hash(&bytes);
                 self.bron = std::sync::Arc::new(bytes);
+                self.tekstgroep = groep.map(|(g, id)| (g, id, self.bron_hash.clone()));
                 *self.beelden.borrow_mut() = vec![(deel, beeld.clone())];
                 Ok(beeld)
             }
@@ -828,6 +889,7 @@ impl Sessie {
         }
     }
     pub fn terug(&mut self) -> Resultaat<()> {
+        self.tekstgroep = None;
         if let Some(bytes) = self.terug.last() {
             let d = Document::open(self.module, bytes)?;
             self.vooruit.push(self.bron.clone());
@@ -839,6 +901,7 @@ impl Sessie {
         Ok(())
     }
     pub fn vooruit(&mut self) -> Resultaat<()> {
+        self.tekstgroep = None;
         if let Some(bytes) = self.vooruit.last() {
             let d = Document::open(self.module, bytes)?;
             self.terug.push(self.bron.clone());
