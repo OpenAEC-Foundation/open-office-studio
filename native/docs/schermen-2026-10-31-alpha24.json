@@ -1,0 +1,471 @@
+{
+  "versie": "2026.44.9-alpha.24",
+  "omvang": "Echte Iced-software-renderer en widgetgebeurtenissen in Rust-tests; eigen klembord en synthetische IME-Commit. Geen fysieke GUI, systeemklembord-, IME-, systeemdialoog- of schermlezerproef.",
+  "reguliere_tests": 272,
+  "runtime_tests": 6,
+  "testlog_sha256": "e41b6b466108a36345e6c05cd4f36ae43af8bc1391497c66094e3a42f5b71a8a",
+  "runtime_log_sha256": "b44733e4000166704569cb9fc21cd8f7cc5afa66ca211ce5aca6bdb4cd6604f5",
+  "laatste_ui_tests": 82,
+  "ui_log_sha256": "e41b6b466108a36345e6c05cd4f36ae43af8bc1391497c66094e3a42f5b71a8a",
+  "toelichting": "Alle 272 reguliere tests inclusief 82 GUI-tests geslaagd. Nieuw: actieve/onbekende blad- en werkmapbeveiliging wordt alleen-lezen geopend en door de documentkern afgedwongen, met bronexacte weigeringen, afwijkende relatiedoelen, ongebruikte brononderdelen, indexgrenzen en een streamende controle zonder tweede celboom. Ook een onjuist bewerkbaar frontendveld kan de kernbeperking niet omzeilen. De bestaande pagina-, klembord-, IME- en bewaartests blijven geslaagd. Geen volledige rijke pagina-editor.",
+  "beelden": [
+    {
+      "bestand": "bestand.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "f383ee72385a7c9b469236b9d8f1e69bc56e157bf27781bf0986c068ff32c3e5"
+    },
+    {
+      "bestand": "email-account-blueprint.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "c360c020af80f70b158a57ae43a679f3a83d0c448ee568fcd4e50de20e00cc83"
+    },
+    {
+      "bestand": "email-account-dark.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "fde9c6479715e73f1a3ea5c6043e21fb60c0971ad7fd0c64b58274f57f81365e"
+    },
+    {
+      "bestand": "email-account-high-contrast-dark.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "1c21de941b38aeea31447cb2188724a3e9765c708e22ad9f3244c7e6e3aab314"
+    },
+    {
+      "bestand": "email-account-high-contrast-light.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "de131f63d9f429a26454a467e416f7b49e0a544423e772fde44581f316c740cc"
+    },
+    {
+      "bestand": "email-account-light.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "987da998cdebfcdac7bb684c90c0256614df53f933222ddcb5142a196ea83ce5"
+    },
+    {
+      "bestand": "email-postvak-blueprint.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "71065072837ba3527eb2ad8b9649fc11711eae06d41a964e1e73b1f8d6e981cc"
+    },
+    {
+      "bestand": "email-postvak-dark.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "75bf6150c452d73bc4671fa6b32f873012a538775ac06bdb3b7e1271e0f96f3e"
+    },
+    {
+      "bestand": "email-postvak-high-contrast-dark.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "74bce8c61853ad779eae28644f87499ea364f1d84a2565bfba6bc4613cfb695d"
+    },
+    {
+      "bestand": "email-postvak-high-contrast-light.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "e1bd4e4e47fbe641708224acd4596d827621c84aec967f2fd59cd2ea3aa637dc"
+    },
+    {
+      "bestand": "email-postvak-light.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "c121cbc02e056b991407a27cfcf18808f5f9d3f9054df464ecfe6e94df5280cc"
+    },
+    {
+      "bestand": "email-sluiten-blueprint.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "d2470815601e66b7e563542d0cdf77fe43d1a1de6c3956f890c75428dc7ba042"
+    },
+    {
+      "bestand": "email-sluiten-dark.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "1bd6871e3f1f22b39eb495e40f1ca1b6aca4c1a8c811f53485afda05e66bcf77"
+    },
+    {
+      "bestand": "email-sluiten-high-contrast-dark.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "a2b48c6929d1a6034ef6efa8368ba78c1d243bab7d2bf3c29d853a696eb03b00"
+    },
+    {
+      "bestand": "email-sluiten-high-contrast-light.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "55a3c72b6dd17ae749d6de0503b45ca962742b117256e794f1df482376c7b098"
+    },
+    {
+      "bestand": "email-sluiten-light.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "0f11efe160807c215b9e766951ca7cd4702723af988239b1ee86a4353c16221d"
+    },
+    {
+      "bestand": "export-pdf.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "9a5e9dfc18b73dd8988cf50668641f0eb4a87bd87714035fbbd7021b36521509"
+    },
+    {
+      "bestand": "notition-canvas.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "30d118959036ee7ac779c50628beb245a29e76ee35393dfc8debba65f923aff3"
+    },
+    {
+      "bestand": "notition-markdown.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "2a7663b8a87d49a9f8d21f0c1566c6b3709889c9e661c1d4c9577ff901211dfd"
+    },
+    {
+      "bestand": "notition-native-referentie.png",
+      "breedte": 1058,
+      "hoogte": 892,
+      "sha256": "3f970dfda2d0932037569c4c7d7cc09d89113fb5ab95cbf55e89c2178663a8cd"
+    },
+    {
+      "bestand": "presentation-dark.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "66d8fb99d234107104a57c21a6243a5bd2d0ab0b35b4e4919d3b94ac78fcd1a2"
+    },
+    {
+      "bestand": "presentation-light.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "6998fb9911b61afc12521e624fb080fec274d477ec076ad45b6e97f85d52cdbb"
+    },
+    {
+      "bestand": "presentation-native-referentie.png",
+      "breedte": 1058,
+      "hoogte": 892,
+      "sha256": "e23ad3374a9ec9e6d8df6f9b402fb63fcca1e91a55287b397958d724f065b4bd"
+    },
+    {
+      "bestand": "spreadsheet-bereikselectie.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "d9573160409197881cf7aaed46e4ddeee443352fe850db9c54d578c4341ebfa1"
+    },
+    {
+      "bestand": "spreadsheet-beveiligd.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "d9ed6c1012a0ad831bd0761da05e04b0810d394fbfea75b17e3380fff8e62355"
+    },
+    {
+      "bestand": "spreadsheet-celbewerking.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "3c0adb54b17422dee3d593a4b3fa97a1bb38954a852c826f0a34c72d0ac20ae9"
+    },
+    {
+      "bestand": "spreadsheet-dark.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "b1bf19706aa7e5aeb8643ebacad0df509067cde3f655c7bddc861cbf50b6f030"
+    },
+    {
+      "bestand": "spreadsheet-koppen-scroll.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "06005c0998545e169c23b8dc0e28c261550faf31fd74bb582be3f3918bb20e42"
+    },
+    {
+      "bestand": "spreadsheet-koppen-zoom.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "542bde4830ec3606dc41c312c3213b10be7e8e8ba12fb65fa7defe91daa84e69"
+    },
+    {
+      "bestand": "spreadsheet-light.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "a2cd07970396da929a9b6a49fa4b31e8d5f845de1f766e299aed337d4121492e"
+    },
+    {
+      "bestand": "spreadsheet-native-referentie.png",
+      "breedte": 1058,
+      "hoogte": 892,
+      "sha256": "4830ccfc94465b407dcea7f610907e432b21f2fd94c76097b9236782913c0504"
+    },
+    {
+      "bestand": "start.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "c3bfea8714dc769faa3cc4eef7071fd47f0dda12bb07ddaf64a86278c5ecf070"
+    },
+    {
+      "bestand": "writer-beveiligd.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "9e270b7db4f48db9e9e5609d61603fb08c70cd33bbeff4e71a2f2bb7ce3ff3c2"
+    },
+    {
+      "bestand": "writer-dark.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "fe78a8be1de9f3bc974b01ea6d171131820339e9c5cf8d33965fb626c22eb1a9"
+    },
+    {
+      "bestand": "writer-indeling.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "9a207e1c6a63d0d5e66700e43ffdee800dbb6cd66cd8de53342f5e6db16edf8d"
+    },
+    {
+      "bestand": "writer-klembord-concept.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "9b9c1694d16c6beb0a00ce02476bae62ea3f29da4422a936ccb975dcab881635"
+    },
+    {
+      "bestand": "writer-light.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "7d821ecc9cd2cd72865a9aa69c45fc203e091bf4f105c6a8b94037d4e5a321c4"
+    },
+    {
+      "bestand": "writer-native-referentie.png",
+      "breedte": 1058,
+      "hoogte": 892,
+      "sha256": "2b98461a1b4f3b89ec23895662d19c506a7ae5fc153c37b280bea9d6545ca2d5"
+    },
+    {
+      "bestand": "writer-pagina-invoer.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "c7268b0b310af2e46e9ffa8bbabaed6452ec76f01efd2b40832750bf3bed4c23"
+    },
+    {
+      "bestand": "writer-pagina-navigatie.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "da8da6a203f595d077efb3f2178346c3aeec9bceb3da1705bfc9c0a127056a05"
+    },
+    {
+      "bestand": "writer-regelgrens.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "4b32a02927f9c0f6c3ba3ca6e5d9dd7e0b36d4926a3b7f4592fdb3209b8100b5"
+    },
+    {
+      "bestand": "writer-selectie-opmaak.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "c61176d79d4344309a46932d5f0cb8cfd993770062ed392154a612f226ed7e86"
+    },
+    {
+      "bestand": "writer-zoeken-markering.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "f38ae67da3ae74fd4043686dcbc6fdb65868fe962ce3a018bf98f85f34b7654a"
+    },
+    {
+      "bestand": "writer-zoeken-pagina.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "8e41f44071e7da901e96f38fc93a0e886b8475dc91020b18d7e47efb960c5ff0"
+    },
+    {
+      "bestand": "writer-zoeken.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "60ed9c7ddbb664618cf52d8d823158901e64f8f47a6390530e215a2c5fe3cba4"
+    }
+  ],
+  "aliassen": {
+    "writer.png": "writer-native-referentie.png",
+    "email-account.png": "email-account-light.png",
+    "spreadsheet.png": "spreadsheet-light.png",
+    "email-sluiten.png": "email-sluiten-light.png",
+    "presentation.png": "presentation-light.png",
+    "email-postvak.png": "email-postvak-light.png"
+  },
+  "bronbestanden": {
+    ".gitattributes": "5f7528cf7e115ea0aefc26b0e265fae5848a053ac39635e45d71ed8acc49594b",
+    ".github/workflows/native-rust.yml": "34e19f4f929f446cbf913db3eec2b5f4c761a31699447f6ad93b415498d971ea",
+    "docs/voorbeelden/Materiaaloverzicht.xlsx": "d2f628a6f4da99722c5261d1c8b7c695f745ca1bd6a8b61cb22152843f2cbd67",
+    "docs/voorbeelden/Notitieboek.json": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+    "docs/voorbeelden/Ontwerpnotitie.docx": "a1fe5935c05612446dbbfcfc1b84c729dc54bf26d559e162616d94eaa98656fa",
+    "docs/voorbeelden/Ontwerpvisie.pptx": "08e6720f7820dae375fe7b39f26bd66698fdc8e0b4edee88ae28e561ccb8fca4",
+    "docs/voorbeelden/README.md": "069528594ffa97d62433e9036304893162d043fc11962c0a38de1fec0905a8a5",
+    "native/Cargo.lock": "58df15fdf7e2289139d556a799643b640761f797be07707e6d5cb24b5f28eed6",
+    "native/Cargo.toml": "8816d2cabda272f0caaf1ee4cf00b24b589b9cc8dbd4c0998bb5f19ce8579fb4",
+    "native/crates/office-conversie/Cargo.toml": "3620ad9b03f52cf32f432bed1b36b096da3e1dc18a132495a0d00b69e980a356",
+    "native/crates/office-conversie/LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "native/crates/office-conversie/locales/de/desktop.json": "56beab2519ce90b2a1a3a4e8aedfb5d875baf26fe450689d96355c42a75ce092",
+    "native/crates/office-conversie/locales/en/desktop.json": "8f835524381bdb968d88fd47da9c6e315c1e16cbbc1d63060f4ac77ade46adec",
+    "native/crates/office-conversie/locales/es/desktop.json": "f5cc519412d40f5cc7a108964c24f1ecd89fa6d0e745a3411faaf35c5a3714fd",
+    "native/crates/office-conversie/locales/fr/desktop.json": "3723919a7552b1651471edfafefb574ddb673980dfbe339e6c947016b8c86fce",
+    "native/crates/office-conversie/locales/it/desktop.json": "5b7615027891818c2488af8704f47b261debee1e4f0ef75b3938806c2da31366",
+    "native/crates/office-conversie/locales/nl/desktop.json": "d40df89d7d1dc6060b5206c09a3eb04089afe5ee243ba9cdd5f1f79fb84a8f7b",
+    "native/crates/office-conversie/locales/pt-BR/desktop.json": "d452a6061f46d5d8fcc65e3e0ae45ede49b781e0ad578d73389da4f820be9434",
+    "native/crates/office-conversie/locales/zh-CN/desktop.json": "57128dabebba7e3e5f1f4f25e6f97aced6ba9f6bba8ee1913cbfe7efc2b74f13",
+    "native/crates/office-conversie/src/conversie.rs": "e80b91a3c8d76adfa56ddcbac9e5d91662d7da16a0f944380bc379e62b8d4a4f",
+    "native/crates/office-conversie/src/conversieprofiel.xcu": "118eee4917a14fb29e7a34329d5448233a2e6e7e4748afecf1e7a57444dfa1b7",
+    "native/crates/office-conversie/src/formaten.json": "1f28691cc3f4f304d335b8da5d5a91a58341635ed972dfdac57b7f821862f1fd",
+    "native/crates/office-conversie/src/lib.rs": "2dd4bb27d0729f0ca399d97075506763b4888ecd8bd9dff85aae11a86bf9f086",
+    "native/crates/office-conversie/src/taal.rs": "72a997090d95f5e80960a2ebfc18ba8fece8eac8a5f524b9da8d94184276d1c7",
+    "native/crates/office-conversie/tests/controleer.py": "52c3c8aceabe79989cb788db015c7f7acf24307abbcf1ed0753807d0c3947153",
+    "native/crates/office-conversie/tests/fixtures/grafiek.docx": "e7d73bcc9ce482159af211fc7ed92c077a754f53cff0e639bc3aef750993f798",
+    "native/crates/office-conversie/tests/templates/nieuw.docx": "10e1f0148383af3a06a9ec720fcd2d992722ff519b0182fd82d4b019ba75d93c",
+    "native/crates/office-conversie/tests/templates/nieuw.pptx": "ef220706f4ac866df87eb848f24a1250732fdecefe4bd34b579f83e1836c7ce9",
+    "native/crates/office-conversie/tests/templates/nieuw.xlsx": "0f3ba70a70215b2814959b2b70e651a63f4b497c66b7eedbf9fb2ead2f2ee544",
+    "native/crates/office-conversie/tests/voorbeelden/Materiaaloverzicht.xlsx": "d2f628a6f4da99722c5261d1c8b7c695f745ca1bd6a8b61cb22152843f2cbd67",
+    "native/crates/office-conversie/tests/voorbeelden/Ontwerpnotitie.docx": "a1fe5935c05612446dbbfcfc1b84c729dc54bf26d559e162616d94eaa98656fa",
+    "native/crates/office-conversie/tests/voorbeelden/Ontwerpvisie.pptx": "08e6720f7820dae375fe7b39f26bd66698fdc8e0b4edee88ae28e561ccb8fca4",
+    "native/crates/office-conversie/tests/voorbeelden/README.md": "97745746579f2c5a4a4c8a648e11ded1e420a64df9ba291bc6e1eb71de1bc249",
+    "native/crates/office-core/.local/controle-2026-10-31/native-alpha21-proef-uitvoer/docx-ontbrekend.png": "7d5542d8d70c99afd428772c5f08662ea518acb47573da9d57be280b7f7a4e7c",
+    "native/crates/office-core/.local/controle-2026-10-31/native-alpha21-proef-uitvoer/docx-symbool.png": "b6ee7736365338d6e57b4b0e8b1b517a82e42dba80951105a3b3121b61e5e322",
+    "native/crates/office-core/.local/controle-2026-10-31/native-alpha21-proef-uitvoer/pptx-ontbrekend.png": "092345afabca6b9c3921d5fdeadcba34f64f020181c8e8523af104b2bcbdcd8a",
+    "native/crates/office-core/.local/controle-2026-10-31/native-alpha21-proef-uitvoer/pptx-symbool.png": "b9fe5778658d60adf4b1f77f03306364f47fd730867dc7ff6425d844413a6f90",
+    "native/crates/office-core/.local/controle-2026-10-31/native-alpha21-proef-uitvoer/unicode-getekend.json": "455eec3d4ee75f89540312cacdd9a917ef2668c55e9c05f249f7e693ed4d8a0c",
+    "native/crates/office-core/.local/controle-2026-10-31/native-alpha21-proef-uitvoer/writer-lettergrootte.docx": "b80ec8486b53f4959afbc34d83f85f5b571b8e7a9d1a2e9378a660f090c5e152",
+    "native/crates/office-core/.local/controle-2026-10-31/native-alpha21-proef-uitvoer/writer-letterprecisie-0.docx": "4bf72e24a2637dbfcb116d67c7980c68de0527d56700657cad42652b00cd9655",
+    "native/crates/office-core/.local/controle-2026-10-31/native-alpha21-proef-uitvoer/writer-letterprecisie-1.docx": "b80ec8486b53f4959afbc34d83f85f5b571b8e7a9d1a2e9378a660f090c5e152",
+    "native/crates/office-core/.local/controle-2026-10-31/native-alpha21-proef-uitvoer/writer-letterprecisie-2.docx": "b80ec8486b53f4959afbc34d83f85f5b571b8e7a9d1a2e9378a660f090c5e152",
+    "native/crates/office-core/.local/controle-2026-10-31/native-alpha21-proef-uitvoer/writer-opmaak.docx": "9438982a554c020e330f0e5047eda6ceafdb195f24fc6cf8e9344f8b71b42901",
+    "native/crates/office-core/.local/controle-2026-10-31/native-alpha21-proef-uitvoer/writer-paginakaart.json": "393690297c50d824674d7402e88d082402966834d217aa477a041441780383da",
+    "native/crates/office-core/.local/controle-2026-10-31/native-alpha21-proef-uitvoer/writer-rijk.docx": "4164ca185fa08a67914da1a28c9f80f0ed6b83087b2d0c06ecac891b6f6d4a26",
+    "native/crates/office-core/.local/controle-2026-10-31/native-alpha21-proef-uitvoer/writer-stijlerfenis-bron.docx": "0187e693debfbd011da86537f4939cfc322fdea5802fc98c2d3598930b37127d",
+    "native/crates/office-core/.local/controle-2026-10-31/native-alpha21-proef-uitvoer/writer-stijlerfenis.docx": "6bfadf33440e5148da36368a83d1e54b1fc3f3d93ca19279fa611ca371d51628",
+    "native/crates/office-core/.local/controle-2026-10-31/native-alpha21-proef-uitvoer/writer.docx": "04c3bb8b8159cb0a809682c1363c3f0d80929d8915c97560a307bd353a54e21e",
+    "native/crates/office-core/Cargo.toml": "330e1c68907b55c20cee6f946d744c036c79c5b1cb44c94e3f41294a77ae7847",
+    "native/crates/office-core/examples/meet.rs": "7bf82b80e31b86c3ee0965d086cf135bc08a38a150b90d4789ba4c945251f30f",
+    "native/crates/office-core/src/bin/controleer-bestand.rs": "4070c1b1d028ff7ed587e6a39fcdb0574a3bed80c077e3b1662abbc83c6746ea",
+    "native/crates/office-core/src/document.rs": "46fac5e84443bca5c0b3a99651490be2b4329de1039acb4b9fa25f0bde8d768b",
+    "native/crates/office-core/src/ifcx-schema.json": "48b5e602ba3f58ea3a5289641ae9e0a69fb02f65553551e1e77c1975fb87cf13",
+    "native/crates/office-core/src/ifcx.rs": "a3747dbd9d80476ae2ed080914a89d01ded1448ff6229e4d7542fd9a692d1f74",
+    "native/crates/office-core/src/interactie.rs": "41cc5bdded02acbf6cc01f52d27e7705ddcb382514c2ddb86491349ee8df505b",
+    "native/crates/office-core/src/lettertype_data.rs": "8a42823e6e9e8f73efa97fdb580c05fb20ec6fac752bbbbcf0794c5bcd015021",
+    "native/crates/office-core/src/lettertypen.rs": "df1fbd3644022c5d99addafb36d994fa079cc749b6e876857bfa7ae7adfd4785",
+    "native/crates/office-core/src/lib.rs": "56320e86dc1462c809d3d0d172bd3dd38a28b02e873706c4711bd4ae2c638abc",
+    "native/crates/office-core/src/notities.rs": "2e8ffd3b9b9e4c4c6ec1d3c503df2ed8c6ecdea4f253a71cc1c87161bc318578",
+    "native/crates/office-core/src/opmaak.rs": "8c2f12b9868b7e8e3551f92aea7ade4004dde3df7ac957683469d55338c04e47",
+    "native/crates/office-core/src/opslag.rs": "a2e921b704014e77f42548383cbb56a1f2c010578a4f3e78ee1484af00aa089c",
+    "native/crates/office-core/src/presentatie.rs": "5fca5d17c3a1491d41c0c841af029416dec67c1f94f72537ccb0d084dced0692",
+    "native/crates/office-core/src/presentatie_tekst.rs": "7f86cadc5e2cecfabd3a98adddaae009bb6cddeb26641f6cc69d3dcc006a0d63",
+    "native/crates/office-core/src/rekenblad.rs": "8e38958da6ff63a3d9bbb6da73e3835e1c31584ddffc118cf289138cac0cf36c",
+    "native/crates/office-core/src/rekenblad_beeld.rs": "bd0601c066ac10cb753ad9fba8604294df2047e03002c37ff4aa006f6d9d9e44",
+    "native/crates/office-core/src/rekenblad_document.rs": "701f728bcdfdac089290c7398ee19eedd6c253fb09592349d7a68b948ada0147",
+    "native/crates/office-core/src/writer.rs": "1de8557446b8c6d736d60a6a9acda48ab66e352cda4ca03c06eb567e33fc2b71",
+    "native/crates/office-core/src/writer_beeld.rs": "b68fad9d2b0075dbbcbdb654ce2e0cccff7486dbc9970566ca2340923400fd32",
+    "native/crates/office-core/src/writer_cursor.rs": "385d1c85f67a8f74ecb78e13958a8e7461ec80cc367e59da1c747713f8e81671",
+    "native/crates/office-core/src/writer_document.rs": "55630b67323565017e10f9af8fffea2f886f3d849bdf31add2813761329ba5ac",
+    "native/crates/office-core/src/writer_navigatie.rs": "536d094913c2101fe990872adaa9bc600361782f00015b4f89c42a923e5f724a",
+    "native/crates/office-core/src/writer_opmaak.rs": "582e07f94455adcd94ea2312fac8702a49ea15b7d4e0595cfddbb5ad6224f831",
+    "native/crates/office-core/src/writer_pagina.rs": "ee4949a1cc70b308facf710b9195ec6ed6c0dccb858468887f7a31dedfbb390f",
+    "native/crates/office-core/src/writer_tekst.rs": "e38388434545c3f86ac7d7c760cd4de56c65241b199730317f32427fb911c436",
+    "native/crates/office-core/src/writer_zoeken.rs": "82b6516ccb9101af4b5c2a3df1df1fb91448ccd747cf73ce8b826c3c5e6b8f72",
+    "native/crates/office-core/tests/documenten.rs": "2bbebc1b9c77b7db21ebdb287bbbea466809da181251380c6a60b05c273100e2",
+    "native/crates/office-core/tests/fixtures/controleer.py": "feed91994de3e30212b591d852dcc97db76ef7cd2c06b363ef6d483cbe558e98",
+    "native/crates/office-core/tests/fixtures/maak-beveiligd.py": "02b8d6d43273f1c4afdca0afb416498e878d381f94cfdc3037cf20bb28a9134a",
+    "native/crates/office-core/tests/fixtures/maak-cachepaginas.py": "52645a33d502c9d34533ead968d35a424be05526cef1a3fe56514c4cece21ba0",
+    "native/crates/office-core/tests/fixtures/maak-kopvoet.py": "0a4f0221914dede4fa8410440bb0c10bc5f9e45c1fc4a08a6a81d56bbf040295",
+    "native/crates/office-core/tests/fixtures/maak-velden.py": "74e3d3f84c131992b9a30d037aef5d020ab627229104c90409256312f29dd68b",
+    "native/crates/office-core/tests/fixtures/maak-weergave.py": "2101749b17c2c1fa9d00b130847efb0c2cb587de557a61e2cab57ea236a381dc",
+    "native/crates/office-core/tests/fixtures/maak.py": "dd4bc1beef7f6221cd4d2b40d84f379779ddad8072ad3e0ec53f2b518e93c92b",
+    "native/crates/office-core/tests/fixtures/presentation-rijk.pptx": "0ec2048036a462af9c1b63e8d3bc04d3e4dd6940826e8280c0a6470a0bc1c8c7",
+    "native/crates/office-core/tests/fixtures/presentation.pptx": "9540364982146e16195043ec65eec1e71a5ef63b8f182c104ecabe5c4af865db",
+    "native/crates/office-core/tests/fixtures/spreadsheet-beveiligd.xlsx": "f8769b929ba66424b35f2b5be55038954a1b765602c4ea8b4ff34a87b6f4cf34",
+    "native/crates/office-core/tests/fixtures/spreadsheet.xlsx": "becac05001f4a7b5cae4c4141db9e004288cbe36760916ac84d55f23be25cd1d",
+    "native/crates/office-core/tests/fixtures/tabel.docx": "3e3e0cb206ca4e550f142cfb5ef977b28ddbe49f94f57b5347ea121acb299521",
+    "native/crates/office-core/tests/fixtures/writer-beveiligd.docx": "8126c0e15fee3023fecfabdc83c6f8e544ea2cec8c5ea5e52a46533344f3aef3",
+    "native/crates/office-core/tests/fixtures/writer-cachepaginas.docx": "ea9bb840b0642dcc61532a6d2e3e47dd029d06577f6f115142bc62db9fbe5d7c",
+    "native/crates/office-core/tests/fixtures/writer-diepe-velden.docx": "bf9a40317b4cd12775e1831292bdaa06996014f7ec9d09c53353ce1be51ac080",
+    "native/crates/office-core/tests/fixtures/writer-dubbele-ids.docx": "4c300e4d0016d854257a1db53de0a5897d1c7f2b68805308fcc2ce1503f2d049",
+    "native/crates/office-core/tests/fixtures/writer-grafiek.docx": "7f671d2aeef8e726d2b90f836d6154fcfd2b49c497998a509ac69ebe3dff3910",
+    "native/crates/office-core/tests/fixtures/writer-kopvoet.docx": "3ae01513c485e8223bfbb3fbef7e9ea8c2e4499bb1b18be0b9666efd470ccd2a",
+    "native/crates/office-core/tests/fixtures/writer-structuur.docx": "6d225b88fc59171d169407e49cf859eb20b264ff58487f84f5bc5f0ef29090e0",
+    "native/crates/office-core/tests/fixtures/writer-velden.docx": "0ecc0374f24ea57cd1405859987721c18e2f32ccdb7f3f3387331f99fd083772",
+    "native/crates/office-core/tests/fixtures/writer-voetnoot.docx": "1b27b8265bee20349276092183f2494411ccbf8876f2a25dc224f0069be2b5bd",
+    "native/crates/office-core/tests/fixtures/writer.docx": "f04ded00ec596c6f8428c9d2e86e82757b14d5bdf40426c9e0f30b7a93689e79",
+    "native/crates/office-core/tests/interactie.rs": "818ebacdf34b892e5b242b54b5a20216a9d5ec736d07e24dcad7e99259e495d3",
+    "native/crates/office-core/tests/lettertypen.rs": "bcb22fb3b93564717ded045b9b827f3c83194649b05d42d87ed67cca3ccd8b53",
+    "native/crates/office-core/tests/notities_presentatie.rs": "40efc40047a5dd4ab2369509eb8561a47859828fb6b39c67b6cf3236a062db42",
+    "native/crates/office-core/tests/raster_bronbeelden.rs": "cdce7919a130cce1306ca86ee2760d35d443c9150573d509851ad8e320836b8d",
+    "native/crates/office-core/tests/rekenblad_beveiliging.rs": "22482cd9918c189c671b82c94e2ed2b543307f2a0e418e48cd511912c1a61d04",
+    "native/crates/office-core/tests/rekenblad_letters.rs": "6756ab72950e69d30f4043773e8887210e5d784285a2b6ff67393281b253810a",
+    "native/crates/office-core/tests/rekenblad_selectie.rs": "1bb10da022d6cd8158e22fa4c9399929d726778d10d29a43b21b9e93bac711a2",
+    "native/crates/office-core/tests/writer_beveiliging.rs": "049e30757461e45d6d99295f024f071f762f322217f63ddd80e5ca5cf589bf38",
+    "native/crates/office-core/tests/writer_cursor.rs": "394aa391948f5a460c9980cae3deeb41774f424542681aeb1f0f906828e6d3f2",
+    "native/crates/office-core/tests/writer_interactie.rs": "4df1cfba9550c3e458b4573844bc90c3152d07d7d72477eb9b6c785a6600f5b9",
+    "native/crates/office-core/tests/writer_invoer.rs": "12c72a561cdd8c53fc81d3184055d71eb2115c07ab6c481874b81898a2f86ccd",
+    "native/crates/office-core/tests/writer_navigatie.rs": "e46413c9131d1e018d6d575a148e6730868d1a5eb282e3c6fc272f929c6914d7",
+    "native/crates/office-core/tests/writer_opmaak.rs": "0d0efed7151c1603215ae14b016974719f5e8c85e39e8b9d82ea3a51f1c94bd9",
+    "native/crates/office-core/tests/writer_pagina.rs": "072b2eeb64dd6d3ba8355a5c44deef26cd13923eb90833ae599a1f44a5f0d771",
+    "native/crates/office-core/tests/writer_regelnavigatie.rs": "476755461a2d11629f6a2d267309bc8b1fbe641d581e8ff21b6e7d9248a86505",
+    "native/crates/office-core/tests/writer_structuur.rs": "398b294a6d06bf542f13f756ab0515b68e1720e4fd9b5d5bf4a302c53e6ac72d",
+    "native/crates/office-core/tests/writer_velden.rs": "fcd24208efad4f4e2482b2679d2e756b702586df92a836e950e784cd8ebbf2ab",
+    "native/crates/office-core/tests/writer_weergave.rs": "f5e530a5f5063e51550b2a385ad7e3dcb3e0a1de73e877ac78481ba33ff50cc0",
+    "native/crates/office-core/tests/writer_zoeken.rs": "ae3884d562c8c0a6e1c30d599379fef5b7b64a401d46abe26ebc243835565db7",
+    "native/crates/office-mail/Cargo.toml": "519be82ec4c498c83d33b0d437f3ae0b56f83b7c519d7817685d5f8826611cbe",
+    "native/crates/office-mail/LICENSE-Apache-2.0": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "native/crates/office-mail/LICENSE-MIT": "2af12f6942621232804d98dbf5fd23fa37a62bb7e7567910a137751720b7d4c5",
+    "native/crates/office-mail/src/dienst.rs": "f2e7ece04b28bab5f28c1ad75d05e9f8ae66c0e4827296b19792cea388f6385b",
+    "native/crates/office-mail/src/email/accounts.rs": "0763369e68e1bebeb29166f49c621dfca29ab04d555f5d502411a56fab760f4d",
+    "native/crates/office-mail/src/email/autoconfig.rs": "1184099e5aaa9f373bb7090dae15d5fb1a7287b2a801401ca3e943ec8c571318",
+    "native/crates/office-mail/src/email/bestanden.rs": "7ccde4e1e2176ace9f75d979de40596141ce3b95058057ab4b511408cc30efbd",
+    "native/crates/office-mail/src/email/fout.rs": "4357cd3c6fa772d1dbe2e542293a4f8e083f1440d79d56aadabe0451175f3755",
+    "native/crates/office-mail/src/email/imap.rs": "1f887ad88e857cd8afe5589a17314759e072547918f9d305df02de810114f072",
+    "native/crates/office-mail/src/email/mime.rs": "ff5f3000801c61685ff711f5eaf5a3e056fdaf65daf5612ec7991e2a037053c0",
+    "native/crates/office-mail/src/email/mod.rs": "78d6c5ed203c3f423ff6b10eb2e991d604a00684227a2526d29a3505416abee9",
+    "native/crates/office-mail/src/email/nepserver.rs": "bdcb82c0ce2a64034402005f527e56f091d7fa0465f15925df30d546081588ed",
+    "native/crates/office-mail/src/email/oauth.rs": "f2d68ba39d540b07d89340c1c0f29d7fb839698455c722c4b05db33ddf1c99da",
+    "native/crates/office-mail/src/email/smtp.rs": "6848689653797044796ff4171bac2b4b734d742dde2bcca35b7e11e3e2a39bf1",
+    "native/crates/office-mail/src/email/zoeken.rs": "b9db4d0a672703d980a262edac23284467d12bdce9d2fcc0c0cbf286ad8c6c7a",
+    "native/crates/office-mail/src/lib.rs": "9796efe6e551291abb82f8ce156d54c620dc095a338f345b4a24a87223f08cb4",
+    "native/crates/office-ui/.local/controle-2026-10-31/native-alpha21-proef-schermen/writer-beveiligd.png": "909e91c34598cc132a306cca51f23f8dd6d3058711db5d88c835bd7e2f5a8cbb",
+    "native/crates/office-ui/.local/controle-2026-10-31/native-alpha21-proef-schermen/writer-indeling.png": "87560e090e570c4d082ee6295c71be7c3a407da0826eb7b1c1a9a854e0b91797",
+    "native/crates/office-ui/.local/controle-2026-10-31/native-alpha21-proef-schermen/writer-native-referentie.png": "c82b185bc9a1701912c5bffaa06fc803ebaacda928ce714fac987f77195221c8",
+    "native/crates/office-ui/.local/controle-2026-10-31/native-alpha21-proef-schermen/writer-pagina-invoer.png": "818e4891b65c74ca680dd517a2868734856e3a05870de6bf65b2d6cf29d61631",
+    "native/crates/office-ui/.local/controle-2026-10-31/native-alpha21-proef-schermen/writer-selectie-opmaak.png": "dc3def68016c4fe59fedf5049cf727a7ddc49eb1540978c0da008cf7e28f4059",
+    "native/crates/office-ui/.local/controle-2026-10-31/native-alpha21-proef-schermen/writer-zoeken.png": "240ec6f45d365084eebdfbe480cb02bd0f43a2b23bc227dad61d264bb1d991f1",
+    "native/crates/office-ui/.local/controle-2026-10-31/native-alpha21-proef-uitvoer/hertekenen-bestand-deel.png": "54a508f702054f6b56815549274edc5a57f521c77e0c3b143f2634087be2d54e",
+    "native/crates/office-ui/.local/controle-2026-10-31/native-alpha21-proef-uitvoer/hertekenen-bestand-vol.png": "54a508f702054f6b56815549274edc5a57f521c77e0c3b143f2634087be2d54e",
+    "native/crates/office-ui/.local/controle-2026-10-31/native-alpha21-proef-uitvoer/hertekenen-writer-deel.png": "9009620f02c525b7ab2a1f206f2a3d81280744162991497766c24a6a8f95d8e6",
+    "native/crates/office-ui/.local/controle-2026-10-31/native-alpha21-proef-uitvoer/hertekenen-writer-vol.png": "9009620f02c525b7ab2a1f206f2a3d81280744162991497766c24a6a8f95d8e6",
+    "native/crates/office-ui/.local/controle-2026-10-31/native-alpha21-proef-uitvoer/writer-conceptreeks.docx": "1a5daacbc4d9b84b0ca7f7fa181ca9529d167bc0747b8415e50d42ce64cb92ee",
+    "native/crates/office-ui/.local/controle-2026-10-31/native-alpha21-proef-uitvoer/writer-pagina-ime.docx": "e9b6055b212e3138ca87fc608fd0261b2897be56f6eb4f4af1918701af0d45ef",
+    "native/crates/office-ui/.local/controle-2026-10-31/native-alpha21-proef-uitvoer/writer-selectie-lint.docx": "73526407cfc5ec60af7ffc8759a1885ceea5da5243a5bee7a55edc37249dc91d",
+    "native/crates/office-ui/.local/controle-2026-10-31/native-alpha21-proef-uitvoer/writer-zoeken-ui.docx": "07e456eb25668f8372fd57a373b2e54844bf7ff988e7f60989d5186f02a09275",
+    "native/crates/office-ui/Cargo.toml": "7181e1afa4e0ae06440dfb615040eff9b64a20a87c6da2e37a8c851e6841dd10",
+    "native/crates/office-ui/assets/formaatgreep.svg": "d6d767100d116a8f5a959404d647df6a70d4a66a0312ce9d7b2f3840f2ff71d3",
+    "native/crates/office-ui/assets/sleepgreep.svg": "784d9799d31a521e2200ef40245e2e26c7ed705edb0f4ae8a14ac8cc243fa119",
+    "native/crates/office-ui/src/documentblad.rs": "e84d2a9a16f034dd800e2d1a453f609467a434928977a246433a8d3a9988bea0",
+    "native/crates/office-ui/src/export_ui.rs": "62cb61b8f01a8413c257767c0cbecd8d7ef4f6f975bbbbd31f66c63bdce9d6f6",
+    "native/crates/office-ui/src/klembord.rs": "a6bd44c5ff9af057287757cb89b4e8cf790f97554f4818b5d352ff003710a86d",
+    "native/crates/office-ui/src/lettertypen_ui.rs": "37f7fdaa7885809a4bc50fd7eabbb51fa19e6361f9d65499135e16b4189c49e9",
+    "native/crates/office-ui/src/lineaal.rs": "d5a0751ab8bf2a9ea428dff743447dbea4a2dd3de1d7985afe6f6de182adaa25",
+    "native/crates/office-ui/src/lint.rs": "6401b16def9aee505d7909acadb641c698bdd332032b92eca5d2bbd5b738a694",
+    "native/crates/office-ui/src/mail_ui.rs": "a4194843c3a6576f89e146974c33addccff45bb601e86eb5beb66fe02901bdfb",
+    "native/crates/office-ui/src/main.rs": "292008b262513b0ec2158c10ef2d0918bceb66fdfce4ed7aecffda1f63960510",
+    "native/crates/office-ui/src/notitie_ui.rs": "c300b9b4d49cd9463fc93bf075afce8d6bd1dbd136939ff2a225cfc1d8f9c0f4",
+    "native/crates/office-ui/src/pagina_ui.rs": "e579fccaf7cd6a9a4ead380564bccc3ee8c598cdb166917179bf8bf4ad5c5ae2",
+    "native/crates/office-ui/src/raster_koppen.rs": "d79f15489d9aa78d14b1185e7bdb0183476031d83b7c90bf520121bbcd53de4e",
+    "native/crates/office-ui/src/raster_ui.rs": "109c94ba237630939fcae96eeb821ede186634025f806cd49bc960997588242d",
+    "native/crates/office-ui/src/sleepvak.rs": "79aec13324a4876c8ce468c170eea3c8ec66df8642f9304a7f2e264e3d81f206",
+    "native/crates/office-ui/src/stijl.rs": "6dd960682e733d7c55baa65722002ff7f368a26ef726b121cd435f7795a48c8d",
+    "native/crates/office-ui/src/tests/raster_proeven.rs": "ff0560c1c0401e9c39f031a73cb5d1eee10e0066d8a027437432019b8a868651",
+    "native/crates/office-ui/src/tests/schaduw_proeven.rs": "76e1c370908a3c127227f0fa54098e99ca04114400a831cb5660456dda214bd5",
+    "native/crates/office-ui/src/tests.rs": "c5c5a128324788587c30edfeb45ecfbe31fa56a4978f368dc7f0349bde76dd23",
+    "native/crates/office-ui/src/werker.rs": "b66554cbc3a567a78314ad601054a6b95b1fdacd03277a5803d978c9326077a7",
+    "native/crates/office-ui/src/writer_direct.rs": "4793d4fe7e3a5c350ddf46b6ffaef428f648750a80e1677a35534273109b1c67",
+    "native/crates/office-ui/src/writer_invoer.rs": "c6bab6a217ed5722ec58c8ed19bc24a529e73ce2d4f2f924dcb3bc33c4351cb6",
+    "native/crates/office-ui/src/writer_paginablad.rs": "8eff018bf1f5b200462db547b27adaadb6ad237dae55d2bb3ba58b3b2d9cdab4",
+    "native/crates/office-ui/src/zoeken_ui.rs": "fe6b50549de0bb83c55eb4e01599873b1399d6f8fc14424a070cb93d1e98276a",
+    "native/scripts/controleer-bron.py": "572741caeec906e9c5d731d992acb64bf6000572c15d8b43804b90d8ca2381ea",
+    "native/vendor/iced-tiny-skia-bron.json": "d0fb3e42107734ed4f3836bb190fe6413080af4936af79d7fc9782f806d5a965",
+    "native/vendor/xlsx-raster-bron.json": "18bcea7becfceed5b48df9cfabb426a1814467a4379c96a190ca5a6288d72abf",
+    "public/templates/nieuw.docx": "10e1f0148383af3a06a9ec720fcd2d992722ff519b0182fd82d4b019ba75d93c",
+    "public/templates/nieuw.pptx": "ef220706f4ac866df87eb848f24a1250732fdecefe4bd34b579f83e1836c7ce9",
+    "public/templates/nieuw.xlsx": "0f3ba70a70215b2814959b2b70e651a63f4b497c66b7eedbf9fb2ead2f2ee544"
+  }
+}

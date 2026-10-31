@@ -149,7 +149,7 @@ pub enum Bewerking {
 
 pub enum Document {
     Writer(Box<crate::writer_document::WriterDocument>),
-    Spreadsheet(Box<xlsx::Workbook>),
+    Spreadsheet(Box<crate::rekenblad_document::RekenbladDocument>),
     Presentation(Box<pptx::Presentation>),
     Notition(serde_json::Value),
     Email(Vec<u8>),
@@ -169,8 +169,11 @@ impl Document {
                 )?))
             }
             Module::Spreadsheet => Self::Spreadsheet(Box::new(
-                xlsx::Workbook::open_recalculated(bytes, xlsx::CalculationOptions::default())
-                    .map_err(fout)?,
+                crate::rekenblad_document::RekenbladDocument::nieuw(
+                    xlsx::Workbook::open_recalculated(bytes, xlsx::CalculationOptions::default())
+                        .map_err(fout)?,
+                    bytes,
+                )?,
             )),
             Module::Presentation => {
                 let mut doc = pptx::Presentation::open(bytes).map_err(fout)?;
@@ -248,8 +251,13 @@ impl Document {
         }
     }
     pub fn bewerk(&mut self, deel: usize, bewerking: Bewerking) -> Resultaat<()> {
-        if let Self::Writer(d) = self {
-            d.controleer_bewerking()?;
+        match &*self {
+            Self::Writer(d) => d.controleer_bewerking()?,
+            Self::Spreadsheet(d) => {
+                d.controleer_bewerking()?;
+                d.controleer_deel(deel)?;
+            }
+            _ => {}
         }
         match (self, bewerking) {
             (Self::Writer(d), Bewerking::TekstReeksen(reeksen)) => {
@@ -442,6 +450,7 @@ impl Document {
                 }
             }
             Self::Spreadsheet(d) => {
+                d.controleer_deel(deel)?;
                 beeld.module = Module::Spreadsheet;
                 beeld.onderdelen = d.model().sheets.iter().map(|s| s.name.clone()).collect();
                 crate::rekenblad::toon(d, deel, venster, &mut beeld)?;
@@ -537,14 +546,17 @@ impl Document {
                 );
             }
         }
-        if let Self::Writer(d) = self {
-            beeld.bewerkingsbeperking = d.bewerkingsbeperking().map(str::to_owned);
-            if beeld.bewerkingsbeperking.is_some() {
-                for veld in &mut beeld.velden {
-                    veld.bewerkbaar = false;
-                }
-                beeld.melding.push_str(" · alleen lezen");
+        beeld.bewerkingsbeperking = match self {
+            Self::Writer(d) => d.bewerkingsbeperking(),
+            Self::Spreadsheet(d) => d.bewerkingsbeperking(),
+            _ => None,
+        }
+        .map(str::to_owned);
+        if beeld.bewerkingsbeperking.is_some() {
+            for veld in &mut beeld.velden {
+                veld.bewerkbaar = false;
             }
+            beeld.melding.push_str(" · alleen lezen");
         }
         Ok(beeld)
     }

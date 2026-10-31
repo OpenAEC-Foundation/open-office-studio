@@ -251,3 +251,13 @@ assert blad['D3'].value == '=B3*C3'
 assert blad['D4'].value == '=SUM(D2:D3)'
 assert selectie['Tweede blad']['A1'].value == 'Bewaar ook dit blad'
 print('Spreadsheet-bereikselectie: zes opgemaakte cellen, oorspronkelijke formules en tweede blad onafhankelijk teruggelezen.')
+
+beveiligd = map/'spreadsheet-beveiligd-rondgang.xlsx'
+assert beveiligd.read_bytes() == Path(__file__).with_name('spreadsheet-beveiligd.xlsx').read_bytes()
+wb = load_workbook(beveiligd, data_only=False)
+assert wb['Tweede blad'].protection.sheet
+assert not wb['Begroting'].protection.sheet
+assert wb['Begroting']['B2'].value == 3
+assert wb['Begroting']['D2'].value == '=B2*C2'
+assert wb['Tweede blad']['A1'].value == 'Bewaar ook dit blad'
+print('Spreadsheet-beveiliging: bron na GUI-weigeringen exact gelijk; beveiligd tweede blad, eerste blad, formules en waarden onafhankelijk teruggelezen.')

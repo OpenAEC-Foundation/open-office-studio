@@ -887,6 +887,89 @@ fn celbereik_samenvoeging_fout_en_bestandsvenster_laten_bron_en_focus_intact() {
     assert_eq!(*p.bron(), *bron);
 }
 
+#[test]
+fn bladbeveiliging_gui_toont_de_beperking_en_laat_alleen_selectie_en_navigatie_toe() {
+    use iced::keyboard::{Key, Modifiers, key::Named};
+    let bytes = include_bytes!("../../../office-core/tests/fixtures/spreadsheet-beveiligd.xlsx");
+    let mut p = Proef::met_app(app_met_werkdraad(Module::Spreadsheet, bytes));
+    let bron = p.bron();
+    assert!(
+        p.app
+            .tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .beeld
+            .bewerkingsbeperking
+            .is_some()
+    );
+    p.cel("B2", false);
+    p.named(Named::F2);
+    assert!(!p.app.tab().unwrap().raster.bewerken);
+    p.toets(Key::Character("7".into()), Modifiers::empty(), Some("7"));
+    assert!(!p.app.tab().unwrap().concept);
+    p.toets(Key::Named(Named::ArrowRight), Modifiers::SHIFT, None);
+    p.toets(Key::Named(Named::ArrowDown), Modifiers::SHIFT, None);
+    assert_eq!(p.app.tab().unwrap().adres, "B2:C3");
+    p.bericht(Msg::Opmaak(office_core::opmaak::Opmaak::Vet(true)));
+    p.bericht(Msg::Structuur(
+        office_core::rekenblad::Structuur::RijInvoegen,
+    ));
+    assert!(p.app.melding.contains("Alleen lezen"));
+    assert_eq!(*p.bron(), *bron);
+    assert!(!p.app.tab().unwrap().antwoord.as_ref().unwrap().terug);
+    assert!(
+        p.toegankelijkheid()
+            .nodes
+            .iter()
+            .any(|n| n.node.name.contains("Alleen lezen"))
+    );
+    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        std::fs::create_dir_all(&map).unwrap();
+        p.verbeeld()
+            .save_png(PathBuf::from(map).join("spreadsheet-beveiligd.png"))
+            .unwrap();
+    }
+    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
+        std::fs::create_dir_all(&map).unwrap();
+        std::fs::write(
+            PathBuf::from(map).join("spreadsheet-beveiligd-rondgang.xlsx"),
+            p.bron().as_slice(),
+        )
+        .unwrap();
+    }
+}
+#[test]
+fn bladbeveiliging_kern_weigert_ook_bij_een_onjuist_bewerkbaar_frontendveld() {
+    use iced::keyboard::key::Named;
+    let bytes = include_bytes!("../../../office-core/tests/fixtures/spreadsheet-beveiligd.xlsx");
+    let mut p = Proef::met_app(app_met_werkdraad(Module::Spreadsheet, bytes));
+    let bron = p.bron();
+    let beeld = &mut p.app.tab_mut().unwrap().antwoord.as_mut().unwrap().beeld;
+    beeld.bewerkingsbeperking = None;
+    for v in &mut beeld.velden {
+        v.bewerkbaar = true;
+    }
+    p.cel("B2", false);
+    p.named(Named::F2);
+    p.selecteer_alles();
+    p.plak("7");
+    p.named(Named::Enter);
+    assert!(p.app.melding.contains("Alleen lezen"));
+    assert_eq!(*p.bron(), *bron);
+    assert!(
+        p.app.tab().unwrap().concept,
+        "Een geweigerd concept mag niet verdwijnen"
+    );
+    assert_eq!(p.app.tab().unwrap().editor.text(), "7");
+    p.named(Named::Escape);
+    assert_eq!(p.app.tab().unwrap().editor.text(), "3");
+    assert!(!p.app.tab().unwrap().concept);
+    assert_eq!(*p.bron(), *bron);
+    assert!(!p.app.tab().unwrap().antwoord.as_ref().unwrap().terug);
+}
+
 impl Proef {
     fn nieuw() -> Self {
         lettertypen();

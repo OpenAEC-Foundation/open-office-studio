@@ -36,6 +36,9 @@ pub struct CelSelectie {
 /// Een rechthoekige selectie neemt elke aangesneden samenvoeging volledig mee.
 /// Ook ketens worden gesloten; een te groot resultaat wordt nooit afgekapt.
 pub fn selectie(d: &x::Workbook, deel: usize, anker: &str, doel: &str) -> Resultaat<CelSelectie> {
+    if deel >= d.sheet_count() {
+        return Err(fout("Dit werkblad bestaat niet"));
+    }
     let a = ankercel(d, deel, x::CellRef::parse_a1(anker).map_err(fout)?)?;
     let b = ankercel(d, deel, x::CellRef::parse_a1(doel).map_err(fout)?)?;
     let mut r = x::CellRange::new(
@@ -134,6 +137,9 @@ pub fn bereik(adres: &str) -> Resultaat<x::CellRange> {
     Ok(r)
 }
 pub fn ankercel(d: &x::Workbook, deel: usize, cel: x::CellRef) -> Resultaat<x::CellRef> {
+    if deel >= d.sheet_count() {
+        return Err(fout("Dit werkblad bestaat niet"));
+    }
     Ok(
         d.merged_ranges(x::SheetId(deel as u32), x::CellRange::new(cel, cel))
             .map_err(fout)?

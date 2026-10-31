@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.23**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.24**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -37,7 +37,7 @@ valt buiten de standaardtestmatrix.
 |---|---|---|
 | Venster | OpenAEC-ribbon, documenttabbladen, vijf thema’s, sneltoetsen, Bestand, openen/opslaan/opslaan als, sluitvragen | Herstelkopieën, recente bestanden, afgesplitste vensters, updater, vertalingen |
 | Writer | Native paginering, klikbare alinea’s, linialen, zoom, tekstbereikopmaak en uitlijning, splitsen bij de editorcursor en samenvoegen van aangrenzende alinea’s, woorden inclusief tabellen, Markdown-export, papierformaat/afdrukstand/marge- en kolomvoorkeuzes per sectie, zichtbare kop- en voetteksten (eerste/even/oneven), opmaakstatus uit dezelfde engine voor stijlen en Unicode-selecties, Ctrl/Cmd+B/I/U, letterlijk zoeken/vervangen en navigatie/markering op de echte trefferpagina, directe pagina-invoer en selectie binnen ondersteunde alinea’s met invoerwachtrij, gegroepeerde undo en brongebonden klikpunten, omhoog/omlaag en Home/End via echte documentregels en paginaovergangen | Volledige rijke paginacursor, invoegopmaak en selecties over alinea’s, kop/voet bewerken, aangepaste pagina-instelling en volledige alineabediening, velden/links/revisies bewerken, volledige ribbon, tabellen invoegen, spelling en afdrukken |
-| Spreadsheet | Raster met vaste rij-/kolomkoppen, directe celbewerking via dubbelklik/F2/typen, Enter/Tab/Escape, enkele-celnavigatie met pijltjestoetsen en werkvensterverplaatsing, rechthoekige bereikselectie met slepen/Shift en vaste ankerpositie, formulebalk, bereikopmaak, rijen/kolommen invoegen/verwijderen, samenvoegen/splitsen, herberekenen en bladen wisselen | Doorlopend virtueel raster, automatisch scrollen bij slepen, volledige rij-/kolomselectie, zoeken, sorteren/filteren, klembordbereiken, CSV-import en grafieken |
+| Spreadsheet | Raster met vaste rij-/kolomkoppen, directe celbewerking via dubbelklik/F2/typen, Enter/Tab/Escape, enkele-celnavigatie met pijltjestoetsen en werkvensterverplaatsing, rechthoekige bereikselectie met slepen/Shift en vaste ankerpositie, formulebalk, bereikopmaak, rijen/kolommen invoegen/verwijderen, samenvoegen/splitsen, herberekenen en bladen wisselen, conservatieve alleen-lezencontrole op blad-/werkmapbeveiliging | Doorlopend virtueel raster, automatisch scrollen bij slepen, volledige rij-/kolomselectie, zoeken, sorteren/filteren, klembordbereiken, CSV-import en grafieken |
 | Presentation | Native diaweergave, niet-geroteerde tekstvakken aanklikken, tekstbereikopmaak, dia’s toevoegen/verwijderen, tekstvakken invoegen, sprekersnotities bewerken | Directe cursor en vormbediening, geroteerde/gegroepeerde objecten, volledige ribbon en presentatiemodus |
 | Notition | Versies 1–3 openen, boeken/secties/pagina’s toevoegen, vrij canvas met tekstvakken slepen/vergroten, Markdown-preview, bloktekst en vet/cursief, prullenbak herstellen; onbekende bronvelden behouden | Automatische lokale opslag/herstel, zoeken, boeken/secties hernoemen/verplaatsen, volledige blok- en taakbediening en import/export |
 | Email | Losse Rust-mailkern, native accountformulier, IMAP-mappen/berichtlijst, zoeken en tekstlezer; volledige MIME-bron met bijlagen openen als IFCX-dossier | OAuth en automatisch serverzoeken in de GUI, opstellen/verzenden, concepten, antwoorden, berichtacties, bijlagen opslaan en HTML-weergave |
@@ -122,7 +122,9 @@ Navigeren verandert geen bestandsbytes en maakt geen undo-stap.
 Een onvolledige formule wordt vóór wijziging geweigerd en blijft als concept
 in beeld. Een geldige formule met een rekenfout blijft toegestaan. Een cel met
 tekstopmaak of invoer met een voorafgaande apostrof blijft letterlijke tekst.
-Bereikselectie gebruikt muisslepen, Shift+klik en Shift+pijlen. Het oorspronkelijke anker blijft bij uitbreiden en verkleinen behouden; aangesneden samenvoegingen worden volledig meegenomen. Relatieve navigatietoetsen blijven tijdens een rasterwissel in volgorde bewaard. Een selectie of pure navigatie verandert geen bronbytes en maakt geen undo-stap. Bestaande bereikopmaak geldt voor het hele geselecteerde gebied. Een selectie boven 10.000 cellen wordt expliciet geweigerd. Bereikplakken, automatisch scrollen tijdens slepen, volledige rij-/kolomselectie en volledige bescherming blijven open.
+Bereikselectie gebruikt muisslepen, Shift+klik en Shift+pijlen. Het oorspronkelijke anker blijft bij uitbreiden en verkleinen behouden; aangesneden samenvoegingen worden volledig meegenomen. Relatieve navigatietoetsen blijven tijdens een rasterwissel in volgorde bewaard. Een selectie of pure navigatie verandert geen bronbytes en maakt geen undo-stap. Bestaande bereikopmaak geldt voor het hele geselecteerde gebied. Een selectie boven 10.000 cellen wordt expliciet geweigerd. Bereikplakken, automatisch scrollen tijdens slepen, volledige rij-/kolomselectie en volledige bescherming blijven open. Actieve of onbekende blad-/werkmapbeveiliging opent voorlopig de gehele werkmap alleen-lezen; ook een verkeerde frontendstatus kan de kerncontrole niet omzeilen. Wachtwoorden, opheffen en bewerkbare uitzonderingen blijven open.
+
+![Spreadsheet met actieve beveiliging van een ander werkblad](docs/screenshots/spreadsheet-beveiligd.png)
 
 ![Native rechthoekige bereikselectie](docs/screenshots/spreadsheet-bereikselectie.png)
 
@@ -277,9 +279,9 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
-Het [controlerapport voor alpha 23](docs/controle-2026-10-31-alpha23.md) beschrijft **265 reguliere Rust-tests**, inclusief **80 GUI-tests**, zes aparte runtimeproeven en zeven Python-tests. Rustfmt, Clippy met waarschuwingen als fouten en bronhashcontroles slagen. Bestandsuitvoer en conversies zijn onafhankelijk teruggelezen; **44 native schermen** zijn vastgelegd. Drie nieuwe kernproeven en vier GUI-proeven controleren bereikselectie, samenvoegingen, ankerpositie, navigatie tijdens rasterwissels, opmaak van zes cellen en bronexacte undo.
+Het [controlerapport voor alpha 24](docs/controle-2026-10-31-alpha24.md) beschrijft **272 reguliere Rust-tests**, inclusief **82 GUI-tests**, zes aparte runtimeproeven en zeven Python-tests. Rustfmt, Clippy met waarschuwingen als fouten en bronhashcontroles slagen. Bestandsuitvoer en conversies zijn onafhankelijk teruggelezen; **45 native schermen** zijn vastgelegd. Het bronmanifest legt nu ook alle fixtures, templates en voorbeeldbestanden vast: **178 bestanden**. De nieuwe proeven controleren blad-/werkmapbeveiliging, bronexacte weigeringen, afwijkende relatiedoelen, ongebruikte delen, indexgrenzen, streamend lezen en een onjuist bewerkbaar frontendveld.
 
-De alpha-23-releasebuild en platformronde moeten nog worden uitgevoerd. De alpha-22-ronde wordt afzonderlijk vastgelegd. De [alpha-21-platformronde](docs/platformen-2026-10-31-alpha21.json) slaagt op alle vijf taken, met 1039 bronbestanden per pakket, 82 volledige beeldparen zonder tolerantie en [21 paginabezoeken](docs/paginametingen-2026-10-31-alpha21.json). De [lokale releasebouw](docs/bouw-2026-10-31-alpha21-lokaal.json) slaagt in 38m02s; beide programma’s zijn met hun versies, bronmanifest en hashes vastgezet.
+De alpha-24-releasebuild en platformronde moeten nog worden uitgevoerd. De [lokale alpha-23-releasebouw](docs/bouw-2026-10-31-alpha23-lokaal.json) slaagt in 33m15s; beide programma’s zijn met versies en hashes vastgezet. De [echte Spreadsheet-vensterproef](docs/vensterproef-2026-10-31-alpha23-spreadsheet/LEESMIJ.md) heeft negen geslaagde functionele stappen, maar is **visueel afgekeurd**: een correct opgeslagen huisteken ontbreekt in het raster. De alpha-23-platformronde wordt afzonderlijk vastgelegd. De [alpha-22-platformronde](docs/platformen-2026-10-31-alpha22.json) slaagt op alle vijf taken met 1074 bronbestanden per pakket, 86 volledige beeldparen zonder tolerantie en [21 paginabezoeken](docs/paginametingen-2026-10-31-alpha22.json). De [lokale releasebouw](docs/bouw-2026-10-31-alpha22-lokaal.json) slaagt in 34m15s en de [echte Linux-vensterproef](docs/vensterproef-2026-10-31-alpha22-release/LEESMIJ.md) op achttien gerichte stappen. Beide programma’s zijn met versies en hashes vastgezet. De [alpha-21-platformronde](docs/platformen-2026-10-31-alpha21.json) slaagt op alle vijf taken, met 1039 bronbestanden per pakket, 82 volledige beeldparen zonder tolerantie en [21 paginabezoeken](docs/paginametingen-2026-10-31-alpha21.json). De [lokale releasebouw](docs/bouw-2026-10-31-alpha21-lokaal.json) slaagt in 38m02s; beide programma’s zijn met hun versies, bronmanifest en hashes vastgezet.
 
 De [echte alpha-21-Linux-releasevensterproef](docs/vensterproef-2026-10-31-alpha21-release/LEESMIJ.md) slaagt op elf gerichte stappen met directe paginatoetsen, systeemklembord, Unicode, onmiddellijk bewaren, opmaakbehoud, bronexacte undo, knippen/plakken, zoekfocus na Escape, Bestand en schoon sluiten. De eerste afgekeurde proefopzet blijft toegelicht bewaard. Deze proef gebruikt een eigen Xvfb, D-Bus en XDG-mappen. Geen alpha-23-venstergoedkeuring, fysieke hardware, Windows/macOS-bediening, echte IME-compositie, systeemdialogen of schermlezers.
 
@@ -400,15 +402,15 @@ Een afzonderlijke Chromium-testbrowser heeft inmiddels een oorspronkelijke
 navigatie gepauzeerd om de knipperfase vast te leggen; meldingen zijn via hun
 sluitknoppen gesloten. De opname is niet geschaald, uitgelijnd of nabewerkt.
 Twee opeenvolgende referentieopnamen zijn pixelgelijk. De
-[alpha-23-vergelijking](docs/pixelcontrole-alpha23/writer/rapport.json)
-met de native Writer meet **108.316 afwijkende pixels van 943.736**.
+[alpha-24-vergelijking](docs/pixelcontrole-alpha24/writer/rapport.json)
+met de native Writer meet **108.312 afwijkende pixels van 943.736**.
 Deze ene vastgelegde toestand bewijst dus expliciet dat de UI nog niet gelijk is.
 De [herkomst](docs/referentie-2026-W44.8/writer.json) vermeldt bron-, bundel- en
 beeldhashes, browser, viewport, thema en taal. Ook voor
 [Spreadsheet](docs/referentie-2026-W44.8/spreadsheet.png),
 [Presentation](docs/referentie-2026-W44.8/presentation.png) en
 [Notition](docs/referentie-2026-W44.8/notition.png) zijn nu vaste PNG-referenties
-vastgelegd. De [vier alpha-23-vergelijkingen](docs/pixelcontrole-alpha23/rapport.json)
+vastgelegd. De [vier alpha-24-vergelijkingen](docs/pixelcontrole-alpha24/rapport.json)
 falen; indeling, panelen en overige schermtoestanden blijven over te zetten.
 De browser- en nativevenstertoestanden zijn vastgelegd. Een vergelijking in
 dezelfde desktopvenstertoestand staat nog open.
@@ -440,4 +442,4 @@ python3 native/scripts/meet-paginas.py \
 Op Windows heeft de controleur de extensie `.exe`. Dit is een paginaproef,
 geen fysieke GUI-, volledige inhouds- of pariteitscontrole.
 
-De [controle van alpha 23](docs/controle-2026-10-31-alpha23.md) legt de huidige lokale tests en nog open acceptatie vast. Historische platform- en vensterproeven blijven aan hun eigen broncommit en programmaversie gekoppeld.
+De [controle van alpha 24](docs/controle-2026-10-31-alpha24.md) legt de huidige lokale tests en nog open acceptatie vast. Historische platform- en vensterproeven blijven aan hun eigen broncommit en programmaversie gekoppeld.
