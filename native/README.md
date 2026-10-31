@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.19**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.20**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -36,7 +36,7 @@ valt buiten de standaardtestmatrix.
 | Onderdeel | Native implementatie | Nog over te zetten |
 |---|---|---|
 | Venster | OpenAEC-ribbon, documenttabbladen, vijf thema’s, sneltoetsen, Bestand, openen/opslaan/opslaan als, sluitvragen | Herstelkopieën, recente bestanden, afgesplitste vensters, updater, vertalingen |
-| Writer | Native paginering, klikbare alinea’s, linialen, zoom, tekstbereikopmaak en uitlijning, splitsen bij de editorcursor en samenvoegen van aangrenzende alinea’s, woorden inclusief tabellen, Markdown-export, papierformaat/afdrukstand/marge- en kolomvoorkeuzes per sectie, zichtbare kop- en voetteksten (eerste/even/oneven), opmaakstatus uit dezelfde engine voor stijlen en Unicode-selecties, Ctrl/Cmd+B/I/U, letterlijk zoeken/vervangen en navigatie naar de echte trefferpagina | Directe rich-text-cursor op de pagina, kop/voet bewerken, aangepaste pagina-instelling en volledige alineabediening, velden/links/revisies bewerken, volledige ribbon, tabellen invoegen, spelling en afdrukken |
+| Writer | Native paginering, klikbare alinea’s, linialen, zoom, tekstbereikopmaak en uitlijning, splitsen bij de editorcursor en samenvoegen van aangrenzende alinea’s, woorden inclusief tabellen, Markdown-export, papierformaat/afdrukstand/marge- en kolomvoorkeuzes per sectie, zichtbare kop- en voetteksten (eerste/even/oneven), opmaakstatus uit dezelfde engine voor stijlen en Unicode-selecties, Ctrl/Cmd+B/I/U, letterlijk zoeken/vervangen en navigatie/markering op de echte trefferpagina | Directe rich-text-cursor op de pagina, kop/voet bewerken, aangepaste pagina-instelling en volledige alineabediening, velden/links/revisies bewerken, volledige ribbon, tabellen invoegen, spelling en afdrukken |
 | Spreadsheet | Raster met vaste rij-/kolomkoppen, directe celbewerking via dubbelklik/F2/typen, Enter/Tab/Escape, enkele-celnavigatie met pijltjestoetsen en werkvensterverplaatsing, formulebalk, bereikopmaak, rijen/kolommen invoegen/verwijderen, samenvoegen/splitsen, herberekenen en bladen wisselen | Doorlopend virtueel raster, bereikselecties en sleepbediening, zoeken, sorteren/filteren, klembordbereiken, CSV-import en grafieken |
 | Presentation | Native diaweergave, niet-geroteerde tekstvakken aanklikken, tekstbereikopmaak, dia’s toevoegen/verwijderen, tekstvakken invoegen, sprekersnotities bewerken | Directe cursor en vormbediening, geroteerde/gegroepeerde objecten, volledige ribbon en presentatiemodus |
 | Notition | Versies 1–3 openen, boeken/secties/pagina’s toevoegen, vrij canvas met tekstvakken slepen/vergroten, Markdown-preview, bloktekst en vet/cursief, prullenbak herstellen; onbekende bronvelden behouden | Automatische lokale opslag/herstel, zoeken, boeken/secties hernoemen/verplaatsen, volledige blok- en taakbediening en import/export |
@@ -180,8 +180,11 @@ zonder de teksteditor te blokkeren; per paneel is hoogstens één navigatie
 actief en blijft alleen het laatste wachtende doel behouden. Nieuw typen,
 selecteren, scrollen, een ander venster of een andere bronversie maakt een
 vertraagd navigatieantwoord ongeldig. Undo en redo gebruiken daarna de echt
-getoonde pagina. De pagina springt voorlopig naar de bovenkant; exacte
-treffermarkering en plaatsing op de gevonden regel ontbreken nog. Een nieuwe
+getoonde pagina. De gevonden tekst krijgt nu een markering uit dezelfde
+gevormde layout als de pagina. Zij schaalt met het document mee en vervalt
+bij gewijzigde invoer, selectie of bronversie. Een onbetrouwbare of te grote
+markering wordt expliciet geweigerd. De pagina springt voorlopig naar de
+bovenkant; scrollen naar de gevonden regel ontbreekt nog. Een nieuwe
 query, een andere bronversie of een gesloten paneel mag geen oud resultaat
 overnemen. Per paneel loopt hoogstens één zoektaak; nieuwe invoer vervangt het
 wachtende verzoek.
@@ -201,10 +204,11 @@ Vorige/Volgende blijft de volledige resultatenlijst doorlopen.
 
 Dit is nog geen volledige zoekpariteit: kop-/voetteksten, noten, tekstvakken,
 zoeken over alineagrenzen, reguliere expressies, jokertekens en opmaakfilters
-zijn niet aangesloten. Op de documentpagina ontbreken nog een rijke cursor
-en markering van de exacte gevonden tekst.
+zijn niet aangesloten. Op de documentpagina ontbreekt nog een rijke cursor.
+De nieuwe brongebonden tekstpunt-API is getest, maar nog niet als volledige
+directe pagina-invoer aangesloten.
 
-![Zoeken en vervangen in native Writer](docs/screenshots/writer-zoeken.png)
+![Gevormde zoekmarkering in native Writer](docs/screenshots/writer-zoeken-markering.png)
 
 ![Een zoektreffer op de zesde pagina](docs/screenshots/writer-zoeken-pagina.png)
 
@@ -274,25 +278,31 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
-Het [controlerapport voor alpha 19](docs/controle-2026-10-31-alpha19.md) beschrijft
-227 reguliere Rust-tests, inclusief 61 GUI-tests, zes aparte runtimeproeven en
+Het [controlerapport voor alpha 20](docs/controle-2026-10-31-alpha20.md) beschrijft
+235 reguliere Rust-tests, inclusief 62 GUI-tests, zes aparte runtimeproeven en
 zeven Python-tests. De bestandsuitvoer en conversies zijn onafhankelijk
-teruggelezen; 39 native schermen zijn vastgelegd. Gerichte proeven vergelijken
-ook gedeeltelijke hertekeningen met verse volledige beelden. De alpha-19-
-releasebuild en platformronde zijn nog niet afgerond.
+teruggelezen; 40 native schermen zijn vastgelegd. De nieuwe markeringen zijn
+zichtbaar gecontroleerd op drie zoomstanden. Een broncache tot 16 MiB vermijdt
+herhaald serialiseren voor layoutaanvragen en wordt bij mutabele modeltoegang
+gewist. Dit is geen gemeten snelheidswinst voor alle documenten.
 
-De [afgeronde alpha-18-platformronde](docs/platformen-2026-10-31-alpha18.json)
-heeft vijf groene CI-jobs, 911 bytegelijke bronbestanden per platform, 76
-exacte native beeldparen en zeven exacte paginabezoeken op elk platform.
-De eerste ronde faalde alleen op een verouderd verwacht schermaantal; de
-herhaalde ronde gebruikt dezelfde native implementatie. Dit bewijst geen
-gelijkheid met de bestaande interface. Eerdere verslagen blijven historisch.
+De alpha-20-releasebuild en platformronde zijn nog niet afgerond. De
+[alpha-19-platformronde](docs/platformen-2026-10-31-alpha19-afgekeurd.json)
+heeft drie geslaagde builds en een geslaagde runtimecontrole. De laatste
+vergelijking faalt op 17 pixels van de knipperende zoekcursor. Een
+[lokale vervolgmeting van alle 78 volledige paren](docs/platformbeelden-2026-10-31-alpha19-vervolg.json)
+bevestigt dat de overige 77 paren exact zijn; alle 944 bronbestanden per
+platform en 21 paginabezoeken zijn gecontroleerd. Alpha 20 geeft de
+widgetproef een vaste klok voor de eerste cursorfase. Er worden geen pixels
+gemaskeerd, verwijderd of met tolerantie geaccepteerd.
 
-De [echte Linux-releasevensterproef van alpha 18](docs/vensterproef-2026-10-31-alpha18-release/LEESMIJ.md)
+De [echte alpha-19-Linux-releasevensterproef](docs/vensterproef-2026-10-31-alpha19-release/LEESMIJ.md)
 slaagt op twaalf gerichte stappen, inclusief zoeken, systeemklembord,
 Unicode-vervanging, opmaakbehoud, snelle selectie/knippen, bewaren, exacte
 bronherstelling via undo, Bestand zonder grijze tekenresten en sluiten.
-De eigen Xvfb-/D-Bus-sessie bewijst deze Linux-releasebediening; alpha 19,
+De [afzonderlijke paginavensterproef](docs/paginavenster-2026-10-31-alpha19-release/LEESMIJ.md)
+controleert drie exacte papierblokken en bronselecties. Beide gebruiken eigen
+Xvfb-/D-Bus- en XDG-mappen. Dit bewijst die Linux-releasebediening; alpha 20,
 fysieke hardware, overige modules, Windows/macOS-bediening, IME-compositie,
 systeemdialogen en schermlezers zijn daarmee niet goedgekeurd.
 
@@ -413,15 +423,15 @@ Een afzonderlijke Chromium-testbrowser heeft inmiddels een oorspronkelijke
 navigatie gepauzeerd om de knipperfase vast te leggen; meldingen zijn via hun
 sluitknoppen gesloten. De opname is niet geschaald, uitgelijnd of nabewerkt.
 Twee opeenvolgende referentieopnamen zijn pixelgelijk. De
-[alpha-19-vergelijking](docs/pixelcontrole-alpha19/writer/rapport.json)
-met de native Writer meet **108.310 afwijkende pixels van 943.736**.
+[alpha-20-vergelijking](docs/pixelcontrole-alpha20/writer/rapport.json)
+met de native Writer meet **108.319 afwijkende pixels van 943.736**.
 Deze ene vastgelegde toestand bewijst dus expliciet dat de UI nog niet gelijk is.
 De [herkomst](docs/referentie-2026-W44.8/writer.json) vermeldt bron-, bundel- en
 beeldhashes, browser, viewport, thema en taal. Ook voor
 [Spreadsheet](docs/referentie-2026-W44.8/spreadsheet.png),
 [Presentation](docs/referentie-2026-W44.8/presentation.png) en
 [Notition](docs/referentie-2026-W44.8/notition.png) zijn nu vaste PNG-referenties
-vastgelegd. De [vier alpha-19-vergelijkingen](docs/pixelcontrole-alpha19/rapport.json)
+vastgelegd. De [vier alpha-20-vergelijkingen](docs/pixelcontrole-alpha20/rapport.json)
 falen; indeling, panelen en overige schermtoestanden blijven over te zetten.
 De browser- en nativevenstertoestanden zijn vastgelegd. Een vergelijking in
 dezelfde desktopvenstertoestand staat nog open.
@@ -453,4 +463,4 @@ python3 native/scripts/meet-paginas.py \
 Op Windows heeft de controleur de extensie `.exe`. Dit is een paginaproef,
 geen fysieke GUI-, volledige inhouds- of pariteitscontrole.
 
-De [controle van alpha 19](docs/controle-2026-10-31-alpha19.md) legt de huidige lokale tests en nog open acceptatie vast. Historische platform- en vensterproeven blijven aan hun eigen broncommit en programmaversie gekoppeld.
+De [controle van alpha 20](docs/controle-2026-10-31-alpha20.md) legt de huidige lokale tests en nog open acceptatie vast. Historische platform- en vensterproeven blijven aan hun eigen broncommit en programmaversie gekoppeld.

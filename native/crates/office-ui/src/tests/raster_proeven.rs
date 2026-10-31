@@ -27,6 +27,7 @@ struct Proef {
     klembord: Testklembord,
     muis: iced::Point,
     focusoperaties: usize,
+    klok: std::time::Instant,
 }
 impl Proef {
     fn nieuw() -> Self {
@@ -48,6 +49,7 @@ impl Proef {
             klembord: Testklembord::default(),
             muis: iced::Point::new(-1., -1.),
             focusoperaties: 0,
+            klok: std::time::Instant::now(),
         }
     }
     fn bericht(&mut self, msg: Msg) {
@@ -256,9 +258,11 @@ impl Proef {
         let mut shell = iced::advanced::Shell::new(&mut berichten);
         element.as_widget_mut().update(
             &mut self.boom,
-            &iced::Event::Window(iced::window::Event::RedrawRequested(
-                std::time::Instant::now(),
-            )),
+            // De testklok begint vóór het verkrijgen van focus. Daardoor is
+            // de cursor steeds in haar eerste knipperfase, ook als layout op
+            // een ander platform langer duurt. De echte widget tekent zelf;
+            // het beeld wordt niet nabewerkt of met tolerantie vergeleken.
+            &iced::Event::Window(iced::window::Event::RedrawRequested(self.klok)),
             Layout::new(&node),
             iced::mouse::Cursor::Unavailable,
             &self.renderer,
@@ -1016,4 +1020,75 @@ fn zoeknavigatie_verplaatst_naar_de_echte_pagina_en_undo_blijft_op_dat_deel() {
     p.bericht(Msg::Vooruit);
     assert_eq!(p.app.tab().unwrap().deel, 5);
     assert_eq!(p.bron(), gewijzigd);
+}
+
+#[test]
+fn zoekmarkering_wordt_echt_getekend_schaalt_mee_en_vervalt_bij_nieuwe_invoer() {
+    use crate::zoeken_ui::Bericht as Z;
+    let bron = include_bytes!("../../../office-core/tests/fixtures/writer-structuur.docx");
+    let mut p = Proef::met_app(app_met_werkdraad(Module::Writer, bron));
+    p.bericht(Msg::Zoeken(Z::Open(false)));
+    p.bericht(Msg::Zoeken(Z::Tekst("café".into())));
+    assert!(p.app.tab().unwrap().tekstmarkering().is_some());
+    if let Some(pad) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        let pad = PathBuf::from(pad);
+        std::fs::create_dir_all(&pad).unwrap();
+        p.verbeeld()
+            .save_png(pad.join("writer-zoeken-markering.png"))
+            .unwrap();
+    }
+    // Zonder het gefocuste zoekveld kan een knipperende tekstcursor de
+    // vergelijking van alleen het echte documentmarkeervlak niet vervuilen.
+    p.bericht(Msg::Zoeken(Z::Sluit));
+    let mut aantallen = Vec::new();
+    for zoom in [1., 0.75, 1.5] {
+        p.bericht(Msg::Zoom(zoom));
+        let met = p.verbeeld();
+        let m = p.app.tab_mut().unwrap().writer_markering.take();
+        let zonder = p.verbeeld();
+        let mut aantal = 0;
+        for (i, (a, b)) in met
+            .data()
+            .as_chunks::<4>()
+            .0
+            .iter()
+            .zip(zonder.data().as_chunks::<4>().0)
+            .enumerate()
+        {
+            if a != b {
+                let (x, y) = (i % 1440, i / 1440);
+                assert!(
+                    (200..1140).contains(&x) && (220..880).contains(&y),
+                    "Markering buiten het document: {x},{y}"
+                );
+                aantal += 1;
+            }
+        }
+        assert!(
+            aantal > 20,
+            "Geen echte zichtbare markering op schaal {zoom}"
+        );
+        aantallen.push(aantal);
+        p.app.tab_mut().unwrap().writer_markering = m;
+    }
+    let verhouding_klein = aantallen[1] as f64 / aantallen[0] as f64;
+    let verhouding_groot = aantallen[2] as f64 / aantallen[0] as f64;
+    assert!((0.4..0.75).contains(&verhouding_klein), "{aantallen:?}");
+    assert!((1.8..2.7).contains(&verhouding_groot), "{aantallen:?}");
+    assert_eq!(p.bron().as_slice(), bron.as_slice());
+    p.bericht(Msg::Veld(0));
+    assert!(p.app.tab().unwrap().tekstmarkering().is_none());
+    p.bericht(Msg::Zoeken(Z::Open(false)));
+    p.bericht(Msg::Zoeken(Z::Tekst("café".into())));
+    assert!(p.app.tab().unwrap().tekstmarkering().is_some());
+    p.bericht(Msg::Zoeken(Z::Kies(0)));
+    p.plak("eigen nieuwe tekst");
+    assert!(p.app.tab().unwrap().concept);
+    assert!(p.app.tab().unwrap().tekstmarkering().is_none());
+    assert_eq!(p.bron().as_slice(), bron.as_slice());
+    if let Some(pad) = std::env::var_os("OFFICE_TEST_UITVOER") {
+        let pad = PathBuf::from(pad);
+        std::fs::create_dir_all(&pad).unwrap();
+        std::fs::write(pad.join("writer-zoekmarkering-zoom.json"),serde_json::to_vec_pretty(&serde_json::json!({"schalen":[1.,0.75,1.5],"afwijkende_pixels_zonder_markering":aantallen})).unwrap()).unwrap();
+    }
 }

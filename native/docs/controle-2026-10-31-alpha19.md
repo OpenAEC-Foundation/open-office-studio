@@ -46,8 +46,31 @@ zijn nog niet geïmplementeerd.
 ![Zoeken bereikt de zesde documentpagina](screenshots/writer-zoeken-pagina.png)
 
 Dit zijn echte Iced-widget- en werkdraadgebeurtenissen, met een testklembord
-en synthetische IME-Commit. De alpha-19-releasebuild en platformronde zijn
-nog niet afgerond. Een echte alpha-19-vensterproef is nog niet uitgevoerd.
+en synthetische IME-Commit. De [platformronde](platformen-2026-10-31-alpha19-afgekeurd.json) heeft drie
+geslaagde native builds en een geslaagde runtimecontrole. De laatste CI-job
+blijft afgekeurd op 17 pixels van de knipperende cursor in het nieuwe
+zoekveld. Alle 944 verpakte bronbestanden per platform, programmaversies,
+architecturen en bronregressies zijn wel gecontroleerd. De afzonderlijke
+[21 paginabezoeken](paginametingen-2026-10-31-alpha19.json) slagen eveneens.
+
+Een [lokale vervolgmeting van alle 78 volledige beeldparen](platformbeelden-2026-10-31-alpha19-vervolg.json)
+vindt precies één afwijkend paar: Windows tegenover Linux voor
+`writer-zoeken-pagina.png`, binnen `(120, 250, 121, 267)`. De andere 77 paren
+zijn exact gelijk. Geen maskers, herschaling of tolerantie; de afgekeurde
+CI-uitvoer blijft behouden. Een vaste testklok moet de knipperfase in de
+volgende versie reproduceerbaar maken; alpha 19 wordt hierdoor niet groen.
+
+De Linux-CI-release is afzonderlijk gecontroleerd: alle 944 pakketbronbestanden
+zijn bytegelijk aan het vaste Git-archief. De
+[echte twaalfstappenproef](vensterproef-2026-10-31-alpha19-release/LEESMIJ.md)
+en de afzonderlijke [achtstappenproef voor paginanavigatie](paginavenster-2026-10-31-alpha19-release/LEESMIJ.md)
+slagen. Drie bezoeken tonen het exacte verwachte papierblok, selectie wordt
+via het systeemklembord gecontroleerd en de bronbytes blijven intact.
+De [lokale alpha-19-release](bouw-2026-10-31-alpha19-lokaal.json) is na
+38 minuten en 45 seconden Rust-bouwtijd afgerond. Beide binaries zijn vóór
+de volgende release met versie en SHA-256 vastgezet. Pakketcontrole en de
+[echte bronregressie](bronregressie-2026-10-31-alpha19-lokaal.json) slagen. Dit keurt geen volledige scherm- of fysieke
+platformpariteit goed.
 
 De [alpha-18-platformronde](platformen-2026-10-31-alpha18.json) heeft vijf groene
 CI-jobs: 911 bytegelijke pakketbronbestanden per platform, 76 exacte volledige

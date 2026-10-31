@@ -8,16 +8,35 @@ use std::ops::{Deref, DerefMut};
 pub struct WriterDocument {
     document: Document,
     beperking: Option<String>,
+    layoutbron: std::cell::OnceCell<std::sync::Arc<Vec<u8>>>,
 }
 impl WriterDocument {
     pub(crate) fn nieuw(document: Document, bron: &[u8]) -> Resultaat<Self> {
         Ok(Self {
             document,
             beperking: lees_beperking(bron)?,
+            layoutbron: std::cell::OnceCell::new(),
         })
     }
     pub fn bewerkingsbeperking(&self) -> Option<&str> {
         self.beperking.as_deref()
+    }
+    /// Het model kan bij openen ID's normaliseren. Layout en tekstadressering
+    /// delen daarom één canonieke bron, los van de ongewijzigde bewaarbron.
+    pub(crate) fn layoutbron(&self) -> Resultaat<std::sync::Arc<Vec<u8>>> {
+        if let Some(bron) = self.layoutbron.get() {
+            return Ok(bron.clone());
+        }
+        let bron = std::sync::Arc::new(
+            self.document
+                .save()
+                .map_err(|e| Fout::Document(e.to_string()))?,
+        );
+        // De cache houdt geen onbeperkte extra kopie van grote pakketten vast.
+        if bron.len() <= 16 * 1024 * 1024 {
+            let _ = self.layoutbron.set(bron.clone());
+        }
+        Ok(bron)
     }
     pub(crate) fn controleer_bewerking(&self) -> Resultaat<()> {
         match &self.beperking {
@@ -34,6 +53,9 @@ impl Deref for WriterDocument {
 }
 impl DerefMut for WriterDocument {
     fn deref_mut(&mut self) -> &mut Self::Target {
+        // Iedere mutabele modeltoegang kan de bron veranderen, ook vanuit
+        // een rechtstreekse document-API buiten de sessiegeschiedenis.
+        self.layoutbron.take();
         &mut self.document
     }
 }
@@ -90,4 +112,60 @@ fn lees_beperking(bron: &[u8]) -> Resultaat<Option<String>> {
         }
     }
     Ok(None)
+}
+
+#[cfg(test)]
+mod layoutbron_proeven {
+    use crate::document::{Bewerking, Document, Module};
+    use std::sync::Arc;
+    #[test]
+    fn paginering_hergebruikt_canonieke_bron_en_alle_mutabele_toegang_ververst_haar() {
+        let mut d = Document::open(
+            Module::Writer,
+            include_bytes!("../tests/fixtures/writer-structuur.docx"),
+        )
+        .unwrap();
+        let bron = match &d {
+            Document::Writer(w) => w.layoutbron().unwrap(),
+            _ => unreachable!(),
+        };
+        let b = d.weergave(0).unwrap();
+        let veld = b.velden.iter().find(|v| v.tekst == "Cel één").unwrap();
+        for _ in 0..3 {
+            let Document::Writer(w) = &d else {
+                unreachable!()
+            };
+            assert!(Arc::ptr_eq(&bron, &w.layoutbron().unwrap()));
+        }
+        d.bewerk(
+            0,
+            Bewerking::Tekst {
+                id: veld.id.clone(),
+                tekst: "Nieuwe eigen celtekst 🏠".into(),
+            },
+        )
+        .unwrap();
+        let Document::Writer(w) = &mut d else {
+            unreachable!()
+        };
+        let nieuw = w.layoutbron().unwrap();
+        assert!(!Arc::ptr_eq(&bron, &nieuw));
+        assert_ne!(*bron, *nieuw);
+        let herlezen = Document::open(Module::Writer, &nieuw)
+            .unwrap()
+            .weergave(0)
+            .unwrap();
+        assert!(
+            herlezen
+                .velden
+                .iter()
+                .any(|v| v.tekst == "Nieuwe eigen celtekst 🏠")
+        );
+        // Ook gebruikers van de rechtstreeks doorgelaten model-API mogen
+        // daarna geen al verouderde layoutbron terugkrijgen.
+        let _ = w.model_mut();
+        let na_toegang = w.layoutbron().unwrap();
+        assert!(!Arc::ptr_eq(&nieuw, &na_toegang));
+        assert_eq!(*nieuw, *na_toegang);
+    }
 }

@@ -372,12 +372,16 @@ impl Document {
         };
         match self {
             Self::Writer(d) => {
+                let eigen;
                 let bron = match bron {
-                    Some(b) => std::borrow::Cow::Borrowed(b),
-                    None => std::borrow::Cow::Owned(d.save().map_err(fout)?),
+                    Some(b) => b,
+                    None => {
+                        eigen = d.layoutbron()?;
+                        eigen.as_slice()
+                    }
                 };
                 let (png, paginas, overgeslagen, pagina, opmaak) =
-                    crate::writer_beeld::pagina_met_opmaak(&bron, deel, eigenaar)?;
+                    crate::writer_beeld::pagina_met_opmaak(bron, deel, eigenaar)?;
                 beeld.afbeelding = Some(png);
                 beeld.pagina = pagina;
                 beeld.onderdelen = (0..paginas).map(|i| format!("Pagina {}", i + 1)).collect();
@@ -648,6 +652,29 @@ impl Sessie {
         begin: usize,
         einde: usize,
     ) -> Resultaat<(usize, Weergave)> {
+        let (d, tekst) = self.writer_tekst(id, verwacht_hash)?;
+        let aantal = tekst.chars().count();
+        if begin > einde || einde > aantal {
+            return Err(fout("Zoekselectie valt buiten de alinea"));
+        }
+        let offset = crate::writer_cursor::scalar_naar_utf16(&tekst, begin)?;
+        let lengte = crate::writer_cursor::scalar_naar_utf16(&tekst, aantal)?;
+        let pagina = crate::writer_beeld::pagina_van_tekst(
+            &d.layoutbron()?,
+            self.layout_eigenaar,
+            id,
+            offset,
+            lengte,
+        )?;
+        let mut beeld = self.weergave(pagina)?;
+        beeld.voorkeursveld = Some(id.into());
+        Ok((pagina, beeld))
+    }
+    fn writer_tekst(
+        &self,
+        id: &str,
+        verwacht_hash: &str,
+    ) -> Resultaat<(&crate::writer_document::WriterDocument, String)> {
         if verwacht_hash != self.bron_hash {
             return Err(fout(
                 "Het zoekresultaat hoort bij een andere documentversie",
@@ -665,26 +692,70 @@ impl Sessie {
             ));
         }
         let tekst = crate::writer_tekst::alinea_tekst(p);
-        let aantal = tekst.chars().count();
-        if begin > einde || einde > aantal {
-            return Err(fout("Zoekselectie valt buiten de alinea"));
+        Ok((d, tekst))
+    }
+    /// Alleen zichtbare geometrie op deze pagina; een meerpagina-selectie
+    /// krijgt per gevraagde pagina haar eigen markeervlakken.
+    pub fn tekstmarkering(
+        &self,
+        pagina: usize,
+        id: &str,
+        verwacht_hash: &str,
+        begin: usize,
+        einde: usize,
+    ) -> Resultaat<crate::writer_cursor::TekstMarkering> {
+        let (d, tekst) = self.writer_tekst(id, verwacht_hash)?;
+        if begin > einde {
+            return Err(fout("Tekstselectie staat in de verkeerde volgorde"));
         }
-        let offset = tekst
-            .chars()
-            .take(begin)
-            .map(char::len_utf16)
-            .sum::<usize>();
-        let lengte = tekst.encode_utf16().count();
-        let pagina = crate::writer_beeld::pagina_van_tekst(
-            &d.save().map_err(fout)?,
+        let a = crate::writer_cursor::scalar_naar_utf16(&tekst, begin)?;
+        let b = crate::writer_cursor::scalar_naar_utf16(&tekst, einde)?;
+        let n = crate::writer_cursor::scalar_naar_utf16(&tekst, tekst.chars().count())?;
+        if b - a > 8192 {
+            return Err(fout(
+                "De selectie overschrijdt het markeerbudget; zij wordt niet afgekapt",
+            ));
+        }
+        crate::writer_beeld::tekstmarkering(
+            &d.layoutbron()?,
             self.layout_eigenaar,
+            pagina,
             id,
-            offset as u32,
-            lengte as u32,
-        )?;
-        let mut beeld = self.weergave(pagina)?;
-        beeld.voorkeursveld = Some(id.into());
-        Ok((pagina, beeld))
+            a,
+            b,
+            n,
+        )
+    }
+    /// Lees het echte gevormde tekstpunt. Kop-/voettekst, noten, afbeeldingen
+    /// en inhoud die nog niet veilig op bronposities aansluit leveren geen doel.
+    /// Dit is een kern-API; de volledige directe pagina-invoer is nog niet aangesloten.
+    pub fn tekstpunt(
+        &self,
+        pagina: usize,
+        verwacht_hash: &str,
+        x: f64,
+        y: f64,
+    ) -> Resultaat<Option<crate::writer_cursor::TekstPunt>> {
+        if verwacht_hash != self.bron_hash {
+            return Err(fout("Het tekstpunt hoort bij een andere documentversie"));
+        }
+        let Document::Writer(d) = &self.document else {
+            return Err(fout("Tekstpunten horen bij Writer"));
+        };
+        let Some((id, offset)) =
+            crate::writer_beeld::tekstpunt(&d.layoutbron()?, self.layout_eigenaar, pagina, x, y)?
+        else {
+            return Ok(None);
+        };
+        let Some(p) = d
+            .paragraph(&id)
+            .filter(|p| crate::writer_tekst::ondersteund(p))
+        else {
+            return Ok(None);
+        };
+        let tekst = crate::writer_tekst::alinea_tekst(p);
+        let positie = crate::writer_cursor::utf16_naar_scalar(&tekst, offset)?;
+        Ok(Some(crate::writer_cursor::TekstPunt { id, positie }))
     }
     pub fn verplaats_cel(
         &mut self,

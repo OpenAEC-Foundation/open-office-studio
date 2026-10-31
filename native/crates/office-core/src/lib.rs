@@ -12,6 +12,7 @@ pub mod rekenblad;
 mod rekenblad_beeld;
 pub mod writer;
 mod writer_beeld;
+pub mod writer_cursor;
 pub mod writer_document;
 pub mod writer_opmaak;
 pub mod writer_pagina;

@@ -8,6 +8,7 @@ use std::{
 #[derive(Debug, Clone)]
 pub struct Antwoord {
     pub deel: usize,
+    pub writer_markering: Option<office_core::writer_cursor::TekstMarkering>,
     pub beeld: Weergave,
     pub bron: Arc<Vec<u8>>,
     pub hash: String,
@@ -90,10 +91,14 @@ impl Werker {
                                 let b=sessie.bewerk_met_weergave(n,b).map_err(|e|e.to_string())?;*deel=n.min(b.onderdelen.len().saturating_sub(1));beeld=Some(b);
                             }
                             Opdracht::NaarTekst{id,hash,begin,einde} => {
-                                let (pagina,beeld)=sessie.naar_tekstbereik(&id,&hash,begin,einde).map_err(|e|e.to_string())?;
+                                let (pagina,mut beeld)=sessie.naar_tekstbereik(&id,&hash,begin,einde).map_err(|e|e.to_string())?;
+                                let writer_markering=match sessie.tekstmarkering(pagina,&id,&hash,begin,einde) {
+                                    Ok(m)=>Some(m),
+                                    Err(e)=>{beeld.melding.push_str(&format!(" · Treffermarkering niet beschikbaar: {e}"));None},
+                                };
                                 // De interface accepteert het doel pas na haar versie-/focuscontrole.
                                 // Een oud navigatieantwoord mag het werkdraaddeel niet verplaatsen.
-                                return Ok(Antwoord{deel:pagina,beeld,bron:sessie.bron(),hash:sessie.bron_hash().into(),terug:sessie.kan_terug(),vooruit:sessie.kan_vooruit()});
+                                return Ok(Antwoord{deel:pagina,writer_markering,beeld,bron:sessie.bron(),hash:sessie.bron_hash().into(),terug:sessie.kan_terug(),vooruit:sessie.kan_vooruit()});
                             }
                             Opdracht::Terug(n) => {sessie.terug().map_err(|e| e.to_string())?;*deel=n;},
                             Opdracht::Vooruit(n) => {sessie.vooruit().map_err(|e| e.to_string())?;*deel=n;},
@@ -104,6 +109,7 @@ impl Werker {
                                 beeld.melding = sessie.markdown().map_err(|e| e.to_string())?;
                                 return Ok(Antwoord {
                                     deel:*deel,
+                                    writer_markering:None,
                                     beeld,
                                     hash:sessie.bron_hash().into(),
                             bron: sessie.bron(),
@@ -115,6 +121,7 @@ impl Werker {
                         }
                         Ok(Antwoord {
                             deel:*deel,
+                            writer_markering:None,
                             beeld: match beeld {Some(b)=>b,None=>sessie.weergave(*deel).map_err(|e| e.to_string())?},
                             hash:sessie.bron_hash().into(),
                             bron: sessie.bron(),

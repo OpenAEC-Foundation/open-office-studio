@@ -142,6 +142,12 @@ struct Geopend {
     hash: String,
     archief: Option<Vec<u8>>,
 }
+struct WriterMarkering {
+    editerversie: u64,
+    cursor: iced::advanced::text::editor::Cursor,
+    hash: String,
+    geometrie: office_core::writer_cursor::TekstMarkering,
+}
 struct Tab {
     id: u64,
     naam: String,
@@ -160,6 +166,7 @@ struct Tab {
     editor: text_editor::Content,
     editerversie: u64,
     writer_stappen: Vec<office_core::document::TekstStap>,
+    writer_markering: Option<WriterMarkering>,
     raster: raster_ui::Staat,
     concept: bool,
     adres: String,
@@ -194,6 +201,7 @@ impl Tab {
             editor: text_editor::Content::new(),
             editerversie: 0,
             writer_stappen: Vec::new(),
+            writer_markering: None,
             raster: raster_ui::Staat::default(),
             concept: false,
             adres: "A1".into(),
@@ -218,6 +226,15 @@ impl Tab {
     }
     fn veld(&self) -> Option<&Veld> {
         self.antwoord.as_ref()?.beeld.velden.get(self.gekozen)
+    }
+    fn tekstmarkering(&self) -> Option<&office_core::writer_cursor::TekstMarkering> {
+        let m = self.writer_markering.as_ref()?;
+        (!self.concept
+            && m.editerversie == self.editerversie
+            && m.cursor == self.editor.cursor()
+            && m.geometrie.pagina == self.deel
+            && self.antwoord.as_ref().is_some_and(|a| a.hash == m.hash))
+        .then_some(&m.geometrie)
     }
     /// De bestaande opdrachten bedienen zonder expliciete selectie de hele
     /// alinea. Status en opdracht gebruiken daarom exact dezelfde tekengrenzen.
@@ -2136,6 +2153,7 @@ impl App {
                             inhoud,
                             pagina,
                             t.veld().map(|v| v.id.as_str()),
+                            t.tekstmarkering(),
                             c.accent,
                             Msg::Raak,
                         )

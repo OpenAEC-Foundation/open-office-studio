@@ -581,10 +581,17 @@ pub fn navigatie_gereed(app: &mut App, d: NavigatieDoel, r: Result<Antwoord, Str
     }
     match r {
         Ok(a) if a.hash == d.hash => {
+            let markering = a.writer_markering.clone();
             let taak = app.update(Msg::Gereed(d.document, Ok(a)));
             if let Some(t) = app.tab_mut() {
                 selecteer(t, &d.treffer);
                 t.scroll = iced::Point::ORIGIN;
+                t.writer_markering = markering.map(|geometrie| WriterMarkering {
+                    editerversie: t.editerversie,
+                    cursor: t.editor.cursor(),
+                    hash: d.hash.clone(),
+                    geometrie,
+                });
             }
             Task::batch([
                 taak,

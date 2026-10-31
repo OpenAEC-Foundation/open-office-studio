@@ -15,6 +15,7 @@ pub fn blad<'a, M: 'a>(
     inhoud: impl Into<Element<'a, M>>,
     pagina: &'a Pagina,
     gekozen: Option<&'a str>,
+    markering: Option<&'a office_core::writer_cursor::TekstMarkering>,
     accent: Color,
     klik: impl Fn(String) -> M + 'a,
 ) -> Element<'a, M> {
@@ -22,6 +23,7 @@ pub fn blad<'a, M: 'a>(
         inhoud: inhoud.into(),
         pagina,
         gekozen,
+        markering,
         accent,
         klik: Box::new(klik),
     })
@@ -30,6 +32,7 @@ struct Blad<'a, M> {
     inhoud: Element<'a, M>,
     pagina: &'a Pagina,
     gekozen: Option<&'a str>,
+    markering: Option<&'a office_core::writer_cursor::TekstMarkering>,
     accent: Color,
     klik: Box<dyn Fn(String) -> M + 'a>,
 }
@@ -124,6 +127,32 @@ impl<M> Widget<M, Theme, Renderer> for Blad<'_, M> {
         let b = l.bounds();
         let sx = b.width / self.pagina.breedte;
         let sy = b.height / self.pagina.hoogte;
+        if let Some(m) = self.markering
+            && let Some(clip) = b.intersection(vp)
+        {
+            // Alleen het getekende documentvlak; geen herberekende
+            // tekstbreedtes of een tweede editorlayout voor de selectie.
+            r.with_layer(clip, |r| {
+                for g in &m.rechthoeken {
+                    let bounds = Rectangle {
+                        x: b.x + g.x * sx,
+                        y: b.y + g.y * sy,
+                        width: g.breedte * sx,
+                        height: g.hoogte * sy,
+                    };
+                    r.fill_quad(
+                        renderer::Quad {
+                            bounds,
+                            ..Default::default()
+                        },
+                        Color {
+                            a: 0.24,
+                            ..self.accent
+                        },
+                    );
+                }
+            });
+        }
         for vlak in &self.pagina.vlakken {
             if Some(vlak.id.as_str()) != self.gekozen {
                 continue;

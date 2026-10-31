@@ -178,6 +178,7 @@ pub fn blad<'a>(app: &'a App, t: &'a Tab, inhoud: Element<'a, Msg>) -> Element<'
         inhoud,
         &b.pagina,
         t.veld().map(|v| v.id.as_str()),
+        None,
         app.look().color.accent,
         Msg::Raak,
     );

@@ -52,6 +52,7 @@ fn blad_klikken_schaalt_correct_en_respecteert_het_scrollvenster() {
         container(iced::widget::Space::new()).width(100).height(50),
         &p,
         None,
+        None,
         iced::Color::BLACK,
         Msg::Raak,
     );
@@ -275,6 +276,7 @@ pub(super) fn app_met_document(module: Module, bytes: &[u8]) -> App {
         .map(|b| image::Handle::from_bytes(b.clone()));
     tab.antwoord = Some(Antwoord {
         deel: 0,
+        writer_markering: None,
         beeld,
         hash: sessie.bron_hash().into(),
         bron: sessie.bron(),

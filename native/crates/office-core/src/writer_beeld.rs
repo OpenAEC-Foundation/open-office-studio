@@ -150,6 +150,55 @@ pub(crate) fn pagina_van_tekst(
     })
 }
 
+pub(crate) fn tekstmarkering(
+    bron: &[u8],
+    eigenaar: u64,
+    pagina: usize,
+    id: &str,
+    begin: u32,
+    einde: u32,
+    lengte: u32,
+) -> Resultaat<crate::writer_cursor::TekstMarkering> {
+    met_context(bron, eigenaar, |c| {
+        c.tekstpagina(pagina)?;
+        c.engine
+            .with_display_list(|dl| {
+                c.adressen
+                    .as_ref()
+                    .unwrap()
+                    .markering(dl, pagina, id, begin, einde, lengte)
+            })
+            .ok_or_else(|| fout("Geen behouden paginabeeld voor tekstmarkering"))?
+    })
+}
+pub(crate) fn tekstpunt(
+    bron: &[u8],
+    eigenaar: u64,
+    pagina: usize,
+    x: f64,
+    y: f64,
+) -> Resultaat<Option<(String, u32)>> {
+    if !x.is_finite() || !y.is_finite() {
+        return Err(fout("Klikpositie is geen eindig documentpunt"));
+    }
+    met_context(bron, eigenaar, |c| {
+        c.tekstpagina(pagina)?;
+        c.engine
+            .with_display_list(|dl| {
+                let p = &dl.pages[pagina];
+                if x < 0.
+                    || y < 0.
+                    || x >= p.width.as_f64().unwrap_or(0.)
+                    || y >= p.height.as_f64().unwrap_or(0.)
+                {
+                    return Ok(None);
+                }
+                c.adressen.as_ref().unwrap().punt(dl, pagina, x, y)
+            })
+            .ok_or_else(|| fout("Geen behouden paginabeeld voor tekstpositie"))?
+    })
+}
+
 struct Context {
     engine: docx_edit::EngineSession,
     verzoek: Value,
@@ -157,6 +206,7 @@ struct Context {
     afbeeldingen: docx_raster::ImageMap,
     opmaak: std::sync::Arc<crate::writer_opmaak::Alineas>,
     paginakaart: Option<docx_edit::structured::DocxLayoutMap>,
+    adressen: Option<crate::writer_cursor::AdresKaart>,
 }
 impl Context {
     fn nieuw(bron: &[u8], met_opmaak: bool) -> Resultaat<Self> {
@@ -234,7 +284,28 @@ impl Context {
             afbeeldingen: afbeeldingen(bron)?,
             opmaak,
             paginakaart: None,
+            adressen: None,
         })
+    }
+    fn tekstpagina(&mut self, pagina: usize) -> Resultaat<()> {
+        let gereed = self
+            .engine
+            .with_display_list(|dl| dl.pages.get(pagina).is_some_and(|p| !p.unbuilt))
+            .unwrap_or(false);
+        if !gereed {
+            self.pagina::<true>(pagina)?;
+        }
+        if !self
+            .engine
+            .with_display_list(|dl| dl.pages.get(pagina).is_some_and(|p| !p.unbuilt))
+            .unwrap_or(false)
+        {
+            return Err(fout("Deze exacte tekstpagina bestaat niet"));
+        }
+        if self.adressen.is_none() {
+            self.adressen = Some(crate::writer_cursor::AdresKaart::nieuw(&self.engine)?);
+        }
+        Ok(())
     }
     fn pagina<const ALLEEN_GEVRAAGD: bool>(&mut self, nummer: usize) -> Resultaat<Blad> {
         let Self {
@@ -786,6 +857,29 @@ mod cacheproeven {
 mod paginakaart_proeven {
     use super::*;
     #[test]
+    fn een_koptekstklik_wordt_nooit_als_een_bodytekstpunt_gebruikt() {
+        use crate::document::{Document, Module, Sessie};
+        let bron = include_bytes!("../tests/fixtures/writer-cachepaginas.docx");
+        let d = Document::open(Module::Writer, bron).unwrap();
+        let mut c = Context::nieuw(&d.bytes().unwrap(), true).unwrap();
+        c.pagina::<true>(0).unwrap();
+        let (x, y) = c
+            .engine
+            .with_display_list(|dl| {
+                let h = dl.pages[0].header.as_ref().unwrap();
+                let x = 140.;
+                let y = h.y.as_f64().unwrap() + h.height.as_f64().unwrap() * 0.5;
+                let hit = docx_layout::hit::hit_test_regions(dl, 0, x, y).unwrap();
+                assert_eq!(hit.region, docx_layout::hit::HitRegion::Header);
+                (x, y)
+            })
+            .unwrap();
+        let s = Sessie::open(Module::Writer, bron.to_vec()).unwrap();
+        assert!(s.tekstpunt(0, s.bron_hash(), x, y).unwrap().is_none());
+        assert_eq!(s.bron().as_slice(), bron.as_slice());
+        assert!(!s.kan_terug());
+    }
+    #[test]
     fn bestaande_rust_engine_levert_een_getypeerde_paginakaart_voor_body_en_tabel() {
         use docx_edit::structured::{PageExportOptions, RevisionView, StorySelection};
         let d = crate::document::Document::open(
@@ -888,6 +982,29 @@ mod unicode_navigatieproeven {
             .naar_tekstbereik(&v.id, s.bron_hash(), begin, begin + marker.chars().count())
             .unwrap();
         assert_eq!(pagina, 1);
+        let m = s
+            .tekstmarkering(
+                pagina,
+                &v.id,
+                s.bron_hash(),
+                begin,
+                begin + marker.chars().count(),
+            )
+            .unwrap();
+        assert!(!m.rechthoeken.is_empty());
+        for r in &m.rechthoeken {
+            let p = s
+                .tekstpunt(
+                    pagina,
+                    s.bron_hash(),
+                    f64::from(r.x + r.breedte * 0.5),
+                    f64::from(r.y + r.hoogte * 0.5),
+                )
+                .unwrap()
+                .unwrap();
+            assert_eq!(p.id, v.id);
+            assert!((begin..=begin + marker.chars().count()).contains(&p.positie));
+        }
         assert_eq!(s.bron().as_slice(), bron.as_slice());
         assert!(!s.kan_terug());
     }
