@@ -85,9 +85,32 @@ en verborgen document-sneltoetsen. De schermproef rendert postvak,
 accountinstellingen en sluitdialoog in alle vijf thema's; de afbeeldingen zijn
 ook visueel bekeken. Dat is geen test met een echt account of systeemsleutelhanger.
 
-De alpha-4-build is voor alle drie platforms geslaagd. De huidige alpha-5-
-releasebuild en de hercontrole van het corpus worden afzonderlijk bijgehouden;
-de alpha-4-uitkomst telt niet als alpha-5-goedkeuring.
+De alpha-5-tests, releasebuilds en uitgepakte pakketcontroles slagen voor
+**Windows, Linux en macOS** op codecommit
+`bbfeaaacd30b21bee5210a44b70f188a735a3013`, in
+[bouwronde 41147860032](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41147860032).
+Ook de lokale Linux-releasebuild slaagt. Dit zijn draagbare zip-pakketten;
+installers, schone installatie, systeemintegratie en echte GUI-bediening zijn
+hiermee niet gecontroleerd.
+
+[De alpha-5-releasecorpusronde](corpus-2026-10-31-alpha5-release.json) controleert
+alle 648 geselecteerde bronnen opnieuw met het daadwerkelijke Linux-CI-programma:
+**578 rondgangen geslaagd, 68 weigeringen, twee tijdslimieten, geen
+rondgangverschil**. De eerdere veldtekstafwijking is opgelost. Dit verandert de
+hierboven beschreven beperkte omvang van de controle niet.
+
+Een aanvullende grensproef op de onveranderde alpha-4-controleur laat zien dat
+`bug59058.docx` ook de afzonderlijke limiet van 90 seconden bereikt.
+`bug65649.docx` breekt af tegen de ingestelde grens van 3 GiB adresruimte.
+Dit bewijst geen overeenkomstig fysiek geheugengebruik. Deze twee gevallen
+blijven open voor prestaties en begrenzing; dit zijn geen geslaagde controles.
+
+De 26 native PNG-beelden zijn vergeleken met dezelfde beelden uit de CI.
+Linux matcht alle 26, Windows en macOS elk 25. De afwijkingen op het
+notitiecanvas betreffen de systeemfont-terugval voor de Unicode-sleeptekens:
+663 pixels op Windows en 666 op macOS. De overige beelden verschillen niet.
+De afzonderlijke meetrapporten staan naast dit document. Dit is uitsluitend een
+vergelijking tussen native builds, **geen pixelpariteit met de webinterface**.
 
 Screenshots worden door dezelfde Iced software-renderer gemaakt,
 met synthetische bronnen. Dat is geen fysieke GUI-, IME- of schermlezertest.
