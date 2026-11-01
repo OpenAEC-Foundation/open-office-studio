@@ -1,0 +1,68 @@
+{
+  "versie": "Open Office Studio 2026.44.9-alpha.35 (native)",
+  "programma_sha256": "e4d8b734d7632d626c964eeeaae49c89010429d3225a12892f4b924417ebcdb9",
+  "broncommit": null,
+  "basiscommit": "cd01f53686d384abbcda84d1185e67789462159c",
+  "bronpatch_sha256": "54a06047151d047785aabbd1dc0490b208a74a514aa49aca605b682497bb1f14",
+  "proefbron_sha256": "088d6941f1b683c12af23de4874072fa0704942bb7b11f08a643a8042b6ae86c",
+  "geslaagd": true,
+  "bouwprofiel": "debug",
+  "omvang": "Ontwikkelprototype met vastgelegde bronpatch, geen release- of volledige brongoedkeuring. Echt native Linux-venster in eigen Xvfb/D-Bus/XDG-sessie, X11-toetsen/muis en systeemklembord. Eigen DOCX met twee secties, tabel en rijke runs. Geen fysieke hardware, andere platforms, IME, schermlezer of volledige suite-/pixelpariteit.",
+  "stappen": [
+    {
+      "stap": "Rijke eigen DOCX geopend",
+      "beeld": {
+        "bestand": "writer-open.png",
+        "sha256": "14e1748fe90f66d07b12d9d0bce95b032463230ed710b16af78acfb344efe523"
+      }
+    },
+    {
+      "stap": "End/Enter en één bewaren maken een lege echte alinea"
+    },
+    {
+      "stap": "Werkelijke Vet-lintklik, direct 9 en één bewaren behouden vet én bestaande cursief zonder focusherstel",
+      "beeld": {
+        "bestand": "writer-vet-invoer.png",
+        "sha256": "610f9d46b7ba334e4f27ab3a5ff268acbfe68012510b0f6eee0860feb6db89ff"
+      }
+    },
+    {
+      "stap": "Eén undo en één bewaren verwijderen alleen 9; gekozen invoegopmaak blijft op lege alinea",
+      "beeld": {
+        "bestand": "writer-vet-ongedaan.png",
+        "sha256": "e55a744da47b5b2c66cca2f3e8ea65437ba6e8337354259c345bcb08c8732c87"
+      }
+    },
+    {
+      "stap": "Nog één undo en één bewaren herstellen de gesplitste bron exact"
+    },
+    {
+      "stap": "Nog één undo en één bewaren herstellen de oorspronkelijke bron exact"
+    },
+    {
+      "stap": "Zoekpaneel met werkelijke sluitknop gesloten; directe vervolginvoer komt op de documentpagina",
+      "beeld": {
+        "bestand": "writer-zoekpaneel-gesloten.png",
+        "sha256": "f18ebd4262c459ca98062e707498ef20ae8220047ce4373e433e27425fd9b989"
+      }
+    },
+    {
+      "stap": "Zoekpaneelvervolginvoer met één undo en één bewaren bronexact hersteld"
+    },
+    {
+      "stap": "Eerste eigen venster schoon gesloten",
+      "procescode": 0
+    },
+    {
+      "stap": "Bewaarde vet-cursieve 9 heropend, via echt systeemklembord bevestigd en bron ongewijzigd",
+      "beeld": {
+        "bestand": "writer-vet-heropend.png",
+        "sha256": "cbfaeefc7aada17f734091b011dedd96d8f1e4d5f98c4a4705d84e491b9f1410"
+      }
+    },
+    {
+      "stap": "Heropend eigen venster schoon gesloten",
+      "procescode": 0
+    }
+  ]
+}

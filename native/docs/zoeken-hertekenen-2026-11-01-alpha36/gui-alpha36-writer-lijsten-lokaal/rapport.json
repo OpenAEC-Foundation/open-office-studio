@@ -1,0 +1,99 @@
+{
+  "versie": "Open Office Studio 2026.44.9-alpha.36 (native)",
+  "programma_sha256": "1538890779e4e41adcab407c890f48a3303ea51960b8e91edb35394cf38c6e0a",
+  "broncommit": "9deec078c7080549f3e6900685ba8357ad3d1547",
+  "proefbron_sha256": "f64b742c2ad7487991403d7470567b270a69f4597baefa2acad9c26a20da3f3e",
+  "geslaagd": true,
+  "omvang": "Echt native Linux-venster in eigen Xvfb/D-Bus/XDG-sessie, X11-toetsen/muis en systeemklembord. Eigen DOCX met twee secties, tabel en rijke runs. Opsomming/nummering met directe vervolginvoer, Enter, lijst beëindigen, bewaren, afzonderlijke undo en heropenen. Geen fysieke hardware, andere platforms, IME, schermlezer of volledige suite-/pixelpariteit.",
+  "stappen": [
+    {
+      "stap": "Eigen document geopend",
+      "beeld": {
+        "bestand": "lijsten-open.png",
+        "sha256": "2b42f228f41c561fea8d15a5bd7992839c6d6c7d1d1d43f692ed874a060c4e4a"
+      }
+    },
+    {
+      "stap": "Echte opsommingklik, directe 9 en één bewaren",
+      "beeld": {
+        "bestand": "lijsten-opsomming.png",
+        "sha256": "0bdbacdfedb87c1e836205493e45414f6ba21f45292db5455fea9727c2a68eba"
+      }
+    },
+    {
+      "stap": "Eén undo verwijdert alleen de 9; opsomming blijft"
+    },
+    {
+      "stap": "Volgende undo herstelt de oorspronkelijke bron exact"
+    },
+    {
+      "stap": "Echte nummeringklik, directe 9 en één bewaren",
+      "beeld": {
+        "bestand": "lijsten-nummering.png",
+        "sha256": "95c091187dcc1c163574b76f1521d620d3b297543947409f48f8e1c0899feb92"
+      }
+    },
+    {
+      "stap": "Eén undo verwijdert alleen de 9; nummering blijft"
+    },
+    {
+      "stap": "Volgende undo herstelt de oorspronkelijke bron exact"
+    },
+    {
+      "stap": "Nummering, directe End/Enter/9 en één bewaren maken een volgend lijstitem",
+      "beeld": {
+        "bestand": "lijsten-enter-negen.png",
+        "sha256": "dd1b98196ace966e3ee1986fbcb376f15dea231d1a37e3d2703df5b13214c04e"
+      }
+    },
+    {
+      "stap": "Eén undo laat een leeg tweede lijstitem staan"
+    },
+    {
+      "stap": "Enter beëindigt het lege tweede item zonder extra alinea",
+      "beeld": {
+        "bestand": "lijsten-beeindigd.png",
+        "sha256": "d5c44306554b8f4e74a994e77920b9e3599b5e2d35a145d9de2af9534a01eb63"
+      }
+    },
+    {
+      "stap": "Eén undo herstelt de lege lijstbron exact"
+    },
+    {
+      "stap": "Volgende undo verwijdert uitsluitend het nieuwe lijstitem"
+    },
+    {
+      "stap": "Volgende undo herstelt het volledige oorspronkelijke document exact"
+    },
+    {
+      "stap": "Eigen bronvenster schoon gesloten"
+    },
+    {
+      "stap": "Bewaarde nummering heropend; volledige tekst via systeemklembord bevestigd"
+    },
+    {
+      "stap": "Afzonderlijk rustig heropenbeeld 1",
+      "beeld": {
+        "bestand": "lijsten-rustig-1.png",
+        "sha256": "569d18f7173d5c969b9d3316f1f67708d28f7e3ff2e4338c6daae09a35ca259b"
+      }
+    },
+    {
+      "stap": "Afzonderlijk rustig heropenbeeld 2",
+      "beeld": {
+        "bestand": "lijsten-rustig-2.png",
+        "sha256": "569d18f7173d5c969b9d3316f1f67708d28f7e3ff2e4338c6daae09a35ca259b"
+      }
+    },
+    {
+      "stap": "Afzonderlijk rustig heropenbeeld 3",
+      "beeld": {
+        "bestand": "lijsten-rustig-3.png",
+        "sha256": "569d18f7173d5c969b9d3316f1f67708d28f7e3ff2e4338c6daae09a35ca259b"
+      }
+    },
+    {
+      "stap": "Heropend venster schoon gesloten"
+    }
+  ]
+}

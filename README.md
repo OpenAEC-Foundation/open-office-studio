@@ -29,13 +29,13 @@ sources. It is **not yet a replacement for the current suite**; the
 [feature comparison and remaining work](native/README.md#huidige-omvang) describe
 the migration boundary. Version 2026-W44.8 remains the existing release.
 
-Alpha 35 prevents a pending search focus request from taking over a later
-document cursor or input field. Its [validation report](native/docs/controle-2026-11-01-alpha35.md)
-records 382 Rust tests, including 145 UI tests, six runtime checks and seven
-Python tests. The original failed alpha-34 GUI checks remain available; the
-new release windows require a separate retest. Full visual parity is still open;
-the original browser and [desktop references](native/docs/referentie-desktop-2026-11-01/LEESMIJ.md)
-remain separately available.
+Alpha 36 binds search focus to its original input event and limits shadow work
+to the current repaint area. Its [validation report](native/docs/controle-2026-11-01-alpha36.md)
+records 388 Rust tests, including 151 UI tests, six runtime checks and seven
+Python tests. The local release build and all five platform CI jobs pass;
+each optimized Linux build passes 61 targeted window steps. The broad corpus
+still contains refusals and a timeout, and the original full visual comparisons
+remain failed. These checks do **not** establish complete migration or visual parity.
 
 ## Suite or a separate app
 

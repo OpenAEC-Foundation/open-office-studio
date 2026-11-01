@@ -29,6 +29,13 @@ worden volledig bewaard. De native app is **nog geen vervanging voor de huidige
 suite**. Zie de [functievergelijking en resterende omzetting](native/README.md#huidige-omvang).
 De bestaande release blijft 2026-W44.8.
 
+De [controle van alpha 36](native/docs/controle-2026-11-01-alpha36.md) legt 388 Rust-tests,
+waaronder 151 UI-tests, zes runtimeproeven en zeven Python-tests vast. Lokale
+releasebouw en vijf platformtaken slagen; beide geoptimaliseerde Linux-bouwen
+slagen ieder op 61 gerichte vensterstappen. Corpusweigeringen, een tijdslimiet
+en de oorspronkelijke volledige pixelvergelijkingen blijven afgekeurd.
+Dit is geen volledige migratie- of pariteitsgoedkeuring.
+
 ## De suite of een aparte app
 
 Versie **2026-W44.8** biedt zeven installatiekeuzes: **Open Office Studio**, **Open Writer Studio**, **Open Spreadsheet Studio**, **Open Presentation Studio**, **Open Email Studio**, **Open Notition Studio** en **Open Database Studio**. Elke app heeft een eigen installer, applicatie-id en lokaal profiel. De suite behoudt alle modules; de gerichte apps openen hun eigen werkruimte. Zie [het appoverzicht, bouwen, gegevens overzetten en screenshots](docs/studios.md).
