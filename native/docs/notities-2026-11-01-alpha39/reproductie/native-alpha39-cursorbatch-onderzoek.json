@@ -1,0 +1,28 @@
+{
+  "omvang": "Gelezen bron wijst op verschil tussen de echte runtime en de eigen widgettesthulp; nog geen bewezen complete verklaring of herstel. Geen bronbestand gewijzigd.",
+  "werkruimte_git": "8de85027545c1e2a56afde04453ba501b2d9c28a",
+  "bestanden": [
+    {
+      "bestand": "/home/aia01/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/iced_runtime-0.14.0/src/user_interface.rs",
+      "sha256": "bdd4b72b8d67fd59f2ea93c7984c64810ed8f6ef1c44aa50b8bca3145b01476d",
+      "rol": "update ontvangt één cursor en geeft base_cursor door aan ieder evenement"
+    },
+    {
+      "bestand": "/home/aia01/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/iced_winit-0.14.1/src/lib.rs",
+      "sha256": "ba9fc11df9bc27959d5f26633bb81b42c47f459a3d4f8609cdacefddb133dce8",
+      "rol": "window_events wordt met window.state.cursor() als één reeks verwerkt"
+    },
+    {
+      "bestand": "native/crates/office-ui/src/tests/raster_proeven.rs",
+      "sha256": "970fa2162b4f1e1b526367b4863bba826be0936d73d4afe03762f819b91449f5",
+      "rol": "Proef::gebeurtenissen werkt de cursor vóór ieder individueel evenement bij"
+    }
+  ],
+  "waarnemingen": [
+    "eerste snelle debuggesture na twee tekstbewerkingen faalt",
+    "snelle gesture direct na openen slaagt",
+    "snelle gesture met tweede tekstvakfocus faalt",
+    "gepauzeerde gesture met opnieuw tweede tekstvakfocus slaagt",
+    "een tussengesture gebruikte nog de oude hoek nadat het vak al vergroot was; die wordt niet als greepproef beoordeeld"
+  ]
+}

@@ -29,7 +29,7 @@ worden volledig bewaard. De native app is **nog geen vervanging voor de huidige
 suite**. Zie de [functievergelijking en resterende omzetting](native/README.md#huidige-omvang).
 De bestaande release blijft 2026-W44.8.
 
-Alpha 38 herstelt de notitiepaginawisselcrash, de zichtbare formaatgreep en de preview na undo. De [volledige lokale controle en echte Linux-vensterproeven](native/docs/controle-2026-11-01-alpha38.md) slagen: 398 Rust-tests, zes runtimeproeven en zeven Python-tests. Alle vijf platformtaken slagen, met 120 exacte vergelijkingen tussen native platformbeelden en 21 paginabezoeken. Alle oorspronkelijke pixelafkeuringen en ontbrekende suitefuncties blijven open.
+Alpha 39 vernieuwt de Notities-werkruimte. De [volledige lokale controle](native/docs/controle-2026-11-01-alpha39.md) slaagt met 403 Rust-tests, zes runtimeproeven en zeven Python-tests. Alle vijf CI-taken slagen, met 120 exacte native beeldparen en 21 paginabezoeken. Een extra echt venster en een aanvullende runtimeproef vinden nog een fout bij snelle muisinvoer; alpha40 wordt daarop hersteld en opnieuw getest. Alle acht oorspronkelijke UI-vergelijkingen blijven afgekeurd; de volledige suite is nog niet gemigreerd.
 
 ## De suite of een aparte app
 

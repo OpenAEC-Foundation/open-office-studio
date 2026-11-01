@@ -29,7 +29,7 @@ sources. It is **not yet a replacement for the current suite**; the
 [feature comparison and remaining work](native/README.md#huidige-omvang) describe
 the migration boundary. Version 2026-W44.8 remains the existing release.
 
-Alpha 38 fixes the notes page-switching crash, visible resize handle and preview after undo. [Full local validation and actual Linux GUI retests](native/docs/controle-2026-11-01-alpha38.md) pass: 398 Rust tests, six runtime checks and seven Python tests. All five platform jobs pass, including 120 exact comparisons between native platform images and 21 page visits. All original pixel comparison failures and missing suite features remain open.
+Alpha 39 updates the Notes workspace. [Full local validation](native/docs/controle-2026-11-01-alpha39.md) passes with 403 Rust tests, six runtime checks and seven Python tests. All five CI jobs pass, including 120 exact native image comparisons and 21 page visits. An extra actual-window check and a direct runtime regression still expose a fast mouse input bug; alpha40 is being corrected and retested. All eight original UI comparisons remain failing, and the full suite migration remains incomplete.
 
 ## Suite or a separate app
 
