@@ -45,9 +45,25 @@ fn opdrachten(id: &str) -> Vec<Bewerking> {
             einde: 0,
             stijl: Opmaak::Alineastijl("Normal".into()),
         },
+        Bewerking::Opmaak {
+            id: id.into(),
+            begin: 0,
+            einde: 0,
+            stijl: Opmaak::Lijst(Some(office_core::opmaak::LijstSoort::Nummering)),
+        },
+        Bewerking::Opmaak {
+            id: id.into(),
+            begin: 0,
+            einde: 0,
+            stijl: Opmaak::Lijst(None),
+        },
         Bewerking::Alinea {
             id: id.into(),
             actie: AlineaActie::Splits { positie: 1 },
+        },
+        Bewerking::Alinea {
+            id: id.into(),
+            actie: AlineaActie::LijstEindigen,
         },
         Bewerking::Pagina {
             id: id.into(),

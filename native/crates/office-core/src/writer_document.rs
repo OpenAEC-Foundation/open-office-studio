@@ -9,12 +9,15 @@ pub struct WriterDocument {
     document: Document,
     beperking: Option<String>,
     dubbele_stijlen: std::collections::HashSet<String>,
+    nummerbron: crate::writer_nummering::Nummerbron,
     layoutbron: std::cell::OnceCell<std::sync::Arc<Vec<u8>>>,
 }
 impl WriterDocument {
     pub(crate) fn nieuw(document: Document, bron: &[u8]) -> Resultaat<Self> {
+        let nummerbron = crate::writer_nummering::Nummerbron::nieuw(&document, bron)?;
         Ok(Self {
             document,
+            nummerbron,
             beperking: lees_beperking(bron)?,
             dubbele_stijlen: crate::writer_stijlen::dubbele_ids(bron)?,
             layoutbron: std::cell::OnceCell::new(),
@@ -22,6 +25,16 @@ impl WriterDocument {
     }
     pub(crate) fn dubbele_stijlen(&self) -> &std::collections::HashSet<String> {
         &self.dubbele_stijlen
+    }
+    /// Bewaar nieuwe lijstdefinities zonder de oorspronkelijke lijstbron af te vlakken.
+    pub fn save(&self) -> Resultaat<Vec<u8>> {
+        self.nummerbron.bewaren(&self.document)
+    }
+    pub(crate) fn controleer_lijstaanvulling(&self) -> Resultaat<()> {
+        self.nummerbron.controleer_aanvulling()
+    }
+    pub(crate) fn hoogste_lijstverwijzing(&self) -> Resultaat<f64> {
+        self.nummerbron.hoogste_verwijzing()
     }
     pub fn bewerkingsbeperking(&self) -> Option<&str> {
         self.beperking.as_deref()
@@ -32,11 +45,7 @@ impl WriterDocument {
         if let Some(bron) = self.layoutbron.get() {
             return Ok(bron.clone());
         }
-        let bron = std::sync::Arc::new(
-            self.document
-                .save()
-                .map_err(|e| Fout::Document(e.to_string()))?,
-        );
+        let bron = std::sync::Arc::new(self.save()?);
         // De cache houdt geen onbeperkte extra kopie van grote pakketten vast.
         if bron.len() <= 16 * 1024 * 1024 {
             let _ = self.layoutbron.set(bron.clone());

@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.33**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.34**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -152,6 +152,14 @@ systeemlettertypen. Zie de [fontproeven](docs/spreadsheetletters-2026-10-31-alph
 
 ![Native spreadsheet met rij- en kolomkoppen](docs/screenshots/spreadsheet-native-referentie.png)
 
+## Writer: opsommingen en nummering
+
+Start → Uitlijning bedient gewone opsommingen en genummerde lijsten voor de actieve ondersteunde alinea. Nogmaals klikken beëindigt de lijst; Enter vervolgt haar en beëindigt een leeg item zonder extra alinea. Aangrenzende alinea’s delen de lijst binnen dezelfde body of tabelcel. De oorspronkelijke lijst-XML en directe runopmaak blijven behouden. Ook nummering uit een alineastijl kan echt worden uitgeschakeld.
+
+De [lijstcontroles voor alpha 34](docs/lijsten-2026-11-01-alpha34/LEESMIJ.md) leggen vijftien nieuwe proeven, twee onafhankelijk teruggelezen DOCX en bronexacte undo vast. Volledig lijstbeheer, niveaus/herstart en selecties over meerdere alinea’s blijven open.
+
+![Native Writer met een genummerde alinea en directe vervolginvoer](docs/screenshots/writer-nummering-direct-typen.png)
+
 ## Writer: alineastijlen
 
 Start → Alinea toont de beschikbare alineastijlen uit het document. Een keuze
@@ -298,7 +306,7 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
-Het [controlerapport voor alpha 33](docs/controle-2026-11-01-alpha33.md) legt **359 reguliere Rust-tests**, inclusief **135 UI-tests**, zes runtimeproeven en zeven Python-tests vast. Rustfmt, Clippy, bronpins en onafhankelijke lezers slagen. **56 volledige native widgetbeelden** en **664 bronbestanden** zijn vastgelegd. [Focus en snelle invoer](docs/invoer-2026-11-01-alpha32/LEESMIJ.md) zijn met zeven nieuwe echte widgetproeven gecontroleerd. Nieuwe en geopende spreadsheets ontvangen eerste toetsen zonder celklik; lange rijnummers passen op één regel. Writer houdt de actieve paginacursor tijdens aangesloten opmaakklikken, ook vóór asynchroon focuswerk; latere tekstvelden blijven afzonderlijke invoerdoelen. De werkelijke oude vensterafkeuringen blijven behouden. Releasebouw, platformronde en de nieuwe werkelijke releasevensters blijven afzonderlijk open.
+Het [controlerapport voor alpha 34](docs/controle-2026-11-01-alpha34.md) legt **374 reguliere Rust-tests**, inclusief **137 UI-tests**, zes runtimeproeven en zeven Python-tests vast. Rustfmt, Clippy, bronpins en onafhankelijke lezers slagen. **57 volledige native widgetbeelden** en **667 bronbestanden** zijn vastgelegd. De nieuwe Writer-lijsten worden met echte widgetgebeurtenissen, snelle vervolginvoer, bronbehoud en afzonderlijke undo gecontroleerd. Eigen releasebouw, nieuwe platformronde en werkelijke alpha-34-releasevensters blijven afzonderlijk vereist. De volledige oorspronkelijke UI-vergelijkingen blijven afgekeurd.
 
 Het [controlerapport voor alpha 31](docs/controle-2026-11-01-alpha31.md) legt **344 reguliere Rust-tests**, inclusief **124 UI-tests**, zes runtimeproeven en zeven Python-tests vast. De [lokale releasebouw](docs/bouw-2026-11-01-alpha31-lokaal.json) slaagt in 34m31s met beide programma’s vastgezet. De [platformronde](docs/platformen-2026-11-01-alpha31.json) slaagt op vijf taken met 2095 bytegelijke bronbestanden per pakket, 106 exacte native beeldparen en 21 paginabezoeken. De [werkelijke CI-Linux-vensterproeven](docs/vensterafkeuring-2026-11-01-alpha31-ci/LEESMIJ.md) blijven afgekeurd: na een ontoereikende eerste bronvoorwaarde toont de strengere hertest daadwerkelijk toetsverlies vlak na een opmaakklik. De oude widgetproeven dekten die gebeurtenisvolgorde niet. De nieuwe alpha-32-widgetronde reproduceert het verlies vóór de correctie en controleert de gewijzigde route; een nieuw werkelijk releasevenster blijft nodig.
 
@@ -470,7 +478,7 @@ python3 native/scripts/meet-paginas.py \
 Op Windows heeft de controleur de extensie `.exe`. Dit is een paginaproef,
 geen fysieke GUI-, volledige inhouds- of pariteitscontrole.
 
-De [controle van alpha 33](docs/controle-2026-11-01-alpha33.md) legt de huidige lokale tests en nog open acceptatie vast. Historische platform- en vensterproeven blijven aan hun eigen broncommit en programmaversie gekoppeld.
+De [controle van alpha 34](docs/controle-2026-11-01-alpha34.md) legt de huidige lokale tests en nog open acceptatie vast. Historische platform- en vensterproeven blijven aan hun eigen broncommit en programmaversie gekoppeld.
 
 ### Ontbrekende symbolen in Spreadsheet
 

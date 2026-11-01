@@ -1,0 +1,59 @@
+   Compiling office-core v2026.44.9-alpha.34 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-core)
+   Compiling open-office-studio-native v2026.44.9-alpha.34 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-ui)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 36s
+     Running unittests src/lib.rs (native/target/debug/deps/office_conversie-0cbb7856160cae58)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_core-095686217fbb136e)
+
+running 5 tests
+test writer_nummering::proeven::writer_lijst_dubbelzinnige_volgorde_en_geneste_definities_worden_geweigerd ... ok
+test writer_nummering::proeven::writer_lijst_lege_wortel_met_andere_prefix_en_eigen_kenmerken_blijft_geldig ... ok
+test writer_nummering::proeven::writer_lijst_nieuwe_naam_tabs_en_markeropmaak_keren_volledig_terug ... ok
+test writer_nummering::proeven::writer_lijst_onbekende_kenmerken_plaatjes_en_opruimmarker_blijven_bytegelijk ... ok
+test writer_nummering::proeven::writer_lijst_verwijzingsgrens_herkent_naamruimten_en_weigert_onduidelijke_ids ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 21 filtered out; finished in 0.81s
+
+     Running unittests src/bin/controleer-bestand.rs (native/target/debug/deps/controleer_bestand-3d75172458db6ad2)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/documentkern.rs (native/target/debug/deps/documentkern-f9df31105463cccd)
+
+running 7 tests
+test writer_opmaak::writer_lijst_een_zojuist_gekozen_lijststijl_eindigt_met_enter_op_hetzelfde_lege_item ... ok
+test writer_opmaak::writer_lijst_nieuwe_definities_worden_bewaard_zonder_oorspronkelijke_lijstbronverlies ... ok
+test writer_opmaak::writer_lijst_nieuwe_identificatie_activeert_geen_oorspronkelijke_verweesde_stijlverwijzing ... ok
+test writer_opmaak::writer_lijst_nummering_enter_vervolgt_en_undo_herstelt_de_gehele_bron ... ok
+test writer_opmaak::writer_lijst_opsomming_wisselen_uitschakelen_en_tabelgrenzen_blijven_bewaard ... ok
+test writer_opmaak::writer_lijst_stijlgebonden_nummering_wordt_echt_uitgeschakeld_en_undo_is_exact ... ok
+test writer_opmaak::writer_lijst_zonder_nummeringsdeel_voegt_een_geldig_gekoppeld_onderdeel_toe ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 131 filtered out; finished in 54.82s
+
+     Running ../../vendor/docx-parse/tests/nested_fields.rs (native/target/debug/deps/engine_velden-3ff3187c9cb999fd)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_mail-25663cdf59969962)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 51 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (native/target/debug/deps/open_office_studio_native-7ced0893002e3d0f)
+
+running 2 tests
+test tests::raster_proeven::writer_lijst_enter_vervolgt_en_een_lege_lijst_eindigt_zonder_extra_alinea ... ok
+test tests::raster_proeven::writer_lijst_ribbon_en_directe_toets_behouden_selectie_bron_en_undo ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 136 filtered out; finished in 37.51s
+

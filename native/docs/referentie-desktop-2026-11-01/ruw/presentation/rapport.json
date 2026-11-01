@@ -1,0 +1,68 @@
+{
+  "geslaagd": true,
+  "referentie_goedgekeurd": false,
+  "omvang": "Aanvullende oorspronkelijke Linux-desktopbeelden in eigen Xvfb/D-Bus/XDG-sessie. Waargenomen GUI bediend met X11; geen vervanging van de vaste webreferenties of native pixelgoedkeuring.",
+  "weergaveomgeving": {
+    "WEBKIT_DISABLE_DMABUF_RENDERER": "1",
+    "WEBKIT_DISABLE_COMPOSITING_MODE": "1"
+  },
+  "voorkeuren": {
+    "taal": "nl",
+    "thema": "forge",
+    "updates": {
+      "automatisch": false,
+      "kanaal": "ontwikkel"
+    }
+  },
+  "appimage": {
+    "versie": "2026.44.8",
+    "broncommit": "0fc4d2bbf94bb6025d8d8517d53631d5f830cd1e",
+    "appimage_sha256": "4623bb10ff9e8f3e6eb0d9229e327196c1f1d29b31334856dd95b70ea6047cc2",
+    "digest_bron": "GitHub Release API van OpenAEC-Foundation/open-office-studio, v2026.44.8",
+    "single_instance": "2.5.4: gecontroleerde Linux-implementatie gebruikt uitsluitend de eigen sessie-D-Bus."
+  },
+  "programma_sha256": "10e3ed617e45d4c4e5973d49cb1a2a0846343d05fe82ad322e04a514e39b2700",
+  "acties": [
+    {
+      "opdracht": "01.actie.json",
+      "x11": [
+        [
+          "mousemove",
+          "--sync",
+          150,
+          171
+        ],
+        [
+          "click",
+          1
+        ],
+        [
+          "mousemove",
+          "--sync",
+          0,
+          0
+        ]
+      ],
+      "wacht": 3,
+      "afronden": true
+    }
+  ],
+  "module": "presentation",
+  "opnamen_identiek": true,
+  "bron_ongewijzigd": true,
+  "bron_sha256": "08e6720f7820dae375fe7b39f26bd66698fdc8e0b4edee88ae28e561ccb8fca4",
+  "voorkeuren_na_start": {
+    "taal": "nl",
+    "thema": "forge",
+    "updates": {
+      "automatisch": false,
+      "kanaal": "ontwikkel"
+    }
+  },
+  "beelden": {
+    "presentation-01.actie.png": "ea1c12b43e2ba1bbd5603892ff93ca502cee74277f833eb96dc27ce18ca06990",
+    "presentation-kandidaat-herhaald.png": "ea1c12b43e2ba1bbd5603892ff93ca502cee74277f833eb96dc27ce18ca06990",
+    "presentation-kandidaat.png": "ea1c12b43e2ba1bbd5603892ff93ca502cee74277f833eb96dc27ce18ca06990",
+    "presentation-voor-bediening.png": "ea1c12b43e2ba1bbd5603892ff93ca502cee74277f833eb96dc27ce18ca06990"
+  }
+}

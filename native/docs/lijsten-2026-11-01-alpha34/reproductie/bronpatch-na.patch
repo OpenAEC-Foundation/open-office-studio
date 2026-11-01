@@ -1,0 +1,2020 @@
+diff --git a/.github/workflows/native-rust.yml b/.github/workflows/native-rust.yml
+index 9b760c1..2cb3e6f 100644
+--- a/.github/workflows/native-rust.yml
++++ b/.github/workflows/native-rust.yml
+@@ -159,7 +159,7 @@ jobs:
+           pattern: native-*
+           path: native/target/platformartefacten
+       - name: Bronbytes, architecturen en volledige native beelden vergelijken
+-        run: python native/scripts/controleer-platformen.py --artefacten native/target/platformartefacten --uitvoer native/target/platformvergelijking/rapport.json --verwachte-schermen 56
++        run: python native/scripts/controleer-platformen.py --artefacten native/target/platformartefacten --uitvoer native/target/platformvergelijking/rapport.json --verwachte-schermen 57
+       - uses: actions/upload-artifact@v4
+         if: always()
+         with:
+diff --git a/native/Cargo.lock b/native/Cargo.lock
+index a182c9c..f05963a 100644
+--- a/native/Cargo.lock
++++ b/native/Cargo.lock
+@@ -3710,7 +3710,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "office-conversie"
+-version = "2026.44.9-alpha.33"
++version = "2026.44.9-alpha.34"
+ dependencies = [
+  "libc",
+  "serde_json",
+@@ -3720,7 +3720,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "office-core"
+-version = "2026.44.9-alpha.33"
++version = "2026.44.9-alpha.34"
+ dependencies = [
+  "base64 0.22.1",
+  "betteroffice-docx",
+@@ -3750,7 +3750,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "office-mail"
+-version = "2026.44.9-alpha.33"
++version = "2026.44.9-alpha.34"
+ dependencies = [
+  "async-imap",
+  "base64 0.22.1",
+@@ -3795,7 +3795,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "open-office-studio-native"
+-version = "2026.44.9-alpha.33"
++version = "2026.44.9-alpha.34"
+ dependencies = [
+  "futures-channel",
+  "iced",
+diff --git a/native/Cargo.toml b/native/Cargo.toml
+index d2dc345..9319a18 100644
+--- a/native/Cargo.toml
++++ b/native/Cargo.toml
+@@ -5,7 +5,7 @@ exclude = ["vendor/openaec-ui", "vendor/docx-parse", "vendor/pptx", "vendor/xlsx
+ resolver = "3"
+ 
+ [workspace.package]
+-version = "2026.44.9-alpha.33"
++version = "2026.44.9-alpha.34"
+ edition = "2024"
+ license = "Apache-2.0"
+ publish = false
+diff --git a/native/crates/office-core/src/document.rs b/native/crates/office-core/src/document.rs
+index 4b8ddb7..b4b667d 100644
+--- a/native/crates/office-core/src/document.rs
++++ b/native/crates/office-core/src/document.rs
+@@ -93,6 +93,8 @@ pub struct Weergave {
+     pub writer_opmaak:
+         std::sync::Arc<std::collections::HashMap<String, Vec<crate::writer_opmaak::OpmaakBereik>>>,
+     pub writer_stijlen: std::sync::Arc<crate::writer_stijlen::Overzicht>,
++    pub writer_lijsten:
++        std::sync::Arc<std::collections::HashMap<String, crate::writer_lijsten::LijstStaat>>,
+     pub writer_frame: Option<std::sync::Arc<crate::writer_cursor::InteractieFrame>>,
+ }
+ /// Eén vervanging in Unicode-tekens, ten opzichte van de vorige stap.
+@@ -244,7 +246,12 @@ impl Document {
+     pub fn markdown(&self) -> Resultaat<String> {
+         match self {
+             Self::Writer(d) => {
+-                let md = d
++                // De mutabele alinea bevat na een bewerking niet alle opnieuw
++                // berekende lijstmetadata. Exporteer dezelfde canonieke bron
++                // als opslaan en de documentpagina, zonder de sessie te wijzigen.
++                let bron = d.layoutbron()?;
++                let canoniek = docx::Document::open(bron.as_slice()).map_err(fout)?;
++                let md = canoniek
+                     .export_markdown(&docx::ExportOptions::new(docx::RevisionView::Accepted))
+                     .map_err(fout)?;
+                 if md.truncated {
+@@ -394,6 +401,7 @@ impl Document {
+             writer_opmaak: Default::default(),
+             writer_frame: None,
+             writer_stijlen: Default::default(),
++            writer_lijsten: Default::default(),
+         };
+         match self {
+             Self::Writer(d) => {
+@@ -411,6 +419,7 @@ impl Document {
+                 beeld.pagina = pagina;
+                 beeld.onderdelen = (0..paginas).map(|i| format!("Pagina {}", i + 1)).collect();
+                 let mut bereiken = std::collections::HashMap::new();
++                let mut lijsten = std::collections::HashMap::new();
+                 for (i, p) in d.paragraphs().into_iter().enumerate() {
+                     let id = p.para_id.clone().unwrap_or_default();
+                     let tekst = crate::writer_tekst::alinea_tekst(p);
+@@ -431,6 +440,9 @@ impl Document {
+                             staat = opmaak;
+                         }
+                         bereiken.insert(id.clone(), gevonden.bereiken.clone());
++                        if let Some(lijst) = &gevonden.lijst {
++                            lijsten.insert(id.clone(), lijst.clone());
++                        }
+                     }
+                     beeld.velden.push(Veld {
+                         id,
+@@ -441,6 +453,7 @@ impl Document {
+                     });
+                 }
+                 beeld.writer_opmaak = std::sync::Arc::new(bereiken);
++                beeld.writer_lijsten = std::sync::Arc::new(lijsten);
+                 beeld.writer_stijlen = std::sync::Arc::new(crate::writer_stijlen::overzicht(d));
+                 let woorden = d
+                     .paragraphs()
+diff --git a/native/crates/office-core/src/lib.rs b/native/crates/office-core/src/lib.rs
+index 39cd36f..e4f29a6 100644
+--- a/native/crates/office-core/src/lib.rs
++++ b/native/crates/office-core/src/lib.rs
+@@ -17,7 +17,9 @@ pub mod writer;
+ mod writer_beeld;
+ pub mod writer_cursor;
+ pub mod writer_document;
++pub mod writer_lijsten;
+ pub mod writer_navigatie;
++mod writer_nummering;
+ pub mod writer_opmaak;
+ pub mod writer_pagina;
+ pub mod writer_stijlen;
+diff --git a/native/crates/office-core/src/opmaak.rs b/native/crates/office-core/src/opmaak.rs
+index b86eae6..37a39f7 100644
+--- a/native/crates/office-core/src/opmaak.rs
++++ b/native/crates/office-core/src/opmaak.rs
+@@ -7,6 +7,11 @@ pub enum Uitlijning {
+     Rechts,
+     Uitvullen,
+ }
++#[derive(Debug, Clone, Copy, PartialEq, Eq)]
++pub enum LijstSoort {
++    Opsomming,
++    Nummering,
++}
+ #[derive(Debug, Clone)]
+ pub enum Opmaak {
+     Vet(bool),
+@@ -19,6 +24,7 @@ pub enum Opmaak {
+     Achtergrond(String),
+     Uitlijning(Uitlijning),
+     Alineastijl(String),
++    Lijst(Option<LijstSoort>),
+     Getal(String),
+     Tekstterugloop(bool),
+ }
+diff --git a/native/crates/office-core/src/writer.rs b/native/crates/office-core/src/writer.rs
+index 517f756..c43c798 100644
+--- a/native/crates/office-core/src/writer.rs
++++ b/native/crates/office-core/src/writer.rs
+@@ -52,6 +52,7 @@ pub enum AlineaActie {
+         einde: usize,
+     },
+     VoegVolgendeSamen,
++    LijstEindigen,
+ }
+ 
+ fn fout(tekst: &str) -> Fout {
+@@ -75,7 +76,7 @@ fn controleer(p: &docx::Paragraph) -> Resultaat<()> {
+ 
+ /// Alleen aangrenzende alinea's binnen dezelfde body of dezelfde tabelcel.
+ /// Een inhoudsbesturing wordt niet doorkruist: die kan een eigen slot hebben.
+-fn zoek<'a>(blokken: &'a [B], id: &str) -> Option<(&'a [B], usize)> {
++pub(crate) fn zoek<'a>(blokken: &'a [B], id: &str) -> Option<(&'a [B], usize)> {
+     for (i, blok) in blokken.iter().enumerate() {
+         match blok {
+             B::Paragraph(p) if p.para_id.as_deref() == Some(id) => return Some((blokken, i)),
+@@ -133,6 +134,23 @@ pub fn alinea(d: &mut docx::Document, id: &str, actie: AlineaActie) -> Resultaat
+     controleer(p)?;
+     let mut eerste = (**p).clone();
+     let (ids, nieuw) = match actie {
++        AlineaActie::LijstEindigen => {
++            if !crate::writer_lijsten::heeft_lijst(d, p)
++                || !crate::writer_tekst::alinea_tekst(p).is_empty()
++            {
++                return Err(fout(
++                    "Alleen een leeg lijstitem kan met Enter worden beëindigd",
++                ));
++            }
++            let f = eerste.formatting.get_or_insert_with(Default::default);
++            f.num_pr = Some(docx_parse::formatting::NumberingProperties {
++                num_id: Some(0.),
++                ilvl: None,
++            });
++            f.num_pr_from_style = None;
++            eerste.list_rendering = None;
++            (vec![id.into()], vec![B::Paragraph(Arc::new(eerste))])
++        }
+         AlineaActie::Splits { .. } => unreachable!(),
+         AlineaActie::SplitsBereik { begin, einde } => {
+             let tekst = docx::get_paragraph_text(p);
+@@ -251,6 +269,14 @@ pub(crate) fn cursor_plan(
+         return Err(fout("De alineacursor valt buiten de brontekst"));
+     }
+     let (id, bewerking, doel) = match actie {
++        CursorActie::Splits if lengte == 0 && crate::writer_lijsten::heeft_lijst(d, p) => (
++            id.into(),
++            AlineaActie::LijstEindigen,
++            CursorNa::Bestaand(TekstPunt {
++                id: id.into(),
++                positie: 0,
++            }),
++        ),
+         CursorActie::Splits => (
+             id.into(),
+             AlineaActie::SplitsBereik { begin, einde },
+diff --git a/native/crates/office-core/src/writer_document.rs b/native/crates/office-core/src/writer_document.rs
+index 0ebdd1d..f5347e0 100644
+--- a/native/crates/office-core/src/writer_document.rs
++++ b/native/crates/office-core/src/writer_document.rs
+@@ -9,12 +9,15 @@ pub struct WriterDocument {
+     document: Document,
+     beperking: Option<String>,
+     dubbele_stijlen: std::collections::HashSet<String>,
++    nummerbron: crate::writer_nummering::Nummerbron,
+     layoutbron: std::cell::OnceCell<std::sync::Arc<Vec<u8>>>,
+ }
+ impl WriterDocument {
+     pub(crate) fn nieuw(document: Document, bron: &[u8]) -> Resultaat<Self> {
++        let nummerbron = crate::writer_nummering::Nummerbron::nieuw(&document, bron)?;
+         Ok(Self {
+             document,
++            nummerbron,
+             beperking: lees_beperking(bron)?,
+             dubbele_stijlen: crate::writer_stijlen::dubbele_ids(bron)?,
+             layoutbron: std::cell::OnceCell::new(),
+@@ -23,6 +26,16 @@ impl WriterDocument {
+     pub(crate) fn dubbele_stijlen(&self) -> &std::collections::HashSet<String> {
+         &self.dubbele_stijlen
+     }
++    /// Bewaar nieuwe lijstdefinities zonder de oorspronkelijke lijstbron af te vlakken.
++    pub fn save(&self) -> Resultaat<Vec<u8>> {
++        self.nummerbron.bewaren(&self.document)
++    }
++    pub(crate) fn controleer_lijstaanvulling(&self) -> Resultaat<()> {
++        self.nummerbron.controleer_aanvulling()
++    }
++    pub(crate) fn hoogste_lijstverwijzing(&self) -> Resultaat<f64> {
++        self.nummerbron.hoogste_verwijzing()
++    }
+     pub fn bewerkingsbeperking(&self) -> Option<&str> {
+         self.beperking.as_deref()
+     }
+@@ -32,11 +45,7 @@ impl WriterDocument {
+         if let Some(bron) = self.layoutbron.get() {
+             return Ok(bron.clone());
+         }
+-        let bron = std::sync::Arc::new(
+-            self.document
+-                .save()
+-                .map_err(|e| Fout::Document(e.to_string()))?,
+-        );
++        let bron = std::sync::Arc::new(self.save()?);
+         // De cache houdt geen onbeperkte extra kopie van grote pakketten vast.
+         if bron.len() <= 16 * 1024 * 1024 {
+             let _ = self.layoutbron.set(bron.clone());
+diff --git a/native/crates/office-core/src/writer_opmaak.rs b/native/crates/office-core/src/writer_opmaak.rs
+index fb3276e..b6774cc 100644
+--- a/native/crates/office-core/src/writer_opmaak.rs
++++ b/native/crates/office-core/src/writer_opmaak.rs
+@@ -19,6 +19,7 @@ pub(crate) struct AlineaOpmaak {
+     pub tekst: String,
+     pub bereiken: Vec<OpmaakBereik>,
+     pub invoegopmaak: Option<docx_parse::formatting::TextFormatting>,
++    pub lijst: Option<crate::writer_lijsten::LijstStaat>,
+ }
+ pub(crate) type Alineas = HashMap<String, AlineaOpmaak>;
+ 
+@@ -106,6 +107,7 @@ pub(crate) fn lees(doc: &docx_edit::EditingDoc) -> Resultaat<Alineas> {
+                     positie = einde;
+                 }
+                 S::Pilcrow(p) => {
++                    alinea.lijst = crate::writer_lijsten::staat(&p.values);
+                     if alinea.tekst.is_empty() {
+                         // Dezelfde reeds opgeloste alinea-/tabelstijl als de engine.
+                         // Beschadigde metadata wordt niet als een standaardstijl voorgesteld.
+diff --git a/native/crates/office-core/src/writer_tekst.rs b/native/crates/office-core/src/writer_tekst.rs
+index ab2215b..3d951be 100644
+--- a/native/crates/office-core/src/writer_tekst.rs
++++ b/native/crates/office-core/src/writer_tekst.rs
+@@ -600,6 +600,8 @@ pub fn opmaak(
+     if let O::Alineastijl(id) = stijl {
+         crate::writer_stijlen::controleer(d, id)?;
+         p.formatting.get_or_insert_with(Default::default).style_id = Some(id.clone());
++    } else if let O::Lijst(soort) = stijl {
++        crate::writer_lijsten::toepassen(d, &mut p, *soort)?;
+     } else if let O::Uitlijning(a) = stijl {
+         p.formatting.get_or_insert_with(Default::default).alignment = Some(
+             match a {
+diff --git a/native/crates/office-core/tests/fixtures/controleer.py b/native/crates/office-core/tests/fixtures/controleer.py
+index 9d6a28c..2525b30 100644
+--- a/native/crates/office-core/tests/fixtures/controleer.py
++++ b/native/crates/office-core/tests/fixtures/controleer.py
+@@ -430,3 +430,6 @@ assert d.sections[0].footer.paragraphs[0].text=='Vaste voettekst'
+ assert d.tables[0].cell(0,0).text=='Cel één\nTweede celalinea'
+ assert d.tables[0].cell(0,1).text=='Cel twee'
+ print('Writer-alineastijlen: beide bewaarde DOCX onafhankelijk goedgekeurd, inclusief stijl-ID, stijllettertype/-grootte, directe runopmaak en tabel-/sectie-/kopvoetbehoud.')
++
++import runpy
++runpy.run_path(str(Path(__file__).with_name('controleer-lijsten.py')), run_name='__main__')
+diff --git a/native/crates/office-core/tests/writer_beveiliging.rs b/native/crates/office-core/tests/writer_beveiliging.rs
+index 846789d..c6f236b 100644
+--- a/native/crates/office-core/tests/writer_beveiliging.rs
++++ b/native/crates/office-core/tests/writer_beveiliging.rs
+@@ -45,10 +45,26 @@ fn opdrachten(id: &str) -> Vec<Bewerking> {
+             einde: 0,
+             stijl: Opmaak::Alineastijl("Normal".into()),
+         },
++        Bewerking::Opmaak {
++            id: id.into(),
++            begin: 0,
++            einde: 0,
++            stijl: Opmaak::Lijst(Some(office_core::opmaak::LijstSoort::Nummering)),
++        },
++        Bewerking::Opmaak {
++            id: id.into(),
++            begin: 0,
++            einde: 0,
++            stijl: Opmaak::Lijst(None),
++        },
+         Bewerking::Alinea {
+             id: id.into(),
+             actie: AlineaActie::Splits { positie: 1 },
+         },
++        Bewerking::Alinea {
++            id: id.into(),
++            actie: AlineaActie::LijstEindigen,
++        },
+         Bewerking::Pagina {
+             id: id.into(),
+             actie: PaginaActie::Liggend(true),
+diff --git a/native/crates/office-core/tests/writer_opmaak.rs b/native/crates/office-core/tests/writer_opmaak.rs
+index 5650b41..9313258 100644
+--- a/native/crates/office-core/tests/writer_opmaak.rs
++++ b/native/crates/office-core/tests/writer_opmaak.rs
+@@ -4,6 +4,187 @@ use office_core::{
+     writer_opmaak::selectie,
+ };
+ const BRON: &[u8] = include_bytes!("fixtures/writer.docx");
++fn lijst_opdracht(id: &str, soort: Option<office_core::opmaak::LijstSoort>) -> Bewerking {
++    Bewerking::Opmaak {
++        id: id.into(),
++        begin: 0,
++        einde: 0,
++        stijl: Opmaak::Lijst(soort),
++    }
++}
++
++#[test]
++fn writer_lijst_nummering_enter_vervolgt_en_undo_herstelt_de_gehele_bron() {
++    use office_core::{opmaak::LijstSoort as L, writer::AlineaActie};
++    let bron = include_bytes!("fixtures/writer-structuur.docx");
++    // De bestaande splitsbewerking schrijft nieuwe tekstruns met expliciet
++    // xml:space. Geef de rijke brontekstruns diezelfde geldige representatie,
++    // zodat daarna alle runvelden exact vergelijkbaar blijven.
++    let mut delen = ooxml_opc::unzip_parts(bron).unwrap();
++    let xml = &mut delen
++        .iter_mut()
++        .find(|(n, _)| n == "word/document.xml")
++        .unwrap()
++        .1;
++    let tekst = String::from_utf8(xml.clone()).unwrap();
++    assert_eq!(tekst.matches("<w:t>café rechts</w:t>").count(), 1);
++    *xml = tekst
++        .replace(
++            "<w:t>café rechts</w:t>",
++            "<w:t xml:space=\"preserve\">café rechts</w:t>",
++        )
++        .into_bytes();
++    let eigen_bron = ooxml_opc::rezip_parts(&delen).unwrap();
++    let bron = eigen_bron.as_slice();
++    let mut s = Sessie::open(Module::Writer, bron.to_vec()).unwrap();
++    let b = s.weergave(0).unwrap();
++    let v = b
++        .velden
++        .iter()
++        .find(|v| v.tekst == "Links 🏠 café rechts")
++        .unwrap();
++    let Document::Writer(d) = Document::open(Module::Writer, bron).unwrap() else {
++        unreachable!()
++    };
++    let inhoud = d.paragraph(&v.id).unwrap().content.clone();
++    s.bewerk(0, lijst_opdracht(&v.id, Some(L::Nummering)))
++        .unwrap();
++    let genummerd = s.bron().clone();
++    let n = s.weergave(0).unwrap();
++    let lijst = n.writer_lijsten.get(&v.id).unwrap();
++    assert_eq!(lijst.soort, L::Nummering);
++    assert_eq!(lijst.niveau, 0);
++    let nummer = lijst.nummer;
++    s.bewerk(
++        0,
++        Bewerking::Alinea {
++            id: v.id.clone(),
++            actie: AlineaActie::Splits {
++                positie: v.tekst.chars().count(),
++            },
++        },
++    )
++    .unwrap();
++    let gesplitst = s.bron().clone();
++    let n = s.weergave(0).unwrap();
++    let i = n.velden.iter().position(|p| p.id == v.id).unwrap();
++    let leeg = &n.velden[i + 1];
++    assert_eq!(leeg.tekst, "");
++    assert_eq!(n.writer_lijsten[&leeg.id].nummer, nummer);
++    s.bewerk(
++        0,
++        Bewerking::Tekst {
++            id: leeg.id.clone(),
++            tekst: "Tweede 🏠".into(),
++        },
++    )
++    .unwrap();
++    let Document::Writer(d) = Document::open(Module::Writer, &s.bron()).unwrap() else {
++        unreachable!()
++    };
++    assert_eq!(d.paragraph(&v.id).unwrap().content, inhoud);
++    assert_eq!(
++        d.paragraph(&v.id)
++            .unwrap()
++            .list_rendering
++            .as_ref()
++            .unwrap()
++            .num_id,
++        nummer as f64
++    );
++    assert_eq!(
++        d.paragraph(&leeg.id)
++            .unwrap()
++            .list_rendering
++            .as_ref()
++            .unwrap()
++            .num_id,
++        nummer as f64
++    );
++    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
++        std::fs::create_dir_all(&map).unwrap();
++        std::fs::write(
++            std::path::PathBuf::from(map).join("writer-lijsten-direct.docx"),
++            s.bron().as_slice(),
++        )
++        .unwrap();
++    }
++    s.terug().unwrap();
++    assert_eq!(*s.bron(), *gesplitst);
++    s.terug().unwrap();
++    assert_eq!(*s.bron(), *genummerd);
++    s.terug().unwrap();
++    assert_eq!(s.bron().as_slice(), bron);
++    s.vooruit().unwrap();
++    assert_eq!(*s.bron(), *genummerd);
++}
++
++#[test]
++fn writer_lijst_opsomming_wisselen_uitschakelen_en_tabelgrenzen_blijven_bewaard() {
++    use office_core::opmaak::LijstSoort as L;
++    let bron = include_bytes!("fixtures/writer-structuur.docx");
++    let mut s = Sessie::open(Module::Writer, bron.to_vec()).unwrap();
++    let b = s.weergave(0).unwrap();
++    let rijk = b
++        .velden
++        .iter()
++        .find(|v| v.tekst == "Links 🏠 café rechts")
++        .unwrap();
++    let cel = b.velden.iter().find(|v| v.tekst == "Cel één").unwrap();
++    let tweede = b
++        .velden
++        .iter()
++        .find(|v| v.tekst == "Tweede celalinea")
++        .unwrap();
++    let andere_cel = b.velden.iter().find(|v| v.tekst == "Cel twee").unwrap();
++    for v in [rijk, cel, tweede, andere_cel] {
++        s.bewerk(0, lijst_opdracht(&v.id, Some(L::Opsomming)))
++            .unwrap();
++    }
++    let n = s.weergave(0).unwrap();
++    for v in [rijk, cel, tweede, andere_cel] {
++        assert_eq!(n.writer_lijsten[&v.id].soort, L::Opsomming);
++        assert_eq!(
++            n.velden.iter().find(|p| p.id == v.id).unwrap().tekst,
++            v.tekst
++        );
++    }
++    assert_ne!(
++        n.writer_lijsten[&rijk.id].nummer,
++        n.writer_lijsten[&cel.id].nummer
++    );
++    assert_eq!(
++        n.writer_lijsten[&cel.id].nummer,
++        n.writer_lijsten[&tweede.id].nummer
++    );
++    assert_ne!(
++        n.writer_lijsten[&cel.id].nummer,
++        n.writer_lijsten[&andere_cel.id].nummer
++    );
++    let Document::Writer(d) = Document::open(Module::Writer, &s.bron()).unwrap() else {
++        unreachable!()
++    };
++    assert_eq!(
++        d.model()
++            .numbering
++            .abstract_nums
++            .iter()
++            .filter(|n| n.name.as_deref() == Some("OpenAEC-Opsomming"))
++            .count(),
++        1
++    );
++    s.bewerk(0, lijst_opdracht(&rijk.id, Some(L::Nummering)))
++        .unwrap();
++    assert_eq!(
++        s.weergave(0).unwrap().writer_lijsten[&rijk.id].soort,
++        L::Nummering
++    );
++    let genummerd = s.bron().clone();
++    s.bewerk(0, lijst_opdracht(&rijk.id, None)).unwrap();
++    assert!(!s.weergave(0).unwrap().writer_lijsten.contains_key(&rijk.id));
++    s.terug().unwrap();
++    assert_eq!(*s.bron(), *genummerd);
++}
+ #[test]
+ fn writer_opmaak_titel_standaardtekst_en_tabel_laten_de_opgeloste_engineopmaak_zien() {
+     let s = Sessie::open(Module::Writer, BRON.to_vec()).unwrap();
+@@ -757,3 +938,385 @@ fn alineastijl_gelezen_standaardstijl_en_ontbrekende_keuze_worden_niet_verzonnen
+     assert!(!b.writer_stijlen.huidig.contains_key(&b.velden[1].id));
+     assert_eq!(s.bron().as_slice(), bron);
+ }
++
++#[test]
++fn writer_lijst_nieuwe_definities_worden_bewaard_zonder_oorspronkelijke_lijstbronverlies() {
++    let invoer = include_bytes!("fixtures/writer-structuur.docx");
++    // Zoals de vastgelegde nulbewerkingsdiagnose laat zien, normaliseert de
++    // bestaande serializer eerst de standaardnaamruimten van kop/voet. Begin
++    // deze afzonderlijke lijstproef daarom met een reeds canonieke bron.
++    let canonieke_invoer = Document::open(Module::Writer, invoer)
++        .unwrap()
++        .bytes()
++        .unwrap();
++    let bron = canonieke_invoer.as_slice();
++    let originele_delen = ooxml_opc::unzip_parts(invoer).unwrap();
++    let canonieke_delen = ooxml_opc::unzip_parts(bron).unwrap();
++    assert_eq!(
++        originele_delen
++            .iter()
++            .find(|(n, _)| n == "word/numbering.xml")
++            .unwrap()
++            .1,
++        canonieke_delen
++            .iter()
++            .find(|(n, _)| n == "word/numbering.xml")
++            .unwrap()
++            .1,
++        "De ruwe nummeringsbron mag ook bij de nulbewerking niet veranderen"
++    );
++    let mut d = Document::open(Module::Writer, bron).unwrap();
++    let zonder_bewerking = d.bytes().unwrap();
++    let Document::Writer(w) = &mut d else {
++        unreachable!()
++    };
++    let origineel = w.model().numbering.clone();
++    let koppen = w.model().headers.clone();
++    let voeten = w.model().footers.clone();
++    assert!(!origineel.abstract_nums.is_empty() && !origineel.nums.is_empty());
++    let mut abstracte = origineel.abstract_nums[0].clone();
++    abstracte.abstract_num_id = origineel
++        .abstract_nums
++        .iter()
++        .map(|n| n.abstract_num_id)
++        .fold(0., f64::max)
++        + 1.;
++    let mut instantie = origineel.nums[0].clone();
++    instantie.num_id = origineel.nums.iter().map(|n| n.num_id).fold(0., f64::max) + 1.;
++    instantie.abstract_num_id = abstracte.abstract_num_id;
++    instantie.level_overrides = None;
++    let nieuwe_id = instantie.num_id;
++    let nieuwe_abstracte = abstracte.abstract_num_id;
++    w.model_mut().numbering.abstract_nums.push(abstracte);
++    w.model_mut().numbering.nums.push(instantie);
++    let bytes = d.bytes().unwrap();
++    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
++        std::fs::create_dir_all(&map).unwrap();
++        for (naam, bytes) in [
++            ("lijstbron-oorspronkelijk.docx", bron),
++            (
++                "lijstbron-zonder-bewerking.docx",
++                zonder_bewerking.as_slice(),
++            ),
++            ("lijstbron-aangevuld.docx", bytes.as_slice()),
++        ] {
++            std::fs::write(std::path::PathBuf::from(&map).join(naam), bytes).unwrap();
++        }
++    }
++
++    let Document::Writer(opnieuw) = Document::open(Module::Writer, &bytes).unwrap() else {
++        unreachable!()
++    };
++    assert!(
++        opnieuw
++            .model()
++            .numbering
++            .nums
++            .iter()
++            .any(|n| n.num_id == nieuwe_id && n.abstract_num_id == nieuwe_abstracte),
++        "De nieuwe lijstinstantie ontbreekt in het bewaarde document"
++    );
++    assert!(
++        opnieuw
++            .model()
++            .numbering
++            .abstract_nums
++            .iter()
++            .any(|n| n.abstract_num_id == nieuwe_abstracte)
++    );
++    assert_eq!(
++        &opnieuw.model().numbering.nums[..origineel.nums.len()],
++        origineel.nums.as_slice()
++    );
++    assert_eq!(opnieuw.model().headers, koppen);
++    assert_eq!(opnieuw.model().footers, voeten);
++    let oud = ooxml_opc::unzip_parts(bron).unwrap();
++    let canoniek = ooxml_opc::unzip_parts(&zonder_bewerking).unwrap();
++    let nieuw = ooxml_opc::unzip_parts(&bytes).unwrap();
++    let oud_num = &oud
++        .iter()
++        .find(|(n, _)| n == "word/numbering.xml")
++        .unwrap()
++        .1;
++    let nieuw_num = &nieuw
++        .iter()
++        .find(|(n, _)| n == "word/numbering.xml")
++        .unwrap()
++        .1;
++    // Nieuwe abstracte definities horen vóór bestaande instanties. Alleen
++    // de twee nieuwe elementen verwijderen moet de hele oorspronkelijke bron
++    // bytegelijk herstellen, inclusief onbekende kenmerken en witruimte.
++    let mut zonder_nieuwe = String::from_utf8(nieuw_num.clone()).unwrap();
++    for (tag, attribuut, id) in [
++        ("abstractNum", "abstractNumId", nieuwe_abstracte),
++        ("num", "numId", nieuwe_id),
++    ] {
++        let patroon =
++            format!(r#"(?s)<w:{tag}\b[^>]*\bw:{attribuut}="{id:.0}"[^>]*(?:/>|>.*?</w:{tag}>)"#);
++        let re = regex::Regex::new(&patroon).unwrap();
++        assert_eq!(re.find_iter(&zonder_nieuwe).count(), 1);
++        zonder_nieuwe = re.replace(&zonder_nieuwe, "").into_owned();
++    }
++    assert_eq!(
++        zonder_nieuwe.as_bytes(),
++        oud_num.as_slice(),
++        "Bestaande onbekende lijstkenmerken moeten bytegelijk blijven"
++    );
++    // De bestaande serializer normaliseert ook bij nulbewerkingen de
++    // standaardnaamruimten en mc:Ignorable van kop/voet. Deze lijststap mag
++    // geen enkel extra verschil buiten document.xml/numbering.xml maken.
++    for (naam, inhoud) in canoniek {
++        if !["word/document.xml", "word/numbering.xml"].contains(&naam.as_str()) {
++            assert_eq!(
++                nieuw.iter().find(|(n, _)| n == &naam).unwrap().1,
++                inhoud,
++                "{naam}"
++            );
++        }
++    }
++}
++
++#[test]
++fn writer_lijst_stijlgebonden_nummering_wordt_echt_uitgeschakeld_en_undo_is_exact() {
++    let bron = met_extra_stijlen(
++        include_bytes!("fixtures/writer-structuur.docx"),
++        r#"<w:style w:type="paragraph" w:styleId="EigenLijst"><w:name w:val="Eigen lijst"/><w:basedOn w:val="Normal"/><w:pPr><w:numPr><w:ilvl w:val="0"/><w:numId w:val="9"/></w:numPr></w:pPr></w:style>"#,
++    );
++    let mut s = Sessie::open(Module::Writer, bron).unwrap();
++    let b = s.weergave(0).unwrap();
++    let id = b
++        .velden
++        .iter()
++        .find(|v| v.tekst == "Links 🏠 café rechts")
++        .unwrap()
++        .id
++        .clone();
++    s.bewerk(
++        0,
++        Bewerking::Opmaak {
++            id: id.clone(),
++            begin: 0,
++            einde: 0,
++            stijl: Opmaak::Alineastijl("EigenLijst".into()),
++        },
++    )
++    .unwrap();
++    let bron = s.bron();
++    let mut s = Sessie::open(Module::Writer, bron.as_ref().clone()).unwrap();
++    assert_eq!(s.weergave(0).unwrap().writer_lijsten[&id].nummer, 9);
++    s.bewerk(0, lijst_opdracht(&id, None)).unwrap();
++    assert!(!s.weergave(0).unwrap().writer_lijsten.contains_key(&id));
++    let bewaard = s.bron();
++    let Document::Writer(w) = Document::open(Module::Writer, &bewaard).unwrap() else {
++        unreachable!()
++    };
++    let f = w.paragraph(&id).unwrap().formatting.as_ref().unwrap();
++    assert_eq!(f.style_id.as_deref(), Some("EigenLijst"));
++    assert_eq!(f.num_pr.as_ref().unwrap().num_id, Some(0.));
++    let delen = |b: &[u8]| ooxml_opc::unzip_parts(b).unwrap();
++    let stijl = |v: Vec<(String, Vec<u8>)>| {
++        v.into_iter()
++            .find(|(n, _)| n == "word/styles.xml")
++            .unwrap()
++            .1
++    };
++    assert_eq!(stijl(delen(&bron)), stijl(delen(&bewaard)));
++    s.terug().unwrap();
++    assert_eq!(*s.bron(), *bron);
++}
++
++#[test]
++fn writer_lijst_zonder_nummeringsdeel_voegt_een_geldig_gekoppeld_onderdeel_toe() {
++    use office_core::opmaak::LijstSoort as L;
++    let mut delen =
++        ooxml_opc::unzip_parts(include_bytes!("fixtures/writer-structuur.docx")).unwrap();
++    delen.retain(|(n, _)| n != "word/numbering.xml");
++    for (naam, bytes) in &mut delen {
++        let patroon = match naam.as_str() {
++            "[Content_Types].xml" => r#"<Override\b[^>]*PartName="/word/numbering.xml"[^>]*/>"#,
++            "word/_rels/document.xml.rels" => {
++                r#"<Relationship\b[^>]*Type="[^"]*/numbering"[^>]*/>"#
++            }
++            _ => continue,
++        };
++        let re = regex::Regex::new(patroon).unwrap();
++        let tekst = String::from_utf8(bytes.clone()).unwrap();
++        assert_eq!(re.find_iter(&tekst).count(), 1);
++        *bytes = re.replace(&tekst, "").into_owned().into_bytes();
++    }
++    let bron = ooxml_opc::rezip_parts(&delen).unwrap();
++    let mut s = Sessie::open(Module::Writer, bron.clone()).unwrap();
++    let b = s.weergave(0).unwrap();
++    let id = b
++        .velden
++        .iter()
++        .find(|v| v.tekst == "Links 🏠 café rechts")
++        .unwrap()
++        .id
++        .clone();
++    s.bewerk(0, lijst_opdracht(&id, Some(L::Opsomming)))
++        .unwrap();
++    let Document::Writer(w) = Document::open(Module::Writer, &s.bron()).unwrap() else {
++        unreachable!()
++    };
++    assert_eq!(w.model().numbering.nums.len(), 1);
++    assert_eq!(w.model().numbering.abstract_nums.len(), 1);
++    assert_eq!(
++        w.model().numbering.abstract_nums[0].name.as_deref(),
++        Some("OpenAEC-Opsomming")
++    );
++    assert_eq!(
++        s.weergave(0).unwrap().writer_lijsten[&id].soort,
++        L::Opsomming
++    );
++    let delen = ooxml_opc::unzip_parts(&s.bron()).unwrap();
++    for (naam, zoek) in [
++        (
++            "[Content_Types].xml",
++            "application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml",
++        ),
++        ("word/_rels/document.xml.rels", "Target=\"numbering.xml\""),
++    ] {
++        let xml = &delen.iter().find(|(n, _)| n == naam).unwrap().1;
++        assert!(std::str::from_utf8(xml).unwrap().contains(zoek));
++    }
++    s.terug().unwrap();
++    assert_eq!(s.bron().as_slice(), bron);
++}
++
++#[test]
++fn writer_lijst_een_zojuist_gekozen_lijststijl_eindigt_met_enter_op_hetzelfde_lege_item() {
++    use office_core::writer::{AlineaActie, CursorActie};
++    let bron = met_extra_stijlen(
++        include_bytes!("fixtures/writer-structuur.docx"),
++        r#"<w:style w:type="paragraph" w:styleId="EigenLijst"><w:name w:val="Eigen lijst"/><w:basedOn w:val="Normal"/><w:pPr><w:numPr><w:ilvl w:val="0"/><w:numId w:val="9"/></w:numPr></w:pPr></w:style>"#,
++    );
++    let mut s = Sessie::open(Module::Writer, bron).unwrap();
++    let b = s.weergave(0).unwrap();
++    let i = b
++        .velden
++        .iter()
++        .position(|v| v.tekst == "Links 🏠 café rechts")
++        .unwrap();
++    let v = &b.velden[i];
++    s.bewerk(
++        0,
++        Bewerking::Alinea {
++            id: v.id.clone(),
++            actie: AlineaActie::Splits {
++                positie: v.tekst.chars().count(),
++            },
++        },
++    )
++    .unwrap();
++    let id = s.weergave(0).unwrap().velden[i + 1].id.clone();
++    s.bewerk(
++        0,
++        Bewerking::Opmaak {
++            id: id.clone(),
++            begin: 0,
++            einde: 0,
++            stijl: Opmaak::Alineastijl("EigenLijst".into()),
++        },
++    )
++    .unwrap();
++    let b = s.weergave(0).unwrap();
++    assert!(b.writer_lijsten.contains_key(&id));
++    let bron = s.bron();
++    let hash = s.bron_hash().to_owned();
++    let (n, cursor) = s
++        .bewerk_alinea_cursor(0, &hash, &id, 0, 0, CursorActie::Splits)
++        .unwrap();
++    assert_eq!(n.velden.len(), b.velden.len());
++    assert_eq!(cursor.id, id);
++    assert_eq!(cursor.positie, 0);
++    assert!(!n.writer_lijsten.contains_key(&id));
++    s.terug().unwrap();
++    assert_eq!(*s.bron(), *bron);
++}
++
++#[test]
++fn writer_lijst_nieuwe_identificatie_activeert_geen_oorspronkelijke_verweesde_stijlverwijzing() {
++    use office_core::opmaak::LijstSoort as L;
++    let bron = met_extra_stijlen(
++        include_bytes!("fixtures/writer-structuur.docx"),
++        r#"<w:style w:type="paragraph" w:styleId="VerweesdeLijst"><w:name w:val="Verweesde lijst"/><w:basedOn w:val="Normal"/><w:pPr><w:numPr><w:ilvl w:val="0"/><w:numId w:val="10"/></w:numPr></w:pPr></w:style>"#,
++    );
++    let mut s = Sessie::open(Module::Writer, bron).unwrap();
++    let b = s.weergave(0).unwrap();
++    let oud = b
++        .velden
++        .iter()
++        .find(|v| v.tekst == "Voor de rijke alinea")
++        .unwrap();
++    let doel = b
++        .velden
++        .iter()
++        .find(|v| v.tekst == "Links 🏠 café rechts")
++        .unwrap();
++    s.bewerk(
++        0,
++        Bewerking::Opmaak {
++            id: oud.id.clone(),
++            begin: 0,
++            einde: 0,
++            stijl: Opmaak::Alineastijl("VerweesdeLijst".into()),
++        },
++    )
++    .unwrap();
++    assert!(!s.weergave(0).unwrap().writer_lijsten.contains_key(&oud.id));
++    let voor = s.bron();
++    s.bewerk(0, lijst_opdracht(&doel.id, Some(L::Nummering)))
++        .unwrap();
++    let n = s.weergave(0).unwrap();
++    assert!(
++        !n.writer_lijsten.contains_key(&oud.id),
++        "Een nieuwe lijst mag een andere alinea met een ontbrekende oorspronkelijke definitie niet alsnog nummeren"
++    );
++    assert!(n.writer_lijsten[&doel.id].nummer > 10);
++    assert_eq!(
++        n.velden.iter().find(|v| v.id == oud.id).unwrap().tekst,
++        oud.tekst
++    );
++    let stijl = |b: &[u8]| {
++        ooxml_opc::unzip_parts(b)
++            .unwrap()
++            .into_iter()
++            .find(|(n, _)| n == "word/styles.xml")
++            .unwrap()
++            .1
++    };
++    assert_eq!(stijl(&voor), stijl(&s.bron()));
++    s.terug().unwrap();
++    assert_eq!(*s.bron(), *voor);
++}
++
++#[test]
++fn writer_lijst_markdown_bewaart_de_nieuwe_lijst_voor_en_na_heropenen() {
++    use office_core::opmaak::LijstSoort as L;
++    for (soort, voorvoegsel) in [(L::Opsomming, "- "), (L::Nummering, "1. ")] {
++        let bron = include_bytes!("fixtures/writer-structuur.docx");
++        let mut s = Sessie::open(Module::Writer, bron.to_vec()).unwrap();
++        let b = s.weergave(0).unwrap();
++        let id = b
++            .velden
++            .iter()
++            .find(|v| v.tekst == "Voor de rijke alinea")
++            .unwrap()
++            .id
++            .clone();
++        s.bewerk(0, lijst_opdracht(&id, Some(soort))).unwrap();
++        let bewaard = s.bron();
++        let md = s.markdown().unwrap();
++        assert!(
++            md.lines()
++                .any(|regel| regel == format!("{voorvoegsel}Voor de rijke alinea")),
++            "{soort:?}: {md}"
++        );
++        let opnieuw = Document::open(Module::Writer, &bewaard).unwrap();
++        assert_eq!(md, opnieuw.markdown().unwrap());
++        assert_eq!(*s.bron(), *bewaard);
++        s.terug().unwrap();
++        assert_eq!(s.bron().as_slice(), bron);
++    }
++}
+diff --git a/native/crates/office-ui/src/lint.rs b/native/crates/office-ui/src/lint.rs
+index 97d5366..1b3f7a9 100644
+--- a/native/crates/office-ui/src/lint.rs
++++ b/native/crates/office-ui/src/lint.rs
+@@ -341,9 +341,35 @@ pub fn ribbon(app: &App) -> Option<Element<'_, Msg>> {
+         groepen.push(w::ribbon_group(l, "Bewerken", vec![geschiedenis.into()]));
+     }
+     groepen.push(klembord);
++    let uitlijnvak: Element<'_, Msg> = if module == Module::Writer {
++        use office_core::opmaak::LijstSoort as L;
++        let huidig = veld
++            .and_then(|v| a.beeld.writer_lijsten.get(&v.id))
++            .map(|s| s.soort);
++        let lijst = |icoon, naam, soort| {
++            compact(
++                icoon,
++                naam,
++                huidig == Some(soort),
++                Opmaak::Lijst((huidig != Some(soort)).then_some(soort)),
++            )
++        };
++        column![
++            uitlijning,
++            row![
++                lijst(OPSOMMING, "Opsomming", L::Opsomming),
++                lijst(NUMMERING, "Nummering", L::Nummering)
++            ]
++            .spacing(2)
++        ]
++        .spacing(2)
++        .into()
++    } else {
++        uitlijning.into()
++    };
+     groepen.extend(vec![
+         w::ribbon_group(l, "Lettertype", vec![tekst.into()]),
+-        w::ribbon_group(l, "Uitlijning", vec![uitlijning.into()]),
++        w::ribbon_group(l, "Uitlijning", vec![uitlijnvak]),
+     ]);
+     if module == Module::Spreadsheet {
+         let actie = |naam, actie| {
+@@ -509,6 +535,8 @@ pub fn tekenoffset(
+ // Eigen lijniconen voor opdrachten buiten de vaste catalogus.
+ const DOORHALEN: &str = r#"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M17 5c-1-1-3-2-5-2-3 0-5 2-5 4 0 1 1 2 2 3m6 4c2 1 3 2 3 3 0 3-3 4-6 4-2 0-4-1-5-2"/></svg>"#;
+ const UITVULLEN: &str = r#"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5h16M4 10h16M4 15h16M4 20h16"/></svg>"#;
++const OPSOMMING: &str = r#"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6h12M9 12h12M9 18h12"/><circle cx="3" cy="6" r="1"/><circle cx="3" cy="12" r="1"/><circle cx="3" cy="18" r="1"/></svg>"#;
++const NUMMERING: &str = r#"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6h11M10 12h11M10 18h11M3 3h1v5M3 8h2M3 11c0-2 4-2 3 0l-3 3h3M3 17h3l-2 2h1c2 0 1 3-2 2"/></svg>"#;
+ const GROTER: &str = r#"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 19 4-12 4 12m-6-4h4m9-10v9m-3-6 3-3 3 3"/></svg>"#;
+ const KLEINER: &str = r#"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 19 4-12 4 12m-6-4h4m9-10v9m-3-3 3 3 3-3"/></svg>"#;
+ fn volgende_grootte(n: f64, groter: bool) -> Option<f64> {
+diff --git a/native/crates/office-ui/src/tests/raster_proeven.rs b/native/crates/office-ui/src/tests/raster_proeven.rs
+index a6ff87e..cf64f89 100644
+--- a/native/crates/office-ui/src/tests/raster_proeven.rs
++++ b/native/crates/office-ui/src/tests/raster_proeven.rs
+@@ -3905,6 +3905,128 @@ fn writer_stijlproef() -> Proef {
+         include_bytes!("../../../office-core/tests/fixtures/writer-stijlen.docx"),
+     ))
+ }
++
++#[test]
++fn writer_lijst_ribbon_en_directe_toets_behouden_selectie_bron_en_undo() {
++    use office_core::opmaak::LijstSoort as L;
++    use openaec_ui::design::a11y::Role;
++    for (naam, soort) in [("Opsomming", L::Opsomming), ("Nummering", L::Nummering)] {
++        let mut p = writer_paginaproef();
++        let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
++        p.klik(punt);
++        let origineel = p.bron();
++        linttoets_in_dezelfde_ronde(&mut p, naam, Role::ToggleButton);
++        let t = p.app.tab().unwrap();
++        assert_eq!(t.editor.text(), "Links 🏠 9café rechts");
++        let id = t.veld().unwrap().id.clone();
++        assert_eq!(
++            t.antwoord.as_ref().unwrap().beeld.writer_lijsten[&id].soort,
++            soort
++        );
++        let knop = p
++            .toegankelijkheid()
++            .nodes
++            .into_iter()
++            .find(|n| n.node.name == naam && n.node.role == Role::ToggleButton)
++            .unwrap();
++        assert_eq!(knop.node.state.checked, Some(true));
++        if soort == L::Nummering {
++            if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
++                std::fs::create_dir_all(&map).unwrap();
++                std::fs::write(
++                    PathBuf::from(map).join("writer-lijsten-lint.docx"),
++                    p.bron().as_slice(),
++                )
++                .unwrap();
++            }
++            if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
++                std::fs::create_dir_all(&map).unwrap();
++                p.verbeeld()
++                    .save_png(PathBuf::from(map).join("writer-nummering-direct-typen.png"))
++                    .unwrap();
++            }
++        }
++        p.bericht(Msg::Terug);
++        assert_eq!(p.app.tab().unwrap().editor.text(), "Links 🏠 café rechts");
++        assert!(
++            p.app
++                .tab()
++                .unwrap()
++                .antwoord
++                .as_ref()
++                .unwrap()
++                .beeld
++                .writer_lijsten
++                .contains_key(&id)
++        );
++        p.bericht(Msg::Terug);
++        assert_eq!(*p.bron(), *origineel);
++    }
++}
++
++#[test]
++fn writer_lijst_enter_vervolgt_en_een_lege_lijst_eindigt_zonder_extra_alinea() {
++    use iced::keyboard::key::Named;
++    use openaec_ui::design::a11y::Role;
++    let mut p = writer_paginaproef();
++    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
++    p.klik(punt);
++    let grens = p
++        .toegankelijkheid()
++        .nodes
++        .into_iter()
++        .find(|n| n.node.name == "Nummering" && n.node.role == Role::ToggleButton)
++        .unwrap()
++        .bounds;
++    p.klik(iced::Point::new(grens.center_x(), grens.center_y()));
++    let nummer = {
++        let t = p.app.tab().unwrap();
++        t.antwoord.as_ref().unwrap().beeld.writer_lijsten[&t.veld().unwrap().id].nummer
++    };
++    p.named(Named::End);
++    p.named(Named::Enter);
++    let t = p.app.tab().unwrap();
++    assert_eq!(t.editor.text(), "");
++    let id = t.veld().unwrap().id.clone();
++    assert_eq!(
++        t.antwoord.as_ref().unwrap().beeld.writer_lijsten[&id].nummer,
++        nummer
++    );
++    let aantal = t.antwoord.as_ref().unwrap().beeld.velden.len();
++    let leeg = p.bron();
++    p.named(Named::Enter);
++    let t = p.app.tab().unwrap();
++    assert_eq!(t.antwoord.as_ref().unwrap().beeld.velden.len(), aantal);
++    assert_eq!(t.veld().unwrap().id, id);
++    assert!(
++        !t.antwoord
++            .as_ref()
++            .unwrap()
++            .beeld
++            .writer_lijsten
++            .contains_key(&id)
++    );
++    p.bericht(Msg::Terug);
++    assert_eq!(*p.bron(), *leeg);
++    p.toets(
++        iced::keyboard::Key::Character("9".into()),
++        iced::keyboard::Modifiers::empty(),
++        Some("9"),
++    );
++    assert_eq!(p.app.tab().unwrap().editor.text(), "9");
++    assert_eq!(
++        p.app
++            .tab()
++            .unwrap()
++            .antwoord
++            .as_ref()
++            .unwrap()
++            .beeld
++            .writer_lijsten[&id]
++            .nummer,
++        nummer
++    );
++}
+ fn open_stijllijst(p: &mut Proef) -> iced::Rectangle {
+     let grens = p
+         .toegankelijkheid()
+diff --git a/native/crates/office-core/src/writer_lijsten.rs b/native/crates/office-core/src/writer_lijsten.rs
+new file mode 100644
+index 0000000..2aba842
+--- /dev/null
++++ b/native/crates/office-core/src/writer_lijsten.rs
+@@ -0,0 +1,216 @@
++//! Gewone lijsten; stijl- en nummeringsovererving blijven bij de documentengine.
++use crate::{
++    document::{Fout, Resultaat},
++    opmaak::LijstSoort,
++    writer_document::WriterDocument,
++};
++use docx_parse::{
++    formatting::{NumberingProperties, ParagraphFormatting},
++    numbering::{AbstractNumbering, ListLevel, NumberingInstance, NumberingMap},
++};
++
++#[derive(Debug, Clone, PartialEq, Eq)]
++pub struct LijstStaat {
++    pub soort: LijstSoort,
++    pub niveau: u8,
++    pub nummer: u32,
++}
++fn eigenschappen(
++    d: &betteroffice_docx::Document,
++    p: &betteroffice_docx::Paragraph,
++) -> Option<NumberingProperties> {
++    let f = p.formatting.as_ref()?;
++    if let Some(n) = &f.num_pr
++        && f.num_pr_from_style.as_ref() != Some(n)
++    {
++        return Some(n.clone());
++    }
++    // De parser levert de reeds opgeloste stijlen. Na een stijlkeuze kan de
++    // oude uit de stijl afkomstige num_pr nog op het mutabele model staan.
++    let id = f.style_id.as_ref()?;
++    d.model()
++        .styles
++        .as_ref()?
++        .styles
++        .iter()
++        .find(|s| &s.style_id == id)?
++        .p_pr
++        .as_ref()?
++        .num_pr
++        .clone()
++}
++pub(crate) fn heeft_lijst(
++    d: &betteroffice_docx::Document,
++    p: &betteroffice_docx::Paragraph,
++) -> bool {
++    let Some(n) = eigenschappen(d, p) else {
++        return false;
++    };
++    if n.num_id.is_none_or(|n| n <= 0.) {
++        return false;
++    }
++    // list_rendering op het mutabele bronmodel kan nog bij de vorige
++    // alinea horen. Laat de engine de huidige getypeerde nummering oplossen.
++    docx_parse::numbering::compute_list_rendering(
++        n.num_id,
++        n.ilvl,
++        &NumberingMap {
++            definitions: d.model().numbering.clone(),
++        },
++    )
++    .is_some()
++}
++
++/// Alleen opgeloste metadata uit dezelfde alineamarkering als de tekenengine.
++pub(crate) fn staat(waarden: &std::collections::BTreeMap<String, yrs::Any>) -> Option<LijstStaat> {
++    use yrs::Any;
++    let Any::Map(eigenschappen) = waarden.get("numPr")? else {
++        return None;
++    };
++    let getal = |sleutel, standaard| match eigenschappen.get(sleutel) {
++        Some(Any::Number(n)) if n.is_finite() && n.fract() == 0. => Some(*n),
++        None => standaard,
++        _ => None,
++    };
++    let nummer = getal("numId", None)?;
++    let niveau = getal("ilvl", Some(0.))?;
++    if !(1. ..=i32::MAX as f64).contains(&nummer) || !(0. ..=8.).contains(&niveau) {
++        return None;
++    }
++    let Any::Bool(opsomming) = waarden.get("listIsBullet")? else {
++        return None;
++    };
++    Some(LijstStaat {
++        soort: if *opsomming {
++            LijstSoort::Opsomming
++        } else {
++            LijstSoort::Nummering
++        },
++        niveau: niveau as u8,
++        nummer: nummer as u32,
++    })
++}
++
++fn definitie(soort: LijstSoort, id: f64) -> AbstractNumbering {
++    let opsomming = soort == LijstSoort::Opsomming;
++    AbstractNumbering {
++        abstract_num_id: id,
++        multi_level_type: Some("singleLevel".into()),
++        num_style_link: None,
++        style_link: None,
++        name: Some(
++            if opsomming {
++                "OpenAEC-Opsomming"
++            } else {
++                "OpenAEC-Nummering"
++            }
++            .into(),
++        ),
++        levels: vec![ListLevel {
++            ilvl: 0.,
++            start: Some(1.),
++            num_fmt: if opsomming { "bullet" } else { "decimal" }.into(),
++            lvl_text: if opsomming { "•" } else { "%1." }.into(),
++            lvl_jc: Some("left".into()),
++            suffix: Some("tab".into()),
++            p_pr: Some(ParagraphFormatting {
++                indent_left: Some(720.),
++                indent_first_line: Some(-360.),
++                hanging_indent: Some(true),
++                ..Default::default()
++            }),
++            r_pr: None,
++            lvl_restart: None,
++            is_lgl: None,
++            legacy: None,
++        }],
++    }
++}
++fn volgende(ids: impl Iterator<Item = f64>) -> Resultaat<f64> {
++    let n = ids.fold(0., f64::max) + 1.;
++    if n <= i32::MAX as f64 {
++        Ok(n)
++    } else {
++        Err(Fout::Document(
++            "Geen veilige nieuwe lijstidentificatie beschikbaar".into(),
++        ))
++    }
++}
++/// Bestaande definities blijven onaangeraakt. Een aangrenzende gewone alinea
++/// binnen dezelfde body of cel vervolgt een lijst van dezelfde soort.
++pub(crate) fn toepassen(
++    d: &mut WriterDocument,
++    p: &mut betteroffice_docx::Paragraph,
++    soort: Option<LijstSoort>,
++) -> Resultaat<()> {
++    let nummer = if let Some(soort) = soort {
++        d.controleer_lijstaanvulling()?;
++        let bron = &d.model().numbering;
++        crate::writer_nummering::controleer_ids(bron)?;
++        let kaart = NumberingMap {
++            definitions: bron.clone(),
++        };
++        let vorige = p
++            .para_id
++            .as_deref()
++            .and_then(|id| crate::writer::zoek(&d.model().body.content, id))
++            .and_then(|(blokken, i)| i.checked_sub(1).and_then(|i| blokken.get(i)))
++            .and_then(|b| match b {
++                betteroffice_docx::BlockContent::Paragraph(p) => Some(p),
++                _ => None,
++            })
++            .and_then(|p| eigenschappen(d, p))
++            .and_then(|n| docx_parse::numbering::compute_list_rendering(n.num_id, n.ilvl, &kaart))
++            .filter(|r| r.is_bullet == (soort == LijstSoort::Opsomming));
++        if let Some(vorige) = vorige {
++            NumberingProperties {
++                num_id: Some(vorige.num_id),
++                ilvl: Some(vorige.level),
++            }
++        } else {
++            let bestaande = bron
++                .abstract_nums
++                .iter()
++                .find(|n| **n == definitie(soort, n.abstract_num_id));
++            let nieuw = bestaande.is_none();
++            let abstract_id = match bestaande {
++                Some(n) => n.abstract_num_id,
++                None => volgende(bron.abstract_nums.iter().map(|n| n.abstract_num_id))?,
++            };
++            let id = volgende(
++                bron.nums
++                    .iter()
++                    .map(|n| n.num_id)
++                    .chain(std::iter::once(d.hoogste_lijstverwijzing()?)),
++            )?;
++            let model = d.model_mut();
++            if nieuw {
++                model
++                    .numbering
++                    .abstract_nums
++                    .push(definitie(soort, abstract_id));
++            }
++            model.numbering.nums.push(NumberingInstance {
++                num_id: id,
++                abstract_num_id: abstract_id,
++                level_overrides: None,
++            });
++            NumberingProperties {
++                num_id: Some(id),
++                ilvl: Some(0.),
++            }
++        }
++    } else {
++        // numId=0 onderdrukt ook een lijst uit de alineastijl. Alleen weglaten
++        // zou bij heropenen de stijlgebonden lijst opnieuw activeren.
++        NumberingProperties {
++            num_id: Some(0.),
++            ilvl: None,
++        }
++    };
++    let f = p.formatting.get_or_insert_with(Default::default);
++    f.num_pr = Some(nummer);
++    f.num_pr_from_style = None;
++    p.list_rendering = None;
++    Ok(())
++}
+diff --git a/native/crates/office-core/src/writer_nummering.rs b/native/crates/office-core/src/writer_nummering.rs
+new file mode 100644
+index 0000000..d905767
+--- /dev/null
++++ b/native/crates/office-core/src/writer_nummering.rs
+@@ -0,0 +1,624 @@
++//! Nieuwe lijstdefinities invoegen zonder de oorspronkelijke XML te herschrijven.
++use crate::document::{Fout, Resultaat};
++use docx_parse::numbering::NumberingDefinitions;
++use quick_xml::{events::Event, name::ResolveResult, reader::NsReader};
++use std::collections::HashSet;
++const WOORD: &[u8] = b"http://schemas.openxmlformats.org/wordprocessingml/2006/main";
++const PAD: &str = "word/numbering.xml";
++fn fout(tekst: &str) -> Fout {
++    Fout::Document(tekst.into())
++}
++
++pub(crate) struct Nummerbron {
++    oorspronkelijk: NumberingDefinitions,
++    xml: Option<Vec<u8>>,
++    onduidelijk: bool,
++    verwijzingsgrens: std::result::Result<f64, String>,
++}
++impl Nummerbron {
++    pub(crate) fn controleer_aanvulling(&self) -> Resultaat<()> {
++        self.hoogste_verwijzing()?;
++        if self.onduidelijk {
++            return Err(fout("De nummeringsbron is niet eenduidig"));
++        }
++        controleer_ids(&self.oorspronkelijk)?;
++        if let Some(xml) = &self.xml {
++            let s = lees(xml)?;
++            for (tag, aantal) in [
++                ("abstractNum", self.oorspronkelijk.abstract_nums.len()),
++                ("num", self.oorspronkelijk.nums.len()),
++            ] {
++                if s.kinderen.iter().filter(|k| k.soort == tag).count() != aantal {
++                    return Err(fout("De nummeringsbron bevat onbegrepen definities"));
++                }
++            }
++        }
++        Ok(())
++    }
++    pub(crate) fn hoogste_verwijzing(&self) -> Resultaat<f64> {
++        self.verwijzingsgrens.as_ref().copied().map_err(|e| fout(e))
++    }
++    pub fn nieuw(d: &betteroffice_docx::Document, bron: &[u8]) -> Resultaat<Self> {
++        let delen =
++            ooxml_opc::unzip_parts_where(bron, ooxml_opc::MAX_TOTAL_UNCOMPRESSED_BYTES, |n| {
++                let n = n.to_ascii_lowercase();
++                n.starts_with("word/") && n.ends_with(".xml")
++            })
++            .map_err(Fout::Document)?;
++        let nummerdelen: Vec<_> = delen
++            .iter()
++            .filter(|(n, _)| n.eq_ignore_ascii_case(PAD))
++            .collect();
++        let onduidelijk =
++            nummerdelen.len() > 1 || nummerdelen.first().is_some_and(|(n, _)| n != PAD);
++        let xml = nummerdelen.first().map(|(_, b)| b.clone());
++        let verwijzingsgrens = delen.iter().try_fold(0f64, |hoogste, (naam, xml)| {
++            hoogste_verwijzing(xml)
++                .map(|n| hoogste.max(n))
++                .map_err(|e| format!("Lijstverwijzingen in {naam} zijn niet eenduidig: {e}"))
++        });
++        Ok(Self {
++            oorspronkelijk: d.model().numbering.clone(),
++            xml,
++            onduidelijk,
++            verwijzingsgrens,
++        })
++    }
++    pub fn bewaren(&self, d: &betteroffice_docx::Document) -> Resultaat<Vec<u8>> {
++        let nieuw = &d.model().numbering;
++        if nieuw == &self.oorspronkelijk {
++            return d.save().map_err(|e| fout(&e.to_string()));
++        }
++        if self.onduidelijk {
++            return Err(fout(
++                "De nummeringsbron is niet eenduidig; de lijstwijziging is niet bewaard",
++            ));
++        }
++        let oud = &self.oorspronkelijk;
++        if nieuw.abstract_nums.len() < oud.abstract_nums.len()
++            || nieuw.nums.len() < oud.nums.len()
++            || nieuw.abstract_nums[..oud.abstract_nums.len()] != oud.abstract_nums
++            || nieuw.nums[..oud.nums.len()] != oud.nums
++        {
++            return Err(fout(
++                "Bestaande lijstdefinities wijzigen of verwijderen wordt nog niet veilig ondersteund",
++            ));
++        }
++        controleer_ids(nieuw)?;
++        let extra = NumberingDefinitions {
++            abstract_nums: nieuw.abstract_nums[oud.abstract_nums.len()..].to_vec(),
++            nums: nieuw.nums[oud.nums.len()..].to_vec(),
++        };
++        let grens = self.hoogste_verwijzing()?;
++        if extra.nums.iter().any(|n| n.num_id <= grens) {
++            return Err(fout(
++                "Een nieuwe lijstidentificatie mag geen bestaande bronverwijzing activeren",
++            ));
++        }
++        let nummering = if let Some(bron) = &self.xml {
++            let structuur = lees(bron)?;
++            if structuur
++                .kinderen
++                .iter()
++                .filter(|k| k.soort == "abstractNum")
++                .count()
++                != oud.abstract_nums.len()
++                || structuur
++                    .kinderen
++                    .iter()
++                    .filter(|k| k.soort == "num")
++                    .count()
++                    != oud.nums.len()
++            {
++                return Err(fout(
++                    "De nummeringsbron bevat onbegrepen definities; de lijstwijziging is niet bewaard",
++                ));
++            }
++            voeg_toe(bron, &structuur, &extra)?
++        } else {
++            maak_nummering(nieuw)?.into_bytes()
++        };
++        let bytes = d.save().map_err(|e| fout(&e.to_string()))?;
++        let mut delen = ooxml_opc::unzip_parts(&bytes).map_err(Fout::Document)?;
++        let mut gevonden = 0;
++        for (naam, inhoud) in &mut delen {
++            if naam == PAD {
++                *inhoud = nummering.clone();
++                gevonden += 1;
++            }
++        }
++        if gevonden != 1 {
++            return Err(fout("Het bewaarde nummeringsonderdeel is niet eenduidig"));
++        }
++        ooxml_opc::rezip_parts(&delen).map_err(Fout::Document)
++    }
++}
++/// Ook verwijzingen zonder definitie zijn bezet. Eén streaming scan bij
++/// openen voorkomt dat een nieuwe lijst onbedoeld een andere alinea, stijl,
++/// kop, voet, noot, opmerking of bewaarde tekstvakinhoud activeert.
++fn hoogste_verwijzing(xml: &[u8]) -> std::result::Result<f64, String> {
++    std::str::from_utf8(xml).map_err(|e| e.to_string())?;
++    let mut reader = NsReader::from_reader(xml);
++    let mut hoogste = 0.;
++    loop {
++        let (ruimte, event) = reader.read_resolved_event().map_err(|e| e.to_string())?;
++        match event {
++            Event::Start(n) | Event::Empty(n) => {
++                let woord = matches!(ruimte, ResolveResult::Bound(ns) if ns.as_ref()==WOORD);
++                // De vaste engine kan ook een letterlijk w-voorvoegsel uit
++                // een onbekende naamruimte lezen. Reserveer dat conservatief.
++                if n.local_name().as_ref() != b"numId"
++                    || (!woord && n.name().as_ref() != b"w:numId")
++                {
++                    continue;
++                }
++                let mut waarde = None;
++                for a in n.attributes() {
++                    let a = a.map_err(|e| e.to_string())?;
++                    let (ruimte, lokaal) = reader.resolver().resolve_attribute(a.key);
++                    if (matches!(ruimte, ResolveResult::Bound(ns) if ns.as_ref()==WOORD)
++                        && lokaal.as_ref() == b"val")
++                        || a.key.as_ref() == b"w:val"
++                    {
++                        if waarde.is_some() {
++                            return Err("Dubbele waarde voor een lijstverwijzing".into());
++                        }
++                        let tekst = a
++                            .decoded_and_normalized_value(
++                                quick_xml::XmlVersion::Implicit1_0,
++                                reader.decoder(),
++                            )
++                            .map_err(|e| e.to_string())?;
++                        let id = tekst.parse::<u32>().map_err(|e| e.to_string())?;
++                        if id > i32::MAX as u32 {
++                            return Err("Lijstverwijzing buiten het ondersteunde bereik".into());
++                        }
++                        waarde = Some(id as f64);
++                    }
++                }
++                hoogste = f64::max(
++                    hoogste,
++                    waarde.ok_or_else(|| {
++                        "Lijstverwijzing zonder eenduidige identificatie".to_owned()
++                    })?,
++                );
++            }
++            Event::Eof => return Ok(hoogste),
++            _ => {}
++        }
++    }
++}
++fn geheel(id: f64) -> Resultaat<i64> {
++    if !id.is_finite() || id < 0. || id.fract() != 0. || id > i32::MAX as f64 {
++        return Err(fout(
++            "Een lijstidentificatie is geen ondersteund geheel getal",
++        ));
++    }
++    Ok(id as i64)
++}
++pub(crate) fn controleer_ids(d: &NumberingDefinitions) -> Resultaat<()> {
++    let mut abstracte = HashSet::new();
++    let mut nummers = HashSet::new();
++    for n in &d.abstract_nums {
++        if !abstracte.insert(geheel(n.abstract_num_id)?) {
++            return Err(fout("Dubbele abstracte lijstidentificatie"));
++        }
++    }
++    for n in &d.nums {
++        if !nummers.insert(geheel(n.num_id)?) {
++            return Err(fout("Dubbele lijstidentificatie"));
++        }
++        if !abstracte.contains(&geheel(n.abstract_num_id)?) {
++            return Err(fout("De abstracte lijstdefinitie ontbreekt"));
++        }
++    }
++    Ok(())
++}
++struct Kind {
++    soort: String,
++    begin: usize,
++    einde: usize,
++}
++struct Structuur {
++    naam: Vec<u8>,
++    begin: usize,
++    open_einde: usize,
++    sluit: usize,
++    leeg: bool,
++    kinderen: Vec<Kind>,
++}
++fn lees(xml: &[u8]) -> Resultaat<Structuur> {
++    let mut reader = NsReader::from_reader(xml);
++    let mut diepte = 0usize;
++    let mut structuur: Option<Structuur> = None;
++    let mut actief: Option<(String, usize)> = None;
++    let mut klaar = false;
++    let mut fase = 0;
++    loop {
++        let begin = reader.buffer_position() as usize;
++        let (ruimte, event) = reader
++            .read_resolved_event()
++            .map_err(|e| fout(&format!("Ongeldige nummeringsbron: {e}")))?;
++        let woord = matches!(ruimte,ResolveResult::Bound(ns) if ns.as_ref()==WOORD);
++        let einde = reader.buffer_position() as usize;
++        let leeg = matches!(&event, Event::Empty(_));
++        match event {
++            Event::Start(n) | Event::Empty(n) => {
++                let lokaal = String::from_utf8_lossy(n.local_name().as_ref()).into_owned();
++                if diepte == 0 {
++                    if structuur.is_some() || klaar || !woord || lokaal != "numbering" {
++                        return Err(fout("Geen eenduidige nummeringswortel"));
++                    }
++                    structuur = Some(Structuur {
++                        naam: n.name().as_ref().to_vec(),
++                        begin,
++                        open_einde: einde,
++                        sluit: begin,
++                        leeg,
++                        kinderen: vec![],
++                    });
++                    if leeg {
++                        klaar = true;
++                    } else {
++                        diepte = 1;
++                    }
++                    continue;
++                }
++                if diepte == 1 {
++                    let soort = if woord { lokaal } else { String::new() };
++                    let rang = match soort.as_str() {
++                        "numPicBullet" => Some(0),
++                        "abstractNum" => Some(1),
++                        "num" => Some(2),
++                        "numIdMacAtCleanup" => Some(3),
++                        _ => None,
++                    };
++                    if let Some(rang) = rang {
++                        if rang < fase {
++                            return Err(fout(
++                                "De lijstonderdelen hebben geen ondersteunde volgorde",
++                            ));
++                        }
++                        fase = rang;
++                    }
++                    if leeg {
++                        structuur.as_mut().unwrap().kinderen.push(Kind {
++                            soort,
++                            begin,
++                            einde,
++                        });
++                    } else {
++                        actief = Some((soort, begin));
++                    }
++                } else if woord && matches!(lokaal.as_str(), "abstractNum" | "num") {
++                    return Err(fout(
++                        "Geneste of alternatieve lijstdefinities worden nog niet veilig aangevuld",
++                    ));
++                }
++                if !leeg {
++                    diepte += 1;
++                }
++            }
++            Event::End(_) => {
++                if diepte == 0 {
++                    return Err(fout("Onverwacht einde in nummeringsbron"));
++                }
++                if diepte == 2 {
++                    let (soort, begin) = actief
++                        .take()
++                        .ok_or_else(|| fout("Onvolledig lijstonderdeel"))?;
++                    structuur.as_mut().unwrap().kinderen.push(Kind {
++                        soort,
++                        begin,
++                        einde,
++                    });
++                } else if diepte == 1 {
++                    structuur.as_mut().unwrap().sluit = begin;
++                    klaar = true;
++                }
++                diepte -= 1;
++            }
++            Event::Eof => break,
++            _ => {}
++        }
++    }
++    if diepte != 0 || !klaar {
++        return Err(fout("Onvolledige nummeringsbron"));
++    }
++    structuur.ok_or_else(|| fout("Nummeringswortel ontbreekt"))
++}
++fn waarde(tag: &str, waarde: &str) -> String {
++    format!("<w:{tag} w:val=\"{}\"/>", quick_xml::escape::escape(waarde))
++}
++fn niveau(n: &docx_parse::numbering::ListLevel) -> Resultaat<String> {
++    let mut xml = format!("<w:lvl w:ilvl=\"{}\">", n.ilvl);
++    if let Some(start) = n.start {
++        xml.push_str(&waarde("start", &start.to_string()));
++    }
++    xml.push_str(&waarde("numFmt", &n.num_fmt));
++    if let Some(suffix) = &n.suffix {
++        xml.push_str(&waarde("suff", suffix));
++    }
++    xml.push_str(&waarde("lvlText", &n.lvl_text));
++    if let Some(uitlijning) = &n.lvl_jc {
++        xml.push_str(&waarde("lvlJc", uitlijning));
++    }
++    if let Some(p) = &n.p_pr {
++        xml.push_str(
++            &docx_parse::serializer::serialize_paragraph_formatting(
++                Some(p),
++                None,
++                None,
++                None,
++                false,
++                None,
++            )
++            .map_err(|e| fout(&e.to_string()))?,
++        );
++    }
++    if let Some(r) = &n.r_pr {
++        xml.push_str(&docx_parse::serializer::serialize_text_formatting(Some(r)));
++    }
++    xml.push_str("</w:lvl>");
++    Ok(xml)
++}
++fn maak_nummering(definities: &NumberingDefinitions) -> Resultaat<String> {
++    // Alleen nieuwe, getypeerde definities. De bestaande nummeringsbron gaat
++    // nooit door deze serializer. De gewone engine schrijft hier geen naam,
++    // tabs of markerlettertype; gebruik haar volledige pPr/rPr-schrijvers.
++    let mut xml = format!(
++        "<w:numbering xmlns:w=\"{}\">",
++        std::str::from_utf8(WOORD).unwrap()
++    );
++    for n in &definities.abstract_nums {
++        xml.push_str(&format!(
++            "<w:abstractNum w:abstractNumId=\"{}\">",
++            n.abstract_num_id
++        ));
++        if let Some(soort) = &n.multi_level_type {
++            xml.push_str(&waarde("multiLevelType", soort));
++        }
++        if let Some(naam) = &n.name {
++            xml.push_str(&waarde("name", naam));
++        }
++        for lvl in &n.levels {
++            xml.push_str(&niveau(lvl)?);
++        }
++        xml.push_str("</w:abstractNum>");
++    }
++    for n in &definities.nums {
++        xml.push_str(&format!("<w:num w:numId=\"{}\">", n.num_id));
++        xml.push_str(&waarde("abstractNumId", &n.abstract_num_id.to_string()));
++        for v in n.level_overrides.as_deref().unwrap_or_default() {
++            xml.push_str(&format!("<w:lvlOverride w:ilvl=\"{}\">", v.ilvl));
++            if let Some(start) = v.start_override {
++                xml.push_str(&waarde("startOverride", &start.to_string()));
++            }
++            if let Some(lvl) = &v.lvl {
++                xml.push_str(&niveau(lvl)?);
++            }
++            xml.push_str("</w:lvlOverride>");
++        }
++        xml.push_str("</w:num>");
++    }
++    xml.push_str("</w:numbering>");
++    let grenzen = docx_parse::xml::ParseLimits::default();
++    let terug = docx_parse::numbering::parse_numbering(
++        Some(xml.as_bytes()),
++        PAD,
++        &mut docx_parse::xml::ParseBudget::new(&grenzen),
++    )
++    .map_err(|e| fout(&e.to_string()))?;
++    // De serializer ondersteunt niet alle mogelijke lijstkenmerken. Een
++    // verliesgevende nieuwe definitie mag geen geslaagde opslag lijken.
++    if terug.definitions != *definities {
++        return Err(fout(
++            "Deze nieuwe lijstdefinitie kan nog niet volledig worden bewaard",
++        ));
++    }
++    Ok(xml)
++}
++fn voeg_toe(bron: &[u8], s: &Structuur, extra: &NumberingDefinitions) -> Resultaat<Vec<u8>> {
++    let gegenereerd = maak_nummering(extra)?;
++    let nieuw = lees(gegenereerd.as_bytes())?;
++    let mut abstracte = Vec::new();
++    let mut nummers = Vec::new();
++    for kind in nieuw.kinderen {
++        let mut tekst = gegenereerd[kind.begin..kind.einde].to_owned();
++        let grens = tekst
++            .find([' ', '>', '/'])
++            .ok_or_else(|| fout("Onvolledige nieuwe lijstdefinitie"))?;
++        // De bestaande bron mag een andere prefix of standaardnaamruimte hebben.
++        // Iedere nieuwe wortel krijgt daarom haar eigen bekende w-naamruimte.
++        tekst.insert_str(
++            grens,
++            &format!(" xmlns:w=\"{}\"", std::str::from_utf8(WOORD).unwrap()),
++        );
++        match kind.soort.as_str() {
++            "abstractNum" => abstracte.extend_from_slice(tekst.as_bytes()),
++            "num" => nummers.extend_from_slice(tekst.as_bytes()),
++            _ => return Err(fout("Onverwacht nieuw lijstonderdeel")),
++        }
++    }
++    if s.leeg {
++        if !bron[s.begin..s.open_einde].ends_with(b"/>") {
++            return Err(fout("Onverwachte lege nummeringswortel"));
++        }
++        let mut uit = bron[..s.open_einde - 2].to_vec();
++        uit.push(b'>');
++        uit.extend(abstracte);
++        uit.extend(nummers);
++        uit.extend_from_slice(b"</");
++        uit.extend_from_slice(&s.naam);
++        uit.push(b'>');
++        uit.extend_from_slice(&bron[s.open_einde..]);
++        return Ok(uit);
++    }
++    let eind = s
++        .kinderen
++        .iter()
++        .find(|k| k.soort == "numIdMacAtCleanup")
++        .map_or(s.sluit, |k| k.begin);
++    let begin = s
++        .kinderen
++        .iter()
++        .find(|k| k.soort == "num")
++        .map_or(eind, |k| k.begin);
++    if begin > eind {
++        return Err(fout("Onjuiste invoegplaatsen voor lijstdefinities"));
++    }
++    let mut uit = Vec::with_capacity(bron.len() + abstracte.len() + nummers.len());
++    uit.extend_from_slice(&bron[..begin]);
++    uit.extend(abstracte);
++    uit.extend_from_slice(&bron[begin..eind]);
++    uit.extend(nummers);
++    uit.extend_from_slice(&bron[eind..]);
++    Ok(uit)
++}
++
++#[cfg(test)]
++mod proeven {
++    use super::*;
++    #[test]
++    fn writer_lijst_verwijzingsgrens_herkent_naamruimten_en_weigert_onduidelijke_ids() {
++        let w = std::str::from_utf8(WOORD).unwrap();
++        assert_eq!(hoogste_verwijzing(format!(r#"<q:root xmlns:q="{w}"><q:numId q:val="0"/><q:numId q:val="&#50;3"/><q:numId q:val="7"/></q:root>"#).as_bytes()).unwrap(),23.);
++        assert_eq!(
++            hoogste_verwijzing(br#"<e:root xmlns:e="urn:eigen"><e:numId e:val="999"/></e:root>"#)
++                .unwrap(),
++            0.
++        );
++        assert_eq!(
++            hoogste_verwijzing(
++                br#"<w:root xmlns:w="urn:verkeerd"><w:numId w:val="999"/></w:root>"#
++            )
++            .unwrap(),
++            999.
++        );
++        for inhoud in [
++            r#"w:val="2x""#,
++            r#"w:val="-1""#,
++            r#"w:val="2147483648""#,
++            r#"w:val="1" w:val="2""#,
++            "",
++            r#"w:val="&onbekend;""#,
++        ] {
++            assert!(
++                hoogste_verwijzing(
++                    format!(r#"<w:root xmlns:w="{w}"><w:numId {inhoud}/></w:root>"#).as_bytes()
++                )
++                .is_err(),
++                "{inhoud}"
++            );
++        }
++    }
++    #[test]
++    fn writer_lijst_nieuwe_naam_tabs_en_markeropmaak_keren_volledig_terug() {
++        let mut d = extra();
++        d.abstract_nums[0].name = Some("Eigen \"naam\" & lijst".into());
++        d.abstract_nums[0].levels[0].r_pr = Some(docx_parse::formatting::TextFormatting {
++            bold: Some(true),
++            font_size: Some(27.),
++            ..Default::default()
++        });
++        assert!(maak_nummering(&d).is_ok());
++        d.abstract_nums[0].levels[0].lvl_restart = Some(1.);
++        assert!(
++            maak_nummering(&d).is_err(),
++            "Een niet geschreven nieuw kenmerk mag niet stil verdwijnen"
++        );
++    }
++    fn extra() -> NumberingDefinitions {
++        let d = betteroffice_docx::Document::open(include_bytes!(
++            "../tests/fixtures/writer-structuur.docx"
++        ))
++        .unwrap();
++        let mut abstracte = d.model().numbering.abstract_nums[0].clone();
++        abstracte.abstract_num_id = 99.;
++        let mut nummer = d.model().numbering.nums[0].clone();
++        nummer.num_id = 100.;
++        nummer.abstract_num_id = 99.;
++        nummer.level_overrides = None;
++        NumberingDefinitions {
++            abstract_nums: vec![abstracte],
++            nums: vec![nummer],
++        }
++    }
++    fn controleer_parse(xml: &[u8], aantal: usize) {
++        let grenzen = docx_parse::xml::ParseLimits::default();
++        let d = docx_parse::numbering::parse_numbering(
++            Some(xml),
++            PAD,
++            &mut docx_parse::xml::ParseBudget::new(&grenzen),
++        )
++        .unwrap();
++        assert_eq!(d.definitions.abstract_nums.len(), aantal);
++        assert_eq!(d.definitions.nums.len(), aantal);
++        assert!(
++            d.definitions
++                .nums
++                .iter()
++                .any(|n| n.num_id == 100. && n.abstract_num_id == 99.)
++        );
++    }
++    #[test]
++    fn writer_lijst_lege_wortel_met_andere_prefix_en_eigen_kenmerken_blijft_geldig() {
++        let bron=br#"<?xml version="1.0"?>
++<p:numbering xmlns:p="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:e="urn:bewaar" e:kenmerk="waarde" />
++"#;
++        let uit = voeg_toe(bron, &lees(bron).unwrap(), &extra()).unwrap();
++        controleer_parse(&uit, 1);
++        let tekst = std::str::from_utf8(&uit).unwrap();
++        assert!(tekst.contains("xmlns:e=\"urn:bewaar\" e:kenmerk=\"waarde\" >"));
++        assert!(tekst.ends_with("</p:numbering>\n"));
++    }
++    #[test]
++    fn writer_lijst_onbekende_kenmerken_plaatjes_en_opruimmarker_blijven_bytegelijk() {
++        let bron=br#"<w:numbering xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:e="urn:bewaar">
++<!-- bewaar ook dit commentaar -->
++<w:numPicBullet w:numPicBulletId="7"><w:pict><e:plaatje bron="eigen"/></w:pict></w:numPicBullet>
++<w:abstractNum w:abstractNumId="1"><w:nsid w:val="12345678"/><e:abstract kenmerk="blijft"/></w:abstractNum>
++<w:num w:numId="1"><w:abstractNumId w:val="1"/><e:instantie kenmerk="blijft"/></w:num>
++<w:numIdMacAtCleanup w:val="27"/>
++</w:numbering>"#;
++        let uit = voeg_toe(bron, &lees(bron).unwrap(), &extra()).unwrap();
++        controleer_parse(&uit, 2);
++        let s = lees(&uit).unwrap();
++        assert_eq!(
++            s.kinderen
++                .iter()
++                .map(|k| k.soort.as_str())
++                .collect::<Vec<_>>(),
++            vec![
++                "numPicBullet",
++                "abstractNum",
++                "abstractNum",
++                "num",
++                "num",
++                "numIdMacAtCleanup"
++            ]
++        );
++        let weg = [&s.kinderen[2], &s.kinderen[4]];
++        let mut herstel = vec![];
++        let mut begin = 0;
++        for k in weg {
++            herstel.extend_from_slice(&uit[begin..k.begin]);
++            begin = k.einde;
++        }
++        herstel.extend_from_slice(&uit[begin..]);
++        assert_eq!(herstel, bron);
++    }
++    #[test]
++    fn writer_lijst_dubbelzinnige_volgorde_en_geneste_definities_worden_geweigerd() {
++        for inhoud in [
++            "<w:num w:numId=\"1\"/><w:abstractNum w:abstractNumId=\"1\"/>",
++            "<e:alternatief><w:num w:numId=\"1\"/></e:alternatief>",
++        ] {
++            let bron = format!(
++                "<w:numbering xmlns:w=\"{}\" xmlns:e=\"urn:bewaar\">{inhoud}</w:numbering>",
++                std::str::from_utf8(WOORD).unwrap()
++            );
++            assert!(lees(bron.as_bytes()).is_err());
++        }
++    }
++}
+diff --git a/native/crates/office-core/tests/fixtures/controleer-lijsten.py b/native/crates/office-core/tests/fixtures/controleer-lijsten.py
+new file mode 100644
+index 0000000..a37b57a
+--- /dev/null
++++ b/native/crates/office-core/tests/fixtures/controleer-lijsten.py
+@@ -0,0 +1,51 @@
++"""Lees werkelijk bewaarde lijsten onafhankelijk terug, zonder de Rust-engine."""
++from pathlib import Path
++from zipfile import ZipFile
++import re
++import sys
++import xml.etree.ElementTree as ET
++from docx import Document
++
++map = Path(sys.argv[1])
++w = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}"
++with ZipFile(Path(__file__).with_name("writer-structuur.docx")) as z:
++    oorspronkelijke_nummering = z.read("word/numbering.xml")
++
++for naam, teksten in [
++    ("writer-lijsten-direct.docx", ["Links 🏠 café rechts", "Tweede 🏠"]),
++    ("writer-lijsten-lint.docx", ["Links 🏠 9café rechts"]),
++]:
++    d = Document(map / naam)
++    assert len(d.sections) == 2 and len(d.tables) == 1
++    assert d.sections[0].header.paragraphs[0].text == "Vaste koptekst"
++    assert d.sections[0].footer.paragraphs[0].text == "Vaste voettekst"
++    assert d.tables[0].cell(0, 0).text == "Cel één\nTweede celalinea"
++    assert d.tables[0].cell(0, 1).text == "Cel twee"
++    gekozen = [next(p for p in d.paragraphs if p.text == t) for t in teksten]
++    assert any(r.bold for r in gekozen[0].runs if "Links" in r.text)
++    assert all(r.italic for r in gekozen[0].runs if "café rechts" in r.text)
++    nummers = [p._p.find(w + "pPr/" + w + "numPr/" + w + "numId").get(w + "val") for p in gekozen]
++    assert len(set(nummers)) == 1 and int(nummers[0]) > 0
++    with ZipFile(map / naam) as z:
++        nummering = z.read("word/numbering.xml")
++        root = ET.fromstring(nummering)
++        instantie = next(n for n in root.findall(w + "num") if n.get(w + "numId") == nummers[0])
++        abstract_id = instantie.find(w + "abstractNumId").get(w + "val")
++        abstract = next(n for n in root.findall(w + "abstractNum") if n.get(w + "abstractNumId") == abstract_id)
++        assert abstract.find(w + "multiLevelType").get(w + "val") == "singleLevel"
++        assert abstract.find(w + "name").get(w + "val") == "OpenAEC-Nummering"
++        niveaus = abstract.findall(w + "lvl")
++        assert len(niveaus) == 1
++        niveau = niveaus[0]
++        assert niveau.get(w + "ilvl") == "0"
++        for veld, waarde in [("start", "1"), ("numFmt", "decimal"), ("lvlText", "%1."), ("suff", "tab")]:
++            assert niveau.find(w + veld).get(w + "val") == waarde
++        inspringing = niveau.find(w + "pPr/" + w + "ind")
++        assert inspringing.get(w + "left") == "720" and inspringing.get(w + "hanging") == "360"
++        over = nummering
++        for tag, attribuut, id in [("abstractNum", "abstractNumId", abstract_id), ("num", "numId", nummers[0])]:
++            patroon = rb'(?s)<w:' + tag.encode() + rb'\b[^>]*\bw:' + attribuut.encode() + rb'="' + id.encode() + rb'"[^>]*(?:/>|>.*?</w:' + tag.encode() + rb'>)'
++            assert len(re.findall(patroon, over)) == 1
++            over = re.sub(patroon, b"", over)
++        assert over == oorspronkelijke_nummering
++    print(f"{naam}: nummering, bronbehoud, Unicode, directe runopmaak, secties, kop/voet en tabel onafhankelijk goedgekeurd.")

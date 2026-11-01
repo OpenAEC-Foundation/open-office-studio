@@ -22,12 +22,18 @@ Open Office Studio is a local office environment for Windows, macOS and Linux. I
 
 ## Native Rust migration
 
-The native preview in [`native/`](native/README.md) also moves the complete UI
-to Rust, using Iced and the shared OpenAEC Blueprint ribbon. It has working
+The native preview in [`native/`](native/README.md) implements its interface
+in Rust, using Iced and the shared OpenAEC Blueprint ribbon. It has working
 DOCX/XLSX/PPTX round trips and IFCX source archives, including complete email
 sources. It is **not yet a replacement for the current suite**; the
 [feature comparison and remaining work](native/README.md#huidige-omvang) describe
 the migration boundary. Version 2026-W44.8 remains the existing release.
+
+Alpha 34 adds Writer bullets and numbering, preserves existing numbering XML,
+and keeps new lists consistent in Markdown exports. Its [validation report](native/docs/controle-2026-11-01-alpha34.md)
+records 374 Rust tests, including 137 UI tests, six runtime checks and seven
+Python tests. Full visual parity is still open; the original browser and
+[desktop references](native/docs/referentie-desktop-2026-11-01/LEESMIJ.md) remain separately available.
 
 ## Suite or a separate app
 

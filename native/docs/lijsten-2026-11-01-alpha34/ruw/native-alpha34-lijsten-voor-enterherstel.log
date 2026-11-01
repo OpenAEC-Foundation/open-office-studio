@@ -1,0 +1,14 @@
+   Compiling open-office-studio-native v2026.44.9-alpha.33 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-ui)
+error[E0615]: attempted to take value of method `checked` on type `openaec_ui::design::a11y::Node`
+    --> crates/office-ui/src/tests/raster_proeven.rs:3932:30
+     |
+3932 |         assert_eq!(knop.node.checked, Some(true));
+     |                              ^^^^^^^ method, not a field
+     |
+help: use parentheses to call the method
+     |
+3932 |         assert_eq!(knop.node.checked(_), Some(true));
+     |                                     +++
+
+For more information about this error, try `rustc --explain E0615`.
+error: could not compile `open-office-studio-native` (bin "open-office-studio-native" test) due to 1 previous error

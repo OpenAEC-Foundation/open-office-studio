@@ -600,6 +600,8 @@ pub fn opmaak(
     if let O::Alineastijl(id) = stijl {
         crate::writer_stijlen::controleer(d, id)?;
         p.formatting.get_or_insert_with(Default::default).style_id = Some(id.clone());
+    } else if let O::Lijst(soort) = stijl {
+        crate::writer_lijsten::toepassen(d, &mut p, *soort)?;
     } else if let O::Uitlijning(a) = stijl {
         p.formatting.get_or_insert_with(Default::default).alignment = Some(
             match a {

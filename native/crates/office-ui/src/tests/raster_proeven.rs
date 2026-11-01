@@ -3905,6 +3905,128 @@ fn writer_stijlproef() -> Proef {
         include_bytes!("../../../office-core/tests/fixtures/writer-stijlen.docx"),
     ))
 }
+
+#[test]
+fn writer_lijst_ribbon_en_directe_toets_behouden_selectie_bron_en_undo() {
+    use office_core::opmaak::LijstSoort as L;
+    use openaec_ui::design::a11y::Role;
+    for (naam, soort) in [("Opsomming", L::Opsomming), ("Nummering", L::Nummering)] {
+        let mut p = writer_paginaproef();
+        let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+        p.klik(punt);
+        let origineel = p.bron();
+        linttoets_in_dezelfde_ronde(&mut p, naam, Role::ToggleButton);
+        let t = p.app.tab().unwrap();
+        assert_eq!(t.editor.text(), "Links 🏠 9café rechts");
+        let id = t.veld().unwrap().id.clone();
+        assert_eq!(
+            t.antwoord.as_ref().unwrap().beeld.writer_lijsten[&id].soort,
+            soort
+        );
+        let knop = p
+            .toegankelijkheid()
+            .nodes
+            .into_iter()
+            .find(|n| n.node.name == naam && n.node.role == Role::ToggleButton)
+            .unwrap();
+        assert_eq!(knop.node.state.checked, Some(true));
+        if soort == L::Nummering {
+            if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
+                std::fs::create_dir_all(&map).unwrap();
+                std::fs::write(
+                    PathBuf::from(map).join("writer-lijsten-lint.docx"),
+                    p.bron().as_slice(),
+                )
+                .unwrap();
+            }
+            if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+                std::fs::create_dir_all(&map).unwrap();
+                p.verbeeld()
+                    .save_png(PathBuf::from(map).join("writer-nummering-direct-typen.png"))
+                    .unwrap();
+            }
+        }
+        p.bericht(Msg::Terug);
+        assert_eq!(p.app.tab().unwrap().editor.text(), "Links 🏠 café rechts");
+        assert!(
+            p.app
+                .tab()
+                .unwrap()
+                .antwoord
+                .as_ref()
+                .unwrap()
+                .beeld
+                .writer_lijsten
+                .contains_key(&id)
+        );
+        p.bericht(Msg::Terug);
+        assert_eq!(*p.bron(), *origineel);
+    }
+}
+
+#[test]
+fn writer_lijst_enter_vervolgt_en_een_lege_lijst_eindigt_zonder_extra_alinea() {
+    use iced::keyboard::key::Named;
+    use openaec_ui::design::a11y::Role;
+    let mut p = writer_paginaproef();
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    p.klik(punt);
+    let grens = p
+        .toegankelijkheid()
+        .nodes
+        .into_iter()
+        .find(|n| n.node.name == "Nummering" && n.node.role == Role::ToggleButton)
+        .unwrap()
+        .bounds;
+    p.klik(iced::Point::new(grens.center_x(), grens.center_y()));
+    let nummer = {
+        let t = p.app.tab().unwrap();
+        t.antwoord.as_ref().unwrap().beeld.writer_lijsten[&t.veld().unwrap().id].nummer
+    };
+    p.named(Named::End);
+    p.named(Named::Enter);
+    let t = p.app.tab().unwrap();
+    assert_eq!(t.editor.text(), "");
+    let id = t.veld().unwrap().id.clone();
+    assert_eq!(
+        t.antwoord.as_ref().unwrap().beeld.writer_lijsten[&id].nummer,
+        nummer
+    );
+    let aantal = t.antwoord.as_ref().unwrap().beeld.velden.len();
+    let leeg = p.bron();
+    p.named(Named::Enter);
+    let t = p.app.tab().unwrap();
+    assert_eq!(t.antwoord.as_ref().unwrap().beeld.velden.len(), aantal);
+    assert_eq!(t.veld().unwrap().id, id);
+    assert!(
+        !t.antwoord
+            .as_ref()
+            .unwrap()
+            .beeld
+            .writer_lijsten
+            .contains_key(&id)
+    );
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *leeg);
+    p.toets(
+        iced::keyboard::Key::Character("9".into()),
+        iced::keyboard::Modifiers::empty(),
+        Some("9"),
+    );
+    assert_eq!(p.app.tab().unwrap().editor.text(), "9");
+    assert_eq!(
+        p.app
+            .tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .beeld
+            .writer_lijsten[&id]
+            .nummer,
+        nummer
+    );
+}
 fn open_stijllijst(p: &mut Proef) -> iced::Rectangle {
     let grens = p
         .toegankelijkheid()

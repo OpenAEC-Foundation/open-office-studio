@@ -1,0 +1,56 @@
+dbus-daemon[3193126]: [session uid=1000 pid=3193126] Activating service name='org.freedesktop.portal.Desktop' requested by ':1.0' (uid=1000 pid=3193147 comm="dbus-send --session --dest=org.freedesktop.portal." label="chatgpt (unconfined)")
+dbus-daemon[3193126]: [session uid=1000 pid=3193126] Activating service name='org.freedesktop.impl.portal.PermissionStore' requested by ':1.1' (uid=1000 pid=3193152 comm="/usr/libexec/xdg-desktop-portal" label="chatgpt (unconfined)")
+dbus-daemon[3193126]: [session uid=1000 pid=3193126] Successfully activated service 'org.freedesktop.impl.portal.PermissionStore'
+dbus-daemon[3193126]: [session uid=1000 pid=3193126] Activating service name='org.freedesktop.portal.Documents' requested by ':1.1' (uid=1000 pid=3193152 comm="/usr/libexec/xdg-desktop-portal" label="chatgpt (unconfined)")
+dbus-daemon[3193126]: [session uid=1000 pid=3193126] Successfully activated service 'org.freedesktop.portal.Documents'
+Ignoring invalid max threads value 4294967295 > max (100000).
+dbus-daemon[3193126]: [session uid=1000 pid=3193126] Activating service name='org.freedesktop.impl.portal.desktop.xapp' requested by ':1.1' (uid=1000 pid=3193152 comm="/usr/libexec/xdg-desktop-portal" label="chatgpt (unconfined)")
+dbus-daemon[3193126]: [session uid=1000 pid=3193126] Activating service name='org.gtk.vfs.Daemon' requested by ':1.4' (uid=1000 pid=3193175 comm="/usr/libexec/xdg-desktop-portal-xapp" label="chatgpt (unconfined)")
+dbus-daemon[3193126]: [session uid=1000 pid=3193126] Successfully activated service 'org.gtk.vfs.Daemon'
+dbus-daemon[3193126]: [session uid=1000 pid=3193126] Activating service name='org.a11y.Bus' requested by ':1.6' (uid=1000 pid=3193175 comm="/usr/libexec/xdg-desktop-portal-xapp" label="chatgpt (unconfined)")
+dbus-daemon[3193126]: [session uid=1000 pid=3193126] Successfully activated service 'org.a11y.Bus'
+dbus-daemon[3193202]: Activating service name='org.a11y.atspi.Registry' requested by ':1.0' (uid=1000 pid=3193175 comm="/usr/libexec/xdg-desktop-portal-xapp" label="chatgpt (unconfined)")
+dbus-daemon[3193126]: [session uid=1000 pid=3193126] Successfully activated service 'org.freedesktop.impl.portal.desktop.xapp'
+dbus-daemon[3193202]: Successfully activated service 'org.a11y.atspi.Registry'
+SpiRegistry daemon is running with well-known name - org.a11y.atspi.Registry
+dbus-daemon[3193126]: [session uid=1000 pid=3193126] Activating service name='org.freedesktop.impl.portal.desktop.gtk' requested by ':1.1' (uid=1000 pid=3193152 comm="/usr/libexec/xdg-desktop-portal" label="chatgpt (unconfined)")
+dbus-daemon[3193126]: [session uid=1000 pid=3193126] Successfully activated service 'org.freedesktop.impl.portal.desktop.gtk'
+
+(/usr/libexec/xdg-desktop-portal:3193152): xdg-desktop-portal-WARNING **: 10:05:11.650: Failed connect to PipeWire: Couldn't connect to PipeWire
+dbus-daemon[3193126]: [session uid=1000 pid=3193126] Activating service name='org.freedesktop.secrets' requested by ':1.1' (uid=1000 pid=3193152 comm="/usr/libexec/xdg-desktop-portal" label="chatgpt (unconfined)")
+** Message: 10:05:11.673: couldn't access control socket: /home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/legacy-drie-spreadsheet/runtime/keyring/control: No such file or directory
+discover_other_daemon: 0
+** (gnome-keyring-daemon:3193224): WARNING **: 10:05:11.676: couldn't bind to control socket: /home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/legacy-drie-spreadsheet/runtime/keyring/control: Address already in use
+
+(/usr/libexec/xdg-desktop-portal:3193152): xdg-desktop-portal-WARNING **: 10:05:36.690: Failed to create secret proxy: Error calling StartServiceByName for org.freedesktop.secrets: Timeout was reached
+
+(/usr/libexec/xdg-desktop-portal:3193152): xdg-desktop-portal-WARNING **: 10:05:36.690: No skeleton to export
+dbus-daemon[3193126]: [session uid=1000 pid=3193126] Successfully activated service 'org.freedesktop.portal.Desktop'
+Traceback (most recent call last):
+  File "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/legacy-drie-modulevenster.py", line 41, in <module>
+    xd('mousemove','--sync',0,0);time.sleep(2)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/legacy-drie-modulevenster.py", line 14, in xd
+    def xd(*a):subprocess.run(['xdotool',*map(str,a)],env=e,stdout=log,stderr=log,check=True,timeout=10)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 550, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 1209, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 2141, in _communicate
+    self.wait(timeout=self._remaining_time(endtime))
+  File "/usr/lib/python3.12/subprocess.py", line 1264, in wait
+    return self._wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 2045, in _wait
+    raise TimeoutExpired(self.args, timeout)
+subprocess.TimeoutExpired: Command '['xdotool', 'mousemove', '--sync', '0', '0']' timed out after 9.99998547998257 seconds
+A connection to the bus can't be made
+Traceback (most recent call last):
+  File "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/start-legacy-modulevenster.py", line 8, in <module>
+    subprocess.run(['dbus-run-session','--',str(w/'gui-hulpmiddelen/uitgepakt/usr/bin/xvfb-run'),'-a','-s','-screen 0 1058x892x24 -nolisten tcp',sys.executable,str(w/'legacy-drie-modulevenster.py'),module],env=e,check=True)
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['dbus-run-session', '--', '/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/gui-hulpmiddelen/uitgepakt/usr/bin/xvfb-run', '-a', '-s', '-screen 0 1058x892x24 -nolisten tcp', '/usr/bin/python3', '/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/legacy-drie-modulevenster.py', 'spreadsheet']' returned non-zero exit status 1.

@@ -1,0 +1,11 @@
+    Checking office-core v2026.44.9-alpha.34 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-core)
+error: use of deprecated method `quick_xml::events::attributes::Attribute::<'a>::decode_and_unescape_value`: use `Self::decoded_and_normalized_value()`
+   --> crates/office-core/src/writer_nummering.rs:167:30
+    |
+167 | ...                   .decode_and_unescape_value(reader.decoder())
+    |                        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `-D deprecated` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(deprecated)]`
+
+error: could not compile `office-core` (lib) due to 1 previous error

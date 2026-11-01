@@ -1,0 +1,131 @@
+{
+  "geslaagd": true,
+  "referentie_goedgekeurd": true,
+  "omvang": "Aanvullende oorspronkelijke Linux-desktopbeelden in eigen Xvfb/D-Bus/XDG-sessie. Waargenomen GUI bediend met X11; geen vervanging van de vaste webreferenties of native pixelgoedkeuring.",
+  "weergaveomgeving": {
+    "WEBKIT_DISABLE_DMABUF_RENDERER": "1",
+    "WEBKIT_DISABLE_COMPOSITING_MODE": "1"
+  },
+  "voorkeuren": {
+    "taal": "nl",
+    "thema": "forge",
+    "updates": {
+      "automatisch": false,
+      "kanaal": "ontwikkel"
+    }
+  },
+  "appimage": {
+    "versie": "2026.44.8",
+    "broncommit": "0fc4d2bbf94bb6025d8d8517d53631d5f830cd1e",
+    "appimage_sha256": "4623bb10ff9e8f3e6eb0d9229e327196c1f1d29b31334856dd95b70ea6047cc2",
+    "digest_bron": "GitHub Release API van OpenAEC-Foundation/open-office-studio, v2026.44.8",
+    "single_instance": "2.5.4: gecontroleerde Linux-implementatie gebruikt uitsluitend de eigen sessie-D-Bus."
+  },
+  "programma_sha256": "10e3ed617e45d4c4e5973d49cb1a2a0846343d05fe82ad322e04a514e39b2700",
+  "acties": [
+    {
+      "opdracht": "01.actie.json",
+      "x11": [
+        [
+          "mousemove",
+          "--sync",
+          1022,
+          752
+        ],
+        [
+          "click",
+          1
+        ],
+        [
+          "mousemove",
+          "--sync",
+          1022,
+          770
+        ],
+        [
+          "click",
+          1
+        ],
+        [
+          "mousemove",
+          "--sync",
+          1022,
+          752
+        ],
+        [
+          "click",
+          1
+        ],
+        [
+          "mousemove",
+          "--sync",
+          1022,
+          770
+        ],
+        [
+          "click",
+          1
+        ],
+        [
+          "mousemove",
+          "--sync",
+          170,
+          171
+        ],
+        [
+          "click",
+          1
+        ],
+        [
+          "mousemove",
+          "--sync",
+          0,
+          0
+        ]
+      ],
+      "wacht": 3
+    },
+    {
+      "opdracht": "02.actie.json",
+      "x11": [
+        [
+          "mousemove",
+          "--sync",
+          600,
+          220
+        ]
+      ],
+      "wacht": 2,
+      "afronden": true
+    }
+  ],
+  "module": "writer",
+  "opnamen_identiek": true,
+  "bron_ongewijzigd": true,
+  "bron_sha256": "a1fe5935c05612446dbbfcfc1b84c729dc54bf26d559e162616d94eaa98656fa",
+  "voorkeuren_na_start": {
+    "taal": "nl",
+    "thema": "forge",
+    "updates": {
+      "automatisch": false,
+      "kanaal": "ontwikkel"
+    }
+  },
+  "beelden": {
+    "writer-01.actie.png": "30e4711bf61d5c6b2b067f3c2a0020d05bf26113c72096b95765a6c07cf31694",
+    "writer-02.actie.png": "081c5e2ed56a273b46831a7dde1f1ef13d6f4ba56046d7baccfac32f99de60f3",
+    "writer-kandidaat-herhaald.png": "081c5e2ed56a273b46831a7dde1f1ef13d6f4ba56046d7baccfac32f99de60f3",
+    "writer-kandidaat.png": "081c5e2ed56a273b46831a7dde1f1ef13d6f4ba56046d7baccfac32f99de60f3",
+    "writer-voor-bediening.png": "8efdf8a6d65348927e873c734452973053a28b43da4923b8e793b5fcdf8f53eb"
+  },
+  "goedkeuring": "Visueel geïnspecteerde, rustige aanvullende oorspronkelijke Linux-desktopreferentie. Twee volledige ruwe PNG-opnamen zijn bytegelijk, bronfixture is ongewijzigd en bytegelijk aan de bestaande referentiebron. Geen goedkeuring van de Rust-preview of wijziging van de vaste browserreferenties.",
+  "brongebieden_bytegelijk_tussen_release_en_webreferentie": [
+    "src",
+    "src-tauri/src",
+    "src-tauri/tauri.conf.json",
+    "public/templates",
+    "docs/voorbeelden"
+  ],
+  "beeld_sha256": "081c5e2ed56a273b46831a7dde1f1ef13d6f4ba56046d7baccfac32f99de60f3",
+  "herhaald_beeld_sha256": "081c5e2ed56a273b46831a7dde1f1ef13d6f4ba56046d7baccfac32f99de60f3"
+}

@@ -4,6 +4,187 @@ use office_core::{
     writer_opmaak::selectie,
 };
 const BRON: &[u8] = include_bytes!("fixtures/writer.docx");
+fn lijst_opdracht(id: &str, soort: Option<office_core::opmaak::LijstSoort>) -> Bewerking {
+    Bewerking::Opmaak {
+        id: id.into(),
+        begin: 0,
+        einde: 0,
+        stijl: Opmaak::Lijst(soort),
+    }
+}
+
+#[test]
+fn writer_lijst_nummering_enter_vervolgt_en_undo_herstelt_de_gehele_bron() {
+    use office_core::{opmaak::LijstSoort as L, writer::AlineaActie};
+    let bron = include_bytes!("fixtures/writer-structuur.docx");
+    // De bestaande splitsbewerking schrijft nieuwe tekstruns met expliciet
+    // xml:space. Geef de rijke brontekstruns diezelfde geldige representatie,
+    // zodat daarna alle runvelden exact vergelijkbaar blijven.
+    let mut delen = ooxml_opc::unzip_parts(bron).unwrap();
+    let xml = &mut delen
+        .iter_mut()
+        .find(|(n, _)| n == "word/document.xml")
+        .unwrap()
+        .1;
+    let tekst = String::from_utf8(xml.clone()).unwrap();
+    assert_eq!(tekst.matches("<w:t>café rechts</w:t>").count(), 1);
+    *xml = tekst
+        .replace(
+            "<w:t>café rechts</w:t>",
+            "<w:t xml:space=\"preserve\">café rechts</w:t>",
+        )
+        .into_bytes();
+    let eigen_bron = ooxml_opc::rezip_parts(&delen).unwrap();
+    let bron = eigen_bron.as_slice();
+    let mut s = Sessie::open(Module::Writer, bron.to_vec()).unwrap();
+    let b = s.weergave(0).unwrap();
+    let v = b
+        .velden
+        .iter()
+        .find(|v| v.tekst == "Links 🏠 café rechts")
+        .unwrap();
+    let Document::Writer(d) = Document::open(Module::Writer, bron).unwrap() else {
+        unreachable!()
+    };
+    let inhoud = d.paragraph(&v.id).unwrap().content.clone();
+    s.bewerk(0, lijst_opdracht(&v.id, Some(L::Nummering)))
+        .unwrap();
+    let genummerd = s.bron().clone();
+    let n = s.weergave(0).unwrap();
+    let lijst = n.writer_lijsten.get(&v.id).unwrap();
+    assert_eq!(lijst.soort, L::Nummering);
+    assert_eq!(lijst.niveau, 0);
+    let nummer = lijst.nummer;
+    s.bewerk(
+        0,
+        Bewerking::Alinea {
+            id: v.id.clone(),
+            actie: AlineaActie::Splits {
+                positie: v.tekst.chars().count(),
+            },
+        },
+    )
+    .unwrap();
+    let gesplitst = s.bron().clone();
+    let n = s.weergave(0).unwrap();
+    let i = n.velden.iter().position(|p| p.id == v.id).unwrap();
+    let leeg = &n.velden[i + 1];
+    assert_eq!(leeg.tekst, "");
+    assert_eq!(n.writer_lijsten[&leeg.id].nummer, nummer);
+    s.bewerk(
+        0,
+        Bewerking::Tekst {
+            id: leeg.id.clone(),
+            tekst: "Tweede 🏠".into(),
+        },
+    )
+    .unwrap();
+    let Document::Writer(d) = Document::open(Module::Writer, &s.bron()).unwrap() else {
+        unreachable!()
+    };
+    assert_eq!(d.paragraph(&v.id).unwrap().content, inhoud);
+    assert_eq!(
+        d.paragraph(&v.id)
+            .unwrap()
+            .list_rendering
+            .as_ref()
+            .unwrap()
+            .num_id,
+        nummer as f64
+    );
+    assert_eq!(
+        d.paragraph(&leeg.id)
+            .unwrap()
+            .list_rendering
+            .as_ref()
+            .unwrap()
+            .num_id,
+        nummer as f64
+    );
+    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
+        std::fs::create_dir_all(&map).unwrap();
+        std::fs::write(
+            std::path::PathBuf::from(map).join("writer-lijsten-direct.docx"),
+            s.bron().as_slice(),
+        )
+        .unwrap();
+    }
+    s.terug().unwrap();
+    assert_eq!(*s.bron(), *gesplitst);
+    s.terug().unwrap();
+    assert_eq!(*s.bron(), *genummerd);
+    s.terug().unwrap();
+    assert_eq!(s.bron().as_slice(), bron);
+    s.vooruit().unwrap();
+    assert_eq!(*s.bron(), *genummerd);
+}
+
+#[test]
+fn writer_lijst_opsomming_wisselen_uitschakelen_en_tabelgrenzen_blijven_bewaard() {
+    use office_core::opmaak::LijstSoort as L;
+    let bron = include_bytes!("fixtures/writer-structuur.docx");
+    let mut s = Sessie::open(Module::Writer, bron.to_vec()).unwrap();
+    let b = s.weergave(0).unwrap();
+    let rijk = b
+        .velden
+        .iter()
+        .find(|v| v.tekst == "Links 🏠 café rechts")
+        .unwrap();
+    let cel = b.velden.iter().find(|v| v.tekst == "Cel één").unwrap();
+    let tweede = b
+        .velden
+        .iter()
+        .find(|v| v.tekst == "Tweede celalinea")
+        .unwrap();
+    let andere_cel = b.velden.iter().find(|v| v.tekst == "Cel twee").unwrap();
+    for v in [rijk, cel, tweede, andere_cel] {
+        s.bewerk(0, lijst_opdracht(&v.id, Some(L::Opsomming)))
+            .unwrap();
+    }
+    let n = s.weergave(0).unwrap();
+    for v in [rijk, cel, tweede, andere_cel] {
+        assert_eq!(n.writer_lijsten[&v.id].soort, L::Opsomming);
+        assert_eq!(
+            n.velden.iter().find(|p| p.id == v.id).unwrap().tekst,
+            v.tekst
+        );
+    }
+    assert_ne!(
+        n.writer_lijsten[&rijk.id].nummer,
+        n.writer_lijsten[&cel.id].nummer
+    );
+    assert_eq!(
+        n.writer_lijsten[&cel.id].nummer,
+        n.writer_lijsten[&tweede.id].nummer
+    );
+    assert_ne!(
+        n.writer_lijsten[&cel.id].nummer,
+        n.writer_lijsten[&andere_cel.id].nummer
+    );
+    let Document::Writer(d) = Document::open(Module::Writer, &s.bron()).unwrap() else {
+        unreachable!()
+    };
+    assert_eq!(
+        d.model()
+            .numbering
+            .abstract_nums
+            .iter()
+            .filter(|n| n.name.as_deref() == Some("OpenAEC-Opsomming"))
+            .count(),
+        1
+    );
+    s.bewerk(0, lijst_opdracht(&rijk.id, Some(L::Nummering)))
+        .unwrap();
+    assert_eq!(
+        s.weergave(0).unwrap().writer_lijsten[&rijk.id].soort,
+        L::Nummering
+    );
+    let genummerd = s.bron().clone();
+    s.bewerk(0, lijst_opdracht(&rijk.id, None)).unwrap();
+    assert!(!s.weergave(0).unwrap().writer_lijsten.contains_key(&rijk.id));
+    s.terug().unwrap();
+    assert_eq!(*s.bron(), *genummerd);
+}
 #[test]
 fn writer_opmaak_titel_standaardtekst_en_tabel_laten_de_opgeloste_engineopmaak_zien() {
     let s = Sessie::open(Module::Writer, BRON.to_vec()).unwrap();
@@ -756,4 +937,386 @@ fn alineastijl_gelezen_standaardstijl_en_ontbrekende_keuze_worden_niet_verzonnen
     assert!(b.writer_stijlen.keuzes.is_empty());
     assert!(!b.writer_stijlen.huidig.contains_key(&b.velden[1].id));
     assert_eq!(s.bron().as_slice(), bron);
+}
+
+#[test]
+fn writer_lijst_nieuwe_definities_worden_bewaard_zonder_oorspronkelijke_lijstbronverlies() {
+    let invoer = include_bytes!("fixtures/writer-structuur.docx");
+    // Zoals de vastgelegde nulbewerkingsdiagnose laat zien, normaliseert de
+    // bestaande serializer eerst de standaardnaamruimten van kop/voet. Begin
+    // deze afzonderlijke lijstproef daarom met een reeds canonieke bron.
+    let canonieke_invoer = Document::open(Module::Writer, invoer)
+        .unwrap()
+        .bytes()
+        .unwrap();
+    let bron = canonieke_invoer.as_slice();
+    let originele_delen = ooxml_opc::unzip_parts(invoer).unwrap();
+    let canonieke_delen = ooxml_opc::unzip_parts(bron).unwrap();
+    assert_eq!(
+        originele_delen
+            .iter()
+            .find(|(n, _)| n == "word/numbering.xml")
+            .unwrap()
+            .1,
+        canonieke_delen
+            .iter()
+            .find(|(n, _)| n == "word/numbering.xml")
+            .unwrap()
+            .1,
+        "De ruwe nummeringsbron mag ook bij de nulbewerking niet veranderen"
+    );
+    let mut d = Document::open(Module::Writer, bron).unwrap();
+    let zonder_bewerking = d.bytes().unwrap();
+    let Document::Writer(w) = &mut d else {
+        unreachable!()
+    };
+    let origineel = w.model().numbering.clone();
+    let koppen = w.model().headers.clone();
+    let voeten = w.model().footers.clone();
+    assert!(!origineel.abstract_nums.is_empty() && !origineel.nums.is_empty());
+    let mut abstracte = origineel.abstract_nums[0].clone();
+    abstracte.abstract_num_id = origineel
+        .abstract_nums
+        .iter()
+        .map(|n| n.abstract_num_id)
+        .fold(0., f64::max)
+        + 1.;
+    let mut instantie = origineel.nums[0].clone();
+    instantie.num_id = origineel.nums.iter().map(|n| n.num_id).fold(0., f64::max) + 1.;
+    instantie.abstract_num_id = abstracte.abstract_num_id;
+    instantie.level_overrides = None;
+    let nieuwe_id = instantie.num_id;
+    let nieuwe_abstracte = abstracte.abstract_num_id;
+    w.model_mut().numbering.abstract_nums.push(abstracte);
+    w.model_mut().numbering.nums.push(instantie);
+    let bytes = d.bytes().unwrap();
+    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
+        std::fs::create_dir_all(&map).unwrap();
+        for (naam, bytes) in [
+            ("lijstbron-oorspronkelijk.docx", bron),
+            (
+                "lijstbron-zonder-bewerking.docx",
+                zonder_bewerking.as_slice(),
+            ),
+            ("lijstbron-aangevuld.docx", bytes.as_slice()),
+        ] {
+            std::fs::write(std::path::PathBuf::from(&map).join(naam), bytes).unwrap();
+        }
+    }
+
+    let Document::Writer(opnieuw) = Document::open(Module::Writer, &bytes).unwrap() else {
+        unreachable!()
+    };
+    assert!(
+        opnieuw
+            .model()
+            .numbering
+            .nums
+            .iter()
+            .any(|n| n.num_id == nieuwe_id && n.abstract_num_id == nieuwe_abstracte),
+        "De nieuwe lijstinstantie ontbreekt in het bewaarde document"
+    );
+    assert!(
+        opnieuw
+            .model()
+            .numbering
+            .abstract_nums
+            .iter()
+            .any(|n| n.abstract_num_id == nieuwe_abstracte)
+    );
+    assert_eq!(
+        &opnieuw.model().numbering.nums[..origineel.nums.len()],
+        origineel.nums.as_slice()
+    );
+    assert_eq!(opnieuw.model().headers, koppen);
+    assert_eq!(opnieuw.model().footers, voeten);
+    let oud = ooxml_opc::unzip_parts(bron).unwrap();
+    let canoniek = ooxml_opc::unzip_parts(&zonder_bewerking).unwrap();
+    let nieuw = ooxml_opc::unzip_parts(&bytes).unwrap();
+    let oud_num = &oud
+        .iter()
+        .find(|(n, _)| n == "word/numbering.xml")
+        .unwrap()
+        .1;
+    let nieuw_num = &nieuw
+        .iter()
+        .find(|(n, _)| n == "word/numbering.xml")
+        .unwrap()
+        .1;
+    // Nieuwe abstracte definities horen vóór bestaande instanties. Alleen
+    // de twee nieuwe elementen verwijderen moet de hele oorspronkelijke bron
+    // bytegelijk herstellen, inclusief onbekende kenmerken en witruimte.
+    let mut zonder_nieuwe = String::from_utf8(nieuw_num.clone()).unwrap();
+    for (tag, attribuut, id) in [
+        ("abstractNum", "abstractNumId", nieuwe_abstracte),
+        ("num", "numId", nieuwe_id),
+    ] {
+        let patroon =
+            format!(r#"(?s)<w:{tag}\b[^>]*\bw:{attribuut}="{id:.0}"[^>]*(?:/>|>.*?</w:{tag}>)"#);
+        let re = regex::Regex::new(&patroon).unwrap();
+        assert_eq!(re.find_iter(&zonder_nieuwe).count(), 1);
+        zonder_nieuwe = re.replace(&zonder_nieuwe, "").into_owned();
+    }
+    assert_eq!(
+        zonder_nieuwe.as_bytes(),
+        oud_num.as_slice(),
+        "Bestaande onbekende lijstkenmerken moeten bytegelijk blijven"
+    );
+    // De bestaande serializer normaliseert ook bij nulbewerkingen de
+    // standaardnaamruimten en mc:Ignorable van kop/voet. Deze lijststap mag
+    // geen enkel extra verschil buiten document.xml/numbering.xml maken.
+    for (naam, inhoud) in canoniek {
+        if !["word/document.xml", "word/numbering.xml"].contains(&naam.as_str()) {
+            assert_eq!(
+                nieuw.iter().find(|(n, _)| n == &naam).unwrap().1,
+                inhoud,
+                "{naam}"
+            );
+        }
+    }
+}
+
+#[test]
+fn writer_lijst_stijlgebonden_nummering_wordt_echt_uitgeschakeld_en_undo_is_exact() {
+    let bron = met_extra_stijlen(
+        include_bytes!("fixtures/writer-structuur.docx"),
+        r#"<w:style w:type="paragraph" w:styleId="EigenLijst"><w:name w:val="Eigen lijst"/><w:basedOn w:val="Normal"/><w:pPr><w:numPr><w:ilvl w:val="0"/><w:numId w:val="9"/></w:numPr></w:pPr></w:style>"#,
+    );
+    let mut s = Sessie::open(Module::Writer, bron).unwrap();
+    let b = s.weergave(0).unwrap();
+    let id = b
+        .velden
+        .iter()
+        .find(|v| v.tekst == "Links 🏠 café rechts")
+        .unwrap()
+        .id
+        .clone();
+    s.bewerk(
+        0,
+        Bewerking::Opmaak {
+            id: id.clone(),
+            begin: 0,
+            einde: 0,
+            stijl: Opmaak::Alineastijl("EigenLijst".into()),
+        },
+    )
+    .unwrap();
+    let bron = s.bron();
+    let mut s = Sessie::open(Module::Writer, bron.as_ref().clone()).unwrap();
+    assert_eq!(s.weergave(0).unwrap().writer_lijsten[&id].nummer, 9);
+    s.bewerk(0, lijst_opdracht(&id, None)).unwrap();
+    assert!(!s.weergave(0).unwrap().writer_lijsten.contains_key(&id));
+    let bewaard = s.bron();
+    let Document::Writer(w) = Document::open(Module::Writer, &bewaard).unwrap() else {
+        unreachable!()
+    };
+    let f = w.paragraph(&id).unwrap().formatting.as_ref().unwrap();
+    assert_eq!(f.style_id.as_deref(), Some("EigenLijst"));
+    assert_eq!(f.num_pr.as_ref().unwrap().num_id, Some(0.));
+    let delen = |b: &[u8]| ooxml_opc::unzip_parts(b).unwrap();
+    let stijl = |v: Vec<(String, Vec<u8>)>| {
+        v.into_iter()
+            .find(|(n, _)| n == "word/styles.xml")
+            .unwrap()
+            .1
+    };
+    assert_eq!(stijl(delen(&bron)), stijl(delen(&bewaard)));
+    s.terug().unwrap();
+    assert_eq!(*s.bron(), *bron);
+}
+
+#[test]
+fn writer_lijst_zonder_nummeringsdeel_voegt_een_geldig_gekoppeld_onderdeel_toe() {
+    use office_core::opmaak::LijstSoort as L;
+    let mut delen =
+        ooxml_opc::unzip_parts(include_bytes!("fixtures/writer-structuur.docx")).unwrap();
+    delen.retain(|(n, _)| n != "word/numbering.xml");
+    for (naam, bytes) in &mut delen {
+        let patroon = match naam.as_str() {
+            "[Content_Types].xml" => r#"<Override\b[^>]*PartName="/word/numbering.xml"[^>]*/>"#,
+            "word/_rels/document.xml.rels" => {
+                r#"<Relationship\b[^>]*Type="[^"]*/numbering"[^>]*/>"#
+            }
+            _ => continue,
+        };
+        let re = regex::Regex::new(patroon).unwrap();
+        let tekst = String::from_utf8(bytes.clone()).unwrap();
+        assert_eq!(re.find_iter(&tekst).count(), 1);
+        *bytes = re.replace(&tekst, "").into_owned().into_bytes();
+    }
+    let bron = ooxml_opc::rezip_parts(&delen).unwrap();
+    let mut s = Sessie::open(Module::Writer, bron.clone()).unwrap();
+    let b = s.weergave(0).unwrap();
+    let id = b
+        .velden
+        .iter()
+        .find(|v| v.tekst == "Links 🏠 café rechts")
+        .unwrap()
+        .id
+        .clone();
+    s.bewerk(0, lijst_opdracht(&id, Some(L::Opsomming)))
+        .unwrap();
+    let Document::Writer(w) = Document::open(Module::Writer, &s.bron()).unwrap() else {
+        unreachable!()
+    };
+    assert_eq!(w.model().numbering.nums.len(), 1);
+    assert_eq!(w.model().numbering.abstract_nums.len(), 1);
+    assert_eq!(
+        w.model().numbering.abstract_nums[0].name.as_deref(),
+        Some("OpenAEC-Opsomming")
+    );
+    assert_eq!(
+        s.weergave(0).unwrap().writer_lijsten[&id].soort,
+        L::Opsomming
+    );
+    let delen = ooxml_opc::unzip_parts(&s.bron()).unwrap();
+    for (naam, zoek) in [
+        (
+            "[Content_Types].xml",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml",
+        ),
+        ("word/_rels/document.xml.rels", "Target=\"numbering.xml\""),
+    ] {
+        let xml = &delen.iter().find(|(n, _)| n == naam).unwrap().1;
+        assert!(std::str::from_utf8(xml).unwrap().contains(zoek));
+    }
+    s.terug().unwrap();
+    assert_eq!(s.bron().as_slice(), bron);
+}
+
+#[test]
+fn writer_lijst_een_zojuist_gekozen_lijststijl_eindigt_met_enter_op_hetzelfde_lege_item() {
+    use office_core::writer::{AlineaActie, CursorActie};
+    let bron = met_extra_stijlen(
+        include_bytes!("fixtures/writer-structuur.docx"),
+        r#"<w:style w:type="paragraph" w:styleId="EigenLijst"><w:name w:val="Eigen lijst"/><w:basedOn w:val="Normal"/><w:pPr><w:numPr><w:ilvl w:val="0"/><w:numId w:val="9"/></w:numPr></w:pPr></w:style>"#,
+    );
+    let mut s = Sessie::open(Module::Writer, bron).unwrap();
+    let b = s.weergave(0).unwrap();
+    let i = b
+        .velden
+        .iter()
+        .position(|v| v.tekst == "Links 🏠 café rechts")
+        .unwrap();
+    let v = &b.velden[i];
+    s.bewerk(
+        0,
+        Bewerking::Alinea {
+            id: v.id.clone(),
+            actie: AlineaActie::Splits {
+                positie: v.tekst.chars().count(),
+            },
+        },
+    )
+    .unwrap();
+    let id = s.weergave(0).unwrap().velden[i + 1].id.clone();
+    s.bewerk(
+        0,
+        Bewerking::Opmaak {
+            id: id.clone(),
+            begin: 0,
+            einde: 0,
+            stijl: Opmaak::Alineastijl("EigenLijst".into()),
+        },
+    )
+    .unwrap();
+    let b = s.weergave(0).unwrap();
+    assert!(b.writer_lijsten.contains_key(&id));
+    let bron = s.bron();
+    let hash = s.bron_hash().to_owned();
+    let (n, cursor) = s
+        .bewerk_alinea_cursor(0, &hash, &id, 0, 0, CursorActie::Splits)
+        .unwrap();
+    assert_eq!(n.velden.len(), b.velden.len());
+    assert_eq!(cursor.id, id);
+    assert_eq!(cursor.positie, 0);
+    assert!(!n.writer_lijsten.contains_key(&id));
+    s.terug().unwrap();
+    assert_eq!(*s.bron(), *bron);
+}
+
+#[test]
+fn writer_lijst_nieuwe_identificatie_activeert_geen_oorspronkelijke_verweesde_stijlverwijzing() {
+    use office_core::opmaak::LijstSoort as L;
+    let bron = met_extra_stijlen(
+        include_bytes!("fixtures/writer-structuur.docx"),
+        r#"<w:style w:type="paragraph" w:styleId="VerweesdeLijst"><w:name w:val="Verweesde lijst"/><w:basedOn w:val="Normal"/><w:pPr><w:numPr><w:ilvl w:val="0"/><w:numId w:val="10"/></w:numPr></w:pPr></w:style>"#,
+    );
+    let mut s = Sessie::open(Module::Writer, bron).unwrap();
+    let b = s.weergave(0).unwrap();
+    let oud = b
+        .velden
+        .iter()
+        .find(|v| v.tekst == "Voor de rijke alinea")
+        .unwrap();
+    let doel = b
+        .velden
+        .iter()
+        .find(|v| v.tekst == "Links 🏠 café rechts")
+        .unwrap();
+    s.bewerk(
+        0,
+        Bewerking::Opmaak {
+            id: oud.id.clone(),
+            begin: 0,
+            einde: 0,
+            stijl: Opmaak::Alineastijl("VerweesdeLijst".into()),
+        },
+    )
+    .unwrap();
+    assert!(!s.weergave(0).unwrap().writer_lijsten.contains_key(&oud.id));
+    let voor = s.bron();
+    s.bewerk(0, lijst_opdracht(&doel.id, Some(L::Nummering)))
+        .unwrap();
+    let n = s.weergave(0).unwrap();
+    assert!(
+        !n.writer_lijsten.contains_key(&oud.id),
+        "Een nieuwe lijst mag een andere alinea met een ontbrekende oorspronkelijke definitie niet alsnog nummeren"
+    );
+    assert!(n.writer_lijsten[&doel.id].nummer > 10);
+    assert_eq!(
+        n.velden.iter().find(|v| v.id == oud.id).unwrap().tekst,
+        oud.tekst
+    );
+    let stijl = |b: &[u8]| {
+        ooxml_opc::unzip_parts(b)
+            .unwrap()
+            .into_iter()
+            .find(|(n, _)| n == "word/styles.xml")
+            .unwrap()
+            .1
+    };
+    assert_eq!(stijl(&voor), stijl(&s.bron()));
+    s.terug().unwrap();
+    assert_eq!(*s.bron(), *voor);
+}
+
+#[test]
+fn writer_lijst_markdown_bewaart_de_nieuwe_lijst_voor_en_na_heropenen() {
+    use office_core::opmaak::LijstSoort as L;
+    for (soort, voorvoegsel) in [(L::Opsomming, "- "), (L::Nummering, "1. ")] {
+        let bron = include_bytes!("fixtures/writer-structuur.docx");
+        let mut s = Sessie::open(Module::Writer, bron.to_vec()).unwrap();
+        let b = s.weergave(0).unwrap();
+        let id = b
+            .velden
+            .iter()
+            .find(|v| v.tekst == "Voor de rijke alinea")
+            .unwrap()
+            .id
+            .clone();
+        s.bewerk(0, lijst_opdracht(&id, Some(soort))).unwrap();
+        let bewaard = s.bron();
+        let md = s.markdown().unwrap();
+        assert!(
+            md.lines()
+                .any(|regel| regel == format!("{voorvoegsel}Voor de rijke alinea")),
+            "{soort:?}: {md}"
+        );
+        let opnieuw = Document::open(Module::Writer, &bewaard).unwrap();
+        assert_eq!(md, opnieuw.markdown().unwrap());
+        assert_eq!(*s.bron(), *bewaard);
+        s.terug().unwrap();
+        assert_eq!(s.bron().as_slice(), bron);
+    }
 }

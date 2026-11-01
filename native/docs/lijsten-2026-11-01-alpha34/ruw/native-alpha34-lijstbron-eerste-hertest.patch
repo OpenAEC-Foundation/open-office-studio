@@ -1,0 +1,450 @@
+diff --git a/native/crates/office-core/src/lib.rs b/native/crates/office-core/src/lib.rs
+index 39cd36f..50fabd7 100644
+--- a/native/crates/office-core/src/lib.rs
++++ b/native/crates/office-core/src/lib.rs
+@@ -18,6 +18,7 @@ mod writer_beeld;
+ pub mod writer_cursor;
+ pub mod writer_document;
+ pub mod writer_navigatie;
++mod writer_nummering;
+ pub mod writer_opmaak;
+ pub mod writer_pagina;
+ pub mod writer_stijlen;
+diff --git a/native/crates/office-core/src/writer_document.rs b/native/crates/office-core/src/writer_document.rs
+index 0ebdd1d..1e7c1f3 100644
+--- a/native/crates/office-core/src/writer_document.rs
++++ b/native/crates/office-core/src/writer_document.rs
+@@ -9,12 +9,15 @@ pub struct WriterDocument {
+     document: Document,
+     beperking: Option<String>,
+     dubbele_stijlen: std::collections::HashSet<String>,
++    nummerbron: crate::writer_nummering::Nummerbron,
+     layoutbron: std::cell::OnceCell<std::sync::Arc<Vec<u8>>>,
+ }
+ impl WriterDocument {
+     pub(crate) fn nieuw(document: Document, bron: &[u8]) -> Resultaat<Self> {
++        let nummerbron = crate::writer_nummering::Nummerbron::nieuw(&document, bron)?;
+         Ok(Self {
+             document,
++            nummerbron,
+             beperking: lees_beperking(bron)?,
+             dubbele_stijlen: crate::writer_stijlen::dubbele_ids(bron)?,
+             layoutbron: std::cell::OnceCell::new(),
+@@ -23,6 +26,10 @@ impl WriterDocument {
+     pub(crate) fn dubbele_stijlen(&self) -> &std::collections::HashSet<String> {
+         &self.dubbele_stijlen
+     }
++    /// Bewaar nieuwe lijstdefinities zonder de oorspronkelijke lijstbron af te vlakken.
++    pub fn save(&self) -> Resultaat<Vec<u8>> {
++        self.nummerbron.bewaren(&self.document)
++    }
+     pub fn bewerkingsbeperking(&self) -> Option<&str> {
+         self.beperking.as_deref()
+     }
+@@ -32,11 +39,7 @@ impl WriterDocument {
+         if let Some(bron) = self.layoutbron.get() {
+             return Ok(bron.clone());
+         }
+-        let bron = std::sync::Arc::new(
+-            self.document
+-                .save()
+-                .map_err(|e| Fout::Document(e.to_string()))?,
+-        );
++        let bron = std::sync::Arc::new(self.save()?);
+         // De cache houdt geen onbeperkte extra kopie van grote pakketten vast.
+         if bron.len() <= 16 * 1024 * 1024 {
+             let _ = self.layoutbron.set(bron.clone());
+diff --git a/native/crates/office-core/tests/writer_opmaak.rs b/native/crates/office-core/tests/writer_opmaak.rs
+index 5650b41..6a6f1e8 100644
+--- a/native/crates/office-core/tests/writer_opmaak.rs
++++ b/native/crates/office-core/tests/writer_opmaak.rs
+@@ -757,3 +757,94 @@ fn alineastijl_gelezen_standaardstijl_en_ontbrekende_keuze_worden_niet_verzonnen
+     assert!(!b.writer_stijlen.huidig.contains_key(&b.velden[1].id));
+     assert_eq!(s.bron().as_slice(), bron);
+ }
++
++#[test]
++fn writer_lijst_nieuwe_definities_worden_bewaard_zonder_oorspronkelijke_lijstbronverlies() {
++    let bron = include_bytes!("fixtures/writer-structuur.docx");
++    let mut d = Document::open(Module::Writer, bron).unwrap();
++    let Document::Writer(w) = &mut d else {
++        unreachable!()
++    };
++    let origineel = w.model().numbering.clone();
++    assert!(!origineel.abstract_nums.is_empty() && !origineel.nums.is_empty());
++    let mut abstracte = origineel.abstract_nums[0].clone();
++    abstracte.abstract_num_id = origineel
++        .abstract_nums
++        .iter()
++        .map(|n| n.abstract_num_id)
++        .fold(0., f64::max)
++        + 1.;
++    let mut instantie = origineel.nums[0].clone();
++    instantie.num_id = origineel.nums.iter().map(|n| n.num_id).fold(0., f64::max) + 1.;
++    instantie.abstract_num_id = abstracte.abstract_num_id;
++    instantie.level_overrides = None;
++    let nieuwe_id = instantie.num_id;
++    let nieuwe_abstracte = abstracte.abstract_num_id;
++    w.model_mut().numbering.abstract_nums.push(abstracte);
++    w.model_mut().numbering.nums.push(instantie);
++    let bytes = d.bytes().unwrap();
++    let Document::Writer(opnieuw) = Document::open(Module::Writer, &bytes).unwrap() else {
++        unreachable!()
++    };
++    assert!(
++        opnieuw
++            .model()
++            .numbering
++            .nums
++            .iter()
++            .any(|n| n.num_id == nieuwe_id && n.abstract_num_id == nieuwe_abstracte),
++        "De nieuwe lijstinstantie ontbreekt in het bewaarde document"
++    );
++    assert!(
++        opnieuw
++            .model()
++            .numbering
++            .abstract_nums
++            .iter()
++            .any(|n| n.abstract_num_id == nieuwe_abstracte)
++    );
++    assert_eq!(
++        &opnieuw.model().numbering.nums[..origineel.nums.len()],
++        origineel.nums.as_slice()
++    );
++    let oud = ooxml_opc::unzip_parts(bron).unwrap();
++    let nieuw = ooxml_opc::unzip_parts(&bytes).unwrap();
++    let oud_num = &oud
++        .iter()
++        .find(|(n, _)| n == "word/numbering.xml")
++        .unwrap()
++        .1;
++    let nieuw_num = &nieuw
++        .iter()
++        .find(|(n, _)| n == "word/numbering.xml")
++        .unwrap()
++        .1;
++    // Nieuwe abstracte definities horen vóór bestaande instanties. Alleen
++    // de twee nieuwe elementen verwijderen moet de hele oorspronkelijke bron
++    // bytegelijk herstellen, inclusief onbekende kenmerken en witruimte.
++    let mut zonder_nieuwe = String::from_utf8(nieuw_num.clone()).unwrap();
++    for (tag, attribuut, id) in [
++        ("abstractNum", "abstractNumId", nieuwe_abstracte),
++        ("num", "numId", nieuwe_id),
++    ] {
++        let patroon =
++            format!(r#"(?s)<w:{tag}\b[^>]*\bw:{attribuut}="{id:.0}"[^>]*(?:/>|>.*?</w:{tag}>)"#);
++        let re = regex::Regex::new(&patroon).unwrap();
++        assert_eq!(re.find_iter(&zonder_nieuwe).count(), 1);
++        zonder_nieuwe = re.replace(&zonder_nieuwe, "").into_owned();
++    }
++    assert_eq!(
++        zonder_nieuwe.as_bytes(),
++        oud_num.as_slice(),
++        "Bestaande onbekende lijstkenmerken moeten bytegelijk blijven"
++    );
++    for (naam, inhoud) in oud {
++        if !["word/document.xml", "word/numbering.xml"].contains(&naam.as_str()) {
++            assert_eq!(
++                nieuw.iter().find(|(n, _)| n == &naam).unwrap().1,
++                inhoud,
++                "{naam}"
++            );
++        }
++    }
++}
+diff --git a/native/crates/office-core/src/writer_nummering.rs b/native/crates/office-core/src/writer_nummering.rs
+new file mode 100644
+index 0000000..7bb0ba8
+--- /dev/null
++++ b/native/crates/office-core/src/writer_nummering.rs
+@@ -0,0 +1,289 @@
++//! Nieuwe lijstdefinities invoegen zonder de oorspronkelijke XML te herschrijven.
++use crate::document::{Fout, Resultaat};
++use docx_parse::numbering::NumberingDefinitions;
++use quick_xml::{events::Event, name::ResolveResult, reader::NsReader};
++use std::collections::HashSet;
++const WOORD: &[u8] = b"http://schemas.openxmlformats.org/wordprocessingml/2006/main";
++const PAD: &str = "word/numbering.xml";
++fn fout(tekst: &str) -> Fout {
++    Fout::Document(tekst.into())
++}
++
++pub(crate) struct Nummerbron {
++    oorspronkelijk: NumberingDefinitions,
++    xml: Option<Vec<u8>>,
++    onduidelijk: bool,
++}
++impl Nummerbron {
++    pub fn nieuw(d: &betteroffice_docx::Document, bron: &[u8]) -> Resultaat<Self> {
++        let delen =
++            ooxml_opc::unzip_parts_where(bron, ooxml_opc::MAX_TOTAL_UNCOMPRESSED_BYTES, |n| {
++                n.eq_ignore_ascii_case(PAD)
++            })
++            .map_err(Fout::Document)?;
++        let onduidelijk = delen.len() > 1 || delen.first().is_some_and(|(n, _)| n != PAD);
++        let xml = delen.into_iter().next().map(|(_, b)| b);
++        Ok(Self {
++            oorspronkelijk: d.model().numbering.clone(),
++            xml,
++            onduidelijk,
++        })
++    }
++    pub fn bewaren(&self, d: &betteroffice_docx::Document) -> Resultaat<Vec<u8>> {
++        let nieuw = &d.model().numbering;
++        if nieuw == &self.oorspronkelijk {
++            return d.save().map_err(|e| fout(&e.to_string()));
++        }
++        if self.onduidelijk {
++            return Err(fout(
++                "De nummeringsbron is niet eenduidig; de lijstwijziging is niet bewaard",
++            ));
++        }
++        let oud = &self.oorspronkelijk;
++        if nieuw.abstract_nums.len() < oud.abstract_nums.len()
++            || nieuw.nums.len() < oud.nums.len()
++            || nieuw.abstract_nums[..oud.abstract_nums.len()] != oud.abstract_nums
++            || nieuw.nums[..oud.nums.len()] != oud.nums
++        {
++            return Err(fout(
++                "Bestaande lijstdefinities wijzigen of verwijderen wordt nog niet veilig ondersteund",
++            ));
++        }
++        controleer_ids(nieuw)?;
++        let extra = NumberingDefinitions {
++            abstract_nums: nieuw.abstract_nums[oud.abstract_nums.len()..].to_vec(),
++            nums: nieuw.nums[oud.nums.len()..].to_vec(),
++        };
++        let Some(bron) = &self.xml else {
++            return d.save().map_err(|e| fout(&e.to_string()));
++        };
++        let structuur = lees(bron)?;
++        if structuur
++            .kinderen
++            .iter()
++            .filter(|k| k.soort == "abstractNum")
++            .count()
++            != oud.abstract_nums.len()
++            || structuur
++                .kinderen
++                .iter()
++                .filter(|k| k.soort == "num")
++                .count()
++                != oud.nums.len()
++        {
++            return Err(fout(
++                "De nummeringsbron bevat onbegrepen definities; de lijstwijziging is niet bewaard",
++            ));
++        }
++        let nummering = voeg_toe(bron, &structuur, &extra)?;
++        let bytes = d.save().map_err(|e| fout(&e.to_string()))?;
++        let mut delen = ooxml_opc::unzip_parts(&bytes).map_err(Fout::Document)?;
++        let mut gevonden = 0;
++        for (naam, inhoud) in &mut delen {
++            if naam == PAD {
++                *inhoud = nummering.clone();
++                gevonden += 1;
++            }
++        }
++        if gevonden != 1 {
++            return Err(fout("Het bewaarde nummeringsonderdeel is niet eenduidig"));
++        }
++        ooxml_opc::rezip_parts(&delen).map_err(Fout::Document)
++    }
++}
++fn geheel(id: f64) -> Resultaat<i64> {
++    if !id.is_finite() || id < 0. || id.fract() != 0. || id > i32::MAX as f64 {
++        return Err(fout(
++            "Een lijstidentificatie is geen ondersteund geheel getal",
++        ));
++    }
++    Ok(id as i64)
++}
++fn controleer_ids(d: &NumberingDefinitions) -> Resultaat<()> {
++    let mut abstracte = HashSet::new();
++    let mut nummers = HashSet::new();
++    for n in &d.abstract_nums {
++        if !abstracte.insert(geheel(n.abstract_num_id)?) {
++            return Err(fout("Dubbele abstracte lijstidentificatie"));
++        }
++    }
++    for n in &d.nums {
++        if !nummers.insert(geheel(n.num_id)?) {
++            return Err(fout("Dubbele lijstidentificatie"));
++        }
++        if !abstracte.contains(&geheel(n.abstract_num_id)?) {
++            return Err(fout("De abstracte lijstdefinitie ontbreekt"));
++        }
++    }
++    Ok(())
++}
++struct Kind {
++    soort: String,
++    begin: usize,
++    einde: usize,
++}
++struct Structuur {
++    naam: Vec<u8>,
++    begin: usize,
++    open_einde: usize,
++    sluit: usize,
++    leeg: bool,
++    kinderen: Vec<Kind>,
++}
++fn lees(xml: &[u8]) -> Resultaat<Structuur> {
++    let mut reader = NsReader::from_reader(xml);
++    let mut diepte = 0usize;
++    let mut structuur: Option<Structuur> = None;
++    let mut actief: Option<(String, usize)> = None;
++    let mut klaar = false;
++    let mut fase = 0;
++    loop {
++        let begin = reader.buffer_position() as usize;
++        let (ruimte, event) = reader
++            .read_resolved_event()
++            .map_err(|e| fout(&format!("Ongeldige nummeringsbron: {e}")))?;
++        let woord = matches!(ruimte,ResolveResult::Bound(ns) if ns.as_ref()==WOORD);
++        let einde = reader.buffer_position() as usize;
++        let leeg = matches!(&event, Event::Empty(_));
++        match event {
++            Event::Start(n) | Event::Empty(n) => {
++                let lokaal = String::from_utf8_lossy(n.local_name().as_ref()).into_owned();
++                if diepte == 0 {
++                    if structuur.is_some() || klaar || !woord || lokaal != "numbering" {
++                        return Err(fout("Geen eenduidige nummeringswortel"));
++                    }
++                    structuur = Some(Structuur {
++                        naam: n.name().as_ref().to_vec(),
++                        begin,
++                        open_einde: einde,
++                        sluit: begin,
++                        leeg,
++                        kinderen: vec![],
++                    });
++                    if leeg {
++                        klaar = true;
++                    } else {
++                        diepte = 1;
++                    }
++                    continue;
++                }
++                if diepte == 1 {
++                    let soort = if woord { lokaal } else { String::new() };
++                    let rang = match soort.as_str() {
++                        "numPicBullet" => Some(0),
++                        "abstractNum" => Some(1),
++                        "num" => Some(2),
++                        "numIdMacAtCleanup" => Some(3),
++                        _ => None,
++                    };
++                    if let Some(rang) = rang {
++                        if rang < fase {
++                            return Err(fout(
++                                "De lijstonderdelen hebben geen ondersteunde volgorde",
++                            ));
++                        }
++                        fase = rang;
++                    }
++                    if leeg {
++                        structuur.as_mut().unwrap().kinderen.push(Kind {
++                            soort,
++                            begin,
++                            einde,
++                        });
++                    } else {
++                        actief = Some((soort, begin));
++                    }
++                } else if woord && matches!(lokaal.as_str(), "abstractNum" | "num") {
++                    return Err(fout(
++                        "Geneste of alternatieve lijstdefinities worden nog niet veilig aangevuld",
++                    ));
++                }
++                if !leeg {
++                    diepte += 1;
++                }
++            }
++            Event::End(_) => {
++                if diepte == 0 {
++                    return Err(fout("Onverwacht einde in nummeringsbron"));
++                }
++                if diepte == 2 {
++                    let (soort, begin) = actief
++                        .take()
++                        .ok_or_else(|| fout("Onvolledig lijstonderdeel"))?;
++                    structuur.as_mut().unwrap().kinderen.push(Kind {
++                        soort,
++                        begin,
++                        einde,
++                    });
++                } else if diepte == 1 {
++                    structuur.as_mut().unwrap().sluit = begin;
++                    klaar = true;
++                }
++                diepte -= 1;
++            }
++            Event::Eof => break,
++            _ => {}
++        }
++    }
++    if diepte != 0 || !klaar {
++        return Err(fout("Onvolledige nummeringsbron"));
++    }
++    structuur.ok_or_else(|| fout("Nummeringswortel ontbreekt"))
++}
++fn voeg_toe(bron: &[u8], s: &Structuur, extra: &NumberingDefinitions) -> Resultaat<Vec<u8>> {
++    let gegenereerd = docx_parse::serializer::serialize_numbering_xml(extra);
++    let nieuw = lees(gegenereerd.as_bytes())?;
++    let mut abstracte = Vec::new();
++    let mut nummers = Vec::new();
++    for kind in nieuw.kinderen {
++        let mut tekst = gegenereerd[kind.begin..kind.einde].to_owned();
++        let grens = tekst
++            .find([' ', '>', '/'])
++            .ok_or_else(|| fout("Onvolledige nieuwe lijstdefinitie"))?;
++        // De bestaande bron mag een andere prefix of standaardnaamruimte hebben.
++        // Iedere nieuwe wortel krijgt daarom haar eigen bekende w-naamruimte.
++        tekst.insert_str(
++            grens,
++            &format!(" xmlns:w=\"{}\"", std::str::from_utf8(WOORD).unwrap()),
++        );
++        match kind.soort.as_str() {
++            "abstractNum" => abstracte.extend_from_slice(tekst.as_bytes()),
++            "num" => nummers.extend_from_slice(tekst.as_bytes()),
++            _ => return Err(fout("Onverwacht nieuw lijstonderdeel")),
++        }
++    }
++    if s.leeg {
++        if !bron[s.begin..s.open_einde].ends_with(b"/>") {
++            return Err(fout("Onverwachte lege nummeringswortel"));
++        }
++        let mut uit = bron[..s.open_einde - 2].to_vec();
++        uit.push(b'>');
++        uit.extend(abstracte);
++        uit.extend(nummers);
++        uit.extend_from_slice(b"</");
++        uit.extend_from_slice(&s.naam);
++        uit.push(b'>');
++        uit.extend_from_slice(&bron[s.open_einde..]);
++        return Ok(uit);
++    }
++    let eind = s
++        .kinderen
++        .iter()
++        .find(|k| k.soort == "numIdMacAtCleanup")
++        .map_or(s.sluit, |k| k.begin);
++    let begin = s
++        .kinderen
++        .iter()
++        .find(|k| k.soort == "num")
++        .map_or(eind, |k| k.begin);
++    if begin > eind {
++        return Err(fout("Onjuiste invoegplaatsen voor lijstdefinities"));
++    }
++    let mut uit = Vec::with_capacity(bron.len() + abstracte.len() + nummers.len());
++    uit.extend_from_slice(&bron[..begin]);
++    uit.extend(abstracte);
++    uit.extend_from_slice(&bron[begin..eind]);
++    uit.extend(nummers);
++    uit.extend_from_slice(&bron[eind..]);
++    Ok(uit)
++}

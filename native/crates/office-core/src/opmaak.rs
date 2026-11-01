@@ -7,6 +7,11 @@ pub enum Uitlijning {
     Rechts,
     Uitvullen,
 }
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum LijstSoort {
+    Opsomming,
+    Nummering,
+}
 #[derive(Debug, Clone)]
 pub enum Opmaak {
     Vet(bool),
@@ -19,6 +24,7 @@ pub enum Opmaak {
     Achtergrond(String),
     Uitlijning(Uitlijning),
     Alineastijl(String),
+    Lijst(Option<LijstSoort>),
     Getal(String),
     Tekstterugloop(bool),
 }

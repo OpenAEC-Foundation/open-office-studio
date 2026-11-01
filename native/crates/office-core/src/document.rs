@@ -93,6 +93,8 @@ pub struct Weergave {
     pub writer_opmaak:
         std::sync::Arc<std::collections::HashMap<String, Vec<crate::writer_opmaak::OpmaakBereik>>>,
     pub writer_stijlen: std::sync::Arc<crate::writer_stijlen::Overzicht>,
+    pub writer_lijsten:
+        std::sync::Arc<std::collections::HashMap<String, crate::writer_lijsten::LijstStaat>>,
     pub writer_frame: Option<std::sync::Arc<crate::writer_cursor::InteractieFrame>>,
 }
 /// Eén vervanging in Unicode-tekens, ten opzichte van de vorige stap.
@@ -244,7 +246,12 @@ impl Document {
     pub fn markdown(&self) -> Resultaat<String> {
         match self {
             Self::Writer(d) => {
-                let md = d
+                // De mutabele alinea bevat na een bewerking niet alle opnieuw
+                // berekende lijstmetadata. Exporteer dezelfde canonieke bron
+                // als opslaan en de documentpagina, zonder de sessie te wijzigen.
+                let bron = d.layoutbron()?;
+                let canoniek = docx::Document::open(bron.as_slice()).map_err(fout)?;
+                let md = canoniek
                     .export_markdown(&docx::ExportOptions::new(docx::RevisionView::Accepted))
                     .map_err(fout)?;
                 if md.truncated {
@@ -394,6 +401,7 @@ impl Document {
             writer_opmaak: Default::default(),
             writer_frame: None,
             writer_stijlen: Default::default(),
+            writer_lijsten: Default::default(),
         };
         match self {
             Self::Writer(d) => {
@@ -411,6 +419,7 @@ impl Document {
                 beeld.pagina = pagina;
                 beeld.onderdelen = (0..paginas).map(|i| format!("Pagina {}", i + 1)).collect();
                 let mut bereiken = std::collections::HashMap::new();
+                let mut lijsten = std::collections::HashMap::new();
                 for (i, p) in d.paragraphs().into_iter().enumerate() {
                     let id = p.para_id.clone().unwrap_or_default();
                     let tekst = crate::writer_tekst::alinea_tekst(p);
@@ -431,6 +440,9 @@ impl Document {
                             staat = opmaak;
                         }
                         bereiken.insert(id.clone(), gevonden.bereiken.clone());
+                        if let Some(lijst) = &gevonden.lijst {
+                            lijsten.insert(id.clone(), lijst.clone());
+                        }
                     }
                     beeld.velden.push(Veld {
                         id,
@@ -441,6 +453,7 @@ impl Document {
                     });
                 }
                 beeld.writer_opmaak = std::sync::Arc::new(bereiken);
+                beeld.writer_lijsten = std::sync::Arc::new(lijsten);
                 beeld.writer_stijlen = std::sync::Arc::new(crate::writer_stijlen::overzicht(d));
                 let woorden = d
                     .paragraphs()

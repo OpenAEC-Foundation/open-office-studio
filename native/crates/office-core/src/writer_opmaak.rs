@@ -19,6 +19,7 @@ pub(crate) struct AlineaOpmaak {
     pub tekst: String,
     pub bereiken: Vec<OpmaakBereik>,
     pub invoegopmaak: Option<docx_parse::formatting::TextFormatting>,
+    pub lijst: Option<crate::writer_lijsten::LijstStaat>,
 }
 pub(crate) type Alineas = HashMap<String, AlineaOpmaak>;
 
@@ -106,6 +107,7 @@ pub(crate) fn lees(doc: &docx_edit::EditingDoc) -> Resultaat<Alineas> {
                     positie = einde;
                 }
                 S::Pilcrow(p) => {
+                    alinea.lijst = crate::writer_lijsten::staat(&p.values);
                     if alinea.tekst.is_empty() {
                         // Dezelfde reeds opgeloste alinea-/tabelstijl als de engine.
                         // Beschadigde metadata wordt niet als een standaardstijl voorgesteld.

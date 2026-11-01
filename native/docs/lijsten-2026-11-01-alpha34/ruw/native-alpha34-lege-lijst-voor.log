@@ -1,0 +1,59 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.37s
+     Running unittests src/lib.rs (native/target/debug/deps/office_conversie-83138a4fe4c7ce2e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_core-fd1d0691ce6c0d09)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 24 filtered out; finished in 0.00s
+
+     Running unittests src/bin/controleer-bestand.rs (native/target/debug/deps/controleer_bestand-bf69e33a830bffb2)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/documentkern.rs (native/target/debug/deps/documentkern-3d38b8bd3ca1c161)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 134 filtered out; finished in 0.00s
+
+     Running ../../vendor/docx-parse/tests/nested_fields.rs (native/target/debug/deps/engine_velden-a25728d860e322bb)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_mail-981231312a21c024)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 51 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (native/target/debug/deps/open_office_studio_native-6d4342599490b871)
+
+running 1 test
+test tests::raster_proeven::writer_lijst_enter_vervolgt_en_een_lege_lijst_eindigt_zonder_extra_alinea ... FAILED
+
+failures:
+
+---- tests::raster_proeven::writer_lijst_enter_vervolgt_en_een_lege_lijst_eindigt_zonder_extra_alinea stdout ----
+
+thread 'tests::raster_proeven::writer_lijst_enter_vervolgt_en_een_lege_lijst_eindigt_zonder_extra_alinea' (3180793) panicked at crates/office-ui/src/tests/raster_proeven.rs:3999:5:
+assertion `left == right` failed
+  left: 9
+ right: 8
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    tests::raster_proeven::writer_lijst_enter_vervolgt_en_een_lege_lijst_eindigt_zonder_extra_alinea
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 137 filtered out; finished in 9.35s
+
+error: test failed, to rerun pass `-p open-office-studio-native --bin open-office-studio-native`

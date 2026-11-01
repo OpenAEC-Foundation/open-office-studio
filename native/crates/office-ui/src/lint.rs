@@ -341,9 +341,35 @@ pub fn ribbon(app: &App) -> Option<Element<'_, Msg>> {
         groepen.push(w::ribbon_group(l, "Bewerken", vec![geschiedenis.into()]));
     }
     groepen.push(klembord);
+    let uitlijnvak: Element<'_, Msg> = if module == Module::Writer {
+        use office_core::opmaak::LijstSoort as L;
+        let huidig = veld
+            .and_then(|v| a.beeld.writer_lijsten.get(&v.id))
+            .map(|s| s.soort);
+        let lijst = |icoon, naam, soort| {
+            compact(
+                icoon,
+                naam,
+                huidig == Some(soort),
+                Opmaak::Lijst((huidig != Some(soort)).then_some(soort)),
+            )
+        };
+        column![
+            uitlijning,
+            row![
+                lijst(OPSOMMING, "Opsomming", L::Opsomming),
+                lijst(NUMMERING, "Nummering", L::Nummering)
+            ]
+            .spacing(2)
+        ]
+        .spacing(2)
+        .into()
+    } else {
+        uitlijning.into()
+    };
     groepen.extend(vec![
         w::ribbon_group(l, "Lettertype", vec![tekst.into()]),
-        w::ribbon_group(l, "Uitlijning", vec![uitlijning.into()]),
+        w::ribbon_group(l, "Uitlijning", vec![uitlijnvak]),
     ]);
     if module == Module::Spreadsheet {
         let actie = |naam, actie| {
@@ -509,6 +535,8 @@ pub fn tekenoffset(
 // Eigen lijniconen voor opdrachten buiten de vaste catalogus.
 const DOORHALEN: &str = r#"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M17 5c-1-1-3-2-5-2-3 0-5 2-5 4 0 1 1 2 2 3m6 4c2 1 3 2 3 3 0 3-3 4-6 4-2 0-4-1-5-2"/></svg>"#;
 const UITVULLEN: &str = r#"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5h16M4 10h16M4 15h16M4 20h16"/></svg>"#;
+const OPSOMMING: &str = r#"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6h12M9 12h12M9 18h12"/><circle cx="3" cy="6" r="1"/><circle cx="3" cy="12" r="1"/><circle cx="3" cy="18" r="1"/></svg>"#;
+const NUMMERING: &str = r#"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6h11M10 12h11M10 18h11M3 3h1v5M3 8h2M3 11c0-2 4-2 3 0l-3 3h3M3 17h3l-2 2h1c2 0 1 3-2 2"/></svg>"#;
 const GROTER: &str = r#"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 19 4-12 4 12m-6-4h4m9-10v9m-3-6 3-3 3 3"/></svg>"#;
 const KLEINER: &str = r#"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 19 4-12 4 12m-6-4h4m9-10v9m-3-3 3 3 3-3"/></svg>"#;
 fn volgende_grootte(n: f64, groter: bool) -> Option<f64> {

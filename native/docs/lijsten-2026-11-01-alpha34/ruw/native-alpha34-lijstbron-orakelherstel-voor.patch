@@ -1,0 +1,99 @@
+diff --git a/native/crates/office-core/tests/writer_opmaak.rs b/native/crates/office-core/tests/writer_opmaak.rs
+index 5650b41..6a6f1e8 100644
+--- a/native/crates/office-core/tests/writer_opmaak.rs
++++ b/native/crates/office-core/tests/writer_opmaak.rs
+@@ -757,3 +757,94 @@ fn alineastijl_gelezen_standaardstijl_en_ontbrekende_keuze_worden_niet_verzonnen
+     assert!(!b.writer_stijlen.huidig.contains_key(&b.velden[1].id));
+     assert_eq!(s.bron().as_slice(), bron);
+ }
++
++#[test]
++fn writer_lijst_nieuwe_definities_worden_bewaard_zonder_oorspronkelijke_lijstbronverlies() {
++    let bron = include_bytes!("fixtures/writer-structuur.docx");
++    let mut d = Document::open(Module::Writer, bron).unwrap();
++    let Document::Writer(w) = &mut d else {
++        unreachable!()
++    };
++    let origineel = w.model().numbering.clone();
++    assert!(!origineel.abstract_nums.is_empty() && !origineel.nums.is_empty());
++    let mut abstracte = origineel.abstract_nums[0].clone();
++    abstracte.abstract_num_id = origineel
++        .abstract_nums
++        .iter()
++        .map(|n| n.abstract_num_id)
++        .fold(0., f64::max)
++        + 1.;
++    let mut instantie = origineel.nums[0].clone();
++    instantie.num_id = origineel.nums.iter().map(|n| n.num_id).fold(0., f64::max) + 1.;
++    instantie.abstract_num_id = abstracte.abstract_num_id;
++    instantie.level_overrides = None;
++    let nieuwe_id = instantie.num_id;
++    let nieuwe_abstracte = abstracte.abstract_num_id;
++    w.model_mut().numbering.abstract_nums.push(abstracte);
++    w.model_mut().numbering.nums.push(instantie);
++    let bytes = d.bytes().unwrap();
++    let Document::Writer(opnieuw) = Document::open(Module::Writer, &bytes).unwrap() else {
++        unreachable!()
++    };
++    assert!(
++        opnieuw
++            .model()
++            .numbering
++            .nums
++            .iter()
++            .any(|n| n.num_id == nieuwe_id && n.abstract_num_id == nieuwe_abstracte),
++        "De nieuwe lijstinstantie ontbreekt in het bewaarde document"
++    );
++    assert!(
++        opnieuw
++            .model()
++            .numbering
++            .abstract_nums
++            .iter()
++            .any(|n| n.abstract_num_id == nieuwe_abstracte)
++    );
++    assert_eq!(
++        &opnieuw.model().numbering.nums[..origineel.nums.len()],
++        origineel.nums.as_slice()
++    );
++    let oud = ooxml_opc::unzip_parts(bron).unwrap();
++    let nieuw = ooxml_opc::unzip_parts(&bytes).unwrap();
++    let oud_num = &oud
++        .iter()
++        .find(|(n, _)| n == "word/numbering.xml")
++        .unwrap()
++        .1;
++    let nieuw_num = &nieuw
++        .iter()
++        .find(|(n, _)| n == "word/numbering.xml")
++        .unwrap()
++        .1;
++    // Nieuwe abstracte definities horen vóór bestaande instanties. Alleen
++    // de twee nieuwe elementen verwijderen moet de hele oorspronkelijke bron
++    // bytegelijk herstellen, inclusief onbekende kenmerken en witruimte.
++    let mut zonder_nieuwe = String::from_utf8(nieuw_num.clone()).unwrap();
++    for (tag, attribuut, id) in [
++        ("abstractNum", "abstractNumId", nieuwe_abstracte),
++        ("num", "numId", nieuwe_id),
++    ] {
++        let patroon =
++            format!(r#"(?s)<w:{tag}\b[^>]*\bw:{attribuut}="{id:.0}"[^>]*(?:/>|>.*?</w:{tag}>)"#);
++        let re = regex::Regex::new(&patroon).unwrap();
++        assert_eq!(re.find_iter(&zonder_nieuwe).count(), 1);
++        zonder_nieuwe = re.replace(&zonder_nieuwe, "").into_owned();
++    }
++    assert_eq!(
++        zonder_nieuwe.as_bytes(),
++        oud_num.as_slice(),
++        "Bestaande onbekende lijstkenmerken moeten bytegelijk blijven"
++    );
++    for (naam, inhoud) in oud {
++        if !["word/document.xml", "word/numbering.xml"].contains(&naam.as_str()) {
++            assert_eq!(
++                nieuw.iter().find(|(n, _)| n == &naam).unwrap().1,
++                inhoud,
++                "{naam}"
++            );
++        }
++    }
++}

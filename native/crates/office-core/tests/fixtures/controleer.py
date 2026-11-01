@@ -430,3 +430,6 @@ assert d.sections[0].footer.paragraphs[0].text=='Vaste voettekst'
 assert d.tables[0].cell(0,0).text=='Cel één\nTweede celalinea'
 assert d.tables[0].cell(0,1).text=='Cel twee'
 print('Writer-alineastijlen: beide bewaarde DOCX onafhankelijk goedgekeurd, inclusief stijl-ID, stijllettertype/-grootte, directe runopmaak en tabel-/sectie-/kopvoetbehoud.')
+
+import runpy
+runpy.run_path(str(Path(__file__).with_name('controleer-lijsten.py')), run_name='__main__')

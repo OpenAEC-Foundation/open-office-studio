@@ -1,0 +1,12 @@
+{
+  "oorspronkelijke_afkeuring": "native-alpha34-lijstbron-voor.log",
+  "eerste_fout": "Nieuwe lijstinstantie ontbreekt na bewaren; S13 ensure_numbering_part retourneert bij een bestaand onderdeel.",
+  "ongebruikte_late_bronvoorwaarde": "De oorspronkelijke starts_with-voorwaarde na die eerste fout werd niet bereikt. Zij veronderstelde dat alle nieuwe elementen achteraan mogen staan.",
+  "testcorrectie": "Abstracte definities moeten vóór de instanties blijven. De afzonderlijke nieuwe elementen verwijderen moet daarom de volledige oorspronkelijke nummeringsbron bytegelijk teruggeven. Deze correctie neemt de eerste productafkeuring niet weg.",
+  "codebron": "native/vendor/docx-parse/src/serializer/numbering.rs:serialize_numbering_xml",
+  "primaire_bronnen": [
+    "https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.wordprocessing.numbering?view=openxml-3.0.1",
+    "https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.wordprocessing.numberingidmacatcleanup?view=openxml-3.0.1"
+  ],
+  "cleanup_toelichting": "Deze marker bewaart de voortgang van controle op ongebruikte abstracte definities. Een nieuwe gebruikte definitie vraagt geen herschrijving van de bestaande marker; de bronwaarde blijft behouden."
+}

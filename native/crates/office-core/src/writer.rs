@@ -52,6 +52,7 @@ pub enum AlineaActie {
         einde: usize,
     },
     VoegVolgendeSamen,
+    LijstEindigen,
 }
 
 fn fout(tekst: &str) -> Fout {
@@ -75,7 +76,7 @@ fn controleer(p: &docx::Paragraph) -> Resultaat<()> {
 
 /// Alleen aangrenzende alinea's binnen dezelfde body of dezelfde tabelcel.
 /// Een inhoudsbesturing wordt niet doorkruist: die kan een eigen slot hebben.
-fn zoek<'a>(blokken: &'a [B], id: &str) -> Option<(&'a [B], usize)> {
+pub(crate) fn zoek<'a>(blokken: &'a [B], id: &str) -> Option<(&'a [B], usize)> {
     for (i, blok) in blokken.iter().enumerate() {
         match blok {
             B::Paragraph(p) if p.para_id.as_deref() == Some(id) => return Some((blokken, i)),
@@ -133,6 +134,23 @@ pub fn alinea(d: &mut docx::Document, id: &str, actie: AlineaActie) -> Resultaat
     controleer(p)?;
     let mut eerste = (**p).clone();
     let (ids, nieuw) = match actie {
+        AlineaActie::LijstEindigen => {
+            if !crate::writer_lijsten::heeft_lijst(d, p)
+                || !crate::writer_tekst::alinea_tekst(p).is_empty()
+            {
+                return Err(fout(
+                    "Alleen een leeg lijstitem kan met Enter worden beëindigd",
+                ));
+            }
+            let f = eerste.formatting.get_or_insert_with(Default::default);
+            f.num_pr = Some(docx_parse::formatting::NumberingProperties {
+                num_id: Some(0.),
+                ilvl: None,
+            });
+            f.num_pr_from_style = None;
+            eerste.list_rendering = None;
+            (vec![id.into()], vec![B::Paragraph(Arc::new(eerste))])
+        }
         AlineaActie::Splits { .. } => unreachable!(),
         AlineaActie::SplitsBereik { begin, einde } => {
             let tekst = docx::get_paragraph_text(p);
@@ -251,6 +269,14 @@ pub(crate) fn cursor_plan(
         return Err(fout("De alineacursor valt buiten de brontekst"));
     }
     let (id, bewerking, doel) = match actie {
+        CursorActie::Splits if lengte == 0 && crate::writer_lijsten::heeft_lijst(d, p) => (
+            id.into(),
+            AlineaActie::LijstEindigen,
+            CursorNa::Bestaand(TekstPunt {
+                id: id.into(),
+                positie: 0,
+            }),
+        ),
         CursorActie::Splits => (
             id.into(),
             AlineaActie::SplitsBereik { begin, einde },
