@@ -1,0 +1,9 @@
+# Werkelijke Linux-vensterproeven van alpha 32
+
+Bron: `e4fb4b5d7f8b360fb848e7fbbf002055ce89976f`, Linux-pakket uit CI-ronde `41279462142`. Beide uitgepakte programma’s zijn op versie en SHA-256 vastgezet; alle verpakte bronbestanden zijn tegen het Git-archief gecontroleerd. De herkomsttekst beschrijft het eerdere uitpakmoment, toen de overige platformtaken nog liepen. De afzonderlijke platformrapportage legt hun uiteindelijke uitslag vast.
+
+Writer slaagt voor elf stappen met echte X11-muis/toetsen en systeemklembord: lege alinea maken, Vet aanklikken en onmiddellijk typen, één bewaaropdracht per stap, drie afzonderlijke undo-stappen met bronexact herstel, zoekpaneel werkelijk sluiten en verder typen, heropenen en schoon afsluiten. Spreadsheet slaagt voor zes stappen zonder voorafgaande celklik: direct Omlaag/7/bewaren naar A1000000, exacte undo, heropenen en kopiëren; rijhoogten, zeroHeight en het tweede blad blijven bewaard.
+
+De eerste Writer-opnamen liggen op bestandsbewaargrenzen en tonen soms nog lopende verwerking. Zij gelden niet als rustige visuele goedkeuring. De aanvullende proef `writer-rustig` opent uitsluitend het eerder bewaarde bestand en maakt na verwerking drie beelden. Alle drie zijn bytegelijk en volledig visueel geïnspecteerd: de 9 is vet én cursief, Cambria 11 staat in de lettervelden, de gekozen knoppen en paginaselectie zijn zichtbaar. De Spreadsheet-opnamen zijn volledig geïnspecteerd; rij 1000000 staat op één regel en de bewaarde 7 is zichtbaar.
+
+Iedere proef gebruikt eigen bestanden, Xvfb, D-Bus en afgeschermde XDG-mappen. De bestaande gebruikersvensters zijn niet bediend. Deze uitslag betreft deze twee Linux-invoertrajecten op een virtueel scherm. Geen uitspraak over fysieke hardware, volledige toegankelijkheid, andere besturingssystemen, alle opdrachten of gelijkheid met de bestaande interface. De historische afkeuringen van alpha 31 blijven bewaard; alle tien migratiegebieden blijven open.

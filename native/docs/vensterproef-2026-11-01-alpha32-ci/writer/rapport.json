@@ -1,0 +1,65 @@
+{
+  "versie": "Open Office Studio 2026.44.9-alpha.32 (native)",
+  "programma_sha256": "99e1cd3afba57b599e51f99d486d85429422e16e6135c441b119952733fe8f10",
+  "broncommit": "e4fb4b5d7f8b360fb848e7fbbf002055ce89976f",
+  "proefbron_sha256": "ed12fd9cae95e70b44a8162856f4837ddd7d825e6741b85fde9f4419ae692cdf",
+  "geslaagd": true,
+  "omvang": "Echt native Linux-venster in eigen Xvfb/D-Bus/XDG-sessie, X11-toetsen/muis en systeemklembord. Eigen DOCX met twee secties, tabel en rijke runs. Geen fysieke hardware, andere platforms, IME, schermlezer of volledige suite-/pixelpariteit.",
+  "stappen": [
+    {
+      "stap": "Rijke eigen DOCX geopend",
+      "beeld": {
+        "bestand": "writer-open.png",
+        "sha256": "28740bd1b99d2f3b782339633c32528b200c34052929d90a9f3e39511a8f2dbb"
+      }
+    },
+    {
+      "stap": "End/Enter en één bewaren maken een lege echte alinea"
+    },
+    {
+      "stap": "Werkelijke Vet-lintklik, direct 9 en één bewaren behouden vet én bestaande cursief zonder focusherstel",
+      "beeld": {
+        "bestand": "writer-vet-invoer.png",
+        "sha256": "6cdead091881b48e9e0b31ff19f91a84a0de48eefa53dcfba887cbb8833e387a"
+      }
+    },
+    {
+      "stap": "Eén undo en één bewaren verwijderen alleen 9; gekozen invoegopmaak blijft op lege alinea",
+      "beeld": {
+        "bestand": "writer-vet-ongedaan.png",
+        "sha256": "f391d1cf57391e147c63d814b3956e221da076b90a8532fc3a0b4ba9f2e30a98"
+      }
+    },
+    {
+      "stap": "Nog één undo en één bewaren herstellen de gesplitste bron exact"
+    },
+    {
+      "stap": "Nog één undo en één bewaren herstellen de oorspronkelijke bron exact"
+    },
+    {
+      "stap": "Zoekpaneel met werkelijke sluitknop gesloten; directe vervolginvoer komt op de documentpagina",
+      "beeld": {
+        "bestand": "writer-zoekpaneel-gesloten.png",
+        "sha256": "dccd9ae9cac8f303ce9921a8560e3544177b3855705960ecdfe43ddcff2a66dc"
+      }
+    },
+    {
+      "stap": "Zoekpaneelvervolginvoer met één undo en één bewaren bronexact hersteld"
+    },
+    {
+      "stap": "Eerste eigen venster schoon gesloten",
+      "procescode": 0
+    },
+    {
+      "stap": "Bewaarde vet-cursieve 9 heropend, via echt systeemklembord bevestigd en bron ongewijzigd",
+      "beeld": {
+        "bestand": "writer-vet-heropend.png",
+        "sha256": "087ce01c04c215f21941c06e5344230f7acf3e85c61d3a5679b390bac07b8cc4"
+      }
+    },
+    {
+      "stap": "Heropend eigen venster schoon gesloten",
+      "procescode": 0
+    }
+  ]
+}
