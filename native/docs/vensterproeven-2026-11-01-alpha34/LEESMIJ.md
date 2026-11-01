@@ -1,0 +1,11 @@
+# Werkelijke alpha-34-releasevensters
+
+Broncommit `fbd0c07ac30dcd22dd95fa7e8e845df51ffe2974`. De lokale en CI-Linux-programma’s zijn afzonderlijk op versie en SHA-256 vastgezet. Alle proeven bedienen uitsluitend eigen bestanden in eigen Xvfb-, D-Bus- en afgeschermde XDG-sessies.
+
+Opsommingen/nummering slagen op beide programma’s voor negentien stappen; alineastijlen voor twintig stappen; het schaarse rekenblad voor zes stappen zonder voorafgaande celklik. Lijst- en stijlkeuzes behouden directe vervolginvoer, afzonderlijke undo en heropenen. Twaalf werkelijk bewaarde DOCX zijn onafhankelijk met python-docx en XML gelezen op lijsten of stijlen, rijke runs, secties, tabel en kop/voet. Bij de lijsten blijft de oorspronkelijke nummerings-XML bytegelijk na uitsluitend verwijderen van de nieuwe definities. Per programma en per lijst-/stijlproef zijn drie rustige beelden bytegelijk; de volledige rustige beelden en stijlmenu’s zijn visueel bekeken.
+
+**De afzonderlijke Writer-invoerregressie blijft afgekeurd**, lokaal en in CI. Na herstel van de bron opent zij Zoeken, klikt op de pagina, stuurt Home/achtmaal Rechts, sluit via de echte knop en typt direct ! met één bewaren. De bron bevat daarna `Links !🏠 café rechts` in plaats van `Links 🏠 !café rechts`. Een aanvullende diagnose probeert de cursorprefix vóór de sluitklik via het systeemklembord te bevestigen; die stopt al vóór de sluitklik op lege klembordinhoud, terwijl het foutbeeld de actieve zoekinvoer toont. De oorzaak mag dus niet zonder verdere proef uitsluitend aan de sluitknop worden toegeschreven. Er is in deze alpha geen correctie aangebracht. De afzonderlijke opvolgproeven komen bij de volgende bronversie.
+
+Een eerste CI-Writer-procesgroep eindigde met SIGTERM/143 zonder rapport. Haar gedeeltelijke bestanden en beelden blijven behouden. De latere afkeuringen zijn afzonderlijke, complete rapporten. De eerste aanname dat de bron ongewijzigd was, is bij exacte ZIP/XML-inspectie verworpen: de invoer was wel bewaard, op een afwijkende cursorpositie. Die diagnosecorrectie staat in het JSON-rapport; de oorspronkelijke uitvoer is niet aangepast.
+
+Dit is geen fysieke hardware-, Windows-/macOS-venster-, IME-, schermlezer-, corpus- of volledige suitegoedkeuring. De gehele migratie en de oorspronkelijke pixelvergelijkingen blijven open.

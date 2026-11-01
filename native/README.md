@@ -497,3 +497,5 @@ Zichtbare buurcellen gebruiken de bestaande rasterafbeelding en logische brongeo
 ![Opgemaakte platte waarden kopiëren en als blok plakken](docs/screenshots/spreadsheet-klembord-bereik.png)
 
 De rasterwachtrij bewaart inline-toetsen, klembordbarrières, bronwerk en bewaarsnapshots in volgorde. Waarden kopiëren leest de opgemaakte celtekst uit dezelfde werkmap; plakken en wissen zijn gezamenlijke bronbewerkingen met bronexacte undo. Ongeldige invoer schrijft geen gedeeltelijk blok. De herstelmelding bewaart de afgekeurde plaktekst en pauzeert vervolgopdrachten. Rijke opmaakoverdracht, formuleverschuiving, bereik verplaatsen, de volledige formulebalk-/zijpaneelwachtrij, fysieke IME en volledige suitepariteit blijven open.
+
+De [werkelijke alpha-34-releasevensters](docs/vensterproeven-2026-11-01-alpha34/LEESMIJ.md) keuren gerichte lijst-, stijl- en rasterbediening goed op lokale en CI-Linux-programma’s. De afzonderlijke Writer-zoekroute blijft afgekeurd: focus/cursor en directe vervolginvoer vragen een correctie. Alle vijf platformtaken slagen, maar deze afkeuring en de oorspronkelijke pixelverschillen sluiten een stabiele native vrijgave uit.

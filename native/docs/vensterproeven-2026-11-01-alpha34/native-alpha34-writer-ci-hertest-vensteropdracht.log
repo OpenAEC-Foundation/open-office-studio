@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/gui-writer-alpha34.py", line 101, in <module>
+    wacht(lambda:inhoud()[0].count('Links 🏠 !café rechts')==1)
+  File "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/gui-writer-alpha34.py", line 36, in wacht
+    raise AssertionError('De ene bewaaropdracht leverde niet de verwachte bron op')
+AssertionError: De ene bewaaropdracht leverde niet de verwachte bron op
+Traceback (most recent call last):
+  File "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/venster-writer-alpha34-hertest.py", line 10, in <module>
+    subprocess.run(['dbus-run-session','--',str(w/'gui-hulpmiddelen/uitgepakt/usr/bin/xvfb-run'),'-a','-s','-screen 0 1440x900x24 -nolisten tcp',sys.executable,str(w/'gui-writer-alpha34.py'),str(vast/'open-office-studio-native'),f'gui-alpha34-writer-hertest-{variant}',m['broncommit']],env=e,check=True)
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['dbus-run-session', '--', '/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/gui-hulpmiddelen/uitgepakt/usr/bin/xvfb-run', '-a', '-s', '-screen 0 1440x900x24 -nolisten tcp', '/usr/bin/python3', '/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/gui-writer-alpha34.py', '/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/native-alpha34-ci-linux-vast/open-office-studio-native', 'gui-alpha34-writer-hertest-ci', 'fbd0c07ac30dcd22dd95fa7e8e845df51ffe2974']' returned non-zero exit status 1.
