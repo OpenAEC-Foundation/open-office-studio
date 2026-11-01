@@ -278,7 +278,15 @@ pub fn ribbon(app: &App) -> Option<Element<'_, Msg>> {
                 ),
                 knop(
                     svg(R::ClipboardCopy),
-                    "Kopiëren",
+                    if a.beeld.module == Module::Spreadsheet
+                        && t.raster.focus
+                        && !t.raster.bewerken
+                        && !t.concept
+                    {
+                        "Waarden kopiëren"
+                    } else {
+                        "Kopiëren"
+                    },
                     false,
                     klembord::kan(app, klembord::Actie::Kopieer)
                         .then_some(Msg::Klembord(klembord::Actie::Kopieer))

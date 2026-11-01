@@ -17,7 +17,13 @@ pub struct Staat {
     pub na_bewerking: Option<String>,
     pub na_richting: Option<Richting>,
     pub selectie: Option<office_core::rekenblad::CelSelectie>,
-    pub wachtend: std::collections::VecDeque<Bericht>,
+    pub(super) wachtend: std::collections::VecDeque<super::raster_invoer::Wachtend>,
+    pub(super) klembord: Option<super::raster_invoer::KlembordVlucht>,
+    pub(super) delegeert: bool,
+    pub(super) fout: bool,
+    pub(super) plaktekst: Option<String>,
+    pub(super) afgewezen: usize,
+    pub(super) plakbereik: Option<office_core::rekenblad::CelSelectie>,
 }
 #[derive(Debug, Clone)]
 pub enum Bericht {
@@ -25,6 +31,20 @@ pub enum Bericht {
         document: u64,
         editerversie: u64,
     },
+    EditorFocus {
+        document: u64,
+        editerversie: u64,
+    },
+    Klembord(klembord::Actie),
+    Opslaan(bool),
+    Terug,
+    Vooruit,
+    Opmaak(Opmaak),
+    Structuur(Structuur),
+    OpmaakToets(char),
+    Wis,
+    HerstelKopie,
+    MeldingGelezen,
     Kies(String),
     Typ(String),
     BewerkActief,
@@ -40,15 +60,20 @@ pub enum Bericht {
         alles: bool,
     },
     Invoer(text_editor::Action),
+    ZijInvoer(text_editor::Action),
+    PasToe,
     Bevestig,
     Voltooi(Richting),
     Verplaats(Richting),
     Annuleer,
 }
 pub(super) fn beschikbaar(app: &App) -> bool {
-    toegankelijk(app) && app.tab().is_some_and(|t| !t.bezig && !t.schrijft)
+    toegankelijk(app)
+        && app.tab().is_some_and(|t| {
+            !t.bezig && !t.schrijft && t.raster.klembord.is_none() && !t.raster.fout
+        })
 }
-fn toegankelijk(app: &App) -> bool {
+pub(super) fn toegankelijk(app: &App) -> bool {
     !app.postvak_zichtbaar
         && !app.bestand
         && !app.instellingen
@@ -61,7 +86,7 @@ fn toegankelijk(app: &App) -> bool {
                 .is_some_and(|a| a.beeld.module == Module::Spreadsheet)
         })
 }
-fn vraag_focus(app: &App) -> Task<Msg> {
+pub(super) fn vraag_focus(app: &App) -> Task<Msg> {
     let Some(t) = app.tab() else {
         return Task::none();
     };
@@ -71,37 +96,42 @@ fn vraag_focus(app: &App) -> Task<Msg> {
     }))
 }
 pub fn update(app: &mut App, bericht: Bericht) -> Task<Msg> {
+    super::raster_invoer::update(app, bericht)
+}
+pub(super) fn voer_uit(app: &mut App, bericht: Bericht) -> Task<Msg> {
     if !beschikbaar(app) {
-        if toegankelijk(app)
-            && let Some(t) = app
-                .tab_mut()
-                .filter(|t| t.bezig && !t.schrijft && !t.concept)
-            && matches!(
-                bericht,
-                Bericht::Kies(_)
-                    | Bericht::BreidUit(_)
-                    | Bericht::Vergroot(_)
-                    | Bericht::Verplaats(_)
-                    | Bericht::Pijl { .. }
-                    | Bericht::Voltooi(_)
-            )
-        {
-            // Slepen bewaart alleen het laatste absolute doel. Relatieve
-            // toetsstappen blijven in volgorde, ook tijdens een paginaraster.
-            if matches!(bericht, Bericht::BreidUit(_))
-                && matches!(t.raster.wachtend.back(), Some(Bericht::BreidUit(_)))
-            {
-                t.raster.wachtend.pop_back();
-            }
-            if t.raster.wachtend.len() >= 256 {
-                return app
-                    .waarschuwing("De navigatiewachtrij is vol; wacht tot het raster gereed is");
-            }
-            t.raster.wachtend.push_back(bericht);
-        }
         return Task::none();
     }
     match bericht {
+        Bericht::EditorFocus {
+            document,
+            editerversie,
+        } => {
+            if app.tab().is_some_and(|t| {
+                t.id == document
+                    && t.editerversie == editerversie
+                    && t.raster.focus
+                    && t.raster.bewerken
+            }) {
+                iced::widget::operation::focus(EDITOR_ID)
+            } else {
+                Task::none()
+            }
+        }
+        Bericht::Klembord(_)
+        | Bericht::Opslaan(_)
+        | Bericht::Terug
+        | Bericht::Vooruit
+        | Bericht::Opmaak(_)
+        | Bericht::Structuur(_)
+        | Bericht::OpmaakToets(_)
+        | Bericht::Wis
+        | Bericht::HerstelKopie
+        | Bericht::MeldingGelezen
+        | Bericht::ZijInvoer(_)
+        | Bericht::PasToe => {
+            unreachable!("Invoeropdracht wordt door de wachtrij afgehandeld")
+        }
         Bericht::Focus {
             document,
             editerversie,
@@ -128,7 +158,7 @@ pub fn update(app: &mut App, bericht: Bericht) -> Task<Msg> {
             let Some(id) = app.tab().and_then(Tab::veld).map(|v| v.id.clone()) else {
                 return Task::none();
             };
-            update(
+            voer_uit(
                 app,
                 Bericht::Begin {
                     id,
@@ -141,7 +171,7 @@ pub fn update(app: &mut App, bericht: Bericht) -> Task<Msg> {
             let Some(id) = app.tab().and_then(Tab::veld).map(|v| v.id.clone()) else {
                 return Task::none();
             };
-            update(
+            voer_uit(
                 app,
                 Bericht::Begin {
                     id,
@@ -167,7 +197,7 @@ pub fn update(app: &mut App, bericht: Bericht) -> Task<Msg> {
                     text_editor::Action::Move(motion)
                 }));
             }
-            update(
+            voer_uit(
                 app,
                 if selecteer {
                     Bericht::Vergroot(richting)
@@ -226,7 +256,10 @@ pub fn update(app: &mut App, bericht: Bericht) -> Task<Msg> {
                 text_editor::Action::Move(text_editor::Motion::DocumentEnd)
             });
             registreer_letters(t);
-            iced::widget::operation::focus(EDITOR_ID)
+            Task::done(Msg::Raster(Bericht::EditorFocus {
+                document: t.id,
+                editerversie: t.editerversie,
+            }))
         }
         Bericht::BreidUit(doel) => selecteer(app, doel, None),
         Bericht::Vergroot(richting) => {
@@ -279,14 +312,14 @@ pub fn update(app: &mut App, bericht: Bericht) -> Task<Msg> {
         Bericht::Voltooi(richting) => {
             let t = app.tab_mut().unwrap();
             if !t.raster.bewerken {
-                return update(app, Bericht::Verplaats(richting));
+                return voer_uit(app, Bericht::Verplaats(richting));
             }
             if t.concept {
                 t.raster.na_richting = Some(richting);
-                app.update(Msg::Raster(Bericht::Bevestig))
+                voer_uit(app, Bericht::Bevestig)
             } else {
                 t.raster.bewerken = false;
-                app.update(Msg::Raster(Bericht::Verplaats(richting)))
+                voer_uit(app, Bericht::Verplaats(richting))
             }
         }
         Bericht::Bevestig => {
@@ -346,21 +379,7 @@ fn selecteer(app: &mut App, doel: String, richting: Option<Richting>) -> Task<Ms
     app.opdracht(id, opdracht)
 }
 pub fn vervolg(app: &mut App) -> Task<Msg> {
-    if !beschikbaar(app) {
-        return Task::none();
-    }
-    let Some(b) = app.tab_mut().and_then(|t| t.raster.wachtend.pop_front()) else {
-        return vraag_focus(app);
-    };
-    let taak = update(app, b);
-    if app
-        .tab()
-        .is_some_and(|t| !t.bezig && !t.raster.wachtend.is_empty())
-    {
-        Task::batch([taak, vervolg(app)])
-    } else {
-        taak
-    }
+    super::raster_invoer::vervolg(app)
 }
 pub fn registreer_letters(t: &Tab) {
     if let Some(v) = t.veld() {
@@ -464,16 +483,13 @@ pub fn blad<'a>(app: &'a App, t: &'a Tab, inhoud: Element<'a, Msg>) -> Element<'
                 value: iced::Color::BLACK,
                 selection: app.look().color.selected,
             });
-        if !t.bezig {
-            editor = editor.on_action(|a| Msg::Raster(Bericht::Invoer(a)));
-        }
+        editor = editor.on_action(|a| Msg::Raster(Bericht::Invoer(a)));
         let editor = openaec_ui::design::a11y::node(
             editor,
             openaec_ui::design::a11y::Node::new(
                 openaec_ui::design::a11y::Role::TextField,
                 format!("Cel {}", v.id),
-            )
-            .disabled(t.bezig),
+            ),
         );
         lagen.push(
             container(editor)
@@ -605,6 +621,16 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Raster<'_> {
             // De vorige selectie mag geen toevallige dubbelklik opleveren.
             t.state.downcast_mut::<Focus>().klik = None;
         }
+        // Het model kan de inline-editor al tonen terwijl de bewaakte
+        // focusoperatie nog onderweg is. Zolang het raster werkelijk focus
+        // heeft, blijven ook deze commits relatieve invoerintenties.
+        if t.state.downcast_ref::<Focus>().actief
+            && let iced::Event::InputMethod(iced::advanced::input_method::Event::Commit(tekst)) = e
+        {
+            s.publish(Msg::Raster(Bericht::Typ(tekst.clone())));
+            s.capture_event();
+            return;
+        }
         if let iced::Event::Keyboard(iced::keyboard::Event::KeyPressed {
             key,
             text,
@@ -612,10 +638,14 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Raster<'_> {
             ..
         }) = e
             && t.state.downcast_ref::<Focus>().actief
-            && !self.bewerken
         {
             use iced::keyboard::{Key, key::Named};
             let bericht = match key {
+                Key::Character(c)
+                    if modifiers.command() && !modifiers.alt() && c.eq_ignore_ascii_case("a") =>
+                {
+                    Some(Bericht::Invoer(text_editor::Action::SelectAll))
+                }
                 Key::Named(k) if !modifiers.command() && !modifiers.alt() => match k {
                     Named::ArrowLeft => Some(Bericht::Pijl {
                         richting: Richting::Links,
@@ -643,6 +673,23 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Raster<'_> {
                     } else {
                         Richting::Rechts
                     })),
+                    Named::Delete => Some(Bericht::Wis),
+                    Named::Backspace => Some(Bericht::Invoer(text_editor::Action::Edit(
+                        text_editor::Edit::Backspace,
+                    ))),
+                    Named::Escape => Some(Bericht::Annuleer),
+                    Named::Home | Named::End if self.bewerken => {
+                        let m = if *k == Named::Home {
+                            text_editor::Motion::Home
+                        } else {
+                            text_editor::Motion::End
+                        };
+                        Some(Bericht::Invoer(if modifiers.shift() {
+                            text_editor::Action::Select(m)
+                        } else {
+                            text_editor::Action::Move(m)
+                        }))
+                    }
                     Named::F2 => self.gekozen.map(|_| Bericht::BewerkActief),
                     _ => None,
                 },

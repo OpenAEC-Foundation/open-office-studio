@@ -31,6 +31,10 @@ fn beveiliging(onderdeel: &str, kenmerk: &str) -> Vec<u8> {
 }
 fn opdrachten() -> Vec<Bewerking> {
     vec![
+        Bewerking::CelTekst {
+            adres: "B2".into(),
+            tekst: office_core::celtekst::CelTekst::lees("7\t8\n9\t10").unwrap(),
+        },
         Bewerking::Tekst {
             id: "B2".into(),
             tekst: "7".into(),

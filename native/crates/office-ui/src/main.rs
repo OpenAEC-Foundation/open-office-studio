@@ -9,6 +9,7 @@ mod lint;
 mod mail_ui;
 mod notitie_ui;
 mod pagina_ui;
+mod raster_invoer;
 mod raster_koppen;
 mod raster_navigatie;
 mod raster_ui;
@@ -96,6 +97,20 @@ enum Msg {
     GaNaar,
     Raak(String),
     Raster(raster_ui::Bericht),
+    RasterKopie {
+        document: u64,
+        nummer: u64,
+        resultaat: Result<String, String>,
+    },
+    RasterPlak {
+        document: u64,
+        nummer: u64,
+        tekst: Option<String>,
+    },
+    RasterKlembordGeschreven {
+        document: u64,
+        nummer: u64,
+    },
     Opmaak(Opmaak),
     Structuur(Structuur),
     Pagina(office_core::writer_pagina::PaginaActie),
@@ -229,6 +244,7 @@ impl Tab {
     }
     fn gewijzigd(&self) -> bool {
         self.concept
+            || self.raster.heeft_invoer()
             || self.writer_direct.heeft_invoer()
             || self
                 .antwoord
@@ -415,7 +431,11 @@ impl App {
             self.postvak_zichtbaar = true;
             return Task::none();
         }
-        if let Some(t) = self.tabs.iter().find(|t| t.bezig || t.schrijft) {
+        if let Some(t) = self
+            .tabs
+            .iter()
+            .find(|t| t.bezig || t.schrijft || t.raster.heeft_werk())
+        {
             self.melding = format!("Wacht tot {} gereed is", t.naam);
             self.venster_sluiten = false;
             return Task::none();
@@ -429,6 +449,12 @@ impl App {
     }
     fn opmaaksneltoets(&self, toets: &str) -> Option<Msg> {
         let t = self.tab()?;
+        if raster_invoer::neemt_over(self) {
+            return toets
+                .chars()
+                .next()
+                .map(|c| Msg::Raster(raster_ui::Bericht::OpmaakToets(c)));
+        }
         let veld = t.veld()?;
         if t.bezig
             || t.concept
@@ -468,6 +494,9 @@ impl App {
                     | Msg::ZoekNavigatie(..)
                     | Msg::WriterGereed(..)
                     | Msg::WriterPlak(..)
+                    | Msg::RasterKopie { .. }
+                    | Msg::RasterPlak { .. }
+                    | Msg::RasterKlembordGeschreven { .. }
                     | Msg::Gelezen(..)
                     | Msg::Geschreven(..)
                     | Msg::Doel(..)
@@ -494,6 +523,9 @@ impl App {
                     | Msg::ZoekNavigatie(..)
                     | Msg::WriterGereed(..)
                     | Msg::WriterPlak(..)
+                    | Msg::RasterKopie { .. }
+                    | Msg::RasterPlak { .. }
+                    | Msg::RasterKlembordGeschreven { .. }
                     | Msg::Gelezen(..)
                     | Msg::Geschreven(..)
                     | Msg::ExportKlaar(..)
@@ -523,6 +555,9 @@ impl App {
                     | Msg::ZoekNavigatie(..)
                     | Msg::WriterGereed(..)
                     | Msg::WriterPlak(..)
+                    | Msg::RasterKopie { .. }
+                    | Msg::RasterPlak { .. }
+                    | Msg::RasterKlembordGeschreven { .. }
                     | Msg::Opslaan(..)
                     | Msg::ExportVoltooid(..)
                     | Msg::ExportPad(..)
@@ -532,6 +567,19 @@ impl App {
             return Task::none();
         }
         match msg {
+            Msg::RasterKopie {
+                document,
+                nummer,
+                resultaat,
+            } => return raster_invoer::gekopieerd(self, document, nummer, resultaat),
+            Msg::RasterPlak {
+                document,
+                nummer,
+                tekst,
+            } => return raster_invoer::geplakt(self, document, nummer, tekst),
+            Msg::RasterKlembordGeschreven { document, nummer } => {
+                return raster_invoer::geschreven(self, document, nummer);
+            }
             Msg::WriterDirect(id, b) => return writer_direct::update(self, id, b),
             Msg::WriterGereed(d, r) => return writer_direct::gereed(self, d, r),
             Msg::WriterPlak(id, n, s) => return writer_direct::plak(self, id, n, s),
@@ -754,6 +802,7 @@ impl App {
                                 tab.panelen = false;
                             }
                             self.melding = antwoord.beeld.melding.clone();
+                            tab.raster.plaktekst = None;
                             // Een nieuwe handle krijgt een unieke decoderidentiteit.
                             // Een selectiestap met hetzelfde paginabeeld houdt de
                             // bestaande decodeer- en rendercache daarom intact.
@@ -779,16 +828,21 @@ impl App {
                                 .find(|v| v.naam == "Markdown")
                                 .map(|v| iced::widget::markdown::parse(&v.tekst).collect())
                                 .unwrap_or_default();
-                            let raster_selectie = antwoord.raster_selectie.clone().or_else(|| {
-                                tab.raster.selectie.clone().filter(|s| {
-                                    s.adres == tab.adres
-                                        && tab.deel == antwoord.deel
-                                        && tab
-                                            .antwoord
-                                            .as_ref()
-                                            .is_some_and(|a| a.hash != antwoord.hash)
-                                })
-                            });
+                            let raster_selectie = tab
+                                .raster
+                                .plakbereik
+                                .take()
+                                .or_else(|| antwoord.raster_selectie.clone())
+                                .or_else(|| {
+                                    tab.raster.selectie.clone().filter(|s| {
+                                        s.adres == tab.adres
+                                            && tab.deel == antwoord.deel
+                                            && tab
+                                                .antwoord
+                                                .as_ref()
+                                                .is_some_and(|a| a.hash != antwoord.hash)
+                                    })
+                                });
                             if let Some(s) = &raster_selectie {
                                 antwoord.beeld.voorkeursveld = Some(s.doel.clone());
                             }
@@ -804,9 +858,7 @@ impl App {
                             );
                             raster_focus = tab.raster.focus && actief_id == Some(id);
                             let richting = tab.raster.na_richting.take();
-                            if raster_focus {
-                                raster_richting = richting;
-                            }
+                            raster_richting = richting;
                             let bereik = tab
                                 .raster
                                 .na_bewerking
@@ -859,7 +911,11 @@ impl App {
                             tab.na_bewerking = None;
                             tab.raster.na_bewerking = None;
                             tab.raster.na_richting = None;
-                            tab.raster.wachtend.clear();
+                            tab.raster.plakbereik = None;
+                            raster_invoer::mislukking(tab);
+                            if tab.raster.fout {
+                                self.melding.push_str(". Niet toegepaste invoer blijft bewaard; Ctrl+Z verwerpt het concept en de wachtende opdrachten");
+                            }
                             tab.canvas_voorbeeld = None;
                             fout = true;
                         }
@@ -872,13 +928,11 @@ impl App {
                 if let Some(als) = vervolg {
                     return self.update(Msg::Opslaan(id, als));
                 }
-                if let Some(richting) = raster_richting
-                    && raster_ui::beschikbaar(self)
-                {
-                    return self.update(Msg::Raster(raster_ui::Bericht::Verplaats(richting)));
+                if !fout && let Some(richting) = raster_richting {
+                    raster_invoer::na_bevestiging(self, id, richting);
                 }
                 if raster_focus && !fout && raster_ui::beschikbaar(self) {
-                    return raster_ui::vervolg(self);
+                    return Task::batch([raster_ui::vraag_focus(self), raster_ui::vervolg(self)]);
                 }
             }
             Msg::Selecteer(n) => {
@@ -889,7 +943,7 @@ impl App {
             }
             Msg::Deel(n) => {
                 if let Some(t) = self.tab_mut() {
-                    if t.bezig || t.concept {
+                    if t.bezig || t.concept || t.raster.heeft_werk() {
                         return self.waarschuwing(
                             "Pas de huidige tekst eerst toe of maak de invoer ongedaan",
                         );
@@ -1095,6 +1149,9 @@ impl App {
                 }
             }
             Msg::Opmaak(stijl) => {
+                if raster_invoer::neemt_over(self) {
+                    return raster_ui::update(self, raster_ui::Bericht::Opmaak(stijl));
+                }
                 if let Some(t) = self.tab().filter(|t| {
                     !t.writer_direct.delegeert
                         && (t.writer_direct.actief || t.writer_direct.heeft_werk())
@@ -1134,6 +1191,9 @@ impl App {
                 }
             }
             Msg::Structuur(actie) => {
+                if raster_invoer::neemt_over(self) {
+                    return raster_ui::update(self, raster_ui::Bericht::Structuur(actie));
+                }
                 if let Some(t) = self.tab_mut() {
                     if t.bezig || t.concept {
                         return self.waarschuwing("Pas de ingevoerde tekst eerst toe");
@@ -1180,6 +1240,9 @@ impl App {
                 }
             }
             Msg::Klembord(actie) => {
+                if raster_invoer::neemt_over(self) {
+                    return raster_ui::update(self, raster_ui::Bericht::Klembord(actie));
+                }
                 if let Some(t) = self.tab().filter(|t| {
                     t.writer_focus.load(std::sync::atomic::Ordering::Relaxed)
                         || t.writer_direct.heeft_werk()
@@ -1194,6 +1257,9 @@ impl App {
             }
             Msg::KlembordGelezen(doel, tekst) => return klembord::plak(self, doel, tekst),
             Msg::Invoer(actie) => {
+                if raster_invoer::neemt_over(self) {
+                    return raster_ui::update(self, raster_ui::Bericht::ZijInvoer(actie));
+                }
                 if let Some(t) = self.tab_mut()
                     && !t.bezig
                     && !t.schrijft
@@ -1220,6 +1286,9 @@ impl App {
                 }
             }
             Msg::PasToe => {
+                if raster_invoer::neemt_over(self) {
+                    return raster_ui::update(self, raster_ui::Bericht::PasToe);
+                }
                 if let Some(t) = self.tab_mut() {
                     if t.bezig || !t.concept {
                         return Task::none();
@@ -1232,6 +1301,12 @@ impl App {
                 }
             }
             Msg::Opslaan(id, als) => {
+                if self.sluiten.is_none()
+                    && self.tab().is_some_and(|t| t.id == id)
+                    && raster_invoer::neemt_over(self)
+                {
+                    return raster_ui::update(self, raster_ui::Bericht::Opslaan(als));
+                }
                 if self.tabs.iter().any(|t| {
                     t.id == id
                         && !t.writer_direct.delegeert
@@ -1306,6 +1381,7 @@ impl App {
                         }
                         Err(e) => {
                             self.melding = e;
+                            raster_invoer::mislukking(t);
                             self.sluiten = None;
                             self.venster_sluiten = false;
                         }
@@ -1322,6 +1398,9 @@ impl App {
                 }
             }
             Msg::Terug => {
+                if raster_invoer::neemt_over(self) {
+                    return raster_ui::update(self, raster_ui::Bericht::Terug);
+                }
                 if let Some(t) = self
                     .tab()
                     .filter(|t| t.writer_direct.actief || t.writer_direct.heeft_werk())
@@ -1342,6 +1421,9 @@ impl App {
                 }
             }
             Msg::Vooruit => {
+                if raster_invoer::neemt_over(self) {
+                    return raster_ui::update(self, raster_ui::Bericht::Vooruit);
+                }
                 if let Some(t) = self
                     .tab()
                     .filter(|t| t.writer_direct.actief || t.writer_direct.heeft_werk())
@@ -1360,7 +1442,7 @@ impl App {
             }
             Msg::Sluit(n) => {
                 if let Some(t) = self.tabs.get(n) {
-                    if t.bezig || t.schrijft {
+                    if t.bezig || t.schrijft || t.raster.heeft_werk() {
                         return self.waarschuwing("Wacht tot het document gereed is");
                     }
                     let id = t.id;
@@ -1541,7 +1623,8 @@ impl App {
             .filter(|t| t.writer_direct.heeft_werk())
             .map(|t| t.id)
             .collect();
-        let mut taken = vec![zoek];
+        let raster = raster_invoer::vervolg(self);
+        let mut taken = vec![zoek, raster];
         for id in ids {
             taken.push(writer_direct::hervat(self, id));
         }
@@ -2561,6 +2644,41 @@ impl App {
             ),
             None => iced::widget::Space::new().height(0).into(),
         };
+        let invoermelding: Element<'_, Msg> = if t.raster.fout {
+            container(row![
+                w::body(l,"Invoer niet toegepast. Je bron is behouden; wachtende opdrachten zijn gepauzeerd.").width(Length::Fill),
+                w::button(l,"Plaktekst terug naar klembord",K::Secondary,D::Compact,None,t.raster.plaktekst.as_ref().map(|_|Msg::Raster(raster_ui::Bericht::HerstelKopie))),
+                w::button(l,"Niet toegepaste invoer verwerpen",K::Quiet,D::Compact,None,Some(Msg::Raster(raster_ui::Bericht::Terug)))
+            ].spacing(12).align_y(iced::Alignment::Center)).padding(8).into()
+        } else if t.raster.afgewezen > 0 {
+            let tekst = format!(
+                "Invoerbuffer vol: {} opdrachten niet aangenomen. Controleer de laatste invoer.",
+                t.raster.afgewezen
+            );
+            let label = openaec_ui::design::a11y::named(
+                w::body(l, tekst.clone()),
+                openaec_ui::design::a11y::Role::Label,
+                tekst,
+            );
+            container(
+                row![
+                    label,
+                    w::button(
+                        l,
+                        "Begrepen",
+                        K::Quiet,
+                        D::Compact,
+                        None,
+                        Some(Msg::Raster(raster_ui::Bericht::MeldingGelezen))
+                    )
+                ]
+                .spacing(12),
+            )
+            .padding(8)
+            .into()
+        } else {
+            iced::widget::Space::new().height(0).into()
+        };
         column![
             w::document_tabs(
                 l,
@@ -2572,6 +2690,7 @@ impl App {
                 Msg::Selecteer
             ),
             beperking,
+            invoermelding,
             werk
         ]
         .height(Length::Fill)

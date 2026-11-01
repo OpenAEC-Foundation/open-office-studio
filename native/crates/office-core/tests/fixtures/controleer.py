@@ -288,3 +288,25 @@ for naam in ['spreadsheet-navigatie-bron-4.xlsx','spreadsheet-schaars-bewerkt.xl
     assert wb['Tweede blad']['A1'].value=='Bewaar ook dit blad'
     if naam=='spreadsheet-schaars-bewerkt.xlsx':assert blad['A1'].value=='café 🏠'
 print('Schaars Spreadsheet: zeroHeight en twee hoogte-uitzonderingen blijven na broninvoer, Unicode-bewerking en bewaren onafhankelijk leesbaar.')
+
+# Bereikplakken is één bronbewerking; de berekening blijft in de werkmapkern.
+# B2=7, C2=8, B3=9 en C3=7+8=15 geven D2=56, D3=135 en D4=191.
+blok=load_workbook(map/'spreadsheet-klembord.xlsx',data_only=False)
+s=blok['Begroting']
+assert s['B2'].value==7 and s['C2'].value==8 and s['B3'].value==9
+assert s['C3'].value=='=SUM(B2:C2)'
+assert s['D2'].value=='=B2*C2' and s['D3'].value=='=B3*C3' and s['D4'].value=='=SUM(D2:D3)'
+assert s['D4'].number_format=='0.00' and s['A1'].font.bold
+assert s['F2'].value=='café 🏠' and s['G2'].value=='regel één\nregel twee'
+assert s['F3'].value=='een "citaat"' and s['G3'].value=='0012' and s['G3'].data_type=='s'
+assert blok['Tweede blad']['A1'].value=='Bewaar ook dit blad'
+waarden=load_workbook(map/'spreadsheet-klembord.xlsx',data_only=True)['Begroting']
+assert waarden['C3'].value==15 and waarden['D2'].value==56 and waarden['D3'].value==135 and waarden['D4'].value==191
+ui=load_workbook(map/'spreadsheet-klembord-ui.xlsx',data_only=False)
+s=ui['Begroting']
+for adres,waarde in [('F2',3),('G2',12.5),('H2',37.5),('F3',2),('G3',15),('H3',30),('H4',67.5)]:
+    assert s[adres].value==waarde and s[adres].data_type=='n'
+assert s['F4'].value is None and s['G4'].value is None
+assert s['D2'].value=='=B2*C2' and s['D3'].value=='=B3*C3' and s['D4'].value=='=SUM(D2:D3)'
+assert ui['Tweede blad']['A1'].value=='Bewaar ook dit blad'
+print('Celbereikklembord: opgemaakte platte waarden, gezamenlijke formule-invoer, Unicode/meerdere regels, letterlijke voorloopnullen, herberekening, bestaande opmaak en tweede blad onafhankelijk goedgekeurd.')

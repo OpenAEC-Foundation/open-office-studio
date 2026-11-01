@@ -17,7 +17,7 @@ pub struct Doel {
     cursor: iced::advanced::text::editor::Cursor,
 }
 impl Doel {
-    fn van_tab(t: &Tab) -> Option<Self> {
+    pub(super) fn van_tab(t: &Tab) -> Option<Self> {
         Some(Self {
             document: t.id,
             editerversie: t.editerversie,
@@ -47,6 +47,14 @@ pub fn kan(app: &App, actie: Actie) -> bool {
     };
     if t.bezig || t.schrijft {
         return false;
+    }
+    if t.raster.focus && !t.raster.bewerken && !t.concept {
+        return match actie {
+            Actie::Kopieer => office_core::rekenblad::bereik(&t.adres).is_ok(),
+            // Bereik verplaatsen vraagt ook referentie- en opmaakoverdracht.
+            Actie::Knip => false,
+            Actie::Plak => v.bewerkbaar,
+        };
     }
     match actie {
         Actie::Kopieer => t.editor.selection().is_some_and(|s| !s.is_empty()),

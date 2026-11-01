@@ -2328,3 +2328,491 @@ fn zoekmarkering_wordt_echt_getekend_schaalt_mee_en_vervalt_bij_nieuwe_invoer() 
         std::fs::write(pad.join("writer-zoekmarkering-zoom.json"),serde_json::to_vec_pretty(&serde_json::json!({"schalen":[1.,0.75,1.5],"afwijkende_pixels_zonder_markering":aantallen})).unwrap()).unwrap();
     }
 }
+
+#[test]
+fn raster_asynchrone_grensronde_bewaart_alle_invoer_en_celbevestigingen() {
+    use office_core::rekenblad::Richting as R;
+    use raster_ui::Bericht as B;
+    let mut p = Proef::nieuw();
+    let origineel = p.bron();
+    p.bericht(Msg::Raster(B::Kies("X2".into())));
+    // Geen antwoord of widgetvernieuwing tussen deze gepubliceerde intenties.
+    let taken: Vec<_> = [
+        B::Pijl {
+            richting: R::Rechts,
+            selecteer: false,
+        },
+        B::Typ("7".into()),
+        B::Voltooi(R::Onder),
+        B::Typ("8".into()),
+        B::Voltooi(R::Onder),
+    ]
+    .into_iter()
+    .map(|b| p.app.update(Msg::Raster(b)))
+    .collect();
+    for taak in taken {
+        p.taak(taak);
+    }
+    assert_eq!(p.app.tab().unwrap().adres, "Y4");
+    let mut d = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone()).unwrap();
+    let b = d.naar_cel(0, "Y2").unwrap();
+    assert_eq!(b.velden.iter().find(|v| v.id == "Y2").unwrap().tekst, "7");
+    assert_eq!(b.velden.iter().find(|v| v.id == "Y3").unwrap().tekst, "8");
+    p.bericht(Msg::Terug);
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *origineel);
+}
+#[test]
+fn raster_asynchrone_plak_enter_en_opslaan_wachten_op_de_geplakte_bron() {
+    use office_core::rekenblad::Richting as R;
+    let mut p = Proef::nieuw();
+    p.cel("B2", false);
+    let map = std::env::temp_dir().join(format!(
+        "office-raster-plak-{}-{}",
+        std::process::id(),
+        std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap()
+            .as_nanos()
+    ));
+    std::fs::create_dir(&map).unwrap();
+    let pad = map.join("Klembord.xlsx");
+    std::fs::write(&pad, p.bron().as_slice()).unwrap();
+    let id = p.app.tab().unwrap().id;
+    {
+        let t = p.app.tab_mut().unwrap();
+        t.pad = Some(pad.clone());
+        t.verwacht = Some(t.antwoord.as_ref().unwrap().hash.clone());
+    }
+    p.klembord.tekst = Some("7".into());
+    let taken = vec![
+        p.app.update(Msg::Klembord(klembord::Actie::Plak)),
+        p.app
+            .update(Msg::Raster(raster_ui::Bericht::Voltooi(R::Onder))),
+        p.app.update(Msg::Opslaan(id, false)),
+    ];
+    for taak in taken {
+        p.taak(taak);
+    }
+    assert_eq!(p.app.tab().unwrap().adres, "B3");
+    let opgeslagen = std::fs::read(&pad).unwrap();
+    let b = Sessie::open(Module::Spreadsheet, opgeslagen.clone())
+        .unwrap()
+        .weergave(0)
+        .unwrap();
+    assert_eq!(b.velden.iter().find(|v| v.id == "B2").unwrap().tekst, "7");
+    assert_eq!(opgeslagen.as_slice(), p.bron().as_slice());
+    assert!(!p.app.tab().unwrap().gewijzigd());
+    std::fs::remove_dir_all(map).unwrap();
+}
+
+#[test]
+fn raster_klembord_bereik_kopieer_plak_en_wissen_zijn_geordend_en_bronexact_ongedaan() {
+    use raster_ui::Bericht as B;
+    let mut p = Proef::nieuw();
+    let origineel = p.bron();
+    p.bericht(Msg::Adres("B2:D4".into()));
+    p.bericht(Msg::GaNaar);
+    // Neem echte rasterfocus over zonder de rechthoekselectie te verliezen.
+    p.app.tab_mut().unwrap().raster.focus = true;
+    let taken = vec![
+        p.app.update(Msg::Klembord(klembord::Actie::Kopieer)),
+        p.app.update(Msg::Raster(B::Kies("F2".into()))),
+        p.app.update(Msg::Klembord(klembord::Actie::Plak)),
+    ];
+    for taak in taken {
+        p.taak(taak);
+    }
+    assert!(p.klembord.tekst.as_ref().unwrap().contains("37.5"));
+    let t = p.app.tab().unwrap();
+    assert_eq!(t.adres, "F2:H4");
+    assert!(!t.concept && !t.bezig && !t.raster.heeft_werk());
+    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
+        .unwrap()
+        .weergave(0)
+        .unwrap();
+    for (id, tekst) in [
+        ("F2", "3"),
+        ("G2", "12.5"),
+        ("H2", "37.5"),
+        ("H3", "30"),
+        ("F4", ""),
+        ("H4", "67.5"),
+        ("D2", "=B2*C2"),
+    ] {
+        assert_eq!(b.velden.iter().find(|v| v.id == id).unwrap().tekst, tekst);
+    }
+    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        std::fs::create_dir_all(&map).unwrap();
+        p.verbeeld()
+            .save_png(PathBuf::from(map).join("spreadsheet-klembord-bereik.png"))
+            .unwrap();
+    }
+    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
+        std::fs::create_dir_all(&map).unwrap();
+        std::fs::write(
+            PathBuf::from(map).join("spreadsheet-klembord-ui.xlsx"),
+            p.bron().as_slice(),
+        )
+        .unwrap();
+    }
+    p.bericht(Msg::Raster(B::Wis));
+    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
+        .unwrap()
+        .weergave(0)
+        .unwrap();
+    assert!(
+        b.velden
+            .iter()
+            .filter(
+                |v| ["F2", "G2", "H2", "F3", "G3", "H3", "F4", "G4", "H4"].contains(&v.id.as_str())
+            )
+            .all(|v| v.tekst.is_empty())
+    );
+    p.bericht(Msg::Terug);
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *origineel);
+}
+#[test]
+fn raster_klembord_modale_late_lezing_wacht_en_gaat_nooit_naar_een_ander_document() {
+    use raster_ui::Bericht as B;
+    let mut p = Proef::nieuw();
+    p.cel("B2", false);
+    let bron = p.bron();
+    let (_, mut antwoorden) = klembordtaak(
+        p.app.update(Msg::Klembord(klembord::Actie::Plak)),
+        Some("7"),
+    );
+    assert_eq!(antwoorden.len(), 1);
+    let vervolg = p.app.update(Msg::Raster(B::Voltooi(
+        office_core::rekenblad::Richting::Onder,
+    )));
+    p.taak(vervolg);
+    p.bericht(Msg::Bestand(true));
+    p.bericht(antwoorden.pop().unwrap());
+    assert_eq!(*p.bron(), *bron);
+    assert!(p.app.tab().unwrap().raster.heeft_werk());
+    p.bericht(Msg::Bestand(false));
+    assert_eq!(p.app.tab().unwrap().adres, "B3");
+    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
+        .unwrap()
+        .weergave(0)
+        .unwrap();
+    assert_eq!(b.velden.iter().find(|v| v.id == "B2").unwrap().tekst, "7");
+    let (_, mut antwoorden) = klembordtaak(
+        p.app.update(Msg::Klembord(klembord::Actie::Plak)),
+        Some("8"),
+    );
+    let oud = p.bron();
+    p.bericht(Msg::Nieuw(Module::Spreadsheet));
+    let tweede = p.bron();
+    p.bericht(antwoorden.pop().unwrap());
+    assert_eq!(*p.bron(), *tweede);
+    assert!(!p.app.tab().unwrap().raster.heeft_werk());
+    assert_eq!(*p.app.tabs[0].antwoord.as_ref().unwrap().bron, *oud);
+    p.bericht(Msg::Selecteer(0));
+    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
+        .unwrap()
+        .weergave(0)
+        .unwrap();
+    assert_eq!(b.velden.iter().find(|v| v.id == "B3").unwrap().tekst, "8");
+    assert_eq!(*p.app.tabs[1].antwoord.as_ref().unwrap().bron, *tweede);
+}
+#[test]
+fn raster_klembord_ongeldige_late_formule_bewaart_de_bron_en_hersteltekst() {
+    use raster_ui::Bericht as B;
+    let mut p = Proef::nieuw();
+    p.cel("B2", false);
+    let bron = p.bron();
+    let tekst = "7\t8\n9\t=1+";
+    p.klembord.tekst = Some(tekst.into());
+    let taken = vec![
+        p.app.update(Msg::Klembord(klembord::Actie::Plak)),
+        p.app.update(Msg::Raster(B::Typ("later".into()))),
+        p.app.update(Msg::Opslaan(p.app.tab().unwrap().id, false)),
+    ];
+    for taak in taken {
+        p.taak(taak);
+    }
+    let t = p.app.tab().unwrap();
+    assert!(t.raster.fout);
+    assert_eq!(t.raster.wachtend.len(), 2);
+    assert_eq!(t.raster.plaktekst.as_deref(), Some(tekst));
+    assert!(!t.antwoord.as_ref().unwrap().terug);
+    assert_eq!(*p.bron(), *bron);
+    p.klembord.tekst = Some("andere tekst".into());
+    p.bericht(Msg::Raster(B::HerstelKopie));
+    assert_eq!(p.klembord.tekst.as_deref(), Some(tekst));
+    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        std::fs::create_dir_all(&map).unwrap();
+        p.verbeeld()
+            .save_png(PathBuf::from(map).join("spreadsheet-invoerherstel.png"))
+            .unwrap();
+    }
+    p.bericht(Msg::Terug);
+    let t = p.app.tab().unwrap();
+    assert!(!t.raster.fout && !t.raster.heeft_werk());
+    assert!(t.raster.plaktekst.is_none());
+    assert_eq!(*p.bron(), *bron);
+}
+#[test]
+fn raster_klembord_gewijzigd_doel_weigert_laat_antwoord_en_bewaart_wachtende_invoer() {
+    use raster_ui::Bericht as B;
+    let mut p = Proef::nieuw();
+    p.cel("B2", false);
+    let bron = p.bron();
+    let (_, mut antwoorden) = klembordtaak(
+        p.app.update(Msg::Klembord(klembord::Actie::Plak)),
+        Some("7"),
+    );
+    p.bericht(Msg::Raster(B::Typ("later".into())));
+    // Een expliciete adresbalkwijziging is geen relatieve rastertoets.
+    p.bericht(Msg::Adres("F2".into()));
+    p.bericht(Msg::GaNaar);
+    p.bericht(antwoorden.pop().unwrap());
+    assert!(p.app.tab().unwrap().raster.fout);
+    assert_eq!(p.app.tab().unwrap().raster.wachtend.len(), 1);
+    assert_eq!(*p.bron(), *bron);
+    p.bericht(Msg::Terug);
+    assert!(!p.app.tab().unwrap().raster.heeft_werk());
+}
+#[test]
+fn raster_invoerbuffer_begrenst_grote_plak_en_meldt_afgewezen_opdrachten_blijvend() {
+    use raster_ui::Bericht as B;
+    let mut p = Proef::nieuw();
+    p.cel("B2", false);
+    let bron = p.bron();
+    let (_, mut antwoorden) = klembordtaak(
+        p.app.update(Msg::Klembord(klembord::Actie::Plak)),
+        Some("7"),
+    );
+    p.bericht(Msg::Raster(B::Typ("x".repeat(4 * 1024 * 1024 + 1))));
+    assert_eq!(p.app.tab().unwrap().raster.afgewezen, 1);
+    assert!(p.app.tab().unwrap().raster.wachtend.is_empty());
+    p.bericht(antwoorden.pop().unwrap());
+    assert_eq!(p.app.tab().unwrap().raster.afgewezen, 1);
+    assert!(
+        p.toegankelijkheid()
+            .nodes
+            .iter()
+            .any(|n| n.node.name.contains("Invoerbuffer vol"))
+    );
+    p.bericht(Msg::Raster(B::MeldingGelezen));
+    assert_eq!(p.app.tab().unwrap().raster.afgewezen, 0);
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *bron);
+}
+
+#[test]
+fn raster_bewaren_vanuit_de_sluitvraag_blijft_werken_met_de_invoerwachtrij() {
+    let mut p = Proef::nieuw();
+    p.cel("B2", false);
+    let bron = p.bron();
+    let pad = std::env::temp_dir().join(format!(
+        "office-raster-sluiten-{}-{}.xlsx",
+        std::process::id(),
+        std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap()
+            .as_nanos()
+    ));
+    std::fs::write(&pad, bron.as_slice()).unwrap();
+    {
+        let t = p.app.tab_mut().unwrap();
+        t.pad = Some(pad.clone());
+        t.verwacht = Some(t.antwoord.as_ref().unwrap().hash.clone());
+    }
+    p.klembord.tekst = Some("7".into());
+    p.bericht(Msg::Klembord(klembord::Actie::Plak));
+    let id = p.app.tab().unwrap().id;
+    p.bericht(Msg::Sluit(0));
+    assert_eq!(p.app.sluiten, Some(id));
+    p.bericht(Msg::SluitKeuze(true));
+    assert!(p.app.tabs.is_empty());
+    let b = Sessie::open(Module::Spreadsheet, std::fs::read(&pad).unwrap())
+        .unwrap()
+        .weergave(0)
+        .unwrap();
+    assert_eq!(b.velden.iter().find(|v| v.id == "B2").unwrap().tekst, "7");
+    std::fs::remove_file(pad).unwrap();
+}
+#[test]
+fn raster_oud_muisdoel_na_bronbewerking_wordt_geweigerd_maar_relatieve_invoer_blijft_geordend() {
+    use raster_ui::Bericht as B;
+    let mut p = Proef::nieuw();
+    p.cel("B2", false);
+    let bron = p.bron();
+    p.bericht(Msg::Raster(B::Typ("7".into())));
+    let taken = vec![
+        p.app.update(Msg::Raster(B::Voltooi(
+            office_core::rekenblad::Richting::Onder,
+        ))),
+        p.app.update(Msg::Raster(B::Kies("F2".into()))),
+        p.app.update(Msg::Raster(B::Typ("8".into()))),
+        p.app.update(Msg::Raster(B::Voltooi(
+            office_core::rekenblad::Richting::Onder,
+        ))),
+    ];
+    for taak in taken {
+        p.taak(taak);
+    }
+    assert_eq!(p.app.tab().unwrap().adres, "B4");
+    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
+        .unwrap()
+        .weergave(0)
+        .unwrap();
+    for (id, tekst) in [("B2", "7"), ("B3", "8"), ("F2", "")] {
+        assert_eq!(b.velden.iter().find(|v| v.id == id).unwrap().tekst, tekst);
+    }
+    p.bericht(Msg::Terug);
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *bron);
+}
+
+#[test]
+fn raster_rij_invoegen_na_plakken_blijft_achter_de_klembordbewerking() {
+    let mut p = Proef::nieuw();
+    p.cel("B2", false);
+    let bron = p.bron();
+    p.klembord.tekst = Some("7".into());
+    let taken = vec![
+        p.app.update(Msg::Klembord(klembord::Actie::Plak)),
+        p.app.update(Msg::Structuur(Structuur::RijInvoegen)),
+    ];
+    for taak in taken {
+        p.taak(taak);
+    }
+    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
+        .unwrap()
+        .weergave(0)
+        .unwrap();
+    assert_eq!(b.velden.iter().find(|v| v.id == "B2").unwrap().tekst, "");
+    assert_eq!(b.velden.iter().find(|v| v.id == "B3").unwrap().tekst, "7");
+    p.bericht(Msg::Terug);
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *bron);
+}
+
+#[test]
+fn raster_invoer_van_de_oude_inline_editor_bewerkt_na_enter_de_volgende_cel() {
+    use office_core::rekenblad::Richting as R;
+    use raster_ui::Bericht as B;
+    use text_editor::{Action as A, Edit as E};
+    let mut p = Proef::nieuw();
+    p.cel("B2", false);
+    let bron = p.bron();
+    p.named(iced::keyboard::key::Named::F2);
+    p.selecteer_alles();
+    p.plak("7");
+    // Deze berichten komen nog uit dezelfde inline-editorwidget, die bij het
+    // verzamelen van de toetsen nog niet is verwijderd of opnieuw opgebouwd.
+    let taken = vec![
+        p.app.update(Msg::Raster(B::Voltooi(R::Onder))),
+        p.app
+            .update(Msg::Raster(B::Invoer(A::Edit(E::Insert('8'))))),
+        p.app.update(Msg::Raster(B::Voltooi(R::Onder))),
+    ];
+    for taak in taken {
+        p.taak(taak);
+    }
+    assert_eq!(p.app.tab().unwrap().adres, "B4");
+    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
+        .unwrap()
+        .weergave(0)
+        .unwrap();
+    assert_eq!(b.velden.iter().find(|v| v.id == "B2").unwrap().tekst, "7");
+    assert_eq!(b.velden.iter().find(|v| v.id == "B3").unwrap().tekst, "8");
+    p.bericht(Msg::Terug);
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *bron);
+}
+#[test]
+fn raster_zijeditor_bewaart_zijn_eigen_invoer_en_toepassen() {
+    use text_editor::{Action as A, Edit as E};
+    let mut p = Proef::nieuw();
+    p.cel("B2", false);
+    let bron = p.bron();
+    p.bericht(Msg::Invoer(A::SelectAll));
+    p.bericht(Msg::Invoer(A::Edit(E::Paste(std::sync::Arc::new(
+        "7".into(),
+    )))));
+    p.bericht(Msg::PasToe);
+    assert_eq!(p.app.tab().unwrap().adres, "B2");
+    assert!(!p.app.tab().unwrap().raster.bewerken);
+    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
+        .unwrap()
+        .weergave(0)
+        .unwrap();
+    assert_eq!(b.velden.iter().find(|v| v.id == "B2").unwrap().tekst, "7");
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *bron);
+}
+
+#[test]
+fn raster_toetsen_en_ime_commit_blijven_bewaard_terwijl_editorfocus_nog_onderweg_is() {
+    use raster_ui::Bericht as B;
+    let mut p = Proef::nieuw();
+    p.cel("B2", false);
+    let bron = p.bron();
+    let oud = p.app.update(Msg::Raster(B::Typ("7".into())));
+    assert!(p.app.tab().unwrap().raster.bewerken);
+    // Bouw de nieuwe widgetboom, maar lever de eerste focusoperatie pas af
+    // nadat de volgende echte toets en synthetische IME-commit zijn verwerkt.
+    p.toets(
+        iced::keyboard::Key::Character("8".into()),
+        iced::keyboard::Modifiers::empty(),
+        Some("8"),
+    );
+    assert_eq!(p.app.tab().unwrap().editor.text(), "78");
+    p.toets(
+        iced::keyboard::Key::Character("a".into()),
+        iced::keyboard::Modifiers::COMMAND,
+        None,
+    );
+    p.toets(
+        iced::keyboard::Key::Character("9".into()),
+        iced::keyboard::Modifiers::empty(),
+        Some("9"),
+    );
+    p.gebeurtenis(iced::Event::InputMethod(
+        iced::advanced::input_method::Event::Commit("é".into()),
+    ));
+    assert_eq!(p.app.tab().unwrap().editor.text(), "9é");
+    p.named(iced::keyboard::key::Named::Enter);
+    let aantal = p.focusoperaties;
+    p.taak(oud);
+    assert_eq!(p.focusoperaties, aantal);
+    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
+        .unwrap()
+        .weergave(0)
+        .unwrap();
+    assert_eq!(b.velden.iter().find(|v| v.id == "B2").unwrap().tekst, "9é");
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *bron);
+}
+
+#[test]
+fn raster_f2_en_selecteer_alles_in_dezelfde_oude_widget_overschrijven_de_cel() {
+    use iced::keyboard::{Key, Modifiers, key::Named};
+    let mut p = Proef::nieuw();
+    p.cel("B2", false);
+    let bron = p.bron();
+    let mut alles = ruwe_rastertoets(Key::Character("a".into()), None);
+    if let iced::Event::Keyboard(iced::keyboard::Event::KeyPressed { modifiers, .. }) = &mut alles {
+        *modifiers = Modifiers::COMMAND;
+    }
+    p.gebeurtenissen([
+        ruwe_rastertoets(Key::Named(Named::F2), None),
+        alles,
+        ruwe_rastertoets(Key::Character("7".into()), Some("7")),
+        ruwe_rastertoets(Key::Named(Named::Enter), None),
+    ]);
+    assert_eq!(p.app.tab().unwrap().adres, "B3");
+    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
+        .unwrap()
+        .weergave(0)
+        .unwrap();
+    assert_eq!(b.velden.iter().find(|v| v.id == "B2").unwrap().tekst, "7");
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *bron);
+}

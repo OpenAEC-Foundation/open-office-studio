@@ -63,13 +63,22 @@ struct Taak {
     opdracht: Opdracht,
     antwoord: oneshot::Sender<Resultaat>,
 }
+enum Werk {
+    Document(Taak),
+    Celtekst {
+        id: u64,
+        deel: usize,
+        adres: String,
+        antwoord: oneshot::Sender<Result<String, String>>,
+    },
+}
 #[derive(Clone)]
 pub struct Werker {
-    zender: mpsc::Sender<Taak>,
+    zender: mpsc::Sender<Werk>,
 }
 impl Werker {
     pub fn start() -> Self {
-        let (zender, ontvanger) = mpsc::channel::<Taak>();
+        let (zender, ontvanger) = mpsc::channel::<Werk>();
         std::thread::Builder::new()
             .name("office-documenten".into())
             // De gepinde parser gebruikt bij diepe veldbomen meer stapelruimte
@@ -78,7 +87,17 @@ impl Werker {
             .stack_size(64 * 1024 * 1024)
             .spawn(move || {
                 let mut sessies = HashMap::<u64, (Sessie, usize)>::new();
-                for taak in ontvanger {
+                for werk in ontvanger {
+                    let taak=match werk {
+                        Werk::Document(taak)=>taak,
+                        Werk::Celtekst{id,deel,adres,antwoord}=>{
+                            let r=std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                                sessies.get(&id).ok_or_else(||"Document niet meer geopend".to_string())?
+                                    .0.celtekst(deel,&adres).map_err(|e|e.to_string())
+                            })).unwrap_or_else(|_|Err("De documentengine heeft het kopiëren afgebroken".into()));
+                            let _=antwoord.send(r);continue;
+                        }
+                    };
                     let resultaat = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| -> Resultaat {
                         match &taak.opdracht {
                             Opdracht::Nieuw(m) => {
@@ -187,22 +206,36 @@ impl Werker {
             .expect("documentwerkdraad");
         Self { zender }
     }
+    pub async fn celtekst(self, id: u64, deel: usize, adres: String) -> Result<String, String> {
+        let (antwoord, ontvanger) = oneshot::channel();
+        self.zender
+            .send(Werk::Celtekst {
+                id,
+                deel,
+                adres,
+                antwoord,
+            })
+            .map_err(|_| "Documentwerkdraad is gestopt")?;
+        ontvanger
+            .await
+            .map_err(|_| "Documentwerkdraad is gestopt".to_string())?
+    }
     pub fn sluit(&self, id: u64) {
         let (antwoord, _) = oneshot::channel();
-        let _ = self.zender.send(Taak {
+        let _ = self.zender.send(Werk::Document(Taak {
             id,
             opdracht: Opdracht::Sluit,
             antwoord,
-        });
+        }));
     }
     pub async fn voer_uit(self, id: u64, opdracht: Opdracht) -> Resultaat {
         let (antwoord, ontvanger) = oneshot::channel();
         self.zender
-            .send(Taak {
+            .send(Werk::Document(Taak {
                 id,
                 opdracht,
                 antwoord,
-            })
+            }))
             .map_err(|_| "Documentwerkdraad is gestopt")?;
         ontvanger
             .await

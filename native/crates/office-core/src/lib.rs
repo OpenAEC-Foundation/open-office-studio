@@ -1,4 +1,5 @@
 //! Documenten en veilige bestandsopslag zonder webinterface.
+pub mod celtekst;
 pub mod document;
 pub mod ifcx;
 pub mod interactie;
@@ -11,6 +12,7 @@ mod presentatie_tekst;
 pub mod rekenblad;
 mod rekenblad_beeld;
 pub mod rekenblad_document;
+pub mod rekenblad_klembord;
 pub mod writer;
 mod writer_beeld;
 pub mod writer_cursor;

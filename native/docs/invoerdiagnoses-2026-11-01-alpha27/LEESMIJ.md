@@ -1,0 +1,9 @@
+# Oorspronkelijke invoerafkeuringen alpha 27
+
+Twee gerichte proeven falen op de oorspronkelijke alpha-26-bron: tekens verdwijnen tijdens rasterwerk en een snelle plak/Enter/bewaarreeks bewaart de oude celwaarde. [voor-correctie.patch](voor-correctie.patch) bevat de toen uitgevoerde regressieproeven voor basiscommit `7a0ad58d53d6a4c273f23088f44194793d49f793`. [rapport.json](rapport.json) bewaart de afwijkingen, oorspronkelijke loghash en patchhash. De oude uitvoer blijft afgekeurd.
+
+De uitgebreide hertest op de vastgelegde alpha-27-bron controleert dezelfde fouten en twaalf aanvullende UI-situaties. Een afzonderlijke start stopte vóór iedere test door de bronbewaking; een eerdere diagnostische bouw is bewust afgebroken tijdens de releasebouw. Ook deze logs zijn behouden en tellen niet als geslaagde rondes. De volledige laatste ronde is afzonderlijk vastgelegd; dat verandert de oorspronkelijke afkeuringen niet.
+
+De eerste volledige alpha-27-ronde is eveneens afgekeurd: 303 reguliere tests slagen en drie UI-tests falen. Een te brede pauze blokkeert het corrigeren of annuleren van een los inline-concept; de zichtbare bufferwaarschuwing mist een benoemd toegankelijkheidsknooppunt. [eerste-volledige-ronde.patch](eerste-volledige-ronde.patch) bewaart die bron voor dezelfde basiscommit. Alle 612 bronbestanden zijn vóór en na die afgekeurde ronde gelijk. De productiecode is gecorrigeerd; de oorspronkelijke tests zijn niet aangepast of verzwakt.
+
+Een aanvullende [F2-regressie](f2-voor-correctie.patch) faalt eveneens concreet: F2/Ctrl+A/7/Enter in dezelfde oude rasterwidget bewaart 37 in plaats van 7. De modekeuze voor Selecteer alles is gecorrigeerd. Een tussenliggende totale ronde is vóór bronwijziging onderbroken om deze extra proef eerst vast te leggen; die telt niet als geslaagd. De laatste volledige ronde controleert de aanvullende proef samen met alle eerdere gevallen.

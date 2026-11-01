@@ -113,6 +113,10 @@ pub struct TekstReeks {
 }
 #[derive(Debug, Clone)]
 pub enum Bewerking {
+    CelTekst {
+        adres: String,
+        tekst: crate::celtekst::CelTekst,
+    },
     TekstReeksen(Vec<TekstReeks>),
     TekstReeks {
         id: String,
@@ -250,6 +254,12 @@ impl Document {
             _ => Err(fout("Markdown-export is beschikbaar voor Writer")),
         }
     }
+    pub fn celtekst(&self, deel: usize, adres: &str) -> Resultaat<String> {
+        match self {
+            Self::Spreadsheet(d) => crate::rekenblad_klembord::kopieer(d, deel, adres),
+            _ => Err(fout("Celbereiken horen bij Spreadsheet")),
+        }
+    }
     pub fn bewerk(&mut self, deel: usize, bewerking: Bewerking) -> Resultaat<()> {
         match &*self {
             Self::Writer(d) => d.controleer_bewerking()?,
@@ -309,6 +319,9 @@ impl Document {
             }
             (Self::Writer(d), Bewerking::Tekst { id, tekst }) => {
                 crate::writer_tekst::vervang(d, &id, &tekst)?;
+            }
+            (Self::Spreadsheet(d), Bewerking::CelTekst { adres, tekst }) => {
+                crate::rekenblad_klembord::plak(d, deel, &adres, &tekst)?;
             }
             (Self::Spreadsheet(d), Bewerking::Tekst { id, tekst }) => {
                 let adres = crate::rekenblad::ankercel(
@@ -884,6 +897,9 @@ impl Sessie {
     }
     pub fn markdown(&self) -> Resultaat<String> {
         self.document.markdown()
+    }
+    pub fn celtekst(&self, deel: usize, adres: &str) -> Resultaat<String> {
+        self.document.celtekst(deel, adres)
     }
     pub fn bewerk(&mut self, deel: usize, bewerking: Bewerking) -> Resultaat<()> {
         self.bewerk_met_weergave(deel, bewerking).map(|_| ())
