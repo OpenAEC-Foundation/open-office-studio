@@ -8,6 +8,7 @@ native/vendor/docx-parse/** -text -whitespace
 
 native/vendor/pptx/** -text -whitespace
 native/vendor/xlsx-raster/** -text -whitespace
+native/vendor/xlsx-parse/** -text -whitespace
 native/vendor/iced-tiny-skia/** -text -whitespace
 native/vendor/symbolen/** -text -whitespace
 
@@ -24,3 +25,6 @@ LICENSE text eol=lf
 .gitattributes text eol=lf
 # Eigen metadata rond de vastgepinde bron blijft eveneens LF.
 native/vendor/*.json text eol=lf
+
+# Dit oorspronkelijke CI-log bewaart ook zijn Windows-regelafbrekingen.
+native/docs/checkout-diagnose-2026-11-01-alpha30/windows-afgekeurd.log -text -whitespace

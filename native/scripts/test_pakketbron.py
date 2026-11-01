@@ -31,6 +31,8 @@ class Pakketbron(unittest.TestCase):
                 'native/crates/proef/document.docx': b'PK\x00\x01\r\n\n',
                 'native/docs/proef.png': b'\x89PNG\r\n\x1a\n\x00',
                 'native/vendor/openaec-ui/src/proef.rs': b'// Oorspronkelijke bytes\r\n\n',
+                'native/vendor/xlsx-parse/src/lf.rs': b'// Oorspronkelijke LF\n',
+                'native/vendor/xlsx-parse/src/crlf.rs': b'// Oorspronkelijke CRLF\r\n',
             }
             for naam, inhoud in bestanden.items():
                 pad = repo/naam
