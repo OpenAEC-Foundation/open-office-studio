@@ -846,13 +846,6 @@ impl App {
                             }
                             tab.canvas_voorbeeld = None;
                             tab.notitie_invoer = false;
-                            tab.markdown = antwoord
-                                .beeld
-                                .velden
-                                .iter()
-                                .find(|v| v.naam == "Markdown")
-                                .map(|v| iced::widget::markdown::parse(&v.tekst).collect())
-                                .unwrap_or_default();
                             let raster_selectie = tab
                                 .raster
                                 .plakbereik
@@ -974,8 +967,16 @@ impl App {
                             "Pas de huidige tekst eerst toe of maak de invoer ongedaan",
                         );
                     }
-                    t.deel = n;
-                    t.gekozen = 0;
+                    // Bij Notities horen de editors nog bij de zichtbare oude
+                    // pagina totdat het werkdraadantwoord compleet binnenkomt.
+                    if !t
+                        .antwoord
+                        .as_ref()
+                        .is_some_and(|a| a.beeld.module == Module::Notition)
+                    {
+                        t.deel = n;
+                        t.gekozen = 0;
+                    }
                     let id = t.id;
                     return self.opdracht(id, Opdracht::Deel(n));
                 }

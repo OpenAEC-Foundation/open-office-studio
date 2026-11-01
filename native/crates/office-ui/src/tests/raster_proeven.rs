@@ -237,6 +237,123 @@ fn notitie_late_invoer_van_een_andere_bron_wordt_niet_toegepast() {
     assert!(!p.app.tab().unwrap().concept);
 }
 #[test]
+fn notitie_paginawissel_rendert_ook_voordat_het_werkdraadantwoord_komt() {
+    let bron = include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json");
+    let mut p = Proef::met_app(app_met_werkdraad(Module::Notition, bron));
+    p.klik(iced::Point::new(370., 311.));
+    assert_eq!(p.app.tab().unwrap().gekozen, 1);
+    let taak = p.app.update(Msg::Deel(1));
+    assert!(p.app.tab().unwrap().bezig);
+    // Het echte venster tekent ook tussen de opdracht en het antwoord.
+    // De oude pagina en alle bijbehorende editors moeten dan nog kloppen.
+    let _ = p.verbeeld();
+    let t = p.app.tab().unwrap();
+    for (n, v) in t.antwoord.as_ref().unwrap().beeld.velden.iter().enumerate() {
+        assert_eq!(notitie_ui::inhoud(t, n).unwrap().text(), v.tekst);
+    }
+    p.taak(taak);
+    assert_eq!(p.app.tab().unwrap().deel, 1);
+    assert_eq!(p.app.tab().unwrap().gekozen, 0);
+    assert!(
+        p.app
+            .tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .beeld
+            .notitie
+            .as_ref()
+            .unwrap()
+            .markdown
+    );
+    assert_eq!(p.bron().as_slice(), bron);
+}
+#[test]
+fn notitie_zichtbare_formaatgreep_vergroot_op_drie_zoomstanden_met_een_undo() {
+    use iced::{Event, mouse};
+    let bron = include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json");
+    // De fysieke sleepafstand 60 × 48 wordt door de zoom gedeeld:
+    // 0,75: +80/+64; 1: +60/+48; 1,5: +40/+32 bronpunten.
+    for (zoom, breedte, hoogte) in [(0.75, 640., 224.), (1., 620., 208.), (1.5, 600., 192.)] {
+        let mut p = Proef::met_app(app_met_werkdraad(Module::Notition, bron));
+        p.bericht(Msg::Zoom(zoom));
+        let g = p
+            .toegankelijkheid()
+            .nodes
+            .into_iter()
+            .find(|n| n.node.name == "Formaatgreep tekstvak 1")
+            .unwrap()
+            .bounds;
+        let begin = iced::Point::new(g.x + g.width / 2., g.y + g.height / 2.);
+        let einde = iced::Point::new(begin.x + 60., begin.y + 48.);
+        p.gebeurtenissen([
+            Event::Mouse(mouse::Event::CursorMoved { position: begin }),
+            Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
+            Event::Mouse(mouse::Event::CursorMoved { position: einde }),
+            Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)),
+        ]);
+        let d: serde_json::Value = serde_json::from_slice(&p.bron()).unwrap();
+        let v = &d["boeken"][0]["secties"][0]["paginas"][0]["vakken"][0];
+        assert_eq!(
+            v["breedte"].as_f64(),
+            Some(breedte),
+            "De zichtbare greep moet het vak vergroten bij zoom {zoom}"
+        );
+        assert_eq!(v["hoogte"].as_f64(), Some(hoogte));
+        assert_eq!(v["x"].as_f64(), Some(40.));
+        assert_eq!(v["y"].as_f64(), Some(32.));
+        if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+            std::fs::create_dir_all(&map).unwrap();
+            p.verbeeld()
+                .save_png(PathBuf::from(map).join(format!(
+                    "notition-formaatgreep-{}.png",
+                    (zoom * 100.) as u32
+                )))
+                .unwrap();
+        }
+        p.bericht(Msg::Terug);
+        assert_eq!(p.bron().as_slice(), bron);
+    }
+}
+#[test]
+fn notitie_markdownvoorbeeld_herstelt_bij_ongedaan_maken_van_een_concept() {
+    use iced::keyboard::{Key, Modifiers};
+    let bron = include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json");
+    let mut p = Proef::met_app(app_met_werkdraad(Module::Notition, bron));
+    p.bericht(Msg::Deel(1));
+    let g = p
+        .toegankelijkheid()
+        .nodes
+        .into_iter()
+        .find(|n| n.node.name == "Notitietekst")
+        .unwrap()
+        .bounds;
+    p.klik(iced::Point::new(g.x + 12., g.y + 12.));
+    let voor = p.app.tab().unwrap().editor.text();
+    // Vergelijk beide modellen nadat de widgetboom hun stijlcaches heeft gevuld.
+    let _ = p.verbeeld();
+    let voorbeeld = format!("{:?}", p.app.tab().unwrap().markdown);
+    p.toets(
+        Key::Character("Voorbeeldconcept9".into()),
+        Modifiers::empty(),
+        Some("Voorbeeldconcept9"),
+    );
+    assert!(p.app.tab().unwrap().concept);
+    assert!(format!("{:?}", p.app.tab().unwrap().markdown).contains("Voorbeeldconcept9"));
+    p.toets(Key::Character("z".into()), Modifiers::COMMAND, None);
+    let _ = p.verbeeld();
+    let t = p.app.tab().unwrap();
+    assert!(!t.concept);
+    assert_eq!(t.editor.text(), voor);
+    assert_eq!(
+        format!("{:?}", t.markdown),
+        voorbeeld,
+        "Ook het voorbeeld moet de verworpen concepttekst vergeten"
+    );
+    assert_eq!(p.bron().as_slice(), bron);
+}
+#[test]
 fn writer_paginacursor_klikken_schalen_typen_en_een_exacte_undo() {
     use iced::keyboard::key::Named;
     for zoom in [0.75, 1., 1.5] {

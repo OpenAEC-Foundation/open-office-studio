@@ -142,8 +142,10 @@ impl Werker {
                                 return Ok(Antwoord {deel:pagina,raster_selectie:None,writer_cursor:Some(cursor),writer_positie:None,writer_markering:None,beeld,bron:sessie.bron(),hash:sessie.bron_hash().into(),terug:sessie.kan_terug(),vooruit:sessie.kan_vooruit()});
                             }
                             Opdracht::Deel(n) => {
-                                beeld=Some(sessie.weergave(n).map_err(|e| e.to_string())?);
-                                *deel = n;
+                                let mut b=sessie.weergave(n).map_err(|e| e.to_string())?;
+                                if b.notitie.is_some() {b.voorkeursveld=b.velden.first().map(|v|v.id.clone());}
+                                *deel=b.notitie.as_ref().map(|p|p.deel).unwrap_or(n);
+                                beeld=Some(b);
                             }
                             Opdracht::Cel(n,adres) => {beeld=Some(sessie.naar_cel(n,&adres).map_err(|e|e.to_string())?);*deel=n;}
                             Opdracht::VerplaatsCel(n,adres,richting) => {beeld=Some(sessie.verplaats_cel(n,&adres,richting).map_err(|e|e.to_string())?);*deel=n;}

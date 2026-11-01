@@ -3,6 +3,12 @@ use super::*;
 use iced::widget::{Space, Stack, column, markdown, pin, row};
 use office_core::notities::NotitieActie as A;
 pub(super) fn vernieuw_editors(t: &mut Tab) {
+    t.markdown = t
+        .antwoord
+        .as_ref()
+        .and_then(|a| a.beeld.velden.iter().find(|v| v.naam == "Markdown"))
+        .map(|v| iced::widget::markdown::parse(&v.tekst).collect())
+        .unwrap_or_default();
     t.notitie_editors = t
         .antwoord
         .as_ref()
@@ -311,10 +317,12 @@ pub fn weergave<'a>(app: &'a App, t: &'a Tab, a: &'a Antwoord) -> Element<'a, Ms
                 .spacing(8)
                 .align_y(iced::Alignment::Center)
             ]
-            .spacing(5);
+            .spacing(5)
+            .height(Length::Fill);
             for &n in &vak.velden {
                 inhoud = inhoud.push(editor(n, Length::Shrink));
             }
+            inhoud = inhoud.push(Space::new().height(Length::Fill));
             inhoud = inhoud.push(
                 row![
                     w::button(
@@ -335,9 +343,14 @@ pub fn weergave<'a>(app: &'a App, t: &'a Tab, a: &'a Antwoord) -> Element<'a, Ms
                             .then_some(Msg::Notitie(A::VerwijderVak(vak.index)))
                     ),
                     Space::new().width(Length::Fill),
-                    w::glyph(include_str!("../assets/formaatgreep.svg"), 12., hoek, hoek)
+                    openaec_ui::design::a11y::named(
+                        w::glyph(include_str!("../assets/formaatgreep.svg"), 12., hoek, hoek),
+                        openaec_ui::design::a11y::Role::Group,
+                        format!("Formaatgreep tekstvak {}", vak.index + 1),
+                    )
                 ]
-                .spacing(4),
+                .spacing(4)
+                .align_y(iced::Alignment::End),
             );
             let kaart = container(inhoud)
                 .width(g.breedte * t.zoom)
