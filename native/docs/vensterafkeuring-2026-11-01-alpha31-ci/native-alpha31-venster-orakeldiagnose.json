@@ -1,0 +1,9 @@
+{
+  "oorspronkelijke_vensterproef_geslaagd": false,
+  "oorspronkelijk_orakel_accepteert_ongesplitste_fixture": true,
+  "reden": "body.findall(w:p) slaat de tussenliggende tabel over. Het volgende gevonden p is het reeds bestaande lege sectie-einde na de tabel. De bronvoorwaarde kan daardoor al vóór de Enter-bewerking slagen.",
+  "exacte_oude_leeg_snapshot_vastgelegd": false,
+  "beperking": "Deze diagnose bewijst dat de eerste bronvoorwaarde ontoereikend was; zij bewijst zonder hertest niet dat dit de enige oorzaak van de oorspronkelijke afkeuring is. Geen productgoedkeuring.",
+  "fixture_sha256": "6d225b88fc59171d169407e49cf859eb20b264ff58487f84f5bc5f0ef29090e0",
+  "vervolg": "Dezelfde vaste programmahash en dezelfde invoeropdrachten opnieuw controleren met een direct aangrenzende lege alinea vóór de tabel; snapshots en hashes vastleggen."
+}

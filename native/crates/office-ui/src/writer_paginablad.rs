@@ -30,6 +30,7 @@ pub fn blad<'a>(t: &'a Tab, inhoud: Element<'a, Msg>, accent: iced::Color) -> El
         focus_id: focus_id(t.id, t.editerversie),
         hash: &a.hash,
         focus: t.writer_focus.clone(),
+        lintdruk: t.writer_lintdruk.clone(),
         markering: t.writer_direct.geometrie(t),
         accent,
         breedte: a.beeld.pagina.breedte,
@@ -50,6 +51,7 @@ struct Blad<'a> {
     focus_id: iced::advanced::widget::Id,
     hash: &'a str,
     focus: Arc<AtomicBool>,
+    lintdruk: Arc<AtomicBool>,
     markering: Option<&'a office_core::writer_cursor::TekstMarkering>,
     accent: iced::Color,
     breedte: f32,
@@ -134,6 +136,7 @@ impl Widget<Msg, Theme, Renderer> for Blad<'_> {
         tree::Tag::of::<Focus>()
     }
     fn state(&self) -> tree::State {
+        self.lintdruk.store(false, Ordering::Relaxed);
         tree::State::new(Focus::nieuw(self.document, self.focus.clone()))
     }
     fn children(&self) -> Vec<Tree> {
@@ -142,6 +145,7 @@ impl Widget<Msg, Theme, Renderer> for Blad<'_> {
     fn diff(&self, t: &mut Tree) {
         let f = t.state.downcast_mut::<Focus>();
         if f.document != self.document {
+            self.lintdruk.store(false, Ordering::Relaxed);
             *f = Focus::nieuw(self.document, self.focus.clone());
         }
         t.diff_children(std::slice::from_ref(&self.inhoud));
@@ -179,6 +183,7 @@ impl Widget<Msg, Theme, Renderer> for Blad<'_> {
         match e {
             Event::Keyboard(keyboard::Event::ModifiersChanged(m)) => f.modifiers = *m,
             Event::Window(iced::window::Event::Unfocused) => {
+                self.lintdruk.store(false, Ordering::Relaxed);
                 f.venster = false;
                 f.preedit = None;
                 f.slepen = false;
@@ -203,7 +208,7 @@ impl Widget<Msg, Theme, Renderer> for Blad<'_> {
                         cursor: Some(punt),
                         selecteren: f.modifiers.shift(),
                     });
-                } else {
+                } else if !self.lintdruk.load(Ordering::Relaxed) {
                     f.unfocus();
                 }
             }

@@ -61,9 +61,14 @@ pub fn ribbon(app: &App) -> Option<Element<'_, Msg>> {
     let kan =
         !t.bezig && !t.concept && veld.is_some_and(|v| v.bewerkbaar && v.id != "__dia_notities");
     let knop = |bron, naam, actief, bericht| {
+        let terug = matches!(&bericht, Some(Msg::Opmaak(_)));
         w::with_tooltip(
             l,
-            w::icon_button(l, bron, 22., actief, naam, bericht),
+            super::writer_lintfocus::behoud(
+                t,
+                w::icon_button(l, bron, 22., actief, naam, bericht),
+                terug,
+            ),
             naam,
             None,
         )
@@ -71,18 +76,22 @@ pub fn ribbon(app: &App) -> Option<Element<'_, Msg>> {
     let compact = |bron, naam, actief, o| {
         w::with_tooltip(
             l,
-            w::icon_button_with(
-                l,
-                bron,
-                26.,
-                actief,
-                openaec_ui::design::a11y::Node::new(
-                    openaec_ui::design::a11y::Role::ToggleButton,
-                    naam,
-                )
-                .checked(actief)
-                .disabled(!kan),
-                kan.then_some(Msg::Opmaak(o)),
+            super::writer_lintfocus::behoud(
+                t,
+                w::icon_button_with(
+                    l,
+                    bron,
+                    26.,
+                    actief,
+                    openaec_ui::design::a11y::Node::new(
+                        openaec_ui::design::a11y::Role::ToggleButton,
+                        naam,
+                    )
+                    .checked(actief)
+                    .disabled(!kan),
+                    kan.then_some(Msg::Opmaak(o)),
+                ),
+                kan,
             ),
             naam,
             None,
@@ -184,7 +193,11 @@ pub fn ribbon(app: &App) -> Option<Element<'_, Msg>> {
     let alinea = |bron, naam, o| {
         w::with_tooltip(
             l,
-            w::icon_button(l, bron, 26., false, naam, kan.then_some(Msg::Opmaak(o))),
+            super::writer_lintfocus::behoud(
+                t,
+                w::icon_button(l, bron, 26., false, naam, kan.then_some(Msg::Opmaak(o))),
+                kan,
+            ),
             naam,
             None,
         )

@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.31**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.32**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -281,7 +281,9 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
-Het [controlerapport voor alpha 31](docs/controle-2026-11-01-alpha31.md) legt **344 reguliere Rust-tests**, inclusief **124 UI-tests**, zes runtimeproeven en zeven Python-tests vast. Rustfmt, Clippy, gepinde bronnen en onafhankelijke lezers slagen. **53 volledige native widgetbeelden** en **660 productiebronbestanden** zijn vastgelegd. [Lege Writer-invoegopmaak](docs/invoegopmaak-2026-11-01-alpha31/LEESMIJ.md) bewaart acht keuzes vóór de eerste letter; bewaakte focus behoudt directe vervolginvoer. Lettervelden en cursor volgen de opgeloste opmaak. De oorspronkelijke afkeuringen en tussenstappen blijven bewaard. De eigen alpha-31-releasebouw, platformronde en echte releasevensterproef blijven afzonderlijk open.
+Het [controlerapport voor alpha 32](docs/controle-2026-11-01-alpha32.md) legt **351 reguliere Rust-tests**, inclusief **131 UI-tests**, zes runtimeproeven en zeven Python-tests vast. Rustfmt, Clippy, bronpins en onafhankelijke lezers slagen. **55 volledige native widgetbeelden** en **662 bronbestanden** zijn vastgelegd. [Focus en snelle invoer](docs/invoer-2026-11-01-alpha32/LEESMIJ.md) zijn met zeven nieuwe echte widgetproeven gecontroleerd. Nieuwe en geopende spreadsheets ontvangen eerste toetsen zonder celklik; lange rijnummers passen op één regel. Writer houdt de actieve paginacursor tijdens aangesloten opmaakklikken, ook vóór asynchroon focuswerk; latere tekstvelden blijven afzonderlijke invoerdoelen. De werkelijke oude vensterafkeuringen blijven behouden. Releasebouw, platformronde en de nieuwe werkelijke releasevensters blijven afzonderlijk open.
+
+Het [controlerapport voor alpha 31](docs/controle-2026-11-01-alpha31.md) legt **344 reguliere Rust-tests**, inclusief **124 UI-tests**, zes runtimeproeven en zeven Python-tests vast. De [lokale releasebouw](docs/bouw-2026-11-01-alpha31-lokaal.json) slaagt in 34m31s met beide programma’s vastgezet. De [platformronde](docs/platformen-2026-11-01-alpha31.json) slaagt op vijf taken met 2095 bytegelijke bronbestanden per pakket, 106 exacte native beeldparen en 21 paginabezoeken. De [werkelijke CI-Linux-vensterproeven](docs/vensterafkeuring-2026-11-01-alpha31-ci/LEESMIJ.md) blijven afgekeurd: na een ontoereikende eerste bronvoorwaarde toont de strengere hertest daadwerkelijk toetsverlies vlak na een opmaakklik. De oude widgetproeven dekten die gebeurtenisvolgorde niet. De nieuwe alpha-32-widgetronde reproduceert het verlies vóór de correctie en controleert de gewijzigde route; een nieuw werkelijk releasevenster blijft nodig.
 
 Het [vorige controlerapport voor alpha 30](docs/controle-2026-11-01-alpha30.md) legt **333 reguliere Rust-tests**, inclusief **118 UI-tests**, zes runtimeproeven en zeven Python-tests vast. Rustfmt, Clippy, bronhashcontroles en onafhankelijke lezers slagen. **51 volledige native widgetbeelden** en **660 productiebronbestanden** zijn vastgelegd. De [standaardrijcorrectie](docs/modeluitvoer-correctie-2026-11-01-alpha30/LEESMIJ.md) is gecontroleerd met vijf eigen proeven, 23 onafhankelijk teruggelezen XLSX-bestanden en afzonderlijk 382 oorspronkelijke parsertests vóór en na de wijziging. De [partiële opdrachtinventaris](docs/functie-inventaris-2026-11-01/LEESMIJ.md) is geen functiedekking. De [lokale alpha-30-releasebouw](docs/bouw-2026-11-01-alpha30-lokaal.json) slaagt in 31m51s. De [uiteindelijke platformronde](docs/platformen-2026-11-01-alpha30.json) slaagt op vijf taken met 1556 bytegelijke bronbestanden per pakket, 102 volledige native beeldparen zonder afwijking en 21 paginabezoeken. De [echte CI-Linux-Writer-vensterproef](docs/vensterproef-2026-11-01-alpha30-ci/LEESMIJ.md) slaagt op achttien gerichte stappen. De [schaarse spreadsheetproef](docs/vensterproef-2026-11-01-alpha30-schaars/LEESMIJ.md) blijft afgekeurd op beginfocus en lange rijkoppen; de afzonderlijke route na celklik slaagt op zes functionele stappen.
 
@@ -451,7 +453,7 @@ python3 native/scripts/meet-paginas.py \
 Op Windows heeft de controleur de extensie `.exe`. Dit is een paginaproef,
 geen fysieke GUI-, volledige inhouds- of pariteitscontrole.
 
-De [controle van alpha 31](docs/controle-2026-11-01-alpha31.md) legt de huidige lokale tests en nog open acceptatie vast. Historische platform- en vensterproeven blijven aan hun eigen broncommit en programmaversie gekoppeld.
+De [controle van alpha 32](docs/controle-2026-11-01-alpha32.md) legt de huidige lokale tests en nog open acceptatie vast. Historische platform- en vensterproeven blijven aan hun eigen broncommit en programmaversie gekoppeld.
 
 ### Ontbrekende symbolen in Spreadsheet
 

@@ -329,7 +329,12 @@ pub(super) fn app_met_werkdraad(module: Module, bytes: &[u8]) -> App {
     app.tabs
         .push(Tab::nieuw(1, format!("Rondgang.{}", module.extensie())));
     app.volgend = 2;
+    // Deze gegevensfixture laadt op de achtergrond, zonder widgetboom.
+    // Beginfocus wordt afzonderlijk via Nieuw/Gelezen in de echte widgetproeven getest.
+    let actief = app.actief;
+    app.actief = usize::MAX;
     voer_interface_uit(&mut app, Msg::Gereed(1, Ok(antwoord)));
+    app.actief = actief;
     app
 }
 

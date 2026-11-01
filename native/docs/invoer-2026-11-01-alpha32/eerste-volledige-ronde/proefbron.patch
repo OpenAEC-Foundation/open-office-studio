@@ -1,0 +1,427 @@
+diff --git a/.github/workflows/native-rust.yml b/.github/workflows/native-rust.yml
+index 4bf2bda..22d02c7 100644
+--- a/.github/workflows/native-rust.yml
++++ b/.github/workflows/native-rust.yml
+@@ -159,7 +159,7 @@ jobs:
+           pattern: native-*
+           path: native/target/platformartefacten
+       - name: Bronbytes, architecturen en volledige native beelden vergelijken
+-        run: python native/scripts/controleer-platformen.py --artefacten native/target/platformartefacten --uitvoer native/target/platformvergelijking/rapport.json --verwachte-schermen 53
++        run: python native/scripts/controleer-platformen.py --artefacten native/target/platformartefacten --uitvoer native/target/platformvergelijking/rapport.json --verwachte-schermen 54
+       - uses: actions/upload-artifact@v4
+         if: always()
+         with:
+diff --git a/native/Cargo.lock b/native/Cargo.lock
+index ad1454d..8d15823 100644
+--- a/native/Cargo.lock
++++ b/native/Cargo.lock
+@@ -3710,7 +3710,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "office-conversie"
+-version = "2026.44.9-alpha.31"
++version = "2026.44.9-alpha.32"
+ dependencies = [
+  "libc",
+  "serde_json",
+@@ -3720,7 +3720,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "office-core"
+-version = "2026.44.9-alpha.31"
++version = "2026.44.9-alpha.32"
+ dependencies = [
+  "base64 0.22.1",
+  "betteroffice-docx",
+@@ -3750,7 +3750,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "office-mail"
+-version = "2026.44.9-alpha.31"
++version = "2026.44.9-alpha.32"
+ dependencies = [
+  "async-imap",
+  "base64 0.22.1",
+@@ -3795,7 +3795,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "open-office-studio-native"
+-version = "2026.44.9-alpha.31"
++version = "2026.44.9-alpha.32"
+ dependencies = [
+  "futures-channel",
+  "iced",
+diff --git a/native/Cargo.toml b/native/Cargo.toml
+index 7e22fd2..bdd0182 100644
+--- a/native/Cargo.toml
++++ b/native/Cargo.toml
+@@ -5,7 +5,7 @@ exclude = ["vendor/openaec-ui", "vendor/docx-parse", "vendor/pptx", "vendor/xlsx
+ resolver = "3"
+ 
+ [workspace.package]
+-version = "2026.44.9-alpha.31"
++version = "2026.44.9-alpha.32"
+ edition = "2024"
+ license = "Apache-2.0"
+ publish = false
+diff --git a/native/crates/office-ui/src/main.rs b/native/crates/office-ui/src/main.rs
+index 3886da7..62794b2 100644
+--- a/native/crates/office-ui/src/main.rs
++++ b/native/crates/office-ui/src/main.rs
+@@ -802,6 +802,7 @@ impl App {
+                                 && antwoord.beeld.module == Module::Spreadsheet
+                             {
+                                 tab.panelen = false;
++                                tab.raster.focus = actief_id == Some(id);
+                             }
+                             self.melding = antwoord.beeld.melding.clone();
+                             tab.raster.plaktekst = None;
+@@ -2336,8 +2337,18 @@ impl App {
+                         .width((pagina.breedte * t.zoom).max(1.))
+                         .height((pagina.hoogte * t.zoom).max(1.))
+                         .content_fit(iced::ContentFit::Fill);
++                    let kopbreedte = if a.beeld.module == Module::Spreadsheet {
++                        raster_koppen::linkerbreedte(t)
++                    } else {
++                        0.
++                    };
+                     let blad = if a.beeld.module == Module::Spreadsheet {
+-                        raster_koppen::omlijst(self, t, raster_ui::blad(self, t, inhoud.into()))
++                        raster_koppen::omlijst(
++                            self,
++                            t,
++                            raster_ui::blad(self, t, inhoud.into()),
++                            kopbreedte,
++                        )
+                     } else {
+                         let blad = documentblad::blad(
+                             inhoud,
+@@ -2361,7 +2372,7 @@ impl App {
+                         container(blad)
+                             .width(
+                                 (self.venster_grootte.width - if t.panelen { 490. } else { 0. })
+-                                    .max(pagina.breedte * t.zoom + raster_koppen::LINKS),
++                                    .max(pagina.breedte * t.zoom + kopbreedte),
+                             )
+                             .style(|_| container::Style {
+                                 background: Some(iced::Color::WHITE.into()),
+diff --git a/native/crates/office-ui/src/raster_koppen.rs b/native/crates/office-ui/src/raster_koppen.rs
+index ea12f09..dde7e93 100644
+--- a/native/crates/office-ui/src/raster_koppen.rs
++++ b/native/crates/office-ui/src/raster_koppen.rs
+@@ -14,12 +14,42 @@ use iced::{
+ use office_core::interactie::{RasterKop, RasterKoppen};
+ pub const LINKS: f32 = 38.;
+ pub const BOVEN: f32 = 24.;
+-pub fn omlijst<'a>(app: &App, t: &'a Tab, inhoud: Element<'a, Msg>) -> Element<'a, Msg> {
++/// Meet de werkelijk zichtbare rijnummers met hetzelfde vaste UI-lettertype.
++/// De minimale breedte blijft gelijk; grote indices mogen nooit afbreken.
++pub fn linkerbreedte(t: &Tab) -> f32 {
++    use iced::advanced::text::Paragraph as _;
++    type Paragraaf = <iced::Renderer as text::Renderer>::Paragraph;
++    let Some(koppen) = t.antwoord.as_ref().and_then(|a| a.beeld.raster.as_ref()) else {
++        return LINKS;
++    };
++    koppen.rijen.iter().fold(LINKS, |breedte, k| {
++        let nummer = (u64::from(k.index) + 1).to_string();
++        let alinea = Paragraaf::with_text(text::Text {
++            content: nummer.as_str(),
++            bounds: Size::new(f32::INFINITY, f32::INFINITY),
++            size: iced::Pixels(11.),
++            line_height: text::LineHeight::Relative(1.),
++            font: fonts::BODY,
++            align_x: text::Alignment::Center,
++            align_y: iced::alignment::Vertical::Center,
++            shaping: text::Shaping::Basic,
++            wrapping: text::Wrapping::None,
++        });
++        breedte.max((alinea.min_bounds().width + 8.).ceil())
++    })
++}
++pub fn omlijst<'a>(
++    app: &App,
++    t: &'a Tab,
++    inhoud: Element<'a, Msg>,
++    links: f32,
++) -> Element<'a, Msg> {
+     let Some(koppen) = t.antwoord.as_ref().and_then(|a| a.beeld.raster.as_ref()) else {
+         return inhoud;
+     };
+     Element::new(Koppen {
+         inhoud,
++        links,
+         koppen,
+         zoom: t.zoom,
+         gekozen: t.veld().and_then(|v| celindex(&v.id)),
+@@ -54,6 +84,7 @@ fn kolomnaam(mut index: u32) -> String {
+     letters.into_iter().rev().collect()
+ }
+ struct Koppen<'a> {
++    links: f32,
+     inhoud: Element<'a, Msg>,
+     koppen: &'a RasterKoppen,
+     zoom: f32,
+@@ -61,11 +92,15 @@ struct Koppen<'a> {
+     accent: Color,
+ }
+ /// De koppen blijven in de viewport; hun schaalverdeling beweegt met de cellen.
+-fn vlakken(grens: Rectangle, viewport: Rectangle) -> Option<(Rectangle, Rectangle, Rectangle)> {
++fn vlakken(
++    grens: Rectangle,
++    viewport: Rectangle,
++    links: f32,
++) -> Option<(Rectangle, Rectangle, Rectangle)> {
+     let clip = grens.intersection(&viewport)?;
+     let x = grens.x.max(viewport.x);
+     let y = grens.y.max(viewport.y);
+-    let breedte = LINKS.min(clip.width);
++    let breedte = links.min(clip.width);
+     let hoogte = BOVEN.min(clip.height);
+     let hoek = Rectangle {
+         x,
+@@ -101,12 +136,12 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Koppen<'_> {
+         let kind = self.inhoud.as_widget_mut().layout(
+             &mut t.children[0],
+             r,
+-            &l.shrink(Size::new(LINKS, BOVEN)),
++            &l.shrink(Size::new(self.links, BOVEN)),
+         );
+         let maat = kind.size();
+         layout::Node::with_children(
+-            Size::new(maat.width + LINKS, maat.height + BOVEN),
+-            vec![kind.move_to(iced::Point::new(LINKS, BOVEN))],
++            Size::new(maat.width + self.links, maat.height + BOVEN),
++            vec![kind.move_to(iced::Point::new(self.links, BOVEN))],
+         )
+     }
+     fn operate(&mut self, t: &mut Tree, l: Layout<'_>, r: &iced::Renderer, o: &mut dyn Operation) {
+@@ -124,7 +159,7 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Koppen<'_> {
+                 );
+                 let rect = if horizontaal {
+                     Rectangle {
+-                        x: b.x + LINKS + k.begin * self.zoom,
++                        x: b.x + self.links + k.begin * self.zoom,
+                         y: b.y,
+                         width: k.omvang * self.zoom,
+                         height: BOVEN,
+@@ -133,7 +168,7 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Koppen<'_> {
+                     Rectangle {
+                         x: b.x,
+                         y: b.y + BOVEN + k.begin * self.zoom,
+-                        width: LINKS,
++                        width: self.links,
+                         height: k.omvang * self.zoom,
+                     }
+                 };
+@@ -156,7 +191,7 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Koppen<'_> {
+         vp: &Rectangle,
+     ) {
+         if matches!(e, iced::Event::Mouse(mouse::Event::ButtonPressed(_)))
+-            && vlakken(l.bounds(), *vp).is_some_and(|(boven, links, hoek)| {
++            && vlakken(l.bounds(), *vp, self.links).is_some_and(|(boven, links, hoek)| {
+                 c.is_over(boven) || c.is_over(links) || c.is_over(hoek)
+             })
+         {
+@@ -184,7 +219,7 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Koppen<'_> {
+         vp: &Rectangle,
+         r: &iced::Renderer,
+     ) -> mouse::Interaction {
+-        if vlakken(l.bounds(), *vp).is_some_and(|(boven, links, hoek)| {
++        if vlakken(l.bounds(), *vp, self.links).is_some_and(|(boven, links, hoek)| {
+             c.is_over(boven) || c.is_over(links) || c.is_over(hoek)
+         }) {
+             return mouse::Interaction::default();
+@@ -217,7 +252,7 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Koppen<'_> {
+             vp,
+         );
+         let grens = l.bounds();
+-        let Some((boven, links, hoek)) = vlakken(grens, *vp) else {
++        let Some((boven, links, hoek)) = vlakken(grens, *vp, self.links) else {
+             return;
+         };
+         let achtergrond = Color::from_rgb8(237, 240, 243);
+@@ -298,7 +333,7 @@ impl Koppen<'_> {
+     ) {
+         let rect = if horizontaal {
+             Rectangle {
+-                x: b.x + LINKS + k.begin * self.zoom,
++                x: b.x + self.links + k.begin * self.zoom,
+                 y: clip.y,
+                 width: k.omvang * self.zoom,
+                 height: BOVEN,
+@@ -307,7 +342,7 @@ impl Koppen<'_> {
+             Rectangle {
+                 x: clip.x,
+                 y: b.y + BOVEN + k.begin * self.zoom,
+-                width: LINKS,
++                width: self.links,
+                 height: k.omvang * self.zoom,
+             }
+         };
+diff --git a/native/crates/office-ui/src/tests.rs b/native/crates/office-ui/src/tests.rs
+index 30f2423..d8ec63b 100644
+--- a/native/crates/office-ui/src/tests.rs
++++ b/native/crates/office-ui/src/tests.rs
+@@ -329,7 +329,12 @@ pub(super) fn app_met_werkdraad(module: Module, bytes: &[u8]) -> App {
+     app.tabs
+         .push(Tab::nieuw(1, format!("Rondgang.{}", module.extensie())));
+     app.volgend = 2;
++    // Deze gegevensfixture laadt op de achtergrond, zonder widgetboom.
++    // Beginfocus wordt afzonderlijk via Nieuw/Gelezen in de echte widgetproeven getest.
++    let actief = app.actief;
++    app.actief = usize::MAX;
+     voer_interface_uit(&mut app, Msg::Gereed(1, Ok(antwoord)));
++    app.actief = actief;
+     app
+ }
+ 
+diff --git a/native/crates/office-ui/src/tests/raster_proeven.rs b/native/crates/office-ui/src/tests/raster_proeven.rs
+index e049814..82ef42b 100644
+--- a/native/crates/office-ui/src/tests/raster_proeven.rs
++++ b/native/crates/office-ui/src/tests/raster_proeven.rs
+@@ -3565,3 +3565,145 @@ fn writer_zoekpaneel_late_sluitfocus_laat_een_later_lettertypeveld_werken() {
+     assert!(p.app.tab().unwrap().lettertype.contains('9'));
+     assert_eq!(*p.bron(), *bron);
+ }
++
++// Gerichte regressies voor de werkelijk afgekeurde alpha-30-vensterproef.
++#[test]
++fn raster_beginfocus_nieuw_document_ontvangt_toetsen_zonder_celklik() {
++    use iced::keyboard::{Key, Modifiers, key::Named};
++    let mut p = Proef::met_app(App::default());
++    p.bericht(Msg::Nieuw(Module::Spreadsheet));
++    let bron = p.bron();
++    p.named(Named::ArrowRight);
++    assert_eq!(p.app.tab().unwrap().adres, "B1");
++    p.toets(Key::Character("9".into()), Modifiers::empty(), Some("9"));
++    p.named(Named::Enter);
++    let t = p.app.tab().unwrap();
++    assert_eq!(t.adres, "B2");
++    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
++        .unwrap()
++        .weergave(0)
++        .unwrap();
++    assert_eq!(b.velden.iter().find(|v| v.id == "B1").unwrap().tekst, "9");
++    p.bericht(Msg::Terug);
++    assert_eq!(*p.bron(), *bron);
++}
++
++#[test]
++fn raster_beginfocus_geopend_document_ontvangt_toetsen_zonder_celklik() {
++    use iced::keyboard::{Key, Modifiers, key::Named};
++    let mut p = Proef::met_app(App::default());
++    let bytes = include_bytes!("../../../office-core/tests/fixtures/spreadsheet.xlsx").to_vec();
++    p.bericht(Msg::Gelezen(
++        1,
++        PathBuf::from("Eigen.xlsx"),
++        Ok(Geopend {
++            module: Module::Spreadsheet,
++            hash: opslag::hash(&bytes),
++            bytes: bytes.clone(),
++            archief: None,
++        }),
++    ));
++    let bron = p.bron();
++    p.named(Named::ArrowRight);
++    assert_eq!(p.app.tab().unwrap().adres, "B1");
++    p.toets(Key::Character("9".into()), Modifiers::empty(), Some("9"));
++    p.named(Named::Enter);
++    assert_eq!(p.app.tab().unwrap().adres, "B2");
++    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
++        .unwrap()
++        .weergave(0)
++        .unwrap();
++    assert_eq!(b.velden.iter().find(|v| v.id == "B1").unwrap().tekst, "9");
++    p.bericht(Msg::Terug);
++    assert_eq!(*p.bron(), *bron);
++}
++
++#[test]
++fn raster_beginfocus_lange_rijkop_past_op_een_regel_en_celklik_blijft_juist() {
++    use iced::advanced::text::Paragraph as _;
++    use iced::keyboard::key::Named;
++    let mut p = Proef::met_app(app_met_werkdraad(
++        Module::Spreadsheet,
++        include_bytes!("../../../office-core/tests/fixtures/spreadsheet-schaars.xlsx"),
++    ));
++    let bron = p.bron();
++    p.cel("A1", false);
++    p.named(Named::ArrowDown);
++    assert_eq!(p.app.tab().unwrap().adres, "A1000000");
++    for zoom in [0.75, 1., 1.5] {
++        p.bericht(Msg::Zoom(zoom));
++        let kop = p
++            .toegankelijkheid()
++            .nodes
++            .into_iter()
++            .find(|n| n.node.name == "Rij 1000000")
++            .unwrap()
++            .bounds;
++        type Paragraaf = <iced_tiny_skia::Renderer as iced::advanced::text::Renderer>::Paragraph;
++        let tekst = Paragraaf::with_text(iced::advanced::text::Text {
++            content: "1000000",
++            bounds: Size::new(f32::INFINITY, f32::INFINITY),
++            size: iced::Pixels(11.),
++            line_height: iced::advanced::text::LineHeight::Relative(1.),
++            font: fonts::BODY,
++            align_x: iced::advanced::text::Alignment::Center,
++            align_y: iced::alignment::Vertical::Center,
++            shaping: iced::advanced::text::Shaping::Basic,
++            wrapping: iced::advanced::text::Wrapping::None,
++        });
++        assert!(
++            kop.width >= tekst.min_bounds().width + 8.,
++            "De rijkop van {} past niet bij zoom {zoom}: {:?}",
++            tekst.min_bounds().width,
++            kop
++        );
++        p.cel("B1000000", false);
++        assert_eq!(p.app.tab().unwrap().adres, "B1000000");
++        assert_eq!(*p.bron(), *bron);
++        if zoom == 1.
++            && let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN")
++        {
++            std::fs::create_dir_all(&map).unwrap();
++            p.verbeeld()
++                .save_png(PathBuf::from(map).join("spreadsheet-rijkop-lang.png"))
++                .unwrap();
++        }
++    }
++}
++
++#[test]
++fn raster_beginfocus_late_eerste_focus_laat_later_lettertypeveld_werken() {
++    use iced::keyboard::{Key, Modifiers};
++    let mut p = Proef::met_app(App::default());
++    let bytes = include_bytes!("../../../office-core/tests/fixtures/spreadsheet.xlsx");
++    let antwoord = iced::futures::executor::block_on(
++        p.app
++            .werker
++            .clone()
++            .voer_uit(1, Opdracht::Open(Module::Spreadsheet, bytes.to_vec())),
++    )
++    .unwrap();
++    p.app.tabs.push(Tab::nieuw(1, "Eigen.xlsx".into()));
++    p.app.volgend = 2;
++    let taak = p.app.update(Msg::Gereed(1, Ok(antwoord)));
++    let bron = p.bron();
++    let veld = p
++        .toegankelijkheid()
++        .nodes
++        .into_iter()
++        .find(|n| {
++            n.node.name == "Lettertype" && n.node.role == openaec_ui::design::a11y::Role::TextField
++        })
++        .unwrap()
++        .bounds;
++    p.klik(iced::Point::new(
++        veld.x + veld.width * 0.5,
++        veld.y + veld.height * 0.5,
++    ));
++    let oud = p.app.tab().unwrap().lettertype.clone();
++    p.taak(taak);
++    p.toets(Key::Character("9".into()), Modifiers::empty(), Some("9"));
++    assert_ne!(p.app.tab().unwrap().lettertype, oud);
++    assert!(p.app.tab().unwrap().lettertype.contains('9'));
++    assert_eq!(*p.bron(), *bron);
++}

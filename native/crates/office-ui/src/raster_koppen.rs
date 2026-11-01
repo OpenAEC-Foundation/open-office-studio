@@ -14,12 +14,42 @@ use iced::{
 use office_core::interactie::{RasterKop, RasterKoppen};
 pub const LINKS: f32 = 38.;
 pub const BOVEN: f32 = 24.;
-pub fn omlijst<'a>(app: &App, t: &'a Tab, inhoud: Element<'a, Msg>) -> Element<'a, Msg> {
+/// Meet de werkelijk zichtbare rijnummers met hetzelfde vaste UI-lettertype.
+/// De minimale breedte blijft gelijk; grote indices mogen nooit afbreken.
+pub fn linkerbreedte(t: &Tab) -> f32 {
+    use iced::advanced::text::Paragraph as _;
+    type Paragraaf = <iced::Renderer as text::Renderer>::Paragraph;
+    let Some(koppen) = t.antwoord.as_ref().and_then(|a| a.beeld.raster.as_ref()) else {
+        return LINKS;
+    };
+    koppen.rijen.iter().fold(LINKS, |breedte, k| {
+        let nummer = (u64::from(k.index) + 1).to_string();
+        let alinea = Paragraaf::with_text(text::Text {
+            content: nummer.as_str(),
+            bounds: Size::new(f32::INFINITY, f32::INFINITY),
+            size: iced::Pixels(11.),
+            line_height: text::LineHeight::Relative(1.),
+            font: fonts::BODY,
+            align_x: text::Alignment::Center,
+            align_y: iced::alignment::Vertical::Center,
+            shaping: text::Shaping::Basic,
+            wrapping: text::Wrapping::None,
+        });
+        breedte.max((alinea.min_bounds().width + 8.).ceil())
+    })
+}
+pub fn omlijst<'a>(
+    app: &App,
+    t: &'a Tab,
+    inhoud: Element<'a, Msg>,
+    links: f32,
+) -> Element<'a, Msg> {
     let Some(koppen) = t.antwoord.as_ref().and_then(|a| a.beeld.raster.as_ref()) else {
         return inhoud;
     };
     Element::new(Koppen {
         inhoud,
+        links,
         koppen,
         zoom: t.zoom,
         gekozen: t.veld().and_then(|v| celindex(&v.id)),
@@ -54,6 +84,7 @@ fn kolomnaam(mut index: u32) -> String {
     letters.into_iter().rev().collect()
 }
 struct Koppen<'a> {
+    links: f32,
     inhoud: Element<'a, Msg>,
     koppen: &'a RasterKoppen,
     zoom: f32,
@@ -61,11 +92,15 @@ struct Koppen<'a> {
     accent: Color,
 }
 /// De koppen blijven in de viewport; hun schaalverdeling beweegt met de cellen.
-fn vlakken(grens: Rectangle, viewport: Rectangle) -> Option<(Rectangle, Rectangle, Rectangle)> {
+fn vlakken(
+    grens: Rectangle,
+    viewport: Rectangle,
+    links: f32,
+) -> Option<(Rectangle, Rectangle, Rectangle)> {
     let clip = grens.intersection(&viewport)?;
     let x = grens.x.max(viewport.x);
     let y = grens.y.max(viewport.y);
-    let breedte = LINKS.min(clip.width);
+    let breedte = links.min(clip.width);
     let hoogte = BOVEN.min(clip.height);
     let hoek = Rectangle {
         x,
@@ -101,12 +136,12 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Koppen<'_> {
         let kind = self.inhoud.as_widget_mut().layout(
             &mut t.children[0],
             r,
-            &l.shrink(Size::new(LINKS, BOVEN)),
+            &l.shrink(Size::new(self.links, BOVEN)),
         );
         let maat = kind.size();
         layout::Node::with_children(
-            Size::new(maat.width + LINKS, maat.height + BOVEN),
-            vec![kind.move_to(iced::Point::new(LINKS, BOVEN))],
+            Size::new(maat.width + self.links, maat.height + BOVEN),
+            vec![kind.move_to(iced::Point::new(self.links, BOVEN))],
         )
     }
     fn operate(&mut self, t: &mut Tree, l: Layout<'_>, r: &iced::Renderer, o: &mut dyn Operation) {
@@ -124,7 +159,7 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Koppen<'_> {
                 );
                 let rect = if horizontaal {
                     Rectangle {
-                        x: b.x + LINKS + k.begin * self.zoom,
+                        x: b.x + self.links + k.begin * self.zoom,
                         y: b.y,
                         width: k.omvang * self.zoom,
                         height: BOVEN,
@@ -133,7 +168,7 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Koppen<'_> {
                     Rectangle {
                         x: b.x,
                         y: b.y + BOVEN + k.begin * self.zoom,
-                        width: LINKS,
+                        width: self.links,
                         height: k.omvang * self.zoom,
                     }
                 };
@@ -156,7 +191,7 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Koppen<'_> {
         vp: &Rectangle,
     ) {
         if matches!(e, iced::Event::Mouse(mouse::Event::ButtonPressed(_)))
-            && vlakken(l.bounds(), *vp).is_some_and(|(boven, links, hoek)| {
+            && vlakken(l.bounds(), *vp, self.links).is_some_and(|(boven, links, hoek)| {
                 c.is_over(boven) || c.is_over(links) || c.is_over(hoek)
             })
         {
@@ -184,7 +219,7 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Koppen<'_> {
         vp: &Rectangle,
         r: &iced::Renderer,
     ) -> mouse::Interaction {
-        if vlakken(l.bounds(), *vp).is_some_and(|(boven, links, hoek)| {
+        if vlakken(l.bounds(), *vp, self.links).is_some_and(|(boven, links, hoek)| {
             c.is_over(boven) || c.is_over(links) || c.is_over(hoek)
         }) {
             return mouse::Interaction::default();
@@ -217,7 +252,7 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Koppen<'_> {
             vp,
         );
         let grens = l.bounds();
-        let Some((boven, links, hoek)) = vlakken(grens, *vp) else {
+        let Some((boven, links, hoek)) = vlakken(grens, *vp, self.links) else {
             return;
         };
         let achtergrond = Color::from_rgb8(237, 240, 243);
@@ -298,7 +333,7 @@ impl Koppen<'_> {
     ) {
         let rect = if horizontaal {
             Rectangle {
-                x: b.x + LINKS + k.begin * self.zoom,
+                x: b.x + self.links + k.begin * self.zoom,
                 y: clip.y,
                 width: k.omvang * self.zoom,
                 height: BOVEN,
@@ -307,7 +342,7 @@ impl Koppen<'_> {
             Rectangle {
                 x: clip.x,
                 y: b.y + BOVEN + k.begin * self.zoom,
-                width: LINKS,
+                width: self.links,
                 height: k.omvang * self.zoom,
             }
         };

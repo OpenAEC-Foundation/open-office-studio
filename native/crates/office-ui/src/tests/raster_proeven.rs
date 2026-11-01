@@ -3565,3 +3565,239 @@ fn writer_zoekpaneel_late_sluitfocus_laat_een_later_lettertypeveld_werken() {
     assert!(p.app.tab().unwrap().lettertype.contains('9'));
     assert_eq!(*p.bron(), *bron);
 }
+
+// Gerichte regressies voor de werkelijk afgekeurde alpha-30-vensterproef.
+#[test]
+fn raster_beginfocus_nieuw_document_ontvangt_toetsen_zonder_celklik() {
+    use iced::keyboard::{Key, Modifiers, key::Named};
+    let mut p = Proef::met_app(App::default());
+    p.bericht(Msg::Nieuw(Module::Spreadsheet));
+    let bron = p.bron();
+    p.named(Named::ArrowRight);
+    assert_eq!(p.app.tab().unwrap().adres, "B1");
+    p.toets(Key::Character("9".into()), Modifiers::empty(), Some("9"));
+    p.named(Named::Enter);
+    let t = p.app.tab().unwrap();
+    assert_eq!(t.adres, "B2");
+    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
+        .unwrap()
+        .weergave(0)
+        .unwrap();
+    assert_eq!(b.velden.iter().find(|v| v.id == "B1").unwrap().tekst, "9");
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *bron);
+}
+
+#[test]
+fn raster_beginfocus_geopend_document_ontvangt_toetsen_zonder_celklik() {
+    use iced::keyboard::{Key, Modifiers, key::Named};
+    let mut p = Proef::met_app(App::default());
+    let bytes = include_bytes!("../../../office-core/tests/fixtures/spreadsheet.xlsx").to_vec();
+    p.bericht(Msg::Gelezen(
+        1,
+        PathBuf::from("Eigen.xlsx"),
+        Ok(Geopend {
+            module: Module::Spreadsheet,
+            hash: opslag::hash(&bytes),
+            bytes: bytes.clone(),
+            archief: None,
+        }),
+    ));
+    let bron = p.bron();
+    p.named(Named::ArrowRight);
+    assert_eq!(p.app.tab().unwrap().adres, "B1");
+    p.toets(Key::Character("9".into()), Modifiers::empty(), Some("9"));
+    p.named(Named::Enter);
+    assert_eq!(p.app.tab().unwrap().adres, "B2");
+    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
+        .unwrap()
+        .weergave(0)
+        .unwrap();
+    assert_eq!(b.velden.iter().find(|v| v.id == "B1").unwrap().tekst, "9");
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *bron);
+}
+
+#[test]
+fn raster_beginfocus_lange_rijkop_past_op_een_regel_en_celklik_blijft_juist() {
+    use iced::advanced::text::Paragraph as _;
+    use iced::keyboard::key::Named;
+    let mut p = Proef::met_app(app_met_werkdraad(
+        Module::Spreadsheet,
+        include_bytes!("../../../office-core/tests/fixtures/spreadsheet-schaars.xlsx"),
+    ));
+    let bron = p.bron();
+    p.cel("A1", false);
+    p.named(Named::ArrowDown);
+    assert_eq!(p.app.tab().unwrap().adres, "A1000000");
+    for zoom in [0.75, 1., 1.5] {
+        p.bericht(Msg::Zoom(zoom));
+        let kop = p
+            .toegankelijkheid()
+            .nodes
+            .into_iter()
+            .find(|n| n.node.name == "Rij 1000000")
+            .unwrap()
+            .bounds;
+        type Paragraaf = <iced_tiny_skia::Renderer as iced::advanced::text::Renderer>::Paragraph;
+        let tekst = Paragraaf::with_text(iced::advanced::text::Text {
+            content: "1000000",
+            bounds: Size::new(f32::INFINITY, f32::INFINITY),
+            size: iced::Pixels(11.),
+            line_height: iced::advanced::text::LineHeight::Relative(1.),
+            font: fonts::BODY,
+            align_x: iced::advanced::text::Alignment::Center,
+            align_y: iced::alignment::Vertical::Center,
+            shaping: iced::advanced::text::Shaping::Basic,
+            wrapping: iced::advanced::text::Wrapping::None,
+        });
+        assert!(
+            kop.width >= tekst.min_bounds().width + 8.,
+            "De rijkop van {} past niet bij zoom {zoom}: {:?}",
+            tekst.min_bounds().width,
+            kop
+        );
+        p.cel("B1000000", false);
+        assert_eq!(p.app.tab().unwrap().adres, "B1000000");
+        assert_eq!(*p.bron(), *bron);
+        if zoom == 1.
+            && let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN")
+        {
+            std::fs::create_dir_all(&map).unwrap();
+            p.verbeeld()
+                .save_png(PathBuf::from(map).join("spreadsheet-rijkop-lang.png"))
+                .unwrap();
+        }
+    }
+}
+
+#[test]
+fn raster_beginfocus_late_eerste_focus_laat_later_lettertypeveld_werken() {
+    use iced::keyboard::{Key, Modifiers};
+    let mut p = Proef::met_app(App::default());
+    let bytes = include_bytes!("../../../office-core/tests/fixtures/spreadsheet.xlsx");
+    let antwoord = iced::futures::executor::block_on(
+        p.app
+            .werker
+            .clone()
+            .voer_uit(1, Opdracht::Open(Module::Spreadsheet, bytes.to_vec())),
+    )
+    .unwrap();
+    p.app.tabs.push(Tab::nieuw(1, "Eigen.xlsx".into()));
+    p.app.volgend = 2;
+    let taak = p.app.update(Msg::Gereed(1, Ok(antwoord)));
+    let bron = p.bron();
+    let veld = p
+        .toegankelijkheid()
+        .nodes
+        .into_iter()
+        .find(|n| {
+            n.node.name == "Lettertype" && n.node.role == openaec_ui::design::a11y::Role::TextField
+        })
+        .unwrap()
+        .bounds;
+    p.klik(iced::Point::new(
+        veld.x + veld.width * 0.5,
+        veld.y + veld.height * 0.5,
+    ));
+    let oud = p.app.tab().unwrap().lettertype.clone();
+    p.taak(taak);
+    p.toets(Key::Character("9".into()), Modifiers::empty(), Some("9"));
+    assert_ne!(p.app.tab().unwrap().lettertype, oud);
+    assert!(p.app.tab().unwrap().lettertype.contains('9'));
+    assert_eq!(*p.bron(), *bron);
+}
+
+fn linttoets_in_dezelfde_ronde(p: &mut Proef, naam: &str, rol: openaec_ui::design::a11y::Role) {
+    use iced::{Event, keyboard as k, mouse};
+    let grens = p
+        .toegankelijkheid()
+        .nodes
+        .into_iter()
+        .find(|n| n.node.name == naam && n.node.role == rol)
+        .unwrap()
+        .bounds;
+    p.muis = iced::Point::new(grens.x + grens.width * 0.5, grens.y + grens.height * 0.5);
+    p.gebeurtenis(Event::Mouse(mouse::Event::CursorMoved { position: p.muis }));
+    // Zoals een venster dat meerdere X11-gebeurtenissen vóór de berichtafhandeling ontvangt:
+    // laat de echte widgetboom klikken en typen afhandelen vóór alle vervolgtaken.
+    p.gebeurtenissen([
+        Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
+        Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)),
+        Event::Keyboard(k::Event::KeyPressed {
+            key: k::Key::Character("9".into()),
+            modified_key: k::Key::Character("9".into()),
+            physical_key: k::key::Physical::Unidentified(k::key::NativeCode::Unidentified),
+            location: k::Location::Standard,
+            modifiers: k::Modifiers::empty(),
+            text: Some("9".into()),
+            repeat: false,
+        }),
+    ]);
+}
+#[test]
+fn writer_lintfocus_echte_vetklik_en_typen_in_dezelfde_widgetronde_verliezen_geen_toets() {
+    use iced::keyboard::key::Named;
+    let mut p = writer_paginaproef();
+    let tekst = "Links 🏠 café rechts";
+    let punt = writer_punt(&mut p, tekst, tekst.chars().count());
+    p.klik(punt);
+    p.named(Named::End);
+    p.named(Named::Enter);
+    let leeg = p.bron();
+    linttoets_in_dezelfde_ronde(&mut p, "Vet", openaec_ui::design::a11y::Role::ToggleButton);
+    let t = p.app.tab().unwrap();
+    assert_eq!(t.editor.text(), "9");
+    assert!(t.veld().unwrap().opmaak.vet && t.veld().unwrap().opmaak.cursief);
+    assert!(!t.concept && !t.bezig);
+    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        std::fs::create_dir_all(&map).unwrap();
+        p.verbeeld()
+            .save_png(PathBuf::from(map).join("writer-lint-direct-typen.png"))
+            .unwrap();
+    }
+    p.bericht(Msg::Terug);
+    assert_eq!(p.app.tab().unwrap().editor.text(), "");
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *leeg);
+}
+#[test]
+fn writer_lintfocus_lettertypeveld_en_typen_in_dezelfde_widgetronde_wijzigen_geen_document() {
+    let mut p = writer_paginaproef();
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    p.klik(punt);
+    let bron = p.bron();
+    let oud = p.app.tab().unwrap().lettertype.clone();
+    linttoets_in_dezelfde_ronde(
+        &mut p,
+        "Lettertype",
+        openaec_ui::design::a11y::Role::TextField,
+    );
+    assert_ne!(p.app.tab().unwrap().lettertype, oud);
+    assert!(p.app.tab().unwrap().lettertype.contains('9'));
+    assert_eq!(*p.bron(), *bron);
+}
+
+#[test]
+fn writer_lintfocus_na_een_opmaakklik_neemt_een_later_lettertypeveld_geen_documenttoets_over() {
+    use iced::keyboard::key::Named;
+    let mut p = writer_paginaproef();
+    let tekst = "Links 🏠 café rechts";
+    let punt = writer_punt(&mut p, tekst, tekst.chars().count());
+    p.klik(punt);
+    p.named(Named::End);
+    p.named(Named::Enter);
+    linttoets_in_dezelfde_ronde(&mut p, "Vet", openaec_ui::design::a11y::Role::ToggleButton);
+    assert_eq!(p.app.tab().unwrap().editor.text(), "9");
+    let bron = p.bron();
+    let oud = p.app.tab().unwrap().lettertype.clone();
+    linttoets_in_dezelfde_ronde(
+        &mut p,
+        "Lettertype",
+        openaec_ui::design::a11y::Role::TextField,
+    );
+    assert_ne!(p.app.tab().unwrap().lettertype, oud);
+    assert!(p.app.tab().unwrap().lettertype.contains('9'));
+    assert_eq!(*p.bron(), *bron);
+    assert_eq!(p.app.tab().unwrap().editor.text(), "9");
+}

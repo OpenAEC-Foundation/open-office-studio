@@ -20,6 +20,7 @@ mod stijl;
 mod werker;
 mod writer_direct;
 mod writer_invoer;
+mod writer_lintfocus;
 mod writer_paginablad;
 mod zoeken_ui;
 use iced::widget::{column, container, image, row, scrollable, text_editor, text_input};
@@ -192,6 +193,7 @@ struct Tab {
     writer_markering: Option<WriterMarkering>,
     writer_direct: writer_direct::Staat,
     writer_focus: std::sync::Arc<std::sync::atomic::AtomicBool>,
+    writer_lintdruk: std::sync::Arc<std::sync::atomic::AtomicBool>,
     raster: raster_ui::Staat,
     concept: bool,
     adres: String,
@@ -229,6 +231,7 @@ impl Tab {
             writer_markering: None,
             writer_direct: writer_direct::Staat::default(),
             writer_focus: Default::default(),
+            writer_lintdruk: Default::default(),
             raster: raster_ui::Staat::default(),
             concept: false,
             adres: "A1".into(),
@@ -802,6 +805,7 @@ impl App {
                                 && antwoord.beeld.module == Module::Spreadsheet
                             {
                                 tab.panelen = false;
+                                tab.raster.focus = actief_id == Some(id);
                             }
                             self.melding = antwoord.beeld.melding.clone();
                             tab.raster.plaktekst = None;
@@ -2336,8 +2340,18 @@ impl App {
                         .width((pagina.breedte * t.zoom).max(1.))
                         .height((pagina.hoogte * t.zoom).max(1.))
                         .content_fit(iced::ContentFit::Fill);
+                    let kopbreedte = if a.beeld.module == Module::Spreadsheet {
+                        raster_koppen::linkerbreedte(t)
+                    } else {
+                        0.
+                    };
                     let blad = if a.beeld.module == Module::Spreadsheet {
-                        raster_koppen::omlijst(self, t, raster_ui::blad(self, t, inhoud.into()))
+                        raster_koppen::omlijst(
+                            self,
+                            t,
+                            raster_ui::blad(self, t, inhoud.into()),
+                            kopbreedte,
+                        )
                     } else {
                         let blad = documentblad::blad(
                             inhoud,
@@ -2361,7 +2375,7 @@ impl App {
                         container(blad)
                             .width(
                                 (self.venster_grootte.width - if t.panelen { 490. } else { 0. })
-                                    .max(pagina.breedte * t.zoom + raster_koppen::LINKS),
+                                    .max(pagina.breedte * t.zoom + kopbreedte),
                             )
                             .style(|_| container::Style {
                                 background: Some(iced::Color::WHITE.into()),
