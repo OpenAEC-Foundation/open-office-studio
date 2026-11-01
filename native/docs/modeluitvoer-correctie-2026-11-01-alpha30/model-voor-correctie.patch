@@ -1,0 +1,75 @@
+diff --git a/native/crates/office-core/tests/rekenblad_snelle_navigatie.rs b/native/crates/office-core/tests/rekenblad_snelle_navigatie.rs
+index 72f30be..3fb58d4 100644
+--- a/native/crates/office-core/tests/rekenblad_snelle_navigatie.rs
++++ b/native/crates/office-core/tests/rekenblad_snelle_navigatie.rs
+@@ -256,3 +256,70 @@ fn snelle_navigatie_bewaart_het_schaarse_blad_na_invoer_en_bronexacte_undo() {
+     s.terug().unwrap();
+     assert_eq!(s.bron().as_slice(), bron.as_slice());
+ }
++
++fn bewaar_modeluitvoer(naam: &str, bytes: &[u8]) {
++    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
++        let map = std::path::PathBuf::from(map);
++        std::fs::create_dir_all(&map).unwrap();
++        std::fs::write(map.join(naam), bytes).unwrap();
++    }
++}
++#[test]
++fn modeluitvoer_bewaart_standaard_verborgen_rijen_en_hun_hoogte_uitzonderingen() {
++    let d = x::Workbook::open(include_bytes!("fixtures/spreadsheet.xlsx")).unwrap();
++    let mut model = d.model().clone();
++    let mut blad = x::Sheet::new("Schaars");
++    blad.format.zero_height = true;
++    blad.format.default_row_height_pt = Some(15.);
++    blad.row_heights.insert(0, 15.);
++    blad.row_heights.insert(999_999, 15.);
++    model.sheets[0] = blad;
++    let d = x::Workbook::from_model(model).unwrap();
++    assert_eq!(
++        volgende_cel(&d, 0, "A1", Richting::Onder).unwrap(),
++        "A1000000"
++    );
++    let bytes = d.save().unwrap();
++    bewaar_modeluitvoer("spreadsheet-model-verborgen.xlsx", &bytes);
++    let opnieuw = x::Workbook::open(&bytes).unwrap();
++    assert!(opnieuw.model().sheets[0].format.zero_height);
++    assert_eq!(
++        volgende_cel(&opnieuw, 0, "A1", Richting::Onder).unwrap(),
++        "A1000000"
++    );
++    assert_eq!(
++        volgende_cel(&opnieuw, 0, "A1000000", Richting::Boven).unwrap(),
++        "A1"
++    );
++    assert!(opnieuw.model().sheets[0].row_hidden(1));
++    assert!(!opnieuw.model().sheets[0].row_hidden(0));
++}
++#[test]
++fn modeluitvoer_bewaart_explicitiete_standaardrijhoogte_en_vaste_hoogte() {
++    let d = x::Workbook::open(include_bytes!("fixtures/spreadsheet.xlsx")).unwrap();
++    let mut model = d.model().clone();
++    model.sheets[0].format.default_row_height_pt = Some(27.25);
++    model.sheets[0].format.custom_height = true;
++    let verwacht = model.sheets[0].format;
++    let bytes = x::Workbook::from_model(model).unwrap().save().unwrap();
++    bewaar_modeluitvoer("spreadsheet-model-standaardhoogte.xlsx", &bytes);
++    let opnieuw = x::Workbook::open(&bytes).unwrap();
++    assert_eq!(opnieuw.model().sheets[0].format, verwacht);
++    assert_eq!(opnieuw.model().sheets[1].name, "Tweede blad");
++}
++#[test]
++fn modeluitvoer_weigert_niet_eindige_of_onleesbare_standaardhoogten() {
++    let d = x::Workbook::open(include_bytes!("fixtures/spreadsheet.xlsx")).unwrap();
++    for hoogte in [-1., 409.5001, f64::INFINITY, f64::NAN] {
++        let mut model = d.model().clone();
++        model.sheets[0].format.default_row_height_pt = Some(hoogte);
++        let geweigerd = match x::Workbook::from_model(model) {
++            Err(_) => true,
++            Ok(d) => d.save().is_err(),
++        };
++        assert!(
++            geweigerd,
++            "Een onbruikbare standaardhoogte werd stil weggelaten: {hoogte}"
++        );
++    }
++}

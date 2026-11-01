@@ -331,3 +331,38 @@ p=next(p for p in doc.paragraphs if p.text=='9')
 assert all(r.italic for r in p.runs if r.text)
 assert len(doc.sections)==2 and len(doc.tables)==1
 print('Writer: directe pagina-invoer in de nieuwe lege alinea behoudt cursieve runopmaak in de bewaarde bron.')
+
+# Nieuwe modeluitvoer moet dezelfde rij-informatie bewaren als een bronbewerking.
+import json
+schaars=load_workbook(map/'spreadsheet-model-verborgen.xlsx',data_only=False)
+s=schaars['Schaars']
+assert s.sheet_format.zeroHeight and s.sheet_format.defaultRowHeight==15
+assert s.row_dimensions[1].height==15 and s.row_dimensions[1000000].height==15
+assert schaars['Tweede blad']['A1'].value=='Bewaar ook dit blad'
+hoogte=load_workbook(map/'spreadsheet-model-standaardhoogte.xlsx',data_only=False)
+s=hoogte['Begroting']
+assert s.sheet_format.defaultRowHeight==27.25 and s.sheet_format.customHeight
+assert s['B2'].value==3 and s['D2'].value=='=B2*C2'
+assert hoogte['Tweede blad']['A1'].value=='Bewaar ook dit blad'
+gevallen=json.loads((map/'spreadsheet-model-format-combinaties.json').read_text())
+assert len(gevallen)==20 and len({g['bestand'] for g in gevallen})==20
+for geval in gevallen:
+    boek=load_workbook(map/geval['bestand'],data_only=False)
+    opmaak=boek['Rijopmaak'].sheet_format
+    verwacht=geval['standaardhoogte']
+    assert opmaak.defaultRowHeight==(15 if verwacht is None else verwacht)
+    assert bool(opmaak.customHeight)==geval['vaste_hoogte']
+    assert bool(opmaak.zeroHeight)==geval['standaard_verborgen']
+    assert boek['Tweede blad']['A1'].value=='Bewaar ook dit blad'
+bron=load_workbook(map/'spreadsheet-model-bestaande-bron.xlsx',data_only=False)
+s=bron['Begroting']
+assert s['B2'].value==7 and s['D2'].value=='=B2*C2'
+assert s.sheet_format.defaultRowHeight==18.5
+assert s.sheet_format.customHeight and s.sheet_format.zeroHeight
+assert s.sheet_format.baseColWidth==12
+assert bron['Tweede blad']['A1'].value=='Bewaar ook dit blad'
+with ZipFile(map/'spreadsheet-model-bestaande-bron.xlsx') as archief:
+    wortel=ET.fromstring(archief.read('xl/worksheets/sheet1.xml'))
+    opmaak=wortel.findall('{http://schemas.openxmlformats.org/spreadsheetml/2006/main}sheetFormatPr')
+    assert len(opmaak)==1 and opmaak[0].attrib['{urn:openaec:test}bewaar']=='blijft'
+print('Spreadsheet-modeluitvoer: twintig rijformaatcombinaties, hoogte-uitzonderingen, bronattributen met eigen naamruimte, celinhoud, formules en tweede blad onafhankelijk teruggelezen.')

@@ -1,0 +1,137 @@
+{
+  "versie": "2026.44.9-alpha.30",
+  "geslaagd_binnen_omvang": true,
+  "omvang": "Vijf eigen kernproeven, twintig formaatcombinaties en drie aanvullende XLSX-rondgangen. Alleen de drie gemodelleerde sheetFormatPr-eigenschappen; geen volledige model-, formaat-, functie- of suitepariteit.",
+  "oorspronkelijke_afkeuring": {
+    "broncommit": "cf35322ccf19fc8981ee63592d4892f54349e5fd",
+    "geslaagd": false,
+    "tests_geslaagd": 0,
+    "tests_afgekeurd": 3,
+    "log": "model-voor-correctie.log",
+    "proefbronpatch": "model-voor-correctie.patch",
+    "toelichting": "De oorspronkelijke spelling explicitiete in één testnaam is later gecorrigeerd naar expliciete; de verwachting is gelijk gebleven."
+  },
+  "eerste_testcompilatie": {
+    "geslaagd": false,
+    "log": "model-eerste-check.log",
+    "reden": "Drie onjuiste aanroepen in de nieuwe XML-testdecoder. Dit waren testcompilatiefouten, geen uitgevoerde productafkeuringen."
+  },
+  "tweede_testcompilatie": {
+    "geslaagd": true,
+    "log": "model-tweede-check.log",
+    "beperking": "Twee verouderingswaarschuwingen in de testdecoder; daarna vervangen door de versiegebonden API. De uiteindelijke volledige Clippy-controle accepteert geen waarschuwingen."
+  },
+  "upstream_oorspronkelijk": {
+    "tests_geslaagd": 382,
+    "log": "upstream-voor-correctie.log"
+  },
+  "upstream_gecorrigeerd": {
+    "tests_geslaagd": 382,
+    "log": "upstream-na-correctie.log"
+  },
+  "nieuwe_eigen_tests": 5,
+  "volledige_workspace_tests": 333,
+  "testlog_sha256": "cde84fa4314ce5fb04672923d7cd507174e08e821544ca408c74445cc30bd1b7",
+  "onafhankelijk_log_sha256": "de61bc8bc83491aa6c7d71f90c50b2b681db4cf66aa40bc7497aea7b3c09643f",
+  "bronmanifest": "../schermen-2026-11-01-alpha30.json",
+  "uitvoer": [
+    {
+      "bestand": "spreadsheet-model-bestaande-bron.xlsx",
+      "sha256": "df8c392c372250ed6d3dcae9c231ea59ccc7ca26dc519faf1a486ccd9d2fc5a8"
+    },
+    {
+      "bestand": "spreadsheet-model-format-0.xlsx",
+      "sha256": "4337b9cac93bf726ef677b127605fc07bee2538baec76d3d275ff8d8fb0cbcbd"
+    },
+    {
+      "bestand": "spreadsheet-model-format-1.xlsx",
+      "sha256": "887d1ace6f9b1b9718915987d94ee9188d5d6d48fd76fb6c12447672aed827bc"
+    },
+    {
+      "bestand": "spreadsheet-model-format-10.xlsx",
+      "sha256": "a5bdc50108cfa6f7bd40466727096b8a2003d145a695cf3fe9011b3e66055e16"
+    },
+    {
+      "bestand": "spreadsheet-model-format-11.xlsx",
+      "sha256": "16e6576df2ff8cfdcd9c62b85dc0ccb01901ae04aec482d031bd624ed6fcf192"
+    },
+    {
+      "bestand": "spreadsheet-model-format-12.xlsx",
+      "sha256": "a3fa953076367a171bfa89b11baef3692251ecf7a13a1a2322705e03723dcbdb"
+    },
+    {
+      "bestand": "spreadsheet-model-format-13.xlsx",
+      "sha256": "5140830201c84c6b4160874360e4a08c8d8d7edbfeac792cdf6cddcb4b0d2e02"
+    },
+    {
+      "bestand": "spreadsheet-model-format-14.xlsx",
+      "sha256": "6e37d2f2f25e1b76496b242e84efc1f1fae061e1c2dc68e9dd0e567d5cf77de0"
+    },
+    {
+      "bestand": "spreadsheet-model-format-15.xlsx",
+      "sha256": "da02ce62e44021b370af5bed1e675bbf8fd074d303adea15b9430830c8e8aa56"
+    },
+    {
+      "bestand": "spreadsheet-model-format-16.xlsx",
+      "sha256": "1f8dbd9bed5722c2f663ace67d888b78718fb41bbc88ced88d341abb9c00195d"
+    },
+    {
+      "bestand": "spreadsheet-model-format-17.xlsx",
+      "sha256": "fc655cb10f36a1e28063ccb4e57caa4712c086546b0e2262c4212d066f39d7af"
+    },
+    {
+      "bestand": "spreadsheet-model-format-18.xlsx",
+      "sha256": "9980a23704f7dd916da1020e2ec451e88f424cbdf4c1624f343fb5c740b29505"
+    },
+    {
+      "bestand": "spreadsheet-model-format-19.xlsx",
+      "sha256": "f579922c2b2aff54abaecbb33bec6fc6721e37b65657ed25f3408188731fca9a"
+    },
+    {
+      "bestand": "spreadsheet-model-format-2.xlsx",
+      "sha256": "a5bdc50108cfa6f7bd40466727096b8a2003d145a695cf3fe9011b3e66055e16"
+    },
+    {
+      "bestand": "spreadsheet-model-format-3.xlsx",
+      "sha256": "16e6576df2ff8cfdcd9c62b85dc0ccb01901ae04aec482d031bd624ed6fcf192"
+    },
+    {
+      "bestand": "spreadsheet-model-format-4.xlsx",
+      "sha256": "1be9eb7ed9437f52d241a6db0d6a32d061d0e1c68d209aba01f22a13e9cb5e30"
+    },
+    {
+      "bestand": "spreadsheet-model-format-5.xlsx",
+      "sha256": "87591a47a7e604eeeec8aba518a99bcfdf2344e141b1052c485e4a337dd647d5"
+    },
+    {
+      "bestand": "spreadsheet-model-format-6.xlsx",
+      "sha256": "446899272f8420a4818de117930d01d37b4b8bd842afe171129b3ff2b6c08ee9"
+    },
+    {
+      "bestand": "spreadsheet-model-format-7.xlsx",
+      "sha256": "15896422c3be25985d665f107168df582a766efb3df05a8ace03129df3cc68d9"
+    },
+    {
+      "bestand": "spreadsheet-model-format-8.xlsx",
+      "sha256": "0ad96e0d39f9b62c736a9be19f9e873d2787c30b1b9ecae2c1371c153d9fd812"
+    },
+    {
+      "bestand": "spreadsheet-model-format-9.xlsx",
+      "sha256": "887d1ace6f9b1b9718915987d94ee9188d5d6d48fd76fb6c12447672aed827bc"
+    },
+    {
+      "bestand": "spreadsheet-model-standaardhoogte.xlsx",
+      "sha256": "04994161687d49923c688a7c040f65f338cf996ed9597fa3bf99ec90df9bea0b"
+    },
+    {
+      "bestand": "spreadsheet-model-verborgen.xlsx",
+      "sha256": "92192bfeebcb23a2b71eb259b8a4d2916d6b1af9ece8f52229e0efe270ff45b9"
+    }
+  ],
+  "oorspronkelijke_diagnose": "../modeluitvoer-diagnose-2026-11-01/rapport.json",
+  "beperkingen": [
+    "Onbekende bronattributen blijven op de bestaande bronroute bewaard; zij worden niet verzonnen in een volledig nieuw model.",
+    "Een ontbrekende standaardhoogte met customHeight of zeroHeight krijgt de vereiste standaardwaarde 15.",
+    "Dit verbetert uitsluitend de gemodelleerde standaardrijopmaak en bewijst geen volledige spreadsheetuitvoerpariteit."
+  ]
+}

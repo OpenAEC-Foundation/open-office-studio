@@ -1,0 +1,67 @@
+   Compiling betteroffice-xlsx-parse v0.5.1 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/vendor/xlsx-parse)
+   Compiling betteroffice-xlsx v0.5.1
+   Compiling office-core v2026.44.9-alpha.29 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-core)
+   Compiling open-office-studio-native v2026.44.9-alpha.29 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-ui)
+warning: use of deprecated method `quick_xml::events::attributes::Attribute::<'a>::decode_and_unescape_value`: use `Self::decoded_and_normalized_value()`
+   --> crates/office-core/tests/rekenblad_snelle_navigatie.rs:426:31
+    |
+426 | ...                   a.decode_and_unescape_value(lezer.decoder()).unwrap(),
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated method `quick_xml::events::attributes::Attribute::<'a>::decode_and_unescape_value`: use `Self::decoded_and_normalized_value()`
+   --> crates/office-core/tests/rekenblad_snelle_navigatie.rs:433:38
+    |
+433 |                         assert_eq!(a.decode_and_unescape_value(lezer.decoder()).unwrap(), "12");
+    |                                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `office-core` (test "documentkern") generated 2 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3m 03s
+     Running unittests src/lib.rs (native/target/debug/deps/office_conversie-07950d6ecc06c860)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_core-c34b4d8959389a42)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 21 filtered out; finished in 0.00s
+
+     Running unittests src/bin/controleer-bestand.rs (native/target/debug/deps/controleer_bestand-53a40be630c6937e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/documentkern.rs (native/target/debug/deps/documentkern-2e432beed8b1d361)
+
+running 5 tests
+test rekenblad_snelle_navigatie::modeluitvoer_alle_rijformaatcombinaties_bewaren_waarden_en_xml_volgorde ... ok
+test rekenblad_snelle_navigatie::modeluitvoer_bestaande_bron_behoudt_bekende_en_onbekende_rijformaat_attributen ... ok
+test rekenblad_snelle_navigatie::modeluitvoer_bewaart_expliciete_standaardrijhoogte_en_vaste_hoogte ... ok
+test rekenblad_snelle_navigatie::modeluitvoer_bewaart_standaard_verborgen_rijen_en_hun_hoogte_uitzonderingen ... ok
+test rekenblad_snelle_navigatie::modeluitvoer_weigert_niet_eindige_of_onleesbare_standaardhoogten ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 117 filtered out; finished in 1.54s
+
+     Running ../../vendor/docx-parse/tests/nested_fields.rs (native/target/debug/deps/engine_velden-4a363628f97e1d36)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.03s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_mail-e928057e720dc7e6)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 51 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (native/target/debug/deps/open_office_studio_native-7ddd44356e295763)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 119 filtered out; finished in 0.00s
+

@@ -1,0 +1,56 @@
+   Compiling office-core v2026.44.9-alpha.29 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 18.00s
+     Running unittests src/lib.rs (native/target/debug/deps/office_conversie-07950d6ecc06c860)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_core-b3dc5cb012779091)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 21 filtered out; finished in 0.00s
+
+     Running unittests src/bin/controleer-bestand.rs (native/target/debug/deps/controleer_bestand-436d53f1b8383d81)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/documentkern.rs (native/target/debug/deps/documentkern-62af519be9c3dbc3)
+
+running 3 tests
+test rekenblad_snelle_navigatie::modeluitvoer_bewaart_explicitiete_standaardrijhoogte_en_vaste_hoogte ... FAILED
+test rekenblad_snelle_navigatie::modeluitvoer_bewaart_standaard_verborgen_rijen_en_hun_hoogte_uitzonderingen ... FAILED
+test rekenblad_snelle_navigatie::modeluitvoer_weigert_niet_eindige_of_onleesbare_standaardhoogten ... FAILED
+
+failures:
+
+---- rekenblad_snelle_navigatie::modeluitvoer_bewaart_explicitiete_standaardrijhoogte_en_vaste_hoogte stdout ----
+
+thread 'rekenblad_snelle_navigatie::modeluitvoer_bewaart_explicitiete_standaardrijhoogte_en_vaste_hoogte' (3017058) panicked at crates/office-core/tests/rekenblad_snelle_navigatie.rs:307:5:
+assertion `left == right` failed
+  left: SheetFormat { default_row_height_pt: None, custom_height: false, zero_height: false }
+ right: SheetFormat { default_row_height_pt: Some(27.25), custom_height: true, zero_height: false }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- rekenblad_snelle_navigatie::modeluitvoer_bewaart_standaard_verborgen_rijen_en_hun_hoogte_uitzonderingen stdout ----
+
+thread 'rekenblad_snelle_navigatie::modeluitvoer_bewaart_standaard_verborgen_rijen_en_hun_hoogte_uitzonderingen' (3017059) panicked at crates/office-core/tests/rekenblad_snelle_navigatie.rs:285:5:
+assertion failed: opnieuw.model().sheets[0].format.zero_height
+
+---- rekenblad_snelle_navigatie::modeluitvoer_weigert_niet_eindige_of_onleesbare_standaardhoogten stdout ----
+
+thread 'rekenblad_snelle_navigatie::modeluitvoer_weigert_niet_eindige_of_onleesbare_standaardhoogten' (3017061) panicked at crates/office-core/tests/rekenblad_snelle_navigatie.rs:320:9:
+Een onbruikbare standaardhoogte werd stil weggelaten: -1
+
+
+failures:
+    rekenblad_snelle_navigatie::modeluitvoer_bewaart_explicitiete_standaardrijhoogte_en_vaste_hoogte
+    rekenblad_snelle_navigatie::modeluitvoer_bewaart_standaard_verborgen_rijen_en_hun_hoogte_uitzonderingen
+    rekenblad_snelle_navigatie::modeluitvoer_weigert_niet_eindige_of_onleesbare_standaardhoogten
+
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 117 filtered out; finished in 0.19s
+
+error: test failed, to rerun pass `-p office-core --test documentkern`

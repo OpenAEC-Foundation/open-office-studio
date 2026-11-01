@@ -1,0 +1,224 @@
+//! streaming spreadsheetml parser + serializer over `xlsx_model`. parse treats
+//! every byte as attacker-controlled with depth and collection caps.
+
+mod axis;
+mod chart;
+mod facts_codec;
+mod formula;
+mod inventory;
+mod package;
+mod package_facts;
+mod patch;
+mod read;
+mod reference;
+mod rich_text;
+#[cfg(test)]
+mod rich_text_tests;
+#[cfg(any(test, feature = "test-oracle"))]
+mod save_oracle;
+mod styles;
+mod tree;
+mod write;
+mod xml;
+
+pub use axis::SheetAxes;
+pub use chart::{
+    ChartMetadata, ChartRefresh, ChartRefreshPlan, ChartSeriesInfo, chart_bytes, chart_metadata,
+    chart_references, chart_space, edit_chart, edited_chart_space, preserved_chart_space,
+};
+#[cfg(feature = "test-counters")]
+pub use chart::{chart_counters, chart_save_counters, reset_chart_counters};
+pub use facts_codec::{PackageFactsBuilder, PackageFactsEncoder, SNAPSHOT_RECORD_MAX_BYTES};
+pub use formula::translate_formula;
+pub use inventory::{
+    DrawingObject, DrawingObjectKind, InspectionBudget, SheetInventory, SourceObject,
+};
+pub use package::{PreservedPackage, SheetVisibility, SourceSheetKind};
+pub use package_facts::{PackageFacts, PackageFactsView};
+pub use patch::{keeps_source, keeps_source_conditional_formats};
+pub use read::{LegacySheetDimensions, SharedStringCells, SourceCellFacts, parse_workbook};
+pub use reference::UnpatchableReference;
+pub use rich_text::{MAX_RICH_TEXT_RUNS, MAX_RICH_TEXT_RUNS_PER_ITEM, MAX_RICH_TEXT_STYLE_BYTES};
+#[cfg(any(test, feature = "test-oracle"))]
+#[doc(hidden)]
+pub use save_oracle::with_legacy_save_path;
+#[cfg(feature = "test-counters")]
+pub use styles::legacy_style_reads;
+pub use write::{
+    SaveEdits, SerializedParts, serialize_workbook, serialize_workbook_with_active_sheet,
+    serialize_workbook_with_package_and_origins_after_edits,
+    serialize_workbook_with_package_and_origins_after_edits_and_active_sheet,
+    serialize_workbook_with_package_and_origins_after_edits_and_active_sheet_with_axes,
+    validate_defined_name_edits,
+};
+
+use xlsx_model::{SheetId, Workbook};
+
+/// Parsed workbook with its source package.
+pub struct ParsedWorkbook {
+    pub workbook: Workbook,
+    pub active_sheet: SheetId,
+    pub package: PreservedPackage,
+    /// Per sheet, the dimensions releases before hidden rows and columns read
+    /// as zero stored. Only a legacy collaboration fingerprint needs these.
+    pub legacy_dimensions: Vec<LegacySheetDimensions>,
+    /// The style table releases that needed an explicit `applyX` flag read.
+    /// Only a legacy collaboration fingerprint needs it.
+    pub legacy_styles: Option<xlsx_model::Stylesheet>,
+}
+
+#[doc(hidden)]
+pub struct LegacyStyleReadings {
+    pub workbook: Workbook,
+    pub dimensions: Vec<LegacySheetDimensions>,
+    pub styles: Vec<xlsx_model::Stylesheet>,
+}
+
+/// Parses the model and captures source package state.
+pub fn parse_workbook_with_package(
+    parts: &[(String, Vec<u8>)],
+) -> Result<ParsedWorkbook, ParseError> {
+    parse_workbook_with_owned_package(parts.to_vec())
+}
+
+/// [`parse_workbook_with_package`] taking ownership of `parts` so the package
+/// retains the inflated archive once instead of cloning it.
+pub fn parse_workbook_with_owned_package(
+    parts: Vec<(String, Vec<u8>)>,
+) -> Result<ParsedWorkbook, ParseError> {
+    let parsed = read::parse_workbook_indexed(&parts)?;
+    let package = PreservedPackage::capture(
+        parts,
+        &parsed.workbook,
+        parsed.active_sheet,
+        &parsed.shared_string_cells,
+        &parsed.declined_parts,
+        parsed.rich_shared_strings,
+        parsed.cell_facts,
+    )?;
+    Ok(ParsedWorkbook {
+        workbook: parsed.workbook,
+        active_sheet: parsed.active_sheet,
+        package,
+        legacy_dimensions: parsed.legacy_dimensions,
+        legacy_styles: parsed.legacy_styles,
+    })
+}
+
+/// hard nesting limit for xml elements; deeper input is rejected as hostile.
+pub const MAX_DEPTH: usize = 64;
+
+/// upper bound on cells parsed across a single worksheet stream.
+pub const MAX_CELLS: u64 = 10_000_000;
+
+/// upper bound on entries in the shared string table.
+pub const MAX_SHARED_STRINGS: usize = 10_000_000;
+
+/// no longer enforced: the name table is bounded by [`MAX_DEFINED_NAME_BYTES`].
+pub const MAX_DEFINED_NAMES: usize = xlsx_model::workbook::MAX_DEFINED_NAMES;
+
+/// upper bound on the bytes the workbook- and sheet-scoped defined names hold,
+/// counted by [`xlsx_model::workbook::defined_names_bytes`].
+pub const MAX_DEFINED_NAME_BYTES: usize = xlsx_model::workbook::MAX_DEFINED_NAME_BYTES;
+
+/// upper bound on hyperlinks in one worksheet.
+pub const MAX_HYPERLINKS: usize = 65_536;
+
+/// upper bound on `<col>` runs naming a style in one worksheet.
+pub const MAX_COL_STYLES: usize = 65_536;
+
+pub const MAX_ROW_STYLES: usize = xlsx_model::workbook::MAX_ROW_STYLES;
+
+/// upper bound on table parts read from one package.
+pub const MAX_TABLES: usize = 65_536;
+
+/// upper bound on columns read from one table part.
+pub const MAX_TABLE_COLUMNS: usize = xlsx_model::MAX_COLS as usize;
+
+/// upper bound on entries in any single style pool (fonts, fills, borders,
+/// cellXfs, numFmts).
+pub const MAX_STYLE_ENTRIES: usize = 65_536;
+
+/// upper bound on the source bytes of one part built into an element tree.
+pub const MAX_TREE_BYTES: usize = 32 * 1024 * 1024;
+
+/// upper bound on elements plus attributes in one element tree.
+pub const MAX_TREE_NODES: usize = 1_000_000;
+
+/// upper bound on total text bytes retained by one element tree.
+pub const MAX_TREE_TEXT_BYTES: usize = 32 * 1024 * 1024;
+
+/// upper bound on `c:f` references in a single chart part.
+pub const MAX_CHART_REFS: usize = 16_384;
+
+/// upper bound on drawing anchors read from one drawing part, and on charts
+/// attached to one worksheet.
+pub const MAX_CHART_ANCHORS: usize = 4_096;
+
+/// upper bound on the cells one chart part may resolve while being projected
+/// against the live workbook. a projection runs on every frame, so it is far
+/// tighter than the cache a preserved part may already carry.
+pub const MAX_PROJECTED_CACHE_POINTS: usize = 4_096;
+
+/// everything that can go wrong turning bytes into a workbook (or back).
+#[derive(Debug, Clone, PartialEq)]
+pub enum ParseError {
+    /// a required opc part was absent.
+    MissingPart(String),
+    /// well-formedness or decoding failure reported by quick-xml.
+    Xml(String),
+    /// structurally valid xml that violates the spreadsheetml shape.
+    Malformed(String),
+    /// element nesting exceeded [`MAX_DEPTH`].
+    DepthExceeded,
+    /// a worksheet declared more cells than [`MAX_CELLS`].
+    TooManyCells,
+    /// the shared string table exceeded [`MAX_SHARED_STRINGS`].
+    TooManyStrings,
+    /// the defined-name table exceeded [`MAX_DEFINED_NAME_BYTES`].
+    TooManyDefinedNames,
+    /// a worksheet exceeded [`MAX_HYPERLINKS`].
+    TooManyHyperlinks,
+    /// a worksheet exceeded [`MAX_COL_STYLES`].
+    TooManyColumnStyles,
+    TooManyRowStyles,
+    /// a style pool exceeded [`MAX_STYLE_ENTRIES`].
+    TooManyStyles,
+    /// a part exceeded [`MAX_TREE_BYTES`], [`MAX_TREE_NODES`] or
+    /// [`MAX_TREE_TEXT_BYTES`] while being read into an element tree.
+    TreeTooLarge,
+    /// a chart part exceeded [`MAX_CHART_REFS`], or a drawing exceeded
+    /// [`MAX_CHART_ANCHORS`].
+    TooManyCharts,
+    /// saving would have to rewrite source markup that cannot be patched
+    /// safely, so the edit is refused instead of corrupting the package.
+    UnsupportedEdit(String),
+}
+
+impl core::fmt::Display for ParseError {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            ParseError::MissingPart(p) => write!(f, "missing part: {p}"),
+            ParseError::Xml(e) => write!(f, "xml error: {e}"),
+            ParseError::Malformed(m) => write!(f, "malformed spreadsheetml: {m}"),
+            ParseError::DepthExceeded => write!(f, "xml nesting exceeded depth cap"),
+            ParseError::TooManyCells => write!(f, "worksheet cell count exceeded cap"),
+            ParseError::TooManyStrings => write!(f, "shared string count exceeded cap"),
+            ParseError::TooManyDefinedNames => write!(f, "defined name table exceeded cap"),
+            ParseError::TooManyHyperlinks => write!(f, "worksheet hyperlink count exceeded cap"),
+            ParseError::TooManyColumnStyles => {
+                write!(f, "worksheet column style count exceeded cap")
+            }
+            ParseError::TooManyRowStyles => write!(f, "worksheet row style count exceeded cap"),
+            ParseError::TooManyStyles => write!(f, "style pool count exceeded cap"),
+            ParseError::TreeTooLarge => write!(f, "part exceeded the element tree cap"),
+            ParseError::TooManyCharts => write!(f, "chart reference or anchor count exceeded cap"),
+            ParseError::UnsupportedEdit(m) => write!(f, "unsupported edit: {m}"),
+        }
+    }
+}
+
+impl std::error::Error for ParseError {}
+
+#[cfg(test)]
+mod tests;

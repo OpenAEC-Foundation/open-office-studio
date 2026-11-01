@@ -80,3 +80,18 @@ werkelijk = {p.relative_to(renderermap).as_posix(): hashlib.sha256(p.read_bytes(
              for p in renderermap.rglob('*') if p.is_file()}
 assert werkelijk == verwacht, 'Software-renderer wijkt af van de vastgelegde bron en upstreamcorrecties'
 print(f"Software-renderer: {len(werkelijk)} bronbestanden, twee upstreamcorrecties en consistente quad-afkapping geverifieerd.")
+
+# De modelworksheet bewaart de in het model aanwezige standaardrijopmaak.
+parsermap = root/'vendor/xlsx-parse'
+parser = json.loads((root/'vendor/xlsx-parse-bron.json').read_text(encoding='utf-8'))
+verwacht = dict(parser['oorspronkelijke_bestanden'])
+for naam, wijziging in parser['aanpassingen'].items():
+    assert naam in verwacht, f'Onbekende serializerwijziging: {naam}'
+    verwacht[naam] = wijziging['sha256']
+for naam, aanvulling in parser['aanvullingen'].items():
+    assert naam not in verwacht, f'Dubbel parserbestand: {naam}'
+    verwacht[naam] = aanvulling['sha256']
+werkelijk = {p.relative_to(parsermap).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
+             for p in parsermap.rglob('*') if p.is_file()}
+assert werkelijk == verwacht, 'Spreadsheetparser wijkt af van de vastgelegde bron en correctie'
+print(f"Spreadsheetparser: {len(werkelijk)} bron-/noticebestanden en {len(parser['aanpassingen'])} vastgelegde correctie geverifieerd.")

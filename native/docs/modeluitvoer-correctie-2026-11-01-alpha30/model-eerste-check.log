@@ -1,0 +1,44 @@
+    Checking betteroffice-xlsx-parse v0.5.1 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/vendor/xlsx-parse)
+    Checking betteroffice-xlsx v0.5.1
+    Checking office-core v2026.44.9-alpha.29 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-core)
+    Checking office-mail v2026.44.9-alpha.29 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-mail)
+    Checking office-conversie v2026.44.9-alpha.29 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-conversie)
+    Checking open-office-studio-native v2026.44.9-alpha.29 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-ui)
+error[E0599]: no method named `resolve_attribute` found for struct `NsReader<&[u8]>` in the current scope
+   --> crates/office-core/tests/rekenblad_snelle_navigatie.rs:420:44
+    |
+420 |                     let (ns, naam) = lezer.resolve_attribute(a.key);
+    |                                            ^^^^^^^^^^^^^^^^^
+    |
+help: there is a method `resolver_mut` with a similar name, but with different arguments
+   --> /home/aia01/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/quick-xml-0.41.0/src/reader/ns_reader.rs:131:5
+    |
+131 |     pub fn resolver_mut(&mut self) -> &mut NamespaceResolver {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `unescape_value` found for struct `Attribute<'a>` in the current scope
+   --> crates/office-core/tests/rekenblad_snelle_navigatie.rs:424:38
+    |
+424 |                         assert_eq!(a.unescape_value().unwrap(), "blijft");
+    |                                      ^^^^^^^^^^^^^^
+    |
+help: there is a method `decode_and_unescape_value` with a similar name, but with different arguments
+   --> /home/aia01/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/quick-xml-0.41.0/src/events/attributes.rs:342:5
+    |
+342 |     pub fn decode_and_unescape_value(&self, decoder: Decoder) -> XmlResult<Cow<'a, str>> {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `unescape_value` found for struct `Attribute<'a>` in the current scope
+   --> crates/office-core/tests/rekenblad_snelle_navigatie.rs:428:38
+    |
+428 |                         assert_eq!(a.unescape_value().unwrap(), "12");
+    |                                      ^^^^^^^^^^^^^^
+    |
+help: there is a method `decode_and_unescape_value` with a similar name, but with different arguments
+   --> /home/aia01/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/quick-xml-0.41.0/src/events/attributes.rs:342:5
+    |
+342 |     pub fn decode_and_unescape_value(&self, decoder: Decoder) -> XmlResult<Cow<'a, str>> {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `office-core` (test "documentkern") due to 3 previous errors

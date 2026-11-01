@@ -64,7 +64,7 @@ with (pakket/'licenties/afhankelijkheden.csv').open('w', newline='', encoding='u
         licentiemap = pakket/'licenties/rust'/f"{p['name']}-{p['version']}"
         for document in pakketbron.iterdir():
             klein = document.name.casefold()
-            if document.is_file() and klein.startswith(('license', 'licence', 'notice', 'copying', 'copyright')):
+            if document.is_file() and klein.startswith(('license', 'licence', 'notice', 'copying', 'copyright', 'third-party', 'third_party')):
                 licentiemap.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(document, licentiemap/document.name)
             elif document.is_dir() and klein in ('license', 'licenses', 'licence', 'licences'):
