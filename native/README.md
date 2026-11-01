@@ -306,6 +306,8 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
+Het [actuele controlerapport voor alpha 38](docs/controle-2026-11-01-alpha38.md) legt **398 reguliere Rust-tests**, waaronder **158 UI-tests**, zes runtimeproeven en zeven Python-tests vast. Alle 671 bronbestanden blijven tijdens de volledige ronde bytegelijk. De Notities-crash, zichtbare formaatgreep en preview-undo zijn hersteld; echte Linux-vensterproeven slagen op het debug- en releaseprogramma. De platformcontrole wordt herhaald na correctie van de letterlijke schermtelling van 57 naar 60. Alle oorspronkelijke pixelafkeuringen en ontbrekende suitefuncties blijven open.
+
 Het [controlerapport voor alpha 37](docs/controle-2026-11-01-alpha37.md) legt **395 reguliere Rust-tests**, waaronder **155 UI-tests**, zes runtimeproeven en zeven Python-tests vast. Rustfmt, Clippy, bronpins en onafhankelijke lezers slagen; **671 bronbestanden** en **57 volledige native widgetbeelden** zijn vastgelegd. Alle vijf CI-taken, 114 exacte native beeldparen en 21 paginabezoeken slagen. De echte geoptimaliseerde Linux-Notities-proef eindigt echter in een paginawisselcrash; ook de zichtbare formaatgreep blijft afgekeurd. De bewaarde bron blijft intact. Er is geen volledige GUI-, functie-, platform- of oorspronkelijke UI-pariteit.
 
 De brede corpusronde heeft 579 geslaagde bronnen, 68 weigeringen en één overschrijding van 30 seconden. De afzonderlijke 120-secondenproef slaagt, maar maakt de oorspronkelijke ronde niet groen. Een extra ZIP-byte-eis legt herschreven kop-/voettekstwrappers vast; de inhoud blijft afzonderlijk gecontroleerd. De oorspronkelijke afkeuringen blijven in de [bewijsreeks](docs/zoeken-hertekenen-2026-11-01-alpha36/LEESMIJ.md) bewaard.

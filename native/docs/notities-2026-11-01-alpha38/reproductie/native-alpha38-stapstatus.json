@@ -1,0 +1,143 @@
+{
+  "omvang": "Afzonderlijk afgeronde onderliggende controles; de terminal-eindstatus staat hier niet gelijk aan.",
+  "bronmanifest_sha256": "284356bebe578db05d6adb35ff9625805271eed2ae0c0dc5218360464572d644",
+  "stappen": [
+    {
+      "controle": "fmt",
+      "opdracht": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "native/Cargo.toml",
+        "-p",
+        "office-core",
+        "-p",
+        "open-office-studio-native",
+        "-p",
+        "office-mail",
+        "-p",
+        "office-conversie",
+        "--check"
+      ],
+      "exitcode": 0,
+      "seconden": 2.065,
+      "log": "native-alpha38-definitief-fmt.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "controle": "clippy",
+      "opdracht": [
+        "cargo",
+        "clippy",
+        "--manifest-path",
+        "native/Cargo.toml",
+        "--workspace",
+        "--locked",
+        "--all-targets",
+        "-j",
+        "1",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exitcode": 0,
+      "seconden": 28.258,
+      "log": "native-alpha38-definitief-clippy.log",
+      "sha256": "b9f82ac469bef726f81e63bce4a54b255aa51add3a41a9bb9af31502fd6600b6"
+    },
+    {
+      "controle": "tests",
+      "opdracht": [
+        "cargo",
+        "test",
+        "--manifest-path",
+        "native/Cargo.toml",
+        "--workspace",
+        "--locked",
+        "-j",
+        "1",
+        "--no-fail-fast",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitcode": 0,
+      "seconden": 2042.955,
+      "log": "native-alpha38-definitief-tests.log",
+      "sha256": "f56146fc66103807ddc7ef3292444848a0bed46342275e77c5566676e0d6ea65"
+    },
+    {
+      "controle": "onafhankelijk",
+      "opdracht": [
+        "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "native/crates/office-core/tests/fixtures/controleer.py",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/native-alpha38-definitief-uitvoer"
+      ],
+      "exitcode": 0,
+      "seconden": 2.091,
+      "log": "native-alpha38-definitief-onafhankelijk.log",
+      "sha256": "199499ffc042d4ef5fcfc573307a5334c8004e6868c0352d45571adc64c39769"
+    },
+    {
+      "controle": "python",
+      "opdracht": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "native/scripts",
+        "-p",
+        "test_*.py"
+      ],
+      "exitcode": 0,
+      "seconden": 2.131,
+      "log": "native-alpha38-definitief-python.log",
+      "sha256": "8dd8b2c1c156a1d3b1355d0c3842e1f02593239a87851dc9278bf9c5967d4706"
+    },
+    {
+      "controle": "bron",
+      "opdracht": [
+        "/usr/bin/python3",
+        "native/scripts/controleer-bron.py"
+      ],
+      "exitcode": 0,
+      "seconden": 0.199,
+      "log": "native-alpha38-definitief-bron.log",
+      "sha256": "4ced1c48ff40b759b9c11f904b920de7e4434a464c0dd33e24681ab36419917b"
+    },
+    {
+      "controle": "runtime",
+      "opdracht": [
+        "cargo",
+        "test",
+        "--manifest-path",
+        "native/Cargo.toml",
+        "--workspace",
+        "--locked",
+        "-j",
+        "1",
+        "--",
+        "--ignored",
+        "--test-threads=1"
+      ],
+      "exitcode": 0,
+      "seconden": 170.415,
+      "log": "native-alpha38-definitief-runtime.log",
+      "sha256": "e20b27c5fcd33ea518b83cbf80b21d69233109b184bb6b0993cd9d9ff6e838ec"
+    },
+    {
+      "controle": "conversie-onafhankelijk",
+      "opdracht": [
+        "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "native/crates/office-conversie/tests/controleer.py",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/native-alpha38-conversie-uitvoer"
+      ],
+      "exitcode": 0,
+      "seconden": 0.615,
+      "log": "native-alpha38-definitief-conversie-onafhankelijk.log",
+      "sha256": "2cebd3abf09245f126c56d3b3feb5d8ef442f2ccffbd363f44bce77907e29bdf"
+    }
+  ],
+  "inhoudelijk_afgerond": true,
+  "bron_van_671_bestanden_bytegelijk": true
+}

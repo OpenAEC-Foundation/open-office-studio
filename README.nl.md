@@ -29,12 +29,7 @@ worden volledig bewaard. De native app is **nog geen vervanging voor de huidige
 suite**. Zie de [functievergelijking en resterende omzetting](native/README.md#huidige-omvang).
 De bestaande release blijft 2026-W44.8.
 
-Alpha 38 corrigeert de notitiepaginawisselcrash, de zichtbare formaatgreep en de
-preview na undo. Twaalf gerichte controles, Rustfmt en Clippy slagen;
-de [volledige ronde en releasevensterhertest](native/docs/controle-2026-11-01-alpha38.md)
-lopen nog. Het [alpha37-rapport](native/docs/controle-2026-11-01-alpha37.md)
-bewaart de echte vensterafkeuringen naast de geslaagde automatische controles.
-Oorspronkelijke UI-vergelijkingen en alle migratieacceptaties blijven open.
+Alpha 38 herstelt de notitiepaginawisselcrash, de zichtbare formaatgreep en de preview na undo. De [volledige lokale controle en echte Linux-vensterproeven](native/docs/controle-2026-11-01-alpha38.md) slagen: 398 Rust-tests, zes runtimeproeven en zeven Python-tests. De platformcontrole wordt herhaald met de juiste telling van 60 screenshots. Alle oorspronkelijke pixelafkeuringen en ontbrekende suitefuncties blijven open.
 
 ## De suite of een aparte app
 
