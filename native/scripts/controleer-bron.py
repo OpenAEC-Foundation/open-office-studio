@@ -95,3 +95,18 @@ werkelijk = {p.relative_to(parsermap).as_posix(): hashlib.sha256(p.read_bytes())
              for p in parsermap.rglob('*') if p.is_file()}
 assert werkelijk == verwacht, 'Spreadsheetparser wijkt af van de vastgelegde bron en correctie'
 print(f"Spreadsheetparser: {len(werkelijk)} bron-/noticebestanden en {len(parser['aanpassingen'])} vastgelegde correctie geverifieerd.")
+
+# De runtime gebruikt de werkelijke cursorpositie per gebeurtenis in een batch.
+runtimemap = root/'vendor/iced-runtime'
+runtime = json.loads((root/'vendor/iced-runtime-bron.json').read_text(encoding='utf-8'))
+verwacht = dict(runtime['oorspronkelijke_bestanden'])
+for naam, wijziging in runtime['aanpassingen'].items():
+    assert naam in verwacht, f'Onbekende runtimecorrectie: {naam}'
+    verwacht[naam] = wijziging['sha256']
+for naam, aanvulling in runtime['aanvullingen'].items():
+    assert naam not in verwacht, f'Dubbel runtimebestand: {naam}'
+    verwacht[naam] = aanvulling['sha256']
+werkelijk = {p.relative_to(runtimemap).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
+             for p in runtimemap.rglob('*') if p.is_file()}
+assert werkelijk == verwacht, 'Runtimebron, licentie of gebeurteniscorrectie wijkt af van de vastgelegde bron'
+print(f"Vensterruntime: {len(werkelijk)} bron-/noticebestanden en één lokale cursorbatchcorrectie geverifieerd.")

@@ -1,11 +1,11 @@
 [workspace]
 members = ["crates/office-core", "crates/office-ui", "crates/office-mail", "crates/office-conversie"]
 default-members = ["crates/office-ui"]
-exclude = ["vendor/openaec-ui", "vendor/docx-parse", "vendor/pptx", "vendor/xlsx-raster", "vendor/iced-tiny-skia", "vendor/xlsx-parse"]
+exclude = ["vendor/openaec-ui", "vendor/docx-parse", "vendor/pptx", "vendor/xlsx-raster", "vendor/iced-tiny-skia", "vendor/xlsx-parse", "vendor/iced-runtime"]
 resolver = "3"
 
 [workspace.package]
-version = "2026.44.9-alpha.39"
+version = "2026.44.9-alpha.40"
 edition = "2024"
 license = "Apache-2.0"
 publish = false
@@ -37,3 +37,5 @@ betteroffice-xlsx-raster = { path = "vendor/xlsx-raster" }
 iced_tiny_skia = { path = "vendor/iced-tiny-skia" }
 
 betteroffice-xlsx-parse = { path = "vendor/xlsx-parse" }
+
+iced_runtime = { path = "vendor/iced-runtime" }

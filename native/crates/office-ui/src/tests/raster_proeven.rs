@@ -193,6 +193,222 @@ fn notitie_tekstpunt(p: &mut Proef, index: usize) -> iced::Point {
     iced::Point::new(v.x + 12., v.y + 10.)
 }
 #[test]
+fn notitie_runtimebatch_bewaart_het_beginpunt_van_een_snelle_greep() {
+    use iced::{Event, mouse};
+    let bron = include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json");
+    let mut uit = Vec::new();
+    for zoom in [0.75, 1., 1.5] {
+        let mut p = Proef::met_app(app_met_werkdraad(Module::Notition, bron));
+        p.bericht(Msg::Zoom(zoom));
+        let g = p
+            .toegankelijkheid()
+            .nodes
+            .into_iter()
+            .find(|n| n.node.name == "Formaatgreep tekstvak 1")
+            .unwrap()
+            .bounds;
+        let begin = iced::Point::new(g.x + g.width / 2., g.y + g.height / 2.);
+        let eind = iced::Point::new(begin.x + 60., begin.y + 48.);
+        let berichten = {
+            let mut ui = iced_runtime::user_interface::UserInterface::build(
+                p.app.view(),
+                Size::new(1440., 900.),
+                iced_runtime::user_interface::Cache::default(),
+                &mut p.renderer,
+            );
+            let mut berichten = Vec::new();
+            // De vensterruntime geeft de laatste cursorpositie mee aan de
+            // gehele reeks. Gebruik hier werkelijk dezelfde UserInterface.
+            ui.update(
+                &[
+                    Event::Mouse(mouse::Event::CursorMoved { position: begin }),
+                    Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
+                    Event::Mouse(mouse::Event::CursorMoved { position: eind }),
+                    Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)),
+                ],
+                mouse::Cursor::Available(eind),
+                &mut p.renderer,
+                &mut p.klembord,
+                &mut berichten,
+            );
+            berichten
+        };
+        for bericht in berichten {
+            p.bericht(bericht);
+        }
+        let d: serde_json::Value = serde_json::from_slice(&p.bron()).unwrap();
+        let v = &d["boeken"][0]["secties"][0]["paginas"][0]["vakken"][0];
+        uit.push((
+            zoom,
+            v["breedte"].as_f64().unwrap(),
+            v["hoogte"].as_f64().unwrap(),
+        ));
+    }
+    assert_eq!(
+        uit,
+        vec![(0.75, 640., 224.), (1., 620., 208.), (1.5, 600., 192.)],
+        "Ook een snelle echte runtimebatch moet op het oorspronkelijke grijppunt beginnen"
+    );
+}
+fn notitie_runtime_ronde(
+    p: &mut Proef,
+    cache: iced_runtime::user_interface::Cache,
+    events: &[iced::Event],
+    cursor: iced::mouse::Cursor,
+) -> iced_runtime::user_interface::Cache {
+    let mut berichten = Vec::new();
+    let cache = {
+        let mut ui = iced_runtime::user_interface::UserInterface::build(
+            p.app.view(),
+            Size::new(1440., 900.),
+            cache,
+            &mut p.renderer,
+        );
+        ui.update(
+            events,
+            cursor,
+            &mut p.renderer,
+            &mut p.klembord,
+            &mut berichten,
+        );
+        ui.into_cache()
+    };
+    for bericht in berichten {
+        p.bericht(bericht);
+    }
+    cache
+}
+#[test]
+fn notitie_runtimebatch_bewaart_focus_positie_en_undo_over_frames() {
+    use iced::{Event, mouse};
+    let bron = include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json");
+    for zoom in [0.75, 1., 1.5] {
+        let mut p = Proef::met_app(app_met_werkdraad(Module::Notition, bron));
+        p.bericht(Msg::Zoom(zoom));
+        let ander = notitie_tekstpunt(&mut p, 1);
+        let g = p
+            .toegankelijkheid()
+            .nodes
+            .into_iter()
+            .find(|n| n.node.name == "Formaatgreep tekstvak 1")
+            .unwrap()
+            .bounds;
+        let begin = iced::Point::new(g.x + g.width / 2., g.y + g.height / 2.);
+        let eind = iced::Point::new(begin.x + 60., begin.y + 48.);
+        let cache = notitie_runtime_ronde(
+            &mut p,
+            Default::default(),
+            &[
+                Event::Mouse(mouse::Event::CursorMoved { position: ander }),
+                Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
+                Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)),
+            ],
+            mouse::Cursor::Available(ander),
+        );
+        let cache = notitie_runtime_ronde(
+            &mut p,
+            cache,
+            &[Event::Mouse(mouse::Event::CursorMoved { position: begin })],
+            mouse::Cursor::Available(begin),
+        );
+        // De druk heeft geen eigen positie. De runtime moet hiervoor de
+        // cursor uit de vorige UI-cache gebruiken, niet het einde van de batch.
+        let cache = notitie_runtime_ronde(
+            &mut p,
+            cache,
+            &[
+                Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
+                Event::Mouse(mouse::Event::CursorMoved { position: eind }),
+                Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)),
+            ],
+            mouse::Cursor::Available(eind),
+        );
+        let d: serde_json::Value = serde_json::from_slice(&p.bron()).unwrap();
+        let v = &d["boeken"][0]["secties"][0]["paginas"][0]["vakken"][0];
+        assert!((v["breedte"].as_f64().unwrap() - (560. + 60. / zoom as f64)).abs() < 0.001);
+        assert!((v["hoogte"].as_f64().unwrap() - (160. + 48. / zoom as f64)).abs() < 0.001);
+        p.bericht(Msg::Terug);
+        assert_eq!(
+            p.bron().as_slice(),
+            bron,
+            "Een runtimegesture blijft één bronexacte undo"
+        );
+        // Buiten het venster loslaten mag dezelfde bron niet alsnog wijzigen.
+        let _cache = notitie_runtime_ronde(
+            &mut p,
+            cache,
+            &[
+                Event::Mouse(mouse::Event::CursorMoved { position: begin }),
+                Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
+                Event::Mouse(mouse::Event::CursorLeft),
+                Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)),
+            ],
+            mouse::Cursor::Unavailable,
+        );
+        assert_eq!(p.bron().as_slice(), bron);
+    }
+}
+#[test]
+fn runtimebatch_gewone_knoppen_volgen_iedere_klik_en_de_vorige_framepositie() {
+    use iced::{Event, mouse};
+    let mut p = Proef::met_app(app_met_werkdraad(
+        Module::Notition,
+        include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json"),
+    ));
+    let links = iced::Point::new(40., 20.);
+    let rechts = iced::Point::new(120., 20.);
+    let beweeg = |position| Event::Mouse(mouse::Event::CursorMoved { position });
+    let druk = || Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left));
+    let los = || Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left));
+    let mut ronde = |cache, events: &[Event], punt| {
+        let inhoud: iced::Element<'_, u8, iced::Theme, iced_tiny_skia::Renderer> =
+            iced::widget::row![
+                iced::widget::button("Links")
+                    .width(80)
+                    .height(40)
+                    .on_press(1),
+                iced::widget::button("Rechts")
+                    .width(80)
+                    .height(40)
+                    .on_press(2),
+            ]
+            .into();
+        let mut ui = iced_runtime::user_interface::UserInterface::build(
+            inhoud,
+            Size::new(160., 40.),
+            cache,
+            &mut p.renderer,
+        );
+        let mut berichten = Vec::new();
+        ui.update(
+            events,
+            mouse::Cursor::Available(punt),
+            &mut p.renderer,
+            &mut p.klembord,
+            &mut berichten,
+        );
+        (ui.into_cache(), berichten)
+    };
+    let (_, berichten) = ronde(
+        Default::default(),
+        &[beweeg(links), druk(), los(), beweeg(rechts), druk(), los()],
+        rechts,
+    );
+    assert_eq!(
+        berichten,
+        vec![1, 2],
+        "Iedere klik hoort bij zijn eigen knop"
+    );
+    let (cache, berichten) = ronde(Default::default(), &[beweeg(links)], links);
+    assert!(berichten.is_empty());
+    let (_, berichten) = ronde(cache, &[druk(), los(), beweeg(rechts)], rechts);
+    assert_eq!(
+        berichten,
+        vec![1],
+        "Een latere beweging verplaatst een eerdere klik niet"
+    );
+}
+#[test]
 fn notitie_originele_werkruimte_heeft_boek_en_paginakolom_en_een_licht_canvas() {
     let bron = include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json");
     // De oorspronkelijke notities.css gebruikt 228/250 px voor de navigatie;
