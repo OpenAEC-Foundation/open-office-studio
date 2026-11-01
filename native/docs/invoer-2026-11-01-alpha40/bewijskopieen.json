@@ -1,5 +1,5 @@
 {
-  "omvang": "Afgesloten gerichte invoerproeven en verkennend echt debugvenster; de volledige alpha40-ronde en platformronde lopen nog. Ruwe log-/patchbytes zijn verliesloos bewaard.",
+  "omvang": "Volledige lokale alpha40-ronde afgesloten op 694 bronbestanden en broncommit 64ade0208e9d117516faeab83ec03a2d1dff9806. Gerichte invoer-/vensterbronproeven slagen; echte menubeelden blijven afgekeurd. De platformronde loopt nog. Alle kopieën verliesloos.",
   "kopieen": [
     {
       "bron": ".local/controle-2026-10-31/native-alpha40-testbron.json",
@@ -580,6 +580,118 @@
       "bestand": "debugvenster/vrij-blok-typen.png",
       "bron_sha256": "5fcb2b34cb09123075db877ab6d0b4a5e776166994d8b8905f1f950efebb027c",
       "opgeslagen_sha256": "5fcb2b34cb09123075db877ab6d0b4a5e776166994d8b8905f1f950efebb027c",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha40-definitief-fmt.log",
+      "bestand": "volledige-ronde/native-alpha40-definitief-fmt.log.gz",
+      "bron_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "opgeslagen_sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha40-definitief-clippy.log",
+      "bestand": "volledige-ronde/native-alpha40-definitief-clippy.log.gz",
+      "bron_sha256": "7c40bd28ef5abaceca9b27f16e21ed5c452b47dd8968b13e4f802e11ef045c3f",
+      "opgeslagen_sha256": "cec8ddce630b79f644e05144d6e955deb16c79c574f793f13e8bd40c5dbc54fd",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha40-definitief-tests.log",
+      "bestand": "volledige-ronde/native-alpha40-definitief-tests.log.gz",
+      "bron_sha256": "282adbb8fd9668d4ed87311ca49268c017187edfb91ac6308ccf98d03c9c70e3",
+      "opgeslagen_sha256": "0906eaa85d5c40a0b6cf01960f74f5eed016cdb58ccea6c12db01835ed51be8e",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha40-definitief-onafhankelijk.log",
+      "bestand": "volledige-ronde/native-alpha40-definitief-onafhankelijk.log.gz",
+      "bron_sha256": "199499ffc042d4ef5fcfc573307a5334c8004e6868c0352d45571adc64c39769",
+      "opgeslagen_sha256": "5c7c42d9c54c51c82e463be7e9c1e5ae0c72befe41d31626865fdf82d3e21f61",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha40-definitief-python.log",
+      "bestand": "volledige-ronde/native-alpha40-definitief-python.log.gz",
+      "bron_sha256": "42c61bbc7aac1a646059d9a2bb69f3e46cc20b54b162ef5a13765c0a1059ad4e",
+      "opgeslagen_sha256": "fb938241c26bfe698e58f5af12720065e302b6bf3928302addd52d3c22a2c58a",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha40-definitief-bron.log",
+      "bestand": "volledige-ronde/native-alpha40-definitief-bron.log.gz",
+      "bron_sha256": "1ab0dc872b8694ba9c60f3efa364a9ba98cbc3c5f0853438295fcd984239e4cb",
+      "opgeslagen_sha256": "a36a9f257f5b846b2e3ed39ce7ea56c34b8d69ad07c63e5ff78ccb8ef01bb8b6",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha40-definitief-runtime.log",
+      "bestand": "volledige-ronde/native-alpha40-definitief-runtime.log.gz",
+      "bron_sha256": "8cc9479f4bafb0ad7fbf543e024c05c08c161cdbf67268ae23223a1df9c6f8de",
+      "opgeslagen_sha256": "9196e7caafcfb978a9e88eff8ce66e60a8be67eb86a0a53a7baf42d9c49d4b82",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha40-definitief-conversie-onafhankelijk.log",
+      "bestand": "volledige-ronde/native-alpha40-definitief-conversie-onafhankelijk.log.gz",
+      "bron_sha256": "2cebd3abf09245f126c56d3b3feb5d8ef442f2ccffbd363f44bce77907e29bdf",
+      "opgeslagen_sha256": "5c7f7e0345ec985df4dc2c98c4604080781e4f69e11453649c2821f96e314580",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha40-stapstatus.json",
+      "bestand": "afsluiting/native-alpha40-stapstatus.json",
+      "bron_sha256": "91ba30c07635ecde6865cfc10f4e0c4a8c0d24b63b8c1f4c81295b0b08e360a7",
+      "opgeslagen_sha256": "91ba30c07635ecde6865cfc10f4e0c4a8c0d24b63b8c1f4c81295b0b08e360a7",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha40-terminalstatus.json",
+      "bestand": "afsluiting/native-alpha40-terminalstatus.json",
+      "bron_sha256": "3eecb1ba31ae08466a197115d4dd2ea140b52fa05f4c09d891e4f40e9b84b9f9",
+      "opgeslagen_sha256": "3eecb1ba31ae08466a197115d4dd2ea140b52fa05f4c09d891e4f40e9b84b9f9",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha40-finaliseren.log",
+      "bestand": "afsluiting/native-alpha40-finaliseren.log.gz",
+      "bron_sha256": "7e0fa12acddc9943f7b625174f8d8f172e01a71f24edd851622ebf100088a3a5",
+      "opgeslagen_sha256": "c6774628c83093f200c1f027deddedb409821fd83353b7e1f1959eab617c0c90",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/controle-alpha40-definitief.py",
+      "bestand": "afsluiting/controle-alpha40-definitief.py",
+      "bron_sha256": "773c9a4c5a9a12340be73affd949db4054aa0715dde5a84ecd5e9502fe8659b2",
+      "opgeslagen_sha256": "773c9a4c5a9a12340be73affd949db4054aa0715dde5a84ecd5e9502fe8659b2",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/start-alpha40-volledig.py",
+      "bestand": "afsluiting/start-alpha40-volledig.py",
+      "bron_sha256": "b02ccb3be5fc610d9964f0ee9b97432443bdb3021e4a3aeda5607772f3b15cd9",
+      "opgeslagen_sha256": "b02ccb3be5fc610d9964f0ee9b97432443bdb3021e4a3aeda5607772f3b15cd9",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/finaliseer-alpha40.py",
+      "bestand": "afsluiting/finaliseer-alpha40.py",
+      "bron_sha256": "ce0cdcde0f0e5d638b181ee433feac4eaa55cdbbdffdad8a02aa279f861dac3e",
+      "opgeslagen_sha256": "ce0cdcde0f0e5d638b181ee433feac4eaa55cdbbdffdad8a02aa279f861dac3e",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha40-indexcontrole.json",
+      "bestand": "afsluiting/native-alpha40-indexcontrole.json",
+      "bron_sha256": "a4432ab0affbeaa71918fc8a5e8acd9097a190b5589c60f1629ea70013f49fdc",
+      "opgeslagen_sha256": "a4432ab0affbeaa71918fc8a5e8acd9097a190b5589c60f1629ea70013f49fdc",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha40-gitbroncontrole.json",
+      "bestand": "afsluiting/native-alpha40-gitbroncontrole.json",
+      "bron_sha256": "9745234370fc210ea3dc50f29e6dc5981daeb7f14c041e2dde9daab1a23829e0",
+      "opgeslagen_sha256": "9745234370fc210ea3dc50f29e6dc5981daeb7f14c041e2dde9daab1a23829e0",
       "codering": "ongewijzigde bytes"
     }
   ]
