@@ -1,0 +1,5 @@
+# Werkelijke CI-Linux-Writer-vensterproef, alpha 30
+
+Het oorspronkelijke Linux-pakket van ronde `41268771798`, bron `c752341ab177ad4685dcd29abe71e687dcaf1292`, is byte voor byte tegen het vaste Git-archief gecontroleerd. Beide programma’s zijn op versie en SHA-256 vastgezet. De echte Writer-proef slaagt op achttien gerichte stappen met eigen X11-, D-Bus- en XDG-sessie, systeemklembord, alineatoetsen, snelle vervolginvoer, bronexacte undo, sluiten en opnieuw openen. De [drie volledige vensterbeelden](visuele-beoordeling.json) zijn daadwerkelijk bekeken.
+
+De eerste Windows-taak van deze CI-ronde blijft terecht afgekeurd wegens Git-regelafbrekingconversie van de nieuwe parserbron. Deze zelfstandige Linux-proef keurt die CI-ronde niet alsnog goed. De nieuwe checkoutcorrectie heeft een eigen platformronde. De nieuwe lege-invoegopmaak uit de volgende bronstap zit nog niet in dit programma. Geen volledige Writer-, functie-, fysieke platform- of pixelpariteit. Screenshots van klembordacties kunnen tijdelijke lintstatus tonen; bron en cursor worden afzonderlijk gecontroleerd.

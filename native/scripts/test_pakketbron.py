@@ -28,6 +28,7 @@ class Pakketbron(unittest.TestCase):
                 'docs/voorbeelden/proef.json': b'{"eigen": true}\n',
                 'LICENSE': b'Eigen proeftekst\n',
                 'native/vendor/proef-bron.json': b'{"bron": "eigen"}\n',
+                'native/vendor/xlsx-parse-AANPASSINGEN.md': b'# Eigen parsernotities\n',
                 'native/crates/proef/document.docx': b'PK\x00\x01\r\n\n',
                 'native/docs/proef.png': b'\x89PNG\r\n\x1a\n\x00',
                 'native/vendor/openaec-ui/src/proef.rs': b'// Oorspronkelijke bytes\r\n\n',
