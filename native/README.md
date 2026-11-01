@@ -167,7 +167,7 @@ worden geweigerd. Stijlketens zijn begrensd op 128 definities en opdracht-ID’s
 complexe alinea’s en selecties over meerdere alinea’s blijven open.
 De [gerichte proeven en oorspronkelijke afkeuringen](docs/alineastijlen-2026-11-01-alpha33/LEESMIJ.md)
 leggen directe vervolginvoer, bewaren, heropenen, onafhankelijke DOCX-lezers en
-bronexacte undo/redo vast. De echte nieuwe releasevensterproef blijft apart vereist.
+bronexacte undo/redo vast. De [echte alpha-33-stijlvensterproeven](docs/vensterproeven-2026-11-01-alpha33/LEESMIJ.md) slagen op lokale en CI-Linux-programma’s voor twintig gerichte stappen; overige functie-, platform- en pixelacceptatie blijft open.
 
 ## Writer: pagina-indeling
 
