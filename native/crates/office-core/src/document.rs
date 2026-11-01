@@ -937,23 +937,72 @@ impl Sessie {
     pub fn sluit_tekstgroep(&mut self) {
         self.tekstgroep = None;
     }
+    /// Structurele invoer en haar doel worden vóór dezelfde broncommit gecontroleerd.
+    pub fn bewerk_alinea_cursor(
+        &mut self,
+        deel: usize,
+        hash: &str,
+        id: &str,
+        begin: usize,
+        einde: usize,
+        actie: crate::writer::CursorActie,
+    ) -> Resultaat<(Weergave, crate::writer_cursor::TekstPunt)> {
+        self.tekstgroep = None;
+        if hash != self.bron_hash {
+            return Err(fout("De alineatoets hoort bij een andere documentversie"));
+        }
+        let Document::Writer(d) = &self.document else {
+            return Err(fout("Alineatoetsen horen bij Writer"));
+        };
+        d.controleer_bewerking()?;
+        let plan = crate::writer::cursor_plan(d, id, begin, einde, actie)?;
+        let Some(plan) = plan else {
+            self.tekstgroep = None;
+            return Ok((
+                self.weergave(deel)?,
+                crate::writer_cursor::TekstPunt {
+                    id: id.into(),
+                    positie: begin,
+                },
+            ));
+        };
+        self.bewerk_transactie(deel, None, move |document| {
+            let Document::Writer(d) = document else {
+                return Err(fout("Alineatoetsen horen bij Writer"));
+            };
+            d.controleer_bewerking()?;
+            crate::writer::cursor_toepassen(d, plan)
+        })
+    }
     fn bewerk_in(
         &mut self,
         deel: usize,
         bewerking: Bewerking,
         groep: Option<(u64, String)>,
     ) -> Resultaat<Weergave> {
+        if matches!(bewerking, Bewerking::Pagina { .. }) {
+            self.tekstgroep = None;
+            crate::writer_pagina::controleer_bron(&self.bron)?;
+        }
+        self.bewerk_transactie(deel, groep, move |document| {
+            document.bewerk(deel, bewerking)
+        })
+        .map(|(beeld, ())| beeld)
+    }
+    fn bewerk_transactie<T>(
+        &mut self,
+        deel: usize,
+        groep: Option<(u64, String)>,
+        wijzig: impl FnOnce(&mut Document) -> Resultaat<T>,
+    ) -> Resultaat<(Weergave, T)> {
         let aansluitend = groep.as_ref().is_some_and(|(g, id)| {
             self.tekstgroep.as_ref().is_some_and(|(oud, alinea, hash)| {
                 oud == g && alinea == id && hash == &self.bron_hash
             })
         });
         self.tekstgroep = None;
-        if matches!(bewerking, Bewerking::Pagina { .. }) {
-            crate::writer_pagina::controleer_bron(&self.bron)?;
-        }
         let resultaat = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-            self.document.bewerk(deel, bewerking)?;
+            let doel = wijzig(&mut self.document)?;
             // Serialiseer één keer; de renderer toont precies de te bewaren bron.
             let bytes = self.document.bytes()?;
             let beeld = self.document.weergave_van_bron(
@@ -962,10 +1011,10 @@ impl Sessie {
                 Some(&bytes),
                 Some(self.layout_eigenaar),
             )?;
-            Ok((bytes, beeld))
+            Ok((bytes, beeld, doel))
         }));
         match resultaat {
-            Ok(Ok((bytes, beeld))) => {
+            Ok(Ok((bytes, beeld, doel))) => {
                 if !aansluitend {
                     self.terug.push(self.bron.clone());
                 }
@@ -980,7 +1029,7 @@ impl Sessie {
                 self.bron = std::sync::Arc::new(bytes);
                 self.tekstgroep = groep.map(|(g, id)| (g, id, self.bron_hash.clone()));
                 *self.beelden.borrow_mut() = vec![(deel, beeld.clone())];
-                Ok(beeld)
+                Ok((beeld, doel))
             }
             foutresultaat => {
                 self.document = Document::open(self.module, &self.bron)?;

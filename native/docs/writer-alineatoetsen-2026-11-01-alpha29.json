@@ -1,0 +1,82 @@
+{
+  "versie": "2026.44.9-alpha.29",
+  "geslaagd": true,
+  "omvang": "Alineatoetsen in ondersteunde hoofdtekst en tabelcellen; Unicode-selectie, cursordoel, lege invoer, bestaande runopmaak, bronexacte undo/redo, grenzen, beveiliging en verouderde posities. Geen volledige rijke editor of functiedekkingspercentage.",
+  "kernproeven": [
+    "writer_structuur::alineacursor_doorkruist_geen_tabelcellen_of_sectie_einde_en_maakt_geen_lege_undo",
+    "writer_structuur::alineacursor_weigert_verouderde_posities_module_en_bronbeveiliging_zonder_wijziging",
+    "writer_structuur::alineacursor_lege_nieuwe_alinea_heeft_een_werkelijke_cursor_en_bewaart_runopmaak",
+    "writer_structuur::alineacursor_selectie_splitsen_is_atomair_en_behoudt_de_overige_inhoud",
+    "writer_structuur::alineacursor_beide_samenvoegtoetsen_geven_de_oorspronkelijke_grens_terug"
+  ],
+  "ui_proeven": [
+    "tests::raster_proeven::writer_alineatoets_aanvullend_typen_in_een_nieuwe_lege_alinea_bewaart_opmaak",
+    "tests::raster_proeven::writer_alineatoets_op_de_grens_van_tabelcellen_bewaart_de_bron_en_geschiedenis",
+    "tests::raster_proeven::writer_alineatoets_backspace_voegt_binnen_dezelfde_tekst_samen",
+    "tests::raster_proeven::writer_alineatoets_delete_voegt_binnen_dezelfde_tekst_samen",
+    "tests::raster_proeven::writer_alineatoets_ongeimplementeerde_enter_combinaties_splitsen_geen_alinea",
+    "tests::raster_proeven::writer_alineatoets_aanvullend_ingeklapte_shift_selectie_voegt_toch_samen",
+    "tests::raster_proeven::writer_alineatoets_shift_enter_blijft_een_zachte_regelovergang",
+    "tests::raster_proeven::writer_alineatoets_selectie_en_splitsen_zijn_een_bewerking_met_selectieherstel",
+    "tests::raster_proeven::writer_alineatoets_enter_en_snellen_vervolgtekst_vormen_twee_bronexacte_undo_stappen"
+  ],
+  "reguliere_tests": 328,
+  "ui_tests": 118,
+  "bronmanifest": "schermen-2026-11-01-alpha29.json",
+  "testlog_sha256": "93c4b0f34150b7ddb7516513de821130731dfa024bc638eb6dc536e1a77bbd96",
+  "onafhankelijk_log_sha256": "b8fd056df9290341ac8c2286d6bd918ecfbaa095c6cf6b864d2ac41fb665284d",
+  "onafhankelijk_teruggelezen_bestanden": [
+    {
+      "bestand": "writer-cursor-selectie.docx",
+      "sha256": "c982de5a3168f88bf1532e57ea4cffc08793e07b06b3af2b61fbc82b1e7bfb6a"
+    },
+    {
+      "bestand": "writer-cursor-leeg.docx",
+      "sha256": "719d80012552ed822c351882d7e29577c07cea35ef1941b9076f505c7efdce04"
+    },
+    {
+      "bestand": "writer-alinea-selectie-ui.docx",
+      "sha256": "b6da229c46464f339caa9d7993585b7044a5cc9182a2100edaa7fe6cfa53a8e9"
+    },
+    {
+      "bestand": "writer-alinea-invoer-ui.docx",
+      "sha256": "3f7081f7e26da9ccb9ef07d8364d6e4b5b7255590e3785597320edb55ec9e687"
+    },
+    {
+      "bestand": "writer-alinea-leeg-ui.docx",
+      "sha256": "8396dfdde89ab50ba5221e158239d1fe6a59fa77856aaacbd5e77cc68e8b961f"
+    }
+  ],
+  "nieuwe_widgetbeelden": [
+    {
+      "bestand": "writer-alinea-invoer.png",
+      "sha256": "7b7efd2938f517b9c577964a896c7000221a6237889888d5bafaee04d6d11083"
+    },
+    {
+      "bestand": "writer-alinea-selectie.png",
+      "sha256": "e624afd64e6c21993e4915efb88132064c744a107d8929ff2ef40a11ef75a32e"
+    }
+  ],
+  "echte_alpha29_releasevensterproef_afgerond": false,
+  "beperkingen": [
+    "Selecties over meerdere alinea’s en opmaak kiezen in een lege alinea blijven open.",
+    "Shift+Enter en meerregelige platte klembordtekst blijven zachte regelovergangen.",
+    "Ctrl/Cmd+Enter en Alt+Enter voegen geen verkeerde alinea in; hun eigen functie is nog niet aangesloten.",
+    "Samenvoegen doorkruist geen tabelcel, niet-aangrenzend blok, inhoudsbesturing of sectie-einde.",
+    "Na een structurele bronwijziging worden oude pagina-aanwijzingen geweigerd; zij worden niet gegokt op een nieuw alinea-ID."
+  ],
+  "visuele_widgetcontrole": {
+    "geslaagd": true,
+    "omvang": "De twee genoemde volledige widgetbeelden zijn bekeken: echte alineagrens met 7café rechts en cursor na 7; selectie café verwijderd met cursor vóór de resterende spatie/rechts. Header en tabeltekst blijven zichtbaar. Geen releasevenster- of volledige pixelgoedkeuring.",
+    "beelden": [
+      {
+        "bestand": "writer-alinea-invoer.png",
+        "sha256": "7b7efd2938f517b9c577964a896c7000221a6237889888d5bafaee04d6d11083"
+      },
+      {
+        "bestand": "writer-alinea-selectie.png",
+        "sha256": "e624afd64e6c21993e4915efb88132064c744a107d8929ff2ef40a11ef75a32e"
+      }
+    ]
+  }
+}

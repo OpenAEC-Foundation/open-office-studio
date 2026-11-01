@@ -310,3 +310,24 @@ assert s['F4'].value is None and s['G4'].value is None
 assert s['D2'].value=='=B2*C2' and s['D3'].value=='=B3*C3' and s['D4'].value=='=SUM(D2:D3)'
 assert ui['Tweede blad']['A1'].value=='Bewaar ook dit blad'
 print('Celbereikklembord: opgemaakte platte waarden, gezamenlijke formule-invoer, Unicode/meerdere regels, letterlijke voorloopnullen, herberekening, bestaande opmaak en tweede blad onafhankelijk goedgekeurd.')
+
+for naam,rechts in [('writer-cursor-selectie.docx',' rechts'),('writer-alinea-selectie-ui.docx',' rechts'),('writer-alinea-invoer-ui.docx','7café rechts')]:
+    doc=Document(map/naam)
+    teksten=[p.text for p in doc.paragraphs]
+    assert 'Links 🏠 ' in teksten and rechts in teksten, (naam,teksten)
+    assert len(doc.sections)==2 and len(doc.tables)==1
+    assert doc.tables[0].cell(0,0).text=='Cel één\nTweede celalinea'
+    assert doc.tables[0].cell(0,1).text=='Cel twee'
+    assert 'Voor de rijke alinea' in teksten and 'Andere sectie' in teksten
+    assert any(r.bold for p in doc.paragraphs if p.text=='Links 🏠 ' for r in p.runs if r.text)
+doc=Document(map/'writer-cursor-leeg.docx')
+p=next(p for p in doc.paragraphs if p.text=='Nieuwe tekst 🏠')
+assert all(r.italic for r in p.runs if r.text)
+assert len(doc.sections)==2 and len(doc.tables)==1
+print('Writer-alineatoetsen: Unicode-selectiesplitsing, directe vervolginvoer, tabel/sectiebehoud en opmaak in een nieuwe lege alinea onafhankelijk teruggelezen.')
+
+doc=Document(map/'writer-alinea-leeg-ui.docx')
+p=next(p for p in doc.paragraphs if p.text=='9')
+assert all(r.italic for r in p.runs if r.text)
+assert len(doc.sections)==2 and len(doc.tables)==1
+print('Writer: directe pagina-invoer in de nieuwe lege alinea behoudt cursieve runopmaak in de bewaarde bron.')

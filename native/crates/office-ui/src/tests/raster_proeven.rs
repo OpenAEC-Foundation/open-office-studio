@@ -3059,3 +3059,289 @@ fn raster_aanvullend_een_oude_inline_cursoractie_verplaatst_geen_nieuwe_invoer()
     assert_eq!(p.app.tab().unwrap().editor.text(), "78");
     p.named(N::Escape);
 }
+
+#[test]
+fn writer_alineatoets_enter_en_snellen_vervolgtekst_vormen_twee_bronexacte_undo_stappen() {
+    use iced::keyboard::{Key, key::Named as N};
+    let mut p = writer_paginaproef();
+    let origineel = p.bron();
+    let aantal = p
+        .app
+        .tab()
+        .unwrap()
+        .antwoord
+        .as_ref()
+        .unwrap()
+        .beeld
+        .velden
+        .len();
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    p.klik(punt);
+    p.gebeurtenissen([
+        ruwe_rastertoets(Key::Named(N::Enter), None),
+        ruwe_rastertoets(Key::Character("7".into()), Some("7")),
+    ]);
+    let b = Sessie::open(Module::Writer, p.bron().as_ref().clone())
+        .unwrap()
+        .weergave(0)
+        .unwrap();
+    assert_eq!(b.velden.len(), aantal + 1);
+    assert!(b.velden.iter().any(|v| v.tekst == "Links 🏠 "));
+    assert!(b.velden.iter().any(|v| v.tekst == "7café rechts"));
+    assert_eq!(p.app.tab().unwrap().editor.text(), "7café rechts");
+    assert_eq!(
+        lint::tekenoffset(
+            &p.app.tab().unwrap().editor,
+            p.app.tab().unwrap().editor.cursor().position
+        ),
+        1
+    );
+    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        std::fs::create_dir_all(&map).unwrap();
+        p.verbeeld()
+            .save_png(PathBuf::from(map).join("writer-alinea-invoer.png"))
+            .unwrap();
+    }
+    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
+        std::fs::create_dir_all(&map).unwrap();
+        std::fs::write(
+            PathBuf::from(map).join("writer-alinea-invoer-ui.docx"),
+            p.bron().as_slice(),
+        )
+        .unwrap();
+    }
+    let klaar = p.bron();
+    p.bericht(Msg::Terug);
+    assert_eq!(p.app.tab().unwrap().editor.text(), "café rechts");
+    assert_eq!(
+        lint::tekenoffset(
+            &p.app.tab().unwrap().editor,
+            p.app.tab().unwrap().editor.cursor().position
+        ),
+        0
+    );
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *origineel);
+    assert_eq!(
+        lint::tekenoffset(
+            &p.app.tab().unwrap().editor,
+            p.app.tab().unwrap().editor.cursor().position
+        ),
+        8
+    );
+    p.bericht(Msg::Vooruit);
+    p.bericht(Msg::Vooruit);
+    assert_eq!(*p.bron(), *klaar);
+}
+
+fn writer_grenstoetsproef(terug: bool, ingeklapt: bool) {
+    use iced::keyboard::key::Named as N;
+    {
+        let mut p = writer_paginaproef();
+        let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+        p.klik(punt);
+        p.bericht(Msg::SplitsAlinea);
+        let gesplitst = p.bron();
+        let punt = writer_punt(
+            &mut p,
+            if terug { "café rechts" } else { "Links 🏠 " },
+            if terug { 0 } else { 8 },
+        );
+        p.klik(punt);
+        if ingeklapt {
+            use iced::keyboard::{Key, Modifiers as M};
+            p.toets(
+                Key::Named(if terug { N::ArrowRight } else { N::ArrowLeft }),
+                M::SHIFT,
+                None,
+            );
+            p.toets(
+                Key::Named(if terug { N::ArrowLeft } else { N::ArrowRight }),
+                M::SHIFT,
+                None,
+            );
+            assert!(
+                p.app
+                    .tab()
+                    .unwrap()
+                    .editor
+                    .selection()
+                    .is_none_or(|s| s.is_empty())
+            );
+        }
+        p.named(if terug { N::Backspace } else { N::Delete });
+        let b = Sessie::open(Module::Writer, p.bron().as_ref().clone())
+            .unwrap()
+            .weergave(0)
+            .unwrap();
+        assert!(b.velden.iter().any(|v| v.tekst == "Links 🏠 café rechts"));
+        assert_eq!(p.app.tab().unwrap().editor.text(), "Links 🏠 café rechts");
+        assert_eq!(
+            lint::tekenoffset(
+                &p.app.tab().unwrap().editor,
+                p.app.tab().unwrap().editor.cursor().position
+            ),
+            8
+        );
+        p.bericht(Msg::Terug);
+        assert_eq!(*p.bron(), *gesplitst);
+    }
+}
+
+#[test]
+fn writer_alineatoets_backspace_voegt_binnen_dezelfde_tekst_samen() {
+    writer_grenstoetsproef(true, false);
+}
+#[test]
+fn writer_alineatoets_delete_voegt_binnen_dezelfde_tekst_samen() {
+    writer_grenstoetsproef(false, false);
+}
+
+#[test]
+fn writer_alineatoets_shift_enter_blijft_een_zachte_regelovergang() {
+    use iced::keyboard::{Key, Modifiers as M, key::Named as N};
+    let mut p = writer_paginaproef();
+    let bron = p.bron();
+    let aantal = p
+        .app
+        .tab()
+        .unwrap()
+        .antwoord
+        .as_ref()
+        .unwrap()
+        .beeld
+        .velden
+        .len();
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    p.klik(punt);
+    p.toets(Key::Named(N::Enter), M::SHIFT, None);
+    let b = Sessie::open(Module::Writer, p.bron().as_ref().clone())
+        .unwrap()
+        .weergave(0)
+        .unwrap();
+    assert_eq!(b.velden.len(), aantal);
+    assert!(b.velden.iter().any(|v| v.tekst == "Links 🏠 \ncafé rechts"));
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *bron);
+}
+
+#[test]
+fn writer_alineatoets_selectie_en_splitsen_zijn_een_bewerking_met_selectieherstel() {
+    use iced::keyboard::{Key, Modifiers as M, key::Named as N};
+    let mut p = writer_paginaproef();
+    let bron = p.bron();
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    p.klik(punt);
+    for _ in 0..4 {
+        p.toets(Key::Named(N::ArrowRight), M::SHIFT, None);
+    }
+    assert_eq!(
+        p.app.tab().unwrap().editor.selection().as_deref(),
+        Some("café")
+    );
+    p.named(N::Enter);
+    let b = Sessie::open(Module::Writer, p.bron().as_ref().clone())
+        .unwrap()
+        .weergave(0)
+        .unwrap();
+    assert!(b.velden.iter().any(|v| v.tekst == "Links 🏠 "));
+    assert!(b.velden.iter().any(|v| v.tekst == " rechts"));
+    assert_eq!(p.app.tab().unwrap().editor.text(), " rechts");
+    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        std::fs::create_dir_all(&map).unwrap();
+        p.verbeeld()
+            .save_png(PathBuf::from(map).join("writer-alinea-selectie.png"))
+            .unwrap();
+    }
+    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
+        std::fs::create_dir_all(&map).unwrap();
+        std::fs::write(
+            PathBuf::from(map).join("writer-alinea-selectie-ui.docx"),
+            p.bron().as_slice(),
+        )
+        .unwrap();
+    }
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *bron);
+    assert_eq!(
+        p.app.tab().unwrap().editor.selection().as_deref(),
+        Some("café")
+    );
+}
+
+#[test]
+fn writer_alineatoets_op_de_grens_van_tabelcellen_bewaart_de_bron_en_geschiedenis() {
+    use iced::keyboard::key::Named as N;
+    let mut p = writer_paginaproef();
+    let bron = p.bron();
+    let punt = writer_punt(&mut p, "Cel één", 0);
+    p.klik(punt);
+    p.named(N::Backspace);
+    assert_eq!(*p.bron(), *bron);
+    assert!(!p.app.tab().unwrap().antwoord.as_ref().unwrap().terug);
+    let punt = writer_punt(&mut p, "Cel twee", "Cel twee".chars().count());
+    p.klik(punt);
+    p.named(N::Delete);
+    assert_eq!(*p.bron(), *bron);
+    assert!(!p.app.tab().unwrap().antwoord.as_ref().unwrap().terug);
+}
+
+#[test]
+fn writer_alineatoets_ongeimplementeerde_enter_combinaties_splitsen_geen_alinea() {
+    use iced::keyboard::{Key, Modifiers as M, key::Named as N};
+    for modifiers in [M::COMMAND, M::ALT, M::COMMAND | M::SHIFT] {
+        let mut p = writer_paginaproef();
+        let bron = p.bron();
+        let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+        p.klik(punt);
+        p.toets(Key::Named(N::Enter), modifiers, None);
+        assert_eq!(*p.bron(), *bron);
+        assert!(!p.app.tab().unwrap().antwoord.as_ref().unwrap().terug);
+    }
+}
+
+#[test]
+fn writer_alineatoets_aanvullend_ingeklapte_shift_selectie_voegt_toch_samen() {
+    writer_grenstoetsproef(true, true);
+    writer_grenstoetsproef(false, true);
+}
+#[test]
+fn writer_alineatoets_aanvullend_typen_in_een_nieuwe_lege_alinea_bewaart_opmaak() {
+    use iced::keyboard::{Key, Modifiers as M, key::Named as N};
+    let mut p = writer_paginaproef();
+    let bron = p.bron();
+    let tekst = "Links 🏠 café rechts";
+    let lengte = tekst.chars().count();
+    let punt = writer_punt(&mut p, tekst, lengte);
+    p.klik(punt);
+    let t = p.app.tab().unwrap();
+    assert_eq!(
+        lint::tekenoffset(&t.editor, t.editor.cursor().position),
+        lengte
+    );
+    p.named(N::Enter);
+    let t = p.app.tab().unwrap();
+    assert_eq!(t.editor.text(), "");
+    assert!(t.veld().unwrap().opmaak.cursief);
+    assert!(
+        t.writer_direct
+            .geometrie(t)
+            .is_some_and(|m| m.cursor.is_some())
+    );
+    p.toets(Key::Character("9".into()), M::empty(), Some("9"));
+    let t = p.app.tab().unwrap();
+    assert_eq!(t.editor.text(), "9");
+    assert!(t.veld().unwrap().opmaak.cursief);
+    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
+        std::fs::create_dir_all(&map).unwrap();
+        std::fs::write(
+            PathBuf::from(map).join("writer-alinea-leeg-ui.docx"),
+            p.bron().as_slice(),
+        )
+        .unwrap();
+    }
+    p.bericht(Msg::Terug);
+    assert_eq!(p.app.tab().unwrap().editor.text(), "");
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *bron);
+}

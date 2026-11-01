@@ -24,6 +24,7 @@ pub enum Bericht {
     },
     Beweeg(Richting, bool),
     Invoer(text_editor::Action),
+    Structuur(office_core::writer::CursorActie),
     Klembord(klembord::Actie),
     Opslaan(bool),
     Opmaak(Opmaak),
@@ -84,6 +85,9 @@ enum Soort {
         reeks: TekstReeks,
         voor: Box<Cursor>,
     },
+    Structuur {
+        voor: Box<Cursor>,
+    },
     Navigatie,
     Cursor {
         selecteren: bool,
@@ -127,7 +131,8 @@ impl Staat {
                 matches!(b,Bericht::Invoer(a) if a.is_edit())
                     || matches!(
                         b,
-                        Bericht::Klembord(klembord::Actie::Knip | klembord::Actie::Plak)
+                        Bericht::Structuur(_)
+                            | Bericht::Klembord(klembord::Actie::Knip | klembord::Actie::Plak)
                             | Bericht::Opmaak(_)
                             | Bericht::OpmaakToets(_)
                             | Bericht::Terug
@@ -434,6 +439,30 @@ fn verwerk(app: &mut App, id: u64) -> Task<Msg> {
                         fout = Some("Deze alinea is alleen-lezen".into());
                         break;
                     }
+                    // Pas de structurele bedoeling toe op de dan actuele cursor.
+                    // Eerst wordt eventuele eerdere tekstinvoer apart bevestigd.
+                    let cursor = t.editor.cursor();
+                    if cursor.selection.is_none() {
+                        let positie = lint::tekenoffset(&t.editor, cursor.position);
+                        let lengte = t.editor.text().chars().count();
+                        let structuur = match &a {
+                            text_editor::Action::Edit(text_editor::Edit::Backspace)
+                                if positie == 0 =>
+                            {
+                                Some(office_core::writer::CursorActie::VorigeSamen)
+                            }
+                            text_editor::Action::Edit(text_editor::Edit::Delete)
+                                if positie == lengte =>
+                            {
+                                Some(office_core::writer::CursorActie::VolgendeSamen)
+                            }
+                            _ => None,
+                        };
+                        if let Some(actie) = structuur {
+                            st.rij.push_front((Bericht::Structuur(actie), aangekomen));
+                            continue;
+                        }
+                    }
                     let bewerkt = a.is_edit();
                     if bewerkt
                         && (st.laatst.is_none_or(|v| {
@@ -459,6 +488,48 @@ fn verwerk(app: &mut App, id: u64) -> Task<Msg> {
                     }
                     t.werk_opmaak_bij();
                     st.ververs(t);
+                }
+                Bericht::Structuur(actie) => {
+                    if !st.actief {
+                        continue;
+                    }
+                    if !t.veld().is_some_and(|v| v.bewerkbaar) {
+                        fout = Some("Deze alinea is alleen-lezen".into());
+                        break;
+                    }
+                    let cursor = Cursor::van(t, &st).unwrap();
+                    let positie = lint::tekenoffset(&t.editor, cursor.cursor.position);
+                    let anker = cursor
+                        .cursor
+                        .selection
+                        .map(|p| lint::tekenoffset(&t.editor, p))
+                        .unwrap_or(positie);
+                    let (begin, einde) = (positie.min(anker), positie.max(anker));
+                    let hash = t.antwoord.as_ref().unwrap().hash.clone();
+                    let d = Doel {
+                        document: id,
+                        volgnummer: nummer(),
+                    };
+                    let opdracht = Opdracht::WriterAlinea {
+                        deel: t.deel,
+                        hash: hash.clone(),
+                        id: cursor.id.clone(),
+                        begin,
+                        einde,
+                        actie,
+                    };
+                    st.vlucht = Some(Vlucht {
+                        doel: d.clone(),
+                        hash,
+                        cursor: cursor.clone(),
+                        soort: Soort::Structuur {
+                            voor: Box::new(cursor),
+                        },
+                    });
+                    st.nieuwe_groep();
+                    t.bezig = true;
+                    resultaat = Uitkomst::Werk(d, opdracht);
+                    break;
                 }
                 Bericht::Beweeg(richting, selecteren) => {
                     if !st.actief {
@@ -761,6 +832,28 @@ pub fn gereed(app: &mut App, d: Doel, r: Result<Antwoord, String>) -> Task<Msg> 
         }
     };
     let cursor_doel = a.writer_cursor.clone();
+    let mut cursorfout = None;
+    if matches!(v.soort, Soort::Structuur { .. }) {
+        if let Some(punt) = &a.writer_positie
+            && let Some(veld) = a.beeld.velden.iter().find(|f| f.id == punt.id)
+            && punt.positie <= veld.tekst.chars().count()
+        {
+            v.cursor = Cursor {
+                id: punt.id.clone(),
+                cursor: iced::advanced::text::editor::Cursor {
+                    position: plek(&veld.tekst, punt.positie),
+                    selection: None,
+                },
+                voorkeur: cursor_doel.as_ref().map(|c| (a.hash.clone(), c.clone())),
+            };
+            if cursor_doel.is_none() {
+                cursorfout=Some("De alineabewerking is toegepast; haar cursor kon niet op de pagina worden geplaatst. Vervolginvoer blijft bewaard.".to_string());
+            }
+        } else {
+            cursorfout=Some("De alineabewerking is toegepast; het teruggegeven cursordoel ontbreekt. Vervolginvoer blijft bewaard.".into());
+        }
+    }
+
     if let Soort::Cursor { selecteren } = v.soort {
         let Some(c) = &cursor_doel else {
             app.tabs[i].bezig = false;
@@ -839,6 +932,23 @@ pub fn gereed(app: &mut App, d: Doel, r: Result<Antwoord, String>) -> Task<Msg> 
                 st.geschiedenis.pop_front();
             }
         }
+        Soort::Structuur { voor } => {
+            // Nieuwe alinea-ID’s en verwijderde grenzen zijn geen tekstdelta.
+            // Oude pagina-aanwijzingen worden daarom veilig opnieuw gevraagd.
+            st.veranderingen.clear();
+            if v.hash != nieuw {
+                st.geschiedenis.push_back(Geschiedenis {
+                    groep: nummer(),
+                    voor_hash: v.hash,
+                    na_hash: nieuw,
+                    voor: *voor,
+                    na: v.cursor.clone(),
+                });
+                while st.geschiedenis.len() > 32 {
+                    st.geschiedenis.pop_front();
+                }
+            }
+        }
         Soort::Terug | Soort::Vooruit => {
             st.veranderingen.clear();
         }
@@ -857,6 +967,13 @@ pub fn gereed(app: &mut App, d: Doel, r: Result<Antwoord, String>) -> Task<Msg> 
         Soort::Cursor { .. } => {}
     }
     st.ververs(t);
+    if let Some(e) = cursorfout {
+        st.fout = true;
+        t.writer_focus.store(false, Ordering::Relaxed);
+        if actief {
+            app.melding = e;
+        }
+    }
     t.writer_direct = st;
     Task::batch([taak, verwerk(app, d.document)])
 }

@@ -46,6 +46,11 @@ pub enum AlineaActie {
     Splits {
         positie: usize,
     },
+    /// Verwijder de Unicode-selectie en splits in dezelfde brontransactie.
+    SplitsBereik {
+        begin: usize,
+        einde: usize,
+    },
     VoegVolgendeSamen,
 }
 
@@ -113,6 +118,13 @@ fn vervang(blokken: &mut Vec<B>, ids: &[String], nieuw: &[B]) -> bool {
 }
 
 pub fn alinea(d: &mut docx::Document, id: &str, actie: AlineaActie) -> Resultaat<()> {
+    let actie = match actie {
+        AlineaActie::Splits { positie } => AlineaActie::SplitsBereik {
+            begin: positie,
+            einde: positie,
+        },
+        a => a,
+    };
     let (blokken, i) = zoek(&d.model().body.content, id)
         .ok_or_else(|| fout("Alinea ontbreekt of staat in een inhoudsbesturing"))?;
     let B::Paragraph(p) = &blokken[i] else {
@@ -121,9 +133,10 @@ pub fn alinea(d: &mut docx::Document, id: &str, actie: AlineaActie) -> Resultaat
     controleer(p)?;
     let mut eerste = (**p).clone();
     let (ids, nieuw) = match actie {
-        AlineaActie::Splits { positie } => {
+        AlineaActie::Splits { .. } => unreachable!(),
+        AlineaActie::SplitsBereik { begin, einde } => {
             let tekst = docx::get_paragraph_text(p);
-            if positie > tekst.chars().count() {
+            if begin > einde || einde > tekst.chars().count() {
                 return Err(fout("Splitspositie valt buiten de alinea"));
             }
             let mut tweede = (**p).clone();
@@ -150,7 +163,8 @@ pub fn alinea(d: &mut docx::Document, id: &str, actie: AlineaActie) -> Resultaat
                 .page_break_before = Some(false);
             // Een sectie-einde blijft achter de oorspronkelijke volledige tekst.
             eerste.section_properties = None;
-            let (links, rechts) = crate::writer_tekst::splits_inhoud(p, positie);
+            let (links, _) = crate::writer_tekst::splits_inhoud(p, begin);
+            let (_, rechts) = crate::writer_tekst::splits_inhoud(p, einde);
             eerste.content = links;
             tweede.content = rechts;
             (
@@ -200,4 +214,110 @@ pub fn alinea(d: &mut docx::Document, id: &str, actie: AlineaActie) -> Resultaat
         }
     }
     Ok(())
+}
+
+/// Alineagrenzen via toetsen; zachte regelovergangen blijven tekstinvoer.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum CursorActie {
+    Splits,
+    VorigeSamen,
+    VolgendeSamen,
+}
+pub(crate) struct CursorPlan {
+    id: String,
+    actie: AlineaActie,
+    doel: CursorNa,
+}
+enum CursorNa {
+    NieuwNa(String),
+    Bestaand(crate::writer_cursor::TekstPunt),
+}
+pub(crate) fn cursor_plan(
+    d: &docx::Document,
+    id: &str,
+    begin: usize,
+    einde: usize,
+    actie: CursorActie,
+) -> Resultaat<Option<CursorPlan>> {
+    use crate::writer_cursor::TekstPunt;
+    let (blokken, i) = zoek(&d.model().body.content, id)
+        .ok_or_else(|| fout("Alinea ontbreekt of staat in een inhoudsbesturing"))?;
+    let B::Paragraph(p) = &blokken[i] else {
+        unreachable!()
+    };
+    controleer(p)?;
+    let lengte = crate::writer_tekst::alinea_tekst(p).chars().count();
+    if begin > einde || einde > lengte {
+        return Err(fout("De alineacursor valt buiten de brontekst"));
+    }
+    let (id, bewerking, doel) = match actie {
+        CursorActie::Splits => (
+            id.into(),
+            AlineaActie::SplitsBereik { begin, einde },
+            CursorNa::NieuwNa(id.into()),
+        ),
+        CursorActie::VorigeSamen | CursorActie::VolgendeSamen => {
+            if begin != einde
+                || (actie == CursorActie::VorigeSamen && begin != 0)
+                || (actie == CursorActie::VolgendeSamen && begin != lengte)
+            {
+                return Err(fout(
+                    "Samenvoegen met een toets vraagt een cursor op de alineagrens zonder selectie",
+                ));
+            }
+            let eerste = if actie == CursorActie::VorigeSamen {
+                let Some(j) = i.checked_sub(1) else {
+                    return Ok(None);
+                };
+                j
+            } else {
+                i
+            };
+            let (Some(B::Paragraph(a)), Some(B::Paragraph(_))) =
+                (blokken.get(eerste), blokken.get(eerste + 1))
+            else {
+                return Ok(None);
+            };
+            let id = a
+                .para_id
+                .clone()
+                .ok_or_else(|| fout("De aangrenzende alinea mist een adres"))?;
+            let positie = crate::writer_tekst::alinea_tekst(a).chars().count();
+            (
+                id.clone(),
+                AlineaActie::VoegVolgendeSamen,
+                CursorNa::Bestaand(TekstPunt { id, positie }),
+            )
+        }
+    };
+    Ok(Some(CursorPlan {
+        id,
+        actie: bewerking,
+        doel,
+    }))
+}
+pub(crate) fn cursor_toepassen(
+    d: &mut docx::Document,
+    plan: CursorPlan,
+) -> Resultaat<crate::writer_cursor::TekstPunt> {
+    alinea(d, &plan.id, plan.actie)?;
+    match plan.doel {
+        CursorNa::Bestaand(p) => Ok(p),
+        CursorNa::NieuwNa(id) => {
+            let (blokken, i) = zoek(&d.model().body.content, &id)
+                .ok_or_else(|| fout("De gesplitste bronalinea ontbreekt"))?;
+            let Some(B::Paragraph(p)) = blokken.get(i + 1) else {
+                return Err(fout(
+                    "De nieuwe alinea ontbreekt binnen dezelfde tekst of tabelcel",
+                ));
+            };
+            Ok(crate::writer_cursor::TekstPunt {
+                id: p
+                    .para_id
+                    .clone()
+                    .ok_or_else(|| fout("De nieuwe alinea mist een adres"))?,
+                positie: 0,
+            })
+        }
+    }
 }

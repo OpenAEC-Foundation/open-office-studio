@@ -278,6 +278,7 @@ pub(super) fn app_met_document(module: Module, bytes: &[u8]) -> App {
         raster_selectie: None,
         deel: 0,
         writer_markering: None,
+        writer_positie: None,
         writer_cursor: None,
         beeld,
         hash: sessie.bron_hash().into(),

@@ -306,7 +306,14 @@ impl Widget<Msg, Theme, Renderer> for Blad<'_> {
                             }
                             Named::Backspace => Some(A::Edit(E::Backspace)),
                             Named::Delete => Some(A::Edit(E::Delete)),
-                            Named::Enter => Some(A::Edit(E::Enter)),
+                            Named::Enter if modifiers.command() || modifiers.alt() => None,
+                            Named::Enter if modifiers.shift() => Some(A::Edit(E::Enter)),
+                            Named::Enter => {
+                                bericht = Some(writer_direct::Bericht::Structuur(
+                                    office_core::writer::CursorActie::Splits,
+                                ));
+                                None
+                            }
                             Named::Escape => {
                                 bericht = Some(writer_direct::Bericht::Ontsnap);
                                 None

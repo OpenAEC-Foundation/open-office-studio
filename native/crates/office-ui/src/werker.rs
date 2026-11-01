@@ -9,6 +9,7 @@ use std::{
 pub struct Antwoord {
     pub deel: usize,
     pub raster_selectie: Option<office_core::rekenblad::CelSelectie>,
+    pub writer_positie: Option<office_core::writer_cursor::TekstPunt>,
     pub writer_cursor: Option<office_core::writer_navigatie::CursorDoel>,
     pub writer_markering: Option<office_core::writer_cursor::TekstMarkering>,
     pub beeld: Weergave,
@@ -19,6 +20,14 @@ pub struct Antwoord {
 }
 #[derive(Debug, Clone)]
 pub enum Opdracht {
+    WriterAlinea {
+        deel: usize,
+        hash: String,
+        id: String,
+        begin: usize,
+        einde: usize,
+        actie: office_core::writer::CursorActie,
+    },
     WriterCursor {
         deel: usize,
         hash: String,
@@ -123,12 +132,14 @@ impl Werker {
                             .ok_or("Document niet meer geopend")?;
                         let mut beeld=None;
                         let mut raster_selectie=None;
+                        let mut writer_positie=None;
+                        let mut writer_cursor=None;
                         match taak.opdracht {
                             Opdracht::WriterCursor {deel:n,hash,punt,richting,voorkeur,doel_x}=>{
                                 let cursor=sessie.verplaats_cursor(n,&hash,&punt,richting,voorkeur.as_ref(),doel_x).map_err(|e|e.to_string())?;
                                 let pagina=cursor.pagina;let mut beeld=sessie.weergave(pagina).map_err(|e|e.to_string())?;beeld.voorkeursveld=Some(cursor.punt.id.clone());
                                 *deel=pagina;
-                                return Ok(Antwoord {deel:pagina,raster_selectie:None,writer_cursor:Some(cursor),writer_markering:None,beeld,bron:sessie.bron(),hash:sessie.bron_hash().into(),terug:sessie.kan_terug(),vooruit:sessie.kan_vooruit()});
+                                return Ok(Antwoord {deel:pagina,raster_selectie:None,writer_cursor:Some(cursor),writer_positie:None,writer_markering:None,beeld,bron:sessie.bron(),hash:sessie.bron_hash().into(),terug:sessie.kan_terug(),vooruit:sessie.kan_vooruit()});
                             }
                             Opdracht::Deel(n) => {
                                 beeld=Some(sessie.weergave(n).map_err(|e| e.to_string())?);
@@ -151,7 +162,22 @@ impl Werker {
                                 };
                                 // De interface accepteert het doel pas na haar versie-/focuscontrole.
                                 // Een oud navigatieantwoord mag het werkdraaddeel niet verplaatsen.
-                                return Ok(Antwoord{deel:pagina,raster_selectie:None,writer_markering,writer_cursor:None,beeld,bron:sessie.bron(),hash:sessie.bron_hash().into(),terug:sessie.kan_terug(),vooruit:sessie.kan_vooruit()});
+                                return Ok(Antwoord{deel:pagina,raster_selectie:None,writer_markering,writer_positie:None,writer_cursor:None,beeld,bron:sessie.bron(),hash:sessie.bron_hash().into(),terug:sessie.kan_terug(),vooruit:sessie.kan_vooruit()});
+                            }
+                            Opdracht::WriterAlinea { deel:n, hash, id, begin, einde, actie } => {
+                                let (mut b,punt)=sessie.bewerk_alinea_cursor(n,&hash,&id,begin,einde,actie).map_err(|e|e.to_string())?;
+                                let mut pagina=n.min(b.onderdelen.len().saturating_sub(1));
+                                let zichtbaar=b.writer_frame.as_ref().is_some_and(|f|f.cursordoel(&punt.id,punt.positie).is_ok());
+                                if !zichtbaar {
+                                    match sessie.naar_tekstbereik(&punt.id,sessie.bron_hash(),punt.positie,punt.positie) {
+                                        Ok((p,nieuw))=>{pagina=p;b=nieuw;},
+                                        Err(e)=>b.melding.push_str(&format!(" · Alinea toegepast; cursorplaatsing niet beschikbaar: {e}")),
+                                    }
+                                }
+                                writer_cursor=b.writer_frame.as_ref().and_then(|f|f.cursordoel(&punt.id,punt.positie).ok());
+                                b.voorkeursveld=Some(punt.id.clone());
+                                writer_positie=Some(punt);
+                                *deel=pagina;beeld=Some(b);
                             }
                             Opdracht::WriterInvoer {deel:n,hash,groep,reeks,positie} => {
                                 if hash!=sessie.bron_hash() {return Err("Deze invoer hoort bij een verouderde documentversie".into());}
@@ -179,7 +205,7 @@ impl Werker {
                                 return Ok(Antwoord {
                                     deel:*deel,
                                     raster_selectie:None,
-                                    writer_markering:None,writer_cursor:None,
+                                    writer_positie:None,writer_markering:None,writer_cursor:None,
                                     beeld,
                                     hash:sessie.bron_hash().into(),
                             bron: sessie.bron(),
@@ -192,7 +218,7 @@ impl Werker {
                         Ok(Antwoord {
                             deel:*deel,
                             raster_selectie,
-                            writer_markering:None,writer_cursor:None,
+                            writer_positie,writer_markering:None,writer_cursor,
                             beeld: match beeld {Some(b)=>b,None=>sessie.weergave(*deel).map_err(|e| e.to_string())?},
                             hash:sessie.bron_hash().into(),
                             bron: sessie.bron(),

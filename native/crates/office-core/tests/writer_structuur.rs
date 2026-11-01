@@ -269,3 +269,218 @@ fn verdwijnende_laatste_pagina_breekt_een_geldige_bewerking_niet_af() {
     assert_eq!(*s.bron(), *bron);
     assert_eq!(s.weergave(1).unwrap().onderdelen.len(), 2);
 }
+
+#[test]
+fn alineacursor_selectie_splitsen_is_atomair_en_behoudt_de_overige_inhoud() {
+    use office_core::writer::CursorActie as C;
+    let mut s = Sessie::open(Module::Writer, BRON.to_vec()).unwrap();
+    let sleutel = id(&s, "Links 🏠 café rechts");
+    let hash = s.bron_hash().to_owned();
+    let aantal = s.weergave(0).unwrap().velden.len();
+    let (beeld, doel) = s
+        .bewerk_alinea_cursor(0, &hash, &sleutel, 8, 12, C::Splits)
+        .unwrap();
+    assert_eq!(beeld.velden.len(), aantal + 1);
+    assert!(
+        beeld
+            .velden
+            .iter()
+            .any(|v| v.id == sleutel && v.tekst == "Links 🏠 ")
+    );
+    assert!(
+        beeld
+            .velden
+            .iter()
+            .any(|v| v.id == doel.id && v.tekst == " rechts")
+    );
+    assert_eq!(doel.positie, 0);
+    ongewijzigde_delen(&s.bron());
+    bewaar("writer-cursor-selectie.docx", &s.bron());
+    let nieuw = s.bron();
+    s.terug().unwrap();
+    assert_eq!(s.bron().as_slice(), BRON);
+    s.vooruit().unwrap();
+    assert_eq!(*s.bron(), *nieuw);
+}
+
+#[test]
+fn alineacursor_beide_samenvoegtoetsen_geven_de_oorspronkelijke_grens_terug() {
+    use office_core::writer::CursorActie as C;
+    for terug in [false, true] {
+        let mut s = Sessie::open(Module::Writer, BRON.to_vec()).unwrap();
+        let sleutel = id(&s, "Links 🏠 café rechts");
+        let hash = s.bron_hash().to_owned();
+        let (_, rechts) = s
+            .bewerk_alinea_cursor(0, &hash, &sleutel, 8, 8, C::Splits)
+            .unwrap();
+        let gesplitst = s.bron();
+        let hash = s.bron_hash().to_owned();
+        let (beeld, punt) = s
+            .bewerk_alinea_cursor(
+                0,
+                &hash,
+                if terug { &rechts.id } else { &sleutel },
+                if terug { 0 } else { 8 },
+                if terug { 0 } else { 8 },
+                if terug {
+                    C::VorigeSamen
+                } else {
+                    C::VolgendeSamen
+                },
+            )
+            .unwrap();
+        assert_eq!(punt.id, sleutel);
+        assert_eq!(punt.positie, 8);
+        assert!(
+            beeld
+                .velden
+                .iter()
+                .any(|v| v.id == sleutel && v.tekst == "Links 🏠 café rechts")
+        );
+        ongewijzigde_delen(&s.bron());
+        s.terug().unwrap();
+        assert_eq!(*s.bron(), *gesplitst);
+        s.terug().unwrap();
+        assert_eq!(s.bron().as_slice(), BRON);
+    }
+}
+
+#[test]
+fn alineacursor_doorkruist_geen_tabelcellen_of_sectie_einde_en_maakt_geen_lege_undo() {
+    use office_core::writer::CursorActie as C;
+    let mut s = Sessie::open(Module::Writer, BRON.to_vec()).unwrap();
+    for (tekst, actie) in [
+        ("Voor de rijke alinea", C::VorigeSamen),
+        ("Cel één", C::VorigeSamen),
+        ("Cel twee", C::VolgendeSamen),
+    ] {
+        let sleutel = id(&s, tekst);
+        let hash = s.bron_hash().to_owned();
+        let pos = if actie == C::VorigeSamen {
+            0
+        } else {
+            tekst.chars().count()
+        };
+        let (_, punt) = s
+            .bewerk_alinea_cursor(0, &hash, &sleutel, pos, pos, actie)
+            .unwrap();
+        assert_eq!(punt.id, sleutel);
+        assert_eq!(punt.positie, pos);
+        assert_eq!(s.bron().as_slice(), BRON);
+        assert!(!s.kan_terug());
+    }
+    let Document::Writer(d) = Document::open(Module::Writer, &s.bron()).unwrap() else {
+        panic!()
+    };
+    let sectie = d
+        .paragraphs()
+        .into_iter()
+        .find(|p| p.section_properties.is_some())
+        .unwrap()
+        .para_id
+        .clone()
+        .unwrap();
+    let hash = s.bron_hash().to_owned();
+    assert!(
+        s.bewerk_alinea_cursor(0, &hash, &sectie, 0, 0, C::VolgendeSamen)
+            .is_err()
+    );
+    assert_eq!(s.bron().as_slice(), BRON);
+    assert!(!s.kan_terug());
+}
+
+#[test]
+fn alineacursor_weigert_verouderde_posities_module_en_bronbeveiliging_zonder_wijziging() {
+    use office_core::writer::CursorActie as C;
+    let mut s = Sessie::open(Module::Writer, BRON.to_vec()).unwrap();
+    let sleutel = id(&s, "Links 🏠 café rechts");
+    for (begin, einde) in [(3, 2), (0, 100), (100, 100)] {
+        let hash = s.bron_hash().to_owned();
+        assert!(
+            s.bewerk_alinea_cursor(0, &hash, &sleutel, begin, einde, C::Splits)
+                .is_err()
+        );
+        assert_eq!(s.bron().as_slice(), BRON);
+        assert!(!s.kan_terug());
+    }
+    assert!(
+        s.bewerk_alinea_cursor(0, "andere bron", &sleutel, 0, 0, C::Splits)
+            .is_err()
+    );
+    assert_eq!(s.bron().as_slice(), BRON);
+    assert!(!s.kan_terug());
+    let mut s = Sessie::open(
+        Module::Writer,
+        include_bytes!("fixtures/writer-beveiligd.docx").to_vec(),
+    )
+    .unwrap();
+    let bron = s.bron();
+    let veld = s.weergave(0).unwrap().velden[0].clone();
+    for actie in [C::Splits, C::VorigeSamen, C::VolgendeSamen] {
+        let hash = s.bron_hash().to_owned();
+        let pos = if actie == C::VolgendeSamen {
+            veld.tekst.chars().count()
+        } else {
+            0
+        };
+        assert!(
+            s.bewerk_alinea_cursor(0, &hash, &veld.id, pos, pos, actie)
+                .is_err()
+        );
+        assert_eq!(*s.bron(), *bron);
+        assert!(!s.kan_terug());
+    }
+    let mut s = Sessie::nieuw(Module::Spreadsheet).unwrap();
+    let bron = s.bron();
+    let hash = s.bron_hash().to_owned();
+    assert!(
+        s.bewerk_alinea_cursor(0, &hash, "A1", 0, 0, C::Splits)
+            .is_err()
+    );
+    assert_eq!(*s.bron(), *bron);
+    assert!(!s.kan_terug());
+}
+
+#[test]
+fn alineacursor_lege_nieuwe_alinea_heeft_een_werkelijke_cursor_en_bewaart_runopmaak() {
+    use office_core::writer::CursorActie as C;
+    let mut s = Sessie::open(Module::Writer, BRON.to_vec()).unwrap();
+    let tekst = "Links 🏠 café rechts";
+    let sleutel = id(&s, tekst);
+    let hash = s.bron_hash().to_owned();
+    let (beeld, punt) = s
+        .bewerk_alinea_cursor(
+            0,
+            &hash,
+            &sleutel,
+            tekst.chars().count(),
+            tekst.chars().count(),
+            C::Splits,
+        )
+        .unwrap();
+    let veld = beeld.velden.iter().find(|v| v.id == punt.id).unwrap();
+    assert_eq!(veld.tekst, "");
+    assert!(veld.opmaak.cursief);
+    assert!(
+        beeld
+            .writer_frame
+            .as_ref()
+            .unwrap()
+            .cursordoel(&punt.id, 0)
+            .is_ok()
+    );
+    s.bewerk(
+        0,
+        Bewerking::Tekst {
+            id: punt.id.clone(),
+            tekst: "Nieuwe tekst 🏠".into(),
+        },
+    )
+    .unwrap();
+    let beeld = s.weergave(0).unwrap();
+    let veld = beeld.velden.iter().find(|v| v.id == punt.id).unwrap();
+    assert_eq!(veld.tekst, "Nieuwe tekst 🏠");
+    assert!(veld.opmaak.cursief);
+    ongewijzigde_delen(&s.bron());
+    bewaar("writer-cursor-leeg.docx", &s.bron());
+}
