@@ -8,6 +8,8 @@ mod lettertypen_ui;
 mod lineaal;
 mod lint;
 mod mail_ui;
+mod notitie_navigatie_ui;
+mod notitie_raster;
 mod notitie_ui;
 mod pagina_ui;
 mod raster_focus;
@@ -103,6 +105,20 @@ enum Msg {
         hash: String,
         veld: String,
         actie: text_editor::Action,
+    },
+    NotitieBoek(usize),
+    NotitieSoort {
+        document: u64,
+        hash: String,
+        deel: usize,
+        markdown: bool,
+    },
+    NotitieNieuwVak {
+        document: u64,
+        hash: String,
+        deel: usize,
+        x: f32,
+        y: f32,
     },
     Adres(String),
     GaNaar,
@@ -220,6 +236,7 @@ struct Tab {
     markdown: Vec<iced::widget::markdown::Item>,
     notitie_invoer: bool,
     notitie_editors: Vec<Option<text_editor::Content>>,
+    notitie_woorden: Vec<usize>,
     scroll: iced::Point,
     na_bewerking: Option<bool>, // Opslaan; bool geeft Opslaan als aan.
 }
@@ -259,6 +276,7 @@ impl Tab {
             markdown: vec![],
             notitie_invoer: false,
             notitie_editors: vec![],
+            notitie_woorden: vec![],
             scroll: iced::Point::ORIGIN,
             na_bewerking: None,
         }
@@ -999,6 +1017,83 @@ impl App {
                     t.adres = a;
                 }
             }
+            Msg::NotitieBoek(n) => {
+                let doel = self
+                    .tab()
+                    .and_then(|t| t.antwoord.as_ref())
+                    .and_then(|a| a.beeld.notitie.as_ref())
+                    .and_then(|p| p.overzicht.boeken.get(n))
+                    .and_then(|b| {
+                        b.secties
+                            .iter()
+                            .flat_map(|s| &s.paginas)
+                            .find(|p| !p.verwijderd)
+                            .or_else(|| b.secties.iter().flat_map(|s| &s.paginas).next())
+                    })
+                    .map(|p| p.deel);
+                if let Some(n) = doel {
+                    return self.update(Msg::Deel(n));
+                }
+                return self.waarschuwing("Dit notitieboek heeft geen actieve pagina; openen van lege boeken is nog niet overgezet");
+            }
+            Msg::NotitieSoort {
+                document,
+                hash,
+                deel,
+                markdown,
+            } => {
+                if !self.bestand
+                    && !self.instellingen
+                    && self.exportblad.is_none()
+                    && self.sluiten.is_none()
+                    && !self.postvak_zichtbaar
+                    && self.tab().is_some_and(|t| {
+                        t.id == document
+                            && t.deel == deel
+                            && !t.bezig
+                            && !t.schrijft
+                            && t.antwoord.as_ref().is_some_and(|a| {
+                                a.hash == hash
+                                    && a.beeld
+                                        .notitie
+                                        .as_ref()
+                                        .is_some_and(|p| p.markdown != markdown)
+                            })
+                    })
+                {
+                    return self.update(Msg::Notitie(
+                        office_core::notities::NotitieActie::KopieerSectie { markdown },
+                    ));
+                }
+            }
+            Msg::NotitieNieuwVak {
+                document,
+                hash,
+                deel,
+                x,
+                y,
+            } => {
+                if !self.bestand
+                    && !self.instellingen
+                    && self.exportblad.is_none()
+                    && self.sluiten.is_none()
+                    && !self.postvak_zichtbaar
+                    && self.tab().is_some_and(|t| {
+                        t.id == document
+                            && t.deel == deel
+                            && !t.bezig
+                            && !t.schrijft
+                            && !t.concept
+                            && t.antwoord.as_ref().is_some_and(|a| {
+                                a.hash == hash && a.beeld.module == Module::Notition
+                            })
+                    })
+                {
+                    return self.update(Msg::Notitie(
+                        office_core::notities::NotitieActie::NieuwVak { x, y },
+                    ));
+                }
+            }
             Msg::NotitieInvoer {
                 document,
                 hash,
@@ -1364,6 +1459,16 @@ impl App {
                         return self.waarschuwing(&e);
                     }
                     t.concept |= bewerkt;
+                    if bewerkt
+                        && t.antwoord
+                            .as_ref()
+                            .is_some_and(|a| a.beeld.module == Module::Notition)
+                    {
+                        let aantal = t.editor.text().split_whitespace().count();
+                        if let Some(woorden) = t.notitie_woorden.get_mut(t.gekozen) {
+                            *woorden = aantal;
+                        }
+                    }
                     if bewerkt
                         && t.antwoord
                             .as_ref()

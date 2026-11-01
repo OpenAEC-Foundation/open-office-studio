@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.38**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.39**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -305,6 +305,8 @@ bij herschrijven behouden. IFCX is archivering van de bron; de semantische
 bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
+
+Het [werkrapport voor alpha 39](docs/controle-2026-11-01-alpha39.md) beschrijft de nieuwe Notities-kolommen, het lichte canvas, echte dubbelklik-invoer, sectiekopie via de typekeuze en live woordtelling. Zeventien gerichte tests en Clippy slagen; de volledige ronde en platform-/vensterproeven lopen nog. De desktopvoorproef daalt van 665709 naar 145039 afwijkende pixels en blijft afgekeurd.
 
 Het [actuele controlerapport voor alpha 38](docs/controle-2026-11-01-alpha38.md) legt **398 reguliere Rust-tests**, waaronder **158 UI-tests**, zes runtimeproeven en zeven Python-tests vast. Alle 671 bronbestanden blijven tijdens de volledige ronde bytegelijk. De Notities-crash, zichtbare formaatgreep en preview-undo zijn hersteld; echte Linux-vensterproeven slagen op het debug- en releaseprogramma. De CI-herhaling slaagt op alle vijf taken, met 3951 verpakte bronbestanden per platform, 120 exacte native beeldparen en 21 paginabezoeken; de eerste schermtellingafkeuring blijft bewaard. Alle oorspronkelijke pixelafkeuringen en ontbrekende suitefuncties blijven open.
 

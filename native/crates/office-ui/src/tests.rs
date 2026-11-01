@@ -160,31 +160,23 @@ fn canvas_slepen_geeft_een_enkele_definitieve_bewerking() {
 }
 #[test]
 fn notitie_canvas_en_markdown_renderen_met_benoemde_bediening() {
-    use office_core::notities::NotitieActie as N;
-    let mut s = Sessie::nieuw(Module::Notition).unwrap();
-    s.bewerk(0, Bewerking::Notitie(N::Sectiesoort { markdown: false }))
-        .unwrap();
-    for (x, y, tekst) in [
-        (40., 32., "Een vrij tekstvak"),
-        (660., 240., "Een idee op een andere plek"),
-    ] {
-        s.bewerk(0, Bewerking::Notitie(N::NieuwVak { x, y }))
-            .unwrap();
-        let b = s.weergave(0).unwrap();
-        let id = b.velden.last().unwrap().id.clone();
-        s.bewerk(
-            0,
-            Bewerking::Tekst {
-                id,
-                tekst: tekst.into(),
-            },
-        )
-        .unwrap();
-    }
+    let oorspronkelijk: serde_json::Value = serde_json::from_slice(include_bytes!(
+        "../../../../docs/voorbeelden/Notitieboek.json"
+    ))
+    .unwrap();
     for (naam, markdown) in [("notition-canvas", false), ("notition-markdown", true)] {
-        s.bewerk(0, Bewerking::Notitie(N::Sectiesoort { markdown }))
-            .unwrap();
-        let app = app_met_document(Module::Notition, &s.bron());
+        // Een echte vaste bron maakt ook de zichtbare datum onafhankelijk
+        // van de starttijd en tijdzone van de platformtaak. De MD-bron bevat
+        // werkelijk tekst, een kop en een lijst; de canvasbron blijft intact.
+        let mut fixture = oorspronkelijk.clone();
+        if markdown {
+            fixture["boeken"][0]["secties"]
+                .as_array_mut()
+                .unwrap()
+                .swap(0, 1);
+        }
+        let bytes = serde_json::to_vec(&fixture).unwrap();
+        let app = app_met_document(Module::Notition, &bytes);
         assert!(toegankelijkheid(&app).unnamed.is_empty());
         let png = render(&app);
         if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
@@ -201,7 +193,7 @@ fn referentie_renderen(module: Module, bron: &[u8], naam: &str, uitvoernaam: &st
     app.venster_grootte = Size::new(1058., 892.);
     let t = app.tab_mut().unwrap();
     t.naam = naam.into();
-    t.panelen = false;
+    t.panelen = module == Module::Notition;
     // De webreferentie toont de voorbeeldpresentatie op 65%; de andere
     // documenten op 100%. Hetzelfde zoomniveau is ook native bedienbaar.
     if module == Module::Presentation {

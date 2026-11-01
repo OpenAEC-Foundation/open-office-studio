@@ -115,6 +115,27 @@ fn notitie_omzetting_bewaart_canvas_en_opent_een_gevulde_markdownkopie() {
             .markdown
     );
     assert_eq!(p.app.tab().unwrap().deel, 2);
+    let t = p.app.tab().unwrap();
+    let document = t.id;
+    let hash = t.antwoord.as_ref().unwrap().hash.clone();
+    let voor = p.bron();
+    p.bericht(Msg::NotitieSoort {
+        document,
+        hash: hash.clone(),
+        deel: 2,
+        markdown: true,
+    });
+    p.bericht(Msg::NotitieSoort {
+        document: document + 1,
+        hash,
+        deel: 2,
+        markdown: false,
+    });
+    assert_eq!(
+        *p.bron(),
+        *voor,
+        "Gelijke keuze en een oud document mogen niets kopiëren"
+    );
     p.bericht(Msg::Terug);
     assert_eq!(p.bron().as_slice(), bron.as_slice());
     assert_eq!(p.app.tab().unwrap().deel, 0);
@@ -131,12 +152,286 @@ fn notitie_omzetting_bewaart_canvas_en_opent_een_gevulde_markdownkopie() {
             .unwrap()
             .markdown
     );
+    let t = p.app.tab().unwrap();
+    let document = t.id;
+    let hash = t.antwoord.as_ref().unwrap().hash.clone();
+    p.bericht(Msg::NotitieSoort {
+        document,
+        hash,
+        deel: 0,
+        markdown: true,
+    });
+    let nieuw: serde_json::Value = serde_json::from_slice(&p.bron()).unwrap();
+    assert_eq!(
+        nieuw["boeken"][0]["secties"][0],
+        origineel["boeken"][0]["secties"][0]
+    );
+    assert_eq!(
+        nieuw["boeken"][0]["secties"][1],
+        origineel["boeken"][0]["secties"][1]
+    );
+    assert_eq!(nieuw["boeken"][0]["secties"][2]["soort"], "markdown");
+    assert!(
+        nieuw["boeken"][0]["secties"][2]["paginas"][0]["markdown"]
+            .as_str()
+            .unwrap()
+            .contains("Een vrij tekstvak")
+    );
+    assert_eq!(p.app.tab().unwrap().deel, 2);
+    p.bericht(Msg::Terug);
+    assert_eq!(p.bron().as_slice(), bron);
+}
+fn notitie_tekstpunt(p: &mut Proef, index: usize) -> iced::Point {
+    let v = p
+        .toegankelijkheid()
+        .nodes
+        .into_iter()
+        .filter(|n| n.node.name == "Notitietekst")
+        .nth(index)
+        .unwrap()
+        .bounds;
+    iced::Point::new(v.x + 12., v.y + 10.)
+}
+#[test]
+fn notitie_originele_werkruimte_heeft_boek_en_paginakolom_en_een_licht_canvas() {
+    let bron = include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json");
+    // De oorspronkelijke notities.css gebruikt 228/250 px voor de navigatie;
+    // canvas.css houdt het werkblad ook bij een donkere schil op #fafaf9.
+    for thema in [ThemeId::Light, ThemeId::Dark] {
+        let mut app = app_met_werkdraad(Module::Notition, bron);
+        app.thema = thema;
+        let mut p = Proef::met_app(app);
+        let nodes = p.toegankelijkheid().nodes;
+        let boek = nodes
+            .iter()
+            .find(|n| n.node.name == "Notitieboeken")
+            .expect("De oorspronkelijke boekkolom ontbreekt")
+            .bounds;
+        let pagina = nodes
+            .iter()
+            .find(|n| n.node.name == "Notitiepagina's")
+            .expect("De afzonderlijke paginakolom ontbreekt")
+            .bounds;
+        let canvas = nodes
+            .iter()
+            .find(|n| n.node.name == "Notitiecanvas")
+            .expect("Het herkenbare vrije canvas ontbreekt")
+            .bounds;
+        assert_eq!((boek.x, boek.width), (0., 228.));
+        assert_eq!((pagina.x, pagina.width), (228., 250.));
+        assert_eq!(canvas.x, 478.);
+        let beeld = p.verbeeld();
+        let kleur = beeld
+            .pixel((canvas.x + 11.) as u32, (canvas.y + 11.) as u32)
+            .unwrap();
+        assert_eq!(
+            (kleur.red(), kleur.green(), kleur.blue(), kleur.alpha()),
+            (250, 250, 249, 255)
+        );
+        assert_eq!(p.bron().as_slice(), bron);
+    }
+}
+#[test]
+fn notitie_boekkiezer_en_panelen_behouden_identiteit_concept_en_bron() {
+    let mut d: serde_json::Value = serde_json::from_slice(include_bytes!(
+        "../../../../../docs/voorbeelden/Notitieboek.json"
+    ))
+    .unwrap();
+    fn nieuwe_ids(v: &mut serde_json::Value) {
+        match v {
+            serde_json::Value::Object(o) => {
+                for (k, v) in o {
+                    if k == "id" {
+                        *v = serde_json::json!(format!("{}-kopie", v.as_str().unwrap()));
+                    } else {
+                        nieuwe_ids(v);
+                    }
+                }
+            }
+            serde_json::Value::Array(a) => {
+                for v in a {
+                    nieuwe_ids(v);
+                }
+            }
+            _ => {}
+        }
+    }
+    let mut kopie = d["boeken"][0].clone();
+    nieuwe_ids(&mut kopie);
+    kopie["naam"] = serde_json::json!("Dubbel / boek");
+    d["boeken"][0]["naam"] = kopie["naam"].clone();
+    d["boeken"].as_array_mut().unwrap().push(kopie);
+    d["boeken"]
+        .as_array_mut()
+        .unwrap()
+        .push(serde_json::json!({"id":"leeg-boek","naam":"Leeg boek","secties":[]}));
+    let bron = serde_json::to_vec(&d).unwrap();
+    let mut p = Proef::met_app(app_met_werkdraad(Module::Notition, &bron));
+    p.bericht(Msg::NotitieBoek(1));
+    assert_eq!(p.app.tab().unwrap().deel, 2);
+    assert_eq!(
+        p.app
+            .tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .beeld
+            .notitie
+            .as_ref()
+            .unwrap()
+            .overzicht
+            .boek,
+        1
+    );
+    p.bericht(Msg::NotitieBoek(0));
+    assert_eq!(p.app.tab().unwrap().deel, 0);
+    p.bericht(Msg::NotitieBoek(2));
+    assert_eq!(p.app.tab().unwrap().deel, 0);
+    assert!(p.app.melding.contains("geen actieve pagina"));
+    let punt = notitie_tekstpunt(&mut p, 0);
+    p.klik(punt);
+    p.toets(
+        iced::keyboard::Key::Character("9".into()),
+        iced::keyboard::Modifiers::empty(),
+        Some("9"),
+    );
+    p.toets(
+        iced::keyboard::Key::Character(" Twee extra ".into()),
+        iced::keyboard::Modifiers::empty(),
+        Some(" Twee extra "),
+    );
+    // '9 Twee extra Een vrij tekstvak' telt zes woorden; het tweede vak zes.
+    assert_eq!(
+        p.app
+            .tab()
+            .unwrap()
+            .notitie_woorden
+            .iter()
+            .skip(1)
+            .sum::<usize>(),
+        12
+    );
+    assert_eq!(
+        p.app
+            .tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .beeld
+            .notitie
+            .as_ref()
+            .unwrap()
+            .woorden,
+        9
+    );
+    let concept = p.app.tab().unwrap().editor.text();
+    p.bericht(Msg::NotitieBoek(1));
+    assert_eq!(p.app.tab().unwrap().deel, 0);
+    assert_eq!(p.app.tab().unwrap().editor.text(), concept);
+    p.bericht(Msg::Terug);
+    assert_eq!(p.bron().as_slice(), bron);
+    assert_eq!(
+        p.app
+            .tab()
+            .unwrap()
+            .notitie_woorden
+            .iter()
+            .skip(1)
+            .sum::<usize>(),
+        9
+    );
+    p.bericht(Msg::Panelen);
+    let nodes = p.toegankelijkheid().nodes;
+    assert!(!nodes.iter().any(|n| n.node.name == "Notitiepagina's"));
+    assert_eq!(
+        nodes
+            .iter()
+            .find(|n| n.node.name == "Notitiecanvas")
+            .unwrap()
+            .bounds
+            .x,
+        0.
+    );
+    p.bericht(Msg::Panelen);
+    assert_eq!(
+        p.toegankelijkheid()
+            .nodes
+            .iter()
+            .find(|n| n.node.name == "Notitiecanvas")
+            .unwrap()
+            .bounds
+            .x,
+        478.
+    );
+    assert_eq!(p.bron().as_slice(), bron);
+}
+#[test]
+fn notitie_canvas_dubbelklik_voegt_op_drie_zoomstanden_een_bewerkbaar_vak_toe() {
+    use iced::{Event, keyboard as k, mouse};
+    let bron = include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json");
+    for zoom in [0.75, 1., 1.5] {
+        let mut p = Proef::met_app(app_met_werkdraad(Module::Notition, bron));
+        p.bericht(Msg::Zoom(zoom));
+        let grens = p
+            .toegankelijkheid()
+            .nodes
+            .into_iter()
+            .find(|n| n.node.name == "Notitiecanvas")
+            .unwrap()
+            .bounds;
+        let punt = iced::Point::new(grens.x + 300. * zoom, grens.y + 300. * zoom);
+        p.gebeurtenissen([
+            Event::Mouse(mouse::Event::CursorMoved { position: punt }),
+            Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
+            Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)),
+            Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
+            Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)),
+        ]);
+        let d: serde_json::Value = serde_json::from_slice(&p.bron()).unwrap();
+        let vakken = d["boeken"][0]["secties"][0]["paginas"][0]["vakken"]
+            .as_array()
+            .unwrap();
+        assert_eq!(vakken.len(), 3);
+        assert_eq!(vakken[2]["x"].as_f64(), Some(300.));
+        assert_eq!(vakken[2]["y"].as_f64(), Some(300.));
+        let punt = notitie_tekstpunt(&mut p, 2);
+        p.klik(punt);
+        p.toets(
+            k::Key::Character("Nieuwe notitie9".into()),
+            k::Modifiers::empty(),
+            Some("Nieuwe notitie9"),
+        );
+        p.bericht(Msg::PasToe);
+        let d: serde_json::Value = serde_json::from_slice(&p.bron()).unwrap();
+        assert_eq!(
+            d["boeken"][0]["secties"][0]["paginas"][0]["vakken"][2]["blokken"][0]["tekst"],
+            "Nieuwe notitie9"
+        );
+        p.bericht(Msg::Terug);
+        p.bericht(Msg::Terug);
+        assert_eq!(p.bron().as_slice(), bron);
+        let t = p.app.tab().unwrap();
+        let document = t.id;
+        let hash = t.antwoord.as_ref().unwrap().hash.clone();
+        p.bericht(Msg::Bestand(true));
+        p.bericht(Msg::NotitieNieuwVak {
+            document,
+            hash,
+            deel: 0,
+            x: 300.,
+            y: 300.,
+        });
+        assert_eq!(p.bron().as_slice(), bron);
+    }
 }
 #[test]
 fn notitie_een_tekstklik_en_direct_typen_behouden_de_invoer() {
     let bron = include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json");
     let mut p = Proef::met_app(app_met_werkdraad(Module::Notition, bron));
-    p.klik(iced::Point::new(370., 311.));
+    let punt = notitie_tekstpunt(&mut p, 0);
+    p.klik(punt);
     p.toets(
         iced::keyboard::Key::Character("9".into()),
         iced::keyboard::Modifiers::empty(),
@@ -240,7 +535,8 @@ fn notitie_late_invoer_van_een_andere_bron_wordt_niet_toegepast() {
 fn notitie_paginawissel_rendert_ook_voordat_het_werkdraadantwoord_komt() {
     let bron = include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json");
     let mut p = Proef::met_app(app_met_werkdraad(Module::Notition, bron));
-    p.klik(iced::Point::new(370., 311.));
+    let punt = notitie_tekstpunt(&mut p, 0);
+    p.klik(punt);
     assert_eq!(p.app.tab().unwrap().gekozen, 1);
     let taak = p.app.update(Msg::Deel(1));
     assert!(p.app.tab().unwrap().bezig);

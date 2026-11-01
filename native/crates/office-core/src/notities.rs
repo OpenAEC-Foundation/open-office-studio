@@ -6,7 +6,9 @@ use crate::{
 };
 use serde_json::{Value, json};
 mod omzetten;
+mod overzicht;
 mod positie;
+pub use overzicht::{BoekOverzicht, NotitieOverzicht, PaginaOverzicht, SectieOverzicht};
 pub use positie::Anker;
 pub(crate) use positie::{anker, herstel};
 fn fout(s: &str) -> Fout {
@@ -31,6 +33,9 @@ pub struct NotitiePagina {
     pub titel: String,
     pub markdown: bool,
     pub vakken: Vec<Vak>,
+    pub overzicht: NotitieOverzicht,
+    pub bijgewerkt: String,
+    pub woorden: usize,
 }
 #[derive(Debug, Clone)]
 pub enum NotitieActie {
@@ -350,6 +355,12 @@ pub fn toon(d: &Value, deel: usize, beeld: &mut Weergave) -> Resultaat<()> {
         titel: p["titel"].as_str().unwrap_or_default().into(),
         markdown: *markdown,
         vakken,
+        overzicht: overzicht::bouw(d, deel)?,
+        bijgewerkt: p["bijgewerkt"].as_str().unwrap_or_default().into(),
+        woorden: overzicht::teksten(p, *markdown)
+            .iter()
+            .map(|s| s.split_whitespace().count())
+            .sum(),
     });
     beeld.melding = format!(
         "{} · {} · {}",

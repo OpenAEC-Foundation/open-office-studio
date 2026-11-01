@@ -3,6 +3,18 @@ use super::*;
 use iced::widget::{Space, Stack, column, markdown, pin, row};
 use office_core::notities::NotitieActie as A;
 pub(super) fn vernieuw_editors(t: &mut Tab) {
+    t.notitie_woorden = t
+        .antwoord
+        .as_ref()
+        .filter(|a| a.beeld.module == Module::Notition)
+        .map(|a| {
+            a.beeld
+                .velden
+                .iter()
+                .map(|v| v.tekst.split_whitespace().count())
+                .collect()
+        })
+        .unwrap_or_default();
     t.markdown = t
         .antwoord
         .as_ref()
@@ -191,23 +203,11 @@ pub fn ribbon<'a>(app: &'a App, t: &'a Tab) -> Element<'a, Msg> {
     )
 }
 pub fn weergave<'a>(app: &'a App, t: &'a Tab, a: &'a Antwoord) -> Element<'a, Msg> {
-    let l = app.look();
+    // De oorspronkelijke Office-schil volgt het thema, het notitieblad blijft licht.
+    let l = stijl::office(Look::from(ThemeId::Light)).with_text_size(app.look().text_size);
     let c = l.color;
-    let nav = column(a.beeld.onderdelen.iter().enumerate().map(|(n, naam)| {
-        tekstknop(
-            l,
-            naam.clone(),
-            if n == t.deel { K::Secondary } else { K::Quiet },
-            D::Compact,
-            None,
-            (!t.bezig).then_some(Msg::Deel(n)),
-        )
-    }))
-    .spacing(4)
-    .padding(10);
     let Some(p) = &a.beeld.notitie else {
         return row![
-            w::panel(l, "Notitieboeken", 230., vec![], scrollable(nav).into()),
             container(w::button(
                 l,
                 "Maak een notitieboek",
@@ -234,7 +234,7 @@ pub fn weergave<'a>(app: &'a App, t: &'a Tab, a: &'a Antwoord) -> Element<'a, Ms
                     actie,
                 })
                 .font(iced::Font {
-                    weight: if veld.opmaak.vet {
+                    weight: if n == 0 || veld.opmaak.vet {
                         iced::font::Weight::Bold
                     } else {
                         iced::font::Weight::Normal
@@ -244,18 +244,29 @@ pub fn weergave<'a>(app: &'a App, t: &'a Tab, a: &'a Antwoord) -> Element<'a, Ms
                     } else {
                         iced::font::Style::Normal
                     },
-                    ..fonts::BODY
+                    ..if n == 0 { fonts::HEADING } else { fonts::BODY }
                 })
-                .size(match veld.naam.as_str() {
-                    "kop" => 24.,
-                    "subkop" => 18.,
-                    _ => 14.,
+                .size(if n == 0 {
+                    29.
+                } else {
+                    match veld.naam.as_str() {
+                        "kop" => 24.,
+                        "subkop" => 18.,
+                        _ => 13.,
+                    }
                 })
-                .padding(8)
+                .line_height(iced::advanced::text::LineHeight::Relative(if n == 0 {
+                    1.4
+                } else {
+                    1.9
+                }))
+                .padding(0)
                 .style(move |thema, status| {
                     let mut stijl = text_editor::default(thema, status);
+                    stijl.value = c.text;
+                    stijl.background = iced::Color::TRANSPARENT.into();
+                    stijl.border.color = c.focus;
                     if !matches!(status, text_editor::Status::Focused { .. }) {
-                        stijl.background = iced::Color::TRANSPARENT.into();
                         stijl.border.width = 0.;
                     }
                     stijl
@@ -277,12 +288,12 @@ pub fn weergave<'a>(app: &'a App, t: &'a Tab, a: &'a Antwoord) -> Element<'a, Ms
         let voorbeeld = markdown::view(
             t.markdown.iter(),
             markdown::Settings::with_style(markdown::Style::from_palette(
-                app.thema.iced().palette(),
+                ThemeId::Light.iced().palette(),
             )),
         )
         .map(|uri| Msg::Koppeling(uri.to_string()));
         row![
-            container(bewerk).width(Length::FillPortion(1)),
+            container(bewerk).padding(24).width(Length::FillPortion(1)),
             container(scrollable(voorbeeld))
                 .padding(24)
                 .width(Length::FillPortion(1))
@@ -309,59 +320,90 @@ pub fn weergave<'a>(app: &'a App, t: &'a Tab, a: &'a Antwoord) -> Element<'a, Ms
             // gedempt blijft als het bijbehorende label, in ieder thema.
             let greep = openaec_ui::design::mix(c.text_muted, c.text_muted.a, c.panel);
             let hoek = openaec_ui::design::mix(c.text_secondary, c.text_secondary.a, c.panel);
-            let mut inhoud = column![
-                row![
-                    w::glyph(include_str!("../assets/sleepgreep.svg"), 10., greep, greep),
-                    w::mono_label(l, "TEKSTVAK")
-                ]
-                .spacing(8)
-                .align_y(iced::Alignment::Center)
-            ]
-            .spacing(5)
-            .height(Length::Fill);
+            let actief = vak.velden.contains(&t.gekozen) || (t.gekozen == 0 && vak.index == 0);
+            let mut tekst = column![].spacing(2);
             for &n in &vak.velden {
-                inhoud = inhoud.push(editor(n, Length::Shrink));
+                tekst = tekst.push(editor(n, Length::Shrink));
             }
-            inhoud = inhoud.push(Space::new().height(Length::Fill));
-            inhoud = inhoud.push(
-                row![
-                    w::button(
-                        l,
-                        "+",
-                        K::Quiet,
-                        D::Compact,
-                        None,
-                        (!t.bezig && !t.concept).then_some(Msg::Notitie(A::NieuwBlok(vak.index)))
-                    ),
-                    w::button(
-                        l,
-                        "×",
-                        K::Quiet,
-                        D::Compact,
-                        None,
-                        (!t.bezig && !t.concept)
-                            .then_some(Msg::Notitie(A::VerwijderVak(vak.index)))
-                    ),
-                    Space::new().width(Length::Fill),
-                    openaec_ui::design::a11y::named(
-                        w::glyph(include_str!("../assets/formaatgreep.svg"), 12., hoek, hoek),
-                        openaec_ui::design::a11y::Role::Group,
-                        format!("Formaatgreep tekstvak {}", vak.index + 1),
-                    )
-                ]
-                .spacing(4)
-                .align_y(iced::Alignment::End),
-            );
+            let inhoud = column![
+                container(
+                    row![
+                        w::glyph(include_str!("../assets/sleepgreep.svg"), 10., greep, greep),
+                        iced::widget::text(format!("Tekstvak {}", vak.index + 1))
+                            .font(fonts::BODY)
+                            .size(9)
+                            .color(if actief { c.accent } else { c.text_muted })
+                    ]
+                    .spacing(8)
+                    .align_y(iced::Alignment::Center)
+                )
+                .height(25)
+                .padding([4, 9])
+                .width(Length::Fill)
+                .style(move |_| container::Style {
+                    background: Some(iced::Color::from_rgb8(250, 250, 249).into()),
+                    ..Default::default()
+                }),
+                container(scrollable(tekst))
+                    .padding(iced::Padding {
+                        top: 11.,
+                        right: 18.,
+                        bottom: 3.,
+                        left: 18.
+                    })
+                    .height(Length::Fill),
+                container(
+                    row![
+                        w::button(
+                            l,
+                            "+",
+                            K::Quiet,
+                            D::Compact,
+                            None,
+                            (!t.bezig && !t.concept)
+                                .then_some(Msg::Notitie(A::NieuwBlok(vak.index)))
+                        ),
+                        w::button(
+                            l,
+                            "×",
+                            K::Quiet,
+                            D::Compact,
+                            None,
+                            (!t.bezig && !t.concept)
+                                .then_some(Msg::Notitie(A::VerwijderVak(vak.index)))
+                        ),
+                        Space::new().width(Length::Fill),
+                        openaec_ui::design::a11y::named(
+                            w::glyph(include_str!("../assets/formaatgreep.svg"), 12., hoek, hoek),
+                            openaec_ui::design::a11y::Role::Group,
+                            format!("Formaatgreep tekstvak {}", vak.index + 1),
+                        )
+                    ]
+                    .spacing(4)
+                    .align_y(iced::Alignment::End)
+                )
+                .padding(iced::Padding {
+                    top: 0.,
+                    right: 8.,
+                    bottom: 8.,
+                    left: 8.
+                })
+            ]
+            .height(Length::Fill);
             let kaart = container(inhoud)
+                .padding(1)
                 .width(g.breedte * t.zoom)
                 .height(g.hoogte * t.zoom)
-                .padding(8)
                 .style(move |_| container::Style {
                     background: Some(c.panel.into()),
                     border: iced::Border {
-                        color: c.border,
+                        color: if actief {
+                            iced::Color::from_rgba8(217, 119, 6, 0.5)
+                        } else {
+                            iced::Color::from_rgb8(231, 229, 228)
+                        },
                         width: 1.,
-                        radius: 4.into(),
+                        radius: 5.into(),
                     },
                     ..Default::default()
                 });
@@ -386,33 +428,120 @@ pub fn weergave<'a>(app: &'a App, t: &'a Tab, a: &'a Antwoord) -> Element<'a, Ms
             );
         }
         let mut lagen = vec![
-            Space::new()
-                .width(breedte * t.zoom)
-                .height(hoogte * t.zoom)
-                .into(),
+            super::notitie_raster::raster(
+                t,
+                a,
+                breedte * t.zoom,
+                hoogte * t.zoom,
+                !t.bezig
+                    && !t.concept
+                    && !t.schrijft
+                    && a.beeld.velden.iter().any(|v| v.bewerkbaar),
+            ),
+            pin(
+                iced::widget::text("Dubbelklik op een lege plek om een tekstvak toe te voegen")
+                    .font(fonts::BODY)
+                    .size(10)
+                    .color(iced::Color::from_rgb8(120, 113, 108)),
+            )
+            .position([40., 10.])
+            .into(),
         ];
         lagen.extend(kaarten);
-        scrollable(Stack::with_children(lagen))
-            .direction(scrollable::Direction::Both {
-                horizontal: Default::default(),
-                vertical: Default::default(),
-            })
-            .height(Length::Fill)
-            .into()
+        openaec_ui::design::a11y::named(
+            scrollable(Stack::with_children(lagen))
+                .direction(scrollable::Direction::Both {
+                    horizontal: Default::default(),
+                    vertical: Default::default(),
+                })
+                .height(Length::Fill),
+            openaec_ui::design::a11y::Role::Group,
+            "Notitiecanvas",
+        )
     };
-    let mut blad = column![editor(0, Length::Fixed(38.))].spacing(8);
-    blad = blad.push(werk);
-    row![
-        w::panel(l, "Notitieboeken", 230., vec![], scrollable(nav).into()),
-        container(blad)
-            .padding(16)
-            .height(Length::Fill)
-            .width(Length::Fill)
-            .style(move |_| container::Style {
-                background: Some(c.workspace.into()),
-                ..Default::default()
+    let woorden = if t.notitie_woorden.len() == a.beeld.velden.len() {
+        t.notitie_woorden.iter().skip(1).sum()
+    } else {
+        p.woorden
+    };
+    let boek = &p.overzicht.boeken[p.overzicht.boek];
+    let sectie = &boek.secties[p.overzicht.sectie];
+    let kop = column![
+        container(
+            iced::widget::text(format!("{}   /   {}", boek.naam, sectie.naam))
+                .font(fonts::BODY)
+                .size(10)
+                .color(iced::Color::from_rgb8(120, 113, 108))
+        )
+        .height(48)
+        .padding(iced::Padding {
+            top: 17.,
+            right: 32.,
+            bottom: 0.,
+            left: 32.
+        }),
+        Space::new().height(16),
+        container(editor(0, Length::Fixed(49.))).padding([0, 32]),
+        container(
+            iced::widget::text(format!(
+                "{}  ·  {} woorden",
+                super::notitie_navigatie_ui::datum(&p.bijgewerkt),
+                woorden
+            ))
+            .font(fonts::BODY)
+            .size(10)
+            .color(iced::Color::from_rgb8(120, 113, 108))
+        )
+        .height(33)
+        .padding(iced::Padding {
+            top: 4.,
+            right: 32.,
+            bottom: 15.,
+            left: 32.
+        })
+    ];
+    let blad = container(column![kop, werk].height(Length::Fill))
+        .height(Length::Fill)
+        .width(Length::Fill)
+        .style(move |_| container::Style {
+            background: Some(iced::Color::WHITE.into()),
+            ..Default::default()
+        });
+    let (boeken, paginas) = super::notitie_navigatie_ui::kolommen(app, t, p);
+    let rij = if t.panelen {
+        row![boeken, paginas, blad]
+    } else {
+        row![blad]
+    }
+    .height(Length::Fill);
+    let voet = container(
+        row![
+            iced::widget::text(if t.concept || t.gewijzigd() {
+                "Niet opgeslagen"
+            } else {
+                "Lokaal opgeslagen"
             })
-    ]
-    .height(Length::Fill)
-    .into()
+            .font(fonts::BODY)
+            .size(10)
+            .color(iced::Color::from_rgb8(120, 113, 108)),
+            Space::new().width(Length::Fill),
+            iced::widget::text(format!(
+                "{} tekstvakken · {}% · Ctrl+Z ongedaan maken",
+                p.vakken.len(),
+                (t.zoom * 100.).round()
+            ))
+            .font(fonts::BODY)
+            .size(9)
+            .color(iced::Color::from_rgb8(120, 113, 108))
+        ]
+        .align_y(iced::Alignment::Center),
+    )
+    .height(26)
+    .padding([5, 16])
+    .width(Length::Fill)
+    .style(move |_| container::Style {
+        background: Some(iced::Color::from_rgb8(250, 250, 249).into()),
+        ..Default::default()
+    });
+    column![rij, voet].height(Length::Fill).into()
 }
