@@ -2,6 +2,58 @@
 use super::*;
 use iced::widget::{Space, Stack, column, markdown, pin, row};
 use office_core::notities::NotitieActie as A;
+pub(super) fn vernieuw_editors(t: &mut Tab) {
+    t.notitie_editors = t
+        .antwoord
+        .as_ref()
+        .filter(|a| a.beeld.module == Module::Notition)
+        .map(|a| {
+            a.beeld
+                .velden
+                .iter()
+                .enumerate()
+                .map(|(n, v)| (n != t.gekozen).then(|| text_editor::Content::with_text(&v.tekst)))
+                .collect()
+        })
+        .unwrap_or_default();
+}
+pub(super) fn inhoud(t: &Tab, n: usize) -> Option<&text_editor::Content> {
+    if n == t.gekozen {
+        Some(&t.editor)
+    } else {
+        t.notitie_editors.get(n)?.as_ref()
+    }
+}
+pub(super) fn kies_veld(t: &mut Tab, n: usize) -> bool {
+    if t.notitie_editors.len() <= n {
+        return false;
+    }
+    if n != t.gekozen {
+        let Some(nieuw) = t.notitie_editors[n].take() else {
+            return false;
+        };
+        t.notitie_editors[t.gekozen] = Some(std::mem::replace(&mut t.editor, nieuw));
+        t.gekozen = n;
+        t.editerversie = t.editerversie.wrapping_add(1);
+        t.adres = t.veld().unwrap().id.clone();
+        t.werk_opmaak_bij();
+    }
+    true
+}
+fn toets(k: text_editor::KeyPress) -> Option<text_editor::Binding<Msg>> {
+    use text_editor::Binding as B;
+    let tekst = k.text.clone();
+    match klembord::toets(k)? {
+        B::Insert(_) => Some(B::Sequence(
+            tekst?
+                .chars()
+                .filter(|c| !c.is_control())
+                .map(B::Insert)
+                .collect(),
+        )),
+        ander => Some(ander),
+    }
+}
 pub fn ribbon<'a>(app: &'a App, t: &'a Tab) -> Element<'a, Msg> {
     let l = app.look();
     let kan = !t.bezig && !t.concept;
@@ -37,8 +89,8 @@ pub fn ribbon<'a>(app: &'a App, t: &'a Tab) -> Element<'a, Msg> {
                 "Sectie",
                 vec![
                     column![
-                        knop("Vrij canvas", A::Sectiesoort { markdown: false }),
-                        knop("Markdown", A::Sectiesoort { markdown: true }),
+                        knop("Vrij canvas", A::KopieerSectie { markdown: false }),
+                        knop("Markdown", A::KopieerSectie { markdown: true }),
                         knop("Herstellen", A::Prullenbak(false))
                     ]
                     .spacing(2)
@@ -162,46 +214,60 @@ pub fn weergave<'a>(app: &'a App, t: &'a Tab, a: &'a Antwoord) -> Element<'a, Ms
         ]
         .into();
     };
-    let title = w::button(l, &p.titel, K::Quiet, D::Regular, None, Some(Msg::Veld(0)));
-    let editor = |hoogte| {
+    let editor = |n: usize, hoogte| {
+        let veld = &a.beeld.velden[n];
+        let hash = a.hash.clone();
+        let id = veld.id.clone();
         openaec_ui::design::a11y::named(
-            text_editor(&t.editor)
-                .key_binding(klembord::toets)
-                .on_action(Msg::Invoer)
+            text_editor(inhoud(t, n).expect("Notitievelden hebben een eigen editor"))
+                .key_binding(toets)
+                .on_action(move |actie| Msg::NotitieInvoer {
+                    document: t.id,
+                    hash: hash.clone(),
+                    veld: id.clone(),
+                    actie,
+                })
                 .font(iced::Font {
-                    weight: if t.veld().is_some_and(|v| v.opmaak.vet) {
+                    weight: if veld.opmaak.vet {
                         iced::font::Weight::Bold
                     } else {
                         iced::font::Weight::Normal
                     },
-                    style: if t.veld().is_some_and(|v| v.opmaak.cursief) {
+                    style: if veld.opmaak.cursief {
                         iced::font::Style::Italic
                     } else {
                         iced::font::Style::Normal
                     },
                     ..fonts::BODY
                 })
-                .size(14)
-                .padding(12)
+                .size(match veld.naam.as_str() {
+                    "kop" => 24.,
+                    "subkop" => 18.,
+                    _ => 14.,
+                })
+                .padding(8)
+                .style(move |thema, status| {
+                    let mut stijl = text_editor::default(thema, status);
+                    if !matches!(status, text_editor::Status::Focused { .. }) {
+                        stijl.background = iced::Color::TRANSPARENT.into();
+                        stijl.border.width = 0.;
+                    }
+                    stijl
+                })
                 .height(hoogte),
             openaec_ui::design::a11y::Role::TextField,
-            "Notitietekst",
+            if n == 0 {
+                "Paginatitel"
+            } else {
+                "Notitietekst"
+            },
         )
     };
     let werk: Element<_> = if p.markdown {
         let md = a.beeld.velden.iter().position(|v| v.naam == "Markdown");
-        let bewerk: Element<_> = if md == Some(t.gekozen) && t.notitie_invoer {
-            editor(Length::Fill)
-        } else {
-            w::button(
-                l,
-                "Markdown bewerken",
-                K::Secondary,
-                D::Regular,
-                None,
-                md.map(Msg::Veld),
-            )
-        };
+        let bewerk: Element<_> = md
+            .map(|n| editor(n, Length::Fill))
+            .unwrap_or_else(|| Space::new().into());
         let voorbeeld = markdown::view(
             t.markdown.iter(),
             markdown::Settings::with_style(markdown::Style::from_palette(
@@ -247,48 +313,7 @@ pub fn weergave<'a>(app: &'a App, t: &'a Tab, a: &'a Antwoord) -> Element<'a, Ms
             ]
             .spacing(5);
             for &n in &vak.velden {
-                let veld = &a.beeld.velden[n];
-                if n == t.gekozen && t.notitie_invoer {
-                    inhoud = inhoud.push(editor(Length::Fill));
-                } else {
-                    let letter = iced::Font {
-                        weight: if veld.opmaak.vet {
-                            iced::font::Weight::Bold
-                        } else {
-                            iced::font::Weight::Normal
-                        },
-                        style: if veld.opmaak.cursief {
-                            iced::font::Style::Italic
-                        } else {
-                            iced::font::Style::Normal
-                        },
-                        ..fonts::BODY
-                    };
-                    let label = if veld.tekst.is_empty() {
-                        "Klik om te schrijven"
-                    } else {
-                        &veld.tekst
-                    };
-                    let knop = iced::widget::button(
-                        iced::widget::text(label)
-                            .font(letter)
-                            .size(match veld.naam.as_str() {
-                                "kop" => 24.,
-                                "subkop" => 18.,
-                                _ => 14.,
-                            })
-                            .color(c.text),
-                    )
-                    .width(Length::Fill)
-                    .padding(8)
-                    .on_press(Msg::Veld(n))
-                    .style(move |_, s| w::button_style(l, K::Quiet, s));
-                    inhoud = inhoud.push(openaec_ui::design::a11y::named(
-                        knop,
-                        openaec_ui::design::a11y::Role::Button,
-                        label,
-                    ));
-                }
+                inhoud = inhoud.push(editor(n, Length::Shrink));
             }
             inhoud = inhoud.push(
                 row![
@@ -362,10 +387,7 @@ pub fn weergave<'a>(app: &'a App, t: &'a Tab, a: &'a Antwoord) -> Element<'a, Ms
             .height(Length::Fill)
             .into()
     };
-    let mut blad = column![title].spacing(8);
-    if t.gekozen == 0 && t.notitie_invoer {
-        blad = blad.push(editor(Length::Fixed(70.)));
-    }
+    let mut blad = column![editor(0, Length::Fixed(38.))].spacing(8);
     blad = blad.push(werk);
     row![
         w::panel(l, "Notitieboeken", 230., vec![], scrollable(nav).into()),

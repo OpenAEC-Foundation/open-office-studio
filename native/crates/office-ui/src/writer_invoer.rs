@@ -5,6 +5,22 @@ use office_core::document::TekstStap;
 impl Tab {
     pub fn tekst_opdracht(&self) -> Bewerking {
         let v = self.veld().expect("Bewerking vereist een actief veld");
+        if self.antwoord.as_ref().unwrap().beeld.module == Module::Notition {
+            let velden = self
+                .antwoord
+                .as_ref()
+                .unwrap()
+                .beeld
+                .velden
+                .iter()
+                .enumerate()
+                .filter_map(|(n, v)| {
+                    let inhoud = notitie_ui::inhoud(self, n)?.text();
+                    (inhoud != v.tekst).then_some((v.id.clone(), inhoud))
+                })
+                .collect();
+            return Bewerking::Notitie(office_core::notities::NotitieActie::Teksten(velden));
+        }
         if self.antwoord.as_ref().unwrap().beeld.module == Module::Writer {
             Bewerking::TekstReeks {
                 id: v.id.clone(),

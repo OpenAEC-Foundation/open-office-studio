@@ -5,6 +5,10 @@ use crate::{
     opmaak::{Opmaak, OpmaakStaat},
 };
 use serde_json::{Value, json};
+mod omzetten;
+mod positie;
+pub use positie::Anker;
+pub(crate) use positie::{anker, herstel};
 fn fout(s: &str) -> Fout {
     Fout::Document(s.into())
 }
@@ -22,6 +26,7 @@ pub struct Vak {
 }
 #[derive(Debug, Clone)]
 pub struct NotitiePagina {
+    pub deel: usize,
     pub pad: String,
     pub titel: String,
     pub markdown: bool,
@@ -29,6 +34,7 @@ pub struct NotitiePagina {
 }
 #[derive(Debug, Clone)]
 pub enum NotitieActie {
+    Teksten(Vec<(String, String)>),
     NieuwVak {
         x: f32,
         y: f32,
@@ -50,6 +56,9 @@ pub enum NotitieActie {
     },
     NieuwBoek,
     Sectiesoort {
+        markdown: bool,
+    },
+    KopieerSectie {
         markdown: bool,
     },
     Prullenbak(bool),
@@ -336,6 +345,7 @@ pub fn toon(d: &Value, deel: usize, beeld: &mut Weergave) -> Resultaat<()> {
         }
     }
     beeld.notitie = Some(NotitiePagina {
+        deel,
         pad: pad.clone(),
         titel: p["titel"].as_str().unwrap_or_default().into(),
         markdown: *markdown,
@@ -358,6 +368,15 @@ pub fn toon(d: &Value, deel: usize, beeld: &mut Weergave) -> Resultaat<()> {
     Ok(())
 }
 pub fn bewerk(d: &mut Value, deel: usize, actie: NotitieActie) -> Resultaat<()> {
+    bewerk_met_doel(d, deel, actie).map(|_| ())
+}
+pub(crate) fn bewerk_met_doel(d: &mut Value, deel: usize, actie: NotitieActie) -> Resultaat<usize> {
+    if let NotitieActie::Teksten(velden) = actie {
+        for (id, inhoud) in velden {
+            tekst(d, deel, &id, &inhoud)?;
+        }
+        return Ok(deel);
+    }
     if matches!(actie, NotitieActie::NieuwBoek) {
         let boeken = d["boeken"]
             .as_array_mut()
@@ -365,32 +384,41 @@ pub fn bewerk(d: &mut Value, deel: usize, actie: NotitieActie) -> Resultaat<()> 
         if boeken.len() >= 100 {
             return Err(fout("Te veel notitieboeken"));
         }
+        let nieuw = format!("/boeken/{}/secties/0/paginas/0", boeken.len());
         boeken.push(boek());
-        return Ok(());
+        return doel(d, &nieuw);
     }
     let pad = pad(d, deel)?;
     let sectiepad = pad.rsplit_once("/paginas/").unwrap().0;
     match actie {
         NotitieActie::NieuweSectie { markdown } => {
             let boekpad = sectiepad.rsplit_once("/secties/").unwrap().0;
-            d.pointer_mut(&format!("{boekpad}/secties"))
+            let secties = d
+                .pointer_mut(&format!("{boekpad}/secties"))
                 .and_then(Value::as_array_mut)
-                .ok_or_else(|| fout("Secties ontbreken"))?
-                .push(sectie(markdown));
-            return Ok(());
+                .ok_or_else(|| fout("Secties ontbreken"))?;
+            let nieuw = format!("{boekpad}/secties/{}/paginas/0", secties.len());
+            secties.push(sectie(markdown));
+            return doel(d, &nieuw);
         }
         NotitieActie::NieuwePagina => {
-            d.pointer_mut(&format!("{sectiepad}/paginas"))
+            let lijst = d
+                .pointer_mut(&format!("{sectiepad}/paginas"))
                 .and_then(Value::as_array_mut)
-                .ok_or_else(|| fout("Pagina's ontbreken"))?
-                .push(pagina());
-            return Ok(());
+                .ok_or_else(|| fout("Pagina's ontbreken"))?;
+            let nieuw = format!("{sectiepad}/paginas/{}", lijst.len());
+            lijst.push(pagina());
+            return doel(d, &nieuw);
+        }
+        NotitieActie::KopieerSectie { markdown } => {
+            let nieuw = omzetten::kopieer(d, sectiepad, markdown)?;
+            return doel(d, &nieuw);
         }
         NotitieActie::Sectiesoort { markdown } => {
             *d.pointer_mut(&format!("{sectiepad}/soort"))
                 .ok_or_else(|| fout("Sectiesoort ontbreekt"))? =
                 json!(if markdown { "markdown" } else { "canvas" });
-            return Ok(());
+            return Ok(deel);
         }
         _ => {}
     }
@@ -457,7 +485,13 @@ pub fn bewerk(d: &mut Value, deel: usize, actie: NotitieActie) -> Resultaat<()> 
         _ => return Err(fout("Onbekende notitieopdracht")),
     }
     p["bijgewerkt"] = json!(nu());
-    Ok(())
+    Ok(deel)
+}
+fn doel(d: &Value, pad: &str) -> Resultaat<usize> {
+    paginas(d)
+        .iter()
+        .position(|p| p.0 == pad)
+        .ok_or_else(|| fout("De nieuwe notitiepagina ontbreekt"))
 }
 pub fn opmaak(d: &mut Value, deel: usize, id: &str, stijl: &Opmaak) -> Resultaat<()> {
     let p = pad(d, deel)?;

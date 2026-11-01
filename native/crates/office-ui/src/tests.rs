@@ -287,6 +287,7 @@ pub(super) fn app_met_document(module: Module, bytes: &[u8]) -> App {
         vooruit: false,
     });
     tab.toon_veld(0);
+    notitie_ui::vernieuw_editors(&mut tab);
     app.tabs.push(tab);
     app.volgend = 2;
     app

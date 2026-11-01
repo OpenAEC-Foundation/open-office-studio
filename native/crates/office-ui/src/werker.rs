@@ -152,7 +152,7 @@ impl Werker {
                                 beeld=Some(b);raster_selectie=Some(s);*deel=n;
                             }
                             Opdracht::Bewerk(n, b) => {
-                                let b=sessie.bewerk_met_weergave(n,b).map_err(|e|e.to_string())?;*deel=n.min(b.onderdelen.len().saturating_sub(1));beeld=Some(b);
+                                let b=sessie.bewerk_met_weergave(n,b).map_err(|e|e.to_string())?;*deel=b.notitie.as_ref().map(|p|p.deel).unwrap_or(n.min(b.onderdelen.len().saturating_sub(1)));beeld=Some(b);
                             }
                             Opdracht::NaarTekst{id,hash,begin,einde} => {
                                 let (pagina,mut beeld)=sessie.naar_tekstbereik(&id,&hash,begin,einde).map_err(|e|e.to_string())?;
@@ -195,8 +195,8 @@ impl Werker {
                                 b.voorkeursveld=Some(id);
                                 *deel=pagina;beeld=Some(b);
                             }
-                            Opdracht::Terug(n) => {sessie.terug().map_err(|e| e.to_string())?;*deel=n;},
-                            Opdracht::Vooruit(n) => {sessie.vooruit().map_err(|e| e.to_string())?;*deel=n;},
+                            Opdracht::Terug(n) => {let anker=sessie.notitie_anker(n);sessie.terug().map_err(|e| e.to_string())?;*deel=sessie.notitiepositie(anker.as_ref(),n);},
+                            Opdracht::Vooruit(n) => {let anker=sessie.notitie_anker(n);sessie.vooruit().map_err(|e| e.to_string())?;*deel=sessie.notitiepositie(anker.as_ref(),n);},
                             Opdracht::Markdown(n) => {
                                 *deel=n;
                                 let mut beeld =

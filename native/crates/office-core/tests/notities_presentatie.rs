@@ -9,6 +9,142 @@ fn data(s: &Sessie) -> serde_json::Value {
     serde_json::from_slice(&s.bron()).unwrap()
 }
 #[test]
+fn notitie_sectiekopie_behoudt_bron_opmaak_volgorde_en_onbekende_velden() {
+    use serde_json::json;
+    let mut bron: serde_json::Value = serde_json::from_slice(include_bytes!(
+        "../../../../docs/voorbeelden/Notitieboek.json"
+    ))
+    .unwrap();
+    let sectie = &mut bron["boeken"][0]["secties"][0];
+    sectie["uitbreiding"] = json!({"bewaar":42});
+    let pagina = &mut sectie["paginas"][0];
+    pagina["uitbreiding"] = json!(["blijft", "staan"]);
+    pagina["vakken"][0]["y"] = json!(400);
+    pagina["vakken"][1]["y"] = json!(20);
+    pagina["vakken"][0]["blokken"][0]["tekst"] = json!("A * [é] 🏠\nvervolg");
+    pagina["vakken"][0]["blokken"][0]["soort"] = json!("taak");
+    pagina["vakken"][0]["blokken"][0]["klaar"] = json!(true);
+    pagina["vakken"][0]["blokken"][0]["vet"] = json!(true);
+    pagina["vakken"][1]["blokken"][0]["tekst"] = json!("Eerst");
+    pagina["vakken"][1]["blokken"][0]["soort"] = json!("kop");
+    let bytes = serde_json::to_vec(&bron).unwrap();
+    let mut s = Sessie::open(Module::Notition, bytes.clone()).unwrap();
+    let b = s
+        .bewerk_met_weergave(0, Bewerking::Notitie(N::KopieerSectie { markdown: true }))
+        .unwrap();
+    assert_eq!(b.notitie.unwrap().deel, 2);
+    let d = data(&s);
+    assert_eq!(
+        d["boeken"][0]["secties"][0],
+        bron["boeken"][0]["secties"][0]
+    );
+    assert_eq!(
+        d["boeken"][0]["secties"][1],
+        bron["boeken"][0]["secties"][1]
+    );
+    let kopie = &d["boeken"][0]["secties"][2];
+    assert_eq!(kopie["uitbreiding"], json!({"bewaar":42}));
+    assert_eq!(
+        kopie["paginas"][0]["uitbreiding"],
+        json!(["blijft", "staan"])
+    );
+    assert_eq!(
+        kopie["paginas"][0]["markdown"],
+        "## Eerst\n\n- [x] **A \\* \\[é\\] 🏠\n  vervolg**\n"
+    );
+    assert_ne!(kopie["id"], bron["boeken"][0]["secties"][0]["id"]);
+    assert_ne!(
+        kopie["paginas"][0]["id"],
+        bron["boeken"][0]["secties"][0]["paginas"][0]["id"]
+    );
+    let heropen = Sessie::open(Module::Notition, s.bron().as_ref().clone()).unwrap();
+    assert_eq!(
+        heropen.weergave(2).unwrap().velden[1].tekst,
+        kopie["paginas"][0]["markdown"].as_str().unwrap()
+    );
+    let anker = s.notitie_anker(2);
+    s.terug().unwrap();
+    assert_eq!(s.bron().as_slice(), bytes);
+    assert_eq!(s.notitiepositie(anker.as_ref(), 2), 0);
+    s.vooruit().unwrap();
+    assert_eq!(data(&s), d);
+}
+#[test]
+fn notitie_markdownkopie_splitst_unicode_veilig_en_weigert_te_grote_omzetting_atomair() {
+    use serde_json::json;
+    let mut s = Sessie::nieuw(Module::Notition).unwrap();
+    let id = s.weergave(0).unwrap().velden[1].id.clone();
+    let tekst = format!("{}🏠{}", "a".repeat(99_999), "é".repeat(17));
+    s.bewerk(
+        0,
+        Bewerking::Tekst {
+            id,
+            tekst: tekst.clone(),
+        },
+    )
+    .unwrap();
+    s.bewerk(0, Bewerking::Notitie(N::KopieerSectie { markdown: false }))
+        .unwrap();
+    let d = data(&s);
+    let blokken = d["boeken"][0]["secties"][1]["paginas"][0]["vakken"][0]["blokken"]
+        .as_array()
+        .unwrap();
+    assert_eq!(blokken.len(), 2);
+    assert_eq!(
+        blokken[0]["tekst"].as_str().unwrap().encode_utf16().count(),
+        99_999
+    );
+    assert_eq!(
+        blokken
+            .iter()
+            .map(|b| b["tekst"].as_str().unwrap())
+            .collect::<String>(),
+        tekst
+    );
+    assert_ne!(blokken[0]["id"], blokken[1]["id"]);
+    let mut bron = d;
+    bron["boeken"][0]["secties"][1]["paginas"][0]["vakken"][0]["blokken"][0]["tekst"] =
+        json!("*".repeat(250_000));
+    let bytes = serde_json::to_vec(&bron).unwrap();
+    let mut s = Sessie::open(Module::Notition, bytes.clone()).unwrap();
+    assert!(
+        s.bewerk(1, Bewerking::Notitie(N::KopieerSectie { markdown: true }))
+            .is_err()
+    );
+    assert_eq!(s.bron().as_slice(), bytes);
+    assert!(!s.kan_terug());
+    assert!(
+        s.bewerk(0, Bewerking::Notitie(N::KopieerSectie { markdown: true }))
+            .is_err()
+    );
+    assert_eq!(s.bron().as_slice(), bytes);
+}
+#[test]
+fn notitie_nieuwe_onderdelen_openen_hun_eigen_pagina_en_teksten_zijn_een_transactie() {
+    let mut s = Sessie::nieuw(Module::Notition).unwrap();
+    for (actie, verwacht) in [
+        (N::NieuwePagina, 1),
+        (N::NieuweSectie { markdown: false }, 2),
+        (N::NieuwBoek, 3),
+    ] {
+        let b = s.bewerk_met_weergave(0, Bewerking::Notitie(actie)).unwrap();
+        assert_eq!(b.notitie.unwrap().deel, verwacht);
+    }
+    let bron = s.bron();
+    let id = s.weergave(0).unwrap().velden[0].id.clone();
+    assert!(
+        s.bewerk(
+            0,
+            Bewerking::Notitie(N::Teksten(vec![
+                (id, "Veranderd".into()),
+                ("/onbestaand".into(), "Mag niet".into())
+            ]))
+        )
+        .is_err()
+    );
+    assert_eq!(s.bron().as_slice(), bron.as_slice());
+}
+#[test]
 fn vrije_vakken_verplaatsen_vergroten_en_undo_behouden_onbekende_inhoud() {
     let bron=br#"{"formaat":"openaec-notities","versie":3,"boeken":[{"id":"b","naam":"Boek","secties":[{"id":"s","naam":"Sectie","soort":"canvas","paginas":[{"id":"p","titel":"Pagina","vakken":[{"id":"v","x":40,"y":32,"breedte":560,"hoogte":160,"blokken":[{"id":"t","tekst":"Blijft staan","soort":"tekst","vet":false,"cursief":false,"klaar":false}],"uitbreiding":{"kleur":"amber"}}],"markdown":"Bestaande markdown","verwijderd":false}]}]}],"extra":{"bewaar":42}}"#;
     let mut s = Sessie::open(Module::Notition, bron.to_vec()).unwrap();

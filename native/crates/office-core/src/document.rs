@@ -641,6 +641,18 @@ impl Sessie {
     pub fn bron_hash(&self) -> &str {
         &self.bron_hash
     }
+    pub fn notitie_anker(&self, deel: usize) -> Option<crate::notities::Anker> {
+        match &self.document {
+            Document::Notition(d) => crate::notities::anker(d, deel),
+            _ => None,
+        }
+    }
+    pub fn notitiepositie(&self, anker: Option<&crate::notities::Anker>, anders: usize) -> usize {
+        match &self.document {
+            Document::Notition(d) => crate::notities::herstel(d, anker),
+            _ => anders,
+        }
+    }
     pub fn kan_terug(&self) -> bool {
         !self.terug.is_empty()
     }
@@ -1001,6 +1013,20 @@ impl Sessie {
         bewerking: Bewerking,
         groep: Option<(u64, String)>,
     ) -> Resultaat<Weergave> {
+        if let Bewerking::Notitie(actie) = bewerking {
+            return self
+                .bewerk_transactie_met_doel(
+                    groep,
+                    move |document| {
+                        let Document::Notition(d) = document else {
+                            return Err(fout("Een notitieopdracht hoort bij Notition"));
+                        };
+                        crate::notities::bewerk_met_doel(d, deel, actie)
+                    },
+                    |doel| *doel,
+                )
+                .map(|(beeld, _)| beeld);
+        }
         if matches!(bewerking, Bewerking::Pagina { .. }) {
             self.tekstgroep = None;
             crate::writer_pagina::controleer_bron(&self.bron)?;
@@ -1016,6 +1042,14 @@ impl Sessie {
         groep: Option<(u64, String)>,
         wijzig: impl FnOnce(&mut Document) -> Resultaat<T>,
     ) -> Resultaat<(Weergave, T)> {
+        self.bewerk_transactie_met_doel(groep, wijzig, |_| deel)
+    }
+    fn bewerk_transactie_met_doel<T>(
+        &mut self,
+        groep: Option<(u64, String)>,
+        wijzig: impl FnOnce(&mut Document) -> Resultaat<T>,
+        doel_deel: impl Fn(&T) -> usize,
+    ) -> Resultaat<(Weergave, T)> {
         let aansluitend = groep.as_ref().is_some_and(|(g, id)| {
             self.tekstgroep.as_ref().is_some_and(|(oud, alinea, hash)| {
                 oud == g && alinea == id && hash == &self.bron_hash
@@ -1027,7 +1061,7 @@ impl Sessie {
             // Serialiseer één keer; de renderer toont precies de te bewaren bron.
             let bytes = self.document.bytes()?;
             let beeld = self.document.weergave_van_bron(
-                deel,
+                doel_deel(&doel),
                 self.venster,
                 Some(&bytes),
                 Some(self.layout_eigenaar),
@@ -1049,7 +1083,7 @@ impl Sessie {
                 self.bron_hash = crate::opslag::hash(&bytes);
                 self.bron = std::sync::Arc::new(bytes);
                 self.tekstgroep = groep.map(|(g, id)| (g, id, self.bron_hash.clone()));
-                *self.beelden.borrow_mut() = vec![(deel, beeld.clone())];
+                *self.beelden.borrow_mut() = vec![(doel_deel(&doel), beeld.clone())];
                 Ok((beeld, doel))
             }
             foutresultaat => {

@@ -74,6 +74,169 @@ fn writer_snel(p: &mut Proef, berichten: impl IntoIterator<Item = writer_direct:
     assert!(!p.app.tab().unwrap().writer_direct.heeft_werk());
 }
 #[test]
+fn notitie_omzetting_bewaart_canvas_en_opent_een_gevulde_markdownkopie() {
+    let bron = include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json");
+    let mut p = Proef::met_app(app_met_werkdraad(Module::Notition, bron));
+    let origineel: serde_json::Value = serde_json::from_slice(bron).unwrap();
+    p.klik(iced::Point::new(165., 95.));
+    let d: serde_json::Value = serde_json::from_slice(&p.bron()).unwrap();
+    let secties = d["boeken"][0]["secties"].as_array().unwrap();
+    assert_eq!(
+        secties.len(),
+        3,
+        "Een andere sectiesoort krijgt een afzonderlijke kopie"
+    );
+    assert_eq!(secties[0], origineel["boeken"][0]["secties"][0]);
+    assert_eq!(secties[1], origineel["boeken"][0]["secties"][1]);
+    assert_eq!(secties[2]["soort"], "markdown");
+    assert!(
+        secties[2]["paginas"][0]["markdown"]
+            .as_str()
+            .unwrap()
+            .contains("Een vrij tekstvak")
+    );
+    assert!(
+        secties[2]["paginas"][0]["markdown"]
+            .as_str()
+            .unwrap()
+            .contains("Een idee op een andere plek")
+    );
+    assert!(
+        p.app
+            .tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .beeld
+            .notitie
+            .as_ref()
+            .unwrap()
+            .markdown
+    );
+    assert_eq!(p.app.tab().unwrap().deel, 2);
+    p.bericht(Msg::Terug);
+    assert_eq!(p.bron().as_slice(), bron.as_slice());
+    assert_eq!(p.app.tab().unwrap().deel, 0);
+    assert!(
+        !p.app
+            .tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .beeld
+            .notitie
+            .as_ref()
+            .unwrap()
+            .markdown
+    );
+}
+#[test]
+fn notitie_een_tekstklik_en_direct_typen_behouden_de_invoer() {
+    let bron = include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json");
+    let mut p = Proef::met_app(app_met_werkdraad(Module::Notition, bron));
+    p.klik(iced::Point::new(370., 311.));
+    p.toets(
+        iced::keyboard::Key::Character("9".into()),
+        iced::keyboard::Modifiers::empty(),
+        Some("9"),
+    );
+    let tekst = p.app.tab().unwrap().editor.text();
+    assert_eq!(tekst.replace('9', ""), "Een vrij tekstvak");
+    assert_eq!(
+        tekst.matches('9').count(),
+        1,
+        "De eerste tekstklik moet ook invoer ontvangen"
+    );
+    p.bericht(Msg::PasToe);
+    let d: serde_json::Value = serde_json::from_slice(&p.bron()).unwrap();
+    assert_eq!(
+        d["boeken"][0]["secties"][0]["paginas"][0]["vakken"][0]["blokken"][0]["tekst"],
+        tekst
+    );
+    p.bericht(Msg::Terug);
+    assert_eq!(p.bron().as_slice(), bron.as_slice());
+}
+#[test]
+fn notitie_tekstklikken_en_unicode_in_dezelfde_widgetronde_bewaren_beide_vakken() {
+    use iced::{Event, keyboard as k, mouse};
+    let bron = include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json");
+    let mut p = Proef::met_app(app_met_werkdraad(Module::Notition, bron));
+    let vakken: Vec<_> = p
+        .toegankelijkheid()
+        .nodes
+        .into_iter()
+        .filter(|n| n.node.name == "Notitietekst")
+        .map(|n| n.bounds)
+        .collect();
+    assert_eq!(vakken.len(), 2);
+    let mut events = vec![];
+    for (vak, tekst) in vakken.iter().zip(["9", "é🏠"]) {
+        events.extend([
+            Event::Mouse(mouse::Event::CursorMoved {
+                position: iced::Point::new(vak.x + 12., vak.y + 10.),
+            }),
+            Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
+            Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)),
+            Event::Keyboard(k::Event::KeyPressed {
+                key: k::Key::Character(tekst.into()),
+                modified_key: k::Key::Character(tekst.into()),
+                physical_key: k::key::Physical::Unidentified(k::key::NativeCode::Unidentified),
+                location: k::Location::Standard,
+                modifiers: k::Modifiers::empty(),
+                text: Some(tekst.into()),
+                repeat: false,
+            }),
+        ]);
+    }
+    p.gebeurtenissen(events);
+    let t = p.app.tab().unwrap();
+    assert!(t.concept);
+    let eerste = notitie_ui::inhoud(t, 1).unwrap().text();
+    let tweede = notitie_ui::inhoud(t, 2).unwrap().text();
+    assert_eq!(eerste.replace('9', ""), "Een vrij tekstvak");
+    assert_eq!(eerste.matches('9').count(), 1);
+    assert_eq!(tweede.replace("é🏠", ""), "Een idee op een andere plek");
+    assert_eq!(tweede.matches("é🏠").count(), 1);
+    assert_eq!(p.bron().as_slice(), bron);
+    p.bericht(Msg::PasToe);
+    let d: serde_json::Value = serde_json::from_slice(&p.bron()).unwrap();
+    let vakken = &d["boeken"][0]["secties"][0]["paginas"][0]["vakken"];
+    assert_eq!(vakken[0]["blokken"][0]["tekst"], eerste);
+    assert_eq!(vakken[1]["blokken"][0]["tekst"], tweede);
+    let heropen = Sessie::open(Module::Notition, p.bron().as_ref().clone()).unwrap();
+    assert!(
+        heropen
+            .weergave(0)
+            .unwrap()
+            .velden
+            .iter()
+            .any(|v| v.tekst == tweede)
+    );
+    p.bericht(Msg::Terug);
+    assert_eq!(p.bron().as_slice(), bron);
+}
+#[test]
+fn notitie_late_invoer_van_een_andere_bron_wordt_niet_toegepast() {
+    let bron = include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json");
+    let mut p = Proef::met_app(app_met_werkdraad(Module::Notition, bron));
+    let t = p.app.tab().unwrap();
+    let oud = Msg::NotitieInvoer {
+        document: t.id,
+        hash: t.antwoord.as_ref().unwrap().hash.clone(),
+        veld: t.antwoord.as_ref().unwrap().beeld.velden[1].id.clone(),
+        actie: text_editor::Action::Edit(text_editor::Edit::Insert('9')),
+    };
+    p.bericht(Msg::Notitie(
+        office_core::notities::NotitieActie::KopieerSectie { markdown: true },
+    ));
+    let na = p.bron();
+    p.bericht(oud);
+    assert_eq!(*p.bron(), *na);
+    assert!(!p.app.tab().unwrap().concept);
+}
+#[test]
 fn writer_paginacursor_klikken_schalen_typen_en_een_exacte_undo() {
     use iced::keyboard::key::Named;
     for zoom in [0.75, 1., 1.5] {

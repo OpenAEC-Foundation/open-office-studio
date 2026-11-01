@@ -98,6 +98,12 @@ enum Msg {
     Annuleer,
     Deel(usize),
     Veld(usize),
+    NotitieInvoer {
+        document: u64,
+        hash: String,
+        veld: String,
+        actie: text_editor::Action,
+    },
     Adres(String),
     GaNaar,
     Raak(String),
@@ -213,6 +219,7 @@ struct Tab {
     canvas_voorbeeld: Option<(usize, office_core::interactie::Rechthoek)>,
     markdown: Vec<iced::widget::markdown::Item>,
     notitie_invoer: bool,
+    notitie_editors: Vec<Option<text_editor::Content>>,
     scroll: iced::Point,
     na_bewerking: Option<bool>, // Opslaan; bool geeft Opslaan als aan.
 }
@@ -251,6 +258,7 @@ impl Tab {
             canvas_voorbeeld: None,
             markdown: vec![],
             notitie_invoer: false,
+            notitie_editors: vec![],
             scroll: iced::Point::ORIGIN,
             na_bewerking: None,
         }
@@ -909,6 +917,7 @@ impl App {
                                 );
                             let grid_focus = tab.raster.focus;
                             tab.toon_veld(keuze);
+                            notitie_ui::vernieuw_editors(tab);
                             tab.raster.focus = grid_focus;
                             if let Some(s) = raster_selectie {
                                 tab.adres = s.adres.clone();
@@ -978,13 +987,50 @@ impl App {
                             "Pas de huidige tekst eerst toe of maak de invoer ongedaan",
                         );
                     }
-                    t.toon_veld(n);
+                    if !notitie_ui::kies_veld(t, n) {
+                        t.toon_veld(n);
+                    }
                     t.notitie_invoer = true;
                 }
             }
             Msg::Adres(a) => {
                 if let Some(t) = self.tab_mut() {
                     t.adres = a;
+                }
+            }
+            Msg::NotitieInvoer {
+                document,
+                hash,
+                veld,
+                actie,
+            } => {
+                let Some(t) = self.tab_mut().filter(|t| {
+                    t.id == document
+                        && !t.bezig
+                        && !t.schrijft
+                        && t.antwoord
+                            .as_ref()
+                            .is_some_and(|a| a.hash == hash && a.beeld.module == Module::Notition)
+                }) else {
+                    return Task::none();
+                };
+                let Some(n) = t
+                    .antwoord
+                    .as_ref()
+                    .unwrap()
+                    .beeld
+                    .velden
+                    .iter()
+                    .position(|v| v.id == veld)
+                else {
+                    return Task::none();
+                };
+                if actie.is_edit() && !t.antwoord.as_ref().unwrap().beeld.velden[n].bewerkbaar {
+                    return Task::none();
+                }
+                if notitie_ui::kies_veld(t, n) {
+                    t.notitie_invoer = true;
+                    return self.update(Msg::Invoer(actie));
                 }
             }
             Msg::Raster(bericht) => return raster_ui::update(self, bericht),
@@ -1317,6 +1363,14 @@ impl App {
                         return self.waarschuwing(&e);
                     }
                     t.concept |= bewerkt;
+                    if bewerkt
+                        && t.antwoord
+                            .as_ref()
+                            .is_some_and(|a| a.beeld.module == Module::Notition)
+                        && t.veld().is_some_and(|v| v.naam == "Markdown")
+                    {
+                        t.markdown = iced::widget::markdown::parse(&t.editor.text()).collect();
+                    }
                     if t.raster.bewerken {
                         raster_ui::registreer_letters(t);
                     } else {
@@ -1453,6 +1507,7 @@ impl App {
                     if t.concept {
                         let n = t.gekozen;
                         t.toon_veld(n);
+                        notitie_ui::vernieuw_editors(t);
                         return Task::none();
                     }
                     if !t.bezig && t.antwoord.as_ref().is_some_and(|a| a.terug) {
