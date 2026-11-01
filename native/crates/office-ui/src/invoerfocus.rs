@@ -28,16 +28,61 @@ fn registreer(generatie: &Generatie, event: &Event) {
 
 /// Leg de bediening vast vóór de widget zelf berichten of focusvragen maakt.
 /// Ook afgehandelde gebeurtenissen en keuzemenu's tellen mee.
-pub fn volg<'a>(inhoud: impl Into<Element<'a, Msg>>, generatie: Generatie) -> Element<'a, Msg> {
+pub fn volg<'a>(
+    inhoud: impl Into<Element<'a, Msg>>,
+    generatie: Generatie,
+    zoektoetsen: bool,
+) -> Element<'a, Msg> {
     Element::new(Bediening {
         inhoud: inhoud.into(),
         generatie,
+        zoektoetsen,
     })
 }
 
 struct Bediening<'a> {
     inhoud: Element<'a, Msg>,
     generatie: Generatie,
+    zoektoetsen: bool,
+}
+fn zoektoets(event: &Event) -> Option<bool> {
+    let Event::Keyboard(iced::keyboard::Event::KeyPressed {
+        key: iced::keyboard::Key::Character(tekst),
+        modifiers,
+        ..
+    }) = event
+    else {
+        return None;
+    };
+    if !modifiers.command() {
+        return None;
+    }
+    match tekst.to_lowercase().as_str() {
+        "f" => Some(false),
+        "h" => Some(true),
+        _ => None,
+    }
+}
+fn sluit_ronde(
+    shell: &mut Shell<'_, Msg>,
+    mut lokaal: Shell<'_, Msg>,
+    event: &Event,
+    generatie: u64,
+    zoektoetsen: bool,
+) {
+    if zoektoetsen
+        && !lokaal.is_event_captured()
+        && let Some(vervangen) = zoektoets(event)
+    {
+        lokaal.publish(Msg::Zoeken(zoeken_ui::Bericht::Open(vervangen)));
+        lokaal.capture_event();
+    }
+    // App::update kan pas volgen nadat meerdere latere gebeurtenissen zijn
+    // afgehandeld. Bewaar daarom het stempel van de oorspronkelijke invoer.
+    shell.merge(lokaal, |bericht| match bericht {
+        Msg::Zoeken(zoek) => Msg::ZoekenInvoer(generatie, zoek),
+        ander => ander,
+    });
 }
 impl Widget<Msg, Theme, Renderer> for Bediening<'_> {
     fn children(&self) -> Vec<Tree> {
@@ -69,9 +114,13 @@ impl Widget<Msg, Theme, Renderer> for Bediening<'_> {
         vp: &Rectangle,
     ) {
         registreer(&self.generatie, e);
+        let generatie = self.generatie.load(Ordering::Relaxed);
+        let mut berichten = Vec::new();
+        let mut lokaal = Shell::new(&mut berichten);
         self.inhoud
             .as_widget_mut()
-            .update(&mut t.children[0], e, l, c, r, cb, s, vp);
+            .update(&mut t.children[0], e, l, c, r, cb, &mut lokaal, vp);
+        sluit_ronde(s, lokaal, e, generatie, self.zoektoetsen);
     }
     fn mouse_interaction(
         &self,
@@ -114,6 +163,7 @@ impl Widget<Msg, Theme, Renderer> for Bediening<'_> {
                 overlay::Element::new(Box::new(Bovenlaag {
                     inhoud,
                     generatie: self.generatie.clone(),
+                    zoektoetsen: self.zoektoetsen,
                 }))
             })
     }
@@ -122,6 +172,7 @@ impl Widget<Msg, Theme, Renderer> for Bediening<'_> {
 struct Bovenlaag<'a> {
     inhoud: overlay::Element<'a, Msg, Theme, Renderer>,
     generatie: Generatie,
+    zoektoetsen: bool,
 }
 impl overlay::Overlay<Msg, Theme, Renderer> for Bovenlaag<'_> {
     fn layout(&mut self, r: &Renderer, b: Size) -> layout::Node {
@@ -140,7 +191,13 @@ impl overlay::Overlay<Msg, Theme, Renderer> for Bovenlaag<'_> {
         s: &mut Shell<'_, Msg>,
     ) {
         registreer(&self.generatie, e);
-        self.inhoud.as_overlay_mut().update(e, l, c, r, cb, s);
+        let generatie = self.generatie.load(Ordering::Relaxed);
+        let mut berichten = Vec::new();
+        let mut lokaal = Shell::new(&mut berichten);
+        self.inhoud
+            .as_overlay_mut()
+            .update(e, l, c, r, cb, &mut lokaal);
+        sluit_ronde(s, lokaal, e, generatie, self.zoektoetsen);
     }
     fn mouse_interaction(
         &self,
@@ -169,6 +226,7 @@ impl overlay::Overlay<Msg, Theme, Renderer> for Bovenlaag<'_> {
             overlay::Element::new(Box::new(Bovenlaag {
                 inhoud,
                 generatie: self.generatie.clone(),
+                zoektoetsen: self.zoektoetsen,
             }))
         })
     }
@@ -206,10 +264,10 @@ impl Operation for Focusvraag {
     }
 }
 /// Het unieke doel moet nog in de actuele, bedienbare widgetboom staan.
-pub fn vraag(generatie: &Generatie, doel: Id) -> Task<Msg> {
+pub fn vraag(generatie: &Generatie, doel: Id, verwacht: u64) -> Task<Msg> {
     iced::advanced::widget::operate(Focusvraag {
         generatie: generatie.clone(),
-        verwacht: generatie.load(Ordering::Relaxed),
+        verwacht,
         doel,
         aanwezig: false,
     })

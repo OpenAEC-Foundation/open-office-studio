@@ -607,6 +607,176 @@ fn writer_zoekopenfocus_van_ander_document_raakt_de_huidige_editor_niet() {
     assert_eq!(*p.bron(), *origineel);
 }
 #[test]
+fn writer_zoekherkomst_sneltoets_en_paginaklik_in_dezelfde_widgetronde() {
+    use iced::{Event, keyboard as k, mouse};
+    let mut p = writer_paginaproef();
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    p.klik(punt);
+    let origineel = p.bron();
+    p.gebeurtenissen([
+        Event::Keyboard(k::Event::KeyPressed {
+            key: k::Key::Character("f".into()),
+            modified_key: k::Key::Character("f".into()),
+            physical_key: k::key::Physical::Unidentified(k::key::NativeCode::Unidentified),
+            location: k::Location::Standard,
+            modifiers: k::Modifiers::COMMAND,
+            text: None,
+            repeat: false,
+        }),
+        Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
+        Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)),
+    ]);
+    assert!(p.app.zoeken.is_some());
+    assert!(
+        p.app
+            .tab()
+            .unwrap()
+            .writer_focus
+            .load(std::sync::atomic::Ordering::Relaxed)
+    );
+    p.toets(
+        k::Key::Character("9".into()),
+        k::Modifiers::empty(),
+        Some("9"),
+    );
+    assert_eq!(p.app.tab().unwrap().editor.text(), "Links 🏠 9café rechts");
+    assert!(!p.app.tab().unwrap().concept);
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *origineel);
+}
+#[test]
+fn writer_zoekherkomst_lintklik_en_paginaklik_in_dezelfde_widgetronde() {
+    use iced::{Event, keyboard as k, mouse};
+    let mut p = writer_paginaproef();
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    p.klik(punt);
+    let origineel = p.bron();
+    let b = p
+        .toegankelijkheid()
+        .nodes
+        .into_iter()
+        .find(|n| n.node.name == "Zoeken" && n.node.role == openaec_ui::design::a11y::Role::Button)
+        .unwrap()
+        .bounds;
+    let knop = iced::Point::new(b.x + b.width * 0.5, b.y + b.height * 0.5);
+    p.gebeurtenissen([
+        Event::Mouse(mouse::Event::CursorMoved { position: knop }),
+        Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
+        Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)),
+        Event::Mouse(mouse::Event::CursorMoved { position: punt }),
+        Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
+        Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)),
+    ]);
+    assert!(p.app.zoeken.is_some());
+    assert!(
+        p.app
+            .tab()
+            .unwrap()
+            .writer_focus
+            .load(std::sync::atomic::Ordering::Relaxed)
+    );
+    p.toets(
+        k::Key::Character("9".into()),
+        k::Modifiers::empty(),
+        Some("9"),
+    );
+    assert_eq!(p.app.tab().unwrap().editor.text(), "Links 🏠 9café rechts");
+    assert!(!p.app.tab().unwrap().concept);
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *origineel);
+}
+#[test]
+fn writer_zoekherkomst_normale_zoek_en_vervangsneltoets_typen_in_het_zoekveld() {
+    use iced::keyboard as k;
+    for toets in ["f", "h"] {
+        let mut p = writer_paginaproef();
+        let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+        p.klik(punt);
+        let origineel = p.bron();
+        p.toets(k::Key::Character(toets.into()), k::Modifiers::COMMAND, None);
+        assert!(p.app.zoeken.is_some());
+        p.toets(
+            k::Key::Character("9".into()),
+            k::Modifiers::empty(),
+            Some("9"),
+        );
+        p.selecteer_alles();
+        p.toets(k::Key::Character("c".into()), k::Modifiers::COMMAND, None);
+        assert_eq!(p.klembord.tekst.as_deref(), Some("9"));
+        assert_eq!(*p.bron(), *origineel);
+        assert!(!p.app.tab().unwrap().concept);
+    }
+}
+#[test]
+fn writer_heropen_negen_paginaklik_volgt_de_getekende_regel() {
+    use iced::keyboard::{Key, Modifiers, key::Named};
+    let mut p = writer_paginaproef();
+    let tekst = "Links 🏠 café rechts";
+    let punt = writer_punt(&mut p, tekst, tekst.chars().count());
+    p.klik(punt);
+    p.named(Named::End);
+    p.named(Named::Enter);
+    p.bericht(Msg::Opmaak(Opmaak::Vet(true)));
+    p.toets(Key::Character("9".into()), Modifiers::empty(), Some("9"));
+    let bron = p.bron();
+    let mut q = Proef::met_app(app_met_werkdraad(Module::Writer, bron.as_slice()));
+    q.klik(iced::Point::new(390., 401.));
+    assert!(
+        q.app
+            .tab()
+            .unwrap()
+            .writer_focus
+            .load(std::sync::atomic::Ordering::Relaxed)
+    );
+    assert_eq!(q.app.tab().unwrap().editor.text(), "9");
+    q.named(Named::Home);
+    assert_eq!(q.app.tab().unwrap().editor.text(), "9");
+    q.selecteer_alles();
+    q.toets(Key::Character("c".into()), Modifiers::COMMAND, None);
+    assert_eq!(q.klembord.tekst.as_deref(), Some("9"));
+    assert_eq!(*q.bron(), *bron);
+    let bewaard =
+        include_bytes!("../../../office-core/tests/fixtures/writer-heropen-invoegopmaak.docx");
+    let mut q = Proef::met_app(app_met_werkdraad(Module::Writer, bewaard));
+    q.klik(iced::Point::new(390., 401.));
+    assert!(
+        q.app
+            .tab()
+            .unwrap()
+            .writer_focus
+            .load(std::sync::atomic::Ordering::Relaxed)
+    );
+    assert_eq!(q.app.tab().unwrap().editor.text(), "9");
+    q.named(Named::Home);
+    assert_eq!(q.app.tab().unwrap().editor.text(), "9");
+    q.selecteer_alles();
+    q.toets(Key::Character("c".into()), Modifiers::COMMAND, None);
+    assert_eq!(q.klembord.tekst.as_deref(), Some("9"));
+    assert_eq!(q.bron().as_slice(), bewaard.as_slice());
+}
+#[test]
+fn writer_heropen_home_selecteer_kopieer_wachten_op_dezelfde_navigatie() {
+    use office_core::writer_navigatie::Richting;
+    use text_editor::Action;
+    use writer_direct::Bericht as B;
+    let bron =
+        include_bytes!("../../../office-core/tests/fixtures/writer-heropen-invoegopmaak.docx");
+    let mut p = Proef::met_app(app_met_werkdraad(Module::Writer, bron));
+    p.klik(iced::Point::new(390., 401.));
+    assert_eq!(p.app.tab().unwrap().editor.text(), "9");
+    writer_snel(
+        &mut p,
+        [
+            B::Beweeg(Richting::RegelBegin, false),
+            B::Invoer(Action::SelectAll),
+            B::Klembord(klembord::Actie::Kopieer),
+        ],
+    );
+    assert_eq!(p.app.tab().unwrap().editor.text(), "9");
+    assert_eq!(p.klembord.tekst.as_deref(), Some("9"));
+    assert_eq!(p.bron().as_slice(), bron.as_slice());
+}
+#[test]
 fn writer_pagina_opmaak_sneltoets_bewaart_cursor_en_onderbreekt_invoerundo() {
     use text_editor::{Action as A, Edit as E};
     use writer_direct::Bericht as B;
@@ -1511,6 +1681,9 @@ impl Proef {
             );
             let mut berichten = vec![];
             for event in events {
+                if let iced::Event::Mouse(iced::mouse::Event::CursorMoved { position }) = &event {
+                    self.muis = *position;
+                }
                 let mut shell = iced::advanced::Shell::new(&mut berichten);
                 element.as_widget_mut().update(
                     &mut self.boom,

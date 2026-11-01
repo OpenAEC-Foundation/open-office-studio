@@ -74,6 +74,7 @@ enum Msg {
     WriterGereed(writer_direct::Doel, Result<Antwoord, String>),
     WriterPlak(u64, u64, Option<String>),
     Zoeken(zoeken_ui::Bericht),
+    ZoekenInvoer(u64, zoeken_ui::Bericht),
     ZoekNavigatie(zoeken_ui::NavigatieDoel, Result<Antwoord, String>),
     ZoekGereed(
         zoeken_ui::Doel,
@@ -598,6 +599,7 @@ impl App {
             Msg::WriterGereed(d, r) => return writer_direct::gereed(self, d, r),
             Msg::WriterPlak(id, n, s) => return writer_direct::plak(self, id, n, s),
             Msg::Zoeken(m) => return zoeken_ui::update(self, m),
+            Msg::ZoekenInvoer(generatie, m) => return zoeken_ui::update_vanaf(self, m, generatie),
             Msg::ZoekNavigatie(doel, r) => return zoeken_ui::navigatie_gereed(self, doel, r),
             Msg::ZoekGereed(doel, resultaat) => return zoeken_ui::gereed(self, doel, resultaat),
             Msg::ExportMenu => {
@@ -1986,6 +1988,14 @@ impl App {
         invoerfocus::volg(
             iced::widget::Stack::with_children(lagen),
             self.invoergeneratie.clone(),
+            !modaal
+                && !self.bestand
+                && !self.postvak_zichtbaar
+                && self.tab().is_some_and(|t| {
+                    t.antwoord
+                        .as_ref()
+                        .is_some_and(|a| a.beeld.module == Module::Writer)
+                }),
         )
     }
     fn ribbon(&self) -> Element<'_, Msg> {

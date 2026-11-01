@@ -24,13 +24,13 @@
   },
   "aanpassingen": {
     "src/engine.rs": {
-      "sha256": "bc2043d090f3139868ac001ac150a9c5b2f8fab6041cfc43c4ee9bc04e02a60e",
+      "sha256": "dfa6ff35382323332fa979ededd663173555859b4a80fcabe80763b5eebeab48",
       "reden": "Twee afgebakende upstreamcorrecties: schaduwen gebruiken het clipmasker en de teksteditor wordt altijd geclipt. Daarnaast gebruiken quads steeds hetzelfde clip-/mengpad voor identieke ronde randpixels bij volledige en gedeeltelijke hertekening. Geen brede engine-upgrade.",
       "upstream_commits": [
         "https://github.com/iced-rs/iced/commit/0553559827c99b8c80563375f5fa6bbe1edce597",
         "https://github.com/iced-rs/iced/commit/23170119b048584a3cc659dd3b04d83bffd87c14"
       ],
-      "eigen_correctie": "Consistente quad-afkapping; vier schaalproeven voor gekleurde ronde randen en echte Writer-/Bestand-deelhertekening."
+      "eigen_correctie": "Consistente quad-afkapping; vier schaalproeven voor gekleurde ronde randen en echte Writer-/Bestand-deelhertekening. Schaduwmonsters worden tot de huidige fysieke clip en pixelbuffer begrensd, met behoud van hun globale monsterposities; dit voorkomt volledige schaduwberekening per klein hertekengebied."
     }
   },
   "aanvullingen": {

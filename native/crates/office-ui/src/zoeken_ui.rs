@@ -369,13 +369,19 @@ pub fn bij_document(app: &mut App) -> Task<Msg> {
     z.gekozen = 0;
     vraag(app)
 }
-fn focus_zoektekst(app: &App) -> Task<Msg> {
+fn focus_zoektekst(app: &App, generatie: u64) -> Task<Msg> {
     app.zoeken
         .as_ref()
-        .map(|z| invoerfocus::vraag(&app.invoergeneratie, z.invoer_id()))
+        .map(|z| invoerfocus::vraag(&app.invoergeneratie, z.invoer_id(), generatie))
         .unwrap_or_else(Task::none)
 }
 pub fn update(app: &mut App, m: Bericht) -> Task<Msg> {
+    let generatie = app
+        .invoergeneratie
+        .load(std::sync::atomic::Ordering::Relaxed);
+    update_vanaf(app, m, generatie)
+}
+pub fn update_vanaf(app: &mut App, m: Bericht, generatie: u64) -> Task<Msg> {
     match m {
         Bericht::Sluit => {
             let pagina = app
@@ -405,7 +411,7 @@ pub fn update(app: &mut App, m: Bericht) -> Task<Msg> {
             } else {
                 app.zoeken = Some(Zoekpaneel::nieuw(id, hash, vervangen, tekst));
             }
-            return Task::batch([vraag(app), focus_zoektekst(app)]);
+            return Task::batch([vraag(app), focus_zoektekst(app, generatie)]);
         }
         Bericht::Vervang(alles) => {
             let Some(t) = tab_gereed(app) else {
@@ -455,7 +461,7 @@ pub fn update(app: &mut App, m: Bericht) -> Task<Msg> {
             } else {
                 (z.gekozen + 1) % z.treffers.len()
             };
-            return Task::batch([kies(app, n, false), focus_zoektekst(app)]);
+            return Task::batch([kies(app, n, false), focus_zoektekst(app, generatie)]);
         }
         Bericht::Vervangtekst(s) => {
             if let Some(z) = app.zoeken.as_mut() {

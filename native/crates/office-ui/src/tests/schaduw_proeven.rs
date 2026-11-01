@@ -136,3 +136,60 @@ fn gekleurde_ronde_randen_veranderen_niet_bij_deelhertekenen() {
         "Gekleurde ronde randen hebben een afwijkende menging: {fouten:?}"
     );
 }
+
+#[test]
+fn paneelschaduw_bij_fractionele_deelgebieden_blijft_pixelgelijk() {
+    for schaal in [1., 1.25, 1.5, 2.] {
+        let (breedte, hoogte) = ((420. * schaal) as u32, (300. * schaal) as u32);
+        let viewport = iced_tiny_skia::graphics::Viewport::with_physical_size(
+            Size::new(breedte, hoogte),
+            schaal,
+        );
+        let mut r = iced_tiny_skia::Renderer::new(iced::Font::DEFAULT, iced::Pixels(12.));
+        r.fill_quad(
+            iced::advanced::renderer::Quad {
+                bounds: iced::Rectangle::new(iced::Point::new(30., -18.), Size::new(300., 694.)),
+                shadow: iced::Shadow {
+                    color: iced::Color::from_rgba(0., 0., 0., 0.16),
+                    offset: iced::Vector::new(0., 1.),
+                    blur_radius: 3.,
+                },
+                ..Default::default()
+            },
+            iced::Color::WHITE,
+        );
+        let mut pixels = tiny_skia::Pixmap::new(breedte, hoogte).unwrap();
+        let mut masker = tiny_skia::Mask::new(breedte, hoogte).unwrap();
+        r.draw(
+            &mut pixels.as_mut(),
+            &mut masker,
+            &viewport,
+            &[iced::Rectangle::with_size(Size::new(420., 300.))],
+            iced::Color::WHITE,
+        );
+        let vol = pixels.data().to_vec();
+        for _ in 0..3 {
+            for (x, y, w, h) in [
+                (27.1, 0.4, 7.3, 121.6),
+                (43., 71.9, 122.4082, 147.4),
+                (327.2, 242.3, 8.6, 57.7),
+            ] {
+                r.draw(
+                    &mut pixels.as_mut(),
+                    &mut masker,
+                    &viewport,
+                    &[iced::Rectangle::new(
+                        iced::Point::new(x, y),
+                        Size::new(w, h),
+                    )],
+                    iced::Color::WHITE,
+                );
+            }
+        }
+        assert_eq!(
+            pixels.data(),
+            vol,
+            "Fractionele paneelhertekening bij schaal {schaal}"
+        );
+    }
+}

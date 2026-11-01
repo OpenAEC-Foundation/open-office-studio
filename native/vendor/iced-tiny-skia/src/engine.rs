@@ -81,63 +81,76 @@ impl Engine {
                 shadow_bounds.width as u32,
                 shadow_bounds.height as u32,
             );
+            // Bereken alleen pixels die het huidige clipmasker kan raken.
+            // De globale monsterposities blijven gelijk aan een volle render.
+            let rechts = x
+                .saturating_add(width)
+                .min((clip_bounds.x + clip_bounds.width).ceil() as u32)
+                .min(pixels.width());
+            let onder = y
+                .saturating_add(height)
+                .min((clip_bounds.y + clip_bounds.height).ceil() as u32)
+                .min(pixels.height());
+            let x = x.max(clip_bounds.x.floor() as u32);
+            let y = y.max(clip_bounds.y.floor() as u32);
+            let width = rechts.saturating_sub(x);
+            let height = onder.saturating_sub(y);
             let half_width = physical_bounds.width / 2.0;
             let half_height = physical_bounds.height / 2.0;
 
-            let colors = (y..y + height)
-                .flat_map(|y| (x..x + width).map(move |x| (x as f32, y as f32)))
-                .filter_map(|(x, y)| {
-                    tiny_skia::Size::from_wh(half_width, half_height).map(
-                        |size| {
-                            let shadow_distance = rounded_box_sdf(
-                                Vector::new(
-                                    x - physical_bounds.position().x
-                                        - (shadow.offset.x
-                                            * transformation.scale_factor())
-                                        - half_width,
-                                    y - physical_bounds.position().y
-                                        - (shadow.offset.y
-                                            * transformation.scale_factor())
-                                        - half_height,
-                                ),
-                                size,
-                                &radii,
-                            )
-                            .max(0.0);
-                            let shadow_alpha = 1.0
-                                - smoothstep(
-                                    -shadow.blur_radius
-                                        * transformation.scale_factor(),
-                                    shadow.blur_radius
-                                        * transformation.scale_factor(),
-                                    shadow_distance,
-                                );
+            if let Some(size) = tiny_skia::IntSize::from_wh(width, height) {
+                let colors = (y..y + height)
+                    .flat_map(|y| (x..x + width).map(move |x| (x as f32, y as f32)))
+                    .filter_map(|(x, y)| {
+                        tiny_skia::Size::from_wh(half_width, half_height).map(
+                            |size| {
+                                let shadow_distance = rounded_box_sdf(
+                                    Vector::new(
+                                        x - physical_bounds.position().x
+                                            - (shadow.offset.x
+                                                * transformation.scale_factor())
+                                            - half_width,
+                                        y - physical_bounds.position().y
+                                            - (shadow.offset.y
+                                                * transformation.scale_factor())
+                                            - half_height,
+                                    ),
+                                    size,
+                                    &radii,
+                                )
+                                .max(0.0);
+                                let shadow_alpha = 1.0
+                                    - smoothstep(
+                                        -shadow.blur_radius
+                                            * transformation.scale_factor(),
+                                        shadow.blur_radius
+                                            * transformation.scale_factor(),
+                                        shadow_distance,
+                                    );
 
-                            let mut color = into_color(shadow.color);
-                            color.apply_opacity(shadow_alpha);
+                                let mut color = into_color(shadow.color);
+                                color.apply_opacity(shadow_alpha);
 
-                            color.to_color_u8().premultiply()
-                        },
-                    )
-                })
-                .collect();
+                                color.to_color_u8().premultiply()
+                            },
+                        )
+                    })
+                    .collect();
 
-            if let Some(pixmap) = tiny_skia::IntSize::from_wh(width, height)
-                .and_then(|size| {
-                    tiny_skia::Pixmap::from_vec(
-                        bytemuck::cast_vec(colors),
-                        size,
-                    )
-                })
-            {
-                pixels.draw_pixmap(
-                    x as i32,
-                    y as i32,
-                    pixmap.as_ref(),
-                    &tiny_skia::PixmapPaint::default(),
-                    tiny_skia::Transform::default(),
-                    Some(clip_mask),
-                );
+                if let Some(pixmap) = tiny_skia::Pixmap::from_vec(
+                    bytemuck::cast_vec(colors),
+                    size,
+                )
+                {
+                    pixels.draw_pixmap(
+                        x as i32,
+                        y as i32,
+                        pixmap.as_ref(),
+                        &tiny_skia::PixmapPaint::default(),
+                        tiny_skia::Transform::default(),
+                        Some(clip_mask),
+                    );
+                }
             }
         }
 
