@@ -1,0 +1,1232 @@
+diff --git a/.github/workflows/native-rust.yml b/.github/workflows/native-rust.yml
+index cf87fae..4bf2bda 100644
+--- a/.github/workflows/native-rust.yml
++++ b/.github/workflows/native-rust.yml
+@@ -159,7 +159,7 @@ jobs:
+           pattern: native-*
+           path: native/target/platformartefacten
+       - name: Bronbytes, architecturen en volledige native beelden vergelijken
+-        run: python native/scripts/controleer-platformen.py --artefacten native/target/platformartefacten --uitvoer native/target/platformvergelijking/rapport.json --verwachte-schermen 51
++        run: python native/scripts/controleer-platformen.py --artefacten native/target/platformartefacten --uitvoer native/target/platformvergelijking/rapport.json --verwachte-schermen 53
+       - uses: actions/upload-artifact@v4
+         if: always()
+         with:
+diff --git a/native/Cargo.lock b/native/Cargo.lock
+index 85a7f3d..ad1454d 100644
+--- a/native/Cargo.lock
++++ b/native/Cargo.lock
+@@ -3710,7 +3710,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "office-conversie"
+-version = "2026.44.9-alpha.30"
++version = "2026.44.9-alpha.31"
+ dependencies = [
+  "libc",
+  "serde_json",
+@@ -3720,7 +3720,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "office-core"
+-version = "2026.44.9-alpha.30"
++version = "2026.44.9-alpha.31"
+ dependencies = [
+  "base64 0.22.1",
+  "betteroffice-docx",
+@@ -3750,7 +3750,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "office-mail"
+-version = "2026.44.9-alpha.30"
++version = "2026.44.9-alpha.31"
+ dependencies = [
+  "async-imap",
+  "base64 0.22.1",
+@@ -3795,7 +3795,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "open-office-studio-native"
+-version = "2026.44.9-alpha.30"
++version = "2026.44.9-alpha.31"
+ dependencies = [
+  "futures-channel",
+  "iced",
+diff --git a/native/Cargo.toml b/native/Cargo.toml
+index 0dc8ffa..7e22fd2 100644
+--- a/native/Cargo.toml
++++ b/native/Cargo.toml
+@@ -5,7 +5,7 @@ exclude = ["vendor/openaec-ui", "vendor/docx-parse", "vendor/pptx", "vendor/xlsx
+ resolver = "3"
+ 
+ [workspace.package]
+-version = "2026.44.9-alpha.30"
++version = "2026.44.9-alpha.31"
+ edition = "2024"
+ license = "Apache-2.0"
+ publish = false
+diff --git a/native/crates/office-core/src/document.rs b/native/crates/office-core/src/document.rs
+index 36a8b1d..98f1867 100644
+--- a/native/crates/office-core/src/document.rs
++++ b/native/crates/office-core/src/document.rs
+@@ -416,6 +416,11 @@ impl Document {
+                     if let Some(gevonden) = opmaak.get(&id)
+                         && gevonden.tekst == tekst
+                     {
++                        if tekst.is_empty()
++                            && let Some(invoegopmaak) = &gevonden.invoegopmaak
++                        {
++                            staat = crate::writer_tekst::invoeg_staat(p, invoegopmaak);
++                        }
+                         if let Some(opmaak) = crate::writer_opmaak::selectie(
+                             &gevonden.bereiken,
+                             0,
+diff --git a/native/crates/office-core/src/writer_beeld.rs b/native/crates/office-core/src/writer_beeld.rs
+index 3f013fe..dd5f340 100644
+--- a/native/crates/office-core/src/writer_beeld.rs
++++ b/native/crates/office-core/src/writer_beeld.rs
+@@ -16,6 +16,49 @@ type BladMetOpmaak = (
+     crate::interactie::Pagina,
+     std::sync::Arc<crate::writer_opmaak::Alineas>,
+ );
++// De gepinde engine geeft een leeg hitmarker altijd zijn standaardfont mee.
++// Herstel uitsluitend dat nulbrede markerfont vanuit de al opgeloste markopmaak.
++// De rasterweergave en alle cursor-/navigatievragen blijven dezelfde lijst gebruiken.
++fn corrigeer_lege_markeringen(
++    lijst: &mut docx_layout::display_list::DisplayList,
++    opmaak: &crate::writer_opmaak::Alineas,
++) {
++    use docx_layout::display_list::{Primitive, px};
++    for pagina in &mut lijst.pages {
++        for primitief in &mut pagina.primitives {
++            let Primitive::Text(tekst) = primitief else {
++                continue;
++            };
++            if !tekst.text.is_empty() || tekst.attrs.doc_start != tekst.attrs.doc_end {
++                continue;
++            }
++            let Some(alinea) = tekst.attrs.para_id.as_ref().and_then(|id| opmaak.get(id)) else {
++                continue;
++            };
++            if !alinea.tekst.is_empty() {
++                continue;
++            }
++            let Some(hoogte) = alinea.invoegopmaak.as_ref().and_then(|f| f.font_size) else {
++                continue;
++            };
++            let pixels = hoogte / 2. * 96. / 72.;
++            if !pixels.is_finite() || pixels <= 0. {
++                continue;
++            }
++            let Some(token) = tekst.font.split_whitespace().find(|t| {
++                t.strip_suffix("px")
++                    .is_some_and(|n| n.parse::<f64>().is_ok())
++            }) else {
++                continue;
++            };
++            let nieuw = format!("{}px", px(pixels));
++            if token != nieuw {
++                tekst.font = tekst.font.replacen(token, &nieuw, 1);
++            }
++        }
++    }
++}
++
+ struct Behouden {
+     eigenaar: u64,
+     bron_hash: String,
+@@ -108,7 +151,7 @@ pub(crate) fn pagina_van_tekst(
+         if c.paginakaart.is_none() {
+             // Alleen de eerste aanvraag moet de behouden layout opbouwen.
+             // De paginakaart zelf bouwt geen volledige paginabeeldenreeks.
+-            if c.engine.with_display_list(|_| ()).is_none() {
++            if c.met_lijst(|_| ()).is_none() {
+                 c.pagina::<true>(0)?;
+             }
+             let mut opties = PageExportOptions::new(RevisionView::Accepted);
+@@ -161,14 +204,13 @@ pub(crate) fn tekstmarkering(
+ ) -> Resultaat<crate::writer_cursor::TekstMarkering> {
+     met_context(bron, eigenaar, |c| {
+         c.tekstpagina(pagina)?;
+-        c.engine
+-            .with_display_list(|dl| {
+-                c.adressen
+-                    .as_ref()
+-                    .unwrap()
+-                    .markering(dl, pagina, id, begin, einde, lengte)
+-            })
+-            .ok_or_else(|| fout("Geen behouden paginabeeld voor tekstmarkering"))?
++        c.met_lijst(|dl| {
++            c.adressen
++                .as_ref()
++                .unwrap()
++                .markering(dl, pagina, id, begin, einde, lengte)
++        })
++        .ok_or_else(|| fout("Geen behouden paginabeeld voor tekstmarkering"))?
+     })
+ }
+ 
+@@ -180,8 +222,7 @@ pub(crate) fn interactie_frame(
+     met_context(bron, eigenaar, |c| {
+         c.tekstpagina(pagina)?;
+         let lijst = c
+-            .engine
+-            .with_display_list(|dl| docx_layout::display_list::DisplayList {
++            .met_lijst(|dl| docx_layout::display_list::DisplayList {
+                 contract_version: dl.contract_version,
+                 pages: vec![dl.pages[pagina].clone()],
+             })
+@@ -205,19 +246,18 @@ pub(crate) fn tekstpunt(
+     }
+     met_context(bron, eigenaar, |c| {
+         c.tekstpagina(pagina)?;
+-        c.engine
+-            .with_display_list(|dl| {
+-                let p = &dl.pages[pagina];
+-                if x < 0.
+-                    || y < 0.
+-                    || x >= p.width.as_f64().unwrap_or(0.)
+-                    || y >= p.height.as_f64().unwrap_or(0.)
+-                {
+-                    return Ok(None);
+-                }
+-                c.adressen.as_ref().unwrap().punt(dl, pagina, x, y)
+-            })
+-            .ok_or_else(|| fout("Geen behouden paginabeeld voor tekstpositie"))?
++        c.met_lijst(|dl| {
++            let p = &dl.pages[pagina];
++            if x < 0.
++                || y < 0.
++                || x >= p.width.as_f64().unwrap_or(0.)
++                || y >= p.height.as_f64().unwrap_or(0.)
++            {
++                return Ok(None);
++            }
++            c.adressen.as_ref().unwrap().punt(dl, pagina, x, y)
++        })
++        .ok_or_else(|| fout("Geen behouden paginabeeld voor tekstpositie"))?
+     })
+ }
+ 
+@@ -255,7 +295,7 @@ pub(crate) fn verplaats_cursor(
+     } = vraag;
+     met_context(bron, eigenaar, |c| {
+         c.tekstpagina(pagina)?;
+-        let aantal = c.engine.with_display_list(|d| d.pages.len()).unwrap_or(0);
++        let aantal = c.met_lijst(|d| d.pages.len()).unwrap_or(0);
+         let paginas: Vec<_> = (pagina.saturating_sub(1)..(pagina + 2).min(aantal)).collect();
+         c.engine
+             .build_display_pages_frame(&paginas, 0)
+@@ -263,33 +303,52 @@ pub(crate) fn verplaats_cursor(
+         let adressen = c.adressen.as_ref().unwrap();
+         let pos = adressen.positie(id, positie)?;
+         let vorig = adressen.positie(id, vorige)?;
+-        c.engine
+-            .with_display_list(|dl| {
+-                let (k, pos, x) = crate::writer_navigatie::verplaats(
+-                    dl,
+-                    adressen,
+-                    crate::writer_navigatie::Vraag {
+-                        pagina,
+-                        id,
+-                        pos,
+-                        vorige: vorig,
+-                        richting,
+-                        voorkeur,
+-                        doel_x,
+-                    },
+-                )?;
+-                let Some((doel_id, offset)) = adressen.punt_voor_positie(pos)? else {
+-                    return Err(fout("Geen tekstadres bij de doelcursor"));
+-                };
+-                if doel_id != k.id {
+-                    return Err(fout("Doelcursor en bronalinea komen niet overeen"));
+-                }
+-                Ok((k, offset, x))
+-            })
+-            .ok_or_else(|| fout("Geen behouden navigatiegeometrie"))?
++        c.met_lijst(|dl| {
++            let (k, pos, x) = crate::writer_navigatie::verplaats(
++                dl,
++                adressen,
++                crate::writer_navigatie::Vraag {
++                    pagina,
++                    id,
++                    pos,
++                    vorige: vorig,
++                    richting,
++                    voorkeur,
++                    doel_x,
++                },
++            )?;
++            let Some((doel_id, offset)) = adressen.punt_voor_positie(pos)? else {
++                return Err(fout("Geen tekstadres bij de doelcursor"));
++            };
++            if doel_id != k.id {
++                return Err(fout("Doelcursor en bronalinea komen niet overeen"));
++            }
++            Ok((k, offset, x))
++        })
++        .ok_or_else(|| fout("Geen behouden navigatiegeometrie"))?
+     })
+ }
+ impl Context {
++    fn met_lijst<T>(
++        &self,
++        lees: impl FnOnce(&docx_layout::display_list::DisplayList) -> T,
++    ) -> Option<T> {
++        self.engine.with_display_list(|lijst| {
++            if self.opmaak.values().any(|a| {
++                a.tekst.is_empty()
++                    && a.invoegopmaak
++                        .as_ref()
++                        .and_then(|f| f.font_size)
++                        .is_some_and(|n| n != 22.)
++            }) {
++                let mut eigen = lijst.clone();
++                corrigeer_lege_markeringen(&mut eigen, &self.opmaak);
++                lees(&eigen)
++            } else {
++                lees(lijst)
++            }
++        })
++    }
+     fn nieuw(bron: &[u8], met_opmaak: bool) -> Resultaat<Self> {
+         #[cfg(test)]
+         OPBOUWEN.with(|n| n.set(n.get() + 1));
+@@ -396,6 +455,7 @@ impl Context {
+             verzoek,
+             benodigd,
+             afbeeldingen,
++            opmaak,
+             ..
+         } = self;
+         LETTERCACHE.with(|cel| {
+@@ -438,9 +498,10 @@ impl Context {
+             engine
+                 .build_display_list_frame(&extra.to_string(), 0)
+                 .map_err(fout)?;
+-            let dl = engine
++            let mut dl = engine
+                 .with_display_list(Clone::clone)
+                 .ok_or_else(|| fout("Geen paginabeeld"))?;
++            corrigeer_lege_markeringen(&mut dl, opmaak);
+             let aantal = dl.pages.len();
+             let resources = docx_raster::RenderResources::new(fonts, tekenen, afbeeldingen);
+             let render = docx_raster::render_page(&dl, nummer, &resources).map_err(fout)?;
+diff --git a/native/crates/office-core/src/writer_opmaak.rs b/native/crates/office-core/src/writer_opmaak.rs
+index fd4c2e2..fb3276e 100644
+--- a/native/crates/office-core/src/writer_opmaak.rs
++++ b/native/crates/office-core/src/writer_opmaak.rs
+@@ -18,6 +18,7 @@ pub struct OpmaakBereik {
+ pub(crate) struct AlineaOpmaak {
+     pub tekst: String,
+     pub bereiken: Vec<OpmaakBereik>,
++    pub invoegopmaak: Option<docx_parse::formatting::TextFormatting>,
+ }
+ pub(crate) type Alineas = HashMap<String, AlineaOpmaak>;
+ 
+@@ -105,6 +106,16 @@ pub(crate) fn lees(doc: &docx_edit::EditingDoc) -> Resultaat<Alineas> {
+                     positie = einde;
+                 }
+                 S::Pilcrow(p) => {
++                    if alinea.tekst.is_empty() {
++                        // Dezelfde reeds opgeloste alinea-/tabelstijl als de engine.
++                        // Beschadigde metadata wordt niet als een standaardstijl voorgesteld.
++                        alinea.invoegopmaak = match p.values.get("defaultTextFormatting") {
++                            None | Some(Any::Null | Any::Undefined) => Some(Default::default()),
++                            Some(waarde) => serde_json::to_value(waarde)
++                                .ok()
++                                .and_then(|v| serde_json::from_value(v).ok()),
++                        };
++                    }
+                     // Dubbele identificaties mogen niet stil de opmaak van een
+                     // andere alinea overnemen. Zulke bron is al niet bewerkbaar.
+                     match uit.entry(p.para_id) {
+diff --git a/native/crates/office-core/src/writer_tekst.rs b/native/crates/office-core/src/writer_tekst.rs
+index 4c6d9a0..4d0bb29 100644
+--- a/native/crates/office-core/src/writer_tekst.rs
++++ b/native/crates/office-core/src/writer_tekst.rs
+@@ -525,6 +525,57 @@ fn schrijf_lijst(
+     }
+ }
+ 
++fn pas_runopmaak_toe(run: &mut docx::Run, stijl: &crate::opmaak::Opmaak) -> Resultaat<()> {
++    pas_formatering_toe(run.formatting.get_or_insert_with(Default::default), stijl)
++}
++fn pas_formatering_toe(
++    f: &mut docx_parse::formatting::TextFormatting,
++    stijl: &crate::opmaak::Opmaak,
++) -> Resultaat<()> {
++    use crate::opmaak::Opmaak as O;
++    match stijl {
++        O::Vet(v) => {
++            f.bold = Some(*v);
++            f.bold_cs = Some(*v);
++        }
++        O::Cursief(v) => {
++            f.italic = Some(*v);
++            f.italic_cs = Some(*v);
++        }
++        O::Onderstrepen(v) => {
++            f.underline = Some(docx_parse::scalars::UnderlineValue {
++                style: if *v { "single" } else { "none" }.into(),
++                color: None,
++            })
++        }
++        O::Doorhalen(v) => f.strike = Some(*v),
++        O::Lettergrootte(v) => {
++            // Dezelfde positieve halvepuntenafronding als de
++            // vaste serializer: model en bewaarde bron blijven gelijk.
++            f.font_size = Some((*v * 2. + 0.5).floor());
++            f.font_size_cs = Some(*v * 2.);
++        }
++        O::Lettertype(v) => {
++            let fam = f.font_family.get_or_insert_with(Default::default);
++            fam.ascii = Some(v.clone());
++            fam.h_ansi = Some(v.clone());
++            fam.ascii_theme = None;
++            fam.h_ansi_theme = None;
++        }
++        O::Kleur(v) => f.color = Some(docx_parse::scalars::ColorValue::from_attribute(&v[1..])),
++        O::Achtergrond(v) => {
++            let shade = f.shading.get_or_insert_with(Default::default);
++            shade.fill = Some(docx_parse::scalars::ColorValue::from_attribute(&v[1..]));
++        }
++        _ => {
++            return Err(Fout::Document(
++                "Deze tekstopmaak wordt nog niet ondersteund".into(),
++            ));
++        }
++    }
++    Ok(())
++}
++
+ /// Aantallen in Unicode-tekens; nooit bytes of halve UTF-16-surrogaten.
+ pub fn opmaak(
+     d: &mut docx::Document,
+@@ -556,6 +607,29 @@ pub fn opmaak(
+             }
+             .into(),
+         );
++    } else if lengte == 0 {
++        // De eerste lege run is ook de invoegstijl bij de volgende tekststap.
++        // Overige lege runs en onbekende opmaakvelden blijven behouden.
++        if p.content.is_empty() {
++            p.content.push(P::Inline(I::Run(docx::Run {
++                node_type: docx_parse::inline::RunType::Run,
++                formatting: None,
++                property_changes: None,
++                content: vec![],
++            })));
++        }
++        let P::Inline(I::Run(run)) = &mut p.content[0] else {
++            return Err(fout());
++        };
++        pas_runopmaak_toe(run, stijl)?;
++        // Ook het lege alineateken draagt de invoegstijl. De layout gebruikt
++        // die voor de cursorhoogte vóór er een eerste letter wordt ingevoegd.
++        let markering = p
++            .formatting
++            .get_or_insert_with(Default::default)
++            .run_properties
++            .get_or_insert_with(Default::default);
++        pas_formatering_toe(markering, stijl)?;
+     } else {
+         // Een lege selectie op een niet-lege alinea mag geen schijnbewerking zijn.
+         if begin == einde {
+@@ -584,50 +658,7 @@ pub fn opmaak(
+                 let mut r = run.clone();
+                 r.content = inhoud(&chars[a..b].iter().collect::<String>());
+                 if pas_aan {
+-                    let f = r.formatting.get_or_insert_with(Default::default);
+-                    match stijl {
+-                        O::Vet(v) => {
+-                            f.bold = Some(*v);
+-                            f.bold_cs = Some(*v);
+-                        }
+-                        O::Cursief(v) => {
+-                            f.italic = Some(*v);
+-                            f.italic_cs = Some(*v);
+-                        }
+-                        O::Onderstrepen(v) => {
+-                            f.underline = Some(docx_parse::scalars::UnderlineValue {
+-                                style: if *v { "single" } else { "none" }.into(),
+-                                color: None,
+-                            })
+-                        }
+-                        O::Doorhalen(v) => f.strike = Some(*v),
+-                        O::Lettergrootte(v) => {
+-                            // Dezelfde positieve halvepuntenafronding als de
+-                            // vaste serializer: model en bewaarde bron blijven gelijk.
+-                            f.font_size = Some((*v * 2. + 0.5).floor());
+-                            f.font_size_cs = Some(*v * 2.);
+-                        }
+-                        O::Lettertype(v) => {
+-                            let fam = f.font_family.get_or_insert_with(Default::default);
+-                            fam.ascii = Some(v.clone());
+-                            fam.h_ansi = Some(v.clone());
+-                            fam.ascii_theme = None;
+-                            fam.h_ansi_theme = None;
+-                        }
+-                        O::Kleur(v) => {
+-                            f.color = Some(docx_parse::scalars::ColorValue::from_attribute(&v[1..]))
+-                        }
+-                        O::Achtergrond(v) => {
+-                            let shade = f.shading.get_or_insert_with(Default::default);
+-                            shade.fill =
+-                                Some(docx_parse::scalars::ColorValue::from_attribute(&v[1..]));
+-                        }
+-                        _ => {
+-                            return Err(Fout::Document(
+-                                "Deze tekstopmaak wordt nog niet ondersteund".into(),
+-                            ));
+-                        }
+-                    }
++                    pas_runopmaak_toe(&mut r, stijl)?;
+                 }
+                 uit.push(P::Inline(I::Run(r)));
+             }
+@@ -639,10 +670,45 @@ pub fn opmaak(
+     Ok(())
+ }
+ pub fn staat(p: &docx::Paragraph) -> crate::opmaak::OpmaakStaat {
+-    let f = p.content.iter().find_map(|c| match c {
++    staat_van_formatering(p.content.iter().find_map(|c| match c {
++        P::Inline(I::Run(r)) => r.formatting.as_ref(),
++        _ => None,
++    }))
++}
++
++/// Een lege run vult de opgeloste alineastijl aan; de bron wordt niet veranderd.
++pub(crate) fn invoeg_staat(
++    p: &docx::Paragraph,
++    standaard: &docx_parse::formatting::TextFormatting,
++) -> crate::opmaak::OpmaakStaat {
++    let direct = p.content.iter().find_map(|c| match c {
+         P::Inline(I::Run(r)) => r.formatting.as_ref(),
+         _ => None,
+     });
++    // Een expliciete tekenstijl vraagt haar eigen opgeloste overerving.
++    // Zolang die voor lege runs ontbreekt, wordt geen alineaterugval gegokt.
++    if direct.is_some_and(|f| f.style_id.is_some()) {
++        return staat_van_formatering(direct);
++    }
++    let opmaak = docx_parse::formatting::merge_text_formatting(Some(standaard), direct);
++    let mut staat = staat_van_formatering(opmaak.as_ref());
++    if opmaak
++        .as_ref()
++        .is_none_or(|f| f.font_size.is_none() && f.font_size_cs.is_none())
++    {
++        staat.grootte = Some(11.);
++    } else if staat.grootte.is_none() {
++        staat.grootte = opmaak.as_ref().and_then(|f| f.font_size_cs).map(|n| n / 2.);
++    }
++    if opmaak.as_ref().is_none_or(|f| f.font_family.is_none()) {
++        staat.lettertype = Some("Calibri".into());
++    }
++    staat
++}
++
++fn staat_van_formatering(
++    f: Option<&docx_parse::formatting::TextFormatting>,
++) -> crate::opmaak::OpmaakStaat {
+     crate::opmaak::OpmaakStaat {
+         vet: f.and_then(|f| f.bold).unwrap_or(false),
+         cursief: f.and_then(|f| f.italic).unwrap_or(false),
+diff --git a/native/crates/office-core/tests/fixtures/controleer.py b/native/crates/office-core/tests/fixtures/controleer.py
+index b472c78..94d1341 100644
+--- a/native/crates/office-core/tests/fixtures/controleer.py
++++ b/native/crates/office-core/tests/fixtures/controleer.py
+@@ -366,3 +366,35 @@ with ZipFile(map/'spreadsheet-model-bestaande-bron.xlsx') as archief:
+     opmaak=wortel.findall('{http://schemas.openxmlformats.org/spreadsheetml/2006/main}sheetFormatPr')
+     assert len(opmaak)==1 and opmaak[0].attrib['{urn:openaec:test}bewaar']=='blijft'
+ print('Spreadsheet-modeluitvoer: twintig rijformaatcombinaties, hoogte-uitzonderingen, bronattributen met eigen naamruimte, celinhoud, formules en tweede blad onafhankelijk teruggelezen.')
++
++# Invoegopmaak wordt ook vóór de eerste letter bewaard en onafhankelijk heropend.
++d=Document(map/'writer-lege-invoegopmaak.docx')
++nieuw=next(a for a in d.paragraphs if a.text=='Nieuwe tekst 🏠')
++assert nieuw.runs and all(r.bold and r.italic for r in nieuw.runs if r.text)
++assert len(d.sections)==2 and len(d.tables)==1
++assert d.sections[0].header.paragraphs[0].text=='Vaste koptekst'
++assert d.sections[0].footer.paragraphs[0].text=='Vaste voettekst'
++assert d.tables[0].cell(0,0).text=='Cel één\nTweede celalinea' and d.tables[0].cell(0,1).text=='Cel twee'
++d=Document(map/'writer-lege-acht-opmaken.docx')
++assert len(d.paragraphs)==1 and d.paragraphs[0].text=='café 🏠'
++a=d.paragraphs[0];assert int(a.alignment)==1
++for r in a.runs:
++ if not r.text:continue
++ assert r.bold and r.italic and r.underline and r.font.strike
++ assert r.font.name=='Inter' and r.font.size.pt==13.5
++ assert str(r.font.color.rgb)=='123456'
++with ZipFile(map/'writer-lege-acht-opmaken.docx') as z:
++ root=ET.fromstring(z.read('word/document.xml'));w='{http://schemas.openxmlformats.org/wordprocessingml/2006/main}'
++ assert all(n.attrib[w+'fill']=='FFF2CC' for n in root.iter(w+'shd'))
++ assert len(list(root.iter(w+'shd')))>=1
++print('Lege Writer-invoegopmaak: twee DOCX onafhankelijk goedgekeurd, inclusief acht stijleigenschappen, Unicode, alinea-uitlijning, kop/voet, secties en tabelinhoud.')
++
++for naam,tekst in [('writer-lege-opmaak-ui.docx','9'),('writer-lege-opmaak-wachtrij-ui.docx','café 🏠')]:
++    doc=Document(map/naam)
++    alinea=next(a for a in doc.paragraphs if a.text==tekst)
++    assert alinea.runs and all(r.bold and r.italic for r in alinea.runs if r.text)
++    assert len(doc.sections)==2 and len(doc.tables)==1
++    assert doc.sections[0].header.paragraphs[0].text=='Vaste koptekst'
++    assert doc.sections[0].footer.paragraphs[0].text=='Vaste voettekst'
++    assert doc.tables[0].cell(0,0).text=='Cel één\nTweede celalinea'
++print('Writer-invoegopmaak via lint en wachtrij: opgeslagen Unicode-tekst, beide runstijlen en overige documentstructuur onafhankelijk goedgekeurd.')
+diff --git a/native/crates/office-core/tests/writer_opmaak.rs b/native/crates/office-core/tests/writer_opmaak.rs
+index fa5c948..fffb63a 100644
+--- a/native/crates/office-core/tests/writer_opmaak.rs
++++ b/native/crates/office-core/tests/writer_opmaak.rs
+@@ -181,3 +181,330 @@ fn writer_opmaak_lettergrootte_volgt_de_werkelijk_bewaarde_halve_punten() {
+         assert_eq!(s.bron().as_slice(), BRON);
+     }
+ }
++
++fn bewaar_lege_opmaak(naam: &str, bytes: &[u8]) {
++    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
++        std::fs::create_dir_all(&map).unwrap();
++        std::fs::write(std::path::PathBuf::from(map).join(naam), bytes).unwrap();
++    }
++}
++
++#[test]
++fn lege_invoegopmaak_na_splitsen_bewaart_bestaande_cursief_en_nieuwe_vetkeuze() {
++    let bron = include_bytes!("fixtures/writer-structuur.docx");
++    let mut s = Sessie::open(Module::Writer, bron.to_vec()).unwrap();
++    let b = s.weergave(0).unwrap();
++    let v = b
++        .velden
++        .iter()
++        .find(|v| v.tekst == "Links 🏠 café rechts")
++        .unwrap();
++    let n = v.tekst.chars().count();
++    let (_, doel) = s
++        .bewerk_alinea_cursor(
++            0,
++            &s.bron_hash().to_owned(),
++            &v.id,
++            n,
++            n,
++            office_core::writer::CursorActie::Splits,
++        )
++        .unwrap();
++    let leeg = s.bron();
++    s.bewerk(
++        0,
++        Bewerking::Opmaak {
++            id: doel.id.clone(),
++            begin: 0,
++            einde: 0,
++            stijl: Opmaak::Vet(true),
++        },
++    )
++    .unwrap();
++    let opgemaakt = s.bron();
++    let direct = s.weergave(0).unwrap();
++    let direct = direct.velden.iter().find(|v| v.id == doel.id).unwrap();
++    assert_eq!(direct.opmaak.grootte, Some(11.));
++    assert_eq!(direct.opmaak.lettertype.as_deref(), Some("Cambria"));
++    let mut heropend = Sessie::open(Module::Writer, opgemaakt.as_ref().clone()).unwrap();
++    let b = heropend.weergave(0).unwrap();
++    let v = b.velden.iter().find(|v| v.id == doel.id).unwrap();
++    assert!(v.tekst.is_empty() && v.opmaak.vet && v.opmaak.cursief);
++    bewaar_lege_opmaak("writer-lege-invoegopmaak-leeg.docx", &opgemaakt);
++    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
++        let engine = docx_edit::EngineSession::new(424244);
++        docx_edit::seed_from_docx(engine.doc(), &opgemaakt).unwrap();
++        let mut waarden = vec![];
++        for verhaal in engine.doc().list_stories().stories {
++            if verhaal.root != "body" {
++                continue;
++            }
++            for segment in engine.doc().story_segments(&verhaal.story).unwrap() {
++                if let docx_edit::SegmentContent::Pilcrow(p) = segment.content {
++                    let decode = p.values.get("defaultTextFormatting").map(|v| {
++                        serde_json::to_value(v)
++                            .and_then(
++                                serde_json::from_value::<docx_parse::formatting::TextFormatting>,
++                            )
++                            .map(|f| format!("{f:?}"))
++                            .unwrap_or_else(|e| format!("Niet gelezen: {e}"))
++                    });
++                    waarden.push(serde_json::json!({"id":p.para_id,"eigenschappen":p.values,"decode":decode}));
++                }
++            }
++        }
++        std::fs::write(
++            std::path::PathBuf::from(map).join("writer-lege-vet-markeringen.json"),
++            serde_json::to_vec_pretty(&waarden).unwrap(),
++        )
++        .unwrap();
++    }
++    assert_eq!(v.opmaak.grootte, Some(11.));
++    assert_eq!(v.opmaak.lettertype.as_deref(), Some("Cambria"));
++    heropend
++        .bewerk(
++            0,
++            Bewerking::Tekst {
++                id: doel.id.clone(),
++                tekst: "Nieuwe tekst 🏠".into(),
++            },
++        )
++        .unwrap();
++    let b = heropend.weergave(0).unwrap();
++    let v = b.velden.iter().find(|v| v.id == doel.id).unwrap();
++    assert_eq!(v.tekst, "Nieuwe tekst 🏠");
++    assert!(v.opmaak.vet && v.opmaak.cursief);
++    assert_eq!(
++        b.velden
++            .iter()
++            .filter(|v| v.tekst == "Links 🏠 café rechts")
++            .count(),
++        1
++    );
++    bewaar_lege_opmaak("writer-lege-invoegopmaak.docx", &heropend.bron());
++    // Vergelijk de opmaakstap met de al gesplitste, canonieke bron.
++    // De ongewijzigde inhoud tegenover het origineel wordt onafhankelijk gelezen.
++    let oorspronkelijke_delen = ooxml_opc::unzip_parts(&leeg).unwrap();
++    let nieuwe_delen = ooxml_opc::unzip_parts(&heropend.bron()).unwrap();
++    for (naam, data) in oorspronkelijke_delen
++        .iter()
++        .filter(|(n, _)| n != "word/document.xml")
++    {
++        assert_eq!(
++            nieuwe_delen.iter().find(|(n, _)| n == naam).unwrap().1,
++            *data,
++            "{naam}"
++        );
++    }
++    heropend.terug().unwrap();
++    assert_eq!(*heropend.bron(), *opgemaakt);
++    s.terug().unwrap();
++    assert_eq!(*s.bron(), *leeg);
++    s.terug().unwrap();
++    assert_eq!(s.bron().as_slice(), bron);
++}
++
++fn bron_zonder_tekstruns() -> Vec<u8> {
++    let mut delen = ooxml_opc::unzip_parts(BRON).unwrap();
++    let (_, bytes) = delen
++        .iter_mut()
++        .find(|(n, _)| n == "word/document.xml")
++        .unwrap();
++    let xml = String::from_utf8(bytes.clone()).unwrap();
++    let begin = xml.find("<w:body>").unwrap();
++    let eind = xml.find("</w:body>").unwrap() + "</w:body>".len();
++    let body = r#"<w:body><w:p><w:pPr><w:jc w:val="center"/></w:pPr></w:p><w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440"/></w:sectPr></w:body>"#;
++    *bytes = format!("{}{}{}", &xml[..begin], body, &xml[eind..]).into_bytes();
++    ooxml_opc::rezip_parts(&delen).unwrap()
++}
++
++#[test]
++fn lege_invoegopmaak_zonder_runs_behoudt_acht_opmaakeigenschappen_na_heropenen() {
++    let bron = bron_zonder_tekstruns();
++    let mut s = Sessie::open(Module::Writer, bron.clone()).unwrap();
++    let id = s.weergave(0).unwrap().velden[0].id.clone();
++    for stijl in [
++        Opmaak::Vet(true),
++        Opmaak::Cursief(true),
++        Opmaak::Onderstrepen(true),
++        Opmaak::Doorhalen(true),
++        Opmaak::Lettergrootte(13.5),
++        Opmaak::Lettertype("Inter".into()),
++        Opmaak::Kleur("#123456".into()),
++        Opmaak::Achtergrond("#FFF2CC".into()),
++    ] {
++        s.bewerk(
++            0,
++            Bewerking::Opmaak {
++                id: id.clone(),
++                begin: 0,
++                einde: 0,
++                stijl,
++            },
++        )
++        .unwrap();
++    }
++    let opgemaakt = s.bron();
++    let mut heropend = Sessie::open(Module::Writer, opgemaakt.as_ref().clone()).unwrap();
++    heropend
++        .bewerk(
++            0,
++            Bewerking::Tekst {
++                id: id.clone(),
++                tekst: "café 🏠".into(),
++            },
++        )
++        .unwrap();
++    let b = heropend.weergave(0).unwrap();
++    let staat = &b.velden[0].opmaak;
++    assert!(staat.vet && staat.cursief && staat.onderstrepen && staat.doorhalen);
++    assert_eq!(staat.grootte, Some(13.5));
++    assert_eq!(staat.lettertype.as_deref(), Some("Inter"));
++    let Document::Writer(d) = Document::open(Module::Writer, &heropend.bron()).unwrap() else {
++        panic!()
++    };
++    let p = d.paragraph(&id).unwrap();
++    assert_eq!(
++        p.formatting.as_ref().unwrap().alignment.as_deref(),
++        Some("center")
++    );
++    let betteroffice_docx::ParagraphContent::Inline(betteroffice_docx::InlineNode::Run(r)) =
++        &p.content[0]
++    else {
++        panic!()
++    };
++    let f = r.formatting.as_ref().unwrap();
++    assert!(serde_json::to_string(&f.color).unwrap().contains("123456"));
++    assert!(
++        serde_json::to_string(&f.shading)
++            .unwrap()
++            .contains("FFF2CC")
++    );
++    bewaar_lege_opmaak("writer-lege-acht-opmaken.docx", &heropend.bron());
++    heropend.terug().unwrap();
++    assert_eq!(*heropend.bron(), *opgemaakt);
++    for _ in 0..8 {
++        s.terug().unwrap();
++    }
++    assert_eq!(*s.bron(), bron);
++    assert!(!s.kan_terug());
++}
++
++#[test]
++fn lege_invoegopmaak_weigert_verkeerde_grenzen_waarden_en_niet_tekstopmaak_zonder_mutatie() {
++    let bron = bron_zonder_tekstruns();
++    let mut s = Sessie::open(Module::Writer, bron.clone()).unwrap();
++    let id = s.weergave(0).unwrap().velden[0].id.clone();
++    for (begin, einde, stijl) in [
++        (1, 1, Opmaak::Vet(true)),
++        (1, 0, Opmaak::Cursief(true)),
++        (0, 0, Opmaak::Lettergrootte(f64::NAN)),
++        (0, 0, Opmaak::Kleur("ongeldig".into())),
++        (0, 0, Opmaak::Getal("0.00".into())),
++        (0, 0, Opmaak::Tekstterugloop(true)),
++    ] {
++        assert!(
++            s.bewerk(
++                0,
++                Bewerking::Opmaak {
++                    id: id.clone(),
++                    begin,
++                    einde,
++                    stijl
++                }
++            )
++            .is_err()
++        );
++        assert_eq!(*s.bron(), bron);
++        assert!(!s.kan_terug());
++    }
++    assert!(s.weergave(0).unwrap().velden[0].tekst.is_empty());
++}
++
++#[test]
++fn lege_invoegopmaak_lettervelden_erven_de_alineastijl_zonder_bronwijziging() {
++    let mut delen = ooxml_opc::unzip_parts(&stijlbron()).unwrap();
++    let (_, xml) = delen
++        .iter_mut()
++        .find(|(n, _)| n == "word/document.xml")
++        .unwrap();
++    let mut tekst = String::from_utf8(xml.clone()).unwrap();
++    let begin = tekst.find("<w:p>").unwrap();
++    let eind = begin + tekst[begin..].find("</w:p>").unwrap() + "</w:p>".len();
++    tekst.replace_range(
++        begin..eind,
++        r#"<w:p><w:pPr><w:pStyle w:val="EigenKop"/></w:pPr><w:r><w:rPr><w:i/></w:rPr></w:r></w:p>"#,
++    );
++    *xml = tekst.into_bytes();
++    let bron = ooxml_opc::rezip_parts(&delen).unwrap();
++    let s = Sessie::open(Module::Writer, bron.clone()).unwrap();
++    let b = s.weergave(0).unwrap();
++    assert!(b.velden[0].tekst.is_empty());
++    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
++        let engine = docx_edit::EngineSession::new(424243);
++        docx_edit::seed_from_docx(engine.doc(), &bron).unwrap();
++        let mut waarden = vec![];
++        for verhaal in engine.doc().list_stories().stories {
++            if verhaal.root != "body" {
++                continue;
++            }
++            for segment in engine.doc().story_segments(&verhaal.story).unwrap() {
++                if let docx_edit::SegmentContent::Pilcrow(p) = segment.content {
++                    waarden.push(serde_json::json!({"id":p.para_id,"eigenschappen":p.values,"attributen":segment.attributes}));
++                }
++            }
++        }
++        std::fs::create_dir_all(&map).unwrap();
++        std::fs::write(
++            std::path::PathBuf::from(map).join("writer-lege-opmaak-engine-alineamarkeringen.json"),
++            serde_json::to_vec_pretty(&waarden).unwrap(),
++        )
++        .unwrap();
++    }
++    assert_eq!(b.velden[0].opmaak.grootte, Some(18.));
++    assert_eq!(b.velden[0].opmaak.lettertype.as_deref(), Some("Inter"));
++    assert!(b.velden[0].opmaak.vet && b.velden[0].opmaak.cursief);
++    assert_eq!(*s.bron(), bron);
++    assert!(!s.kan_terug());
++}
++
++#[test]
++fn lege_invoegopmaak_lettervelden_cursor_volgt_het_gekozen_lege_letterformaat() {
++    let bron = bron_zonder_tekstruns();
++    let mut s = Sessie::open(Module::Writer, bron).unwrap();
++    let b = s.weergave(0).unwrap();
++    let id = b.velden[0].id.clone();
++    let oud = b
++        .writer_frame
++        .unwrap()
++        .markering(&id, 0, 0)
++        .unwrap()
++        .cursor
++        .unwrap()
++        .hoogte;
++    s.bewerk(
++        0,
++        Bewerking::Opmaak {
++            id: id.clone(),
++            begin: 0,
++            einde: 0,
++            stijl: Opmaak::Lettergrootte(48.),
++        },
++    )
++    .unwrap();
++    let b = s.weergave(0).unwrap();
++    let nieuw = b
++        .writer_frame
++        .unwrap()
++        .markering(&id, 0, 0)
++        .unwrap()
++        .cursor
++        .unwrap()
++        .hoogte;
++    assert!(
++        nieuw > oud * 2.,
++        "De lege cursor volgt 48 punten niet: {oud} -> {nieuw}"
++    );
++    assert!(b.velden[0].tekst.is_empty());
++    assert_eq!(b.velden[0].opmaak.grootte, Some(48.));
++}
+diff --git a/native/crates/office-ui/src/main.rs b/native/crates/office-ui/src/main.rs
+index bcd1c94..3886da7 100644
+--- a/native/crates/office-ui/src/main.rs
++++ b/native/crates/office-ui/src/main.rs
+@@ -1158,11 +1158,12 @@ impl App {
+                     !t.writer_direct.delegeert
+                         && (t.writer_direct.actief || t.writer_direct.heeft_werk())
+                 }) {
+-                    return writer_direct::update(
+-                        self,
+-                        t.id,
+-                        writer_direct::Bericht::Opmaak(stijl),
+-                    );
++                    let id = t.id;
++                    let werk =
++                        writer_direct::update(self, id, writer_direct::Bericht::Opmaak(stijl));
++                    // Herstel de paginacursor vóór het bronwerk begint. Een late
++                    // focusoperatie mag geen later invoerveld of ander document overnemen.
++                    return writer_direct::vraag_focus(self, id).chain(werk);
+                 }
+                 if let Some(t) = self.tab_mut() {
+                     if t.bezig || t.concept {
+diff --git a/native/crates/office-ui/src/raster_focus.rs b/native/crates/office-ui/src/raster_focus.rs
+index 6baa56e..5c3d365 100644
+--- a/native/crates/office-ui/src/raster_focus.rs
++++ b/native/crates/office-ui/src/raster_focus.rs
+@@ -49,9 +49,16 @@ impl Operation for Bewaker {
+ pub fn focus(document: u64, versie: u64, editor: bool) -> Task<Msg> {
+     let raster = id(document, versie, false);
+     let cel = id(document, versie, true);
++    bewaakt(
++        if editor { cel.clone() } else { raster.clone() },
++        [raster, cel],
++    )
++}
++/// Het doel moet nog bestaan; een later invoerveld houdt zijn eigen focus.
++pub fn bewaakt(doel: Id, eigen: [Id; 2]) -> Task<Msg> {
+     iced::advanced::widget::operate(Bewaker {
+-        doel: if editor { cel.clone() } else { raster.clone() },
+-        eigen: [raster, cel],
++        doel,
++        eigen,
+         aanwezig: false,
+         ander: false,
+         eigen_focus: false,
+diff --git a/native/crates/office-ui/src/tests/raster_proeven.rs b/native/crates/office-ui/src/tests/raster_proeven.rs
+index 3c821aa..9d81aba 100644
+--- a/native/crates/office-ui/src/tests/raster_proeven.rs
++++ b/native/crates/office-ui/src/tests/raster_proeven.rs
+@@ -3345,3 +3345,192 @@ fn writer_alineatoets_aanvullend_typen_in_een_nieuwe_lege_alinea_bewaart_opmaak(
+     p.bericht(Msg::Terug);
+     assert_eq!(*p.bron(), *bron);
+ }
++
++#[test]
++fn lege_invoegopmaak_echte_vetknop_op_nieuwe_alinea_bewaart_volgende_unicode_tekst() {
++    use iced::keyboard::{Key, Modifiers as M, key::Named as N};
++    let mut p = writer_paginaproef();
++    let tekst = "Links 🏠 café rechts";
++    let punt = writer_punt(&mut p, tekst, tekst.chars().count());
++    p.klik(punt);
++    p.named(N::Enter);
++    let leeg = p.bron();
++    let knop = p
++        .toegankelijkheid()
++        .nodes
++        .into_iter()
++        .find(|n| n.node.name == "Vet")
++        .unwrap();
++    assert_eq!(knop.node.state.checked, Some(false));
++    assert!(!knop.node.state.disabled);
++    p.klik(iced::Point::new(
++        knop.bounds.x + knop.bounds.width * 0.5,
++        knop.bounds.y + knop.bounds.height * 0.5,
++    ));
++    assert!(
++        p.app.tab().unwrap().opmaak_van_selectie().unwrap().vet,
++        "Vet kiezen op de lege alinea is niet toegepast: {}",
++        p.app.melding
++    );
++    assert_eq!(p.app.tab().unwrap().lettertype, "Cambria");
++    assert_eq!(p.app.tab().unwrap().grootte, "11");
++    let opgemaakt = p.bron();
++    assert_ne!(*opgemaakt, *leeg);
++    p.toets(Key::Character("9".into()), M::empty(), Some("9"));
++    let t = p.app.tab().unwrap();
++    assert_eq!(t.editor.text(), "9");
++    assert!(t.veld().unwrap().opmaak.vet && t.veld().unwrap().opmaak.cursief);
++    let cursor = t.writer_direct.geometrie(t).unwrap().cursor.unwrap();
++    assert!(cursor.hoogte > 0.);
++    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
++        std::fs::create_dir_all(&map).unwrap();
++        std::fs::write(
++            PathBuf::from(map).join("writer-lege-opmaak-ui.docx"),
++            p.bron().as_slice(),
++        )
++        .unwrap();
++    }
++    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
++        std::fs::create_dir_all(&map).unwrap();
++        p.verbeeld()
++            .save_png(PathBuf::from(map).join("writer-invoegopmaak-tekst.png"))
++            .unwrap();
++    }
++    p.bericht(Msg::Terug);
++    assert_eq!(*p.bron(), *opgemaakt);
++    assert_eq!(p.app.tab().unwrap().lettertype, "Cambria");
++    assert_eq!(p.app.tab().unwrap().grootte, "11");
++    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
++        std::fs::create_dir_all(&map).unwrap();
++        p.verbeeld()
++            .save_png(PathBuf::from(map).join("writer-invoegopmaak-leeg.png"))
++            .unwrap();
++    }
++    p.bericht(Msg::Terug);
++    assert_eq!(*p.bron(), *leeg);
++}
++
++#[test]
++fn lege_invoegopmaak_wachtrij_bewaart_opmaak_en_unicode_vanaf_dezelfde_oude_bron() {
++    use iced::keyboard::key::Named as N;
++    let mut p = writer_paginaproef();
++    let tekst = "Links 🏠 café rechts";
++    let punt = writer_punt(&mut p, tekst, tekst.chars().count());
++    p.klik(punt);
++    p.named(N::Enter);
++    let leeg = p.bron();
++    writer_snel(
++        &mut p,
++        [
++            writer_direct::Bericht::OpmaakToets('b'),
++            writer_direct::Bericht::Invoer(text_editor::Action::Edit(text_editor::Edit::Paste(
++                std::sync::Arc::new("café 🏠".into()),
++            ))),
++        ],
++    );
++    let t = p.app.tab().unwrap();
++    assert_eq!(t.editor.text(), "café 🏠");
++    assert!(t.veld().unwrap().opmaak.vet && t.veld().unwrap().opmaak.cursief);
++    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
++        std::fs::create_dir_all(&map).unwrap();
++        std::fs::write(
++            PathBuf::from(map).join("writer-lege-opmaak-wachtrij-ui.docx"),
++            p.bron().as_slice(),
++        )
++        .unwrap();
++    }
++    p.bericht(Msg::Terug);
++    assert_eq!(p.app.tab().unwrap().editor.text(), "");
++    assert!(p.app.tab().unwrap().veld().unwrap().opmaak.vet);
++    p.bericht(Msg::Terug);
++    assert_eq!(*p.bron(), *leeg);
++}
++
++#[test]
++fn lege_invoegopmaak_late_focus_laat_een_later_lettertypeveld_werken() {
++    use iced::keyboard::{Key, Modifiers as M};
++    let mut p = writer_paginaproef();
++    let bron = p.bron();
++    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
++    p.klik(punt);
++    let taak = writer_direct::vraag_focus(&p.app, p.app.tab().unwrap().id);
++    let veld = p
++        .toegankelijkheid()
++        .nodes
++        .into_iter()
++        .find(|n| {
++            n.node.name == "Lettertype" && n.node.role == openaec_ui::design::a11y::Role::TextField
++        })
++        .unwrap()
++        .bounds;
++    p.klik(iced::Point::new(
++        veld.x + veld.width * 0.5,
++        veld.y + veld.height * 0.5,
++    ));
++    assert!(
++        !p.app
++            .tab()
++            .unwrap()
++            .writer_focus
++            .load(std::sync::atomic::Ordering::Relaxed)
++    );
++    let oud = p.app.tab().unwrap().lettertype.clone();
++    p.taak(taak);
++    p.toets(Key::Character("9".into()), M::empty(), Some("9"));
++    assert!(
++        !p.app
++            .tab()
++            .unwrap()
++            .writer_focus
++            .load(std::sync::atomic::Ordering::Relaxed)
++    );
++    assert_ne!(p.app.tab().unwrap().lettertype, oud);
++    assert!(p.app.tab().unwrap().lettertype.contains('9'));
++    assert_eq!(*p.bron(), *bron);
++}
++
++#[test]
++fn lege_invoegopmaak_focus_van_een_ander_document_raakt_de_nieuwe_pagina_niet() {
++    let mut p = writer_paginaproef();
++    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
++    p.klik(punt);
++    let oud = p.app.tab().unwrap().id;
++    let taak = writer_direct::vraag_focus(&p.app, oud);
++    p.bericht(Msg::Nieuw(Module::Writer));
++    assert_ne!(p.app.tab().unwrap().id, oud);
++    let bron = p.bron();
++    assert!(
++        !p.app
++            .tab()
++            .unwrap()
++            .writer_focus
++            .load(std::sync::atomic::Ordering::Relaxed)
++    );
++    p.taak(taak);
++    assert!(
++        !p.app
++            .tab()
++            .unwrap()
++            .writer_focus
++            .load(std::sync::atomic::Ordering::Relaxed)
++    );
++    assert_eq!(*p.bron(), *bron);
++}
++
++#[test]
++fn lege_invoegopmaak_lettervelden_zijn_zichtbaar_voor_de_eerste_letter() {
++    use iced::keyboard::key::Named as N;
++    let mut p = writer_paginaproef();
++    let tekst = "Links 🏠 café rechts";
++    let punt = writer_punt(&mut p, tekst, tekst.chars().count());
++    p.klik(punt);
++    p.named(N::Enter);
++    assert_eq!(p.app.tab().unwrap().editor.text(), "");
++    assert_eq!(p.app.tab().unwrap().lettertype, "Cambria");
++    assert_eq!(p.app.tab().unwrap().grootte, "11");
++    p.bericht(Msg::Opmaak(Opmaak::Lettertype("Inter".into())));
++    p.bericht(Msg::Opmaak(Opmaak::Lettergrootte(13.5)));
++    assert_eq!(p.app.tab().unwrap().lettertype, "Inter");
++    assert_eq!(p.app.tab().unwrap().grootte, "13.5");
++    assert_eq!(p.app.tab().unwrap().editor.text(), "");
++}
+diff --git a/native/crates/office-ui/src/writer_direct.rs b/native/crates/office-ui/src/writer_direct.rs
+index 386f804..7d97016 100644
+--- a/native/crates/office-ui/src/writer_direct.rs
++++ b/native/crates/office-ui/src/writer_direct.rs
+@@ -736,15 +736,28 @@ fn verwerk(app: &mut App, id: u64) -> Task<Msg> {
+             app.tabs[i].writer_direct.delegeert = false;
+             Task::batch([taak, verwerk(app, id)])
+         }
+-        Uitkomst::Focus => {
+-            if app.tab().is_some_and(|t| t.id == id) {
+-                iced::widget::operation::focus("writer-pagina-invoer")
+-            } else {
+-                Task::none()
+-            }
+-        }
++        Uitkomst::Focus => vraag_focus(app, id),
++    }
++}
++pub fn vraag_focus(app: &App, document: u64) -> Task<Msg> {
++    if app.bestand
++        || app.instellingen
++        || app.exportblad.is_some()
++        || app.sluiten.is_some()
++        || app.postvak_zichtbaar
++    {
++        return Task::none();
+     }
++    let Some(t) = app
++        .tab()
++        .filter(|t| t.id == document && t.writer_direct.actief)
++    else {
++        return Task::none();
++    };
++    let id = writer_paginablad::focus_id(t.id, t.editerversie);
++    raster_focus::bewaakt(id.clone(), [id.clone(), id])
+ }
++
+ fn start_invoer(t: &mut Tab, st: &mut Staat) -> Uitkomst {
+     let v = t.veld().unwrap();
+     let c = Cursor::van(t, st).unwrap();
+diff --git a/native/crates/office-ui/src/writer_paginablad.rs b/native/crates/office-ui/src/writer_paginablad.rs
+index 173d9bb..2921406 100644
+--- a/native/crates/office-ui/src/writer_paginablad.rs
++++ b/native/crates/office-ui/src/writer_paginablad.rs
+@@ -14,6 +14,10 @@ use std::sync::{
+ };
+ use std::time::{Duration, Instant};
+ 
++pub fn focus_id(document: u64, versie: u64) -> iced::advanced::widget::Id {
++    iced::advanced::widget::Id::from(format!("writer-pagina-invoer:{document}:{versie}"))
++}
++
+ pub fn blad<'a>(t: &'a Tab, inhoud: Element<'a, Msg>, accent: iced::Color) -> Element<'a, Msg> {
+     let Some(a) = &t.antwoord else { return inhoud };
+     let Some(frame) = &a.beeld.writer_frame else {
+@@ -23,6 +27,7 @@ pub fn blad<'a>(t: &'a Tab, inhoud: Element<'a, Msg>, accent: iced::Color) -> El
+         inhoud,
+         frame,
+         document: t.id,
++        focus_id: focus_id(t.id, t.editerversie),
+         hash: &a.hash,
+         focus: t.writer_focus.clone(),
+         markering: t.writer_direct.geometrie(t),
+@@ -42,6 +47,7 @@ struct Blad<'a> {
+     inhoud: Element<'a, Msg>,
+     frame: &'a office_core::writer_cursor::InteractieFrame,
+     document: u64,
++    focus_id: iced::advanced::widget::Id,
+     hash: &'a str,
+     focus: Arc<AtomicBool>,
+     markering: Option<&'a office_core::writer_cursor::TekstMarkering>,
+@@ -148,7 +154,7 @@ impl Widget<Msg, Theme, Renderer> for Blad<'_> {
+     }
+     fn operate(&mut self, t: &mut Tree, l: Layout<'_>, r: &Renderer, o: &mut dyn Operation) {
+         o.focusable(
+-            Some(&iced::advanced::widget::Id::new("writer-pagina-invoer")),
++            Some(&self.focus_id),
+             l.bounds(),
+             t.state.downcast_mut::<Focus>(),
+         );

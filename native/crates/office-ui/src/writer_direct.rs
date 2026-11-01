@@ -736,15 +736,28 @@ fn verwerk(app: &mut App, id: u64) -> Task<Msg> {
             app.tabs[i].writer_direct.delegeert = false;
             Task::batch([taak, verwerk(app, id)])
         }
-        Uitkomst::Focus => {
-            if app.tab().is_some_and(|t| t.id == id) {
-                iced::widget::operation::focus("writer-pagina-invoer")
-            } else {
-                Task::none()
-            }
-        }
+        Uitkomst::Focus => vraag_focus(app, id),
     }
 }
+pub fn vraag_focus(app: &App, document: u64) -> Task<Msg> {
+    if app.bestand
+        || app.instellingen
+        || app.exportblad.is_some()
+        || app.sluiten.is_some()
+        || app.postvak_zichtbaar
+    {
+        return Task::none();
+    }
+    let Some(t) = app
+        .tab()
+        .filter(|t| t.id == document && t.writer_direct.actief)
+    else {
+        return Task::none();
+    };
+    let id = writer_paginablad::focus_id(t.id, t.editerversie);
+    raster_focus::bewaakt(id.clone(), [id.clone(), id])
+}
+
 fn start_invoer(t: &mut Tab, st: &mut Staat) -> Uitkomst {
     let v = t.veld().unwrap();
     let c = Cursor::van(t, st).unwrap();

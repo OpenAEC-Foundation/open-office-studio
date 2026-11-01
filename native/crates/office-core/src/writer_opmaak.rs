@@ -18,6 +18,7 @@ pub struct OpmaakBereik {
 pub(crate) struct AlineaOpmaak {
     pub tekst: String,
     pub bereiken: Vec<OpmaakBereik>,
+    pub invoegopmaak: Option<docx_parse::formatting::TextFormatting>,
 }
 pub(crate) type Alineas = HashMap<String, AlineaOpmaak>;
 
@@ -105,6 +106,16 @@ pub(crate) fn lees(doc: &docx_edit::EditingDoc) -> Resultaat<Alineas> {
                     positie = einde;
                 }
                 S::Pilcrow(p) => {
+                    if alinea.tekst.is_empty() {
+                        // Dezelfde reeds opgeloste alinea-/tabelstijl als de engine.
+                        // Beschadigde metadata wordt niet als een standaardstijl voorgesteld.
+                        alinea.invoegopmaak = match p.values.get("defaultTextFormatting") {
+                            None | Some(Any::Null | Any::Undefined) => Some(Default::default()),
+                            Some(waarde) => serde_json::to_value(waarde)
+                                .ok()
+                                .and_then(|v| serde_json::from_value(v).ok()),
+                        };
+                    }
                     // Dubbele identificaties mogen niet stil de opmaak van een
                     // andere alinea overnemen. Zulke bron is al niet bewerkbaar.
                     match uit.entry(p.para_id) {

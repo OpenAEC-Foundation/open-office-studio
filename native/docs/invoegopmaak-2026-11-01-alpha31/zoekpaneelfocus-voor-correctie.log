@@ -1,0 +1,71 @@
+   Compiling open-office-studio-native v2026.44.9-alpha.31 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-ui)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 26.95s
+     Running unittests src/lib.rs (native/target/debug/deps/office_conversie-a26321718241b261)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_core-1bade6a479975ce8)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 21 filtered out; finished in 0.00s
+
+     Running unittests src/bin/controleer-bestand.rs (native/target/debug/deps/controleer_bestand-8e0f22cc0e0fc00d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/documentkern.rs (native/target/debug/deps/documentkern-2f316a1bc1c61c00)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 127 filtered out; finished in 0.00s
+
+     Running ../../vendor/docx-parse/tests/nested_fields.rs (native/target/debug/deps/engine_velden-7c0fe208b6b9f538)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_mail-c2a1bd2f85bc266d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 51 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (native/target/debug/deps/open_office_studio_native-fc016f47a33bc1a1)
+
+running 2 tests
+test tests::raster_proeven::writer_zoekpaneel_late_sluitfocus_laat_een_later_lettertypeveld_werken ... FAILED
+test tests::raster_proeven::writer_zoekpaneel_sluiten_behoudt_de_werkelijke_editorfocus ... FAILED
+
+failures:
+
+---- tests::raster_proeven::writer_zoekpaneel_late_sluitfocus_laat_een_later_lettertypeveld_werken stdout ----
+
+thread 'tests::raster_proeven::writer_zoekpaneel_late_sluitfocus_laat_een_later_lettertypeveld_werken' (3077715) panicked at crates/office-ui/src/tests/raster_proeven.rs:3564:5:
+assertion `left != right` failed
+  left: "Cambria"
+ right: "Cambria"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- tests::raster_proeven::writer_zoekpaneel_sluiten_behoudt_de_werkelijke_editorfocus stdout ----
+
+thread 'tests::raster_proeven::writer_zoekpaneel_sluiten_behoudt_de_werkelijke_editorfocus' (3077731) panicked at crates/office-ui/src/tests/raster_proeven.rs:408:5:
+assertion `left == right` failed
+  left: "Links 🏠 café rechts"
+ right: "Links 🏠 !café rechts"
+
+
+failures:
+    tests::raster_proeven::writer_zoekpaneel_late_sluitfocus_laat_een_later_lettertypeveld_werken
+    tests::raster_proeven::writer_zoekpaneel_sluiten_behoudt_de_werkelijke_editorfocus
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 123 filtered out; finished in 7.52s
+
+error: test failed, to rerun pass `-p open-office-studio-native --bin open-office-studio-native`
+error: 1 target failed:
+    `-p open-office-studio-native --bin open-office-studio-native`

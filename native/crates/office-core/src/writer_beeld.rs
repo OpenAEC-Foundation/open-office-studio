@@ -16,6 +16,49 @@ type BladMetOpmaak = (
     crate::interactie::Pagina,
     std::sync::Arc<crate::writer_opmaak::Alineas>,
 );
+// De gepinde engine geeft een lege hitmarker altijd zijn standaardgrootte mee.
+// Herstel uitsluitend die nulbrede markergrootte vanuit de opgeloste markopmaak.
+// De rasterweergave en alle cursor-/navigatievragen blijven dezelfde lijst gebruiken.
+fn corrigeer_lege_markeringen(
+    lijst: &mut docx_layout::display_list::DisplayList,
+    opmaak: &crate::writer_opmaak::Alineas,
+) {
+    use docx_layout::display_list::{Primitive, px};
+    for pagina in &mut lijst.pages {
+        for primitief in &mut pagina.primitives {
+            let Primitive::Text(tekst) = primitief else {
+                continue;
+            };
+            if !tekst.text.is_empty() || tekst.attrs.doc_start != tekst.attrs.doc_end {
+                continue;
+            }
+            let Some(alinea) = tekst.attrs.para_id.as_ref().and_then(|id| opmaak.get(id)) else {
+                continue;
+            };
+            if !alinea.tekst.is_empty() {
+                continue;
+            }
+            let Some(hoogte) = alinea.invoegopmaak.as_ref().and_then(|f| f.font_size) else {
+                continue;
+            };
+            let pixels = hoogte / 2. * 96. / 72.;
+            if !pixels.is_finite() || pixels <= 0. {
+                continue;
+            }
+            let Some(token) = tekst.font.split_whitespace().find(|t| {
+                t.strip_suffix("px")
+                    .is_some_and(|n| n.parse::<f64>().is_ok())
+            }) else {
+                continue;
+            };
+            let nieuw = format!("{}px", px(pixels));
+            if token != nieuw {
+                tekst.font = tekst.font.replacen(token, &nieuw, 1);
+            }
+        }
+    }
+}
+
 struct Behouden {
     eigenaar: u64,
     bron_hash: String,
@@ -108,7 +151,7 @@ pub(crate) fn pagina_van_tekst(
         if c.paginakaart.is_none() {
             // Alleen de eerste aanvraag moet de behouden layout opbouwen.
             // De paginakaart zelf bouwt geen volledige paginabeeldenreeks.
-            if c.engine.with_display_list(|_| ()).is_none() {
+            if c.met_lijst(|_| ()).is_none() {
                 c.pagina::<true>(0)?;
             }
             let mut opties = PageExportOptions::new(RevisionView::Accepted);
@@ -161,14 +204,13 @@ pub(crate) fn tekstmarkering(
 ) -> Resultaat<crate::writer_cursor::TekstMarkering> {
     met_context(bron, eigenaar, |c| {
         c.tekstpagina(pagina)?;
-        c.engine
-            .with_display_list(|dl| {
-                c.adressen
-                    .as_ref()
-                    .unwrap()
-                    .markering(dl, pagina, id, begin, einde, lengte)
-            })
-            .ok_or_else(|| fout("Geen behouden paginabeeld voor tekstmarkering"))?
+        c.met_lijst(|dl| {
+            c.adressen
+                .as_ref()
+                .unwrap()
+                .markering(dl, pagina, id, begin, einde, lengte)
+        })
+        .ok_or_else(|| fout("Geen behouden paginabeeld voor tekstmarkering"))?
     })
 }
 
@@ -180,8 +222,7 @@ pub(crate) fn interactie_frame(
     met_context(bron, eigenaar, |c| {
         c.tekstpagina(pagina)?;
         let lijst = c
-            .engine
-            .with_display_list(|dl| docx_layout::display_list::DisplayList {
+            .met_lijst(|dl| docx_layout::display_list::DisplayList {
                 contract_version: dl.contract_version,
                 pages: vec![dl.pages[pagina].clone()],
             })
@@ -205,19 +246,18 @@ pub(crate) fn tekstpunt(
     }
     met_context(bron, eigenaar, |c| {
         c.tekstpagina(pagina)?;
-        c.engine
-            .with_display_list(|dl| {
-                let p = &dl.pages[pagina];
-                if x < 0.
-                    || y < 0.
-                    || x >= p.width.as_f64().unwrap_or(0.)
-                    || y >= p.height.as_f64().unwrap_or(0.)
-                {
-                    return Ok(None);
-                }
-                c.adressen.as_ref().unwrap().punt(dl, pagina, x, y)
-            })
-            .ok_or_else(|| fout("Geen behouden paginabeeld voor tekstpositie"))?
+        c.met_lijst(|dl| {
+            let p = &dl.pages[pagina];
+            if x < 0.
+                || y < 0.
+                || x >= p.width.as_f64().unwrap_or(0.)
+                || y >= p.height.as_f64().unwrap_or(0.)
+            {
+                return Ok(None);
+            }
+            c.adressen.as_ref().unwrap().punt(dl, pagina, x, y)
+        })
+        .ok_or_else(|| fout("Geen behouden paginabeeld voor tekstpositie"))?
     })
 }
 
@@ -255,7 +295,7 @@ pub(crate) fn verplaats_cursor(
     } = vraag;
     met_context(bron, eigenaar, |c| {
         c.tekstpagina(pagina)?;
-        let aantal = c.engine.with_display_list(|d| d.pages.len()).unwrap_or(0);
+        let aantal = c.met_lijst(|d| d.pages.len()).unwrap_or(0);
         let paginas: Vec<_> = (pagina.saturating_sub(1)..(pagina + 2).min(aantal)).collect();
         c.engine
             .build_display_pages_frame(&paginas, 0)
@@ -263,33 +303,52 @@ pub(crate) fn verplaats_cursor(
         let adressen = c.adressen.as_ref().unwrap();
         let pos = adressen.positie(id, positie)?;
         let vorig = adressen.positie(id, vorige)?;
-        c.engine
-            .with_display_list(|dl| {
-                let (k, pos, x) = crate::writer_navigatie::verplaats(
-                    dl,
-                    adressen,
-                    crate::writer_navigatie::Vraag {
-                        pagina,
-                        id,
-                        pos,
-                        vorige: vorig,
-                        richting,
-                        voorkeur,
-                        doel_x,
-                    },
-                )?;
-                let Some((doel_id, offset)) = adressen.punt_voor_positie(pos)? else {
-                    return Err(fout("Geen tekstadres bij de doelcursor"));
-                };
-                if doel_id != k.id {
-                    return Err(fout("Doelcursor en bronalinea komen niet overeen"));
-                }
-                Ok((k, offset, x))
-            })
-            .ok_or_else(|| fout("Geen behouden navigatiegeometrie"))?
+        c.met_lijst(|dl| {
+            let (k, pos, x) = crate::writer_navigatie::verplaats(
+                dl,
+                adressen,
+                crate::writer_navigatie::Vraag {
+                    pagina,
+                    id,
+                    pos,
+                    vorige: vorig,
+                    richting,
+                    voorkeur,
+                    doel_x,
+                },
+            )?;
+            let Some((doel_id, offset)) = adressen.punt_voor_positie(pos)? else {
+                return Err(fout("Geen tekstadres bij de doelcursor"));
+            };
+            if doel_id != k.id {
+                return Err(fout("Doelcursor en bronalinea komen niet overeen"));
+            }
+            Ok((k, offset, x))
+        })
+        .ok_or_else(|| fout("Geen behouden navigatiegeometrie"))?
     })
 }
 impl Context {
+    fn met_lijst<T>(
+        &self,
+        lees: impl FnOnce(&docx_layout::display_list::DisplayList) -> T,
+    ) -> Option<T> {
+        self.engine.with_display_list(|lijst| {
+            if self.opmaak.values().any(|a| {
+                a.tekst.is_empty()
+                    && a.invoegopmaak
+                        .as_ref()
+                        .and_then(|f| f.font_size)
+                        .is_some_and(|n| n != 22.)
+            }) {
+                let mut eigen = lijst.clone();
+                corrigeer_lege_markeringen(&mut eigen, &self.opmaak);
+                lees(&eigen)
+            } else {
+                lees(lijst)
+            }
+        })
+    }
     fn nieuw(bron: &[u8], met_opmaak: bool) -> Resultaat<Self> {
         #[cfg(test)]
         OPBOUWEN.with(|n| n.set(n.get() + 1));
@@ -396,6 +455,7 @@ impl Context {
             verzoek,
             benodigd,
             afbeeldingen,
+            opmaak,
             ..
         } = self;
         LETTERCACHE.with(|cel| {
@@ -438,9 +498,10 @@ impl Context {
             engine
                 .build_display_list_frame(&extra.to_string(), 0)
                 .map_err(fout)?;
-            let dl = engine
+            let mut dl = engine
                 .with_display_list(Clone::clone)
                 .ok_or_else(|| fout("Geen paginabeeld"))?;
+            corrigeer_lege_markeringen(&mut dl, opmaak);
             let aantal = dl.pages.len();
             let resources = docx_raster::RenderResources::new(fonts, tekenen, afbeeldingen);
             let render = docx_raster::render_page(&dl, nummer, &resources).map_err(fout)?;

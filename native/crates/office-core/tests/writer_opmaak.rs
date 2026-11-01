@@ -181,3 +181,332 @@ fn writer_opmaak_lettergrootte_volgt_de_werkelijk_bewaarde_halve_punten() {
         assert_eq!(s.bron().as_slice(), BRON);
     }
 }
+
+fn bewaar_lege_opmaak(naam: &str, bytes: &[u8]) {
+    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
+        std::fs::create_dir_all(&map).unwrap();
+        std::fs::write(std::path::PathBuf::from(map).join(naam), bytes).unwrap();
+    }
+}
+
+#[test]
+fn lege_invoegopmaak_na_splitsen_bewaart_bestaande_cursief_en_nieuwe_vetkeuze() {
+    let bron = include_bytes!("fixtures/writer-structuur.docx");
+    let mut s = Sessie::open(Module::Writer, bron.to_vec()).unwrap();
+    let b = s.weergave(0).unwrap();
+    let v = b
+        .velden
+        .iter()
+        .find(|v| v.tekst == "Links 🏠 café rechts")
+        .unwrap();
+    let n = v.tekst.chars().count();
+    let hash = s.bron_hash().to_owned();
+    let (_, doel) = s
+        .bewerk_alinea_cursor(
+            0,
+            &hash,
+            &v.id,
+            n,
+            n,
+            office_core::writer::CursorActie::Splits,
+        )
+        .unwrap();
+    let leeg = s.bron();
+    s.bewerk(
+        0,
+        Bewerking::Opmaak {
+            id: doel.id.clone(),
+            begin: 0,
+            einde: 0,
+            stijl: Opmaak::Vet(true),
+        },
+    )
+    .unwrap();
+    let opgemaakt = s.bron();
+    let direct = s.weergave(0).unwrap();
+    let direct = direct.velden.iter().find(|v| v.id == doel.id).unwrap();
+    assert_eq!(direct.opmaak.grootte, Some(11.));
+    assert_eq!(direct.opmaak.lettertype.as_deref(), Some("Cambria"));
+    let mut heropend = Sessie::open(Module::Writer, opgemaakt.as_ref().clone()).unwrap();
+    let b = heropend.weergave(0).unwrap();
+    let v = b.velden.iter().find(|v| v.id == doel.id).unwrap();
+    assert!(v.tekst.is_empty() && v.opmaak.vet && v.opmaak.cursief);
+    bewaar_lege_opmaak("writer-lege-invoegopmaak-leeg.docx", &opgemaakt);
+    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
+        let engine = docx_edit::EngineSession::new(424244);
+        docx_edit::seed_from_docx(engine.doc(), &opgemaakt).unwrap();
+        let mut waarden = vec![];
+        for verhaal in engine.doc().list_stories().stories {
+            if verhaal.root != "body" {
+                continue;
+            }
+            for segment in engine.doc().story_segments(&verhaal.story).unwrap() {
+                if let docx_edit::SegmentContent::Pilcrow(p) = segment.content {
+                    let decode = p.values.get("defaultTextFormatting").map(|v| {
+                        serde_json::to_value(v)
+                            .and_then(
+                                serde_json::from_value::<docx_parse::formatting::TextFormatting>,
+                            )
+                            .map(|f| format!("{f:?}"))
+                            .unwrap_or_else(|e| format!("Niet gelezen: {e}"))
+                    });
+                    waarden.push(serde_json::json!({"id":p.para_id,"eigenschappen":p.values,"decode":decode}));
+                }
+            }
+        }
+        std::fs::write(
+            std::path::PathBuf::from(map).join("writer-lege-vet-markeringen.json"),
+            serde_json::to_vec_pretty(&waarden).unwrap(),
+        )
+        .unwrap();
+    }
+    assert_eq!(v.opmaak.grootte, Some(11.));
+    assert_eq!(v.opmaak.lettertype.as_deref(), Some("Cambria"));
+    heropend
+        .bewerk(
+            0,
+            Bewerking::Tekst {
+                id: doel.id.clone(),
+                tekst: "Nieuwe tekst 🏠".into(),
+            },
+        )
+        .unwrap();
+    let b = heropend.weergave(0).unwrap();
+    let v = b.velden.iter().find(|v| v.id == doel.id).unwrap();
+    assert_eq!(v.tekst, "Nieuwe tekst 🏠");
+    assert!(v.opmaak.vet && v.opmaak.cursief);
+    assert_eq!(
+        b.velden
+            .iter()
+            .filter(|v| v.tekst == "Links 🏠 café rechts")
+            .count(),
+        1
+    );
+    bewaar_lege_opmaak("writer-lege-invoegopmaak.docx", &heropend.bron());
+    // Vergelijk de opmaakstap met de al gesplitste, canonieke bron.
+    // De ongewijzigde inhoud tegenover het origineel wordt onafhankelijk gelezen.
+    let oorspronkelijke_delen = ooxml_opc::unzip_parts(&leeg).unwrap();
+    let nieuwe_delen = ooxml_opc::unzip_parts(&heropend.bron()).unwrap();
+    for (naam, data) in oorspronkelijke_delen
+        .iter()
+        .filter(|(n, _)| n != "word/document.xml")
+    {
+        assert_eq!(
+            nieuwe_delen.iter().find(|(n, _)| n == naam).unwrap().1,
+            *data,
+            "{naam}"
+        );
+    }
+    heropend.terug().unwrap();
+    assert_eq!(*heropend.bron(), *opgemaakt);
+    s.terug().unwrap();
+    assert_eq!(*s.bron(), *leeg);
+    s.terug().unwrap();
+    assert_eq!(s.bron().as_slice(), bron);
+}
+
+fn bron_zonder_tekstruns() -> Vec<u8> {
+    let mut delen = ooxml_opc::unzip_parts(BRON).unwrap();
+    let (_, bytes) = delen
+        .iter_mut()
+        .find(|(n, _)| n == "word/document.xml")
+        .unwrap();
+    let xml = String::from_utf8(bytes.clone()).unwrap();
+    let begin = xml.find("<w:body>").unwrap();
+    let eind = xml.find("</w:body>").unwrap() + "</w:body>".len();
+    let body = r#"<w:body><w:p><w:pPr><w:jc w:val="center"/></w:pPr></w:p><w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440"/></w:sectPr></w:body>"#;
+    *bytes = format!("{}{}{}", &xml[..begin], body, &xml[eind..]).into_bytes();
+    ooxml_opc::rezip_parts(&delen).unwrap()
+}
+
+#[test]
+fn lege_invoegopmaak_zonder_runs_behoudt_acht_opmaakeigenschappen_na_heropenen() {
+    let bron = bron_zonder_tekstruns();
+    let mut s = Sessie::open(Module::Writer, bron.clone()).unwrap();
+    let id = s.weergave(0).unwrap().velden[0].id.clone();
+    for stijl in [
+        Opmaak::Vet(true),
+        Opmaak::Cursief(true),
+        Opmaak::Onderstrepen(true),
+        Opmaak::Doorhalen(true),
+        Opmaak::Lettergrootte(13.5),
+        Opmaak::Lettertype("Inter".into()),
+        Opmaak::Kleur("#123456".into()),
+        Opmaak::Achtergrond("#FFF2CC".into()),
+    ] {
+        s.bewerk(
+            0,
+            Bewerking::Opmaak {
+                id: id.clone(),
+                begin: 0,
+                einde: 0,
+                stijl,
+            },
+        )
+        .unwrap();
+    }
+    let opgemaakt = s.bron();
+    let mut heropend = Sessie::open(Module::Writer, opgemaakt.as_ref().clone()).unwrap();
+    heropend
+        .bewerk(
+            0,
+            Bewerking::Tekst {
+                id: id.clone(),
+                tekst: "café 🏠".into(),
+            },
+        )
+        .unwrap();
+    let b = heropend.weergave(0).unwrap();
+    let staat = &b.velden[0].opmaak;
+    assert!(staat.vet && staat.cursief && staat.onderstrepen && staat.doorhalen);
+    assert_eq!(staat.grootte, Some(13.5));
+    assert_eq!(staat.lettertype.as_deref(), Some("Inter"));
+    let Document::Writer(d) = Document::open(Module::Writer, &heropend.bron()).unwrap() else {
+        panic!()
+    };
+    let p = d.paragraph(&id).unwrap();
+    assert_eq!(
+        p.formatting.as_ref().unwrap().alignment.as_deref(),
+        Some("center")
+    );
+    let betteroffice_docx::ParagraphContent::Inline(betteroffice_docx::InlineNode::Run(r)) =
+        &p.content[0]
+    else {
+        panic!()
+    };
+    let f = r.formatting.as_ref().unwrap();
+    assert!(serde_json::to_string(&f.color).unwrap().contains("123456"));
+    assert!(
+        serde_json::to_string(&f.shading)
+            .unwrap()
+            .contains("FFF2CC")
+    );
+    bewaar_lege_opmaak("writer-lege-acht-opmaken.docx", &heropend.bron());
+    heropend.terug().unwrap();
+    assert_eq!(*heropend.bron(), *opgemaakt);
+    for _ in 0..8 {
+        s.terug().unwrap();
+    }
+    assert_eq!(*s.bron(), bron);
+    assert!(!s.kan_terug());
+}
+
+#[test]
+fn lege_invoegopmaak_weigert_verkeerde_grenzen_waarden_en_niet_tekstopmaak_zonder_mutatie() {
+    let bron = bron_zonder_tekstruns();
+    let mut s = Sessie::open(Module::Writer, bron.clone()).unwrap();
+    let id = s.weergave(0).unwrap().velden[0].id.clone();
+    for (begin, einde, stijl) in [
+        (1, 1, Opmaak::Vet(true)),
+        (1, 0, Opmaak::Cursief(true)),
+        (0, 0, Opmaak::Lettergrootte(f64::NAN)),
+        (0, 0, Opmaak::Kleur("ongeldig".into())),
+        (0, 0, Opmaak::Getal("0.00".into())),
+        (0, 0, Opmaak::Tekstterugloop(true)),
+    ] {
+        assert!(
+            s.bewerk(
+                0,
+                Bewerking::Opmaak {
+                    id: id.clone(),
+                    begin,
+                    einde,
+                    stijl
+                }
+            )
+            .is_err()
+        );
+        assert_eq!(*s.bron(), bron);
+        assert!(!s.kan_terug());
+    }
+    assert!(s.weergave(0).unwrap().velden[0].tekst.is_empty());
+}
+
+#[test]
+fn lege_invoegopmaak_lettervelden_erven_de_alineastijl_zonder_bronwijziging() {
+    let mut delen = ooxml_opc::unzip_parts(&stijlbron()).unwrap();
+    let (_, xml) = delen
+        .iter_mut()
+        .find(|(n, _)| n == "word/document.xml")
+        .unwrap();
+    let mut tekst = String::from_utf8(xml.clone()).unwrap();
+    let begin = tekst.find("<w:p>").unwrap();
+    let eind = begin + tekst[begin..].find("</w:p>").unwrap() + "</w:p>".len();
+    tekst.replace_range(
+        begin..eind,
+        r#"<w:p><w:pPr><w:pStyle w:val="EigenKop"/></w:pPr><w:r><w:rPr><w:i/></w:rPr></w:r></w:p>"#,
+    );
+    *xml = tekst.into_bytes();
+    let bron = ooxml_opc::rezip_parts(&delen).unwrap();
+    let s = Sessie::open(Module::Writer, bron.clone()).unwrap();
+    let b = s.weergave(0).unwrap();
+    assert!(b.velden[0].tekst.is_empty());
+    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
+        let engine = docx_edit::EngineSession::new(424243);
+        docx_edit::seed_from_docx(engine.doc(), &bron).unwrap();
+        let mut waarden = vec![];
+        for verhaal in engine.doc().list_stories().stories {
+            if verhaal.root != "body" {
+                continue;
+            }
+            for segment in engine.doc().story_segments(&verhaal.story).unwrap() {
+                if let docx_edit::SegmentContent::Pilcrow(p) = segment.content {
+                    waarden.push(serde_json::json!({"id":p.para_id,"eigenschappen":p.values,"attributen":segment.attributes}));
+                }
+            }
+        }
+        std::fs::create_dir_all(&map).unwrap();
+        std::fs::write(
+            std::path::PathBuf::from(map).join("writer-lege-opmaak-engine-alineamarkeringen.json"),
+            serde_json::to_vec_pretty(&waarden).unwrap(),
+        )
+        .unwrap();
+    }
+    assert_eq!(b.velden[0].opmaak.grootte, Some(18.));
+    assert_eq!(b.velden[0].opmaak.lettertype.as_deref(), Some("Inter"));
+    assert!(b.velden[0].opmaak.vet && b.velden[0].opmaak.cursief);
+    assert_eq!(*s.bron(), bron);
+    assert!(!s.kan_terug());
+}
+
+#[test]
+fn lege_invoegopmaak_lettervelden_cursor_volgt_het_gekozen_lege_letterformaat() {
+    let bron = bron_zonder_tekstruns();
+    let mut s = Sessie::open(Module::Writer, bron).unwrap();
+    let b = s.weergave(0).unwrap();
+    let id = b.velden[0].id.clone();
+    let oud = b
+        .writer_frame
+        .unwrap()
+        .markering(&id, 0, 0)
+        .unwrap()
+        .cursor
+        .unwrap()
+        .hoogte;
+    s.bewerk(
+        0,
+        Bewerking::Opmaak {
+            id: id.clone(),
+            begin: 0,
+            einde: 0,
+            stijl: Opmaak::Lettergrootte(48.),
+        },
+    )
+    .unwrap();
+    let b = s.weergave(0).unwrap();
+    let nieuw = b
+        .writer_frame
+        .unwrap()
+        .markering(&id, 0, 0)
+        .unwrap()
+        .cursor
+        .unwrap()
+        .hoogte;
+    assert!(
+        nieuw > oud * 2.,
+        "De lege cursor volgt 48 punten niet: {oud} -> {nieuw}"
+    );
+    assert!(b.velden[0].tekst.is_empty());
+    assert_eq!(b.velden[0].opmaak.grootte, Some(48.));
+    bewaar_lege_opmaak("writer-lege-48-punten.docx", &s.bron());
+}

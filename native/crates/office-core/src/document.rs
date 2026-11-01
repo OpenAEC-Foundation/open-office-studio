@@ -416,6 +416,11 @@ impl Document {
                     if let Some(gevonden) = opmaak.get(&id)
                         && gevonden.tekst == tekst
                     {
+                        if tekst.is_empty()
+                            && let Some(invoegopmaak) = &gevonden.invoegopmaak
+                        {
+                            staat = crate::writer_tekst::invoeg_staat(p, invoegopmaak);
+                        }
                         if let Some(opmaak) = crate::writer_opmaak::selectie(
                             &gevonden.bereiken,
                             0,

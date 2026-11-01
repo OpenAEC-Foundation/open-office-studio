@@ -1,0 +1,11 @@
+fmt geslaagd
+tests geslaagd
+onafhankelijk geslaagd
+python geslaagd
+bron geslaagd
+Traceback (most recent call last):
+  File "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/controle-alpha31-definitief.py", line 14, in <module>
+    subprocess.run(cmd,env=env,stdout=log,stderr=subprocess.STDOUT,check=True)
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['cargo', 'clippy', '--manifest-path', 'native/Cargo.toml', '--workspace', '--locked', '--all-targets', '-j', '1', '--', '-D', 'warnings']' returned non-zero exit status 101.

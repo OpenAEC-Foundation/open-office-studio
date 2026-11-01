@@ -1,0 +1,7 @@
+fmt geslaagd
+Traceback (most recent call last):
+  File "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/controle-alpha31-definitief.py", line 14, in <module>
+    subprocess.run(cmd,env=env,stdout=log,stderr=subprocess.STDOUT,check=True)
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['cargo', 'test', '--manifest-path', 'native/Cargo.toml', '--workspace', '--locked', '-j', '1', '--no-fail-fast']' died with <Signals.SIGINT: 2>.

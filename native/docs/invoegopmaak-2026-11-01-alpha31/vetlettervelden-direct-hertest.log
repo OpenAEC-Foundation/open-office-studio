@@ -1,0 +1,53 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.13s
+     Running unittests src/lib.rs (native/target/debug/deps/office_conversie-a26321718241b261)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_core-1bade6a479975ce8)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 21 filtered out; finished in 0.00s
+
+     Running unittests src/bin/controleer-bestand.rs (native/target/debug/deps/controleer_bestand-8e0f22cc0e0fc00d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/documentkern.rs (native/target/debug/deps/documentkern-2f316a1bc1c61c00)
+
+running 5 tests
+test writer_opmaak::lege_invoegopmaak_lettervelden_cursor_volgt_het_gekozen_lege_letterformaat ... ok
+test writer_opmaak::lege_invoegopmaak_lettervelden_erven_de_alineastijl_zonder_bronwijziging ... ok
+test writer_opmaak::lege_invoegopmaak_na_splitsen_bewaart_bestaande_cursief_en_nieuwe_vetkeuze ... ok
+test writer_opmaak::lege_invoegopmaak_weigert_verkeerde_grenzen_waarden_en_niet_tekstopmaak_zonder_mutatie ... ok
+test writer_opmaak::lege_invoegopmaak_zonder_runs_behoudt_acht_opmaakeigenschappen_na_heropenen ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 122 filtered out; finished in 31.39s
+
+     Running ../../vendor/docx-parse/tests/nested_fields.rs (native/target/debug/deps/engine_velden-7c0fe208b6b9f538)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_mail-c2a1bd2f85bc266d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 51 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (native/target/debug/deps/open_office_studio_native-fc016f47a33bc1a1)
+
+running 5 tests
+test tests::raster_proeven::lege_invoegopmaak_echte_vetknop_op_nieuwe_alinea_bewaart_volgende_unicode_tekst ... ok
+test tests::raster_proeven::lege_invoegopmaak_focus_van_een_ander_document_raakt_de_nieuwe_pagina_niet ... ok
+test tests::raster_proeven::lege_invoegopmaak_late_focus_laat_een_later_lettertypeveld_werken ... ok
+test tests::raster_proeven::lege_invoegopmaak_lettervelden_zijn_zichtbaar_voor_de_eerste_letter ... ok
+test tests::raster_proeven::lege_invoegopmaak_wachtrij_bewaart_opmaak_en_unicode_vanaf_dezelfde_oude_bron ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 119 filtered out; finished in 37.05s
+

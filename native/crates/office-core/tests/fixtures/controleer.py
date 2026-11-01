@@ -366,3 +366,46 @@ with ZipFile(map/'spreadsheet-model-bestaande-bron.xlsx') as archief:
     opmaak=wortel.findall('{http://schemas.openxmlformats.org/spreadsheetml/2006/main}sheetFormatPr')
     assert len(opmaak)==1 and opmaak[0].attrib['{urn:openaec:test}bewaar']=='blijft'
 print('Spreadsheet-modeluitvoer: twintig rijformaatcombinaties, hoogte-uitzonderingen, bronattributen met eigen naamruimte, celinhoud, formules en tweede blad onafhankelijk teruggelezen.')
+
+# Invoegopmaak wordt ook vóór de eerste letter bewaard en onafhankelijk heropend.
+d=Document(map/'writer-lege-invoegopmaak.docx')
+nieuw=next(a for a in d.paragraphs if a.text=='Nieuwe tekst 🏠')
+assert nieuw.runs and all(r.bold and r.italic for r in nieuw.runs if r.text)
+assert len(d.sections)==2 and len(d.tables)==1
+assert d.sections[0].header.paragraphs[0].text=='Vaste koptekst'
+assert d.sections[0].footer.paragraphs[0].text=='Vaste voettekst'
+assert d.tables[0].cell(0,0).text=='Cel één\nTweede celalinea' and d.tables[0].cell(0,1).text=='Cel twee'
+d=Document(map/'writer-lege-acht-opmaken.docx')
+assert len(d.paragraphs)==1 and d.paragraphs[0].text=='café 🏠'
+a=d.paragraphs[0];assert int(a.alignment)==1
+for r in a.runs:
+ if not r.text:continue
+ assert r.bold and r.italic and r.underline and r.font.strike
+ assert r.font.name=='Inter' and r.font.size.pt==13.5
+ assert str(r.font.color.rgb)=='123456'
+with ZipFile(map/'writer-lege-acht-opmaken.docx') as z:
+ root=ET.fromstring(z.read('word/document.xml'));w='{http://schemas.openxmlformats.org/wordprocessingml/2006/main}'
+ assert all(n.attrib[w+'fill']=='FFF2CC' for n in root.iter(w+'shd'))
+ assert len(list(root.iter(w+'shd')))>=1
+print('Lege Writer-invoegopmaak: twee DOCX onafhankelijk goedgekeurd, inclusief acht stijleigenschappen, Unicode, alinea-uitlijning, kop/voet, secties en tabelinhoud.')
+
+for naam,tekst in [('writer-lege-opmaak-ui.docx','9'),('writer-lege-opmaak-wachtrij-ui.docx','café 🏠')]:
+    doc=Document(map/naam)
+    alinea=next(a for a in doc.paragraphs if a.text==tekst)
+    assert alinea.runs and all(r.bold and r.italic for r in alinea.runs if r.text)
+    assert len(doc.sections)==2 and len(doc.tables)==1
+    assert doc.sections[0].header.paragraphs[0].text=='Vaste koptekst'
+    assert doc.sections[0].footer.paragraphs[0].text=='Vaste voettekst'
+    assert doc.tables[0].cell(0,0).text=='Cel één\nTweede celalinea'
+print('Writer-invoegopmaak via lint en wachtrij: opgeslagen Unicode-tekst, beide runstijlen en overige documentstructuur onafhankelijk goedgekeurd.')
+
+# Ook de lege run én het alineamarkeringsteken bewaren de gekozen puntgrootte.
+with ZipFile(map/'writer-lege-48-punten.docx') as z:
+    root=ET.fromstring(z.read('word/document.xml'))
+    w='{http://schemas.openxmlformats.org/wordprocessingml/2006/main}'
+    alinea=root.find(w+'body/'+w+'p')
+    assert alinea is not None and not list(alinea.iter(w+'t'))
+    for pad in [w+'pPr/'+w+'rPr/'+w+'sz', w+'r/'+w+'rPr/'+w+'sz']:
+        maat=alinea.find(pad)
+        assert maat is not None and maat.attrib[w+'val']=='96'
+print('Lege Writer-cursor: 48 punten blijven in zowel run als alineamarkering onafhankelijk bewaard.')

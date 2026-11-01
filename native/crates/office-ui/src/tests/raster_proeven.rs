@@ -3345,3 +3345,223 @@ fn writer_alineatoets_aanvullend_typen_in_een_nieuwe_lege_alinea_bewaart_opmaak(
     p.bericht(Msg::Terug);
     assert_eq!(*p.bron(), *bron);
 }
+
+#[test]
+fn lege_invoegopmaak_echte_vetknop_op_nieuwe_alinea_bewaart_volgende_unicode_tekst() {
+    use iced::keyboard::{Key, Modifiers as M, key::Named as N};
+    let mut p = writer_paginaproef();
+    let tekst = "Links 🏠 café rechts";
+    let punt = writer_punt(&mut p, tekst, tekst.chars().count());
+    p.klik(punt);
+    p.named(N::Enter);
+    let leeg = p.bron();
+    let knop = p
+        .toegankelijkheid()
+        .nodes
+        .into_iter()
+        .find(|n| n.node.name == "Vet")
+        .unwrap();
+    assert_eq!(knop.node.state.checked, Some(false));
+    assert!(!knop.node.state.disabled);
+    p.klik(iced::Point::new(
+        knop.bounds.x + knop.bounds.width * 0.5,
+        knop.bounds.y + knop.bounds.height * 0.5,
+    ));
+    assert!(
+        p.app.tab().unwrap().opmaak_van_selectie().unwrap().vet,
+        "Vet kiezen op de lege alinea is niet toegepast: {}",
+        p.app.melding
+    );
+    assert_eq!(p.app.tab().unwrap().lettertype, "Cambria");
+    assert_eq!(p.app.tab().unwrap().grootte, "11");
+    let opgemaakt = p.bron();
+    assert_ne!(*opgemaakt, *leeg);
+    p.toets(Key::Character("9".into()), M::empty(), Some("9"));
+    let t = p.app.tab().unwrap();
+    assert_eq!(t.editor.text(), "9");
+    assert!(t.veld().unwrap().opmaak.vet && t.veld().unwrap().opmaak.cursief);
+    let cursor = t.writer_direct.geometrie(t).unwrap().cursor.unwrap();
+    assert!(cursor.hoogte > 0.);
+    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
+        std::fs::create_dir_all(&map).unwrap();
+        std::fs::write(
+            PathBuf::from(map).join("writer-lege-opmaak-ui.docx"),
+            p.bron().as_slice(),
+        )
+        .unwrap();
+    }
+    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        std::fs::create_dir_all(&map).unwrap();
+        p.verbeeld()
+            .save_png(PathBuf::from(map).join("writer-invoegopmaak-tekst.png"))
+            .unwrap();
+    }
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *opgemaakt);
+    assert_eq!(p.app.tab().unwrap().lettertype, "Cambria");
+    assert_eq!(p.app.tab().unwrap().grootte, "11");
+    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        std::fs::create_dir_all(&map).unwrap();
+        p.verbeeld()
+            .save_png(PathBuf::from(map).join("writer-invoegopmaak-leeg.png"))
+            .unwrap();
+    }
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *leeg);
+}
+
+#[test]
+fn lege_invoegopmaak_wachtrij_bewaart_opmaak_en_unicode_vanaf_dezelfde_oude_bron() {
+    use iced::keyboard::key::Named as N;
+    let mut p = writer_paginaproef();
+    let tekst = "Links 🏠 café rechts";
+    let punt = writer_punt(&mut p, tekst, tekst.chars().count());
+    p.klik(punt);
+    p.named(N::Enter);
+    let leeg = p.bron();
+    writer_snel(
+        &mut p,
+        [
+            writer_direct::Bericht::OpmaakToets('b'),
+            writer_direct::Bericht::Invoer(text_editor::Action::Edit(text_editor::Edit::Paste(
+                std::sync::Arc::new("café 🏠".into()),
+            ))),
+        ],
+    );
+    let t = p.app.tab().unwrap();
+    assert_eq!(t.editor.text(), "café 🏠");
+    assert!(t.veld().unwrap().opmaak.vet && t.veld().unwrap().opmaak.cursief);
+    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
+        std::fs::create_dir_all(&map).unwrap();
+        std::fs::write(
+            PathBuf::from(map).join("writer-lege-opmaak-wachtrij-ui.docx"),
+            p.bron().as_slice(),
+        )
+        .unwrap();
+    }
+    p.bericht(Msg::Terug);
+    assert_eq!(p.app.tab().unwrap().editor.text(), "");
+    assert!(p.app.tab().unwrap().veld().unwrap().opmaak.vet);
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *leeg);
+}
+
+#[test]
+fn lege_invoegopmaak_late_focus_laat_een_later_lettertypeveld_werken() {
+    use iced::keyboard::{Key, Modifiers as M};
+    let mut p = writer_paginaproef();
+    let bron = p.bron();
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    p.klik(punt);
+    let taak = writer_direct::vraag_focus(&p.app, p.app.tab().unwrap().id);
+    let veld = p
+        .toegankelijkheid()
+        .nodes
+        .into_iter()
+        .find(|n| {
+            n.node.name == "Lettertype" && n.node.role == openaec_ui::design::a11y::Role::TextField
+        })
+        .unwrap()
+        .bounds;
+    p.klik(iced::Point::new(
+        veld.x + veld.width * 0.5,
+        veld.y + veld.height * 0.5,
+    ));
+    assert!(
+        !p.app
+            .tab()
+            .unwrap()
+            .writer_focus
+            .load(std::sync::atomic::Ordering::Relaxed)
+    );
+    let oud = p.app.tab().unwrap().lettertype.clone();
+    p.taak(taak);
+    p.toets(Key::Character("9".into()), M::empty(), Some("9"));
+    assert!(
+        !p.app
+            .tab()
+            .unwrap()
+            .writer_focus
+            .load(std::sync::atomic::Ordering::Relaxed)
+    );
+    assert_ne!(p.app.tab().unwrap().lettertype, oud);
+    assert!(p.app.tab().unwrap().lettertype.contains('9'));
+    assert_eq!(*p.bron(), *bron);
+}
+
+#[test]
+fn lege_invoegopmaak_focus_van_een_ander_document_raakt_de_nieuwe_pagina_niet() {
+    let mut p = writer_paginaproef();
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    p.klik(punt);
+    let oud = p.app.tab().unwrap().id;
+    let taak = writer_direct::vraag_focus(&p.app, oud);
+    p.bericht(Msg::Nieuw(Module::Writer));
+    assert_ne!(p.app.tab().unwrap().id, oud);
+    let bron = p.bron();
+    assert!(
+        !p.app
+            .tab()
+            .unwrap()
+            .writer_focus
+            .load(std::sync::atomic::Ordering::Relaxed)
+    );
+    p.taak(taak);
+    assert!(
+        !p.app
+            .tab()
+            .unwrap()
+            .writer_focus
+            .load(std::sync::atomic::Ordering::Relaxed)
+    );
+    assert_eq!(*p.bron(), *bron);
+}
+
+#[test]
+fn lege_invoegopmaak_lettervelden_zijn_zichtbaar_voor_de_eerste_letter() {
+    use iced::keyboard::key::Named as N;
+    let mut p = writer_paginaproef();
+    let tekst = "Links 🏠 café rechts";
+    let punt = writer_punt(&mut p, tekst, tekst.chars().count());
+    p.klik(punt);
+    p.named(N::Enter);
+    assert_eq!(p.app.tab().unwrap().editor.text(), "");
+    assert_eq!(p.app.tab().unwrap().lettertype, "Cambria");
+    assert_eq!(p.app.tab().unwrap().grootte, "11");
+    p.bericht(Msg::Opmaak(Opmaak::Lettertype("Inter".into())));
+    p.bericht(Msg::Opmaak(Opmaak::Lettergrootte(13.5)));
+    assert_eq!(p.app.tab().unwrap().lettertype, "Inter");
+    assert_eq!(p.app.tab().unwrap().grootte, "13.5");
+    assert_eq!(p.app.tab().unwrap().editor.text(), "");
+}
+
+#[test]
+fn writer_zoekpaneel_late_sluitfocus_laat_een_later_lettertypeveld_werken() {
+    use iced::keyboard::{Key, Modifiers};
+    use zoeken_ui::Bericht as Z;
+    let mut p = writer_paginaproef();
+    p.bericht(Msg::Zoeken(Z::Open(false)));
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    p.klik(punt);
+    let bron = p.bron();
+    let taak = p.app.update(Msg::Zoeken(Z::Sluit));
+    let veld = p
+        .toegankelijkheid()
+        .nodes
+        .into_iter()
+        .find(|n| {
+            n.node.name == "Lettertype" && n.node.role == openaec_ui::design::a11y::Role::TextField
+        })
+        .unwrap()
+        .bounds;
+    p.klik(iced::Point::new(
+        veld.x + veld.width * 0.5,
+        veld.y + veld.height * 0.5,
+    ));
+    let oud = p.app.tab().unwrap().lettertype.clone();
+    p.taak(taak);
+    p.toets(Key::Character("9".into()), Modifiers::empty(), Some("9"));
+    assert_ne!(p.app.tab().unwrap().lettertype, oud);
+    assert!(p.app.tab().unwrap().lettertype.contains('9'));
+    assert_eq!(*p.bron(), *bron);
+}

@@ -1158,11 +1158,12 @@ impl App {
                     !t.writer_direct.delegeert
                         && (t.writer_direct.actief || t.writer_direct.heeft_werk())
                 }) {
-                    return writer_direct::update(
-                        self,
-                        t.id,
-                        writer_direct::Bericht::Opmaak(stijl),
-                    );
+                    let id = t.id;
+                    let werk =
+                        writer_direct::update(self, id, writer_direct::Bericht::Opmaak(stijl));
+                    // Herstel de paginacursor vóór het bronwerk begint. Een late
+                    // focusoperatie mag geen later invoerveld of ander document overnemen.
+                    return writer_direct::vraag_focus(self, id).chain(werk);
                 }
                 if let Some(t) = self.tab_mut() {
                     if t.bezig || t.concept {

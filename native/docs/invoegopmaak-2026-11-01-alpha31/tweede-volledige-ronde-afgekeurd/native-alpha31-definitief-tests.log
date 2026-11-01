@@ -1,0 +1,435 @@
+   Compiling office-core v2026.44.9-alpha.31 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-core)
+   Compiling open-office-studio-native v2026.44.9-alpha.31 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-ui)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 41s
+     Running unittests src/lib.rs (native/target/debug/deps/office_conversie-a26321718241b261)
+
+running 20 tests
+test conversie::tests::alle_runtimeformaten_uit_de_catalogus ... ignored, Vereist een geïnstalleerde kantoorruntime
+test conversie::tests::docx_met_grafiek_naar_pdf ... ignored, Vereist een geïnstalleerde kantoorruntime
+test conversie::tests::drie_odf_formaten_heen_en_terug ... ignored, Vereist een geïnstalleerde kantoorruntime
+test conversie::tests::bekende_paden_zijn_vast ... ok
+test conversie::tests::catalogus_is_volledig ... ok
+test conversie::tests::runtime_wordt_gevonden_met_versie ... ignored, Vereist een geïnstalleerde kantoorruntime
+test conversie::tests::veilig_profiel_schakelt_macros_uit ... ok
+test conversie::tests::voorbeelden_in_odf_oud_en_pdf ... ignored, Vereist een geïnstalleerde kantoorruntime en OFFICE_TEST_UIT
+test conversie::tests::filteropties_worden_veilig_opgebouwd ... ok
+test conversie::tests::alleen_soffice_mag_worden_gekozen ... ok
+test taal::tests::herkent_systeemtags ... ok
+test taal::tests::elke_taal_heeft_de_meervoudsvormen_die_rust_kiest ... ok
+test taal::tests::kiest_tekst_variabelen_en_terugval ... ok
+test taal::tests::meervoud_volgt_cldr ... ok
+test taal::tests::alle_talen_zijn_geldige_json_met_dezelfde_sleutels ... ok
+test conversie::tests::formaat_en_module_moeten_overeenkomen ... ok
+test conversie::tests::geslaagd_proces_wordt_aanvaard ... ok
+test conversie::tests::procesfout_wordt_geweigerd ... ok
+test conversie::tests::exportkeuzes_hebben_een_runtimefilter_en_geen_macrovarianten ... ok
+test conversie::tests::proces_wordt_gestopt_bij_tijdslimiet ... ok
+
+test result: ok. 15 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 0.15s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_core-1bade6a479975ce8)
+
+running 21 tests
+test celtekst::tests::celtekst_geleende_tabellen_citaten_unicode_en_lege_randen ... ok
+test ifcx::tests::beschadigde_bronnen_en_onbekende_profielen_worden_geweigerd ... ok
+test celtekst::aanvullende_proeven::xmltekens_en_rechthoekbudget_worden_voor_opslaan_gecontroleerd ... ok
+test ifcx::tests::alle_modules_bewaren_exacte_bron ... ok
+test opslag::tests::nieuwe_bestaande_en_extern_gewijzigde_bestanden ... ok
+test rekenblad_beeld::proeven::rasterletters_behouden_de_oorspronkelijke_facadebudgetten ... ok
+test rekenblad_beeld::symboolproeven::spreadsheet_aanvullend_huisglyph_heeft_dezelfde_schaal_uitlijning_en_stijl_als_zijn_eigen_font ... ok
+test celtekst::tests::celtekst_onvolledige_quotes_nultekens_en_rechthoekbudget_worden_geweigerd ... ok
+test rekenblad_beeld::proeven::rasterletters_zijn_scoped_genest_en_geisoleerd_bij_fouten_paniek_en_draden ... ok
+test rekenblad_document::proeven::bladbeveiliging_streamende_scan_leest_groot_blad_zonder_tweede_celboom ... ok
+test writer_beeld::paginakaart_proeven::bestaande_rust_engine_levert_een_getypeerde_paginakaart_voor_body_en_tabel ... ok
+test rekenblad_beeld::symboolproeven::spreadsheet_aanvullend_glyph_blijft_zichtbaar_bij_rotatie_stapeling_en_regelterugloop ... ok
+test writer_cursor::proeven::scalaire_grenzen_accepteren_nooit_een_halve_surrogaat ... ok
+test writer_beeld::paginakaart_proeven::een_koptekstklik_wordt_nooit_als_een_bodytekstpunt_gebruikt ... ok
+test writer_beeld::cacheproeven::paginacache_ververst_bij_fontgeneratie_en_isoleert_documenten ... ok
+test writer_beeld::cacheproeven::paginacache_volgt_bewerken_undo_en_laat_fouten_niet_achter ... ok
+test writer_beeld::unicode_navigatieproeven::navigatie_na_veel_astrale_tekens_komt_op_de_werkelijk_getekende_pagina ... ok
+test writer_document::layoutbron_proeven::paginering_hergebruikt_canonieke_bron_en_alle_mutabele_toegang_ververst_haar ... ok
+test writer_beeld::cacheproeven::paginacache_hergebruikt_een_engine_en_blijft_gelijk_aan_verse_beelden ... ok
+test writer_beeld::vensterproeven::tekenvenster_behoudt_paginavelden_kopvoetvarianten_en_laatste_pagina ... ok
+test writer_beeld::vensterproeven::tekenvenster_behoudt_beeld_noten_tabellen_grafiek_en_klikgebieden ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 28.13s
+
+     Running unittests src/bin/controleer-bestand.rs (native/target/debug/deps/controleer_bestand-8e0f22cc0e0fc00d)
+
+running 1 test
+test tests::paginameting_behoudt_volgorde_en_weigert_onbegrensde_of_ongeldige_invoer ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/documentkern.rs (native/target/debug/deps/documentkern-2f316a1bc1c61c00)
+
+running 127 tests
+test documenten::email_bewaart_alle_oorspronkelijke_bytes ... ok
+test documenten::notities_onbekende_velden_en_canvasposities_behouden ... ok
+test documenten::ifcx_herschrijven_bewaart_onbekende_attributen ... ok
+test documenten::ongeldige_tekstbewerking_verandert_geen_bron ... ok
+test documenten::presentatie_behoudt_opmaak_en_bewerkt_alineas_met_unicode ... ok
+test documenten::presentatie_bewerken_renderen_en_opnieuw_openen ... ok
+test documenten::writer_telt_tabelwoorden ... ok
+test documenten::spreadsheet_formules_bladen_en_herstel_na_ongeldige_formule ... ok
+test documenten::alle_nieuwe_documenten_openen_en_opslaan ... ok
+test interactie::rekenblad_navigatie_slaat_samenvoegingen_en_verborgen_assen_over ... ok
+test interactie::dubbele_alinea_ids_mogen_nooit_een_andere_alinea_wijzigen ... ok
+test documenten::writer_gemengde_opmaak_unicode_en_regelovergangen_blijven_bewaard ... ok
+test documenten::writer_bewerken_tabel_markdown_en_ongedaan_maken ... ok
+test documenten::spreadsheet_formulesyntaxis_is_transactioneel_en_tekst_blijft_tekst ... ok
+test interactie::rekenblad_navigatie_verplaatst_het_venster_zonder_bestandswijziging ... ok
+test interactie::rekenblad_samenvoeging_klikt_naar_ankercel ... ok
+test interactie::rekenblad_naar_ver_adres_bewerken_undo_en_opnieuw_openen ... ok
+test interactie::writer_paginageometrie_verwijst_naar_bestaande_alineas ... ok
+test interactie::writer_ongeldige_opmaak_is_transactioneel ... ok
+test lettertypen::ontbrekend_huissymbool_krijgt_een_echt_glyph_met_tekenbaar_contour ... ok
+test interactie::rekenblad_opmaak_en_structuur_bewaren_formules ... ok
+test interactie::rasterkoppen_delen_celgeometrie_ook_bij_verborgen_en_brede_assen ... ok
+test notities_presentatie::lettercatalogus_resolveert_bold_italic_en_metricfamilies ... ok
+test notities_presentatie::notitie_geometriefouten_en_leeg_boek_verliezen_geen_bron ... ok
+test notities_presentatie::oude_notitiebron_wordt_pas_bij_bewerking_gemigreerd ... ok
+test notities_presentatie::sectie_wisselt_tussen_canvas_en_markdown_zonder_inhoudsverlies ... ok
+test notities_presentatie::sectielimiet_levert_geen_onleesbare_opgeslagen_bron_op ... ok
+test notities_presentatie::vrije_vakken_verplaatsen_vergroten_en_undo_behouden_onbekende_inhoud ... ok
+test raster_bronbeelden::golden_align ... ok
+test raster_bronbeelden::golden_clipped ... ok
+test raster_bronbeelden::golden_mixed ... ok
+test raster_bronbeelden::golden_styled ... ok
+test raster_bronbeelden::golden_unicode ... ok
+test interactie::writer_selectieopmaak_behoudt_tekst_en_andere_runs ... ok
+test notities_presentatie::diatekstopmaak_gebruikt_correcte_unicodegrenzen_en_bewaart_runs ... ok
+test interactie::samengevoegde_cel_buiten_werkvenster_blijft_aanklikbaar_en_bewerkbaar ... ok
+test rekenblad_beveiliging::bladbeveiliging_ongeldige_bladindex_mag_nooit_naar_een_bestaand_blad_teruglopen ... ok
+test rekenblad_klembord::celklembord_beveiliging_en_matrixformules_worden_nooit_omzeild ... ok
+test rekenblad_klembord::celklembord_kopieert_opgemaakte_waarden_zonder_bronwijziging_of_geschiedenis ... ok
+test rekenblad_klembord::celklembord_late_ongeldige_formule_verandert_geen_enkele_cel ... ok
+test interactie::writer_puntgrootte_wordt_als_halve_punten_opgeslagen ... ok
+test interactie::lettercache_blijft_correct_na_een_ander_document_en_externe_wisactie ... ok
+test notities_presentatie::diabeheer_tekstvak_notities_en_verwijderen_laatste_dia ... ok
+test rekenblad_beveiliging::bladbeveiliging_sessie_houdt_bron_geschiedenis_en_navigatie_intact ... ok
+test rekenblad_selectie::celbereik_sluit_aangesneden_samenvoegingen_in_beide_richtingen ... ok
+test rekenblad_klembord::celklembord_samenvoegingen_alleen_als_hele_anker_of_gezamenlijk_wissen ... ok
+test rekenblad_klembord::celklembord_plakt_formules_getallen_en_unicode_als_een_bronexacte_undo ... ok
+test rekenblad_klembord::celklembord_tegelvulling_lege_randen_en_wissen_behouden_celopmaak ... ok
+test rekenblad_snelle_navigatie::modeluitvoer_bestaande_bron_behoudt_bekende_en_onbekende_rijformaat_attributen ... ok
+test rekenblad_snelle_navigatie::modeluitvoer_alle_rijformaatcombinaties_bewaren_waarden_en_xml_volgorde ... ok
+test rekenblad_snelle_navigatie::modeluitvoer_bewaart_expliciete_standaardrijhoogte_en_vaste_hoogte ... ok
+test rekenblad_snelle_navigatie::modeluitvoer_weigert_niet_eindige_of_onleesbare_standaardhoogten ... ok
+test rekenblad_snelle_navigatie::modeluitvoer_bewaart_standaard_verborgen_rijen_en_hun_hoogte_uitzonderingen ... ok
+test rekenblad_selectie::celbereik_volgt_werkvenster_zonder_bron_of_geschiedenis_te_veranderen ... ok
+test rekenblad_selectie::celbereik_weigert_overschrijding_en_verkeerde_module_zonder_gedeeltelijke_navigatie ... ok
+test rekenblad_snelle_navigatie::snelle_navigatie_bewaart_het_schaarse_blad_na_invoer_en_bronexacte_undo ... ok
+test lettertypen::documentmodules_rasteren_een_symbool_in_plaats_van_een_ontbrekend_teken ... ok
+test rekenblad_snelle_navigatie::snelle_celsprongen_weigeren_dubbelzinnige_of_ongeldige_geometrie ... ok
+test rekenblad_beveiliging::bladbeveiliging_inactief_ongebruikte_delen_en_afwijkende_relatiedoelen_worden_juist_gelezen ... ok
+test rekenblad_snelle_navigatie::snelle_celsprongen_raden_nooit_een_ontbrekend_of_te_klein_doel ... ok
+test writer_beveiliging::geldige_gezamenlijke_vervanging_wordt_bij_bronbeveiliging_geweigerd ... ok
+test writer_beveiliging::geweigerde_sessieopdrachten_houden_exact_de_bron_en_geschiedenis ... ok
+test writer_cursor::markeerbudget_weigert_een_geldig_groot_bereik_zonder_gedeeltelijk_resultaat ... ok
+test writer_cursor::markering_en_echte_klikpunten_hebben_dezelfde_unicode_bronposities ... ok
+test writer_cursor::tabelalinea_en_lege_selectie_blijven_binnen_het_eigen_tekstverhaal ... ok
+test rekenblad_beveiliging::bladbeveiliging_actief_onbekend_en_werkmapblokkade_weigeren_elke_documentopdracht ... ok
+test rekenblad_letters::spreadsheet_letterfamilies_en_vier_stijlen_tekenen_verschillend_en_undo_herstelt ... ok
+test writer_beveiliging::actieve_beveiliging_blokkeert_alle_writeropdrachten_in_de_document_api ... ok
+test writer_beveiliging::bijhouden_en_inhoudssloten_worden_niet_stil_genegeerd ... ok
+test writer_interactie::leeg_document_heeft_een_werkelijk_cursorvlak_en_een_klikbaar_tekstpunt ... ok
+test writer_cursor::verouderde_of_ongeldige_geometrie_verandert_geen_bron_of_geschiedenis ... ok
+test writer_interactie::frame_van_de_zesde_pagina_adresseert_die_pagina_en_geen_hernummerde_body ... ok
+test writer_interactie::frame_hoort_bij_de_zichtbare_tekst_ook_na_een_andere_layout_en_eigen_bewerking ... ok
+test writer_invoer::foute_late_stap_versie_grens_resultaat_en_budget_schrijven_niets ... ok
+test writer_navigatie::ongeldige_selecties_versies_en_modules_veranderen_niets ... ok
+test writer_invoer::unicode_lege_alinea_en_meerdere_stappen_vormen_een_undo_stap ... ok
+test writer_beveiliging::niet_afgedwongen_beveiliging_blijft_bewerkbaar_en_behoudt_de_instelling ... ok
+test writer_interactie::aansluitende_invoer_is_een_undo_stap_en_een_nieuwe_groep_blijft_apart ... ok
+test writer_opmaak::lege_invoegopmaak_lettervelden_erven_de_alineastijl_zonder_bronwijziging ... ok
+test writer_opmaak::lege_invoegopmaak_lettervelden_cursor_volgt_het_gekozen_lege_letterformaat ... ok
+test writer_navigatie::tekstnavigatie_vindt_alle_zes_paginas_zonder_bron_of_undo_te_veranderen ... ok
+test rekenblad_snelle_navigatie::snelle_celsprongen_geven_hetzelfde_doel_als_de_kern_bij_merges_verborgen_en_geknipte_assen ... ok
+test writer_opmaak::writer_opmaak_gemengde_opmaak_en_unicode_selecties_gebruiken_de_juiste_tekengrenzen ... ok
+test writer_opmaak::lege_invoegopmaak_weigert_verkeerde_grenzen_waarden_en_niet_tekstopmaak_zonder_mutatie ... ok
+test writer_opmaak::writer_opmaak_titel_standaardtekst_en_tabel_laten_de_opgeloste_engineopmaak_zien ... ok
+test writer_navigatie::tabelposities_en_een_andere_sessie_vervuilen_de_paginakaart_niet ... ok
+test writer_invoer::gelijke_tekens_verwijderen_en_vervangen_gebruikt_de_echte_selectie ... ok
+test writer_pagina::marges_en_kolommen_houden_verwijzingen_en_andere_sectie_intact ... ok
+test writer_opmaak::writer_opmaak_stijlketen_tekenstijl_en_directe_opmaak_blijven_correct_bij_bewerken_en_undo ... ok
+test writer_pagina::papier_en_afdrukstand_veranderen_alleen_de_gekozen_sectie ... ok
+test writer_pagina::sectie_einde_hoort_bij_de_voorgaande_sectie ... ok
+test writer_pagina::ongeldige_invoer_wijzigt_niets ... ok
+test writer_pagina::alle_papierformaten_houden_de_afdrukstand_en_staan_weer_omkeerbaar ... ok
+test writer_opmaak::lege_invoegopmaak_na_splitsen_bewaart_bestaande_cursief_en_nieuwe_vetkeuze ... ok
+test writer_pagina::vergrendelde_inhoudsbesturing_wordt_niet_via_paginaomweg_gewijzigd ... ok
+test writer_pagina::wijzigingen_bijhouden_worden_niet_onzichtbaar_omzeild ... ok
+test writer_regelnavigatie::cursor_home_end_en_een_klik_bewaren_de_affiniteit_van_een_automatische_regelgrens ... ok
+test writer_interactie::gewone_opdracht_fout_en_een_andere_alinea_onderbreken_invoergroepering ... ok
+test writer_regelnavigatie::cursor_ongeldige_versie_pagina_kolom_en_voorkeur_schatten_geen_cursorpositie ... ok
+test writer_regelnavigatie::cursor_tabelnavigatie_volgt_regels_binnen_de_cel_en_springt_niet_naar_de_buurkolom ... ok
+test writer_structuur::alineacursor_doorkruist_geen_tabelcellen_of_sectie_einde_en_maakt_geen_lege_undo ... ok
+test writer_pagina::sectierevisie_en_documentbeveiliging_blijven_in_de_oorspronkelijke_bron ... ok
+test writer_regelnavigatie::cursor_verticaal_tussen_echte_paginas_slaat_koppen_over_en_laat_de_bron_ongemoeid ... ok
+test writer_pagina::sessie_pagina_bewaart_en_herstelt_via_echte_paginering ... ok
+test writer_opmaak::writer_opmaak_lettergrootte_volgt_de_werkelijk_bewaarde_halve_punten ... ok
+test writer_opmaak::lege_invoegopmaak_zonder_runs_behoudt_acht_opmaakeigenschappen_na_heropenen ... ok
+test writer_structuur::ongeldige_splitspositie_verandert_bron_en_geschiedenis_niet ... ok
+test writer_structuur::alineacursor_lege_nieuwe_alinea_heeft_een_werkelijke_cursor_en_bewaart_runopmaak ... ok
+test writer_structuur::alineacursor_selectie_splitsen_is_atomair_en_behoudt_de_overige_inhoud ... ok
+test writer_structuur::alineacursor_weigert_verouderde_posities_module_en_bronbeveiliging_zonder_wijziging ... ok
+test writer_weergave::een_gebroken_voetnootnummer_wordt_niet_stil_afgerond ... ok
+test writer_velden::bestandscontrole_verwerkt_een_diepe_veldboom_op_de_eigen_werkdraad ... ok
+test writer_structuur::verdwijnende_laatste_pagina_breekt_een_geldige_bewerking_niet_af ... ok
+test writer_structuur::splitsen_en_samenvoegen_bewaart_unicode_runs_secties_en_ongedaan_maken ... ok
+test writer_structuur::tabelcel_splitsen_blijft_binnen_de_cel_en_weigert_samenvoegen_over_grenzen ... ok
+test writer_velden::geneste_velden_en_hyperlinks_houden_alle_resultaattekst_na_bewaren ... ok
+test writer_structuur::alineacursor_beide_samenvoegtoetsen_geven_de_oorspronkelijke_grens_terug ... ok
+test writer_zoeken::gezamenlijke_vervanging_blijft_correct_over_honderden_alineas ... ok
+test writer_zoeken::limieten_en_alleen_lezen_leiden_nooit_tot_stil_overgeslagen_vervangingen ... ok
+test writer_zoeken::zoeken_gebruikt_unicodegrenzen_en_letterlijke_woorden ... ok
+test writer_zoeken::een_late_fout_en_dubbele_alinea_wijzigen_geen_deel_van_het_document ... ok
+test writer_weergave::lettertype_in_grafiek_blijft_een_eigen_familie_en_vervuilt_volgend_document_niet ... ok
+test writer_weergave::kop_en_voettekst_veranderen_het_werkelijke_paginabeeld ... ok
+test writer_structuur::lege_alineas_en_sectie_einde_blijven_heropenbaar ... ok
+test writer_zoeken::alles_vervangen_bewaart_runopmaak_en_tabellen_en_is_een_undo_stap ... ok
+test writer_weergave::voetnoot_en_grafiek_buiten_alineatekst_renderen_na_teruglezen ... ok
+test writer_weergave::kopvoet_varianten_veranderen_uitsluitend_hun_eigen_paginas ... ok
+
+test result: ok. 127 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 156.01s
+
+     Running ../../vendor/docx-parse/tests/nested_fields.rs (native/target/debug/deps/engine_velden-7c0fe208b6b9f538)
+
+running 5 tests
+test nested_fields_hold_each_level_once ... ok
+test fields_past_the_limit_that_leave_their_scope_are_refused ... ok
+test saving_nested_fields_is_not_exponential_in_depth ... ok
+test field_characters_past_the_limit_save_as_often_as_they_open ... ok
+test fields_nested_past_the_limit_open_and_save_every_level ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.54s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_mail-c2a1bd2f85bc266d)
+
+running 51 tests
+test email::autoconfig::tests::domeinen_en_hosts ... ok
+test email::autoconfig::tests::gok_volgt_gangbare_namen ... ok
+test email::autoconfig::tests::voorinstellingen ... ok
+test email::accounts::tests::validatie_van_invoer ... ok
+test email::bestanden::tests::afbeeldingstypen ... ok
+test email::bestanden::tests::links ... ok
+test email::accounts::tests::beveiligingsregels ... ok
+test email::bestanden::tests::magische_bytes ... ok
+test email::bestanden::tests::ssrf_adressen ... ok
+test email::bestanden::tests::weigerlijst_en_namen ... ok
+test email::autoconfig::tests::http_en_doorverwijzing ... ok
+test email::fout::tests::serialiseert_sleutel_en_waarden ... ok
+test email::fout::tests::serialiseert_volgens_contract ... ok
+test email::fout::tests::verwijdert_geheim_uit_melding ... ok
+test email::fout::tests::verwijdert_geheim_uit_waarden ... ok
+test email::bestanden::tests::externe_inhoud_weigert_lokale_en_vreemde_adressen ... ok
+test email::fout::tests::certificaatfout_wordt_herkend ... ok
+test email::imap::tests::speciale_mappen_op_naam ... ok
+test email::accounts::tests::sleutelhanger_onbeschikbaar_geeft_fout_en_slaat_niets_op ... ok
+test email::autoconfig::tests::leest_autoconfig_xml ... ok
+test email::mime::tests::adressen_uit_tekst ... ok
+test email::imap::tests::uidsets ... ok
+test email::mime::tests::kop_uit_header_fields_met_interne_datum ... ok
+test email::imap::tests::gewijzigd_utf7 ... ok
+test email::imap::tests::zoekcriteria_opbouw ... ok
+test email::imap::tests::md5_en_cram_md5_volgens_rfc ... ok
+test email::mime::tests::ontleedt_bijlagen_en_html ... ok
+test email::mime::tests::ontleedt_kop_en_adressen ... ok
+test dienst::tests::runtime_is_onafhankelijk_van_venster_en_bewaart_geen_geheimen_in_json ... ok
+test email::oauth::tests::autorisatie_urls ... ok
+test email::oauth::tests::id_token_en_xoauth2 ... ok
+test email::oauth::tests::pkce_volgens_rfc7636 ... ok
+test email::oauth::tests::state_controle ... ok
+test email::oauth::tests::tokenantwoorden ... ok
+test email::accounts::tests::bewaart_zonder_wachtwoord_op_schijf ... ok
+test email::oauth::tests::urls_voor_tokeneindpunt ... ok
+test email::smtp::tests::gmail_bewaart_zelf ... ok
+test email::smtp::tests::stelt_bericht_op ... ok
+test email::smtp::tests::grenzen_en_validatie ... ok
+test email::tests::contractvelden_in_camelcase ... ok
+test email::zoeken::tests::mx_herkenning ... ok
+test email::zoeken::tests::rangschikking_en_ontdubbeling ... ok
+test email::zoeken::tests::srv_verwerking ... ok
+test email::bestanden::tests::tijdelijk_bestand_is_alleen_lezen ... ok
+test email::nepserver::tests::grootte_en_beveiliging ... ok
+test email::zoeken::tests::ispdb_alleen_op_verzoek_en_zonder_proef ... ok
+test email::nepserver::tests::verkeerd_wachtwoord_en_wachttijd ... ok
+test email::zoeken::tests::zoekt_servers_met_proef ... ok
+test email::nepserver::tests::oauth2_aanmelden_vernieuwen_en_intrekken ... ok
+test email::nepserver::tests::volledige_stroom_tegen_nepserver ... ok
+test email::nepserver::tests::oauth2_annuleren ... ok
+
+test result: ok. 51 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.25s
+
+     Running unittests src/main.rs (native/target/debug/deps/open_office_studio_native-fc016f47a33bc1a1)
+
+running 124 tests
+test mail_ui::tests::fout_behoudt_accountinvoer_en_bezig_blokkeert_vervolgopdrachten ... ok
+test mail_ui::tests::accountverversing_koppelt_berichten_niet_aan_een_andere_identiteit ... ok
+test mail_ui::tests::formulier_weigert_onversleutelde_externe_server_en_sluitvraag_blokkeert_bediening ... ok
+test mail_ui::tests::accountwijziging_bewaart_verborgen_instellingen_en_toont_geen_geheim ... ok
+test tests::canvas_slepen_geeft_een_enkele_definitieve_bewerking ... ok
+test tests::blad_klikken_schaalt_correct_en_respecteert_het_scrollvenster ... ok
+test tests::document_sneltoetsen_veranderen_geen_verborgen_editor_in_het_postvak ... ok
+test tests::alleen_lezen_laat_selecteren_toe_en_weigert_tekstwijziging ... ok
+test export_ui::tests::csv_en_pdf_opties_worden_strikt_gecontroleerd ... ok
+test tests::concept_wordt_niet_stil_weggegooid_bij_selectie_of_sluiten ... ok
+test export_ui::tests::export_legde_bron_vast_en_weigert_eigen_pad_of_andere_extensie ... ok
+test tests::alineaopdracht_weigert_concept_selectie_en_alleen_lezen ... ok
+test tests::documentwerkdraad_opent_diepe_velden_zonder_de_vensterdraad_te_gebruiken ... ok
+test tests::benoemde_bediening_in_document_bestand_en_instellingen ... ok
+test tests::mail_sluitvraag_verliest_geen_antwoord_van_de_documentwerkdraad ... ok
+test tests::mislukt_opslaan_markeert_geen_document_als_opgeslagen ... ok
+test tests::mislukte_eerste_weergave_ruimt_de_achtergrondsessie_op ... ok
+test tests::modale_sluitvraag_blokkeert_sneltoetsen_en_achterliggende_acties ... ok
+test tests::native_export_via_interface_en_werkdraad_slaat_pdf_en_csv_op_zonder_documentopslag ... ignored, Vereist een geïnstalleerde kantoorruntime
+test tests::geannuleerde_ifcx_export_verandert_de_huidige_bestandssoort_niet ... ok
+test tests::klembord_respecteert_beveiliging_en_verborgen_of_modale_editors ... ok
+test tests::klembord_vertraagd_antwoord_verandert_geen_andere_editor_of_selectie ... ok
+test tests::exportdialoog_blokkeert_verborgen_acties_en_wijzigt_geen_opslagstatus ... ok
+test tests::notitie_canvas_en_markdown_renderen_met_benoemde_bediening ... ok
+test tests::huidige_writer_referentie_renderen_op_browserformaat ... ok
+test tests::raster_proeven::beschermde_widget_knipt_niet_en_mag_de_selectie_wel_kopieren ... ok
+test tests::raster_proeven::bladbeveiliging_kern_weigert_ook_bij_een_onjuist_bewerkbaar_frontendveld ... ok
+test tests::raster_proeven::bladbeveiliging_gui_toont_de_beperking_en_laat_alleen_selectie_en_navigatie_toe ... ok
+test tests::raster_proeven::celbereik_samenvoeging_fout_en_bestandsvenster_laten_bron_en_focus_intact ... ok
+test tests::klembord_lintknoppen_behouden_unicode_bron_opmaak_en_ongedaan_maken ... ok
+test tests::overige_documentreferenties_renderen_op_browserformaat ... ok
+test tests::raster_proeven::celbereik_muis_slepen_shiftklik_en_zoom_volgen_de_echte_rastergeometrie ... ok
+test tests::nederlandse_lettergrootte_komt_via_de_werkdraad_in_alle_drie_documentmodellen ... ok
+test tests::raster_proeven::celbereik_snellen_toetsen_blijven_in_volgorde_tijdens_werkvensterwissel ... ok
+test tests::compacte_opmaakrij_bedient_doorhalen_uitvullen_en_letterstappen has been running for over 60 seconds
+test tests::raster_proeven::celbereik_shiftpijlen_behouden_anker_bron_en_bestaande_bereikopmaak ... ok
+test tests::raster_proeven::cursor_paginapijlen_verwerken_snellen_toetsen_zonder_bronwijziging_of_undo ... ok
+test tests::raster_proeven::cursor_home_end_shiftselectie_en_klembord_volgen_de_werkelijke_documentregel ... ok
+test tests::native_postvak_en_accountformulier_renderen_met_sluitbeveiliging has been running for over 60 seconds
+test tests::native_schermen_renderen has been running for over 60 seconds
+test tests::raster_proeven::enter_in_het_zoekveld_navigeert_en_een_resultaat_zet_echte_editorfocus ... ok
+test tests::raster_proeven::cursor_undo_na_invoer_aan_de_regelgrens_herstelt_ook_de_zichtbare_affiniteit ... ok
+test tests::native_postvak_en_accountformulier_renderen_met_sluitbeveiliging ... ok
+test tests::raster_proeven::cursor_snelle_regelnavigatie_en_typen_behouden_de_juist_geadresseerde_tekst ... ok
+test tests::native_schermen_renderen ... ok
+test tests::raster_proeven::lege_invoegopmaak_late_focus_laat_een_later_lettertypeveld_werken ... ok
+test tests::raster_proeven::raster_aanvullend_een_oude_inline_cursoractie_verplaatst_geen_nieuwe_invoer ... ok
+test tests::raster_proeven::raster_aanvullend_focus_op_een_verdwenen_doel_laat_de_nieuwe_editor_werken ... ok
+test tests::raster_proeven::lege_invoegopmaak_focus_van_een_ander_document_raakt_de_nieuwe_pagina_niet ... ok
+test tests::raster_proeven::raster_aanvullend_reeds_gevalideerde_focus_steelt_geen_later_adresveld ... ok
+test tests::raster_proeven::lege_invoegopmaak_lettervelden_zijn_zichtbaar_voor_de_eerste_letter ... ok
+test tests::raster_proeven::raster_aanvullend_meerdere_unicode_tekens_en_altgr_blijven_in_een_oude_widget_behouden ... ok
+test tests::raster_proeven::raster_asynchrone_plak_enter_en_opslaan_wachten_op_de_geplakte_bron ... ok
+test tests::raster_proeven::lege_invoegopmaak_wachtrij_bewaart_opmaak_en_unicode_vanaf_dezelfde_oude_bron ... ok
+test tests::raster_proeven::raster_dubbelklik_schaalt_ime_annuleren_en_late_lege_plakreactie ... ok
+test tests::raster_proeven::raster_bewaren_vanuit_de_sluitvraag_blijft_werken_met_de_invoerwachtrij ... ok
+test tests::compacte_opmaakrij_bedient_doorhalen_uitvullen_en_letterstappen ... ok
+test tests::raster_proeven::raster_asynchrone_grensronde_bewaart_alle_invoer_en_celbevestigingen ... ok
+test tests::raster_proeven::lege_invoegopmaak_echte_vetknop_op_nieuwe_alinea_bewaart_volgende_unicode_tekst ... ok
+test tests::raster_proeven::raster_foute_formule_blijft_concept_en_muiswissel_past_een_geldige_cel_toe ... ok
+test tests::raster_proeven::raster_klembord_gewijzigd_doel_weigert_laat_antwoord_en_bewaart_wachtende_invoer ... ok
+test tests::raster_proeven::raster_f2_en_selecteer_alles_in_dezelfde_oude_widget_overschrijven_de_cel ... ok
+test tests::raster_proeven::raster_invoerbuffer_begrenst_grote_plak_en_meldt_afgewezen_opdrachten_blijvend ... ok
+test tests::raster_proeven::raster_f2_bewerkt_de_echte_cel_bevestigt_herberekening_en_undo ... ok
+test tests::raster_proeven::raster_invoer_van_de_oude_inline_editor_bewerkt_na_enter_de_volgende_cel ... ok
+test tests::raster_proeven::raster_klembord_ongeldige_late_formule_bewaart_de_bron_en_hersteltekst ... ok
+test tests::raster_proeven::raster_late_lokale_focus_neemt_geen_nieuwe_editor_of_dialoog_over ... ok
+test tests::raster_proeven::echte_writer_en_bestand_deelhertekeningen_zijn_gelijk_aan_verse_hele_beelden has been running for over 60 seconds
+test tests::raster_proeven::raster_klembord_modale_late_lezing_wacht_en_gaat_nooit_naar_een_ander_document ... ok
+test tests::raster_proeven::echte_writer_en_bestand_deelhertekeningen_zijn_gelijk_aan_verse_hele_beelden ... ok
+test tests::raster_proeven::raster_klembord_bereik_kopieer_plak_en_wissen_zijn_geordend_en_bronexact_ongedaan ... ok
+test tests::raster_proeven::raster_snelle_invoerronde_omzeilt_nooit_de_bronbeveiliging ... ok
+test tests::raster_proeven::raster_snelle_f2_en_pijl_bewerken_de_nieuwe_cel_in_dezelfde_invoerronde ... ok
+test tests::raster_proeven::raster_snelle_pijl_binnen_het_werkvenster_vergt_geen_rasteropdracht ... ok
+test tests::raster_proeven::raster_oud_muisdoel_na_bronbewerking_wordt_geweigerd_maar_relatieve_invoer_blijft_geordend ... ok
+test tests::raster_proeven::raster_koppen_blijven_staan_en_cellen_klikken_correct_na_scroll_en_zoom ... ok
+test tests::raster_proeven::raster_rij_invoegen_na_plakken_blijft_achter_de_klembordbewerking ... ok
+test tests::raster_proeven::raster_snelle_invoerronde_navigeert_typt_en_bevestigt_in_de_nieuwe_cel ... ok
+test tests::raster_proeven::raster_vervolg_typen_na_direct_bewaren_heeft_echte_rasterfocus ... ok
+test tests::raster_proeven::raster_vervolg_opmaak_tijdens_een_concept_verliest_geen_typtekst ... ok
+test tests::raster_proeven::raster_toetsen_en_ime_commit_blijven_bewaard_terwijl_editorfocus_nog_onderweg_is ... ok
+test tests::raster_proeven::raster_toetsen_navigeren_voorbij_het_venster_en_tab_bevestigt ... ok
+test tests::raster_proeven::raster_zijeditor_bewaart_zijn_eigen_invoer_en_toepassen ... ok
+test tests::raster_proeven::vervangen_gaat_voorbij_nieuw_ingevoegde_zoektekst_naar_de_volgende_treffer ... ok
+test tests::raster_proeven::snelle_selectie_gevolgd_door_kopieren_en_knippen_bewaart_de_juiste_tekst ... ok
+test tests::raster_proeven::raster_werkdraad_steelt_geen_focus_van_een_later_geopend_venster ... ok
+test tests::raster_proeven::writer_alineatoets_aanvullend_typen_in_een_nieuwe_lege_alinea_bewaart_opmaak ... ok
+test tests::raster_proeven::writer_alineatoets_backspace_voegt_binnen_dezelfde_tekst_samen ... ok
+test tests::raster_proeven::writer_alineatoets_op_de_grens_van_tabelcellen_bewaart_de_bron_en_geschiedenis ... ok
+test tests::raster_proeven::writer_alineatoets_delete_voegt_binnen_dezelfde_tekst_samen ... ok
+test tests::raster_proeven::spreadsheet_opgeslagen_symbool_staat_in_het_raster_en_undo_herstelt_de_bron ... ok
+test tests::raster_proeven::writer_alineatoets_ongeimplementeerde_enter_combinaties_splitsen_geen_alinea ... ok
+test tests::raster_proeven::writer_pagina_achtergrondzoeken_en_dubbele_reactie_nemen_cursor_niet_over ... ok
+test tests::raster_proeven::writer_alineatoets_aanvullend_ingeklapte_shift_selectie_voegt_toch_samen ... ok
+test tests::raster_proeven::writer_pagina_kernweigering_bewaart_concept_en_wachtrij_tot_expliciet_verwerpen ... ok
+test tests::raster_proeven::writer_late_paginaklik_wordt_alleen_door_eigen_invoerstappen_verplaatst ... ok
+test tests::raster_proeven::writer_alineatoets_shift_enter_blijft_een_zachte_regelovergang ... ok
+test tests::raster_proeven::raster_vervolg_toetsen_geven_hetzelfde_resultaat_voor_en_na_editorfocus has been running for over 60 seconds
+test tests::raster_proeven::writer_alineatoets_selectie_en_splitsen_zijn_een_bewerking_met_selectieherstel ... ok
+test tests::raster_proeven::writer_pagina_verliest_focus_naar_zijeditor_en_weigert_alleen_lezen_invoer ... ok
+test tests::raster_proeven::writer_pagina_opslaan_wacht_op_invoer_en_laat_latere_tekst_gewijzigd ... ok
+test tests::raster_proeven::writer_alineatoets_enter_en_snellen_vervolgtekst_vormen_twee_bronexacte_undo_stappen ... ok
+test tests::raster_proeven::writer_paginaselectie_via_slepen_kopieert_bron_en_ime_commit_bewaart_opmaak ... ok
+test tests::raster_proeven::writer_zoekpaneel_sluiten_behoudt_de_werkelijke_editorfocus ... FAILED
+test tests::schaduw_proeven::gekleurde_ronde_randen_veranderen_niet_bij_deelhertekenen ... ok
+test tests::schaduw_proeven::schaduw_deelhertekening_blijft_pixelgelijk_aan_een_verse_volle_render ... ok
+test tests::raster_proeven::writer_pagina_opmaak_sneltoets_bewaart_cursor_en_onderbreekt_invoerundo ... ok
+test tests::symbool_in_bediening_gebruikt_het_gepinde_font_bij_ieder_lintgewicht ... ok
+test tests::unicode_selectie_wordt_van_iced_bytes_naar_documenttekens_vertaald ... ok
+test tests::venster_sluiten_vanuit_instellingen_toont_een_bereikbare_sluitvraag ... ok
+test tests::wijziging_tijdens_opslaan_blijft_onopgeslagen ... ok
+test tests::spreadsheet_interface_selecteert_anker_buiten_werkvenster_via_echte_werkdraad ... ok
+test tests::writer_beveiliging_blijft_zichtbaar_en_weigert_interfaceopdrachten ... ok
+test tests::raster_proeven::writer_paginawachtrij_bewaart_snellen_unicode_selectie_knip_plak_en_undo ... ok
+test tests::raster_proeven::zoeknavigatie_verplaatst_naar_de_echte_pagina_en_undo_blijft_op_dat_deel ... ok
+test tests::raster_proeven::writer_zoeken_vervangen_via_lint_werkdraad_unicode_en_undo ... ok
+test tests::writer_invoer_graphemen_selectie_regels_en_tabs_volgen_de_werkelijke_editor ... ok
+test tests::raster_proeven::writer_paginacursor_klikken_schalen_typen_en_een_exacte_undo has been running for over 60 seconds
+test tests::writer_meerdere_conceptbewerkingen_behouden_de_opmaak_tussen_de_wijzigingen ... ok
+test tests::writer_paginaopdracht_weigert_concept_en_verdwijnt_bij_andere_module ... ok
+test zoeken_ui::proeven::late_zoekresultaten_mogen_geen_nieuwe_query_of_nieuw_paneel_overschrijven ... ok
+test tests::writer_interface_splitsen_samenvoegen_en_undo_via_echte_werkdraad ... ok
+test tests::raster_proeven::raster_vervolg_toetsen_geven_hetzelfde_resultaat_voor_en_na_editorfocus ... ok
+test tests::writer_indeling_bedient_de_echte_werkdraad_en_bewaart_de_actieve_sectie ... ok
+test zoeken_ui::proeven::snelle_navigatie_bewaart_hoogstens_een_lopend_en_het_laatste_wachtende_doel ... ok
+test zoeken_ui::proeven::verouderde_bron_en_onverwerkte_invoer_blokkeren_vervangen ... ok
+test tests::raster_proeven::zoekmarkering_wordt_echt_getekend_schaalt_mee_en_vervalt_bij_nieuwe_invoer ... ok
+test zoeken_ui::proeven::late_paginanavigatie_verplaatst_geen_gewijzigde_selectie_invoer_of_venster ... ok
+test tests::writer_opmaak_in_het_lint_volgt_selectie_en_past_de_echte_knop_op_hetzelfde_bereik_toe ... ok
+test tests::raster_proeven::writer_paginacursor_klikken_schalen_typen_en_een_exacte_undo ... ok
+
+failures:
+
+---- tests::raster_proeven::writer_zoekpaneel_sluiten_behoudt_de_werkelijke_editorfocus stdout ----
+
+thread 'tests::raster_proeven::writer_zoekpaneel_sluiten_behoudt_de_werkelijke_editorfocus' (3076621) panicked at crates/office-ui/src/tests/raster_proeven.rs:408:5:
+assertion `left == right` failed
+  left: "Links 🏠 café rechts"
+ right: "Links 🏠 !café rechts"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    tests::raster_proeven::writer_zoekpaneel_sluiten_behoudt_de_werkelijke_editorfocus
+
+test result: FAILED. 122 passed; 1 failed; 1 ignored; 0 measured; 0 filtered out; finished in 276.67s
+
+error: test failed, to rerun pass `-p open-office-studio-native --bin open-office-studio-native`
+   Doc-tests office_conversie
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests office_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests office_mail
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: 1 target failed:
+    `-p open-office-studio-native --bin open-office-studio-native`

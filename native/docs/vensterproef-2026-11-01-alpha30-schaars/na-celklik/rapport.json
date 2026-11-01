@@ -1,0 +1,41 @@
+{
+  "versie": "Open Office Studio 2026.44.9-alpha.30 (native)",
+  "programma_sha256": "e927eaade2a6eea2158878b9686787136edcec36761508a6e60a4b895f8d67d8",
+  "broncommit": "c752341ab177ad4685dcd29abe71e687dcaf1292",
+  "geslaagd": true,
+  "omvang": "Echt CI-Linux-venster, eigen X11/D-Bus/XDG, model-XLSX met zeroHeight en zichtbare rijen 1/1000000. Geen fysieke hardware, andere platforms, IME, volledige matrix- of pixelpariteit.",
+  "stappen": [
+    {
+      "stap": "Nieuwe modelwerkmap geopend en de eerste zichtbare cel werkelijk aangeklikt",
+      "beeld": {
+        "bestand": "schaars-open.png",
+        "sha256": "23fc0c1fedb509a10db6d1645d81ef32c7222ab807d4ea3c59e4a9e0fe86adcd"
+      }
+    },
+    {
+      "stap": "Direct Omlaag/7/één bewaren schrijft uitsluitend A1000000 en bewaart zeroHeight, beide hoogten en tweede blad",
+      "beeld": {
+        "bestand": "schaars-invoer.png",
+        "sha256": "2b186197524af3664aae78162ef98a3f6a31f8c274e1f0ae6136b39e5bab1106"
+      }
+    },
+    {
+      "stap": "Eén undo en één bewaren herstellen de oorspronkelijke modelbron exact"
+    },
+    {
+      "stap": "Eigen bronvenster schoon gesloten",
+      "procescode": 0
+    },
+    {
+      "stap": "Na heropenen slaat Omlaag de verborgen rijen over; werkelijk systeemklembord bevestigt 7 zonder bronwijziging",
+      "beeld": {
+        "bestand": "schaars-heropend.png",
+        "sha256": "cce917f2146b8749d0c361294f3bc0406b159204af1c9c83f139ff31ca5cc9d5"
+      }
+    },
+    {
+      "stap": "Ook het heropende eigen venster schoon gesloten",
+      "procescode": 0
+    }
+  ]
+}

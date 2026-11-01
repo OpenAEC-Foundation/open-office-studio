@@ -49,9 +49,16 @@ impl Operation for Bewaker {
 pub fn focus(document: u64, versie: u64, editor: bool) -> Task<Msg> {
     let raster = id(document, versie, false);
     let cel = id(document, versie, true);
+    bewaakt(
+        if editor { cel.clone() } else { raster.clone() },
+        [raster, cel],
+    )
+}
+/// Het doel moet nog bestaan; een later invoerveld houdt zijn eigen focus.
+pub fn bewaakt(doel: Id, eigen: [Id; 2]) -> Task<Msg> {
     iced::advanced::widget::operate(Bewaker {
-        doel: if editor { cel.clone() } else { raster.clone() },
-        eigen: [raster, cel],
+        doel,
+        eigen,
         aanwezig: false,
         ander: false,
         eigen_focus: false,

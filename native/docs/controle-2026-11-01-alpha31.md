@@ -1,0 +1,14 @@
+# Native controle, 1 november 2026: alpha 31
+
+**2026.44.9-alpha.31** verbindt [invoegopmaak op volledig lege Writer-alinea’s](invoegopmaak-2026-11-01-alpha31/LEESMIJ.md), bewaakte paginafocus na een lintklik en opgeloste lettervelden. Zowel lege run als alineamarkering bewaren de keuze; de cursor volgt de puntgrootte. Vijf nieuwe kernproeven en zes widgetproeven controleren deze stap.
+
+- **344 reguliere Rust-tests**, inclusief **124 UI-tests**, zes runtimeproeven en zeven Python-tests geslaagd.
+- Rustfmt, Clippy met waarschuwingen als fouten, gepinde broncontroles en onafhankelijke bestands-/conversielezers geslaagd. **660 productiebronbestanden** blijven vóór en na de ronde bytegelijk.
+- [53 volledige native widgetbeelden](schermen-2026-11-01-alpha31.json), met twee nieuwe beelden van typen en undo op de lege alinea. Vijftien gedeelde documentbeelden en acht letterbeelden blijven bytegelijk aan alpha 30. Vijf oorspronkelijke renderer-goldens blijven gecontroleerd.
+- De oorspronkelijk falende proeven, mislukte tussenstappen, eerdere lege lettervelden en bewust afgebroken volledige ronde blijven behouden. De tweede volledige ronde vond nog een zoekpaneelsluitregressie door de oude vaste focus-ID; de nieuwe bewaakte route en een extra late-sluitproef controleren dat herstel. Een derde ronde slaagde op alle 344 tests maar faalde op één Clippy-waarschuwing in de nieuwe test; de expliciete hashbinding is daarna waarschuwingvrij opnieuw gecontroleerd. De laatste markeropname is na herbeoordeling correct en bytegelijk aan de extra hertest.
+
+De [uiteindelijke alpha-30-platformronde](platformen-2026-11-01-alpha30.json) slaagt op vijf taken met 1556 bytegelijke bronbestanden per pakket, 102 exacte native beeldparen en 21 paginabezoeken. De [lokale alpha-30-releasebouw](bouw-2026-11-01-alpha30-lokaal.json) slaagt in 31m51s; de [echte CI-Linux-Writer-proef](vensterproef-2026-11-01-alpha30-ci/LEESMIJ.md) slaagt op achttien stappen. De [schaarse spreadsheetproef](vensterproef-2026-11-01-alpha30-schaars/LEESMIJ.md) blijft afgekeurd op beginfocus en lange rijkoppen. Deze oudere programma’s keuren de nieuwe alpha 31 niet goed: haar releasebouw, platformronde en werkelijk releasevenster blijven afzonderlijk te controleren.
+
+De [vier volledige oorspronkelijke UI-vergelijkingen](pixelcontrole-alpha31/rapport.json) blijven rood: {'writer': 108314, 'spreadsheet': 382432, 'presentation': 560039, 'notition': 666025}. Elk beeld heeft 943.736 pixels; geen maskers, herschaling of kleurtolerantie. Dit is geen functiedekkingspercentage.
+
+Invoegopmaak binnen bestaande tekst, benoemde lege tekenstijlen, volledige complexe scripts, rijke selectie/klembord, volledige ribbon en de overige modulefuncties blijven open. Alle tien acceptatiegebieden blijven afgekeurd op volledige functie-, test- en pixelpariteit. Geen stabiele native vrijgave.

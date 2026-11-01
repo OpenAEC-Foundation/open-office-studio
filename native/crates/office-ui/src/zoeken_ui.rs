@@ -372,13 +372,14 @@ pub fn update(app: &mut App, m: Bericht) -> Task<Msg> {
         Bericht::Sluit => {
             let pagina = app
                 .tab()
-                .is_some_and(|t| t.writer_focus.load(std::sync::atomic::Ordering::Relaxed));
+                .filter(|t| t.writer_focus.load(std::sync::atomic::Ordering::Relaxed))
+                .map(|t| t.id);
             app.zoeken = None;
-            return iced::widget::operation::focus(if pagina {
-                "writer-pagina-invoer"
-            } else {
-                "document-tekst-editor"
-            });
+            if let Some(document) = pagina {
+                return super::writer_direct::vraag_focus(app, document);
+            }
+            let id = iced::advanced::widget::Id::from("document-tekst-editor");
+            return super::raster_focus::bewaakt(id.clone(), [id.clone(), id]);
         }
         Bericht::Open(vervangen) => {
             let Some(t) = tab_gereed(app) else {

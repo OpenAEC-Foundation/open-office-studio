@@ -525,6 +525,57 @@ fn schrijf_lijst(
     }
 }
 
+fn pas_runopmaak_toe(run: &mut docx::Run, stijl: &crate::opmaak::Opmaak) -> Resultaat<()> {
+    pas_formatering_toe(run.formatting.get_or_insert_with(Default::default), stijl)
+}
+fn pas_formatering_toe(
+    f: &mut docx_parse::formatting::TextFormatting,
+    stijl: &crate::opmaak::Opmaak,
+) -> Resultaat<()> {
+    use crate::opmaak::Opmaak as O;
+    match stijl {
+        O::Vet(v) => {
+            f.bold = Some(*v);
+            f.bold_cs = Some(*v);
+        }
+        O::Cursief(v) => {
+            f.italic = Some(*v);
+            f.italic_cs = Some(*v);
+        }
+        O::Onderstrepen(v) => {
+            f.underline = Some(docx_parse::scalars::UnderlineValue {
+                style: if *v { "single" } else { "none" }.into(),
+                color: None,
+            })
+        }
+        O::Doorhalen(v) => f.strike = Some(*v),
+        O::Lettergrootte(v) => {
+            // Dezelfde positieve halvepuntenafronding als de
+            // vaste serializer: model en bewaarde bron blijven gelijk.
+            f.font_size = Some((*v * 2. + 0.5).floor());
+            f.font_size_cs = Some(*v * 2.);
+        }
+        O::Lettertype(v) => {
+            let fam = f.font_family.get_or_insert_with(Default::default);
+            fam.ascii = Some(v.clone());
+            fam.h_ansi = Some(v.clone());
+            fam.ascii_theme = None;
+            fam.h_ansi_theme = None;
+        }
+        O::Kleur(v) => f.color = Some(docx_parse::scalars::ColorValue::from_attribute(&v[1..])),
+        O::Achtergrond(v) => {
+            let shade = f.shading.get_or_insert_with(Default::default);
+            shade.fill = Some(docx_parse::scalars::ColorValue::from_attribute(&v[1..]));
+        }
+        _ => {
+            return Err(Fout::Document(
+                "Deze tekstopmaak wordt nog niet ondersteund".into(),
+            ));
+        }
+    }
+    Ok(())
+}
+
 /// Aantallen in Unicode-tekens; nooit bytes of halve UTF-16-surrogaten.
 pub fn opmaak(
     d: &mut docx::Document,
@@ -556,6 +607,29 @@ pub fn opmaak(
             }
             .into(),
         );
+    } else if lengte == 0 {
+        // De eerste lege run is ook de invoegstijl bij de volgende tekststap.
+        // Overige lege runs en onbekende opmaakvelden blijven behouden.
+        if p.content.is_empty() {
+            p.content.push(P::Inline(I::Run(docx::Run {
+                node_type: docx_parse::inline::RunType::Run,
+                formatting: None,
+                property_changes: None,
+                content: vec![],
+            })));
+        }
+        let P::Inline(I::Run(run)) = &mut p.content[0] else {
+            return Err(fout());
+        };
+        pas_runopmaak_toe(run, stijl)?;
+        // Ook het lege alineateken draagt de invoegstijl. De layout gebruikt
+        // die voor de cursorhoogte vóór er een eerste letter wordt ingevoegd.
+        let markering = p
+            .formatting
+            .get_or_insert_with(Default::default)
+            .run_properties
+            .get_or_insert_with(Default::default);
+        pas_formatering_toe(markering, stijl)?;
     } else {
         // Een lege selectie op een niet-lege alinea mag geen schijnbewerking zijn.
         if begin == einde {
@@ -584,50 +658,7 @@ pub fn opmaak(
                 let mut r = run.clone();
                 r.content = inhoud(&chars[a..b].iter().collect::<String>());
                 if pas_aan {
-                    let f = r.formatting.get_or_insert_with(Default::default);
-                    match stijl {
-                        O::Vet(v) => {
-                            f.bold = Some(*v);
-                            f.bold_cs = Some(*v);
-                        }
-                        O::Cursief(v) => {
-                            f.italic = Some(*v);
-                            f.italic_cs = Some(*v);
-                        }
-                        O::Onderstrepen(v) => {
-                            f.underline = Some(docx_parse::scalars::UnderlineValue {
-                                style: if *v { "single" } else { "none" }.into(),
-                                color: None,
-                            })
-                        }
-                        O::Doorhalen(v) => f.strike = Some(*v),
-                        O::Lettergrootte(v) => {
-                            // Dezelfde positieve halvepuntenafronding als de
-                            // vaste serializer: model en bewaarde bron blijven gelijk.
-                            f.font_size = Some((*v * 2. + 0.5).floor());
-                            f.font_size_cs = Some(*v * 2.);
-                        }
-                        O::Lettertype(v) => {
-                            let fam = f.font_family.get_or_insert_with(Default::default);
-                            fam.ascii = Some(v.clone());
-                            fam.h_ansi = Some(v.clone());
-                            fam.ascii_theme = None;
-                            fam.h_ansi_theme = None;
-                        }
-                        O::Kleur(v) => {
-                            f.color = Some(docx_parse::scalars::ColorValue::from_attribute(&v[1..]))
-                        }
-                        O::Achtergrond(v) => {
-                            let shade = f.shading.get_or_insert_with(Default::default);
-                            shade.fill =
-                                Some(docx_parse::scalars::ColorValue::from_attribute(&v[1..]));
-                        }
-                        _ => {
-                            return Err(Fout::Document(
-                                "Deze tekstopmaak wordt nog niet ondersteund".into(),
-                            ));
-                        }
-                    }
+                    pas_runopmaak_toe(&mut r, stijl)?;
                 }
                 uit.push(P::Inline(I::Run(r)));
             }
@@ -639,10 +670,45 @@ pub fn opmaak(
     Ok(())
 }
 pub fn staat(p: &docx::Paragraph) -> crate::opmaak::OpmaakStaat {
-    let f = p.content.iter().find_map(|c| match c {
+    staat_van_formatering(p.content.iter().find_map(|c| match c {
+        P::Inline(I::Run(r)) => r.formatting.as_ref(),
+        _ => None,
+    }))
+}
+
+/// Een lege run vult de opgeloste alineastijl aan; de bron wordt niet veranderd.
+pub(crate) fn invoeg_staat(
+    p: &docx::Paragraph,
+    standaard: &docx_parse::formatting::TextFormatting,
+) -> crate::opmaak::OpmaakStaat {
+    let direct = p.content.iter().find_map(|c| match c {
         P::Inline(I::Run(r)) => r.formatting.as_ref(),
         _ => None,
     });
+    // Een expliciete tekenstijl vraagt haar eigen opgeloste overerving.
+    // Zolang die voor lege runs ontbreekt, wordt geen alineaterugval gegokt.
+    if direct.is_some_and(|f| f.style_id.is_some()) {
+        return staat_van_formatering(direct);
+    }
+    let opmaak = docx_parse::formatting::merge_text_formatting(Some(standaard), direct);
+    let mut staat = staat_van_formatering(opmaak.as_ref());
+    if opmaak
+        .as_ref()
+        .is_none_or(|f| f.font_size.is_none() && f.font_size_cs.is_none())
+    {
+        staat.grootte = Some(11.);
+    } else if staat.grootte.is_none() {
+        staat.grootte = opmaak.as_ref().and_then(|f| f.font_size_cs).map(|n| n / 2.);
+    }
+    if opmaak.as_ref().is_none_or(|f| f.font_family.is_none()) {
+        staat.lettertype = Some("Calibri".into());
+    }
+    staat
+}
+
+fn staat_van_formatering(
+    f: Option<&docx_parse::formatting::TextFormatting>,
+) -> crate::opmaak::OpmaakStaat {
     crate::opmaak::OpmaakStaat {
         vet: f.and_then(|f| f.bold).unwrap_or(false),
         cursief: f.and_then(|f| f.italic).unwrap_or(false),

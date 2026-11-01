@@ -14,6 +14,10 @@ use std::sync::{
 };
 use std::time::{Duration, Instant};
 
+pub fn focus_id(document: u64, versie: u64) -> iced::advanced::widget::Id {
+    iced::advanced::widget::Id::from(format!("writer-pagina-invoer:{document}:{versie}"))
+}
+
 pub fn blad<'a>(t: &'a Tab, inhoud: Element<'a, Msg>, accent: iced::Color) -> Element<'a, Msg> {
     let Some(a) = &t.antwoord else { return inhoud };
     let Some(frame) = &a.beeld.writer_frame else {
@@ -23,6 +27,7 @@ pub fn blad<'a>(t: &'a Tab, inhoud: Element<'a, Msg>, accent: iced::Color) -> El
         inhoud,
         frame,
         document: t.id,
+        focus_id: focus_id(t.id, t.editerversie),
         hash: &a.hash,
         focus: t.writer_focus.clone(),
         markering: t.writer_direct.geometrie(t),
@@ -42,6 +47,7 @@ struct Blad<'a> {
     inhoud: Element<'a, Msg>,
     frame: &'a office_core::writer_cursor::InteractieFrame,
     document: u64,
+    focus_id: iced::advanced::widget::Id,
     hash: &'a str,
     focus: Arc<AtomicBool>,
     markering: Option<&'a office_core::writer_cursor::TekstMarkering>,
@@ -148,7 +154,7 @@ impl Widget<Msg, Theme, Renderer> for Blad<'_> {
     }
     fn operate(&mut self, t: &mut Tree, l: Layout<'_>, r: &Renderer, o: &mut dyn Operation) {
         o.focusable(
-            Some(&iced::advanced::widget::Id::new("writer-pagina-invoer")),
+            Some(&self.focus_id),
             l.bounds(),
             t.state.downcast_mut::<Focus>(),
         );
