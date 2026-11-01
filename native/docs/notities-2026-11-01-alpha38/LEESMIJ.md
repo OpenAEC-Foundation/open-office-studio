@@ -11,3 +11,5 @@ De eerste CI-ronde bouwt Windows, Linux en macOS en slaagt op de conversietaak. 
 Zestig volledige native widgetbeelden, vijftien gedeelde documentbeelden en acht letterbeelden zijn gecontroleerd. De acht vergelijkingen met de oorspronkelijke UI blijven allemaal afgekeurd. Deze bewijzen zijn geen volledige suite-, platform-, installatie- of pixelpariteit. Alle dertig migratieacceptaties blijven false; geen stabiele native vrijgave.
 
 `bewijskopieen.json` koppelt ieder bestand aan de oorspronkelijke bytes en hash. Logs en patches staan als deterministische gzip-bestanden in de repository; uitpakken levert exact de ruwe bytes terug.
+
+De afgesloten CI-herhaling 41337108934 slaagt op alle vijf taken: 3951 verpakte bronbestanden per platform, 120 exacte native beeldparen en 21 paginabezoeken. De bestanden onder `ci-hertest` bevestigen dat beide Linux-programma’s bytegelijk zijn aan de eerder fysiek geteste alpha38-programma’s. De eerste schermtellingafkeuring blijft ongewijzigd bewaard.
