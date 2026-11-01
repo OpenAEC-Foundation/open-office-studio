@@ -306,7 +306,7 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
-Het [controlerapport voor alpha 36](docs/controle-2026-11-01-alpha36.md) legt **388 reguliere Rust-tests**, waaronder **151 UI-tests**, zes runtimeproeven en zeven Python-tests vast. Rustfmt, Clippy, bronpins en onafhankelijke lezers slagen; **669 bronbestanden** en **57 volledige native widgetbeelden** zijn vastgelegd. De lokale releasebouw, vijf CI-taken, 114 exacte native beeldparen en 21 paginabezoeken slagen. Beide geoptimaliseerde Linux-bouwen slagen ieder op 61 gerichte vensterstappen. Dit bewijst geen volledige functie-, platform- of oorspronkelijke UI-pariteit.
+Het [controlerapport voor alpha 37](docs/controle-2026-11-01-alpha37.md) legt **395 reguliere Rust-tests**, waaronder **155 UI-tests**, zes runtimeproeven en zeven Python-tests vast. Rustfmt, Clippy, bronpins en onafhankelijke lezers slagen; **671 bronbestanden** en **57 volledige native widgetbeelden** zijn vastgelegd. Alle vijf CI-taken, 114 exacte native beeldparen en 21 paginabezoeken slagen. De echte geoptimaliseerde Linux-Notities-proef eindigt echter in een paginawisselcrash; ook de zichtbare formaatgreep blijft afgekeurd. De bewaarde bron blijft intact. Er is geen volledige GUI-, functie-, platform- of oorspronkelijke UI-pariteit.
 
 De brede corpusronde heeft 579 geslaagde bronnen, 68 weigeringen en één overschrijding van 30 seconden. De afzonderlijke 120-secondenproef slaagt, maar maakt de oorspronkelijke ronde niet groen. Een extra ZIP-byte-eis legt herschreven kop-/voettekstwrappers vast; de inhoud blijft afzonderlijk gecontroleerd. De oorspronkelijke afkeuringen blijven in de [bewijsreeks](docs/zoeken-hertekenen-2026-11-01-alpha36/LEESMIJ.md) bewaard.
 
@@ -482,7 +482,7 @@ python3 native/scripts/meet-paginas.py \
 Op Windows heeft de controleur de extensie `.exe`. Dit is een paginaproef,
 geen fysieke GUI-, volledige inhouds- of pariteitscontrole.
 
-De [controle van alpha 36](docs/controle-2026-11-01-alpha36.md) legt de huidige lokale tests en nog open acceptatie vast. Historische platform- en vensterproeven blijven aan hun eigen broncommit en programmaversie gekoppeld.
+De [controle van alpha 37](docs/controle-2026-11-01-alpha37.md) legt de huidige lokale tests en nog open acceptatie vast. Historische platform- en vensterproeven blijven aan hun eigen broncommit en programmaversie gekoppeld.
 
 ### Ontbrekende symbolen in Spreadsheet
 

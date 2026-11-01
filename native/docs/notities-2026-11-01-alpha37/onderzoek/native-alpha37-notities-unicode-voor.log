@@ -1,0 +1,64 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.49s
+     Running unittests src/lib.rs (native/target/debug/deps/office_conversie-deab71ae26016505)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_core-73d8ec30703d09ba)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 26 filtered out; finished in 0.00s
+
+     Running unittests src/bin/controleer-bestand.rs (native/target/debug/deps/controleer_bestand-fa08116d156b269d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/documentkern.rs (native/target/debug/deps/documentkern-52ef090cb92c8e28)
+
+running 4 tests
+test notities_presentatie::notitie_geometriefouten_en_leeg_boek_verliezen_geen_bron ... ok
+test notities_presentatie::notitie_markdownkopie_splitst_unicode_veilig_en_weigert_te_grote_omzetting_atomair ... ok
+test notities_presentatie::notitie_nieuwe_onderdelen_openen_hun_eigen_pagina_en_teksten_zijn_een_transactie ... ok
+test notities_presentatie::notitie_sectiekopie_behoudt_bron_opmaak_volgorde_en_onbekende_velden ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 138 filtered out; finished in 0.19s
+
+     Running ../../vendor/docx-parse/tests/nested_fields.rs (native/target/debug/deps/engine_velden-49d9657fd396d79d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_mail-757437653ded2e53)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 51 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (native/target/debug/deps/open_office_studio_native-ab46617f9d1b7eeb)
+
+running 5 tests
+test tests::notitie_canvas_en_markdown_renderen_met_benoemde_bediening ... ok
+test tests::raster_proeven::notitie_een_tekstklik_en_direct_typen_behouden_de_invoer ... ok
+test tests::raster_proeven::notitie_late_invoer_van_een_andere_bron_wordt_niet_toegepast ... ok
+test tests::raster_proeven::notitie_omzetting_bewaart_canvas_en_opent_een_gevulde_markdownkopie ... ok
+test tests::raster_proeven::notitie_tekstklikken_en_unicode_in_dezelfde_widgetronde_bewaren_beide_vakken ... 
+thread 'tests::raster_proeven::notitie_tekstklikken_en_unicode_in_dezelfde_widgetronde_bewaren_beide_vakken' (3346166) panicked at crates/office-ui/src/tests/raster_proeven.rs:200:5:
+assertion `left == right` failed
+  left: "éEen idee op een andere plek"
+ right: "Een idee op een andere plek"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+
+failures:
+
+failures:
+    tests::raster_proeven::notitie_tekstklikken_en_unicode_in_dezelfde_widgetronde_bewaren_beide_vakken
+
+test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 151 filtered out; finished in 4.78s
+
+error: test failed, to rerun pass `-p open-office-studio-native --bin open-office-studio-native`

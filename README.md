@@ -29,13 +29,13 @@ sources. It is **not yet a replacement for the current suite**; the
 [feature comparison and remaining work](native/README.md#huidige-omvang) describe
 the migration boundary. Version 2026-W44.8 remains the existing release.
 
-Alpha 36 binds search focus to its original input event and limits shadow work
-to the current repaint area. Its [validation report](native/docs/controle-2026-11-01-alpha36.md)
-records 388 Rust tests, including 151 UI tests, six runtime checks and seven
-Python tests. The local release build and all five platform CI jobs pass;
-each optimized Linux build passes 61 targeted window steps. The broad corpus
-still contains refusals and a timeout, and the original full visual comparisons
-remain failed. These checks do **not** establish complete migration or visual parity.
+Alpha 37 adds source-preserving notes section copies and editing from the first
+click. Its [validation report](native/docs/controle-2026-11-01-alpha37.md) records
+395 Rust tests, including 155 UI tests, six runtime checks and seven Python tests.
+All five CI jobs pass, including Windows, Linux and macOS builds and 114 exact
+native image comparisons. **The real notes GUI still fails on a page-switching
+crash and a misplaced resize handle.** Original visual comparisons and migration
+acceptance remain failed; this preview is not ready to replace the current suite.
 
 ## Suite or a separate app
 

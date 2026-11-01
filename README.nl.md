@@ -29,12 +29,14 @@ worden volledig bewaard. De native app is **nog geen vervanging voor de huidige
 suite**. Zie de [functievergelijking en resterende omzetting](native/README.md#huidige-omvang).
 De bestaande release blijft 2026-W44.8.
 
-De [controle van alpha 36](native/docs/controle-2026-11-01-alpha36.md) legt 388 Rust-tests,
-waaronder 151 UI-tests, zes runtimeproeven en zeven Python-tests vast. Lokale
-releasebouw en vijf platformtaken slagen; beide geoptimaliseerde Linux-bouwen
-slagen ieder op 61 gerichte vensterstappen. Corpusweigeringen, een tijdslimiet
-en de oorspronkelijke volledige pixelvergelijkingen blijven afgekeurd.
-Dit is geen volledige migratie- of pariteitsgoedkeuring.
+Alpha 37 verbindt bronbehoudende notitiesectiekopieën en tekstinvoer vanaf de
+eerste klik. De [controle](native/docs/controle-2026-11-01-alpha37.md) legt 395
+Rust-tests, waaronder 155 UI-tests, zes runtimeproeven en zeven Python-tests vast.
+Alle vijf CI-taken slagen, met Windows-, Linux- en macOS-bouwen en 114 exacte
+native beeldvergelijkingen. **De echte Notities-GUI blijft afgekeurd door een
+paginawisselcrash en een verkeerd geplaatste formaatgreep.** Oorspronkelijke
+pixelvergelijkingen en alle migratieacceptaties blijven open; deze preview
+vervangt de bestaande suite nog niet.
 
 ## De suite of een aparte app
 
