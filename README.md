@@ -29,11 +29,13 @@ sources. It is **not yet a replacement for the current suite**; the
 [feature comparison and remaining work](native/README.md#huidige-omvang) describe
 the migration boundary. Version 2026-W44.8 remains the existing release.
 
-Alpha 34 adds Writer bullets and numbering, preserves existing numbering XML,
-and keeps new lists consistent in Markdown exports. Its [validation report](native/docs/controle-2026-11-01-alpha34.md)
-records 374 Rust tests, including 137 UI tests, six runtime checks and seven
-Python tests. Full visual parity is still open; the original browser and
-[desktop references](native/docs/referentie-desktop-2026-11-01/LEESMIJ.md) remain separately available.
+Alpha 35 prevents a pending search focus request from taking over a later
+document cursor or input field. Its [validation report](native/docs/controle-2026-11-01-alpha35.md)
+records 382 Rust tests, including 145 UI tests, six runtime checks and seven
+Python tests. The original failed alpha-34 GUI checks remain available; the
+new release windows require a separate retest. Full visual parity is still open;
+the original browser and [desktop references](native/docs/referentie-desktop-2026-11-01/LEESMIJ.md)
+remain separately available.
 
 ## Suite or a separate app
 

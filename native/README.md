@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.34**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.35**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -306,7 +306,7 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
-Het [controlerapport voor alpha 34](docs/controle-2026-11-01-alpha34.md) legt **374 reguliere Rust-tests**, inclusief **137 UI-tests**, zes runtimeproeven en zeven Python-tests vast. Rustfmt, Clippy, bronpins en onafhankelijke lezers slagen. **57 volledige native widgetbeelden** en **667 bronbestanden** zijn vastgelegd. De nieuwe Writer-lijsten worden met echte widgetgebeurtenissen, snelle vervolginvoer, bronbehoud en afzonderlijke undo gecontroleerd. Eigen releasebouw, nieuwe platformronde en werkelijke alpha-34-releasevensters blijven afzonderlijk vereist. De volledige oorspronkelijke UI-vergelijkingen blijven afgekeurd.
+Het [controlerapport voor alpha 35](docs/controle-2026-11-01-alpha35.md) legt **382 reguliere Rust-tests**, inclusief **145 UI-tests**, zes runtimeproeven en zeven Python-tests vast. Rustfmt, Clippy, bronpins en onafhankelijke lezers slagen. **57 volledige native widgetbeelden** en **668 bronbestanden** zijn vastgelegd. Acht nieuwe gerichte proeven controleren uitgestelde zoekfocus en werkelijke sluitknopklikken. De oorspronkelijke afkeuringen blijven behouden. Eigen alpha35-releasebouw, platformronde en echte vensterhertests blijven afzonderlijk vereist; volledige oorspronkelijke UI-pariteit blijft open.
 
 Het [controlerapport voor alpha 31](docs/controle-2026-11-01-alpha31.md) legt **344 reguliere Rust-tests**, inclusief **124 UI-tests**, zes runtimeproeven en zeven Python-tests vast. De [lokale releasebouw](docs/bouw-2026-11-01-alpha31-lokaal.json) slaagt in 34m31s met beide programma’s vastgezet. De [platformronde](docs/platformen-2026-11-01-alpha31.json) slaagt op vijf taken met 2095 bytegelijke bronbestanden per pakket, 106 exacte native beeldparen en 21 paginabezoeken. De [werkelijke CI-Linux-vensterproeven](docs/vensterafkeuring-2026-11-01-alpha31-ci/LEESMIJ.md) blijven afgekeurd: na een ontoereikende eerste bronvoorwaarde toont de strengere hertest daadwerkelijk toetsverlies vlak na een opmaakklik. De oude widgetproeven dekten die gebeurtenisvolgorde niet. De nieuwe alpha-32-widgetronde reproduceert het verlies vóór de correctie en controleert de gewijzigde route; een nieuw werkelijk releasevenster blijft nodig.
 
@@ -478,7 +478,7 @@ python3 native/scripts/meet-paginas.py \
 Op Windows heeft de controleur de extensie `.exe`. Dit is een paginaproef,
 geen fysieke GUI-, volledige inhouds- of pariteitscontrole.
 
-De [controle van alpha 34](docs/controle-2026-11-01-alpha34.md) legt de huidige lokale tests en nog open acceptatie vast. Historische platform- en vensterproeven blijven aan hun eigen broncommit en programmaversie gekoppeld.
+De [controle van alpha 35](docs/controle-2026-11-01-alpha35.md) legt de huidige lokale tests en nog open acceptatie vast. Historische platform- en vensterproeven blijven aan hun eigen broncommit en programmaversie gekoppeld.
 
 ### Ontbrekende symbolen in Spreadsheet
 

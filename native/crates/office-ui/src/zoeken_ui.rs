@@ -4,7 +4,6 @@ use iced::widget::{checkbox, column, row};
 use office_core::writer_zoeken::{self as kern, Treffer, Zoekopdracht};
 use std::sync::atomic::{AtomicU64, Ordering};
 static VOLGEND: AtomicU64 = AtomicU64::new(1);
-const INVOER: &str = "writer-zoektekst";
 #[derive(Debug, Clone)]
 pub enum Bericht {
     Open(bool),
@@ -42,6 +41,9 @@ pub struct Zoekpaneel {
     fout: String,
 }
 impl Zoekpaneel {
+    fn invoer_id(&self) -> iced::advanced::widget::Id {
+        iced::advanced::widget::Id::from(format!("writer-zoektekst:{}:{}", self.document, self.id))
+    }
     fn nieuw(document: u64, hash: String, vervangen: bool, tekst: String) -> Self {
         Self {
             id: VOLGEND.fetch_add(1, Ordering::Relaxed),
@@ -99,7 +101,7 @@ impl Zoekpaneel {
             .spacing(8),
             openaec_ui::design::a11y::named(
                 text_input("Zoeken in hoofdtekst en tabellen", &self.opdracht.tekst)
-                    .id(INVOER)
+                    .id(self.invoer_id())
                     .on_input(|s| Msg::Zoeken(Bericht::Tekst(s)))
                     .on_submit(Msg::Zoeken(Bericht::Volgende))
                     .padding(8)
@@ -367,6 +369,12 @@ pub fn bij_document(app: &mut App) -> Task<Msg> {
     z.gekozen = 0;
     vraag(app)
 }
+fn focus_zoektekst(app: &App) -> Task<Msg> {
+    app.zoeken
+        .as_ref()
+        .map(|z| invoerfocus::vraag(&app.invoergeneratie, z.invoer_id()))
+        .unwrap_or_else(Task::none)
+}
 pub fn update(app: &mut App, m: Bericht) -> Task<Msg> {
     match m {
         Bericht::Sluit => {
@@ -397,7 +405,7 @@ pub fn update(app: &mut App, m: Bericht) -> Task<Msg> {
             } else {
                 app.zoeken = Some(Zoekpaneel::nieuw(id, hash, vervangen, tekst));
             }
-            return Task::batch([vraag(app), iced::widget::operation::focus(INVOER)]);
+            return Task::batch([vraag(app), focus_zoektekst(app)]);
         }
         Bericht::Vervang(alles) => {
             let Some(t) = tab_gereed(app) else {
@@ -447,7 +455,7 @@ pub fn update(app: &mut App, m: Bericht) -> Task<Msg> {
             } else {
                 (z.gekozen + 1) % z.treffers.len()
             };
-            return Task::batch([kies(app, n, false), iced::widget::operation::focus(INVOER)]);
+            return Task::batch([kies(app, n, false), focus_zoektekst(app)]);
         }
         Bericht::Vervangtekst(s) => {
             if let Some(z) = app.zoeken.as_mut() {

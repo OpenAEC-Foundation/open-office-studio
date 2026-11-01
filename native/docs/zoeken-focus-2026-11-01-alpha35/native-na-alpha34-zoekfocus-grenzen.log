@@ -1,0 +1,74 @@
+   Compiling open-office-studio-native v2026.44.9-alpha.34 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-ui)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 35.80s
+     Running unittests src/lib.rs (native/target/debug/deps/office_conversie-0cbb7856160cae58)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_core-095686217fbb136e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 26 filtered out; finished in 0.00s
+
+     Running unittests src/bin/controleer-bestand.rs (native/target/debug/deps/controleer_bestand-3d75172458db6ad2)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/documentkern.rs (native/target/debug/deps/documentkern-f9df31105463cccd)
+
+running 5 tests
+test writer_zoeken::alles_vervangen_bewaart_runopmaak_en_tabellen_en_is_een_undo_stap ... ok
+test writer_zoeken::een_late_fout_en_dubbele_alinea_wijzigen_geen_deel_van_het_document ... ok
+test writer_zoeken::gezamenlijke_vervanging_blijft_correct_over_honderden_alineas ... ok
+test writer_zoeken::limieten_en_alleen_lezen_leiden_nooit_tot_stil_overgeslagen_vervangingen ... ok
+test writer_zoeken::zoeken_gebruikt_unicodegrenzen_en_letterlijke_woorden ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 134 filtered out; finished in 15.31s
+
+     Running ../../vendor/docx-parse/tests/nested_fields.rs (native/target/debug/deps/engine_velden-3ff3187c9cb999fd)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_mail-25663cdf59969962)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 51 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (native/target/debug/deps/open_office_studio_native-7ced0893002e3d0f)
+
+running 10 tests
+test tests::raster_proeven::writer_zoeken_vervangen_via_lint_werkdraad_unicode_en_undo ... ok
+test tests::raster_proeven::writer_zoekopenfocus_gesloten_paneel_raakt_een_nieuw_paneel_niet ... ok
+test tests::raster_proeven::writer_zoekopenfocus_laat_een_later_gekozen_paginacursor_werken ... ok
+test tests::raster_proeven::writer_zoekopenfocus_laat_een_later_lettertypeveld_werken ... ok
+test tests::raster_proeven::writer_zoekopenfocus_laat_een_nieuwe_cursor_in_dezelfde_alinea_werken ... FAILED
+test tests::raster_proeven::writer_zoekopenfocus_normale_opening_typen_en_kopieren_blijven_werken ... ok
+test tests::raster_proeven::writer_zoekpaneel_late_sluitfocus_laat_een_later_lettertypeveld_werken ... ok
+test tests::raster_proeven::writer_zoekpaneel_sluiten_behoudt_de_werkelijke_editorfocus ... ok
+test tests::raster_proeven::writer_zoeksluitklik_behoudt_de_bevestigde_paginacursor ... ok
+test tests::raster_proeven::writer_zoeksluitklik_en_directe_toets_in_dezelfde_widgetronde ... ok
+
+failures:
+
+---- tests::raster_proeven::writer_zoekopenfocus_laat_een_nieuwe_cursor_in_dezelfde_alinea_werken stdout ----
+
+thread 'tests::raster_proeven::writer_zoekopenfocus_laat_een_nieuwe_cursor_in_dezelfde_alinea_werken' (3246906) panicked at crates/office-ui/src/tests/raster_proeven.rs:555:5:
+assertion `left == right` failed
+  left: 3
+ right: 2
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    tests::raster_proeven::writer_zoekopenfocus_laat_een_nieuwe_cursor_in_dezelfde_alinea_werken
+
+test result: FAILED. 9 passed; 1 failed; 0 ignored; 0 measured; 135 filtered out; finished in 60.91s
+
+error: test failed, to rerun pass `-p open-office-studio-native --bin open-office-studio-native`

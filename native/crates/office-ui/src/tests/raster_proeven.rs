@@ -408,6 +408,205 @@ fn writer_zoekpaneel_sluiten_behoudt_de_werkelijke_editorfocus() {
     assert_eq!(p.app.tab().unwrap().editor.text(), "Links 🏠 !café rechts");
 }
 #[test]
+fn writer_zoeksluitklik_behoudt_de_bevestigde_paginacursor() {
+    use iced::keyboard::{Key, Modifiers};
+    use zoeken_ui::Bericht as Z;
+    let mut p = writer_paginaproef();
+    let origineel = p.bron();
+    p.bericht(Msg::Zoeken(Z::Open(false)));
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    p.klik(punt);
+    assert_eq!(
+        lint::tekenoffset(
+            &p.app.tab().unwrap().editor,
+            p.app.tab().unwrap().editor.cursor().position
+        ),
+        8
+    );
+    let knop = p
+        .toegankelijkheid()
+        .nodes
+        .into_iter()
+        .find(|n| n.node.name == "Zoekpaneel sluiten")
+        .unwrap()
+        .bounds;
+    p.klik(iced::Point::new(
+        knop.x + knop.width * 0.5,
+        knop.y + knop.height * 0.5,
+    ));
+    assert!(p.app.zoeken.is_none());
+    assert!(
+        p.app
+            .tab()
+            .unwrap()
+            .writer_focus
+            .load(std::sync::atomic::Ordering::Relaxed)
+    );
+    p.toets(Key::Character("!".into()), Modifiers::empty(), Some("!"));
+    assert!(!p.app.tab().unwrap().concept);
+    assert_eq!(p.app.tab().unwrap().editor.text(), "Links 🏠 !café rechts");
+    assert_ne!(*p.bron(), *origineel);
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *origineel);
+}
+#[test]
+fn writer_zoeksluitklik_en_directe_toets_in_dezelfde_widgetronde() {
+    use zoeken_ui::Bericht as Z;
+    let mut p = writer_paginaproef();
+    let origineel = p.bron();
+    p.bericht(Msg::Zoeken(Z::Open(false)));
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    p.klik(punt);
+    linttoets_in_dezelfde_ronde(
+        &mut p,
+        "Zoekpaneel sluiten",
+        openaec_ui::design::a11y::Role::Button,
+    );
+    assert!(p.app.zoeken.is_none());
+    assert!(!p.app.tab().unwrap().concept);
+    assert_eq!(p.app.tab().unwrap().editor.text(), "Links 🏠 9café rechts");
+    assert_ne!(*p.bron(), *origineel);
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *origineel);
+}
+#[test]
+fn writer_zoekopenfocus_laat_een_later_gekozen_paginacursor_werken() {
+    use iced::keyboard::{Key, Modifiers};
+    use zoeken_ui::Bericht as Z;
+    let mut p = writer_paginaproef();
+    let origineel = p.bron();
+    let laat = p.app.update(Msg::Zoeken(Z::Open(false)));
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    p.klik(punt);
+    assert_eq!(
+        lint::tekenoffset(
+            &p.app.tab().unwrap().editor,
+            p.app.tab().unwrap().editor.cursor().position
+        ),
+        8
+    );
+    p.taak(laat);
+    p.toets(Key::Character("9".into()), Modifiers::empty(), Some("9"));
+    assert_eq!(p.app.tab().unwrap().editor.text(), "Links 🏠 9café rechts");
+    assert!(!p.app.tab().unwrap().concept);
+    assert_ne!(*p.bron(), *origineel);
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *origineel);
+}
+#[test]
+fn writer_zoekopenfocus_normale_opening_typen_en_kopieren_blijven_werken() {
+    use iced::keyboard::{Key, Modifiers};
+    use zoeken_ui::Bericht as Z;
+    for vanaf_pagina in [false, true] {
+        let mut p = writer_paginaproef();
+        if vanaf_pagina {
+            let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+            p.klik(punt);
+        }
+        let origineel = p.bron();
+        p.bericht(Msg::Zoeken(Z::Open(false)));
+        p.toets(Key::Character("9".into()), Modifiers::empty(), Some("9"));
+        p.selecteer_alles();
+        p.toets(Key::Character("c".into()), Modifiers::COMMAND, None);
+        assert_eq!(p.klembord.tekst.as_deref(), Some("9"));
+        assert_eq!(*p.bron(), *origineel);
+        assert!(!p.app.tab().unwrap().concept);
+    }
+}
+#[test]
+fn writer_zoekopenfocus_laat_een_later_lettertypeveld_werken() {
+    use iced::keyboard::{Key, Modifiers};
+    use zoeken_ui::Bericht as Z;
+    let mut p = writer_paginaproef();
+    let origineel = p.bron();
+    let laat = p.app.update(Msg::Zoeken(Z::Open(false)));
+    let veld = p
+        .toegankelijkheid()
+        .nodes
+        .into_iter()
+        .find(|n| {
+            n.node.name == "Lettertype" && n.node.role == openaec_ui::design::a11y::Role::TextField
+        })
+        .unwrap()
+        .bounds;
+    p.klik(iced::Point::new(
+        veld.x + veld.width * 0.5,
+        veld.y + veld.height * 0.5,
+    ));
+    let oud = p.app.tab().unwrap().lettertype.clone();
+    p.taak(laat);
+    p.toets(Key::Character("9".into()), Modifiers::empty(), Some("9"));
+    assert_ne!(p.app.tab().unwrap().lettertype, oud);
+    assert!(p.app.tab().unwrap().lettertype.contains('9'));
+    assert_eq!(*p.bron(), *origineel);
+}
+#[test]
+fn writer_zoekopenfocus_laat_een_nieuwe_cursor_in_dezelfde_alinea_werken() {
+    use iced::keyboard::{Key, Modifiers};
+    use zoeken_ui::Bericht as Z;
+    let mut p = writer_paginaproef();
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 2);
+    p.klik(punt);
+    let origineel = p.bron();
+    let versie = p.app.tab().unwrap().editerversie;
+    let alinea = p.app.tab().unwrap().veld().unwrap().id.clone();
+    let laat = p.app.update(Msg::Zoeken(Z::Open(false)));
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    p.klik(punt);
+    // Ook een klik binnen dezelfde alinea vernieuwt de editor. De alinea
+    // blijft gelijk en de nieuwe cursor moet vóór de oude focusvraag winnen.
+    assert_eq!(p.app.tab().unwrap().editerversie, versie.wrapping_add(1));
+    assert_eq!(p.app.tab().unwrap().veld().unwrap().id, alinea);
+    assert_eq!(
+        lint::tekenoffset(
+            &p.app.tab().unwrap().editor,
+            p.app.tab().unwrap().editor.cursor().position
+        ),
+        8
+    );
+    p.taak(laat);
+    p.toets(Key::Character("9".into()), Modifiers::empty(), Some("9"));
+    assert_eq!(p.app.tab().unwrap().editor.text(), "Links 🏠 9café rechts");
+    assert!(!p.app.tab().unwrap().concept);
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *origineel);
+}
+#[test]
+fn writer_zoekopenfocus_gesloten_paneel_raakt_een_nieuw_paneel_niet() {
+    use iced::keyboard::{Key, Modifiers};
+    use zoeken_ui::Bericht as Z;
+    let mut p = writer_paginaproef();
+    let origineel = p.bron();
+    let laat = p.app.update(Msg::Zoeken(Z::Open(false)));
+    p.bericht(Msg::Zoeken(Z::Sluit));
+    p.bericht(Msg::Zoeken(Z::Open(false)));
+    // Een latere focusvraag kan ook uit een werkdraad komen, zonder muisgebeurtenis.
+    p.taak(iced::widget::operation::focus("document-tekst-editor"));
+    p.taak(laat);
+    p.toets(Key::Character("9".into()), Modifiers::empty(), Some("9"));
+    assert!(p.app.tab().unwrap().concept);
+    assert!(p.app.tab().unwrap().editor.text().contains('9'));
+    assert_eq!(*p.bron(), *origineel);
+}
+#[test]
+fn writer_zoekopenfocus_van_ander_document_raakt_de_huidige_editor_niet() {
+    use iced::keyboard::{Key, Modifiers};
+    use zoeken_ui::Bericht as Z;
+    let mut p = writer_paginaproef();
+    let oud = p.app.tab().unwrap().id;
+    let laat = p.app.update(Msg::Zoeken(Z::Open(false)));
+    p.bericht(Msg::Nieuw(Module::Writer));
+    assert_ne!(p.app.tab().unwrap().id, oud);
+    p.bericht(Msg::Zoeken(Z::Open(false)));
+    let origineel = p.bron();
+    p.taak(iced::widget::operation::focus("document-tekst-editor"));
+    p.taak(laat);
+    p.toets(Key::Character("9".into()), Modifiers::empty(), Some("9"));
+    assert!(p.app.tab().unwrap().concept);
+    assert!(p.app.tab().unwrap().editor.text().contains('9'));
+    assert_eq!(*p.bron(), *origineel);
+}
+#[test]
 fn writer_pagina_opmaak_sneltoets_bewaart_cursor_en_onderbreekt_invoerundo() {
     use text_editor::{Action as A, Edit as E};
     use writer_direct::Bericht as B;

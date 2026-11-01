@@ -2,6 +2,7 @@
 //! Volledig native venster: geen browser, React, JavaScript of Tauri-runtime.
 mod documentblad;
 mod export_ui;
+mod invoerfocus;
 mod klembord;
 mod lettertypen_ui;
 mod lineaal;
@@ -329,6 +330,7 @@ enum LintSoort {
     Weergave,
 }
 struct App {
+    invoergeneratie: invoerfocus::Generatie,
     zoeken: Option<zoeken_ui::Zoekpaneel>,
     exportblad: Option<export_ui::Exportblad>,
     export_bezig: bool,
@@ -354,6 +356,7 @@ impl Default for App {
         let pad = display::settings_path("open-office-studio-native");
         let display = pad.as_ref().map(|p| Display::load(p)).unwrap_or_default();
         Self {
+            invoergeneratie: Default::default(),
             zoeken: None,
             exportblad: None,
             export_bezig: false,
@@ -1980,7 +1983,10 @@ impl App {
                 .into(),
             );
         }
-        iced::widget::Stack::with_children(lagen).into()
+        invoerfocus::volg(
+            iced::widget::Stack::with_children(lagen),
+            self.invoergeneratie.clone(),
+        )
     }
     fn ribbon(&self) -> Element<'_, Msg> {
         if let Some(lint) = lint::ribbon(self) {
