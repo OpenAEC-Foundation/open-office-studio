@@ -9,9 +9,11 @@ mod lint;
 mod mail_ui;
 mod notitie_ui;
 mod pagina_ui;
+mod raster_focus;
 mod raster_invoer;
 mod raster_koppen;
 mod raster_navigatie;
+mod raster_toetsen;
 mod raster_ui;
 mod sleepvak;
 mod stijl;
@@ -1270,6 +1272,9 @@ impl App {
                         .store(false, std::sync::atomic::Ordering::Relaxed);
                     t.writer_direct.verlaat();
                     let bewerkt = actie.is_edit();
+                    if bewerkt && t.raster.bewerken {
+                        t.raster.tekstversie = t.raster.tekstversie.wrapping_add(1);
+                    }
                     let selectie = !bewerkt && !matches!(actie, text_editor::Action::Scroll { .. });
                     if let Err(e) = writer_invoer::voer_uit(t, actie) {
                         return self.waarschuwing(&e);

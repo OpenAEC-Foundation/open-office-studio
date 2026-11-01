@@ -68,7 +68,8 @@ impl raster_ui::Staat {
                         | B::OpmaakToets(_)
                         | B::Wis
                         | B::Klembord(klembord::Actie::Knip | klembord::Actie::Plak)
-                ) || matches!(&w.bericht, B::Invoer(a) | B::ZijInvoer(a) if a.is_edit())
+                ) || matches!(&w.bericht,B::Toets(k) if raster_toetsen::wijzigt_invoer(k))
+                    || matches!(&w.bericht, B::Invoer(a) | B::ZijInvoer(a) if a.is_edit())
             })
     }
 }
@@ -86,6 +87,7 @@ fn wachtend(t: &Tab, bericht: B) -> Wachtend {
     // toetsen worden juist pas tegen de dan actuele cel uitgevoerd.
     let absoluut = matches!(bericht, B::Kies(_) | B::BreidUit(_) | B::Begin { .. });
     let bytes = match &bericht {
+        B::Toets(k) => k.text.as_ref().map_or(0, |s| s.len()),
         B::Typ(s)
         | B::Begin {
             vervang: Some(s), ..
@@ -228,8 +230,29 @@ pub fn vervolg(app: &mut App) -> Task<Msg> {
     }
     Task::batch(taken)
 }
-fn voer_uit(app: &mut App, bericht: B) -> Task<Msg> {
+pub(super) fn voer_uit(app: &mut App, bericht: B) -> Task<Msg> {
     match bericht {
+        B::Toets(k) => raster_toetsen::voer_uit(app, k),
+        B::MuisInvoer {
+            document,
+            cel,
+            editerversie,
+            tekstversie,
+            actie,
+        } => {
+            if app.tab().is_some_and(|t| {
+                t.id == document
+                    && t.editerversie == editerversie
+                    && t.raster.tekstversie == tekstversie
+                    && t.raster.bewerken
+                    && t.veld().is_some_and(|v| v.id == cel)
+            }) {
+                raster_ui::voer_uit(app, B::Invoer(actie))
+            } else {
+                Task::none()
+            }
+        }
+
         B::ZijInvoer(a) => app.update(Msg::Invoer(a)),
         B::PasToe => app.update(Msg::PasToe),
         B::Invoer(a) if !app.tab().unwrap().raster.bewerken => {
@@ -296,9 +319,9 @@ fn voer_uit(app: &mut App, bericht: B) -> Task<Msg> {
         B::Opmaak(o) => {
             let t = app.tab_mut().unwrap();
             if t.concept {
-                let w = wachtend(t, B::Opmaak(o));
-                t.raster.wachtend.push_front(w);
-                app.update(Msg::PasToe)
+                app.waarschuwing(
+                    "Bevestig de celinvoer voordat je de hele cel opmaakt; de invoer is behouden",
+                )
             } else {
                 app.update(Msg::Opmaak(o))
             }

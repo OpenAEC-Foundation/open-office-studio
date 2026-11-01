@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.27**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.28**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -82,7 +82,7 @@ selectie bedienen de huidige opmaakopdrachten de hele alinea. Directe pagina-inv
 
 Het compacte lint heeft nu tekstklembordknoppen en letterstappen. Kopiëren,
 Knippen en Plakken gebruiken uitsluitend platte tekst in de actieve editor;
-rijke inhoud en celbereiken zijn nog niet overgezet. Vertraagde plakantwoorden
+rijke inhoud is nog niet overgezet. Spreadsheet heeft afzonderlijk platte celbereiken, gezamenlijk plakken en wissen; formuleverschuiving en bereik verplaatsen blijven open. Vertraagde plakantwoorden
 mogen geen gewijzigd doel bewerken. Ook snel opeenvolgende selectie- en
 klembordtoetsen worden in de volgorde van de applicatieberichten verwerkt;
 knippen mag geen tekst verwijderen voordat de selectie is gekopieerd.
@@ -279,9 +279,10 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
-Het [controlerapport voor alpha 27](docs/controle-2026-11-01-alpha27.md) legt **307 reguliere Rust-tests**, inclusief **102 tests in de UI-crate**, zes runtimeproeven en zeven Python-tests vast. Rustfmt, Clippy met waarschuwingen als fouten, gepinde bronhashcontroles en onafhankelijke bestands-/conversielezers slagen. **49 native widgetbeelden** en een manifest met **612 bronbestanden** zijn vastgelegd. De [klembord- en invoerproeven](docs/spreadsheet-klembord-2026-11-01-alpha27.json) controleren geordende inline-toetsen, platte blokinvoer, beschermingsgrenzen, bronexacte undo/redo, asynchrone bewaarsnapshots, tabwissel, modaliteit, ongeldige invoer en hersteltekst. De volledige suite blijft open.
+Het [controlerapport voor alpha 28](docs/controle-2026-11-01-alpha28.md) legt **314 reguliere Rust-tests**, inclusief **109 UI-tests**, zes runtimeproeven en zeven Python-tests vast. Rustfmt, Clippy met waarschuwingen als fouten, gepinde bronhashcontroles en onafhankelijke lezers slagen. **49 native widgetbeelden** en **615 bronbestanden** zijn vastgelegd. [Zeven nieuwe toetsen-/focusproeven](docs/spreadsheet-toetsen-2026-11-01-alpha28.json) controleren snelle invoer, Unicode/AltGr, late cursor-/focusacties en verder typen na bewaren. De [testbundeling](docs/testbundeling-2026-11-01-alpha28.json) behoudt alle bestaande tests en beelden met dezelfde afhankelijkheden/features. De volledige suite blijft open.
 
-De alpha-27-releasebouw, platformronde en echte releasevensterproef zijn nog niet afgerond.
+De alpha-28-releasebouw, platformronde en echte releasevensterproef zijn nog niet afgerond.
+De [lokale alpha-27-releasebouw](docs/bouw-2026-11-01-alpha27-lokaal.json) slaagt in 31m12s, inclusief pakket-/broncontrole en beide programma’s vastgezet. De [echte CI-Linux-releasevensterproef](docs/vensterproef-2026-11-01-alpha27-ci/LEESMIJ.md) slaagt op achttien gerichte stappen: directe plak/Enter/bewaren, opeenvolgende celinvoer, bronexacte undo, Bestand zonder documentlint en Unicode na heropenen. De eerdere onvoldoende Bestand-controle blijft afzonderlijk afgekeurd. De [volledige alpha-27-platformronde](docs/platformen-2026-11-01-alpha27.json) slaagt op vijf taken met 1297 bytegelijke bronbestanden per pakket, 98 volledige native beeldparen en 21 releasepaginabezoeken.
 De [lokale alpha-26-releasebouw](docs/bouw-2026-11-01-alpha26-lokaal.json) slaagt in 29m56s met pakketcontrole, bronregressie en beide programma’s vastgezet. De [platformronde](docs/platformen-2026-11-01-alpha26.json) slaagt op vijf taken: 1240 bytegelijke bronbestanden per pakket, 94 volledige native beeldparen zonder tolerantie en 21 releasepaginabezoeken. De [echte lokale vensterproef](docs/vensterproef-2026-11-01-alpha26-lokaal/LEESMIJ.md) slaagt op veertien gerichte stappen; de voorafgaande scriptfout blijft afgekeurd.
 De [lokale alpha-25-releasebouw](docs/bouw-2026-11-01-alpha25-lokaal.json) slaagt in 28m03s, inclusief pakketcontrole en bronregressie; beide programma’s zijn vastgezet. De [echte CI-Linux-vensterproef](docs/vensterproef-2026-11-01-alpha25-ci/LEESMIJ.md) slaagt op twaalf gerichte stappen. Het huisteken is zichtbaar in het raster, ook na opslaan, sluiten en opnieuw openen. De [volledige alpha-25-platformronde](docs/platformen-2026-10-31-alpha25.json) slaagt op vijf taken met 1199 bronbestanden per pakket, 92 volledige native beeldparen zonder tolerantie en 21 releasepaginabezoeken. De [alpha-24-releasebouw](docs/bouw-2026-10-31-alpha24-lokaal.json) slaagt in 29m50s; beide programma’s zijn vastgezet en pakket-/broncontroles slagen. De [echte beschermingsproef](docs/vensterproef-2026-10-31-alpha24-release/LEESMIJ.md) slaagt na afgeronde navigatie, met eerdere mislukkingen en de snelle sleepsessie nog open. De [volledige alpha-24-platformronde](docs/platformen-2026-10-31-alpha24.json) slaagt op vijf taken met 1145 bronbestanden per pakket, 90 volledige native beeldparen en 21 paginabezoeken. De echte alpha-23-vensterproef met het ontbrekende huisteken blijft historisch visueel afgekeurd; de aparte alpha-25-releasevensterproef corrigeert en controleert dat concrete geval.
 

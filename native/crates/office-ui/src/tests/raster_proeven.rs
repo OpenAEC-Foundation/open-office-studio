@@ -2816,3 +2816,246 @@ fn raster_f2_en_selecteer_alles_in_dezelfde_oude_widget_overschrijven_de_cel() {
     p.bericht(Msg::Terug);
     assert_eq!(*p.bron(), *bron);
 }
+
+fn rastertoets_met_modifiers(
+    key: iced::keyboard::Key,
+    modifiers: iced::keyboard::Modifiers,
+    tekst: Option<&str>,
+) -> iced::Event {
+    let mut e = ruwe_rastertoets(key, tekst);
+    if let iced::Event::Keyboard(iced::keyboard::Event::KeyPressed { modifiers: m, .. }) = &mut e {
+        *m = modifiers;
+    }
+    e
+}
+#[test]
+fn raster_vervolg_toetsen_geven_hetzelfde_resultaat_voor_en_na_editorfocus() {
+    use iced::keyboard::{Key, Modifiers as M, key::Named as N};
+    let mut s = Sessie::open(
+        Module::Spreadsheet,
+        include_bytes!("../../../office-core/tests/fixtures/spreadsheet.xlsx").to_vec(),
+    )
+    .unwrap();
+    s.bewerk(
+        0,
+        Bewerking::Tekst {
+            id: "B2".into(),
+            tekst: "één twee 🏠".into(),
+        },
+    )
+    .unwrap();
+    let bron = s.bron();
+    let mut normaal = Vec::new();
+    let mut oud = Vec::new();
+    for (key, m) in [
+        (N::Home, M::empty()),
+        (N::End, M::empty()),
+        (N::ArrowLeft, M::COMMAND),
+        (N::ArrowRight, M::COMMAND),
+        (N::Home, M::SHIFT),
+        (N::End, M::SHIFT),
+        (N::ArrowLeft, M::COMMAND | M::SHIFT),
+        (N::Enter, M::ALT),
+    ] {
+        for snel in [false, true] {
+            let mut p = Proef::met_app(app_met_werkdraad(Module::Spreadsheet, bron.as_slice()));
+            p.cel("B2", false);
+            if snel {
+                p.gebeurtenissen([
+                    ruwe_rastertoets(Key::Named(N::F2), None),
+                    rastertoets_met_modifiers(Key::Named(key), m, None),
+                    ruwe_rastertoets(Key::Character("7".into()), Some("7")),
+                    ruwe_rastertoets(Key::Named(N::Enter), None),
+                ]);
+            } else {
+                p.named(N::F2);
+                p.toets(Key::Named(key), m, None);
+                p.toets(Key::Character("7".into()), M::empty(), Some("7"));
+                p.named(N::Enter);
+            }
+            let tekst = p
+                .app
+                .tab()
+                .unwrap()
+                .antwoord
+                .as_ref()
+                .unwrap()
+                .beeld
+                .velden
+                .iter()
+                .find(|v| v.id == "B2")
+                .unwrap()
+                .tekst
+                .clone();
+            if snel {
+                oud.push(tekst);
+            } else {
+                normaal.push(tekst);
+            }
+        }
+    }
+    assert_eq!(normaal[0], "7één twee 🏠");
+    assert_eq!(normaal[1], "één twee 🏠7");
+    assert_eq!(normaal[4], "7");
+    assert_eq!(normaal[7], "één twee 🏠\n7");
+    assert_eq!(oud, normaal);
+}
+#[test]
+fn raster_vervolg_opmaak_tijdens_een_concept_verliest_geen_typtekst() {
+    use iced::keyboard::{Key, Modifiers as M, key::Named as N};
+    let mut p = Proef::nieuw();
+    p.cel("B2", false);
+    let bron = p.bron();
+    p.gebeurtenissen([
+        ruwe_rastertoets(Key::Character("7".into()), Some("7")),
+        rastertoets_met_modifiers(Key::Character("b".into()), M::COMMAND, None),
+        ruwe_rastertoets(Key::Character("8".into()), Some("8")),
+        ruwe_rastertoets(Key::Named(N::Enter), None),
+    ]);
+    let t = p.app.tab().unwrap();
+    assert_eq!(
+        t.antwoord
+            .as_ref()
+            .unwrap()
+            .beeld
+            .velden
+            .iter()
+            .find(|v| v.id == "B2")
+            .unwrap()
+            .tekst,
+        "78"
+    );
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *bron);
+}
+#[test]
+fn raster_vervolg_typen_na_direct_bewaren_heeft_echte_rasterfocus() {
+    use iced::keyboard::{Key, Modifiers as M, key::Named as N};
+    let mut p = Proef::nieuw();
+    p.cel("B2", false);
+    p.named(N::F2);
+    p.klembord.tekst = Some("7".into());
+    let pad = std::env::temp_dir().join(format!(
+        "office-raster-focus-{}-{}.xlsx",
+        std::process::id(),
+        std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap()
+            .as_nanos()
+    ));
+    std::fs::write(&pad, p.bron().as_slice()).unwrap();
+    let id = p.app.tab().unwrap().id;
+    {
+        let t = p.app.tab_mut().unwrap();
+        t.pad = Some(pad.clone());
+        t.verwacht = Some(t.antwoord.as_ref().unwrap().hash.clone());
+    }
+    let taken = vec![
+        p.app.update(Msg::Klembord(klembord::Actie::Plak)),
+        p.app.update(Msg::Raster(raster_ui::Bericht::Voltooi(
+            office_core::rekenblad::Richting::Onder,
+        ))),
+        p.app.update(Msg::Opslaan(id, false)),
+    ];
+    for taak in taken {
+        p.taak(taak);
+    }
+    assert_eq!(p.app.tab().unwrap().adres, "B3");
+    // Gewone tekentoets na het bewaren, zonder extra klik of focusopdracht.
+    p.toets(Key::Character("8".into()), M::empty(), Some("8"));
+    assert_eq!(p.app.tab().unwrap().editor.text(), "8");
+    assert!(p.app.tab().unwrap().raster.bewerken && p.app.tab().unwrap().concept);
+    p.named(N::Escape);
+    std::fs::remove_file(pad).unwrap();
+}
+
+#[test]
+fn raster_aanvullend_meerdere_unicode_tekens_en_altgr_blijven_in_een_oude_widget_behouden() {
+    use iced::keyboard::{Key, Modifiers as M, key::Named as N};
+    let mut p = Proef::nieuw();
+    p.cel("B2", false);
+    let bron = p.bron();
+    p.gebeurtenissen([
+        ruwe_rastertoets(Key::Named(N::F2), None),
+        rastertoets_met_modifiers(Key::Character("a".into()), M::COMMAND, None),
+        ruwe_rastertoets(Key::Character("o\u{308}".into()), Some("o\u{308}")),
+        rastertoets_met_modifiers(Key::Character("e".into()), M::CTRL | M::ALT, Some("€")),
+        ruwe_rastertoets(Key::Named(N::Enter), None),
+    ]);
+    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
+        .unwrap()
+        .weergave(0)
+        .unwrap();
+    assert_eq!(
+        b.velden.iter().find(|v| v.id == "B2").unwrap().tekst,
+        "o\u{308}€"
+    );
+    p.bericht(Msg::Terug);
+    assert_eq!(*p.bron(), *bron);
+}
+
+#[test]
+fn raster_aanvullend_reeds_gevalideerde_focus_steelt_geen_later_adresveld() {
+    use iced::keyboard::{Key, Modifiers as M};
+    let mut p = Proef::nieuw();
+    p.cel("B2", false);
+    let t = p.app.tab().unwrap();
+    let laat = raster_focus::focus(t.id, t.editerversie, false);
+    let bron = p.bron();
+    let b = p
+        .toegankelijkheid()
+        .nodes
+        .into_iter()
+        .find(|n| n.node.name == "Cel of bereik")
+        .unwrap()
+        .bounds;
+    p.klik(iced::Point::new(b.x + b.width / 2., b.y + b.height / 2.));
+    p.selecteer_alles();
+    p.toets(Key::Character("9".into()), M::empty(), Some("9"));
+    assert_eq!(p.app.tab().unwrap().adres, "9");
+    p.taak(laat);
+    p.toets(Key::Character("8".into()), M::empty(), Some("8"));
+    assert_eq!(p.app.tab().unwrap().adres, "98");
+    assert!(!p.app.tab().unwrap().raster.bewerken);
+    assert_eq!(*p.bron(), *bron);
+}
+
+#[test]
+fn raster_aanvullend_focus_op_een_verdwenen_doel_laat_de_nieuwe_editor_werken() {
+    use iced::keyboard::{Key, Modifiers as M, key::Named as N};
+    let mut p = Proef::nieuw();
+    p.cel("B2", false);
+    let t = p.app.tab().unwrap();
+    let laat = raster_focus::focus(t.id, t.editerversie, false);
+    p.toets(Key::Character("7".into()), M::empty(), Some("7"));
+    assert!(p.app.tab().unwrap().raster.bewerken);
+    p.taak(laat);
+    p.toets(Key::Character("8".into()), M::empty(), Some("8"));
+    assert_eq!(p.app.tab().unwrap().editor.text(), "78");
+    p.named(N::Escape);
+}
+
+#[test]
+fn raster_aanvullend_een_oude_inline_cursoractie_verplaatst_geen_nieuwe_invoer() {
+    use iced::keyboard::{Key, Modifiers as M, key::Named as N};
+    let mut p = Proef::nieuw();
+    p.cel("B2", false);
+    p.named(N::F2);
+    let t = p.app.tab().unwrap();
+    let laat = Msg::Raster(raster_ui::Bericht::MuisInvoer {
+        document: t.id,
+        cel: t.adres.clone(),
+        editerversie: t.editerversie,
+        tekstversie: t.raster.tekstversie,
+        actie: text_editor::Action::Move(text_editor::Motion::DocumentStart),
+    });
+    p.named(N::Enter);
+    p.toets(Key::Character("7".into()), M::empty(), Some("7"));
+    let cursor = p.app.tab().unwrap().editor.cursor();
+    p.bericht(laat);
+    assert_eq!(p.app.tab().unwrap().editor.cursor(), cursor);
+    p.toets(Key::Character("8".into()), M::empty(), Some("8"));
+    assert_eq!(p.app.tab().unwrap().adres, "B3");
+    assert_eq!(p.app.tab().unwrap().editor.text(), "78");
+    p.named(N::Escape);
+}

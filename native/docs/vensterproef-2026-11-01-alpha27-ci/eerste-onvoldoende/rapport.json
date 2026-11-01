@@ -1,0 +1,107 @@
+{
+  "versie": "Open Office Studio 2026.44.9-alpha.27 (native)",
+  "programma_sha256": "ea811ce1086df698a9ef3a285a9fa1346b59e2a64b9ce8084a9653999759a832",
+  "broncommit": "5c047de84dc8cd4458bd5634d15129c934dd7574",
+  "proefbron_sha256": "72a0cc6c6d3f990a6ca99892e0498c0216c9f8d4c11a749717e6c28c700e0bec",
+  "geslaagd": false,
+  "omvang": "Echt native Linux-venster, X11-muis/toetsen en systeemklembord, in eigen Xvfb en vooraf geïsoleerde sessie-D-Bus/XDG-profielen. Geen fysieke hardware, andere platforms, volledige suite, IME-compositie of systeemdialoog.",
+  "stappen": [
+    {
+      "stap": "Eigen XLSX geopend in het echte native venster",
+      "beeld": {
+        "bestand": "spreadsheet-open.png",
+        "sha256": "173dc5a07e9f905a8c263d5da5312907618210ee058a6f14e25077d66e9b6909"
+      }
+    },
+    {
+      "stap": "Echte muissleep selecteert B2:D4; adresveld via systeemklembord bevestigd",
+      "beeld": {
+        "bestand": "spreadsheet-bereik.png",
+        "sha256": "06976a998937e7d76ca0603201bb91b6839e3e1eeb6303c1e72ba1c8fde0faf1"
+      }
+    },
+    {
+      "stap": "Lintopmaak en bewaren: alle negen cellen vet, oorspronkelijke formules behouden",
+      "beeld": {
+        "bestand": "spreadsheet-bereik-opmaak.png",
+        "sha256": "1ecab9f423206fc0ac646216f2938c8b77be3e23e52debdc8e5a9f2fbd5a514d"
+      }
+    },
+    {
+      "stap": "Snelle Shift-pijlen, Shift-klik en extra uitbreiding bewaren het oorspronkelijke anker D4"
+    },
+    {
+      "stap": "Bereikopmaak met één undo bronexact hersteld"
+    },
+    {
+      "stap": "Ctrl+C, klik F2, Ctrl+V en één Ctrl+S zonder kunstmatige tussenpauzes: drie bij drie platte waarden bewaard; bereik F2:H4",
+      "beeld": {
+        "bestand": "spreadsheet-klembord.png",
+        "sha256": "446321537afe8c54fdae8c11cfdc242557a40da99e0fd2a3b64b7417897b0856"
+      }
+    },
+    {
+      "stap": "Blokplakken met één undo en één directe bewaaropdracht bronexact hersteld"
+    },
+    {
+      "stap": "Snelle Down/78/Enter zonder onderlinge pauzes bereikt B4; na bewaren B2=3 en B3=78",
+      "beeld": {
+        "bestand": "spreadsheet-snelle-invoer.png",
+        "sha256": "c561adc97a3aeafd73a22ab1c707403a07b294650a57948eb165013f636e5a86"
+      }
+    },
+    {
+      "stap": "Snelle celinvoer met één undo bronexact hersteld"
+    },
+    {
+      "stap": "F2/selecteren/7/Enter/8/Enter en één Ctrl+S zonder kunstmatige tussenpauzes bewaart beide cellen en bereikt B4",
+      "beeld": {
+        "bestand": "spreadsheet-opeenvolgende-invoer.png",
+        "sha256": "e514723276c2f4b68dc3b05680c9e2842c3f3b024964aa804d51e7c388e9bd90"
+      }
+    },
+    {
+      "stap": "Twee celbewerkingen met twee directe undo-opdrachten en één bewaren bronexact hersteld"
+    },
+    {
+      "stap": "Unicode-systeemklembord in G10 met directe Ctrl+V/Enter en één Ctrl+S zonder tussenpauzes; geen extra bewaren; XML-waarde klopt",
+      "beeld": {
+        "bestand": "spreadsheet-unicode.png",
+        "sha256": "c1d93c8b8ea9381cb998d7ed82b4a8d713a0d8373a787870e59f4eed716afa4b"
+      }
+    },
+    {
+      "stap": "Celbewerking met één undo bronexact hersteld"
+    },
+    {
+      "stap": "Bestand geopend en gesloten met behoud van de oorspronkelijke bron"
+    },
+    {
+      "stap": "Eigen venster schoon gesloten",
+      "procescode": 0
+    },
+    {
+      "stap": "Bewaarde Unicode-bron opnieuw in een nieuw echt venster geopend",
+      "bron_sha256": "e6e8ceb7bcaa2a795605877e67dfe0e9a15824acf29518249d720aaecf20a866",
+      "beeld": {
+        "bestand": "spreadsheet-unicode-heropend.png",
+        "sha256": "5004862c1094e78eadddb458b3331858d1c0ef3713039026fb742cfc08ae0b06"
+      }
+    },
+    {
+      "stap": "Heropende cel via F2 en systeemklembord exact gecontroleerd, Escape behoudt bron",
+      "beeld": {
+        "bestand": "spreadsheet-unicode-heropend-gecontroleerd.png",
+        "sha256": "cf36ce050697a9f229457c9ccd9dc4d6a23045a3c593a18a6cd2f418a28ae66a"
+      }
+    },
+    {
+      "stap": "Ook het heropende eigen venster schoon gesloten",
+      "procescode": 0
+    }
+  ],
+  "functionele_stappen_geslaagd": false,
+  "visuele_controle_geslaagd": false,
+  "reden": "De automatische proef bewees alleen klikken en bronbehoud bij Bestand. De vastgelegde schermafbeelding toont nog het documentlint en raster, dus werkelijke opening was niet aangetoond. De oorspronkelijke automatische uitvoer blijft ongewijzigd. Geen vastgestelde productoorzaak of volledige afkeuring van de overige zeventien stappen.",
+  "aanpassing": "De tweede volledige ronde behoudt alle achttien stappen en voegt uitsluitend observerend wachten op de werkelijke schermwisseling toe, zonder extra klik of versoepeling van een pixelvergelijking."
+}

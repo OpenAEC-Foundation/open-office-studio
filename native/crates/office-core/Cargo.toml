@@ -1,4 +1,5 @@
 [package]
+autotests = false
 name = "office-core"
 version.workspace = true
 edition.workspace = true
@@ -11,6 +12,10 @@ description = "Gedeelde native documentkern van Open Office Studio"
 [[test]]
 name = "engine_velden"
 path = "../../vendor/docx-parse/tests/nested_fields.rs"
+
+[[test]]
+name = "documentkern"
+path = "tests/documentkern.rs"
 
 [dependencies]
 serde.workspace = true

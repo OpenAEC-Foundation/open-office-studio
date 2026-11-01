@@ -1,0 +1,11 @@
+# Echte Spreadsheet-vensterproef alpha 27
+
+Het vastgezette **CI-Linux-programma 2026.44.9-alpha.27** slaagt op achttien gerichte stappen in een eigen Xvfb-/D-Bus-sessie. XDG-configuratie, gegevens, cache en runtime zijn vóór de sessiebus geïsoleerd. [herkomst.json](herkomst.json) koppelt de broncommit, beide versies en programmahashes. Dit zijn de CI-programma’s; de lokale build heeft eigen hashes.
+
+Echte muis- en toetseninvoer controleren bereikselectie, ankerbehoud, opmaak, herberekening, bewaren en bronexacte undo. **Kopiëren, klik op F2, plakken en één bewaren** worden zonder kunstmatige tussenpauzes aangeboden. Het drie-bij-drieblok staat op F2:H4. Ook **F2/selecteren/7/Enter/8/Enter en één bewaren** houdt beide cellen en bestemming B4 vast. Twee undo-opdrachten en één bewaren herstellen de bronbytes. Unicode via het systeemklembord volgt direct met Enter en één bewaren; de proef observeert het bestand zonder aanvullende bewaaropdrachten. De andere oudere controles vermelden hun afzonderlijke wacht-/bewaarstappen in het [proefscript](proefbron.py).
+
+Een bewaarde Unicode-kopie opent in een nieuw werkelijk venster. F2, selecteren en het systeemklembord bevestigen de volledige celtekst. Escape behoudt de bron; beide eigen vensters sluiten met procescode nul. De vier in het [beoordeelde rapport](rapport.json) genoemde volledige beelden zijn bekeken: het huisteken staat na heropenen in G10, het platte blok staat op F2:H4 en de opeenvolgende invoer toont B2=7/B3=8 met B4 als bestemming. Het bestandsscherm toont de bestandsopdrachten zonder documentlint/raster. Dit is gerichte visuele goedkeuring.
+
+De [eerste onvoldoende controle](eerste-onvoldoende/rapport.json) blijft afgekeurd: het automatische rapport meldde succes, maar het Bestand-beeld toonde nog het raster. Klikken en bronbehoud alleen bewezen de opening niet. De oorspronkelijke automatische uitvoer, bron en beelden blijven bewaard. De tweede volledige ronde behoudt alle achttien stappen en wacht na één klik uitsluitend op de werkelijke schermwisseling; Escape moet het raster terugbrengen. Er is geen oorzaak aan het product toegeschreven zonder bewijs.
+
+Geen fysieke hardware, volledige suite-, Unicode- of pixelpariteit, Windows/macOS-bediening, echte IME-compositie, systeemdialoog of schermlezerproef.

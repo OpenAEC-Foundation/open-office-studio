@@ -1,0 +1,207 @@
+diff --git a/native/crates/office-core/Cargo.toml b/native/crates/office-core/Cargo.toml
+index 7b57511..d09c88e 100644
+--- a/native/crates/office-core/Cargo.toml
++++ b/native/crates/office-core/Cargo.toml
+@@ -1,4 +1,5 @@
+ [package]
++autotests = false
+ name = "office-core"
+ version.workspace = true
+ edition.workspace = true
+@@ -12,6 +13,10 @@ description = "Gedeelde native documentkern van Open Office Studio"
+ name = "engine_velden"
+ path = "../../vendor/docx-parse/tests/nested_fields.rs"
+ 
++[[test]]
++name = "documentkern"
++path = "tests/documentkern.rs"
++
+ [dependencies]
+ serde.workspace = true
+ serde_json.workspace = true
+diff --git a/native/crates/office-ui/src/tests/raster_proeven.rs b/native/crates/office-ui/src/tests/raster_proeven.rs
+index 4ebe18d..c9c4fd8 100644
+--- a/native/crates/office-ui/src/tests/raster_proeven.rs
++++ b/native/crates/office-ui/src/tests/raster_proeven.rs
+@@ -2816,3 +2816,152 @@ fn raster_f2_en_selecteer_alles_in_dezelfde_oude_widget_overschrijven_de_cel() {
+     p.bericht(Msg::Terug);
+     assert_eq!(*p.bron(), *bron);
+ }
++
++fn rastertoets_met_modifiers(
++    key: iced::keyboard::Key,
++    modifiers: iced::keyboard::Modifiers,
++    tekst: Option<&str>,
++) -> iced::Event {
++    let mut e = ruwe_rastertoets(key, tekst);
++    if let iced::Event::Keyboard(iced::keyboard::Event::KeyPressed { modifiers: m, .. }) = &mut e {
++        *m = modifiers;
++    }
++    e
++}
++#[test]
++fn raster_vervolg_toetsen_geven_hetzelfde_resultaat_voor_en_na_editorfocus() {
++    use iced::keyboard::{Key, Modifiers as M, key::Named as N};
++    let mut s = Sessie::open(
++        Module::Spreadsheet,
++        include_bytes!("../../../office-core/tests/fixtures/spreadsheet.xlsx").to_vec(),
++    )
++    .unwrap();
++    s.bewerk(
++        0,
++        Bewerking::Tekst {
++            id: "B2".into(),
++            tekst: "één twee 🏠".into(),
++        },
++    )
++    .unwrap();
++    let bron = s.bron();
++    let mut normaal = Vec::new();
++    let mut oud = Vec::new();
++    for (key, m) in [
++        (N::Home, M::empty()),
++        (N::End, M::empty()),
++        (N::ArrowLeft, M::COMMAND),
++        (N::ArrowRight, M::COMMAND),
++        (N::Home, M::SHIFT),
++        (N::End, M::SHIFT),
++        (N::ArrowLeft, M::COMMAND | M::SHIFT),
++        (N::Enter, M::ALT),
++    ] {
++        for snel in [false, true] {
++            let mut p = Proef::met_app(app_met_werkdraad(Module::Spreadsheet, bron.as_slice()));
++            p.cel("B2", false);
++            if snel {
++                p.gebeurtenissen([
++                    ruwe_rastertoets(Key::Named(N::F2), None),
++                    rastertoets_met_modifiers(Key::Named(key), m, None),
++                    ruwe_rastertoets(Key::Character("7".into()), Some("7")),
++                    ruwe_rastertoets(Key::Named(N::Enter), None),
++                ]);
++            } else {
++                p.named(N::F2);
++                p.toets(Key::Named(key), m, None);
++                p.toets(Key::Character("7".into()), M::empty(), Some("7"));
++                p.named(N::Enter);
++            }
++            let tekst = p
++                .app
++                .tab()
++                .unwrap()
++                .antwoord
++                .as_ref()
++                .unwrap()
++                .beeld
++                .velden
++                .iter()
++                .find(|v| v.id == "B2")
++                .unwrap()
++                .tekst
++                .clone();
++            if snel {
++                oud.push(tekst);
++            } else {
++                normaal.push(tekst);
++            }
++        }
++    }
++    assert_eq!(normaal[0], "7één twee 🏠");
++    assert_eq!(oud, normaal);
++}
++#[test]
++fn raster_vervolg_opmaak_tijdens_een_concept_verliest_geen_typtekst() {
++    use iced::keyboard::{Key, Modifiers as M, key::Named as N};
++    let mut p = Proef::nieuw();
++    p.cel("B2", false);
++    let bron = p.bron();
++    p.gebeurtenissen([
++        ruwe_rastertoets(Key::Character("7".into()), Some("7")),
++        rastertoets_met_modifiers(Key::Character("b".into()), M::COMMAND, None),
++        ruwe_rastertoets(Key::Character("8".into()), Some("8")),
++        ruwe_rastertoets(Key::Named(N::Enter), None),
++    ]);
++    let t = p.app.tab().unwrap();
++    assert_eq!(
++        t.antwoord
++            .as_ref()
++            .unwrap()
++            .beeld
++            .velden
++            .iter()
++            .find(|v| v.id == "B2")
++            .unwrap()
++            .tekst,
++        "78"
++    );
++    p.bericht(Msg::Terug);
++    assert_eq!(*p.bron(), *bron);
++}
++#[test]
++fn raster_vervolg_typen_na_direct_bewaren_heeft_echte_rasterfocus() {
++    use iced::keyboard::{Key, Modifiers as M, key::Named as N};
++    let mut p = Proef::nieuw();
++    p.cel("B2", false);
++    p.named(N::F2);
++    p.klembord.tekst = Some("7".into());
++    let pad = std::env::temp_dir().join(format!(
++        "office-raster-focus-{}-{}.xlsx",
++        std::process::id(),
++        std::time::SystemTime::now()
++            .duration_since(std::time::UNIX_EPOCH)
++            .unwrap()
++            .as_nanos()
++    ));
++    std::fs::write(&pad, p.bron().as_slice()).unwrap();
++    let id = p.app.tab().unwrap().id;
++    {
++        let t = p.app.tab_mut().unwrap();
++        t.pad = Some(pad.clone());
++        t.verwacht = Some(t.antwoord.as_ref().unwrap().hash.clone());
++    }
++    let taken = vec![
++        p.app.update(Msg::Klembord(klembord::Actie::Plak)),
++        p.app.update(Msg::Raster(raster_ui::Bericht::Voltooi(
++            office_core::rekenblad::Richting::Onder,
++        ))),
++        p.app.update(Msg::Opslaan(id, false)),
++    ];
++    for taak in taken {
++        p.taak(taak);
++    }
++    assert_eq!(p.app.tab().unwrap().adres, "B3");
++    // Gewone tekentoets na het bewaren, zonder extra klik of focusopdracht.
++    p.toets(Key::Character("8".into()), M::empty(), Some("8"));
++    assert_eq!(p.app.tab().unwrap().editor.text(), "8");
++    assert!(p.app.tab().unwrap().raster.bewerken && p.app.tab().unwrap().concept);
++    p.named(N::Escape);
++    std::fs::remove_file(pad).unwrap();
++}
+diff --git a/native/crates/office-core/tests/documentkern.rs b/native/crates/office-core/tests/documentkern.rs
+new file mode 100644
+index 0000000..3c7a3fb
+--- /dev/null
++++ b/native/crates/office-core/tests/documentkern.rs
+@@ -0,0 +1,23 @@
++//! De bestaande integratieproeven delen één testprogramma en dezelfde kern.
++mod documenten;
++mod interactie;
++mod lettertypen;
++mod notities_presentatie;
++mod raster_bronbeelden;
++mod rekenblad_beveiliging;
++mod rekenblad_klembord;
++mod rekenblad_letters;
++mod rekenblad_selectie;
++mod rekenblad_snelle_navigatie;
++mod writer_beveiliging;
++mod writer_cursor;
++mod writer_interactie;
++mod writer_invoer;
++mod writer_navigatie;
++mod writer_opmaak;
++mod writer_pagina;
++mod writer_regelnavigatie;
++mod writer_structuur;
++mod writer_velden;
++mod writer_weergave;
++mod writer_zoeken;

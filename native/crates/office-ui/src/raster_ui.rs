@@ -9,7 +9,7 @@ use iced::advanced::{
 };
 use office_core::rekenblad::Richting;
 pub const RASTER_ID: &str = "werkbladraster";
-const EDITOR_ID: &str = "cel-editor";
+pub(super) const EDITOR_ID: &str = "cel-editor";
 #[derive(Default)]
 pub struct Staat {
     pub bewerken: bool,
@@ -23,10 +23,19 @@ pub struct Staat {
     pub(super) fout: bool,
     pub(super) plaktekst: Option<String>,
     pub(super) afgewezen: usize,
+    pub(super) tekstversie: u64,
     pub(super) plakbereik: Option<office_core::rekenblad::CelSelectie>,
 }
 #[derive(Debug, Clone)]
 pub enum Bericht {
+    Toets(text_editor::KeyPress),
+    MuisInvoer {
+        document: u64,
+        cel: String,
+        editerversie: u64,
+        tekstversie: u64,
+        actie: text_editor::Action,
+    },
     Focus {
         document: u64,
         editerversie: u64,
@@ -99,7 +108,10 @@ pub fn update(app: &mut App, bericht: Bericht) -> Task<Msg> {
     super::raster_invoer::update(app, bericht)
 }
 pub(super) fn voer_uit(app: &mut App, bericht: Bericht) -> Task<Msg> {
-    if !beschikbaar(app) {
+    if !toegankelijk(app)
+        || (!matches!(bericht, Bericht::Focus { .. } | Bericht::EditorFocus { .. })
+            && !beschikbaar(app))
+    {
         return Task::none();
     }
     match bericht {
@@ -113,12 +125,14 @@ pub(super) fn voer_uit(app: &mut App, bericht: Bericht) -> Task<Msg> {
                     && t.raster.focus
                     && t.raster.bewerken
             }) {
-                iced::widget::operation::focus(EDITOR_ID)
+                raster_focus::focus(document, editerversie, true)
             } else {
                 Task::none()
             }
         }
-        Bericht::Klembord(_)
+        Bericht::Toets(_)
+        | Bericht::MuisInvoer { .. }
+        | Bericht::Klembord(_)
         | Bericht::Opslaan(_)
         | Bericht::Terug
         | Bericht::Vooruit
@@ -144,7 +158,7 @@ pub(super) fn voer_uit(app: &mut App, bericht: Bericht) -> Task<Msg> {
                     && t.raster.focus
                     && !t.raster.bewerken
             }) {
-                iced::widget::operation::focus(RASTER_ID)
+                raster_focus::focus(document, editerversie, false)
             } else {
                 Task::none()
             }
@@ -431,7 +445,7 @@ pub fn blad<'a>(app: &'a App, t: &'a Tab, inhoud: Element<'a, Msg>) -> Element<'
         };
         let hoogte = (r.grens.hoogte * t.zoom).max(1.);
         let mut editor = text_editor(&t.editor)
-            .id(EDITOR_ID)
+            .id(raster_focus::id(t.id, t.editerversie, true))
             .font(font)
             .size((f.grootte.unwrap_or(11.) as f32 * 4. / 3. * t.zoom).max(1.))
             .width((r.grens.breedte * t.zoom).max(1.))
@@ -445,32 +459,8 @@ pub fn blad<'a>(app: &'a App, t: &'a Tab, inhoud: Element<'a, Msg>) -> Element<'
             })
             .wrapping(iced::widget::text::Wrapping::None)
             .key_binding(|k| {
-                if !matches!(k.status, text_editor::Status::Focused { .. }) {
-                    return text_editor::Binding::from_key_press(k);
-                }
-                use iced::keyboard::{Key, key::Named};
-                match k.key {
-                    Key::Named(Named::Escape) => {
-                        Some(text_editor::Binding::Custom(Msg::Raster(Bericht::Annuleer)))
-                    }
-                    Key::Named(Named::Enter) if !k.modifiers.alt() => {
-                        Some(text_editor::Binding::Custom(Msg::Raster(Bericht::Voltooi(
-                            if k.modifiers.shift() {
-                                Richting::Boven
-                            } else {
-                                Richting::Onder
-                            },
-                        ))))
-                    }
-                    Key::Named(Named::Tab) => Some(text_editor::Binding::Custom(Msg::Raster(
-                        Bericht::Voltooi(if k.modifiers.shift() {
-                            Richting::Links
-                        } else {
-                            Richting::Rechts
-                        }),
-                    ))),
-                    _ => klembord::toets(k),
-                }
+                raster_toetsen::onderschep(&k)
+                    .then_some(text_editor::Binding::Custom(Msg::Raster(Bericht::Toets(k))))
             })
             .style(move |_, _| text_editor::Style {
                 background: iced::Background::Color(iced::Color::WHITE),
@@ -483,7 +473,23 @@ pub fn blad<'a>(app: &'a App, t: &'a Tab, inhoud: Element<'a, Msg>) -> Element<'
                 value: iced::Color::BLACK,
                 selection: app.look().color.selected,
             });
-        editor = editor.on_action(|a| Msg::Raster(Bericht::Invoer(a)));
+        let document = t.id;
+        let cel = v.id.clone();
+        let editerversie = t.editerversie;
+        let tekstversie = t.raster.tekstversie;
+        editor = editor.on_action(move |actie| {
+            Msg::Raster(if actie.is_edit() {
+                Bericht::Invoer(actie)
+            } else {
+                Bericht::MuisInvoer {
+                    document,
+                    cel: cel.clone(),
+                    editerversie,
+                    tekstversie,
+                    actie,
+                }
+            })
+        });
         let editor = openaec_ui::design::a11y::node(
             editor,
             openaec_ui::design::a11y::Node::new(
@@ -505,6 +511,7 @@ pub fn blad<'a>(app: &'a App, t: &'a Tab, inhoud: Element<'a, Msg>) -> Element<'
         );
     }
     let widget = Raster {
+        focus_id: raster_focus::id(t.id, t.editerversie, false),
         inhoud: iced::widget::Stack::with_children(lagen).into(),
         pagina: &b.pagina,
         gekozen: t.veld().map(|v| v.id.as_str()),
@@ -540,6 +547,7 @@ impl iced::advanced::widget::operation::Focusable for Focus {
     }
 }
 struct Raster<'a> {
+    focus_id: iced::advanced::widget::Id,
     inhoud: Element<'a, Msg>,
     pagina: &'a office_core::interactie::Pagina,
     gekozen: Option<&'a str>,
@@ -568,7 +576,7 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Raster<'_> {
     }
     fn operate(&mut self, t: &mut Tree, l: Layout<'_>, r: &iced::Renderer, o: &mut dyn Operation) {
         o.focusable(
-            Some(&iced::advanced::widget::Id::new(RASTER_ID)),
+            Some(&self.focus_id),
             l.bounds(),
             t.state.downcast_mut::<Focus>(),
         );
@@ -587,6 +595,15 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Raster<'_> {
         s: &mut iced::advanced::Shell<'_, Msg>,
         vp: &iced::Rectangle,
     ) {
+        if matches!(
+            e,
+            iced::Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left))
+        ) {
+            let binnen = c.is_over(*vp) && c.is_over(l.bounds());
+            if !binnen || !self.bewerken {
+                t.state.downcast_mut::<Focus>().actief = binnen;
+            }
+        }
         if let iced::Event::Keyboard(iced::keyboard::Event::ModifiersChanged(m)) = e {
             t.state.downcast_mut::<Focus>().modifiers = *m;
         }
@@ -633,75 +650,26 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Raster<'_> {
         }
         if let iced::Event::Keyboard(iced::keyboard::Event::KeyPressed {
             key,
+            modified_key,
+            physical_key,
             text,
             modifiers,
             ..
         }) = e
             && t.state.downcast_ref::<Focus>().actief
         {
-            use iced::keyboard::{Key, key::Named};
-            let bericht = match key {
-                Key::Character(c)
-                    if modifiers.command() && !modifiers.alt() && c.eq_ignore_ascii_case("a") =>
-                {
-                    Some(Bericht::Invoer(text_editor::Action::SelectAll))
-                }
-                Key::Named(k) if !modifiers.command() && !modifiers.alt() => match k {
-                    Named::ArrowLeft => Some(Bericht::Pijl {
-                        richting: Richting::Links,
-                        selecteer: modifiers.shift(),
-                    }),
-                    Named::ArrowRight => Some(Bericht::Pijl {
-                        richting: Richting::Rechts,
-                        selecteer: modifiers.shift(),
-                    }),
-                    Named::ArrowUp => Some(Bericht::Pijl {
-                        richting: Richting::Boven,
-                        selecteer: modifiers.shift(),
-                    }),
-                    Named::ArrowDown => Some(Bericht::Pijl {
-                        richting: Richting::Onder,
-                        selecteer: modifiers.shift(),
-                    }),
-                    Named::Enter => Some(Bericht::Voltooi(if modifiers.shift() {
-                        Richting::Boven
-                    } else {
-                        Richting::Onder
-                    })),
-                    Named::Tab => Some(Bericht::Voltooi(if modifiers.shift() {
-                        Richting::Links
-                    } else {
-                        Richting::Rechts
-                    })),
-                    Named::Delete => Some(Bericht::Wis),
-                    Named::Backspace => Some(Bericht::Invoer(text_editor::Action::Edit(
-                        text_editor::Edit::Backspace,
-                    ))),
-                    Named::Escape => Some(Bericht::Annuleer),
-                    Named::Home | Named::End if self.bewerken => {
-                        let m = if *k == Named::Home {
-                            text_editor::Motion::Home
-                        } else {
-                            text_editor::Motion::End
-                        };
-                        Some(Bericht::Invoer(if modifiers.shift() {
-                            text_editor::Action::Select(m)
-                        } else {
-                            text_editor::Action::Move(m)
-                        }))
-                    }
-                    Named::F2 => self.gekozen.map(|_| Bericht::BewerkActief),
-                    _ => None,
+            let k = text_editor::KeyPress {
+                key: key.clone(),
+                modified_key: modified_key.clone(),
+                physical_key: *physical_key,
+                text: text.clone(),
+                modifiers: *modifiers,
+                status: text_editor::Status::Focused {
+                    is_hovered: c.is_over(l.bounds()),
                 },
-                Key::Named(Named::F2) => self.gekozen.map(|_| Bericht::BewerkActief),
-                _ if !modifiers.command() || (modifiers.control() && modifiers.alt()) => text
-                    .as_ref()
-                    .filter(|tekst| tekst.chars().any(|c| !c.is_control()))
-                    .and_then(|tekst| self.gekozen.map(|_| Bericht::Typ(tekst.to_string()))),
-                _ => None,
             };
-            if let Some(b) = bericht {
-                s.publish(Msg::Raster(b));
+            if raster_toetsen::onderschep(&k) {
+                s.publish(Msg::Raster(Bericht::Toets(k)));
                 s.capture_event();
                 return;
             }
