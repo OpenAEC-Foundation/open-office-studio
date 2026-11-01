@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.40**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.41**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -20,6 +20,9 @@ cargo test --manifest-path native/Cargo.toml --workspace --locked
 cargo build --manifest-path native/Cargo.toml --workspace --locked --release
 python3 native/scripts/verpak.py
 ```
+
+Op Linux vereist de reguliere X11-contracttest `Xvfb`: installeer het pakket `xvfb` of stel `OFFICE_XVFB` in op de eigen testbinary. De test start een apart tijdelijk scherm en gebruikt het bestaande bureaublad niet. De CI installeert deze testafhankelijkheid; Windows en macOS voeren deze Linux-contracttest niet uit.
+
 
 De uitvoer staat in `native/target/release/open-office-studio-native` (Windows:
 `.exe`). De workflow `native-rust.yml` controleert en bouwt Windows, Linux en
@@ -306,7 +309,9 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
-Het [actuele controlerapport voor alpha 40](docs/controle-2026-11-01-alpha40.md) legt **406 reguliere Rust-tests**, waaronder **164 UI-tests**, zes afzonderlijke runtimeproeven en zeven Python-tests vast. Alle 694 bronbestanden blijven tijdens de afgesloten ronde bytegelijk; terminal, Rustfmt, Clippy, bronpins en onafhankelijke lezers slagen. Drie aanvullende runtimeproeven herstellen snelle muisinvoer en cachebehoud. Het echte debugvenster controleert twee snelle grepen met focus in een ander tekstvak, vrije dubbelklik, tekstinvoer en bronexacte undo. Achterlopende menu-/Escape-beelden blijven echter open; een afzonderlijke X11-proef reproduceert een ontbrekende verzending na presenteren. De prototypecorrectie is nog niet geïntegreerd. De alpha40-platformronde loopt; alle acht oorspronkelijke UI-vergelijkingen blijven afgekeurd.
+Het [werkrapport voor alpha 41](docs/controle-2026-11-01-alpha41.md) beschrijft de eigen aanraakposities, directe X11-verzending en vijftig bytevaste vendorbestanden in een Windows-checkoutsimulatie. Vijf gerichte proeven, Clippy en bronpins slagen. De volledige ronde op 727 bronbestanden en de platform-/geoptimaliseerde alpha41-vensterproeven lopen nog. Trage debugframes blijven expliciet afgekeurd; de geoptimaliseerde alpha40-vergelijking is apart gehouden.
+
+Het [actuele controlerapport voor alpha 40](docs/controle-2026-11-01-alpha40.md) legt **406 reguliere Rust-tests**, waaronder **164 UI-tests**, zes afzonderlijke runtimeproeven en zeven Python-tests vast. Alle 694 bronbestanden blijven tijdens de afgesloten ronde bytegelijk; terminal, Rustfmt, Clippy, bronpins en onafhankelijke lezers slagen. Drie aanvullende runtimeproeven herstellen snelle muisinvoer en cachebehoud. Het echte debugvenster controleert twee snelle grepen met focus in een ander tekstvak, vrije dubbelklik, tekstinvoer en bronexacte undo. Achterlopende menu-/Escape-beelden blijven echter open; een afzonderlijke X11-proef reproduceert een ontbrekende verzending na presenteren. De prototypecorrectie is nog niet geïntegreerd. De alpha40-platformronde is afgekeurd op gewijzigde Windows-checkoutbytes in de nieuwe runtime; alpha41 herstelt de vendorregels. Een aanvullende aanraakproef vond bovendien hergebruik van de oude muispositie. Beide oorspronkelijke afkeuringen blijven behouden; alle acht oorspronkelijke UI-vergelijkingen blijven afgekeurd.
 
 Het [werkrapport voor alpha 39](docs/controle-2026-11-01-alpha39.md) beschrijft de nieuwe Notities-kolommen, het lichte canvas, echte dubbelklik-invoer, sectiekopie via de typekeuze en live woordtelling. De volledige lokale ronde slaagt met 403 Rust-tests, waaronder 161 UI-tests, zes runtimeproeven en zeven Python-tests. Alle vijf CI-taken slagen: 3962 bronbestanden per platform, 120 exacte native beeldparen en 21 paginabezoeken. De definitieve desktopvergelijking daalt van 665709 naar 145039 afwijkende pixels en blijft afgekeurd. De extra echte vensterproef vindt echter nog een snelle-muisinvoerfout; de aanvullende runtime-regressietest faalt op alpha39 bij drie zoomniveaus. De afgesloten alpha40-controle staat hierboven; de weergavevertraging blijft open.
 

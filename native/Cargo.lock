@@ -3708,7 +3708,7 @@ dependencies = [
 
 [[package]]
 name = "office-conversie"
-version = "2026.44.9-alpha.40"
+version = "2026.44.9-alpha.41"
 dependencies = [
  "libc",
  "serde_json",
@@ -3718,7 +3718,7 @@ dependencies = [
 
 [[package]]
 name = "office-core"
-version = "2026.44.9-alpha.40"
+version = "2026.44.9-alpha.41"
 dependencies = [
  "base64 0.22.1",
  "betteroffice-docx",
@@ -3748,7 +3748,7 @@ dependencies = [
 
 [[package]]
 name = "office-mail"
-version = "2026.44.9-alpha.40"
+version = "2026.44.9-alpha.41"
 dependencies = [
  "async-imap",
  "base64 0.22.1",
@@ -3793,7 +3793,7 @@ dependencies = [
 
 [[package]]
 name = "open-office-studio-native"
-version = "2026.44.9-alpha.40"
+version = "2026.44.9-alpha.41"
 dependencies = [
  "futures-channel",
  "iced",
@@ -3804,11 +3804,14 @@ dependencies = [
  "office-core",
  "office-mail",
  "openaec-ui",
+ "raw-window-handle",
  "rfd",
  "serde",
  "serde_json",
+ "softbuffer",
  "tiny-skia 0.11.4",
  "unicode-script",
+ "x11rb",
 ]
 
 [[package]]
@@ -5015,8 +5018,6 @@ dependencies = [
 [[package]]
 name = "softbuffer"
 version = "0.4.8"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "aac18da81ebbf05109ab275b157c22a653bb3c12cf884450179942f81bcbf6c3"
 dependencies = [
  "as-raw-xcb-connection",
  "bytemuck",

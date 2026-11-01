@@ -1,0 +1,32 @@
+{
+  "opdracht": [
+    "rustc",
+    "--edition",
+    "2024",
+    ".local/controle-2026-10-31/softbuffer-enkele-presentatie-voor.rs",
+    "-L",
+    "dependency=native/target/debug/deps",
+    "-o",
+    ".local/controle-2026-10-31/softbuffer-enkele-presentatie-voor",
+    "--extern",
+    "raw_window_handle=native/target/debug/deps/libraw_window_handle-2fbc8c535bf8ee17.rlib",
+    "--extern",
+    "x11rb=native/target/debug/deps/libx11rb-6c7b57b0a86730b8.rlib",
+    "--extern",
+    "softbuffer=native/target/debug/deps/libsoftbuffer-5d65d40f07ccb479.rlib"
+  ],
+  "afhankelijkheden": {
+    "raw_window_handle": {
+      "bestand": "native/target/debug/deps/libraw_window_handle-2fbc8c535bf8ee17.rlib",
+      "sha256": "77dc30e2180fbb0e8927691280fb212667c8e791e68280ec1a1cadc8dd645a51"
+    },
+    "x11rb": {
+      "bestand": "native/target/debug/deps/libx11rb-6c7b57b0a86730b8.rlib",
+      "sha256": "e126074d6b43185478a2a08b93540304af8dabc82eafb0433131a64d1b03c097"
+    },
+    "softbuffer": {
+      "bestand": "native/target/debug/deps/libsoftbuffer-5d65d40f07ccb479.rlib",
+      "sha256": "5587eb34ab8a7b0d69bac0e5b5f11b3a5c7d166709fb0ce8e03c0eaea8b0f170"
+    }
+  }
+}

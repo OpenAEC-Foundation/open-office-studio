@@ -110,3 +110,18 @@ werkelijk = {p.relative_to(runtimemap).as_posix(): hashlib.sha256(p.read_bytes()
              for p in runtimemap.rglob('*') if p.is_file()}
 assert werkelijk == verwacht, 'Runtimebron, licentie of gebeurteniscorrectie wijkt af van de vastgelegde bron'
 print(f"Vensterruntime: {len(werkelijk)} bron-/noticebestanden en één lokale cursorbatchcorrectie geverifieerd.")
+
+# Eén X11-presentatie moet ook zonder volgend frame werkelijk worden verzonden.
+presentatiemap = root/'vendor/softbuffer'
+presentatie = json.loads((root/'vendor/softbuffer-bron.json').read_text(encoding='utf-8'))
+verwacht = dict(presentatie['oorspronkelijke_bestanden'])
+for naam, wijziging in presentatie['aanpassingen'].items():
+    assert naam in verwacht, f'Onbekende schermpresentatiecorrectie: {naam}'
+    verwacht[naam] = wijziging['sha256']
+for naam, aanvulling in presentatie['aanvullingen'].items():
+    assert naam not in verwacht, f'Dubbel schermpresentatiebestand: {naam}'
+    verwacht[naam] = aanvulling['sha256']
+werkelijk = {p.relative_to(presentatiemap).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
+             for p in presentatiemap.rglob('*') if p.is_file()}
+assert werkelijk == verwacht, 'Schermpresentatiebron, licenties of verzendcorrectie wijkt af van de vastgelegde bron'
+print(f"Schermpresentatie: {len(werkelijk)} bron-/noticebestanden en één lokale X11-verzendcorrectie geverifieerd.")

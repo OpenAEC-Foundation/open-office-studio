@@ -409,6 +409,94 @@ fn runtimebatch_gewone_knoppen_volgen_iedere_klik_en_de_vorige_framepositie() {
     );
 }
 #[test]
+fn runtimebatch_aanraakknoppen_volgen_hun_eigen_positie_na_muisfocus() {
+    use iced::{Event, mouse, touch};
+    let mut p = Proef::met_app(app_met_werkdraad(
+        Module::Notition,
+        include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json"),
+    ));
+    let links = iced::Point::new(40., 20.);
+    let rechts = iced::Point::new(120., 20.);
+    let druk = |position| {
+        Event::Touch(touch::Event::FingerPressed {
+            id: touch::Finger(0),
+            position,
+        })
+    };
+    let los = |position| {
+        Event::Touch(touch::Event::FingerLifted {
+            id: touch::Finger(0),
+            position,
+        })
+    };
+    let mut ronde = |cache, events: &[Event], punt| {
+        let inhoud: iced::Element<'_, u8, iced::Theme, iced_tiny_skia::Renderer> =
+            iced::widget::row![
+                iced::widget::button("Links")
+                    .width(80)
+                    .height(40)
+                    .on_press(1),
+                iced::widget::button("Rechts")
+                    .width(80)
+                    .height(40)
+                    .on_press(2),
+            ]
+            .into();
+        let mut ui = iced_runtime::user_interface::UserInterface::build(
+            inhoud,
+            Size::new(160., 40.),
+            cache,
+            &mut p.renderer,
+        );
+        let mut berichten = Vec::new();
+        ui.update(
+            events,
+            mouse::Cursor::Available(punt),
+            &mut p.renderer,
+            &mut p.klembord,
+            &mut berichten,
+        );
+        (ui.into_cache(), berichten)
+    };
+    let (cache, berichten) = ronde(
+        Default::default(),
+        &[Event::Mouse(mouse::Event::CursorMoved { position: rechts })],
+        rechts,
+    );
+    assert!(berichten.is_empty());
+    let (cache, berichten) = ronde(cache, &[druk(links), los(links)], links);
+    assert_eq!(
+        berichten,
+        vec![1],
+        "Een aanraking gebruikt zijn eigen positie, niet de oude muiscursor"
+    );
+    let (cache, berichten) = ronde(
+        cache,
+        &[druk(links), los(links), druk(rechts), los(rechts)],
+        rechts,
+    );
+    assert_eq!(
+        berichten,
+        vec![1, 2],
+        "Iedere aanraking in één batch hoort bij zijn eigen knop"
+    );
+    let (_, berichten) = ronde(
+        cache,
+        &[
+            druk(links),
+            Event::Touch(touch::Event::FingerLost {
+                id: touch::Finger(0),
+                position: links,
+            }),
+        ],
+        links,
+    );
+    assert!(
+        berichten.is_empty(),
+        "Een geannuleerde aanraking activeert geen knop"
+    );
+}
+#[test]
 fn notitie_originele_werkruimte_heeft_boek_en_paginakolom_en_een_licht_canvas() {
     let bron = include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json");
     // De oorspronkelijke notities.css gebruikt 228/250 px voor de navigatie;

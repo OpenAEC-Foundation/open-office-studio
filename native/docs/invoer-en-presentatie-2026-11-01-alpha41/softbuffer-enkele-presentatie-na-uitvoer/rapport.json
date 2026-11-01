@@ -1,0 +1,30 @@
+{
+  "omvang": "Afzonderlijke X11-/softbufferdiagnose buiten de suite. Eigen apart scherm; één vlakke kleur wordt één keer gepresenteerd. De tweede stap verstuurt uitsluitend de reeds bestaande XCB-verzoeken: geen nieuwe tekenronde of invoer. Geen gewone werkruimtetest of suitegoedkeuring.",
+  "verwachte_kleur": [
+    255,
+    0,
+    128
+  ],
+  "eerste_presentatie_geslaagd": true,
+  "eerste": {
+    "bestand": "na-een-presentatie.png",
+    "sha256": "71b25211828209553c5bb8b0d6da55d98c3546955fea1c2ea1bd153ce654f9cd",
+    "middenpixel": [
+      255,
+      0,
+      128
+    ],
+    "alle_pixels_verwacht": true
+  },
+  "na_explicit_flush": {
+    "bestand": "na-uitsluitend-verzenden.png",
+    "sha256": "71b25211828209553c5bb8b0d6da55d98c3546955fea1c2ea1bd153ce654f9cd",
+    "middenpixel": [
+      255,
+      0,
+      128
+    ],
+    "alle_pixels_verwacht": true
+  },
+  "programma_eindcode": 0
+}

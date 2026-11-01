@@ -1,0 +1,99 @@
+{
+  "voorbeeldbron_commit": "f50dd2533cc2dd49f73bfaaf78a029f93339a0ef",
+  "programmabron": {
+    "basiscommit": "f50dd2533cc2dd49f73bfaaf78a029f93339a0ef",
+    "bronbestanden": 727,
+    "bronmanifest_sha256": "b20808e57abb00ccf706d14d7788cfd48e0233d45805c9f3868d47c3234e4b3a",
+    "bronpatch_sha256": "7dea66ce2f16746a13a692cd9ee04f9cab2fe653d34db5af257ff870153dcb1c",
+    "bouwbron": "Eigen debugbouw; alle 727 bronbestanden na de bouw gelijk aan de vooraf vastgelegde volledige bron. Volledige ronde loopt afzonderlijk.",
+    "programmas": {
+      "open-office-studio-native": {
+        "versie": "Open Office Studio 2026.44.9-alpha.41 (native)",
+        "sha256": "4b1c0990219e4d87c47fc6f635c6b2f4af22ecae8d9ed6738e20614099bb064b"
+      },
+      "controleer-bestand": {
+        "versie": "Open Office native bestandscontrole 2026.44.9-alpha.41 (debug)",
+        "sha256": "87e99c599ae02b5cab509b8a181d20de7ab1176173da7877685a5578a1ad5662"
+      }
+    }
+  },
+  "programma_sha256": "4b1c0990219e4d87c47fc6f635c6b2f4af22ecae8d9ed6738e20614099bb064b",
+  "proefbron_sha256": "a1c30b8c9a2a747d70a7e6715950ab5243aacf130bcb5404baa8b3d98c05a1f2",
+  "omvang": "Verkennend eigen Linux-venster in aparte Xvfb/D-Bus/XDG. Eigen voorbeeldkopie, geen volledige functie-/pixelgoedkeuring.",
+  "begindata_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+  "stappen": [
+    {
+      "actie": "open",
+      "beeld": {
+        "bestand": "notities-open.png",
+        "sha256": "b37dfae162f4ccd6608d7f0462921228ad40cda57246d3b6e15c509dd3681bf0"
+      }
+    },
+    {
+      "actie": "wacht",
+      "seconden": 8,
+      "beeldnaam": "notities-bron-geopend",
+      "beeld": {
+        "bestand": "notities-bron-geopend.png",
+        "sha256": "04a73b4cd2bc26b7994bba0592e6f2fefd1877b353af37ebac4173faa69db121"
+      },
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c"
+    },
+    {
+      "actie": "klik",
+      "x": 43,
+      "y": 45,
+      "beeldnaam": "bestand-eerste-klik",
+      "beeld": {
+        "bestand": "bestand-eerste-klik.png",
+        "sha256": "f839b65d0804ebe43125d9af8f660858b258ff31a6bdd4d3dfd3b63b3bb6ec83"
+      },
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c"
+    },
+    {
+      "actie": "wacht",
+      "seconden": 3,
+      "beeldnaam": "bestand-eerste-klik-zichtbaar",
+      "beeld": {
+        "bestand": "bestand-eerste-klik-zichtbaar.png",
+        "sha256": "f839b65d0804ebe43125d9af8f660858b258ff31a6bdd4d3dfd3b63b3bb6ec83"
+      },
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c"
+    },
+    {
+      "actie": "toets",
+      "toetsen": [
+        "Escape"
+      ],
+      "beeldnaam": "bestand-eerste-escape",
+      "beeld": {
+        "bestand": "bestand-eerste-escape.png",
+        "sha256": "f839b65d0804ebe43125d9af8f660858b258ff31a6bdd4d3dfd3b63b3bb6ec83"
+      },
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c"
+    },
+    {
+      "actie": "wacht",
+      "seconden": 3,
+      "beeldnaam": "bestand-eerste-escape-zichtbaar",
+      "beeld": {
+        "bestand": "bestand-eerste-escape-zichtbaar.png",
+        "sha256": "3197332fd2d6f1bef0fdd865643580d7c95ed07d793662d3114883d043e8e3b9"
+      },
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c"
+    },
+    {
+      "actie": "stop",
+      "beeld": {
+        "bestand": "notities-expliciet-gestopt.png",
+        "sha256": "f839b65d0804ebe43125d9af8f660858b258ff31a6bdd4d3dfd3b63b3bb6ec83"
+      },
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c"
+    }
+  ],
+  "expliciet_gestopt": true,
+  "programma_eindcode": -15,
+  "testscherm": ":103",
+  "eigen_sessiebus": "unix:path=/tmp/dbus-mlIojvEzrD,guid=6481a30ffda04476f08184e66ae7b25e",
+  "einddata_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c"
+}

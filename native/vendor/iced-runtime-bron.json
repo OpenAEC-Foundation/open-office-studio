@@ -26,8 +26,8 @@
   },
   "aanpassingen": {
     "src/user_interface.rs": {
-      "sha256": "e2783001821b05fa5ab407f97318fdf5fce5ab472575a625d04fdff97b710ca0",
-      "reden": "Gebeurtenisgebonden muispositie met cachebehoud en afzonderlijke overlayafscherming; resterende gebeurtenissen behouden wanneer overlay verdwijnt."
+      "sha256": "507736bdec4224de32041001eea7f38a9754450076f79e1ea5d528607e442bcd",
+      "reden": "Gebeurtenisgebonden muispositie met cachebehoud en afzonderlijke overlayafscherming; resterende gebeurtenissen behouden wanneer overlay verdwijnt. Aanraakdruk, verplaatsen, loslaten en annuleren gebruiken eveneens hun eigen gebeurtenispositie; geen hergebruik van de oude muispositie."
     }
   },
   "aanvullingen": {
@@ -36,7 +36,7 @@
       "bron": "https://raw.githubusercontent.com/iced-rs/iced/3997291f318a8bc06fa522f5579836fb3feb94df/LICENSE"
     },
     "NOTICE.md": {
-      "sha256": "3ecbbbceda52b2c6d6a42b077456b3d847d010db052381d575bb3a635cd61c4e",
+      "sha256": "7fb5dcfccefec62ddb13c79ab5f0144a79ca26cfd3e980b112484ff3017c27ee",
       "bron": "Lokale toelichting"
     }
   }

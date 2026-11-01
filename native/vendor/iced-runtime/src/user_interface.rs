@@ -4,6 +4,7 @@ use crate::core::layout;
 use crate::core::mouse;
 use crate::core::overlay;
 use crate::core::renderer;
+use crate::core::touch;
 use crate::core::widget;
 use crate::core::window;
 use crate::core::{Clipboard, Element, InputMethod, Layout, Rectangle, Shell, Size, Vector};
@@ -200,7 +201,13 @@ where
             .iter()
             .map(|event| {
                 match event {
-                    Event::Mouse(mouse::Event::CursorMoved { position }) => {
+                    Event::Mouse(mouse::Event::CursorMoved { position })
+                    | Event::Touch(
+                        touch::Event::FingerPressed { position, .. }
+                        | touch::Event::FingerMoved { position, .. }
+                        | touch::Event::FingerLifted { position, .. }
+                        | touch::Event::FingerLost { position, .. },
+                    ) => {
                         event_cursor = mouse::Cursor::Available(*position);
                     }
                     Event::Mouse(mouse::Event::CursorLeft)

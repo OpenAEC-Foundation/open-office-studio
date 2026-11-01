@@ -29,3 +29,7 @@ native/vendor/*.md text eol=lf
 
 # Dit oorspronkelijke CI-log bewaart ook zijn Windows-regelafbrekingen.
 native/docs/checkout-diagnose-2026-11-01-alpha30/windows-afgekeurd.log -text -whitespace
+
+# Ook deze vastgepinde bronnen blijven op Windows exact gelijk aan de Git-bytes.
+native/vendor/iced-runtime/** -text -whitespace
+native/vendor/softbuffer/** -text -whitespace
