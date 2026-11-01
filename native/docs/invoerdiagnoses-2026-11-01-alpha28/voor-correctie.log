@@ -1,0 +1,78 @@
+   Compiling open-office-studio-native v2026.44.9-alpha.27 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-ui)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 35.91s
+     Running unittests src/lib.rs (native/target/debug/deps/office_conversie-356185caa6b4417c)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_core-d0ac01f3d4bb2d6d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 21 filtered out; finished in 0.00s
+
+     Running unittests src/bin/controleer-bestand.rs (native/target/debug/deps/controleer_bestand-4e7dbdbc642e846e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/documentkern.rs (native/target/debug/deps/documentkern-4da39a6bf1b6accf)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 112 filtered out; finished in 0.00s
+
+     Running ../../vendor/docx-parse/tests/nested_fields.rs (native/target/debug/deps/engine_velden-d25d9dd2858aec08)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_mail-25f008f013961d9f)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 51 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (native/target/debug/deps/open_office_studio_native-c3c3957642e30d0e)
+
+running 3 tests
+test tests::raster_proeven::raster_vervolg_opmaak_tijdens_een_concept_verliest_geen_typtekst ... FAILED
+test tests::raster_proeven::raster_vervolg_toetsen_geven_hetzelfde_resultaat_voor_en_na_editorfocus ... FAILED
+test tests::raster_proeven::raster_vervolg_typen_na_direct_bewaren_heeft_echte_rasterfocus ... FAILED
+
+failures:
+
+---- tests::raster_proeven::raster_vervolg_opmaak_tijdens_een_concept_verliest_geen_typtekst stdout ----
+
+thread 'tests::raster_proeven::raster_vervolg_opmaak_tijdens_een_concept_verliest_geen_typtekst' (2973747) panicked at crates/office-ui/src/tests/raster_proeven.rs:2913:5:
+assertion `left == right` failed
+  left: "8"
+ right: "78"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- tests::raster_proeven::raster_vervolg_toetsen_geven_hetzelfde_resultaat_voor_en_na_editorfocus stdout ----
+
+thread 'tests::raster_proeven::raster_vervolg_toetsen_geven_hetzelfde_resultaat_voor_en_na_editorfocus' (2973838) panicked at crates/office-ui/src/tests/raster_proeven.rs:2898:5:
+assertion `left == right` failed
+  left: ["één twee 🏠7", "één twee 🏠7", "één twee 🏠7", "één twee 🏠7", "één twee 🏠7", "één twee 🏠7", "één twee 🏠7", "één twee 🏠7"]
+ right: ["7één twee 🏠", "één twee 🏠7", "één 7twee 🏠", "één twee 🏠7", "7", "één twee 🏠7", "één 7", "één twee 🏠\n7"]
+
+---- tests::raster_proeven::raster_vervolg_typen_na_direct_bewaren_heeft_echte_rasterfocus stdout ----
+
+thread 'tests::raster_proeven::raster_vervolg_typen_na_direct_bewaren_heeft_echte_rasterfocus' (2975219) panicked at crates/office-ui/src/tests/raster_proeven.rs:2963:5:
+assertion `left == right` failed
+  left: "2"
+ right: "8"
+
+
+failures:
+    tests::raster_proeven::raster_vervolg_opmaak_tijdens_een_concept_verliest_geen_typtekst
+    tests::raster_proeven::raster_vervolg_toetsen_geven_hetzelfde_resultaat_voor_en_na_editorfocus
+    tests::raster_proeven::raster_vervolg_typen_na_direct_bewaren_heeft_echte_rasterfocus
+
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 103 filtered out; finished in 67.96s
+
+error: test failed, to rerun pass `-p open-office-studio-native --bin open-office-studio-native`

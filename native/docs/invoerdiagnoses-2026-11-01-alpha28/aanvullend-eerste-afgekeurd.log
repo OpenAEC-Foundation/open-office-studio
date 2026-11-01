@@ -1,0 +1,61 @@
+   Compiling open-office-studio-native v2026.44.9-alpha.27 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-ui)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 40.10s
+     Running unittests src/lib.rs (native/target/debug/deps/office_conversie-356185caa6b4417c)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_core-d0ac01f3d4bb2d6d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 21 filtered out; finished in 0.00s
+
+     Running unittests src/bin/controleer-bestand.rs (native/target/debug/deps/controleer_bestand-4e7dbdbc642e846e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/documentkern.rs (native/target/debug/deps/documentkern-4da39a6bf1b6accf)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 112 filtered out; finished in 0.00s
+
+     Running ../../vendor/docx-parse/tests/nested_fields.rs (native/target/debug/deps/engine_velden-d25d9dd2858aec08)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_mail-25f008f013961d9f)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 51 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (native/target/debug/deps/open_office_studio_native-c3c3957642e30d0e)
+
+running 4 tests
+test tests::raster_proeven::raster_aanvullend_een_oude_inline_cursoractie_verplaatst_geen_nieuwe_invoer ... ok
+test tests::raster_proeven::raster_aanvullend_focus_op_een_verdwenen_doel_laat_de_nieuwe_editor_werken ... ok
+test tests::raster_proeven::raster_aanvullend_meerdere_unicode_tekens_en_altgr_blijven_in_een_oude_widget_behouden ... ok
+test tests::raster_proeven::raster_aanvullend_reeds_gevalideerde_focus_steelt_geen_later_adresveld ... FAILED
+
+failures:
+
+---- tests::raster_proeven::raster_aanvullend_reeds_gevalideerde_focus_steelt_geen_later_adresveld stdout ----
+
+thread 'tests::raster_proeven::raster_aanvullend_reeds_gevalideerde_focus_steelt_geen_later_adresveld' (2978570) panicked at crates/office-ui/src/tests/raster_proeven.rs:3007:10:
+called `Option::unwrap()` on a `None` value
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    tests::raster_proeven::raster_aanvullend_reeds_gevalideerde_focus_steelt_geen_later_adresveld
+
+test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 106 filtered out; finished in 14.42s
+
+error: test failed, to rerun pass `-p open-office-studio-native --bin open-office-studio-native`
