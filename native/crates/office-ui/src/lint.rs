@@ -460,6 +460,7 @@ pub fn ribbon(app: &App) -> Option<Element<'_, Msg>> {
                         false,
                         kan.then_some(Msg::VoegAlineasSamen)
                     ),
+                    alineastijlen(l, t, kan),
                 ]
                 .spacing(2)
                 .into(),
@@ -539,4 +540,61 @@ fn volgende_grootte(n: f64, groter: bool) -> Option<f64> {
             .unwrap_or((n - 1.).max(1.))
     };
     (doel != n).then_some(doel)
+}
+
+fn alineastijlen(l: Look, t: &Tab, kan: bool) -> Element<'_, Msg> {
+    use office_core::writer_stijlen::Alineastijl;
+    use openaec_ui::design::a11y::{self, Node, Role};
+    let a = t.antwoord.as_ref().expect("geopend Writer-document");
+    let overzicht = &a.beeld.writer_stijlen;
+    let huidig = t.veld().and_then(|v| overzicht.huidig.get(&v.id));
+    let keuze = overzicht.keuzes.iter().find(|s| Some(&s.id) == huidig);
+    let kan = kan && !t.writer_direct.heeft_werk() && !overzicht.keuzes.is_empty();
+    let inhoud: Element<'_, Msg> = if kan {
+        let document = t.id;
+        let hash = a.hash.clone();
+        let alinea = t.veld().unwrap().id.clone();
+        let focus = t.writer_focus.clone();
+        let pagina = t.writer_direct.actief && !t.writer_direct.delegeert;
+        container(w::select(
+            l,
+            overzicht.keuzes.as_slice(),
+            keuze.cloned(),
+            move |stijl: Alineastijl| {
+                // De lijst sluit tijdens deze widgetgebeurtenis. Geef de volgende
+                // toets direct terug aan de bestaande paginacursor, vóór bronwerk.
+                if pagina {
+                    focus.store(true, std::sync::atomic::Ordering::Relaxed);
+                }
+                Msg::Alineastijl {
+                    document,
+                    hash: hash.clone(),
+                    alinea: alinea.clone(),
+                    stijl: stijl.id,
+                }
+            },
+            D::Compact,
+        ))
+        .width(160)
+        .into()
+    } else {
+        container(
+            iced::widget::text(keuze.map(|s| s.naam.as_str()).unwrap_or("Alineastijl")).size(12),
+        )
+        .width(160)
+        .height(24)
+        .padding([0, 8])
+        .align_y(iced::Alignment::Center)
+        .into()
+    };
+    a11y::node(
+        inhoud,
+        Node::new(Role::ComboBox, "Alineastijl")
+            .value(
+                keuze
+                    .map(|s| s.naam.as_str())
+                    .unwrap_or("Geen beschikbare stijl"),
+            )
+            .disabled(!kan),
+    )
 }

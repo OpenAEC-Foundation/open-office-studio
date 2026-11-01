@@ -1,0 +1,63 @@
+diff --git a/native/crates/office-core/src/opmaak.rs b/native/crates/office-core/src/opmaak.rs
+index 015d8ec..b86eae6 100644
+--- a/native/crates/office-core/src/opmaak.rs
++++ b/native/crates/office-core/src/opmaak.rs
+@@ -18,6 +18,7 @@ pub enum Opmaak {
+     Kleur(String),
+     Achtergrond(String),
+     Uitlijning(Uitlijning),
++    Alineastijl(String),
+     Getal(String),
+     Tekstterugloop(bool),
+ }
+@@ -31,6 +32,9 @@ impl Opmaak {
+             Self::Kleur(s) | Self::Achtergrond(s) => {
+                 s.len() == 7 && s.starts_with('#') && s[1..].bytes().all(|b| b.is_ascii_hexdigit())
+             }
++            Self::Alineastijl(s) => {
++                !s.is_empty() && s.len() <= 512 && !s.chars().any(char::is_control)
++            }
+             Self::Getal(s) => !s.is_empty() && s.len() <= 256,
+             _ => true,
+         };
+diff --git a/native/crates/office-core/tests/writer_opmaak.rs b/native/crates/office-core/tests/writer_opmaak.rs
+index 87c3dbb..c22dbe1 100644
+--- a/native/crates/office-core/tests/writer_opmaak.rs
++++ b/native/crates/office-core/tests/writer_opmaak.rs
+@@ -510,3 +510,36 @@ fn lege_invoegopmaak_lettervelden_cursor_volgt_het_gekozen_lege_letterformaat()
+     assert_eq!(b.velden[0].opmaak.grootte, Some(48.));
+     bewaar_lege_opmaak("writer-lege-48-punten.docx", &s.bron());
+ }
++
++
++#[test]
++fn alineastijl_toepassen_behoudt_directe_opmaak_en_undo_is_bronexact() {
++    let bron = stijlbron();
++    let mut s = Sessie::open(Module::Writer, bron.clone()).unwrap();
++    let b = s.weergave(0).unwrap();
++    let v = &b.velden[2];
++    s.bewerk(0, Bewerking::Opmaak {
++        id: v.id.clone(), begin: 0, einde: 0,
++        stijl: Opmaak::Alineastijl("EigenBasis".into()),
++    }).unwrap();
++    let nieuw = s.weergave(0).unwrap();
++    assert_eq!(nieuw.velden[2].tekst, v.tekst);
++    assert!(!nieuw.velden[2].opmaak.vet);
++    assert_eq!(nieuw.velden[2].opmaak.grootte, Some(10.5));
++    assert_eq!(nieuw.velden[2].opmaak.lettertype.as_deref(), Some("Inter"));
++    let Document::Writer(d) = Document::open(Module::Writer, &s.bron()).unwrap() else { unreachable!() };
++    assert_eq!(d.paragraph(&v.id).unwrap().formatting.as_ref().unwrap().style_id.as_deref(), Some("EigenBasis"));
++    let voor = ooxml_opc::unzip_parts(&bron).unwrap();
++    let na = ooxml_opc::unzip_parts(&s.bron()).unwrap();
++    for (naam, bytes) in &voor {
++        if naam != "word/document.xml" { assert_eq!(na.iter().find(|(n,_)| n == naam).unwrap().1, *bytes, "{naam}"); }
++    }
++    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
++        std::fs::create_dir_all(&map).unwrap();
++        std::fs::write(std::path::PathBuf::from(map).join("writer-alineastijl-direct.docx"), s.bron().as_slice()).unwrap();
++    }
++    s.terug().unwrap();
++    assert_eq!(s.bron().as_slice(), bron);
++    s.vooruit().unwrap();
++    assert_eq!(s.weergave(0).unwrap().velden[2].opmaak.grootte, Some(10.5));
++}

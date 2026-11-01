@@ -1,0 +1,1521 @@
+diff --git a/native/crates/office-core/src/document.rs b/native/crates/office-core/src/document.rs
+index 98f1867..4b8ddb7 100644
+--- a/native/crates/office-core/src/document.rs
++++ b/native/crates/office-core/src/document.rs
+@@ -92,6 +92,7 @@ pub struct Weergave {
+     pub bewerkingsbeperking: Option<String>,
+     pub writer_opmaak:
+         std::sync::Arc<std::collections::HashMap<String, Vec<crate::writer_opmaak::OpmaakBereik>>>,
++    pub writer_stijlen: std::sync::Arc<crate::writer_stijlen::Overzicht>,
+     pub writer_frame: Option<std::sync::Arc<crate::writer_cursor::InteractieFrame>>,
+ }
+ /// Eén vervanging in Unicode-tekens, ten opzichte van de vorige stap.
+@@ -392,6 +393,7 @@ impl Document {
+             bewerkingsbeperking: None,
+             writer_opmaak: Default::default(),
+             writer_frame: None,
++            writer_stijlen: Default::default(),
+         };
+         match self {
+             Self::Writer(d) => {
+@@ -439,6 +441,7 @@ impl Document {
+                     });
+                 }
+                 beeld.writer_opmaak = std::sync::Arc::new(bereiken);
++                beeld.writer_stijlen = std::sync::Arc::new(crate::writer_stijlen::overzicht(d));
+                 let woorden = d
+                     .paragraphs()
+                     .iter()
+diff --git a/native/crates/office-core/src/lib.rs b/native/crates/office-core/src/lib.rs
+index b1810d5..39cd36f 100644
+--- a/native/crates/office-core/src/lib.rs
++++ b/native/crates/office-core/src/lib.rs
+@@ -20,6 +20,7 @@ pub mod writer_document;
+ pub mod writer_navigatie;
+ pub mod writer_opmaak;
+ pub mod writer_pagina;
++pub mod writer_stijlen;
+ mod writer_tekst;
+ pub mod writer_zoeken;
+ pub const VERSIE: &str = env!("CARGO_PKG_VERSION");
+diff --git a/native/crates/office-core/src/opmaak.rs b/native/crates/office-core/src/opmaak.rs
+index 015d8ec..b86eae6 100644
+--- a/native/crates/office-core/src/opmaak.rs
++++ b/native/crates/office-core/src/opmaak.rs
+@@ -18,6 +18,7 @@ pub enum Opmaak {
+     Kleur(String),
+     Achtergrond(String),
+     Uitlijning(Uitlijning),
++    Alineastijl(String),
+     Getal(String),
+     Tekstterugloop(bool),
+ }
+@@ -31,6 +32,9 @@ impl Opmaak {
+             Self::Kleur(s) | Self::Achtergrond(s) => {
+                 s.len() == 7 && s.starts_with('#') && s[1..].bytes().all(|b| b.is_ascii_hexdigit())
+             }
++            Self::Alineastijl(s) => {
++                !s.is_empty() && s.len() <= 512 && !s.chars().any(char::is_control)
++            }
+             Self::Getal(s) => !s.is_empty() && s.len() <= 256,
+             _ => true,
+         };
+diff --git a/native/crates/office-core/src/writer_document.rs b/native/crates/office-core/src/writer_document.rs
+index 825a62e..0ebdd1d 100644
+--- a/native/crates/office-core/src/writer_document.rs
++++ b/native/crates/office-core/src/writer_document.rs
+@@ -8,6 +8,7 @@ use std::ops::{Deref, DerefMut};
+ pub struct WriterDocument {
+     document: Document,
+     beperking: Option<String>,
++    dubbele_stijlen: std::collections::HashSet<String>,
+     layoutbron: std::cell::OnceCell<std::sync::Arc<Vec<u8>>>,
+ }
+ impl WriterDocument {
+@@ -15,9 +16,13 @@ impl WriterDocument {
+         Ok(Self {
+             document,
+             beperking: lees_beperking(bron)?,
++            dubbele_stijlen: crate::writer_stijlen::dubbele_ids(bron)?,
+             layoutbron: std::cell::OnceCell::new(),
+         })
+     }
++    pub(crate) fn dubbele_stijlen(&self) -> &std::collections::HashSet<String> {
++        &self.dubbele_stijlen
++    }
+     pub fn bewerkingsbeperking(&self) -> Option<&str> {
+         self.beperking.as_deref()
+     }
+diff --git a/native/crates/office-core/src/writer_tekst.rs b/native/crates/office-core/src/writer_tekst.rs
+index 4d0bb29..ab2215b 100644
+--- a/native/crates/office-core/src/writer_tekst.rs
++++ b/native/crates/office-core/src/writer_tekst.rs
+@@ -578,7 +578,7 @@ fn pas_formatering_toe(
+ 
+ /// Aantallen in Unicode-tekens; nooit bytes of halve UTF-16-surrogaten.
+ pub fn opmaak(
+-    d: &mut docx::Document,
++    d: &mut crate::writer_document::WriterDocument,
+     id: &str,
+     begin: usize,
+     einde: usize,
+@@ -597,7 +597,10 @@ pub fn opmaak(
+     if begin > einde || einde > lengte {
+         return Err(Fout::Document("Tekstselectie valt buiten de alinea".into()));
+     }
+-    if let O::Uitlijning(a) = stijl {
++    if let O::Alineastijl(id) = stijl {
++        crate::writer_stijlen::controleer(d, id)?;
++        p.formatting.get_or_insert_with(Default::default).style_id = Some(id.clone());
++    } else if let O::Uitlijning(a) = stijl {
+         p.formatting.get_or_insert_with(Default::default).alignment = Some(
+             match a {
+                 U::Links => "left",
+diff --git a/native/crates/office-core/tests/fixtures/controleer.py b/native/crates/office-core/tests/fixtures/controleer.py
+index 130034b..9d6a28c 100644
+--- a/native/crates/office-core/tests/fixtures/controleer.py
++++ b/native/crates/office-core/tests/fixtures/controleer.py
+@@ -409,3 +409,24 @@ with ZipFile(map/'writer-lege-48-punten.docx') as z:
+         maat=alinea.find(pad)
+         assert maat is not None and maat.attrib[w+'val']=='96'
+ print('Lege Writer-cursor: 48 punten blijven in zowel run als alineamarkering onafhankelijk bewaard.')
++
++
++# Alineastijlen blijven brondefinities; directe runopmaak wordt niet afgevlakt.
++d=Document(map/'writer-alineastijl-direct.docx')
++p=next(p for p in d.paragraphs if p.text=='Directe opmaak')
++assert p.style.style_id=='EigenBasis'
++assert p.style.font.name=='Inter' and p.style.font.size.pt==20
++assert p.runs[0].bold is False and p.runs[0].font.size.pt==10.5
++assert [p.style.style_id for p in d.paragraphs[:2]]==['EigenKop','EigenKop']
++d=Document(map/'writer-alineastijl-lint.docx')
++p=next(p for p in d.paragraphs if p.text=='Links 🏠 9café rechts')
++assert p.style.style_id=='EigenKop' and p.style.name=='Kop 1'
++assert p.style.font.name=='Inter' and p.style.font.size.pt==20
++assert any(r.bold for r in p.runs if 'Links' in r.text)
++assert all(r.italic for r in p.runs if 'café rechts' in r.text)
++assert len(d.sections)==2 and len(d.tables)==1
++assert d.sections[0].header.paragraphs[0].text=='Vaste koptekst'
++assert d.sections[0].footer.paragraphs[0].text=='Vaste voettekst'
++assert d.tables[0].cell(0,0).text=='Cel één\nTweede celalinea'
++assert d.tables[0].cell(0,1).text=='Cel twee'
++print('Writer-alineastijlen: beide bewaarde DOCX onafhankelijk goedgekeurd, inclusief stijl-ID, stijllettertype/-grootte, directe runopmaak en tabel-/sectie-/kopvoetbehoud.')
+diff --git a/native/crates/office-core/tests/writer_beveiliging.rs b/native/crates/office-core/tests/writer_beveiliging.rs
+index 51f0da0..846789d 100644
+--- a/native/crates/office-core/tests/writer_beveiliging.rs
++++ b/native/crates/office-core/tests/writer_beveiliging.rs
+@@ -39,6 +39,12 @@ fn opdrachten(id: &str) -> Vec<Bewerking> {
+             einde: 1,
+             stijl: Opmaak::Vet(false),
+         },
++        Bewerking::Opmaak {
++            id: id.into(),
++            begin: 0,
++            einde: 0,
++            stijl: Opmaak::Alineastijl("Normal".into()),
++        },
+         Bewerking::Alinea {
+             id: id.into(),
+             actie: AlineaActie::Splits { positie: 1 },
+diff --git a/native/crates/office-core/tests/writer_opmaak.rs b/native/crates/office-core/tests/writer_opmaak.rs
+index 87c3dbb..5650b41 100644
+--- a/native/crates/office-core/tests/writer_opmaak.rs
++++ b/native/crates/office-core/tests/writer_opmaak.rs
+@@ -510,3 +510,250 @@ fn lege_invoegopmaak_lettervelden_cursor_volgt_het_gekozen_lege_letterformaat()
+     assert_eq!(b.velden[0].opmaak.grootte, Some(48.));
+     bewaar_lege_opmaak("writer-lege-48-punten.docx", &s.bron());
+ }
++
++#[test]
++fn alineastijl_toepassen_behoudt_directe_opmaak_en_undo_is_bronexact() {
++    let bron = stijlbron();
++    let mut s = Sessie::open(Module::Writer, bron.clone()).unwrap();
++    let b = s.weergave(0).unwrap();
++    let v = &b.velden[2];
++    s.bewerk(
++        0,
++        Bewerking::Opmaak {
++            id: v.id.clone(),
++            begin: 0,
++            einde: 0,
++            stijl: Opmaak::Alineastijl("EigenBasis".into()),
++        },
++    )
++    .unwrap();
++    let nieuw = s.weergave(0).unwrap();
++    assert_eq!(nieuw.velden[2].tekst, v.tekst);
++    assert!(!nieuw.velden[2].opmaak.vet);
++    assert_eq!(nieuw.velden[2].opmaak.grootte, Some(10.5));
++    assert_eq!(nieuw.velden[2].opmaak.lettertype.as_deref(), Some("Inter"));
++    let Document::Writer(d) = Document::open(Module::Writer, &s.bron()).unwrap() else {
++        unreachable!()
++    };
++    assert_eq!(
++        d.paragraph(&v.id)
++            .unwrap()
++            .formatting
++            .as_ref()
++            .unwrap()
++            .style_id
++            .as_deref(),
++        Some("EigenBasis")
++    );
++    let voor = ooxml_opc::unzip_parts(&bron).unwrap();
++    let na = ooxml_opc::unzip_parts(&s.bron()).unwrap();
++    for (naam, bytes) in &voor {
++        if naam != "word/document.xml" {
++            assert_eq!(
++                na.iter().find(|(n, _)| n == naam).unwrap().1,
++                *bytes,
++                "{naam}"
++            );
++        }
++    }
++    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
++        std::fs::create_dir_all(&map).unwrap();
++        std::fs::write(
++            std::path::PathBuf::from(map).join("writer-alineastijl-direct.docx"),
++            s.bron().as_slice(),
++        )
++        .unwrap();
++    }
++    s.terug().unwrap();
++    assert_eq!(s.bron().as_slice(), bron);
++    s.vooruit().unwrap();
++    assert_eq!(s.weergave(0).unwrap().velden[2].opmaak.grootte, Some(10.5));
++}
++
++fn met_extra_stijlen(bron: &[u8], extra: &str) -> Vec<u8> {
++    let mut delen = ooxml_opc::unzip_parts(bron).unwrap();
++    let (_, xml) = delen
++        .iter_mut()
++        .find(|(n, _)| n == "word/styles.xml")
++        .unwrap();
++    *xml = String::from_utf8(xml.clone())
++        .unwrap()
++        .replace("</w:styles>", &format!("{extra}</w:styles>"))
++        .into_bytes();
++    ooxml_opc::rezip_parts(&delen).unwrap()
++}
++
++#[test]
++fn alineastijl_catalogus_leest_brondefinities_en_weigert_onveilige_ketens_zonder_mutatie() {
++    let extra = r#"
++<w:style w:type="paragraph" w:styleId="OntbrekendeBasis"><w:basedOn w:val="BestaatNiet"/></w:style>
++<w:style w:type="paragraph" w:styleId="KringEen"><w:basedOn w:val="KringTwee"/></w:style>
++<w:style w:type="paragraph" w:styleId="KringTwee"><w:basedOn w:val="KringEen"/></w:style>
++<w:style w:type="paragraph" w:styleId="Tekenbasis"><w:basedOn w:val="EigenNadruk"/></w:style>
++<w:style w:type="paragraph" w:styleId="Dubbel"/><w:style w:type="paragraph" w:styleId="Dubbel"/>
++<w:style w:type="paragraph" w:styleId="ErftDubbel"><w:basedOn w:val="Dubbel"/></w:style>
++"#;
++    let bron = met_extra_stijlen(&stijlbron(), extra);
++    let mut s = Sessie::open(Module::Writer, bron.clone()).unwrap();
++    let b = s.weergave(0).unwrap();
++    let stijl = b
++        .writer_stijlen
++        .keuzes
++        .iter()
++        .find(|s| s.id == "EigenKop")
++        .unwrap();
++    assert_eq!(stijl.naam, "Eigen kop");
++    assert_eq!(
++        b.writer_stijlen
++            .huidig
++            .get(&b.velden[0].id)
++            .map(String::as_str),
++        Some("EigenKop")
++    );
++    let hash = s.bron_hash().to_owned();
++    for id in [
++        "BestaatNiet",
++        "EigenNadruk",
++        "OntbrekendeBasis",
++        "KringEen",
++        "KringTwee",
++        "Tekenbasis",
++        "Dubbel",
++        "ErftDubbel",
++        "",
++        "verkeerd\n",
++    ] {
++        assert!(!b.writer_stijlen.keuzes.iter().any(|s| s.id == id), "{id}");
++        assert!(
++            s.bewerk(
++                0,
++                Bewerking::Opmaak {
++                    id: b.velden[0].id.clone(),
++                    begin: 0,
++                    einde: 0,
++                    stijl: Opmaak::Alineastijl(id.into())
++                }
++            )
++            .is_err(),
++            "{id}"
++        );
++        assert_eq!(s.bron().as_slice(), bron);
++        assert_eq!(s.bron_hash(), hash);
++        assert!(!s.kan_terug() && !s.kan_vooruit());
++    }
++}
++
++#[test]
++fn alineastijl_erfenis_werkt_op_lege_alinea_en_in_een_tabel() {
++    let bron = met_extra_stijlen(
++        include_bytes!("fixtures/writer-structuur.docx"),
++        r#"<w:style w:type="paragraph" w:styleId="EigenGroot"><w:name w:val="Eigen groot"/><w:rPr><w:sz w:val="48"/><w:rFonts w:ascii="Inter" w:hAnsi="Inter"/></w:rPr></w:style>"#,
++    );
++    let mut s = Sessie::open(Module::Writer, bron.clone()).unwrap();
++    let b = s.weergave(0).unwrap();
++    let rijk = b
++        .velden
++        .iter()
++        .find(|v| v.tekst == "Links 🏠 café rechts")
++        .unwrap();
++    s.bewerk(
++        0,
++        Bewerking::Alinea {
++            id: rijk.id.clone(),
++            actie: office_core::writer::AlineaActie::Splits {
++                positie: rijk.tekst.chars().count(),
++            },
++        },
++    )
++    .unwrap();
++    let gesplitst = s.bron();
++    let b = s.weergave(0).unwrap();
++    let leeg = &b.velden[b.velden.iter().position(|v| v.id == rijk.id).unwrap() + 1];
++    assert!(leeg.tekst.is_empty());
++    s.bewerk(
++        0,
++        Bewerking::Opmaak {
++            id: leeg.id.clone(),
++            begin: 0,
++            einde: 0,
++            stijl: Opmaak::Alineastijl("EigenGroot".into()),
++        },
++    )
++    .unwrap();
++    let n = s.weergave(0).unwrap();
++    let v = n.velden.iter().find(|v| v.id == leeg.id).unwrap();
++    assert_eq!(v.opmaak.grootte, Some(24.));
++    assert_eq!(v.opmaak.lettertype.as_deref(), Some("Inter"));
++    let leeg_bron = s.bron();
++    let opnieuw = Sessie::open(Module::Writer, leeg_bron.as_ref().clone()).unwrap();
++    assert_eq!(
++        opnieuw
++            .weergave(0)
++            .unwrap()
++            .writer_stijlen
++            .huidig
++            .get(&leeg.id)
++            .map(String::as_str),
++        Some("EigenGroot")
++    );
++    s.terug().unwrap();
++    assert_eq!(s.bron().as_slice(), gesplitst.as_slice());
++    let cel = b.velden.iter().find(|v| v.tekst == "Cel één").unwrap();
++    s.bewerk(
++        0,
++        Bewerking::Opmaak {
++            id: cel.id.clone(),
++            begin: 0,
++            einde: 0,
++            stijl: Opmaak::Alineastijl("EigenGroot".into()),
++        },
++    )
++    .unwrap();
++    let n = s.weergave(0).unwrap();
++    assert_eq!(
++        n.writer_stijlen.huidig.get(&cel.id).map(String::as_str),
++        Some("EigenGroot")
++    );
++    assert_eq!(
++        n.velden
++            .iter()
++            .find(|v| v.id == cel.id)
++            .unwrap()
++            .opmaak
++            .grootte,
++        Some(24.)
++    );
++    assert_eq!(
++        n.velden.iter().find(|v| v.id == rijk.id).unwrap().tekst,
++        rijk.tekst
++    );
++    s.terug().unwrap();
++    assert_eq!(s.bron().as_slice(), gesplitst.as_slice());
++    s.terug().unwrap();
++    assert_eq!(s.bron().as_slice(), bron);
++}
++
++#[test]
++fn alineastijl_gelezen_standaardstijl_en_ontbrekende_keuze_worden_niet_verzonnen() {
++    let s = Sessie::open(Module::Writer, BRON.to_vec()).unwrap();
++    let b = s.weergave(0).unwrap();
++    assert!(b.writer_stijlen.keuzes.iter().any(|s| s.id == "Normal"));
++    assert_eq!(
++        b.writer_stijlen
++            .huidig
++            .get(&b.velden[1].id)
++            .map(String::as_str),
++        Some("Normal")
++    );
++    assert_eq!(s.bron().as_slice(), BRON);
++    assert!(!s.kan_terug());
++    let zonder = met_extra_stijlen(BRON, "");
++    let mut delen = ooxml_opc::unzip_parts(&zonder).unwrap();
++    delen.retain(|(n, _)| n != "word/styles.xml");
++    let bron = ooxml_opc::rezip_parts(&delen).unwrap();
++    let s = Sessie::open(Module::Writer, bron.clone()).unwrap();
++    let b = s.weergave(0).unwrap();
++    assert!(b.writer_stijlen.keuzes.is_empty());
++    assert!(!b.writer_stijlen.huidig.contains_key(&b.velden[1].id));
++    assert_eq!(s.bron().as_slice(), bron);
++}
+diff --git a/native/crates/office-ui/src/lint.rs b/native/crates/office-ui/src/lint.rs
+index e2c4b55..97d5366 100644
+--- a/native/crates/office-ui/src/lint.rs
++++ b/native/crates/office-ui/src/lint.rs
+@@ -460,6 +460,7 @@ pub fn ribbon(app: &App) -> Option<Element<'_, Msg>> {
+                         false,
+                         kan.then_some(Msg::VoegAlineasSamen)
+                     ),
++                    alineastijlen(l, t, kan),
+                 ]
+                 .spacing(2)
+                 .into(),
+@@ -540,3 +541,60 @@ fn volgende_grootte(n: f64, groter: bool) -> Option<f64> {
+     };
+     (doel != n).then_some(doel)
+ }
++
++fn alineastijlen(l: Look, t: &Tab, kan: bool) -> Element<'_, Msg> {
++    use office_core::writer_stijlen::Alineastijl;
++    use openaec_ui::design::a11y::{self, Node, Role};
++    let a = t.antwoord.as_ref().expect("geopend Writer-document");
++    let overzicht = &a.beeld.writer_stijlen;
++    let huidig = t.veld().and_then(|v| overzicht.huidig.get(&v.id));
++    let keuze = overzicht.keuzes.iter().find(|s| Some(&s.id) == huidig);
++    let kan = kan && !t.writer_direct.heeft_werk() && !overzicht.keuzes.is_empty();
++    let inhoud: Element<'_, Msg> = if kan {
++        let document = t.id;
++        let hash = a.hash.clone();
++        let alinea = t.veld().unwrap().id.clone();
++        let focus = t.writer_focus.clone();
++        let pagina = t.writer_direct.actief && !t.writer_direct.delegeert;
++        container(w::select(
++            l,
++            overzicht.keuzes.as_slice(),
++            keuze.cloned(),
++            move |stijl: Alineastijl| {
++                // De lijst sluit tijdens deze widgetgebeurtenis. Geef de volgende
++                // toets direct terug aan de bestaande paginacursor, vóór bronwerk.
++                if pagina {
++                    focus.store(true, std::sync::atomic::Ordering::Relaxed);
++                }
++                Msg::Alineastijl {
++                    document,
++                    hash: hash.clone(),
++                    alinea: alinea.clone(),
++                    stijl: stijl.id,
++                }
++            },
++            D::Compact,
++        ))
++        .width(160)
++        .into()
++    } else {
++        container(
++            iced::widget::text(keuze.map(|s| s.naam.as_str()).unwrap_or("Alineastijl")).size(12),
++        )
++        .width(160)
++        .height(24)
++        .padding([0, 8])
++        .align_y(iced::Alignment::Center)
++        .into()
++    };
++    a11y::node(
++        inhoud,
++        Node::new(Role::ComboBox, "Alineastijl")
++            .value(
++                keuze
++                    .map(|s| s.naam.as_str())
++                    .unwrap_or("Geen beschikbare stijl"),
++            )
++            .disabled(!kan),
++    )
++}
+diff --git a/native/crates/office-ui/src/main.rs b/native/crates/office-ui/src/main.rs
+index 1ec132c..b053e36 100644
+--- a/native/crates/office-ui/src/main.rs
++++ b/native/crates/office-ui/src/main.rs
+@@ -114,6 +114,12 @@ enum Msg {
+         document: u64,
+         nummer: u64,
+     },
++    Alineastijl {
++        document: u64,
++        hash: String,
++        alinea: String,
++        stijl: String,
++    },
+     Opmaak(Opmaak),
+     Structuur(Structuur),
+     Pagina(office_core::writer_pagina::PaginaActie),
+@@ -1154,6 +1160,27 @@ impl App {
+                     t.lettertype = g;
+                 }
+             }
++            Msg::Alineastijl {
++                document,
++                hash,
++                alinea,
++                stijl,
++            } => {
++                // Een oude keuzelijst mag geen andere tab, gewijzigde bron of
++                // inmiddels gekozen alinea raken.
++                if self.tab().is_some_and(|t| {
++                    t.id == document
++                        && !t.bezig
++                        && !t.concept
++                        && !t.writer_direct.heeft_werk()
++                        && t.antwoord
++                            .as_ref()
++                            .is_some_and(|a| a.hash == hash && a.beeld.module == Module::Writer)
++                        && t.veld().is_some_and(|v| v.id == alinea && v.bewerkbaar)
++                }) {
++                    return self.update(Msg::Opmaak(Opmaak::Alineastijl(stijl)));
++                }
++            }
+             Msg::Opmaak(stijl) => {
+                 if raster_invoer::neemt_over(self) {
+                     return raster_ui::update(self, raster_ui::Bericht::Opmaak(stijl));
+diff --git a/native/crates/office-ui/src/tests/raster_proeven.rs b/native/crates/office-ui/src/tests/raster_proeven.rs
+index 3c1a94f..a6ff87e 100644
+--- a/native/crates/office-ui/src/tests/raster_proeven.rs
++++ b/native/crates/office-ui/src/tests/raster_proeven.rs
+@@ -3801,3 +3801,325 @@ fn writer_lintfocus_na_een_opmaakklik_neemt_een_later_lettertypeveld_geen_docume
+     assert_eq!(*p.bron(), *bron);
+     assert_eq!(p.app.tab().unwrap().editor.text(), "9");
+ }
++
++impl Proef {
++    fn keuzelijst_grens(&mut self) -> iced::Rectangle {
++        let mut element = self.app.view();
++        self.boom.diff(element.as_widget());
++        let node = element.as_widget_mut().layout(
++            &mut self.boom,
++            &self.renderer,
++            &layout::Limits::new(Size::ZERO, Size::new(1440., 900.)),
++        );
++        let viewport = iced::Rectangle::with_size(Size::new(1440., 900.));
++        let mut overlay = element
++            .as_widget_mut()
++            .overlay(
++                &mut self.boom,
++                Layout::new(&node),
++                &self.renderer,
++                &viewport,
++                iced::Vector::ZERO,
++            )
++            .expect("Werkelijk geopende keuzelijst");
++        let lijst = overlay
++            .as_overlay_mut()
++            .layout(&self.renderer, Size::new(1440., 900.));
++        fn vind(node: &layout::Node) -> Option<iced::Rectangle> {
++            let r = node.bounds();
++            if r.width < 500. && r.height < 200. && r.width > 100. && r.height > 30. {
++                return Some(r);
++            }
++            node.children().iter().find_map(vind)
++        }
++        vind(&lijst).expect("Twee echte zichtbare stijlopties")
++    }
++    fn keuzelijst_gebeurtenissen(&mut self, events: impl IntoIterator<Item = iced::Event>) {
++        let events: Vec<_> = events.into_iter().collect();
++        let mut berichten = vec![];
++        {
++            let maat = Size::new(1440., 900.);
++            let viewport = iced::Rectangle::with_size(maat);
++            let mut element = self.app.view();
++            self.boom.diff(element.as_widget());
++            let node = element.as_widget_mut().layout(
++                &mut self.boom,
++                &self.renderer,
++                &layout::Limits::new(Size::ZERO, maat),
++            );
++            let mut statussen = vec![false; events.len()];
++            let mut cursor = iced::mouse::Cursor::Available(self.muis);
++            // Zoals iced_runtime::UserInterface: eerst alle gebeurtenissen op
++            // de echte overlay, daarna alleen de niet-afgevangen op de basis.
++            if let Some(overlay) = element.as_widget_mut().overlay(
++                &mut self.boom,
++                Layout::new(&node),
++                &self.renderer,
++                &viewport,
++                iced::Vector::ZERO,
++            ) {
++                let mut overlay = iced::advanced::overlay::Nested::new(overlay);
++                let lijst = overlay.layout(&self.renderer, maat);
++                for (event, gevangen) in events.iter().zip(&mut statussen) {
++                    let mut shell = iced::advanced::Shell::new(&mut berichten);
++                    overlay.update(
++                        event,
++                        Layout::new(&lijst),
++                        cursor,
++                        &self.renderer,
++                        &mut self.klembord,
++                        &mut shell,
++                    );
++                    *gevangen = shell.is_event_captured();
++                }
++                if overlay.mouse_interaction(Layout::new(&lijst), cursor, &self.renderer)
++                    != iced::mouse::Interaction::None
++                {
++                    cursor = iced::mouse::Cursor::Unavailable;
++                }
++            }
++            for (event, gevangen) in events.iter().zip(statussen) {
++                if !gevangen {
++                    let mut shell = iced::advanced::Shell::new(&mut berichten);
++                    element.as_widget_mut().update(
++                        &mut self.boom,
++                        event,
++                        Layout::new(&node),
++                        cursor,
++                        &self.renderer,
++                        &mut self.klembord,
++                        &mut shell,
++                        &viewport,
++                    );
++                }
++            }
++        }
++        for bericht in berichten {
++            self.bericht(bericht);
++        }
++    }
++}
++fn writer_stijlproef() -> Proef {
++    Proef::met_app(app_met_werkdraad(
++        Module::Writer,
++        include_bytes!("../../../office-core/tests/fixtures/writer-stijlen.docx"),
++    ))
++}
++fn open_stijllijst(p: &mut Proef) -> iced::Rectangle {
++    let grens = p
++        .toegankelijkheid()
++        .nodes
++        .into_iter()
++        .find(|n| {
++            n.node.name == "Alineastijl" && n.node.role == openaec_ui::design::a11y::Role::ComboBox
++        })
++        .unwrap()
++        .bounds;
++    p.klik(iced::Point::new(grens.center_x(), grens.center_y()));
++    p.keuzelijst_grens()
++}
++#[test]
++fn alineastijl_echte_keuze_en_directe_toets_behouden_cursor_runs_en_bronexacte_undo() {
++    use iced::{Event, keyboard as k, mouse};
++    let mut p = writer_stijlproef();
++    let tekst = "Links 🏠 café rechts";
++    let punt = writer_punt(&mut p, tekst, 8);
++    p.klik(punt);
++    let origineel = p.bron();
++    let lijst = open_stijllijst(&mut p);
++    p.muis = iced::Point::new(lijst.center_x(), lijst.y + lijst.height * 0.75);
++    p.keuzelijst_gebeurtenissen([
++        Event::Mouse(mouse::Event::CursorMoved { position: p.muis }),
++        Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
++        Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)),
++        Event::Keyboard(k::Event::KeyPressed {
++            key: k::Key::Character("9".into()),
++            modified_key: k::Key::Character("9".into()),
++            physical_key: k::key::Physical::Unidentified(k::key::NativeCode::Unidentified),
++            location: k::Location::Standard,
++            modifiers: k::Modifiers::empty(),
++            text: Some("9".into()),
++            repeat: false,
++        }),
++    ]);
++    let b = Sessie::open(Module::Writer, p.bron().as_ref().clone())
++        .unwrap()
++        .weergave(0)
++        .unwrap();
++    let v = b
++        .velden
++        .iter()
++        .find(|v| v.tekst == "Links 🏠 9café rechts")
++        .unwrap();
++    assert_eq!(
++        b.writer_stijlen.huidig.get(&v.id).map(String::as_str),
++        Some("EigenKop")
++    );
++    assert_eq!(v.opmaak.grootte, Some(20.));
++    assert!(
++        p.app
++            .tab()
++            .unwrap()
++            .writer_focus
++            .load(std::sync::atomic::Ordering::Relaxed)
++    );
++    assert_eq!(
++        lint::tekenoffset(
++            &p.app.tab().unwrap().editor,
++            p.app.tab().unwrap().editor.cursor().position
++        ),
++        9
++    );
++    let n = p
++        .toegankelijkheid()
++        .nodes
++        .into_iter()
++        .find(|n| n.node.name == "Alineastijl")
++        .unwrap();
++    assert_eq!(n.node.value.as_deref(), Some("Kop 1"));
++    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
++        std::fs::create_dir_all(&map).unwrap();
++        std::fs::write(
++            PathBuf::from(map).join("writer-alineastijl-lint.docx"),
++            p.bron().as_slice(),
++        )
++        .unwrap();
++    }
++    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
++        std::fs::create_dir_all(&map).unwrap();
++        p.verbeeld()
++            .save_png(PathBuf::from(map).join("writer-alineastijl-lint.png"))
++            .unwrap();
++    }
++    p.bericht(Msg::Terug);
++    assert_eq!(p.app.tab().unwrap().editor.text(), tekst);
++    let na_stijl = p.bron();
++    assert_ne!(na_stijl.as_slice(), origineel.as_slice());
++    p.bericht(Msg::Terug);
++    assert_eq!(p.bron().as_slice(), origineel.as_slice());
++    p.bericht(Msg::Vooruit);
++    assert_eq!(p.bron().as_slice(), na_stijl.as_slice());
++}
++#[test]
++fn alineastijl_open_lijst_typen_en_annuleren_wijzigen_de_bron_niet() {
++    use iced::{Event, keyboard as k, mouse};
++    let mut p = writer_stijlproef();
++    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
++    p.klik(punt);
++    let bron = p.bron();
++    open_stijllijst(&mut p);
++    p.keuzelijst_gebeurtenissen([Event::Keyboard(k::Event::KeyPressed {
++        key: k::Key::Character("9".into()),
++        modified_key: k::Key::Character("9".into()),
++        physical_key: k::key::Physical::Unidentified(k::key::NativeCode::Unidentified),
++        location: k::Location::Standard,
++        modifiers: k::Modifiers::empty(),
++        text: Some("9".into()),
++        repeat: false,
++    })]);
++    assert_eq!(p.bron().as_slice(), bron.as_slice());
++    p.muis = iced::Point::new(1100., 170.);
++    p.keuzelijst_gebeurtenissen([
++        Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
++        Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)),
++    ]);
++    assert_eq!(p.bron().as_slice(), bron.as_slice());
++    assert!(!p.app.tab().unwrap().antwoord.as_ref().unwrap().terug);
++}
++#[test]
++fn alineastijl_verouderde_keuze_mag_geen_nieuwe_tab_of_andere_alinea_raken() {
++    let mut p = writer_stijlproef();
++    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
++    p.klik(punt);
++    let t = p.app.tab().unwrap();
++    let a = t.antwoord.as_ref().unwrap();
++    let m = Msg::Alineastijl {
++        document: t.id,
++        hash: a.hash.clone(),
++        alinea: t.veld().unwrap().id.clone(),
++        stijl: "EigenKop".into(),
++    };
++    let bron = p.bron();
++    p.bericht(Msg::Veld(0));
++    p.bericht(m.clone());
++    assert_eq!(p.bron().as_slice(), bron.as_slice());
++    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
++    p.klik(punt);
++    p.toets(
++        iced::keyboard::Key::Character("é".into()),
++        iced::keyboard::Modifiers::empty(),
++        Some("é"),
++    );
++    let gewijzigd = p.bron();
++    assert_ne!(gewijzigd.as_slice(), bron.as_slice());
++    p.bericht(m.clone());
++    assert_eq!(p.bron().as_slice(), gewijzigd.as_slice());
++    p.bericht(Msg::Nieuw(Module::Writer));
++    let nieuw = p.bron();
++    p.bericht(m);
++    assert_eq!(p.bron().as_slice(), nieuw.as_slice());
++}
++
++#[test]
++fn alineastijl_enter_en_spatie_in_dezelfde_lijstronde_komen_op_de_pagina() {
++    use iced::{Event, keyboard as k, mouse};
++    for enter in [true, false] {
++        let mut p = writer_stijlproef();
++        let tekst = "Links 🏠 café rechts";
++        let punt = writer_punt(&mut p, tekst, tekst.chars().count());
++        p.klik(punt);
++        p.named(k::key::Named::End);
++        p.named(k::key::Named::Enter);
++        let gesplitst = p.bron();
++        let lijst = open_stijllijst(&mut p);
++        p.muis = iced::Point::new(lijst.center_x(), lijst.y + lijst.height * 0.75);
++        let toets = |key: k::Key, text| {
++            Event::Keyboard(k::Event::KeyPressed {
++                modified_key: key.clone(),
++                key,
++                physical_key: k::key::Physical::Unidentified(k::key::NativeCode::Unidentified),
++                location: k::Location::Standard,
++                modifiers: k::Modifiers::empty(),
++                text,
++                repeat: false,
++            })
++        };
++        p.keuzelijst_gebeurtenissen([
++            Event::Mouse(mouse::Event::CursorMoved { position: p.muis }),
++            Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
++            Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)),
++            toets(
++                k::Key::Named(if enter {
++                    k::key::Named::Enter
++                } else {
++                    k::key::Named::Space
++                }),
++                if enter { None } else { Some(" ".into()) },
++            ),
++            toets(k::Key::Character("9".into()), Some("9".into())),
++        ]);
++        let b = Sessie::open(Module::Writer, p.bron().as_ref().clone())
++            .unwrap()
++            .weergave(0)
++            .unwrap();
++        let plek = b.velden.iter().position(|v| v.tekst == tekst).unwrap();
++        let laatste = if enter { plek + 2 } else { plek + 1 };
++        if enter {
++            assert_eq!(b.velden[plek + 1].tekst, "");
++        }
++        assert_eq!(b.velden[laatste].tekst, if enter { "9" } else { " 9" });
++        for v in &b.velden[plek + 1..=laatste] {
++            assert_eq!(
++                b.writer_stijlen.huidig.get(&v.id).map(String::as_str),
++                Some("EigenKop")
++            );
++            assert_eq!(v.opmaak.grootte, Some(20.));
++        }
++        if enter {
++            p.bericht(Msg::Terug);
++        }
++        p.bericht(Msg::Terug);
++        p.bericht(Msg::Terug);
++        assert_eq!(p.bron().as_slice(), gesplitst.as_slice());
++    }
++}
+diff --git a/native/crates/office-core/src/writer_stijlen.rs b/native/crates/office-core/src/writer_stijlen.rs
+new file mode 100644
+index 0000000..fac57f8
+--- /dev/null
++++ b/native/crates/office-core/src/writer_stijlen.rs
+@@ -0,0 +1,178 @@
++//! Alineastijlen uit de eigen bron; overerving blijft bij de documentengine.
++use crate::document::{Fout, Resultaat};
++use crate::writer_document::WriterDocument;
++use docx_parse::styles::Style;
++use std::collections::{HashMap, HashSet};
++
++#[derive(Debug, Clone, PartialEq, Eq)]
++pub struct Alineastijl {
++    pub id: String,
++    pub naam: String,
++}
++impl std::fmt::Display for Alineastijl {
++    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
++        f.write_str(&self.naam)
++    }
++}
++#[derive(Debug, Clone, Default)]
++pub struct Overzicht {
++    pub keuzes: Vec<Alineastijl>,
++    pub huidig: HashMap<String, String>,
++}
++struct Register<'a> {
++    index: HashMap<&'a str, Option<&'a Style>>,
++}
++impl<'a> Register<'a> {
++    fn nieuw(d: &'a WriterDocument) -> Self {
++        let mut index = HashMap::new();
++        if let Some(s) = &d.model().styles {
++            for stijl in &s.styles {
++                // Een dubbele identificatie is dubbelzinnig, ook als de eerste
++                // definitie wel een alineastijl lijkt te zijn.
++                index
++                    .entry(stijl.style_id.as_str())
++                    .and_modify(|s| *s = None)
++                    .or_insert(Some(stijl));
++            }
++        }
++        // De engine bewaart definities in een map en voegt dubbele ID’s samen.
++        // De oorspronkelijke broncontrole voorkomt een willekeurige keuze.
++        for id in d.dubbele_stijlen() {
++            index.insert(id.as_str(), None);
++        }
++        Self { index }
++    }
++    fn geldig(&self, id: &str) -> bool {
++        let mut gezien = HashSet::new();
++        let mut huidig = id;
++        // Begrens ook de ketencontrole van onbetrouwbare documentinvoer.
++        // Overschrijden geeft geen gedeeltelijk toegepaste stijl.
++        for _ in 0..128 {
++            if !gezien.insert(huidig) {
++                return false;
++            }
++            let Some(Some(s)) = self.index.get(huidig) else {
++                return false;
++            };
++            if s.style_type != "paragraph"
++                || s.style_id.is_empty()
++                || s.style_id.len() > 512
++                || s.style_id.chars().any(char::is_control)
++            {
++                return false;
++            }
++            match s.based_on.as_deref() {
++                Some(basis) => huidig = basis,
++                None => return true,
++            }
++        }
++        false
++    }
++}
++pub fn controleer(d: &WriterDocument, id: &str) -> Resultaat<()> {
++    if Register::nieuw(d).geldig(id) {
++        Ok(())
++    } else {
++        Err(Fout::Document(
++            "Deze alineastijl ontbreekt of heeft geen eenduidige geldige stijlketen".into(),
++        ))
++    }
++}
++pub fn overzicht(d: &WriterDocument) -> Overzicht {
++    let register = Register::nieuw(d);
++    let mut stijlen: Vec<_> = register
++        .index
++        .iter()
++        .filter_map(|(id, s)| s.filter(|_| register.geldig(id)))
++        .collect();
++    stijlen.sort_by(|a, b| {
++        b.default
++            .unwrap_or(false)
++            .cmp(&a.default.unwrap_or(false))
++            .then_with(|| {
++                b.q_format
++                    .unwrap_or(false)
++                    .cmp(&a.q_format.unwrap_or(false))
++            })
++            .then_with(|| {
++                a.ui_priority
++                    .unwrap_or(99.)
++                    .total_cmp(&b.ui_priority.unwrap_or(99.))
++            })
++            .then_with(|| {
++                a.name
++                    .as_deref()
++                    .unwrap_or(&a.style_id)
++                    .cmp(b.name.as_deref().unwrap_or(&b.style_id))
++            })
++            .then_with(|| a.style_id.cmp(&b.style_id))
++    });
++    let mut standaard = stijlen.iter().filter(|s| s.default == Some(true));
++    let terugval = standaard
++        .next()
++        .map(|s| s.style_id.as_str())
++        .filter(|_| standaard.next().is_none());
++    let keuzes = stijlen
++        .iter()
++        .map(|s| {
++            let naam: String = s
++                .name
++                .as_deref()
++                .unwrap_or(&s.style_id)
++                .chars()
++                .filter(|c| !c.is_control())
++                .collect();
++            Alineastijl {
++                id: s.style_id.clone(),
++                naam: if naam.trim().is_empty() {
++                    s.style_id.clone()
++                } else {
++                    naam
++                },
++            }
++        })
++        .collect();
++    let huidig = d
++        .paragraphs()
++        .into_iter()
++        .filter_map(|p| {
++            let stijl = p
++                .formatting
++                .as_ref()
++                .and_then(|f| f.style_id.as_deref())
++                .or(terugval)?;
++            Some((p.para_id.as_ref()?.clone(), stijl.to_owned()))
++        })
++        .collect();
++    Overzicht { keuzes, huidig }
++}
++
++pub(crate) fn dubbele_ids(bron: &[u8]) -> Resultaat<HashSet<String>> {
++    let delen = ooxml_opc::unzip_parts_where(bron, ooxml_opc::MAX_TOTAL_UNCOMPRESSED_BYTES, |n| {
++        n.eq_ignore_ascii_case("word/styles.xml")
++    })
++    .map_err(Fout::Document)?;
++    let mut gezien = HashSet::new();
++    let mut dubbel = HashSet::new();
++    let limieten = docx_parse::xml::ParseLimits::default();
++    for (naam, xml) in delen {
++        let d = docx_parse::parse_xml(
++            &xml,
++            &naam,
++            &mut docx_parse::xml::ParseBudget::new(&limieten),
++        )
++        .map_err(|e| Fout::Document(e.to_string()))?;
++        if let Some(root) = d.root() {
++            for stijl in root.children_named("w", "style") {
++                if let Some(id) = stijl
++                    .attribute(Some("w"), "styleId")
++                    .filter(|s| !s.is_empty())
++                    && !gezien.insert(id.to_owned())
++                {
++                    dubbel.insert(id.to_owned());
++                }
++            }
++        }
++    }
++    Ok(dubbel)
++}
+diff --git a/native/crates/office-core/tests/fixtures/writer-stijlen.docx b/native/crates/office-core/tests/fixtures/writer-stijlen.docx
+new file mode 100644
+index 0000000000000000000000000000000000000000..4e452eeb83ef07c74bdb22d73818cb65cd04eb32
+GIT binary patch
+literal 26239
+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
+
+literal 0
+HcmV?d00001
+

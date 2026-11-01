@@ -114,6 +114,12 @@ enum Msg {
         document: u64,
         nummer: u64,
     },
+    Alineastijl {
+        document: u64,
+        hash: String,
+        alinea: String,
+        stijl: String,
+    },
     Opmaak(Opmaak),
     Structuur(Structuur),
     Pagina(office_core::writer_pagina::PaginaActie),
@@ -1152,6 +1158,27 @@ impl App {
             Msg::Lettertype(g) => {
                 if let Some(t) = self.tab_mut() {
                     t.lettertype = g;
+                }
+            }
+            Msg::Alineastijl {
+                document,
+                hash,
+                alinea,
+                stijl,
+            } => {
+                // Een oude keuzelijst mag geen andere tab, gewijzigde bron of
+                // inmiddels gekozen alinea raken.
+                if self.tab().is_some_and(|t| {
+                    t.id == document
+                        && !t.bezig
+                        && !t.concept
+                        && !t.writer_direct.heeft_werk()
+                        && t.antwoord
+                            .as_ref()
+                            .is_some_and(|a| a.hash == hash && a.beeld.module == Module::Writer)
+                        && t.veld().is_some_and(|v| v.id == alinea && v.bewerkbaar)
+                }) {
+                    return self.update(Msg::Opmaak(Opmaak::Alineastijl(stijl)));
                 }
             }
             Msg::Opmaak(stijl) => {

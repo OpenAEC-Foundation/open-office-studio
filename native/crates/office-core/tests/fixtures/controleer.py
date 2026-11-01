@@ -409,3 +409,24 @@ with ZipFile(map/'writer-lege-48-punten.docx') as z:
         maat=alinea.find(pad)
         assert maat is not None and maat.attrib[w+'val']=='96'
 print('Lege Writer-cursor: 48 punten blijven in zowel run als alineamarkering onafhankelijk bewaard.')
+
+
+# Alineastijlen blijven brondefinities; directe runopmaak wordt niet afgevlakt.
+d=Document(map/'writer-alineastijl-direct.docx')
+p=next(p for p in d.paragraphs if p.text=='Directe opmaak')
+assert p.style.style_id=='EigenBasis'
+assert p.style.font.name=='Inter' and p.style.font.size.pt==20
+assert p.runs[0].bold is False and p.runs[0].font.size.pt==10.5
+assert [p.style.style_id for p in d.paragraphs[:2]]==['EigenKop','EigenKop']
+d=Document(map/'writer-alineastijl-lint.docx')
+p=next(p for p in d.paragraphs if p.text=='Links 🏠 9café rechts')
+assert p.style.style_id=='EigenKop' and p.style.name=='Kop 1'
+assert p.style.font.name=='Inter' and p.style.font.size.pt==20
+assert any(r.bold for r in p.runs if 'Links' in r.text)
+assert all(r.italic for r in p.runs if 'café rechts' in r.text)
+assert len(d.sections)==2 and len(d.tables)==1
+assert d.sections[0].header.paragraphs[0].text=='Vaste koptekst'
+assert d.sections[0].footer.paragraphs[0].text=='Vaste voettekst'
+assert d.tables[0].cell(0,0).text=='Cel één\nTweede celalinea'
+assert d.tables[0].cell(0,1).text=='Cel twee'
+print('Writer-alineastijlen: beide bewaarde DOCX onafhankelijk goedgekeurd, inclusief stijl-ID, stijllettertype/-grootte, directe runopmaak en tabel-/sectie-/kopvoetbehoud.')

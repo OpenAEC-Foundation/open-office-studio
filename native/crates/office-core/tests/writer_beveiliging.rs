@@ -39,6 +39,12 @@ fn opdrachten(id: &str) -> Vec<Bewerking> {
             einde: 1,
             stijl: Opmaak::Vet(false),
         },
+        Bewerking::Opmaak {
+            id: id.into(),
+            begin: 0,
+            einde: 0,
+            stijl: Opmaak::Alineastijl("Normal".into()),
+        },
         Bewerking::Alinea {
             id: id.into(),
             actie: AlineaActie::Splits { positie: 1 },

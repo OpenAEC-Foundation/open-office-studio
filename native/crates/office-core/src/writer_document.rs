@@ -8,6 +8,7 @@ use std::ops::{Deref, DerefMut};
 pub struct WriterDocument {
     document: Document,
     beperking: Option<String>,
+    dubbele_stijlen: std::collections::HashSet<String>,
     layoutbron: std::cell::OnceCell<std::sync::Arc<Vec<u8>>>,
 }
 impl WriterDocument {
@@ -15,8 +16,12 @@ impl WriterDocument {
         Ok(Self {
             document,
             beperking: lees_beperking(bron)?,
+            dubbele_stijlen: crate::writer_stijlen::dubbele_ids(bron)?,
             layoutbron: std::cell::OnceCell::new(),
         })
+    }
+    pub(crate) fn dubbele_stijlen(&self) -> &std::collections::HashSet<String> {
+        &self.dubbele_stijlen
     }
     pub fn bewerkingsbeperking(&self) -> Option<&str> {
         self.beperking.as_deref()

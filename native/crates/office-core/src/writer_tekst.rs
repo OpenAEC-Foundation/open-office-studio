@@ -578,7 +578,7 @@ fn pas_formatering_toe(
 
 /// Aantallen in Unicode-tekens; nooit bytes of halve UTF-16-surrogaten.
 pub fn opmaak(
-    d: &mut docx::Document,
+    d: &mut crate::writer_document::WriterDocument,
     id: &str,
     begin: usize,
     einde: usize,
@@ -597,7 +597,10 @@ pub fn opmaak(
     if begin > einde || einde > lengte {
         return Err(Fout::Document("Tekstselectie valt buiten de alinea".into()));
     }
-    if let O::Uitlijning(a) = stijl {
+    if let O::Alineastijl(id) = stijl {
+        crate::writer_stijlen::controleer(d, id)?;
+        p.formatting.get_or_insert_with(Default::default).style_id = Some(id.clone());
+    } else if let O::Uitlijning(a) = stijl {
         p.formatting.get_or_insert_with(Default::default).alignment = Some(
             match a {
                 U::Links => "left",

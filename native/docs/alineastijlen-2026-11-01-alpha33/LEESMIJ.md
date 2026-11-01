@@ -1,0 +1,13 @@
+# Alineastijlen in native Writer
+
+Het lint Start → Alinea toont de alineastijlen uit het geopende document. Een keuze geldt voor de actieve ondersteunde alinea, ook zonder tekstselectie, in een tabelcel of op een lege alinea. De documentengine berekent de overerving. Directe alinea- en runopmaak blijft behouden; de brondefinities worden niet herschreven. Opslaan, heropenen en bronexacte undo/redo zijn gecontroleerd.
+
+De keuzelijst gebruikt de gedeelde OpenAEC-componenten. Kiezen is gebonden aan document-ID, bronhash en alinea. Werkelijke lijstgebeurtenissen en directe vervolgtoetsen worden in één widgetronde aangeboden, vóór toepassingsberichten en focuswerk. Een oude keuze mag geen andere alinea, inmiddels gewijzigde bron of nieuwe tab wijzigen. Typen in een nog open lijst en buiten de lijst annuleren wijzigen het document niet.
+
+De engine voegt dubbele stijl-ID’s al bij import samen. De eerste implementatie miste daardoor een onveilige dubbele definitie; die afkeuring blijft ongewijzigd bewaard. De aansluiting leest daarom eenmalig de oorspronkelijke ID’s. Dubbele ID’s, afgeleide dubbelzinnige ketens, cycli, ontbrekende bases en tekenstijlen zijn geen geldige alineakeuze.
+
+De eerste testopzet had twee ontbrekende leningen; na die testcorrectie reproduceert de minimale API-opzet de ontbrekende uitvoering. De eerste implementeerronde heeft vier geslaagde en één afgekeurde kernproef. De relatieve uitvoermap van die ronde is ongewijzigd verplaatst en geregistreerd. Daarna slagen acht en vervolgens negen gerichte proeven. De tijdelijke eerste proeven tonen nog alpha.32 vóór de versiebump; zij zijn geen bewijs voor de uitgegeven alpha-32-programma’s. De definitieve volledige ronde gebruikt alpha.33: 359 reguliere tests, inclusief 135 UI-tests, zes runtimeproeven, zeven Python-tests, formattering, Clippy, bronpins en onafhankelijke bestands-/conversielezers. Alle 664 bronbestanden blijven vóór en na de volledige ronde bytegelijk.
+
+De eigen invoerfixture is met vaste ZIP-metagegevens bytegelijk herbouwd. Twee bewaarde DOCX worden onafhankelijk teruggelezen. De volledige nieuwe widgetopname en Writer in licht/donker thema zijn visueel geïnspecteerd. Er zijn 56 ruwe native widgetbeelden; dit is geen volledige fysieke GUI-proef. Werkelijke vensterproeven op de nog te bouwen nieuwe releaseprogramma’s blijven afzonderlijk vereist.
+
+Stijlen maken/beheren, selecties over meerdere alinea’s, volledige rijke bediening, uitgebreide corpus- en grensgevallen, andere-platformvensters en volledige toegankelijkheid blijven open. De volledige oorspronkelijke UI-vergelijkingen blijven afgekeurd. Geen volledige migratie of stabiele native vrijgave.

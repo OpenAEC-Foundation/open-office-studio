@@ -18,6 +18,7 @@ pub enum Opmaak {
     Kleur(String),
     Achtergrond(String),
     Uitlijning(Uitlijning),
+    Alineastijl(String),
     Getal(String),
     Tekstterugloop(bool),
 }
@@ -30,6 +31,9 @@ impl Opmaak {
             }
             Self::Kleur(s) | Self::Achtergrond(s) => {
                 s.len() == 7 && s.starts_with('#') && s[1..].bytes().all(|b| b.is_ascii_hexdigit())
+            }
+            Self::Alineastijl(s) => {
+                !s.is_empty() && s.len() <= 512 && !s.chars().any(char::is_control)
             }
             Self::Getal(s) => !s.is_empty() && s.len() <= 256,
             _ => true,

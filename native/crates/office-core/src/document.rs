@@ -92,6 +92,7 @@ pub struct Weergave {
     pub bewerkingsbeperking: Option<String>,
     pub writer_opmaak:
         std::sync::Arc<std::collections::HashMap<String, Vec<crate::writer_opmaak::OpmaakBereik>>>,
+    pub writer_stijlen: std::sync::Arc<crate::writer_stijlen::Overzicht>,
     pub writer_frame: Option<std::sync::Arc<crate::writer_cursor::InteractieFrame>>,
 }
 /// Eén vervanging in Unicode-tekens, ten opzichte van de vorige stap.
@@ -392,6 +393,7 @@ impl Document {
             bewerkingsbeperking: None,
             writer_opmaak: Default::default(),
             writer_frame: None,
+            writer_stijlen: Default::default(),
         };
         match self {
             Self::Writer(d) => {
@@ -439,6 +441,7 @@ impl Document {
                     });
                 }
                 beeld.writer_opmaak = std::sync::Arc::new(bereiken);
+                beeld.writer_stijlen = std::sync::Arc::new(crate::writer_stijlen::overzicht(d));
                 let woorden = d
                     .paragraphs()
                     .iter()

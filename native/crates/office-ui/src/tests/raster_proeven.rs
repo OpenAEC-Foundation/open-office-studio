@@ -3801,3 +3801,325 @@ fn writer_lintfocus_na_een_opmaakklik_neemt_een_later_lettertypeveld_geen_docume
     assert_eq!(*p.bron(), *bron);
     assert_eq!(p.app.tab().unwrap().editor.text(), "9");
 }
+
+impl Proef {
+    fn keuzelijst_grens(&mut self) -> iced::Rectangle {
+        let mut element = self.app.view();
+        self.boom.diff(element.as_widget());
+        let node = element.as_widget_mut().layout(
+            &mut self.boom,
+            &self.renderer,
+            &layout::Limits::new(Size::ZERO, Size::new(1440., 900.)),
+        );
+        let viewport = iced::Rectangle::with_size(Size::new(1440., 900.));
+        let mut overlay = element
+            .as_widget_mut()
+            .overlay(
+                &mut self.boom,
+                Layout::new(&node),
+                &self.renderer,
+                &viewport,
+                iced::Vector::ZERO,
+            )
+            .expect("Werkelijk geopende keuzelijst");
+        let lijst = overlay
+            .as_overlay_mut()
+            .layout(&self.renderer, Size::new(1440., 900.));
+        fn vind(node: &layout::Node) -> Option<iced::Rectangle> {
+            let r = node.bounds();
+            if r.width < 500. && r.height < 200. && r.width > 100. && r.height > 30. {
+                return Some(r);
+            }
+            node.children().iter().find_map(vind)
+        }
+        vind(&lijst).expect("Twee echte zichtbare stijlopties")
+    }
+    fn keuzelijst_gebeurtenissen(&mut self, events: impl IntoIterator<Item = iced::Event>) {
+        let events: Vec<_> = events.into_iter().collect();
+        let mut berichten = vec![];
+        {
+            let maat = Size::new(1440., 900.);
+            let viewport = iced::Rectangle::with_size(maat);
+            let mut element = self.app.view();
+            self.boom.diff(element.as_widget());
+            let node = element.as_widget_mut().layout(
+                &mut self.boom,
+                &self.renderer,
+                &layout::Limits::new(Size::ZERO, maat),
+            );
+            let mut statussen = vec![false; events.len()];
+            let mut cursor = iced::mouse::Cursor::Available(self.muis);
+            // Zoals iced_runtime::UserInterface: eerst alle gebeurtenissen op
+            // de echte overlay, daarna alleen de niet-afgevangen op de basis.
+            if let Some(overlay) = element.as_widget_mut().overlay(
+                &mut self.boom,
+                Layout::new(&node),
+                &self.renderer,
+                &viewport,
+                iced::Vector::ZERO,
+            ) {
+                let mut overlay = iced::advanced::overlay::Nested::new(overlay);
+                let lijst = overlay.layout(&self.renderer, maat);
+                for (event, gevangen) in events.iter().zip(&mut statussen) {
+                    let mut shell = iced::advanced::Shell::new(&mut berichten);
+                    overlay.update(
+                        event,
+                        Layout::new(&lijst),
+                        cursor,
+                        &self.renderer,
+                        &mut self.klembord,
+                        &mut shell,
+                    );
+                    *gevangen = shell.is_event_captured();
+                }
+                if overlay.mouse_interaction(Layout::new(&lijst), cursor, &self.renderer)
+                    != iced::mouse::Interaction::None
+                {
+                    cursor = iced::mouse::Cursor::Unavailable;
+                }
+            }
+            for (event, gevangen) in events.iter().zip(statussen) {
+                if !gevangen {
+                    let mut shell = iced::advanced::Shell::new(&mut berichten);
+                    element.as_widget_mut().update(
+                        &mut self.boom,
+                        event,
+                        Layout::new(&node),
+                        cursor,
+                        &self.renderer,
+                        &mut self.klembord,
+                        &mut shell,
+                        &viewport,
+                    );
+                }
+            }
+        }
+        for bericht in berichten {
+            self.bericht(bericht);
+        }
+    }
+}
+fn writer_stijlproef() -> Proef {
+    Proef::met_app(app_met_werkdraad(
+        Module::Writer,
+        include_bytes!("../../../office-core/tests/fixtures/writer-stijlen.docx"),
+    ))
+}
+fn open_stijllijst(p: &mut Proef) -> iced::Rectangle {
+    let grens = p
+        .toegankelijkheid()
+        .nodes
+        .into_iter()
+        .find(|n| {
+            n.node.name == "Alineastijl" && n.node.role == openaec_ui::design::a11y::Role::ComboBox
+        })
+        .unwrap()
+        .bounds;
+    p.klik(iced::Point::new(grens.center_x(), grens.center_y()));
+    p.keuzelijst_grens()
+}
+#[test]
+fn alineastijl_echte_keuze_en_directe_toets_behouden_cursor_runs_en_bronexacte_undo() {
+    use iced::{Event, keyboard as k, mouse};
+    let mut p = writer_stijlproef();
+    let tekst = "Links 🏠 café rechts";
+    let punt = writer_punt(&mut p, tekst, 8);
+    p.klik(punt);
+    let origineel = p.bron();
+    let lijst = open_stijllijst(&mut p);
+    p.muis = iced::Point::new(lijst.center_x(), lijst.y + lijst.height * 0.75);
+    p.keuzelijst_gebeurtenissen([
+        Event::Mouse(mouse::Event::CursorMoved { position: p.muis }),
+        Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
+        Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)),
+        Event::Keyboard(k::Event::KeyPressed {
+            key: k::Key::Character("9".into()),
+            modified_key: k::Key::Character("9".into()),
+            physical_key: k::key::Physical::Unidentified(k::key::NativeCode::Unidentified),
+            location: k::Location::Standard,
+            modifiers: k::Modifiers::empty(),
+            text: Some("9".into()),
+            repeat: false,
+        }),
+    ]);
+    let b = Sessie::open(Module::Writer, p.bron().as_ref().clone())
+        .unwrap()
+        .weergave(0)
+        .unwrap();
+    let v = b
+        .velden
+        .iter()
+        .find(|v| v.tekst == "Links 🏠 9café rechts")
+        .unwrap();
+    assert_eq!(
+        b.writer_stijlen.huidig.get(&v.id).map(String::as_str),
+        Some("EigenKop")
+    );
+    assert_eq!(v.opmaak.grootte, Some(20.));
+    assert!(
+        p.app
+            .tab()
+            .unwrap()
+            .writer_focus
+            .load(std::sync::atomic::Ordering::Relaxed)
+    );
+    assert_eq!(
+        lint::tekenoffset(
+            &p.app.tab().unwrap().editor,
+            p.app.tab().unwrap().editor.cursor().position
+        ),
+        9
+    );
+    let n = p
+        .toegankelijkheid()
+        .nodes
+        .into_iter()
+        .find(|n| n.node.name == "Alineastijl")
+        .unwrap();
+    assert_eq!(n.node.value.as_deref(), Some("Kop 1"));
+    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
+        std::fs::create_dir_all(&map).unwrap();
+        std::fs::write(
+            PathBuf::from(map).join("writer-alineastijl-lint.docx"),
+            p.bron().as_slice(),
+        )
+        .unwrap();
+    }
+    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
+        std::fs::create_dir_all(&map).unwrap();
+        p.verbeeld()
+            .save_png(PathBuf::from(map).join("writer-alineastijl-lint.png"))
+            .unwrap();
+    }
+    p.bericht(Msg::Terug);
+    assert_eq!(p.app.tab().unwrap().editor.text(), tekst);
+    let na_stijl = p.bron();
+    assert_ne!(na_stijl.as_slice(), origineel.as_slice());
+    p.bericht(Msg::Terug);
+    assert_eq!(p.bron().as_slice(), origineel.as_slice());
+    p.bericht(Msg::Vooruit);
+    assert_eq!(p.bron().as_slice(), na_stijl.as_slice());
+}
+#[test]
+fn alineastijl_open_lijst_typen_en_annuleren_wijzigen_de_bron_niet() {
+    use iced::{Event, keyboard as k, mouse};
+    let mut p = writer_stijlproef();
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    p.klik(punt);
+    let bron = p.bron();
+    open_stijllijst(&mut p);
+    p.keuzelijst_gebeurtenissen([Event::Keyboard(k::Event::KeyPressed {
+        key: k::Key::Character("9".into()),
+        modified_key: k::Key::Character("9".into()),
+        physical_key: k::key::Physical::Unidentified(k::key::NativeCode::Unidentified),
+        location: k::Location::Standard,
+        modifiers: k::Modifiers::empty(),
+        text: Some("9".into()),
+        repeat: false,
+    })]);
+    assert_eq!(p.bron().as_slice(), bron.as_slice());
+    p.muis = iced::Point::new(1100., 170.);
+    p.keuzelijst_gebeurtenissen([
+        Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
+        Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)),
+    ]);
+    assert_eq!(p.bron().as_slice(), bron.as_slice());
+    assert!(!p.app.tab().unwrap().antwoord.as_ref().unwrap().terug);
+}
+#[test]
+fn alineastijl_verouderde_keuze_mag_geen_nieuwe_tab_of_andere_alinea_raken() {
+    let mut p = writer_stijlproef();
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    p.klik(punt);
+    let t = p.app.tab().unwrap();
+    let a = t.antwoord.as_ref().unwrap();
+    let m = Msg::Alineastijl {
+        document: t.id,
+        hash: a.hash.clone(),
+        alinea: t.veld().unwrap().id.clone(),
+        stijl: "EigenKop".into(),
+    };
+    let bron = p.bron();
+    p.bericht(Msg::Veld(0));
+    p.bericht(m.clone());
+    assert_eq!(p.bron().as_slice(), bron.as_slice());
+    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
+    p.klik(punt);
+    p.toets(
+        iced::keyboard::Key::Character("é".into()),
+        iced::keyboard::Modifiers::empty(),
+        Some("é"),
+    );
+    let gewijzigd = p.bron();
+    assert_ne!(gewijzigd.as_slice(), bron.as_slice());
+    p.bericht(m.clone());
+    assert_eq!(p.bron().as_slice(), gewijzigd.as_slice());
+    p.bericht(Msg::Nieuw(Module::Writer));
+    let nieuw = p.bron();
+    p.bericht(m);
+    assert_eq!(p.bron().as_slice(), nieuw.as_slice());
+}
+
+#[test]
+fn alineastijl_enter_en_spatie_in_dezelfde_lijstronde_komen_op_de_pagina() {
+    use iced::{Event, keyboard as k, mouse};
+    for enter in [true, false] {
+        let mut p = writer_stijlproef();
+        let tekst = "Links 🏠 café rechts";
+        let punt = writer_punt(&mut p, tekst, tekst.chars().count());
+        p.klik(punt);
+        p.named(k::key::Named::End);
+        p.named(k::key::Named::Enter);
+        let gesplitst = p.bron();
+        let lijst = open_stijllijst(&mut p);
+        p.muis = iced::Point::new(lijst.center_x(), lijst.y + lijst.height * 0.75);
+        let toets = |key: k::Key, text| {
+            Event::Keyboard(k::Event::KeyPressed {
+                modified_key: key.clone(),
+                key,
+                physical_key: k::key::Physical::Unidentified(k::key::NativeCode::Unidentified),
+                location: k::Location::Standard,
+                modifiers: k::Modifiers::empty(),
+                text,
+                repeat: false,
+            })
+        };
+        p.keuzelijst_gebeurtenissen([
+            Event::Mouse(mouse::Event::CursorMoved { position: p.muis }),
+            Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
+            Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)),
+            toets(
+                k::Key::Named(if enter {
+                    k::key::Named::Enter
+                } else {
+                    k::key::Named::Space
+                }),
+                if enter { None } else { Some(" ".into()) },
+            ),
+            toets(k::Key::Character("9".into()), Some("9".into())),
+        ]);
+        let b = Sessie::open(Module::Writer, p.bron().as_ref().clone())
+            .unwrap()
+            .weergave(0)
+            .unwrap();
+        let plek = b.velden.iter().position(|v| v.tekst == tekst).unwrap();
+        let laatste = if enter { plek + 2 } else { plek + 1 };
+        if enter {
+            assert_eq!(b.velden[plek + 1].tekst, "");
+        }
+        assert_eq!(b.velden[laatste].tekst, if enter { "9" } else { " 9" });
+        for v in &b.velden[plek + 1..=laatste] {
+            assert_eq!(
+                b.writer_stijlen.huidig.get(&v.id).map(String::as_str),
+                Some("EigenKop")
+            );
+            assert_eq!(v.opmaak.grootte, Some(20.));
+        }
+        if enter {
+            p.bericht(Msg::Terug);
+        }
+        p.bericht(Msg::Terug);
+        p.bericht(Msg::Terug);
+        assert_eq!(p.bron().as_slice(), gesplitst.as_slice());
+    }
+}

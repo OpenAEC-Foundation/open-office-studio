@@ -510,3 +510,250 @@ fn lege_invoegopmaak_lettervelden_cursor_volgt_het_gekozen_lege_letterformaat() 
     assert_eq!(b.velden[0].opmaak.grootte, Some(48.));
     bewaar_lege_opmaak("writer-lege-48-punten.docx", &s.bron());
 }
+
+#[test]
+fn alineastijl_toepassen_behoudt_directe_opmaak_en_undo_is_bronexact() {
+    let bron = stijlbron();
+    let mut s = Sessie::open(Module::Writer, bron.clone()).unwrap();
+    let b = s.weergave(0).unwrap();
+    let v = &b.velden[2];
+    s.bewerk(
+        0,
+        Bewerking::Opmaak {
+            id: v.id.clone(),
+            begin: 0,
+            einde: 0,
+            stijl: Opmaak::Alineastijl("EigenBasis".into()),
+        },
+    )
+    .unwrap();
+    let nieuw = s.weergave(0).unwrap();
+    assert_eq!(nieuw.velden[2].tekst, v.tekst);
+    assert!(!nieuw.velden[2].opmaak.vet);
+    assert_eq!(nieuw.velden[2].opmaak.grootte, Some(10.5));
+    assert_eq!(nieuw.velden[2].opmaak.lettertype.as_deref(), Some("Inter"));
+    let Document::Writer(d) = Document::open(Module::Writer, &s.bron()).unwrap() else {
+        unreachable!()
+    };
+    assert_eq!(
+        d.paragraph(&v.id)
+            .unwrap()
+            .formatting
+            .as_ref()
+            .unwrap()
+            .style_id
+            .as_deref(),
+        Some("EigenBasis")
+    );
+    let voor = ooxml_opc::unzip_parts(&bron).unwrap();
+    let na = ooxml_opc::unzip_parts(&s.bron()).unwrap();
+    for (naam, bytes) in &voor {
+        if naam != "word/document.xml" {
+            assert_eq!(
+                na.iter().find(|(n, _)| n == naam).unwrap().1,
+                *bytes,
+                "{naam}"
+            );
+        }
+    }
+    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
+        std::fs::create_dir_all(&map).unwrap();
+        std::fs::write(
+            std::path::PathBuf::from(map).join("writer-alineastijl-direct.docx"),
+            s.bron().as_slice(),
+        )
+        .unwrap();
+    }
+    s.terug().unwrap();
+    assert_eq!(s.bron().as_slice(), bron);
+    s.vooruit().unwrap();
+    assert_eq!(s.weergave(0).unwrap().velden[2].opmaak.grootte, Some(10.5));
+}
+
+fn met_extra_stijlen(bron: &[u8], extra: &str) -> Vec<u8> {
+    let mut delen = ooxml_opc::unzip_parts(bron).unwrap();
+    let (_, xml) = delen
+        .iter_mut()
+        .find(|(n, _)| n == "word/styles.xml")
+        .unwrap();
+    *xml = String::from_utf8(xml.clone())
+        .unwrap()
+        .replace("</w:styles>", &format!("{extra}</w:styles>"))
+        .into_bytes();
+    ooxml_opc::rezip_parts(&delen).unwrap()
+}
+
+#[test]
+fn alineastijl_catalogus_leest_brondefinities_en_weigert_onveilige_ketens_zonder_mutatie() {
+    let extra = r#"
+<w:style w:type="paragraph" w:styleId="OntbrekendeBasis"><w:basedOn w:val="BestaatNiet"/></w:style>
+<w:style w:type="paragraph" w:styleId="KringEen"><w:basedOn w:val="KringTwee"/></w:style>
+<w:style w:type="paragraph" w:styleId="KringTwee"><w:basedOn w:val="KringEen"/></w:style>
+<w:style w:type="paragraph" w:styleId="Tekenbasis"><w:basedOn w:val="EigenNadruk"/></w:style>
+<w:style w:type="paragraph" w:styleId="Dubbel"/><w:style w:type="paragraph" w:styleId="Dubbel"/>
+<w:style w:type="paragraph" w:styleId="ErftDubbel"><w:basedOn w:val="Dubbel"/></w:style>
+"#;
+    let bron = met_extra_stijlen(&stijlbron(), extra);
+    let mut s = Sessie::open(Module::Writer, bron.clone()).unwrap();
+    let b = s.weergave(0).unwrap();
+    let stijl = b
+        .writer_stijlen
+        .keuzes
+        .iter()
+        .find(|s| s.id == "EigenKop")
+        .unwrap();
+    assert_eq!(stijl.naam, "Eigen kop");
+    assert_eq!(
+        b.writer_stijlen
+            .huidig
+            .get(&b.velden[0].id)
+            .map(String::as_str),
+        Some("EigenKop")
+    );
+    let hash = s.bron_hash().to_owned();
+    for id in [
+        "BestaatNiet",
+        "EigenNadruk",
+        "OntbrekendeBasis",
+        "KringEen",
+        "KringTwee",
+        "Tekenbasis",
+        "Dubbel",
+        "ErftDubbel",
+        "",
+        "verkeerd\n",
+    ] {
+        assert!(!b.writer_stijlen.keuzes.iter().any(|s| s.id == id), "{id}");
+        assert!(
+            s.bewerk(
+                0,
+                Bewerking::Opmaak {
+                    id: b.velden[0].id.clone(),
+                    begin: 0,
+                    einde: 0,
+                    stijl: Opmaak::Alineastijl(id.into())
+                }
+            )
+            .is_err(),
+            "{id}"
+        );
+        assert_eq!(s.bron().as_slice(), bron);
+        assert_eq!(s.bron_hash(), hash);
+        assert!(!s.kan_terug() && !s.kan_vooruit());
+    }
+}
+
+#[test]
+fn alineastijl_erfenis_werkt_op_lege_alinea_en_in_een_tabel() {
+    let bron = met_extra_stijlen(
+        include_bytes!("fixtures/writer-structuur.docx"),
+        r#"<w:style w:type="paragraph" w:styleId="EigenGroot"><w:name w:val="Eigen groot"/><w:rPr><w:sz w:val="48"/><w:rFonts w:ascii="Inter" w:hAnsi="Inter"/></w:rPr></w:style>"#,
+    );
+    let mut s = Sessie::open(Module::Writer, bron.clone()).unwrap();
+    let b = s.weergave(0).unwrap();
+    let rijk = b
+        .velden
+        .iter()
+        .find(|v| v.tekst == "Links 🏠 café rechts")
+        .unwrap();
+    s.bewerk(
+        0,
+        Bewerking::Alinea {
+            id: rijk.id.clone(),
+            actie: office_core::writer::AlineaActie::Splits {
+                positie: rijk.tekst.chars().count(),
+            },
+        },
+    )
+    .unwrap();
+    let gesplitst = s.bron();
+    let b = s.weergave(0).unwrap();
+    let leeg = &b.velden[b.velden.iter().position(|v| v.id == rijk.id).unwrap() + 1];
+    assert!(leeg.tekst.is_empty());
+    s.bewerk(
+        0,
+        Bewerking::Opmaak {
+            id: leeg.id.clone(),
+            begin: 0,
+            einde: 0,
+            stijl: Opmaak::Alineastijl("EigenGroot".into()),
+        },
+    )
+    .unwrap();
+    let n = s.weergave(0).unwrap();
+    let v = n.velden.iter().find(|v| v.id == leeg.id).unwrap();
+    assert_eq!(v.opmaak.grootte, Some(24.));
+    assert_eq!(v.opmaak.lettertype.as_deref(), Some("Inter"));
+    let leeg_bron = s.bron();
+    let opnieuw = Sessie::open(Module::Writer, leeg_bron.as_ref().clone()).unwrap();
+    assert_eq!(
+        opnieuw
+            .weergave(0)
+            .unwrap()
+            .writer_stijlen
+            .huidig
+            .get(&leeg.id)
+            .map(String::as_str),
+        Some("EigenGroot")
+    );
+    s.terug().unwrap();
+    assert_eq!(s.bron().as_slice(), gesplitst.as_slice());
+    let cel = b.velden.iter().find(|v| v.tekst == "Cel één").unwrap();
+    s.bewerk(
+        0,
+        Bewerking::Opmaak {
+            id: cel.id.clone(),
+            begin: 0,
+            einde: 0,
+            stijl: Opmaak::Alineastijl("EigenGroot".into()),
+        },
+    )
+    .unwrap();
+    let n = s.weergave(0).unwrap();
+    assert_eq!(
+        n.writer_stijlen.huidig.get(&cel.id).map(String::as_str),
+        Some("EigenGroot")
+    );
+    assert_eq!(
+        n.velden
+            .iter()
+            .find(|v| v.id == cel.id)
+            .unwrap()
+            .opmaak
+            .grootte,
+        Some(24.)
+    );
+    assert_eq!(
+        n.velden.iter().find(|v| v.id == rijk.id).unwrap().tekst,
+        rijk.tekst
+    );
+    s.terug().unwrap();
+    assert_eq!(s.bron().as_slice(), gesplitst.as_slice());
+    s.terug().unwrap();
+    assert_eq!(s.bron().as_slice(), bron);
+}
+
+#[test]
+fn alineastijl_gelezen_standaardstijl_en_ontbrekende_keuze_worden_niet_verzonnen() {
+    let s = Sessie::open(Module::Writer, BRON.to_vec()).unwrap();
+    let b = s.weergave(0).unwrap();
+    assert!(b.writer_stijlen.keuzes.iter().any(|s| s.id == "Normal"));
+    assert_eq!(
+        b.writer_stijlen
+            .huidig
+            .get(&b.velden[1].id)
+            .map(String::as_str),
+        Some("Normal")
+    );
+    assert_eq!(s.bron().as_slice(), BRON);
+    assert!(!s.kan_terug());
+    let zonder = met_extra_stijlen(BRON, "");
+    let mut delen = ooxml_opc::unzip_parts(&zonder).unwrap();
+    delen.retain(|(n, _)| n != "word/styles.xml");
+    let bron = ooxml_opc::rezip_parts(&delen).unwrap();
+    let s = Sessie::open(Module::Writer, bron.clone()).unwrap();
+    let b = s.weergave(0).unwrap();
+    assert!(b.writer_stijlen.keuzes.is_empty());
+    assert!(!b.writer_stijlen.huidig.contains_key(&b.velden[1].id));
+    assert_eq!(s.bron().as_slice(), bron);
+}

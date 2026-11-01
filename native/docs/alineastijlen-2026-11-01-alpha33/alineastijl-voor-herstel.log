@@ -1,0 +1,41 @@
+   Compiling office-core v2026.44.9-alpha.32 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 44.28s
+     Running unittests src/lib.rs (native/target/debug/deps/office_conversie-4bcfa56562f13249)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_core-002fe5d56982407d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 21 filtered out; finished in 0.00s
+
+     Running unittests src/bin/controleer-bestand.rs (native/target/debug/deps/controleer_bestand-ffe0817f91d2f6f5)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/documentkern.rs (native/target/debug/deps/documentkern-84df3d960232eefc)
+
+running 2 tests
+test writer_opmaak::alineastijl_toepassen_behoudt_directe_opmaak_en_undo_is_bronexact ... FAILED
+test writer_opmaak::lege_invoegopmaak_lettervelden_erven_de_alineastijl_zonder_bronwijziging ... ok
+
+failures:
+
+---- writer_opmaak::alineastijl_toepassen_behoudt_directe_opmaak_en_undo_is_bronexact stdout ----
+
+thread 'writer_opmaak::alineastijl_toepassen_behoudt_directe_opmaak_en_undo_is_bronexact' (3129473) panicked at crates/office-core/tests/writer_opmaak.rs:524:8:
+called `Result::unwrap()` on an `Err` value: Document("Selecteer tekst om de opmaak te wijzigen")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    writer_opmaak::alineastijl_toepassen_behoudt_directe_opmaak_en_undo_is_bronexact
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 126 filtered out; finished in 5.58s
+
+error: test failed, to rerun pass `-p office-core --test documentkern`
