@@ -484,10 +484,16 @@ const TAKES = {
     await nieuwRekenblad(page);
     await vulRekenblad(page);
     await page.mouse.move(CEL.x(0), CEL.y(0)); await page.mouse.down(); await page.mouse.move(CEL.x(1), CEL.y(6), { steps: 6 }); await page.mouse.up();
+    await page.waitForTimeout(400);
     await lintTab(page, "Invoegen").click();
     await knop(page, /^Grafiek$/).click();
-    await page.getByLabel("Titel", { exact: true }).fill("Library visitors");
-    await page.getByRole("button", { name: "Invoegen", exact: true }).click();
+    await page.waitForSelector("text=Grafiek invoegen");
+    await page.waitForTimeout(800);
+    await page.getByLabel("Titel", { exact: true }).click();
+    await page.keyboard.type("Library visitors");
+    await page.waitForTimeout(600);
+    await page.screenshot({ path: join(UIT, "debug-tabs-grafiek.jpg"), type: "jpeg" });
+    await page.locator(".office-dialoogdoorgaan:not([disabled])").click();
     await page.waitForSelector("[role=dialog]", { state: "detached" });
     await page.waitForTimeout(1500);
     await lintTab(page, "Start").click();
