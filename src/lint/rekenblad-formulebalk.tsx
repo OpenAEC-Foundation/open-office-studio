@@ -44,23 +44,13 @@ import {
   type Functie,
 } from "./rekenblad-functies";
 import { VERWIJZINGSKLEUREN, type RekenbladLaag } from "./rekenblad-laag";
+import {
+  isRekenbladVeld as isVeld,
+  REKENBLAD_VELDEN,
+  zetRekenbladVeld as zetVeld,
+  type RekenbladVeld as Veld,
+} from "./rekenblad-veld";
 import "./rekenblad-gereedschap.css";
-
-const VELDEN = '[data-testid="xlsx-cell-editor"], [data-testid="xlsx-formula-input"], .rekenblad-formule-uitgebreid';
-type Veld = HTMLInputElement | HTMLTextAreaElement;
-const isVeld = (e: EventTarget | null): e is Veld =>
-  (e instanceof HTMLInputElement || e instanceof HTMLTextAreaElement) && e.matches(VELDEN);
-
-/** Zet de tekst van een (React-)invoerveld zoals typen dat doet, en de cursor. */
-export function zetVeld(veld: Veld, tekst: string, begin: number, eind = begin) {
-  const proto = veld instanceof HTMLTextAreaElement ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype;
-  Object.getOwnPropertyDescriptor(proto, "value")?.set?.call(veld, tekst);
-  veld.dispatchEvent(new Event("input", { bubbles: true }));
-  veld.setSelectionRange(begin, eind);
-  requestAnimationFrame(() => {
-    if (document.activeElement === veld && veld.value === tekst) veld.setSelectionRange(begin, eind);
-  });
-}
 
 const tekstVan = (fout: unknown) => (fout instanceof Melding || fout instanceof Error ? fout.message : String(fout));
 
@@ -453,7 +443,7 @@ export function invoegplek(api: XlsxEditorApi, laag: RekenbladLaag | null | unde
   if (!s || !cel) return null;
   const concept =
     veld instanceof HTMLInputElement || veld instanceof HTMLTextAreaElement
-      ? veld.matches(VELDEN) && veld.value.startsWith("=")
+      ? veld.matches(REKENBLAD_VELDEN) && veld.value.startsWith("=")
         ? { tekst: veld.value, cursor: veld.selectionStart ?? veld.value.length }
         : null
       : null;
@@ -570,7 +560,7 @@ export function useBereikKiezen(laag: RekenbladLaag | null | undefined) {
     /** Het veld waarin een formule bewerkt wordt, of null. */
     const formuleVeld = () => {
       const veld = document.activeElement;
-      return isVeld(veld) && veld.value.startsWith("=") && !!rekenbladHost()?.contains(veld) ? veld : null;
+      return isVeld(veld) && veld.value.startsWith("=") ? veld : null;
     };
     const inRaster = (doel: EventTarget | null) => {
       const host = rekenbladHost();

@@ -12,6 +12,7 @@ import {
   syntaxis,
   vervangVerwijzing,
   verwijzingenIn,
+  vervangVerwijzing,
   wisselAbsoluut,
   woordBijCursor,
 } from "./rekenblad-functies";
@@ -83,6 +84,44 @@ describe("typen in een formule", () => {
 });
 
 describe("verwijzingen", () => {
+  it("voegt een celverwijzing op de cursor in", () => {
+    expect(vervangVerwijzing("=SUM(", 5, 5, "B2")).toEqual({
+      tekst: "=SUM(B2",
+      begin: 5,
+      eind: 7,
+    });
+    expect(vervangVerwijzing("=SUM()", 5, 5, "B2")).toEqual({
+      tekst: "=SUM(B2)",
+      begin: 5,
+      eind: 7,
+    });
+  });
+  it("vervangt bij slepen de celverwijzing door het grotere bereik", () => {
+    expect(vervangVerwijzing("=SUM(B2", 5, 7, "B2:D4")).toEqual({
+      tekst: "=SUM(B2:D4",
+      begin: 5,
+      eind: 10,
+    });
+  });
+  it("vervangt een verwijzing en behoudt tekst buiten de selectie", () => {
+    expect(vervangVerwijzing("=SUM(A1)+1", 5, 7, "B2:C3")).toEqual({
+      tekst: "=SUM(B2:C3)+1",
+      begin: 5,
+      eind: 10,
+    });
+  });
+  it("klemt verwijzingsposities binnen de formule", () => {
+    expect(vervangVerwijzing("=A1", 40, 90, "B2")).toEqual({
+      tekst: "=A1B2",
+      begin: 3,
+      eind: 5,
+    });
+    expect(vervangVerwijzing("=A1", -5, -1, "B2")).toEqual({
+      tekst: "B2=A1",
+      begin: 0,
+      eind: 2,
+    });
+  });
   it("vindt verwijzingen buiten teksten, ook met bladnaam en bereik", () => {
     const refs = verwijzingenIn("=SUM(A1:B$2)+'Blad 2'!$C3+\"D4\"+LOG10(5)");
     expect(refs.map((r) => [r.tekst, r.blad, r.bereik])).toEqual([

@@ -1,7 +1,7 @@
 /**
  * Eigen laag boven het rekenbladraster (plugin-overlay van de engine):
  * filterpijlen in de kopregel (#62), de vulgreep met keuzes na het loslaten
- * (#63) en gekleurde verwijzingen tijdens het bewerken van een formule (#58).
+ * (#63) en celbereiken invoegen en kleuren tijdens het bewerken van een formule (#58).
  * De engine heeft geen vulgreep of filtermodel; zijn plugin-API geeft wel
  * de selectie en de geometrie van de getekende cellen.
  */
@@ -23,7 +23,12 @@ import { RibbonFout } from "../Ribbon";
 import { abonneerFilters, bladFilter, laadFilters, leesAutoFilters } from "./rekenblad-filter";
 import { doelBereik, vul, vulTotEinde, type VulKeuze, type VulRichting } from "./rekenblad-gegevens";
 import { alleenLezen, bewerktTekst, Melding, rekenbladHost } from "./rekenblad-opdrachten";
-import { kolomLetters, type Bereik, type Cel } from "./rekenblad-logica";
+<<<<<<< HEAD
+import {
+  kolomLetters,
+  type Bereik,
+  type Cel,
+} from "./rekenblad-logica";
 import { FilterMenu } from "./rekenblad-filtermenu";
 import "./rekenblad-gereedschap.css";
 
@@ -54,12 +59,16 @@ export interface RekenbladLaag {
  */
 function celOpPunt(api: XlsxEditorApi, geometry: XlsxPluginGeometry, x: number, y: number): Cel | null {
   const host = rekenbladHost();
-  const laagEl = host?.querySelector<HTMLElement>('[data-testid="plugin-overlays"]');
   const scroll = host?.querySelector<HTMLElement>('[data-testid="xlsx-scroll"]');
-  if (!laagEl || !scroll) return null;
+  if (!host || !scroll) return null;
   const vak = scroll.getBoundingClientRect();
   const px = Math.min(Math.max(x, vak.left + 1), vak.left + scroll.clientWidth - 2);
   const py = Math.min(Math.max(y, vak.top + 1), vak.top + scroll.clientHeight - 2);
+  const laagEl = [...host.querySelectorAll<HTMLElement>('[data-testid="plugin-overlays"]')].find((element) => {
+    const r = element.getBoundingClientRect();
+    return px >= r.left && px <= r.right && py >= r.top && py <= r.bottom;
+  });
+  if (!laagEl) return null;
   const l = geometry.layout;
   const grid = api.handle.displayList(l.viewport).grid;
   const oorsprong = laagEl.getBoundingClientRect();
