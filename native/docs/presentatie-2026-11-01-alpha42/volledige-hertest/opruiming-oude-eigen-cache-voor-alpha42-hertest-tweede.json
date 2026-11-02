@@ -1,0 +1,122 @@
+{
+  "omvang": "Maximaal tien oude eigen gegenereerde test-/controle-ELFs vóór de alpha39-freeze, geen actieve inode of open descriptor, links 1, geen vaste 555-programmas. De huidige alpha42-bouw gebruikt andere nieuwere artefacten; alle bronnen, vaste builds en bewijzen blijven bewaard.",
+  "lopende_bouw": [
+    {
+      "pid": 3528700,
+      "programma": "cargo",
+      "opdracht": "/home/aia01/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo test --manifest-path native/Cargo.toml --workspace --locked -j 1 --no-fail-fast -- --test-threads=1 "
+    },
+    {
+      "pid": 3532331,
+      "programma": "rustc",
+      "opdracht": "/home/aia01/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name office_core --edition=2024 crates/office-core/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --emit=de"
+    },
+    {
+      "pid": 3532652,
+      "programma": "rust-lld",
+      "opdracht": "/home/aia01/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/x86_64-unknown-linux-gnu/bin/rust-lld -flavor gnu -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-g"
+    }
+  ],
+  "bestanden": [
+    {
+      "bestand": "native/target/debug/deps/writer_navigatie-1b5bccad960bbbae",
+      "bytes": 753857080,
+      "sha256": "03e9051cfbb36e1bbabe6014e7d4cb948fd596578dedc6cca5f99ec98be4bb00",
+      "device": 2050,
+      "inode": 7160221,
+      "mtime_ns": 1793491478537216553,
+      "links": 1,
+      "mode": "0o775"
+    },
+    {
+      "bestand": "native/target/debug/deps/rekenblad_beveiliging-fe61aac08cb724a3",
+      "bytes": 748171776,
+      "sha256": "34e80a951f12159890d0e4a3f932d3fdbdc0ecfb854a6f131f84cccc88ce5609",
+      "device": 2050,
+      "inode": 7160249,
+      "mtime_ns": 1793491501097440526,
+      "links": 1,
+      "mode": "0o775"
+    },
+    {
+      "bestand": "native/target/debug/deps/writer_cursor-1beb28a7cf64f547",
+      "bytes": 748675280,
+      "sha256": "164edf57fd1305c95c923da753a001032aa359b0ef1d310265bd83bd166ea6d1",
+      "device": 2050,
+      "inode": 7160360,
+      "mtime_ns": 1793491531465742214,
+      "links": 1,
+      "mode": "0o775"
+    },
+    {
+      "bestand": "native/target/debug/deps/writer_regelnavigatie-59bf415dd6d9f87d",
+      "bytes": 738307792,
+      "sha256": "8ccfcac882dc67ffa70f896761a536f60b5de9107939cb4c3bf87430f0cc1529",
+      "device": 2050,
+      "inode": 7160394,
+      "mtime_ns": 1793491550540931822,
+      "links": 1,
+      "mode": "0o775"
+    },
+    {
+      "bestand": "native/target/debug/deps/interactie-3ec3a0ec64d6a690",
+      "bytes": 748706616,
+      "sha256": "700030792effc321f4c03a38d499b00ee3f87f0f743db7d14565dea20c30aed7",
+      "device": 2050,
+      "inode": 7160441,
+      "mtime_ns": 1793491569187117245,
+      "links": 1,
+      "mode": "0o775"
+    },
+    {
+      "bestand": "native/target/debug/deps/notities_presentatie-934d8af0948f092f",
+      "bytes": 748484704,
+      "sha256": "d8e136485f6e6ab42b6648eb081addd199f8dbbf81367c674f783edecdb5a537",
+      "device": 2050,
+      "inode": 7160483,
+      "mtime_ns": 1793491593234356489,
+      "links": 1,
+      "mode": "0o775"
+    },
+    {
+      "bestand": "native/target/debug/deps/writer_beveiliging-86cd678e2f399e0f",
+      "bytes": 748205552,
+      "sha256": "d1668cc2dd604147481daab626eba1097fa5f7b75c100e4409fd32dc6062d216",
+      "device": 2050,
+      "inode": 7160520,
+      "mtime_ns": 1793491617582598848,
+      "links": 1,
+      "mode": "0o775"
+    },
+    {
+      "bestand": "native/target/debug/deps/rekenblad_snelle_navigatie-d8bbd94a72549db8",
+      "bytes": 748547960,
+      "sha256": "1e3d624fcc519bb493b008d9ea236d792c9936023febd8d75675f89d03d3d216",
+      "device": 2050,
+      "inode": 7160583,
+      "mtime_ns": 1793491628961712155,
+      "links": 1,
+      "mode": "0o775"
+    },
+    {
+      "bestand": "native/target/debug/deps/writer_zoeken-3964a386a83fd8de",
+      "bytes": 754170992,
+      "sha256": "a7ebc79095f8263ddbc1ea0c239e170eb5cb61ec9331a6740f8a53dff5452d50",
+      "device": 2050,
+      "inode": 7160643,
+      "mtime_ns": 1793491660649027807,
+      "links": 1,
+      "mode": "0o775"
+    },
+    {
+      "bestand": "native/target/debug/deps/lettertypen-aaca9c5086ea6210",
+      "bytes": 748263120,
+      "sha256": "334b8aadb30eb19938430f47124f777863f23c5ff28f02bb9f32df625a43e509",
+      "device": 2050,
+      "inode": 7160678,
+      "mtime_ns": 1793491678463205345,
+      "links": 1,
+      "mode": "0o775"
+    }
+  ]
+}

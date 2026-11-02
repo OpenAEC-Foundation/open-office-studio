@@ -433,3 +433,4 @@ print('Writer-alineastijlen: beide bewaarde DOCX onafhankelijk goedgekeurd, incl
 
 import runpy
 runpy.run_path(str(Path(__file__).with_name('controleer-lijsten.py')), run_name='__main__')
+runpy.run_path(str(Path(__file__).with_name('controleer-presentatienotities.py')), run_name='__main__')

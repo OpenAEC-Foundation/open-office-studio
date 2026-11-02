@@ -12,6 +12,7 @@ mod notitie_navigatie_ui;
 mod notitie_raster;
 mod notitie_ui;
 mod pagina_ui;
+mod presentatie_ui;
 mod raster_focus;
 mod raster_invoer;
 mod raster_koppen;
@@ -72,6 +73,7 @@ fn icoon(i: Icon) -> &'static str {
 }
 #[derive(Debug, Clone)]
 enum Msg {
+    Presentatie(presentatie_ui::Bericht),
     WriterDirect(u64, writer_direct::Bericht),
     WriterGereed(writer_direct::Doel, Result<Antwoord, String>),
     WriterPlak(u64, u64, Option<String>),
@@ -225,6 +227,7 @@ struct Tab {
     writer_focus: std::sync::Arc<std::sync::atomic::AtomicBool>,
     writer_lintdruk: std::sync::Arc<std::sync::atomic::AtomicBool>,
     raster: raster_ui::Staat,
+    presentatie: presentatie_ui::Staat,
     concept: bool,
     adres: String,
     doel_cel: Option<String>,
@@ -265,6 +268,7 @@ impl Tab {
             writer_focus: Default::default(),
             writer_lintdruk: Default::default(),
             raster: raster_ui::Staat::default(),
+            presentatie: presentatie_ui::Staat::default(),
             concept: false,
             adres: "A1".into(),
             doel_cel: None,
@@ -519,6 +523,13 @@ impl App {
         }))
     }
     fn update(&mut self, msg: Msg) -> Task<Msg> {
+        // Achtergrondbeelden moeten ook tijdens een modaal venster kunnen afronden.
+        if matches!(&msg, Msg::Presentatie(presentatie_ui::Bericht::Gereed(..))) {
+            if let Msg::Presentatie(b) = msg {
+                return presentatie_ui::update(self, b);
+            }
+            unreachable!();
+        }
         if self.exportblad.is_some()
             && !matches!(
                 msg,
@@ -608,6 +619,7 @@ impl App {
             return Task::none();
         }
         match msg {
+            Msg::Presentatie(b) => return presentatie_ui::update(self, b),
             Msg::RasterKopie {
                 document,
                 nummer,
@@ -839,7 +851,10 @@ impl App {
                         Ok(mut antwoord) => {
                             lint::vul_beeldmaat(&mut antwoord.beeld);
                             if tab.antwoord.is_none()
-                                && antwoord.beeld.module == Module::Spreadsheet
+                                && matches!(
+                                    antwoord.beeld.module,
+                                    Module::Spreadsheet | Module::Presentation
+                                )
                             {
                                 tab.panelen = false;
                                 tab.raster.focus = actief_id == Some(id);
@@ -882,6 +897,10 @@ impl App {
                             if let Some(s) = &raster_selectie {
                                 antwoord.beeld.voorkeursveld = Some(s.doel.clone());
                             }
+                            let andere_dia = tab.antwoord.as_ref().is_some_and(|oud| {
+                                oud.beeld.module == Module::Presentation
+                                    && oud.deel != antwoord.deel
+                            });
                             tab.antwoord = Some(antwoord);
                             tab.deel = tab.antwoord.as_ref().unwrap().deel.min(
                                 tab.antwoord
@@ -915,7 +934,9 @@ impl App {
                                         .iter()
                                         .position(|v| v.id.eq_ignore_ascii_case(doel))
                                 })
-                                .unwrap_or(
+                                .unwrap_or(if andere_dia {
+                                    0
+                                } else {
                                     tab.gekozen.min(
                                         tab.antwoord
                                             .as_ref()
@@ -924,11 +945,12 @@ impl App {
                                             .velden
                                             .len()
                                             .saturating_sub(1),
-                                    ),
-                                );
+                                    )
+                                });
                             let grid_focus = tab.raster.focus;
                             tab.toon_veld(keuze);
                             notitie_ui::vernieuw_editors(tab);
+                            presentatie_ui::vernieuw_editors(tab);
                             tab.raster.focus = grid_focus;
                             if let Some(s) = raster_selectie {
                                 tab.adres = s.adres.clone();
@@ -985,13 +1007,11 @@ impl App {
                             "Pas de huidige tekst eerst toe of maak de invoer ongedaan",
                         );
                     }
-                    // Bij Notities horen de editors nog bij de zichtbare oude
-                    // pagina totdat het werkdraadantwoord compleet binnenkomt.
-                    if !t
-                        .antwoord
-                        .as_ref()
-                        .is_some_and(|a| a.beeld.module == Module::Notition)
-                    {
+                    // De editors blijven bij de zichtbare oude pagina totdat
+                    // het werkdraadantwoord voor de nieuwe pagina compleet is.
+                    if !t.antwoord.as_ref().is_some_and(|a| {
+                        matches!(a.beeld.module, Module::Notition | Module::Presentation)
+                    }) {
                         t.deel = n;
                         t.gekozen = 0;
                     }
@@ -1006,7 +1026,7 @@ impl App {
                             "Pas de huidige tekst eerst toe of maak de invoer ongedaan",
                         );
                     }
-                    if !notitie_ui::kies_veld(t, n) {
+                    if !notitie_ui::kies_veld(t, n) && !presentatie_ui::kies_veld(t, n) {
                         t.toon_veld(n);
                     }
                     t.notitie_invoer = true;
@@ -1517,6 +1537,13 @@ impl App {
                     return writer_direct::update(self, id, writer_direct::Bericht::Opslaan(als));
                 }
                 if let Some(t) = self.tabs.iter_mut().find(|t| t.id == id) {
+                    if (t.bezig || t.schrijft) && t.antwoord.is_some() {
+                        // Ook een snelle Ctrl+Z/Ctrl+S-reeks bewaart de nieuwe
+                        // toestand zodra de lopende brontransactie is afgerond.
+                        t.na_bewerking = Some(als || t.na_bewerking.unwrap_or(false));
+                        return self
+                            .waarschuwing("Opslaan volgt zodra de lopende bewerking gereed is");
+                    }
                     if t.bezig || t.schrijft {
                         return self.waarschuwing("Dit document wordt nog verwerkt");
                     }
@@ -1563,11 +1590,13 @@ impl App {
                 if let Some(t) = self.tabs.iter_mut().find(|t| t.id == id) {
                     t.schrijft = false;
                     t.export_ifcx = false;
+                    t.na_bewerking = None;
                 }
                 self.sluiten = None;
                 self.venster_sluiten = false;
             }
             Msg::Geschreven(id, pad, resultaat) => {
+                let mut vervolg = None;
                 if let Some(t) = self.tabs.iter_mut().find(|t| t.id == id) {
                     t.schrijft = false;
                     match resultaat {
@@ -1580,14 +1609,21 @@ impl App {
                             t.verwacht = Some(hash.clone());
                             t.opgeslagen = Some(bronhash);
                             self.melding = "Opgeslagen".into();
+                            if !t.bezig {
+                                vervolg = t.na_bewerking.take();
+                            }
                         }
                         Err(e) => {
                             self.melding = e;
+                            t.na_bewerking = None;
                             raster_invoer::mislukking(t);
                             self.sluiten = None;
                             self.venster_sluiten = false;
                         }
                     }
+                }
+                if let Some(als) = vervolg {
+                    return self.update(Msg::Opslaan(id, als));
                 }
                 if self.sluiten == Some(id)
                     && self.tabs.iter().any(|t| t.id == id && !t.gewijzigd())
@@ -1831,6 +1867,8 @@ impl App {
         for id in ids {
             taken.push(writer_direct::hervat(self, id));
         }
+        // Achtergrondbeelden vullen de gewone hervatting aan; zij vervangen haar niet.
+        taken.push(presentatie_ui::vraag(self));
         Task::batch(taken)
     }
     fn waarschuwing(&mut self, m: &str) -> Task<Msg> {
@@ -2519,6 +2557,9 @@ impl App {
                 notitie_ui::weergave(self, t, a)
             } else {
                 let navigator = || {
+                    if a.beeld.module == Module::Presentation {
+                        return presentatie_ui::navigator(self, t, a);
+                    }
                     let mut nav = column![w::mono_label(l, a.beeld.module.naam())].spacing(6);
                     for (i, naam) in a.beeld.onderdelen.iter().enumerate() {
                         nav = nav.push(w::button(
@@ -2586,6 +2627,8 @@ impl App {
                                 ..Default::default()
                             })
                             .into()
+                    } else if a.beeld.module == Module::Presentation {
+                        presentatie_ui::werkblad(self, t, blad)
                     } else {
                         container(container(blad).style(|_| container::Style {
                             background: Some(iced::Color::WHITE.into()),
@@ -2688,11 +2731,14 @@ impl App {
                     .into()
                 } else {
                     container(scroller)
-                        .padding(if a.beeld.module == Module::Spreadsheet {
-                            0
-                        } else {
-                            20
-                        })
+                        .padding(
+                            if matches!(a.beeld.module, Module::Spreadsheet | Module::Presentation)
+                            {
+                                0
+                            } else {
+                                20
+                            },
+                        )
                         .width(Length::Fill)
                         .height(Length::Fill)
                         .style(move |_| container::Style {
@@ -2700,7 +2746,11 @@ impl App {
                                 if a.beeld.module == Module::Spreadsheet {
                                     iced::Color::WHITE
                                 } else {
-                                    c.workspace
+                                    if a.beeld.module == Module::Presentation {
+                                        iced::Color::from_rgb8(243, 245, 248)
+                                    } else {
+                                        c.workspace
+                                    }
                                 }
                                 .into(),
                             ),
@@ -2796,6 +2846,8 @@ impl App {
                     row![navigator(), midden, inhoudspaneel]
                         .height(Length::Fill)
                         .into()
+                } else if a.beeld.module == Module::Presentation {
+                    row![navigator(), midden].height(Length::Fill).into()
                 } else {
                     midden
                 };
@@ -2844,6 +2896,8 @@ impl App {
                     ]
                     .height(Length::Fill)
                     .into()
+                } else if a.beeld.module == Module::Presentation {
+                    presentatie_ui::met_notities(self, t, a, werkvlak)
                 } else {
                     werkvlak
                 }

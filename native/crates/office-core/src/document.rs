@@ -641,6 +641,23 @@ impl Sessie {
     pub fn bron_hash(&self) -> &str {
         &self.bron_hash
     }
+    /// Alleen lezen: miniaturen veranderen geen bron, geschiedenis of werkvenster.
+    pub fn dia_miniatuur(
+        &self,
+        verwacht_hash: &str,
+        deel: usize,
+        breedte: u32,
+    ) -> Resultaat<crate::presentatie::Miniatuur> {
+        if verwacht_hash != self.bron_hash {
+            return Err(fout(
+                "Deze miniatuur hoort bij een verouderde documentversie",
+            ));
+        }
+        let Document::Presentation(d) = &self.document else {
+            return Err(fout("Diaminiaturen horen bij een presentatie"));
+        };
+        crate::presentatie::miniatuur(d, deel, breedte)
+    }
     pub fn notitie_anker(&self, deel: usize) -> Option<crate::notities::Anker> {
         match &self.document {
             Document::Notition(d) => crate::notities::anker(d, deel),

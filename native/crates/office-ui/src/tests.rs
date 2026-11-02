@@ -246,6 +246,12 @@ fn overige_documentreferenties_renderen_op_browserformaat() {
 }
 
 pub(super) fn app_met_document(module: Module, bytes: &[u8]) -> App {
+    if module == Module::Presentation {
+        let mut app = app_met_werkdraad(module, bytes);
+        app.thema = ThemeId::Light;
+        voer_interface_uit(&mut app, Msg::Selecteer(0));
+        return app;
+    }
     let mut app = App {
         thema: ThemeId::Light,
         ..App::default()
@@ -280,6 +286,7 @@ pub(super) fn app_met_document(module: Module, bytes: &[u8]) -> App {
     });
     tab.toon_veld(0);
     notitie_ui::vernieuw_editors(&mut tab);
+    presentatie_ui::vernieuw_editors(&mut tab);
     app.tabs.push(tab);
     app.volgend = 2;
     app
@@ -287,8 +294,12 @@ pub(super) fn app_met_document(module: Module, bytes: &[u8]) -> App {
 
 /// Voer de echte Iced-taken en werkdraad uit zonder systeemvenster of dialoog.
 fn voer_interface_uit(app: &mut App, msg: Msg) {
+    let taak = app.update(msg);
+    voer_taak_uit(app, taak);
+}
+fn voer_taak_uit(app: &mut App, taak: Task<Msg>) {
     use iced::futures::StreamExt;
-    let mut taken = std::collections::VecDeque::from([app.update(msg)]);
+    let mut taken = std::collections::VecDeque::from([taak]);
     let mut aantal = 0;
     while let Some(taak) = taken.pop_front() {
         aantal += 1;
@@ -1938,3 +1949,346 @@ fn writer_invoer_graphemen_selectie_regels_en_tabs_volgen_de_werkelijke_editor()
 
 #[path = "tests/schaduw_proeven.rs"]
 mod schaduw_proeven;
+
+#[test]
+fn presentatie_notities_via_echte_widget_bewaart_diatekst_en_undo() {
+    lettertypen();
+    for (geval, bron) in [
+        (
+            "nieuw",
+            include_bytes!("../../office-core/tests/fixtures/presentation.pptx").as_slice(),
+        ),
+        (
+            "bestaand",
+            include_bytes!("../../../../docs/voorbeelden/Ontwerpvisie.pptx").as_slice(),
+        ),
+    ] {
+        let mut app = app_met_werkdraad(Module::Presentation, bron);
+        assert!(!app.tab().unwrap().panelen);
+        let oud = app.tab().unwrap().antwoord.as_ref().unwrap().bron.clone();
+        let velden = app
+            .tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .beeld
+            .velden
+            .clone();
+        // De eerste klik staat in een ander veld dan de hoofdeditor.
+        voer_tekstveld_in(&mut app, "Sprekersnotities", "Nieuw café 🏠");
+        assert_eq!(app.tab().unwrap().veld().unwrap().id, "__dia_notities");
+        assert!(app.tab().unwrap().concept);
+        assert!(app.tab().unwrap().editor.text().contains("Nieuw café 🏠"));
+        voer_interface_uit(&mut app, Msg::PasToe);
+        let antwoord = app.tab().unwrap().antwoord.as_ref().unwrap();
+        assert!(
+            antwoord
+                .beeld
+                .velden
+                .iter()
+                .find(|v| v.id == "__dia_notities")
+                .unwrap()
+                .tekst
+                .contains("Nieuw café 🏠")
+        );
+        for v in velden.iter().filter(|v| v.id != "__dia_notities") {
+            assert_eq!(
+                antwoord
+                    .beeld
+                    .velden
+                    .iter()
+                    .find(|n| n.id == v.id)
+                    .unwrap()
+                    .tekst,
+                v.tekst
+            );
+        }
+        if let Some(p) = std::env::var_os("OFFICE_TEST_UITVOER") {
+            std::fs::create_dir_all(&p).unwrap();
+            std::fs::write(
+                PathBuf::from(p).join(format!("presentation-notities-widget-{geval}.pptx")),
+                antwoord.bron.as_slice(),
+            )
+            .unwrap();
+        }
+        let scherm = render(&app);
+        if geval == "bestaand"
+            && let Some(p) = std::env::var_os("OFFICE_TEST_SCHERMEN")
+        {
+            std::fs::create_dir_all(&p).unwrap();
+            scherm
+                .save_png(PathBuf::from(p).join("presentation-notities-native.png"))
+                .unwrap();
+        }
+        voer_interface_uit(&mut app, Msg::Terug);
+        assert_eq!(
+            app.tab()
+                .unwrap()
+                .antwoord
+                .as_ref()
+                .unwrap()
+                .bron
+                .as_slice(),
+            oud.as_slice()
+        );
+        voer_interface_uit(&mut app, Msg::Deel(1));
+        assert_eq!(app.tab().unwrap().deel, 1);
+        assert!(toegankelijkheid(&app).unnamed.is_empty());
+    }
+}
+#[test]
+fn presentatie_notities_weigert_oude_versie_dia_tab_en_onbevestigd_ander_veld() {
+    use presentatie_ui::Bericht;
+    let mut app = app_met_werkdraad(
+        Module::Presentation,
+        include_bytes!("../../office-core/tests/fixtures/presentation.pptx"),
+    );
+    let id = app.tab().unwrap().id;
+    let hash = app.tab().unwrap().antwoord.as_ref().unwrap().hash.clone();
+    let actie = || text_editor::Action::Edit(text_editor::Edit::Insert('X'));
+    for (document, h, deel) in [
+        (id + 1, hash.clone(), 0),
+        (id, "oud".into(), 0),
+        (id, hash.clone(), 1),
+    ] {
+        voer_interface_uit(
+            &mut app,
+            Msg::Presentatie(Bericht::Invoer {
+                document,
+                hash: h,
+                deel,
+                actie: actie(),
+            }),
+        );
+        assert!(!app.tab().unwrap().concept);
+    }
+    for toestand in 0..3 {
+        app.bestand = toestand == 0;
+        app.instellingen = toestand == 1;
+        app.postvak_zichtbaar = toestand == 2;
+        voer_interface_uit(
+            &mut app,
+            Msg::Presentatie(Bericht::Invoer {
+                document: id,
+                hash: hash.clone(),
+                deel: 0,
+                actie: actie(),
+            }),
+        );
+        assert!(!app.tab().unwrap().concept);
+    }
+    app.bestand = false;
+    app.instellingen = false;
+    app.postvak_zichtbaar = false;
+    voer_interface_uit(&mut app, Msg::Invoer(actie()));
+    let tekst = app.tab().unwrap().editor.text();
+    voer_interface_uit(
+        &mut app,
+        Msg::Presentatie(Bericht::Invoer {
+            document: id,
+            hash,
+            deel: 0,
+            actie: actie(),
+        }),
+    );
+    assert_eq!(app.tab().unwrap().editor.text(), tekst);
+    assert_ne!(app.tab().unwrap().veld().unwrap().id, "__dia_notities");
+    assert!(app.tab().unwrap().concept);
+}
+
+#[test]
+fn presentatie_behoudt_notitie_editor_tot_het_nieuwe_diaantwoord_binnen_is() {
+    use iced::futures::StreamExt;
+    lettertypen();
+    let mut app = app_met_werkdraad(
+        Module::Presentation,
+        include_bytes!("../../office-core/tests/fixtures/presentation.pptx"),
+    );
+    let n = app
+        .tab()
+        .unwrap()
+        .antwoord
+        .as_ref()
+        .unwrap()
+        .beeld
+        .velden
+        .iter()
+        .position(|v| v.id == "__dia_notities")
+        .unwrap();
+    voer_interface_uit(&mut app, Msg::Veld(n));
+    let bron = app.tab().unwrap().antwoord.as_ref().unwrap().bron.clone();
+    let taak = app.update(Msg::Deel(1));
+    let t = app.tab().unwrap();
+    assert!(t.bezig);
+    assert_eq!(
+        t.deel, 0,
+        "De zichtbare oude dia blijft eigenaar totdat het nieuwe antwoord binnen is"
+    );
+    assert_eq!(
+        t.gekozen, n,
+        "De zichtbare notitie-editor houdt zijn inhoud en cache-eigenaarschap"
+    );
+    let boom = toegankelijkheid(&app);
+    assert!(
+        boom.nodes
+            .iter()
+            .find(|k| k.node.name == "Sprekersnotities")
+            .unwrap()
+            .node
+            .state
+            .disabled
+    );
+    let mut stroom = iced_runtime::task::into_stream(taak).unwrap();
+    let berichten = iced::futures::executor::block_on(async move {
+        let mut uit = vec![];
+        while let Some(actie) = stroom.next().await {
+            match actie {
+                iced_runtime::Action::Output(m) => uit.push(m),
+                andere => panic!("Onverwachte systeemopdracht: {andere:?}"),
+            }
+        }
+        uit
+    });
+    for m in berichten {
+        voer_interface_uit(&mut app, m);
+    }
+    assert_eq!(app.tab().unwrap().deel, 1);
+    assert_eq!(app.tab().unwrap().veld().unwrap().id, "__dia_notities");
+    assert_eq!(
+        app.tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .bron
+            .as_slice(),
+        bron.as_slice()
+    );
+    assert!(
+        toegankelijkheid(&app)
+            .nodes
+            .iter()
+            .any(|k| k.node.name == "Sprekersnotities")
+    );
+}
+
+#[test]
+fn opslaan_na_ongedaan_maken_wacht_op_de_bewerking_en_verwerpt_een_mislukte_opdracht() {
+    let bron = include_bytes!("../../office-core/tests/fixtures/presentation.pptx");
+    let map = tempfile::tempdir().unwrap();
+    let pad = map.path().join("Eigen-presentatie.pptx");
+    std::fs::write(&pad, bron).unwrap();
+    let mut app = app_met_werkdraad(Module::Presentation, bron);
+    let t = app.tab_mut().unwrap();
+    let id = t.id;
+    t.pad = Some(pad.clone());
+    t.verwacht = Some(opslag::hash(bron));
+    t.opgeslagen = Some(t.antwoord.as_ref().unwrap().hash.clone());
+    let n = t
+        .antwoord
+        .as_ref()
+        .unwrap()
+        .beeld
+        .velden
+        .iter()
+        .position(|v| v.id == "__dia_notities")
+        .unwrap();
+    voer_interface_uit(&mut app, Msg::Veld(n));
+    voer_interface_uit(
+        &mut app,
+        Msg::Invoer(text_editor::Action::Edit(text_editor::Edit::Insert('X'))),
+    );
+    voer_interface_uit(&mut app, Msg::Opslaan(id, false));
+    assert_ne!(std::fs::read(&pad).unwrap(), bron);
+    let ongedaan = app.update(Msg::Terug);
+    assert!(app.tab().unwrap().bezig);
+    let bewaren = app.update(Msg::Opslaan(id, false));
+    assert_eq!(
+        app.tab().unwrap().na_bewerking,
+        Some(false),
+        "Ctrl+S mag niet verdwijnen terwijl undo nog wordt verwerkt"
+    );
+    voer_taak_uit(&mut app, bewaren);
+    voer_taak_uit(&mut app, ongedaan);
+    assert_eq!(std::fs::read(&pad).unwrap(), bron);
+    assert_eq!(
+        app.tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .bron
+            .as_slice(),
+        bron
+    );
+    assert!(!app.tab().unwrap().gewijzigd());
+    let fout = app.opdracht(
+        id,
+        Opdracht::Bewerk(
+            0,
+            Bewerking::Tekst {
+                id: "bestaat-niet".into(),
+                tekst: "Geen wijziging".into(),
+            },
+        ),
+    );
+    voer_interface_uit(&mut app, Msg::Opslaan(id, false));
+    assert_eq!(app.tab().unwrap().na_bewerking, Some(false));
+    voer_taak_uit(&mut app, fout);
+    assert_eq!(std::fs::read(&pad).unwrap(), bron);
+    assert!(app.tab().unwrap().na_bewerking.is_none());
+    assert!(!app.tab().unwrap().schrijft);
+}
+
+#[test]
+fn opslaan_tijdens_schrijven_en_undo_verwerkt_beide_antwoordvolgordes() {
+    let bron = include_bytes!("../../office-core/tests/fixtures/presentation.pptx");
+    for schrijven_eerst in [false, true] {
+        let map = tempfile::tempdir().unwrap();
+        let pad = map.path().join("Eigen-presentatie.pptx");
+        std::fs::write(&pad, bron).unwrap();
+        let mut app = app_met_werkdraad(Module::Presentation, bron);
+        let t = app.tab_mut().unwrap();
+        let id = t.id;
+        t.pad = Some(pad.clone());
+        t.verwacht = Some(opslag::hash(bron));
+        t.opgeslagen = Some(t.antwoord.as_ref().unwrap().hash.clone());
+        let n = t
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .beeld
+            .velden
+            .iter()
+            .position(|v| v.id == "__dia_notities")
+            .unwrap();
+        voer_interface_uit(&mut app, Msg::Veld(n));
+        voer_interface_uit(
+            &mut app,
+            Msg::Invoer(text_editor::Action::Edit(text_editor::Edit::Insert('X'))),
+        );
+        voer_interface_uit(&mut app, Msg::PasToe);
+        let schrijven = app.update(Msg::Opslaan(id, false));
+        assert!(app.tab().unwrap().schrijft);
+        let undo = app.update(Msg::Terug);
+        assert!(app.tab().unwrap().bezig);
+        voer_interface_uit(&mut app, Msg::Opslaan(id, false));
+        assert_eq!(
+            app.tab().unwrap().na_bewerking,
+            Some(false),
+            "De tweede Ctrl+S hoort bij de nieuwe toestand, ook als de eerste schrijfopdracht nog loopt"
+        );
+        if schrijven_eerst {
+            voer_taak_uit(&mut app, schrijven);
+            voer_taak_uit(&mut app, undo);
+        } else {
+            voer_taak_uit(&mut app, undo);
+            voer_taak_uit(&mut app, schrijven);
+        }
+        assert_eq!(std::fs::read(&pad).unwrap(), bron);
+        assert!(!app.tab().unwrap().gewijzigd());
+        assert!(app.tab().unwrap().na_bewerking.is_none());
+        assert!(!app.tab().unwrap().schrijft);
+    }
+}

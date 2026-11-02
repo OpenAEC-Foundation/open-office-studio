@@ -29,7 +29,7 @@ sources. It is **not yet a replacement for the current suite**; the
 [feature comparison and remaining work](native/README.md#huidige-omvang) describe
 the migration boundary. Version 2026-W44.8 remains the existing release.
 
-Alpha 39 updates the Notes workspace. [Full local validation](native/docs/controle-2026-11-01-alpha39.md) passes with 403 Rust tests, six runtime checks and seven Python tests. All five CI jobs pass, including 120 exact native image comparisons and 21 page visits. An extra actual-window check and a direct runtime regression still expose a fast mouse input bug; alpha40 is being corrected and retested. All eight original UI comparisons remain failing, and the full suite migration remains incomplete.
+Alpha 42 adds real slide thumbnails and a separate speaker-notes editor. [Full local validation](native/docs/controle-2026-11-01-alpha42.md) passes with 418 Rust tests, including 172 UI tests, six separate runtime checks and seven Python tests. The actual Linux debug-window retest preserves the notes pane during navigation and saves rapid undo/save commands without changing the restored source bytes. Alpha 42 platform builds and optimized release-window checks are pending; the preceding alpha 41 platform round is complete. All eight original UI comparisons still fail, and the full suite migration remains incomplete.
 
 ## Suite or a separate app
 

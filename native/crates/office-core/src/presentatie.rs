@@ -8,6 +8,47 @@ use betteroffice_pptx as p;
 fn fout(e: impl std::fmt::Display) -> Fout {
     Fout::Document(e.to_string())
 }
+/// Een begrensde rasterminiatuur, los van de actieve dia en de bronopslag.
+#[derive(Debug, Clone)]
+pub struct Miniatuur {
+    pub bytes: Vec<u8>,
+    pub breedte: u32,
+    pub hoogte: u32,
+    pub overgeslagen_afbeeldingen: usize,
+}
+pub(crate) fn miniatuur(d: &p::Presentation, deel: usize, breedte: u32) -> Resultaat<Miniatuur> {
+    if !(16..=320).contains(&breedte) {
+        return Err(fout("Miniatuurbreedte moet tussen 16 en 320 pixels liggen"));
+    }
+    if deel >= d.slides().len() {
+        return Err(fout("Dia bestaat niet"));
+    }
+    let dia = d.render_slide(deel).map_err(fout)?;
+    let (w, h) = (dia.display_list.width, dia.display_list.height);
+    if !w.is_finite() || !h.is_finite() || w <= 0. || h <= 0. {
+        return Err(fout("De dia heeft geen geldige miniatuurafmetingen"));
+    }
+    // Ook een zeer hoge dia mag geen onbeperkt raster aanmaken.
+    let schaal = (breedte as f32 / w).min(512. / h).min(1.);
+    let beeld = d
+        .render_png(
+            deel,
+            &p::RenderOptions {
+                scale: schaal,
+                ..Default::default()
+            },
+        )
+        .map_err(fout)?;
+    if beeld.width > breedte || beeld.height > 512 {
+        return Err(fout("De miniatuur overschrijdt het rasterbudget"));
+    }
+    Ok(Miniatuur {
+        bytes: beeld.bytes,
+        breedte: beeld.width,
+        hoogte: beeld.height,
+        overgeslagen_afbeeldingen: beeld.skipped_images,
+    })
+}
 #[derive(Debug, Clone)]
 pub enum DiaActie {
     Toevoegen,

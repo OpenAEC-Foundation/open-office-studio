@@ -9,6 +9,74 @@ fn data(s: &Sessie) -> serde_json::Value {
     serde_json::from_slice(&s.bron()).unwrap()
 }
 #[test]
+fn diaminiaturen_zijn_begrensd_verschillend_en_veranderen_geen_sessiestaat() {
+    let s = Sessie::open(
+        Module::Presentation,
+        include_bytes!("fixtures/presentation.pptx").to_vec(),
+    )
+    .unwrap();
+    let bron = s.bron();
+    let hash = s.bron_hash().to_string();
+    let groot = s.weergave(0).unwrap().afbeelding.unwrap();
+    let a = s.dia_miniatuur(&hash, 0, 144).unwrap();
+    let b = s.dia_miniatuur(&hash, 1, 144).unwrap();
+    assert_ne!(a.bytes, b.bytes);
+    for m in [&a, &b] {
+        assert_eq!(&m.bytes[..8], b"\x89PNG\r\n\x1a\n");
+        assert_eq!(
+            u32::from_be_bytes(m.bytes[16..20].try_into().unwrap()),
+            m.breedte
+        );
+        assert_eq!(
+            u32::from_be_bytes(m.bytes[20..24].try_into().unwrap()),
+            m.hoogte
+        );
+        assert!(m.breedte > 0 && m.breedte <= 144 && m.hoogte > 0 && m.hoogte <= 512);
+    }
+    assert_eq!(s.bron().as_slice(), bron.as_slice());
+    assert_eq!(s.bron_hash(), hash);
+    assert!(!s.kan_terug() && !s.kan_vooruit());
+    assert_eq!(s.weergave(0).unwrap().afbeelding.unwrap(), groot);
+    assert_eq!(s.dia_miniatuur(&hash, 0, 144).unwrap().bytes, a.bytes);
+}
+#[test]
+fn diaminiaturen_weigeren_verouderde_bron_deel_en_budget_en_volgen_undo() {
+    let mut s = Sessie::open(
+        Module::Presentation,
+        include_bytes!("fixtures/presentation.pptx").to_vec(),
+    )
+    .unwrap();
+    let bron = s.bron();
+    let hash = s.bron_hash().to_string();
+    let a = s.dia_miniatuur(&hash, 0, 144).unwrap();
+    for breedte in [0, 15, 321, u32::MAX] {
+        assert!(s.dia_miniatuur(&hash, 0, breedte).is_err());
+    }
+    assert!(s.dia_miniatuur("oude-versie", 0, 144).is_err());
+    assert!(s.dia_miniatuur(&hash, usize::MAX, 144).is_err());
+    let id = s.weergave(0).unwrap().velden[0].id.clone();
+    s.bewerk(
+        0,
+        Bewerking::Tekst {
+            id,
+            tekst: "Andere titel".into(),
+        },
+    )
+    .unwrap();
+    assert!(s.dia_miniatuur(&hash, 0, 144).is_err());
+    assert_ne!(
+        s.dia_miniatuur(s.bron_hash(), 0, 144).unwrap().bytes,
+        a.bytes
+    );
+    s.terug().unwrap();
+    assert_eq!(s.bron().as_slice(), bron.as_slice());
+    assert!(s.kan_vooruit());
+    assert_eq!(s.dia_miniatuur(&hash, 0, 144).unwrap().bytes, a.bytes);
+    assert!(s.kan_vooruit());
+    let writer = Sessie::nieuw(Module::Writer).unwrap();
+    assert!(writer.dia_miniatuur(writer.bron_hash(), 0, 144).is_err());
+}
+#[test]
 fn notitie_sectiekopie_behoudt_bron_opmaak_volgorde_en_onbekende_velden() {
     use serde_json::json;
     let mut bron: serde_json::Value = serde_json::from_slice(include_bytes!(
@@ -450,4 +518,26 @@ fn sectielimiet_levert_geen_onleesbare_opgeslagen_bron_op() {
     assert_eq!(*s.bron(), *oud);
     assert!(!s.kan_terug());
     assert!(Document::open(Module::Notition, &s.bron()).is_ok());
+}
+
+#[test]
+fn diaminiatuur_van_een_extreem_hoge_dia_blijft_binnen_het_pixelbudget() {
+    let mut delen = ooxml_opc::unzip_parts(include_bytes!("fixtures/presentation.pptx")).unwrap();
+    let (_, xml) = delen
+        .iter_mut()
+        .find(|(n, _)| n == "ppt/presentation.xml")
+        .unwrap();
+    let tekst = String::from_utf8(xml.clone()).unwrap();
+    let oud = "<p:sldSz cx=\"9144000\" cy=\"6858000\" type=\"screen4x3\"/>";
+    assert_eq!(tekst.matches(oud).count(), 1);
+    *xml = tekst
+        .replace(oud, "<p:sldSz cx=\"914400\" cy=\"68580000\"/>")
+        .into_bytes();
+    let bron = ooxml_opc::rezip_parts(&delen).unwrap();
+    let s = Sessie::open(Module::Presentation, bron.clone()).unwrap();
+    let m = s.dia_miniatuur(s.bron_hash(), 0, 320).unwrap();
+    assert!(m.hoogte <= 512 && m.hoogte >= 511);
+    assert!(m.breedte > 0 && m.breedte < 16);
+    assert_eq!(s.bron().as_slice(), bron.as_slice());
+    assert!(!s.kan_terug());
 }

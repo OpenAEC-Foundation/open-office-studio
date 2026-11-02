@@ -1,0 +1,160 @@
+{
+  "omvang": "Afzonderlijk afgeronde onderliggende controles; de terminal-eindstatus staat hier niet gelijk aan.",
+  "bronmanifest_sha256": "34ee6c225d162befc78869b2a4b6c9345dacb27b3c67d81fd16c43f1d2df5712",
+  "stappen": [
+    {
+      "controle": "debugbouw",
+      "opdracht": [
+        "cargo",
+        "build",
+        "--manifest-path",
+        "native/Cargo.toml",
+        "--workspace",
+        "--locked",
+        "-j",
+        "1"
+      ],
+      "exitcode": 0,
+      "seconden": 2.816,
+      "log": "native-alpha42-hertest-debugbouw.log",
+      "sha256": "e7f9b3c6c264b4a0795440d9f0b2443ce8b996e933f143ee05ef6a42b421053a"
+    },
+    {
+      "controle": "fmt",
+      "opdracht": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "native/Cargo.toml",
+        "-p",
+        "office-core",
+        "-p",
+        "open-office-studio-native",
+        "-p",
+        "office-mail",
+        "-p",
+        "office-conversie",
+        "--check"
+      ],
+      "exitcode": 0,
+      "seconden": 1.677,
+      "log": "native-alpha42-hertest-fmt.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "controle": "clippy",
+      "opdracht": [
+        "cargo",
+        "clippy",
+        "--manifest-path",
+        "native/Cargo.toml",
+        "--workspace",
+        "--locked",
+        "--all-targets",
+        "-j",
+        "1",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exitcode": 0,
+      "seconden": 59.211,
+      "log": "native-alpha42-hertest-clippy.log",
+      "sha256": "eb2705057a55f77237cf9ee9eef172b47635c9949849c7a9a6e75992dc6659ad"
+    },
+    {
+      "controle": "tests",
+      "opdracht": [
+        "cargo",
+        "test",
+        "--manifest-path",
+        "native/Cargo.toml",
+        "--workspace",
+        "--locked",
+        "-j",
+        "1",
+        "--no-fail-fast",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitcode": 0,
+      "seconden": 1988.632,
+      "log": "native-alpha42-hertest-tests.log",
+      "sha256": "ee99a6924e035e6d74a612ee9023888de2a0bca4c2a629763137d8a802034d19"
+    },
+    {
+      "controle": "onafhankelijk",
+      "opdracht": [
+        "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "native/crates/office-core/tests/fixtures/controleer.py",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/native-alpha42-hertest-uitvoer"
+      ],
+      "exitcode": 0,
+      "seconden": 2.131,
+      "log": "native-alpha42-hertest-onafhankelijk.log",
+      "sha256": "8a5755f0c421fc878f3421f54c1630daff85fb379727dc56809cc1fdb8163212"
+    },
+    {
+      "controle": "python",
+      "opdracht": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "native/scripts",
+        "-p",
+        "test_*.py"
+      ],
+      "exitcode": 0,
+      "seconden": 1.852,
+      "log": "native-alpha42-hertest-python.log",
+      "sha256": "bca88c49f5cb334e7f7a23454e4ed31db7f03d7bdbaa734037f2ad834d1c5ce3"
+    },
+    {
+      "controle": "bron",
+      "opdracht": [
+        "/usr/bin/python3",
+        "native/scripts/controleer-bron.py"
+      ],
+      "exitcode": 0,
+      "seconden": 0.197,
+      "log": "native-alpha42-hertest-bron.log",
+      "sha256": "2913237d8476046d52392c3af78d3b302cb8c593b20e2b142634ae210f86b8e8"
+    },
+    {
+      "controle": "runtime",
+      "opdracht": [
+        "cargo",
+        "test",
+        "--manifest-path",
+        "native/Cargo.toml",
+        "--workspace",
+        "--locked",
+        "-j",
+        "1",
+        "--",
+        "--ignored",
+        "--test-threads=1"
+      ],
+      "exitcode": 0,
+      "seconden": 164.738,
+      "log": "native-alpha42-hertest-runtime.log",
+      "sha256": "f810c7a90b9281588b7528fa183a0462528d00c9dabe36439ea9a1bb64d68314"
+    },
+    {
+      "controle": "conversie-onafhankelijk",
+      "opdracht": [
+        "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "native/crates/office-conversie/tests/controleer.py",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/native-alpha42-hertest-conversie-uitvoer"
+      ],
+      "exitcode": 0,
+      "seconden": 0.659,
+      "log": "native-alpha42-hertest-conversie-onafhankelijk.log",
+      "sha256": "2cebd3abf09245f126c56d3b3feb5d8ef442f2ccffbd363f44bce77907e29bdf"
+    }
+  ],
+  "inhoudelijk_afgerond": true,
+  "bron_van_729_bestanden_bytegelijk": true
+}

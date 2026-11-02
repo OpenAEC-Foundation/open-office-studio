@@ -74,6 +74,12 @@ struct Taak {
 }
 enum Werk {
     Document(Taak),
+    Miniatuur {
+        id: u64,
+        hash: String,
+        deel: usize,
+        antwoord: oneshot::Sender<Result<office_core::presentatie::Miniatuur, String>>,
+    },
     Celtekst {
         id: u64,
         deel: usize,
@@ -99,6 +105,13 @@ impl Werker {
                 for werk in ontvanger {
                     let taak=match werk {
                         Werk::Document(taak)=>taak,
+                        Werk::Miniatuur{id,hash,deel,antwoord}=>{
+                            let r=std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                                sessies.get(&id).ok_or_else(||"Document niet meer geopend".to_string())?
+                                    .0.dia_miniatuur(&hash,deel,128).map_err(|e|e.to_string())
+                            })).unwrap_or_else(|_|Err("De documentengine heeft de miniatuur afgebroken".into()));
+                            let _=antwoord.send(r);continue;
+                        }
                         Werk::Celtekst{id,deel,adres,antwoord}=>{
                             let r=std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
                                 sessies.get(&id).ok_or_else(||"Document niet meer geopend".to_string())?
@@ -255,6 +268,25 @@ impl Werker {
             opdracht: Opdracht::Sluit,
             antwoord,
         }));
+    }
+    pub async fn miniatuur(
+        self,
+        id: u64,
+        hash: String,
+        deel: usize,
+    ) -> Result<office_core::presentatie::Miniatuur, String> {
+        let (antwoord, ontvanger) = oneshot::channel();
+        self.zender
+            .send(Werk::Miniatuur {
+                id,
+                hash,
+                deel,
+                antwoord,
+            })
+            .map_err(|_| "Documentwerkdraad is gestopt")?;
+        ontvanger
+            .await
+            .map_err(|_| "Documentwerkdraad is gestopt".to_string())?
     }
     pub async fn voer_uit(self, id: u64, opdracht: Opdracht) -> Resultaat {
         let (antwoord, ontvanger) = oneshot::channel();

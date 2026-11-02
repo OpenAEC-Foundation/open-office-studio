@@ -1,0 +1,437 @@
+{
+  "omvang": "Aanvullende gerichte herstel- en Linux-vensterproeven; volledige hertest loopt nog. Vier bestaande rasterbibliotheken geoptimaliseerd met behoud van debug- en overflowcontroles. Eerste opnamen rond 0,8 seconde blijven achter; opnamen na drie seconden correct. Rustige beelden bytegelijk aan de ongeoptimaliseerde vergelijkingsbouw. Geen volledige migratie-/pixelgoedkeuring.",
+  "kopieen": [
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha42-schrijfrace-regressie-voor.patch",
+      "bestand": "herstel-en-snelheid/native-alpha42-schrijfrace-regressie-voor.patch.gz",
+      "bron_sha256": "746ab4b19844377439bb9d935ac0d09f92cf81a31b74bccab71aec850ce162b5",
+      "opgeslagen_sha256": "ac96265adbe99e58b36083c21f81ddb071d8c9dbcf143744cc2cb82e0e3c5ac7"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha42-schrijfrace-regressie-voor.json",
+      "bestand": "herstel-en-snelheid/native-alpha42-schrijfrace-regressie-voor.json",
+      "bron_sha256": "3f16d14adf357d84ced121419de0815586ed0337a4c4b368230b6d526835d797",
+      "opgeslagen_sha256": "3f16d14adf357d84ced121419de0815586ed0337a4c4b368230b6d526835d797"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha42-schrijfrace-regressie-voor.log",
+      "bestand": "herstel-en-snelheid/native-alpha42-schrijfrace-regressie-voor.log.gz",
+      "bron_sha256": "a6b2c8224eaf24399a6300fc994e02d4a5af16ae13b4a6ebbd0125cb47785846",
+      "opgeslagen_sha256": "9287c6559c86f63a5c6a3ab6b779caf0b8d2ca96736f02bce93fb2d780728043"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha42-schrijven-en-undo-hertest.log",
+      "bestand": "herstel-en-snelheid/native-alpha42-schrijven-en-undo-hertest.log.gz",
+      "bron_sha256": "a1b4f18f45fcb4317bc8c9ec15ebd0e877980de97cb21eab61706cbb35fde6ca",
+      "opgeslagen_sha256": "1700c5148a64e9f3761035e46c64eae51b30443f58ae8bd9c3fc24e859182372"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha42-herstel-ongeoptimaliseerd-testbron.json",
+      "bestand": "herstel-en-snelheid/native-alpha42-herstel-ongeoptimaliseerd-testbron.json",
+      "bron_sha256": "4c9229f33e9d46a34db11592ba9b5df485b5a764e22489f0121a390f914075cc",
+      "opgeslagen_sha256": "4c9229f33e9d46a34db11592ba9b5df485b5a764e22489f0121a390f914075cc"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha42-herstel-ongeoptimaliseerd-bron.patch",
+      "bestand": "herstel-en-snelheid/native-alpha42-herstel-ongeoptimaliseerd-bron.patch.gz",
+      "bron_sha256": "91b9eb0d8522175e36db1d3ea8f22b5f85c0f3faa8e7efc1ee66b96842091ff3",
+      "opgeslagen_sha256": "e8173e6229953b88bdd78fbaa733eb64815830e686515fb46c985260521c5d04"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha42-herstel-ongeoptimaliseerd-vast/herkomst.json",
+      "bestand": "herstel-en-snelheid/native-alpha42-herstel-ongeoptimaliseerd-vast/herkomst.json",
+      "bron_sha256": "f4140a78bfe1fe188004fcaf13d87ff46ed22c5cb221b8f8c792e754eca91b19",
+      "opgeslagen_sha256": "f4140a78bfe1fe188004fcaf13d87ff46ed22c5cb221b8f8c792e754eca91b19"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha42-rasteropt-testbron.json",
+      "bestand": "herstel-en-snelheid/native-alpha42-rasteropt-testbron.json",
+      "bron_sha256": "34ee6c225d162befc78869b2a4b6c9345dacb27b3c67d81fd16c43f1d2df5712",
+      "opgeslagen_sha256": "34ee6c225d162befc78869b2a4b6c9345dacb27b3c67d81fd16c43f1d2df5712"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha42-rasteropt-verschillen.json",
+      "bestand": "herstel-en-snelheid/native-alpha42-rasteropt-verschillen.json",
+      "bron_sha256": "29e976e5f609b52030de608e5aaa52347a9035230c047c642773f757fc5c620f",
+      "opgeslagen_sha256": "29e976e5f609b52030de608e5aaa52347a9035230c047c642773f757fc5c620f"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha42-rasteropt-vergelijking.json",
+      "bestand": "herstel-en-snelheid/native-alpha42-rasteropt-vergelijking.json",
+      "bron_sha256": "4adef5357a45b414ca81659fbf391a0b3410973bf150098eb0a9d8127a94cee9",
+      "opgeslagen_sha256": "4adef5357a45b414ca81659fbf391a0b3410973bf150098eb0a9d8127a94cee9"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha42-rasteropt-bouw.log",
+      "bestand": "herstel-en-snelheid/native-alpha42-rasteropt-bouw.log.gz",
+      "bron_sha256": "6b97b5038eb3def8963992e604c5ccb799fb6405647c742ef8849ae6f68021c1",
+      "opgeslagen_sha256": "50f149a25ee4b9755415210cccd43eea758ff3356cae61d4f53358b3b64fb80d"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha42-rasteropt-bouwstatus.json",
+      "bestand": "herstel-en-snelheid/native-alpha42-rasteropt-bouwstatus.json",
+      "bron_sha256": "e07674e15679c57f3d100637b0ad784f18bc4b821605f3cb7b66ed34df0fad9c",
+      "opgeslagen_sha256": "e07674e15679c57f3d100637b0ad784f18bc4b821605f3cb7b66ed34df0fad9c"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha42-rasteropt-vast/herkomst.json",
+      "bestand": "herstel-en-snelheid/native-alpha42-rasteropt-vast/herkomst.json",
+      "bron_sha256": "6c1ba5d40d81a6d9fdf906574b64ffa10c73ef4f7a3ecb55ae2ea6b0e7f70b88",
+      "opgeslagen_sha256": "6c1ba5d40d81a6d9fdf906574b64ffa10c73ef4f7a3ecb55ae2ea6b0e7f70b88"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/bouw-alpha42-rasteroptproef.py",
+      "bestand": "herstel-en-snelheid/bouw-alpha42-rasteroptproef.py",
+      "bron_sha256": "fef95c80e41b9f192a3f47ded71093378b0a76c31f45e765b646084902e25fb1",
+      "opgeslagen_sha256": "fef95c80e41b9f192a3f47ded71093378b0a76c31f45e765b646084902e25fb1"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-ongeoptimaliseerd-v2.py",
+      "bestand": "herstel-en-snelheid/gui-alpha42-herstel-ongeoptimaliseerd-v2.py",
+      "bron_sha256": "c3ac8e82b7a5d4871652abebf39d9fbe12f0ed6c7d16435054265b16debc8437",
+      "opgeslagen_sha256": "c3ac8e82b7a5d4871652abebf39d9fbe12f0ed6c7d16435054265b16debc8437"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/venster-alpha42-herstel-ongeoptimaliseerd-v2.py",
+      "bestand": "herstel-en-snelheid/venster-alpha42-herstel-ongeoptimaliseerd-v2.py",
+      "bron_sha256": "2c51915532616b2a986b607aa8819a837a8989db214e4d2783a33151f0378f31",
+      "opgeslagen_sha256": "2c51915532616b2a986b607aa8819a837a8989db214e4d2783a33151f0378f31"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-rasteropt.py",
+      "bestand": "herstel-en-snelheid/gui-alpha42-rasteropt.py",
+      "bron_sha256": "9cea8361bd2076ea3ce4e9ed718d0441ffa74580fb2f64342561b721d8deac99",
+      "opgeslagen_sha256": "9cea8361bd2076ea3ce4e9ed718d0441ffa74580fb2f64342561b721d8deac99"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/venster-alpha42-rasteropt.py",
+      "bestand": "herstel-en-snelheid/venster-alpha42-rasteropt.py",
+      "bron_sha256": "4a9d639c1fc77514c7a6d617c6126354d6266491c320814bcb9e0bfcdfcbff20",
+      "opgeslagen_sha256": "4a9d639c1fc77514c7a6d617c6126354d6266491c320814bcb9e0bfcdfcbff20"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-functioneel.py",
+      "bestand": "herstel-en-snelheid/gui-alpha42-herstel-functioneel.py",
+      "bron_sha256": "f7341a929a34b8461431442ed61857f29a7bf12dc1d6cbeef649079abb0c8f74",
+      "opgeslagen_sha256": "f7341a929a34b8461431442ed61857f29a7bf12dc1d6cbeef649079abb0c8f74"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/venster-alpha42-herstel-functioneel.py",
+      "bestand": "herstel-en-snelheid/venster-alpha42-herstel-functioneel.py",
+      "bron_sha256": "e309c8af543e35b874e1dc54ae6ff726b4e1b8548ae92b109b27004b9586147e",
+      "opgeslagen_sha256": "e309c8af543e35b874e1dc54ae6ff726b4e1b8548ae92b109b27004b9586147e"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/acties-alpha42-herstel-functioneel.jsonl",
+      "bestand": "herstel-en-snelheid/acties-alpha42-herstel-functioneel.jsonl",
+      "bron_sha256": "56de9be47d6c0bf338698d941d94a70ecd9bf5b6369ae65fcb237f5453f55a5d",
+      "opgeslagen_sha256": "56de9be47d6c0bf338698d941d94a70ecd9bf5b6369ae65fcb237f5453f55a5d"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/controleer-alpha42-venster-herstel.py",
+      "bestand": "herstel-en-snelheid/controleer-alpha42-venster-herstel.py",
+      "bron_sha256": "e7b511261af3ecb63e3b72fa3444a692461f52b81afd6cf056e305bb19199853",
+      "opgeslagen_sha256": "e7b511261af3ecb63e3b72fa3444a692461f52b81afd6cf056e305bb19199853"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha42-venster-herstel-broncontrole.log",
+      "bestand": "herstel-en-snelheid/native-alpha42-venster-herstel-broncontrole.log.gz",
+      "bron_sha256": "c95d8a448897d62250bb56c5cd9f891cbce462e2f5903f69c1518d0bae4f5601",
+      "opgeslagen_sha256": "aacd7412b3b398ab52abdb4f8c22476fd8797099444ebaa77a5ec1cff99978bc"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-ongeoptimaliseerd-v2/Eigen-presentatie.pptx",
+      "bestand": "gui-alpha42-herstel-ongeoptimaliseerd-v2/Eigen-presentatie.pptx",
+      "bron_sha256": "08e6720f7820dae375fe7b39f26bd66698fdc8e0b4edee88ae28e561ccb8fca4",
+      "opgeslagen_sha256": "08e6720f7820dae375fe7b39f26bd66698fdc8e0b4edee88ae28e561ccb8fca4"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-ongeoptimaliseerd-v2/bestand-drie-seconden.png",
+      "bestand": "gui-alpha42-herstel-ongeoptimaliseerd-v2/bestand-drie-seconden.png",
+      "bron_sha256": "667f122976addc7d09cb3e3cad37315713372485789e520f83559f07be6f1330",
+      "opgeslagen_sha256": "667f122976addc7d09cb3e3cad37315713372485789e520f83559f07be6f1330"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-ongeoptimaliseerd-v2/bestand-eerste-opname.png",
+      "bestand": "gui-alpha42-herstel-ongeoptimaliseerd-v2/bestand-eerste-opname.png",
+      "bron_sha256": "667f122976addc7d09cb3e3cad37315713372485789e520f83559f07be6f1330",
+      "opgeslagen_sha256": "667f122976addc7d09cb3e3cad37315713372485789e520f83559f07be6f1330"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-ongeoptimaliseerd-v2/bestand-vijftien-seconden.png",
+      "bestand": "gui-alpha42-herstel-ongeoptimaliseerd-v2/bestand-vijftien-seconden.png",
+      "bron_sha256": "76630845e44d621388da3d90d4cab30db397d156c0bbab5e3b346b713f93f315",
+      "opgeslagen_sha256": "76630845e44d621388da3d90d4cab30db397d156c0bbab5e3b346b713f93f315"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-ongeoptimaliseerd-v2/bron-08e6720f7820dae375fe7b39f26bd66698fdc8e0b4edee88ae28e561ccb8fca4.pptx",
+      "bestand": "gui-alpha42-herstel-ongeoptimaliseerd-v2/bron-08e6720f7820dae375fe7b39f26bd66698fdc8e0b4edee88ae28e561ccb8fca4.pptx",
+      "bron_sha256": "08e6720f7820dae375fe7b39f26bd66698fdc8e0b4edee88ae28e561ccb8fca4",
+      "opgeslagen_sha256": "08e6720f7820dae375fe7b39f26bd66698fdc8e0b4edee88ae28e561ccb8fca4"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-ongeoptimaliseerd-v2/escape-drie-seconden.png",
+      "bestand": "gui-alpha42-herstel-ongeoptimaliseerd-v2/escape-drie-seconden.png",
+      "bron_sha256": "76630845e44d621388da3d90d4cab30db397d156c0bbab5e3b346b713f93f315",
+      "opgeslagen_sha256": "76630845e44d621388da3d90d4cab30db397d156c0bbab5e3b346b713f93f315"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-ongeoptimaliseerd-v2/escape-eerste-opname.png",
+      "bestand": "gui-alpha42-herstel-ongeoptimaliseerd-v2/escape-eerste-opname.png",
+      "bron_sha256": "76630845e44d621388da3d90d4cab30db397d156c0bbab5e3b346b713f93f315",
+      "opgeslagen_sha256": "76630845e44d621388da3d90d4cab30db397d156c0bbab5e3b346b713f93f315"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-ongeoptimaliseerd-v2/escape-vijftien-seconden.png",
+      "bestand": "gui-alpha42-herstel-ongeoptimaliseerd-v2/escape-vijftien-seconden.png",
+      "bron_sha256": "667f122976addc7d09cb3e3cad37315713372485789e520f83559f07be6f1330",
+      "opgeslagen_sha256": "667f122976addc7d09cb3e3cad37315713372485789e520f83559f07be6f1330"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-ongeoptimaliseerd-v2/geladen.png",
+      "bestand": "gui-alpha42-herstel-ongeoptimaliseerd-v2/geladen.png",
+      "bron_sha256": "7b0b80e0882576c186cb0722d892d51aba19d6e26a8987acb7cddfb3a78420ec",
+      "opgeslagen_sha256": "7b0b80e0882576c186cb0722d892d51aba19d6e26a8987acb7cddfb3a78420ec"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-ongeoptimaliseerd-v2/notities-expliciet-gestopt.png",
+      "bestand": "gui-alpha42-herstel-ongeoptimaliseerd-v2/notities-expliciet-gestopt.png",
+      "bron_sha256": "667f122976addc7d09cb3e3cad37315713372485789e520f83559f07be6f1330",
+      "opgeslagen_sha256": "667f122976addc7d09cb3e3cad37315713372485789e520f83559f07be6f1330"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-ongeoptimaliseerd-v2/notities-open.png",
+      "bestand": "gui-alpha42-herstel-ongeoptimaliseerd-v2/notities-open.png",
+      "bron_sha256": "178e6a10f32ee70bad9b74e459364f7f12acb12b79da84d6512b95b21ae7beb0",
+      "opgeslagen_sha256": "178e6a10f32ee70bad9b74e459364f7f12acb12b79da84d6512b95b21ae7beb0"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-ongeoptimaliseerd-v2/programma.log",
+      "bestand": "gui-alpha42-herstel-ongeoptimaliseerd-v2/programma.log.gz",
+      "bron_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "opgeslagen_sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-ongeoptimaliseerd-v2/rapport.json",
+      "bestand": "gui-alpha42-herstel-ongeoptimaliseerd-v2/rapport.json",
+      "bron_sha256": "88efccca1219dba3fca321367edd48a0c80583bb4740029c3c385bb44badef12",
+      "opgeslagen_sha256": "88efccca1219dba3fca321367edd48a0c80583bb4740029c3c385bb44badef12"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-rasteropt/Eigen-presentatie.pptx",
+      "bestand": "gui-alpha42-rasteropt/Eigen-presentatie.pptx",
+      "bron_sha256": "08e6720f7820dae375fe7b39f26bd66698fdc8e0b4edee88ae28e561ccb8fca4",
+      "opgeslagen_sha256": "08e6720f7820dae375fe7b39f26bd66698fdc8e0b4edee88ae28e561ccb8fca4"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-rasteropt/bestand-drie-seconden.png",
+      "bestand": "gui-alpha42-rasteropt/bestand-drie-seconden.png",
+      "bron_sha256": "76630845e44d621388da3d90d4cab30db397d156c0bbab5e3b346b713f93f315",
+      "opgeslagen_sha256": "76630845e44d621388da3d90d4cab30db397d156c0bbab5e3b346b713f93f315"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-rasteropt/bestand-eerste-opname.png",
+      "bestand": "gui-alpha42-rasteropt/bestand-eerste-opname.png",
+      "bron_sha256": "667f122976addc7d09cb3e3cad37315713372485789e520f83559f07be6f1330",
+      "opgeslagen_sha256": "667f122976addc7d09cb3e3cad37315713372485789e520f83559f07be6f1330"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-rasteropt/bestand-vijftien-seconden.png",
+      "bestand": "gui-alpha42-rasteropt/bestand-vijftien-seconden.png",
+      "bron_sha256": "76630845e44d621388da3d90d4cab30db397d156c0bbab5e3b346b713f93f315",
+      "opgeslagen_sha256": "76630845e44d621388da3d90d4cab30db397d156c0bbab5e3b346b713f93f315"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-rasteropt/bron-08e6720f7820dae375fe7b39f26bd66698fdc8e0b4edee88ae28e561ccb8fca4.pptx",
+      "bestand": "gui-alpha42-rasteropt/bron-08e6720f7820dae375fe7b39f26bd66698fdc8e0b4edee88ae28e561ccb8fca4.pptx",
+      "bron_sha256": "08e6720f7820dae375fe7b39f26bd66698fdc8e0b4edee88ae28e561ccb8fca4",
+      "opgeslagen_sha256": "08e6720f7820dae375fe7b39f26bd66698fdc8e0b4edee88ae28e561ccb8fca4"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-rasteropt/escape-drie-seconden.png",
+      "bestand": "gui-alpha42-rasteropt/escape-drie-seconden.png",
+      "bron_sha256": "667f122976addc7d09cb3e3cad37315713372485789e520f83559f07be6f1330",
+      "opgeslagen_sha256": "667f122976addc7d09cb3e3cad37315713372485789e520f83559f07be6f1330"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-rasteropt/escape-eerste-opname.png",
+      "bestand": "gui-alpha42-rasteropt/escape-eerste-opname.png",
+      "bron_sha256": "76630845e44d621388da3d90d4cab30db397d156c0bbab5e3b346b713f93f315",
+      "opgeslagen_sha256": "76630845e44d621388da3d90d4cab30db397d156c0bbab5e3b346b713f93f315"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-rasteropt/escape-vijftien-seconden.png",
+      "bestand": "gui-alpha42-rasteropt/escape-vijftien-seconden.png",
+      "bron_sha256": "667f122976addc7d09cb3e3cad37315713372485789e520f83559f07be6f1330",
+      "opgeslagen_sha256": "667f122976addc7d09cb3e3cad37315713372485789e520f83559f07be6f1330"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-rasteropt/geladen.png",
+      "bestand": "gui-alpha42-rasteropt/geladen.png",
+      "bron_sha256": "7b0b80e0882576c186cb0722d892d51aba19d6e26a8987acb7cddfb3a78420ec",
+      "opgeslagen_sha256": "7b0b80e0882576c186cb0722d892d51aba19d6e26a8987acb7cddfb3a78420ec"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-rasteropt/notities-expliciet-gestopt.png",
+      "bestand": "gui-alpha42-rasteropt/notities-expliciet-gestopt.png",
+      "bron_sha256": "667f122976addc7d09cb3e3cad37315713372485789e520f83559f07be6f1330",
+      "opgeslagen_sha256": "667f122976addc7d09cb3e3cad37315713372485789e520f83559f07be6f1330"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-rasteropt/notities-open.png",
+      "bestand": "gui-alpha42-rasteropt/notities-open.png",
+      "bron_sha256": "0df6a8efe8ea9810babb8cad801523a222051ae9beafbff22ee73d41499d3f1c",
+      "opgeslagen_sha256": "0df6a8efe8ea9810babb8cad801523a222051ae9beafbff22ee73d41499d3f1c"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-rasteropt/programma.log",
+      "bestand": "gui-alpha42-rasteropt/programma.log.gz",
+      "bron_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "opgeslagen_sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-rasteropt/rapport.json",
+      "bestand": "gui-alpha42-rasteropt/rapport.json",
+      "bron_sha256": "f83d3d4a8049dc38864126c8ede1f813c28cab1b4b71064fc9b006bba3ee626f",
+      "opgeslagen_sha256": "f83d3d4a8049dc38864126c8ede1f813c28cab1b4b71064fc9b006bba3ee626f"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-functioneel/Eigen-presentatie.pptx",
+      "bestand": "gui-alpha42-herstel-functioneel/Eigen-presentatie.pptx",
+      "bron_sha256": "08e6720f7820dae375fe7b39f26bd66698fdc8e0b4edee88ae28e561ccb8fca4",
+      "opgeslagen_sha256": "08e6720f7820dae375fe7b39f26bd66698fdc8e0b4edee88ae28e561ccb8fca4"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-functioneel/bron-08e6720f7820dae375fe7b39f26bd66698fdc8e0b4edee88ae28e561ccb8fca4.pptx",
+      "bestand": "gui-alpha42-herstel-functioneel/bron-08e6720f7820dae375fe7b39f26bd66698fdc8e0b4edee88ae28e561ccb8fca4.pptx",
+      "bron_sha256": "08e6720f7820dae375fe7b39f26bd66698fdc8e0b4edee88ae28e561ccb8fca4",
+      "opgeslagen_sha256": "08e6720f7820dae375fe7b39f26bd66698fdc8e0b4edee88ae28e561ccb8fca4"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-functioneel/bron-400c6fe87df3b371f3637d2a671ef900fb52508f55c5eafcb8c91f076a546f31.pptx",
+      "bestand": "gui-alpha42-herstel-functioneel/bron-400c6fe87df3b371f3637d2a671ef900fb52508f55c5eafcb8c91f076a546f31.pptx",
+      "bron_sha256": "400c6fe87df3b371f3637d2a671ef900fb52508f55c5eafcb8c91f076a546f31",
+      "opgeslagen_sha256": "400c6fe87df3b371f3637d2a671ef900fb52508f55c5eafcb8c91f076a546f31"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-functioneel/bron-en-weergavecontrole.json",
+      "bestand": "gui-alpha42-herstel-functioneel/bron-en-weergavecontrole.json",
+      "bron_sha256": "2375f5c29c146fab1fe5b08f254a5363eb60ee7f8a13f5ac23a382870c34d5fa",
+      "opgeslagen_sha256": "2375f5c29c146fab1fe5b08f254a5363eb60ee7f8a13f5ac23a382870c34d5fa"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-functioneel/dia-twee-notities-focus.png",
+      "bestand": "gui-alpha42-herstel-functioneel/dia-twee-notities-focus.png",
+      "bron_sha256": "6d9533849af5194cba7cb3ed4b564641eaa4b0c3447d1dda48dafd23a63f3faf",
+      "opgeslagen_sha256": "6d9533849af5194cba7cb3ed4b564641eaa4b0c3447d1dda48dafd23a63f3faf"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-functioneel/dia-twee.png",
+      "bestand": "gui-alpha42-herstel-functioneel/dia-twee.png",
+      "bron_sha256": "7ccd8291181a476573ed58431504667f6dcace3d97fd9d540f935679e82cfe53",
+      "opgeslagen_sha256": "7ccd8291181a476573ed58431504667f6dcace3d97fd9d540f935679e82cfe53"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-functioneel/diawissel-drie-seconden.png",
+      "bestand": "gui-alpha42-herstel-functioneel/diawissel-drie-seconden.png",
+      "bron_sha256": "7ccd8291181a476573ed58431504667f6dcace3d97fd9d540f935679e82cfe53",
+      "opgeslagen_sha256": "7ccd8291181a476573ed58431504667f6dcace3d97fd9d540f935679e82cfe53"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-functioneel/diawissel-eerste.png",
+      "bestand": "gui-alpha42-herstel-functioneel/diawissel-eerste.png",
+      "bron_sha256": "9fc525ad19506d3575a546e6daf7735c2c8f6d442455497c8a77bb3bca11cf75",
+      "opgeslagen_sha256": "9fc525ad19506d3575a546e6daf7735c2c8f6d442455497c8a77bb3bca11cf75"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-functioneel/geladen.png",
+      "bestand": "gui-alpha42-herstel-functioneel/geladen.png",
+      "bron_sha256": "7b0b80e0882576c186cb0722d892d51aba19d6e26a8987acb7cddfb3a78420ec",
+      "opgeslagen_sha256": "7b0b80e0882576c186cb0722d892d51aba19d6e26a8987acb7cddfb3a78420ec"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-functioneel/getypte-notities.png",
+      "bestand": "gui-alpha42-herstel-functioneel/getypte-notities.png",
+      "bron_sha256": "f87b730e6bbee6a6179a33a8a3d98a2683c1f1db275e1b7ac3a046d57198d31d",
+      "opgeslagen_sha256": "f87b730e6bbee6a6179a33a8a3d98a2683c1f1db275e1b7ac3a046d57198d31d"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-functioneel/notities-expliciet-gestopt.png",
+      "bestand": "gui-alpha42-herstel-functioneel/notities-expliciet-gestopt.png",
+      "bron_sha256": "ac7d789d87203329f27e51d9a8db248969697fd1dbd2ff271bdd27492abbf718",
+      "opgeslagen_sha256": "ac7d789d87203329f27e51d9a8db248969697fd1dbd2ff271bdd27492abbf718"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-functioneel/notities-focus.png",
+      "bestand": "gui-alpha42-herstel-functioneel/notities-focus.png",
+      "bron_sha256": "43b83e926c59cff5335bcb6003fc79807e0f2cece7fc2128715dcf7e0f6c7f52",
+      "opgeslagen_sha256": "43b83e926c59cff5335bcb6003fc79807e0f2cece7fc2128715dcf7e0f6c7f52"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-functioneel/notities-open.png",
+      "bestand": "gui-alpha42-herstel-functioneel/notities-open.png",
+      "bron_sha256": "0df6a8efe8ea9810babb8cad801523a222051ae9beafbff22ee73d41499d3f1c",
+      "opgeslagen_sha256": "0df6a8efe8ea9810babb8cad801523a222051ae9beafbff22ee73d41499d3f1c"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-functioneel/ongedaan-en-opgeslagen.png",
+      "bestand": "gui-alpha42-herstel-functioneel/ongedaan-en-opgeslagen.png",
+      "bron_sha256": "ac7d789d87203329f27e51d9a8db248969697fd1dbd2ff271bdd27492abbf718",
+      "opgeslagen_sha256": "ac7d789d87203329f27e51d9a8db248969697fd1dbd2ff271bdd27492abbf718"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-functioneel/ongedaan-maken-eerste.png",
+      "bestand": "gui-alpha42-herstel-functioneel/ongedaan-maken-eerste.png",
+      "bron_sha256": "4fa7c9c815c6804518b863589e0c924fcba63ce51a59d649398a2e41c89d0227",
+      "opgeslagen_sha256": "4fa7c9c815c6804518b863589e0c924fcba63ce51a59d649398a2e41c89d0227"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-functioneel/opgeslagen.png",
+      "bestand": "gui-alpha42-herstel-functioneel/opgeslagen.png",
+      "bron_sha256": "c2b44a686cec4130dd24c655a3035cba174a9e672c513b3edcffd2c44b50ec42",
+      "opgeslagen_sha256": "c2b44a686cec4130dd24c655a3035cba174a9e672c513b3edcffd2c44b50ec42"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-functioneel/opslaan-eerste.png",
+      "bestand": "gui-alpha42-herstel-functioneel/opslaan-eerste.png",
+      "bron_sha256": "c2971e86770a36c954ab74f195b9b61e24de500161377342568b5649c138ebfa",
+      "opgeslagen_sha256": "c2971e86770a36c954ab74f195b9b61e24de500161377342568b5649c138ebfa"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-functioneel/programma.log",
+      "bestand": "gui-alpha42-herstel-functioneel/programma.log.gz",
+      "bron_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "opgeslagen_sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-functioneel/rapport.json",
+      "bestand": "gui-alpha42-herstel-functioneel/rapport.json",
+      "bron_sha256": "fb94a3d95613067174ab2404cc20968820954940585b0d6155090237eccbfd9d",
+      "opgeslagen_sha256": "fb94a3d95613067174ab2404cc20968820954940585b0d6155090237eccbfd9d"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-functioneel/selecteer-notities.png",
+      "bestand": "gui-alpha42-herstel-functioneel/selecteer-notities.png",
+      "bron_sha256": "6d9533849af5194cba7cb3ed4b564641eaa4b0c3447d1dda48dafd23a63f3faf",
+      "opgeslagen_sha256": "6d9533849af5194cba7cb3ed4b564641eaa4b0c3447d1dda48dafd23a63f3faf"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha42-herstel-functioneel/snel-opnieuw-opslaan.png",
+      "bestand": "gui-alpha42-herstel-functioneel/snel-opnieuw-opslaan.png",
+      "bron_sha256": "05371423e3b814cd29c4079cb055d232492b8e4153d1ba70fb8e34fe47dfd6f6",
+      "opgeslagen_sha256": "05371423e3b814cd29c4079cb055d232492b8e4153d1ba70fb8e34fe47dfd6f6"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/opruiming-oude-eigen-cache-voor-alpha42-hertest.json",
+      "bestand": "herstel-en-snelheid/opruiming-oude-eigen-cache-voor-alpha42-hertest.json",
+      "bron_sha256": "393969d168598e4f46d1251dc80898b7f7ec8da78b836ee4a8fec064b964c03f",
+      "opgeslagen_sha256": "393969d168598e4f46d1251dc80898b7f7ec8da78b836ee4a8fec064b964c03f"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/ruim-oude-eigen-cache-alpha42-hertest.py",
+      "bestand": "herstel-en-snelheid/ruim-oude-eigen-cache-alpha42-hertest.py",
+      "bron_sha256": "6cf2a4b20e947765241206c4ec81dd0bb0b38deba726204d3e98757d53509544",
+      "opgeslagen_sha256": "6cf2a4b20e947765241206c4ec81dd0bb0b38deba726204d3e98757d53509544"
+    }
+  ]
+}
