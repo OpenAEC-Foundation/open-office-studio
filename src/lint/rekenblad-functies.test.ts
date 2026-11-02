@@ -12,7 +12,6 @@ import {
   syntaxis,
   vervangVerwijzing,
   verwijzingenIn,
-  vervangVerwijzing,
   wisselAbsoluut,
   woordBijCursor,
 } from "./rekenblad-functies";

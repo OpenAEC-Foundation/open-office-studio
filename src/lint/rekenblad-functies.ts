@@ -448,27 +448,6 @@ export interface Verwijzing {
   bereik: { top: number; left: number; bottom: number; right: number };
 }
 
-/** Vervangt een formulebereik en geeft de nieuwe tekst en cursorpositie terug. */
-export function vervangVerwijzing(
-  formule: string,
-  begin: number,
-  eind: number,
-  verwijzing: string,
-) {
-  const begrens = (positie: number) =>
-    Math.min(
-      formule.length,
-      Math.max(0, Number.isFinite(positie) ? Math.trunc(positie) : 0),
-    );
-  const start = begrens(begin);
-  const stop = Math.max(start, begrens(eind));
-  return {
-    tekst: `${formule.slice(0, start)}${verwijzing}${formule.slice(stop)}`,
-    begin: start,
-    eind: start + verwijzing.length,
-  };
-}
-
 const kolomNr = (letters: string) => {
   let n = 0;
   for (const c of letters.toUpperCase()) n = n * 26 + c.charCodeAt(0) - 64;
@@ -562,8 +541,10 @@ export function wisselAbsoluut(
  * dan vanzelf `A1:B3`.
  */
 export function vervangVerwijzing(tekst: string, begin: number, eind: number, verwijzing: string) {
-  const van = Math.max(0, Math.min(begin, tekst.length));
-  const tot = Math.max(van, Math.min(eind, tekst.length));
+  const begrens = (positie: number) =>
+    Math.min(tekst.length, Math.max(0, Number.isFinite(positie) ? Math.trunc(positie) : 0));
+  const van = begrens(begin);
+  const tot = Math.max(van, begrens(eind));
   return {
     tekst: `${tekst.slice(0, van)}${verwijzing}${tekst.slice(tot)}`,
     begin: van,

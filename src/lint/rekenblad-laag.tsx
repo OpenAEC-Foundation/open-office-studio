@@ -23,7 +23,6 @@ import { RibbonFout } from "../Ribbon";
 import { abonneerFilters, bladFilter, laadFilters, leesAutoFilters } from "./rekenblad-filter";
 import { doelBereik, vul, vulTotEinde, type VulKeuze, type VulRichting } from "./rekenblad-gegevens";
 import { alleenLezen, bewerktTekst, Melding, rekenbladHost } from "./rekenblad-opdrachten";
-<<<<<<< HEAD
 import {
   kolomLetters,
   type Bereik,
