@@ -37,14 +37,14 @@ importers:
         specifier: 0.2.0
         version: 0.2.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@betteroffice/xlsx':
-        specifier: 0.3.0
-        version: 0.3.0
+        specifier: 0.5.1
+        version: 0.5.1
       '@betteroffice/xlsx-i18n':
-        specifier: 0.3.0
-        version: 0.3.0
+        specifier: 0.5.1
+        version: 0.5.1
       '@betteroffice/xlsx-react':
-        specifier: 0.3.0
-        version: 0.3.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        specifier: 0.5.1
+        version: 0.5.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@fontsource/inter':
         specifier: ^5.2.0
         version: 5.3.0
@@ -121,6 +121,9 @@ importers:
       '@types/sql.js':
         specifier: 1.4.11
         version: 1.4.11
+      playwright:
+        specifier: 1.62.1
+        version: 1.62.1
       prettier:
         specifier: 3.6.2
         version: 3.6.2
@@ -185,17 +188,17 @@ packages:
   '@betteroffice/pptx@0.2.0':
     resolution: {integrity: sha512-pNPQ58tlA+pVibERbLdQNskvP7a0GIMf4jhkCU/gPp8043Ichf6gB3PSb4ra9sfqoIaWqOaZKCWyptovA2+Q0A==}
 
-  '@betteroffice/xlsx-i18n@0.3.0':
-    resolution: {integrity: sha512-wQx7boZyKr+8MDDtUdos52pDfHeyesY8Hrsj4zEiptAi1c+8Tgy+d3sTPyYX2WZit9EoeSGy4AzombARI03vOQ==}
+  '@betteroffice/xlsx-i18n@0.5.1':
+    resolution: {integrity: sha512-IlYiWFIgKIldu2PlcdKjeW54v0A2Gl4SFV3XR5p9IYRUxH4Mi5boG3TxfHSewn12nupul/05fCFiZ+SUxr0Byg==}
 
-  '@betteroffice/xlsx-react@0.3.0':
-    resolution: {integrity: sha512-ZKHTKGvWKz9Np33MiENcE115QDddREO3LuvtZTnPiNVphB3J5DvxICV9FET/CMgKP5Y5WMgtNDJcJfe6AvLo6A==}
+  '@betteroffice/xlsx-react@0.5.1':
+    resolution: {integrity: sha512-ZIjyrxPP5QfULl3Z6DRAiuOpJ0/6VDp2Ihjx1R/FnNJScgp+XYaPbkhsBdR05/lJbjmtOVHZMaJQk5AezNh4QQ==}
     peerDependencies:
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
 
-  '@betteroffice/xlsx@0.3.0':
-    resolution: {integrity: sha512-K2bHtdk/epAxsmvxJlIWBRndjP3ltQU0Oh3p4gcZd2n5/YgXglo3SmMYX4nQe8WEm/yvz91p+aIasKyXXQP9Wg==}
+  '@betteroffice/xlsx@0.5.1':
+    resolution: {integrity: sha512-UHOnzcMML6Ud9D1M4d8FZKmw3AAg2/DttE/sVxM858SgiIpOtzGOqlh62RM9/8y/JW8bR8t+wN69EX8UJvR8EQ==}
 
   '@esbuild/aix-ppc64@0.28.2':
     resolution: {integrity: sha512-XExcO+dvLKvVtNTibSTBej1NCAbaGhWn9Ww1ZPx80qsahhPFe/8jgWP0IchNe0F3HwkU7n8ejhH8bjonqht8mQ==}
@@ -1120,6 +1123,11 @@ packages:
     resolution: {integrity: sha512-dKx12eRCVIzqCxFGplyFKJMPvLEWgmNtUrpTiJIR5u97zEhRG8ySrtboPHZXx7daLxQVrl643cTzbab2tkQjxg==}
     engines: {node: '>= 0.4'}
 
+  fsevents@2.3.2:
+    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
+    os: [darwin]
+
   fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
@@ -1418,6 +1426,16 @@ packages:
   picomatch@4.0.7:
     resolution: {integrity: sha512-qcJu88Q2IWqJsDD529JKMdwGm/dvInW4HvQnRwiH9JtihJvzGOscDtHE3x1pBKeUOTysQ8kVmLnJ2kJu7yhcGA==}
     engines: {node: '>=12'}
+
+  playwright-core@1.62.1:
+    resolution: {integrity: sha512-wPYSwEBJY9GHraISXqyqtx0na0LpO3XEX7jNDhntbex7tzUS7kLnZsOlFruFJB4Hi/rhDMjXGqHewDZ68nYZVw==}
+    engines: {node: '>=20'}
+    hasBin: true
+
+  playwright@1.62.1:
+    resolution: {integrity: sha512-0M+L3LAD8/nm554LOla9Ayx0j0tmFZ0FBcoQ7F1VuVHpM/XpiC8RcDzBQB8W5+hA8L22THxELzeF+2WcUzvcLg==}
+    engines: {node: '>=20'}
+    hasBin: true
 
   possible-typed-array-names@1.1.0:
     resolution: {integrity: sha512-/+5VFTchJDoVj3bhoqi6UeymcD00DAwb1nJwamzPvHEszJ4FpF6SNNbUbOS8yI56qHzdV8eK0qEfOSiodkTdxg==}
@@ -1829,16 +1847,16 @@ snapshots:
 
   '@betteroffice/pptx@0.2.0': {}
 
-  '@betteroffice/xlsx-i18n@0.3.0': {}
+  '@betteroffice/xlsx-i18n@0.5.1': {}
 
-  '@betteroffice/xlsx-react@0.3.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+  '@betteroffice/xlsx-react@0.5.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
-      '@betteroffice/xlsx': 0.3.0
-      '@betteroffice/xlsx-i18n': 0.3.0
+      '@betteroffice/xlsx': 0.5.1
+      '@betteroffice/xlsx-i18n': 0.5.1
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
 
-  '@betteroffice/xlsx@0.3.0': {}
+  '@betteroffice/xlsx@0.5.1': {}
 
   '@esbuild/aix-ppc64@0.28.2':
     optional: true
@@ -2586,6 +2604,9 @@ snapshots:
     dependencies:
       is-callable: 1.2.7
 
+  fsevents@2.3.2:
+    optional: true
+
   fsevents@2.3.3:
     optional: true
 
@@ -3105,6 +3126,14 @@ snapshots:
   picocolors@1.1.1: {}
 
   picomatch@4.0.7: {}
+
+  playwright-core@1.62.1: {}
+
+  playwright@1.62.1:
+    dependencies:
+      playwright-core: 1.62.1
+    optionalDependencies:
+      fsevents: 2.3.2
 
   possible-typed-array-names@1.1.0: {}
 

@@ -91,8 +91,7 @@ const leegWerkboek = () =>
  * komt. Null als dat niet lukt of te groot is.
  */
 export async function voorbeeldResultaat(api: XlsxEditorApi, formule: string, blad: number, cel: Cel): Promise<string | null> {
-  // Deze functie laat de rekenkern vastlopen (docs/tests/2026-10-26-rekenbladen.md).
-  if (/ISOWEEKNUM/i.test(formule) || !formule.trim()) return null;
+  if (!formule.trim()) return null;
   const refs = verwijzingenIn(`=${formule}`);
   const cellen = refs.reduce(
     (n, r) => n + (r.bereik.bottom - r.bereik.top + 1) * (r.bereik.right - r.bereik.left + 1),
@@ -788,7 +787,9 @@ export function useFormuleHulp(laag: RekenbladLaag | null | undefined, actief: b
         setHulp({ ...h, voorstellen: [] });
       }
     };
-    document.addEventListener("input", opInvoer, true);
+    // Eerst de React-invoer vastleggen. Een pluginoverlay bijwerken in de
+    // vangfase kan het gecontroleerde veld nog met de vorige tekst tekenen.
+    document.addEventListener("input", opInvoer);
     document.addEventListener("click", opKlik, true);
     const opLos = (e: KeyboardEvent) => {
       if (["ArrowLeft", "ArrowRight", "Home", "End"].includes(e.key) && isVeld(e.target)) werkBij(e.target);
@@ -797,7 +798,7 @@ export function useFormuleHulp(laag: RekenbladLaag | null | undefined, actief: b
     document.addEventListener("focusout", opVerlaten, true);
     window.addEventListener("keydown", opToets, true);
     return () => {
-      document.removeEventListener("input", opInvoer, true);
+      document.removeEventListener("input", opInvoer);
       document.removeEventListener("click", opKlik, true);
       document.removeEventListener("keyup", opLos, true);
       document.removeEventListener("focusout", opVerlaten, true);

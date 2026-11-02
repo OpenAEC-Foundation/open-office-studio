@@ -6,6 +6,7 @@ import { htmlDocument, htmlNaarTekst, markdownNaarHtml, ontsnap } from "./html";
 import { editorKoppeling } from "./koppeling";
 import { celPositie } from "./csv";
 import type { AppPdfKeuze } from "./PdfOpties";
+import type { WorkbookHandle, XlsxExportResult } from "@betteroffice/xlsx";
 
 export interface ExportOpties extends CsvOpties {
   /** 0-gebaseerd blad (CSV, TSV, PNG van rekenblad); standaard het actieve blad. */
@@ -93,13 +94,29 @@ const ALLE_CELLEN = {
   maxBytes: 16 * 1024 * 1024,
 } as const;
 
+/** Exporteer de berekende werkkopie, ook wanneer de bron nog geen formulecache heeft. */
+function exportInhoud<T>(resultaat: XlsxExportResult<T>): T {
+  if (!resultaat.ok) throw new Error(`De rekenbladexport kon niet worden gemaakt: ${resultaat.failure.message}`);
+  return resultaat.content;
+}
+
+async function metWerkmap<T>(bytes: Uint8Array, actie: (werkmap: WorkbookHandle) => XlsxExportResult<T>): Promise<T> {
+  const { initWasm, openWorkbook } = await import("@betteroffice/xlsx");
+  await initWasm();
+  const werkmap = openWorkbook(bytes);
+  try {
+    return exportInhoud(actie(werkmap));
+  } finally {
+    werkmap.dispose();
+  }
+}
+
 async function rekenblad(bytes: Uint8Array, blad?: number) {
-  const { exportXlsxStructured } = await import("@betteroffice/xlsx");
-  const inhoud = await exportXlsxStructured(bytes, {
+  const inhoud = await metWerkmap(bytes, werkmap => werkmap.exportStructured({
     ...ALLE_CELLEN,
     includeHiddenSheets: blad !== undefined,
     ...(blad !== undefined ? { scope: [{ sheet: blad }] } : {}),
-  });
+  }));
   controleerVolledig(inhoud);
   return inhoud;
 }
@@ -197,13 +214,14 @@ export async function maakExport(
     }
     if (soort === "pptx")
       return { bytes: tekst(await presentatieMarkdown(bytes)), mime };
-    const { exportXlsxMarkdown } = await import("@betteroffice/xlsx");
-    await rekenblad(bytes); // controleert grenzen en afkapping vooraf
-    const resultaat = await exportXlsxMarkdown(bytes, ALLE_CELLEN, {
-      maxRows: 5000,
-      maxColumns: 200,
-      maxCells: 1_000_000,
-      maxBytes: 8 * 1024 * 1024,
+    const resultaat = await metWerkmap(bytes, werkmap => {
+      controleerVolledig(exportInhoud(werkmap.exportStructured(ALLE_CELLEN)));
+      return werkmap.exportMarkdown(ALLE_CELLEN, {
+        maxRows: 5000,
+        maxColumns: 200,
+        maxCells: 1_000_000,
+        maxBytes: 8 * 1024 * 1024,
+      });
     });
     controleerVolledig(resultaat);
     return { bytes: tekst(zonderAnkers(resultaat.markdown)), mime };

@@ -252,6 +252,20 @@ jobs:
       # Poort: installer, geïnstalleerd programma en uninstaller dragen een geldige
       # handtekening met tijdstempel. Het programma wordt gecontroleerd zoals het in
       # de installer zit; target/release bevat na het bundelen een ongetekende kopie.
+      - name: Snelle rekenbladinvoer en bestandsbehoud via de productie-GUI
+        if: runner.os == 'Linux'
+        run: |
+          pnpm exec playwright install --with-deps chromium
+          node scripts/test-rekenblad-gui.mjs
+      - name: GUI-bewijs bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: uitgave-rekenblad-gui-${{ matrix.label }}
+          path: .local/proef-rekenblad-gui/
+          include-hidden-files: true
+          if-no-files-found: warn
+
       - name: Authenticode controleren (installer, programma en uninstaller)
         if: runner.os == 'Windows' && env.WIN_SIGN == 'true'
         shell: pwsh

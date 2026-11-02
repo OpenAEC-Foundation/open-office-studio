@@ -1058,6 +1058,7 @@ export const rekenbladEs: RekenbladVertaling = {
     textWrapping: "Ajuste de texto",
     more: "Más elementos de la barra de herramientas",
     groups: {
+      file: "Archivo",
       search: "Buscar",
       history: "Historial",
       print: "Imprimir",
@@ -1184,7 +1185,20 @@ export const rekenbladEs: RekenbladVertaling = {
     appLabel: "Editor de hojas de cálculo",
     demoCellText: "OpenOOXML xlsx",
     openError: "No se pudo abrir este libro",
+    openErrorDescription: "El archivo puede estar dañado o usar contenido que este editor todavía no puede leer.",
+    stoppedError: "El editor ha encontrado un problema",
+    stoppedErrorDescription: "Vuelve a abrir el libro para seguir editando.",
+    loadError: "No se pudo cargar el editor",
+    loadErrorDescription: "Comprueba la conexión y vuelve a cargar la página.",
+    reloadPage: "Volver a cargar la página",
+    showDetails: "Mostrar detalles",
+    openPrompt: "Abrir un archivo XLSX",
     sheetTabsLabel: "Hojas",
+  },
+  presence: {
+    label: "Colaboradores",
+    unavailableSheet: "Hoja no disponible",
+    peerOnSheet: "{name} ({sheet})",
   },
   proposals: {
     panelLabel: "Propuestas del agente",

@@ -408,11 +408,13 @@ export default function OfficeEditor(props: EditorProps) {
           <EditorZichtbaar.Provider value={props.zichtbaar ?? true}>
             <div className="office-rekenblad-host" ref={rekenbladHost}>
               <XlsxEditor
+                legacySyncApi
                 key={herladen.sleutel}
                 file={herladen.bytes}
                 plugins={xlsxPlugins}
                 fileName={props.naam}
                 onReady={gereedXlsx}
+                onError={props.fout}
                 onChange={props.gewijzigd}
                 onSave={props.opslaan}
                 i18n={engineTaal.rekenblad}

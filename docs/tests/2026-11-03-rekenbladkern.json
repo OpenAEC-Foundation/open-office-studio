@@ -1,0 +1,237 @@
+{
+  "versie": "2026.45.6",
+  "datum": "2026-11-03",
+  "basis": "e09947fcf5a3a3f61c4b16e0a0563ba6e975d4cd",
+  "sha256": "317ac12f9f88dd89b4d1fc646c80c074f157ec3ef13a413fb2c1d010ac7ce5e4",
+  "status": "lokale testversie; platformronde en verdere migratie blijven open",
+  "wijzigingen": [
+    "Rekenbladkern en React-/taalpakket gezamenlijk van 0.3.0 naar 0.5.1. De synchrone hostadapter blijft expliciet behouden.",
+    "Lege ISOWEEKNUM-aanroep geeft een celfout in plaats van een onbruikbare sessie (#120).",
+    "Formulehulp wordt na React-invoer bijgewerkt om verlies van snel getypte letters te voorkomen.",
+    "Functiecatalogus en acht taalbestanden bevatten de 13 nieuw herkende namen.",
+    "CSV, HTML en Markdown gebruiken een berekende werkkopie zodat ontbrekende caches geen lege formulebedragen opleveren.",
+    "De reproduceerbaarheidstest vergelijkt rechtstreeks de fixturebytes, zonder actuele ZIP-kloktijd."
+  ],
+  "controles": {
+    "vitest": {
+      "bestanden": 136,
+      "geslaagd": 1560,
+      "mislukt": 0
+    },
+    "python": {
+      "tests": 44,
+      "status": "geslaagd"
+    },
+    "typescript": "geslaagd",
+    "module_opdrachten": {
+      "writer": 68,
+      "rekenblad": "geslaagd, inclusief bewaren/heropenen",
+      "presentatie": 10
+    },
+    "productiebouw": "geslaagd",
+    "native_linux_bouw": "geslaagd",
+    "weekversie": "geslaagd",
+    "rekenbladmatrix": {
+      "fixtures": 8,
+      "functies": {
+        "kandidaten": 519,
+        "ondersteund": 229,
+        "nietOndersteund": 290,
+        "vastgelopen": [],
+        "handleNaPaniek": "geen paniek"
+      },
+      "grote_fixture_formules": 6001,
+      "bekende_afwijkende_cellen": [
+        "Functies!C1",
+        "Functies!C2",
+        "Functies!C6"
+      ],
+      "onverwachte_afwijkingen": 0
+    },
+    "productie_gui": {
+      "versie": "2026.45.6",
+      "rondes": [
+        {
+          "ronde": 0,
+          "f2": false,
+          "exacteInvoer": true,
+          "vervolgbewerking": true,
+          "heropend": true,
+          "fouten": []
+        },
+        {
+          "ronde": 1,
+          "f2": false,
+          "exacteInvoer": true,
+          "vervolgbewerking": true,
+          "heropend": true,
+          "fouten": []
+        },
+        {
+          "ronde": 2,
+          "f2": false,
+          "exacteInvoer": true,
+          "vervolgbewerking": true,
+          "heropend": true,
+          "fouten": []
+        },
+        {
+          "ronde": 3,
+          "f2": true,
+          "exacteInvoer": true,
+          "vervolgbewerking": true,
+          "heropend": true,
+          "fouten": []
+        }
+      ]
+    },
+    "native_gui": {
+      "versie": "2026.45.6",
+      "nativeLinux": true,
+      "echteToetsen": true,
+      "cellen": [
+        {
+          "invoer": {
+            "a1": "A4",
+            "input": "=ISOWEEKNUM(44197)",
+            "isFormula": true
+          },
+          "waarde": {
+            "a1": "A4",
+            "displayText": "53",
+            "formula": "ISOWEEKNUM(44197)",
+            "value": {
+              "kind": "number",
+              "value": 53
+            }
+          }
+        },
+        {
+          "invoer": {
+            "a1": "A2",
+            "input": "=ISOWEEKNUM()",
+            "isFormula": true
+          },
+          "waarde": {
+            "a1": "A2",
+            "displayText": "#VALUE!",
+            "formula": "ISOWEEKNUM()",
+            "value": {
+              "kind": "error",
+              "value": "#VALUE!"
+            }
+          }
+        },
+        {
+          "invoer": {
+            "a1": "A1",
+            "input": "7",
+            "isFormula": false
+          },
+          "waarde": {
+            "a1": "A1",
+            "displayText": "7",
+            "formula": null,
+            "value": {
+              "kind": "number",
+              "value": 7
+            }
+          }
+        },
+        {
+          "invoer": {
+            "a1": "A3",
+            "input": "=A1*2",
+            "isFormula": true
+          },
+          "waarde": {
+            "a1": "A3",
+            "displayText": "14",
+            "formula": "A1*2",
+            "value": {
+              "kind": "number",
+              "value": 14
+            }
+          }
+        }
+      ],
+      "onafhankelijkXlsxGelezen": true,
+      "sha256": "317ac12f9f88dd89b4d1fc646c80c074f157ec3ef13a413fb2c1d010ac7ce5e4",
+      "nieuwNativeProcesHeropend": {
+        "cellen": [
+          {
+            "a1": "A1",
+            "displayText": "7",
+            "formula": null,
+            "value": {
+              "kind": "number",
+              "value": 7
+            }
+          },
+          {
+            "a1": "A2",
+            "displayText": "#VALUE!",
+            "formula": "ISOWEEKNUM()",
+            "value": {
+              "kind": "error",
+              "value": "#VALUE!"
+            }
+          },
+          {
+            "a1": "A3",
+            "displayText": "14",
+            "formula": "A1*2",
+            "value": {
+              "kind": "number",
+              "value": 14
+            }
+          },
+          {
+            "a1": "A4",
+            "displayText": "53",
+            "formula": "ISOWEEKNUM(44197)",
+            "value": {
+              "kind": "number",
+              "value": 53
+            }
+          }
+        ],
+        "fonts": [
+          {
+            "pad": "/fonts/NotoSansJP-Regular.otf",
+            "bytes": 4533028,
+            "type": "application/font-sfnt"
+          },
+          {
+            "pad": "/fonts/Carlito-Regular.ttf",
+            "bytes": 628032,
+            "type": "application/font-sfnt"
+          }
+        ]
+      },
+      "foutmeldingen": [],
+      "zichtbareMeldingenBijHeropenen": [
+        {
+          "toon": "waarschuwing",
+          "tekst": "Not everything is fully supported: write, document or workbook protection."
+        }
+      ]
+    }
+  },
+  "bewijs_oude_bron": [
+    "Twee van zeven nieuwe kernproeven falen op 0.3.0: directe lege aanroep en openen van een bestand met die formule.",
+    "De directe snelle invoer verloor een letter in zowel de bewaarde 45.5-productiebuild als de eerst bijgewerkte bron.",
+    "Na wijzigen van de input-gebeurtenisfase behouden zowel directe invoer als F2 de formule; de oude productiebuild blijft in dezelfde vergelijking fout."
+  ],
+  "beperkingen": [
+    "Windows/macOS en alle losse edities zijn voor deze revisie nog niet opnieuw afgerond.",
+    "De browserproef gebruikt de host-API voor celselectie en inspectie, echte toetsen voor invoer en de bestandsinvoer van de app voor heropenen. Dit dekt geen volledige muis-, klembord- of platformmatrix.",
+    "De native proef gebruikt een afzonderlijk Linux/Xvfb-scherm, geen gebruikersdocument of fysieke schermsessie.",
+    "Een leeg workbookProtection-element veroorzaakt nog een overbodige compatibiliteitswaarschuwing. De celinvoer werkt; de waarschuwing is zichtbaar vastgelegd.",
+    "De matrix herkent 229 van 519 kandidaatnamen. Dit bewijst geen volledige semantische ondersteuning van al die functies.",
+    "Writer-typvertraging en zeer groot rijk plakken blijven open. De volledige Rust-interface is niet voltooid."
+  ],
+  "gebruikersdocumenten_overschreven": false,
+  "draaiende_gebruikersapp_gestopt": false,
+  "vorige_binaries_behouden": true
+}
