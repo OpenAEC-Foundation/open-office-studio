@@ -10,9 +10,11 @@ import { OfficeStudio } from "./OfficeStudio";
 import { bewaarWasmInGeheugen } from "./wasmGeheugen";
 import { gereed as taalGereed } from "./i18n/config";
 import { installeerWerkplekHost } from "./werkplek";
+import { bereidWriterWeergaveVoor } from "./tekst/weergave";
 import versie from "../versie.json";
 import "../packages/database/src/database.css";
 import "./stijl/openaec-office.css";
+bereidWriterWeergaveVoor();
 bewaarWasmInGeheugen();
 // In de SuperCloud-werkplek: opslaan en openen via de gastpagina (src/werkplek.ts).
 installeerWerkplekHost(versie.versie);

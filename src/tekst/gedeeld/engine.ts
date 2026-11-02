@@ -47,12 +47,15 @@ export function begin(e: Engine) {
 
 /** Publiceert een directe sessiebewerking en sluit de ongedaan-maakstap af. */
 export function klaar(e: Engine, verhalen: readonly string[] = ["body"], herindelen = true) {
-  e.weergave.syncYrsInputState(true, [...new Set(verhalen)]);
-  // Een gewijzigd embed-attribuut (tabelraster, rij-eigenschappen, beeld)
-  // verandert de tekst van het verhaal niet; de indeling ziet dat pas na een
-  // volledige herindeling.
-  if (herindelen) e.weergave.relayout();
-  sluitStap(e);
+  try {
+    e.weergave.syncYrsInputState(true, [...new Set(verhalen)]);
+    // Embed-attributen veranderen niet altijd de verhaaltekst: ook herindelen.
+    if (herindelen) e.weergave.relayout();
+  } finally {
+    // Een fout in de weergave mag de volgende bewerking niet in een open
+    // handmatige ongedaan-maakstap achterlaten.
+    sluitStap(e);
+  }
 }
 
 /** Sluit de ongedaan-maakstap af en zet de opnamemodus terug. */
@@ -71,7 +74,14 @@ export function sluitStap(e: Engine) {
 export function bewerk<T>(ref: DocxEditorRef | null, doe: (e: Engine) => { resultaat: T; verhalen: readonly string[] }) {
   const e = engine(ref);
   begin(e);
-  const { resultaat, verhalen } = doe(e);
+  let uit: { resultaat: T; verhalen: readonly string[] };
+  try {
+    uit = doe(e);
+  } catch (fout) {
+    sluitStap(e);
+    throw fout;
+  }
+  const { resultaat, verhalen } = uit;
   klaar(e, verhalen);
   return resultaat;
 }

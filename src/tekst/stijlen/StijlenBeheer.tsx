@@ -101,15 +101,22 @@ function useDocumentStaat(api: () => DocxEditorRef | null) {
   const [versie, setVersie] = useState(0);
   useEffect(() => {
     let gekoppeld: DocxEditorRef | null = null;
+    let bewerker: ReturnType<DocxEditorRef["getEditorRef"]> = null;
     let laatste: Document | null = null;
     let opruimen: (() => void)[] = [];
     let wachten: ReturnType<typeof setTimeout> | undefined;
     const koppel = () => {
       const ref = api();
-      if (ref === gekoppeld && (!ref || ref.getDocument() === laatste)) return;
+      const huidig = ref?.getEditorRef() ?? null;
+      // getDocument bouwt een volledige documentkopie. Bij dezelfde editor
+      // komen wijzigingen via het abonnement; opnieuw uitlezen per tik laat
+      // grote documenten ook zonder invoer steeds het hele lint opbouwen.
+      if (ref === gekoppeld && huidig === bewerker && (!ref || laatste)) return;
+      clearTimeout(wachten);
       opruimen.forEach((weg) => weg());
       opruimen = [];
       gekoppeld = ref;
+      bewerker = huidig;
       const doc = ref?.getDocument() ?? null;
       laatste = doc;
       setDocument(doc);

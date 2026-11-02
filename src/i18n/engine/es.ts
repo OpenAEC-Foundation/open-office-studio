@@ -31,6 +31,9 @@ export const tekstEs: TekstVertaling = {
     closeDialog: "Cerrar cuadro de diálogo",
   },
   toolbar: {
+    "imageWrap": {
+      "current": "Actual"
+    },
     ariaLabel: "Barra de herramientas de formato",
     file: "Archivo",
     format: "Formato",
@@ -206,6 +209,12 @@ export const tekstEs: TekstVertaling = {
     },
   },
   dialogs: {
+    "objectGeometry": {
+      "left": "Izquierda (px)",
+      "top": "Arriba (px)",
+      "width": "Ancho (px)",
+      "height": "Alto (px)"
+    },
     findReplace: {
       titleFind: "Buscar",
       titleFindReplace: "Buscar y reemplazar",
@@ -600,6 +609,13 @@ export const tekstEs: TekstVertaling = {
     replyCount: "{count, plural, one {# respuesta} other {# respuestas}}",
   },
   trackedChanges: {
+    "agent": "editor",
+    "previousChange": "Cambio anterior",
+    "nextChange": "Cambio siguiente",
+    "changeBy": "Cambio de {author}",
+    "changeCount": "{count, plural, one {# cambio} other {# cambios}}",
+    "acceptAll": "Aceptar todo",
+    "acceptAllChanges": "Aceptar todos los cambios",
     unknown: "Desconocido",
     replaced: "Reemplazado",
     with: "por",
@@ -622,6 +638,10 @@ export const tekstEs: TekstVertaling = {
     tableDeleted: "Tabla eliminada",
   },
   contextMenu: {
+    "addComment": "Comentario",
+    "resizeImage": "Cambiar tamaño de imagen",
+    "moveImage": "Mover imagen",
+    "columnWidth": "Ancho de columna",
     ariaLabel: "Menú de acciones de IA",
     textMenuAriaLabel: "Menú de edición de texto",
     customPromptPlaceholder: "Instrucción personalizada...",
@@ -671,6 +691,11 @@ export const tekstEs: TekstVertaling = {
     menuBarAriaLabel: "Barra de menús",
   },
   errors: {
+    "stillOpening": "El documento todavía se está abriendo. Se podrá escribir cuando esté listo.",
+    "failedToLoadDescription": "El archivo puede estar dañado o contener elementos que este editor todavía no puede leer.",
+    "editorUnavailable": "No se pudo cargar el editor",
+    "editorUnavailableDescription": "Comprueba la conexión y vuelve a cargar la página.",
+    "reloadPage": "Volver a cargar la página",
     loadingDocument: "Cargando documento...",
     noDocumentLoaded: "No hay ningún documento cargado",
     failedToLoad: "No se pudo cargar el documento",
@@ -686,6 +711,7 @@ export const tekstEs: TekstVertaling = {
     unsavedChanges: "Hay cambios sin guardar. ¿Salir de todos modos?",
   },
   table: {
+    "viewGridlines": "Mostrar líneas de cuadrícula",
     insertRowAbove: "Insertar fila encima",
     insertRowBelow: "Insertar fila debajo",
     insertColumnLeft: "Insertar columna a la izquierda",
@@ -816,6 +842,20 @@ export const tekstEs: TekstVertaling = {
     comment: "Comentario",
   },
   editor: {
+    "documentInput": "Entrada del documento",
+    "documentPreview": "Vista previa del documento",
+    "closeNote": "Cerrar nota",
+    "recoverableText": "Texto recuperable del documento",
+    "dismissDraft": "Cerrar borrador",
+    "readDocumentText": "Leer el texto del documento",
+    "documentText": "Texto del documento",
+    "previousText": "Texto anterior",
+    "nextText": "Texto siguiente",
+    "addComment": "Añadir comentario",
+    "noteProperties": "Propiedades de la nota",
+    "recoverableTextNotice": "No se pudo aplicar este texto. Cópialo para conservar el borrador y cierra este aviso.",
+    "documentTextUnavailable": "El texto del documento no está disponible.",
+    "documentTextChanged": "El texto del documento cambió. Vuelve a leerlo.",
     toggleCommentsSidebar: "Mostrar u ocultar la barra lateral de comentarios",
     showDocumentOutline: "Mostrar esquema del documento",
     editing: "Edición",

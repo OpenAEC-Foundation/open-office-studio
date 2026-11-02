@@ -6,6 +6,7 @@ from docx import Document
 from openpyxl import Workbook
 from pptx import Presentation
 from pptx.util import Inches
+from writer_sjabloon import normaliseer_writer_voorbeeld
 uitvoer = Path(__file__).resolve().parents[1] / 'public' / 'templates'
 uitvoer.mkdir(parents=True, exist_ok=True)
 
@@ -26,6 +27,8 @@ d.core_properties.author = ''
 d.core_properties.last_modified_by = ''
 d.add_paragraph('')
 d.save(uitvoer / 'nieuw.docx')
+tekstsjabloon = uitvoer / 'nieuw.docx'
+tekstsjabloon.write_bytes(normaliseer_writer_voorbeeld(tekstsjabloon.read_bytes()))
 w = Workbook()
 w.active.title = 'Blad 1'
 w.properties.creator = ''

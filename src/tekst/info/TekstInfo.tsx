@@ -32,23 +32,38 @@ function useEditorVolgen(api: () => DocxEditorRef | null, opWijziging: (soort: "
   useEffect(() => {
     let gekoppeld: DocxEditorRef | null = null;
     let opruimen: (() => void)[] = [];
+    let wachten: ReturnType<typeof setTimeout> | undefined;
+    let inhoud = false;
+    const plan = (soort: "selectie" | "inhoud") => {
+      inhoud ||= soort === "inhoud";
+      clearTimeout(wachten);
+      // De taal hoeft tijdens slepen of ingedrukte pijltoetsen niet telkens
+      // een volledige documentkopie op te vragen. Lees na de laatste beweging.
+      wachten = setTimeout(() => {
+        recent.current(inhoud ? "inhoud" : "selectie");
+        inhoud = false;
+      }, 150);
+    };
     const koppel = () => {
       const ref = api();
       if (ref === gekoppeld) return;
+      clearTimeout(wachten);
+      inhoud = false;
       opruimen.forEach((weg) => weg());
       opruimen = [];
       gekoppeld = ref;
       if (!ref) return;
       opruimen = [
-        ref.onSelectionChange(() => recent.current("selectie")),
-        ref.onContentChange(() => recent.current("inhoud")),
+        ref.onSelectionChange(() => plan("selectie")),
+        ref.onContentChange(() => plan("inhoud")),
       ];
-      recent.current("selectie");
+      plan("selectie");
     };
     koppel();
     const poging = setInterval(koppel, 600);
     return () => {
       clearInterval(poging);
+      clearTimeout(wachten);
       opruimen.forEach((weg) => weg());
     };
   }, [api]);

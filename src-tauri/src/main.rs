@@ -175,6 +175,13 @@ async fn bewaar_kopie(request: tauri::ipc::Request<'_>) -> Result<Option<String>
 }
 
 fn main() {
+    // WebKitGTK: vermijd zwarte of achterblijvende canvasbeelden door DMA-BUF.
+    // Een expliciete systeeminstelling blijft voorgaan; de compositor blijft aan.
+    // Zie https://v2.tauri.app/develop/debug/linux-graphics/.
+    #[cfg(target_os = "linux")]
+    if std::env::var_os("WEBKIT_DISABLE_DMABUF_RENDERER").is_none() {
+        std::env::set_var("WEBKIT_DISABLE_DMABUF_RENDERER", "1");
+    }
     tauri::Builder::default()
         // Eerst registreren: een tweede instantie (dubbelklik terwijl de app al
         // draait) geeft haar bestanden door en stopt meteen.
