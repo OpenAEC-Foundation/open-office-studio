@@ -36,6 +36,12 @@ import { installeerFontCitering } from "./lettertypen/canvasFont";
 import { useTekstSpelling } from "./spelling/tekst/useTekstSpelling";
 import { TEKST_PLUGINS } from "./tekst/gedeeld/markering";
 import { auteur } from "./tekst/gedeeld/engine";
+import { useOfficeThema } from "./stijl/ThemaKnop";
+import { leesPaginaUitPakket } from "./tekst/randen/pagina";
+import "./tekst/papier.css";
+import { wijzigPaginaLive } from "./tekst/pagina/ui/liveSecties";
+import { maakPaginaVolger } from "./tekst/pagina/ui/paginaVolgen";
+import type { SectionProperties } from "@betteroffice/docx/types/document";
 
 const PRESENTATIE_PLUGINS = [tekstSelectiePlugin];
 import { usePresentatieStatus, useRekenbladStatus } from "./status/useEditorStatus";
@@ -69,8 +75,11 @@ export interface EditorProps {
 export default function OfficeEditor(props: EditorProps) {
   // Engine-teksten in de interfacetaal; wisselt live mee zonder het document te herladen.
   const engineTaal = useEngineVertaling();
+  const { thema } = useOfficeThema();
   const { t } = useTranslation("shell");
   const docx = useRef<DocxEditorRef>(null);
+  const [paginaVolger] = useState(() => maakPaginaVolger(() => docx.current));
+  useEffect(() => () => paginaVolger.stop(), [paginaVolger]);
   const [interneOpslag] = useState(maakInterneOpslag);
   const [fontFaces, setFontFaces] = useState<PptxFontFace[]>([]);
   const [documentLettertypen, setDocumentLettertypen] = useState<readonly string[]>([]);
@@ -87,6 +96,20 @@ export default function OfficeEditor(props: EditorProps) {
   useEffect(() => () => stopDiaWijzigingen.current?.(), []);
   const recent = useRef(props);
   recent.current = props;
+  // Ook het venster ‘Aangepaste marges’ gebruikt de bestaande documentsessie.
+  const paginaToepassen = useCallback((p: SectionProperties) => {
+    const geometrie = new Set(["pageWidth", "pageHeight", "orientation", "marginTop", "marginBottom", "marginLeft", "marginRight"]);
+    // Andere toekomstige venstervelden blijven bij de engine in behandeling.
+    if (Object.keys(p).some((k) => !geometrie.has(k))) return false;
+    const ref = docx.current;
+    if (!ref) return false;
+    void wijzigPaginaLive(ref, {
+      ...(p.pageWidth !== undefined && p.pageHeight !== undefined ? { formaat: { breedte: p.pageWidth, hoogte: p.pageHeight } } : {}),
+      ...(p.orientation ? { afdrukstand: p.orientation === "landscape" ? "liggend" : "staand" } as const : {}),
+      marges: { boven: p.marginTop, onder: p.marginBottom, links: p.marginLeft, rechts: p.marginRight },
+    }).then(() => ref.focus()).catch((e) => recent.current.fout(e instanceof Error ? e : new Error(String(e))));
+    return true;
+  }, []);
   const meldEditor = (tekst: string, toon: "info" | "waarschuwing") =>
     recent.current.melding
       ? recent.current.melding(tekst, toon)
@@ -128,6 +151,11 @@ export default function OfficeEditor(props: EditorProps) {
   // Filterpijlen, vulgreep en formulehulp boven het raster (#58, #62, #63).
   const rekenbladLaag = useMemo(maakRekenbladLaag, []);
   const xlsxPlugins = useMemo(() => [...herladen.plugins, rekenbladLaag.plugin], [herladen.plugins, rekenbladLaag]);
+  const papierkleur = useMemo(() => {
+    if (props.soort !== "docx") return null;
+    try { return leesPaginaUitPakket(herladen.bytes).kleur; }
+    catch { return null; }
+  }, [props.soort, herladen.bytes]);
   const herladenRecent = useRef(herladen);
   herladenRecent.current = herladen;
   const apis = useMemo(
@@ -324,10 +352,15 @@ export default function OfficeEditor(props: EditorProps) {
               // Alleen de gebruikersopdracht opent onze opslagdialoog. Een
               // interne export voor herladen of herstel doet dat niet.
               onSaveRequest={() => { props.opslaan(); }}
-              onChange={props.gewijzigd}
+              onDocumentChange={() => {
+                props.gewijzigd();
+                paginaVolger.gewijzigd();
+              }}
+              onPageSetupApply={paginaToepassen}
               onError={props.fout}
               rulerUnit="cm"
               onFirstPagePainted={() => {
+                paginaVolger.onthoud();
                 setDocumentGereed(true);
                 herladenRecent.current.naDocx(docx.current);
               }}
@@ -338,7 +371,8 @@ export default function OfficeEditor(props: EditorProps) {
               showRuler={false}
               showOutline={navigatie}
               showOutlineButton={false}
-              colorMode="light"
+              colorMode={thema === "forge" ? "dark" : "light"}
+              style={{ "--office-papierkleur": papierkleur ? `#${papierkleur}` : undefined } as React.CSSProperties}
               i18n={engineTaal.tekst}
               className="office-tekst"
               readOnly={props.inactief}

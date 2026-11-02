@@ -63,3 +63,36 @@ export function taalOpCursor(
   }
   return stijlen?.docDefaults?.rPr?.language?.latin ?? null;
 }
+
+// Eén alinea lezen voorkomt dat de statusbalk bij iedere cursorbeweging
+// het hele document met alle stijlgegevens opnieuw opbouwt.
+const alineaEenheid = new WeakMap<object, { story: string; paraId: string; index: number }>();
+export function taalUitSessie(sessie: import("@betteroffice/docx/yrs").YrsSession, bron: Document | null): string | null {
+  const head = sessie.selection()?.head;
+  if (!head) return taalOpCursor(bron, null, 0);
+  const oud = alineaEenheid.get(sessie);
+  let index = oud?.story === head.story && oud.paraId === head.paraId ? oud.index : -1;
+  let delen = index >= 0 ? sessie.storySegmentUnits(head.story, [index])[0] : undefined;
+  if (!delen?.some((d) => d.kind === "pilcrow" && d.paraId === head.paraId)) {
+    index = sessie.paragraphSpans(head.story).findIndex((p) => p.paraId === head.paraId);
+    if (index < 0) return taalOpCursor(bron, head.paraId, head.offset);
+    alineaEenheid.set(sessie, { story: head.story, paraId: head.paraId, index });
+    delen = sessie.storySegmentUnits(head.story, [index])[0] ?? [];
+  }
+  const taal = (v: unknown) => v && typeof v === "object" && typeof (v as { latin?: unknown }).latin === "string" ? (v as { latin: string }).latin : null;
+  let positie = 0;
+  for (const d of delen) {
+    if (d.kind === "text") {
+      const eind = positie + d.text.length;
+      if (head.offset <= eind) {
+        const direct = taal(d.attributes.language);
+        if (direct) return direct;
+        break;
+      }
+      positie = eind;
+    } else if (d.kind === "embed") positie++;
+  }
+  const pilcrow = delen.find((d) => d.kind === "pilcrow");
+  const standaard = pilcrow?.kind === "pilcrow" ? pilcrow.properties.defaultTextFormatting as { language?: unknown } | undefined : undefined;
+  return taal(standaard?.language) ?? taalOpCursor(bron, head.paraId, head.offset);
+}

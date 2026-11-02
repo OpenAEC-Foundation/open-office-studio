@@ -225,7 +225,7 @@ export function Leesmodus({ api, sluit }: { api: () => DocxEditorRef | null; slu
     const vorige = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     sluitKnop.current?.focus();
     const ref = api();
-    const stop = ref?.onContentChange(() => setVersie((v) => v + 1));
+    const stop = ref?.onDocumentChange(() => setVersie((v) => v + 1));
     const toets = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();

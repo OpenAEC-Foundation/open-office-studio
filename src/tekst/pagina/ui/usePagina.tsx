@@ -65,6 +65,7 @@ import {
   PaginanummerDialoog,
 } from "./Dialogen.tsx";
 import "./pagina.css";
+import { wijzigPaginaLive } from "./liveSecties";
 
 const tekst = (e: unknown) => (e instanceof Error ? e.message : String(e));
 
@@ -360,9 +361,15 @@ export function usePagina() {
 
   // --- Pagina-indeling --------------------------------------------------------
 
-  const sectieWijziging = (klaar: string, w: Parameters<typeof wijzigSecties>[2]) =>
-    void pakket({ klaar, cursor: "sectie", werk: (b, { sectie }) => wijzigSecties(b, sectie, w) });
-  // Marges slepen op de liniaal (#47): de sectie van de cursor, via de pakketroute.
+  const sectieWijziging = (melding: string, w: Parameters<typeof wijzigSecties>[2]) => {
+    const ref = api();
+    if (!ref) return;
+    void wijzigPaginaLive(ref, w).then(() => {
+      toonMelding(melding);
+      ref.focus();
+    }).catch((e) => fout(tekst(e)));
+  };
+  // Marges slepen op de liniaal: dezelfde levende sectie als de voorkeuzeknoppen.
   const zichtbaar = useEditorZichtbaar();
   const recentSectie = useRef(sectieWijziging);
   recentSectie.current = sectieWijziging;

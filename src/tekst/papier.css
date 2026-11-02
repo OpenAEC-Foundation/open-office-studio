@@ -1,0 +1,6 @@
+/* De documentkleur komt uit w:background. Het canvas tekent de tekst en
+   afbeeldingen transparant; de achtergrond hoort ook bij een hertekening
+   zichtbaar te blijven. Zonder documentkleur volgt het papier het thema. */
+.office-tekst .canvas-page > canvas {
+  background-color: var(--office-papierkleur, var(--doc-page-bg, #fff)) !important;
+}

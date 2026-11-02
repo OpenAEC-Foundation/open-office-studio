@@ -5,6 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 patchedDependencies:
+  '@betteroffice/docx-react@0.5.1': b97f13a44c5c76b609d97c28d25cd9989b3938c863ad35158664046485ae217c
   '@betteroffice/docx@0.5.1': d8779cc5387bb808e84c92d2251651127d28610e0c506c2538405d3b0f73d830
 
 importers:
@@ -19,7 +20,7 @@ importers:
         version: 0.5.1
       '@betteroffice/docx-react':
         specifier: 0.5.1
-        version: 0.5.1(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 0.5.1(patch_hash=b97f13a44c5c76b609d97c28d25cd9989b3938c863ad35158664046485ae217c)(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@betteroffice/fonts':
         specifier: 0.4.0
         version: 0.4.0(@betteroffice/fonts-cjk@0.4.0)
@@ -1792,7 +1793,7 @@ snapshots:
 
   '@betteroffice/docx-i18n@0.5.1': {}
 
-  '@betteroffice/docx-react@0.5.1(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+  '@betteroffice/docx-react@0.5.1(patch_hash=b97f13a44c5c76b609d97c28d25cd9989b3938c863ad35158664046485ae217c)(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
       '@betteroffice/docx': 0.5.1(patch_hash=d8779cc5387bb808e84c92d2251651127d28610e0c506c2538405d3b0f73d830)(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))
       '@betteroffice/docx-i18n': 0.5.1

@@ -12,7 +12,7 @@ import { InspectieVenster } from "./InspectieVenster";
 import { Leesmodus } from "./Leesmodus";
 import { noteerActiviteit } from "./opslaan";
 import { TaalVenster } from "./TaalVenster";
-import { taalNaam, taalOpCursor } from "./taal";
+import { taalNaam, taalUitSessie } from "./taal";
 import {
   meldVerdwenen,
   meldZichtbaar,
@@ -30,7 +30,7 @@ function useEditorVolgen(api: () => DocxEditorRef | null, opWijziging: (soort: "
   const recent = useRef(opWijziging);
   recent.current = opWijziging;
   useEffect(() => {
-    let gekoppeld: DocxEditorRef | null = null;
+    let gekoppeld: object | null = null;
     let opruimen: (() => void)[] = [];
     let wachten: ReturnType<typeof setTimeout> | undefined;
     let inhoud = false;
@@ -42,20 +42,21 @@ function useEditorVolgen(api: () => DocxEditorRef | null, opWijziging: (soort: "
       wachten = setTimeout(() => {
         recent.current(inhoud ? "inhoud" : "selectie");
         inhoud = false;
-      }, 150);
+      }, 1000);
     };
     const koppel = () => {
       const ref = api();
-      if (ref === gekoppeld) return;
+      const sessie = ref?.getEditorRef()?.getYrsSession() ?? null;
+      if (sessie === gekoppeld) return;
       clearTimeout(wachten);
       inhoud = false;
       opruimen.forEach((weg) => weg());
       opruimen = [];
-      gekoppeld = ref;
+      gekoppeld = sessie;
       if (!ref) return;
       opruimen = [
         ref.onSelectionChange(() => plan("selectie")),
-        ref.onContentChange(() => plan("inhoud")),
+        ref.onDocumentChange(() => plan("inhoud")),
       ];
       plan("selectie");
     };
@@ -87,12 +88,15 @@ export function TekstInfo() {
   // Vanuit Bestand › Info: na herladen terug naar het document.
   const [terug, setTerug] = useState<(() => void) | undefined>(undefined);
 
+  const taalBron = useRef<{ sessie: object; document: ReturnType<DocxEditorRef["getDocument"]> } | null>(null);
   useEditorVolgen(api, (soort) => {
     const ref = api();
     if (!ref) return;
     if (soort === "inhoud" && herlaad) noteerActiviteit(herlaad);
-    const info = ref.getSelectionInfo();
-    setTaal(taalOpCursor(ref.getDocument(), info?.paraId, info?.before.length ?? 0));
+    const sessie = ref.getEditorRef()?.getYrsSession();
+    if (!sessie) return;
+    if (taalBron.current?.sessie !== sessie) taalBron.current = { sessie, document: ref.getDocument() };
+    setTaal(taalUitSessie(sessie, taalBron.current.document));
   });
 
   // Bestand › Info opent voor het laatst zichtbare tekstdocument.

@@ -49,7 +49,7 @@ export function useEditorTik() {
       opruimen = [];
       gekoppeld = ref;
       if (!ref) return;
-      opruimen = [ref.onSelectionChange(() => verhoog()), ref.onContentChange(() => verhoog())];
+      opruimen = [ref.onSelectionChange(() => verhoog()), ref.onDocumentChange(() => verhoog())];
       verhoog();
     };
     koppel();

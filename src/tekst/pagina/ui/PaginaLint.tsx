@@ -185,7 +185,6 @@ export function kopVoetTab(p: PaginaFuncties): RibbonTab {
 export function PaginaIndelingKnoppen({ p }: { p: PaginaFuncties }) {
   const { t } = useTranslation("writer");
   const stand = p.stand();
-  const herlaad = t("page.reload.short");
   const margeRegels = (): Menuregel[] => [
     ...(Object.keys(MARGES) as MargeVoorkeur[]).map((v) => {
       const m = MARGES[v].marges;
@@ -212,19 +211,18 @@ export function PaginaIndelingKnoppen({ p }: { p: PaginaFuncties }) {
   ];
   return (
     <>
-      <Keuzemenu naam={t("page.layout.margins")} icoon={Maximize2} groot uit={!p.beschikbaar} regels={margeRegels} voet={herlaad} />
+      <Keuzemenu naam={t("page.layout.margins")} icoon={Maximize2} groot uit={!p.beschikbaar} regels={margeRegels} />
       <div className="ribbon-stapel">
         <Keuzemenu
           naam={t("page.layout.orientation")}
           icoon={stand.liggend ? RectangleHorizontal : RectangleVertical}
           uit={!p.beschikbaar}
-          voet={herlaad}
           regels={() => [
             { naam: t("page.layout.portrait"), icoon: RectangleVertical, actief: !stand.liggend, kies: () => p.afdrukstand("staand") },
             { naam: t("page.layout.landscape"), icoon: RectangleHorizontal, actief: stand.liggend, kies: () => p.afdrukstand("liggend") },
           ]}
         />
-        <Keuzemenu naam={t("page.layout.size")} icoon={Proportions} uit={!p.beschikbaar} regels={formaatRegels} voet={herlaad} />
+        <Keuzemenu naam={t("page.layout.size")} icoon={Proportions} uit={!p.beschikbaar} regels={formaatRegels} />
       </div>
     </>
   );

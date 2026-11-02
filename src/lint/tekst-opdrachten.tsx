@@ -862,7 +862,7 @@ export function TekstStatus({
       scroll.addEventListener("scroll", opScroll, { passive: true });
       opruimen = [
         () => scroll.removeEventListener("scroll", opScroll),
-        ref.onContentChange(() => tel(ref)),
+        ref.onDocumentChange(() => tel(ref)),
         ref.onSelectionChange(() => {
           opScroll();
           // Tijdens slepen niet elke frame een grote selectie uitlezen en

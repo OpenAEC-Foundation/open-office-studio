@@ -3,6 +3,7 @@ import re
 import zipfile
 from pathlib import Path
 from docx import Document
+from docx.shared import Mm
 from openpyxl import Workbook
 from pptx import Presentation
 from pptx.util import Inches
@@ -23,6 +24,8 @@ def zet_toepassing(pad):
 
 
 d = Document()
+d.sections[0].page_width = Mm(210)
+d.sections[0].page_height = Mm(297)
 d.core_properties.author = ''
 d.core_properties.last_modified_by = ''
 d.add_paragraph('')

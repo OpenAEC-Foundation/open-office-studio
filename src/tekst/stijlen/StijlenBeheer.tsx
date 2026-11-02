@@ -100,40 +100,50 @@ function useDocumentStaat(api: () => DocxEditorRef | null) {
   const [selectie, setSelectie] = useState<SelectionState | null>(null);
   const [versie, setVersie] = useState(0);
   useEffect(() => {
-    let gekoppeld: DocxEditorRef | null = null;
-    let bewerker: ReturnType<DocxEditorRef["getEditorRef"]> = null;
+    let sessie: object | null = null;
     let laatste: Document | null = null;
     let opruimen: (() => void)[] = [];
     let wachten: ReturnType<typeof setTimeout> | undefined;
+    const stijlSleutel = () => {
+      const s = api()?.getEditorRef()?.getYrsSession(), head = s?.selection()?.head;
+      if (!s || !head) return "";
+      const c = s.selectionContext({ story: head.story, start: head, end: head });
+      return JSON.stringify([head.story, head.paraId, c.styleId, c.fontFamily, c.fontSize, c.bold, c.italic]);
+    };
+    let vorigeStijl = "";
     const koppel = () => {
       const ref = api();
-      const huidig = ref?.getEditorRef() ?? null;
+      const huidig = ref?.getEditorRef()?.getYrsSession() ?? null;
       // getDocument bouwt een volledige documentkopie. Bij dezelfde editor
       // komen wijzigingen via het abonnement; opnieuw uitlezen per tik laat
       // grote documenten ook zonder invoer steeds het hele lint opbouwen.
-      if (ref === gekoppeld && huidig === bewerker && (!ref || laatste)) return;
+      if (huidig === sessie && (!ref || laatste)) return;
       clearTimeout(wachten);
       opruimen.forEach((weg) => weg());
       opruimen = [];
-      gekoppeld = ref;
-      bewerker = huidig;
+      sessie = huidig;
       const doc = ref?.getDocument() ?? null;
       laatste = doc;
+      vorigeStijl = stijlSleutel();
       setDocument(doc);
       setSelectie(null);
       if (!ref || !doc) {
-        gekoppeld = null;
         return;
       }
       opruimen = [
         ref.onSelectionChange((staat) => setSelectie(staat)),
-        ref.onContentChange((nieuw) => {
+        ref.onDocumentChange(() => {
+          // Gewone tekstinvoer verandert geen stijl: daarvoor is geen volledige
+          // documentprojectie nodig. Het stijlenvenster leest bij openen actueel.
+          const sleutel = stijlSleutel();
+          if (sleutel === vorigeStijl) return;
           clearTimeout(wachten);
           wachten = setTimeout(() => {
-            laatste = nieuw;
-            setDocument(nieuw);
+            vorigeStijl = stijlSleutel();
+            laatste = api()?.getDocument() ?? null;
+            setDocument(laatste);
             setVersie((v) => v + 1);
-          }, 400);
+          }, 1000);
         }),
       ];
     };
