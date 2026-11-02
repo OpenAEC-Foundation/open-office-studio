@@ -1,0 +1,48 @@
+/* Spellingcontrole in Rekenblad en Presentatie (#21); zie ook ../tekst/spelling.css. */
+
+/* Doorzichtige spiegel van een invoerveld met golflijnen (veld.tsx). */
+.spelling-veld {
+  position: fixed;
+  z-index: 9500;
+  overflow: hidden;
+  margin: 0;
+  border-style: solid;
+  border-color: transparent;
+  background: transparent;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  pointer-events: none;
+  user-select: none;
+}
+
+.spelling-veld-fout {
+  text-decoration: underline wavy #e0281e;
+  text-decoration-thickness: 1px;
+  text-decoration-skip-ink: none;
+  text-underline-offset: 2px;
+}
+
+/* Overlay boven raster of dia (Rekenblad, Presentatie). */
+.spelling-laag {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.spelling-menu button.is-actief {
+  background: var(--oa-shell-accent-soft, #fbe9dc);
+}
+
+.spelling-venster .spelling-plek {
+  margin: -6px 0 4px;
+  color: var(--oa-shell-text-secondary, #666);
+  font-size: 12px;
+}
+
+/* Taal en spelfouten in de statusbalk (Rekenblad, Presentatie). */
+.statusbalk-spelling-taal {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}

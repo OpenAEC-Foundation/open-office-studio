@@ -8,6 +8,7 @@ import { useEffect, useId, useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { Modal } from "./Modal";
 import { ThemedSelect, Kleurstalen, type Keuze } from "./ThemedSelect";
+import { TALEN, taalNaam } from "../spelling/talen";
 import { toonSneltoetsen } from "./gebeurtenissen";
 import {
   bewaarInstellingen,
@@ -68,7 +69,7 @@ const STATUSITEMS: (keyof Instellingen["statusbalk"])[] = [
   "database",
 ];
 
-const SPELLING: (keyof Instellingen["spelling"])[] = [
+const SPELLING: Exclude<keyof Instellingen["spelling"], "standaardTaal">[] = [
   "controleren",
   "hoofdletterwoordenNegeren",
   "cijferwoordenNegeren",
@@ -510,6 +511,19 @@ function Bewerken({ instellingen, wijzig }: { instellingen: Instellingen; wijzig
             {t(`editing.spellingOptions.${sleutel}`)}
           </Vink>
         ))}
+        {/* Rekenblad en Presentatie: taal als het bestand er geen noemt (#21). */}
+        <Rij label={t("spelling:settings.defaultLanguage")}>
+          <ThemedSelect
+            label={t("spelling:settings.defaultLanguage")}
+            waarde={instellingen.spelling.standaardTaal}
+            keuzes={(["auto", ...TALEN.map((x) => x.id)] as const).map((waarde) => ({
+              waarde,
+              label: waarde === "auto" ? t("spelling:settings.defaultLanguageAuto") : taalNaam(waarde),
+            }))}
+            onChange={(standaardTaal) => wijzig({ spelling: { standaardTaal } })}
+            stijl={{ width: 220 }}
+          />
+        </Rij>
         <p className="instellingen-uitleg">{t("editing.spellingHelp")}</p>
         <button
           type="button"

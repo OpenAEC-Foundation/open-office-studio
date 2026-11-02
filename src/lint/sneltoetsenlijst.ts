@@ -293,6 +293,8 @@ export const vasteSneltoetsen: readonly SneltoetsInfo[] = [
   rekenblad("Alt+ArrowDown", "openFilterMenu"),
   // F4 in de celinvoer of formulebalk (src/lint/rekenblad-formulebalk.tsx).
   rekenblad("F4", "toggleReference"),
+  // Spelling in de werkmap (src/spelling/rekenblad).
+  rekenblad("F7", "spellingGrammar"),
   rekenblad("Ctrl+PageUp", "previousSheet"),
   rekenblad("Ctrl+PageDown", "nextSheet"),
   rekenblad("Ctrl+F", "find"),
@@ -337,6 +339,8 @@ export const vasteSneltoetsen: readonly SneltoetsInfo[] = [
   presentatie("Ctrl+E", "center"),
   presentatie("Ctrl+R", "alignRight"),
   presentatie("Ctrl+J", "justify"),
+  // Spelling in dia's en notities (src/spelling/presentatie).
+  presentatie("F7", "spellingGrammar"),
   presentatie("PageUp", "previousSlide"),
   presentatie("PageDown", "nextSlide"),
   presentatie("Home", "firstSlide"),

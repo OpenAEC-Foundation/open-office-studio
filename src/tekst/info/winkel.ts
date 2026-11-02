@@ -5,6 +5,7 @@
  * aansluitpunt voor de spellingcontrole (pakket W5).
  */
 import { useSyncExternalStore } from "react";
+import type { Taal } from "../../spelling/talen";
 
 function winkel<T>(begin: T) {
   let waarde = begin;
@@ -85,6 +86,12 @@ export const useInfoVerzoek = () => useSyncExternalStore(infoVerzoek.volg, infoV
 export interface TaalAansluiting {
   kiesTaal?: (huidig: string | null) => void;
   status?: () => string | null;
+  /**
+   * Rekenblad en Presentatie (één taal per document): de documenttaal voor
+   * het taalitem in de statusbalk, en kiezen (src/spelling/gedeeld).
+   */
+  taal?: () => Taal | null;
+  zetTaal?: (taal: Taal) => void;
 }
 const taal = winkel<TaalAansluiting>({});
 

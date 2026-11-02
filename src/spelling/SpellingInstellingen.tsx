@@ -14,7 +14,7 @@ export function SpellingInstellingen() {
   const { spelling } = useInstellingen();
   const { persoonlijk } = useWoordenlijsten();
   const [lijstOpen, setLijstOpen] = useState(false);
-  const vink = (sleutel: keyof typeof spelling, tekst: string) => (
+  const vink = (sleutel: Exclude<keyof typeof spelling, "standaardTaal">, tekst: string) => (
     <label className="werkruimte-vink">
       <input
         type="checkbox"

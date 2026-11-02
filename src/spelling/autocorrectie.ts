@@ -98,11 +98,14 @@ function zelfdeHoofdletter(getypt: string, vervanging: string) {
     : vervanging;
 }
 
-/** Begint op `start` een nieuwe zin? */
-export function isZinsbegin(tekst: string, start: number): boolean {
+/**
+ * Begint op `start` een nieuwe zin? `beginTelt` onwaar: het begin van de
+ * tekst zelf telt niet als zinsbegin (rekenbladcellen, zoals Excel).
+ */
+export function isZinsbegin(tekst: string, start: number, beginTelt = true): boolean {
   let i = start - 1;
   while (i >= 0 && /[\s"“‘(\[]/u.test(tekst[i])) i--;
-  if (i < 0) return true; // begin van de alinea
+  if (i < 0) return beginTelt; // begin van de alinea
   if (!/[.!?]/.test(tekst[i])) return false;
   if (i === start - 1) return false; // geen spatie na de punt ("bijv.nl")
   if (tekst[i] !== ".") return true;
@@ -120,6 +123,11 @@ export interface AutocorrectieOpties {
   taal: Taal;
   /** Woorden die nooit gecorrigeerd worden (persoonlijke woordenlijst). */
   uitzondering?: (woord: string) => boolean;
+  /**
+   * Of het begin van de tekst een zinsbegin is (standaard ja). In een
+   * rekenbladcel niet: "ja", "nee" en codes blijven klein, zoals in Excel.
+   */
+  beginIsZinsbegin?: boolean;
 }
 
 /**
@@ -143,12 +151,13 @@ export function autocorrectie(tekst: string, cursor: number, opties: Autocorrect
   if (/[@/\\]/.test(tekst[scheiding]) || /\p{N}/u.test(tekst.slice(start, eind))) return null;
   const woord = tekst.slice(start, eind);
   if (opties.uitzondering?.(woord)) return null;
+  const begin = opties.beginIsZinsbegin ?? true;
 
   const lijst = typefouten(opties.taal);
   const klein = woord.toLocaleLowerCase();
   if (Object.hasOwn(lijst, klein) && !(woord === "I" && klein === "i")) {
     let nieuw = zelfdeHoofdletter(woord, lijst[klein]);
-    if (isZinsbegin(tekst, start)) nieuw = nieuw[0].toLocaleUpperCase() + nieuw.slice(1);
+    if (isZinsbegin(tekst, start, begin)) nieuw = nieuw[0].toLocaleUpperCase() + nieuw.slice(1);
     if (nieuw !== woord) return { start, eind, oud: woord, nieuw, regel: "typefout" };
   }
 
@@ -164,7 +173,7 @@ export function autocorrectie(tekst: string, cursor: number, opties: Autocorrect
   )
     return { start, eind, oud: woord, nieuw: woord[0] + woord.slice(1).toLocaleLowerCase(), regel: "twee-hoofdletters" };
 
-  if (isKlein(woord[0]) && isZinsbegin(tekst, start) && ![...woord.slice(1)].some(isHoofd)) {
+  if (isKlein(woord[0]) && isZinsbegin(tekst, start, begin) && ![...woord.slice(1)].some(isHoofd)) {
     // Alleen corrigeren als de zin echt al een woord verder is: de scheiding
     // mag geen punt zijn die een afkorting afsluit ("bijv.").
     if (tekst[scheiding] === "." && AFKORTINGEN.has(klein)) return null;
