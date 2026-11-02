@@ -131,7 +131,9 @@ function useDocumentStaat(api: () => DocxEditorRef | null) {
         return;
       }
       opruimen = [
-        ref.onSelectionChange((staat) => setSelectie(staat)),
+        // De cursor verschuift bij elke letter, terwijl de stijlopmaak gelijk blijft.
+        // Houd dezelfde staat aan zodat de galerij niet steeds opnieuw wordt opgebouwd.
+        ref.onSelectionChange((staat) => setSelectie((oud) => JSON.stringify(oud) === JSON.stringify(staat) ? oud : staat)),
         ref.onDocumentChange(() => {
           // Gewone tekstinvoer verandert geen stijl: daarvoor is geen volledige
           // documentprojectie nodig. Het stijlenvenster leest bij openen actueel.

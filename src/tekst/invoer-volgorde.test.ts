@@ -49,3 +49,27 @@ describe("getypte tekst vóór een latere selectie", () => {
     expect(stappen).toEqual([10, 1, 20, 2]);
   });
 });
+
+
+describe("meldingen van de invoerwachtrij", () => {
+  it("bundelt herhaalde meldingen tot één beeld en laat daarna nieuwe meldingen toe", () => {
+    const markering = "Mn=useCallback(";
+    const b = bron.indexOf(markering, bron.indexOf("_openaecMeldFrame=useRef"));
+    const e = bron.indexOf(",[]),Fn=", b);
+    if (b < 0 || e < 0) throw new Error("Controleer de meldingsadapter na een engine-update.");
+    const frames: (() => void)[] = [], frame = { current: null as number | null };
+    let aantal = 0;
+    const meld = new Function("_openaecMeldFrame", "Wt", "requestAnimationFrame", `return ${bron.slice(b + markering.length, e)}`)(
+      frame, { current: new Set([() => aantal++]) }, (fn: () => void) => { frames.push(fn); return frames.length; },
+    );
+    meld();meld();meld();
+    expect(frames).toHaveLength(1);
+    expect(aantal).toBe(0);
+    frames.shift()!();
+    expect(aantal).toBe(1);
+    meld();
+    expect(frames).toHaveLength(1);
+    frames.shift()!();
+    expect(aantal).toBe(2);
+  });
+});

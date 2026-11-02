@@ -4,3 +4,30 @@
 .office-tekst .canvas-page > canvas {
   background-color: var(--office-papierkleur, var(--doc-page-bg, #fff)) !important;
 }
+/* Houd herberekening van de pagina's buiten de rest van de werkruimte. */
+.office-tekst .canvas-pages,
+.office-tekst .canvas-page {
+  contain: layout;
+}
+.office[data-office-thema="forge"] .office-tekst {
+  --doc-bg: #141414;
+  --doc-bg-input: #333333;
+  --doc-bg-hover: #3a3a3a;
+  --doc-text: #e8e8e8;
+  --doc-text-muted: #bdbdbd;
+  --doc-border: #494949;
+  --doc-caret: #ededed;
+}
+.office[data-office-thema="forge"] .office-tekst .docx-editor__scroll-container {
+  background: #141414 !important;
+}
+.office[data-office-thema="forge"] .tekst-galerij-item {
+  background: #303030;
+  color: #ededed;
+  border-color: #505050;
+}
+
+.office[data-office-thema="forge"] .tekst-galerij-voorbeeld:hover:not(:disabled),
+.office[data-office-thema="forge"] .tekst-galerij-pijl:hover {
+  background: #414141;
+}

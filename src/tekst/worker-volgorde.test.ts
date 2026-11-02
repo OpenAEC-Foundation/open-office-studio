@@ -29,6 +29,46 @@ function proef() {
 }
 
 describe("volgorde bij het voorbereiden van de documentworker", () => {
+  it("start de invoeropdrachten pas nadat de worker zijn document heeft geopend", async () => {
+    const p = proef();
+    const opdracht = p.client.commandInit({} as Parameters<typeof p.client.commandInit>[0]).catch((e) => e);
+    try {
+      await Promise.resolve();
+      expect(p.berichten).toHaveLength(0);
+      const openen = p.client.bootstrap(p.momentopname(), "{}");
+      await Promise.resolve();
+      expect(p.berichten.map((b) => b.type)).toEqual(["bootstrap"]);
+      p.antwoord();await openen;
+      await Promise.resolve();await Promise.resolve();
+      expect(p.berichten.map((b) => b.type)).toEqual(["bootstrap", "commandInit"]);
+    } finally {
+      p.client.destroy();
+      expect(await opdracht).toBeInstanceOf(Error);
+    }
+  });
+
+  it("levert een mislukte initialisatie terug aan de wachtende invoer zonder opdracht te sturen", async () => {
+    const p = proef();
+    try {
+      const openen = p.client.bootstrap(p.momentopname(), "{}");
+      const opdracht = p.client.commandInit({} as Parameters<typeof p.client.commandInit>[0]);
+      const fout = expect(opdracht).rejects.toThrow("initialisatie mislukt");
+      p.antwoord(false);
+      await expect(openen).rejects.toThrow("initialisatie mislukt");
+      await fout;
+      expect(p.berichten.map((b) => b.type)).toEqual(["bootstrap"]);
+    } finally { p.client.destroy(); }
+  });
+
+  it("beëindigt ook een invoeropdracht die nog op het openen wacht bij sluiten", async () => {
+    const p = proef();
+    const opdracht = p.client.commandInit({} as Parameters<typeof p.client.commandInit>[0]);
+    const fout = expect(opdracht).rejects.toThrow("destroyed");
+    p.client.destroy();
+    await fout;
+    expect(p.berichten.map((b) => b.type)).toEqual(["destroy"]);
+  });
+
   it("bewaart invoer vóór en tijdens initialiseren en levert die daarna in volgorde af", async () => {
     const p = proef();
     try {

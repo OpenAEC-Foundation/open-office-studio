@@ -41,6 +41,7 @@ import { leesPaginaUitPakket } from "./tekst/randen/pagina";
 import "./tekst/papier.css";
 import { wijzigPaginaLive } from "./tekst/pagina/ui/liveSecties";
 import { maakPaginaVolger } from "./tekst/pagina/ui/paginaVolgen";
+import { donkerePapierkleur, installeerPapierWeergave } from "./tekst/papierWeergave";
 import type { SectionProperties } from "@betteroffice/docx/types/document";
 
 const PRESENTATIE_PLUGINS = [tekstSelectiePlugin];
@@ -54,6 +55,7 @@ configureDefaultFonts({
 void laadSysteemLettertypen();
 // "Source Serif 4" e.d. alleen geldig tussen aanhalingstekens op het canvas.
 installeerFontCitering();
+installeerPapierWeergave();
 export type Soort = "docx" | "xlsx" | "pptx";
 export interface EditorProps {
   soort: Soort;
@@ -76,6 +78,8 @@ export default function OfficeEditor(props: EditorProps) {
   // Engine-teksten in de interfacetaal; wisselt live mee zonder het document te herladen.
   const engineTaal = useEngineVertaling();
   const { thema } = useOfficeThema();
+  const [lichtPapier, setLichtPapier] = useState(false);
+  const donkerPapier = thema === "forge" && !lichtPapier;
   const { t } = useTranslation("shell");
   const docx = useRef<DocxEditorRef>(null);
   const [paginaVolger] = useState(() => maakPaginaVolger(() => docx.current));
@@ -338,6 +342,7 @@ export default function OfficeEditor(props: EditorProps) {
             <DocxEditor
               // De indeling draait in een worker; het lint gebruikt nog de synchrone documentkopie.
               legacySyncApi
+              pageMirror="text"
               key={herladen.sleutel}
               ref={docx}
               documentBuffer={herladen.bytes}
@@ -372,9 +377,9 @@ export default function OfficeEditor(props: EditorProps) {
               showOutline={navigatie}
               showOutlineButton={false}
               colorMode={thema === "forge" ? "dark" : "light"}
-              style={{ "--office-papierkleur": papierkleur ? `#${papierkleur}` : undefined } as React.CSSProperties}
+              style={{ "--office-papierkleur": donkerPapier ? donkerePapierkleur(papierkleur ? `#${papierkleur}` : "#ffffff") : papierkleur ? `#${papierkleur}` : "#ffffff" } as React.CSSProperties}
               i18n={engineTaal.tekst}
-              className="office-tekst"
+              className={`office-tekst${donkerPapier ? " office-papier-donker" : ""}`}
               readOnly={props.inactief}
               toolbar={
                 <TekstRibbon
@@ -383,6 +388,8 @@ export default function OfficeEditor(props: EditorProps) {
                   navigatie={navigatie}
                   wijzigLiniaal={() => setLiniaal(!liniaal)}
                   wijzigNavigatie={() => setNavigatie(!navigatie)}
+                  donkerPapier={donkerPapier}
+                  wisselPapier={thema === "forge" ? () => setLichtPapier((v) => !v) : undefined}
                   zoomKoppeling={zoomKoppeling}
                 />
               }
