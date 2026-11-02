@@ -2,7 +2,6 @@ import i18next from "./i18n/config";
 import type { Soort } from "./editors";
 import type { ModuleNaam } from "./tabbladen";
 import type { Werkbestand } from "./werkbestand";
-import { titelbron, venstertitel as maakTitel } from "./venstertitel";
 
 /**
  * Een tabblad dat naar een ander venster gaat. Documenten gaan mét hun
@@ -24,8 +23,7 @@ export type Overdracht =
     }
   | { type: "module"; module: ModuleNaam };
 
-/** Een nieuw venster, het hoofdvenster of een bestaand venster (Tauri-label). */
-export type Doel = "nieuw" | "hoofd" | { venster: string };
+export type Doel = "nieuw" | "hoofd";
 
 export interface Positie {
   /** Schermcoördinaten in CSS-pixels (logische pixels). */
@@ -57,17 +55,22 @@ export interface Vensterkanaal {
 
 export const TIJDSLIMIET = 30_000;
 
-/** De titel van een nieuw venster tot de webview zelf de titel zet. */
+const appnaam = {
+  docx: "Open Tekst Studio",
+  xlsx: "Open Rekenblad Studio",
+  pptx: "Open Presentatie Studio",
+} as const;
+
 export function venstertitel(overdracht: Overdracht) {
-  return maakTitel(
-    titelbron(
-      overdracht.type === "document"
-        ? { ...overdracht, gewijzigd: overdracht.gewijzigd }
-        : { ...overdracht, gewijzigd: false },
-    ),
-    (sleutel, waarden) => i18next.t(sleutel, waarden),
-  );
+  if (overdracht.type === "document")
+    return `${overdracht.naam} — ${appnaam[overdracht.soort]}`;
+  return overdracht.module === "notities"
+    ? "Open Notities Studio"
+    : overdracht.module === "database"
+      ? "Open Database Studio"
+      : "Open Office Studio";
 }
+
 
 /* ── Verpakking: 4 bytes lengte (LE) + JSON-kop + documentbytes ── */
 
@@ -243,11 +246,6 @@ export function browserkanaal(omgeving: BrowserOmgeving): Vensterkanaal {
           uitstaand.delete(sleutel);
           if (fout) reject(fout);
           else resolve();
-        }
-        if (typeof doel === "object") {
-          // De browser kent alleen het hoofdvenster en nieuwe vensters.
-          klaar(new Error(i18next.t("shell:windows.otherWindowFailed")));
-          return;
         }
         if (doel === "hoofd") {
           if (!hoofdId) {

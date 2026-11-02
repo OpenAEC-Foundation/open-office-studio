@@ -8,7 +8,6 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 1420 --strictPort",
     "build": "tsc --noEmit && vite build",
-    "build:hosted": "tsc --noEmit && vite build --base=./ --mode hosted --outDir dist-hosted && node scripts/controleer-hosted.mjs dist-hosted",
     "preview": "vite preview --host 127.0.0.1 --port 1420 --strictPort",
     "test": "vitest run",
     "tauri": "tauri",

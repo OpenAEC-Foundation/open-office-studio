@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { AppWindow, Layers } from "lucide-react";
+import { Layers } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import i18next from "./i18n/config";
 import type { useTabbladen } from "./useTabbladen";
@@ -14,7 +14,7 @@ interface TabInfo {
   titel: string;
   gewijzigd: boolean;
 }
-export interface VensterInfo {
+interface VensterInfo {
   label: string;
   hoofd: boolean;
   tabbladen: TabInfo[];
@@ -47,42 +47,6 @@ export function venstergroepen(lijst: VensterInfo[], eigen: string | null) {
             ? i18next.t("shell:windowMenu.mainWindow")
             : i18next.t("shell:windowMenu.windowNumber", { number: ++nummer }),
     }));
-}
-
-export interface AnderVenster {
-  label: string;
-  /** "Hoofdvenster · a.docx", "Venster 2 · b.xlsx" of "Venster 3" (leeg). */
-  naam: string;
-}
-
-/**
- * De andere vensters waar een tabblad heen kan, met dezelfde namen als in
- * het venstermenu; ook lege vensters (bijv. een net geopend nieuw venster).
- */
-export function verplaatsDoelen(lijst: VensterInfo[], eigen: string): AnderVenster[] {
-  const groepen = venstergroepen(lijst, eigen);
-  let nummer = groepen.filter((g) => !g.hoofd && !g.eigen).length + 1;
-  const metNaam = new Map(groepen.map((g) => [g.label, g]));
-  return lijst
-    .filter((v) => v.label !== eigen)
-    .map((v) => {
-      const groep = metNaam.get(v.label);
-      if (!groep)
-        return {
-          label: v.label,
-          naam: v.hoofd
-            ? i18next.t("shell:windowMenu.mainWindow")
-            : i18next.t("shell:windowMenu.windowNumber", { number: ++nummer }),
-        };
-      return { label: v.label, naam: `${groep.naam} · ${groep.tabbladen[0].titel}` };
-    });
-}
-
-/** Vraagt de andere open vensters op (desktopapp). */
-export async function andereVensters(): Promise<AnderVenster[]> {
-  if (!tauri) return [];
-  const [mijn, alle] = await Promise.all([label(), invoke<VensterInfo[]>("open_documenten")]);
-  return verplaatsDoelen(alle, mijn);
 }
 
 interface Opties {
@@ -148,12 +112,9 @@ export function useVenstermenu({ tabs, activeer, sluitAlles }: Opties) {
 export function VensterMenu({
   tabs,
   activeer,
-  nieuwVenster,
 }: {
   tabs: ReturnType<typeof useTabbladen>;
   activeer: (id: number) => void;
-  /** Opent een leeg Office Studio-venster (desktopapp). */
-  nieuwVenster?: () => void;
 }) {
   const { t } = useTranslation("shell");
   const [open, setOpen] = useState(false);
@@ -249,19 +210,6 @@ export function VensterMenu({
             }
           }}
         >
-          {nieuwVenster && (
-            <button
-              role="menuitem"
-              className="office-venstermenu-nieuw"
-              onClick={() => {
-                setOpen(false);
-                nieuwVenster();
-              }}
-            >
-              <AppWindow size={14} aria-hidden />
-              <span>{t("windowMenu.newWindow")}</span>
-            </button>
-          )}
           {!groepen.length && <p>{t("windowMenu.empty")}</p>}
           {groepen.map((v) => (
             <div key={v.label} role="group" aria-label={v.naam}>

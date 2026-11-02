@@ -135,7 +135,7 @@ const opPagina = (doel: EventTarget | null) => {
 
 /** Opent een lintkeuze als terugval voor een venster dat (nog) niet bestaat. */
 function toonInLint(tab: string, selector: string) {
-  const lint = zichtbaarElement(".office-lintplek[data-soort=\"docx\"] .ribbon, .office-tekst .ribbon");
+  const lint = zichtbaarElement(".office-tekst .ribbon");
   if (!lint) return;
   const inhoud = lint.querySelector<HTMLElement>(".ribbon-inhoud");
   if (inhoud?.hidden) lint.querySelector<HTMLButtonElement>(".ribbon-inklap")?.click();

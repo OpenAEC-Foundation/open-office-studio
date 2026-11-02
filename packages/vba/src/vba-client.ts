@@ -21,8 +21,6 @@ import type {
   WatWerktOpties,
   WatWerktSamenvatting,
 } from "./extern-typen.ts";
-import vbaWorkerUrl from "./vba-worker.ts?worker&url";
-import { startWorker } from "../../../src/startWorker";
 
 /** Wat de client van een worker gebruikt (Worker of een testvervanger). */
 export interface WorkerAchtig {
@@ -68,7 +66,7 @@ export class VbaClient {
 
   private maakWorker(): WorkerAchtig {
     if (this.opties.maakWorker) return this.opties.maakWorker();
-    return startWorker(vbaWorkerUrl, { name: "vba" }) as unknown as WorkerAchtig;
+    return new Worker(new URL("./vba-worker.ts", import.meta.url), { type: "module", name: "vba" }) as unknown as WorkerAchtig;
   }
 
   private start(): Promise<void> {

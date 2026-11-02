@@ -52,8 +52,6 @@ export interface EditorProps {
   naam: string;
   gewijzigd: () => void;
   fout: (f: Error) => void;
-  /** Melding rechtsonder met een eigen toon; zonder valt het terug op `fout`. */
-  melding?: (tekst: string, toon: "info" | "waarschuwing") => void;
   registreer: (opslaan: (() => Promise<Uint8Array>) | null) => void;
   opslaan: () => void;
   bestandsmenu: () => void;
@@ -84,10 +82,6 @@ export default function OfficeEditor(props: EditorProps) {
   useEffect(() => () => stopDiaWijzigingen.current?.(), []);
   const recent = useRef(props);
   recent.current = props;
-  const meldEditor = (tekst: string, toon: "info" | "waarschuwing") =>
-    recent.current.melding
-      ? recent.current.melding(tekst, toon)
-      : recent.current.fout(new Error(tekst));
   // Grafieken bewerken het pakket zelf en laden de editor daarna opnieuw.
   const herladen = useHerladen({
     bytes: props.bytes,
@@ -236,12 +230,7 @@ export default function OfficeEditor(props: EditorProps) {
       }
       if (props.soort === "xlsx") await lt.registreerVervangers(info);
       const melding = vervangingsMelding(info.vervangingen);
-      // Metrisch gelijke vervangers veranderen de opmaak niet: alleen ter
-      // informatie. Een benadering kan regels laten verschuiven: blijft staan.
-      const toon = info.vervangingen.some((v) => v.soort === "benadering")
-        ? "waarschuwing"
-        : "info";
-      if (melding && actief) meldEditor(melding, toon);
+      if (melding && actief) recent.current.fout(new Error(melding));
     })().catch((e) => {
       if (actief) recent.current.fout(e);
     });
@@ -271,9 +260,8 @@ export default function OfficeEditor(props: EditorProps) {
               vergelijkCache(controle, leesUitWerkboek(api.handle, controle)),
             );
             if (melding?.ernst === "waarschuwing")
-              meldEditor(
-                `${melding.titel}. ${melding.regels.join(" ")}`,
-                "waarschuwing",
+              recent.current.fout(
+                new Error(`${melding.titel}. ${melding.regels.join(" ")}`),
               );
           },
         )

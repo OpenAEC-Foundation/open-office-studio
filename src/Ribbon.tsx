@@ -3,7 +3,6 @@ import { ChevronDown, type LucideIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Lint, LintActie, type LintProps, type LintTeksten } from "./openaec-lint";
 import { useInstellingen } from "./instellingen";
-import { InLintPlek } from "./lintplek";
 
 export const RibbonFout = createContext<(bericht: string) => void>(() => {});
 /** Engelse redenen uit de engines, vertaald naar de interfacetaal. */
@@ -33,16 +32,13 @@ export function Ribbon(props: LintProps) {
     naarLinks: t("ribbon.scrollLeft"),
     naarRechts: t("ribbon.scrollRight"),
   };
-  // In de schil staat het lint boven de documentbalk (zie lintplek.tsx).
   return (
-    <InLintPlek>
-      <Lint
-        compact={lint.compact}
-        standaardIngeklapt={lint.ingeklapt}
-        {...props}
-        teksten={{ ...teksten, ...props.teksten }}
-      />
-    </InLintPlek>
+    <Lint
+      compact={lint.compact}
+      standaardIngeklapt={lint.ingeklapt}
+      {...props}
+      teksten={{ ...teksten, ...props.teksten }}
+    />
   );
 }
 

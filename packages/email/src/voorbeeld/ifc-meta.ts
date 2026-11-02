@@ -7,8 +7,6 @@
  * Gebruik: `const t = new IfcTeller(); t.voed(stuk); …; t.einde()` of
  * `analyseerIfc(bytes, { opVoortgang, signaal })` (Web Worker waar mogelijk).
  */
-import ifcWorkerUrl from "./ifc-worker.ts?worker&url";
-import { startWorker } from "../../../../src/startWorker";
 
 export interface IfcKop {
   beschrijving: string[];
@@ -352,7 +350,7 @@ export function analyseerIfc(
   return new Promise<IfcMeta>((resolve, reject) => {
     let worker: Worker;
     try {
-      worker = startWorker(ifcWorkerUrl, { name: "ifc-voorbeeld" });
+      worker = new Worker(new URL("./ifc-worker.ts", import.meta.url), { type: "module", name: "ifc-voorbeeld" });
     } catch {
       analyseerInStukken(bytes, opties).then(resolve, reject);
       return;

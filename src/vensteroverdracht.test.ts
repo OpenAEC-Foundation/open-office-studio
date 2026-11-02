@@ -41,12 +41,10 @@ describe("verpakking", () => {
     expect(() => pakUit(vals)).toThrow("Onbekende overdracht");
   });
 
-  it("geeft een venstertitel met de module tussen haakjes", () => {
-    expect(venstertitel(document)).toBe(
-      "Ontwerpnotitie.docx • — Open Office Studio (Tekst)",
-    );
+  it("geeft een venstertitel per soort", () => {
+    expect(venstertitel(document)).toBe("Ontwerpnotitie.docx — Open Tekst Studio");
     expect(venstertitel({ type: "module", module: "notities" })).toBe(
-      "Open Office Studio (Notities)",
+      "Open Notities Studio",
     );
   });
 });

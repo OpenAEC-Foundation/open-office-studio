@@ -287,40 +287,24 @@ pub async fn bied_overdracht(
                 token,
             },
         );
-    // Losgelaten boven een ander Office Studio-venster: daarheen, niet naar een nieuw venster.
-    let positie = kop(&request, "x-office-x")
-        .zip(kop(&request, "x-office-y"))
-        .and_then(|(x, y)| Some((x.parse::<f64>().ok()?, y.parse::<f64>().ok()?)));
-    let doel = match (&label, positie) {
-        (Some(_), Some(punt)) => venster_onder_punt(&vensterrechthoeken(&app), punt, venster.label())
-            .unwrap_or(doel),
-        _ => doel,
-    };
-    let label = label.filter(|_| doel == "nieuw");
-    if let Some(p) = vensters
-        .pakketten
-        .lock()
-        .map_err(|e| e.to_string())?
-        .get_mut(&sleutel)
-    {
-        p.venster = label.clone();
-    }
     let resultaat = match &label {
         Some(label) => {
             let titel = kop(&request, "x-office-titel")
                 .map(|t| t.chars().take(200).collect::<String>())
-                .unwrap_or_else(|| APPNAAM.into());
-            maak_venster(&app, label, &titel, Some(&sleutel), positie)
+                .unwrap_or_else(|| "Open Office Studio".into());
+            let positie = kop(&request, "x-office-x")
+                .zip(kop(&request, "x-office-y"))
+                .and_then(|(x, y)| Some((x.parse::<f64>().ok()?, y.parse::<f64>().ok()?)));
+            maak_venster(&app, label, &titel, &sleutel, positie)
         }
-        None => match app.get_webview_window(&doel) {
-            None => Err("Dat venster is niet meer beschikbaar.".into()),
-            Some(doelvenster) => {
-                let _ = doelvenster.unminimize();
-                let _ = doelvenster.set_focus();
+        None => {
+            if app.get_webview_window(&doel).is_none() {
+                Err("Het hoofdvenster is niet beschikbaar.".into())
+            } else {
                 app.emit_to(doel.as_str(), "office-overdracht", sleutel.clone())
                     .map_err(|e| e.to_string())
             }
-        },
+        }
     };
     if let Err(fout) = resultaat {
         vensters.pakketten.lock().map_err(|e| e.to_string())?.remove(&sleutel);
@@ -329,83 +313,17 @@ pub async fn bied_overdracht(
     Ok(sleutel)
 }
 
-/// Opent een leeg, volwaardig Office Studio-venster (venstermenu › Nieuw venster).
-#[tauri::command]
-pub fn nieuw_venster(app: tauri::AppHandle, vensters: tauri::State<Vensters>) -> Result<(), String> {
-    let label = format!("{VOORVOEGSEL}{}", vensters.volgende());
-    maak_venster(&app, &label, APPNAAM, None, None)
-}
-
-/// Een venster op het scherm, in logische pixels (zoals `screenX`/`screenY` in de webview).
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub struct Rechthoek {
-    x: f64,
-    y: f64,
-    breedte: f64,
-    hoogte: f64,
-}
-
-impl Rechthoek {
-    fn bevat(&self, (x, y): (f64, f64)) -> bool {
-        x >= self.x && y >= self.y && x < self.x + self.breedte && y < self.y + self.hoogte
-    }
-}
-
-/// Het Office Studio-venster onder het loslaatpunt, behalve het bronvenster zelf.
-/// Bij overlap wint het eerst genoemde venster (het laatst actieve vooraan).
-pub fn venster_onder_punt(
-    vensters: &[(String, Rechthoek)],
-    punt: (f64, f64),
-    bron: &str,
-) -> Option<String> {
-    vensters
-        .iter()
-        .find(|(label, r)| label != bron && r.bevat(punt))
-        .map(|(label, _)| label.clone())
-}
-
-/// Rechthoeken van alle zichtbare, niet-geminimaliseerde vensters; het laatst actieve eerst.
-fn vensterrechthoeken(app: &tauri::AppHandle) -> Vec<(String, Rechthoek)> {
-    let laatst = crate::systeembestanden::laatst_actief(app);
-    let mut lijst: Vec<(String, Rechthoek)> = app
-        .webview_windows()
-        .into_iter()
-        .filter(|(_, v)| v.is_visible().unwrap_or(false) && !v.is_minimized().unwrap_or(false))
-        .filter_map(|(label, v)| {
-            let schaal = v.scale_factor().ok()?;
-            let plek = v.outer_position().ok()?.to_logical::<f64>(schaal);
-            let maat = v.outer_size().ok()?.to_logical::<f64>(schaal);
-            Some((
-                label,
-                Rechthoek { x: plek.x, y: plek.y, breedte: maat.width, hoogte: maat.height },
-            ))
-        })
-        .collect();
-    lijst.sort_by_key(|(label, _)| Some(label.as_str()) != laatst.as_deref());
-    lijst
-}
-
-/// Naam van de app; de webview zet daarna zelf de volledige titel.
-const APPNAAM: &str = "Open Office Studio";
-
-/// Een Office Studio-venster zonder systeemtitelbalk: de webview tekent zelf
-/// de titelbalk met vensterknoppen (OpenAEC Blueprint). `sleutel`: het
-/// tabblad dat het venster bij de start overneemt.
 fn maak_venster(
     app: &tauri::AppHandle,
     label: &str,
     titel: &str,
-    sleutel: Option<&str>,
+    sleutel: &str,
     positie: Option<(f64, f64)>,
 ) -> Result<(), String> {
-    let url = match sleutel {
-        Some(sleutel) => format!("index.html?venster=document&overdracht={sleutel}"),
-        None => "index.html?venster=document".to_owned(),
-    };
+    let url = format!("index.html?venster=document&overdracht={sleutel}");
     let mut bouwer =
         tauri::WebviewWindowBuilder::new(app, label, tauri::WebviewUrl::App(url.into()))
             .title(titel)
-            .decorations(false)
             .inner_size(1200.0, 800.0)
             .min_inner_size(800.0, 600.0);
     bouwer = match positie {
@@ -585,28 +503,5 @@ mod tests {
         assert_eq!(v.aantal_gewijzigd("document-1"), 0);
         v.vergeet("main");
         assert_eq!(v.aantal_gewijzigd("main"), 0);
-    }
-
-    #[test]
-    fn loslaten_boven_een_ander_venster_kiest_dat_venster() {
-        let r = |x, y, breedte, hoogte| Rechthoek { x, y, breedte, hoogte };
-        let vensters = vec![
-            ("document-4".to_owned(), r(900.0, 100.0, 800.0, 600.0)),
-            ("main".to_owned(), r(0.0, 0.0, 1440.0, 950.0)),
-        ];
-        // Overlap: het eerst genoemde (laatst actieve) venster wint.
-        assert_eq!(
-            venster_onder_punt(&vensters, (1000.0, 200.0), "document-7").as_deref(),
-            Some("document-4")
-        );
-        // Het bronvenster zelf telt niet mee.
-        assert_eq!(
-            venster_onder_punt(&vensters, (1000.0, 200.0), "document-4").as_deref(),
-            Some("main")
-        );
-        assert_eq!(venster_onder_punt(&vensters, (100.0, 100.0), "main"), None);
-        // Buiten alle vensters (of rand rechts/onder): een nieuw venster.
-        assert_eq!(venster_onder_punt(&vensters, (1440.0, 960.0), "document-4"), None);
-        assert_eq!(venster_onder_punt(&vensters, (-5.0, 10.0), "document-4"), None);
     }
 }

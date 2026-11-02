@@ -8,7 +8,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { FolderOpen, Save, SaveAll, SlidersHorizontal } from "lucide-react";
+import { FolderOpen, Save, Home, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { EmailActies } from "../packages/email/src/ui/EmailStudio";
 import { kantoorModule } from "../packages/email/src/kantoor";
@@ -37,9 +37,11 @@ import {
 import { editorKoppeling } from "./export/koppeling";
 import { controleerPakket } from "./pakketcontrole";
 import { bereidOpenen } from "./import/openen";
+import { RapportMelding } from "./import/RapportMelding";
 import { useImportvragen } from "./import/Importvensters";
 import { MACROUITVOER } from "./import/bron";
 import versie from "../versie.json";
+import openaecSymbool from "./stijl/openaec-symbol.svg";
 import { ThemaKnop, useOfficeThema } from "./stijl/ThemaKnop";
 import {
   bestandssoort,
@@ -49,20 +51,12 @@ import {
   uitvoerformaat,
 } from "./formaten";
 import { opslagMelding } from "./documentOpslaan";
-import { useTabbladen, type MeldOpties } from "./useTabbladen";
-import { naamloos, vingerafdruk, type Tabblad } from "./tabbladen";
-import { TabBalk, paneelId, tabId } from "./TabBalk";
-import { Titelbalk } from "./Titelbalk";
-import { Meldingen } from "./Meldingen";
-import { raadToon, zichtbaar as zichtbareMeldingen } from "./meldingen";
-import { LintPlek, LintSlot, wijzigPlekken } from "./lintplek";
-import { titelbron, venstertitel } from "./venstertitel";
-import { toonInstellingen } from "./werkruimte/gebeurtenissen";
+import { useTabbladen } from "./useTabbladen";
+import { naamloos, titel, vingerafdruk, type Tabblad } from "./tabbladen";
+import { TabBalk, paneelId, tabId, tabbladIcoon } from "./TabBalk";
 import { useTabSneltoetsen } from "./useTabSneltoetsen";
 import { useVensters } from "./useVensters";
 import { useSysteembestanden } from "./systeembestanden";
-import { useHostOpenen } from "./useHostOpenen";
-import { hostBestandBekend, officeHost } from "./host";
 import { Werkruimtehulp } from "./werkruimte/Werkruimtehulp";
 import { bijNieuwDocument } from "./werkruimte/gebeurtenissen";
 import { Statusbalk } from "./status/Statusbalk";
@@ -157,15 +151,6 @@ export function OfficeStudio() {
   const wachtwoorden = useRef(new Map<number, string | null>());
   const vorigeFocus = useRef<HTMLElement | null>(null);
   const laatsteFocus = useRef(new Map<number, HTMLElement>());
-  // Plek voor het lint van elk tabblad, boven de documentbalk (lintplek.tsx).
-  const [lintPlekken, setLintPlekken] = useState<
-    ReadonlyMap<number, HTMLElement>
-  >(new Map());
-  const registreerLintPlek = useCallback(
-    (id: number, element: HTMLElement | null) =>
-      setLintPlekken((plekken) => wijzigPlekken(plekken, id, element)),
-    [],
-  );
 
   const importvragen = useImportvragen();
   const tabs = useTabbladen({
@@ -177,8 +162,7 @@ export function OfficeStudio() {
   });
   const { toestand, actief, meld } = tabs;
   const meldActief = useCallback(
-    (tekst: string, opties: MeldOpties = "info") =>
-      meld(tekst, tabs.toestandRef.current.actief ?? undefined, opties),
+    (tekst: string) => meld(tekst, tabs.toestandRef.current.actief ?? undefined),
     [meld, tabs.toestandRef],
   );
   const actiefDocument = actief?.type === "document" ? actief : null;
@@ -252,7 +236,7 @@ export function OfficeStudio() {
       return;
     }
     kiesBestanden(invoerformaten.split(",")).catch((e) =>
-      meld(t("errors.openFailed", { error: String(e) }), null, "fout"),
+      meld(t("errors.openFailed", { error: String(e) })),
     );
   }
 
@@ -297,10 +281,7 @@ export function OfficeStudio() {
       : opslagplan({
           soort: tabblad.soort,
           werkbestand: tabblad.werkbestand,
-          // Een document uit de host (SuperCloud-werkplek) gaat met Ctrl+S direct terug.
-          heeftKeuze:
-            opslaanKeuzes.current.has(tabblad.id) ||
-            (!!officeHost() && hostBestandBekend(tabblad.naam)),
+          heeftKeuze: opslaanKeuzes.current.has(tabblad.id),
         });
     if (plan.route === "opslaanAls") return vraagOpslaanAls(tabblad.id);
     // Een versleuteld origineel nooit stil onversleuteld terugschrijven.
@@ -361,17 +342,12 @@ export function OfficeStudio() {
             ),
       );
       if (resultaat.status === "mislukt") {
-        meld(t("errors.saveFailed", { error: resultaat.fout }), tabblad.id, "fout");
+        meld(t("errors.saveFailed", { error: resultaat.fout }), tabblad.id);
         return false;
       }
       if (resultaat.status !== "afgerond") return false;
       const { uitkomst } = resultaat;
-      // Een toelichting (verlies bij omzetten, conflictkopie) blijft staan.
-      meld(
-        opslagMelding(uitkomst),
-        tabblad.id,
-        uitkomst.toelichting ? "waarschuwing" : uitkomst.status === "opgeslagen" ? "succes" : "info",
-      );
+      meld(opslagMelding(uitkomst), tabblad.id);
       if (uitkomst.status === "opslaan-als") {
         alsNodig = true;
         return false;
@@ -437,7 +413,7 @@ export function OfficeStudio() {
       const { drukAf } = await import("./export");
       await drukAf(soort);
     } catch (e) {
-      meld(t("errors.printFailed", { error: String(e) }), id, "fout");
+      meld(t("errors.printFailed", { error: String(e) }), id);
     }
   }
 
@@ -473,7 +449,7 @@ export function OfficeStudio() {
       try {
         setVerzending({ naam: tabblad.naam, bytes: await serialiseer() });
       } catch (error) {
-        meld(t("errors.sendAsAttachmentFailed", { error: String(error) }), id, "fout");
+        meld(t("errors.sendAsAttachmentFailed", { error: String(error) }), id);
       }
     });
   }
@@ -525,7 +501,7 @@ export function OfficeStudio() {
         id === null ||
         !(doel instanceof HTMLElement) ||
         doel.closest(
-          ".office-tabbalk, .office-titelbalk, .office-meldingen, .office-dialoogachtergrond",
+          ".office-tabbalk, .office-header, .office-dialoogachtergrond",
         )
       )
         return;
@@ -625,7 +601,7 @@ export function OfficeStudio() {
     try {
       await taak();
     } catch (e) {
-      meld(String(e), null, "fout");
+      meld(String(e));
     } finally {
       bezigRef.current = false;
       setBezig(false);
@@ -661,7 +637,7 @@ export function OfficeStudio() {
 
   async function openBestand(file: File) {
     if (!file.size || file.size > 100 * 1024 * 1024) {
-      meld(t("errors.fileSize"), null, "fout");
+      meld(t("errors.fileSize"));
       return;
     }
     const bytes = new Uint8Array(await file.arrayBuffer());
@@ -686,8 +662,6 @@ export function OfficeStudio() {
     if (!ext || !soort) {
       meld(
         neerzetMelding(naam) ?? t("errors.unsupportedFormat", { name: naam }),
-        null,
-        "fout",
       );
       return false;
     }
@@ -722,7 +696,7 @@ export function OfficeStudio() {
           tabs.werkBij(id, { exportFormaat: resultaat.exportFormaat });
       } catch (error) {
         geopend = false;
-        meld(t("errors.openFailed", { error: String(error) }), null, "fout");
+        meld(t("errors.openFailed", { error: String(error) }));
       }
     });
     return geopend;
@@ -732,7 +706,7 @@ export function OfficeStudio() {
   async function openUitEmail(naam: string, bytes: Uint8Array) {
     if (bezigRef.current) return;
     if (!bytes.length) {
-      meld(t("errors.emptyAttachment"), null, "waarschuwing");
+      meld(t("errors.emptyAttachment"));
       return;
     }
     if (kantoorModule(naam) === "database") {
@@ -760,7 +734,6 @@ export function OfficeStudio() {
             : "errors.databaseModifiedFile",
         ),
         bestaand.id,
-        "waarschuwing",
       );
       return;
     }
@@ -785,7 +758,7 @@ export function OfficeStudio() {
     try {
       bytes = await lees();
     } catch (error) {
-      meld(t("errors.openFileFailed", { name: naam, error: String(error) }), null, "fout");
+      meld(t("errors.openFileFailed", { name: naam, error: String(error) }));
       return false;
     }
     if (kantoorModule(naam) === "database") {
@@ -795,9 +768,6 @@ export function OfficeStudio() {
     }
     return (await importeer(naam, bytes, werkbestand)) && !!werkbestand;
   }
-  // Gehoste bouw: het document dat de host (SuperCloud-werkplek) aanbiedt.
-  useHostOpenen(openBestand, meldActief, () => openOpslaanAls());
-
   useSysteembestanden(openSysteembestand, (token) => {
     if (tabs.activeerWerkbestand(token)) herstelFocus();
   });
@@ -817,6 +787,8 @@ export function OfficeStudio() {
   }, [opStart, emailTabblad]);
 
   const module = modules.find((item) => item.soort === actiefDocument?.soort);
+  const ModuleIcoon = actief && tabbladIcoon(actief);
+  const melding = actief?.melding || tabs.melding;
   const vorigeTab = toestand.tabbladen.find((t) => t.id === toestand.vorige);
   const vorigDocument = vorigeTab?.type === "document" ? vorigeTab : null;
   const dialoogOpen =
@@ -826,22 +798,6 @@ export function OfficeStudio() {
   const opslaanTabblad = toestand.tabbladen.find((t) => t.id === opslaanAls);
   const opslaanDocument =
     opslaanTabblad?.type === "document" ? opslaanTabblad : null;
-  const titel = venstertitel(titelbron(actief), (sleutel, waarden) =>
-    t(sleutel, waarden),
-  );
-  useEffect(() => vensters.zetTitel(titel), [titel]);
-  // Markdown als bewaarformaat: eenmalig per tabblad uitleg als melding.
-  const markdownGemeld = useRef(new Set<number>());
-  const markdownTabblad =
-    actiefDocument?.soort === "docx" && actiefDocument.exportFormaat === "md"
-      ? actiefDocument.id
-      : null;
-  useEffect(() => {
-    if (markdownTabblad === null || markdownGemeld.current.has(markdownTabblad))
-      return;
-    markdownGemeld.current.add(markdownTabblad);
-    meld(t("message.markdownNote"), markdownTabblad, "info");
-  }, [markdownTabblad]);
 
   function paneel(tabblad: Tabblad, inhoud: ReactNode, klasse = "") {
     const zichtbaar = tabblad.id === actief?.id;
@@ -855,9 +811,7 @@ export function OfficeStudio() {
         hidden={!zichtbaar}
         inert={!zichtbaar || editorInactief}
       >
-        <LintPlek.Provider value={lintPlekken.get(tabblad.id) ?? null}>
-          {inhoud}
-        </LintPlek.Provider>
+        {inhoud}
       </div>
     );
   }
@@ -870,95 +824,102 @@ export function OfficeStudio() {
         inert={dialoogOpen}
         data-module={actiefDocument?.soort ?? actieveModule ?? "start"}
       >
-        <Titelbalk
-          titel={titel}
-          naarStart={toonStart}
-          snel={
+        <header className="office-header">
+          <button
+            className="office-merk"
+            onClick={toonStart}
+            title={t("header.homeTitle")}
+            aria-label={t("header.homeLabel")}
+          >
+            <span className="office-beeldmerk">
+              <img src={openaecSymbool} alt="" />
+            </span>
+            <strong>
+              OpenAEC<span>Office Studio</span>
+            </strong>
+          </button>
+          <span className="office-weekversie" title={t("header.version", { version: versie.versie })}>
+            {versie.label}
+          </span>
+          {actief && (
             <>
-              <button
-                type="button"
-                className="office-snelknop"
-                disabled={
-                  bezig ||
-                  (actiefDocument
-                    ? !actiefDocument.gereed
-                    : actieveModule !== "notities" && actieveModule !== "email")
-                }
-                onClick={opslaanToets}
-                title={t("titleBar.saveTitle")}
-                aria-label={t("common:save")}
-              >
-                <Save size={16} />
-              </button>
-              <button
-                type="button"
-                className="office-snelknop"
-                disabled={
-                  bezig || (actieveModule === "database" && !databaseGereed)
-                }
-                onClick={kiesBestand}
-                title={
-                  actieveModule === "notities"
-                    ? t("header.openNotesBackupTitle")
-                    : actieveModule === "database"
-                      ? t("header.openDatabaseTitle")
-                      : t("header.openFileTitle")
-                }
-                aria-label={
-                  actieveModule === "notities"
-                    ? t("header.addBackup")
-                    : t("common:open")
-                }
-              >
-                <FolderOpen size={16} />
-              </button>
-              <button
-                type="button"
-                className="office-snelknop"
-                disabled={bezig || !actiefDocument?.gereed}
-                onClick={() => openOpslaanAls()}
-                title={t("header.saveAsTitle")}
-                aria-label={opslaanBezig ? t("header.busy") : t("header.saveAs")}
-              >
-                <SaveAll size={16} />
-              </button>
+              <span className="office-header-scheiding" />
+              <span className="office-modulenaam">
+                {module ? t(`common:modules.${module.module}`) : titel(actief)}
+              </span>
             </>
-          }
-          rechts={
-            <>
-              <VensterMenu
-                tabs={tabs}
-                activeer={(id) => wissel(id, true)}
-                nieuwVenster={vensters.nieuwVenster}
-              />
-              <ThemaKnop thema={thema} wissel={wisselThema} />
+          )}
+          <div className="office-documenttitel">
+            {actiefDocument && ModuleIcoon && (
+              <>
+                <ModuleIcoon size={15} />
+                <span>{actiefDocument.naam}</span>
+                <i
+                  className={actiefDocument.gewijzigd ? "gewijzigd" : ""}
+                  role="img"
+                  aria-label={
+                    actiefDocument.gewijzigd
+                      ? t("header.unsaved")
+                      : t("header.unchanged")
+                  }
+                  title={
+                    actiefDocument.gewijzigd
+                      ? t("header.unsaved")
+                      : t("header.unchanged")
+                  }
+                />
+              </>
+            )}
+          </div>
+          <div className="office-snelacties">
+            <VensterMenu tabs={tabs} activeer={(id) => wissel(id, true)} />
+            <ThemaKnop thema={thema} wissel={wisselThema} />
+            {!opStart && (
               <button
-                type="button"
                 className="office-iconknop"
-                onClick={toonInstellingen}
-                title={t("titleBar.settings")}
-                aria-label={t("titleBar.settings")}
+                onClick={toonStart}
+                aria-label={t("header.fileAndStart")}
+                title={t("header.fileAndStart")}
               >
-                <SlidersHorizontal size={16} />
+                <Home size={17} />
               </button>
-            </>
-          }
-        />
-        {/* Linten van alle tabbladen; alleen dat van het actieve tabblad is zichtbaar. */}
-        <div className="office-lintvlak" hidden={opStart}>
-          {[...toestand.tabbladen]
-            .sort((a, b) => a.id - b.id)
-            .map((tabblad) => (
-              <LintSlot
-                key={tabblad.id}
-                id={tabblad.id}
-                soort={tabblad.type === "document" ? tabblad.soort : tabblad.module}
-                zichtbaar={tabblad.id === actief?.id}
-                inactief={editorInactief}
-                registreer={registreerLintPlek}
-              />
-            ))}
-        </div>
+            )}
+            <button
+              className="office-headerknop"
+              disabled={
+                bezig || (actieveModule === "database" && !databaseGereed)
+              }
+              onClick={kiesBestand}
+              title={
+                actieveModule === "notities"
+                  ? t("header.openNotesBackupTitle")
+                  : actieveModule === "database"
+                    ? t("header.openDatabaseTitle")
+                    : t("header.openFileTitle")
+              }
+            >
+              <FolderOpen size={16} />
+              <span>
+                {actieveModule === "notities"
+                  ? t("header.addBackup")
+                  : t("common:open")}
+              </span>
+            </button>
+            {actiefDocument && (
+              <>
+                <button
+                  className="office-headerknop office-bewaren"
+                  disabled={bezig || !actiefDocument.gereed}
+                  onClick={() => openOpslaanAls()}
+                  title={t("header.saveAsTitle")}
+                >
+                  <Save size={16} />
+                  <span>{opslaanBezig ? t("header.busy") : t("header.saveAs")}</span>
+                </button>
+              </>
+            )}
+          </div>
+        </header>
         <TabBalk
           tabbladen={toestand.tabbladen}
           actief={toestand.actief}
@@ -982,6 +943,35 @@ export function OfficeStudio() {
             if (file) void openBestand(file);
           }}
         />
+        {melding && (
+          <div role="status" className="office-message">
+            <span>{melding}</span>
+            <button
+              onClick={() =>
+                actief?.melding
+                  ? tabs.werkBij(actief.id, { melding: "" })
+                  : meld("")
+              }
+              aria-label={t("message.close")}
+            >
+              <X size={15} />
+            </button>
+          </div>
+        )}
+        {actiefDocument?.rapport && (
+          <RapportMelding
+            key={actiefDocument.id}
+            rapport={actiefDocument.rapport}
+            bestandsnaam={actiefDocument.naam}
+            sluit={() => tabs.werkBij(actiefDocument.id, { rapport: null })}
+          />
+        )}
+        {actiefDocument?.soort === "docx" &&
+          actiefDocument.exportFormaat === "md" && (
+            <div className="office-exportuitleg" role="note">
+              {t("message.markdownNote")}
+            </div>
+          )}
         <div className="office-werkvlak">
           {/* Vaste volgorde op id: herschikken mag de editors niet verplaatsen in de DOM. */}
           {[...toestand.tabbladen]
@@ -1002,7 +992,6 @@ export function OfficeStudio() {
                         naam={tabblad.naam}
                         gewijzigd={koppeling.gewijzigd}
                         fout={koppeling.fout}
-                        melding={koppeling.melding}
                         registreer={koppeling.registreer}
                         opslaan={() => void opslaan(tabblad.id)}
                         bestandsmenu={toonStart}
@@ -1057,7 +1046,7 @@ export function OfficeStudio() {
                     openInKantoor={(naam, bytes) =>
                       void openUitEmail(naam, bytes)
                     }
-                    melding={(tekst) => meld(tekst, tabblad.id, raadToon(tekst))}
+                    melding={(tekst) => meld(tekst, tabblad.id)}
                     ongelezen={setEmailOngelezen}
                     registreer={registreerEmail}
                   />
@@ -1132,10 +1121,6 @@ export function OfficeStudio() {
           aantalGewijzigd={aantalGewijzigd}
           versieLabel={versie.label}
         />
-        <Meldingen
-          meldingen={zichtbareMeldingen(tabs.meldingen, toestand.actief)}
-          sluit={tabs.sluitMelding}
-        />
         {verzending && (
           <Suspense fallback={null}>
             <VerzendAlsBijlage
@@ -1145,7 +1130,7 @@ export function OfficeStudio() {
                 setVerzending(null);
                 setVerzendingOnverzonden(false);
               }}
-              melding={(tekst) => meld(tekst, null, raadToon(tekst))}
+              melding={(tekst) => meld(tekst)}
               onOnverzonden={setVerzendingOnverzonden}
               registreer={registreerVerzending}
             />

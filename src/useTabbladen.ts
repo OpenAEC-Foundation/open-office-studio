@@ -17,16 +17,6 @@ import {
 } from "./tabbladen";
 import type { Soort } from "./editors";
 import { vergeetWerkbestand, type Werkbestand } from "./werkbestand";
-import {
-  rapportMelding,
-  verwijder as verwijderMelding,
-  vergeetTabblad,
-  voegToe,
-  type Melding,
-  type MeldingActie,
-  type NieuweMelding,
-  type Toon,
-} from "./meldingen";
 
 type Serialiseer = () => Promise<Uint8Array>;
 
@@ -44,12 +34,7 @@ export interface EditorKoppeling {
   gewijzigd: () => void;
   zoom: (zoom: number | null) => void;
   fout: (fout: Error) => void;
-  /** Melding van de editor met een eigen toon (bijv. vervangen lettertypen). */
-  melding: (tekst: string, toon: Toon) => void;
 }
-
-/** Toon en eventuele knoppen van een melding. */
-export type MeldOpties = Toon | { toon: Toon; acties?: MeldingActie[] };
 
 interface Opties {
   /** Slaat het tabblad op; waar als het daarna gesloten mag worden. */
@@ -66,8 +51,7 @@ interface Opties {
 export function useTabbladen(opties: Opties) {
   const toestandRef = useRef<TabbladToestand>(beginToestand);
   const [toestand, setToestand] = useState(beginToestand);
-  const [meldingen, setMeldingen] = useState<Melding[]>([]);
-  const meldingTeller = useRef(0);
+  const [melding, setMeldingAlgemeen] = useState("");
   const [verlaatvraag, setVerlaatvraag] = useState<Verlaatvraag | null>(null);
   const opslagen = useRef(new Map<number, DocumentOpslag>());
   const serialiseerders = useRef(new Map<number, Serialiseer>());
@@ -95,33 +79,13 @@ export function useTabbladen(opties: Opties) {
     [verwerk],
   );
 
-  const voegMeldingToe = useCallback((melding: NieuweMelding) => {
-    const id = ++meldingTeller.current;
-    setMeldingen((lijst) => voegToe(lijst, melding, id));
-    return id;
-  }, []);
-
-  /**
-   * Melding rechtsonder (zie `meldingen.ts`) voor een tabblad, of voor het
-   * hele venster als het tabblad niet (meer) bestaat. Lege tekst: niets.
-   */
   const meld = useCallback(
-    (tekst: string, id?: number | null, opties: MeldOpties = "info") => {
-      if (!tekst) return;
-      const { toon, acties } =
-        typeof opties === "string" ? { toon: opties, acties: undefined } : opties;
-      const tabblad =
-        id != null && toestandRef.current.tabbladen.some((t) => t.id === id)
-          ? id
-          : null;
-      voegMeldingToe({ tabblad, toon, tekst, acties });
+    (tekst: string, id?: number | null) => {
+      if (id != null && toestandRef.current.tabbladen.some((t) => t.id === id))
+        werkBij(id, { melding: tekst });
+      else setMeldingAlgemeen(tekst);
     },
-    [voegMeldingToe],
-  );
-
-  const sluitMelding = useCallback(
-    (id: number) => setMeldingen((lijst) => verwijderMelding(lijst, id)),
-    [],
+    [werkBij],
   );
 
   function openDocument(document: {
@@ -139,11 +103,6 @@ export function useTabbladen(opties: Opties) {
     const voor = aantalDocumenten(toestandRef.current);
     const na = verwerk({ type: "openDocument", ...document });
     const id = na.actief!;
-    const nieuwTabblad = !opslagen.current.has(id);
-    if (nieuwTabblad && document.melding)
-      voegMeldingToe({ tabblad: id, toon: "info", tekst: document.melding });
-    if (nieuwTabblad && document.rapport)
-      voegMeldingToe(rapportMelding(id, document.rapport, document.naam));
     if (!opslagen.current.has(id)) {
       const opslag = new DocumentOpslag();
       opslag.wissel();
@@ -152,11 +111,7 @@ export function useTabbladen(opties: Opties) {
     }
     const aantal = aantalDocumenten(na);
     if (aantal > voor && aantal > GEHEUGENGRENS)
-      voegMeldingToe({
-        tabblad: null,
-        toon: "waarschuwing",
-        tekst: i18next.t("shell:tabs.memoryWarning", { count: aantal }),
-      });
+      setMeldingAlgemeen(i18next.t("shell:tabs.memoryWarning", { count: aantal }));
     return { id, nieuw: aantal > voor };
   }
 
@@ -197,8 +152,7 @@ export function useTabbladen(opties: Opties) {
             werkBij(id, { gewijzigd: true });
         },
         zoom: (zoom) => werkBij(id, { zoom }),
-        fout: (fout) => meld(fout.message, id, "fout"),
-        melding: (tekst, toon) => meld(tekst, id, toon),
+        fout: (fout) => meld(fout.message, id),
       };
       koppelingen.current.set(id, k);
     }
@@ -254,7 +208,6 @@ export function useTabbladen(opties: Opties) {
     serialiseerders.current.delete(id);
     koppelingen.current.delete(id);
     moduleGewijzigd.current.delete(id);
-    setMeldingen((lijst) => vergeetTabblad(lijst, id));
   }
 
   /** Sluit de tabbladen één voor één; stopt bij Annuleren. */
@@ -288,9 +241,8 @@ export function useTabbladen(opties: Opties) {
     toestand,
     actief: actiefTabblad(toestand),
     toestandRef,
-    meldingen,
+    melding,
     meld,
-    sluitMelding,
     werkBij,
     verwerk,
     openDocument,

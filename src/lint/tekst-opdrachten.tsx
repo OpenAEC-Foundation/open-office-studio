@@ -331,7 +331,7 @@ export function useTekstOpdrachten({
   }
 
   function toonStijlen() {
-    const lint = zichtbaarElement(".office-lintplek[data-soort=\"docx\"] .ribbon, .office-tekst .ribbon");
+    const lint = zichtbaarElement(".office-tekst .ribbon");
     if (!lint) return;
     const inhoud = lint.querySelector<HTMLElement>(".ribbon-inhoud");
     if (inhoud?.hidden)

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { ClipboardCopy, Download, TriangleAlert } from "lucide-react";
+import { useId, useState } from "react";
+import { ClipboardCopy, Download, Info, TriangleAlert, X } from "lucide-react";
 import versie from "../../versie.json";
 import { rapportTekst, type Rapport } from "./rapport";
 import "./import.css";
@@ -72,6 +72,45 @@ export function Rapportdetails({
         </button>
         <span role="status">{status}</span>
       </div>
+    </div>
+  );
+}
+
+/** Niet-blokkerende melding na openen, met uitklapbare details. */
+export function RapportMelding({
+  rapport,
+  bestandsnaam,
+  sluit,
+}: {
+  rapport: Rapport;
+  bestandsnaam: string;
+  sluit: () => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const id = useId();
+  return (
+    <div role="status" className="office-message rapport-melding">
+      <div className="rapport-kop">
+        <Info size={14} aria-hidden />
+        <span>{rapport.kop}</span>
+        <button
+          type="button"
+          className="rapport-wissel"
+          aria-expanded={open}
+          aria-controls={id}
+          onClick={() => setOpen(!open)}
+        >
+          {open ? "Minder" : "Details"}
+        </button>
+        <button type="button" onClick={sluit} aria-label="Rapport sluiten">
+          <X size={15} />
+        </button>
+      </div>
+      {open && (
+        <div id={id}>
+          <Rapportdetails rapport={rapport} bestandsnaam={bestandsnaam} />
+        </div>
+      )}
     </div>
   );
 }

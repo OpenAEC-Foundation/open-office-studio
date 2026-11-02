@@ -4,8 +4,6 @@
  */
 import { Controleur } from "./controleur";
 import { WorkerMotor } from "./motor";
-import spellingWorkerUrl from "./worker.ts?worker&url";
-import { startWorker } from "../startWorker";
 
 let controleur: Controleur | null = null;
 
@@ -17,7 +15,7 @@ function basis() {
 export function spellingControleur(): Controleur {
   if (!controleur) {
     const motor = new WorkerMotor(
-      () => startWorker(spellingWorkerUrl, { name: "spelling" }),
+      () => new Worker(new URL("./worker.ts", import.meta.url), { type: "module", name: "spelling" }),
       new URL("spelling/oos_spelling.wasm", basis()).href,
       new URL("woordenboeken/", basis()).href,
     );

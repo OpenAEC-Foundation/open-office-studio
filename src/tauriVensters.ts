@@ -67,12 +67,7 @@ export async function tauriKanaal(): Promise<Vensterkanaal> {
         pakIn(overdracht),
         {
           headers: {
-            "x-office-doel":
-              typeof doel === "object"
-                ? doel.venster
-                : doel === "hoofd"
-                  ? "main"
-                  : "nieuw",
+            "x-office-doel": doel === "hoofd" ? "main" : "nieuw",
             "x-office-titel": encodeURIComponent(venstertitel(overdracht)),
             ...(positie && {
               "x-office-x": String(Math.round(positie.x)),
