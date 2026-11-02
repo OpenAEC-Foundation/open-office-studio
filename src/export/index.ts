@@ -6,6 +6,7 @@ import { htmlDocument, htmlNaarTekst, markdownNaarHtml, ontsnap } from "./html";
 import { editorKoppeling } from "./koppeling";
 import { celPositie } from "./csv";
 import type { AppPdfKeuze } from "./PdfOpties";
+import { kolomLetters } from "../lint/rekenblad-logica";
 
 export interface ExportOpties extends CsvOpties {
   /** 0-gebaseerd blad (CSV, TSV, PNG van rekenblad); standaard het actieve blad. */
@@ -111,6 +112,69 @@ function actiefBlad(opties: ExportOpties) {
 
 type Blad = Awaited<ReturnType<typeof rekenblad>>["sheets"][number];
 
+async function berekenOntbrekendeFormules(bytes: Uint8Array, blad: Blad) {
+  const formules = blad.cells.flatMap((cel) => {
+    if (
+      cel.formula === null ||
+      cel.value.kind !== "empty" ||
+      cel.anchor.kind !== "cell"
+    )
+      return [];
+    const positie = celPositie(cel.anchor.a1);
+    return positie
+      ? [
+          {
+            cel,
+            a1: cel.anchor.a1,
+            sheetId: cel.anchor.sheet.sheetId,
+            ...positie,
+          },
+        ]
+      : [];
+  });
+  if (!formules.length) return;
+
+  const { openWorkbook } = await import("@betteroffice/xlsx");
+  const werkmap = openWorkbook(bytes);
+  try {
+    const sheetId = formules[0].sheetId;
+    const perRij = new Map<number, { links: number; rechts: number }>();
+    for (const { rij, kolom } of formules) {
+      const bereik = perRij.get(rij);
+      if (bereik) {
+        bereik.links = Math.min(bereik.links, kolom);
+        bereik.rechts = Math.max(bereik.rechts, kolom);
+      } else {
+        perRij.set(rij, { links: kolom, rechts: kolom });
+      }
+    }
+
+    const lezing = werkmap.readCells({
+      ranges: [...perRij].map(([rij, bereik]) => {
+        const van = `${kolomLetters(bereik.links)}${rij + 1}`;
+        const tot = `${kolomLetters(bereik.rechts)}${rij + 1}`;
+        return { sheetId, range: { kind: "a1", a1: `${van}:${tot}` } };
+      }),
+    });
+    if (!lezing.ok) throw new Error(lezing.failure.message);
+
+    const berekend = new Map(
+      lezing.ranges
+        .flatMap((bereik) => bereik.cells.flat())
+        .map((cel) => [cel.a1, cel]),
+    );
+    for (const { cel, a1 } of formules) {
+      const waarde = berekend.get(a1);
+      if (!waarde)
+        throw new Error(`De formule-uitkomst van ${a1} ontbreekt.`);
+      cel.value = waarde.value;
+      cel.displayText = waarde.displayText;
+    }
+  } finally {
+    werkmap.dispose();
+  }
+}
+
 /** Eén blad als HTML-tabel; samengevoegde cellen worden rowspan/colspan. */
 export function bladNaarHtml(blad: Pick<Blad, "anchor" | "cells">) {
   const raster = new Map<string, (typeof blad.cells)[number]>();
@@ -211,7 +275,9 @@ export async function maakExport(
   if ((ext === "csv" || ext === "tsv") && soort === "xlsx") {
     const blad = actiefBlad(opties);
     const inhoud = await rekenblad(bytes, blad);
-    const cellen = (inhoud.sheets[0]?.cells ?? []) as unknown as CsvCel[];
+    const exportBlad = inhoud.sheets[0];
+    if (exportBlad) await berekenOntbrekendeFormules(bytes, exportBlad);
+    const cellen = (exportBlad?.cells ?? []) as unknown as CsvCel[];
     const csv = cellenNaarCsv(cellen, {
       scheidingsteken: ext === "tsv" ? "tab" : (opties.scheidingsteken ?? ";"),
     });

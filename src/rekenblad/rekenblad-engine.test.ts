@@ -138,6 +138,36 @@ describe("bladen in een bestaand bestand (#61)", () => {
   });
 });
 
+describe("lege ISOWEEKNUM-aanroep (#120)", () => {
+  it("geeft een foutwaarde zonder de handle te beschadigen", () => {
+    h.editCell(0, 0, 0, "7");
+    h.editCell(0, 1, 0, "=ISOWEEKNUM()");
+    expect(waarde(h, 0, "A2").value).toEqual({ kind: "error", value: "#VALUE!" });
+
+    h.editCell(0, 2, 0, "=A1*2");
+    expect(waarde(h, 0, "A3").value).toEqual({ kind: "number", value: 14 });
+
+    const terug = xlsx.openWorkbook(h.save());
+    expect(waarde(terug, 0, "A2").formula).toBe("ISOWEEKNUM()");
+    expect(waarde(terug, 0, "A3").value).toEqual({ kind: "number", value: 14 });
+    terug.editCell(0, 3, 0, "=A1+1");
+    expect(waarde(terug, 0, "A4").value).toEqual({ kind: "number", value: 8 });
+    expect(terug.save()).toBeInstanceOf(Uint8Array);
+  });
+
+  it("verwerkt dezelfde formule bij plakken en heropenen", async () => {
+    selectie = "A2";
+    await plak(api, { tekst: "=ISOWEEKNUM()" });
+    expect(waarde(h, 0, "A2").value).toEqual({ kind: "error", value: "#VALUE!" });
+
+    const terug = xlsx.openWorkbook(h.save());
+    expect(waarde(terug, 0, "A2").formula).toBe("ISOWEEKNUM()");
+    terug.editCell(0, 2, 0, "=1+1");
+    expect(waarde(terug, 0, "A3").value).toEqual({ kind: "number", value: 2 });
+    expect(terug.save()).toBeInstanceOf(Uint8Array);
+  });
+});
+
 describe("klembord (#20)", () => {
   function vul() {
     h.editCell(0, 0, 0, "1");

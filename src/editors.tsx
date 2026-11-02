@@ -382,6 +382,7 @@ export default function OfficeEditor(props: EditorProps) {
             <div className="office-rekenblad-host" ref={rekenbladHost}>
               <XlsxEditor
                 key={herladen.sleutel}
+                legacySyncApi
                 file={herladen.bytes}
                 plugins={xlsxPlugins}
                 fileName={props.naam}

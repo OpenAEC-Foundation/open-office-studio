@@ -73,6 +73,10 @@ Afzonderlijk proces met de werkelijk geïnstalleerde `@betteroffice/xlsx` 0.3.0 
 
 De eerste bewerking geeft `RuntimeError: unreachable`; de tweede geeft `recursive use of an object detected which would lead to unsafe aliasing in rust`. Dit bevestigt de eerder beschreven enginefout van [26 oktober](2026-10-26-rekenbladen.md#formulecontrole). De GUI-crash is in deze ronde niet nagespeeld. De functiepreview vermijdt deze functie, maar dat is geen volledige afscherming van invoer, klembord en import. **Blokkade vóór productiegebruik en vóór het vastleggen van de rekenkern als definitieve migratiereferentie.** Deze vrijgave lost de fout niet op.
 
+### Follow-up — 2 november 2026
+
+De suite gebruikt nu `@betteroffice/xlsx` en `@betteroffice/xlsx-react` 0.5.1. Met de geleverde WASM geeft `=ISOWEEKNUM()` een gewone `#VALUE!`; een volgende geldige formule, opslaan en heropenen blijven werken. Gerichte regressieproeven controleren directe invoer, plakken en heropenen. De bestaande sync-integratie van de suite blijft expliciet ingeschakeld via `legacySyncApi`. Een handmatige Tauri-GUI-proef is niet uitgevoerd.
+
 ## Bevestigde afwijking: woordtelling van een document met alleen een tabel
 
 In de gerichte Writer-GUI is `Naam\tAantal\nHout\t3` omgezet naar een tabel van 2×2. Na ongedaan maken en opnieuw uitvoeren tonen zowel de statusbalk als het venster **Woorden tellen** nul woorden, tekens en alinea’s. De vier celwaarden staan wel correct in het document en de onafhankelijk gelezen DOCX-download. Dit is een fout in de telling; deze distributiewijziging lost hem niet op. [GUI-bewijs](../screenshots/test-writer-tabeltelling-2026-W44.8.jpg).
