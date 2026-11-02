@@ -13,3 +13,7 @@ De eerste bronfreezer las door een fout in de stuurcode een nog niet gemaakt man
 ## Afgesloten volledige lokale ronde
 
 De [gecorrigeerde hertest](volledige-hertest/bewijskopieen.json) sluit alle negen stappen af: 430 reguliere Rust-proeven, waarvan 177 UI-proeven, zes daadwerkelijk afzonderlijk uitgevoerde runtimeproeven en zeven Python-tests. Alle 731 bronbestanden zijn exact hersteld uit basiscommit plus volledige patch en bytegelijk in werkboom en Git-index. Alle oorspronkelijke UI-vergelijkingen blijven afgekeurd; alpha43-platform- en geoptimaliseerde releasevenstercontrole blijven open. De eerste manifestomvang hierboven beschrijft het eerdere voorproefmoment.
+
+## Afgesloten platform- en releasevenstercontrole
+
+Alle vijf alpha43-CI-taken slagen: 122 native beeldparen, 4956 bronbestanden per pakket en 21 paginabezoeken zijn exact. Alle veertien artefacten zijn geïnventariseerd in [de CI-bewijzen](ci-afsluiting/bewijskopieen.json). De [echte geoptimaliseerde Linux-releasevensterproef](releasevenster/LEESMIJ.md) slaagt voor zestien gerichte stappen en behoudt de oorspronkelijke notitie bytegelijk. Windows/macOS blijven uitsluitend CI; alle oorspronkelijke suiteacceptaties blijven open.

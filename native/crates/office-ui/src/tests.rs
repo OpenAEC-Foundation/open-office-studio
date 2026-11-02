@@ -332,6 +332,7 @@ fn app_met_klok(
 ) -> App {
     let mut app = App::met_werker(Werker::met_klok(klok));
     app.dagzone = office_core::klok::Dagzone::Utc;
+    app.weergave_pad = None;
     let antwoord = iced::futures::executor::block_on(
         app.werker
             .clone()
@@ -2315,6 +2316,7 @@ pub(super) fn testklok() -> std::sync::Arc<dyn office_core::klok::Klok> {
 pub(super) fn testapp() -> App {
     let mut app = App::met_werker(Werker::met_klok(testklok()));
     app.dagzone = office_core::klok::Dagzone::Utc;
+    app.weergave_pad = None;
     app
 }
 
@@ -2491,4 +2493,215 @@ fn sluitsneltoets_negeert_extra_modifiers_en_verborgen_documenten() {
     voer_interface_uit(&mut app, sluittoets(M::COMMAND));
     assert_eq!(app.sluiten, Some(1));
     assert_eq!(app.tabs.len(), 1);
+}
+fn tabbladproef() -> App {
+    let bytes = Sessie::nieuw_met_klok(Module::Notition, testklok())
+        .unwrap()
+        .bron();
+    let mut app = app_met_document(Module::Notition, &bytes);
+    let bron = app.tab().unwrap().antwoord.as_ref().unwrap().clone();
+    app.tabs = (1..=3)
+        .map(|id| {
+            let mut t = Tab::nieuw(id, format!("Document {id}.json"));
+            let mut a = bron.clone();
+            a.beeld.melding = format!("Document {id}");
+            t.bezig = false;
+            t.opgeslagen = Some(a.hash.clone());
+            t.antwoord = Some(a);
+            t
+        })
+        .collect();
+    app.actief = 1;
+    app.melding = "Waarschuwing bij document 2".into();
+    app
+}
+#[test]
+fn tabbladregressie_sluiten_links_en_rechts_bewaart_eigenaar_en_waarschuwing() {
+    let mut app = tabbladproef();
+    let waarschuwing = app.melding.clone();
+    app.verwijder(1);
+    assert_eq!(app.tab().unwrap().id, 2);
+    assert_eq!(app.melding, waarschuwing);
+    app.verwijder(3);
+    assert_eq!(app.tab().unwrap().id, 2);
+    assert_eq!(app.melding, waarschuwing);
+    app.verwijder(99);
+    assert_eq!(app.tab().unwrap().id, 2);
+    assert_eq!(app.melding, waarschuwing);
+}
+#[test]
+fn tabbladregressie_actief_sluiten_toont_buurmetadata_en_wist_laatste_documentstatus() {
+    let mut app = tabbladproef();
+    app.verwijder(2);
+    assert_eq!(app.tab().unwrap().id, 3);
+    assert_eq!(app.melding, "Document 3");
+    app.verwijder(3);
+    assert_eq!(app.tab().unwrap().id, 1);
+    assert_eq!(app.melding, "Document 1");
+    app.verwijder(1);
+    assert!(app.tabs.is_empty());
+    assert_eq!(app.melding, "Gereed");
+}
+#[test]
+fn tabbladregressie_wisselen_toont_eigen_metadata_en_een_herhaalde_keuze_bewaart_waarschuwingen() {
+    let mut app = tabbladproef();
+    voer_interface_uit(&mut app, Msg::Selecteer(0));
+    assert_eq!(app.tab().unwrap().id, 1);
+    assert_eq!(app.melding, "Document 1");
+    app.melding = "Bewaar deze waarschuwing".into();
+    voer_interface_uit(&mut app, Msg::Selecteer(0));
+    assert_eq!(app.melding, "Bewaar deze waarschuwing");
+    voer_interface_uit(&mut app, Msg::Selecteer(2));
+    assert_eq!(app.tab().unwrap().id, 3);
+    assert_eq!(app.melding, "Document 3");
+}
+
+#[test]
+fn vensterbalk_toont_module_titel_en_gecentreerde_benoemde_bediening() {
+    lettertypen();
+    for (module, naam) in [
+        (Module::Writer, "Tekst"),
+        (Module::Spreadsheet, "Rekenblad"),
+        (Module::Presentation, "Presentatie"),
+        (Module::Notition, "Notities"),
+        (Module::Email, "E-mail"),
+    ] {
+        let bron = Sessie::nieuw_met_klok(module, testklok()).unwrap().bron();
+        let mut app = app_met_document(module, &bron);
+        let t = app.tab_mut().unwrap();
+        t.naam = "Voorbeeld".into();
+        t.opgeslagen = Some(t.antwoord.as_ref().unwrap().hash.clone());
+        let titel = format!("Voorbeeld — Open Office Studio ({naam})");
+        assert_eq!(vensterbalk::titel(&app), titel);
+        for breedte in [1058., 1440.] {
+            let mut e = vensterbalk::weergave(&app);
+            let r = iced_tiny_skia::Renderer::new(
+                ui_instellingen().default_font,
+                ui_instellingen().default_text_size,
+            );
+            let mut boom = Tree::new(&e);
+            let n = e.as_widget_mut().layout(
+                &mut boom,
+                &r,
+                &layout::Limits::new(Size::ZERO, Size::new(breedte, 32.)),
+            );
+            let mut gevonden = Collect::default();
+            e.as_widget_mut()
+                .operate(&mut boom, Layout::new(&n), &r, &mut gevonden);
+            assert!(gevonden.unnamed.is_empty());
+            let titelnode = gevonden
+                .nodes
+                .iter()
+                .find(|n| n.node.name == titel)
+                .unwrap();
+            assert!(
+                (titelnode.bounds.center_x() - breedte / 2.).abs() < 0.01,
+                "{module:?} {breedte}: {:?}",
+                titelnode.bounds
+            );
+            for label in [
+                "Opslaan",
+                "Openen",
+                "Opslaan als",
+                "Thema wisselen",
+                "Instellingen",
+                "Minimaliseren",
+                "Maximaliseren",
+                "Sluiten",
+            ] {
+                assert_eq!(
+                    gevonden
+                        .nodes
+                        .iter()
+                        .filter(|n| n.node.name == label)
+                        .count(),
+                    1,
+                    "{label}"
+                );
+            }
+        }
+    }
+}
+#[test]
+fn vensterbalk_voorkeuren_blijven_expliciet_in_het_eigen_bestand() {
+    let tmp = tempfile::tempdir().unwrap();
+    let pad = tmp.path().join("weergave.json");
+    let mut app = testapp();
+    assert!(app.weergave_pad.is_none());
+    app.weergave_pad = Some(pad.clone());
+    voer_interface_uit(&mut app, Msg::Thema(ThemeId::Dark));
+    assert_eq!(Display::load(&pad).theme, ThemeId::Dark);
+    app.weergave_pad = None;
+    voer_interface_uit(&mut app, Msg::Thema(ThemeId::Light));
+    assert_eq!(app.thema, ThemeId::Light);
+    assert_eq!(Display::load(&pad).theme, ThemeId::Dark);
+}
+
+fn vensterbalk_klik(app: &App, naam: Option<&str>) -> Vec<Msg> {
+    use iced::{Event, Point, Rectangle, mouse};
+    lettertypen();
+    let mut e = vensterbalk::weergave(app);
+    let r = iced_tiny_skia::Renderer::new(
+        ui_instellingen().default_font,
+        ui_instellingen().default_text_size,
+    );
+    let mut boom = Tree::new(&e);
+    let n = e.as_widget_mut().layout(
+        &mut boom,
+        &r,
+        &layout::Limits::new(Size::ZERO, Size::new(1440., 32.)),
+    );
+    let mut gevonden = Collect::default();
+    e.as_widget_mut()
+        .operate(&mut boom, Layout::new(&n), &r, &mut gevonden);
+    let punt = naam
+        .map(|naam| {
+            gevonden
+                .nodes
+                .iter()
+                .find(|n| n.node.name == naam)
+                .unwrap()
+                .bounds
+                .center()
+        })
+        .unwrap_or(Point::new(300., 16.));
+    let mut berichten = Vec::new();
+    for event in [
+        Event::Mouse(mouse::Event::CursorMoved { position: punt }),
+        Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
+        Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)),
+    ] {
+        let mut shell = iced::advanced::Shell::new(&mut berichten);
+        e.as_widget_mut().update(
+            &mut boom,
+            &event,
+            Layout::new(&n),
+            mouse::Cursor::Available(punt),
+            &r,
+            &mut iced::advanced::clipboard::Null,
+            &mut shell,
+            &Rectangle::with_size(Size::new(1440., 32.)),
+        );
+    }
+    berichten
+}
+#[test]
+fn vensterbalk_echte_muisklikken_bewaren_acties_en_geven_geen_onbedoelde_sleeptaak() {
+    let bytes = Sessie::nieuw_met_klok(Module::Notition, testklok())
+        .unwrap()
+        .bron();
+    let mut app = app_met_document(Module::Notition, &bytes);
+    app.thema = ThemeId::Light;
+    let b = vensterbalk_klik(&app, Some("Opslaan als"));
+    assert!(matches!(b.as_slice(), [Msg::Opslaan(1, true)]), "{b:?}");
+    let b = vensterbalk_klik(&app, Some("Opslaan"));
+    assert!(matches!(b.as_slice(), [Msg::Opslaan(1, false)]), "{b:?}");
+    let b = vensterbalk_klik(&app, Some("Thema wisselen"));
+    assert!(matches!(b.as_slice(), [Msg::Thema(ThemeId::Dark)]), "{b:?}");
+    let b = vensterbalk_klik(&app, Some("Instellingen"));
+    assert!(matches!(b.as_slice(), [Msg::Instellingen(true)]), "{b:?}");
+    let b = vensterbalk_klik(&app, None);
+    assert!(matches!(b.as_slice(), [Msg::Sleep]), "{b:?}");
+    app.tab_mut().unwrap().bezig = true;
+    assert!(vensterbalk_klik(&app, Some("Opslaan als")).is_empty());
 }

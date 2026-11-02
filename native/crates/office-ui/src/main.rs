@@ -21,6 +21,7 @@ mod raster_toetsen;
 mod raster_ui;
 mod sleepvak;
 mod stijl;
+mod vensterbalk;
 mod werker;
 mod writer_direct;
 mod writer_invoer;
@@ -37,7 +38,6 @@ use office_core::{
 };
 use openaec_ui::design::{
     Look, ThemeId,
-    chrome::{self, WindowActions, WindowIcons},
     display::{self, Display},
     focus,
     widgets::{self as w, ButtonKind as K, Density as D, DocumentTab},
@@ -374,6 +374,7 @@ struct App {
     werker: Werker,
     thema: ThemeId,
     display: Display,
+    weergave_pad: Option<PathBuf>,
     bestand: bool,
     lint: usize,
     instellingen: bool,
@@ -406,6 +407,7 @@ impl App {
             werker,
             thema: display.theme,
             display,
+            weergave_pad: pad,
             bestand: false,
             lint: 0,
             instellingen: false,
@@ -1003,8 +1005,12 @@ impl App {
             }
             Msg::Selecteer(n) => {
                 if n < self.tabs.len() {
+                    let andere = self.actief != n;
                     self.actief = n;
                     self.bestand = false;
+                    if andere {
+                        self.vernieuw_documentmelding();
+                    }
                 }
             }
             Msg::Deel(n) => {
@@ -1732,8 +1738,8 @@ impl App {
             Msg::Thema(thema) => {
                 self.thema = thema;
                 self.display.theme = thema;
-                if let Some(p) = display::settings_path("open-office-studio-native")
-                    && let Err(e) = self.display.save(&p)
+                if let Some(p) = self.weergave_pad.as_ref()
+                    && let Err(e) = self.display.save(p)
                 {
                     self.melding = e.to_string();
                 }
@@ -1886,9 +1892,30 @@ impl App {
         self.melding = m.into();
         Task::none()
     }
+    fn vernieuw_documentmelding(&mut self) {
+        self.melding = self
+            .tab()
+            .map(|t| {
+                t.antwoord
+                    .as_ref()
+                    .map(|a| a.beeld.melding.clone())
+                    .unwrap_or_else(|| "Document wordt geladen…".into())
+            })
+            .unwrap_or_else(|| "Gereed".into());
+    }
     fn verwijder(&mut self, id: u64) {
-        self.tabs.retain(|t| t.id != id);
-        self.actief = self.actief.min(self.tabs.len().saturating_sub(1));
+        let Some(positie) = self.tabs.iter().position(|t| t.id == id) else {
+            return;
+        };
+        let actief = self.tab().map(|t| t.id);
+        self.tabs.remove(positie);
+        if let Some(huidig) = actief.filter(|huidig| *huidig != id) {
+            // Sluiten links van het actieve document mag zijn eigenaar niet wijzigen.
+            self.actief = self.tabs.iter().position(|t| t.id == huidig).unwrap();
+        } else {
+            self.actief = positie.min(self.tabs.len().saturating_sub(1));
+            self.vernieuw_documentmelding();
+        }
         self.werker.sluit(id);
     }
     fn schrijf(&mut self, id: u64, pad: PathBuf) -> Task<Msg> {
@@ -1974,70 +2001,7 @@ impl App {
     fn view(&self) -> Element<'_, Msg> {
         let look = self.look();
         let c = look.color;
-        let titel = if self.postvak_zichtbaar {
-            "Email Studio · Open Office Studio".into()
-        } else {
-            self.tab()
-                .map(|t| {
-                    format!(
-                        "{}{} · Open Office Studio",
-                        t.naam,
-                        if t.gewijzigd() { " •" } else { "" }
-                    )
-                })
-                .unwrap_or("Open Office Studio".into())
-        };
-        let knop = |i, label, msg| {
-            w::with_tooltip(
-                look,
-                w::icon_button(look, icoon(i), 28., false, label, msg),
-                label,
-                None,
-            )
-        };
-        let snel = vec![
-            knop(Icon::Open, "Openen", Some(Msg::Open)),
-            knop(
-                Icon::Save,
-                "Opslaan",
-                self.tab()
-                    .filter(|t| !self.postvak_zichtbaar && !t.bezig && !t.schrijft)
-                    .map(|t| Msg::Opslaan(t.id, false)),
-            ),
-            knop(
-                Icon::Undo,
-                "Ongedaan maken",
-                self.tab()
-                    .filter(|t| {
-                        !self.postvak_zichtbaar
-                            && (t.concept || t.antwoord.as_ref().is_some_and(|a| a.terug))
-                    })
-                    .map(|_| Msg::Terug),
-            ),
-        ];
-        let balk = chrome::title_bar(
-            look,
-            titel,
-            snel,
-            vec![knop(
-                Icon::Settings,
-                "Instellingen",
-                Some(Msg::Instellingen(true)),
-            )],
-            WindowActions {
-                drag: Msg::Sleep,
-                minimize: Msg::Minimaliseer,
-                maximize: Msg::Maximaliseer,
-                close: Msg::SluitVenster,
-                maximized: false,
-            },
-            WindowIcons {
-                minimize: icoon(Icon::Minimize),
-                maximize: icoon(Icon::Maximize),
-                restore: icoon(Icon::Restore),
-                close: icoon(Icon::Close),
-            },
-        );
+        let balk = vensterbalk::weergave(self);
         let inhoud = if self.postvak_zichtbaar {
             column![
                 container(
