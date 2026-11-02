@@ -4,7 +4,7 @@
  */
 import { readFileSync } from "node:fs";
 import { beforeAll, beforeEach, describe, expect, it } from "vitest";
-import { strFromU8, unzipSync } from "fflate";
+import { strFromU8, strToU8, unzipSync, zipSync } from "fflate";
 import * as xlsx from "@betteroffice/xlsx";
 import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
 import { ontleedBereik } from "../lint/rekenblad-logica";
@@ -165,6 +165,24 @@ describe("lege ISOWEEKNUM-aanroep (#120)", () => {
     terug.editCell(0, 2, 0, "=1+1");
     expect(waarde(terug, 0, "A3").value).toEqual({ kind: "number", value: 2 });
     expect(terug.save()).toBeInstanceOf(Uint8Array);
+  });
+
+  it("opent een bestand met de formule en laat bewerken en opslaan toe", () => {
+    const delen = unzipSync(readFileSync("public/templates/nieuw.xlsx"));
+    const pad = "xl/worksheets/sheet1.xml";
+    delen[pad] = strToU8(
+      strFromU8(delen[pad]).replace(
+        "<sheetData></sheetData>",
+        '<sheetData><row r="1"><c r="A1"><f>ISOWEEKNUM()</f><v></v></c></row></sheetData>',
+      ),
+    );
+    const geopend = xlsx.openWorkbook(zipSync(delen));
+
+    expect(waarde(geopend, 0, "A1").formula).toBe("ISOWEEKNUM()");
+    expect(waarde(geopend, 0, "A1").value).toEqual({ kind: "error", value: "#VALUE!" });
+    geopend.editCell(0, 0, 1, "=1+1");
+    expect(waarde(geopend, 0, "B1").value).toEqual({ kind: "number", value: 2 });
+    expect(geopend.save()).toBeInstanceOf(Uint8Array);
   });
 });
 
