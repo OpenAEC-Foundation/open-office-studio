@@ -5,7 +5,7 @@ use iced::widget::{Space, button, mouse_area, row, svg, text};
 use iced::{Alignment, Border, Color, Padding, Shadow};
 use openaec_ui::design::a11y::{self, Node, Role};
 
-const ZON: &str = r#"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>"#;
+use super::office_iconen as oi;
 const MIN: &str = r#"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><rect y="4.5" width="10" height="1" fill="currentColor"/></svg>"#;
 const MAX: &str = r#"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor"/></svg>"#;
 const SLUIT: &str = r#"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><path d="M0 0 10 10M10 0 0 10" stroke="currentColor" stroke-width="1.2"/></svg>"#;
@@ -127,19 +127,40 @@ pub(super) fn weergave(app: &App) -> Element<'_, Msg> {
     let bewaar = app
         .tab()
         .filter(|t| !app.postvak_zichtbaar && !t.bezig && !t.schrijft && t.antwoord.is_some());
+    let beeldmerk = container(
+        svg(svg::Handle::from_memory(include_bytes!(
+            "../assets/openaec-symbol.svg"
+        )))
+        .width(18)
+        .height(20),
+    )
+    .width(26)
+    .height(26)
+    .center(26);
     let merk = a11y::named(
-        container(
-            svg(svg::Handle::from_memory(include_bytes!(
-                "../assets/openaec-symbol.svg"
-            )))
-            .width(18)
-            .height(20),
-        )
-        .width(26)
-        .height(26)
-        .center(26),
-        Role::Label,
-        "OpenAEC Foundation",
+        focus::focusable(
+            l,
+            button(beeldmerk)
+                .width(26)
+                .height(26)
+                .padding(0)
+                .on_press(Msg::Start)
+                .style(move |_, s| button::Style {
+                    snap: false,
+                    background: matches!(s, button::Status::Hovered | button::Status::Pressed)
+                        .then_some(c.pressed.into()),
+                    text_color: c.text,
+                    border: Border {
+                        radius: 4.into(),
+                        ..Default::default()
+                    },
+                    shadow: Shadow::default(),
+                }),
+            true,
+            4.,
+        ),
+        Role::Button,
+        "OpenAEC Office Studio · Start",
     );
     let scheiding = container(Space::new().width(1).height(22)).style(move |_| container::Style {
         background: Some(c.border.into()),
@@ -153,16 +174,16 @@ pub(super) fn weergave(app: &App) -> Element<'_, Msg> {
         row![
             knop(
                 l,
-                icoon(Icon::Save),
+                oi::OPSLAAN,
                 "Opslaan",
                 bewaar.map(|t| Msg::Opslaan(t.id, false)),
                 true,
                 None
             ),
-            knop(l, icoon(Icon::Open), "Openen", Some(Msg::Open), true, None),
+            knop(l, oi::OPENEN, "Openen", Some(Msg::Open), true, None),
             knop(
                 l,
-                icoon(Icon::SaveAs),
+                oi::OPSLAAN_ALS,
                 "Opslaan als",
                 bewaar.map(|t| Msg::Opslaan(t.id, true)),
                 true,
@@ -188,7 +209,11 @@ pub(super) fn weergave(app: &App) -> Element<'_, Msg> {
         ),
         knop(
             l,
-            ZON,
+            if app.thema == ThemeId::Dark {
+                oi::ZON
+            } else {
+                oi::MAAN
+            },
             "Thema wisselen",
             Some(Msg::Thema(if app.thema == ThemeId::Dark {
                 ThemeId::Light
@@ -200,7 +225,7 @@ pub(super) fn weergave(app: &App) -> Element<'_, Msg> {
         ),
         knop(
             l,
-            icoon(Icon::Settings),
+            oi::INSTELLINGEN,
             "Instellingen",
             Some(Msg::Instellingen(true)),
             false,
@@ -236,10 +261,6 @@ pub(super) fn weergave(app: &App) -> Element<'_, Msg> {
             links,
             mouse_area(Space::new().width(Length::Fill).height(32)).on_press(Msg::Sleep)
         ])
-        .padding(Padding {
-            left: 6.,
-            ..Padding::ZERO
-        })
         .width(Length::FillPortion(1)),
         midden,
         row![
@@ -249,6 +270,10 @@ pub(super) fn weergave(app: &App) -> Element<'_, Msg> {
         .width(Length::FillPortion(1))
     ]
     .height(32)
+    .padding(Padding {
+        left: 6.,
+        ..Padding::ZERO
+    })
     .align_y(Alignment::Center);
     container(rij)
         .width(Length::Fill)

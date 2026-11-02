@@ -2595,7 +2595,7 @@ fn vensterbalk_toont_module_titel_en_gecentreerde_benoemde_bediening() {
                 .find(|n| n.node.name == titel)
                 .unwrap();
             assert!(
-                (titelnode.bounds.center_x() - breedte / 2.).abs() < 0.01,
+                (titelnode.bounds.center_x() - (breedte / 2. + 3.)).abs() < 0.01,
                 "{module:?} {breedte}: {:?}",
                 titelnode.bounds
             );
@@ -2776,4 +2776,152 @@ fn achtergrondmelding_bewaarfout_blijft_terugvindbaar_zonder_verlies_van_een_and
     assert_eq!(app.melding, "Document 1 is extern gewijzigd");
     let _ = app.update(Msg::Selecteer(1));
     assert_eq!(app.melding, waarschuwing);
+}
+
+#[test]
+fn startdocumentbalk_bewaart_concept_en_status_en_keert_naar_dezelfde_eigenaar_terug() {
+    let mut app = tabbladproef();
+    app.tabs[1].concept = true;
+    app.tabs[1].editor = text_editor::Content::with_text("Niet toegepaste tekst 🏠");
+    let inhoud = app.tabs[1].editor.text();
+    let status = app.melding.clone();
+    let bron = app.tabs[1].antwoord.as_ref().unwrap().bron.clone();
+    let _ = app.update(Msg::Start);
+    assert!(app.start);
+    assert!(app.tab().is_none());
+    assert_eq!(app.melding, "Gereed");
+    let _ = app.update(Msg::Toets(openaec_ui::keyboard::KeyPress {
+        key: iced::keyboard::Key::Character("w".into()),
+        modifiers: iced::keyboard::Modifiers::CTRL,
+    }));
+    assert_eq!(app.tabs.len(), 3);
+    assert!(app.sluiten.is_none());
+    let _ = app.update(Msg::Selecteer(1));
+    assert!(!app.start);
+    assert_eq!(app.tab().unwrap().id, 2);
+    assert_eq!(app.melding, status);
+    assert_eq!(app.tab().unwrap().editor.text(), inhoud);
+    assert_eq!(app.tab().unwrap().antwoord.as_ref().unwrap().bron, bron);
+}
+
+#[test]
+fn startdocumentbalk_achtergrondantwoord_en_inactief_sluiten_verlaten_start_niet() {
+    let mut app = tabbladproef();
+    let _ = app.update(Msg::Start);
+    let mut antwoord = app.tabs[0].antwoord.as_ref().unwrap().clone();
+    antwoord.beeld.melding = "Vernieuwde metadata van eerste document".into();
+    let _ = app.update(Msg::Gereed(1, Ok(antwoord)));
+    assert!(app.start);
+    assert_eq!(app.melding, "Gereed");
+    app.verwijder(3);
+    assert!(app.start);
+    assert_eq!(app.melding, "Gereed");
+    let _ = app.update(Msg::Selecteer(0));
+    assert_eq!(app.tab().unwrap().id, 1);
+    assert_eq!(app.melding, "Vernieuwde metadata van eerste document");
+}
+
+#[test]
+fn startdocumentbalk_venster_sluiten_activeert_de_eigenaar_van_het_eerste_concept() {
+    let mut app = tabbladproef();
+    app.tabs[0].concept = true;
+    app.tabs[0].editor = text_editor::Content::with_text("Bewaar deze invoer");
+    let inhoud = app.tabs[0].editor.text();
+    let bron = app.tabs[0].antwoord.as_ref().unwrap().bron.clone();
+    let _ = app.update(Msg::Start);
+    let _ = app.update(Msg::SluitVenster);
+    assert_eq!(app.sluiten, Some(1));
+    assert!(!app.start);
+    assert_eq!(app.tab().unwrap().id, 1);
+    let _ = app.update(Msg::Annuleer);
+    assert!(app.sluiten.is_none());
+    assert!(!app.venster_sluiten);
+    assert_eq!(app.tabs.len(), 3);
+    assert_eq!(app.tabs[0].editor.text(), inhoud);
+    assert_eq!(app.tabs[0].antwoord.as_ref().unwrap().bron, bron);
+}
+
+fn documentbalk_klik(app: &App, naam: &str) -> Vec<Msg> {
+    use iced::{Event, Point, Rectangle, mouse};
+    lettertypen();
+    let mut e = documentbalk::weergave(app);
+    let r = iced_tiny_skia::Renderer::new(
+        ui_instellingen().default_font,
+        ui_instellingen().default_text_size,
+    );
+    let mut boom = Tree::new(&e);
+    let maat = Size::new(1058., 30.);
+    let n = e
+        .as_widget_mut()
+        .layout(&mut boom, &r, &layout::Limits::new(Size::ZERO, maat));
+    assert_eq!(n.size().height, 30.);
+    let mut gevonden = Collect::default();
+    e.as_widget_mut()
+        .operate(&mut boom, Layout::new(&n), &r, &mut gevonden);
+    assert!(gevonden.unnamed.is_empty());
+    let doel = gevonden.nodes.iter().find(|n| n.node.name == naam).unwrap();
+    let punt = Point::new(doel.bounds.center_x(), doel.bounds.center_y());
+    let mut berichten = vec![];
+    for gebeurtenis in [
+        mouse::Event::CursorMoved { position: punt },
+        mouse::Event::ButtonPressed(mouse::Button::Left),
+        mouse::Event::ButtonReleased(mouse::Button::Left),
+    ] {
+        let mut shell = iced::advanced::Shell::new(&mut berichten);
+        e.as_widget_mut().update(
+            &mut boom,
+            &Event::Mouse(gebeurtenis),
+            Layout::new(&n),
+            mouse::Cursor::Available(punt),
+            &r,
+            &mut iced::advanced::clipboard::Null,
+            &mut shell,
+            &Rectangle::with_size(maat),
+        );
+    }
+    berichten
+}
+#[test]
+fn startdocumentbalk_echte_muisklikken_geven_de_juiste_route_en_sluiten_nooit_een_andere_tab() {
+    let app = tabbladproef();
+    assert!(matches!(
+        documentbalk_klik(&app, "Start").as_slice(),
+        [Msg::Start]
+    ));
+    assert!(matches!(
+        documentbalk_klik(&app, "Tabblad toevoegen").as_slice(),
+        [Msg::Start]
+    ));
+    assert!(matches!(
+        documentbalk_klik(&app, "Document 3.json").as_slice(),
+        [Msg::Selecteer(2)]
+    ));
+    assert!(matches!(
+        documentbalk_klik(&app, "Document 1.json sluiten").as_slice(),
+        [Msg::Sluit(0)]
+    ));
+    assert!(matches!(
+        vensterbalk_klik(&app, Some("OpenAEC Office Studio · Start")).as_slice(),
+        [Msg::Start]
+    ));
+}
+#[test]
+fn startdocumentbalk_titelmeting_gebruikt_het_werkelijke_lettertype_en_begrenst_unicode() {
+    lettertypen();
+    let (naam, breedte) = documentbalk::titel("Ontwerpnotitie.docx", 160.);
+    assert_eq!(naam, "Ontwerpnotitie.docx");
+    assert!(
+        (breedte - 115.109375).abs() < 0.1,
+        "Werkelijke browsermeting 115.109375; native {breedte}"
+    );
+    for naam in [
+        "Een zeer lange documentnaam met woorden en cijfers 0123456789.docx",
+        "日本語のとても長い文書名を省略して表示する.docx",
+        "Café 🏠 Ĳssel en een bijzonder lange naam met Unicode.docx",
+    ] {
+        let (kort, maat) = documentbalk::titel(naam, 160.);
+        assert!(maat <= 160.);
+        assert!(kort.ends_with('…'));
+        assert!(!kort.contains('�'));
+    }
 }

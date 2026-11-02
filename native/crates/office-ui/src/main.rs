@@ -1,5 +1,6 @@
 #![cfg_attr(all(windows, not(debug_assertions)), windows_subsystem = "windows")]
 //! Volledig native venster: geen browser, React, JavaScript of Tauri-runtime.
+mod documentbalk;
 mod documentblad;
 mod export_ui;
 mod invoerfocus;
@@ -11,6 +12,7 @@ mod mail_ui;
 mod notitie_navigatie_ui;
 mod notitie_raster;
 mod notitie_ui;
+mod office_iconen;
 mod pagina_ui;
 mod presentatie_ui;
 mod raster_focus;
@@ -40,7 +42,7 @@ use openaec_ui::design::{
     Look, ThemeId,
     display::{self, Display},
     focus,
-    widgets::{self as w, ButtonKind as K, Density as D, DocumentTab},
+    widgets::{self as w, ButtonKind as K, Density as D},
 };
 use openaec_ui::{
     fonts,
@@ -95,6 +97,7 @@ enum Msg {
     Pad(Option<PathBuf>),
     Gelezen(u64, PathBuf, Result<Geopend, String>),
     Gereed(u64, Result<Antwoord, String>),
+    Start,
     Selecteer(usize),
     Sluit(usize),
     SluitVenster,
@@ -371,6 +374,7 @@ struct App {
     postvak: mail_ui::Postvak,
     postvak_zichtbaar: bool,
     tabs: Vec<Tab>,
+    start: bool,
     actief: usize,
     volgend: u64,
     werker: Werker,
@@ -404,6 +408,7 @@ impl App {
             postvak: mail_ui::Postvak::default(),
             postvak_zichtbaar: false,
             tabs: vec![],
+            start: false,
             actief: 0,
             volgend: 1,
             werker,
@@ -460,10 +465,18 @@ impl App {
         )
     }
     fn tab(&self) -> Option<&Tab> {
-        self.tabs.get(self.actief)
+        if self.start {
+            None
+        } else {
+            self.tabs.get(self.actief)
+        }
     }
     fn tab_mut(&mut self) -> Option<&mut Tab> {
-        self.tabs.get_mut(self.actief)
+        if self.start {
+            None
+        } else {
+            self.tabs.get_mut(self.actief)
+        }
     }
     fn opdracht(&mut self, id: u64, opdracht: Opdracht) -> Task<Msg> {
         if let Some(t) = self.tabs.iter_mut().find(|t| t.id == id) {
@@ -496,8 +509,13 @@ impl App {
             self.venster_sluiten = false;
             return Task::none();
         }
-        if let Some(t) = self.tabs.iter().find(|t| t.gewijzigd()) {
-            self.sluiten = Some(t.id);
+        if let Some(n) = self.tabs.iter().position(|t| t.gewijzigd()) {
+            // De sluitvraag en Opslaan moeten dezelfde eigenaar gebruiken,
+            // ook vanaf Start of een ander document met een inline-concept.
+            self.start = false;
+            self.actief = n;
+            self.vernieuw_documentmelding();
+            self.sluiten = Some(self.tabs[n].id);
             Task::none()
         } else {
             iced::exit()
@@ -750,6 +768,7 @@ impl App {
                 self.volgend += 1;
                 let mut tab = Tab::nieuw(id, format!("E-mail {id}.ifcx"));
                 tab.ifcx = true;
+                self.start = false;
                 self.tabs.push(tab);
                 self.actief = self.tabs.len() - 1;
                 self.postvak_zichtbaar = false;
@@ -764,6 +783,7 @@ impl App {
                 let id = self.volgend;
                 self.volgend += 1;
                 let tab = Tab::nieuw(id, format!("Naamloos {id}.{}", module.extensie()));
+                self.start = false;
                 self.tabs.push(tab);
                 self.actief = self.tabs.len() - 1;
                 self.bestand = false;
@@ -844,6 +864,7 @@ impl App {
                     tab.pad = Some(pad);
                     tab.verwacht = Some(bron.hash);
                 }
+                self.start = false;
                 self.tabs.push(tab);
                 self.actief = self.tabs.len() - 1;
                 self.bestand = false;
@@ -1011,15 +1032,27 @@ impl App {
                     return Task::batch([raster_ui::vraag_focus(self), raster_ui::vervolg(self)]);
                 }
             }
+            Msg::Start => {
+                let melding = self.melding.clone();
+                if let Some(t) = self.tab_mut() {
+                    t.melding = Some(melding);
+                }
+                self.start = true;
+                self.postvak_zichtbaar = false;
+                self.bestand = false;
+                self.zoeken = None;
+                self.melding = "Gereed".into();
+            }
             Msg::Selecteer(n) => {
                 if n < self.tabs.len() {
-                    let andere = self.actief != n;
+                    let andere = self.start || self.actief != n;
                     if andere {
                         let melding = self.melding.clone();
                         if let Some(t) = self.tab_mut() {
                             t.melding = Some(melding);
                         }
                     }
+                    self.start = false;
                     self.actief = n;
                     self.bestand = false;
                     if andere {
@@ -2485,7 +2518,7 @@ impl App {
     fn documenten(&self) -> Element<'_, Msg> {
         let l = self.look();
         let c = l.color;
-        if self.tabs.is_empty() {
+        if self.start || self.tabs.is_empty() {
             let mut kaarten = row![].spacing(14);
             for m in Module::ALLE {
                 let kaart = column![
@@ -2521,7 +2554,7 @@ impl App {
                         .style(move |_| w::panel_style(l)),
                 );
             }
-            return container(
+            let startscherm = container(
                 column![
                     w::mono_label(l, "OPENAEC · OFFICE"),
                     w::heading(l, "Ruimte voor je werk", 36.),
@@ -2553,14 +2586,11 @@ impl App {
             .style(move |_| container::Style {
                 background: Some(c.workspace.into()),
                 ..Default::default()
-            })
-            .into();
+            });
+            return column![documentbalk::weergave(self), startscherm]
+                .height(Length::Fill)
+                .into();
         }
-        let tabs: Vec<_> = self
-            .tabs
-            .iter()
-            .map(|t| DocumentTab::new(&t.naam, t.gewijzigd()))
-            .collect();
         let t = self.tab().unwrap();
         let werk: Element<_> = if let Some(a) = &t.antwoord {
             if a.beeld.module == Module::Notition {
@@ -2967,22 +2997,9 @@ impl App {
         } else {
             iced::widget::Space::new().height(0).into()
         };
-        column![
-            w::document_tabs(
-                l,
-                &tabs,
-                self.actief,
-                icoon(Icon::Close),
-                Msg::Selecteer,
-                Msg::Sluit,
-                Msg::Selecteer
-            ),
-            beperking,
-            invoermelding,
-            werk
-        ]
-        .height(Length::Fill)
-        .into()
+        column![documentbalk::weergave(self), beperking, invoermelding, werk]
+            .height(Length::Fill)
+            .into()
     }
 }
 fn tekstknop<'a>(

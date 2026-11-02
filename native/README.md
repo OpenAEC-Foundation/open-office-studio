@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.45.0-alpha.45**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.45.0-alpha.46**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -309,7 +309,9 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
-Alpha45 bewaart centrale en directe Writer-meldingen per document. De [volledige lokale ronde](docs/controle-2026-11-02-alpha45.md) slaagt met 442 reguliere Rust-proeven (189 UI), zes afzonderlijke runtimeproeven en zeven Python-tests op 733 bytegelijke bronbestanden. Twee echte Linux-debugproeven van elk negentien stappen tonen het foutbehoud vóór/na de correctie, met behoud van de externe wijziging en de eigen Writer-bron. Zeer snelle toetsen/tabwissels krijgen verdere controle. Alle oorspronkelijke UI-vergelijkingen en de alpha45-platform-/releasevenstercontroles blijven open.
+Alpha46 verbindt Start, de documentbalk en bestaande Office-iconen. De [volledige lokale ronde](docs/controle-2026-11-02-alpha46.md) slaagt met 447 reguliere Rust-proeven (194 UI), zes afzonderlijke runtimeproeven en zeven Python-tests op 736 bytegelijke bronbestanden. Veertig echte Linux-debugstappen controleren behoud van invoer, sluiten vanaf Start, werkelijk bewaren en terugkeer naar Writer. Alle oorspronkelijke UI-vergelijkingen en alpha46-platform-/releasevenstercontroles blijven open.
+
+Alpha45 bewaart centrale en directe Writer-meldingen per document. De [volledige lokale ronde](docs/controle-2026-11-02-alpha45.md) slaagt met 442 reguliere Rust-proeven (189 UI), zes afzonderlijke runtimeproeven en zeven Python-tests op 733 bytegelijke bronbestanden. Twee echte Linux-debugproeven van elk negentien stappen tonen het foutbehoud vóór/na de correctie, met behoud van de externe wijziging en de eigen Writer-bron. Zeer snelle toetsen/tabwissels krijgen verdere controle. Alle vijf alpha45-CI-taken en de gerichte negentien-staps geoptimaliseerde Linux-releasevensterproef slagen: 122 native beeldparen, 5417 bronbestanden per pakket en 21 paginabezoeken zijn exact. Alle oorspronkelijke UI-vergelijkingen blijven afgekeurd.
 
 Alpha44 sluit de Office-vensterbalk aan en herstelt actieve-tabkeuze, documentmetadata en Gereed na het laatste document. De [volledige lokale ronde](docs/controle-2026-11-02-alpha44.md) slaagt met 436 reguliere Rust-proeven (183 UI), zes afzonderlijke runtimeproeven en zeven Python-tests op 733 bytegelijke bronbestanden. De echte Linux-debugproef sluit 58 stappen af met bytegelijk behouden bronnen en opgeslagen notitie. Alle vijf alpha44-CI-taken slagen: 122 native beeldparen, 5168 bronbestanden per pakket en 21 paginabezoeken zijn exact. De geoptimaliseerde alpha44-Linux-releasevensterproef sluit 58 gerichte stappen af met behouden bronnen; alle oorspronkelijke UI-vergelijkingen blijven afgekeurd.
 

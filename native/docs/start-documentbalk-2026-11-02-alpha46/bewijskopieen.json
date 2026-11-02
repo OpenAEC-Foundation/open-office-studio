@@ -1,0 +1,733 @@
+{
+  "omvang": "Volledige lokale alpha46-ronde en veertig gerichte stappen in een eigen Linux-debugvenster. Alle oorspronkelijke UI-vergelijkingen blijven afgekeurd. Afzonderlijke eerdere prototypes behoren niet tot deze definitieve hoofdbron.",
+  "kopieen": [
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-geteste-bron.patch",
+      "bestand": "ruw/native-alpha46-geteste-bron.patch.gz",
+      "bron_sha256": "d368dc4766a080030e6c7085fb91e24d5583a48d00204071b7dd179822f3005d",
+      "opgeslagen_sha256": "8afa03e9be814cbfdde1f65f460f64df4158613b5a2929f147231250bed78787"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hertest-bron.log",
+      "bestand": "ruw/native-alpha46-hertest-bron.log.gz",
+      "bron_sha256": "2913237d8476046d52392c3af78d3b302cb8c593b20e2b142634ae210f86b8e8",
+      "opgeslagen_sha256": "65e3b270643d4c709be42a5839609e0e02c0993dc57501b05572518f175f909c"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hertest-clippy.log",
+      "bestand": "ruw/native-alpha46-hertest-clippy.log.gz",
+      "bron_sha256": "6046bd18c9e87627fc7bcead6d51ecd7db6aa20e535874b5752d322ad7893284",
+      "opgeslagen_sha256": "f7ba5899eb1020f338341f61078cbe9015ba3f8290b068512fa9815809ea588a"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hertest-conversie-onafhankelijk.log",
+      "bestand": "ruw/native-alpha46-hertest-conversie-onafhankelijk.log.gz",
+      "bron_sha256": "2cebd3abf09245f126c56d3b3feb5d8ef442f2ccffbd363f44bce77907e29bdf",
+      "opgeslagen_sha256": "5c7f7e0345ec985df4dc2c98c4604080781e4f69e11453649c2821f96e314580"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hertest-debugbouw.log",
+      "bestand": "ruw/native-alpha46-hertest-debugbouw.log.gz",
+      "bron_sha256": "467caeac39dc50ddf95ab5d2d30e8d75d3072df2ba45ef0943d92c1bbcea9d67",
+      "opgeslagen_sha256": "5273bbcfe8d210a47faf627ba5bd473d08ef6fc9bfedc148f0bf155110aa4da0"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hertest-finalisering.log",
+      "bestand": "ruw/native-alpha46-hertest-finalisering.log.gz",
+      "bron_sha256": "c0daa8efc7a4753c13f8e2e8a013314fa6f1889fbb82a6ebcc7fc927c694813c",
+      "opgeslagen_sha256": "e681719975e47854f3cfa898d23607a568d38191073c41ce26bfd71e4624e043"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hertest-fmt.log",
+      "bestand": "ruw/native-alpha46-hertest-fmt.log.gz",
+      "bron_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "opgeslagen_sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hertest-hervatting-terminal.log",
+      "bestand": "ruw/native-alpha46-hertest-hervatting-terminal.log.gz",
+      "bron_sha256": "2461be0be51f7c9978e2382dca8de8801b0824288601609a4101fb1e4e309451",
+      "opgeslagen_sha256": "4c6dc6ee497c05686b33c9d6a48ef2fae5dcfe52d408af95c581535fd3ae73d9"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hertest-hervatting-terminalstatus.json",
+      "bestand": "ruw/native-alpha46-hertest-hervatting-terminalstatus.json",
+      "bron_sha256": "9590a161b30bfdbce91fdab5ec1312cec78c09280eb6f0879bf53c986c1edc5e",
+      "opgeslagen_sha256": "9590a161b30bfdbce91fdab5ec1312cec78c09280eb6f0879bf53c986c1edc5e"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hertest-index.json",
+      "bestand": "ruw/native-alpha46-hertest-index.json",
+      "bron_sha256": "47cbe8bb4ac55b62f9a4dcff9b5e39b183b4e56f2bd0151dce66d6e09a387049",
+      "opgeslagen_sha256": "47cbe8bb4ac55b62f9a4dcff9b5e39b183b4e56f2bd0151dce66d6e09a387049"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hertest-onafhankelijk.log",
+      "bestand": "ruw/native-alpha46-hertest-onafhankelijk.log.gz",
+      "bron_sha256": "8a5755f0c421fc878f3421f54c1630daff85fb379727dc56809cc1fdb8163212",
+      "opgeslagen_sha256": "d7e4ff76f970c6cf59e29a57c0afa5db2fdf05c291e5c1d463e78ad44d8d2987"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hertest-onderbroken-runtime.log",
+      "bestand": "ruw/native-alpha46-hertest-onderbroken-runtime.log.gz",
+      "bron_sha256": "035d53b3437c6efe5f096c5f59b61a8986da7c1e5721963c7bd628383acb543c",
+      "opgeslagen_sha256": "4295cc28eacc8a71e48d22f5dc91ad9a35cc0ef0471ce9e1399abb4516e0d25f"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hertest-onderbroken-stapstatus.json",
+      "bestand": "ruw/native-alpha46-hertest-onderbroken-stapstatus.json",
+      "bron_sha256": "d8acc5533ac362e31f94943ca422457465ce723cc8d62c73afb926172999d73c",
+      "opgeslagen_sha256": "d8acc5533ac362e31f94943ca422457465ce723cc8d62c73afb926172999d73c"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hertest-onderbroken-terminal.log",
+      "bestand": "ruw/native-alpha46-hertest-onderbroken-terminal.log.gz",
+      "bron_sha256": "2a20138dd48bf70558c1147f124d17ced39f045376888c49442698aa4441a3c2",
+      "opgeslagen_sha256": "122fc56cd77301349a93aa85df078ee945a23fb7faa5ba88af38fd3ee64c3655"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hertest-publicatie.log",
+      "bestand": "ruw/native-alpha46-hertest-publicatie.log.gz",
+      "bron_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "opgeslagen_sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "moment": "Lege momentopname terwijl de publicatie nog liep; geen afgesloten uitvoerlog. De afgesloten uitvoer staat afzonderlijk hieronder."
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hertest-python.log",
+      "bestand": "ruw/native-alpha46-hertest-python.log.gz",
+      "bron_sha256": "2cfb22e56d98034b09ff122dc42ff0c4dcdbf518a64e15b060c3f6d60015db20",
+      "opgeslagen_sha256": "22b38ab68b60c0f374982078671cad126ee6272430878cb0584b520498e32b8e"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hertest-runtime.log",
+      "bestand": "ruw/native-alpha46-hertest-runtime.log.gz",
+      "bron_sha256": "348a1f1bcd65b2db870c64e712b683f1b7e12ea7c7889717dbf92fdf77d09eab",
+      "opgeslagen_sha256": "ea0b46ea7ec39d73ac2254a3ea6426759ced9438ddc12711a692a39d4c6a8431"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hertest-stapstatus.json",
+      "bestand": "ruw/native-alpha46-hertest-stapstatus.json",
+      "bron_sha256": "019add92313710595200545dbe335d097e38dce787202b9f0e33a106af3a1bb9",
+      "opgeslagen_sha256": "019add92313710595200545dbe335d097e38dce787202b9f0e33a106af3a1bb9"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hertest-terminal.log",
+      "bestand": "ruw/native-alpha46-hertest-terminal.log.gz",
+      "bron_sha256": "2a20138dd48bf70558c1147f124d17ced39f045376888c49442698aa4441a3c2",
+      "opgeslagen_sha256": "122fc56cd77301349a93aa85df078ee945a23fb7faa5ba88af38fd3ee64c3655"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hertest-terminalstatus.json",
+      "bestand": "ruw/native-alpha46-hertest-terminalstatus.json",
+      "bron_sha256": "901be1fb6ba9e11b47b2e06922048b70d88e130ad12ce545d2beadc5db8b6435",
+      "opgeslagen_sha256": "901be1fb6ba9e11b47b2e06922048b70d88e130ad12ce545d2beadc5db8b6435"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hertest-testbron.json",
+      "bestand": "ruw/native-alpha46-hertest-testbron.json",
+      "bron_sha256": "340e2f5a81c5897e020b59f346bd91c3f26968703646f108813882125f05c081",
+      "opgeslagen_sha256": "340e2f5a81c5897e020b59f346bd91c3f26968703646f108813882125f05c081"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hertest-tests.log",
+      "bestand": "ruw/native-alpha46-hertest-tests.log.gz",
+      "bron_sha256": "296de1cb283da910f003bbb75269e3d7065cef4aed3b2f1fae108ef78f42381e",
+      "opgeslagen_sha256": "c3c70359a51e1dbbed58f3aabab3861d67a5ae804f8cac75fcf6084b6abf47e7"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hoofdvoorproef-referentie.log",
+      "bestand": "ruw/native-alpha46-hoofdvoorproef-referentie.log.gz",
+      "bron_sha256": "4f29f9a7b19b5cea8f4b72c583d7ec2638621e18e733cd920bddb05b886115d9",
+      "opgeslagen_sha256": "e2e34594afa394d4c02f0d38cf7a4c18069d9ad80640df2988deb36660d860cb"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hoofdvoorproef-start.log",
+      "bestand": "ruw/native-alpha46-hoofdvoorproef-start.log.gz",
+      "bron_sha256": "a4dfa22f31bc6ac046a8f401cb7f376ac1d9f2a321ebb48aafd0f8ed3fda2097",
+      "opgeslagen_sha256": "465b9f26ec032b996215a4b1d85fa1bd67f4eda48b0f4483916c07bdb594c810"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hoofdvoorproef-status.json",
+      "bestand": "ruw/native-alpha46-hoofdvoorproef-status.json",
+      "bron_sha256": "881e029b33f7dead441d1def1c14e9858fabc6c1f6683cd3d08e56dd1911658a",
+      "opgeslagen_sha256": "881e029b33f7dead441d1def1c14e9858fabc6c1f6683cd3d08e56dd1911658a"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hoofdvoorproef-testbron.json",
+      "bestand": "ruw/native-alpha46-hoofdvoorproef-testbron.json",
+      "bron_sha256": "340e2f5a81c5897e020b59f346bd91c3f26968703646f108813882125f05c081",
+      "opgeslagen_sha256": "340e2f5a81c5897e020b59f346bd91c3f26968703646f108813882125f05c081"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hoofdvoorproef-vensterbalk.log",
+      "bestand": "ruw/native-alpha46-hoofdvoorproef-vensterbalk.log.gz",
+      "bron_sha256": "7216d828234897c4904a502020a620ec12fd8bec54f1753d9c77da6cc0e73bf9",
+      "opgeslagen_sha256": "a823f45f3c7416b56ae88a6b97060526d2f297249320537672b2068b6bc0d935"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hoofdvoorproef.patch",
+      "bestand": "ruw/native-alpha46-hoofdvoorproef.patch.gz",
+      "bron_sha256": "d368dc4766a080030e6c7085fb91e24d5583a48d00204071b7dd179822f3005d",
+      "opgeslagen_sha256": "8afa03e9be814cbfdde1f65f460f64df4158613b5a2929f147231250bed78787"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-patchherstel-eerste-afkeuring.json",
+      "bestand": "ruw/native-alpha46-patchherstel-eerste-afkeuring.json",
+      "bron_sha256": "cef8da8139500b6898c4ea1e0e5dbdca6c236ac00af43f5bcb6c7a9ce62e09eb",
+      "opgeslagen_sha256": "cef8da8139500b6898c4ea1e0e5dbdca6c236ac00af43f5bcb6c7a9ce62e09eb"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-patchherstel.json",
+      "bestand": "ruw/native-alpha46-patchherstel.json",
+      "bron_sha256": "10c58c9596a28a0a2b90b0696f014adb6633773a42ecc93aa654501458d05428",
+      "opgeslagen_sha256": "10c58c9596a28a0a2b90b0696f014adb6633773a42ecc93aa654501458d05428"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-start-documentbalk-controle.json",
+      "bestand": "ruw/native-alpha46-start-documentbalk-controle.json",
+      "bron_sha256": "3f2ffedfc578a73f3ca93b21fe75be5d23f8e7ccef247ea3be6dbea40ee8c3cf",
+      "opgeslagen_sha256": "3f2ffedfc578a73f3ca93b21fe75be5d23f8e7ccef247ea3be6dbea40ee8c3cf"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-writer-menu-controle.json",
+      "bestand": "ruw/native-alpha46-writer-menu-controle.json",
+      "bron_sha256": "30af49f9927b1fc54e87a996d3b0e6e953b98556f951377c073725eb81b9883b",
+      "opgeslagen_sha256": "30af49f9927b1fc54e87a996d3b0e6e953b98556f951377c073725eb81b9883b"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/start-alpha46-hertest.py",
+      "bestand": "proefcode/start-alpha46-hertest.py",
+      "bron_sha256": "745f8686970f544b78529d5e570d48367783fa5c9db2f49ad083a101eb148542",
+      "opgeslagen_sha256": "745f8686970f544b78529d5e570d48367783fa5c9db2f49ad083a101eb148542"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/controle-alpha46-hertest.py",
+      "bestand": "proefcode/controle-alpha46-hertest.py",
+      "bron_sha256": "56d9134a0e5354fdccd8058553dab99e16e2e683d243d7541177e00c3e18d39d",
+      "opgeslagen_sha256": "56d9134a0e5354fdccd8058553dab99e16e2e683d243d7541177e00c3e18d39d"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/hervat-alpha46-runtime.py",
+      "bestand": "proefcode/hervat-alpha46-runtime.py",
+      "bron_sha256": "5d961629797e2dc968447c2e36091516bab405099950080aabfa7807ff7b98f3",
+      "opgeslagen_sha256": "5d961629797e2dc968447c2e36091516bab405099950080aabfa7807ff7b98f3"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/bevries-alpha46-debug.py",
+      "bestand": "proefcode/bevries-alpha46-debug.py",
+      "bron_sha256": "c70909c199865b47f631a5252c4b9be097b06a656e90285a62fbe76b2cc6e593",
+      "opgeslagen_sha256": "c70909c199865b47f631a5252c4b9be097b06a656e90285a62fbe76b2cc6e593"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/finaliseer-alpha46-hertest.py",
+      "bestand": "proefcode/finaliseer-alpha46-hertest.py",
+      "bron_sha256": "a3504a706d96b9ba073d6b5153bdddb3d3bf20abb1783f9ec78f854bff68df7b",
+      "opgeslagen_sha256": "a3504a706d96b9ba073d6b5153bdddb3d3bf20abb1783f9ec78f854bff68df7b"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/controleer-alpha46-start-documentbalk.py",
+      "bestand": "proefcode/controleer-alpha46-start-documentbalk.py",
+      "bron_sha256": "fd8f8c720feb48311a076836848dae7f7797a6a4395a63897c1f305ba9809b30",
+      "opgeslagen_sha256": "fd8f8c720feb48311a076836848dae7f7797a6a4395a63897c1f305ba9809b30"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk.py",
+      "bestand": "proefcode/gui-alpha46-start-documentbalk.py",
+      "bron_sha256": "f36fccd5c4fcc5ec847a7d4092bd2a25ecc9137905650790f3d77a05688ccb1b",
+      "opgeslagen_sha256": "f36fccd5c4fcc5ec847a7d4092bd2a25ecc9137905650790f3d77a05688ccb1b"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/venster-alpha46-start-documentbalk.py",
+      "bestand": "proefcode/venster-alpha46-start-documentbalk.py",
+      "bron_sha256": "c0cb4d0a6e1bd0e77d49639929c1b4b62adc5082cd43e12f0c513d1541d1ec89",
+      "opgeslagen_sha256": "c0cb4d0a6e1bd0e77d49639929c1b4b62adc5082cd43e12f0c513d1541d1ec89"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/publiceer-alpha46-controle.py",
+      "bestand": "proefcode/publiceer-alpha46-controle.py",
+      "bron_sha256": "2cca6cdaf1ba99d7c20cd414a3dec62bbbddacb6be3a4fd6efaab45850824e98",
+      "opgeslagen_sha256": "2cca6cdaf1ba99d7c20cd414a3dec62bbbddacb6be3a4fd6efaab45850824e98"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/controleer-alpha46-writer-menu.py",
+      "bestand": "proefcode/controleer-alpha46-writer-menu.py",
+      "bron_sha256": "8931c1eb718c1274503ad815257524cee7c4fabd85d215c49c7b31fda7cf9f1e",
+      "opgeslagen_sha256": "8931c1eb718c1274503ad815257524cee7c4fabd85d215c49c7b31fda7cf9f1e"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-writer-menu.py",
+      "bestand": "proefcode/gui-alpha46-writer-menu.py",
+      "bron_sha256": "379688b09448fc00d97550c30497eb6effd9874d8a3d3abf7743c6cfaf7f8d25",
+      "opgeslagen_sha256": "379688b09448fc00d97550c30497eb6effd9874d8a3d3abf7743c6cfaf7f8d25"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/venster-alpha46-writer-menu.py",
+      "bestand": "proefcode/venster-alpha46-writer-menu.py",
+      "bron_sha256": "bdb1b84a756ed5cb7d61a7afadaa1fc17c1c95e63ea7c1ff3829c9bc268ef0c3",
+      "opgeslagen_sha256": "bdb1b84a756ed5cb7d61a7afadaa1fc17c1c95e63ea7c1ff3829c9bc268ef0c3"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/ruim-oude-eigen-cache-alpha46-volledige-ronde.py",
+      "bestand": "proefcode/ruim-oude-eigen-cache-alpha46-volledige-ronde.py",
+      "bron_sha256": "2b4a839e8f0394a3ba8db81da62bff873cabe266508f9913f9ec4da0bb8c9c0b",
+      "opgeslagen_sha256": "2b4a839e8f0394a3ba8db81da62bff873cabe266508f9913f9ec4da0bb8c9c0b"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/ruim-oude-eigen-cache-tijdens-alpha46-volledige-ronde.py",
+      "bestand": "proefcode/ruim-oude-eigen-cache-tijdens-alpha46-volledige-ronde.py",
+      "bron_sha256": "562f0d030b08be4168d637b8466d56610acc9b729eb043d3b3a7b40104ddb8b3",
+      "opgeslagen_sha256": "562f0d030b08be4168d637b8466d56610acc9b729eb043d3b3a7b40104ddb8b3"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/opruiming-eigen-cache-voor-alpha46-hoofdbouw.json",
+      "bestand": "proefcode/opruiming-eigen-cache-voor-alpha46-hoofdbouw.json",
+      "bron_sha256": "f06bd32bd73673cdad19d31c4c1e168923bcd5d5bf40c1a26edbacf8fc6aa9ca",
+      "opgeslagen_sha256": "f06bd32bd73673cdad19d31c4c1e168923bcd5d5bf40c1a26edbacf8fc6aa9ca"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/opruiming-oude-eigen-cache-voor-alpha46-volledige-ronde.json",
+      "bestand": "proefcode/opruiming-oude-eigen-cache-voor-alpha46-volledige-ronde.json",
+      "bron_sha256": "b213a44b8ac4f0a35a5d281ffe2667dd4c9d207c372c134dc55f3507d75d804d",
+      "opgeslagen_sha256": "b213a44b8ac4f0a35a5d281ffe2667dd4c9d207c372c134dc55f3507d75d804d"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/opruiming-oude-eigen-cache-tijdens-alpha46-volledige-ronde.json",
+      "bestand": "proefcode/opruiming-oude-eigen-cache-tijdens-alpha46-volledige-ronde.json",
+      "bron_sha256": "58b454dede6765bf72ee782999437d4151b5f818e0620b049d45ba8300f1342f",
+      "opgeslagen_sha256": "58b454dede6765bf72ee782999437d4151b5f818e0620b049d45ba8300f1342f"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/Bewaarde-notitie.json",
+      "bestand": "venster/Bewaarde-notitie.json",
+      "bron_sha256": "aa7450af1790a6ef04d2d4bd1e66d15bf3c48cc0cbe5f4220abf1db88fd002a1",
+      "opgeslagen_sha256": "aa7450af1790a6ef04d2d4bd1e66d15bf3c48cc0cbe5f4220abf1db88fd002a1"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/Eigen-derde-document.docx",
+      "bestand": "venster/Eigen-derde-document.docx",
+      "bron_sha256": "a1fe5935c05612446dbbfcfc1b84c729dc54bf26d559e162616d94eaa98656fa",
+      "opgeslagen_sha256": "a1fe5935c05612446dbbfcfc1b84c729dc54bf26d559e162616d94eaa98656fa"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/bron-aa7450af1790a6ef04d2d4bd1e66d15bf3c48cc0cbe5f4220abf1db88fd002a1.json",
+      "bestand": "venster/bron-aa7450af1790a6ef04d2d4bd1e66d15bf3c48cc0cbe5f4220abf1db88fd002a1.json",
+      "bron_sha256": "aa7450af1790a6ef04d2d4bd1e66d15bf3c48cc0cbe5f4220abf1db88fd002a1",
+      "opgeslagen_sha256": "aa7450af1790a6ef04d2d4bd1e66d15bf3c48cc0cbe5f4220abf1db88fd002a1"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/bron-c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13.json",
+      "bestand": "venster/bron-c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13.json",
+      "bron_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13",
+      "opgeslagen_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/inactieve-notitie-sluiten.png",
+      "bestand": "venster/inactieve-notitie-sluiten.png",
+      "bron_sha256": "e9b64629609cdc9a4c8b8184135b834a8d2d15a4d6170d19af486753a08351cf",
+      "opgeslagen_sha256": "e9b64629609cdc9a4c8b8184135b834a8d2d15a4d6170d19af486753a08351cf"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/notitie-bewaard.png",
+      "bestand": "venster/notitie-bewaard.png",
+      "bron_sha256": "297a4814461b17600d9681c2fc0219ab06a16e942d78626ab6a4b5a6f63cfdf6",
+      "opgeslagen_sha256": "297a4814461b17600d9681c2fc0219ab06a16e942d78626ab6a4b5a6f63cfdf6"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/notitie-bewaren.png",
+      "bestand": "venster/notitie-bewaren.png",
+      "bron_sha256": "297a4814461b17600d9681c2fc0219ab06a16e942d78626ab6a4b5a6f63cfdf6",
+      "opgeslagen_sha256": "297a4814461b17600d9681c2fc0219ab06a16e942d78626ab6a4b5a6f63cfdf6"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/notities-expliciet-gestopt.png",
+      "bestand": "venster/notities-expliciet-gestopt.png",
+      "bron_sha256": "fce53c6a344b22a8d89ec64d88f24f8ece7f12af94a9c66a95cf8e60c62074ad",
+      "opgeslagen_sha256": "fce53c6a344b22a8d89ec64d88f24f8ece7f12af94a9c66a95cf8e60c62074ad"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/notities-open.png",
+      "bestand": "venster/notities-open.png",
+      "bron_sha256": "cd7fbe934d789ae2708dd0ebf61ecc28cbc2c05bb9e011aadd3b50ad834832c5",
+      "opgeslagen_sha256": "cd7fbe934d789ae2708dd0ebf61ecc28cbc2c05bb9e011aadd3b50ad834832c5"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/notitietitel-toegepast.png",
+      "bestand": "venster/notitietitel-toegepast.png",
+      "bron_sha256": "3c2617a23c770f038fe768f619a4f3a86e5adb9ef173583fede91d6d08d9cad8",
+      "opgeslagen_sha256": "3c2617a23c770f038fe768f619a4f3a86e5adb9ef173583fede91d6d08d9cad8"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/notitietitel-toepassen.png",
+      "bestand": "venster/notitietitel-toepassen.png",
+      "bron_sha256": "3c2617a23c770f038fe768f619a4f3a86e5adb9ef173583fede91d6d08d9cad8",
+      "opgeslagen_sha256": "3c2617a23c770f038fe768f619a4f3a86e5adb9ef173583fede91d6d08d9cad8"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/programma.log",
+      "bestand": "venster/programma.log.gz",
+      "bron_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "opgeslagen_sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/rapport.json",
+      "bestand": "venster/rapport.json",
+      "bron_sha256": "b331b562bb1823d133370db77a6ed4c2a75e7092d88250335668b829bc34b6aa",
+      "opgeslagen_sha256": "b331b562bb1823d133370db77a6ed4c2a75e7092d88250335668b829bc34b6aa"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/sluitvraag-annuleren.png",
+      "bestand": "venster/sluitvraag-annuleren.png",
+      "bron_sha256": "46e86eef0dcb3e0bc7a5919f5bddaae5372cfc3753b2b4337fd5d04c188de984",
+      "opgeslagen_sha256": "46e86eef0dcb3e0bc7a5919f5bddaae5372cfc3753b2b4337fd5d04c188de984"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/sluitvraag-eigen-document.png",
+      "bestand": "venster/sluitvraag-eigen-document.png",
+      "bron_sha256": "6149323a5051f94944569da70dbfc21e05b9277d1ca0101f1610f06474637c59",
+      "opgeslagen_sha256": "6149323a5051f94944569da70dbfc21e05b9277d1ca0101f1610f06474637c59"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/start-ctrl-w.png",
+      "bestand": "venster/start-ctrl-w.png",
+      "bron_sha256": "3dc8d597c669e2304703773e52300272805621c8d5cf49e790d5e4b49eb12cc5",
+      "opgeslagen_sha256": "3dc8d597c669e2304703773e52300272805621c8d5cf49e790d5e4b49eb12cc5"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/start-open-opnieuw.png",
+      "bestand": "venster/start-open-opnieuw.png",
+      "bron_sha256": "3dc8d597c669e2304703773e52300272805621c8d5cf49e790d5e4b49eb12cc5",
+      "opgeslagen_sha256": "3dc8d597c669e2304703773e52300272805621c8d5cf49e790d5e4b49eb12cc5"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/start-open-rustig.png",
+      "bestand": "venster/start-open-rustig.png",
+      "bron_sha256": "3dc8d597c669e2304703773e52300272805621c8d5cf49e790d5e4b49eb12cc5",
+      "opgeslagen_sha256": "3dc8d597c669e2304703773e52300272805621c8d5cf49e790d5e4b49eb12cc5"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/start-via-merk.png",
+      "bestand": "venster/start-via-merk.png",
+      "bron_sha256": "88e189af36fbacdeb2958704d968c86f5c142e584e851e3bb0c30cf1c10f5a36",
+      "opgeslagen_sha256": "88e189af36fbacdeb2958704d968c86f5c142e584e851e3bb0c30cf1c10f5a36"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/start-via-plus.png",
+      "bestand": "venster/start-via-plus.png",
+      "bron_sha256": "5f360c21801ddf9065a05f48bea352fe2540e17006cf5d2e19cfa57a22d98b7f",
+      "opgeslagen_sha256": "5f360c21801ddf9065a05f48bea352fe2540e17006cf5d2e19cfa57a22d98b7f"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/start-via-tab.png",
+      "bestand": "venster/start-via-tab.png",
+      "bron_sha256": "237b42e8e01557e071ce87c147eb1647051e8b9271d2ba22fe1fc20f90502f57",
+      "opgeslagen_sha256": "237b42e8e01557e071ce87c147eb1647051e8b9271d2ba22fe1fc20f90502f57"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/terug-na-merk.png",
+      "bestand": "venster/terug-na-merk.png",
+      "bron_sha256": "b3e3ca974ee0d44d7da96caf68c28382031893816704fa77e675ae93df56e7a3",
+      "opgeslagen_sha256": "b3e3ca974ee0d44d7da96caf68c28382031893816704fa77e675ae93df56e7a3"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/terug-na-plus.png",
+      "bestand": "venster/terug-na-plus.png",
+      "bron_sha256": "878b1f84c82422ec1b0d4394d79527f3e403ed8e3558bef89ceea1b23f6be51d",
+      "opgeslagen_sha256": "878b1f84c82422ec1b0d4394d79527f3e403ed8e3558bef89ceea1b23f6be51d"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/terug-naar-concept.png",
+      "bestand": "venster/terug-naar-concept.png",
+      "bron_sha256": "5f360c21801ddf9065a05f48bea352fe2540e17006cf5d2e19cfa57a22d98b7f",
+      "opgeslagen_sha256": "5f360c21801ddf9065a05f48bea352fe2540e17006cf5d2e19cfa57a22d98b7f"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/titel-concept.png",
+      "bestand": "venster/titel-concept.png",
+      "bron_sha256": "066c28aef5246165b4041dc3a29355cb842ab395464d855b9b77c973d449d1c0",
+      "opgeslagen_sha256": "066c28aef5246165b4041dc3a29355cb842ab395464d855b9b77c973d449d1c0"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/titel-focus.png",
+      "bestand": "venster/titel-focus.png",
+      "bron_sha256": "af1c425b147c80fdedf55048462fe18353497a2bc49645d95eb9580ce8cd2a2f",
+      "opgeslagen_sha256": "af1c425b147c80fdedf55048462fe18353497a2bc49645d95eb9580ce8cd2a2f"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/titel-selectie.png",
+      "bestand": "venster/titel-selectie.png",
+      "bron_sha256": "d102e8f78951e7bb638785894ba46c48a2f78a3128f25f48350fff35e03730b5",
+      "opgeslagen_sha256": "d102e8f78951e7bb638785894ba46c48a2f78a3128f25f48350fff35e03730b5"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/venster-sluiten-vanaf-start.png",
+      "bestand": "venster/venster-sluiten-vanaf-start.png",
+      "bron_sha256": "a89e64c1c0757584ae2e3325d19f76fde84a3389131433aa84d077b743f419c1",
+      "opgeslagen_sha256": "a89e64c1c0757584ae2e3325d19f76fde84a3389131433aa84d077b743f419c1"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/writer-bevestigd.png",
+      "bestand": "venster/writer-bevestigd.png",
+      "bron_sha256": "297a4814461b17600d9681c2fc0219ab06a16e942d78626ab6a4b5a6f63cfdf6",
+      "opgeslagen_sha256": "297a4814461b17600d9681c2fc0219ab06a16e942d78626ab6a4b5a6f63cfdf6"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/writer-blijft-actief.png",
+      "bestand": "venster/writer-blijft-actief.png",
+      "bron_sha256": "fce53c6a344b22a8d89ec64d88f24f8ece7f12af94a9c66a95cf8e60c62074ad",
+      "opgeslagen_sha256": "fce53c6a344b22a8d89ec64d88f24f8ece7f12af94a9c66a95cf8e60c62074ad"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/writer-dialoog-focus.png",
+      "bestand": "venster/writer-dialoog-focus.png",
+      "bron_sha256": "7758b969762d8e4ba8b9c72d0ca35f56cf129a9e2968cd289a689b515310ede8",
+      "opgeslagen_sha256": "7758b969762d8e4ba8b9c72d0ca35f56cf129a9e2968cd289a689b515310ede8"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/writer-dialoog-gereed.png",
+      "bestand": "venster/writer-dialoog-gereed.png",
+      "bron_sha256": "5d08970f6c80c05d723d62290484ccd149dcf5f786b70546438324c75b9ababf",
+      "opgeslagen_sha256": "5d08970f6c80c05d723d62290484ccd149dcf5f786b70546438324c75b9ababf"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/writer-eigen-focus.png",
+      "bestand": "venster/writer-eigen-focus.png",
+      "bron_sha256": "53539a786a5c25f60bbeccf309847a48c783423eb419da408174b4aae61f317a",
+      "opgeslagen_sha256": "53539a786a5c25f60bbeccf309847a48c783423eb419da408174b4aae61f317a"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/writer-geopend-rustig.png",
+      "bestand": "venster/writer-geopend-rustig.png",
+      "bron_sha256": "e9b64629609cdc9a4c8b8184135b834a8d2d15a4d6170d19af486753a08351cf",
+      "opgeslagen_sha256": "e9b64629609cdc9a4c8b8184135b834a8d2d15a4d6170d19af486753a08351cf"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/writer-geopend.png",
+      "bestand": "venster/writer-geopend.png",
+      "bron_sha256": "53539a786a5c25f60bbeccf309847a48c783423eb419da408174b4aae61f317a",
+      "opgeslagen_sha256": "53539a786a5c25f60bbeccf309847a48c783423eb419da408174b4aae61f317a"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/writer-openen.png",
+      "bestand": "venster/writer-openen.png",
+      "bron_sha256": "297a4814461b17600d9681c2fc0219ab06a16e942d78626ab6a4b5a6f63cfdf6",
+      "opgeslagen_sha256": "297a4814461b17600d9681c2fc0219ab06a16e942d78626ab6a4b5a6f63cfdf6"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/writer-pad-ingevuld.png",
+      "bestand": "venster/writer-pad-ingevuld.png",
+      "bron_sha256": "869922e108293ed80aa492f5f8af06e253ec800181d3df8bf6b820fb39a210b9",
+      "opgeslagen_sha256": "869922e108293ed80aa492f5f8af06e253ec800181d3df8bf6b820fb39a210b9"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/writer-padveld.png",
+      "bestand": "venster/writer-padveld.png",
+      "bron_sha256": "ec635bab51d086fc8967e143167e0d226baf0c4bdbd89b49d0c03e4dc4c990b5",
+      "opgeslagen_sha256": "ec635bab51d086fc8967e143167e0d226baf0c4bdbd89b49d0c03e4dc4c990b5"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/writer-plus-start-rustig.png",
+      "bestand": "venster/writer-plus-start-rustig.png",
+      "bron_sha256": "dc9890a13c43daadc09055ba174f5dd9b6e31b4e138bf160f86d1cbc451c7d80",
+      "opgeslagen_sha256": "dc9890a13c43daadc09055ba174f5dd9b6e31b4e138bf160f86d1cbc451c7d80"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/writer-plus-start.png",
+      "bestand": "venster/writer-plus-start.png",
+      "bron_sha256": "fce53c6a344b22a8d89ec64d88f24f8ece7f12af94a9c66a95cf8e60c62074ad",
+      "opgeslagen_sha256": "fce53c6a344b22a8d89ec64d88f24f8ece7f12af94a9c66a95cf8e60c62074ad"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/writer-plus-terug-rustig.png",
+      "bestand": "venster/writer-plus-terug-rustig.png",
+      "bron_sha256": "fce53c6a344b22a8d89ec64d88f24f8ece7f12af94a9c66a95cf8e60c62074ad",
+      "opgeslagen_sha256": "fce53c6a344b22a8d89ec64d88f24f8ece7f12af94a9c66a95cf8e60c62074ad"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/writer-plus-terug.png",
+      "bestand": "venster/writer-plus-terug.png",
+      "bron_sha256": "fb99c9a6e105bec5ed8bdc69fe56b8e4fcd5d40391e5b1dd36bd697d27d80b8a",
+      "opgeslagen_sha256": "fb99c9a6e105bec5ed8bdc69fe56b8e4fcd5d40391e5b1dd36bd697d27d80b8a"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/writer-start-via-merk-rustig.png",
+      "bestand": "venster/writer-start-via-merk-rustig.png",
+      "bron_sha256": "0e97cf396e6173cea4ae8459cec9d2d7559d2d1afd2a6dd26f228a24f582c1ad",
+      "opgeslagen_sha256": "0e97cf396e6173cea4ae8459cec9d2d7559d2d1afd2a6dd26f228a24f582c1ad"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/writer-start-via-merk.png",
+      "bestand": "venster/writer-start-via-merk.png",
+      "bron_sha256": "fce53c6a344b22a8d89ec64d88f24f8ece7f12af94a9c66a95cf8e60c62074ad",
+      "opgeslagen_sha256": "fce53c6a344b22a8d89ec64d88f24f8ece7f12af94a9c66a95cf8e60c62074ad"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/writer-terug-rustig.png",
+      "bestand": "venster/writer-terug-rustig.png",
+      "bron_sha256": "fce53c6a344b22a8d89ec64d88f24f8ece7f12af94a9c66a95cf8e60c62074ad",
+      "opgeslagen_sha256": "fce53c6a344b22a8d89ec64d88f24f8ece7f12af94a9c66a95cf8e60c62074ad"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-start-documentbalk/writer-terug-van-start.png",
+      "bestand": "venster/writer-terug-van-start.png",
+      "bron_sha256": "fc5502b021a7c98e6edf36b63b6bfe7a341e753eb607a2e717769ce9d6c0e25f",
+      "opgeslagen_sha256": "fc5502b021a7c98e6edf36b63b6bfe7a341e753eb607a2e717769ce9d6c0e25f"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-writer-menu/Bewaarde-notitie.json",
+      "bestand": "writer-menu/Bewaarde-notitie.json",
+      "bron_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13",
+      "opgeslagen_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-writer-menu/Eigen-derde-document.docx",
+      "bestand": "writer-menu/Eigen-derde-document.docx",
+      "bron_sha256": "a1fe5935c05612446dbbfcfc1b84c729dc54bf26d559e162616d94eaa98656fa",
+      "opgeslagen_sha256": "a1fe5935c05612446dbbfcfc1b84c729dc54bf26d559e162616d94eaa98656fa"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-writer-menu/bestand-donker-escape.png",
+      "bestand": "writer-menu/bestand-donker-escape.png",
+      "bron_sha256": "8b2676fb16e64863d821988ff8ecac57c770f3701f0cdf29736f6617879b1218",
+      "opgeslagen_sha256": "8b2676fb16e64863d821988ff8ecac57c770f3701f0cdf29736f6617879b1218"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-writer-menu/bestand-donker-rustig.png",
+      "bestand": "writer-menu/bestand-donker-rustig.png",
+      "bron_sha256": "8b2676fb16e64863d821988ff8ecac57c770f3701f0cdf29736f6617879b1218",
+      "opgeslagen_sha256": "8b2676fb16e64863d821988ff8ecac57c770f3701f0cdf29736f6617879b1218"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-writer-menu/bestand-donker.png",
+      "bestand": "writer-menu/bestand-donker.png",
+      "bron_sha256": "61ff83ce96c97b3c41e9d679c98cfdc6c5a7af0dc9fa515ed9c5f25dc36d4d5f",
+      "opgeslagen_sha256": "61ff83ce96c97b3c41e9d679c98cfdc6c5a7af0dc9fa515ed9c5f25dc36d4d5f"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-writer-menu/bestand-escape.png",
+      "bestand": "writer-menu/bestand-escape.png",
+      "bron_sha256": "bfc5ef59a709c7673e6c89a04f2d3dc966c7386d0fe7b3e534443a0af52219f4",
+      "opgeslagen_sha256": "bfc5ef59a709c7673e6c89a04f2d3dc966c7386d0fe7b3e534443a0af52219f4"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-writer-menu/bestand-gesloten.png",
+      "bestand": "writer-menu/bestand-gesloten.png",
+      "bron_sha256": "a8a16243122652aef67b427dda41260214bf3baf3e832e9c25954ec1f72fc60c",
+      "opgeslagen_sha256": "a8a16243122652aef67b427dda41260214bf3baf3e832e9c25954ec1f72fc60c"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-writer-menu/bestand-open-rustig.png",
+      "bestand": "writer-menu/bestand-open-rustig.png",
+      "bron_sha256": "bfc5ef59a709c7673e6c89a04f2d3dc966c7386d0fe7b3e534443a0af52219f4",
+      "opgeslagen_sha256": "bfc5ef59a709c7673e6c89a04f2d3dc966c7386d0fe7b3e534443a0af52219f4"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-writer-menu/bestand-open.png",
+      "bestand": "writer-menu/bestand-open.png",
+      "bron_sha256": "a8a16243122652aef67b427dda41260214bf3baf3e832e9c25954ec1f72fc60c",
+      "opgeslagen_sha256": "a8a16243122652aef67b427dda41260214bf3baf3e832e9c25954ec1f72fc60c"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-writer-menu/bron-c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13.json",
+      "bestand": "writer-menu/bron-c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13.json",
+      "bron_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13",
+      "opgeslagen_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-writer-menu/instellingen-donker-open.png",
+      "bestand": "writer-menu/instellingen-donker-open.png",
+      "bron_sha256": "433af5c22746986688a495f22db3efc99d8f1b49c42a04161f585f523dda5844",
+      "opgeslagen_sha256": "433af5c22746986688a495f22db3efc99d8f1b49c42a04161f585f523dda5844"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-writer-menu/instellingen-donker-rustig.png",
+      "bestand": "writer-menu/instellingen-donker-rustig.png",
+      "bron_sha256": "771d9180f31c1bb12e7e89581cbf2172868ba71793cdfe799d1285a3740d9275",
+      "opgeslagen_sha256": "771d9180f31c1bb12e7e89581cbf2172868ba71793cdfe799d1285a3740d9275"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-writer-menu/instellingen-escape.png",
+      "bestand": "writer-menu/instellingen-escape.png",
+      "bron_sha256": "771d9180f31c1bb12e7e89581cbf2172868ba71793cdfe799d1285a3740d9275",
+      "opgeslagen_sha256": "771d9180f31c1bb12e7e89581cbf2172868ba71793cdfe799d1285a3740d9275"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-writer-menu/instellingen-gesloten.png",
+      "bestand": "writer-menu/instellingen-gesloten.png",
+      "bron_sha256": "74b1f2d73051b66a31dc06a5b4e011e9b4b816ad7d8265fcea21c5a0633e19f0",
+      "opgeslagen_sha256": "74b1f2d73051b66a31dc06a5b4e011e9b4b816ad7d8265fcea21c5a0633e19f0"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-writer-menu/notities-expliciet-gestopt.png",
+      "bestand": "writer-menu/notities-expliciet-gestopt.png",
+      "bron_sha256": "be0ab540f3eb9ee9825e2dd022e1b4a42c63eb90200cfa6277e21a074e2fd1e4",
+      "opgeslagen_sha256": "be0ab540f3eb9ee9825e2dd022e1b4a42c63eb90200cfa6277e21a074e2fd1e4"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-writer-menu/notities-open.png",
+      "bestand": "writer-menu/notities-open.png",
+      "bron_sha256": "f2992a994522b29ed9631a7fb2043edb44eeaeca39f5fb9a17f773117f5f04bc",
+      "opgeslagen_sha256": "f2992a994522b29ed9631a7fb2043edb44eeaeca39f5fb9a17f773117f5f04bc"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-writer-menu/programma.log",
+      "bestand": "writer-menu/programma.log.gz",
+      "bron_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "opgeslagen_sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-writer-menu/rapport.json",
+      "bestand": "writer-menu/rapport.json",
+      "bron_sha256": "707abff7c154a4f0ca4de00018e20379baa315aa323d603290030880e93a0528",
+      "opgeslagen_sha256": "707abff7c154a4f0ca4de00018e20379baa315aa323d603290030880e93a0528"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-writer-menu/writer-donker-rustig.png",
+      "bestand": "writer-menu/writer-donker-rustig.png",
+      "bron_sha256": "61ff83ce96c97b3c41e9d679c98cfdc6c5a7af0dc9fa515ed9c5f25dc36d4d5f",
+      "opgeslagen_sha256": "61ff83ce96c97b3c41e9d679c98cfdc6c5a7af0dc9fa515ed9c5f25dc36d4d5f"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-writer-menu/writer-donker-terug.png",
+      "bestand": "writer-menu/writer-donker-terug.png",
+      "bron_sha256": "433af5c22746986688a495f22db3efc99d8f1b49c42a04161f585f523dda5844",
+      "opgeslagen_sha256": "433af5c22746986688a495f22db3efc99d8f1b49c42a04161f585f523dda5844"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-writer-menu/writer-donker.png",
+      "bestand": "writer-menu/writer-donker.png",
+      "bron_sha256": "a8a16243122652aef67b427dda41260214bf3baf3e832e9c25954ec1f72fc60c",
+      "opgeslagen_sha256": "a8a16243122652aef67b427dda41260214bf3baf3e832e9c25954ec1f72fc60c"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-writer-menu/writer-menu-begin.png",
+      "bestand": "writer-menu/writer-menu-begin.png",
+      "bron_sha256": "fce53c6a344b22a8d89ec64d88f24f8ece7f12af94a9c66a95cf8e60c62074ad",
+      "opgeslagen_sha256": "fce53c6a344b22a8d89ec64d88f24f8ece7f12af94a9c66a95cf8e60c62074ad"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-writer-menu/writer-terug-licht-rustig.png",
+      "bestand": "writer-menu/writer-terug-licht-rustig.png",
+      "bron_sha256": "be0ab540f3eb9ee9825e2dd022e1b4a42c63eb90200cfa6277e21a074e2fd1e4",
+      "opgeslagen_sha256": "be0ab540f3eb9ee9825e2dd022e1b4a42c63eb90200cfa6277e21a074e2fd1e4"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha46-writer-menu/writer-terug-licht.png",
+      "bestand": "writer-menu/writer-terug-licht.png",
+      "bron_sha256": "1c00bc4ffeaa43dd9bf6009102246f9c8394ace84595f140f4d579b3b93b8ff5",
+      "opgeslagen_sha256": "1c00bc4ffeaa43dd9bf6009102246f9c8394ace84595f140f4d579b3b93b8ff5"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-debug-vast/herkomst.json",
+      "bestand": "debugprogramma-herkomst.json",
+      "bron_sha256": "83419e0960a20543e59a2a3efcd99cdcbc0c8d5f67da036d7e40d6a10711f359",
+      "opgeslagen_sha256": "83419e0960a20543e59a2a3efcd99cdcbc0c8d5f67da036d7e40d6a10711f359"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha46-hertest-publicatie.log",
+      "bestand": "ruw/native-alpha46-hertest-publicatie-afgerond.log.gz",
+      "bron_sha256": "1d8fe48c06f0ddaf0a1e1de6c911be959a472685317fb41275aeb4d759ddc174",
+      "opgeslagen_sha256": "26d80e00b34a940408fb58ea6e04b95c9a5d2dae00d6c19651289245cef16903",
+      "moment": "Afgesloten publicatieproces met eindstatus nul."
+    }
+  ]
+}
