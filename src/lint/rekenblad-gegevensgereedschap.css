@@ -34,3 +34,48 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* Tekst naar kolommen */
+.rekenblad-keuzes.rekenblad-naast {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.rekenblad-venster input.rekenblad-smalveld {
+  width: 5em;
+}
+.rekenblad-veld {
+  display: grid;
+  gap: 4px;
+}
+.rekenblad-liniaal {
+  overflow: auto;
+  max-height: 200px;
+  padding: 4px;
+  border: 1px solid var(--w-rand, #d3d9e0);
+  border-radius: 6px;
+  background: var(--w-bg, #fff);
+  font: 12px/1.5 ui-monospace, "Cascadia Mono", Consolas, monospace;
+  cursor: text;
+}
+.rekenblad-liniaalregel {
+  display: flex;
+  white-space: pre;
+}
+.rekenblad-liniaalregel span {
+  flex: 0 0 1ch;
+  width: 1ch;
+  box-sizing: content-box;
+  border-left: 1px solid transparent;
+  cursor: col-resize;
+}
+.rekenblad-liniaalregel.is-schaal span {
+  color: var(--w-tekst-zacht, #737b87);
+  cursor: default;
+}
+.rekenblad-liniaalregel span.is-breuk {
+  border-left-color: var(--w-accent, #d97706);
+}
+.importvenster-voorbeeld td.is-overslaan {
+  color: var(--w-tekst-zacht, #737b87);
+}
