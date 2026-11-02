@@ -236,6 +236,7 @@ impl overlay::Overlay<Msg, Theme, Renderer> for Bovenlaag<'_> {
 }
 
 struct Focusvraag {
+    selecteer: bool,
     generatie: Generatie,
     verwacht: u64,
     doel: Id,
@@ -255,9 +256,15 @@ impl Operation for Focusvraag {
     }
     fn finish(&self) -> Outcome<()> {
         if self.aanwezig && self.generatie.load(Ordering::Relaxed) == self.verwacht {
-            Outcome::Chain(Box::new(
-                iced::advanced::widget::operation::focusable::focus(self.doel.clone()),
-            ))
+            if self.selecteer {
+                Outcome::Chain(Box::new(FocusMetSelectie {
+                    doel: self.doel.clone(),
+                }))
+            } else {
+                Outcome::Chain(Box::new(
+                    iced::advanced::widget::operation::focusable::focus(self.doel.clone()),
+                ))
+            }
         } else {
             Outcome::None
         }
@@ -266,10 +273,51 @@ impl Operation for Focusvraag {
 /// Het unieke doel moet nog in de actuele, bedienbare widgetboom staan.
 pub fn vraag(generatie: &Generatie, doel: Id, verwacht: u64) -> Task<Msg> {
     iced::advanced::widget::operate(Focusvraag {
+        selecteer: false,
         generatie: generatie.clone(),
         verwacht,
         doel,
         aanwezig: false,
     })
     .discard()
+}
+
+/// Focus en selectie vinden in dezelfde gecontroleerde vervolgstap plaats.
+/// Een oud of verdwenen veld mag ook geen latere selectie wissen.
+pub fn vraag_met_selectie(generatie: &Generatie, doel: Id, verwacht: u64) -> Task<Msg> {
+    iced::advanced::widget::operate(Focusvraag {
+        selecteer: true,
+        generatie: generatie.clone(),
+        verwacht,
+        doel,
+        aanwezig: false,
+    })
+    .discard()
+}
+struct FocusMetSelectie {
+    doel: Id,
+}
+impl Operation for FocusMetSelectie {
+    fn traverse(&mut self, f: &mut dyn FnMut(&mut dyn Operation)) {
+        f(self);
+    }
+    fn focusable(
+        &mut self,
+        id: Option<&Id>,
+        _: Rectangle,
+        staat: &mut dyn iced::advanced::widget::operation::Focusable,
+    ) {
+        if id == Some(&self.doel) {
+            staat.focus();
+        } else {
+            staat.unfocus();
+        }
+    }
+    fn finish(&self) -> Outcome<()> {
+        // Iced bezoekt tekstinvoer vóór focusable; focus() zet de cursor aan
+        // het einde. Selecteer daarom pas na die volledige focusronde.
+        Outcome::Chain(Box::new(
+            iced::advanced::widget::operation::text_input::select_all(self.doel.clone()),
+        ))
+    }
 }

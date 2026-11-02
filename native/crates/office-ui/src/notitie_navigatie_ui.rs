@@ -75,9 +75,21 @@ pub fn kolommen<'a>(
     );
     let mut links = column![
         label("MIJN NOTITIEBOEKEN", 9., c.text_secondary),
-        row![w::glyph(icoon(Icon::New), 19., c.text, c.text), kiezer]
-            .spacing(8)
-            .padding([13, 4]),
+        row![
+            w::glyph(icoon(Icon::New), 19., c.text, c.text),
+            kiezer,
+            w::icon_button(
+                l,
+                icoon(Icon::Rename),
+                22.,
+                false,
+                "Notitieboek hernoemen",
+                (!t.bezig && !t.concept && !t.schrijft)
+                    .then_some(notitie_naam_ui::openen(t, notitie_naam_ui::Soort::Boek))
+            )
+        ]
+        .spacing(8)
+        .padding([13, 4]),
         row![
             label("SECTIES", 9., c.text_secondary),
             Space::new().width(Length::Fill),
@@ -321,10 +333,24 @@ pub fn kolommen<'a>(
         container(
             column![
                 label("PAGINA'S", 9., iced::Color::from_rgb8(120, 113, 108)),
-                label(sectie.naam.clone(), 19., wit.text).font(iced::Font {
-                    weight: iced::font::Weight::Bold,
-                    ..fonts::HEADING
-                })
+                row![
+                    label(sectie.naam.clone(), 19., wit.text)
+                        .font(iced::Font {
+                            weight: iced::font::Weight::Bold,
+                            ..fonts::HEADING
+                        })
+                        .width(Length::Fill),
+                    w::icon_button(
+                        licht,
+                        icoon(Icon::Rename),
+                        22.,
+                        false,
+                        "Sectie hernoemen",
+                        (!t.bezig && !t.concept && !t.schrijft)
+                            .then_some(notitie_naam_ui::openen(t, notitie_naam_ui::Soort::Sectie))
+                    )
+                ]
+                .align_y(iced::Alignment::Center)
             ]
             .spacing(5)
         )

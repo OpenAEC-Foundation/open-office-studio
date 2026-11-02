@@ -73,6 +73,8 @@ pub enum NotitieActie {
         markdown: bool,
     },
     NieuwBoek,
+    BoekNaam(String),
+    SectieNaam(String),
     Sectiesoort {
         markdown: bool,
     },
@@ -420,6 +422,22 @@ pub(crate) fn bewerk_met_doel(
     let pad = pad(d, deel)?;
     let sectiepad = pad.rsplit_once("/paginas/").unwrap().0;
     match actie {
+        NotitieActie::BoekNaam(ref naam) | NotitieActie::SectieNaam(ref naam) => {
+            let naam = naam.trim();
+            if naam.is_empty() || naam.chars().count() > 200 || naam.chars().any(char::is_control) {
+                return Err(fout(
+                    "Kies een naam van 1 tot en met 200 tekens zonder regelovergangen",
+                ));
+            }
+            let doelpad = if matches!(actie, NotitieActie::BoekNaam(_)) {
+                sectiepad.rsplit_once("/secties/").unwrap().0
+            } else {
+                sectiepad
+            };
+            *d.pointer_mut(&format!("{doelpad}/naam"))
+                .ok_or_else(|| fout("De naam ontbreekt"))? = json!(naam);
+            return Ok(deel);
+        }
         NotitieActie::NieuweSectie { markdown } => {
             let boekpad = sectiepad.rsplit_once("/secties/").unwrap().0;
             let secties = d

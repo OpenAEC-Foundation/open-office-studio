@@ -541,3 +541,81 @@ fn diaminiatuur_van_een_extreem_hoge_dia_blijft_binnen_het_pixelbudget() {
     assert_eq!(s.bron().as_slice(), bron.as_slice());
     assert!(!s.kan_terug());
 }
+
+#[test]
+fn notitienaam_boek_en_sectie_behouden_onbekende_inhoud_en_undo_exact() {
+    let mut bron: serde_json::Value = serde_json::from_slice(include_bytes!(
+        "../../../../docs/voorbeelden/Notitieboek.json"
+    ))
+    .unwrap();
+    bron["extra_bronveld"] = serde_json::json!({"getal": 17});
+    bron["boeken"][0]["extra_boek"] = serde_json::json!([1, 2, 3]);
+    bron["boeken"][0]["secties"][0]["extra_sectie"] = serde_json::json!("behouden");
+    let bytes = serde_json::to_vec_pretty(&bron).unwrap();
+    let mut s = Sessie::open(Module::Notition, bytes.clone()).unwrap();
+    for (actie, pad, verwacht) in [
+        (
+            N::BoekNaam("  Ideeën 🏠  ".into()),
+            "/boeken/0/naam",
+            "Ideeën 🏠",
+        ),
+        (
+            N::SectieNaam("  Schetsen 日本語  ".into()),
+            "/boeken/0/secties/0/naam",
+            "Schetsen 日本語",
+        ),
+    ] {
+        s.bewerk(0, Bewerking::Notitie(actie)).unwrap();
+        assert_eq!(s.weergave(0).unwrap().notitie.as_ref().unwrap().deel, 0);
+        let nieuw = data(&s);
+        let mut gewenst = bron.clone();
+        *gewenst.pointer_mut(pad).unwrap() = serde_json::json!(verwacht);
+        assert_eq!(nieuw, gewenst);
+        let opgeslagen = s.bron();
+        let heropend = Sessie::open(Module::Notition, opgeslagen.to_vec()).unwrap();
+        assert_eq!(data(&heropend), gewenst);
+        s.terug().unwrap();
+        assert_eq!(s.bron().as_slice(), bytes.as_slice());
+        s.vooruit().unwrap();
+        assert_eq!(s.bron().as_slice(), opgeslagen.as_slice());
+        s.terug().unwrap();
+    }
+}
+
+#[test]
+fn notitienaam_weigert_ongeldige_namen_en_doelen_zonder_bron_of_undo_te_veranderen() {
+    let mut s = Sessie::open(
+        Module::Notition,
+        include_bytes!("../../../../docs/voorbeelden/Notitieboek.json").to_vec(),
+    )
+    .unwrap();
+    let bron = s.bron();
+    for naam in [
+        "".to_string(),
+        "   ".into(),
+        "a\nb".into(),
+        "a\0b".into(),
+        "é".repeat(201),
+    ] {
+        for actie in [N::BoekNaam(naam.clone()), N::SectieNaam(naam.clone())] {
+            assert!(s.bewerk(0, Bewerking::Notitie(actie)).is_err());
+            assert_eq!(s.bron().as_slice(), bron.as_slice());
+            assert!(!s.kan_terug() && !s.kan_vooruit());
+        }
+    }
+    assert!(
+        s.bewerk(usize::MAX, Bewerking::Notitie(N::BoekNaam("Anders".into())))
+            .is_err()
+    );
+    assert_eq!(s.bron().as_slice(), bron.as_slice());
+    s.bewerk(0, Bewerking::Notitie(N::SectieNaam("é".repeat(200))))
+        .unwrap();
+    assert_eq!(
+        data(&s)["boeken"][0]["secties"][0]["naam"]
+            .as_str()
+            .unwrap()
+            .chars()
+            .count(),
+        200
+    );
+}

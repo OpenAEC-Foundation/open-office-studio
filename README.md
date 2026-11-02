@@ -22,8 +22,15 @@ Open Office Studio is a local office environment for Windows, macOS and Linux. I
 
 ## Native Rust migration
 
-The native preview in [`native/`](native/README.md) implements its interface
-in Rust, using Iced and the shared OpenAEC Blueprint ribbon. It has working
+The selected interface migration now uses **Rust/Dioxus with a system WebView,
+retaining the existing HTML classes, CSS and fonts**. The first connection is in
+[`office-webview`](native/crates/office-webview/README.md); it is an early preview,
+with the original module editors and complete UI parity still to be ported.
+Run it with `cargo run --manifest-path native/Cargo.toml -p open-office-studio-webview --features desktop`.
+
+The earlier native preview in [`native/`](native/README.md) uses Iced and the
+shared OpenAEC Blueprint ribbon and remains available as an intermediate step.
+It has working
 DOCX/XLSX/PPTX round trips and IFCX source archives, including complete email
 sources. It is **not yet a replacement for the current suite**; the
 [feature comparison and remaining work](native/README.md#huidige-omvang) describe

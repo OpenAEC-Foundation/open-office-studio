@@ -9,6 +9,7 @@ mod lettertypen_ui;
 mod lineaal;
 mod lint;
 mod mail_ui;
+mod notitie_naam_ui;
 mod notitie_navigatie_ui;
 mod notitie_raster;
 mod notitie_ui;
@@ -112,6 +113,7 @@ enum Msg {
         actie: text_editor::Action,
     },
     NotitieBoek(usize),
+    NotitieNaam(notitie_naam_ui::Bericht),
     NotitieSoort {
         document: u64,
         hash: String,
@@ -370,6 +372,7 @@ struct App {
     invoergeneratie: invoerfocus::Generatie,
     zoeken: Option<zoeken_ui::Zoekpaneel>,
     exportblad: Option<export_ui::Exportblad>,
+    notitienaam: Option<notitie_naam_ui::Naamblad>,
     export_bezig: bool,
     postvak: mail_ui::Postvak,
     postvak_zichtbaar: bool,
@@ -404,6 +407,7 @@ impl App {
             invoergeneratie: Default::default(),
             zoeken: None,
             exportblad: None,
+            notitienaam: None,
             export_bezig: false,
             postvak: mail_ui::Postvak::default(),
             postvak_zichtbaar: false,
@@ -552,6 +556,9 @@ impl App {
         }))
     }
     fn update(&mut self, msg: Msg) -> Task<Msg> {
+        if matches!(&msg, Msg::SluitVenster) {
+            self.notitienaam = None;
+        }
         // Achtergrondbeelden moeten ook tijdens een modaal venster kunnen afronden.
         if matches!(&msg, Msg::Presentatie(presentatie_ui::Bericht::Gereed(..))) {
             if let Msg::Presentatie(b) = msg {
@@ -559,10 +566,11 @@ impl App {
             }
             unreachable!();
         }
-        if self.exportblad.is_some()
+        if (self.exportblad.is_some() || self.notitienaam.is_some())
             && !matches!(
                 msg,
                 Msg::Export(_)
+                    | Msg::NotitieNaam(_)
                     | Msg::Toets(_)
                     | Msg::Navigeer(_)
                     | Msg::SluitVenster
@@ -648,6 +656,7 @@ impl App {
             return Task::none();
         }
         match msg {
+            Msg::NotitieNaam(b) => return notitie_naam_ui::update(self, b),
             Msg::Presentatie(b) => return presentatie_ui::update(self, b),
             Msg::RasterKopie {
                 document,
@@ -1861,6 +1870,16 @@ impl App {
             }
             Msg::Toets(k) => {
                 use iced::keyboard::{Key, key::Named};
+                if self.notitienaam.is_some() {
+                    if k.key == Key::Named(Named::Escape) {
+                        let nummer = self.notitienaam.as_ref().unwrap().nummer();
+                        return notitie_naam_ui::update(
+                            self,
+                            notitie_naam_ui::Bericht::Annuleer(nummer),
+                        );
+                    }
+                    return Task::none();
+                }
                 if self.exportblad.is_some() {
                     if k.key == Key::Named(Named::Escape) {
                         self.exportblad = None;
@@ -2049,6 +2068,15 @@ impl App {
     }
     fn subscription(&self) -> Subscription<Msg> {
         Subscription::batch([
+            if let Some(b) = &self.notitienaam {
+                iced::event::listen_with(notitie_naam_ui::afgevangen_escape)
+                    .with(b.nummer())
+                    .map(|(nummer, ())| {
+                        Msg::NotitieNaam(notitie_naam_ui::Bericht::Annuleer(nummer))
+                    })
+            } else {
+                Subscription::none()
+            },
             if self.zoeken.is_some()
                 && !self.postvak_zichtbaar
                 && !self.bestand
@@ -2120,7 +2148,10 @@ impl App {
             )
         ]
         .height(Length::Fill);
-        let modaal = self.sluiten.is_some() || self.instellingen || self.exportblad.is_some();
+        let modaal = self.sluiten.is_some()
+            || self.instellingen
+            || self.exportblad.is_some()
+            || self.notitienaam.is_some();
         let mut lagen = vec![focus::inert(
             container(scherm).style(move |_| container::Style {
                 background: Some(c.frame.into()),
@@ -2146,6 +2177,9 @@ impl App {
         }
         if let Some(b) = &self.exportblad {
             lagen.push(w::overlay(look, b.view(look).map(Msg::Export)));
+        }
+        if let Some(naamblad) = notitie_naam_ui::weergave(self) {
+            lagen.push(naamblad);
         }
         if self.sluiten.is_some() {
             let naam = self

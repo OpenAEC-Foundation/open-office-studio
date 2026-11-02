@@ -1,10 +1,10 @@
 name: Native Rust controleren en bouwen
 on:
   pull_request:
-    paths: [".gitattributes", "native/**", "public/templates/**", ".github/workflows/native-rust.yml"]
+    paths: [".gitattributes", "native/**", "src/**/*.css", "src/stijl/**", "packages/email/src/start.css", "public/templates/**", ".github/workflows/native-rust.yml"]
   push:
     branches: [main]
-    paths: [".gitattributes", "native/**", "public/templates/**", ".github/workflows/native-rust.yml"]
+    paths: [".gitattributes", "native/**", "src/**/*.css", "src/stijl/**", "packages/email/src/start.css", "public/templates/**", ".github/workflows/native-rust.yml"]
   workflow_dispatch:
 permissions:
   contents: read
@@ -84,8 +84,9 @@ jobs:
           restore-keys: native-v2-${{ runner.os }}-
       - run: python native/scripts/ci-bronstempels.py herstellen
       - run: python native/scripts/controleer-bron.py
+      - run: python native/scripts/controleer-webview-bron.py
       - run: python native/scripts/controleer-migratie.py
-      - run: cargo fmt --manifest-path native/Cargo.toml -p office-core -p open-office-studio-native -p office-mail -p office-conversie --check
+      - run: cargo fmt --manifest-path native/Cargo.toml -p office-core -p open-office-studio-native -p office-mail -p office-conversie -p open-office-studio-webview --check
       - run: cargo clippy --manifest-path native/Cargo.toml --workspace --locked --all-targets -- -D warnings
       - run: cargo test --manifest-path native/Cargo.toml --workspace --locked
       - name: Native uitvoer onafhankelijk teruglezen

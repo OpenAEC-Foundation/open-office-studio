@@ -2545,6 +2545,7 @@ impl Proef {
         self.gebeurtenissen([event]);
     }
     fn gebeurtenissen(&mut self, events: impl IntoIterator<Item = iced::Event>) {
+        let naam_escape = self.app.notitienaam.as_ref().map(|b| b.nummer());
         let zoek_escape = self.app.zoeken.is_some()
             && !self.app.postvak_zichtbaar
             && !self.app.bestand
@@ -2590,6 +2591,19 @@ impl Proef {
                     )
                 {
                     berichten.push(m);
+                }
+                if let Some(nummer) = naam_escape
+                    && let Some(()) = notitie_naam_ui::afgevangen_escape(
+                        event.clone(),
+                        if gevangen {
+                            iced::event::Status::Captured
+                        } else {
+                            iced::event::Status::Ignored
+                        },
+                        iced::window::Id::unique(),
+                    )
+                {
+                    berichten.push(Msg::NotitieNaam(notitie_naam_ui::Bericht::Annuleer(nummer)));
                 }
                 if !gevangen
                     && let iced::Event::Keyboard(iced::keyboard::Event::KeyPressed {
@@ -5496,4 +5510,205 @@ fn alineastijl_enter_en_spatie_in_dezelfde_lijstronde_komen_op_de_pagina() {
         p.bericht(Msg::Terug);
         assert_eq!(p.bron().as_slice(), gesplitst.as_slice());
     }
+}
+
+fn notitienaam_focus(p: &mut Proef) -> (usize, bool) {
+    struct Tellen {
+        naam: iced::advanced::widget::Id,
+        aantal: usize,
+        naam_heeft_focus: bool,
+    }
+    impl iced::advanced::widget::Operation for Tellen {
+        fn traverse(&mut self, f: &mut dyn FnMut(&mut dyn iced::advanced::widget::Operation)) {
+            f(self);
+        }
+        fn focusable(
+            &mut self,
+            id: Option<&iced::advanced::widget::Id>,
+            _: iced::Rectangle,
+            staat: &mut dyn iced::advanced::widget::operation::Focusable,
+        ) {
+            self.aantal += 1;
+            self.naam_heeft_focus |= id == Some(&self.naam) && staat.is_focused();
+        }
+    }
+    let mut tel = Tellen {
+        naam: format!("notitie-naam-{}", notitienaam_nr(p)).into(),
+        aantal: 0,
+        naam_heeft_focus: false,
+    };
+    let mut element = p.app.view();
+    p.boom.diff(element.as_widget());
+    let n = element.as_widget_mut().layout(
+        &mut p.boom,
+        &p.renderer,
+        &layout::Limits::new(Size::ZERO, Size::new(1440., 900.)),
+    );
+    element
+        .as_widget_mut()
+        .operate(&mut p.boom, Layout::new(&n), &p.renderer, &mut tel);
+    (tel.aantal, tel.naam_heeft_focus)
+}
+fn notitienaam_nr(p: &Proef) -> u64 {
+    p.app.notitienaam.as_ref().unwrap().nummer()
+}
+fn notitienaam_open(p: &mut Proef, soort: notitie_naam_ui::Soort) {
+    let bericht = notitie_naam_ui::openen(p.app.tab().unwrap(), soort);
+    p.bericht(bericht);
+}
+fn notitienaam_klik(p: &mut Proef, naam: &str) {
+    let doel = p
+        .toegankelijkheid()
+        .nodes
+        .into_iter()
+        .find(|n| n.node.name == naam)
+        .unwrap()
+        .bounds
+        .center();
+    p.klik(doel);
+}
+#[test]
+fn notitienaam_echte_knoppen_typen_en_enter_bewaren_boek_sectie_en_undo() {
+    use notitie_naam_ui::Soort as S;
+    let bron = include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json");
+    let mut p = Proef::met_app(app_met_werkdraad(Module::Notition, bron));
+    for (knop, waarde, soort) in [
+        ("Notitieboek hernoemen", "Ideeën 🏠", S::Boek),
+        ("Sectie hernoemen", "Schetsen 日本語", S::Sectie),
+    ] {
+        let voor = p.bron();
+        notitienaam_klik(&mut p, knop);
+        assert!(p.app.notitienaam.is_some());
+        assert!(p.focusoperaties > 0);
+        assert_eq!(notitienaam_focus(&mut p), (3, true));
+        // Plakken direct na openen moet de automatisch geselecteerde oude naam
+        // vervangen. Daarna blijft de Tab-route binnen de drie dialoogvelden.
+        p.plak(waarde);
+        for _ in 0..3 {
+            p.named(iced::keyboard::key::Named::Tab);
+        }
+        assert_eq!(notitienaam_focus(&mut p), (3, true));
+        assert_eq!(*p.bron(), *voor, "Naam blijft een concept tot bevestiging");
+        p.named(iced::keyboard::key::Named::Enter);
+        assert!(p.app.notitienaam.is_none());
+        let data: serde_json::Value = serde_json::from_slice(&p.bron()).unwrap();
+        let pad = match soort {
+            S::Boek => "/boeken/0/naam",
+            S::Sectie => "/boeken/0/secties/0/naam",
+        };
+        assert_eq!(data.pointer(pad).unwrap().as_str(), Some(waarde));
+        let bewaard = p.bron();
+        p.bericht(Msg::Terug);
+        assert_eq!(*p.bron(), *voor);
+        p.bericht(Msg::Vooruit);
+        assert_eq!(*p.bron(), *bewaard);
+    }
+    notitienaam_open(&mut p, S::Boek);
+    notitienaam_klik(&mut p, "Annuleren");
+    assert!(p.app.notitienaam.is_none());
+}
+#[test]
+fn notitienaam_modale_opdrachten_en_oude_bron_wijzigen_geen_document() {
+    use notitie_naam_ui::{Bericht as B, Soort as S};
+    let bron = include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json");
+    let mut p = Proef::met_app(app_met_werkdraad(Module::Notition, bron));
+    let voor = p.bron();
+    notitienaam_open(&mut p, S::Sectie);
+    for msg in [
+        Msg::Start,
+        Msg::Selecteer(99),
+        Msg::Notitie(office_core::notities::NotitieActie::NieuwePagina),
+        Msg::Opslaan(1, false),
+        Msg::Terug,
+    ] {
+        p.bericht(msg);
+        assert!(p.app.notitienaam.is_some());
+        assert_eq!(*p.bron(), *voor);
+    }
+    p.bericht(Msg::NotitieNaam(B::Waarde(
+        notitienaam_nr(&p),
+        "Nieuw".into(),
+    )));
+    // Simuleer een eerder gestarte werkdraad die inmiddels een nieuwe bron levert.
+    p.app.tab_mut().unwrap().antwoord.as_mut().unwrap().hash = "Andere bronversie".into();
+    p.bericht(Msg::NotitieNaam(B::Bevestig(notitienaam_nr(&p))));
+    assert!(p.app.notitienaam.is_some());
+    assert!(
+        p.toegankelijkheid()
+            .nodes
+            .iter()
+            .any(|n| n.node.name.contains("De bron of selectie is gewijzigd"))
+    );
+    assert_eq!(*p.bron(), *voor);
+    p.bericht(Msg::NotitieNaam(B::Annuleer(notitienaam_nr(&p))));
+    assert!(p.app.notitienaam.is_none());
+}
+#[test]
+fn notitienaam_leeg_ongeldig_en_annuleren_behouden_alle_tekst() {
+    use notitie_naam_ui::{Bericht as B, Soort as S};
+    let bron = include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json");
+    let mut p = Proef::met_app(app_met_werkdraad(Module::Notition, bron));
+    let voor = p.bron();
+    notitienaam_open(&mut p, S::Boek);
+    for waarde in [
+        "".to_string(),
+        " \t ".into(),
+        "a\nb".into(),
+        "é".repeat(201),
+    ] {
+        p.bericht(Msg::NotitieNaam(B::Waarde(notitienaam_nr(&p), waarde)));
+        p.bericht(Msg::NotitieNaam(B::Bevestig(notitienaam_nr(&p))));
+        assert!(p.app.notitienaam.is_some());
+        assert_eq!(*p.bron(), *voor);
+    }
+    p.named(iced::keyboard::key::Named::Escape);
+    assert!(
+        p.app.notitienaam.is_none(),
+        "Ook Escape uit het gefocuste naamveld sluit het venster"
+    );
+    assert_eq!(*p.bron(), *voor);
+    p.app.tab_mut().unwrap().concept = true;
+    notitienaam_open(&mut p, S::Sectie);
+    assert!(p.app.notitienaam.is_none());
+    assert!(p.app.tab().unwrap().concept);
+}
+
+#[test]
+fn notitienaam_oude_openvragen_formulierberichten_en_focus_storen_geen_nieuw_doel() {
+    use notitie_naam_ui::{Bericht as B, Soort as S};
+    let bron = include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json");
+    let mut p = Proef::met_app(app_met_werkdraad(Module::Notition, bron));
+    let voor = p.bron();
+    let oud_open = notitie_naam_ui::openen(p.app.tab().unwrap(), S::Sectie);
+    p.bericht(Msg::Deel(1));
+    p.bericht(oud_open);
+    assert!(p.app.notitienaam.is_none());
+    p.bericht(Msg::Deel(0));
+    let vraag = notitie_naam_ui::openen(p.app.tab().unwrap(), S::Sectie);
+    let late_focus = p.app.update(vraag);
+    let oud = notitienaam_nr(&p);
+    p.bericht(Msg::NotitieNaam(B::Annuleer(oud)));
+    notitienaam_open(&mut p, S::Boek);
+    let nieuw = notitienaam_nr(&p);
+    assert_ne!(oud, nieuw);
+    // Een oude focusvraag mag het nieuwe tekstveld ook niet de focus ontnemen.
+    p.taak(late_focus);
+    for bericht in [
+        B::Waarde(oud, "Verkeerde eigenaar".into()),
+        B::Bevestig(oud),
+        B::Annuleer(oud),
+    ] {
+        p.bericht(Msg::NotitieNaam(bericht));
+        assert_eq!(notitienaam_nr(&p), nieuw);
+        assert_eq!(*p.bron(), *voor);
+    }
+    p.plak("Eigen nieuw boek");
+    p.named(iced::keyboard::key::Named::Enter);
+    assert!(p.app.notitienaam.is_none());
+    let data: serde_json::Value = serde_json::from_slice(&p.bron()).unwrap();
+    assert_eq!(data["boeken"][0]["naam"], "Eigen nieuw boek");
+    assert_ne!(
+        data["boeken"][0]["secties"][0]["naam"],
+        "Verkeerde eigenaar"
+    );
 }

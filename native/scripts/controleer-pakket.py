@@ -2,6 +2,7 @@
 """Pak het echte previewpakket uit en controleer bron, licenties en programmaversie."""
 from pathlib import Path
 import hashlib
+import json
 import platform
 import re
 import subprocess
@@ -19,6 +20,11 @@ def controleer_bronbytes(verpakt: Path, checkout: Path) -> int:
                 verwacht[pad.relative_to(checkout)] = pad
     for naam in ['native/Cargo.toml', 'native/Cargo.lock', 'native/README.md', 'LICENSE', '.gitattributes']:
         verwacht[Path(naam)] = checkout/naam
+    stijllijst = checkout/'native/crates/office-webview/stijlbronnen.json'
+    if stijllijst.is_file():
+        stijlbron = json.loads(stijllijst.read_text(encoding='utf-8'))
+        for naam in stijlbron['stijl'] + stijlbron['benodigd']:
+            verwacht[Path(naam)] = checkout/naam
     aanwezig = {p.relative_to(verpakt) for p in verpakt.rglob('*') if p.is_file()}
     assert aanwezig == verwacht.keys(), 'Bestandslijst van verpakte bron wijkt af van de checkout'
     for naam, pad in verwacht.items():

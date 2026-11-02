@@ -12,6 +12,34 @@ spec.loader.exec_module(controle)
 
 
 class Pakketbron(unittest.TestCase):
+    def test_webview_stijlbron_buiten_native_moet_exact_aanwezig_zijn(self):
+        with tempfile.TemporaryDirectory(prefix='office-webview-pakket-') as tijdelijk:
+            checkout = Path(tijdelijk)/'checkout'
+            verpakt = Path(tijdelijk)/'verpakt'
+            bestanden = {
+                'native/Cargo.toml': b'[workspace]\nmembers=[]\n',
+                'native/Cargo.lock': b'eigen lock\n',
+                'native/README.md': b'Eigen pakket\n',
+                'LICENSE': b'Eigen licentie\n',
+                '.gitattributes': b'*.css text eol=lf\n',
+                'native/crates/office-webview/stijlbronnen.json': b'{"stijl":["src/office.css"],"benodigd":["src/stijl/merk.svg"]}\n',
+                'src/office.css': b'.office{height:100dvh}\n',
+                'src/stijl/merk.svg': b'<svg/>\n',
+            }
+            for naam, inhoud in bestanden.items():
+                pad = checkout/naam
+                pad.parent.mkdir(parents=True, exist_ok=True)
+                pad.write_bytes(inhoud)
+            shutil.copytree(checkout, verpakt)
+            self.assertEqual(controle.controleer_bronbytes(verpakt, checkout), len(bestanden))
+            stijl = verpakt/'src/office.css'
+            stijl.write_bytes(b'.office{height:90dvh}\n')
+            with self.assertRaisesRegex(AssertionError, 'Verpakte bron wijkt af'):
+                controle.controleer_bronbytes(verpakt, checkout)
+            stijl.unlink()
+            with self.assertRaisesRegex(AssertionError, 'Bestandslijst'):
+                controle.controleer_bronbytes(verpakt, checkout)
+
     def test_windows_checkout_behoudt_eigen_lf_en_oorspronkelijke_binaire_en_vendorbytes(self):
         with tempfile.TemporaryDirectory(prefix='office-regelafbreking-') as tijdelijk:
             repo = Path(tijdelijk)/'repo'
