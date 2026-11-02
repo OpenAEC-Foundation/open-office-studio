@@ -70,6 +70,7 @@ export default function OfficeEditor(props: EditorProps) {
   const engineTaal = useEngineVertaling();
   const { t } = useTranslation("shell");
   const docx = useRef<DocxEditorRef>(null);
+  (window as unknown as { __PROBE?: unknown }).__PROBE = docx; // TIJDELIJK-PROBE
   const exporteren = useRef(false);
   const [fontFaces, setFontFaces] = useState<PptxFontFace[]>([]);
   const [documentLettertypen, setDocumentLettertypen] = useState<readonly string[]>([]);
