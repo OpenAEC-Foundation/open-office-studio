@@ -91,6 +91,7 @@ export function OpdrachtKnop({
   icoon: LucideIcon;
   naam: string;
   groot?: boolean;
+  altijdLabel?: boolean;
 }) {
   const uitvoeren = useUitvoeren(opdracht);
   const { t } = useTranslation("shell");

@@ -49,6 +49,7 @@ export function WS<K extends DocxCommandId>({
   naam: string;
   icoon: LucideIcon;
   groot?: boolean;
+  altijdLabel?: boolean;
 }) {
   const opdracht = useHerhaalbaar(id, useDocxCommand(id, args), args);
   const toets = useProfielToets()(sneltoets);

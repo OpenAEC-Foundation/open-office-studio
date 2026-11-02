@@ -36,7 +36,7 @@ import {
   type GebondenOpdracht,
 } from "../Ribbon";
 
-export type Knop = { naam: string; icoon: LucideIcon; groot?: boolean };
+export type Knop = { naam: string; icoon: LucideIcon; groot?: boolean; altijdLabel?: boolean };
 export function W<K extends DocxCommandId>({
   id,
   args,

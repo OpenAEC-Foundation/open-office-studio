@@ -1,0 +1,144 @@
+{
+  "versie": "2026.45.5",
+  "datum": "2026-11-03",
+  "basis": "bdab16e39a1119fe3d37b8f29d222ffb82cb254c",
+  "sha256": "04fc2810e0f3c8a8d7b5e1f053bfd4a2961ba17d849420efc31eee45c0277dda",
+  "status": "lokale testversie; verdere optimalisatie en migratie nodig",
+  "wijzigingen": [
+    "Native beforeinput wordt vóór de terugvalroute van React verwerkt; compositie en niet-afgehandelde invoer blijven via de bestaande route lopen.",
+    "Canvaslettertypen worden eenmaal per opgave ingesteld; numerieke familienamen worden vooraf geciteerd.",
+    "Rij en kolom verwijderen houden ook in het compacte lint hun zichtbare labels (#131)."
+  ],
+  "controles": {
+    "automatisch": {
+      "bestanden": 134,
+      "tests": 1551,
+      "status": "geslaagd"
+    },
+    "module_opdrachten": {
+      "writer": 68,
+      "rekenblad": "geslaagd, inclusief opslaan en heropenen",
+      "presentatie": 10
+    },
+    "typescript_en_productiebouw": "geslaagd",
+    "native_linux_bouw": "geslaagd",
+    "weekversie": "geslaagd",
+    "webview_stijlbronnen": "74 letterbestanden en 14 stijl-/merkbronnen geslaagd",
+    "native_gui": {
+      "gereed": {
+        "pagina": [
+          {
+            "paraId": "body:p0",
+            "properties": {
+              "defaultTextFormatting": {
+                "fontFamily": {
+                  "ascii": "Caladea",
+                  "asciiTheme": "minorHAnsi",
+                  "cs": "",
+                  "csTheme": "minorBidi",
+                  "eastAsia": "ＭＳ 明朝",
+                  "eastAsiaTheme": "minorEastAsia",
+                  "hAnsi": "Caladea",
+                  "hAnsiTheme": "minorHAnsi"
+                },
+                "fontSize": 22,
+                "fontSizeCs": 22,
+                "language": {
+                  "bidi": "ar-SA",
+                  "eastAsia": "en-US",
+                  "latin": "en-US"
+                }
+              },
+              "hangingIndent": false,
+              "lineSpacing": 276,
+              "lineSpacingRule": "auto",
+              "spaceAfter": 200
+            },
+            "text": ""
+          }
+        ]
+      },
+      "typen": {
+        "tekens": 98,
+        "exact": true,
+        "totLaatsteKeydownMs": 15235.999999999996,
+        "inclusiefLaatsteVerwerkingMs": 15848
+      },
+      "directSelecterenEnVervangen": true,
+      "backspace": true,
+      "undo": {
+        "gewijzigd": true,
+        "tekst": " Een gewone zin om snel typen en selectie te testen. Een tweede zin met meer woorden en een einde. gereed",
+        "groepering": "Snelle vervanging en Backspace kunnen één undo-stap vormen."
+      },
+      "redo": true,
+      "enter": true,
+      "docxOnafhankelijkExact": true,
+      "fonts": {
+        "/fonts/NotoSansJP-Regular.otf": {
+          "bytes": 4533028,
+          "type": "application/font-sfnt"
+        },
+        "/fonts/Carlito-Regular.ttf": {
+          "bytes": 628032,
+          "type": "application/font-sfnt"
+        }
+      },
+      "meldingen": [],
+      "programmaSha256": "04fc2810e0f3c8a8d7b5e1f053bfd4a2961ba17d849420efc31eee45c0277dda",
+      "beperking": "Gerichte Linux/Xvfb/WebKit-proef; geen grote-plak-, IME-, Windows-, macOS- of volledige suitegoedkeuring.",
+      "heropenViaPubliekeEditorApi": {
+        "tekst": " Een gewone zin om snel typen en selectie te testen. Een tweede zin met meer woorden en een einde. geree\nTweede alinea.",
+        "pages": 1
+      }
+    },
+    "tabel_labels": {
+      "breed": [
+        {
+          "naam": "Rij verwijderen",
+          "tekst": "Rij verwijderen",
+          "zichtbaar": true
+        },
+        {
+          "naam": "Kolom verwijderen",
+          "tekst": "Kolom verwijderen",
+          "zichtbaar": true
+        }
+      ],
+      "smal": [
+        {
+          "naam": "Rij verwijderen",
+          "tekst": "Rij verwijderen",
+          "zichtbaar": true
+        },
+        {
+          "naam": "Kolom verwijderen",
+          "tekst": "Kolom verwijderen",
+          "zichtbaar": true
+        }
+      ],
+      "rijVerwijderen": true,
+      "kolomVerwijderen": true,
+      "opgeslagenRijen": 2,
+      "opgeslagenCellen": 4,
+      "fouten": []
+    }
+  },
+  "meetbeperkingen": [
+    "98 tekens in een nieuw document; geen grote praktijkbestanden.",
+    "Xvfb/WebKit gebruikt een geïsoleerd testscherm zonder hardwareversnelling; dit is geen meting op de geopende gebruikerssessie.",
+    "De eerdere 45.4-meting van circa 22,7 seconden en huidige 15,2 seconden zijn afzonderlijke rondes, geen algemene benchmark.",
+    "De eerste proef verwachtte één specifieke undo-groepering. Die verwachting is gecorrigeerd: snelle vervanging en Backspace kunnen samen één undo-stap vormen. Terugzetten en opnieuw uitvoeren zijn daarna daadwerkelijk gecontroleerd.",
+    "Heropenen via de publieke editor-API wacht op gereedheid van de nieuwe invoersessie; dit is geen systeemdialoogtest."
+  ],
+  "bekende_beperkingen": [
+    "Typen en selecteren zijn nog te traag; niet als opgelost goedgekeurd.",
+    "Grote rijke plakbewerkingen, fysieke IME en alle bestandsvarianten zijn niet volledig gecontroleerd.",
+    "Windows/macOS en de zeven losse edities zijn voor deze bron nog niet opnieuw gebouwd.",
+    "De volledige Rust-interface is nog niet gemigreerd.",
+    "Rekenbladissue #120 is alleen geïsoleerd tegen een nieuwere kern onderzocht; die kern is nog niet onderdeel van deze versie."
+  ],
+  "gebruikersdocumenten_overschreven": false,
+  "draaiende_gebruikersapp_gestopt": false,
+  "vorige_binary_behouden": true
+}

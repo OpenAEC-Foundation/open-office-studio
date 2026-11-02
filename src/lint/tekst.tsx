@@ -493,12 +493,14 @@ export function TekstRibbon({
                 args="deleteRow"
                 naam={t("writer.commands.deleteRow")}
                 icoon={Trash2}
+                altijdLabel
               />
               <W
                 id="tableAction"
                 args="deleteColumn"
                 naam={t("writer.commands.deleteColumn")}
                 icoon={Trash2}
+                altijdLabel
               />
             </div>
             <W
