@@ -18,7 +18,20 @@ fn id() -> String {
     uuid::Uuid::new_v4().to_string()
 }
 fn nu() -> String {
-    chrono::Utc::now().to_rfc3339_opts(chrono::SecondsFormat::Millis, true)
+    crate::klok::tijdstempel(&crate::klok::SysteemKlok)
+}
+/// De aanmaakdatum komt van dezelfde sessieklok als latere bewerkingen.
+pub(crate) fn nieuw(tijd: &str) -> Resultaat<Value> {
+    open(json!({
+        "formaat": "openaec-notities", "versie": 3,
+        "boeken": [{"id": "boek1", "naam": "Mijn notities", "secties": [{
+            "id": "sectie1", "naam": "Notities", "soort": "markdown", "paginas": [{
+                "id": "pagina1", "titel": "Nieuwe pagina", "bijgewerkt": tijd,
+                "vastgezet": false, "verwijderd": false, "vakken": [],
+                "markdown": "# Nieuwe pagina\n\nSchrijf hier je notities."
+            }]
+        }]}]
+    }))
 }
 #[derive(Debug, Clone)]
 pub struct Vak {
@@ -69,14 +82,14 @@ pub enum NotitieActie {
     Prullenbak(bool),
     Vastzetten(bool),
 }
-fn pagina() -> Value {
-    json!({"id":id(),"titel":"Nieuwe pagina","bijgewerkt":nu(),"vastgezet":false,"verwijderd":false,"vakken":[],"markdown":""})
+fn pagina(tijd: &str) -> Value {
+    json!({"id":id(),"titel":"Nieuwe pagina","bijgewerkt":tijd,"vastgezet":false,"verwijderd":false,"vakken":[],"markdown":""})
 }
-fn sectie(markdown: bool) -> Value {
-    json!({"id":id(),"naam":"Nieuwe sectie","soort":if markdown{"markdown"}else{"canvas"},"paginas":[pagina()]})
+fn sectie(markdown: bool, tijd: &str) -> Value {
+    json!({"id":id(),"naam":"Nieuwe sectie","soort":if markdown{"markdown"}else{"canvas"},"paginas":[pagina(tijd)]})
 }
-fn boek() -> Value {
-    json!({"id":id(),"naam":"Nieuw notitieboek","secties":[sectie(false)]})
+fn boek(tijd: &str) -> Value {
+    json!({"id":id(),"naam":"Nieuw notitieboek","secties":[sectie(false, tijd)]})
 }
 fn blok() -> Value {
     json!({"id":id(),"soort":"tekst","tekst":"","vet":false,"cursief":false,"klaar":false})
@@ -379,12 +392,17 @@ pub fn toon(d: &Value, deel: usize, beeld: &mut Weergave) -> Resultaat<()> {
     Ok(())
 }
 pub fn bewerk(d: &mut Value, deel: usize, actie: NotitieActie) -> Resultaat<()> {
-    bewerk_met_doel(d, deel, actie).map(|_| ())
+    bewerk_met_doel(d, deel, actie, &nu()).map(|_| ())
 }
-pub(crate) fn bewerk_met_doel(d: &mut Value, deel: usize, actie: NotitieActie) -> Resultaat<usize> {
+pub(crate) fn bewerk_met_doel(
+    d: &mut Value,
+    deel: usize,
+    actie: NotitieActie,
+    tijd: &str,
+) -> Resultaat<usize> {
     if let NotitieActie::Teksten(velden) = actie {
         for (id, inhoud) in velden {
-            tekst(d, deel, &id, &inhoud)?;
+            tekst_op(d, deel, &id, &inhoud, tijd)?;
         }
         return Ok(deel);
     }
@@ -396,7 +414,7 @@ pub(crate) fn bewerk_met_doel(d: &mut Value, deel: usize, actie: NotitieActie) -
             return Err(fout("Te veel notitieboeken"));
         }
         let nieuw = format!("/boeken/{}/secties/0/paginas/0", boeken.len());
-        boeken.push(boek());
+        boeken.push(boek(tijd));
         return doel(d, &nieuw);
     }
     let pad = pad(d, deel)?;
@@ -409,7 +427,7 @@ pub(crate) fn bewerk_met_doel(d: &mut Value, deel: usize, actie: NotitieActie) -
                 .and_then(Value::as_array_mut)
                 .ok_or_else(|| fout("Secties ontbreken"))?;
             let nieuw = format!("{boekpad}/secties/{}/paginas/0", secties.len());
-            secties.push(sectie(markdown));
+            secties.push(sectie(markdown, tijd));
             return doel(d, &nieuw);
         }
         NotitieActie::NieuwePagina => {
@@ -418,7 +436,7 @@ pub(crate) fn bewerk_met_doel(d: &mut Value, deel: usize, actie: NotitieActie) -
                 .and_then(Value::as_array_mut)
                 .ok_or_else(|| fout("Pagina's ontbreken"))?;
             let nieuw = format!("{sectiepad}/paginas/{}", lijst.len());
-            lijst.push(pagina());
+            lijst.push(pagina(tijd));
             return doel(d, &nieuw);
         }
         NotitieActie::KopieerSectie { markdown } => {
@@ -495,7 +513,7 @@ pub(crate) fn bewerk_met_doel(d: &mut Value, deel: usize, actie: NotitieActie) -
         NotitieActie::Vastzetten(v) => p["vastgezet"] = json!(v),
         _ => return Err(fout("Onbekende notitieopdracht")),
     }
-    p["bijgewerkt"] = json!(nu());
+    p["bijgewerkt"] = json!(tijd);
     Ok(deel)
 }
 fn doel(d: &Value, pad: &str) -> Resultaat<usize> {
@@ -505,6 +523,15 @@ fn doel(d: &Value, pad: &str) -> Resultaat<usize> {
         .ok_or_else(|| fout("De nieuwe notitiepagina ontbreekt"))
 }
 pub fn opmaak(d: &mut Value, deel: usize, id: &str, stijl: &Opmaak) -> Resultaat<()> {
+    opmaak_op(d, deel, id, stijl, &nu())
+}
+pub(crate) fn opmaak_op(
+    d: &mut Value,
+    deel: usize,
+    id: &str,
+    stijl: &Opmaak,
+    tijd: &str,
+) -> Resultaat<()> {
     let p = pad(d, deel)?;
     if !id.starts_with(&format!("{p}/vakken/"))
         || d.pointer(&p).is_some_and(|p| p["verwijderd"] == true)
@@ -522,10 +549,20 @@ pub fn opmaak(d: &mut Value, deel: usize, id: &str, stijl: &Opmaak) -> Resultaat
         Opmaak::Cursief(v) => b["cursief"] = json!(v),
         _ => return Err(fout("Deze blokopmaak wordt nog niet ondersteund")),
     }
+    d.pointer_mut(&p).unwrap()["bijgewerkt"] = json!(tijd);
     Ok(())
 }
 
 pub fn tekst(d: &mut Value, deel: usize, id: &str, tekst: &str) -> Resultaat<()> {
+    tekst_op(d, deel, id, tekst, &nu())
+}
+pub(crate) fn tekst_op(
+    d: &mut Value,
+    deel: usize,
+    id: &str,
+    tekst: &str,
+    tijd: &str,
+) -> Resultaat<()> {
     if tekst.len() > 500_000 {
         return Err(fout("Notitietekst te lang"));
     }
@@ -547,6 +584,6 @@ pub fn tekst(d: &mut Value, deel: usize, id: &str, tekst: &str) -> Resultaat<()>
         return Err(fout("Geen tekstveld"));
     }
     *veld = json!(tekst);
-    d.pointer_mut(&p).unwrap()["bijgewerkt"] = json!(nu());
+    d.pointer_mut(&p).unwrap()["bijgewerkt"] = json!(tijd);
     Ok(())
 }

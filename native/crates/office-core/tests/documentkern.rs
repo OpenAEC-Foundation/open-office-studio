@@ -21,3 +21,5 @@ mod writer_structuur;
 mod writer_velden;
 mod writer_weergave;
 mod writer_zoeken;
+
+mod notitie_klok;

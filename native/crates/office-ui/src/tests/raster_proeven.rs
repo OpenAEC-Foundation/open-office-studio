@@ -4822,7 +4822,7 @@ fn writer_zoekpaneel_late_sluitfocus_laat_een_later_lettertypeveld_werken() {
 #[test]
 fn raster_beginfocus_nieuw_document_ontvangt_toetsen_zonder_celklik() {
     use iced::keyboard::{Key, Modifiers, key::Named};
-    let mut p = Proef::met_app(App::default());
+    let mut p = Proef::met_app(crate::tests::testapp());
     p.bericht(Msg::Nieuw(Module::Spreadsheet));
     let bron = p.bron();
     p.named(Named::ArrowRight);
@@ -4843,7 +4843,7 @@ fn raster_beginfocus_nieuw_document_ontvangt_toetsen_zonder_celklik() {
 #[test]
 fn raster_beginfocus_geopend_document_ontvangt_toetsen_zonder_celklik() {
     use iced::keyboard::{Key, Modifiers, key::Named};
-    let mut p = Proef::met_app(App::default());
+    let mut p = Proef::met_app(crate::tests::testapp());
     let bytes = include_bytes!("../../../office-core/tests/fixtures/spreadsheet.xlsx").to_vec();
     p.bericht(Msg::Gelezen(
         1,
@@ -4926,7 +4926,7 @@ fn raster_beginfocus_lange_rijkop_past_op_een_regel_en_celklik_blijft_juist() {
 #[test]
 fn raster_beginfocus_late_eerste_focus_laat_later_lettertypeveld_werken() {
     use iced::keyboard::{Key, Modifiers};
-    let mut p = Proef::met_app(App::default());
+    let mut p = Proef::met_app(crate::tests::testapp());
     let bytes = include_bytes!("../../../office-core/tests/fixtures/spreadsheet.xlsx");
     let antwoord = iced::futures::executor::block_on(
         p.app

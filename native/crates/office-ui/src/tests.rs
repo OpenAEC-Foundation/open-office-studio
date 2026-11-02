@@ -254,9 +254,9 @@ pub(super) fn app_met_document(module: Module, bytes: &[u8]) -> App {
     }
     let mut app = App {
         thema: ThemeId::Light,
-        ..App::default()
+        ..crate::tests::testapp()
     };
-    let sessie = Sessie::open(module, bytes.to_vec()).unwrap();
+    let sessie = Sessie::open_met_klok(module, bytes.to_vec(), testklok()).unwrap();
     let mut tab = Tab::nieuw(1, format!("Voorbeeld.{}", module.extensie()));
     tab.bezig = false;
     let mut beeld = sessie.weergave(0).unwrap();
@@ -323,7 +323,15 @@ fn voer_taak_uit(app: &mut App, taak: Task<Msg>) {
     }
 }
 pub(super) fn app_met_werkdraad(module: Module, bytes: &[u8]) -> App {
-    let mut app = App::default();
+    app_met_klok(module, bytes, testklok())
+}
+fn app_met_klok(
+    module: Module,
+    bytes: &[u8],
+    klok: std::sync::Arc<dyn office_core::klok::Klok>,
+) -> App {
+    let mut app = App::met_werker(Werker::met_klok(klok));
+    app.dagzone = office_core::klok::Dagzone::Utc;
     let antwoord = iced::futures::executor::block_on(
         app.werker
             .clone()
@@ -461,7 +469,9 @@ fn concept_wordt_niet_stil_weggegooid_bij_selectie_of_sluiten() {
 fn mislukt_opslaan_markeert_geen_document_als_opgeslagen() {
     let mut app = app_met_document(
         Module::Notition,
-        &Sessie::nieuw(Module::Notition).unwrap().bron(),
+        &Sessie::nieuw_met_klok(Module::Notition, testklok())
+            .unwrap()
+            .bron(),
     );
     let _ = app.update(Msg::Geschreven(
         1,
@@ -475,7 +485,9 @@ fn mislukt_opslaan_markeert_geen_document_als_opgeslagen() {
 fn wijziging_tijdens_opslaan_blijft_onopgeslagen() {
     let mut app = app_met_document(
         Module::Notition,
-        &Sessie::nieuw(Module::Notition).unwrap().bron(),
+        &Sessie::nieuw_met_klok(Module::Notition, testklok())
+            .unwrap()
+            .bron(),
     );
     app.tab_mut().unwrap().concept = true;
     let oude_hash = opslag::hash(&app.tab().unwrap().antwoord.as_ref().unwrap().bron);
@@ -490,7 +502,9 @@ fn wijziging_tijdens_opslaan_blijft_onopgeslagen() {
 fn modale_sluitvraag_blokkeert_sneltoetsen_en_achterliggende_acties() {
     let mut app = app_met_document(
         Module::Notition,
-        &Sessie::nieuw(Module::Notition).unwrap().bron(),
+        &Sessie::nieuw_met_klok(Module::Notition, testklok())
+            .unwrap()
+            .bron(),
     );
     let _ = app.update(Msg::Sluit(0));
     let _ = app.update(Msg::Nieuw(Module::Writer));
@@ -648,7 +662,7 @@ fn native_schermen_renderen() {
     }
     let mut home = App {
         thema: ThemeId::Light,
-        ..App::default()
+        ..crate::tests::testapp()
     };
     let png = render(&home);
     if let Some(map) = &uitvoer {
@@ -726,7 +740,9 @@ fn alineaopdracht_weigert_concept_selectie_en_alleen_lezen() {
 fn venster_sluiten_vanuit_instellingen_toont_een_bereikbare_sluitvraag() {
     let mut app = app_met_document(
         Module::Notition,
-        &Sessie::nieuw(Module::Notition).unwrap().bron(),
+        &Sessie::nieuw_met_klok(Module::Notition, testklok())
+            .unwrap()
+            .bron(),
     );
     app.instellingen = true;
     let _ = app.update(Msg::SluitVenster);
@@ -739,7 +755,7 @@ fn venster_sluiten_vanuit_instellingen_toont_een_bereikbare_sluitvraag() {
 
 #[test]
 fn mislukte_eerste_weergave_ruimt_de_achtergrondsessie_op() {
-    let mut app = App::default();
+    let mut app = crate::tests::testapp();
     let voer = |w: Werker, o| iced::futures::executor::block_on(w.voer_uit(1, o));
     assert!(voer(app.werker.clone(), Opdracht::Nieuw(Module::Notition)).is_ok());
     app.tabs.push(Tab::nieuw(1, "Onleesbaar document".into()));
@@ -758,7 +774,7 @@ fn native_postvak_en_accountformulier_renderen_met_sluitbeveiliging() {
         postvak: mail_ui::testvoorbeeld(),
         postvak_zichtbaar: true,
         thema: ThemeId::Light,
-        ..App::default()
+        ..crate::tests::testapp()
     };
     for naam in ["email-postvak", "email-account", "email-sluiten"] {
         if naam == "email-account" {
@@ -794,7 +810,7 @@ fn mail_sluitvraag_verliest_geen_antwoord_van_de_documentwerkdraad() {
     let mut app = App {
         postvak: mail_ui::testvoorbeeld(),
         postvak_zichtbaar: true,
-        ..App::default()
+        ..crate::tests::testapp()
     };
     app.tabs.push(Tab::nieuw(1, "Voorbeeld.docx".into()));
     let _ = app.update(Msg::Mail(mail_ui::BerichtUi::Wijzig));
@@ -819,7 +835,7 @@ fn mail_sluitvraag_verliest_geen_antwoord_van_de_documentwerkdraad() {
 fn document_sneltoetsen_veranderen_geen_verborgen_editor_in_het_postvak() {
     let mut app = App {
         postvak_zichtbaar: true,
-        ..App::default()
+        ..crate::tests::testapp()
     };
     let mut tab = Tab::nieuw(1, "Voorbeeld.docx".into());
     tab.bezig = false;
@@ -1076,7 +1092,7 @@ fn symbool_in_bediening_gebruikt_het_gepinde_font_bij_ieder_lintgewicht() {
 #[test]
 fn writer_beveiliging_blijft_zichtbaar_en_weigert_interfaceopdrachten() {
     let bytes = include_bytes!("../../office-core/tests/fixtures/writer-beveiligd.docx");
-    let mut app = App::default();
+    let mut app = crate::tests::testapp();
     voer_interface_uit(
         &mut app,
         Msg::Gelezen(
@@ -2291,4 +2307,188 @@ fn opslaan_tijdens_schrijven_en_undo_verwerkt_beide_antwoordvolgordes() {
         assert!(app.tab().unwrap().na_bewerking.is_none());
         assert!(!app.tab().unwrap().schrijft);
     }
+}
+
+pub(super) fn testklok() -> std::sync::Arc<dyn office_core::klok::Klok> {
+    std::sync::Arc::new(office_core::klok::VasteKlok::parseer("2026-11-02T12:00:00.123Z").unwrap())
+}
+pub(super) fn testapp() -> App {
+    let mut app = App::met_werker(Werker::met_klok(testklok()));
+    app.dagzone = office_core::klok::Dagzone::Utc;
+    app
+}
+
+#[test]
+fn notitieklok_werkdraden_bewaren_hun_eigen_datum_en_veranderen_geen_ander_document() {
+    let bytes = include_bytes!("../../../../docs/voorbeelden/Notitieboek.json");
+    let tijden = ["2030-01-01T12:00:00Z", "2040-12-31T12:00:00Z"];
+    let mut apps = tijden.map(|tijd| {
+        app_met_klok(
+            Module::Notition,
+            bytes,
+            std::sync::Arc::new(office_core::klok::VasteKlok::parseer(tijd).unwrap()),
+        )
+    });
+    for app in &mut apps {
+        voer_interface_uit(
+            app,
+            Msg::Notitie(office_core::notities::NotitieActie::Vastzetten(true)),
+        );
+    }
+    for (app, tijd) in apps.iter().zip(tijden) {
+        let antwoord = app.tab().unwrap().antwoord.as_ref().unwrap();
+        assert_eq!(
+            antwoord.beeld.notitie.as_ref().unwrap().bijgewerkt,
+            format!("{}.000Z", tijd.trim_end_matches('Z'))
+        );
+        assert!(toegankelijkheid(app).unnamed.is_empty());
+    }
+    let andere = apps[1]
+        .tab()
+        .unwrap()
+        .antwoord
+        .as_ref()
+        .unwrap()
+        .bron
+        .clone();
+    voer_interface_uit(&mut apps[0], Msg::Terug);
+    assert_eq!(
+        apps[0]
+            .tab()
+            .unwrap()
+            .antwoord
+            .as_ref()
+            .unwrap()
+            .bron
+            .as_slice(),
+        bytes
+    );
+    assert_eq!(
+        apps[1].tab().unwrap().antwoord.as_ref().unwrap().bron,
+        andere
+    );
+}
+#[test]
+fn notitieklok_gelijke_momenten_renderen_bytegelijk_en_lezen_wijzigt_de_bron_niet() {
+    let bytes = include_bytes!("../../../../docs/voorbeelden/Notitieboek.json");
+    let tijden = ["2030-02-28T23:30:00Z", "2030-03-01T01:30:00+02:00"];
+    let mut apps = tijden.map(|tijd| {
+        app_met_klok(
+            Module::Notition,
+            bytes,
+            std::sync::Arc::new(office_core::klok::VasteKlok::parseer(tijd).unwrap()),
+        )
+    });
+    for app in &mut apps {
+        app.thema = ThemeId::Light;
+        voer_interface_uit(
+            app,
+            Msg::Notitie(office_core::notities::NotitieActie::Vastzetten(true)),
+        );
+    }
+    let bron = apps[0]
+        .tab()
+        .unwrap()
+        .antwoord
+        .as_ref()
+        .unwrap()
+        .bron
+        .clone();
+    assert_eq!(bron, apps[1].tab().unwrap().antwoord.as_ref().unwrap().bron);
+    let a = render(&apps[0]);
+    let b = render(&apps[1]);
+    assert_eq!(a.data(), b.data());
+    assert_eq!(render(&apps[0]).data(), a.data());
+    apps[0].dagzone = office_core::klok::Dagzone::vast(7200).unwrap();
+    assert_ne!(render(&apps[0]).data(), a.data());
+    apps[0].dagzone = office_core::klok::Dagzone::Utc;
+    assert_eq!(render(&apps[0]).data(), a.data());
+    assert_eq!(apps[0].tab().unwrap().antwoord.as_ref().unwrap().bron, bron);
+}
+
+fn sluittoets(modifiers: iced::keyboard::Modifiers) -> Msg {
+    Msg::Toets(openaec_ui::keyboard::KeyPress {
+        key: iced::keyboard::Key::Character("w".into()),
+        modifiers,
+    })
+}
+#[test]
+fn sluitsneltoets_sluit_alleen_het_opgeslagen_actieve_document() {
+    for module in Module::ALLE {
+        let bron = Sessie::nieuw_met_klok(module, testklok()).unwrap().bron();
+        let mut app = app_met_document(module, &bron);
+        let t = app.tab_mut().unwrap();
+        t.opgeslagen = Some(t.antwoord.as_ref().unwrap().hash.clone());
+        assert!(!t.gewijzigd());
+        let actief = app.tabs.remove(0);
+        app.tabs = vec![
+            Tab::nieuw(77, "Ander document".into()),
+            Tab::nieuw(78, "Derde document".into()),
+            actief,
+        ];
+        app.actief = 2;
+        voer_interface_uit(&mut app, sluittoets(iced::keyboard::Modifiers::COMMAND));
+        assert_eq!(
+            app.tabs.iter().map(|t| t.id).collect::<Vec<_>>(),
+            vec![77, 78],
+            "{module:?}"
+        );
+        assert!(app.sluiten.is_none() && !app.venster_sluiten);
+    }
+    let mut leeg = testapp();
+    voer_interface_uit(&mut leeg, sluittoets(iced::keyboard::Modifiers::COMMAND));
+    assert!(leeg.tabs.is_empty() && !leeg.venster_sluiten);
+}
+#[test]
+fn sluitsneltoets_bewaart_concept_en_annuleren_behoudt_de_bron() {
+    let bron = Sessie::nieuw_met_klok(Module::Notition, testklok())
+        .unwrap()
+        .bron();
+    let mut app = app_met_document(Module::Notition, &bron);
+    let t = app.tab_mut().unwrap();
+    t.opgeslagen = Some(t.antwoord.as_ref().unwrap().hash.clone());
+    t.editor = text_editor::Content::with_text("Nog niet toegepaste notitie café 🏠");
+    t.concept = true;
+    voer_interface_uit(&mut app, sluittoets(iced::keyboard::Modifiers::COMMAND));
+    assert_eq!(app.sluiten, Some(1));
+    assert_eq!(app.tabs.len(), 1);
+    assert_eq!(
+        app.tab().unwrap().editor.text(),
+        "Nog niet toegepaste notitie café 🏠"
+    );
+    assert_eq!(app.tab().unwrap().antwoord.as_ref().unwrap().bron, bron);
+    voer_interface_uit(&mut app, Msg::Annuleer);
+    assert!(app.sluiten.is_none() && app.tab().unwrap().concept);
+    assert_eq!(
+        app.tab().unwrap().editor.text(),
+        "Nog niet toegepaste notitie café 🏠"
+    );
+    assert_eq!(app.tab().unwrap().antwoord.as_ref().unwrap().bron, bron);
+}
+#[test]
+fn sluitsneltoets_negeert_extra_modifiers_en_verborgen_documenten() {
+    use iced::keyboard::Modifiers as M;
+    let bron = Sessie::nieuw_met_klok(Module::Notition, testklok())
+        .unwrap()
+        .bron();
+    let mut app = app_met_document(Module::Notition, &bron);
+    let t = app.tab_mut().unwrap();
+    t.opgeslagen = Some(t.antwoord.as_ref().unwrap().hash.clone());
+    for modifier in [M::COMMAND | M::ALT, M::COMMAND | M::SHIFT] {
+        voer_interface_uit(&mut app, sluittoets(modifier));
+        assert_eq!(app.tabs.len(), 1);
+        assert!(app.sluiten.is_none());
+    }
+    app.instellingen = true;
+    voer_interface_uit(&mut app, sluittoets(M::COMMAND));
+    assert!(app.instellingen && app.sluiten.is_none() && app.tabs.len() == 1);
+    app.instellingen = false;
+    app.postvak_zichtbaar = true;
+    voer_interface_uit(&mut app, sluittoets(M::COMMAND));
+    assert!(app.postvak_zichtbaar && app.sluiten.is_none() && app.tabs.len() == 1);
+    app.postvak_zichtbaar = false;
+    app.sluiten = Some(1);
+    voer_interface_uit(&mut app, sluittoets(M::COMMAND));
+    assert_eq!(app.sluiten, Some(1));
+    assert_eq!(app.tabs.len(), 1);
 }

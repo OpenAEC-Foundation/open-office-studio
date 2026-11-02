@@ -3,7 +3,7 @@
 De migratie verplaatst ook de volledige interface naar Rust. Deze afzonderlijke
 preview gebruikt Iced en de gepinde native OpenAEC Blueprint-bibliotheek. Het
 uitvoerbare bestand start zonder React, JavaScript, Tauri of een webview.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.44.9-alpha.42**; de volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De huidige bouwstap is **2026.45.0-alpha.43**; de volledige migratie is nog open.
 
 [migratie.json](docs/migratie.json) legt de open acceptatiegebieden vast. Een stabiele native vrijgave is pas toegestaan als functies, controles en uiterlijk aantoonbaar gelijk zijn.
 
@@ -309,7 +309,9 @@ bewerking van tekst, cellen en dia’s blijft bij de documentengines.
 
 ## Controles
 
-Alpha42 verbindt echte diavoorbeelden, een lichte presentatie-werkruimte en een afzonderlijke notitie-editor. De volledige lokale hertest slaagt met 418 reguliere Rust-proeven (172 UI), zes afzonderlijke runtimeproeven en zeven Python-tests op 729 bytegelijke bronbestanden. De echte Linux-debugvensterhertest behoudt het paneel bij navigatie en bewaart snelle undo/opslaan bronexact. De eerste afkeuringen blijven vastgelegd in [de controle](docs/controle-2026-11-01-alpha42.md). Alle acht oorspronkelijke UI-vergelijkingen blijven afgekeurd; platform- en geoptimaliseerde releasevenstercontrole van alpha42 zijn nog open.
+Alpha43 verbindt een klok per notitiesessie, werkelijke aanmaakdatums en een lokale kalenderdag, met vaste tijd/UTC voor widgetproeven. Ctrl+W gebruikt dezelfde sluitbeveiliging als de tabknop. De [volledige lokale ronde](docs/controle-2026-11-02-alpha43.md) slaagt met 430 reguliere Rust-proeven (177 UI), zes afzonderlijke runtimeproeven en zeven Python-tests op 731 bytegelijke bronbestanden. De echte Linux-debugvensterhertest behoudt concepttekst en de opgeslagen bron. Alle oorspronkelijke UI-vergelijkingen blijven afgekeurd; alpha43-platform- en geoptimaliseerde releasevenstercontrole zijn nog open.
+
+Alpha42 verbindt echte diavoorbeelden, een lichte presentatie-werkruimte en een afzonderlijke notitie-editor. De volledige lokale hertest slaagt met 418 reguliere Rust-proeven (172 UI), zes afzonderlijke runtimeproeven en zeven Python-tests op 729 bytegelijke bronbestanden. De echte Linux-debugvensterhertest behoudt het paneel bij navigatie en bewaart snelle undo/opslaan bronexact. De eerste afkeuringen blijven vastgelegd in [de controle](docs/controle-2026-11-01-alpha42.md). Alle vijf alpha42-CI-taken slagen: 122 native beeldparen, 4725 bronbestanden per pakket en 21 paginabezoeken zijn exact. De echte geoptimaliseerde Linux-vensterproef slaagt op zeventien gerichte stappen. Alle acht oorspronkelijke UI-vergelijkingen blijven afgekeurd; fysieke Windows/macOS-vensters, volledige functie- en installatiepariteit blijven open.
 
 Het [afgesloten rapport voor alpha 41](docs/controle-2026-11-01-alpha41.md) bevat 408 geslaagde reguliere Linux-proeven, zes runtimeproeven en zeven Python-tests. Alle vijf CI-taken slagen: 120 native beeldparen zijn exact, drie pakketten bevatten elk 4439 bytegelijke bronbestanden en alle 21 paginabezoeken zijn exact. De geoptimaliseerde Linux-vensterproef omvat 28 afgebakende notitiestappen. De oorspronkelijke trage debugbeelden en alle acht oorspronkelijke UI-afkeuringen blijven behouden; Windows en macOS zijn uitsluitend in CI gecontroleerd.
 

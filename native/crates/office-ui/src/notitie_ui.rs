@@ -485,7 +485,7 @@ pub fn weergave<'a>(app: &'a App, t: &'a Tab, a: &'a Antwoord) -> Element<'a, Ms
         container(
             iced::widget::text(format!(
                 "{}  ·  {} woorden",
-                super::notitie_navigatie_ui::datum(&p.bijgewerkt),
+                super::notitie_navigatie_ui::datum(app.dagzone, &p.bijgewerkt),
                 woorden
             ))
             .font(fonts::BODY)

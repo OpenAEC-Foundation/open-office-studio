@@ -223,11 +223,14 @@ impl Document {
         })
     }
     pub fn nieuw(module: Module) -> Resultaat<Self> {
+        Self::nieuw_met_klok(module, &crate::klok::SysteemKlok)
+    }
+    pub fn nieuw_met_klok(module: Module, klok: &dyn crate::klok::Klok) -> Resultaat<Self> {
         match module {
             Module::Writer=>Self::open(module,include_bytes!("../../../../public/templates/nieuw.docx")),
             Module::Spreadsheet=>Self::open(module,include_bytes!("../../../../public/templates/nieuw.xlsx")),
             Module::Presentation=>Self::open(module,include_bytes!("../../../../public/templates/nieuw.pptx")),
-            Module::Notition=>Self::open(module,br##"{"formaat":"openaec-notities","versie":3,"boeken":[{"id":"boek1","naam":"Mijn notities","secties":[{"id":"sectie1","naam":"Notities","soort":"markdown","paginas":[{"id":"pagina1","titel":"Nieuwe pagina","bijgewerkt":"2026-10-30T00:00:00Z","vastgezet":false,"verwijderd":false,"vakken":[],"markdown":"# Nieuwe pagina\n\nSchrijf hier je notities."}]}]}]}"##),
+            Module::Notition => Ok(Self::Notition(crate::notities::nieuw(&crate::klok::tijdstempel(klok))?)),
             Module::Email=>Self::open(module,b"From: OpenAEC <voorbeeld@example.invalid>\r\nTo: lokaal@example.invalid\r\nSubject: Lokaal voorbeeld\r\nMIME-Version: 1.0\r\nContent-Type: text/plain; charset=utf-8\r\n\r\nBewaar complete e-mailbronnen, inclusief bijlagen.\r\n"),
         }
     }
@@ -269,6 +272,14 @@ impl Document {
         }
     }
     pub fn bewerk(&mut self, deel: usize, bewerking: Bewerking) -> Resultaat<()> {
+        let tijd = if matches!(self, Self::Notition(_)) {
+            crate::klok::tijdstempel(&crate::klok::SysteemKlok)
+        } else {
+            String::new()
+        };
+        self.bewerk_op(deel, bewerking, &tijd)
+    }
+    fn bewerk_op(&mut self, deel: usize, bewerking: Bewerking, tijd: &str) -> Resultaat<()> {
         match &*self {
             Self::Writer(d) => d.controleer_bewerking()?,
             Self::Spreadsheet(d) => {
@@ -362,13 +373,13 @@ impl Document {
                     .map_err(fout)?;
             }
             (Self::Notition(d), Bewerking::Notitie(actie)) => {
-                crate::notities::bewerk(d, deel, actie)?
+                crate::notities::bewerk_met_doel(d, deel, actie, tijd)?;
             }
             (Self::Notition(d), Bewerking::Opmaak { id, stijl, .. }) => {
-                crate::notities::opmaak(d, deel, &id, &stijl)?
+                crate::notities::opmaak_op(d, deel, &id, &stijl, tijd)?
             }
             (Self::Notition(d), Bewerking::Tekst { id, tekst }) => {
-                crate::notities::tekst(d, deel, &id, &tekst)?
+                crate::notities::tekst_op(d, deel, &id, &tekst, tijd)?
             }
             _ => return Err(fout("Deze bewerking is niet beschikbaar")),
         }
@@ -601,6 +612,7 @@ impl Document {
 pub struct Sessie {
     pub module: Module,
     layout_eigenaar: u64,
+    klok: std::sync::Arc<dyn crate::klok::Klok>,
     document: Document,
     bron: std::sync::Arc<Vec<u8>>,
     bron_hash: String,
@@ -618,7 +630,15 @@ impl Drop for Sessie {
 }
 impl Sessie {
     pub fn open(module: Module, bytes: Vec<u8>) -> Resultaat<Self> {
+        Self::open_met_klok(module, bytes, std::sync::Arc::new(crate::klok::SysteemKlok))
+    }
+    pub fn open_met_klok(
+        module: Module,
+        bytes: Vec<u8>,
+        klok: std::sync::Arc<dyn crate::klok::Klok>,
+    ) -> Resultaat<Self> {
         Ok(Self {
+            klok,
             document: Document::open(module, &bytes)?,
             module,
             layout_eigenaar: VOLGENDE_LAYOUT.fetch_add(1, std::sync::atomic::Ordering::Relaxed),
@@ -632,8 +652,14 @@ impl Sessie {
         })
     }
     pub fn nieuw(module: Module) -> Resultaat<Self> {
-        let d = Document::nieuw(module)?;
-        Self::open(module, d.bytes()?)
+        Self::nieuw_met_klok(module, std::sync::Arc::new(crate::klok::SysteemKlok))
+    }
+    pub fn nieuw_met_klok(
+        module: Module,
+        klok: std::sync::Arc<dyn crate::klok::Klok>,
+    ) -> Resultaat<Self> {
+        let d = Document::nieuw_met_klok(module, klok.as_ref())?;
+        Self::open_met_klok(module, d.bytes()?, klok)
     }
     pub fn bron(&self) -> std::sync::Arc<Vec<u8>> {
         self.bron.clone()
@@ -1030,6 +1056,11 @@ impl Sessie {
         bewerking: Bewerking,
         groep: Option<(u64, String)>,
     ) -> Resultaat<Weergave> {
+        let tijd = if self.module == Module::Notition {
+            crate::klok::tijdstempel(self.klok.as_ref())
+        } else {
+            String::new()
+        };
         if let Bewerking::Notitie(actie) = bewerking {
             return self
                 .bewerk_transactie_met_doel(
@@ -1038,7 +1069,7 @@ impl Sessie {
                         let Document::Notition(d) = document else {
                             return Err(fout("Een notitieopdracht hoort bij Notition"));
                         };
-                        crate::notities::bewerk_met_doel(d, deel, actie)
+                        crate::notities::bewerk_met_doel(d, deel, actie, &tijd)
                     },
                     |doel| *doel,
                 )
@@ -1049,7 +1080,7 @@ impl Sessie {
             crate::writer_pagina::controleer_bron(&self.bron)?;
         }
         self.bewerk_transactie(deel, groep, move |document| {
-            document.bewerk(deel, bewerking)
+            document.bewerk_op(deel, bewerking, &tijd)
         })
         .map(|(beeld, ())| beeld)
     }

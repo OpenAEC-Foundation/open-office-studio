@@ -93,6 +93,9 @@ pub struct Werker {
 }
 impl Werker {
     pub fn start() -> Self {
+        Self::met_klok(Arc::new(office_core::klok::SysteemKlok))
+    }
+    pub fn met_klok(klok: Arc<dyn office_core::klok::Klok>) -> Self {
         let (zender, ontvanger) = mpsc::channel::<Werk>();
         std::thread::Builder::new()
             .name("office-documenten".into())
@@ -125,13 +128,13 @@ impl Werker {
                             Opdracht::Nieuw(m) => {
                                 sessies.insert(
                                     taak.id,
-                                    (Sessie::nieuw(*m).map_err(|e| e.to_string())?, 0),
+                                    (Sessie::nieuw_met_klok(*m, klok.clone()).map_err(|e| e.to_string())?, 0),
                                 );
                             }
                             Opdracht::Open(m, b) => {
                                 sessies.insert(
                                     taak.id,
-                                    (Sessie::open(*m, b.clone()).map_err(|e| e.to_string())?, 0),
+                                    (Sessie::open_met_klok(*m, b.clone(), klok.clone()).map_err(|e| e.to_string())?, 0),
                                 );
                             }
                             Opdracht::Sluit => {

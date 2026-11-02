@@ -3,6 +3,7 @@ pub mod celtekst;
 pub mod document;
 pub mod ifcx;
 pub mod interactie;
+pub mod klok;
 pub mod lettertypen;
 pub mod notities;
 pub mod opmaak;

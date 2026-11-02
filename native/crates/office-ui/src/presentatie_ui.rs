@@ -421,7 +421,7 @@ mod tests {
         assert!(s.volgende(1, "eerste", 100).is_none());
         let nieuw = s.volgende(1, "tweede", 100).unwrap();
         assert_ne!(d, nieuw);
-        let mut app = App::default();
+        let mut app = crate::tests::testapp();
         let mut tab = Tab::nieuw(1, "Test.pptx".into());
         tab.presentatie = s;
         app.tabs.push(tab);

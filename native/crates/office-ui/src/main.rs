@@ -361,6 +361,7 @@ enum LintSoort {
     Weergave,
 }
 struct App {
+    dagzone: office_core::klok::Dagzone,
     invoergeneratie: invoerfocus::Generatie,
     zoeken: Option<zoeken_ui::Zoekpaneel>,
     exportblad: Option<export_ui::Exportblad>,
@@ -383,10 +384,16 @@ struct App {
 }
 impl Default for App {
     fn default() -> Self {
+        Self::met_werker(Werker::start())
+    }
+}
+impl App {
+    fn met_werker(werker: Werker) -> Self {
         office_conversie::taal::zet("nl");
         let pad = display::settings_path("open-office-studio-native");
         let display = pad.as_ref().map(|p| Display::load(p)).unwrap_or_default();
         Self {
+            dagzone: office_core::klok::Dagzone::Systeem,
             invoergeneratie: Default::default(),
             zoeken: None,
             exportblad: None,
@@ -396,7 +403,7 @@ impl Default for App {
             tabs: vec![],
             actief: 0,
             volgend: 1,
-            werker: Werker::start(),
+            werker,
             thema: display.theme,
             display,
             bestand: false,
@@ -1828,6 +1835,10 @@ impl App {
                         "h" => Some(Msg::Zoeken(zoeken_ui::Bericht::Open(true))),
                         "o" => Some(Msg::Open),
                         "n" => Some(Msg::Nieuw(Module::Writer)),
+                        // Gebruik dezelfde sluitbeveiliging als de tabknop.
+                        "w" if !k.modifiers.shift() && !k.modifiers.alt() => {
+                            self.tab().map(|_| Msg::Sluit(self.actief))
+                        }
                         "s" => self.tab().map(|t| Msg::Opslaan(t.id, k.modifiers.shift())),
                         "z" => Some(if k.modifiers.shift() {
                             Msg::Vooruit

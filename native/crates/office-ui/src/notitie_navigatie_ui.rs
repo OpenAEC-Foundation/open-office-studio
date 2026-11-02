@@ -17,19 +17,15 @@ impl std::fmt::Display for BoekKeuze {
 fn label<'a>(s: impl Into<String>, maat: f32, kleur: iced::Color) -> iced::widget::Text<'a> {
     text(s.into()).font(fonts::BODY).size(maat).color(kleur)
 }
-pub fn datum(tekst: &str) -> String {
-    let delen: Vec<_> = tekst.split(['-', 'T']).take(3).collect();
-    if delen.len() != 3 {
+pub fn datum(zone: office_core::klok::Dagzone, tekst: &str) -> String {
+    let Some((_, maand, dag)) = zone.kalenderdag(tekst) else {
         return tekst.into();
-    }
+    };
     let maanden = [
         "jan.", "feb.", "mrt.", "apr.", "mei", "jun.", "jul.", "aug.", "sep.", "okt.", "nov.",
         "dec.",
     ];
-    match (delen[2].parse::<u32>(), delen[1].parse::<usize>()) {
-        (Ok(dag @ 1..=31), Ok(maand @ 1..=12)) => format!("{dag} {}", maanden[maand - 1]),
-        _ => tekst.into(),
-    }
+    format!("{dag} {}", maanden[maand as usize - 1])
 }
 pub fn kolommen<'a>(
     app: &'a App,
@@ -225,7 +221,7 @@ pub fn kolommen<'a>(
             )
             .height(36),
             label(
-                datum(&pagina.bijgewerkt),
+                datum(app.dagzone, &pagina.bijgewerkt),
                 9.,
                 iced::Color::from_rgb8(120, 113, 108)
             )
