@@ -200,19 +200,9 @@ export default function OfficeEditor(props: EditorProps) {
         return werkEigenschappenBij(herladen.api, ref, new Uint8Array(bytes), true);
       });
     });
-    // Browser: één onzichtbare proef-opslag laadt de WASM die de engine pas bij
-    // opslaan ophaalt, zodat opslaan ook na een nieuwe uitrol blijft werken.
-    let proef = 0;
-    if (!("__TAURI_INTERNALS__" in window))
-      proef = window.setTimeout(() => {
-        if (interneOpslag.bezig() || !docx.current?.getDocument()) return;
-        void interneOpslag.voerUit(async () => docx.current?.save())
-          .catch(() => {
-            // Alleen een voorbereiding; echte fouten verschijnen bij opslaan.
-          });
-      }, 2500);
+    // Geen proef-opslag tijdens het openen: die concurreert met de eerste
+    // bewerking om de worker. Opslaan gebeurt op verzoek of voor herstel.
     return () => {
-      window.clearTimeout(proef);
       props.registreer(null);
     };
   }, [documentGereed]);

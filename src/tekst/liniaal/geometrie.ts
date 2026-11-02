@@ -65,7 +65,7 @@ export interface PaginaBeeld {
 }
 
 /** Celverhaal `<ouder>:t<n>:r<r>c<k>`. */
-const CEL = /^(.*):t(\d+):r(\d+)c(\d+)$/;
+const CEL = /^(.*):t(\d+):r(\d+)c(\d+)(?:~\d+)?$/;
 
 export interface TabelPlekInfo {
   loc: TabelLoc;
@@ -90,8 +90,7 @@ export function tabelVanCel(sessie: Sessie, celVerhaal: string, versie = ""): Ta
   if (cache.has(sleutel)) return cache.get(sleutel)!;
   if (cache.size > 500) cache.clear();
   const ouder = m[1];
-  const voorvoegsel = `${ouder}:t${m[2]}:r`;
-  const bevat = (payload: TabelPayload | null) => !!payload?.rows?.some((r) => r.cells.some((c) => c.story.startsWith(voorvoegsel)));
+  const bevat = (payload: TabelPayload | null) => !!payload?.rows?.some((r) => r.cells.some((c) => c.story === celVerhaal));
   let gevonden: TabelPlekInfo | null = null;
   // Meestal klopt het nummer uit de naam; dan hoeft het hele verhaal niet doorlopen.
   try {
@@ -432,9 +431,19 @@ export interface LiniaalStand {
   inTekst: boolean;
 }
 
+const standaardTabCache = new WeakMap<object, number>();
+
 export function standaardTabAfstand(ref: DocxEditorRef) {
-  const w = (ref.getDocument()?.package as { settings?: { defaultTabStop?: number } } | undefined)?.settings?.defaultTabStop;
-  return typeof w === "number" && w > 0 ? w : 720;
+  const sessie = ref.getEditorRef()?.getYrsSession();
+  const oud = sessie ? standaardTabCache.get(sessie) : undefined;
+  if (oud !== undefined) return oud;
+  // Dit is een pakketinstelling: wijzigen vraagt herladen en dus een nieuwe
+  // sessie. Vermijd een volledige documentkopie bij iedere cursorbeweging.
+  const pakket = ref.getDocument()?.package;
+  const w = (pakket as { settings?: { defaultTabStop?: number } } | undefined)?.settings?.defaultTabStop;
+  const afstand = typeof w === "number" && w > 0 ? w : 720;
+  if (sessie && pakket) standaardTabCache.set(sessie, afstand);
+  return afstand;
 }
 
 /** Meet de liniaal voor de cursor; null zonder document of zichtbare pagina's. */
@@ -507,27 +516,30 @@ export function meetLiniaal(ref: DocxEditorRef, vlak: Element, geometrie: DocxPl
     stand.vak = kolommen[0];
   }
   stand.ruimteLinks = Math.max(0, Math.round(stand.vak.links * TWIPS_PER_PX));
-  Object.assign(stand, alineaGegevens(sessie, verhaal, head.paraId, versie));
+  Object.assign(stand, alineaGegevens(sessie, verhaal, head.paraId));
   stand.inTekst = true;
   return stand;
 }
 
 const alineaCache = new WeakMap<object, { sleutel: string; gegevens: Pick<LiniaalStand, "inspringing" | "tabs" | "directe"> }>();
 
-/** Inspringing en tabs van de alinea met de cursor; bij scrollen uit de buffer. */
-function alineaGegevens(sessie: Sessie, verhaal: string, paraId: string, versie: string) {
-  const sleutel = `${versie}|${verhaal}|${paraId}`;
-  const oud = alineaCache.get(sessie);
-  if (oud?.sleutel === sleutel) return oud.gegevens;
-  const attrs = opgelosteAlinea(sessie, verhaal, paraId);
+/** Inspringing en tabs veranderen bij opmaak, niet bij iedere getypte letter. */
+export function alineaGegevens(sessie: Sessie, verhaal: string, paraId: string) {
   // Directe opmaak via de selectiecontext: `paragraphs()` doorloopt het hele verhaal.
   let direct: Record<string, unknown> = {};
   try {
     const plek = { paraId, offset: 0 };
     direct = (sessie.selectionContext({ story: verhaal, start: plek, end: plek }).paragraphProperties ?? {}) as Record<string, unknown>;
   } catch {
-    direct = {};
+    // Een tijdelijk onleesbare selectie mag de vorige stand niet vastzetten.
+    return { inspringing: inspringingUitBlok(undefined), tabs: [], directe: [] };
   }
+  // Stijldefinities veranderen via herladen (een nieuwe sessie). Binnen die
+  // sessie bepalen de alinea-eigenschappen de inspringing en tabstops.
+  const sleutel = JSON.stringify([verhaal, paraId, direct]);
+  const oud = alineaCache.get(sessie);
+  if (oud?.sleutel === sleutel) return oud.gegevens;
+  const attrs = opgelosteAlinea(sessie, verhaal, paraId);
   const gegevens = { inspringing: inspringingUitBlok(attrs), tabs: tabsUitBlok(attrs), directe: directeTabs(direct) };
   alineaCache.set(sessie, { sleutel, gegevens });
   return gegevens;

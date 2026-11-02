@@ -4,13 +4,16 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@betteroffice/docx@0.5.1': d8779cc5387bb808e84c92d2251651127d28610e0c506c2538405d3b0f73d830
+
 importers:
 
   .:
     dependencies:
       '@betteroffice/docx':
         specifier: 0.5.1
-        version: 0.5.1(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))
+        version: 0.5.1(patch_hash=d8779cc5387bb808e84c92d2251651127d28610e0c506c2538405d3b0f73d830)(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))
       '@betteroffice/docx-i18n':
         specifier: 0.5.1
         version: 0.5.1
@@ -1791,7 +1794,7 @@ snapshots:
 
   '@betteroffice/docx-react@0.5.1(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
-      '@betteroffice/docx': 0.5.1(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))
+      '@betteroffice/docx': 0.5.1(patch_hash=d8779cc5387bb808e84c92d2251651127d28610e0c506c2538405d3b0f73d830)(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))
       '@betteroffice/docx-i18n': 0.5.1
       '@radix-ui/react-select': 2.4.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       clsx: 2.1.1
@@ -1804,7 +1807,7 @@ snapshots:
       - '@types/react'
       - '@types/react-dom'
 
-  '@betteroffice/docx@0.5.1(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))':
+  '@betteroffice/docx@0.5.1(patch_hash=d8779cc5387bb808e84c92d2251651127d28610e0c506c2538405d3b0f73d830)(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))':
     optionalDependencies:
       '@betteroffice/fonts': 0.4.0(@betteroffice/fonts-cjk@0.4.0)
 

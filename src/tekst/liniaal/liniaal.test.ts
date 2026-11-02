@@ -1,4 +1,5 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+import type { DocxEditorRef } from "@betteroffice/docx-react";
 import {
   MIN_KOLOM,
   MIN_TEKSTBREEDTE,
@@ -18,8 +19,39 @@ import {
   tabsWijziging,
   volgendeTabSoort,
 } from "./model";
-import { celGrenzen, celIn, paginaMetPositie, rasterVan, tekstkolommen, type IndelingPagina } from "./geometrie";
+import { alineaGegevens, celGrenzen, celIn, paginaMetPositie, rasterVan, standaardTabAfstand, tekstkolommen, type IndelingPagina } from "./geometrie";
 import { effectieveEigenschappen, formulierUit, wijzigingUit } from "../alinea/model";
+
+describe("pakketinstellingen van de liniaal", () => {
+  it("leest het document eenmaal per sessie en opnieuw na herladen", () => {
+    let sessie = {};
+    const getDocument = vi.fn(() => ({ package: { settings: { defaultTabStop: 708 } } }));
+    const ref = { getDocument, getEditorRef: () => ({ getYrsSession: () => sessie }) } as unknown as DocxEditorRef;
+    for (let i = 0; i < 100; i++) expect(standaardTabAfstand(ref)).toBe(708);
+    expect(getDocument).toHaveBeenCalledTimes(1);
+    sessie = {};
+    getDocument.mockReturnValue({ package: { settings: { defaultTabStop: 1440 } } });
+    expect(standaardTabAfstand(ref)).toBe(1440);
+    expect(getDocument).toHaveBeenCalledTimes(2);
+  });
+  it("lost het hele verhaal niet opnieuw op bij typen en wel bij gewijzigde inspringing", () => {
+    let versie = "1", links = 0;
+    const yrsBlocksForStory = vi.fn(() => [{ kind: "paragraph", id: "body:p0", attrs: { indent: { left: links / 15 } } }]);
+    const sessie = {
+      version: () => versie,
+      selectionContext: () => ({ paragraphProperties: { indentLeft: links } }),
+      yrsBlocksForStory,
+    } as unknown as Parameters<typeof alineaGegevens>[0];
+    expect(alineaGegevens(sessie, "body", "body:p0").inspringing?.links).toBe(0);
+    versie = "2";
+    alineaGegevens(sessie, "body", "body:p0");
+    expect(yrsBlocksForStory).toHaveBeenCalledTimes(1);
+    versie = "3";
+    links = 567;
+    expect(alineaGegevens(sessie, "body", "body:p0").inspringing?.links).toBe(567);
+    expect(yrsBlocksForStory).toHaveBeenCalledTimes(2);
+  });
+});
 
 describe("opgeloste alinea-indeling", () => {
   it("leest inspringing in pixels als twips", () => {
