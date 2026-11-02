@@ -20,6 +20,10 @@
 import { zlibSync } from "fflate";
 import { GLYPH_BREEDTE, glyphloosLettertype } from "./glyphloos.ts";
 import { getal } from "./getal.ts";
+import { SRGB_NAAM, srgbProfiel } from "./srgb.ts";
+import { heeftBeveiliging, maakVersleuteling, versleutelStrings, type PdfBeveiliging } from "./beveiliging.ts";
+
+export type { PdfBeveiliging } from "./beveiliging.ts";
 
 export type PdfBeeld =
   | { soort: "jpeg"; breedte: number; hoogte: number; bytes: Uint8Array }
@@ -57,6 +61,8 @@ export interface PdfBladwijzer {
   titel: string;
   pagina: number;
   y?: number;
+  /** Kopniveau (1 = hoofdstuk); lagere niveaus worden kinderen van de vorige hogere. */
+  niveau?: number;
 }
 
 export interface PdfFont {
@@ -115,6 +121,23 @@ export interface PdfDocument {
   bladwijzers?: PdfBladwijzer[];
   /** Gedeelde bronnen van de vectorpagina's. */
   bronnen?: PdfBronnen;
+  /** PDF/A-2b: XMP-identificatie, OutputIntent met sRGB-profiel (geen versleuteling). */
+  pdfa?: boolean;
+}
+
+/** Eén genummerd object: woordenboek of waarde, eventueel met stroom. */
+interface PdfObject {
+  nr: number;
+  inhoud: string;
+  stroom?: Uint8Array;
+}
+
+interface Bouw {
+  objecten: PdfObject[];
+  aantal: number;
+  catalogus: number;
+  info: number;
+  idBron: string;
 }
 
 const enc = new TextEncoder();
@@ -221,23 +244,70 @@ end`;
   }
 }
 
+/** Schrijft de PDF (zonder versleuteling). */
 export function schrijfPdf(doc: PdfDocument): Uint8Array {
+  return serialiseer(bouw(doc, false));
+}
+
+/**
+ * Schrijft de PDF, met wachtwoord en rechten als `beveiliging` dat vraagt
+ * (AES-256). PDF/A en versleuteling sluiten elkaar uit.
+ */
+export async function schrijfPdfBeveiligd(doc: PdfDocument, beveiliging?: PdfBeveiliging): Promise<Uint8Array> {
+  if (!heeftBeveiliging(beveiliging)) return schrijfPdf(doc);
+  if (doc.pdfa) throw new Error("PDF/A kan niet met een wachtwoord worden beveiligd.");
+  const b = bouw(doc, true);
+  const v = await maakVersleuteling(beveiliging);
+  const encrypt = b.aantal + 1;
+  for (const o of b.objecten) {
+    if (o.stroom) {
+      const oud = o.stroom.length;
+      o.stroom = await v.versleutel(o.stroom);
+      o.inhoud = o.inhoud.replace(`/Length ${oud}`, `/Length ${o.stroom.length}`);
+    }
+    o.inhoud = await versleutelStrings(o.inhoud, v.versleutel);
+  }
+  b.objecten.push({ nr: encrypt, inhoud: v.woordenboek });
+  b.aantal = encrypt;
+  return serialiseer(b, encrypt);
+}
+
+function serialiseer(b: Bouw, encrypt = 0): Uint8Array {
   const uit = new Uitvoer();
   const posities: number[] = [];
-  let volgnummer = 0;
-  const reserveer = () => ++volgnummer;
-  const object = (nr: number, inhoud: string | Uint8Array, stroom?: Uint8Array) => {
-    posities[nr] = uit.lengte;
-    uit.schrijf(`${nr} 0 obj\n`);
-    uit.schrijf(inhoud);
-    if (stroom) {
+  uit.schrijf("%PDF-1.7\n%\xe2\xe3\xcf\xd3\n");
+  for (const o of b.objecten) {
+    posities[o.nr] = uit.lengte;
+    uit.schrijf(`${o.nr} 0 obj\n`);
+    uit.schrijf(o.inhoud);
+    if (o.stroom) {
       uit.schrijf("\nstream\n");
-      uit.schrijf(stroom);
+      uit.schrijf(o.stroom);
       uit.schrijf("\nendstream");
     }
     uit.schrijf("\nendobj\n");
+  }
+  const xref = uit.lengte;
+  let tabel = `xref\n0 ${b.aantal + 1}\n0000000000 65535 f \n`;
+  for (let nr = 1; nr <= b.aantal; nr++)
+    tabel +=
+      posities[nr] !== undefined ? `${String(posities[nr]).padStart(10, "0")} 00000 n \n` : "0000000000 00001 f \n";
+  uit.schrijf(tabel);
+  const id = idVan(`${uit.lengte}|${b.idBron}`);
+  uit.schrijf(
+    `trailer\n<< /Size ${b.aantal + 1} /Root ${b.catalogus} 0 R /Info ${b.info} 0 R${encrypt ? ` /Encrypt ${encrypt} 0 R` : ""} /ID [<${id}> <${id}>] >>\nstartxref\n${xref}\n%%EOF\n`,
+  );
+  return uit.bytes();
+}
+
+function bouw(doc: PdfDocument, versleuteld: boolean): Bouw {
+  const objecten: PdfObject[] = [];
+  let volgnummer = 0;
+  const reserveer = () => ++volgnummer;
+  const object = (nr: number, inhoud: string, stroom?: Uint8Array) => {
+    objecten.push({ nr, inhoud, stroom });
   };
-  uit.schrijf("%PDF-1.7\n%\xe2\xe3\xcf\xd3\n");
+  const pdfa = !!doc.pdfa && !versleuteld;
 
   const catalogus = reserveer();
   const paginaBoom = reserveer();
@@ -257,6 +327,9 @@ export function schrijfPdf(doc: PdfDocument): Uint8Array {
   const tekenset = new Tekenset();
   // Bronnen van de vectorpagina's: één woordenboek, alleen als er vectorpagina's zijn.
   const bronnenNr = doc.paginas.some((p) => p.vector) && doc.bronnen ? reserveer() : 0;
+  const transparant =
+    !!doc.bronnen &&
+    (doc.bronnen.toestanden.some((t) => t.ca < 1 || t.CA < 1) || doc.bronnen.beelden.some((b) => b.stroom.masker));
 
   const paginaNummers: number[] = [];
   doc.paginas.forEach((pagina) => {
@@ -293,16 +366,18 @@ export function schrijfPdf(doc: PdfDocument): Uint8Array {
       annotaties.push(a);
       object(
         a,
-        `<< /Type /Annot /Subtype /Link /Rect [${getal(k.x)} ${getal(H - k.y - k.hoogte)} ${getal(k.x + k.breedte)} ${getal(H - k.y)}] /Border [0 0 0] /A << /S /URI /URI ${pdfLetterlijk(url)} >> >>`,
+        `<< /Type /Annot /Subtype /Link /F 4 /Rect [${getal(k.x)} ${getal(H - k.y - k.hoogte)} ${getal(k.x + k.breedte)} ${getal(H - k.y)}] /Border [0 0 0] /A << /S /URI /URI ${pdfLetterlijk(url)} >> >>`,
       );
     }
     const middelen =
       vector !== null
         ? `${bronnenNr} 0 R`
         : `<< /ProcSet [/PDF /Text /ImageC]${pagina.beeld ? ` /XObject << /Im0 ${beeldNr} 0 R >>` : ""}${stukken.length ? ` /Font << /F0 ${glyphloosNrs().lettertype} 0 R >>` : ""} >>`;
+    // Transparantiegroep met mengkleurruimte (PDF/A-2, 6.2.10) bij doorzichtigheid op vectorpagina's.
+    const groep = pdfa && vector !== null && transparant ? " /Group << /Type /Group /S /Transparency /CS /DeviceRGB >>" : "";
     object(
       nr,
-      `<< /Type /Page /Parent ${paginaBoom} 0 R /MediaBox [0 0 ${getal(B)} ${getal(H)}] /Resources ${middelen} /Contents ${inhoudNr} 0 R${annotaties.length ? ` /Annots [${annotaties.map((a) => `${a} 0 R`).join(" ")}]` : ""} >>`,
+      `<< /Type /Page /Parent ${paginaBoom} 0 R /MediaBox [0 0 ${getal(B)} ${getal(H)}] /Resources ${middelen} /Contents ${inhoudNr} 0 R${groep}${annotaties.length ? ` /Annots [${annotaties.map((a) => `${a} 0 R`).join(" ")}]` : ""} >>`,
     );
     object(inhoudNr, `<< /Length ${inhoudBytes.length} /Filter /FlateDecode >>`, inhoudBytes);
     if (pagina.beeld && vector === null) {
@@ -358,25 +433,42 @@ export function schrijfPdf(doc: PdfDocument): Uint8Array {
     `<< /Type /Pages /Kids [${paginaNummers.map((n) => `${n} 0 R`).join(" ")}] /Count ${paginaNummers.length} >>`,
   );
 
-  // Bladwijzers (inhoudsopgave), plat.
+  // Bladwijzers (inhoudsopgave), genest volgens kopniveau.
   let outlines = 0;
   const bladwijzers = (doc.bladwijzers ?? []).filter(
     (b) => b.titel.trim() && b.pagina >= 0 && b.pagina < paginaNummers.length,
   );
   if (bladwijzers.length) {
     outlines = reserveer();
-    const nummers = bladwijzers.map(() => reserveer());
-    bladwijzers.forEach((b, i) => {
-      const hoogte = doc.paginas[b.pagina].hoogte;
-      const y = b.y !== undefined ? getal(hoogte - b.y) : getal(hoogte);
-      object(
-        nummers[i],
-        `<< /Title ${pdfTekst(b.titel.slice(0, 200))} /Parent ${outlines} 0 R${i > 0 ? ` /Prev ${nummers[i - 1]} 0 R` : ""}${i < nummers.length - 1 ? ` /Next ${nummers[i + 1]} 0 R` : ""} /Dest [${paginaNummers[b.pagina]} 0 R /XYZ 0 ${y} 0] >>`,
-      );
-    });
+    const boom = bladwijzerBoom(bladwijzers);
+    const nummers = new Map<BladwijzerKnoop, number>();
+    const nummer = (k: BladwijzerKnoop) => {
+      let n = nummers.get(k);
+      if (!n) nummers.set(k, (n = reserveer()));
+      return n;
+    };
+    // Alleen het eerste niveau staat open; dieper ligt ingeklapt (negatieve /Count).
+    const schrijf = (lijst: BladwijzerKnoop[], ouder: number, diepte: number) => {
+      lijst.forEach((k, i) => {
+        const b = k.bladwijzer;
+        const hoogte = doc.paginas[b.pagina].hoogte;
+        const y = b.y !== undefined ? getal(Math.max(0, Math.min(hoogte, hoogte - b.y))) : getal(hoogte);
+        const kinderen = k.kinderen.length
+          ? ` /First ${nummer(k.kinderen[0])} 0 R /Last ${nummer(k.kinderen[k.kinderen.length - 1])} 0 R /Count ${diepte === 0 ? k.kinderen.length : -k.kinderen.length}`
+          : "";
+        object(
+          nummer(k),
+          `<< /Title ${pdfTekst(b.titel.trim().slice(0, 200))} /Parent ${ouder} 0 R${i > 0 ? ` /Prev ${nummer(lijst[i - 1])} 0 R` : ""}${i < lijst.length - 1 ? ` /Next ${nummer(lijst[i + 1])} 0 R` : ""}${kinderen} /Dest [${paginaNummers[b.pagina]} 0 R /XYZ 0 ${y} 0] >>`,
+        );
+        if (k.kinderen.length) schrijf(k.kinderen, nummer(k), diepte + 1);
+      });
+    };
+    for (const k of boom) nummer(k);
+    schrijf(boom, outlines, 0);
+    const zichtbaar = boom.reduce((n, k) => n + 1 + k.kinderen.length, 0);
     object(
       outlines,
-      `<< /Type /Outlines /First ${nummers[0]} 0 R /Last ${nummers[nummers.length - 1]} 0 R /Count ${nummers.length} >>`,
+      `<< /Type /Outlines /First ${nummer(boom[0])} 0 R /Last ${nummer(boom[boom.length - 1])} 0 R /Count ${zichtbaar} >>`,
     );
   }
 
@@ -398,8 +490,8 @@ export function schrijfPdf(doc: PdfDocument): Uint8Array {
   const xmp = `<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
 <x:xmpmeta xmlns:x="adobe:ns:meta/">
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-<rdf:Description rdf:about="" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xmp="http://ns.adobe.com/xap/1.0/" xmlns:pdf="http://ns.adobe.com/pdf/1.3/">
-<dc:format>application/pdf</dc:format>
+<rdf:Description rdf:about="" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xmp="http://ns.adobe.com/xap/1.0/" xmlns:pdf="http://ns.adobe.com/pdf/1.3/"${pdfa ? ` xmlns:pdfaid="http://www.aiim.org/pdfa/ns/id/"` : ""}>
+<dc:format>application/pdf</dc:format>${pdfa ? "\n<pdfaid:part>2</pdfaid:part>\n<pdfaid:conformance>B</pdfaid:conformance>" : ""}
 ${doc.titel ? `<dc:title><rdf:Alt><rdf:li xml:lang="x-default">${xmlOntsnap(doc.titel)}</rdf:li></rdf:Alt></dc:title>` : ""}
 ${doc.auteur ? `<dc:creator><rdf:Seq><rdf:li>${xmlOntsnap(doc.auteur)}</rdf:li></rdf:Seq></dc:creator>` : ""}
 ${doc.onderwerp ? `<dc:description><rdf:Alt><rdf:li xml:lang="x-default">${xmlOntsnap(doc.onderwerp)}</rdf:li></rdf:Alt></dc:description>` : ""}
@@ -415,28 +507,52 @@ ${doc.trefwoorden ? `<pdf:Keywords>${xmlOntsnap(doc.trefwoorden)}</pdf:Keywords>
   const xmpBytes = enc.encode(xmp);
   object(metadata, `<< /Type /Metadata /Subtype /XML /Length ${xmpBytes.length} >>`, xmpBytes);
 
+  // PDF/A: OutputIntent met het eigen sRGB-profiel (alle kleuren zijn DeviceRGB/DeviceGray).
+  let uitvoerbedoeling = "";
+  if (pdfa) {
+    const profielNr = reserveer();
+    const profiel = zlibSync(srgbProfiel(), { level: 9 });
+    object(profielNr, `<< /N 3 /Length ${profiel.length} /Filter /FlateDecode >>`, profiel);
+    uitvoerbedoeling = ` /OutputIntents [<< /Type /OutputIntent /S /GTS_PDFA1 /OutputConditionIdentifier (${SRGB_NAAM}) /RegistryName (http://www.color.org) /Info (${SRGB_NAAM}) /DestOutputProfile ${profielNr} 0 R >>]`;
+  }
+  // AES-256 (R 6) hoort bij PDF 2.0; voor PDF 1.7-lezers de Adobe-extensie niveau 8.
+  const extensies = versleuteld ? " /Extensions << /ADBE << /BaseVersion /1.7 /ExtensionLevel 8 >> >>" : "";
   object(
     catalogus,
-    `<< /Type /Catalog /Pages ${paginaBoom} 0 R /Metadata ${metadata} 0 R /Lang ${pdfTekst(doc.taal ?? "nl-NL")} /ViewerPreferences << /DisplayDocTitle true >>${outlines ? ` /Outlines ${outlines} 0 R /PageMode /UseOutlines` : ""} >>`,
+    `<< /Type /Catalog /Pages ${paginaBoom} 0 R /Metadata ${metadata} 0 R /Lang ${pdfTekst(doc.taal ?? "nl-NL")} /ViewerPreferences << /DisplayDocTitle true >>${outlines ? ` /Outlines ${outlines} 0 R /PageMode /UseOutlines` : ""}${uitvoerbedoeling}${extensies} >>`,
   );
+  return {
+    objecten,
+    aantal: volgnummer,
+    catalogus,
+    info,
+    idBron: `${doc.paginas.length}|${doc.titel ?? ""}|${datum.getTime()}`,
+  };
+}
 
-  const xref = uit.lengte;
-  let tabel = `xref\n0 ${volgnummer + 1}\n0000000000 65535 f \n`;
-  for (let nr = 1; nr <= volgnummer; nr++)
-    tabel += `${String(posities[nr] ?? 0).padStart(10, "0")} 00000 n \n`;
-  uit.schrijf(tabel);
-  const id = idVan(uit.lengte, doc.paginas.length, doc.titel ?? "", datum);
-  uit.schrijf(
-    `trailer\n<< /Size ${volgnummer + 1} /Root ${catalogus} 0 R /Info ${info} 0 R /ID [<${id}> <${id}>] >>\nstartxref\n${xref}\n%%EOF\n`,
-  );
-  return uit.bytes();
+interface BladwijzerKnoop {
+  bladwijzer: PdfBladwijzer;
+  kinderen: BladwijzerKnoop[];
+}
+
+/** Zet een platte lijst met kopniveaus om in een boom (een sprong van 1 naar 3 wordt gewoon een kind). */
+export function bladwijzerBoom(lijst: PdfBladwijzer[]): BladwijzerKnoop[] {
+  const wortel: BladwijzerKnoop[] = [];
+  const stapel: { niveau: number; knoop: BladwijzerKnoop }[] = [];
+  for (const bladwijzer of lijst) {
+    const niveau = Math.max(1, Math.round(bladwijzer.niveau ?? 1));
+    const knoop: BladwijzerKnoop = { bladwijzer, kinderen: [] };
+    while (stapel.length && stapel[stapel.length - 1].niveau >= niveau) stapel.pop();
+    (stapel.length ? stapel[stapel.length - 1].knoop.kinderen : wortel).push(knoop);
+    stapel.push({ niveau, knoop });
+  }
+  return wortel;
 }
 
 /** Eenvoudige, deterministische bestands-id (geen cryptografische functie nodig). */
-function idVan(lengte: number, paginas: number, titel: string, datum: Date) {
+function idVan(bron: string) {
   let h1 = 0x811c9dc5;
   let h2 = 0x01000193;
-  const bron = `${lengte}|${paginas}|${titel}|${datum.getTime()}`;
   for (let i = 0; i < bron.length; i++) {
     h1 = Math.imul(h1 ^ bron.charCodeAt(i), 0x01000193) >>> 0;
     h2 = Math.imul(h2 ^ bron.charCodeAt(i), 0x5bd1e995) >>> 0;
@@ -447,7 +563,7 @@ function idVan(lengte: number, paginas: number, titel: string, datum: Date) {
     .toUpperCase();
 }
 
-type Schrijf = (nr: number, inhoud: string | Uint8Array, stroom?: Uint8Array) => void;
+type Schrijf = (nr: number, inhoud: string, stroom?: Uint8Array) => void;
 
 /** ToUnicode-tabel voor glyph → tekst. */
 function unicodeTabel(paren: [number, string][]) {

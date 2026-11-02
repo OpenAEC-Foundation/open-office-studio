@@ -286,9 +286,28 @@ export async function drukAf(soort: Soort) {
   await koppeling.afdrukken();
 }
 
+/** Standaardtaal van het document (Tekst: docDefaults, Presentatie: defaultTextStyle). */
+function standaardTaal(bytes: Uint8Array) {
+  try {
+    const namen = new Set(["word/styles.xml", "ppt/presentation.xml"]);
+    const delen = unzipSync(bytes, { filter: (f) => namen.has(f.name) });
+    for (const [naam, data] of Object.entries(delen)) {
+      const xml = strFromU8(data);
+      const m =
+        naam === "word/styles.xml"
+          ? /<w:docDefaults>[\s\S]*?<w:lang\b[^>]*\bw:val="([A-Za-z]{2,3}(?:-[A-Za-z0-9]{2,8})*)"/.exec(xml)
+          : /<p:defaultTextStyle>[\s\S]*?\blang="([A-Za-z]{2,3}(?:-[A-Za-z0-9]{2,8})*)"/.exec(xml);
+      if (m) return m[1];
+    }
+  } catch {
+    // Geen taal bekend: de schrijver valt terug op zijn standaard.
+  }
+  return undefined;
+}
+
 /** Titel, auteur, onderwerp en trefwoorden uit docProps/core.xml. */
 export function documentEigenschappen(bytes: Uint8Array) {
-  const uit: { titel?: string; auteur?: string; onderwerp?: string; trefwoorden?: string } = {};
+  const uit: { titel?: string; auteur?: string; onderwerp?: string; trefwoorden?: string; taal?: string } = {};
   try {
     const delen = unzipSync(bytes, { filter: (f) => f.name === "docProps/core.xml" });
     const xml = delen["docProps/core.xml"] ? strFromU8(delen["docProps/core.xml"]) : "";
@@ -307,6 +326,8 @@ export function documentEigenschappen(bytes: Uint8Array) {
     uit.auteur = lees("dc:creator");
     uit.onderwerp = lees("dc:subject");
     uit.trefwoorden = lees("cp:keywords");
+    // Taal uit de eigenschappen (dc:language), anders de standaardtaal van de stijlen.
+    uit.taal = lees("dc:language") ?? standaardTaal(bytes);
   } catch {
     // Geen eigenschappen: de PDF krijgt alleen de bestandsnaam als titel.
   }
@@ -326,7 +347,11 @@ async function pdfExport(
   const bron = editorKoppeling(soort)?.afdrukbron?.();
   if (!bron)
     throw new Error("Open het document in de editor om er een PDF van te maken.");
-  const keuze = opties.pdf ?? { kwaliteit: "standaard", omvang: "werkmap", indeling: "dias" };
+  const keuze: Partial<AppPdfKeuze> & Pick<AppPdfKeuze, "kwaliteit" | "omvang" | "indeling"> = opties.pdf ?? {
+    kwaliteit: "standaard",
+    omvang: "werkmap",
+    indeling: "dias",
+  };
   let doc;
   if (bron.soort === "docx") doc = await bron.maak();
   else if (bron.soort === "pptx") {
@@ -352,6 +377,20 @@ async function pdfExport(
       auteur: eigenschappen.auteur,
       onderwerp: eigenschappen.onderwerp,
       trefwoorden: eigenschappen.trefwoorden,
+      taal: eigenschappen.taal,
+      bladwijzers: keuze.bladwijzers !== false,
+      pdfa: !!keuze.pdfa,
+      // Wachtwoorden gaan alleen van het venster naar de schrijver; nergens bewaard.
+      beveiliging:
+        keuze.beveiligen && !keuze.pdfa
+          ? {
+              openWachtwoord: keuze.openWachtwoord || undefined,
+              rechtenWachtwoord: keuze.rechtenWachtwoord || undefined,
+              afdrukken: keuze.afdrukken !== false,
+              kopieren: keuze.kopieren !== false,
+              wijzigen: keuze.wijzigen !== false,
+            }
+          : undefined,
     },
   );
 }

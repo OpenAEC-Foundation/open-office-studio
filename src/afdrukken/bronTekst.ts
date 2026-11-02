@@ -131,7 +131,8 @@ async function koppenEnKoppelingen(ref: DocxEditorRef) {
               titel,
               pagina: f.pageIndex,
               y: (f.geometry?.rects[0]?.y ?? 0) * 0.75,
-              niveau: kop.outlineLevel,
+              // outlineLevel is 0-gebaseerd (Kop 1 = 0).
+              niveau: kop.outlineLevel + 1,
             });
         }
         for (const inline of blok.paragraph.inlines) {

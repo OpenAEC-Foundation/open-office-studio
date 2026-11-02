@@ -49,6 +49,7 @@ export interface Bladwijzer {
   pagina: number;
   /** Hoogte op de pagina in punten vanaf boven. */
   y?: number;
+  /** Kopniveau, 1-gebaseerd (Kop 1 = 1); voor geneste PDF-bladwijzers. */
   niveau?: number;
 }
 

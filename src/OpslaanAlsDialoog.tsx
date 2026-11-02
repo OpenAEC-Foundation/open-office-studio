@@ -18,7 +18,7 @@ import type { Rapport } from "./import/rapport";
 import { Verliesrapport } from "./import/RapportMelding";
 import { VERSLEUTELBAAR } from "./import/bron";
 import type { Codering, Scheidingsteken } from "./export/csv";
-import { PdfOpties, standaardAppPdf } from "./export/PdfOpties";
+import { PdfOpties, pdfKeuzeFout, standaardAppPdf } from "./export/PdfOpties";
 import "./OpslaanAlsDialoog.css";
 
 /** Sleutel onder `backstage:saveAs.routes` per route. */
@@ -165,7 +165,8 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
     t(`saveAs.formats.${props.soort}.${f.ext}.name`, { defaultValue: f.naam });
   const formaatBehoud = (f: Uitvoerformaat) =>
     t(`saveAs.formats.${props.soort}.${f.ext}.keeps`, { defaultValue: f.behoud });
-  const kan = !!route && !!naam.trim() && bereikGeldig && !wachtwoordFout;
+  const pdfFout = gekozen.ext === "pdf" && route === "engine" ? pdfKeuzeFout(appPdf, t) : "";
+  const kan = !!route && !!naam.trim() && bereikGeldig && !wachtwoordFout && !pdfFout;
 
   function bevestig() {
     if (!kan || !route) return;

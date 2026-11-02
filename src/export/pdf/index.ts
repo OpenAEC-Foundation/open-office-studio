@@ -9,7 +9,7 @@
  */
 import type { AfdrukDocument } from "../../afdrukken/model";
 import { canvasNaarBlob, opWit } from "../../afdrukken/afdrukframe";
-import { schrijfPdf, type PdfBeeld, type PdfBronnen, type PdfPagina } from "./schrijver.ts";
+import { schrijfPdfBeveiligd, type PdfBeeld, type PdfBeveiliging, type PdfBronnen, type PdfPagina } from "./schrijver.ts";
 import { metVectoropname, opnameVan, type Opname } from "./opname";
 import { Bronnen, fontsIn, Onvectoriseerbaar, vectorPagina } from "./vector";
 import { laadLettertype, ontleedFont, type GeladenLettertype } from "./lettertypebron";
@@ -35,6 +35,14 @@ export interface PdfOpties {
   auteur?: string;
   onderwerp?: string;
   trefwoorden?: string;
+  /** Taal van het document (BCP 47) voor /Lang. */
+  taal?: string;
+  /** Bladwijzers uit koppen, dia-titels of bladnamen (standaard aan). */
+  bladwijzers?: boolean;
+  /** PDF/A-2b voor archivering (sluit beveiliging uit). */
+  pdfa?: boolean;
+  /** Wachtwoord en rechten (AES-256); alleen in het geheugen. */
+  beveiliging?: PdfBeveiliging;
   voortgang?: (klaar: number, totaal: number) => void;
   /** Voor tests en diagnose: waarom pagina's een beeld werden. */
   terugval?: (pagina: number, reden: string) => void;
@@ -192,18 +200,26 @@ export async function maakPdf(
   }
 
   const positie = new Map(indexen.map((index, n) => [index, n]));
-  const bladwijzers = (doc.bladwijzers ?? [])
-    .filter((b) => positie.has(b.pagina))
-    .map((b) => ({ titel: b.titel, pagina: positie.get(b.pagina)!, y: b.y }));
-  return schrijfPdf({
-    titel: doc.titel,
-    auteur: opties.auteur,
-    onderwerp: opties.onderwerp,
-    trefwoorden: opties.trefwoorden,
-    paginas,
-    bladwijzers,
-    bronnen: vectorPaginas ? await maakBronnen(bronnen, kwaliteit.beeldDpi, kwaliteit.jpeg) : undefined,
-  });
+  const bladwijzers =
+    opties.bladwijzers === false
+      ? []
+      : (doc.bladwijzers ?? [])
+          .filter((b) => positie.has(b.pagina))
+          .map((b) => ({ titel: b.titel, pagina: positie.get(b.pagina)!, y: b.y, niveau: b.niveau }));
+  return schrijfPdfBeveiligd(
+    {
+      titel: doc.titel,
+      auteur: opties.auteur,
+      onderwerp: opties.onderwerp,
+      trefwoorden: opties.trefwoorden,
+      taal: opties.taal,
+      pdfa: opties.pdfa,
+      paginas,
+      bladwijzers,
+      bronnen: vectorPaginas ? await maakBronnen(bronnen, kwaliteit.beeldDpi, kwaliteit.jpeg) : undefined,
+    },
+    opties.pdfa ? undefined : opties.beveiliging,
+  );
 }
 
 
