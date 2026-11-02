@@ -12,6 +12,13 @@ pub struct Doel {
     generatie: u64,
 }
 
+impl Doel {
+    /// Een herstelactie of navigatie vervangt het invoerveld; gewone invoer niet.
+    pub fn sleutel(self) -> String {
+        format!("{}:{}:{}", self.document, self.deel, self.generatie)
+    }
+}
+
 pub struct Tabblad {
     pub id: u64,
     pub naam: String,
@@ -25,6 +32,30 @@ pub struct Tabblad {
     generatie: u64,
 }
 impl Tabblad {
+    pub fn tabnaam(&self) -> &str {
+        match self.sessie.module {
+            Module::Notition => "Notities",
+            _ => &self.naam,
+        }
+    }
+    pub fn venstertitel(&self) -> String {
+        let stip = if self.gewijzigd() { " •" } else { "" };
+        if self.sessie.module == Module::Notition {
+            format!("Open Office Studio (Notities){stip}")
+        } else {
+            format!(
+                "{}{stip} — Open Office Studio ({})",
+                self.naam,
+                match self.sessie.module {
+                    Module::Writer => "Tekst",
+                    Module::Spreadsheet => "Rekenblad",
+                    Module::Presentation => "Presentatie",
+                    Module::Email => "E-mail",
+                    Module::Notition => unreachable!(),
+                }
+            )
+        }
+    }
     pub fn doel(&self) -> Doel {
         Doel {
             document: self.id,
@@ -117,7 +148,16 @@ impl Werkruimte {
     }
     pub fn bewerk(&mut self, doel: Doel, bewerking: Bewerking) -> Resultaat<()> {
         let t = self.eigenaar(doel)?;
-        t.beeld = t.sessie.bewerk_met_weergave(t.deel, bewerking)?;
+        t.beeld = match t.sessie.bewerk_met_weergave(t.deel, bewerking) {
+            Ok(beeld) => beeld,
+            Err(fout) => {
+                // Ook een ongecontroleerd browserveld moet de geldige bron tonen
+                // wanneer de kern een te groot of verboden concept weigert.
+                t.generatie += 1;
+                t.melding = fout.to_string();
+                return Err(fout);
+            }
+        };
         if let Some(pagina) = &t.beeld.notitie
             && pagina.deel != t.deel
         {

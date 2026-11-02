@@ -41,3 +41,22 @@ controleert de DOM-mutaties, naast de echte vensterbediening. De statische lette
 heeft een eigen component, zodat invoer die niet steeds opnieuw opbouwt.
 Documentacties lopen in deze eerste aansluiting nog op de UI-draad. De bestaande
 werkdraad moet worden overgezet voordat grote documenten een vlotte bediening hebben.
+
+Tekstvelden krijgen hun beginwaarde zonder elke ontvangen native update terug
+naar de levende browserwaarde te schrijven. Dat voorkomt letterverlies bij snelle
+invoer. Na navigatie of ongedaan maken krijgt de editor een nieuwe generatie,
+zodat de Rust-bron dan wel opnieuw in de velden verschijnt.
+
+Gerichte echte Linux-vensterproef (Python met python-xlib/Pillow, Xvfb,
+xdotool, xauth en een afzonderlijke D-Bus-sessie):
+
+```sh
+python3 native/scripts/proef-webview-venster.py --programma native/target/debug/open-office-studio-webview --bron docs/voorbeelden/Notitieboek.json --uitvoer /tmp/office-vensterresultaat
+```
+
+De proef opent uitsluitend een eigen kopie in een afzonderlijk testscherm,
+typt met 12 ms tussen tekens, controleert opgeslagen velden en bronexacte
+undo/redo, heropent het bestand en controleert annuleren/verwerpen bij sluiten.
+Meerregelige invoer gebruikt afzonderlijke Return-toetsaanslagen. Volledige
+clientbeelden en negatieve resultaten blijven bewaard; geen maskers of
+verklaring van volledige functie- of pixelgelijkheid.

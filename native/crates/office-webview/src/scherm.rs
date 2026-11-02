@@ -110,17 +110,25 @@ pub fn Scherm(mut werk: Signal<Werkruimte>) -> Element {
             w.actief,
             w.tab().map(|t| t.doel()),
             w.tab()
-                .map(|t| t.naam.clone())
+                .map(|t| t.venstertitel())
                 .unwrap_or_else(|| "Open Office Studio".into()),
             w.donker,
             w.bestand,
             w.tabbladen
                 .iter()
-                .map(|t| (t.id, t.naam.clone(), t.gewijzigd(), t.sessie.module))
+                .map(|t| {
+                    (
+                        t.id,
+                        t.tabnaam().to_string(),
+                        t.gewijzigd(),
+                        t.sessie.module,
+                    )
+                })
                 .collect::<Vec<_>>(),
             w.melding.clone(),
         )
     };
+    let sleutel = doel.map(Doel::sleutel).unwrap_or_default();
     let sluit_venster = werk.read().venster_sluiten;
     let modaal = sluiten().is_some() || sluit_venster;
     let merk = format!(
@@ -145,7 +153,7 @@ pub fn Scherm(mut werk: Signal<Werkruimte>) -> Element {
                         button { class: "office-snelknop", title: "Opslaan als", "aria-label": "Opslaan als", disabled: doel.is_none(), onclick: move |_| { if let Some(d) = doel { bewaren(werk,d,true); } }, Icoon { bron: i::OPSLAAN_ALS, maat: 16 } }
                     }
                 }
-                div { class: "office-titelbalk-titel", "{naam} — Open Office Studio" }
+                div { class: "office-titelbalk-titel", "{naam}" }
                 div { class: "office-titelbalk-rechts",
                     button { class: "office-iconknop", title: "Thema wisselen", "aria-label": "Thema wisselen", onclick: move |_| werk.write().donker = !donker, Icoon { bron: if donker { i::ZON } else { i::MAAN }, maat: 16 } }
                 }
@@ -176,8 +184,8 @@ pub fn Scherm(mut werk: Signal<Werkruimte>) -> Element {
                     div { class: "office-tabpaneel office-backstage", Start { werk, terug: actief.is_some() } }
                 } else if let Some(d) = doel {
                     div { class: "office-tabpaneel",
-                        if werk.read().tab().is_some_and(|t| t.sessie.module == Module::Notition) { Notities { werk, doel: d } }
-                        else { Document { werk, doel: d } }
+                        if werk.read().tab().is_some_and(|t| t.sessie.module == Module::Notition) { Notities { key: "{sleutel}", werk, doel: d } }
+                        else { Document { key: "{sleutel}", werk, doel: d } }
                     }
                 }
             }
@@ -196,7 +204,11 @@ pub fn Scherm(mut werk: Signal<Werkruimte>) -> Element {
                                     let ids=werk.read().tabbladen.iter().map(|t|t.id).collect::<Vec<_>>();
                                     for id in ids { voer(werk,|w|w.sluit(id,true)); }
                                     werk.write().venster_sluiten=false;
-                                    #[cfg(feature="desktop")] dioxus::desktop::window().close();
+                                    #[cfg(feature="desktop")] {
+                                        let venster = dioxus::desktop::window();
+                                        venster.set_close_behavior(dioxus::desktop::WindowCloseBehaviour::WindowCloses);
+                                        venster.close();
+                                    }
                                 } else if let Some(id)=sluiten() { voer(werk, |w| w.sluit(id,true)); }
                                 sluiten.set(None); }, "Verwerpen" }
                         }
@@ -313,7 +325,7 @@ fn Notities(werk: Signal<Werkruimte>, doel: Doel) -> Element {
                 aside { class: "notities-boeken", "aria-label": "Notitieboeken en secties",
                     div { class: "notities-zijlabel", "MIJN NOTITIEBOEKEN" }
                     div { class: "notities-boekkiezer", Icoon { bron: i::NOTITIES, maat: 19 }
-                        select { "aria-label": "Notitieboek kiezen", value: "{p.overzicht.boek}", onchange: move |e| {
+                        select { "aria-label": "Notitieboek kiezen", style: if werk.read().donker { "color-scheme:dark" } else { "color-scheme:light" }, value: "{p.overzicht.boek}", onchange: move |e| {
                             let deel = { let w=werk.read(); let o=&w.tab().unwrap().beeld.notitie.as_ref().unwrap().overzicht; e.value().parse::<usize>().ok().and_then(|i|o.boeken.get(i)).and_then(|b|b.secties.iter().flat_map(|s|s.paginas.iter()).next()).map(|p|p.deel) };
                             if let Some(n) = deel { voer(werk,|w|w.kies_deel(doel,n)); }
                         }, for (n,b) in p.overzicht.boeken.iter().enumerate() { option { value: "{n}", "{b.naam}" } } }
@@ -334,16 +346,16 @@ fn Notities(werk: Signal<Werkruimte>, doel: Doel) -> Element {
                 }
                 main { class: "notities-pagina", article {
                     div { class: "notities-paginakop", span { "{boek.naam}" b { "/" } "{sectie.naam}" } }
-                    if let Some(v) = titel { input { class: "notities-paginatitel", "aria-label": "Paginatitel", value: v.tekst, maxlength: "300", oninput: move |e| { let id=v.id.clone(); voer(werk,|w|w.bewerk(doel,Bewerking::Tekst { id,tekst:e.value() })); } } }
+                    if let Some(v) = titel { input { class: "notities-paginatitel", "aria-label": "Paginatitel", initial_value: v.tekst, maxlength: "300", oninput: move |e| { let id=v.id.clone(); voer(werk,|w|w.bewerk(doel,Bewerking::Tekst { id,tekst:e.value() })); } } }
                     div { class: "notities-paginadatum", "{p.bijgewerkt}" span { "·" } "{p.woorden} woorden" }
                     if p.markdown {
-                        if let Some(v) = beeld.velden.get(1).cloned() { div { class: "notities-markdown", div { class: "notities-md-balk", span { "Markdown" } } div { class: "notities-md-panelen beeld-bron", textarea { class: "notities-md-bron", "aria-label": "Markdown-bron", value: v.tekst, oninput: move |e| { let id=v.id.clone(); voer(werk,|w|w.bewerk(doel,Bewerking::Tekst { id,tekst:e.value() })); } } } } }
+                        if let Some(v) = beeld.velden.get(1).cloned() { div { class: "notities-markdown", div { class: "notities-md-balk", span { "Markdown" } } div { class: "notities-md-panelen beeld-bron", label { class: "notities-md-bron", span { "Broncode" } textarea { dir: "auto", "aria-label": "Markdown-bron", spellcheck: false, initial_value: v.tekst, oninput: move |e| { let id=v.id.clone(); voer(werk,|w|w.bewerk(doel,Bewerking::Tekst { id,tekst:e.value() })); } } } } } }
                     } else {
                         div { class: "notities-canvasvenster", div { class: "notities-canvasruimte", style: "width:1600px;height:1200px", div { class: "notities-canvas met-raster", style: "width:1600px;height:1200px",
                             for vak in &p.vakken {
                                 div { class: "notities-tekstvak", style: "left:{vak.grens.x}px;top:{vak.grens.y}px;width:{vak.grens.breedte}px;min-height:{vak.grens.hoogte}px",
                                     for n in &vak.velden { if let Some(v) = beeld.velden.get(*n).cloned() {
-                                        div { class: "notities-blok is-tekst", textarea { "aria-label": "Notitietekst", value: v.tekst, rows: "3", oninput: move |e| { let id=v.id.clone(); voer(werk,|w|w.bewerk(doel,Bewerking::Tekst { id,tekst:e.value() })); } } }
+                                        div { key: "{v.id}", class: "notities-blok is-tekst", textarea { "aria-label": "Notitietekst", initial_value: v.tekst, rows: "3", oninput: move |e| { let id=v.id.clone(); voer(werk,|w|w.bewerk(doel,Bewerking::Tekst { id,tekst:e.value() })); } } }
                                     } }
                                 }
                             }
@@ -368,7 +380,7 @@ fn Document(werk: Signal<Werkruimte>, doel: Doel) -> Element {
             aside { style: "width:260px;flex-shrink:0;overflow:auto;padding:16px",
                 p { "Documentbediening wordt naar de oorspronkelijke interface overgezet." }
                 for (n,naam) in beeld.onderdelen.iter().enumerate() { button { onclick: move |_| voer(werk,|w|w.kies_deel(doel,n)), "{naam}" } }
-                for v in beeld.velden { label { style: "display:block;margin:12px 0", "{v.naam}", textarea { style: "width:100%", disabled: !v.bewerkbaar, value: v.tekst, oninput: move |e| { let id=v.id.clone(); voer(werk,|w|w.bewerk(doel,Bewerking::Tekst { id,tekst:e.value() })); } } } }
+                for v in beeld.velden { label { key: "{v.id}", style: "display:block;margin:12px 0", "{v.naam}", textarea { style: "width:100%", disabled: !v.bewerkbaar, initial_value: v.tekst, oninput: move |e| { let id=v.id.clone(); voer(werk,|w|w.bewerk(doel,Bewerking::Tekst { id,tekst:e.value() })); } } } }
             }
             if let Some(src) = afbeelding { main { style: "overflow:auto;flex:1;background:#eee;padding:24px", img { src, alt: "Documentweergave uit de Rust-kern", style: "max-width:100%;height:auto" } } }
         }

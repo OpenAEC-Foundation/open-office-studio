@@ -41,7 +41,7 @@ fn webview_rust_dom_heeft_oorspronkelijke_schil_en_escape_documenttekst() {
     ] {
         assert!(html.contains(klasse), "{klasse}");
     }
-    assert!(html.contains("&lt;script&gt;onveilig()&lt;/script&gt;"));
+    assert!(html.contains("&#60;script&#62;onveilig()&#60;/script&#62;"));
     assert!(!html.contains("<script>onveilig()"));
     assert!(html.contains("aria-label=\"Paginatitel\""));
     assert!(html.contains("aria-label=\"Markdown-bron\""));
@@ -95,4 +95,32 @@ fn webview_clientmutaties_laten_inert_weg_buiten_een_dialoog() {
         }
         assert_eq!(aanwezig, modaal);
     }
+}
+
+#[test]
+fn webview_tekstinvoer_overschrijft_geen_nieuwere_browserwaarde() {
+    use dioxus::core::{AttributeValue, Mutation, Mutations};
+    let mut dom = VirtualDom::new(proef);
+    let mut mutaties = Mutations::default();
+    dom.rebuild(&mut mutaties);
+    let mut titel = false;
+    for mutatie in &mutaties.edits {
+        if let Mutation::SetAttribute {
+            name,
+            value: AttributeValue::Text(tekst),
+            ..
+        } = mutatie
+            && tekst.contains("onveilig()")
+        {
+            assert_eq!(
+                *name, "initial_value",
+                "Documenttekst mag geen levende invoer terugzetten"
+            );
+            titel = true;
+        }
+    }
+    assert!(
+        titel,
+        "De echte clientmutaties moeten de begintitel bevatten"
+    );
 }

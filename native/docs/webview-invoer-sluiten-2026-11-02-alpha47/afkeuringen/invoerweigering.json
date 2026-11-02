@@ -1,0 +1,19 @@
+{
+  "verwacht_mislukt": true,
+  "eindcode": 101,
+  "opdracht": [
+    "cargo",
+    "test",
+    "--manifest-path",
+    "native/Cargo.toml",
+    "--workspace",
+    "--locked",
+    "--features",
+    "open-office-studio-webview/desktop",
+    "-j1",
+    "webview_geweigerde_invoer",
+    "--",
+    "--test-threads=1"
+  ],
+  "betekenis": "Geweigerde invoer behoudt de bron maar vervangt het zichtbare ongecontroleerde invoerveld nog niet."
+}

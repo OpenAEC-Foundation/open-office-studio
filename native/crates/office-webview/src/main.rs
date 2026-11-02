@@ -31,6 +31,7 @@ fn app() -> Element {
     });
     let venster = dioxus::desktop::use_window();
     let sluitvenster = venster.clone();
+    let mut terugtonen = false;
     dioxus::desktop::use_wry_event_handler(move |event, _| {
         use dioxus::desktop::{
             WindowCloseBehaviour,
@@ -51,12 +52,15 @@ fn app() -> Element {
             });
             if vuil {
                 werk.write().venster_sluiten = true;
+                terugtonen = true;
             }
         }
-    });
-    use_effect(move || {
-        if werk.read().venster_sluiten {
-            venster.set_visible(true);
+        // Dioxus verbergt het venster na CloseRequested. Een effect na tekenen
+        // kan in een verborgen WebView blijven wachten; herstel via de native lus.
+        if terugtonen && matches!(event, Event::MainEventsCleared) {
+            terugtonen = false;
+            sluitvenster.set_visible(true);
+            sluitvenster.set_focus();
         }
     });
     rsx! { Scherm { werk } }

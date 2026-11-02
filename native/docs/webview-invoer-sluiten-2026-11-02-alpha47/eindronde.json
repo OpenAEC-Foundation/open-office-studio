@@ -1,0 +1,118 @@
+{
+  "afgerond": true,
+  "geslaagd": true,
+  "bronmanifest_sha256": "64b26a9477ba8378341db2b27651ce216850c1e9f5c72843ac648d20b0022b0b",
+  "bronbestanden": 7264,
+  "stappen": [
+    {
+      "naam": "rust-met-runtime",
+      "opdracht": [
+        "cargo",
+        "test",
+        "--manifest-path",
+        "native/Cargo.toml",
+        "--workspace",
+        "--locked",
+        "--features",
+        "open-office-studio-webview/desktop",
+        "-j1",
+        "--",
+        "--include-ignored",
+        "--test-threads=1"
+      ],
+      "eindcode": 0,
+      "seconden": 1645.195,
+      "log": "webview-alpha47-eindronde-rust-met-runtime.log",
+      "sha256": "78719ba341eb3b7b6c1411e7a25884a7703954d8a9d6ee6a34416a73d90c58e4"
+    },
+    {
+      "naam": "documenten-onafhankelijk",
+      "opdracht": [
+        "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "native/crates/office-core/tests/fixtures/controleer.py",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/webview-alpha47-eindronde-documenten"
+      ],
+      "eindcode": 0,
+      "seconden": 2.606,
+      "log": "webview-alpha47-eindronde-documenten-onafhankelijk.log",
+      "sha256": "8a5755f0c421fc878f3421f54c1630daff85fb379727dc56809cc1fdb8163212"
+    },
+    {
+      "naam": "conversie-onafhankelijk",
+      "opdracht": [
+        "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "native/crates/office-conversie/tests/controleer.py",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/webview-alpha47-eindronde-conversie"
+      ],
+      "eindcode": 0,
+      "seconden": 1.321,
+      "log": "webview-alpha47-eindronde-conversie-onafhankelijk.log",
+      "sha256": "2cebd3abf09245f126c56d3b3feb5d8ef442f2ccffbd363f44bce77907e29bdf"
+    },
+    {
+      "naam": "python",
+      "opdracht": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "native/scripts",
+        "-p",
+        "test_*.py"
+      ],
+      "eindcode": 0,
+      "seconden": 1.924,
+      "log": "webview-alpha47-eindronde-python.log",
+      "sha256": "e1f062b7452723e3aae857565b4fc8bf5bd658063e105e80a9e18b1e304a790e"
+    },
+    {
+      "naam": "stijl",
+      "opdracht": [
+        "python3",
+        "native/scripts/controleer-webview-bron.py"
+      ],
+      "eindcode": 0,
+      "seconden": 0.593,
+      "log": "webview-alpha47-eindronde-stijl.log",
+      "sha256": "f6c6456df548047023ac5b3915ddea81e4efd3cabdd16f9b7d98d5f4f08be620"
+    },
+    {
+      "naam": "bron",
+      "opdracht": [
+        "python3",
+        "native/scripts/controleer-bron.py"
+      ],
+      "eindcode": 0,
+      "seconden": 0.753,
+      "log": "webview-alpha47-eindronde-bron.log",
+      "sha256": "2913237d8476046d52392c3af78d3b302cb8c593b20e2b142634ae210f86b8e8"
+    },
+    {
+      "naam": "opmaak",
+      "opdracht": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "native/Cargo.toml",
+        "-p",
+        "office-core",
+        "-p",
+        "open-office-studio-native",
+        "-p",
+        "office-mail",
+        "-p",
+        "office-conversie",
+        "-p",
+        "open-office-studio-webview",
+        "--",
+        "--check"
+      ],
+      "eindcode": 0,
+      "seconden": 1.986,
+      "log": "webview-alpha47-eindronde-opmaak.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "bron_voor_en_na_bytegelijk": true
+}

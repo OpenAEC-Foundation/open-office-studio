@@ -169,3 +169,77 @@ fn webview_boek_sectie_en_markdown_hebben_werkelijke_rust_bewerkingen() {
     let vak = &w.tab().unwrap().beeld.notitie.as_ref().unwrap().vakken[0];
     assert_eq!((vak.grens.x, vak.grens.y), (360., 240.));
 }
+
+#[test]
+fn webview_invoerveld_blijft_stabiel_bij_typen_en_vernieuwt_bij_herstel() {
+    let (mut w, d) = notities();
+    let sleutel = d.sleutel();
+    titel(&mut w, d, "Snelle invoer");
+    assert_eq!(w.tab().unwrap().doel().sleutel(), sleutel);
+    w.historie(d, false).unwrap();
+    let hersteld = w.tab().unwrap().doel();
+    assert_ne!(hersteld.sleutel(), sleutel);
+    assert_ne!(w.tab().unwrap().beeld.velden[0].tekst, "Snelle invoer");
+    w.historie(hersteld, true).unwrap();
+    let opnieuw = w.tab().unwrap().doel();
+    assert_ne!(opnieuw.sleutel(), hersteld.sleutel());
+    assert_eq!(w.tab().unwrap().beeld.velden[0].tekst, "Snelle invoer");
+    w.kies_deel(opnieuw, 0).unwrap();
+    assert_ne!(w.tab().unwrap().doel().sleutel(), opnieuw.sleutel());
+    assert!(w.bewerk(opnieuw, Bewerking::Notitie(N::NieuwBoek)).is_err());
+    assert_eq!(w.tab().unwrap().tabnaam(), "Notities");
+    assert_eq!(
+        w.tab().unwrap().venstertitel(),
+        "Open Office Studio (Notities) •"
+    );
+}
+
+#[test]
+fn webview_geweigerde_invoer_herstelt_het_zichtbare_veld_en_behoudt_de_bron() {
+    let (mut w, d) = notities();
+    let bron = w.tab().unwrap().sessie.bron();
+    let veld = w.tab().unwrap().beeld.velden[1].clone();
+    assert!(
+        w.bewerk(
+            d,
+            Bewerking::Tekst {
+                id: veld.id.clone(),
+                tekst: "é".repeat(250_001),
+            }
+        )
+        .is_err()
+    );
+    assert_eq!(w.tab().unwrap().sessie.bron().as_slice(), bron.as_slice());
+    assert_eq!(w.tab().unwrap().beeld.velden[1].tekst, veld.tekst);
+    assert!(!w.tab().unwrap().gewijzigd());
+    assert!(!w.tab().unwrap().sessie.kan_terug());
+    let hersteld = w.tab().unwrap().doel();
+    assert_ne!(
+        hersteld.sleutel(),
+        d.sleutel(),
+        "Een geweigerd browserconcept moet uit het zichtbare veld verdwijnen"
+    );
+    assert!(w.tab().unwrap().melding.contains("Notitietekst te lang"));
+    assert!(
+        w.bewerk(
+            d,
+            Bewerking::Tekst {
+                id: veld.id.clone(),
+                tekst: "Verlate invoer".into()
+            }
+        )
+        .is_err()
+    );
+    w.bewerk(
+        hersteld,
+        Bewerking::Tekst {
+            id: veld.id,
+            tekst: "Geldige invoer na herstel".into(),
+        },
+    )
+    .unwrap();
+    assert_eq!(
+        w.tab().unwrap().beeld.velden[1].tekst,
+        "Geldige invoer na herstel"
+    );
+}
