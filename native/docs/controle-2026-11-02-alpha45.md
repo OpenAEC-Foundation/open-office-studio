@@ -1,0 +1,13 @@
+# Native controle: 2 november 2026, alpha 45
+
+**2026.45.0-alpha.45** bewaart meldingen per document. Een inactief werkdraadantwoord, een bewaarsucces of een bewaarfout vervangt geen waarschuwing van het actieve tabblad. Terugkeer toont de eigen melding. De directe Writer-routes binden hun fout aan dezelfde eigenaar en behouden de oorspronkelijke bron.
+
+Vier oorspronkelijke centrale afkeuringen en twee afzonderlijke Writer-afkeuringen zijn vastgelegd. De zes nieuwe UI-proeven slagen na de correcties. Alle negen lokale controlefasen zijn groen: **442 reguliere Rust-proeven**, waarvan **189 UI-proeven**, inclusief het X11-contract; daarnaast **zes afzonderlijke runtimeproeven** en **zeven Python-tests**. De **733 bronbestanden** zijn bytegelijk tussen werkboom, Git-index en herstelde bron. Alle stapstatussen en de afzonderlijke terminal-eindstatus zijn nul.
+
+De echte Linux-debughertest gebruikt per versie negentien vastgelegde stappen. Een eigen notitiekopie wordt bewust extern gewijzigd; het werkelijk zichtbare bewaarconflict blijft bij terugkeer behouden in alpha45 en wordt vergeten in alpha44. Volledige frames bevestigen dat verschil zonder uitsneden of maskers. Beide versies behouden de externe wijziging; de eigen Writer-bron blijft bytegelijk. Deze GUI-proef controleert foutbehoud na wisselen. De inactieve antwoordvolgordes zijn afzonderlijk deterministisch gecontroleerd in Rust.
+
+De eerste samengevoegde Ctrl+S/muisklikproef gaf geen bewezen notitie-bewaarconflict en blijft behouden. Opdracht-eigendom bij zeer snelle toetsen/tabwissels moet verder worden gecontroleerd. De weergave van een behouden fout mag daarmee niet worden verward.
+
+De 61 widgetbeelden zijn vastgelegd. Vijftien gedeelde documentbeelden, acht letterbeelden en twee symboolbeelden zijn exact gelijk aan alpha44. Alle acht oorspronkelijke volledige browser-/desktopvergelijkingen blijven afgekeurd. Referenties, schaal en nul tolerantie zijn ongewijzigd. De nieuwe documentbalk en Start-route zijn uitsluitend een afzonderlijk prototype; zij behoren niet tot deze geteste alpha45-bron.
+
+[Volledige lokale bewijzen](documentmeldingen-2026-11-02-alpha45/LEESMIJ.md) en [schermmetingen](schermen-2026-11-02-alpha45.json) blijven gekoppeld. Alpha45-platform- en geoptimaliseerde releasevenstercontrole zijn nog open. Alpha44 is afgesloten met vijf groene CI-taken, 122 exacte native beeldparen, 5168 bytegelijke bronbestanden per pakket, 21 exacte paginabezoeken en 58 gerichte stappen op de echte geoptimaliseerde Linux-build. Geen fysieke GUI- of installatiegoedkeuring voor Windows/macOS. Alle dertig migratieacceptaties blijven false.

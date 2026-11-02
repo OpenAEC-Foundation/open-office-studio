@@ -8,6 +8,10 @@ De echte Linux-debugproef bevat 58 vastgelegde stappen: thema en instellingen, w
 
 Twee eerste vensterproeven zijn geen productafkeuring: de eerste had geen interactieve stdin; de tweede telde een GTK-tooltip als tweede dialoogvenster. De gecorrigeerde helper kiest uitsluitend een groot eigen dialoogvenster. Een eerste onafhankelijke controle gebruikte daarnaast een onjuiste tijdstempelsleutel. De oorspronkelijke rapporten en proefcode blijven ongewijzigd behouden. Focus is na systeemdialogen expliciet op het eigen venster gezet; automatisch focusherstel onder een normale windowmanager is niet bewezen.
 
-Alle acht volledige oorspronkelijke browser-/desktopvergelijkingen blijven afgekeurd, zonder maskers, herschaling of kleurtolerantie. Onder meer het venstermenu, de Start-route van het beeldmerk, gemaximaliseerde vensterstatus, responsieve bediening, volledige linten en tabbladen zijn nog niet gelijkwaardig. Alpha44-platform- en geoptimaliseerde releasevenstercontroles zijn nog open. Een achtergrondantwoord kan in andere routes bovendien nog een vreemde statusmelding tonen; dit krijgt aanvullende regressies. Alle dertig migratieacceptaties blijven false.
+Alle acht volledige oorspronkelijke browser-/desktopvergelijkingen blijven afgekeurd, zonder maskers, herschaling of kleurtolerantie. Onder meer het venstermenu, de Start-route van het beeldmerk, gemaximaliseerde vensterstatus, responsieve bediening, volledige linten en tabbladen zijn nog niet gelijkwaardig. Alle vijf alpha44-CI-taken slagen: 122 native beeldparen, 5168 bronbestanden per pakket en 21 paginabezoeken zijn exact; de echte geoptimaliseerde Linux-releasevensterproef slaagt voor dezelfde 58 gerichte stappen met behouden bronkopieën en opgeslagen notitie. Een achtergrondantwoord kan in andere routes bovendien nog een vreemde statusmelding tonen; dit krijgt aanvullende regressies. Alle dertig migratieacceptaties blijven false.
 
 [Alle verliesloze bewijzen](bewijskopieen.json)
+
+[Afgesloten platformronde en ruwe bewijzen](ci-afsluiting/bewijskopieen.json). Alle veertien artefacten zijn geïnventariseerd.
+
+[Afgesloten geoptimaliseerde Linux-releasevensterproef](releasevenster/LEESMIJ.md).

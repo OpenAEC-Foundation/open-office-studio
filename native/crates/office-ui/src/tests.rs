@@ -2705,3 +2705,75 @@ fn vensterbalk_echte_muisklikken_bewaren_acties_en_geven_geen_onbedoelde_sleepta
     app.tab_mut().unwrap().bezig = true;
     assert!(vensterbalk_klik(&app, Some("Opslaan als")).is_empty());
 }
+
+#[test]
+fn achtergrondmelding_succes_bewaart_de_actieve_waarschuwing_en_ververst_alleen_de_eigen_tab() {
+    let mut app = tabbladproef();
+    let waarschuwing = app.melding.clone();
+    let mut antwoord = app.tabs[0].antwoord.as_ref().unwrap().clone();
+    antwoord.beeld.melding = "Nieuw antwoord van document 1".into();
+    let _ = app.update(Msg::Gereed(1, Ok(antwoord)));
+    assert_eq!(app.tab().unwrap().id, 2);
+    assert_eq!(app.melding, waarschuwing);
+    let _ = app.update(Msg::Selecteer(0));
+    assert_eq!(app.melding, "Nieuw antwoord van document 1");
+    let _ = app.update(Msg::Selecteer(1));
+    assert_eq!(app.melding, waarschuwing);
+}
+
+#[test]
+fn achtergrondmelding_fout_blijft_bij_haar_document_en_verdringt_geen_andere_waarschuwing() {
+    let mut app = tabbladproef();
+    let waarschuwing = app.melding.clone();
+    let hash = app.tabs[0].antwoord.as_ref().unwrap().hash.clone();
+    let _ = app.update(Msg::Gereed(
+        1,
+        Err("Bewerking van document 1 geweigerd".into()),
+    ));
+    assert_eq!(app.melding, waarschuwing);
+    assert_eq!(app.tabs[0].antwoord.as_ref().unwrap().hash, hash);
+    let _ = app.update(Msg::Selecteer(0));
+    assert_eq!(app.melding, "Bewerking van document 1 geweigerd");
+    let _ = app.update(Msg::Selecteer(1));
+    assert_eq!(app.melding, waarschuwing);
+}
+
+#[test]
+fn achtergrondmelding_opslaan_ververst_haar_eigen_bestandsnaam_en_status() {
+    let mut app = tabbladproef();
+    let waarschuwing = app.melding.clone();
+    let hash = app.tabs[0].antwoord.as_ref().unwrap().hash.clone();
+    app.tabs[0].schrijft = true;
+    let _ = app.update(Msg::Geschreven(
+        1,
+        PathBuf::from("Bewaard-eerste.json"),
+        Ok((hash.clone(), hash, None)),
+    ));
+    assert_eq!(app.melding, waarschuwing);
+    assert!(!app.tabs[0].schrijft);
+    assert_eq!(app.tabs[0].naam, "Bewaard-eerste.json");
+    let _ = app.update(Msg::Selecteer(0));
+    assert_eq!(app.melding, "Opgeslagen");
+    let _ = app.update(Msg::Selecteer(1));
+    assert_eq!(app.melding, waarschuwing);
+}
+
+#[test]
+fn achtergrondmelding_bewaarfout_blijft_terugvindbaar_zonder_verlies_van_een_andere_tabstatus() {
+    let mut app = tabbladproef();
+    let waarschuwing = app.melding.clone();
+    let naam = app.tabs[0].naam.clone();
+    app.tabs[0].schrijft = true;
+    let _ = app.update(Msg::Geschreven(
+        1,
+        PathBuf::from("Niet-bewaard.json"),
+        Err("Document 1 is extern gewijzigd".into()),
+    ));
+    assert_eq!(app.melding, waarschuwing);
+    assert!(!app.tabs[0].schrijft);
+    assert_eq!(app.tabs[0].naam, naam);
+    let _ = app.update(Msg::Selecteer(0));
+    assert_eq!(app.melding, "Document 1 is extern gewijzigd");
+    let _ = app.update(Msg::Selecteer(1));
+    assert_eq!(app.melding, waarschuwing);
+}

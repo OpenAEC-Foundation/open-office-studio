@@ -207,6 +207,7 @@ struct WriterMarkering {
 struct Tab {
     id: u64,
     naam: String,
+    melding: Option<String>,
     pad: Option<PathBuf>,
     verwacht: Option<String>,
     opgeslagen: Option<String>,
@@ -248,6 +249,7 @@ impl Tab {
         Self {
             id,
             naam,
+            melding: None,
             pad: None,
             verwacht: None,
             opgeslagen: None,
@@ -868,7 +870,10 @@ impl App {
                                 tab.panelen = false;
                                 tab.raster.focus = actief_id == Some(id);
                             }
-                            self.melding = antwoord.beeld.melding.clone();
+                            tab.melding = Some(antwoord.beeld.melding.clone());
+                            if actief_id == Some(id) {
+                                self.melding = antwoord.beeld.melding.clone();
+                            }
                             tab.raster.plaktekst = None;
                             // Een nieuwe handle krijgt een unieke decoderidentiteit.
                             // Een selectiestap met hetzelfde paginabeeld houdt de
@@ -975,7 +980,10 @@ impl App {
                             vervolg = tab.na_bewerking.take();
                         }
                         Err(e) => {
-                            self.melding = e;
+                            tab.melding = Some(e.clone());
+                            if actief_id == Some(id) {
+                                self.melding = e;
+                            }
                             tab.na_bewerking = None;
                             tab.raster.na_bewerking = None;
                             tab.raster.na_richting = None;
@@ -1006,6 +1014,12 @@ impl App {
             Msg::Selecteer(n) => {
                 if n < self.tabs.len() {
                     let andere = self.actief != n;
+                    if andere {
+                        let melding = self.melding.clone();
+                        if let Some(t) = self.tab_mut() {
+                            t.melding = Some(melding);
+                        }
+                    }
                     self.actief = n;
                     self.bestand = false;
                     if andere {
@@ -1609,6 +1623,7 @@ impl App {
                 self.venster_sluiten = false;
             }
             Msg::Geschreven(id, pad, resultaat) => {
+                let actief_id = self.tab().map(|t| t.id);
                 let mut vervolg = None;
                 if let Some(t) = self.tabs.iter_mut().find(|t| t.id == id) {
                     t.schrijft = false;
@@ -1621,13 +1636,19 @@ impl App {
                             t.naam = pad.file_name().unwrap_or_default().to_string_lossy().into();
                             t.verwacht = Some(hash.clone());
                             t.opgeslagen = Some(bronhash);
-                            self.melding = "Opgeslagen".into();
+                            t.melding = Some("Opgeslagen".into());
+                            if actief_id == Some(id) {
+                                self.melding = "Opgeslagen".into();
+                            }
                             if !t.bezig {
                                 vervolg = t.na_bewerking.take();
                             }
                         }
                         Err(e) => {
-                            self.melding = e;
+                            t.melding = Some(e.clone());
+                            if actief_id == Some(id) {
+                                self.melding = e;
+                            }
                             t.na_bewerking = None;
                             raster_invoer::mislukking(t);
                             self.sluiten = None;
@@ -1888,6 +1909,18 @@ impl App {
         taken.push(presentatie_ui::vraag(self));
         Task::batch(taken)
     }
+    /// Achtergrondmeldingen blijven bij de eigenaar; gesloten documenten
+    /// mogen geen status van een later gekozen document vervangen.
+    fn documentmelding(&mut self, id: u64, melding: impl Into<String>) {
+        let melding = melding.into();
+        let actief = self.tab().is_some_and(|t| t.id == id);
+        if let Some(t) = self.tabs.iter_mut().find(|t| t.id == id) {
+            t.melding = Some(melding.clone());
+            if actief {
+                self.melding = melding;
+            }
+        }
+    }
     fn waarschuwing(&mut self, m: &str) -> Task<Msg> {
         self.melding = m.into();
         Task::none()
@@ -1896,10 +1929,12 @@ impl App {
         self.melding = self
             .tab()
             .map(|t| {
-                t.antwoord
-                    .as_ref()
-                    .map(|a| a.beeld.melding.clone())
-                    .unwrap_or_else(|| "Document wordt geladen…".into())
+                t.melding.clone().unwrap_or_else(|| {
+                    t.antwoord
+                        .as_ref()
+                        .map(|a| a.beeld.melding.clone())
+                        .unwrap_or_else(|| "Document wordt geladen…".into())
+                })
             })
             .unwrap_or_else(|| "Gereed".into());
     }

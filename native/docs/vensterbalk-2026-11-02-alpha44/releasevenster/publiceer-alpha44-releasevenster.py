@@ -1,0 +1,25 @@
+from pathlib import Path
+import json,hashlib,gzip
+r=Path.cwd();w=r/'.local/controle-2026-10-31';g=w/'gui-alpha44-release-vensterbalk';v=json.loads((w/'native-alpha44-release-venster-controle.json').read_text());assert v['stappen']==58 and v['wrapper_exitcode']==0;u=r/'native/docs/vensterbalk-2026-11-02-alpha44/releasevenster';u.mkdir();items=[]
+def kopie(p,naam):
+ raw=p.read_bytes();q=u/naam;gz=p.suffix=='.log';q=q.with_name(q.name+'.gz') if gz else q;assert not q.exists();q.write_bytes(gzip.compress(raw,mtime=0) if gz else raw);assert (gzip.decompress(q.read_bytes()) if gz else q.read_bytes())==raw;items.append({'bron':p.relative_to(r).as_posix(),'bestand':q.name,'bron_sha256':hashlib.sha256(raw).hexdigest(),'opgeslagen_sha256':hashlib.sha256(q.read_bytes()).hexdigest()})
+for p in sorted(g.iterdir()):
+ if p.is_file():kopie(p,p.name)
+for n in ['controleer-alpha44-release-venster.py','native-alpha44-release-venster-controle.json','gui-alpha44-release-vensterbalk.py','venster-alpha44-release-vensterbalk.py','native-alpha44-release-vensterbalk-terminal.log','acties-alpha44-release-vensterbalk.jsonl','publiceer-alpha44-releasevenster.py']:kopie(w/n,n)
+kopie(w/'native-alpha44-ci-linux-vast/herkomst.json','releaseprogramma-herkomst.json')
+(u/'bewijskopieen.json').write_text(json.dumps({'omvang':'Daadwerkelijke geoptimaliseerde Linux-build uit de vijf groene alpha44-CI-taken, 58 gerichte vensterstappen. Geen fysieke Windows/macOS-, installatie- of volledige oorspronkelijke functie-/pixelgoedkeuring.','kopieen':items},ensure_ascii=False,indent=2)+'\n')
+(u/'LEESMIJ.md').write_text('''# Werkelijke geoptimaliseerde Linux-releaseproef alpha44
+
+De echte Linux-build uit CI-ronde 41383163426 sluit 58 eigen vensterstappen af. De gecontroleerde GUI en helper zijn vóór gebruik op versie en SHA-256 gecontroleerd en als vaste 555-kopieën bewaard. Thema en instellingen, werkelijk Opslaan als en heropenen via GTK, snelle opslag, drie documenten, actieve eigenaar bij sluiten links, eigen Writer-metadata, panelen en sluiten tot Gereed worden gecontroleerd. De opgeslagen notitie en beide bronkopieën blijven bytegelijk.
+
+Dezelfde eerder daadwerkelijk bediende debugreeks wordt op de echte CI-release uitgevoerd in eigen Xvfb, D-Bus en XDG-mappen. Na GTK-dialogen wordt uitsluitend het eigen gecontroleerde app-/dialoogvenster gefocust. Normaal automatisch focusherstel, fysieke andere platformen en installatie worden hiermee niet bewezen. De ruwe opnamen en alle tussenstappen blijven intact. Dit is geen volledige suite- of oorspronkelijke pixelgoedkeuring.
+
+[Verliesloze bewijzen](bewijskopieen.json)
+''')
+d=r/'native/docs';p=d/'controle-2026-11-02-alpha44.md';s=p.read_text();oud='De geoptimaliseerde alpha44-releasevenstercontrole is nog open.';assert oud in s;s=s.replace(oud,'De [daadwerkelijke geoptimaliseerde Linux-releasevensterproef](vensterbalk-2026-11-02-alpha44/releasevenster/LEESMIJ.md) is ook afgesloten: 58 gerichte stappen slagen met behouden bronkopieën en opgeslagen notitie. De GUI-/helperhashes zijn aan het echte CI-pakket gekoppeld.');p.write_text(s)
+p=d/'vensterbalk-2026-11-02-alpha44/LEESMIJ.md';s=p.read_text().replace('de geoptimaliseerde releasevenstercontrole is nog open','de echte geoptimaliseerde Linux-releasevensterproef slaagt voor dezelfde 58 gerichte stappen met behouden bronkopieën en opgeslagen notitie');p.write_text(s+'\n[Afgesloten geoptimaliseerde Linux-releasevensterproef](releasevenster/LEESMIJ.md).\n')
+p=r/'native/README.md';s=p.read_text().replace('Alle oorspronkelijke UI-vergelijkingen en de geoptimaliseerde alpha44-releasevenstercontrole blijven open.','De geoptimaliseerde alpha44-Linux-releasevensterproef sluit 58 gerichte stappen af met behouden bronnen; alle oorspronkelijke UI-vergelijkingen blijven afgekeurd.',1);p.write_text(s)
+p=r/'README.md';s=p.read_text().replace('The optimized alpha 44 release-window check remains open; all eight original UI comparisons still fail.','The actual optimized alpha 44 Linux release window completes 58 focused steps and preserves its sources; all eight original UI comparisons still fail.',1);p.write_text(s)
+for n in ['controle-2026-11-02-alpha45.md','documentmeldingen-2026-11-02-alpha45/LEESMIJ.md']:
+ p=d/n;s=p.read_text().replace('Alpha44 heeft vijf groene CI-taken; aanvullende pakket-/releasevensterbewijzen blijven aan die eerdere bron gebonden.','Alpha44 is afgesloten met vijf groene CI-taken, 122 exacte native beeldparen, 5168 bytegelijke bronbestanden per pakket, 21 exacte paginabezoeken en 58 gerichte stappen op de echte geoptimaliseerde Linux-build.').replace('Alpha44 heeft vijf groene CI-taken; de afzonderlijke pakketverificatie en releasevensterproef worden aan haar eigen bron gekoppeld.','Alpha44 sluit vijf CI-taken en de echte geoptimaliseerde Linux-releasevensterproef af: 122 native beeldparen, 5168 bronbestanden per pakket, 21 paginabezoeken en 58 gerichte vensterstappen zijn gecontroleerd.');p.write_text(s)
+print({'verliesloze_bewijzen':len(items),'releasevensterstappen':58})

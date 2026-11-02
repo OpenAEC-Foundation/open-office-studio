@@ -1,0 +1,15 @@
+# Documentgebonden meldingen alpha45
+
+Centrale werkdraadantwoorden en bewaarmeldingen krijgen een eigenaar per tabblad. Een inactief antwoord mag geen waarschuwing van het actieve document vervangen. Bij terugkeer blijft een eigen fout of bewaarstatus zichtbaar. De afzonderlijke directe Writer-routes gebruiken dezelfde documentbinding voor werkfouten, ontbrekende cursors, ongeldige selectie over alinea’s en ontbrekende doelalinea’s; de bron blijft intact.
+
+Vier nieuwe regressies falen op de oorspronkelijke alpha44-code. Na de centrale correctie slagen zij. Twee aanvullende Writer-regressies falen eerst en slagen na de eigen Writer-correctie. Zes nieuwe UI-proeven controleren ook de terugkeer naar de juiste waarschuwing, bronbehoud en de vier gecontroleerde Writer-foutroutes.
+
+De volledige lokale ronde sluit alle negen fasen af: 442 reguliere Rust-proeven (189 UI), zes werkelijk afzonderlijke runtimeproeven en zeven Python-tests. Alle 733 bronbestanden zijn vanuit basiscommit plus volledige patch hersteld, na afloop bytegelijk en met de Git-index vergeleken. De 61 widgetbeelden zijn vastgelegd; vijftien gedeelde documentbeelden, acht letterbeelden en twee symboolbeelden blijven exact gelijk aan alpha44. Alle acht oorspronkelijke UI-vergelijkingen blijven afgekeurd.
+
+Twee echte Linux-debugvensters gebruiken dezelfde eigen bestanden, elk met negentien stappen. De notitiekopie wordt uitsluitend door de proef bewust extern veranderd. Ctrl+S legt eerst een werkelijk bewaarconflict vast; daarna volgt wisselen naar Writer en terug. Alpha44 vergeet de eigen fout: haar volledige frame na terugkeer is exact gelijk aan het frame vóór de fout. Alpha45 behoudt haar: haar volledige frame na terugkeer is exact gelijk aan het frame mét de fout. De extern gewijzigde kopie wordt in beide versies niet overschreven; de eigen Writer-bron blijft bytegelijk. De volledige beelden zijn visueel beoordeeld en zonder uitsnede, maskers of herschaling vergeleken. Inactieve antwoordvolgordes zijn afzonderlijk deterministisch in de Rust-proeven gecontroleerd.
+
+De eerste gecombineerde Ctrl+S/muisklikproef bewijst geen notitie-bewaarconflict: Writer meldde Opgeslagen en de notitiekopie bleef extern gewijzigd. Opdracht-eigendom bij zeer snelle toetsen/tabwissels moet afzonderlijk verder worden gecontroleerd; dit wordt niet als opgelost beschouwd. De eerste opstellingen en twee afgewezen verwachtingen bij veilige testcacheopruiming blijven als bewijs behouden. Alle vaste GUI/helperparen, bronnen en testuitvoer blijven bewaard.
+
+Alpha45-platform- en geoptimaliseerde releasevenstercontrole zijn nog open. Alpha44 sluit vijf CI-taken en de echte geoptimaliseerde Linux-releasevensterproef af: 122 native beeldparen, 5168 bronbestanden per pakket, 21 paginabezoeken en 58 gerichte vensterstappen zijn gecontroleerd. Fysieke Windows/macOS-, installatie-, volledige oorspronkelijke functie- en pixelpariteit blijven open. Alle dertig migratieacceptaties blijven false.
+
+[Alle verliesloze bewijzen](bewijskopieen.json)

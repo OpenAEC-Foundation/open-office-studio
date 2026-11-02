@@ -293,13 +293,17 @@ pub fn update(app: &mut App, id: u64, b: Bericht) -> Task<Msg> {
         st.nieuwe_groep();
         st.ververs(t);
         t.writer_direct = st;
-        app.melding = format!(
-            "Niet toegepaste invoer en {aantal} wachtende opdrachten op jouw verzoek verworpen"
+        app.documentmelding(
+            id,
+            format!(
+                "Niet toegepaste invoer en {aantal} wachtende opdrachten op jouw verzoek verworpen"
+            ),
         );
         return Task::none();
     }
     if t.writer_direct.rij.len() >= 4096 {
-        return app.waarschuwing("De invoerbuffer is vol; wacht tot de tekst is verwerkt");
+        app.documentmelding(id, "De invoerbuffer is vol; wacht tot de tekst is verwerkt");
+        return Task::none();
     }
     t.writer_direct.rij.push_back((b, Instant::now()));
     verwerk(app, id)
@@ -713,13 +717,14 @@ fn verwerk(app: &mut App, id: u64) -> Task<Msg> {
         resultaat
     };
     if let Some(e) = fout {
-        app.melding = if st.fout {
+        let melding = if st.fout {
             format!(
                 "Niet toegepast: {e}. De invoer blijft bewaard; Ctrl+Z verwerpt dit concept en de wachtende opdrachten."
             )
         } else {
             e
         };
+        app.documentmelding(id, melding);
         app.tabs[i].writer_focus.store(false, Ordering::Relaxed);
     }
     app.tabs[i].writer_direct = st;
@@ -838,9 +843,9 @@ pub fn gereed(app: &mut App, d: Doel, r: Result<Antwoord, String>) -> Task<Msg> 
             t.bezig = false;
             t.writer_direct.fout = true;
             t.writer_focus.store(false, Ordering::Relaxed);
-            app.melding = format!(
+            app.documentmelding(d.document, format!(
                 "Niet toegepast: {e}. De invoer blijft bewaard; Ctrl+Z verwerpt dit concept en de wachtende opdrachten."
-            );
+            ));
             return Task::none();
         }
     };
@@ -870,7 +875,7 @@ pub fn gereed(app: &mut App, d: Doel, r: Result<Antwoord, String>) -> Task<Msg> 
     if let Soort::Cursor { selecteren } = v.soort {
         let Some(c) = &cursor_doel else {
             app.tabs[i].bezig = false;
-            app.melding = "De navigatie leverde geen cursor op".into();
+            app.documentmelding(d.document, "De navigatie leverde geen cursor op");
             return Task::none();
         };
         if selecteren && c.punt.id != v.cursor.id {
@@ -878,12 +883,12 @@ pub fn gereed(app: &mut App, d: Doel, r: Result<Antwoord, String>) -> Task<Msg> 
             t.bezig = false;
             t.writer_direct.fout = true;
             t.writer_focus.store(false, Ordering::Relaxed);
-            app.melding="Selecties over meerdere alinea’s zijn nog niet aangesloten. De bron blijft ongewijzigd; Ctrl+Z verwerpt wachtende invoer.".into();
+            app.documentmelding(d.document, "Selecties over meerdere alinea’s zijn nog niet aangesloten. De bron blijft ongewijzigd; Ctrl+Z verwerpt wachtende invoer.");
             return Task::none();
         }
         let Some(veld) = a.beeld.velden.iter().find(|f| f.id == c.punt.id) else {
             app.tabs[i].bezig = false;
-            app.melding = "De doelalinea ontbreekt in het navigatiebeeld".into();
+            app.documentmelding(d.document, "De doelalinea ontbreekt in het navigatiebeeld");
             return Task::none();
         };
         let selectie = selecteren.then_some(
@@ -983,10 +988,125 @@ pub fn gereed(app: &mut App, d: Doel, r: Result<Antwoord, String>) -> Task<Msg> 
     if let Some(e) = cursorfout {
         st.fout = true;
         t.writer_focus.store(false, Ordering::Relaxed);
+        t.melding = Some(e.clone());
         if actief {
             app.melding = e;
         }
     }
     t.writer_direct = st;
     Task::batch([taak, verwerk(app, d.document)])
+}
+
+#[cfg(test)]
+mod statusproeven {
+    use super::*;
+
+    fn twee_documenten() -> App {
+        let mut app = crate::tests::app_met_document(
+            Module::Writer,
+            include_bytes!("../../../../docs/voorbeelden/Ontwerpnotitie.docx"),
+        );
+        let mut tab = Tab::nieuw(2, "Tweede-document.docx".into());
+        tab.antwoord = app.tabs[0].antwoord.clone();
+        tab.bezig = false;
+        tab.toon_veld(0);
+        app.tabs.push(tab);
+        app.actief = 1;
+        app.melding = "Waarschuwing van het actieve document".into();
+        app
+    }
+
+    fn vlucht(app: &mut App, soort: Soort) -> Doel {
+        let t = &mut app.tabs[0];
+        let doel = Doel {
+            document: t.id,
+            volgnummer: nummer(),
+        };
+        let cursor = Cursor::van(t, &t.writer_direct).unwrap();
+        t.writer_direct.vlucht = Some(Vlucht {
+            doel: doel.clone(),
+            hash: t.antwoord.as_ref().unwrap().hash.clone(),
+            cursor,
+            soort,
+        });
+        t.bezig = true;
+        doel
+    }
+
+    #[test]
+    fn achtergrondmelding_writer_werkfout_blijft_bij_haar_eigen_document() {
+        let mut app = twee_documenten();
+        let waarschuwing = app.melding.clone();
+        let bron = app.tabs[0].antwoord.as_ref().unwrap().bron.clone();
+        let doel = vlucht(&mut app, Soort::Opmaak);
+        let _ = gereed(&mut app, doel, Err("Afgewezen achtergrondbewerking".into()));
+        assert_eq!(app.melding, waarschuwing);
+        assert!(app.tabs[0].writer_direct.fout);
+        assert!(!app.tabs[0].bezig);
+        assert_eq!(app.tabs[0].antwoord.as_ref().unwrap().bron, bron);
+        let _ = app.update(Msg::Selecteer(0));
+        assert!(
+            app.melding
+                .starts_with("Niet toegepast: Afgewezen achtergrondbewerking")
+        );
+        let _ = app.update(Msg::Selecteer(1));
+        assert_eq!(app.melding, waarschuwing);
+    }
+
+    #[test]
+    fn achtergrondmelding_writer_navigatiefouten_blijven_terugvindbaar_zonder_andere_tabstatus_te_vervangen()
+     {
+        for (keuze, prefix) in [
+            (0, "De navigatie leverde geen cursor op"),
+            (1, "De doelalinea ontbreekt in het navigatiebeeld"),
+            (
+                2,
+                "Selecties over meerdere alinea’s zijn nog niet aangesloten",
+            ),
+        ] {
+            let mut app = twee_documenten();
+            let waarschuwing = app.melding.clone();
+            let mut antwoord = app.tabs[0].antwoord.as_ref().unwrap().clone();
+            let bron = antwoord.bron.clone();
+            if keuze > 0 {
+                let id = if keuze == 1 {
+                    "ontbrekende-bronalinea".to_string()
+                } else {
+                    antwoord.beeld.velden[1].id.clone()
+                };
+                assert_ne!(id, app.tabs[0].veld().unwrap().id);
+                antwoord.writer_cursor = Some(CursorDoel {
+                    pagina: 0,
+                    punt: TekstPunt { id, positie: 0 },
+                    cursor: office_core::interactie::Rechthoek {
+                        x: 0.,
+                        y: 0.,
+                        breedte: 1.,
+                        hoogte: 1.,
+                    },
+                    regel: None,
+                    basislijn: 0.,
+                    doel_x: None,
+                });
+            }
+            let doel = vlucht(
+                &mut app,
+                Soort::Cursor {
+                    selecteren: keuze == 2,
+                },
+            );
+            let _ = gereed(&mut app, doel, Ok(antwoord));
+            assert_eq!(app.melding, waarschuwing, "navigatiegeval {keuze}");
+            assert!(!app.tabs[0].bezig);
+            assert_eq!(app.tabs[0].antwoord.as_ref().unwrap().bron, bron);
+            let _ = app.update(Msg::Selecteer(0));
+            assert!(
+                app.melding.starts_with(prefix),
+                "navigatiegeval {keuze}: {}",
+                app.melding
+            );
+            let _ = app.update(Msg::Selecteer(1));
+            assert_eq!(app.melding, waarschuwing);
+        }
+    }
 }
