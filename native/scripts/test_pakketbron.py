@@ -124,6 +124,10 @@ class Pakketbron(unittest.TestCase):
                 'native/vendor/xlsx-parse/src/lf.rs': b'// Oorspronkelijke LF\n',
                 'native/vendor/xlsx-parse/src/crlf.rs': b'// Oorspronkelijke CRLF\r\n',
             }
+            bronroot = Path(__file__).resolve().parents[2]
+            stijlbron = json.loads((bronroot/'native/crates/office-webview/stijlbronnen.json').read_text(encoding='utf-8'))
+            for naam in stijlbron.get('testbenodigd', []):
+                bestanden[naam] = (bronroot/naam).read_bytes()
             for naam, inhoud in bestanden.items():
                 pad = repo/naam
                 pad.parent.mkdir(parents=True, exist_ok=True)

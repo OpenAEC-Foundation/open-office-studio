@@ -1,7 +1,7 @@
 {
   "datum": "2026-11-03",
   "versie": "2026.45.0-alpha.48",
-  "status": "Volledige lokale Rust-testreeks, Clippy, bron-/pakketproeven en geoptimaliseerde Linux-releasevensters geslaagd. De WebView-platform-CI op a32b081 slaagt op drie platforms; de afzonderlijke bredere native-CI loopt nog.",
+  "status": "Volledige lokale Rust-testreeks, Clippy en geoptimaliseerde Linux-releasevensters geslaagd. WebView-CI a32b081 slaagt op drie platforms. De bredere native-CI bouwt en test drie platforms succesvol, maar de afsluitende pakketbronvergelijking faalt op Windows-regelafbrekingen van gedeelde GUI-hulpbronnen. Gerichte checkoutproef en LF-correctie slagen lokaal; nieuwe platformvergelijking blijft nodig.",
   "rust": {
     "geslaagd": 488,
     "mislukt": 0,
@@ -106,5 +106,16 @@
     ],
     "linux_gerichte_releasevensters": "Notities- en vijfmoduleproef geslaagd",
     "grens": "Geen fysieke Windows-/macOS-GUI- of volledige pixelacceptatie."
+  },
+  "ci_native": {
+    "run": 41581980043,
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41581980043",
+    "bron": "a32b081b2c639ad9f612651f293419c28ace2f9f",
+    "status": "failure",
+    "platformbouw_en_tests": "Linux, Windows en macOS geslaagd; conversie geslaagd.",
+    "fout": "Afsluitende vergelijking: Verpakte bron wijkt af van checkout: scripts/gui/webkit_inspector.py",
+    "oorzaak": "Ontbrekende LF-attributen voor de gedeelde scripts/gui-bronnen; Windows autocrlf verandert de exacte pakketbytes.",
+    "lokale_regressie": "Uitgebreide bestaande Windows-checkoutproef faalt zonder attributen en slaagt met scripts/gui/** text eol=lf; alle negen Python-proeven geslaagd.",
+    "hertest": "Nieuwe CI na push nodig; geen algehele groene native-CI geclaimd."
   }
 }

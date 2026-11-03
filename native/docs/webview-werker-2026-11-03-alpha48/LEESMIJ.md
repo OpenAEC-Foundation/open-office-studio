@@ -60,7 +60,13 @@ leggen de daadwerkelijke programma-/script-/bronhashes vast. De native beeldopna
 zijn volledig en ongewijzigd; zeven geselecteerde beelden staan bij dit verslag.
 De [WebView-CI op a32b081](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41581980111)
 slaagt op Linux, Windows en macOS, inclusief beide gerichte Linux-releasevensterproeven.
-De afzonderlijke bredere native-CI loopt nog. De actuele
+De afzonderlijke [bredere native-CI](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41581980043)
+bouwt en test alle drie platforms succesvol, maar faalt daarna op de exacte
+pakketbronvergelijking: Windows verandert de regelafbrekingen van de gedeelde
+GUI-hulpbronnen. De bestaande Windows-checkoutproef is uitgebreid met de echte
+hulpbronnen en reproduceert dit. Met expliciete LF-attributen slagen die proef
+en alle negen Python-proeven lokaal. De nieuwe platformvergelijking blijft nodig.
+De actuele
 [meetgegevens en grenzen](rapport.json) onderscheiden debug, release en CI.
 
 ## Resterend
