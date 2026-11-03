@@ -1,5 +1,7 @@
 import type { DocxEditorRef } from "@betteroffice/docx-react";
+import { effectiveZoom } from "@betteroffice/docx/layout/render";
 import { zichtbaarElement } from "../lint/editorApi";
+import { geometrieVan } from "../tekst/liniaal/geometriePlugin";
 import {
   bepaalAnker,
   paginaBij,
@@ -28,14 +30,19 @@ export function paginas(vlak: HTMLElement | null) {
 }
 
 /** Paginamaten van de sectie waarin de cursor staat (of van de laatste sectie). */
-function sectieMaten(ref: DocxEditorRef, paraId: string | null): Partial<Paginamaten> | null {
+function sectieMaten(
+  ref: DocxEditorRef,
+  paraId: string | null,
+): Partial<Paginamaten> | null {
   try {
     const body = ref.getDocument()?.package.document;
     if (!body) return null;
     const sectie =
       (paraId &&
         body.sections?.find((s) =>
-          s.content.some((blok) => blok.type === "paragraph" && blok.paraId === paraId),
+          s.content.some(
+            (blok) => blok.type === "paragraph" && blok.paraId === paraId,
+          ),
         )?.properties) ||
       body.finalSectionProperties;
     return sectie ?? null;
@@ -67,7 +74,9 @@ function uitSpiegel(vlak: HTMLElement, positie: number): Rechthoek | null {
       (element) =>
         !element.querySelector("[data-doc-start]") &&
         // kop- en voetteksten en voetnoten hebben hun eigen posities
-        !element.closest('[class*="header"], [class*="footer"], [class*="note"]'),
+        !element.closest(
+          '[class*="header"], [class*="footer"], [class*="note"]',
+        ),
     )
     .map((element) => ({
       element,
@@ -80,6 +89,51 @@ function uitSpiegel(vlak: HTMLElement, positie: number): Rechthoek | null {
     positie,
   );
   return element ? rechthoek(element) : null;
+}
+
+/** De Rust-weergave levert paginacoördinaten; zet die om naar schermpixels. */
+export function cursorNaarScherm(
+  cursor: { x: number; y: number; height: number },
+  oorsprong: { left: number; top: number },
+  schaal: number,
+): Rechthoek | null {
+  if (
+    ![
+      cursor.x,
+      cursor.y,
+      cursor.height,
+      oorsprong.left,
+      oorsprong.top,
+      schaal,
+    ].every(Number.isFinite) ||
+    cursor.height <= 0 ||
+    schaal <= 0
+  )
+    return null;
+  return {
+    left: oorsprong.left + cursor.x * schaal,
+    top: oorsprong.top + cursor.y * schaal,
+    width: schaal,
+    height: cursor.height * schaal,
+  };
+}
+
+function uitGeometrie(vlak: HTMLElement, positie: number): Rechthoek | null {
+  const geometrie = geometrieVan(vlak);
+  if (!geometrie) return null;
+  try {
+    const cursor = geometrie.dom.getCoordinatesForPosition(positie);
+    if (!cursor) return null;
+    const host = geometrie.dom.pagesContainer;
+    return cursorNaarScherm(
+      cursor,
+      host.getBoundingClientRect(),
+      geometrie.layout.zoom * effectiveZoom(host),
+    );
+  } catch {
+    // De engine weigert een bron die intussen vervangen of heringedeeld is.
+    return null;
+  }
 }
 
 /**
@@ -103,7 +157,8 @@ function uitInvoerveld(vlak: Rechthoek): Rechthoek | null {
 
 /**
  * Meet de cursorpositie in het zichtbare tekstdocument. De engine tekent op
- * een canvas; de regel van de cursor komt uit haar toegankelijkheidsspiegel.
+ * een canvas; de cursor komt uit de Rust-geometrie. Oudere aansluitingen
+ * kunnen terugvallen op de toegankelijkheidsspiegel of het invoerveld.
  */
 export function meetCursor(ref: DocxEditorRef | null): Meting | null {
   if (!ref) return null;
@@ -111,7 +166,9 @@ export function meetCursor(ref: DocxEditorRef | null): Meting | null {
   if (!vlak) return null;
   const selectie = ref.getEditorRef()?.getSelectionRange();
   const cursor =
-    (selectie && uitSpiegel(vlak, selectie.from)) || uitInvoerveld(rechthoek(vlak));
+    (selectie &&
+      (uitGeometrie(vlak, selectie.from) || uitSpiegel(vlak, selectie.from))) ||
+    uitInvoerveld(rechthoek(vlak));
   if (!cursor) return null;
   const lijst = paginas(vlak).map(rechthoek);
   const index = paginaBij(lijst, cursor.top + cursor.height / 2);

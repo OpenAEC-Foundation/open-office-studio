@@ -1,13 +1,13 @@
 # Voortgang migratie en open issues
 
-Peildatum: 2 november 2026. Ontwikkelbasis: Tauri/Rust met React/TypeScript, commit `bdab16e`, lokale testversie `2026.45.8` (getest op 3 november).
+Peildatum: 2 november 2026. Ontwikkelbasis: Tauri/Rust met React/TypeScript, commit `693777a`, lokale testversie `2026.45.9` (getest op 3 november).
 
 ## Huidige waarheid
 
 - De volledige Rust-interface is nog niet af; `native/docs/migratie.json` blijft leidend voor acceptatie.
-- Writer-invoer en selectie zijn nog te traag. De nieuwe geïsoleerde native WebKit-proef verwerkt 98 tekens in circa 15,2 seconden; de eerdere ronde duurde circa 22,7 seconden. Dit is nog onvoldoende en geen algemene benchmark.
+- Writer-invoer en selectie zijn nog te traag. De eerdere proef van circa 15,2 seconden voor 98 tekens schakelde compositie uit; met de normale instelling duurt een nieuwe 45.8-proef circa 8,2 seconden. De invoer is exact, maar dit is nog onvoldoende en geen algemene benchmark. Verse processen met normale compositie variëren van circa 8 tot 17 seconden; er is nog geen overtuigende algemene snelheidswinst.
 - Voor 2026.45.4 zijn 1.545 automatische tests, 68 Writer-opdrachtcontroles en gerichte Linux-GUI-controles geslaagd. Dit bewijst geen volledige functiedekking.
-- De suite en zes losse edities van 2026.45.6 zijn op Windows, Linux en macOS gebouwd. De volledige GUI-matrix blijft open; de nieuwere 45.7 is lokaal op Linux getest.
+- De suite en zes losse edities van 2026.45.7 zijn op Windows, Linux en macOS gebouwd. De volledige GUI-matrix blijft open. De nieuwere 45.8-Linux-CI strandde op een testbibliotheek na het bouwen van de suite; Windows en macOS slagen voor 45.8.
 
 ## Werkvolgorde
 
@@ -192,3 +192,19 @@ Deze inventaris heeft **106** items. “Open” betekent niet dat de fout in dez
 - 45.8 is lokaal geïnstalleerd; eerdere binaries en gebruikersprofiel zijn behouden. De bouwronde voor zeven edities van 45.7 loopt afzonderlijk. Een groen 45.6-verslag wordt niet als bewijs voor 45.8 gebruikt.
 - De aanvullende Rust-componentproef voor bewaren faalt op de eerdere aansluiting wanneer haar kindcomponent verdwijnt. Na herstel blijft de bevestiging bij de hoofdcomponent bestaan. Alle zestien gerichte WebView-tests en volledige Clippy slagen.
 - In de nieuwe Windows-Rust-CI bleek de pakketproef een korte en lange schrijfwijze van dezelfde tijdelijke map ongelijk te vinden. Zij vergelijkt nu de daadwerkelijke bestanden; negen lokale scriptproeven slagen. De platformhertest blijft nodig.
+
+### 2026.45.9: paginazoeken en tekstspiegel
+
+- De eerder ingestelde tekstspiegel bereikte de oudere renderer niet. De adapter geeft de keuze nu door; de volledige spiegel blijft de standaard voor andere aansluitingen. De GUI-fixture gebruikt 18 spiegelknopen in plaats van 66, met dezelfde tekst, verwijzingen en leesrichting.
+- Het tabelvoorbeeld gebruikt de enginegeometrie, zodat de plaats correct blijft zonder volledige opmaakspiegel. De productie-GUI-proef slaagt bij 100% en 150% zoom en controleert de opgeslagen bron onafhankelijk.
+- Een aanwijzeropdracht op 5.000 pagina’s gebruikt 12 schermmetingen in plaats van 5.000, met dezelfde pagina en documentcoördinaten. Een echte native proef op 500 pagina’s geeft 9 in plaats van 500 metingen met dezelfde positie. Dit is gericht bewijs voor deze zoekopdracht, geen algemene snelheidsgarantie.
+- 138 bestanden met 1.572 tests, TypeScript, productie-/native Linux-bouw, alle module-opdrachten, de lettergrootteproef, browserkleuren en de native GTK-kleurproef slagen. Zie de [proefbeschrijving](tests/writer-paginas.md) en [meetgegevens](tests/2026-11-03-writer-paginas.json).
+- De bladwijzer heeft ook in de oude volledige spiegel geen DOM-doel en de link bestaat uit letterfragmenten. Dit blijft open; de bladwijzer en verwijzing worden wel behouden in DOCX.
+- Een proef na herhaald rechtstreeks vervangen van de buffer verwerkte vervolginvoer niet betrouwbaar. Geen geslaagde grote-documentbewerkingsproef: gewone bestandsopening in een nieuw native proces en groot plakken moeten apart worden onderzocht.
+- De [45.7-bouwronde](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41556146431) is nu geslaagd voor zeven edities op drie platforms; publiceren was uitgeschakeld. De [45.8-ronde](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41559150003) is niet groen: Linux faalt op de oude Python-WebSocket-bibliotheek vóór de native inspectie. De workflows gebruiken nu een geïsoleerde omgeving met de lokaal geteste versie. De native kleurproef slaagt lokaal ook via deze omgeving; een nieuwe Ubuntu-CI-uitvoering blijft nodig.
+- De Rust-preview gebruikt de gedeelde documentwerker nog niet voor openen en bewerken. Geen migratie-acceptatiepunt is op basis van deze optimalisaties afgevinkt.
+
+- Aanvullende native proef via de gewone openroute in een nieuw proces: 500 pagina’s, invoer op pagina 500, echte toetsen voor selectie/Backspace, undo/redo en bewaren slagen. Onafhankelijke DOCX-teruglezing geeft alle 500 alinea’s exact. Deze proef vervangt de mislukte directe-bufferproef niet en bewijst geen goedkeuring voor willekeurige grote plakdocumenten.
+- De [Rust-platformronde 7356e2f](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41557773896) is geslaagd op drie platforms, inclusief conversie- en pakketvergelijking. Ook de [WebView-platformronde 693777a](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41559061255) is geslaagd op drie platforms. Dit is bouw-/testbewijs van de preview; de volledige visuele/functionele acceptatie blijft open.
+
+- De lokale startkoppeling gebruikt 45.9. Oudere binaries, het gebruikersprofiel en eventueel lopende gebruikersprocessen zijn behouden. De geteste nieuwe Linux-binary is dezelfde als in het verslag.

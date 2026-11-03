@@ -14,9 +14,11 @@ slaagt ook op de oude bron en bewijst daarom niet dat die terugkoppeling weg is.
 Gebruik op Linux daarnaast de gebouwde suite met de native proef:
 
 ```sh
-sudo apt-get install python3-xlib python3-pil python3-websockets xvfb xauth xdotool
+sudo apt-get install python3-xlib python3-pil python3-venv xvfb xauth xdotool
+/usr/bin/python3 -m venv --system-site-packages .local/gui-python
+.local/gui-python/bin/python -m pip install --ignore-installed -r scripts/gui/requirements.txt
 pnpm desktop:build --no-bundle
-/usr/bin/python3 scripts/test-writer-kleur-native.py \
+.local/gui-python/bin/python scripts/test-writer-kleur-native.py \
   --programma src-tauri/target/release/open-office-studio \
   --versie "$(node -p "require('./package.json').version")" \
   --uitvoer .local/eigen-native-kleurproef
@@ -43,3 +45,9 @@ zichtbaar; Windows, macOS, alle vrije kleuren en de native paletten van de
 andere modules vereisen aanvullende proeven. Beide Linux-workflows bewaren het
 native bewijs en voeren de proef uit op de suitebinary vóór de losse edities
 de gedeelde bouwmap vervangen.
+
+De geïsoleerde Python-omgeving gebruikt de vastgezette WebSocket-bibliotheek uit
+`scripts/gui/requirements.txt`. De oude systeembibliotheek op Ubuntu 22.04 faalt
+met Python 3.10 voordat de app wordt geïnspecteerd. Dit was de oorzaak van de
+afgebroken Linux-vrijgaveproef voor 2026.45.8. De omgevingsreparatie moet ook
+op de CI-runner slagen voordat de nieuwe vrijgave als groen geldt.
