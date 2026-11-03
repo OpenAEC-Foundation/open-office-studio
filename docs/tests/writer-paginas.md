@@ -1,9 +1,13 @@
 # Lange paginastapels en tekstspiegel controleren
 
-De bestaande Writer-route vraagt al een tekstspiegel aan. De React-adapter gaf
+De Writer-route vroeg bij deze wijziging een tekstspiegel aan. De React-adapter gaf
 hem echter niet door aan de oudere renderer. De patch geeft deze keuze door;
 de standaard blijft de volledige spiegel voor andere aansluitingen. De spiegel
 blijft bestaan voor leesbare tekst, links en leesrichting.
+
+Sinds 45.23 vraagt Writer weer de volledige, incrementeel bijgewerkte spiegel
+aan voor actieve pagina’s. De tekstkeuze blijft ondersteund en is de terugval
+voor niet-actieve pagina’s. Zie de [native vergelijking, regressies en grenzen](writer-incrementele-spiegel.md).
 
 Bij een volledige verticale paginastapel zoekt de aanwijzer nu eerst binair
 naar de pagina. Alleen deze eigen renderer gebruikt de snellere route. Andere

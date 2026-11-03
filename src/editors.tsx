@@ -342,7 +342,7 @@ export default function OfficeEditor(props: EditorProps) {
             <DocxEditor
               // De indeling draait in een worker; het lint gebruikt nog de synchrone documentkopie.
               legacySyncApi
-              pageMirror="text"
+              pageMirror="full"
               key={herladen.sleutel}
               ref={docx}
               documentBuffer={herladen.bytes}
