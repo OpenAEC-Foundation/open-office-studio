@@ -38,6 +38,8 @@ pub enum Opdracht {
     },
     Nieuw(Module),
     Open(Module, Vec<u8>),
+    /// Een bronkopie en beeld van het huidige onderdeel, zonder te navigeren.
+    Stand,
     Deel(usize),
     Cel(usize, String),
     VerplaatsCel(usize, String, crate::rekenblad::Richting),
@@ -299,7 +301,8 @@ impl Werker {
         opdracht: Opdracht,
     ) -> impl std::future::Future<Output = Resultaat> + Send + 'static + use<> {
         let (antwoord, ontvanger) = oneshot::channel();
-        let verzonden = self.zender
+        let verzonden = self
+            .zender
             .send(Werk::Document(Taak {
                 id,
                 opdracht,

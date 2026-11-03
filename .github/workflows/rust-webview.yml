@@ -1,10 +1,10 @@
 name: Rust WebView-preview bouwen
 on:
   pull_request:
-    paths: ["native/**", "src/**/*.css", "src/stijl/**", "packages/email/src/start.css", ".github/workflows/rust-webview.yml"]
+    paths: ["native/**", "scripts/gui/**", "src/**/*.css", "src/stijl/**", "packages/email/src/start.css", ".github/workflows/rust-webview.yml"]
   push:
     branches: [main]
-    paths: ["native/**", "src/**/*.css", "src/stijl/**", "packages/email/src/start.css", ".github/workflows/rust-webview.yml"]
+    paths: ["native/**", "scripts/gui/**", "src/**/*.css", "src/stijl/**", "packages/email/src/start.css", ".github/workflows/rust-webview.yml"]
   workflow_dispatch:
 permissions:
   contents: read
@@ -26,6 +26,7 @@ jobs:
       # De Cargo-cache bevat ook oudere proefuitvoer. Iedere poging krijgt een
       # eigen lege map, zodat nooit eerder bewijs als nieuwe uitvoering geldt.
       OFFICE_WEBVIEW_PROEF: native/target/webview-vensterproef-${{ github.run_id }}-${{ github.run_attempt }}
+      OFFICE_WEBVIEW_MODULES_PROEF: native/target/webview-moduleproef-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
@@ -33,7 +34,13 @@ jobs:
           components: rustfmt, clippy
       - name: Linux-WebView-afhankelijkheden
         if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libgtk-3-dev libwebkit2gtk-4.1-dev libxdo-dev libxkbcommon-dev libwayland-dev libx11-dev libxcb1-dev xvfb xauth xdotool python3-xlib python3-pil
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libgtk-3-dev libwebkit2gtk-4.1-dev libxdo-dev libxkbcommon-dev libwayland-dev libx11-dev libxcb1-dev xvfb xauth xdotool python3-xlib python3-pil python3-venv
+      - name: Afzonderlijke omgeving voor native GUI-inspectie
+        if: runner.os == 'Linux'
+        run: |
+          /usr/bin/python3 -m venv --system-site-packages "${RUNNER_TEMP}/office-webview-gui"
+          "${RUNNER_TEMP}/office-webview-gui/bin/python" -m pip install --ignore-installed -r scripts/gui/requirements.txt
+          echo "OFFICE_GUI_PYTHON=${RUNNER_TEMP}/office-webview-gui/bin/python" >> "$GITHUB_ENV"
       - uses: actions/cache@v4
         with:
           path: |
@@ -57,11 +64,20 @@ jobs:
       - name: Echte Linux-releasevensters en opgeslagen invoer controleren
         if: runner.os == 'Linux'
         run: /usr/bin/python3 native/scripts/proef-webview-venster.py --programma native/target/release/open-office-studio-webview --bron docs/voorbeelden/Notitieboek.json --uitvoer "${{ env.OFFICE_WEBVIEW_PROEF }}"
+      - name: Vijf modules werkelijk bewerken, bewaren en heropenen
+        if: runner.os == 'Linux'
+        run: '"${OFFICE_GUI_PYTHON}" native/scripts/proef-webview-documenten.py --programma native/target/release/open-office-studio-webview --uitvoer "${{ env.OFFICE_WEBVIEW_MODULES_PROEF }}"'
       - uses: actions/upload-artifact@v4
         if: always() && runner.os == 'Linux'
         with:
           name: rust-webview-vensterproef-${{ runner.os }}
           path: ${{ env.OFFICE_WEBVIEW_PROEF }}/
+          if-no-files-found: warn
+      - uses: actions/upload-artifact@v4
+        if: always() && runner.os == 'Linux'
+        with:
+          name: rust-webview-moduleproef-${{ runner.os }}
+          path: ${{ env.OFFICE_WEBVIEW_MODULES_PROEF }}/
           if-no-files-found: warn
       - uses: actions/upload-artifact@v4
         with:

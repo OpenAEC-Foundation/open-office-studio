@@ -23,7 +23,7 @@ def controleer_bronbytes(verpakt: Path, checkout: Path) -> int:
     stijllijst = checkout/'native/crates/office-webview/stijlbronnen.json'
     if stijllijst.is_file():
         stijlbron = json.loads(stijllijst.read_text(encoding='utf-8'))
-        for naam in stijlbron['stijl'] + stijlbron['benodigd']:
+        for naam in stijlbron['stijl'] + stijlbron['benodigd'] + stijlbron.get('testbenodigd', []):
             verwacht[Path(naam)] = checkout/naam
     aanwezig = {p.relative_to(verpakt) for p in verpakt.rglob('*') if p.is_file()}
     assert aanwezig == verwacht.keys(), 'Bestandslijst van verpakte bron wijkt af van de checkout'

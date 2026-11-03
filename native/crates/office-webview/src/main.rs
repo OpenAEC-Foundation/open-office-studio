@@ -21,13 +21,11 @@ fn main() {
 }
 
 fn app() -> Element {
-    let mut werk = use_signal(|| {
-        let mut w = Werkruimte::default();
+    let mut werk = use_signal(Werkruimte::default);
+    use_effect(move || {
         for pad in std::env::args_os().skip(1) {
-            let r = w.open(std::path::Path::new(&pad)).map(|_| ());
-            w.meld(r);
+            open_office_studio_webview::scherm::open_pad(werk, std::path::Path::new(&pad));
         }
-        w
     });
     let venster = dioxus::desktop::use_window();
     let sluitvenster = venster.clone();

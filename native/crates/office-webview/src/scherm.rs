@@ -1,7 +1,7 @@
 //! De klassen en elementvolgorde volgen de bestaande Office-componenten.
 use crate::{
     STIJL, iconen as i,
-    model::{Doel, Werkruimte},
+    model::{DocumentTaak, Doel, Werkruimte},
 };
 use base64::{Engine, engine::general_purpose::STANDARD};
 use dioxus::prelude::*;
@@ -10,23 +10,46 @@ use office_core::{
     notities::NotitieActie as N,
 };
 
-fn voer(mut werk: Signal<Werkruimte>, f: impl FnOnce(&mut Werkruimte) -> Resultaat<()>) {
-    let mut w = werk.write();
-    let r = f(&mut w);
-    w.meld(r);
+trait UiResultaat {
+    fn starten(self, werk: Signal<Werkruimte>);
 }
-fn nieuw(mut werk: Signal<Werkruimte>, module: Module) {
-    let mut w = werk.write();
-    let r = w.nieuw(module).map(|_| ());
-    w.meld(r);
+impl UiResultaat for () {
+    fn starten(self, _werk: Signal<Werkruimte>) {}
 }
+impl UiResultaat for DocumentTaak {
+    fn starten(self, mut werk: Signal<Werkruimte>) {
+        // Een bediening mag verdwijnen; de geaccepteerde opdracht en haar
+        // bevestiging blijven bij het hoofdcomponent en document horen.
+        dioxus::core::spawn_forever(async move {
+            let antwoord = self.uitvoeren().await;
+            let _ = werk.write().voltooi(antwoord);
+        });
+    }
+}
+fn voer<R: UiResultaat>(
+    mut werk: Signal<Werkruimte>,
+    f: impl FnOnce(&mut Werkruimte) -> Resultaat<R>,
+) {
+    let resultaat = { f(&mut werk.write()) };
+    match resultaat {
+        Ok(taak) => taak.starten(werk),
+        Err(e) => werk.write().meld(Err(e)),
+    }
+}
+fn nieuw(werk: Signal<Werkruimte>, module: Module) {
+    voer(werk, |w| w.nieuw(module));
+}
+pub fn open_pad(werk: Signal<Werkruimte>, pad: &std::path::Path) {
+    voer(werk, |w| w.open(pad));
+}
+
 fn notitie(werk: Signal<Werkruimte>, doel: Doel, actie: N) {
     voer(werk, |w| w.bewerk(doel, Bewerking::Notitie(actie)));
 }
 
 pub fn openen(werk: Signal<Werkruimte>) {
     #[cfg(feature = "desktop")]
-    spawn(async move {
+    dioxus::core::spawn_forever(async move {
         if let Some(bestand) = rfd::AsyncFileDialog::new()
             .add_filter(
                 "Office-documenten",
@@ -35,7 +58,7 @@ pub fn openen(werk: Signal<Werkruimte>) {
             .pick_file()
             .await
         {
-            voer(werk, |w| w.open(bestand.path()).map(|_| ()));
+            open_pad(werk, bestand.path());
         }
     });
     #[cfg(not(feature = "desktop"))]
@@ -66,7 +89,7 @@ pub fn bewaren(werk: Signal<Werkruimte>, doel: Doel, als: bool) {
             .find(|t| t.doel() == doel)
             .map(|t| t.naam.clone())
             .unwrap_or_default();
-        spawn(async move {
+        dioxus::core::spawn_forever(async move {
             if let Some(bestand) = rfd::AsyncFileDialog::new()
                 .set_file_name(naam)
                 .save_file()
@@ -102,8 +125,7 @@ fn bewaar_pad(mut werk: Signal<Werkruimte>, doel: Doel, pad: Option<std::path::P
     dioxus::core::spawn_forever(async move {
         let antwoord = taak.uitvoeren().await;
         let mut w = werk.write();
-        let resultaat = w.voltooi_bewaren(antwoord).map(|_| ());
-        w.meld(resultaat);
+        let _ = w.voltooi_bewaren(antwoord);
     });
 }
 
@@ -135,18 +157,13 @@ pub fn Scherm(mut werk: Signal<Werkruimte>) -> Element {
                 .unwrap_or_else(|| "Open Office Studio".into()),
             w.donker,
             w.bestand,
-            w.tabbladen
-                .iter()
-                .map(|t| {
-                    (
-                        t.id,
-                        t.tabnaam().to_string(),
-                        t.gewijzigd(),
-                        t.sessie.module,
-                    )
-                })
+            w.tablijst()
+                .into_iter()
+                .map(|t| (t.id, t.naam, t.gewijzigd, t.module, t.laden))
                 .collect::<Vec<_>>(),
-            w.melding.clone(),
+            w.tab()
+                .and_then(|t| t.fout.clone())
+                .unwrap_or_else(|| w.melding.clone()),
         )
     };
     let sleutel = doel.map(Doel::sleutel).unwrap_or_default();
@@ -185,8 +202,8 @@ pub fn Scherm(mut werk: Signal<Werkruimte>) -> Element {
             div { class: "office-tabbalk", role: "tablist", "aria-label": "Documenten",
                 div { class: if actief.is_none() { "office-tab office-starttab is-actief" } else { "office-tab office-starttab" }, role: "tab", tabindex: "0", "aria-selected": actief.is_none(), onclick: move |_| werk.write().kies(None), Icoon { bron: i::HUIS, maat: 14 } "Start" }
                 div { class: "office-tablijst",
-                    for (id,titel,vuil,module) in tabs {
-                        div { key: "{id}", class: if actief == Some(id) { "office-tab is-actief" } else { "office-tab" }, role: "tab", tabindex: "0", "aria-selected": actief == Some(id), onclick: move |_| werk.write().kies(Some(id)),
+                    for (id,titel,vuil,module,laden) in tabs {
+                        div { key: "{id}", class: if actief == Some(id) { "office-tab is-actief" } else { "office-tab" }, role: "tab", tabindex: "0", "aria-selected": actief == Some(id), "aria-busy": laden.then_some("true"), onclick: move |_| werk.write().kies(Some(id)),
                             Icoon { bron: module_icoon(module), maat: 14 }
                             span { class: "office-tabnaam", "{titel}" if vuil { " •" } }
                             button { class: "office-tabsluiten", title: "Sluiten", "aria-label": "Sluiten {titel}", onclick: move |e| {
@@ -199,13 +216,15 @@ pub fn Scherm(mut werk: Signal<Werkruimte>) -> Element {
                 }
                 button { class: "office-tabknop", "aria-label": "Nieuw document", title: "Nieuw document", onclick: move |_| werk.write().kies(None), Icoon { bron: i::TOEVOEGEN, maat: 15 } }
             }
-            if !melding.is_empty() { div { role: "alert", class: "notities-melding is-fout", "{melding}", button { "aria-label": "Melding sluiten", onclick: move |_| werk.write().melding.clear(), "×" } } }
+            if !melding.is_empty() { div { role: "alert", class: "notities-melding is-fout", "{melding}", button { "aria-label": "Melding sluiten", onclick: move |_| { let mut w=werk.write();w.melding.clear();let id=w.actief;if let Some(t)=w.tabbladen.iter_mut().find(|t|Some(t.id)==id){t.fout=None;} }, "×" } } }
             div { class: "office-werkvlak",
                 if actief.is_none() || bestand {
                     div { class: "office-tabpaneel office-backstage", Start { werk, terug: actief.is_some() } }
+                } else if werk.read().opent() {
+                    div { class: "office-tabpaneel", role: "status", "aria-busy": "true", "Document openen…" }
                 } else if let Some(d) = doel {
-                    div { class: "office-tabpaneel",
-                        if werk.read().tab().is_some_and(|t| t.sessie.module == Module::Notition) { Notities { key: "{sleutel}", werk, doel: d } }
+                    div { class: "office-tabpaneel", inert: werk.read().tab().is_some_and(|t|t.geblokkeerd()).then_some(""),
+                        if werk.read().tab().is_some_and(|t| t.module == Module::Notition) { Notities { key: "{sleutel}", werk, doel: d } }
                         else { Document { key: "{sleutel}", werk, doel: d } }
                     }
                 }
@@ -291,18 +310,19 @@ fn Start(mut werk: Signal<Werkruimte>, terug: bool) -> Element {
 
 #[component]
 fn Lint(mut werk: Signal<Werkruimte>, doel: Doel) -> Element {
-    let (terug, vooruit, notities, markdown) = {
+    let (terug, vooruit, notities, markdown, geblokkeerd) = {
         let w = werk.read();
         let t = w.tab().unwrap();
         (
-            t.sessie.kan_terug(),
-            t.sessie.kan_vooruit(),
-            t.sessie.module == Module::Notition,
+            t.kan_terug(),
+            t.kan_vooruit(),
+            t.module == Module::Notition,
             t.beeld.notitie.as_ref().is_some_and(|p| p.markdown),
+            t.geblokkeerd(),
         )
     };
     rsx! {
-        div { class: "ribbon",
+        div { class: "ribbon", inert: geblokkeerd.then_some(""),
             div { class: "ribbon-tabs",
                 button { class: "ribbon-bestand", onclick: move |_| werk.write().bestand = true, "Bestand" }
                 div { class: "ribbon-tabknoppen", role: "tablist", "aria-label": "Lint", button { role: "tab", "aria-selected": "true", "Start" } }
@@ -425,17 +445,19 @@ mod bewaarproef {
     fn proef(props: ProefProps) -> Element {
         let werk = use_signal(|| {
             let mut w = Werkruimte::default();
-            w.open(&props.pad).unwrap();
+            crate::proefhulp::opdracht(&mut w, |w| w.open(&props.pad)).unwrap();
             let tab = w.tab().unwrap();
             let doel = tab.doel();
             let id = tab.beeld.velden[0].id.clone();
-            w.bewerk(
-                doel,
-                Bewerking::Tekst {
-                    id,
-                    tekst: "Bewaard na verlaten van de bediening".into(),
-                },
-            )
+            crate::proefhulp::opdracht(&mut w, |w| {
+                w.bewerk(
+                    doel,
+                    Bewerking::Tekst {
+                        id,
+                        tekst: "Bewaard na verlaten van de bediening".into(),
+                    },
+                )
+            })
             .unwrap();
             w
         });
@@ -483,5 +505,148 @@ mod bewaarproef {
             bron["boeken"][0]["secties"][0]["paginas"][0]["titel"],
             "Bewaard na verlaten van de bediening"
         );
+    }
+}
+
+#[cfg(test)]
+mod werkerproef {
+    use super::*;
+    use dioxus::core::{generation, needs_update};
+    use std::{
+        sync::{
+            Arc, Condvar, Mutex,
+            atomic::{AtomicBool, Ordering},
+        },
+        time::{Duration, Instant},
+    };
+
+    #[derive(Default)]
+    struct Poort {
+        actief: AtomicBool,
+        binnen: AtomicBool,
+        vrij: Mutex<bool>,
+        wekker: Condvar,
+    }
+    impl Poort {
+        fn los(&self) {
+            *self.vrij.lock().unwrap() = true;
+            self.wekker.notify_all();
+        }
+    }
+    impl office_core::klok::Klok for Poort {
+        fn nu(&self) -> chrono::DateTime<chrono::Utc> {
+            if self.actief.load(Ordering::SeqCst) {
+                self.binnen.store(true, Ordering::SeqCst);
+                let (vrij, _) = self
+                    .wekker
+                    .wait_timeout_while(
+                        self.vrij.lock().unwrap(),
+                        Duration::from_secs(10),
+                        |vrij| !*vrij,
+                    )
+                    .unwrap();
+                assert!(*vrij, "De proef gaf de documentwerker niet vrij");
+            }
+            "2026-11-03T00:00:00Z".parse().unwrap()
+        }
+    }
+    struct Vrijgeven(Arc<Poort>);
+    impl Drop for Vrijgeven {
+        fn drop(&mut self) {
+            self.0.los();
+        }
+    }
+    #[derive(Clone, Props)]
+    struct ProefProps {
+        poort: Arc<Poort>,
+    }
+    impl PartialEq for ProefProps {
+        fn eq(&self, ander: &Self) -> bool {
+            Arc::ptr_eq(&self.poort, &ander.poort)
+        }
+    }
+    fn proef(props: ProefProps) -> Element {
+        let werk = use_signal(|| {
+            let mut w =
+                Werkruimte::met_werker(office_core::werker::Werker::met_klok(props.poort.clone()));
+            crate::proefhulp::opdracht(&mut w, |w| w.nieuw(Module::Notition)).unwrap();
+            w
+        });
+        if generation() == 0 {
+            needs_update();
+            rsx! { InvoerKind { werk, props } }
+        } else {
+            let (tekst, bezig) = {
+                let w = werk.read();
+                let t = w.tab().unwrap();
+                (t.beeld.velden[0].tekst.clone(), t.bezig())
+            };
+            rsx! { div { "Hoofdcomponent blijft bereikbaar: {tekst}; bezig={bezig}" } }
+        }
+    }
+    #[component]
+    fn InvoerKind(werk: Signal<Werkruimte>, props: ProefProps) -> Element {
+        use_hook(move || {
+            props.poort.actief.store(true, Ordering::SeqCst);
+            let (doel, id) = {
+                let w = werk.read();
+                let t = w.tab().unwrap();
+                (t.doel(), t.beeld.velden[0].id.clone())
+            };
+            voer(werk, |w| {
+                w.bewerk(
+                    doel,
+                    Bewerking::Tekst {
+                        id,
+                        tekst: "Invoer na verdwijnen van de bediening".into(),
+                    },
+                )
+            });
+        });
+        rsx! { div { "Tijdelijke invoerbediening" } }
+    }
+    #[test]
+    fn webview_documentwerk_blokkeert_de_ui_niet_en_het_antwoord_overleeft_de_kindcomponent() {
+        let poort = Arc::new(Poort::default());
+        let _vrijgeven = Vrijgeven(poort.clone());
+        let mut dom = VirtualDom::new_with_props(
+            proef,
+            ProefProps {
+                poort: poort.clone(),
+            },
+        );
+        dom.rebuild_in_place();
+        let einde = Instant::now() + Duration::from_secs(5);
+        while !poort.binnen.load(Ordering::SeqCst) {
+            dom.render_immediate_to_vec();
+            assert!(
+                Instant::now() < einde,
+                "De opdracht bereikte de documentwerker niet"
+            );
+            std::thread::sleep(Duration::from_millis(5));
+        }
+        dom.render_immediate_to_vec();
+        let html = dioxus_ssr::render(&dom);
+        assert!(html.contains("Hoofdcomponent blijft bereikbaar"), "{html}");
+        assert!(!html.contains("Tijdelijke invoerbediening"), "{html}");
+        assert!(
+            html.contains("bezig=true"),
+            "De UI wacht zonder haar eigen thread te blokkeren: {html}"
+        );
+        poort.los();
+        loop {
+            dom.render_immediate_to_vec();
+            let html = dioxus_ssr::render(&dom);
+            if html.contains("Invoer na verdwijnen van de bediening")
+                && html.contains("bezig=false")
+            {
+                break;
+            }
+            assert!(
+                Instant::now() < einde,
+                "Het achtergrondantwoord verdween met de bediening: {html}"
+            );
+            std::thread::sleep(Duration::from_millis(5));
+        }
     }
 }

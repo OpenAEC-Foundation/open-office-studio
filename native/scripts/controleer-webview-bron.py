@@ -20,7 +20,7 @@ for naam in letters['letterstijlen']:
     for bestand in re.findall(r'url\(\./([^\)]+)\)', (assets/naam).read_text(encoding='utf-8')):
         assert bestand in verwacht, f'Niet meegeleverd letterbestand: {bestand}'
 bronnen = json.loads((crate/'stijlbronnen.json').read_text(encoding='utf-8'))
-alle_bronnen = bronnen['stijl'] + bronnen['benodigd']
+alle_bronnen = bronnen['stijl'] + bronnen['benodigd'] + bronnen.get('testbenodigd', [])
 assert len(set(alle_bronnen)) == len(alle_bronnen), 'Dubbele stijlbron'
 for naam in alle_bronnen:
     pad = repo/naam

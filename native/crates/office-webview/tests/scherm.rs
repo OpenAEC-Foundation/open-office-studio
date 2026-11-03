@@ -1,3 +1,4 @@
+mod gereedschap;
 use dioxus::prelude::*;
 use office_core::document::{Bewerking, Module};
 use open_office_studio_webview::{STIJL, model::Werkruimte, scherm::Scherm};
@@ -5,17 +6,19 @@ use open_office_studio_webview::{STIJL, model::Werkruimte, scherm::Scherm};
 fn proef() -> Element {
     let werk = use_signal(|| {
         let mut w = Werkruimte::default();
-        w.nieuw(Module::Notition).unwrap();
+        gereedschap::opdracht(&mut w, |w| w.nieuw(Module::Notition)).unwrap();
         let t = w.tab().unwrap();
         let doel = t.doel();
         let id = t.beeld.velden[0].id.clone();
-        w.bewerk(
-            doel,
-            Bewerking::Tekst {
-                id,
-                tekst: "<script>onveilig()</script> & eigen notitie 🏠".into(),
-            },
-        )
+        gereedschap::opdracht(&mut w, |w| {
+            w.bewerk(
+                doel,
+                Bewerking::Tekst {
+                    id,
+                    tekst: "<script>onveilig()</script> & eigen notitie 🏠".into(),
+                },
+            )
+        })
         .unwrap();
         w
     });

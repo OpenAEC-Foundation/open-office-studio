@@ -26,3 +26,18 @@ pub fn wacht<T>(taak: impl Future<Output = T>) -> T {
         thread::park_timeout(einde.saturating_duration_since(Instant::now()));
     }
 }
+
+/// Proefopstelling wacht bewust; de productie-interface gebruikt root-taken.
+pub fn opdracht(
+    werk: &mut open_office_studio_webview::model::Werkruimte,
+    voorbereiden: impl FnOnce(
+        &mut open_office_studio_webview::model::Werkruimte,
+    ) -> office_core::document::Resultaat<
+        open_office_studio_webview::model::DocumentTaak,
+    >,
+) -> office_core::document::Resultaat<u64> {
+    let taak = voorbereiden(werk)?;
+    let document = taak.document();
+    werk.voltooi(wacht(taak.uitvoeren()))?;
+    Ok(document)
+}

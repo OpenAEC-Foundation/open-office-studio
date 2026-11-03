@@ -1,0 +1,97 @@
+{
+  "datum": "2026-11-03",
+  "versie": "2026.45.0-alpha.48",
+  "status": "Volledige lokale Rust-testreeks, Clippy, bron-/pakketproeven en geoptimaliseerde Linux-releasevensters geslaagd; alpha48-platform-CI volgt.",
+  "rust": {
+    "geslaagd": 488,
+    "mislukt": 0,
+    "expliciet_opt_in_overgeslagen": 6,
+    "omvang": "De volledige werkruimte met open-office-studio-webview/desktop, inclusief X11 via expliciet OFFICE_XVFB.",
+    "log_sha256": "e920180a8ff8782af49045c478a9c0ce779956b683dbc2b0255268ae87929337"
+  },
+  "regressies_met_negatieve_proef": [
+    {
+      "naam": "Antwoord verdwijnt met de kindcomponent",
+      "voor": "Scoped spawn laat Nieuwe pagina; bezig=true na vijf seconden achter.",
+      "na": "De echte UI-route blijft bereikbaar terwijl de klok de werker blokkeert; na vrijgave bevestigt de hoofdscope de tekst."
+    },
+    {
+      "naam": "Ongewijzigd Opslaan als kan te vroeg sluiten",
+      "voor": "Een nog lopende bestandsactie telt onterecht niet als gewijzigd.",
+      "na": "De sluitbeveiliging blijft tot bevestiging actief."
+    },
+    {
+      "naam": "Tabs wisselen van volgorde bij latere bevestiging",
+      "voor": "Eerder afgewacht antwoord geeft B,A.",
+      "na": "Ready tabs en openingsplaatsen blijven A,B, ook na omgekeerd afwachten."
+    },
+    {
+      "naam": "Herbouwbaar pakket mist moduleproefhulp",
+      "voor": "De nieuwe GUI-proef kan de gedeelde inspector niet vinden in het bronpakket.",
+      "na": "De twee helpers zijn exact opgenomen via de stijlbronlijst; pakketproeven vergelijken de bytes."
+    }
+  ],
+  "grenzen": [
+    "Nog geen volledige rijke module-editors, oorspronkelijke linten of pixelacceptatie.",
+    "E-mail is alleen-lezen in deze WebView-preview; geen account-, schrijf- of verzendbediening.",
+    "Database-interface nog niet aangesloten; laagste prioriteit.",
+    "De gedeelde werker voert zware opdrachten serieel uit, zonder annulering of voorrang; een zware opdracht kan andere documenten laten wachten.",
+    "Geen garantie voor grote plakdocumenten, fysieke IME of snelle willekeurige muis-/toetswisselingen.",
+    "Alle tien migratiegebieden en hun dertig acceptatievlaggen blijven open."
+  ],
+  "python": {
+    "geslaagd": 9,
+    "mislukt": 0,
+    "broncontrole": {
+      "letterbestanden": 74,
+      "stijl_merk_en_testbronnen": 16
+    }
+  },
+  "formatteringscontrole": {
+    "geslaagd": true,
+    "eerdere_ci": "1fe2283 stopte op drie platforms bij een niet-geformatteerde methodeketen in Werker::stuur; lokaal gereproduceerd en geformatteerd. Een nieuwe CI-ronde blijft nodig."
+  },
+  "basiscommit": "1fe2283c2b883a1b299b0e368d9954831ae9defc",
+  "bronbestanden": {
+    "native/Cargo.toml": "37764598eb8a25789a502bf4aa349b8c7387f3e1993e80210a318e5031a9ecdf",
+    "native/Cargo.lock": "b030a7ecb407c2c9ff7bbca000ef71e25edd558fac814e808709e158cca27cb7",
+    "native/crates/office-core/src/werker.rs": "3b7962d4b9070c7f92f6f622f937f771c3a5d05cf3279c9ba6bf8aae022a03f6",
+    "native/crates/office-webview/Cargo.toml": "3ecaf0363ecf0c10c8029cec3109cc6894875ad21f792ec8ee2af0460ab0734a",
+    "native/crates/office-webview/src/model.rs": "b05f58c907d7c5c261500dd92c5837dce43d23b4921b0562d98be38fd226e72f",
+    "native/crates/office-webview/src/scherm.rs": "20dcbc6d6046499124330620eb5868c71d86e0a51606551a8d0cb1b033639160",
+    "native/crates/office-webview/src/main.rs": "e9990ef80c4f1577244fccab139a7f877c867ab8332add7d3394038ad1948c94",
+    "native/scripts/proef-webview-documenten.py": "b77b2238d96fa3fdfbcc6f8516113e7ad940227b3dbfd5dbaea503ffd1fd773e",
+    "native/scripts/proef-webview-venster.py": "08858b404ae25ad6d8b9ab43c743a3cdc068db9c2497f871eff4488a69ce67fa"
+  },
+  "clippy": {
+    "geslaagd": true,
+    "omvang": "Volledige werkruimte, desktopfeature en alle doelen; -D warnings.",
+    "log_sha256": "534adab068c35e8b90fd54c471ef3a9703f8760a7ee3e8d6196e2534a917988a"
+  },
+  "release": {
+    "programma_sha256": "68b9e31033496a06f2c390a10c7c6ed4f3868125f29c86eab214d5fbae5c357b",
+    "versie": "2026.45.0-alpha.48",
+    "bouw": "cargo build --manifest-path native/Cargo.toml --locked --release --workspace --features open-office-studio-webview/desktop --bin open-office-studio-webview",
+    "notities": {
+      "geslaagd": true,
+      "stappen": 45,
+      "controles": 10,
+      "rapport": "notities-release.json"
+    },
+    "modules": {
+      "geslaagd": true,
+      "stappen": 10,
+      "rapport": "modules-release.json",
+      "uitleg": "Vier modules bewerkt; EML alleen-lezen en bronexact. Alle vijf in een nieuw proces heropend."
+    }
+  },
+  "beelden": {
+    "email-heropend.png": "1d79259ad23d514e8a49f355393b37cd4e1c4f45e54890b8f169e8ac8e001c8c",
+    "notities-canvas.png": "f4ad5d2da1071960a04c3d3e450923422a4518d6f9beba44c61d8ed8ec3814df",
+    "notities-heropend.png": "ebcce99dc7d7d024e24a3465c2ce10333a8574f0bf81dbd115567b75e7bd9acc",
+    "notities-markdown.png": "a3e011198a4dad62b1ca8fa52e291e6d998117397bb806b2e87a2c266caa942b",
+    "presentatie-heropend.png": "05aa5165e9f05e146334eb09cac8aeb4246efe39791a60e65151574c6968f25d",
+    "rekenblad-heropend.png": "df780c57e84610a7aaf04c3c4cbf7d0dfd765d8d70c5905991ea0615c44157af",
+    "writer-heropend.png": "d0091ce6612c67de29ba46449afba995d92bbc82749af82f86dd363ae25e8ad0"
+  }
+}

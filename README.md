@@ -22,13 +22,15 @@ Open Office Studio is a local office environment for Windows, macOS and Linux. I
 
 ## Native Rust migration
 
-The development branch has a locally tested **2026-W45.10** Tauri build. Writer now limits spelling overlays and table handles to pages near the viewport; a native 500-page fixture preserves typing, selection, undo/redo and all saved paragraphs. **1,583 frontend tests and 476 Rust workspace tests pass; six optional Rust tests are skipped.** This is not complete feature, performance or pixel-parity acceptance. See the [current progress and open issues](docs/voortgang-migratie.md), [500-page checks](docs/tests/2026-11-03-writer-golflijnen.json) and [Rust command admission](native/docs/werker-toelating-2026-11-03.json). The seven-edition platform build for 45.7 passes; the newer 45.10 build is running separately.
+The development branch has a locally tested **2026-W45.10** Tauri build. Writer now limits spelling overlays and table handles to pages near the viewport; a native 500-page fixture preserves typing, selection, undo/redo and all saved paragraphs. **1,583 frontend tests and 488 Rust workspace tests pass; six optional Rust tests are skipped.** This is not complete feature, performance or pixel-parity acceptance. See the [current progress and open issues](docs/voortgang-migratie.md), [500-page checks](docs/tests/2026-11-03-writer-golflijnen.json) and [Rust command admission](native/docs/werker-toelating-2026-11-03.json). The [45.10 build for seven editions on Linux, Windows and macOS](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41571435460) passes; publishing was disabled.
 
 The selected interface migration now uses **Rust/Dioxus with a system WebView,
 retaining the existing HTML classes, CSS and fonts**. The first connection is in
 [`office-webview`](native/crates/office-webview/README.md); it is an early preview,
 with the original module editors and complete UI parity still to be ported.
 Run it with `cargo run --manifest-path native/Cargo.toml -p open-office-studio-webview --features desktop`.
+
+Alpha 48 moves opening, editing, navigation, history and save snapshots to the shared Rust document worker. The UI retains source copies and views without owning document sessions. [The validation report](native/docs/webview-werker-2026-11-03-alpha48/LEESMIJ.md) separates queue/component tests and actual module windows from the remaining full editor and pixel work.
 
 The earlier native preview in [`native/`](native/README.md) uses Iced and the
 shared OpenAEC Blueprint ribbon and remains available as an intermediate step.

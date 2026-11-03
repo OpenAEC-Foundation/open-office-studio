@@ -187,3 +187,22 @@ fn stuur_bewaart_de_invoervolgorde_bij_omgekeerd_afwachten() {
         "Tweede concept"
     );
 }
+
+#[test]
+fn momentopname_bewaart_het_huidige_onderdeel_bron_en_geschiedenis() {
+    use office_core::notities::NotitieActie as N;
+    let w = Werker::start();
+    wacht(w.clone().voer_uit(93, Opdracht::Nieuw(Module::Notition))).unwrap();
+    let gewijzigd = wacht(
+        w.clone()
+            .voer_uit(93, Opdracht::Bewerk(0, Bewerking::Notitie(N::NieuwePagina))),
+    )
+    .unwrap();
+    assert_eq!(gewijzigd.deel, 1);
+    let kopie = wacht(w.stuur(93, Opdracht::Stand)).unwrap();
+    assert_eq!(kopie.deel, gewijzigd.deel);
+    assert_eq!(kopie.hash, gewijzigd.hash);
+    assert_eq!(kopie.bron, gewijzigd.bron);
+    assert_eq!(kopie.terug, gewijzigd.terug);
+    assert_eq!(kopie.vooruit, gewijzigd.vooruit);
+}

@@ -39,15 +39,25 @@ De gepinde desktopinterpreter behandelt `inert=false` anders dan de SSR-renderer
 De schil laat het attribuut daarom volledig weg buiten een dialoog; de regressieproef
 controleert de DOM-mutaties, naast de echte vensterbediening. De statische letterstijl
 heeft een eigen component, zodat invoer die niet steeds opnieuw opbouwt.
-Openen en enginebewerkingen lopen in deze eerste aansluiting nog op de UI-draad.
-Bewaren schrijft een onveranderlijke bronkopie op een achtergronddraad, zonder UI-slot.
-Alleen de vastgelegde bronhash wordt bevestigd; nieuwe invoer blijft gewijzigd en
-een gesloten tab wordt niet heropend. De bevestiging blijft bestaan als het lint
-of bestandsmenu verdwijnt. De gedeelde
-documentwerker staat nu in `office_core::werker`, los van de Iced-interface.
-De WebView-aansluiting en haar invoer-/bewaarbarrières moeten nog worden
-overgezet voordat grote documenten een vlotte bediening hebben; zie
-[de opdracht- en acceptatieafspraken](../../docs/gedeelde-werker.md).
+Alpha 48 verplaatst ook openen, bewerken, navigeren en geschiedenis naar de gedeelde
+`office_core::werker`. Het UI-model bevat bronkopieën en weergaven; geen `Sessie`.
+Bestanden lezen en schrijven gebeurt buiten de UI. Geaccepteerde opdrachten worden
+meteen in de seriële werkrij geplaatst; hun antwoordtaken blijven bij de hoofdscope.
+Antwoorden worden per document in toelatingsvolgorde bevestigd, ook als een latere
+future eerder wordt afgewacht. Een gesloten tab wordt niet door een laat antwoord
+heropend. Openende tabs hebben al een vaste plaats en stelen later geen focus.
+
+Gewone invoer behoudt haar bediening en generatie. Structuur-/navigatieacties
+hebben een korte bedieningsbarrière; achtergronduitvoering en tabwissels blijven
+mogelijk. Een geweigerd concept wordt pas vervangen nadat eerder geaccepteerde
+invoer is bevestigd, zodat bron en zichtbare velden bij elkaar blijven horen.
+
+Bewaren vraagt op zijn eigen plaats in dezelfde rij een onveranderlijke
+momentopname. Dit omvat eerdere nog onbevestigde invoer en sluit latere invoer
+uit. Alleen die bronhash wordt als bewaard bevestigd. Een lopende bewaaractie
+blijft conservatief gewijzigd, ook bij Opslaan als van een ongewijzigde bron.
+De sluitbeveiliging geldt dus tot de bestandsactie werkelijk is bevestigd.
+Volledige rijke editors, linten en prestatie-/pixelpariteit blijven open.
 
 Tekstvelden krijgen hun beginwaarde zonder elke ontvangen native update terug
 naar de levende browserwaarde te schrijven. Dat voorkomt letterverlies bij snelle
@@ -67,3 +77,19 @@ undo/redo, heropent het bestand en controleert annuleren/verwerpen bij sluiten.
 Meerregelige invoer gebruikt afzonderlijke Return-toetsaanslagen. Volledige
 clientbeelden en negatieve resultaten blijven bewaard; geen maskers of
 verklaring van volledige functie- of pixelgelijkheid.
+
+Vijf modules via echte muis-/toetsenbediening, met een nieuw proces voor heropenen:
+
+```sh
+/usr/bin/python3 -m venv --system-site-packages .local/gui-python
+.local/gui-python/bin/python -m pip install --ignore-installed -r scripts/gui/requirements.txt
+.local/gui-python/bin/python native/scripts/proef-webview-documenten.py --programma native/target/debug/open-office-studio-webview --uitvoer /tmp/office-moduleproef
+```
+
+Deze proef gebruikt de gewone opdrachtregelopening en uitsluitend eigen kopieën
+van de voorbeeldbestanden. Zij bewerkt een veld in Writer, Spreadsheet,
+Presentation en Notities, controleert het bewaarde bronformaat onafhankelijk en
+heropent alle vijf modules. E-mail is in deze preview alleen-lezen; haar volledige
+MIME-bron moet bytegelijk blijven. De DOM-inspectie luistert alleen voor de eigen
+proef op tijdelijke localhostpoorten. Dit is geen volledige editor-, account-,
+database- of platform-GUI-acceptatie.

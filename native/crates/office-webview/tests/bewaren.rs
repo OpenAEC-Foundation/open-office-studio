@@ -5,7 +5,7 @@ use office_core::document::{Bewerking, Module};
 use open_office_studio_webview::model::{Doel, Werkruimte};
 
 fn nieuw(w: &mut Werkruimte) -> Doel {
-    w.nieuw(Module::Notition).unwrap();
+    gereedschap::opdracht(w, |w| w.nieuw(Module::Notition)).unwrap();
     w.tab().unwrap().doel()
 }
 fn titel(w: &mut Werkruimte, doel: Doel, tekst: &str) {
@@ -18,13 +18,15 @@ fn titel(w: &mut Werkruimte, doel: Doel, tekst: &str) {
         .velden[0]
         .id
         .clone();
-    w.bewerk(
-        doel,
-        Bewerking::Tekst {
-            id,
-            tekst: tekst.into(),
-        },
-    )
+    gereedschap::opdracht(w, |w| {
+        w.bewerk(
+            doel,
+            Bewerking::Tekst {
+                id,
+                tekst: tekst.into(),
+            },
+        )
+    })
     .unwrap();
 }
 fn lees_titel(pad: &std::path::Path) -> String {
@@ -45,7 +47,7 @@ fn webview_bewaren_bevestigt_alleen_de_vastgelegde_bron_na_nieuwe_invoer_en_navi
     let taak = w.voorbereid_bewaren(d, Some(&pad)).unwrap();
     assert!(!pad.exists(), "Voorbereiden verricht geen bestands-I/O");
     titel(&mut w, d, "Nieuwe tekst tijdens bewaren");
-    w.kies_deel(d, 0).unwrap();
+    gereedschap::opdracht(&mut w, |w| w.kies_deel(d, 0)).unwrap();
     let huidig = w.tab().unwrap().doel();
     assert_ne!(huidig, d);
     let tweede = nieuw(&mut w);
@@ -73,11 +75,11 @@ fn webview_bewaarantwoord_heropent_geen_gesloten_document_en_wijzigt_geen_nieuwe
     let antwoord = wacht(taak.uitvoeren());
     w.sluit(d.document, true).unwrap();
     let ander = nieuw(&mut w);
-    let bron = w.tab().unwrap().sessie.bron();
+    let bron = w.tab().unwrap().bron();
     assert!(!w.voltooi_bewaren(antwoord).unwrap());
     assert_eq!(w.tabbladen.len(), 1);
     assert_eq!(w.actief, Some(ander.document));
-    assert_eq!(w.tab().unwrap().sessie.bron().as_slice(), bron.as_slice());
+    assert_eq!(w.tab().unwrap().bron().as_slice(), bron.as_slice());
     assert!(!w.tab().unwrap().gewijzigd());
     assert_eq!(lees_titel(&pad), "Bewuste bewaarkopie");
 }
@@ -109,7 +111,7 @@ fn webview_twee_tabs_overschrijven_niet_beide_dezelfde_oude_schijfversie() {
     let eerste = nieuw(&mut w);
     let taak = w.voorbereid_bewaren(eerste, Some(&pad)).unwrap();
     w.voltooi_bewaren(wacht(taak.uitvoeren())).unwrap();
-    w.open(&pad).unwrap();
+    gereedschap::opdracht(&mut w, |w| w.open(&pad)).unwrap();
     let tweede = w.tab().unwrap().doel();
     titel(&mut w, eerste, "Eerste tab");
     titel(&mut w, tweede, "Tweede tab");

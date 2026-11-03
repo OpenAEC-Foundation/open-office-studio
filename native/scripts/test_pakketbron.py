@@ -34,7 +34,9 @@ class Pakketbron(unittest.TestCase):
                 'native/vendor/document-fonts/LICENSES/proef.txt': 'Eigen licentie\n',
                 'native/vendor/document-fonts/LICENSES-CJK/proef.txt': 'Eigen licentie\n',
                 'native/vendor/symbolen/OFL.txt': 'Eigen licentie\n',
-                'native/crates/office-webview/stijlbronnen.json': '{"stijl":["src/office.css"],"benodigd":["src/stijl/bron.json"]}\n',
+                'native/crates/office-webview/stijlbronnen.json': '{"stijl":["src/office.css"],"benodigd":["src/stijl/bron.json"],"testbenodigd":["scripts/gui/webkit_inspector.py","scripts/gui/requirements.txt"]}\n',
+                'scripts/gui/webkit_inspector.py': 'print("Eigen GUI-proef")\n',
+                'scripts/gui/requirements.txt': 'websockets==10.4\n',
                 'src/office.css': '.office{height:100dvh}\n',
                 'src/stijl/bron.json': '{"eigen":true}\n',
                 'public/templates/proef.txt': 'Eigen sjabloon\n',
@@ -60,7 +62,7 @@ class Pakketbron(unittest.TestCase):
             naam = 'Open-Office-Studio-native-1.0.0-alpha.1-Linux-proef'
             archief = repo/'native/target/distributie'/f'{naam}.zip'
             with zipfile.ZipFile(archief) as pakket:
-                for bron in ['src/office.css', 'src/stijl/bron.json']:
+                for bron in ['src/office.css', 'src/stijl/bron.json', 'scripts/gui/webkit_inspector.py', 'scripts/gui/requirements.txt']:
                     self.assertEqual(pakket.read(f'{naam}/bron/{bron}'), (repo/bron).read_bytes())
                 self.assertTrue(all(p.startswith(naam+'/') for p in pakket.namelist()))
             controlehash = hashlib.sha256(archief.read_bytes()).hexdigest()
