@@ -4,8 +4,8 @@ Een push naar GitHub werkt de broncode bij. De pagina Releases verandert alleen
 als er apart een uitgave wordt gepubliceerd. Een ontwikkelbuild is daarom
 beschikbaar als download bij GitHub Actions, zonder nieuwe release of tag.
 
-De gecontroleerde [45.21-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41668283834/artifacts/13247446790) is gebouwd uit
-`14db0e1dd8f7a93198b2e23a6a69c70d0fff616c`. De [bouw en pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41668283834) slagen.
+De gecontroleerde [45.22-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41683682284/artifacts/13253889103) is gebouwd uit
+`547d9778433360604750a7df41beb8fa26557d31`. De [bouw en pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41683682284) slagen.
 Sluit een eerder geopende dev-versie na het bewaren voordat je de nieuwe start;
 beide gebruiken hetzelfde dev-profiel.
 
@@ -46,5 +46,15 @@ is afgekeurd op een geheugenfout in de Wasm-layout bij 500 pagina’s. De
 geslaagde devpakketproef bewijst geen oplossing voor die fout. Ook de
 [brede 45.21-desktopproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41668303628)
 is op Linux afgekeurd bij heropenen, met een fout over een synchrone uitlezing
-van een viewersessie. Zie het [geheugen-/opstartonderzoek](../tests/writer-geheugenonderzoek.md). De workflow heeft alleen leesrechten op de repository en
+van een viewersessie. Die herstelstartfout is in 45.22 gericht gerepareerd; de
+[native herstel-/geheugenproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41683682448)
+slaagt inclusief echte herstelkopie, beide herstelkeuzes en twintig extra
+geschiedenisrondes met garbagecollection. Dit bewijst geen herstel van de
+afzonderlijke allocatorpanic. Zie het [geheugen-/opstartonderzoek](../tests/writer-geheugenonderzoek.md). De workflow heeft alleen leesrechten op de repository en
 publiceert geen GitHub-release.
+
+De brede desktopbouw van 45.22 slaagt op Linux, Windows en macOS. De afzonderlijke
+Linux-zeveneditieproef faalt echter bij het openen van de eigen voorbeeldkopie
+op een fatale grafische modulecompilatie, vóór de eerste plakactie. Ook deze
+[rendererafkeuring](../tests/writer-renderer-opstart.md) blijft open; een groene
+devpakketproef bewijst geen volledige stabiliteit.

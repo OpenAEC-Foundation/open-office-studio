@@ -65,8 +65,37 @@ class WriterFoutcontext(unittest.TestCase):
         self.gegevens['script_sha256'] = '0' * 64
         self.schrijf()
         context = module.bewaar(self.programma, [self.rapport], self.uitvoer, systeem=False)
-        self.assertFalse(context['scripts']['test-writer-lang-native.py']['beschikbaar'])
+        self.assertFalse(context['proefscript']['beschikbaar'])
+        self.assertEqual(context['proefscript']['gerapporteerde_sha256'], '0' * 64)
         self.assertFalse((self.uitvoer / 'inhoud/scripts/test-writer-lang-native.py').exists())
+
+    def test_bewaart_de_afgekeurde_plakproef_na_een_groene_langdocumentproef(self):
+        groen = self.map / 'lang/rapport.json'
+        groen.parent.mkdir()
+        groen.write_text(json.dumps({**self.gegevens, 'geslaagd': True}))
+        script = REPO / 'scripts/test-writer-rijk-plakken-native.py'
+        self.gegevens['script_sha256'] = module.checksum(script)
+        self.schrijf()
+        (self.map / 'Ontwerpnotitie.docx').write_bytes(b'eigen kopie van de vaste proefbron')
+        (self.map / 'programma.log').write_text('Eigen rendererfout')
+        context = module.bewaar(self.programma, [groen, self.rapport], self.uitvoer, systeem=False)
+        self.assertEqual(context['proefscript']['naam'], script.name)
+        self.assertTrue(context['proefscript']['beschikbaar'])
+        with tarfile.open(self.uitvoer / 'writer-foutcontext.tar.gz') as tar:
+            self.assertEqual(tar.extractfile('writer-foutcontext/scripts/' + script.name).read(), script.read_bytes())
+            self.assertEqual(tar.extractfile('writer-foutcontext/proef/Ontwerpnotitie.docx').read(), b'eigen kopie van de vaste proefbron')
+            self.assertEqual(tar.extractfile('writer-foutcontext/proef/programma.log').read().decode(), 'Eigen rendererfout')
+        # De gedeelde basis wordt meegenomen, zonder een onbewezen claim over
+        # de oorspronkelijke helperbytes van een historische uitvoering.
+        self.assertIn('niet afzonderlijk', context['scripts']['test-writer-lang-native.py']['herkomst'])
+
+    def test_plakrapport_met_verkeerde_binary_maakt_geen_pakket(self):
+        self.gegevens['script_sha256'] = module.checksum(REPO / 'scripts/test-writer-rijk-plakken-native.py')
+        self.schrijf()
+        self.programma.write_bytes(b'een andere bouw van dezelfde versie')
+        with self.assertRaisesRegex(ValueError, 'hoort niet'):
+            module.bewaar(self.programma, [self.rapport], self.uitvoer, systeem=False)
+        self.assertFalse(self.uitvoer.exists())
 
     def test_kiest_geen_willekeurige_begeleidende_appimage(self):
         pakketten = self.map / 'pakketten'

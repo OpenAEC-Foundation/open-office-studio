@@ -82,3 +82,22 @@ veertien tekens. Deze stap is geen versnelling of vergelijking tussen platforms.
 Windows-/macOS-GUI, alle formaten, overige herstelkeuzes en de volledige
 suite-/editieacceptatie blijven afzonderlijke vereisten. Er is geen issue of
 migratievlag gesloten; alle tien gebieden en dertig vlaggen blijven open.
+
+## Gerichte CI en devdownload
+
+De [45.22-geheugen-CI](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41683682448)
+slaagt inmiddels op de werkelijke Ubuntu-22.04-bouw. De gewone proef omvat
+elf bronstappen, twee herstelkeuzes en een bytegelijke oorspronkelijke
+eindbron. De extra proef doorstaat twintig geheugen-/garbagecollectionrondes
+en alle acht bron-/geschiedenis-/bewaar-/heropenstappen. Dit is aanvullend
+bewijs van de herstelstartcorrectie, geen bewezen oplossing voor de eerdere
+incidentele allocatorpanic.
+
+De [45.22-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41683682284/artifacts/13253889103)
+is opgehaald en gecontroleerd op buitenste controlesom, interne bouwmetadata,
+AppImage-controlesom, uitvoerrechten, volledige uitpakking en de AppRun-/ELF-
+checksums uit de werkelijk uitgevoerde pakketproef. De volledige en dev-uitgave
+hebben een eigen binary; die hashes worden niet als gelijk voorgesteld.
+De [CI- en pakketgegevens](2026-11-03-platform-45.22.json) leggen dit vast.
+De overige platform-/editieroutes moeten afzonderlijk slagen. Er is geen
+nieuwe officiële release gepubliceerd.

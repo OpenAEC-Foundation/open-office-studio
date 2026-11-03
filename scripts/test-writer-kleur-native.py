@@ -91,7 +91,7 @@ async def proef(a):
     d = display.Display()
     log = (a.uitvoer/'programma.log').open('w')
     programma = None
-    rapport = {'geslaagd': False, 'versie': a.versie, 'programma_sha256': hashlib.sha256(a.programma.read_bytes()).hexdigest(), 'stappen': [], 'kleurgebeurtenissen': [], 'paletten': [], 'beperking': 'GTK3-palet op Linux/X11; geen volledige platform- of functieacceptatie.'}
+    rapport = {'geslaagd': False, 'versie': a.versie, 'programma_sha256': hashlib.sha256(a.programma.read_bytes()).hexdigest(), 'script_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), 'stappen': [], 'kleurgebeurtenissen': [], 'paletten': [], 'beperking': 'GTK3-palet op Linux/X11; geen volledige platform- of functieacceptatie.'}
     ns = {'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
     http = int(os.environ['OFFICE_PROEF_HTTP'])
 

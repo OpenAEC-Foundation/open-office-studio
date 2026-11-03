@@ -11,6 +11,15 @@ import subprocess
 import tarfile
 
 
+PROEFSCRIPTS = (
+    'test-writer-lang-native.py',
+    'test-writer-rijk-plakken-native.py',
+    'test-writer-lijsten-native.py',
+    'test-writer-klembord-native.py',
+    'test-writer-kleur-native.py',
+)
+
+
 def checksum(pad):
     som = hashlib.sha256()
     with pad.open('rb') as bestand:
@@ -59,13 +68,17 @@ def bewaar(programma, rapporten, uitvoer, appimage_map=None, systeem=True):
         'checkout': {naam: os.environ.get(naam) for naam in ['GITHUB_SHA', 'GITHUB_RUN_ID', 'GITHUB_JOB']},
         'testomgeving': {naam: os.environ.get(naam) for naam in ['GDK_BACKEND', 'WEBKIT_DISABLE_DMABUF_RENDERER', 'WEBKIT_DISABLE_COMPOSITING_MODE']},
         'scripts': {},
+        'proefscript': {'beschikbaar': False, 'gerapporteerde_sha256': gegevens.get('script_sha256')},
         'proefbestanden': {},
         'appimage': None,
         'grens': 'Dit pakket bewaart een afkeuring. Het is geen vrijgave of bewijs van herstel.',
     }
     # Alleen de eigen gegenereerde proefbron en vaste foutuitvoer meenemen;
     # geen willekeurige bestanden uit de rapportmap verzamelen.
-    for naam in ['Prestatieproef.docx', 'herstelkopie.docx', 'hersteld.docx', 'programma.log', 'afgekeurd.png']:
+    for naam in ['Prestatieproef.docx', 'herstelkopie.docx', 'hersteld.docx',
+                 'Ontwerpnotitie.docx', 'tussenbewaring.docx', 'geplakt.docx',
+                 'Lijstenproef.docx', 'Klembordproef.docx', 'Markeerkleurproef.docx',
+                 'programma.log', 'afgekeurd.png']:
         bron = rapport.parent / naam
         if bron.is_file():
             doel = inhoud / 'proef' / naam
@@ -73,16 +86,29 @@ def bewaar(programma, rapporten, uitvoer, appimage_map=None, systeem=True):
             shutil.copy2(bron, doel)
             context['proefbestanden'][naam] = {'sha256': checksum(doel), 'grens': 'Bestandstoestand na de afgekeurde proef; niet noodzakelijk de oorspronkelijke bron vóór bewerken.'}
     repo = Path(__file__).resolve().parents[1]
-    for naam in ['test-writer-lang-native.py', 'gui/webkit_inspector.py', 'gui/requirements.txt']:
+    # Identificeer de proef aan haar bytes, niet aan de positie van het rapport
+    # of een door het rapport aangeleverde bestandsnaam. Na een latere wijziging
+    # is het oorspronkelijke script niet alsnog uit deze checkout te bewijzen.
+    for naam in PROEFSCRIPTS:
+        bron = repo / 'scripts' / naam
+        if checksum(bron) == gegevens.get('script_sha256'):
+            context['proefscript'].update(beschikbaar=True, naam=naam)
+            break
+    if not context['proefscript']['beschikbaar']:
+        context['proefscript']['reden'] = 'Geen vast proefscript in deze checkout heeft de gerapporteerde checksum'
+    namen = ['gui/webkit_inspector.py', 'gui/requirements.txt']
+    if context['proefscript']['beschikbaar']:
+        namen.insert(0, context['proefscript']['naam'])
+        if context['proefscript']['naam'] in ['test-writer-rijk-plakken-native.py', 'test-writer-lijsten-native.py']:
+            namen.append('test-writer-lang-native.py')
+    for naam in namen:
         bron = repo / 'scripts' / naam
         som = checksum(bron)
-        if naam == 'test-writer-lang-native.py' and som != gegevens.get('script_sha256'):
-            context['scripts'][naam] = {'beschikbaar': False, 'reden': 'Huidige scriptbytes wijken af van de afgekeurde proef', 'sha256': som}
-            continue
         doel = inhoud / 'scripts' / naam
         doel.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(bron, doel)
-        context['scripts'][naam] = {'beschikbaar': True, 'sha256': som}
+        context['scripts'][naam] = {'beschikbaar': True, 'sha256': som,
+                                  'herkomst': 'Checksumgelijk aan gerapporteerde proef' if naam == context['proefscript'].get('naam') else 'Hulpmiddel uit huidige checkout; oorspronkelijke bytes niet afzonderlijk in het rapport vastgelegd'}
     if appimage_map is not None:
         pakketten = sorted(appimage_map.glob('*.AppImage'))
         if len(pakketten) == 1:

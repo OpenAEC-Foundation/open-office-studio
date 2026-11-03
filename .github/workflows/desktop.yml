@@ -198,7 +198,16 @@ jobs:
           if-no-files-found: warn
       - name: Exacte afgekeurde Writer-binary en runtime bewaren
         if: failure() && runner.os == 'Linux'
-        run: python3 scripts/bewaar-writer-foutcontext.py --programma src-tauri/target/release/open-office-studio --rapport .local/proef-native-writer-lang/rapport.json --uitvoer .local/writer-foutcontext --appimage-map src-tauri/target/release/bundle/appimage
+        run: >-
+          python3 scripts/bewaar-writer-foutcontext.py
+          --programma src-tauri/target/release/open-office-studio
+          --rapport .local/proef-native-writer-kleur/rapport.json
+          --rapport .local/proef-native-writer-klembord/rapport.json
+          --rapport .local/proef-native-writer-lijsten/rapport.json
+          --rapport .local/proef-native-writer-lang/rapport.json
+          --rapport .local/proef-native-writer-bewaren/rapport.json
+          --uitvoer .local/writer-foutcontext
+          --appimage-map src-tauri/target/release/bundle/appimage
       - name: Writer-foutcontext uploaden
         if: always() && runner.os == 'Linux'
         uses: actions/upload-artifact@v4
