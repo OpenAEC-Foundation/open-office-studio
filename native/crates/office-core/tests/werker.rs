@@ -125,3 +125,65 @@ fn bestandswerk_geeft_zijn_resultaat_vanaf_een_afzonderlijke_draad_terug() {
     assert_ne!(draad, huidig);
     assert_eq!(waarde, 42);
 }
+
+#[test]
+fn stuur_leg_de_volgorde_vast_voordat_een_interface_het_antwoord_afwacht() {
+    let w = Werker::start();
+    let nieuw = w.stuur(90, Opdracht::Nieuw(Module::Notition));
+    let beeld = w.stuur(90, Opdracht::Deel(0));
+    // Een executor mag een later antwoord eerder pollen. De toelating tot de
+    // werker moet dan toch vóór de afbeeldingsvraag zijn gebeurd.
+    let antwoord = wacht(beeld).expect("Het eerder aangemaakte document moet bestaan");
+    assert_eq!(antwoord.hash, wacht(nieuw).unwrap().hash);
+}
+
+#[test]
+fn stuur_behoudt_een_toegelaten_bewerking_als_de_bediening_verdwijnt() {
+    let w = Werker::start();
+    let begin = wacht(w.clone().voer_uit(91, Opdracht::Nieuw(Module::Notition))).unwrap();
+    let bewerking = w.stuur(
+        91,
+        Opdracht::Bewerk(
+            0,
+            Bewerking::Tekst {
+                id: begin.beeld.velden[0].id.clone(),
+                tekst: "Geaccepteerde invoer".into(),
+            },
+        ),
+    );
+    // Het antwoord is niet de opdracht. Een verdwenen tabbediening mag de
+    // al toegelaten invoer niet geruisloos uit de werker laten verdwijnen.
+    drop(bewerking);
+    let bewaard = wacht(w.stuur(91, Opdracht::Deel(0))).unwrap();
+    assert_eq!(bewaard.beeld.velden[0].tekst, "Geaccepteerde invoer");
+    assert_ne!(bewaard.hash, begin.hash);
+}
+
+#[test]
+fn stuur_bewaart_de_invoervolgorde_bij_omgekeerd_afwachten() {
+    let w = Werker::start();
+    let begin = wacht(w.clone().voer_uit(92, Opdracht::Nieuw(Module::Notition))).unwrap();
+    let tekst = |s: &str| {
+        Opdracht::Bewerk(
+            0,
+            Bewerking::Tekst {
+                id: begin.beeld.velden[0].id.clone(),
+                tekst: s.into(),
+            },
+        )
+    };
+    let eerste = w.stuur(92, tekst("Eerste concept"));
+    let tweede = w.stuur(92, tekst("Tweede concept"));
+    assert_eq!(
+        wacht(tweede).unwrap().beeld.velden[0].tekst,
+        "Tweede concept"
+    );
+    assert_eq!(
+        wacht(eerste).unwrap().beeld.velden[0].tekst,
+        "Eerste concept"
+    );
+    assert_eq!(
+        wacht(w.stuur(92, Opdracht::Deel(0))).unwrap().beeld.velden[0].tekst,
+        "Tweede concept"
+    );
+}

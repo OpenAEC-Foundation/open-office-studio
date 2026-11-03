@@ -1,0 +1,35 @@
+{
+  "datum": "2026-11-03",
+  "basis": "9487100",
+  "wijziging": "Werker::stuur laat een geaccepteerde opdracht onmiddellijk toe tot de seriële werkrij. De toekomstige antwoordafhandeling kan daarna in willekeurige volgorde worden gepolld of verdwijnen. De bestaande asynchrone voer_uit-interface behoudt haar uitgestelde toelating tot de eerste poll.",
+  "negatieve_proef": {
+    "variant": "stuur als uitsluitend een doorgegeven voer_uit-future",
+    "tests": 3,
+    "gefaald": 3,
+    "uitkomsten": [
+      "Latere afbeeldingsvraag vindt het nog niet aangemaakte document niet.",
+      "Weggegooide future laat de geaccepteerde tekst verdwijnen.",
+      "Omgekeerd afwachten maakt het oudere concept tot eindtoestand."
+    ]
+  },
+  "nieuwe_proef": {
+    "werker_tests": 7,
+    "geslaagd": 7,
+    "documentkern": {
+      "geslaagd": 161,
+      "gefaald": 0
+    },
+    "clippy": "Werkruimte, desktopcode en alle doelen met -D warnings geslaagd.",
+    "volledige_werkruimte": {
+      "geslaagd": 476,
+      "gefaald": 0,
+      "expliciet_overgeslagen": 6,
+      "x11": "Geslaagd met expliciet OFFICE_XVFB-pad.",
+      "opdracht": "cargo test --manifest-path native/Cargo.toml --locked --workspace --features open-office-studio-webview/desktop"
+    }
+  },
+  "beperkingen": [
+    "De Dioxus-interface houdt de sessie nog in haar model; de daadwerkelijke aansluiting op deze toelating en de gedeelde documentwerker blijft open.",
+    "Geen acceptatiegebied is hiermee als volledig gemigreerd afgevinkt."
+  ]
+}

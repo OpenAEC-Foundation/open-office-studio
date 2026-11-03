@@ -37,3 +37,24 @@ productiegebruik ook de volgende eigenschappen bewaren:
 De bestaande WebView-model- en vensterproeven blijven de regressiebasis.
 De werker verplaatsen bewijst op zichzelf geen snellere WebView, volledige
 functiepariteit of pixelgelijkheid.
+
+## Opdrachten toelaten vóór de antwoordafhandeling
+
+`Werker::stuur` plaatst een geaccepteerde opdracht onmiddellijk in de seriële rij.
+De teruggegeven future ontvangt alleen het antwoord. Later pollen of weggooien
+verplaatst of annuleert de opdracht niet. Dit is nodig bij het aansluiten van de
+Rust-WebView: een verdwenen bediening mag geaccepteerde invoer niet verliezen.
+De bestaande `voer_uit`-future behoudt haar eerdere uitgestelde gedrag tot de
+executor haar voor het eerst pollt. `sluit` blijft een expliciete opdracht in
+precies dezelfde rij.
+
+Drie nieuwe regressieproeven falen op een louter doorgestuurde lazy future en
+slagen met onmiddellijke toelating: een latere weergavevraag eerder afwachten,
+een antwoord weggooien en twee conceptbewerkingen omgekeerd afwachten. De zeven
+werkertests en 161 documentkernproeven slagen; zie
+[het toelatingsverslag](werker-toelating-2026-11-03.json). De WebView-aansluiting
+zelf is hiermee nog niet uitgevoerd.
+
+De aansluitende volledige werkruimte-uitvoering slaagt in één ronde: 476 tests,
+zes expliciet optionele tests overgeslagen. Ook de X11-proef slaagt met het
+expliciete `OFFICE_XVFB`-pad. Clippy met desktopcode en alle doelen blijft groen.

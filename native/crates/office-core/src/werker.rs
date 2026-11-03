@@ -291,18 +291,30 @@ impl Werker {
             .await
             .map_err(|_| "Documentwerkdraad is gestopt".to_string())?
     }
-    pub async fn voer_uit(self, id: u64, opdracht: Opdracht) -> Resultaat {
+    /// Leg een geaccepteerde UI-opdracht vast vóór haar antwoord wordt afgewacht.
+    /// Weggooien van het antwoord trekt een al toegelaten opdracht niet in.
+    pub fn stuur(
+        &self,
+        id: u64,
+        opdracht: Opdracht,
+    ) -> impl std::future::Future<Output = Resultaat> + Send + 'static + use<> {
         let (antwoord, ontvanger) = oneshot::channel();
-        self.zender
+        let verzonden = self.zender
             .send(Werk::Document(Taak {
                 id,
                 opdracht,
                 antwoord,
             }))
-            .map_err(|_| "Documentwerkdraad is gestopt")?;
-        ontvanger
-            .await
-            .map_err(|_| "Documentwerkdraad is gestopt".to_string())?
+            .map_err(|_| "Documentwerkdraad is gestopt".to_string());
+        async move {
+            verzonden?;
+            ontvanger
+                .await
+                .map_err(|_| "Documentwerkdraad is gestopt".to_string())?
+        }
+    }
+    pub async fn voer_uit(self, id: u64, opdracht: Opdracht) -> Resultaat {
+        self.stuur(id, opdracht).await
     }
 }
 /// Bestands-I/O blokkeert ook nooit de vensterdraad.
