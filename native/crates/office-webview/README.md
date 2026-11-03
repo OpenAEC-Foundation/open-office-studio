@@ -39,7 +39,11 @@ De gepinde desktopinterpreter behandelt `inert=false` anders dan de SSR-renderer
 De schil laat het attribuut daarom volledig weg buiten een dialoog; de regressieproef
 controleert de DOM-mutaties, naast de echte vensterbediening. De statische letterstijl
 heeft een eigen component, zodat invoer die niet steeds opnieuw opbouwt.
-Documentacties lopen in deze eerste aansluiting nog op de UI-draad. De gedeelde
+Openen en enginebewerkingen lopen in deze eerste aansluiting nog op de UI-draad.
+Bewaren schrijft een onveranderlijke bronkopie op een achtergronddraad, zonder UI-slot.
+Alleen de vastgelegde bronhash wordt bevestigd; nieuwe invoer blijft gewijzigd en
+een gesloten tab wordt niet heropend. De bevestiging blijft bestaan als het lint
+of bestandsmenu verdwijnt. De gedeelde
 documentwerker staat nu in `office_core::werker`, los van de Iced-interface.
 De WebView-aansluiting en haar invoer-/bewaarbarrières moeten nog worden
 overgezet voordat grote documenten een vlotte bediening hebben; zie

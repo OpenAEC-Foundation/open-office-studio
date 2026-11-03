@@ -98,7 +98,8 @@ fn bewaar_pad(mut werk: Signal<Werkruimte>, doel: Doel, pad: Option<std::path::P
         }
     };
     // De bewaarkopie is vastgelegd; de UI-borrow eindigt vóór de await.
-    spawn(async move {
+    // Het lint of bestandsmenu mag verdwijnen terwijl de bevestiging wacht.
+    dioxus::core::spawn_forever(async move {
         let antwoord = taak.uitvoeren().await;
         let mut w = werk.write();
         let resultaat = w.voltooi_bewaren(antwoord).map(|_| ());
@@ -404,5 +405,83 @@ fn Document(werk: Signal<Werkruimte>, doel: Doel) -> Element {
             }
             if let Some(src) = afbeelding { main { style: "overflow:auto;flex:1;background:#eee;padding:24px", img { src, alt: "Documentweergave uit de Rust-kern", style: "max-width:100%;height:auto" } } }
         }
+    }
+}
+
+#[cfg(test)]
+mod bewaarproef {
+    use super::*;
+    use dioxus::core::{generation, needs_update};
+    use std::{
+        path::PathBuf,
+        time::{Duration, Instant},
+    };
+
+    #[derive(Props, Clone, PartialEq)]
+    struct ProefProps {
+        pad: PathBuf,
+    }
+
+    fn proef(props: ProefProps) -> Element {
+        let werk = use_signal(|| {
+            let mut w = Werkruimte::default();
+            w.open(&props.pad).unwrap();
+            let tab = w.tab().unwrap();
+            let doel = tab.doel();
+            let id = tab.beeld.velden[0].id.clone();
+            w.bewerk(
+                doel,
+                Bewerking::Tekst {
+                    id,
+                    tekst: "Bewaard na verlaten van de bediening".into(),
+                },
+            )
+            .unwrap();
+            w
+        });
+        if generation() == 0 {
+            needs_update();
+            rsx! { BewaarKind { werk } }
+        } else {
+            let vuil = werk.read().tab().unwrap().gewijzigd();
+            rsx! { div { if vuil { "nog gewijzigd" } else { "opslag bevestigd" } } }
+        }
+    }
+
+    #[component]
+    fn BewaarKind(werk: Signal<Werkruimte>) -> Element {
+        use_hook(move || {
+            let doel = werk.read().tab().unwrap().doel();
+            bewaar_pad(werk, doel, None);
+        });
+        rsx! { div { "tijdelijke bewaarbediening" } }
+    }
+
+    #[test]
+    fn webview_bewaarbevestiging_overleeft_het_verlaten_van_de_component() {
+        let map = tempfile::tempdir().unwrap();
+        let pad = map.path().join("notitie.json");
+        let sessie = office_core::document::Sessie::nieuw(Module::Notition).unwrap();
+        std::fs::write(&pad, sessie.bron().as_slice()).unwrap();
+        let mut dom = VirtualDom::new_with_props(proef, ProefProps { pad: pad.clone() });
+        dom.rebuild_in_place();
+        let einde = Instant::now() + Duration::from_secs(5);
+        loop {
+            dom.render_immediate_to_vec();
+            let html = dioxus_ssr::render(&dom);
+            if html.contains("opslag bevestigd") {
+                break;
+            }
+            assert!(
+                Instant::now() < einde,
+                "De bewaarbevestiging verdween met de bediening: {html}"
+            );
+            std::thread::sleep(Duration::from_millis(5));
+        }
+        let bron: serde_json::Value = serde_json::from_slice(&std::fs::read(pad).unwrap()).unwrap();
+        assert_eq!(
+            bron["boeken"][0]["secties"][0]["paginas"][0]["titel"],
+            "Bewaard na verlaten van de bediening"
+        );
     }
 }

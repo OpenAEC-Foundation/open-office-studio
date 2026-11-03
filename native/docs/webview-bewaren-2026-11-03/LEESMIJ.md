@@ -23,3 +23,11 @@ De volledige lokale proef heeft 45 beelden; dit is geen pixelgoedkeuring.
 
 Openen en enginebewerkingen zijn nog synchroon. De volledige documentsessiewerker
 moet nog worden aangesloten; alle tien migratiegebieden blijven open.
+
+
+Een aanvullende componentproef vond dat een bewaarantwoord kon verdwijnen
+wanneer de bediening werd verlaten. De bevestiging heeft nu de levensduur van
+de hoofdcomponent. De proef voert de echte bewaarfunctie uit vanuit een kind,
+verwijdert die component, controleert de bevestigde schijftoestand en leest het
+bestand onafhankelijk terug. Zij faalt op de eerdere aansluiting en slaagt na
+herstel. De gerichte WebView-ronde bevat nu zestien proeven; Clippy blijft groen.
