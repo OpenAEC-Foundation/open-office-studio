@@ -4,8 +4,8 @@ Een push naar GitHub werkt de broncode bij. De pagina Releases verandert alleen
 als er apart een uitgave wordt gepubliceerd. Een ontwikkelbuild is daarom
 beschikbaar als download bij GitHub Actions, zonder nieuwe release of tag.
 
-De gecontroleerde [45.22-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41683682284/artifacts/13253889103) is gebouwd uit
-`547d9778433360604750a7df41beb8fa26557d31`. De [bouw en pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41683682284) slagen.
+De gecontroleerde [45.23-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41690552163/artifacts/13257089427) is gebouwd uit
+`ec1b2a4fff930cee8326d9464814ccbb5bad867b`. De [bouw en pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41690552163) slagen.
 Sluit een eerder geopende dev-versie na het bewaren voordat je de nieuwe start;
 beide gebruiken hetzelfde dev-profiel.
 
@@ -58,3 +58,10 @@ Linux-zeveneditieproef faalt echter bij het openen van de eigen voorbeeldkopie
 op een fatale grafische modulecompilatie, vóór de eerste plakactie. Ook deze
 [rendererafkeuring](../tests/writer-renderer-opstart.md) blijft open; een groene
 devpakketproef bewijst geen volledige stabiliteit.
+
+Ook de 45.23-desktopbouw slaagt op drie platforms, maar de aparte
+[geheugenronde van 45.23](../tests/writer-geheugenonderzoek.md#4523-afkeuring-tijdens-de-extra-geheugenbelasting)
+is afgekeurd op een Wasm-geheugentoegang buiten bereik na selectie/geschiedenis
+en garbagecollection. De exacte negatieve binary en context zijn bewaard.
+Een lokale hertest met dezelfde binary slaagt; de fout is daarmee niet
+opgelost. Gebruik de devdownload voor tests met documentkopieën.

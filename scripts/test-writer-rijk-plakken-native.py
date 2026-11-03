@@ -182,6 +182,13 @@ async def proef(a):
             r['geslaagd'] = True
     except Exception as e:
         r['fout'] = repr(e)
+        # De inspectiecontext is hier al gesloten. Bewaar de eerder ontvangen
+        # consoleberichten ook bij een late afkeuring (bijvoorbeeld wanneer
+        # het nieuwe document na verwerpen niet gereed komt). Een nieuwe
+        # inspectieopdracht zou de oorspronkelijke fout kunnen overschrijven.
+        inspectie = locals().get('p')
+        if inspectie is not None:
+            r['console_bij_afkeuring'] = inspectie.consoleberichten
         if v and app.poll() is None:
             try:
                 beeld('afgekeurd')

@@ -129,3 +129,38 @@ herstelvenster blokkeert op zichzelf invoer; een renderfout erachter is wel een
 applicatiefout. Het venster wegklikken en vervolgens een groene proef melden
 zou daarvoor onvoldoende herstelbewijs zijn. De allocatorpanic blijft een
 afzonderlijk onopgelost onderzoekspunt.
+
+## 45.23: afkeuring tijdens de extra geheugenbelasting
+
+De [45.23-onderzoeksronde](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41690550985)
+slaagt voor de herstelstart: elf bronstappen, een echte periodieke kopie en
+beide herstelkeuzes. De daaropvolgende extra selectie-/Backspace-/undo-/redo-/
+GC-proef faalt al na de eerste ronde. Alle 500 alinea’s zijn nog bronexact,
+maar de GUI en console melden een Wasm-geheugentoegang buiten bereik bij
+`editsession_layout_document_with_regions_retained_json`. Dat is terecht een
+afkeuring: correcte broninhoud bewijst geen geldige nieuwe weergave.
+
+![Geheugentoegang buiten bereik na de eerste extra ronde](writer-geheugen-45.23/afgekeurd-ci.png)
+
+De verbeterde foutverzameling heeft de exacte raw binary, het juiste testscript,
+eigen DOCX, foutafbeelding en runtimegegevens bewaard. Het
+[foutpakket](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41690550985/artifacts/13257283924)
+is opgehaald; de archiefchecksum en alle interne checksums zijn gecontroleerd.
+De ELF-checksum is
+`a06234925cfa4fd6f8bbc1d3619c8fbd3cfb4b4659d8465435f6b5faa318db96`.
+De runner gebruikt WebKitGTK/JSC `2.50.4-0ubuntu0.22.04.1`.
+
+Dezelfde ELF en bytegelijke publieke proef zijn lokaal met de afzonderlijke
+WebKit 2.50.4 gestart. Twintig extra geheugen-/GC-rondes, alle acht gewone
+bronstappen, bewaren en heropenen slagen. De werkelijk gestarte ELF en geladen
+bibliotheekpaden zijn gecontroleerd. Andere hostbibliotheken, OS en timing zijn
+daarmee niet gelijk aan CI. Deze groene hertest reproduceert de afkeuring niet
+en bewijst geen herstel. Een eerste eigen launcheropzet miste zijn vereiste
+desktopbestand en stopte vóór de app; die opzetfout telt niet als productproef.
+
+De geslaagde brede 45.23-desktopbouw en de gecontroleerde devdownload blijven
+bewijs binnen hun eigen omvang. De devbinary verschilt van de afgekeurde
+gewone binary. De relatie tussen deze nieuwe geheugenfout, de oudere
+allocatorpanic en de afzonderlijke SkSL-rendererafkeuring is niet vastgesteld.
+Geen van deze problemen is gesloten. De [gegevens](2026-11-03-writer-geheugen-45.23.json)
+bewaren de negatieve en positieve uitkomsten naast elkaar.
