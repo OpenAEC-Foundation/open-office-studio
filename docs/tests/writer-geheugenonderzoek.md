@@ -164,3 +164,21 @@ gewone binary. De relatie tussen deze nieuwe geheugenfout, de oudere
 allocatorpanic en de afzonderlijke SkSL-rendererafkeuring is niet vastgesteld.
 Geen van deze problemen is gesloten. De [gegevens](2026-11-03-writer-geheugen-45.23.json)
 bewaren de negatieve en positieve uitkomsten naast elkaar.
+
+
+## 45.23: aparte opstarttimeout op 008cdc2
+
+De [geheugenroute op 008cdc2](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41695450809)
+is opnieuw afgekeurd, nu in de eerste gewone opstartronde vóór enige bronstap.
+Het rapport meldt `TimeoutError()`. De eerste pagina met tekst en cursor is
+zichtbaar en de status meldt Ready, terwijl de stijlen nog Loading styles tonen.
+Het programmalog bevat alleen de AT-SPI-waarschuwing, zonder expliciete
+allocator-, Wasm- of Skia-fout. Deze afkeuring wordt daarom afzonderlijk bewaard;
+een gezamenlijke oorzaak is niet aangetoond.
+
+De programma- en primaire scriptchecksums zijn gelijk aan die van de eerdere
+45.23-geheugenafkeuring. Het nieuwe archief en alle tien interne bestanden zijn
+op checksum gecontroleerd. Geen bron- of belastingstest is in deze uitvoering
+voltooid. Zie de [gegevens en grenzen](2026-11-03-writer-opstart-008cdc2.json)
+en het [volledige foutbeeld](writer-geheugen-45.23/afgekeurd-opstart-008cdc2.png).
+De kleinere devpakketproef op dezelfde commit slaagt; dat sluit deze fout niet.
