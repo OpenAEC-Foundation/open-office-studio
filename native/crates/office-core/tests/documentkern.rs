@@ -9,6 +9,7 @@ mod rekenblad_klembord;
 mod rekenblad_letters;
 mod rekenblad_selectie;
 mod rekenblad_snelle_navigatie;
+mod werker;
 mod writer_beveiliging;
 mod writer_cursor;
 mod writer_interactie;

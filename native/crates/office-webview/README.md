@@ -39,8 +39,11 @@ De gepinde desktopinterpreter behandelt `inert=false` anders dan de SSR-renderer
 De schil laat het attribuut daarom volledig weg buiten een dialoog; de regressieproef
 controleert de DOM-mutaties, naast de echte vensterbediening. De statische letterstijl
 heeft een eigen component, zodat invoer die niet steeds opnieuw opbouwt.
-Documentacties lopen in deze eerste aansluiting nog op de UI-draad. De bestaande
-werkdraad moet worden overgezet voordat grote documenten een vlotte bediening hebben.
+Documentacties lopen in deze eerste aansluiting nog op de UI-draad. De gedeelde
+documentwerker staat nu in `office_core::werker`, los van de Iced-interface.
+De WebView-aansluiting en haar invoer-/bewaarbarrières moeten nog worden
+overgezet voordat grote documenten een vlotte bediening hebben; zie
+[de opdracht- en acceptatieafspraken](../../docs/gedeelde-werker.md).
 
 Tekstvelden krijgen hun beginwaarde zonder elke ontvangen native update terug
 naar de levende browserwaarde te schrijven. Dat voorkomt letterverlies bij snelle
