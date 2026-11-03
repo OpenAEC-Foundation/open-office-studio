@@ -164,17 +164,26 @@ async def proef(a):
         subprocess.run(['xdotool', 'mousemove', '--window', str(venster.id), str(pos['x']), str(pos['y']), 'click', '1'], check=True)
         kiezer = await zoekvenster(lambda n: n == 'Select Color')
         g = kiezer.get_geometry()
-        scherm('kiezer-'+verwacht)
+        scherm('kiezer-eerste-beeld-'+verwacht)
         # Ubuntu 22.04 en de lokale GTK3-omgeving hebben dezelfde kleurcellen,
         # maar verschillen twee pixels in de ondermarge. Alleen gemeten vormen
         # toelaten; controleer de kleur onder de muis vóór de echte klik.
         assert g.width == 488 and g.height in (301, 303), f'GTK-palet wijkt af: {g.width}×{g.height}; coördinaten niet toepassen'
         x, y = 36+52*kolom, 28+34*rij
-        raw = kiezer.get_image(0, 0, g.width, g.height, X.ZPixmap, 0xffffffff)
-        palet = Image.frombytes('RGB', (g.width, g.height), raw.data, 'raw', 'BGRX')
-        pixel = palet.getpixel((x, y))
         rgb = tuple(bytes.fromhex(verwacht))
-        rapport['paletten'].append({'keuze': verwacht, 'breedte': g.width, 'hoogte': g.height, 'pixel': pixel, 'verwacht': rgb})
+        begin = time.monotonic()
+        # Viewable betekent nog niet dat GTK het eerste frame heeft geschilderd.
+        # Wacht begrensd op precies dezelfde vereiste kleur; klik nooit op een
+        # onbekend of nog ongeschilderd vlak.
+        while True:
+            raw = kiezer.get_image(0, 0, g.width, g.height, X.ZPixmap, 0xffffffff)
+            palet = Image.frombytes('RGB', (g.width, g.height), raw.data, 'raw', 'BGRX')
+            pixel = palet.getpixel((x, y))
+            if pixel == rgb or time.monotonic()-begin >= 3:
+                break
+            await asyncio.sleep(.05)
+        scherm('kiezer-'+verwacht)
+        rapport['paletten'].append({'keuze': verwacht, 'breedte': g.width, 'hoogte': g.height, 'pixel': pixel, 'verwacht': rgb, 'schilderwacht_ms': round((time.monotonic()-begin)*1000)})
         assert pixel == rgb, 'Het gemeten kleurvlak bevat niet de verwachte kleur; niet klikken'
         subprocess.run(['xdotool', 'mousemove', '--window', str(kiezer.id), str(x), str(y), 'click', '1'], check=True)
         await asyncio.sleep(.5)

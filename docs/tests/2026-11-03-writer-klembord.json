@@ -1,0 +1,268 @@
+{
+  "datum": "2026-11-03",
+  "versie": "2026.45.11",
+  "probleem": "#126: extern plakken via het lint wordt in de Linux-WebView geweigerd. Ctrl+V werkt in deze gerichte 45.10-proef al.",
+  "correctie": "Expliciete Tauri-klembordtoegang voor zowel geconfigureerde startvensters als later gemaakte documentvensters. Alle geconfigureerde eigenschappen blijven via from_config behouden; bewust uitgeschakelde vensters blijven uitgeschakeld.",
+  "voor": {
+    "geslaagd": false,
+    "versie": "2026.45.10",
+    "programma_sha256": "efcf2008fef6bf8e5851599643bd857dc5d5d29b4d3d96ae193813878d69411a",
+    "script_sha256": "3239d961e66cbae9d2dc1a7dc8346b0d8089b7ed8136559e141ca81740b231b7",
+    "stappen": [
+      {
+        "naam": "extern-toets-met-invoegpositie",
+        "verwacht": [
+          "Voor Externe toetsenproef| na."
+        ],
+        "werkelijk": [
+          "Voor Externe toetsenproef| na."
+        ],
+        "geslaagd": true
+      },
+      {
+        "naam": "extern-lint-met-unicode",
+        "verwacht": [
+          "Voor Externe toetsenproef| na. Lintproef Ω 🏠."
+        ],
+        "werkelijk": [
+          "Voor Externe toetsenproef| na."
+        ],
+        "geslaagd": false
+      }
+    ],
+    "grenzen": [
+      "Gerichte Linux/X11-proef met een aparte GTK-klembordbron; geen fysieke platform- of volledige klembordformaatacceptatie."
+    ],
+    "fout": "AssertionError({'naam': 'extern-lint-met-unicode', 'verwacht': ['Voor Externe toetsenproef| na. Lintproef Ω 🏠.'], 'werkelijk': ['Voor Externe toetsenproef| na.'], 'geslaagd': False})"
+  },
+  "na": {
+    "geslaagd": true,
+    "versie": "2026.45.11",
+    "programma_sha256": "e2a94fe67430580632de5733143d1c0c2411146a951dca60469317f74600b218",
+    "script_sha256": "3239d961e66cbae9d2dc1a7dc8346b0d8089b7ed8136559e141ca81740b231b7",
+    "stappen": [
+      {
+        "naam": "extern-toets-met-invoegpositie",
+        "verwacht": [
+          "Voor Externe toetsenproef| na."
+        ],
+        "werkelijk": [
+          "Voor Externe toetsenproef| na."
+        ],
+        "geslaagd": true
+      },
+      {
+        "naam": "extern-lint-met-unicode",
+        "verwacht": [
+          "Voor Externe toetsenproef| na. Lintproef Ω 🏠."
+        ],
+        "werkelijk": [
+          "Voor Externe toetsenproef| na. Lintproef Ω 🏠."
+        ],
+        "geslaagd": true
+      },
+      {
+        "naam": "intern-lint",
+        "verwacht": [
+          "Voor Externe toetsenproef| na. Lintproef Ω 🏠.Voor Externe toetsenproef| na. Lintproef Ω 🏠."
+        ],
+        "werkelijk": [
+          "Voor Externe toetsenproef| na. Lintproef Ω 🏠.Voor Externe toetsenproef| na. Lintproef Ω 🏠."
+        ],
+        "geslaagd": true
+      },
+      {
+        "naam": "intern-toets",
+        "verwacht": [
+          "Voor Externe toetsenproef| na. Lintproef Ω 🏠.Voor Externe toetsenproef| na. Lintproef Ω 🏠.Voor Externe toetsenproef| na. Lintproef Ω 🏠.Voor Externe toetsenproef| na. Lintproef Ω 🏠."
+        ],
+        "werkelijk": [
+          "Voor Externe toetsenproef| na. Lintproef Ω 🏠.Voor Externe toetsenproef| na. Lintproef Ω 🏠.Voor Externe toetsenproef| na. Lintproef Ω 🏠.Voor Externe toetsenproef| na. Lintproef Ω 🏠."
+        ],
+        "geslaagd": true
+      },
+      {
+        "naam": "extern-lint-meerregelig",
+        "verwacht": [
+          "Voor Externe toetsenproef| na. Lintproef Ω 🏠.Voor Externe toetsenproef| na. Lintproef Ω 🏠.Voor Externe toetsenproef| na. Lintproef Ω 🏠.Voor Externe toetsenproef| na. Lintproef Ω 🏠.Twee regels.",
+          "Volgende regel."
+        ],
+        "werkelijk": [
+          "Voor Externe toetsenproef| na. Lintproef Ω 🏠.Voor Externe toetsenproef| na. Lintproef Ω 🏠.Voor Externe toetsenproef| na. Lintproef Ω 🏠.Voor Externe toetsenproef| na. Lintproef Ω 🏠.Twee regels.",
+          "Volgende regel."
+        ],
+        "geslaagd": true
+      },
+      {
+        "naam": "native-bewaaractie",
+        "geslaagd": true
+      },
+      {
+        "naam": "nieuw-proces-heropend",
+        "verwacht": [
+          "Voor Externe toetsenproef| na. Lintproef Ω 🏠.Voor Externe toetsenproef| na. Lintproef Ω 🏠.Voor Externe toetsenproef| na. Lintproef Ω 🏠.Voor Externe toetsenproef| na. Lintproef Ω 🏠.Twee regels.",
+          "Volgende regel."
+        ],
+        "werkelijk": [
+          "Voor Externe toetsenproef| na. Lintproef Ω 🏠.Voor Externe toetsenproef| na. Lintproef Ω 🏠.Voor Externe toetsenproef| na. Lintproef Ω 🏠.Voor Externe toetsenproef| na. Lintproef Ω 🏠.Twee regels.",
+          "Volgende regel."
+        ],
+        "geslaagd": true
+      },
+      {
+        "naam": "nieuw-venster-extern-lint",
+        "verwacht": [
+          "Nieuw venster: extern geplakt."
+        ],
+        "werkelijk": [
+          "Nieuw venster: extern geplakt."
+        ],
+        "geslaagd": true
+      }
+    ],
+    "grenzen": [
+      "Gerichte Linux/X11-proef met een aparte GTK-klembordbron; geen fysieke platform- of volledige klembordformaatacceptatie."
+    ],
+    "bron_eind_sha256": "ee9de2ac3e2ca401742c86e3150713bf5a29abd147966dcd57b671bc36af1f2e"
+  },
+  "kleurregressie": {
+    "geslaagd": true,
+    "versie": "2026.45.11",
+    "programma_sha256": "e2a94fe67430580632de5733143d1c0c2411146a951dca60469317f74600b218",
+    "stappen": [
+      {
+        "naam": "begin",
+        "vullingen": [],
+        "tekstExact": true
+      },
+      {
+        "naam": "keuze-f6d32d",
+        "vullingen": [
+          "f6d32d"
+        ],
+        "tekstExact": true
+      },
+      {
+        "naam": "ongedaan",
+        "vullingen": [],
+        "tekstExact": true
+      },
+      {
+        "naam": "opnieuw",
+        "vullingen": [
+          "f6d32d"
+        ],
+        "tekstExact": true
+      },
+      {
+        "naam": "keuze-99c1f1",
+        "vullingen": [
+          "99c1f1"
+        ],
+        "tekstExact": true
+      },
+      {
+        "naam": "nieuw-getypte-tekst",
+        "vullingen": [
+          "99c1f1"
+        ],
+        "tekstExact": true
+      },
+      {
+        "naam": "nieuw-native-proces",
+        "vullingen": [
+          "99c1f1"
+        ],
+        "tekstExact": true
+      }
+    ],
+    "kleurgebeurtenissen": [
+      {
+        "keuze": "f6d32d",
+        "gebeurtenissen": [
+          {
+            "soort": "input",
+            "kleur": "#f6d32d",
+            "native": true
+          },
+          {
+            "soort": "change",
+            "kleur": "#f6d32d",
+            "native": true
+          }
+        ]
+      },
+      {
+        "keuze": "99c1f1",
+        "gebeurtenissen": [
+          {
+            "soort": "input",
+            "kleur": "#99c1f1",
+            "native": true
+          },
+          {
+            "soort": "change",
+            "kleur": "#99c1f1",
+            "native": true
+          }
+        ]
+      }
+    ],
+    "paletten": [
+      {
+        "keuze": "f6d32d",
+        "breedte": 488,
+        "hoogte": 303,
+        "pixel": [
+          246,
+          211,
+          45
+        ],
+        "verwacht": [
+          246,
+          211,
+          45
+        ],
+        "schilderwacht_ms": 75
+      },
+      {
+        "keuze": "99c1f1",
+        "breedte": 488,
+        "hoogte": 303,
+        "pixel": [
+          153,
+          193,
+          241
+        ],
+        "verwacht": [
+          153,
+          193,
+          241
+        ],
+        "schilderwacht_ms": 78
+      }
+    ],
+    "beperking": "GTK3-palet op Linux/X11; geen volledige platform- of functieacceptatie.",
+    "foutmeldingen": []
+  },
+  "overige_controles": {
+    "productiebuild_en_typescript": "geslaagd",
+    "native_linux_release": "geslaagd",
+    "versie_en_studioconfiguratie": {
+      "bestanden": 3,
+      "tests_geslaagd": 28
+    },
+    "weekversies_consistent": true,
+    "volledige_frontendtests": "De 1.583 geslaagde tests van 45.10 zijn hier niet opnieuw uitgevoerd; er is geen React/TypeScript-productcode gewijzigd. De nieuwe brede platform-CI volgt na push."
+  },
+  "grenzen": [
+    "Geen fysieke GUI-proef op Windows of macOS; de platformbouw en alle zeven edities worden na push afzonderlijk uitgevoerd.",
+    "Geen volledige klembordformaatacceptatie: deze ronde controleert externe platte tekst, interne enginekopieën, Unicode en meerdere regels.",
+    "Geen algemene snelheidsgoedkeuring of volledige Rust-/pixelmigratie."
+  ],
+  "beelden": {
+    "2026-11-03-writer-klembord-voor.png": "34dde3b588043ac006931f663b833013fabf55fd1fb327e4fa0b0e6410512789",
+    "2026-11-03-writer-klembord-na.png": "f922ff013b5928c2ee713888d74b72887af63712f3a1862572f84436488c2f04",
+    "2026-11-03-writer-klembord-nieuw-venster.png": "2209211ff5858fb2f871db54c78863a1984b13d6425d8ed3952c52636879866d"
+  }
+}

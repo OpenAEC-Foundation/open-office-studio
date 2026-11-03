@@ -8,18 +8,19 @@ from websockets import connect
 
 
 class Inspector:
-    def __init__(self, port):
+    def __init__(self, port, pagina=0):
         self.port = port
+        self.pagina = pagina
         self.i = 0
         self.taak = 0
 
     async def __aenter__(self):
         with urlopen(f'http://127.0.0.1:{self.port}/', timeout=5) as antwoord:
             html = antwoord.read().decode()
-        pad = re.search(r"(/socket/[^']+)", html)
-        if not pad:
+        paden = re.findall(r"(/socket/[^']+)", html)
+        if not 0 <= self.pagina < len(paden):
             raise RuntimeError('Geen inspectieverbinding van de eigen testapp')
-        self.ws = await connect(f'ws://127.0.0.1:{self.port}'+pad.group(1), max_size=16*1024*1024, origin=f'http://127.0.0.1:{self.port}')
+        self.ws = await connect(f'ws://127.0.0.1:{self.port}'+paden[self.pagina], max_size=16*1024*1024, origin=f'http://127.0.0.1:{self.port}')
         try:
             while True:
                 bericht = json.loads(await asyncio.wait_for(self.ws.recv(), timeout=30))

@@ -1,7 +1,7 @@
 {
   "datum": "2026-11-03",
   "versie": "2026.45.0-alpha.48",
-  "status": "Volledige lokale Rust-testreeks, Clippy, bron-/pakketproeven en geoptimaliseerde Linux-releasevensters geslaagd; alpha48-platform-CI volgt.",
+  "status": "Volledige lokale Rust-testreeks, Clippy, bron-/pakketproeven en geoptimaliseerde Linux-releasevensters geslaagd. De WebView-platform-CI op a32b081 slaagt op drie platforms; de afzonderlijke bredere native-CI loopt nog.",
   "rust": {
     "geslaagd": 488,
     "mislukt": 0,
@@ -93,5 +93,18 @@
     "presentatie-heropend.png": "05aa5165e9f05e146334eb09cac8aeb4246efe39791a60e65151574c6968f25d",
     "rekenblad-heropend.png": "df780c57e84610a7aaf04c3c4cbf7d0dfd765d8d70c5905991ea0615c44157af",
     "writer-heropend.png": "d0091ce6612c67de29ba46449afba995d92bbc82749af82f86dd363ae25e8ad0"
+  },
+  "ci_webview": {
+    "run": 41581980111,
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41581980111",
+    "bron": "a32b081b2c639ad9f612651f293419c28ace2f9f",
+    "status": "success",
+    "platforms": [
+      "Linux",
+      "Windows",
+      "macOS"
+    ],
+    "linux_gerichte_releasevensters": "Notities- en vijfmoduleproef geslaagd",
+    "grens": "Geen fysieke Windows-/macOS-GUI- of volledige pixelacceptatie."
   }
 }

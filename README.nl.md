@@ -31,7 +31,7 @@ documentsessies. Zie het [controleverslag](native/docs/webview-werker-2026-11-03
 tussenstap; geen van beide is al een volledige vervanging voor de huidige suite.
 Zie de [functievergelijking en resterende omzetting](native/README.md#huidige-omvang).
 
-De ontwikkeltak heeft een lokaal geteste Tauri-versie **2026-W45.10**. Writer
+De ontwikkeltak heeft een lokaal geteste Tauri-versie **2026-W45.11**. Writer
 begrenst spellinggolflijnen en tabelgrepen tot pagina’s rond het venster. Een echte
 native proef met 500 pagina’s behoudt invoer, selectie, undo/redo en alle opgeslagen
 alinea’s. **1.583 frontendtests en 488 Rust-werkruimtetests slagen; zes optionele
@@ -39,7 +39,10 @@ Rust-tests zijn overgeslagen.** Volledige functie-, snelheids- en pixelgelijkhei
 zijn nog niet goedgekeurd. Zie de [voortgang en open issues](docs/voortgang-migratie.md),
 [500-paginaproeven](docs/tests/2026-11-03-writer-golflijnen.json) en
 [Rust-opdrachttoelating](native/docs/werker-toelating-2026-11-03.json). De [45.10-bouw voor zeven edities op Linux, Windows en macOS](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41571435460)
-is geslaagd; publiceren was uitgeschakeld.
+is geslaagd; publiceren was uitgeschakeld. 45.11 herstelt daarnaast de native
+klembordtoegang voor plakken via het lint. [Acht echte Linux-controles](docs/tests/writer-klembord.md)
+testen invoegpositie, Unicode, interne/externe kopieën, bewaren/heropenen en een
+nieuw documentvenster. De nieuwe platformbouw volgt afzonderlijk.
 
 Alpha 39 vernieuwt de Notities-werkruimte. De [volledige lokale controle](native/docs/controle-2026-11-01-alpha39.md) slaagt met 403 Rust-tests, zes runtimeproeven en zeven Python-tests. Alle vijf CI-taken slagen, met 120 exacte native beeldparen en 21 paginabezoeken. Een extra echt venster en een aanvullende runtimeproef vinden nog een fout bij snelle muisinvoer; alpha40 wordt daarop hersteld en opnieuw getest. Alle acht oorspronkelijke UI-vergelijkingen blijven afgekeurd; de volledige suite is nog niet gemigreerd.
 

@@ -58,7 +58,9 @@ De afzonderlijke **geoptimaliseerde Linux-releasebuild** slaagt daarna op dezelf
 [Notities-verslag](notities-release.json) en [moduleverslag](modules-release.json)
 leggen de daadwerkelijke programma-/script-/bronhashes vast. De native beeldopnames
 zijn volledig en ongewijzigd; zeven geselecteerde beelden staan bij dit verslag.
-De nieuwe Linux-/Windows-/macOS-CI moet nog volgen. De actuele
+De [WebView-CI op a32b081](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41581980111)
+slaagt op Linux, Windows en macOS, inclusief beide gerichte Linux-releasevensterproeven.
+De afzonderlijke bredere native-CI loopt nog. De actuele
 [meetgegevens en grenzen](rapport.json) onderscheiden debug, release en CI.
 
 ## Resterend

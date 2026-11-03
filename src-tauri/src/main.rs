@@ -182,6 +182,21 @@ fn main() {
     if std::env::var_os("WEBKIT_DISABLE_DMABUF_RENDERER").is_none() {
         std::env::set_var("WEBKIT_DISABLE_DMABUF_RENDERER", "1");
     }
+    // Ook het eerste venster krijgt expliciete klembordtoegang. De automatische
+    // configuratieroute biedt die builderoptie niet; behoud alle overige
+    // venstereigenschappen en laat bewust uitgeschakelde vensters uitgeschakeld.
+    let mut context = tauri::generate_context!();
+    let startvensters: Vec<_> = context
+        .config_mut()
+        .app
+        .windows
+        .iter_mut()
+        .filter(|venster| venster.create)
+        .map(|venster| {
+            venster.create = false;
+            venster.clone()
+        })
+        .collect();
     tauri::Builder::default()
         // Eerst registreren: een tweede instantie (dubbelklik terwijl de app al
         // draait) geeft haar bestanden door en stopt meteen.
@@ -206,8 +221,13 @@ fn main() {
             std::env::args_os(),
         ))
         // Native teksten in de taal van de voorkeuren tot de frontend `zet_taal` meldt.
-        .setup(|app| {
+        .setup(move |app| {
             voorkeuren::zet_begintaal(app.handle());
+            for venster in &startvensters {
+                tauri::WebviewWindowBuilder::from_config(app.handle(), venster)?
+                    .enable_clipboard_access()
+                    .build()?;
+            }
             Ok(())
         })
         .on_window_event(|venster, gebeurtenis| {
@@ -292,7 +312,7 @@ fn main() {
             email::bestanden::email_externe_inhoud,
             email::bestanden::email_open_link
         ])
-        .build(tauri::generate_context!())
+        .build(context)
         .expect("De kantooromgeving kon niet starten")
         .run(|_app, gebeurtenis| match gebeurtenis {
             // Tijdelijk geopende e-mailbijlagen opruimen bij afsluiten.
