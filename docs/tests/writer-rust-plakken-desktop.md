@@ -75,9 +75,33 @@ zes in het volledige getypte venster (logo en zoomlabel). Het documentvlak
 van dat laatste beeldenpaar is gelijk. Dit is geen volledige pixelacceptatie
 voor alle vensters, toestanden, modules of platforms.
 
+## Grote functionele GUI-ronde
+
+Acht echte rijke plakrondes slagen op dezelfde definitieve binary, met 129
+pagina’s, 256 tabellen, 1.793 bodyalinea’s en 1.536 cellen. Iedere ronde gebruikt
+aantoonbaar de Rust-opdracht en precies één lokale delta. Bewaren na ronde
+zeven en voortbewerken, onafhankelijke DOCX-controle, Niet opslaan en een nieuw
+document slagen met lege foutenlijsten.
+
+De laatste ronde vraagt 48.072 ms. De 16-ms-hoofdthreadtimer heeft daarbij een
+onderbreking van 9.071 ms: de snelheidsklacht is dus niet opgelost. De Rust-
+voorbereiding vraagt 30.824 ms; twee compilaties liepen gelijktijdig. In ronde
+zeven verandert de bron echt tijdens voorbereiden en wordt het oude antwoord
+terecht geweigerd; de tweede voorbereiding slaagt. De bronbinding wordt niet
+versoepeld om deze herhaling te vermijden.
+
+Deze meetbarrière vraagt gewijzigde bron, lege invoerwachtrij en plakopties;
+zij bewijst niet dat iedere nieuwe pagina al is geschilderd. Een tussenliggend
+pagina-aantal loopt achter. De uiteindelijke 129 pagina’s en brongegevens zijn
+wel gecontroleerd. Ook de bestaande actuele-paginamelding loopt achter:
+status 64/129 tegenover scrollbadge 128/129; dit is eveneens aanwezig op 45.23.
+Volledige paginapaint en vervolginvoer op de grote bron vragen eigen tests.
+
+![Grote functionele proef; actuele-paginamelding blijft open](writer-rust-plakken-desktop/acht-rondes-45.24.png)
+
 ## Openstaande grenzen
 
-De rustige grote plakproef, volledige native werkruimtecontrole en nieuwe
+De rustige snelheidsvergelijking, volledige native werkruimtecontrole en nieuwe
 platform-/zeveneditieronde worden afzonderlijk vervolgd. De eerdere allocator-,
 Wasm-geheugen-, renderer- en opstartafkeuringen zijn hiermee niet opgelost.
 Volledige zichtbare brongetrouwheid van intern gekopieerde kop-/alineastijlen
