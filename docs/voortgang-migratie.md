@@ -1,20 +1,21 @@
 # Voortgang migratie en open issues
 
-Peildatum: 3 november 2026. Ontwikkelbasis: Tauri/Rust met React/TypeScript. De lokale testversie is `2026.45.14`, voortbouwend op bron `0749b1f`. De afzonderlijke Rust-WebView-preview is `2026.45.0-alpha.48`; deze vervangt de volledige suite nog niet.
+Peildatum: 3 november 2026. Ontwikkelbasis: Tauri/Rust met React/TypeScript. De lokale testversie is `2026.45.17`, met behoud van het bestaande gebruikersprofiel en oudere programma’s. De afzonderlijke Rust-WebView-preview is `2026.45.0-alpha.48`; deze vervangt de volledige suite nog niet.
 
 ## Huidige waarheid
 
 - De volledige Rust-interface is nog niet af; `native/docs/migratie.json` blijft leidend. Alle tien gebieden en dertig acceptatievlaggen blijven open.
-- Writer-invoer en selectie zijn nog onvoldoende soepel. De twee native 500-paginarondes geven 45.13→45.14: 4,508→4,319 s en 4,563→4,625 s voor veertien tekens. De totale tijd verbetert niet overtuigend; kortere framepauzes in deze rondes zijn geen algemene prestatiegoedkeuring. Zie [metingen, verworpen kandidaat en grenzen](tests/writer-spellingoffsets.md).
-- Op 45.14 slagen 1.599 frontendtests in 143 bestanden, TypeScript en productie-/native Linux-bouw. Acht offsetproeven omvatten de echte Rust-engine. De native 500-paginaproeven behouden alle alinea’s na typen, selectie/Backspace, geschiedenis, bewaren en heropenen. De aanvullende productie-GUI controleert revisies en gewone opmerkingen. Geen volledige functiedekking geclaimd.
-- De [45.11-bouw](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41584192673) slaagt voor zeven edities op Linux, Windows en macOS; publiceren was uitgeschakeld. Ook de [45.12-ronde](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41587557778) slaagt op alle drie platforms en zeven edities. De [45.13-ronde](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41589648687) loopt afzonderlijk. De gepubliceerde uitgave blijft `2026.44.8`; de volledige fysieke GUI-matrix blijft open.
+- Writer-invoer en selectie zijn nog onvoldoende soepel. De 45.17-ronde meet 4,957 s voor invoer en spelling van veertien tekens op 500 pagina’s. De achtste rijke plakactie kost 59,573 s bij 129 pagina’s en 256 tabellen. De worker blijft nu behouden na bewaren: de WebKit-modulekaartfout is afzonderlijk gereproduceerd en de bewaarenvervolgproef faalt op 45.16 en slaagt op 45.17. Dit is geen algemene prestatiegoedkeuring; de statusbalk loopt in het onmiddellijke grote proefbeeld nog achter. Zie [oorspronkelijke afkeuringen, reparatie en grenzen](tests/writer-worker-ingang.md) en de [eerdere spellingmetingen](tests/writer-spellingoffsets.md).
+- Op 45.17 slagen 1.612 frontendtests in 145 bestanden, 46 Python-tests, TypeScript, productie-/native Linux-bouw en de afzonderlijke Database-frontendbouw. De strengere native 500-paginaproef behoudt alle alinea’s na typen, selectie/Backspace, geschiedenis, bewaren en heropenen, met lege GUI- en consolefoutenlijsten. De grote native plakproef en de onafhankelijke pakket-/opmaakvergelijking slagen binnen hun beschreven omvang. Vijf productie-GUI-controles omvatten revisies en gewone opmerkingen. Geen volledige functiedekking geclaimd.
+- De [45.11-bouw](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41584192673), [45.12-ronde](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41587557778) en [45.13-ronde](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41589648687) slagen voor zeven edities op Linux, Windows en macOS; publiceren was uitgeschakeld. De [45.14-uitgavebouw](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41596171755) slaagt op Windows/macOS en faalt op Linux. De nieuwe 45.17-platformronde moet afzonderlijk worden gevolgd. De gepubliceerde uitgave blijft `2026.44.8`; de volledige fysieke GUI-matrix blijft open.
+- Een [afzonderlijke Linux-devbuild](gebruik/ontwikkelbuild-linux.md) is beschikbaar via Actions, met een eigen dev-profiel en zonder releasepublicatie. De eerste [45.14-download](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41616329596) slaagt voor broncode, bouw en pakketcontrole. De vernieuwde workflow bevat een echte controle op de uitgepakte AppImage; die nieuwe controle is nog geen goedgekeurde remote 45.17-uitkomst.
 - Rust-WebView alpha48 heeft 488 lokale werkruimtetests met desktopcode, zes expliciet optionele overslagen, Clippy en gerichte geoptimaliseerde Linux-vensterproeven. Haar [WebView-CI](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41581980111) slaagt op drie platforms. De bredere native-CI vond Windows-regelafbrekingen in gedeelde GUI-hulpen; de [hertest na LF-correctie](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41587526144) slaagt op de drie platformtaken, conversie en de afsluitende bron-/beeldvergelijking. Dit betreft de eigen native referenties, geen gelijkheid met de volledige suite. Zie [het bron-/releaseverslag](../native/docs/webview-werker-2026-11-03-alpha48/LEESMIJ.md).
 
 ## Werkvolgorde
 
 1. Writer: invoer-/selectievertraging, workerlevensduur, groot plakken en behoud van getypte tekst.
 2. Voorkomen van sessie-/gegevensverlies: onder meer rekenbladissue #120.
-3. Concrete Writer-regressies #122–#133 met reproductie, bewaren/heropenen en undo/redo.
+3. Concrete Writer-regressies #122–#139 met reproductie, bewaren/heropenen en undo/redo. De nieuwe #135-workerfout in een tabelcel is nog niet als exacte celcasus bewezen opgelost; #137–#139 betreffen navigatie, klikken en tabelgeschiedenis.
 4. Overige modulefuncties en open issues; applicatielogica stapsgewijs naar de Rust-kern verplaatsen.
 5. Rust-interface per module pas vervangen bij aantoonbare functionele en visuele gelijkwaardigheid.
 6. Distributie: suite plus losse edities, installatie/upgrade, ondertekening en echte platformproeven.
@@ -22,7 +23,7 @@ Peildatum: 3 november 2026. Ontwikkelbasis: Tauri/Rust met React/TypeScript. De 
 
 ## Open issues op de peildatum
 
-De GitHub-inventaris is op 3 november opnieuw vergeleken: **106** open issues, exact dezelfde nummers als in deze tabel. “Open” betekent niet dat de fout in deze ronde al is gereproduceerd. Een bestaand testbestand of ouder verslag is geen nieuwe uitvoering.
+De GitHub-inventaris is op 3 november opnieuw vergeleken: **111** open issues. Vijf nieuwe tabelmeldingen (#135–#139) zijn tijdens deze ronde toegevoegd en hieronder opgenomen. “Open” betekent niet dat de fout in deze ronde al is gereproduceerd. Een bestaand testbestand of ouder verslag is geen nieuwe uitvoering.
 
 | Issue | Onderwerp | Status |
 | --- | --- | --- |
@@ -132,6 +133,11 @@ De GitHub-inventaris is op 3 november opnieuw vergeleken: **106** open issues, e
 | [#130](https://github.com/OpenAEC-Foundation/open-office-studio/issues/130) | Writer: splitsen van bovenste cel lijkt kolombreedtes in andere rijen te verschuiven | Open; controle per issue nodig |
 | [#131](https://github.com/OpenAEC-Foundation/open-office-studio/issues/131) | Writer: zichtbare labels toevoegen aan rij en kolom verwijderen in het tabellint | Bron aangepast; GUI 1440/960 en opslaan gecontroleerd; nog niet vrijgegeven |
 | [#133](https://github.com/OpenAEC-Foundation/open-office-studio/issues/133) | Writer: beeld verspringt bij verticale celuitlijning terwijl tekst al zichtbaar is | Open; controle per issue nodig |
+| [#135](https://github.com/OpenAEC-Foundation/open-office-studio/issues/135) | Writer: tijdelijke fout “Document worker is not initialized” bij invoer in tabelcel | Open; exacte tabelcasus nog te reproduceren |
+| [#136](https://github.com/OpenAEC-Foundation/open-office-studio/issues/136) | Writer: maak rij- en kolomknoppen in Table Design duidelijk met zichtbare actielabels | Open; exacte tabelcasus nog te reproduceren |
+| [#137](https://github.com/OpenAEC-Foundation/open-office-studio/issues/137) | Writer: Tab slaat bestaande tabelcellen over en springt twee rijen omlaag | Open; exacte tabelcasus nog te reproduceren |
+| [#138](https://github.com/OpenAEC-Foundation/open-office-studio/issues/138) | Writer: tekstcursor in tabelcel plaatsen vereist zeer precies klikken en lukt soms niet | Open; exacte tabelcasus nog te reproduceren |
+| [#139](https://github.com/OpenAEC-Foundation/open-office-studio/issues/139) | Writer: Undo niet beschikbaar na Split Table | Open; exacte tabelcasus nog te reproduceren |
 
 ## Laatste onderzochte stap
 
@@ -265,3 +271,11 @@ De GitHub-inventaris is op 3 november opnieuw vergeleken: **106** open issues, e
 - De meetproef wacht nu op de echte laatste keyup, de invoerwachtrij en één exacte laatste-alineacontrole, zonder herhaald alle 500 alinea’s te lezen. Beide programma’s gebruiken dezelfde proefbytes. Een fout bij het opruimen van uitsluitend de eigen tijdelijke portalmap beïnvloedt de inhoudelijke testuitkomst niet meer; definitieve rondes eindigen met code 0.
 - De nieuwe begrensde profielproef bewaart ruwe WebKit-samples van pagina en workers en ijkt de stackvolgorde op dezelfde runtime. Geen proces-CPUtijd uit ontbrekende tijdintervallen afgeleid. Een extra paginaproef ziet 499 van 500 objectreferenties hergebruikt; er is geen ongefundeerde paginacomparatorwijziging gemaakt.
 - De lokale startkoppeling is bijgewerkt naar de definitief geteste 45.14-binary. Documenten, gebruikersgegevens, eerdere binaries en lopende vensters zijn behouden. Nieuwere platform-/zeveneditiecontroles volgen afzonderlijk. De 45.12-editiebouw en bredere native-alpha48-ronde zijn inmiddels volledig groen; dit bewijst geen volledige Rust-/pixelacceptatie.
+
+### 2026.45.17: worker-ingang en bewaarproef
+
+- De eigen WebKit-modulekaartproef reproduceert de dubbele initialisatie. De workerbouw gebruikt een aparte ingang en weigert terugimporten. De gerichte bewaar-/vervolgproef keurt 45.16 af en keurt 45.17 goed; ook verborgen consolefouten tellen mee.
+- De grote native hertest behoudt 129 pagina’s en 256 tabellen, zonder workerfout, met onafhankelijke pakket-/opmaakvergelijking en werkend verwerpen. De achtste plakactie duurt nog 59,573 s. De statusbalk in het onmiddellijke beeld loopt achter en is verder te onderzoeken.
+- 1.612 frontendtests, 46 Python-tests, TypeScript, native Linux-bouw, Database-frontendbouw en vijf revisie-GUI-controles slagen. De strengere 500-paginaproef behoudt inhoud en geschiedenis met lege foutlijsten; haar invoer-/spellingtijd van 4,957 s is geen prestatiegoedkeuring.
+- De lokale snelkoppeling verwijst naar de geteste 45.17-binary, SHA256 `341d97067fdd1ce57409f9946bb8ca8fa95fde94a765e2d7cd4956c6c4135ead`. Profiel, documenten, oudere binaries en lopende vensters zijn behouden. De Linux-devworkflow test de werkelijk uitgepakte AppImage; die remote ronde volgt na push.
+- De inventaris bevat nu 111 open issues, inclusief vijf nieuwe tabelmeldingen. Geen issue of migratie-acceptatiepunt gesloten. Zie [bewijs, afkeuringen en grenzen](tests/writer-worker-ingang.md).

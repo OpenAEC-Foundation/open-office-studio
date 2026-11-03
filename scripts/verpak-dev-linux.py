@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Verpak de gecontroleerde dev-AppImage met bronrevisie en startinstructies."""
+import argparse
 import hashlib
 import json
 from pathlib import Path
@@ -10,6 +11,9 @@ import tempfile
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--gui-python', type=Path, help='Voer de bewaarenvervolgproef op de uitgepakte AppImage uit.')
+    opties = parser.parse_args()
     versie = json.loads(Path('package.json').read_text())['version']
     bron = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
     configuratie = json.loads(Path('src-tauri/tauri.dev.conf.json').read_text())
@@ -19,8 +23,23 @@ def main():
     assert len(pakketten) == 1, f'Verwacht één AppImage, gevonden: {pakketten}'
     pakket = pakketten[0].resolve()
     controle = runpy.run_path('scripts/controleer-installers.py')
+    native_gui = None
     with tempfile.TemporaryDirectory(prefix='office-dev-pakketcontrole-') as tijdelijk:
-        controles = controle['appimage'](pakket, Path(tijdelijk) / 'uitgepakt')
+        uitgepakt = Path(tijdelijk) / 'uitgepakt'
+        controles = controle['appimage'](pakket, uitgepakt)
+        if opties.gui_python:
+            programma = uitgepakt / 'usr/bin/open-office-studio'
+            uitvoer_gui = Path('.local/proef-dev-native')
+            subprocess.run([
+                str(opties.gui_python.resolve(strict=True)), 'scripts/test-writer-rijk-plakken-native.py',
+                '--programma', str(programma), '--versie', versie,
+                '--profiel', configuratie['identifier'], '--rondes', '3',
+                '--bewaar-na-ronde', '1', '--maxduur', '180', '--uitvoer', str(uitvoer_gui),
+            ], check=True)
+            native_gui = json.loads((uitvoer_gui / 'rapport.json').read_text())
+            assert native_gui.get('geslaagd') is True
+            with programma.open('rb') as bestand:
+                assert native_gui['programma_sha256'] == hashlib.file_digest(bestand, 'sha256').hexdigest()
     with pakket.open('rb') as bestand:
         checksum = hashlib.file_digest(bestand, 'sha256').hexdigest()
     mapnaam = f'Open-Office-Studio-Dev-{versie}-linux-x86_64-{bron[:7]}'
@@ -33,6 +52,18 @@ def main():
         'controles': ['TypeScript via productiebouw', 'Vitest', 'Rust-desktoptests'],
         'gui_acceptatie': 'Niet volledig gecontroleerd; ontwikkelbuild met bekende Writer-problemen.',
     }
+    modulekaart = Path('.local/proef-webkit-modulekaart/rapport.json')
+    if modulekaart.is_file():
+        controle = json.loads(modulekaart.read_text())
+        assert controle.get('geslaagd') is True, 'De WebKit-moduleproef is niet geslaagd'
+        rapport['webkit_modulekaart'] = controle
+    if native_gui:
+        rapport['native_gui'] = {
+            'geslaagd': True, 'programma_sha256': native_gui['programma_sha256'],
+            'profiel': native_gui['profiel'], 'script_sha256': native_gui['script_sha256'],
+            'omvang': 'Eigen DOCX-kopie, drie plakrondes, bewaren na ronde één en verder bewerken; onafhankelijke inhoudscontrole, verwerpen en nieuw document.',
+            'appimage_startfunctie': 'Niet via AppRun gestart; de werkelijk uitgepakte ELF is bediend.',
+        }
     with tempfile.TemporaryDirectory(prefix='office-dev-download-') as tijdelijk:
         inhoud = Path(tijdelijk) / mapnaam
         inhoud.mkdir()

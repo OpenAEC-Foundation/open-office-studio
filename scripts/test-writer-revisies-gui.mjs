@@ -72,8 +72,13 @@ try {
     assert(stand.kaarten.some(k => k.tekst.includes("Verwijderde woorden")));
     assert(actieveVerbindingen.every(paden => paden.length >= 1 && paden.every(d => d && !/NaN|Infinity/.test(d))));
     const werkruimte = await page.locator(".docx-editor__scroll-container").boundingBox();
-    rapport.stappen.push({ naam: "twee_revisies", zoom, ...stand, actieveVerbindingen, werkruimte });
-    assert(stand.kaarten.every(k => k.y >= werkruimte.y && k.y + k.height <= werkruimte.y + werkruimte.height), "Revisiekaarten vallen na de schuifanimatie buiten de werkruimte");
+    const pixelschaal = await page.evaluate(() => devicePixelRatio);
+    assert(Number.isFinite(pixelschaal) && pixelschaal > 0);
+    const pixel = waarde => Math.round(waarde * pixelschaal);
+    // Vergelijk geschilderde pixelgrenzen. De CI gaf bij 150% zoom een
+    // subpixelpositie 207,890625 tegenover 208; beide vallen op pixel 208.
+    rapport.stappen.push({ naam: "twee_revisies", zoom, ...stand, actieveVerbindingen, werkruimte, pixelschaal });
+    assert(stand.kaarten.every(k => pixel(k.y) >= pixel(werkruimte.y) && pixel(k.y + k.height) <= pixel(werkruimte.y + werkruimte.height)), "Revisiekaarten vallen na de schuifanimatie buiten de werkruimte");
     await page.screenshot({ path: join(uitvoer, `revisies-${zoom}.png`) });
   }
   await page.locator(".docx-review-accept-all").click();

@@ -68,6 +68,7 @@ import {
   tabelUitKlembord,
 } from "./plakopties";
 import { kanTabelPlakken, plakTabel } from "../tabel/opdrachten";
+import { pasOpmaakBatchToe, type OpmaakOpdracht } from "./opmaakbatch";
 import { DatumTijdDialoog } from "./DatumTijdDialoog";
 import { ontbrekendeStijl } from "../stijlen/model";
 import { metHeleAlinea } from "../stijlen/toepassen";
@@ -468,6 +469,8 @@ export function TekstBewerken({
       sessie.story,
       (s) => {
         let plek = 0;
+        const opdrachten: OpmaakOpdracht[] = [];
+        const normaliseren: { bereik: OpmaakOpdracht["bereik"]; gemengd: boolean }[] = [];
         for (const stuk of sessie.stukken) {
           const range = {
             story: sessie.story,
@@ -475,11 +478,10 @@ export function TekstBewerken({
             end: { paraId: stuk.paraId, offset: stuk.eind },
           };
           if (stuk.eind > stuk.begin && sessie.basis) {
-            s.formatRange(range, sessie.basis.delta);
+            opdrachten.push({ bereik: range, delta: sessie.basis.delta });
             if (sessie.basis.positie === "normaal") {
               const ctx = s.selectionContext(range);
-              if (ctx.superscript !== false) s.toggleMark(range, { type: "superscript" });
-              if (ctx.superscript === "mixed") s.toggleMark(range, { type: "superscript" });
+              if (ctx.superscript !== false) normaliseren.push({ bereik: range, gemengd: ctx.superscript === "mixed" });
             }
           }
           if (keuze !== "tekst" && sessie.html) {
@@ -488,17 +490,24 @@ export function TekstBewerken({
               .map((o) => (o ? deltaUitHtml(o, keuze === "samenvoegen") : null));
             for (const deel of stukken(deltas, zelfdeDelta)) {
               if (!deel.waarde) continue;
-              s.formatRange(
-                {
+              opdrachten.push({
+                bereik: {
                   ...range,
                   start: { paraId: stuk.paraId, offset: stuk.begin + deel.begin },
                   end: { paraId: stuk.paraId, offset: stuk.begin + deel.eind },
                 },
-                deel.waarde,
-              );
+                delta: deel.waarde,
+              });
             }
           }
           plek += stuk.tekst.length + 1;
+        }
+        if (!pasOpmaakBatchToe(s, opdrachten)) for (const opdracht of opdrachten) s.formatRange(opdracht.bereik, opdracht.delta);
+        // De plakdelta's wijzigen super-/subscript niet. Hun normalisatie kan
+        // daarom na de batch zonder de oorspronkelijke keuze te veranderen.
+        for (const { bereik, gemengd } of normaliseren) {
+          s.toggleMark(bereik, { type: "superscript" });
+          if (gemengd) s.toggleMark(bereik, { type: "superscript" });
         }
       },
       { aansluiten },

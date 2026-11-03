@@ -200,6 +200,7 @@ jobs:
             "$OFFICE_GUI_PYTHON" scripts/test-writer-kleur-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-native-writer-kleur
             "$OFFICE_GUI_PYTHON" scripts/test-writer-klembord-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-native-writer-klembord
             "$OFFICE_GUI_PYTHON" scripts/test-writer-lang-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-native-writer-lang
+            "$OFFICE_GUI_PYTHON" scripts/test-writer-rijk-plakken-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --rondes 3 --bewaar-na-ronde 1 --maxduur 180 --uitvoer .local/proef-native-writer-bewaren
             node scripts/test-writer-revisies-gui.mjs
           fi
           node scripts/verzamel-studio.mjs office
@@ -302,6 +303,14 @@ jobs:
         with:
           name: native-writer-lang-${{ github.workflow }}-${{ matrix.os || matrix.label }}
           path: .local/proef-native-writer-lang/
+          include-hidden-files: true
+          if-no-files-found: warn
+      - name: Writer-bewaarbewijs bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-writer-bewaren-${{ github.workflow }}-${{ matrix.label }}
+          path: .local/proef-native-writer-bewaren/
           include-hidden-files: true
           if-no-files-found: warn
       - name: Native Writer-kleurbewijs bewaren

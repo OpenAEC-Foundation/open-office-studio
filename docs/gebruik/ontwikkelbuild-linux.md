@@ -29,7 +29,12 @@ van de gewone versie. Zelf geopende bestanden blijven dezelfde bestanden;
 gebruik kopieën bij het testen. Automatische updates staan uit.
 
 De workflow controleert de broncode, bouwt de app en pakt de AppImage
-onafhankelijk uit. Een geslaagde bouw betekent geen volledige GUI-acceptatie.
+onafhankelijk uit. Een minimale proef in de echte WebKit controleert tevens
+de moduleworker-opzet; het resultaat staat in `bouw.json`. Dit is geen volledige GUI-acceptatie.
+De uitgepakte AppImage wordt in de GUI geopend en gecontroleerd op bewaren en
+verder bewerken, drie plakrondes en sluiten zonder opslaan. De hash in
+`bouw.json` bindt die proef aan de werkelijk verpakte ELF. De startfunctie
+AppRun, andere distributies en de overige functies zijn daarmee niet volledig getoetst.
 Bekende Writer-problemen met grote documenten en de documentworker zijn nog
 in onderzoek. De workflow heeft alleen leesrechten op de repository en
 publiceert geen GitHub-release.

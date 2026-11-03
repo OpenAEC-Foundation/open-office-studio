@@ -5,6 +5,8 @@ native Linux-proef gebruikt uitsluitend een eigen kopie van het meegeleverde
 `docs/voorbeelden/Ontwerpnotitie.docx`. Dat sluit beter aan bij de gemelde
 werkwijze dan de afzonderlijke proef met 500 eenvoudige alinea’s op 500 pagina’s.
 
+Vervolg: [worker behouden na bewaren, afgekeurde kandidaten en 45.17-hertest](writer-worker-ingang.md).
+
 Elke ronde bedient werkelijk Ctrl+A, Ctrl+C, Ctrl+End en Ctrl+V. Vervolgens wacht
 de proef op de gewijzigde bron en het einde van de invoerwachtrij. Pas buiten de
 tijdmeting worden de volledige alineatekst, celteksten en tabelvormen vergeleken.

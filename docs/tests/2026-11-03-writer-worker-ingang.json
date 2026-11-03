@@ -1,0 +1,444 @@
+{
+  "peildatum": "2026-11-03",
+  "omgeving": "Linux x86_64, WebKitGTK 2.52.6, eigen X11/Xvfb- en D-Bus-sessie; DMABUF uit, normale compositor voor de appproeven.",
+  "scope": "Gerichte Writer-reparatie; geen volledige GUI-, snelheid-, platform- of migratieacceptatie.",
+  "bronverwijzingen": [
+    "https://bugs.webkit.org/show_bug.cgi?id=324459",
+    "https://rollupjs.org/configuration-options/#preserveentrysignatures"
+  ],
+  "modulekaart": {
+    "geslaagd": true,
+    "omvang": "Twee minimale moduleworkers in de geïnstalleerde WebKitGTK; geen app- of prestatieacceptatie.",
+    "webkit": "2.52.6",
+    "gevallen": {
+      "oud": {
+        "evaluaties": 2,
+        "gelijk": false
+      },
+      "apart": {
+        "evaluaties": 1,
+        "gelijk": true
+      }
+    },
+    "kwetsbaar": true
+  },
+  "oude_bouw_acht": {
+    "versie": "2026.45.14",
+    "geslaagd": false,
+    "programma_sha256": "a589b7ac4f306dd2c196c3ede410c5eadf6838d62d4af1e66d1f025a310cb560",
+    "script_sha256": "9c51e849b262238ab9b8a897d7a4ce182d7d9e9d08f90c558b9b70b9bc4b6d7c",
+    "bron_sha256": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee",
+    "fout": "TimeoutError()",
+    "rondes": [
+      {
+        "ronde": 1,
+        "ms": 972,
+        "paginas": 2,
+        "tabellen": 2,
+        "alineas": 15
+      },
+      {
+        "ronde": 2,
+        "ms": 1001,
+        "paginas": 3,
+        "tabellen": 4,
+        "alineas": 29
+      },
+      {
+        "ronde": 3,
+        "ms": 1137,
+        "paginas": 5,
+        "tabellen": 8,
+        "alineas": 57
+      },
+      {
+        "ronde": 4,
+        "ms": 1022,
+        "paginas": 9,
+        "tabellen": 16,
+        "alineas": 113
+      },
+      {
+        "ronde": 5,
+        "ms": 2841,
+        "paginas": 17,
+        "tabellen": 32,
+        "alineas": 225
+      },
+      {
+        "ronde": 6,
+        "ms": 6182,
+        "paginas": 33,
+        "tabellen": 64,
+        "alineas": 449
+      },
+      {
+        "ronde": 7,
+        "ms": 24474,
+        "paginas": 65,
+        "tabellen": 128,
+        "alineas": 897
+      }
+    ],
+    "gui_fouten": "niet_bewaakt_of_niet_bereikt",
+    "console_fouten": "niet_bewaakt_of_niet_bereikt"
+  },
+  "verworpen_kandidaat_acht": {
+    "versie": "2026.45.16",
+    "geslaagd": false,
+    "programma_sha256": "e90881de84f96abc9729ad77c11c7aedb72ad297c0dbf48dba35fceb815697f4",
+    "script_sha256": "9c51e849b262238ab9b8a897d7a4ce182d7d9e9d08f90c558b9b70b9bc4b6d7c",
+    "bron_sha256": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee",
+    "fout": "AssertionError('De broncontroles slagen, maar de GUI meldt fouten')",
+    "verwerpen_ms": 485,
+    "nieuw_document_na_verwerpen": true,
+    "onafhankelijk_docx": {
+      "exact": true,
+      "sha256": "895214437e526ba210d19ebb4ff172b66f26ee3b7ddfa15cab0ceace1de1f432",
+      "bytes": 72903,
+      "body_met_opmaak_sha256": "b6168187c7519585543ce394d4affaa5bc5b3ac182665f7d0eae2cd6c36c0a9a",
+      "normalisatie": "Alleen paraId/textId en rsid-attributen verwijderd; tekst, run- en alineaopmaak, hyperlinks en tabelstructuur blijven in de bodyhash."
+    },
+    "rondes": [
+      {
+        "ronde": 1,
+        "ms": 962,
+        "paginas": 2,
+        "tabellen": 2,
+        "alineas": 15
+      },
+      {
+        "ronde": 2,
+        "ms": 1066,
+        "paginas": 3,
+        "tabellen": 4,
+        "alineas": 29
+      },
+      {
+        "ronde": 3,
+        "ms": 1088,
+        "paginas": 5,
+        "tabellen": 8,
+        "alineas": 57
+      },
+      {
+        "ronde": 4,
+        "ms": 900,
+        "paginas": 9,
+        "tabellen": 16,
+        "alineas": 113
+      },
+      {
+        "ronde": 5,
+        "ms": 2697,
+        "paginas": 17,
+        "tabellen": 32,
+        "alineas": 225
+      },
+      {
+        "ronde": 6,
+        "ms": 4993,
+        "paginas": 33,
+        "tabellen": 64,
+        "alineas": 449
+      },
+      {
+        "ronde": 7,
+        "ms": 20219,
+        "paginas": 65,
+        "tabellen": 128,
+        "alineas": 897
+      },
+      {
+        "ronde": 8,
+        "ms": 52563,
+        "paginas": 129,
+        "tabellen": 256,
+        "alineas": 1793
+      }
+    ],
+    "gui_fouten": [
+      {
+        "tekst": "ErrorDocument worker was destroyed",
+        "ronde": 7
+      }
+    ],
+    "console_fouten": "niet_bewaakt_of_niet_bereikt"
+  },
+  "bewaren_en_vervolgen_voor": {
+    "versie": "2026.45.16",
+    "geslaagd": false,
+    "programma_sha256": "e90881de84f96abc9729ad77c11c7aedb72ad297c0dbf48dba35fceb815697f4",
+    "script_sha256": "cb5430fddb5590cb1ee3939e13910c2ad3756c4f489309ce72df656e664e1ed5",
+    "bron_sha256": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee",
+    "fout": "AssertionError('De engine meldt consolefouten, ook zonder zichtbare melding')",
+    "bewaar_na_ronde": 1,
+    "tussenbewaring": {
+      "na_ronde": 1,
+      "bytes": 36725,
+      "sha256": "32d24f037c8a7d314efb3cb3f6cbf540fa20fee7138b32ec42d151907c736f7b"
+    },
+    "verwerpen_ms": 362,
+    "nieuw_document_na_verwerpen": true,
+    "onafhankelijk_docx": {
+      "exact": true,
+      "sha256": "20f392cf14765659026cbb31bb4fb6961c499d34ce73dc025f77377a026d9cba",
+      "bytes": 37672,
+      "body_met_opmaak_sha256": "f958cd0f39db750ae098511c9b05460bef3c2803ba9abac2a7b8d7ebfbc8aaf9",
+      "normalisatie": "Alleen paraId/textId en rsid-attributen verwijderd; tekst, run- en alineaopmaak, hyperlinks en tabelstructuur blijven in de bodyhash."
+    },
+    "rondes": [
+      {
+        "ronde": 1,
+        "ms": 992,
+        "paginas": 2,
+        "tabellen": 2,
+        "alineas": 15
+      },
+      {
+        "ronde": 2,
+        "ms": 1272,
+        "paginas": 3,
+        "tabellen": 4,
+        "alineas": 29
+      },
+      {
+        "ronde": 3,
+        "ms": 1433,
+        "paginas": 5,
+        "tabellen": 8,
+        "alineas": 57
+      }
+    ],
+    "gui_fouten": [],
+    "console_fouten": [
+      {
+        "tekst": "[CanvasRenderer] Document worker unavailable; laying out on the main thread",
+        "fout": "Error: Document worker is not initialized"
+      }
+    ]
+  },
+  "bewaren_en_vervolgen_na": {
+    "versie": "2026.45.17",
+    "geslaagd": true,
+    "programma_sha256": "341d97067fdd1ce57409f9946bb8ca8fa95fde94a765e2d7cd4956c6c4135ead",
+    "script_sha256": "cb5430fddb5590cb1ee3939e13910c2ad3756c4f489309ce72df656e664e1ed5",
+    "bron_sha256": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee",
+    "bewaar_na_ronde": 1,
+    "tussenbewaring": {
+      "na_ronde": 1,
+      "bytes": 36722,
+      "sha256": "56537701cef2d229e6421272c03df6ac5296ada4ceeb665ab20c07d43e6ea85f"
+    },
+    "verwerpen_ms": 361,
+    "nieuw_document_na_verwerpen": true,
+    "onafhankelijk_docx": {
+      "exact": true,
+      "sha256": "d39e3b2acb3b195d393bb3aee725034ec5c3ecae46c6766146d55258df6fbd6a",
+      "bytes": 37688,
+      "body_met_opmaak_sha256": "f958cd0f39db750ae098511c9b05460bef3c2803ba9abac2a7b8d7ebfbc8aaf9",
+      "normalisatie": "Alleen paraId/textId en rsid-attributen verwijderd; tekst, run- en alineaopmaak, hyperlinks en tabelstructuur blijven in de bodyhash."
+    },
+    "rondes": [
+      {
+        "ronde": 1,
+        "ms": 946,
+        "paginas": 2,
+        "tabellen": 2,
+        "alineas": 15
+      },
+      {
+        "ronde": 2,
+        "ms": 991,
+        "paginas": 3,
+        "tabellen": 4,
+        "alineas": 29
+      },
+      {
+        "ronde": 3,
+        "ms": 1053,
+        "paginas": 5,
+        "tabellen": 8,
+        "alineas": 57
+      }
+    ],
+    "gui_fouten": [],
+    "console_fouten": []
+  },
+  "nieuwe_bouw_acht": {
+    "versie": "2026.45.17",
+    "geslaagd": true,
+    "programma_sha256": "341d97067fdd1ce57409f9946bb8ca8fa95fde94a765e2d7cd4956c6c4135ead",
+    "script_sha256": "cb5430fddb5590cb1ee3939e13910c2ad3756c4f489309ce72df656e664e1ed5",
+    "bron_sha256": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee",
+    "bewaar_na_ronde": 0,
+    "verwerpen_ms": 490,
+    "nieuw_document_na_verwerpen": true,
+    "onafhankelijk_docx": {
+      "exact": true,
+      "sha256": "56c4c6e4f56646a315e2f3146f6a7f74b8939ec8a594c4740fd69df4b8936279",
+      "bytes": 73325,
+      "body_met_opmaak_sha256": "c6a30378ac21520c50475ab5290df9cd2d9989fd8c82cd874ef51a6fa37d9fd2",
+      "normalisatie": "Alleen paraId/textId en rsid-attributen verwijderd; tekst, run- en alineaopmaak, hyperlinks en tabelstructuur blijven in de bodyhash."
+    },
+    "rondes": [
+      {
+        "ronde": 1,
+        "ms": 970,
+        "paginas": 2,
+        "tabellen": 2,
+        "alineas": 15
+      },
+      {
+        "ronde": 2,
+        "ms": 1149,
+        "paginas": 3,
+        "tabellen": 4,
+        "alineas": 29
+      },
+      {
+        "ronde": 3,
+        "ms": 886,
+        "paginas": 5,
+        "tabellen": 8,
+        "alineas": 57
+      },
+      {
+        "ronde": 4,
+        "ms": 903,
+        "paginas": 9,
+        "tabellen": 16,
+        "alineas": 113
+      },
+      {
+        "ronde": 5,
+        "ms": 2020,
+        "paginas": 17,
+        "tabellen": 32,
+        "alineas": 225
+      },
+      {
+        "ronde": 6,
+        "ms": 4350,
+        "paginas": 33,
+        "tabellen": 64,
+        "alineas": 449
+      },
+      {
+        "ronde": 7,
+        "ms": 14352,
+        "paginas": 65,
+        "tabellen": 128,
+        "alineas": 897
+      },
+      {
+        "ronde": 8,
+        "ms": 59573,
+        "paginas": 129,
+        "tabellen": 256,
+        "alineas": 1793
+      }
+    ],
+    "gui_fouten": [],
+    "console_fouten": []
+  },
+  "vijfhonderd_paginas": {
+    "versie": "2026.45.17",
+    "geslaagd": true,
+    "programma_sha256": "341d97067fdd1ce57409f9946bb8ca8fa95fde94a765e2d7cd4956c6c4135ead",
+    "script_sha256": "b5e3119b6424795dece7e5d69afaa9e115ad2b13055698c614136abde3187455",
+    "invoer_tot_bron_en_golven_ms": 4957,
+    "fouten_voor_heropenen": {
+      "gui": [],
+      "console": []
+    },
+    "fouten_na_heropenen": {
+      "gui": [],
+      "console": []
+    },
+    "grenzen": [
+      "Eén gegenereerde 500-paginabron, normale compositor, alleen een lichte teller om getBoundingClientRect. Geen algemene prestatie-, IME-, enorme-plak- of platformacceptatie."
+    ],
+    "stappen": [
+      {
+        "naam": "beginbron",
+        "exact": true
+      },
+      {
+        "naam": "getypte_bron",
+        "exact": true
+      },
+      {
+        "naam": "selectie_en_backspace",
+        "exact": true
+      },
+      {
+        "naam": "undo",
+        "exact": true
+      },
+      {
+        "naam": "redo",
+        "exact": true
+      },
+      {
+        "naam": "hersteld_voor_bewaren",
+        "exact": true
+      },
+      {
+        "naam": "native_bewaaractie_onafhankelijk",
+        "exact": true
+      },
+      {
+        "naam": "nieuw_proces_heropend",
+        "exact": true
+      }
+    ]
+  },
+  "pakketbehoud_tegen_originele_fixture": {
+    "toegevoegd": [],
+    "verdwenen": [],
+    "gewijzigd": [
+      "docProps/core.xml",
+      "word/document.xml"
+    ],
+    "ongewijzigde_onderdelen": 12,
+    "gewijzigde_kernvelden": [
+      "{http://purl.org/dc/terms/}modified"
+    ]
+  },
+  "body_en_stijlen_tegen_oude_export": {
+    "geslaagd": true,
+    "voor_sha256": "50e196a6e6dec468ddbdf29214e8fd55cb8b35a1acb3c04390f4fd52617e98f6",
+    "na_sha256": "56c4c6e4f56646a315e2f3146f6a7f74b8939ec8a594c4740fd69df4b8936279",
+    "tabellen": 256,
+    "gelijke_geerfde_marges_expliciet": 0,
+    "genormaliseerde_body_sha256": "2862d5d4537762cedf4f56264bb36ffa891085511db3524c44fde668699e2df3"
+  },
+  "statusbalk_bij_schermafbeelding": {
+    "werkelijke_paginas": 129,
+    "zichtbaar": "Page 32 of 65; 9,857 words, 65,664 characters",
+    "verwachte_bodytekens": 131328,
+    "beoordeling": "Achterstand direct na de plakactie zichtbaar; herstel na een wachttijd is nog niet gecontroleerd."
+  },
+  "controles": {
+    "frontend": {
+      "bestanden": 145,
+      "tests": 1612,
+      "geslaagd": true
+    },
+    "python": {
+      "tests": 46,
+      "geslaagd": true
+    },
+    "typescript_en_native_linuxbouw": true,
+    "database_frontendbouw": true,
+    "productie_gui_revisies": true
+  },
+  "resterend": [
+    "Typen/selecteren nog te traag; 4,957 s voor invoer en spelling in de ene 500-paginaronde.",
+    "Achtste rijke plakactie nog 59,573 s; geen geslaagde prestatieacceptatie.",
+    "Statusbalk na grote plakactie verder onderzoeken; volledige visuele controles ontbreken.",
+    "Snelle plakreeksen zonder barrières, veel grotere bestanden en fysieke andere platforms niet afgetest.",
+    "Alle tien migratiegebieden en dertig acceptatievlaggen blijven open."
+  ]
+}

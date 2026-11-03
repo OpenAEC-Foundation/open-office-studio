@@ -1,9 +1,10 @@
 import { defineConfig } from "vite";
 import { fileURLToPath } from "node:url";
+import { maakWorkerConfig } from "../../scripts/workerconfig";
 
 export default defineConfig({
   root: fileURLToPath(new URL(".", import.meta.url)),
-  worker: { format: "es" },
+  worker: maakWorkerConfig(),
   // Zonder kantoorlettertypen in deze bundel (zie src/export/pdf/lettertypebron.ts).
   define: { "import.meta.env.VITE_DATABASE_APP": JSON.stringify("1") },
   resolve: {

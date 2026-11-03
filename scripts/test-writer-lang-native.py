@@ -142,6 +142,7 @@ async def proef(a):
         await p.run('''window.proefApi=()=>{const el=document.querySelector('.office-tabpaneel:not([hidden]) .office-tekst');if(!el)return null;for(let f=el[Object.keys(el).find(k=>k.startsWith('__reactFiber$'))];f;f=f.return)for(let s=f.memoizedState,i=0;s&&i<200;i++,s=s.next){const v=s.memoizedState?.current;if(v?.getEditorRef&&v.commands)return v}return null};let einde=performance.now()+60000;while(proefApi()?.getTotalPages()!==500||!proefApi().getEditorRef()?.getYrsSession()){if(performance.now()>einde)throw Error('500 pagina’s niet gereed');await new Promise(r=>setTimeout(r,100))}await proefApi().flushPendingInput();return true;''')
         werkelijk = await p.run("return await window.__TAURI_INTERNALS__.invoke('plugin:app|version');")
         assert werkelijk == a.versie, (werkelijk, a.versie)
+        await p.begin_foutbewaking()
         await p.ev("window._toetsenProef=[];window.addEventListener('keyup',e=>_toetsenProef.push({key:e.key.toLowerCase(),code:e.code,target:e.target?.className}),true);true")
 
     async def bronstand(p):
@@ -200,10 +201,14 @@ async def proef(a):
             teksten = [''.join(e.text or '' for e in alinea.findall('.//w:t', ns)) for alinea in xml.findall('.//w:body/w:p', ns)]
             assert teksten == getypt, 'Onafhankelijke DOCX-teruglezing wijkt af'
             rapport['stappen'].append({'naam': 'native_bewaaractie_onafhankelijk', **samenvatting(teksten), 'exact': True})
+            rapport['fouten_voor_heropenen'] = await p.fouten()
+            assert not any(rapport['fouten_voor_heropenen'].values()), 'GUI of engine meldt fouten vóór heropenen'
         stop(); await start()
         async with Inspector(int(os.environ['OFFICE_PROEF_HTTP'])) as p:
             await gereed(p)
             await controle(p, 'nieuw_proces_heropend', getypt)
+            rapport['fouten_na_heropenen'] = await p.fouten()
+            assert not any(rapport['fouten_na_heropenen'].values()), 'GUI of engine meldt fouten na heropenen'
         rapport['bron_eind_sha256'] = hashlib.sha256(bron.read_bytes()).hexdigest()
         rapport['geslaagd'] = True
     except Exception as fout:

@@ -29,6 +29,109 @@ function proef() {
 }
 
 describe("volgorde bij het voorbereiden van de documentworker", () => {
+  it("boekt een wachtende synchronisatie pas bij werkelijk verzenden als overgedragen", async () => {
+    const p = proef();
+    const begin = p.momentopname();
+    begin.fontsRevision = 2;
+    const openen = p.client.bootstrap(begin, "{}", { stateVector: new Uint8Array([1]) });
+    const volgend = p.momentopname();
+    volgend.fontsRevision = 7;
+    const vector = new Uint8Array([9]);
+    const sync = p.client.sync(volgend, "{}", 0, false, { stateVector: vector }).catch(e => e);
+    try {
+      expect(p.berichten.map(b => b.type)).toEqual(["bootstrap"]);
+      expect(Array.from(p.client.remoteStateVector() ?? [])).toEqual([1]);
+      expect(p.client.syncedFontsRevision()).toBe(2);
+      vector[0] = 99;
+      p.antwoord(); await openen;
+      await new Promise<void>(klaar => setImmediate(klaar));
+      expect(p.berichten.map(b => b.type)).toEqual(["bootstrap", "sync"]);
+      expect(Array.from(p.client.remoteStateVector() ?? [])).toEqual([9]);
+      expect(p.client.syncedFontsRevision()).toBe(7);
+    } finally { p.client.destroy(); await Promise.all([openen.catch(e => e), sync]); }
+  });
+
+  it("stuurt weergave, lezen en synchroniseren pas na de voltooide initialisatie", async () => {
+    const p = proef();
+    const openen = p.client.bootstrap(p.momentopname(), "{}");
+    const taken = [
+      openen.catch(e => e),
+      p.client.buildFrame("{}", 0).catch(e => e),
+      p.client.documentRead({} as Parameters<typeof p.client.documentRead>[0]).catch(e => e),
+      p.client.sync(p.momentopname(), "{}", 0).catch(e => e),
+      p.client.fontRequirements("{}").catch(e => e),
+    ];
+    try {
+      await Promise.resolve();
+      expect(p.berichten.map(b => b.type)).toEqual(["bootstrap"]);
+      p.antwoord(); await openen;
+      await new Promise<void>(klaar => setImmediate(klaar));
+      expect(p.berichten.map(b => b.type)).toEqual(["bootstrap", "buildFrame", "documentRead", "sync", "fontRequirements"]);
+    } finally { p.client.destroy(); await Promise.all(taken); }
+  });
+
+  it("bouwt twee gelijktijdig gevraagde momentopnamen op volgorde op", async () => {
+    const p = proef();
+    const eerste = p.client.bootstrap(p.momentopname(), "{}");
+    const tweede = p.client.bootstrap(p.momentopname(), "{}");
+    const taken = [eerste.catch(e => e), tweede.catch(e => e)];
+    try {
+      expect(p.berichten.map(b => b.type)).toEqual(["bootstrap"]);
+      p.antwoord(); await eerste;
+      await new Promise<void>(klaar => setImmediate(klaar));
+      expect(p.berichten.map(b => b.type)).toEqual(["bootstrap", "bootstrap"]);
+      p.antwoord(); await tweede;
+      expect(p.client.isReady()).toBe(true);
+    } finally { p.client.destroy(); await Promise.all(taken); }
+  });
+
+  it("houdt uitgestelde synchronisatie bij haar toegelaten bytes en opties", async () => {
+    const p = proef();
+    const openen = p.client.bootstrap(p.momentopname(), "{}");
+    const snapshot = p.momentopname();
+    snapshot.state[0] = 7;
+    const buffer = snapshot.state.buffer;
+    const sync = p.client.sync(snapshot, "{}", 0).catch(e => e);
+    const taken = [openen.catch(e => e), sync];
+    try {
+      // Zoals bij direct postMessage is de overgedragen buffer nu eigendom
+      // van de client; latere veranderingen aan opties veranderen het verzoek niet.
+      expect(buffer.byteLength).toBe(0);
+      snapshot.layoutInput = '{"later":true}';
+      p.antwoord(); await openen;
+      await new Promise<void>(klaar => setImmediate(klaar));
+      const bericht = p.berichten.find(b => b.type === "sync");
+      expect(bericht?.type).toBe("sync");
+      if (bericht?.type !== "sync") throw Error("Synchronisatie ontbreekt");
+      expect(Array.from(bericht.snapshot.state)).toEqual([7, 0]);
+      expect(bericht.snapshot.layoutInput).toBe("{}");
+    } finally { p.client.destroy(); await Promise.all(taken); }
+  });
+
+  it("geeft een initialisatiefout ook aan wachtende weergave door zonder die te verzenden", async () => {
+    const p = proef();
+    const openen = p.client.bootstrap(p.momentopname(), "{}");
+    const frame = p.client.buildFrame("{}", 0);
+    const taken = [openen.catch(e => e), frame.catch(e => e)];
+    try {
+      expect(p.berichten.map(b => b.type)).toEqual(["bootstrap"]);
+      const fout = expect(openen).rejects.toThrow("initialisatie mislukt");
+      const framefout = expect(frame).rejects.toThrow("initialisatie mislukt");
+      p.antwoord(false); await fout; await framefout;
+      expect(p.berichten.map(b => b.type)).toEqual(["bootstrap"]);
+    } finally { p.client.destroy(); await Promise.all(taken); }
+  });
+
+  it("verzendt wachtende weergave niet meer wanneer het document tijdens openen sluit", async () => {
+    const p = proef();
+    const openen = p.client.bootstrap(p.momentopname(), "{}").catch(e => e);
+    const frame = p.client.buildFrame("{}", 0).catch(e => e);
+    p.client.destroy();
+    expect(await openen).toBeInstanceOf(Error);
+    expect(await frame).toBeInstanceOf(Error);
+    expect(p.berichten.map(b => b.type)).toEqual(["bootstrap", "destroy"]);
+  });
+
   it("start de invoeropdrachten pas nadat de worker zijn document heeft geopend", async () => {
     const p = proef();
     const opdracht = p.client.commandInit({} as Parameters<typeof p.client.commandInit>[0]).catch((e) => e);

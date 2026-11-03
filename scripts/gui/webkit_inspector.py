@@ -4,7 +4,6 @@ import json
 import re
 import time
 from urllib.request import urlopen
-from websockets import connect
 
 
 class Inspector:
@@ -13,8 +12,10 @@ class Inspector:
         self.pagina = pagina
         self.i = 0
         self.taak = 0
+        self.consoleberichten = []
 
     async def __aenter__(self):
+        from websockets import connect
         with urlopen(f'http://127.0.0.1:{self.port}/', timeout=5) as antwoord:
             html = antwoord.read().decode()
         paden = re.findall(r"(/socket/[^']+)", html)
@@ -45,6 +46,8 @@ class Inspector:
                     raise RuntimeError(bericht['error'])
                 continue
             bericht = json.loads(bericht['params']['message'])
+            if bericht.get('method') == 'Console.messageAdded':
+                self.consoleberichten.append(bericht['params']['message'])
             if bericht.get('id') == nummer:
                 return bericht
 
@@ -53,6 +56,32 @@ class Inspector:
         if bericht.get('error') or bericht['result'].get('wasThrown'):
             raise RuntimeError(bericht)
         return bericht['result']['result'].get('value')
+
+    async def begin_foutbewaking(self):
+        await self.command('Console.enable')
+        await self.ev('''(() => {
+          if (window._officeGuiFouten) return true;
+          const fouten = window._officeGuiFouten = [];
+          const meld = tekst => {
+            if (!fouten.some(f => f.tekst === tekst)) fouten.push({tekst, ronde: window._plakRonde ?? 0});
+          };
+          window.addEventListener('error', e => meld(String(e.error ?? e.message)));
+          window.addEventListener('unhandledrejection', e => meld(String(e.reason)));
+          const scan = () => {
+            for (const e of document.querySelectorAll('.office-melding[data-toon="fout"]')) meld(e.textContent);
+          };
+          const meldingen = document.querySelector('.office-meldingen');
+          if (!meldingen) throw Error('Meldingencontainer ontbreekt; foutbewaking kan niet starten');
+          scan();
+          new MutationObserver(scan).observe(meldingen, {childList:true, subtree:true, characterData:true});
+          return true;
+        })()''')
+
+    async def fouten(self):
+        gui = await self.ev('window._officeGuiFouten')
+        if not isinstance(gui, list):
+            raise RuntimeError('GUI-foutbewaking was niet gestart')
+        return {'gui': gui, 'console': [m for m in self.consoleberichten if m.get('level') == 'error']}
 
     async def run(self, code, t=90):
         # Deze WebKit-route wacht niet betrouwbaar op een teruggegeven Promise.
