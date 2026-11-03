@@ -153,6 +153,17 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           "$OFFICE_GUI_PYTHON" scripts/test-writer-lang-native.py --programma src-tauri/target/release/open-office-studio --versie $(node -p "require('./package.json').version") --uitvoer .local/proef-native-writer-lang
+      - name: Revisiekaarten en gewone opmerkingen in de productie-UI
+        if: runner.os == 'Linux'
+        run: node scripts/test-writer-revisies-gui.mjs
+      - name: Writer-revisiebewijs bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: writer-revisies-${{ github.workflow }}-${{ matrix.os || matrix.label }}
+          path: .local/proef-writer-revisies/
+          include-hidden-files: true
+          if-no-files-found: warn
       - name: Native Writer-langdocumentbewijs bewaren
         if: always() && runner.os == 'Linux'
         uses: actions/upload-artifact@v4

@@ -125,6 +125,9 @@ jobs:
           "$RUNNER_TEMP/office-native-gui/bin/python" -m pip install --ignore-installed -r scripts/gui/requirements.txt
           echo "OFFICE_GUI_PYTHON=$RUNNER_TEMP/office-native-gui/bin/python" >> "$GITHUB_ENV"
       - run: pnpm install --frozen-lockfile
+      - name: Browser voor de suitecontrole klaarzetten
+        if: runner.os == 'Linux'
+        run: pnpm exec playwright install --with-deps chromium
       # Extra open lettertypen (assets/lettertypen.json): bewaard per manifestversie,
       # zodat een build zonder netwerk naar GitHub ook werkt.
       - name: Lettertypencache
@@ -197,6 +200,7 @@ jobs:
             "$OFFICE_GUI_PYTHON" scripts/test-writer-kleur-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-native-writer-kleur
             "$OFFICE_GUI_PYTHON" scripts/test-writer-klembord-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-native-writer-klembord
             "$OFFICE_GUI_PYTHON" scripts/test-writer-lang-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-native-writer-lang
+            node scripts/test-writer-revisies-gui.mjs
           fi
           node scripts/verzamel-studio.mjs office
           pnpm database:desktop:build --bundles ${{ matrix.bundels }}
@@ -263,7 +267,6 @@ jobs:
       - name: Invoer en bestandsbehoud via de productie-GUI
         if: runner.os == 'Linux'
         run: |
-          pnpm exec playwright install --with-deps chromium
           node scripts/test-rekenblad-gui.mjs
           node scripts/test-writer-lettergrootte-gui.mjs
           node scripts/test-writer-kleur-gui.mjs
@@ -283,6 +286,14 @@ jobs:
         with:
           name: native-writer-klembord-${{ github.workflow }}-${{ matrix.os || matrix.label }}
           path: .local/proef-native-writer-klembord/
+          include-hidden-files: true
+          if-no-files-found: warn
+      - name: Writer-revisiebewijs bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: writer-revisies-${{ github.workflow }}-${{ matrix.os || matrix.label }}
+          path: .local/proef-writer-revisies/
           include-hidden-files: true
           if-no-files-found: warn
       - name: Native Writer-langdocumentbewijs bewaren

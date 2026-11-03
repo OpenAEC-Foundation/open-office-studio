@@ -33,7 +33,8 @@ wacht nu maximaal drie seconden op de **exact vereiste RGB-pixel**; de maat- en
 kleurvoorwaarden blijven even streng. Het oorspronkelijke negatieve beeld blijft
 lokaal bewaard.
 
-De nieuwe platform-CI en bouw voor zeven edities volgen afzonderlijk na push.
+De [45.11-bouw voor zeven edities op drie platforms](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41584192673)
+slaagt inmiddels; publiceren was uitgeschakeld. Dit is bouw-/CI-bewijs.
 Fysieke Windows-/macOS-GUI-proeven, alle externe rijke klembordformaten, algemene
 prestaties en de volledige Rust-/pixelmigratie zijn hiermee niet goedgekeurd.
 
