@@ -1,0 +1,458 @@
+{
+  "basiscommit": "9fcc66b",
+  "omvang": "Afzonderlijke Rust-plakbatch, niet aangesloten in de suite. Exacte werkboombron wordt door onderstaande hashes gebonden. Geen algemene prestatie-, stabiliteits-, GUI- of migratieacceptatie.",
+  "omgeving": {
+    "python": "3.12.3",
+    "rust": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "node": "v24.22.1",
+    "platform": "Linux x86_64"
+  },
+  "bronbestanden_sha256": {
+    ".github/workflows/writer-rust-plakbatch.yml": "a63eec9fca82ec89e368758d59cd3bbec4cdec2fb50a5fb5ba7edb593cfe0429",
+    "docs/tests/writer-rust-plakbatch/bron-128-tabellen.docx": "f69528bf0ee7b1e2d89aff2e893a131696e0485dd494b2a7c15b16f55d95b7a5",
+    "native/onderzoek/writer-plakbatch/Cargo.lock": "e733db512e488e596a24195dcb89d8d8522106daf376e3ffbd3a6b11200a7f58",
+    "native/onderzoek/writer-plakbatch/Cargo.toml": "3034693adef043e58a7f6a2f9d1396aac160fbf75140e9c1c962d68ce2214403",
+    "native/onderzoek/writer-plakbatch/README.md": "e6c31c8db8ae2a0e3b110616b26c0097c29bfcddee3bc1dc12cc5bad4bd9eee0",
+    "native/onderzoek/writer-plakbatch/controleer-afwijzingen.mjs": "7184435324d25ccb46ab4f5157656b341b545c282f690ecaeb04b69808b8d5fe",
+    "native/onderzoek/writer-plakbatch/controleer-groot.mjs": "18a2869f78594d51d095d0caa890721826c95b1734df230b1613e71ab31d2b44",
+    "native/onderzoek/writer-plakbatch/controleer-randgevallen.mjs": "8b6ffb032be97d3760a69f688cbf2a438c2fa27ab8de3fcbbf6a371dbe1f233e",
+    "native/onderzoek/writer-plakbatch/patches/docx-edit-bron.json": "ac99bdb25c53d65f79de4fdc5a41e7f8bd51efa0c78035db88e301f9a85fab94",
+    "native/onderzoek/writer-plakbatch/patches/docx-edit.patch": "6f04bd2518b8255d18715af49d392b713fe922bc2c030dacfe177547fdcfe2f5",
+    "native/onderzoek/writer-plakbatch/patches/yrs-bron.json": "970f3fc72b3e1f47fcc8de6cc9a1b0db95187a79ed0ee8eec0ec9fe4096c777b",
+    "native/onderzoek/writer-plakbatch/patches/yrs.patch": "85f059c361219613cd71223b8610763f000490472b96d0c50a77977985cd46bd",
+    "native/onderzoek/writer-plakbatch/src/main.rs": "a6407ef906d7a7402c6a73523f6f0c356d23efd9af1c6da92965f5ced7182866",
+    "native/onderzoek/writer-plakbatch/tests/venster.rs": "134b08e521df37a0e873b68199959d86b71475bb3f781246f3ca58ba49dede14",
+    "native/onderzoek/writer-plakbatch/voorbereiden.py": "a42a191d37e85fb791115074efb44f645878971bb5a99e8b736a456494cfccc0"
+  },
+  "rust_tests": {
+    "geslaagd": true,
+    "aantal": 2,
+    "log_sha256": "cbf7b95d2fd4f84707cf20cd461cb0c3b80f51ee4639b64f7568535339ef7e68"
+  },
+  "voorbereiden": {
+    "eerste_kopie_en_idempotente_hertest": true,
+    "registerbronnen_alleen_gelezen": true,
+    "git_patch_check_en_toepassen": true,
+    "verse_eigen_kopie": true,
+    "idempotente_hertest": true,
+    "afwijkende_werkkopie_geweigerd_en_behouden": true,
+    "controles_actief_met_python_optimize": true,
+    "fout": "RuntimeError: yrs: werkkopie gewijzigd: src/types/text.rs"
+  },
+  "proeven": {
+    "randgevallen": {
+      "rapport_sha256": "85bd2e4cc3d0184106990bebc6b9a19a773f889e742e1422b9662ea07b825f61",
+      "gegevens": {
+        "scope": "Gegevens-/DOCX-proeven van private Rust-batch; geen GUI of productacceptatie.",
+        "gevallen": [
+          {
+            "naam": "begin",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 1
+          },
+          {
+            "naam": "midden",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 1
+          },
+          {
+            "naam": "einde",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 2
+          },
+          {
+            "naam": "deelselectie",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 1
+          },
+          {
+            "naam": "meer-alineas",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 1
+          },
+          {
+            "naam": "unicode-midden",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 1
+          },
+          {
+            "naam": "unicode-grens",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 1
+          },
+          {
+            "naam": "lege-alineas",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 1
+          },
+          {
+            "naam": "enkele-tabel",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 2
+          },
+          {
+            "naam": "tabel-na-tekst",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 2
+          },
+          {
+            "naam": "geneste-tabel",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 4
+          },
+          {
+            "naam": "celtekst",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 1
+          },
+          {
+            "naam": "tabel-in-cel",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 4
+          },
+          {
+            "naam": "afbeelding",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 3
+          },
+          {
+            "naam": "afbeelding-na-tabel",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 2
+          },
+          {
+            "naam": "leeg-fragment",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 1
+          },
+          {
+            "naam": "bladwijzer-begin",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 1
+          },
+          {
+            "naam": "bladwijzer-midden",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 1
+          },
+          {
+            "naam": "bladwijzer-selectie",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 1
+          },
+          {
+            "naam": "bladwijzer-tabel",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 2
+          },
+          {
+            "naam": "bladwijzer-afbeelding",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 1
+          },
+          {
+            "naam": "revisie-tekst",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 1
+          },
+          {
+            "naam": "revisie-selectie",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 2
+          },
+          {
+            "naam": "revisie-tabel",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 3
+          },
+          {
+            "naam": "revisie-afbeelding",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 1
+          },
+          {
+            "naam": "vorige-revisie",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 1
+          },
+          {
+            "naam": "revisie-genest",
+            "geslaagd": true,
+            "verhalen_opmaak_identiteiten": true,
+            "cursor": true,
+            "undo_redo": true,
+            "docx_alle_onderdelen_exact": true,
+            "heropenen": true,
+            "native_ms": 4
+          }
+        ],
+        "geslaagd": true
+      }
+    },
+    "afwijzingen": {
+      "rapport_sha256": "708dd048d190b38f353f7b26d5b57215c49dd7cf6d00d544879b36af787ec85a",
+      "gegevens": {
+        "scope": "Private foutafhandeling; een mislukte voorbereidingsopdracht levert geen gedeeltelijke delta op. Geen host-/GUI-acceptatie.",
+        "gevallen": [
+          {
+            "naam": "onbekende-alinea",
+            "exitcode": 1,
+            "geen_gedeeltelijke_delta": true,
+            "bron_sha256": "a2471ff7bee44102abddc7fa3aaac80383b658d74a3a134b9cc6b78df213271d",
+            "fout": "paragraph \"ontbreekt\" was not found"
+          },
+          {
+            "naam": "offset-buiten-alinea",
+            "exitcode": 1,
+            "geen_gedeeltelijke_delta": true,
+            "bron_sha256": "a2471ff7bee44102abddc7fa3aaac80383b658d74a3a134b9cc6b78df213271d",
+            "fout": "index 10000000 is outside the story length 31"
+          },
+          {
+            "naam": "tabel-zonder-rijen",
+            "exitcode": 1,
+            "geen_gedeeltelijke_delta": true,
+            "bron_sha256": "a2471ff7bee44102abddc7fa3aaac80383b658d74a3a134b9cc6b78df213271d",
+            "fout": "invalid table: table tblPr must be an object"
+          },
+          {
+            "naam": "afbeelding-geen-data",
+            "exitcode": 1,
+            "geen_gedeeltelijke_delta": true,
+            "bron_sha256": "a2471ff7bee44102abddc7fa3aaac80383b658d74a3a134b9cc6b78df213271d",
+            "fout": "invalid format value: Geen data-afbeelding"
+          },
+          {
+            "naam": "afbeelding-beschermd-veld",
+            "exitcode": 1,
+            "geen_gedeeltelijke_delta": true,
+            "bron_sha256": "a2471ff7bee44102abddc7fa3aaac80383b658d74a3a134b9cc6b78df213271d",
+            "fout": "invalid format value: Beschermd afbeeldingsveld"
+          },
+          {
+            "naam": "afbeelding-negatieve-maat",
+            "exitcode": 1,
+            "geen_gedeeltelijke_delta": true,
+            "bron_sha256": "a2471ff7bee44102abddc7fa3aaac80383b658d74a3a134b9cc6b78df213271d",
+            "fout": "invalid format value: Ongeldige afbeeldingsmaat"
+          },
+          {
+            "naam": "late-tekstfout",
+            "exitcode": 1,
+            "geen_gedeeltelijke_delta": true,
+            "bron_sha256": "a2471ff7bee44102abddc7fa3aaac80383b658d74a3a134b9cc6b78df213271d",
+            "fout": "inserted text may not contain paragraph or line breaks"
+          },
+          {
+            "naam": "ontbrekende-tekst",
+            "exitcode": 1,
+            "geen_gedeeltelijke_delta": true,
+            "bron_sha256": "a2471ff7bee44102abddc7fa3aaac80383b658d74a3a134b9cc6b78df213271d",
+            "fout": "invalid format value: missing field `text`"
+          }
+        ],
+        "geslaagd": true
+      }
+    },
+    "grote-proef": {
+      "rapport_sha256": "561b4322765ba55374b5e62ae32436af53c61ff2b1be33021f383174809975a4",
+      "gegevens": {
+        "scope": "Afzonderlijke gegevens-/DOCX-proef, geen GUI of algemene snelheidsacceptatie. Twee verschillende runtimes; tijden bevatten verschillende kopieer-/brugkosten.",
+        "bron_sha256": "f69528bf0ee7b1e2d89aff2e893a131696e0485dd494b2a7c15b16f55d95b7a5",
+        "programma_sha256": "8193971a294d7f9bb3edde2970031e39dc1e4d68cfb3bb3aaacb6516218d98a0",
+        "stappen": [
+          "Alle verhalen/opmaak/identiteiten en cursor exact",
+          "Bronexacte undo en redo op beide routes",
+          "Alle uitgepakte DOCX-onderdelen bytegelijk",
+          "Alle verhaalteksten na heropenen structureel exact"
+        ],
+        "voor": {
+          "bodyalinea": 897,
+          "bodytabellen": 128,
+          "verhalen": 769
+        },
+        "voor_hash": "dd0bdc70c9ce51f7d2ac52381355240d891aee3699b8d2a1ab332964e2dfe72e",
+        "sdk_gegevens_ms": 27252,
+        "geslaagd": true,
+        "na": {
+          "bodyalinea": 1793,
+          "bodytabellen": 256,
+          "verhalen": 1537
+        },
+        "na_hash": "5b087c573c243b2200343a1b0417176e6edde6d3c1039b1bf88ba0ca42d248bb",
+        "cursor": true,
+        "exacte_verhalen_opmaak_identiteiten": true,
+        "undo_redo": true,
+        "alle_docx_onderdelen_exact": true,
+        "heropenen_alle_verhaalteksten": true,
+        "native_voorbereiding_ms": 16856,
+        "delta_bytes": 3142726,
+        "docx_onderdelen": 14,
+        "native_docx_sha256": "74d4c27fe44bc4b0326d1730f80a0578d634a68044f09c9098925174f7d2a820",
+        "referentie_docx_sha256": "74d4c27fe44bc4b0326d1730f80a0578d634a68044f09c9098925174f7d2a820"
+      }
+    }
+  },
+  "verkennende_stappen_ms": {
+    "eerste_een_transactie": 29943,
+    "begrensde_tekstlezing": 25667,
+    "alineamarkeringen_zonder_tekstkopie": 21658,
+    "ook_bladwijzerlezing": 16840,
+    "grens": "Losse ontwikkelmetingen op dezelfde eigen bron met deels instrumentatie. Geen ABBA, geen algemene prestatiewinst en geen GUI-vergelijking."
+  },
+  "testopstelling_gecorrigeerd": {
+    "grote_eerste_hertest": {
+      "scope": "Afzonderlijke gegevens-/DOCX-proef, geen GUI of algemene snelheidsacceptatie. Twee verschillende runtimes; tijden bevatten verschillende kopieer-/brugkosten.",
+      "bron_sha256": "f69528bf0ee7b1e2d89aff2e893a131696e0485dd494b2a7c15b16f55d95b7a5",
+      "programma_sha256": "8193971a294d7f9bb3edde2970031e39dc1e4d68cfb3bb3aaacb6516218d98a0",
+      "voor": {
+        "bodyalinea": 897,
+        "bodytabellen": 128,
+        "verhalen": 769
+      },
+      "voor_hash": "dd0bdc70c9ce51f7d2ac52381355240d891aee3699b8d2a1ab332964e2dfe72e",
+      "sdk_gegevens_ms": 26656,
+      "geslaagd": false,
+      "fout": "story \"body:t128:r0c0~20264524\" was not found"
+    },
+    "uitleg": "De eerste heropening zocht interne celverhaal-id’s uit de oude sessie in een nieuwe DOCX-opening. Die namen mogen veranderen. De definitieve proef controleert alle teksten langs ieder structureel tabel-/celpad, controleert dat ieder verhaal bereikt wordt, en vergelijkt daarnaast alle DOCX-onderdelen bytegelijk. Geen verhaalcontrole is overgeslagen."
+  },
+  "resterend": [
+    "Desktopaansluiting met document-/versiebinding en veilige geordende asynchrone invoer.",
+    "Daadwerkelijke GUI-, selectie-, bewaar-, annuleer- en sluitproeven tijdens voorbereiding.",
+    "Verdere schaalbaarheid; circa zeventien seconden voor de grote voorbereiding is nog te traag.",
+    "Volledige upstream-tests/corpus, kop-/voettekst, noten en opmerkingen/ankers.",
+    "Platformmatrix en suite/losse edities voor de nieuwe route.",
+    "Allocator-/Wasm-/opstartafkeuringen en volledige Rust-/visuele migratie blijven open."
+  ]
+}

@@ -1,0 +1,58 @@
+name: Writer Rust-plakbatch onderzoeken
+on:
+  push:
+    branches: ["codex/native-rust-office"]
+    paths:
+      - "native/onderzoek/writer-plakbatch/**"
+      - ".github/workflows/writer-rust-plakbatch.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: writer-rust-plakbatch-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  gegevensproef:
+    name: Geïsoleerde Rust-/SDK-vergelijking op Linux
+    runs-on: ubuntu-22.04
+    timeout-minutes: 40
+    env:
+      CARGO_TARGET_DIR: ${{ github.workspace }}/native/onderzoek/writer-plakbatch/.local/target
+      OFFICE_PLAKBATCH_BIN: ${{ github.workspace }}/native/onderzoek/writer-plakbatch/.local/target/release/office-plakverkenning
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+      - run: python3 native/onderzoek/writer-plakbatch/voorbereiden.py
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: native/onderzoek/writer-plakbatch -> .local/target
+      - run: pnpm install --frozen-lockfile
+      - name: Afzonderlijke Rust-proef bouwen
+        run: cargo build --release --locked --manifest-path native/onderzoek/writer-plakbatch/Cargo.toml
+      - name: Lezingen met de oorspronkelijke volledige runs vergelijken
+        run: cargo test --release --locked --manifest-path native/onderzoek/writer-plakbatch/Cargo.toml --test venster
+      - name: Inhoud, cursor, geschiedenis en DOCX controleren
+        run: node native/onderzoek/writer-plakbatch/controleer-randgevallen.mjs
+      - name: Ongeldige aanvragen zonder gedeeltelijke uitvoer weigeren
+        run: node native/onderzoek/writer-plakbatch/controleer-afwijzingen.mjs
+      - name: Grote bron met 128 tabellen bronexact verdubbelen
+        run: node native/onderzoek/writer-plakbatch/controleer-groot.mjs
+      - name: Proefgegevens bewaren
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Writer-Rust-plakbatch-${{ github.run_number }}
+          path: |
+            native/onderzoek/writer-plakbatch/.local/randgevallen/
+            native/onderzoek/writer-plakbatch/.local/afwijzingen/
+            native/onderzoek/writer-plakbatch/.local/grote-proef/
+            native/onderzoek/writer-plakbatch/.local/target/release/office-plakverkenning
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 14

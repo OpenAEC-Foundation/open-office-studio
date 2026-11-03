@@ -1,0 +1,19 @@
+[package]
+name = "office-plakverkenning"
+version = "0.1.0"
+edition = "2024"
+publish = false
+[workspace]
+[dependencies]
+docx-edit = { package = "betteroffice-docx-edit", version = "=0.5.1" }
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["raw_value", "float_roundtrip"] }
+base64 = "0.22.1"
+[patch.crates-io]
+betteroffice-docx-parse = { path = "../../vendor/docx-parse" }
+betteroffice-docx-edit = { path = ".local/vendor/docx-edit" }
+
+yrs = { path = ".local/vendor/yrs" }
+
+[dev-dependencies]
+yrs = "=0.27.4"

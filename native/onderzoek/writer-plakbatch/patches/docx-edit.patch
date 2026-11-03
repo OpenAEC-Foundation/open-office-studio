@@ -1,0 +1,551 @@
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -2136,36 +2136,24 @@
+     map_string(map, txn, KIND_KEY).as_deref() == Some(PILCROW_KIND)
+ }
+ 
+-fn pilcrows<T: ReadTxn>(story: &TextRef, txn: &T) -> Vec<(u32, MapRef)> {
++fn pilcrows<T: ReadTxn>(story:&TextRef,txn:&T)->Vec<(u32,MapRef)>{
+     #[cfg(test)]
+-    PILCROW_DIFFS_BUILT.with(|built| built.set(built.get() + 1));
+-    let mut offset = 0;
+-    let mut result = Vec::new();
+-    for diff in story.diff(txn, YChange::identity) {
+-        let len = out_len(&diff.insert);
+-        if let Out::YMap(map) = diff.insert
+-            && is_pilcrow(&map, txn)
+-        {
+-            result.push((offset, map));
+-        }
+-        offset += len;
+-    }
++    PILCROW_DIFFS_BUILT.with(|built|built.set(built.get()+1));
++    let mut result=Vec::new();
++    story.visit_utf16_embeds(txn,|offset,out|{
++        if let Out::YMap(map)=out && is_pilcrow(&map,txn){result.push((offset,map));}
++        true
++    });
+     result
+ }
+-
+-fn next_pilcrow<T: ReadTxn>(story: &TextRef, txn: &T, from: u32) -> Option<(u32, MapRef)> {
+-    let mut offset = 0;
+-    for diff in story.diff(txn, YChange::identity) {
+-        let len = out_len(&diff.insert);
+-        if offset >= from
+-            && let Out::YMap(map) = diff.insert
+-            && is_pilcrow(&map, txn)
+-        {
+-            return Some((offset, map));
+-        }
+-        offset += len;
+-    }
+-    None
++fn next_pilcrow<T: ReadTxn>(story:&TextRef,txn:&T,from:u32)->Option<(u32,MapRef)>{
++    let _meting=crate::meting::begin("next_pilcrow");
++    let mut result=None;
++    story.visit_utf16_embeds(txn,|offset,out|{
++        if offset>=from && let Out::YMap(map)=out && is_pilcrow(&map,txn){result=Some((offset,map));return false;}
++        true
++    });
++    result
+ }
+ 
+ fn out_len(value: &Out) -> u32 {
+@@ -3465,3 +3453,8 @@
+ }
+ 
+ pub mod bridge;
++
++mod clipboard_batch;
++pub use clipboard_batch::{prepare_clipboard_fragment,ClipboardBatchResult};
++
++mod meting;
+--- a/src/op.rs
++++ b/src/op.rs
+@@ -226,6 +226,7 @@
+ }
+ 
+ pub(crate) fn para_bounds<T: ReadTxn>(story: &TextRef, txn: &T) -> Vec<ParaBounds> {
++    let _meting=crate::meting::begin("para_bounds");
+     let mut start = 0;
+     pilcrows(story, txn)
+         .into_iter()
+--- a/src/ops/mod.rs
++++ b/src/ops/mod.rs
+@@ -324,6 +324,7 @@
+     txn: &T,
+     ranges: &mut [(u32, u32)],
+ ) -> Vec<Chunk> {
++    let _meting=crate::meting::begin("snapshot_window");
+     #[cfg(test)]
+     crate::SNAPSHOT_DIFFS_BUILT.with(|built| built.set(built.get() + 1));
+     ranges.sort_unstable();
+@@ -363,31 +364,17 @@
+ }
+ 
+ fn snapshot_window<T: ReadTxn>(
+-    story: &TextRef,
+-    txn: &T,
+-    lo: u32,
+-    hi: u32,
+-    through_embeds: bool,
++    story: &TextRef, txn: &T, lo: u32, hi: u32, through_embeds: bool,
+ ) -> Vec<Chunk> {
++    let _meting=crate::meting::begin("snapshot_window");
+     #[cfg(test)]
+     crate::SNAPSHOT_DIFFS_BUILT.with(|built| built.set(built.get() + 1));
+-    let mut offset = 0;
+     let mut chunks: Vec<Chunk> = Vec::new();
+-    for diff in story.diff(txn, YChange::identity) {
+-        let len = out_len(&diff.insert);
+-        if offset >= hi && !(through_embeds && chunks.last().is_some_and(Chunk::is_map_embed)) {
+-            break;
+-        }
+-        if offset + len > lo {
+-            chunks.push(chunk_at(
+-                &diff.insert,
+-                diff.attributes.as_deref(),
+-                offset,
+-                txn,
+-            ));
+-        }
+-        offset += len;
+-    }
++    story.visit_utf16_window(txn,lo,|offset,diff| {
++        if offset >= hi && !(through_embeds && chunks.last().is_some_and(Chunk::is_map_embed)) { return false; }
++        chunks.push(chunk_at(&diff.insert,diff.attributes.as_deref(),offset,txn));
++        true
++    });
+     chunks
+ }
+ 
+@@ -792,20 +779,14 @@
+     end: u32,
+ ) -> (u32, u32) {
+     let mut range = (start, end);
+-    let mut offset = 0;
+-    for diff in story.diff(txn, YChange::identity) {
+-        if offset >= end {
+-            break;
+-        }
+-        if let Out::Any(Any::String(text)) = &diff.insert {
+-            if offset < start && inside_pair(text, start - offset) {
+-                range.0 = start - 1;
+-            }
+-            if start < end && inside_pair(text, end - offset) {
+-                range.1 = end + 1;
+-            }
+-        }
+-        offset += out_len(&diff.insert);
++    let _meting=crate::meting::begin("code_point_range");
++    for chunk in snapshot_range(story,txn,start.saturating_sub(1),end.saturating_add(1)) {
++        let offset=chunk.start;
++        if offset >= end { break; }
++        if let ChunkKind::Text(text)=&chunk.kind {
++            if offset < start && inside_pair(text,start-offset){range.0=start-1;}
++            if start < end && inside_pair(text,end-offset){range.1=end+1;}
++        }
+     }
+     if start == end {
+         range.1 = range.0;
+--- a/src/ops/paragraph.rs
++++ b/src/ops/paragraph.rs
+@@ -406,13 +406,20 @@
+     }
+ 
+     pub(crate) fn split_paragraph_in_transaction(
++        &self, ctx: &EditCtx, txn: &mut TransactionMut<'_>, at: Position,
++        next_style: Option<&ResolvedStyleProjection>, revision_id: Option<String>,
++    ) -> OpResult<SplitReceipt> {
++        self.split_paragraph_placed_in(ctx, txn, at, next_style, revision_id).map(|(receipt, _)| receipt)
++    }
++
++    pub(crate) fn split_paragraph_placed_in(
+         &self,
+         ctx: &EditCtx,
+         txn: &mut TransactionMut<'_>,
+         mut at: Position,
+         next_style: Option<&ResolvedStyleProjection>,
+         revision_id: Option<String>,
+-    ) -> OpResult<SplitReceipt> {
++    ) -> OpResult<(SplitReceipt, u32)> {
+         if let Some(projection) = next_style
+             && !projection.known
+         {
+@@ -507,11 +514,11 @@
+                 &[(at.index, new_pilcrow)],
+             );
+         }
+-        Ok(SplitReceipt {
++        Ok((SplitReceipt {
+             first_para_id,
+             second_para_id,
+             revision_ids: revision_id.into_iter().collect(),
+-        })
++        }, at.index + 1))
+     }
+ 
+     /// Merges the paragraph with its neighbour by deleting the boundary
+--- a/src/ops/table.rs
++++ b/src/ops/table.rs
+@@ -1950,22 +1950,29 @@
+     /// Inserts a clipboard table fragment at a story position, creating one
+     /// story per cell with the fragment's content. Mirrors [`EditingDoc::insert_table`].
+     pub fn insert_table_fragment(
++        &self, ctx: &EditCtx, at: Position, fragment: &Value,
++    ) -> OpResult<TableFragmentReceipt> {
++        let mut txn = self.transact_for(ctx);
++        self.insert_table_fragment_placed_in(ctx, &mut txn, at, fragment).map(|(receipt, _)| receipt)
++    }
++
++    pub(crate) fn insert_table_fragment_placed_in(
+         &self,
+         ctx: &EditCtx,
++        txn: &mut TransactionMut<'_>,
+         mut at: Position,
+         fragment: &Value,
+-    ) -> OpResult<TableFragmentReceipt> {
++    ) -> OpResult<(TableFragmentReceipt, u32)> {
+         let mut remaining = MAX_FRAGMENT_CELLS;
+         let (valid, columns) = validate_fragment_table(fragment, 1, &mut remaining)?;
+         let revision_id = ctx.is_suggesting().then(|| self.next_id());
+-        let mut txn = self.transact_for(ctx);
+-        let story = story_ref(&txn, &at.story)?;
+-        check_position(&story, &txn, at.index)?;
+-        at.index = crate::ops::code_point_range(&story, &txn, at.index, at.index).0;
+-        let split_para_id = if paragraph_content_before(&story, &txn, at.index) {
++        let story = story_ref(&*txn, &at.story)?;
++        check_position(&story, &*txn, at.index)?;
++        at.index = crate::ops::code_point_range(&story, &*txn, at.index, at.index).0;
++        let split_para_id = if paragraph_content_before(&story, &*txn, at.index) {
+             let split = self.split_paragraph_in_transaction(
+                 ctx,
+-                &mut txn,
++                txn,
+                 at.clone(),
+                 None,
+                 revision_id.clone(),
+@@ -1977,20 +1984,20 @@
+         };
+         let mut ordinal = 0u32;
+         let mut offset = 0u32;
+-        for diff in story.diff(&txn, YChange::identity) {
++        for diff in story.diff(&*txn, YChange::identity) {
+             if offset >= at.index {
+                 break;
+             }
+             if let Out::YMap(map) = &diff.insert
+-                && map_string(map, &txn, KIND_KEY).as_deref() == Some("table")
++                && map_string(map, &*txn, KIND_KEY).as_deref() == Some("table")
+             {
+                 ordinal += 1;
+             }
+             offset += out_len(&diff.insert);
+         }
+         let locator = TableLocator::new(at.story.clone(), ordinal);
+-        let mut used = story_ids(&txn);
+-        let mut ids = IdAllocator::new(self, &txn);
++        let mut used = story_ids(&*txn);
++        let mut ids = IdAllocator::new(self, &*txn);
+         let slot = fresh_table_slot(&used, &at.story, ordinal as usize);
+         let revision = revision_id
+             .as_ref()
+@@ -1998,7 +2005,7 @@
+         let mut build = FragmentBuild::default();
+         build.new_para_ids.extend(split_para_id);
+         let data = self.insert_fragment_table_data(
+-            &mut txn,
++            txn,
+             &mut ids,
+             &mut used,
+             &story,
+@@ -2010,9 +2017,9 @@
+             insertion_attrs(None, None),
+             &mut build,
+         )?;
+-        let after = caret_after_insert(&story, &txn, &at.story, at.index)?;
++        let after = caret_after_insert(&story, &*txn, &at.story, at.index)?;
+         debug_assert_eq!(data.rows.len() as u32, valid.rows.len() as u32);
+-        Ok(TableFragmentReceipt {
++        Ok((TableFragmentReceipt {
+             table: locator,
+             rows: data.rows.len() as u32,
+             columns: columns as u32,
+@@ -2023,7 +2030,7 @@
+             deleted_table: false,
+             revision_ids: revision_id.into_iter().collect(),
+             after,
+-        })
++        }, at.index + 1))
+     }
+ 
+     /// Builds one validated table's rows, creating each cell story with the
+--- a/src/ops/embed.rs
++++ b/src/ops/embed.rs
+@@ -1,5 +1,6 @@
+ //! Map-backed embed operations.
+ 
++use yrs::TransactionMut;
+ use yrs::types::AsPrelim;
+ use yrs::types::text::YChange;
+ use yrs::{Any, Map, MapPrelim, MapRef, Out, ReadTxn, Text, TextRef, Transact};
+@@ -299,8 +300,16 @@
+     /// The caller supplies the typed kind/payload vocabulary; suggesting mode
+     /// stamps the embed with one insertion revision.
+     pub fn insert_embed(
++        &self, ctx: &EditCtx, at: Position, kind: &str, payload: Vec<(String, Any)>,
++    ) -> OpResult<Receipt> {
++        let mut txn = self.transact_for(ctx);
++        self.insert_embed_in(ctx, &mut txn, at, kind, payload)
++    }
++
++    pub(crate) fn insert_embed_in(
+         &self,
+         ctx: &EditCtx,
++        txn: &mut TransactionMut<'_>,
+         mut at: Position,
+         kind: &str,
+         payload: Vec<(String, Any)>,
+@@ -317,24 +326,23 @@
+             kind,
+             payload.iter().map(|(key, value)| (key.as_str(), value)),
+         )?;
+-        let mut txn = self.transact_for(ctx);
+-        let story = story_ref(&txn, &at.story)?;
+-        check_position(&story, &txn, at.index)?;
++        let story = story_ref(&*txn, &at.story)?;
++        check_position(&story, &*txn, at.index)?;
+         if !crate::segments::is_block_embed(kind) {
+-            at.index = past_leading_blocks(&story, &txn, at.index);
+-        }
+-        crate::identity::promote_at(self, &mut txn, &at.story, &story, at.index);
+-        let chunks = position_chunks(&story, &txn, &mut at.index);
++            at.index = past_leading_blocks(&story, &*txn, at.index);
++        }
++        crate::identity::promote_at(self, txn, &at.story, &story, at.index);
++        let chunks = position_chunks(&story, &*txn, &mut at.index);
+         let append_paragraph = kind == "pageBreak"
+             && at.story == "body"
+-            && at.index + 1 == story.len(&txn)
++            && at.index + 1 == story.len(&*txn)
+             && chunks.iter().any(|chunk| {
+                 chunk.start == at.index && matches!(chunk.kind, ChunkKind::Pilcrow(_))
+             });
+         let revision_id = ctx.is_suggesting().then(|| {
+             adjacent_revision_id(&chunks, at.index, INS, &ctx.author)
+                 .or_else(|| {
+-                    adjacent_paragraph_change_revision_id(&chunks, at.index, &txn, &ctx.author)
++                    adjacent_paragraph_change_revision_id(&chunks, at.index, &*txn, &ctx.author)
+                 })
+                 .unwrap_or_else(|| self.next_id())
+         });
+@@ -342,25 +350,25 @@
+             .as_ref()
+             .map(|id| revision_value(id, &ctx.revision_author()));
+         let carry = (!crate::segments::is_block_embed(kind))
+-            .then(|| Carry::capture(&story, &txn, at.index, at.index, None))
++            .then(|| Carry::capture(&story, &*txn, at.index, at.index, None))
+             .flatten();
+         let embed = story.insert_embed_with_attributes(
+-            &mut txn,
++            txn,
+             at.index,
+             MapPrelim::default(),
+             insertion_attrs(ins, None),
+         );
+-        embed.insert(&mut txn, KIND_KEY, kind);
++        embed.insert(txn, KIND_KEY, kind);
+         for (key, value) in payload {
+-            embed.insert(&mut txn, key, value);
++            embed.insert(txn, key, value);
+         }
+         if let Some(carry) = carry {
+-            carry.inserted(&mut txn, at.index, 1);
++            carry.inserted(txn, at.index, 1);
+         }
+         let new_para_ids = if append_paragraph {
+             let split = self.split_paragraph_in_transaction(
+                 ctx,
+-                &mut txn,
++                txn,
+                 Position::new(&at.story, at.index + 1),
+                 None,
+                 revision_id.clone(),
+@@ -369,7 +377,7 @@
+         } else {
+             Vec::new()
+         };
+-        let range = loc_range_in_txn(&at.story, &story, &txn, at.index, at.index + 1)?;
++        let range = loc_range_in_txn(&at.story, &story, &*txn, at.index, at.index + 1)?;
+         Ok(Receipt {
+             new_para_ids,
+             revision_ids: revision_id.into_iter().collect(),
+--- a/src/ops/bookmarks.rs
++++ b/src/ops/bookmarks.rs
+@@ -197,36 +197,30 @@
+         lo: u32,
+         hi: u32,
+     ) -> Option<(u32, Vec<Paragraph>)> {
+-        let mut offset = 0;
+-        let mut start = 0;
+-        let mut lead = 0;
+-        let mut leading = true;
+-        let mut base = None;
+-        let mut paragraphs = Vec::new();
+-        for diff in story.diff(txn, YChange::identity) {
+-            match &diff.insert {
+-                Out::YMap(map) if is_pilcrow(map, txn) => {
+-                    if offset >= lo {
++        let _meting=crate::meting::begin("bookmark_scan");
++        let mut start=0;
++        let mut lead=0;
++        let mut leading=true;
++        let mut vorig_einde=0;
++        let mut base=None;
++        let mut paragraphs=Vec::new();
++        story.visit_utf16_embeds(txn,|offset,out|{
++            if offset>vorig_einde {leading=false;}
++            match &out {
++                Out::YMap(map) if is_pilcrow(map,txn)=>{
++                    if offset>=lo {
+                         base.get_or_insert(start);
+-                        paragraphs.push(Paragraph {
+-                            pilcrow: Some(offset),
+-                            lead,
+-                            map: map.clone(),
+-                            added: false,
+-                        });
+-                        if offset >= hi {
+-                            break;
+-                        }
++                        paragraphs.push(Paragraph{pilcrow:Some(offset),lead,map:map.clone(),added:false});
++                        if offset>=hi{return false;}
+                     }
+-                    start = offset + 1;
+-                    lead = 0;
+-                    leading = true;
++                    start=offset+1;lead=0;leading=true;
+                 }
+-                Out::YMap(map) if leading && block_embed(map, txn) => lead += 1,
+-                _ => leading = false,
+-            }
+-            offset += out_len(&diff.insert);
+-        }
++                Out::YMap(map) if leading && block_embed(map,txn)=>lead+=1,
++                _=>leading=false,
++            }
++            vorig_einde=offset+1;
++            true
++        });
+         paragraphs
+             .iter()
+             .any(|paragraph| entries(&paragraph.map, txn).is_some())
+--- /dev/null
++++ b/src/clipboard_batch.rs
+@@ -0,0 +1,96 @@
++//! Bereid een gestructureerde plakactie op een afzonderlijke replica voor.
++//! De aanroeper neemt pas het volledige resultaat over; fouten wijzigen nooit de bronreplica.
++use serde::Deserialize;
++use serde_json::Value;
++use yrs::Any;
++use crate::{EditingDoc, EditCtx, FormatPolicy, Loc, LocRange, OpError, OpResult, Position, StoryRange, story_ref};
++use crate::op::global_of_loc;
++
++#[derive(Deserialize)]
++struct Fragment { paragraphs: Vec<Alinea> }
++#[derive(Deserialize)]
++struct Alinea {
++    text: String,
++    #[serde(default)] tables: Vec<Value>,
++    inlines: Option<Vec<Value>>,
++}
++pub struct ClipboardBatchResult {
++    pub update: Vec<u8>,
++    pub base_vector: Vec<u8>,
++    pub caret: Loc,
++}
++fn ongeldig(tekst: impl Into<String>) -> OpError { OpError::InvalidFormatValue(tekst.into()) }
++fn afbeelding(value: &Value) -> OpResult<Vec<(String,Any)>> {
++    let mut image=value.as_object().ok_or_else(||ongeldig("Afbeelding is geen object"))?.clone();
++    if image.contains_key("_kind") { return Err(ongeldig("Beschermd afbeeldingsveld")) }
++    let src=image.get("src").and_then(Value::as_str).ok_or_else(||ongeldig("Afbeeldingsbron ontbreekt"))?;
++    let (media,data)=src.split_once(',').ok_or_else(||ongeldig("Geen data-afbeelding"))?;
++    let media=media.to_ascii_lowercase();
++    let subtype=media.strip_prefix("data:image/").and_then(|s|s.strip_suffix(";base64")).ok_or_else(||ongeldig("Geen base64-afbeelding"))?;
++    if src.len()>64*1024*1024 || subtype.is_empty() || !subtype.bytes().all(|b|b.is_ascii_alphanumeric()||b".+-".contains(&b)) || data.is_empty(){return Err(ongeldig("Ongeldige afbeeldingsbron"))}
++    let zonder=data.trim_end_matches('=');
++    if zonder.is_empty() || data.len()-zonder.len()>2 || !zonder.bytes().all(|b|b.is_ascii_alphanumeric()||b"+/".contains(&b)){return Err(ongeldig("Ongeldige base64-afbeelding"))}
++    for sleutel in ["widthEmu","heightEmu"] {if let Some(v)=image.get(sleutel){if v.as_f64().is_none_or(|n|!n.is_finite()||n<=0.){return Err(ongeldig("Ongeldige afbeeldingsmaat"))}}}
++    for sleutel in ["rId","id","embedId","docPrId","drawingId"] { image.remove(sleutel); }
++    image.entry("noChangeAspect").or_insert(Value::Bool(true));
++    let Any::Map(map)=Any::from_json(&Value::Object(image).to_string()).map_err(|e|ongeldig(e.to_string()))? else {unreachable!()};
++    Ok(map.iter().map(|(k,v)|(k.clone(),v.clone())).collect())
++}
++
++pub fn prepare_clipboard_fragment(snapshot:&[u8],client_id:u64,range:&LocRange,fragment:&Value,ctx:&EditCtx)->OpResult<ClipboardBatchResult>{
++    let fragment:Fragment=serde_json::from_value(fragment.clone()).map_err(|e|ongeldig(e.to_string()))?;
++    if range.start.story!=range.end.story{return Err(ongeldig("Bereik loopt over verschillende verhalen"))}
++    let doc=EditingDoc::new(client_id);
++    doc.keep_deleted();
++    doc.apply_update_v1(snapshot).map_err(OpError::from)?;
++    let base_vector=doc.encode_state_vector_v1();
++    let start=doc.locate(&range.start)?.index;
++    let end=doc.locate(&range.end)?.index;
++    if end<start{return Err(OpError::InvalidRange{start,end})}
++    for p in &fragment.paragraphs {
++        for t in &p.tables {EditingDoc::validate_table_fragment(t)?;}
++        if let Some(inlines)=&p.inlines {for inline in inlines {if let Some(image)=inline.get("image"){afbeelding(image)?;}else if inline.get("text").and_then(Value::as_str).is_none(){return Err(ongeldig("Ongeldige inline"))}}}
++    }
++    let story_id=range.start.story.clone();
++    let mut position=start;
++    let mut para_start=start-range.start.offset;
++    {
++        let mut txn=doc.transact_for(ctx);
++        if start!=end {
++            let receipt=doc.delete_range_in(&mut txn,ctx,StoryRange::new(&story_id,start,end))?;
++            let at=receipt.range.ok_or_else(||ongeldig("Wisbereik ontbreekt"))?.start;
++            let story=story_ref(&txn,&story_id)?;
++            position=global_of_loc(&story,&txn,&at)?;
++            para_start=position-at.offset;
++        }
++        for (i,p) in fragment.paragraphs.iter().enumerate(){
++            if i>0 {
++                let _meting=crate::meting::begin("split_totaal");
++                let (_,after)=doc.split_paragraph_placed_in(ctx,&mut txn,Position::new(&story_id,position),None,None)?;
++                position=after;para_start=after;
++            }
++            for table in &p.tables {
++                let _meting=crate::meting::begin("tabel_totaal");
++                let (receipt,after)=doc.insert_table_fragment_placed_in(ctx,&mut txn,Position::new(&story_id,position),table)?;
++                position=after;para_start=after-receipt.after.offset;
++            }
++            let fallback=if p.text.is_empty(){Vec::new()}else{vec![serde_json::json!({"text":p.text})]};
++            for inline in p.inlines.as_ref().unwrap_or(&fallback){
++                let at=Position::new(&story_id,position);
++                let _meting=crate::meting::begin("inline_totaal");
++                let receipt=if let Some(image)=inline.get("image") {
++                    doc.insert_embed_in(ctx,&mut txn,at,"image",afbeelding(image)?)?
++                }else{
++                    let text=inline.get("text").and_then(Value::as_str).ok_or_else(||ongeldig("Inline tekst ontbreekt"))?;
++                    doc.insert_text_observed_in(&mut txn,ctx,at,text,FormatPolicy::Inherit,|_|{})?
++                };
++                let end=receipt.range.ok_or_else(||ongeldig("Invoegbereik ontbreekt"))?.end;
++                position=para_start+end.offset;
++            }
++        }
++    }
++    let caret=doc.loc_at(&Position::new(story_id,position))?;
++    let update=doc.encode_diff_v1(&base_vector).map_err(OpError::from)?;
++    crate::meting::toon();
++    Ok(ClipboardBatchResult{update,base_vector,caret})
++}
+--- /dev/null
++++ b/src/meting.rs
+@@ -0,0 +1,6 @@
++use std::{cell::RefCell,collections::BTreeMap,time::{Instant,Duration}};
++thread_local!{static TIJDEN:RefCell<BTreeMap<&'static str,(u64,Duration)>>=RefCell::new(BTreeMap::new());}
++pub(crate) struct Meting { naam:&'static str,begin:Instant }
++pub(crate) fn begin(naam:&'static str)->Meting{Meting{naam,begin:Instant::now()}}
++impl Drop for Meting{fn drop(&mut self){TIJDEN.with(|t|{let mut t=t.borrow_mut();let e=t.entry(self.naam).or_default();e.0+=1;e.1+=self.begin.elapsed();});}}
++pub(crate) fn toon(){TIJDEN.with(|t|for(n,(c,d))in t.borrow().iter(){eprintln!("METING {n} {c} {}",d.as_millis());});}
