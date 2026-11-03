@@ -7,7 +7,7 @@ import { controleerWorkerIngang, maakWorkerConfig } from "../../scripts/workerco
 
 interface Deel { naam: string; ingang: boolean; imports: string[]; code: string; dynamisch: string[] }
 
-async function proef(config: NonNullable<UserConfig["worker"]>) {
+async function proef(config: NonNullable<UserConfig["worker"]>, gedeeldeKnoop = true) {
   const map = await mkdtemp(join(tmpdir(), "office-worker-ingang-"));
   let delen: Deel[] = [];
   const vastleggen: Plugin = {
@@ -28,7 +28,18 @@ async function proef(config: NonNullable<UserConfig["worker"]>) {
     ]);
     await build({
       configFile: false, root: map, logLevel: "silent",
-      worker: { ...config, plugins: () => [...plugins, vastleggen] },
+      worker: {
+        ...config,
+        // De automatische chunkkeuze hoeft niet op ieder platform dezelfde
+        // onveilige ingang te kiezen. Leg voor de negatieve proef die concrete
+        // knoop vast: bewaren deelt een helper met de initialisatiemodule.
+        ...(gedeeldeKnoop ? { rollupOptions: { output: {
+          manualChunks(id: string) {
+            if (/\/(worker|gedeeld)\.js$/.test(id.replace(/\\/g, "/"))) return "werkerknoop";
+          },
+        } } } : {}),
+        plugins: () => [...plugins, vastleggen],
+      },
       build: { write: false, minify: false, rollupOptions: { input: join(map, "main.js") } },
     });
     return delen;
@@ -51,6 +62,13 @@ describe("worker-ingang bij laat geladen opslagcode", () => {
     expect(delen.filter(d => d.ingang)).toHaveLength(1);
     expect(delen.find(d => d.ingang)!.code.length).toBeLessThan(1000);
     expect(delen.some(d => !d.ingang && d.code.includes("evaluaties"))).toBe(true);
+    expect(delen.some(d => d.dynamisch.length > 0)).toBe(true);
+  });
+
+  it("controleert ook de gewone productiechunkkeuze zonder opgelegde knoop", async () => {
+    const delen = await proef(maakWorkerConfig(), false);
+    expect(delen.filter(d => d.ingang)).toHaveLength(1);
+    expect(terugimporten(delen)).toEqual([]);
     expect(delen.some(d => d.dynamisch.length > 0)).toBe(true);
   });
 

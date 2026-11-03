@@ -164,6 +164,9 @@ async def proef(a):
             await p.run("let e=proefApi().getEditorRef(),a=e.getYrsSession().paragraphs('body').at(-1);e.setSelection(e.yrsLocToDisplayPosition({story:'body',paraId:a.paraId,offset:a.text.length}));proefApi().scrollToPage(500);proefApi().focus();await proefApi().flushPendingInput();return true;")
             await asyncio.sleep(3)
             await p.ev("window._rectProef={calls:0,classes:Object.create(null)};window._rectOud=Element.prototype.getBoundingClientRect;Element.prototype.getBoundingClientRect=function(...args){_rectProef.calls++;const k=this.getAttribute('class')||this.tagName;_rectProef.classes[k]=(_rectProef.classes[k]||0)+1;return _rectOud.apply(this,args)};window._frameProef={v:[],last:performance.now(),stop:false};window._frameTik=nu=>{if(_frameProef.stop)return;_frameProef.v.push(nu-_frameProef.last);_frameProef.last=nu;requestAnimationFrame(_frameTik)};requestAnimationFrame(_frameTik);true")
+            # Tel de werkelijke projecties naar de pakketstructuur; een
+            # verborgen lint mag niet het hele document per toets opbouwen.
+            await p.ev("window._docRef=(()=>{let el=document.querySelector('.office-tabpaneel:not([hidden]) .office-tekst');for(let f=el[Object.keys(el).find(k=>k.startsWith('__reactFiber$'))];f;f=f.return)for(let s=f.memoizedState,n=0;s&&n<200;n++,s=s.next)if(s.memoizedState?.current?.getEditorRef&&s.memoizedState.current.commands)return s.memoizedState;throw Error('API-ref ontbreekt')})();window._docDescriptor=Object.getOwnPropertyDescriptor(_docRef,'current');if(!_docDescriptor?.configurable||!('value' in _docDescriptor))throw Error('API-ref niet meetbaar');window._docValue=_docRef.current;window._docProef={calls:0,ms:0,api_wissels:0};window._docOrig=[];window._docSeen=new WeakSet;window._docVolg=a=>{if(!a||_docSeen.has(a))return;let oud=a.getDocument;if(typeof oud!=='function')throw Error('GetDocument-meetpunt ontbreekt');_docSeen.add(a);_docOrig.push([a,oud]);a.getDocument=function(...args){_docProef.calls++;let begin=performance.now();try{return oud.apply(this,args)}finally{_docProef.ms+=performance.now()-begin}}};_docVolg(_docValue);Object.defineProperty(_docRef,'current',{configurable:true,enumerable:_docDescriptor.enumerable,get(){return _docValue},set(a){_docProef.api_wissels++;_docVolg(a);_docValue=a}});true")
             vanaf = await p.ev('_toetsenProef.length')
             begin = time.monotonic()
             subprocess.run(['xdotool', 'type', '--clearmodifiers', '--delay', '20', ' Een proefzin.'], check=True)
@@ -173,6 +176,8 @@ async def proef(a):
             laatste = await p.run("let einde=performance.now()+90000;while(!_toetsenProef.slice("+str(vanaf)+").some(e=>e.key==='.')){if(performance.now()>einde)throw Error('Laatste native invoertoets niet ontvangen');await new Promise(r=>setTimeout(r,50))}await proefApi().flushPendingInput();while(!document.querySelector('.spelling-golf')){if(performance.now()>einde)throw Error('Golflijnen niet gereed');await new Promise(r=>setTimeout(r,50))}return proefApi().getEditorRef().getYrsSession().paragraphs('body').at(-1).text;", t=100)
             assert laatste == origineel[-1]+' Een proefzin.', 'Laatste invoer na keyup en flush niet exact'
             rapport['invoer_tot_bron_en_golven_ms'] = round((time.monotonic()-begin)*1000)
+            rapport['documentuitlezingen_tijdens_invoer'] = await p.ev("(()=>{let gevolgd=_docSeen.has(proefApi());Object.defineProperty(_docRef,'current',{..._docDescriptor,value:_docValue});for(let[a,oud]of _docOrig)a.getDocument=oud;return{..._docProef,actieve_api_gevolgd:gevolgd,omvang:'GetDocument-aanroepen tijdens native invoer tot bron-/golflijngereedheid. De stabiele React-ref volgt vervanging van API-objecten; geen CPU-profiler.'}})()")
+            assert rapport['documentuitlezingen_tijdens_invoer']['actieve_api_gevolgd'], 'Actieve API buiten de invoermeting gevallen'
             tussenpozen = await p.ev('(()=>{_frameProef.stop=true;return _frameProef.v})()')
             volgorde = sorted(tussenpozen)
             rapport['frame_tussenpozen_ms'] = {'aantal': len(volgorde), 'maximum': volgorde[-1] if volgorde else None, 'p95': volgorde[min(len(volgorde)-1, int(len(volgorde)*.95))] if volgorde else None, 'reeks': tussenpozen, 'omvang': 'requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS.'}
@@ -201,6 +206,17 @@ async def proef(a):
             teksten = [''.join(e.text or '' for e in alinea.findall('.//w:t', ns)) for alinea in xml.findall('.//w:body/w:p', ns)]
             assert teksten == getypt, 'Onafhankelijke DOCX-teruglezing wijkt af'
             rapport['stappen'].append({'naam': 'native_bewaaractie_onafhankelijk', **samenvatting(teksten), 'exact': True})
+            # De luie kop-/voettekstinhoud moet dezelfde bediening en
+            # geometrie houden; leg beide tabbladen buiten de snelheidsmeting vast.
+            rapport['lintbeelden'] = {}
+            for sleutel, naam in [('startlint', 'Home'), ('kopvoetlint', 'Header & Footer')]:
+                xy = await p.ev("(()=>{let t=Array.from(document.querySelectorAll('.office-lintplek:not([hidden]) [role=tab],.office-tekst [role=tab]')).find(t=>t.textContent.trim()==="+json.dumps(naam)+");if(!t)throw Error('Linttab ontbreekt');let r=t.getBoundingClientRect();return{x:Math.round(r.left+r.width/2),y:Math.round(r.top+r.height/2)}})()")
+                subprocess.run(['xdotool', 'mousemove', '--window', str(venster.id), str(xy['x']), str(xy['y']), 'click', '1'], check=True)
+                await p.run("let einde=performance.now()+10000;while(!Array.from(document.querySelectorAll('.office-lintplek:not([hidden]) [role=tab],.office-tekst [role=tab]')).some(t=>t.textContent.trim()==="+json.dumps(naam)+"&&t.getAttribute('aria-selected')==='true')){if(performance.now()>einde)throw Error('Linttab niet gekozen');await new Promise(r=>setTimeout(r,50))}return true;")
+                await asyncio.sleep(1)
+                rapport['lintbeelden'][sleutel] = await p.ev("(()=>{let b=(document.querySelector('.office-lintplek:not([hidden]) .ribbon')||document.querySelector('.office-tekst .ribbon')),r=b.getBoundingClientRect();return{plek:{x:r.x,y:r.y,breedte:r.width,hoogte:r.height},knoppen:Array.from(b.querySelectorAll('.ribbon-baan button')).map(e=>({naam:e.getAttribute('aria-label')||e.textContent,actief:e.getAttribute('aria-pressed'),uit:e.disabled}))}})()")
+                beeld(sleutel)
+            assert any(k['naam']=='Different First Page' for k in rapport['lintbeelden']['kopvoetlint']['knoppen']), 'Koptekstopties ontbreken'
             rapport['fouten_voor_heropenen'] = await p.fouten()
             assert not any(rapport['fouten_voor_heropenen'].values()), 'GUI of engine meldt fouten vóór heropenen'
         stop(); await start()

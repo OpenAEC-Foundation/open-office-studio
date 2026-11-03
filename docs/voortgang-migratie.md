@@ -1,9 +1,11 @@
 # Voortgang migratie en open issues
 
-Peildatum: 3 november 2026. Ontwikkelbasis: Tauri/Rust met React/TypeScript. De lokale testversie is `2026.45.17`, met behoud van het bestaande gebruikersprofiel en oudere programma’s. De afzonderlijke Rust-WebView-preview is `2026.45.0-alpha.48`; deze vervangt de volledige suite nog niet.
+Peildatum: 3 november 2026. Ontwikkelbasis: Tauri/Rust met React/TypeScript. De lokale testversie is `2026.45.18`, met behoud van het bestaande gebruikersprofiel en oudere programma’s. De afzonderlijke Rust-WebView-preview is `2026.45.0-alpha.48`; deze vervangt de volledige suite nog niet.
 
 ## Huidige waarheid
 
+- 45.18 vermijdt de volledige documentuitlezing voor het verborgen kop-/voettekstlint. Vier opeenvolgende native 500-paginaproeven (oud/nieuw/nieuw/oud) slagen voor alle bron-/geschiedenis-/bewaarcontroles. De uitleesteller gaat van 3/5 naar 0/0; invoer en spelling duren op de kandidaat 3,834/3,907 s tegenover 4,022/4,609 s. Dit is een kleine vergelijking op één pc, geen algemene snelheidsacceptatie. Start- en koptekstlint hebben in de twee native lintuitsneden nul afwijkende pixels. De grote proef behoudt 129 pagina’s en 256 tabellen, maar de laatste plakactie duurt nog 61,451 s. Zie [proeven, beelden en resterende grenzen](tests/writer-lint-uitlezen.md).
+- Op 45.18 slagen 1.616 frontendtests in 146 bestanden, 47 Python-tests, de laatste TypeScript-controle en de native Linux-productiebouw. De lokale testkoppeling is bijgewerkt naar de geteste binary met SHA256 `7b36df8cfe7ec436c77fa01d8d0b29e08750c844756781cbb857953247cf4774`; gebruikersgegevens, oudere binaries en lopende vensters zijn behouden. De nieuwe remote dev-/platformcontroles volgen afzonderlijk; het reeds goedgekeurde devpakket hieronder blijft 45.17.
 - De volledige Rust-interface is nog niet af; `native/docs/migratie.json` blijft leidend. Alle tien gebieden en dertig acceptatievlaggen blijven open.
 - Writer-invoer en selectie zijn nog onvoldoende soepel. De 45.17-ronde meet 4,957 s voor invoer en spelling van veertien tekens op 500 pagina’s. De achtste rijke plakactie kost 59,573 s bij 129 pagina’s en 256 tabellen. De worker blijft nu behouden na bewaren: de WebKit-modulekaartfout is afzonderlijk gereproduceerd en de bewaarenvervolgproef faalt op 45.16 en slaagt op 45.17. Dit is geen algemene prestatiegoedkeuring; de statusbalk loopt in het onmiddellijke grote proefbeeld nog achter. Zie [oorspronkelijke afkeuringen, reparatie en grenzen](tests/writer-worker-ingang.md) en de [eerdere spellingmetingen](tests/writer-spellingoffsets.md).
 - Op 45.17 slagen 1.612 frontendtests in 145 bestanden, 47 Python-tests, TypeScript, productie-/native Linux-bouw en de afzonderlijke Database-frontendbouw. De strengere native 500-paginaproef behoudt alle alinea’s na typen, selectie/Backspace, geschiedenis, bewaren en heropenen, met lege GUI- en consolefoutenlijsten. De grote native plakproef en de onafhankelijke pakket-/opmaakvergelijking slagen binnen hun beschreven omvang. Vijf productie-GUI-controles omvatten revisies en gewone opmerkingen. Geen volledige functiedekking geclaimd.
@@ -15,7 +17,7 @@ Peildatum: 3 november 2026. Ontwikkelbasis: Tauri/Rust met React/TypeScript. De 
 
 1. Writer: invoer-/selectievertraging, workerlevensduur, groot plakken en behoud van getypte tekst.
 2. Voorkomen van sessie-/gegevensverlies: onder meer rekenbladissue #120.
-3. Concrete Writer-regressies #122–#139 met reproductie, bewaren/heropenen en undo/redo. De nieuwe #135-workerfout in een tabelcel is nog niet als exacte celcasus bewezen opgelost; #137–#139 betreffen navigatie, klikken en tabelgeschiedenis.
+3. Concrete Writer-regressies #122–#140 met reproductie, bewaren/heropenen en undo/redo. De nieuwe #135-workerfout in een tabelcel is nog niet als exacte celcasus bewezen opgelost; #137–#139 betreffen navigatie, klikken en tabelgeschiedenis.
 4. Overige modulefuncties en open issues; applicatielogica stapsgewijs naar de Rust-kern verplaatsen.
 5. Rust-interface per module pas vervangen bij aantoonbare functionele en visuele gelijkwaardigheid.
 6. Distributie: suite plus losse edities, installatie/upgrade, ondertekening en echte platformproeven.
@@ -23,7 +25,7 @@ Peildatum: 3 november 2026. Ontwikkelbasis: Tauri/Rust met React/TypeScript. De 
 
 ## Open issues op de peildatum
 
-De GitHub-inventaris is op 3 november opnieuw vergeleken: **111** open issues. Vijf nieuwe tabelmeldingen (#135–#139) zijn tijdens deze ronde toegevoegd en hieronder opgenomen. “Open” betekent niet dat de fout in deze ronde al is gereproduceerd. Een bestaand testbestand of ouder verslag is geen nieuwe uitvoering.
+De GitHub-inventaris is op 3 november opnieuw vergeleken: **112** open issues. De tabelmeldingen #135–#139 en de nieuwe melding #140 over het contrast van het eigen scheidingsteken zijn hieronder opgenomen. “Open” betekent niet dat de fout in deze ronde al is gereproduceerd. Een bestaand testbestand of ouder verslag is geen nieuwe uitvoering.
 
 | Issue | Onderwerp | Status |
 | --- | --- | --- |
@@ -138,6 +140,7 @@ De GitHub-inventaris is op 3 november opnieuw vergeleken: **111** open issues. V
 | [#137](https://github.com/OpenAEC-Foundation/open-office-studio/issues/137) | Writer: Tab slaat bestaande tabelcellen over en springt twee rijen omlaag | Open; exacte tabelcasus nog te reproduceren |
 | [#138](https://github.com/OpenAEC-Foundation/open-office-studio/issues/138) | Writer: tekstcursor in tabelcel plaatsen vereist zeer precies klikken en lukt soms niet | Open; exacte tabelcasus nog te reproduceren |
 | [#139](https://github.com/OpenAEC-Foundation/open-office-studio/issues/139) | Writer: Undo niet beschikbaar na Split Table | Open; exacte tabelcasus nog te reproduceren |
+| [#140](https://github.com/OpenAEC-Foundation/open-office-studio/issues/140) | Writer: eigen scheidingsteken bij Convert to Text is moeilijk leesbaar | Open; contrast en omzetting nog onafhankelijk te toetsen |
 
 ## Laatste onderzochte stap
 
@@ -278,4 +281,12 @@ De GitHub-inventaris is op 3 november opnieuw vergeleken: **111** open issues. V
 - De grote native hertest behoudt 129 pagina’s en 256 tabellen, zonder workerfout, met onafhankelijke pakket-/opmaakvergelijking en werkend verwerpen. De achtste plakactie duurt nog 59,573 s. De statusbalk in het onmiddellijke beeld loopt achter en is verder te onderzoeken.
 - 1.612 frontendtests, 47 Python-tests, TypeScript, native Linux-bouw, Database-frontendbouw en vijf revisie-GUI-controles slagen. De strengere 500-paginaproef behoudt inhoud en geschiedenis met lege foutlijsten; haar invoer-/spellingtijd van 4,957 s is geen prestatiegoedkeuring.
 - De lokale snelkoppeling verwijst naar de geteste 45.17-binary, SHA256 `341d97067fdd1ce57409f9946bb8ca8fa95fde94a765e2d7cd4956c6c4135ead`. Profiel, documenten, oudere binaries en lopende vensters zijn behouden. De [remote Linux-devronde](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41633473423) test de werkelijk uitgepakte AppImage via AppRun en slaagt; de geteste dev-ELF heeft SHA256 `ef5bee0b10f2c52bdef7dc09b38248b7aafdbbc028f40883386c5c9bc601fbfa`.
-- De inventaris bevat nu 111 open issues, inclusief vijf nieuwe tabelmeldingen. Geen issue of migratie-acceptatiepunt gesloten. Zie [bewijs, afkeuringen en grenzen](tests/writer-worker-ingang.md).
+- De inventaris bevatte bij de 45.17-ronde 111 open issues, inclusief vijf nieuwe tabelmeldingen; de huidige telling is 112 met #140. Geen issue of migratie-acceptatiepunt gesloten. Zie [bewijs, afkeuringen en grenzen](tests/writer-worker-ingang.md).
+
+## 3 november: verborgen Writer-lint uitlezen uitgesteld, 45.18
+
+- `kopVoetTab` maakt alleen tabgegevens aan. De inhoud leest de actuele sectie pas wanneer het lint die rendert; de bestaande JSX-bediening en CSS blijven gelijk. Drie regressieproeven omvatten verborgen uitlezingen, verse opties bij openen en actieve toestand/beschikbaarheid.
+- Vier echte native 500-paginaproeven slagen, met onafhankelijke teruglezing en foutvrije GUI/console. Het meetpunt volgt vervanging van de API via de stabiele React-ref; de eerste onbruikbare meetpoging is uitgesloten. De twee linten zijn bij één venstergrootte pixelgelijk; volledige suite-/Rust-gelijkheid blijft open.
+- De achtvoudige plakproef inclusief bewaren na ronde één behoudt body, 256 tabellen, 1.536 celteksten en de oorspronkelijke opmaak. De laatste ronde duurt nog ruim een minuut. De statusbalk toont direct na de actie de juiste totale 129 pagina’s maar een achterlopende tekentelling; rust-/vervolgcontrole blijft nodig.
+- De eerdere aanvullende desktop-CI op `d348d6b` faalt op Windows op de automatische negatieve workerchunkkeuze, terwijl Linux/macOS slagen. De negatieve bouwproef legt nu een gedeelde knoop vast en een vierde proef controleert afzonderlijk de gewone productiechunkkeuze. De productiebeveiliging verandert niet; een remote hertest moet nog volgen.
+- De inventaris blijft 112 open issues. Alle tien migratiegebieden en dertig vlaggen zijn nog open. Geen issue gesloten; de Writer-vertraging is nog onvoldoende opgelost. De gepubliceerde release is niet gewijzigd.

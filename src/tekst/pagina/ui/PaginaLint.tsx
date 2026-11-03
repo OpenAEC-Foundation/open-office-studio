@@ -106,77 +106,80 @@ export function KopVoetInvoegenGroep({ p }: { p: PaginaFuncties }) {
   );
 }
 
-/**
- * Het tabblad Kop- en voettekst. Geen component: de teksten komen uit `p.t`
- * (usePagina tekent de lintcomponent opnieuw bij een taalwissel).
- */
+/** Alleen de tabgegevens; lees het document pas als dit tabblad actief is. */
 export function kopVoetTab(p: PaginaFuncties): RibbonTab {
+  return {
+    id: "kopvoet",
+    naam: p.t("page.headerFooter.tab"),
+    inhoud: <KopVoetInhoud p={p} />,
+  };
+}
+
+function KopVoetInhoud({ p }: { p: PaginaFuncties }) {
+  // stand() materialiseert de documentstructuur. Een verborgen tab mag dat
+  // niet bij iedere invoer-/selectiewijziging in het Startlint herhalen.
   const stand = p.stand();
   const t = p.t;
   const herlaad = t("page.reload.short");
-  return {
-    id: "kopvoet",
-    naam: t("page.headerFooter.tab"),
-    inhoud: (
-      <>
-        <Groep naam={t("page.headerFooter.groupEdit")}>
-          <EigenKnop naam={t("page.headerFooter.editHeader")} icoon={PanelTop} groot disabled={!p.bewerkbaar && !p.kopVoet} onClick={() => p.bewerk("header")} />
-          <EigenKnop naam={t("page.headerFooter.editFooter")} icoon={PanelBottom} groot disabled={!p.bewerkbaar && !p.kopVoet} onClick={() => p.bewerk("footer")} />
-        </Groep>
-        <Groep naam={t("page.headerFooter.groupInsert")}>
-          <PaginanummerKnop p={p} />
-        </Groep>
-        <Groep naam={t("page.headerFooter.groupOptions")}>
-          <div className="ribbon-stapel">
-            <EigenKnop
-              naam={t("page.headerFooter.firstPageDifferent")}
-              icoon={FileText}
-              actief={stand.titelpagina}
-              uitleg={t("page.headerFooter.firstPageDifferentHint", { reload: herlaad })}
-              disabled={!p.beschikbaar}
-              onClick={() => p.eersteAnders(!stand.titelpagina)}
-            />
-            <EigenKnop
-              naam={t("page.headerFooter.evenOddDifferent")}
-              icoon={BookOpen}
-              actief={stand.evenOneven}
-              uitleg={t("page.headerFooter.evenOddDifferentHint", { reload: herlaad })}
-              disabled={!p.beschikbaar}
-              onClick={() => p.evenOneven(!stand.evenOneven)}
-            />
-          </div>
-        </Groep>
-        <Groep naam={t("page.headerFooter.groupSections")}>
-          <Keuzemenu
-            naam={t("page.headerFooter.linkToPrevious")}
-            icoon={Link2}
-            groot
-            uit={!p.beschikbaar}
-            uitleg={t("page.headerFooter.linkToPreviousHint")}
-            voet={herlaad}
-            regels={[
-              { naam: t("page.headerFooter.linkHeader"), icoon: Link2, kies: () => p.koppel("header", true) },
-              { naam: t("page.headerFooter.unlinkHeader"), icoon: Link2Off, kies: () => p.koppel("header", false) },
-              { naam: t("page.headerFooter.linkFooter"), icoon: Link2, kies: () => p.koppel("footer", true) },
-              { naam: t("page.headerFooter.unlinkFooter"), icoon: Link2Off, kies: () => p.koppel("footer", false) },
-            ]}
+  return (
+    <>
+      <Groep naam={t("page.headerFooter.groupEdit")}>
+        <EigenKnop naam={t("page.headerFooter.editHeader")} icoon={PanelTop} groot disabled={!p.bewerkbaar && !p.kopVoet} onClick={() => p.bewerk("header")} />
+        <EigenKnop naam={t("page.headerFooter.editFooter")} icoon={PanelBottom} groot disabled={!p.bewerkbaar && !p.kopVoet} onClick={() => p.bewerk("footer")} />
+      </Groep>
+      <Groep naam={t("page.headerFooter.groupInsert")}>
+        <PaginanummerKnop p={p} />
+      </Groep>
+      <Groep naam={t("page.headerFooter.groupOptions")}>
+        <div className="ribbon-stapel">
+          <EigenKnop
+            naam={t("page.headerFooter.firstPageDifferent")}
+            icoon={FileText}
+            actief={stand.titelpagina}
+            uitleg={t("page.headerFooter.firstPageDifferentHint", { reload: herlaad })}
+            disabled={!p.beschikbaar}
+            onClick={() => p.eersteAnders(!stand.titelpagina)}
           />
-        </Groep>
-        <Groep naam={t("page.headerFooter.groupPosition")}>
-          <EigenKnop naam={t("page.headerFooter.distance")} icoon={MoveVertical} groot uitleg={t("page.headerFooter.distanceHint")} disabled={!p.beschikbaar} onClick={() => void p.afstandVenster()} />
-        </Groep>
-        <Groep naam={t("page.headerFooter.groupRemove")}>
-          <div className="ribbon-stapel">
-            <EigenKnop naam={t("page.headerFooter.removeHeader")} icoon={Trash2} disabled={!p.beschikbaar} onClick={() => p.kopVoetWeg("header")} />
-            <EigenKnop naam={t("page.headerFooter.removeFooter")} icoon={Trash2} disabled={!p.beschikbaar} onClick={() => p.kopVoetWeg("footer")} />
-          </div>
-        </Groep>
-        <Groep naam={t("page.headerFooter.groupClose")}>
-          <EigenKnop naam={t("page.headerFooter.close")} icoon={X} groot uitleg={t("page.headerFooter.closeHint")} disabled={!p.kopVoet} onClick={p.sluitBewerken} />
-        </Groep>
-      </>
-    ),
-  };
+          <EigenKnop
+            naam={t("page.headerFooter.evenOddDifferent")}
+            icoon={BookOpen}
+            actief={stand.evenOneven}
+            uitleg={t("page.headerFooter.evenOddDifferentHint", { reload: herlaad })}
+            disabled={!p.beschikbaar}
+            onClick={() => p.evenOneven(!stand.evenOneven)}
+          />
+        </div>
+      </Groep>
+      <Groep naam={t("page.headerFooter.groupSections")}>
+        <Keuzemenu
+          naam={t("page.headerFooter.linkToPrevious")}
+          icoon={Link2}
+          groot
+          uit={!p.beschikbaar}
+          uitleg={t("page.headerFooter.linkToPreviousHint")}
+          voet={herlaad}
+          regels={[
+            { naam: t("page.headerFooter.linkHeader"), icoon: Link2, kies: () => p.koppel("header", true) },
+            { naam: t("page.headerFooter.unlinkHeader"), icoon: Link2Off, kies: () => p.koppel("header", false) },
+            { naam: t("page.headerFooter.linkFooter"), icoon: Link2, kies: () => p.koppel("footer", true) },
+            { naam: t("page.headerFooter.unlinkFooter"), icoon: Link2Off, kies: () => p.koppel("footer", false) },
+          ]}
+        />
+      </Groep>
+      <Groep naam={t("page.headerFooter.groupPosition")}>
+        <EigenKnop naam={t("page.headerFooter.distance")} icoon={MoveVertical} groot uitleg={t("page.headerFooter.distanceHint")} disabled={!p.beschikbaar} onClick={() => void p.afstandVenster()} />
+      </Groep>
+      <Groep naam={t("page.headerFooter.groupRemove")}>
+        <div className="ribbon-stapel">
+          <EigenKnop naam={t("page.headerFooter.removeHeader")} icoon={Trash2} disabled={!p.beschikbaar} onClick={() => p.kopVoetWeg("header")} />
+          <EigenKnop naam={t("page.headerFooter.removeFooter")} icoon={Trash2} disabled={!p.beschikbaar} onClick={() => p.kopVoetWeg("footer")} />
+        </div>
+      </Groep>
+      <Groep naam={t("page.headerFooter.groupClose")}>
+        <EigenKnop naam={t("page.headerFooter.close")} icoon={X} groot uitleg={t("page.headerFooter.closeHint")} disabled={!p.kopVoet} onClick={p.sluitBewerken} />
+      </Groep>
+    </>
+  );
 }
 
 // ---------------------------------------------------------------------------
