@@ -10,6 +10,14 @@ import tarfile
 import tempfile
 
 
+def gui_python(pad):
+    if not pad.is_file():
+        raise FileNotFoundError(pad)
+    # De symlink hoort bij de virtuele omgeving. resolve() kiest de systeem-
+    # interpreter en verliest de daar geïnstalleerde inspectiehulpmiddelen.
+    return str(pad.absolute())
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--gui-python', type=Path, help='Voer de bewaarenvervolgproef op de uitgepakte AppImage uit.')
@@ -31,7 +39,7 @@ def main():
             programma = uitgepakt / 'usr/bin/open-office-studio'
             uitvoer_gui = Path('.local/proef-dev-native')
             subprocess.run([
-                str(opties.gui_python.resolve(strict=True)), 'scripts/test-writer-rijk-plakken-native.py',
+                gui_python(opties.gui_python), 'scripts/test-writer-rijk-plakken-native.py',
                 '--programma', str(programma), '--versie', versie,
                 '--profiel', configuratie['identifier'], '--rondes', '3',
                 '--bewaar-na-ronde', '1', '--maxduur', '180', '--uitvoer', str(uitvoer_gui),

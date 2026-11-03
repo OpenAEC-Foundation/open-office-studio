@@ -98,7 +98,7 @@ niet gecontroleerd; de afbeelding bewijst geen volledige visuele juistheid:
 
 ## Overige controles en grenzen
 
-- 1.612 frontendtests in 145 bestanden, 46 Python-tests, TypeScript,
+- 1.612 frontendtests in 145 bestanden, 47 Python-tests, TypeScript,
   productie-/native Linux-bouw en de afzonderlijke Database-frontendbouw slagen.
 - De aangescherpte native 500-paginaproef slaagt voor acht gerichte
   inhouds-/bewaar-/heropencontroles, met lege GUI- en consolefoutenlijsten.
@@ -115,6 +115,16 @@ niet gecontroleerd; de afbeelding bewijst geen volledige visuele juistheid:
   blijven open. Andere bestanden, snelle plakreeksen zonder barrières,
   fysieke andere platforms, volledige GUI-gelijkheid en alle functies zijn
   niet hiermee afgetest. De gepubliceerde release blijft ongewijzigd.
+
+## Pakketcontrole op GitHub
+
+De [eerste 45.17-devbouw](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41627883409)
+keurt het pakket terecht nog niet goed. De verpakker volgde de Python-symlink
+uit de testomgeving naar `/usr/bin/python3.10`; daardoor ontbrak `websockets`
+tijdens de inspectie. De app was gebouwd, maar deze GUI-proef was niet afgerond.
+Het absolute omgevingspad blijft nu behouden. Een echte tijdelijke Python-
+omgeving met een eigen proefmodule controleert dat de oude padkeuze de module
+verliest en de nieuwe haar behoudt. De remote hertest moet nog worden afgewacht.
 
 ## Herhalen
 

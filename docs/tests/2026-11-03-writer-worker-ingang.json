@@ -427,7 +427,7 @@
       "geslaagd": true
     },
     "python": {
-      "tests": 46,
+      "tests": 47,
       "geslaagd": true
     },
     "typescript_en_native_linuxbouw": true,
@@ -440,5 +440,12 @@
     "Statusbalk na grote plakactie verder onderzoeken; volledige visuele controles ontbreken.",
     "Snelle plakreeksen zonder barrières, veel grotere bestanden en fysieke andere platforms niet afgetest.",
     "Alle tien migratiegebieden en dertig acceptatievlaggen blijven open."
-  ]
+  ],
+  "pakketcontrole_eerste_ci_45_17": {
+    "geslaagd": false,
+    "run": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41627883409",
+    "oorzaak": "Path.resolve() verving de Python-interpreter uit de GUI-omgeving door /usr/bin/python3.10; websockets was daar niet beschikbaar.",
+    "herstel": "Het absolute pad blijft binnen de opgegeven virtuele omgeving. Een echte omgevingsproef toont de ontbrekende module vóór en de behouden module na correctie.",
+    "remote_hertest": "Nog af te wachten na push; de pakket-GUI-controle blijft verplicht."
+  }
 }
