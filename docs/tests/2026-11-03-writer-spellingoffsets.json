@@ -1,0 +1,1584 @@
+{
+  "datum": "2026-11-03",
+  "versie": "2026.45.14",
+  "status": "Functionele proeven slagen; geen overtuigende algemene typversnelling aangetoond.",
+  "programma_sha256": "a589b7ac4f306dd2c196c3ede410c5eadf6838d62d4af1e66d1f025a310cb560",
+  "frontend": {
+    "bestanden": 143,
+    "tests": 1599,
+    "mislukt": 0
+  },
+  "bouw": {
+    "typescript": true,
+    "productie": true,
+    "native_linux": true
+  },
+  "offset_regressies": {
+    "tests": 8,
+    "eerste_negatieve_ronde": "Vier van zes proeven falen op 45.13-bron, waaronder onterechte segmenthergebruik bij een andere sessie met dezelfde versie.",
+    "eerste_correctie": "Zes proeven slagen; aanvullende echte-Rust-engineproef controleert Unicode, verwijderingen en tabelverhalen.",
+    "versiecontext_negatief": "De eerste kandidaat vraagt in één zichtbare-foutenberekening 1.002 keer de native versie op; de nieuwe proef faalt daarop.",
+    "versiecontext_na": "Eén versieopvraag en één compacte verhaalindex, met dezelfde foutposities. Alle acht proeven slagen.",
+    "echte_kern": "Werkelijke createYrsSession met DOCX: alle UTF-16-offsets en beide randkeuzes blijven gelijk aan de oorspronkelijke native opzoekroute."
+  },
+  "eerste_kandidaat_niet_geinstalleerd": {
+    "programma_sha256": "443888052109f0839fdadbe390aa5421063321e9dd7a4e1c41faf28661f0f874",
+    "vergelijking": {
+      "45.13": {
+        "geslaagd": true,
+        "versie": "2026.45.13",
+        "programma_sha256": "7b347b17c19dec31e7a6f23a1c69b030c22c5292c84c45b7677ed27087a22de4",
+        "script_sha256": "cac50900e37a4c3958783fdeb612f98eaa93a0da6f7c224d91db6d4293d5f029",
+        "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+        "stappen": [
+          {
+            "naam": "beginbron",
+            "alinea_aantal": 500,
+            "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. ",
+            "exact": true
+          },
+          {
+            "naam": "getypte_bron",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          },
+          {
+            "naam": "selectie_en_backspace",
+            "alinea_aantal": 500,
+            "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+            "exact": true
+          },
+          {
+            "naam": "undo",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          },
+          {
+            "naam": "redo",
+            "alinea_aantal": 500,
+            "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+            "exact": true
+          },
+          {
+            "naam": "hersteld_voor_bewaren",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          },
+          {
+            "naam": "native_bewaaractie_onafhankelijk",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          },
+          {
+            "naam": "nieuw_proces_heropend",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          }
+        ],
+        "invoerinterval_ms": 20,
+        "vaste_nawacht_ms": 2000,
+        "invoer_gereedheid": "Native keyup van de laatste punt, inputwachtrij, zichtbare golflijnen en één exacte controle van de laatste alinea; alle 500 bronalinea’s daarnaast apart vergeleken.",
+        "grenzen": [
+          "Eén gegenereerde 500-paginabron, normale compositor, alleen een lichte teller om getBoundingClientRect. Geen algemene prestatie-, IME-, enorme-plak- of platformacceptatie."
+        ],
+        "invoer_tot_bron_en_golven_ms": 4248,
+        "frame_tussenpozen_ms": {
+          "aantal": 37,
+          "maximum": 236,
+          "p95": 234,
+          "reeks": [
+            1,
+            26,
+            36,
+            53,
+            14,
+            137,
+            234,
+            161,
+            139,
+            217,
+            129,
+            168,
+            134,
+            236,
+            135,
+            173,
+            124,
+            212,
+            126,
+            145,
+            126,
+            63,
+            96,
+            118,
+            126,
+            111,
+            35,
+            117,
+            105,
+            137,
+            118,
+            129,
+            110,
+            129,
+            121,
+            2,
+            35
+          ],
+          "omvang": "requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS."
+        },
+        "invoermeting": {
+          "calls": 5516,
+          "classes": {
+            "docx-editor__scroll-container": 262,
+            "canvas-page": 1038,
+            "DIV": 136,
+            "CANVAS": 1538,
+            "canvas-pages__column": 42,
+            "canvas-pages": 1642,
+            "docx-plugin-overlays": 821,
+            "docx-editor__viewport tl-met-liniaal": 37
+          },
+          "golven": 83,
+          "paginas": 500,
+          "tot_bron_en_golven_ms_inclusief_nawacht": 6267
+        },
+        "selectie_backspace": {
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "eerste_verschil": 499,
+          "native_toetsen": [
+            {
+              "key": " ",
+              "code": "Space",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "shift",
+              "code": "ShiftLeft",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "e",
+              "code": "KeyE",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "e",
+              "code": "KeyE",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "n",
+              "code": "KeyN",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": " ",
+              "code": "Space",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "p",
+              "code": "KeyP",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "r",
+              "code": "KeyR",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "o",
+              "code": "KeyO",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "e",
+              "code": "KeyE",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "f",
+              "code": "KeyF",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "z",
+              "code": "KeyZ",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "i",
+              "code": "KeyI",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "n",
+              "code": "KeyN",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": ".",
+              "code": "Period",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "shift",
+              "code": "ShiftLeft",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "control",
+              "code": "ControlLeft",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "arrowleft",
+              "code": "ArrowLeft",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "backspace",
+              "code": "Backspace",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            }
+          ]
+        },
+        "bron_eind_sha256": "d2c7c2fd5b11618f358acc4605aef7973776f732c7eee6029166ece383d71021"
+      },
+      "45.14": {
+        "geslaagd": true,
+        "versie": "2026.45.14",
+        "programma_sha256": "443888052109f0839fdadbe390aa5421063321e9dd7a4e1c41faf28661f0f874",
+        "script_sha256": "cac50900e37a4c3958783fdeb612f98eaa93a0da6f7c224d91db6d4293d5f029",
+        "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+        "stappen": [
+          {
+            "naam": "beginbron",
+            "alinea_aantal": 500,
+            "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. ",
+            "exact": true
+          },
+          {
+            "naam": "getypte_bron",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          },
+          {
+            "naam": "selectie_en_backspace",
+            "alinea_aantal": 500,
+            "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+            "exact": true
+          },
+          {
+            "naam": "undo",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          },
+          {
+            "naam": "redo",
+            "alinea_aantal": 500,
+            "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+            "exact": true
+          },
+          {
+            "naam": "hersteld_voor_bewaren",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          },
+          {
+            "naam": "native_bewaaractie_onafhankelijk",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          },
+          {
+            "naam": "nieuw_proces_heropend",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          }
+        ],
+        "invoerinterval_ms": 20,
+        "vaste_nawacht_ms": 2000,
+        "invoer_gereedheid": "Native keyup van de laatste punt, inputwachtrij, zichtbare golflijnen en één exacte controle van de laatste alinea; alle 500 bronalinea’s daarnaast apart vergeleken.",
+        "grenzen": [
+          "Eén gegenereerde 500-paginabron, normale compositor, alleen een lichte teller om getBoundingClientRect. Geen algemene prestatie-, IME-, enorme-plak- of platformacceptatie."
+        ],
+        "invoer_tot_bron_en_golven_ms": 4625,
+        "frame_tussenpozen_ms": {
+          "aantal": 34,
+          "maximum": 400,
+          "p95": 311,
+          "reeks": [
+            1,
+            31,
+            41,
+            270,
+            120,
+            40,
+            400,
+            231,
+            63,
+            223,
+            311,
+            131,
+            135,
+            228,
+            130,
+            176,
+            127,
+            204,
+            120,
+            48,
+            139,
+            112,
+            107,
+            122,
+            106,
+            211,
+            116,
+            92,
+            190,
+            127,
+            15,
+            134,
+            151,
+            7
+          ],
+          "omvang": "requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS."
+        },
+        "invoermeting": {
+          "calls": 6549,
+          "classes": {
+            "docx-editor__scroll-container": 265,
+            "CANVAS": 1784,
+            "canvas-page": 1084,
+            "DIV": 134,
+            "canvas-pages__column": 40,
+            "canvas-pages": 2134,
+            "docx-plugin-overlays": 1067,
+            "docx-editor__viewport tl-met-liniaal": 41
+          },
+          "golven": 83,
+          "paginas": 500,
+          "tot_bron_en_golven_ms_inclusief_nawacht": 6636
+        },
+        "selectie_backspace": {
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "eerste_verschil": 499,
+          "native_toetsen": [
+            {
+              "key": " ",
+              "code": "Space",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "shift",
+              "code": "ShiftLeft",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "e",
+              "code": "KeyE",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "e",
+              "code": "KeyE",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "n",
+              "code": "KeyN",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": " ",
+              "code": "Space",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "p",
+              "code": "KeyP",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "r",
+              "code": "KeyR",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "o",
+              "code": "KeyO",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "e",
+              "code": "KeyE",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "f",
+              "code": "KeyF",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "z",
+              "code": "KeyZ",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "i",
+              "code": "KeyI",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "n",
+              "code": "KeyN",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": ".",
+              "code": "Period",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "shift",
+              "code": "ShiftLeft",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "control",
+              "code": "ControlLeft",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "arrowleft",
+              "code": "ArrowLeft",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "backspace",
+              "code": "Backspace",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            }
+          ]
+        },
+        "bron_eind_sha256": "595020199d9dafe08ec8d7e31d9f349abdf8eb293c58b81944d94a2c10195877"
+      }
+    },
+    "conclusie": "4,248→4,625 s; geen geslaagde snelheidsverbetering. De versiecontrole is daarna eenmaal per synchrone leesbewerking gemaakt."
+  },
+  "definitieve_rondes": [
+    {
+      "volgorde": [
+        "45.13",
+        "45.14"
+      ],
+      "45.13": {
+        "geslaagd": true,
+        "versie": "2026.45.13",
+        "programma_sha256": "7b347b17c19dec31e7a6f23a1c69b030c22c5292c84c45b7677ed27087a22de4",
+        "script_sha256": "2e985e2441d3967eddab93f614990ee6ee73f4f1903682b3d3bd84369b646c33",
+        "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+        "stappen": [
+          {
+            "naam": "beginbron",
+            "alinea_aantal": 500,
+            "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. ",
+            "exact": true
+          },
+          {
+            "naam": "getypte_bron",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          },
+          {
+            "naam": "selectie_en_backspace",
+            "alinea_aantal": 500,
+            "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+            "exact": true
+          },
+          {
+            "naam": "undo",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          },
+          {
+            "naam": "redo",
+            "alinea_aantal": 500,
+            "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+            "exact": true
+          },
+          {
+            "naam": "hersteld_voor_bewaren",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          },
+          {
+            "naam": "native_bewaaractie_onafhankelijk",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          },
+          {
+            "naam": "nieuw_proces_heropend",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          }
+        ],
+        "invoerinterval_ms": 20,
+        "vaste_nawacht_ms": 2000,
+        "invoer_gereedheid": "Native keyup van de laatste punt, inputwachtrij, zichtbare golflijnen en één exacte controle van de laatste alinea; alle 500 bronalinea’s daarnaast apart vergeleken.",
+        "grenzen": [
+          "Eén gegenereerde 500-paginabron, normale compositor, alleen een lichte teller om getBoundingClientRect. Geen algemene prestatie-, IME-, enorme-plak- of platformacceptatie."
+        ],
+        "invoer_tot_bron_en_golven_ms": 4508,
+        "frame_tussenpozen_ms": {
+          "aantal": 34,
+          "maximum": 391,
+          "p95": 290,
+          "reeks": [
+            0.999999999998181,
+            27,
+            38,
+            188,
+            122,
+            31,
+            391,
+            233,
+            74,
+            231,
+            290,
+            132,
+            130,
+            227,
+            134,
+            165,
+            130,
+            251,
+            123,
+            42,
+            6,
+            105,
+            117,
+            100,
+            116,
+            95,
+            211,
+            124,
+            113,
+            115,
+            96,
+            225,
+            124,
+            30
+          ],
+          "omvang": "requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS."
+        },
+        "invoermeting": {
+          "calls": 6352,
+          "classes": {
+            "docx-editor__scroll-container": 262,
+            "CANVAS": 1751,
+            "canvas-page": 1048,
+            "DIV": 134,
+            "canvas-pages__column": 40,
+            "canvas-pages": 2052,
+            "docx-plugin-overlays": 1026,
+            "docx-editor__viewport tl-met-liniaal": 39
+          },
+          "golven": 83,
+          "paginas": 500,
+          "tot_bron_en_golven_ms_inclusief_nawacht": 6525
+        },
+        "selectie_backspace": {
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "eerste_verschil": 499,
+          "native_toetsen": [
+            {
+              "key": " ",
+              "code": "Space",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "shift",
+              "code": "ShiftLeft",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "e",
+              "code": "KeyE",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "e",
+              "code": "KeyE",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "n",
+              "code": "KeyN",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": " ",
+              "code": "Space",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "p",
+              "code": "KeyP",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "r",
+              "code": "KeyR",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "o",
+              "code": "KeyO",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "e",
+              "code": "KeyE",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "f",
+              "code": "KeyF",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "z",
+              "code": "KeyZ",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "i",
+              "code": "KeyI",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "n",
+              "code": "KeyN",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": ".",
+              "code": "Period",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "shift",
+              "code": "ShiftLeft",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "control",
+              "code": "ControlLeft",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "arrowleft",
+              "code": "ArrowLeft",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "backspace",
+              "code": "Backspace",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            }
+          ]
+        },
+        "bron_eind_sha256": "d7536377e97ced98bb4f8903308908af6c7f8d5b3c697387ecf504081d13e7c2"
+      },
+      "45.14": {
+        "geslaagd": true,
+        "versie": "2026.45.14",
+        "programma_sha256": "a589b7ac4f306dd2c196c3ede410c5eadf6838d62d4af1e66d1f025a310cb560",
+        "script_sha256": "2e985e2441d3967eddab93f614990ee6ee73f4f1903682b3d3bd84369b646c33",
+        "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+        "stappen": [
+          {
+            "naam": "beginbron",
+            "alinea_aantal": 500,
+            "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. ",
+            "exact": true
+          },
+          {
+            "naam": "getypte_bron",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          },
+          {
+            "naam": "selectie_en_backspace",
+            "alinea_aantal": 500,
+            "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+            "exact": true
+          },
+          {
+            "naam": "undo",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          },
+          {
+            "naam": "redo",
+            "alinea_aantal": 500,
+            "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+            "exact": true
+          },
+          {
+            "naam": "hersteld_voor_bewaren",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          },
+          {
+            "naam": "native_bewaaractie_onafhankelijk",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          },
+          {
+            "naam": "nieuw_proces_heropend",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          }
+        ],
+        "invoerinterval_ms": 20,
+        "vaste_nawacht_ms": 2000,
+        "invoer_gereedheid": "Native keyup van de laatste punt, inputwachtrij, zichtbare golflijnen en één exacte controle van de laatste alinea; alle 500 bronalinea’s daarnaast apart vergeleken.",
+        "grenzen": [
+          "Eén gegenereerde 500-paginabron, normale compositor, alleen een lichte teller om getBoundingClientRect. Geen algemene prestatie-, IME-, enorme-plak- of platformacceptatie."
+        ],
+        "invoer_tot_bron_en_golven_ms": 4319,
+        "frame_tussenpozen_ms": {
+          "aantal": 33,
+          "maximum": 365,
+          "p95": 269,
+          "reeks": [
+            8,
+            17,
+            256,
+            125,
+            33,
+            365,
+            269,
+            23,
+            144,
+            131,
+            249,
+            118,
+            139,
+            136,
+            131,
+            33,
+            101,
+            243,
+            123,
+            113,
+            223,
+            129,
+            45,
+            5,
+            88,
+            205,
+            197,
+            139,
+            15,
+            154,
+            118,
+            122,
+            118
+          ],
+          "omvang": "requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS."
+        },
+        "invoermeting": {
+          "calls": 6775,
+          "classes": {
+            "docx-editor__scroll-container": 269,
+            "canvas-page": 1139,
+            "DIV": 135,
+            "CANVAS": 1825,
+            "canvas-pages__column": 38,
+            "canvas-pages": 2216,
+            "docx-plugin-overlays": 1108,
+            "docx-editor__viewport tl-met-liniaal": 45
+          },
+          "golven": 83,
+          "paginas": 500,
+          "tot_bron_en_golven_ms_inclusief_nawacht": 6335
+        },
+        "selectie_backspace": {
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "eerste_verschil": 499,
+          "native_toetsen": [
+            {
+              "key": " ",
+              "code": "Space",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "shift",
+              "code": "ShiftLeft",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "e",
+              "code": "KeyE",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "e",
+              "code": "KeyE",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "n",
+              "code": "KeyN",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": " ",
+              "code": "Space",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "p",
+              "code": "KeyP",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "r",
+              "code": "KeyR",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "o",
+              "code": "KeyO",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "e",
+              "code": "KeyE",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "f",
+              "code": "KeyF",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "z",
+              "code": "KeyZ",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "i",
+              "code": "KeyI",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "n",
+              "code": "KeyN",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": ".",
+              "code": "Period",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "shift",
+              "code": "ShiftLeft",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "control",
+              "code": "ControlLeft",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "arrowleft",
+              "code": "ArrowLeft",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "backspace",
+              "code": "Backspace",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            }
+          ]
+        },
+        "bron_eind_sha256": "3ce716a6568b1369d60ba3309a19466bcf6aeb26d80bdf8a2109490aa7bf1f27"
+      }
+    },
+    {
+      "volgorde": [
+        "45.14",
+        "45.13"
+      ],
+      "45.13": {
+        "geslaagd": true,
+        "versie": "2026.45.13",
+        "programma_sha256": "7b347b17c19dec31e7a6f23a1c69b030c22c5292c84c45b7677ed27087a22de4",
+        "script_sha256": "2e985e2441d3967eddab93f614990ee6ee73f4f1903682b3d3bd84369b646c33",
+        "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+        "stappen": [
+          {
+            "naam": "beginbron",
+            "alinea_aantal": 500,
+            "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. ",
+            "exact": true
+          },
+          {
+            "naam": "getypte_bron",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          },
+          {
+            "naam": "selectie_en_backspace",
+            "alinea_aantal": 500,
+            "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+            "exact": true
+          },
+          {
+            "naam": "undo",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          },
+          {
+            "naam": "redo",
+            "alinea_aantal": 500,
+            "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+            "exact": true
+          },
+          {
+            "naam": "hersteld_voor_bewaren",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          },
+          {
+            "naam": "native_bewaaractie_onafhankelijk",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          },
+          {
+            "naam": "nieuw_proces_heropend",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          }
+        ],
+        "invoerinterval_ms": 20,
+        "vaste_nawacht_ms": 2000,
+        "invoer_gereedheid": "Native keyup van de laatste punt, inputwachtrij, zichtbare golflijnen en één exacte controle van de laatste alinea; alle 500 bronalinea’s daarnaast apart vergeleken.",
+        "grenzen": [
+          "Eén gegenereerde 500-paginabron, normale compositor, alleen een lichte teller om getBoundingClientRect. Geen algemene prestatie-, IME-, enorme-plak- of platformacceptatie."
+        ],
+        "invoer_tot_bron_en_golven_ms": 4563,
+        "frame_tussenpozen_ms": {
+          "aantal": 32,
+          "maximum": 437,
+          "p95": 400,
+          "reeks": [
+            2,
+            48,
+            49,
+            437,
+            132,
+            38,
+            400,
+            244,
+            22,
+            156,
+            150,
+            263,
+            199,
+            146,
+            126,
+            119,
+            109,
+            106,
+            165,
+            111,
+            113,
+            109,
+            102,
+            223,
+            121,
+            94,
+            196,
+            104,
+            108,
+            232,
+            163,
+            29
+          ],
+          "omvang": "requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS."
+        },
+        "invoermeting": {
+          "calls": 6333,
+          "classes": {
+            "docx-editor__scroll-container": 257,
+            "CANVAS": 1743,
+            "canvas-page": 1048,
+            "DIV": 127,
+            "canvas-pages__column": 39,
+            "canvas-pages": 2052,
+            "docx-plugin-overlays": 1026,
+            "docx-editor__viewport tl-met-liniaal": 41
+          },
+          "golven": 83,
+          "paginas": 500,
+          "tot_bron_en_golven_ms_inclusief_nawacht": 6575
+        },
+        "selectie_backspace": {
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "eerste_verschil": 499,
+          "native_toetsen": [
+            {
+              "key": " ",
+              "code": "Space",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "shift",
+              "code": "ShiftLeft",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "e",
+              "code": "KeyE",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "e",
+              "code": "KeyE",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "n",
+              "code": "KeyN",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": " ",
+              "code": "Space",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "p",
+              "code": "KeyP",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "r",
+              "code": "KeyR",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "o",
+              "code": "KeyO",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "e",
+              "code": "KeyE",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "f",
+              "code": "KeyF",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "z",
+              "code": "KeyZ",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "i",
+              "code": "KeyI",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "n",
+              "code": "KeyN",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": ".",
+              "code": "Period",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "shift",
+              "code": "ShiftLeft",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "control",
+              "code": "ControlLeft",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "arrowleft",
+              "code": "ArrowLeft",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "backspace",
+              "code": "Backspace",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            }
+          ]
+        },
+        "bron_eind_sha256": "ca7f6321b4c2f30c8b22a81802d5857c80e1e44beba39def787f2eb33b2b0ca1"
+      },
+      "45.14": {
+        "geslaagd": true,
+        "versie": "2026.45.14",
+        "programma_sha256": "a589b7ac4f306dd2c196c3ede410c5eadf6838d62d4af1e66d1f025a310cb560",
+        "script_sha256": "2e985e2441d3967eddab93f614990ee6ee73f4f1903682b3d3bd84369b646c33",
+        "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+        "stappen": [
+          {
+            "naam": "beginbron",
+            "alinea_aantal": 500,
+            "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. ",
+            "exact": true
+          },
+          {
+            "naam": "getypte_bron",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          },
+          {
+            "naam": "selectie_en_backspace",
+            "alinea_aantal": 500,
+            "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+            "exact": true
+          },
+          {
+            "naam": "undo",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          },
+          {
+            "naam": "redo",
+            "alinea_aantal": 500,
+            "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+            "exact": true
+          },
+          {
+            "naam": "hersteld_voor_bewaren",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          },
+          {
+            "naam": "native_bewaaractie_onafhankelijk",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          },
+          {
+            "naam": "nieuw_proces_heropend",
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "exact": true
+          }
+        ],
+        "invoerinterval_ms": 20,
+        "vaste_nawacht_ms": 2000,
+        "invoer_gereedheid": "Native keyup van de laatste punt, inputwachtrij, zichtbare golflijnen en één exacte controle van de laatste alinea; alle 500 bronalinea’s daarnaast apart vergeleken.",
+        "grenzen": [
+          "Eén gegenereerde 500-paginabron, normale compositor, alleen een lichte teller om getBoundingClientRect. Geen algemene prestatie-, IME-, enorme-plak- of platformacceptatie."
+        ],
+        "invoer_tot_bron_en_golven_ms": 4625,
+        "frame_tussenpozen_ms": {
+          "aantal": 33,
+          "maximum": 356,
+          "p95": 287,
+          "reeks": [
+            2,
+            29,
+            9,
+            18,
+            181,
+            132,
+            356,
+            238,
+            24,
+            266,
+            287,
+            131,
+            138,
+            240,
+            129,
+            249,
+            253,
+            217,
+            136,
+            46,
+            91,
+            206,
+            116,
+            108,
+            131,
+            109,
+            210,
+            205,
+            127,
+            17,
+            112,
+            139,
+            5
+          ],
+          "omvang": "requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS."
+        },
+        "invoermeting": {
+          "calls": 6709,
+          "classes": {
+            "docx-editor__scroll-container": 262,
+            "canvas-page": 1083,
+            "DIV": 130,
+            "CANVAS": 1826,
+            "canvas-pages__column": 39,
+            "canvas-pages": 2218,
+            "docx-plugin-overlays": 1109,
+            "docx-editor__viewport tl-met-liniaal": 42
+          },
+          "golven": 83,
+          "paginas": 500,
+          "tot_bron_en_golven_ms_inclusief_nawacht": 6652
+        },
+        "selectie_backspace": {
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "eerste_verschil": 499,
+          "native_toetsen": [
+            {
+              "key": " ",
+              "code": "Space",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "shift",
+              "code": "ShiftLeft",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "e",
+              "code": "KeyE",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "e",
+              "code": "KeyE",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "n",
+              "code": "KeyN",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": " ",
+              "code": "Space",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "p",
+              "code": "KeyP",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "r",
+              "code": "KeyR",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "o",
+              "code": "KeyO",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "e",
+              "code": "KeyE",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "f",
+              "code": "KeyF",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "z",
+              "code": "KeyZ",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "i",
+              "code": "KeyI",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "n",
+              "code": "KeyN",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": ".",
+              "code": "Period",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "shift",
+              "code": "ShiftLeft",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "control",
+              "code": "ControlLeft",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "arrowleft",
+              "code": "ArrowLeft",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            },
+            {
+              "key": "backspace",
+              "code": "Backspace",
+              "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+            }
+          ]
+        },
+        "bron_eind_sha256": "b883e71fda82c95a869886d5febc138582e1a8d5894381ae7ffbf3d9f22ca5d5"
+      }
+    }
+  ],
+  "gui_revisies": {
+    "versie": "2026.45.14",
+    "geslaagd": true,
+    "stappen": [
+      {
+        "naam": "twee_revisies",
+        "zoom": 1,
+        "kaarten": [
+          {
+            "tekst": "PProefauteur1:00 AMIngevoegde woorden",
+            "x": 1042,
+            "y": 359.25,
+            "width": 240,
+            "height": 58
+          },
+          {
+            "tekst": "PProefauteur1:00 AMVerwijderde woorden‹2/2›",
+            "x": 1042,
+            "y": 425.25,
+            "width": 240,
+            "height": 131
+          }
+        ],
+        "verbindingen": [
+          "M684.5039828608927 169.59413608110347 H1018.859375 L1009 235.25"
+        ],
+        "actieveVerbindingen": [
+          [
+            "M534.0416841801651 169.59413608110347 H996.859375 L1009 169.25"
+          ],
+          [
+            "M684.5039828608927 169.59413608110347 H1018.859375 L1009 235.25"
+          ]
+        ],
+        "werkruimte": {
+          "x": 18,
+          "y": 208,
+          "width": 1582,
+          "height": 870
+        }
+      },
+      {
+        "naam": "twee_revisies",
+        "zoom": 1.5,
+        "kaarten": [
+          {
+            "tekst": "PProefauteur1:00 AMIngevoegde woorden",
+            "x": 1255,
+            "y": 422.890625,
+            "width": 240,
+            "height": 58
+          },
+          {
+            "tekst": "PProefauteur1:00 AMVerwijderde woorden‹2/2›",
+            "x": 1255,
+            "y": 488.890625,
+            "width": 240,
+            "height": 131
+          }
+        ],
+        "verbindingen": [
+          "M742.2576378210621 242.39407026079613 H1232.796875 L1223 298.890625"
+        ],
+        "actieveVerbindingen": [
+          [
+            "M516.5612278270843 242.39407026079613 H1210.796875 L1223 232.890625"
+          ],
+          [
+            "M742.2576378210621 242.39407026079613 H1232.796875 L1223 298.890625"
+          ]
+        ],
+        "werkruimte": {
+          "x": 18,
+          "y": 208,
+          "width": 1582,
+          "height": 870
+        }
+      },
+      {
+        "naam": "alle_revisies_geaccepteerd",
+        "kaarten": 0
+      },
+      {
+        "naam": "gewone_opmerking_zonder_revisies",
+        "commentId": 1
+      },
+      {
+        "naam": "onafhankelijke_bewaarcontrole",
+        "revisies": 0,
+        "ingevoegde_tekst": true,
+        "verwijderde_tekst": false,
+        "opmerking": true
+      }
+    ],
+    "fouten": [],
+    "grenzen": [
+      "Gerichte Chromium-proef van de productie-UI; geen fysieke native-platform- of volledige pixelacceptatie."
+    ]
+  },
+  "meetmethode": {
+    "gewijzigd": "De oude proef vroeg tijdens wachten telkens alle 500 alinea’s op. De nieuwe proef wacht op de echte laatste keyup, leegt de invoerwachtrij en vergelijkt de laatste alinea eenmaal. Alle 500 alinea’s worden daarna exact vergeleken, onafhankelijk bewaard teruggelezen en in een nieuw proces geopend.",
+    "vergelijkbaarheid": "Elke definitieve ronde gebruikt identieke scriptbytes en dezelfde beginbron voor beide programma’s. Oude 45.13-metingen met de eerdere proef zijn geen rechtstreekse snelheidsreferentie.",
+    "opruimen": "Een 45.13-proef slaagde inhoudelijk maar stopte daarna op ConnectionAbortedError bij het verdwijnen van haar eigen portalmap. Alleen deze vrijblijvende cleanup vangt nu OSError op; de proefuitkomst en alle inhoudelijke foutcodes blijven gehandhaafd. Definitieve rondes eindigen met code 0."
+  },
+  "profielen": {
+    "45.13": {
+      "rapport": "2026-11-03-writer-spellingprofiel-45.13.json",
+      "ruwe_data": "2026-11-03-writer-spellingprofiel-45.13.json.gz"
+    },
+    "45.14": {
+      "rapport": "2026-11-03-writer-spellingprofiel-45.14.json",
+      "ruwe_data": "2026-11-03-writer-spellingprofiel-45.14.json.gz"
+    }
+  },
+  "paginareferenties": {
+    "versie": "2026.45.14",
+    "waargenomen": 500,
+    "zelfde_object_na_invoer": 499,
+    "gewijzigde_revisienummers": 0,
+    "conclusie": "Ongewijzigde paginaobjecten worden al hergebruikt; er is op grond van deze meting geen wijziging van de paginacomparator gemaakt."
+  },
+  "grenzen": [
+    "Twee native rondes op één synthetisch document en één Linux-computer; geen algemene benchmark.",
+    "De inputduur verbetert niet overtuigend; de grote typvertraging blijft open.",
+    "Frame-intervallen zijn geen fysieke beeldscherm-FPS; de tracer is geen proces-CPUtijdbudget.",
+    "De runtime levert samples maar geen trackingUpdate-tijdintervallen; stackvolgorde is op dezelfde runtime geijkt.",
+    "De aanvullende revisie-/opmerkingenproef gebruikt Chromium; geen fysieke Windows-/macOS-GUI- of volledige Rust-/pixelacceptatie."
+  ],
+  "bronbestanden": {
+    "src/spelling/tekst/sessie.ts": "5b7c17b0c21a797964132f46f43e7ef64cf74925cc549abc4ea7382795d277a3",
+    "src/spelling/tekst/bereik.ts": "f570d665e9e31ecf6cdbffb9ed0b09de734dce425e9cfa50f51831f3f29fb54f",
+    "src/spelling/tekst/segment-cache.test.ts": "14962752eacdc5cc6d7fc7aef45c25f3cea1e64cb530b727cb2b8d8ffa5a0a4c",
+    "scripts/test-writer-lang-native.py": "2e985e2441d3967eddab93f614990ee6ee73f4f1903682b3d3bd84369b646c33",
+    "scripts/test-writer-kleur-native.py": "5ae456f6607b0772f7da4721d022e73d56a183fc7ced34fc68213743503ab6dd",
+    "scripts/test-writer-klembord-native.py": "341f4a3e5060d5c42a44877fcdff759858d230a796079818bf347b828d40ab86",
+    "scripts/profiel-writer-invoer-native.py": "a5e34f114f7bc6dd5a55ca03cf20b7839443ec087ce1a84c134170657a89dcbb"
+  }
+}

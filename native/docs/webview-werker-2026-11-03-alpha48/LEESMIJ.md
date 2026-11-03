@@ -60,12 +60,15 @@ leggen de daadwerkelijke programma-/script-/bronhashes vast. De native beeldopna
 zijn volledig en ongewijzigd; zeven geselecteerde beelden staan bij dit verslag.
 De [WebView-CI op a32b081](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41581980111)
 slaagt op Linux, Windows en macOS, inclusief beide gerichte Linux-releasevensterproeven.
-De afzonderlijke [bredere native-CI](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41581980043)
-bouwt en test alle drie platforms succesvol, maar faalt daarna op de exacte
-pakketbronvergelijking: Windows verandert de regelafbrekingen van de gedeelde
-GUI-hulpbronnen. De bestaande Windows-checkoutproef is uitgebreid met de echte
-hulpbronnen en reproduceert dit. Met expliciete LF-attributen slagen die proef
-en alle negen Python-proeven lokaal. De nieuwe platformvergelijking blijft nodig.
+De afzonderlijke [bredere native-CI](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41587526144)
+slaagt na de LF-correctie op Linux, Windows, macOS, conversie en de afsluitende
+pakket-/beeldvergelijking. Het [ongewijzigde CI-verslag](platformvergelijking.json)
+bevestigt per platform 5.968 bytegelijke bronbestanden en correcte programmaheaders.
+De 61 eigen native referentiebeelden verschillen nul pixels tussen CI-platforms.
+Dit betreft de Iced-preview en controleur, zonder vergelijking met de bestaande
+Tauri-suite of volledige Rust-WebView-pixelacceptatie. De geteste PR-checkout is
+`87420aca`; de GitHub-boomvergelijking met bron `9f7a91e` bevat nul gewijzigde
+bestanden. Het eerdere a32b081-faalresultaat blijft in de meetgegevens bewaard.
 De actuele
 [meetgegevens en grenzen](rapport.json) onderscheiden debug, release en CI.
 

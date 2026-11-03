@@ -1,13 +1,14 @@
 # Voortgang migratie en open issues
 
-Peildatum: 2 november 2026. Ontwikkelbasis: Tauri/Rust met React/TypeScript, basis `b481be6`, lokale testversie `2026.45.10` (getest op 3 november).
+Peildatum: 3 november 2026. Ontwikkelbasis: Tauri/Rust met React/TypeScript. De lokale testversie is `2026.45.14`, voortbouwend op bron `0749b1f`. De afzonderlijke Rust-WebView-preview is `2026.45.0-alpha.48`; deze vervangt de volledige suite nog niet.
 
 ## Huidige waarheid
 
-- De volledige Rust-interface is nog niet af; `native/docs/migratie.json` blijft leidend voor acceptatie.
-- Writer-invoer en selectie zijn nog te traag. De eerdere proef van circa 15,2 seconden voor 98 tekens schakelde compositie uit; met de normale instelling duurt een nieuwe 45.8-proef circa 8,2 seconden. De invoer is exact, maar dit is nog onvoldoende en geen algemene benchmark. Verse processen met normale compositie variëren van circa 8 tot 17 seconden; er is nog geen overtuigende algemene snelheidswinst.
-- Voor 2026.45.4 zijn 1.545 automatische tests, 68 Writer-opdrachtcontroles en gerichte Linux-GUI-controles geslaagd. Dit bewijst geen volledige functiedekking.
-- De suite en zes losse edities van 2026.45.7 zijn op Windows, Linux en macOS gebouwd. De volledige GUI-matrix blijft open. De nieuwere 45.8-Linux-CI strandde op een testbibliotheek na het bouwen van de suite; Windows en macOS slagen voor 45.8.
+- De volledige Rust-interface is nog niet af; `native/docs/migratie.json` blijft leidend. Alle tien gebieden en dertig acceptatievlaggen blijven open.
+- Writer-invoer en selectie zijn nog onvoldoende soepel. De twee native 500-paginarondes geven 45.13→45.14: 4,508→4,319 s en 4,563→4,625 s voor veertien tekens. De totale tijd verbetert niet overtuigend; kortere framepauzes in deze rondes zijn geen algemene prestatiegoedkeuring. Zie [metingen, verworpen kandidaat en grenzen](tests/writer-spellingoffsets.md).
+- Op 45.14 slagen 1.599 frontendtests in 143 bestanden, TypeScript en productie-/native Linux-bouw. Acht offsetproeven omvatten de echte Rust-engine. De native 500-paginaproeven behouden alle alinea’s na typen, selectie/Backspace, geschiedenis, bewaren en heropenen. De aanvullende productie-GUI controleert revisies en gewone opmerkingen. Geen volledige functiedekking geclaimd.
+- De [45.11-bouw](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41584192673) slaagt voor zeven edities op Linux, Windows en macOS; publiceren was uitgeschakeld. Ook de [45.12-ronde](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41587557778) slaagt op alle drie platforms en zeven edities. De [45.13-ronde](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41589648687) loopt afzonderlijk. De gepubliceerde uitgave blijft `2026.44.8`; de volledige fysieke GUI-matrix blijft open.
+- Rust-WebView alpha48 heeft 488 lokale werkruimtetests met desktopcode, zes expliciet optionele overslagen, Clippy en gerichte geoptimaliseerde Linux-vensterproeven. Haar [WebView-CI](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41581980111) slaagt op drie platforms. De bredere native-CI vond Windows-regelafbrekingen in gedeelde GUI-hulpen; de [hertest na LF-correctie](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41587526144) slaagt op de drie platformtaken, conversie en de afsluitende bron-/beeldvergelijking. Dit betreft de eigen native referenties, geen gelijkheid met de volledige suite. Zie [het bron-/releaseverslag](../native/docs/webview-werker-2026-11-03-alpha48/LEESMIJ.md).
 
 ## Werkvolgorde
 
@@ -21,7 +22,7 @@ Peildatum: 2 november 2026. Ontwikkelbasis: Tauri/Rust met React/TypeScript, bas
 
 ## Open issues op de peildatum
 
-Deze inventaris heeft **106** items. “Open” betekent niet dat de fout in deze ronde al is gereproduceerd. Een bestaand testbestand of ouder verslag is geen nieuwe uitvoering.
+De GitHub-inventaris is op 3 november opnieuw vergeleken: **106** open issues, exact dezelfde nummers als in deze tabel. “Open” betekent niet dat de fout in deze ronde al is gereproduceerd. Een bestaand testbestand of ouder verslag is geen nieuwe uitvoering.
 
 | Issue | Onderwerp | Status |
 | --- | --- | --- |
@@ -255,3 +256,12 @@ Deze inventaris heeft **106** items. “Open” betekent niet dat de fout in dez
 - De productie-GUI slaagt op vijf controles: twee revisiekaarten en hun geselecteerde verbindingslijn bij 100%/150%, accepteren, gewone opmerking zonder revisies en onafhankelijke XML-teruglezing. De eerste proef eiste ten onrechte twee lijnen zonder actieve kaart. Een tussenopname leek tijdens het schuiven buiten beeld; de definitieve controle wacht op stabiele geometrie en bevestigt plaatsing binnen de werkruimte. Geen blijvende fout aangetoond.
 - De nieuwe native 500-paginabron slaagt op alle acht bewerkings-/bewaar-/heropencontroles. De opeenvolgende vergelijking geeft 17.918→5.543 schermmetingen en 4,037→3,651 s invoerduur. Een eerdere losse 45.13-meting geeft 4,296 s en een pauze van 407 ms; zij staat eveneens in het verslag. De absolute typvertraging blijft prioritair open. Zie [bewijs en grenzen](tests/writer-revisiemeting.md).
 - De lokale startkoppeling gebruikt exact de geteste 45.13-binary; gebruikersgegevens, documenten, oudere binaries en lopende vensters zijn behouden. De nieuwe platform-/zeveneditiecontrole volgt na push. De [45.11-ronde](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41584192673) slaagt inmiddels op alle drie platforms en zeven edities; publiceren was uitgeschakeld. Geen volledige Rust-/pixelacceptatie of afhandeling van alle open issues geclaimd.
+
+### 2026.45.14: spellingcontext en meetmethode
+
+- Spellingsegmenten horen nu bij zowel hun native sessie als versie. De oude route geeft bij een andere sessie met dezelfde versie een verkeerde offset; de regressieproef slaagt na correctie. Een compacte Rust-index levert de alinealengtes. Eén synchrone foutberekening vraagt de versie eenmaal, tegenover 1.002 vragen in de eerste kandidaat. Acht gerichte proeven omvatten ook een echte DOCX-engine met Unicode, verwijderingen en tabelverhalen.
+- De eerste kandidaat is niet geïnstalleerd: haar invoertijd gaat in de eerste vergelijking achteruit. Na de versiecontextcorrectie slagen alle 1.599 frontendtests, TypeScript en productie-/native Linux-bouw. Twee native rondes in omgekeerde volgorde bewaren per versie alle 500 alinea’s met acht bewerkings-/bewaar-/heropencontroles; vijf aanvullende revisie-/opmerkingen-GUI-controles slagen.
+- De totale tijd geeft geen overtuigende typversnelling. Framepauzes zijn in deze twee rondes korter. [Het volledige verslag](tests/writer-spellingoffsets.md) bewaart beide richtingen, de verworpen kandidaat, bron-/programmahashes, profilerdata en de resterende grenzen. De ernstige typvertraging blijft prioritair open.
+- De meetproef wacht nu op de echte laatste keyup, de invoerwachtrij en één exacte laatste-alineacontrole, zonder herhaald alle 500 alinea’s te lezen. Beide programma’s gebruiken dezelfde proefbytes. Een fout bij het opruimen van uitsluitend de eigen tijdelijke portalmap beïnvloedt de inhoudelijke testuitkomst niet meer; definitieve rondes eindigen met code 0.
+- De nieuwe begrensde profielproef bewaart ruwe WebKit-samples van pagina en workers en ijkt de stackvolgorde op dezelfde runtime. Geen proces-CPUtijd uit ontbrekende tijdintervallen afgeleid. Een extra paginaproef ziet 499 van 500 objectreferenties hergebruikt; er is geen ongefundeerde paginacomparatorwijziging gemaakt.
+- De lokale startkoppeling is bijgewerkt naar de definitief geteste 45.14-binary. Documenten, gebruikersgegevens, eerdere binaries en lopende vensters zijn behouden. Nieuwere platform-/zeveneditiecontroles volgen afzonderlijk. De 45.12-editiebouw en bredere native-alpha48-ronde zijn inmiddels volledig groen; dit bewijst geen volledige Rust-/pixelacceptatie.

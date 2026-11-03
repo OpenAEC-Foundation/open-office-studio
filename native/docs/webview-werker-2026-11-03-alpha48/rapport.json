@@ -1,7 +1,7 @@
 {
   "datum": "2026-11-03",
   "versie": "2026.45.0-alpha.48",
-  "status": "Volledige lokale Rust-testreeks, Clippy en geoptimaliseerde Linux-releasevensters geslaagd. WebView-CI a32b081 slaagt op drie platforms. De bredere native-CI bouwt en test drie platforms succesvol, maar de afsluitende pakketbronvergelijking faalt op Windows-regelafbrekingen van gedeelde GUI-hulpbronnen. Gerichte checkoutproef en LF-correctie slagen lokaal; nieuwe platformvergelijking blijft nodig.",
+  "status": "Volledige lokale Rust-testreeks, Clippy en geoptimaliseerde Linux-releasevensters geslaagd. WebView-CI a32b081 slaagt op drie platforms. De bredere native-CI 9f7a91e slaagt na LF-correctie op alle platform-, conversie- en pakket-/beeldvergelijkingen.",
   "rust": {
     "geslaagd": 488,
     "mislukt": 0,
@@ -49,7 +49,7 @@
   },
   "formatteringscontrole": {
     "geslaagd": true,
-    "eerdere_ci": "1fe2283 stopte op drie platforms bij een niet-geformatteerde methodeketen in Werker::stuur; lokaal gereproduceerd en geformatteerd. Een nieuwe CI-ronde blijft nodig."
+    "eerdere_ci": "1fe2283 stopte op drie platforms bij een niet-geformatteerde methodeketen in Werker::stuur; lokaal gereproduceerd en geformatteerd. WebView-CI a32b081 en de bredere native-CI 9f7a91e slagen daarna op drie platforms."
   },
   "basiscommit": "1fe2283c2b883a1b299b0e368d9954831ae9defc",
   "bronbestanden": {
@@ -107,7 +107,7 @@
     "linux_gerichte_releasevensters": "Notities- en vijfmoduleproef geslaagd",
     "grens": "Geen fysieke Windows-/macOS-GUI- of volledige pixelacceptatie."
   },
-  "ci_native": {
+  "ci_native_afgekeurd": {
     "run": 41581980043,
     "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41581980043",
     "bron": "a32b081b2c639ad9f612651f293419c28ace2f9f",
@@ -117,5 +117,26 @@
     "oorzaak": "Ontbrekende LF-attributen voor de gedeelde scripts/gui-bronnen; Windows autocrlf verandert de exacte pakketbytes.",
     "lokale_regressie": "Uitgebreide bestaande Windows-checkoutproef faalt zonder attributen en slaagt met scripts/gui/** text eol=lf; alle negen Python-proeven geslaagd.",
     "hertest": "Nieuwe CI na push nodig; geen algehele groene native-CI geclaimd."
+  },
+  "ci_native": {
+    "run": 41587526144,
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41587526144",
+    "bron": "9f7a91e751ecd064b81889a8be172529d4316afc",
+    "geteste_checkout": "87420aca6d7b22a3483ce9d1a0b23996fad60766",
+    "checkout_bronboom_gelijk_aan_bron": true,
+    "controle_bronboom": "https://github.com/OpenAEC-Foundation/open-office-studio/compare/9f7a91e751ecd064b81889a8be172529d4316afc...87420aca6d7b22a3483ce9d1a0b23996fad60766",
+    "status": "success",
+    "platforms": [
+      "Linux",
+      "Windows",
+      "macOS"
+    ],
+    "conversie": "success",
+    "vergeleken_bronbestanden_per_platform": 5968,
+    "eigen_native_referentiebeelden_per_platform": 61,
+    "pixelafwijking": 0,
+    "rapport": "platformvergelijking.json",
+    "rapport_sha256": "14103f6cd2f2ee01f58a67f9ca73a7d50e9594311e86abb43481c8e6db9822e3",
+    "grens": "Iced-preview en controleer-bestand: eigen native referentiebeelden tussen CI-platforms; geen vergelijking met de bestaande Tauri-suite of volledige Rust-WebView-pixelacceptatie."
   }
 }

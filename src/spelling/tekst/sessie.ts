@@ -8,7 +8,7 @@
  * overlay (Golflijnen.tsx) uit deze gegevens.
  */
 import type { DocxEditorRef, DocxPluginContext, DocxPluginGeometry } from "@betteroffice/docx-react";
-import type { DocxEditStep } from "@betteroffice/docx/yrs";
+import type { DocxEditStep, YrsSession } from "@betteroffice/docx/yrs";
 import { leesInstellingen } from "../../instellingen";
 import type { Controleur, Fout } from "../controleur";
 import { standaardTaal, type Taal, type TaalId } from "../talen";
@@ -128,6 +128,14 @@ export function verschuifPlek(oud: string, nieuw: string, start: number, woord: 
   return plek !== null && nieuw.slice(plek, plek + woord.length) === woord ? plek : null;
 }
 
+interface SegmentCache {
+  sessie: YrsSession;
+  versie: string;
+  lengtes: Map<string, Map<string, number>>;
+  gelezen: Set<string>;
+  per: Map<string, Segment[]>;
+}
+
 export class SpellingSessie {
   /** Laatst gecontroleerde alinea's, in documentvolgorde. */
   alineas: Alinea[] = [];
@@ -205,6 +213,7 @@ export class SpellingSessie {
 
   bijLaden(ctx: Ctx) {
     this.ctx = ctx;
+    this.segmentCache = null;
     this.alineas = [];
     this.perId.clear();
     this.vuil.clear();
@@ -481,44 +490,88 @@ export class SpellingSessie {
     return na ?? lijst.find(({ alinea, fout }) => !(overslaan && alinea.paraId === overslaan.paraId && fout.start === overslaan.start)) ?? null;
   }
 
-  /** Segmenten per alinea met bijgehouden verwijderingen, per sessieversie. */
-  private segmentCache: { versie: string; per: Map<string, Segment[]> } | null = null;
+  /** Compacte lengtes en afwijkende segmenten, uitsluitend voor deze sessieversie. */
+  private segmentCache: SegmentCache | null = null;
 
   /**
    * De sessie-offset (Yrs) van een offset in de geaccepteerde tekst van een
    * alinea. Zonder bijgehouden verwijderingen in de alinea zijn ze gelijk.
    */
   rauw(alinea: Alinea, offset: number, eind = false): number {
-    const delen = this.afwijkendeSegmenten(alinea.story, alinea.paraId, alinea.tekst.length);
+    return this.rauwInContext(alinea, offset, eind, this.segmentenContext());
+  }
+
+  /** Alleen binnen één synchrone leesbewerking gebruiken; er wordt niet bewerkt. */
+  offsetLezer() {
+    const context = this.segmentenContext();
+    if (!context) return this.rauw.bind(this);
+    return (alinea: Alinea, offset: number, eind = false) => this.rauwInContext(alinea, offset, eind, context);
+  }
+
+  private rauwInContext(alinea: Alinea, offset: number, eind: boolean, context: SegmentCache | null): number {
+    const delen = this.afwijkendeSegmenten(alinea.story, alinea.paraId, alinea.tekst.length, context);
     return delen ? naarRauw(delen, offset, eind) : offset;
+  }
+
+  private segmentenContext(): SegmentCache | null {
+    const sessie = this.editor()?.getEditorRef()?.getYrsSession();
+    if (!sessie) return null;
+    try {
+      const versie = String(sessie.version());
+      if (this.segmentCache?.sessie !== sessie || this.segmentCache.versie !== versie)
+        this.segmentCache = { sessie, versie, lengtes: new Map(), gelezen: new Set(), per: new Map() };
+      return this.segmentCache;
+    } catch {
+      return null;
+    }
   }
 
   /**
    * De segmenten van een alinea als de sessie er meer telt dan de
    * geaccepteerde tekst lang is (verwijderingen, tabel ervoor); anders null.
    */
-  private afwijkendeSegmenten(story: string, paraId: string, lengte: number): Segment[] | null {
-    const sessie = this.editor()?.getEditorRef()?.getYrsSession();
-    if (!sessie) return null;
+  private afwijkendeSegmenten(story: string, paraId: string, lengte: number, cache = this.segmentenContext()): Segment[] | null {
+    if (!cache) return null;
+    const sessie = cache.sessie;
     try {
-      const span = sessie.locateParagraph(story, paraId);
-      if (span.end - span.start === lengte) return null;
-      const versie = String(sessie.version());
-      if (this.segmentCache?.versie !== versie) this.segmentCache = { versie, per: new Map() };
+      let lengtes = cache.lengtes.get(story);
+      if (!lengtes) {
+        try {
+          lengtes = new Map();
+          const dubbel = new Set<string>();
+          // De Rust-kern leest deze compacte index in één verhaaldoorloop.
+          // Geen volledige alinea-opzoeking voor iedere woord- en alineagrens.
+          for (const p of sessie.paragraphSpans(story)) {
+            if (lengtes.has(p.paraId) || dubbel.has(p.paraId)) {
+              lengtes.delete(p.paraId);
+              dubbel.add(p.paraId);
+            } else if (Number.isSafeInteger(p.length) && p.length >= 0) lengtes.set(p.paraId, p.length);
+          }
+          cache.lengtes.set(story, lengtes);
+        } catch {
+          // Een nog onbeschikbare index verandert de oorspronkelijke route niet.
+          lengtes = undefined;
+        }
+      }
+      let rauweLengte = lengtes?.get(paraId);
+      if (rauweLengte === undefined) {
+        const span = sessie.locateParagraph(story, paraId);
+        rauweLengte = span.end - span.start;
+      }
+      if (rauweLengte === lengte) return null;
       const sleutel = `${story}\u0000${paraId}`;
-      let delen = this.segmentCache.per.get(sleutel);
-      if (!delen) {
+      if (!cache.gelezen.has(story)) {
         // Eén keer per versie en verhaal: alle alinea's van het verhaal opdelen.
         let huidig: Segment[] = [];
         for (const d of sessie.storySegments(story) as Segment[]) {
           if (d.kind === "pilcrow") {
-            this.segmentCache.per.set(`${story}\u0000${(d as { paraId?: string }).paraId}`, huidig);
+            cache.per.set(`${story}\u0000${(d as { paraId?: string }).paraId}`, huidig);
             huidig = [];
           } else huidig.push(d);
         }
-        delen = this.segmentCache.per.get(sleutel) ?? [];
+        cache.gelezen.add(story);
       }
-      return delen;
+      return cache.per.get(sleutel) ?? [];
     } catch {
       return null;
     }

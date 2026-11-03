@@ -28,6 +28,15 @@ def poorten():
         return a.getsockname()[1], b.getsockname()[1]
 
 
+def ruim_profiel_op(pad):
+    try:
+        shutil.rmtree(pad, ignore_errors=True)
+    except OSError as fout:
+        # Een verdwijnende eigen portalmap kan ook bij fstat een fout geven.
+        # Alleen opruimen is vrijblijvend; de uitkomst van de proef blijft staan.
+        print('Eigen tijdelijke profielmap niet volledig opgeruimd: '+str(fout), file=sys.stderr)
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--programma', type=Path, required=True)
@@ -45,7 +54,7 @@ def main():
     with ExitStack() as opruimen:
         tmp = tempfile.mkdtemp(prefix='office-liniaalproef-')
         # Een portal kan zijn tijdelijke FUSE-map pas na sessie-einde loslaten.
-        opruimen.callback(shutil.rmtree, tmp, ignore_errors=True)
+        opruimen.callback(ruim_profiel_op, tmp)
         omgeving = os.environ.copy()
         for naam in ['DISPLAY', 'XAUTHORITY', 'WAYLAND_DISPLAY', 'DBUS_SESSION_BUS_ADDRESS', 'DBUS_STARTER_ADDRESS', 'DBUS_STARTER_BUS_TYPE', 'GNOME_KEYRING_CONTROL', 'SSH_AUTH_SOCK', 'SESSION_MANAGER', 'WEBKIT_DISABLE_COMPOSITING_MODE']:
             omgeving.pop(naam, None)
@@ -86,7 +95,7 @@ async def proef(a):
     d = display.Display()
     log = (a.uitvoer/'programma.log').open('w')
     programma = venster = None
-    rapport = {'geslaagd': False, 'versie': a.versie, 'programma_sha256': hashlib.sha256(a.programma.read_bytes()).hexdigest(), 'script_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), 'bron_begin_sha256': hashlib.sha256(bron.read_bytes()).hexdigest(), 'stappen': [], 'invoerinterval_ms': 20, 'vaste_nawacht_ms': 2000, 'grenzen': ['Eén gegenereerde 500-paginabron, normale compositor, alleen een lichte teller om getBoundingClientRect. Geen algemene prestatie-, IME-, enorme-plak- of platformacceptatie.']}
+    rapport = {'geslaagd': False, 'versie': a.versie, 'programma_sha256': hashlib.sha256(a.programma.read_bytes()).hexdigest(), 'script_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), 'bron_begin_sha256': hashlib.sha256(bron.read_bytes()).hexdigest(), 'stappen': [], 'invoerinterval_ms': 20, 'vaste_nawacht_ms': 2000, 'invoer_gereedheid': 'Native keyup van de laatste punt, inputwachtrij, zichtbare golflijnen en één exacte controle van de laatste alinea; alle 500 bronalinea’s daarnaast apart vergeleken.', 'grenzen': ['Eén gegenereerde 500-paginabron, normale compositor, alleen een lichte teller om getBoundingClientRect. Geen algemene prestatie-, IME-, enorme-plak- of platformacceptatie.']}
 
     async def toets(p, *toetsen):
         vanaf = await p.ev('window._toetsenProef.length')
@@ -154,9 +163,14 @@ async def proef(a):
             await p.run("let e=proefApi().getEditorRef(),a=e.getYrsSession().paragraphs('body').at(-1);e.setSelection(e.yrsLocToDisplayPosition({story:'body',paraId:a.paraId,offset:a.text.length}));proefApi().scrollToPage(500);proefApi().focus();await proefApi().flushPendingInput();return true;")
             await asyncio.sleep(3)
             await p.ev("window._rectProef={calls:0,classes:Object.create(null)};window._rectOud=Element.prototype.getBoundingClientRect;Element.prototype.getBoundingClientRect=function(...args){_rectProef.calls++;const k=this.getAttribute('class')||this.tagName;_rectProef.classes[k]=(_rectProef.classes[k]||0)+1;return _rectOud.apply(this,args)};window._frameProef={v:[],last:performance.now(),stop:false};window._frameTik=nu=>{if(_frameProef.stop)return;_frameProef.v.push(nu-_frameProef.last);_frameProef.last=nu;requestAnimationFrame(_frameTik)};requestAnimationFrame(_frameTik);true")
+            vanaf = await p.ev('_toetsenProef.length')
             begin = time.monotonic()
             subprocess.run(['xdotool', 'type', '--clearmodifiers', '--delay', '20', ' Een proefzin.'], check=True)
-            await p.run("await proefApi().flushPendingInput();let einde=performance.now()+90000;while(!proefApi().getEditorRef().getYrsSession().paragraphs('body').at(-1).text.endsWith(' Een proefzin.')||!document.querySelector('.spelling-golf')){if(performance.now()>einde)throw Error('Bron/golflijnen niet gereed');await new Promise(r=>setTimeout(r,150))}return true;", t=100)
+            # Wacht op de werkelijk verwerkte laatste toets vóór het legen van
+            # de invoerwachtrij. Lees niet telkens alle 500 alinea’s tijdens de
+            # tijdmeting; hun exacte broncontrole volgt eenmaal hieronder.
+            laatste = await p.run("let einde=performance.now()+90000;while(!_toetsenProef.slice("+str(vanaf)+").some(e=>e.key==='.')){if(performance.now()>einde)throw Error('Laatste native invoertoets niet ontvangen');await new Promise(r=>setTimeout(r,50))}await proefApi().flushPendingInput();while(!document.querySelector('.spelling-golf')){if(performance.now()>einde)throw Error('Golflijnen niet gereed');await new Promise(r=>setTimeout(r,50))}return proefApi().getEditorRef().getYrsSession().paragraphs('body').at(-1).text;", t=100)
+            assert laatste == origineel[-1]+' Een proefzin.', 'Laatste invoer na keyup en flush niet exact'
             rapport['invoer_tot_bron_en_golven_ms'] = round((time.monotonic()-begin)*1000)
             tussenpozen = await p.ev('(()=>{_frameProef.stop=true;return _frameProef.v})()')
             volgorde = sorted(tussenpozen)

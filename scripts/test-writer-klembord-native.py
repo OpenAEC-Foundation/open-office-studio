@@ -28,6 +28,15 @@ def poorten():
         return a.getsockname()[1], b.getsockname()[1]
 
 
+def ruim_profiel_op(pad):
+    try:
+        shutil.rmtree(pad, ignore_errors=True)
+    except OSError as fout:
+        # Een verdwijnende eigen portalmap kan ook bij fstat een fout geven.
+        # Alleen opruimen is vrijblijvend; de uitkomst van de proef blijft staan.
+        print('Eigen tijdelijke profielmap niet volledig opgeruimd: '+str(fout), file=sys.stderr)
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--programma', type=Path, required=True)
@@ -45,7 +54,7 @@ def main():
     with ExitStack() as opruimen:
         tmp = tempfile.mkdtemp(prefix='office-klembordproef-')
         # Een portal kan zijn tijdelijke FUSE-map pas na sessie-einde loslaten.
-        opruimen.callback(shutil.rmtree, tmp, ignore_errors=True)
+        opruimen.callback(ruim_profiel_op, tmp)
         omgeving = os.environ.copy()
         for naam in ['DISPLAY', 'XAUTHORITY', 'WAYLAND_DISPLAY', 'DBUS_SESSION_BUS_ADDRESS', 'DBUS_STARTER_ADDRESS', 'DBUS_STARTER_BUS_TYPE', 'GNOME_KEYRING_CONTROL', 'SSH_AUTH_SOCK', 'SESSION_MANAGER']:
             omgeving.pop(naam, None)

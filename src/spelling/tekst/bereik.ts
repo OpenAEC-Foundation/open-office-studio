@@ -13,13 +13,15 @@ export function foutenInBereik(
   bereik: readonly [number, number] | null,
 ) {
   const uit = [];
+  // Eén native sessieversie voor deze synchrone, uitsluitend lezende berekening.
+  const rauw = sessie.offsetLezer();
   const zichtbaar = (alinea: Alinea) => {
     if (!bereik) return true;
     const punt = (offset: number, eind = false) =>
       editor.yrsLocToDisplayPosition({
         story: alinea.story,
         paraId: alinea.paraId,
-        offset: sessie.rauw(alinea, offset, eind),
+        offset: rauw(alinea, offset, eind),
       });
     let van: number | null, tot: number | null;
     try {
@@ -45,12 +47,12 @@ export function foutenInBereik(
     const van = editor.yrsLocToDisplayPosition({
       story: alinea.story,
       paraId: alinea.paraId,
-      offset: sessie.rauw(alinea, fout.start),
+      offset: rauw(alinea, fout.start),
     });
     const tot = editor.yrsLocToDisplayPosition({
       story: alinea.story,
       paraId: alinea.paraId,
-      offset: sessie.rauw(alinea, fout.eind, true),
+      offset: rauw(alinea, fout.eind, true),
     });
     if (van === null || tot === null || tot <= van) continue;
     if (bereik && (tot < bereik[0] || van > bereik[1])) continue;
