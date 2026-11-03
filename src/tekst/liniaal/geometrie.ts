@@ -18,6 +18,7 @@ import { deriveDisplayListTableFragmentsOnPages, type DisplayList, type DisplayL
 import type { Tabstop } from "../opmaak";
 import type { TabelLoc } from "../tabel/opdrachten";
 import type { TabelPayload } from "../tabel/logica";
+import { zichtbarePaginaElementen } from "../paginabereik";
 import {
   TWIPS_PER_PX,
   directeTabs,
@@ -236,13 +237,19 @@ function rechthoek(e: Element): Vak {
 }
 
 /** De pagina's op het scherm met hun indeling. */
-export function paginaBeelden(vlak: Element, paginas: readonly IndelingPagina[]): PaginaBeeld[] {
+export function paginaBeelden(vlak: Element, paginas: readonly IndelingPagina[], venster?: Vak): PaginaBeeld[] {
   const uit: PaginaBeeld[] = [];
-  for (const el of vlak.querySelectorAll<HTMLElement>(".canvas-page[data-page-index]")) {
+  const elementen = [...vlak.querySelectorAll<HTMLElement>(".canvas-page[data-page-index]")]
+    .filter((el) => paginas[Number(el.dataset.pageIndex)]?.size);
+  // paginaInBeeld accepteert ook minder dan één pixel negatieve overlap.
+  // Houd die grens aan en hergebruik de meting uit de zichtbaarheidzoektocht.
+  const beelden = venster
+    ? zichtbarePaginaElementen(elementen, { top: venster.top, bottom: venster.top + venster.height }, 1)
+    : elementen.map((pagina) => ({ pagina, rect: pagina.getBoundingClientRect() }));
+  for (const { pagina: el, rect: r } of beelden) {
     const index = Number(el.dataset.pageIndex);
     const pagina = paginas[index];
-    if (!pagina?.size) continue;
-    const rect = rechthoek(el);
+    const rect = { left: r.left, top: r.top, width: r.width, height: r.height };
     if (!(rect.width > 0)) continue;
     uit.push({ index, rect, schaal: rect.width / pagina.size.w, pagina });
   }
@@ -464,9 +471,11 @@ export function meetLiniaal(ref: DocxEditorRef, vlak: Element, geometrie: DocxPl
   const inHoofdtekst = verhaal === "body" || verhaal.startsWith("body:");
   const index = inHoofdtekst ? paginaMetPositie(paginas, positie) : -1;
   // Alleen de pagina met de cursor meten (elke meting van een pagina kost een herberekening van de opmaak).
-  const beeld =
-    paginaBeeld(vlak, paginas, index) ??
-    paginaInBeeld(paginaBeelden(vlak, paginas), rechthoek(vlak.querySelector(".docx-editor__scroll-container") ?? vlak));
+  let beeld = paginaBeeld(vlak, paginas, index);
+  if (!beeld) {
+    const venster = rechthoek(vlak.querySelector(".docx-editor__scroll-container") ?? vlak);
+    beeld = paginaInBeeld(paginaBeelden(vlak, paginas, venster), venster);
+  }
   if (!beeld) return null;
   const p = beeld.pagina;
   const kolommen = tekstkolommen(p);

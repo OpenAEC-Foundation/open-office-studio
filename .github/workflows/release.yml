@@ -196,6 +196,7 @@ jobs:
           if [ "$RUNNER_OS" = Linux ]; then
             "$OFFICE_GUI_PYTHON" scripts/test-writer-kleur-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-native-writer-kleur
             "$OFFICE_GUI_PYTHON" scripts/test-writer-klembord-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-native-writer-klembord
+            "$OFFICE_GUI_PYTHON" scripts/test-writer-lang-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-native-writer-lang
           fi
           node scripts/verzamel-studio.mjs office
           pnpm database:desktop:build --bundles ${{ matrix.bundels }}
@@ -282,6 +283,14 @@ jobs:
         with:
           name: native-writer-klembord-${{ github.workflow }}-${{ matrix.os || matrix.label }}
           path: .local/proef-native-writer-klembord/
+          include-hidden-files: true
+          if-no-files-found: warn
+      - name: Native Writer-langdocumentbewijs bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-writer-lang-${{ github.workflow }}-${{ matrix.os || matrix.label }}
+          path: .local/proef-native-writer-lang/
           include-hidden-files: true
           if-no-files-found: warn
       - name: Native Writer-kleurbewijs bewaren
