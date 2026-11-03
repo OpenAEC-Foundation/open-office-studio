@@ -852,7 +852,9 @@ export function TekstStatus({
         ".office-tekst .docx-editor__viewport",
       );
       const scroll = vlak?.querySelector(".docx-editor__scroll-container");
-      if (!ref || !vlak || !scroll || !ref.getDocument()) return;
+      // Een herstelvenster kan de editor tijdelijk in viewersessie houden.
+      // Koppel pas aan de bewerksessie; getDocument gooit in die tussentijd.
+      if (!ref || !vlak || !scroll || !ref.getEditorRef()?.getYrsSession()) return;
       gekoppeld = vlak;
       setDoel(vlak);
       tel(ref);

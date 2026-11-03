@@ -1,0 +1,3542 @@
+{
+  "versie": "2026.45.22",
+  "doel": "Herstel de getDocument/viewersessie-botsing van het stijlenpaneel en de statuskoppeling bij een echt herstelvenster. Geen bewijs dat de aparte allocatorpanic of ernstige snelheidsklacht is opgelost.",
+  "bouw": {
+    "pid": 709839,
+    "status": "afgerond",
+    "opdracht": [
+      "pnpm",
+      "tauri",
+      "build",
+      "--no-bundle",
+      "--config",
+      "src-tauri/tauri.linux.conf.json"
+    ],
+    "exitcode": 0,
+    "binary_sha256": "fbf4b9d0b49a46cd7fd00ed8febd4e7c8a9675cff0e7662fff65b4a67d6dc8d5"
+  },
+  "negatief_45_21": {
+    "geslaagd": false,
+    "versie": "2026.45.21",
+    "programma_sha256": "7e2d3eb8d87025e9a8fd250c3874fe1b80f50486add8cec8a093bcaf205b1a37",
+    "script_sha256": "32ca9b1330d6bcfbc749011b4fb88a5fe587e1d18a301854620f7b78c3f40b59",
+    "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+    "stappen": [
+      {
+        "naam": "beginbron",
+        "alinea_aantal": 500,
+        "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. ",
+        "exact": true
+      },
+      {
+        "naam": "getypte_bron",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "selectie_en_backspace",
+        "alinea_aantal": 500,
+        "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+        "exact": true
+      },
+      {
+        "naam": "undo",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "redo",
+        "alinea_aantal": 500,
+        "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+        "exact": true
+      },
+      {
+        "naam": "hersteld_voor_bewaren",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "native_bewaaractie_onafhankelijk",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      }
+    ],
+    "invoerinterval_ms": 20,
+    "vaste_nawacht_ms": 2000,
+    "invoer_gereedheid": "Native keyup van de laatste punt, inputwachtrij, zichtbare golflijnen en één exacte controle van de laatste alinea; alle 500 bronalinea’s daarnaast apart vergeleken.",
+    "grenzen": [
+      "Eén gegenereerde 500-paginabron, normale compositor, alleen een lichte teller om getBoundingClientRect. Geen algemene prestatie-, IME-, enorme-plak- of platformacceptatie."
+    ],
+    "startprogramma_sha256": "eb0b254ac0dae6543e6dd7cd02e1baf40a060de95b927313122d6b46323c00aa",
+    "geladen_runtime": [
+      "/usr/lib/libjavascriptcoregtk-4.1.so.0",
+      "/usr/lib/libwebkit2gtk-4.1.so.0"
+    ],
+    "invoer_tot_bron_en_golven_ms": 8732,
+    "paginavergelijkingen_tijdens_invoer": {
+      "calls": 6986
+    },
+    "documentuitlezingen_tijdens_invoer": {
+      "calls": 0,
+      "ms": 0,
+      "api_wissels": 138,
+      "actieve_api_gevolgd": true,
+      "omvang": "GetDocument-aanroepen tijdens native invoer tot bron-/golflijngereedheid. De stabiele React-ref volgt vervanging van API-objecten; geen CPU-profiler."
+    },
+    "native_leesaanroepen": {
+      "zelfde_sessie": true,
+      "readParagraphs": {
+        "calls": 31,
+        "ms": 186.9999999999891
+      },
+      "paragraphSpans": {
+        "calls": 28,
+        "ms": 150.0000000000109
+      }
+    },
+    "frame_tussenpozen_ms": {
+      "aantal": 59,
+      "maximum": 485,
+      "p95": 384,
+      "reeks": [
+        3,
+        8,
+        6,
+        6,
+        6,
+        7,
+        11,
+        7,
+        8,
+        7,
+        9,
+        8,
+        7,
+        7,
+        8,
+        7,
+        6,
+        7,
+        8,
+        20,
+        54,
+        14,
+        14,
+        9,
+        167,
+        308,
+        229,
+        413,
+        262,
+        355,
+        265,
+        485,
+        289,
+        177,
+        383,
+        347,
+        348,
+        250,
+        363,
+        266,
+        366,
+        265,
+        384,
+        247,
+        372,
+        241,
+        368,
+        261,
+        358,
+        271,
+        370,
+        279,
+        13,
+        15,
+        11,
+        13,
+        13,
+        10,
+        9
+      ],
+      "omvang": "requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS."
+    },
+    "invoermeting": {
+      "calls": 8574,
+      "classes": {
+        "docx-editor__scroll-container": 269,
+        "CANVAS": 2325,
+        "docx-editor__viewport tl-met-liniaal": 48,
+        "canvas-page": 1047,
+        "DIV": 140,
+        "canvas-pages__column": 41,
+        "canvas-pages": 3136,
+        "docx-plugin-overlays": 1568
+      },
+      "golven": 83,
+      "paginas": 500,
+      "tot_bron_en_golven_ms_inclusief_nawacht": 10948
+    },
+    "selectie_backspace": {
+      "alinea_aantal": 500,
+      "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+      "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+      "eerste_verschil": 499,
+      "native_toetsen": [
+        {
+          "key": " ",
+          "code": "Space",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "shift",
+          "code": "ShiftLeft",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "e",
+          "code": "KeyE",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "e",
+          "code": "KeyE",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "n",
+          "code": "KeyN",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": " ",
+          "code": "Space",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "p",
+          "code": "KeyP",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "r",
+          "code": "KeyR",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "o",
+          "code": "KeyO",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "e",
+          "code": "KeyE",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "f",
+          "code": "KeyF",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "z",
+          "code": "KeyZ",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "i",
+          "code": "KeyI",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "n",
+          "code": "KeyN",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": ".",
+          "code": "Period",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "shift",
+          "code": "ShiftLeft",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "control",
+          "code": "ControlLeft",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "arrowleft",
+          "code": "ArrowLeft",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "backspace",
+          "code": "Backspace",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        }
+      ]
+    },
+    "lintbeelden": {
+      "startlint": {
+        "plek": {
+          "x": 0,
+          "y": 32,
+          "breedte": 1440,
+          "hoogte": 122
+        },
+        "knoppen": [
+          {
+            "naam": "Edit",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Undo",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Redo",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Clipboard",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Paste",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Cut",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Copy",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Format Painter",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Font",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Font: Caladea",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Increase Font Size",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Decrease Font Size",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Bold",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Italic",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Underline",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Strikethrough",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Superscript",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Subscript",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Font…",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Paragraph",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Bullets",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Numbering",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Decrease Indent",
+            "actief": null,
+            "uit": true
+          },
+          {
+            "naam": "Increase Indent",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "List Options…",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Align Left",
+            "actief": "true",
+            "uit": false
+          },
+          {
+            "naam": "Center",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Align Right",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Justify",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Paragraph…",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Borders and Shading…",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Styles",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Normal",
+            "actief": "true",
+            "uit": false
+          },
+          {
+            "naam": "Menu for style Normal",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "No Spacing",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Menu for style No Spacing",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Heading 1",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Menu for style Heading 1",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Heading 2",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Menu for style Heading 2",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Heading 3",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Menu for style Heading 3",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Title",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Menu for style Title",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": " All Styles…",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Formatting",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Clear Formatting",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Find",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Find",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Replace",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Go To",
+            "actief": null,
+            "uit": false
+          }
+        ]
+      },
+      "kopvoetlint": {
+        "plek": {
+          "x": 0,
+          "y": 32,
+          "breedte": 1440,
+          "hoogte": 122
+        },
+        "knoppen": [
+          {
+            "naam": "Edit",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Edit Header",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Edit Footer",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Insert",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Page Number",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Options",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Different First Page",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Different Odd & Even Pages",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Sections",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Link to Previous",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Position",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Distance from Edge",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Remove",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Remove Header",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Remove Footer",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Close",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Close Header and Footer",
+            "actief": null,
+            "uit": true
+          }
+        ]
+      }
+    },
+    "paginaregister": {
+      "voor": 500,
+      "na": 500,
+      "zoom": 1.15,
+      "add": 0,
+      "delete": 0,
+      "invalidate": 1,
+      "historische_registerwissels": false,
+      "geen_canvaswissels": true,
+      "paginaopdracht": {
+        "ok": true,
+        "status": "executed"
+      },
+      "na_pagina_invoegen": 501,
+      "na_undo": 500,
+      "geslaagd": true
+    },
+    "herstelkopie": {
+      "sha256": "cd6dba0a54745ce125e520febc5a6106c049ac6924559dc7f64c64f0eef55de7",
+      "exact": true
+    },
+    "fouten_voor_heropenen": {
+      "gui": [],
+      "console": []
+    },
+    "herstelkeuzes": [
+      {
+        "keuze": "later",
+        "aanbod": {
+          "namen": [
+            "Prestatieproef.docx"
+          ],
+          "tekst": "Recover documentsOpen Office Studio was not closed properly last time. A recovery copy was kept of these documents. Recovering opens a new, unsaved tab; the original file stays unchanged.Prestatieproef.docxText · recovery copy from today 17:59RecoverSave as…DiscardDecide later"
+        },
+        "fouten_voor_keuze": {
+          "gui": [
+            {
+              "tekst": "ErrorgetDocument cannot read the document synchronously in a viewer session; use readParagraphs or exportStructuredWithPages",
+              "ronde": 0
+            }
+          ],
+          "console": []
+        }
+      }
+    ],
+    "niet_gereed": {
+      "paginas": null,
+      "tekst": "\n\nPrestatieproef.docx — Open Office Studio (Text)\n\n\n\n\n\n\nStart\nPrestatieproef.docx\n\n\nSomething went wrong\nAn error occurred while rendering this component. Please try again or contact support if the problem persists.\n\nError: getDocument cannot read the document synchronously in a viewer session; use readParagraphs or exportStructuredWithPages\n\nComponent Stack:\nU7e@tauri://localhost/assets/index-YIWWFK37.js:291:38455\nrne@tauri://localhost/assets/editors-h1GFvzH5.js:49:6830\nHoe@tauri://localhost/assets/editors-h1GFvzH5.js:67:23594\nPae@tauri://localhost/assets/editors-h1GFvzH5.js:71:15373\ndiv@unknown:0:0\ndiv@unknown:0:0\ndiv@unknown:0:0\ndiv@unknown:0:0\na5e@tauri://localhost/assets/index-YIWWFK37.js:282:751\nt5e@tauri://localhost/assets/index-YIWWFK37.js:271:56697\nxW@tauri://localhost/assets/index-YIWWFK37.js:141:103672\nL$e@tauri://localhost/assets/index-YIWWFK37.js:284:13275\nABe@tauri://localhost/assets/index-YIWWFK37.js:266:57666\n@tauri://localhost/assets/editors-h1GFvzH5.js:12:247256\n@tauri://localhost/assets/editors-h1GFvzH5.js:12:246620\nrue@tauri://localhost/assets/editors-h1GFvzH5.js:72:146750\nSuspense@unknown:0:0\nJ8e@\ndiv@unknown:0:0\ndiv@unknown:0:0\ndiv@unknown:0:0\nQ8e@tauri://localhost/assets/index-YIWWFK37.js:291:62944\nTry Again\nLocal\nOpen Tekst Studio\nLoading…\nCtrl+S\nError\ngetDocument cannot read the document synchronously in a viewer session; use readParagraphs or exportStructuredWithPages\n\nRecover documents\n\nOpen Office Studio was not closed properly last time. A recovery copy was kept of these documents. Recovering opens a new, unsaved tab; the original file stays unchanged.\nPrestatieproef.docx\nText · recovery copy from today 17:59\nRecover\nSave as…\nDiscard\nDecide later",
+      "meldingen": [
+        "ErrorgetDocument cannot read the document synchronously in a viewer session; use readParagraphs or exportStructuredWithPages"
+      ],
+      "console": []
+    },
+    "fout": "AssertionError('Applicatiefout achter het herstelvenster')"
+  },
+  "positief_webkit_2_50_4": {
+    "geslaagd": true,
+    "versie": "2026.45.22",
+    "programma_sha256": "fbf4b9d0b49a46cd7fd00ed8febd4e7c8a9675cff0e7662fff65b4a67d6dc8d5",
+    "script_sha256": "4079a06edcc2d9456f547c491e5f046db4762441ea2d38c6cf76da5078cd892c",
+    "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+    "stappen": [
+      {
+        "naam": "beginbron",
+        "alinea_aantal": 500,
+        "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. ",
+        "exact": true
+      },
+      {
+        "naam": "getypte_bron",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "selectie_en_backspace",
+        "alinea_aantal": 500,
+        "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+        "exact": true
+      },
+      {
+        "naam": "undo",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "redo",
+        "alinea_aantal": 500,
+        "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+        "exact": true
+      },
+      {
+        "naam": "hersteld_voor_bewaren",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "native_bewaaractie_onafhankelijk",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "nieuw_proces_heropend",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "verder_na_later",
+        "alinea_aantal": 500,
+        "tekst_sha256": "fd7d825b22dee866b9680b7eda810589f0bcff6cc43796092675cc7d54c0126c",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin. Verder.",
+        "exact": true
+      },
+      {
+        "naam": "herstelde_kopie",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "verder_in_herstelde_kopie",
+        "alinea_aantal": 500,
+        "tekst_sha256": "2479dfa76e6a51382e07e955c4058dcb85f9d02950bee6b116734b457cb13c75",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin. Hersteld.",
+        "exact": true
+      }
+    ],
+    "invoerinterval_ms": 20,
+    "vaste_nawacht_ms": 2000,
+    "invoer_gereedheid": "Native keyup van de laatste punt, inputwachtrij, zichtbare golflijnen en één exacte controle van de laatste alinea; alle 500 bronalinea’s daarnaast apart vergeleken.",
+    "grenzen": [
+      "Eén gegenereerde 500-paginabron, normale compositor, alleen een lichte teller om getBoundingClientRect. Geen algemene prestatie-, IME-, enorme-plak- of platformacceptatie."
+    ],
+    "startprogramma_sha256": "eb0b254ac0dae6543e6dd7cd02e1baf40a060de95b927313122d6b46323c00aa",
+    "geladen_runtime": [
+      "/usr/lib/libjavascriptcoregtk-4.1.so.0",
+      "/usr/lib/libwebkit2gtk-4.1.so.0"
+    ],
+    "invoer_tot_bron_en_golven_ms": 7941,
+    "paginavergelijkingen_tijdens_invoer": {
+      "calls": 6986
+    },
+    "documentuitlezingen_tijdens_invoer": {
+      "calls": 0,
+      "ms": 0,
+      "api_wissels": 142,
+      "actieve_api_gevolgd": true,
+      "omvang": "GetDocument-aanroepen tijdens native invoer tot bron-/golflijngereedheid. De stabiele React-ref volgt vervanging van API-objecten; geen CPU-profiler."
+    },
+    "native_leesaanroepen": {
+      "zelfde_sessie": true,
+      "readParagraphs": {
+        "calls": 34,
+        "ms": 178.0000000000109
+      },
+      "paragraphSpans": {
+        "calls": 28,
+        "ms": 137.99999999999272
+      }
+    },
+    "frame_tussenpozen_ms": {
+      "aantal": 55,
+      "maximum": 408,
+      "p95": 355,
+      "reeks": [
+        -1.8189894035458565e-12,
+        8,
+        8,
+        8,
+        8,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        8,
+        8,
+        20,
+        23,
+        8,
+        18,
+        46,
+        18,
+        17,
+        129,
+        265,
+        187,
+        340,
+        230,
+        355,
+        332,
+        270,
+        224,
+        288,
+        122,
+        336,
+        218,
+        335,
+        225,
+        319,
+        293,
+        408,
+        310,
+        398,
+        229,
+        328,
+        262,
+        333,
+        207,
+        340,
+        234,
+        314,
+        246,
+        6,
+        15,
+        7,
+        9,
+        16,
+        16
+      ],
+      "omvang": "requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS."
+    },
+    "invoermeting": {
+      "calls": 9245,
+      "classes": {
+        "docx-editor__scroll-container": 272,
+        "canvas-page": 1065,
+        "DIV": 144,
+        "CANVAS": 2474,
+        "canvas-pages__column": 42,
+        "canvas-pages": 3466,
+        "docx-plugin-overlays": 1733,
+        "docx-editor__viewport tl-met-liniaal": 49
+      },
+      "golven": 83,
+      "paginas": 500,
+      "tot_bron_en_golven_ms_inclusief_nawacht": 10334
+    },
+    "selectie_backspace": {
+      "alinea_aantal": 500,
+      "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+      "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+      "eerste_verschil": 499,
+      "native_toetsen": [
+        {
+          "key": " ",
+          "code": "Space",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "shift",
+          "code": "ShiftLeft",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "e",
+          "code": "KeyE",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "e",
+          "code": "KeyE",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "n",
+          "code": "KeyN",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": " ",
+          "code": "Space",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "p",
+          "code": "KeyP",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "r",
+          "code": "KeyR",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "o",
+          "code": "KeyO",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "e",
+          "code": "KeyE",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "f",
+          "code": "KeyF",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "z",
+          "code": "KeyZ",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "i",
+          "code": "KeyI",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "n",
+          "code": "KeyN",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": ".",
+          "code": "Period",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "shift",
+          "code": "ShiftLeft",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "control",
+          "code": "ControlLeft",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "arrowleft",
+          "code": "ArrowLeft",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "backspace",
+          "code": "Backspace",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        }
+      ]
+    },
+    "lintbeelden": {
+      "startlint": {
+        "plek": {
+          "x": 0,
+          "y": 32,
+          "breedte": 1440,
+          "hoogte": 122
+        },
+        "knoppen": [
+          {
+            "naam": "Edit",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Undo",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Redo",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Clipboard",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Paste",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Cut",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Copy",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Format Painter",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Font",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Font: Caladea",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Increase Font Size",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Decrease Font Size",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Bold",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Italic",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Underline",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Strikethrough",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Superscript",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Subscript",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Font…",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Paragraph",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Bullets",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Numbering",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Decrease Indent",
+            "actief": null,
+            "uit": true
+          },
+          {
+            "naam": "Increase Indent",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "List Options…",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Align Left",
+            "actief": "true",
+            "uit": false
+          },
+          {
+            "naam": "Center",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Align Right",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Justify",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Paragraph…",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Borders and Shading…",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Styles",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Normal",
+            "actief": "true",
+            "uit": false
+          },
+          {
+            "naam": "Menu for style Normal",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "No Spacing",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Menu for style No Spacing",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Heading 1",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Menu for style Heading 1",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Heading 2",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Menu for style Heading 2",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Heading 3",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Menu for style Heading 3",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Title",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Menu for style Title",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": " All Styles…",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Formatting",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Clear Formatting",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Find",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Find",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Replace",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Go To",
+            "actief": null,
+            "uit": false
+          }
+        ]
+      },
+      "kopvoetlint": {
+        "plek": {
+          "x": 0,
+          "y": 32,
+          "breedte": 1440,
+          "hoogte": 122
+        },
+        "knoppen": [
+          {
+            "naam": "Edit",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Edit Header",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Edit Footer",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Insert",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Page Number",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Options",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Different First Page",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Different Odd & Even Pages",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Sections",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Link to Previous",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Position",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Distance from Edge",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Remove",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Remove Header",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Remove Footer",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Close",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Close Header and Footer",
+            "actief": null,
+            "uit": true
+          }
+        ]
+      }
+    },
+    "paginaregister": {
+      "voor": 500,
+      "na": 500,
+      "zoom": 1.15,
+      "add": 0,
+      "delete": 0,
+      "invalidate": 1,
+      "historische_registerwissels": false,
+      "geen_canvaswissels": true,
+      "paginaopdracht": {
+        "ok": true,
+        "status": "executed"
+      },
+      "na_pagina_invoegen": 501,
+      "na_undo": 500,
+      "geslaagd": true
+    },
+    "herstelkopie": {
+      "sha256": "64eec8ae863180d8604c243b359ddfcdce92b135b4b39c8c7625fdf4f6cc9697",
+      "exact": true
+    },
+    "fouten_voor_heropenen": {
+      "gui": [],
+      "console": []
+    },
+    "herstelkeuzes": [
+      {
+        "keuze": "later",
+        "aanbod": {
+          "namen": [
+            "Prestatieproef.docx"
+          ],
+          "tekst": "Recover documentsOpen Office Studio was not closed properly last time. A recovery copy was kept of these documents. Recovering opens a new, unsaved tab; the original file stays unchanged.Prestatieproef.docxText · recovery copy from today 18:09RecoverSave as…DiscardDecide later"
+        },
+        "fouten_voor_keuze": {
+          "gui": [],
+          "console": []
+        }
+      },
+      {
+        "keuze": "herstellen",
+        "aanbod": {
+          "namen": [
+            "Prestatieproef.docx"
+          ],
+          "tekst": "Recover documentsOpen Office Studio was not closed properly last time. A recovery copy was kept of these documents. Recovering opens a new, unsaved tab; the original file stays unchanged.Prestatieproef.docxText · recovery copy from today 18:09RecoverSave as…DiscardDecide later"
+        },
+        "fouten_voor_keuze": {
+          "gui": [],
+          "console": []
+        }
+      }
+    ],
+    "status_na_later": [
+      "Page 1 of 500",
+      "29,002 words, 173,906 characters",
+      "English (United States) · 20,502 spelling errors",
+      "Track Changes: off"
+    ],
+    "fouten_na_heropenen": {
+      "gui": [],
+      "console": []
+    },
+    "verder_na_later_bewaard": true,
+    "hersteltabbladen": 2,
+    "herstel_fouten": {
+      "gui": [],
+      "console": []
+    },
+    "bron_eind_sha256": "5755aaa5ce11b796902091d6d3e0300b82ca27191b7bac949cfb09a177ef0450"
+  },
+  "positief_host_webkit_2_52_6": {
+    "geslaagd": true,
+    "versie": "2026.45.22",
+    "programma_sha256": "fbf4b9d0b49a46cd7fd00ed8febd4e7c8a9675cff0e7662fff65b4a67d6dc8d5",
+    "script_sha256": "4079a06edcc2d9456f547c491e5f046db4762441ea2d38c6cf76da5078cd892c",
+    "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+    "stappen": [
+      {
+        "naam": "beginbron",
+        "alinea_aantal": 500,
+        "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. ",
+        "exact": true
+      },
+      {
+        "naam": "getypte_bron",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "selectie_en_backspace",
+        "alinea_aantal": 500,
+        "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+        "exact": true
+      },
+      {
+        "naam": "undo",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "redo",
+        "alinea_aantal": 500,
+        "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+        "exact": true
+      },
+      {
+        "naam": "hersteld_voor_bewaren",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "native_bewaaractie_onafhankelijk",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "nieuw_proces_heropend",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "verder_na_later",
+        "alinea_aantal": 500,
+        "tekst_sha256": "fd7d825b22dee866b9680b7eda810589f0bcff6cc43796092675cc7d54c0126c",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin. Verder.",
+        "exact": true
+      },
+      {
+        "naam": "herstelde_kopie",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "verder_in_herstelde_kopie",
+        "alinea_aantal": 500,
+        "tekst_sha256": "2479dfa76e6a51382e07e955c4058dcb85f9d02950bee6b116734b457cb13c75",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin. Hersteld.",
+        "exact": true
+      }
+    ],
+    "invoerinterval_ms": 20,
+    "vaste_nawacht_ms": 2000,
+    "invoer_gereedheid": "Native keyup van de laatste punt, inputwachtrij, zichtbare golflijnen en één exacte controle van de laatste alinea; alle 500 bronalinea’s daarnaast apart vergeleken.",
+    "grenzen": [
+      "Eén gegenereerde 500-paginabron, normale compositor, alleen een lichte teller om getBoundingClientRect. Geen algemene prestatie-, IME-, enorme-plak- of platformacceptatie."
+    ],
+    "startprogramma_sha256": "fbf4b9d0b49a46cd7fd00ed8febd4e7c8a9675cff0e7662fff65b4a67d6dc8d5",
+    "geladen_runtime": [
+      "/usr/lib/x86_64-linux-gnu/libjavascriptcoregtk-4.1.so.0.10.14",
+      "/usr/lib/x86_64-linux-gnu/libwebkit2gtk-4.1.so.0.21.10"
+    ],
+    "invoer_tot_bron_en_golven_ms": 4390,
+    "paginavergelijkingen_tijdens_invoer": {
+      "calls": 6986
+    },
+    "documentuitlezingen_tijdens_invoer": {
+      "calls": 0,
+      "ms": 0,
+      "api_wissels": 130,
+      "actieve_api_gevolgd": true,
+      "omvang": "GetDocument-aanroepen tijdens native invoer tot bron-/golflijngereedheid. De stabiele React-ref volgt vervanging van API-objecten; geen CPU-profiler."
+    },
+    "native_leesaanroepen": {
+      "zelfde_sessie": true,
+      "readParagraphs": {
+        "calls": 12,
+        "ms": 61.99999999999636
+      },
+      "paragraphSpans": {
+        "calls": 28,
+        "ms": 123
+      }
+    },
+    "frame_tussenpozen_ms": {
+      "aantal": 34,
+      "maximum": 331,
+      "p95": 290,
+      "reeks": [
+        5,
+        14,
+        5,
+        26,
+        66,
+        153,
+        139,
+        200,
+        160,
+        290,
+        251,
+        134,
+        149,
+        331,
+        124,
+        225,
+        213,
+        131,
+        129,
+        138,
+        127,
+        30,
+        120,
+        107,
+        104,
+        101,
+        140,
+        117,
+        97,
+        184,
+        228,
+        135,
+        35,
+        17
+      ],
+      "omvang": "requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS."
+    },
+    "invoermeting": {
+      "calls": 6507,
+      "classes": {
+        "docx-editor__scroll-container": 257,
+        "canvas-page": 1047,
+        "DIV": 126,
+        "CANVAS": 1787,
+        "canvas-pages__column": 40,
+        "canvas-pages": 2140,
+        "docx-plugin-overlays": 1070,
+        "docx-editor__viewport tl-met-liniaal": 40
+      },
+      "golven": 83,
+      "paginas": 500,
+      "tot_bron_en_golven_ms_inclusief_nawacht": 6429
+    },
+    "selectie_backspace": {
+      "alinea_aantal": 500,
+      "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+      "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+      "eerste_verschil": 499,
+      "native_toetsen": [
+        {
+          "key": " ",
+          "code": "Space",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "shift",
+          "code": "ShiftLeft",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "e",
+          "code": "KeyE",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "e",
+          "code": "KeyE",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "n",
+          "code": "KeyN",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": " ",
+          "code": "Space",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "p",
+          "code": "KeyP",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "r",
+          "code": "KeyR",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "o",
+          "code": "KeyO",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "e",
+          "code": "KeyE",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "f",
+          "code": "KeyF",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "z",
+          "code": "KeyZ",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "i",
+          "code": "KeyI",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "n",
+          "code": "KeyN",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": ".",
+          "code": "Period",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "shift",
+          "code": "ShiftLeft",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "control",
+          "code": "ControlLeft",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "arrowleft",
+          "code": "ArrowLeft",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "backspace",
+          "code": "Backspace",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        }
+      ]
+    },
+    "lintbeelden": {
+      "startlint": {
+        "plek": {
+          "x": 0,
+          "y": 32,
+          "breedte": 1440,
+          "hoogte": 122
+        },
+        "knoppen": [
+          {
+            "naam": "Edit",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Undo",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Redo",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Clipboard",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Paste",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Cut",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Copy",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Format Painter",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Font",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Font: Caladea",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Increase Font Size",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Decrease Font Size",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Bold",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Italic",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Underline",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Strikethrough",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Superscript",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Subscript",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Font…",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Paragraph",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Bullets",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Numbering",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Decrease Indent",
+            "actief": null,
+            "uit": true
+          },
+          {
+            "naam": "Increase Indent",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "List Options…",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Align Left",
+            "actief": "true",
+            "uit": false
+          },
+          {
+            "naam": "Center",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Align Right",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Justify",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Paragraph…",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Borders and Shading…",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Styles",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Normal",
+            "actief": "true",
+            "uit": false
+          },
+          {
+            "naam": "Menu for style Normal",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "No Spacing",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Menu for style No Spacing",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Heading 1",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Menu for style Heading 1",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Heading 2",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Menu for style Heading 2",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Heading 3",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Menu for style Heading 3",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Title",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Menu for style Title",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": " All Styles…",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Formatting",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Clear Formatting",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Find",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Find",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Replace",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Go To",
+            "actief": null,
+            "uit": false
+          }
+        ]
+      },
+      "kopvoetlint": {
+        "plek": {
+          "x": 0,
+          "y": 32,
+          "breedte": 1440,
+          "hoogte": 122
+        },
+        "knoppen": [
+          {
+            "naam": "Edit",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Edit Header",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Edit Footer",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Insert",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Page Number",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Options",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Different First Page",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Different Odd & Even Pages",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Sections",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Link to Previous",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Position",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Distance from Edge",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Remove",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Remove Header",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Remove Footer",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Close",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Close Header and Footer",
+            "actief": null,
+            "uit": true
+          }
+        ]
+      }
+    },
+    "paginaregister": {
+      "voor": 500,
+      "na": 500,
+      "zoom": 1.15,
+      "add": 0,
+      "delete": 0,
+      "invalidate": 1,
+      "historische_registerwissels": false,
+      "geen_canvaswissels": true,
+      "paginaopdracht": {
+        "ok": true,
+        "status": "executed"
+      },
+      "na_pagina_invoegen": 501,
+      "na_undo": 500,
+      "geslaagd": true
+    },
+    "herstelkopie": {
+      "sha256": "101406455f1dd1e828f6a7053dfd25f4a4cc9c30e71928f1813762b3d2121f55",
+      "exact": true
+    },
+    "fouten_voor_heropenen": {
+      "gui": [],
+      "console": []
+    },
+    "herstelkeuzes": [
+      {
+        "keuze": "later",
+        "aanbod": {
+          "namen": [
+            "Prestatieproef.docx"
+          ],
+          "tekst": "Recover documentsOpen Office Studio was not closed properly last time. A recovery copy was kept of these documents. Recovering opens a new, unsaved tab; the original file stays unchanged.Prestatieproef.docxText · recovery copy from today 18:12RecoverSave as…DiscardDecide later"
+        },
+        "fouten_voor_keuze": {
+          "gui": [],
+          "console": []
+        }
+      },
+      {
+        "keuze": "herstellen",
+        "aanbod": {
+          "namen": [
+            "Prestatieproef.docx"
+          ],
+          "tekst": "Recover documentsOpen Office Studio was not closed properly last time. A recovery copy was kept of these documents. Recovering opens a new, unsaved tab; the original file stays unchanged.Prestatieproef.docxText · recovery copy from today 18:12RecoverSave as…DiscardDecide later"
+        },
+        "fouten_voor_keuze": {
+          "gui": [],
+          "console": []
+        }
+      }
+    ],
+    "status_na_later": [
+      "Page 1 of 500",
+      "29,002 words, 173,906 characters",
+      "Language unknown · 20,502 spelling errors",
+      "Track Changes: off"
+    ],
+    "fouten_na_heropenen": {
+      "gui": [],
+      "console": []
+    },
+    "verder_na_later_bewaard": true,
+    "hersteltabbladen": 2,
+    "herstel_fouten": {
+      "gui": [],
+      "console": []
+    },
+    "bron_eind_sha256": "ec3a1174d6eb84d43674b8e6e0f9eea55d0efdd55b72f4be87d47ebe259c5e7a"
+  },
+  "lintvergelijkingen": [
+    {
+      "beeld": "startlint",
+      "breedte": 1440,
+      "hoogte": 122,
+      "verschillende_pixels": 0,
+      "kader": {
+        "x": 0,
+        "y": 32,
+        "breedte": 1440,
+        "hoogte": 122
+      }
+    },
+    {
+      "beeld": "kopvoetlint",
+      "breedte": 1440,
+      "hoogte": 122,
+      "verschillende_pixels": 0,
+      "kader": {
+        "x": 0,
+        "y": 32,
+        "breedte": 1440,
+        "hoogte": 122
+      }
+    }
+  ],
+  "controles": {
+    "frontend": 1633,
+    "frontendbestanden": 149,
+    "python": 54,
+    "TypeScript": true,
+    "weekversie": true,
+    "moduleopdrachten": true
+  },
+  "grenzen": [
+    "Eén gegenereerde DOCX van 500 pagina’s, twee Linux-WebKit-runtimes op dezelfde pc.",
+    "Elke start gebruikt het eigen geïsoleerde testprofiel; geen gebruikersvenster gestopt of gebruikersdocument gewijzigd.",
+    "Twee lintuitsneden zijn pixelgelijk; geen volledige visuele suiteacceptatie.",
+    "Platform- en zeveneditiebouw na push moeten afzonderlijk slagen.",
+    "118 issues, alle tien migratiegebieden en dertig acceptatievlaggen blijven open."
+  ],
+  "strenge_bronbytes_webkit_2_50_4": {
+    "geslaagd": true,
+    "versie": "2026.45.22",
+    "programma_sha256": "fbf4b9d0b49a46cd7fd00ed8febd4e7c8a9675cff0e7662fff65b4a67d6dc8d5",
+    "script_sha256": "01ef4f53ca0acbb9d0f2e5167e3b8327022c1670b3f732c9f12a8a4ddcd899ec",
+    "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+    "stappen": [
+      {
+        "naam": "beginbron",
+        "alinea_aantal": 500,
+        "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. ",
+        "exact": true
+      },
+      {
+        "naam": "getypte_bron",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "selectie_en_backspace",
+        "alinea_aantal": 500,
+        "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+        "exact": true
+      },
+      {
+        "naam": "undo",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "redo",
+        "alinea_aantal": 500,
+        "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+        "exact": true
+      },
+      {
+        "naam": "hersteld_voor_bewaren",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "native_bewaaractie_onafhankelijk",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "nieuw_proces_heropend",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "verder_na_later",
+        "alinea_aantal": 500,
+        "tekst_sha256": "fd7d825b22dee866b9680b7eda810589f0bcff6cc43796092675cc7d54c0126c",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin. Verder.",
+        "exact": true
+      },
+      {
+        "naam": "herstelde_kopie",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "verder_in_herstelde_kopie",
+        "alinea_aantal": 500,
+        "tekst_sha256": "2479dfa76e6a51382e07e955c4058dcb85f9d02950bee6b116734b457cb13c75",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin. Hersteld.",
+        "exact": true
+      }
+    ],
+    "invoerinterval_ms": 20,
+    "vaste_nawacht_ms": 2000,
+    "invoer_gereedheid": "Native keyup van de laatste punt, inputwachtrij, zichtbare golflijnen en één exacte controle van de laatste alinea; alle 500 bronalinea’s daarnaast apart vergeleken.",
+    "grenzen": [
+      "Eén gegenereerde 500-paginabron, normale compositor, alleen een lichte teller om getBoundingClientRect. Geen algemene prestatie-, IME-, enorme-plak- of platformacceptatie."
+    ],
+    "startprogramma_sha256": "eb0b254ac0dae6543e6dd7cd02e1baf40a060de95b927313122d6b46323c00aa",
+    "geladen_runtime": [
+      "/usr/lib/libjavascriptcoregtk-4.1.so.0",
+      "/usr/lib/libwebkit2gtk-4.1.so.0"
+    ],
+    "invoer_tot_bron_en_golven_ms": 3042,
+    "paginavergelijkingen_tijdens_invoer": {
+      "calls": 2994
+    },
+    "documentuitlezingen_tijdens_invoer": {
+      "calls": 0,
+      "ms": 0,
+      "api_wissels": 68,
+      "actieve_api_gevolgd": true,
+      "omvang": "GetDocument-aanroepen tijdens native invoer tot bron-/golflijngereedheid. De stabiele React-ref volgt vervanging van API-objecten; geen CPU-profiler."
+    },
+    "native_leesaanroepen": {
+      "zelfde_sessie": true,
+      "readParagraphs": {
+        "calls": 10,
+        "ms": 41.00000000000364
+      },
+      "paragraphSpans": {
+        "calls": 12,
+        "ms": 53.99999999999818
+      }
+    },
+    "frame_tussenpozen_ms": {
+      "aantal": 34,
+      "maximum": 354,
+      "p95": 316,
+      "reeks": [
+        16.99999999999818,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        21,
+        15,
+        16,
+        13,
+        16,
+        16,
+        145,
+        254,
+        87,
+        141,
+        277,
+        163,
+        354,
+        225,
+        132,
+        259,
+        121,
+        282,
+        190,
+        316,
+        194,
+        38,
+        3,
+        12,
+        16,
+        16
+      ],
+      "omvang": "requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS."
+    },
+    "invoermeting": {
+      "calls": 4100,
+      "classes": {
+        "docx-editor__scroll-container": 133,
+        "CANVAS": 1090,
+        "canvas-page": 535,
+        "DIV": 72,
+        "canvas-pages__column": 18,
+        "canvas-pages": 1486,
+        "docx-plugin-overlays": 743,
+        "docx-editor__viewport tl-met-liniaal": 23
+      },
+      "golven": 83,
+      "paginas": 500,
+      "tot_bron_en_golven_ms_inclusief_nawacht": 5378
+    },
+    "selectie_backspace": {
+      "alinea_aantal": 500,
+      "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+      "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+      "eerste_verschil": 499,
+      "native_toetsen": [
+        {
+          "key": " ",
+          "code": "Space",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "shift",
+          "code": "ShiftLeft",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "e",
+          "code": "KeyE",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "e",
+          "code": "KeyE",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "n",
+          "code": "KeyN",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": " ",
+          "code": "Space",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "p",
+          "code": "KeyP",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "r",
+          "code": "KeyR",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "o",
+          "code": "KeyO",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "e",
+          "code": "KeyE",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "f",
+          "code": "KeyF",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "z",
+          "code": "KeyZ",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "i",
+          "code": "KeyI",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "n",
+          "code": "KeyN",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": ".",
+          "code": "Period",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "shift",
+          "code": "ShiftLeft",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "control",
+          "code": "ControlLeft",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "arrowleft",
+          "code": "ArrowLeft",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        },
+        {
+          "key": "backspace",
+          "code": "Backspace",
+          "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+        }
+      ]
+    },
+    "lintbeelden": {
+      "startlint": {
+        "plek": {
+          "x": 0,
+          "y": 32,
+          "breedte": 1440,
+          "hoogte": 122
+        },
+        "knoppen": [
+          {
+            "naam": "Edit",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Undo",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Redo",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Clipboard",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Paste",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Cut",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Copy",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Format Painter",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Font",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Font: Caladea",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Increase Font Size",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Decrease Font Size",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Bold",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Italic",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Underline",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Strikethrough",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Superscript",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Subscript",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Font…",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Paragraph",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Bullets",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Numbering",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Decrease Indent",
+            "actief": null,
+            "uit": true
+          },
+          {
+            "naam": "Increase Indent",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "List Options…",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Align Left",
+            "actief": "true",
+            "uit": false
+          },
+          {
+            "naam": "Center",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Align Right",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Justify",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Paragraph…",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Borders and Shading…",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Styles",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Normal",
+            "actief": "true",
+            "uit": false
+          },
+          {
+            "naam": "Menu for style Normal",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "No Spacing",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Menu for style No Spacing",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Heading 1",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Menu for style Heading 1",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Heading 2",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Menu for style Heading 2",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Heading 3",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Menu for style Heading 3",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Title",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Menu for style Title",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": " All Styles…",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Formatting",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Clear Formatting",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Find",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Find",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Replace",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Go To",
+            "actief": null,
+            "uit": false
+          }
+        ]
+      },
+      "kopvoetlint": {
+        "plek": {
+          "x": 0,
+          "y": 32,
+          "breedte": 1440,
+          "hoogte": 122
+        },
+        "knoppen": [
+          {
+            "naam": "Edit",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Edit Header",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Edit Footer",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Insert",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Page Number",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Options",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Different First Page",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Different Odd & Even Pages",
+            "actief": "false",
+            "uit": false
+          },
+          {
+            "naam": "Sections",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Link to Previous",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Position",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Distance from Edge",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Remove",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Remove Header",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Remove Footer",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Close",
+            "actief": null,
+            "uit": false
+          },
+          {
+            "naam": "Close Header and Footer",
+            "actief": null,
+            "uit": true
+          }
+        ]
+      }
+    },
+    "paginaregister": {
+      "voor": 500,
+      "na": 500,
+      "zoom": 1.15,
+      "add": 0,
+      "delete": 0,
+      "invalidate": 1,
+      "historische_registerwissels": false,
+      "geen_canvaswissels": true,
+      "paginaopdracht": {
+        "ok": true,
+        "status": "executed"
+      },
+      "na_pagina_invoegen": 501,
+      "na_undo": 500,
+      "geslaagd": true
+    },
+    "herstelkopie": {
+      "sha256": "fa54f80b06969e66dc6d549cc1eab38429f47de66435f2127fa559a3cc1ebc18",
+      "exact": true
+    },
+    "fouten_voor_heropenen": {
+      "gui": [],
+      "console": []
+    },
+    "herstelkeuzes": [
+      {
+        "keuze": "later",
+        "aanbod": {
+          "namen": [
+            "Prestatieproef.docx"
+          ],
+          "tekst": "Recover documentsOpen Office Studio was not closed properly last time. A recovery copy was kept of these documents. Recovering opens a new, unsaved tab; the original file stays unchanged.Prestatieproef.docxText · recovery copy from today 18:16RecoverSave as…DiscardDecide later"
+        },
+        "fouten_voor_keuze": {
+          "gui": [],
+          "console": []
+        }
+      },
+      {
+        "keuze": "herstellen",
+        "aanbod": {
+          "namen": [
+            "Prestatieproef.docx"
+          ],
+          "tekst": "Recover documentsOpen Office Studio was not closed properly last time. A recovery copy was kept of these documents. Recovering opens a new, unsaved tab; the original file stays unchanged.Prestatieproef.docxText · recovery copy from today 18:16RecoverSave as…DiscardDecide later"
+        },
+        "fouten_voor_keuze": {
+          "gui": [],
+          "console": []
+        }
+      }
+    ],
+    "status_na_later": [
+      "Page 1 of 500",
+      "29,002 words, 173,906 characters",
+      "English (United States) · 20,502 spelling errors",
+      "Track Changes: off"
+    ],
+    "fouten_na_heropenen": {
+      "gui": [],
+      "console": []
+    },
+    "verder_na_later_bewaard": true,
+    "bron_na_verder_sha256": "826e7b6f87d1724780f402dd366ba9e8a4156f1862974f2ee985855bad6badb2",
+    "hersteltabbladen": 2,
+    "herstel_fouten": {
+      "gui": [],
+      "console": []
+    },
+    "bron_eind_sha256": "826e7b6f87d1724780f402dd366ba9e8a4156f1862974f2ee985855bad6badb2"
+  },
+  "native_lijsten": {
+    "geslaagd": true,
+    "versie": "2026.45.22",
+    "programma_sha256": "fbf4b9d0b49a46cd7fd00ed8febd4e7c8a9675cff0e7662fff65b4a67d6dc8d5",
+    "script_sha256": "77da7bfbc3c6679965e2e55d0341106bc6c02429fd4269b97614e8a78976db13",
+    "stappen": [
+      {
+        "naam": "01-opsomming",
+        "verwacht": "bullet",
+        "stand": {
+          "alinea": {
+            "paraId": "body:p0",
+            "properties": {
+              "defaultTextFormatting": {
+                "fontFamily": {
+                  "ascii": "Caladea",
+                  "asciiTheme": "minorHAnsi",
+                  "cs": "",
+                  "csTheme": "minorBidi",
+                  "eastAsia": "ＭＳ 明朝",
+                  "eastAsiaTheme": "minorEastAsia",
+                  "hAnsi": "Caladea",
+                  "hAnsiTheme": "minorHAnsi"
+                },
+                "fontSize": 22,
+                "fontSizeCs": 22,
+                "language": {
+                  "bidi": "ar-SA",
+                  "eastAsia": "en-US",
+                  "latin": "en-US"
+                }
+              },
+              "hangingIndent": false,
+              "lineSpacing": 276,
+              "lineSpacingRule": "auto",
+              "listAbstractNumId": 8,
+              "listIsBullet": true,
+              "listLevelNumFmts": [
+                "bullet"
+              ],
+              "listMarker": "•",
+              "listMarkerFontFamily": "Symbol",
+              "listNumFmt": "bullet",
+              "numPr": {
+                "ilvl": 0,
+                "numId": 1
+              },
+              "spaceAfter": 200
+            },
+            "text": "Nummering bewaren en heropenen."
+          },
+          "bullets": {
+            "active": true,
+            "enabled": true
+          },
+          "nummering": {
+            "active": false,
+            "enabled": true
+          }
+        },
+        "bewaard": {
+          "numId": 1,
+          "abstractNumId": 8,
+          "ilvl": 0,
+          "numFmt": "bullet",
+          "nummering_sha256": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce"
+        },
+        "geslaagd": true
+      },
+      {
+        "naam": "02-nummering",
+        "verwacht": "decimal",
+        "stand": {
+          "alinea": {
+            "paraId": "body:p0",
+            "properties": {
+              "defaultTextFormatting": {
+                "fontFamily": {
+                  "ascii": "Caladea",
+                  "asciiTheme": "minorHAnsi",
+                  "cs": "",
+                  "csTheme": "minorBidi",
+                  "eastAsia": "ＭＳ 明朝",
+                  "eastAsiaTheme": "minorEastAsia",
+                  "hAnsi": "Caladea",
+                  "hAnsiTheme": "minorHAnsi"
+                },
+                "fontSize": 22,
+                "fontSizeCs": 22,
+                "language": {
+                  "bidi": "ar-SA",
+                  "eastAsia": "en-US",
+                  "latin": "en-US"
+                }
+              },
+              "hangingIndent": false,
+              "lineSpacing": 276,
+              "lineSpacingRule": "auto",
+              "listAbstractNumId": 7,
+              "listIsBullet": false,
+              "listLevelNumFmts": [
+                "decimal"
+              ],
+              "listMarker": "%1.",
+              "listNumFmt": "decimal",
+              "numPr": {
+                "ilvl": 0,
+                "numId": 5
+              },
+              "spaceAfter": 200
+            },
+            "text": "Nummering bewaren en heropenen."
+          },
+          "bullets": {
+            "active": false,
+            "enabled": true
+          },
+          "nummering": {
+            "active": true,
+            "enabled": true
+          }
+        },
+        "bewaard": {
+          "numId": 5,
+          "abstractNumId": 7,
+          "ilvl": 0,
+          "numFmt": "decimal",
+          "nummering_sha256": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce"
+        },
+        "geslaagd": true
+      },
+      {
+        "naam": "03-ongedaan",
+        "verwacht": "bullet",
+        "stand": {
+          "alinea": {
+            "paraId": "body:p0",
+            "properties": {
+              "defaultTextFormatting": {
+                "fontFamily": {
+                  "ascii": "Caladea",
+                  "asciiTheme": "minorHAnsi",
+                  "cs": "",
+                  "csTheme": "minorBidi",
+                  "eastAsia": "ＭＳ 明朝",
+                  "eastAsiaTheme": "minorEastAsia",
+                  "hAnsi": "Caladea",
+                  "hAnsiTheme": "minorHAnsi"
+                },
+                "fontSize": 22,
+                "fontSizeCs": 22,
+                "language": {
+                  "bidi": "ar-SA",
+                  "eastAsia": "en-US",
+                  "latin": "en-US"
+                }
+              },
+              "hangingIndent": false,
+              "lineSpacing": 276,
+              "lineSpacingRule": "auto",
+              "listAbstractNumId": 8,
+              "listIsBullet": true,
+              "listLevelNumFmts": [
+                "bullet"
+              ],
+              "listMarker": "•",
+              "listMarkerFontFamily": "Symbol",
+              "listNumFmt": "bullet",
+              "numPr": {
+                "ilvl": 0,
+                "numId": 1
+              },
+              "spaceAfter": 200
+            },
+            "text": "Nummering bewaren en heropenen."
+          },
+          "bullets": {
+            "active": true,
+            "enabled": true
+          },
+          "nummering": {
+            "active": false,
+            "enabled": true
+          }
+        },
+        "bewaard": {
+          "numId": 1,
+          "abstractNumId": 8,
+          "ilvl": 0,
+          "numFmt": "bullet",
+          "nummering_sha256": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce"
+        },
+        "geslaagd": true
+      },
+      {
+        "naam": "04-opnieuw",
+        "verwacht": "decimal",
+        "stand": {
+          "alinea": {
+            "paraId": "body:p0",
+            "properties": {
+              "defaultTextFormatting": {
+                "fontFamily": {
+                  "ascii": "Caladea",
+                  "asciiTheme": "minorHAnsi",
+                  "cs": "",
+                  "csTheme": "minorBidi",
+                  "eastAsia": "ＭＳ 明朝",
+                  "eastAsiaTheme": "minorEastAsia",
+                  "hAnsi": "Caladea",
+                  "hAnsiTheme": "minorHAnsi"
+                },
+                "fontSize": 22,
+                "fontSizeCs": 22,
+                "language": {
+                  "bidi": "ar-SA",
+                  "eastAsia": "en-US",
+                  "latin": "en-US"
+                }
+              },
+              "hangingIndent": false,
+              "lineSpacing": 276,
+              "lineSpacingRule": "auto",
+              "listAbstractNumId": 7,
+              "listIsBullet": false,
+              "listLevelNumFmts": [
+                "decimal"
+              ],
+              "listMarker": "%1.",
+              "listNumFmt": "decimal",
+              "numPr": {
+                "ilvl": 0,
+                "numId": 5
+              },
+              "spaceAfter": 200
+            },
+            "text": "Nummering bewaren en heropenen."
+          },
+          "bullets": {
+            "active": false,
+            "enabled": true
+          },
+          "nummering": {
+            "active": true,
+            "enabled": true
+          }
+        },
+        "bewaard": {
+          "numId": 5,
+          "abstractNumId": 7,
+          "ilvl": 0,
+          "numFmt": "decimal",
+          "nummering_sha256": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce"
+        },
+        "geslaagd": true
+      },
+      {
+        "naam": "05-heropend",
+        "verwacht": "decimal",
+        "stand": {
+          "alinea": {
+            "paraId": "body:p0",
+            "properties": {
+              "_originalFormatting": {
+                "lineSpacing": 276,
+                "lineSpacingRule": "auto",
+                "numPr": {
+                  "ilvl": 0,
+                  "numId": 5
+                },
+                "spaceAfter": 200,
+                "spacingExplicit": {
+                  "after": true
+                }
+              },
+              "_originalRunBoundaries": [
+                {
+                  "marksKey": "fontFamily:{\"ascii\":\"Caladea\",\"hAnsi\":\"Caladea\",\"eastAsia\":\"ＭＳ 明朝\",\"cs\":\"\",\"asciiTheme\":\"minorHAnsi\",\"hAnsiTheme\":\"minorHAnsi\",\"eastAsiaTheme\":\"minorEastAsia\",\"csTheme\":\"minorBidi\"}|fontSize:{\"size\":22,\"sizeCs\":22}",
+                  "text": "Nummering bewaren en heropenen."
+                }
+              ],
+              "defaultTextFormatting": {
+                "fontFamily": {
+                  "ascii": "Caladea",
+                  "asciiTheme": "minorHAnsi",
+                  "cs": "",
+                  "csTheme": "minorBidi",
+                  "eastAsia": "ＭＳ 明朝",
+                  "eastAsiaTheme": "minorEastAsia",
+                  "hAnsi": "Caladea",
+                  "hAnsiTheme": "minorHAnsi"
+                },
+                "fontSize": 22,
+                "fontSizeCs": 22,
+                "language": {
+                  "bidi": "ar-SA",
+                  "eastAsia": "en-US",
+                  "latin": "en-US"
+                }
+              },
+              "hangingIndent": true,
+              "indentFirstLine": -360,
+              "indentLeft": 360,
+              "lineSpacing": 276,
+              "lineSpacingRule": "auto",
+              "listAbstractNumId": 7,
+              "listIsBullet": false,
+              "listLevelNumFmts": [
+                "decimal"
+              ],
+              "listMarker": "%1.",
+              "listNumFmt": "decimal",
+              "numPr": {
+                "ilvl": 0,
+                "numId": 5
+              },
+              "spaceAfter": 200,
+              "spacingExplicit": {
+                "after": true
+              }
+            },
+            "text": "Nummering bewaren en heropenen."
+          },
+          "bullets": {
+            "active": false,
+            "enabled": true
+          },
+          "nummering": {
+            "active": true,
+            "enabled": true
+          }
+        },
+        "geslaagd": true
+      },
+      {
+        "naam": "06-terug-opsomming",
+        "verwacht": "bullet",
+        "stand": {
+          "alinea": {
+            "paraId": "body:p0",
+            "properties": {
+              "_originalFormatting": {
+                "lineSpacing": 276,
+                "lineSpacingRule": "auto",
+                "numPr": {
+                  "ilvl": 0,
+                  "numId": 5
+                },
+                "spaceAfter": 200,
+                "spacingExplicit": {
+                  "after": true
+                }
+              },
+              "_originalRunBoundaries": [
+                {
+                  "marksKey": "fontFamily:{\"ascii\":\"Caladea\",\"hAnsi\":\"Caladea\",\"eastAsia\":\"ＭＳ 明朝\",\"cs\":\"\",\"asciiTheme\":\"minorHAnsi\",\"hAnsiTheme\":\"minorHAnsi\",\"eastAsiaTheme\":\"minorEastAsia\",\"csTheme\":\"minorBidi\"}|fontSize:{\"size\":22,\"sizeCs\":22}",
+                  "text": "Nummering bewaren en heropenen."
+                }
+              ],
+              "defaultTextFormatting": {
+                "fontFamily": {
+                  "ascii": "Caladea",
+                  "asciiTheme": "minorHAnsi",
+                  "cs": "",
+                  "csTheme": "minorBidi",
+                  "eastAsia": "ＭＳ 明朝",
+                  "eastAsiaTheme": "minorEastAsia",
+                  "hAnsi": "Caladea",
+                  "hAnsiTheme": "minorHAnsi"
+                },
+                "fontSize": 22,
+                "fontSizeCs": 22,
+                "language": {
+                  "bidi": "ar-SA",
+                  "eastAsia": "en-US",
+                  "latin": "en-US"
+                }
+              },
+              "hangingIndent": true,
+              "indentFirstLine": -360,
+              "indentLeft": 360,
+              "lineSpacing": 276,
+              "lineSpacingRule": "auto",
+              "listAbstractNumId": 8,
+              "listIsBullet": true,
+              "listLevelNumFmts": [
+                "bullet"
+              ],
+              "listMarker": "•",
+              "listMarkerFontFamily": "Symbol",
+              "listNumFmt": "bullet",
+              "numPr": {
+                "ilvl": 0,
+                "numId": 1
+              },
+              "spaceAfter": 200,
+              "spacingExplicit": {
+                "after": true
+              }
+            },
+            "text": "Nummering bewaren en heropenen."
+          },
+          "bullets": {
+            "active": true,
+            "enabled": true
+          },
+          "nummering": {
+            "active": false,
+            "enabled": true
+          }
+        },
+        "bewaard": {
+          "numId": 1,
+          "abstractNumId": 8,
+          "ilvl": 0,
+          "numFmt": "bullet",
+          "nummering_sha256": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce"
+        },
+        "geslaagd": true
+      },
+      {
+        "naam": "07-uit",
+        "verwacht": null,
+        "stand": {
+          "alinea": {
+            "paraId": "body:p0",
+            "properties": {
+              "_originalFormatting": {
+                "lineSpacing": 276,
+                "lineSpacingRule": "auto",
+                "numPr": {
+                  "ilvl": 0,
+                  "numId": 5
+                },
+                "spaceAfter": 200,
+                "spacingExplicit": {
+                  "after": true
+                }
+              },
+              "_originalRunBoundaries": [
+                {
+                  "marksKey": "fontFamily:{\"ascii\":\"Caladea\",\"hAnsi\":\"Caladea\",\"eastAsia\":\"ＭＳ 明朝\",\"cs\":\"\",\"asciiTheme\":\"minorHAnsi\",\"hAnsiTheme\":\"minorHAnsi\",\"eastAsiaTheme\":\"minorEastAsia\",\"csTheme\":\"minorBidi\"}|fontSize:{\"size\":22,\"sizeCs\":22}",
+                  "text": "Nummering bewaren en heropenen."
+                }
+              ],
+              "defaultTextFormatting": {
+                "fontFamily": {
+                  "ascii": "Caladea",
+                  "asciiTheme": "minorHAnsi",
+                  "cs": "",
+                  "csTheme": "minorBidi",
+                  "eastAsia": "ＭＳ 明朝",
+                  "eastAsiaTheme": "minorEastAsia",
+                  "hAnsi": "Caladea",
+                  "hAnsiTheme": "minorHAnsi"
+                },
+                "fontSize": 22,
+                "fontSizeCs": 22,
+                "language": {
+                  "bidi": "ar-SA",
+                  "eastAsia": "en-US",
+                  "latin": "en-US"
+                }
+              },
+              "hangingIndent": true,
+              "indentFirstLine": -360,
+              "indentLeft": 360,
+              "lineSpacing": 276,
+              "lineSpacingRule": "auto",
+              "numPr": {
+                "ilvl": 0,
+                "numId": 0
+              },
+              "spaceAfter": 200,
+              "spacingExplicit": {
+                "after": true
+              }
+            },
+            "text": "Nummering bewaren en heropenen."
+          },
+          "bullets": {
+            "active": false,
+            "enabled": true
+          },
+          "nummering": {
+            "active": false,
+            "enabled": true
+          }
+        },
+        "bewaard": {
+          "numId": 0,
+          "ilvl": 0,
+          "numFmt": null,
+          "nummering_sha256": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce"
+        },
+        "geslaagd": true
+      }
+    ],
+    "grenzen": [
+      "Eigen nieuw DOCX met bestaande lijstdefinities, één Linux/WebKit-omgeving; geen Windows-, snelheids- of volledige lijstacceptatie."
+    ],
+    "fouten_eerste_proces": {
+      "gui": [],
+      "console": []
+    },
+    "fouten_tweede_proces": {
+      "gui": [],
+      "console": []
+    }
+  },
+  "bron_sha256": {
+    "src/tekst/stijlen/volgen.ts": "3fd5d83e428dc33fdcb249115a71eb7633c30c5fadcea2f3cf142e44bcea9c8b",
+    "src/tekst/stijlen/volgen.test.ts": "88d737368e8ecff6abb1087011e494713a1abd4721c20bd2f5e1bf7c2275f04b",
+    "src/tekst/stijlen/StijlenBeheer.tsx": "49bcbcbe745b27ac434809e15036231bf81c236fc6338990deee86ecfaf824fa",
+    "src/lint/tekst-opdrachten.tsx": "4b31b3b76cdddc5e42a9e2af6f422f2d373b80be87889fec5add2d9f3d68aac0",
+    "scripts/test-writer-lang-native.py": "01ef4f53ca0acbb9d0f2e5167e3b8327022c1670b3f732c9f12a8a4ddcd899ec",
+    "scripts/bewaar-writer-foutcontext.py": "8f4f69121df81447ffbba1571693c6d8d4c2c4d84aa347bed42b865c3419e041"
+  },
+  "rijk_plakken": {
+    "maxduur_seconden": 300,
+    "geslaagd": true,
+    "versie": "2026.45.22",
+    "programma_sha256": "fbf4b9d0b49a46cd7fd00ed8febd4e7c8a9675cff0e7662fff65b4a67d6dc8d5",
+    "script_sha256": "ca54b04928bf4442d9bb1c89226418172ce870ee3cf4d7c0499a19131d629a0c",
+    "bron_sha256": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee",
+    "invoergereedheid": "Gewijzigde bron, lege engine-invoerwachtrij en nieuw verschenen plakopties na de eigen opmaakverwerking; bronvergelijkingen daarnaast buiten de tijdmeting.",
+    "grenzen": "Eigen kopie van meegeleverd document; selecteer alles, kopieer, ga naar einde en plak; per ronde broncontrole. Geen snelle plakreeks zonder barrières.",
+    "bewaar_na_ronde": 1,
+    "startprogramma_sha256": "fbf4b9d0b49a46cd7fd00ed8febd4e7c8a9675cff0e7662fff65b4a67d6dc8d5",
+    "profiel": "org.openaec.office-studio",
+    "tussenbewaring": {
+      "na_ronde": 1,
+      "bytes": 36722,
+      "sha256": "3cbe1b4163fc0969786d192135fa0cf6f6aa2bd2445d88165293c226fc0e8974"
+    },
+    "statusbalk_na_rust": {
+      "paginas": 129,
+      "body_tekens_utf16": 131328,
+      "grens_ms": 8000,
+      "knoppen": [
+        "Page 64 of 129",
+        "19,713 words, 131,328 characters",
+        "Dutch (Netherlands) · 255 spelling errors",
+        "Track Changes: off"
+      ]
+    },
+    "onafhankelijk_docx": {
+      "exact": true,
+      "sha256": "387853d9bee56cdb902e4aebe4a9937c7d139c50f628d7fc0e9f506acc54c8c9",
+      "bytes": 73356,
+      "body_met_opmaak_sha256": "c6a30378ac21520c50475ab5290df9cd2d9989fd8c82cd874ef51a6fa37d9fd2",
+      "normalisatie": "Alleen paraId/textId en rsid-attributen verwijderd; tekst, run- en alineaopmaak, hyperlinks en tabelstructuur blijven in de bodyhash."
+    },
+    "verwerpen_ms": 463,
+    "nieuw_document_na_verwerpen": true,
+    "gui_fouten": [],
+    "console_fouten": [],
+    "rondes": [
+      {
+        "ronde": 1,
+        "plak_tot_bron_ms": 968,
+        "paginas": 2,
+        "tabellen": 2,
+        "bodyalineas": 15,
+        "cellen": 12
+      },
+      {
+        "ronde": 2,
+        "plak_tot_bron_ms": 701,
+        "paginas": 3,
+        "tabellen": 4,
+        "bodyalineas": 29,
+        "cellen": 24
+      },
+      {
+        "ronde": 3,
+        "plak_tot_bron_ms": 837,
+        "paginas": 5,
+        "tabellen": 8,
+        "bodyalineas": 57,
+        "cellen": 48
+      },
+      {
+        "ronde": 4,
+        "plak_tot_bron_ms": 867,
+        "paginas": 9,
+        "tabellen": 16,
+        "bodyalineas": 113,
+        "cellen": 96
+      },
+      {
+        "ronde": 5,
+        "plak_tot_bron_ms": 1827,
+        "paginas": 17,
+        "tabellen": 32,
+        "bodyalineas": 225,
+        "cellen": 192
+      },
+      {
+        "ronde": 6,
+        "plak_tot_bron_ms": 5006,
+        "paginas": 33,
+        "tabellen": 64,
+        "bodyalineas": 449,
+        "cellen": 384
+      },
+      {
+        "ronde": 7,
+        "plak_tot_bron_ms": 16082,
+        "paginas": 65,
+        "tabellen": 128,
+        "bodyalineas": 897,
+        "cellen": 768
+      },
+      {
+        "ronde": 8,
+        "plak_tot_bron_ms": 64307,
+        "paginas": 129,
+        "tabellen": 256,
+        "bodyalineas": 1793,
+        "cellen": 1536
+      }
+    ],
+    "grens": "Samenvatting van de native plakproef; volledige afzonderlijke cel-/bodyinhoud staat in het lokale bronrapport, niet gekopieerd naar dit verslag.",
+    "oorspronkelijk_rapport_sha256": "8c0094b83a4b6d07188c7cea858635c67ad3444ab9e990901756aac67ddeb6fa"
+  },
+  "lokale_testkoppeling": {
+    "versie": "2026.45.22",
+    "sha256": "fbf4b9d0b49a46cd7fd00ed8febd4e7c8a9675cff0e7662fff65b4a67d6dc8d5",
+    "vorige_starter_en_leesmij_bewaard": true,
+    "gebruikersvensters_niet_afgesloten": true
+  }
+}

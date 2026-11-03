@@ -61,9 +61,9 @@ jobs:
       - run: pnpm versie:check
       - name: De gewone suite met Linux-verpakkingen bouwen
         run: pnpm desktop:build --bundles deb,appimage
-      - name: Gewone 500-paginaproef inclusief heropenen
+      - name: 500 pagina’s inclusief echte herstelkopie en herstelkeuzes
         run: |
-          "$OFFICE_GUI_PYTHON" scripts/test-writer-lang-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-writer-geheugen/normaal
+          "$OFFICE_GUI_PYTHON" scripts/test-writer-lang-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-writer-geheugen/normaal --herstelstart
       - name: Extra selectie, Backspace, undo, redo en garbagecollection
         env:
           GEHEUGENRONDES: ${{ inputs.geheugenrondes || '20' }}

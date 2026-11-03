@@ -65,7 +65,7 @@ def bewaar(programma, rapporten, uitvoer, appimage_map=None, systeem=True):
     }
     # Alleen de eigen gegenereerde proefbron en vaste foutuitvoer meenemen;
     # geen willekeurige bestanden uit de rapportmap verzamelen.
-    for naam in ['Prestatieproef.docx', 'programma.log', 'afgekeurd.png']:
+    for naam in ['Prestatieproef.docx', 'herstelkopie.docx', 'hersteld.docx', 'programma.log', 'afgekeurd.png']:
         bron = rapport.parent / naam
         if bron.is_file():
             doel = inhoud / 'proef' / naam

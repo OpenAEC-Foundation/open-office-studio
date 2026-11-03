@@ -43,6 +43,7 @@ def main():
     p.add_argument('--uitvoer', type=Path, required=True)
     p.add_argument('--versie', required=True)
     p.add_argument('--historische-registerwissels', action='store_true', help='Alleen voor vergelijking met een oude binary: registreer de canvaswissels zonder deze specifieke nieuwe acceptatie-eis.')
+    p.add_argument('--herstelstart', action='store_true', help='Wacht op een echte eigen herstelkopie en toets Later, verder bewerken en daarna Herstellen in een nieuw tabblad.')
     p.add_argument('--geheugenrondes', type=int, default=0, help='Extra selectie-/Backspace-/undo-/redo-rondes vóór de gewone bewaarproef (0–100).')
     p.add_argument('--geheugen-gc', action='store_true', help='Vraag na iedere extra ronde expliciet WebKit-garbagecollection aan; een geweigerde opdracht keurt de proef af.')
     p.add_argument('--binnen', action='store_true', help=argparse.SUPPRESS)
@@ -73,6 +74,8 @@ def main():
         omgeving.update(GDK_BACKEND='x11', LC_ALL='C.UTF-8', WEBKIT_DISABLE_DMABUF_RENDERER='1', WEBKIT_INSPECTOR_HTTP_SERVER=f'127.0.0.1:{http}', WEBKIT_INSPECTOR_SERVER=f'127.0.0.1:{inspectie}', OFFICE_PROEF_HTTP=str(http))
         extra = ['--historische-registerwissels'] if a.historische_registerwissels else []
         extra += ['--geheugenrondes', str(a.geheugenrondes)]
+        if a.herstelstart:
+            extra.append('--herstelstart')
         if a.geheugen_gc:
             extra.append('--geheugen-gc')
         return subprocess.call(['dbus-run-session', '--', 'xvfb-run', '-a', '-s', '-screen 0 1600x1100x24 -nolisten tcp', sys.executable, str(Path(__file__).resolve()), '--binnen', '--programma', str(a.programma), '--uitvoer', str(a.uitvoer), '--versie', a.versie, *extra], env=omgeving)
@@ -143,15 +146,51 @@ async def proef(a):
                 naam = prop.value.decode(errors='replace') if prop and isinstance(prop.value, bytes) else ''
                 if v.get_attributes().map_state == X.IsViewable and 'Office Studio' in naam:
                     venster = v
+                    pid_prop = v.get_full_property(d.intern_atom('_NET_WM_PID'), X.AnyPropertyType)
+                    pid = int(pid_prop.value[0]) if pid_prop is not None else programma.pid
+                    werkelijk = Path(f'/proc/{pid}/exe').read_bytes()
+                    assert werkelijk.startswith(b'\x7fELF'), 'Eigen vensterproces is geen ELF'
+                    rapport['startprogramma_sha256'] = hashlib.sha256(a.programma.read_bytes()).hexdigest()
+                    rapport['programma_sha256'] = hashlib.sha256(werkelijk).hexdigest()
+                    maps = Path(f'/proc/{pid}/maps').read_text()
+                    rapport['geladen_runtime'] = sorted({regel.split()[-1] for regel in maps.splitlines() if 'libwebkit2gtk' in regel or 'libjavascriptcoregtk' in regel})
                     v.configure(x=0, y=0, width=1440, height=1000); v.set_input_focus(X.RevertToParent, X.CurrentTime); d.sync()
                     await asyncio.sleep(12)
                     return
             await asyncio.sleep(.1)
         raise TimeoutError('Eigen proefvenster niet gevonden')
 
-    async def gereed(p):
+    def lees_docx(pad):
+        with ZipFile(pad) as z:
+            xml = ET.fromstring(z.read('word/document.xml'))
+        ns = {'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
+        return [''.join(e.text or '' for e in alinea.findall('.//w:t', ns)) for alinea in xml.findall('.//w:body/w:p', ns)]
+
+    async def klik(p, selector):
+        xy = await p.ev("(()=>{const e=document.querySelector("+json.dumps(selector)+");if(!e||e.disabled)throw Error('Eigen herstelknop ontbreekt');const r=e.getBoundingClientRect();return{x:Math.round(r.left+r.width/2),y:Math.round(r.top+r.height/2)}})()")
+        subprocess.run(['xdotool', 'mousemove', '--window', str(venster.id), str(xy['x']), str(xy['y']), 'click', '1'], check=True)
+
+    async def gereed(p, heropenen=False, herstelkeuze='later'):
         await p.command('Console.enable')
         try:
+            if heropenen:
+                await p.begin_foutbewaking()
+                if a.herstelstart:
+                    await p.run("const eind=performance.now()+15000;while(!document.querySelector('.office-herstel')){if(performance.now()>eind)throw Error('Eigen herstelkopie niet aangeboden');await new Promise(r=>setTimeout(r,100))}return true;")
+                aanbod = await p.ev("(()=>{const d=document.querySelector('.office-herstel');return d?{namen:Array.from(d.querySelectorAll('.office-herstellijst strong')).map(e=>e.textContent),tekst:d.textContent}:null})()")
+                fouten = await p.fouten()
+                rapport.setdefault('herstelkeuzes', []).append({'keuze': herstelkeuze, 'aanbod': aanbod, 'fouten_voor_keuze': fouten})
+                # Eerst de oorspronkelijke render-/enginefout afkeuren. Niet
+                # wegklikken en daarna een gerepareerde proef suggereren.
+                assert not any(fouten.values()), 'Applicatiefout achter het herstelvenster'
+                if aanbod:
+                    assert aanbod['namen'] == ['Prestatieproef.docx'], 'Onverwacht herstelitem in het eigen geïsoleerde profiel'
+                    assert not await p.ev("document.body.innerText.includes('Something went wrong')"), 'Renderfout achter het herstelvenster'
+                    beeld('herstel-aanbod-'+herstelkeuze)
+                    bron_voor_keuze = hashlib.sha256(bron.read_bytes()).hexdigest()
+                    await klik(p, '.office-herstel .office-dialoogacties button' if herstelkeuze == 'later' else '.office-herstel .office-dialoogdoorgaan')
+                    await p.run("const eind=performance.now()+15000;while(document.querySelector('.office-herstel')){if(performance.now()>eind)throw Error('Eigen herstelkeuze niet verwerkt');await new Promise(r=>setTimeout(r,100))}return true;")
+                    assert hashlib.sha256(bron.read_bytes()).hexdigest() == bron_voor_keuze, 'Herstelkeuze overschrijft de oorspronkelijke bron'
             await p.run('''window.proefApi=()=>{const el=document.querySelector('.office-tabpaneel:not([hidden]) .office-tekst');if(!el)return null;for(let f=el[Object.keys(el).find(k=>k.startsWith('__reactFiber$'))];f;f=f.return)for(let s=f.memoizedState,i=0;s&&i<200;i++,s=s.next){const v=s.memoizedState?.current;if(v?.getEditorRef&&v.commands)return v}return null};let einde=performance.now()+60000;while(proefApi()?.getTotalPages()!==500||!proefApi().getEditorRef()?.getYrsSession()){if(performance.now()>einde)throw Error('500 pagina’s niet gereed');await new Promise(r=>setTimeout(r,100))}await proefApi().flushPendingInput();return true;''')
         except Exception:
             # Bewaar een opstartafkeuring terwijl de inspectieverbinding nog
@@ -353,14 +392,82 @@ async def proef(a):
             assert await bronstand(p) == getypt, 'Pagina invoegen/undo verandert bronalinea’s'
             rapport['paginaregister']['geslaagd'] = True
             print('paginaregister, zoom en paginagrens geslaagd', flush=True)
+            if a.herstelstart:
+                # Dit pad ligt uitsluitend onder het voor deze proef gemaakte
+                # XDG-profiel. Wacht op de echte periodieke app-bewaring.
+                herstelmap = Path(os.environ['XDG_DATA_HOME']) / 'org.openaec.office-studio' / 'herstel'
+                einde = time.monotonic()+65
+                herstelkopie = None
+                while herstelkopie is None:
+                    for kandidaat in herstelmap.glob('*/tab-*.bin'):
+                        if not kandidaat.with_suffix('.json').is_file():
+                            continue
+                        try:
+                            if lees_docx(kandidaat) == getypt:
+                                herstelkopie = kandidaat
+                                break
+                        except FileNotFoundError:
+                            continue
+                    assert time.monotonic() < einde, 'Geen actuele eigen periodieke herstelkopie'
+                    if herstelkopie is None:
+                        await asyncio.sleep(.2)
+                shutil.copyfile(herstelkopie, a.uitvoer/'herstelkopie.docx')
+                rapport['herstelkopie'] = {'sha256': hashlib.sha256(herstelkopie.read_bytes()).hexdigest(), 'exact': lees_docx(herstelkopie) == getypt}
+                print('eigen periodieke herstelkopie geslaagd', flush=True)
             rapport['fouten_voor_heropenen'] = await p.fouten()
             assert not any(rapport['fouten_voor_heropenen'].values()), 'GUI of engine meldt fouten vóór heropenen'
         stop(); await start()
         async with Inspector(int(os.environ['OFFICE_PROEF_HTTP'])) as p:
-            await gereed(p)
+            await gereed(p, heropenen=True)
             await controle(p, 'nieuw_proces_heropend', getypt)
+            if a.herstelstart:
+                tekens = sum(len(tekst) for tekst in getypt)
+                rapport['status_na_later'] = await p.run("const eind=performance.now()+8000;while(true){const b=Array.from(document.querySelectorAll('.office-statusbalk .statusbalk-module button')).map(e=>e.textContent||'');if(b[0]?.endsWith(' of 500')&&b[1]?.includes("+json.dumps(f', {tekens:,} characters')+"))return b;if(performance.now()>eind)throw Error('Statusbalk komt niet terug na Later: '+JSON.stringify(b));await new Promise(r=>setTimeout(r,100))}", t=10)
             rapport['fouten_na_heropenen'] = await p.fouten()
             assert not any(rapport['fouten_na_heropenen'].values()), 'GUI of engine meldt fouten na heropenen'
+            if a.herstelstart:
+                assert herstelkopie.is_file(), 'Later beslissen verwijdert de herstelkopie'
+                assert hashlib.sha256(herstelkopie.read_bytes()).hexdigest() == rapport['herstelkopie']['sha256']
+                await p.run("const e=proefApi().getEditorRef(),a=e.getYrsSession().paragraphs('body').at(-1);e.setSelection(e.yrsLocToDisplayPosition({story:'body',paraId:a.paraId,offset:a.text.length}));proefApi().scrollToPage(500);proefApi().focus();return true;")
+                subprocess.run(['xdotool', 'type', '--clearmodifiers', '--delay', '20', ' Verder.'], check=True)
+                await toets(p, 'Right')
+                verder = list(getypt); verder[-1] += ' Verder.'
+                await controle(p, 'verder_na_later', verder)
+                voor = bron.stat().st_mtime_ns
+                await toets(p, 'ctrl+s')
+                einde = time.monotonic()+60
+                while bron.stat().st_mtime_ns == voor:
+                    assert time.monotonic() < einde, 'Bewaren na Later ontbreekt'
+                    await asyncio.sleep(.1)
+                assert lees_docx(bron) == verder, 'Vervolgbewaring na Later wijkt af'
+                rapport['verder_na_later_bewaard'] = True
+                rapport['bron_na_verder_sha256'] = hashlib.sha256(bron.read_bytes()).hexdigest()
+                assert herstelkopie.is_file(), 'Vervolgbewaring verwijdert de oudere aangeboden kopie'
+                assert hashlib.sha256(herstelkopie.read_bytes()).hexdigest() == rapport['herstelkopie']['sha256'], 'Vervolgbewaring verandert de oudere aangeboden kopie'
+        if a.herstelstart:
+            stop(); await start()
+            async with Inspector(int(os.environ['OFFICE_PROEF_HTTP'])) as p:
+                await gereed(p, heropenen=True, herstelkeuze='herstellen')
+                await controle(p, 'herstelde_kopie', getypt)
+                assert lees_docx(bron) == verder, 'Herstellen verandert de inmiddels verder bewerkte bron'
+                assert hashlib.sha256(bron.read_bytes()).hexdigest() == rapport['bron_na_verder_sha256'], 'Herstellen wijzigt bytes van de oorspronkelijke bron'
+                rapport['hersteltabbladen'] = await p.ev("document.querySelectorAll('.office-tabpaneel .office-tekst').length")
+                assert rapport['hersteltabbladen'] == 2, 'Herstellen opent geen afzonderlijk document'
+                assert not herstelkopie.exists(), 'Verwerkte kopie blijft aangeboden worden'
+                await p.run("const e=proefApi().getEditorRef(),a=e.getYrsSession().paragraphs('body').at(-1);e.setSelection(e.yrsLocToDisplayPosition({story:'body',paraId:a.paraId,offset:a.text.length}));proefApi().scrollToPage(500);proefApi().focus();return true;")
+                subprocess.run(['xdotool', 'type', '--clearmodifiers', '--delay', '20', ' Hersteld.'], check=True)
+                await toets(p, 'Right')
+                hersteld = list(getypt); hersteld[-1] += ' Hersteld.'
+                await controle(p, 'verder_in_herstelde_kopie', hersteld)
+                data = await p.run('return Array.from(new Uint8Array(await proefApi().save()));')
+                kopie = a.uitvoer/'hersteld.docx'; kopie.write_bytes(bytes(data))
+                assert lees_docx(kopie) == hersteld, 'Bewaarde herstelde kopie wijkt af'
+                assert lees_docx(bron) == verder, 'Export van herstelde kopie wijzigt de oorspronkelijke bron'
+                assert hashlib.sha256(bron.read_bytes()).hexdigest() == rapport['bron_na_verder_sha256'], 'Export van de herstelde kopie wijzigt oorspronkelijke bronbytes'
+                rapport['herstel_fouten'] = await p.fouten()
+                assert not any(rapport['herstel_fouten'].values()), 'GUI of engine meldt fouten in de herstelde kopie'
+                beeld('herstelde-kopie-bewerkt')
+                print('Herstellen, voortbewerken en onafhankelijk bewaren geslaagd', flush=True)
         rapport['bron_eind_sha256'] = hashlib.sha256(bron.read_bytes()).hexdigest()
         rapport['geslaagd'] = True
     except Exception as fout:

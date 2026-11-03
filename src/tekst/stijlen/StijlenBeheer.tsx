@@ -46,6 +46,7 @@ import { Herhaalmelding } from "../bewerken/herhaalmelding";
 import { StijlenVenster } from "./StijlenVenster";
 import { StijlSets } from "./StijlSets";
 import { Bevestiging } from "./Bevestiging";
+import { volgStijlen } from "./volgen";
 import "./stijlen.css";
 
 export type StijlVenster =
@@ -99,64 +100,12 @@ function useDocumentStaat(api: () => DocxEditorRef | null) {
   const [document, setDocument] = useState<Document | null>(null);
   const [selectie, setSelectie] = useState<SelectionState | null>(null);
   const [versie, setVersie] = useState(0);
-  useEffect(() => {
-    let sessie: object | null = null;
-    let laatste: Document | null = null;
-    let opruimen: (() => void)[] = [];
-    let wachten: ReturnType<typeof setTimeout> | undefined;
-    const stijlSleutel = () => {
-      const s = api()?.getEditorRef()?.getYrsSession(), head = s?.selection()?.head;
-      if (!s || !head) return "";
-      const c = s.selectionContext({ story: head.story, start: head, end: head });
-      return JSON.stringify([head.story, head.paraId, c.styleId, c.fontFamily, c.fontSize, c.bold, c.italic]);
-    };
-    let vorigeStijl = "";
-    const koppel = () => {
-      const ref = api();
-      const huidig = ref?.getEditorRef()?.getYrsSession() ?? null;
-      // getDocument bouwt een volledige documentkopie. Bij dezelfde editor
-      // komen wijzigingen via het abonnement; opnieuw uitlezen per tik laat
-      // grote documenten ook zonder invoer steeds het hele lint opbouwen.
-      if (huidig === sessie && (!ref || laatste)) return;
-      clearTimeout(wachten);
-      opruimen.forEach((weg) => weg());
-      opruimen = [];
-      sessie = huidig;
-      const doc = ref?.getDocument() ?? null;
-      laatste = doc;
-      vorigeStijl = stijlSleutel();
-      setDocument(doc);
-      setSelectie(null);
-      if (!ref || !doc) {
-        return;
-      }
-      opruimen = [
-        // De cursor verschuift bij elke letter, terwijl de stijlopmaak gelijk blijft.
-        // Houd dezelfde staat aan zodat de galerij niet steeds opnieuw wordt opgebouwd.
-        ref.onSelectionChange((staat) => setSelectie((oud) => JSON.stringify(oud) === JSON.stringify(staat) ? oud : staat)),
-        ref.onDocumentChange(() => {
-          // Gewone tekstinvoer verandert geen stijl: daarvoor is geen volledige
-          // documentprojectie nodig. Het stijlenvenster leest bij openen actueel.
-          const sleutel = stijlSleutel();
-          if (sleutel === vorigeStijl) return;
-          clearTimeout(wachten);
-          wachten = setTimeout(() => {
-            vorigeStijl = stijlSleutel();
-            laatste = api()?.getDocument() ?? null;
-            setDocument(laatste);
-            setVersie((v) => v + 1);
-          }, 1000);
-        }),
-      ];
-    };
-    koppel();
-    const poging = setInterval(koppel, 600);
-    return () => {
-      clearInterval(poging);
-      clearTimeout(wachten);
-      opruimen.forEach((weg) => weg());
-    };
-  }, [api]);
+  useEffect(() => volgStijlen(
+    api,
+    setDocument,
+    (staat) => setSelectie((oud) => JSON.stringify(oud) === JSON.stringify(staat) ? oud : staat),
+    () => setVersie((v) => v + 1),
+  ), [api]);
   return { document, selectie, versie };
 }
 

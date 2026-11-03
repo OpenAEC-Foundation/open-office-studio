@@ -121,7 +121,7 @@ met hetzelfde herstelvenster, dezelfde viewersessiefout en dezelfde
 appvensters bij betrokken.
 
 Via het door deze exacte binary geleverde JavaScript-asset is `U7e` gekoppeld
-aan `StijlenBeheer`; zijn hook `k8e` is `useStijlenData`. Die observer roept
+aan `StijlenBeheer`; zijn hook `k8e` is `useDocumentStaat`. Die observer roept
 `getDocument` ook aan als de bewerksessie ontbreekt. Het herstelvenster maakt
 de editor tijdelijk alleen-lezen. De aansluiting van deze observer en de
 andere statuslezingen moet worden gerepareerd en gericht hertest. Een legitiem
