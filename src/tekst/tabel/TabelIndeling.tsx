@@ -510,6 +510,7 @@ function ScheidingKeuze({
           <input type="radio" name="scheiding" checked={typeof scheiding === "object"} onChange={() => setScheiding({ teken: anders || "-" })} /> {t("table.separator.other")}
           <input
             type="text"
+            className="tw-scheidingsteken"
             maxLength={1}
             size={2}
             value={anders}

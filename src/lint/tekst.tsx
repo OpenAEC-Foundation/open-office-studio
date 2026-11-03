@@ -45,6 +45,9 @@ import {
   FlipHorizontal2,
   FlipVertical2,
   Rows3,
+  ArrowUpToLine,
+  ArrowLeftToLine,
+  ArrowRightToLine,
   Trash2,
   Scissors,
   Copy,
@@ -406,13 +409,15 @@ export function TekstRibbon({
                 id="tableAction"
                 args="addRowAbove"
                 naam={t("writer.commands.insertRowAbove")}
-                icoon={Rows3}
+                icoon={ArrowUpToLine}
+                altijdLabel
               />
               <W
                 id="tableAction"
                 args="addRowBelow"
                 naam={t("writer.commands.insertRowBelow")}
-                icoon={Rows3}
+                icoon={ArrowDownToLine}
+                altijdLabel
               />
             </div>
           </Groep>
@@ -422,13 +427,15 @@ export function TekstRibbon({
                 id="tableAction"
                 args="addColumnLeft"
                 naam={t("writer.commands.insertColumnLeft")}
-                icoon={Columns2}
+                icoon={ArrowLeftToLine}
+                altijdLabel
               />
               <W
                 id="tableAction"
                 args="addColumnRight"
                 naam={t("writer.commands.insertColumnRight")}
-                icoon={Columns2}
+                icoon={ArrowRightToLine}
+                altijdLabel
               />
             </div>
           </Groep>

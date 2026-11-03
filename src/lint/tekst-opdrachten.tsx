@@ -23,6 +23,7 @@ import { useHerhaalbaar } from "../tekst/bewerken/herhaalmelding";
 import { ontbrekendeStijl } from "../tekst/stijlen/model";
 import { metHeleAlinea } from "../tekst/stijlen/toepassen";
 import { tabelInvoegen } from "../tekst/tabel/opdrachten";
+import { vervangHoofdletters } from "../tekst/bewerken/hoofdletters";
 import {
   selectieBegin,
   specialeTekens,
@@ -267,28 +268,12 @@ export function useTekstOpdrachten({
       ];
       const voorstel = opnemen
         ? {
-            suggest: {
-              author: leesAuteur() || t("writer.comment.unknownAuthor"),
-              date: new Date().toISOString(),
-            },
+            author: leesAuteur() || t("writer.comment.unknownAuthor"),
+            date: new Date().toISOString(),
           }
-        : {};
-      const resultaat = await ref.applyEdits({
-        expectVersion: versie,
-        steps: vervangingen.map((v) => ({
-          op: "replaceText" as const,
-          target: {
-            kind: "range" as const,
-            story: alinea.story,
-            start: { paraId: alinea.paraId, offset: v.begin },
-            end: { paraId: alinea.paraId, offset: v.eind },
-            view: "accepted" as const,
-          },
-          text: v.tekst,
-          ...voorstel,
-        })),
-      });
-      if (!resultaat.ok)
+        : undefined;
+      const gelukt = await vervangHoofdletters(ref, alinea, versie, vervangingen, voorstel);
+      if (!gelukt)
         throw new Error(t("writer.errors.caseFailed"));
       ref.focus();
     } catch (error) {

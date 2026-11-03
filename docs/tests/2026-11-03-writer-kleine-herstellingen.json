@@ -1,0 +1,344 @@
+{
+  "datum": "2026-11-03",
+  "basis": "a67f7e9850257f5aceb65daaa01c36356f662793",
+  "status": "Lokaal hersteld en getest; niet gepubliceerd",
+  "issues": [
+    {
+      "nummer": 136,
+      "herstel": "Zichtbare vertaalde labels blijven behouden bij compacte lintgroepen; aparte richtingpictogrammen."
+    },
+    {
+      "nummer": 140,
+      "herstel": "Eigen scheidingsteken gebruikt themakleuren voor tekst, achtergrond en cursor; ruimer invoerveld."
+    },
+    {
+      "nummer": 142,
+      "herstel": "Lange hoofdletterselecties worden in batches van maximaal 128 stappen gevalideerd en daarna achterwaarts in één Undo-stap uitgevoerd; geaccepteerde posities worden naar sessieposities omgerekend."
+    }
+  ],
+  "aanvullendGecontroleerd": {
+    "nummer": 131,
+    "status": "Bestaande labels bevestigd; geen nieuwe fix meegeteld"
+  },
+  "controles": {
+    "typescript": "pnpm exec tsc --noEmit: geslaagd",
+    "productieBouw": "pnpm exec vite build --outDir .local/issue-fixes-dist --logLevel error: geslaagd",
+    "frontend": {
+      "rapport": ".local/issue-fixes-vitest-final.json",
+      "overgeslagen": 6,
+      "geslaagd": 1614,
+      "mislukt": 0
+    },
+    "hoofdlettersVoor": {
+      "stappen": [
+        {
+          "naam": "begin",
+          "tekens": 785,
+          "opmaak": "vet/cursief en dubbele regelafstand behouden"
+        },
+        {
+          "naam": "oude fout gereproduceerd, tekst behouden",
+          "tekens": 785,
+          "opmaak": "vet/cursief en dubbele regelafstand behouden"
+        }
+      ],
+      "fouten": []
+    },
+    "hoofdlettersNa": {
+      "stappen": [
+        {
+          "naam": "begin",
+          "tekens": 785,
+          "opmaak": "vet/cursief en dubbele regelafstand behouden"
+        },
+        {
+          "naam": "785 tekens naar hoofdletters",
+          "tekens": 785,
+          "opmaak": "vet/cursief en dubbele regelafstand behouden"
+        },
+        {
+          "naam": "één Undo",
+          "tekens": 785,
+          "opmaak": "vet/cursief en dubbele regelafstand behouden"
+        },
+        {
+          "naam": "één Redo",
+          "tekens": 785,
+          "opmaak": "vet/cursief en dubbele regelafstand behouden"
+        },
+        {
+          "naam": "opnieuw geopend",
+          "tekens": 785,
+          "opmaak": "vet/cursief en dubbele regelafstand behouden"
+        }
+      ],
+      "fouten": []
+    },
+    "tabel": {
+      "stappen": [
+        {
+          "thema": "forge",
+          "breedte": 1440,
+          "labels": "zichtbaar, inclusief ingeklapte groepen"
+        },
+        {
+          "thema": "forge",
+          "breedte": 640,
+          "labels": "zichtbaar, inclusief ingeklapte groepen"
+        },
+        {
+          "thema": "forge",
+          "actie": "Insert Row Above",
+          "bewaardeRijen": [
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "thema": "forge",
+          "actie": "Delete Row",
+          "bewaardeRijen": [
+            2,
+            2
+          ]
+        },
+        {
+          "thema": "forge",
+          "actie": "Insert Row Below",
+          "bewaardeRijen": [
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "thema": "forge",
+          "actie": "Delete Row",
+          "bewaardeRijen": [
+            2,
+            2
+          ]
+        },
+        {
+          "thema": "forge",
+          "actie": "Insert Column Left",
+          "bewaardeRijen": [
+            3,
+            3
+          ]
+        },
+        {
+          "thema": "forge",
+          "actie": "Delete Column",
+          "bewaardeRijen": [
+            2,
+            2
+          ]
+        },
+        {
+          "thema": "forge",
+          "actie": "Insert Column Right",
+          "bewaardeRijen": [
+            3,
+            3
+          ]
+        },
+        {
+          "thema": "forge",
+          "actie": "Delete Column",
+          "bewaardeRijen": [
+            2,
+            2
+          ]
+        },
+        {
+          "thema": "forge",
+          "focus": true,
+          "tekst": "rgb(242, 242, 240)",
+          "achtergrond": "rgb(42, 42, 49)",
+          "cursor": "rgb(242, 242, 240)",
+          "contrast": 12.710147827432733,
+          "breedte": 44,
+          "hoogte": 28,
+          "waarde": "|"
+        },
+        {
+          "thema": "forge",
+          "focus": false,
+          "tekst": "rgb(242, 242, 240)",
+          "achtergrond": "rgb(42, 42, 49)",
+          "cursor": "rgb(242, 242, 240)",
+          "contrast": 12.710147827432733,
+          "breedte": 44,
+          "hoogte": 28,
+          "waarde": "|"
+        },
+        {
+          "thema": "forge",
+          "omgezet": [
+            "a|b",
+            "c|d"
+          ]
+        },
+        {
+          "thema": "light",
+          "breedte": 1440,
+          "labels": "zichtbaar, inclusief ingeklapte groepen"
+        },
+        {
+          "thema": "light",
+          "breedte": 640,
+          "labels": "zichtbaar, inclusief ingeklapte groepen"
+        },
+        {
+          "thema": "light",
+          "actie": "Insert Row Above",
+          "bewaardeRijen": [
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "thema": "light",
+          "actie": "Delete Row",
+          "bewaardeRijen": [
+            2,
+            2
+          ]
+        },
+        {
+          "thema": "light",
+          "actie": "Insert Row Below",
+          "bewaardeRijen": [
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "thema": "light",
+          "actie": "Delete Row",
+          "bewaardeRijen": [
+            2,
+            2
+          ]
+        },
+        {
+          "thema": "light",
+          "actie": "Insert Column Left",
+          "bewaardeRijen": [
+            3,
+            3
+          ]
+        },
+        {
+          "thema": "light",
+          "actie": "Delete Column",
+          "bewaardeRijen": [
+            2,
+            2
+          ]
+        },
+        {
+          "thema": "light",
+          "actie": "Insert Column Right",
+          "bewaardeRijen": [
+            3,
+            3
+          ]
+        },
+        {
+          "thema": "light",
+          "actie": "Delete Column",
+          "bewaardeRijen": [
+            2,
+            2
+          ]
+        },
+        {
+          "thema": "light",
+          "focus": true,
+          "tekst": "rgb(43, 47, 54)",
+          "achtergrond": "rgb(255, 255, 255)",
+          "cursor": "rgb(43, 47, 54)",
+          "contrast": 13.43920277684545,
+          "breedte": 44,
+          "hoogte": 28,
+          "waarde": "|"
+        },
+        {
+          "thema": "light",
+          "focus": false,
+          "tekst": "rgb(43, 47, 54)",
+          "achtergrond": "rgb(255, 255, 255)",
+          "cursor": "rgb(43, 47, 54)",
+          "contrast": 13.43920277684545,
+          "breedte": 44,
+          "hoogte": 28,
+          "waarde": "|"
+        },
+        {
+          "thema": "light",
+          "omgezet": [
+            "a|b",
+            "c|d"
+          ]
+        }
+      ],
+      "fouten": [
+        "[CanvasRenderer] Document worker unavailable; falling back to the main-thread engine Error: story \"body:t0:r2c0~3550133945\" was not found\n    at e_e (http://127.0.0.1:58036/assets/index-D5XrWyAr.js:221:111326)\n    at VK.worker.onmessage (http://127.0.0.1:58036/assets/index-D5XrWyAr.js:221:93110)",
+        "[CanvasRenderer] Document worker unavailable; falling back to the main-thread engine Error: story \"body:t0:r2c0~3010773943\" was not found\n    at e_e (http://127.0.0.1:58036/assets/index-D5XrWyAr.js:221:111326)\n    at VK.worker.onmessage (http://127.0.0.1:58036/assets/index-D5XrWyAr.js:221:93110)"
+      ],
+      "fout": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   '[CanvasRenderer] Document worker unavailable; falling back to the main-thread engine Error: story \"body:t0:r2c0~3550133945\" was not found\\n' +\n+     '    at e_e (http://127.0.0.1:58036/assets/index-D5XrWyAr.js:221:111326)\\n' +\n+     '    at VK.worker.onmessage (http://127.0.0.1:58036/assets/index-D5XrWyAr.js:221:93110)',\n+   '[CanvasRenderer] Document worker unavailable; falling back to the main-thread engine Error: story \"body:t0:r2c0~3010773943\" was not found\\n' +\n+     '    at e_e (http://127.0.0.1:58036/assets/index-D5XrWyAr.js:221:111326)\\n' +\n+     '    at VK.worker.onmessage (http://127.0.0.1:58036/assets/index-D5XrWyAr.js:221:93110)'\n+ ]\n- []\n",
+      "beoordeling": "Labels, contrast, invoegen/verwijderen en bewaarde DOCX-inhoud voldoen. De strenge controle op een lege console faalt bij een snelle reeks tabelbewerkingen: documentworker valt terug wegens een verdwenen celverhaal. Geen volledige runtimegoedkeuring."
+    }
+  },
+  "bronHashes": [
+    {
+      "pad": "src/lint/tekst.tsx",
+      "sha256": "578d6c6264c15cc8838784c2e1dfa83ca41722d25b21570e51a7fbb1c503d29f"
+    },
+    {
+      "pad": "src/lint/tekst-opdrachten.tsx",
+      "sha256": "bc4a408211717c941a9b5411593cd18166392237874532fbb80c1b99314a3a84"
+    },
+    {
+      "pad": "src/tekst/gedeeld/tekst-word.css",
+      "sha256": "dc70a39ccacdba61ebb571f87967090a89edda9e3b29debfdf3f1990aacf9591"
+    },
+    {
+      "pad": "src/tekst/tabel/TabelIndeling.tsx",
+      "sha256": "3bab06b9de8e120dd381760eafed6f1dd59869b589614be611293427f9dfac5d"
+    },
+    {
+      "pad": "src/tekst/bewerken/hoofdletters.ts",
+      "sha256": "069da239bc29011cc4857d53917150f6c7aee88440dadd9812875acb22741618"
+    },
+    {
+      "pad": "src/tekst/bewerken/hoofdletters.test.ts",
+      "sha256": "f52af908819a2a0f6766e04d0ca11ee49dd45d9442882f18d169fa6ec61eda79"
+    },
+    {
+      "pad": "scripts/test-writer-tabel-ui.mjs",
+      "sha256": "76730d79a25e02ccffd5dc7162f0ad40694c066f1a972aeb41224dcaa13ec744"
+    },
+    {
+      "pad": "scripts/test-writer-hoofdletters-gui.mjs",
+      "sha256": "ecf7451b7f4dc844e5b32515eb39fbce0f2d030766152e929be416fd3f3cbfd2"
+    }
+  ],
+  "grenzen": [
+    "GUI-proeven gebruiken de lokale productie-frontend in Playwright Chromium op Windows. Geen nieuwe native Tauri- of Linux/macOS-GUI-acceptatie.",
+    "Bestaande engineweigeringen voor conflicterende bijgehouden wijzigingen blijven gelden.",
+    "Andere gelijktijdige wijzigingen, onder andere paginanavigatie en bestaande documentatie, zijn geen onderdeel van deze drie fixes.",
+    "De geïnstalleerde desktopapp en GitHub-issues zijn niet gewijzigd.",
+    "De laatste tabel-GUI-proef eindigt met exitcode 1 wegens twee worker-consolefouten na structuurwijzigingen. Alle daarin uitgevoerde inhouds-, label- en contrastcontroles slagen. Deze resterende fout is vastgelegd, niet opgelost."
+  ],
+  "productieBundel": {
+    "sha256": "8ea70d5e8cb313a871b2c4ab9482fa2f00cb79f34cb2b0d813810841cf6f0605",
+    "pad": ".local\\issue-fixes-dist\\assets\\index-D5XrWyAr.js",
+    "grootte": 2885163
+  }
+}
