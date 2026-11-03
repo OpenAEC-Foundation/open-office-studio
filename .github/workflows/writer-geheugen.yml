@@ -1,0 +1,86 @@
+name: Writer-geheugenonderzoek op Linux
+run-name: Writer-geheugenonderzoek · ${{ github.ref_name }} · ${{ github.sha }}
+on:
+  push:
+    branches: ["codex/native-rust-office"]
+    paths:
+      - '.github/workflows/writer-geheugen.yml'
+      - 'scripts/test-writer-lang-native.py'
+      - 'scripts/bewaar-writer-foutcontext.py'
+  workflow_dispatch:
+    inputs:
+      geheugenrondes:
+        description: Extra selectie-/geschiedenisrondes met expliciete garbagecollection (1–100)
+        required: true
+        default: '20'
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: writer-geheugen-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  onderzoeken:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            src-tauri -> target
+            src/spelling/rust -> target
+      - name: Dezelfde Linux-bouw- en GUI-afhankelijkheden
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev patchelf squashfs-tools python3-gi python3-xlib python3-pil python3-venv xvfb xauth xdotool
+      - name: Afzonderlijke GUI-testomgeving
+        run: |
+          /usr/bin/python3 -m venv --system-site-packages "$RUNNER_TEMP/office-geheugen-gui"
+          "$RUNNER_TEMP/office-geheugen-gui/bin/python" -m pip install --ignore-installed -r scripts/gui/requirements.txt
+          echo "OFFICE_GUI_PYTHON=$RUNNER_TEMP/office-geheugen-gui/bin/python" >> "$GITHUB_ENV"
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/cache@v4
+        with:
+          path: |
+            .local/lettertypen-cache
+            .local/woordenboeken-cache
+          key: dev-assets-${{ hashFiles('assets/lettertypen.json', 'assets/woordenboeken.json') }}
+      - name: Lettertypen, woordenboeken en spellingkern
+        run: |
+          node scripts/haal-lettertypen.mjs
+          node scripts/haal-woordenboeken.mjs
+          node scripts/bouw-spelling-wasm.mjs
+      - run: pnpm versie:check
+      - name: De gewone suite met Linux-verpakkingen bouwen
+        run: pnpm desktop:build --bundles deb,appimage
+      - name: Gewone 500-paginaproef inclusief heropenen
+        run: |
+          "$OFFICE_GUI_PYTHON" scripts/test-writer-lang-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-writer-geheugen/normaal
+      - name: Extra selectie, Backspace, undo, redo en garbagecollection
+        env:
+          GEHEUGENRONDES: ${{ inputs.geheugenrondes || '20' }}
+        run: |
+          "$OFFICE_GUI_PYTHON" scripts/test-writer-lang-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-writer-geheugen/herhalen --geheugenrondes "$GEHEUGENRONDES" --geheugen-gc
+      - name: Exacte binary bij afkeuring bewaren
+        if: failure()
+        run: |
+          python3 scripts/bewaar-writer-foutcontext.py --programma src-tauri/target/release/open-office-studio --rapport .local/proef-writer-geheugen/normaal/rapport.json --rapport .local/proef-writer-geheugen/herhalen/rapport.json --uitvoer .local/proef-writer-geheugen/foutcontext --appimage-map src-tauri/target/release/bundle/appimage
+      - name: Onderzoeksgegevens bewaren
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: writer-geheugen-Linux-${{ github.run_number }}
+          path: |
+            .local/proef-writer-geheugen/
+            !.local/proef-writer-geheugen/foutcontext/inhoud/**
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 30

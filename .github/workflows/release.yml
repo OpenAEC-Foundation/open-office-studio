@@ -306,6 +306,20 @@ jobs:
           path: .local/proef-native-writer-lang/
           include-hidden-files: true
           if-no-files-found: warn
+      - name: Exacte afgekeurde Writer-binary en runtime bewaren
+        if: failure() && runner.os == 'Linux'
+        run: python3 scripts/bewaar-writer-foutcontext.py --programma src-tauri/target/release/open-office-studio --rapport .local/proef-native-writer-lang/rapport.json --uitvoer .local/writer-foutcontext --appimage-map src-tauri/target/release/bundle/appimage
+      - name: Writer-foutcontext uploaden
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: writer-foutcontext-${{ github.workflow }}-${{ matrix.label }}
+          path: |
+            .local/writer-foutcontext/*.tar.gz
+            .local/writer-foutcontext/SHA256SUMS
+          include-hidden-files: true
+          if-no-files-found: ignore
+          retention-days: 30
       - name: Native Writer-lijstbewijs bewaren
         if: always() && runner.os == 'Linux'
         uses: actions/upload-artifact@v4

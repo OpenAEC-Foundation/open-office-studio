@@ -4,8 +4,8 @@ Een push naar GitHub werkt de broncode bij. De pagina Releases verandert alleen
 als er apart een uitgave wordt gepubliceerd. Een ontwikkelbuild is daarom
 beschikbaar als download bij GitHub Actions, zonder nieuwe release of tag.
 
-De gecontroleerde [45.20-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41658684001/artifacts/13240879781) is gebouwd uit
-`058e6a17dfc5d571b307fba3e9c6ae03d25ee978`. De [bouw en pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41658684001) slagen.
+De gecontroleerde [45.21-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41668283834/artifacts/13247446790) is gebouwd uit
+`14db0e1dd8f7a93198b2e23a6a69c70d0fff616c`. De [bouw en pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41668283834) slagen.
 Sluit een eerder geopende dev-versie na het bewaren voordat je de nieuwe start;
 beide gebruiken hetzelfde dev-profiel.
 
@@ -43,5 +43,8 @@ De FUSE-mount, andere distributies en de overige functies zijn daarmee niet voll
 Bekende Writer-problemen met grote documenten en de documentworker zijn nog
 in onderzoek. Een [afzonderlijke Linux-uitgaveproef van 45.20](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41658755587)
 is afgekeurd op een geheugenfout in de Wasm-layout bij 500 pagina’s. De
-geslaagde devpakketproef bewijst geen oplossing voor die fout. De workflow heeft alleen leesrechten op de repository en
+geslaagde devpakketproef bewijst geen oplossing voor die fout. Ook de
+[brede 45.21-desktopproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41668303628)
+is op Linux afgekeurd bij heropenen, met een fout over een synchrone uitlezing
+van een viewersessie. Zie het [geheugen-/opstartonderzoek](../tests/writer-geheugenonderzoek.md). De workflow heeft alleen leesrechten op de repository en
 publiceert geen GitHub-release.

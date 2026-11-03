@@ -43,8 +43,14 @@ def main():
     p.add_argument('--uitvoer', type=Path, required=True)
     p.add_argument('--versie', required=True)
     p.add_argument('--historische-registerwissels', action='store_true', help='Alleen voor vergelijking met een oude binary: registreer de canvaswissels zonder deze specifieke nieuwe acceptatie-eis.')
+    p.add_argument('--geheugenrondes', type=int, default=0, help='Extra selectie-/Backspace-/undo-/redo-rondes vóór de gewone bewaarproef (0–100).')
+    p.add_argument('--geheugen-gc', action='store_true', help='Vraag na iedere extra ronde expliciet WebKit-garbagecollection aan; een geweigerde opdracht keurt de proef af.')
     p.add_argument('--binnen', action='store_true', help=argparse.SUPPRESS)
     a = p.parse_args()
+    if not 0 <= a.geheugenrondes <= 100:
+        p.error('--geheugenrondes moet tussen 0 en 100 liggen')
+    if a.geheugen_gc and not a.geheugenrondes:
+        p.error('--geheugen-gc vereist minstens één geheugenronde')
     a.programma = a.programma.resolve(strict=True)
     a.uitvoer = a.uitvoer.resolve()
     if a.binnen:
@@ -66,6 +72,9 @@ def main():
         http, inspectie = poorten()
         omgeving.update(GDK_BACKEND='x11', LC_ALL='C.UTF-8', WEBKIT_DISABLE_DMABUF_RENDERER='1', WEBKIT_INSPECTOR_HTTP_SERVER=f'127.0.0.1:{http}', WEBKIT_INSPECTOR_SERVER=f'127.0.0.1:{inspectie}', OFFICE_PROEF_HTTP=str(http))
         extra = ['--historische-registerwissels'] if a.historische_registerwissels else []
+        extra += ['--geheugenrondes', str(a.geheugenrondes)]
+        if a.geheugen_gc:
+            extra.append('--geheugen-gc')
         return subprocess.call(['dbus-run-session', '--', 'xvfb-run', '-a', '-s', '-screen 0 1600x1100x24 -nolisten tcp', sys.executable, str(Path(__file__).resolve()), '--binnen', '--programma', str(a.programma), '--uitvoer', str(a.uitvoer), '--versie', a.versie, *extra], env=omgeving)
 
 
@@ -141,7 +150,18 @@ async def proef(a):
         raise TimeoutError('Eigen proefvenster niet gevonden')
 
     async def gereed(p):
-        await p.run('''window.proefApi=()=>{const el=document.querySelector('.office-tabpaneel:not([hidden]) .office-tekst');if(!el)return null;for(let f=el[Object.keys(el).find(k=>k.startsWith('__reactFiber$'))];f;f=f.return)for(let s=f.memoizedState,i=0;s&&i<200;i++,s=s.next){const v=s.memoizedState?.current;if(v?.getEditorRef&&v.commands)return v}return null};let einde=performance.now()+60000;while(proefApi()?.getTotalPages()!==500||!proefApi().getEditorRef()?.getYrsSession()){if(performance.now()>einde)throw Error('500 pagina’s niet gereed');await new Promise(r=>setTimeout(r,100))}await proefApi().flushPendingInput();return true;''')
+        await p.command('Console.enable')
+        try:
+            await p.run('''window.proefApi=()=>{const el=document.querySelector('.office-tabpaneel:not([hidden]) .office-tekst');if(!el)return null;for(let f=el[Object.keys(el).find(k=>k.startsWith('__reactFiber$'))];f;f=f.return)for(let s=f.memoizedState,i=0;s&&i<200;i++,s=s.next){const v=s.memoizedState?.current;if(v?.getEditorRef&&v.commands)return v}return null};let einde=performance.now()+60000;while(proefApi()?.getTotalPages()!==500||!proefApi().getEditorRef()?.getYrsSession()){if(performance.now()>einde)throw Error('500 pagina’s niet gereed');await new Promise(r=>setTimeout(r,100))}await proefApi().flushPendingInput();return true;''')
+        except Exception:
+            # Bewaar een opstartafkeuring terwijl de inspectieverbinding nog
+            # bestaat. Een herstelvenster of foutmelding wordt niet weggeklikt.
+            try:
+                rapport['niet_gereed'] = await p.ev("({paginas:window.proefApi?.()?.getTotalPages(),tekst:document.body.innerText.slice(0,16000),meldingen:Array.from(document.querySelectorAll('.office-melding')).map(e=>e.textContent)})")
+                rapport['niet_gereed']['console'] = list(p.consoleberichten)
+            except Exception as inspectiefout:
+                rapport['niet_gereed_inspectiefout'] = repr(inspectiefout)
+            raise
         werkelijk = await p.run("return await window.__TAURI_INTERNALS__.invoke('plugin:app|version');")
         assert werkelijk == a.versie, (werkelijk, a.versie)
         await p.begin_foutbewaking()
@@ -227,6 +247,26 @@ async def proef(a):
             rapport['invoermeting']['tot_bron_en_golven_ms_inclusief_nawacht'] = round((time.monotonic()-begin)*1000)
             getypt = list(origineel); getypt[-1] += ' Een proefzin.'
             await controle(p, 'getypte_bron', getypt); beeld('getypt-pagina-500')
+            if a.geheugenrondes:
+                rapport['geheugenproef'] = {'gevraagde_rondes': a.geheugenrondes, 'gc_gevraagd': a.geheugen_gc, 'rondes': [], 'grens': 'Extra native geschiedenis-/selectiebelasting; geen bewijs dat een incidentele allocatorpanic is opgelost.'}
+                if a.geheugen_gc:
+                    antwoord = await p.command('Heap.enable')
+                    assert not antwoord.get('error'), antwoord
+                for ronde in range(1, a.geheugenrondes + 1):
+                    # Right is een unieke laatste keyup: wachten op z kan al
+                    # de eerste undo zien terwijl de rest nog onderweg is.
+                    await toets(p, 'ctrl+shift+Left', 'BackSpace', 'ctrl+z', 'ctrl+y', 'ctrl+z', 'Right')
+                    gc = None
+                    if a.geheugen_gc:
+                        gc = await p.command('Heap.gc')
+                        assert not gc.get('error'), gc
+                    teksten = await bronstand(p)
+                    fouten = await p.fouten()
+                    stap = {'ronde': ronde, 'exact': teksten == getypt, **samenvatting(teksten), 'fouten': fouten, 'gc': gc}
+                    rapport['geheugenproef']['rondes'].append(stap)
+                    assert stap['exact'], 'Geheugenronde verandert brongegevens'
+                    assert not any(fouten.values()), 'GUI of engine meldt fouten in de geheugenronde'
+                    print('geheugenronde', ronde, 'geslaagd', flush=True)
             await toets(p, 'ctrl+shift+Left', 'BackSpace')
             verwijderd = await bronstand(p)
             rapport['selectie_backspace'] = {**samenvatting(verwijderd), 'eerste_verschil': next((i for i, paar in enumerate(zip(verwijderd, getypt)) if paar[0] != paar[1]), None), 'native_toetsen': await p.ev('_toetsenProef')}
