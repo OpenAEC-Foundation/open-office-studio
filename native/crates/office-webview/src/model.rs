@@ -3,7 +3,62 @@ use office_core::{
     document::{Bewerking, Fout, Module, Resultaat, Sessie, Weergave},
     opslag,
 };
-use std::path::{Path, PathBuf};
+use std::{
+    path::{Path, PathBuf},
+    sync::{Arc, Mutex},
+};
+
+/// Een onveranderlijke bewaarkopie; bevat geen documentsessie of UI-slot.
+pub struct BewaarTaak {
+    document: u64,
+    volgnummer: u64,
+    pad: PathBuf,
+    bron: Arc<Vec<u8>>,
+    bron_hash: String,
+    verwacht: Option<String>,
+    schrijfsleutel: Arc<Mutex<()>>,
+}
+
+pub struct BewaarAntwoord {
+    document: u64,
+    volgnummer: u64,
+    pad: PathBuf,
+    bron_hash: String,
+    resultaat: Resultaat<String>,
+}
+
+impl BewaarTaak {
+    pub async fn uitvoeren(self) -> BewaarAntwoord {
+        let Self {
+            document,
+            volgnummer,
+            pad,
+            bron,
+            bron_hash,
+            verwacht,
+            schrijfsleutel,
+        } = self;
+        let schrijfpad = pad.clone();
+        let resultaat = office_core::werker::achtergrond(move || {
+            // Alleen de achtergronddraad wacht op deze sleutel. Twee tabbladen
+            // mogen niet tegelijk dezelfde oude schijfhash goedkeuren.
+            let _sleutel = schrijfsleutel
+                .lock()
+                .map_err(|_| Fout::Document("De bewaarwerker is afgebroken".into()))?;
+            opslag::schrijf(&schrijfpad, &bron, verwacht.as_deref())
+        })
+        .await
+        .map_err(Fout::Document)
+        .and_then(|r| r);
+        BewaarAntwoord {
+            document,
+            volgnummer,
+            pad,
+            bron_hash,
+            resultaat,
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct Doel {
@@ -30,6 +85,7 @@ pub struct Tabblad {
     schijf_hash: Option<String>,
     bewaard_hash: String,
     generatie: u64,
+    bewaar_bezig: Option<u64>,
 }
 impl Tabblad {
     pub fn tabnaam(&self) -> &str {
@@ -77,6 +133,8 @@ pub struct Werkruimte {
     pub melding: String,
     pub venster_sluiten: bool,
     volgend: u64,
+    volgende_bewaaractie: u64,
+    schrijfsleutel: Arc<Mutex<()>>,
 }
 impl Werkruimte {
     pub fn tab(&self) -> Option<&Tabblad> {
@@ -108,6 +166,7 @@ impl Werkruimte {
             schijf_hash,
             bewaard_hash,
             generatie: 0,
+            bewaar_bezig: None,
         });
         self.actief = Some(id);
         self.bestand = false;
@@ -194,25 +253,72 @@ impl Werkruimte {
         .into();
         Ok(())
     }
-    pub fn bewaar(&mut self, doel: Doel, nieuw_pad: Option<&Path>) -> Resultaat<()> {
+    pub fn voorbereid_bewaren(
+        &mut self,
+        doel: Doel,
+        nieuw_pad: Option<&Path>,
+    ) -> Resultaat<BewaarTaak> {
+        let schrijfsleutel = self.schrijfsleutel.clone();
+        self.volgende_bewaaractie = self
+            .volgende_bewaaractie
+            .checked_add(1)
+            .ok_or_else(|| Fout::Document("Te veel bewaaracties".into()))?;
+        let volgnummer = self.volgende_bewaaractie;
         let t = self.eigenaar(doel)?;
+        if t.bewaar_bezig.is_some() {
+            return Err(Fout::Document("Dit document wordt al opgeslagen".into()));
+        }
         let pad = nieuw_pad
             .or(t.pad.as_deref())
             .ok_or_else(|| Fout::Document("Kies eerst Opslaan als".into()))?
             .to_path_buf();
         let verwacht = if t.pad.as_deref() == Some(pad.as_path()) {
-            t.schijf_hash.as_deref()
+            t.schijf_hash.clone()
         } else {
             None
         };
-        match opslag::schrijf(&pad, &t.sessie.bron(), verwacht) {
+        let taak = BewaarTaak {
+            document: t.id,
+            volgnummer,
+            pad,
+            bron: t.sessie.bron(),
+            bron_hash: t.sessie.bron_hash().into(),
+            verwacht,
+            schrijfsleutel,
+        };
+        t.bewaar_bezig = Some(volgnummer);
+        t.melding = "Opslaan…".into();
+        Ok(taak)
+    }
+    /// Alleen de bijbehorende bewaarkopie wordt bevestigd, ook na navigatie.
+    /// Een gesloten document wordt nooit door een laat antwoord teruggebracht.
+    pub fn voltooi_bewaren(&mut self, antwoord: BewaarAntwoord) -> Resultaat<bool> {
+        let Some(t) = self
+            .tabbladen
+            .iter_mut()
+            .find(|t| t.id == antwoord.document && t.bewaar_bezig == Some(antwoord.volgnummer))
+        else {
+            return Ok(false);
+        };
+        t.bewaar_bezig = None;
+        match antwoord.resultaat {
             Ok(hash) => {
                 t.schijf_hash = Some(hash);
-                t.bewaard_hash = t.sessie.bron_hash().into();
-                t.naam = pad.file_name().unwrap_or_default().to_string_lossy().into();
-                t.pad = Some(pad);
-                t.melding = "Opgeslagen".into();
-                Ok(())
+                t.bewaard_hash = antwoord.bron_hash;
+                t.naam = antwoord
+                    .pad
+                    .file_name()
+                    .unwrap_or_default()
+                    .to_string_lossy()
+                    .into();
+                t.pad = Some(antwoord.pad);
+                t.melding = if t.gewijzigd() {
+                    "Niet opgeslagen"
+                } else {
+                    "Opgeslagen"
+                }
+                .into();
+                Ok(true)
             }
             Err(e) => {
                 t.melding = e.to_string();

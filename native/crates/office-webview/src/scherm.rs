@@ -54,7 +54,7 @@ pub fn bewaren(werk: Signal<Werkruimte>, doel: Doel, als: bool) {
         .find(|t| t.doel() == doel)
         .is_some_and(|t| t.pad.is_some());
     if heeft_pad && !als {
-        voer(werk, |w| w.bewaar(doel, None));
+        bewaar_pad(werk, doel, None);
         return;
     }
     #[cfg(feature = "desktop")]
@@ -73,7 +73,7 @@ pub fn bewaren(werk: Signal<Werkruimte>, doel: Doel, als: bool) {
                 .await
             {
                 // Een eerder gekozen bestaand document wordt hier niet stil overschreven.
-                voer(werk, |w| w.bewaar(doel, Some(bestand.path())));
+                bewaar_pad(werk, doel, Some(bestand.path().to_path_buf()));
             }
         });
     }
@@ -84,6 +84,26 @@ pub fn bewaren(werk: Signal<Werkruimte>, doel: Doel, als: bool) {
             Ok(())
         });
     }
+}
+
+fn bewaar_pad(mut werk: Signal<Werkruimte>, doel: Doel, pad: Option<std::path::PathBuf>) {
+    let taak = {
+        let mut w = werk.write();
+        match w.voorbereid_bewaren(doel, pad.as_deref()) {
+            Ok(taak) => taak,
+            Err(fout) => {
+                w.meld(Err(fout));
+                return;
+            }
+        }
+    };
+    // De bewaarkopie is vastgelegd; de UI-borrow eindigt vóór de await.
+    spawn(async move {
+        let antwoord = taak.uitvoeren().await;
+        let mut w = werk.write();
+        let resultaat = w.voltooi_bewaren(antwoord).map(|_| ());
+        w.meld(resultaat);
+    });
 }
 
 #[component]

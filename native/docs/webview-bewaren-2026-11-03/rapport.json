@@ -1,0 +1,118 @@
+{
+  "datum": "2026-11-03",
+  "basis": "bd0ee03",
+  "versie": "Open Office Studio WebView 2026.45.0-alpha.47",
+  "soort_bouw": "native Linux debug, volledige werkruimte met desktopfeature",
+  "programma_sha256": "bbe77c41f9fbae766eaaca84c04ccdff9af7bf8c60599182aa54a1300592f0ad",
+  "gerichte_webview_tests": 15,
+  "nieuwe_bewaarproeven": 4,
+  "clippy": "Volledige werkruimte met desktopfeature, alle doelen, -D warnings geslaagd",
+  "vensterproef": {
+    "geslaagd": true,
+    "clientbeelden": 45,
+    "controles": [
+      {
+        "naam": "snelle titel bewaard",
+        "verwacht": {
+          "titel": "Notitie uit Rust WebView"
+        },
+        "werkelijk": {
+          "titel": "Notitie uit Rust WebView"
+        },
+        "bron_sha256": "6fb70f7cea45c59f882be3733597d2d64a5d4356abca4abfb83656b66665deb5"
+      },
+      {
+        "naam": "snelle canvastekst bewaard",
+        "verwacht": {
+          "titel": "Notitie uit Rust WebView",
+          "canvas": "Snelle canvastekst met alle letters 0123456789."
+        },
+        "werkelijk": {
+          "titel": "Notitie uit Rust WebView",
+          "canvas": "Snelle canvastekst met alle letters 0123456789."
+        },
+        "bron_sha256": "38430e79cf539df9f0d4173ab2308c4bb6f3a1790faf061e3175e96b43963718"
+      },
+      {
+        "naam": "undo",
+        "verwacht": {
+          "canvas": "Snelle canvastekst met alle letters 0123456789"
+        },
+        "werkelijk": {
+          "canvas": "Snelle canvastekst met alle letters 0123456789"
+        },
+        "bron_sha256": "c30173e931b81254a76b4ff745916d8b2c3a7b9b7dd4648100f0c3163f6fd3d6"
+      },
+      {
+        "naam": "opnieuw",
+        "verwacht": {
+          "canvas": "Snelle canvastekst met alle letters 0123456789."
+        },
+        "werkelijk": {
+          "canvas": "Snelle canvastekst met alle letters 0123456789."
+        },
+        "bron_sha256": "38430e79cf539df9f0d4173ab2308c4bb6f3a1790faf061e3175e96b43963718"
+      },
+      {
+        "naam": "markdown met echte regelovergangen",
+        "verwacht": {
+          "markdown": "Volledige Markdown tekst 0123456789.\n\nTweede regel blijft ook compleet."
+        },
+        "werkelijk": {
+          "markdown": "Volledige Markdown tekst 0123456789.\n\nTweede regel blijft ook compleet."
+        },
+        "bron_sha256": "6390e981a7ee9a40ec6bc797f1dc5bddd72654ca5feb7615e75025574abd6b3c"
+      },
+      {
+        "naam": "eindbron",
+        "verwacht": {
+          "titel": "Notitie uit Rust WebView",
+          "canvas": "Snelle canvastekst met alle letters 0123456789.",
+          "markdown": "Volledige Markdown tekst 0123456789.\n\nTweede regel blijft ook compleet."
+        },
+        "werkelijk": {
+          "titel": "Notitie uit Rust WebView",
+          "canvas": "Snelle canvastekst met alle letters 0123456789.",
+          "markdown": "Volledige Markdown tekst 0123456789.\n\nTweede regel blijft ook compleet."
+        },
+        "bron_sha256": "6390e981a7ee9a40ec6bc797f1dc5bddd72654ca5feb7615e75025574abd6b3c"
+      },
+      {
+        "naam": "schoon systeemsluiten",
+        "programma_eindcode": 0
+      },
+      {
+        "naam": "heropend",
+        "verwacht": {
+          "titel": "Notitie uit Rust WebView",
+          "canvas": "Snelle canvastekst met alle letters 0123456789.",
+          "markdown": "Volledige Markdown tekst 0123456789.\n\nTweede regel blijft ook compleet."
+        },
+        "werkelijk": {
+          "titel": "Notitie uit Rust WebView",
+          "canvas": "Snelle canvastekst met alle letters 0123456789.",
+          "markdown": "Volledige Markdown tekst 0123456789.\n\nTweede regel blijft ook compleet."
+        },
+        "bron_sha256": "6390e981a7ee9a40ec6bc797f1dc5bddd72654ca5feb7615e75025574abd6b3c"
+      },
+      {
+        "naam": "heropend schoon systeemsluiten",
+        "programma_eindcode": 0
+      },
+      {
+        "naam": "expliciet verwerpen sluit werkelijk en behoudt schijfbron",
+        "programma_eindcode": 0,
+        "bron_sha256": "6390e981a7ee9a40ec6bc797f1dc5bddd72654ca5feb7615e75025574abd6b3c"
+      }
+    ],
+    "bron_begin_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+    "bron_eind_sha256": "6390e981a7ee9a40ec6bc797f1dc5bddd72654ca5feb7615e75025574abd6b3c",
+    "script_sha256": "08858b404ae25ad6d8b9ab43c743a3cdc068db9c2497f871eff4488a69ce67fa"
+  },
+  "beperkingen": [
+    "Dit is geen releasebuild of volledige functie-/pixelacceptatie.",
+    "Openen, enginebewerkingen en weergave draaien in deze WebView-preview nog op de interfacethread; de gedeelde documentsessiewerker moet nog worden aangesloten.",
+    "De kortdurende lokale schijfproef bewijst geen gedrag van alle netwerkschijven of alle externe schrijfprocessen.",
+    "De bestaande Tauri-testapp is een afzonderlijke uitvoering."
+  ]
+}

@@ -176,3 +176,10 @@ Deze inventaris heeft **106** items. “Open” betekent niet dat de fout in dez
 - De Rust-kernronde slaagt op 192 proeven. De brede werkruimtecontrole met desktopcode heeft ook 198 Iced-interfacetests, 51 mailtests en 15 conversietests uitgevoerd. Zes expliciet optionele proeven zijn daarbij niet uitgevoerd. De extra X11-proef vond eerst Xvfb niet op PATH en is daarna met dezelfde testbinary en expliciet pad geslaagd. Elf resterende WebView-proeven en Clippy met desktopcode/alle doelen zijn groen. Samen zijn 468 Rust-proeven uitgevoerd en zes optionele proeven overgeslagen; zie [het verslag](../native/docs/gedeelde-werker-2026-11-03.json). De Dioxus-aansluiting blijft open.
 
 - Bij controle van de oudere Rust-CI zijn twee afzonderlijke vrijgaveproblemen gevonden: de pakketnaam wordt door een stijlpad overschreven en de WebView-vensterproef hergebruikt een map uit de bouwcache. De Tauri-platformbouw hierboven blijft geslaagd; de Rust-previewroute is hierdoor nog niet volledig groen. Correctie en hertest lopen.
+
+### Rust-WebView: bewaren buiten de interfacethread
+
+- Een bewaarkopie bevat alleen bronbytes, hash, doelpad en de eigen document-/opdrachtidentiteit. Het bestandswerk wacht buiten de UI op de gedeelde achtergrondvoorziening.
+- Een voltooid ouder bewaarsnapshot maakt nieuwe invoer niet schoon. Navigeren of een andere tab kiezen verplaatst de bevestiging niet; een gesloten tab komt niet terug. Gelijktijdig bewaren naar dezelfde oude schijfversie heeft maximaal één winnaar.
+- Vier nieuwe modelproeven, alle vijftien gerichte WebView-proeven, volledige Clippy en de echte Linux-vensterproef slagen. De laatste heeft 45 clientbeelden en tien inhouds-/afsluitcontroles. Zie [het verslag](../native/docs/webview-bewaren-2026-11-03/LEESMIJ.md).
+- Dit is een geteste debugbuild van de preview. Openen, enginebewerkingen en weergave moeten nog op de documentwerker worden aangesloten; dit lost de Writer-typvertraging van de bestaande Tauri-app niet op.

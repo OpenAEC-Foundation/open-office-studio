@@ -1,9 +1,20 @@
 //! Eigenaarschap, bronbehoud en opslag testen onafhankelijk van de DOM.
+mod gereedschap;
 use office_core::{
     document::{Bewerking, Module},
     notities::NotitieActie as N,
 };
 use open_office_studio_webview::model::{Doel, Werkruimte};
+
+fn bewaar(
+    w: &mut Werkruimte,
+    doel: Doel,
+    pad: Option<&std::path::Path>,
+) -> office_core::document::Resultaat<()> {
+    let taak = w.voorbereid_bewaren(doel, pad)?;
+    w.voltooi_bewaren(gereedschap::wacht(taak.uitvoeren()))
+        .map(|_| ())
+}
 
 fn notities() -> (Werkruimte, Doel) {
     let mut w = Werkruimte::default();
@@ -79,7 +90,7 @@ fn webview_opslaan_weigert_externe_wijziging_en_bewaart_fout_bij_eigenaar() {
     let (mut w, d) = notities();
     titel(&mut w, d, "Bewaarde titel");
     assert!(w.sluit(d.document, false).is_err());
-    w.bewaar(d, Some(&pad)).unwrap();
+    bewaar(&mut w, d, Some(&pad)).unwrap();
     assert!(!w.tab().unwrap().gewijzigd());
     let bytes = std::fs::read(&pad).unwrap();
     let mut ander = Werkruimte::default();
@@ -89,7 +100,7 @@ fn webview_opslaan_weigert_externe_wijziging_en_bewaart_fout_bij_eigenaar() {
     titel(&mut w, d, "Onopgeslagen titel");
     std::fs::write(&pad, b"Externe wijziging").unwrap();
     let tweede = w.nieuw(Module::Notition).unwrap();
-    assert!(w.bewaar(d, None).is_err());
+    assert!(bewaar(&mut w, d, None).is_err());
     assert_eq!(std::fs::read(&pad).unwrap(), b"Externe wijziging");
     assert!(
         w.tabbladen[0]
@@ -99,7 +110,7 @@ fn webview_opslaan_weigert_externe_wijziging_en_bewaart_fout_bij_eigenaar() {
     assert!(w.tabbladen[0].gewijzigd());
     assert!(w.tab().unwrap().melding.is_empty());
     assert_eq!(w.actief, Some(tweede));
-    assert!(w.bewaar(d, Some(&pad)).is_err());
+    assert!(bewaar(&mut w, d, Some(&pad)).is_err());
     assert_eq!(std::fs::read(&pad).unwrap(), b"Externe wijziging");
 }
 
