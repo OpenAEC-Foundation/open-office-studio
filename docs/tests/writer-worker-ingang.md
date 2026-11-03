@@ -109,8 +109,8 @@ niet gecontroleerd; de afbeelding bewijst geen volledige visuele juistheid:
   0,109375 CSS-pixel in oudere CI was geen zichtbare overschrijding.
 - De Linux-devworkflow controleert de uitgepakte AppImage zelf met de
   bewaar-/vervolgproef en bindt het resultaat aan de hash van de bediende ELF.
-  De vernieuwde CI-ronde moet na push afzonderlijk worden gevolgd; lokale
-  proeven bewijzen niet dat de remote pakketten al zijn goedgekeurd.
+  De [remote devronde](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41633473423) slaagt eveneens;
+  deze uitslag betreft de afzonderlijke dev-identiteit en de geteste AppRun/ELF.
 - Alle 111 open issues, tien migratiegebieden en dertig acceptatievlaggen
   blijven open. Andere bestanden, snelle plakreeksen zonder barrières,
   fysieke andere platforms, volledige GUI-gelijkheid en alle functies zijn
@@ -128,8 +128,16 @@ verliest en de nieuwe haar behoudt. De tweede CI-proef bereikte vervolgens het p
 GTK-/WebKit-omgeving van de meegeleverde AppRun. De proef gebruikt nu die
 werkelijke starter en controleert via het eigen zichtbare proces de hash van
 de uitgevoerde ELF. Een lokale controle op het oude 45.14-pakket bereikt zo
-alle bewerkingen en wordt terecht op de workerfout afgekeurd. De remote
-positieve hertest op het nieuwe pakket moet nog worden afgewacht.
+alle bewerkingen en wordt terecht op de workerfout afgekeurd. De [remote positieve hertest](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41633473423) op bron `d348d6b` slaagt.
+De [download](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41633473423/artifacts/13229474620) bevat versie 2026.45.17 met dev-profiel.
+Drie plakrondes bereiken vijf pagina’s en acht tabellen, inclusief bewaren na
+ronde één en verder bewerken. De onafhankelijke DOCX-controle slaagt, verwerpen
+duurt in die ronde 377 ms en een nieuw document opent; GUI- en consolefouten
+zijn leeg. De hash van de werkelijk gestarte dev-ELF is
+`ef5bee0b10f2c52bdef7dc09b38248b7aafdbbc028f40883386c5c9bc601fbfa`.
+De [zeveneditie-/drieplatformbouw](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41627926223)
+slaagt ook; publiceren is overgeslagen. Dit vervangt geen fysieke platform-
+of volledige functieacceptatie.
 
 ## Herhalen
 

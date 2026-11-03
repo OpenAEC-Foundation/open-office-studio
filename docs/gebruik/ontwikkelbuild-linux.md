@@ -4,6 +4,11 @@ Een push naar GitHub werkt de broncode bij. De pagina Releases verandert alleen
 als er apart een uitgave wordt gepubliceerd. Een ontwikkelbuild is daarom
 beschikbaar als download bij GitHub Actions, zonder nieuwe release of tag.
 
+De gecontroleerde [45.17-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41633473423/artifacts/13229474620) is gebouwd uit
+`d348d6b108c2a37eb0791f9f63b0ef2aa4d57963`. De [bouw en pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41633473423) slagen.
+Sluit een eerder geopende dev-versie na het bewaren voordat je de nieuwe start;
+beide gebruiken hetzelfde dev-profiel.
+
 1. Open [Linux-ontwikkelbuild](https://github.com/OpenAEC-Foundation/open-office-studio/actions/workflows/dev-linux.yml).
 2. Kies de nieuwste geslaagde uitvoering op `codex/native-rust-office`.
    Controleer of de bronrevisie overeenkomt met de gewenste commit.
