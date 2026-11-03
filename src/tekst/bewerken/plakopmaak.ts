@@ -85,31 +85,31 @@ export function pasPlakOpmaakToe(s: YrsSession, sessie: Plaksessie, keuze: PlakK
       start: { paraId: stuk.paraId, offset: stuk.begin },
       end: { paraId: stuk.paraId, offset: stuk.eind },
     };
-    if (sessie.basis) {
+    if (sessie.basis?.positie === "normaal") {
       for (const deel of bereiken(stuk)) {
         const bereik = { ...range, start: { paraId: stuk.paraId, offset: deel.begin }, end: { paraId: stuk.paraId, offset: deel.eind } };
-        opdrachten.push({ bereik, delta: sessie.basis.delta });
-        if (sessie.basis.positie === "normaal") {
-          const ctx = s.selectionContext(bereik);
-          if (ctx.superscript !== false) normaliseren.push({ bereik, gemengd: ctx.superscript === "mixed" });
-        }
+        const ctx = s.selectionContext(bereik);
+        if (ctx.superscript !== false) normaliseren.push({ bereik, gemengd: ctx.superscript === "mixed" });
       }
     }
-    if (keuze !== "tekst" && sessie.html) {
-      const deltas = per
+    const delen = keuze !== "tekst" && sessie.html
+      ? stukken(per
         .slice(plek, plek + stuk.tekst.length)
-        .map((o) => (o ? deltaUitHtml(o, keuze === "samenvoegen") : null));
-      for (const deel of stukken(deltas, zelfdeDelta)) {
-        if (!deel.waarde) continue;
-        for (const bereik of bereiken(stuk, deel.begin, deel.eind)) opdrachten.push({
-          bereik: {
-            ...range,
-            start: { paraId: stuk.paraId, offset: bereik.begin },
-            end: { paraId: stuk.paraId, offset: bereik.eind },
-          },
-          delta: deel.waarde,
-        });
-      }
+        .map((o) => (o ? deltaUitHtml(o, keuze === "samenvoegen") : null)), zelfdeDelta)
+      : [{ begin: 0, eind: stuk.tekst.length, waarde: null }];
+    for (const deel of delen) {
+      if (!sessie.basis && !deel.waarde) continue;
+      // De HTML-keuze overschrijft dezelfde velden als na de basisopmaak.
+      // Schrijf hun eindwaarde eenmaal; beschermde marks blijven ongemoeid.
+      const delta = { ...sessie.basis?.delta, ...deel.waarde };
+      for (const bereik of bereiken(stuk, deel.begin, deel.eind)) opdrachten.push({
+        bereik: {
+          ...range,
+          start: { paraId: stuk.paraId, offset: bereik.begin },
+          end: { paraId: stuk.paraId, offset: bereik.eind },
+        },
+        delta,
+      });
     }
     plek += stuk.tekst.length + 1;
   }

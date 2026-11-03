@@ -21,7 +21,9 @@ async def proef(a):
     from gui.webkit_inspector import Inspector
     a.uitvoer.mkdir(parents=True, exist_ok=False)
     bron = a.uitvoer / 'Ontwerpnotitie.docx'
-    shutil.copyfile(REPO / 'docs/voorbeelden/Ontwerpnotitie.docx', bron)
+    bronkeuze = os.environ.get('OFFICE_PLAK_BRON', 'voorbeeld')
+    bronnen = {'voorbeeld': 'docs/voorbeelden/Ontwerpnotitie.docx', '128-tabellen': 'docs/tests/writer-rust-plakbatch/bron-128-tabellen.docx'}
+    shutil.copyfile(REPO / bronnen[bronkeuze], bron)
     profiel = os.environ.get('OFFICE_PLAK_PROFIEL', 'org.openaec.office-studio')
     cfg = Path(os.environ['XDG_CONFIG_HOME']) / profiel
     cfg.mkdir(parents=True)
@@ -33,6 +35,7 @@ async def proef(a):
     r = {'maxduur_seconden': int(os.environ['OFFICE_PLAK_MAXDUUR']), 'geslaagd': False, 'versie': a.versie, 'programma_sha256': hashlib.sha256(a.programma.read_bytes()).hexdigest(), 'script_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), 'bron_sha256': hashlib.sha256(bron.read_bytes()).hexdigest(), 'rondes': [], 'invoergereedheid': 'Gewijzigde bron, lege engine-invoerwachtrij en nieuw verschenen plakopties na de eigen opmaakverwerking; bronvergelijkingen daarnaast buiten de tijdmeting.', 'grenzen': 'Eigen kopie van meegeleverd document; selecteer alles, kopieer, ga naar einde en plak; per ronde broncontrole. Geen snelle plakreeks zonder barrières.'}
 
     r['bewaar_na_ronde'] = int(os.environ.get('OFFICE_PLAK_BEWAAR_NA', '0'))
+    r['bronkeuze'] = bronkeuze
 
     def stop():
         if app.poll() is None:
@@ -96,6 +99,32 @@ async def proef(a):
             assert await p.run("return await window.__TAURI_INTERNALS__.invoke('plugin:app|identifier');") == profiel
             r['profiel'] = profiel
             await p.begin_foutbewaking()
+            if os.environ.get('OFFICE_PLAK_METHODEPROFIEL') == '1':
+                # Alleen synchrone kosten op de eigen pagina; geen worker-
+                # inspectie, argumenten of documentinhoud in dit profiel.
+                r['profielopzet'] = await p.ev('''(() => {
+                  const s = api().getEditorRef().getYrsSession();
+                  const methodes = ['applyLocalUpdate','encodeStateAsUpdate','version','readParagraphs','paragraphSpans','storySegments','selectionContext','applyRawOps','formatRange','toggleMark','selection','setSelection'];
+                  window._plakProfiel = {actief:false,metingen:{},stapel:[]};
+                  for (const naam of methodes) {
+                    const origineel = s[naam];
+                    if (typeof origineel !== 'function') throw Error('Profielmethode ontbreekt: '+naam);
+                    s[naam] = function(...args) {
+                      const p = _plakProfiel;
+                      if (!p.actief) return origineel.apply(this,args);
+                      const meting = p.metingen[naam] ??= {aantal:0,totaal_ms:0,eigen_ms:0,maximum_ms:0};
+                      if(naam==='applyRawOps'&&Array.isArray(args[1])){meting.bewerkingen=(meting.bewerkingen??0)+args[1].length;meting.maximum_bewerkingen=Math.max(meting.maximum_bewerkingen??0,args[1].length)}
+                      const frame = {kinderen:0}, begin = performance.now();p.stapel.push(frame);
+                      try { return origineel.apply(this,args); }
+                      finally {
+                        const duur = performance.now()-begin;p.stapel.pop();
+                        if(p.stapel.length)p.stapel.at(-1).kinderen+=duur;
+                        meting.aantal++;meting.totaal_ms+=duur;meting.eigen_ms+=Math.max(0,duur-frame.kinderen);meting.maximum_ms=Math.max(meting.maximum_ms,duur);
+                      }
+                    };
+                  }
+                  return {methodes,betekenis:'Synchrone eigen en inclusieve methodetijd; alleen bron-/invoerbarrière, geen volledige paginapaint of FPS.'};
+                })()''')
             if os.environ.get('OFFICE_PLAK_VEREIS_RUST') == '1':
                 # Alleen de eigen proefpagina. Observeer de werkelijk gebruikte
                 # desktopopdracht en lokale delta, zonder de inhoud te vervangen.
@@ -140,13 +169,17 @@ async def proef(a):
                 begin = time.monotonic()
                 native_voor = await p.ev('window._rustPlak ? {opdrachten:_rustPlak.opdrachten.length,updates:_rustPlak.updates.length} : null')
                 await p.ev('window._plakMeet={laatste:performance.now(),tussen:[]};_plakMeet.timer=setInterval(()=>{let nu=performance.now();_plakMeet.tussen.push(nu-_plakMeet.laatste);_plakMeet.laatste=nu},16);true')
+                await p.ev('if(window._plakProfiel){_plakProfiel.metingen={};_plakProfiel.actief=true}true')
                 key('ctrl+v')
                 await p.run("let eind=performance.now()+120000;while(api().getEditorRef().getYrsSession().storyLength('body')<=" + str(stand['lengte']) + "){if(performance.now()>eind)throw Error('Plakactie niet toegelaten');await new Promise(r=>setTimeout(r,100))}await api().flushPendingInput();while(!document.querySelector('.tekst-plakopties')){if(performance.now()>eind)throw Error('Plakopmaak niet gereed');await new Promise(r=>setTimeout(r,50))}return true;", t=130)
                 duur = round((time.monotonic() - begin) * 1000)
+                methodeprofiel = await p.ev('(()=>{if(!window._plakProfiel)return null;_plakProfiel.actief=false;return _plakProfiel.metingen})()')
                 eventlus = await p.ev('(()=>{let m=_plakMeet;clearInterval(m.timer);m.tussen.push(performance.now()-m.laatste);let t=m.tussen.sort((a,b)=>a-b);return{timer_ms:16,waarnemingen:t.length,grootste_tussenruimte_ms:t.at(-1),p95_tussenruimte_ms:t[Math.floor((t.length-1)*.95)],betekenis:"Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."}})()')
                 na = await p.ev('proefStand()')
                 stap = {'ronde': n + 1, 'plak_tot_bron_ms': duur, 'voor': stand, 'na': na}
                 stap['eventlus'] = eventlus
+                if methodeprofiel is not None:
+                    stap['methodeprofiel'] = methodeprofiel
                 r['rondes'].append(stap)
                 if native_voor is not None:
                     native = await p.ev('({opdrachten:_rustPlak.opdrachten.slice(' + str(native_voor['opdrachten']) + '),updates:_rustPlak.updates.slice(' + str(native_voor['updates']) + ')})')
@@ -169,6 +202,66 @@ async def proef(a):
                     tussen = a.uitvoer / 'tussenbewaring.docx'
                     tussen.write_bytes(bytes(data))
                     r['tussenbewaring'] = {'na_ronde': n + 1, 'bytes': len(data), 'sha256': hashlib.sha256(bytes(data)).hexdigest()}
+            if os.environ.get('OFFICE_PLAK_VERVOLGINVOER') == '1':
+                # Zoek uitsluitend de spellinginstantie van de eigen editor.
+                # Forceer een normale hercontrole en stuur daarna echte toetsen
+                # terwijl die grote lezing bezig is; geen synthetische edits.
+                await p.run('''window._spellingProef=()=>{
+                  let el=document.querySelector('.office-tabpaneel:not([hidden]) .office-tekst');
+                  for(let f=el?.[Object.keys(el).find(k=>k.startsWith('__reactFiber$'))];f;f=f.return)
+                    for(let s=f.memoizedState,n=0;s&&n<200;n++,s=s.next)
+                      for(let v of [s.memoizedState,s.memoizedState?.[0],s.memoizedState?.current])
+                        if(v&&typeof v.controleer==='function'&&typeof v.herbegin==='function'&&v.editor?.()?.getEditorRef()===api().getEditorRef())return v;
+                  return null;
+                };let eind=performance.now()+90000;while(!_spellingProef()||_spellingProef().bezig){if(performance.now()>eind)throw Error('Geen rustige eigen spellinginstantie');await new Promise(r=>setTimeout(r,50))}
+                if(!_spellingProef().aan)throw Error('Spelling staat uit; vervolgproef niet geldig');api().focus();return true;''', t=100)
+                await p.ev('''(() => {
+                  const s=api().getEditorRef().getYrsSession(),oud=s.readParagraphs;
+                  window._plakToetsen.length=0;
+                  window._vervolgProef={lezingen:0,eersteToetsNaLezingen:null,hercontroleGestart:false,verhalen:s.storyIds().filter(id=>id==='body'||/^body:t[0-9]+:r[0-9]+c[0-9]+/.test(id)).length};
+                  s.readParagraphs=function(...args){_vervolgProef.lezingen++;return oud.apply(this,args)};
+                  window._vervolgToets=e=>{if(e.key.length===1&&!e.ctrlKey&&!e.metaKey&&_vervolgProef.eersteToetsNaLezingen===null)_vervolgProef.eersteToetsNaLezingen=_vervolgProef.lezingen};
+                  window.addEventListener('keydown',_vervolgToets,true);
+                  window._vervolgOpruimen=()=>{s.readParagraphs=oud;window.removeEventListener('keydown',_vervolgToets,true)};
+                  setTimeout(()=>{_vervolgProef.hercontroleGestart=true;_spellingProef().herbegin()},0);return true;
+                })()''')
+                await asyncio.sleep(.15)
+                begin_invoer = time.monotonic()
+                subprocess.run(['xdotool', 'type', '--clearmodifiers', '--delay', '20', ' SNEL'], check=True)
+                key('shift+Left', 'shift+Left', 'shift+Left')
+                subprocess.run(['xdotool', 'type', '--clearmodifiers', '--delay', '20', '!'], check=True)
+                # Bij een Shift-teken kan keyup de onverschoven toetsnaam
+                # dragen. De gewone pijltjestoets is een eenduidige barrière.
+                key('Right')
+                await p.run('let eind=performance.now()+60000;while(!_plakToetsen.some(t=>t.key==="arrowright")){if(performance.now()>eind)throw Error("Vervolgtoetsen niet ontvangen");await new Promise(r=>setTimeout(r,20))}await api().flushPendingInput();return true;', t=70)
+                invoer_ms = round((time.monotonic()-begin_invoer)*1000)
+                na = await p.ev('proefStand()')
+                gegevens = await p.ev('(()=>{_vervolgOpruimen();return _vervolgProef})()')
+                gegevens.update(invoer_tot_bron_ms=invoer_ms, wacht_voor_invoer_ms=150,
+                                onderbreekbaar=gegevens['eersteToetsNaLezingen'] is not None and gegevens['eersteToetsNaLezingen'] < gegevens['verhalen'],
+                                bron_exact=na['body'] == stand['body'] + ' S!',
+                                na_body_begin=na['body'][:60], na_body_eind=na['body'][-100:],
+                                structuur_exact=all(na[naam] == stand[naam] for naam in ['alineas','uniekeAlineas','tabellen','tabelvormen','cellen']),
+                                grens='Echte toetsen en bron-/invoerbarrière; geen volledige paginapaint of FPS.')
+                r['vervolginvoer'] = gegevens
+                assert gegevens['hercontroleGestart'] and gegevens['eersteToetsNaLezingen'] is not None and gegevens['eersteToetsNaLezingen'] > 0, 'Spellingproef was nog niet gestart bij eerste toets'
+                if os.environ.get('OFFICE_PLAK_VEREIS_SPELLINGONDERBREKING') == '1':
+                    assert gegevens['onderbreekbaar'], 'Grote spellinglezing blokkeert alle toetsen tot na de laatste cel'
+                assert gegevens['bron_exact'], 'Snelle vervolginvoer/selectievervanging na groot plakken wijkt af'
+                assert gegevens['structuur_exact'], 'Vervolginvoer verandert bestaande structuur'
+                # Na nieuwe invoer moet de onderbreekbare controle uiteindelijk
+                # ook alle bodyalinea's en celverhalen weer volledig bijwerken.
+                verwacht = {'body': na['body'], 'cellen': na['cellen']}
+                await p.ev('window._verwachteSpelling=' + json.dumps(verwacht) + ';true')
+                gegevens['spelling_na_invoer'] = await p.run('''let eind=performance.now()+60000;while(true){
+                  const s=_spellingProef(),v=_verwachteSpelling,cellen=new Map();
+                  for(const a of s.alineas)if(a.story!=='body')cellen.set(a.story,(cellen.get(a.story)??'')+a.tekst);
+                  const body=s.alineas.filter(a=>a.story==='body').map(a=>a.tekst).join('');
+                  if(!s.bezig&&!s.probleem&&body===v.body&&cellen.size===v.cellen.length&&v.cellen.every(c=>cellen.get(c.story)===c.tekst))return{bron_exact:true,alinea_aantal:s.alineas.length,celverhalen:cellen.size};
+                  if(performance.now()>eind)throw Error('Spellingcache na vervolginvoer niet volledig bijgewerkt');await new Promise(r=>setTimeout(r,50));}
+                ''', t=70)
+                stand = na
+                beeld('vervolginvoer')
             # De statusbalk telt gedebounced. Een direct beeld kan nog de oude
             # helft tonen; eis begrensd de werkelijke, bijgewerkte totalen.
             tekens = len(stand['body'].encode('utf-16-le')) // 2
@@ -254,7 +347,13 @@ if __name__ == '__main__':
     p.add_argument('--profiel', choices=['org.openaec.office-studio', 'org.openaec.office-studio.dev', 'org.openaec.writer-studio'], default=os.environ.get('OFFICE_PLAK_PROFIEL', 'org.openaec.office-studio'))
     p.add_argument('--bewaar-na-ronde', type=int, default=int(os.environ.get('OFFICE_PLAK_BEWAAR_NA', '0')))
     p.add_argument('--vereis-rust-plakken', action='store_true', default=os.environ.get('OFFICE_PLAK_VEREIS_RUST') == '1')
+    p.add_argument('--bron', choices=['voorbeeld', '128-tabellen'], default=os.environ.get('OFFICE_PLAK_BRON', 'voorbeeld'))
+    p.add_argument('--methodeprofiel', action='store_true', default=os.environ.get('OFFICE_PLAK_METHODEPROFIEL') == '1')
+    p.add_argument('--vervolginvoer', action='store_true', default=os.environ.get('OFFICE_PLAK_VERVOLGINVOER') == '1')
+    p.add_argument('--vereis-onderbreekbare-spelling', action='store_true', default=os.environ.get('OFFICE_PLAK_VEREIS_SPELLINGONDERBREKING') == '1')
     eigen, overig = p.parse_known_args()
+    if eigen.vereis_onderbreekbare_spelling and not eigen.vervolginvoer:
+        p.error('--vereis-onderbreekbare-spelling vereist --vervolginvoer')
     if not 1 <= eigen.rondes <= 10:
         p.error('Gebruik 1 tot en met 10 rondes.')
     if not 30 <= eigen.maxduur <= 900:
@@ -266,5 +365,9 @@ if __name__ == '__main__':
     os.environ['OFFICE_PLAK_PROFIEL'] = eigen.profiel
     os.environ['OFFICE_PLAK_BEWAAR_NA'] = str(eigen.bewaar_na_ronde)
     os.environ['OFFICE_PLAK_VEREIS_RUST'] = '1' if eigen.vereis_rust_plakken else '0'
+    os.environ['OFFICE_PLAK_BRON'] = eigen.bron
+    os.environ['OFFICE_PLAK_METHODEPROFIEL'] = '1' if eigen.methodeprofiel else '0'
+    os.environ['OFFICE_PLAK_VERVOLGINVOER'] = '1' if eigen.vervolginvoer else '0'
+    os.environ['OFFICE_PLAK_VEREIS_SPELLINGONDERBREKING'] = '1' if eigen.vereis_onderbreekbare_spelling else '0'
     sys.argv = [sys.argv[0], *overig]
     raise SystemExit(basis.main())

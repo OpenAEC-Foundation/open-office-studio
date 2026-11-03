@@ -1,0 +1,2621 @@
+{
+  "datum": "2026-11-04",
+  "versie": "2026.45.25",
+  "bronouder": "9db0c113e46391be07b740f758884157559f21f7",
+  "bronbestanden_sha256": {
+    "src/spelling/tekst/sessie.ts": "881ed6bfe9af4477851ad233f7ab9bec0fd967b2756c942e46d552465d3bd085",
+    "src/tekst/bewerken/plakopmaak.ts": "57f5bce77bb6f014e23da11748e8c8f8e9ae800e86e527a29fc5eb449d05a043",
+    "src/spelling/tekst/leesgroepen.test.ts": "334b56ab4f1176124ec4f999b2486d1aad4392262e2ef317ea09492b9980fca3",
+    "src/tekst/bewerken/plakopmaak-samenvoegen.test.ts": "3cc7593d04ff2671b4240fccd64d03c4a13b3a0dda24a939b318d3a2a948eef4",
+    "scripts/test-writer-rijk-plakken-native.py": "89b905ee19e853d4f9574043fa605ecfceee61e358ba4ef4d6657a8acac6faa2",
+    ".github/workflows/writer-geheugen.yml": "5a24939d90d27bfd84131c700c96b855b1f31ca2276eac92af50cc8852856d53"
+  },
+  "programma_sha256": "ea230d9f95e7f5b94f9b61565805e1844d4af2748c9d4d351135f3e2c3b09de7",
+  "oude_programma_sha256": "ff697f583774b32be739cb4ba3a72717f4e8d78f90fa1f38eb31c99ebeb990be",
+  "proeven": {
+    "rust-plak-profiel-45.24-128": {
+      "maxduur_seconden": 600,
+      "geslaagd": true,
+      "versie": "2026.45.24",
+      "programma_sha256": "ff697f583774b32be739cb4ba3a72717f4e8d78f90fa1f38eb31c99ebeb990be",
+      "script_sha256": "d892ae1beaf059bf792dd1b30e9be1761887aec22d329ba9b656893811939d9d",
+      "bron_sha256": "f69528bf0ee7b1e2d89aff2e893a131696e0485dd494b2a7c15b16f55d95b7a5",
+      "invoergereedheid": "Gewijzigde bron, lege engine-invoerwachtrij en nieuw verschenen plakopties na de eigen opmaakverwerking; bronvergelijkingen daarnaast buiten de tijdmeting.",
+      "grenzen": "Eigen kopie van meegeleverd document; selecteer alles, kopieer, ga naar einde en plak; per ronde broncontrole. Geen snelle plakreeks zonder barrières.",
+      "bewaar_na_ronde": 0,
+      "bronkeuze": "128-tabellen",
+      "startprogramma_sha256": "ff697f583774b32be739cb4ba3a72717f4e8d78f90fa1f38eb31c99ebeb990be",
+      "profiel": "org.openaec.office-studio",
+      "profielopzet": {
+        "methodes": [
+          "applyLocalUpdate",
+          "encodeStateAsUpdate",
+          "version",
+          "readParagraphs",
+          "paragraphSpans",
+          "storySegments",
+          "selectionContext",
+          "applyRawOps",
+          "formatRange",
+          "toggleMark",
+          "selection",
+          "setSelection"
+        ],
+        "betekenis": "Synchrone eigen en inclusieve methodetijd; alleen bron-/invoerbarrière, geen volledige paginapaint of FPS."
+      },
+      "statusbalk_na_rust": {
+        "paginas": 129,
+        "body_tekens_utf16": 131328,
+        "grens_ms": 8000,
+        "knoppen": [
+          "Page 64 of 129",
+          "19,713 words, 131,328 characters",
+          "Dutch (Netherlands) · 255 spelling errors",
+          "Track Changes: off"
+        ]
+      },
+      "onafhankelijk_docx": {
+        "exact": true,
+        "sha256": "1cca71fb3ea91dc58681b9065a625faa66493479ef6c766665dc21f024573de3",
+        "bytes": 72962,
+        "body_met_opmaak_sha256": "711945e8c3e3653188ec60ad6f2102e33efa01f3b4331e89b8232eac8d3cffaa",
+        "normalisatie": "Alleen paraId/textId en rsid-attributen verwijderd; tekst, run- en alineaopmaak, hyperlinks en tabelstructuur blijven in de bodyhash."
+      },
+      "verwerpen_ms": 578,
+      "nieuw_document_na_verwerpen": true,
+      "gui_fouten": [],
+      "console_fouten": [],
+      "rapport_sha256": "7335d1e17e648e829be7b3551768e8dfafa005c957b8aac5d941baf07c77dc46",
+      "rondes": [
+        {
+          "ronde": 1,
+          "plak_tot_bron_ms": 42449,
+          "eventlus": {
+            "timer_ms": 16,
+            "waarnemingen": 1191,
+            "grootste_tussenruimte_ms": 7255,
+            "p95_tussenruimte_ms": 21.000000000007276,
+            "betekenis": "Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."
+          },
+          "methodeprofiel": {
+            "selection": {
+              "aantal": 253,
+              "totaal_ms": 2,
+              "eigen_ms": 2,
+              "maximum_ms": 1
+            },
+            "version": {
+              "aantal": 51,
+              "totaal_ms": 3,
+              "eigen_ms": 3,
+              "maximum_ms": 1.000000000007276
+            },
+            "selectionContext": {
+              "aantal": 918,
+              "totaal_ms": 136.00000000000364,
+              "eigen_ms": 136.00000000000364,
+              "maximum_ms": 17
+            },
+            "encodeStateAsUpdate": {
+              "aantal": 2,
+              "totaal_ms": 109,
+              "eigen_ms": 109,
+              "maximum_ms": 67
+            },
+            "paragraphSpans": {
+              "aantal": 42,
+              "totaal_ms": 180.99999999999272,
+              "eigen_ms": 180.99999999999272,
+              "maximum_ms": 62.999999999992724
+            },
+            "applyLocalUpdate": {
+              "aantal": 1,
+              "totaal_ms": 532,
+              "eigen_ms": 532,
+              "maximum_ms": 532
+            },
+            "readParagraphs": {
+              "aantal": 1538,
+              "totaal_ms": 4128.999999999956,
+              "eigen_ms": 4128.999999999956,
+              "maximum_ms": 135
+            },
+            "storySegments": {
+              "aantal": 771,
+              "totaal_ms": 342.0000000000218,
+              "eigen_ms": 342.0000000000218,
+              "maximum_ms": 143
+            },
+            "applyRawOps": {
+              "aantal": 1,
+              "totaal_ms": 4385.000000000007,
+              "eigen_ms": 4385.000000000007,
+              "maximum_ms": 4385.000000000007
+            },
+            "setSelection": {
+              "aantal": 1,
+              "totaal_ms": 13.999999999992724,
+              "eigen_ms": 13.999999999992724,
+              "maximum_ms": 13.999999999992724
+            }
+          },
+          "rust_plakken": {
+            "opdrachten": [
+              {
+                "requestId": "92351247-2899-4574-a30d-614798221cea",
+                "clientId": 2308234079,
+                "snapshotTekens": 4023772,
+                "gereed": true,
+                "desktopMs": 25824.000000000007,
+                "preparationMs": 25539,
+                "bronbinding": true,
+                "deltaBytes": 2812956
+              }
+            ],
+            "updates": [
+              {
+                "bytes": 2812956
+              }
+            ]
+          },
+          "bronvoor": {
+            "alineas": 897,
+            "uniekeAlineas": 897,
+            "tabellen": 128,
+            "paginas": 65,
+            "lengte": 66689,
+            "tabelvormen_sha256": "3f8764b386144ef9b7deebd024347ce88df5f910c40d1caa44945e4c45a8e562"
+          },
+          "bronna": {
+            "alineas": 1793,
+            "uniekeAlineas": 1793,
+            "tabellen": 256,
+            "paginas": 129,
+            "lengte": 133377,
+            "tabelvormen_sha256": "71e307bdbb6e3a8ba3cbfdc602bb156455eafb2f0fec83a0cb6726389c5b1ec3"
+          },
+          "celverhalen_voor": 768,
+          "celverhalen_na": 1536
+        }
+      ]
+    },
+    "rust-plak-kalibratie-45.24-128": {
+      "maxduur_seconden": 600,
+      "geslaagd": true,
+      "versie": "2026.45.24",
+      "programma_sha256": "ff697f583774b32be739cb4ba3a72717f4e8d78f90fa1f38eb31c99ebeb990be",
+      "script_sha256": "d892ae1beaf059bf792dd1b30e9be1761887aec22d329ba9b656893811939d9d",
+      "bron_sha256": "f69528bf0ee7b1e2d89aff2e893a131696e0485dd494b2a7c15b16f55d95b7a5",
+      "invoergereedheid": "Gewijzigde bron, lege engine-invoerwachtrij en nieuw verschenen plakopties na de eigen opmaakverwerking; bronvergelijkingen daarnaast buiten de tijdmeting.",
+      "grenzen": "Eigen kopie van meegeleverd document; selecteer alles, kopieer, ga naar einde en plak; per ronde broncontrole. Geen snelle plakreeks zonder barrières.",
+      "bewaar_na_ronde": 0,
+      "bronkeuze": "128-tabellen",
+      "startprogramma_sha256": "ff697f583774b32be739cb4ba3a72717f4e8d78f90fa1f38eb31c99ebeb990be",
+      "profiel": "org.openaec.office-studio",
+      "statusbalk_na_rust": {
+        "paginas": 129,
+        "body_tekens_utf16": 131328,
+        "grens_ms": 8000,
+        "knoppen": [
+          "Page 64 of 129",
+          "19,713 words, 131,328 characters",
+          "Dutch (Netherlands) · 255 spelling errors",
+          "Track Changes: off"
+        ]
+      },
+      "onafhankelijk_docx": {
+        "exact": true,
+        "sha256": "e2a95e1fd6aa37541c4aaeb9eb2af430d19ce1b2ec1a9d92015ec01214b3cc92",
+        "bytes": 73237,
+        "body_met_opmaak_sha256": "711945e8c3e3653188ec60ad6f2102e33efa01f3b4331e89b8232eac8d3cffaa",
+        "normalisatie": "Alleen paraId/textId en rsid-attributen verwijderd; tekst, run- en alineaopmaak, hyperlinks en tabelstructuur blijven in de bodyhash."
+      },
+      "verwerpen_ms": 555,
+      "nieuw_document_na_verwerpen": true,
+      "gui_fouten": [],
+      "console_fouten": [],
+      "rapport_sha256": "08815a391dc2e4bcd062c15830c1a8fd938cb921a18cfb453a1ce7c9ea4169cc",
+      "rondes": [
+        {
+          "ronde": 1,
+          "plak_tot_bron_ms": 41810,
+          "eventlus": {
+            "timer_ms": 16,
+            "waarnemingen": 1159,
+            "grootste_tussenruimte_ms": 8829,
+            "p95_tussenruimte_ms": 20.000000000007276,
+            "betekenis": "Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."
+          },
+          "rust_plakken": {
+            "opdrachten": [
+              {
+                "requestId": "76764b80-a5a8-4ae4-8b80-e65ca6120c6e",
+                "clientId": 148100652,
+                "snapshotTekens": 4023772,
+                "gereed": true,
+                "desktopMs": 25384.999999999996,
+                "preparationMs": 25143,
+                "bronbinding": true,
+                "deltaBytes": 2774403
+              }
+            ],
+            "updates": [
+              {
+                "bytes": 2774403
+              }
+            ]
+          },
+          "bronvoor": {
+            "alineas": 897,
+            "uniekeAlineas": 897,
+            "tabellen": 128,
+            "paginas": 65,
+            "lengte": 66689,
+            "tabelvormen_sha256": "3f8764b386144ef9b7deebd024347ce88df5f910c40d1caa44945e4c45a8e562"
+          },
+          "bronna": {
+            "alineas": 1793,
+            "uniekeAlineas": 1793,
+            "tabellen": 256,
+            "paginas": 129,
+            "lengte": 133377,
+            "tabelvormen_sha256": "71e307bdbb6e3a8ba3cbfdc602bb156455eafb2f0fec83a0cb6726389c5b1ec3"
+          },
+          "celverhalen_voor": 768,
+          "celverhalen_na": 1536
+        }
+      ]
+    },
+    "rust-plak-invoer-profiel-45.24-128": {
+      "maxduur_seconden": 600,
+      "geslaagd": true,
+      "versie": "2026.45.24",
+      "programma_sha256": "ff697f583774b32be739cb4ba3a72717f4e8d78f90fa1f38eb31c99ebeb990be",
+      "script_sha256": "83dadd2a9f475c6feb65d57c1a8a459e5a2cd645097f6146048e6a78a6540fee",
+      "bron_sha256": "f69528bf0ee7b1e2d89aff2e893a131696e0485dd494b2a7c15b16f55d95b7a5",
+      "invoergereedheid": "Gewijzigde bron, lege engine-invoerwachtrij en nieuw verschenen plakopties na de eigen opmaakverwerking; bronvergelijkingen daarnaast buiten de tijdmeting.",
+      "grenzen": "Eigen kopie van meegeleverd document; selecteer alles, kopieer, ga naar einde en plak; per ronde broncontrole. Geen snelle plakreeks zonder barrières.",
+      "bewaar_na_ronde": 0,
+      "bronkeuze": "128-tabellen",
+      "startprogramma_sha256": "ff697f583774b32be739cb4ba3a72717f4e8d78f90fa1f38eb31c99ebeb990be",
+      "profiel": "org.openaec.office-studio",
+      "profielopzet": {
+        "methodes": [
+          "applyLocalUpdate",
+          "encodeStateAsUpdate",
+          "version",
+          "readParagraphs",
+          "paragraphSpans",
+          "storySegments",
+          "selectionContext",
+          "applyRawOps",
+          "formatRange",
+          "toggleMark",
+          "selection",
+          "setSelection"
+        ],
+        "betekenis": "Synchrone eigen en inclusieve methodetijd; alleen bron-/invoerbarrière, geen volledige paginapaint of FPS."
+      },
+      "statusbalk_na_rust": {
+        "paginas": 129,
+        "body_tekens_utf16": 131331,
+        "grens_ms": 8000,
+        "knoppen": [
+          "Page 128 of 129",
+          "19,714 words, 131,331 characters",
+          "Dutch (Netherlands) · 255 spelling errors",
+          "Track Changes: off"
+        ]
+      },
+      "onafhankelijk_docx": {
+        "exact": true,
+        "sha256": "3011aa7b351f6676a9a9d916872e97dee70439e6ad6bcc89541b1db4b7319b5f",
+        "bytes": 73288,
+        "body_met_opmaak_sha256": "c0140dae8ba8dbc090eda777ccba08ae45b15c675ae28a2db9a2e01ea3c3640f",
+        "normalisatie": "Alleen paraId/textId en rsid-attributen verwijderd; tekst, run- en alineaopmaak, hyperlinks en tabelstructuur blijven in de bodyhash."
+      },
+      "verwerpen_ms": 466,
+      "nieuw_document_na_verwerpen": true,
+      "gui_fouten": [],
+      "console_fouten": [],
+      "rapport_sha256": "9e3d2087a7ef957b432f2a3b369b6c9252aab707694d528761c8447f77f13506",
+      "vervolginvoer": {
+        "lezingen": 9232,
+        "eersteToetsNaLezingen": 1537,
+        "hercontroleGestart": true,
+        "verhalen": 1537,
+        "invoer_tot_bron_ms": 31028,
+        "wacht_voor_invoer_ms": 150,
+        "onderbreekbaar": false,
+        "bron_exact": true,
+        "structuur_exact": true,
+        "grens": "Echte toetsen en bron-/invoerbarrière; geen volledige paginapaint of FPS.",
+        "spelling_na_invoer": {
+          "bron_exact": true,
+          "alinea_aantal": 3329,
+          "celverhalen": 1536
+        }
+      },
+      "rondes": [
+        {
+          "ronde": 1,
+          "plak_tot_bron_ms": 33734,
+          "eventlus": {
+            "timer_ms": 16,
+            "waarnemingen": 969,
+            "grootste_tussenruimte_ms": 6726,
+            "p95_tussenruimte_ms": 23,
+            "betekenis": "Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."
+          },
+          "methodeprofiel": {
+            "selection": {
+              "aantal": 261,
+              "totaal_ms": 0.999999999996362,
+              "eigen_ms": 0.999999999996362,
+              "maximum_ms": 0.999999999996362
+            },
+            "selectionContext": {
+              "aantal": 919,
+              "totaal_ms": 71.9999999999709,
+              "eigen_ms": 71.9999999999709,
+              "maximum_ms": 11
+            },
+            "encodeStateAsUpdate": {
+              "aantal": 2,
+              "totaal_ms": 89,
+              "eigen_ms": 89,
+              "maximum_ms": 58
+            },
+            "version": {
+              "aantal": 49,
+              "totaal_ms": 1,
+              "eigen_ms": 1,
+              "maximum_ms": 1
+            },
+            "paragraphSpans": {
+              "aantal": 42,
+              "totaal_ms": 147,
+              "eigen_ms": 147,
+              "maximum_ms": 50
+            },
+            "applyLocalUpdate": {
+              "aantal": 1,
+              "totaal_ms": 350,
+              "eigen_ms": 350,
+              "maximum_ms": 350
+            },
+            "readParagraphs": {
+              "aantal": 1539,
+              "totaal_ms": 3388.9999999999927,
+              "eigen_ms": 3388.9999999999927,
+              "maximum_ms": 97
+            },
+            "storySegments": {
+              "aantal": 771,
+              "totaal_ms": 302.0000000000073,
+              "eigen_ms": 302.0000000000073,
+              "maximum_ms": 108
+            },
+            "applyRawOps": {
+              "aantal": 1,
+              "totaal_ms": 3215,
+              "eigen_ms": 3215,
+              "maximum_ms": 3215,
+              "bewerkingen": 1794,
+              "maximum_bewerkingen": 1794
+            },
+            "setSelection": {
+              "aantal": 1,
+              "totaal_ms": 8,
+              "eigen_ms": 8,
+              "maximum_ms": 8
+            }
+          },
+          "rust_plakken": {
+            "opdrachten": [
+              {
+                "requestId": "eb94a2ae-f48e-46e2-908b-a120835297a1",
+                "clientId": 1730142946,
+                "snapshotTekens": 4023772,
+                "gereed": true,
+                "desktopMs": 21361,
+                "preparationMs": 21104,
+                "bronbinding": true,
+                "deltaBytes": 2816284
+              }
+            ],
+            "updates": [
+              {
+                "bytes": 2816284
+              }
+            ]
+          },
+          "bronvoor": {
+            "alineas": 897,
+            "uniekeAlineas": 897,
+            "tabellen": 128,
+            "paginas": 65,
+            "lengte": 66689,
+            "tabelvormen_sha256": "3f8764b386144ef9b7deebd024347ce88df5f910c40d1caa44945e4c45a8e562"
+          },
+          "bronna": {
+            "alineas": 1793,
+            "uniekeAlineas": 1793,
+            "tabellen": 256,
+            "paginas": 129,
+            "lengte": 133377,
+            "tabelvormen_sha256": "71e307bdbb6e3a8ba3cbfdc602bb156455eafb2f0fec83a0cb6726389c5b1ec3"
+          },
+          "celverhalen_voor": 768,
+          "celverhalen_na": 1536
+        }
+      ]
+    },
+    "rust-plak-profiel-45.25-128": {
+      "maxduur_seconden": 600,
+      "geslaagd": true,
+      "versie": "2026.45.25",
+      "programma_sha256": "ea230d9f95e7f5b94f9b61565805e1844d4af2748c9d4d351135f3e2c3b09de7",
+      "script_sha256": "83dadd2a9f475c6feb65d57c1a8a459e5a2cd645097f6146048e6a78a6540fee",
+      "bron_sha256": "f69528bf0ee7b1e2d89aff2e893a131696e0485dd494b2a7c15b16f55d95b7a5",
+      "invoergereedheid": "Gewijzigde bron, lege engine-invoerwachtrij en nieuw verschenen plakopties na de eigen opmaakverwerking; bronvergelijkingen daarnaast buiten de tijdmeting.",
+      "grenzen": "Eigen kopie van meegeleverd document; selecteer alles, kopieer, ga naar einde en plak; per ronde broncontrole. Geen snelle plakreeks zonder barrières.",
+      "bewaar_na_ronde": 0,
+      "bronkeuze": "128-tabellen",
+      "startprogramma_sha256": "ea230d9f95e7f5b94f9b61565805e1844d4af2748c9d4d351135f3e2c3b09de7",
+      "profiel": "org.openaec.office-studio",
+      "profielopzet": {
+        "methodes": [
+          "applyLocalUpdate",
+          "encodeStateAsUpdate",
+          "version",
+          "readParagraphs",
+          "paragraphSpans",
+          "storySegments",
+          "selectionContext",
+          "applyRawOps",
+          "formatRange",
+          "toggleMark",
+          "selection",
+          "setSelection"
+        ],
+        "betekenis": "Synchrone eigen en inclusieve methodetijd; alleen bron-/invoerbarrière, geen volledige paginapaint of FPS."
+      },
+      "statusbalk_na_rust": {
+        "paginas": 129,
+        "body_tekens_utf16": 131331,
+        "grens_ms": 8000,
+        "knoppen": [
+          "Page 128 of 129",
+          "19,714 words, 131,331 characters",
+          "Dutch (Netherlands) · 255 spelling errors",
+          "Track Changes: off"
+        ]
+      },
+      "onafhankelijk_docx": {
+        "exact": true,
+        "sha256": "ca36b3493b6c11f097f72993b02603fac9f6ff01a5e6e0ed47741fed9a618df2",
+        "bytes": 73212,
+        "body_met_opmaak_sha256": "c0140dae8ba8dbc090eda777ccba08ae45b15c675ae28a2db9a2e01ea3c3640f",
+        "normalisatie": "Alleen paraId/textId en rsid-attributen verwijderd; tekst, run- en alineaopmaak, hyperlinks en tabelstructuur blijven in de bodyhash."
+      },
+      "verwerpen_ms": 567,
+      "nieuw_document_na_verwerpen": true,
+      "gui_fouten": [],
+      "console_fouten": [],
+      "rapport_sha256": "f365ed72f1acff73324980b1d8c350f155218a7cd572790166e3791c290e3225",
+      "vervolginvoer": {
+        "lezingen": 135,
+        "eersteToetsNaLezingen": 64,
+        "hercontroleGestart": true,
+        "verhalen": 1537,
+        "invoer_tot_bron_ms": 6589,
+        "wacht_voor_invoer_ms": 150,
+        "onderbreekbaar": true,
+        "bron_exact": true,
+        "structuur_exact": true,
+        "grens": "Echte toetsen en bron-/invoerbarrière; geen volledige paginapaint of FPS.",
+        "spelling_na_invoer": {
+          "bron_exact": true,
+          "alinea_aantal": 3329,
+          "celverhalen": 1536
+        }
+      },
+      "rondes": [
+        {
+          "ronde": 1,
+          "plak_tot_bron_ms": 39351,
+          "eventlus": {
+            "timer_ms": 16,
+            "waarnemingen": 1160,
+            "grootste_tussenruimte_ms": 7110.000000000015,
+            "p95_tussenruimte_ms": 20.000000000007276,
+            "betekenis": "Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."
+          },
+          "methodeprofiel": {
+            "selection": {
+              "aantal": 296,
+              "totaal_ms": 1,
+              "eigen_ms": 1,
+              "maximum_ms": 1
+            },
+            "paragraphSpans": {
+              "aantal": 43,
+              "totaal_ms": 143.00000000002183,
+              "eigen_ms": 143.00000000002183,
+              "maximum_ms": 31.000000000007276
+            },
+            "version": {
+              "aantal": 61,
+              "totaal_ms": 4,
+              "eigen_ms": 4,
+              "maximum_ms": 1
+            },
+            "selectionContext": {
+              "aantal": 923,
+              "totaal_ms": 96.9999999999709,
+              "eigen_ms": 96.9999999999709,
+              "maximum_ms": 16.000000000007276
+            },
+            "encodeStateAsUpdate": {
+              "aantal": 2,
+              "totaal_ms": 156.99999999999272,
+              "eigen_ms": 156.99999999999272,
+              "maximum_ms": 118.99999999999272
+            },
+            "storySegments": {
+              "aantal": 2308,
+              "totaal_ms": 524.0000000000509,
+              "eigen_ms": 524.0000000000509,
+              "maximum_ms": 132.99999999999272
+            },
+            "applyLocalUpdate": {
+              "aantal": 1,
+              "totaal_ms": 509.0000000000073,
+              "eigen_ms": 509.0000000000073,
+              "maximum_ms": 509.0000000000073
+            },
+            "readParagraphs": {
+              "aantal": 33,
+              "totaal_ms": 279.9999999999782,
+              "eigen_ms": 279.9999999999782,
+              "maximum_ms": 109.99999999999272
+            },
+            "applyRawOps": {
+              "aantal": 1,
+              "totaal_ms": 2503,
+              "eigen_ms": 2503,
+              "maximum_ms": 2503,
+              "bewerkingen": 897,
+              "maximum_bewerkingen": 897
+            },
+            "setSelection": {
+              "aantal": 1,
+              "totaal_ms": 11.000000000014552,
+              "eigen_ms": 11.000000000014552,
+              "maximum_ms": 11.000000000014552
+            }
+          },
+          "rust_plakken": {
+            "opdrachten": [
+              {
+                "requestId": "c93d7b2d-14c3-4f08-8020-56133da0b8d0",
+                "clientId": 1608872440,
+                "snapshotTekens": 4023772,
+                "gereed": true,
+                "desktopMs": 26887,
+                "preparationMs": 26467,
+                "bronbinding": true,
+                "deltaBytes": 2816619
+              }
+            ],
+            "updates": [
+              {
+                "bytes": 2816619
+              }
+            ]
+          },
+          "bronvoor": {
+            "alineas": 897,
+            "uniekeAlineas": 897,
+            "tabellen": 128,
+            "paginas": 65,
+            "lengte": 66689,
+            "tabelvormen_sha256": "3f8764b386144ef9b7deebd024347ce88df5f910c40d1caa44945e4c45a8e562"
+          },
+          "bronna": {
+            "alineas": 1793,
+            "uniekeAlineas": 1793,
+            "tabellen": 256,
+            "paginas": 129,
+            "lengte": 133377,
+            "tabelvormen_sha256": "71e307bdbb6e3a8ba3cbfdc602bb156455eafb2f0fec83a0cb6726389c5b1ec3"
+          },
+          "celverhalen_voor": 768,
+          "celverhalen_na": 1536
+        }
+      ]
+    },
+    "rust-plak-invoer-profiel-45.25-streng": {
+      "maxduur_seconden": 600,
+      "geslaagd": true,
+      "versie": "2026.45.25",
+      "programma_sha256": "ea230d9f95e7f5b94f9b61565805e1844d4af2748c9d4d351135f3e2c3b09de7",
+      "script_sha256": "89b905ee19e853d4f9574043fa605ecfceee61e358ba4ef4d6657a8acac6faa2",
+      "bron_sha256": "f69528bf0ee7b1e2d89aff2e893a131696e0485dd494b2a7c15b16f55d95b7a5",
+      "invoergereedheid": "Gewijzigde bron, lege engine-invoerwachtrij en nieuw verschenen plakopties na de eigen opmaakverwerking; bronvergelijkingen daarnaast buiten de tijdmeting.",
+      "grenzen": "Eigen kopie van meegeleverd document; selecteer alles, kopieer, ga naar einde en plak; per ronde broncontrole. Geen snelle plakreeks zonder barrières.",
+      "bewaar_na_ronde": 0,
+      "bronkeuze": "128-tabellen",
+      "startprogramma_sha256": "ea230d9f95e7f5b94f9b61565805e1844d4af2748c9d4d351135f3e2c3b09de7",
+      "profiel": "org.openaec.office-studio",
+      "profielopzet": {
+        "methodes": [
+          "applyLocalUpdate",
+          "encodeStateAsUpdate",
+          "version",
+          "readParagraphs",
+          "paragraphSpans",
+          "storySegments",
+          "selectionContext",
+          "applyRawOps",
+          "formatRange",
+          "toggleMark",
+          "selection",
+          "setSelection"
+        ],
+        "betekenis": "Synchrone eigen en inclusieve methodetijd; alleen bron-/invoerbarrière, geen volledige paginapaint of FPS."
+      },
+      "statusbalk_na_rust": {
+        "paginas": 129,
+        "body_tekens_utf16": 131331,
+        "grens_ms": 8000,
+        "knoppen": [
+          "Page 128 of 129",
+          "19,714 words, 131,331 characters",
+          "Dutch (Netherlands) · 255 spelling errors",
+          "Track Changes: off"
+        ]
+      },
+      "onafhankelijk_docx": {
+        "exact": true,
+        "sha256": "239805108290bb15af44c872fff75a96c739a9fb7e5204c0770b73244be6c5ce",
+        "bytes": 72812,
+        "body_met_opmaak_sha256": "c0140dae8ba8dbc090eda777ccba08ae45b15c675ae28a2db9a2e01ea3c3640f",
+        "normalisatie": "Alleen paraId/textId en rsid-attributen verwijderd; tekst, run- en alineaopmaak, hyperlinks en tabelstructuur blijven in de bodyhash."
+      },
+      "verwerpen_ms": 591,
+      "nieuw_document_na_verwerpen": true,
+      "gui_fouten": [],
+      "console_fouten": [],
+      "rapport_sha256": "ce1595c258bd9d1ca34b55117a42bd949e18b00dff65405bd1637eac1dcdacc9",
+      "vervolginvoer": {
+        "lezingen": 103,
+        "eersteToetsNaLezingen": 32,
+        "hercontroleGestart": true,
+        "verhalen": 1537,
+        "invoer_tot_bron_ms": 6671,
+        "wacht_voor_invoer_ms": 150,
+        "onderbreekbaar": true,
+        "bron_exact": true,
+        "structuur_exact": true,
+        "grens": "Echte toetsen en bron-/invoerbarrière; geen volledige paginapaint of FPS.",
+        "spelling_na_invoer": {
+          "bron_exact": true,
+          "alinea_aantal": 3329,
+          "celverhalen": 1536
+        }
+      },
+      "rondes": [
+        {
+          "ronde": 1,
+          "plak_tot_bron_ms": 28597,
+          "eventlus": {
+            "timer_ms": 16,
+            "waarnemingen": 933,
+            "grootste_tussenruimte_ms": 5643,
+            "p95_tussenruimte_ms": 22,
+            "betekenis": "Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."
+          },
+          "methodeprofiel": {
+            "selection": {
+              "aantal": 301,
+              "totaal_ms": 1,
+              "eigen_ms": 1,
+              "maximum_ms": 1
+            },
+            "paragraphSpans": {
+              "aantal": 43,
+              "totaal_ms": 134.00000000000728,
+              "eigen_ms": 134.00000000000728,
+              "maximum_ms": 46
+            },
+            "selectionContext": {
+              "aantal": 922,
+              "totaal_ms": 65.99999999997817,
+              "eigen_ms": 65.99999999997817,
+              "maximum_ms": 11
+            },
+            "encodeStateAsUpdate": {
+              "aantal": 2,
+              "totaal_ms": 81,
+              "eigen_ms": 81,
+              "maximum_ms": 50
+            },
+            "version": {
+              "aantal": 58,
+              "totaal_ms": 3,
+              "eigen_ms": 3,
+              "maximum_ms": 1
+            },
+            "storySegments": {
+              "aantal": 771,
+              "totaal_ms": 236.00000000000364,
+              "eigen_ms": 236.00000000000364,
+              "maximum_ms": 94
+            },
+            "applyLocalUpdate": {
+              "aantal": 1,
+              "totaal_ms": 405.9999999999927,
+              "eigen_ms": 405.9999999999927,
+              "maximum_ms": 405.9999999999927
+            },
+            "readParagraphs": {
+              "aantal": 33,
+              "totaal_ms": 297,
+              "eigen_ms": 297,
+              "maximum_ms": 143
+            },
+            "applyRawOps": {
+              "aantal": 1,
+              "totaal_ms": 1982.0000000000073,
+              "eigen_ms": 1982.0000000000073,
+              "maximum_ms": 1982.0000000000073,
+              "bewerkingen": 897,
+              "maximum_bewerkingen": 897
+            },
+            "setSelection": {
+              "aantal": 1,
+              "totaal_ms": 9,
+              "eigen_ms": 9,
+              "maximum_ms": 9
+            }
+          },
+          "rust_plakken": {
+            "opdrachten": [
+              {
+                "requestId": "b43e367a-811b-40b9-8f61-b74a2eb26c56",
+                "clientId": 3255220818,
+                "snapshotTekens": 3961600,
+                "gereed": true,
+                "desktopMs": 20302,
+                "preparationMs": 20061,
+                "bronbinding": true,
+                "deltaBytes": 2809231
+              }
+            ],
+            "updates": [
+              {
+                "bytes": 2809231
+              }
+            ]
+          },
+          "bronvoor": {
+            "alineas": 897,
+            "uniekeAlineas": 897,
+            "tabellen": 128,
+            "paginas": 65,
+            "lengte": 66689,
+            "tabelvormen_sha256": "3f8764b386144ef9b7deebd024347ce88df5f910c40d1caa44945e4c45a8e562"
+          },
+          "bronna": {
+            "alineas": 1793,
+            "uniekeAlineas": 1793,
+            "tabellen": 256,
+            "paginas": 129,
+            "lengte": 133377,
+            "tabelvormen_sha256": "71e307bdbb6e3a8ba3cbfdc602bb156455eafb2f0fec83a0cb6726389c5b1ec3"
+          },
+          "celverhalen_voor": 768,
+          "celverhalen_na": 1536
+        }
+      ]
+    },
+    "rust-plak-gui-45.25-volgorde": {
+      "geslaagd": true,
+      "versie": "2026.45.25",
+      "programma_sha256": "ea230d9f95e7f5b94f9b61565805e1844d4af2748c9d4d351135f3e2c3b09de7",
+      "script_sha256": "4c010c3e9fadea8489344000a3987ce2d82c0c380cfbbd4c9c8043ce30d6ae8e",
+      "grenzen": "Echte WebKit-invoer tijdens native plakken: opmaak/undo, bewaren en verwerpen.\n\nAlleen het terugbezorgen van een werkelijk berekend Rust-antwoord wordt in\ntwee gevallen vastgehouden. Dit is een volgordeproef, geen snelheidsmeting.\n",
+      "bewaring_sha256": "b3cfcf725a3846ac8ebff29f49bec8bfabcc978ff71c86ec24b21bcd58b5daa9",
+      "native_opdrachten": [
+        {
+          "requestId": "9ee05e8e-5dc8-4b00-86f6-0dc3ec4e0a43",
+          "range": {
+            "story": "body",
+            "start": {
+              "paraId": "body:p7",
+              "offset": 70
+            },
+            "end": {
+              "paraId": "body:p7",
+              "offset": 70
+            }
+          },
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "story": "body",
+            "paraId": "2315839168:6",
+            "offset": 70
+          }
+        },
+        {
+          "requestId": "6ed46271-d7df-47f3-8cf7-851571457d6a",
+          "range": {
+            "story": "body",
+            "start": {
+              "paraId": "2315839168:6",
+              "offset": 70
+            },
+            "end": {
+              "paraId": "2315839168:6",
+              "offset": 70
+            }
+          },
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "story": "body",
+            "paraId": "2315839168:32",
+            "offset": 70
+          }
+        },
+        {
+          "requestId": "ac9c23db-1c3b-4c2d-975c-150b09d8b224",
+          "range": {
+            "story": "body",
+            "start": {
+              "paraId": "2315839168:32",
+              "offset": 73
+            },
+            "end": {
+              "paraId": "2315839168:32",
+              "offset": 73
+            }
+          },
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "story": "body",
+            "paraId": "2315839168:84",
+            "offset": 73
+          }
+        }
+      ],
+      "fouten": {
+        "gui": [],
+        "console": []
+      },
+      "rapport_sha256": "b100f5b5cad548ecf790a02664205a8c13e9a059aa2951b093ef5fb5843dacd6",
+      "stappen": [
+        "Werkelijk rijk plakken, één Undo en bronexacte Redo",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór antwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder antwoord; nieuw document en late beantwoording behouden bron en invoer"
+      ]
+    },
+    "rust-plak-gui-45.25-vijfhonderd": {
+      "geslaagd": true,
+      "versie": "2026.45.25",
+      "programma_sha256": "ea230d9f95e7f5b94f9b61565805e1844d4af2748c9d4d351135f3e2c3b09de7",
+      "script_sha256": "01ef4f53ca0acbb9d0f2e5167e3b8327022c1670b3f732c9f12a8a4ddcd899ec",
+      "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+      "invoerinterval_ms": 20,
+      "vaste_nawacht_ms": 2000,
+      "invoer_gereedheid": "Native keyup van de laatste punt, inputwachtrij, zichtbare golflijnen en één exacte controle van de laatste alinea; alle 500 bronalinea’s daarnaast apart vergeleken.",
+      "grenzen": [
+        "Eén gegenereerde 500-paginabron, normale compositor, alleen een lichte teller om getBoundingClientRect. Geen algemene prestatie-, IME-, enorme-plak- of platformacceptatie."
+      ],
+      "startprogramma_sha256": "ea230d9f95e7f5b94f9b61565805e1844d4af2748c9d4d351135f3e2c3b09de7",
+      "geladen_runtime": [
+        "/usr/lib/x86_64-linux-gnu/libjavascriptcoregtk-4.1.so.0.10.14",
+        "/usr/lib/x86_64-linux-gnu/libwebkit2gtk-4.1.so.0.21.10"
+      ],
+      "invoer_tot_bron_en_golven_ms": 4344,
+      "paginavergelijkingen_tijdens_invoer": {
+        "calls": 6487
+      },
+      "documentuitlezingen_tijdens_invoer": {
+        "calls": 0,
+        "ms": 0,
+        "api_wissels": 120,
+        "actieve_api_gevolgd": true,
+        "omvang": "GetDocument-aanroepen tijdens native invoer tot bron-/golflijngereedheid. De stabiele React-ref volgt vervanging van API-objecten; geen CPU-profiler."
+      },
+      "native_leesaanroepen": {
+        "zelfde_sessie": true,
+        "readParagraphs": {
+          "calls": 7,
+          "ms": 34
+        },
+        "paragraphSpans": {
+          "calls": 26,
+          "ms": 160.9999999999891
+        }
+      },
+      "frame_tussenpozen_ms": {
+        "aantal": 39,
+        "maximum": 321,
+        "p95": 321,
+        "reeks": [
+          3,
+          17,
+          8,
+          17,
+          27,
+          24,
+          33,
+          29,
+          44,
+          321,
+          174,
+          222,
+          193,
+          145,
+          135,
+          34,
+          125,
+          139,
+          135,
+          124,
+          151,
+          168,
+          53,
+          159,
+          321,
+          126,
+          139,
+          164,
+          181,
+          118,
+          137,
+          108,
+          127,
+          123,
+          223,
+          141,
+          7,
+          3,
+          25
+        ],
+        "omvang": "requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS."
+      },
+      "invoermeting": {
+        "calls": 5402,
+        "classes": {
+          "docx-editor__scroll-container": 246,
+          "CANVAS": 1494,
+          "canvas-page": 1002,
+          "DIV": 124,
+          "canvas-pages__column": 38,
+          "canvas-pages": 1642,
+          "docx-plugin-overlays": 821,
+          "docx-editor__viewport tl-met-liniaal": 35
+        },
+        "golven": 83,
+        "paginas": 500,
+        "tot_bron_en_golven_ms_inclusief_nawacht": 6392
+      },
+      "selectie_backspace": {
+        "alinea_aantal": 500,
+        "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+        "eerste_verschil": 499,
+        "native_toetsen": [
+          {
+            "key": " ",
+            "code": "Space",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "e",
+            "code": "KeyE",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "e",
+            "code": "KeyE",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "n",
+            "code": "KeyN",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": " ",
+            "code": "Space",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "p",
+            "code": "KeyP",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "r",
+            "code": "KeyR",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "o",
+            "code": "KeyO",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "e",
+            "code": "KeyE",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "f",
+            "code": "KeyF",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "i",
+            "code": "KeyI",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "n",
+            "code": "KeyN",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": ".",
+            "code": "Period",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowleft",
+            "code": "ArrowLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "backspace",
+            "code": "Backspace",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          }
+        ]
+      },
+      "lintbeelden": {
+        "startlint": {
+          "plek": {
+            "x": 0,
+            "y": 32,
+            "breedte": 1440,
+            "hoogte": 122
+          },
+          "knoppen": [
+            {
+              "naam": "Edit",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Undo",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Redo",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Clipboard",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Paste",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Cut",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Copy",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Format Painter",
+              "actief": "false",
+              "uit": false
+            },
+            {
+              "naam": "Font",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Font: Caladea",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Increase Font Size",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Decrease Font Size",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Bold",
+              "actief": "false",
+              "uit": false
+            },
+            {
+              "naam": "Italic",
+              "actief": "false",
+              "uit": false
+            },
+            {
+              "naam": "Underline",
+              "actief": "false",
+              "uit": false
+            },
+            {
+              "naam": "Strikethrough",
+              "actief": "false",
+              "uit": false
+            },
+            {
+              "naam": "Superscript",
+              "actief": "false",
+              "uit": false
+            },
+            {
+              "naam": "Subscript",
+              "actief": "false",
+              "uit": false
+            },
+            {
+              "naam": "Font…",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Paragraph",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Bullets",
+              "actief": "false",
+              "uit": false
+            },
+            {
+              "naam": "Numbering",
+              "actief": "false",
+              "uit": false
+            },
+            {
+              "naam": "Decrease Indent",
+              "actief": null,
+              "uit": true
+            },
+            {
+              "naam": "Increase Indent",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "List Options…",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Align Left",
+              "actief": "true",
+              "uit": false
+            },
+            {
+              "naam": "Center",
+              "actief": "false",
+              "uit": false
+            },
+            {
+              "naam": "Align Right",
+              "actief": "false",
+              "uit": false
+            },
+            {
+              "naam": "Justify",
+              "actief": "false",
+              "uit": false
+            },
+            {
+              "naam": "Paragraph…",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Borders and Shading…",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Styles",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Normal",
+              "actief": "true",
+              "uit": false
+            },
+            {
+              "naam": "Menu for style Normal",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "No Spacing",
+              "actief": "false",
+              "uit": false
+            },
+            {
+              "naam": "Menu for style No Spacing",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Heading 1",
+              "actief": "false",
+              "uit": false
+            },
+            {
+              "naam": "Menu for style Heading 1",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Heading 2",
+              "actief": "false",
+              "uit": false
+            },
+            {
+              "naam": "Menu for style Heading 2",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Heading 3",
+              "actief": "false",
+              "uit": false
+            },
+            {
+              "naam": "Menu for style Heading 3",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Title",
+              "actief": "false",
+              "uit": false
+            },
+            {
+              "naam": "Menu for style Title",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": " All Styles…",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Formatting",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Clear Formatting",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Find",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Find",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Replace",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Go To",
+              "actief": null,
+              "uit": false
+            }
+          ]
+        },
+        "kopvoetlint": {
+          "plek": {
+            "x": 0,
+            "y": 32,
+            "breedte": 1440,
+            "hoogte": 122
+          },
+          "knoppen": [
+            {
+              "naam": "Edit",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Edit Header",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Edit Footer",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Insert",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Page Number",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Options",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Different First Page",
+              "actief": "false",
+              "uit": false
+            },
+            {
+              "naam": "Different Odd & Even Pages",
+              "actief": "false",
+              "uit": false
+            },
+            {
+              "naam": "Sections",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Link to Previous",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Position",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Distance from Edge",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Remove",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Remove Header",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Remove Footer",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Close",
+              "actief": null,
+              "uit": false
+            },
+            {
+              "naam": "Close Header and Footer",
+              "actief": null,
+              "uit": true
+            }
+          ]
+        }
+      },
+      "paginaregister": {
+        "voor": 500,
+        "na": 500,
+        "zoom": 1.15,
+        "add": 0,
+        "delete": 0,
+        "invalidate": 1,
+        "historische_registerwissels": false,
+        "geen_canvaswissels": true,
+        "paginaopdracht": {
+          "ok": true,
+          "status": "executed"
+        },
+        "na_pagina_invoegen": 501,
+        "na_undo": 500,
+        "geslaagd": true
+      },
+      "herstelkopie": {
+        "sha256": "64a167ca0b4469df68097023400c08c587bcaa9894537f508a8ccf43ee77c029",
+        "exact": true
+      },
+      "fouten_voor_heropenen": {
+        "gui": [],
+        "console": []
+      },
+      "herstelkeuzes": [
+        {
+          "keuze": "later",
+          "aanbod": {
+            "namen": [
+              "Prestatieproef.docx"
+            ],
+            "tekst": "Recover documentsOpen Office Studio was not closed properly last time. A recovery copy was kept of these documents. Recovering opens a new, unsaved tab; the original file stays unchanged.Prestatieproef.docxText · recovery copy from today 00:10RecoverSave as…DiscardDecide later"
+          },
+          "fouten_voor_keuze": {
+            "gui": [],
+            "console": []
+          }
+        },
+        {
+          "keuze": "herstellen",
+          "aanbod": {
+            "namen": [
+              "Prestatieproef.docx"
+            ],
+            "tekst": "Recover documentsOpen Office Studio was not closed properly last time. A recovery copy was kept of these documents. Recovering opens a new, unsaved tab; the original file stays unchanged.Prestatieproef.docxText · recovery copy from today 00:10RecoverSave as…DiscardDecide later"
+          },
+          "fouten_voor_keuze": {
+            "gui": [],
+            "console": []
+          }
+        }
+      ],
+      "status_na_later": [
+        "Page 1 of 500",
+        "29,002 words, 173,906 characters",
+        "English (United States) · 20,502 spelling errors",
+        "Track Changes: off"
+      ],
+      "fouten_na_heropenen": {
+        "gui": [],
+        "console": []
+      },
+      "verder_na_later_bewaard": true,
+      "bron_na_verder_sha256": "6650b2e75bed4851575bcda910164e801c06173530581eedcfc9b98b2cbb7969",
+      "hersteltabbladen": 2,
+      "herstel_fouten": {
+        "gui": [],
+        "console": []
+      },
+      "bron_eind_sha256": "6650b2e75bed4851575bcda910164e801c06173530581eedcfc9b98b2cbb7969",
+      "rapport_sha256": "f4cdab5f3e2b3a7290464f093f756103d73c465042183f2c3c477ff74f84041b",
+      "stappen": [
+        {
+          "naam": "beginbron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2",
+          "exact": true
+        },
+        {
+          "naam": "getypte_bron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "exact": true
+        },
+        {
+          "naam": "selectie_en_backspace",
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "exact": true
+        },
+        {
+          "naam": "undo",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "exact": true
+        },
+        {
+          "naam": "redo",
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "exact": true
+        },
+        {
+          "naam": "hersteld_voor_bewaren",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "exact": true
+        },
+        {
+          "naam": "native_bewaaractie_onafhankelijk",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "exact": true
+        },
+        {
+          "naam": "nieuw_proces_heropend",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "exact": true
+        },
+        {
+          "naam": "verder_na_later",
+          "alinea_aantal": 500,
+          "tekst_sha256": "fd7d825b22dee866b9680b7eda810589f0bcff6cc43796092675cc7d54c0126c",
+          "exact": true
+        },
+        {
+          "naam": "herstelde_kopie",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "exact": true
+        },
+        {
+          "naam": "verder_in_herstelde_kopie",
+          "alinea_aantal": 500,
+          "tekst_sha256": "2479dfa76e6a51382e07e955c4058dcb85f9d02950bee6b116734b457cb13c75",
+          "exact": true
+        }
+      ]
+    },
+    "rust-plak-gui-45.25-acht": {
+      "maxduur_seconden": 600,
+      "geslaagd": true,
+      "versie": "2026.45.25",
+      "programma_sha256": "ea230d9f95e7f5b94f9b61565805e1844d4af2748c9d4d351135f3e2c3b09de7",
+      "script_sha256": "83dadd2a9f475c6feb65d57c1a8a459e5a2cd645097f6146048e6a78a6540fee",
+      "bron_sha256": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee",
+      "invoergereedheid": "Gewijzigde bron, lege engine-invoerwachtrij en nieuw verschenen plakopties na de eigen opmaakverwerking; bronvergelijkingen daarnaast buiten de tijdmeting.",
+      "grenzen": "Eigen kopie van meegeleverd document; selecteer alles, kopieer, ga naar einde en plak; per ronde broncontrole. Geen snelle plakreeks zonder barrières.",
+      "bewaar_na_ronde": 7,
+      "bronkeuze": "voorbeeld",
+      "startprogramma_sha256": "ea230d9f95e7f5b94f9b61565805e1844d4af2748c9d4d351135f3e2c3b09de7",
+      "profiel": "org.openaec.office-studio",
+      "tussenbewaring": {
+        "na_ronde": 7,
+        "bytes": 54851,
+        "sha256": "59dfdee8c9ee449179bbbf8a5ed5260fab8e8d4c660badfd4d2371ced2873a1e"
+      },
+      "statusbalk_na_rust": {
+        "paginas": 129,
+        "body_tekens_utf16": 131328,
+        "grens_ms": 8000,
+        "knoppen": [
+          "Page 64 of 129",
+          "19,713 words, 131,328 characters",
+          "Dutch (Netherlands) · 63 spelling errors",
+          "Track Changes: off"
+        ]
+      },
+      "onafhankelijk_docx": {
+        "exact": true,
+        "sha256": "e8477e65617a5dd6d5128f6c6bebee6ef1278eb5f5ddc0a90835a8d85bbfd60c",
+        "bytes": 73319,
+        "body_met_opmaak_sha256": "0808d3dcf34c8251d371d9e4c6eda470ed2597acd850062b5b5f70169333a302",
+        "normalisatie": "Alleen paraId/textId en rsid-attributen verwijderd; tekst, run- en alineaopmaak, hyperlinks en tabelstructuur blijven in de bodyhash."
+      },
+      "verwerpen_ms": 2011,
+      "nieuw_document_na_verwerpen": true,
+      "gui_fouten": [],
+      "console_fouten": [],
+      "rapport_sha256": "44fbb3fc151d537046b8911b35d41b532deb053b81def675cdb28259f0893f4d",
+      "rondes": [
+        {
+          "ronde": 1,
+          "plak_tot_bron_ms": 925,
+          "eventlus": {
+            "timer_ms": 16,
+            "waarnemingen": 6,
+            "grootste_tussenruimte_ms": 454,
+            "p95_tussenruimte_ms": 319,
+            "betekenis": "Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."
+          },
+          "rust_plakken": {
+            "opdrachten": [
+              {
+                "requestId": "a52799a2-2a30-465f-9288-e128487437ff",
+                "clientId": 1782322207,
+                "snapshotTekens": 30576,
+                "gereed": true,
+                "desktopMs": 25,
+                "preparationMs": 6,
+                "bronbinding": true,
+                "deltaBytes": 21248
+              }
+            ],
+            "updates": [
+              {
+                "bytes": 21248
+              }
+            ]
+          },
+          "bronvoor": {
+            "alineas": 8,
+            "uniekeAlineas": 8,
+            "tabellen": 1,
+            "paginas": 1,
+            "lengte": 522,
+            "tabelvormen_sha256": "feb115898dccda4f2960aa2b15cda6e998d15c5f65f415b6d956e11c047ce7fd"
+          },
+          "bronna": {
+            "alineas": 15,
+            "uniekeAlineas": 15,
+            "tabellen": 2,
+            "paginas": 2,
+            "lengte": 1043,
+            "tabelvormen_sha256": "d59a5ab06dd5a3b94ee0d2b0aaf12c349e908aef9e35e62f2f6366fce1a084f8"
+          },
+          "celverhalen_voor": 6,
+          "celverhalen_na": 12
+        },
+        {
+          "ronde": 2,
+          "plak_tot_bron_ms": 387,
+          "eventlus": {
+            "timer_ms": 16,
+            "waarnemingen": 6,
+            "grootste_tussenruimte_ms": 263,
+            "p95_tussenruimte_ms": 44.00000000000182,
+            "betekenis": "Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."
+          },
+          "rust_plakken": {
+            "opdrachten": [
+              {
+                "requestId": "25901545-7470-4391-9ef4-322b9317a8ab",
+                "clientId": 1782322207,
+                "snapshotTekens": 61688,
+                "gereed": true,
+                "desktopMs": 17,
+                "preparationMs": 12,
+                "bronbinding": true,
+                "deltaBytes": 38478
+              }
+            ],
+            "updates": [
+              {
+                "bytes": 38478
+              }
+            ]
+          },
+          "bronvoor": {
+            "alineas": 15,
+            "uniekeAlineas": 15,
+            "tabellen": 2,
+            "paginas": 2,
+            "lengte": 1043,
+            "tabelvormen_sha256": "d59a5ab06dd5a3b94ee0d2b0aaf12c349e908aef9e35e62f2f6366fce1a084f8"
+          },
+          "bronna": {
+            "alineas": 29,
+            "uniekeAlineas": 29,
+            "tabellen": 4,
+            "paginas": 3,
+            "lengte": 2085,
+            "tabelvormen_sha256": "c7d39272383e692806765c2653681719ba08e47d133a4b37a270b3ed3ecb7cd5"
+          },
+          "celverhalen_voor": 12,
+          "celverhalen_na": 24
+        },
+        {
+          "ronde": 3,
+          "plak_tot_bron_ms": 1059,
+          "eventlus": {
+            "timer_ms": 16,
+            "waarnemingen": 8,
+            "grootste_tussenruimte_ms": 372,
+            "p95_tussenruimte_ms": 156,
+            "betekenis": "Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."
+          },
+          "rust_plakken": {
+            "opdrachten": [
+              {
+                "requestId": "af551305-d479-48fb-809c-f0ceca239a46",
+                "clientId": 1782322207,
+                "snapshotTekens": 116476,
+                "gereed": true,
+                "desktopMs": 31,
+                "preparationMs": 19,
+                "bronbinding": true,
+                "deltaBytes": 76451
+              }
+            ],
+            "updates": [
+              {
+                "bytes": 76451
+              }
+            ]
+          },
+          "bronvoor": {
+            "alineas": 29,
+            "uniekeAlineas": 29,
+            "tabellen": 4,
+            "paginas": 3,
+            "lengte": 2085,
+            "tabelvormen_sha256": "c7d39272383e692806765c2653681719ba08e47d133a4b37a270b3ed3ecb7cd5"
+          },
+          "bronna": {
+            "alineas": 57,
+            "uniekeAlineas": 57,
+            "tabellen": 8,
+            "paginas": 5,
+            "lengte": 4169,
+            "tabelvormen_sha256": "e140001ff99f359d456e94d78a91034cd71c4223dc475864e7c9a45db3f24256"
+          },
+          "celverhalen_voor": 24,
+          "celverhalen_na": 48
+        },
+        {
+          "ronde": 4,
+          "plak_tot_bron_ms": 855,
+          "eventlus": {
+            "timer_ms": 16,
+            "waarnemingen": 10,
+            "grootste_tussenruimte_ms": 364,
+            "p95_tussenruimte_ms": 106.00000000000364,
+            "betekenis": "Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."
+          },
+          "rust_plakken": {
+            "opdrachten": [
+              {
+                "requestId": "b9843d1c-786c-410d-b913-aa1327d9b8e6",
+                "clientId": 1782322207,
+                "snapshotTekens": 225968,
+                "gereed": true,
+                "desktopMs": 85,
+                "preparationMs": 67,
+                "bronbinding": true,
+                "deltaBytes": 152842
+              }
+            ],
+            "updates": [
+              {
+                "bytes": 152842
+              }
+            ]
+          },
+          "bronvoor": {
+            "alineas": 57,
+            "uniekeAlineas": 57,
+            "tabellen": 8,
+            "paginas": 5,
+            "lengte": 4169,
+            "tabelvormen_sha256": "e140001ff99f359d456e94d78a91034cd71c4223dc475864e7c9a45db3f24256"
+          },
+          "bronna": {
+            "alineas": 113,
+            "uniekeAlineas": 113,
+            "tabellen": 16,
+            "paginas": 9,
+            "lengte": 8337,
+            "tabelvormen_sha256": "6ddded7b5729bc54b969215e9b3f421101f692e01c6f045fcf3006b865f1b963"
+          },
+          "celverhalen_voor": 48,
+          "celverhalen_na": 96
+        },
+        {
+          "ronde": 5,
+          "plak_tot_bron_ms": 2942,
+          "eventlus": {
+            "timer_ms": 16,
+            "waarnemingen": 20,
+            "grootste_tussenruimte_ms": 1108,
+            "p95_tussenruimte_ms": 816,
+            "betekenis": "Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."
+          },
+          "rust_plakken": {
+            "opdrachten": [
+              {
+                "requestId": "6237cde9-3a37-4de4-9ed0-6300eef1a6a9",
+                "clientId": 1782322207,
+                "snapshotTekens": 444116,
+                "gereed": true,
+                "desktopMs": 259.00000000000364,
+                "preparationMs": 228,
+                "bronbinding": true,
+                "deltaBytes": 311837
+              }
+            ],
+            "updates": [
+              {
+                "bytes": 311837
+              }
+            ]
+          },
+          "bronvoor": {
+            "alineas": 113,
+            "uniekeAlineas": 113,
+            "tabellen": 16,
+            "paginas": 9,
+            "lengte": 8337,
+            "tabelvormen_sha256": "6ddded7b5729bc54b969215e9b3f421101f692e01c6f045fcf3006b865f1b963"
+          },
+          "bronna": {
+            "alineas": 225,
+            "uniekeAlineas": 225,
+            "tabellen": 32,
+            "paginas": 17,
+            "lengte": 16673,
+            "tabelvormen_sha256": "8768fe3a12a984b2596dbe2710d8775daf7f6530f2704d92a439d7fdd5693abd"
+          },
+          "celverhalen_voor": 96,
+          "celverhalen_na": 192
+        },
+        {
+          "ronde": 6,
+          "plak_tot_bron_ms": 7449,
+          "eventlus": {
+            "timer_ms": 16,
+            "waarnemingen": 19,
+            "grootste_tussenruimte_ms": 2285.9999999999964,
+            "p95_tussenruimte_ms": 997,
+            "betekenis": "Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."
+          },
+          "rust_plakken": {
+            "opdrachten": [
+              {
+                "requestId": "a86e8bd2-d863-4167-a00a-a3fabe368968",
+                "clientId": 1782322207,
+                "snapshotTekens": 890588,
+                "gereed": true,
+                "desktopMs": 1376,
+                "preparationMs": 1307,
+                "bronbinding": true,
+                "deltaBytes": 622301
+              }
+            ],
+            "updates": [
+              {
+                "bytes": 622301
+              }
+            ]
+          },
+          "bronvoor": {
+            "alineas": 225,
+            "uniekeAlineas": 225,
+            "tabellen": 32,
+            "paginas": 17,
+            "lengte": 16673,
+            "tabelvormen_sha256": "8768fe3a12a984b2596dbe2710d8775daf7f6530f2704d92a439d7fdd5693abd"
+          },
+          "bronna": {
+            "alineas": 449,
+            "uniekeAlineas": 449,
+            "tabellen": 64,
+            "paginas": 33,
+            "lengte": 33345,
+            "tabelvormen_sha256": "4d974a241733f601b0329fd747aaa613200d13d72bb5edc772f4846504153dea"
+          },
+          "celverhalen_voor": 192,
+          "celverhalen_na": 384
+        },
+        {
+          "ronde": 7,
+          "plak_tot_bron_ms": 12454,
+          "eventlus": {
+            "timer_ms": 16,
+            "waarnemingen": 267,
+            "grootste_tussenruimte_ms": 2165.9999999999927,
+            "p95_tussenruimte_ms": 62,
+            "betekenis": "Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."
+          },
+          "rust_plakken": {
+            "opdrachten": [
+              {
+                "requestId": "8dffda63-f630-41bd-94cc-0bad9d097a6c",
+                "clientId": 1782322207,
+                "snapshotTekens": 1825332,
+                "gereed": true,
+                "desktopMs": 7786.000000000007,
+                "preparationMs": 7655,
+                "bronbinding": true,
+                "deltaBytes": 1251304
+              }
+            ],
+            "updates": [
+              {
+                "bytes": 1251304
+              }
+            ]
+          },
+          "bronvoor": {
+            "alineas": 449,
+            "uniekeAlineas": 449,
+            "tabellen": 64,
+            "paginas": 33,
+            "lengte": 33345,
+            "tabelvormen_sha256": "4d974a241733f601b0329fd747aaa613200d13d72bb5edc772f4846504153dea"
+          },
+          "bronna": {
+            "alineas": 897,
+            "uniekeAlineas": 897,
+            "tabellen": 128,
+            "paginas": 65,
+            "lengte": 66689,
+            "tabelvormen_sha256": "3f8764b386144ef9b7deebd024347ce88df5f910c40d1caa44945e4c45a8e562"
+          },
+          "celverhalen_voor": 384,
+          "celverhalen_na": 768
+        },
+        {
+          "ronde": 8,
+          "plak_tot_bron_ms": 46281,
+          "eventlus": {
+            "timer_ms": 16,
+            "waarnemingen": 1726,
+            "grootste_tussenruimte_ms": 8325,
+            "p95_tussenruimte_ms": 22.999999999992724,
+            "betekenis": "Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."
+          },
+          "rust_plakken": {
+            "opdrachten": [
+              {
+                "requestId": "c60af1d5-a694-4aa1-9dd9-6a5d878ae4b7",
+                "clientId": 1782322207,
+                "snapshotTekens": 3658516,
+                "gereed": true,
+                "desktopMs": 35184.99999999999,
+                "preparationMs": 34977,
+                "bronbinding": true,
+                "deltaBytes": 2498789
+              }
+            ],
+            "updates": [
+              {
+                "bytes": 2498789
+              }
+            ]
+          },
+          "bronvoor": {
+            "alineas": 897,
+            "uniekeAlineas": 897,
+            "tabellen": 128,
+            "paginas": 65,
+            "lengte": 66689,
+            "tabelvormen_sha256": "3f8764b386144ef9b7deebd024347ce88df5f910c40d1caa44945e4c45a8e562"
+          },
+          "bronna": {
+            "alineas": 1793,
+            "uniekeAlineas": 1793,
+            "tabellen": 256,
+            "paginas": 129,
+            "lengte": 133377,
+            "tabelvormen_sha256": "71e307bdbb6e3a8ba3cbfdc602bb156455eafb2f0fec83a0cb6726389c5b1ec3"
+          },
+          "celverhalen_voor": 768,
+          "celverhalen_na": 1536
+        }
+      ]
+    }
+  },
+  "profielkalibratie": {
+    "zonder_en_met_profiel_gelijke_genormaliseerde_body": true,
+    "methodes_bij_beide_invoerproeven_gelijk": true,
+    "opmerking": "De eerste scriptversie zonder optionele strenge onderbrekingseis is op hash gereconstrueerd en lokaal naast de twee oorspronkelijke rapporten bewaard. De strenge hertest gebruikt het huidige script."
+  },
+  "beeldvergelijking": {
+    "basis": "45.24-vervolginvoer tegenover eerste 45.25-vervolginvoer",
+    "afmetingen": [
+      1440,
+      1000
+    ],
+    "lint_pixels_afwijkend": 0,
+    "heel_venster_pixels_afwijkend": 11,
+    "bbox": [
+      1118,
+      995,
+      1132,
+      999
+    ],
+    "grens": "Eén toestand, geen volledige visuele migratieacceptatie."
+  },
+  "controles": {
+    "frontend": {
+      "bestanden": 154,
+      "tests": 1666,
+      "geslaagd": true
+    },
+    "nieuwe_spellingtests": 7,
+    "nieuwe_semantische_opmaaktests": 3,
+    "python": {
+      "tests": 56,
+      "geslaagd": true
+    },
+    "typescript": true,
+    "module_opdrachten": true,
+    "weekversie": true,
+    "desktop_linux_bouw": true,
+    "lokale_native_releasewerkruimte": {
+      "geslaagd": null,
+      "afsluitcode": 143,
+      "clippy_gestart": false,
+      "status": "Onderbroken vóór testuitslag; niet als groen geteld."
+    }
+  },
+  "ci_vorige_bron_45_24": [
+    {
+      "status": "completed",
+      "conclusion": "success",
+      "headSha": "dce2123eef8872cbb0ef71da0d6a2f55b5b5f9a2",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41728984416",
+      "jobs": [
+        {
+          "name": "AppImage voor Linux x86_64",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "status": "completed",
+      "conclusion": "success",
+      "headSha": "dce2123eef8872cbb0ef71da0d6a2f55b5b5f9a2",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41728984777",
+      "jobs": [
+        {
+          "name": "onderzoeken",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "status": "completed",
+      "conclusion": "success",
+      "headSha": "dce2123eef8872cbb0ef71da0d6a2f55b5b5f9a2",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41728984933",
+      "jobs": [
+        {
+          "name": "Gedeelde desktopcodec en bron-/geschiedenisbehoud",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Geïsoleerde Rust-/SDK-vergelijking op Linux",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "status": "completed",
+      "conclusion": "success",
+      "headSha": "dce2123eef8872cbb0ef71da0d6a2f55b5b5f9a2",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41728999542",
+      "jobs": [
+        {
+          "name": "desktop (macos-latest)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "desktop (windows-latest)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "desktop (ubuntu-22.04)",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "status": "completed",
+      "conclusion": "success",
+      "headSha": "dce2123eef8872cbb0ef71da0d6a2f55b5b5f9a2",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41728999553",
+      "jobs": [
+        {
+          "name": "Conversie met geïnstalleerde kantoorruntime",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "native (windows-latest)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "native (macos-latest)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "native (ubuntu-22.04)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Native beelden en pakketbron tussen platforms",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "status": "completed",
+      "conclusion": "success",
+      "headSha": "dce2123eef8872cbb0ef71da0d6a2f55b5b5f9a2",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41728999569",
+      "jobs": [
+        {
+          "name": "database (ubuntu-22.04)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "database (macos-latest)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "database (windows-latest)",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "status": "completed",
+      "conclusion": "success",
+      "headSha": "dce2123eef8872cbb0ef71da0d6a2f55b5b5f9a2",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41728999581",
+      "jobs": [
+        {
+          "name": "bouwen (windows-latest)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "bouwen (ubuntu-22.04)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "bouwen (macos-latest)",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "status": "completed",
+      "conclusion": "success",
+      "headSha": "dce2123eef8872cbb0ef71da0d6a2f55b5b5f9a2",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41729285303",
+      "jobs": [
+        {
+          "name": "versie",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Bouwen – Linux",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Bouwen – macOS",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Bouwen – Windows",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "publiceren",
+          "status": "completed",
+          "conclusion": "skipped"
+        }
+      ]
+    }
+  ],
+  "ci_geheugen_45_24": {
+    "normaal": {
+      "geslaagd": true,
+      "versie": "2026.45.24",
+      "programma_sha256": "17b396f462d30310b69c1522b865a742d52a55b4c869717750507f703c284392",
+      "script_sha256": "01ef4f53ca0acbb9d0f2e5167e3b8327022c1670b3f732c9f12a8a4ddcd899ec",
+      "rapport_sha256": "ccc0e5686952d784fc9a32d9112fe752ee45e77793460ea5534e37b59351e330",
+      "stappen": [
+        "beginbron",
+        "getypte_bron",
+        "selectie_en_backspace",
+        "undo",
+        "redo",
+        "hersteld_voor_bewaren",
+        "native_bewaaractie_onafhankelijk",
+        "nieuw_proces_heropend",
+        "verder_na_later",
+        "herstelde_kopie",
+        "verder_in_herstelde_kopie"
+      ]
+    },
+    "herhalen": {
+      "geslaagd": true,
+      "versie": "2026.45.24",
+      "programma_sha256": "17b396f462d30310b69c1522b865a742d52a55b4c869717750507f703c284392",
+      "script_sha256": "01ef4f53ca0acbb9d0f2e5167e3b8327022c1670b3f732c9f12a8a4ddcd899ec",
+      "rapport_sha256": "f0cbcc440df05b93ba2310ee804f200bd985fd20d90f43f181c390ad65c9a67b",
+      "stappen": [
+        "beginbron",
+        "getypte_bron",
+        "selectie_en_backspace",
+        "undo",
+        "redo",
+        "hersteld_voor_bewaren",
+        "native_bewaaractie_onafhankelijk",
+        "nieuw_proces_heropend"
+      ],
+      "geheugenproef": {
+        "gevraagde_rondes": 20,
+        "gc_gevraagd": true,
+        "rondes": [
+          {
+            "ronde": 1,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 50
+            }
+          },
+          {
+            "ronde": 2,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 64
+            }
+          },
+          {
+            "ronde": 3,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 79
+            }
+          },
+          {
+            "ronde": 4,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 92
+            }
+          },
+          {
+            "ronde": 5,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 106
+            }
+          },
+          {
+            "ronde": 6,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 119
+            }
+          },
+          {
+            "ronde": 7,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 133
+            }
+          },
+          {
+            "ronde": 8,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 145
+            }
+          },
+          {
+            "ronde": 9,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 157
+            }
+          },
+          {
+            "ronde": 10,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 172
+            }
+          },
+          {
+            "ronde": 11,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 185
+            }
+          },
+          {
+            "ronde": 12,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 198
+            }
+          },
+          {
+            "ronde": 13,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 211
+            }
+          },
+          {
+            "ronde": 14,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 224
+            }
+          },
+          {
+            "ronde": 15,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 237
+            }
+          },
+          {
+            "ronde": 16,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 250
+            }
+          },
+          {
+            "ronde": 17,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 262
+            }
+          },
+          {
+            "ronde": 18,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 275
+            }
+          },
+          {
+            "ronde": 19,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 291
+            }
+          },
+          {
+            "ronde": 20,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 304
+            }
+          }
+        ],
+        "grens": "Extra native geschiedenis-/selectiebelasting; geen bewijs dat een incidentele allocatorpanic is opgelost."
+      }
+    },
+    "bewaren": {
+      "geslaagd": true,
+      "versie": "2026.45.24",
+      "programma_sha256": "17b396f462d30310b69c1522b865a742d52a55b4c869717750507f703c284392",
+      "script_sha256": "716f422e7b2635360185e0943fed2a66500d95831b4c5eb341417205bc6ce6b6",
+      "rapport_sha256": "093e8b16e3d83ab82f130777c383a2e9b32d35ad41f4b219a1fa66dab70fb4bf",
+      "rondes": 3
+    }
+  },
+  "open": {
+    "issues": 118,
+    "migratiegebieden": 10,
+    "acceptatievlaggen": 30,
+    "snelheidsacceptatie": false,
+    "volledige_rustinterface": false,
+    "historische_stabiliteitsafkeuringen_opgelost": false
+  },
+  "grenzen": [
+    "Eigen XDG-/DBus-/Xvfb-profielen en vaste openbare proefbronnen; geen gebruikersdocument of draaiende app gewijzigd.",
+    "Wisselende belasting bij de eerste vergelijking; geen algemene snelheids- of FPS-claim.",
+    "De afzonderlijke strenge 45.25-hertest start zonder andere eigen bouw-/GUI-proeven. Ook die ene hertest is geen volledige praktijkacceptatie.",
+    "Genormaliseerde bodyhash laat alleen paraId/textId/rsid weg; alle overige DOCX-delen worden in de drie semantische opmaakproeven volledig bytegelijk vergeleken.",
+    "Platform- en editieacceptatie op 45.25 volgt na push; de huidige groene platformbewijzen horen bij dce2123."
+  ]
+}

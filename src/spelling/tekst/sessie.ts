@@ -167,6 +167,8 @@ export class SpellingSessie {
   private luisteraars = new Set<() => void>();
   private stand = 0;
   private gestopt = false;
+  /** Ook verwijderingen en taalkeuzes maken een lopende lezing ongeldig. */
+  private leesGeneratie = 0;
   /** Aantal getypte tekens in het document (voor de autocorrectie). */
   toetsen = 0;
 
@@ -198,6 +200,7 @@ export class SpellingSessie {
   }
 
   stop() {
+    this.leesGeneratie++;
     this.gestopt = true;
     window.clearTimeout(this.timer);
   }
@@ -212,6 +215,7 @@ export class SpellingSessie {
   }
 
   bijLaden(ctx: Ctx) {
+    this.leesGeneratie++;
     this.ctx = ctx;
     this.segmentCache = null;
     this.alineas = [];
@@ -223,6 +227,7 @@ export class SpellingSessie {
   }
 
   bijWijziging(ctx: Ctx) {
+    this.leesGeneratie++;
     this.ctx = ctx;
     this.laatsteWijziging = performance.now();
     // Hier is alleen de alinea-id nodig. cursor() vertaalt óók de offset naar
@@ -299,6 +304,7 @@ export class SpellingSessie {
   }
 
   kiesAlineaTaal(paraId: string, taal: Taal) {
+    this.leesGeneratie++;
     this.alineaTaal.set(paraId, taal);
     this.vuil.add(paraId);
     this.plan(0);
@@ -306,6 +312,7 @@ export class SpellingSessie {
 
   /** Alles opnieuw (andere taal, instelling of woordenlijst). */
   herbegin() {
+    this.leesGeneratie++;
     for (const a of this.alineas) a.tekst = "\u0000";
     this.plan(0);
   }
@@ -329,6 +336,9 @@ export class SpellingSessie {
   private async voerControleUit() {
     const ctx = this.ctx;
     if (!ctx || this.gestopt) return;
+    const generatie = this.leesGeneratie;
+    const actueel = () => !this.gestopt && generatie === this.leesGeneratie;
+    const opnieuw = () => { if (!this.gestopt) this.opnieuw = true; };
     if (!this.aan) {
       this.alineas = [];
       this.perId.clear();
@@ -336,25 +346,38 @@ export class SpellingSessie {
       this.herteken();
       return;
     }
-    // Alle verhalen in één versie lezen (de hoofdtekst en elke tabelcel apart).
+    // Alle verhalen in één versie lezen, zonder honderden synchrone
+    // Wasm-lezingen in één hoofdthreadtaak te starten. Nieuwe invoer mag
+    // tussen groepen door; zo'n bronwijziging maakt de hele lezing ongeldig.
     const verhalen = this.verhalen();
     const gelezen: { story: string; paragraphs: { story: string; paraId: string; text: string }[] }[] = [];
     try {
       await ctx.run(async (vers) => {
-        const uit = await Promise.all(verhalen.map((story) => vers.read.readParagraphs({ view: "accepted", story })));
         const versies = new Set<string>();
-        uit.forEach((r, i) => {
-          if ("ok" in r && r.ok) {
+        for (let i = 0; i < verhalen.length;) {
+          if (!actueel() || vers.lifetimeSignal?.aborted) { gelezen.length = 0; return; }
+          const van = i, begin = performance.now();
+          const aanvragen = [];
+          do {
+            aanvragen.push(vers.read.readParagraphs({ view: "accepted", story: verhalen[i++] }));
+          } while (i < verhalen.length && i - van < 32 && performance.now() - begin < 8);
+          const uit = await Promise.all(aanvragen);
+          if (!actueel()) { gelezen.length = 0; return; }
+          for (let k = 0; k < uit.length; k++) {
+            const r = uit[k];
+            if (!("ok" in r) || !r.ok) { gelezen.length = 0; return; }
             versies.add(r.version);
-            gelezen.push({ story: verhalen[i], paragraphs: r.paragraphs });
+            if (versies.size > 1) { gelezen.length = 0; return; }
+            gelezen.push({ story: verhalen[van + k], paragraphs: r.paragraphs });
           }
-        });
-        // Tussendoor getypt: later opnieuw.
-        if (versies.size > 1) gelezen.length = 0;
+          if (i < verhalen.length) await new Promise<void>(klaar => window.setTimeout(klaar, 0));
+        }
       });
     } catch {
+      if (!actueel()) opnieuw();
       return;
     }
+    if (!actueel()) { opnieuw(); return; }
     if (!gelezen.length) {
       this.opnieuw = true;
       return;
@@ -394,6 +417,7 @@ export class SpellingSessie {
         teControleren.map((a) => ({ tekst: a.tekst, taal: a.taal })),
         instelling,
       );
+      if (!actueel()) { opnieuw(); return; }
       // Niet onderstrepen terwijl iemand nog aan het woord typt (zoals Word).
       const cursor = performance.now() - this.laatsteWijziging < 1500 ? this.cursor() : null;
       teControleren.forEach((a, i) => {
@@ -405,6 +429,7 @@ export class SpellingSessie {
       });
       this.probleem = null;
     } catch (fout) {
+      if (!actueel()) { opnieuw(); return; }
       this.probleem = String((fout as Error)?.message ?? fout);
       this.aantal = null;
       this.meld();
@@ -633,6 +658,7 @@ export class SpellingSessie {
       gelukt = "ok" in uit && uit.ok;
     });
     if (gelukt) {
+      this.leesGeneratie++;
       for (const { alinea } of doelen) this.vuil.add(alinea.paraId);
       this.plan(0);
     }

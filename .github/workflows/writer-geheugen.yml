@@ -8,6 +8,8 @@ on:
       - 'scripts/test-writer-lang-native.py'
       - 'scripts/test-writer-rijk-plakken-native.py'
       - 'scripts/bewaar-writer-foutcontext.py'
+      - 'src/spelling/tekst/sessie.ts'
+      - 'src/tekst/bewerken/plakopmaak.ts'
   workflow_dispatch:
     inputs:
       geheugenrondes:
@@ -73,10 +75,13 @@ jobs:
       - name: Voorbeeldkopie openen, rijk plakken, bewaren en verder bewerken
         run: |
           "$OFFICE_GUI_PYTHON" scripts/test-writer-rijk-plakken-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --rondes 3 --bewaar-na-ronde 1 --maxduur 180 --vereis-rust-plakken --uitvoer .local/proef-writer-geheugen/bewaren
+      - name: Typen en selecteren tijdens spelling na verdubbelen van 128 tabellen
+        run: |
+          "$OFFICE_GUI_PYTHON" scripts/test-writer-rijk-plakken-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --rondes 1 --bron 128-tabellen --methodeprofiel --vervolginvoer --vereis-onderbreekbare-spelling --maxduur 600 --vereis-rust-plakken --uitvoer .local/proef-writer-geheugen/spelling
       - name: Exacte binary bij afkeuring bewaren
         if: failure()
         run: |
-          python3 scripts/bewaar-writer-foutcontext.py --programma src-tauri/target/release/open-office-studio --rapport .local/proef-writer-geheugen/normaal/rapport.json --rapport .local/proef-writer-geheugen/herhalen/rapport.json --rapport .local/proef-writer-geheugen/bewaren/rapport.json --uitvoer .local/proef-writer-geheugen/foutcontext --appimage-map src-tauri/target/release/bundle/appimage
+          python3 scripts/bewaar-writer-foutcontext.py --programma src-tauri/target/release/open-office-studio --rapport .local/proef-writer-geheugen/normaal/rapport.json --rapport .local/proef-writer-geheugen/herhalen/rapport.json --rapport .local/proef-writer-geheugen/bewaren/rapport.json --rapport .local/proef-writer-geheugen/spelling/rapport.json --uitvoer .local/proef-writer-geheugen/foutcontext --appimage-map src-tauri/target/release/bundle/appimage
       - name: Onderzoeksgegevens bewaren
         if: always()
         uses: actions/upload-artifact@v4
