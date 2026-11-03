@@ -1,6 +1,6 @@
 # Voortgang migratie en open issues
 
-Peildatum: 2 november 2026. Ontwikkelbasis: Tauri/Rust met React/TypeScript, commit `bdab16e`, lokale testversie `2026.45.7` (getest op 3 november).
+Peildatum: 2 november 2026. Ontwikkelbasis: Tauri/Rust met React/TypeScript, commit `bdab16e`, lokale testversie `2026.45.8` (getest op 3 november).
 
 ## Huidige waarheid
 
@@ -123,7 +123,7 @@ Deze inventaris heeft **106** items. “Open” betekent niet dat de fout in dez
 | [#122](https://github.com/OpenAEC-Foundation/open-office-studio/issues/122) | Writer: opsommingstekens ontbreken na klikken op de opsommingsknop | Open; controle per issue nodig |
 | [#123](https://github.com/OpenAEC-Foundation/open-office-studio/issues/123) | Writer: genummerde lijst wordt na Enter niet voortgezet | Open; controle per issue nodig |
 | [#124](https://github.com/OpenAEC-Foundation/open-office-studio/issues/124) | Writer: pijltjes in lettergrootteveld passen geselecteerde tekst niet aan | Hersteld in 45.7; browser en native Linux inclusief bewaren/heropenen geslaagd; merge en andere platforms open |
-| [#125](https://github.com/OpenAEC-Foundation/open-office-studio/issues/125) | Writer: bestaande tekst bewaart donkergrijze markering terwijl nieuwe invoer geel wordt | Open; controle per issue nodig |
+| [#125](https://github.com/OpenAEC-Foundation/open-office-studio/issues/125) | Writer: bestaande tekst bewaart donkergrijze markering terwijl nieuwe invoer geel wordt | Native GTK-terugkoppeling gereproduceerd en hersteld in 45.8; bewaren/heropenen en nieuwe invoer geslaagd; merge en andere platforms open |
 | [#126](https://github.com/OpenAEC-Foundation/open-office-studio/issues/126) | Writer: extern gekopieerde tekst plakt niet; intern plakken werkt via lint en Ctrl+V | Open; controle per issue nodig |
 | [#127](https://github.com/OpenAEC-Foundation/open-office-studio/issues/127) | Writer: Ga naar pagina moet de cursor aan het begin van de gekozen pagina plaatsen | Open; controle per issue nodig |
 | [#128](https://github.com/OpenAEC-Foundation/open-office-studio/issues/128) | Writer: Tab in laatste tabelcel verlaat tabel zonder nieuwe rij toe te voegen | Open; controle per issue nodig |
@@ -183,3 +183,12 @@ Deze inventaris heeft **106** items. “Open” betekent niet dat de fout in dez
 - Een voltooid ouder bewaarsnapshot maakt nieuwe invoer niet schoon. Navigeren of een andere tab kiezen verplaatst de bevestiging niet; een gesloten tab komt niet terug. Gelijktijdig bewaren naar dezelfde oude schijfversie heeft maximaal één winnaar.
 - Vier nieuwe modelproeven, alle vijftien gerichte WebView-proeven, volledige Clippy en de echte Linux-vensterproef slagen. De laatste heeft 45 clientbeelden en tien inhouds-/afsluitcontroles. Zie [het verslag](../native/docs/webview-bewaren-2026-11-03/LEESMIJ.md).
 - Dit is een geteste debugbuild van de preview. Openen, enginebewerkingen en weergave moeten nog op de documentwerker worden aangesloten; dit lost de Writer-typvertraging van de bestaande Tauri-app niet op.
+
+### 2026.45.8: native markeerkleur
+
+- #125 is nu herhaald met de echte GTK-kleurkiezer. Op 45.7 veroorzaakt één keuze achttien native gebeurtenissen met afwisselend geel en donkergrijs; de eerdere afzonderlijke DOCX-controle bewaart werkelijk donkergrijs na bevestigen. De gewone Chromium-proef geeft dit niet weer en slaagt ook op de oude bron.
+- De aangepaste kleurbediening bewaart het lokale concept onmiddellijk en behandelt een keuze eenmaal. De bewaarde Linux-build 45.8 geeft bij geel en blauw elk twee gewone native gebeurtenissen, zonder oude kleur ertussen. Geselecteerde tekst én nieuw getypte tekst krijgen dezelfde kleur; undo/redo en een nieuw native proces behouden de bewaarde opmaak.
+- 1.560 tests, TypeScript, productie-/nativebouw en alle module-opdrachten slagen. De herhaalbare native proef is aan de Linux-desktop- en uitgaveworkflow toegevoegd. Zie [het verslag](tests/2026-11-03-writer-kleur.json).
+- 45.8 is lokaal geïnstalleerd; eerdere binaries en gebruikersprofiel zijn behouden. De bouwronde voor zeven edities van 45.7 loopt afzonderlijk. Een groen 45.6-verslag wordt niet als bewijs voor 45.8 gebruikt.
+- De aanvullende Rust-componentproef voor bewaren faalt op de eerdere aansluiting wanneer haar kindcomponent verdwijnt. Na herstel blijft de bevestiging bij de hoofdcomponent bestaan. Alle zestien gerichte WebView-tests en volledige Clippy slagen.
+- In de nieuwe Windows-Rust-CI bleek de pakketproef een korte en lange schrijfwijze van dezelfde tijdelijke map ongelijk te vinden. Zij vergelijkt nu de daadwerkelijke bestanden; negen lokale scriptproeven slagen. De platformhertest blijft nodig.

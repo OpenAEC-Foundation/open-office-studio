@@ -117,7 +117,7 @@ jobs:
           fi
       - name: Linux-bouwafhankelijkheden
         if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev patchelf squashfs-tools poppler-utils
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev patchelf squashfs-tools poppler-utils python3-xlib python3-pil python3-websockets xvfb xauth xdotool
       - run: pnpm install --frozen-lockfile
       # Extra open lettertypen (assets/lettertypen.json): bewaard per manifestversie,
       # zodat een build zonder netwerk naar GitHub ook werkt.
@@ -187,6 +187,9 @@ jobs:
           else
             pnpm desktop:build --bundles ${{ matrix.bundels }}
           fi
+          if [ "$RUNNER_OS" = Linux ]; then
+            /usr/bin/python3 scripts/test-writer-kleur-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-native-writer-kleur
+          fi
           node scripts/verzamel-studio.mjs office
           pnpm database:desktop:build --bundles ${{ matrix.bundels }}
           node scripts/verzamel-studio.mjs database
@@ -255,12 +258,29 @@ jobs:
           pnpm exec playwright install --with-deps chromium
           node scripts/test-rekenblad-gui.mjs
           node scripts/test-writer-lettergrootte-gui.mjs
+          node scripts/test-writer-kleur-gui.mjs
       - name: GUI-bewijs bewaren
         if: always() && runner.os == 'Linux'
         uses: actions/upload-artifact@v4
         with:
           name: uitgave-rekenblad-gui-${{ matrix.label }}
           path: .local/proef-rekenblad-gui/
+          include-hidden-files: true
+          if-no-files-found: warn
+      - name: Native Writer-kleurbewijs bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-writer-kleur-${{ github.workflow }}-${{ matrix.os || matrix.label }}
+          path: .local/proef-native-writer-kleur/
+          include-hidden-files: true
+          if-no-files-found: warn
+      - name: Writer-kleurbewijs bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: writer-kleur-${{ github.workflow }}-${{ matrix.os || matrix.label }}
+          path: .local/proef-writer-kleur/
           include-hidden-files: true
           if-no-files-found: warn
       - name: Writer-lettergroottebewijs bewaren

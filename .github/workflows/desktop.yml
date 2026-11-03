@@ -34,7 +34,7 @@ jobs:
           python-version: "3.12"
       - name: Linux-bouwafhankelijkheden
         if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev patchelf squashfs-tools poppler-utils
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev patchelf squashfs-tools poppler-utils python3-xlib python3-pil python3-websockets xvfb xauth xdotool
       # De conversieruntime staat niet in deze repository: zet de Actions-variabelen
       # CONVERSIE_APT_PAKKETTEN en CONVERSIE_PROGRAMMA om de echte conversieproeven te draaien.
       - name: Conversieruntime installeren
@@ -79,6 +79,7 @@ jobs:
           pnpm exec playwright install --with-deps chromium
           node scripts/test-rekenblad-gui.mjs
           node scripts/test-writer-lettergrootte-gui.mjs
+          node scripts/test-writer-kleur-gui.mjs
       - name: GUI-bewijs bewaren
         if: always() && runner.os == 'Linux'
         uses: actions/upload-artifact@v4
@@ -124,6 +125,25 @@ jobs:
       - name: macOS-pakket bouwen
         if: runner.os == 'macOS'
         run: pnpm desktop:build --bundles dmg
+      - name: GTK-kleurkeuze in de gebouwde Linux-app
+        if: runner.os == 'Linux'
+        run: /usr/bin/python3 scripts/test-writer-kleur-native.py --programma src-tauri/target/release/open-office-studio --versie $(node -p "require('./package.json').version") --uitvoer .local/proef-native-writer-kleur
+      - name: Native Writer-kleurbewijs bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-writer-kleur-${{ github.workflow }}-${{ matrix.os || matrix.label }}
+          path: .local/proef-native-writer-kleur/
+          include-hidden-files: true
+          if-no-files-found: warn
+      - name: Writer-kleurbewijs bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: writer-kleur-${{ github.workflow }}-${{ matrix.os || matrix.label }}
+          path: .local/proef-writer-kleur/
+          include-hidden-files: true
+          if-no-files-found: warn
       - name: Linux-installers werkelijk uitpakken en controleren
         if: runner.os == 'Linux'
         run: python scripts/controleer-installers.py --platform linux --rapport .local/pakketcontrole-Linux.json

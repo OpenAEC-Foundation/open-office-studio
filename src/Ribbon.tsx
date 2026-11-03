@@ -186,6 +186,11 @@ export function OpdrachtKleur({
       ? opdracht.state.value.replace(/^#/, "")
       : "";
   const kleur = /^[0-9a-f]{6}$/i.test(waarde) ? `#${waarde}` : "#36363e";
+  // De native kiezer moet zijn eigen keuze direct terugzien. De opdrachtstatus
+  // komt later binnen; de vorige kleur terugzetten veroorzaakt in WebKit een
+  // nieuwe native kleurgebeurtenis en daarmee een heen-en-weergaande reeks.
+  const [concept, setConcept] = useState(kleur);
+  useEffect(() => setConcept(kleur), [kleur]);
   return (
     <label
       className="ribbon-kleur"
@@ -193,15 +198,18 @@ export function OpdrachtKleur({
       data-disabled={!opdracht.state.enabled}
     >
       <Icoon size={17} strokeWidth={1.65} />
-      <i style={{ background: kleur }} />
+      <i style={{ background: concept }} />
       <ChevronDown size={10} />
       <input
         type="color"
         aria-label={naam}
-        value={kleur}
+        value={concept}
         disabled={!opdracht.state.enabled}
-        onInput={(event) => uitvoeren(args(event.currentTarget.value))}
-        onChange={(event) => uitvoeren(args(event.target.value))}
+        onChange={(event) => {
+          const gekozen = event.currentTarget.value;
+          setConcept(gekozen);
+          uitvoeren(args(gekozen));
+        }}
       />
     </label>
   );
