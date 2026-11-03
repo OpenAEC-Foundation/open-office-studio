@@ -8,6 +8,10 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+# Laat de lopende controle afronden; bewaar alleen de nieuwste wachtende bron.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
   conversie-runtime:
     name: Conversie met geïnstalleerde kantoorruntime

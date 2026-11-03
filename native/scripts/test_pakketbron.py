@@ -65,7 +65,11 @@ class Pakketbron(unittest.TestCase):
                 self.assertTrue(all(p.startswith(naam+'/') for p in pakket.namelist()))
             controlehash = hashlib.sha256(archief.read_bytes()).hexdigest()
             self.assertEqual(archief.with_suffix('.sha256').read_text(encoding='utf-8'), f'{controlehash}  {archief.name}\n')
-            self.assertIn(f'pakket={archief}', uitvoer.read_text(encoding='utf-8'))
+            velden = dict(regel.split('=', 1) for regel in uitvoer.read_text(encoding='utf-8').splitlines())
+            # Windows kan dezelfde tijdelijke map met haar korte en lange naam
+            # teruggeven. Controleer het werkelijke bestand, niet de schrijfwijze.
+            self.assertTrue(Path(velden['pakket']).samefile(archief))
+            self.assertTrue(Path(velden['controlehash']).samefile(archief.with_suffix('.sha256')))
 
     def test_webview_stijlbron_buiten_native_moet_exact_aanwezig_zijn(self):
         with tempfile.TemporaryDirectory(prefix='office-webview-pakket-') as tijdelijk:
