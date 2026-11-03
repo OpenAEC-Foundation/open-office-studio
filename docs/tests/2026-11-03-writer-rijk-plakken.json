@@ -1,0 +1,184 @@
+{
+  "versie": "2026.45.14",
+  "programma_sha256": "a589b7ac4f306dd2c196c3ede410c5eadf6838d62d4af1e66d1f025a310cb560",
+  "script_sha256": "1a628052f6e7a59e1608033eb4af21940c6a8414410b102a67631ae6e3d29d44",
+  "bron": "docs/voorbeelden/Ontwerpnotitie.docx",
+  "bron_sha256": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee",
+  "omgeving": "Eigen Linux/WebKit-app in eigen DBus/X11-testomgeving; native Ctrl+A, Ctrl+C, Ctrl+End, Ctrl+V. Geen userdocumenten of bestaande apps bediend.",
+  "methode": "Per ronde wachten tot bron gewijzigd is en inputwachtrij leeg is; daarna volledige tekst-, celtekst-, tabelvorm-, id- en verhaalvergelijking. De wachttijd begint bij Ctrl+V. Broncontroles en kopiëren vallen buiten die tijd.",
+  "kleine_proef": {
+    "geslaagd": true,
+    "rondes": 3,
+    "eindstand": {
+      "paginas": 5,
+      "body_tekens": 4104,
+      "body_sha256": "df118db07c35d9bf91a4069b7d1c3b47a2fb62f122235fc4cac6c41b03197936",
+      "alineas": 57,
+      "unieke_alineas": 57,
+      "tabellen": 8,
+      "cellen": 48,
+      "unieke_celverhalen": 48,
+      "celteksten_sha256": "c3f37fa61b1c8056ded435ee0aaf1e891e8c183ebd2e0ec390a4e58aad713650"
+    },
+    "onafhankelijk_docx": {
+      "exact": true,
+      "sha256": "d1967cb3fdbea39323308e56db27248b49d8fb3cf57a6b06f593c0dbcdce9bfc",
+      "bytes": 37675
+    },
+    "verwerpen_ms": 405,
+    "nieuw_document_na_verwerpen": true,
+    "geopende_bron_ongewijzigd": true,
+    "ruw_rapport_sha256": "f254f346d6200199f98bc06731d496f90076dafdf7a2a3e48ccd82cd6db7ebb8"
+  },
+  "grote_proef": {
+    "geslaagd": false,
+    "status": "Onderzoek; bewust afgebroken tijdens poging 9 wegens oplopende wachttijden. Geen geslaagde eindacceptatie. De daardoor verbroken inspectieverbinding is een gevolg van het stoppen van uitsluitend het eigen proefproces.",
+    "afgeronde_rondes": 8,
+    "rondes": [
+      {
+        "ronde": 1,
+        "plak_tot_bron_ms": 496,
+        "bron_exact_verdubbeld": true,
+        "tabelvormen_en_celteksten_exact": true,
+        "na": {
+          "paginas": 2,
+          "body_tekens": 1026,
+          "body_sha256": "7f4bef2cf2c41b521da1d069531c73f4290f4b22038fbee39e18c0c53186ce0b",
+          "alineas": 15,
+          "unieke_alineas": 15,
+          "tabellen": 2,
+          "cellen": 12,
+          "unieke_celverhalen": 12,
+          "celteksten_sha256": "8e479374289c85d8b87922ffecb793d572ab11ed8bc5ee0ac04019218c81456c"
+        }
+      },
+      {
+        "ronde": 2,
+        "plak_tot_bron_ms": 1480,
+        "bron_exact_verdubbeld": true,
+        "tabelvormen_en_celteksten_exact": true,
+        "na": {
+          "paginas": 3,
+          "body_tekens": 2052,
+          "body_sha256": "85221163a77b0a99e947f47892c9f20ca52efdd65e28e7910537702f89f8dc96",
+          "alineas": 29,
+          "unieke_alineas": 29,
+          "tabellen": 4,
+          "cellen": 24,
+          "unieke_celverhalen": 24,
+          "celteksten_sha256": "d35db978e21d966b22946425fdee3760199d83d77830710a50a9693ba6109421"
+        }
+      },
+      {
+        "ronde": 3,
+        "plak_tot_bron_ms": 936,
+        "bron_exact_verdubbeld": true,
+        "tabelvormen_en_celteksten_exact": true,
+        "na": {
+          "paginas": 5,
+          "body_tekens": 4104,
+          "body_sha256": "df118db07c35d9bf91a4069b7d1c3b47a2fb62f122235fc4cac6c41b03197936",
+          "alineas": 57,
+          "unieke_alineas": 57,
+          "tabellen": 8,
+          "cellen": 48,
+          "unieke_celverhalen": 48,
+          "celteksten_sha256": "c3f37fa61b1c8056ded435ee0aaf1e891e8c183ebd2e0ec390a4e58aad713650"
+        }
+      },
+      {
+        "ronde": 4,
+        "plak_tot_bron_ms": 1323,
+        "bron_exact_verdubbeld": true,
+        "tabelvormen_en_celteksten_exact": true,
+        "na": {
+          "paginas": 9,
+          "body_tekens": 8208,
+          "body_sha256": "3bc8d90cf73573c46481bae781fa41e829da9d5c72549145e0e514ad8abf18c2",
+          "alineas": 113,
+          "unieke_alineas": 113,
+          "tabellen": 16,
+          "cellen": 96,
+          "unieke_celverhalen": 96,
+          "celteksten_sha256": "72fd1a0615f5aeb2bd3a3fb12ed1f2c227f48f1a50138ad560b0c102d8c46313"
+        }
+      },
+      {
+        "ronde": 5,
+        "plak_tot_bron_ms": 3859,
+        "bron_exact_verdubbeld": true,
+        "tabelvormen_en_celteksten_exact": true,
+        "na": {
+          "paginas": 17,
+          "body_tekens": 16416,
+          "body_sha256": "59293febc435a3a0e76998dcaa8f28ab9b37bd034b8c91c5e6033bf7fd3e300b",
+          "alineas": 225,
+          "unieke_alineas": 225,
+          "tabellen": 32,
+          "cellen": 192,
+          "unieke_celverhalen": 192,
+          "celteksten_sha256": "5c208c7ef57f83dcb45f8727f89d3e45ed84c1d89d20df915c69d57b20f895b5"
+        }
+      },
+      {
+        "ronde": 6,
+        "plak_tot_bron_ms": 7769,
+        "bron_exact_verdubbeld": true,
+        "tabelvormen_en_celteksten_exact": true,
+        "na": {
+          "paginas": 33,
+          "body_tekens": 32832,
+          "body_sha256": "a808ba20419c1117ade7611646cd48dfa2521ee1adb70d5ababe21e0e6eff6c7",
+          "alineas": 449,
+          "unieke_alineas": 449,
+          "tabellen": 64,
+          "cellen": 384,
+          "unieke_celverhalen": 384,
+          "celteksten_sha256": "9d6b9dee05c01196b9ebb9963d01df045b9e774091cd23c226cad297dcb8d919"
+        }
+      },
+      {
+        "ronde": 7,
+        "plak_tot_bron_ms": 30450,
+        "bron_exact_verdubbeld": true,
+        "tabelvormen_en_celteksten_exact": true,
+        "na": {
+          "paginas": 65,
+          "body_tekens": 65664,
+          "body_sha256": "005ed86f9402988c9142969559f872762190e9c3b9af9f111ceb6028df895c5f",
+          "alineas": 897,
+          "unieke_alineas": 897,
+          "tabellen": 128,
+          "cellen": 768,
+          "unieke_celverhalen": 768,
+          "celteksten_sha256": "71d5f8ac55b67cb18034f7ccb4451aceeef6d4e571094ef985938a1482099754"
+        }
+      },
+      {
+        "ronde": 8,
+        "plak_tot_bron_ms": 98807,
+        "bron_exact_verdubbeld": true,
+        "tabelvormen_en_celteksten_exact": true,
+        "na": {
+          "paginas": 129,
+          "body_tekens": 131328,
+          "body_sha256": "4dfe9a7b8da2ba2479164bef55d1f7033c004f213fde642e1c0977aeef2bbd62",
+          "alineas": 1793,
+          "unieke_alineas": 1793,
+          "tabellen": 256,
+          "cellen": 1536,
+          "unieke_celverhalen": 1536,
+          "celteksten_sha256": "ee526c412fe59758e40659fe4f3496edc80a43287bf5a409d47df8a6eb869ec5"
+        }
+      }
+    ],
+    "onafhankelijke_export_en_sluiten": "Niet bereikt in deze grote proef.",
+    "ruw_rapport_sha256": "f404f3df77886664c7a10b8244572ff43a9ae21d0cd6bd8fc1d9f6d65d107434"
+  },
+  "grenzen": [
+    "Eén meegeleverd document en één computer, geen fysieke platformacceptatie.",
+    "Per ronde een bronbarrière; geen onbelemmerde snelle plakreeks.",
+    "Geen bewijs dat 129 pagina’s vlot bewerkbaar zijn; achtste plakactie duurt circa 99 seconden.",
+    "Dit is nieuw diagnosebewijs op de bestaande versie, geen productwijziging of snelheidswinst."
+  ]
+}

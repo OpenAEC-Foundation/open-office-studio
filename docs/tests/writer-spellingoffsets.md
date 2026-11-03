@@ -36,6 +36,11 @@ in beide rondes vooruit. Framepauzes zijn in deze rondes korter, maar twee
 rondes op één bron/computer bewijzen geen brede winst. De grote typvertraging
 blijft open. Frame-intervallen zijn geen fysieke beeldscherm-FPS.
 
+De aanvullende [plakproef met het meegeleverde document en tabellen](writer-rijk-plakken.md)
+bevestigt een ernstiger schaalprobleem: de achtste verdubbeling naar 129 pagina’s
+en 256 tabellen duurt circa 99 seconden. De bron blijft tot dat punt exact, maar
+de grote proef is daarna begrensd en niet als geslaagd aangemerkt.
+
 Elke versie slaagt op acht controles: typen, selectie/Backspace, undo/redo,
 Ctrl+S, onafhankelijke controle van alle 500 alinea’s en heropenen in een nieuw
 proces. De productie-GUI slaagt ook op de vijf revisie-/opmerkingencontroles.
