@@ -501,11 +501,11 @@ function GaNaarVenster({ sluit }: { sluit: () => void }) {
     };
   }, [soort, api]);
   const nummer = leesNummer(invoer, api() ? huidigNummer(api()!, soort) || gekozen + 1 : 1, lijst.length);
-  function ga(doel: Doel | undefined) {
+  async function ga(doel: Doel | undefined) {
     const ref = api();
     if (!ref || !doel) return;
     try {
-      doel.ga(ref);
+      await doel.ga(ref);
       setGekozen(doel.nr - 1);
       setBezocht(true);
       setMelding(`${doel.label.trim()}`);
@@ -513,11 +513,12 @@ function GaNaarVenster({ sluit }: { sluit: () => void }) {
       setMelding(fout(e));
     }
   }
-  function gaNaarInvoer() {
+  async function gaNaarInvoer() {
     if (huidigeSoort.lijst && !invoer.trim()) return ga(lijst[gekozen]);
     if (nummer === null) return setMelding(t("find.goTo.enterNumber", { max: lijst.length }));
-    ga(lijst[nummer - 1]);
+    await ga(lijst[nummer - 1]);
     sluit();
+    requestAnimationFrame(() => api()?.focus());
   }
   return (
     <Dialoog

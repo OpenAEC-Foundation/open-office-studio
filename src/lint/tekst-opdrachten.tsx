@@ -23,6 +23,7 @@ import { useHerhaalbaar } from "../tekst/bewerken/herhaalmelding";
 import { ontbrekendeStijl } from "../tekst/stijlen/model";
 import { metHeleAlinea } from "../tekst/stijlen/toepassen";
 import { tabelInvoegen } from "../tekst/tabel/opdrachten";
+import { gaNaarPagina } from "../tekst/bewerken/paginanavigatie";
 import { vervangHoofdletters } from "../tekst/bewerken/hoofdletters";
 import {
   selectieBegin,
@@ -718,9 +719,11 @@ function OpmerkingInvoegen({
 function GaNaarPagina({
   api,
   sluit,
+  fout,
 }: {
   api: () => DocxEditorRef | null;
   sluit: () => void;
+  fout: (error: unknown) => void;
 }) {
   const { t } = useTranslation("ribbon");
   const { getal } = useOpmaak();
@@ -730,10 +733,15 @@ function GaNaarPagina({
   const nummer = Number(pagina);
   const geldig =
     Number.isInteger(nummer) && nummer >= 1 && (!totaal || nummer <= totaal);
-  function ga() {
+  async function ga() {
     if (!geldig) return;
-    sluit();
-    api()?.scrollToPage(nummer);
+    try {
+      const ref = api();
+      if (ref) await gaNaarPagina(ref, nummer);
+      sluit();
+    } catch (error) {
+      fout(error);
+    }
   }
   return (
     <Dialoog
@@ -788,7 +796,7 @@ export function TekstDialogen({
     return <SpeciaalTeken sluit={sluit} voegIn={voegIn} />;
   if (dialoog === "opmerking")
     return <OpmerkingInvoegen api={api} sluit={sluit} fout={fout} />;
-  if (dialoog === "pagina") return <GaNaarPagina api={api} sluit={sluit} />;
+  if (dialoog === "pagina") return <GaNaarPagina api={api} sluit={sluit} fout={fout} />;
   return null;
 }
 

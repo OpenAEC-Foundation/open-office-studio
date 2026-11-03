@@ -8,6 +8,7 @@ import type { DocxEditorRef } from "@betteroffice/docx-react";
 import i18next from "../../i18n/config";
 import { engine, type Sessie } from "../gedeeld/engine.ts";
 import { verhaalVolgorde } from "./zoeken.ts";
+import { gaNaarPagina } from "../bewerken/paginanavigatie";
 
 export type Doelsoort = "pagina" | "sectie" | "regel" | "kop" | "tabel" | "afbeelding" | "opmerking";
 
@@ -15,7 +16,7 @@ export interface Doel {
   /** Volgnummer (1-gebaseerd) zoals de gebruiker het ziet. */
   nr: number;
   label: string;
-  ga: (ref: DocxEditorRef) => void;
+  ga: (ref: DocxEditorRef) => void | Promise<unknown>;
 }
 
 /** "5", "+2" of "-1" (ten opzichte van `huidig`) naar een nummer binnen 1..max. */
@@ -62,7 +63,7 @@ function naarPlek(ref: DocxEditorRef, plek: { story: string; paraId: string; off
 
 export function paginaDoelen(ref: DocxEditorRef): Doel[] {
   const totaal = ref.getTotalPages() || paginas(ref).length;
-  return Array.from({ length: totaal }, (_, i) => ({ nr: i + 1, label: i18next.t("writer:find.goTo.labels.page", { n: i + 1 }), ga: (r) => r.scrollToPage(i + 1) }));
+  return Array.from({ length: totaal }, (_, i) => ({ nr: i + 1, label: i18next.t("writer:find.goTo.labels.page", { n: i + 1 }), ga: (r) => gaNaarPagina(r, i + 1) }));
 }
 
 export function sectieDoelen(ref: DocxEditorRef): Doel[] {
