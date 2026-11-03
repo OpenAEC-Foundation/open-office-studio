@@ -19,6 +19,9 @@ jobs:
       CARGO_BUILD_JOBS: 2
       CARGO_PROFILE_DEV_DEBUG: "0"
       CARGO_PROFILE_TEST_DEBUG: "0"
+      # De Cargo-cache bevat ook oudere proefuitvoer. Iedere poging krijgt een
+      # eigen lege map, zodat nooit eerder bewijs als nieuwe uitvoering geldt.
+      OFFICE_WEBVIEW_PROEF: native/target/webview-vensterproef-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
@@ -49,12 +52,12 @@ jobs:
           "$programma" --version
       - name: Echte Linux-releasevensters en opgeslagen invoer controleren
         if: runner.os == 'Linux'
-        run: /usr/bin/python3 native/scripts/proef-webview-venster.py --programma native/target/release/open-office-studio-webview --bron docs/voorbeelden/Notitieboek.json --uitvoer native/target/webview-vensterproef
+        run: /usr/bin/python3 native/scripts/proef-webview-venster.py --programma native/target/release/open-office-studio-webview --bron docs/voorbeelden/Notitieboek.json --uitvoer "${{ env.OFFICE_WEBVIEW_PROEF }}"
       - uses: actions/upload-artifact@v4
         if: always() && runner.os == 'Linux'
         with:
           name: rust-webview-vensterproef-${{ runner.os }}
-          path: native/target/webview-vensterproef/
+          path: ${{ env.OFFICE_WEBVIEW_PROEF }}/
           if-no-files-found: warn
       - uses: actions/upload-artifact@v4
         with:

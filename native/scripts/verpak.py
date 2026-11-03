@@ -54,10 +54,10 @@ shutil.copytree(repo/'docs/voorbeelden', pakket/'bron/docs/voorbeelden')
 # De Rust-WebView leest tijdens het bouwen dezelfde stijlen als de bestaande app.
 # Neem deze echte bron mee zodat ook die crate uit het pakket herbouwbaar blijft.
 stijlbron = json.loads((root/'crates/office-webview/stijlbronnen.json').read_text(encoding='utf-8'))
-for naam in stijlbron['stijl'] + stijlbron['benodigd']:
-    doel = pakket/'bron'/naam
+for stijlpad in stijlbron['stijl'] + stijlbron['benodigd']:
+    doel = pakket/'bron'/stijlpad
     doel.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(repo/naam, doel)
+    shutil.copy2(repo/stijlpad, doel)
 shutil.copy2(repo/'LICENSE', pakket/'bron/LICENSE')
 shutil.copy2(repo/'.gitattributes', pakket/'bron/.gitattributes')
 metadata = json.loads(subprocess.check_output(['cargo', 'metadata', '--manifest-path', str(root/'Cargo.toml'), '--locked', '--format-version', '1'], text=True, encoding='utf-8'))
