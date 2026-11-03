@@ -167,6 +167,27 @@ async def proef(a):
             # Tel de werkelijke projecties naar de pakketstructuur; een
             # verborgen lint mag niet het hele document per toets opbouwen.
             await p.ev("window._docRef=(()=>{let el=document.querySelector('.office-tabpaneel:not([hidden]) .office-tekst');for(let f=el[Object.keys(el).find(k=>k.startsWith('__reactFiber$'))];f;f=f.return)for(let s=f.memoizedState,n=0;s&&n<200;n++,s=s.next)if(s.memoizedState?.current?.getEditorRef&&s.memoizedState.current.commands)return s.memoizedState;throw Error('API-ref ontbreekt')})();window._docDescriptor=Object.getOwnPropertyDescriptor(_docRef,'current');if(!_docDescriptor?.configurable||!('value' in _docDescriptor))throw Error('API-ref niet meetbaar');window._docValue=_docRef.current;window._docProef={calls:0,ms:0,api_wissels:0};window._docOrig=[];window._docSeen=new WeakSet;window._docVolg=a=>{if(!a||_docSeen.has(a))return;let oud=a.getDocument;if(typeof oud!=='function')throw Error('GetDocument-meetpunt ontbreekt');_docSeen.add(a);_docOrig.push([a,oud]);a.getDocument=function(...args){_docProef.calls++;let begin=performance.now();try{return oud.apply(this,args)}finally{_docProef.ms+=performance.now()-begin}}};_docVolg(_docValue);Object.defineProperty(_docRef,'current',{configurable:true,enumerable:_docDescriptor.enumerable,get(){return _docValue},set(a){_docProef.api_wissels++;_docVolg(a);_docValue=a}});true")
+            # Dezelfde Rust-sessie blijft bij deze invoer bestaan, ook als de
+            # React-API-objecten wisselen. Tel de synchrone spellingleesroute.
+            await p.ev("""
+              window._nativeSessie = proefApi().getEditorRef().getYrsSession();
+              window._nativeLees = {};
+              window._nativeHerstel = [];
+              for (const naam of ['readParagraphs', 'paragraphSpans']) {
+                const oud = _nativeSessie[naam];
+                if (typeof oud !== 'function') throw Error('Native leesmeetpunt ontbreekt');
+                const eigen = Object.getOwnPropertyDescriptor(_nativeSessie, naam);
+                _nativeLees[naam] = {calls: 0, ms: 0};
+                _nativeHerstel.push([naam, eigen]);
+                _nativeSessie[naam] = function(...args) {
+                  const meting = _nativeLees[naam], begin = performance.now();
+                  meting.calls++;
+                  try { return oud.apply(this, args); }
+                  finally { meting.ms += performance.now() - begin; }
+                };
+              }
+              true
+            """)
             vanaf = await p.ev('_toetsenProef.length')
             begin = time.monotonic()
             subprocess.run(['xdotool', 'type', '--clearmodifiers', '--delay', '20', ' Een proefzin.'], check=True)
@@ -178,6 +199,17 @@ async def proef(a):
             rapport['invoer_tot_bron_en_golven_ms'] = round((time.monotonic()-begin)*1000)
             rapport['documentuitlezingen_tijdens_invoer'] = await p.ev("(()=>{let gevolgd=_docSeen.has(proefApi());Object.defineProperty(_docRef,'current',{..._docDescriptor,value:_docValue});for(let[a,oud]of _docOrig)a.getDocument=oud;return{..._docProef,actieve_api_gevolgd:gevolgd,omvang:'GetDocument-aanroepen tijdens native invoer tot bron-/golflijngereedheid. De stabiele React-ref volgt vervanging van API-objecten; geen CPU-profiler.'}})()")
             assert rapport['documentuitlezingen_tijdens_invoer']['actieve_api_gevolgd'], 'Actieve API buiten de invoermeting gevallen'
+            rapport['native_leesaanroepen'] = await p.ev("""
+              (() => {
+                const zelfde = proefApi().getEditorRef().getYrsSession() === _nativeSessie;
+                for (const [naam, eigen] of _nativeHerstel) {
+                  if (eigen) Object.defineProperty(_nativeSessie, naam, eigen);
+                  else delete _nativeSessie[naam];
+                }
+                return {zelfde_sessie: zelfde, ..._nativeLees};
+              })()
+            """)
+            assert rapport['native_leesaanroepen']['zelfde_sessie'], 'Native sessie vervangen tijdens invoermeting'
             tussenpozen = await p.ev('(()=>{_frameProef.stop=true;return _frameProef.v})()')
             volgorde = sorted(tussenpozen)
             rapport['frame_tussenpozen_ms'] = {'aantal': len(volgorde), 'maximum': volgorde[-1] if volgorde else None, 'p95': volgorde[min(len(volgorde)-1, int(len(volgorde)*.95))] if volgorde else None, 'reeks': tussenpozen, 'omvang': 'requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS.'}

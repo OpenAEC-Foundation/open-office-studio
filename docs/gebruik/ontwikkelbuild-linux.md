@@ -4,8 +4,8 @@ Een push naar GitHub werkt de broncode bij. De pagina Releases verandert alleen
 als er apart een uitgave wordt gepubliceerd. Een ontwikkelbuild is daarom
 beschikbaar als download bij GitHub Actions, zonder nieuwe release of tag.
 
-De gecontroleerde [45.17-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41633473423/artifacts/13229474620) is gebouwd uit
-`d348d6b108c2a37eb0791f9f63b0ef2aa4d57963`. De [bouw en pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41633473423) slagen.
+De gecontroleerde [45.18-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41639997268/artifacts/13232883111) is gebouwd uit
+`f5fed316e3723de2baad35195dd64399d822741c`. De [bouw en pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41639997268) slagen.
 Sluit een eerder geopende dev-versie na het bewaren voordat je de nieuwe start;
 beide gebruiken hetzelfde dev-profiel.
 

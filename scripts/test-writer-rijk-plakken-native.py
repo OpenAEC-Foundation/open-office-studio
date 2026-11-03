@@ -130,6 +130,16 @@ async def proef(a):
                     tussen = a.uitvoer / 'tussenbewaring.docx'
                     tussen.write_bytes(bytes(data))
                     r['tussenbewaring'] = {'na_ronde': n + 1, 'bytes': len(data), 'sha256': hashlib.sha256(bytes(data)).hexdigest()}
+            # De statusbalk telt gedebounced. Een direct beeld kan nog de oude
+            # helft tonen; eis begrensd de werkelijke, bijgewerkte totalen.
+            tekens = len(stand['body'].encode('utf-16-le')) // 2
+            verwachte_tekens = f', {tekens:,} characters'
+            verwachte_paginas = f" of {stand['paginas']:,}"
+            status = await p.run(
+                "let eind=performance.now()+8000;while(true){let b=Array.from(document.querySelectorAll('.office-statusbalk .statusbalk-module button')).map(e=>e.textContent||'');"
+                "if(b[0]?.endsWith(" + json.dumps(verwachte_paginas) + ")&&b[1]?.includes(" + json.dumps(verwachte_tekens) + "))return b;"
+                "if(performance.now()>eind)throw Error('Statusbalktotalen blijven achter: '+JSON.stringify(b));await new Promise(r=>setTimeout(r,100));}", t=10)
+            r['statusbalk_na_rust'] = {'paginas': stand['paginas'], 'body_tekens_utf16': tekens, 'grens_ms': 8000, 'knoppen': status}
             beeld('na-plakken')
             # Bewaar een aparte kopie; de geopende bron blijft onopgeslagen.
             data = await p.run('let b=new Uint8Array(await api().save());return Array.from(b);', t=90)

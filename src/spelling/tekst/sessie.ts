@@ -225,8 +225,18 @@ export class SpellingSessie {
   bijWijziging(ctx: Ctx) {
     this.ctx = ctx;
     this.laatsteWijziging = performance.now();
-    const cursor = this.cursor();
-    if (cursor) this.vuil.add(cursor.paraId);
+    // Hier is alleen de alinea-id nodig. cursor() vertaalt óók de offset naar
+    // geaccepteerde tekst en leest daarvoor tekst en de verhaalindex. Doe dat
+    // niet synchroon op elke documentwijziging; de controle volgt gedebounced.
+    let paraId: string | undefined;
+    try {
+      const ed = this.editor()?.getEditorRef();
+      const bereik = ed?.getSelectionRange();
+      if (ed && bereik) paraId = ed.displayPositionToYrsLoc(bereik.from)?.paraId;
+    } catch {
+      // Zonder betrouwbare locatie blijft de volledige hercontrole nodig.
+    }
+    if (paraId !== undefined) this.vuil.add(paraId);
     else this.vuil = new Set(this.perId.keys());
     this.plan(VERTRAGING);
   }
