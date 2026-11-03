@@ -23,6 +23,13 @@ herstart in deze proef beëindigt alleen het eigen proces; het herstelvenster
 wordt niet automatisch weggeklikt. De fout vóór dat venster en de
 opstartvolgorde moeten nog nader onderzocht worden.
 
+Inmiddels is ook de [45.21-zeveneditieproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41668389174)
+op Linux afgekeurd op dezelfde allocatorassertie als 45.20. Deze 45.21-route
+gebruikt exact dezelfde binary, testscriptbytes en gegenereerde beginbron als
+de aparte 45.21-desktoproute die bij heropenen faalt. Windows en macOS zijn in
+de zeveneditieproef geslaagd; publiceren is overgeslagen. De twee negatieve
+Linux-uitkomsten blijven staan. Er is geen bewezen reparatie.
+
 ## Exacte foutcontext
 
 De oorspronkelijke workflows bewaarden het rapport en beelden, maar bij een
@@ -70,6 +77,19 @@ proces. Beide foutenlijsten zijn leeg. De invoer-/spellingmeting vraagt
 4.677 ms: de ernstige snelheidsklacht is hiermee niet opgelost. De
 [ruwe gegevens](2026-11-03-writer-geheugenonderzoek.json) bewaren deze groene
 proef en beide oorspronkelijke negatieve CI-rapporten naast elkaar.
+
+Daarnaast doorstaat de volledig uitgepakte 45.21-dev-AppImage via haar eigen
+AppRun twintig extra rondes met garbagecollection en alle acht gewone
+bron-/bewaar-/heropenstappen. De werkelijke vensterbinary komt op checksum
+overeen met de devpakketproef (`aa382d182e95649f99eb917d6cbce7f9243f967624c134a0f7f8f7d318f81fad`).
+De geladen bibliotheekpaden verwijzen naar de uitgepakte AppImage. Een
+afzonderlijke versieopvraag van die eigen bibliotheek bevestigt WebKit
+**2.50.4**, in plaats van alleen de hostversie te veronderstellen. De private
+proefadapter wijzigt alleen repository-/importpaden, het dev-profiel en de
+vastlegging van het werkelijke vensterproces; alle publieke controles blijven
+staan. Deze groene lokale runtimeproef reproduceert de CI-panic nog niet en
+wordt niet als herstel gepresenteerd. FUSE en andere distributies zijn hiermee
+niet getest.
 
 De aanvullende workflow `writer-geheugen.yml` bouwt op dezelfde Ubuntu 22.04
 als de afgekeurde Linux-route, draait eerst de gewone proef en daarna de
