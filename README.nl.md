@@ -18,16 +18,27 @@
 
 Open Office Studio is een lokale kantooromgeving voor Windows, macOS en Linux. De app opent en bewaart Word-, Excel- en PowerPoint-bestanden rechtstreeks, opent oude Microsoft Access-databases als bewerkbare kopie en heeft een notitiemodule en een e-mailprogramma. Alles draait op je eigen computer; er is geen account en geen clouddienst.
 
-> **Status:** Open Office Studio wordt actief ontwikkeld. Uitgaven verschijnen als *pre-release* (ontwikkelversie). Probeer de app eerst met kopieën van je bestanden. Acht interfacetalen zijn beschikbaar. Lees de [vrijgavecontrole en bekende beperkingen](docs/tests/2026-10-30-vrijgavecontrole.md), waaronder een bevestigde crash van de rekenkern bij `=ISOWEEKNUM()` zonder argument.
+> **Status:** Open Office Studio wordt actief ontwikkeld. Uitgaven verschijnen als *pre-release* (ontwikkelversie). Probeer de app eerst met kopieën van je bestanden. Acht interfacetalen zijn beschikbaar. Lees de [vrijgavecontrole en bekende beperkingen](docs/tests/2026-10-30-vrijgavecontrole.md), waaronder een bevestigde crash van de rekenkern bij `=ISOWEEKNUM()` zonder argument in de gepubliceerde uitgave. Deze crash is sinds 45.6 hersteld op de ontwikkeltak.
 
 ## Native Rust-migratie
 
-De afzonderlijke preview in [`native/`](native/README.md) verplaatst ook de
-interface naar Rust, met Iced en de gedeelde OpenAEC Blueprint-ribbon. Werkende
-DOCX/XLSX/PPTX-rondgangen en IFCX-bronarchivering zijn aanwezig; e-mailbronnen
-worden volledig bewaard. De native app is **nog geen vervanging voor de huidige
-suite**. Zie de [functievergelijking en resterende omzetting](native/README.md#huidige-omvang).
-De bestaande release blijft 2026-W44.8.
+De gekozen interfacemigratie gebruikt **Rust/Dioxus met de systeem-WebView** en
+behoudt de oorspronkelijke HTML-klassen, CSS en lettertypen. De eerste aansluiting
+staat in [`office-webview`](native/crates/office-webview/README.md). De gedeelde
+Rust-documentwerker is beschikbaar, maar openen en bewerken zijn in deze interface
+nog niet op de werker aangesloten. De eerdere Iced-preview blijft beschikbaar als
+tussenstap; geen van beide is al een volledige vervanging voor de huidige suite.
+Zie de [functievergelijking en resterende omzetting](native/README.md#huidige-omvang).
+
+De ontwikkeltak heeft een lokaal geteste Tauri-versie **2026-W45.10**. Writer
+begrenst spellinggolflijnen en tabelgrepen tot pagina’s rond het venster. Een echte
+native proef met 500 pagina’s behoudt invoer, selectie, undo/redo en alle opgeslagen
+alinea’s. **1.583 frontendtests en 476 Rust-werkruimtetests slagen; zes optionele
+Rust-tests zijn overgeslagen.** Volledige functie-, snelheids- en pixelgelijkheid
+zijn nog niet goedgekeurd. Zie de [voortgang en open issues](docs/voortgang-migratie.md),
+[500-paginaproeven](docs/tests/2026-11-03-writer-golflijnen.json) en
+[Rust-opdrachttoelating](native/docs/werker-toelating-2026-11-03.json). De bouw van
+zeven edities op drie platforms slaagt voor 45.7; de nieuwe 45.10-bouw loopt apart.
 
 Alpha 39 vernieuwt de Notities-werkruimte. De [volledige lokale controle](native/docs/controle-2026-11-01-alpha39.md) slaagt met 403 Rust-tests, zes runtimeproeven en zeven Python-tests. Alle vijf CI-taken slagen, met 120 exacte native beeldparen en 21 paginabezoeken. Een extra echt venster en een aanvullende runtimeproef vinden nog een fout bij snelle muisinvoer; alpha40 wordt daarop hersteld en opnieuw getest. Alle acht oorspronkelijke UI-vergelijkingen blijven afgekeurd; de volledige suite is nog niet gemigreerd.
 

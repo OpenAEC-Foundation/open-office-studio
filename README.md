@@ -18,9 +18,11 @@
 
 Open Office Studio is a local office environment for Windows, macOS and Linux. It opens and saves Word, Excel and PowerPoint files directly, opens old Microsoft Access databases as an editable copy, and includes a notes module and an email client. Everything runs on your own computer; there is no account and no cloud service.
 
-> **Status:** Open Office Studio is under active development. Releases are published as *pre-releases* (development builds). Test it with copies of your files before relying on it. Eight interface languages are available. See the [release audit and known limitations](docs/tests/2026-10-30-vrijgavecontrole.md), including a confirmed spreadsheet engine crash with `=ISOWEEKNUM()` without an argument.
+> **Status:** Open Office Studio is under active development. Releases are published as *pre-releases* (development builds). Test it with copies of your files before relying on it. Eight interface languages are available. See the [release audit and known limitations](docs/tests/2026-10-30-vrijgavecontrole.md), including a confirmed spreadsheet engine crash with `=ISOWEEKNUM()` without an argument in the published release. That crash is fixed in the development branch since 45.6.
 
 ## Native Rust migration
+
+The development branch has a locally tested **2026-W45.10** Tauri build. Writer now limits spelling overlays and table handles to pages near the viewport; a native 500-page fixture preserves typing, selection, undo/redo and all saved paragraphs. **1,583 frontend tests and 476 Rust workspace tests pass; six optional Rust tests are skipped.** This is not complete feature, performance or pixel-parity acceptance. See the [current progress and open issues](docs/voortgang-migratie.md), [500-page checks](docs/tests/2026-11-03-writer-golflijnen.json) and [Rust command admission](native/docs/werker-toelating-2026-11-03.json). The seven-edition platform build for 45.7 passes; the newer 45.10 build is running separately.
 
 The selected interface migration now uses **Rust/Dioxus with a system WebView,
 retaining the existing HTML classes, CSS and fonts**. The first connection is in
