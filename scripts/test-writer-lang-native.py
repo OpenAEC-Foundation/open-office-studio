@@ -42,6 +42,7 @@ def main():
     p.add_argument('--programma', type=Path, required=True)
     p.add_argument('--uitvoer', type=Path, required=True)
     p.add_argument('--versie', required=True)
+    p.add_argument('--historische-registerwissels', action='store_true', help='Alleen voor vergelijking met een oude binary: registreer de canvaswissels zonder deze specifieke nieuwe acceptatie-eis.')
     p.add_argument('--binnen', action='store_true', help=argparse.SUPPRESS)
     a = p.parse_args()
     a.programma = a.programma.resolve(strict=True)
@@ -64,7 +65,8 @@ def main():
             omgeving['XDG_'+naam+'_HOME' if naam != 'RUNTIME' else 'XDG_RUNTIME_DIR'] = str(pad)
         http, inspectie = poorten()
         omgeving.update(GDK_BACKEND='x11', LC_ALL='C.UTF-8', WEBKIT_DISABLE_DMABUF_RENDERER='1', WEBKIT_INSPECTOR_HTTP_SERVER=f'127.0.0.1:{http}', WEBKIT_INSPECTOR_SERVER=f'127.0.0.1:{inspectie}', OFFICE_PROEF_HTTP=str(http))
-        return subprocess.call(['dbus-run-session', '--', 'xvfb-run', '-a', '-s', '-screen 0 1600x1100x24 -nolisten tcp', sys.executable, str(Path(__file__).resolve()), '--binnen', '--programma', str(a.programma), '--uitvoer', str(a.uitvoer), '--versie', a.versie], env=omgeving)
+        extra = ['--historische-registerwissels'] if a.historische_registerwissels else []
+        return subprocess.call(['dbus-run-session', '--', 'xvfb-run', '-a', '-s', '-screen 0 1600x1100x24 -nolisten tcp', sys.executable, str(Path(__file__).resolve()), '--binnen', '--programma', str(a.programma), '--uitvoer', str(a.uitvoer), '--versie', a.versie, *extra], env=omgeving)
 
 
 async def proef(a):
@@ -186,6 +188,12 @@ async def proef(a):
                   finally { meting.ms += performance.now() - begin; }
                 };
               }
+              window._canvasVergelijkOrig = Node.prototype.compareDocumentPosition;
+              window._canvasVergelijk = {calls: 0};
+              Node.prototype.compareDocumentPosition = function(node) {
+                if (this instanceof HTMLCanvasElement && node instanceof HTMLCanvasElement) _canvasVergelijk.calls++;
+                return _canvasVergelijkOrig.call(this, node);
+              };
               true
             """)
             vanaf = await p.ev('_toetsenProef.length')
@@ -197,6 +205,7 @@ async def proef(a):
             laatste = await p.run("let einde=performance.now()+90000;while(!_toetsenProef.slice("+str(vanaf)+").some(e=>e.key==='.')){if(performance.now()>einde)throw Error('Laatste native invoertoets niet ontvangen');await new Promise(r=>setTimeout(r,50))}await proefApi().flushPendingInput();while(!document.querySelector('.spelling-golf')){if(performance.now()>einde)throw Error('Golflijnen niet gereed');await new Promise(r=>setTimeout(r,50))}return proefApi().getEditorRef().getYrsSession().paragraphs('body').at(-1).text;", t=100)
             assert laatste == origineel[-1]+' Een proefzin.', 'Laatste invoer na keyup en flush niet exact'
             rapport['invoer_tot_bron_en_golven_ms'] = round((time.monotonic()-begin)*1000)
+            rapport['paginavergelijkingen_tijdens_invoer'] = await p.ev('(()=>{Node.prototype.compareDocumentPosition=_canvasVergelijkOrig;return _canvasVergelijk})()')
             rapport['documentuitlezingen_tijdens_invoer'] = await p.ev("(()=>{let gevolgd=_docSeen.has(proefApi());Object.defineProperty(_docRef,'current',{..._docDescriptor,value:_docValue});for(let[a,oud]of _docOrig)a.getDocument=oud;return{..._docProef,actieve_api_gevolgd:gevolgd,omvang:'GetDocument-aanroepen tijdens native invoer tot bron-/golflijngereedheid. De stabiele React-ref volgt vervanging van API-objecten; geen CPU-profiler.'}})()")
             assert rapport['documentuitlezingen_tijdens_invoer']['actieve_api_gevolgd'], 'Actieve API buiten de invoermeting gevallen'
             rapport['native_leesaanroepen'] = await p.ev("""
@@ -249,6 +258,61 @@ async def proef(a):
                 rapport['lintbeelden'][sleutel] = await p.ev("(()=>{let b=(document.querySelector('.office-lintplek:not([hidden]) .ribbon')||document.querySelector('.office-tekst .ribbon')),r=b.getBoundingClientRect();return{plek:{x:r.x,y:r.y,breedte:r.width,hoogte:r.height},knoppen:Array.from(b.querySelectorAll('.ribbon-baan button')).map(e=>({naam:e.getAttribute('aria-label')||e.textContent,actief:e.getAttribute('aria-pressed'),uit:e.disabled}))}})()")
                 beeld(sleutel)
             assert any(k['naam']=='Different First Page' for k in rapport['lintbeelden']['kopvoetlint']['knoppen']), 'Koptekstopties ontbreken'
+            # Het register moet dezelfde canvasnodes blijven gebruiken als
+            # alleen hun schaal verandert, en echte structuurwijzigingen wel
+            # volgen. De onafhankelijke waarheid is de actuele DOM-volgorde.
+            rapport['paginaregister'] = await p.run('''
+              const host = document.querySelector('.canvas-pages');
+              let registry = null;
+              for (let f=host[Object.keys(host).find(k=>k.startsWith('__reactFiber$'))];f&&!registry;f=f.return) {
+                for (let s=f.memoizedState,n=0;s&&n<200;s=s.next,n++) {
+                  const v=s.memoizedState;
+                  if (v && typeof v.all==='function' && typeof v.canvas==='function' && typeof v.invalidate==='function') { registry=v; break; }
+                }
+              }
+              if (!registry) throw Error('Paginaregister niet gevonden');
+              window._registerProef = registry;
+              window._controleerRegister = () => {
+                const dom=Array.from(host.querySelectorAll('.canvas-pages__column > .canvas-page > canvas'));
+                const alle=registry.all();
+                if (dom.length!==alle.length || dom.some((c,i)=>c!==alle[i] || registry.canvas(Number(c.dataset.pageIndex))!==c)) throw Error('Register wijkt af van werkelijke DOM-volgorde/indices');
+                return dom.length;
+              };
+              const aantal=_controleerRegister(), teller={add:0,delete:0,invalidate:0}, herstel=[];
+              for (const naam of Object.keys(teller)) {
+                const eigen=Object.getOwnPropertyDescriptor(registry,naam), oud=registry[naam];
+                herstel.push([naam,eigen]);
+                registry[naam]=function(...args){teller[naam]++;return oud.apply(this,args)};
+              }
+              try {
+                proefApi().setZoom(1.15);
+                await new Promise(r=>setTimeout(r,1000));
+                await proefApi().flushPendingInput();
+                const na=_controleerRegister();
+                return {voor:aantal,na,zoom:proefApi().getZoom(),...teller};
+              } finally {
+                for (const [naam,eigen] of herstel) {
+                  if (eigen) Object.defineProperty(registry,naam,eigen); else delete registry[naam];
+                }
+              }
+            ''')
+            assert rapport['paginaregister']['voor'] == rapport['paginaregister']['na'] == 500
+            assert rapport['paginaregister']['zoom'] == 1.15
+            rapport['paginaregister']['historische_registerwissels'] = a.historische_registerwissels
+            rapport['paginaregister']['geen_canvaswissels'] = rapport['paginaregister']['add'] == rapport['paginaregister']['delete'] == 0
+            if not a.historische_registerwissels:
+                assert rapport['paginaregister']['geen_canvaswissels'], 'Zoomen registreert ongewijzigde canvasnodes opnieuw'
+            await p.run("const e=proefApi().getEditorRef(),p=e.getYrsSession().paragraphs('body')[0];e.setSelection(e.yrsLocToDisplayPosition({story:'body',paraId:p.paraId,offset:20}));proefApi().focus();return true;")
+            rapport['paginaregister']['paginaopdracht'] = await p.run("return await proefApi().commands.execute('insertPageBreak',null);")
+            assert rapport['paginaregister']['paginaopdracht']['ok'], 'Paginaopdracht geweigerd'
+            rapport['paginaregister']['na_pagina_invoegen'] = await p.run("const eind=performance.now()+30000;while(proefApi().getTotalPages()!==501||document.querySelectorAll('.canvas-pages__column > .canvas-page > canvas').length!==501){if(performance.now()>eind)throw Error('Ingevoegde pagina niet gereed');await new Promise(r=>setTimeout(r,100))}await proefApi().flushPendingInput();return _controleerRegister();")
+            assert rapport['paginaregister']['na_pagina_invoegen'] == 501
+            subprocess.run(['xdotool', 'key', '--clearmodifiers', 'ctrl+z'], check=True)
+            rapport['paginaregister']['na_undo'] = await p.run("const eind=performance.now()+30000;while(proefApi().getTotalPages()!==500||document.querySelectorAll('.canvas-pages__column > .canvas-page > canvas').length!==500){if(performance.now()>eind)throw Error('Undo pagina niet gereed');await new Promise(r=>setTimeout(r,100))}await proefApi().flushPendingInput();proefApi().setZoom(1);return _controleerRegister();")
+            assert rapport['paginaregister']['na_undo'] == 500
+            assert await bronstand(p) == getypt, 'Pagina invoegen/undo verandert bronalinea’s'
+            rapport['paginaregister']['geslaagd'] = True
+            print('paginaregister, zoom en paginagrens geslaagd', flush=True)
             rapport['fouten_voor_heropenen'] = await p.fouten()
             assert not any(rapport['fouten_voor_heropenen'].values()), 'GUI of engine meldt fouten vóór heropenen'
         stop(); await start()

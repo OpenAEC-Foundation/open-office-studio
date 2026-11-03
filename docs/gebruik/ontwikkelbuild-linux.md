@@ -4,8 +4,8 @@ Een push naar GitHub werkt de broncode bij. De pagina Releases verandert alleen
 als er apart een uitgave wordt gepubliceerd. Een ontwikkelbuild is daarom
 beschikbaar als download bij GitHub Actions, zonder nieuwe release of tag.
 
-De gecontroleerde [45.19-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41646420982/artifacts/13235374156) is gebouwd uit
-`d2bdec17c7db57efc3e9f55d729b87089a5d7ff7`. De [bouw en pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41646420982) slagen.
+De gecontroleerde [45.20-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41658684001/artifacts/13240879781) is gebouwd uit
+`058e6a17dfc5d571b307fba3e9c6ae03d25ee978`. De [bouw en pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41658684001) slagen.
 Sluit een eerder geopende dev-versie na het bewaren voordat je de nieuwe start;
 beide gebruiken hetzelfde dev-profiel.
 
@@ -41,5 +41,7 @@ verder bewerken, drie plakrondes en sluiten zonder opslaan. De hash in
 `bouw.json` bindt die proef aan zowel de starter als de werkelijk gestarte ELF.
 De FUSE-mount, andere distributies en de overige functies zijn daarmee niet volledig getoetst.
 Bekende Writer-problemen met grote documenten en de documentworker zijn nog
-in onderzoek. De workflow heeft alleen leesrechten op de repository en
+in onderzoek. Een [afzonderlijke Linux-uitgaveproef van 45.20](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41658755587)
+is afgekeurd op een geheugenfout in de Wasm-layout bij 500 pagina’s. De
+geslaagde devpakketproef bewijst geen oplossing voor die fout. De workflow heeft alleen leesrechten op de repository en
 publiceert geen GitHub-release.
