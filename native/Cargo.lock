@@ -535,8 +535,6 @@ dependencies = [
 [[package]]
 name = "betteroffice-docx-edit"
 version = "0.5.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ff860c82f6c05835b42049cde14e34f6dc3207cdbcfc987f731538dfc13217fa"
 dependencies = [
  "betteroffice-docx-layout",
  "betteroffice-docx-parse",
@@ -5110,7 +5108,7 @@ dependencies = [
 
 [[package]]
 name = "office-conversie"
-version = "2026.45.0-alpha.48"
+version = "2026.45.0-alpha.49"
 dependencies = [
  "libc",
  "serde_json",
@@ -5120,7 +5118,7 @@ dependencies = [
 
 [[package]]
 name = "office-core"
-version = "2026.45.0-alpha.48"
+version = "2026.45.0-alpha.49"
 dependencies = [
  "base64 0.22.1",
  "betteroffice-docx",
@@ -5138,6 +5136,7 @@ dependencies = [
  "chrono",
  "futures-channel",
  "mail-parser",
+ "office-writer-plakken",
  "quick-xml",
  "regex",
  "serde",
@@ -5151,7 +5150,7 @@ dependencies = [
 
 [[package]]
 name = "office-mail"
-version = "2026.45.0-alpha.48"
+version = "2026.45.0-alpha.49"
 dependencies = [
  "async-imap",
  "base64 0.22.1",
@@ -5172,6 +5171,18 @@ dependencies = [
  "tokio-rustls",
  "uuid",
  "webpki-roots",
+]
+
+[[package]]
+name = "office-writer-plakken"
+version = "2026.45.0-alpha.49"
+dependencies = [
+ "base64 0.22.1",
+ "betteroffice-docx-edit",
+ "serde",
+ "serde_json",
+ "sha2 0.10.9",
+ "yrs",
 ]
 
 [[package]]
@@ -5196,7 +5207,7 @@ dependencies = [
 
 [[package]]
 name = "open-office-studio-native"
-version = "2026.45.0-alpha.48"
+version = "2026.45.0-alpha.49"
 dependencies = [
  "iced",
  "iced_runtime",
@@ -5219,7 +5230,7 @@ dependencies = [
 
 [[package]]
 name = "open-office-studio-webview"
-version = "2026.45.0-alpha.48"
+version = "2026.45.0-alpha.49"
 dependencies = [
  "base64 0.22.1",
  "chrono",
@@ -9223,8 +9234,6 @@ dependencies = [
 [[package]]
 name = "yrs"
 version = "0.27.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3987db9bdbe6f0f49c58ec3d0daf4750a70b40019c190f6c6708abfcdfe6bea0"
 dependencies = [
  "arc-swap",
  "async-lock",

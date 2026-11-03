@@ -28,3 +28,6 @@ pub mod writer_stijlen;
 mod writer_tekst;
 pub mod writer_zoeken;
 pub const VERSIE: &str = env!("CARGO_PKG_VERSION");
+
+// Dezelfde brongebonden plakvoorbereiding als de bestaande desktop.
+pub use office_writer_plakken as writer_plakken;

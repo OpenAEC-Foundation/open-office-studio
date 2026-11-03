@@ -1,0 +1,61 @@
+{
+  "run": 41708064564,
+  "artifact": 13268082008,
+  "bronrevisie": "6f9f6aca7a1fe559bf7af4ec721162af528a8be4",
+  "metadata": {
+    "versie": "2026.45.23",
+    "bronrevisie": "6f9f6aca7a1fe559bf7af4ec721162af528a8be4",
+    "platform": "Linux x86_64",
+    "profiel": "org.openaec.office-studio.dev",
+    "appimage": "Open Office Studio Dev_2026.45.23_amd64.AppImage",
+    "sha256": "549e8b95747d6169603b092f723099aff4a07d927c76eaebf6698685bb7cedd3",
+    "pakketcontroles": [
+      "AppImage type 2",
+      "SquashFS volledig uitgepakt",
+      "AppRun uitvoerbaar",
+      "ELF x64 en bibliotheken gevonden",
+      "snelkoppeling en pictogram aanwezig"
+    ],
+    "controles": [
+      "TypeScript via productiebouw",
+      "Vitest",
+      "Rust-desktoptests"
+    ],
+    "gui_acceptatie": "Niet volledig gecontroleerd; ontwikkelbuild met bekende Writer-problemen.",
+    "webkit_modulekaart": {
+      "geslaagd": true,
+      "omvang": "Twee minimale moduleworkers in de geïnstalleerde WebKitGTK; geen app- of prestatieacceptatie.",
+      "webkit": "2.50.4",
+      "gevallen": {
+        "oud": {
+          "evaluaties": 2,
+          "gelijk": false
+        },
+        "apart": {
+          "evaluaties": 1,
+          "gelijk": true
+        }
+      },
+      "kwetsbaar": true
+    },
+    "native_gui": {
+      "geslaagd": true,
+      "programma_sha256": "c650ac599bc10b8bb069dacbd4c8e6e2ea45e35b677adf0981e41b992e0feaa4",
+      "startprogramma_sha256": "eb0b254ac0dae6543e6dd7cd02e1baf40a060de95b927313122d6b46323c00aa",
+      "profiel": "org.openaec.office-studio.dev",
+      "script_sha256": "a4aeffad1445c78ecd7810abfd941e29d6e92c2e86631d6e0bbf81915727b43c",
+      "omvang": "Eigen DOCX-kopie, drie plakrondes, bewaren na ronde één en verder bewerken; onafhankelijke inhoudscontrole, verwerpen en nieuw document.",
+      "appimage_startfunctie": "De uitgepakte AppRun is gestart; launcher en werkelijke ELF zijn op hash gecontroleerd. FUSE-mount niet getoetst."
+    }
+  },
+  "zip_sha256": "82b96dd1ef58ce28ef7a62e59235decabc936e6dae8da28d4ff9b20304b8ea3a",
+  "archief_sha256": "262ae050358d0245bc9c818838cb009b703271e3920613046edf474dc13e640e",
+  "controles": [
+    "Startinstructies en eigen profiel",
+    "Binnenste checksumlijst",
+    "Binnenste bouwmetadata gelijk aan buitenste metadata",
+    "Startscript en uitvoerrechten",
+    "AppImage-checksum en uitvoerrechten"
+  ],
+  "scope": "Lokaal gedownloade pakketbytes en metadata gecontroleerd. Gerichte bouw-, test- en native GUI-resultaten komen uit de geslaagde workflow; geen volledige functie-, snelheids- of stabiliteitsacceptatie."
+}

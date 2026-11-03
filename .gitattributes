@@ -48,3 +48,7 @@ native/vendor/softbuffer/** -text -whitespace
 # De afzonderlijke plakproef controleert bronpatches op hun exacte bytes.
 native/onderzoek/writer-plakbatch/** text=auto eol=lf
 native/onderzoek/writer-plakbatch/patches/*.patch text eol=lf -whitespace
+
+# Gepinde bewerkkern en leesprimitieven; bewaar bron en licenties bytegelijk.
+native/vendor/docx-edit/** -text -whitespace
+native/vendor/yrs/** -text -whitespace

@@ -1,0 +1,17 @@
+[package]
+name = "office-writer-plakken"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+description = "Brongebonden voorbereiding van volledige Writer-plakacties"
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+base64.workspace = true
+sha2.workspace = true
+docx-edit = { package = "betteroffice-docx-edit", version = "=0.5.1" }
+
+[dev-dependencies]
+yrs = "=0.27.4"

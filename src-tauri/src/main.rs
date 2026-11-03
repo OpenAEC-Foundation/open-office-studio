@@ -4,6 +4,7 @@ mod conversie;
 mod database_export;
 mod email;
 mod herstel;
+mod writer_plakken;
 mod lettertypen;
 mod recent;
 mod systeembestanden;
@@ -237,6 +238,7 @@ fn main() {
             herstel::bij_venstergebeurtenis(venster, gebeurtenis);
         })
         .invoke_handler(tauri::generate_handler![
+            writer_plakken::writer_plakken_voorbereiden,
             bewaar_kopie,
             lettertypen::systeemlettertypen,
             lettertypen::systeemlettertype,

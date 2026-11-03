@@ -96,6 +96,35 @@ async def proef(a):
             assert await p.run("return await window.__TAURI_INTERNALS__.invoke('plugin:app|identifier');") == profiel
             r['profiel'] = profiel
             await p.begin_foutbewaking()
+            if os.environ.get('OFFICE_PLAK_VEREIS_RUST') == '1':
+                # Alleen de eigen proefpagina. Observeer de werkelijk gebruikte
+                # desktopopdracht en lokale delta, zonder de inhoud te vervangen.
+                await p.ev('''(() => {
+                  const intern = window.__TAURI_INTERNALS__, origineel = window.fetch;
+                  const doel = intern.convertFileSrc('writer_plakken_voorbereiden', 'ipc');
+                  const s = api().getEditorRef().getYrsSession(), toepassen = s.applyLocalUpdate;
+                  window._rustPlak = {opdrachten: [], updates: []};
+                  window.fetch = async function(url, args, ...rest) {
+                    if (String(url) !== doel) return origineel.call(this, url, args, ...rest);
+                    const a = JSON.parse(args.body).aanvraag, begin = performance.now(), m = {requestId:a.requestId, clientId:a.clientId, snapshotTekens:a.snapshot.length, gereed:false};
+                    _rustPlak.opdrachten.push(m);
+                    const response = await origineel.call(this, url, args, ...rest), json = response.json.bind(response);
+                    response.json = async () => {
+                      const antwoord = await json();
+                      m.desktopMs = performance.now()-begin; m.preparationMs = antwoord.preparationMs;
+                      m.bronbinding = ['schema','requestId','documentId','sourceVersion','snapshotSha256','clientId'].every(k=>antwoord[k]===a[k]);
+                      m.deltaBytes = antwoord.delta.length/4*3 - (antwoord.delta.endsWith('==')?2:antwoord.delta.endsWith('=')?1:0);
+                      m.gereed = true;
+                      return antwoord;
+                    };
+                    return response;
+                  };
+                  s.applyLocalUpdate = function(delta, ...rest) {
+                    _rustPlak.updates.push({bytes:delta.byteLength});
+                    return toepassen.call(this, delta, ...rest);
+                  };
+                  return true;
+                })()''')
             await p.ev("window.proefStand=()=>{let s=api().getEditorRef().getYrsSession(),tabellen=s.storySegments('body').filter(x=>x.kind==='embed'&&x.embedKind==='table'),cellen=[];for(let t of tabellen)for(let r of t.payload.rows)for(let c of r.cells)cellen.push({story:c.story,tekst:s.paragraphs(c.story).map(p=>p.text).join('')});let a=s.paragraphs('body');return{body:a.map(p=>p.text).join(''),alineas:a.length,uniekeAlineas:new Set(a.map(p=>p.paraId)).size,tabellen:tabellen.length,tabelvormen:tabellen.map(t=>t.payload.rows.map(r=>r.cells.length)),cellen,paginas:api().getTotalPages(),lengte:s.storyLength('body')}};window._plakToetsen=[];window.addEventListener('keyup',e=>_plakToetsen.push({key:e.key.toLowerCase(),ms:performance.now()}),true);true")
             stand = await p.ev('proefStand()')
             r['begin'] = stand
@@ -109,12 +138,22 @@ async def proef(a):
                 await asyncio.sleep(0.2)
                 await p.run("let eind=performance.now()+10000;while(document.querySelector('.tekst-plakopties')){if(performance.now()>eind)throw Error('Oude plakopties blijven staan');await new Promise(r=>setTimeout(r,50))}return true;")
                 begin = time.monotonic()
+                native_voor = await p.ev('window._rustPlak ? {opdrachten:_rustPlak.opdrachten.length,updates:_rustPlak.updates.length} : null')
+                await p.ev('window._plakMeet={laatste:performance.now(),tussen:[]};_plakMeet.timer=setInterval(()=>{let nu=performance.now();_plakMeet.tussen.push(nu-_plakMeet.laatste);_plakMeet.laatste=nu},16);true')
                 key('ctrl+v')
                 await p.run("let eind=performance.now()+120000;while(api().getEditorRef().getYrsSession().storyLength('body')<=" + str(stand['lengte']) + "){if(performance.now()>eind)throw Error('Plakactie niet toegelaten');await new Promise(r=>setTimeout(r,100))}await api().flushPendingInput();while(!document.querySelector('.tekst-plakopties')){if(performance.now()>eind)throw Error('Plakopmaak niet gereed');await new Promise(r=>setTimeout(r,50))}return true;", t=130)
                 duur = round((time.monotonic() - begin) * 1000)
+                eventlus = await p.ev('(()=>{let m=_plakMeet;clearInterval(m.timer);m.tussen.push(performance.now()-m.laatste);let t=m.tussen.sort((a,b)=>a-b);return{timer_ms:16,waarnemingen:t.length,grootste_tussenruimte_ms:t.at(-1),p95_tussenruimte_ms:t[Math.floor((t.length-1)*.95)],betekenis:"Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."}})()')
                 na = await p.ev('proefStand()')
                 stap = {'ronde': n + 1, 'plak_tot_bron_ms': duur, 'voor': stand, 'na': na}
+                stap['eventlus'] = eventlus
                 r['rondes'].append(stap)
+                if native_voor is not None:
+                    native = await p.ev('({opdrachten:_rustPlak.opdrachten.slice(' + str(native_voor['opdrachten']) + '),updates:_rustPlak.updates.slice(' + str(native_voor['updates']) + ')})')
+                    stap['rust_plakken'] = native
+                    assert native['opdrachten'] and all(m['gereed'] and m['bronbinding'] for m in native['opdrachten']), 'Geen afgeronde brongebonden desktopplakopdracht'
+                    assert len(native['updates']) == 1, 'Plakken heeft niet precies één native delta opgenomen'
+                    assert native['updates'][0]['bytes'] == native['opdrachten'][-1]['deltaBytes'], 'Opgenomen delta heeft een andere omvang'
                 assert na['body'] == stand['body'] * 2, ('Body verdubbelt niet', n + 1, len(stand['body']), len(na['body']))
                 assert na['tabellen'] == stand['tabellen'] * 2, ('Tabelverlies', n + 1)
                 assert Counter((json.dumps(x) for x in na['tabelvormen'])) == Counter({k: v * 2 for k, v in Counter((json.dumps(x) for x in stand['tabelvormen'])).items()}), ('Tabelvorm wijkt af', n + 1)
@@ -214,6 +253,7 @@ if __name__ == '__main__':
     p.add_argument('--maxduur', type=int, default=int(os.environ.get('OFFICE_PLAK_MAXDUUR', '300')))
     p.add_argument('--profiel', choices=['org.openaec.office-studio', 'org.openaec.office-studio.dev', 'org.openaec.writer-studio'], default=os.environ.get('OFFICE_PLAK_PROFIEL', 'org.openaec.office-studio'))
     p.add_argument('--bewaar-na-ronde', type=int, default=int(os.environ.get('OFFICE_PLAK_BEWAAR_NA', '0')))
+    p.add_argument('--vereis-rust-plakken', action='store_true', default=os.environ.get('OFFICE_PLAK_VEREIS_RUST') == '1')
     eigen, overig = p.parse_known_args()
     if not 1 <= eigen.rondes <= 10:
         p.error('Gebruik 1 tot en met 10 rondes.')
@@ -225,5 +265,6 @@ if __name__ == '__main__':
     os.environ['OFFICE_PLAK_MAXDUUR'] = str(eigen.maxduur)
     os.environ['OFFICE_PLAK_PROFIEL'] = eigen.profiel
     os.environ['OFFICE_PLAK_BEWAAR_NA'] = str(eigen.bewaar_na_ronde)
+    os.environ['OFFICE_PLAK_VEREIS_RUST'] = '1' if eigen.vereis_rust_plakken else '0'
     sys.argv = [sys.argv[0], *overig]
     raise SystemExit(basis.main())

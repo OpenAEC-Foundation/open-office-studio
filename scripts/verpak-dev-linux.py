@@ -42,7 +42,7 @@ def main():
                 gui_python(opties.gui_python), 'scripts/test-writer-rijk-plakken-native.py',
                 '--programma', str(uitgepakt / 'AppRun'), '--versie', versie,
                 '--profiel', configuratie['identifier'], '--rondes', '3',
-                '--bewaar-na-ronde', '1', '--maxduur', '180', '--uitvoer', str(uitvoer_gui),
+                '--bewaar-na-ronde', '1', '--maxduur', '180', '--vereis-rust-plakken', '--uitvoer', str(uitvoer_gui),
             ], check=True)
             native_gui = json.loads((uitvoer_gui / 'rapport.json').read_text())
             assert native_gui.get('geslaagd') is True

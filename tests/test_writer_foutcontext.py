@@ -73,21 +73,24 @@ class WriterFoutcontext(unittest.TestCase):
         groen = self.map / 'lang/rapport.json'
         groen.parent.mkdir()
         groen.write_text(json.dumps({**self.gegevens, 'geslaagd': True}))
-        script = REPO / 'scripts/test-writer-rijk-plakken-native.py'
-        self.gegevens['script_sha256'] = module.checksum(script)
-        self.schrijf()
-        (self.map / 'Ontwerpnotitie.docx').write_bytes(b'eigen kopie van de vaste proefbron')
-        (self.map / 'programma.log').write_text('Eigen rendererfout')
-        context = module.bewaar(self.programma, [groen, self.rapport], self.uitvoer, systeem=False)
-        self.assertEqual(context['proefscript']['naam'], script.name)
-        self.assertTrue(context['proefscript']['beschikbaar'])
-        with tarfile.open(self.uitvoer / 'writer-foutcontext.tar.gz') as tar:
-            self.assertEqual(tar.extractfile('writer-foutcontext/scripts/' + script.name).read(), script.read_bytes())
-            self.assertEqual(tar.extractfile('writer-foutcontext/proef/Ontwerpnotitie.docx').read(), b'eigen kopie van de vaste proefbron')
-            self.assertEqual(tar.extractfile('writer-foutcontext/proef/programma.log').read().decode(), 'Eigen rendererfout')
-        # De gedeelde basis wordt meegenomen, zonder een onbewezen claim over
-        # de oorspronkelijke helperbytes van een historische uitvoering.
-        self.assertIn('niet afzonderlijk', context['scripts']['test-writer-lang-native.py']['herkomst'])
+        for naam in ['test-writer-rijk-plakken-native.py', 'test-writer-rust-plakken-volgorde-native.py']:
+            with self.subTest(proefscript=naam):
+                script = REPO / 'scripts' / naam
+                self.uitvoer = self.map / naam
+                self.gegevens['script_sha256'] = module.checksum(script)
+                self.schrijf()
+                (self.map / 'Ontwerpnotitie.docx').write_bytes(b'eigen kopie van de vaste proefbron')
+                (self.map / 'programma.log').write_text('Eigen rendererfout')
+                context = module.bewaar(self.programma, [groen, self.rapport], self.uitvoer, systeem=False)
+                self.assertEqual(context['proefscript']['naam'], script.name)
+                self.assertTrue(context['proefscript']['beschikbaar'])
+                with tarfile.open(self.uitvoer / 'writer-foutcontext.tar.gz') as tar:
+                    self.assertEqual(tar.extractfile('writer-foutcontext/scripts/' + script.name).read(), script.read_bytes())
+                    self.assertEqual(tar.extractfile('writer-foutcontext/proef/Ontwerpnotitie.docx').read(), b'eigen kopie van de vaste proefbron')
+                    self.assertEqual(tar.extractfile('writer-foutcontext/proef/programma.log').read().decode(), 'Eigen rendererfout')
+                # De gedeelde basis wordt meegenomen, zonder een onbewezen claim over
+                # de oorspronkelijke helperbytes van een historische uitvoering.
+                self.assertIn('niet afzonderlijk', context['scripts']['test-writer-lang-native.py']['herkomst'])
 
     def test_plakrapport_met_verkeerde_binary_maakt_geen_pakket(self):
         self.gegevens['script_sha256'] = module.checksum(REPO / 'scripts/test-writer-rijk-plakken-native.py')

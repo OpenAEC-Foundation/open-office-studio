@@ -42,6 +42,7 @@ import "./tekst/papier.css";
 import { wijzigPaginaLive } from "./tekst/pagina/ui/liveSecties";
 import { maakPaginaVolger } from "./tekst/pagina/ui/paginaVolgen";
 import { donkerePapierkleur, installeerPapierWeergave } from "./tekst/papierWeergave";
+import { RustPlakLaag } from "./tekst/bewerken/RustPlakLaag";
 import type { SectionProperties } from "@betteroffice/docx/types/document";
 
 const PRESENTATIE_PLUGINS = [tekstSelectiePlugin];
@@ -339,6 +340,7 @@ export default function OfficeEditor(props: EditorProps) {
         <EditorApi.Provider value={apis}>
           <DocumentLettertypen.Provider value={documentLettertypen}>
           <EditorZichtbaar.Provider value={props.zichtbaar ?? true}>
+            <RustPlakLaag key={herladen.sleutel} gewijzigd={() => recent.current.gewijzigd()} fout={(fout) => recent.current.fout(fout)}>
             <DocxEditor
               // De indeling draait in een worker; het lint gebruikt nog de synchrone documentkopie.
               legacySyncApi
@@ -394,6 +396,7 @@ export default function OfficeEditor(props: EditorProps) {
                 />
               }
             />
+            </RustPlakLaag>
             {spelling.element}
           </EditorZichtbaar.Provider>
           </DocumentLettertypen.Provider>

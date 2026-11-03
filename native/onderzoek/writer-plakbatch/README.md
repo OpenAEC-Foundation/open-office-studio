@@ -1,9 +1,11 @@
 # Rust-plakbatch: afzonderlijke gegevensproef
 
 Deze proef bereidt één volledige gestructureerde plakactie in een aparte
-Rust-replica voor. De app gebruikt deze route **nog niet**. De bestaande suite,
-het gebruikersprofiel en de normale native werkruimte blijven ongewijzigd.
-Er is geen volledige snelheids-, stabiliteits- of migratieacceptatie.
+Rust-replica voor. Dit pakket blijft de afzonderlijk reproduceerbare
+onderzoeksvariant. De productievoorbereiding is inmiddels ondergebracht in
+[de gedeelde desktopbibliotheek](../../crates/office-writer-plakken/README.md)
+voor de 45.24-kandidaat; haar GUI-acceptatie wordt afzonderlijk bijgehouden.
+Dit onderzoek vervangt geen snelheids-, stabiliteits- of migratieacceptatie.
 
 De proef behoudt de bestaande invoeg-, splits-, tabel-, afbeeldings-,
 bladwijzer- en revisieregels. Eén fout levert geen gedeeltelijke delta op.
@@ -32,8 +34,11 @@ controleert de oorspronkelijke bronbestanden en past de twee kleine patches
 uitsluitend op eigen kopieën in `.local/vendor` toe. De Cargo-registerbronnen
 worden nooit gewijzigd. Een tweede uitvoering controleert de bestaande kopie;
 eigen wijzigingen of gewijzigde patches worden niet overschreven.
-De oorspronkelijke licenties blijven in beide kopieën: Apache-2.0 voor de
-bewerkkern en MIT voor de gerepliceerde gegevensstructuur.
+De oorspronkelijke licentievelden blijven in beide kopieën: Apache-2.0 voor
+de bewerkkern en MIT voor de gerepliceerde gegevensstructuur. De gepubliceerde
+registerpakketten bevatten niet de volledige licentiebestanden. De exact aan
+hun bronrevisies gekoppelde volledige teksten staan nu bij de productiebronnen
+onder `native/vendor`, inclusief herkomst en SHA-256.
 
 Bij een andere doelmap gebruik je `OFFICE_PLAKBATCH_BIN` voor het volledige
 pad van `office-plakverkenning`. De JavaScript-proeven verwachten dat de

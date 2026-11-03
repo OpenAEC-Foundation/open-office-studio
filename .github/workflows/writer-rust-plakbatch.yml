@@ -4,6 +4,18 @@ on:
     branches: ["codex/native-rust-office"]
     paths:
       - "native/onderzoek/writer-plakbatch/**"
+      - "native/crates/office-writer-plakken/**"
+      - "native/vendor/docx-edit/**"
+      - "native/vendor/yrs/**"
+      - "native/scripts/proef-writer-plak-protocol.py"
+      - "native/Cargo.toml"
+      - "native/Cargo.lock"
+      - "src/tekst/bewerken/rustPlakken*"
+      - "src/tekst/bewerken/plak*"
+      - "src/tekst/bewerken/selectieLezen.test.ts"
+      - "src/tekst/bewerken/TekstBewerken.tsx"
+      - "src/tekst/bewerken/RustPlakLaag.tsx"
+      - "patches/@betteroffice__docx-react@0.5.1.patch"
       - ".github/workflows/writer-rust-plakbatch.yml"
   workflow_dispatch:
 permissions:
@@ -53,6 +65,60 @@ jobs:
             native/onderzoek/writer-plakbatch/.local/afwijzingen/
             native/onderzoek/writer-plakbatch/.local/grote-proef/
             native/onderzoek/writer-plakbatch/.local/target/release/office-plakverkenning
+            native/vendor/docx-edit/LICENSE-UPSTREAM
+            native/vendor/docx-edit/OPENAEC-WIJZIGINGEN.md
+            native/vendor/yrs/LICENSE-UPSTREAM
+            native/vendor/yrs/OPENAEC-WIJZIGINGEN.md
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 14
+
+  desktopprotocol:
+    name: Gedeelde desktopcodec en bron-/geschiedenisbehoud
+    runs-on: ubuntu-22.04
+    timeout-minutes: 40
+    env:
+      OFFICE_PLAKBATCH_BIN: ${{ github.workspace }}/native/scripts/proef-writer-plak-protocol.py
+      OFFICE_PLAK_PROTOCOL_BIN: ${{ github.workspace }}/native/target/release/examples/plak_protocol
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: native -> target
+          shared-key: writer-plak-desktop
+      - run: pnpm install --frozen-lockfile
+      - name: Levensduur, bronversie en selectievolgorde controleren
+        run: pnpm exec vitest run src/tekst/bewerken/rustPlakken.test.ts src/tekst/bewerken/plakopmaak.test.ts src/tekst/bewerken/selectieLezen.test.ts
+      - name: Echte desktopcodec en leesprimitieven testen
+        run: cargo test --release --locked --manifest-path native/Cargo.toml -p office-writer-plakken
+      - name: Protocolprogramma bouwen
+        run: cargo build --release --locked --manifest-path native/Cargo.toml -p office-writer-plakken --example plak_protocol
+      - name: Dezelfde inhoudsproeven tegen de echte desktopcodec uitvoeren
+        run: |
+          node native/onderzoek/writer-plakbatch/controleer-randgevallen.mjs
+          node native/onderzoek/writer-plakbatch/controleer-afwijzingen.mjs
+          node native/onderzoek/writer-plakbatch/controleer-groot.mjs
+      - name: Protocolbewijs bewaren
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Writer-plak-desktopprotocol-${{ github.run_number }}
+          path: |
+            native/onderzoek/writer-plakbatch/.local/randgevallen/
+            native/onderzoek/writer-plakbatch/.local/afwijzingen/
+            native/onderzoek/writer-plakbatch/.local/grote-proef/
+            native/target/release/examples/plak_protocol
+            native/vendor/docx-edit/LICENSE-UPSTREAM
+            native/vendor/docx-edit/OPENAEC-WIJZIGINGEN.md
+            native/vendor/yrs/LICENSE-UPSTREAM
+            native/vendor/yrs/OPENAEC-WIJZIGINGEN.md
           include-hidden-files: true
           if-no-files-found: warn
           retention-days: 14
