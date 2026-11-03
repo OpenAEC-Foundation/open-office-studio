@@ -74,12 +74,21 @@ jobs:
         run: |
           pnpm exec playwright install --with-deps chromium
           node scripts/test-rekenblad-gui.mjs
+          node scripts/test-writer-lettergrootte-gui.mjs
       - name: GUI-bewijs bewaren
         if: always() && runner.os == 'Linux'
         uses: actions/upload-artifact@v4
         with:
           name: rekenblad-gui-${{ runner.os }}
           path: .local/proef-rekenblad-gui/
+          include-hidden-files: true
+          if-no-files-found: warn
+      - name: Writer-lettergroottebewijs bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: writer-lettergrootte-gui-${{ runner.os }}
+          path: .local/proef-writer-lettergrootte/
           include-hidden-files: true
           if-no-files-found: warn
       - name: Vastgelegde MDB-, ACCDB- en Strict-proefbestanden ophalen

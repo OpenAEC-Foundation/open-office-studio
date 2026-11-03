@@ -1,0 +1,201 @@
+{
+  "versie": "2026.45.7",
+  "datum": "2026-11-03",
+  "basis": "db81946df36fd62ea8c7c7a20461c3aa1a673b35",
+  "issue": 124,
+  "sha256": "12052f2c0f93b795676d6f02a51f2d3837017e6645b64daf0013070e1d3f3a1d",
+  "wijziging": "Native cijferpijltjes en pijltjestoetsen bevestigen de getoonde lettergrootte. Een gewone klik bevestigt geen onvoltooid concept.",
+  "oude_bron": "De oude productiebuild wijzigde het veld van 11 naar 12, maar bewaarde w:sz=22 (11 pt). Dezelfde proef slaagt met de aangepaste bron.",
+  "controles": {
+    "vitest": {
+      "bestanden": 136,
+      "geslaagd": 1560
+    },
+    "typescript": "geslaagd",
+    "productiebouw": "geslaagd",
+    "native_linux_bouw": "geslaagd",
+    "module_opdrachten": {
+      "writer": 68,
+      "rekenblad": "geslaagd",
+      "presentatie": 10
+    },
+    "productie_gui": {
+      "versie": "2026.45.7",
+      "stappen": [
+        {
+          "naam": "begin",
+          "punten": 11,
+          "opgeslagenHalvePunten": [
+            22
+          ],
+          "tekstOngewijzigd": true
+        },
+        {
+          "naam": "muis omhoog",
+          "punten": 12,
+          "opgeslagenHalvePunten": [
+            24
+          ],
+          "tekstOngewijzigd": true
+        },
+        {
+          "naam": "muis omlaag",
+          "punten": 11,
+          "opgeslagenHalvePunten": [
+            22
+          ],
+          "tekstOngewijzigd": true
+        },
+        {
+          "naam": "toets omhoog",
+          "punten": 12,
+          "opgeslagenHalvePunten": [
+            24
+          ],
+          "tekstOngewijzigd": true
+        },
+        {
+          "naam": "toets omlaag",
+          "punten": 11,
+          "opgeslagenHalvePunten": [
+            22
+          ],
+          "tekstOngewijzigd": true
+        },
+        {
+          "naam": "handmatig concept nog niet bevestigd",
+          "punten": 11,
+          "opgeslagenHalvePunten": [
+            22
+          ],
+          "tekstOngewijzigd": true
+        },
+        {
+          "naam": "handmatig bevestigd",
+          "punten": 16,
+          "opgeslagenHalvePunten": [
+            32
+          ],
+          "tekstOngewijzigd": true
+        },
+        {
+          "naam": "ongedaan",
+          "punten": 11,
+          "opgeslagenHalvePunten": [
+            22
+          ],
+          "tekstOngewijzigd": true
+        },
+        {
+          "naam": "opnieuw",
+          "punten": 16,
+          "opgeslagenHalvePunten": [
+            32
+          ],
+          "tekstOngewijzigd": true
+        },
+        {
+          "naam": "drie snelle muisklikken",
+          "punten": 19,
+          "opgeslagenHalvePunten": [
+            38
+          ],
+          "tekstOngewijzigd": true
+        },
+        {
+          "naam": "heropend in een nieuwe editorsessie",
+          "punten": 19,
+          "opgeslagenHalvePunten": [
+            38
+          ],
+          "tekstOngewijzigd": true
+        }
+      ],
+      "fouten": []
+    },
+    "rekenblad_productie_gui": "Vier afzonderlijke sessies opnieuw geslaagd na de gedeelde lintaanpassing.",
+    "native_gui": {
+      "versie": "2026.45.7",
+      "nativeLinux": true,
+      "echteMuisEnToetsen": true,
+      "stappen": [
+        {
+          "actie": "begin",
+          "punten": 11,
+          "opgeslagenHalvePunten": [
+            22
+          ]
+        },
+        {
+          "actie": "muis-omhoog",
+          "punten": 12,
+          "opgeslagenHalvePunten": [
+            24
+          ]
+        },
+        {
+          "actie": "muis-omlaag",
+          "punten": 11,
+          "opgeslagenHalvePunten": [
+            22
+          ]
+        },
+        {
+          "actie": "toets-omhoog",
+          "punten": 12,
+          "opgeslagenHalvePunten": [
+            24
+          ]
+        },
+        {
+          "actie": "toets-omlaag",
+          "punten": 11,
+          "opgeslagenHalvePunten": [
+            22
+          ]
+        },
+        {
+          "actie": "handmatig",
+          "punten": 16,
+          "opgeslagenHalvePunten": [
+            32
+          ]
+        },
+        {
+          "actie": "undo",
+          "punten": 11,
+          "opgeslagenHalvePunten": [
+            22
+          ]
+        },
+        {
+          "actie": "redo",
+          "punten": 16,
+          "opgeslagenHalvePunten": [
+            32
+          ]
+        }
+      ],
+      "meldingen": [],
+      "sha256": "12052f2c0f93b795676d6f02a51f2d3837017e6645b64daf0013070e1d3f3a1d",
+      "heropenen": {
+        "nieuwNativeProcesHeropend": true,
+        "punten": 16,
+        "halvePunten": [
+          32
+        ],
+        "tekstOngewijzigd": true,
+        "foutmeldingen": []
+      }
+    }
+  },
+  "beperkingen": [
+    "Deze wijziging is daadwerkelijk getest in Chromium en de Linux/WebKit-desktopapp; Windows- en macOS-vensters zijn niet lokaal getest.",
+    "De zeven edities van 45.6 hebben een geslaagde platformbouw; dat is geen bouwgoedkeuring voor 45.7.",
+    "Writer-invoersnelheid, zeer groot plakken en andere open issues zijn hiermee niet opgelost.",
+    "De volledige Rust-interface is niet voltooid."
+  ],
+  "gebruikersdocumenten_overschreven": false,
+  "draaiende_gebruikersapp_gestopt": false,
+  "vorige_binaries_behouden": true
+}

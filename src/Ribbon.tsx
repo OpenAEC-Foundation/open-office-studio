@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { ChevronDown, type LucideIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Lint, LintActie, type LintProps, type LintTeksten } from "./openaec-lint";
@@ -218,12 +218,13 @@ export function OpdrachtGetal({
 }) {
   const uitvoeren = useUitvoeren(opdracht);
   const [waarde, setWaarde] = useState(String(opdracht.state.value ?? ""));
+  const beginMuis = useRef<string | null>(null);
   useEffect(
     () => setWaarde(String(opdracht.state.value ?? "")),
     [opdracht.state.value],
   );
-  function toepassen() {
-    const getal = Number(waarde);
+  function toepassen(tekst = waarde) {
+    const getal = Number(tekst);
     if (getal >= 1 && getal <= 400 && getal !== opdracht.state.value)
       uitvoeren(args(getal));
     else setWaarde(String(opdracht.state.value ?? ""));
@@ -239,11 +240,24 @@ export function OpdrachtGetal({
       value={waarde}
       disabled={!opdracht.state.enabled}
       onChange={(event) => setWaarde(event.target.value)}
-      onBlur={toepassen}
+      onBlur={(event) => toepassen(event.currentTarget.value)}
+      onPointerDown={(event) => { beginMuis.current = event.currentTarget.value; }}
+      onPointerUp={(event) => {
+        // Een native pijltje verandert het veld zonder het te verlaten.
+        // Een gewone klik of tekstselectie in het veld bevestigt niets.
+        if (beginMuis.current !== null && beginMuis.current !== event.currentTarget.value)
+          toepassen(event.currentTarget.value);
+        beginMuis.current = null;
+      }}
+      onPointerCancel={() => { beginMuis.current = null; }}
+      onKeyUp={(event) => {
+        if (event.key === "ArrowUp" || event.key === "ArrowDown")
+          toepassen(event.currentTarget.value);
+      }}
       onKeyDown={(event) => {
         if (event.key === "Enter") {
           event.preventDefault();
-          toepassen();
+          toepassen(event.currentTarget.value);
         }
         if (event.key === "Escape")
           setWaarde(String(opdracht.state.value ?? ""));

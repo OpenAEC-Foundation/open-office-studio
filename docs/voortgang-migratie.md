@@ -1,13 +1,13 @@
 # Voortgang migratie en open issues
 
-Peildatum: 2 november 2026. Ontwikkelbasis: Tauri/Rust met React/TypeScript, commit `bdab16e`, lokale testversie `2026.45.6` (getest op 3 november).
+Peildatum: 2 november 2026. Ontwikkelbasis: Tauri/Rust met React/TypeScript, commit `bdab16e`, lokale testversie `2026.45.7` (getest op 3 november).
 
 ## Huidige waarheid
 
 - De volledige Rust-interface is nog niet af; `native/docs/migratie.json` blijft leidend voor acceptatie.
 - Writer-invoer en selectie zijn nog te traag. De nieuwe geïsoleerde native WebKit-proef verwerkt 98 tekens in circa 15,2 seconden; de eerdere ronde duurde circa 22,7 seconden. Dit is nog onvoldoende en geen algemene benchmark.
 - Voor 2026.45.4 zijn 1.545 automatische tests, 68 Writer-opdrachtcontroles en gerichte Linux-GUI-controles geslaagd. Dit bewijst geen volledige functiedekking.
-- De zeven losse edities en Windows/macOS zijn niet allemaal opnieuw gebouwd en via echte vensters gecontroleerd.
+- De suite en zes losse edities van 2026.45.6 zijn op Windows, Linux en macOS gebouwd. De volledige GUI-matrix blijft open; de nieuwere 45.7 is lokaal op Linux getest.
 
 ## Werkvolgorde
 
@@ -119,10 +119,10 @@ Deze inventaris heeft **106** items. “Open” betekent niet dat de fout in dez
 | [#106](https://github.com/OpenAEC-Foundation/open-office-studio/issues/106) | Agenda: Y-app als bron (afspraken, taken, verlof, timesheets, collega's) | Open; controle per issue nodig |
 | [#108](https://github.com/OpenAEC-Foundation/open-office-studio/issues/108) | Algemeen: voorvertoning van kantoorbestanden herbruikbaar maken voor Y-next | Open; controle per issue nodig |
 | [#113](https://github.com/OpenAEC-Foundation/open-office-studio/issues/113) | Signing van installers borgen — audit 29-10-2026 | Open; controle per issue nodig |
-| [#120](https://github.com/OpenAEC-Foundation/open-office-studio/issues/120) | Rekenblad: lege ISOWEEKNUM-aanroep maakt bewerken en opslaan onmogelijk | Bron en kern-/browser-/nativeproeven geslaagd in 45.6; CI en merge nog open |
+| [#120](https://github.com/OpenAEC-Foundation/open-office-studio/issues/120) | Rekenblad: lege ISOWEEKNUM-aanroep maakt bewerken en opslaan onmogelijk | Bron, kern-/browser-/nativeproeven en platformbouw geslaagd in 45.6; merge nog open |
 | [#122](https://github.com/OpenAEC-Foundation/open-office-studio/issues/122) | Writer: opsommingstekens ontbreken na klikken op de opsommingsknop | Open; controle per issue nodig |
 | [#123](https://github.com/OpenAEC-Foundation/open-office-studio/issues/123) | Writer: genummerde lijst wordt na Enter niet voortgezet | Open; controle per issue nodig |
-| [#124](https://github.com/OpenAEC-Foundation/open-office-studio/issues/124) | Writer: pijltjes in lettergrootteveld passen geselecteerde tekst niet aan | Open; controle per issue nodig |
+| [#124](https://github.com/OpenAEC-Foundation/open-office-studio/issues/124) | Writer: pijltjes in lettergrootteveld passen geselecteerde tekst niet aan | Hersteld in 45.7; browser en native Linux inclusief bewaren/heropenen geslaagd; merge en andere platforms open |
 | [#125](https://github.com/OpenAEC-Foundation/open-office-studio/issues/125) | Writer: bestaande tekst bewaart donkergrijze markering terwijl nieuwe invoer geel wordt | Open; controle per issue nodig |
 | [#126](https://github.com/OpenAEC-Foundation/open-office-studio/issues/126) | Writer: extern gekopieerde tekst plakt niet; intern plakken werkt via lint en Ctrl+V | Open; controle per issue nodig |
 | [#127](https://github.com/OpenAEC-Foundation/open-office-studio/issues/127) | Writer: Ga naar pagina moet de cursor aan het begin van de gekozen pagina plaatsen | Open; controle per issue nodig |
@@ -164,7 +164,15 @@ Deze inventaris heeft **106** items. “Open” betekent niet dat de fout in dez
 - De rekenbladmatrix slaagt op acht fixtures, inclusief 6.001 formulecellen en 229 herkende namen uit 519 kandidaten. Drie bekende afwijkingen voor onbekende/gebruikersfuncties blijven streng gemeld. Dit bewijst geen volledige ondersteuning van alle 229 functies.
 - CSV, HTML en Markdown gebruiken een berekende werkkopie, zodat ontbreken van cachewaarden geen lege formulebedragen oplevert. De exportproeven controleren 924 en totaal 3068.
 - De 45.5-platformronde [41542519654](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41542519654) is niet groen: de Windows-Pythonproef bleek afhankelijk van de kloktijd van een extra ZIP-verpakking. De test vergelijkt nu rechtstreeks de deterministische fixturebytes. De platformronde moet na push van de correctie opnieuw lopen.
-- De 45.6-native Linux-bouw en echte toetsenproef zijn geslaagd. Een nieuw native proces heropent de bewaarde XLSX met exact 7, #VALUE!, 14 en 53. De gebundelde lettertypen worden werkelijk als fontbestand geladen. Zie [het volledige verslag](tests/2026-11-03-rekenbladkern.json). De lokale testversie is 45.6; commit/push en de nieuwe platformronde volgen.
+- De 45.6-native Linux-bouw en echte toetsenproef zijn geslaagd. Een nieuw native proces heropent de bewaarde XLSX met exact 7, #VALUE!, 14 en 53. De gebundelde lettertypen worden werkelijk als fontbestand geladen. Zie [het volledige verslag](tests/2026-11-03-rekenbladkern.json). De lokale testversie is 45.6; bron `db81946` is gecommit en gepusht. De nieuwe [bouwronde voor zeven edities op drie platforms](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41547290342) is geslaagd; de drie platformartefacten zijn beschikbaar. Publiceren is bewust niet ingeschakeld. De oude run is als verouderd geannuleerd; zij blijft geen groene vrijgave.
 
 - Nieuwe bevinding bij de native visuele controle: het lege `<workbookProtection/>` in het meegeleverde sjabloon geeft onterecht een beschermingswaarschuwing. Niet als foutloos afgevinkt; de zichtbare melding staat in het verslag.
-- De gedeelde Rust-werker wordt nu losgemaakt uit de Iced-interface naar `office-core`. Vier gerichte onafhankelijke controles en aansluitende native werkruimtecontroles moeten nog worden afgerond. De Dioxus-interface gebruikt deze werker nog niet.
+- De gedeelde Rust-werker wordt nu losgemaakt uit de Iced-interface naar `office-core`. Vier nieuwe gerichte proeven en de aansluitende werkruimtecontroles zijn geslaagd; vastgelegd in `e7762c6`. De Dioxus-interface gebruikt deze werker nog niet.
+
+### Volgende stappen na 45.6
+
+- #124 is in de bron hersteld: native cijferpijltjes en pijltjestoetsen bevestigen de getoonde grootte, zonder gewone veldklikken te bevestigen. De oude productiebuild faalt op 11→12 pt; de nieuwe productieproef slaagt op elf bewaar-/invoer-/geschiedenis-/heropenstappen. 1.560 tests en alle module-opdrachten blijven groen. De native Linux-bouw, echte muis-/toetsenproef en heropenen in een nieuw native proces zijn geslaagd. De lokale testversie is bijgewerkt naar 45.7; zie [het verslag](tests/2026-11-03-lettergrootte.json).
+- De productie-GUI-proef voor rekenbladen slaagt ook na de gedeelde lintaanpassing opnieuw in alle vier sessies.
+- De Rust-kernronde slaagt op 192 proeven. De brede werkruimtecontrole met desktopcode heeft ook 198 Iced-interfacetests, 51 mailtests en 15 conversietests uitgevoerd. Zes expliciet optionele proeven zijn daarbij niet uitgevoerd. De extra X11-proef vond eerst Xvfb niet op PATH en is daarna met dezelfde testbinary en expliciet pad geslaagd. Elf resterende WebView-proeven en Clippy met desktopcode/alle doelen zijn groen. Samen zijn 468 Rust-proeven uitgevoerd en zes optionele proeven overgeslagen; zie [het verslag](../native/docs/gedeelde-werker-2026-11-03.json). De Dioxus-aansluiting blijft open.
+
+- Bij controle van de oudere Rust-CI zijn twee afzonderlijke vrijgaveproblemen gevonden: de pakketnaam wordt door een stijlpad overschreven en de WebView-vensterproef hergebruikt een map uit de bouwcache. De Tauri-platformbouw hierboven blijft geslaagd; de Rust-previewroute is hierdoor nog niet volledig groen. Correctie en hertest lopen.
