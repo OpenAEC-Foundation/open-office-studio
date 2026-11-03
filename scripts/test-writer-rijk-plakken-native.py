@@ -82,6 +82,13 @@ async def proef(a):
         v.configure(x=0, y=0, width=1440, height=1000)
         v.set_input_focus(X.RevertToParent, X.CurrentTime)
         d.sync()
+        # AppRun stelt onder meer de GTK- en WebKit-paden in en exec't de
+        # echte app. Bind het bewijs aan die eigen, zichtbare ELF, niet alleen
+        # aan de eventuele startscriptbytes.
+        r['startprogramma_sha256'] = r['programma_sha256']
+        werkelijk = Path(f'/proc/{app.pid}/exe').read_bytes()
+        assert werkelijk.startswith(b'\x7fELF'), 'Eigen zichtbare proces is geen ELF'
+        r['programma_sha256'] = hashlib.sha256(werkelijk).hexdigest()
         await asyncio.sleep(12)
         async with Inspector(int(os.environ['OFFICE_PROEF_HTTP'])) as p:
             await p.run("window.api=()=>{let el=document.querySelector('.office-tabpaneel:not([hidden]) .office-tekst');if(!el)return null;for(let f=el[Object.keys(el).find(k=>k.startsWith('__reactFiber$'))];f;f=f.return)for(let s=f.memoizedState,n=0;s&&n<200;n++,s=s.next){let v=s.memoizedState?.current;if(v?.getEditorRef&&v.commands)return v}return null};let eind=performance.now()+60000;while(!api()?.getEditorRef()?.getYrsSession()){if(performance.now()>eind)throw Error('Document niet gereed');await new Promise(r=>setTimeout(r,100))}await api().flushPendingInput();return true;")

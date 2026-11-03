@@ -40,7 +40,7 @@ def main():
             uitvoer_gui = Path('.local/proef-dev-native')
             subprocess.run([
                 gui_python(opties.gui_python), 'scripts/test-writer-rijk-plakken-native.py',
-                '--programma', str(programma), '--versie', versie,
+                '--programma', str(uitgepakt / 'AppRun'), '--versie', versie,
                 '--profiel', configuratie['identifier'], '--rondes', '3',
                 '--bewaar-na-ronde', '1', '--maxduur', '180', '--uitvoer', str(uitvoer_gui),
             ], check=True)
@@ -48,6 +48,8 @@ def main():
             assert native_gui.get('geslaagd') is True
             with programma.open('rb') as bestand:
                 assert native_gui['programma_sha256'] == hashlib.file_digest(bestand, 'sha256').hexdigest()
+            with (uitgepakt / 'AppRun').open('rb') as bestand:
+                assert native_gui['startprogramma_sha256'] == hashlib.file_digest(bestand, 'sha256').hexdigest()
     with pakket.open('rb') as bestand:
         checksum = hashlib.file_digest(bestand, 'sha256').hexdigest()
     mapnaam = f'Open-Office-Studio-Dev-{versie}-linux-x86_64-{bron[:7]}'
@@ -68,9 +70,10 @@ def main():
     if native_gui:
         rapport['native_gui'] = {
             'geslaagd': True, 'programma_sha256': native_gui['programma_sha256'],
+            'startprogramma_sha256': native_gui['startprogramma_sha256'],
             'profiel': native_gui['profiel'], 'script_sha256': native_gui['script_sha256'],
             'omvang': 'Eigen DOCX-kopie, drie plakrondes, bewaren na ronde één en verder bewerken; onafhankelijke inhoudscontrole, verwerpen en nieuw document.',
-            'appimage_startfunctie': 'Niet via AppRun gestart; de werkelijk uitgepakte ELF is bediend.',
+            'appimage_startfunctie': 'De uitgepakte AppRun is gestart; launcher en werkelijke ELF zijn op hash gecontroleerd. FUSE-mount niet getoetst.',
         }
     with tempfile.TemporaryDirectory(prefix='office-dev-download-') as tijdelijk:
         inhoud = Path(tijdelijk) / mapnaam

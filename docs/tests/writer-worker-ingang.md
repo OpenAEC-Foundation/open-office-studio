@@ -124,7 +124,12 @@ uit de testomgeving naar `/usr/bin/python3.10`; daardoor ontbrak `websockets`
 tijdens de inspectie. De app was gebouwd, maar deze GUI-proef was niet afgerond.
 Het absolute omgevingspad blijft nu behouden. Een echte tijdelijke Python-
 omgeving met een eigen proefmodule controleert dat de oude padkeuze de module
-verliest en de nieuwe haar behoudt. De remote hertest moet nog worden afgewacht.
+verliest en de nieuwe haar behoudt. De tweede CI-proef bereikte vervolgens het pakket, maar de losse ELF miste de
+GTK-/WebKit-omgeving van de meegeleverde AppRun. De proef gebruikt nu die
+werkelijke starter en controleert via het eigen zichtbare proces de hash van
+de uitgevoerde ELF. Een lokale controle op het oude 45.14-pakket bereikt zo
+alle bewerkingen en wordt terecht op de workerfout afgekeurd. De remote
+positieve hertest op het nieuwe pakket moet nog worden afgewacht.
 
 ## Herhalen
 

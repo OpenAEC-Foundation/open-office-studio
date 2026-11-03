@@ -447,5 +447,18 @@
     "oorzaak": "Path.resolve() verving de Python-interpreter uit de GUI-omgeving door /usr/bin/python3.10; websockets was daar niet beschikbaar.",
     "herstel": "Het absolute pad blijft binnen de opgegeven virtuele omgeving. Een echte omgevingsproef toont de ontbrekende module vóór en de behouden module na correctie.",
     "remote_hertest": "Nog af te wachten na push; de pakket-GUI-controle blijft verplicht."
+  },
+  "pakketcontrole_tweede_ci_45_17": {
+    "geslaagd": false,
+    "run": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41630068310",
+    "oorzaak": "De rechtstreeks gestarte pakket-ELF miste de AppRun-omgeving en kon het WebKitNetworkProcess niet vinden.",
+    "herstel": "Start de meegeleverde AppRun en bind de proef via /proc van het eigen zichtbare proces aan de werkelijk uitgevoerde ELF.",
+    "controle_oud_pakket": {
+      "geslaagd": false,
+      "verwacht": "De oude 45.14-AppImage wordt op de bekende workerfout afgekeurd, nadat opstarten en bewaren/vervolgen zijn bereikt.",
+      "programma_sha256": "788f92b23ff6cad390406336aff27560f89078fc857e885502712fcb7b022287",
+      "startprogramma_sha256": "eb0b254ac0dae6543e6dd7cd02e1baf40a060de95b927313122d6b46323c00aa"
+    },
+    "remote_hertest": "Nog af te wachten; de verplichte GUI-controle blijft behouden."
   }
 }
