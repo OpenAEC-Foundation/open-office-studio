@@ -1,0 +1,78 @@
+name: Linux-ontwikkelbuild
+run-name: Linux-dev · ${{ github.ref_name }} · ${{ github.sha }}
+on:
+  push:
+    branches: ["codex/native-rust-office"]
+    paths-ignore: ["docs/**", "README.md"]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: linux-dev-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  bouwen:
+    name: AppImage voor Linux x86_64
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            src-tauri -> target
+            src/spelling/rust -> target
+      - name: Linux-bouwafhankelijkheden
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev patchelf squashfs-tools
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/cache@v4
+        with:
+          path: |
+            .local/lettertypen-cache
+            .local/woordenboeken-cache
+          key: dev-assets-${{ hashFiles('assets/lettertypen.json', 'assets/woordenboeken.json') }}
+      - name: Lettertypen en woordenboeken ophalen
+        run: |
+          node scripts/haal-lettertypen.mjs
+          node scripts/haal-woordenboeken.mjs
+          node scripts/bouw-spelling-wasm.mjs
+      - run: pnpm versie:check
+      - name: Vastgelegde versleutelde proefbestanden ophalen
+        run: node scripts/corpus-download.mjs docs/tests/versleuteling-manifest.json
+      - name: Broncode controleren
+        run: |
+          pnpm test
+          cargo test --manifest-path src-tauri/Cargo.toml --locked
+      - name: Eigen dev-profiel configureren
+        run: |
+          node --input-type=module <<'JS'
+          import { writeFileSync } from 'node:fs';
+          writeFileSync('src-tauri/tauri.dev.conf.json', JSON.stringify({
+            productName: 'Open Office Studio Dev',
+            identifier: 'org.openaec.office-studio.dev',
+            bundle: { createUpdaterArtifacts: false },
+            plugins: { updater: { pubkey: '', endpoints: [] } },
+          }, null, 2));
+          JS
+      - name: AppImage bouwen
+        run: pnpm desktop:build --bundles appimage --config src-tauri/tauri.dev.conf.json
+      - name: AppImage uitpakken, controleren en verpakken
+        run: python3 scripts/verpak-dev-linux.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Open-Office-Studio-Dev-Linux-x86_64-${{ github.run_number }}
+          path: dist-dev/*
+          if-no-files-found: error
+          retention-days: 30
