@@ -82,7 +82,7 @@ async def proef(a):
     d = display.Display()
     log = (a.uitvoer/'programma.log').open('w')
     programma = None
-    rapport = {'geslaagd': False, 'versie': a.versie, 'programma_sha256': hashlib.sha256(a.programma.read_bytes()).hexdigest(), 'stappen': [], 'kleurgebeurtenissen': [], 'beperking': 'GTK3-palet op Linux/X11; geen volledige platform- of functieacceptatie.'}
+    rapport = {'geslaagd': False, 'versie': a.versie, 'programma_sha256': hashlib.sha256(a.programma.read_bytes()).hexdigest(), 'stappen': [], 'kleurgebeurtenissen': [], 'paletten': [], 'beperking': 'GTK3-palet op Linux/X11; geen volledige platform- of functieacceptatie.'}
     ns = {'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
     http = int(os.environ['OFFICE_PROEF_HTTP'])
 
@@ -164,11 +164,21 @@ async def proef(a):
         subprocess.run(['xdotool', 'mousemove', '--window', str(venster.id), str(pos['x']), str(pos['y']), 'click', '1'], check=True)
         kiezer = await zoekvenster(lambda n: n == 'Select Color')
         g = kiezer.get_geometry()
-        assert (g.width, g.height) == (488, 303), 'GTK-palet wijkt af; coördinaten niet toepassen'
         scherm('kiezer-'+verwacht)
-        subprocess.run(['xdotool', 'mousemove', '--window', str(kiezer.id), str(36+52*kolom), str(28+34*rij), 'click', '1'], check=True)
+        # Ubuntu 22.04 en de lokale GTK3-omgeving hebben dezelfde kleurcellen,
+        # maar verschillen twee pixels in de ondermarge. Alleen gemeten vormen
+        # toelaten; controleer de kleur onder de muis vóór de echte klik.
+        assert g.width == 488 and g.height in (301, 303), f'GTK-palet wijkt af: {g.width}×{g.height}; coördinaten niet toepassen'
+        x, y = 36+52*kolom, 28+34*rij
+        raw = kiezer.get_image(0, 0, g.width, g.height, X.ZPixmap, 0xffffffff)
+        palet = Image.frombytes('RGB', (g.width, g.height), raw.data, 'raw', 'BGRX')
+        pixel = palet.getpixel((x, y))
+        rgb = tuple(bytes.fromhex(verwacht))
+        rapport['paletten'].append({'keuze': verwacht, 'breedte': g.width, 'hoogte': g.height, 'pixel': pixel, 'verwacht': rgb})
+        assert pixel == rgb, 'Het gemeten kleurvlak bevat niet de verwachte kleur; niet klikken'
+        subprocess.run(['xdotool', 'mousemove', '--window', str(kiezer.id), str(x), str(y), 'click', '1'], check=True)
         await asyncio.sleep(.5)
-        subprocess.run(['xdotool', 'mousemove', '--window', str(kiezer.id), '438', '279', 'click', '1'], check=True)
+        subprocess.run(['xdotool', 'mousemove', '--window', str(kiezer.id), str(g.width-50), str(g.height-24), 'click', '1'], check=True)
         await asyncio.sleep(1)
         events = await p.ev('kleurEvents')
         rapport['kleurgebeurtenissen'].append({'keuze': verwacht, 'gebeurtenissen': events})

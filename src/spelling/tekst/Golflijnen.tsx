@@ -13,6 +13,8 @@ import type { DocxPluginContext, DocxPluginGeometry } from "@betteroffice/docx-r
 import { memo, useEffect, useMemo, useRef, useState } from "react";
 import type { PluginStaat, SpellingSessie } from "./sessie";
 import "./spelling.css";
+import { foutenInBereik } from "./bereik";
+import { zichtbarePaginaElementen } from "../../tekst/paginabereik";
 
 interface Props {
   sessie: SpellingSessie;
@@ -56,8 +58,8 @@ function bereikInBeeld(sessie: SpellingSessie, laag: HTMLElement | null): [numbe
   const venster = { boven: Math.max(v.top, 0), onder: Math.min(v.bottom, window.innerHeight) };
   const elementen = vlak.querySelectorAll<HTMLElement>(".canvas-page");
   if (elementen.length !== indeling.pages.length) return null;
-  const paginas = indeling.pages.map((p, i) => {
-    const r = elementen[i].getBoundingClientRect();
+  const paginas = zichtbarePaginaElementen([...elementen], { top: venster.boven, bottom: venster.onder }, MARGE).map(({ index, rect: r }) => {
+    const p = indeling.pages[index];
     let van = Infinity;
     let tot = -Infinity;
     for (const f of p.fragments as { pmStart?: number; pmEnd?: number }[]) {
@@ -111,12 +113,7 @@ export const Golflijnen = memo(function Golflijnen({ sessie, context, geometry }
     const uit: Rechthoek[] = [];
     const ed = sessie.editor()?.getEditorRef();
     if (!ed || bereik === undefined) return uit;
-    for (const { alinea, fout } of sessie.zichtbareFouten()) {
-      // Foutoffsets gelden voor de geaccepteerde tekst; bijgehouden verwijderingen tellen in de sessie mee.
-      const a = ed.yrsLocToDisplayPosition({ story: alinea.story, paraId: alinea.paraId, offset: sessie.rauw(alinea, fout.start) });
-      const b = ed.yrsLocToDisplayPosition({ story: alinea.story, paraId: alinea.paraId, offset: sessie.rauw(alinea, fout.eind, true) });
-      if (a === null || b === null || b <= a) continue;
-      if (bereik && (b < van || a > tot)) continue;
+    for (const { alinea, fout, van: a, tot: b } of foutenInBereik(sessie, ed, bereik ?? null)) {
       let delen: { x: number; y: number; width: number; height: number }[] = [];
       try {
         delen = geometry.dom.getRectsForRange(a, b);

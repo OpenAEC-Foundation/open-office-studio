@@ -30,7 +30,7 @@ Zij maakt een kleine DOCX uit het sjabloon en opent geen gebruikersdocument.
 Alleen de zelf gestarte processen worden na afloop gesloten.
 
 De echte muis kiest geel en blauw in het GTK3-palet. De proef controleert de
-paletafmetingen voordat zij coördinaten gebruikt en bewaart beelden en de
+paletafmetingen en de werkelijke RGB-kleur onder de muis voordat zij klikt en bewaart beelden en de
 daadwerkelijke native kleurgebeurtenissen. De opgeslagen DOCX wordt onafhankelijk
 gelezen. Ongedaan/opnieuw, een echt getypt extra teken en een nieuw native proces
 moeten de verwachte tekst en achtergrondkleur behouden.
@@ -51,3 +51,10 @@ De geïsoleerde Python-omgeving gebruikt de vastgezette WebSocket-bibliotheek ui
 met Python 3.10 voordat de app wordt geïnspecteerd. Dit was de oorzaak van de
 afgebroken Linux-vrijgaveproef voor 2026.45.8. De omgevingsreparatie moet ook
 op de CI-runner slagen voordat de nieuwe vrijgave als groen geldt.
+
+De Ubuntu-CI voor 45.9 bereikte na de Python-reparatie het native palet, maar
+stopte terecht op de oude maatbewaking: het palet is daar 488×301, lokaal
+488×303. Het CI-beeld bevestigt dezelfde kleurcelposities en exacte RGB-waarden.
+De proef accepteert nu uitsluitend deze twee gemeten vormen, controleert de
+kleurpixel vóór de klik en plaatst de bevestiging ten opzichte van de onderrand.
+Andere vormen blijven afgekeurd. De aangepaste proef moet nog op Ubuntu-CI slagen.

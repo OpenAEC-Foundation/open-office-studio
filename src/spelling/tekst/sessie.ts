@@ -448,10 +448,10 @@ export class SpellingSessie {
   }
 
   /** Alinea's die de overlay mag tekenen (niet vuil). */
-  zichtbareFouten(): { alinea: Alinea; fout: Fout }[] {
+  zichtbareFouten(kies?: (alinea: Alinea) => boolean): { alinea: Alinea; fout: Fout }[] {
     const uit: { alinea: Alinea; fout: Fout }[] = [];
     for (const a of this.alineas) {
-      if (this.vuil.has(a.paraId)) continue;
+      if (!a.fouten.length || this.vuil.has(a.paraId) || (kies && !kies(a))) continue;
       for (const f of a.fouten)
         if (!persoonlijk.bevat(f.tekst) && !genegeerd.bevat(f.tekst) && !this.eenmaalGenegeerd(a, f)) uit.push({ alinea: a, fout: f });
     }

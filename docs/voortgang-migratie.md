@@ -1,6 +1,6 @@
 # Voortgang migratie en open issues
 
-Peildatum: 2 november 2026. Ontwikkelbasis: Tauri/Rust met React/TypeScript, commit `693777a`, lokale testversie `2026.45.9` (getest op 3 november).
+Peildatum: 2 november 2026. Ontwikkelbasis: Tauri/Rust met React/TypeScript, basis `b481be6`, lokale testversie `2026.45.10` (getest op 3 november).
 
 ## Huidige waarheid
 
@@ -208,3 +208,12 @@ Deze inventaris heeft **106** items. “Open” betekent niet dat de fout in dez
 - De [Rust-platformronde 7356e2f](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41557773896) is geslaagd op drie platforms, inclusief conversie- en pakketvergelijking. Ook de [WebView-platformronde 693777a](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41559061255) is geslaagd op drie platforms. Dit is bouw-/testbewijs van de preview; de volledige visuele/functionele acceptatie blijft open.
 
 - De lokale startkoppeling gebruikt 45.9. Oudere binaries, het gebruikersprofiel en eventueel lopende gebruikersprocessen zijn behouden. De geteste nieuwe Linux-binary is dezelfde als in het verslag.
+
+### Vervolg: Rust-toelating en kandidaat 2026.45.10
+
+- `b481be6`: de gedeelde werker kan opdrachten nu onmiddellijk toelaten met `stuur`, onafhankelijk van wanneer de interface het antwoord afwacht. Drie nieuwe regressieproeven falen op uitsluitend een lazy future en slagen na herstel. De volledige Rust-werkruimte slaagt in één uitvoering: **476 tests, zes expliciet optionele tests overgeslagen**. Clippy met desktopcode en alle doelen is groen. De daadwerkelijke Dioxus-aansluiting blijft open; zie [het toelatingsverslag](../native/docs/werker-toelating-2026-11-03.json).
+- Kandidaat 45.10: spellinggolflijnen begrenzen eerst per alinea. De prestatieregressieproef gaat bij hetzelfde zichtbare resultaat van 100.000 naar 1.200 positieomrekeningen. De spellingoverlay en tabelgrepen meten voor de eigen paginakolom alleen de zoekgrenzen en zichtbare boxen: 14 metingen op een proef van 10.000 pagina’s.
+- **1.583 frontendtests in 140 bestanden**, TypeScript, productie-/native Linux-bouw, alle module-opdrachten en de bestaande kleur-, lettergrootte- en tekstspiegel-GUI-proeven slagen. Een strengere productieproef controleert 500 pagina’s, 6.000 spelfouten en werkelijk zichtbare tabelgrepen op vijf pagina-/zoomstanden. Bronwoorden en tabel blijven bij bewaren behouden.
+- De verse native 500-paginaproef zonder profielhooks slaagt ook op 45.10: invoer, selectie/Backspace, undo/redo en onafhankelijk teruggelezen DOCX met alle alinea’s exact. Een vervolgsessie na uitgebreide profilering liep vast. Daarom blijven profielmetingen apart en geven zij geen algemene prestatiegoedkeuring; de aansluitende schone vergelijking zonder gewijzigde editor-methoden is hieronder afzonderlijk vastgelegd.
+- De Linux-uitgaveronde voor 45.9 bereikte na de Python-reparatie het native kleurpalet, maar wees de afwijkende maat terecht af: Ubuntu toont 488×301, lokaal 488×303. Het CI-beeld bevestigt dezelfde kleurcellen en exacte RGB-waarden. De proef accepteert nu uitsluitend die gemeten vormen, controleert de kleurpixel vóór de muisklik en bevestigt relatief aan de onderrand. De aangepaste lokale native kleurproef slaagt; Ubuntu moet opnieuw worden uitgevoerd.
+- Bewijs: [golflijnenproef](tests/writer-golflijnen.md), [versiegegevens](tests/2026-11-03-writer-golflijnen.json). De schone native vergelijking is uitgevoerd. De 45.9-proef haalt bron- én golflijngereedheid niet binnen 90 seconden. 45.10 behoudt alle veertien tekens exact en is inclusief twee seconden vaste nawacht na 4.657 ms gereed; 19.820 schermmetingen. Dit is één gerichte eigen fixtureproef, geen algemene snelheidsgarantie. De lokale startkoppeling gebruikt nu 45.10; oudere binaries en het gebruikersprofiel zijn behouden. Een lopende gebruikersapp is niet gestopt.
