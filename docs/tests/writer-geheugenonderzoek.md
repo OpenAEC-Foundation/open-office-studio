@@ -99,3 +99,33 @@ publiceert geen release en vervangt geen platform- of migratieacceptatie.
 Een opstarttimeout bewaart voortaan ook de zichtbare fouttekst en console
 terwijl de inspectieverbinding nog bestaat; de oorspronkelijke afkeuring
 blijft een afkeuring.
+
+## Gerichte CI-afkeuring en lokale reproductie
+
+De [eerste onderzoeksronde](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41675196274)
+faalt bij de gewone heropencontrole, vóór de extra belasting. Het
+[foutpakket](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41675196274/artifacts/13251436441)
+is opgehaald; alle binnenste en buitenste controlesommen kloppen. De raw binary
+is exact de eerder genoemde 45.21-binary (`7e2d3e…`). Het pakket bewaart ook
+de juiste testscriptbytes, de eigen DOCX en WebKit/JSC 2.50.4 op Ubuntu 22.04.
+De nieuwe opstartgegevens tonen de componentstack terwijl het herstelvenster
+openstaat. De extra geheugenrondes zijn terecht niet uitgevoerd na deze afkeuring.
+
+De exacte CI-binary is vervolgens in een eigen runtimekopie lokaal gestart
+met de meegeleverde WebKit 2.50.4. De echte vensterproceshash is gecontroleerd.
+De gewone lokale heropenproef slaagt aanvankelijk. Een afzonderlijke gerichte
+proef wacht na de pagina-/undo-controle 32 seconden op de eigen periodieke
+herstelkopie en start daarna alleen het eigen proces opnieuw. Die proef faalt
+met hetzelfde herstelvenster, dezelfde viewersessiefout en dezelfde
+`U7e`-componentstack als CI. Er zijn geen gebruikersdocumenten of bestaande
+appvensters bij betrokken.
+
+Via het door deze exacte binary geleverde JavaScript-asset is `U7e` gekoppeld
+aan `StijlenBeheer`; zijn hook `k8e` is `useStijlenData`. Die observer roept
+`getDocument` ook aan als de bewerksessie ontbreekt. Het herstelvenster maakt
+de editor tijdelijk alleen-lezen. De aansluiting van deze observer en de
+andere statuslezingen moet worden gerepareerd en gericht hertest. Een legitiem
+herstelvenster blokkeert op zichzelf invoer; een renderfout erachter is wel een
+applicatiefout. Het venster wegklikken en vervolgens een groene proef melden
+zou daarvoor onvoldoende herstelbewijs zijn. De allocatorpanic blijft een
+afzonderlijk onopgelost onderzoekspunt.
