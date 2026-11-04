@@ -1,0 +1,87 @@
+{
+  "run": 41750119154,
+  "artifact": 13285919582,
+  "bronrevisie": "a3ef61185a24036f61de71071425292be13691ab",
+  "metadata": {
+    "versie": "2026.45.27",
+    "bronrevisie": "a3ef61185a24036f61de71071425292be13691ab",
+    "platform": "Linux x86_64",
+    "profiel": "org.openaec.office-studio.dev",
+    "appimage": "Open Office Studio Dev_2026.45.27_amd64.AppImage",
+    "sha256": "6203277646d39acfff5a9a48bc6dc73abdebc39748a3e4c0b71f6bc41874c07f",
+    "pakketcontroles": [
+      "AppImage type 2",
+      "SquashFS volledig uitgepakt",
+      "AppRun uitvoerbaar",
+      "ELF x64 en bibliotheken gevonden",
+      "snelkoppeling en pictogram aanwezig"
+    ],
+    "controles": [
+      "TypeScript via productiebouw",
+      "Vitest",
+      "Rust-desktoptests"
+    ],
+    "gui_acceptatie": "Niet volledig gecontroleerd; ontwikkelbuild met bekende Writer-problemen.",
+    "webkit_modulekaart": {
+      "geslaagd": true,
+      "omvang": "Twee minimale moduleworkers in de geïnstalleerde WebKitGTK; geen app- of prestatieacceptatie.",
+      "webkit": "2.50.4",
+      "gevallen": {
+        "oud": {
+          "evaluaties": 2,
+          "gelijk": false
+        },
+        "apart": {
+          "evaluaties": 1,
+          "gelijk": true
+        }
+      },
+      "kwetsbaar": true
+    },
+    "native_gui": {
+      "geslaagd": true,
+      "programma_sha256": "96fea6567bd4a2af80df445b70723e64741c90ffff83b9ba5e2b73a6f61229f7",
+      "startprogramma_sha256": "eb0b254ac0dae6543e6dd7cd02e1baf40a060de95b927313122d6b46323c00aa",
+      "profiel": "org.openaec.office-studio.dev",
+      "script_sha256": "89b905ee19e853d4f9574043fa605ecfceee61e358ba4ef4d6657a8acac6faa2",
+      "omvang": "Eigen DOCX-kopie, drie plakrondes, bewaren na ronde één en verder bewerken; onafhankelijke inhoudscontrole, verwerpen en nieuw document.",
+      "appimage_startfunctie": "De uitgepakte AppRun is gestart; launcher en werkelijke ELF zijn op hash gecontroleerd. FUSE-mount niet getoetst."
+    }
+  },
+  "zip_sha256": "b4c8ee02103380588fa18b302ff7e33148738ac30db64ec9f9720cac5d942b39",
+  "archief_sha256": "8267857877610d9229d29ef0861b71fbc4fb88bfecdbdf0924370b14fb38f53c",
+  "bestanden": {
+    "LEESMIJ.txt": {
+      "sha256": "822ee126090119ed6e4c68d9ecfb2bfa5302363818a07cf067e47dc4861b0303",
+      "bytes": 771,
+      "mode": "0o644"
+    },
+    "SHA256SUMS": {
+      "sha256": "aa546fdee6cfe478de4d2b760a4c5d6224e8fe82f97071999bca67831f982222",
+      "bytes": 115,
+      "mode": "0o644"
+    },
+    "bouw.json": {
+      "sha256": "a0a56d7e6fdeb005c7ce3b467d7fba74dce9bbc958efba6ee1ac698e605fe01c",
+      "bytes": 1753,
+      "mode": "0o644"
+    },
+    "start-dev.sh": {
+      "sha256": "fd790c9051b1ca0d529724e2a6b059fb5d9f376b0dde3f66587b394f7cd237e9",
+      "bytes": 134,
+      "mode": "0o755"
+    },
+    "Open Office Studio Dev_2026.45.27_amd64.AppImage": {
+      "sha256": "6203277646d39acfff5a9a48bc6dc73abdebc39748a3e4c0b71f6bc41874c07f",
+      "bytes": 152607224,
+      "mode": "0o755"
+    }
+  },
+  "controles": [
+    "Buitenste ZIP, tar en AppImage gecontroleerd",
+    "Binnenste checksumlijst",
+    "Binnenste en buitenste metadata gelijk",
+    "Startscript en uitvoerrechten; argumenten en omgeving worden doorgegeven"
+  ],
+  "scope": "Gedownloade bytes, metadata en uitvoerrechten gecontroleerd. CI-bouw, automatische tests en gerichte native GUI-pakketproef slagen; FUSE-mount en volledige stabiliteit niet bewezen. De aparte geheugenroute op dezelfde bron slaagt nu ook, maar bewijst geen herstel van eerdere incidentele Wasm-geheugentrappen."
+}

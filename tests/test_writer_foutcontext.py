@@ -100,6 +100,18 @@ class WriterFoutcontext(unittest.TestCase):
             module.bewaar(self.programma, [self.rapport], self.uitvoer, systeem=False)
         self.assertFalse(self.uitvoer.exists())
 
+    def test_bewaart_de_exacte_rendererproef_met_eigen_bron_en_gedeelde_basis(self):
+        script = REPO / 'scripts/test-writer-rendererfout-native.py'
+        self.gegevens['script_sha256'] = module.checksum(script)
+        self.schrijf()
+        (self.map / 'Rendererproef.docx').write_bytes(b'eigen rendererbron')
+        context = module.bewaar(self.programma, [self.rapport], self.uitvoer, systeem=False)
+        self.assertEqual(context['proefscript']['naam'], script.name)
+        with tarfile.open(self.uitvoer / 'writer-foutcontext.tar.gz') as tar:
+            self.assertEqual(tar.extractfile('writer-foutcontext/scripts/' + script.name).read(), script.read_bytes())
+            self.assertEqual(tar.extractfile('writer-foutcontext/proef/Rendererproef.docx').read(), b'eigen rendererbron')
+            self.assertIn('test-writer-lang-native.py', context['scripts'])
+
     def test_kiest_geen_willekeurige_begeleidende_appimage(self):
         pakketten = self.map / 'pakketten'
         pakketten.mkdir()

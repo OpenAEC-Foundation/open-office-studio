@@ -18,6 +18,7 @@ PROEFSCRIPTS = (
     'test-writer-lijsten-native.py',
     'test-writer-klembord-native.py',
     'test-writer-kleur-native.py',
+    'test-writer-rendererfout-native.py',
 )
 
 
@@ -79,7 +80,7 @@ def bewaar(programma, rapporten, uitvoer, appimage_map=None, systeem=True):
     for naam in ['Prestatieproef.docx', 'herstelkopie.docx', 'hersteld.docx',
                  'herstel-afwijkend.docx', 'herstel-afwijkend.json',
                  'Ontwerpnotitie.docx', 'tussenbewaring.docx', 'geplakt.docx',
-                 'Lijstenproef.docx', 'Klembordproef.docx', 'Markeerkleurproef.docx',
+                 'Lijstenproef.docx', 'Klembordproef.docx', 'Markeerkleurproef.docx', 'Rendererproef.docx',
                  'programma.log', 'afgekeurd.png']:
         bron = rapport.parent / naam
         if bron.is_file():
@@ -101,7 +102,7 @@ def bewaar(programma, rapporten, uitvoer, appimage_map=None, systeem=True):
     namen = ['gui/webkit_inspector.py', 'gui/requirements.txt']
     if context['proefscript']['beschikbaar']:
         namen.insert(0, context['proefscript']['naam'])
-        if context['proefscript']['naam'] in ['test-writer-rijk-plakken-native.py', 'test-writer-rust-plakken-volgorde-native.py', 'test-writer-lijsten-native.py']:
+        if context['proefscript']['naam'] in ['test-writer-rijk-plakken-native.py', 'test-writer-rust-plakken-volgorde-native.py', 'test-writer-lijsten-native.py', 'test-writer-rendererfout-native.py']:
             namen.append('test-writer-lang-native.py')
     for naam in namen:
         bron = repo / 'scripts' / naam

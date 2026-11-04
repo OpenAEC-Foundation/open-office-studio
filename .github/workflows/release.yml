@@ -200,6 +200,7 @@ jobs:
             "$OFFICE_GUI_PYTHON" scripts/test-writer-kleur-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-native-writer-kleur
             "$OFFICE_GUI_PYTHON" scripts/test-writer-klembord-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-native-writer-klembord
             "$OFFICE_GUI_PYTHON" scripts/test-writer-lijsten-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-native-writer-lijsten
+            "$OFFICE_GUI_PYTHON" scripts/test-writer-rendererfout-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-native-writer-renderer
             "$OFFICE_GUI_PYTHON" scripts/test-writer-lang-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-native-writer-lang
             "$OFFICE_GUI_PYTHON" scripts/test-writer-rijk-plakken-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --rondes 3 --bewaar-na-ronde 1 --maxduur 180 --vereis-rust-plakken --uitvoer .local/proef-native-writer-bewaren
             "$OFFICE_GUI_PYTHON" scripts/test-writer-rust-plakken-volgorde-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-native-writer-volgorde
@@ -323,6 +324,7 @@ jobs:
           --rapport .local/proef-native-writer-kleur/rapport.json
           --rapport .local/proef-native-writer-klembord/rapport.json
           --rapport .local/proef-native-writer-lijsten/rapport.json
+          --rapport .local/proef-native-writer-renderer/rapport.json
           --rapport .local/proef-native-writer-lang/rapport.json
           --rapport .local/proef-native-writer-bewaren/rapport.json
           --rapport .local/proef-native-writer-volgorde/rapport.json
@@ -339,6 +341,14 @@ jobs:
           include-hidden-files: true
           if-no-files-found: ignore
           retention-days: 30
+      - name: Native Writer-rendererbewijs bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-writer-renderer-${{ github.workflow }}-${{ matrix.label }}
+          path: .local/proef-native-writer-renderer/
+          include-hidden-files: true
+          if-no-files-found: warn
       - name: Native Writer-lijstbewijs bewaren
         if: always() && runner.os == 'Linux'
         uses: actions/upload-artifact@v4
