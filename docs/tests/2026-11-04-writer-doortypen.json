@@ -1,0 +1,199 @@
+{
+  "schema": 1,
+  "product": "2026.45.38",
+  "applicatie_commit": "ca2a42c7303e18e4861a2df862f2a4e943b8967d",
+  "programma_sha256": "6af66a21a9ec43db3c81a6b3c39cfa30971668007e185660e647055758f5b5e1",
+  "grenzen": [
+    "Geisoleerde Linux Xvfb/X11-softwarecontext; geen Windows-, macOS-, FPS- of volledige UI-acceptatie.",
+    "Bron en foutbewaking controleren alinea- en celtekst; geen nieuwe DOCX-bewaar- of Undo-proef.",
+    "Profielsamples zijn geen CPU-milliseconden. Inspectie en invoerbarriere zijn inbegrepen in de invoertijd.",
+    "Bij profilering wordt xdotool pas na de stopopdrachten afgewacht; dat tijdstip is geen zuivere verzendduur."
+  ],
+  "ronden": [
+    {
+      "naam": "profiel-tabellen-38",
+      "exitcode": 1,
+      "geslaagd": false,
+      "script_sha256": "97757f8efb0eae0f641cfbce525af953cdd1b6c621ac2c43d92653ff326dbe6c",
+      "identiteit_in_rapport": true,
+      "tekens": 14,
+      "fout": "RuntimeError('Error: Golven niet gereed')"
+    },
+    {
+      "naam": "profiel-tabellen-38-herproef",
+      "exitcode": 0,
+      "geslaagd": true,
+      "script_sha256": "f1225882fb67cb6ab9bca37eb99a5e2a8f5e0063a2bcb7e5ca72e82017a2818c",
+      "identiteit_in_rapport": true,
+      "tekens": 14,
+      "invoer_en_inspectie_ms": 2228,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      }
+    },
+    {
+      "naam": "profiel-doortypen-38",
+      "exitcode": 1,
+      "geslaagd": false,
+      "script_sha256": "9d0d05b6034804f1c50dc7af1c03695eae14c71b9d6adb893e41d4561674fcf3",
+      "identiteit_in_rapport": true,
+      "tekens": 351,
+      "fout": "ConnectionClosedError(None, Close(code=1009, reason=''), None)",
+      "invoer_en_inspectie_ms": 25110
+    },
+    {
+      "naam": "profiel-doortypen-38-begrensd",
+      "exitcode": 0,
+      "geslaagd": true,
+      "script_sha256": "ed151471be625132fabaeed44bb2ec62ddd5bb28a21966794989af85f4c35b14",
+      "identiteit_in_rapport": true,
+      "tekens": 351,
+      "invoer_en_inspectie_ms": 24553,
+      "profielvenster": {
+        "doel_ms": 1500,
+        "werkelijk_tot_stop_ms": 2506,
+        "grens": "Alleen het begin van de invoerreeks; geen CPU-profiel van de volledige reeks."
+      },
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      }
+    },
+    {
+      "naam": "doortypen-38-zonder-profiel",
+      "exitcode": 0,
+      "geslaagd": true,
+      "script_sha256": "ea696bb5e5a9f5c925de8a8f3f4a3112884f366835848b6ca799a67cb1019d7e",
+      "identiteit_in_rapport": true,
+      "tekens": 351,
+      "invoer_en_inspectie_ms": 25240,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      }
+    },
+    {
+      "naam": "doortypen-38-verzendcontrole",
+      "exitcode": 0,
+      "geslaagd": true,
+      "script_sha256": "e493abb8489f9cada0681216a55300d8eed42a5c70cb483277945d7946131607",
+      "identiteit_in_rapport": true,
+      "tekens": 351,
+      "invoer_en_inspectie_ms": 24243,
+      "toetsen_verzonden_ms": 3884,
+      "na_toetsen_verzenden_ms": 20359,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "toetsontvangst": {
+        "aantal": 351,
+        "eerste_ms": 19727,
+        "laatste_ms": 23357,
+        "tijdspan_ms": 3630
+      }
+    },
+    {
+      "naam": "profiel-kort-38-definitief",
+      "exitcode": 1,
+      "geslaagd": false,
+      "script_sha256": "e493abb8489f9cada0681216a55300d8eed42a5c70cb483277945d7946131607",
+      "identiteit_in_rapport": false,
+      "tekens": 14,
+      "fout": "RuntimeError(\"TypeError: null is not an object (evaluating 'e.getYrsSession')\")"
+    },
+    {
+      "naam": "profiel-kort-38-gereed",
+      "exitcode": 0,
+      "geslaagd": true,
+      "script_sha256": "4b6b9de5f9a658d370b6dd00fa7264d35652f87b396328c11af04b5e9ad033f9",
+      "identiteit_in_rapport": true,
+      "tekens": 14,
+      "invoer_en_inspectie_ms": 3078,
+      "toetsen_verzonden_ms": 2818,
+      "na_toetsen_verzenden_ms": 260,
+      "profielvenster": {
+        "doel_ms": 1500,
+        "werkelijk_tot_stop_ms": 2818,
+        "grens": "Alleen het begin van de invoerreeks; geen CPU-profiel van de volledige reeks."
+      },
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "toetsontvangst": {
+        "aantal": 14,
+        "eerste_ms": 20818,
+        "laatste_ms": 20991,
+        "tijdspan_ms": 173
+      }
+    }
+  ],
+  "bestanden": {
+    "profiel-tabellen-38/proefcode.py.gz": "ce2b6a8e129795828f2fd96766532be81669183c632bf3e6219a429f9a0f4eaa",
+    "profiel-tabellen-38/profiel.json.gz": "4a0e953b6748e49c36dbd02b5f6a80c2ae8580dc7b78abd3216bdbf83eed6d85",
+    "profiel-tabellen-38/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "profiel-tabellen-38/proef.log.gz": "3131bd50f6933af40d77e2f2fe6bae5d6512aa2146af288bdb9d43ab59cb1284",
+    "profiel-tabellen-38-herproef/proefcode.py.gz": "c2774b61fc4028192fb7c89b2bee7068a230ae8a13abe28fedc1e744f83f61e5",
+    "profiel-tabellen-38-herproef/profielen.json.gz": "e8bbc86b909e188966fbe1c475be54399bfafca5d518484a9d1f52590efbd90f",
+    "profiel-tabellen-38-herproef/profiel.json.gz": "3573ad60a75d775a7e8e63348db1d8efce82ab1df2f17fe8d1e134ab630e753e",
+    "profiel-tabellen-38-herproef/bron-index-CYdrJaYa.js.gz": "38655c0ff57d204202638952459c2522b3abbe3f86d101bbde4b03dea09568d3",
+    "profiel-tabellen-38-herproef/profiel.png": "75ed407980819dbe7a48fea08768117aa7f1a5a60a2525a18c9b304669417d27",
+    "profiel-tabellen-38-herproef/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "profiel-tabellen-38-herproef/bron-editors-DBewiMUP.js.gz": "14f40c62c54c0219c025c11713f33fa9946d63e2d767a4a7dccec5c6754fa8c1",
+    "profiel-tabellen-38-herproef/bron-core-BUhCcD2K.js.gz": "5f9f76f89e365ba69008850da78f6e89412c11b6d4e71a1f3fb22591d8d9de43",
+    "profiel-tabellen-38-herproef/proef.log.gz": "40d9464bf9e4a613f94c0b6216932c2ed94cdf9ebdc89905dbf38af8e49cf655",
+    "profiel-doortypen-38/proefcode.py.gz": "f0ffcbd41590b2fb098f3fd87874d5ce7bd81f5eb7d6f1477161e87cc94c2ea0",
+    "profiel-doortypen-38/profiel.json.gz": "ab559e83d385adae58b094e7f56c273bdc4a9a16eb7a636b11069f4e0d21aba2",
+    "profiel-doortypen-38/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "profiel-doortypen-38/proef.log.gz": "e037c5fc58295bd56decb5033f23504463168b7f16af1cd91a6da65dfde358b1",
+    "profiel-doortypen-38-begrensd/proefcode.py.gz": "0edbbc1808562ed8e702afc4832a0d17b3309163f77c65fce50ee4b35a493ebb",
+    "profiel-doortypen-38-begrensd/profielen.json.gz": "711cfc41b1ae1d997fab242a9c6f6205ecadca633a96b0a7bdee0725a8bd1935",
+    "profiel-doortypen-38-begrensd/profiel.json.gz": "9cc3c0cbffd3b293a5dc80f8fac23d9ad4ee17292db18748d7df948913ff4425",
+    "profiel-doortypen-38-begrensd/bron-index-CYdrJaYa.js.gz": "38655c0ff57d204202638952459c2522b3abbe3f86d101bbde4b03dea09568d3",
+    "profiel-doortypen-38-begrensd/profiel.png": "f16f4e8c3c4c9c5c5a32a20a56a2e4e61ab58a727a7f0745e92136f67284808a",
+    "profiel-doortypen-38-begrensd/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "profiel-doortypen-38-begrensd/bron-editors-DBewiMUP.js.gz": "14f40c62c54c0219c025c11713f33fa9946d63e2d767a4a7dccec5c6754fa8c1",
+    "profiel-doortypen-38-begrensd/bron-core-BUhCcD2K.js.gz": "5f9f76f89e365ba69008850da78f6e89412c11b6d4e71a1f3fb22591d8d9de43",
+    "profiel-doortypen-38-begrensd/bron-chunk-Q7OC7M5Q-DSCzIuXY.js.gz": "6ee79e3ff9673a2d76e9fa99b2176b0863105feaeedd2025102d89e52ef78b12",
+    "profiel-doortypen-38-begrensd/proef.log.gz": "50d067273b86526dc341e72785164333d066f98846109406fccd1fb5644ad147",
+    "doortypen-38-zonder-profiel/proefcode.py.gz": "178a7c8fc2a951ba4c4e508a1fc9ed66a9823395a5195795a3619d239029b7e5",
+    "doortypen-38-zonder-profiel/profiel.json.gz": "c690630a19d366bfeec0f51d774b358c1612df0a11bd48dba05f603c196960dd",
+    "doortypen-38-zonder-profiel/profiel.png": "8eef6e5b35fd6388f01d73020e6e9a8db875943bee08d85d79ee98ed10bf3554",
+    "doortypen-38-zonder-profiel/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "doortypen-38-zonder-profiel/proef.log.gz": "ac1d5f6ca69031816f3766ed2a42d746d37dc4b379a42473af89b58f5245a9de",
+    "doortypen-38-verzendcontrole/proefcode.py.gz": "6e9aa8de75c2468a8cc9d7f8e89115a7a324fcd08d492b904b213ffec48cdd02",
+    "doortypen-38-verzendcontrole/profiel.json.gz": "48594f1ee56d94348ee3ec3f0bec9dbb09f22c1d7b0db16debae1422dd181f1f",
+    "doortypen-38-verzendcontrole/profiel.png": "ad38c122be3f04e92db28dce5d8c5bdd22c42a628121b37634d2de7de4d0a6dd",
+    "doortypen-38-verzendcontrole/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "doortypen-38-verzendcontrole/proef.log.gz": "034743af056e37c61149196a68eae490a41a8f12e97112a6787253c858c65554",
+    "profiel-kort-38-definitief/proefcode.py.gz": "6e9aa8de75c2468a8cc9d7f8e89115a7a324fcd08d492b904b213ffec48cdd02",
+    "profiel-kort-38-definitief/profiel.json.gz": "a343cf02a1aa45fbaa7d29afea0e84fccfe2581c8dd65c4f6ce53349a818ddce",
+    "profiel-kort-38-definitief/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "profiel-kort-38-definitief/proef.log.gz": "0e517465e2ade6ddc5e8e60e21328d269cb47600905acfcfc0e91f7eab719a7f",
+    "profiel-kort-38-gereed/proefcode.py.gz": "89911a0db82763eabbc45a2fc44539e6f5eced51026bd7c2dbf014e1cee5b1d3",
+    "profiel-kort-38-gereed/profielen.json.gz": "61c5a6d65f6eff9055f5f17b5fef3815ac687a4cbef20946e82c8e2714462efe",
+    "profiel-kort-38-gereed/profiel.json.gz": "0831a52d1643f8887f237a776550b109d2d5dcbd56b722c71bbe543526023982",
+    "profiel-kort-38-gereed/bron-index-CYdrJaYa.js.gz": "38655c0ff57d204202638952459c2522b3abbe3f86d101bbde4b03dea09568d3",
+    "profiel-kort-38-gereed/profiel.png": "9bca7740f4db3a93c12efb0808c56acae3f34382d95d85850e8b0dd9279491ef",
+    "profiel-kort-38-gereed/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "profiel-kort-38-gereed/bron-editors-DBewiMUP.js.gz": "14f40c62c54c0219c025c11713f33fa9946d63e2d767a4a7dccec5c6754fa8c1",
+    "profiel-kort-38-gereed/bron-core-BUhCcD2K.js.gz": "5f9f76f89e365ba69008850da78f6e89412c11b6d4e71a1f3fb22591d8d9de43",
+    "profiel-kort-38-gereed/bron-chunk-Q7OC7M5Q-DSCzIuXY.js.gz": "6ee79e3ff9673a2d76e9fa99b2176b0863105feaeedd2025102d89e52ef78b12",
+    "profiel-kort-38-gereed/proef.log.gz": "ed9053fa7fa0e50ff4f00bf2c5654a627f1294d93cebe0d6ab34e465f2544da2",
+    "bron.docx": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+    "python-profielcontrole-definitief.log.gz": "4caa4bfcc91cd426b40f2a85c522291ecaa169989f723e5c4ebd3cb6ad597b58",
+    "profiel-argumentcontrole.json.gz": "89195e85ef1131ef420e417693ef429ea3fca8f3ab59951f2547feffdd9ffe68",
+    "open-issues-profiel.json.gz": "4547b84ba4c177778207b1b639a5a84620502529f43fb466c5fe738bc5f7296d"
+  },
+  "bron_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+  "open_issues": 118,
+  "migratiegebieden": 10,
+  "open_acceptatievlaggen": 30
+}
