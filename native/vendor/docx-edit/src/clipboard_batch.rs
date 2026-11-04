@@ -2,6 +2,7 @@
 //! Bereid een gestructureerde plakactie op een afzonderlijke replica voor.
 //! De aanroeper neemt pas het volledige resultaat over; fouten wijzigen nooit de bronreplica.
 use serde::Deserialize;
+use sha2::{Digest, Sha256};
 use serde_json::Value;
 use yrs::{Any, StateVector, updates::decoder::Decode};
 use crate::{EditingDoc, EditCtx, FormatPolicy, Loc, LocRange, OpError, OpResult, Position, StoryRange, story_ref};
@@ -27,16 +28,38 @@ pub struct ConfirmedClipboardBatchResult {
     pub snapshot: Vec<u8>,
     pub vector: Vec<u8>,
     pub batch: ClipboardBatchResult,
+    pub replica: PreparedClipboardReplica,
+    pub reused: bool,
+}
+/// OpenAEC: een afzonderlijk voorstel, nooit de bevestigde bron. Alleen exact
+/// dezelfde bevestigde basis én exact de teruggekomen voorstelbytes maken deze
+/// replica bruikbaar voor een volgende voorbereiding. Een vector alleen volstaat niet.
+pub struct PreparedClipboardReplica {
+    doc: EditingDoc,
+    client_id: u64,
+    base_digest: [u8; 32],
+    proposed_update: Vec<u8>,
 }
 pub fn prepare_confirmed_clipboard_fragment(base: Option<&[u8]>, update: &[u8], client_id: u64,
+    expected_vector: &[u8], range: &LocRange, fragment: &Value, ctx: &EditCtx, max_source_bytes: usize) -> OpResult<ConfirmedClipboardBatchResult> {
+    prepare_confirmed_clipboard_fragment_cached(None, base, update, client_id, expected_vector, range, fragment, ctx, max_source_bytes)
+}
+#[allow(clippy::too_many_arguments)]
+pub fn prepare_confirmed_clipboard_fragment_cached(cached: Option<PreparedClipboardReplica>, base: Option<&[u8]>, update: &[u8], client_id: u64,
     expected_vector: &[u8], range: &LocRange, fragment: &Value, ctx: &EditCtx, max_source_bytes: usize) -> OpResult<ConfirmedClipboardBatchResult> {
     let expected = StateVector::decode_v1(expected_vector).map_err(|e|ongeldig(e.to_string()))?;
     let fragment: Fragment = serde_json::from_value(fragment.clone()).map_err(|e|ongeldig(e.to_string()))?;
     if range.start.story != range.end.story { return Err(ongeldig("Bereik loopt over verschillende verhalen")); }
-    let doc = EditingDoc::new(client_id);
-    doc.keep_deleted();
-    if let Some(base) = base { doc.apply_verbatim_v1(base).map_err(OpError::from)?; }
-    doc.apply_verbatim_v1(update).map_err(OpError::from)?;
+    let cached = cached.filter(|c| c.client_id == client_id && c.proposed_update == update
+        && base.is_some_and(|b| <[u8;32]>::from(Sha256::digest(b)) == c.base_digest));
+    let reused = cached.is_some();
+    let doc = if let Some(c) = cached { c.doc } else {
+        let doc = EditingDoc::new(client_id);
+        doc.keep_deleted();
+        if let Some(base) = base { doc.apply_verbatim_v1(base).map_err(OpError::from)?; }
+        doc.apply_verbatim_v1(update).map_err(OpError::from)?;
+        doc
+    };
     if doc.holds_pending_update() { return Err(ongeldig("De Writer-bron bevat nog onopgeloste afhankelijkheden")); }
     let vector = doc.encode_state_vector_v1();
     if StateVector::decode_v1(&vector).map_err(|e|ongeldig(e.to_string()))? != expected {
@@ -45,7 +68,8 @@ pub fn prepare_confirmed_clipboard_fragment(base: Option<&[u8]>, update: &[u8], 
     let snapshot = doc.encode_state_as_update_v1();
     if snapshot.len() > max_source_bytes { return Err(ongeldig("De samengestelde Writer-bron is te groot")); }
     let batch = prepare_clipboard_in_doc(&doc, range, fragment, ctx)?;
-    Ok(ConfirmedClipboardBatchResult { snapshot, vector, batch })
+    let replica = PreparedClipboardReplica { doc, client_id, base_digest: Sha256::digest(&snapshot).into(), proposed_update: batch.update.clone() };
+    Ok(ConfirmedClipboardBatchResult { snapshot, vector, batch, replica, reused })
 }
 fn ongeldig(tekst: impl Into<String>) -> OpError { OpError::InvalidFormatValue(tekst.into()) }
 fn afbeelding(value: &Value) -> OpResult<Vec<(String,Any)>> {

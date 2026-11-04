@@ -1,4 +1,4 @@
-//! Bewaar alleen bevestigde brongegevens; een voorbereid voorstel blijft erbuiten.
+//! Bevestigde bronbytes en een strikt daarvan gescheiden, nog onbevestigd voorstel.
 use crate::{Antwoord, MAX_SNAPSHOT_BYTES, snapshot_sha256};
 use base64::{Engine as _, engine::general_purpose::STANDARD};
 use serde::{Deserialize, Serialize};
@@ -30,11 +30,15 @@ pub struct IncrementeelAntwoord {
     pub bronvector: String,
 }
 
-/// Alleen bytes zijn overdraagbaar tussen desktopwerkers. Een EditingDoc bevat
-/// eigen threadgebonden observers en leeft uitsluitend binnen `bereid_voor`.
+/// Deze spiegel leeft uitsluitend op zijn eigen documentwerker. De nog
+/// onbevestigde replica vervangt nooit de bewaarde bevestigde bronbytes.
 #[derive(Default)]
 pub struct BronSpiegel {
     bron: Option<BevestigdeBron>,
+    voorstel: Option<docx_edit::PreparedClipboardReplica>,
+    voorstel_bytes: usize,
+    #[cfg(test)]
+    hergebruikt: bool,
 }
 
 struct BevestigdeBron {
@@ -46,7 +50,14 @@ struct BevestigdeBron {
 
 impl BronSpiegel {
     pub fn bytes(&self) -> usize {
-        self.bron.as_ref().map_or(0, |b| b.snapshot.len())
+        self.bron
+            .as_ref()
+            .map_or(0, |b| b.snapshot.len())
+            .saturating_add(if self.voorstel.is_some() {
+                self.voorstel_bytes
+            } else {
+                0
+            })
     }
 
     /// None vraagt expliciet om een volledige bron. Ongeldige of onvolledige
@@ -103,7 +114,8 @@ impl BronSpiegel {
         };
         let begin = std::time::Instant::now();
         let loc = docx_edit::Loc::new(&p.position.story, &p.position.para_id, p.position.offset);
-        let r = docx_edit::prepare_confirmed_clipboard_fragment(
+        let r = docx_edit::prepare_confirmed_clipboard_fragment_cached(
+            self.voorstel.take(),
             oud,
             &bytes,
             p.client_id,
@@ -117,6 +129,12 @@ impl BronSpiegel {
             MAX_SNAPSHOT_BYTES,
         )
         .map_err(|e| e.to_string())?;
+        #[cfg(test)]
+        {
+            self.hergebruikt = r.reused;
+        }
+        self.voorstel_bytes = r.batch.update.len();
+        self.voorstel = Some(r.replica);
         let snapshot = r.snapshot;
         let basis = snapshot_sha256(&snapshot);
         let bronvector = p.source_vector;
@@ -189,6 +207,118 @@ mod tests {
 
     fn tekst(doc: &EditingDoc) -> String {
         doc.paragraphs("body").unwrap()[0].text.clone()
+    }
+
+    fn vervolg(
+        doc: &EditingDoc,
+        vorig: &IncrementeelAntwoord,
+        text: &str,
+    ) -> IncrementeleTekstAanvraag {
+        let bytes = doc
+            .encode_diff_v1(&STANDARD.decode(&vorig.bronvector).unwrap())
+            .unwrap();
+        let mut a = aanvraag(bytes, Some(vorig.basis.clone()), text);
+        a.source_vector = STANDARD.encode(doc.encode_state_vector_v1());
+        a.position = vorig.resultaat.caret.clone();
+        a
+    }
+
+    #[test]
+    fn exact_bevestigde_voorstellen_zijn_gelijk_aan_steeds_volledig_reconstrueren() {
+        let doc = bron();
+        let mut spiegel = BronSpiegel::default();
+        let mut vorig = spiegel
+            .bereid_voor(aanvraag(doc.encode_state_as_update_v1(), None, "X"))
+            .unwrap()
+            .unwrap();
+        assert!(!spiegel.hergebruikt);
+        for text in [" een", " volgende", " 😀", " tekst", "!"] {
+            doc.apply_update_v1(&STANDARD.decode(&vorig.resultaat.delta).unwrap())
+                .unwrap();
+            let a = vervolg(&doc, &vorig, text);
+            assert_eq!(a.snapshot, vorig.resultaat.delta);
+            let mut volledig = a.clone();
+            volledig.basis = None;
+            let bytes = doc.encode_state_as_update_v1();
+            volledig.snapshot_sha256 = snapshot_sha256(&bytes);
+            volledig.snapshot = STANDARD.encode(bytes.clone());
+            let referentie = BronSpiegel::default()
+                .bereid_voor(volledig)
+                .unwrap()
+                .unwrap();
+            let volgende = spiegel.bereid_voor(a).unwrap().unwrap();
+            assert!(spiegel.hergebruikt);
+            assert_eq!(volgende.resultaat.delta, referentie.resultaat.delta);
+            assert_eq!(
+                serde_json::to_value(&volgende.resultaat.caret).unwrap(),
+                serde_json::to_value(&referentie.resultaat.caret).unwrap()
+            );
+            assert_eq!(spiegel.bron.as_ref().unwrap().snapshot, bytes);
+            vorig = volgende;
+        }
+    }
+
+    #[test]
+    fn dezelfde_klokken_met_andere_tekst_bevestigen_geen_voorstel() {
+        let doc = bron();
+        let mut spiegel = BronSpiegel::default();
+        let eerste = spiegel
+            .bereid_voor(aanvraag(doc.encode_state_as_update_v1(), None, "X"))
+            .unwrap()
+            .unwrap();
+        let voorstel = EditingDoc::new(91);
+        voorstel
+            .apply_update_v1(&doc.encode_state_as_update_v1())
+            .unwrap();
+        voorstel
+            .apply_update_v1(&STANDARD.decode(&eerste.resultaat.delta).unwrap())
+            .unwrap();
+        let index = doc
+            .locate(&docx_edit::Loc::new("body", "p0", 7))
+            .unwrap()
+            .index;
+        doc.insert_text(
+            &EditCtx::local("", ""),
+            Position::new("body", index),
+            "Y",
+            FormatPolicy::Inherit,
+        )
+        .unwrap();
+        assert_eq!(
+            doc.encode_state_vector_v1(),
+            voorstel.encode_state_vector_v1()
+        );
+        let mut a = vervolg(&doc, &eerste, "Z");
+        assert_ne!(a.snapshot, eerste.resultaat.delta);
+        a.position.offset = 8;
+        let tweede = spiegel.bereid_voor(a).unwrap().unwrap();
+        assert!(!spiegel.hergebruikt);
+        doc.apply_update_v1(&STANDARD.decode(tweede.resultaat.delta).unwrap())
+            .unwrap();
+        assert_eq!(tekst(&doc), "Voor 😀YZ na");
+    }
+
+    #[test]
+    fn een_verkeerde_vector_promoveert_ook_een_exact_voorstel_niet() {
+        let doc = bron();
+        let mut spiegel = BronSpiegel::default();
+        let eerste = spiegel
+            .bereid_voor(aanvraag(doc.encode_state_as_update_v1(), None, "X"))
+            .unwrap()
+            .unwrap();
+        doc.apply_update_v1(&STANDARD.decode(&eerste.resultaat.delta).unwrap())
+            .unwrap();
+        let a = vervolg(&doc, &eerste, "Y");
+        let bewaard = spiegel.bron.as_ref().unwrap().snapshot.clone();
+        let mut fout = a.clone();
+        fout.source_vector = STANDARD.encode([0]);
+        assert!(spiegel.bereid_voor(fout).is_err());
+        assert_eq!(spiegel.bron.as_ref().unwrap().snapshot, bewaard);
+        let tweede = spiegel.bereid_voor(a).unwrap().unwrap();
+        assert!(!spiegel.hergebruikt);
+        doc.apply_update_v1(&STANDARD.decode(tweede.resultaat.delta).unwrap())
+            .unwrap();
+        assert_eq!(tekst(&doc), "Voor 😀XY na");
     }
 
     #[test]
