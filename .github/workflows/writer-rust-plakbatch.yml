@@ -11,6 +11,9 @@ on:
       - "native/Cargo.toml"
       - "native/Cargo.lock"
       - "src/tekst/bewerken/rustPlakken*"
+      - "src/tekst/bewerken/rustTekst*"
+      - "src/tekst/bewerken/tekstInvoerRoute.test.ts"
+      - "scripts/test-writer-rust-tekst-protocol.mjs"
       - "src/tekst/bewerken/plak*"
       - "src/tekst/bewerken/selectieLezen.test.ts"
       - "src/tekst/bewerken/TekstBewerken.tsx"
@@ -95,11 +98,13 @@ jobs:
           shared-key: writer-plak-desktop
       - run: pnpm install --frozen-lockfile
       - name: Levensduur, bronversie en selectievolgorde controleren
-        run: pnpm exec vitest run src/tekst/bewerken/rustPlakken.test.ts src/tekst/bewerken/plakopmaak.test.ts src/tekst/bewerken/selectieLezen.test.ts
+        run: pnpm exec vitest run src/tekst/bewerken/rustPlakken.test.ts src/tekst/bewerken/rustTekst.test.ts src/tekst/bewerken/tekstInvoerRoute.test.ts src/tekst/bewerken/plakopmaak.test.ts src/tekst/bewerken/selectieLezen.test.ts
       - name: Echte desktopcodec en leesprimitieven testen
         run: cargo test --release --locked --manifest-path native/Cargo.toml -p office-writer-plakken
       - name: Protocolprogramma bouwen
-        run: cargo build --release --locked --manifest-path native/Cargo.toml -p office-writer-plakken --example plak_protocol
+        run: cargo build --release --locked --manifest-path native/Cargo.toml -p office-writer-plakken --example plak_protocol --example tekst_protocol
+      - name: Gewone tekst met de onafhankelijke invoegroute vergelijken
+        run: node scripts/test-writer-rust-tekst-protocol.mjs
       - name: Dezelfde inhoudsproeven tegen de echte desktopcodec uitvoeren
         run: |
           node native/onderzoek/writer-plakbatch/controleer-randgevallen.mjs
@@ -115,6 +120,8 @@ jobs:
             native/onderzoek/writer-plakbatch/.local/afwijzingen/
             native/onderzoek/writer-plakbatch/.local/grote-proef/
             native/target/release/examples/plak_protocol
+            native/target/release/examples/tekst_protocol
+            .local/proef-writer-rust-tekst-protocol/
             native/vendor/docx-edit/LICENSE-UPSTREAM
             native/vendor/docx-edit/OPENAEC-WIJZIGINGEN.md
             native/vendor/yrs/LICENSE-UPSTREAM

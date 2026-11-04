@@ -176,7 +176,7 @@ jobs:
       - name: Bewerken, bewaren en heropenen van 500 pagina’s
         if: runner.os == 'Linux'
         run: |
-          "$OFFICE_GUI_PYTHON" scripts/test-writer-lang-native.py --programma src-tauri/target/release/open-office-studio --versie $(node -p "require('./package.json').version") --uitvoer .local/proef-native-writer-lang
+          "$OFFICE_GUI_PYTHON" scripts/test-writer-lang-native.py --programma src-tauri/target/release/open-office-studio --versie $(node -p "require('./package.json').version") --uitvoer .local/proef-native-writer-lang --verwacht-rust-tekst
       - name: Revisiekaarten en gewone opmerkingen in de productie-UI
         if: runner.os == 'Linux'
         run: node scripts/test-writer-revisies-gui.mjs
@@ -184,16 +184,19 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           "$OFFICE_GUI_PYTHON" scripts/test-writer-rijk-plakken-native.py --programma src-tauri/target/release/open-office-studio --versie $(node -p "require('./package.json').version") --rondes 3 --bewaar-na-ronde 1 --maxduur 180 --vereis-rust-plakken --uitvoer .local/proef-native-writer-bewaren
-      - name: Snelle invoer, bewaren en verwerpen tijdens native plakken
+      - name: Invoervolgorde, bewaren en verwerpen tijdens native Writer-antwoorden
         if: runner.os == 'Linux'
         run: |
           "$OFFICE_GUI_PYTHON" scripts/test-writer-rust-plakken-volgorde-native.py --programma src-tauri/target/release/open-office-studio --versie $(node -p "require('./package.json').version") --uitvoer .local/proef-native-writer-volgorde
+          "$OFFICE_GUI_PYTHON" scripts/test-writer-rust-tekst-native.py --programma src-tauri/target/release/open-office-studio --versie $(node -p "require('./package.json').version") --uitvoer .local/proef-native-writer-tekst
       - name: Native Writer-volgordebewijs bewaren
         if: always() && runner.os == 'Linux'
         uses: actions/upload-artifact@v4
         with:
           name: native-writer-volgorde-${{ github.workflow }}-${{ matrix.os }}
-          path: .local/proef-native-writer-volgorde/
+          path: |
+            .local/proef-native-writer-volgorde/
+            .local/proef-native-writer-tekst/
           include-hidden-files: true
           if-no-files-found: warn
       - name: Writer-bewaarbewijs bewaren
@@ -232,6 +235,7 @@ jobs:
           --rapport .local/proef-native-writer-lang/rapport.json
           --rapport .local/proef-native-writer-bewaren/rapport.json
           --rapport .local/proef-native-writer-volgorde/rapport.json
+          --rapport .local/proef-native-writer-tekst/rapport.json
           --uitvoer .local/writer-foutcontext
           --appimage-map src-tauri/target/release/bundle/appimage
       - name: Writer-foutcontext uploaden

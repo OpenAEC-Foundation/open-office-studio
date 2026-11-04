@@ -73,7 +73,7 @@ class WriterFoutcontext(unittest.TestCase):
         groen = self.map / 'lang/rapport.json'
         groen.parent.mkdir()
         groen.write_text(json.dumps({**self.gegevens, 'geslaagd': True}))
-        for naam in ['test-writer-rijk-plakken-native.py', 'test-writer-rust-plakken-volgorde-native.py']:
+        for naam in ['test-writer-rijk-plakken-native.py', 'test-writer-rust-plakken-volgorde-native.py', 'test-writer-rust-tekst-native.py']:
             with self.subTest(proefscript=naam):
                 script = REPO / 'scripts' / naam
                 self.uitvoer = self.map / naam

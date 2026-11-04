@@ -42,6 +42,7 @@ def main():
     p.add_argument('--programma', type=Path, required=True)
     p.add_argument('--uitvoer', type=Path, required=True)
     p.add_argument('--versie', required=True)
+    p.add_argument('--verwacht-rust-tekst', action='store_true', help='Vereis dat de gewone toetsreeks werkelijk via de native tekstcodec loopt.')
     p.add_argument('--historische-registerwissels', action='store_true', help='Alleen voor vergelijking met een oude binary: registreer de canvaswissels zonder deze specifieke nieuwe acceptatie-eis.')
     p.add_argument('--herstelstart', action='store_true', help='Wacht op een echte eigen herstelkopie en toets Later, verder bewerken en daarna Herstellen in een nieuw tabblad.')
     p.add_argument('--geheugenrondes', type=int, default=0, help='Extra selectie-/Backspace-/undo-/redo-rondes vóór de gewone bewaarproef (0–100).')
@@ -73,6 +74,8 @@ def main():
         http, inspectie = poorten()
         omgeving.update(GDK_BACKEND='x11', LC_ALL='C.UTF-8', WEBKIT_DISABLE_DMABUF_RENDERER='1', WEBKIT_INSPECTOR_HTTP_SERVER=f'127.0.0.1:{http}', WEBKIT_INSPECTOR_SERVER=f'127.0.0.1:{inspectie}', OFFICE_PROEF_HTTP=str(http))
         extra = ['--historische-registerwissels'] if a.historische_registerwissels else []
+        if a.verwacht_rust_tekst:
+            extra.append('--verwacht-rust-tekst')
         extra += ['--geheugenrondes', str(a.geheugenrondes)]
         if a.herstelstart:
             extra.append('--herstelstart')
@@ -266,6 +269,28 @@ async def proef(a):
               true
             """)
             vanaf = await p.ev('_toetsenProef.length')
+            await p.ev("""
+              window._tekstTransport = {aanvragen: [], antwoorden: 0, voorbereiding_ms: [], antwoord_ms: []};
+              _tekstTransport.invoke_wijzigbaar = Object.getOwnPropertyDescriptor(window.__TAURI_INTERNALS__, 'invoke')?.writable ?? null;
+              window._tekstFetchOud = window.fetch;
+              window._tekstDoel = window.__TAURI_INTERNALS__.convertFileSrc('writer_tekst_voorbereiden', 'ipc');
+              window.fetch = async function(url, gegevens, ...rest) {
+                if (String(url) !== _tekstDoel) return _tekstFetchOud.call(this, url, gegevens, ...rest);
+                const a = JSON.parse(gegevens.body).aanvraag;
+                _tekstTransport.aanvragen.push(a.text);
+                const begin = performance.now();
+                const response = await _tekstFetchOud.call(this, url, gegevens, ...rest), json = response.json.bind(response);
+                response.json = async () => {
+                  const antwoord = await json();
+                  _tekstTransport.antwoorden++;
+                  _tekstTransport.voorbereiding_ms.push(antwoord.preparationMs);
+                  _tekstTransport.antwoord_ms.push(performance.now()-begin);
+                  return antwoord;
+                };
+                return response;
+              };
+              true
+            """)
             begin = time.monotonic()
             subprocess.run(['xdotool', 'type', '--clearmodifiers', '--delay', '20', ' Een proefzin.'], check=True)
             # Wacht op de werkelijk verwerkte laatste toets vóór het legen van
@@ -274,6 +299,10 @@ async def proef(a):
             laatste = await p.run("let einde=performance.now()+90000;while(!_toetsenProef.slice("+str(vanaf)+").some(e=>e.key==='.')){if(performance.now()>einde)throw Error('Laatste native invoertoets niet ontvangen');await new Promise(r=>setTimeout(r,50))}await proefApi().flushPendingInput();while(!document.querySelector('.spelling-golf')){if(performance.now()>einde)throw Error('Golflijnen niet gereed');await new Promise(r=>setTimeout(r,50))}return proefApi().getEditorRef().getYrsSession().paragraphs('body').at(-1).text;", t=100)
             assert laatste == origineel[-1]+' Een proefzin.', 'Laatste invoer na keyup en flush niet exact'
             rapport['invoer_tot_bron_en_golven_ms'] = round((time.monotonic()-begin)*1000)
+            rapport['rust_teksttransport'] = await p.ev("(()=>{window.fetch=_tekstFetchOud;return _tekstTransport})()")
+            if a.verwacht_rust_tekst:
+                assert ''.join(rapport['rust_teksttransport']['aanvragen']) == ' Een proefzin.', 'Gewone toetsreeks niet geheel via native Rust'
+                assert rapport['rust_teksttransport']['antwoorden'] == len(rapport['rust_teksttransport']['aanvragen']), 'Native tekstantwoord ontbreekt'
             rapport['paginavergelijkingen_tijdens_invoer'] = await p.ev('(()=>{Node.prototype.compareDocumentPosition=_canvasVergelijkOrig;return _canvasVergelijk})()')
             rapport['documentuitlezingen_tijdens_invoer'] = await p.ev("(()=>{let gevolgd=_docSeen.has(proefApi());Object.defineProperty(_docRef,'current',{..._docDescriptor,value:_docValue});for(let[a,oud]of _docOrig)a.getDocument=oud;return{..._docProef,actieve_api_gevolgd:gevolgd,omvang:'GetDocument-aanroepen tijdens native invoer tot bron-/golflijngereedheid. De stabiele React-ref volgt vervanging van API-objecten; geen CPU-profiler.'}})()")
             assert rapport['documentuitlezingen_tijdens_invoer']['actieve_api_gevolgd'], 'Actieve API buiten de invoermeting gevallen'

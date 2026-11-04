@@ -239,6 +239,7 @@ fn main() {
         })
         .invoke_handler(tauri::generate_handler![
             writer_plakken::writer_plakken_voorbereiden,
+            writer_plakken::writer_tekst_voorbereiden,
             bewaar_kopie,
             lettertypen::systeemlettertypen,
             lettertypen::systeemlettertype,

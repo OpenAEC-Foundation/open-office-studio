@@ -1,0 +1,1237 @@
+{
+  "versie": "2026.45.29",
+  "native_versie": "2026.45.0-alpha.51",
+  "programma_sha256": "beefebc5b520e6ff5e8f9178494194c7210de9df37b7890bba924c659447cc2d",
+  "baseline_sha256": "956b6573dd9cde60455b0da05776fe82af858c750f31aaa2b49f07e137380a04",
+  "open_issues": 118,
+  "migratie_gebieden_open": 10,
+  "acceptatievlaggen_open": 30,
+  "scope": "Gemeenschappelijke Rust-tekstcodec en bestaande Tauri/React-interface; geen volledige Rust-interface, platform- of snelheidsacceptatie.",
+  "protocol": {
+    "omvang": "Echte Rust-tekstcodec versus onafhankelijke SDK insertText; geen GUI- of snelheidsacceptatie.",
+    "codec_sha256": "291f1c168df576defd1f9c6265a0a0a7a92d518043fd669c7ef269b2a1bb83f6",
+    "gevallen": [
+      {
+        "naam": "begin",
+        "geslaagd": true,
+        "alle_verhalen_opmaak_identiteiten": true,
+        "cursor": true,
+        "undo_redo": true,
+        "docx_alle_onderdelen_exact": true,
+        "heropenen": true,
+        "voorbereiding_ms": 1
+      },
+      {
+        "naam": "midden",
+        "geslaagd": true,
+        "alle_verhalen_opmaak_identiteiten": true,
+        "cursor": true,
+        "undo_redo": true,
+        "docx_alle_onderdelen_exact": true,
+        "heropenen": true,
+        "voorbereiding_ms": 1
+      },
+      {
+        "naam": "einde",
+        "geslaagd": true,
+        "alle_verhalen_opmaak_identiteiten": true,
+        "cursor": true,
+        "undo_redo": true,
+        "docx_alle_onderdelen_exact": true,
+        "heropenen": true,
+        "voorbereiding_ms": 1
+      },
+      {
+        "naam": "opmaakgrens",
+        "geslaagd": true,
+        "alle_verhalen_opmaak_identiteiten": true,
+        "cursor": true,
+        "undo_redo": true,
+        "docx_alle_onderdelen_exact": true,
+        "heropenen": true,
+        "voorbereiding_ms": 1
+      },
+      {
+        "naam": "spaties",
+        "geslaagd": true,
+        "alle_verhalen_opmaak_identiteiten": true,
+        "cursor": true,
+        "undo_redo": true,
+        "docx_alle_onderdelen_exact": true,
+        "heropenen": true,
+        "voorbereiding_ms": 0
+      },
+      {
+        "naam": "unicode-voor",
+        "geslaagd": true,
+        "alle_verhalen_opmaak_identiteiten": true,
+        "cursor": true,
+        "undo_redo": true,
+        "docx_alle_onderdelen_exact": true,
+        "heropenen": true,
+        "voorbereiding_ms": 0
+      },
+      {
+        "naam": "unicode-na",
+        "geslaagd": true,
+        "alle_verhalen_opmaak_identiteiten": true,
+        "cursor": true,
+        "undo_redo": true,
+        "docx_alle_onderdelen_exact": true,
+        "heropenen": true,
+        "voorbereiding_ms": 0
+      },
+      {
+        "naam": "lege-alinea",
+        "geslaagd": true,
+        "alle_verhalen_opmaak_identiteiten": true,
+        "cursor": true,
+        "undo_redo": true,
+        "docx_alle_onderdelen_exact": true,
+        "heropenen": true,
+        "voorbereiding_ms": 0
+      },
+      {
+        "naam": "celtekst",
+        "geslaagd": true,
+        "alle_verhalen_opmaak_identiteiten": true,
+        "cursor": true,
+        "undo_redo": true,
+        "docx_alle_onderdelen_exact": true,
+        "heropenen": true,
+        "voorbereiding_ms": 1
+      },
+      {
+        "naam": "celbegin",
+        "geslaagd": true,
+        "alle_verhalen_opmaak_identiteiten": true,
+        "cursor": true,
+        "undo_redo": true,
+        "docx_alle_onderdelen_exact": true,
+        "heropenen": true,
+        "voorbereiding_ms": 1
+      },
+      {
+        "naam": "tabel-voor-tekst",
+        "geslaagd": true,
+        "alle_verhalen_opmaak_identiteiten": true,
+        "cursor": true,
+        "undo_redo": true,
+        "docx_alle_onderdelen_exact": true,
+        "heropenen": true,
+        "voorbereiding_ms": 1
+      },
+      {
+        "naam": "bladwijzer-begin",
+        "geslaagd": true,
+        "alle_verhalen_opmaak_identiteiten": true,
+        "cursor": true,
+        "undo_redo": true,
+        "docx_alle_onderdelen_exact": true,
+        "heropenen": true,
+        "voorbereiding_ms": 1
+      },
+      {
+        "naam": "bladwijzer-midden",
+        "geslaagd": true,
+        "alle_verhalen_opmaak_identiteiten": true,
+        "cursor": true,
+        "undo_redo": true,
+        "docx_alle_onderdelen_exact": true,
+        "heropenen": true,
+        "voorbereiding_ms": 0
+      },
+      {
+        "naam": "revisie-tekst",
+        "geslaagd": true,
+        "alle_verhalen_opmaak_identiteiten": true,
+        "cursor": true,
+        "undo_redo": true,
+        "docx_alle_onderdelen_exact": true,
+        "heropenen": true,
+        "voorbereiding_ms": 0
+      },
+      {
+        "naam": "vorige-revisie",
+        "geslaagd": true,
+        "alle_verhalen_opmaak_identiteiten": true,
+        "cursor": true,
+        "undo_redo": true,
+        "docx_alle_onderdelen_exact": true,
+        "heropenen": true,
+        "voorbereiding_ms": 0
+      }
+    ],
+    "geslaagd": true
+  },
+  "native_proeven": [
+    {
+      "proef": "rust-tekst-45.29-vijfhonderd-2",
+      "geslaagd": true,
+      "versie": "2026.45.29",
+      "programma_sha256": "beefebc5b520e6ff5e8f9178494194c7210de9df37b7890bba924c659447cc2d",
+      "script_sha256": "1882f83ba61dbbed2d4775f81b8184f9e2fd4b89f443b729ca917a979d467c83",
+      "stappen": [
+        {
+          "naam": "beginbron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. ",
+          "exact": true
+        },
+        {
+          "naam": "getypte_bron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "selectie_en_backspace",
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "exact": true
+        },
+        {
+          "naam": "undo",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "redo",
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "exact": true
+        },
+        {
+          "naam": "hersteld_voor_bewaren",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "native_bewaaractie_onafhankelijk",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "nieuw_proces_heropend",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        }
+      ],
+      "invoer_tot_bron_en_golven_ms": 4512,
+      "rust_teksttransport": {
+        "aanvragen": [
+          " ",
+          "E",
+          "e",
+          "n ",
+          "proe",
+          "f",
+          "zi",
+          "n."
+        ],
+        "antwoorden": 8,
+        "voorbereiding_ms": [
+          35,
+          26,
+          33,
+          22,
+          31,
+          30,
+          44,
+          35
+        ],
+        "antwoord_ms": [
+          59.99999999999818,
+          61,
+          51,
+          115,
+          288,
+          52,
+          178,
+          224
+        ],
+        "invoke_wijzigbaar": false
+      },
+      "frame_tussenpozen_ms": {
+        "aantal": 52,
+        "maximum": 1075,
+        "p95": 267,
+        "reeks": [
+          10,
+          103,
+          86,
+          3,
+          10,
+          5,
+          7,
+          98,
+          1075,
+          13,
+          10,
+          26,
+          65,
+          267,
+          25,
+          3,
+          15,
+          161,
+          97,
+          66,
+          166,
+          162,
+          164,
+          278,
+          15,
+          11,
+          19,
+          167,
+          170,
+          63,
+          148,
+          3,
+          108,
+          173,
+          192,
+          3,
+          16,
+          13,
+          16,
+          16,
+          33,
+          2,
+          16,
+          15,
+          17,
+          110,
+          131,
+          19,
+          63,
+          66,
+          48,
+          13
+        ],
+        "omvang": "requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS."
+      },
+      "native_leesaanroepen": {
+        "zelfde_sessie": true,
+        "readParagraphs": {
+          "calls": 10,
+          "ms": 50
+        },
+        "paragraphSpans": {
+          "calls": 14,
+          "ms": 67
+        }
+      }
+    },
+    {
+      "proef": "rust-tekst-45.28-vergelijk-1",
+      "geslaagd": true,
+      "versie": "2026.45.28",
+      "programma_sha256": "956b6573dd9cde60455b0da05776fe82af858c750f31aaa2b49f07e137380a04",
+      "script_sha256": "1882f83ba61dbbed2d4775f81b8184f9e2fd4b89f443b729ca917a979d467c83",
+      "stappen": [
+        {
+          "naam": "beginbron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. ",
+          "exact": true
+        },
+        {
+          "naam": "getypte_bron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "selectie_en_backspace",
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "exact": true
+        },
+        {
+          "naam": "undo",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "redo",
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "exact": true
+        },
+        {
+          "naam": "hersteld_voor_bewaren",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "native_bewaaractie_onafhankelijk",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "nieuw_proces_heropend",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        }
+      ],
+      "invoer_tot_bron_en_golven_ms": 4395,
+      "rust_teksttransport": {
+        "aanvragen": [],
+        "antwoorden": 0,
+        "voorbereiding_ms": [],
+        "antwoord_ms": [],
+        "invoke_wijzigbaar": false
+      },
+      "frame_tussenpozen_ms": {
+        "aantal": 37,
+        "maximum": 244,
+        "p95": 243,
+        "reeks": [
+          3,
+          12,
+          5,
+          25,
+          62,
+          145,
+          122,
+          188,
+          106,
+          132,
+          234,
+          130,
+          243,
+          128,
+          229,
+          125,
+          158,
+          120,
+          244,
+          126,
+          149,
+          126,
+          129,
+          131,
+          156,
+          129,
+          59,
+          125,
+          110,
+          141,
+          117,
+          122,
+          102,
+          143,
+          120,
+          39,
+          16
+        ],
+        "omvang": "requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS."
+      },
+      "native_leesaanroepen": {
+        "zelfde_sessie": true,
+        "readParagraphs": {
+          "calls": 8,
+          "ms": 40.00000000000182
+        },
+        "paragraphSpans": {
+          "calls": 28,
+          "ms": 114.00000000000182
+        }
+      }
+    },
+    {
+      "proef": "rust-tekst-45.29-vergelijk-1",
+      "geslaagd": true,
+      "versie": "2026.45.29",
+      "programma_sha256": "beefebc5b520e6ff5e8f9178494194c7210de9df37b7890bba924c659447cc2d",
+      "script_sha256": "1882f83ba61dbbed2d4775f81b8184f9e2fd4b89f443b729ca917a979d467c83",
+      "stappen": [
+        {
+          "naam": "beginbron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. ",
+          "exact": true
+        },
+        {
+          "naam": "getypte_bron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "selectie_en_backspace",
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "exact": true
+        },
+        {
+          "naam": "undo",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "redo",
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "exact": true
+        },
+        {
+          "naam": "hersteld_voor_bewaren",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "native_bewaaractie_onafhankelijk",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "nieuw_proces_heropend",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        }
+      ],
+      "invoer_tot_bron_en_golven_ms": 3765,
+      "rust_teksttransport": {
+        "aanvragen": [
+          " ",
+          "Ee",
+          "n",
+          " ",
+          "proe",
+          "fz",
+          "in."
+        ],
+        "antwoorden": 7,
+        "voorbereiding_ms": [
+          37,
+          28,
+          24,
+          42,
+          55,
+          36,
+          35
+        ],
+        "antwoord_ms": [
+          70.00000000000364,
+          58,
+          46,
+          75,
+          76,
+          137,
+          301
+        ],
+        "invoke_wijzigbaar": false
+      },
+      "frame_tussenpozen_ms": {
+        "aantal": 43,
+        "maximum": 1019,
+        "p95": 239,
+        "reeks": [
+          2,
+          50,
+          16,
+          16,
+          5,
+          262,
+          220,
+          23,
+          6,
+          8,
+          6,
+          116,
+          1019,
+          11,
+          27,
+          3,
+          95,
+          239,
+          21,
+          4,
+          91,
+          171,
+          22,
+          11,
+          20,
+          7,
+          74,
+          148,
+          26,
+          16,
+          4,
+          21,
+          85,
+          206,
+          78,
+          158,
+          3,
+          171,
+          211,
+          181,
+          3,
+          5,
+          16
+        ],
+        "omvang": "requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS."
+      },
+      "native_leesaanroepen": {
+        "zelfde_sessie": true,
+        "readParagraphs": {
+          "calls": 7,
+          "ms": 43.99999999999636
+        },
+        "paragraphSpans": {
+          "calls": 13,
+          "ms": 84
+        }
+      }
+    },
+    {
+      "proef": "rust-tekst-45.28-vergelijk-2",
+      "geslaagd": true,
+      "versie": "2026.45.28",
+      "programma_sha256": "956b6573dd9cde60455b0da05776fe82af858c750f31aaa2b49f07e137380a04",
+      "script_sha256": "1882f83ba61dbbed2d4775f81b8184f9e2fd4b89f443b729ca917a979d467c83",
+      "stappen": [
+        {
+          "naam": "beginbron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. ",
+          "exact": true
+        },
+        {
+          "naam": "getypte_bron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "selectie_en_backspace",
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "exact": true
+        },
+        {
+          "naam": "undo",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "redo",
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "exact": true
+        },
+        {
+          "naam": "hersteld_voor_bewaren",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "native_bewaaractie_onafhankelijk",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "nieuw_proces_heropend",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        }
+      ],
+      "invoer_tot_bron_en_golven_ms": 3688,
+      "rust_teksttransport": {
+        "aanvragen": [],
+        "antwoorden": 0,
+        "voorbereiding_ms": [],
+        "antwoord_ms": [],
+        "invoke_wijzigbaar": false
+      },
+      "frame_tussenpozen_ms": {
+        "aantal": 37,
+        "maximum": 216,
+        "p95": 212,
+        "reeks": [
+          4,
+          11,
+          36,
+          33,
+          53,
+          80,
+          161,
+          123,
+          204,
+          114,
+          121,
+          143,
+          134,
+          68,
+          107,
+          126,
+          127,
+          130,
+          43,
+          107,
+          110,
+          124,
+          112,
+          129,
+          108,
+          39,
+          107,
+          111,
+          112,
+          216,
+          107,
+          127,
+          108,
+          212,
+          121,
+          36,
+          6
+        ],
+        "omvang": "requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS."
+      },
+      "native_leesaanroepen": {
+        "zelfde_sessie": true,
+        "readParagraphs": {
+          "calls": 7,
+          "ms": 37
+        },
+        "paragraphSpans": {
+          "calls": 26,
+          "ms": 107.99999999999636
+        }
+      }
+    },
+    {
+      "proef": "rust-tekst-45.29-antwoordvolgorde",
+      "geslaagd": true,
+      "versie": "2026.45.29",
+      "programma_sha256": "beefebc5b520e6ff5e8f9178494194c7210de9df37b7890bba924c659447cc2d",
+      "script_sha256": "d55c34b65fab68bcc787983723ac6fc6438bdbc505229fd00550aa664fcb523e",
+      "stappen": [
+        "Fysieke tekstinvoer, één Undo en bronexacte Redo",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+      ],
+      "fouten": {
+        "gui": [],
+        "console": []
+      },
+      "bewaring_sha256": "7b5cac89a2d46569f3bda34429df09b5062f0306aeaa38910df12c8bc20971fc"
+    },
+    {
+      "proef": "rust-tekst-45.29-plakvolgorde-herpoging",
+      "geslaagd": true,
+      "programma_sha256": "beefebc5b520e6ff5e8f9178494194c7210de9df37b7890bba924c659447cc2d",
+      "script_sha256": "ad9e30943c28fcc7dd7dd9bca4e27e3fc87c08bd10301b3bcbf8617b29ff6092",
+      "stappen": [
+        "Werkelijk rijk plakken, één Undo en bronexacte Redo",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór antwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder antwoord; nieuw document en late beantwoording behouden bron en invoer"
+      ],
+      "native_opdrachten": [
+        {
+          "requestId": "55ee2703-b29b-4429-9f75-5213b0333cf4",
+          "range": {
+            "story": "body",
+            "start": {
+              "paraId": "body:p7",
+              "offset": 70
+            },
+            "end": {
+              "paraId": "body:p7",
+              "offset": 70
+            }
+          },
+          "fase": 1,
+          "sourceVersion": "bbe3986179b3c76f-2",
+          "snapshotSha256": "39934b14861defe35e181e2ecf9b0a95e33c6765c2a672d46507e9eaa0797dce",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "story": "body",
+            "paraId": "1803996697:6",
+            "offset": 70
+          }
+        },
+        {
+          "requestId": "8de9cfae-03d1-4356-b73b-c7b819f96b7b",
+          "range": {
+            "story": "body",
+            "start": {
+              "paraId": "1803996697:6",
+              "offset": 70
+            },
+            "end": {
+              "paraId": "1803996697:6",
+              "offset": 70
+            }
+          },
+          "fase": 2,
+          "sourceVersion": "bbe3986179b3c76f-6",
+          "snapshotSha256": "c9f4f78aa843667da0ec90a8af5dcb4b33e7033f8953b44c26e93715001aedf7",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "story": "body",
+            "paraId": "1803996697:32",
+            "offset": 70
+          }
+        },
+        {
+          "requestId": "bb903c31-551c-4437-b639-1d48aa6a47ce",
+          "range": {
+            "story": "body",
+            "start": {
+              "paraId": "1803996697:32",
+              "offset": 73
+            },
+            "end": {
+              "paraId": "1803996697:32",
+              "offset": 73
+            }
+          },
+          "fase": 3,
+          "sourceVersion": "bbe3986179b3c76f-12",
+          "snapshotSha256": "9cf2feb791c396c8a0b2b8e6fc7c446a5a6578e4807c8b9623174c7937edaa6c",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "story": "body",
+            "paraId": "1803996697:84",
+            "offset": 73
+          }
+        }
+      ],
+      "aantal_aparte_tekstupdates": 2,
+      "fouten": {
+        "gui": [],
+        "console": []
+      }
+    },
+    {
+      "proef": "rust-tekst-45.29-plak-bronwijziging",
+      "geslaagd": true,
+      "programma_sha256": "beefebc5b520e6ff5e8f9178494194c7210de9df37b7890bba924c659447cc2d",
+      "script_sha256": "edfa8a7368808f048a078a3ba136c6b7796f62085500e1d77b85070852b7abcd",
+      "stappen": [
+        "Werkelijk rijk plakken, één Undo en bronexacte Redo",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór antwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder antwoord; nieuw document en late beantwoording behouden bron en invoer"
+      ],
+      "native_opdrachten": [
+        {
+          "requestId": "a12c7a94-17ab-4e76-88c2-329a614de0cd",
+          "range": {
+            "story": "body",
+            "start": {
+              "paraId": "body:p7",
+              "offset": 70
+            },
+            "end": {
+              "paraId": "body:p7",
+              "offset": 70
+            }
+          },
+          "fase": 1,
+          "sourceVersion": "9948878b4bcbaa02-2",
+          "snapshotSha256": "3d040d39819c4992dbae06cbff8523929d86ecd45b7b6dcbfb970a7ee4b87e8e",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "story": "body",
+            "paraId": "1657572134:6",
+            "offset": 70
+          }
+        },
+        {
+          "requestId": "67444c47-a44c-479d-9ab3-79f0187ce6cc",
+          "range": {
+            "story": "body",
+            "start": {
+              "paraId": "1657572134:6",
+              "offset": 70
+            },
+            "end": {
+              "paraId": "1657572134:6",
+              "offset": 70
+            }
+          },
+          "fase": 2,
+          "sourceVersion": "9948878b4bcbaa02-6",
+          "snapshotSha256": "8f9d2f069745d15c5974fcc0a52a429d5ebd151880188b92c440ff00238cd55b",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "story": "body",
+            "paraId": "1657572134:32",
+            "offset": 70
+          }
+        },
+        {
+          "requestId": "c75dc14e-ff1d-4664-8f9c-82150561150c",
+          "range": {
+            "story": "body",
+            "start": {
+              "paraId": "1657572134:6",
+              "offset": 70
+            },
+            "end": {
+              "paraId": "1657572134:6",
+              "offset": 70
+            }
+          },
+          "fase": 2,
+          "sourceVersion": "9948878b4bcbaa02-7",
+          "snapshotSha256": "7c5953788312db1bbabde42e36952c4cc435c2ed44b3c3d3c322368c4f03fe35",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "story": "body",
+            "paraId": "1657572134:32",
+            "offset": 70
+          }
+        },
+        {
+          "requestId": "596826b1-818a-4bb4-a925-6e4d7c812ec0",
+          "range": {
+            "story": "body",
+            "start": {
+              "paraId": "1657572134:32",
+              "offset": 73
+            },
+            "end": {
+              "paraId": "1657572134:32",
+              "offset": 73
+            }
+          },
+          "fase": 3,
+          "sourceVersion": "9948878b4bcbaa02-13",
+          "snapshotSha256": "a8c3b06acd5694179fcdaf786b7118f17f6b47f54230d85fd57beaead32e9533",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "story": "body",
+            "paraId": "1657572134:84",
+            "offset": 73
+          }
+        }
+      ],
+      "aantal_aparte_tekstupdates": 2,
+      "fouten": {
+        "gui": [],
+        "console": []
+      }
+    },
+    {
+      "proef": "rust-tekst-45.29-rendererfout",
+      "geslaagd": true,
+      "programma_sha256": "beefebc5b520e6ff5e8f9178494194c7210de9df37b7890bba924c659447cc2d",
+      "script_sha256": "5437da482be9e81d901affa00286070e959008d9716af145545b52968105a8fa",
+      "stappen": [
+        "64 bronalinea’s en echte onbewaarde toetsinvoer exact",
+        "Queryfout zichtbaar; dezelfde bron, selectie en alle onbewaarde tekst behouden",
+        "Na de queryfout fysiek opgeslagen; alle 64 alinea’s onafhankelijk teruggelezen",
+        "Nieuw eigen proces heropent, bewerkt en bewaart dezelfde DOCX zonder fouten"
+      ]
+    },
+    {
+      "proef": "rust-tekst-45.29-plak-bronwijziging-definitief",
+      "geslaagd": true,
+      "programma_sha256": "beefebc5b520e6ff5e8f9178494194c7210de9df37b7890bba924c659447cc2d",
+      "script_sha256": "7a036f1fbe9c334f42bad331b8cf0aa7edede53c9e883f245697eb126c114f1a",
+      "stappen": [
+        "Werkelijk rijk plakken, één Undo en bronexacte Redo",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór antwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder antwoord; nieuw document en late beantwoording behouden bron en invoer"
+      ],
+      "native_opdrachten": [
+        {
+          "requestId": "574df664-7cb6-4a7e-baf3-86ef75005413",
+          "range": {
+            "story": "body",
+            "start": {
+              "paraId": "body:p7",
+              "offset": 70
+            },
+            "end": {
+              "paraId": "body:p7",
+              "offset": 70
+            }
+          },
+          "fase": 1,
+          "sourceVersion": "63112df77b89cbc4-2",
+          "snapshotSha256": "2acc0606c5ed610a5088913d33ee1f727b5c31ce5269bf6a5ffc8f4fc3a15fb5",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "story": "body",
+            "paraId": "2211542128:6",
+            "offset": 70
+          }
+        },
+        {
+          "requestId": "d8452d64-1b75-4229-b8da-893ecab48c45",
+          "range": {
+            "story": "body",
+            "start": {
+              "paraId": "2211542128:6",
+              "offset": 70
+            },
+            "end": {
+              "paraId": "2211542128:6",
+              "offset": 70
+            }
+          },
+          "fase": 2,
+          "sourceVersion": "63112df77b89cbc4-6",
+          "snapshotSha256": "73465d6f45437f54120bd0c507f1408acae6557b37decc355e0537c30aa55fd3",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "story": "body",
+            "paraId": "2211542128:32",
+            "offset": 70
+          }
+        },
+        {
+          "requestId": "a653842a-5427-4de9-b6bf-75c18d8cbf19",
+          "range": {
+            "story": "body",
+            "start": {
+              "paraId": "2211542128:6",
+              "offset": 70
+            },
+            "end": {
+              "paraId": "2211542128:6",
+              "offset": 70
+            }
+          },
+          "fase": 2,
+          "sourceVersion": "63112df77b89cbc4-7",
+          "snapshotSha256": "c028e42a8347ef7fc2421f283bcbf62654cbf18c7c6bba9087ea87da7304bc4a",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "story": "body",
+            "paraId": "2211542128:32",
+            "offset": 70
+          }
+        },
+        {
+          "requestId": "eabbbe2c-fee1-4e91-b22a-69ce4b1fec16",
+          "range": {
+            "story": "body",
+            "start": {
+              "paraId": "2211542128:32",
+              "offset": 73
+            },
+            "end": {
+              "paraId": "2211542128:32",
+              "offset": 73
+            }
+          },
+          "fase": 3,
+          "sourceVersion": "63112df77b89cbc4-13",
+          "snapshotSha256": "cf39eadae32645dac6fe6e615987bacd8cd3a543a4d9c71e2ad4dac233a59963",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "story": "body",
+            "paraId": "2211542128:84",
+            "offset": 73
+          }
+        }
+      ],
+      "aantal_aparte_tekstupdates": 2,
+      "fouten": {
+        "gui": [],
+        "console": []
+      },
+      "bronwijziging_docx_onafhankelijk": true
+    }
+  ],
+  "beeldvergelijking": [
+    {
+      "beeld": "getypt-pagina-500.png",
+      "vlak": "hele_venster",
+      "afwijkende_pixels": 364,
+      "rechthoek": [
+        62,
+        33,
+        1132,
+        999
+      ]
+    },
+    {
+      "beeld": "getypt-pagina-500.png",
+      "vlak": "lint",
+      "afwijkende_pixels": 2,
+      "rechthoek": [
+        62,
+        33,
+        126,
+        34
+      ]
+    },
+    {
+      "beeld": "getypt-pagina-500.png",
+      "vlak": "document",
+      "afwijkende_pixels": 138,
+      "rechthoek": [
+        505,
+        100,
+        560,
+        119
+      ]
+    },
+    {
+      "beeld": "kopvoetlint.png",
+      "vlak": "hele_venster",
+      "afwijkende_pixels": 49,
+      "rechthoek": [
+        1166,
+        940,
+        1172,
+        950
+      ]
+    },
+    {
+      "beeld": "kopvoetlint.png",
+      "vlak": "lint",
+      "afwijkende_pixels": 0,
+      "rechthoek": null
+    },
+    {
+      "beeld": "kopvoetlint.png",
+      "vlak": "document",
+      "afwijkende_pixels": 49,
+      "rechthoek": [
+        1142,
+        732,
+        1148,
+        742
+      ]
+    },
+    {
+      "beeld": "startlint.png",
+      "vlak": "hele_venster",
+      "afwijkende_pixels": 49,
+      "rechthoek": [
+        1166,
+        940,
+        1172,
+        950
+      ]
+    },
+    {
+      "beeld": "startlint.png",
+      "vlak": "lint",
+      "afwijkende_pixels": 0,
+      "rechthoek": null
+    },
+    {
+      "beeld": "startlint.png",
+      "vlak": "document",
+      "afwijkende_pixels": 49,
+      "rechthoek": [
+        1142,
+        732,
+        1148,
+        742
+      ]
+    }
+  ],
+  "afgekeurd_meetpunt": {
+    "eerste_proef": "rust-tekst-45.29-vijfhonderd-1",
+    "reden": "Tauri invoke is niet overschrijfbaar. De stille toewijzing plaatste geen teller en de native eis keurde de meting af. De oorspronkelijke broncontrole slaagde. De herhaling gebruikt de werkelijke IPC-fetch en bevestigt zowel nul aanvragen op 45.28 als alle getypte tekens via Rust op 45.29.",
+    "eerste_tijd_ms": 3383,
+    "telt_als_native_bewijs": false
+  },
+  "debugger_onderzoek": {
+    "scope": "Alleen eigen testvensters, geen acceptatiebewijs.",
+    "uitkomst": "De geladen scriptbytes komen overeen met de gebouwde bron; native handler aanwezig en alle invoerguards voldaan. Instrumenteerde pauzerondes eindigen met een SyntaxError-melding. Geen normale-productrouteherstelclaim op basis van deze rondes.",
+    "lokale_context": "proef-tekst-debugger-alpha51*.py en rust-tekst-45.29-debugger*/ in de eigen lokale onderzoeksmap"
+  },
+  "controles": {
+    "frontend_geslaagd": 1717,
+    "frontend_bestanden": 160,
+    "rust_geslaagd": 8,
+    "python_geslaagd": 58,
+    "typescript": true,
+    "weekversie": true,
+    "linux_bouw_terminal": 0,
+    "rustfmt_nieuwe_kern_en_opdracht": true,
+    "yaml": true
+  },
+  "afgekeurde_plakteller": {
+    "proef": "rust-tekst-45.29-plakvolgorde",
+    "bron_bewaren_verwerpen_exact": true,
+    "voorbereidingen": 4,
+    "toegepaste_plakdeltas": 2,
+    "afkeuring": "Vast aantal van drie transportaanvragen. De eerste ronde bevat geen snapshothashes per verzoek en bewijst de precieze herpogingsreden daarom niet.",
+    "nieuwe_controle": "Drie onderscheiden fasen met ieder één tot drie pogingen; herpogingen vereisen verschillende snapshothashes. Een aparte echte bronopmaakwijziging dwingt herpoging af en wordt behouden."
+  }
+}

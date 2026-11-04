@@ -106,14 +106,14 @@ async def proef(a):
                   window.tekst=()=>sessie().paragraphs('body').map(p=>p.text).join('');
                   window.stand=()=>JSON.stringify(Object.fromEntries(sessie().storyIds().sort().map(id=>[id,sessie().storySegments(id)])));
                   window._toetsen=[];window.addEventListener('keyup',e=>_toetsen.push(e.key.toLowerCase()),true);
-                  window._rust={aanvragen:[],updates:0,houd:false};window._diagnose=[];
+                  window._rust={aanvragen:[],updates:0,tekstUpdates:0,houd:false,fase:1};window._rustPlakDeltas=new Set;window._diagnose=[];
                   const intern=window.__TAURI_INTERNALS__,oud=window.fetch,doel=intern.convertFileSrc('writer_plakken_voorbereiden','ipc'),s=sessie(),pasToe=s.applyLocalUpdate;
                   window.fetch=async function(url,args,...rest){
                     if(String(url)!==doel)return oud.call(this,url,args,...rest);
-                    const a=JSON.parse(args.body).aanvraag,m={requestId:a.requestId,range:a.range,gereed:false,wacht:false};_rust.aanvragen.push(m);
+                    const a=JSON.parse(args.body).aanvraag,m={requestId:a.requestId,range:a.range,fase:_rust.fase,sourceVersion:a.sourceVersion,snapshotSha256:a.snapshotSha256,gereed:false,wacht:false};_rust.aanvragen.push(m);
                     const response=await oud.call(this,url,args,...rest),json=response.json.bind(response);
                     response.json=async()=>{
-                      const antwoord=await json();
+                      const antwoord=await json();_rustPlakDeltas.add(antwoord.delta);
                       m.bronbinding=['schema','requestId','documentId','sourceVersion','snapshotSha256','clientId'].every(k=>antwoord[k]===a[k]);
                       m.gereed=true;m.caret=antwoord.caret;
                       if(_rust.houd)await new Promise(resolve=>{m.wacht=true;_rust.los=()=>{_rust.houd=false;m.wacht=false;delete _rust.los;resolve()}});
@@ -121,7 +121,7 @@ async def proef(a):
                     };
                     return response;
                   };
-                  s.applyLocalUpdate=function(...args){_rust.updates++;_diagnose.push({soort:'delta',selection:s.selection()});return pasToe.apply(this,args)};
+                  s.applyLocalUpdate=function(...args){const delta=btoa(Array.from(args[0],c=>String.fromCharCode(c)).join(''));if(_rustPlakDeltas.has(delta))_rust.updates++;else _rust.tekstUpdates++;_diagnose.push({soort:'delta',selection:s.selection()});return pasToe.apply(this,args)};
                   const selectie=s.setSelection;
                   s.setSelection=function(...args){_diagnose.push({soort:'selectie',args,stack:new Error().stack.slice(0,500)});return selectie.apply(this,args)};
                   const eerste=s.paragraphs('body')[0],e=api().getEditorRef();
@@ -142,9 +142,12 @@ async def proef(a):
                 # Houd alleen de bezorging vast. De echte Rust-berekening en alle
                 # toetsen/Save gaan langs hun normale productie-ingang.
                 await klembord(p)
-                await p.ev('window._voorSnelleTekst=tekst();_rust.houd=true;_diagnose.push({soort:"voor_snellereeks",selection:sessie().selection()});true')
+                await p.ev('window._voorSnelleTekst=tekst();_rust.houd=true;_rust.fase=2;_diagnose.push({soort:"voor_snellereeks",selection:sessie().selection()});true')
                 await toets(p, 'ctrl+v', leeg=False)
                 await p.run('let eind=performance.now()+30000;while(!_rust.aanvragen.at(-1)?.wacht){if(performance.now()>eind)throw Error("Geen vastgehouden Rust-antwoord");await new Promise(r=>setTimeout(r,30))}return true;')
+                # Een echte bronwijziging moet het vastgehouden voorstel
+                # ongeldig maken; alleen opnieuw tellen zou dit niet bewijzen.
+                await p.ev("(()=>{const s=sessie(),p=s.paragraphs('body')[0];window._proefOpmaakBereik={story:'body',start:{paraId:p.paraId,offset:0},end:{paraId:p.paraId,offset:1}};const versie=s.version();s.formatRange(_proefOpmaakBereik,{italic:true});if(s.version()===versie)throw Error('Bronwijziging ontbreekt');return true})()")
                 subprocess.run(['xdotool', 'type', '--clearmodifiers', '--delay', '10', ' SNEL'], check=True)
                 await toets(p, 'shift+Left', 'shift+Left', 'shift+Left', leeg=False)
                 subprocess.run(['xdotool', 'type', '--clearmodifiers', '--delay', '10', '!'], check=True)
@@ -163,13 +166,18 @@ async def proef(a):
                 body = xml.find('w:body', ns)
                 terug = ''.join(t.text or '' for p_xml in body.findall('w:p', ns) for t in p_xml.findall('.//w:t', ns))
                 assert terug == await p.ev('tekst()'), 'Bewaring mist de latere invoer of bevat verkeerde selectie'
+                eerste_run = next(r for r in body.find('w:p', ns).findall('.//w:r', ns) if r.find('w:t', ns) is not None)
+                cursief = eerste_run.find('w:rPr/w:i', ns)
+                assert cursief is not None and cursief.get('{'+ns['w']+'}val', '1') in ['1', 'true', 'on'], 'Bewaring mist opmaakwijziging tijdens voorbereiden'
+                r['bronwijziging_docx_onafhankelijk'] = True
                 assert await p.ev('_rust.updates') == 2
+                assert await p.ev('sessie().selectionContext(_proefOpmaakBereik).italic===true'), 'Opmaakwijziging tijdens voorbereiden verloren'
                 r['bewaring_sha256'] = hashlib.sha256(bron.read_bytes()).hexdigest()
                 r['stappen'].append('Fysiek typen, Shift-selectie, vervangen en Save vóór antwoord; DOCX onafhankelijk exact teruggelezen')
                 beeld('snel-getypt-bewaard')
 
                 await klembord(p)
-                await p.ev('_rust.houd=true;true')
+                await p.ev('_rust.houd=true;_rust.fase=3;true')
                 await toets(p, 'ctrl+v', leeg=False)
                 await p.run('let eind=performance.now()+30000;while(!_rust.aanvragen.at(-1)?.wacht){if(performance.now()>eind)throw Error("Geen vastgehouden tweede antwoord");await new Promise(r=>setTimeout(r,30))}return true;')
                 await toets(p, 'ctrl+w', leeg=False)
@@ -189,7 +197,16 @@ async def proef(a):
                 assert hashlib.sha256(bron.read_bytes()).hexdigest() == r['bewaring_sha256'], 'Niet opslaan wijzigt de bewaarde bron'
                 r['stappen'].append('Niet opslaan zonder antwoord; nieuw document en late beantwoording behouden bron en invoer')
                 r['native_opdrachten'] = await p.ev('_rust.aanvragen')
-                assert len(r['native_opdrachten']) == 3 and all(m['gereed'] and m['bronbinding'] for m in r['native_opdrachten'])
+                assert all(m['gereed'] and m['bronbinding'] for m in r['native_opdrachten'])
+                assert {m['fase'] for m in r['native_opdrachten']} == {1, 2, 3}
+                for fase in [1, 2, 3]:
+                    pogingen = [m for m in r['native_opdrachten'] if m['fase'] == fase]
+                    assert 1 <= len(pogingen) <= 3, 'Onbegrensde of ontbrekende voorbereiding'
+                    if fase == 2:
+                        assert len(pogingen) >= 2, 'Gewijzigde bron niet opnieuw voorbereid'
+                    for oud, nieuw in zip(pogingen, pogingen[1:]):
+                        assert oud['snapshotSha256'] != nieuw['snapshotSha256'], 'Herhaalde voorbereiding zonder andere bron'
+                r['aantal_aparte_tekstupdates'] = await p.ev('_rust.tekstUpdates')
                 r['fouten'] = await p.fouten()
                 assert not any(r['fouten'].values()), 'GUI of engine meldt fouten'
                 beeld('nieuw-na-laat-antwoord')
