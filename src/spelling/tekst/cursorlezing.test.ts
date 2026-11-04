@@ -1,6 +1,6 @@
 /** Geaccepteerde cursortekst blijft gebonden aan precies deze bron en alinea. */
 import { readFileSync } from "node:fs";
-import { describe, expect, it, vi } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { createYrsSession } from "@betteroffice/docx/yrs";
 import type { DocxEditorRef, DocxPluginContext } from "@betteroffice/docx-react";
 import type { Controleur } from "../controleur";
@@ -24,18 +24,24 @@ function proef() {
   return { sessie, native, teksten, versie: (v: string) => { versie = v; }, loc: (v: typeof loc) => { loc = v; }, vervang: (v: typeof native) => { actief = v; } };
 }
 
+// De grote bron hoort bij de testopzet; de lees-/cachecontroles zelf
+// behouden de standaardlimiet van vijf seconden en alle inhoudsasserties.
+let echteBron: Awaited<ReturnType<typeof createYrsSession>> | undefined;
+beforeAll(async () => {
+  echteBron = await createYrsSession({ clientId: 71 });
+  echteBron.openDocx(new Uint8Array(readFileSync("docs/tests/writer-lettertypeworker/tabelbron-256.docx")), true);
+}, 30_000);
+afterAll(() => echteBron?.destroy());
+
 describe("geaccepteerde alinealezing voor spellingcursor en autocorrectie", () => {
   it("leest een echte alinea met tabelanker eenmaal en behoudt de geaccepteerde offset", async () => {
-    const native = await createYrsSession({ clientId: 71 });
-    try {
-      native.openDocx(new Uint8Array(readFileSync("docs/tests/writer-lettertypeworker/tabelbron-256.docx")), true);
-      const p = native.paragraphs("body").at(-1)!, lengte = native.paragraphSpans("body").at(-1)!.length;
-      expect(lengte).toBe(p.text.length+1);
-      const editor = { getEditorRef: () => ({ getYrsSession: () => native, getSelectionRange: () => ({ from: 0, to: 0 }), displayPositionToYrsLoc: () => ({ story: "body", paraId: p.paraId, offset: lengte }) }) } as unknown as DocxEditorRef;
-      const sessie = new SpellingSessie(() => editor, () => ({}) as Controleur), lezen = vi.spyOn(native, "readParagraphs");
-      for (let i = 0; i < 20; i++) expect(sessie.cursor()).toEqual({ story: "body", paraId: p.paraId, offset: p.text.length });
-      expect(lezen).toHaveBeenCalledTimes(1);
-    } finally { native.destroy(); }
+    const native = echteBron!;
+    const p = native.paragraphs("body").at(-1)!, lengte = native.paragraphSpans("body").at(-1)!.length;
+    expect(lengte).toBe(p.text.length+1);
+    const editor = { getEditorRef: () => ({ getYrsSession: () => native, getSelectionRange: () => ({ from: 0, to: 0 }), displayPositionToYrsLoc: () => ({ story: "body", paraId: p.paraId, offset: lengte }) }) } as unknown as DocxEditorRef;
+    const sessie = new SpellingSessie(() => editor, () => ({}) as Controleur), lezen = vi.spyOn(native, "readParagraphs");
+    for (let i = 0; i < 20; i++) expect(sessie.cursor()).toEqual({ story: "body", paraId: p.paraId, offset: p.text.length });
+    expect(lezen).toHaveBeenCalledTimes(1);
   });
 
   it("ververst na een bronwijziging, ook als de alinea-id gelijk blijft", () => {

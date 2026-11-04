@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "soort": "testopzet; geen app- of snelheidsreparatie",
+  "afkeuring": {
+    "run": 41928620960,
+    "job": 126919641258,
+    "bron": "bafc2205632c4d4f67db848952ba946d57701ed1",
+    "platform": "Windows",
+    "test": "spellingcursor, grote echte bron",
+    "melding": "Test timed out in 5000ms"
+  },
+  "lokale_afkeuringen": "Twee volledige ronden: cursorlezing en tabelcache overschrijden vijf seconden. Dezelfde vijftien tests slagen afzonderlijk; volledige ronde met twee werkers slaagt ook. Alle logs bewaard.",
+  "fase_diagnose": {
+    "module_en_sessie_ms": 169.200579,
+    "bron_openen_ms": 1676.6353139999999,
+    "tabel_lezen_ms": 8.155524000000014,
+    "grens": "Losse Node-diagnose tijdens een bouw; geen prestatieacceptatie"
+  },
+  "afgewezen_opzet": "Alleen een lege sessie vooraf maken verlaagde de bodyduur niet; die proef is teruggedraaid.",
+  "wijziging": "Exact dezelfde grote bron laden in beforeAll met een eigen limiet van dertig seconden; sessie vrijgeven in afterAll. Alle assertieregels bytegelijk na weghalen van inspringing. De feitelijke lees-/cachetests houden vijf seconden.",
+  "hertest": {
+    "bestanden": 174,
+    "geslaagd": 1831,
+    "afgekeurd": 0,
+    "standaard_werkers": true,
+    "grens": "Deze lokale werkboom bevat ook twaalf aanvullende tests van de nog niet gepushte queryafstemmingsproef. Geen GUI- of platformacceptatie.",
+    "typescript": "geslaagd, exitcode 0"
+  },
+  "resterend": [
+    "Windows-hertest met deze testopzet nog nodig",
+    "Alle zeven edities en overige lopende platformronden niet volledig geaccepteerd",
+    "Writer-invoervertraging, incidentele stabiliteitsproblemen en dertig migratievlaggen blijven open"
+  ],
+  "bewijzen": {
+    "writer-grote-bronopzet/ci43-zeven-windows-afkeuring-api.log.gz": {
+      "sha256": "7ccbd3a6818b9b92786591f9d8849838d1ec95f11b44aff2f7a230476973f628",
+      "inhoud_sha256": "f7b918f58c12ef7c22026c278ffb265f5a117575df2278839fda36496b44ebe7"
+    },
+    "writer-grote-bronopzet/queryafstemming44-volledig.log.gz": {
+      "sha256": "02b532033436f468fc166b86276cfa0868529b20f21868b1259847805a462a78",
+      "inhoud_sha256": "7bb5a6a6f22660e41202268773cfe24236e2c674221cd0dc8f38f5c13fa013f3"
+    },
+    "writer-grote-bronopzet/queryafstemming44-volledig-zonder-tsc.log.gz": {
+      "sha256": "155bd0ec9f15de980839114e9eb1b0d008c1f214f5983e2efbff4b0ac3890a3f",
+      "inhoud_sha256": "702407145f9635d6f22e98590cadfc82c8977ac89255d858acc39ebca0d11cdc"
+    },
+    "writer-grote-bronopzet/queryafstemming44-twee-afkeuringen.log.gz": {
+      "sha256": "6f75648b255c708cf8d1abb4fa195d21883fba58da9555876558b48d0e9107f7",
+      "inhoud_sha256": "0176892e39945113126123531267b9508b9744a2ea1afdabed3aa57ac897ee22"
+    },
+    "writer-grote-bronopzet/queryafstemming44-volledig-twee-werkers.log.gz": {
+      "sha256": "14a7b7d399232b2722a0eb0d3f853f5355417b3a85166d7ce6106e4192c161a8",
+      "inhoud_sha256": "13626cd8e70d318a810fc790c017ed44ea82a8f072522b5cef4b0cd6931e9331"
+    },
+    "writer-grote-bronopzet/wasm-testopzet-gerichte-tests.log.gz": {
+      "sha256": "56c103981a78f16321c18e1b28b79a12b22b41040db6f1ed274bc1d379794510",
+      "inhoud_sha256": "62eacc1c716747c37adc381158056dcb762ec5b338fe4f8fb9317749418ddf76"
+    },
+    "writer-grote-bronopzet/wasm-testopzet-fasen.json.gz": {
+      "sha256": "b8712e58237329c279d477e91fd163a57087776b98addcc340f4994bc32721b7",
+      "inhoud_sha256": "a01a113caa533020aa710f000e95c763a3b7791afadb863631635efd742ef456"
+    },
+    "writer-grote-bronopzet/wasm-bronopzet-volledig.log.gz": {
+      "sha256": "42feb81dbc57862384545876e40952c31247a44c2cb7d00feaa3bd0360ecc211",
+      "inhoud_sha256": "e90b873f5a0944678cb75cb70568b8558e2b8c1aab4cee9f3cb19d5e80bf175d"
+    },
+    "writer-grote-bronopzet/cursorlezing.test.ts.voor.gz": {
+      "sha256": "133c56cd1c49fe0b6f5ece4003996a1a8e6cfcb164aad216fffca02207f12f58",
+      "inhoud_sha256": "21ba9768d12e3d69f767379863a5195bcf544e089c1a55aea148d2afd2a4c496"
+    },
+    "writer-grote-bronopzet/cursorlezing.test.ts.na.gz": {
+      "sha256": "e00f8632db306f8262e8723187089bd72184763aee421455aafeaee1f02b0201",
+      "inhoud_sha256": "130980a7d865354afcb95f8f9d104358bd8d18ab57826c9bc3e85f9de7983c20"
+    },
+    "writer-grote-bronopzet/tabelcache.test.ts.voor.gz": {
+      "sha256": "0e7b00281b47199d96082db9f69596068ea6737b8e9065579d2d729bc58e484c",
+      "inhoud_sha256": "93de6b227196acc1264526287de1bfffb8e658275cec46a0e45d75fda53c85cc"
+    },
+    "writer-grote-bronopzet/tabelcache.test.ts.na.gz": {
+      "sha256": "6d89246d9c710241cf3a444ce25df685a9d3a2628e8cb53d813891b2816e846f",
+      "inhoud_sha256": "5a5404a657acbc4304b4a5ee0a811ca1b858f29c3ba1031d702a1b0d60f4f9fd"
+    },
+    "writer-grote-bronopzet/wasm-bronopzet-tsc.log.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "inhoud_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}
