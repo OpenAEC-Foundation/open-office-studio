@@ -4,6 +4,8 @@ Peildatum: 4 november 2026. Ontwikkelbasis: Tauri/Rust met React/TypeScript. De 
 
 ## Huidige waarheid
 
+- De c60a080-desktopronde faalt op Linux vóór de eerste plakronde in de bewaartest: een fatale Skia-shadercompilatiefout laat de app op laden staan, waarna de inspector een time-out meldt. De exacte ELF is dezelfde `221d1e48…` als de eerdere 3ad-afkeuring. Dit is een afzonderlijke fout, geen bewezen workerreparatie. De daaropvolgende ce06-ronde slaagt op drie platforms; de oorspronkelijke grafische afkeuring blijft open. [Log, beeld en pakketidentiteit](tests/2026-11-04-writer-grafische-start-c60.json).
+
 - 45.41 schrapt herhaalde tabelcelprojecties, maar fysieke invoer blijft circa 26% trager: 23.375/29.165/29.458/23.091 ms voor 39/41/41/39. Tien native scenario's slagen; alle 3.329 teksten en de documentpixels blijven gelijk. De optimalisatie is verwijderd uit de volgende kandidaat. [Afkeuring en bevroren bronbewijs](tests/writer-celidentiteiten.md).
 
 - De latere brede ronde op 3ad2eb6 faalt op Linux na heropenen van 500 pagina's: de documentworker krijgt een geheugengrensfout in `yrs_blocks_for_story` en de renderer valt terug op de hoofdthread. Windows/macOS slagen. Exacte negatieve ELF `221d1e48…`, oorspronkelijke context en bytegelijke CI-scripts zijn bewaard; oorzaak blijft open. Eén lokale ronde op die exacte negatieve ELF slaagt met bytegelijke scripts en ongewijzigde limieten; dat bewijst geen herstel. Volledige stabiliteitsacceptatie blijft open. [Exacte afkeuring](tests/2026-11-04-writer-heropenen-3ad.json).
