@@ -4,19 +4,24 @@ Een push naar GitHub werkt de broncode bij. De pagina Releases verandert alleen
 als er apart een uitgave wordt gepubliceerd. Een ontwikkelbuild is daarom
 beschikbaar als download bij GitHub Actions, zonder nieuwe release of tag.
 
-De gecontroleerde [45.36-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41827404218/artifacts/13322266840)
-is gebouwd uit `f12863db1be8ab2bf307bf667cc7af22e5bb8743`.
-De bouw, broncodetests en gerichte native open-/bewaar-/plakproef slagen.
-ZIP-digest en CRC, tar, AppImagehash/type, bronversie, devprofiel, uitvoerrechten
-en ingesloten checksums zijn onafhankelijk gecontroleerd. De
-[downloadgegevens](../tests/2026-11-04-linux-dev-f12863d.json) leggen dit vast.
-Deze versie deelt volledige tabelgegevens tussen celgrepen binnen dezelfde
-bronversie. Zie [metingen en grenzen](../tests/writer-tabelgegevens.md).
-De afzonderlijke geheugentest van dezelfde bron faalt op “The document changed
-while saving”; de actuele paginering en broncontroles slagen daar wel.
-Dit is dus een ontwikkelbuild met open stabiliteitsproblemen.
-De eerdere [45.35-downloadcontrole](../tests/2026-11-04-linux-dev-322f840.json)
-blijft apart bewaard.
+De gecontroleerde [45.38-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41862023734/artifacts/13342190592)
+is gebouwd uit `ca2a42c7303e18e4861a2df862f2a4e943b8967d`.
+De Linux-ontwikkelworkflow is geslaagd. ZIP-/tar-/AppImagehashes, CRC,
+metadata, uitvoerrechten, startscript, eigen dev-profiel en de daadwerkelijke
+AppRun-/ELF-hashes zijn onafhankelijk gecontroleerd. Het afzonderlijk
+opgehaalde CI-GUI-rapport komt overeen met deze bytes en bewaart lege
+GUI-, console- en enginefoutlijsten. Die gerichte proef controleert drie
+plakrondes, bewaren, verder bewerken, verwerpen en een nieuw document.
+[Exacte downloadcontrole](../tests/2026-11-04-linux-dev-ca2a42c.json).
+
+Dit is nog steeds een ontwikkelbuild met open stabiliteits- en snelheidsproblemen.
+De [doorgaande-invoerproef](../tests/writer-doortypen.md) op dezelfde appversie
+laat na snelle toetsverzending nog ongeveer twintig seconden achterstallige
+verwerking zien op een grote tabelbron. De gerichte pakketproef bewijst geen
+volledige functionaliteit, prestaties of platformacceptatie.
+De eerdere [45.36-downloadcontrole](../tests/2026-11-04-linux-dev-f12863d.json)
+en [45.35-downloadcontrole](../tests/2026-11-04-linux-dev-322f840.json)
+blijven afzonderlijk bewaard.
 
 Sluit een eerder geopende dev-versie na het bewaren voordat je de nieuwe start;
 beide gebruiken hetzelfde dev-profiel. Gebruik kopieën van je documenten.
