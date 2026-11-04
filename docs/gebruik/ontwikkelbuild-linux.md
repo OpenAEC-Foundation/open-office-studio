@@ -4,17 +4,18 @@ Een push naar GitHub werkt de broncode bij. De pagina Releases verandert alleen
 als er apart een uitgave wordt gepubliceerd. Een ontwikkelbuild is daarom
 beschikbaar als download bij GitHub Actions, zonder nieuwe release of tag.
 
-De gecontroleerde [45.33-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41795426019/artifacts/13305528093)
-is gebouwd uit `67be6e40316f7c49e1726d3df7ccc316f7cd51f8`.
-De [bouw en gerichte pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41795426019)
-slagen. De [downloadgegevens](../tests/2026-11-04-linux-dev-67be6e4.json) leggen
+De gecontroleerde [45.35-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41815824421/artifacts/13315396086)
+is gebouwd uit `322f840062f951114ec979ef4af929fc2ea47417`.
+De [bouw en gerichte pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41815824421)
+slagen. De [downloadgegevens](../tests/2026-11-04-linux-dev-322f840.json) leggen
 bronrevisie, gecontroleerde ZIP-/tar-/AppImage-bytes en testomvang vast.
-Deze versie gebruikt de ingebouwde snapshotencoder waar beschikbaar, behoudt
-de volledige encoder voor oudere runtimes, groepeert Undo op de oorspronkelijke
-invoertijd, hergebruikt
-alinea-eindmarkeringen en houdt de layout na gewone native invoer in de worker;
-[de grote plakproef en snelheidsgrenzen](../tests/writer-layout-hostsync.md)
-laten ook zien dat de algemene vertraging nog niet is opgelost.
+Deze versie voert volledige lettertypecontroles tijdens geschikte gewone
+Writer-invoer uit in de bestaande worker. De beperkte afwisselende lokale
+500-paginavergelijking is ongeveer 29–35% sneller dan 45.33; na 256 tabellen
+blijft invoer nog 5.594 ms vragen. Zie [metingen, gegevensbehoud en resterende
+grenzen](../tests/writer-lettertypeworker.md). Dit is geen algemene
+snelheids- of stabiliteitsacceptatie. De eerdere [45.33-downloadcontrole](../tests/2026-11-04-linux-dev-67be6e4.json)
+blijft apart bewaard.
 
 Sluit een eerder geopende dev-versie na het bewaren voordat je de nieuwe start;
 beide gebruiken hetzelfde dev-profiel. Gebruik kopieën van je documenten.
@@ -74,3 +75,9 @@ De 45.33-devpakketproef en de afzonderlijke Linux-geheugenronde slagen.
 De zeveneditieronde van dezelfde versie is op macOS afgekeurd op de bestaande
 corpusdownloadtest met een vijfsecondenlimiet; overige platformcontroles worden
 apart gevolgd. Ook deze download is geen volledige stabiliteitsacceptatie.
+
+
+De afzonderlijke [45.35-geheugenronde](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41815824535)
+is afgekeurd op een verouderde layout na invoer in het document met 256 tabellen.
+De gerichte pakketproef van deze download slaagt, maar deze nieuwe afkeuring
+blijft open. [Details en foutcontext](../tests/2026-11-04-writer-tabeldiagnose-45.35.json).

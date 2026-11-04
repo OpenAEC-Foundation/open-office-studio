@@ -1,0 +1,98 @@
+{
+  "versie": "2026.45.35",
+  "bronrevisie": "322f840062f951114ec979ef4af929fc2ea47417",
+  "scope": "Aanvullende diagnose, geen nieuwe productcorrectie, vrijgave of algemene snelheidsacceptatie.",
+  "verkeerde_meetpositie": {
+    "tekstlengte": 72,
+    "modelspan": 73,
+    "oorzaak": "Het leidende tabelanker telt als één modelpositie, niet als tekstteken. De profielvariant vroeg offset 72 aan en verwachtte ten onrechte invoer na het teksteinde. Offset 72 is vóór het laatste uitroepteken. Dezelfde foutieve verwachting faalt op 45.33, 45.35 en de native bibliotheek. Geen bewezen productfout.",
+    "proeven": {
+      "cpu-33-tabellen-verkeer": {
+        "pad": "writer-lettertypeworker/cpu-33-tabellen-verkeer-onjuiste-verwachting.json.gz",
+        "sha256": "536bc1d58d22854a0388d58e3ac7d259765aa6555796c37291af24f2877f1158",
+        "gzip_sha256": "33ccc4a728f557aace52de073b7b74fbc874df37b5a82d9a32ae9c3d70d7f444"
+      },
+      "cpu-35-tabellen-verkeer": {
+        "pad": "writer-lettertypeworker/cpu-35-tabellen-verkeer-onjuiste-verwachting.json.gz",
+        "sha256": "ed49d2e4661ab2c8099c01e6486f355a4131527bdd8325720c4e61e9ce532aec",
+        "gzip_sha256": "2e74b171f28f1fdfdd3f1ca24e31fddad5eb7e8e0e4439ca58c6b6275e003124"
+      },
+      "cpu-35-tabellen-actuele-layout": {
+        "pad": "writer-lettertypeworker/cpu-35-tabellen-actuele-layout-onjuiste-verwachting.json.gz",
+        "sha256": "c29d2cc2f93229043c59e1fd00c05c2a03ec961ba4d9303022be79f5ab63a7a0",
+        "gzip_sha256": "a94231b63ea66c2921d62151415b35482de868dfd727ee090f22e6f4cefa9fb4"
+      }
+    },
+    "native_proefbron": {
+      "pad": "writer-lettertypeworker/native-tabeldiagnose-onjuiste-verwachting.rs.gz",
+      "sha256": "b2c7df9f9e44403f2621106e14d24618410334d1a708146521edaee839ba0c93",
+      "gzip_sha256": "e88126627c952aa85b872e94147127519abef505eaa76c4bae62ad90ff36766d"
+    },
+    "native_log": {
+      "pad": "writer-lettertypeworker/native-tabeldiagnose-onjuiste-verwachting.log.gz",
+      "sha256": "4af3dd199e2005933921e439800ac95ff3470076e360918c0027b549aa07f02d",
+      "gzip_sha256": "d3edf2b38b0e052a59819bdb0cbafb211cbc472d51914ecafbb4d368adcd7c92"
+    }
+  },
+  "correcte_modelpositie": {
+    "rapport": {
+      "pad": "writer-lettertypeworker/cpu-35-tabellen-span.json.gz",
+      "sha256": "3b98a9b9b42121c8f52d0b15aeab6024186fd041c81b26cc94cb730422e20c42",
+      "gzip_sha256": "6136f0f1b2856fb7059d7f7f87d57e1cd78f87039593fe3168d64ab9a1e04bbb"
+    },
+    "script": {
+      "pad": "writer-lettertypeworker/profiel-writer-tabellen-span-native.py.gz",
+      "sha256": "0d078944b717669491ef1bd832ed7160ab47848c876d03fbd4c80c1d4fcab49b",
+      "gzip_sha256": "d467ae3df0ef1c982117623b82d3882b9d4e47586d77a459e13f52e747af9679"
+    },
+    "raw": {
+      "pad": "writer-lettertypeworker/cpu-35-tabellen-span-ruw.json.gz",
+      "sha256": "cb4759f017459739216bd1d924728891b3e3a4cc67460a142ce507866e1f7b58",
+      "gzip_sha256": "d9781ab3423daa7b02b663b5ad1d74b58b4479ed25598b920de6b21f2ea3cd6a"
+    },
+    "programma_sha256": "9b7588486a14e0516e35bf25eac415e2981c65761bf09775ed929f2a3a45c7d2",
+    "bron_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+    "alle_teksten_exact": true,
+    "verhalen": 1537,
+    "invoer_en_inspectie_ms": 2577,
+    "golven_vooraf": 0,
+    "golven_achteraf": 3,
+    "grens": "Alleen diagnose na opnieuw openen: native laatste keyup en invoerbarrière, zonder eis aan zichtbare spellingsgolven. Volledige alinea- en celteksten buiten het profiel gecontroleerd; geen vergelijking met de 500-paginameting of de gelijktijdige hercontrole direct na plakken.",
+    "hoofdthread_steekproeven": 1447,
+    "verdere_attributie": "297 stacks bevatten TabelGrepen, 281 tabelBeelden (niet optellen; overlappende inclusieve stacks). Exacte scriptbronnen zijn gelijk aan de definitieve 45.35-opname. Dit is een volgend onderzoekspunt, geen bewezen productcorrectie.",
+    "bronbestand": "writer-lettertypeworker/tabelbron-256.docx"
+  },
+  "CI_afkeuring": {
+    "run": 41815824535,
+    "job": 126526184412,
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41815824535",
+    "artifact": 13315007669,
+    "zip_sha256": "2c8cc04bec683352a1cede4feb3d2e17d0aa2b31b040f1de81f171c6a9b01a12",
+    "tar_sha256": "62aa1838c7e94f98775e2afafde1fdd0da69c6fd09a3c298e381b58a97f92009",
+    "programma_sha256": "d063b67c4d52842db7c82542be2f4da1d4b13e28640ab4d58aa094b4f9a954ee",
+    "script_sha256": "c690f866999ea08d81ed97f30a5269933b24e01955e8b6811bc0e7622e1f1278",
+    "rapport": {
+      "pad": "writer-lettertypeworker/ci-35-geheugen-afgekeurd.json.gz",
+      "sha256": "188640d7ebd163269ff55bfabf98d1fef77e411fee8e304b76f3c80f0686c015",
+      "gzip_sha256": "3b570a8712d08a9a8bf9f439de91eca5c65893ce311e611d93e3f878e3484c29"
+    },
+    "contextcontrole": {
+      "pad": "writer-lettertypeworker/ci-35-geheugen-contextcontrole.json.gz",
+      "sha256": "5384576cf94953da0dbf9fbf69e643b764426c29161ea9c3983c884e91eb3e29",
+      "gzip_sha256": "4161ab441d533e3d56a0bda38769ab3749077651a71b11d83aa518eeb69b03b4"
+    },
+    "fout": "RuntimeError('Error: Laatste bron heeft geen voltooide paginering: {\"final\":true,\"versie_actueel\":false,\"layout_actief\":true,\"paginas\":129}')",
+    "bron_exact": true,
+    "structuur_exact": true,
+    "onderbreekbaar": true,
+    "invoer_ms": 7715,
+    "status": "De exacte negatieve ELF met checksumgelijke oorspronkelijke scripts en bron slaagt lokaal op dezelfde route. Oorzaak en herstel van de oorspronkelijke CI-afkeuring blijven open.",
+    "beeld_sha256": "b262df5dcd2fb0c1332173d9299947f8850a516ed1f228ceef8c3e9f984e10ff",
+    "exacte_hertest": {
+      "pad": "writer-lettertypeworker/ci-35-geheugen-exacte-hertest.json.gz",
+      "sha256": "692497153ee1acf83ac2f93448142c2331e2633bc975d3b9238798ff9c7f59b3",
+      "gzip_sha256": "5d5be3de41b32e2dea607137610c8b849955f42809157feb37e7b3c272a9fa24",
+      "geslaagd": true
+    }
+  }
+}

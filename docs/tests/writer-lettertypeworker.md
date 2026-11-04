@@ -142,3 +142,29 @@ en bron doorstaat de route lokaal. De nieuwe 45.35 doorstaat dezelfde drie
 ronden/bewaren-na-ronde-een-route eveneens. De oorspronkelijke geheugenfout
 blijft open en wordt niet door de groene lettertype- of lokale hertestproeven
 als opgelost gepresenteerd.
+
+
+## Aanvullende tabeldiagnose en afzonderlijke 45.35-afkeuring
+
+De [45.35-geheugenronde](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41815824535)
+is afgekeurd na het verdubbelen van 128 tabellen en echte vervolginvoer tijdens
+spelling. Bron en structuur blijven exact en de spelling is onderbreekbaar;
+invoer vraagt 7.715 ms. De finale layout blijft echter bij een oude bronversie,
+ook na de bestaande twee minuten wachttijd. Consolefouten ontbreken. Deze
+verouderde-layoutfout is niet opgelost door de geslaagde devpakketproef. De
+exacte negatieve binary, oorspronkelijke scripts, bron en volledige foutcontext
+zijn op checksum gecontroleerd en bewaard. Dezelfde oorspronkelijke binary,
+proefcode en bron slagen lokaal op dezelfde route; dat verklaart of herstelt
+de oorspronkelijke afkeuring niet.
+
+Een aanvullende CPU-diagnose na opnieuw openen gebruikt de echte modelspan
+voor het alineaeinde. Een eerste verwachting gebruikte tekstlengte 72 terwijl
+het tabelanker de modelspan op 73 brengt; die onjuiste verwachting faalt zowel
+op 45.33 als op 45.35 en is geen bewezen productfout. De correcte positie 73
+behoudt alle teksten in 1.537 verhalen. De gemeten invoer/inspectie vraagt
+2.577 ms; deze diagnose wacht niet op spellingsgolven en is geen vergelijking
+met de eerdere 500-paginameting of invoer tijdens hercontrole direct na plakken.
+De opname wijst op extra werk in TabelGrepen/tabelBeelden; dat blijft een
+onderzoekspunt. De bestaande acceptatieproeven zijn niet versoepeld.
+
+[Afkeuring, exacte context en juiste/verkeerde diagnoseopzet](2026-11-04-writer-tabeldiagnose-45.35.json).
