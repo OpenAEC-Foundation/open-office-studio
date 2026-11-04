@@ -1,0 +1,33 @@
+{
+  "run": 41746035415,
+  "bronrevisie": "a84c9b3e36d9558bc551a805afb76173e8ee7e65",
+  "versie": "2026.45.26",
+  "conclusie": "failure",
+  "artifact": 13283499369,
+  "zip_sha256": "059c3a0e6f0b5500a6ce305e85dc691710a88fcccafb18cc4be3f7596d23060d",
+  "programma_sha256": "c937fd023e864472ce466385f2fa57b6867567275f10a63c188b523a974e2ea7",
+  "script_sha256": "aefe6b2f661bc781f6768b5240db99ea46f0fe6209f26276bc73cf756ed592bc",
+  "rapport_sha256": "71be0ea72fe59d00bb7fff93e4ebca68d8e1da4746d4dfab169818dcd85248ee",
+  "contextbestanden_gecontroleerd": 10,
+  "normale_herstelproef": {
+    "geslaagd": true,
+    "stappen": 11
+  },
+  "extra_geheugenproef": {
+    "gevraagd": 20,
+    "afgekeurd_in_ronde": 8,
+    "gc_gevraagd": true,
+    "alle_waargenomen_bronteksten_exact": true,
+    "fouten_laatste_ronde": {
+      "gui": [
+        {
+          "tekst": "ErrorDocument worker trapped: Out of bounds memory access (evaluating 'p.editsession_materialize_docx(this.__wbg_ptr)')",
+          "ronde": 0
+        }
+      ],
+      "console": []
+    },
+    "slotfout": "AssertionError('GUI of engine meldt fouten in de geheugenronde')"
+  },
+  "grens": "De oorspronkelijke negatieve ELF, proefcode en context zijn volledig bewaard en op checksums gecontroleerd. Geen aangetoonde oorzaak of reparatie van de Wasm-geheugentrap. De 45.27-correctie van de display-queryfoutafhandeling raakt deze afzonderlijke materialize_docx-route niet."
+}

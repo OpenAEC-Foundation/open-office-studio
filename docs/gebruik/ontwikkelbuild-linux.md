@@ -4,16 +4,17 @@ Een push naar GitHub werkt de broncode bij. De pagina Releases verandert alleen
 als er apart een uitgave wordt gepubliceerd. Een ontwikkelbuild is daarom
 beschikbaar als download bij GitHub Actions, zonder nieuwe release of tag.
 
-De gecontroleerde [45.25-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41737832305/artifacts/13280144142) is gebouwd uit
-`1a0aa52142d9857a7875be227ecbe8cb6c6cf1c0`. De [bouw en pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41737832305) slagen; de [downloadgegevens](../tests/2026-11-04-linux-dev-1a0aa52.json) leggen bronrevisie, checksums en testomvang vast.
+De gecontroleerde [45.26-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41746035510/artifacts/13284476489) is gebouwd uit
+`a84c9b3e36d9558bc551a805afb76173e8ee7e65`. De [bouw en pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41746035510) slagen; de [downloadgegevens](../tests/2026-11-04-linux-dev-a84c9b3.json) leggen bronrevisie, checksums en testomvang vast.
 Sluit een eerder geopende dev-versie na het bewaren voordat je de nieuwe start;
 beide gebruiken hetzelfde dev-profiel.
 
-De afzonderlijke geheugenroute op dezelfde bron is afgekeurd op het wachten
-op een actuele periodieke herstelkopie. De exacte binary en context zijn
-bewaard. Een lokale hertest en een afzonderlijke proef van het normale
-herstelinterval slagen; dit is geen volledige stabiliteitsacceptatie.
-Zie [herstelproef en bewijsgrenzen](../tests/writer-herstelinterval.md).
+De afzonderlijke geheugenroute op dezelfde bron doorstaat elf gewone herstel-
+en bewaarstappen, maar faalt in de achtste extra selectie-/geschiedenis-/GC-ronde
+op een Wasm-geheugentoegang buiten bereik bij `materialize_docx`. Alle 500
+bronalinea’s zijn op dat moment exact. De negatieve ELF en context zijn bewaard
+en gecontroleerd; de oorzaak is nog niet hersteld. De groene devpakketproef
+bewijst geen volledige stabiliteit. Zie [de exacte afkeuring](../tests/2026-11-04-writer-geheugen-45.26.json).
 
 1. Open [Linux-ontwikkelbuild](https://github.com/OpenAEC-Foundation/open-office-studio/actions/workflows/dev-linux.yml).
 2. Kies de nieuwste geslaagde uitvoering op `codex/native-rust-office`.
