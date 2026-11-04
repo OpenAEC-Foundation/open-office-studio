@@ -44,6 +44,7 @@ def main():
     p.add_argument('--versie', required=True)
     p.add_argument('--verwacht-rust-tekst', action='store_true', help='Vereis dat de gewone toetsreeks werkelijk via de native tekstcodec loopt.')
     p.add_argument('--verwacht-worker-layout', action='store_true', help='Vereis dat de gewone toetsreeks geen volledige pagina-indeling op de hoofdthread uitvoert.')
+    p.add_argument('--verwacht-native-base64', action='store_true', help='Vereis bij deze runtime dat iedere native tekstbatch de ingebouwde snapshotencoder gebruikt.')
     p.add_argument('--framebasis', action='store_true', help='Bewaar begrensde rendererframes van deze eigen proefbron na de invoermeting, met de eerste workerfout.')
     p.add_argument('--historische-registerwissels', action='store_true', help='Alleen voor vergelijking met een oude binary: registreer de canvaswissels zonder deze specifieke nieuwe acceptatie-eis.')
     p.add_argument('--herstelstart', action='store_true', help='Wacht op een echte eigen herstelkopie en toets Later, verder bewerken en daarna Herstellen in een nieuw tabblad.')
@@ -80,6 +81,8 @@ def main():
             extra.append('--verwacht-rust-tekst')
         if a.verwacht_worker_layout:
             extra.append('--verwacht-worker-layout')
+        if a.verwacht_native_base64:
+            extra.append('--verwacht-native-base64')
         if a.framebasis:
             extra.append('--framebasis')
         extra += ['--geheugenrondes', str(a.geheugenrondes)]
@@ -253,6 +256,21 @@ async def proef(a):
               window._nativeSessie = proefApi().getEditorRef().getYrsSession();
               window._nativeLees = {};
               window._nativeHerstel = [];
+              window._base64Descriptor = Object.getOwnPropertyDescriptor(Uint8Array.prototype, 'toBase64');
+              window._nativeBase64 = {beschikbaar: typeof _base64Descriptor?.value === 'function', calls: 0, bytes: 0, ms: 0};
+              window._base64Laatste = null;
+              if (_nativeBase64.beschikbaar) {
+                Object.defineProperty(Uint8Array.prototype, 'toBase64', {..._base64Descriptor, value: function(...args) {
+                  _nativeBase64.calls++; _nativeBase64.bytes += this.byteLength;
+                  const begin = performance.now();
+                  try {
+                    const resultaat = _base64Descriptor.value.apply(this, args);
+                    _base64Laatste = resultaat;
+                    return resultaat;
+                  }
+                  finally { _nativeBase64.ms += performance.now() - begin; }
+                }});
+              }
               window._workerBerichten = Object.create(null);
               window._workerPostOud = Worker.prototype.postMessage;
               Worker.prototype.postMessage = function(bericht, ...rest) {
@@ -282,7 +300,7 @@ async def proef(a):
             """)
             vanaf = await p.ev('_toetsenProef.length')
             await p.ev("""
-              window._tekstTransport = {aanvragen: [], antwoorden: 0, voorbereiding_ms: [], antwoord_ms: []};
+              window._tekstTransport = {aanvragen: [], antwoorden: 0, voorbereiding_ms: [], antwoord_ms: [], native_encoder_bevestigd: 0};
               _tekstTransport.invoke_wijzigbaar = Object.getOwnPropertyDescriptor(window.__TAURI_INTERNALS__, 'invoke')?.writable ?? null;
               window._tekstFetchOud = window.fetch;
               window._tekstDoel = window.__TAURI_INTERNALS__.convertFileSrc('writer_tekst_voorbereiden', 'ipc');
@@ -290,6 +308,7 @@ async def proef(a):
                 if (String(url) !== _tekstDoel) return _tekstFetchOud.call(this, url, gegevens, ...rest);
                 const a = JSON.parse(gegevens.body).aanvraag;
                 _tekstTransport.aanvragen.push(a.text);
+                if (typeof _base64Laatste === 'string' && a.snapshot === _base64Laatste) _tekstTransport.native_encoder_bevestigd++;
                 const begin = performance.now();
                 const response = await _tekstFetchOud.call(this, url, gegevens, ...rest), json = response.json.bind(response);
                 response.json = async () => {
@@ -312,6 +331,11 @@ async def proef(a):
             assert laatste == origineel[-1]+' Een proefzin.', 'Laatste invoer na keyup en flush niet exact'
             rapport['invoer_tot_bron_en_golven_ms'] = round((time.monotonic()-begin)*1000)
             rapport['rust_teksttransport'] = await p.ev("(()=>{window.fetch=_tekstFetchOud;return _tekstTransport})()")
+            rapport['native_base64'] = await p.ev("(()=>{if(_nativeBase64.beschikbaar)Object.defineProperty(Uint8Array.prototype,'toBase64',_base64Descriptor);delete window._base64Laatste;return _nativeBase64})()")
+            if a.verwacht_native_base64:
+                assert rapport['native_base64']['beschikbaar'], 'De runtime ondersteunt de gevraagde native encoder niet'
+                assert rapport['native_base64']['calls'] >= len(rapport['rust_teksttransport']['aanvragen']) > 0, 'Een native tekstbatch gebruikt de ingebouwde encoder niet'
+                assert rapport['rust_teksttransport']['native_encoder_bevestigd'] == len(rapport['rust_teksttransport']['aanvragen']), 'De IPC-snapshot wijkt af van de ingebouwde omzetting'
             if a.verwacht_rust_tekst:
                 assert ''.join(rapport['rust_teksttransport']['aanvragen']) == ' Een proefzin.', 'Gewone toetsreeks niet geheel via native Rust'
                 assert rapport['rust_teksttransport']['antwoorden'] == len(rapport['rust_teksttransport']['aanvragen']), 'Native tekstantwoord ontbreekt'

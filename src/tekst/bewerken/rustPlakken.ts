@@ -2,6 +2,7 @@
 import { Buffer } from "buffer";
 import { applyClipboardFragment, sameYrsSelection, storyOffsetForLoc, type DocxClipboardFragment, type YrsAuthor, type YrsLoc, type YrsSelection, type YrsSession, type YrsStoryRange } from "@betteroffice/docx/yrs";
 import { neemPlakAfronding } from "./plakAfronding";
+import { snapshotNaarBase64 } from "./binaireSnapshot";
 
 export interface RustPlakAanvraag {
   schema: 1;
@@ -109,7 +110,7 @@ export function maakRustPlakKoppeling(opties: RustPlakOpties) {
             opties.meting?.({ route: "opnieuw", poging }); continue;
           }
           const aanvraag: RustPlakAanvraag = { schema: 1, requestId: crypto.randomUUID(), documentId, sourceVersion,
-            snapshotSha256, snapshot: Buffer.from(snapshot).toString("base64"), clientId: sessie.clientId, range, fragment, author: auteur };
+            snapshotSha256, snapshot: snapshotNaarBase64(snapshot), clientId: sessie.clientId, range, fragment, author: auteur };
           const antwoord = await opties.transport(aanvraag);
           if (!geldig()) return false;
           // Dezelfde client-id mag uitsluitend tegen de nog identieke bron schrijven.
