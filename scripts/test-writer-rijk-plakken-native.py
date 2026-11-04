@@ -333,7 +333,9 @@ async def proef(a):
             fouten = await p.fouten()
             r['gui_fouten'] = fouten['gui']
             r['console_fouten'] = fouten['console']
+            r['engine_fouten'] = fouten['engine']
             assert not r['gui_fouten'], 'De broncontroles slagen, maar de GUI meldt fouten'
+            assert not r['engine_fouten'], 'De engine heeft oorspronkelijke kritieke fouten vastgelegd'
             assert not r['console_fouten'], 'De engine meldt consolefouten, ook zonder zichtbare melding'
             assert r['bewaar_na_ronde'] == 0 or r.get('tussenbewaring', {}).get('na_ronde') == r['bewaar_na_ronde'], 'Tussenbewaring is niet uitgevoerd'
             r['geslaagd'] = True

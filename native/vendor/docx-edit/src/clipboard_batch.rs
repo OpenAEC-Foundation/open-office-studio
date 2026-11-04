@@ -3,7 +3,7 @@
 //! De aanroeper neemt pas het volledige resultaat over; fouten wijzigen nooit de bronreplica.
 use serde::Deserialize;
 use serde_json::Value;
-use yrs::Any;
+use yrs::{Any, StateVector, updates::decoder::Decode};
 use crate::{EditingDoc, EditCtx, FormatPolicy, Loc, LocRange, OpError, OpResult, Position, StoryRange, story_ref};
 use crate::op::global_of_loc;
 
@@ -19,6 +19,33 @@ pub struct ClipboardBatchResult {
     pub update: Vec<u8>,
     pub base_vector: Vec<u8>,
     pub caret: Loc,
+}
+
+/// OpenAEC: de bron wordt eenmaal geïmporteerd. Haar bytes blijven van vóór
+/// het voorstel en de bronvector moet inhoudelijk bij de editor passen.
+pub struct ConfirmedClipboardBatchResult {
+    pub snapshot: Vec<u8>,
+    pub vector: Vec<u8>,
+    pub batch: ClipboardBatchResult,
+}
+pub fn prepare_confirmed_clipboard_fragment(base: Option<&[u8]>, update: &[u8], client_id: u64,
+    expected_vector: &[u8], range: &LocRange, fragment: &Value, ctx: &EditCtx, max_source_bytes: usize) -> OpResult<ConfirmedClipboardBatchResult> {
+    let expected = StateVector::decode_v1(expected_vector).map_err(|e|ongeldig(e.to_string()))?;
+    let fragment: Fragment = serde_json::from_value(fragment.clone()).map_err(|e|ongeldig(e.to_string()))?;
+    if range.start.story != range.end.story { return Err(ongeldig("Bereik loopt over verschillende verhalen")); }
+    let doc = EditingDoc::new(client_id);
+    doc.keep_deleted();
+    if let Some(base) = base { doc.apply_verbatim_v1(base).map_err(OpError::from)?; }
+    doc.apply_verbatim_v1(update).map_err(OpError::from)?;
+    if doc.holds_pending_update() { return Err(ongeldig("De Writer-bron bevat nog onopgeloste afhankelijkheden")); }
+    let vector = doc.encode_state_vector_v1();
+    if StateVector::decode_v1(&vector).map_err(|e|ongeldig(e.to_string()))? != expected {
+        return Err(ongeldig("De samengestelde Writer-bron heeft een andere bronvector"));
+    }
+    let snapshot = doc.encode_state_as_update_v1();
+    if snapshot.len() > max_source_bytes { return Err(ongeldig("De samengestelde Writer-bron is te groot")); }
+    let batch = prepare_clipboard_in_doc(&doc, range, fragment, ctx)?;
+    Ok(ConfirmedClipboardBatchResult { snapshot, vector, batch })
 }
 fn ongeldig(tekst: impl Into<String>) -> OpError { OpError::InvalidFormatValue(tekst.into()) }
 fn afbeelding(value: &Value) -> OpResult<Vec<(String,Any)>> {
@@ -44,6 +71,9 @@ pub fn prepare_clipboard_fragment(snapshot:&[u8],client_id:u64,range:&LocRange,f
     let doc=EditingDoc::new(client_id);
     doc.keep_deleted();
     doc.apply_update_v1(snapshot).map_err(OpError::from)?;
+    prepare_clipboard_in_doc(&doc,range,fragment,ctx)
+}
+fn prepare_clipboard_in_doc(doc: &EditingDoc,range: &LocRange,fragment: Fragment,ctx: &EditCtx) -> OpResult<ClipboardBatchResult> {
     let base_vector=doc.encode_state_vector_v1();
     let start=doc.locate(&range.start)?.index;
     let end=doc.locate(&range.end)?.index;

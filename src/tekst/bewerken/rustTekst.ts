@@ -1,9 +1,12 @@
 /** Gewone tekst gebruikt dezelfde bron- en levensduurbewaking als rijke plakacties. */
 import type { YrsAuthor, YrsLoc, YrsSession } from "@betteroffice/docx/yrs";
-import { maakRustPlakKoppeling, type RustPlakAntwoord, type RustPlakOpties } from "./rustPlakken";
+import { maakRustPlakKoppeling, type RustTransportAntwoord, type RustPlakOpties } from "./rustPlakken";
+import { maakRustBron } from "./rustBron";
 
 export interface RustTekstAanvraag {
-  schema: 1;
+  schema: 1 | 2;
+  basis?: string;
+  sourceVector?: string;
   requestId: string;
   documentId: string;
   sourceVersion: string;
@@ -15,11 +18,15 @@ export interface RustTekstAanvraag {
   author?: YrsAuthor;
 }
 
-export function maakRustTekstKoppeling(opties: Omit<RustPlakOpties, "transport"> & {
-  transport: (aanvraag: RustTekstAanvraag) => Promise<RustPlakAntwoord>;
+export function maakRustTekstKoppeling(opties: Omit<RustPlakOpties, "transport" | "bron"> & {
+  transport: (aanvraag: RustTekstAanvraag) => Promise<RustTransportAntwoord>;
+  synchronisatie?: { vergeten: (documentId: string) => void };
 }) {
+  const documentId = opties.documentId ?? crypto.randomUUID();
+  const bron = opties.synchronisatie ? maakRustBron(() => opties.synchronisatie!.vergeten(documentId)) : undefined;
   const koppeling = maakRustPlakKoppeling({
     ...opties,
+    documentId, bron,
     transport: aanvraag => {
       const { range, fragment, ...bron } = aanvraag;
       if (range.start.paraId !== range.end.paraId || range.start.offset !== range.end.offset

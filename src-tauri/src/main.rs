@@ -213,6 +213,7 @@ fn main() {
         // Updates (#26): de plugin controleert handtekeningen; kanaal en bediening in updates.rs.
         .plugin(tauri_plugin_updater::Builder::new().build())
         .manage(updates::Updates::default())
+        .manage(office_writer_plakken::BronVoorraad::default())
         .manage(vensters::Vensters::default())
         .manage(werkbestanden::Werkbestanden::default())
         .manage(recent::Recent::default())
@@ -236,10 +237,12 @@ fn main() {
             vensters::bij_venstergebeurtenis(venster, gebeurtenis);
             werkbestanden::bij_venstergebeurtenis(venster, gebeurtenis);
             herstel::bij_venstergebeurtenis(venster, gebeurtenis);
+            writer_plakken::bij_venstergebeurtenis(venster, gebeurtenis);
         })
         .invoke_handler(tauri::generate_handler![
             writer_plakken::writer_plakken_voorbereiden,
             writer_plakken::writer_tekst_voorbereiden,
+            writer_plakken::writer_bron_vergeten,
             bewaar_kopie,
             lettertypen::systeemlettertypen,
             lettertypen::systeemlettertype,

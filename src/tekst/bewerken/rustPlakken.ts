@@ -5,7 +5,9 @@ import { neemPlakAfronding } from "./plakAfronding";
 import { snapshotNaarBase64 } from "./binaireSnapshot";
 
 export interface RustPlakAanvraag {
-  schema: 1;
+  schema: 1 | 2;
+  basis?: string;
+  sourceVector?: string;
   requestId: string;
   documentId: string;
   sourceVersion: string;
@@ -26,12 +28,24 @@ export interface RustPlakAntwoord {
   delta: string;
   caret: YrsLoc;
   preparationMs: number;
+  basis?: string;
+  bronvector?: string;
+  retryFull?: false;
+}
+export type RustBronOpnieuw = Pick<RustPlakAntwoord, "schema" | "requestId" | "documentId" | "sourceVersion" | "snapshotSha256" | "clientId"> & { retryFull: true };
+export type RustTransportAntwoord = RustPlakAntwoord | RustBronOpnieuw;
+export interface RustBronKoppeling {
+  lees: (sessie: YrsSession) => { bytes: Uint8Array; basis?: string; sourceVector: string };
+  bevestig: (sessie: YrsSession, aanvraag: RustPlakAanvraag, antwoord: RustPlakAntwoord) => void;
+  herbegin: () => void;
+  vergeet: () => void;
 }
 export interface RustPlakOpties {
-  transport: (aanvraag: RustPlakAanvraag) => Promise<RustPlakAntwoord>;
+  transport: (aanvraag: RustPlakAanvraag) => Promise<RustTransportAntwoord>;
   gewijzigd: () => void;
   fout?: (fout: Error) => void;
   documentId?: string;
+  bron?: RustBronKoppeling;
   /** Alleen meet-/testgegevens; geen documentinhoud. */
   meting?: (gegevens: { route: "rust" | "opnieuw" | "synchroon"; poging: number }) => void;
 }
@@ -47,12 +61,17 @@ async function hash(bytes: Uint8Array<ArrayBuffer>): Promise<string> {
   const som = new Uint8Array(await crypto.subtle.digest("SHA-256", bytes));
   return [...som].map(n => n.toString(16).padStart(2, "0")).join("");
 }
-function antwoordDelta(antwoord: RustPlakAntwoord, aanvraag: RustPlakAanvraag): Uint8Array {
-  if (antwoord.schema !== 1 || antwoord.requestId !== aanvraag.requestId || antwoord.documentId !== aanvraag.documentId
+function antwoordBinding(antwoord: RustTransportAntwoord, aanvraag: RustPlakAanvraag) {
+  if (antwoord.schema !== aanvraag.schema || antwoord.requestId !== aanvraag.requestId || antwoord.documentId !== aanvraag.documentId
     || antwoord.sourceVersion !== aanvraag.sourceVersion || antwoord.snapshotSha256 !== aanvraag.snapshotSha256
-    || antwoord.clientId !== aanvraag.clientId || !cursor(antwoord.caret) || antwoord.caret.story !== aanvraag.range.story) {
+    || antwoord.clientId !== aanvraag.clientId) {
     throw new Error("Het plakantwoord hoort niet bij deze documentopdracht");
   }
+}
+function antwoordDelta(antwoord: RustPlakAntwoord, aanvraag: RustPlakAanvraag): Uint8Array {
+  antwoordBinding(antwoord, aanvraag);
+  if (!cursor(antwoord.caret) || antwoord.caret.story !== aanvraag.range.story)
+    throw new Error("Het plakantwoord hoort niet bij deze documentopdracht");
   if (typeof antwoord.delta !== "string" || !antwoord.delta.length
     || antwoord.delta.length % 4 !== 0 || !/^[A-Za-z0-9+/]+={0,2}$/.test(antwoord.delta)) {
     throw new Error("Het plakantwoord bevat geen geldige documentgegevens");
@@ -69,8 +88,8 @@ export function maakRustPlakKoppeling(opties: RustPlakOpties) {
   const documentId = opties.documentId ?? crypto.randomUUID();
   let actief = false, levensduur = 0;
   return {
-    activeer() { actief = true; levensduur++; },
-    stop() { actief = false; levensduur++; },
+    activeer() { actief = true; levensduur++; opties.bron?.vergeet(); },
+    stop() { actief = false; levensduur++; opties.bron?.vergeet(); },
     async plak(sessie: YrsSession, bereik: YrsStoryRange, fragment: DocxClipboardFragment, auteur: YrsAuthor | undefined, zelfdeEditor: () => boolean, klembordGebeurtenis?: Event, opnemen: (mutatie: () => void) => void = mutatie => mutatie()): Promise<boolean> {
       const bereidAfronding = neemPlakAfronding(klembordGebeurtenis);
       const eigenLevensduur = levensduur;
@@ -101,7 +120,8 @@ export function maakRustPlakKoppeling(opties: RustPlakOpties) {
           if (!geldig()) return false;
           const range = actueelBereik(), generatie = bronGeneratie;
           const afronden = bereidAfronding?.(sessie, range);
-          const snapshot = new Uint8Array(sessie.encodeStateAsUpdate());
+          const bron = opties.bron?.lees(sessie);
+          const snapshot = new Uint8Array(bron?.bytes ?? sessie.encodeStateAsUpdate());
           if (snapshot.length > MAX_SNAPSHOT_BYTES) break;
           const sourceVersion = sessie.version();
           const snapshotSha256 = await hash(snapshot);
@@ -109,7 +129,7 @@ export function maakRustPlakKoppeling(opties: RustPlakOpties) {
           if (generatie !== bronGeneratie || sourceVersion !== sessie.version()) {
             opties.meting?.({ route: "opnieuw", poging }); continue;
           }
-          const aanvraag: RustPlakAanvraag = { schema: 1, requestId: crypto.randomUUID(), documentId, sourceVersion,
+          const aanvraag: RustPlakAanvraag = { schema: bron ? 2 : 1, ...(bron ? { sourceVector: bron.sourceVector } : {}), ...(bron?.basis ? { basis: bron.basis } : {}), requestId: crypto.randomUUID(), documentId, sourceVersion,
             snapshotSha256, snapshot: snapshotNaarBase64(snapshot), clientId: sessie.clientId, range, fragment, author: auteur };
           const antwoord = await opties.transport(aanvraag);
           if (!geldig()) return false;
@@ -117,7 +137,14 @@ export function maakRustPlakKoppeling(opties: RustPlakOpties) {
           if (generatie !== bronGeneratie || sourceVersion !== sessie.version()) {
             opties.meting?.({ route: "opnieuw", poging }); continue;
           }
+          if (antwoord.retryFull === true) {
+            antwoordBinding(antwoord, aanvraag);
+            if (!opties.bron || aanvraag.schema !== 2) throw new Error("Onverwacht verzoek om een volledige Writer-bron");
+            opties.bron.herbegin();
+            opties.meting?.({ route: "opnieuw", poging }); continue;
+          }
           const delta = antwoordDelta(antwoord, aanvraag);
+          opties.bron?.bevestig(sessie, aanvraag, antwoord);
           const verplaatsCursor = sameYrsSelection(sessie.selection(), actueleSelectie());
           opnemen(() => {
             sessie.applyLocalUpdate(delta);

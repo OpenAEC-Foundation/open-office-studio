@@ -3455,5 +3455,5 @@ mod tests {
 pub mod bridge;
 
 mod clipboard_batch;
-pub use clipboard_batch::{prepare_clipboard_fragment,ClipboardBatchResult};
+pub use clipboard_batch::{prepare_clipboard_fragment,ClipboardBatchResult,prepare_confirmed_clipboard_fragment,ConfirmedClipboardBatchResult};
 

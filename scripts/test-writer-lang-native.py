@@ -43,6 +43,7 @@ def main():
     p.add_argument('--uitvoer', type=Path, required=True)
     p.add_argument('--versie', required=True)
     p.add_argument('--verwacht-rust-tekst', action='store_true', help='Vereis dat de gewone toetsreeks werkelijk via de native tekstcodec loopt.')
+    p.add_argument('--verwacht-incrementele-bron', action='store_true', help='Vereis schema 2 en kleine bevestigde brondelta’s na de eerste native invoer.')
     p.add_argument('--verwacht-worker-layout', action='store_true', help='Vereis dat de gewone toetsreeks geen volledige pagina-indeling op de hoofdthread uitvoert.')
     p.add_argument('--verwacht-worker-lettertypen', action='store_true', help='Vereis dat gewone invoer haar volledige lettertypebehoeften in de worker bepaalt.')
     p.add_argument('--lettertypebewijs', action='store_true', help='Vergelijk vier fontvarianten na heropenen met de volledige hostreferentie en onafhankelijke DOCX-opmaak.')
@@ -83,6 +84,8 @@ def main():
         extra = ['--historische-registerwissels'] if a.historische_registerwissels else []
         if a.verwacht_rust_tekst:
             extra.append('--verwacht-rust-tekst')
+        if a.verwacht_incrementele_bron:
+            extra.append('--verwacht-incrementele-bron')
         if a.verwacht_worker_layout:
             extra.append('--verwacht-worker-layout')
         if a.verwacht_worker_lettertypen:
@@ -316,7 +319,7 @@ async def proef(a):
             """)
             vanaf = await p.ev('_toetsenProef.length')
             await p.ev("""
-              window._tekstTransport = {aanvragen: [], antwoorden: 0, voorbereiding_ms: [], antwoord_ms: [], native_encoder_bevestigd: 0};
+              window._tekstTransport = {aanvragen: [], bronnen: [], antwoorden: 0, voorbereiding_ms: [], antwoord_ms: [], native_encoder_bevestigd: 0};
               _tekstTransport.invoke_wijzigbaar = Object.getOwnPropertyDescriptor(window.__TAURI_INTERNALS__, 'invoke')?.writable ?? null;
               window._tekstFetchOud = window.fetch;
               window._tekstDoel = window.__TAURI_INTERNALS__.convertFileSrc('writer_tekst_voorbereiden', 'ipc');
@@ -324,6 +327,7 @@ async def proef(a):
                 if (String(url) !== _tekstDoel) return _tekstFetchOud.call(this, url, gegevens, ...rest);
                 const a = JSON.parse(gegevens.body).aanvraag;
                 _tekstTransport.aanvragen.push(a.text);
+                _tekstTransport.bronnen.push({schema:a.schema,basis:typeof a.basis==='string',base64_bytes:a.snapshot.length});
                 if (typeof _base64Laatste === 'string' && a.snapshot === _base64Laatste) _tekstTransport.native_encoder_bevestigd++;
                 const begin = performance.now();
                 const response = await _tekstFetchOud.call(this, url, gegevens, ...rest), json = response.json.bind(response);
@@ -355,6 +359,13 @@ async def proef(a):
             if a.verwacht_rust_tekst:
                 assert ''.join(rapport['rust_teksttransport']['aanvragen']) == ' Een proefzin.', 'Gewone toetsreeks niet geheel via native Rust'
                 assert rapport['rust_teksttransport']['antwoorden'] == len(rapport['rust_teksttransport']['aanvragen']), 'Native tekstantwoord ontbreekt'
+            if a.verwacht_incrementele_bron:
+                bronnen = rapport['rust_teksttransport']['bronnen']
+                assert len(bronnen) >= 2 and all(b['schema'] == 2 for b in bronnen), 'Geen volledige incrementele invoerroute'
+                volledig = [b['base64_bytes'] for b in bronnen if not b['basis']]
+                deltas = [b['base64_bytes'] for b in bronnen if b['basis']]
+                assert volledig and deltas, 'Volledige bron of bevestigde delta ontbreekt'
+                assert max(deltas) * 20 < min(volledig), 'De brondelta’s blijven te groot'
             rapport['paginavergelijkingen_tijdens_invoer'] = await p.ev('(()=>{Node.prototype.compareDocumentPosition=_canvasVergelijkOrig;return _canvasVergelijk})()')
             rapport['documentuitlezingen_tijdens_invoer'] = await p.ev("(()=>{let gevolgd=_docSeen.has(proefApi());Object.defineProperty(_docRef,'current',{..._docDescriptor,value:_docValue});for(let[a,oud]of _docOrig)a.getDocument=oud;return{..._docProef,actieve_api_gevolgd:gevolgd,omvang:'GetDocument-aanroepen tijdens native invoer tot bron-/golflijngereedheid. De stabiele React-ref volgt vervanging van API-objecten; geen CPU-profiler.'}})()")
             assert rapport['documentuitlezingen_tijdens_invoer']['actieve_api_gevolgd'], 'Actieve API buiten de invoermeting gevallen'

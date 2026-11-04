@@ -1,7 +1,7 @@
 # Native Open Office Studio
 
 De migratie verplaatst ook de volledige interface naar Rust. De gekozen vervolgrichting is **Rust/Dioxus met WebView en behoud van de oorspronkelijke HTML/CSS**; zie [de WebView-crate](crates/office-webview/README.md). Deze nieuwe route is nog een eerste aansluiting. De eerdere Iced-preview en gepinde OpenAEC Blueprint-bibliotheek blijven als tussenstap en gecontroleerde referentie beschikbaar. De beschrijvingen en afbeeldingen hieronder betreffen die Iced-preview, tenzij anders vermeld.
-De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De laatste volledig lokaal gecontroleerde Iced-bouwstap is **2026.45.0-alpha.46**. De huidige ontwikkelbron is **2026.45.0-alpha.52**. De gedeelde Writer-kern bereidt nu ook gewone tekstinvoer voor de bestaande Tauri-interface voor; de zelfstandige Rust-WebView-interface blijft een eerste aansluiting. De volledige migratie is nog open.
+De bestaande release 2026-W44.8 blijft de referentie voor functionele en visuele gelijkwaardigheid. De laatste volledig lokaal gecontroleerde Iced-bouwstap is **2026.45.0-alpha.46**. De huidige ontwikkelbron is **2026.45.0-alpha.53**. De gedeelde Writer-kern bereidt gewone tekstinvoer voor de bestaande Tauri-interface voor en synchroniseert haar bron incrementeel met een venstergebonden bevestigde spiegel; de zelfstandige Rust-WebView-interface blijft een eerste aansluiting. De volledige migratie is nog open.
 
 [De brongebonden Writer-tekstcodec](../docs/tests/writer-rust-tekst.md) is met onafhankelijke invoer-, geschiedenis- en DOCX-proeven gecontroleerd. Dat bewijst geen volledige interface- of snelheidsacceptatie.
 
