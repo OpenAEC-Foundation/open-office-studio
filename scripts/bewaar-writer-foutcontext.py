@@ -82,7 +82,7 @@ def bewaar(programma, rapporten, uitvoer, appimage_map=None, systeem=True):
                  'herstel-afwijkend.docx', 'herstel-afwijkend.json',
                  'Ontwerpnotitie.docx', 'tussenbewaring.docx', 'geplakt.docx',
                  'Lijstenproef.docx', 'Klembordproef.docx', 'Markeerkleurproef.docx', 'Rendererproef.docx',
-                 'programma.log', 'afgekeurd.png', 'framebasis.json', 'framebasis.inspectiefout.json', 'workerbron.json']:
+                 'programma.log', 'afgekeurd.png', 'framebasis.json', 'framebasis.inspectiefout.json', 'workerbron.json', 'workerbron.inspectiefout.json']:
         bron = rapport.parent / naam
         if bron.is_file():
             doel = inhoud / 'proef' / naam

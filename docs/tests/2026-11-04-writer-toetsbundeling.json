@@ -1,0 +1,242 @@
+{
+  "besluit": "Niet opnemen: geen betrouwbare invoerwinst in de afwisselende herhaling. Productbron en SDK hersteld naar 45.33.",
+  "productversie": "2026.45.33",
+  "alleen_lokale_proefversie": "2026.45.34",
+  "proefbinary_sha256": "2224e709cdede1e05d9779e4bc9ee0394d794f53aa5d4e8984511a5e1134f2b9",
+  "basiscommit": "adeffb9ec64d6185ce5ce874c01d86e23ec676bd",
+  "SDK_verschil": {
+    "voor_sha256": "db02522c81f8a1f81a3e4ef909fd860b234729c53c8ae034dd797d4d9e2d9319",
+    "na_sha256": "06384515818f999c4ccd908f3c269195d175cb831e5a649c998f53fa361bb8bf",
+    "verschil": {
+      "oud": "kt.current===me&&(kt.current=null),",
+      "nieuw": "if(_openaecNativeTekst){await new Promise(klaar=>setTimeout(klaar,0));if(!$(u))return}kt.current===me&&(kt.current=null);",
+      "plaats": 96053
+    }
+  },
+  "kandidaatbron_sha256": {
+    "src/tekst/bewerken/tekstInvoerRoute.test.ts": "08d78e7b152fabeca8901b284ee37d0a5fab2ff42cd9f68b88de25e05810f69b",
+    "src/tekst/invoer-tijdspan.test.ts": "529d22f09472a93a8be4cb53c6ac3fe752d3bd78ca13844ff0ecf5caac4f244a",
+    "patches/@betteroffice__docx-react@0.5.1.patch": "36c183cb0ab30438857dc2e0d821fbf963d0dcf7493405074923719dc39eb43e",
+    "pnpm-lock.yaml": "aec840c01fa62efb09be2e3a6b5113a1cdc1cf445a36d763fe41688ba9b11de0",
+    "pnpm-workspace.yaml": "5492dff7e7d9e355d84f0eaa1ca470da4d851911328fe9edaf72ed5f2a000569",
+    "package.json": "55f0e055219016a2f1c213115bf720445511c0195ab16edfa0ba011c416e292b",
+    "versie.json": "c55e29c7a5627c376d2fe0f8170fa2525c59bc2676815ecfebc1f1bccd10b23f",
+    "src-tauri/Cargo.toml": "2681e3da96f242788cddf4a7a7ae581a19e70b713375d2d383d9d55000b16b89",
+    "src-tauri/Cargo.lock": "75a322f521e99ac77b636d5cc512206f3274b6919511a55fd76750d50fef96e7",
+    "src-tauri/tauri.conf.json": "0a06aa452a5e0b62f61c2ca13df1c39b65f201b5e1f1b08a86ebad5b1594ada5",
+    "apps/database-studio/src-tauri/Cargo.toml": "d915c20251cb1f150a722b7c59556953e31978eccc1b2b84fda3c7da096102e1",
+    "apps/database-studio/src-tauri/Cargo.lock": "ec42f2747770fafe1c7d836e23ed844b88d28570ecbf1d7dc000196eebdba469",
+    "apps/database-studio/src-tauri/tauri.conf.json": "87ccfe54ce4b9579342d9b146ba9d97e56d70611bd3e79e3abac058b804ae497"
+  },
+  "metingen": [
+    {
+      "proef": "gui-33-voor",
+      "geslaagd": true,
+      "programma_sha256": "55907bfefea2a9753983b719c73c0b4d9f126ef541ec193cbd7fa9730ade5f39",
+      "script_sha256": "520fb41c067de704415b224f58dbd582d7a9b352971230fd631a9d266cda5879",
+      "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+      "invoer_ms": 1773,
+      "native_bundels": [
+        " ",
+        "Een ",
+        "p",
+        "ro",
+        "efz",
+        "i",
+        "n."
+      ],
+      "rAF_p95_ms": 137,
+      "rAF_maximum_ms": 162,
+      "DOM_metingen": 1059,
+      "spellingcontrole": true
+    },
+    {
+      "proef": "gui-34",
+      "geslaagd": true,
+      "programma_sha256": "2224e709cdede1e05d9779e4bc9ee0394d794f53aa5d4e8984511a5e1134f2b9",
+      "script_sha256": "520fb41c067de704415b224f58dbd582d7a9b352971230fd631a9d266cda5879",
+      "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+      "invoer_ms": 1536,
+      "native_bundels": [
+        " ",
+        "Een ",
+        "pro",
+        "ef",
+        "zin",
+        "."
+      ],
+      "rAF_p95_ms": 137,
+      "rAF_maximum_ms": 164,
+      "DOM_metingen": 1020,
+      "spellingcontrole": true
+    },
+    {
+      "proef": "gui-34-herhaling",
+      "geslaagd": true,
+      "programma_sha256": "2224e709cdede1e05d9779e4bc9ee0394d794f53aa5d4e8984511a5e1134f2b9",
+      "script_sha256": "520fb41c067de704415b224f58dbd582d7a9b352971230fd631a9d266cda5879",
+      "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+      "invoer_ms": 2223,
+      "native_bundels": [
+        " ",
+        "Een",
+        " ",
+        "proefz",
+        "i",
+        "n."
+      ],
+      "rAF_p95_ms": 161,
+      "rAF_maximum_ms": 175,
+      "DOM_metingen": 1814,
+      "spellingcontrole": true
+    },
+    {
+      "proef": "gui-33-na",
+      "geslaagd": true,
+      "programma_sha256": "55907bfefea2a9753983b719c73c0b4d9f126ef541ec193cbd7fa9730ade5f39",
+      "script_sha256": "520fb41c067de704415b224f58dbd582d7a9b352971230fd631a9d266cda5879",
+      "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+      "invoer_ms": 1596,
+      "native_bundels": [
+        " ",
+        "Een ",
+        "p",
+        "r",
+        "oefzi",
+        "n."
+      ],
+      "rAF_p95_ms": 141,
+      "rAF_maximum_ms": 170,
+      "DOM_metingen": 1032,
+      "spellingcontrole": true
+    }
+  ],
+  "bewijsbestanden": {
+    "gui-33-voor": {
+      "pad": "writer-toetsbundeling/gui-33-voor.json.gz",
+      "sha256": "9db1791171f3f2f65f91ca806866b34730b5f1e682779ec187f217a9439ae34d",
+      "gzip_sha256": "675e247d33c869e9383d7f0ce1fa6de28853d5436dbf405e97494339e0216af1"
+    },
+    "gui-34": {
+      "pad": "writer-toetsbundeling/gui-34.json.gz",
+      "sha256": "3a0dc47cd501e3dfc0e5f30dd0c75d615cc101145ec2bafaf8467d72da4434bb",
+      "gzip_sha256": "00a761c5775b672214bed6ad9a1f75eedc90f8c7f319353ba02ae2f1ed18c9d3"
+    },
+    "gui-34-herhaling": {
+      "pad": "writer-toetsbundeling/gui-34-herhaling.json.gz",
+      "sha256": "4b1f13a3b75805621107ee7902262e418b9cfc5a71ad7acc7e1edd0f1742e828",
+      "gzip_sha256": "49f9588783eb423147ccdbd91d5f16b0e11606cc87988baefc06166e3ab93b05"
+    },
+    "gui-33-na": {
+      "pad": "writer-toetsbundeling/gui-33-na.json.gz",
+      "sha256": "9a1b08d0e6a54e7485d5e743b06f2f336a0c69e8edf12e8ea1ce0f0310d9d6f5",
+      "gzip_sha256": "cc965dd4b69fcb30764ece917e6497d72dd38a8a419456a4cd409e0b7069fa8d"
+    },
+    "cpu-45.33": {
+      "pad": "writer-toetsbundeling/cpu-45.33.json.gz",
+      "sha256": "9c1098058e0cb32865090ca54dfc20952c783416709ad0d4216626ac7ea7e05c",
+      "gzip_sha256": "b30297186b8fee5219a8582a6b3f85e781487347ff98e915ccd2ff95a585c3fe"
+    },
+    "cpu-45.33-bronnen": {
+      "pad": "writer-toetsbundeling/cpu-45.33-bronnen.json.gz",
+      "sha256": "5fe3544ed4d82542b5b23a615e860dfddc36ae01566d5dcb2ba758df656d2815",
+      "gzip_sha256": "b44649618c15836b6c7fb5131bfc14b4cca9f2a586abb0ed94f309ef9f5a54f0"
+    },
+    "cpu-45.33-ruw": {
+      "pad": "writer-toetsbundeling/cpu-45.33-ruw.json.gz",
+      "sha256": "d81b22ca56a003ae191e8a4c534df0e934c3350b32227191a560dc84a8785bcd",
+      "gzip_sha256": "53f6ef35b9e21fb9974266da16dd5ace293539824d50d1806e3be5a8ef7f40d0"
+    },
+    "cpu-attributie": {
+      "pad": "writer-toetsbundeling/cpu-attributie.json.gz",
+      "sha256": "d6a9c570bbbae227aa26b4e0924ae2a981fee1c97c1954cfe75bd969e1a139b5",
+      "gzip_sha256": "975aaad87e44f78b3e935ec482b6592d85ba3c3a71045013534b3ab4cf7c0219"
+    },
+    "workerbron-afsluiten": {
+      "pad": "writer-toetsbundeling/workerbron-afsluiten.json.gz",
+      "sha256": "e73c8c017ed696dd07fe6577b804068300880f93107b9816821394d97ca65da5",
+      "gzip_sha256": "e929b0d4fe61bf31a32795c717b6a46a742b739d4b2b1d8102539d5e223fbeb1"
+    },
+    "workerbron-afsluiten-bron": {
+      "pad": "writer-toetsbundeling/workerbron-afsluiten-bron.json.gz",
+      "sha256": "8ac1856486a1db79de063b41b9765bd7999e8b36818f1784d519091c200d083f",
+      "gzip_sha256": "dba57ec7050e6150a85e33e11dacbb52648550d2be9812834c1ae2b4895d4870"
+    }
+  },
+  "controles_kandidaat": {
+    "frontendtests": 1775,
+    "typescript": true,
+    "native_bouw": true,
+    "vier_native_langdocumentproeven": true,
+    "proef_voor": {
+      "gericht": 18,
+      "groen": 16,
+      "rood": 2
+    },
+    "proef_na": {
+      "gericht": 18,
+      "groen": 18,
+      "rood": 0
+    }
+  },
+  "grenzen": [
+    "De gerichte callbackproef bundelt tijdens de nieuwe toelatingspauze en bewaakt de levensduur. Dit bewijst geen snelheid in de echte desktop.",
+    "Alle vier native rondes behouden hun volledige bron-/bewaar-/heropencontroles en de zeven venstertoestanden van spelling.",
+    "Een eerste volledige testronde faalde op een fixture die onmiddellijke verzending aannam. Een expliciet werkelijk-verzonden-signaal behield dezelfde drie tijdspan-/tekstasserties; daarna slaagden alle 1775 kandidaatproeven.",
+    "Geen algemene snelheids-, platform-, migratie- of pixelpariteitsacceptatie. Kandidaat niet gepusht of geïnstalleerd."
+  ],
+  "CPU_attributie": {
+    "hoofdthread_samples": 788,
+    "React_renderpad_samples": 213,
+    "native_plakroute_samples": 162,
+    "lettertypebehoeften_samples": 128,
+    "font_en_react_overlap_samples": 0,
+    "exacte_scriptbronnen": [
+      {
+        "url": "tauri://localhost/assets/chunk-XUXC3ZKS-E3eDqbvy.js",
+        "bestand": "bron-chunk-XUXC3ZKS-E3eDqbvy.js.gz",
+        "bytes": 12686,
+        "sha256": "eee330f3b8e3bc95e9105349b5f3755d4e1027ce403e514b26acf44e5351ef66"
+      },
+      {
+        "url": "tauri://localhost/assets/core-BUhCcD2K.js",
+        "bestand": "bron-core-BUhCcD2K.js.gz",
+        "bytes": 2695,
+        "sha256": "bd9612a6a3f9b04eb26fc2f333f1dde54b6c0796cb515b6dfbc30aac2db7d176"
+      },
+      {
+        "url": "tauri://localhost/assets/editors-DJYk2j0c.js",
+        "bestand": "bron-editors-DJYk2j0c.js.gz",
+        "bytes": 1701369,
+        "sha256": "04e2303da8e7ef260adcf99f31e978f9f93f512db3ba7c74805727103f2ffb37"
+      },
+      {
+        "url": "tauri://localhost/assets/index-DH8FkXgZ.js",
+        "bestand": "bron-index-DH8FkXgZ.js.gz",
+        "bytes": 2888204,
+        "sha256": "3a0f022bcfddbd939924245e2dc2c145e5016e46169ae22f88d0257e07cce3e9"
+      }
+    ],
+    "grens": "Aantallen steekproeven met runtimekalibratie, geen proces-CPUduur. Bronbestanden zijn pas na profileren uit dezelfde eigen binary opgehaald; volledige bronbytes blijven lokaal.",
+    "protocol": "https://raw.githubusercontent.com/WebKit/WebKit/main/Source/JavaScriptCore/inspector/protocol/ScriptProfiler.json",
+    "volgende_onderzoek": "Bestaande workerroute voor volledige lettertypebehoeften ook bij gewone gewijzigde hostbron onderzoeken; eigendom, bronvolgorde, fouten en oudere antwoorden moeten behouden blijven.",
+    "inspectiehelper_sha256": "7acb9b024e46daa4db6bc06b5962f3f0d8841da7e78845aa9c136bc227cafc1f"
+  },
+  "diagnosebron_sha256": {
+    ".github/workflows/writer-geheugen.yml": "cfc11e0c6afbcdf46ed0e619dec03cb321e1a07ba0636f1057ad5665da8e23ed",
+    "scripts/bewaar-writer-foutcontext.py": "725a0799b0f1860b4ad815da5649dfece9f9796754f4e7647a577da67a62d786",
+    "scripts/gui/webkit_inspector.py": "5d59c720db0d5a0dc51a53566499b78b896a8bd1e45af895914584a49e2a5765",
+    "scripts/profiel-writer-invoer-native.py": "4a82da01509c63f44ecadaef3e891492695b4230e2b7b347b9bd221b1822d134",
+    "scripts/test-writer-lang-native.py": "415727b65644fb410d3a2e6bae851fbc453719a0739ceebf491267a3f0719adf",
+    "tests/test_webkit_inspector.py": "5dfbd9e31b9ffb93db4c69091a38da86fdfccbc68866764c0d11cc9beb32a3fa"
+  },
+  "diagnosecontroles": {
+    "python_tests": 73,
+    "drie_nieuwe_afsluitgevallen": true,
+    "native_acht_stappen": true,
+    "afsluiteditie": "2026.45.33",
+    "export_sha256_gelijk_aan_rapport": true,
+    "productbron_gewijzigd": false,
+    "typeScript_gewijzigd": false
+  }
+}

@@ -3,6 +3,8 @@ import importlib.util
 import json
 from pathlib import Path
 import unittest
+import tempfile
+from types import SimpleNamespace
 from unittest.mock import AsyncMock, patch
 
 spec = importlib.util.spec_from_file_location('webkit_inspector', Path(__file__).parents[1] / 'scripts/gui/webkit_inspector.py')
@@ -27,6 +29,38 @@ def bericht(inhoud):
 
 
 class InspectieConsole(unittest.IsolatedAsyncioTestCase):
+    async def test_workerbron_wordt_ook_bij_een_eerdere_proeffout_bewaard(self):
+        with tempfile.TemporaryDirectory() as map:
+            p = module.Inspector(0)
+            p.ws = SimpleNamespace(close=AsyncMock())
+            p.workerbron_uitvoer = Path(map)/'workerbron.json'
+            data = {'schema': 1, 'volledig': True, 'begin': [1, 2], 'berichten': []}
+            p.ev = AsyncMock(return_value=data)
+            await p.__aexit__(RuntimeError, RuntimeError('Oorspronkelijke workerfout'), None)
+            self.assertEqual(json.loads(p.workerbron_uitvoer.read_text()), data)
+            p.ws.close.assert_awaited_once()
+
+    async def test_mislukte_workerbronexport_vervangt_de_eerdere_proeffout_niet(self):
+        with tempfile.TemporaryDirectory() as map:
+            p = module.Inspector(0)
+            p.ws = SimpleNamespace(close=AsyncMock())
+            p.workerbron_uitvoer = Path(map)/'workerbron.json'
+            p.ev = AsyncMock(side_effect=TimeoutError('WebView reageert niet'))
+            await p.__aexit__(RuntimeError, RuntimeError('Oorspronkelijke workerfout'), None)
+            fout = json.loads(p.workerbron_uitvoer.with_suffix('.inspectiefout.json').read_text())
+            self.assertIn('WebView reageert niet', fout['fout'])
+            p.ws.close.assert_awaited_once()
+
+    async def test_mislukte_workerbronexport_na_een_gezonde_proef_blijft_afgekeurd(self):
+        with tempfile.TemporaryDirectory() as map:
+            p = module.Inspector(0)
+            p.ws = SimpleNamespace(close=AsyncMock())
+            p.workerbron_uitvoer = Path(map)/'workerbron.json'
+            p.ev = AsyncMock(side_effect=RuntimeError('Bronexport ontbreekt'))
+            with self.assertRaisesRegex(RuntimeError, 'Bronexport ontbreekt'):
+                await p.__aexit__(None, None, None)
+            p.ws.close.assert_awaited_once()
+
     async def test_consolefout_naast_geslaagd_antwoord_blijft_bewaard(self):
         fout = {'level': 'error', 'text': 'Document worker is not initialized'}
         antwoord = {'id': 1, 'result': {'result': {'type': 'boolean', 'value': True}}}

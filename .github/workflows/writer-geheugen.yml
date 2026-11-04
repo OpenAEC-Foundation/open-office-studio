@@ -15,6 +15,9 @@ on:
       - 'scripts/gui/worker_bron.js'
       - 'scripts/test-writer-workerbron.mjs'
       - 'src/tekst/bewerken/plakopmaak.ts'
+      - 'src/tekst/bewerken/rustTekst.ts'
+      - 'src/tekst/bewerken/rustPlakken.ts'
+      - 'patches/@betteroffice__docx-react@0.5.1.patch'
   workflow_dispatch:
     inputs:
       geheugenrondes:

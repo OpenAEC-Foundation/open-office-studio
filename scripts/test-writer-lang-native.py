@@ -254,6 +254,7 @@ async def proef(a):
             await asyncio.sleep(3)
             if a.workerbron:
                 await p.ev((repo/'scripts/gui/worker_bron.js').read_text())
+                p.workerbron_uitvoer = a.uitvoer/'workerbron.json'
                 rapport['workerbron'] = {'bestandsnaam': 'workerbron.json', 'script_sha256': hashlib.sha256((repo/'scripts/gui/worker_bron.js').read_bytes()).hexdigest(), 'grens': 'Diagnose met extra bytekopieën; geen ongestoorde snelheidsmeting.'}
             await p.ev("window._rectProef={calls:0,classes:Object.create(null)};window._rectOud=Element.prototype.getBoundingClientRect;Element.prototype.getBoundingClientRect=function(...args){_rectProef.calls++;const k=this.getAttribute('class')||this.tagName;_rectProef.classes[k]=(_rectProef.classes[k]||0)+1;return _rectOud.apply(this,args)};window._frameProef={v:[],last:performance.now(),stop:false};window._frameTik=nu=>{if(_frameProef.stop)return;_frameProef.v.push(nu-_frameProef.last);_frameProef.last=nu;requestAnimationFrame(_frameTik)};requestAnimationFrame(_frameTik);true")
             # Tel de werkelijke projecties naar de pakketstructuur; een
@@ -368,10 +369,11 @@ async def proef(a):
                 pad = a.uitvoer/'workerbron.json'
                 pad.write_text(json.dumps(gegevens, ensure_ascii=False)+'\n')
                 rapport['workerbron'].update(volledig=gegevens['volledig'], bytes=gegevens['bytes'], berichten=len(gegevens['berichten']), sha256=hashlib.sha256(pad.read_bytes()).hexdigest())
-                assert gegevens['volledig'], 'De workerbronbewaking is begrensd; geen volledig replaybewijs'
             if a.verwacht_worker_layout:
                 assert rapport['native_leesaanroepen']['layoutDocumentWithRegionsRetainedJson']['calls'] == 0, 'Volledige pagina-indeling op de hoofdthread tijdens gewone invoer'
                 assert rapport['native_leesaanroepen']['worker_berichten'].get('sync', 0) > 0, 'Geen bronsynchronisatie naar de layoutworker tijdens invoer'
+            if a.workerbron:
+                assert gegevens['volledig'], 'De workerbronbewaking is begrensd; geen volledig replaybewijs'
             tussenpozen = await p.ev('(()=>{_frameProef.stop=true;return _frameProef.v})()')
             volgorde = sorted(tussenpozen)
             rapport['frame_tussenpozen_ms'] = {'aantal': len(volgorde), 'maximum': volgorde[-1] if volgorde else None, 'p95': volgorde[min(len(volgorde)-1, int(len(volgorde)*.95))] if volgorde else None, 'reeks': tussenpozen, 'omvang': 'requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS.'}

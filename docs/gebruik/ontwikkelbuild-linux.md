@@ -4,10 +4,10 @@ Een push naar GitHub werkt de broncode bij. De pagina Releases verandert alleen
 als er apart een uitgave wordt gepubliceerd. Een ontwikkelbuild is daarom
 beschikbaar als download bij GitHub Actions, zonder nieuwe release of tag.
 
-De gecontroleerde [45.32-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41783862269/artifacts/13300019175)
-is gebouwd uit `67bdae678817c9d69a67ed4f88d5990d037a763b`.
-De [bouw en gerichte pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41783862269)
-slagen. De [downloadgegevens](../tests/2026-11-04-linux-dev-67bdae6.json) leggen
+De gecontroleerde [45.33-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41795426019/artifacts/13305528093)
+is gebouwd uit `67be6e40316f7c49e1726d3df7ccc316f7cd51f8`.
+De [bouw en gerichte pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41795426019)
+slagen. De [downloadgegevens](../tests/2026-11-04-linux-dev-67be6e4.json) leggen
 bronrevisie, gecontroleerde ZIP-/tar-/AppImage-bytes en testomvang vast.
 Deze versie gebruikt de ingebouwde snapshotencoder waar beschikbaar, behoudt
 de volledige encoder voor oudere runtimes, groepeert Undo op de oorspronkelijke
@@ -69,3 +69,8 @@ De afzonderlijke zeveneditieronde van 45.32 faalt op Linux doordat een worker
 bij gewone tekstinvoer een unsupported embed meldt en stopt. De exacte
 negatieve binary slaagt lokaal met dezelfde proefcode; de oorzaak blijft open.
 [Afkeuring en exacte hertest](../tests/writer-spellingsweergave.md#aanvullende-linux-afkeuring-op-4532).
+
+De 45.33-devpakketproef en de afzonderlijke Linux-geheugenronde slagen.
+De zeveneditieronde van dezelfde versie is op macOS afgekeurd op de bestaande
+corpusdownloadtest met een vijfsecondenlimiet; overige platformcontroles worden
+apart gevolgd. Ook deze download is geen volledige stabiliteitsacceptatie.

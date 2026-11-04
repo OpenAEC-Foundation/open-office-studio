@@ -43,6 +43,20 @@ class Inspector:
                     self.meld_framebasis_exportfout(fout)
                     if not args or args[0] is None:
                         raise
+            if hasattr(self, 'workerbron_uitvoer'):
+                try:
+                    gegevens = await asyncio.wait_for(self.ev('window._officeWorkerBron.exporteer()'), timeout=5)
+                    if not isinstance(gegevens, dict) or gegevens.get('schema') != 1:
+                        raise RuntimeError('Workerbronbewaking ontbreekt bij afsluiten')
+                    self.workerbron_uitvoer.write_text(json.dumps(gegevens, ensure_ascii=False)+'\n')
+                except Exception as fout:
+                    self.workerbron_exportfout = repr(fout)
+                    try:
+                        self.workerbron_uitvoer.with_suffix('.inspectiefout.json').write_text(json.dumps({'fout': self.workerbron_exportfout})+'\n')
+                    except OSError as schrijffout:
+                        self.workerbron_exportfout += '; diagnosebestand niet geschreven: '+repr(schrijffout)
+                    if not args or args[0] is None:
+                        raise
         finally:
             await self.ws.close()
 

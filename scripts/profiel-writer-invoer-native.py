@@ -163,6 +163,24 @@ async def proef(a):
                     som += max(0, stop - max(start, einde))
                     einde = max(einde, stop)
                 r['samenvatting'][naam] = {'events': len(events), 'voltooide_profielen': len(compleet), 'samples': len(samples), 'script_intervallen_unie_s': som if intervallen else None, 'interval_gebeurtenissen': len(intervallen), 'top': top.most_common(25), 'inclusief': inclusief.most_common(35)}
+            # Pas na het profiel exacte bronbytes uit deze eigen binary halen.
+            # Minificatienamen of kolommen nooit op een andere build projecteren.
+            urls = sorted({f['url'] for sample in lijsten['hoofdthread']
+                           if sample.get('method') == 'ScriptProfiler.trackingComplete'
+                           for s in sample['params'].get('samples', {}).get('stackTraces', [])
+                           for f in s['stackFrames']
+                           if f.get('url', '').startswith('tauri://localhost/assets/') and f['url'].endswith('.js')})
+            assert len(urls) <= 8, 'Te veel hoofdthreadbronnen voor begrensde bronattributie'
+            r['scriptbronnen'] = []
+            omvang = 0
+            for url in urls:
+                inhoud = await p.run('const r=await fetch('+json.dumps(url)+');if(!r.ok)throw Error("Eigen scriptbron niet opgehaald");return await r.text();')
+                data = inhoud.encode()
+                omvang += len(data)
+                assert len(data) <= 4*1024*1024 and omvang <= 12*1024*1024, 'Scriptbron overschrijdt de diagnosegrens'
+                naam = 'bron-'+url.rsplit('/', 1)[-1]+'.gz'
+                (a.uitvoer/naam).write_bytes(gzip.compress(data, mtime=0))
+                r['scriptbronnen'].append({'url': url, 'bestand': naam, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()})
             r.update(await p.ev("({voor,na:api().getEditorRef().getYrsSession().paragraphs('body').at(-1).text,paginas:api().getTotalPages()})"))
             assert r['na'] == r['voor'] + ' Een proefzin.'
             g = v.get_geometry()
