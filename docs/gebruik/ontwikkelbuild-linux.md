@@ -4,17 +4,18 @@ Een push naar GitHub werkt de broncode bij. De pagina Releases verandert alleen
 als er apart een uitgave wordt gepubliceerd. Een ontwikkelbuild is daarom
 beschikbaar als download bij GitHub Actions, zonder nieuwe release of tag.
 
-De gecontroleerde [45.35-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41815824421/artifacts/13315396086)
-is gebouwd uit `322f840062f951114ec979ef4af929fc2ea47417`.
-De [bouw en gerichte pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41815824421)
-slagen. De [downloadgegevens](../tests/2026-11-04-linux-dev-322f840.json) leggen
-bronrevisie, gecontroleerde ZIP-/tar-/AppImage-bytes en testomvang vast.
-Deze versie voert volledige lettertypecontroles tijdens geschikte gewone
-Writer-invoer uit in de bestaande worker. De beperkte afwisselende lokale
-500-paginavergelijking is ongeveer 29–35% sneller dan 45.33; na 256 tabellen
-blijft invoer nog 5.594 ms vragen. Zie [metingen, gegevensbehoud en resterende
-grenzen](../tests/writer-lettertypeworker.md). Dit is geen algemene
-snelheids- of stabiliteitsacceptatie. De eerdere [45.33-downloadcontrole](../tests/2026-11-04-linux-dev-67be6e4.json)
+De gecontroleerde [45.36-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41827404218/artifacts/13322266840)
+is gebouwd uit `f12863db1be8ab2bf307bf667cc7af22e5bb8743`.
+De bouw, broncodetests en gerichte native open-/bewaar-/plakproef slagen.
+ZIP-digest en CRC, tar, AppImagehash/type, bronversie, devprofiel, uitvoerrechten
+en ingesloten checksums zijn onafhankelijk gecontroleerd. De
+[downloadgegevens](../tests/2026-11-04-linux-dev-f12863d.json) leggen dit vast.
+Deze versie deelt volledige tabelgegevens tussen celgrepen binnen dezelfde
+bronversie. Zie [metingen en grenzen](../tests/writer-tabelgegevens.md).
+De afzonderlijke geheugentest van dezelfde bron faalt op “The document changed
+while saving”; de actuele paginering en broncontroles slagen daar wel.
+Dit is dus een ontwikkelbuild met open stabiliteitsproblemen.
+De eerdere [45.35-downloadcontrole](../tests/2026-11-04-linux-dev-322f840.json)
 blijft apart bewaard.
 
 Sluit een eerder geopende dev-versie na het bewaren voordat je de nieuwe start;

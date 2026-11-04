@@ -169,6 +169,7 @@ export class SpellingSessie {
   private gestopt = false;
   /** Ook verwijderingen en taalkeuzes maken een lopende lezing ongeldig. */
   private leesGeneratie = 0;
+  private cursorLezing: { sessie: YrsSession; versie: string; story: string; paraId: string; antwoord: ReturnType<YrsSession["readParagraphs"]> } | null = null;
   /** Aantal getypte tekens in het document (voor de autocorrectie). */
   toetsen = 0;
 
@@ -202,6 +203,7 @@ export class SpellingSessie {
   stop() {
     this.leesGeneratie++;
     this.gestopt = true;
+    this.cursorLezing = null;
     window.clearTimeout(this.timer);
   }
 
@@ -218,6 +220,7 @@ export class SpellingSessie {
     this.leesGeneratie++;
     this.ctx = ctx;
     this.segmentCache = null;
+    this.cursorLezing = null;
     this.alineas = [];
     this.perId.clear();
     this.vuil.clear();
@@ -262,13 +265,34 @@ export class SpellingSessie {
       if (!loc) return null;
       // De sessie telt verwijderde tekst en een voorafgaande tabel mee; de
       // fouten en de autocorrectie rekenen in de geaccepteerde tekst.
-      const r = ed.getYrsSession()?.readParagraphs({ view: "accepted", story: loc.story, paraIds: [loc.paraId] });
+      const sessie = ed.getYrsSession();
+      const r = sessie ? this.leesCursorAlinea(sessie, loc.story, loc.paraId) : null;
       const lengte = r?.ok ? r.paragraphs[0]?.text.length : undefined;
       const delen = lengte === undefined ? null : this.afwijkendeSegmenten(loc.story, loc.paraId, lengte);
       return { paraId: loc.paraId, offset: delen ? naarGeaccepteerd(delen, loc.offset) : loc.offset, story: loc.story };
     } catch {
       return null;
     }
+  }
+
+  /** Alleen de actuele cursoralinea; onbekende of afwijkende versies blijven volledig lezen. */
+  private leesCursorAlinea(sessie: YrsSession, story: string, paraId: string) {
+    let versie: string | null = null;
+    try {
+      const v = sessie.version();
+      if (typeof v === "string" && v.length) versie = v;
+    } catch { /* Zonder betrouwbare versie geen hergebruik. */ }
+    const oud = this.cursorLezing;
+    if (versie !== null && oud?.sessie === sessie && oud.versie === versie && oud.story === story && oud.paraId === paraId) return oud.antwoord;
+    this.cursorLezing = null;
+    const antwoord = sessie.readParagraphs({ view: "accepted", story, paraIds: [paraId] });
+    if (versie !== null && antwoord.ok && antwoord.version === versie
+      && antwoord.paragraphs.length === 1 && antwoord.paragraphs[0].paraId === paraId && antwoord.paragraphs[0].story === story) {
+      try {
+        if (sessie.version() === versie) this.cursorLezing = { sessie, versie, story, paraId, antwoord };
+      } catch { /* Het gelezen antwoord blijft bruikbaar, maar wordt niet bewaard. */ }
+    }
+    return antwoord;
   }
 
   /** De talen uit het geladen pakket (eenmalig per document gelezen). */
@@ -712,7 +736,7 @@ export class SpellingSessie {
     if (!cursor?.story) return;
     let gelezen: { tekst: string; versie: string };
     try {
-      const r = sessie.readParagraphs({ view: "accepted", story: cursor.story, paraIds: [cursor.paraId] });
+      const r = this.leesCursorAlinea(sessie, cursor.story, cursor.paraId);
       if (!r.ok || !r.paragraphs[0]) return;
       gelezen = { tekst: r.paragraphs[0].text, versie: r.version };
     } catch {
