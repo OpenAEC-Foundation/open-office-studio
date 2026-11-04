@@ -19,9 +19,12 @@
   "aanvullende_wijzigingen_2026_11_04": {
     "bestanden_sha256": {
       "src/ops/table.rs": "89b18b8013e6248fdbab2d759286c8139ce48dbfd41b4c414b7d10f916cb3d26",
-      "src/ops/text.rs": "05f079bbb0dd305e387288211ee084f179df52cd1fb45a86902e4c1e400ee15d",
-      "src/clipboard_batch.rs": "3675481a2ce044a6d2b9173dc27d6f8cdc01e14d6772ebe088cb4edcdb69e9b7"
+      "src/ops/text.rs": "5ad59c1a8788de2c0966a65f3d7216877599eb1abf567ed28601d4488e05b51e",
+      "src/clipboard_batch.rs": "3675481a2ce044a6d2b9173dc27d6f8cdc01e14d6772ebe088cb4edcdb69e9b7",
+      "src/ops/bookmarks.rs": "bacd30d1a878908bf252000ddad9d9f0772f87344d86f0ea739a88e7c36ce00d",
+      "src/ops/paragraph.rs": "336f586cab2ffd7b56795f81fe17e8a93dfe8bc24e3b53096adf02b38b32682b",
+      "OPENAEC-WIJZIGINGEN.md": "8e380a5f51071167c7b10a89377876d33b5b5698cf7891980fe8d685536ebeac"
     },
-    "doel": "Tabelvolgorde en eindcursor lezen zonder volledige tekstdiff; dezelfde tekstmutatie levert voor de plakbatch een globaal eindpunt zonder herhaalde alineagrensprojectie. Publieke Receipt en definitieve cursorvalidatie blijven behouden."
+    "doel": "Tabelvolgorde en eindcursor lezen zonder volledige tekstdiff; dezelfde tekstmutatie levert voor de plakbatch een globaal eindpunt zonder herhaalde alineagrensprojectie. Publieke Receipt en definitieve cursorvalidatie blijven behouden. Hergebruik van de actuele alinea-eindmarkering vermijdt herhaalde lezingen; bladwijzers, invoegposities en blokrevisies behouden hun bestaande bewerkingsregels."
   }
 }

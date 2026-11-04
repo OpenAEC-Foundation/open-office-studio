@@ -30,6 +30,16 @@ const cases=[
  {naam:'inline-na-tabel',offset:0,tabel:true,inlines:['','Voor 😀','',' na']},
  {naam:'inline-in-cel',offset:1,cel:true,inlines:['','A😀','é','']},
  {naam:'revisie-lege-inline',offset:3,author:true,inlines:['','Nieuw 😀','',' na']},
+ {naam:'bladwijzer-einde',offset:'einde',bookmark:true},
+ {naam:'bladwijzer-einde-revisie',offset:'einde',bookmark:true,author:true},
+ {naam:'bladwijzer-einde-tabel',offset:'einde',bookmark:true,tabel:true},
+ {naam:'einde-lege-inline',offset:'einde',inlines:['','','A😀','']},
+ {naam:'einde-afbeelding',offset:'einde',image:true},
+ {naam:'einde-tabel',offset:'einde',tabel:true},
+ {naam:'cel-einde',offset:'einde',cel:true},
+ {naam:'cel-einde-revisie',offset:'einde',cel:true,author:true},
+ {naam:'laatste-alinea-einde',offset:'einde',laatste:true},
+ {naam:'laatste-alinea-einde-revisie',offset:'einde',laatste:true,author:true},
 ];
 const resultaten={scope:'Gegevens-/DOCX-proeven van private Rust-batch; geen GUI of productacceptatie.',gevallen:[]};
 for(const c of cases){
@@ -47,7 +57,7 @@ for(const c of cases){
   bron.setHyperlink({story:'body',start:punt(eerste,0),end:punt(eerste,8)},{href:'https://example.org/proef',tooltip:'Behouden koppeling'});
   bron.formatRange({story:'body',start:punt(eerste,0),end:punt(eerste,8)},{bold:true,color:{rgb:'AB1234'}});
   const story=c.cel?bron.storyIds().find(id=>id!=='body'):'body';
-  const paras=bron.paragraphs(story),p=paras[0],q=paras[c.volgende??0];
+  const paras=bron.paragraphs(story),basis=c.laatste?paras.length-1:0,p=paras[basis],q=paras[basis+(c.volgende??0)];
   const offset=c.offset==='einde'?p.text.length:c.offset;
   const range={story,start:punt(p,offset),end:punt(q,c.end??offset)};
   const table=readTableFragment(bron,{story:'body',tableIndex:0});

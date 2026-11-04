@@ -7,6 +7,8 @@ const bron = readFileSync("node_modules/@betteroffice/docx-react/dist/index.mjs"
 const begin = bron.indexOf("U=useCallback((h,H,z=false)"), eind = bron.indexOf(",Se=useCallback", begin);
 if (begin < 0 || eind < 0) throw Error("Controleer de invoercallback na een SDK-update");
 const callback = bron.slice(begin + 2, eind);
+const captureVenster = Number(bron.match(/\bzv=(\d+)/)?.[1]);
+if (!Number.isFinite(captureVenster)) throw Error("Het bestaande capturevenster ontbreekt");
 const bytes = new Uint8Array(readFileSync("docs/voorbeelden/Ontwerpnotitie.docx"));
 
 async function proef(opties: { native?: boolean; worker?: boolean; suggesting?: boolean; composing?: boolean; expliciet?: boolean; readonly?: boolean } = {}) {
@@ -29,7 +31,7 @@ async function proef(opties: { native?: boolean; worker?: boolean; suggesting?: 
     he, f: !!opties.suggesting, vt: () => undefined, yt: publiceer, G: { current: !!opties.composing },
     Wl: (id: string) => id === "body" || id.startsWith("body:"),
     k: opties.worker === false ? null : resident, _openaecNativeTekst: opties.native === false ? null : native,
-    $: () => actueel, dn: vi.fn(), i: { current: true }, W: (fn: () => Promise<void>) => { taken.push(fn); }, kt: { current: null },
+    $: () => actueel, dn: vi.fn(), i: { current: true }, W: (fn: () => Promise<void>) => { taken.push(fn); }, kt: { current: null }, zv: captureVenster,
   };
   const typ = new Function(...Object.keys(context), `return ${callback}`)(...Object.values(context));
   return { s, typ, native, resident, publiceer, positie,

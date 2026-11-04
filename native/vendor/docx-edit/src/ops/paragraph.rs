@@ -1,4 +1,4 @@
-// OpenAEC: gewijzigd voor brongebonden plakbatches en begrensde lezingen (2026-11-03).
+// OpenAEC: gewijzigd voor brongebonden plakbatches en begrensde lezingen (2026-11-04).
 //! Paragraph structure and properties: split, merge, attribute deltas, tab
 //! stops, indent steps, style application, and paraId maintenance.
 //!
@@ -441,17 +441,30 @@ impl EditingDoc {
                     .unwrap_or_else(|| self.next_id())
             })
         });
-        let (orig_index, orig_map) =
-            next_pilcrow(&story, txn, at.index).ok_or(OpError::ExpectedPilcrow {
+        // Alleen een markering precies op de cursor is zonder verdere zoekslag
+        // de afsluiting van deze alinea. Elders blijft de oorspronkelijke zoekroute.
+        let (orig_index, orig_map) = chunks
+            .iter()
+            .find_map(|chunk| match &chunk.kind {
+                ChunkKind::Pilcrow(map) if chunk.start == at.index => Some((chunk.start, map.clone())),
+                _ => None,
+            })
+            .or_else(|| next_pilcrow(&story, txn, at.index))
+            .ok_or(OpError::ExpectedPilcrow {
                 story: at.story.clone(),
                 index: at.index,
             })?;
         let (first_para_id, mut props) = capture_pilcrow(&orig_map, txn);
         // A mark kept before a pending block carries that block's revision; the new mark does not.
-        let block_revisions = snapshot_range(&story, txn, orig_index + 1, orig_index + 2)
-            .first()
-            .and_then(|chunk| chunk.block_revisions(txn))
-            .unwrap_or_default();
+        let block_revisions = if orig_index + 1 < story.len(txn) {
+            snapshot_range(&story, txn, orig_index + 1, orig_index + 2)
+                .first()
+                .and_then(|chunk| chunk.block_revisions(txn))
+                .unwrap_or_default()
+        } else {
+            // Na de laatste markering kan geen volgend blok staan.
+            Default::default()
+        };
         props.retain(|(key, value)| match key.as_str() {
             PPR_INS => block_revisions[0].as_ref() != Some(value),
             PPR_DEL => block_revisions[1].as_ref() != Some(value),
@@ -462,7 +475,7 @@ impl EditingDoc {
         let ins = revision_id
             .as_ref()
             .map(|id| revision_value(id, &ctx.revision_author()));
-        let carry = Carry::capture(&story, txn, at.index, at.index, None);
+        let carry = Carry::capture_at_pilcrow(&story, txn, at.index, &orig_map, None);
         let new_pilcrow = story.insert_embed_with_attributes(
             txn,
             at.index,

@@ -451,7 +451,16 @@ impl EditingDoc {
             .map(|id| revision_value(id, &ctx.revision_author()));
         let attrs = stamped_attrs(formatting, ins);
         observe(&attrs);
-        let carry = Carry::capture(&story, txn, at.index, at.index, indexed.as_ref());
+        // Aan het alinea-einde bevat het gelezen venster de afsluitmarkering al.
+        // Binnen tekst of bij onbekende markering blijft de volledige route gelden.
+        let mark = chunks.iter().find_map(|chunk| match &chunk.kind {
+            ChunkKind::Pilcrow(map) if chunk.start == at.index => Some(map),
+            _ => None,
+        });
+        let carry = match mark {
+            Some(map) => Carry::capture_at_pilcrow(&story, txn, at.index, map, indexed.as_ref()),
+            None => Carry::capture(&story, txn, at.index, at.index, indexed.as_ref()),
+        };
         story.insert_with_attributes(txn, at.index, text, attrs);
         let end = at.index + utf16_len(text);
         if let Some(carry) = carry {

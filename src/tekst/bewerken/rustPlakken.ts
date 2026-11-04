@@ -70,7 +70,7 @@ export function maakRustPlakKoppeling(opties: RustPlakOpties) {
   return {
     activeer() { actief = true; levensduur++; },
     stop() { actief = false; levensduur++; },
-    async plak(sessie: YrsSession, bereik: YrsStoryRange, fragment: DocxClipboardFragment, auteur: YrsAuthor | undefined, zelfdeEditor: () => boolean, klembordGebeurtenis?: Event): Promise<boolean> {
+    async plak(sessie: YrsSession, bereik: YrsStoryRange, fragment: DocxClipboardFragment, auteur: YrsAuthor | undefined, zelfdeEditor: () => boolean, klembordGebeurtenis?: Event, opnemen: (mutatie: () => void) => void = mutatie => mutatie()): Promise<boolean> {
       const bereidAfronding = neemPlakAfronding(klembordGebeurtenis);
       const eigenLevensduur = levensduur;
       const geldig = () => actief && levensduur === eigenLevensduur && zelfdeEditor();
@@ -118,8 +118,10 @@ export function maakRustPlakKoppeling(opties: RustPlakOpties) {
           }
           const delta = antwoordDelta(antwoord, aanvraag);
           const verplaatsCursor = sameYrsSelection(sessie.selection(), actueleSelectie());
-          sessie.applyLocalUpdate(delta);
-          afronden?.(antwoord.caret);
+          opnemen(() => {
+            sessie.applyLocalUpdate(delta);
+            afronden?.(antwoord.caret);
+          });
           if (verplaatsCursor && geldig()) sessie.setSelection(antwoord.caret);
           opties.meting?.({ route: "rust", poging });
           return true;
@@ -129,8 +131,11 @@ export function maakRustPlakKoppeling(opties: RustPlakOpties) {
         // volledige bestaande route. Gebruik de meebewogen oorspronkelijke selectie.
         const verplaatsCursor = sameYrsSelection(sessie.selection(), actueleSelectie());
         const range = actueelBereik(), afronden = bereidAfronding?.(sessie, range);
-        const eindpunt = applyClipboardFragment(sessie, range, fragment, auteur);
-        afronden?.(eindpunt);
+        let eindpunt!: YrsLoc;
+        opnemen(() => {
+          eindpunt = applyClipboardFragment(sessie, range, fragment, auteur);
+          afronden?.(eindpunt);
+        });
         if (verplaatsCursor && geldig()) sessie.setSelection(eindpunt);
         opties.meting?.({ route: "synchroon", poging: 3 });
         return true;

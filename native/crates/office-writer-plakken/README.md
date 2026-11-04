@@ -47,10 +47,18 @@ de werkelijke desktopaanvraag; de berekening komt uit deze bibliotheek.
 Met `OFFICE_PLAKBATCH_UIT` krijgen de drie Node-proeven een afzonderlijke
 uitvoermap; dezelfde map wordt voor randgevallen, afwijzingen en de grote
 proef gebruikt. Zo blijven eerdere bewijsbestanden behouden bij een hertest.
-De 31 inhoudsgevallen, acht foutgevallen, grote bronproef, vijf protocoltests
+De 41 inhoudsgevallen, acht foutgevallen, grote bronproef, acht tekst-/plakprotocoltests
 en twee leeslaagentests hebben ieder een eigen omvang. Zij vervangen geen
 GUI-, platform-, geheugen- of volledige suiteacceptatie. De voorbereiding
 maakt nog een volledige bronreplica; verdere schaalbaarheid blijft nodig.
 
 De twee gewijzigde bibliotheken staan onder `native/vendor`, met vastgelegde
 herkomst, oorspronkelijke licentieteksten en wijzigingsvermeldingen.
+
+Bij invoeging aan een alinea-einde gebruikt de kern waar mogelijk de reeds
+gelezen afsluitmarkering. Zonder bladwijzers op die markering is geen nieuwe
+verhaalwandeling nodig; met bladwijzers blijft de volledige grensbewerking
+gelden. Bij splitsen aan het verhaaleinde wordt geen volgend blok opgevraagd.
+Dit kort geen broninhoud in en verandert de invoeg-/revisieregels niet. De tien
+extra inhoudsgevallen toetsen eindposities bij bladwijzers, revisies, lege
+inlines, afbeeldingen, tabellen, tabelcellen en de laatste alinea.

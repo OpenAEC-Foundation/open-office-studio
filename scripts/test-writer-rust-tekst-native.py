@@ -107,7 +107,7 @@ async def proef(a):
                   window.tekst=()=>sessie().paragraphs('body').map(p=>p.text).join('');
                   window.stand=()=>JSON.stringify(Object.fromEntries(sessie().storyIds().sort().map(id=>[id,sessie().storySegments(id)])));
                   window._toetsen=[];window.addEventListener('keyup',e=>_toetsen.push(e.key.toLowerCase()),true);
-                  window._rust={aanvragen:[],updates:0,houd:false};window._diagnose=[];
+                  window._rust={aanvragen:[],updates:0,houd:false,vertragingMs:1000};window._diagnose=[];
                   const intern=window.__TAURI_INTERNALS__,oud=window.fetch,doel=intern.convertFileSrc('writer_tekst_voorbereiden','ipc'),s=sessie(),pasToe=s.applyLocalUpdate;
                   window.fetch=async function(url,args,...rest){
                     if(String(url)!==doel)return oud.call(this,url,args,...rest);
@@ -117,6 +117,8 @@ async def proef(a):
                       const antwoord=await json();
                       m.bronbinding=['schema','requestId','documentId','sourceVersion','snapshotSha256','clientId'].every(k=>antwoord[k]===a[k]);
                       m.gereed=true;m.caret=antwoord.caret;
+                      m.vertragingMs=_rust.vertragingMs;
+                      if(m.vertragingMs)await new Promise(resolve=>setTimeout(resolve,m.vertragingMs));
                       if(_rust.houd)await new Promise(resolve=>{m.wacht=true;_rust.los=()=>{_rust.houd=false;m.wacht=false;delete _rust.los;resolve()}});
                       return antwoord;
                     };
@@ -130,6 +132,8 @@ async def proef(a):
                   window._voor=stand();window._voorTekst=tekst();return true;
                 })()''')
                 await toets(p, 'ctrl+End')
+                assert await p.ev('sessie().undoCaptureMode()') == 'auto', 'Gewone invoer staat niet op automatische Undo-groepering'
+                r['gewone_invoer_antwoordvertraging_ms'] = 1000
                 await p.ev('window._voor=stand();window._voorTekst=tekst();true')
                 subprocess.run(['xdotool', 'type', '--clearmodifiers', '--delay', '20', 'EERSTE'], check=True)
                 await toets(p, 'Right')
@@ -141,6 +145,7 @@ async def proef(a):
                 assert await p.ev('stand()===_getypt'), 'Redo herstelt de tekst niet exact'
                 r['stappen'].append('Fysieke tekstinvoer, één Undo en bronexacte Redo')
                 beeld('invoer-redo')
+                await p.ev('_rust.vertragingMs=0;true')
 
                 await toets(p, 'ctrl+End')
                 await p.ev('window._voorSnelleTekst=tekst();_rust.houd=true;true')

@@ -1,4 +1,4 @@
-// OpenAEC: gewijzigd voor brongebonden plakbatches en begrensde lezingen (2026-11-03).
+// OpenAEC: gewijzigd voor brongebonden plakbatches en begrensde lezingen (2026-11-04).
 //! Bookmark offsets on paragraph marks, carried through the edits that move the text around
 //! them.
 //!
@@ -135,6 +135,20 @@ fn block_embed<T: ReadTxn>(map: &MapRef, txn: &T) -> bool {
 }
 
 impl Carry {
+    /// De aanroeper kent de actuele afsluitmarkering van de alinea bij `at` al.
+    /// Zonder bladwijzers op die markering is geen nieuwe verhaalwandeling nodig.
+    /// Met bladwijzers blijft de volledige bestaande positie-/grensbewerking gelden.
+    pub(crate) fn capture_at_pilcrow<T: ReadTxn>(
+        story: &TextRef,
+        txn: &T,
+        at: u32,
+        mark: &MapRef,
+        indexed: Option<&IndexedStory>,
+    ) -> Option<Self> {
+        entries(mark, txn)?;
+        Self::capture(story, txn, at, at, indexed)
+    }
+
     /// Captures the bookmarks of the paragraphs holding `[lo, hi]`, or `None` when they hold
     /// none.
     pub(crate) fn capture<T: ReadTxn>(

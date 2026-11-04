@@ -4,10 +4,10 @@ Een push naar GitHub werkt de broncode bij. De pagina Releases verandert alleen
 als er apart een uitgave wordt gepubliceerd. Een ontwikkelbuild is daarom
 beschikbaar als download bij GitHub Actions, zonder nieuwe release of tag.
 
-De gecontroleerde [45.30-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41768035087/artifacts/13294261521)
-is gebouwd uit `276493774a7a60d6c72d67de5bb074306d1cba34`.
-De [bouw en gerichte pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41768035087)
-slagen. De [downloadgegevens](../tests/2026-11-04-linux-dev-2764937.json) leggen
+De gecontroleerde [45.30-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41771582834/artifacts/13295444004)
+is gebouwd uit `036dbb93eec10ce0f72383fc2f95ea2c067b1af9`.
+De [bouw en gerichte pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41771582834)
+slagen. De [downloadgegevens](../tests/2026-11-04-linux-dev-036dbb9.json) leggen
 bronrevisie, gecontroleerde ZIP-/tar-/AppImage-bytes en testomvang vast.
 Deze versie houdt de layout na gewone native invoer in de worker;
 [de grote plakproef en snelheidsgrenzen](../tests/writer-layout-hostsync.md)

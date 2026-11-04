@@ -51,7 +51,7 @@ bewijsbestanden te behouden.
 
 ## Wat wordt vergeleken
 
-De 31 gevallen gebruiken de eigen voorbeeldkopie. De referentie voert de
+De 41 gevallen gebruiken de eigen voorbeeldkopie. De referentie voert de
 bestaande SDK-plakfunctie uit; de kandidaat krijgt dezelfde beginsnapshot,
 selectie, klembordinhoud, clientidentiteit en eventuele auteur-/tijdstempel.
 De vergelijking controleert alle verhaaltekens, opmaak en alinea-identiteiten,
@@ -71,6 +71,8 @@ bij opeenvolgende opmaak-/verwijderbewerkingen.
 
 Vier aanvullende gevallen controleren lege inlinefragmenten, Unicode naast
 een tabel, invoer in een cel en revisieregistratie bij opeenvolgende inlines.
+Tien extra gevallen controleren eindposities, waaronder de laatste alinea,
+bladwijzers, revisies, lege inlines, afbeeldingen, tabellen en celtekst.
 
 De patches begrenzen tijdelijke tekstlezingen en vermijden tekstkopieën bij
 het zoeken naar alineamarkeringen. Tekst wordt nooit ingekort om een proef te

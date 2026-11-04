@@ -24,3 +24,10 @@ blijft gedeeld; de definitieve broncursor wordt nog steeds gevalideerd.
 De oorspronkelijke tests en verwijzingen blijven behouden. Niet alle
 upstreamtestfixtures worden met het registerpakket meegeleverd; de eigen
 gegevens-, protocol-, geschiedenis- en DOCX-proeven staan elders in de repo.
+
+Een alinea-eindmarkering uit het actuele tekstvenster wordt sinds 4 november
+ook gebruikt bij splitsen en het controleren van bladwijzers. Zonder
+bladwijzers op de bekende afsluitmarkering volgt geen nieuwe verhaalwandeling;
+met bladwijzers blijft de bestaande grensbewerking gelden. Achter de laatste
+markering wordt geen niet-bestaand volgend blok meer opgevraagd. Andere
+invoegposities houden de oorspronkelijke zoekroute.
