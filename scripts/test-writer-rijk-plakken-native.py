@@ -262,6 +262,31 @@ async def proef(a):
                 ''', t=70)
                 stand = na
                 beeld('vervolginvoer')
+            # Bronopname en plakopmaak zijn geen bewijs van voltooide async
+            # paginering. Eis de gepubliceerde finale layout van deze bron.
+            r['volledige_layout'] = await p.run('''
+              const begin=performance.now(),eind=begin+120000;let laatste=null;
+              while(performance.now()<eind){
+                const s=api().getEditorRef().getYrsSession(),layout=api().getEditorRef().getLayout();
+                const el=document.querySelector('.office-tabpaneel:not([hidden]) .office-tekst .paged-editor');
+                if(!el)throw Error('Actieve paginaview ontbreekt');
+                let gevonden=0;
+                for(let f=el[Object.keys(el).find(k=>k.startsWith('__reactFiber$'))];f;f=f.return)
+                  for(let slot=f.memoizedState,n=0;slot&&n<1500;n++,slot=slot.next){
+                    const v=slot.memoizedState?.current;
+                    if(v?.session!==s||!v.layout||typeof v.final!=='boolean')continue;
+                    gevonden++;
+                    laatste={final:v.final,versie_actueel:v.version===s.version(),layout_actief:v.layout===layout,paginas:v.layout.pages.length};
+                    if(laatste.final&&laatste.versie_actueel&&laatste.layout_actief)
+                      return {...laatste,wacht_ms:performance.now()-begin};
+                  }
+                if(!gevonden)laatste={gevonden,paginas:api().getTotalPages()};
+                await new Promise(r=>setTimeout(r,100));
+              }
+              throw Error('Laatste bron heeft geen voltooide paginering: '+JSON.stringify(laatste));
+            ''', t=130)
+            stand = {**stand, 'paginas': r['volledige_layout']['paginas']}
+            print('Volledige actuele layout:', json.dumps(r['volledige_layout']), flush=True)
             # De statusbalk telt gedebounced. Een direct beeld kan nog de oude
             # helft tonen; eis begrensd de werkelijke, bijgewerkte totalen.
             tekens = len(stand['body'].encode('utf-16-le')) // 2

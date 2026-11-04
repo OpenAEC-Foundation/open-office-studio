@@ -4,12 +4,17 @@ Een push naar GitHub werkt de broncode bij. De pagina Releases verandert alleen
 als er apart een uitgave wordt gepubliceerd. Een ontwikkelbuild is daarom
 beschikbaar als download bij GitHub Actions, zonder nieuwe release of tag.
 
-De gecontroleerde [45.28-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41755546283/artifacts/13288871592) is gebouwd uit
-`74940c89c8dcd5786ce1a76d6da68901509b439e`. De [bouw en pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41755546283) slagen; de [downloadgegevens](../tests/2026-11-04-linux-dev-74940c8.json) leggen bronrevisie, checksums en testomvang vast.
+De gecontroleerde [45.29-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41761343266/artifacts/13291612406) is gebouwd uit
+`f3f66e7e64e7d6aecfb3eec89ba99e408f1268a3`. De [bouw en pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41761343266) slagen; de [downloadgegevens](../tests/2026-11-04-linux-dev-f3f66e7.json) leggen bronrevisie, checksums en testomvang vast.
+De brede 45.29-desktoproute slaagt op Windows/macOS en faalt op Linux vóór
+heropenen op `FrameDelta: position span shift requires retained positionSpan`.
+[Exacte afkeuring en behouden binary](../tests/2026-11-04-writer-framebasis-45.29.json).
+Deze download bevat ook nog de hostlayoutterugval die in 45.30 afzonderlijk
+wordt aangepakt. Gebruik dit pakket voor tests met kopieën.
 Sluit een eerder geopende dev-versie na het bewaren voordat je de nieuwe start;
 beide gebruiken hetzelfde dev-profiel.
 
-De [afzonderlijke geheugenroute op dezelfde bron](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41755546249)
+De [afzonderlijke geheugenroute op dezelfde bron](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41761343398)
 slaagt eveneens. Dat bewijst geen herstel van de eerdere incidentele
 Wasm-geheugentrappen: de 45.26-route faalde nog na zeven geslaagde extra
 selectie-/geschiedenis-/GC-rondes. De oorspronkelijke negatieve ELF en context

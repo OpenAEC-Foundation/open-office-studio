@@ -43,6 +43,7 @@ def main():
     p.add_argument('--uitvoer', type=Path, required=True)
     p.add_argument('--versie', required=True)
     p.add_argument('--verwacht-rust-tekst', action='store_true', help='Vereis dat de gewone toetsreeks werkelijk via de native tekstcodec loopt.')
+    p.add_argument('--verwacht-worker-layout', action='store_true', help='Vereis dat de gewone toetsreeks geen volledige pagina-indeling op de hoofdthread uitvoert.')
     p.add_argument('--historische-registerwissels', action='store_true', help='Alleen voor vergelijking met een oude binary: registreer de canvaswissels zonder deze specifieke nieuwe acceptatie-eis.')
     p.add_argument('--herstelstart', action='store_true', help='Wacht op een echte eigen herstelkopie en toets Later, verder bewerken en daarna Herstellen in een nieuw tabblad.')
     p.add_argument('--geheugenrondes', type=int, default=0, help='Extra selectie-/Backspace-/undo-/redo-rondes vóór de gewone bewaarproef (0–100).')
@@ -76,6 +77,8 @@ def main():
         extra = ['--historische-registerwissels'] if a.historische_registerwissels else []
         if a.verwacht_rust_tekst:
             extra.append('--verwacht-rust-tekst')
+        if a.verwacht_worker_layout:
+            extra.append('--verwacht-worker-layout')
         extra += ['--geheugenrondes', str(a.geheugenrondes)]
         if a.herstelstart:
             extra.append('--herstelstart')
@@ -247,7 +250,13 @@ async def proef(a):
               window._nativeSessie = proefApi().getEditorRef().getYrsSession();
               window._nativeLees = {};
               window._nativeHerstel = [];
-              for (const naam of ['readParagraphs', 'paragraphSpans']) {
+              window._workerBerichten = Object.create(null);
+              window._workerPostOud = Worker.prototype.postMessage;
+              Worker.prototype.postMessage = function(bericht, ...rest) {
+                if (typeof bericht?.type === 'string') _workerBerichten[bericht.type] = (_workerBerichten[bericht.type] ?? 0) + 1;
+                return _workerPostOud.call(this, bericht, ...rest);
+              };
+              for (const naam of ['readParagraphs', 'paragraphSpans', 'layoutDocumentWithRegionsRetainedJson', 'layoutFontRequirementsJson', 'residentWorkerSnapshot']) {
                 const oud = _nativeSessie[naam];
                 if (typeof oud !== 'function') throw Error('Native leesmeetpunt ontbreekt');
                 const eigen = Object.getOwnPropertyDescriptor(_nativeSessie, naam);
@@ -313,10 +322,14 @@ async def proef(a):
                   if (eigen) Object.defineProperty(_nativeSessie, naam, eigen);
                   else delete _nativeSessie[naam];
                 }
-                return {zelfde_sessie: zelfde, ..._nativeLees};
+                Worker.prototype.postMessage = _workerPostOud;
+                return {zelfde_sessie: zelfde, worker_berichten: _workerBerichten, ..._nativeLees};
               })()
             """)
             assert rapport['native_leesaanroepen']['zelfde_sessie'], 'Native sessie vervangen tijdens invoermeting'
+            if a.verwacht_worker_layout:
+                assert rapport['native_leesaanroepen']['layoutDocumentWithRegionsRetainedJson']['calls'] == 0, 'Volledige pagina-indeling op de hoofdthread tijdens gewone invoer'
+                assert rapport['native_leesaanroepen']['worker_berichten'].get('sync', 0) > 0, 'Geen bronsynchronisatie naar de layoutworker tijdens invoer'
             tussenpozen = await p.ev('(()=>{_frameProef.stop=true;return _frameProef.v})()')
             volgorde = sorted(tussenpozen)
             rapport['frame_tussenpozen_ms'] = {'aantal': len(volgorde), 'maximum': volgorde[-1] if volgorde else None, 'p95': volgorde[min(len(volgorde)-1, int(len(volgorde)*.95))] if volgorde else None, 'reeks': tussenpozen, 'omvang': 'requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS.'}
@@ -325,6 +338,27 @@ async def proef(a):
             rapport['invoermeting']['tot_bron_en_golven_ms_inclusief_nawacht'] = round((time.monotonic()-begin)*1000)
             getypt = list(origineel); getypt[-1] += ' Een proefzin.'
             await controle(p, 'getypte_bron', getypt); beeld('getypt-pagina-500')
+            rapport['getypt_frame'] = await p.run("""
+              const einde=performance.now()+10000;
+              let laatste='';
+              while(performance.now()<einde) {
+                const el=document.querySelector('.office-tabpaneel:not([hidden]) .office-tekst');
+                for(let f=el[Object.keys(el).find(k=>k.startsWith('__reactFiber$'))];f;f=f.return)
+                  for(let s=f.memoizedState,n=0;s&&n<1500;n++,s=s.next)
+                    for(const v of [s.memoizedState,s.memoizedState?.current]) {
+                      if(!v?.displayList?.pages||!v.queries?.sourceState)continue;
+                      if(v.queries.sourceState().status==='error')throw Error('Querybron van getypte frame is defect');
+                      const pagina=v.displayList.pages[499];
+                      laatste=(pagina?.primitives??[]).filter(p=>typeof p.text==='string').map(p=>p.text).join('');
+                      if(laatste.includes('Een proefzin.')) {
+                        await new Promise(requestAnimationFrame);
+                        return {pagina:500,tekststaart:laatste.slice(-220),getypte_tekst_aanwezig:true};
+                      }
+                    }
+                await new Promise(r=>setTimeout(r,50));
+              }
+              throw Error('Getypte tekst ontbreekt in het gerenderde frame: '+laatste.slice(-100));
+            """)
             if a.geheugenrondes:
                 rapport['geheugenproef'] = {'gevraagde_rondes': a.geheugenrondes, 'gc_gevraagd': a.geheugen_gc, 'rondes': [], 'grens': 'Extra native geschiedenis-/selectiebelasting; geen bewijs dat een incidentele allocatorpanic is opgelost.'}
                 if a.geheugen_gc:
