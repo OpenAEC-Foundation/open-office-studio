@@ -17,6 +17,16 @@ on:
       - 'src/tekst/bewerken/plakopmaak.ts'
       - 'src/tekst/bewerken/rustTekst.ts'
       - 'src/tekst/bewerken/rustPlakken.ts'
+      - 'src/tekst/bewerken/rustBron*'
+      - 'src/tekst/bewerken/RustPlakLaag.tsx'
+      - 'native/crates/office-writer-plakken/**'
+      - 'native/vendor/docx-edit/**'
+      - 'native/vendor/yrs/**'
+      - 'native/Cargo.toml'
+      - 'native/Cargo.lock'
+      - 'src-tauri/src/writer_plakken.rs'
+      - 'src-tauri/src/main.rs'
+      - 'patches/@betteroffice__docx@0.5.1.patch'
       - 'patches/@betteroffice__docx-react@0.5.1.patch'
   workflow_dispatch:
     inputs:
