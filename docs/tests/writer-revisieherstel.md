@@ -58,3 +58,18 @@ geen oplossing voor.
 Geen issue of migratievlag is gesloten. De nieuwe platform- en zeveneditiecontrole
 moet afzonderlijk slagen; er is geen officiële release gepubliceerd. Eerdere
 worker-/geheugen- en grafische afkeuringen blijven open.
+
+## Afgekeurde eerste platformronde
+
+De eerste 45.43-ronde op `99358ac` faalt op tien platformtaken vóór de appbouw:
+een nieuwe zelfstandige `node:test`-controle werd door haar `.test.mjs`-naam
+ook door Vitest verzameld. Het log meldt `No test suite found`. De eerdere
+lokale frontendronde was uitgevoerd vóór het toevoegen van dit zelfstandige
+bestand en dekte deze testindeling dus niet.
+
+Het bestand is met ongewijzigde inhoud hernoemd naar
+`controleer-revisie-bijectie.mjs`; beide expliciete Node-CI-opdrachten zijn
+bijgewerkt. De volledige lokale herhaling slaagt met 1.819 Vitest-tests in
+173 bestanden en dezelfde zeven Node-controles. Runtimebron en de bevroren
+Linux-binary blijven ongewijzigd. De nieuwe platform-/editiehertest moet nog
+afronden. [Afkeuringen, bytegelijke controle en hertest](2026-11-04-writer-testindeling-43.json).

@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "versie": "2026.45.43",
+  "afgekeurde_bron": "99358acacaeb066f64b7b1430f0126b4c20b95d3",
+  "oorzaak": "De zelfstandige node:test-controle had een .test.mjs-naam en werd daarnaast door Vitest verzameld: No test suite found. Alle tien afgekeurde platformtaken melden deze fout vóór de appbouw.",
+  "herstel": "Uitsluitend hernoemd naar controleer-revisie-bijectie.mjs; beide expliciete Node-CI-opdrachten bijgewerkt. Alle zeven controles en hun asserties blijven bytegelijk.",
+  "node_controle_sha256": "d8a5ea678f5aba3b1e1006c6190f53fcf3fecfcb9af0b01393725bb237223541",
+  "lokale_binary_sha256": "3ea2fb22c4e938395e6e9a99b3d5d80f10772faaf9d29275621b9249d5df29af",
+  "runtimebron_ongewijzigd": {
+    "native/Cargo.toml": "0fa6d4f50ed919d8446e57109faceca53d699059b2a9d40ad5512b660765157e",
+    "native/Cargo.lock": "337fc0f92e77f3e94a33b5ef5b6d9b79b9c8b28f07c3fdaac772dddadc4b97e7",
+    "native/crates/office-writer-plakken/src/bronspiegel.rs": "1d60a1652c7fc5428b8336073a452a23b204d78dc34b8fef850f42f8bc0c7404",
+    "native/vendor/docx-edit/src/lib.rs": "b4d0f1f94e9be9217714404847aedff7b8d2212523c9170b340536bafdfe6955",
+    "native/vendor/docx-edit/src/clipboard_batch.rs": "aa144fd2ee0836dc06a8223d2e2eda6956a67a1a29d08d4f928978dcac290355",
+    "native/vendor/docx-edit/src/clipboard_batch/revision_ids.rs": "71c3b507ea885a998d88d7c375655898efd0d5b4cbb956c72f02e9e5123e4c50",
+    "native/vendor/docx-edit/src/ops/text.rs": "383ce6516702f545ff9cd81d3f21ac17e7517ab6e5627e89567e1b47c66c7a8f",
+    "native/vendor/docx-edit/src/ops/paragraph.rs": "b9f16f4dc21f2557b87445f4a8d25b6b055c3431912a76908ff04d7caae72a3c",
+    "native/vendor/docx-edit/src/ops/table.rs": "731fbf11a0f3acdafd9fd9205dc9418044759930910dc2ca5b69595405eafff4",
+    "native/vendor/docx-edit/src/ops/embed.rs": "54c921366badd6c365a32f130369ddaefb86acdd41dfe5453ace9c207c7b9a1f",
+    "src-tauri/Cargo.toml": "d89b8dbd2140fde698cf74f514de601457ccd033658d6908f12eb0735d62ed32",
+    "src-tauri/Cargo.lock": "e8be6fd4cf88d31872ea23d2076b2a24d5df7fc1f037744a402b24d18dcc9d60",
+    "src-tauri/tauri.conf.json": "c68a68eb85706dbd8f69b1629e5222bcab4f333067cb3c1fc5bff1360a20a71e",
+    "package.json": "2832e761c042f7449f9354a66ab7ffe4cddf96800f2ebabb7c2a23121d44776f",
+    "versie.json": "47edaa67674acc4081179ad1f54643005559a6ae34ed7a4a3f3cd7b8ac9b899e",
+    "patches/@betteroffice__docx-react@0.5.1.patch": "65a3c11e608311028e544014eea30d89cc76ec15e88fdc807d7f4d5d9c64a367",
+    "pnpm-lock.yaml": "caa859ed9181a41b2c63573bc0b02802b73234c3fb01a4ecb5518e674a0227bb"
+  },
+  "lokale_herhaling": {
+    "vitest_bestanden": 173,
+    "vitest_tests": 1819,
+    "node_tests": 7,
+    "geslaagd": true
+  },
+  "platform_hertest": "Nog niet afgesloten; de oorspronkelijke afkeuringen blijven behouden.",
+  "bestanden": {
+    "ci-43-testindeling-afkeuringen.json.gz": "ad15bbd2616266cdb6070865992abe24258b94511522f97d0e2dcbf30cf4bae8",
+    "revisies43-testindeling-node.log.gz": "7500b7e3972bcbff5dcae6b3e1733f7919e85f4e74a439abd095e377118f44f6",
+    "revisies43-testindeling-vitest.log.gz": "ea443a54bc458ac44d2b7495b5715552cbeedf5898ac83e138d13a305a119125",
+    "writer-rust-plakbatch.yml.gz": "5830a144a248feb6ced5a5634c84f860ed31dead71140b1df5a3e71002e4caf5",
+    "controleer-revisie-bijectie.mjs.gz": "cfe34505e157f6fe47ec96e247643723243f3b4fad7c149d29f7edcbeb1f8caa",
+    "ci-43-taak-126911270597.log.gz": "294214541e8a6b086f677440923ade397e267fc66b4bd4c94920b18aa94c3777",
+    "ci-43-taak-126911270319.log.gz": "76f6fae6ca4d55587f57115477db1071a1dde71984c4d8e3ffecaa379393619f",
+    "ci-43-taak-126911546458.log.gz": "25dbb337d12c301c4fd0c1385e4011b698dbc10be1f8cdbf5b7df0ff75a3be85",
+    "ci-43-taak-126911288492.log.gz": "f03c41ef9a304a9ac687c2ab9c6cb41d4defc38dcd33f7ade0eb1fd3090b5430",
+    "ci-43-taak-126911270302.log.gz": "a691b61fcc00908493958730c07588a14f4fc801d4c97ffe448cd8b47817b089",
+    "ci-43-taak-126911218008.log.gz": "35670c65720855369051cf168c3372a00de731a4870b0b572dc51cd3d6d9487e",
+    "ci-43-taak-126911288873.log.gz": "6e537a8a5a740c0ebf76f642c6d0f1b73f58c6fe9b5cfe1b28c2861d989a97e3",
+    "ci-43-taak-126911546350.log.gz": "dc3e45f15d4a82aa666154c5b8155079be90640b867c5273b8755e667c84afba",
+    "ci-43-taak-126911288772.log.gz": "b24fb1c9869b14e9701db7fa97cce16dd94c236189678042fa1fb34e4d3bf7b2",
+    "ci-43-taak-126911546513.log.gz": "7aa4835898deb5edca97af333bf841a180f60611959f783e7dcdcc379f9915a3"
+  }
+}

@@ -49,7 +49,7 @@ jobs:
           workspaces: native/onderzoek/writer-plakbatch -> .local/target
       - run: pnpm install --frozen-lockfile
       - name: Revisiebijectie weigert identiteitsschade
-        run: node --test native/onderzoek/writer-plakbatch/revisie-identiteiten.test.mjs
+        run: node --test native/onderzoek/writer-plakbatch/controleer-revisie-bijectie.mjs
       - name: Afzonderlijke Rust-proef bouwen
         run: cargo build --release --locked --manifest-path native/onderzoek/writer-plakbatch/Cargo.toml
       - name: Lezingen met de oorspronkelijke volledige runs vergelijken
@@ -101,7 +101,7 @@ jobs:
           shared-key: writer-plak-desktop
       - run: pnpm install --frozen-lockfile
       - name: Revisiebijectie weigert identiteitsschade
-        run: node --test native/onderzoek/writer-plakbatch/revisie-identiteiten.test.mjs
+        run: node --test native/onderzoek/writer-plakbatch/controleer-revisie-bijectie.mjs
       - name: Levensduur, bronversie en selectievolgorde controleren
         run: pnpm exec vitest run src/tekst/bewerken/rustPlakken.test.ts src/tekst/bewerken/rustTekst.test.ts src/tekst/bewerken/tekstInvoerRoute.test.ts src/tekst/bewerken/plakopmaak.test.ts src/tekst/bewerken/selectieLezen.test.ts
       - name: Echte desktopcodec en leesprimitieven testen
