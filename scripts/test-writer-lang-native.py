@@ -44,6 +44,8 @@ def main():
     p.add_argument('--versie', required=True)
     p.add_argument('--verwacht-rust-tekst', action='store_true', help='Vereis dat de gewone toetsreeks werkelijk via de native tekstcodec loopt.')
     p.add_argument('--verwacht-worker-layout', action='store_true', help='Vereis dat de gewone toetsreeks geen volledige pagina-indeling op de hoofdthread uitvoert.')
+    p.add_argument('--verwacht-worker-lettertypen', action='store_true', help='Vereis dat gewone invoer haar volledige lettertypebehoeften in de worker bepaalt.')
+    p.add_argument('--lettertypebewijs', action='store_true', help='Vergelijk vier fontvarianten na heropenen met de volledige hostreferentie en onafhankelijke DOCX-opmaak.')
     p.add_argument('--verwacht-native-base64', action='store_true', help='Vereis bij deze runtime dat iedere native tekstbatch de ingebouwde snapshotencoder gebruikt.')
     p.add_argument('--spelling-weergave', action='store_true', help='Controleer alle zichtbare golven en de volledige foutencache bij navigatie, zoomen, vensterformaat en tabwissels.')
     p.add_argument('--framebasis', action='store_true', help='Bewaar begrensde rendererframes van deze eigen proefbron na de invoermeting, met de eerste workerfout.')
@@ -83,6 +85,10 @@ def main():
             extra.append('--verwacht-rust-tekst')
         if a.verwacht_worker_layout:
             extra.append('--verwacht-worker-layout')
+        if a.verwacht_worker_lettertypen:
+            extra.append('--verwacht-worker-lettertypen')
+        if a.lettertypebewijs:
+            extra.append('--lettertypebewijs')
         if a.verwacht_native_base64:
             extra.append('--verwacht-native-base64')
         if a.spelling_weergave:
@@ -372,6 +378,9 @@ async def proef(a):
             if a.verwacht_worker_layout:
                 assert rapport['native_leesaanroepen']['layoutDocumentWithRegionsRetainedJson']['calls'] == 0, 'Volledige pagina-indeling op de hoofdthread tijdens gewone invoer'
                 assert rapport['native_leesaanroepen']['worker_berichten'].get('sync', 0) > 0, 'Geen bronsynchronisatie naar de layoutworker tijdens invoer'
+            if a.verwacht_worker_lettertypen:
+                assert rapport['native_leesaanroepen']['layoutFontRequirementsJson']['calls'] == 0, 'Volledige lettertypecontrole op de hoofdthread tijdens gewone invoer'
+                assert rapport['native_leesaanroepen']['worker_berichten'].get('fontRequirements', 0) > 0, 'Geen volledige lettertypecontrole in de worker tijdens invoer'
             if a.workerbron:
                 assert gegevens['volledig'], 'De workerbronbewaking is begrensd; geen volledig replaybewijs'
             tussenpozen = await p.ev('(()=>{_frameProef.stop=true;return _frameProef.v})()')
@@ -576,6 +585,10 @@ async def proef(a):
         async with Inspector(int(os.environ['OFFICE_PROEF_HTTP'])) as p:
             await gereed(p, heropenen=True)
             await controle(p, 'nieuw_proces_heropend', getypt)
+            if a.lettertypebewijs:
+                from gui.lettertype_bewijs import controleer as controleer_lettertypen
+                rapport['lettertypebewijs'] = {}
+                await controleer_lettertypen(p, a.uitvoer, rapport['lettertypebewijs'])
             if a.herstelstart:
                 tekens = sum(len(tekst) for tekst in getypt)
                 rapport['status_na_later'] = await p.run("const eind=performance.now()+8000;while(true){const b=Array.from(document.querySelectorAll('.office-statusbalk .statusbalk-module button')).map(e=>e.textContent||'');if(b[0]?.endsWith(' of 500')&&b[1]?.includes("+json.dumps(f', {tekens:,} characters')+"))return b;if(performance.now()>eind)throw Error('Statusbalk komt niet terug na Later: '+JSON.stringify(b));await new Promise(r=>setTimeout(r,100))}", t=10)

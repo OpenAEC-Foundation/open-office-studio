@@ -57,6 +57,19 @@ class WriterFoutcontext(unittest.TestCase):
             self.assertEqual(tar.extractfile('writer-foutcontext/proef/workerbron.json').read(), bron.read_bytes())
             self.assertEqual(tar.extractfile('writer-foutcontext/scripts/gui/worker_bron.js').read(), (REPO/'scripts/gui/worker_bron.js').read_bytes())
 
+    def test_bewaart_alleen_de_vaste_eigen_lettertypevarianten_met_exacte_helper(self):
+        namen = ['Lettertype-caladea.docx', 'Lettertype-carlito.docx', 'Lettertype-vet.docx', 'Lettertype-cursief.docx']
+        for naam in namen:
+            (self.map/naam).write_bytes(('Eigen proef '+naam).encode())
+        (self.map/'ander-lettertype.docx').write_bytes(b'Niet opnemen')
+        context = module.bewaar(self.programma, [self.rapport], self.uitvoer, systeem=False)
+        with tarfile.open(self.uitvoer/'writer-foutcontext.tar.gz') as tar:
+            for naam in namen:
+                self.assertEqual(tar.extractfile('writer-foutcontext/proef/'+naam).read(), (self.map/naam).read_bytes())
+                self.assertEqual(context['proefbestanden'][naam]['sha256'], module.checksum(self.map/naam))
+            self.assertNotIn('writer-foutcontext/proef/ander-lettertype.docx', tar.getnames())
+            self.assertEqual(tar.extractfile('writer-foutcontext/scripts/gui/lettertype_bewijs.js').read(), (REPO/'scripts/gui/lettertype_bewijs.js').read_bytes())
+
     def test_vervangt_geen_afkeuring_door_een_groen_rapport(self):
         groen = self.map / 'groen.json'
         groen.write_text(json.dumps({**self.gegevens, 'geslaagd': True}))

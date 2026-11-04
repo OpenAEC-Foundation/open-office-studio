@@ -14,8 +14,12 @@ const poort = sdk.slice(poortBegin + 3, poortEinde);
 
 function uitgesteld<T>() {
   let klaar!: (v: T) => void;
-  const wacht = new Promise<T>(r => { klaar = r; });
-  return { klaar, wacht };
+  let fout!: (v: unknown) => void;
+  const wacht = new Promise<T>((r, f) => { klaar = r; fout = f; });
+  // Ook een vóór de correctie geheel ongebruikte proefpoort mag een expliciet
+  // afgekeurd antwoord leveren zonder een tweede globale testfout te maken.
+  void wacht.catch(() => {});
+  return { klaar, fout, wacht };
 }
 
 function workerpoort() {
@@ -28,7 +32,7 @@ function workerpoort() {
   return { fn, bron, andereBron, client, Xn, ce, d, ko, G };
 }
 
-function layout(opties: { worker?: boolean; geschikt?: boolean } = {}) {
+function layout(opties: { worker?: boolean; geschikt?: boolean; lettertypen?: () => Promise<string | null> } = {}) {
   let versie = "bron-na-invoer";
   const bron = { version: () => versie, layoutFontRequirementsJson: vi.fn(() => "{}") };
   const resultaat = { layout: { pages: [{ id: "nieuwe-pagina" }] } };
@@ -44,7 +48,7 @@ function layout(opties: { worker?: boolean; geschikt?: boolean } = {}) {
     Ee: { cancel: vi.fn(), capture: vi.fn() }, S, q$1: ref(() => false), Re: ref(bron),
     t: () => versie, P: (_s: unknown, v: unknown) => v, Zl: () => ({ revisionPreview: {}, reservationSets: [] }),
     buildResidentRegionLayoutRequest: () => ({ proef: "layoutverzoek" }),
-    t$1: {}, r$1: 24, ne: ref(null), s: () => ({ fontChains: {} }), _e: ref(null),
+    t$1: {}, r$1: 24, ne: ref(opties.lettertypen ?? null), s: vi.fn(() => ({ fontChains: {} })), _e: ref(null),
     pe: ref({ session: bron, version: "bron-voor-invoer" }), He: vi.fn(), Cn: vi.fn(),
     V: () => ({ initialized: true }), o$1: {}, l: () => "preview", q: () => [], b$3: vi.fn(), n: vi.fn(), r: vi.fn(),
     d: ref(null), m: () => null, u: undefined, F: ref(null), ct: ref(null), G$1: ref(false),
@@ -54,13 +58,70 @@ function layout(opties: { worker?: boolean; geschikt?: boolean } = {}) {
     zi: (_a: unknown, b: unknown) => b, ya: (_a: unknown, b: unknown) => b,
   };
   const cr = new Function(...Object.keys(context), `return ${callback}`)(...Object.values(context));
-  return { cr, bron, worker, host, publiceer, antwoord, resultaat, S,
+  return { cr, bron, worker, host, publiceer, antwoord, resultaat, S, fontketens: context.s, fouten: context.Cn, herplan: context.Ge,
     andereVersie() { versie = "latere-bron"; },
     async afgerond() { await new Promise(r => setTimeout(r, 0)); },
   };
 }
 
 describe("actieve worker voor een gewijzigde hostbron", () => {
+  it("laat volledige lettertypebehoeften vóór de layout door de bestaande worker bepalen", async () => {
+    const antwoord = uitgesteld<string | null>(), lettertypen = vi.fn(() => antwoord.wacht), p = layout({ lettertypen });
+    p.cr();
+    expect(lettertypen).toHaveBeenCalledOnce();
+    expect(p.bron.layoutFontRequirementsJson).not.toHaveBeenCalled();
+    expect(p.worker).not.toHaveBeenCalled();
+    const nodig = [{ family: "Proeffamilie", key: "proef", bold: false, italic: true, scripts: ["Arab"] }];
+    antwoord.klaar(JSON.stringify(nodig)); await p.afgerond();
+    expect(p.fontketens).toHaveBeenCalledWith(nodig);
+    expect(p.worker).toHaveBeenCalledOnce(); expect(p.host).not.toHaveBeenCalled();
+    p.antwoord.klaar(p.resultaat); await p.afgerond();
+    expect(p.publiceer).toHaveBeenCalledWith(p.resultaat.layout);
+  });
+  it("plant een nieuwe volledige workercontrole bij een ongemerkt gewijzigde bron", async () => {
+    const oud = uitgesteld<string | null>(), nieuw = uitgesteld<string | null>();
+    const lettertypen = vi.fn().mockReturnValueOnce(oud.wacht).mockReturnValueOnce(nieuw.wacht), p = layout({ lettertypen });
+    p.cr(); p.andereVersie(); oud.klaar('[{"family":"Oude bron"}]'); await p.afgerond();
+    expect(p.herplan).toHaveBeenCalledOnce(); expect(p.S.onLayoutComplete).toHaveBeenCalledOnce();
+    expect(p.bron.layoutFontRequirementsJson).not.toHaveBeenCalled();
+    expect(p.fontketens).not.toHaveBeenCalled(); expect(p.worker).not.toHaveBeenCalled();
+    p.cr(); nieuw.klaar('[{"family":"Nieuw"}]'); await p.afgerond();
+    expect(p.fontketens).toHaveBeenCalledExactlyOnceWith([{ family: "Nieuw" }]);
+    expect(p.bron.layoutFontRequirementsJson).not.toHaveBeenCalled(); expect(p.worker).toHaveBeenCalledOnce();
+    p.antwoord.klaar(p.resultaat); await p.afgerond();
+  });
+  it("negeert een lettertypeantwoord uit een vervangen layoutpass", async () => {
+    const oud = uitgesteld<string | null>(), nieuw = uitgesteld<string | null>();
+    const lettertypen = vi.fn().mockReturnValueOnce(oud.wacht).mockReturnValueOnce(nieuw.wacht), p = layout({ lettertypen });
+    p.cr(); p.andereVersie(); p.cr();
+    nieuw.klaar('[{"family":"Nieuw"}]'); await p.afgerond();
+    oud.klaar('[{"family":"Oud"}]'); await p.afgerond();
+    expect(p.fontketens).toHaveBeenCalledOnce(); expect(p.fontketens).toHaveBeenCalledWith([{ family: "Nieuw" }]);
+    p.antwoord.klaar(p.resultaat); await p.afgerond();
+  });
+  it("behoudt de oorspronkelijke fout wanneer de lettertypeworker faalt", async () => {
+    const antwoord = uitgesteld<string | null>(), p = layout({ lettertypen: () => antwoord.wacht }), fout = new Error("Lettertypeworker afgekeurd");
+    p.cr(); antwoord.fout(fout); await p.afgerond();
+    expect(p.fouten).toHaveBeenCalledWith(p.bron, fout);
+    expect(p.worker).not.toHaveBeenCalled(); expect(p.host).not.toHaveBeenCalled();
+  });
+  it.each([{ worker: false }, { geschikt: false }])("behoudt volledige lettertypecontrole zonder geschikte worker: %j", async opties => {
+    const lettertypen = vi.fn(async () => "[]"), p = layout({ ...opties, lettertypen });
+    p.cr(); await p.afgerond();
+    expect(lettertypen).not.toHaveBeenCalled(); expect(p.bron.layoutFontRequirementsJson).toHaveBeenCalledOnce();
+  });
+  it("behoudt de volledige hostcontrole bij een uitdrukkelijk verzochte hostlayout", async () => {
+    const lettertypen = vi.fn(async () => "[]"), p = layout({ lettertypen });
+    p.cr({ onHost: true }); await p.afgerond();
+    expect(lettertypen).not.toHaveBeenCalled(); expect(p.bron.layoutFontRequirementsJson).toHaveBeenCalledOnce();
+    expect(p.host).toHaveBeenCalledOnce();
+  });
+  it("controleert alsnog volledig wanneer de bestaande lettertypepoort geen antwoord heeft", async () => {
+    const p = layout({ lettertypen: async () => null }); p.cr(); await p.afgerond();
+    expect(p.bron.layoutFontRequirementsJson).toHaveBeenCalledOnce();
+    expect(p.fontketens).toHaveBeenCalledWith({});
+    p.antwoord.klaar(p.resultaat); await p.afgerond();
+  });
   it("laat een geschikte nieuwe bron door de bestaande worker synchroniseren", async () => {
     const p = layout(); p.cr();
     expect(p.worker).toHaveBeenCalledOnce(); expect(p.worker.mock.calls[0][0]).toBe(p.bron);
