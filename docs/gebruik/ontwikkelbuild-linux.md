@@ -4,23 +4,26 @@ Een push naar GitHub werkt de broncode bij. De pagina Releases verandert alleen
 als er apart een uitgave wordt gepubliceerd. Een ontwikkelbuild is daarom
 beschikbaar als download bij GitHub Actions, zonder nieuwe release of tag.
 
-De gecontroleerde [45.38-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41862023734/artifacts/13342190592)
-is gebouwd uit `ca2a42c7303e18e4861a2df862f2a4e943b8967d`.
+De gecontroleerde [45.39-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41880946289/artifacts/13349933481)
+is gebouwd uit `1e67dbc32023318708b7e3ae4ee41a9292ea5946`.
 De Linux-ontwikkelworkflow is geslaagd. ZIP-/tar-/AppImagehashes, CRC,
 metadata, uitvoerrechten, startscript, eigen dev-profiel en de daadwerkelijke
 AppRun-/ELF-hashes zijn onafhankelijk gecontroleerd. Het afzonderlijk
 opgehaalde CI-GUI-rapport komt overeen met deze bytes en bewaart lege
 GUI-, console- en enginefoutlijsten. Die gerichte proef controleert drie
 plakrondes, bewaren, verder bewerken, verwerpen en een nieuw document.
-[Exacte downloadcontrole](../tests/2026-11-04-linux-dev-ca2a42c.json).
+[Exacte downloadcontrole](../tests/2026-11-04-linux-dev-1e67dbc.json).
 
-Dit is nog steeds een ontwikkelbuild met open stabiliteits- en snelheidsproblemen.
-De [doorgaande-invoerproef](../tests/writer-doortypen.md) op dezelfde appversie
-laat na snelle toetsverzending nog ongeveer twintig seconden achterstallige
-verwerking zien op een grote tabelbron. De gerichte pakketproef bewijst geen
-volledige functionaliteit, prestaties of platformacceptatie.
-De eerdere [45.36-downloadcontrole](../tests/2026-11-04-linux-dev-f12863d.json)
-en [45.35-downloadcontrole](../tests/2026-11-04-linux-dev-322f840.json)
+Dit blijft een ontwikkelbuild met open stabiliteits- en snelheidsproblemen.
+De [doorgaande-invoerproef](../tests/writer-replica-hergebruik.md) toont de
+volledige getypte alinea op een grote tabelbron ongeveer 27% eerder dan 45.38,
+maar de resterende vertraging is nog te groot. De bredere desktopronde op
+Windows is afgekeurd op een grafiektest met een vijfsecondenlimiet; de
+Windows-controle is dus nog niet geaccepteerd. Linux en macOS slagen in die
+ronde. De gerichte devpakketproef bewijst geen volledige suiteacceptatie.
+De eerdere [45.38-downloadcontrole](../tests/2026-11-04-linux-dev-ca2a42c.json),
+[45.36-downloadcontrole](../tests/2026-11-04-linux-dev-f12863d.json) en
+[45.35-downloadcontrole](../tests/2026-11-04-linux-dev-322f840.json)
 blijven afzonderlijk bewaard.
 
 Sluit een eerder geopende dev-versie na het bewaren voordat je de nieuwe start;
