@@ -14,6 +14,7 @@ class Inspector:
         self.i = 0
         self.taak = 0
         self.consoleberichten = []
+        self.opruimfouten = []
 
     async def __aenter__(self):
         from websockets import connect
@@ -129,6 +130,7 @@ class Inspector:
         plek = f'window._officeProeven[{self.taak}]'
         await self.ev('window._officeProeven??={};'+plek+'={};void(async()=>{try{'+plek+'.uit=await(async()=>{'+code+'})();}catch(e){'+plek+'.fout=String(e)}})()')
         einde = time.monotonic()+t
+        geslaagd = False
         try:
             while time.monotonic() < einde:
                 await asyncio.sleep(.15)
@@ -138,7 +140,18 @@ class Inspector:
                 if 'fout' in antwoord:
                     raise RuntimeError(antwoord['fout'])
                 if 'uit' in antwoord:
+                    geslaagd = True
                     return antwoord['uit']
             raise TimeoutError('Asynchrone testopdracht niet gereed')
         finally:
-            await self.ev('delete '+plek.replace('window._officeProeven[', 'window._officeProeven?.['))
+            opruimen = 'delete '+plek.replace('window._officeProeven[', 'window._officeProeven?.[')
+            if geslaagd:
+                # Een onvolledig afgeronde gezonde proef blijft een afkeuring.
+                await self.ev(opruimen)
+            else:
+                try:
+                    # Een al onbereikbare pagina niet nogmaals 90 seconden
+                    # afwachten of de oorspronkelijke foutstack vervangen.
+                    await asyncio.wait_for(self.ev(opruimen), timeout=1)
+                except Exception as fout:
+                    self.opruimfouten.append({'taak': self.taak, 'fout': repr(fout)})

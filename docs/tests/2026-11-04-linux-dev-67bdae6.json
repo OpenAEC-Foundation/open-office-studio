@@ -1,0 +1,81 @@
+{
+  "run": 41783862269,
+  "artifact": 13300019175,
+  "zip_sha256": "45bb2e3c3313f7c6dbd9b15107d99120a9d59a5be07c16548db948250e38b4e6",
+  "archief_sha256": "58b9050984ec589cc7bd2f207a176067af55e673442d8ce4f94e9e6a673e5f90",
+  "metadata": {
+    "versie": "2026.45.32",
+    "bronrevisie": "67bdae678817c9d69a67ed4f88d5990d037a763b",
+    "platform": "Linux x86_64",
+    "profiel": "org.openaec.office-studio.dev",
+    "appimage": "Open Office Studio Dev_2026.45.32_amd64.AppImage",
+    "sha256": "2a405dfbd4dacd8f87fedea3a56765d3c6a8fc734bbb718736e2dadcdb51160a",
+    "pakketcontroles": [
+      "AppImage type 2",
+      "SquashFS volledig uitgepakt",
+      "AppRun uitvoerbaar",
+      "ELF x64 en bibliotheken gevonden",
+      "snelkoppeling en pictogram aanwezig"
+    ],
+    "controles": [
+      "TypeScript via productiebouw",
+      "Vitest",
+      "Rust-desktoptests"
+    ],
+    "gui_acceptatie": "Niet volledig gecontroleerd; ontwikkelbuild met bekende Writer-problemen.",
+    "webkit_modulekaart": {
+      "geslaagd": true,
+      "omvang": "Twee minimale moduleworkers in de geïnstalleerde WebKitGTK; geen app- of prestatieacceptatie.",
+      "webkit": "2.50.4",
+      "gevallen": {
+        "oud": {
+          "evaluaties": 2,
+          "gelijk": false
+        },
+        "apart": {
+          "evaluaties": 1,
+          "gelijk": true
+        }
+      },
+      "kwetsbaar": true
+    },
+    "native_gui": {
+      "geslaagd": true,
+      "programma_sha256": "48854c53266ce9d363e90737b07cd9427ed71d5303e3ab3936a463e7f970b113",
+      "startprogramma_sha256": "eb0b254ac0dae6543e6dd7cd02e1baf40a060de95b927313122d6b46323c00aa",
+      "profiel": "org.openaec.office-studio.dev",
+      "script_sha256": "c690f866999ea08d81ed97f30a5269933b24e01955e8b6811bc0e7622e1f1278",
+      "omvang": "Eigen DOCX-kopie, drie plakrondes, bewaren na ronde één en verder bewerken; onafhankelijke inhoudscontrole, verwerpen en nieuw document.",
+      "appimage_startfunctie": "De uitgepakte AppRun is gestart; launcher en werkelijke ELF zijn op hash gecontroleerd. FUSE-mount niet getoetst."
+    }
+  },
+  "bestanden": {
+    "LEESMIJ.txt": {
+      "sha256": "c37f80983c8762c225c5232e5fa435a8b1d459c3c50fb748ca5ee86048e52bb5",
+      "bytes": 771,
+      "mode": "0o644"
+    },
+    "SHA256SUMS": {
+      "sha256": "afc0d4b4516815c69ca52efe4ad41f8a75cc041e8daf0c0e5af6891c35c3e085",
+      "bytes": 115,
+      "mode": "0o644"
+    },
+    "bouw.json": {
+      "sha256": "c6972e06986d5bd8f9470bf86fab2be12de102a3f462f2b26b005a7469346f9b",
+      "bytes": 1753,
+      "mode": "0o644"
+    },
+    "start-dev.sh": {
+      "sha256": "ffe0074a57d50fa2bb366e41f920f946edcf101d46e2a1f63ae68290e850c7e2",
+      "bytes": 134,
+      "mode": "0o755"
+    },
+    "Open Office Studio Dev_2026.45.32_amd64.AppImage": {
+      "sha256": "2a405dfbd4dacd8f87fedea3a56765d3c6a8fc734bbb718736e2dadcdb51160a",
+      "bytes": 152574456,
+      "mode": "0o755"
+    }
+  },
+  "scope": "Pakketbytes in geheugen gecontroleerd op GitHub ZIP-digest, CRC, tar-checksum, volledige AppImage-checksum/ELF/type2, metadata, bron en versie, uitvoerrechten en starter. Originele ZIP niet op schijf opgeslagen; beschikbaar via GitHub. De gerichte AppRun-/ELF-bewaarproef en bron-/bouwcontrole uit CI slagen, geen volledige GUI-/platform-/stabiliteitsacceptatie.",
+  "download": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41783862269/artifacts/13300019175"
+}

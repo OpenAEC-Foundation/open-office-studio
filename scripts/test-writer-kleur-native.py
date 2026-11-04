@@ -210,9 +210,14 @@ async def proef(a):
         async with Inspector(http) as p:
             print('Eigen inspectieverbinding gereed', flush=True)
             await gereed(p)
+            await p.begin_foutbewaking()
+            await p.begin_framebewaking(a.uitvoer/'framebasis.json')
             print('Document gereed', flush=True)
             await controle(p, 'begin', None)
             await kies(p, venster, 2, 2, 'f6d32d')
+            # Leg de geldige basis vast vóór de eerder vastgelopen Undo-opdracht.
+            # Een daarna onbereikbare WebView kan haar ring niet meer exporteren.
+            rapport['framebasis_voor_undo'] = await p.bewaar_framebasis()
             await p.run('await proefApi().commands.execute("undo",null);return true;')
             await controle(p, 'ongedaan', None)
             await p.run('await proefApi().commands.execute("redo",null);return true;')
@@ -223,6 +228,8 @@ async def proef(a):
             subprocess.run(['xdotool', 'type', '--clearmodifiers', 'X'], check=True)
             await asyncio.sleep(.3)
             bewaard = await controle(p, 'nieuw-getypte-tekst', '99c1f1', tekst+'X')
+            rapport['fouten_eerste_proces'] = await p.fouten()
+            assert not any(rapport['fouten_eerste_proces'].values()), rapport['fouten_eerste_proces']
         stop()
         heropen = a.uitvoer/'Bewaarde markeerkleur.docx'
         heropen.write_bytes(bewaard)

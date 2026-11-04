@@ -45,6 +45,7 @@ def main():
     p.add_argument('--verwacht-rust-tekst', action='store_true', help='Vereis dat de gewone toetsreeks werkelijk via de native tekstcodec loopt.')
     p.add_argument('--verwacht-worker-layout', action='store_true', help='Vereis dat de gewone toetsreeks geen volledige pagina-indeling op de hoofdthread uitvoert.')
     p.add_argument('--verwacht-native-base64', action='store_true', help='Vereis bij deze runtime dat iedere native tekstbatch de ingebouwde snapshotencoder gebruikt.')
+    p.add_argument('--spelling-weergave', action='store_true', help='Controleer alle zichtbare golven en de volledige foutencache bij navigatie, zoomen, vensterformaat en tabwissels.')
     p.add_argument('--framebasis', action='store_true', help='Bewaar begrensde rendererframes van deze eigen proefbron na de invoermeting, met de eerste workerfout.')
     p.add_argument('--historische-registerwissels', action='store_true', help='Alleen voor vergelijking met een oude binary: registreer de canvaswissels zonder deze specifieke nieuwe acceptatie-eis.')
     p.add_argument('--herstelstart', action='store_true', help='Wacht op een echte eigen herstelkopie en toets Later, verder bewerken en daarna Herstellen in een nieuw tabblad.')
@@ -83,6 +84,8 @@ def main():
             extra.append('--verwacht-worker-layout')
         if a.verwacht_native_base64:
             extra.append('--verwacht-native-base64')
+        if a.spelling_weergave:
+            extra.append('--spelling-weergave')
         if a.framebasis:
             extra.append('--framebasis')
         extra += ['--geheugenrondes', str(a.geheugenrondes)]
@@ -393,6 +396,10 @@ async def proef(a):
                     'script_sha256': hashlib.sha256((repo/'scripts/gui/framebasis.js').read_bytes()).hexdigest(),
                     'grens': 'Alleen de eigen proefbron; maximaal 2 MiB framebytes, 24 gebeurtenissen en 8.000 paginametadata-items. Geen decoderwijziging of volledige runtimeherkomstcontrole.',
                 }
+            if a.spelling_weergave:
+                from gui.spelling_weergave import controleer as controleer_spellingweergave
+                rapport['spelling_weergave'] = {}
+                await controleer_spellingweergave(p, venster, d, toets, beeld, rapport['spelling_weergave'])
             if a.geheugenrondes:
                 rapport['geheugenproef'] = {'gevraagde_rondes': a.geheugenrondes, 'gc_gevraagd': a.geheugen_gc, 'rondes': [], 'grens': 'Extra native geschiedenis-/selectiebelasting; geen bewijs dat een incidentele allocatorpanic is opgelost.'}
                 if a.geheugen_gc:

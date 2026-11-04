@@ -4,12 +4,14 @@ Een push naar GitHub werkt de broncode bij. De pagina Releases verandert alleen
 als er apart een uitgave wordt gepubliceerd. Een ontwikkelbuild is daarom
 beschikbaar als download bij GitHub Actions, zonder nieuwe release of tag.
 
-De gecontroleerde [45.31-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41781392338/artifacts/13299632661)
-is gebouwd uit `9d0c1161d86ff426d35e118bb0f621c7cc917ae2`.
-De [bouw en gerichte pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41781392338)
-slagen. De [downloadgegevens](../tests/2026-11-04-linux-dev-9d0c116.json) leggen
+De gecontroleerde [45.32-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41783862269/artifacts/13300019175)
+is gebouwd uit `67bdae678817c9d69a67ed4f88d5990d037a763b`.
+De [bouw en gerichte pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41783862269)
+slagen. De [downloadgegevens](../tests/2026-11-04-linux-dev-67bdae6.json) leggen
 bronrevisie, gecontroleerde ZIP-/tar-/AppImage-bytes en testomvang vast.
-Deze versie groepeert Undo op de oorspronkelijke invoertijd, hergebruikt
+Deze versie gebruikt de ingebouwde snapshotencoder waar beschikbaar, behoudt
+de volledige encoder voor oudere runtimes, groepeert Undo op de oorspronkelijke
+invoertijd, hergebruikt
 alinea-eindmarkeringen en houdt de layout na gewone native invoer in de worker;
 [de grote plakproef en snelheidsgrenzen](../tests/writer-layout-hostsync.md)
 laten ook zien dat de algemene vertraging nog niet is opgelost.
@@ -62,3 +64,8 @@ na een geslaagde GTK-markeerkleurkeuze. De exacte negatieve ELF en de huidige
 45.32 doorstaan dezelfde proef lokaal; de oorspronkelijke oorzaak blijft open.
 [Afkeuring, exacte bytes en hertests](../tests/2026-11-04-writer-kleur-45.31.json).
 Er wordt geen officiële release gepubliceerd.
+
+De afzonderlijke zeveneditieronde van 45.32 faalt op Linux doordat een worker
+bij gewone tekstinvoer een unsupported embed meldt en stopt. De exacte
+negatieve binary slaagt lokaal met dezelfde proefcode; de oorzaak blijft open.
+[Afkeuring en exacte hertest](../tests/writer-spellingsweergave.md#aanvullende-linux-afkeuring-op-4532).
