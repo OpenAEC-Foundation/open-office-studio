@@ -176,7 +176,7 @@ jobs:
       - name: Bewerken, bewaren en heropenen van 500 pagina’s
         if: runner.os == 'Linux'
         run: |
-          "$OFFICE_GUI_PYTHON" scripts/test-writer-lang-native.py --programma src-tauri/target/release/open-office-studio --versie $(node -p "require('./package.json').version") --uitvoer .local/proef-native-writer-lang --verwacht-rust-tekst --verwacht-worker-layout
+          "$OFFICE_GUI_PYTHON" scripts/test-writer-lang-native.py --programma src-tauri/target/release/open-office-studio --versie $(node -p "require('./package.json').version") --uitvoer .local/proef-native-writer-lang --verwacht-rust-tekst --verwacht-worker-layout --framebasis
       - name: Revisiekaarten en gewone opmerkingen in de productie-UI
         if: runner.os == 'Linux'
         run: node scripts/test-writer-revisies-gui.mjs

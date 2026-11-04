@@ -140,6 +140,16 @@ class WriterFoutcontext(unittest.TestCase):
                 self.assertEqual(tar.extractfile('writer-foutcontext/proef/' + naam).read(), (self.map / naam).read_bytes())
                 self.assertIn(naam, context['proefbestanden'])
 
+    def test_bewaart_framebasis_en_de_exacte_diagnosecode(self):
+        for naam in ['framebasis.json', 'framebasis.inspectiefout.json']:
+            (self.map / naam).write_text('{"eigen_proef":true}\n')
+        context = module.bewaar(self.programma, [self.rapport], self.uitvoer, systeem=False)
+        with tarfile.open(self.uitvoer / 'writer-foutcontext.tar.gz') as tar:
+            self.assertEqual(tar.extractfile('writer-foutcontext/scripts/gui/framebasis.js').read(), (REPO / 'scripts/gui/framebasis.js').read_bytes())
+            for naam in ['framebasis.json', 'framebasis.inspectiefout.json']:
+                self.assertEqual(tar.extractfile('writer-foutcontext/proef/' + naam).read(), (self.map / naam).read_bytes())
+                self.assertIn(naam, context['proefbestanden'])
+
 
 if __name__ == '__main__':
     unittest.main()

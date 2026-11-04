@@ -4,27 +4,17 @@ Een push naar GitHub werkt de broncode bij. De pagina Releases verandert alleen
 als er apart een uitgave wordt gepubliceerd. Een ontwikkelbuild is daarom
 beschikbaar als download bij GitHub Actions, zonder nieuwe release of tag.
 
-De gecontroleerde [45.29-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41761343266/artifacts/13291612406) is gebouwd uit
-`f3f66e7e64e7d6aecfb3eec89ba99e408f1268a3`. De [bouw en pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41761343266) slagen; de [downloadgegevens](../tests/2026-11-04-linux-dev-f3f66e7.json) leggen bronrevisie, checksums en testomvang vast.
-De brede 45.29-desktoproute slaagt op Windows/macOS en faalt op Linux vóór
-heropenen op `FrameDelta: position span shift requires retained positionSpan`.
-[Exacte afkeuring en behouden binary](../tests/2026-11-04-writer-framebasis-45.29.json).
-Deze download bevat ook nog de hostlayoutterugval die in 45.30 afzonderlijk
-wordt aangepakt. Gebruik dit pakket voor tests met kopieën.
+De gecontroleerde [45.30-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41768035087/artifacts/13294261521)
+is gebouwd uit `276493774a7a60d6c72d67de5bb074306d1cba34`.
+De [bouw en gerichte pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41768035087)
+slagen. De [downloadgegevens](../tests/2026-11-04-linux-dev-2764937.json) leggen
+bronrevisie, gecontroleerde ZIP-/tar-/AppImage-bytes en testomvang vast.
+Deze versie houdt de layout na gewone native invoer in de worker;
+[de grote plakproef en snelheidsgrenzen](../tests/writer-layout-hostsync.md)
+laten ook zien dat de algemene vertraging nog niet is opgelost.
+
 Sluit een eerder geopende dev-versie na het bewaren voordat je de nieuwe start;
-beide gebruiken hetzelfde dev-profiel.
-
-De [afzonderlijke geheugenroute op dezelfde bron](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41761343398)
-slaagt eveneens. Dat bewijst geen herstel van de eerdere incidentele
-Wasm-geheugentrappen: de 45.26-route faalde nog na zeven geslaagde extra
-selectie-/geschiedenis-/GC-rondes. De oorspronkelijke negatieve ELF en context
-blijven bewaard. Zie [die afkeuring](../tests/2026-11-04-writer-geheugen-45.26.json).
-Een groene nieuwe ronde is geen volledige stabiliteitsacceptatie.
-
-De brede 45.27-desktoproute slaagt op Windows/macOS, maar faalt op Linux op een
-Wasm-trap in `editsession_apply_input` tijdens de aparte invoer-/plakantwoordproef.
-De [afkeuring en exacte binary](../tests/2026-11-04-writer-volgorde-45.27.json)
-blijven bewaard. De geslaagde devpakketproef bewijst geen herstel van die fout.
+beide gebruiken hetzelfde dev-profiel. Gebruik kopieën van je documenten.
 
 1. Open [Linux-ontwikkelbuild](https://github.com/OpenAEC-Foundation/open-office-studio/actions/workflows/dev-linux.yml).
 2. Kies de nieuwste geslaagde uitvoering op `codex/native-rust-office`.
@@ -57,28 +47,13 @@ De uitgepakte AppImage wordt via haar meegeleverde AppRun gestart en gecontrolee
 verder bewerken, drie plakrondes en sluiten zonder opslaan. De hash in
 `bouw.json` bindt die proef aan zowel de starter als de werkelijk gestarte ELF.
 De FUSE-mount, andere distributies en de overige functies zijn daarmee niet volledig getoetst.
-Bekende Writer-problemen met grote documenten en de documentworker zijn nog
-in onderzoek. Een [afzonderlijke Linux-uitgaveproef van 45.20](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41658755587)
-is afgekeurd op een geheugenfout in de Wasm-layout bij 500 pagina’s. De
-geslaagde devpakketproef bewijst geen oplossing voor die fout. Ook de
-[brede 45.21-desktopproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41668303628)
-is op Linux afgekeurd bij heropenen, met een fout over een synchrone uitlezing
-van een viewersessie. Die herstelstartfout is in 45.22 gericht gerepareerd; de
-[native herstel-/geheugenproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41683682448)
-slaagt inclusief echte herstelkopie, beide herstelkeuzes en twintig extra
-geschiedenisrondes met garbagecollection. Dit bewijst geen herstel van de
-afzonderlijke allocatorpanic. Zie het [geheugen-/opstartonderzoek](../tests/writer-geheugenonderzoek.md). De workflow heeft alleen leesrechten op de repository en
-publiceert geen GitHub-release.
-
-De brede desktopbouw van 45.22 slaagt op Linux, Windows en macOS. De afzonderlijke
-Linux-zeveneditieproef faalt echter bij het openen van de eigen voorbeeldkopie
-op een fatale grafische modulecompilatie, vóór de eerste plakactie. Ook deze
-[rendererafkeuring](../tests/writer-renderer-opstart.md) blijft open; een groene
-devpakketproef bewijst geen volledige stabiliteit.
-
-Ook de 45.23-desktopbouw slaagt op drie platforms, maar de aparte
-[geheugenronde van 45.23](../tests/writer-geheugenonderzoek.md#4523-afkeuring-tijdens-de-extra-geheugenbelasting)
-is afgekeurd op een Wasm-geheugentoegang buiten bereik na selectie/geschiedenis
-en garbagecollection. De exacte negatieve binary en context zijn bewaard.
-Een lokale hertest met dezelfde binary slaagt; de fout is daarmee niet
-opgelost. Gebruik de devdownload voor tests met documentkopieën.
+Bekende Writer-problemen met grote documenten, invoervertraging en incidentele
+worker-/Wasm-fouten blijven open. De brede 45.29-desktoproute faalde op Linux
+op `FrameDelta: position span shift requires retained positionSpan`.
+De [exacte afkeuring](../tests/2026-11-04-writer-framebasis-45.29.json) en de
+[verdere framebasisproeven](../tests/writer-framebasis.md) blijven afzonderlijk
+vastgelegd. De groene devpakketproef is geen bewijs dat deze fout, de oudere
+[geheugenafkeuringen](../tests/writer-geheugenonderzoek.md) of alle functies
+hersteld zijn. De [brede 45.30-desktoproute](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41768043233)
+slaagt op Linux, Windows en macOS; de zeveneditiecontrole wordt apart gevolgd.
+Er wordt geen officiële release gepubliceerd.

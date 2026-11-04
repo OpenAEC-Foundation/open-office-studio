@@ -1,6 +1,7 @@
 """Begrensde inspectie van uitsluitend de afzonderlijke lokale WebKit-testapp."""
 import asyncio
 import json
+from pathlib import Path
 import re
 import time
 from urllib.request import urlopen
@@ -33,7 +34,16 @@ class Inspector:
             raise
 
     async def __aexit__(self, *args):
-        await self.ws.close()
+        try:
+            if hasattr(self, 'framebasis_uitvoer'):
+                try:
+                    await asyncio.wait_for(self.bewaar_framebasis(), timeout=5)
+                except Exception as fout:
+                    self.meld_framebasis_exportfout(fout)
+                    if not args or args[0] is None:
+                        raise
+        finally:
+            await self.ws.close()
 
     async def command(self, method, params=None):
         self.i += 1
@@ -81,7 +91,36 @@ class Inspector:
         gui = await self.ev('window._officeGuiFouten')
         if not isinstance(gui, list):
             raise RuntimeError('GUI-foutbewaking was niet gestart')
-        return {'gui': gui, 'console': [m for m in self.consoleberichten if m.get('level') == 'error']}
+        fouten = {'gui': gui, 'console': [m for m in self.consoleberichten if m.get('level') == 'error']}
+        if any(fouten.values()) and hasattr(self, 'framebasis_uitvoer'):
+            try:
+                await self.bewaar_framebasis()
+            except Exception as fout:
+                self.meld_framebasis_exportfout(fout)
+        return fouten
+
+    def meld_framebasis_exportfout(self, fout):
+        self.framebasis_exportfout = repr(fout)
+        try:
+            self.framebasis_uitvoer.with_suffix('.inspectiefout.json').write_text(json.dumps({'fout': self.framebasis_exportfout})+'\n')
+        except OSError as schrijffout:
+            # Ook een volle schijf mag de oorspronkelijke GUI-afkeuring niet vervangen.
+            self.framebasis_exportfout += '; diagnosebestand niet geschreven: '+repr(schrijffout)
+
+    async def begin_framebewaking(self, uitvoer):
+        """Alleen bij de eigen proefbron, buiten de invoermeting; nooit de decoder aanpassen."""
+        if hasattr(self, 'framebasis_uitvoer'):
+            raise RuntimeError('Framebewaking is al gestart')
+        if not await self.ev(Path(__file__).with_name('framebasis.js').read_text()):
+            raise RuntimeError('Framebewaking is niet geïnstalleerd')
+        self.framebasis_uitvoer = Path(uitvoer)
+
+    async def bewaar_framebasis(self):
+        gegevens = await self.ev('window._officeFramebasis')
+        if not isinstance(gegevens, dict) or gegevens.get('schema') != 1:
+            raise RuntimeError('Framebewaking ontbreekt in de eigen proefpagina')
+        self.framebasis_uitvoer.write_text(json.dumps(gegevens, ensure_ascii=False)+'\n')
+        return gegevens
 
     async def run(self, code, t=90):
         # Deze WebKit-route wacht niet betrouwbaar op een teruggegeven Promise.

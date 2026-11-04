@@ -44,6 +44,7 @@ def main():
     p.add_argument('--versie', required=True)
     p.add_argument('--verwacht-rust-tekst', action='store_true', help='Vereis dat de gewone toetsreeks werkelijk via de native tekstcodec loopt.')
     p.add_argument('--verwacht-worker-layout', action='store_true', help='Vereis dat de gewone toetsreeks geen volledige pagina-indeling op de hoofdthread uitvoert.')
+    p.add_argument('--framebasis', action='store_true', help='Bewaar begrensde rendererframes van deze eigen proefbron na de invoermeting, met de eerste workerfout.')
     p.add_argument('--historische-registerwissels', action='store_true', help='Alleen voor vergelijking met een oude binary: registreer de canvaswissels zonder deze specifieke nieuwe acceptatie-eis.')
     p.add_argument('--herstelstart', action='store_true', help='Wacht op een echte eigen herstelkopie en toets Later, verder bewerken en daarna Herstellen in een nieuw tabblad.')
     p.add_argument('--geheugenrondes', type=int, default=0, help='Extra selectie-/Backspace-/undo-/redo-rondes vóór de gewone bewaarproef (0–100).')
@@ -79,6 +80,8 @@ def main():
             extra.append('--verwacht-rust-tekst')
         if a.verwacht_worker_layout:
             extra.append('--verwacht-worker-layout')
+        if a.framebasis:
+            extra.append('--framebasis')
         extra += ['--geheugenrondes', str(a.geheugenrondes)]
         if a.herstelstart:
             extra.append('--herstelstart')
@@ -359,6 +362,13 @@ async def proef(a):
               }
               throw Error('Getypte tekst ontbreekt in het gerenderde frame: '+laatste.slice(-100));
             """)
+            if a.framebasis:
+                await p.begin_framebewaking(a.uitvoer/'framebasis.json')
+                rapport['framebewaking'] = {
+                    'vanaf': 'Na bron-, golflijn-, rAF- en getypte-framecontrole; geen instrumentatie tijdens de invoermeting.',
+                    'script_sha256': hashlib.sha256((repo/'scripts/gui/framebasis.js').read_bytes()).hexdigest(),
+                    'grens': 'Alleen de eigen proefbron; maximaal 2 MiB framebytes, 24 gebeurtenissen en 8.000 paginametadata-items. Geen decoderwijziging of volledige runtimeherkomstcontrole.',
+                }
             if a.geheugenrondes:
                 rapport['geheugenproef'] = {'gevraagde_rondes': a.geheugenrondes, 'gc_gevraagd': a.geheugen_gc, 'rondes': [], 'grens': 'Extra native geschiedenis-/selectiebelasting; geen bewijs dat een incidentele allocatorpanic is opgelost.'}
                 if a.geheugen_gc:
@@ -511,6 +521,12 @@ async def proef(a):
                 print('eigen periodieke herstelkopie geslaagd', flush=True)
             rapport['fouten_voor_heropenen'] = await p.fouten()
             assert not any(rapport['fouten_voor_heropenen'].values()), 'GUI of engine meldt fouten vóór heropenen'
+            if a.framebasis:
+                stand = await p.bewaar_framebasis()
+                rapport['framebewaking']['instrumentatiefouten'] = stand['instrumentatiefouten']
+                rapport['framebewaking']['antwoorden_met_frame'] = sum(e['soort'] == 'antwoord' and any('base64' in b for b in e['buffers']) for e in stand['gebeurtenissen'])
+                assert not stand['instrumentatiefouten'], 'Framebewaking meldt instrumentatiefouten'
+                assert rapport['framebewaking']['antwoorden_met_frame'] > 0, 'Geen werkelijke framebytes geregistreerd'
         stop(); await start()
         async with Inspector(int(os.environ['OFFICE_PROEF_HTTP'])) as p:
             await gereed(p, heropenen=True)
