@@ -160,3 +160,20 @@ als goedgekeurde versie gepusht of voor nieuwe platform-/editiepakketten
 aangeboden. De oorspronkelijke Windows-test-time-out in
 45.39 blijft oorzaak-open, ook na de groene hertest. Er wordt geen officiële
 release gepubliceerd en geen issue of acceptatievlag gesloten.
+
+## Nieuwe afkeuring van de bestaande 45.39-code
+
+De [latere brede ronde op 3ad2eb6](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41888674222)
+slaagt op Windows en macOS, maar faalt op Linux na het heropenen van 500
+pagina's. De documentworker meldt een geheugengrensfout in
+`editsession_yrs_blocks_for_story`; de renderer valt terug op de hoofdthread.
+Alle vastgelegde broncontroles blijven exact, maar de workerfout blijft een
+afkeuring. De oorzaak is nog niet bewezen. De exacte negatieve ELF, ZIP-/tar-
+hashes, bytegelijke CI-scripts en oorspronkelijke foutcontext zijn bewaard.
+[Oorspronkelijke afkeuring en identiteit](2026-11-04-writer-heropenen-3ad.json).
+De eerdere groene ronde en de lokale 45.40-proeven bewijzen geen herstel.
+
+De eerste lokale hertest op die exacte negatieve ELF slaagt met bytegelijke
+CI-testscripts en dezelfde limieten. Er is geen productcode veranderd. De
+oorspronkelijke CI-afkeuring en de lokale groene ronde blijven afzonderlijk
+bewaard; oorzaak en herstel zijn daarmee niet bewezen.

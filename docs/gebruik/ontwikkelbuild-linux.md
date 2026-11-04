@@ -31,6 +31,11 @@ slaagt op Linux, Windows en macOS met dezelfde applicatiecode. De eerdere
 Windows-time-out blijft als onverklaarde afkeuring bewaard; deze groene ronde
 bewijst geen gerichte reparatie of volledige stabiliteit.
 
+Een [latere Linux-desktopproef](../tests/2026-11-04-writer-heropenen-3ad.json)
+is na heropenen van 500 pagina's afgekeurd op een geheugengrensfout in de
+Wasm-documentworker. De oorzaak blijft open; de gecontroleerde devdownload
+is daarom nog steeds een testversie met bekende stabiliteitsproblemen.
+
 Sluit een eerder geopende dev-versie na het bewaren voordat je de nieuwe start;
 beide gebruiken hetzelfde dev-profiel. Gebruik kopieën van je documenten.
 
