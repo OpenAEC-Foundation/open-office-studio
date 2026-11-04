@@ -172,6 +172,16 @@ async def proef(a):
 
     async def gereed(p, heropenen=False, herstelkeuze='later'):
         await p.command('Console.enable')
+        if a.herstelstart and not heropenen:
+            # De normale instelling is vijf minuten tussen gewijzigde kopieën.
+            # Kies voor deze eigen proef het ondersteunde interval van één
+            # minuut; een eerdere kopie kan vóór de laatste edit zijn gemaakt.
+            await p.ev('localStorage.setItem("openaec-office-herstelinterval", "1");true')
+            rapport['herstelbeleid_proef'] = {
+                'interval_minuten': 1,
+                'wachtgrens_seconden': 120,
+                'betekenis': 'Eén interval, een periodieke tik van 30 seconden en 30 seconden export-/IO-ruimte; de uiteindelijke kopie moet nog steeds volledig actueel zijn.',
+            }
         try:
             if heropenen:
                 await p.begin_foutbewaking()
@@ -396,18 +406,40 @@ async def proef(a):
                 # Dit pad ligt uitsluitend onder het voor deze proef gemaakte
                 # XDG-profiel. Wacht op de echte periodieke app-bewaring.
                 herstelmap = Path(os.environ['XDG_DATA_HOME']) / 'org.openaec.office-studio' / 'herstel'
-                einde = time.monotonic()+65
+                einde = time.monotonic()+rapport['herstelbeleid_proef']['wachtgrens_seconden']
                 herstelkopie = None
+                rapport['herstelwaarnemingen'] = []
+                herstelgezien = set()
                 while herstelkopie is None:
                     for kandidaat in herstelmap.glob('*/tab-*.bin'):
                         if not kandidaat.with_suffix('.json').is_file():
                             continue
                         try:
-                            if lees_docx(kandidaat) == getypt:
+                            inhoud = lees_docx(kandidaat)
+                            som = hashlib.sha256(kandidaat.read_bytes()).hexdigest()
+                            if som not in herstelgezien:
+                                herstelgezien.add(som)
+                                exact = inhoud == getypt
+                                rapport['herstelwaarnemingen'].append({
+                                    'sha256': som, 'exact': exact,
+                                    'alinea_aantal': len(inhoud),
+                                    'tekst_sha256': hashlib.sha256(json.dumps(inhoud, ensure_ascii=False).encode()).hexdigest(),
+                                })
+                                if not exact:
+                                    # Alleen de laatste afwijkende eigen proefkopie;
+                                    # niets uit een gebruikersprofiel verzamelen.
+                                    shutil.copyfile(kandidaat, a.uitvoer/'herstel-afwijkend.docx')
+                                    shutil.copyfile(kandidaat.with_suffix('.json'), a.uitvoer/'herstel-afwijkend.json')
+                            if inhoud == getypt:
                                 herstelkopie = kandidaat
                                 break
                         except FileNotFoundError:
                             continue
+                    if time.monotonic() >= einde:
+                        try:
+                            rapport['fouten_tijdens_herstelwacht'] = await p.fouten()
+                        except Exception as bewakingsfout:
+                            rapport['foutbewaking_niet_beschikbaar'] = repr(bewakingsfout)
                     assert time.monotonic() < einde, 'Geen actuele eigen periodieke herstelkopie'
                     if herstelkopie is None:
                         await asyncio.sleep(.2)
@@ -472,6 +504,9 @@ async def proef(a):
         rapport['geslaagd'] = True
     except Exception as fout:
         rapport['fout'] = repr(fout)
+        inspectie = locals().get('p')
+        if inspectie is not None:
+            rapport['console_bij_afkeuring'] = inspectie.consoleberichten
         if venster and programma and programma.poll() is None:
             try: beeld('afgekeurd')
             except Exception as beeldfout: rapport['beeldfout'] = repr(beeldfout)

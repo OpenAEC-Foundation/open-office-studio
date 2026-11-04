@@ -1,3 +1,4 @@
+// OpenAEC: gedeelde tekstinvoeging met rechtstreeks eindpunt voor plakbatches (2026-11-04).
 //! Text editing operations.
 
 use std::collections::BTreeMap;
@@ -46,6 +47,16 @@ fn text_edit_range<T: ReadTxn>(
         });
     }
     loc_range_in_txn(story_id, story, txn, start, end)
+}
+
+/// Hetzelfde invoegresultaat vóór omzetting naar alinea-identiteiten.
+/// Een plakbatch bewaart zijn globale positie al en vraagt die omzetting
+/// uitsluitend voor de uiteindelijke cursor, niet na ieder tekstfragment.
+struct TextPlacement {
+    start: u32,
+    end: u32,
+    bounds: Option<crate::op::ParaBounds>,
+    revision_ids: Vec<String>,
 }
 
 /// One explicitly formatted run for [`EditingDoc::replace_range_rich`].
@@ -370,29 +381,55 @@ impl EditingDoc {
         &self,
         txn: &mut TransactionMut<'_>,
         ctx: &EditCtx,
-        mut at: Position,
+        at: Position,
         text: &str,
         policy: FormatPolicy,
         observe: impl FnOnce(&Attrs),
     ) -> OpResult<Receipt> {
+        let story_id = at.story.clone();
+        let placed = self.insert_text_placed_observed_in(txn, ctx, at, text, policy, observe)?;
+        let story = story_ref(txn, &story_id)?;
+        let range = text_edit_range(&story_id, &story, txn, placed.start, placed.end, placed.bounds)?;
+        Ok(Receipt {
+            new_para_ids: Vec::new(),
+            revision_ids: placed.revision_ids,
+            range: Some(range),
+        })
+    }
+
+    pub(crate) fn insert_text_placed_in(
+        &self,
+        txn: &mut TransactionMut<'_>,
+        ctx: &EditCtx,
+        at: Position,
+        text: &str,
+        policy: FormatPolicy,
+    ) -> OpResult<u32> {
+        self.insert_text_placed_observed_in(txn, ctx, at, text, policy, |_| {})
+            .map(|placed| placed.end)
+    }
+
+    fn insert_text_placed_observed_in(
+        &self,
+        txn: &mut TransactionMut<'_>,
+        ctx: &EditCtx,
+        mut at: Position,
+        text: &str,
+        policy: FormatPolicy,
+        observe: impl FnOnce(&Attrs),
+    ) -> OpResult<TextPlacement> {
         validate_text(text)?;
         let story = story_ref(txn, &at.story)?;
         check_position(&story, txn, at.index)?;
         let indexed = IndexedStory::in_txn(self, &at.story, txn);
         if text.is_empty() {
-            let range = text_edit_range(
-                &at.story,
-                &story,
-                txn,
-                at.index,
-                at.index,
-                indexed
+            return Ok(TextPlacement {
+                start: at.index,
+                end: at.index,
+                bounds: indexed
                     .as_ref()
                     .and_then(|index| index.bounds_at(txn, at.index)),
-            )?;
-            return Ok(Receipt {
-                range: Some(range),
-                ..Receipt::default()
+                revision_ids: Vec::new(),
             });
         }
         at.index = past_leading_blocks_indexed(&story, txn, at.index, indexed.as_ref());
@@ -426,11 +463,11 @@ impl EditingDoc {
             }
             bounds
         });
-        let range = text_edit_range(&at.story, &story, txn, at.index, end, bounds)?;
-        Ok(Receipt {
-            new_para_ids: Vec::new(),
+        Ok(TextPlacement {
+            start: at.index,
+            end,
+            bounds,
             revision_ids: revision_id.into_iter().collect(),
-            range: Some(range),
         })
     }
 

@@ -44,7 +44,10 @@ node native/onderzoek/writer-plakbatch/controleer-groot.mjs
 
 De protocoladapter zet de bestaande onafhankelijke SDK-/DOCX-proeven om naar
 de werkelijke desktopaanvraag; de berekening komt uit deze bibliotheek.
-De 27 inhoudsgevallen, acht foutgevallen, grote bronproef, vijf protocoltests
+Met `OFFICE_PLAKBATCH_UIT` krijgen de drie Node-proeven een afzonderlijke
+uitvoermap; dezelfde map wordt voor randgevallen, afwijzingen en de grote
+proef gebruikt. Zo blijven eerdere bewijsbestanden behouden bij een hertest.
+De 31 inhoudsgevallen, acht foutgevallen, grote bronproef, vijf protocoltests
 en twee leeslaagentests hebben ieder een eigen omvang. Zij vervangen geen
 GUI-, platform-, geheugen- of volledige suiteacceptatie. De voorbereiding
 maakt nog een volledige bronreplica; verdere schaalbaarheid blijft nodig.

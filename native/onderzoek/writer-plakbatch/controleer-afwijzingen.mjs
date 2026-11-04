@@ -1,5 +1,5 @@
 import {readFile,writeFile,mkdir,stat} from 'node:fs/promises';import {spawnSync} from 'node:child_process';import assert from 'node:assert/strict';import {createHash} from 'node:crypto';
-const map='native/onderzoek/writer-plakbatch/.local',uitmap=map+'/afwijzingen';await mkdir(uitmap,{recursive:true});const basis=JSON.parse(await readFile(map+'/randgevallen/begin-verzoek.json'));
+const map=process.env.OFFICE_PLAKBATCH_UIT??'native/onderzoek/writer-plakbatch/.local',uitmap=map+'/afwijzingen';await mkdir(uitmap,{recursive:true});const basis=JSON.parse(await readFile(map+'/randgevallen/begin-verzoek.json'));
 const gevallen=[
  ['onbekende-alinea',r=>r.range.start.paraId='ontbreekt'],
  ['offset-buiten-alinea',r=>r.range.end.offset=10000000],

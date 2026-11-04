@@ -9,10 +9,19 @@
     "src/ops/embed.rs": "aff535e9338892742885661006ff28403e7dbad66548abb8ab0e3cae721f7917",
     "src/ops/bookmarks.rs": "b4538abb6e065cad62dc73ace2e20736e56c3bfb7023e41bac3956eba21e17d0",
     "src/clipboard_batch.rs": null,
-    "src/meting.rs": null
+    "src/meting.rs": null,
+    "src/ops/text.rs": "87fd224b7187e9621a958bdaf42df374b00fd92fc527b97e0dce8f8c30aef747"
   },
   "patch_sha256": "6f04bd2518b8255d18715af49d392b713fe922bc2c030dacfe177547fdcfe2f5",
-  "grens": "De geteste bronpatch is overgenomen; alleen de diagnostische tijdmeters zijn bij docx-edit weggelaten. Productaansluiting en nieuwe kerncontroles volgen afzonderlijk.",
+  "grens": "De oorspronkelijke geteste bronpatch is overgenomen zonder diagnostische tijdmeters. De gedeelde productiecodec wordt door Tauri en office-core gebruikt. Nieuwe stappen vragen eigen protocol-, gegevens-, DOCX-, GUI- en platformbewijs; dit manifest bewijst alleen bronherkomst en bestandshashes.",
   "licentie_bron": "https://raw.githubusercontent.com/openooxml/betteroffice/4e982c3aea0065578604c3fe7727938533888f66/LICENSE",
-  "licentie_sha256": "db17c7e4531fd3e1a376cd87ad1ddf9a195118e47fde7f26b9feb657c8c114af"
+  "licentie_sha256": "db17c7e4531fd3e1a376cd87ad1ddf9a195118e47fde7f26b9feb657c8c114af",
+  "aanvullende_wijzigingen_2026_11_04": {
+    "bestanden_sha256": {
+      "src/ops/table.rs": "89b18b8013e6248fdbab2d759286c8139ce48dbfd41b4c414b7d10f916cb3d26",
+      "src/ops/text.rs": "05f079bbb0dd305e387288211ee084f179df52cd1fb45a86902e4c1e400ee15d",
+      "src/clipboard_batch.rs": "3675481a2ce044a6d2b9173dc27d6f8cdc01e14d6772ebe088cb4edcdb69e9b7"
+    },
+    "doel": "Tabelvolgorde en eindcursor lezen zonder volledige tekstdiff; dezelfde tekstmutatie levert voor de plakbatch een globaal eindpunt zonder herhaalde alineagrensprojectie. Publieke Receipt en definitieve cursorvalidatie blijven behouden."
+  }
 }

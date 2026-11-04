@@ -77,6 +77,7 @@ def bewaar(programma, rapporten, uitvoer, appimage_map=None, systeem=True):
     # Alleen de eigen gegenereerde proefbron en vaste foutuitvoer meenemen;
     # geen willekeurige bestanden uit de rapportmap verzamelen.
     for naam in ['Prestatieproef.docx', 'herstelkopie.docx', 'hersteld.docx',
+                 'herstel-afwijkend.docx', 'herstel-afwijkend.json',
                  'Ontwerpnotitie.docx', 'tussenbewaring.docx', 'geplakt.docx',
                  'Lijstenproef.docx', 'Klembordproef.docx', 'Markeerkleurproef.docx',
                  'programma.log', 'afgekeurd.png']:

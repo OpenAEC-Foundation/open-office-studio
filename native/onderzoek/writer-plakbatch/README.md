@@ -4,7 +4,7 @@ Deze proef bereidt één volledige gestructureerde plakactie in een aparte
 Rust-replica voor. Dit pakket blijft de afzonderlijk reproduceerbare
 onderzoeksvariant. De productievoorbereiding is inmiddels ondergebracht in
 [de gedeelde desktopbibliotheek](../../crates/office-writer-plakken/README.md)
-voor de 45.24-kandidaat; haar GUI-acceptatie wordt afzonderlijk bijgehouden.
+sinds 45.24; haar GUI-acceptatie wordt afzonderlijk bijgehouden.
 Dit onderzoek vervangt geen snelheids-, stabiliteits- of migratieacceptatie.
 
 De proef behoudt de bestaande invoeg-, splits-, tabel-, afbeeldings-,
@@ -44,10 +44,14 @@ Bij een andere doelmap gebruik je `OFFICE_PLAKBATCH_BIN` voor het volledige
 pad van `office-plakverkenning`. De JavaScript-proeven verwachten dat de
 werkmap de hoofdmap van de repository is. De standaardopdrachten hierboven
 zijn gericht op Linux; deze onderzoeksroute heeft nog geen platformacceptatie.
+`OFFICE_PLAKBATCH_UIT` kiest een andere uitvoermap voor alle drie Node-proeven,
+met daarin `randgevallen`, `afwijzingen` en `grote-proef`. Laat deze variabele
+bij alle drie opdrachten naar dezelfde nieuwe map wijzen om eerdere
+bewijsbestanden te behouden.
 
 ## Wat wordt vergeleken
 
-De 27 gevallen gebruiken de eigen voorbeeldkopie. De referentie voert de
+De 31 gevallen gebruiken de eigen voorbeeldkopie. De referentie voert de
 bestaande SDK-plakfunctie uit; de kandidaat krijgt dezelfde beginsnapshot,
 selectie, klembordinhoud, clientidentiteit en eventuele auteur-/tijdstempel.
 De vergelijking controleert alle verhaaltekens, opmaak en alinea-identiteiten,
@@ -64,6 +68,9 @@ ongeldige afbeeldingen en een late tekstfout. Zij mogen geen gedeeltelijke
 uitvoerdelta produceren. Twee Rust-tests vergelijken volledige runs en
 objectposities met de oorspronkelijke volledige lezing, vóór en na commit en
 bij opeenvolgende opmaak-/verwijderbewerkingen.
+
+Vier aanvullende gevallen controleren lege inlinefragmenten, Unicode naast
+een tabel, invoer in een cel en revisieregistratie bij opeenvolgende inlines.
 
 De patches begrenzen tijdelijke tekstlezingen en vermijden tekstkopieën bij
 het zoeken naar alineamarkeringen. Tekst wordt nooit ingekort om een proef te

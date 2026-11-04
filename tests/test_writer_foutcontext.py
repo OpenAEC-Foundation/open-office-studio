@@ -118,6 +118,16 @@ class WriterFoutcontext(unittest.TestCase):
             self.assertEqual(tar.extractfile('writer-foutcontext/proef/Prestatieproef.docx').read(), b'eigen gewijzigde proefbron')
             self.assertFalse(any(m.name.endswith('niet-meenemen.txt') for m in tar.getmembers()))
 
+    def test_bewaart_de_afwijkende_eigen_herstelkopie_met_metadata(self):
+        for naam, data in [('herstel-afwijkend.docx', b'eigen oudere herstelkopie'),
+                           ('herstel-afwijkend.json', b'{"datum":123}')]:
+            (self.map / naam).write_bytes(data)
+        context = module.bewaar(self.programma, [self.rapport], self.uitvoer, systeem=False)
+        with tarfile.open(self.uitvoer / 'writer-foutcontext.tar.gz') as tar:
+            for naam in ['herstel-afwijkend.docx', 'herstel-afwijkend.json']:
+                self.assertEqual(tar.extractfile('writer-foutcontext/proef/' + naam).read(), (self.map / naam).read_bytes())
+                self.assertIn(naam, context['proefbestanden'])
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {createYrsSession,applyClipboardFragment,readTableFragment,saveYrsDocx} from '@betteroffice/docx/yrs';
 import {unzipSync,zipSync,strFromU8,strToU8} from 'fflate';
-const map='native/onderzoek/writer-plakbatch/.local/randgevallen';await mkdir(map,{recursive:true});
+const map=(process.env.OFFICE_PLAKBATCH_UIT??'native/onderzoek/writer-plakbatch/.local')+'/randgevallen';await mkdir(map,{recursive:true});
 const bytes=new Uint8Array(await readFile('docs/voorbeelden/Ontwerpnotitie.docx'));
 function canon(v){return Array.isArray(v)?v.map(canon):v&&typeof v==='object'?Object.fromEntries(Object.keys(v).sort().map(k=>[k,canon(v[k])])):v}
 function som(v){return createHash('sha256').update(JSON.stringify(canon(v))).digest('hex')}
@@ -26,6 +26,10 @@ const cases=[
  {naam:'revisie-tabel',offset:3,author:true,tabel:true}, {naam:'revisie-afbeelding',offset:3,author:true,image:true},
  {naam:'vorige-revisie',offset:3,author:true,tracksource:true},
  {naam:'revisie-genest',offset:3,author:true,genest:true,bookmark:true},
+ {naam:'lege-inline',offset:4,inlines:['','A😀','',' na','']},
+ {naam:'inline-na-tabel',offset:0,tabel:true,inlines:['','Voor 😀','',' na']},
+ {naam:'inline-in-cel',offset:1,cel:true,inlines:['','A😀','é','']},
+ {naam:'revisie-lege-inline',offset:3,author:true,inlines:['','Nieuw 😀','',' na']},
 ];
 const resultaten={scope:'Gegevens-/DOCX-proeven van private Rust-batch; geen GUI of productacceptatie.',gevallen:[]};
 for(const c of cases){
@@ -50,6 +54,7 @@ for(const c of cases){
   if(c.genest){const child=structuredClone(table);table.rows[0].cells[0].content=[{kind:'text',text:'Voor 😀',attributes:{bold:true}},{kind:'pilcrow',properties:{}},{kind:'table',table:child,attributes:{}},{kind:'pilcrow',properties:{}}];}
   const image={src:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4z8DwHwAFgAI/ScLbtAAAAABJRU5ErkJggg==',widthEmu:914400,heightEmu:457200,rId:'bron-rId',id:'bron-id',docPrId:12};
   const fragment={paragraphs:c.geen?[]:c.leeg?[{text:''},{text:''},{text:'Einde 😀'}]:[{text:'Nieuw 😀 é',...((c.tabel||c.genest)?{tables:[table]}:{}),...(c.image?{inlines:[{text:'Voor '},{image},{text:' na'}]}:{})},{text:'Tweede alinea'},{text:''}]};
+  if(c.inlines)fragment.paragraphs[0].inlines=c.inlines.map(text=>({text}));
   const snapshot=bron.encodeStateAsUpdate(),voor=som(stand(bron));
   for(const s of [ref,native]){s.openDocx(bronbytes,false);s.applyUpdate(snapshot);s.beginUndoCapture();s.setUndoCaptureMode('manual');s.addUndoBoundary();assert.equal(som(stand(s)),voor);}
   const author=c.author?{name:'Proefauteur',date:'2026-11-03T09:00:00Z'}:undefined;const caret=applyClipboardFragment(ref,range,fragment,author);ref.addUndoBoundary();const na=som(stand(ref));

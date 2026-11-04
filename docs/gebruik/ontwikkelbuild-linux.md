@@ -4,10 +4,16 @@ Een push naar GitHub werkt de broncode bij. De pagina Releases verandert alleen
 als er apart een uitgave wordt gepubliceerd. Een ontwikkelbuild is daarom
 beschikbaar als download bij GitHub Actions, zonder nieuwe release of tag.
 
-De gecontroleerde [45.24-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41728984416/artifacts/13275484823) is gebouwd uit
-`dce2123eef8872cbb0ef71da0d6a2f55b5b5f9a2`. De [bouw en pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41728984416) slagen; de [downloadgegevens](../tests/2026-11-03-linux-dev-dce2123.json) leggen bronrevisie, checksums en testomvang vast.
+De gecontroleerde [45.25-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41737832305/artifacts/13280144142) is gebouwd uit
+`1a0aa52142d9857a7875be227ecbe8cb6c6cf1c0`. De [bouw en pakketproef](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41737832305) slagen; de [downloadgegevens](../tests/2026-11-04-linux-dev-1a0aa52.json) leggen bronrevisie, checksums en testomvang vast.
 Sluit een eerder geopende dev-versie na het bewaren voordat je de nieuwe start;
 beide gebruiken hetzelfde dev-profiel.
+
+De afzonderlijke geheugenroute op dezelfde bron is afgekeurd op het wachten
+op een actuele periodieke herstelkopie. De exacte binary en context zijn
+bewaard. Een lokale hertest en een afzonderlijke proef van het normale
+herstelinterval slagen; dit is geen volledige stabiliteitsacceptatie.
+Zie [herstelproef en bewijsgrenzen](../tests/writer-herstelinterval.md).
 
 1. Open [Linux-ontwikkelbuild](https://github.com/OpenAEC-Foundation/open-office-studio/actions/workflows/dev-linux.yml).
 2. Kies de nieuwste geslaagde uitvoering op `codex/native-rust-office`.

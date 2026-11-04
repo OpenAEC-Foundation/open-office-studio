@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { createYrsSession, readClipboardSlice, applyClipboardFragment, saveYrsDocx } from '@betteroffice/docx/yrs';
 import { unzipSync } from 'fflate';
 
-const map = 'native/onderzoek/writer-plakbatch/.local/grote-proef';
+const map = (process.env.OFFICE_PLAKBATCH_UIT ?? 'native/onderzoek/writer-plakbatch/.local') + '/grote-proef';
 const bronpad = process.argv[2] ?? 'docs/tests/writer-rust-plakbatch/bron-128-tabellen.docx';
 const programma = process.env.OFFICE_PLAKBATCH_BIN ?? 'native/onderzoek/writer-plakbatch/.local/target/release/office-plakverkenning';
 await mkdir(map, { recursive: true });

@@ -75,7 +75,10 @@ toestand op Linux, geen volledige visuele migratieacceptatie.
 De echte 500-paginaproef slaagt voor elf bronstappen, inclusief selectie,
 Backspace, geschiedenis, bewaren, nieuw proces, echte periodieke herstelkopie,
 Later en Herstellen met vervolgbewerking. De gemeten invoer/spelling kost
-4.344 ms inclusief de vaste nawacht; tegelijkertijd liep een andere GUI-proef.
+4.344 ms tot bron en golflijnen, en 6.392 ms inclusief de vaste nawacht;
+tegelijkertijd liep een andere GUI-proef. De vroegere aanduiding dat 4.344 ms
+de nawacht al bevatte, was onjuist; de oorspronkelijke JSON-meetvelden zijn
+ongewijzigd.
 De vertraagde Rust-antwoordproef behoudt snelle invoer, selectievervanging,
 één Undo/Redo, Save vóór beantwoording en Niet opslaan zonder wachten. Een
 nieuw document blijft na de late beantwoording behouden.

@@ -1,4 +1,4 @@
-// OpenAEC: gewijzigd voor brongebonden plakbatches en begrensde lezingen (2026-11-03).
+// OpenAEC: gewijzigd voor brongebonden plakbatches en begrensde lezingen (2026-11-04).
 //! Bereid een gestructureerde plakactie op een afzonderlijke replica voor.
 //! De aanroeper neemt pas het volledige resultaat over; fouten wijzigen nooit de bronreplica.
 use serde::Deserialize;
@@ -76,14 +76,14 @@ pub fn prepare_clipboard_fragment(snapshot:&[u8],client_id:u64,range:&LocRange,f
             let fallback=if p.text.is_empty(){Vec::new()}else{vec![serde_json::json!({"text":p.text})]};
             for inline in p.inlines.as_ref().unwrap_or(&fallback){
                 let at=Position::new(&story_id,position);
-                let receipt=if let Some(image)=inline.get("image") {
-                    doc.insert_embed_in(ctx,&mut txn,at,"image",afbeelding(image)?)?
+                if let Some(image)=inline.get("image") {
+                    let receipt=doc.insert_embed_in(ctx,&mut txn,at,"image",afbeelding(image)?)?;
+                    let end=receipt.range.ok_or_else(||ongeldig("Invoegbereik ontbreekt"))?.end;
+                    position=para_start+end.offset;
                 }else{
                     let text=inline.get("text").and_then(Value::as_str).ok_or_else(||ongeldig("Inline tekst ontbreekt"))?;
-                    doc.insert_text_observed_in(&mut txn,ctx,at,text,FormatPolicy::Inherit,|_|{})?
-                };
-                let end=receipt.range.ok_or_else(||ongeldig("Invoegbereik ontbreekt"))?.end;
-                position=para_start+end.offset;
+                    position=doc.insert_text_placed_in(&mut txn,ctx,at,text,FormatPolicy::Inherit)?;
+                }
             }
         }
     }

@@ -1,4 +1,4 @@
-// OpenAEC: gewijzigd voor brongebonden plakbatches en begrensde lezingen (2026-11-03).
+// OpenAEC: gewijzigd voor brongebonden plakbatches en begrensde lezingen (2026-11-04).
 //! Native table-structure operations over the yrs structural-table embed.
 //!
 //! A table is one map-backed unit in its parent story. Its `tblPr`, `grid`, and
@@ -924,26 +924,31 @@ fn caret_after_insert(
     story_id: &str,
     insert_index: u32,
 ) -> OpResult<FragmentCaret> {
-    let mut offset = 0u32;
     let mut para_start = 0u32;
     let mut fallback: Option<(String, u32)> = None;
-    for diff in story.diff(txn, YChange::identity) {
-        let len = out_len(&diff.insert);
-        if let Out::YMap(map) = &diff.insert
-            && is_pilcrow(map, txn)
+    let mut gevonden = None;
+    // Alleen de alineamarkeringen bepalen deze cursor. Kopieer daarvoor
+    // niet opnieuw alle tekst en opmaak van het groeiende verhaal.
+    story.visit_utf16_embeds(txn, |offset, out| {
+        if let Out::YMap(map) = out
+            && is_pilcrow(&map, txn)
         {
-            let para_id = map_string(map, txn, PARA_ID).unwrap_or_default();
+            let para_id = map_string(&map, txn, PARA_ID).unwrap_or_default();
             fallback = Some((para_id.clone(), para_start));
             if offset > insert_index {
-                return Ok(FragmentCaret {
+                gevonden = Some(FragmentCaret {
                     story: story_id.to_owned(),
                     para_id,
                     offset: insert_index + 1 - para_start,
                 });
+                return false;
             }
             para_start = offset + 1;
         }
-        offset += len;
+        true
+    });
+    if let Some(cursor) = gevonden {
+        return Ok(cursor);
     }
     let (para_id, start) = fallback.unwrap_or_default();
     Ok(FragmentCaret {
@@ -1984,18 +1989,18 @@ impl EditingDoc {
             None
         };
         let mut ordinal = 0u32;
-        let mut offset = 0u32;
-        for diff in story.diff(&*txn, YChange::identity) {
+        // De tabelvolgorde hangt alleen af van objecten vóór de invoegplek.
+        story.visit_utf16_embeds(&*txn, |offset, out| {
             if offset >= at.index {
-                break;
+                return false;
             }
-            if let Out::YMap(map) = &diff.insert
-                && map_string(map, &*txn, KIND_KEY).as_deref() == Some("table")
+            if let Out::YMap(map) = out
+                && map_string(&map, &*txn, KIND_KEY).as_deref() == Some("table")
             {
                 ordinal += 1;
             }
-            offset += out_len(&diff.insert);
-        }
+            true
+        });
         let locator = TableLocator::new(at.story.clone(), ordinal);
         let mut used = story_ids(&*txn);
         let mut ids = IdAllocator::new(self, &*txn);
