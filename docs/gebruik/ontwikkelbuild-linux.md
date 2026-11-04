@@ -18,8 +18,9 @@ De [brede desktopcontrole](https://github.com/OpenAEC-Foundation/open-office-stu
 van dezelfde bronrevisie slaagt op Linux, Windows en macOS. Dit is geen
 volledige suiteacceptatie: Writer heeft nog invoervertraging en open
 stabiliteitsproblemen, onder meer eerdere incidentele worker-/Wasm-fouten
-bij grote documenten. Deze download is een testversie. De nieuwe lokale
-snelheidsproef voor 45.44 is hierin niet opgenomen en nog niet bewezen.
+bij grote documenten. Deze download is een testversie. De lokale
+[snelheidsproef voor 45.44](../tests/writer-queryafstemming.md) is afgekeurd en
+teruggedraaid; deze devdownload bevat die proef niet.
 De afzonderlijke [45.39-downloadcontrole](../tests/2026-11-04-linux-dev-1e67dbc.json)
 en oudere afkeuringen blijven bewaard. De download verloopt op 4 december 2026;
 GitHub Actions bewaart deze artefacten dertig dagen.

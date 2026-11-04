@@ -1,0 +1,391 @@
+{
+  "schema": 1,
+  "besluit": "45.44 afgekeurd en uit werkboom/runtimepatch teruggedraaid; geen push van prototype",
+  "programma_sha256": "b376f2d0e17923512e16dfd6058a093cfb420f7d9949b9f3c5d3f4f234195222",
+  "basis": "2026.45.43 / Rust alpha57",
+  "proef": "Na native tekstovername en bestaande publicatie wachten op een gereed queryobject met exact dezelfde bronmetadata; bronwijziging, sluiten en wisselen annuleren het wachten. Geen wijziging van gewone resolverroute.",
+  "unittests": {
+    "gericht": 30,
+    "volledig": 1831,
+    "bestanden": 174,
+    "typescript": "geslaagd",
+    "grens": "Dit bewijst de echte uitgeknipte callback/resolver, niet dat alle werkelijke rendererpublicaties die metadata leveren."
+  },
+  "fysiek": {
+    "referentie": {
+      "versie": "2026.45.43",
+      "getekende_tekst_ms": 23461,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      }
+    },
+    "prototype": "Binnen 90 seconden geen volledig gelijk getekende alinea; eerste kandidaat afgekeurd. ABBA na eerste afkeuring afgebroken, geen vierledige vergelijking.",
+    "diagnose": {
+      "ontvangen_toetsen": 351,
+      "query_statussen": [
+        {
+          "status": "timeout",
+          "ms": 5067.999999999996
+        },
+        {
+          "status": "timeout",
+          "ms": 5068
+        },
+        {
+          "status": "timeout",
+          "ms": 5059
+        },
+        {
+          "status": "timeout",
+          "ms": 5061
+        },
+        {
+          "status": "timeout",
+          "ms": 5065.999999999993
+        },
+        {
+          "status": "timeout",
+          "ms": 5066
+        },
+        {
+          "status": "timeout",
+          "ms": 5061
+        },
+        {
+          "status": "timeout",
+          "ms": 5068
+        },
+        {
+          "status": "timeout",
+          "ms": 5062
+        },
+        {
+          "status": "timeout",
+          "ms": 5058
+        },
+        {
+          "status": "timeout",
+          "ms": 5066
+        },
+        {
+          "status": "timeout",
+          "ms": 5055
+        },
+        {
+          "status": "timeout",
+          "ms": 5053
+        },
+        {
+          "status": "timeout",
+          "ms": 5067
+        },
+        {
+          "status": "timeout",
+          "ms": 5075.000000000015
+        },
+        {
+          "status": "timeout",
+          "ms": 5062
+        },
+        {
+          "status": "timeout",
+          "ms": 5053
+        }
+      ],
+      "bron": {
+        "versie": "afa4e94934c5930a-20",
+        "laatste": "VOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. S! Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer.",
+        "paginas": 129,
+        "toetsen": 351
+      }
+    },
+    "grens": "Geen volledige inhouds-/UI-acceptatie van de afgekeurde kandidaat; bron na afkeuring niet onafhankelijk opgeslagen en heropend."
+  },
+  "bronbevinding": {
+    "sdk_sha256": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+    "code": ".selection(),Ie):null,zn=v.current===tr?Ma(Ie.displayList,Ie,un,ee?null:Me,rt,c(rt.queries),ee?Oa(q.current,I.layoutRevision):o(rt.queries),qr,ee?I.documentVersion??e(rt.queries):null,!!ee&&(I.documentVersion===void 0?f(rt.queries)?.preview??!1:I.documentPreview??!1),!!ee&&(I.documentVersion===void 0?f(rt.queries)?.asOpened??!1:I.documentAsOpened??!1)):{displayList:Ie.displayLi",
+    "betekenis": "De opbouw van legacy-weergavepagina’s geeft aan Ma expliciet null voor documentVersion waar de workerroute I.documentVersion of de vorige querymetadata doorgeeft. De gemaakte metadata-aanname is dus onjuist voor deze route. Geen bronversie van een nieuwere sessie op een oud frame stempelen.",
+    "grens": "Deze codebevinding en de time-outs ondersteunen het verwerpen van de proef. Geen volledige oorzaak van alle oudere Writer-vertragingen bewezen.",
+    "sdk_sha256_betekenis": "Teruggezette geïnstalleerde SDK van de behouden versie; geciteerde legacy-code staat ook letterlijk in de bevroren 45.44-patch.",
+    "vervolgbevinding": "Er zijn twee verschillende metadatafamilies: documentVersion via QE/e8 (d/e) en layoutbronversie via JE/Ci (b/c). De echte layoutpublicatie stempelt met b$3(Oe, ge), en Ma stempelt queries met b$3(w, i). Onderzoek deze oorspronkelijke bronbinding; let op lokale c-shadowing als seedSelection in Gv. Nog geen runtimecorrectie of snelheidswinst bewezen."
+  },
+  "vervolg": "Onderzoek een expliciete melding vanuit de werkelijk brongebonden behouden layout/publicatie, met sessie, versie en levensduur; geen volledige paginaopbouw forceren. Opnieuw echte beeldmeting voordat een runtimewijziging wordt gepusht.",
+  "bewijzen": {
+    "writer-queryafstemming/queryafstemming44-bronnen.json.gz": {
+      "sha256": "29489bbf6d12b17957218765d2322bad7c5fdd32bbd9542048d005548cb3b6e0",
+      "inhoud_sha256": "1cb20b5aa310bcf5af1cf880798dab6a679ade2b67008ceaff9c4a84572d7259"
+    },
+    "writer-queryafstemming/queryafstemming44-bouw.log.gz": {
+      "sha256": "c4ccd1ab0a31604f5d96033cd38af4d55dd45ceba9176ae8eaec503520ab8f17",
+      "inhoud_sha256": "9cca1cfd0eb400c8ae20dd1b521408c1c71343ab2c2c22f994bfbfad23afbc96"
+    },
+    "writer-queryafstemming/queryafstemming44-bouw-en-meet.log.gz": {
+      "sha256": "bbca34d907908c7709acbe9893b85c2861f1e2f3230c4a4f0b9fedb65f03d14e",
+      "inhoud_sha256": "0acb4ec7c05411648f32b4c1b745adac229b893ec06090d20ade5cbdacab5bc6"
+    },
+    "writer-queryafstemming/queryafstemming44-passieve-uitkomsten.json.gz": {
+      "sha256": "f87bc34798c70b3a7207b8776b063f4fab0006c44722e382c01ee1c62019290d",
+      "inhoud_sha256": "5fb59265ba87b9d1f2821c22d6f2c1f23d0aa5207d1208e1a624bac6586d20b0"
+    },
+    "writer-queryafstemming/queryafstemming44-diagnose-uitkomst.json.gz": {
+      "sha256": "0432970a76343d27f2e37ddadc0c97517aac8f61b6ccdc6c2443a6e908538bd3",
+      "inhoud_sha256": "8246f18c70ddc8f25959df593ce163cc0dcb66ef8ed9e56f2ef6ca8e386c898b"
+    },
+    "writer-queryafstemming/queryafstemming44-diagnose.log.gz": {
+      "sha256": "94adf6622fd91672cecb0e9a4501d8060d9befe735c9cb01cff5c6571aaee464",
+      "inhoud_sha256": "bd7fa95766d72497aed1ff310b8fd3c46e257d9d831c899253b910a803a447c7"
+    },
+    "writer-queryafstemming/queryafstemming44-levensduur-tests.log.gz": {
+      "sha256": "40876de1342bec954c0d70c0ee12f1c67bafa8eb9dd16b3383878b8d035ac5f9",
+      "inhoud_sha256": "d984f5ea16c9a1661b5da7ba3daa9d003efe4751e0049e493d4ef5a11857a5fd"
+    },
+    "writer-queryafstemming/queryafstemming44-levensduur-tsc.log.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "inhoud_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "writer-queryafstemming/queryafstemming44-volledig-twee-werkers.log.gz": {
+      "sha256": "14a7b7d399232b2722a0eb0d3f853f5355417b3a85166d7ce6106e4192c161a8",
+      "inhoud_sha256": "13626cd8e70d318a810fc790c017ed44ea82a8f072522b5cef4b0cd6931e9331"
+    },
+    "writer-queryafstemming/meet-queryafstemming44-native.py.gz": {
+      "sha256": "818c4530f53a928d2efea6465049fcc74052c6b8e66c3af0e57f70c3b5dfa41b",
+      "inhoud_sha256": "699f3dbcd11b4171605f2fd7f7478b05a9fb160d13e348a36c59c562f9f95366"
+    },
+    "writer-queryafstemming/meet-queryafstemming44-diagnose-native.py.gz": {
+      "sha256": "38654d52814c0a570931df26e195579e65403b62bd423e3b517ff99ebc96ad11",
+      "inhoud_sha256": "d51ae6a39f3253723594e37482fe8701d8d081be0769940ff3abbf346435ccf0"
+    },
+    "writer-queryafstemming/voer-queryafstemming44-passieve-metingen.py.gz": {
+      "sha256": "aaf7a2a6b87d67ab92f3fb8e787fd76975de39a2bf83d50639f52d8a8b9b8a28",
+      "inhoud_sha256": "e6a6fde8c5660e8945a4c30242c6db28ef5d92f2f10cb8cfaf6fadb5d8b1063a"
+    },
+    "writer-queryafstemming/voer-queryafstemming44-diagnose.py.gz": {
+      "sha256": "1a4d5132656e2e5dfa3b5ba68e2fce2dcf49cbaf94d42846bbe9c3565552d22b",
+      "inhoud_sha256": "892f3b94959b24d904004b403e634ccc459d440e7fd8460aa17aba2a6664c9ee"
+    },
+    "writer-queryafstemming/wacht-bouw-en-meet-query44.py.gz": {
+      "sha256": "fe2f5b58c5a25ade07ac4d1d120298c96977cdb4b2bef297233ece129dbde42b",
+      "inhoud_sha256": "5d2711ff9c4a581db58cc7c4e24df8a672443275a4eba089d6624bcec918f9c1"
+    },
+    "writer-queryafstemming/queryafstemming44-terugdraai-install.log.gz": {
+      "sha256": "32fdae332dce02353329100529c0fdd2cdb82d6be884c16d547e3c1377aeabf6",
+      "inhoud_sha256": "3fbd18930648cf820939428591a8656d43ce5329298a42283dabb8eba0680af0"
+    },
+    "writer-queryafstemming/passief-query-43-voor/profiel.json.gz": {
+      "sha256": "937cc06b2f424b2c54d9261f29b2b710e8a6dd4128ef1fc2556c275b6b5fdf14",
+      "inhoud_sha256": "5940cc0ba3166efff02e5d68c0ffa66e6518d492e5b576b4e4d249d564a44b42"
+    },
+    "writer-queryafstemming/passief-query-43-voor/profiel.png": {
+      "sha256": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef",
+      "inhoud_sha256": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef"
+    },
+    "writer-queryafstemming/passief-query-43-voor/programma.log.gz": {
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "inhoud_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413"
+    },
+    "writer-queryafstemming/passief-query-43-voor/Prestatieproef.docx": {
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "inhoud_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c"
+    },
+    "writer-queryafstemming/passief-query-43-voor/eerste-gelijke-tekst.png": {
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "inhoud_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05"
+    },
+    "writer-queryafstemming/passief-query-44-eerste/profiel.json.gz": {
+      "sha256": "ef39b97f8528e9c8e5efde0f234fc942f5c26334a60572cfbd96939a6bbd9b3b",
+      "inhoud_sha256": "9ed1623808b6eaa0266a357c39258236dc4affbaad8dd0424b19a9ab0eb5e7c7"
+    },
+    "writer-queryafstemming/passief-query-44-eerste/programma.log.gz": {
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "inhoud_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413"
+    },
+    "writer-queryafstemming/passief-query-44-eerste/Prestatieproef.docx": {
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "inhoud_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c"
+    },
+    "writer-queryafstemming/passief-query-44-eerste/afgekeurde-tekst.png": {
+      "sha256": "f93949517b5c4fa94f1bc90a04cf760d99bdd5a7e8929fcb5e032bfa6cd3bd42",
+      "inhoud_sha256": "f93949517b5c4fa94f1bc90a04cf760d99bdd5a7e8929fcb5e032bfa6cd3bd42"
+    },
+    "writer-queryafstemming/passief-query-44-diagnose/profiel.json.gz": {
+      "sha256": "90e8899ec2bd27b8a345368628b80b74ee99c18948cd91c557bf04dcb6407ed6",
+      "inhoud_sha256": "fb611fa6cd542171d441f97a29ebf23fa97f7ce7c50ac7250acee50099d1101a"
+    },
+    "writer-queryafstemming/passief-query-44-diagnose/programma.log.gz": {
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "inhoud_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413"
+    },
+    "writer-queryafstemming/passief-query-44-diagnose/Prestatieproef.docx": {
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "inhoud_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c"
+    },
+    "writer-queryafstemming/passief-query-44-diagnose/afgekeurd-venster.png": {
+      "sha256": "cf5d4a68ade081c5a98f8bde9ecd432e0de9afb0ab508642ed4f39bb02be90b0",
+      "inhoud_sha256": "cf5d4a68ade081c5a98f8bde9ecd432e0de9afb0ab508642ed4f39bb02be90b0"
+    },
+    "writer-queryafstemming/passief-query-44-diagnose/afgekeurde-tekst.png": {
+      "sha256": "bb56f4a0664f3b175ab569c540516f25b2b4da1b9942f8043b950e294e7ed200",
+      "inhoud_sha256": "bb56f4a0664f3b175ab569c540516f25b2b4da1b9942f8043b950e294e7ed200"
+    },
+    "writer-queryafstemming/queryafstemming44-bevroren-bron/package.json.gz": {
+      "sha256": "11d685b6b1a640e030783103ea73d1a4b6c751a952e6ce466f6f102a4d242901",
+      "inhoud_sha256": "a703556e4a039880f3285420050252ca337b8b61a37c53989d43369f083f6fce"
+    },
+    "writer-queryafstemming/queryafstemming44-bevroren-bron/versie.json.gz": {
+      "sha256": "01f6a54a7c3bb9f40772b66e1d34b1db855dd04c4af6072db1d23591d1715b3d",
+      "inhoud_sha256": "a72b4fb9761e0138a0eb1c41c5fdc4951a3ad135f10c645fdcf03348fb41d673"
+    },
+    "writer-queryafstemming/queryafstemming44-bevroren-bron/pnpm-lock.yaml.gz": {
+      "sha256": "c29adf28edb841eb57f537a637092d0d20f47e3bb3809394a502ca21a63e8548",
+      "inhoud_sha256": "08629122dd9282c5e65fef184abebfdc05d015e63d4d5075ab00c9ae3a92d47c"
+    },
+    "writer-queryafstemming/queryafstemming44-bevroren-bron/patches/@betteroffice__docx-react@0.5.1.patch.gz": {
+      "sha256": "9f99b0fa4f2ebfc8a0af1b12d415b9689fd15081f726379ea558980527a23a9d",
+      "inhoud_sha256": "357454851e0728f08bedd6dff9fc1d5adbf26efdd489febd2e82dc58df720555"
+    },
+    "writer-queryafstemming/queryafstemming44-bevroren-bron/native/Cargo.lock.gz": {
+      "sha256": "49a1711b3f99ae2f4e92b32c3b5177e6a45001d56156722cb337152b5f97736c",
+      "inhoud_sha256": "337fc0f92e77f3e94a33b5ef5b6d9b79b9c8b28f07c3fdaac772dddadc4b97e7"
+    },
+    "writer-queryafstemming/queryafstemming44-bevroren-bron/native/Cargo.toml.gz": {
+      "sha256": "3d1be305b5a6a010c8b334d436679de63cdbadd450c26b3a85e2d72c42a8e199",
+      "inhoud_sha256": "0fa6d4f50ed919d8446e57109faceca53d699059b2a9d40ad5512b660765157e"
+    },
+    "writer-queryafstemming/queryafstemming44-bevroren-bron/src-tauri/tauri.conf.json.gz": {
+      "sha256": "21c1c5ec2b7d8bc2805dc74e5c463d87394a4914ef0b5c9317ad04c062db861e",
+      "inhoud_sha256": "2d1641d94c06de932ef42be93ac42f677f21cb923e310a23c1006933274e6432"
+    },
+    "writer-queryafstemming/queryafstemming44-bevroren-bron/src-tauri/Cargo.lock.gz": {
+      "sha256": "d27a63fc0c9ecf4a141cec5ceb133431e4dd84499675581803e774a8d29060df",
+      "inhoud_sha256": "01ab221bef2f7a2f1443443e5e140654f8a27c2ea542664192eba768e9090557"
+    },
+    "writer-queryafstemming/queryafstemming44-bevroren-bron/src-tauri/Cargo.toml.gz": {
+      "sha256": "1acfb1a1fcf6ccb6e12e82df4d16db9334ba8b96ad86d87ddb1e3a11c16c987d",
+      "inhoud_sha256": "2e7c59593b3884ab36d4881d8e5dcb6d05324338ebb3f5a8a00a91b6e59284c4"
+    },
+    "writer-queryafstemming/queryafstemming44-bevroren-bron/native/crates/office-writer-plakken/src/bronspiegel.rs.gz": {
+      "sha256": "63044858a9ea79529e9005e974ed8b3c4a3c1f4260cdfdf73d1f19eece686b17",
+      "inhoud_sha256": "1d60a1652c7fc5428b8336073a452a23b204d78dc34b8fef850f42f8bc0c7404"
+    },
+    "writer-queryafstemming/queryafstemming44-bevroren-bron/native/vendor/docx-edit/src/lib.rs.gz": {
+      "sha256": "cad7e38be269f9af49d038b6c681d965787ee86828476d75857781085581b5c0",
+      "inhoud_sha256": "b4d0f1f94e9be9217714404847aedff7b8d2212523c9170b340536bafdfe6955"
+    },
+    "writer-queryafstemming/queryafstemming44-bevroren-bron/native/vendor/docx-edit/src/clipboard_batch.rs.gz": {
+      "sha256": "4d586ea23ae88dd7ff55f4e9cee4d2e946837dcc1e02f826c154ac587c599f29",
+      "inhoud_sha256": "aa144fd2ee0836dc06a8223d2e2eda6956a67a1a29d08d4f928978dcac290355"
+    },
+    "writer-queryafstemming/queryafstemming44-bevroren-bron/native/vendor/docx-edit/src/clipboard_batch/revision_ids.rs.gz": {
+      "sha256": "83b583110ea440f1fea1e8cfa0b0f0503136b9afa4f71613627d54aba0997eef",
+      "inhoud_sha256": "71c3b507ea885a998d88d7c375655898efd0d5b4cbb956c72f02e9e5123e4c50"
+    },
+    "writer-queryafstemming/queryafstemming44-bevroren-bron/native/vendor/docx-edit/src/ops/embed.rs.gz": {
+      "sha256": "8f516cbb68c4189011afcfc89dfba77e35bd1e1a93c5e242b92411eb209f21f9",
+      "inhoud_sha256": "54c921366badd6c365a32f130369ddaefb86acdd41dfe5453ace9c207c7b9a1f"
+    },
+    "writer-queryafstemming/queryafstemming44-bevroren-bron/native/vendor/docx-edit/src/ops/table.rs.gz": {
+      "sha256": "e62bb4811c395995216c32e963c748d9e883488321dda76c99105e9ab5e33547",
+      "inhoud_sha256": "731fbf11a0f3acdafd9fd9205dc9418044759930910dc2ca5b69595405eafff4"
+    },
+    "writer-queryafstemming/queryafstemming44-bevroren-bron/native/vendor/docx-edit/src/ops/paragraph.rs.gz": {
+      "sha256": "f3270c461b3b6789157a74ca2128eabc98e1c9ff243fd0dcbfc489cc8964fb5d",
+      "inhoud_sha256": "b9f16f4dc21f2557b87445f4a8d25b6b055c3431912a76908ff04d7caae72a3c"
+    },
+    "writer-queryafstemming/queryafstemming44-bevroren-bron/native/vendor/docx-edit/src/ops/text.rs.gz": {
+      "sha256": "40e93aa77cfc60ab49d0e9de0e31e17ace6b76636ff5357f486f6d89cffbf301",
+      "inhoud_sha256": "383ce6516702f545ff9cd81d3f21ac17e7517ab6e5627e89567e1b47c66c7a8f"
+    },
+    "writer-queryafstemming/queryafstemming44-bevroren-bron/src/tekst/invoer-tijdspan.test.ts.gz": {
+      "sha256": "ccc403c2c04e60310afea97b12d8f83a4a319789e6249efde44ea3ec8af4bdd8",
+      "inhoud_sha256": "57d250a05502369e705079cc475f3801bbeb6f414c0fac91066faeda546562a6"
+    },
+    "writer-queryafstemming/queryafstemming44-bevroren-bron/src/tekst/bewerken/tekstInvoerRoute.test.ts.gz": {
+      "sha256": "ab997dad6b2fae1b7c6ee4c0fbddf895b7f98938f3d933467df60521250e62a5",
+      "inhoud_sha256": "e779b601038430523914ee9f3e5219cc99d72d89a45a93c0cc5064ff3644df5c"
+    },
+    "writer-queryafstemming/queryafstemming44-bevroren-bron/src/tekst/bewerken/bronAfstemming.test.ts.gz": {
+      "sha256": "af3c49df7e96727b9c6772e6c3e1d448973bc5c21db3a042ec4445f2d2f2df80",
+      "inhoud_sha256": "f7462fa19e67e37da57c8bdb12c7f25e5792854cfb78ff0df8604a489761363e"
+    },
+    "writer-queryafstemming/queryafstemming44-bevroren-bron/apps/database-studio/src-tauri/tauri.conf.json.gz": {
+      "sha256": "1ad3ebba0ba883b7def5f0f8061b9926a7f58e37c03111886d46aece6edba9c4",
+      "inhoud_sha256": "255744197251f96eb3f44c6763dfbf2a3bd89d65e8318a285c106c619dce2127"
+    },
+    "writer-queryafstemming/queryafstemming44-bevroren-bron/apps/database-studio/src-tauri/Cargo.lock.gz": {
+      "sha256": "2c3f4d65c7b9fc76e76b9cc4468148a9db2b2e6b951953ba2cd40c513c038b7c",
+      "inhoud_sha256": "b314032344cc75a37cc03d72b4fb58ae5c15e6ec5c6483d7303449bfab301c3b"
+    },
+    "writer-queryafstemming/queryafstemming44-bevroren-bron/apps/database-studio/src-tauri/Cargo.toml.gz": {
+      "sha256": "8a7b3c9e2a90c6295ea3753698cb734d238abb0479af6a2ff92940a948360d97",
+      "inhoud_sha256": "5c35a7a83d976859247c7499f29b5faa1667633181be5ed41c08816ff836f038"
+    },
+    "writer-queryafstemming/passief-query-43-voor.log.gz": {
+      "sha256": "3c0ac19c83710e2da32ffc2e96f14b2f450c06db19c7b57b5795aafad90a608b",
+      "inhoud_sha256": "995c49b5295cc2dfc91741d188ab85d09907aa100d7f29ce21406ee1a287a4bf"
+    },
+    "writer-queryafstemming/passief-query-44-eerste.log.gz": {
+      "sha256": "b184c94c784954d8c8a9664d0651172dcbffebb7144c79125844fba2f9416cab",
+      "inhoud_sha256": "5f069c0096caccb8febbaa37e9dce1a0e8a25576d3d115971fee62214f5d5ede"
+    },
+    "writer-queryafstemming/passief-query-44-diagnose.log.gz": {
+      "sha256": "a19714ce5b70fa9fd8834ebeb456a29478f1932609f417ad129f6f67e1e6e5fa",
+      "inhoud_sha256": "c0853fe83dd7fb6c7a926269cd5e3955ff77a390871b1beb4a23a8aaa2699e4e"
+    },
+    "writer-queryafstemming/queryafstemming44-terugdraai-tests.log.gz": {
+      "sha256": "2669ae48e5f42ecacd44935c5642e81400e77a1a7fa877662dd41dad9a14166e",
+      "inhoud_sha256": "c66becd56ec00a0e72388fca19ea4eed9a5390772cb22886e826446e722dac7e"
+    },
+    "writer-queryafstemming/queryafstemming44-terugkeer.log.gz": {
+      "sha256": "fc0c8f1a214e1cff5f36f638f9ecb17bf9d7eb616be895b2fa7a6828cf4a5921",
+      "inhoud_sha256": "7b75f6ecdd952933515c57180bb5f15a406982fe12509ea54008679f665bb023"
+    },
+    "writer-queryafstemming/queryafstemming44-terugkeer-uitkomst.json.gz": {
+      "sha256": "e2f09c64486b323ec16b059008510aa78f9d856c28a85c3901ea4307f0b338b4",
+      "inhoud_sha256": "24fe2622b9f7a755e4e8a84210ea552e83a78e7f1343c290b2b2c0bd91b5c1d5"
+    },
+    "writer-queryafstemming/voer-queryafstemming44-terugkeer.py.gz": {
+      "sha256": "4c90dea1e04b273fa3758020204ef7ed430c1b21fed77c736823dca2cb103488",
+      "inhoud_sha256": "91c7503e3e6941d5343b079cc8cd1e56edf37ca54c5357601be2c1838166e183"
+    },
+    "writer-queryafstemming/passief-query-43-na.log.gz": {
+      "sha256": "060af40c508f795b9d40051a364fcfd81496adea156d45072a6a4ae32bacb9b4",
+      "inhoud_sha256": "158f9e44889f015455b558eb98fa636d7ab19383119ab3f8f944dce3f8f68f61"
+    },
+    "writer-queryafstemming/passief-query-43-na/profiel.json.gz": {
+      "sha256": "e0c50e70db312b30e3478a18a3dac6ded65cdf0cb8cbaa4e735b4e5d2de61e04",
+      "inhoud_sha256": "f94f7869dc2a404f4afb15f56be06f88cb571aecc7fedbbeaa402d7ca5f3c325"
+    },
+    "writer-queryafstemming/passief-query-43-na/profiel.png": {
+      "sha256": "a0169091d8d0b2496a5d5aea18622e5b0e266d18540a983902000ae5175ac637",
+      "inhoud_sha256": "a0169091d8d0b2496a5d5aea18622e5b0e266d18540a983902000ae5175ac637"
+    },
+    "writer-queryafstemming/passief-query-43-na/programma.log.gz": {
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "inhoud_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413"
+    },
+    "writer-queryafstemming/passief-query-43-na/Prestatieproef.docx": {
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "inhoud_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c"
+    },
+    "writer-queryafstemming/passief-query-43-na/eerste-gelijke-tekst.png": {
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "inhoud_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05"
+    }
+  },
+  "terugkeer": {
+    "vitest": 1819,
+    "bestanden": 173,
+    "fysieke_hertest": {
+      "versie": "2026.45.43",
+      "getekende_tekst_ms": 23276,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      }
+    },
+    "grens": "Losse referentiehertest na de afgekeurde kandidaat, geen volledige ABBA."
+  }
+}
