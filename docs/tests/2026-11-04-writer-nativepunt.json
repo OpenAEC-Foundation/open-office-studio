@@ -1,0 +1,336 @@
+{
+  "schema": 1,
+  "versie": "2026.45.42",
+  "applicatiebron": {
+    "basiscommit": "76650ad46e2b706a45a92178173124c441d6e70f",
+    "versie": "2026.45.42",
+    "rustwerkruimte": "2026.45.0-alpha.56",
+    "programma": ".local/doorwerk-2026-11-04/incrementele-invoer/open-office-studio-45.42-nativepunt",
+    "programma_sha256": "94ca672e3c23fdfb08df03284a4a9e750f8194cfb5e980b0fad8fbbe338db038",
+    "bronbestanden": {
+      "native/Cargo.toml": "4c4c9c7a2524e0845b5594876a7d6a4b168d17ba1a91207ad0522a2a343551a6",
+      "native/Cargo.lock": "ec435bf11827118142a32d2eb76bc28e45ba62aa690159abe31d9d80c689e219",
+      "native/crates/office-writer-plakken/src/bronspiegel.rs": "f750dbf36a502c27db2b4cbe0a78105b518c1673a488909f5ef557fceaf9625a",
+      "native/vendor/docx-edit/src/lib.rs": "99080b0db30a754ad04d4080e59a1f8d47f13de79db001252ca470af3ba84a0e",
+      "native/vendor/docx-edit/src/clipboard_batch.rs": "cbde1015cda91e189116a6f2400378385c3867f5441dcf73cf58c82a7d3884fb",
+      "native/vendor/docx-edit/src/clipboard_batch/confirmed_source.rs": "8033028a48feba79d636a9818e06fe8f2c559101960d36b1b216f2f94b6c96cd",
+      "native/vendor/docx-edit/src/clipboard_batch/revision_ids.rs": "a680932ef5c1e01ba8f2f363d59bba112e551f12f0fe170848d0b4afd53d8219",
+      "native/vendor/docx-edit/src/ops/text.rs": "383ce6516702f545ff9cd81d3f21ac17e7517ab6e5627e89567e1b47c66c7a8f",
+      "native/vendor/docx-edit/src/ops/paragraph.rs": "b9f16f4dc21f2557b87445f4a8d25b6b055c3431912a76908ff04d7caae72a3c",
+      "native/vendor/docx-edit/src/ops/table.rs": "731fbf11a0f3acdafd9fd9205dc9418044759930910dc2ca5b69595405eafff4",
+      "native/vendor/docx-edit/src/ops/embed.rs": "54c921366badd6c365a32f130369ddaefb86acdd41dfe5453ace9c207c7b9a1f",
+      "src/tekst/liniaal/geometrie.ts": "cdebc50a423c1c65dba1158d385639356af3fb2108eda2323ba19df2fb0ee6bf",
+      "src-tauri/Cargo.toml": "0c0b932b813a4ef8dc108e45233ad27c0970b2197d46d41d49ed8aae1e126924",
+      "src-tauri/Cargo.lock": "fe3074f344cdede19cb12d63efc4725c3a33d2524fa2fac26284a83e0ccceefc",
+      "src-tauri/tauri.conf.json": "90b1a612d7dc012c47e6418d34e2d5d49bcc1b04fa1af2c5985cb8163cd6651a",
+      "package.json": "fa1226aa96ec5da0fa6c9174bad399612575bc131a3f8ad13962f043892accc8",
+      "versie.json": "d57dd8bb4451243f930898967d2840dbeb596035b871af464304895499a978fd",
+      "patches/@betteroffice__docx-react@0.5.1.patch": "9597a0e3ec002fbf33dfbd47d723ead7360d772c292a108544b69eb61fc73503",
+      "pnpm-lock.yaml": "75a0535a90e712edfc97aa1cbacae77adc904743321b08b65ae5d9e209cee8d1"
+    },
+    "frontend_tests": 1820,
+    "typescript": true,
+    "rust_writer_tests": 37,
+    "clippy_writer_all_targets": true,
+    "bouw_code": 0,
+    "acceptatie": "Nog niet geaccepteerd; fysieke metingen en GUI-scenario’s volgen."
+  },
+  "bestanden": {
+    "renderer-42-nativepunt/heropend-en-bewerkt.png": "71b162788a311de458f3745752c3a13fb86da852b8759133187b53a6e0778a78",
+    "renderer-42-nativepunt/programma.log.gz": "0d6971a10e256ebd4805ac8718438d04a75d10b3ae8ee76015ddf01c160e9dc7",
+    "renderer-42-nativepunt/queryfout-zichtbaar.png": "d678b2a0917842bb4421db8bf467fb223ca0a07990c015f3fe3bfead150a71fd",
+    "renderer-42-nativepunt/voor-queryfout.png": "ffc359b20d4127c8a6d463a3f70d46b0f0ba1ff8cf7c654d51dcdc7eb5656dde",
+    "renderer-42-nativepunt/rapport.json.gz": "ddb88221fb7603ba68a4c1b6156786c6e05a323f958927f58f721dcdd6bad9cf",
+    "renderer-42-nativepunt/proef.log.gz": "1e19671e2664609db30ab2e53f762fa8e924954c1a1d3313d77f94a5bde42ec0",
+    "lang-42-nativepunt/kopvoetlint.png": "2341185c7a6432f91a3188b6b06ce945ad0c899881fda32f11d933694f4caaa9",
+    "lang-42-nativepunt/spelling-eerste-pagina.png": "1d37ac154af9669a09392100be12c7fa538ab3ca54928cd74e7cdfee462d4e97",
+    "lang-42-nativepunt/framebasis.json.gz": "a222e7a23e895515edbe036b37405ceb8a54b42a4743e3bea228425943680c0e",
+    "lang-42-nativepunt/spelling-hersteld-venster.png": "5bd925111d1d60df83677f8051e0d0efb1fa24c1be325a9f29122c9142508a68",
+    "lang-42-nativepunt/getypt-pagina-500.png": "a0cfcee024b5a0fd507e10621fe00143023a00e960cfd875738425f4c3c77df0",
+    "lang-42-nativepunt/spelling-kleiner-venster.png": "fb92db64b071959a46f1c256d5c03c73873d73b2ecd059b6ece9ea3f9c4ed649",
+    "lang-42-nativepunt/programma.log.gz": "0d6971a10e256ebd4805ac8718438d04a75d10b3ae8ee76015ddf01c160e9dc7",
+    "lang-42-nativepunt/spelling-zoom-125.png": "be855a3ba680d01a1158ef974abca923c743482d263a85a58f34bac98ce14d14",
+    "lang-42-nativepunt/spelling-laatste-pagina.png": "1ab74db7090d2f1e22e89dd48b503b185e0de884bf36c2e2015c31e89cd450ab",
+    "lang-42-nativepunt/spelling-terug-in-document.png": "cd7cfb0a774879b4394391b57b3082053e5b01cf8a0ac309627522e415bdfada",
+    "lang-42-nativepunt/rapport.json.gz": "c4fb0c30436d9786b1cc427940855a2adafc9f72a6f77917450d9b9ef9e7ea22",
+    "lang-42-nativepunt/startlint.png": "1956dee0b7d7919056d55833c22103608d9c943425adaa815e518704dc3661f7",
+    "lang-42-nativepunt/spelling-verborgen.png": "90a1951af91f98d90b1b8a6cae0c2e4a3a2fc44f083388fd64738a35d85065f6",
+    "lang-42-nativepunt/proef.log.gz": "6d195fdb08c55796fd5251c170dcc3b5350b4c31f9fdb963614a3f6068fe1ea0",
+    "tekst-42-nativepunt/snel-getypt-bewaard.png": "f0ce311063b3125e5883335dda039762792551a4ba3ef132268a169656a13aee",
+    "tekst-42-nativepunt/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "tekst-42-nativepunt/rapport.json.gz": "c61731a80cdd64052d32e81e12a2340237c8e3ae9d7ae0539c536e02229f7b4b",
+    "tekst-42-nativepunt/nieuw-na-laat-antwoord.png": "70ccd110fab183495facfb948d81c9d2683f0fb1f96a6ac60c83027ea636c1bc",
+    "tekst-42-nativepunt/invoer-redo.png": "9c2d9cc86910bb6a858a64c97a55b0d59701534c01cba434b689b3df77988b2c",
+    "tekst-42-nativepunt/proef.log.gz": "5d3a5ab836cf8f38db2313cfa6270b63db21ffc8d2a8615f4760a7b9477b176e",
+    "geheugen-42-nativepunt/herstel-aanbod-herstellen.png": "f9560c4b384a8e5543dfc24d5bd75a1b817cc1e730628ed909cf5fcd531fb634",
+    "geheugen-42-nativepunt/kopvoetlint.png": "ece0b340496bbe7e9f02d2003b1ec8845672d8ecd48b46e1dc8c9adf7409ae05",
+    "geheugen-42-nativepunt/spelling-eerste-pagina.png": "b466d78063c5fc0f61bdbb610b3105b1e5f4081b611aa9427136d68ce53e5aa5",
+    "geheugen-42-nativepunt/herstel-aanbod-later.png": "f9560c4b384a8e5543dfc24d5bd75a1b817cc1e730628ed909cf5fcd531fb634",
+    "geheugen-42-nativepunt/framebasis.json.gz": "a1fdc21afb886ccc5a8beb5141447872cd5cd1898eecbdf3c5c644630f9159c9",
+    "geheugen-42-nativepunt/spelling-hersteld-venster.png": "87150d78ad98d0b663558040627f389448f2f3f9e757f9f23a4d373c55296d12",
+    "geheugen-42-nativepunt/getypt-pagina-500.png": "1ab74db7090d2f1e22e89dd48b503b185e0de884bf36c2e2015c31e89cd450ab",
+    "geheugen-42-nativepunt/workerbron.json.gz": "fcd6455bce68a9f6b601b831573ce6b133ec6f8cc951f38f0e522003158f74e9",
+    "geheugen-42-nativepunt/spelling-kleiner-venster.png": "6534d6d2e17f1a8892b0d33d2f13b4e4cc292f60bf9785401c441ba6efe44fad",
+    "geheugen-42-nativepunt/programma.log.gz": "0cfe12894ff1459cefbebdefc70f8219fb0ff64e9d72626603e5372a45be95ce",
+    "geheugen-42-nativepunt/spelling-zoom-125.png": "36459418699c3d513b4d9ade3bd8b52363b51769383c85233d39252e54dbbe3f",
+    "geheugen-42-nativepunt/spelling-laatste-pagina.png": "a0cfcee024b5a0fd507e10621fe00143023a00e960cfd875738425f4c3c77df0",
+    "geheugen-42-nativepunt/spelling-terug-in-document.png": "87a0c14be0c5b2129eb019f25d10e337e40fab47aaa8f253048acbfe26825195",
+    "geheugen-42-nativepunt/herstelde-kopie-bewerkt.png": "adfa7e3cdf9ef213e1a40abade02da1f6aa19c51bbd3c9230c406149cee38df6",
+    "geheugen-42-nativepunt/rapport.json.gz": "70737c30c9944d2c186f41f7ac1d4fc9b56899b228c6c7bcdca24dbbbc4d4af9",
+    "geheugen-42-nativepunt/startlint.png": "e23b2ff481128356e14c52f0cd827a7a89dbceeacc13b974fff436438b0c0416",
+    "geheugen-42-nativepunt/spelling-verborgen.png": "495090a79c904ac908cca9ac9f5244f959df92f90a3e91b1da82a2ce5d181cdd",
+    "geheugen-42-nativepunt/proef.log.gz": "7797f7d47644321f449227b23d08558065618d3dd052fcc1438de2c1ffa68909",
+    "acht-42-nativepunt/begin.png": "822fa19313484f7c0b3824601f4990abef9c0ebc89f419915f7995ee90ed4249",
+    "acht-42-nativepunt/sluitdialoog.png": "c9fde89aca6ced44a22714055c0e630d9aba025601eca7e194e60165854c2050",
+    "acht-42-nativepunt/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "acht-42-nativepunt/na-plakken.png": "c52a3fb139a8d1fa22289f7d4a0a585c7bcc6aab21d652214d213a2b94f40aea",
+    "acht-42-nativepunt/nieuw-na-verwerpen.png": "986d69a9fc8db0fd636b251b06ca117530b7802edbcfca85eb8fe1c4ef5141f9",
+    "acht-42-nativepunt/rapport.json.gz": "9ba69715fa6712bb4804ea6a72f1c8d5bff52eeae0033961e229f8b059f8b318",
+    "acht-42-nativepunt/proef.log.gz": "4a39986c850a0a703a87df2969c3030212d396cb11c10f9d28c9c2f58e3d4302",
+    "vervolginvoer-42-nativepunt/begin.png": "0224520095280d133c38cb487336ab809d7c3bae32f68287000417835f97f432",
+    "vervolginvoer-42-nativepunt/sluitdialoog.png": "6e463e2ba8fc92f9d13adc45abcf6cc9343f53784d7043245173e2a4b684d83e",
+    "vervolginvoer-42-nativepunt/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "vervolginvoer-42-nativepunt/vervolginvoer.png": "b926e36471c2711748a471a0a76670935f7f81fbcf4ee1370be33e89e4ab251e",
+    "vervolginvoer-42-nativepunt/na-plakken.png": "ef8dd780d9f1a37532b6c5417c8a93052fdb14c8547bd685b0ff2b9d3a104bf9",
+    "vervolginvoer-42-nativepunt/nieuw-na-verwerpen.png": "1c9e31f156fc365c802f176ef2a6e1a576f9563087da2722ac0196aeb6dfb336",
+    "vervolginvoer-42-nativepunt/rapport.json.gz": "a81102ccea0551b3c673f334086b5f0880e4a3081a24b2edb4a5405bfbbf87cf",
+    "vervolginvoer-42-nativepunt/proef.log.gz": "d22a83f1e27a9f5f7965461df140752f2084ad80bcf035d8d96db3bbacbae99c",
+    "kleur-42-nativepunt/framebasis.json.gz": "467c7652b30152b99f8951a125fe71babc3d0806b35668a63440841ae8d3dd0f",
+    "kleur-42-nativepunt/heropend.png": "32511ca58fc8c4dd873ab6964ff8a725fc1add6ee1204a54647beeaf16083be2",
+    "kleur-42-nativepunt/kiezer-99c1f1.png": "3036378c2a91b2ff3b8df941549ca1d439c2c4a29b17529dd131bad44dc14219",
+    "kleur-42-nativepunt/programma.log.gz": "0d6971a10e256ebd4805ac8718438d04a75d10b3ae8ee76015ddf01c160e9dc7",
+    "kleur-42-nativepunt/kiezer-f6d32d.png": "98e4cf724c176ea8c596fab2cccf42e96585ddb6d04a8e9cb596c1a2ecbbd1cd",
+    "kleur-42-nativepunt/rapport.json.gz": "bb39c40b3980e8df77677543121bfcf66b9bc3c40c8ec578a3cd50f3d751ff27",
+    "kleur-42-nativepunt/kiezer-eerste-beeld-99c1f1.png": "d89063ef0e2fe862b31b429b774b09906850d632e9feaac1638aa09c85affe91",
+    "kleur-42-nativepunt/kiezer-eerste-beeld-f6d32d.png": "314a8ce35aba81b4786d516c4ccbe88ece8686a59080d201b5a05c99adb5381f",
+    "kleur-42-nativepunt/proef.log.gz": "ff17f76f23951acfe21720251e28a42dfde3b5fd7202d9d356c5909f8165df2f",
+    "bewaren-42-nativepunt/begin.png": "822fa19313484f7c0b3824601f4990abef9c0ebc89f419915f7995ee90ed4249",
+    "bewaren-42-nativepunt/sluitdialoog.png": "11af45b9fdf6cc986b2ea0cab98669712e042ca654eef9207a83fa891dab05aa",
+    "bewaren-42-nativepunt/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "bewaren-42-nativepunt/na-plakken.png": "c1744e3232f11ce36db7c2f0dad30ece5e6a6eaa4c5b0d1cff8c558271d0d357",
+    "bewaren-42-nativepunt/nieuw-na-verwerpen.png": "986d69a9fc8db0fd636b251b06ca117530b7802edbcfca85eb8fe1c4ef5141f9",
+    "bewaren-42-nativepunt/rapport.json.gz": "bf0be9225c4c25d1d4468b6ec5aab8983d74b02eca4383118da6700fcc8efd48",
+    "bewaren-42-nativepunt/proef.log.gz": "070b3f0a40a2ed4e3d5fa0ba17c5494c4a9a5c138947fc944fea85fa85c5d2d6",
+    "tabelgrepen-42-nativepunt/na-slepen.png": "3aac2243e1f4f4054018399775bc03b43b04f4b1dff5ac7f75d1e9bac609c0d9",
+    "tabelgrepen-42-nativepunt/heropend.png": "e96b3f3eda9c3fa323c8877ae6d87e61c0bc837ddf0ba9a953e0dc4893a791d4",
+    "tabelgrepen-42-nativepunt/programma.log.gz": "0d6971a10e256ebd4805ac8718438d04a75d10b3ae8ee76015ddf01c160e9dc7",
+    "tabelgrepen-42-nativepunt/voor-slepen.png": "1793e7be538486f13de03068e14ae17622edfff61f9b2ac5998db59a6d2a38f5",
+    "tabelgrepen-42-nativepunt/rapport.json.gz": "92a1041cd83b50e4d37c90adac4e062cdda322f38fe787357244c2ebc73a4b74",
+    "tabelgrepen-42-nativepunt/proef.log.gz": "7c4f5c969f4bda3235758ae6730b0403989797ff33392a02f1d859ea27a046ec",
+    "volgorde-42-nativepunt/snel-getypt-bewaard.png": "814a84b4793d8cf485d0c9f184e88cc7ce492ba4438e4cabe7e4b23297a3e024",
+    "volgorde-42-nativepunt/plakken-redo.png": "0fa71a992cbddddb2b73f8828f46f6348aabdf87e95ff358d3d4f3e200c0a9e2",
+    "volgorde-42-nativepunt/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "volgorde-42-nativepunt/rapport.json.gz": "b65ce2457cd5d739155a10914d0a1a5c75b1b422e93d436841dd595cbe889c48",
+    "volgorde-42-nativepunt/nieuw-na-laat-antwoord.png": "fcd9fd7bdcbb08ab40dd85be2b5743b2fd2a65e3150ed5f446b798d1f84900e2",
+    "volgorde-42-nativepunt/proef.log.gz": "fb247981b866f943bdd02e29678b4392c8947b23a2582b8b3bf863bcb7d59608",
+    "passief-nativepunt-39-voor/profiel.json.gz": "a93b40c9fd56356f5238c579b97741dcc7760cc83add35847494b421039bcfec",
+    "passief-nativepunt-39-voor/profiel.png": "0962e74f78128a2fcc6190c9c465fdae87d12beff575168015e7cb2b581b2084",
+    "passief-nativepunt-39-voor/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "passief-nativepunt-39-voor/eerste-gelijke-tekst.png": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+    "passief-nativepunt-39-voor/proef.log.gz": "96e370da3b245ec94d32a9acdec132b89bfd47dfa2a519f0f1c0e606892cb35f",
+    "passief-nativepunt-42-eerste/profiel.json.gz": "3b68835560f71697c13db6ff8f6b39ed6311572139c94540f4d28a9802c739ea",
+    "passief-nativepunt-42-eerste/profiel.png": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef",
+    "passief-nativepunt-42-eerste/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "passief-nativepunt-42-eerste/eerste-gelijke-tekst.png": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+    "passief-nativepunt-42-eerste/proef.log.gz": "68422bb33aa75edcd70ec49b2c27873b412c157b5eaa83792faee63bac2785a7",
+    "passief-nativepunt-42-tweede/profiel.json.gz": "d9f2cc985a7bdff54227b00c7d9ca43f50b9f057cc07574ff808d95b2df6c2d2",
+    "passief-nativepunt-42-tweede/profiel.png": "cade066f6bfb0bafbe3f6f7a58bc16c8dd622554233e7c4f9e1c2a76faa06584",
+    "passief-nativepunt-42-tweede/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "passief-nativepunt-42-tweede/eerste-gelijke-tekst.png": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+    "passief-nativepunt-42-tweede/proef.log.gz": "122cc3e23f9518bcc1705d0fc62012fb99d9485ec9f860331c088137c1b3114e",
+    "passief-nativepunt-39-na/profiel.json.gz": "39a824fdf5c913c6748571e9098c82b94f34e8475bf9ac0a450753a96b4e1231",
+    "passief-nativepunt-39-na/profiel.png": "0962e74f78128a2fcc6190c9c465fdae87d12beff575168015e7cb2b581b2084",
+    "passief-nativepunt-39-na/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "passief-nativepunt-39-na/eerste-gelijke-tekst.png": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+    "passief-nativepunt-39-na/proef.log.gz": "f9826c5dca465834159906cef6d57d33da750c62b35fa7ab186c924f0afe1cdc",
+    "rpc-bevestiging-42-nativepunt/profiel.json.gz": "d038d58a4beebbf2036e8d59671796720649d3a60499581fe92fcdcc4bda9e9b",
+    "rpc-bevestiging-42-nativepunt/profiel.png": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef",
+    "rpc-bevestiging-42-nativepunt/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "rpc-bevestiging-42-nativepunt/proef.log.gz": "0b9f5149fa1f4849a2f7a1de0524d737f5b1a9213fde70e5adc2bcc241a3e806",
+    "bevroren-bron/package.json.gz": "aec33ea0ae980aa1443cde63fa8a2d6f156dd4c566d64eee7a9cfbfb36ee0f73",
+    "bevroren-bron/versie.json.gz": "2d7c1216379d75db8bb0a1123ff45668e84e5ad4e9fdb1c3ed7c78167b97d1d6",
+    "bevroren-bron/pnpm-lock.yaml.gz": "b2eff26e240989241c3410ab65a42dc506406e929e75a1d2d95c42d2a67f4e9f",
+    "bevroren-bron/patches/@betteroffice__docx-react@0.5.1.patch.gz": "25805682b48ae9b21d2cb81c8e1acb6e305cb84c7b0b5f2464307ef0b73a4980",
+    "bevroren-bron/native/Cargo.lock.gz": "612ef03944e9c132d93b26820937a9e52604f139bb21286286af42c235bb74cf",
+    "bevroren-bron/native/Cargo.toml.gz": "eca7159443ccee12c8e3c06940e6df9d06f1f0d612be632560bd87f016ba762b",
+    "bevroren-bron/src-tauri/tauri.conf.json.gz": "1b4f4a6767151deeb9af938e33936e36b448992cf630cd7dc9f9eb1a4380d286",
+    "bevroren-bron/src-tauri/Cargo.lock.gz": "78186422bb8d1237bf3d8c6cd24864e022b1350e117d574dfa79c20805f07878",
+    "bevroren-bron/src-tauri/Cargo.toml.gz": "1545f5b0676a830e952f4d12e3215a09c304f80831a2167d884362da2dc2dca1",
+    "bevroren-bron/native/vendor/docx-edit-bron.json.gz": "5372a30c34f6924ce57ba9152359579a88d4c692057f3049325d97c223d149f6",
+    "bevroren-bron/native/crates/office-writer-plakken/README.md.gz": "12bd2d913888ba690bf38abdeb3104cc297b6aa36a310e2ef6b60185cfc7361f",
+    "bevroren-bron/native/crates/office-writer-plakken/src/bronspiegel.rs.gz": "fea9021a3ff2558c4ef11bea281375f30afd0f83a29dd87e8b5f79e83951963f",
+    "bevroren-bron/native/crates/office-writer-plakken/examples/meet_bronkosten.rs.gz": "c9465529cd505ae1fdffaa360cdbee1e75f8cd2bfc25bf4d06a785ab4aa9a4b7",
+    "bevroren-bron/native/vendor/docx-edit/OPENAEC-WIJZIGINGEN.md.gz": "63ff8a8adc9b879f2792b40ec18ef5abaededb11d6fd461b115c65603c25752d",
+    "bevroren-bron/native/vendor/docx-edit/src/lib.rs.gz": "df8d8e95b76caebd2b2a6d83afd805de967d91eeb5899010371c97578e355932",
+    "bevroren-bron/native/vendor/docx-edit/src/clipboard_batch.rs.gz": "3d1a0b1bd8aef06918705c7965a08825e36c98845dccfd4c2cd557d661da1e20",
+    "bevroren-bron/native/vendor/docx-edit/src/clipboard_batch/revision_ids.rs.gz": "0bcf6668e8e7d529e8d3730c452b3e8288e82a056d069fcf20996ec0f0f52289",
+    "bevroren-bron/native/vendor/docx-edit/src/clipboard_batch/confirmed_source.rs.gz": "cd6f2a4f8d37f27cd030453bc229305b20742f640e846458862b1697b3f560ce",
+    "bevroren-bron/native/vendor/docx-edit/src/ops/embed.rs.gz": "8f516cbb68c4189011afcfc89dfba77e35bd1e1a93c5e242b92411eb209f21f9",
+    "bevroren-bron/native/vendor/docx-edit/src/ops/table.rs.gz": "e62bb4811c395995216c32e963c748d9e883488321dda76c99105e9ab5e33547",
+    "bevroren-bron/native/vendor/docx-edit/src/ops/paragraph.rs.gz": "f3270c461b3b6789157a74ca2128eabc98e1c9ff243fd0dcbfc489cc8964fb5d",
+    "bevroren-bron/native/vendor/docx-edit/src/ops/text.rs.gz": "40e93aa77cfc60ab49d0e9de0e31e17ace6b76636ff5357f486f6d89cffbf301",
+    "bevroren-bron/src/tekst/liniaal/geometrie.ts.gz": "63ac5aa6a388b5c6050a5e2bd617732ad70b9b287d6e19cb998eb652b18b074f",
+    "bevroren-bron/src/tekst/bewerken/tekstInvoerRoute.test.ts.gz": "e249700cf0dca05ebeb7b46f005991f31036b0dbb022a7176d2925f1517ecbe4",
+    "nativepunt42-app-bronnen.json.gz": "630fd039f5cba95d70b4b03def2925b836c25e69a0294046985c6e9614fefa32",
+    "native-punt42-bouw.log.gz": "eb2da8f4cce54c1231846308f3338c5509361d90df3b7c9698c9c74158044784",
+    "native-punt42-weekversie.log.gz": "1e072182f42b9dc6e552d415fa54edc120f94c053396c3dfe17bfc6524f269d7",
+    "native-punt42-fmt.log.gz": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+    "nativepunt42-proefuitkomsten.json.gz": "ebd3376584bd4f84d8c8bcb3e30ecefd938a401e6fe9bc441476c2b7b6a1ee48",
+    "nativepunt42-passieve-uitkomsten.json.gz": "291dbde044c8a82e1ed73bc5da451d313542501c7db9b4adaa4bee7b331064a0",
+    "nativepunt42-rpc-uitkomst.json.gz": "acfb68c3ca1f3930a4c2c9a4f2e42c95f07b6d2c2afb5891c6160d1f63f41643",
+    "native-punt-volledige-vitest.log.gz": "3571b808bf6d6f5e5454984cd663d63245b58929f545670e0362e67047582042",
+    "native-punt-tsc.log.gz": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+    "native-punt-voor-herstel.log.gz": "204e8c1d66f628735a7e85a682c31333c5da7421415842508d36e0bb8cfecfa9",
+    "native-punt-na-herstel.log.gz": "3d6c7a35c0d0e4b57900ea140a45ccb53e730af2efa82f5e9aa287d3de980c7b",
+    "nativepunt42-python.log.gz": "96ca8f21fa961949c7e413ae5cdce81ea2c9b8611453ba403d2b936a06ac2868",
+    "nativepunt42-python-native.log.gz": "882c8fd224410e79329d44f556b54536b3c47677d81d2a0635f334855316e15e",
+    "voer-nativepunt42-proeven.py.gz": "50d1aade84f1bbac4169fab3a30e4d762de475077aa754d1c213e01c6257bde8",
+    "voer-nativepunt42-passieve-metingen.py.gz": "2da3750b1365c9b4a5545e1da1c873df502818beae9065d0709f1a817600ffb5",
+    "meet-passief-doortypen-native.py.gz": "cd2b45747f658acd46f96626b210bcfd72783e30c61b1eabd757356fe6c919ef",
+    "meet-rpc-native.py.gz": "783ff7a323538d092e3e4ed44fbce0bd79e25f2c4d29cef0be5c68f3aa4227ce",
+    "bewaar-nativepunt42-proeven.py.gz": "bd300e6e8a926154a519edc3c828e6737013e41940e5ffff4a8299024e7681f1"
+  },
+  "functioneel": [
+    {
+      "naam": "renderer-42-nativepunt",
+      "code": 0,
+      "seconden": 32.9
+    },
+    {
+      "naam": "lang-42-nativepunt",
+      "code": 0,
+      "seconden": 61.6
+    },
+    {
+      "naam": "tekst-42-nativepunt",
+      "code": 0,
+      "seconden": 25.8
+    },
+    {
+      "naam": "geheugen-42-nativepunt",
+      "code": 0,
+      "seconden": 141.62
+    },
+    {
+      "naam": "acht-42-nativepunt",
+      "code": 0,
+      "seconden": 73.67
+    },
+    {
+      "naam": "vervolginvoer-42-nativepunt",
+      "code": 0,
+      "seconden": 54.98
+    },
+    {
+      "naam": "kleur-42-nativepunt",
+      "code": 0,
+      "seconden": 33.99
+    },
+    {
+      "naam": "bewaren-42-nativepunt",
+      "code": 0,
+      "seconden": 23.92
+    },
+    {
+      "naam": "tabelgrepen-42-nativepunt",
+      "code": 0,
+      "seconden": 29.93
+    },
+    {
+      "naam": "volgorde-42-nativepunt",
+      "code": 0,
+      "seconden": 28.77
+    }
+  ],
+  "metingen": [
+    {
+      "naam": "passief-nativepunt-39-voor",
+      "getekende_tekst_ms": 23148,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "programma_sha256": "f25c6c3395781209f0d1760c035110c0e846f0b1e394d90860d5e8a526ccc75d"
+    },
+    {
+      "naam": "passief-nativepunt-42-eerste",
+      "getekende_tekst_ms": 30407,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "programma_sha256": "94ca672e3c23fdfb08df03284a4a9e750f8194cfb5e980b0fad8fbbe338db038"
+    },
+    {
+      "naam": "passief-nativepunt-42-tweede",
+      "getekende_tekst_ms": 30473,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "programma_sha256": "94ca672e3c23fdfb08df03284a4a9e750f8194cfb5e980b0fad8fbbe338db038"
+    },
+    {
+      "naam": "passief-nativepunt-39-na",
+      "getekende_tekst_ms": 22953,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "programma_sha256": "f25c6c3395781209f0d1760c035110c0e846f0b1e394d90860d5e8a526ccc75d"
+    }
+  ],
+  "raster": {
+    "passief-nativepunt-39-voor": {
+      "pixels": 0,
+      "bbox": null,
+      "documentpixels": 0,
+      "document_zonder_cursorpixels": 0
+    },
+    "passief-nativepunt-42-eerste": {
+      "pixels": 8,
+      "bbox": [
+        6,
+        33,
+        1120,
+        997
+      ],
+      "documentpixels": 0,
+      "document_zonder_cursorpixels": 0
+    },
+    "passief-nativepunt-42-tweede": {
+      "pixels": 33,
+      "bbox": [
+        492,
+        349,
+        1120,
+        997
+      ],
+      "documentpixels": 30,
+      "document_zonder_cursorpixels": 0
+    },
+    "passief-nativepunt-39-na": {
+      "pixels": 0,
+      "bbox": null,
+      "documentpixels": 0,
+      "document_zonder_cursorpixels": 0
+    }
+  },
+  "acceptatie": "AFGEKEURD: beide nieuwe fysieke invoerronden zijn trager dan de referentie. Bronjournaal en invoercallbackoptimalisatie niet behouden; geen download, gesloten issue of acceptatievlag.",
+  "grenzen": [
+    "Alleen eigen Linux-omgeving; geen volledige suite-, FPS-, platform- of migratieacceptatie.",
+    "Bronidentiteit komt uit de bevroren 42-bronnen, niet uit latere lokale wijzigingen."
+  ],
+  "rpc": {
+    "broncontrole": {
+      "verhalen": 1537,
+      "alinea_en_celteksten": 3329,
+      "exact": true
+    },
+    "batches": 98
+  }
+}
