@@ -4,37 +4,25 @@ Een push naar GitHub werkt de broncode bij. De pagina Releases verandert alleen
 als er apart een uitgave wordt gepubliceerd. Een ontwikkelbuild is daarom
 beschikbaar als download bij GitHub Actions, zonder nieuwe release of tag.
 
-De gecontroleerde [45.39-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41880946289/artifacts/13349933481)
-is gebouwd uit `1e67dbc32023318708b7e3ae4ee41a9292ea5946`.
-De Linux-ontwikkelworkflow is geslaagd. ZIP-/tar-/AppImagehashes, CRC,
-metadata, uitvoerrechten, startscript, eigen dev-profiel en de daadwerkelijke
-AppRun-/ELF-hashes zijn onafhankelijk gecontroleerd. Het afzonderlijk
-opgehaalde CI-GUI-rapport komt overeen met deze bytes en bewaart lege
-GUI-, console- en enginefoutlijsten. Die gerichte proef controleert drie
-plakrondes, bewaren, verder bewerken, verwerpen en een nieuw document.
-[Exacte downloadcontrole](../tests/2026-11-04-linux-dev-1e67dbc.json).
+De gecontroleerde [45.43-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41928376381/artifacts/13372515187)
+is gebouwd uit `bafc2205632c4d4f67db848952ba946d57701ed1`.
+De Linux-ontwikkelworkflow is geslaagd. De gedownloade ZIP, tar en AppImage
+zijn onafhankelijk op hashes, CRC, metadata en uitvoerrechten gecontroleerd.
+De uitgepakte AppRun en de werkelijke ELF komen op hash overeen met het
+apart opgehaalde CI-GUI-rapport. Die gerichte proef slaagt voor drie plakrondes,
+bewaren, verder bewerken, verwerpen en een nieuw document; de GUI-, console-
+en enginefoutlijsten zijn leeg.
+[Exacte downloadcontrole](../tests/2026-11-05-linux-dev-bafc220.json).
 
-Dit blijft een ontwikkelbuild met open stabiliteits- en snelheidsproblemen.
-De [doorgaande-invoerproef](../tests/writer-replica-hergebruik.md) toont de
-volledige getypte alinea op een grote tabelbron ongeveer 27% eerder dan 45.38,
-maar de resterende vertraging is nog te groot. De bredere desktopronde op
-Windows is afgekeurd op een grafiektest met een vijfsecondenlimiet; de
-die specifieke Windows-ronde is dus afgekeurd. Linux en macOS slagen in die
-ronde. De gerichte devpakketproef bewijst geen volledige suiteacceptatie.
-De eerdere [45.38-downloadcontrole](../tests/2026-11-04-linux-dev-ca2a42c.json),
-[45.36-downloadcontrole](../tests/2026-11-04-linux-dev-f12863d.json) en
-[45.35-downloadcontrole](../tests/2026-11-04-linux-dev-322f840.json)
-blijven afzonderlijk bewaard.
-
-De [latere brede desktop-hertest](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41882225371)
-slaagt op Linux, Windows en macOS met dezelfde applicatiecode. De eerdere
-Windows-time-out blijft als onverklaarde afkeuring bewaard; deze groene ronde
-bewijst geen gerichte reparatie of volledige stabiliteit.
-
-Een [latere Linux-desktopproef](../tests/2026-11-04-writer-heropenen-3ad.json)
-is na heropenen van 500 pagina's afgekeurd op een geheugengrensfout in de
-Wasm-documentworker. De oorzaak blijft open; de gecontroleerde devdownload
-is daarom nog steeds een testversie met bekende stabiliteitsproblemen.
+De [brede desktopcontrole](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41928388178)
+van dezelfde bronrevisie slaagt op Linux, Windows en macOS. Dit is geen
+volledige suiteacceptatie: Writer heeft nog invoervertraging en open
+stabiliteitsproblemen, onder meer eerdere incidentele worker-/Wasm-fouten
+bij grote documenten. Deze download is een testversie. De nieuwe lokale
+snelheidsproef voor 45.44 is hierin niet opgenomen en nog niet bewezen.
+De afzonderlijke [45.39-downloadcontrole](../tests/2026-11-04-linux-dev-1e67dbc.json)
+en oudere afkeuringen blijven bewaard. De download verloopt op 4 december 2026;
+GitHub Actions bewaart deze artefacten dertig dagen.
 
 Sluit een eerder geopende dev-versie na het bewaren voordat je de nieuwe start;
 beide gebruiken hetzelfde dev-profiel. Gebruik kopieën van je documenten.
