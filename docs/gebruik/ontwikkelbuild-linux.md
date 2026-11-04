@@ -57,4 +57,8 @@ vastgelegd. De groene devpakketproef is geen bewijs dat deze fout, de oudere
 [geheugenafkeuringen](../tests/writer-geheugenonderzoek.md) of alle functies
 hersteld zijn. De [brede 45.30-desktoproute](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41768043233)
 slaagt op Linux, Windows en macOS; de zeveneditiecontrole wordt apart gevolgd.
+De brede 45.31-desktoproute slaagt op Windows/macOS en faalt op Linux bij Undo
+na een geslaagde GTK-markeerkleurkeuze. De exacte negatieve ELF en de huidige
+45.32 doorstaan dezelfde proef lokaal; de oorspronkelijke oorzaak blijft open.
+[Afkeuring, exacte bytes en hertests](../tests/2026-11-04-writer-kleur-45.31.json).
 Er wordt geen officiële release gepubliceerd.

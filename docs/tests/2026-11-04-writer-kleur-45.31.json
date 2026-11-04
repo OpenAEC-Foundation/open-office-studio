@@ -1,0 +1,376 @@
+{
+  "run": 41781398281,
+  "head_sha": "9d0c1161d86ff426d35e118bb0f621c7cc917ae2",
+  "checkout_sha": "8319583d87992041be67a3d1ce800915ac3169b8",
+  "gelijke_head_en_merge_tree": "126b8ad99db70d43f6f225c06ed569f342cd57b9",
+  "platforms": {
+    "Windows": "success",
+    "macOS": "success",
+    "Linux": "failure"
+  },
+  "afgekeurde_stap": "GTK-kleurkeuze in de gebouwde Linux-app",
+  "fout": "Geen inspectieantwoord tijdens commands.execute(\"undo\", null) na geslaagde kleurkeuze en onafhankelijk teruggelezen DOCX. De cleanup-Runtime.evaluate loopt eveneens vast en vervangt in de laatste stack de oorspronkelijke timeout. De oorspronkelijke productoorzaak is niet vastgesteld.",
+  "negatieve_elf_sha256": "d4902b39b8d078a3bf5b6f6597000cd163edc6a05a34549142d5a69dba60e7e7",
+  "negatieve_appimage": {
+    "naam": "Open Office Studio_2026.45.31_amd64.AppImage",
+    "sha256": "4446c93b9ac2011b1a68c0aaa4a1cbf048b00aa3b67c668fe7196806dfcc7ecb",
+    "grens": "Begeleidende verpakking uit dezelfde bouwmap; de afzonderlijk gecontroleerde raw binary is het bewijs voor de afgekeurde proef."
+  },
+  "artifact_kleur": {
+    "id": 13300651282,
+    "sha256": "47c693331107a87ae978b406114e24011645434f1f88bcbd82475160cc091ff5"
+  },
+  "artifact_foutcontext": {
+    "id": 13300297060,
+    "zip_sha256": "70251aa58b2730ea8527b309a979b74972a88b76412d3cecaa7649967ff14b0b",
+    "tar_sha256": "8f7ecb2f57663afe6e3372aa738904265e0ad7d26da3cf372e513e243f72c972"
+  },
+  "alle_contextbestanden_sha256": {
+    "Open Office Studio_2026.45.31_amd64.AppImage": "4446c93b9ac2011b1a68c0aaa4a1cbf048b00aa3b67c668fe7196806dfcc7ecb",
+    "context.json": "54427a562f62adf300b107e6b0374d14a0b3c4fe434d428cc59a1336a097915d",
+    "open-office-studio": "d4902b39b8d078a3bf5b6f6597000cd163edc6a05a34549142d5a69dba60e7e7",
+    "proef/Markeerkleurproef.docx": "3fc434fb16e5b71b620e7c953671c80db9184a7d3460816fda3fddbc97774a2e",
+    "proef/afgekeurd.png": "8dfafcc1107d72b91391a58cbf89fdfa76bae280273cbf2c6c0980e4bd19eec7",
+    "proef/programma.log": "71eb231d1cfe0ad0b2d0e512d5dbb5777e7be7350bc939624679274831d942fa",
+    "rapport.json": "427b19d2f0ce5dcba172b5c4cf1158c6465764d2827188a89f278334b3a44e65",
+    "scripts/gui/framebasis.js": "f0d0c17073177f6cacea5e4a6e04dd47d79999dc322a6922dd37147d32d4c369",
+    "scripts/gui/requirements.txt": "4d3b280d9e5ae568f66bb597713614b9ef6477a829bf1569ae528fbe306d2f53",
+    "scripts/gui/webkit_inspector.py": "6112b95e4bf1bc8cc068589257562b2686551cf19307150b237fc0f9ea2bd93a",
+    "scripts/test-writer-kleur-native.py": "664cfbf601ecfcaaf52e607d6fe85ae327e7de14ba2c09836dd1f099e6d977b9"
+  },
+  "ci_rapport": {
+    "geslaagd": false,
+    "versie": "2026.45.31",
+    "programma_sha256": "d4902b39b8d078a3bf5b6f6597000cd163edc6a05a34549142d5a69dba60e7e7",
+    "script_sha256": "664cfbf601ecfcaaf52e607d6fe85ae327e7de14ba2c09836dd1f099e6d977b9",
+    "stappen": [
+      {
+        "naam": "begin",
+        "vullingen": [],
+        "tekstExact": true
+      },
+      {
+        "naam": "keuze-f6d32d",
+        "vullingen": [
+          "f6d32d"
+        ],
+        "tekstExact": true
+      }
+    ],
+    "kleurgebeurtenissen": [
+      {
+        "keuze": "f6d32d",
+        "gebeurtenissen": [
+          {
+            "soort": "input",
+            "kleur": "#f6d32d",
+            "native": true
+          },
+          {
+            "soort": "change",
+            "kleur": "#f6d32d",
+            "native": true
+          }
+        ]
+      }
+    ],
+    "paletten": [
+      {
+        "keuze": "f6d32d",
+        "breedte": 488,
+        "hoogte": 301,
+        "pixel": [
+          246,
+          211,
+          45
+        ],
+        "verwacht": [
+          246,
+          211,
+          45
+        ],
+        "schilderwacht_ms": 101
+      }
+    ],
+    "beperking": "GTK3-palet op Linux/X11; geen volledige platform- of functieacceptatie.",
+    "fout": "TimeoutError()"
+  },
+  "exacte_lokale_hertest": {
+    "geslaagd": true,
+    "versie": "2026.45.31",
+    "programma_sha256": "d4902b39b8d078a3bf5b6f6597000cd163edc6a05a34549142d5a69dba60e7e7",
+    "script_sha256": "664cfbf601ecfcaaf52e607d6fe85ae327e7de14ba2c09836dd1f099e6d977b9",
+    "stappen": [
+      {
+        "naam": "begin",
+        "vullingen": [],
+        "tekstExact": true
+      },
+      {
+        "naam": "keuze-f6d32d",
+        "vullingen": [
+          "f6d32d"
+        ],
+        "tekstExact": true
+      },
+      {
+        "naam": "ongedaan",
+        "vullingen": [],
+        "tekstExact": true
+      },
+      {
+        "naam": "opnieuw",
+        "vullingen": [
+          "f6d32d"
+        ],
+        "tekstExact": true
+      },
+      {
+        "naam": "keuze-99c1f1",
+        "vullingen": [
+          "99c1f1"
+        ],
+        "tekstExact": true
+      },
+      {
+        "naam": "nieuw-getypte-tekst",
+        "vullingen": [
+          "99c1f1"
+        ],
+        "tekstExact": true
+      },
+      {
+        "naam": "nieuw-native-proces",
+        "vullingen": [
+          "99c1f1"
+        ],
+        "tekstExact": true
+      }
+    ],
+    "kleurgebeurtenissen": [
+      {
+        "keuze": "f6d32d",
+        "gebeurtenissen": [
+          {
+            "soort": "input",
+            "kleur": "#f6d32d",
+            "native": true
+          },
+          {
+            "soort": "change",
+            "kleur": "#f6d32d",
+            "native": true
+          }
+        ]
+      },
+      {
+        "keuze": "99c1f1",
+        "gebeurtenissen": [
+          {
+            "soort": "input",
+            "kleur": "#99c1f1",
+            "native": true
+          },
+          {
+            "soort": "change",
+            "kleur": "#99c1f1",
+            "native": true
+          }
+        ]
+      }
+    ],
+    "paletten": [
+      {
+        "keuze": "f6d32d",
+        "breedte": 488,
+        "hoogte": 303,
+        "pixel": [
+          246,
+          211,
+          45
+        ],
+        "verwacht": [
+          246,
+          211,
+          45
+        ],
+        "schilderwacht_ms": 94
+      },
+      {
+        "keuze": "99c1f1",
+        "breedte": 488,
+        "hoogte": 303,
+        "pixel": [
+          153,
+          193,
+          241
+        ],
+        "verwacht": [
+          153,
+          193,
+          241
+        ],
+        "schilderwacht_ms": 74
+      }
+    ],
+    "beperking": "GTK3-palet op Linux/X11; geen volledige platform- of functieacceptatie.",
+    "foutmeldingen": []
+  },
+  "lokale_45_32_hertest": {
+    "geslaagd": true,
+    "versie": "2026.45.32",
+    "programma_sha256": "7a0b1048263df705e0c3a1977b73c95b898cb44a595d06434b8eb451c635b173",
+    "script_sha256": "664cfbf601ecfcaaf52e607d6fe85ae327e7de14ba2c09836dd1f099e6d977b9",
+    "stappen": [
+      {
+        "naam": "begin",
+        "vullingen": [],
+        "tekstExact": true
+      },
+      {
+        "naam": "keuze-f6d32d",
+        "vullingen": [
+          "f6d32d"
+        ],
+        "tekstExact": true
+      },
+      {
+        "naam": "ongedaan",
+        "vullingen": [],
+        "tekstExact": true
+      },
+      {
+        "naam": "opnieuw",
+        "vullingen": [
+          "f6d32d"
+        ],
+        "tekstExact": true
+      },
+      {
+        "naam": "keuze-99c1f1",
+        "vullingen": [
+          "99c1f1"
+        ],
+        "tekstExact": true
+      },
+      {
+        "naam": "nieuw-getypte-tekst",
+        "vullingen": [
+          "99c1f1"
+        ],
+        "tekstExact": true
+      },
+      {
+        "naam": "nieuw-native-proces",
+        "vullingen": [
+          "99c1f1"
+        ],
+        "tekstExact": true
+      }
+    ],
+    "kleurgebeurtenissen": [
+      {
+        "keuze": "f6d32d",
+        "gebeurtenissen": [
+          {
+            "soort": "input",
+            "kleur": "#f6d32d",
+            "native": true
+          },
+          {
+            "soort": "change",
+            "kleur": "#f6d32d",
+            "native": true
+          }
+        ]
+      },
+      {
+        "keuze": "99c1f1",
+        "gebeurtenissen": [
+          {
+            "soort": "input",
+            "kleur": "#99c1f1",
+            "native": true
+          },
+          {
+            "soort": "change",
+            "kleur": "#99c1f1",
+            "native": true
+          }
+        ]
+      }
+    ],
+    "paletten": [
+      {
+        "keuze": "f6d32d",
+        "breedte": 488,
+        "hoogte": 303,
+        "pixel": [
+          246,
+          211,
+          45
+        ],
+        "verwacht": [
+          246,
+          211,
+          45
+        ],
+        "schilderwacht_ms": 192
+      },
+      {
+        "keuze": "99c1f1",
+        "breedte": 488,
+        "hoogte": 303,
+        "pixel": [
+          153,
+          193,
+          241
+        ],
+        "verwacht": [
+          153,
+          193,
+          241
+        ],
+        "schilderwacht_ms": 83
+      }
+    ],
+    "beperking": "GTK3-palet op Linux/X11; geen volledige platform- of functieacceptatie.",
+    "foutmeldingen": []
+  },
+  "foutlog_sha256": "a15ad289eedd0cc66e2c1b06105b320c635318915410c775988837be30b01d9e",
+  "context_sha256": "54427a562f62adf300b107e6b0374d14a0b3c4fe434d428cc59a1336a097915d",
+  "proefbron": {
+    "test-writer-kleur-native.py": {
+      "beschikbaar": true,
+      "sha256": "664cfbf601ecfcaaf52e607d6fe85ae327e7de14ba2c09836dd1f099e6d977b9",
+      "herkomst": "Checksumgelijk aan gerapporteerde proef"
+    },
+    "gui/webkit_inspector.py": {
+      "beschikbaar": true,
+      "sha256": "6112b95e4bf1bc8cc068589257562b2686551cf19307150b237fc0f9ea2bd93a",
+      "herkomst": "Hulpmiddel uit huidige checkout; oorspronkelijke bytes niet afzonderlijk in het rapport vastgelegd"
+    },
+    "gui/requirements.txt": {
+      "beschikbaar": true,
+      "sha256": "4d3b280d9e5ae568f66bb597713614b9ef6477a829bf1569ae528fbe306d2f53",
+      "herkomst": "Hulpmiddel uit huidige checkout; oorspronkelijke bytes niet afzonderlijk in het rapport vastgelegd"
+    },
+    "gui/framebasis.js": {
+      "beschikbaar": true,
+      "sha256": "f0d0c17073177f6cacea5e4a6e04dd47d79999dc322a6922dd37147d32d4c369",
+      "herkomst": "Hulpmiddel uit huidige checkout; oorspronkelijke bytes niet afzonderlijk in het rapport vastgelegd"
+    }
+  },
+  "ci_runtime": {
+    "exitcode": 0,
+    "uitvoer": "libc6 2.35-0ubuntu3.15\nlibgtk-3-0 3.24.33-1ubuntu2.2\nlibjavascriptcoregtk-4.1-0 2.50.4-0ubuntu0.22.04.1\nlibwebkit2gtk-4.1-0 2.50.4-0ubuntu0.22.04.1"
+  },
+  "grenzen": [
+    "ZIP, tar, alle contextbestanden, AppImage en werkelijke negatieve ELF op checksums gecontroleerd.",
+    "De gedocumenteerde head en CI-merge hebben dezelfde bronboom.",
+    "Exacte negatieve ELF en huidige 45.32 slagen lokaal met dezelfde proefscript- en inspectiehelperbytes; de CI-afkeuring wordt niet tot opgelost verklaard.",
+    "De lokale en CI-systemen verschillen; een lokale hertest is geen herstelbewijs.",
+    "De groene devpakket- en geheugenroute bewijzen geen algemene stabiliteit of deze kleur/Undo-casus.",
+    "Alle 118 issues, tien migratiegebieden en dertig vlaggen blijven open."
+  ]
+}
