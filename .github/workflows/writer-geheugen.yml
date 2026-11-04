@@ -12,6 +12,8 @@ on:
       - 'src/spelling/tekst/Golflijnen.tsx'
       - 'scripts/gui/spelling_weergave.*'
       - 'scripts/gui/webkit_inspector.py'
+      - 'scripts/gui/worker_bron.js'
+      - 'scripts/test-writer-workerbron.mjs'
       - 'src/tekst/bewerken/plakopmaak.ts'
   workflow_dispatch:
     inputs:
@@ -69,7 +71,11 @@ jobs:
         run: pnpm desktop:build --bundles deb,appimage
       - name: 500 pagina’s inclusief echte herstelkopie en herstelkeuzes
         run: |
-          "$OFFICE_GUI_PYTHON" scripts/test-writer-lang-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-writer-geheugen/normaal --herstelstart --verwacht-rust-tekst --verwacht-worker-layout --spelling-weergave --framebasis
+          "$OFFICE_GUI_PYTHON" scripts/test-writer-lang-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-writer-geheugen/normaal --herstelstart --verwacht-rust-tekst --verwacht-worker-layout --spelling-weergave --framebasis --workerbron
+      - name: Vastgelegde bronupdates onafhankelijk naspelen
+        if: always()
+        # Ook een afgekeurde worker kan een volledige bronreeks hebben bewaard.
+        run: node scripts/test-writer-workerbron.mjs .local/proef-writer-geheugen/normaal/workerbron.json .local/proef-writer-geheugen/normaal/workerbron-herhaling.json
       - name: Extra selectie, Backspace, undo, redo en garbagecollection
         env:
           GEHEUGENRONDES: ${{ inputs.geheugenrondes || '20' }}

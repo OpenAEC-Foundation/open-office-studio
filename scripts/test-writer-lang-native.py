@@ -47,6 +47,7 @@ def main():
     p.add_argument('--verwacht-native-base64', action='store_true', help='Vereis bij deze runtime dat iedere native tekstbatch de ingebouwde snapshotencoder gebruikt.')
     p.add_argument('--spelling-weergave', action='store_true', help='Controleer alle zichtbare golven en de volledige foutencache bij navigatie, zoomen, vensterformaat en tabwissels.')
     p.add_argument('--framebasis', action='store_true', help='Bewaar begrensde rendererframes van deze eigen proefbron na de invoermeting, met de eerste workerfout.')
+    p.add_argument('--workerbron', action='store_true', help='Bewaar begrensde bronupdates tijdens invoer voor onderzoek; geen ongestoorde snelheidsmeting.')
     p.add_argument('--historische-registerwissels', action='store_true', help='Alleen voor vergelijking met een oude binary: registreer de canvaswissels zonder deze specifieke nieuwe acceptatie-eis.')
     p.add_argument('--herstelstart', action='store_true', help='Wacht op een echte eigen herstelkopie en toets Later, verder bewerken en daarna Herstellen in een nieuw tabblad.')
     p.add_argument('--geheugenrondes', type=int, default=0, help='Extra selectie-/Backspace-/undo-/redo-rondes vóór de gewone bewaarproef (0–100).')
@@ -88,6 +89,8 @@ def main():
             extra.append('--spelling-weergave')
         if a.framebasis:
             extra.append('--framebasis')
+        if a.workerbron:
+            extra.append('--workerbron')
         extra += ['--geheugenrondes', str(a.geheugenrondes)]
         if a.herstelstart:
             extra.append('--herstelstart')
@@ -249,6 +252,9 @@ async def proef(a):
             await controle(p, 'beginbron', origineel)
             await p.run("let e=proefApi().getEditorRef(),a=e.getYrsSession().paragraphs('body').at(-1);e.setSelection(e.yrsLocToDisplayPosition({story:'body',paraId:a.paraId,offset:a.text.length}));proefApi().scrollToPage(500);proefApi().focus();await proefApi().flushPendingInput();return true;")
             await asyncio.sleep(3)
+            if a.workerbron:
+                await p.ev((repo/'scripts/gui/worker_bron.js').read_text())
+                rapport['workerbron'] = {'bestandsnaam': 'workerbron.json', 'script_sha256': hashlib.sha256((repo/'scripts/gui/worker_bron.js').read_bytes()).hexdigest(), 'grens': 'Diagnose met extra bytekopieën; geen ongestoorde snelheidsmeting.'}
             await p.ev("window._rectProef={calls:0,classes:Object.create(null)};window._rectOud=Element.prototype.getBoundingClientRect;Element.prototype.getBoundingClientRect=function(...args){_rectProef.calls++;const k=this.getAttribute('class')||this.tagName;_rectProef.classes[k]=(_rectProef.classes[k]||0)+1;return _rectOud.apply(this,args)};window._frameProef={v:[],last:performance.now(),stop:false};window._frameTik=nu=>{if(_frameProef.stop)return;_frameProef.v.push(nu-_frameProef.last);_frameProef.last=nu;requestAnimationFrame(_frameTik)};requestAnimationFrame(_frameTik);true")
             # Tel de werkelijke projecties naar de pakketstructuur; een
             # verborgen lint mag niet het hele document per toets opbouwen.
@@ -357,6 +363,12 @@ async def proef(a):
               })()
             """)
             assert rapport['native_leesaanroepen']['zelfde_sessie'], 'Native sessie vervangen tijdens invoermeting'
+            if a.workerbron:
+                gegevens = await p.ev('(()=>{const r=_officeWorkerBron.exporteer();_officeWorkerBron.stop();return r})()')
+                pad = a.uitvoer/'workerbron.json'
+                pad.write_text(json.dumps(gegevens, ensure_ascii=False)+'\n')
+                rapport['workerbron'].update(volledig=gegevens['volledig'], bytes=gegevens['bytes'], berichten=len(gegevens['berichten']), sha256=hashlib.sha256(pad.read_bytes()).hexdigest())
+                assert gegevens['volledig'], 'De workerbronbewaking is begrensd; geen volledig replaybewijs'
             if a.verwacht_worker_layout:
                 assert rapport['native_leesaanroepen']['layoutDocumentWithRegionsRetainedJson']['calls'] == 0, 'Volledige pagina-indeling op de hoofdthread tijdens gewone invoer'
                 assert rapport['native_leesaanroepen']['worker_berichten'].get('sync', 0) > 0, 'Geen bronsynchronisatie naar de layoutworker tijdens invoer'

@@ -1,0 +1,59 @@
+{
+  "basiscommit": "67be6e40316f7c49e1726d3df7ccc316f7cd51f8",
+  "productbron_gewijzigd": false,
+  "versie": "2026.45.33",
+  "kern": "2026.45.0-alpha.52",
+  "onderzoek": "Bewaar begrensde bronupdates voor de incidentele unsupported-embed-afkeuring; nog geen bewezen herstel.",
+  "bewijsbestanden": {
+    "native": {
+      "pad": "writer-workerbron/native.json.gz",
+      "sha256": "a2e83e0941a0e8fd5b267899f743e9b832d64644c92b35dcf9f0c8fdf421f62d",
+      "gzip_sha256": "87f56ea6f7cd15a662fb8d3d57c0ab61e3a82cbb70fe7181c5a01162a3f7623f"
+    },
+    "bron": {
+      "pad": "writer-workerbron/bron.json.gz",
+      "sha256": "7b879b58fc708ff1ebdcb9dbcbfc988c78cfeb60d6620a8b7502072eaaa3994e",
+      "gzip_sha256": "1cd3cfae66f7d3f0cd027edec77c8934b0607487265b916b42941a6792882288"
+    },
+    "nagespeeld": {
+      "pad": "writer-workerbron/nagespeeld.json.gz",
+      "sha256": "c2fc75efb9b2200bbcd7b8385a54d8bb153db93a594b77e204c96cef61c087e4",
+      "gzip_sha256": "c6cd4b6d6dada6874637b9443b097d7ffbe766f92347de7fcc234e184c6b989e"
+    },
+    "afgekapt-afgekeurd": {
+      "pad": "writer-workerbron/afgekapt-afgekeurd.json.gz",
+      "sha256": "502c054cd4a50c767dcff08189da8968468e1f851f3b62ada0ef11e811145edb",
+      "gzip_sha256": "7a7e3850dc6a106436e8c2bc29a916115a83b0d32b056e11e30079a42837e438"
+    }
+  },
+  "bronbestanden_sha256": {
+    "scripts/gui/worker_bron.js": "98b2b64ed7e58c9456a9275f2a8e0e5ddc64b84f134969fafffdfeaef941443e",
+    "scripts/test-writer-workerbron.mjs": "fc41ee7e37a179210d0e4a9f5576589cdc55446de6d72d8c5928638794b2fc4a",
+    "scripts/test-writer-lang-native.py": "520fb41c067de704415b224f58dbd582d7a9b352971230fd631a9d266cda5879",
+    "scripts/bewaar-writer-foutcontext.py": "8b2c6ea204a0a4c125f2a7cb7bf32c9548afc1e9c16bf24341b1a2f2c98952ba",
+    "src/tekst/worker-bronbewaking.test.ts": "696eff774952d32efbaa6921aae60e9fc493afe9f1a719c205d053a7eddf75f0",
+    "tests/test_writer_foutcontext.py": "95e16727f03471b187108a194b668b352ca639726897260a8cd1ad86cefd03ed",
+    ".github/workflows/writer-geheugen.yml": "1a1f887d93d6b92778bdd514259fc6028584ba6fbb03dffa85c943793bbd98c8"
+  },
+  "controles": {
+    "gerichte_frontendtests": 3,
+    "frontendtests": 1771,
+    "python_tests": 70,
+    "native_bronstappen": 8,
+    "nagespeelde_updateberichten": 18,
+    "volledige_binaire_bronbytes": 918868,
+    "afgekapt_bewijs_geweigerd": true
+  },
+  "grenzen": [
+    "De beginbron is de hostbron vóór de invoer, niet de oorspronkelijke workerheap.",
+    "Naspelen gebruikt de huidige SDK en maakt de oorspronkelijke berichtplanner of renderer niet na.",
+    "Extra bytekopieën maken de diagnose ongeschikt voor ongestoorde prestatievergelijking.",
+    "De eerste trace begint pas bij gewone invoer; opstartfouten worden hierdoor niet volledig gereconstrueerd.",
+    "De oorspronkelijke negatieve ELF slaagt lokaal; de incidentele fout blijft open."
+  ],
+  "ci_45_33": {
+    "run": 41795505634,
+    "macOS": "Afgekeurd op vijfsecondenlimiet in corpus-download.test.ts: herstelt twee tijdelijke netwerkfouten. Geen tijdgrens gewijzigd.",
+    "overige_platforms": "Nog lopend bij vastlegging."
+  }
+}

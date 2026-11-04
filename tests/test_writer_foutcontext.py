@@ -48,6 +48,15 @@ class WriterFoutcontext(unittest.TestCase):
             module.bewaar(self.programma, [self.rapport], self.uitvoer, systeem=False)
         self.assertFalse(self.uitvoer.exists())
 
+    def test_bewaart_de_begrensde_workerbron_en_haar_oorspronkelijke_helper(self):
+        bron = self.map / 'workerbron.json'
+        bron.write_text(json.dumps({'schema': 1, 'volledig': True, 'begin': [1, 2], 'berichten': []}))
+        context = module.bewaar(self.programma, [self.rapport], self.uitvoer, systeem=False)
+        self.assertEqual(context['proefbestanden']['workerbron.json']['sha256'], module.checksum(bron))
+        with tarfile.open(self.uitvoer / 'writer-foutcontext.tar.gz') as tar:
+            self.assertEqual(tar.extractfile('writer-foutcontext/proef/workerbron.json').read(), bron.read_bytes())
+            self.assertEqual(tar.extractfile('writer-foutcontext/scripts/gui/worker_bron.js').read(), (REPO/'scripts/gui/worker_bron.js').read_bytes())
+
     def test_vervangt_geen_afkeuring_door_een_groen_rapport(self):
         groen = self.map / 'groen.json'
         groen.write_text(json.dumps({**self.gegevens, 'geslaagd': True}))

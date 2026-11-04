@@ -82,7 +82,7 @@ def bewaar(programma, rapporten, uitvoer, appimage_map=None, systeem=True):
                  'herstel-afwijkend.docx', 'herstel-afwijkend.json',
                  'Ontwerpnotitie.docx', 'tussenbewaring.docx', 'geplakt.docx',
                  'Lijstenproef.docx', 'Klembordproef.docx', 'Markeerkleurproef.docx', 'Rendererproef.docx',
-                 'programma.log', 'afgekeurd.png', 'framebasis.json', 'framebasis.inspectiefout.json']:
+                 'programma.log', 'afgekeurd.png', 'framebasis.json', 'framebasis.inspectiefout.json', 'workerbron.json']:
         bron = rapport.parent / naam
         if bron.is_file():
             doel = inhoud / 'proef' / naam
@@ -100,7 +100,7 @@ def bewaar(programma, rapporten, uitvoer, appimage_map=None, systeem=True):
             break
     if not context['proefscript']['beschikbaar']:
         context['proefscript']['reden'] = 'Geen vast proefscript in deze checkout heeft de gerapporteerde checksum'
-    namen = ['gui/webkit_inspector.py', 'gui/requirements.txt', 'gui/framebasis.js', 'gui/spelling_weergave.py', 'gui/spelling_weergave.js']
+    namen = ['gui/webkit_inspector.py', 'gui/requirements.txt', 'gui/framebasis.js', 'gui/spelling_weergave.py', 'gui/spelling_weergave.js', 'gui/worker_bron.js']
     if context['proefscript']['beschikbaar']:
         namen.insert(0, context['proefscript']['naam'])
         if context['proefscript']['naam'] in ['test-writer-rijk-plakken-native.py', 'test-writer-rust-plakken-volgorde-native.py', 'test-writer-rust-tekst-native.py', 'test-writer-lijsten-native.py', 'test-writer-rendererfout-native.py']:
