@@ -81,3 +81,9 @@ De afzonderlijke [45.35-geheugenronde](https://github.com/OpenAEC-Foundation/ope
 is afgekeurd op een verouderde layout na invoer in het document met 256 tabellen.
 De gerichte pakketproef van deze download slaagt, maar deze nieuwe afkeuring
 blijft open. [Details en foutcontext](../tests/2026-11-04-writer-tabeldiagnose-45.35.json).
+
+De Linux-zeveneditieronde van 45.35 is ook afgekeurd op een Wasm-geheugenfout
+bij het bijwerken van de displaylijst na heropenen. Beide exacte negatieve
+routes slagen lokaal, maar hun oorzaak is niet bewezen of hersteld. De
+[afkeuringen en exacte hertests](../tests/2026-11-04-writer-tabeldiagnose-45.35.json)
+blijven daarom open.

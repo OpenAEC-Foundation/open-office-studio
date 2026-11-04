@@ -168,3 +168,15 @@ De opname wijst op extra werk in TabelGrepen/tabelBeelden; dat blijft een
 onderzoekspunt. De bestaande acceptatieproeven zijn niet versoepeld.
 
 [Afkeuring, exacte context en juiste/verkeerde diagnoseopzet](2026-11-04-writer-tabeldiagnose-45.35.json).
+
+
+De [Linux-zeveneditieronde](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41815882769)
+is daarnaast afgekeurd na bewaren en heropenen van de 500-paginabron. De app
+meldt achter het herstelvenster `Out of bounds memory access` bij
+`update_display_list`; de proef klikt die fout niet weg. Deze ronde gebruikt
+exact dezelfde ELF als de afzonderlijke geheugenafkeuring. Beide foutcontexten
+zijn volledig op checksums gecontroleerd. Dezelfde ELF met oorspronkelijke
+proefcode, bytegelijke template en beginbron doorstaat de route lokaal, inclusief
+de vier fontvarianten; ook dat verklaart of herstelt de afkeuring niet.
+De eerste lokale startpoging miste alleen de template en heeft de app niet
+gestart. De overige platform-/editieronden worden apart gevolgd.

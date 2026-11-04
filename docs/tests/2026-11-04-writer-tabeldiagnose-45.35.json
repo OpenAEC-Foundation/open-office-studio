@@ -94,5 +94,40 @@
       "gzip_sha256": "5d5be3de41b32e2dea607137610c8b849955f42809157feb37e7b3c272a9fa24",
       "geslaagd": true
     }
+  },
+  "CI_zeven_afkeuring": {
+    "run": 41815882769,
+    "job": 126526479924,
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41815882769",
+    "rapport_artifact": 13315671898,
+    "rapport_zip_sha256": "18bf7ba3cd121e8c5786245717acccb3812651d226e359a8b066d7100b5ebfec",
+    "context_artifact": 13314853905,
+    "context_zip_sha256": "d143ad15780dce7caf96df53a9555b04c1347fb80eaa4e157bfba6ed41bc9a71",
+    "programma_sha256": "d063b67c4d52842db7c82542be2f4da1d4b13e28640ab4d58aa094b4f9a954ee",
+    "script_sha256": "c884038659eec5c522b4d17180ed3c0640ecf72cf2cf12ba9b672a1f80947838",
+    "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+    "fout": "AssertionError('Applicatiefout achter het herstelvenster')",
+    "melding": [
+      "ErrorOut of bounds memory access (evaluating 'r.update_display_list(e,_,t)')"
+    ],
+    "rapport": {
+      "pad": "writer-lettertypeworker/ci-35-zeven-afgekeurd.json.gz",
+      "sha256": "54e694d7b8176deb58ece66db9c422dfc7000ef25aa5775ebe4161b471f2c381",
+      "gzip_sha256": "ab42d68d6990d758dba31b2995c7f95f11c0d383a9e277849b5a2f4ae490231e"
+    },
+    "contextcontrole": {
+      "pad": "writer-lettertypeworker/ci-35-zeven-contextcontrole.json.gz",
+      "sha256": "c0013ebdb529db12008a7fea3109b335fa28b5a57fbda5320995150e194a0d71",
+      "gzip_sha256": "df9a9496aebaff8f0ee8f301533502240837fb3503dd23c0d4d46329bf5cd5b3"
+    },
+    "exacte_hertest": {
+      "pad": "writer-lettertypeworker/ci-35-zeven-exacte-hertest.json.gz",
+      "sha256": "daf4a0e45eb2f0a05ffb93a5cd5a95726ab3ab5a5cef2f009b558655058f627b",
+      "gzip_sha256": "08f8d6fe4ae581cedb7893dfa9190060b2defda985556e91c2410c19ade8bdd5"
+    },
+    "hertest_geslaagd": true,
+    "vier_lettertypevarianten_geslaagd": true,
+    "status": "Oorzaak en herstel open. Dezelfde exacte negatieve ELF als de geheugenafkeuring, oorspronkelijke proefcode en bron slagen lokaal. De eerste hertestpoging miste de oorspronkelijke template en startte de app niet; die template is bytegelijk aangevuld uit git 322f840.",
+    "beeld_sha256": "a21aa7ceb5609ea2d83dea5373285a4bab9abcc728abd6f08985d2ada1d953ab"
   }
 }
