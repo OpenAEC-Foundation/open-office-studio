@@ -47,3 +47,10 @@ behouden; een volgende groene uitvoering bewijst op zichzelf geen herstel.
 De gecontroleerde Linux-devdownload staat [apart beschikbaar](../gebruik/ontwikkelbuild-linux.md).
 Deze stap sluit geen issue of migratievlag en bewijst geen volledige suite-
 of Rust-interfaceacceptatie.
+
+De [afgesloten hertest op d3455b1](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41882225371)
+slaagt op Linux, Windows en macOS. Ten opzichte van de afgekeurde bron is
+uitsluitend de geheugenworkflow gewijzigd; de applicatie- en frontendcode
+zijn gelijk. De oorspronkelijke oorzaak blijft daarom open. Het volledige
+CI-resultaat is aan de bewijsbestanden toegevoegd; deze hertest is geen bewijs
+van een gerichte reparatie van de time-out.

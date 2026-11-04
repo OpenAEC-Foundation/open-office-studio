@@ -19,12 +19,17 @@ De [doorgaande-invoerproef](../tests/writer-replica-hergebruik.md) toont de
 volledige getypte alinea op een grote tabelbron ongeveer 27% eerder dan 45.38,
 maar de resterende vertraging is nog te groot. De bredere desktopronde op
 Windows is afgekeurd op een grafiektest met een vijfsecondenlimiet; de
-Windows-controle is dus nog niet geaccepteerd. Linux en macOS slagen in die
+die specifieke Windows-ronde is dus afgekeurd. Linux en macOS slagen in die
 ronde. De gerichte devpakketproef bewijst geen volledige suiteacceptatie.
 De eerdere [45.38-downloadcontrole](../tests/2026-11-04-linux-dev-ca2a42c.json),
 [45.36-downloadcontrole](../tests/2026-11-04-linux-dev-f12863d.json) en
 [45.35-downloadcontrole](../tests/2026-11-04-linux-dev-322f840.json)
 blijven afzonderlijk bewaard.
+
+De [latere brede desktop-hertest](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41882225371)
+slaagt op Linux, Windows en macOS met dezelfde applicatiecode. De eerdere
+Windows-time-out blijft als onverklaarde afkeuring bewaard; deze groene ronde
+bewijst geen gerichte reparatie of volledige stabiliteit.
 
 Sluit een eerder geopende dev-versie na het bewaren voordat je de nieuwe start;
 beide gebruiken hetzelfde dev-profiel. Gebruik kopieën van je documenten.

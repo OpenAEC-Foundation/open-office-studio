@@ -31,7 +31,8 @@
     "leg-native-bron-vast.py.gz": "990739831cb847617a9e223197253392ccbf696d8f539cc2dbe00ff97f43eb65",
     "bron-voor-faseprofiel/profiel.json.gz": "afcf8f0af9979ddd752398f7b5e089ec943f401c866157909e99f40e760c5432",
     "ci-39-windows-front/taak.log.gz": "4356b3e1277f8acf886e89634fc771c9a388e32559fff5b869301b83c61a9a46",
-    "grafieken-ci39-hertest.log.gz": "7825a2dd88c053abd3a0c8cfc5a0e2fcf10f91653aaf5041f9746f3012bdcceb"
+    "grafieken-ci39-hertest.log.gz": "7825a2dd88c053abd3a0c8cfc5a0e2fcf10f91653aaf5041f9746f3012bdcceb",
+    "ci-39-desktop-hertest-afgesloten.json.gz": "54fbb778fbcd4128a8721db16ce559bbdc3e9ffb4e8d219b3deb3012d3ec8ff8"
   },
   "grens": "Losse geoptimaliseerde Rust-meting; geen renderer, IPC, FPS of onafhankelijke exclusieve faseverdeling van de gehele app. Geen productwijziging.",
   "windows_afkeuring": {
@@ -42,5 +43,11 @@
     "fout": "Test timed out in 5000ms",
     "status": "Oorzaak open; Windows-bouw niet bereikt. Geen afgekeurde Windows-appbinary beschikbaar.",
     "lokale_hertest": "37 grafiektests slagen op Linux; geen bewijs van herstel op Windows."
+  },
+  "windows_hertest": {
+    "run": 41882225371,
+    "bron": "d3455b13c11f6be95e5495517154649b7b423699",
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41882225371",
+    "resultaat": "Desktopcontroles slagen op Linux, Windows en macOS. Het verschil ten opzichte van de afgekeurde bron betreft uitsluitend workflowtriggers voor het geheugenonderzoek. De frontendcode is gelijk. De oorspronkelijke oorzaak blijft open; een groene hertest bewijst geen herstel."
   }
 }
