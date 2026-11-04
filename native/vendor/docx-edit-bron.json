@@ -26,5 +26,18 @@
       "OPENAEC-WIJZIGINGEN.md": "8e380a5f51071167c7b10a89377876d33b5b5698cf7891980fe8d685536ebeac"
     },
     "doel": "Tabelvolgorde en eindcursor lezen zonder volledige tekstdiff; dezelfde tekstmutatie levert voor de plakbatch een globaal eindpunt zonder herhaalde alineagrensprojectie. Publieke Receipt en definitieve cursorvalidatie blijven behouden. Hergebruik van de actuele alinea-eindmarkering vermijdt herhaalde lezingen; bladwijzers, invoegposities en blokrevisies behouden hun bestaande bewerkingsregels."
+  },
+  "native_revisies_2026_11_04": {
+    "doel": "Gescheiden native revisie-identiteiten en blijvende per-client teller. Afgekeurde bronjournaal- en invoercallbackoptimalisaties niet behouden. Geen prestatie- of suiteacceptatie.",
+    "bestanden_sha256": {
+      "src/lib.rs": "b4d0f1f94e9be9217714404847aedff7b8d2212523c9170b340536bafdfe6955",
+      "src/clipboard_batch.rs": "aa144fd2ee0836dc06a8223d2e2eda6956a67a1a29d08d4f928978dcac290355",
+      "src/clipboard_batch/revision_ids.rs": "71c3b507ea885a998d88d7c375655898efd0d5b4cbb956c72f02e9e5123e4c50",
+      "src/ops/text.rs": "383ce6516702f545ff9cd81d3f21ac17e7517ab6e5627e89567e1b47c66c7a8f",
+      "src/ops/table.rs": "731fbf11a0f3acdafd9fd9205dc9418044759930910dc2ca5b69595405eafff4",
+      "src/ops/paragraph.rs": "b9f16f4dc21f2557b87445f4a8d25b6b055c3431912a76908ff04d7caae72a3c",
+      "src/ops/embed.rs": "54c921366badd6c365a32f130369ddaefb86acdd41dfe5453ace9c207c7b9a1f",
+      "OPENAEC-WIJZIGINGEN.md": "a1f735c348ee8d174211a790710a697309c8c3a7921cf8d99fe3533d2f13544b"
+    }
   }
 }

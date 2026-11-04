@@ -345,8 +345,8 @@ impl EditingDoc {
                 .or_else(|| {
                     adjacent_paragraph_change_revision_id(&chunks, at.index, &*txn, &ctx.author)
                 })
-                .unwrap_or_else(|| self.next_id())
-        });
+                .map(Ok).unwrap_or_else(|| self.next_revision_id())
+        }).transpose()?;
         let ins = revision_id
             .as_ref()
             .map(|id| revision_value(id, &ctx.revision_author()));

@@ -433,14 +433,14 @@ impl EditingDoc {
         let second_para_id = ids.session_key(self);
         let chunks = position_chunks(&story, txn, &mut at.index);
         let revision_id = ctx.is_suggesting().then(|| {
-            revision_id.unwrap_or_else(|| {
+            revision_id.map(Ok).unwrap_or_else(|| {
                 adjacent_revision_id(&chunks, at.index, crate::INS, &ctx.author)
                     .or_else(|| {
                         adjacent_paragraph_change_revision_id(&chunks, at.index, txn, &ctx.author)
                     })
-                    .unwrap_or_else(|| self.next_id())
+                    .map(Ok).unwrap_or_else(|| self.next_revision_id())
             })
-        });
+        }).transpose()?;
         // Alleen een markering precies op de cursor is zonder verdere zoekslag
         // de afsluiting van deze alinea. Elders blijft de oorspronkelijke zoekroute.
         let (orig_index, orig_map) = chunks
@@ -600,8 +600,8 @@ impl EditingDoc {
                 pilcrow_index.saturating_add(1),
             );
             adjacent_revision_id(&chunks, pilcrow_index, DEL, &ctx.author)
-                .unwrap_or_else(|| self.next_id())
-        });
+                .map(Ok).unwrap_or_else(|| self.next_revision_id())
+        }).transpose()?;
 
         let carry = (revision_id.is_none() && !needs_boundary)
             .then(|| Carry::capture(&story, &txn, pilcrow_index, pilcrow_index + 1, None))
@@ -744,8 +744,8 @@ impl EditingDoc {
                         &ctx.author,
                     )
                 })
-                .unwrap_or_else(|| self.next_id())
-        });
+                .map(Ok).unwrap_or_else(|| self.next_revision_id())
+        }).transpose()?;
         let mut changed = false;
         let mut inherited = RestyleInheritanceCache::new();
         for target in &targets {

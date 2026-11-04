@@ -3,6 +3,7 @@ import {spawnSync} from 'node:child_process';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {createYrsSession,applyClipboardFragment,readTableFragment,saveYrsDocx} from '@betteroffice/docx/yrs';
+import {vergelijkRevisies} from './revisie-identiteiten.mjs';
 import {unzipSync,zipSync,strFromU8,strToU8} from 'fflate';
 const map=(process.env.OFFICE_PLAKBATCH_UIT??'native/onderzoek/writer-plakbatch/.local')+'/randgevallen';await mkdir(map,{recursive:true});
 const bytes=new Uint8Array(await readFile('docs/voorbeelden/Ontwerpnotitie.docx'));
@@ -65,7 +66,7 @@ for(const c of cases){
   const image={src:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4z8DwHwAFgAI/ScLbtAAAAABJRU5ErkJggg==',widthEmu:914400,heightEmu:457200,rId:'bron-rId',id:'bron-id',docPrId:12};
   const fragment={paragraphs:c.geen?[]:c.leeg?[{text:''},{text:''},{text:'Einde 😀'}]:[{text:'Nieuw 😀 é',...((c.tabel||c.genest)?{tables:[table]}:{}),...(c.image?{inlines:[{text:'Voor '},{image},{text:' na'}]}:{})},{text:'Tweede alinea'},{text:''}]};
   if(c.inlines)fragment.paragraphs[0].inlines=c.inlines.map(text=>({text}));
-  const snapshot=bron.encodeStateAsUpdate(),voor=som(stand(bron));
+  const snapshot=bron.encodeStateAsUpdate(),voor=som(stand(bron)),bestaandeRevisies=new Set(bron.listRevisions().map(r=>r.revisionId));
   for(const s of [ref,native]){s.openDocx(bronbytes,false);s.applyUpdate(snapshot);s.beginUndoCapture();s.setUndoCaptureMode('manual');s.addUndoBoundary();assert.equal(som(stand(s)),voor);}
   const author=c.author?{name:'Proefauteur',date:'2026-11-03T09:00:00Z'}:undefined;const caret=applyClipboardFragment(ref,range,fragment,author);ref.addUndoBoundary();const na=som(stand(ref));
   const aanvraag=map+'/'+c.naam+'-verzoek.json',antwoord=map+'/'+c.naam+'-uitvoer.json';
@@ -74,14 +75,14 @@ for(const c of cases){
   await writeFile(map+'/'+c.naam+'-native.log',(run.stdout??'')+(run.stderr??''));assert.equal(run.status,0,run.stderr);
   const out=JSON.parse(await readFile(antwoord));native.applyLocalUpdate(Buffer.from(out.delta,'base64'));native.addUndoBoundary();
   await writeFile(map+'/'+c.naam+'-standen.json',JSON.stringify({referentie:stand(ref),native:stand(native)}));
-  assert.equal(som(stand(native)),na,'Inhoud/opmaak/identiteit');assert.deepEqual(out.caret,caret,'Cursor');
-  for(const s of [ref,native]){if(na!==voor){assert.equal(s.undo(),true);assert.equal(som(stand(s)),voor,'Undo');assert.equal(s.redo(),true);assert.equal(som(stand(s)),na,'Redo');}}
+  const bijectie=vergelijkRevisies(stand(ref),stand(native),bestaandeRevisies,20264524),nativeNa=som(stand(native));uit.revisie_id_bijectie=bijectie;const terugId=new Map(bijectie.map(x=>[x.native,x.referentie]));assert.deepEqual(native.listRevisions().map(r=>({...r,revisionId:terugId.get(r.revisionId)??r.revisionId})),ref.listRevisions(),'Revisieauteurs, rollen, verhalen en bereiken');assert.deepEqual(out.caret,caret,'Cursor');
+  for(const s of [ref,native]){if(na!==voor){assert.equal(s.undo(),true);assert.equal(som(stand(s)),voor,'Undo');assert.equal(s.redo(),true);assert.equal(som(stand(s)),s===native?nativeNa:na,'Redo');}}
   const ar=(await saveYrsDocx(ref,{updateModifiedDate:false})).bytes,an=(await saveYrsDocx(native,{updateModifiedDate:false})).bytes;
   await writeFile(map+'/'+c.naam+'-referentie.docx',ar);await writeFile(map+'/'+c.naam+'-native.docx',an);
   const zr=unzipSync(ar),zn=unzipSync(an);assert.deepEqual(Object.keys(zn).sort(),Object.keys(zr).sort(),'Pakketonderdelen');
   for(const name of Object.keys(zr))assert.deepEqual(zn[name],zr[name],'DOCX-onderdeel '+name);
   const terug=await createYrsSession();try{terug.openDocx(an,true);assert.equal(terug.paragraphs(story).map(p=>p.text).join('|'),native.paragraphs(story).map(p=>p.text).join('|'),'Heropenen');}finally{terug.destroy();}
-  uit.geslaagd=true;uit.verhalen_opmaak_identiteiten=true;uit.cursor=true;uit.undo_redo=true;uit.docx_alle_onderdelen_exact=true;uit.heropenen=true;uit.native_ms=out.toepassen_ms;
+  uit.geslaagd=true;uit.verhalen_opmaak_bestaande_identiteiten=true;uit.cursor=true;uit.undo_redo=true;uit.docx_alle_onderdelen_exact=true;uit.heropenen=true;uit.native_ms=out.toepassen_ms;
  }catch(e){uit.geslaagd=false;uit.fout=String(e);}
  finally{bron.destroy();ref.destroy();native.destroy();resultaten.gevallen.push(uit);console.log(JSON.stringify(uit));await writeFile(map+'/rapport.json',JSON.stringify(resultaten,null,2)+'\n');}
 }

@@ -48,6 +48,8 @@ jobs:
         with:
           workspaces: native/onderzoek/writer-plakbatch -> .local/target
       - run: pnpm install --frozen-lockfile
+      - name: Revisiebijectie weigert identiteitsschade
+        run: node --test native/onderzoek/writer-plakbatch/revisie-identiteiten.test.mjs
       - name: Afzonderlijke Rust-proef bouwen
         run: cargo build --release --locked --manifest-path native/onderzoek/writer-plakbatch/Cargo.toml
       - name: Lezingen met de oorspronkelijke volledige runs vergelijken
@@ -83,6 +85,7 @@ jobs:
     env:
       OFFICE_PLAKBATCH_BIN: ${{ github.workspace }}/native/scripts/proef-writer-plak-protocol.py
       OFFICE_PLAK_PROTOCOL_BIN: ${{ github.workspace }}/native/target/release/examples/plak_protocol
+      OFFICE_TEKST_PROTOCOL_BIN: ${{ github.workspace }}/native/target/release/examples/tekst_protocol
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -97,6 +100,8 @@ jobs:
           workspaces: native -> target
           shared-key: writer-plak-desktop
       - run: pnpm install --frozen-lockfile
+      - name: Revisiebijectie weigert identiteitsschade
+        run: node --test native/onderzoek/writer-plakbatch/revisie-identiteiten.test.mjs
       - name: Levensduur, bronversie en selectievolgorde controleren
         run: pnpm exec vitest run src/tekst/bewerken/rustPlakken.test.ts src/tekst/bewerken/rustTekst.test.ts src/tekst/bewerken/tekstInvoerRoute.test.ts src/tekst/bewerken/plakopmaak.test.ts src/tekst/bewerken/selectieLezen.test.ts
       - name: Echte desktopcodec en leesprimitieven testen
@@ -105,6 +110,8 @@ jobs:
         run: cargo build --release --locked --manifest-path native/Cargo.toml -p office-writer-plakken --example plak_protocol --example tekst_protocol
       - name: Gewone tekst met de onafhankelijke invoegroute vergelijken
         run: node scripts/test-writer-rust-tekst-protocol.mjs
+      - name: Drie auteurs afzonderlijk verwerpen, ook na DOCX-heropenen
+        run: node native/onderzoek/writer-plakbatch/controleer-revisies.mjs
       - name: Dezelfde inhoudsproeven tegen de echte desktopcodec uitvoeren
         run: |
           node native/onderzoek/writer-plakbatch/controleer-randgevallen.mjs
@@ -119,6 +126,7 @@ jobs:
             native/onderzoek/writer-plakbatch/.local/randgevallen/
             native/onderzoek/writer-plakbatch/.local/afwijzingen/
             native/onderzoek/writer-plakbatch/.local/grote-proef/
+            native/onderzoek/writer-plakbatch/.local/revisies/
             native/target/release/examples/plak_protocol
             native/target/release/examples/tekst_protocol
             .local/proef-writer-rust-tekst-protocol/

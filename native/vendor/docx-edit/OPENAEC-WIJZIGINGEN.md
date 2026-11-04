@@ -31,3 +31,18 @@ bladwijzers op de bekende afsluitmarkering volgt geen nieuwe verhaalwandeling;
 met bladwijzers blijft de bestaande grensbewerking gelden. Achter de laatste
 markering wordt geen niet-bestaand volgend blok meer opgevraagd. Andere
 invoegposities houden de oorspronkelijke zoekroute.
+
+Native voorbereidingen gebruiken sinds 4 november een eigen revisienaamruimte
+en een per-client teller in de bevestigde Yrs-bron. Alleen een overgenomen
+voorsteldelta maakt de teller blijvend. De teller overleeft het opruimen van
+verworpen revisies; aanwezige eigen revisies blijven de ondergrens. Ongeldige
+of uitgeputte tellers leveren geen voorstel. De gewone SDK behoudt haar eigen
+identiteiten. Auteurs worden daardoor niet samengevoegd wanneer een volledige
+bronreplica een lokale, niet-geserialiseerde objectteller opnieuw aanmaakt.
+Alinea-identiteiten en bestaande aaneengesloten revisies blijven ongewijzigd.
+
+Iedere nieuwe native revisie reserveert ook de oorspronkelijke lokale
+tellerstap. Zo blijft de allocatievolgorde van andere nieuwe identiteiten,
+zoals alinea’s, gelijk; alleen de nieuwe revisienaam gebruikt de eigen
+naamruimte. Gerichte controles eisen ongewijzigde bestaande identiteiten
+en een bijectie tussen de nieuwe revisies, zonder auteurs of rollen te wissen.

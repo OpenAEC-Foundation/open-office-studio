@@ -1,5 +1,6 @@
 /** Onafhankelijke vergelijking: echte Rust-tekstcodec tegenover SDK insertText. */
 import assert from "node:assert/strict";
+import { vergelijkRevisies } from "../native/onderzoek/writer-plakbatch/revisie-identiteiten.mjs";
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
@@ -70,7 +71,7 @@ for (const geval of gevallen) {
     const position = { story, paraId: p.paraId, offset };
     const author = geval.author ? { name: "Proefauteur", date: "2026-11-04T02:00:00Z" } : undefined;
     const text = geval.text ?? "Nieuw é 😀";
-    const snapshot = bron.encodeStateAsUpdate(), voor = stand(bron);
+    const snapshot = bron.encodeStateAsUpdate(), voor = stand(bron), bestaandeRevisies = new Set(bron.listRevisions().map(r => r.revisionId));
     for (const s of [referentie, native]) {
       s.openDocx(bronbytes, false); s.applyUpdate(snapshot);
       s.beginUndoCapture(); s.setUndoCaptureMode("manual"); s.addUndoBoundary();
@@ -94,11 +95,14 @@ for (const geval of gevallen) {
     assert.deepEqual(bron.encodeStateAsUpdate(), snapshot, "Levende bron blijft ongewijzigd");
     const na = stand(referentie);
     await writeFile(`${map}/${geval.naam}-standen.json`, JSON.stringify({ referentie: na, native: stand(native) }));
-    assert.deepEqual(stand(native), na, "Alle verhalen, identiteiten en opmaak");
+    const nativeNa = stand(native), bijectie = vergelijkRevisies(na, nativeNa, bestaandeRevisies, referentie.clientId);
+    resultaat.revisie_id_bijectie = bijectie;
+    const terugId = new Map(bijectie.map(x => [x.native, x.referentie]));
+    assert.deepEqual(native.listRevisions().map(r => ({...r, revisionId: terugId.get(r.revisionId) ?? r.revisionId})), referentie.listRevisions(), "Revisieauteurs, rollen, verhalen en bereiken");
     assert.deepEqual(antwoord.caret, caret, "UTF-16-cursor");
     for (const s of [referentie, native]) {
       assert.equal(s.undo(), true); assert.deepEqual(stand(s), voor, "Undo");
-      assert.equal(s.redo(), true); assert.deepEqual(stand(s), na, "Redo");
+      assert.equal(s.redo(), true); assert.deepEqual(stand(s), s === native ? nativeNa : na, "Redo");
     }
     const a = (await saveYrsDocx(referentie, { updateModifiedDate: false })).bytes;
     const b = (await saveYrsDocx(native, { updateModifiedDate: false })).bytes;

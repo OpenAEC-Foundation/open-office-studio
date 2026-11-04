@@ -7,6 +7,7 @@ use serde_json::Value;
 use yrs::{Any, StateVector, updates::decoder::Decode};
 use crate::{EditingDoc, EditCtx, FormatPolicy, Loc, LocRange, OpError, OpResult, Position, StoryRange, story_ref};
 use crate::op::global_of_loc;
+mod revision_ids;
 
 #[derive(Deserialize)]
 struct Fragment { paragraphs: Vec<Alinea> }
@@ -106,6 +107,7 @@ fn prepare_clipboard_in_doc(doc: &EditingDoc,range: &LocRange,fragment: Fragment
         for t in &p.tables {EditingDoc::validate_table_fragment(t)?;}
         if let Some(inlines)=&p.inlines {for inline in inlines {if let Some(image)=inline.get("image"){afbeelding(image)?;}else if inline.get("text").and_then(Value::as_str).is_none(){return Err(ongeldig("Ongeldige inline"))}}}
     }
+    doc.begin_native_revisions(ctx)?;
     let story_id=range.start.story.clone();
     let mut position=start;
     let mut para_start=start-range.start.offset;
@@ -141,6 +143,7 @@ fn prepare_clipboard_in_doc(doc: &EditingDoc,range: &LocRange,fragment: Fragment
             }
         }
     }
+    doc.persist_native_revisions(ctx)?;
     let caret=doc.loc_at(&Position::new(story_id,position))?;
     let update=doc.encode_diff_v1(&base_vector).map_err(OpError::from)?;
     Ok(ClipboardBatchResult{update,base_vector,caret})

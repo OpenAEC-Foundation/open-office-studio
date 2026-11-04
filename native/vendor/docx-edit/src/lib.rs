@@ -653,11 +653,20 @@ impl Drop for CommitHook {
     }
 }
 
+// OpenAEC: native revisies delen geen teller met een levende WebView-replica.
+const NATIVE_REVISION_SEQUENCES: &str = "openaec-native-revision-sequences-v1";
+#[derive(Clone, Copy)]
+struct NativeRevisionIds {
+    next: u64,
+    stored: Option<u64>,
+}
+
 /// A single yrs replica of the DOCX editing model.
 pub struct EditingDoc {
     doc: Doc,
     client_id: u64,
     id_counter: AtomicU64,
+    native_revision_ids: RefCell<Option<NativeRevisionIds>>,
     direct_batches: AtomicBool,
     direct_batches_applied: AtomicU64,
     host_edit_depth: Arc<AtomicU32>,
@@ -721,6 +730,7 @@ impl EditingDoc {
         doc.get_or_insert_map(identity::PARAGRAPH_IDS);
         doc.get_or_insert_map(identity::SOURCE_PARAGRAPH_IDS);
         doc.get_or_insert_map(identity::SESSION);
+        doc.get_or_insert_map(NATIVE_REVISION_SEQUENCES);
         let epoch = Arc::new(AtomicU64::new(0));
         let observed = Arc::clone(&epoch);
         let keeps_deleted = Arc::new(AtomicBool::new(keeps_deleted));
@@ -759,6 +769,7 @@ impl EditingDoc {
             doc,
             client_id,
             id_counter: AtomicU64::new(0),
+            native_revision_ids: RefCell::new(None),
             direct_batches: AtomicBool::new(false),
             direct_batches_applied: AtomicU64::new(0),
             host_edit_depth: Arc::new(AtomicU32::new(0)),
@@ -1971,6 +1982,7 @@ impl EditingDoc {
         fork.apply_verbatim_v1(state)?;
         fork.id_counter
             .store(self.id_counter.load(Ordering::Relaxed), Ordering::Relaxed);
+        *fork.native_revision_ids.borrow_mut() = *self.native_revision_ids.borrow();
         if let Some(index) = self.source_index() {
             fork.retain_source(identity::SourcePackage::Ready(index));
         }

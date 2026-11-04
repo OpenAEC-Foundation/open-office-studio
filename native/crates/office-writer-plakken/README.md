@@ -62,3 +62,31 @@ gelden. Bij splitsen aan het verhaaleinde wordt geen volgend blok opgevraagd.
 Dit kort geen broninhoud in en verandert de invoeg-/revisieregels niet. De tien
 extra inhoudsgevallen toetsen eindposities bij bladwijzers, revisies, lege
 inlines, afbeeldingen, tabellen, tabelcellen en de laatste alinea.
+
+## Revisie-identiteiten
+
+Native voorstellen bewaren een per-client revisieteller in dezelfde delta als
+de bewerking. Een eigen naamruimte voorkomt botsingen met latere SDK-bewerkingen.
+Een volledige reconstructie of GC na verwerpen mag een oude identiteit niet
+hergebruiken. Vier Rust-regressieproeven toetsen auteurs, de SDK-naamruimte, GC
+en ongeldige/uitgeputte tellers. De warme/coude bronproef vergelijkt 80 stappen
+met wisselende auteurs en celverhalen zonder revisie-ID-normalisatie.
+
+De onafhankelijke Node-proef gebruikt de echte Wasm-SDK en het native protocol,
+bewaart als DOCX en verwerpt drie auteurs afzonderlijk, ook na heropenen:
+
+```sh
+cargo build --locked --manifest-path native/Cargo.toml -p office-writer-plakken --example tekst_protocol
+OFFICE_REVISIES_UIT=/tmp/eigen-nieuwe-revisieproef node native/onderzoek/writer-plakbatch/controleer-revisies.mjs
+```
+
+De uitvoermap mag nog niet bestaan. Dit is gericht gegevensbewijs; een volledige
+GUI-, prestatie- of platformacceptatie volgt er niet uit.
+
+De onafhankelijke plak- en tekstvergelijkingen controleren een bijectie voor
+nieuw gemaakte revisies in de eigen naamruimte. Bestaande revisie-identiteiten,
+alinea-identiteiten, auteurs, rollen, verhalen en bereiken blijven exact.
+Gesplitste of samengevoegde identiteiten worden geweigerd; zeven gerichte
+proeven toetsen deze controle. Alle overige verhaal-/opmaakgegevens en alle
+uitgevoerde DOCX-pakketonderdelen worden exact vergeleken. De oorspronkelijke
+negatieve ronde blijft afzonderlijk bewaard.

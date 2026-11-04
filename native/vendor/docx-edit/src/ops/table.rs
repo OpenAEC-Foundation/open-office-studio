@@ -1852,7 +1852,7 @@ impl EditingDoc {
         if rows == 0 || columns == 0 {
             return Err(invalid("table dimensions must be positive"));
         }
-        let revision_id = ctx.is_suggesting().then(|| self.next_id());
+        let revision_id = ctx.is_suggesting().then(|| self.next_revision_id()).transpose()?;
         let mut txn = self.transact_for(ctx);
         let story = story_ref(&txn, &at.story)?;
         check_position(&story, &txn, at.index)?;
@@ -1971,7 +1971,7 @@ impl EditingDoc {
     ) -> OpResult<(TableFragmentReceipt, u32)> {
         let mut remaining = MAX_FRAGMENT_CELLS;
         let (valid, columns) = validate_fragment_table(fragment, 1, &mut remaining)?;
-        let revision_id = ctx.is_suggesting().then(|| self.next_id());
+        let revision_id = ctx.is_suggesting().then(|| self.next_revision_id()).transpose()?;
         let story = story_ref(&*txn, &at.story)?;
         check_position(&story, &*txn, at.index)?;
         at.index = crate::ops::code_point_range(&story, &*txn, at.index, at.index).0;
@@ -2207,7 +2207,7 @@ impl EditingDoc {
     /// cell's covering row. Spans crossing the insertion boundary grow by one.
     pub fn insert_row(&self, ctx: &EditCtx, at: &CellLoc, after: bool) -> OpResult<TableReceipt> {
         let locator = at.table();
-        let revision_id = ctx.is_suggesting().then(|| self.next_id());
+        let revision_id = ctx.is_suggesting().then(|| self.next_revision_id()).transpose()?;
         let mut txn = self.transact_for(ctx);
         let (_, table, _) = table_at(&txn, &locator)?;
         let mut data = read_table(&table, &txn)?;
@@ -2392,7 +2392,7 @@ impl EditingDoc {
         let mut data = read_table(&table, &txn)?;
         let rect = checked_rect(&data, range)?;
         if ctx.is_suggesting() {
-            let revision_id = self.next_id();
+            let revision_id = self.next_revision_id()?;
             let revision = revision_value(&revision_id, &ctx.revision_author());
             for row in &mut data.rows[rect.top..rect.bottom] {
                 row.tr_pr.insert(TR_DEL.to_owned(), revision.clone());
