@@ -148,7 +148,20 @@ jobs:
       - name: Opzettelijke queryfout, bronbehoud en bewaren in de gebouwde Linux-app
         if: runner.os == 'Linux'
         run: |
-          "$OFFICE_GUI_PYTHON" scripts/test-writer-rendererfout-native.py --programma src-tauri/target/release/open-office-studio --versie $(node -p "require('./package.json').version") --uitvoer .local/proef-native-writer-renderer
+          OFFICE_ENGINE_OPNAME=1 "$OFFICE_GUI_PYTHON" scripts/test-writer-rendererfout-native.py --programma src-tauri/target/release/open-office-studio --versie $(node -p "require('./package.json').version") --uitvoer .local/proef-native-writer-renderer
+      - name: Tabelrand slepen, geschiedenis en DOCX bewaren
+        if: runner.os == 'Linux'
+        run: |
+          "$OFFICE_GUI_PYTHON" scripts/test-writer-tabelgrepen-native.py --programma src-tauri/target/release/open-office-studio --versie $(node -p "require('./package.json').version") --uitvoer .local/proef-native-writer-tabelgrepen
+      - name: Native Writer-tabelgreepbewijs bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-writer-tabelgrepen-${{ github.workflow }}-${{ matrix.os }}
+          path: .local/proef-native-writer-tabelgrepen/
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 30
       - name: Native Writer-rendererbewijs bewaren
         if: always() && runner.os == 'Linux'
         uses: actions/upload-artifact@v4
@@ -232,6 +245,7 @@ jobs:
           --rapport .local/proef-native-writer-klembord/rapport.json
           --rapport .local/proef-native-writer-lijsten/rapport.json
           --rapport .local/proef-native-writer-renderer/rapport.json
+          --rapport .local/proef-native-writer-tabelgrepen/rapport.json
           --rapport .local/proef-native-writer-lang/rapport.json
           --rapport .local/proef-native-writer-bewaren/rapport.json
           --rapport .local/proef-native-writer-volgorde/rapport.json

@@ -29,6 +29,22 @@ def bericht(inhoud):
 
 
 class InspectieConsole(unittest.IsolatedAsyncioTestCase):
+    async def test_eerdere_enginefout_blijft_afgekeurd_zonder_zichtbare_melding(self):
+        inspectie = module.Inspector(0)
+        opname = {'naam': 'RuntimeError', 'bericht': 'Out of bounds memory access', 'stack': 'oorspronkelijke Wasm-stack', 'tijd': 1}
+        inspectie.ev = AsyncMock(side_effect=[[], [opname]])
+        fouten = await inspectie.fouten()
+        self.assertEqual(fouten['engine'], [opname])
+        self.assertEqual(fouten['gui'], [])
+        self.assertEqual(fouten['console'], [])
+        self.assertTrue(any(fouten.values()))
+
+    async def test_beschadigde_engineopname_wordt_niet_als_groen_behandeld(self):
+        inspectie = module.Inspector(0)
+        inspectie.ev = AsyncMock(side_effect=[[], {'onjuist': True}])
+        with self.assertRaisesRegex(RuntimeError, 'ongeldige vorm'):
+            await inspectie.fouten()
+
     async def test_workerbron_wordt_ook_bij_een_eerdere_proeffout_bewaard(self):
         with tempfile.TemporaryDirectory() as map:
             p = module.Inspector(0)

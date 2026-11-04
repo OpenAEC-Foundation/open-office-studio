@@ -26,7 +26,7 @@ class Framebewaking(unittest.IsolatedAsyncioTestCase):
         with self.assertRaisesRegex(RuntimeError, 'al gestart'):
             await i.begin_framebewaking(self.pad)
         gegevens = {'schema': 1, 'fout': {'tekst': 'FrameDelta: eigen proef', 'stacks': ['volledige stack']}}
-        i.ev.side_effect = [[], gegevens]
+        i.ev.side_effect = [[], [], gegevens]
         i.consoleberichten = [{'level': 'error', 'text': 'Eigen afgekeurde proef'}]
         fouten = await i.fouten()
         self.assertEqual(fouten['console'], i.consoleberichten)
@@ -53,7 +53,7 @@ class Framebewaking(unittest.IsolatedAsyncioTestCase):
         i = self.inspectie
         i.framebasis_uitvoer = self.pad
         i.consoleberichten = [{'level': 'error', 'text': 'Oorspronkelijke workerfout'}]
-        i.ev = AsyncMock(side_effect=[[], RuntimeError('Eigen diagnose niet leesbaar')])
+        i.ev = AsyncMock(side_effect=[[], [], RuntimeError('Eigen diagnose niet leesbaar')])
         self.assertEqual((await i.fouten())['console'], i.consoleberichten)
         self.assertIn('Eigen diagnose niet leesbaar', self.pad.with_suffix('.inspectiefout.json').read_text())
 

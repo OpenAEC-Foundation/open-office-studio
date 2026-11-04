@@ -20,6 +20,7 @@ PROEFSCRIPTS = (
     'test-writer-klembord-native.py',
     'test-writer-kleur-native.py',
     'test-writer-rendererfout-native.py',
+    'test-writer-tabelgrepen-native.py',
 )
 
 
@@ -73,6 +74,7 @@ def bewaar(programma, rapporten, uitvoer, appimage_map=None, systeem=True):
         'scripts': {},
         'proefscript': {'beschikbaar': False, 'gerapporteerde_sha256': gegevens.get('script_sha256')},
         'proefbestanden': {},
+        'bronbestanden': {},
         'appimage': None,
         'grens': 'Dit pakket bewaart een afkeuring. Het is geen vrijgave of bewijs van herstel.',
     }
@@ -81,7 +83,7 @@ def bewaar(programma, rapporten, uitvoer, appimage_map=None, systeem=True):
     for naam in ['Prestatieproef.docx', 'herstelkopie.docx', 'hersteld.docx',
                  'herstel-afwijkend.docx', 'herstel-afwijkend.json',
                  'Ontwerpnotitie.docx', 'tussenbewaring.docx', 'geplakt.docx',
-                 'Lijstenproef.docx', 'Klembordproef.docx', 'Markeerkleurproef.docx', 'Rendererproef.docx',
+                 'Lijstenproef.docx', 'Klembordproef.docx', 'Markeerkleurproef.docx', 'Rendererproef.docx', 'Tabelproef-begin.docx',
                  'Lettertype-caladea.docx', 'Lettertype-carlito.docx', 'Lettertype-vet.docx', 'Lettertype-cursief.docx',
                  'programma.log', 'afgekeurd.png', 'framebasis.json', 'framebasis.inspectiefout.json', 'workerbron.json', 'workerbron.inspectiefout.json']:
         bron = rapport.parent / naam
@@ -91,6 +93,17 @@ def bewaar(programma, rapporten, uitvoer, appimage_map=None, systeem=True):
             shutil.copy2(bron, doel)
             context['proefbestanden'][naam] = {'sha256': checksum(doel), 'grens': 'Bestandstoestand na de afgekeurde proef; niet noodzakelijk de oorspronkelijke bron vóór bewerken.'}
     repo = Path(__file__).resolve().parents[1]
+    # Ook het oorspronkelijke proefscript kan deze vaste seed nodig hebben
+    # om zijn eigen bron opnieuw op te bouwen. Geen paden uit het rapport lezen.
+    for naam in ['public/templates/nieuw.docx', 'docs/voorbeelden/Ontwerpnotitie.docx',
+                 'docs/tests/writer-rust-plakbatch/bron-128-tabellen.docx']:
+        doel = inhoud / naam
+        doel.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(repo / naam, doel)
+        context['bronbestanden'][naam] = {
+            'sha256': checksum(doel),
+            'herkomst': 'Vaste proefbron uit huidige checkout; oorspronkelijke bytes niet afzonderlijk in het rapport vastgelegd',
+        }
     # Identificeer de proef aan haar bytes, niet aan de positie van het rapport
     # of een door het rapport aangeleverde bestandsnaam. Na een latere wijziging
     # is het oorspronkelijke script niet alsnog uit deze checkout te bewijzen.
@@ -104,7 +117,7 @@ def bewaar(programma, rapporten, uitvoer, appimage_map=None, systeem=True):
     namen = ['gui/webkit_inspector.py', 'gui/requirements.txt', 'gui/framebasis.js', 'gui/spelling_weergave.py', 'gui/spelling_weergave.js', 'gui/worker_bron.js', 'gui/lettertype_bewijs.py', 'gui/lettertype_bewijs.js']
     if context['proefscript']['beschikbaar']:
         namen.insert(0, context['proefscript']['naam'])
-        if context['proefscript']['naam'] in ['test-writer-rijk-plakken-native.py', 'test-writer-rust-plakken-volgorde-native.py', 'test-writer-rust-tekst-native.py', 'test-writer-lijsten-native.py', 'test-writer-rendererfout-native.py']:
+        if context['proefscript']['naam'] in ['test-writer-rijk-plakken-native.py', 'test-writer-rust-plakken-volgorde-native.py', 'test-writer-rust-tekst-native.py', 'test-writer-lijsten-native.py', 'test-writer-rendererfout-native.py', 'test-writer-tabelgrepen-native.py']:
             namen.append('test-writer-lang-native.py')
     for naam in namen:
         bron = repo / 'scripts' / naam

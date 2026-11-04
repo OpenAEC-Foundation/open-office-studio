@@ -14,6 +14,21 @@ spec.loader.exec_module(module)
 
 
 class WriterFoutcontext(unittest.TestCase):
+    def test_bewaart_de_vaste_seed_en_oorspronkelijke_tabelgreepproef(self):
+        self.gegevens['script_sha256'] = module.checksum(REPO/'scripts/test-writer-tabelgrepen-native.py')
+        self.rapport.write_text(json.dumps(self.gegevens))
+        begin = self.map/'Tabelproef-begin.docx'
+        begin.write_bytes(b'Eigen oorspronkelijke tabelproefbron')
+        context = module.bewaar(self.programma, [self.rapport], self.uitvoer, systeem=False)
+        with tarfile.open(self.uitvoer/'writer-foutcontext.tar.gz') as tar:
+            self.assertEqual(tar.extractfile('writer-foutcontext/proef/Tabelproef-begin.docx').read(), begin.read_bytes())
+            self.assertEqual(tar.extractfile('writer-foutcontext/public/templates/nieuw.docx').read(), (REPO/'public/templates/nieuw.docx').read_bytes())
+            self.assertEqual(tar.extractfile('writer-foutcontext/scripts/test-writer-tabelgrepen-native.py').read(), (REPO/'scripts/test-writer-tabelgrepen-native.py').read_bytes())
+            self.assertEqual(tar.extractfile('writer-foutcontext/scripts/test-writer-lang-native.py').read(), (REPO/'scripts/test-writer-lang-native.py').read_bytes())
+            for naam in ['docs/voorbeelden/Ontwerpnotitie.docx', 'docs/tests/writer-rust-plakbatch/bron-128-tabellen.docx']:
+                self.assertEqual(tar.extractfile('writer-foutcontext/'+naam).read(), (REPO/naam).read_bytes())
+        self.assertEqual(context['bronbestanden']['public/templates/nieuw.docx']['sha256'], module.checksum(REPO/'public/templates/nieuw.docx'))
+
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)

@@ -135,9 +135,9 @@ async def proef(a):
             rechthoek = await p.ev("(()=>{const p=document.querySelector('.office-tekst .canvas-page');if(!p)throw Error('Oorspronkelijke pagina ontbreekt');const r=p.getBoundingClientRect();return[Math.ceil(r.left+20),Math.ceil(r.top+20),Math.floor(r.left+Math.min(r.width-20,620)),Math.floor(r.top+Math.min(r.height-20,520))]})()")
             beeld('voor-queryfout')
             r['injectie'] = await p.run('''const stand=queryStand(),q=stand.queries,e=stand.engine;const marker='''+json.dumps(MARKERING)+''';let route=null;
-              const oud=JSON.stringify;try{JSON.stringify=function(v,...a){if(v?.keep===true&&Array.isArray(v.replace)){route='paginavervanging';throw new WebAssembly.RuntimeError(marker)}return oud.call(this,v,...a)};q.hitTestRegions(q.pageCount()-1,1,1)}finally{JSON.stringify=oud}
-              if(q.sourceState().status!=='error'&&typeof e?.displayHitTestRegionsJson==='function'){const oud=e.displayHitTestRegionsJson;try{e.displayHitTestRegionsJson=()=>{route='residentquery';throw new WebAssembly.RuntimeError(marker)};q.hitTestRegions(q.pageCount()-1,1,1)}finally{e.displayHitTestRegionsJson=oud}}
-              if(q.sourceState().status!=='error'){q.dispose();const oud=JSON.stringify;try{JSON.stringify=function(v,...a){if(v===q.displayList){route='JSON-query na handlevrijgave';throw new WebAssembly.RuntimeError(marker)}return oud.call(this,v,...a)};q.hitTestRegions(q.pageCount()-1,1,1)}finally{JSON.stringify=oud}}
+              const oud=JSON.stringify;try{JSON.stringify=function(v,...a){if(v?.keep===true&&Array.isArray(v.replace)){route='paginavervanging';const f=new WebAssembly.RuntimeError(marker);window._rendererOorspronkelijkeStack=f.stack;throw f}return oud.call(this,v,...a)};q.hitTestRegions(q.pageCount()-1,1,1)}finally{JSON.stringify=oud}
+              if(q.sourceState().status!=='error'&&typeof e?.displayHitTestRegionsJson==='function'){const oud=e.displayHitTestRegionsJson;try{e.displayHitTestRegionsJson=()=>{route='residentquery';const f=new WebAssembly.RuntimeError(marker);window._rendererOorspronkelijkeStack=f.stack;throw f};q.hitTestRegions(q.pageCount()-1,1,1)}finally{e.displayHitTestRegionsJson=oud}}
+              if(q.sourceState().status!=='error'){q.dispose();const oud=JSON.stringify;try{JSON.stringify=function(v,...a){if(v===q.displayList){route='JSON-query na handlevrijgave';const f=new WebAssembly.RuntimeError(marker);window._rendererOorspronkelijkeStack=f.stack;throw f}return oud.call(this,v,...a)};q.hitTestRegions(q.pageCount()-1,1,1)}finally{JSON.stringify=oud}}
               if(!route||q.sourceState().status!=='error')throw Error('Eigen queryfout niet opgewekt');
               return{route,bronstatus:q.sourceState().status,gereed:q.isReady(),paginaAantal:q.pageCount()};''')
             await p.run("const einde=performance.now()+15000;while(queryStand()?.ready||queryStand()?.error?.message!=="+json.dumps(MARKERING)+"){if(performance.now()>einde)throw Error('Queryfout bereikt interface niet');await new Promise(r=>setTimeout(r,25))}while(!Array.from(document.querySelectorAll('.office-melding[data-toon=\"fout\"]')).some(e=>e.textContent.includes("+json.dumps(MARKERING)+"))){if(performance.now()>einde)throw Error('Zichtbare foutmelding ontbreekt');await new Promise(r=>setTimeout(r,25))}return true;")
@@ -160,6 +160,11 @@ async def proef(a):
             fouten = await p.fouten()
             assert fouten['gui'] and all(MARKERING in f['tekst'] for f in fouten['gui']), fouten
             assert len(fouten['console']) == 1 and all(MARKERING in m.get('text','') or any(MARKERING in x.get('description','') for x in m.get('parameters',[])) for m in fouten['console']), fouten
+            if os.environ.get('OFFICE_ENGINE_OPNAME') == '1':
+                oorspronkelijk = await p.ev('window._rendererOorspronkelijkeStack')
+                assert isinstance(oorspronkelijk, str) and oorspronkelijk, 'Oorspronkelijke proefstack ontbreekt'
+                assert fouten['engine'] and all(e['naam'] == 'RuntimeError' and e['bericht'] == MARKERING and e['stack'] == oorspronkelijk for e in fouten['engine']), 'Oorspronkelijke Wasm-stack bereikt de begrensde opname niet'
+                r['oorspronkelijke_stack_bewaard'] = True
             r['verwachte_fouten'] = fouten
         stop()
         await start()

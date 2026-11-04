@@ -75,7 +75,12 @@ export interface TabelPlekInfo {
   payload: TabelPayload;
 }
 
-const tabelCache = new WeakMap<object, Map<string, TabelPlekInfo | null>>();
+interface TabelCache {
+  versie: string;
+  cellen: Map<string, TabelPlekInfo | null>;
+  tabellen: Map<string, TabelPlekInfo>;
+}
+const tabelCache = new WeakMap<object, TabelCache>();
 
 /**
  * De tabel waartoe een celverhaal hoort. Het volgnummer in de verhaalnaam
@@ -86,12 +91,32 @@ export function tabelVanCel(sessie: Sessie, celVerhaal: string, versie = ""): Ta
   const m = CEL.exec(celVerhaal);
   if (!m) return null;
   let cache = tabelCache.get(sessie);
-  if (!cache) tabelCache.set(sessie, (cache = new Map()));
-  const sleutel = `${versie}|${celVerhaal}`;
-  if (cache.has(sleutel)) return cache.get(sleutel)!;
-  if (cache.size > 500) cache.clear();
+  if (!cache || cache.versie !== versie) {
+    cache = { versie, cellen: new Map(), tabellen: new Map() };
+    tabelCache.set(sessie, cache);
+  }
+  if (cache.cellen.has(celVerhaal)) return cache.cellen.get(celVerhaal)!;
   const ouder = m[1];
   const bevat = (payload: TabelPayload | null) => !!payload?.rows?.some((r) => r.cells.some((c) => c.story === celVerhaal));
+  // Celranden op dezelfde pagina vragen vaak dezelfde volledige tabel op.
+  // Een oude naamgroep kan na splitsen meerdere tabellen bevatten: controleer
+  // daarom ook bij hergebruik of precies dit celverhaal in de tabel staat.
+  const groep = `${ouder}|${m[2]}`;
+  const bekend = cache.tabellen.get(groep);
+  if (bekend && bevat(bekend.payload)) {
+    if (cache.cellen.size >= 500) cache.cellen.clear();
+    cache.cellen.set(celVerhaal, bekend);
+    return bekend;
+  }
+  const onthoud = (info: TabelPlekInfo | null) => {
+    if (cache.cellen.size >= 500) cache.cellen.clear();
+    cache.cellen.set(celVerhaal, info);
+    if (info) {
+      if (cache.tabellen.size >= 250) cache.tabellen.clear();
+      cache.tabellen.set(groep, info);
+    }
+    return info;
+  };
   let gevonden: TabelPlekInfo | null = null;
   // Meestal klopt het nummer uit de naam; dan hoeft het hele verhaal niet doorlopen.
   try {
@@ -101,8 +126,7 @@ export function tabelVanCel(sessie: Sessie, celVerhaal: string, versie = ""): Ta
     gevonden = null;
   }
   if (gevonden) {
-    cache.set(sleutel, gevonden);
-    return gevonden;
+    return onthoud(gevonden);
   }
   try {
     let index = 0;
@@ -118,8 +142,7 @@ export function tabelVanCel(sessie: Sessie, celVerhaal: string, versie = ""): Ta
   } catch {
     gevonden = null;
   }
-  cache.set(sleutel, gevonden);
-  return gevonden;
+  return onthoud(gevonden);
 }
 
 /** Rij en kolom (rasterkolom, met samengevoegde cellen meegeteld) van een celverhaal. */

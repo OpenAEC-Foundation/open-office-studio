@@ -106,7 +106,10 @@ class Inspector:
         gui = await self.ev('window._officeGuiFouten')
         if not isinstance(gui, list):
             raise RuntimeError('GUI-foutbewaking was niet gestart')
-        fouten = {'gui': gui, 'console': [m for m in self.consoleberichten if m.get('level') == 'error']}
+        engine = await self.ev('window._openaecWriterFouten ?? []')
+        if not isinstance(engine, list):
+            raise RuntimeError('Enginefoutopname heeft een ongeldige vorm')
+        fouten = {'gui': gui, 'engine': engine, 'console': [m for m in self.consoleberichten if m.get('level') == 'error']}
         if any(fouten.values()) and hasattr(self, 'framebasis_uitvoer'):
             try:
                 await self.bewaar_framebasis()

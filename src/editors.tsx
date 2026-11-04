@@ -43,6 +43,7 @@ import { wijzigPaginaLive } from "./tekst/pagina/ui/liveSecties";
 import { maakPaginaVolger } from "./tekst/pagina/ui/paginaVolgen";
 import { donkerePapierkleur, installeerPapierWeergave } from "./tekst/papierWeergave";
 import { RustPlakLaag } from "./tekst/bewerken/RustPlakLaag";
+import { meldWriterEngineFout } from "./tekst/engineFouten";
 import type { SectionProperties } from "@betteroffice/docx/types/document";
 
 const PRESENTATIE_PLUGINS = [tekstSelectiePlugin];
@@ -101,6 +102,9 @@ export default function OfficeEditor(props: EditorProps) {
   useEffect(() => () => stopDiaWijzigingen.current?.(), []);
   const recent = useRef(props);
   recent.current = props;
+  const writerFout = useCallback((fout: Error) => {
+    meldWriterEngineFout(fout, recent.current.fout);
+  }, []);
   // Ook het venster ‘Aangepaste marges’ gebruikt de bestaande documentsessie.
   const paginaToepassen = useCallback((p: SectionProperties) => {
     const geometrie = new Set(["pageWidth", "pageHeight", "orientation", "marginTop", "marginBottom", "marginLeft", "marginRight"]);
@@ -364,7 +368,7 @@ export default function OfficeEditor(props: EditorProps) {
                 paginaVolger.gewijzigd();
               }}
               onPageSetupApply={paginaToepassen}
-              onError={props.fout}
+              onError={writerFout}
               rulerUnit="cm"
               onFirstPagePainted={() => {
                 paginaVolger.onthoud();
