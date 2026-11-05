@@ -380,13 +380,39 @@ export class SpellingSessie {
         const versies = new Set<string>();
         for (let i = 0; i < verhalen.length;) {
           if (!actueel() || vers.lifetimeSignal?.aborted) { gelezen.length = 0; return; }
+          // Eén Rust-leestransactie voor maximaal 32 verhalen voorkomt dat
+          // de bronversie en leesprojectie voor iedere cel opnieuw worden gemaakt.
+          // Een afgekorte groep valt terug op de bestaande begrensde leesroute;
+          // gedeeltelijke of gemengde antwoorden worden nooit gepubliceerd.
+          if (typeof vers.read.readStories === "function") {
+            const ids = verhalen.slice(i, i + 32);
+            const groep = await vers.read.readStories({ view: "accepted", stories: ids });
+            if (!actueel() || vers.lifetimeSignal?.aborted) { gelezen.length = 0; return; }
+            if (!("ok" in groep) || !groep.ok || groep.view !== "accepted") { gelezen.length = 0; return; }
+            if (!groep.truncated) {
+              const perStory = new Map(groep.stories.map(r => [r.story, r]));
+              if (groep.stories.length !== ids.length || perStory.size !== ids.length || ids.some(id => !perStory.has(id))) {
+                gelezen.length = 0; return;
+              }
+              versies.add(groep.version);
+              if (versies.size > 1) { gelezen.length = 0; return; }
+              for (const story of ids) {
+                const r = perStory.get(story)!;
+                if (!r.ok || r.paragraphs.some(p => p.story !== story)) { gelezen.length = 0; return; }
+                gelezen.push({ story, paragraphs: r.paragraphs });
+              }
+              i += ids.length;
+              if (i < verhalen.length) await new Promise<void>(klaar => window.setTimeout(klaar, 0));
+              continue;
+            }
+          }
           const van = i, begin = performance.now();
           const aanvragen = [];
           do {
             aanvragen.push(vers.read.readParagraphs({ view: "accepted", story: verhalen[i++] }));
           } while (i < verhalen.length && i - van < 32 && performance.now() - begin < 8);
           const uit = await Promise.all(aanvragen);
-          if (!actueel()) { gelezen.length = 0; return; }
+          if (!actueel() || vers.lifetimeSignal?.aborted) { gelezen.length = 0; return; }
           for (let k = 0; k < uit.length; k++) {
             const r = uit[k];
             if (!("ok" in r) || !r.ok) { gelezen.length = 0; return; }

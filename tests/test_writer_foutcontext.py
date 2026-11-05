@@ -123,6 +123,10 @@ class WriterFoutcontext(unittest.TestCase):
                 self.assertTrue(context['proefscript']['beschikbaar'])
                 with tarfile.open(self.uitvoer / 'writer-foutcontext.tar.gz') as tar:
                     self.assertEqual(tar.extractfile('writer-foutcontext/scripts/' + script.name).read(), script.read_bytes())
+                    if naam == 'test-writer-rijk-plakken-native.py':
+                        helper = 'scripts/gui/spelling_vervolginvoer.js'
+                        self.assertEqual(tar.extractfile('writer-foutcontext/' + helper).read(), (REPO / helper).read_bytes())
+                        self.assertEqual(context['scripts']['gui/spelling_vervolginvoer.js']['sha256'], module.checksum(REPO / helper))
                     self.assertEqual(tar.extractfile('writer-foutcontext/proef/Ontwerpnotitie.docx').read(), b'eigen kopie van de vaste proefbron')
                     self.assertEqual(tar.extractfile('writer-foutcontext/proef/programma.log').read().decode(), 'Eigen rendererfout')
                 # De gedeelde basis wordt meegenomen, zonder een onbewezen claim over

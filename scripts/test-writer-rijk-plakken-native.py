@@ -215,16 +215,7 @@ async def proef(a):
                   return null;
                 };let eind=performance.now()+90000;while(!_spellingProef()||_spellingProef().bezig){if(performance.now()>eind)throw Error('Geen rustige eigen spellinginstantie');await new Promise(r=>setTimeout(r,50))}
                 if(!_spellingProef().aan)throw Error('Spelling staat uit; vervolgproef niet geldig');api().focus();return true;''', t=100)
-                await p.ev('''(() => {
-                  const s=api().getEditorRef().getYrsSession(),oud=s.readParagraphs;
-                  window._plakToetsen.length=0;
-                  window._vervolgProef={lezingen:0,eersteToetsNaLezingen:null,hercontroleGestart:false,verhalen:s.storyIds().filter(id=>id==='body'||/^body:t[0-9]+:r[0-9]+c[0-9]+/.test(id)).length};
-                  s.readParagraphs=function(...args){_vervolgProef.lezingen++;return oud.apply(this,args)};
-                  window._vervolgToets=e=>{if(e.key.length===1&&!e.ctrlKey&&!e.metaKey&&_vervolgProef.eersteToetsNaLezingen===null)_vervolgProef.eersteToetsNaLezingen=_vervolgProef.lezingen};
-                  window.addEventListener('keydown',_vervolgToets,true);
-                  window._vervolgOpruimen=()=>{s.readParagraphs=oud;window.removeEventListener('keydown',_vervolgToets,true)};
-                  setTimeout(()=>{_vervolgProef.hercontroleGestart=true;_spellingProef().herbegin()},0);return true;
-                })()''')
+                await p.ev((Path(__file__).resolve().parent / 'gui/spelling_vervolginvoer.js').read_text())
                 await asyncio.sleep(.15)
                 begin_invoer = time.monotonic()
                 subprocess.run(['xdotool', 'type', '--clearmodifiers', '--delay', '20', ' SNEL'], check=True)
