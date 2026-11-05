@@ -38,7 +38,7 @@ worden niet gesloten op basis van alleen aanwezige knoppen of broncode.
 | [#129](https://github.com/OpenAEC-Foundation/open-office-studio/issues/129) | Hersteld en gericht getest | Vier celvlakken zichtbaar; ook selectie met lege cel, behoud in het lint, samenvoegen van precies het getoonde bereik en undo gecontroleerd. |
 | [#128](https://github.com/OpenAEC-Foundation/open-office-studio/issues/128) | Hersteld en gericht getest | Actuele celposities uit de tabelstructuur; Tab voegt een rij toe. Interfaceproef met vier cellen, undo/redo, gedownloade XML en heropenen. |
 | [#127](https://github.com/OpenAEC-Foundation/open-office-studio/issues/127) | Hersteld en gericht getest | Vier regressieproeven en invoegen na paginanavigatie. |
-| [#126](https://github.com/OpenAEC-Foundation/open-office-studio/issues/126) | Nog te controleren op Tauri | Melding op ontwikkelbuild; minimale proef uitvoeren op deze suite. |
+| [#126](https://github.com/OpenAEC-Foundation/open-office-studio/issues/126) | Herstel geïmplementeerd en gelaagd getest | Native systeemklembord op geïsoleerd X11-display, echte JS-opdracht via gesimuleerde IPC, browserlint/Ctrl+V, intern plakken en DOCX-heropenen groen. Native webviewbediening op de drie platforms nog niet uitgevoerd. |
 | [#125](https://github.com/OpenAEC-Foundation/open-office-studio/issues/125) | Hersteld en gericht getest | Markering in XML en na heropenen; annuleren kleurkeuze. |
 | [#124](https://github.com/OpenAEC-Foundation/open-office-studio/issues/124) | Hersteld en gericht getest | Toetsenbord, muispijltje en opgeslagen lettergrootte. |
 | [#123](https://github.com/OpenAEC-Foundation/open-office-studio/issues/123) | Hersteld en gericht getest | Lijstvervolg in dezelfde invoerbewerking, echte engineproeven voor bewaren/heropenen en geschiedenis; productie-interface toont item 2 en de bewaarde DOCX heeft twee verwijzingen naar dezelfde decimale definitie. |
@@ -206,3 +206,41 @@ en minimaal omlaag schuiven. De gewone opmaak- en opslagproeven blijven groen.
 
 Eindcontrole: typecontrole, productiebuild en opdrachtcontroles groen;
 131 testbestanden, 1.537 proeven geslaagd en zeven corpusgevallen overgeslagen.
+
+## Extern plakken
+
+De Tauri-app leest tekst via de officiële klembordkoppeling wanneer de
+plakroute als platte tekst wordt uitgevoerd. Alleen tekst lezen is aan de
+lokale appvensters toegestaan. Er is geen klembordcache of achtergrondlezer.
+Ctrl+V en Ctrl+Shift+V gebruiken op desktop dezelfde route als de lintknoppen;
+de browser behoudt zijn gewone paste-gebeurtenis. Een geweigerde native
+opdracht valt niet terug op een mogelijk verouderde webviewkopie. De gewone
+browserroute en de bestaande route voor rijke gegevens blijven beschikbaar.
+
+Geteste lagen:
+
+- Acht gerichte gevallen: browser, geweigerde of ontbrekende browser-API op
+  desktop, nieuwe kopie, leeg klembord en geweigerde native opdracht.
+- De werkelijk geleverde JS-koppeling doet uitsluitend de verwachte
+  `plugin:clipboard-manager|read_text`-aanroep via een gesimuleerde IPC-host.
+- De echte native klembordkoppeling is op een eigen X11-display gestart met
+  twee afzonderlijke verbindingen. De lezer ontvangt zowel de eerste als de
+  volgende systeemkopie van de andere verbinding. Deze proef slaagt; het
+  gewone bureaubladklembord wordt daarbij niet gebruikt.
+- Browserinterface: ‘Voor ’ typen, externe tekst via het lint plakken, een
+  nieuwe externe kopie met Ctrl+V toevoegen, intern alles kopiëren en opnieuw
+  plakken. De bewaarde DOCX bevat twee identieke volledige alinea's en toont
+  deze ook na heropenen: 14 woorden, 88 tekens.
+
+De klembordmodule en desktopschil gebruiken beide versie 2.3.2. De officiële
+[API en rechten](https://v2.tauri.app/plugin/clipboard/) beschrijven de gekozen
+tekst-opdracht. Dit is geen uitgevoerde Windows-, macOS- of native
+webview-toetsenbordproef; #126 wordt daarom niet automatisch gesloten.
+
+[Heropende plakproef](../screenshots/test-tauri-plakken-2026-11-05.png).
+
+Laatste controle: productiebuild en typecontrole groen; 133 testbestanden,
+1.546 proeven geslaagd en zeven corpusgevallen overgeslagen. De vernieuwde
+Tauri-desktopschil heeft 109 gewone tests geslaagd en zes standaard
+overgeslagen tests; de vijf conversieproeven en de afzonderlijke
+klembordsysteemproef zijn in deze ronde expliciet uitgevoerd en geslaagd.

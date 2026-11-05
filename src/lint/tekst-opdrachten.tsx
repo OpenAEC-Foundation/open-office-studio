@@ -23,6 +23,7 @@ import { leesAlleAlineas } from "../tekst/gedeeld/engine";
 import { ontbrekendeStijl } from "../tekst/stijlen/model";
 import { metHeleAlinea } from "../tekst/stijlen/toepassen";
 import { tabelInvoegen } from "../tekst/tabel/opdrachten";
+import { leesKlembordTekst } from "../klembord";
 import {
   selectieBegin,
   specialeTekens,
@@ -202,7 +203,7 @@ export function useTekstOpdrachten({
             else if (soort.startsWith("image/"))
               data.items.add(new File([blob], `afbeelding.${soort.slice(6)}`, { type: soort }));
           }
-        if (!data.types.length) return;
+        if (!data.types.length) return plakken();
         editor().focus();
         const invoer = tekstVlak();
         const gebeurtenis = new ClipboardEvent("paste", { clipboardData: data, bubbles: true, cancelable: true });
@@ -215,12 +216,7 @@ export function useTekstOpdrachten({
       .catch(() => plakken());
   }
   function plakken() {
-    if (!navigator.clipboard?.readText) {
-      meld(t("writer.errors.pasteNotAllowed", { shortcut: "Ctrl+V" }));
-      return;
-    }
-    navigator.clipboard
-      .readText()
+    void leesKlembordTekst()
       .then((tekst) => tekst && voegIn(tekst))
       .catch(() =>
         meld(t("writer.errors.pasteNotAllowed", { shortcut: "Ctrl+V" })),
@@ -351,6 +347,18 @@ export function useTekstOpdrachten({
 
   const kanBewerken = () => bewerkbaar;
   const sneltoetsen: Sneltoets[] = [
+    // Op desktop dezelfde plakroute als het lint; de browser behoudt zijn
+    // eigen paste-gebeurtenis met de door de webview geleverde gegevens.
+    {
+      toets: "Ctrl+V",
+      uitvoeren: plakkenMetOpmaak,
+      beschikbaar: () => invoerbaar && "__TAURI_INTERNALS__" in window,
+    },
+    {
+      toets: "Ctrl+Shift+V",
+      uitvoeren: plakken,
+      beschikbaar: () => invoerbaar && "__TAURI_INTERNALS__" in window,
+    },
     {
       toets: "Ctrl+1",
       uitvoeren: () => stijl("Heading1"),
