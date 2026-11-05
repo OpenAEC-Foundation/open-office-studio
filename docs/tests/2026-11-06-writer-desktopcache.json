@@ -1,0 +1,1661 @@
+{
+  "schema": 1,
+  "datum": "2026-11-06",
+  "basis_commit": "c9118b611ce440d229710cda9a5a5ee71c652001",
+  "productie_appversie": "2026.45.49",
+  "productie_nativeversie": "2026.45.0-alpha.57",
+  "kandidaatversie": "2026.45.50",
+  "kandidaat_nativeversie": "2026.45.0-alpha.58",
+  "kandidaat_sha256": "49da87a4df5ff2f209a583aaf92963cd0a9863055c5b21de68408adff0b1f611",
+  "referentie_sha256": "e7295980a17df1e85c9524ad6e384fcf63735162bb60964f4d7aebacf42e5785",
+  "besluit": "Afgewezen voor productie: fysieke invoer gemiddeld 6.25% trager. Geen nieuwe download/release of gesloten issue.",
+  "bouwacceptatie": {
+    "geslaagd": true,
+    "controlemap": "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-05/desktopcache/controles-4",
+    "frontend_geslaagd": 1850,
+    "frontend_overgeslagen": 10,
+    "frontend_bestanden": 179,
+    "rust_kern": 28,
+    "python": 112,
+    "programma_sha256": "49da87a4df5ff2f209a583aaf92963cd0a9863055c5b21de68408adff0b1f611",
+    "grens": "Bouwpoorten en bronidentiteit; nog geen GUI-/snelheids-/geheugen-/platformacceptatie."
+  },
+  "gui": {
+    "schema": 1,
+    "metingen": [
+      {
+        "naam": "referentie-a",
+        "getekend_ms": 23724,
+        "broncontrole": {
+          "verhalen": 1537,
+          "alinea_en_celteksten": 3329,
+          "exact": true
+        },
+        "documentpixels": {
+          "roi": [
+            320,
+            210,
+            1140,
+            950
+          ],
+          "alleen_cursor_uitgesloten": [
+            491,
+            347,
+            496,
+            366
+          ],
+          "afwijkend": 0,
+          "bbox": null
+        },
+        "native_piek_rss_kib": 353856,
+        "native_laatste_rss_kib": 351320
+      },
+      {
+        "naam": "cache-a",
+        "getekend_ms": 25645,
+        "broncontrole": {
+          "verhalen": 1537,
+          "alinea_en_celteksten": 3329,
+          "exact": true
+        },
+        "documentpixels": {
+          "roi": [
+            320,
+            210,
+            1140,
+            950
+          ],
+          "alleen_cursor_uitgesloten": [
+            491,
+            347,
+            496,
+            366
+          ],
+          "afwijkend": 0,
+          "bbox": null
+        },
+        "native_piek_rss_kib": 360200,
+        "native_laatste_rss_kib": 359640
+      },
+      {
+        "naam": "cache-b",
+        "getekend_ms": 25127,
+        "broncontrole": {
+          "verhalen": 1537,
+          "alinea_en_celteksten": 3329,
+          "exact": true
+        },
+        "documentpixels": {
+          "roi": [
+            320,
+            210,
+            1140,
+            950
+          ],
+          "alleen_cursor_uitgesloten": [
+            491,
+            347,
+            496,
+            366
+          ],
+          "afwijkend": 0,
+          "bbox": null
+        },
+        "native_piek_rss_kib": 366348,
+        "native_laatste_rss_kib": 363724
+      },
+      {
+        "naam": "referentie-b",
+        "getekend_ms": 24061,
+        "broncontrole": {
+          "verhalen": 1537,
+          "alinea_en_celteksten": 3329,
+          "exact": true
+        },
+        "documentpixels": {
+          "roi": [
+            320,
+            210,
+            1140,
+            950
+          ],
+          "alleen_cursor_uitgesloten": [
+            491,
+            347,
+            496,
+            366
+          ],
+          "afwijkend": 0,
+          "bbox": null
+        },
+        "native_piek_rss_kib": 356960,
+        "native_laatste_rss_kib": 351600
+      }
+    ],
+    "gemiddeld_referentie_ms": 23892.5,
+    "gemiddeld_cache_ms": 25386.0,
+    "ratio": 1.0625091555927593,
+    "alle_documentpixels_exact": true,
+    "grenzen": [
+      "Eén eigen bron/pc, vier fysieke ronden; geen algemene responsiviteits-/FPS-/suiteacceptatie.",
+      "Geen volledige UI-pixelpariteit: alleen de vastgelegde documentuitsnede, met uitsluitend de bekende cursorzone uitgesloten.",
+      "RSS is gesampled procesresident geheugen; geen PSS, harde cache-RAM-grens of lekbewijs."
+    ]
+  },
+  "selectie_uitkomst": {
+    "code": 0,
+    "seconden": 35.71364785201149,
+    "opdracht": [
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio/scripts/test-writer-rust-tekst-native.py",
+      "--programma",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-05/desktopcache/open-office-studio-45.50-cache",
+      "--versie",
+      "2026.45.50",
+      "--uitvoer",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-05/desktopcache/selectie"
+    ],
+    "script_sha256": "b1590d04f779d906f225d867e4c0196ccb62e96784c4857c86a03861ad8a5627"
+  },
+  "selectie": {
+    "geslaagd": true,
+    "versie": "2026.45.50",
+    "programma_sha256": "49da87a4df5ff2f209a583aaf92963cd0a9863055c5b21de68408adff0b1f611",
+    "script_sha256": "b1590d04f779d906f225d867e4c0196ccb62e96784c4857c86a03861ad8a5627",
+    "stappen": [
+      "Fysieke tekstinvoer, één Undo en bronexacte Redo",
+      "Fysiek typen, Shift-selectie, vervangen en Save vóór tekstantwoord; DOCX onafhankelijk exact teruggelezen",
+      "Niet opslaan zonder tekstantwoord; nieuw document en laat antwoord behouden bron en invoer"
+    ],
+    "grenzen": "Echte native tekstinvoer: Undo, selectie en bewaren tijdens een vertraagd Rust-antwoord.\n\nAlleen het terugbezorgen van een werkelijk berekend tekstantwoord wordt\nvastgehouden. Eigen bron/profiel/venster; dit is geen snelheidsmeting.\n",
+    "startprogramma_sha256": "49da87a4df5ff2f209a583aaf92963cd0a9863055c5b21de68408adff0b1f611",
+    "gewone_invoer_antwoordvertraging_ms": 1000,
+    "bewaring_sha256": "ad4210189f3834bfdf51f03867f849305a74ed1da094bed7f09489a5969c620d",
+    "native_opdrachten": [
+      {
+        "requestId": "c54143b0-65f3-4487-a7cb-d614a80b6cbe",
+        "position": {
+          "story": "body",
+          "paraId": "body:p7",
+          "offset": 70
+        },
+        "text": "E",
+        "gereed": true,
+        "wacht": false,
+        "bronbinding": true,
+        "caret": {
+          "offset": 71,
+          "paraId": "body:p7",
+          "story": "body"
+        },
+        "vertragingMs": 1000
+      },
+      {
+        "requestId": "9d65eba1-b5bd-47c0-ae1d-2c75d45cc961",
+        "position": {
+          "story": "body",
+          "paraId": "body:p7",
+          "offset": 71
+        },
+        "text": "ERSTE",
+        "gereed": true,
+        "wacht": false,
+        "bronbinding": true,
+        "caret": {
+          "offset": 76,
+          "paraId": "body:p7",
+          "story": "body"
+        },
+        "vertragingMs": 1000
+      },
+      {
+        "requestId": "de4b2874-23e8-401c-824a-00d3cc18db09",
+        "position": {
+          "story": "body",
+          "paraId": "body:p7",
+          "offset": 76
+        },
+        "text": " ",
+        "gereed": true,
+        "wacht": false,
+        "bronbinding": true,
+        "caret": {
+          "offset": 77,
+          "paraId": "body:p7",
+          "story": "body"
+        },
+        "vertragingMs": 0
+      },
+      {
+        "requestId": "78756908-5d72-4df0-95c8-9ecca5513660",
+        "position": {
+          "story": "body",
+          "paraId": "body:p7",
+          "offset": 77
+        },
+        "text": "SNEL",
+        "gereed": true,
+        "wacht": false,
+        "bronbinding": true,
+        "caret": {
+          "offset": 81,
+          "paraId": "body:p7",
+          "story": "body"
+        },
+        "vertragingMs": 0
+      },
+      {
+        "requestId": "3baaa2e5-7160-49c3-91a0-e86712f0d959",
+        "position": {
+          "story": "body",
+          "paraId": "body:p7",
+          "offset": 79
+        },
+        "text": " ",
+        "gereed": true,
+        "wacht": false,
+        "bronbinding": true,
+        "caret": {
+          "offset": 80,
+          "paraId": "body:p7",
+          "story": "body"
+        },
+        "vertragingMs": 0
+      },
+      {
+        "requestId": "2e420096-99f0-4f8f-9abe-6dcc90821b5d",
+        "position": {
+          "story": "body",
+          "paraId": "body:p0",
+          "offset": 0
+        },
+        "text": "N",
+        "gereed": true,
+        "wacht": false,
+        "bronbinding": true,
+        "caret": {
+          "offset": 1,
+          "paraId": "body:p0",
+          "story": "body"
+        },
+        "vertragingMs": 0
+      },
+      {
+        "requestId": "f471a7f9-4b59-45f0-97dc-73f67e5710df",
+        "position": {
+          "story": "body",
+          "paraId": "body:p0",
+          "offset": 1
+        },
+        "text": "i",
+        "gereed": true,
+        "wacht": false,
+        "bronbinding": true,
+        "caret": {
+          "offset": 2,
+          "paraId": "body:p0",
+          "story": "body"
+        },
+        "vertragingMs": 0
+      },
+      {
+        "requestId": "b60cf453-24ac-4570-a67f-8adda9d945bd",
+        "position": {
+          "story": "body",
+          "paraId": "body:p0",
+          "offset": 2
+        },
+        "text": "e",
+        "gereed": true,
+        "wacht": false,
+        "bronbinding": true,
+        "caret": {
+          "offset": 3,
+          "paraId": "body:p0",
+          "story": "body"
+        },
+        "vertragingMs": 0
+      },
+      {
+        "requestId": "5dea0a07-b66c-4ae5-8c79-061558cb3191",
+        "position": {
+          "story": "body",
+          "paraId": "body:p0",
+          "offset": 3
+        },
+        "text": "u",
+        "gereed": true,
+        "wacht": false,
+        "bronbinding": true,
+        "caret": {
+          "offset": 4,
+          "paraId": "body:p0",
+          "story": "body"
+        },
+        "vertragingMs": 0
+      },
+      {
+        "requestId": "1419148e-0042-464c-bb48-5c0e698115f8",
+        "position": {
+          "story": "body",
+          "paraId": "body:p0",
+          "offset": 4
+        },
+        "text": "w",
+        "gereed": true,
+        "wacht": false,
+        "bronbinding": true,
+        "caret": {
+          "offset": 5,
+          "paraId": "body:p0",
+          "story": "body"
+        },
+        "vertragingMs": 0
+      },
+      {
+        "requestId": "5bef2405-4a9b-4aa7-94a3-630ffdfab6a7",
+        "position": {
+          "story": "body",
+          "paraId": "body:p0",
+          "offset": 5
+        },
+        "text": " ",
+        "gereed": true,
+        "wacht": false,
+        "bronbinding": true,
+        "caret": {
+          "offset": 6,
+          "paraId": "body:p0",
+          "story": "body"
+        },
+        "vertragingMs": 0
+      },
+      {
+        "requestId": "a3f3d836-9e87-432e-a0b9-72512895ed8e",
+        "position": {
+          "story": "body",
+          "paraId": "body:p0",
+          "offset": 6
+        },
+        "text": "d",
+        "gereed": true,
+        "wacht": false,
+        "bronbinding": true,
+        "caret": {
+          "offset": 7,
+          "paraId": "body:p0",
+          "story": "body"
+        },
+        "vertragingMs": 0
+      },
+      {
+        "requestId": "fb65b503-5792-4fae-99fa-2aeb1a4c3b80",
+        "position": {
+          "story": "body",
+          "paraId": "body:p0",
+          "offset": 7
+        },
+        "text": "oc",
+        "gereed": true,
+        "wacht": false,
+        "bronbinding": true,
+        "caret": {
+          "offset": 9,
+          "paraId": "body:p0",
+          "story": "body"
+        },
+        "vertragingMs": 0
+      },
+      {
+        "requestId": "d0dda4d1-4ddf-431e-bb99-7614062e689a",
+        "position": {
+          "story": "body",
+          "paraId": "body:p0",
+          "offset": 9
+        },
+        "text": "u",
+        "gereed": true,
+        "wacht": false,
+        "bronbinding": true,
+        "caret": {
+          "offset": 10,
+          "paraId": "body:p0",
+          "story": "body"
+        },
+        "vertragingMs": 0
+      },
+      {
+        "requestId": "90746cbf-c04f-494a-8422-be479e05b95e",
+        "position": {
+          "story": "body",
+          "paraId": "body:p0",
+          "offset": 10
+        },
+        "text": "me",
+        "gereed": true,
+        "wacht": false,
+        "bronbinding": true,
+        "caret": {
+          "offset": 12,
+          "paraId": "body:p0",
+          "story": "body"
+        },
+        "vertragingMs": 0
+      },
+      {
+        "requestId": "2799384e-3c05-462b-95f1-fab25453b3c7",
+        "position": {
+          "story": "body",
+          "paraId": "body:p0",
+          "offset": 12
+        },
+        "text": "n",
+        "gereed": true,
+        "wacht": false,
+        "bronbinding": true,
+        "caret": {
+          "offset": 13,
+          "paraId": "body:p0",
+          "story": "body"
+        },
+        "vertragingMs": 0
+      },
+      {
+        "requestId": "1792b9cb-fb79-4c29-8776-ce531c079878",
+        "position": {
+          "story": "body",
+          "paraId": "body:p0",
+          "offset": 13
+        },
+        "text": "t",
+        "gereed": true,
+        "wacht": false,
+        "bronbinding": true,
+        "caret": {
+          "offset": 14,
+          "paraId": "body:p0",
+          "story": "body"
+        },
+        "vertragingMs": 0
+      }
+    ],
+    "fouten": {
+      "gui": [],
+      "engine": [],
+      "console": []
+    },
+    "diagnose": {
+      "opdrachten": [
+        {
+          "requestId": "c54143b0-65f3-4487-a7cb-d614a80b6cbe",
+          "position": {
+            "story": "body",
+            "paraId": "body:p7",
+            "offset": 70
+          },
+          "text": "E",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "offset": 71,
+            "paraId": "body:p7",
+            "story": "body"
+          },
+          "vertragingMs": 1000
+        },
+        {
+          "requestId": "9d65eba1-b5bd-47c0-ae1d-2c75d45cc961",
+          "position": {
+            "story": "body",
+            "paraId": "body:p7",
+            "offset": 71
+          },
+          "text": "ERSTE",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "offset": 76,
+            "paraId": "body:p7",
+            "story": "body"
+          },
+          "vertragingMs": 1000
+        },
+        {
+          "requestId": "de4b2874-23e8-401c-824a-00d3cc18db09",
+          "position": {
+            "story": "body",
+            "paraId": "body:p7",
+            "offset": 76
+          },
+          "text": " ",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "offset": 77,
+            "paraId": "body:p7",
+            "story": "body"
+          },
+          "vertragingMs": 0
+        },
+        {
+          "requestId": "78756908-5d72-4df0-95c8-9ecca5513660",
+          "position": {
+            "story": "body",
+            "paraId": "body:p7",
+            "offset": 77
+          },
+          "text": "SNEL",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "offset": 81,
+            "paraId": "body:p7",
+            "story": "body"
+          },
+          "vertragingMs": 0
+        },
+        {
+          "requestId": "3baaa2e5-7160-49c3-91a0-e86712f0d959",
+          "position": {
+            "story": "body",
+            "paraId": "body:p7",
+            "offset": 79
+          },
+          "text": " ",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "offset": 80,
+            "paraId": "body:p7",
+            "story": "body"
+          },
+          "vertragingMs": 0
+        },
+        {
+          "requestId": "2e420096-99f0-4f8f-9abe-6dcc90821b5d",
+          "position": {
+            "story": "body",
+            "paraId": "body:p0",
+            "offset": 0
+          },
+          "text": "N",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "offset": 1,
+            "paraId": "body:p0",
+            "story": "body"
+          },
+          "vertragingMs": 0
+        },
+        {
+          "requestId": "f471a7f9-4b59-45f0-97dc-73f67e5710df",
+          "position": {
+            "story": "body",
+            "paraId": "body:p0",
+            "offset": 1
+          },
+          "text": "i",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "offset": 2,
+            "paraId": "body:p0",
+            "story": "body"
+          },
+          "vertragingMs": 0
+        },
+        {
+          "requestId": "b60cf453-24ac-4570-a67f-8adda9d945bd",
+          "position": {
+            "story": "body",
+            "paraId": "body:p0",
+            "offset": 2
+          },
+          "text": "e",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "offset": 3,
+            "paraId": "body:p0",
+            "story": "body"
+          },
+          "vertragingMs": 0
+        },
+        {
+          "requestId": "5dea0a07-b66c-4ae5-8c79-061558cb3191",
+          "position": {
+            "story": "body",
+            "paraId": "body:p0",
+            "offset": 3
+          },
+          "text": "u",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "offset": 4,
+            "paraId": "body:p0",
+            "story": "body"
+          },
+          "vertragingMs": 0
+        },
+        {
+          "requestId": "1419148e-0042-464c-bb48-5c0e698115f8",
+          "position": {
+            "story": "body",
+            "paraId": "body:p0",
+            "offset": 4
+          },
+          "text": "w",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "offset": 5,
+            "paraId": "body:p0",
+            "story": "body"
+          },
+          "vertragingMs": 0
+        },
+        {
+          "requestId": "5bef2405-4a9b-4aa7-94a3-630ffdfab6a7",
+          "position": {
+            "story": "body",
+            "paraId": "body:p0",
+            "offset": 5
+          },
+          "text": " ",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "offset": 6,
+            "paraId": "body:p0",
+            "story": "body"
+          },
+          "vertragingMs": 0
+        },
+        {
+          "requestId": "a3f3d836-9e87-432e-a0b9-72512895ed8e",
+          "position": {
+            "story": "body",
+            "paraId": "body:p0",
+            "offset": 6
+          },
+          "text": "d",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "offset": 7,
+            "paraId": "body:p0",
+            "story": "body"
+          },
+          "vertragingMs": 0
+        },
+        {
+          "requestId": "fb65b503-5792-4fae-99fa-2aeb1a4c3b80",
+          "position": {
+            "story": "body",
+            "paraId": "body:p0",
+            "offset": 7
+          },
+          "text": "oc",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "offset": 9,
+            "paraId": "body:p0",
+            "story": "body"
+          },
+          "vertragingMs": 0
+        },
+        {
+          "requestId": "d0dda4d1-4ddf-431e-bb99-7614062e689a",
+          "position": {
+            "story": "body",
+            "paraId": "body:p0",
+            "offset": 9
+          },
+          "text": "u",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "offset": 10,
+            "paraId": "body:p0",
+            "story": "body"
+          },
+          "vertragingMs": 0
+        },
+        {
+          "requestId": "90746cbf-c04f-494a-8422-be479e05b95e",
+          "position": {
+            "story": "body",
+            "paraId": "body:p0",
+            "offset": 10
+          },
+          "text": "me",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "offset": 12,
+            "paraId": "body:p0",
+            "story": "body"
+          },
+          "vertragingMs": 0
+        },
+        {
+          "requestId": "2799384e-3c05-462b-95f1-fab25453b3c7",
+          "position": {
+            "story": "body",
+            "paraId": "body:p0",
+            "offset": 12
+          },
+          "text": "n",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "offset": 13,
+            "paraId": "body:p0",
+            "story": "body"
+          },
+          "vertragingMs": 0
+        },
+        {
+          "requestId": "1792b9cb-fb79-4c29-8776-ce531c079878",
+          "position": {
+            "story": "body",
+            "paraId": "body:p0",
+            "offset": 13
+          },
+          "text": "t",
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "offset": 14,
+            "paraId": "body:p0",
+            "story": "body"
+          },
+          "vertragingMs": 0
+        }
+      ],
+      "updates": 4,
+      "selecties": [
+        {
+          "soort": "selectie",
+          "args": [
+            {
+              "story": "body",
+              "paraId": "body:p0",
+              "offset": 0
+            },
+            {
+              "story": "body",
+              "paraId": "body:p0",
+              "offset": 0
+            }
+          ],
+          "stack": "@\n@tauri://localhost/assets/editors-DW5Jbf7j.js:8:78031\nsetSelectionFromDisplay@tauri://localhost/assets/editors-DW5Jbf7j.js:12:17770\nT@tauri://localhost/assets/editors-DW5Jbf7j.js:12:108576\nsetSelection@tauri://localhost/assets/editors-DW5Jbf7j.js:12:109352\n@\nglobal code@"
+        },
+        {
+          "soort": "selectie",
+          "args": [
+            {
+              "story": "body",
+              "paraId": "body:p7",
+              "offset": 70
+            },
+            {
+              "story": "body",
+              "paraId": "body:p7",
+              "offset": 70
+            }
+          ],
+          "stack": "@\n@tauri://localhost/assets/editors-DW5Jbf7j.js:8:78031\n@tauri://localhost/assets/editors-DW5Jbf7j.js:12:4983"
+        },
+        {
+          "soort": "delta",
+          "selection": {
+            "anchor": {
+              "story": "body",
+              "paraId": "body:p7",
+              "offset": 70
+            },
+            "head": {
+              "story": "body",
+              "paraId": "body:p7",
+              "offset": 70
+            }
+          }
+        },
+        {
+          "soort": "selectie",
+          "args": [
+            {
+              "offset": 71,
+              "paraId": "body:p7",
+              "story": "body"
+            }
+          ],
+          "stack": "@\nplak@tauri://localhost/assets/editors-DW5Jbf7j.js:72:180653"
+        },
+        {
+          "soort": "delta",
+          "selection": {
+            "anchor": {
+              "offset": 71,
+              "paraId": "body:p7",
+              "story": "body"
+            },
+            "head": {
+              "offset": 71,
+              "paraId": "body:p7",
+              "story": "body"
+            }
+          }
+        },
+        {
+          "soort": "selectie",
+          "args": [
+            {
+              "offset": 76,
+              "paraId": "body:p7",
+              "story": "body"
+            }
+          ],
+          "stack": "@\nplak@tauri://localhost/assets/editors-DW5Jbf7j.js:72:180653"
+        },
+        {
+          "soort": "selectie",
+          "args": [
+            {
+              "offset": 76,
+              "paraId": "body:p7",
+              "story": "body"
+            },
+            {
+              "offset": 76,
+              "paraId": "body:p7",
+              "story": "body"
+            }
+          ],
+          "stack": "@\n@tauri://localhost/assets/editors-DW5Jbf7j.js:8:78031\n@tauri://localhost/assets/editors-DW5Jbf7j.js:12:4983"
+        },
+        {
+          "soort": "selectie",
+          "args": [
+            {
+              "story": "body",
+              "paraId": "body:p7",
+              "offset": 76
+            },
+            {
+              "story": "body",
+              "paraId": "body:p7",
+              "offset": 76
+            }
+          ],
+          "stack": "@\n@tauri://localhost/assets/editors-DW5Jbf7j.js:8:78031\n@tauri://localhost/assets/editors-DW5Jbf7j.js:12:4983"
+        },
+        {
+          "soort": "delta",
+          "selection": {
+            "anchor": {
+              "story": "body",
+              "paraId": "body:p7",
+              "offset": 76
+            },
+            "head": {
+              "story": "body",
+              "paraId": "body:p7",
+              "offset": 76
+            }
+          }
+        },
+        {
+          "soort": "selectie",
+          "args": [
+            {
+              "offset": 77,
+              "paraId": "body:p7",
+              "story": "body"
+            }
+          ],
+          "stack": "@\nplak@tauri://localhost/assets/editors-DW5Jbf7j.js:72:180653"
+        },
+        {
+          "soort": "delta",
+          "selection": {
+            "anchor": {
+              "offset": 77,
+              "paraId": "body:p7",
+              "story": "body"
+            },
+            "head": {
+              "offset": 77,
+              "paraId": "body:p7",
+              "story": "body"
+            }
+          }
+        },
+        {
+          "soort": "selectie",
+          "args": [
+            {
+              "offset": 81,
+              "paraId": "body:p7",
+              "story": "body"
+            }
+          ],
+          "stack": "@\nplak@tauri://localhost/assets/editors-DW5Jbf7j.js:72:180653"
+        },
+        {
+          "soort": "selectie",
+          "args": [
+            {
+              "offset": 81,
+              "paraId": "body:p7",
+              "story": "body"
+            },
+            {
+              "offset": 80,
+              "paraId": "body:p7",
+              "story": "body"
+            }
+          ],
+          "stack": "@\n@tauri://localhost/assets/editors-DW5Jbf7j.js:8:78031\n@tauri://localhost/assets/editors-DW5Jbf7j.js:12:4983"
+        },
+        {
+          "soort": "selectie",
+          "args": [
+            {
+              "offset": 81,
+              "paraId": "body:p7",
+              "story": "body"
+            },
+            {
+              "offset": 79,
+              "paraId": "body:p7",
+              "story": "body"
+            }
+          ],
+          "stack": "@\n@tauri://localhost/assets/editors-DW5Jbf7j.js:8:78031\n@tauri://localhost/assets/editors-DW5Jbf7j.js:12:4983"
+        },
+        {
+          "soort": "selectie",
+          "args": [
+            {
+              "offset": 81,
+              "paraId": "body:p7",
+              "story": "body"
+            },
+            {
+              "offset": 78,
+              "paraId": "body:p7",
+              "story": "body"
+            }
+          ],
+          "stack": "@\n@tauri://localhost/assets/editors-DW5Jbf7j.js:8:78031\n@tauri://localhost/assets/editors-DW5Jbf7j.js:12:4983"
+        },
+        {
+          "soort": "selectie",
+          "args": [
+            {
+              "story": "body",
+              "offset": 79,
+              "paraId": "body:p7"
+            }
+          ],
+          "stack": "@\ndn@tauri://localhost/assets/editors-DW5Jbf7j.js:10:890\n@tauri://localhost/assets/editors-DW5Jbf7j.js:11:172\n@tauri://localhost/assets/editors-DW5Jbf7j.js:12:212"
+        },
+        {
+          "soort": "selectie",
+          "args": [
+            {
+              "story": "body",
+              "paraId": "body:p7",
+              "offset": 79
+            },
+            {
+              "story": "body",
+              "paraId": "body:p7",
+              "offset": 79
+            }
+          ],
+          "stack": "@\n@tauri://localhost/assets/editors-DW5Jbf7j.js:8:78031\n@tauri://localhost/assets/editors-DW5Jbf7j.js:12:4983"
+        }
+      ],
+      "selectie": {
+        "anchor": {
+          "offset": 14,
+          "paraId": "body:p0",
+          "story": "body"
+        },
+        "head": {
+          "offset": 14,
+          "paraId": "body:p0",
+          "story": "body"
+        }
+      },
+      "begin": "Nieuw document",
+      "eind": "Nieuw document"
+    }
+  },
+  "fasen": {
+    "metingen": [
+      {
+        "naam": "referentie",
+        "getekend_ms": 27027,
+        "groepen": 69,
+        "eigen_duur_ms": 10577.000000000033,
+        "rust_binnen_ms": 7840,
+        "pogingen": 69,
+        "stappen_ms": {
+          "cursor": 93.00000000004366,
+          "bron": 200.99999999998545,
+          "hash": 810.0000000000146,
+          "aanvraag": 9.000000000007276,
+          "transport": 8303.999999999996,
+          "binding": 40.99999999998181,
+          "mutatie": 429.0000000000109,
+          "selectie": 684.0
+        },
+        "broncontrole": {
+          "verhalen": 1537,
+          "alinea_en_celteksten": 3329,
+          "exact": true
+        }
+      },
+      {
+        "naam": "cache",
+        "getekend_ms": 46419,
+        "groepen": 73,
+        "eigen_duur_ms": 11929.000000000022,
+        "rust_binnen_ms": 8508,
+        "pogingen": 73,
+        "stappen_ms": {
+          "cursor": 139.00000000004002,
+          "bron": 279.99999999997453,
+          "hash": 439.00000000002547,
+          "aanvraag": 12.999999999996362,
+          "transport": 9361.999999999956,
+          "binding": 45.00000000001455,
+          "mutatie": 691.0000000000073,
+          "selectie": 958.0000000000073
+        },
+        "broncontrole": {
+          "verhalen": 1537,
+          "alinea_en_celteksten": 3329,
+          "exact": true
+        }
+      }
+    ],
+    "grens": "Twee aanvullende geïnstrumenteerde ronden; geen vervanging van de vier passieve ronden en geen bewezen volledige oorzaak."
+  },
+  "opzetafkeuringen": [
+    "frontend-afkeuring.json",
+    "cargo-opzetafkeuring.json",
+    "cargo-testopzetafkeuring.json",
+    "gui-opzetafkeuring.json"
+  ],
+  "bronbestanden": {
+    "native/onderzoek/writer-desktopcache/meten.py": "c7a0a8e5c675687c0a035c968d77e6f736f663ca34c6f176aab04cd3f79d6afa",
+    "native/onderzoek/writer-desktopcache/fysiek.py": "91a55aa20cd211b3a36a2624bf1814b3bcbb95ae1d1487ed6c18838a9194155c",
+    "native/onderzoek/writer-desktopcache/fasen.py": "683d592e2a76d73c5fbd90a4c2c5937c918dd7b73026c97856555c3e5b4d2ff0",
+    "native/onderzoek/writer-desktopcache/README.md": "eb446a5c698faaf3c0afbf3455cbe03b0e76d0568f02281fda40e9f79ac7733a",
+    "native/onderzoek/writer-desktopcache/broncontrole.py": "22de4de173e8e19072159104c5e67466090b0509f3fd7a4f35b76db039c11a9e",
+    "native/onderzoek/writer-desktopcache/controleren.py": "b50912fc95ec005fd90013db8145e158573c769003ebded8031580475418f574",
+    "native/onderzoek/writer-desktopcache/bouwen.py": "e9b76eb46d031df38d04c50573644713d75dafc13c3fade278e793d47c1edd96",
+    "native/onderzoek/writer-desktopcache/voorbereiden.py": "44e9128408e1dc85cb024bc7c33a2a366e79e2676bd2310fadb3131bef36d12c",
+    "native/onderzoek/writer-desktopcache/vergelijken.py": "85e2b68c331bc6be89f8f7742a500c9ea808b83d795ef974d31b61f321de2ddd",
+    "native/onderzoek/writer-desktopcache/bron.json": "4a5ce70dfe59008dca8bb2f17a7dba688610922dd81bf5ef2ba46c4e4c2810f0",
+    "native/onderzoek/writer-desktopcache/selectie.py": "bc313c0c122e4ca24c1fb086f0481133e350fdf27f3cde0c49f9467396ba9ac4",
+    "tests/test_writer_desktopcache.py": "0b438e6d07debcf45c355a308ac3649d75ae69eb8a207b57ee0e360e5179c75b"
+  },
+  "niet_getest": [
+    "Geen nieuwe 500-pagina-/herstel-/20-GC-/font-/rijke-plak-/lijstproeven op deze reeds voor snelheid afgewezen kandidaat.",
+    "Geen aanvaard meerbestandsgebruik of echte cacheverdringing; geen PSS/lekbewijs.",
+    "Geen Windows/macOS-/editiebouw of officiële release; geen volledige Rust-interface of UI-pixelpariteit."
+  ],
+  "volgende_stap": "Begrensde metadata van werkelijke bevestigde voorstellen en bronhergebruik tijdens GUI-invoer vastleggen zonder documentinhoud: vergelijk exacte teruggekomen voorstelbytes/basis/client met het volgende verzoek. SDK-publicatie/tekenen en pakketgroepering onderzoeken; snellere synthetische kern niet automatisch promoveren.",
+  "bewijsbestanden": {
+    "docs/tests/writer-desktopcache/controles/rapport.json.gz": {
+      "sha256": "8d748831d6b7e46ff744fb5989d768bdd532b0d93d0a88a1731845309473723e",
+      "inhoud_sha256": "40c7d71d784944a30ef8226fe4d4370b7231d654c4625e4f45eacb5dc780d680",
+      "bytes": 371
+    },
+    "docs/tests/writer-desktopcache/controles/frontend.log.gz": {
+      "sha256": "fc560e3a6112bd816421e1f5f48bf551f17292b19425a7faab944b5d3b7444f8",
+      "inhoud_sha256": "9a4e297b67221c2bc2f20ad69a0aa74e998efef081e1f81447e885dcabe7e704",
+      "bytes": 32778
+    },
+    "docs/tests/writer-desktopcache/controles-2/weekversie.log.gz": {
+      "sha256": "6256755c04fe7725980a7619a2938a1d49da8e0b56f33001875e528fb89f4015",
+      "inhoud_sha256": "cdc66b55750c5df95c3c7c4c15d4b84c76d94175514359cba67fec5a7b2caab2",
+      "bytes": 53
+    },
+    "docs/tests/writer-desktopcache/controles-2/rust-kern.log.gz": {
+      "sha256": "291a34fb53a3199ef597061145be5cafed025be1f3cc49e4271e61c20ffd9766",
+      "inhoud_sha256": "cbf49558dd78e10fa546330630ffd18c85fa4da4abb30c45cbd35d4af07703ed",
+      "bytes": 649
+    },
+    "docs/tests/writer-desktopcache/controles-2/opdrachten.log.gz": {
+      "sha256": "aebe9c229e8376b67a95a3334feb44b01105d21c8e26d0bec658ae1172dfdf16",
+      "inhoud_sha256": "35c4e59deeccfe1952ffb639f6070c68b7778bdd3fce798d880250a673e0fe31",
+      "bytes": 5191
+    },
+    "docs/tests/writer-desktopcache/controles-2/rapport.json.gz": {
+      "sha256": "b42f5b67a254c8a38f96ee52f80d6fd0c6f07d000cb74afd40d7e708262d217c",
+      "inhoud_sha256": "c444c06865116a79c4d1e72b5ae38d567e81134cb1e5edec67af6fd0c06a4be5",
+      "bytes": 2080
+    },
+    "docs/tests/writer-desktopcache/controles-2/frontend.log.gz": {
+      "sha256": "0d703d0d0f2da7d53336d50a495d403641503f649289436dbd83ab772e9d8a9d",
+      "inhoud_sha256": "e23611276e06b956fbea2b167d9e1a5deb83b1cc1ac4e9bae98c777b01477be0",
+      "bytes": 30686
+    },
+    "docs/tests/writer-desktopcache/controles-2/typescript.log.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "inhoud_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tests/writer-desktopcache/controles-2/engines.log.gz": {
+      "sha256": "6de11f78a95927519636e824a5a448ed252a867685f2835d2da16f2c7370eb14",
+      "inhoud_sha256": "74e7a56285e814d8b1e87098e3f1a0c5b556e2e653f809d19ad6b5ab09032af4",
+      "bytes": 153
+    },
+    "docs/tests/writer-desktopcache/controles-3/weekversie.log.gz": {
+      "sha256": "6256755c04fe7725980a7619a2938a1d49da8e0b56f33001875e528fb89f4015",
+      "inhoud_sha256": "cdc66b55750c5df95c3c7c4c15d4b84c76d94175514359cba67fec5a7b2caab2",
+      "bytes": 53
+    },
+    "docs/tests/writer-desktopcache/controles-3/rust-kern.log.gz": {
+      "sha256": "9c187337c0c597936c8db6aa5ec1aebfebb0d6490830765f2da2eeefefe3a047",
+      "inhoud_sha256": "996a21788a195ff5c391ef3dbe55a14a87de4c63b3e21f5730c7d6dba3ab6214",
+      "bytes": 130
+    },
+    "docs/tests/writer-desktopcache/controles-3/opdrachten.log.gz": {
+      "sha256": "aebe9c229e8376b67a95a3334feb44b01105d21c8e26d0bec658ae1172dfdf16",
+      "inhoud_sha256": "35c4e59deeccfe1952ffb639f6070c68b7778bdd3fce798d880250a673e0fe31",
+      "bytes": 5191
+    },
+    "docs/tests/writer-desktopcache/controles-3/rapport.json.gz": {
+      "sha256": "edf220bfad013239c360c83153492bc8537845ccf9cba29fbc1fdda325cbc1eb",
+      "inhoud_sha256": "754375a88b1bf628f0470a35d01dfc2ce72c451db6fb54c81a6d2c0c38ebe28e",
+      "bytes": 2045
+    },
+    "docs/tests/writer-desktopcache/controles-3/frontend.log.gz": {
+      "sha256": "232998e058ace8109a3eb2cd3434704ce4cd29b483aaacc6352a1a68ccb82923",
+      "inhoud_sha256": "a71bf16273435630c5186fd21eba528ff3d15282be769eada6d0af0cedfebe02",
+      "bytes": 29886
+    },
+    "docs/tests/writer-desktopcache/controles-3/typescript.log.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "inhoud_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tests/writer-desktopcache/controles-3/engines.log.gz": {
+      "sha256": "6de11f78a95927519636e824a5a448ed252a867685f2835d2da16f2c7370eb14",
+      "inhoud_sha256": "74e7a56285e814d8b1e87098e3f1a0c5b556e2e653f809d19ad6b5ab09032af4",
+      "bytes": 153
+    },
+    "docs/tests/writer-desktopcache/controles-4/weekversie.log.gz": {
+      "sha256": "6256755c04fe7725980a7619a2938a1d49da8e0b56f33001875e528fb89f4015",
+      "inhoud_sha256": "cdc66b55750c5df95c3c7c4c15d4b84c76d94175514359cba67fec5a7b2caab2",
+      "bytes": 53
+    },
+    "docs/tests/writer-desktopcache/controles-4/rust-kern.log.gz": {
+      "sha256": "05185f1c57c26264f71b85b5a614efb2467e95ecbc517bef162e6aba6865b382",
+      "inhoud_sha256": "51302acc5845f6220407d387e6423850b7f51639c7368d2468004d67effa6f93",
+      "bytes": 28800
+    },
+    "docs/tests/writer-desktopcache/controles-4/desktop.log.gz": {
+      "sha256": "a77c769ba7953d435b327cee93ac07995317a9b1867140b6e6e085f2510b2e60",
+      "inhoud_sha256": "a90dd87a02265fc0364aeff4ef29b9b34eea15b3ecadc92053292b75bee21385",
+      "bytes": 66812
+    },
+    "docs/tests/writer-desktopcache/controles-4/opdrachten.log.gz": {
+      "sha256": "aebe9c229e8376b67a95a3334feb44b01105d21c8e26d0bec658ae1172dfdf16",
+      "inhoud_sha256": "35c4e59deeccfe1952ffb639f6070c68b7778bdd3fce798d880250a673e0fe31",
+      "bytes": 5191
+    },
+    "docs/tests/writer-desktopcache/controles-4/rapport.json.gz": {
+      "sha256": "13dd5270e3b5e2bc0559f357fff6f8baf1b271fdc8c8f9110dc3f408c2a4d62e",
+      "inhoud_sha256": "251b44cd695972ba7f43db4e2e04b68d5e981d1e2121df9630dc1d6440110f94",
+      "bytes": 3344
+    },
+    "docs/tests/writer-desktopcache/controles-4/python-referenties.log.gz": {
+      "sha256": "0176f8e522cc54517d75fc91bf377a80a75d63761805e41e7fec1ba633b30946",
+      "inhoud_sha256": "a706f050075818347d67455d0bc05dc26b253c218db3dc1fe13dbffa091378a0",
+      "bytes": 16862
+    },
+    "docs/tests/writer-desktopcache/controles-4/frontend.log.gz": {
+      "sha256": "232998e058ace8109a3eb2cd3434704ce4cd29b483aaacc6352a1a68ccb82923",
+      "inhoud_sha256": "a71bf16273435630c5186fd21eba528ff3d15282be769eada6d0af0cedfebe02",
+      "bytes": 29886
+    },
+    "docs/tests/writer-desktopcache/controles-4/typescript.log.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "inhoud_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tests/writer-desktopcache/controles-4/engines.log.gz": {
+      "sha256": "6de11f78a95927519636e824a5a448ed252a867685f2835d2da16f2c7370eb14",
+      "inhoud_sha256": "74e7a56285e814d8b1e87098e3f1a0c5b556e2e653f809d19ad6b5ab09032af4",
+      "bytes": 153
+    },
+    "docs/tests/writer-desktopcache/gui-afgekeurd-import/referentie-a.log.gz": {
+      "sha256": "f8a395e2901f0c0e632d0394ed8301bcfec1a43393f5b23129e9fde90fd05fcf",
+      "inhoud_sha256": "aca3c298c53c79ba9322dca52712ffc558c0de5ed5ab53c265ca409c42f16cb7",
+      "bytes": 1101
+    },
+    "docs/tests/writer-desktopcache/gui-afgekeurd-import/uitkomsten.json.gz": {
+      "sha256": "cd904faab5c11bfc2f0fa940a379739cb36ecb8bfde59e540b668d58c82a7927",
+      "inhoud_sha256": "357c364956b51690095c3ea87a047a3b7bb69adf3741dae76dd86aedacbf40c3",
+      "bytes": 1325
+    },
+    "docs/tests/writer-desktopcache/gui-afgekeurd-import/referentie-a-rss.json.gz": {
+      "sha256": "b4d4a414df40ff7a32393ec93d7157877e90ceb4451a87ea5a381ddafe4c78d8",
+      "inhoud_sha256": "bce130453be1a0c3a1361f13219d6c0b3428c8a26da7363e025fb5973ee0c033",
+      "bytes": 2155
+    },
+    "docs/tests/writer-desktopcache/gui/referentie-a.log.gz": {
+      "sha256": "48877e2018acacfd69dc19a75b88e35c4911566233464980a78761d0948579aa",
+      "inhoud_sha256": "e0b53d7b8b61dea8a2c64ea5ae99c6436e10fe4b87629d84a2b8509cc2f3de08",
+      "bytes": 3645
+    },
+    "docs/tests/writer-desktopcache/gui/uitkomsten.json.gz": {
+      "sha256": "bdf45f56a2989ea256e92b4618fa4a81ff88fcca6f75731fe757a85468dcbf78",
+      "inhoud_sha256": "3a4ed26e9e587c147477192e90c2e87baa36215258c7e5fe9aec022b76cad8e2",
+      "bytes": 5269
+    },
+    "docs/tests/writer-desktopcache/gui/referentie-b-rss.json.gz": {
+      "sha256": "e23485a5e47ad9529d97278c9db49c6a0c0ed739a0a0a6d1bb2d05fbf9f99b4a",
+      "inhoud_sha256": "d8d1ee20579c32073915106939702be904633143f847c1c6ecb48c875a0a617d",
+      "bytes": 173765
+    },
+    "docs/tests/writer-desktopcache/gui/referentie-a-rss.json.gz": {
+      "sha256": "4f4acededed32b2e64ec711bacf559680b6a62c5bde33cd6f9ecf4f5ddff1f35",
+      "inhoud_sha256": "2159381259ccd959516c1036cb5cf05b26afcab0c811425d5db8d9b5be652dbc",
+      "bytes": 180046
+    },
+    "docs/tests/writer-desktopcache/gui/cache-b.log.gz": {
+      "sha256": "a7fe181b7410c71c06975474389cc976c6f1d8cc7ad86d6c7f071cd6deb580bd",
+      "inhoud_sha256": "c885a5372f55eba7626429d8cfdbbdebb7a012a1562409a963c78cafe94c1a47",
+      "bytes": 3645
+    },
+    "docs/tests/writer-desktopcache/gui/cache-a.log.gz": {
+      "sha256": "8406d4180d76f1410d7473f7f5cb0e65b5c9013fbec2121737554525da095cdd",
+      "inhoud_sha256": "a399ffe9a38663f5782791d72147fbc7f344f7cd2a9eb47ddc8d34b56a4c9468",
+      "bytes": 3645
+    },
+    "docs/tests/writer-desktopcache/gui/referentie-b.log.gz": {
+      "sha256": "06817d37898bf1499f93a9079e832a7a45cc631b34d09faacf31f092baa4bab0",
+      "inhoud_sha256": "39f4cecb851830424da7e14a6fcc6cb195f5f1bee5b355c62111dcfa5aedfddc",
+      "bytes": 3645
+    },
+    "docs/tests/writer-desktopcache/gui/cache-a-rss.json.gz": {
+      "sha256": "3cdcebb45eb5330221d0ebd057b330646586b86dca8187c4c9df5e2d7e5e3b22",
+      "inhoud_sha256": "233949f760201042351531fc9f38c59c63d2674a0362c47e317fb4146432b1e5",
+      "bytes": 180616
+    },
+    "docs/tests/writer-desktopcache/gui/cache-b-rss.json.gz": {
+      "sha256": "7ab872f234f8579f6cfc04ee3c706e74a78a015602fed12aaffcc945a371302d",
+      "inhoud_sha256": "e6d80ed85bb2e38a2654e67f55e23ba9fcf5c3ed9204f88c0d19f04169c773e9",
+      "bytes": 179119
+    },
+    "docs/tests/writer-desktopcache/gui/referentie-a/profiel.json.gz": {
+      "sha256": "4338e376dcb86355dbd4d48df579a8a3fa3234a23a2c6d0cac723b04b7e97f44",
+      "inhoud_sha256": "d5df126cfe23062292c9ed0be82ac0e86bc6bd8678be25f5450c58f249a72491",
+      "bytes": 2908
+    },
+    "docs/tests/writer-desktopcache/gui/referentie-a/profiel.png.gz": {
+      "sha256": "022832a0eb18f316c6ab821055ac0e324ee6b2ed49629f0b67a3a9f4394a730a",
+      "inhoud_sha256": "0962e74f78128a2fcc6190c9c465fdae87d12beff575168015e7cb2b581b2084",
+      "bytes": 118018
+    },
+    "docs/tests/writer-desktopcache/gui/referentie-a/programma.log.gz": {
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "inhoud_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "bytes": 134
+    },
+    "docs/tests/writer-desktopcache/gui/referentie-a/Prestatieproef.docx.gz": {
+      "sha256": "d513cd05cb2dd662086d747c915b197ce61a6c0b6e5c1a7e7bd7bfdb64d308c6",
+      "inhoud_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "bytes": 73262
+    },
+    "docs/tests/writer-desktopcache/gui/referentie-a/eerste-gelijke-tekst.png.gz": {
+      "sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533",
+      "inhoud_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "bytes": 31219
+    },
+    "docs/tests/writer-desktopcache/gui/cache-a/profiel.json.gz": {
+      "sha256": "3b6ecd7637b124dc06fd579f1584bf96ad3e29a72c1b788726955977ce6f5783",
+      "inhoud_sha256": "0ea523ce339196c6f18bf9f7e847b679e289042ed5eb29dffc886d0c1299edcf",
+      "bytes": 2882
+    },
+    "docs/tests/writer-desktopcache/gui/cache-a/profiel.png.gz": {
+      "sha256": "565ece24b660b67c7480eff5dacb906233c63915ffccfb04d0566262750f28a2",
+      "inhoud_sha256": "e168d203efda6cbe5c5d92545adb98df08ecb0f05bb51870c118b6d2313dd310",
+      "bytes": 118017
+    },
+    "docs/tests/writer-desktopcache/gui/cache-a/programma.log.gz": {
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "inhoud_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "bytes": 134
+    },
+    "docs/tests/writer-desktopcache/gui/cache-a/Prestatieproef.docx.gz": {
+      "sha256": "d513cd05cb2dd662086d747c915b197ce61a6c0b6e5c1a7e7bd7bfdb64d308c6",
+      "inhoud_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "bytes": 73262
+    },
+    "docs/tests/writer-desktopcache/gui/cache-a/eerste-gelijke-tekst.png.gz": {
+      "sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533",
+      "inhoud_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "bytes": 31219
+    },
+    "docs/tests/writer-desktopcache/gui/referentie-b/profiel.json.gz": {
+      "sha256": "b938b37a15f0b36bf1a359144e9ee4a7e2693b6856cd8f466a5525d9274b81d9",
+      "inhoud_sha256": "18db1a9b40d8d26ad5bd4443f8204679a57fcaab33a4809622a8cd4d7036de41",
+      "bytes": 2882
+    },
+    "docs/tests/writer-desktopcache/gui/referentie-b/profiel.png.gz": {
+      "sha256": "c62fee36f1fcc2ebf404fdca96e255ba2c663e58b1a1ba20c2ffd0997901d9a7",
+      "inhoud_sha256": "ac8b053ab6440d1469f1ad2a0c3838b85a4de5336a1eb31e701d93439c0976d8",
+      "bytes": 118057
+    },
+    "docs/tests/writer-desktopcache/gui/referentie-b/programma.log.gz": {
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "inhoud_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "bytes": 134
+    },
+    "docs/tests/writer-desktopcache/gui/referentie-b/Prestatieproef.docx.gz": {
+      "sha256": "d513cd05cb2dd662086d747c915b197ce61a6c0b6e5c1a7e7bd7bfdb64d308c6",
+      "inhoud_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "bytes": 73262
+    },
+    "docs/tests/writer-desktopcache/gui/referentie-b/eerste-gelijke-tekst.png.gz": {
+      "sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533",
+      "inhoud_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "bytes": 31219
+    },
+    "docs/tests/writer-desktopcache/gui/cache-b/profiel.json.gz": {
+      "sha256": "5ff2922561239b6d29e9be704f0a5684f7308cbcecce49ab229bf745bb492274",
+      "inhoud_sha256": "d8002f7d2975960e020f3443c84851e6c6bf6f988d44a017adfbc769c36f9d6a",
+      "bytes": 2908
+    },
+    "docs/tests/writer-desktopcache/gui/cache-b/profiel.png.gz": {
+      "sha256": "8e5083b10d317aa9994552708befb6f148178de56c58c6cf9874311749e16e5b",
+      "inhoud_sha256": "1a0374973f2f9469f384863bae675eb5aca530ca85acc1ee3011f653e6f77963",
+      "bytes": 118046
+    },
+    "docs/tests/writer-desktopcache/gui/cache-b/programma.log.gz": {
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "inhoud_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "bytes": 134
+    },
+    "docs/tests/writer-desktopcache/gui/cache-b/Prestatieproef.docx.gz": {
+      "sha256": "d513cd05cb2dd662086d747c915b197ce61a6c0b6e5c1a7e7bd7bfdb64d308c6",
+      "inhoud_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "bytes": 73262
+    },
+    "docs/tests/writer-desktopcache/gui/cache-b/eerste-gelijke-tekst.png.gz": {
+      "sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533",
+      "inhoud_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "bytes": 31219
+    },
+    "docs/tests/writer-desktopcache/fasen/referentie.log.gz": {
+      "sha256": "ee3d31bd016fc3bc57969c61b19104f73fbe42abbc3d3096db56cf61a9ba687c",
+      "inhoud_sha256": "62895bdcea224a75ac81d8fd7b6395370930a0746bc1e531069aa2ab4382bef4",
+      "bytes": 3645
+    },
+    "docs/tests/writer-desktopcache/fasen/cache.log.gz": {
+      "sha256": "46dace83cfebecf100ca24e490bc02f3df8d297555f401957a8145377a8acc37",
+      "inhoud_sha256": "19ca66c1e516f2a6d3cd6ea726d833f323e6e061ef6b16bc83d920ba6b31f156",
+      "bytes": 3645
+    },
+    "docs/tests/writer-desktopcache/fasen/rapport.json.gz": {
+      "sha256": "20e992098b6824ff8e1fa13adf6a0086b9e2f759dca816a2c89c9ad64651cbe2",
+      "inhoud_sha256": "eb6491122983c25e43a48249a729586b3eeadeceda0c2364bfe58ef15d04ab09",
+      "bytes": 2603
+    },
+    "docs/tests/writer-desktopcache/fasen/referentie/profiel.json.gz": {
+      "sha256": "536c4a1d538a6f3569d68dd61adca9a93185b822fde1ad1f195205885a4d3eda",
+      "inhoud_sha256": "7733859a04fb23a9a8083ffa6715e30f81ec6439dde6ee957637662cee2c5208",
+      "bytes": 33607
+    },
+    "docs/tests/writer-desktopcache/fasen/referentie/profiel.png.gz": {
+      "sha256": "565ece24b660b67c7480eff5dacb906233c63915ffccfb04d0566262750f28a2",
+      "inhoud_sha256": "e168d203efda6cbe5c5d92545adb98df08ecb0f05bb51870c118b6d2313dd310",
+      "bytes": 118017
+    },
+    "docs/tests/writer-desktopcache/fasen/referentie/programma.log.gz": {
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "inhoud_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "bytes": 134
+    },
+    "docs/tests/writer-desktopcache/fasen/referentie/Prestatieproef.docx.gz": {
+      "sha256": "d513cd05cb2dd662086d747c915b197ce61a6c0b6e5c1a7e7bd7bfdb64d308c6",
+      "inhoud_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "bytes": 73262
+    },
+    "docs/tests/writer-desktopcache/fasen/referentie/eerste-gelijke-tekst.png.gz": {
+      "sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533",
+      "inhoud_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "bytes": 31219
+    },
+    "docs/tests/writer-desktopcache/fasen/cache/profiel.json.gz": {
+      "sha256": "8a1a9b419dfd4d672de04121c4012fe7e8d96bb92dcd75e5abe0c6fc200dbff4",
+      "inhoud_sha256": "98b3359f52455bbbc82172d69410b2c0cfd11f4ae1895e0404f745e3f10c6539",
+      "bytes": 34997
+    },
+    "docs/tests/writer-desktopcache/fasen/cache/profiel.png.gz": {
+      "sha256": "022832a0eb18f316c6ab821055ac0e324ee6b2ed49629f0b67a3a9f4394a730a",
+      "inhoud_sha256": "0962e74f78128a2fcc6190c9c465fdae87d12beff575168015e7cb2b581b2084",
+      "bytes": 118018
+    },
+    "docs/tests/writer-desktopcache/fasen/cache/programma.log.gz": {
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "inhoud_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "bytes": 134
+    },
+    "docs/tests/writer-desktopcache/fasen/cache/Prestatieproef.docx.gz": {
+      "sha256": "d513cd05cb2dd662086d747c915b197ce61a6c0b6e5c1a7e7bd7bfdb64d308c6",
+      "inhoud_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "bytes": 73262
+    },
+    "docs/tests/writer-desktopcache/fasen/cache/eerste-gelijke-tekst.png.gz": {
+      "sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533",
+      "inhoud_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "bytes": 31219
+    },
+    "docs/tests/writer-desktopcache/selectie/snel-getypt-bewaard.png.gz": {
+      "sha256": "ec3d363c9a8f5131b5dc59b7a0ee527b39aebdcc1edb343a04dfcbec51590fa9",
+      "inhoud_sha256": "f0ce311063b3125e5883335dda039762792551a4ba3ef132268a169656a13aee",
+      "bytes": 159800
+    },
+    "docs/tests/writer-desktopcache/selectie/programma.log.gz": {
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "inhoud_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "bytes": 134
+    },
+    "docs/tests/writer-desktopcache/selectie/rapport.json.gz": {
+      "sha256": "ac03220ef6b2a48bb202480ed334285ef458a00b64d883f1fbca487de79853e7",
+      "inhoud_sha256": "355346716cfb8ce4d208f4a5a831cb1f9a55d640e5640e5e136660bdc3e30034",
+      "bytes": 21687
+    },
+    "docs/tests/writer-desktopcache/selectie/nieuw-na-laat-antwoord.png.gz": {
+      "sha256": "eeab9fca367b2784e871f1ef76bfc882836e257eb4a0e9b1baaed59e74da27d0",
+      "inhoud_sha256": "82447087e926411d664cd1354e5a69169b25fc395d0a8322cf50a4f74ba932ca",
+      "bytes": 76059
+    },
+    "docs/tests/writer-desktopcache/selectie/invoer-redo.png.gz": {
+      "sha256": "6bb737aa1e6ce4f027ba18fd4f4ba22f0a0b3f0b884fff1e8c0d6d0894fc8c49",
+      "inhoud_sha256": "9c2d9cc86910bb6a858a64c97a55b0d59701534c01cba434b689b3df77988b2c",
+      "bytes": 160405
+    },
+    "docs/tests/writer-desktopcache/selectie/Ontwerpnotitie.docx.gz": {
+      "sha256": "10691111066f3defa7793c4acefa61d0b32e4ee308a9ebc988c10e83dc0d48a7",
+      "inhoud_sha256": "ad4210189f3834bfdf51f03867f849305a74ed1da094bed7f09489a5969c620d",
+      "bytes": 43599
+    },
+    "docs/tests/writer-desktopcache/bronnen.json.gz": {
+      "sha256": "c9c2d1b7ccd5ed17aec6023253d6f98d3fd558c8aac87c0e3bd57d4a2466fb83",
+      "inhoud_sha256": "c7443eb83a9b9ad00c69140062c12200a4c61480e7cc47b24c5a4703175813cb",
+      "bytes": 1828
+    },
+    "docs/tests/writer-desktopcache/fasen-uitgevoerd.py.gz": {
+      "sha256": "3479f5425f0a2172e61b773faeb3717df96da7f0709098f6db6f00c8f703e0c6",
+      "inhoud_sha256": "acacbed2d0d14285ad6b5450ff6b53364292bd98942dd8154fb4754f186a880e",
+      "bytes": 24897
+    },
+    "docs/tests/writer-desktopcache/frontend-afkeuring.json.gz": {
+      "sha256": "540e4ae60c271a6ad8d362591b6f4be2b3c7c957b38f8e5d6fb909f7a7c93159",
+      "inhoud_sha256": "016fa0523fae2d7edb6992be914d3eb88f38f3fa9eddf032e7548e0098024fde",
+      "bytes": 422
+    },
+    "docs/tests/writer-desktopcache/python-definitief.log.gz": {
+      "sha256": "cb310541ba463594924432c890cbdb9412003d1e7bac508cae73954aeaa69a82",
+      "inhoud_sha256": "5098e3483135c699cb6cd605c25fe57aa24eb7f3f27d0c3dcffc5b2572beab10",
+      "bytes": 16862
+    },
+    "docs/tests/writer-desktopcache/frontend-gerichte-herhaling.log.gz": {
+      "sha256": "253ef5af00f7c66cd801577a4b1c944e70330d54c4e562f76c29804fae37212c",
+      "inhoud_sha256": "183b3e587f77fd622c822ef2ee2b388c0f3b056fc885191e9d06acdfb56a5ed0",
+      "bytes": 353
+    },
+    "docs/tests/writer-desktopcache/fasen-samenvatting.json.gz": {
+      "sha256": "c6133cbcd41df71521606d0ad4f67b5b023aa82951929b68a44f856e04405b68",
+      "inhoud_sha256": "b59e96c1e31c6f1bd10a381df7e7737ba8029b94ffe8edd8774b798a1cd0d31b",
+      "bytes": 1420
+    },
+    "docs/tests/writer-desktopcache/cargo-opzetafkeuring.json.gz": {
+      "sha256": "4f72146e059e53946afb460c6574c73bf3ee738456352f84877456db8864aa61",
+      "inhoud_sha256": "936a6d39129059632ba3784c64f4377a5b8d570e82faf1e7a8b40a8d2932d73d",
+      "bytes": 370
+    },
+    "docs/tests/writer-desktopcache/raster-referentiescript.py.gz": {
+      "sha256": "cd2b45747f658acd46f96626b210bcfd72783e30c61b1eabd757356fe6c919ef",
+      "inhoud_sha256": "413c2cf48f213dc7818993b131e3567264fe25233cd2299bc272916eaae27449",
+      "bytes": 24277
+    },
+    "docs/tests/writer-desktopcache/selectie.log.gz": {
+      "sha256": "32893ff4e004d3529708b1f982043f3b9a9df3ffd1692d105a01ac932d410662",
+      "inhoud_sha256": "2c6b9420b49ea060f4d25f27bcae80f943a2c2607aa23957f76b11bd6aad8371",
+      "bytes": 3576
+    },
+    "docs/tests/writer-desktopcache/bouwacceptatie.json.gz": {
+      "sha256": "e7b0487d96af58b3107e44d102fd2727344813e6456c24227f9398ad94b18bab",
+      "inhoud_sha256": "429b4b7b8e29f8a88437e890a49a0a13770b8a0b64642931d9a299f394e6661f",
+      "bytes": 459
+    },
+    "docs/tests/writer-desktopcache/gebouwd.json.gz": {
+      "sha256": "bc054e8ef5660b2f641ee16ddbc9e2833e958b9ac13744a1d413bf8be2b1a90e",
+      "inhoud_sha256": "a0536e479c595c93b6d3e88d905d583127c19990ac770ecfd9b8485750066d23",
+      "bytes": 2056
+    },
+    "docs/tests/writer-desktopcache/python-na-guihernoeming.log.gz": {
+      "sha256": "d0e6c3d083732f1bc68e1ca7bc5a7cf425443861d87247f878352aa121745102",
+      "inhoud_sha256": "974b900997d2e5a75e085a843969ead97a80855b35f402a47b2cc038949ee0b2",
+      "bytes": 16862
+    },
+    "docs/tests/writer-desktopcache/cargo-testopzetafkeuring.json.gz": {
+      "sha256": "9b12d83102f2ad3b9bb1cb79ce44f7d554f1f330df9f05da29aef74808573fa5",
+      "inhoud_sha256": "ef109f4ad9b5421a6b1b6f3574d5eba81e6b3d52910cb1dc86a8df033f0904b1",
+      "bytes": 574
+    },
+    "docs/tests/writer-desktopcache/vervolg-onuitgevoerd.py.gz": {
+      "sha256": "d88e883d3081376d99f3156910ffe93601d2093800c1104f91c4edd4016f90df",
+      "inhoud_sha256": "0dbf6202ae59d171e29b69ff7c36e0f6f0ef077862990ce0c7b76ce70175be6e",
+      "bytes": 2170
+    },
+    "docs/tests/writer-desktopcache/gui-vergelijking.json.gz": {
+      "sha256": "118606eebd81b6fb16e8e11b36bb3f6d866ab9ccc7a8f7d1ed017575e4ade898",
+      "inhoud_sha256": "c755254b5301a4bb429f9b31f50c47ab0d1e35dd521b20f7c43689df7a4f3ce7",
+      "bytes": 2689
+    },
+    "docs/tests/writer-desktopcache/gui-opzetafkeuring.json.gz": {
+      "sha256": "7853a52336a9155bf2520c821f8d1e08c050defac73687aa938d9d55dde0af43",
+      "inhoud_sha256": "20612166040c2a8a2ba3379ca6b157d8f47d80c9dc62dfaa3da227d5d186dfe0",
+      "bytes": 405
+    },
+    "docs/tests/writer-desktopcache/selectie-uitkomst.json.gz": {
+      "sha256": "4c2665b9947fdabb7a72d5479f57a5ab36abc1ebdd9234c2fdd4bf71effa376d",
+      "inhoud_sha256": "3e32146fab8f22f51fd74b3c82a6525f109e2305acd5dabd83868f855ae45c38",
+      "bytes": 660
+    },
+    "docs/tests/writer-desktopcache/afgekeurd/reden.json.gz": {
+      "sha256": "70bc5505050fd3eef0e29329229ff749e6738dd12bc627cdb1ef34133d97bd45",
+      "inhoud_sha256": "c2150da9666f9deba8eaa743e5b0b5f097a5b3d095ef52f91f778f47a503df21",
+      "bytes": 311
+    },
+    "docs/tests/writer-desktopcache/bron/native/vendor/docx-edit/src/deterministic.rs.gz": {
+      "sha256": "638ee58030c3b3e30e7803f5eed9b2d74030e1d5da9183e5c5eb252c2bfbb901",
+      "inhoud_sha256": "443044325251c27f79330e166c06fd571cc38344d8553f8c236d3ee67b72729e",
+      "bytes": 28107
+    },
+    "docs/tests/writer-desktopcache/bron/native/vendor/docx-edit/src/lib.rs.gz": {
+      "sha256": "9acd7db31613bdf26a34c843e28959872a3f4e84197f96bf9f3bc597c5dd6488",
+      "inhoud_sha256": "49f7abbda34b476bda4589be2ef70423489f9087bdb8a1ea26db6a68519051f3",
+      "bytes": 129242
+    },
+    "docs/tests/writer-desktopcache/bron/native/vendor/docx-edit/src/clipboard_batch.rs.gz": {
+      "sha256": "344cf8fb92d8463372d4d82f20cdf4d8ca4261387556595c92a75322867f1f5a",
+      "inhoud_sha256": "353b8d511fe67539d2b1b84f0b975f2252b910f834478e71a345c9ffc6c908b9",
+      "bytes": 9377
+    },
+    "docs/tests/writer-desktopcache/bron/native/crates/office-writer-plakken/src/bronspiegel.rs.gz": {
+      "sha256": "c603b53cf2771c876a76975fb620f8a1bae6f4bcb61188a004caaea0e9eb0577",
+      "inhoud_sha256": "ebbf6c9c574a8b114b4d0972860b6431a80418eeb53a0c6510c4681113762c70",
+      "bytes": 24407
+    },
+    "docs/tests/writer-desktopcache/bron/src-tauri/Cargo.toml.gz": {
+      "sha256": "2f0f1265e701aff290972633282066504b837064016b4e335b57274548525344",
+      "inhoud_sha256": "dab406ef2636c3cca82344a18553857053051236a365a027a80ac18de439a00e",
+      "bytes": 2564
+    },
+    "docs/tests/writer-desktopcache/bron/src-tauri/Cargo.lock.gz": {
+      "sha256": "625ad6cf735278402f92f437b3ec93375b4f97e0bb70ffafb0c72e82cf1c9ef1",
+      "inhoud_sha256": "44e7eadfceeab6d50e643fbd4eb337c6d17077e5dd9e9d01a97837e5d026d87b",
+      "bytes": 162564
+    },
+    "docs/tests/writer-desktopcache/bron/native/Cargo.toml.gz": {
+      "sha256": "73c181b7c6d7d7b9f47f830a5b94967f696ce3f7a003b2fb44ee67b5ccff788c",
+      "inhoud_sha256": "4a6bae7e14076f4b50ac5d90b53bccbf5648cf66ca71f10741f9bf3f22672728",
+      "bytes": 2194
+    },
+    "docs/tests/writer-desktopcache/bron/native/Cargo.lock.gz": {
+      "sha256": "414ceb91b1a4291636257f034d440a475dc6352d9481f4718bf6e28cc3003204",
+      "inhoud_sha256": "369bd0b7a22d184e50688c86c925255e1cdb19a7c174b127d1c1da62e2b06a1f",
+      "bytes": 232837
+    },
+    "docs/tests/writer-desktopcache/bron/package.json.gz": {
+      "sha256": "d484163d316a5f29a87e890b38dfdf56cef95cfe52c95974475067d9c071e6f6",
+      "inhoud_sha256": "1c290a2bffd99b75ec90f21a83127aa5194582ffa58acff8399507264ad49eaa",
+      "bytes": 2880
+    },
+    "docs/tests/writer-desktopcache/bron/versie.json.gz": {
+      "sha256": "101ea75edf60b3bcf24ee2b5e661fe43bc7362accd7577bc9f3b310c5c9ac347",
+      "inhoud_sha256": "4ef1d9dadcb421fe4d64c13775058b067f2b0670f6ebbe46f4eab6f16833d431",
+      "bytes": 105
+    },
+    "docs/tests/writer-desktopcache/kandidaat.png": {
+      "sha256": "e168d203efda6cbe5c5d92545adb98df08ecb0f05bb51870c118b6d2313dd310",
+      "bytes": 118017
+    }
+  }
+}
