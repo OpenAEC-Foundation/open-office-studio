@@ -1,0 +1,9 @@
+# Werkelijk alpha-31-venster blijft afgekeurd
+
+Het [Linux-CI-pakket](herkomst.json) is tegen het vaste Git-archief van a574614422b6dfd125c97980a69a82a4cbfa46f9 gecontroleerd. Beide programma’s zijn op versie en hash vastgezet; de drie daadwerkelijk verpakte parsernotices zijn bytegelijk. Dat keurt de GUI niet goed.
+
+De [eerste vensterproef](eerste-proef/rapport.json) faalt bij undo/bewaren. Haar eerste bronvoorwaarde slaat de tabel over en kan een bestaand leeg sectie-einde na de tabel aanzien voor de nieuwe alinea. De [diagnose](native-alpha31-venster-orakeldiagnose.json) bewijst dat die voorwaarde de ongesplitste oorspronkelijke fixture al accepteert. De eerste leegsnapshot is niet opgeslagen; daarmee is niet bewezen dat dit de enige oorzaak van die oorspronkelijke afkeuring is. De eerste proef blijft afgekeurd. Haar twee tussenschermen tonen bovendien nog verwerking en gelden niet als visuele eindgoedkeuring.
+
+De [strengere hertest](sterkere-bronvoorwaarde/rapport.json) gebruikt dezelfde vaste programmahash en dezelfde invoeropdrachten. Zij eist nu een direct aangrenzende lege alinea vóór de tabel en bewaart de leegsnapshot. De Vet-keuze wordt toegepast en opgeslagen, maar de onmiddellijk volgende 9 gaat verloren. Het eindscherm en de bewaarde bron tonen een vet-cursieve lege alinea. Er is geen wachtpauze of focusherstel tussen de lintklik en het typen toegevoegd.
+
+De nieuwe echte widgetregressie biedt muisklik en toets in dezelfde widgetronde aan, vóór de berichtafhandeling en focusoperatie. Zij reproduceert het toetsverlies op deze Writer-basis; de afzonderlijke lettertypeveldproef slaagt. Een correctie in een volgende bronstap vraagt zowel nieuwe widgetcontroles als een werkelijk releasevenster op de nieuwe programmahash. Deze oorspronkelijke afkeuringen en snapshots worden niet overschreven.

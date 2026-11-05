@@ -49,6 +49,7 @@ export function WS<K extends DocxCommandId>({
   naam: string;
   icoon: LucideIcon;
   groot?: boolean;
+  altijdLabel?: boolean;
 }) {
   const opdracht = useHerhaalbaar(id, useDocxCommand(id, args), args);
   const toets = useProfielToets()(sneltoets);
@@ -822,7 +823,7 @@ export function TekstStatus({
     let opruimen: (() => void)[] = [];
     let wachten: ReturnType<typeof setTimeout> | undefined;
     let frame = 0;
-    let selectieFrame = 0;
+    let selectieWachten: ReturnType<typeof setTimeout> | undefined;
     let gekoppeld: HTMLElement | null = null;
     const paginas = (ref: DocxEditorRef) => {
       const huidig = ref.getCurrentPage(),
@@ -851,7 +852,9 @@ export function TekstStatus({
         ".office-tekst .docx-editor__viewport",
       );
       const scroll = vlak?.querySelector(".docx-editor__scroll-container");
-      if (!ref || !vlak || !scroll || !ref.getDocument()) return;
+      // Een herstelvenster kan de editor tijdelijk in viewersessie houden.
+      // Koppel pas aan de bewerksessie; getDocument gooit in die tussentijd.
+      if (!ref || !vlak || !scroll || !ref.getEditorRef()?.getYrsSession()) return;
       gekoppeld = vlak;
       setDoel(vlak);
       tel(ref);
@@ -862,18 +865,18 @@ export function TekstStatus({
       scroll.addEventListener("scroll", opScroll, { passive: true });
       opruimen = [
         () => scroll.removeEventListener("scroll", opScroll),
-        ref.onContentChange(() => tel(ref)),
+        ref.onDocumentChange(() => tel(ref)),
         ref.onSelectionChange(() => {
           opScroll();
-          // De selectietekst loopt bij Shift+pijl en dubbelklikken één stap
-          // achter op de melding; pas in het volgende frame lezen.
-          cancelAnimationFrame(selectieFrame);
-          selectieFrame = requestAnimationFrame(() => {
+          // Tijdens slepen niet elke frame een grote selectie uitlezen en
+          // opnieuw tellen. Na de laatste beweging is ook de tekst bijgewerkt.
+          clearTimeout(selectieWachten);
+          selectieWachten = setTimeout(() => {
             const tekst = ref.getSelectionInfo()?.selectedText ?? "";
             setSelectie(tekst ? telTekst(tekst.split(/\r?\n/)) : null);
-          });
+          }, 150);
         }),
-        () => cancelAnimationFrame(selectieFrame),
+        () => clearTimeout(selectieWachten),
       ];
     };
     // Het weergavevlak wordt opnieuw opgebouwd, bijvoorbeeld bij de navigator.

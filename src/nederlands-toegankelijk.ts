@@ -74,11 +74,69 @@ const rekenbladToegankelijk = {
   },
 };
 
+// Aanvullingen voor de documentengine 0.5.
+const tekst05 = {
+  "toolbar": {
+    "imageWrap": {
+      "current": "Huidig"
+    }
+  },
+  "dialogs": {
+    "objectGeometry": {
+      "left": "Links (px)",
+      "top": "Boven (px)",
+      "width": "Breedte (px)",
+      "height": "Hoogte (px)"
+    }
+  },
+  "trackedChanges": {
+    "agent": "bewerker",
+    "previousChange": "Vorige wijziging",
+    "nextChange": "Volgende wijziging",
+    "changeBy": "Wijziging van {author}",
+    "changeCount": "{count, plural, one {# wijziging} other {# wijzigingen}}",
+    "acceptAll": "Alles accepteren",
+    "acceptAllChanges": "Alle wijzigingen accepteren"
+  },
+  "errors": {
+    "stillOpening": "Dit document wordt nog geopend. Je kunt typen zodra het gereed is.",
+    "failedToLoadDescription": "Het bestand is mogelijk beschadigd of bevat onderdelen die deze editor nog niet kan lezen.",
+    "editorUnavailable": "De editor kon niet worden geladen",
+    "editorUnavailableDescription": "Controleer de verbinding en laad de pagina opnieuw.",
+    "reloadPage": "Pagina opnieuw laden"
+  },
+  "contextMenu": {
+    "addComment": "Opmerking",
+    "resizeImage": "Afbeelding vergroten of verkleinen",
+    "moveImage": "Afbeelding verplaatsen",
+    "columnWidth": "Kolombreedte"
+  },
+  "table": {
+    "viewGridlines": "Rasterlijnen tonen"
+  },
+  "editor": {
+    "documentInput": "Documentinvoer",
+    "documentPreview": "Documentvoorbeeld",
+    "closeNote": "Noot sluiten",
+    "recoverableText": "Herstelbare documenttekst",
+    "dismissDraft": "Concept sluiten",
+    "readDocumentText": "Documenttekst lezen",
+    "documentText": "Documenttekst",
+    "previousText": "Vorige tekst",
+    "nextText": "Volgende tekst",
+    "addComment": "Opmerking toevoegen",
+    "noteProperties": "Nooteigenschappen",
+    "recoverableTextNotice": "Deze tekst kon niet worden toegepast. Kopieer de tekst om je concept te bewaren en sluit daarna deze melding.",
+    "documentTextUnavailable": "De documenttekst is niet beschikbaar.",
+    "documentTextChanged": "De documenttekst is gewijzigd. Lees de tekst opnieuw."
+  }
+};
+
 const diaToegankelijk = {
   proposals: { targetLabel: "Wijzigen" },
 };
 
-export const tekstNlVolledig: TekstVertaling = voegSamen(voegSamen(tekstNl as Boom, tekstToegankelijk), tekstPaginaNl);
+export const tekstNlVolledig: TekstVertaling = voegSamen(voegSamen(voegSamen(tekstNl as Boom, tekstToegankelijk), tekstPaginaNl), tekst05);
 export const rekenbladNlVolledig: RekenbladVertaling = voegSamen(
   rekenbladNl as Boom,
   rekenbladToegankelijk,

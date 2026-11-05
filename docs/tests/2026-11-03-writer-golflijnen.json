@@ -1,0 +1,981 @@
+{
+  "datum": "2026-11-03",
+  "versie": "2026.45.10",
+  "basis": "9487100",
+  "programma_sha256": "efcf2008fef6bf8e5851599643bd857dc5d5d29b4d3d96ae193813878d69411a",
+  "wijzigingen": [
+    "Spellinggolflijnen begrenzen eerst per alinea, voordat individuele foutposities worden omgerekend. Het volledige foutenoverzicht blijft ongewijzigd.",
+    "Spellingoverlay en tabelgrepen zoeken alleen de zichtbare grenzen in de eigen verticale paginakolom. Andere hosts houden de algemene route.",
+    "Native GTK-kleurtest controleert de werkelijk gemeten kleurpixel en accepteert uitsluitend de gemeten lokale en Ubuntu-paletvormen."
+  ],
+  "controles": {
+    "vitest": {
+      "bestanden": 140,
+      "geslaagd": 1583
+    },
+    "typescript": "geslaagd",
+    "productiebouw": "geslaagd",
+    "native_linux_bouw": "geslaagd",
+    "module_opdrachten": "68 Writer-opdrachten, rekenbladopdrachten en 10 presentatieproeven geslaagd",
+    "woordpositie_regressie": {
+      "oude_route": 100000,
+      "nieuwe_route": 1200,
+      "alinea_s": 500,
+      "spelfouten": 50000,
+      "zichtbare_fouten": 100,
+      "zelfde_uitkomst": true,
+      "berekening_nieuwe_route": "2 × 500 alineagrenzen + 2 × 100 zichtbare fouten = 1200"
+    },
+    "paginaboxen": {
+      "paginas": 10000,
+      "uitkomst": "Gelijk aan onafhankelijke volledige selectie; tests van hoogtes, grenzen, gaten, onbekende indeling en omgekeerde volgorde geslaagd.",
+      "test_eis": "minder dan 35 metingen",
+      "werkelijk_gemeten": 14
+    },
+    "productie_gui": {
+      "versie": "2026.45.10",
+      "paginas": [
+        {
+          "nummer": 1,
+          "zoom": 1,
+          "golven": 24,
+          "grepen": 0,
+          "status": "LocalOpen Tekst StudioPage 1 of 5006,000 words, 35,500 charactersLanguage unknown · 6,000 spelling errorsTrack Changes: off100%ReadyCtrl+S",
+          "grepenInBeeld": 0,
+          "golflijnen": [
+            {
+              "x": 452.125,
+              "y": 326.859375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 489.15625,
+              "y": 326.859375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 526.171875,
+              "y": 326.859375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 563.1875,
+              "y": 326.859375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 600.203125,
+              "y": 326.859375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 637.21875,
+              "y": 326.859375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 674.234375,
+              "y": 326.859375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 711.25,
+              "y": 326.859375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 748.28125,
+              "y": 326.859375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 785.296875,
+              "y": 326.859375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 822.3125,
+              "y": 326.859375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 859.328125,
+              "y": 326.859375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 452.125,
+              "y": 1465.390625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 489.15625,
+              "y": 1465.390625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 526.171875,
+              "y": 1465.390625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 563.1875,
+              "y": 1465.390625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 600.203125,
+              "y": 1465.390625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 637.21875,
+              "y": 1465.390625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 674.234375,
+              "y": 1465.390625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 711.25,
+              "y": 1465.390625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 748.28125,
+              "y": 1465.390625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 785.296875,
+              "y": 1465.390625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 822.3125,
+              "y": 1465.390625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 859.328125,
+              "y": 1465.390625,
+              "width": 33.78125,
+              "height": 3
+            }
+          ]
+        },
+        {
+          "nummer": 250,
+          "zoom": 1,
+          "golven": 36,
+          "grepen": 4,
+          "status": "LocalOpen Tekst StudioPage 250 of 5006,000 words, 35,500 charactersEnglish (United States) · 6,000 spelling errorsTrack Changes: off100%ReadyCtrl+S",
+          "grepenInBeeld": 4,
+          "golflijnen": [
+            {
+              "x": 452.125,
+              "y": -797.375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 489.15625,
+              "y": -797.375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 526.171875,
+              "y": -797.375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 563.1875,
+              "y": -797.375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 600.203125,
+              "y": -797.375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 637.21875,
+              "y": -797.375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 674.234375,
+              "y": -797.375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 711.25,
+              "y": -797.375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 748.28125,
+              "y": -797.375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 785.296875,
+              "y": -797.375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 822.3125,
+              "y": -797.375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 859.328125,
+              "y": -797.375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 452.125,
+              "y": 341.15625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 489.15625,
+              "y": 341.15625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 526.171875,
+              "y": 341.15625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 563.1875,
+              "y": 341.15625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 600.203125,
+              "y": 341.15625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 637.21875,
+              "y": 341.15625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 674.234375,
+              "y": 341.15625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 711.25,
+              "y": 341.15625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 748.28125,
+              "y": 341.15625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 785.296875,
+              "y": 341.15625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 822.3125,
+              "y": 341.15625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 859.328125,
+              "y": 341.15625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 452.125,
+              "y": 1479.6875,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 489.15625,
+              "y": 1479.6875,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 526.171875,
+              "y": 1479.6875,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 563.1875,
+              "y": 1479.6875,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 600.203125,
+              "y": 1479.6875,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 637.21875,
+              "y": 1479.6875,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 674.234375,
+              "y": 1479.6875,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 711.25,
+              "y": 1479.6875,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 748.28125,
+              "y": 1479.6875,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 785.296875,
+              "y": 1479.6875,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 822.3125,
+              "y": 1479.6875,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 859.328125,
+              "y": 1479.6875,
+              "width": 33.78125,
+              "height": 3
+            }
+          ]
+        },
+        {
+          "nummer": 500,
+          "zoom": 1,
+          "golven": 24,
+          "grepen": 0,
+          "status": "LocalOpen Tekst StudioPage 500 of 5006,000 words, 35,500 charactersEnglish (United States) · 6,000 spelling errorsTrack Changes: off100%ReadyCtrl+S",
+          "grepenInBeeld": 0,
+          "golflijnen": [
+            {
+              "x": 452.125,
+              "y": -797.5625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 489.15625,
+              "y": -797.5625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 526.171875,
+              "y": -797.5625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 563.1875,
+              "y": -797.5625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 600.203125,
+              "y": -797.5625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 637.21875,
+              "y": -797.5625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 674.234375,
+              "y": -797.5625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 711.25,
+              "y": -797.5625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 748.28125,
+              "y": -797.5625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 785.296875,
+              "y": -797.5625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 822.3125,
+              "y": -797.5625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 859.328125,
+              "y": -797.5625,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 452.125,
+              "y": 340.9375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 489.15625,
+              "y": 340.9375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 526.171875,
+              "y": 340.9375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 563.1875,
+              "y": 340.9375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 600.203125,
+              "y": 340.9375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 637.21875,
+              "y": 340.9375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 674.234375,
+              "y": 340.9375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 711.25,
+              "y": 340.9375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 748.28125,
+              "y": 340.9375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 785.296875,
+              "y": 340.9375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 822.3125,
+              "y": 340.9375,
+              "width": 33.78125,
+              "height": 3
+            },
+            {
+              "x": 859.328125,
+              "y": 340.9375,
+              "width": 33.78125,
+              "height": 3
+            }
+          ]
+        },
+        {
+          "nummer": 250,
+          "zoom": 1.5,
+          "golven": 24,
+          "grepen": 4,
+          "status": "LocalOpen Tekst StudioPage 250 of 5006,000 words, 35,500 charactersEnglish (United States) · 6,000 spelling errorsTrack Changes: off150%ReadyCtrl+S",
+          "grepenInBeeld": 4,
+          "golflijnen": [
+            {
+              "x": 313.6875,
+              "y": -1305.0625,
+              "width": 50.6875,
+              "height": 5
+            },
+            {
+              "x": 369.21875,
+              "y": -1305.0625,
+              "width": 50.671875,
+              "height": 5
+            },
+            {
+              "x": 424.75,
+              "y": -1305.0625,
+              "width": 50.6875,
+              "height": 5
+            },
+            {
+              "x": 480.28125,
+              "y": -1305.0625,
+              "width": 50.6875,
+              "height": 5
+            },
+            {
+              "x": 535.8125,
+              "y": -1305.0625,
+              "width": 50.671875,
+              "height": 5
+            },
+            {
+              "x": 591.328125,
+              "y": -1305.0625,
+              "width": 50.6875,
+              "height": 5
+            },
+            {
+              "x": 646.859375,
+              "y": -1305.0625,
+              "width": 50.6875,
+              "height": 5
+            },
+            {
+              "x": 702.390625,
+              "y": -1305.0625,
+              "width": 50.671875,
+              "height": 5
+            },
+            {
+              "x": 757.921875,
+              "y": -1305.0625,
+              "width": 50.6875,
+              "height": 5
+            },
+            {
+              "x": 813.4375,
+              "y": -1305.0625,
+              "width": 50.6875,
+              "height": 5
+            },
+            {
+              "x": 868.96875,
+              "y": -1305.0625,
+              "width": 50.671875,
+              "height": 5
+            },
+            {
+              "x": 924.5,
+              "y": -1305.0625,
+              "width": 50.6875,
+              "height": 5
+            },
+            {
+              "x": 313.6875,
+              "y": 394.71875,
+              "width": 50.6875,
+              "height": 5
+            },
+            {
+              "x": 369.21875,
+              "y": 394.71875,
+              "width": 50.671875,
+              "height": 5
+            },
+            {
+              "x": 424.75,
+              "y": 394.71875,
+              "width": 50.6875,
+              "height": 5
+            },
+            {
+              "x": 480.28125,
+              "y": 394.71875,
+              "width": 50.6875,
+              "height": 5
+            },
+            {
+              "x": 535.8125,
+              "y": 394.71875,
+              "width": 50.671875,
+              "height": 5
+            },
+            {
+              "x": 591.328125,
+              "y": 394.71875,
+              "width": 50.6875,
+              "height": 5
+            },
+            {
+              "x": 646.859375,
+              "y": 394.71875,
+              "width": 50.6875,
+              "height": 5
+            },
+            {
+              "x": 702.390625,
+              "y": 394.71875,
+              "width": 50.671875,
+              "height": 5
+            },
+            {
+              "x": 757.921875,
+              "y": 394.71875,
+              "width": 50.6875,
+              "height": 5
+            },
+            {
+              "x": 813.4375,
+              "y": 394.71875,
+              "width": 50.6875,
+              "height": 5
+            },
+            {
+              "x": 868.96875,
+              "y": 394.71875,
+              "width": 50.671875,
+              "height": 5
+            },
+            {
+              "x": 924.5,
+              "y": 394.71875,
+              "width": 50.6875,
+              "height": 5
+            }
+          ]
+        },
+        {
+          "nummer": 1,
+          "zoom": 1.5,
+          "golven": 12,
+          "grepen": 0,
+          "status": "LocalOpen Tekst StudioPage 1 of 5006,000 words, 35,500 charactersEnglish (United States) · 6,000 spelling errorsTrack Changes: off150%ReadyCtrl+S",
+          "grepenInBeeld": 0,
+          "golflijnen": [
+            {
+              "x": 313.6875,
+              "y": 394.296875,
+              "width": 50.6875,
+              "height": 5
+            },
+            {
+              "x": 369.21875,
+              "y": 394.296875,
+              "width": 50.671875,
+              "height": 5
+            },
+            {
+              "x": 424.75,
+              "y": 394.296875,
+              "width": 50.6875,
+              "height": 5
+            },
+            {
+              "x": 480.28125,
+              "y": 394.296875,
+              "width": 50.6875,
+              "height": 5
+            },
+            {
+              "x": 535.8125,
+              "y": 394.296875,
+              "width": 50.671875,
+              "height": 5
+            },
+            {
+              "x": 591.328125,
+              "y": 394.296875,
+              "width": 50.6875,
+              "height": 5
+            },
+            {
+              "x": 646.859375,
+              "y": 394.296875,
+              "width": 50.6875,
+              "height": 5
+            },
+            {
+              "x": 702.390625,
+              "y": 394.296875,
+              "width": 50.671875,
+              "height": 5
+            },
+            {
+              "x": 757.921875,
+              "y": 394.296875,
+              "width": 50.6875,
+              "height": 5
+            },
+            {
+              "x": 813.4375,
+              "y": 394.296875,
+              "width": 50.6875,
+              "height": 5
+            },
+            {
+              "x": 868.96875,
+              "y": 394.296875,
+              "width": 50.671875,
+              "height": 5
+            },
+            {
+              "x": 924.5,
+              "y": 394.296875,
+              "width": 50.6875,
+              "height": 5
+            }
+          ]
+        }
+      ],
+      "fouten": [],
+      "statusVoor": "LocalOpen Tekst StudioPage 1 of 5006,000 words, 35,500 charactersLanguage unknown · 6,000 spelling errorsTrack Changes: off100%ReadyCtrl+S"
+    },
+    "native_500_paginas": {
+      "aanwijzer": {
+        "metingen": 9,
+        "duurMs": 9.999999999985448,
+        "position": 174543,
+        "pageIndex": 499
+      },
+      "stappen": [
+        "500 pagina’s gereed",
+        "aanwijzer pagina 500",
+        "invoer op pagina 500",
+        "selectie met echte toetsen",
+        "backspace",
+        "undo",
+        "redo",
+        "opslaan en onafhankelijk DOCX-onderzoek"
+      ],
+      "docxExact": true,
+      "alineas": 500
+    },
+    "native_kleur": {
+      "geslaagd": true,
+      "versie": "2026.45.10",
+      "programma_sha256": "efcf2008fef6bf8e5851599643bd857dc5d5d29b4d3d96ae193813878d69411a",
+      "stappen": [
+        {
+          "naam": "begin",
+          "vullingen": [],
+          "tekstExact": true
+        },
+        {
+          "naam": "keuze-f6d32d",
+          "vullingen": [
+            "f6d32d"
+          ],
+          "tekstExact": true
+        },
+        {
+          "naam": "ongedaan",
+          "vullingen": [],
+          "tekstExact": true
+        },
+        {
+          "naam": "opnieuw",
+          "vullingen": [
+            "f6d32d"
+          ],
+          "tekstExact": true
+        },
+        {
+          "naam": "keuze-99c1f1",
+          "vullingen": [
+            "99c1f1"
+          ],
+          "tekstExact": true
+        },
+        {
+          "naam": "nieuw-getypte-tekst",
+          "vullingen": [
+            "99c1f1"
+          ],
+          "tekstExact": true
+        },
+        {
+          "naam": "nieuw-native-proces",
+          "vullingen": [
+            "99c1f1"
+          ],
+          "tekstExact": true
+        }
+      ],
+      "kleurgebeurtenissen": [
+        {
+          "keuze": "f6d32d",
+          "gebeurtenissen": [
+            {
+              "soort": "input",
+              "kleur": "#f6d32d",
+              "native": true
+            },
+            {
+              "soort": "change",
+              "kleur": "#f6d32d",
+              "native": true
+            }
+          ]
+        },
+        {
+          "keuze": "99c1f1",
+          "gebeurtenissen": [
+            {
+              "soort": "input",
+              "kleur": "#99c1f1",
+              "native": true
+            },
+            {
+              "soort": "change",
+              "kleur": "#99c1f1",
+              "native": true
+            }
+          ]
+        }
+      ],
+      "paletten": [
+        {
+          "keuze": "f6d32d",
+          "breedte": 488,
+          "hoogte": 303,
+          "pixel": [
+            246,
+            211,
+            45
+          ],
+          "verwacht": [
+            246,
+            211,
+            45
+          ]
+        },
+        {
+          "keuze": "99c1f1",
+          "breedte": 488,
+          "hoogte": 303,
+          "pixel": [
+            153,
+            193,
+            241
+          ],
+          "verwacht": [
+            153,
+            193,
+            241
+          ]
+        }
+      ],
+      "beperking": "GTK3-palet op Linux/X11; geen volledige platform- of functieacceptatie.",
+      "foutmeldingen": []
+    },
+    "native_schone_invoer": {
+      "fixture": "500 pagina’s, 20500 spelfouten bij openen, gewone native bestandsopening in afzonderlijke verse processen.",
+      "invoer": " Een proefzin.",
+      "tekens": 14,
+      "compositie": "normale productinstelling; compositor niet uitgeschakeld",
+      "voor": {
+        "versie": "2026.45.9",
+        "geslaagd": false,
+        "gereedheidscontrole": "Documentbron met de gehele ingevoerde zin én zichtbare golflijnen niet beide gereed binnen 90 seconden.",
+        "beperking": "De timeout onderscheidt niet welke van deze twee voorwaarden uiteindelijk achterbleef."
+      },
+      "na": {
+        "versie": "2026.45.10",
+        "geslaagd": true,
+        "tekst_exact": true,
+        "schermmetingen": 19820,
+        "golflijnen": 83,
+        "duur_inclusief_vaste_2_seconden_wacht_ms": 4657
+      },
+      "beperking": "Een gerichte proef op een eigen vaste fixture; geen algemene prestatievergelijking met andere apps en geen goedkeuring van willekeurige grote plakdocumenten."
+    }
+  },
+  "beperkingen": [
+    "Geen algemene goedkeuring voor willekeurige grote plakdocumenten of volledige platform-GUI-matrix.",
+    "De eerste profielproef gaf na het wijzigen/herstellen van een editor-methode een vastgelopen vervolgsessie; de onafhankelijke verse native bewerkingsproef zonder profielhooks slaagt. De oorzaak van de profielverstoring is niet vastgesteld.",
+    "De oorspronkelijke Writer-typvertraging is nog niet volledig opgelost; een eerste winstmeting bewijst geen volledige optimalisatie.",
+    "De Ubuntu-kleurtest moet na het afvangen van de gemeten paletafwijking opnieuw op CI slagen.",
+    "De volledige Rust-interface en documentwerkeraansluiting in Dioxus blijven open."
+  ],
+  "gebruikersdocumenten_overschreven": false,
+  "draaiende_gebruikersapp_gestopt": false
+}

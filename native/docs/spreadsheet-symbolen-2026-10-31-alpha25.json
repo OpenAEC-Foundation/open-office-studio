@@ -1,0 +1,30 @@
+{
+  "versie": "2026.44.9-alpha.25",
+  "geslaagd": true,
+  "omvang": "Monochrome symbolen uit het vastgepinde aanvullende gezicht. Bestaande gevormde clusters en kerning blijven behouden; alleen ontbrekende clusters krijgen vervanging. Geen volledige CJK-, BiDi-, emoji- of systeemletterdekking.",
+  "beelden": [
+    {
+      "bestand": "xlsx-symbool.png",
+      "sha256": "9adcf7d6636c69731a0e99733766688b02579236c014432923448840589fbfb0"
+    },
+    {
+      "bestand": "xlsx-ontbrekend.png",
+      "sha256": "9030e12cb6d524831fab8664a2ce021ff187d71ba2f62706bb4830c05733e7b3"
+    }
+  ],
+  "kernproeven": [
+    "spreadsheet_aanvullend_huisglyph_heeft_dezelfde_schaal_uitlijning_en_stijl_als_zijn_eigen_font",
+    "spreadsheet_aanvullend_glyph_blijft_zichtbaar_bij_rotatie_stapeling_en_regelterugloop",
+    "documentmodules_rasteren_een_symbool_in_plaats_van_een_ontbrekend_teken"
+  ],
+  "gui_proef": "spreadsheet_opgeslagen_symbool_staat_in_het_raster_en_undo_herstelt_de_bron",
+  "ui_beeld": "screenshots/spreadsheet-symbool-raster.png",
+  "ui_beeld_sha256": "d2e9b7608bccabc6e1c8b0fdf66c654755f89355cfb22a72fc2df2828813232f",
+  "bestand_sha256": "e6e8ceb7bcaa2a795605877e67dfe0e9a15824acf29518249d720aaecf20a866",
+  "onafhankelijk_teruggelezen_log_sha256": "c6d80e1afd580a096b7544b620ee88ce2a276da3725ba450d6a678455fa4eefc",
+  "testlog_sha256": "4bcef8e297a38a26fd42f7ef39c396878682914294b756f2d50f8008b238500e",
+  "bronmanifest": "schermen-2026-10-31-alpha25.json",
+  "eerder_echt_venster_afgekeurd": "vensterproef-2026-10-31-alpha23-spreadsheet/rapport.json",
+  "echte_releasevenster_hertest_afgerond": true,
+  "echte_releasevenster_hertest": "vensterproef-2026-11-01-alpha25-ci/rapport.json"
+}

@@ -1,0 +1,133 @@
+{
+  "schema": 1,
+  "versie_kandidaat": "2026.45.42",
+  "rustwerkruimte": "2026.45.0-alpha.56",
+  "status": "Gerichte gegevensregressie hersteld; geen volledige Writer-, GUI-, prestatie- of platformacceptatie.",
+  "oorspronkelijke_fout": "Twee afzonderlijke koude voorbereidingen met dezelfde client gebruiken revisie-id 21:0; auteur A verwerpen verwijdert ook invoer van auteur B.",
+  "herstel": "Eigen native revisienaamruimte en blijvende per-client teller in uitsluitend de overgenomen voorsteldelta; bestaande eigen revisies vormen een ondergrens.",
+  "controles": {
+    "rust_writer": 37,
+    "waarvan_koude_revisies": 4,
+    "warme_koude_pariteit": 80,
+    "echte_wasm_en_docx": true,
+    "onafhankelijk_xml": true,
+    "clippy_all_targets": true
+  },
+  "bestanden": {
+    "revisies-koud-voor-herstel.rs.gz": "5a741000b46f6b032701595e48576abf406c94922f0ab1c58c34c470a17d6e22",
+    "revisies-koud-voor-herstel.log.gz": "432fd68dc92604aaadd37a54ad5d0508cad5c5175022483fa9fb304953585202",
+    "revisies-native56-eerste.log.gz": "86636b558b337f10c5b41dce4f8d3843fdaa68fc3f8e9f7b78ab7c9e0107db10",
+    "revisies-native56-clippy.log.gz": "e4f345f053efb70905351f759d15ce2c5c148a7f8377eaeff73cf033a1ea7245",
+    "revisies-native56-controles.json.gz": "8fd1fb2b68600d55aabd81effaac4c3aaa4a477d78bef6eee8db45563fadd0a8",
+    "revisies-wasm56-met-xml.log.gz": "d0f57bc64921799a2fd076fd57435b3fc16057463a37ab78fb5e00c2637fb59b",
+    "bron/native/crates/office-writer-plakken/tests/revisies.rs.gz": "659f6636c9ac9a56d221ec31564991ebc282de7a1649b7b81c56f835b2029516",
+    "bron/native/crates/office-writer-plakken/tests/journaal.rs.gz": "17193517bf2166fc307d43a5118e1c798ebb82d08b6fd5def942e5d6594a62e7",
+    "bron/native/onderzoek/writer-plakbatch/controleer-revisies.mjs.gz": "85f03be3975a174a9bfedd65cb35144f18559ceb87530ba67c7f9479df1a0620",
+    "bevroren-bron/native/vendor/docx-edit/src/clipboard_batch/revision_ids.rs.gz": "0bcf6668e8e7d529e8d3730c452b3e8288e82a056d069fcf20996ec0f0f52289",
+    "bevroren-bron/native/vendor/docx-edit/src/lib.rs.gz": "df8d8e95b76caebd2b2a6d83afd805de967d91eeb5899010371c97578e355932",
+    "bevroren-bron/native/vendor/docx-edit/src/clipboard_batch.rs.gz": "3d1a0b1bd8aef06918705c7965a08825e36c98845dccfd4c2cd557d661da1e20",
+    "bevroren-bron/native/vendor/docx-edit/src/ops/text.rs.gz": "40e93aa77cfc60ab49d0e9de0e31e17ace6b76636ff5357f486f6d89cffbf301",
+    "bevroren-bron/native/vendor/docx-edit/src/ops/paragraph.rs.gz": "f3270c461b3b6789157a74ca2128eabc98e1c9ff243fd0dcbfc489cc8964fb5d",
+    "bevroren-bron/native/vendor/docx-edit/src/ops/table.rs.gz": "e62bb4811c395995216c32e963c748d9e883488321dda76c99105e9ab5e33547",
+    "bevroren-bron/native/vendor/docx-edit/src/ops/embed.rs.gz": "8f516cbb68c4189011afcfc89dfba77e35bd1e1a93c5e242b92411eb209f21f9",
+    "wasm/1-antwoord.json.gz": "1daa3a45aa356b58118bc544c59ed9ad119597866eeabc86e0fc7699a4955350",
+    "wasm/1-aanvraag.json.gz": "3b45de1d6817b08fa3bb513fa95bd207736d69dca4d2bc702e977c855df6ada9",
+    "wasm/2-aanvraag.json.gz": "388bfeaf1c25146af236e05d7cbe6e93d8d4f76bf28399ca221158f8f0443fda",
+    "wasm/resultaat.json.gz": "06daf1a75cb60f6ce3c11d38d1195a8d8a9f8fab23c59a8bcbb4f77395c21c1f",
+    "wasm/2-antwoord.json.gz": "c503c142ada610939ab3380f627427223a9394272ae6611b573e032b5c5fd2c7",
+    "wasm/drie-auteurs.docx": "ae730156f6d55c96fc5484d2c2215860e01ed834952eb0f2bac30ba1388c42be",
+    "revisies-koud-voor-herstel-identiteit.json.gz": "287be1d677f7f5c8e73dab090b8a1c8aad12887b103a77645e2e8cee7bb9e4f0",
+    "revisies-wasm56-eindpositie.log.gz": "d0f57bc64921799a2fd076fd57435b3fc16057463a37ab78fb5e00c2637fb59b"
+  },
+  "wasm": {
+    "fixtureSha256": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee",
+    "protocolSha256": "dbcd621a5290d69e5eaf257a16ba930ca277226cf0b59af601a9a79208202eba",
+    "docxSha256": "ae730156f6d55c96fc5484d2c2215860e01ed834952eb0f2bac30ba1388c42be",
+    "revisies": [
+      {
+        "author": "Auteur A",
+        "date": "2026-11-04T00:00:00Z",
+        "kind": "insertion",
+        "preview": "NATIVE-A ",
+        "range": {
+          "end": {
+            "offset": 9,
+            "paraId": "body:p0"
+          },
+          "start": {
+            "offset": 0,
+            "paraId": "body:p0"
+          },
+          "story": "body"
+        },
+        "revisionId": "openaec-revision-v1:21:0",
+        "story": "body"
+      },
+      {
+        "author": "Auteur B",
+        "date": "2026-11-04T00:00:00Z",
+        "kind": "insertion",
+        "preview": "NATIVE-B ",
+        "range": {
+          "end": {
+            "offset": 10,
+            "paraId": "body:p7"
+          },
+          "start": {
+            "offset": 1,
+            "paraId": "body:p7"
+          },
+          "story": "body"
+        },
+        "revisionId": "openaec-revision-v1:21:1",
+        "story": "body"
+      },
+      {
+        "author": "Auteur C",
+        "date": "2026-11-04T01:00:00Z",
+        "kind": "insertion",
+        "preview": " SDK-C",
+        "range": {
+          "end": {
+            "offset": 85,
+            "paraId": "body:p7"
+          },
+          "start": {
+            "offset": 79,
+            "paraId": "body:p7"
+          },
+          "story": "body"
+        },
+        "revisionId": "21:7",
+        "story": "body"
+      }
+    ],
+    "xmlRevisies": [
+      {
+        "auteur": "Auteur A",
+        "id": "1"
+      },
+      {
+        "auteur": "Auteur B",
+        "id": "2"
+      },
+      {
+        "auteur": "Auteur C",
+        "id": "3"
+      }
+    ],
+    "resultaten": [
+      {
+        "route": "levende-wasm",
+        "auteurs": 3,
+        "alleTekstenHersteld": true
+      },
+      {
+        "route": "docx-heropend",
+        "auteurs": 3,
+        "alleTekstenHersteld": true
+      }
+    ]
+  },
+  "testafbakening": "De SDK-invoegpositie gebruikt de rauwe UTF-16-alinealengte, inclusief eventuele objectposities; de zichtbare tekstlengte is daarvoor geen algemene eindpositie."
+}

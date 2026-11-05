@@ -1,0 +1,141 @@
+{
+  "dialogs": {
+    "cancel": "Annuleren",
+    "saveAsEllipsis": "Opslaan als…",
+    "officeFile": "Kantoorbestand",
+    "officeFiles": "Kantoorbestanden",
+    "untitled": "Naamloos",
+    "saveCopy": "Kopie opslaan",
+    "saveAs": "Opslaan als",
+    "openFile": "Bestand openen",
+    "replaceFile": {
+      "title": "Bestand vervangen",
+      "message": "Het bestand {{path}} bestaat al. Vervangen?"
+    },
+    "unsavedChanges": {
+      "title": "Niet-opgeslagen wijzigingen",
+      "message_one": "Eén document in dit venster bevat wijzigingen die nog niet zijn opgeslagen. Die gaan verloren. Toch sluiten?",
+      "message_other": "{{count}} documenten in dit venster bevatten wijzigingen die nog niet zijn opgeslagen. Die gaan verloren. Toch sluiten?"
+    },
+    "fileChanged": {
+      "title": "Bestand gewijzigd",
+      "missing": "{{name}} bestaat niet meer op de oorspronkelijke plek. Opnieuw aanmaken met jouw versie, of elders opslaan?",
+      "changedExternally": "{{name}} is gewijzigd buiten Open Office Studio sinds je het opende. Overschrijven gooit die wijzigingen weg.",
+      "overwrite": "Overschrijven"
+    },
+    "foreignFormat": {
+      "title": "Opslaan als {{format}}",
+      "message": "{{name}} wordt bijgewerkt in het formaat {{format}}. De kantoorruntime zet het document daarvoor om; opmaak die {{format}} niet kent, kan verloren gaan.",
+      "hint": "Kies Opslaan als… om een DOCX, XLSX of PPTX te bewaren.",
+      "update": "Bijwerken als {{format}}"
+    },
+    "chooseConverter": "Conversieprogramma kiezen (soffice)",
+    "databaseExport": {
+      "title": "Database-export opslaan",
+      "filter": "Database-export",
+      "sqliteFilter": "SQLite-werkkopie",
+      "replaceTitle": "Export vervangen",
+      "replaceMessage": "Dit exportbestand bestaat al. Vervangen?"
+    }
+  },
+  "errors": {
+    "file": {
+      "invalidBody": "Het bestand is leeg, groter dan 100 MB of niet als binaire gegevens verzonden.",
+      "emptyOrTooLarge": "Het bestand is leeg of groter dan 100 MB.",
+      "formatInfoMissing": "De formaatinformatie ontbreekt.",
+      "formatMissing": "Het formaat ontbreekt.",
+      "targetFolderMissing": "De doelmap ontbreekt.",
+      "nameMissing": "De bestandsnaam ontbreekt.",
+      "nameInvalidChars": "De bestandsnaam bevat ongeldige tekens.",
+      "unsupportedFormat": "Niet-ondersteund bestandsformaat.",
+      "extensionMismatch": "De gekozen extensie past niet bij het document.",
+      "alreadyOpenedOrOtherWindow": "Dit bestand is al geopend of niet voor dit venster bedoeld.",
+      "notThisWindow": "Dit bestand hoort niet bij dit venster.",
+      "notLinked": "Dit bestand is niet (meer) aan dit tabblad gekoppeld.",
+      "tokenMissing": "Het token ontbreekt.",
+      "openInOtherTab": "{{name}} is geopend in een ander tabblad. Sluit dat eerst of kies een andere naam.",
+      "readOnly": "Geen schrijfrechten in deze map of het bestand is alleen-lezen ({{path}}). Kies een andere plek.",
+      "notInRecentList": "Dit bestand staat niet (meer) in de lijst."
+    },
+    "preferences": {
+      "tooLarge": "De voorkeuren zijn groter dan 64 kB.",
+      "invalid": "De voorkeuren zijn geen geldig JSON-object.",
+      "configDirUnavailable": "De configuratiemap van de app is niet beschikbaar.",
+      "pathInvalid": "Ongeldig pad voor de voorkeuren."
+    },
+    "font": {
+      "notInstalled": "Lettertype {{family}} staat niet op deze computer.",
+      "notFound": "Lettertype niet gevonden.",
+      "fileTooLarge": "Dit lettertypebestand is te groot.",
+      "inCollection": "Dit lettertype zit in een verzameling (.ttc) en kan niet los worden gebruikt.",
+      "unreadable": "Het lettertypebestand kon niet worden gelezen.",
+      "nameInvalid": "Ongeldige lettertypenaam."
+    },
+    "recovery": {
+      "keyInvalid": "Ongeldige herstelsleutel.",
+      "spaceFull": "De ruimte voor herstelkopieën (512 MB) is vol. Sla je documenten op.",
+      "sessionMissing": "De sessie ontbreekt.",
+      "keyMissing": "De sleutel ontbreekt.",
+      "dataInvalid": "Ongeldige herstelgegevens.",
+      "unknownDocumentType": "Onbekend documenttype.",
+      "sessionNotThisWindow": "Deze herstelsessie hoort niet bij dit venster.",
+      "sessionOtherWindow": "Deze herstelsessie hoort bij een ander venster.",
+      "sessionStillRunning": "Deze sessie draait nog."
+    },
+    "window": {
+      "closed": "Dit venster is gesloten.",
+      "transferEmptyOrTooLarge": "De overdracht is leeg of te groot.",
+      "mainWindowUnavailable": "Het hoofdvenster is niet beschikbaar.",
+      "openFailed": "Het venster kon niet worden geopend: {{error}}",
+      "transferExpired": "Deze overdracht is verlopen of al opgenomen.",
+      "transferAlreadyTaken": "Deze overdracht is al opgenomen.",
+      "transferUnknown": "Deze overdracht is onbekend."
+    },
+    "conversion": {
+      "unknownModule": "Onbekende kantoormodule.",
+      "sourceFormatMismatch": "Het bronformaat hoort niet bij deze module.",
+      "outputFormatUnsupported": "Dit uitvoerformaat wordt niet ondersteund.",
+      "outputFormatDirect": "Dit uitvoerformaat wordt rechtstreeks in de app gemaakt, niet via conversie.",
+      "invalidOptions": "Ongeldige conversieopties.",
+      "chooseSoffice": "Kies het programma soffice (Windows: soffice.exe) uit de map program van de kantoorruntime.",
+      "chosenFileMissing": "Het gekozen bestand bestaat niet.",
+      "chosenPathNotFile": "Het gekozen pad is geen bestand.",
+      "chosenFileNotExecutable": "Het gekozen bestand is niet uitvoerbaar.",
+      "appDataDirUnavailable": "De app-gegevensmap is niet beschikbaar.",
+      "startFailed": "Conversie kon niet starten: {{error}}",
+      "failed": "De conversie is mislukt ({{reason}}). Het origineel is behouden.",
+      "exitCode": "procescode {{code}}",
+      "processAborted": "proces afgebroken",
+      "timeout": "De conversie heeft de tijdslimiet overschreden en is gestopt. Het origineel is behouden.",
+      "profilePathInvalid": "Het tijdelijke profielpad is ongeldig.",
+      "inputSize": "Kies een bestand van maximaal 100 MB dat niet leeg is.",
+      "runtimeMissing": "Voor dit formaat is een kantoorruntime nodig (LibreOffice). Die is niet gevonden: installeer hem, kies het programma in Opslaan als, of zet OPENAEC_CONVERSIE_PROGRAMMA. DOCX, XLSX en PPTX werken rechtstreeks.",
+      "notConverted": "Dit bestand kon niet worden geconverteerd. Het kan beschadigd of beveiligd zijn, of het formaatfilter ontbreekt in de lokale runtime.",
+      "multipleOutputs": "De conversie leverde meer dan één bestand op.",
+      "noUsableOutput": "De conversie leverde geen bruikbaar bestand van maximaal 100 MB op."
+    },
+    "databaseExport": {
+      "emptyOrTooLarge": "De export is leeg of groter dan 100 MB.",
+      "emptyInvalidOrTooLarge": "De export is leeg, ongeldig of groter dan 100 MB.",
+      "nameMissing": "Bestandsnaam ontbreekt.",
+      "nameInvalid": "Ongeldige bestandsnaam.",
+      "notSqlite": "Dit is geen SQLite-werkkopie.",
+      "typeNotAllowed": "Alleen CSV-, bron-, rapport- en SQLite-werkkopie-exports zijn toegestaan. Access-databases worden niet overschreven.",
+      "textNotUtf8": "Een tekstexport moet geldige UTF-8-tekst zijn.",
+      "sendAsBinary": "Stuur de export als binaire gegevens van maximaal 100 MB.",
+      "extensionMismatch": "De gekozen extensie past niet bij de export."
+    }
+  },
+  "launcher": {
+    "officeStudio": {
+      "genericName": "Kantoorpakket",
+      "comment": "Lokale OpenAEC-kantooromgeving",
+      "keywords": "tekstverwerker;rekenblad;presentatie;database;e-mail;kantoor;"
+    },
+    "databaseStudio": {
+      "genericName": "Databaseviewer",
+      "comment": "Open oude MDB- en ACCDB-databases lokaal",
+      "keywords": "database;databank;tabel;query;"
+    }
+  }
+}

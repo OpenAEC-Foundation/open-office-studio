@@ -1,0 +1,791 @@
+{
+  "versie": "2026.45.35",
+  "kern": "2026.45.0-alpha.52",
+  "basiscommit": "75baaee5b8a7167a2e96c80326f28e69e3d197a4",
+  "programma_sha256": "9b7588486a14e0516e35bf25eac415e2981c65761bf09775ed929f2a3a45c7d2",
+  "referentie_sha256": "55907bfefea2a9753983b719c73c0b4d9f126ef541ec193cbd7fa9730ade5f39",
+  "scope": "Volledige lettertypebehoeften op de bestaande worker voor geschikte gewone hostbronnen; geen algemene soepelheids-, suite-, platform- of volledige Rust-interfaceacceptatie.",
+  "bronbestanden_sha256": {
+    "package.json": "aab3d5ccd8c586973ce8c55e49097141257791c620c7d75a7627630743516680",
+    "versie.json": "95b0a7983e7eb030df1e278c439357674dc921c99aed176706358b4b41e139f5",
+    "src-tauri/Cargo.toml": "5f0ca48ea331927109dbc11224c2f2319d573bfdad697a2421cde57467c999e0",
+    "src-tauri/Cargo.lock": "da508c1b8868d70a0ecd9183d95603ca3d1e30f97445f962daa6636d2c17e101",
+    "src-tauri/tauri.conf.json": "832a4efc41de4d4266c2a974d9996e17afcad2214bd31d092cbf8af527827f1b",
+    "apps/database-studio/src-tauri/Cargo.toml": "0af0536bf1528a8903f5d87544fc6b9bba4ff93c655e57e3373617a379ebd9d2",
+    "apps/database-studio/src-tauri/Cargo.lock": "159ef5bfab0c97c68df2a2e5757b66577f86d0ca50d53b09da3f748e656ba976",
+    "apps/database-studio/src-tauri/tauri.conf.json": "e522b7bbf91a18307c8cdf2edd6a83f7e29bf8ca2b24a611786780367e4a5c0f",
+    "patches/@betteroffice__docx-react@0.5.1.patch": "65a3c11e608311028e544014eea30d89cc76ec15e88fdc807d7f4d5d9c64a367",
+    "pnpm-lock.yaml": "caa859ed9181a41b2c63573bc0b02802b73234c3fb01a4ecb5518e674a0227bb",
+    "src/tekst/layout-hostsynchronisatie.test.ts": "ce110b8fe1c38f38fa3982ec689e38c4cb930bdc960e69e394651e21803876c6",
+    "src/tekst/lettertype-workerpoort.test.ts": "38fa0650e10b27d2bad4ff33ef994787b888f38c86c7370fd8c9fcc3fe0f1cef",
+    "src/tekst/lettertype-workerplanning.test.ts": "0c0228ed234417ab7be062ac0fc373500c93625c5f13d68e26e2a5c2a68006fc",
+    "scripts/test-writer-lang-native.py": "c884038659eec5c522b4d17180ed3c0640ecf72cf2cf12ba9b672a1f80947838",
+    "scripts/bewaar-writer-foutcontext.py": "37ed75c91eaa3ffdb647f594079eaabe06a08e30a474447927cd07267f1d6040",
+    "scripts/gui/lettertype_bewijs.js": "35ef4b0f486984925fb1765ad909a20a741e80270d8452e84deac0697fc22238",
+    "scripts/gui/lettertype_bewijs.py": "d7c4bc900fcb26d581e61175be8ae400e642b65f28459c4b71c367c6525b8327",
+    "tests/test_writer_foutcontext.py": "b43e3c853d24e831c12b477e9b31d52a51310fd39a34f73b388c65812243a68c",
+    ".github/workflows/desktop.yml": "936493a711d4274fa1994ce4be9da39a231c3e8ec5525be9448836fbb668c1b0",
+    ".github/workflows/release.yml": "d9bf5d238fe162f1b04f33624a7db41eedbf6185385f81f751f78bb13ce5b018",
+    ".github/workflows/writer-geheugen.yml": "71378ac785e17ed22dcfb7b54f301a7aac1c230b7011e221f55df19e2a674f3a"
+  },
+  "bewijsbestanden": {
+    "gui-35-controle": {
+      "pad": "writer-lettertypeworker/gui-35-controle.json.gz",
+      "sha256": "61a8cf7ff8eaecc6a1df9c60464efe7dd2ef83ee44e12c359eeff3c468442d6e",
+      "gzip_sha256": "a38f0f7408321eccabc7450a95555b2d4c03d8088e87f1b10295d68d52bba308",
+      "geslaagd": false
+    },
+    "gui-35-herstel": {
+      "pad": "writer-lettertypeworker/gui-35-herstel.json.gz",
+      "sha256": "a26c352a425f06654b9a1e539fb70e733fe89296fa6992b99392c1d6799d6aa2",
+      "gzip_sha256": "36f186571773b1ceee4b25f0d9379732bd70a10331147e27923f6d3b2649b7fc",
+      "geslaagd": true
+    },
+    "gui-33-voor": {
+      "pad": "writer-lettertypeworker/gui-33-voor.json.gz",
+      "sha256": "d2ebff7b94e57f33832a959e37e946cf4a7cbfeb5128d878a7d830b1547f4b7d",
+      "gzip_sha256": "a21b7ee3f35a11d97475df6659d77aaa66d2af985749c0a2a986b2ab968e25a8",
+      "geslaagd": true
+    },
+    "gui-35": {
+      "pad": "writer-lettertypeworker/gui-35.json.gz",
+      "sha256": "8ff771ad89900e4ccb759db938acbbbe700c8070aa2846d35a7270d65dc68999",
+      "gzip_sha256": "5475067cb41dbc252142a7f404e9276690b1b217193b57cbd77411d4baa6efc6",
+      "geslaagd": false
+    },
+    "gui-35-herplan": {
+      "pad": "writer-lettertypeworker/gui-35-herplan.json.gz",
+      "sha256": "8f0833666b303ebd302a956bf78021a01759f3b04b3ebb8c6b5d0187ab616fac",
+      "gzip_sha256": "2457416d3a1f888e4732cf1a16858e86a715c67811099dcb418fdb581fdbea47",
+      "geslaagd": true
+    },
+    "gui-33-voor-herplan": {
+      "pad": "writer-lettertypeworker/gui-33-voor-herplan.json.gz",
+      "sha256": "5edc7fd92326c57feaf12687163dd1fc781b4661683df96c988ae58f3e8387a2",
+      "gzip_sha256": "d88ef82a3d1de32af305c7b5f0573eef638008fdae1cb51113ec520022601156",
+      "geslaagd": true
+    },
+    "gui-35-eerste": {
+      "pad": "writer-lettertypeworker/gui-35-eerste.json.gz",
+      "sha256": "587122c1cea78a5a21911e15b13ce2cc32cba4f6e80f0036a4a0ad1a14b1697e",
+      "gzip_sha256": "b40cbb0b7fc6dfc3b220abe33e41eabb7d6a559e6b529b1f1ed6a53b8b4581c9",
+      "geslaagd": true
+    },
+    "gui-35-tweede": {
+      "pad": "writer-lettertypeworker/gui-35-tweede.json.gz",
+      "sha256": "11353f5ff0d6fc47d1ab5d3930e55d37bcfe44677fab63627edb5212735bcac6",
+      "gzip_sha256": "36eea84d503c0029a11d59ef687c2cff1f9e25380fa34a481aa35d2ab623ca4e",
+      "geslaagd": true
+    },
+    "gui-33-na-herplan": {
+      "pad": "writer-lettertypeworker/gui-33-na-herplan.json.gz",
+      "sha256": "42dcfa41de531a90128f2191e83f13e299820fa5fb606c414d3f51e77702abdc",
+      "gzip_sha256": "e43b516c136459d56f71af61f0f37559bf988790818cf05cdda5311976be3625",
+      "geslaagd": true
+    },
+    "gui-tekst-35": {
+      "pad": "writer-lettertypeworker/gui-tekst-35.json.gz",
+      "sha256": "78877f0568cf8c2a07721a4e3d50ef2abdd41d1bdce00a067499e2fabecac83e",
+      "gzip_sha256": "bf06db03f112c1d151272c35de367f1fb7f7a257737d9b3c4286ec13e5adc6ed",
+      "geslaagd": true
+    },
+    "gui-geheugen-35": {
+      "pad": "writer-lettertypeworker/gui-geheugen-35.json.gz",
+      "sha256": "d0ef773276a2c0e93636922e6158343c85a6dc728ceb6975cb1fb800f1ec0ea0",
+      "gzip_sha256": "68f74a6476e99321187d2a72515ea4d3e6c3e607962bca5c6ae673aa029c2d09",
+      "geslaagd": true
+    },
+    "gui-acht-35": {
+      "pad": "writer-lettertypeworker/gui-acht-35.json.gz",
+      "sha256": "ee6981e9ea6ef0b5c44ced212f24edd41a6ff0d9b10bd2ccf59956179edada00",
+      "gzip_sha256": "67f955e8e2f4903ba20c25db0701434d59454d48e290d085fb2480987f592401",
+      "geslaagd": true
+    },
+    "gui-na-plakken-35": {
+      "pad": "writer-lettertypeworker/gui-na-plakken-35.json.gz",
+      "sha256": "f833150bd143a4ad13d32c0d86645ed97b582088b4c06bd5d8b02eba16c18064",
+      "gzip_sha256": "3bb32d1bb20f23ded5395d366615cda345e1e6b1c8f12577bddd59c723b72041",
+      "geslaagd": true
+    },
+    "gui-kleur-35": {
+      "pad": "writer-lettertypeworker/gui-kleur-35.json.gz",
+      "sha256": "73a44e3a8ff986a1d07e74c58a8cf76cb5345a6d8a2478b8fb9fbdc396061061",
+      "gzip_sha256": "899643153dcb36c779c1ce3bc7ff4248e6431df39cab45e3a22ea0fca3515f20",
+      "geslaagd": true
+    },
+    "gui-lettertypen-35-volledig": {
+      "pad": "writer-lettertypeworker/gui-lettertypen-35-volledig.json.gz",
+      "sha256": "3bab03f2aada12f53e0f00db46a63ae235b64d00e68dacfe4904298b610d8ca3",
+      "gzip_sha256": "6f778af9b926cd41b2ff956f4252f9263949e937ccac65e200e0d143b5f4b4b1",
+      "geslaagd": true
+    },
+    "cpu-35": {
+      "pad": "writer-lettertypeworker/cpu-35.json.gz",
+      "sha256": "ddd2a3d290ecf796060b1e5afeb2a2dcd6f8a39424ecfbcf01fab250e0f6e977",
+      "gzip_sha256": "006ec81a2583b53e7810463a30b9158e09ddcedf3cf0f9357df12d550f2a7f9c"
+    },
+    "cpu-35-ruw": {
+      "pad": "writer-lettertypeworker/cpu-35-ruw.json.gz",
+      "sha256": "841579a4103a6e3d0db8d1fc04442b513654bf6f98308ad1b0a23ec009671c32",
+      "gzip_sha256": "ac0645f9eb4812e05a7a7ef819b500a5b37925e86969878f1eedfd6c6b520abf"
+    },
+    "bron-herhaling": {
+      "pad": "writer-lettertypeworker/bron-herhaling.json.gz",
+      "sha256": "bac97a5ea0052e2baffd66e46cbfbfdf06ec2a6558d503e3ec84d0acbcfb69dc",
+      "gzip_sha256": "5042561a4a07ce244a6051a28836bce00a9da64fca5fea3400637f3e2cc47241"
+    },
+    "ci-33-bewaren-afgekeurd": {
+      "pad": "writer-lettertypeworker/ci-33-bewaren-afgekeurd.json.gz",
+      "sha256": "ed6c16c21d6a2139292ba1457f96c21612997955d20c62515bdf1e859ec0a8a6",
+      "gzip_sha256": "e5b160a927e31eb9973add001d5b1b00ce96c22837e51b7c87c5b4c99ffcbce3",
+      "geslaagd": false
+    },
+    "ci-33-bewaren-exacte-hertest": {
+      "pad": "writer-lettertypeworker/ci-33-bewaren-exacte-hertest.json.gz",
+      "sha256": "5690f16e9860d8c738fa736b37af0156df03378946a7eac864853bdbc5b95c79",
+      "gzip_sha256": "c865e626b9cd23224dd7fc4d93c6128953662c1300d16482a1c4499d4b205dc2",
+      "geslaagd": true
+    },
+    "gui-bewaren-35": {
+      "pad": "writer-lettertypeworker/gui-bewaren-35.json.gz",
+      "sha256": "e125ca5c4911fca55d62d27f7b7ba970d4c12efc206666a25e59b5070199e6e4",
+      "gzip_sha256": "3fb8b304db7ce5bb948e205d06fe29869f681042e067e34f7956b4138597cca4",
+      "geslaagd": true
+    },
+    "ongekende-bron-voor": {
+      "pad": "writer-lettertypeworker/ongekende-bron-voor.json.gz",
+      "sha256": "636ec6fde3295ba77220315fb6625aed76b8e4719cbadc24fa81573c826b115f",
+      "gzip_sha256": "09890b1a6ebb895a21a15525a08501b9a08781190ac4954d508072863429d7bb",
+      "geslaagd": false
+    },
+    "frontend-definitief": {
+      "pad": "writer-lettertypeworker/frontend-definitief.json.gz",
+      "sha256": "654ac523445157ac054445f56f8a632fa8966748a2490781fbeff9c7b5b1ad90",
+      "gzip_sha256": "923571445a8dddee7663f22b0fcf7a422ab4fa2df52ef12c309e81cbb052aa1e",
+      "geslaagd": true
+    },
+    "gui-35-definitief": {
+      "pad": "writer-lettertypeworker/gui-35-definitief.json.gz",
+      "sha256": "e60e809bd32a28f6bf62f7071fb2a16d2f96a55b51de0a11268d1ef3ad485e5f",
+      "gzip_sha256": "994382b05b307a1e56a0046feca635b40b592ce533d0ba370c94a4ed5b10fde4",
+      "geslaagd": true
+    },
+    "gui-33-voor-definitief": {
+      "pad": "writer-lettertypeworker/gui-33-voor-definitief.json.gz",
+      "sha256": "424e81cb5f743cf343bfdfaf0a8ed400ba1d134f2a04806baffabe6951320e39",
+      "gzip_sha256": "520232b5f2401f9454f7b00badeba80821a9f7d0e74cc2544099eaf5b1298a5a",
+      "geslaagd": true
+    },
+    "gui-35-eerste-definitief": {
+      "pad": "writer-lettertypeworker/gui-35-eerste-definitief.json.gz",
+      "sha256": "66a1861f2f84a778a95015e8961d4e716387f4675f8f759cef564270b1daf065",
+      "gzip_sha256": "8ef1b92e9519535aa8bdea4c8a440bf9ad395bf486cb76574614d63733df1726",
+      "geslaagd": true
+    },
+    "gui-35-tweede-definitief": {
+      "pad": "writer-lettertypeworker/gui-35-tweede-definitief.json.gz",
+      "sha256": "2b71bcf57b1fe11806a33d0ffbd7e18c0ce42d105b517520943486775469eaa8",
+      "gzip_sha256": "ebc31d6d95752829ed40a2d1528aa68b30089be5d7ed81c088cc66fef2a50bcb",
+      "geslaagd": true
+    },
+    "gui-33-na-definitief": {
+      "pad": "writer-lettertypeworker/gui-33-na-definitief.json.gz",
+      "sha256": "b85a09f9e5514e10b63136342d49cb036bd0ab791b95767ebd6beab3f59938fa",
+      "gzip_sha256": "aa7492cae2bafeed1497c16d003edc01fa9125773e2c2daa45b3373cf5db2dac",
+      "geslaagd": true
+    },
+    "gui-tekst-35-definitief": {
+      "pad": "writer-lettertypeworker/gui-tekst-35-definitief.json.gz",
+      "sha256": "3f04cb74748dfd7240371283f461a0a931625383afe32bbcd7db99336d4a7e27",
+      "gzip_sha256": "4aee68cf08c31057f2bb679d59180d907e9c7fe9ec16dedcb2a2f5e503c6566c",
+      "geslaagd": true
+    },
+    "gui-geheugen-35-definitief": {
+      "pad": "writer-lettertypeworker/gui-geheugen-35-definitief.json.gz",
+      "sha256": "2f9cd8fea3ed87248426d0a2b771809c42c40c2fb12a3831c200b2d7e5087705",
+      "gzip_sha256": "72385a8454070b3362f814779229be99ed7f4bf30fff3c905d937bdf9f0bb8a7",
+      "geslaagd": true
+    },
+    "gui-acht-35-definitief": {
+      "pad": "writer-lettertypeworker/gui-acht-35-definitief.json.gz",
+      "sha256": "7063551706788074cb2495718eb3eca56f8b5bed491a688844135090cee3bd54",
+      "gzip_sha256": "e2de16329dca2b3540038417fa2c17a4164cfbb6295480cc77fb5df373bb3652",
+      "geslaagd": true
+    },
+    "gui-na-plakken-35-definitief": {
+      "pad": "writer-lettertypeworker/gui-na-plakken-35-definitief.json.gz",
+      "sha256": "77a2f8c2ece6940f4fbc0798e2596f8b8ce1029823d68754df779588dbea8f29",
+      "gzip_sha256": "b22e942436f28cfa58ab1b40fac712b13f4c9e53f3304a063a3d10e28b5a0ec5",
+      "geslaagd": true
+    },
+    "gui-kleur-35-definitief": {
+      "pad": "writer-lettertypeworker/gui-kleur-35-definitief.json.gz",
+      "sha256": "bc43e94b1ef8704273858e8d44b35bb97d3038111e1f6c2807e2502ce3cd9a36",
+      "gzip_sha256": "29c296bdbad042fc7e53908317089f2504ef9dcbf9e29ea117a4d99e4a4ab0ae",
+      "geslaagd": true
+    },
+    "cpu-35-definitief": {
+      "pad": "writer-lettertypeworker/cpu-35-definitief.json.gz",
+      "sha256": "ce1b6a4bec33c4abe23ea01be8c68e152e12e6795d0ad9d499c0ca50d40276fc",
+      "gzip_sha256": "27dc40a904bf6c12cb200a955359841682a275d973d2fe83899dae01661d12d8",
+      "geslaagd": true
+    },
+    "gui-bewaren-35-definitief": {
+      "pad": "writer-lettertypeworker/gui-bewaren-35-definitief.json.gz",
+      "sha256": "f5a86b66a97a7ab4e28d6dcc4b9b79cbcb24cbb04648e10e4c0e0af0cf70a5ea",
+      "gzip_sha256": "3873f4e29aaa05b5433cf20c2fb606a582bc00ab288440582eba5b6ec57179bd",
+      "geslaagd": true
+    },
+    "cpu-35-definitief-ruw": {
+      "pad": "writer-lettertypeworker/cpu-35-definitief-ruw.json.gz",
+      "sha256": "4accadb1705c8c5421e35aa785218a8d72e6b191f643811a7c094c64a7b520cf",
+      "gzip_sha256": "11184e4c0dc5d93e56bb4e63893856e0d757cfa5aaf0d826d2b5d5806a5c2d4a"
+    },
+    "bron-herhaling-definitief": {
+      "pad": "writer-lettertypeworker/bron-herhaling-definitief.json.gz",
+      "sha256": "ea89bb8f9effa10e3ec0938b8bac0d133a9b57aefad9dd24a5b3b6b99b7e2c08",
+      "gzip_sha256": "fe7e4892d147bbb70b207a5477f054664137e8e52b029486cfc63954d44990da",
+      "geslaagd": true
+    },
+    "open-issues-definitief": {
+      "pad": "writer-lettertypeworker/open-issues-definitief.json.gz",
+      "sha256": "95d275da61da430480ed1dafd9ab8cec26336f6edcb5ce68913a967748a6875d",
+      "gzip_sha256": "4547b84ba4c177778207b1b639a5a84620502529f43fb466c5fe738bc5f7296d"
+    }
+  },
+  "beelden_sha256": {
+    "getypt-pagina-500.png": "a0cfcee024b5a0fd507e10621fe00143023a00e960cfd875738425f4c3c77df0",
+    "initialisatie-afgekeurd.png": "4975ab09584e5a1c88ad10d53cd8e2107611cc988929aa94100437c7116d52c1",
+    "hostterugval-afgekeurd.png": "fc939295a78dda1ce1c2d6847777fda9343fe904810aa42c98c8fe82b14c10c4",
+    "ci-33-bewaren-afgekeurd.png": "53fce26e22386919446f7a75a30916d104adc5b2b6c6679ec55fda5447d94cb1",
+    "getypt-pagina-500-definitief.png": "a0cfcee024b5a0fd507e10621fe00143023a00e960cfd875738425f4c3c77df0"
+  },
+  "metingen": [
+    {
+      "proef": "gui-33-voor-definitief",
+      "invoer_ms": 1677,
+      "native_bundels": 7,
+      "rAF_p95_ms": 182,
+      "rAF_maximum_ms": 187,
+      "DOM_metingen": 1205,
+      "host_lettertypecontroles": {
+        "calls": 7,
+        "ms": 205.99999999999636
+      },
+      "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+      "worker_berichten": {
+        "applyUpdate": 7,
+        "sync": 7,
+        "buildFrame": 1
+      }
+    },
+    {
+      "proef": "gui-35-eerste-definitief",
+      "invoer_ms": 1091,
+      "native_bundels": 6,
+      "rAF_p95_ms": 151,
+      "rAF_maximum_ms": 165,
+      "DOM_metingen": 1114,
+      "host_lettertypecontroles": {
+        "calls": 0,
+        "ms": 0
+      },
+      "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+      "worker_berichten": {
+        "applyUpdate": 6,
+        "fontRequirements": 6,
+        "sync": 4
+      }
+    },
+    {
+      "proef": "gui-35-tweede-definitief",
+      "invoer_ms": 1120,
+      "native_bundels": 7,
+      "rAF_p95_ms": 129,
+      "rAF_maximum_ms": 141,
+      "DOM_metingen": 1274,
+      "host_lettertypecontroles": {
+        "calls": 0,
+        "ms": 0
+      },
+      "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+      "worker_berichten": {
+        "applyUpdate": 7,
+        "fontRequirements": 7,
+        "sync": 4
+      }
+    },
+    {
+      "proef": "gui-33-na-definitief",
+      "invoer_ms": 1568,
+      "native_bundels": 6,
+      "rAF_p95_ms": 167,
+      "rAF_maximum_ms": 174,
+      "DOM_metingen": 1033,
+      "host_lettertypecontroles": {
+        "calls": 6,
+        "ms": 156
+      },
+      "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+      "worker_berichten": {
+        "applyUpdate": 6,
+        "sync": 6,
+        "buildFrame": 1
+      }
+    }
+  ],
+  "controles": {
+    "frontendtests": 1793,
+    "frontendbestanden": 169,
+    "python_tests": 74,
+    "typescript": true,
+    "weekversie": true,
+    "linux_productiebouw": true,
+    "gewijzigde_workflow_yaml": true,
+    "rust_kernbron_gewijzigd": false
+  },
+  "lettertypevarianten": {
+    "geslaagd": true,
+    "gevallen": [
+      {
+        "naam": "caladea",
+        "familie": "Caladea",
+        "behoeften": [
+          {
+            "key": "caladea|0|0",
+            "family": "Caladea",
+            "bold": false,
+            "italic": false
+          }
+        ],
+        "bronversie": "d3f21c0029515e48-3",
+        "exact": true,
+        "bron_hersteld": true,
+        "bestand": "Lettertype-caladea.docx",
+        "sha256": "37753cdacbff1c33fe687d87ab2c86f210dbebcfdc3c2726d88f3936cd94dded",
+        "xml_exact": true,
+        "volledige_tekst_exact": true,
+        "bewaard_als": "writer-lettertypeworker/definitief/Lettertype-caladea.docx"
+      },
+      {
+        "naam": "carlito",
+        "familie": "Carlito",
+        "behoeften": [
+          {
+            "key": "caladea|0|0",
+            "family": "Caladea",
+            "bold": false,
+            "italic": false
+          },
+          {
+            "key": "carlito|0|0",
+            "family": "Carlito",
+            "bold": false,
+            "italic": false
+          }
+        ],
+        "bronversie": "d3f21c0029515e48-5",
+        "exact": true,
+        "bron_hersteld": true,
+        "bestand": "Lettertype-carlito.docx",
+        "sha256": "926137cbb1b37fe7eabee7b3fc0982a7caed323d107fd90cc4e53a98629e2688",
+        "xml_exact": true,
+        "volledige_tekst_exact": true,
+        "bewaard_als": "writer-lettertypeworker/definitief/Lettertype-carlito.docx"
+      },
+      {
+        "naam": "vet",
+        "stijl": "bold",
+        "behoeften": [
+          {
+            "key": "caladea|0|0",
+            "family": "Caladea",
+            "bold": false,
+            "italic": false
+          },
+          {
+            "key": "caladea|1|0",
+            "family": "Caladea",
+            "bold": true,
+            "italic": false
+          }
+        ],
+        "bronversie": "d3f21c0029515e48-7",
+        "exact": true,
+        "bron_hersteld": true,
+        "bestand": "Lettertype-vet.docx",
+        "sha256": "b94100a8ee6b89b089e897fb331f67fcf2eccfe5cacced2220173f4d88a7fa12",
+        "xml_exact": true,
+        "volledige_tekst_exact": true,
+        "bewaard_als": "writer-lettertypeworker/definitief/Lettertype-vet.docx"
+      },
+      {
+        "naam": "cursief",
+        "stijl": "italic",
+        "behoeften": [
+          {
+            "key": "caladea|0|0",
+            "family": "Caladea",
+            "bold": false,
+            "italic": false
+          },
+          {
+            "key": "caladea|0|1",
+            "family": "Caladea",
+            "bold": false,
+            "italic": true
+          }
+        ],
+        "bronversie": "d3f21c0029515e48-9",
+        "exact": true,
+        "bron_hersteld": true,
+        "bestand": "Lettertype-cursief.docx",
+        "sha256": "e75945498154e2020995249424b0de88adca192fce36595567e94bc90386cfee",
+        "xml_exact": true,
+        "volledige_tekst_exact": true,
+        "bewaard_als": "writer-lettertypeworker/definitief/Lettertype-cursief.docx"
+      }
+    ],
+    "alinea_aantal": 500,
+    "tekst_sha256": "bd3cc4b7c68f7096aefd6a7778c880524b5b7894d296fc59c882d709ce81a1c0",
+    "script_sha256": "35ef4b0f486984925fb1765ad909a20a741e80270d8452e84deac0697fc22238",
+    "python_sha256": "d7c4bc900fcb26d581e61175be8ae400e642b65f28459c4b71c367c6525b8327",
+    "grens": "Volledige worker-/hostantwoorden op dezelfde actuele bron; vier fontopmaakvarianten, onafhankelijk XML en bronexacte Undo. Na de invoermeting; geen snelheidsmeting."
+  },
+  "beeldvergelijking": {
+    "volledig": {
+      "verschillende_pixels": 3,
+      "begrenzing": [
+        6,
+        159,
+        74,
+        161
+      ]
+    },
+    "lint": {
+      "verschillende_pixels": 3,
+      "begrenzing": [
+        6,
+        159,
+        74,
+        161
+      ]
+    }
+  },
+  "CPU": {
+    "hoofdthread_steekproeven": 438,
+    "font_export_op_hoofdthread_steekproeven": 0,
+    "oude_referentie": "2026-11-04-writer-toetsbundeling.json",
+    "oude_hoofdthread_steekproeven": 788,
+    "oude_font_export_steekproeven": 128,
+    "grens": "Aantallen steekproeven met runtimekalibratie en exacte scriptbronnen; geen proces-CPUduur, geen fysieke FPS.",
+    "scriptbronnen": [
+      {
+        "url": "tauri://localhost/assets/core-BUhCcD2K.js",
+        "bestand": "bron-core-BUhCcD2K.js.gz",
+        "bytes": 2695,
+        "sha256": "bd9612a6a3f9b04eb26fc2f333f1dde54b6c0796cb515b6dfbc30aac2db7d176",
+        "bewaard_als": "writer-lettertypeworker/definitief-bron-core-BUhCcD2K.js.gz"
+      },
+      {
+        "url": "tauri://localhost/assets/editors-TtkGB6iE.js",
+        "bestand": "bron-editors-TtkGB6iE.js.gz",
+        "bytes": 1701773,
+        "sha256": "a2354d1f29b426a9de4c234dfe024e75b2034ff96f16c6522c2add359a6af09a",
+        "bewaard_als": "writer-lettertypeworker/definitief-bron-editors-TtkGB6iE.js.gz"
+      },
+      {
+        "url": "tauri://localhost/assets/index-Mlr0LNHS.js",
+        "bestand": "bron-index-Mlr0LNHS.js.gz",
+        "bytes": 2888204,
+        "sha256": "01a00746e36babf8b549139c673015da27c3cd6d966c725f9020625ba57aae36",
+        "bewaard_als": "writer-lettertypeworker/definitief-bron-index-Mlr0LNHS.js.gz"
+      }
+    ]
+  },
+  "negatieve_prototypes": {
+    "initialisatie": {
+      "programma_sha256": "f9286e0af985111e064d83bb61768164189b92b5a5b77f2301197502fd445611",
+      "fout": "\n\nPrestatieproef.docx — Open Office Studio (Text)\n\n\n\n\n\n\nStart\nPrestatieproef.docx\n\n\nThe editor could not open this file: Cannot access 'Gn' before initialization.\nLocal\nOpen Tekst Studio\nLoading…\nCtrl+S",
+      "correctie": "De ongewijzigde compatibiliteitscallback vóór haar nieuwe afhankelijkheid registreren; nieuwe registratievolgordeproef."
+    },
+    "hostterugval": {
+      "programma_sha256": "2f40d7d2f4135771975c18736e2ad0f8a8d3a3af49453aa48f25917ac2102c74",
+      "host_lettertypecontroles": {
+        "calls": 1,
+        "ms": 31
+      },
+      "fout": "AssertionError('Volledige lettertypecontrole op de hoofdthread tijdens gewone invoer')",
+      "correctie": "Een gewijzigde bron herplant de volledige workercontrole, zonder verouderd antwoord toe te passen. De nulgrens blijft staan."
+    }
+  },
+  "resterend": {
+    "open_issues": 118,
+    "migratiegebieden": 10,
+    "acceptatievlaggen": 30,
+    "alles_open": true,
+    "algemene_invoer_en_selectiesnelheid": "Nog onvoldoende; na 256 tabellen vraagt vervolginvoer nog 5594 ms.",
+    "grote_plakactie_ms": 19222,
+    "grootste_plaktimerpauze_ms": 4314,
+    "incidentele_worker_en_Wasm_fouten": "Geen bewezen herstel van oudere afzonderlijke afkeuringen.",
+    "volledige_Rust_interface": false,
+    "platform_CI_op_deze_bron": "322f840: brede desktopcontrole op drie platforms, devpakket, native Rust, plakbatch en database slagen. Geheugenronde faalt op verouderde layout na vervolginvoer bij 256 tabellen; Linux-zeveneditieronde faalt op update_display_list-geheugenfout na heropenen van 500 pagina’s. Beide exacte negatieve routes slagen lokaal. Geen oorzaak of herstel bewezen; overige WebView-/editieronden apart volgen. Geen officiële release."
+  },
+  "logbestanden_sha256": {
+    "frontend-herplan.json": "0d6f6ab883c627e642ef9f91a5abbcb663a0409eecafaff50a1bd1c4815bc071",
+    "frontend-herplan.log": "f5409a29197a933818490a741865932f1100496899534d9db027833960bb67e3",
+    "typescript-herplan.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "python-definitief.log": "702f68ebd94e12c9f6625729de9aeb60def4a8e19d72211809f74b76a8103a73",
+    "bouw-45.35-herplan.log": "322c468a6481bd763c145e5792fa813c237dcb3f2ef22a1a349fc5a8d1d11adf",
+    "weekversie.log": "c262fe347f6bc07a1bc03a72e68f5f275fb34bfe2e875f63474b77f667e619c1",
+    "voor-definitief.json": "ac0aac0e6d2afc0265f432ce712b696ff1467762bd5f4113060f5519d03ec339",
+    "initialisatie-voor.json": "618aa043715d6985bb3f65b9909e6ad813ff1e6084d0b54817294c53da3cb53e",
+    "herplan-voor.json": "2a5c1a4ccee1d8036c631d855ac31a3d48f7e708729c113cb3ed1b4dd28b80d0",
+    "frontend-definitief.json": "654ac523445157ac054445f56f8a632fa8966748a2490781fbeff9c7b5b1ad90",
+    "frontend-definitief.log": "84b6a8b27f3718b8ec697ad863af28ec278a1e09c7f7ed995452d102e872b65d",
+    "typescript-definitief.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "python-definitief-guard.log": "669e64b256ec10606d3b5b9150d190691aa74953374f4a86e077c14d29015203",
+    "bouw-45.35-definitief.log": "69b8ff1aa305fef594300df1eb53e67033667891091cdc8ca94beabf87f34cd4",
+    "ongekende-bron-voor.json": "636ec6fde3295ba77220315fb6625aed76b8e4719cbadc24fa81573c826b115f",
+    "definitieve-proeven-uitkomsten.json": "3c675250717207c00a2252c5544345c1ab9465fb79b38691ee4b3980010d0d68",
+    "bron-herhaling-definitief.log": "0ef26f417c372b8a713ba72c502ca4b687ea36e80020e54c14847cef602f583e"
+  },
+  "aanvullende_CI_afkeuring": {
+    "run": 41796744672,
+    "bronhead": "adeffb9ec64d6185ce5ce874c01d86e23ec676bd",
+    "checkout": {
+      "GITHUB_SHA": "c69c79cc530cd4828383c5aef4e82e167d67c27c",
+      "GITHUB_RUN_ID": "41796744672",
+      "GITHUB_JOB": "desktop"
+    },
+    "gelijke_head_en_merge_bronboom": "051ffbb734fa144d15141a33ebe07057ec1e1bb1",
+    "native_artifact": 13307553656,
+    "context_artifact": 13307547532,
+    "context_zip_sha256": "e1fc8556349f71eb25621a6980fbddc89707056376b64522684bd68573233632",
+    "programma_sha256": "199b2935109025e35862ddc8e48b1d692b56757fdd972b295bbd917a7f96d939",
+    "script_sha256": "c690f866999ea08d81ed97f30a5269933b24e01955e8b6811bc0e7622e1f1278",
+    "bron_sha256": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee",
+    "fout": "Document worker trapped: Out of bounds memory access in editsession_build_display_list_frame",
+    "omvang": "Drie rijke plakrondes met werkelijk bewaren na ronde één; alle inhoud bleef correct maar de console meldt een workerfout. Linux afgekeurd; Windows/macOS slagen.",
+    "hertests": "De exacte negatieve ELF met checksumgelijke oorspronkelijke script-/bronbytes en de nieuwe 45.35 slagen lokaal op dezelfde route. Geen bewezen herstel; oorspronkelijke oorzaak open.",
+    "definitieve_hertest": "gui-bewaren-35-definitief; geslaagd, geen verklaring of herstelbewijs voor de oorspronkelijke CI-afkeuring."
+  },
+  "inventaris_sha256": {
+    "native/docs/migratie.json": "78f52cfb2969438e45be39b192086718da1c86474235fd9b4ee941bec64a4d5a",
+    "open_issues": "95d275da61da430480ed1dafd9ab8cec26336f6edcb5ce68913a967748a6875d"
+  },
+  "voorgaande_kandidaat_sha256": "ecccfbd721ce516e15683258c5b0042ac1beb2267e680f1fd5cacbd581bb1e0f",
+  "laatste_toelatingscorrectie": {
+    "gedrag": "Een geschikte hostbron zonder geregistreerde bestandsbron behoudt de volledige host-fontterugval en de bestaande layoutworker. Geen reset of nieuwe worker. Verplichte viewerroutes blijven behouden.",
+    "voor_sdk_sha256": "d33f1e046857c9462847fb8f5d24168e17f3a0aa5e9055948518c5acf3cbb475",
+    "na_sdk_sha256": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+    "gerichte_test_voor": {
+      "totaal": 11,
+      "geslaagd": 10,
+      "afgekeurd": 1
+    },
+    "gerichte_test_na": {
+      "totaal": 11,
+      "geslaagd": 11,
+      "afgekeurd": 0
+    }
+  },
+  "metingen_voor_laatste_toelatingscorrectie": [
+    {
+      "proef": "gui-33-voor-herplan",
+      "invoer_ms": 1565,
+      "native_bundels": 6,
+      "rAF_p95_ms": 141,
+      "rAF_maximum_ms": 179,
+      "DOM_metingen": 1032,
+      "host_lettertypecontroles": {
+        "calls": 6,
+        "ms": 171.99999999999818
+      },
+      "worker_berichten": {
+        "applyUpdate": 6,
+        "sync": 6,
+        "buildFrame": 1
+      },
+      "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e"
+    },
+    {
+      "proef": "gui-35-eerste",
+      "invoer_ms": 1156,
+      "native_bundels": 7,
+      "rAF_p95_ms": 103,
+      "rAF_maximum_ms": 127,
+      "DOM_metingen": 1279,
+      "host_lettertypecontroles": {
+        "calls": 0,
+        "ms": 0
+      },
+      "worker_berichten": {
+        "applyUpdate": 7,
+        "fontRequirements": 7,
+        "sync": 4
+      },
+      "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e"
+    },
+    {
+      "proef": "gui-35-tweede",
+      "invoer_ms": 1224,
+      "native_bundels": 8,
+      "rAF_p95_ms": 103,
+      "rAF_maximum_ms": 117,
+      "DOM_metingen": 1270,
+      "host_lettertypecontroles": {
+        "calls": 0,
+        "ms": 0
+      },
+      "worker_berichten": {
+        "applyUpdate": 8,
+        "fontRequirements": 8,
+        "sync": 4
+      },
+      "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e"
+    },
+    {
+      "proef": "gui-33-na-herplan",
+      "invoer_ms": 1898,
+      "native_bundels": 9,
+      "rAF_p95_ms": 153,
+      "rAF_maximum_ms": 167,
+      "DOM_metingen": 1071,
+      "host_lettertypecontroles": {
+        "calls": 9,
+        "ms": 229.99999999999818
+      },
+      "worker_berichten": {
+        "applyUpdate": 9,
+        "sync": 9,
+        "buildFrame": 1
+      },
+      "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e"
+    }
+  ],
+  "CPU_voor_laatste_toelatingscorrectie": {
+    "hoofdthread_steekproeven": 443,
+    "font_export_op_hoofdthread_steekproeven": 0,
+    "oude_referentie": "2026-11-04-writer-toetsbundeling.json",
+    "oude_hoofdthread_steekproeven": 788,
+    "oude_font_export_steekproeven": 128,
+    "grens": "Aantallen steekproeven met runtimekalibratie en exacte scriptbronnen; geen proces-CPUduur, geen fysieke FPS."
+  },
+  "lettertypevarianten_voor_laatste_toelatingscorrectie": {
+    "geslaagd": true,
+    "gevallen": [
+      {
+        "naam": "caladea",
+        "familie": "Caladea",
+        "behoeften": [
+          {
+            "key": "caladea|0|0",
+            "family": "Caladea",
+            "bold": false,
+            "italic": false
+          }
+        ],
+        "bronversie": "5dff3d2b9352635a-3",
+        "exact": true,
+        "bron_hersteld": true,
+        "bestand": "Lettertype-caladea.docx",
+        "sha256": "02a890a7e19bb696e2586d2de72c60ea48cfbf999e32e76b5a691a135b1e2ae7",
+        "xml_exact": true,
+        "volledige_tekst_exact": true
+      },
+      {
+        "naam": "carlito",
+        "familie": "Carlito",
+        "behoeften": [
+          {
+            "key": "caladea|0|0",
+            "family": "Caladea",
+            "bold": false,
+            "italic": false
+          },
+          {
+            "key": "carlito|0|0",
+            "family": "Carlito",
+            "bold": false,
+            "italic": false
+          }
+        ],
+        "bronversie": "5dff3d2b9352635a-5",
+        "exact": true,
+        "bron_hersteld": true,
+        "bestand": "Lettertype-carlito.docx",
+        "sha256": "5b4bf6e4219729ecd533df7394ab4e45ccfb406f7ba88d33b2e8a7741991cb56",
+        "xml_exact": true,
+        "volledige_tekst_exact": true
+      },
+      {
+        "naam": "vet",
+        "stijl": "bold",
+        "behoeften": [
+          {
+            "key": "caladea|0|0",
+            "family": "Caladea",
+            "bold": false,
+            "italic": false
+          },
+          {
+            "key": "caladea|1|0",
+            "family": "Caladea",
+            "bold": true,
+            "italic": false
+          }
+        ],
+        "bronversie": "5dff3d2b9352635a-7",
+        "exact": true,
+        "bron_hersteld": true,
+        "bestand": "Lettertype-vet.docx",
+        "sha256": "a2228583005a0211798b3d99b7b26532a1973071e7b0afc030eff2dabf207827",
+        "xml_exact": true,
+        "volledige_tekst_exact": true
+      },
+      {
+        "naam": "cursief",
+        "stijl": "italic",
+        "behoeften": [
+          {
+            "key": "caladea|0|0",
+            "family": "Caladea",
+            "bold": false,
+            "italic": false
+          },
+          {
+            "key": "caladea|0|1",
+            "family": "Caladea",
+            "bold": false,
+            "italic": true
+          }
+        ],
+        "bronversie": "5dff3d2b9352635a-9",
+        "exact": true,
+        "bron_hersteld": true,
+        "bestand": "Lettertype-cursief.docx",
+        "sha256": "be5bcca68257f4030a47571e66d286a6d72b59df850539d4d4d41acb0d51ce3d",
+        "xml_exact": true,
+        "volledige_tekst_exact": true
+      }
+    ],
+    "alinea_aantal": 500,
+    "tekst_sha256": "bd3cc4b7c68f7096aefd6a7778c880524b5b7894d296fc59c882d709ce81a1c0",
+    "script_sha256": "35ef4b0f486984925fb1765ad909a20a741e80270d8452e84deac0697fc22238",
+    "python_sha256": "d7c4bc900fcb26d581e61175be8ae400e642b65f28459c4b71c367c6525b8327",
+    "grens": "Volledige worker-/hostantwoorden op dezelfde actuele bron; vier fontopmaakvarianten, onafhankelijk XML en bronexacte Undo. Na de invoermeting; geen snelheidsmeting."
+  },
+  "beeldvergelijking_voor_laatste_toelatingscorrectie": {
+    "volledig": {
+      "verschillende_pixels": 0,
+      "begrenzing": null
+    },
+    "lint": {
+      "verschillende_pixels": 0,
+      "begrenzing": null
+    }
+  },
+  "gepatchte_sdk_sha256": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+  "aanvullende_45_35_diagnose": "2026-11-04-writer-tabeldiagnose-45.35.json"
+}

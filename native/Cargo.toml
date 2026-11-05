@@ -1,0 +1,69 @@
+[workspace]
+members = ["crates/office-core", "crates/office-ui", "crates/office-mail", "crates/office-conversie", "crates/office-webview", "crates/office-writer-plakken"]
+default-members = ["crates/office-ui"]
+exclude = ["vendor/docx-edit", "vendor/yrs", "vendor/openaec-ui", "vendor/docx-parse", "vendor/pptx", "vendor/xlsx-raster", "vendor/iced-tiny-skia", "vendor/xlsx-parse", "vendor/iced-runtime", "vendor/softbuffer"]
+resolver = "3"
+
+[workspace.package]
+version = "2026.45.0-alpha.57"
+edition = "2024"
+license = "Apache-2.0"
+publish = false
+
+[workspace.dependencies]
+office-core = { path = "crates/office-core" }
+office-writer-plakken = { path = "crates/office-writer-plakken" }
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["raw_value", "float_roundtrip"] }
+thiserror = "2"
+sha2 = "0.10.9"
+base64 = "0.22.1"
+tempfile = "3"
+betteroffice-docx = { version = "=0.5.1", features = ["raster"] }
+betteroffice-xlsx = { version = "=0.5.1", features = ["raster"] }
+betteroffice-pptx = { version = "=0.5.1", features = ["raster"] }
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 8
+
+[patch.crates-io]
+betteroffice-docx-edit = { path = "vendor/docx-edit" }
+yrs = { path = "vendor/yrs" }
+betteroffice-docx-parse = { path = "vendor/docx-parse" }
+
+betteroffice-pptx = { path = "vendor/pptx" }
+
+betteroffice-xlsx-raster = { path = "vendor/xlsx-raster" }
+
+iced_tiny_skia = { path = "vendor/iced-tiny-skia" }
+
+betteroffice-xlsx-parse = { path = "vendor/xlsx-parse" }
+
+iced_runtime = { path = "vendor/iced-runtime" }
+
+softbuffer = { path = "vendor/softbuffer" }
+
+# Rasterwerk blijft ook tijdens ontwikkelen responsief. Alleen deze vier
+# tekenbibliotheken krijgen optimalisatie; alle debug- en overflowcontroles blijven aan.
+
+[profile.dev.package."tiny-skia:0.11.4"]
+opt-level = 3
+debug-assertions = true
+overflow-checks = true
+
+[profile.dev.package."tiny-skia:0.12.0"]
+opt-level = 3
+debug-assertions = true
+overflow-checks = true
+
+[profile.dev.package."tiny-skia-path:0.11.4"]
+opt-level = 3
+debug-assertions = true
+overflow-checks = true
+
+[profile.dev.package."tiny-skia-path:0.12.0"]
+opt-level = 3
+debug-assertions = true
+overflow-checks = true

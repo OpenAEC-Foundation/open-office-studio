@@ -1,0 +1,364 @@
+diff --git a/native/crates/office-ui/src/invoerfocus.rs b/native/crates/office-ui/src/invoerfocus.rs
+index e8f7b8e..def0ed5 100644
+--- a/native/crates/office-ui/src/invoerfocus.rs
++++ b/native/crates/office-ui/src/invoerfocus.rs
+@@ -28,16 +28,61 @@ fn registreer(generatie: &Generatie, event: &Event) {
+ 
+ /// Leg de bediening vast vóór de widget zelf berichten of focusvragen maakt.
+ /// Ook afgehandelde gebeurtenissen en keuzemenu's tellen mee.
+-pub fn volg<'a>(inhoud: impl Into<Element<'a, Msg>>, generatie: Generatie) -> Element<'a, Msg> {
++pub fn volg<'a>(
++    inhoud: impl Into<Element<'a, Msg>>,
++    generatie: Generatie,
++    zoektoetsen: bool,
++) -> Element<'a, Msg> {
+     Element::new(Bediening {
+         inhoud: inhoud.into(),
+         generatie,
++        zoektoetsen,
+     })
+ }
+ 
+ struct Bediening<'a> {
+     inhoud: Element<'a, Msg>,
+     generatie: Generatie,
++    zoektoetsen: bool,
++}
++fn zoektoets(event: &Event) -> Option<bool> {
++    let Event::Keyboard(iced::keyboard::Event::KeyPressed {
++        key: iced::keyboard::Key::Character(tekst),
++        modifiers,
++        ..
++    }) = event
++    else {
++        return None;
++    };
++    if !modifiers.command() {
++        return None;
++    }
++    match tekst.to_lowercase().as_str() {
++        "f" => Some(false),
++        "h" => Some(true),
++        _ => None,
++    }
++}
++fn sluit_ronde(
++    shell: &mut Shell<'_, Msg>,
++    mut lokaal: Shell<'_, Msg>,
++    event: &Event,
++    generatie: u64,
++    zoektoetsen: bool,
++) {
++    if zoektoetsen
++        && !lokaal.is_event_captured()
++        && let Some(vervangen) = zoektoets(event)
++    {
++        lokaal.publish(Msg::Zoeken(zoeken_ui::Bericht::Open(vervangen)));
++        lokaal.capture_event();
++    }
++    // App::update kan pas volgen nadat meerdere latere gebeurtenissen zijn
++    // afgehandeld. Bewaar daarom het stempel van de oorspronkelijke invoer.
++    shell.merge(lokaal, |bericht| match bericht {
++        Msg::Zoeken(zoek) => Msg::ZoekenInvoer(generatie, zoek),
++        ander => ander,
++    });
+ }
+ impl Widget<Msg, Theme, Renderer> for Bediening<'_> {
+     fn children(&self) -> Vec<Tree> {
+@@ -69,9 +114,13 @@ impl Widget<Msg, Theme, Renderer> for Bediening<'_> {
+         vp: &Rectangle,
+     ) {
+         registreer(&self.generatie, e);
++        let generatie = self.generatie.load(Ordering::Relaxed);
++        let mut berichten = Vec::new();
++        let mut lokaal = Shell::new(&mut berichten);
+         self.inhoud
+             .as_widget_mut()
+-            .update(&mut t.children[0], e, l, c, r, cb, s, vp);
++            .update(&mut t.children[0], e, l, c, r, cb, &mut lokaal, vp);
++        sluit_ronde(s, lokaal, e, generatie, self.zoektoetsen);
+     }
+     fn mouse_interaction(
+         &self,
+@@ -114,6 +163,7 @@ impl Widget<Msg, Theme, Renderer> for Bediening<'_> {
+                 overlay::Element::new(Box::new(Bovenlaag {
+                     inhoud,
+                     generatie: self.generatie.clone(),
++                    zoektoetsen: self.zoektoetsen,
+                 }))
+             })
+     }
+@@ -122,6 +172,7 @@ impl Widget<Msg, Theme, Renderer> for Bediening<'_> {
+ struct Bovenlaag<'a> {
+     inhoud: overlay::Element<'a, Msg, Theme, Renderer>,
+     generatie: Generatie,
++    zoektoetsen: bool,
+ }
+ impl overlay::Overlay<Msg, Theme, Renderer> for Bovenlaag<'_> {
+     fn layout(&mut self, r: &Renderer, b: Size) -> layout::Node {
+@@ -140,7 +191,13 @@ impl overlay::Overlay<Msg, Theme, Renderer> for Bovenlaag<'_> {
+         s: &mut Shell<'_, Msg>,
+     ) {
+         registreer(&self.generatie, e);
+-        self.inhoud.as_overlay_mut().update(e, l, c, r, cb, s);
++        let generatie = self.generatie.load(Ordering::Relaxed);
++        let mut berichten = Vec::new();
++        let mut lokaal = Shell::new(&mut berichten);
++        self.inhoud
++            .as_overlay_mut()
++            .update(e, l, c, r, cb, &mut lokaal);
++        sluit_ronde(s, lokaal, e, generatie, self.zoektoetsen);
+     }
+     fn mouse_interaction(
+         &self,
+@@ -169,6 +226,7 @@ impl overlay::Overlay<Msg, Theme, Renderer> for Bovenlaag<'_> {
+             overlay::Element::new(Box::new(Bovenlaag {
+                 inhoud,
+                 generatie: self.generatie.clone(),
++                zoektoetsen: self.zoektoetsen,
+             }))
+         })
+     }
+@@ -206,10 +264,10 @@ impl Operation for Focusvraag {
+     }
+ }
+ /// Het unieke doel moet nog in de actuele, bedienbare widgetboom staan.
+-pub fn vraag(generatie: &Generatie, doel: Id) -> Task<Msg> {
++pub fn vraag(generatie: &Generatie, doel: Id, verwacht: u64) -> Task<Msg> {
+     iced::advanced::widget::operate(Focusvraag {
+         generatie: generatie.clone(),
+-        verwacht: generatie.load(Ordering::Relaxed),
++        verwacht,
+         doel,
+         aanwezig: false,
+     })
+diff --git a/native/crates/office-ui/src/main.rs b/native/crates/office-ui/src/main.rs
+index d5ede35..627a423 100644
+--- a/native/crates/office-ui/src/main.rs
++++ b/native/crates/office-ui/src/main.rs
+@@ -74,6 +74,7 @@ enum Msg {
+     WriterGereed(writer_direct::Doel, Result<Antwoord, String>),
+     WriterPlak(u64, u64, Option<String>),
+     Zoeken(zoeken_ui::Bericht),
++    ZoekenInvoer(u64, zoeken_ui::Bericht),
+     ZoekNavigatie(zoeken_ui::NavigatieDoel, Result<Antwoord, String>),
+     ZoekGereed(
+         zoeken_ui::Doel,
+@@ -598,6 +599,7 @@ impl App {
+             Msg::WriterGereed(d, r) => return writer_direct::gereed(self, d, r),
+             Msg::WriterPlak(id, n, s) => return writer_direct::plak(self, id, n, s),
+             Msg::Zoeken(m) => return zoeken_ui::update(self, m),
++            Msg::ZoekenInvoer(generatie, m) => return zoeken_ui::update_vanaf(self, m, generatie),
+             Msg::ZoekNavigatie(doel, r) => return zoeken_ui::navigatie_gereed(self, doel, r),
+             Msg::ZoekGereed(doel, resultaat) => return zoeken_ui::gereed(self, doel, resultaat),
+             Msg::ExportMenu => {
+@@ -1986,6 +1988,14 @@ impl App {
+         invoerfocus::volg(
+             iced::widget::Stack::with_children(lagen),
+             self.invoergeneratie.clone(),
++            !modaal
++                && !self.bestand
++                && !self.postvak_zichtbaar
++                && self.tab().is_some_and(|t| {
++                    t.antwoord
++                        .as_ref()
++                        .is_some_and(|a| a.beeld.module == Module::Writer)
++                }),
+         )
+     }
+     fn ribbon(&self) -> Element<'_, Msg> {
+diff --git a/native/crates/office-ui/src/tests/raster_proeven.rs b/native/crates/office-ui/src/tests/raster_proeven.rs
+index a7218cd..da7c4c0 100644
+--- a/native/crates/office-ui/src/tests/raster_proeven.rs
++++ b/native/crates/office-ui/src/tests/raster_proeven.rs
+@@ -607,6 +607,136 @@ fn writer_zoekopenfocus_van_ander_document_raakt_de_huidige_editor_niet() {
+     assert_eq!(*p.bron(), *origineel);
+ }
+ #[test]
++fn writer_zoekherkomst_sneltoets_en_paginaklik_in_dezelfde_widgetronde() {
++    use iced::{Event, keyboard as k, mouse};
++    let mut p = writer_paginaproef();
++    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
++    p.klik(punt);
++    let origineel = p.bron();
++    p.gebeurtenissen([
++        Event::Keyboard(k::Event::KeyPressed {
++            key: k::Key::Character("f".into()),
++            modified_key: k::Key::Character("f".into()),
++            physical_key: k::key::Physical::Unidentified(k::key::NativeCode::Unidentified),
++            location: k::Location::Standard,
++            modifiers: k::Modifiers::COMMAND,
++            text: None,
++            repeat: false,
++        }),
++        Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
++        Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)),
++    ]);
++    assert!(p.app.zoeken.is_some());
++    assert!(
++        p.app
++            .tab()
++            .unwrap()
++            .writer_focus
++            .load(std::sync::atomic::Ordering::Relaxed)
++    );
++    p.toets(
++        k::Key::Character("9".into()),
++        k::Modifiers::empty(),
++        Some("9"),
++    );
++    assert_eq!(p.app.tab().unwrap().editor.text(), "Links 🏠 9café rechts");
++    assert!(!p.app.tab().unwrap().concept);
++    p.bericht(Msg::Terug);
++    assert_eq!(*p.bron(), *origineel);
++}
++#[test]
++fn writer_zoekherkomst_lintklik_en_paginaklik_in_dezelfde_widgetronde() {
++    use iced::{Event, keyboard as k, mouse};
++    let mut p = writer_paginaproef();
++    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
++    p.klik(punt);
++    let origineel = p.bron();
++    let b = p
++        .toegankelijkheid()
++        .nodes
++        .into_iter()
++        .find(|n| n.node.name == "Zoeken" && n.node.role == openaec_ui::design::a11y::Role::Button)
++        .unwrap()
++        .bounds;
++    let knop = iced::Point::new(b.x + b.width * 0.5, b.y + b.height * 0.5);
++    p.gebeurtenissen([
++        Event::Mouse(mouse::Event::CursorMoved { position: knop }),
++        Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
++        Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)),
++        Event::Mouse(mouse::Event::CursorMoved { position: punt }),
++        Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
++        Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)),
++    ]);
++    assert!(p.app.zoeken.is_some());
++    assert!(
++        p.app
++            .tab()
++            .unwrap()
++            .writer_focus
++            .load(std::sync::atomic::Ordering::Relaxed)
++    );
++    p.toets(
++        k::Key::Character("9".into()),
++        k::Modifiers::empty(),
++        Some("9"),
++    );
++    assert_eq!(p.app.tab().unwrap().editor.text(), "Links 🏠 9café rechts");
++    assert!(!p.app.tab().unwrap().concept);
++    p.bericht(Msg::Terug);
++    assert_eq!(*p.bron(), *origineel);
++}
++#[test]
++fn writer_zoekherkomst_normale_zoek_en_vervangsneltoets_typen_in_het_zoekveld() {
++    use iced::keyboard as k;
++    for toets in ["f", "h"] {
++        let mut p = writer_paginaproef();
++        let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
++        p.klik(punt);
++        let origineel = p.bron();
++        p.toets(k::Key::Character(toets.into()), k::Modifiers::COMMAND, None);
++        assert!(p.app.zoeken.is_some());
++        p.toets(
++            k::Key::Character("9".into()),
++            k::Modifiers::empty(),
++            Some("9"),
++        );
++        p.selecteer_alles();
++        p.toets(k::Key::Character("c".into()), k::Modifiers::COMMAND, None);
++        assert_eq!(p.klembord.tekst.as_deref(), Some("9"));
++        assert_eq!(*p.bron(), *origineel);
++        assert!(!p.app.tab().unwrap().concept);
++    }
++}
++#[test]
++fn writer_heropen_negen_paginaklik_volgt_de_getekende_regel() {
++    use iced::keyboard::{Key, Modifiers, key::Named};
++    let mut p = writer_paginaproef();
++    let tekst = "Links 🏠 café rechts";
++    let punt = writer_punt(&mut p, tekst, tekst.chars().count());
++    p.klik(punt);
++    p.named(Named::End);
++    p.named(Named::Enter);
++    p.bericht(Msg::Opmaak(Opmaak::Vet(true)));
++    p.toets(Key::Character("9".into()), Modifiers::empty(), Some("9"));
++    let bron = p.bron();
++    let mut q = Proef::met_app(app_met_werkdraad(Module::Writer, bron.as_slice()));
++    let berekend = writer_punt(&mut q, "9", 0);
++    println!("Cursorpunt van de heropende 9: {berekend:?}");
++    q.klik(iced::Point::new(390., 401.));
++    assert!(
++        q.app
++            .tab()
++            .unwrap()
++            .writer_focus
++            .load(std::sync::atomic::Ordering::Relaxed)
++    );
++    assert_eq!(q.app.tab().unwrap().editor.text(), "9");
++    q.selecteer_alles();
++    q.toets(Key::Character("c".into()), Modifiers::COMMAND, None);
++    assert_eq!(q.klembord.tekst.as_deref(), Some("9"));
++    assert_eq!(*q.bron(), *bron);
++}
++#[test]
+ fn writer_pagina_opmaak_sneltoets_bewaart_cursor_en_onderbreekt_invoerundo() {
+     use text_editor::{Action as A, Edit as E};
+     use writer_direct::Bericht as B;
+@@ -1511,6 +1641,9 @@ impl Proef {
+             );
+             let mut berichten = vec![];
+             for event in events {
++                if let iced::Event::Mouse(iced::mouse::Event::CursorMoved { position }) = &event {
++                    self.muis = *position;
++                }
+                 let mut shell = iced::advanced::Shell::new(&mut berichten);
+                 element.as_widget_mut().update(
+                     &mut self.boom,
+diff --git a/native/crates/office-ui/src/zoeken_ui.rs b/native/crates/office-ui/src/zoeken_ui.rs
+index f110556..1101e1b 100644
+--- a/native/crates/office-ui/src/zoeken_ui.rs
++++ b/native/crates/office-ui/src/zoeken_ui.rs
+@@ -369,13 +369,19 @@ pub fn bij_document(app: &mut App) -> Task<Msg> {
+     z.gekozen = 0;
+     vraag(app)
+ }
+-fn focus_zoektekst(app: &App) -> Task<Msg> {
++fn focus_zoektekst(app: &App, generatie: u64) -> Task<Msg> {
+     app.zoeken
+         .as_ref()
+-        .map(|z| invoerfocus::vraag(&app.invoergeneratie, z.invoer_id()))
++        .map(|z| invoerfocus::vraag(&app.invoergeneratie, z.invoer_id(), generatie))
+         .unwrap_or_else(Task::none)
+ }
+ pub fn update(app: &mut App, m: Bericht) -> Task<Msg> {
++    let generatie = app
++        .invoergeneratie
++        .load(std::sync::atomic::Ordering::Relaxed);
++    update_vanaf(app, m, generatie)
++}
++pub fn update_vanaf(app: &mut App, m: Bericht, generatie: u64) -> Task<Msg> {
+     match m {
+         Bericht::Sluit => {
+             let pagina = app
+@@ -405,7 +411,7 @@ pub fn update(app: &mut App, m: Bericht) -> Task<Msg> {
+             } else {
+                 app.zoeken = Some(Zoekpaneel::nieuw(id, hash, vervangen, tekst));
+             }
+-            return Task::batch([vraag(app), focus_zoektekst(app)]);
++            return Task::batch([vraag(app), focus_zoektekst(app, generatie)]);
+         }
+         Bericht::Vervang(alles) => {
+             let Some(t) = tab_gereed(app) else {
+@@ -455,7 +461,7 @@ pub fn update(app: &mut App, m: Bericht) -> Task<Msg> {
+             } else {
+                 (z.gekozen + 1) % z.treffers.len()
+             };
+-            return Task::batch([kies(app, n, false), focus_zoektekst(app)]);
++            return Task::batch([kies(app, n, false), focus_zoektekst(app, generatie)]);
+         }
+         Bericht::Vervangtekst(s) => {
+             if let Some(z) = app.zoeken.as_mut() {

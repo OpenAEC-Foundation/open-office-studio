@@ -1,0 +1,667 @@
+diff --git a/native/crates/office-core/src/document.rs b/native/crates/office-core/src/document.rs
+index 214f3be..36a8b1d 100644
+--- a/native/crates/office-core/src/document.rs
++++ b/native/crates/office-core/src/document.rs
+@@ -937,23 +937,72 @@ impl Sessie {
+     pub fn sluit_tekstgroep(&mut self) {
+         self.tekstgroep = None;
+     }
++    /// Structurele invoer en haar doel worden vóór dezelfde broncommit gecontroleerd.
++    pub fn bewerk_alinea_cursor(
++        &mut self,
++        deel: usize,
++        hash: &str,
++        id: &str,
++        begin: usize,
++        einde: usize,
++        actie: crate::writer::CursorActie,
++    ) -> Resultaat<(Weergave, crate::writer_cursor::TekstPunt)> {
++        self.tekstgroep = None;
++        if hash != self.bron_hash {
++            return Err(fout("De alineatoets hoort bij een andere documentversie"));
++        }
++        let Document::Writer(d) = &self.document else {
++            return Err(fout("Alineatoetsen horen bij Writer"));
++        };
++        d.controleer_bewerking()?;
++        let plan = crate::writer::cursor_plan(d, id, begin, einde, actie)?;
++        let Some(plan) = plan else {
++            self.tekstgroep = None;
++            return Ok((
++                self.weergave(deel)?,
++                crate::writer_cursor::TekstPunt {
++                    id: id.into(),
++                    positie: begin,
++                },
++            ));
++        };
++        self.bewerk_transactie(deel, None, move |document| {
++            let Document::Writer(d) = document else {
++                return Err(fout("Alineatoetsen horen bij Writer"));
++            };
++            d.controleer_bewerking()?;
++            crate::writer::cursor_toepassen(d, plan)
++        })
++    }
+     fn bewerk_in(
+         &mut self,
+         deel: usize,
+         bewerking: Bewerking,
+         groep: Option<(u64, String)>,
+     ) -> Resultaat<Weergave> {
++        if matches!(bewerking, Bewerking::Pagina { .. }) {
++            self.tekstgroep = None;
++            crate::writer_pagina::controleer_bron(&self.bron)?;
++        }
++        self.bewerk_transactie(deel, groep, move |document| {
++            document.bewerk(deel, bewerking)
++        })
++        .map(|(beeld, ())| beeld)
++    }
++    fn bewerk_transactie<T>(
++        &mut self,
++        deel: usize,
++        groep: Option<(u64, String)>,
++        wijzig: impl FnOnce(&mut Document) -> Resultaat<T>,
++    ) -> Resultaat<(Weergave, T)> {
+         let aansluitend = groep.as_ref().is_some_and(|(g, id)| {
+             self.tekstgroep.as_ref().is_some_and(|(oud, alinea, hash)| {
+                 oud == g && alinea == id && hash == &self.bron_hash
+             })
+         });
+         self.tekstgroep = None;
+-        if matches!(bewerking, Bewerking::Pagina { .. }) {
+-            crate::writer_pagina::controleer_bron(&self.bron)?;
+-        }
+         let resultaat = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+-            self.document.bewerk(deel, bewerking)?;
++            let doel = wijzig(&mut self.document)?;
+             // Serialiseer één keer; de renderer toont precies de te bewaren bron.
+             let bytes = self.document.bytes()?;
+             let beeld = self.document.weergave_van_bron(
+@@ -962,10 +1011,10 @@ impl Sessie {
+                 Some(&bytes),
+                 Some(self.layout_eigenaar),
+             )?;
+-            Ok((bytes, beeld))
++            Ok((bytes, beeld, doel))
+         }));
+         match resultaat {
+-            Ok(Ok((bytes, beeld))) => {
++            Ok(Ok((bytes, beeld, doel))) => {
+                 if !aansluitend {
+                     self.terug.push(self.bron.clone());
+                 }
+@@ -980,7 +1029,7 @@ impl Sessie {
+                 self.bron = std::sync::Arc::new(bytes);
+                 self.tekstgroep = groep.map(|(g, id)| (g, id, self.bron_hash.clone()));
+                 *self.beelden.borrow_mut() = vec![(deel, beeld.clone())];
+-                Ok(beeld)
++                Ok((beeld, doel))
+             }
+             foutresultaat => {
+                 self.document = Document::open(self.module, &self.bron)?;
+diff --git a/native/crates/office-core/src/writer.rs b/native/crates/office-core/src/writer.rs
+index 62e25d3..517f756 100644
+--- a/native/crates/office-core/src/writer.rs
++++ b/native/crates/office-core/src/writer.rs
+@@ -46,6 +46,11 @@ pub enum AlineaActie {
+     Splits {
+         positie: usize,
+     },
++    /// Verwijder de Unicode-selectie en splits in dezelfde brontransactie.
++    SplitsBereik {
++        begin: usize,
++        einde: usize,
++    },
+     VoegVolgendeSamen,
+ }
+ 
+@@ -113,6 +118,13 @@ fn vervang(blokken: &mut Vec<B>, ids: &[String], nieuw: &[B]) -> bool {
+ }
+ 
+ pub fn alinea(d: &mut docx::Document, id: &str, actie: AlineaActie) -> Resultaat<()> {
++    let actie = match actie {
++        AlineaActie::Splits { positie } => AlineaActie::SplitsBereik {
++            begin: positie,
++            einde: positie,
++        },
++        a => a,
++    };
+     let (blokken, i) = zoek(&d.model().body.content, id)
+         .ok_or_else(|| fout("Alinea ontbreekt of staat in een inhoudsbesturing"))?;
+     let B::Paragraph(p) = &blokken[i] else {
+@@ -121,9 +133,10 @@ pub fn alinea(d: &mut docx::Document, id: &str, actie: AlineaActie) -> Resultaat
+     controleer(p)?;
+     let mut eerste = (**p).clone();
+     let (ids, nieuw) = match actie {
+-        AlineaActie::Splits { positie } => {
++        AlineaActie::Splits { .. } => unreachable!(),
++        AlineaActie::SplitsBereik { begin, einde } => {
+             let tekst = docx::get_paragraph_text(p);
+-            if positie > tekst.chars().count() {
++            if begin > einde || einde > tekst.chars().count() {
+                 return Err(fout("Splitspositie valt buiten de alinea"));
+             }
+             let mut tweede = (**p).clone();
+@@ -150,7 +163,8 @@ pub fn alinea(d: &mut docx::Document, id: &str, actie: AlineaActie) -> Resultaat
+                 .page_break_before = Some(false);
+             // Een sectie-einde blijft achter de oorspronkelijke volledige tekst.
+             eerste.section_properties = None;
+-            let (links, rechts) = crate::writer_tekst::splits_inhoud(p, positie);
++            let (links, _) = crate::writer_tekst::splits_inhoud(p, begin);
++            let (_, rechts) = crate::writer_tekst::splits_inhoud(p, einde);
+             eerste.content = links;
+             tweede.content = rechts;
+             (
+@@ -201,3 +215,109 @@ pub fn alinea(d: &mut docx::Document, id: &str, actie: AlineaActie) -> Resultaat
+     }
+     Ok(())
+ }
++
++/// Alineagrenzen via toetsen; zachte regelovergangen blijven tekstinvoer.
++#[derive(Debug, Clone, Copy, PartialEq, Eq)]
++pub enum CursorActie {
++    Splits,
++    VorigeSamen,
++    VolgendeSamen,
++}
++pub(crate) struct CursorPlan {
++    id: String,
++    actie: AlineaActie,
++    doel: CursorNa,
++}
++enum CursorNa {
++    NieuwNa(String),
++    Bestaand(crate::writer_cursor::TekstPunt),
++}
++pub(crate) fn cursor_plan(
++    d: &docx::Document,
++    id: &str,
++    begin: usize,
++    einde: usize,
++    actie: CursorActie,
++) -> Resultaat<Option<CursorPlan>> {
++    use crate::writer_cursor::TekstPunt;
++    let (blokken, i) = zoek(&d.model().body.content, id)
++        .ok_or_else(|| fout("Alinea ontbreekt of staat in een inhoudsbesturing"))?;
++    let B::Paragraph(p) = &blokken[i] else {
++        unreachable!()
++    };
++    controleer(p)?;
++    let lengte = crate::writer_tekst::alinea_tekst(p).chars().count();
++    if begin > einde || einde > lengte {
++        return Err(fout("De alineacursor valt buiten de brontekst"));
++    }
++    let (id, bewerking, doel) = match actie {
++        CursorActie::Splits => (
++            id.into(),
++            AlineaActie::SplitsBereik { begin, einde },
++            CursorNa::NieuwNa(id.into()),
++        ),
++        CursorActie::VorigeSamen | CursorActie::VolgendeSamen => {
++            if begin != einde
++                || (actie == CursorActie::VorigeSamen && begin != 0)
++                || (actie == CursorActie::VolgendeSamen && begin != lengte)
++            {
++                return Err(fout(
++                    "Samenvoegen met een toets vraagt een cursor op de alineagrens zonder selectie",
++                ));
++            }
++            let eerste = if actie == CursorActie::VorigeSamen {
++                let Some(j) = i.checked_sub(1) else {
++                    return Ok(None);
++                };
++                j
++            } else {
++                i
++            };
++            let (Some(B::Paragraph(a)), Some(B::Paragraph(_))) =
++                (blokken.get(eerste), blokken.get(eerste + 1))
++            else {
++                return Ok(None);
++            };
++            let id = a
++                .para_id
++                .clone()
++                .ok_or_else(|| fout("De aangrenzende alinea mist een adres"))?;
++            let positie = crate::writer_tekst::alinea_tekst(a).chars().count();
++            (
++                id.clone(),
++                AlineaActie::VoegVolgendeSamen,
++                CursorNa::Bestaand(TekstPunt { id, positie }),
++            )
++        }
++    };
++    Ok(Some(CursorPlan {
++        id,
++        actie: bewerking,
++        doel,
++    }))
++}
++pub(crate) fn cursor_toepassen(
++    d: &mut docx::Document,
++    plan: CursorPlan,
++) -> Resultaat<crate::writer_cursor::TekstPunt> {
++    alinea(d, &plan.id, plan.actie)?;
++    match plan.doel {
++        CursorNa::Bestaand(p) => Ok(p),
++        CursorNa::NieuwNa(id) => {
++            let (blokken, i) = zoek(&d.model().body.content, &id)
++                .ok_or_else(|| fout("De gesplitste bronalinea ontbreekt"))?;
++            let Some(B::Paragraph(p)) = blokken.get(i + 1) else {
++                return Err(fout(
++                    "De nieuwe alinea ontbreekt binnen dezelfde tekst of tabelcel",
++                ));
++            };
++            Ok(crate::writer_cursor::TekstPunt {
++                id: p
++                    .para_id
++                    .clone()
++                    .ok_or_else(|| fout("De nieuwe alinea mist een adres"))?,
++                positie: 0,
++            })
++        }
++    }
++}
+diff --git a/native/crates/office-ui/src/tests.rs b/native/crates/office-ui/src/tests.rs
+index aa44fdd..30f2423 100644
+--- a/native/crates/office-ui/src/tests.rs
++++ b/native/crates/office-ui/src/tests.rs
+@@ -278,6 +278,7 @@ pub(super) fn app_met_document(module: Module, bytes: &[u8]) -> App {
+         raster_selectie: None,
+         deel: 0,
+         writer_markering: None,
++        writer_positie: None,
+         writer_cursor: None,
+         beeld,
+         hash: sessie.bron_hash().into(),
+diff --git a/native/crates/office-ui/src/tests/raster_proeven.rs b/native/crates/office-ui/src/tests/raster_proeven.rs
+index b94ddf7..75245e1 100644
+--- a/native/crates/office-ui/src/tests/raster_proeven.rs
++++ b/native/crates/office-ui/src/tests/raster_proeven.rs
+@@ -3059,3 +3059,105 @@ fn raster_aanvullend_een_oude_inline_cursoractie_verplaatst_geen_nieuwe_invoer()
+     assert_eq!(p.app.tab().unwrap().editor.text(), "78");
+     p.named(N::Escape);
+ }
++
++#[test]
++fn writer_alineatoets_enter_en_snellen_vervolgtekst_vormen_twee_bronexacte_undo_stappen() {
++    use iced::keyboard::{Key, key::Named as N};
++    let mut p = writer_paginaproef();
++    let origineel = p.bron();
++    let aantal = p
++        .app
++        .tab()
++        .unwrap()
++        .antwoord
++        .as_ref()
++        .unwrap()
++        .beeld
++        .velden
++        .len();
++    let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
++    p.klik(punt);
++    p.gebeurtenissen([
++        ruwe_rastertoets(Key::Named(N::Enter), None),
++        ruwe_rastertoets(Key::Character("7".into()), Some("7")),
++    ]);
++    let b = Sessie::open(Module::Writer, p.bron().as_ref().clone())
++        .unwrap()
++        .weergave(0)
++        .unwrap();
++    assert_eq!(b.velden.len(), aantal + 1);
++    assert!(b.velden.iter().any(|v| v.tekst == "Links 🏠 "));
++    assert!(b.velden.iter().any(|v| v.tekst == "7café rechts"));
++    assert_eq!(p.app.tab().unwrap().editor.text(), "7café rechts");
++    assert_eq!(
++        lint::tekenoffset(
++            &p.app.tab().unwrap().editor,
++            p.app.tab().unwrap().editor.cursor().position
++        ),
++        1
++    );
++    let klaar = p.bron();
++    p.bericht(Msg::Terug);
++    assert_eq!(p.app.tab().unwrap().editor.text(), "café rechts");
++    assert_eq!(
++        lint::tekenoffset(
++            &p.app.tab().unwrap().editor,
++            p.app.tab().unwrap().editor.cursor().position
++        ),
++        0
++    );
++    p.bericht(Msg::Terug);
++    assert_eq!(*p.bron(), *origineel);
++    assert_eq!(
++        lint::tekenoffset(
++            &p.app.tab().unwrap().editor,
++            p.app.tab().unwrap().editor.cursor().position
++        ),
++        8
++    );
++    p.bericht(Msg::Vooruit);
++    p.bericht(Msg::Vooruit);
++    assert_eq!(*p.bron(), *klaar);
++}
++
++fn writer_grenstoetsproef(terug: bool) {
++    use iced::keyboard::key::Named as N;
++    {
++        let mut p = writer_paginaproef();
++        let punt = writer_punt(&mut p, "Links 🏠 café rechts", 8);
++        p.klik(punt);
++        p.bericht(Msg::SplitsAlinea);
++        let gesplitst = p.bron();
++        let punt = writer_punt(
++            &mut p,
++            if terug { "café rechts" } else { "Links 🏠 " },
++            if terug { 0 } else { 8 },
++        );
++        p.klik(punt);
++        p.named(if terug { N::Backspace } else { N::Delete });
++        let b = Sessie::open(Module::Writer, p.bron().as_ref().clone())
++            .unwrap()
++            .weergave(0)
++            .unwrap();
++        assert!(b.velden.iter().any(|v| v.tekst == "Links 🏠 café rechts"));
++        assert_eq!(p.app.tab().unwrap().editor.text(), "Links 🏠 café rechts");
++        assert_eq!(
++            lint::tekenoffset(
++                &p.app.tab().unwrap().editor,
++                p.app.tab().unwrap().editor.cursor().position
++            ),
++            8
++        );
++        p.bericht(Msg::Terug);
++        assert_eq!(*p.bron(), *gesplitst);
++    }
++}
++
++#[test]
++fn writer_alineatoets_backspace_voegt_binnen_dezelfde_tekst_samen() {
++    writer_grenstoetsproef(true);
++}
++#[test]
++fn writer_alineatoets_delete_voegt_binnen_dezelfde_tekst_samen() {
++    writer_grenstoetsproef(false);
++}
+diff --git a/native/crates/office-ui/src/werker.rs b/native/crates/office-ui/src/werker.rs
+index 20deac4..e0ff462 100644
+--- a/native/crates/office-ui/src/werker.rs
++++ b/native/crates/office-ui/src/werker.rs
+@@ -9,6 +9,7 @@ use std::{
+ pub struct Antwoord {
+     pub deel: usize,
+     pub raster_selectie: Option<office_core::rekenblad::CelSelectie>,
++    pub writer_positie: Option<office_core::writer_cursor::TekstPunt>,
+     pub writer_cursor: Option<office_core::writer_navigatie::CursorDoel>,
+     pub writer_markering: Option<office_core::writer_cursor::TekstMarkering>,
+     pub beeld: Weergave,
+@@ -19,6 +20,14 @@ pub struct Antwoord {
+ }
+ #[derive(Debug, Clone)]
+ pub enum Opdracht {
++    WriterAlinea {
++        deel: usize,
++        hash: String,
++        id: String,
++        begin: usize,
++        einde: usize,
++        actie: office_core::writer::CursorActie,
++    },
+     WriterCursor {
+         deel: usize,
+         hash: String,
+@@ -123,12 +132,14 @@ impl Werker {
+                             .ok_or("Document niet meer geopend")?;
+                         let mut beeld=None;
+                         let mut raster_selectie=None;
++                        let mut writer_positie=None;
++                        let mut writer_cursor=None;
+                         match taak.opdracht {
+                             Opdracht::WriterCursor {deel:n,hash,punt,richting,voorkeur,doel_x}=>{
+                                 let cursor=sessie.verplaats_cursor(n,&hash,&punt,richting,voorkeur.as_ref(),doel_x).map_err(|e|e.to_string())?;
+                                 let pagina=cursor.pagina;let mut beeld=sessie.weergave(pagina).map_err(|e|e.to_string())?;beeld.voorkeursveld=Some(cursor.punt.id.clone());
+                                 *deel=pagina;
+-                                return Ok(Antwoord {deel:pagina,raster_selectie:None,writer_cursor:Some(cursor),writer_markering:None,beeld,bron:sessie.bron(),hash:sessie.bron_hash().into(),terug:sessie.kan_terug(),vooruit:sessie.kan_vooruit()});
++                                return Ok(Antwoord {deel:pagina,raster_selectie:None,writer_cursor:Some(cursor),writer_positie:None,writer_markering:None,beeld,bron:sessie.bron(),hash:sessie.bron_hash().into(),terug:sessie.kan_terug(),vooruit:sessie.kan_vooruit()});
+                             }
+                             Opdracht::Deel(n) => {
+                                 beeld=Some(sessie.weergave(n).map_err(|e| e.to_string())?);
+@@ -151,7 +162,22 @@ impl Werker {
+                                 };
+                                 // De interface accepteert het doel pas na haar versie-/focuscontrole.
+                                 // Een oud navigatieantwoord mag het werkdraaddeel niet verplaatsen.
+-                                return Ok(Antwoord{deel:pagina,raster_selectie:None,writer_markering,writer_cursor:None,beeld,bron:sessie.bron(),hash:sessie.bron_hash().into(),terug:sessie.kan_terug(),vooruit:sessie.kan_vooruit()});
++                                return Ok(Antwoord{deel:pagina,raster_selectie:None,writer_markering,writer_positie:None,writer_cursor:None,beeld,bron:sessie.bron(),hash:sessie.bron_hash().into(),terug:sessie.kan_terug(),vooruit:sessie.kan_vooruit()});
++                            }
++                            Opdracht::WriterAlinea { deel:n, hash, id, begin, einde, actie } => {
++                                let (mut b,punt)=sessie.bewerk_alinea_cursor(n,&hash,&id,begin,einde,actie).map_err(|e|e.to_string())?;
++                                let mut pagina=n.min(b.onderdelen.len().saturating_sub(1));
++                                let zichtbaar=b.writer_frame.as_ref().is_some_and(|f|f.cursordoel(&punt.id,punt.positie).is_ok());
++                                if !zichtbaar {
++                                    match sessie.naar_tekstbereik(&punt.id,sessie.bron_hash(),punt.positie,punt.positie) {
++                                        Ok((p,nieuw))=>{pagina=p;b=nieuw;},
++                                        Err(e)=>b.melding.push_str(&format!(" · Alinea toegepast; cursorplaatsing niet beschikbaar: {e}")),
++                                    }
++                                }
++                                writer_cursor=b.writer_frame.as_ref().and_then(|f|f.cursordoel(&punt.id,punt.positie).ok());
++                                b.voorkeursveld=Some(punt.id.clone());
++                                writer_positie=Some(punt);
++                                *deel=pagina;beeld=Some(b);
+                             }
+                             Opdracht::WriterInvoer {deel:n,hash,groep,reeks,positie} => {
+                                 if hash!=sessie.bron_hash() {return Err("Deze invoer hoort bij een verouderde documentversie".into());}
+@@ -179,7 +205,7 @@ impl Werker {
+                                 return Ok(Antwoord {
+                                     deel:*deel,
+                                     raster_selectie:None,
+-                                    writer_markering:None,writer_cursor:None,
++                                    writer_positie:None,writer_markering:None,writer_cursor:None,
+                                     beeld,
+                                     hash:sessie.bron_hash().into(),
+                             bron: sessie.bron(),
+@@ -192,7 +218,7 @@ impl Werker {
+                         Ok(Antwoord {
+                             deel:*deel,
+                             raster_selectie,
+-                            writer_markering:None,writer_cursor:None,
++                            writer_positie,writer_markering:None,writer_cursor,
+                             beeld: match beeld {Some(b)=>b,None=>sessie.weergave(*deel).map_err(|e| e.to_string())?},
+                             hash:sessie.bron_hash().into(),
+                             bron: sessie.bron(),
+diff --git a/native/crates/office-ui/src/writer_direct.rs b/native/crates/office-ui/src/writer_direct.rs
+index d2d53d2..7745f1e 100644
+--- a/native/crates/office-ui/src/writer_direct.rs
++++ b/native/crates/office-ui/src/writer_direct.rs
+@@ -24,6 +24,7 @@ pub enum Bericht {
+     },
+     Beweeg(Richting, bool),
+     Invoer(text_editor::Action),
++    Structuur(office_core::writer::CursorActie),
+     Klembord(klembord::Actie),
+     Opslaan(bool),
+     Opmaak(Opmaak),
+@@ -84,6 +85,9 @@ enum Soort {
+         reeks: TekstReeks,
+         voor: Box<Cursor>,
+     },
++    Structuur {
++        voor: Box<Cursor>,
++    },
+     Navigatie,
+     Cursor {
+         selecteren: bool,
+@@ -127,7 +131,8 @@ impl Staat {
+                 matches!(b,Bericht::Invoer(a) if a.is_edit())
+                     || matches!(
+                         b,
+-                        Bericht::Klembord(klembord::Actie::Knip | klembord::Actie::Plak)
++                        Bericht::Structuur(_)
++                            | Bericht::Klembord(klembord::Actie::Knip | klembord::Actie::Plak)
+                             | Bericht::Opmaak(_)
+                             | Bericht::OpmaakToets(_)
+                             | Bericht::Terug
+@@ -434,6 +439,30 @@ fn verwerk(app: &mut App, id: u64) -> Task<Msg> {
+                         fout = Some("Deze alinea is alleen-lezen".into());
+                         break;
+                     }
++                    // Pas de structurele bedoeling toe op de dan actuele cursor.
++                    // Eerst wordt eventuele eerdere tekstinvoer apart bevestigd.
++                    let cursor = t.editor.cursor();
++                    if cursor.selection.is_none() {
++                        let positie = lint::tekenoffset(&t.editor, cursor.position);
++                        let lengte = t.editor.text().chars().count();
++                        let structuur = match &a {
++                            text_editor::Action::Edit(text_editor::Edit::Backspace)
++                                if positie == 0 =>
++                            {
++                                Some(office_core::writer::CursorActie::VorigeSamen)
++                            }
++                            text_editor::Action::Edit(text_editor::Edit::Delete)
++                                if positie == lengte =>
++                            {
++                                Some(office_core::writer::CursorActie::VolgendeSamen)
++                            }
++                            _ => None,
++                        };
++                        if let Some(actie) = structuur {
++                            st.rij.push_front((Bericht::Structuur(actie), aangekomen));
++                            continue;
++                        }
++                    }
+                     let bewerkt = a.is_edit();
+                     if bewerkt
+                         && (st.laatst.is_none_or(|v| {
+@@ -460,6 +489,44 @@ fn verwerk(app: &mut App, id: u64) -> Task<Msg> {
+                     t.werk_opmaak_bij();
+                     st.ververs(t);
+                 }
++                Bericht::Structuur(actie) => {
++                    if !st.actief {
++                        continue;
++                    }
++                    if !t.veld().is_some_and(|v| v.bewerkbaar) {
++                        fout = Some("Deze alinea is alleen-lezen".into());
++                        break;
++                    }
++                    let Some((begin, einde)) = t.tekstbereik() else {
++                        continue;
++                    };
++                    let cursor = Cursor::van(t, &st).unwrap();
++                    let hash = t.antwoord.as_ref().unwrap().hash.clone();
++                    let d = Doel {
++                        document: id,
++                        volgnummer: nummer(),
++                    };
++                    let opdracht = Opdracht::WriterAlinea {
++                        deel: t.deel,
++                        hash: hash.clone(),
++                        id: cursor.id.clone(),
++                        begin,
++                        einde,
++                        actie,
++                    };
++                    st.vlucht = Some(Vlucht {
++                        doel: d.clone(),
++                        hash,
++                        cursor: cursor.clone(),
++                        soort: Soort::Structuur {
++                            voor: Box::new(cursor),
++                        },
++                    });
++                    st.nieuwe_groep();
++                    t.bezig = true;
++                    resultaat = Uitkomst::Werk(d, opdracht);
++                    break;
++                }
+                 Bericht::Beweeg(richting, selecteren) => {
+                     if !st.actief {
+                         continue;
+@@ -761,6 +828,28 @@ pub fn gereed(app: &mut App, d: Doel, r: Result<Antwoord, String>) -> Task<Msg>
+         }
+     };
+     let cursor_doel = a.writer_cursor.clone();
++    let mut cursorfout = None;
++    if matches!(v.soort, Soort::Structuur { .. }) {
++        if let Some(punt) = &a.writer_positie
++            && let Some(veld) = a.beeld.velden.iter().find(|f| f.id == punt.id)
++            && punt.positie <= veld.tekst.chars().count()
++        {
++            v.cursor = Cursor {
++                id: punt.id.clone(),
++                cursor: iced::advanced::text::editor::Cursor {
++                    position: plek(&veld.tekst, punt.positie),
++                    selection: None,
++                },
++                voorkeur: cursor_doel.as_ref().map(|c| (a.hash.clone(), c.clone())),
++            };
++            if cursor_doel.is_none() {
++                cursorfout=Some("De alineabewerking is toegepast; haar cursor kon niet op de pagina worden geplaatst. Vervolginvoer blijft bewaard.".to_string());
++            }
++        } else {
++            cursorfout=Some("De alineabewerking is toegepast; het teruggegeven cursordoel ontbreekt. Vervolginvoer blijft bewaard.".into());
++        }
++    }
++
+     if let Soort::Cursor { selecteren } = v.soort {
+         let Some(c) = &cursor_doel else {
+             app.tabs[i].bezig = false;
+@@ -839,6 +928,23 @@ pub fn gereed(app: &mut App, d: Doel, r: Result<Antwoord, String>) -> Task<Msg>
+                 st.geschiedenis.pop_front();
+             }
+         }
++        Soort::Structuur { voor } => {
++            // Nieuwe alinea-ID’s en verwijderde grenzen zijn geen tekstdelta.
++            // Oude pagina-aanwijzingen worden daarom veilig opnieuw gevraagd.
++            st.veranderingen.clear();
++            if v.hash != nieuw {
++                st.geschiedenis.push_back(Geschiedenis {
++                    groep: nummer(),
++                    voor_hash: v.hash,
++                    na_hash: nieuw,
++                    voor: *voor,
++                    na: v.cursor.clone(),
++                });
++                while st.geschiedenis.len() > 32 {
++                    st.geschiedenis.pop_front();
++                }
++            }
++        }
+         Soort::Terug | Soort::Vooruit => {
+             st.veranderingen.clear();
+         }
+@@ -857,6 +963,13 @@ pub fn gereed(app: &mut App, d: Doel, r: Result<Antwoord, String>) -> Task<Msg>
+         Soort::Cursor { .. } => {}
+     }
+     st.ververs(t);
++    if let Some(e) = cursorfout {
++        st.fout = true;
++        t.writer_focus.store(false, Ordering::Relaxed);
++        if actief {
++            app.melding = e;
++        }
++    }
+     t.writer_direct = st;
+     Task::batch([taak, verwerk(app, d.document)])
+ }
+diff --git a/native/crates/office-ui/src/writer_paginablad.rs b/native/crates/office-ui/src/writer_paginablad.rs
+index 898c761..02f911c 100644
+--- a/native/crates/office-ui/src/writer_paginablad.rs
++++ b/native/crates/office-ui/src/writer_paginablad.rs
+@@ -306,7 +306,13 @@ impl Widget<Msg, Theme, Renderer> for Blad<'_> {
+                             }
+                             Named::Backspace => Some(A::Edit(E::Backspace)),
+                             Named::Delete => Some(A::Edit(E::Delete)),
+-                            Named::Enter => Some(A::Edit(E::Enter)),
++                            Named::Enter if modifiers.shift() => Some(A::Edit(E::Enter)),
++                            Named::Enter => {
++                                bericht = Some(writer_direct::Bericht::Structuur(
++                                    office_core::writer::CursorActie::Splits,
++                                ));
++                                None
++                            }
+                             Named::Escape => {
+                                 bericht = Some(writer_direct::Bericht::Ontsnap);
+                                 None

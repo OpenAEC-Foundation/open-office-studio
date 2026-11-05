@@ -1,0 +1,132 @@
+{
+  "schema": 1,
+  "datum": "2026-11-05",
+  "versie": "2026.45.49",
+  "runtimebron": "5f5f84a773a9d1925efe73855b11ae9c22cc4980",
+  "onderzoeksbasis": "e5be9f16701060e1cfc9ee3e0bb2ea057ca04ec4",
+  "programma_sha256": "3a523abadcf4ca803d73c8d3402c43a3e5b64e81b37b1d55a4c9544055067e9d",
+  "resultaat": "Diagnose- en testverbetering geslaagd; oorspronkelijke retained-layout-trap niet verklaard of hersteld. Geen productcode gewijzigd.",
+  "opdracht": [
+    "scripts/test-writer-lang-native.py",
+    "--programma",
+    "bewaarde originele CI49-ELF",
+    "--versie",
+    "2026.45.49",
+    "--verwacht-rust-tekst",
+    "--verwacht-incrementele-bron",
+    "--verwacht-worker-layout",
+    "--verwacht-worker-lettertypen",
+    "--spelling-weergave",
+    "--framebasis",
+    "--lettertypebewijs"
+  ],
+  "exitcode": 0,
+  "python_tests": 86,
+  "javascript_scenarios": [
+    "goede vier varianten",
+    "null-export",
+    "lege ArrayBuffer",
+    "tekstexport",
+    "terminaal workerantwoord ok=false",
+    "andere documentbron",
+    "primaire vensterfout",
+    "vervangen API-object met dezelfde documentbron"
+  ],
+  "framebasis_lettertypen": {
+    "gebeurtenissen": 16,
+    "frameantwoorden": 3,
+    "bytes": 218812,
+    "instrumentatiefouten": [],
+    "fout": null
+  },
+  "beperkingen": [
+    "Geen snelheidsreparatie of vergelijkende FPS-meting",
+    "Geen volledige visuele pariteit; alleen het opgeslagen 500-paginabeeld visueel bekeken",
+    "Geen nieuwe Windows/macOS-/zeveneditieacceptatie",
+    "Geen oorzaakbewijs voor de oorspronkelijke Linux-CI-afkeuring",
+    "Geen gesloten issues of migratievlaggen"
+  ],
+  "bestanden": {
+    "docs/tests/writer-fontdiagnose-49/rapport.json.gz": {
+      "uitgepakt_sha256": "7aa6fdad0736fac9a79a61af7368b51a340c44a99a0a25566cbbe695041ae5db",
+      "sha256": "9838ba92dbc64d46ff477f553dc9a8978fa5f028b2ad68deaf69f99df3451e4b"
+    },
+    "docs/tests/writer-fontdiagnose-49/framebasis-lettertypen.json.gz": {
+      "uitgepakt_sha256": "0f8afc35ade0b48a6fbb1bb4cac81936d53bbcf50322bb7ffe7110c8569e5744",
+      "sha256": "425a723c920fdda0457afdca98ac8454eb454a504331bd19a590900c82e4007f"
+    },
+    "docs/tests/writer-fontdiagnose-49/framebasis.json.gz": {
+      "uitgepakt_sha256": "d4677d2c91cc79b750515e3218c1e5ee929fc44742cd80e30887d771e958632d",
+      "sha256": "6212899868d59d92842c4bfcbb1bc5812db6855746c8afea55e3d81347da8b7b"
+    },
+    "docs/tests/writer-fontdiagnose-49/Lettertype-caladea.docx.gz": {
+      "uitgepakt_sha256": "50117bc5f548112bf85341bbee0f1621c04f92f616fb1a68db893d7ea4995270",
+      "sha256": "65e4d9b9351c63c2f9dfaffa5c423c750b656582a945e683215fac4d68b87b23"
+    },
+    "docs/tests/writer-fontdiagnose-49/Lettertype-carlito.docx.gz": {
+      "uitgepakt_sha256": "31a15917c4074a820fd95840754843cbd0cc9a2a515b0c25c59ea100bff09bf1",
+      "sha256": "516268878d4f3880bec34738da76abd9a8476bd1f09bd9ce5077a4f68f7aa8a9"
+    },
+    "docs/tests/writer-fontdiagnose-49/Lettertype-vet.docx.gz": {
+      "uitgepakt_sha256": "27f52706925c4bf5e287d316859e5565144bd2b2ff78165d9daf21694fa40e9a",
+      "sha256": "e9e98f8c8ad017d85646ad7c13162a5a67216e2eb1577247830583a88a706256"
+    },
+    "docs/tests/writer-fontdiagnose-49/Lettertype-cursief.docx.gz": {
+      "uitgepakt_sha256": "6a733fdef09809e0bb7e1b833d42c6027abe1830cb78be9bfaff5d3e22f6f618",
+      "sha256": "b1a2f1a28f87471b9200507169c6ca0ef0a5c6932bcf5083308c3d39e6b5a325"
+    },
+    "docs/tests/writer-fontdiagnose-49/gui-definitief.log.gz": {
+      "uitgepakt_sha256": "a2905ca451efd62914769a220311ed934a3863c3751ffe6e085303af927e5d75",
+      "sha256": "42e2724040429bd66a2c56fefc3c3398c97cf609189a2ecda5e5309d9ffca403"
+    },
+    "docs/tests/writer-fontdiagnose-49/python-definitief.log.gz": {
+      "uitgepakt_sha256": "f40522b607504261f5965959c571374af9bc2076f3c7319e06a7f40fd9da860b",
+      "sha256": "e5d776cb34506addb1803bc0fecf076d5f18b292c23f1e621220112d5fdd29b9"
+    },
+    "docs/tests/writer-fontdiagnose-49/lettertype_bewijs.js.gz": {
+      "uitgepakt_sha256": "a64459717d04c166aa4e94b9b0f86a190cc70b80a9b6a0b2f2e2ee0c26822b89",
+      "sha256": "fea1593ad8736aad3b2c1887ed376fbdcc336bc2a665b319822c39fe47542476"
+    },
+    "docs/tests/writer-fontdiagnose-49/lettertype_bewijs.py.gz": {
+      "uitgepakt_sha256": "c7380cae05493ef40652d81312aa1efedeceef1d3ae521b33b4544132b5f085a",
+      "sha256": "1f9582627761f214c8883f5f6621edab9314cfb4a8a9676bbd975c307729af42"
+    },
+    "docs/tests/writer-fontdiagnose-49/test-writer-lang-native.py.gz": {
+      "uitgepakt_sha256": "a4186744bb55f640cf33da8f6f3d0060de7d9d2fed98bdee64035dcc2588e8a0",
+      "sha256": "a9cdbbfb6c60cfe1124eee3a2ddb38f78213a895b51660434fe5e75e8eb37c15"
+    },
+    "docs/tests/writer-fontdiagnose-49/bewaar-writer-foutcontext.py.gz": {
+      "uitgepakt_sha256": "fbb93ca3de24ce5da42e8f2ce99c6f4cf6004b5c1e0c63af9d4dbdcf295ecd45",
+      "sha256": "14601917e4647cce9a6c4d9962fb6ae1b7553edc47e700460baccbfb4fdadf36"
+    },
+    "docs/tests/writer-fontdiagnose-49/test_lettertype_bewijs.py.gz": {
+      "uitgepakt_sha256": "708299d86e30558a832ec2dc6ef0bf5e63f664d8289e606aa3e68366b6f3c6da",
+      "sha256": "9e78231b67a2b439da14fb126b3642cff0a3c58ae405c7417900d891c835e495"
+    },
+    "docs/tests/writer-fontdiagnose-49/test_writer_foutcontext.py.gz": {
+      "uitgepakt_sha256": "134d4c569f66fd5d8ec39b7538e872c10d6fae7ec22e3001ee04b245db732ef5",
+      "sha256": "78257e857718c405b3c10fe9fcd3fda1b1d961e01d4be0065041bed543b1502e"
+    },
+    "docs/tests/writer-fontdiagnose-49/lettertype-bewijs.mjs.gz": {
+      "uitgepakt_sha256": "6a2fb4de6319c4cfe292f005c63c1b6087c763716742c6a15c4d25468baee013",
+      "sha256": "8e9a45e534a7cb0230df14eb6bf897a3e751a5651e46644347a74895aba6028b"
+    },
+    "docs/tests/writer-fontdiagnose-49/getypt-pagina-500.png": {
+      "sha256": "a0cfcee024b5a0fd507e10621fe00143023a00e960cfd875738425f4c3c77df0"
+    },
+    "docs/tests/writer-fontdiagnose-49/ci-start.json.gz": {
+      "sha256": "efc8d1dfbdc3c5103477a08c62fd39a8ead82467f3712e20df4deac1619a1603",
+      "uitgepakt_sha256": "da67bdbdf25cbc7b33a5ea1ee04ee69dd53d6f3ae1875085dcc3a5f2c21c9b33"
+    }
+  },
+  "vervolg_ci": {
+    "run": 42063289274,
+    "bron": "b2d73d47bfc14eeedd76497b8a9c69730d75f80a",
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42063289274",
+    "status_bij_start": "in_progress",
+    "publiceren": false,
+    "grens": "Linux faalt bij de eerdere lijstproef; de lange document-/fontproef is deze CI-ronde niet uitgevoerd. Windows/macOS slagen, publiceren overgeslagen. Zie 2026-11-05-writer-lijsten-ci49.json.",
+    "status": "completed",
+    "conclusie": "failure"
+  }
+}

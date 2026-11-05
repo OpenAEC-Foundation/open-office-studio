@@ -1,0 +1,2647 @@
+diff --git a/.github/workflows/native-rust.yml b/.github/workflows/native-rust.yml
+index 710b19a..36bd819 100644
+--- a/.github/workflows/native-rust.yml
++++ b/.github/workflows/native-rust.yml
+@@ -159,7 +159,7 @@ jobs:
+           pattern: native-*
+           path: native/target/platformartefacten
+       - name: Bronbytes, architecturen en volledige native beelden vergelijken
+-        run: python native/scripts/controleer-platformen.py --artefacten native/target/platformartefacten --uitvoer native/target/platformvergelijking/rapport.json --verwachte-schermen 47
++        run: python native/scripts/controleer-platformen.py --artefacten native/target/platformartefacten --uitvoer native/target/platformvergelijking/rapport.json --verwachte-schermen 49
+       - uses: actions/upload-artifact@v4
+         if: always()
+         with:
+diff --git a/native/Cargo.lock b/native/Cargo.lock
+index d16f986..4d50b62 100644
+--- a/native/Cargo.lock
++++ b/native/Cargo.lock
+@@ -3712,7 +3712,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "office-conversie"
+-version = "2026.44.9-alpha.26"
++version = "2026.44.9-alpha.27"
+ dependencies = [
+  "libc",
+  "serde_json",
+@@ -3722,7 +3722,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "office-core"
+-version = "2026.44.9-alpha.26"
++version = "2026.44.9-alpha.27"
+ dependencies = [
+  "base64 0.22.1",
+  "betteroffice-docx",
+@@ -3752,7 +3752,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "office-mail"
+-version = "2026.44.9-alpha.26"
++version = "2026.44.9-alpha.27"
+ dependencies = [
+  "async-imap",
+  "base64 0.22.1",
+@@ -3797,7 +3797,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "open-office-studio-native"
+-version = "2026.44.9-alpha.26"
++version = "2026.44.9-alpha.27"
+ dependencies = [
+  "futures-channel",
+  "iced",
+diff --git a/native/Cargo.toml b/native/Cargo.toml
+index dc6bec3..66eb476 100644
+--- a/native/Cargo.toml
++++ b/native/Cargo.toml
+@@ -5,7 +5,7 @@ exclude = ["vendor/openaec-ui", "vendor/docx-parse", "vendor/pptx", "vendor/xlsx
+ resolver = "3"
+ 
+ [workspace.package]
+-version = "2026.44.9-alpha.26"
++version = "2026.44.9-alpha.27"
+ edition = "2024"
+ license = "Apache-2.0"
+ publish = false
+diff --git a/native/crates/office-core/Cargo.toml b/native/crates/office-core/Cargo.toml
+index 4d007b8..7b57511 100644
+--- a/native/crates/office-core/Cargo.toml
++++ b/native/crates/office-core/Cargo.toml
+@@ -42,5 +42,5 @@ regex = "1"
+ # De reeds gepinde XML-lezer scant bladbeveiliging zonder een tweede celboom.
+ quick-xml = "=0.41.0"
+ 
+-[dev-dependencies]
++# Dezelfde opgemaakte celtekst als de rasterizer voor het platte klembord.
+ xlsx-render = { package = "betteroffice-xlsx-render", version = "=0.5.1" }
+diff --git a/native/crates/office-core/src/document.rs b/native/crates/office-core/src/document.rs
+index 64070c0..214f3be 100644
+--- a/native/crates/office-core/src/document.rs
++++ b/native/crates/office-core/src/document.rs
+@@ -113,6 +113,10 @@ pub struct TekstReeks {
+ }
+ #[derive(Debug, Clone)]
+ pub enum Bewerking {
++    CelTekst {
++        adres: String,
++        tekst: crate::celtekst::CelTekst,
++    },
+     TekstReeksen(Vec<TekstReeks>),
+     TekstReeks {
+         id: String,
+@@ -250,6 +254,12 @@ impl Document {
+             _ => Err(fout("Markdown-export is beschikbaar voor Writer")),
+         }
+     }
++    pub fn celtekst(&self, deel: usize, adres: &str) -> Resultaat<String> {
++        match self {
++            Self::Spreadsheet(d) => crate::rekenblad_klembord::kopieer(d, deel, adres),
++            _ => Err(fout("Celbereiken horen bij Spreadsheet")),
++        }
++    }
+     pub fn bewerk(&mut self, deel: usize, bewerking: Bewerking) -> Resultaat<()> {
+         match &*self {
+             Self::Writer(d) => d.controleer_bewerking()?,
+@@ -310,6 +320,9 @@ impl Document {
+             (Self::Writer(d), Bewerking::Tekst { id, tekst }) => {
+                 crate::writer_tekst::vervang(d, &id, &tekst)?;
+             }
++            (Self::Spreadsheet(d), Bewerking::CelTekst { adres, tekst }) => {
++                crate::rekenblad_klembord::plak(d, deel, &adres, &tekst)?;
++            }
+             (Self::Spreadsheet(d), Bewerking::Tekst { id, tekst }) => {
+                 let adres = crate::rekenblad::ankercel(
+                     d,
+@@ -885,6 +898,9 @@ impl Sessie {
+     pub fn markdown(&self) -> Resultaat<String> {
+         self.document.markdown()
+     }
++    pub fn celtekst(&self, deel: usize, adres: &str) -> Resultaat<String> {
++        self.document.celtekst(deel, adres)
++    }
+     pub fn bewerk(&mut self, deel: usize, bewerking: Bewerking) -> Resultaat<()> {
+         self.bewerk_met_weergave(deel, bewerking).map(|_| ())
+     }
+diff --git a/native/crates/office-core/src/lib.rs b/native/crates/office-core/src/lib.rs
+index a1e6fe8..b1810d5 100644
+--- a/native/crates/office-core/src/lib.rs
++++ b/native/crates/office-core/src/lib.rs
+@@ -1,4 +1,5 @@
+ //! Documenten en veilige bestandsopslag zonder webinterface.
++pub mod celtekst;
+ pub mod document;
+ pub mod ifcx;
+ pub mod interactie;
+@@ -11,6 +12,7 @@ mod presentatie_tekst;
+ pub mod rekenblad;
+ mod rekenblad_beeld;
+ pub mod rekenblad_document;
++pub mod rekenblad_klembord;
+ pub mod writer;
+ mod writer_beeld;
+ pub mod writer_cursor;
+diff --git a/native/crates/office-core/tests/fixtures/controleer.py b/native/crates/office-core/tests/fixtures/controleer.py
+index 44e7fcc..78a4965 100644
+--- a/native/crates/office-core/tests/fixtures/controleer.py
++++ b/native/crates/office-core/tests/fixtures/controleer.py
+@@ -288,3 +288,25 @@ for naam in ['spreadsheet-navigatie-bron-4.xlsx','spreadsheet-schaars-bewerkt.xl
+     assert wb['Tweede blad']['A1'].value=='Bewaar ook dit blad'
+     if naam=='spreadsheet-schaars-bewerkt.xlsx':assert blad['A1'].value=='café 🏠'
+ print('Schaars Spreadsheet: zeroHeight en twee hoogte-uitzonderingen blijven na broninvoer, Unicode-bewerking en bewaren onafhankelijk leesbaar.')
++
++# Bereikplakken is één bronbewerking; de berekening blijft in de werkmapkern.
++# B2=7, C2=8, B3=9 en C3=7+8=15 geven D2=56, D3=135 en D4=191.
++blok=load_workbook(map/'spreadsheet-klembord.xlsx',data_only=False)
++s=blok['Begroting']
++assert s['B2'].value==7 and s['C2'].value==8 and s['B3'].value==9
++assert s['C3'].value=='=SUM(B2:C2)'
++assert s['D2'].value=='=B2*C2' and s['D3'].value=='=B3*C3' and s['D4'].value=='=SUM(D2:D3)'
++assert s['D4'].number_format=='0.00' and s['A1'].font.bold
++assert s['F2'].value=='café 🏠' and s['G2'].value=='regel één\nregel twee'
++assert s['F3'].value=='een "citaat"' and s['G3'].value=='0012' and s['G3'].data_type=='s'
++assert blok['Tweede blad']['A1'].value=='Bewaar ook dit blad'
++waarden=load_workbook(map/'spreadsheet-klembord.xlsx',data_only=True)['Begroting']
++assert waarden['C3'].value==15 and waarden['D2'].value==56 and waarden['D3'].value==135 and waarden['D4'].value==191
++ui=load_workbook(map/'spreadsheet-klembord-ui.xlsx',data_only=False)
++s=ui['Begroting']
++for adres,waarde in [('F2',3),('G2',12.5),('H2',37.5),('F3',2),('G3',15),('H3',30),('H4',67.5)]:
++    assert s[adres].value==waarde and s[adres].data_type=='n'
++assert s['F4'].value is None and s['G4'].value is None
++assert s['D2'].value=='=B2*C2' and s['D3'].value=='=B3*C3' and s['D4'].value=='=SUM(D2:D3)'
++assert ui['Tweede blad']['A1'].value=='Bewaar ook dit blad'
++print('Celbereikklembord: opgemaakte platte waarden, gezamenlijke formule-invoer, Unicode/meerdere regels, letterlijke voorloopnullen, herberekening, bestaande opmaak en tweede blad onafhankelijk goedgekeurd.')
+diff --git a/native/crates/office-core/tests/rekenblad_beveiliging.rs b/native/crates/office-core/tests/rekenblad_beveiliging.rs
+index 731cac7..7e01d4c 100644
+--- a/native/crates/office-core/tests/rekenblad_beveiliging.rs
++++ b/native/crates/office-core/tests/rekenblad_beveiliging.rs
+@@ -31,6 +31,10 @@ fn beveiliging(onderdeel: &str, kenmerk: &str) -> Vec<u8> {
+ }
+ fn opdrachten() -> Vec<Bewerking> {
+     vec![
++        Bewerking::CelTekst {
++            adres: "B2".into(),
++            tekst: office_core::celtekst::CelTekst::lees("7\t8\n9\t10").unwrap(),
++        },
+         Bewerking::Tekst {
+             id: "B2".into(),
+             tekst: "7".into(),
+diff --git a/native/crates/office-ui/src/klembord.rs b/native/crates/office-ui/src/klembord.rs
+index 9b1ba71..209e8e1 100644
+--- a/native/crates/office-ui/src/klembord.rs
++++ b/native/crates/office-ui/src/klembord.rs
+@@ -17,7 +17,7 @@ pub struct Doel {
+     cursor: iced::advanced::text::editor::Cursor,
+ }
+ impl Doel {
+-    fn van_tab(t: &Tab) -> Option<Self> {
++    pub(super) fn van_tab(t: &Tab) -> Option<Self> {
+         Some(Self {
+             document: t.id,
+             editerversie: t.editerversie,
+@@ -48,6 +48,14 @@ pub fn kan(app: &App, actie: Actie) -> bool {
+     if t.bezig || t.schrijft {
+         return false;
+     }
++    if t.raster.focus && !t.raster.bewerken && !t.concept {
++        return match actie {
++            Actie::Kopieer => office_core::rekenblad::bereik(&t.adres).is_ok(),
++            // Bereik verplaatsen vraagt ook referentie- en opmaakoverdracht.
++            Actie::Knip => false,
++            Actie::Plak => v.bewerkbaar,
++        };
++    }
+     match actie {
+         Actie::Kopieer => t.editor.selection().is_some_and(|s| !s.is_empty()),
+         Actie::Knip => v.bewerkbaar && t.editor.selection().is_some_and(|s| !s.is_empty()),
+diff --git a/native/crates/office-ui/src/lint.rs b/native/crates/office-ui/src/lint.rs
+index 8f3c638..31f093f 100644
+--- a/native/crates/office-ui/src/lint.rs
++++ b/native/crates/office-ui/src/lint.rs
+@@ -278,7 +278,15 @@ pub fn ribbon(app: &App) -> Option<Element<'_, Msg>> {
+                 ),
+                 knop(
+                     svg(R::ClipboardCopy),
+-                    "Kopiëren",
++                    if a.beeld.module == Module::Spreadsheet
++                        && t.raster.focus
++                        && !t.raster.bewerken
++                        && !t.concept
++                    {
++                        "Waarden kopiëren"
++                    } else {
++                        "Kopiëren"
++                    },
+                     false,
+                     klembord::kan(app, klembord::Actie::Kopieer)
+                         .then_some(Msg::Klembord(klembord::Actie::Kopieer))
+diff --git a/native/crates/office-ui/src/main.rs b/native/crates/office-ui/src/main.rs
+index 8d63cc8..d6b1e35 100644
+--- a/native/crates/office-ui/src/main.rs
++++ b/native/crates/office-ui/src/main.rs
+@@ -9,6 +9,7 @@ mod lint;
+ mod mail_ui;
+ mod notitie_ui;
+ mod pagina_ui;
++mod raster_invoer;
+ mod raster_koppen;
+ mod raster_navigatie;
+ mod raster_ui;
+@@ -96,6 +97,20 @@ enum Msg {
+     GaNaar,
+     Raak(String),
+     Raster(raster_ui::Bericht),
++    RasterKopie {
++        document: u64,
++        nummer: u64,
++        resultaat: Result<String, String>,
++    },
++    RasterPlak {
++        document: u64,
++        nummer: u64,
++        tekst: Option<String>,
++    },
++    RasterKlembordGeschreven {
++        document: u64,
++        nummer: u64,
++    },
+     Opmaak(Opmaak),
+     Structuur(Structuur),
+     Pagina(office_core::writer_pagina::PaginaActie),
+@@ -229,6 +244,7 @@ impl Tab {
+     }
+     fn gewijzigd(&self) -> bool {
+         self.concept
++            || self.raster.heeft_invoer()
+             || self.writer_direct.heeft_invoer()
+             || self
+                 .antwoord
+@@ -415,7 +431,11 @@ impl App {
+             self.postvak_zichtbaar = true;
+             return Task::none();
+         }
+-        if let Some(t) = self.tabs.iter().find(|t| t.bezig || t.schrijft) {
++        if let Some(t) = self
++            .tabs
++            .iter()
++            .find(|t| t.bezig || t.schrijft || t.raster.heeft_werk())
++        {
+             self.melding = format!("Wacht tot {} gereed is", t.naam);
+             self.venster_sluiten = false;
+             return Task::none();
+@@ -429,6 +449,12 @@ impl App {
+     }
+     fn opmaaksneltoets(&self, toets: &str) -> Option<Msg> {
+         let t = self.tab()?;
++        if raster_invoer::neemt_over(self) {
++            return toets
++                .chars()
++                .next()
++                .map(|c| Msg::Raster(raster_ui::Bericht::OpmaakToets(c)));
++        }
+         let veld = t.veld()?;
+         if t.bezig
+             || t.concept
+@@ -468,6 +494,9 @@ impl App {
+                     | Msg::ZoekNavigatie(..)
+                     | Msg::WriterGereed(..)
+                     | Msg::WriterPlak(..)
++                    | Msg::RasterKopie { .. }
++                    | Msg::RasterPlak { .. }
++                    | Msg::RasterKlembordGeschreven { .. }
+                     | Msg::Gelezen(..)
+                     | Msg::Geschreven(..)
+                     | Msg::Doel(..)
+@@ -494,6 +523,9 @@ impl App {
+                     | Msg::ZoekNavigatie(..)
+                     | Msg::WriterGereed(..)
+                     | Msg::WriterPlak(..)
++                    | Msg::RasterKopie { .. }
++                    | Msg::RasterPlak { .. }
++                    | Msg::RasterKlembordGeschreven { .. }
+                     | Msg::Gelezen(..)
+                     | Msg::Geschreven(..)
+                     | Msg::ExportKlaar(..)
+@@ -523,6 +555,9 @@ impl App {
+                     | Msg::ZoekNavigatie(..)
+                     | Msg::WriterGereed(..)
+                     | Msg::WriterPlak(..)
++                    | Msg::RasterKopie { .. }
++                    | Msg::RasterPlak { .. }
++                    | Msg::RasterKlembordGeschreven { .. }
+                     | Msg::Opslaan(..)
+                     | Msg::ExportVoltooid(..)
+                     | Msg::ExportPad(..)
+@@ -532,6 +567,19 @@ impl App {
+             return Task::none();
+         }
+         match msg {
++            Msg::RasterKopie {
++                document,
++                nummer,
++                resultaat,
++            } => return raster_invoer::gekopieerd(self, document, nummer, resultaat),
++            Msg::RasterPlak {
++                document,
++                nummer,
++                tekst,
++            } => return raster_invoer::geplakt(self, document, nummer, tekst),
++            Msg::RasterKlembordGeschreven { document, nummer } => {
++                return raster_invoer::geschreven(self, document, nummer);
++            }
+             Msg::WriterDirect(id, b) => return writer_direct::update(self, id, b),
+             Msg::WriterGereed(d, r) => return writer_direct::gereed(self, d, r),
+             Msg::WriterPlak(id, n, s) => return writer_direct::plak(self, id, n, s),
+@@ -754,6 +802,7 @@ impl App {
+                                 tab.panelen = false;
+                             }
+                             self.melding = antwoord.beeld.melding.clone();
++                            tab.raster.plaktekst = None;
+                             // Een nieuwe handle krijgt een unieke decoderidentiteit.
+                             // Een selectiestap met hetzelfde paginabeeld houdt de
+                             // bestaande decodeer- en rendercache daarom intact.
+@@ -779,16 +828,21 @@ impl App {
+                                 .find(|v| v.naam == "Markdown")
+                                 .map(|v| iced::widget::markdown::parse(&v.tekst).collect())
+                                 .unwrap_or_default();
+-                            let raster_selectie = antwoord.raster_selectie.clone().or_else(|| {
+-                                tab.raster.selectie.clone().filter(|s| {
+-                                    s.adres == tab.adres
+-                                        && tab.deel == antwoord.deel
+-                                        && tab
+-                                            .antwoord
+-                                            .as_ref()
+-                                            .is_some_and(|a| a.hash != antwoord.hash)
+-                                })
+-                            });
++                            let raster_selectie = tab
++                                .raster
++                                .plakbereik
++                                .take()
++                                .or_else(|| antwoord.raster_selectie.clone())
++                                .or_else(|| {
++                                    tab.raster.selectie.clone().filter(|s| {
++                                        s.adres == tab.adres
++                                            && tab.deel == antwoord.deel
++                                            && tab
++                                                .antwoord
++                                                .as_ref()
++                                                .is_some_and(|a| a.hash != antwoord.hash)
++                                    })
++                                });
+                             if let Some(s) = &raster_selectie {
+                                 antwoord.beeld.voorkeursveld = Some(s.doel.clone());
+                             }
+@@ -804,9 +858,7 @@ impl App {
+                             );
+                             raster_focus = tab.raster.focus && actief_id == Some(id);
+                             let richting = tab.raster.na_richting.take();
+-                            if raster_focus {
+-                                raster_richting = richting;
+-                            }
++                            raster_richting = richting;
+                             let bereik = tab
+                                 .raster
+                                 .na_bewerking
+@@ -859,7 +911,11 @@ impl App {
+                             tab.na_bewerking = None;
+                             tab.raster.na_bewerking = None;
+                             tab.raster.na_richting = None;
+-                            tab.raster.wachtend.clear();
++                            tab.raster.plakbereik = None;
++                            raster_invoer::mislukking(tab);
++                            if tab.raster.fout {
++                                self.melding.push_str(". Niet toegepaste invoer blijft bewaard; Ctrl+Z verwerpt het concept en de wachtende opdrachten");
++                            }
+                             tab.canvas_voorbeeld = None;
+                             fout = true;
+                         }
+@@ -872,13 +928,11 @@ impl App {
+                 if let Some(als) = vervolg {
+                     return self.update(Msg::Opslaan(id, als));
+                 }
+-                if let Some(richting) = raster_richting
+-                    && raster_ui::beschikbaar(self)
+-                {
+-                    return self.update(Msg::Raster(raster_ui::Bericht::Verplaats(richting)));
++                if !fout && let Some(richting) = raster_richting {
++                    raster_invoer::na_bevestiging(self, id, richting);
+                 }
+                 if raster_focus && !fout && raster_ui::beschikbaar(self) {
+-                    return raster_ui::vervolg(self);
++                    return Task::batch([raster_ui::vraag_focus(self), raster_ui::vervolg(self)]);
+                 }
+             }
+             Msg::Selecteer(n) => {
+@@ -889,7 +943,7 @@ impl App {
+             }
+             Msg::Deel(n) => {
+                 if let Some(t) = self.tab_mut() {
+-                    if t.bezig || t.concept {
++                    if t.bezig || t.concept || t.raster.heeft_werk() {
+                         return self.waarschuwing(
+                             "Pas de huidige tekst eerst toe of maak de invoer ongedaan",
+                         );
+@@ -1095,6 +1149,9 @@ impl App {
+                 }
+             }
+             Msg::Opmaak(stijl) => {
++                if raster_invoer::neemt_over(self) {
++                    return raster_ui::update(self, raster_ui::Bericht::Opmaak(stijl));
++                }
+                 if let Some(t) = self.tab().filter(|t| {
+                     !t.writer_direct.delegeert
+                         && (t.writer_direct.actief || t.writer_direct.heeft_werk())
+@@ -1134,6 +1191,9 @@ impl App {
+                 }
+             }
+             Msg::Structuur(actie) => {
++                if raster_invoer::neemt_over(self) {
++                    return raster_ui::update(self, raster_ui::Bericht::Structuur(actie));
++                }
+                 if let Some(t) = self.tab_mut() {
+                     if t.bezig || t.concept {
+                         return self.waarschuwing("Pas de ingevoerde tekst eerst toe");
+@@ -1180,6 +1240,9 @@ impl App {
+                 }
+             }
+             Msg::Klembord(actie) => {
++                if raster_invoer::neemt_over(self) {
++                    return raster_ui::update(self, raster_ui::Bericht::Klembord(actie));
++                }
+                 if let Some(t) = self.tab().filter(|t| {
+                     t.writer_focus.load(std::sync::atomic::Ordering::Relaxed)
+                         || t.writer_direct.heeft_werk()
+@@ -1194,6 +1257,9 @@ impl App {
+             }
+             Msg::KlembordGelezen(doel, tekst) => return klembord::plak(self, doel, tekst),
+             Msg::Invoer(actie) => {
++                if raster_invoer::neemt_over(self) {
++                    return raster_ui::update(self, raster_ui::Bericht::ZijInvoer(actie));
++                }
+                 if let Some(t) = self.tab_mut()
+                     && !t.bezig
+                     && !t.schrijft
+@@ -1220,6 +1286,9 @@ impl App {
+                 }
+             }
+             Msg::PasToe => {
++                if raster_invoer::neemt_over(self) {
++                    return raster_ui::update(self, raster_ui::Bericht::PasToe);
++                }
+                 if let Some(t) = self.tab_mut() {
+                     if t.bezig || !t.concept {
+                         return Task::none();
+@@ -1232,6 +1301,12 @@ impl App {
+                 }
+             }
+             Msg::Opslaan(id, als) => {
++                if self.sluiten.is_none()
++                    && self.tab().is_some_and(|t| t.id == id)
++                    && raster_invoer::neemt_over(self)
++                {
++                    return raster_ui::update(self, raster_ui::Bericht::Opslaan(als));
++                }
+                 if self.tabs.iter().any(|t| {
+                     t.id == id
+                         && !t.writer_direct.delegeert
+@@ -1306,6 +1381,7 @@ impl App {
+                         }
+                         Err(e) => {
+                             self.melding = e;
++                            raster_invoer::mislukking(t);
+                             self.sluiten = None;
+                             self.venster_sluiten = false;
+                         }
+@@ -1322,6 +1398,9 @@ impl App {
+                 }
+             }
+             Msg::Terug => {
++                if raster_invoer::neemt_over(self) {
++                    return raster_ui::update(self, raster_ui::Bericht::Terug);
++                }
+                 if let Some(t) = self
+                     .tab()
+                     .filter(|t| t.writer_direct.actief || t.writer_direct.heeft_werk())
+@@ -1342,6 +1421,9 @@ impl App {
+                 }
+             }
+             Msg::Vooruit => {
++                if raster_invoer::neemt_over(self) {
++                    return raster_ui::update(self, raster_ui::Bericht::Vooruit);
++                }
+                 if let Some(t) = self
+                     .tab()
+                     .filter(|t| t.writer_direct.actief || t.writer_direct.heeft_werk())
+@@ -1360,7 +1442,7 @@ impl App {
+             }
+             Msg::Sluit(n) => {
+                 if let Some(t) = self.tabs.get(n) {
+-                    if t.bezig || t.schrijft {
++                    if t.bezig || t.schrijft || t.raster.heeft_werk() {
+                         return self.waarschuwing("Wacht tot het document gereed is");
+                     }
+                     let id = t.id;
+@@ -1541,7 +1623,8 @@ impl App {
+             .filter(|t| t.writer_direct.heeft_werk())
+             .map(|t| t.id)
+             .collect();
+-        let mut taken = vec![zoek];
++        let raster = raster_invoer::vervolg(self);
++        let mut taken = vec![zoek, raster];
+         for id in ids {
+             taken.push(writer_direct::hervat(self, id));
+         }
+@@ -2561,6 +2644,41 @@ impl App {
+             ),
+             None => iced::widget::Space::new().height(0).into(),
+         };
++        let invoermelding: Element<'_, Msg> = if t.raster.fout {
++            container(row![
++                w::body(l,"Invoer niet toegepast. Je bron is behouden; wachtende opdrachten zijn gepauzeerd.").width(Length::Fill),
++                w::button(l,"Plaktekst terug naar klembord",K::Secondary,D::Compact,None,t.raster.plaktekst.as_ref().map(|_|Msg::Raster(raster_ui::Bericht::HerstelKopie))),
++                w::button(l,"Niet toegepaste invoer verwerpen",K::Quiet,D::Compact,None,Some(Msg::Raster(raster_ui::Bericht::Terug)))
++            ].spacing(12).align_y(iced::Alignment::Center)).padding(8).into()
++        } else if t.raster.afgewezen > 0 {
++            let tekst = format!(
++                "Invoerbuffer vol: {} opdrachten niet aangenomen. Controleer de laatste invoer.",
++                t.raster.afgewezen
++            );
++            let label = openaec_ui::design::a11y::named(
++                w::body(l, tekst.clone()),
++                openaec_ui::design::a11y::Role::Label,
++                tekst,
++            );
++            container(
++                row![
++                    label,
++                    w::button(
++                        l,
++                        "Begrepen",
++                        K::Quiet,
++                        D::Compact,
++                        None,
++                        Some(Msg::Raster(raster_ui::Bericht::MeldingGelezen))
++                    )
++                ]
++                .spacing(12),
++            )
++            .padding(8)
++            .into()
++        } else {
++            iced::widget::Space::new().height(0).into()
++        };
+         column![
+             w::document_tabs(
+                 l,
+@@ -2572,6 +2690,7 @@ impl App {
+                 Msg::Selecteer
+             ),
+             beperking,
++            invoermelding,
+             werk
+         ]
+         .height(Length::Fill)
+diff --git a/native/crates/office-ui/src/raster_ui.rs b/native/crates/office-ui/src/raster_ui.rs
+index 9f45e6f..208a2e0 100644
+--- a/native/crates/office-ui/src/raster_ui.rs
++++ b/native/crates/office-ui/src/raster_ui.rs
+@@ -17,7 +17,13 @@ pub struct Staat {
+     pub na_bewerking: Option<String>,
+     pub na_richting: Option<Richting>,
+     pub selectie: Option<office_core::rekenblad::CelSelectie>,
+-    pub wachtend: std::collections::VecDeque<Bericht>,
++    pub(super) wachtend: std::collections::VecDeque<super::raster_invoer::Wachtend>,
++    pub(super) klembord: Option<super::raster_invoer::KlembordVlucht>,
++    pub(super) delegeert: bool,
++    pub(super) fout: bool,
++    pub(super) plaktekst: Option<String>,
++    pub(super) afgewezen: usize,
++    pub(super) plakbereik: Option<office_core::rekenblad::CelSelectie>,
+ }
+ #[derive(Debug, Clone)]
+ pub enum Bericht {
+@@ -25,6 +31,20 @@ pub enum Bericht {
+         document: u64,
+         editerversie: u64,
+     },
++    EditorFocus {
++        document: u64,
++        editerversie: u64,
++    },
++    Klembord(klembord::Actie),
++    Opslaan(bool),
++    Terug,
++    Vooruit,
++    Opmaak(Opmaak),
++    Structuur(Structuur),
++    OpmaakToets(char),
++    Wis,
++    HerstelKopie,
++    MeldingGelezen,
+     Kies(String),
+     Typ(String),
+     BewerkActief,
+@@ -40,15 +60,20 @@ pub enum Bericht {
+         alles: bool,
+     },
+     Invoer(text_editor::Action),
++    ZijInvoer(text_editor::Action),
++    PasToe,
+     Bevestig,
+     Voltooi(Richting),
+     Verplaats(Richting),
+     Annuleer,
+ }
+ pub(super) fn beschikbaar(app: &App) -> bool {
+-    toegankelijk(app) && app.tab().is_some_and(|t| !t.bezig && !t.schrijft)
++    toegankelijk(app)
++        && app.tab().is_some_and(|t| {
++            !t.bezig && !t.schrijft && t.raster.klembord.is_none() && !t.raster.fout
++        })
+ }
+-fn toegankelijk(app: &App) -> bool {
++pub(super) fn toegankelijk(app: &App) -> bool {
+     !app.postvak_zichtbaar
+         && !app.bestand
+         && !app.instellingen
+@@ -61,7 +86,7 @@ fn toegankelijk(app: &App) -> bool {
+                 .is_some_and(|a| a.beeld.module == Module::Spreadsheet)
+         })
+ }
+-fn vraag_focus(app: &App) -> Task<Msg> {
++pub(super) fn vraag_focus(app: &App) -> Task<Msg> {
+     let Some(t) = app.tab() else {
+         return Task::none();
+     };
+@@ -71,37 +96,42 @@ fn vraag_focus(app: &App) -> Task<Msg> {
+     }))
+ }
+ pub fn update(app: &mut App, bericht: Bericht) -> Task<Msg> {
++    super::raster_invoer::update(app, bericht)
++}
++pub(super) fn voer_uit(app: &mut App, bericht: Bericht) -> Task<Msg> {
+     if !beschikbaar(app) {
+-        if toegankelijk(app)
+-            && let Some(t) = app
+-                .tab_mut()
+-                .filter(|t| t.bezig && !t.schrijft && !t.concept)
+-            && matches!(
+-                bericht,
+-                Bericht::Kies(_)
+-                    | Bericht::BreidUit(_)
+-                    | Bericht::Vergroot(_)
+-                    | Bericht::Verplaats(_)
+-                    | Bericht::Pijl { .. }
+-                    | Bericht::Voltooi(_)
+-            )
+-        {
+-            // Slepen bewaart alleen het laatste absolute doel. Relatieve
+-            // toetsstappen blijven in volgorde, ook tijdens een paginaraster.
+-            if matches!(bericht, Bericht::BreidUit(_))
+-                && matches!(t.raster.wachtend.back(), Some(Bericht::BreidUit(_)))
+-            {
+-                t.raster.wachtend.pop_back();
+-            }
+-            if t.raster.wachtend.len() >= 256 {
+-                return app
+-                    .waarschuwing("De navigatiewachtrij is vol; wacht tot het raster gereed is");
+-            }
+-            t.raster.wachtend.push_back(bericht);
+-        }
+         return Task::none();
+     }
+     match bericht {
++        Bericht::EditorFocus {
++            document,
++            editerversie,
++        } => {
++            if app.tab().is_some_and(|t| {
++                t.id == document
++                    && t.editerversie == editerversie
++                    && t.raster.focus
++                    && t.raster.bewerken
++            }) {
++                iced::widget::operation::focus(EDITOR_ID)
++            } else {
++                Task::none()
++            }
++        }
++        Bericht::Klembord(_)
++        | Bericht::Opslaan(_)
++        | Bericht::Terug
++        | Bericht::Vooruit
++        | Bericht::Opmaak(_)
++        | Bericht::Structuur(_)
++        | Bericht::OpmaakToets(_)
++        | Bericht::Wis
++        | Bericht::HerstelKopie
++        | Bericht::MeldingGelezen
++        | Bericht::ZijInvoer(_)
++        | Bericht::PasToe => {
++            unreachable!("Invoeropdracht wordt door de wachtrij afgehandeld")
++        }
+         Bericht::Focus {
+             document,
+             editerversie,
+@@ -128,7 +158,7 @@ pub fn update(app: &mut App, bericht: Bericht) -> Task<Msg> {
+             let Some(id) = app.tab().and_then(Tab::veld).map(|v| v.id.clone()) else {
+                 return Task::none();
+             };
+-            update(
++            voer_uit(
+                 app,
+                 Bericht::Begin {
+                     id,
+@@ -141,7 +171,7 @@ pub fn update(app: &mut App, bericht: Bericht) -> Task<Msg> {
+             let Some(id) = app.tab().and_then(Tab::veld).map(|v| v.id.clone()) else {
+                 return Task::none();
+             };
+-            update(
++            voer_uit(
+                 app,
+                 Bericht::Begin {
+                     id,
+@@ -167,7 +197,7 @@ pub fn update(app: &mut App, bericht: Bericht) -> Task<Msg> {
+                     text_editor::Action::Move(motion)
+                 }));
+             }
+-            update(
++            voer_uit(
+                 app,
+                 if selecteer {
+                     Bericht::Vergroot(richting)
+@@ -226,7 +256,10 @@ pub fn update(app: &mut App, bericht: Bericht) -> Task<Msg> {
+                 text_editor::Action::Move(text_editor::Motion::DocumentEnd)
+             });
+             registreer_letters(t);
+-            iced::widget::operation::focus(EDITOR_ID)
++            Task::done(Msg::Raster(Bericht::EditorFocus {
++                document: t.id,
++                editerversie: t.editerversie,
++            }))
+         }
+         Bericht::BreidUit(doel) => selecteer(app, doel, None),
+         Bericht::Vergroot(richting) => {
+@@ -279,14 +312,14 @@ pub fn update(app: &mut App, bericht: Bericht) -> Task<Msg> {
+         Bericht::Voltooi(richting) => {
+             let t = app.tab_mut().unwrap();
+             if !t.raster.bewerken {
+-                return update(app, Bericht::Verplaats(richting));
++                return voer_uit(app, Bericht::Verplaats(richting));
+             }
+             if t.concept {
+                 t.raster.na_richting = Some(richting);
+-                app.update(Msg::Raster(Bericht::Bevestig))
++                voer_uit(app, Bericht::Bevestig)
+             } else {
+                 t.raster.bewerken = false;
+-                app.update(Msg::Raster(Bericht::Verplaats(richting)))
++                voer_uit(app, Bericht::Verplaats(richting))
+             }
+         }
+         Bericht::Bevestig => {
+@@ -346,21 +379,7 @@ fn selecteer(app: &mut App, doel: String, richting: Option<Richting>) -> Task<Ms
+     app.opdracht(id, opdracht)
+ }
+ pub fn vervolg(app: &mut App) -> Task<Msg> {
+-    if !beschikbaar(app) {
+-        return Task::none();
+-    }
+-    let Some(b) = app.tab_mut().and_then(|t| t.raster.wachtend.pop_front()) else {
+-        return vraag_focus(app);
+-    };
+-    let taak = update(app, b);
+-    if app
+-        .tab()
+-        .is_some_and(|t| !t.bezig && !t.raster.wachtend.is_empty())
+-    {
+-        Task::batch([taak, vervolg(app)])
+-    } else {
+-        taak
+-    }
++    super::raster_invoer::vervolg(app)
+ }
+ pub fn registreer_letters(t: &Tab) {
+     if let Some(v) = t.veld() {
+@@ -464,16 +483,13 @@ pub fn blad<'a>(app: &'a App, t: &'a Tab, inhoud: Element<'a, Msg>) -> Element<'
+                 value: iced::Color::BLACK,
+                 selection: app.look().color.selected,
+             });
+-        if !t.bezig {
+-            editor = editor.on_action(|a| Msg::Raster(Bericht::Invoer(a)));
+-        }
++        editor = editor.on_action(|a| Msg::Raster(Bericht::Invoer(a)));
+         let editor = openaec_ui::design::a11y::node(
+             editor,
+             openaec_ui::design::a11y::Node::new(
+                 openaec_ui::design::a11y::Role::TextField,
+                 format!("Cel {}", v.id),
+-            )
+-            .disabled(t.bezig),
++            ),
+         );
+         lagen.push(
+             container(editor)
+@@ -605,6 +621,16 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Raster<'_> {
+             // De vorige selectie mag geen toevallige dubbelklik opleveren.
+             t.state.downcast_mut::<Focus>().klik = None;
+         }
++        // Het model kan de inline-editor al tonen terwijl de bewaakte
++        // focusoperatie nog onderweg is. Zolang het raster werkelijk focus
++        // heeft, blijven ook deze commits relatieve invoerintenties.
++        if t.state.downcast_ref::<Focus>().actief
++            && let iced::Event::InputMethod(iced::advanced::input_method::Event::Commit(tekst)) = e
++        {
++            s.publish(Msg::Raster(Bericht::Typ(tekst.clone())));
++            s.capture_event();
++            return;
++        }
+         if let iced::Event::Keyboard(iced::keyboard::Event::KeyPressed {
+             key,
+             text,
+@@ -612,10 +638,17 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Raster<'_> {
+             ..
+         }) = e
+             && t.state.downcast_ref::<Focus>().actief
+-            && !self.bewerken
+         {
+             use iced::keyboard::{Key, key::Named};
+             let bericht = match key {
++                Key::Character(c)
++                    if self.bewerken
++                        && modifiers.command()
++                        && !modifiers.alt()
++                        && c.eq_ignore_ascii_case("a") =>
++                {
++                    Some(Bericht::Invoer(text_editor::Action::SelectAll))
++                }
+                 Key::Named(k) if !modifiers.command() && !modifiers.alt() => match k {
+                     Named::ArrowLeft => Some(Bericht::Pijl {
+                         richting: Richting::Links,
+@@ -643,6 +676,23 @@ impl Widget<Msg, iced::Theme, iced::Renderer> for Raster<'_> {
+                     } else {
+                         Richting::Rechts
+                     })),
++                    Named::Delete => Some(Bericht::Wis),
++                    Named::Backspace => Some(Bericht::Invoer(text_editor::Action::Edit(
++                        text_editor::Edit::Backspace,
++                    ))),
++                    Named::Escape => Some(Bericht::Annuleer),
++                    Named::Home | Named::End if self.bewerken => {
++                        let m = if *k == Named::Home {
++                            text_editor::Motion::Home
++                        } else {
++                            text_editor::Motion::End
++                        };
++                        Some(Bericht::Invoer(if modifiers.shift() {
++                            text_editor::Action::Select(m)
++                        } else {
++                            text_editor::Action::Move(m)
++                        }))
++                    }
+                     Named::F2 => self.gekozen.map(|_| Bericht::BewerkActief),
+                     _ => None,
+                 },
+diff --git a/native/crates/office-ui/src/tests/raster_proeven.rs b/native/crates/office-ui/src/tests/raster_proeven.rs
+index af388e2..4ebe18d 100644
+--- a/native/crates/office-ui/src/tests/raster_proeven.rs
++++ b/native/crates/office-ui/src/tests/raster_proeven.rs
+@@ -2328,3 +2328,491 @@ fn zoekmarkering_wordt_echt_getekend_schaalt_mee_en_vervalt_bij_nieuwe_invoer()
+         std::fs::write(pad.join("writer-zoekmarkering-zoom.json"),serde_json::to_vec_pretty(&serde_json::json!({"schalen":[1.,0.75,1.5],"afwijkende_pixels_zonder_markering":aantallen})).unwrap()).unwrap();
+     }
+ }
++
++#[test]
++fn raster_asynchrone_grensronde_bewaart_alle_invoer_en_celbevestigingen() {
++    use office_core::rekenblad::Richting as R;
++    use raster_ui::Bericht as B;
++    let mut p = Proef::nieuw();
++    let origineel = p.bron();
++    p.bericht(Msg::Raster(B::Kies("X2".into())));
++    // Geen antwoord of widgetvernieuwing tussen deze gepubliceerde intenties.
++    let taken: Vec<_> = [
++        B::Pijl {
++            richting: R::Rechts,
++            selecteer: false,
++        },
++        B::Typ("7".into()),
++        B::Voltooi(R::Onder),
++        B::Typ("8".into()),
++        B::Voltooi(R::Onder),
++    ]
++    .into_iter()
++    .map(|b| p.app.update(Msg::Raster(b)))
++    .collect();
++    for taak in taken {
++        p.taak(taak);
++    }
++    assert_eq!(p.app.tab().unwrap().adres, "Y4");
++    let mut d = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone()).unwrap();
++    let b = d.naar_cel(0, "Y2").unwrap();
++    assert_eq!(b.velden.iter().find(|v| v.id == "Y2").unwrap().tekst, "7");
++    assert_eq!(b.velden.iter().find(|v| v.id == "Y3").unwrap().tekst, "8");
++    p.bericht(Msg::Terug);
++    p.bericht(Msg::Terug);
++    assert_eq!(*p.bron(), *origineel);
++}
++#[test]
++fn raster_asynchrone_plak_enter_en_opslaan_wachten_op_de_geplakte_bron() {
++    use office_core::rekenblad::Richting as R;
++    let mut p = Proef::nieuw();
++    p.cel("B2", false);
++    let map = std::env::temp_dir().join(format!(
++        "office-raster-plak-{}-{}",
++        std::process::id(),
++        std::time::SystemTime::now()
++            .duration_since(std::time::UNIX_EPOCH)
++            .unwrap()
++            .as_nanos()
++    ));
++    std::fs::create_dir(&map).unwrap();
++    let pad = map.join("Klembord.xlsx");
++    std::fs::write(&pad, p.bron().as_slice()).unwrap();
++    let id = p.app.tab().unwrap().id;
++    {
++        let t = p.app.tab_mut().unwrap();
++        t.pad = Some(pad.clone());
++        t.verwacht = Some(t.antwoord.as_ref().unwrap().hash.clone());
++    }
++    p.klembord.tekst = Some("7".into());
++    let taken = vec![
++        p.app.update(Msg::Klembord(klembord::Actie::Plak)),
++        p.app
++            .update(Msg::Raster(raster_ui::Bericht::Voltooi(R::Onder))),
++        p.app.update(Msg::Opslaan(id, false)),
++    ];
++    for taak in taken {
++        p.taak(taak);
++    }
++    assert_eq!(p.app.tab().unwrap().adres, "B3");
++    let opgeslagen = std::fs::read(&pad).unwrap();
++    let b = Sessie::open(Module::Spreadsheet, opgeslagen.clone())
++        .unwrap()
++        .weergave(0)
++        .unwrap();
++    assert_eq!(b.velden.iter().find(|v| v.id == "B2").unwrap().tekst, "7");
++    assert_eq!(opgeslagen.as_slice(), p.bron().as_slice());
++    assert!(!p.app.tab().unwrap().gewijzigd());
++    std::fs::remove_dir_all(map).unwrap();
++}
++
++#[test]
++fn raster_klembord_bereik_kopieer_plak_en_wissen_zijn_geordend_en_bronexact_ongedaan() {
++    use raster_ui::Bericht as B;
++    let mut p = Proef::nieuw();
++    let origineel = p.bron();
++    p.bericht(Msg::Adres("B2:D4".into()));
++    p.bericht(Msg::GaNaar);
++    // Neem echte rasterfocus over zonder de rechthoekselectie te verliezen.
++    p.app.tab_mut().unwrap().raster.focus = true;
++    let taken = vec![
++        p.app.update(Msg::Klembord(klembord::Actie::Kopieer)),
++        p.app.update(Msg::Raster(B::Kies("F2".into()))),
++        p.app.update(Msg::Klembord(klembord::Actie::Plak)),
++    ];
++    for taak in taken {
++        p.taak(taak);
++    }
++    assert!(p.klembord.tekst.as_ref().unwrap().contains("37.5"));
++    let t = p.app.tab().unwrap();
++    assert_eq!(t.adres, "F2:H4");
++    assert!(!t.concept && !t.bezig && !t.raster.heeft_werk());
++    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
++        .unwrap()
++        .weergave(0)
++        .unwrap();
++    for (id, tekst) in [
++        ("F2", "3"),
++        ("G2", "12.5"),
++        ("H2", "37.5"),
++        ("H3", "30"),
++        ("F4", ""),
++        ("H4", "67.5"),
++        ("D2", "=B2*C2"),
++    ] {
++        assert_eq!(b.velden.iter().find(|v| v.id == id).unwrap().tekst, tekst);
++    }
++    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
++        std::fs::create_dir_all(&map).unwrap();
++        p.verbeeld()
++            .save_png(PathBuf::from(map).join("spreadsheet-klembord-bereik.png"))
++            .unwrap();
++    }
++    if let Some(map) = std::env::var_os("OFFICE_TEST_UITVOER") {
++        std::fs::create_dir_all(&map).unwrap();
++        std::fs::write(
++            PathBuf::from(map).join("spreadsheet-klembord-ui.xlsx"),
++            p.bron().as_slice(),
++        )
++        .unwrap();
++    }
++    p.bericht(Msg::Raster(B::Wis));
++    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
++        .unwrap()
++        .weergave(0)
++        .unwrap();
++    assert!(
++        b.velden
++            .iter()
++            .filter(
++                |v| ["F2", "G2", "H2", "F3", "G3", "H3", "F4", "G4", "H4"].contains(&v.id.as_str())
++            )
++            .all(|v| v.tekst.is_empty())
++    );
++    p.bericht(Msg::Terug);
++    p.bericht(Msg::Terug);
++    assert_eq!(*p.bron(), *origineel);
++}
++#[test]
++fn raster_klembord_modale_late_lezing_wacht_en_gaat_nooit_naar_een_ander_document() {
++    use raster_ui::Bericht as B;
++    let mut p = Proef::nieuw();
++    p.cel("B2", false);
++    let bron = p.bron();
++    let (_, mut antwoorden) = klembordtaak(
++        p.app.update(Msg::Klembord(klembord::Actie::Plak)),
++        Some("7"),
++    );
++    assert_eq!(antwoorden.len(), 1);
++    let vervolg = p.app.update(Msg::Raster(B::Voltooi(
++        office_core::rekenblad::Richting::Onder,
++    )));
++    p.taak(vervolg);
++    p.bericht(Msg::Bestand(true));
++    p.bericht(antwoorden.pop().unwrap());
++    assert_eq!(*p.bron(), *bron);
++    assert!(p.app.tab().unwrap().raster.heeft_werk());
++    p.bericht(Msg::Bestand(false));
++    assert_eq!(p.app.tab().unwrap().adres, "B3");
++    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
++        .unwrap()
++        .weergave(0)
++        .unwrap();
++    assert_eq!(b.velden.iter().find(|v| v.id == "B2").unwrap().tekst, "7");
++    let (_, mut antwoorden) = klembordtaak(
++        p.app.update(Msg::Klembord(klembord::Actie::Plak)),
++        Some("8"),
++    );
++    let oud = p.bron();
++    p.bericht(Msg::Nieuw(Module::Spreadsheet));
++    let tweede = p.bron();
++    p.bericht(antwoorden.pop().unwrap());
++    assert_eq!(*p.bron(), *tweede);
++    assert!(!p.app.tab().unwrap().raster.heeft_werk());
++    assert_eq!(*p.app.tabs[0].antwoord.as_ref().unwrap().bron, *oud);
++    p.bericht(Msg::Selecteer(0));
++    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
++        .unwrap()
++        .weergave(0)
++        .unwrap();
++    assert_eq!(b.velden.iter().find(|v| v.id == "B3").unwrap().tekst, "8");
++    assert_eq!(*p.app.tabs[1].antwoord.as_ref().unwrap().bron, *tweede);
++}
++#[test]
++fn raster_klembord_ongeldige_late_formule_bewaart_de_bron_en_hersteltekst() {
++    use raster_ui::Bericht as B;
++    let mut p = Proef::nieuw();
++    p.cel("B2", false);
++    let bron = p.bron();
++    let tekst = "7\t8\n9\t=1+";
++    p.klembord.tekst = Some(tekst.into());
++    let taken = vec![
++        p.app.update(Msg::Klembord(klembord::Actie::Plak)),
++        p.app.update(Msg::Raster(B::Typ("later".into()))),
++        p.app.update(Msg::Opslaan(p.app.tab().unwrap().id, false)),
++    ];
++    for taak in taken {
++        p.taak(taak);
++    }
++    let t = p.app.tab().unwrap();
++    assert!(t.raster.fout);
++    assert_eq!(t.raster.wachtend.len(), 2);
++    assert_eq!(t.raster.plaktekst.as_deref(), Some(tekst));
++    assert!(!t.antwoord.as_ref().unwrap().terug);
++    assert_eq!(*p.bron(), *bron);
++    p.klembord.tekst = Some("andere tekst".into());
++    p.bericht(Msg::Raster(B::HerstelKopie));
++    assert_eq!(p.klembord.tekst.as_deref(), Some(tekst));
++    if let Some(map) = std::env::var_os("OFFICE_TEST_SCHERMEN") {
++        std::fs::create_dir_all(&map).unwrap();
++        p.verbeeld()
++            .save_png(PathBuf::from(map).join("spreadsheet-invoerherstel.png"))
++            .unwrap();
++    }
++    p.bericht(Msg::Terug);
++    let t = p.app.tab().unwrap();
++    assert!(!t.raster.fout && !t.raster.heeft_werk());
++    assert!(t.raster.plaktekst.is_none());
++    assert_eq!(*p.bron(), *bron);
++}
++#[test]
++fn raster_klembord_gewijzigd_doel_weigert_laat_antwoord_en_bewaart_wachtende_invoer() {
++    use raster_ui::Bericht as B;
++    let mut p = Proef::nieuw();
++    p.cel("B2", false);
++    let bron = p.bron();
++    let (_, mut antwoorden) = klembordtaak(
++        p.app.update(Msg::Klembord(klembord::Actie::Plak)),
++        Some("7"),
++    );
++    p.bericht(Msg::Raster(B::Typ("later".into())));
++    // Een expliciete adresbalkwijziging is geen relatieve rastertoets.
++    p.bericht(Msg::Adres("F2".into()));
++    p.bericht(Msg::GaNaar);
++    p.bericht(antwoorden.pop().unwrap());
++    assert!(p.app.tab().unwrap().raster.fout);
++    assert_eq!(p.app.tab().unwrap().raster.wachtend.len(), 1);
++    assert_eq!(*p.bron(), *bron);
++    p.bericht(Msg::Terug);
++    assert!(!p.app.tab().unwrap().raster.heeft_werk());
++}
++#[test]
++fn raster_invoerbuffer_begrenst_grote_plak_en_meldt_afgewezen_opdrachten_blijvend() {
++    use raster_ui::Bericht as B;
++    let mut p = Proef::nieuw();
++    p.cel("B2", false);
++    let bron = p.bron();
++    let (_, mut antwoorden) = klembordtaak(
++        p.app.update(Msg::Klembord(klembord::Actie::Plak)),
++        Some("7"),
++    );
++    p.bericht(Msg::Raster(B::Typ("x".repeat(4 * 1024 * 1024 + 1))));
++    assert_eq!(p.app.tab().unwrap().raster.afgewezen, 1);
++    assert!(p.app.tab().unwrap().raster.wachtend.is_empty());
++    p.bericht(antwoorden.pop().unwrap());
++    assert_eq!(p.app.tab().unwrap().raster.afgewezen, 1);
++    assert!(
++        p.toegankelijkheid()
++            .nodes
++            .iter()
++            .any(|n| n.node.name.contains("Invoerbuffer vol"))
++    );
++    p.bericht(Msg::Raster(B::MeldingGelezen));
++    assert_eq!(p.app.tab().unwrap().raster.afgewezen, 0);
++    p.bericht(Msg::Terug);
++    assert_eq!(*p.bron(), *bron);
++}
++
++#[test]
++fn raster_bewaren_vanuit_de_sluitvraag_blijft_werken_met_de_invoerwachtrij() {
++    let mut p = Proef::nieuw();
++    p.cel("B2", false);
++    let bron = p.bron();
++    let pad = std::env::temp_dir().join(format!(
++        "office-raster-sluiten-{}-{}.xlsx",
++        std::process::id(),
++        std::time::SystemTime::now()
++            .duration_since(std::time::UNIX_EPOCH)
++            .unwrap()
++            .as_nanos()
++    ));
++    std::fs::write(&pad, bron.as_slice()).unwrap();
++    {
++        let t = p.app.tab_mut().unwrap();
++        t.pad = Some(pad.clone());
++        t.verwacht = Some(t.antwoord.as_ref().unwrap().hash.clone());
++    }
++    p.klembord.tekst = Some("7".into());
++    p.bericht(Msg::Klembord(klembord::Actie::Plak));
++    let id = p.app.tab().unwrap().id;
++    p.bericht(Msg::Sluit(0));
++    assert_eq!(p.app.sluiten, Some(id));
++    p.bericht(Msg::SluitKeuze(true));
++    assert!(p.app.tabs.is_empty());
++    let b = Sessie::open(Module::Spreadsheet, std::fs::read(&pad).unwrap())
++        .unwrap()
++        .weergave(0)
++        .unwrap();
++    assert_eq!(b.velden.iter().find(|v| v.id == "B2").unwrap().tekst, "7");
++    std::fs::remove_file(pad).unwrap();
++}
++#[test]
++fn raster_oud_muisdoel_na_bronbewerking_wordt_geweigerd_maar_relatieve_invoer_blijft_geordend() {
++    use raster_ui::Bericht as B;
++    let mut p = Proef::nieuw();
++    p.cel("B2", false);
++    let bron = p.bron();
++    p.bericht(Msg::Raster(B::Typ("7".into())));
++    let taken = vec![
++        p.app.update(Msg::Raster(B::Voltooi(
++            office_core::rekenblad::Richting::Onder,
++        ))),
++        p.app.update(Msg::Raster(B::Kies("F2".into()))),
++        p.app.update(Msg::Raster(B::Typ("8".into()))),
++        p.app.update(Msg::Raster(B::Voltooi(
++            office_core::rekenblad::Richting::Onder,
++        ))),
++    ];
++    for taak in taken {
++        p.taak(taak);
++    }
++    assert_eq!(p.app.tab().unwrap().adres, "B4");
++    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
++        .unwrap()
++        .weergave(0)
++        .unwrap();
++    for (id, tekst) in [("B2", "7"), ("B3", "8"), ("F2", "")] {
++        assert_eq!(b.velden.iter().find(|v| v.id == id).unwrap().tekst, tekst);
++    }
++    p.bericht(Msg::Terug);
++    p.bericht(Msg::Terug);
++    assert_eq!(*p.bron(), *bron);
++}
++
++#[test]
++fn raster_rij_invoegen_na_plakken_blijft_achter_de_klembordbewerking() {
++    let mut p = Proef::nieuw();
++    p.cel("B2", false);
++    let bron = p.bron();
++    p.klembord.tekst = Some("7".into());
++    let taken = vec![
++        p.app.update(Msg::Klembord(klembord::Actie::Plak)),
++        p.app.update(Msg::Structuur(Structuur::RijInvoegen)),
++    ];
++    for taak in taken {
++        p.taak(taak);
++    }
++    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
++        .unwrap()
++        .weergave(0)
++        .unwrap();
++    assert_eq!(b.velden.iter().find(|v| v.id == "B2").unwrap().tekst, "");
++    assert_eq!(b.velden.iter().find(|v| v.id == "B3").unwrap().tekst, "7");
++    p.bericht(Msg::Terug);
++    p.bericht(Msg::Terug);
++    assert_eq!(*p.bron(), *bron);
++}
++
++#[test]
++fn raster_invoer_van_de_oude_inline_editor_bewerkt_na_enter_de_volgende_cel() {
++    use office_core::rekenblad::Richting as R;
++    use raster_ui::Bericht as B;
++    use text_editor::{Action as A, Edit as E};
++    let mut p = Proef::nieuw();
++    p.cel("B2", false);
++    let bron = p.bron();
++    p.named(iced::keyboard::key::Named::F2);
++    p.selecteer_alles();
++    p.plak("7");
++    // Deze berichten komen nog uit dezelfde inline-editorwidget, die bij het
++    // verzamelen van de toetsen nog niet is verwijderd of opnieuw opgebouwd.
++    let taken = vec![
++        p.app.update(Msg::Raster(B::Voltooi(R::Onder))),
++        p.app
++            .update(Msg::Raster(B::Invoer(A::Edit(E::Insert('8'))))),
++        p.app.update(Msg::Raster(B::Voltooi(R::Onder))),
++    ];
++    for taak in taken {
++        p.taak(taak);
++    }
++    assert_eq!(p.app.tab().unwrap().adres, "B4");
++    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
++        .unwrap()
++        .weergave(0)
++        .unwrap();
++    assert_eq!(b.velden.iter().find(|v| v.id == "B2").unwrap().tekst, "7");
++    assert_eq!(b.velden.iter().find(|v| v.id == "B3").unwrap().tekst, "8");
++    p.bericht(Msg::Terug);
++    p.bericht(Msg::Terug);
++    assert_eq!(*p.bron(), *bron);
++}
++#[test]
++fn raster_zijeditor_bewaart_zijn_eigen_invoer_en_toepassen() {
++    use text_editor::{Action as A, Edit as E};
++    let mut p = Proef::nieuw();
++    p.cel("B2", false);
++    let bron = p.bron();
++    p.bericht(Msg::Invoer(A::SelectAll));
++    p.bericht(Msg::Invoer(A::Edit(E::Paste(std::sync::Arc::new(
++        "7".into(),
++    )))));
++    p.bericht(Msg::PasToe);
++    assert_eq!(p.app.tab().unwrap().adres, "B2");
++    assert!(!p.app.tab().unwrap().raster.bewerken);
++    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
++        .unwrap()
++        .weergave(0)
++        .unwrap();
++    assert_eq!(b.velden.iter().find(|v| v.id == "B2").unwrap().tekst, "7");
++    p.bericht(Msg::Terug);
++    assert_eq!(*p.bron(), *bron);
++}
++
++#[test]
++fn raster_toetsen_en_ime_commit_blijven_bewaard_terwijl_editorfocus_nog_onderweg_is() {
++    use raster_ui::Bericht as B;
++    let mut p = Proef::nieuw();
++    p.cel("B2", false);
++    let bron = p.bron();
++    let oud = p.app.update(Msg::Raster(B::Typ("7".into())));
++    assert!(p.app.tab().unwrap().raster.bewerken);
++    // Bouw de nieuwe widgetboom, maar lever de eerste focusoperatie pas af
++    // nadat de volgende echte toets en synthetische IME-commit zijn verwerkt.
++    p.toets(
++        iced::keyboard::Key::Character("8".into()),
++        iced::keyboard::Modifiers::empty(),
++        Some("8"),
++    );
++    assert_eq!(p.app.tab().unwrap().editor.text(), "78");
++    p.toets(
++        iced::keyboard::Key::Character("a".into()),
++        iced::keyboard::Modifiers::COMMAND,
++        None,
++    );
++    p.toets(
++        iced::keyboard::Key::Character("9".into()),
++        iced::keyboard::Modifiers::empty(),
++        Some("9"),
++    );
++    p.gebeurtenis(iced::Event::InputMethod(
++        iced::advanced::input_method::Event::Commit("é".into()),
++    ));
++    assert_eq!(p.app.tab().unwrap().editor.text(), "9é");
++    p.named(iced::keyboard::key::Named::Enter);
++    let aantal = p.focusoperaties;
++    p.taak(oud);
++    assert_eq!(p.focusoperaties, aantal);
++    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
++        .unwrap()
++        .weergave(0)
++        .unwrap();
++    assert_eq!(b.velden.iter().find(|v| v.id == "B2").unwrap().tekst, "9é");
++    p.bericht(Msg::Terug);
++    assert_eq!(*p.bron(), *bron);
++}
++
++#[test]
++fn raster_f2_en_selecteer_alles_in_dezelfde_oude_widget_overschrijven_de_cel() {
++    use iced::keyboard::{Key, Modifiers, key::Named};
++    let mut p = Proef::nieuw();
++    p.cel("B2", false);
++    let bron = p.bron();
++    let mut alles = ruwe_rastertoets(Key::Character("a".into()), None);
++    if let iced::Event::Keyboard(iced::keyboard::Event::KeyPressed { modifiers, .. }) = &mut alles {
++        *modifiers = Modifiers::COMMAND;
++    }
++    p.gebeurtenissen([
++        ruwe_rastertoets(Key::Named(Named::F2), None),
++        alles,
++        ruwe_rastertoets(Key::Character("7".into()), Some("7")),
++        ruwe_rastertoets(Key::Named(Named::Enter), None),
++    ]);
++    assert_eq!(p.app.tab().unwrap().adres, "B3");
++    let b = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone())
++        .unwrap()
++        .weergave(0)
++        .unwrap();
++    assert_eq!(b.velden.iter().find(|v| v.id == "B2").unwrap().tekst, "7");
++    p.bericht(Msg::Terug);
++    assert_eq!(*p.bron(), *bron);
++}
+diff --git a/native/crates/office-ui/src/werker.rs b/native/crates/office-ui/src/werker.rs
+index 1b53963..20deac4 100644
+--- a/native/crates/office-ui/src/werker.rs
++++ b/native/crates/office-ui/src/werker.rs
+@@ -63,13 +63,22 @@ struct Taak {
+     opdracht: Opdracht,
+     antwoord: oneshot::Sender<Resultaat>,
+ }
++enum Werk {
++    Document(Taak),
++    Celtekst {
++        id: u64,
++        deel: usize,
++        adres: String,
++        antwoord: oneshot::Sender<Result<String, String>>,
++    },
++}
+ #[derive(Clone)]
+ pub struct Werker {
+-    zender: mpsc::Sender<Taak>,
++    zender: mpsc::Sender<Werk>,
+ }
+ impl Werker {
+     pub fn start() -> Self {
+-        let (zender, ontvanger) = mpsc::channel::<Taak>();
++        let (zender, ontvanger) = mpsc::channel::<Werk>();
+         std::thread::Builder::new()
+             .name("office-documenten".into())
+             // De gepinde parser gebruikt bij diepe veldbomen meer stapelruimte
+@@ -78,7 +87,17 @@ impl Werker {
+             .stack_size(64 * 1024 * 1024)
+             .spawn(move || {
+                 let mut sessies = HashMap::<u64, (Sessie, usize)>::new();
+-                for taak in ontvanger {
++                for werk in ontvanger {
++                    let taak=match werk {
++                        Werk::Document(taak)=>taak,
++                        Werk::Celtekst{id,deel,adres,antwoord}=>{
++                            let r=std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
++                                sessies.get(&id).ok_or_else(||"Document niet meer geopend".to_string())?
++                                    .0.celtekst(deel,&adres).map_err(|e|e.to_string())
++                            })).unwrap_or_else(|_|Err("De documentengine heeft het kopiëren afgebroken".into()));
++                            let _=antwoord.send(r);continue;
++                        }
++                    };
+                     let resultaat = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| -> Resultaat {
+                         match &taak.opdracht {
+                             Opdracht::Nieuw(m) => {
+@@ -187,22 +206,36 @@ impl Werker {
+             .expect("documentwerkdraad");
+         Self { zender }
+     }
++    pub async fn celtekst(self, id: u64, deel: usize, adres: String) -> Result<String, String> {
++        let (antwoord, ontvanger) = oneshot::channel();
++        self.zender
++            .send(Werk::Celtekst {
++                id,
++                deel,
++                adres,
++                antwoord,
++            })
++            .map_err(|_| "Documentwerkdraad is gestopt")?;
++        ontvanger
++            .await
++            .map_err(|_| "Documentwerkdraad is gestopt".to_string())?
++    }
+     pub fn sluit(&self, id: u64) {
+         let (antwoord, _) = oneshot::channel();
+-        let _ = self.zender.send(Taak {
++        let _ = self.zender.send(Werk::Document(Taak {
+             id,
+             opdracht: Opdracht::Sluit,
+             antwoord,
+-        });
++        }));
+     }
+     pub async fn voer_uit(self, id: u64, opdracht: Opdracht) -> Resultaat {
+         let (antwoord, ontvanger) = oneshot::channel();
+         self.zender
+-            .send(Taak {
++            .send(Werk::Document(Taak {
+                 id,
+                 opdracht,
+                 antwoord,
+-            })
++            }))
+             .map_err(|_| "Documentwerkdraad is gestopt")?;
+         ontvanger
+             .await
+diff --git a/native/crates/office-core/src/celtekst.rs b/native/crates/office-core/src/celtekst.rs
+new file mode 100644
+index 0000000..f9ee62a
+--- /dev/null
++++ b/native/crates/office-core/src/celtekst.rs
+@@ -0,0 +1,227 @@
++//! Platte celtekst met tabgescheiden velden, geciteerde regels en expliciete grenzen.
++pub const MAX_CELLEN: usize = 10_000;
++pub const MAX_BYTES: usize = 4 * 1024 * 1024;
++fn ongeldige_xmltekst(tekst: &str) -> bool {
++    tekst.chars().any(|c| {
++        (c < ' ' && !matches!(c, '\t' | '\n' | '\r')) || matches!(c, '\u{fffe}' | '\u{ffff}')
++    })
++}
++#[derive(Debug, Clone, PartialEq, Eq)]
++pub struct CelTekst {
++    rijen: Vec<Vec<String>>,
++}
++impl CelTekst {
++    pub fn nieuw(mut rijen: Vec<Vec<String>>) -> Result<Self, String> {
++        let breedte = rijen.iter().map(Vec::len).max().unwrap_or(0);
++        if breedte == 0
++            || rijen
++                .len()
++                .checked_mul(breedte)
++                .is_none_or(|n| n > MAX_CELLEN)
++        {
++            return Err("Het klembordbereik moet 1 tot 10.000 cellen bevatten".into());
++        }
++        let mut bytes = 0usize;
++        for rij in &mut rijen {
++            for cel in rij.iter() {
++                bytes = bytes.saturating_add(cel.len());
++                if bytes > MAX_BYTES || ongeldige_xmltekst(cel) {
++                    return Err("De celtekst is te groot of bevat ongeldige XML-tekens".into());
++                }
++            }
++            rij.resize(breedte, String::new());
++        }
++        Ok(Self { rijen })
++    }
++    pub fn rijen(&self) -> &[Vec<String>] {
++        &self.rijen
++    }
++    pub fn hoogte(&self) -> usize {
++        self.rijen.len()
++    }
++    pub fn breedte(&self) -> usize {
++        self.rijen[0].len()
++    }
++    pub fn lees(tekst: &str) -> Result<Self, String> {
++        if tekst.len() > MAX_BYTES || ongeldige_xmltekst(tekst) {
++            return Err("De klembordtekst is te groot of bevat ongeldige XML-tekens".into());
++        }
++        let mut rijen = Vec::new();
++        let mut breedte = 0usize;
++        let mut rij = Vec::new();
++        let mut veld = String::new();
++        let mut tekens = tekst.chars().peekable();
++        let (mut begin, mut geciteerd, mut gesloten, mut eindregel) = (true, false, false, false);
++        while let Some(c) = tekens.next() {
++            eindregel = false;
++            if geciteerd {
++                if c == '"' {
++                    if tekens.peek() == Some(&'"') {
++                        tekens.next();
++                        veld.push('"');
++                    } else {
++                        geciteerd = false;
++                        gesloten = true;
++                    }
++                } else {
++                    veld.push(c);
++                }
++                continue;
++            }
++            if c == '"' && begin {
++                begin = false;
++                geciteerd = true;
++                continue;
++            }
++            if c == '\t' || c == '\n' || c == '\r' {
++                rij.push(std::mem::take(&mut veld));
++                breedte = breedte.max(rij.len());
++                if breedte
++                    .checked_mul(rijen.len() + 1)
++                    .is_none_or(|n| n > MAX_CELLEN)
++                {
++                    return Err("Het rechthoekige klembordbereik bevat te veel cellen".into());
++                }
++                begin = true;
++                gesloten = false;
++                if c != '\t' {
++                    if c == '\r' && tekens.peek() == Some(&'\n') {
++                        tekens.next();
++                    }
++                    rijen.push(std::mem::take(&mut rij));
++                    if rijen.len() > MAX_CELLEN {
++                        return Err("Te veel klembordrijen".into());
++                    }
++                    eindregel = true;
++                }
++            } else {
++                if gesloten {
++                    return Err("Onverwachte tekst na een geciteerd celveld".into());
++                }
++                begin = false;
++                veld.push(c);
++            }
++        }
++        if geciteerd {
++            return Err("Een geciteerd celveld is niet afgesloten".into());
++        }
++        if !eindregel || rijen.is_empty() {
++            rij.push(veld);
++            rijen.push(rij);
++        }
++        Self::nieuw(rijen)
++    }
++    pub fn schrijf(&self) -> Result<String, String> {
++        let mut uit = String::new();
++        for (r, rij) in self.rijen.iter().enumerate() {
++            if r > 0 {
++                uit.push_str("\r\n");
++            }
++            for (k, cel) in rij.iter().enumerate() {
++                if k > 0 {
++                    uit.push('\t');
++                }
++                if cel.is_empty() || cel.contains(['\t', '\n', '\r', '"']) {
++                    uit.push('"');
++                    for c in cel.chars() {
++                        uit.push(c);
++                        if c == '"' {
++                            uit.push('"');
++                        }
++                    }
++                    uit.push('"');
++                } else {
++                    uit.push_str(cel);
++                }
++                if uit.len() > MAX_BYTES {
++                    return Err("De geschreven klembordtekst is te groot".into());
++                }
++            }
++        }
++        Ok(uit)
++    }
++}
++#[cfg(test)]
++mod tests {
++    use super::*;
++    #[test]
++    fn celtekst_geleende_tabellen_citaten_unicode_en_lege_randen() {
++        let t = CelTekst::lees(
++            "café\t\"regel één\nregel twee\"\t\"\"\r\n\"een \"\"citaat\"\"\"\t🏠\t\r\n",
++        )
++        .unwrap();
++        assert_eq!(
++            t.rijen(),
++            &[
++                vec![
++                    "café".to_string(),
++                    "regel één\nregel twee".into(),
++                    "".into()
++                ],
++                vec!["een \"citaat\"".into(), "🏠".into(), "".into()]
++            ]
++        );
++        assert_eq!(CelTekst::lees(&t.schrijf().unwrap()).unwrap(), t);
++        assert_eq!(
++            CelTekst::lees("a\tb\n1").unwrap().rijen(),
++            &[
++                vec!["a".to_string(), "b".into()],
++                vec!["1".into(), "".into()]
++            ]
++        );
++        assert_eq!(CelTekst::lees("\n\n").unwrap().hoogte(), 2);
++        assert_eq!(CelTekst::lees("a\t").unwrap().breedte(), 2);
++        assert_eq!(CelTekst::lees("").unwrap().rijen(), &[vec![String::new()]]);
++        for rijen in [
++            vec![vec!["a".into()], vec![String::new()]],
++            vec![vec![String::new()], vec![String::new()]],
++            vec![vec![String::new(); 2]; 2],
++        ] {
++            let t = CelTekst::nieuw(rijen).unwrap();
++            assert_eq!(
++                CelTekst::lees(&t.schrijf().unwrap()).unwrap(),
++                t,
++                "Lege laatste rij moet behouden blijven"
++            );
++        }
++    }
++    #[test]
++    fn celtekst_onvolledige_quotes_nultekens_en_rechthoekbudget_worden_geweigerd() {
++        for s in ["\"onafgesloten", "\"klaar\"erachter", "tekst\0rest"] {
++            assert!(CelTekst::lees(s).is_err(), "{s:?}");
++        }
++        assert!(CelTekst::lees(&"a".repeat(MAX_BYTES + 1)).is_err());
++        assert!(CelTekst::nieuw(vec![vec![String::new(); 100]; 101]).is_err());
++        assert!(CelTekst::nieuw(vec![vec![String::new(); 100]; 100]).is_ok());
++        assert!(CelTekst::nieuw(vec![]).is_err());
++        assert!(CelTekst::lees(&format!("{}\n{}", "x\t".repeat(100), "\n".repeat(100))).is_err());
++        let t = CelTekst::nieuw(vec![vec!["\"".repeat(MAX_BYTES)]]).unwrap();
++        assert!(t.schrijf().is_err());
++    }
++}
++
++#[cfg(test)]
++mod aanvullende_proeven {
++    use super::*;
++    #[test]
++    fn xmltekens_en_rechthoekbudget_worden_voor_opslaan_gecontroleerd() {
++        for t in [
++            "a\0b",
++            "a\u{1}b",
++            "a\u{b}b",
++            "a\u{c}b",
++            "a\u{1f}b",
++            "a\u{fffe}b",
++            "a\u{ffff}b",
++        ] {
++            assert!(CelTekst::lees(t).is_err());
++            assert!(CelTekst::nieuw(vec![vec![t.into()]]).is_err());
++        }
++        let geldig = CelTekst::lees("\"regel\r\nregel\"\t\"🏠\twaarde\"").unwrap();
++        assert_eq!(CelTekst::lees(&geldig.schrijf().unwrap()).unwrap(), geldig);
++        let rij = "\t".repeat(99) + "\n";
++        let t = CelTekst::lees(&rij.repeat(100)).unwrap();
++        assert_eq!((t.hoogte(), t.breedte()), (100, 100));
++        assert!(CelTekst::lees(&rij.repeat(101)).is_err());
++    }
++}
+diff --git a/native/crates/office-core/src/rekenblad_klembord.rs b/native/crates/office-core/src/rekenblad_klembord.rs
+new file mode 100644
+index 0000000..5b171ea
+--- /dev/null
++++ b/native/crates/office-core/src/rekenblad_klembord.rs
+@@ -0,0 +1,166 @@
++//! Platte tabellen: opgemaakte waarden kopiëren en celinvoer gezamenlijk plakken.
++//! Geen rijke opmaakoverdracht, formuleverschuiving of verplaatsing van broncellen.
++use crate::{
++    celtekst::CelTekst,
++    document::{Fout, Resultaat},
++    rekenblad,
++};
++use betteroffice_xlsx as x;
++fn fout(e: impl std::fmt::Display) -> Fout {
++    Fout::Document(e.to_string())
++}
++fn blad(d: &x::Workbook, deel: usize) -> Resultaat<x::SheetId> {
++    if deel >= d.sheet_count() {
++        return Err(fout("Dit werkblad bestaat niet"));
++    }
++    Ok(x::SheetId(deel as u32))
++}
++pub fn doel(adres: &str, t: &CelTekst) -> Resultaat<x::CellRange> {
++    let r = rekenblad::bereik(adres)?;
++    let (hoog, breed) = (
++        (r.end.row - r.start.row + 1) as usize,
++        (r.end.col - r.start.col + 1) as usize,
++    );
++    if hoog == 1 && breed == 1 {
++        let einde = x::CellRef::new(
++            r.start
++                .row
++                .checked_add((t.hoogte() - 1) as u32)
++                .ok_or_else(|| fout("Het plakbereik valt buiten het werkblad"))?,
++            r.start
++                .col
++                .checked_add((t.breedte() - 1) as u32)
++                .ok_or_else(|| fout("Het plakbereik valt buiten het werkblad"))?,
++        );
++        return rekenblad::bereik(&format!("{}:{}", r.start.to_a1(), einde.to_a1()));
++    }
++    if !hoog.is_multiple_of(t.hoogte()) || !breed.is_multiple_of(t.breedte()) {
++        return Err(fout(
++            "De geselecteerde afmetingen passen niet bij het klembordbereik",
++        ));
++    }
++    Ok(r)
++}
++pub fn kopieer(d: &x::Workbook, deel: usize, adres: &str) -> Resultaat<String> {
++    let sheet = blad(d, deel)?;
++    let r = rekenblad::bereik(adres)?;
++    let gesloten = rekenblad::selectie(d, deel, &r.start.to_a1(), &r.end.to_a1())?;
++    let r = rekenblad::bereik(&gesloten.adres)?;
++    let merges = d.merged_ranges(sheet, r).map_err(fout)?;
++    let mut gedekt = std::collections::HashSet::new();
++    let mut werk = 0usize;
++    for m in merges {
++        for rij in m.start.row..=m.end.row {
++            for kolom in m.start.col..=m.end.col {
++                werk += 1;
++                if werk > crate::celtekst::MAX_CELLEN {
++                    return Err(fout(
++                        "Overlappende samenvoegingen passen niet in het klembordbereik",
++                    ));
++                }
++                if x::CellRef::new(rij, kolom) != m.start {
++                    gedekt.insert((rij, kolom));
++                }
++            }
++        }
++    }
++    let mut rijen = Vec::new();
++    let mut bytes = 0usize;
++    for rij in r.start.row..=r.end.row {
++        let mut cellen = Vec::new();
++        for kolom in r.start.col..=r.end.col {
++            let tekst = if gedekt.contains(&(rij, kolom)) {
++                String::new()
++            } else {
++                d.sheet(sheet)
++                    .map_err(fout)?
++                    .cell(x::CellRef::new(rij, kolom))
++                    .map(|cel| {
++                        xlsx_render::display_text(&d.model().styles, d.model().date_system, cel)
++                    })
++                    .unwrap_or_default()
++            };
++            bytes = bytes.saturating_add(tekst.len());
++            if bytes > crate::celtekst::MAX_BYTES {
++                return Err(fout(
++                    "De geselecteerde celinvoer is te groot voor het klembord",
++                ));
++            }
++            cellen.push(tekst);
++        }
++        rijen.push(cellen);
++    }
++    CelTekst::nieuw(rijen)
++        .map_err(fout)?
++        .schrijf()
++        .map_err(fout)
++}
++pub fn plak(d: &mut x::Workbook, deel: usize, adres: &str, t: &CelTekst) -> Resultaat<()> {
++    let sheet = blad(d, deel)?;
++    let mut r = doel(adres, t)?;
++    let enkel = t.hoogte() == 1 && t.breedte() == 1;
++    if enkel && r.start == r.end {
++        let anker = rekenblad::ankercel(d, deel, r.start)?;
++        r = d
++            .merged_ranges(sheet, x::CellRange::new(anker, anker))
++            .map_err(fout)?
++            .into_iter()
++            .next()
++            .unwrap_or(x::CellRange::new(anker, anker));
++        rekenblad::bereik(&format!("{}:{}", r.start.to_a1(), r.end.to_a1()))?;
++    }
++    let merges = d.merged_ranges(sheet, r).map_err(fout)?;
++    let wissen = enkel && t.rijen()[0][0].is_empty();
++    let gehele_merge = merges.len() == 1 && merges[0] == r;
++    for m in &merges {
++        let geheel = m.start.row >= r.start.row
++            && m.end.row <= r.end.row
++            && m.start.col >= r.start.col
++            && m.end.col <= r.end.col;
++        if !geheel || !(wissen || enkel && gehele_merge) {
++            return Err(fout(
++                "Plak eerst in gewone cellen; gedeeltelijke of meervoudige samenvoegingen worden niet overschreven",
++            ));
++        }
++    }
++    if d.sheet(sheet)
++        .map_err(fout)?
++        .array_formulas()
++        .any(|(_, a)| {
++            a.start.row <= r.end.row
++                && a.end.row >= r.start.row
++                && a.start.col <= r.end.col
++                && a.end.col >= r.start.col
++        })
++    {
++        return Err(fout(
++            "Een bestaande matrixformule wordt niet via het klembord gewijzigd",
++        ));
++    }
++    // Volledige controle vóór de ene gezamenlijke enginebewerking. Een late
++    // ongeldige formule mag geen eerdere cel uit hetzelfde plakblok bewaren.
++    let mut edits = Vec::new();
++    let mut bytes = 0usize;
++    for rij in r.start.row..=r.end.row {
++        for kolom in r.start.col..=r.end.col {
++            let cel = x::CellRef::new(rij, kolom);
++            if gehele_merge && !wissen && cel != r.start {
++                continue;
++            }
++            let tekst = &t.rijen()[(rij - r.start.row) as usize % t.hoogte()]
++                [(kolom - r.start.col) as usize % t.breedte()];
++            bytes = bytes.saturating_add(tekst.len());
++            if bytes > crate::celtekst::MAX_BYTES {
++                return Err(fout("De uitgezette celinvoer is te groot"));
++            }
++            rekenblad::controleer_invoer(d, deel, cel, tekst)?;
++            edits.push(x::CellInput {
++                cell: cel,
++                input: tekst.clone(),
++            });
++        }
++    }
++    d.edit_cells(sheet, &edits, x::CalculationOptions::default())
++        .map_err(fout)?;
++    Ok(())
++}
+diff --git a/native/crates/office-core/tests/rekenblad_klembord.rs b/native/crates/office-core/tests/rekenblad_klembord.rs
+new file mode 100644
+index 0000000..3e502b7
+--- /dev/null
++++ b/native/crates/office-core/tests/rekenblad_klembord.rs
+@@ -0,0 +1,181 @@
++use betteroffice_xlsx as x;
++use office_core::{
++    celtekst::CelTekst,
++    document::{Bewerking, Document, Module, Sessie},
++    rekenblad::{Structuur, bereik},
++    rekenblad_klembord,
++};
++const BRON: &[u8] = include_bytes!("fixtures/spreadsheet.xlsx");
++fn plak(adres: &str, tekst: &str) -> Bewerking {
++    Bewerking::CelTekst {
++        adres: adres.into(),
++        tekst: CelTekst::lees(tekst).unwrap(),
++    }
++}
++fn uitvoer(naam: &str, b: &[u8]) {
++    if let Some(p) = std::env::var_os("OFFICE_TEST_UITVOER") {
++        let p = std::path::PathBuf::from(p);
++        std::fs::create_dir_all(&p).unwrap();
++        std::fs::write(p.join(naam), b).unwrap();
++    }
++}
++#[test]
++fn celklembord_kopieert_opgemaakte_waarden_zonder_bronwijziging_of_geschiedenis() {
++    let s = Sessie::open(Module::Spreadsheet, BRON.to_vec()).unwrap();
++    let t = CelTekst::lees(&s.celtekst(0, "B2:D4").unwrap()).unwrap();
++    assert_eq!(
++        t.rijen(),
++        &[
++            vec!["3".to_string(), "12.5".into(), "37.5".into()],
++            vec!["2".into(), "15".into(), "30".into()],
++            vec!["".into(), "".into(), "67.50".into()]
++        ]
++    );
++    assert_eq!(s.bron().as_slice(), BRON);
++    assert!(!s.kan_terug());
++    assert!(s.celtekst(usize::MAX, "A1").is_err());
++    assert!(s.celtekst(0, "A1:XFD1048576").is_err());
++}
++#[test]
++fn celklembord_plakt_formules_getallen_en_unicode_als_een_bronexacte_undo() {
++    let mut s = Sessie::open(Module::Spreadsheet, BRON.to_vec()).unwrap();
++    s.bewerk(0, plak("B2", "7\t8\r\n9\t=SUM(B2:C3)")).unwrap();
++    let nieuw = s.bron();
++    let b = x::Workbook::open(&nieuw).unwrap();
++    for (adres, invoer) in [("B2", "7"), ("C2", "8"), ("B3", "9"), ("C3", "=SUM(B2:C3)")] {
++        assert_eq!(
++            b.cell(x::SheetId(0), x::CellRef::parse_a1(adres).unwrap())
++                .unwrap()
++                .input,
++            invoer
++        );
++    }
++    assert_eq!(
++        b.cell(x::SheetId(0), x::CellRef::parse_a1("D2").unwrap())
++            .unwrap()
++            .input,
++        "=B2*C2"
++    );
++    s.terug().unwrap();
++    assert_eq!(s.bron().as_slice(), BRON);
++    assert!(!s.kan_terug());
++    s.vooruit().unwrap();
++    assert_eq!(s.bron(), nieuw);
++    // Zelfverwijzende formules zijn geldige invoer met een rekenfout; de
++    // afzonderlijke, onafhankelijk teruggelezen proef hieronder gebruikt geen kring.
++    s.terug().unwrap();
++    s.bewerk(0, plak("B2", "7\t8\r\n9\t=SUM(B2:C2)")).unwrap();
++    s.bewerk(
++        0,
++        plak(
++            "F2",
++            "\"café 🏠\"\t\"regel één\nregel twee\"\r\n\"een \"\"citaat\"\"\"\t'0012",
++        ),
++    )
++    .unwrap();
++    uitvoer("spreadsheet-klembord.xlsx", s.bron().as_slice());
++}
++#[test]
++fn celklembord_tegelvulling_lege_randen_en_wissen_behouden_celopmaak() {
++    let mut s = Sessie::open(Module::Spreadsheet, BRON.to_vec()).unwrap();
++    s.bewerk(0, plak("F2:I5", "1\t2\n3\t4")).unwrap();
++    let d = x::Workbook::open(s.bron().as_slice()).unwrap();
++    for rij in 1..5 {
++        for kol in 5..9 {
++            assert_eq!(
++                d.cell(x::SheetId(0), x::CellRef::new(rij, kol))
++                    .unwrap()
++                    .input,
++                ((rij - 1) % 2 * 2 + (kol - 5) % 2 + 1).to_string()
++            );
++        }
++    }
++    s.bewerk(0, plak("F2:I5", "")).unwrap();
++    let t = CelTekst::lees(&s.celtekst(0, "F2:I5").unwrap()).unwrap();
++    assert!(t.rijen().iter().flatten().all(String::is_empty));
++    s.bewerk(0, plak("F2", "a\tb\n1")).unwrap();
++    let t = CelTekst::lees(&s.celtekst(0, "F2:G3").unwrap()).unwrap();
++    assert_eq!(t.rijen()[1], vec!["1".to_string(), "".into()]);
++    assert!(rekenblad_klembord::doel("A1:C2", &CelTekst::lees("1\t2").unwrap()).is_err());
++    assert!(rekenblad_klembord::doel("XFD1048576", &CelTekst::lees("1\t2").unwrap()).is_err());
++    assert!(bereik("A1:Z1000").is_err());
++    assert!(rekenblad_klembord::doel("A1", &CelTekst::lees("1").unwrap()).is_ok());
++}
++#[test]
++fn celklembord_late_ongeldige_formule_verandert_geen_enkele_cel() {
++    let mut s = Sessie::open(Module::Spreadsheet, BRON.to_vec()).unwrap();
++    for (adres, tekst) in [
++        ("B2", "7\t8\n9\t=1+"),
++        ("A1:C2", "1\t2"),
++        ("XFD1048576", "1\t2"),
++    ] {
++        assert!(s.bewerk(0, plak(adres, tekst)).is_err());
++        assert_eq!(s.bron().as_slice(), BRON);
++        assert!(!s.kan_terug() && !s.kan_vooruit());
++    }
++}
++#[test]
++fn celklembord_samenvoegingen_alleen_als_hele_anker_of_gezamenlijk_wissen() {
++    let mut s = Sessie::open(Module::Spreadsheet, BRON.to_vec()).unwrap();
++    s.bewerk(
++        0,
++        Bewerking::Structuur {
++            adres: "F2:G3".into(),
++            actie: Structuur::Samenvoegen,
++        },
++    )
++    .unwrap();
++    let samengevoegd = s.bron();
++    s.bewerk(0, plak("G3", "café 🏠")).unwrap();
++    let d = x::Workbook::open(s.bron().as_slice()).unwrap();
++    assert_eq!(
++        d.cell(x::SheetId(0), x::CellRef::parse_a1("F2").unwrap())
++            .unwrap()
++            .input,
++        "café 🏠"
++    );
++    let kopie = CelTekst::lees(&s.celtekst(0, "G3").unwrap()).unwrap();
++    assert_eq!((kopie.hoogte(), kopie.breedte()), (2, 2));
++    assert_eq!(kopie.rijen()[0][0], "café 🏠");
++    let voor = s.bron();
++    for (adres, tekst) in [("F2", "1\t2"), ("E2:F3", "1"), ("E2:H4", "1\t2\n3\t4")] {
++        assert!(s.bewerk(0, plak(adres, tekst)).is_err());
++        assert_eq!(s.bron(), voor);
++    }
++    s.bewerk(0, plak("E2:H4", "")).unwrap();
++    assert!(
++        CelTekst::lees(&s.celtekst(0, "F2:G3").unwrap())
++            .unwrap()
++            .rijen()
++            .iter()
++            .flatten()
++            .all(String::is_empty)
++    );
++    s.terug().unwrap();
++    assert_eq!(s.bron(), voor);
++    s.terug().unwrap();
++    assert_eq!(s.bron(), samengevoegd);
++}
++#[test]
++fn celklembord_beveiliging_en_matrixformules_worden_nooit_omzeild() {
++    let b = include_bytes!("fixtures/spreadsheet-beveiligd.xlsx");
++    let mut s = Sessie::open(Module::Spreadsheet, b.to_vec()).unwrap();
++    assert!(s.bewerk(0, plak("B2", "7\t8")).is_err());
++    assert_eq!(s.bron().as_slice(), b);
++    assert!(s.celtekst(0, "B2:D4").is_ok());
++    let mut delen = ooxml_opc::unzip_parts(BRON).unwrap();
++    let (_, xml) = delen
++        .iter_mut()
++        .find(|(n, _)| n == "xl/worksheets/sheet1.xml")
++        .unwrap();
++    let oud = String::from_utf8(xml.clone()).unwrap();
++    assert!(oud.contains("<f>B2*C2</f>"));
++    *xml = oud
++        .replace("<f>B2*C2</f>", "<f t=\"array\" ref=\"D2:E3\">B2*C2</f>")
++        .into_bytes();
++    let bytes = ooxml_opc::rezip_parts(&delen).unwrap();
++    let mut d = Document::open(Module::Spreadsheet, &bytes).unwrap();
++    let voor = d.bytes().unwrap();
++    assert!(d.bewerk(0, plak("B2:E3", "1")).is_err());
++    assert_eq!(d.bytes().unwrap(), voor);
++}
+diff --git a/native/crates/office-ui/src/raster_invoer.rs b/native/crates/office-ui/src/raster_invoer.rs
+new file mode 100644
+index 0000000..58ac9a2
+--- /dev/null
++++ b/native/crates/office-ui/src/raster_invoer.rs
+@@ -0,0 +1,559 @@
++//! Eén volgorde voor toetsen, klembord, bronbewerkingen en bewaarsnapshots.
++use super::*;
++use raster_ui::Bericht as B;
++use std::sync::atomic::{AtomicU64, Ordering};
++static VOLGEND: AtomicU64 = AtomicU64::new(1);
++const MAX_OPDRACHTEN: usize = 256;
++const MAX_BYTES: usize = 4 * 1024 * 1024;
++
++pub(super) struct Wachtend {
++    bericht: B,
++    bron: Option<String>,
++    bytes: usize,
++}
++pub(super) enum KlembordVlucht {
++    Lezen {
++        nummer: u64,
++        doel: PlakDoel,
++        antwoord: Option<Option<String>>,
++    },
++    Kopieren {
++        nummer: u64,
++        doel: RasterDoel,
++        antwoord: Option<Result<String, String>>,
++    },
++    Schrijven(u64),
++}
++pub(super) enum PlakDoel {
++    Editor(klembord::Doel),
++    Raster(RasterDoel),
++}
++#[derive(PartialEq, Eq)]
++pub(super) struct RasterDoel {
++    document: u64,
++    deel: usize,
++    bron: String,
++    adres: String,
++    editerversie: u64,
++}
++impl RasterDoel {
++    fn van(t: &Tab) -> Self {
++        Self {
++            document: t.id,
++            deel: t.deel,
++            bron: t.antwoord.as_ref().unwrap().hash.clone(),
++            adres: t.adres.clone(),
++            editerversie: t.editerversie,
++        }
++    }
++}
++impl raster_ui::Staat {
++    pub fn heeft_werk(&self) -> bool {
++        self.klembord.is_some() || !self.wachtend.is_empty()
++    }
++    pub fn heeft_invoer(&self) -> bool {
++        matches!(self.klembord, Some(KlembordVlucht::Lezen { .. }))
++            || self.wachtend.iter().any(|w| {
++                matches!(
++                    &w.bericht,
++                    B::Typ(_)
++                        | B::Begin {
++                            vervang: Some(_),
++                            ..
++                        }
++                        | B::Terug
++                        | B::Vooruit
++                        | B::Opmaak(_)
++                        | B::Structuur(_)
++                        | B::OpmaakToets(_)
++                        | B::Wis
++                        | B::Klembord(klembord::Actie::Knip | klembord::Actie::Plak)
++                ) || matches!(&w.bericht, B::Invoer(a) | B::ZijInvoer(a) if a.is_edit())
++            })
++    }
++}
++pub fn neemt_over(app: &App) -> bool {
++    app.tab().is_some_and(|t| {
++        !t.raster.delegeert
++            && (t.raster.focus || t.raster.heeft_werk())
++            && t.antwoord
++                .as_ref()
++                .is_some_and(|a| a.beeld.module == Module::Spreadsheet)
++    })
++}
++fn wachtend(t: &Tab, bericht: B) -> Wachtend {
++    // Een muisdoel hoort bij de bron waarop het werd aangewezen. Relatieve
++    // toetsen worden juist pas tegen de dan actuele cel uitgevoerd.
++    let absoluut = matches!(bericht, B::Kies(_) | B::BreidUit(_) | B::Begin { .. });
++    let bytes = match &bericht {
++        B::Typ(s)
++        | B::Begin {
++            vervang: Some(s), ..
++        } => s.len(),
++        B::Invoer(text_editor::Action::Edit(text_editor::Edit::Paste(s)))
++        | B::ZijInvoer(text_editor::Action::Edit(text_editor::Edit::Paste(s))) => s.len(),
++        _ => 0,
++    };
++    Wachtend {
++        bericht,
++        bron: absoluut.then(|| t.antwoord.as_ref().unwrap().hash.clone()),
++        bytes,
++    }
++}
++pub fn update(app: &mut App, bericht: B) -> Task<Msg> {
++    if matches!(bericht, B::Focus { .. } | B::EditorFocus { .. }) {
++        return raster_ui::voer_uit(app, bericht);
++    }
++    if !raster_ui::toegankelijk(app) {
++        return Task::none();
++    }
++    let t = app.tab_mut().unwrap();
++    if matches!(bericht, B::HerstelKopie) {
++        return t
++            .raster
++            .plaktekst
++            .clone()
++            .map(iced::clipboard::write)
++            .unwrap_or_else(Task::none);
++    }
++    if matches!(bericht, B::MeldingGelezen) {
++        t.raster.afgewezen = 0;
++        return Task::none();
++    }
++    if t.raster.fout && matches!(bericht, B::Terug) {
++        let aantal = t.raster.wachtend.len();
++        t.raster.wachtend.clear();
++        t.raster.klembord = None;
++        t.raster.fout = false;
++        t.raster.plaktekst = None;
++        t.raster.plakbereik = None;
++        t.raster.afgewezen = 0;
++        t.raster.na_bewerking = None;
++        t.raster.na_richting = None;
++        let n = t.gekozen;
++        t.toon_veld(n);
++        t.raster.focus = true;
++        return app.waarschuwing(&format!(
++            "Niet toegepaste invoer en {aantal} wachtende opdrachten op jouw verzoek verworpen"
++        ));
++    }
++    let w = wachtend(t, bericht);
++    if matches!(w.bericht, B::BreidUit(_))
++        && t.raster
++            .wachtend
++            .back()
++            .is_some_and(|vorig| matches!(vorig.bericht, B::BreidUit(_)) && vorig.bron == w.bron)
++    {
++        t.raster.wachtend.pop_back();
++    }
++    if t.raster.wachtend.len() >= MAX_OPDRACHTEN
++        || t.raster
++            .wachtend
++            .iter()
++            .map(|w| w.bytes)
++            .sum::<usize>()
++            .saturating_add(w.bytes)
++            > MAX_BYTES
++    {
++        t.raster.afgewezen = t.raster.afgewezen.saturating_add(1);
++        return app.waarschuwing("De invoerwachtrij is vol; deze opdracht is niet aangenomen. Wacht tot het werkblad gereed is");
++    }
++    t.raster.wachtend.push_back(w);
++    vervolg(app)
++}
++pub fn na_bevestiging(app: &mut App, id: u64, richting: office_core::rekenblad::Richting) {
++    if let Some(t) = app.tabs.iter_mut().find(|t| t.id == id) {
++        let w = wachtend(t, B::Verplaats(richting));
++        // De bevestiging en haar vervolgstap vormen samen één gebruikersactie.
++        t.raster.wachtend.push_front(w);
++    }
++}
++pub fn mislukking(t: &mut Tab) {
++    // Een gewone ongeldige inline-formule blijft een herstelbaar concept.
++    // Alleen vervolgopdrachten of een ontvangen plakblok vragen een expliciete
++    // pauze; anders moeten corrigeren en Escape bereikbaar blijven.
++    if t.raster.heeft_werk() || t.raster.plaktekst.is_some() {
++        t.raster.fout = true;
++        t.raster.na_bewerking = None;
++        t.raster.na_richting = None;
++    }
++}
++pub fn vervolg(app: &mut App) -> Task<Msg> {
++    if !raster_ui::toegankelijk(app) {
++        return Task::none();
++    }
++    let Some(t) = app.tab() else {
++        return Task::none();
++    };
++    if t.raster.delegeert || t.bezig || t.schrijft || t.raster.fout {
++        return Task::none();
++    }
++    if let Some(KlembordVlucht::Lezen {
++        antwoord: Some(_), ..
++    }) = &t.raster.klembord
++    {
++        return voltooi_plakken(app);
++    }
++    if matches!(
++        t.raster.klembord,
++        Some(KlembordVlucht::Kopieren {
++            antwoord: Some(_),
++            ..
++        })
++    ) {
++        return voltooi_kopieren(app);
++    }
++    if t.raster.klembord.is_some() {
++        return Task::none();
++    }
++    let mut taken = Vec::new();
++    while raster_ui::beschikbaar(app) {
++        let Some(w) = app.tab_mut().unwrap().raster.wachtend.pop_front() else {
++            break;
++        };
++        if w.bron.as_ref().is_some_and(|hash| {
++            app.tab()
++                .unwrap()
++                .antwoord
++                .as_ref()
++                .is_none_or(|a| &a.hash != hash)
++        }) {
++            app.melding="Het werkblad is gewijzigd; het oude muisdoel is niet uitgevoerd. Klik opnieuw op de gewenste cel".into();
++            continue;
++        }
++        app.tab_mut().unwrap().raster.delegeert = true;
++        let taak = voer_uit(app, w.bericht);
++        app.tab_mut().unwrap().raster.delegeert = false;
++        taken.push(taak);
++    }
++    Task::batch(taken)
++}
++fn voer_uit(app: &mut App, bericht: B) -> Task<Msg> {
++    match bericht {
++        B::ZijInvoer(a) => app.update(Msg::Invoer(a)),
++        B::PasToe => app.update(Msg::PasToe),
++        B::Invoer(a) if !app.tab().unwrap().raster.bewerken => {
++            use text_editor::{Action as A, Edit as E, Motion as M};
++            match a {
++                A::Edit(E::Insert(c)) => voer_uit(app, B::Typ(c.to_string())),
++                A::Edit(E::Paste(s)) => voer_uit(app, B::Typ(s.as_ref().clone())),
++                A::Edit(E::Enter) => voer_uit(app, B::Typ("\n".into())),
++                A::Edit(E::Delete) => voer_uit(app, B::Wis),
++                A::Edit(E::Backspace) => voer_uit(app, B::Typ(String::new())),
++                A::Move(m) | A::Select(m) => {
++                    let richting = match m {
++                        M::Left => office_core::rekenblad::Richting::Links,
++                        M::Right => office_core::rekenblad::Richting::Rechts,
++                        M::Up => office_core::rekenblad::Richting::Boven,
++                        M::Down => office_core::rekenblad::Richting::Onder,
++                        _ => return Task::none(),
++                    };
++                    voer_uit(
++                        app,
++                        B::Pijl {
++                            richting,
++                            selecteer: matches!(a, A::Select(_)),
++                        },
++                    )
++                }
++                _ => Task::none(),
++            }
++        }
++        B::Klembord(actie) => klembord(app, actie),
++        B::Opslaan(als) => {
++            let t = app.tab_mut().unwrap();
++            let id = t.id;
++            if t.concept {
++                let w = wachtend(t, B::Opslaan(als));
++                t.raster.wachtend.push_front(w);
++                app.update(Msg::PasToe)
++            } else {
++                app.update(Msg::Opslaan(id, als))
++            }
++        }
++        B::Terug => app.update(Msg::Terug),
++        B::Vooruit => app.update(Msg::Vooruit),
++        B::Structuur(actie) => {
++            let t = app.tab_mut().unwrap();
++            if t.concept {
++                let w = wachtend(t, B::Structuur(actie));
++                t.raster.wachtend.push_front(w);
++                app.update(Msg::PasToe)
++            } else {
++                app.update(Msg::Structuur(actie))
++            }
++        }
++        B::OpmaakToets(c) => {
++            let Some(s) = app.tab().unwrap().opmaak_van_selectie() else {
++                return Task::none();
++            };
++            match c {
++                'b' => voer_uit(app, B::Opmaak(Opmaak::Vet(!s.vet))),
++                'i' => voer_uit(app, B::Opmaak(Opmaak::Cursief(!s.cursief))),
++                _ => Task::none(),
++            }
++        }
++        B::Opmaak(o) => {
++            let t = app.tab_mut().unwrap();
++            if t.concept {
++                let w = wachtend(t, B::Opmaak(o));
++                t.raster.wachtend.push_front(w);
++                app.update(Msg::PasToe)
++            } else {
++                app.update(Msg::Opmaak(o))
++            }
++        }
++        B::Wis => {
++            if app.tab().unwrap().raster.bewerken {
++                app.update(Msg::Invoer(text_editor::Action::Edit(
++                    text_editor::Edit::Delete,
++                )))
++            } else {
++                plakbereik(app, "")
++            }
++        }
++        anders => raster_ui::voer_uit(app, anders),
++    }
++}
++fn klembord(app: &mut App, actie: klembord::Actie) -> Task<Msg> {
++    if !klembord::kan(app, actie) {
++        return Task::none();
++    }
++    if matches!(actie, klembord::Actie::Plak) {
++        let t = app.tab_mut().unwrap();
++        let doel = if !t.raster.bewerken && !t.concept {
++            PlakDoel::Raster(RasterDoel::van(t))
++        } else {
++            let Some(d) = klembord::Doel::van_tab(t) else {
++                return Task::none();
++            };
++            PlakDoel::Editor(d)
++        };
++        let document = t.id;
++        let nummer = VOLGEND.fetch_add(1, Ordering::Relaxed);
++        t.raster.klembord = Some(KlembordVlucht::Lezen {
++            nummer,
++            doel,
++            antwoord: None,
++        });
++        return iced::clipboard::read().map(move |tekst| Msg::RasterPlak {
++            document,
++            nummer,
++            tekst,
++        });
++    }
++    if !app.tab().unwrap().raster.bewerken && !app.tab().unwrap().concept {
++        let t = app.tab_mut().unwrap();
++        let document = t.id;
++        let deel = t.deel;
++        let adres = t.adres.clone();
++        let nummer = VOLGEND.fetch_add(1, Ordering::Relaxed);
++        t.raster.klembord = Some(KlembordVlucht::Kopieren {
++            nummer,
++            doel: RasterDoel::van(t),
++            antwoord: None,
++        });
++        return Task::perform(
++            app.werker.clone().celtekst(document, deel, adres),
++            move |resultaat| Msg::RasterKopie {
++                document,
++                nummer,
++                resultaat,
++            },
++        );
++    }
++    let Some(tekst) = app
++        .tab()
++        .unwrap()
++        .editor
++        .selection()
++        .filter(|s| !s.is_empty())
++    else {
++        return Task::none();
++    };
++    let wijzig = if matches!(actie, klembord::Actie::Knip) {
++        app.update(Msg::Invoer(text_editor::Action::Edit(
++            text_editor::Edit::Delete,
++        )))
++    } else {
++        Task::none()
++    };
++    let t = app.tab_mut().unwrap();
++    let document = t.id;
++    let nummer = VOLGEND.fetch_add(1, Ordering::Relaxed);
++    t.raster.klembord = Some(KlembordVlucht::Schrijven(nummer));
++    Task::batch([
++        wijzig,
++        iced::clipboard::write(tekst).chain(Task::done(Msg::RasterKlembordGeschreven {
++            document,
++            nummer,
++        })),
++    ])
++}
++pub fn geplakt(app: &mut App, document: u64, nummer: u64, tekst: Option<String>) -> Task<Msg> {
++    let Some(t) = app.tabs.iter_mut().find(|t| t.id == document) else {
++        return Task::none();
++    };
++    let Some(KlembordVlucht::Lezen {
++        nummer: n,
++        antwoord,
++        ..
++    }) = &mut t.raster.klembord
++    else {
++        return Task::none();
++    };
++    if *n != nummer || antwoord.is_some() {
++        return Task::none();
++    }
++    *antwoord = Some(tekst);
++    if app.tab().is_some_and(|t| t.id == document) {
++        vervolg(app)
++    } else {
++        Task::none()
++    }
++}
++fn voltooi_plakken(app: &mut App) -> Task<Msg> {
++    let t = app.tab_mut().unwrap();
++    let Some(KlembordVlucht::Lezen {
++        doel,
++        antwoord: Some(tekst),
++        ..
++    }) = t.raster.klembord.take()
++    else {
++        unreachable!();
++    };
++    let gelijk = match &doel {
++        PlakDoel::Editor(d) => klembord::Doel::van_tab(t).as_ref() == Some(d),
++        PlakDoel::Raster(d) => RasterDoel::van(t) == *d,
++    };
++    if !gelijk {
++        t.raster.fout = true;
++        return app.waarschuwing("De editor of selectie is gewijzigd; plakken is niet toegepast. Wachtende invoer blijft bewaard; Ctrl+Z verwerpt haar");
++    }
++    let taak = if let Some(s) = tekst.filter(|s| !s.is_empty()) {
++        if matches!(doel, PlakDoel::Raster(_)) {
++            return plakbereik(app, &s);
++        }
++        app.tab_mut().unwrap().raster.delegeert = true;
++        let taak = app.update(Msg::Invoer(text_editor::Action::Edit(
++            text_editor::Edit::Paste(std::sync::Arc::new(s)),
++        )));
++        app.tab_mut().unwrap().raster.delegeert = false;
++        taak
++    } else {
++        Task::none()
++    };
++    Task::batch([taak, vervolg(app)])
++}
++fn plakbereik(app: &mut App, tekst: &str) -> Task<Msg> {
++    let t = app.tab_mut().unwrap();
++    let adres = t.adres.clone();
++    if tekst.len() <= MAX_BYTES {
++        t.raster.plaktekst = Some(tekst.to_string());
++    }
++    if !t.veld().is_some_and(|v| v.bewerkbaar) {
++        return app.waarschuwing("Dit werkblad is alleen-lezen");
++    }
++    let voorbereiding = (|| -> Result<_, String> {
++        let tekst = office_core::celtekst::CelTekst::lees(tekst)?;
++        let r = office_core::rekenblad_klembord::doel(&adres, &tekst).map_err(|e| e.to_string())?;
++        let selectie = office_core::rekenblad::CelSelectie {
++            anker: r.start.to_a1(),
++            doel: r.start.to_a1(),
++            adres: if r.start == r.end {
++                r.start.to_a1()
++            } else {
++                format!("{}:{}", r.start.to_a1(), r.end.to_a1())
++            },
++        };
++        Ok((tekst, selectie))
++    })();
++    let (tekst, selectie) = match voorbereiding {
++        Ok(x) => x,
++        Err(e) => {
++            t.raster.fout = true;
++            return app.waarschuwing(&format!(
++                "Niet geplakt: {e}. Wachtende opdrachten blijven bewaard; Ctrl+Z verwerpt haar"
++            ));
++        }
++    };
++    let id = t.id;
++    let deel = t.deel;
++    t.raster.plakbereik = Some(selectie);
++    app.opdracht(
++        id,
++        Opdracht::Bewerk(deel, Bewerking::CelTekst { adres, tekst }),
++    )
++}
++pub fn gekopieerd(
++    app: &mut App,
++    document: u64,
++    nummer: u64,
++    resultaat: Result<String, String>,
++) -> Task<Msg> {
++    let Some(t) = app.tabs.iter_mut().find(|t| t.id == document) else {
++        return Task::none();
++    };
++    let Some(KlembordVlucht::Kopieren {
++        nummer: n,
++        antwoord,
++        ..
++    }) = &mut t.raster.klembord
++    else {
++        return Task::none();
++    };
++    if *n != nummer || antwoord.is_some() {
++        return Task::none();
++    }
++    *antwoord = Some(resultaat);
++    if app.tab().is_some_and(|t| t.id == document) {
++        vervolg(app)
++    } else {
++        Task::none()
++    }
++}
++fn voltooi_kopieren(app: &mut App) -> Task<Msg> {
++    let t = app.tab_mut().unwrap();
++    let Some(KlembordVlucht::Kopieren {
++        nummer,
++        doel,
++        antwoord: Some(r),
++    }) = t.raster.klembord.take()
++    else {
++        unreachable!();
++    };
++    if RasterDoel::van(t) != doel {
++        t.raster.fout = true;
++        return app.waarschuwing("Het kopieerbereik is gewijzigd; het klembord blijft behouden. Ctrl+Z verwerpt de wachtende opdrachten");
++    }
++    match r {
++        Ok(tekst) => {
++            let document = t.id;
++            t.raster.klembord = Some(KlembordVlucht::Schrijven(nummer));
++            iced::clipboard::write(tekst).chain(Task::done(Msg::RasterKlembordGeschreven {
++                document,
++                nummer,
++            }))
++        }
++        Err(e) => {
++            t.raster.fout = true;
++            app.waarschuwing(&format!(
++                "Niet gekopieerd: {e}. Ctrl+Z verwerpt de wachtende opdrachten"
++            ))
++        }
++    }
++}
++pub fn geschreven(app: &mut App, document: u64, nummer: u64) -> Task<Msg> {
++    let Some(t) = app.tabs.iter_mut().find(|t| t.id == document) else {
++        return Task::none();
++    };
++    if !matches!(t.raster.klembord,Some(KlembordVlucht::Schrijven(n)) if n==nummer) {
++        return Task::none();
++    }
++    t.raster.klembord = None;
++    if app.tab().is_some_and(|t| t.id == document) {
++        vervolg(app)
++    } else {
++        Task::none()
++    }
++}

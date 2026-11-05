@@ -1,0 +1,70 @@
+{
+  "versie": "2026.44.9-alpha.33",
+  "geslaagd_binnen_omvang": true,
+  "suiteacceptatie": false,
+  "omvang": "Alineastijlen kiezen voor ondersteunde Writer-alinea’s. Vier nieuwe documentkernproeven en vier echte widgetproeven; geen volledig stijlbeheer, volledige functie- of pixelpariteit.",
+  "basis_broncommit": "b1679870e3d333e81e2d40b5b91285c11441e76d",
+  "negatieve_rondes": [
+    {
+      "log": "alineastijl-voor.log",
+      "soort": "Nieuwe test had twee ontbrekende leningen in testcode; compileerfout, geen productuitspraak."
+    },
+    {
+      "log": "alineastijl-voor-herstel.log",
+      "soort": "Minimale API-variant toegevoegd voor de regressietest, uitvoering nog afwezig. Eén nieuwe opdrachtproef faalt; één bestaande lege-alineastijlproef slaagt."
+    },
+    {
+      "log": "stijlen-eerste.log",
+      "soort": "Vier kernproeven slagen, één faalt: de engine voegt dubbele stijl-ID’s samen. De UI-proeven zijn door de standaard stop na deze fout niet uitgevoerd. Bronpatch en oorspronkelijke uitvoer blijven bewaard."
+    }
+  ],
+  "gerichte_hertests": [
+    {
+      "log": "stijlen-tweede.log",
+      "geslaagd": 8,
+      "omvang": "Broncontrole op dubbele ID’s toegevoegd; vijf kern- en drie widgetproeven slagen."
+    },
+    {
+      "log": "stijllijst-enter-voor.log",
+      "geslaagd": 1,
+      "omvang": "Gedeeld OpenAEC-selectiecomponent met directe Enter. Deze proef slaagt al; er is geen Enter-productafkeuring of aanvullende focuscorrectie verzonnen."
+    },
+    {
+      "log": "stijlen-derde.log",
+      "geslaagd": 9,
+      "omvang": "Vijf kern- en vier widgetproeven, inclusief Enter én spatie en verouderde bronhash."
+    }
+  ],
+  "tijdelijke_versie_toelichting": "De eerste gerichte alineastijlproeven zijn vóór de versiebump gebouwd met de eerdere alpha-32-pakketidentiteit. Zij zijn geen alpha-32-releasebewijs en geen uitgegeven alpha-33-programma. De definitieve volledige ronde gebruikt alpha.33.",
+  "correctie": "Eenmaal bij openen de oorspronkelijke stijl-ID’s lezen voordat de engine ze samenvoegt. Dubbele ID’s en daarvan afhankelijke ketens blijven onbeschikbaar; cycli, ontbrekende bases en tekenstijlen worden geweigerd. De modelstijl wordt op de hele alinea toegepast; directe alinea-/runopmaak en oorspronkelijke overige pakketdelen blijven behouden.",
+  "proeven": [
+    "Broncatalogus, standaardstijl en ontbrekende definities zonder bronwijziging.",
+    "Ontbrekende, dubbele en cyclische stijlketens en verkeerde stijlsoorten weigeren zonder bron- of geschiedeniswijziging.",
+    "Toepassen zonder tekstselectie, directe runopmaak, overige pakketdelen en exacte undo/redo.",
+    "Lege alinea, tabelcel, opgeslagen stijl-ID en opgeloste overerving na heropenen.",
+    "Werkelijke keuzelijst plus directe 9 in dezelfde widgetronde, cursorbehoud en exacte undo.",
+    "Directe Enter en spatie na kiezen komen op de pagina en behouden de nieuwe stijl.",
+    "Typen bij een open lijst en buiten de lijst annuleren wijzigen geen bron.",
+    "Oude keuzes raken geen andere alinea, gewijzigde bron of nieuwe tab; bestaande documentbeveiligingsproeven omvatten ook alineastijlen."
+  ],
+  "reguliere_tests": 359,
+  "ui_tests": 135,
+  "runtime_tests": 6,
+  "python_tests": 7,
+  "bronbestanden": 664,
+  "raw_widgetbeelden": 56,
+  "onafhankelijke_docx_rondgangen": 2,
+  "bron_voor_en_na_bytegelijk": true,
+  "nieuwe_volledige_widgetopname_visueel_bekeken": true,
+  "beeld": "writer-alineastijl-lint.png",
+  "beeld_sha256": "8bf575bbd0ba30a5a7340369351cb1ad716b12c42c813553ffe58f00002d88ca",
+  "eigen_releasebouw_afgerond": false,
+  "platformronde_afgerond": false,
+  "werkelijke_releasevensterproef_afgerond": false,
+  "beperkingen": [
+    "Alleen reeds aanwezige geldige alineastijlen; aanmaken, hernoemen, verwijderen en beheren blijven open.",
+    "Ondersteunde alinea’s en actieve alinea; selecties over meerdere alinea’s en complexe object-/revisie-alinea’s blijven open.",
+    "Stijlketen begrensd op 128 definities en opdracht-ID op 512 UTF-8-bytes. Dit is geen volledige grens-, stijl-, taal- of documentencorpusmatrix.",
+    "Geen fysieke schermlezer-, andere-platformvenster- of volledige legacy-pixelgoedkeuring. Alle tien migratiegebieden blijven open."
+  ]
+}

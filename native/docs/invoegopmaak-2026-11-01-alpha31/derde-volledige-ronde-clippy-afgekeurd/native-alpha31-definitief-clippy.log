@@ -1,0 +1,15 @@
+    Checking office-core v2026.44.9-alpha.31 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-core)
+    Checking office-mail v2026.44.9-alpha.31 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-mail)
+    Checking office-conversie v2026.44.9-alpha.31 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-conversie)
+    Checking open-office-studio-native v2026.44.9-alpha.31 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-ui)
+error: unnecessary use of `to_owned`
+   --> crates/office-core/tests/writer_opmaak.rs:206:13
+    |
+206 |             &s.bron_hash().to_owned(),
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^ help: use: `s.bron_hash()`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#unnecessary_to_owned
+    = note: `-D clippy::unnecessary-to-owned` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::unnecessary_to_owned)]`
+
+error: could not compile `office-core` (test "documentkern") due to 1 previous error

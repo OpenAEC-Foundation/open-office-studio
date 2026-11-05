@@ -1,0 +1,14 @@
+{
+  "omvang": "Aanvullende echte bestandsmenuproef; nog te onderzoeken. De eerste snelle klik op Bestand na de undo-/opslagreeks toonde na vier seconden nog de notitiewerkruimte. Een tweede klik toont wel het volledige bestandsmenu zonder ribbon op de voorgrond. Dit is geen geslaagde eenklikproef en wordt niet als zodanig meegeteld.",
+  "eerste_frame": {
+    "bestand": "bestand-zichtbaar.png",
+    "sha256": "711c52cd0332cd6a185fdb0ea75643acf9ce521eb8d08a890effce1c6286b959"
+  },
+  "tweede_frame": {
+    "bestand": "bestand-herhaalde-klik-zichtbaar.png",
+    "sha256": "2dd849fa559d4f3a370cecd72242ee58badeaa5d26fc81c6dc308daac2ac6ed6"
+  },
+  "nadere_diagnose_nodig": true,
+  "latere_diagnose": "Na Escape toont het scherm nog het bestandsmenu; uitsluitend één Expose-gebeurtenis toont vervolgens het actuele notitiecanvas. Een afzonderlijke X11-/softbufferproef bevestigt dat één presentatie pas zichtbaar wordt na expliciet versturen van de reeds klaargezette XCB-verzoeken. De eerdere frames bewijzen dus geen ontbrekende Bestand-opdracht; ze blijven wel een afgekeurde weergaveproef. De prototypecorrectie slaagt in de kleurproef maar is nog niet geïntegreerd in alpha40.",
+  "aanvullend_beeld": "na-geforceerde-hertekening.png"
+}

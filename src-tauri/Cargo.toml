@@ -1,6 +1,6 @@
 [package]
 name = "open-office-studio"
-version = "2026.44.8"
+version = "2026.45.49"
 description = "Lokale OpenAEC-kantooromgeving"
 license = "Apache-2.0"
 edition = "2021"
@@ -9,6 +9,7 @@ edition = "2021"
 tauri-build = { version = "2", features = [] }
 
 [dependencies]
+office-writer-plakken = { path = "../native/crates/office-writer-plakken" }
 tauri = { version = "2", features = [] }
 rfd = "0.15"
 # Een tweede start (dubbelklik op een gekoppeld bestand) gaat naar de draaiende app.
@@ -50,3 +51,8 @@ tokio = { version = "1", features = ["net", "time", "io-util", "sync", "rt", "rt
 
 [target.'cfg(unix)'.dependencies]
 libc = "0.2"
+
+[patch.crates-io]
+betteroffice-docx-parse = { path = "../native/vendor/docx-parse" }
+betteroffice-docx-edit = { path = "../native/vendor/docx-edit" }
+yrs = { path = "../native/vendor/yrs" }

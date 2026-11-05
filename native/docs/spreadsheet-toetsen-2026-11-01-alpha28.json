@@ -1,0 +1,22 @@
+{
+  "versie": "2026.44.9-alpha.28",
+  "geslaagd": true,
+  "omvang": "Zeven gerichte widget-/werkdraadproeven; dezelfde oude widgetronde tegenover afgeronde focusoverdracht, Unicode, AltGr, cursor-/focusversies en bewaren. Geen kwantitatieve functiedekking, fysieke IME of volledige rasterbediening.",
+  "ui_proeven": [
+    "tests::raster_proeven::raster_aanvullend_een_oude_inline_cursoractie_verplaatst_geen_nieuwe_invoer",
+    "tests::raster_proeven::raster_aanvullend_focus_op_een_verdwenen_doel_laat_de_nieuwe_editor_werken",
+    "tests::raster_proeven::raster_aanvullend_reeds_gevalideerde_focus_steelt_geen_later_adresveld",
+    "tests::raster_proeven::raster_aanvullend_meerdere_unicode_tekens_en_altgr_blijven_in_een_oude_widget_behouden",
+    "tests::raster_proeven::raster_vervolg_typen_na_direct_bewaren_heeft_echte_rasterfocus",
+    "tests::raster_proeven::raster_vervolg_opmaak_tijdens_een_concept_verliest_geen_typtekst",
+    "tests::raster_proeven::raster_vervolg_toetsen_geven_hetzelfde_resultaat_voor_en_na_editorfocus"
+  ],
+  "reguliere_tests": 314,
+  "ui_tests": 109,
+  "testlog_sha256": "835c53c6fbc86603e8bd6a3af55106679b8f59446f6f5ca153c2e0529eb1f0e8",
+  "bronmanifest": "schermen-2026-11-01-alpha28.json",
+  "vooraf_afgekeurd": "invoerdiagnoses-2026-11-01-alpha28/voor-correctie.log",
+  "opmaak_tijdens_concept": "Hele-celopmaak wordt met een melding geweigerd zolang de inline-invoer nog niet is bevestigd; vervolgtekst blijft behouden. Rijke opmaak binnen het concept is niet toegevoegd.",
+  "releasevensterproef_alpha28_afgerond": true,
+  "releasevensterproef": "vensterproef-2026-11-01-alpha28-ci/rapport.json"
+}

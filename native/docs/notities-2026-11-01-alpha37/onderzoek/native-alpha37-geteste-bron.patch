@@ -1,0 +1,1195 @@
+diff --git a/native/Cargo.lock b/native/Cargo.lock
+index de85f26..21a563e 100644
+--- a/native/Cargo.lock
++++ b/native/Cargo.lock
+@@ -3710,7 +3710,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "office-conversie"
+-version = "2026.44.9-alpha.36"
++version = "2026.44.9-alpha.37"
+ dependencies = [
+  "libc",
+  "serde_json",
+@@ -3720,7 +3720,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "office-core"
+-version = "2026.44.9-alpha.36"
++version = "2026.44.9-alpha.37"
+ dependencies = [
+  "base64 0.22.1",
+  "betteroffice-docx",
+@@ -3750,7 +3750,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "office-mail"
+-version = "2026.44.9-alpha.36"
++version = "2026.44.9-alpha.37"
+ dependencies = [
+  "async-imap",
+  "base64 0.22.1",
+@@ -3795,7 +3795,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "open-office-studio-native"
+-version = "2026.44.9-alpha.36"
++version = "2026.44.9-alpha.37"
+ dependencies = [
+  "futures-channel",
+  "iced",
+diff --git a/native/Cargo.toml b/native/Cargo.toml
+index 10ca6d9..4ff69e3 100644
+--- a/native/Cargo.toml
++++ b/native/Cargo.toml
+@@ -5,7 +5,7 @@ exclude = ["vendor/openaec-ui", "vendor/docx-parse", "vendor/pptx", "vendor/xlsx
+ resolver = "3"
+ 
+ [workspace.package]
+-version = "2026.44.9-alpha.36"
++version = "2026.44.9-alpha.37"
+ edition = "2024"
+ license = "Apache-2.0"
+ publish = false
+diff --git a/native/crates/office-core/src/document.rs b/native/crates/office-core/src/document.rs
+index b4b667d..47d00ee 100644
+--- a/native/crates/office-core/src/document.rs
++++ b/native/crates/office-core/src/document.rs
+@@ -641,6 +641,18 @@ impl Sessie {
+     pub fn bron_hash(&self) -> &str {
+         &self.bron_hash
+     }
++    pub fn notitie_anker(&self, deel: usize) -> Option<crate::notities::Anker> {
++        match &self.document {
++            Document::Notition(d) => crate::notities::anker(d, deel),
++            _ => None,
++        }
++    }
++    pub fn notitiepositie(&self, anker: Option<&crate::notities::Anker>, anders: usize) -> usize {
++        match &self.document {
++            Document::Notition(d) => crate::notities::herstel(d, anker),
++            _ => anders,
++        }
++    }
+     pub fn kan_terug(&self) -> bool {
+         !self.terug.is_empty()
+     }
+@@ -1001,6 +1013,20 @@ impl Sessie {
+         bewerking: Bewerking,
+         groep: Option<(u64, String)>,
+     ) -> Resultaat<Weergave> {
++        if let Bewerking::Notitie(actie) = bewerking {
++            return self
++                .bewerk_transactie_met_doel(
++                    groep,
++                    move |document| {
++                        let Document::Notition(d) = document else {
++                            return Err(fout("Een notitieopdracht hoort bij Notition"));
++                        };
++                        crate::notities::bewerk_met_doel(d, deel, actie)
++                    },
++                    |doel| *doel,
++                )
++                .map(|(beeld, _)| beeld);
++        }
+         if matches!(bewerking, Bewerking::Pagina { .. }) {
+             self.tekstgroep = None;
+             crate::writer_pagina::controleer_bron(&self.bron)?;
+@@ -1015,6 +1041,14 @@ impl Sessie {
+         deel: usize,
+         groep: Option<(u64, String)>,
+         wijzig: impl FnOnce(&mut Document) -> Resultaat<T>,
++    ) -> Resultaat<(Weergave, T)> {
++        self.bewerk_transactie_met_doel(groep, wijzig, |_| deel)
++    }
++    fn bewerk_transactie_met_doel<T>(
++        &mut self,
++        groep: Option<(u64, String)>,
++        wijzig: impl FnOnce(&mut Document) -> Resultaat<T>,
++        doel_deel: impl Fn(&T) -> usize,
+     ) -> Resultaat<(Weergave, T)> {
+         let aansluitend = groep.as_ref().is_some_and(|(g, id)| {
+             self.tekstgroep.as_ref().is_some_and(|(oud, alinea, hash)| {
+@@ -1027,7 +1061,7 @@ impl Sessie {
+             // Serialiseer één keer; de renderer toont precies de te bewaren bron.
+             let bytes = self.document.bytes()?;
+             let beeld = self.document.weergave_van_bron(
+-                deel,
++                doel_deel(&doel),
+                 self.venster,
+                 Some(&bytes),
+                 Some(self.layout_eigenaar),
+@@ -1049,7 +1083,7 @@ impl Sessie {
+                 self.bron_hash = crate::opslag::hash(&bytes);
+                 self.bron = std::sync::Arc::new(bytes);
+                 self.tekstgroep = groep.map(|(g, id)| (g, id, self.bron_hash.clone()));
+-                *self.beelden.borrow_mut() = vec![(deel, beeld.clone())];
++                *self.beelden.borrow_mut() = vec![(doel_deel(&doel), beeld.clone())];
+                 Ok((beeld, doel))
+             }
+             foutresultaat => {
+diff --git a/native/crates/office-core/src/notities.rs b/native/crates/office-core/src/notities.rs
+index 4f3f238..9d72681 100644
+--- a/native/crates/office-core/src/notities.rs
++++ b/native/crates/office-core/src/notities.rs
+@@ -5,6 +5,10 @@ use crate::{
+     opmaak::{Opmaak, OpmaakStaat},
+ };
+ use serde_json::{Value, json};
++mod omzetten;
++mod positie;
++pub use positie::Anker;
++pub(crate) use positie::{anker, herstel};
+ fn fout(s: &str) -> Fout {
+     Fout::Document(s.into())
+ }
+@@ -22,6 +26,7 @@ pub struct Vak {
+ }
+ #[derive(Debug, Clone)]
+ pub struct NotitiePagina {
++    pub deel: usize,
+     pub pad: String,
+     pub titel: String,
+     pub markdown: bool,
+@@ -29,6 +34,7 @@ pub struct NotitiePagina {
+ }
+ #[derive(Debug, Clone)]
+ pub enum NotitieActie {
++    Teksten(Vec<(String, String)>),
+     NieuwVak {
+         x: f32,
+         y: f32,
+@@ -52,6 +58,9 @@ pub enum NotitieActie {
+     Sectiesoort {
+         markdown: bool,
+     },
++    KopieerSectie {
++        markdown: bool,
++    },
+     Prullenbak(bool),
+     Vastzetten(bool),
+ }
+@@ -336,6 +345,7 @@ pub fn toon(d: &Value, deel: usize, beeld: &mut Weergave) -> Resultaat<()> {
+         }
+     }
+     beeld.notitie = Some(NotitiePagina {
++        deel,
+         pad: pad.clone(),
+         titel: p["titel"].as_str().unwrap_or_default().into(),
+         markdown: *markdown,
+@@ -358,6 +368,15 @@ pub fn toon(d: &Value, deel: usize, beeld: &mut Weergave) -> Resultaat<()> {
+     Ok(())
+ }
+ pub fn bewerk(d: &mut Value, deel: usize, actie: NotitieActie) -> Resultaat<()> {
++    bewerk_met_doel(d, deel, actie).map(|_| ())
++}
++pub(crate) fn bewerk_met_doel(d: &mut Value, deel: usize, actie: NotitieActie) -> Resultaat<usize> {
++    if let NotitieActie::Teksten(velden) = actie {
++        for (id, inhoud) in velden {
++            tekst(d, deel, &id, &inhoud)?;
++        }
++        return Ok(deel);
++    }
+     if matches!(actie, NotitieActie::NieuwBoek) {
+         let boeken = d["boeken"]
+             .as_array_mut()
+@@ -365,32 +384,41 @@ pub fn bewerk(d: &mut Value, deel: usize, actie: NotitieActie) -> Resultaat<()>
+         if boeken.len() >= 100 {
+             return Err(fout("Te veel notitieboeken"));
+         }
++        let nieuw = format!("/boeken/{}/secties/0/paginas/0", boeken.len());
+         boeken.push(boek());
+-        return Ok(());
++        return doel(d, &nieuw);
+     }
+     let pad = pad(d, deel)?;
+     let sectiepad = pad.rsplit_once("/paginas/").unwrap().0;
+     match actie {
+         NotitieActie::NieuweSectie { markdown } => {
+             let boekpad = sectiepad.rsplit_once("/secties/").unwrap().0;
+-            d.pointer_mut(&format!("{boekpad}/secties"))
++            let secties = d
++                .pointer_mut(&format!("{boekpad}/secties"))
+                 .and_then(Value::as_array_mut)
+-                .ok_or_else(|| fout("Secties ontbreken"))?
+-                .push(sectie(markdown));
+-            return Ok(());
++                .ok_or_else(|| fout("Secties ontbreken"))?;
++            let nieuw = format!("{boekpad}/secties/{}/paginas/0", secties.len());
++            secties.push(sectie(markdown));
++            return doel(d, &nieuw);
+         }
+         NotitieActie::NieuwePagina => {
+-            d.pointer_mut(&format!("{sectiepad}/paginas"))
++            let lijst = d
++                .pointer_mut(&format!("{sectiepad}/paginas"))
+                 .and_then(Value::as_array_mut)
+-                .ok_or_else(|| fout("Pagina's ontbreken"))?
+-                .push(pagina());
+-            return Ok(());
++                .ok_or_else(|| fout("Pagina's ontbreken"))?;
++            let nieuw = format!("{sectiepad}/paginas/{}", lijst.len());
++            lijst.push(pagina());
++            return doel(d, &nieuw);
++        }
++        NotitieActie::KopieerSectie { markdown } => {
++            let nieuw = omzetten::kopieer(d, sectiepad, markdown)?;
++            return doel(d, &nieuw);
+         }
+         NotitieActie::Sectiesoort { markdown } => {
+             *d.pointer_mut(&format!("{sectiepad}/soort"))
+                 .ok_or_else(|| fout("Sectiesoort ontbreekt"))? =
+                 json!(if markdown { "markdown" } else { "canvas" });
+-            return Ok(());
++            return Ok(deel);
+         }
+         _ => {}
+     }
+@@ -457,7 +485,13 @@ pub fn bewerk(d: &mut Value, deel: usize, actie: NotitieActie) -> Resultaat<()>
+         _ => return Err(fout("Onbekende notitieopdracht")),
+     }
+     p["bijgewerkt"] = json!(nu());
+-    Ok(())
++    Ok(deel)
++}
++fn doel(d: &Value, pad: &str) -> Resultaat<usize> {
++    paginas(d)
++        .iter()
++        .position(|p| p.0 == pad)
++        .ok_or_else(|| fout("De nieuwe notitiepagina ontbreekt"))
+ }
+ pub fn opmaak(d: &mut Value, deel: usize, id: &str, stijl: &Opmaak) -> Resultaat<()> {
+     let p = pad(d, deel)?;
+diff --git a/native/crates/office-core/src/notities/omzetten.rs b/native/crates/office-core/src/notities/omzetten.rs
+new file mode 100644
+index 0000000..1da04cb
+--- /dev/null
++++ b/native/crates/office-core/src/notities/omzetten.rs
+@@ -0,0 +1,146 @@
++//! Een sectiekopie krijgt eigen identiteit; alle oorspronkelijke inhoud blijft intact.
++use super::*;
++
++fn begrens(tekst: &str, maximum: usize) -> String {
++    let mut aantal = 0;
++    tekst
++        .chars()
++        .take_while(|c| {
++            aantal += c.len_utf16();
++            aantal <= maximum
++        })
++        .collect()
++}
++fn markdown(pagina: &Value) -> Resultaat<String> {
++    let mut vakken: Vec<_> = pagina["vakken"].as_array().into_iter().flatten().collect();
++    vakken.sort_by(|a, b| {
++        let getal = |v: &Value, k: &str| v[k].as_f64().unwrap_or_default();
++        getal(a, "y")
++            .total_cmp(&getal(b, "y"))
++            .then_with(|| getal(a, "x").total_cmp(&getal(b, "x")))
++    });
++    let mut uit = String::new();
++    let mut aantal = 0;
++    let mut eerste = true;
++    for b in vakken
++        .iter()
++        .flat_map(|v| v["blokken"].as_array().into_iter().flatten())
++    {
++        let bron = b["tekst"].as_str().unwrap_or_default();
++        if bron.encode_utf16().take(500_001).count() > 500_000 {
++            return Err(fout("Pagina te groot voor een Markdownkopie"));
++        }
++        let mut tekst = String::new();
++        for c in bron.chars() {
++            if "\\`*_[]<>".contains(c) {
++                tekst.push('\\');
++            }
++            tekst.push(c);
++        }
++        if b["vet"] == true {
++            tekst = format!("**{tekst}**");
++        }
++        if b["cursief"] == true {
++            tekst = format!("*{tekst}*");
++        }
++        let prefix = match b["soort"].as_str().unwrap_or("tekst") {
++            "kop" => "## ",
++            "subkop" => "### ",
++            "opsomming" => "- ",
++            "taak" if b["klaar"] == true => "- [x] ",
++            "taak" => "- [ ] ",
++            _ => "",
++        };
++        if !prefix.is_empty() {
++            tekst = tekst.replace('\n', "\n  ");
++        }
++        let scheiding = if eerste { "" } else { "\n\n" };
++        aantal += scheiding.len() + prefix.len() + tekst.encode_utf16().count();
++        // Ook de afsluitende regeleinde telt mee, net als in de bestaande editor.
++        if aantal >= 500_000 {
++            return Err(fout("Pagina te groot voor een Markdownkopie"));
++        }
++        uit.push_str(scheiding);
++        uit.push_str(prefix);
++        uit.push_str(&tekst);
++        eerste = false;
++    }
++    uit.push('\n');
++    Ok(uit)
++}
++fn tekstvakken(tekst: &str) -> Value {
++    let mut v = vak(40., 32.);
++    let mut blokken = Vec::new();
++    let mut begin = 0;
++    let mut aantal = 0;
++    for (positie, c) in tekst.char_indices() {
++        if aantal + c.len_utf16() > 100_000 {
++            let mut b = blok();
++            b["tekst"] = json!(&tekst[begin..positie]);
++            blokken.push(b);
++            begin = positie;
++            aantal = 0;
++        }
++        aantal += c.len_utf16();
++    }
++    let mut b = blok();
++    b["tekst"] = json!(&tekst[begin..]);
++    blokken.push(b);
++    v["blokken"] = json!(blokken);
++    json!([v])
++}
++pub(super) fn kopieer(d: &mut Value, sectiepad: &str, naar_markdown: bool) -> Resultaat<String> {
++    let bron = d
++        .pointer(sectiepad)
++        .ok_or_else(|| fout("Sectie ontbreekt"))?;
++    if (bron["soort"] == "markdown") == naar_markdown {
++        return Err(fout("Kies een andere sectiesoort"));
++    }
++    let mut kopie = bron.clone();
++    kopie["id"] = json!(id());
++    kopie["soort"] = json!(if naar_markdown { "markdown" } else { "canvas" });
++    let soort = if naar_markdown { "Markdown" } else { "Canvas" };
++    let basis = format!(
++        "{} ({soort})",
++        begrens(bron["naam"].as_str().unwrap_or("Sectie"), 180)
++    );
++    let boekpad = sectiepad.rsplit_once("/secties/").unwrap().0;
++    let secties = d
++        .pointer(&format!("{boekpad}/secties"))
++        .and_then(Value::as_array)
++        .ok_or_else(|| fout("Secties ontbreken"))?;
++    let mut naam = basis.clone();
++    let mut nummer = 2;
++    while secties.iter().any(|s| s["naam"] == naam) {
++        naam = format!("{} ({nummer})", begrens(&basis, 180));
++        nummer += 1;
++    }
++    kopie["naam"] = json!(naam);
++    let lijst = kopie["paginas"]
++        .as_array_mut()
++        .ok_or_else(|| fout("Pagina's ontbreken"))?;
++    if lijst.is_empty() {
++        return Err(fout("Sectie heeft geen pagina's om te kopiëren"));
++    }
++    for pagina in lijst.iter_mut() {
++        pagina["id"] = json!(id());
++        if naar_markdown {
++            pagina["markdown"] = json!(markdown(pagina)?);
++            pagina["vakken"] = json!([]);
++        } else {
++            pagina["vakken"] = tekstvakken(pagina["markdown"].as_str().unwrap_or_default());
++            pagina["markdown"] = json!("");
++        }
++    }
++    let pagina = lijst
++        .iter()
++        .position(|p| p["verwijderd"] != true)
++        .unwrap_or(0);
++    let nieuw = format!("{boekpad}/secties/{}/paginas/{pagina}", secties.len());
++    d.pointer_mut(&format!("{boekpad}/secties"))
++        .unwrap()
++        .as_array_mut()
++        .unwrap()
++        .push(kopie);
++    Ok(nieuw)
++}
+diff --git a/native/crates/office-core/src/notities/positie.rs b/native/crates/office-core/src/notities/positie.rs
+new file mode 100644
+index 0000000..fd3b91b
+--- /dev/null
++++ b/native/crates/office-core/src/notities/positie.rs
+@@ -0,0 +1,70 @@
++//! Houd na bronherstel dezelfde pagina vast, of val binnen hetzelfde boek terug.
++use super::*;
++#[derive(Debug, Clone)]
++struct Onderdeel {
++    id: Option<String>,
++    index: usize,
++}
++#[derive(Debug, Clone)]
++pub struct Anker {
++    boek: Onderdeel,
++    sectie: Onderdeel,
++    pagina: Onderdeel,
++}
++fn onderdeel(v: &Value, index: usize) -> Onderdeel {
++    Onderdeel {
++        id: v["id"].as_str().map(str::to_owned),
++        index,
++    }
++}
++pub(crate) fn anker(d: &Value, deel: usize) -> Option<Anker> {
++    let pad = pad(d, deel).ok()?;
++    let n: Vec<usize> = pad.split('/').filter_map(|s| s.parse().ok()).collect();
++    let boek = &d["boeken"][n[0]];
++    let sectie = &boek["secties"][n[1]];
++    Some(Anker {
++        boek: onderdeel(boek, n[0]),
++        sectie: onderdeel(sectie, n[1]),
++        pagina: onderdeel(&sectie["paginas"][n[2]], n[2]),
++    })
++}
++fn zoek(lijst: &[Value], doel: &Onderdeel) -> Option<usize> {
++    match &doel.id {
++        Some(id) => lijst.iter().position(|v| v["id"] == *id),
++        None => (doel.index < lijst.len()).then_some(doel.index),
++    }
++}
++pub(crate) fn herstel(d: &Value, anker: Option<&Anker>) -> usize {
++    let alle = paginas(d);
++    let vind = |prefix: &str| {
++        alle.iter()
++            .position(|(pad, _, _)| {
++                pad.starts_with(prefix) && d.pointer(pad).is_some_and(|p| p["verwijderd"] != true)
++            })
++            .or_else(|| alle.iter().position(|(pad, _, _)| pad.starts_with(prefix)))
++    };
++    if let Some(a) = anker
++        && let Some(boeken) = d["boeken"].as_array()
++        && let Some(b) = zoek(boeken, &a.boek)
++    {
++        let boekpad = format!("/boeken/{b}/");
++        if let Some(secties) = boeken[b]["secties"].as_array()
++            && let Some(s) = zoek(secties, &a.sectie)
++        {
++            let sectiepad = format!("{boekpad}secties/{s}/paginas/");
++            if let Some(paginas) = secties[s]["paginas"].as_array()
++                && let Some(p) = zoek(paginas, &a.pagina)
++                && let Some(n) = alle.iter().position(|v| v.0 == format!("{sectiepad}{p}"))
++            {
++                return n;
++            }
++            if let Some(n) = vind(&sectiepad) {
++                return n;
++            }
++        }
++        if let Some(n) = vind(&boekpad) {
++            return n;
++        }
++    }
++    vind("/boeken/").unwrap_or(0)
++}
+diff --git a/native/crates/office-core/tests/notities_presentatie.rs b/native/crates/office-core/tests/notities_presentatie.rs
+index 0c9e68a..f29f3d7 100644
+--- a/native/crates/office-core/tests/notities_presentatie.rs
++++ b/native/crates/office-core/tests/notities_presentatie.rs
+@@ -9,6 +9,142 @@ fn data(s: &Sessie) -> serde_json::Value {
+     serde_json::from_slice(&s.bron()).unwrap()
+ }
+ #[test]
++fn notitie_sectiekopie_behoudt_bron_opmaak_volgorde_en_onbekende_velden() {
++    use serde_json::json;
++    let mut bron: serde_json::Value = serde_json::from_slice(include_bytes!(
++        "../../../../docs/voorbeelden/Notitieboek.json"
++    ))
++    .unwrap();
++    let sectie = &mut bron["boeken"][0]["secties"][0];
++    sectie["uitbreiding"] = json!({"bewaar":42});
++    let pagina = &mut sectie["paginas"][0];
++    pagina["uitbreiding"] = json!(["blijft", "staan"]);
++    pagina["vakken"][0]["y"] = json!(400);
++    pagina["vakken"][1]["y"] = json!(20);
++    pagina["vakken"][0]["blokken"][0]["tekst"] = json!("A * [é] 🏠\nvervolg");
++    pagina["vakken"][0]["blokken"][0]["soort"] = json!("taak");
++    pagina["vakken"][0]["blokken"][0]["klaar"] = json!(true);
++    pagina["vakken"][0]["blokken"][0]["vet"] = json!(true);
++    pagina["vakken"][1]["blokken"][0]["tekst"] = json!("Eerst");
++    pagina["vakken"][1]["blokken"][0]["soort"] = json!("kop");
++    let bytes = serde_json::to_vec(&bron).unwrap();
++    let mut s = Sessie::open(Module::Notition, bytes.clone()).unwrap();
++    let b = s
++        .bewerk_met_weergave(0, Bewerking::Notitie(N::KopieerSectie { markdown: true }))
++        .unwrap();
++    assert_eq!(b.notitie.unwrap().deel, 2);
++    let d = data(&s);
++    assert_eq!(
++        d["boeken"][0]["secties"][0],
++        bron["boeken"][0]["secties"][0]
++    );
++    assert_eq!(
++        d["boeken"][0]["secties"][1],
++        bron["boeken"][0]["secties"][1]
++    );
++    let kopie = &d["boeken"][0]["secties"][2];
++    assert_eq!(kopie["uitbreiding"], json!({"bewaar":42}));
++    assert_eq!(
++        kopie["paginas"][0]["uitbreiding"],
++        json!(["blijft", "staan"])
++    );
++    assert_eq!(
++        kopie["paginas"][0]["markdown"],
++        "## Eerst\n\n- [x] **A \\* \\[é\\] 🏠\n  vervolg**\n"
++    );
++    assert_ne!(kopie["id"], bron["boeken"][0]["secties"][0]["id"]);
++    assert_ne!(
++        kopie["paginas"][0]["id"],
++        bron["boeken"][0]["secties"][0]["paginas"][0]["id"]
++    );
++    let heropen = Sessie::open(Module::Notition, s.bron().as_ref().clone()).unwrap();
++    assert_eq!(
++        heropen.weergave(2).unwrap().velden[1].tekst,
++        kopie["paginas"][0]["markdown"].as_str().unwrap()
++    );
++    let anker = s.notitie_anker(2);
++    s.terug().unwrap();
++    assert_eq!(s.bron().as_slice(), bytes);
++    assert_eq!(s.notitiepositie(anker.as_ref(), 2), 0);
++    s.vooruit().unwrap();
++    assert_eq!(data(&s), d);
++}
++#[test]
++fn notitie_markdownkopie_splitst_unicode_veilig_en_weigert_te_grote_omzetting_atomair() {
++    use serde_json::json;
++    let mut s = Sessie::nieuw(Module::Notition).unwrap();
++    let id = s.weergave(0).unwrap().velden[1].id.clone();
++    let tekst = format!("{}🏠{}", "a".repeat(99_999), "é".repeat(17));
++    s.bewerk(
++        0,
++        Bewerking::Tekst {
++            id,
++            tekst: tekst.clone(),
++        },
++    )
++    .unwrap();
++    s.bewerk(0, Bewerking::Notitie(N::KopieerSectie { markdown: false }))
++        .unwrap();
++    let d = data(&s);
++    let blokken = d["boeken"][0]["secties"][1]["paginas"][0]["vakken"][0]["blokken"]
++        .as_array()
++        .unwrap();
++    assert_eq!(blokken.len(), 2);
++    assert_eq!(
++        blokken[0]["tekst"].as_str().unwrap().encode_utf16().count(),
++        99_999
++    );
++    assert_eq!(
++        blokken
++            .iter()
++            .map(|b| b["tekst"].as_str().unwrap())
++            .collect::<String>(),
++        tekst
++    );
++    assert_ne!(blokken[0]["id"], blokken[1]["id"]);
++    let mut bron = d;
++    bron["boeken"][0]["secties"][1]["paginas"][0]["vakken"][0]["blokken"][0]["tekst"] =
++        json!("*".repeat(250_000));
++    let bytes = serde_json::to_vec(&bron).unwrap();
++    let mut s = Sessie::open(Module::Notition, bytes.clone()).unwrap();
++    assert!(
++        s.bewerk(1, Bewerking::Notitie(N::KopieerSectie { markdown: true }))
++            .is_err()
++    );
++    assert_eq!(s.bron().as_slice(), bytes);
++    assert!(!s.kan_terug());
++    assert!(
++        s.bewerk(0, Bewerking::Notitie(N::KopieerSectie { markdown: true }))
++            .is_err()
++    );
++    assert_eq!(s.bron().as_slice(), bytes);
++}
++#[test]
++fn notitie_nieuwe_onderdelen_openen_hun_eigen_pagina_en_teksten_zijn_een_transactie() {
++    let mut s = Sessie::nieuw(Module::Notition).unwrap();
++    for (actie, verwacht) in [
++        (N::NieuwePagina, 1),
++        (N::NieuweSectie { markdown: false }, 2),
++        (N::NieuwBoek, 3),
++    ] {
++        let b = s.bewerk_met_weergave(0, Bewerking::Notitie(actie)).unwrap();
++        assert_eq!(b.notitie.unwrap().deel, verwacht);
++    }
++    let bron = s.bron();
++    let id = s.weergave(0).unwrap().velden[0].id.clone();
++    assert!(
++        s.bewerk(
++            0,
++            Bewerking::Notitie(N::Teksten(vec![
++                (id, "Veranderd".into()),
++                ("/onbestaand".into(), "Mag niet".into())
++            ]))
++        )
++        .is_err()
++    );
++    assert_eq!(s.bron().as_slice(), bron.as_slice());
++}
++#[test]
+ fn vrije_vakken_verplaatsen_vergroten_en_undo_behouden_onbekende_inhoud() {
+     let bron=br#"{"formaat":"openaec-notities","versie":3,"boeken":[{"id":"b","naam":"Boek","secties":[{"id":"s","naam":"Sectie","soort":"canvas","paginas":[{"id":"p","titel":"Pagina","vakken":[{"id":"v","x":40,"y":32,"breedte":560,"hoogte":160,"blokken":[{"id":"t","tekst":"Blijft staan","soort":"tekst","vet":false,"cursief":false,"klaar":false}],"uitbreiding":{"kleur":"amber"}}],"markdown":"Bestaande markdown","verwijderd":false}]}]}],"extra":{"bewaar":42}}"#;
+     let mut s = Sessie::open(Module::Notition, bron.to_vec()).unwrap();
+diff --git a/native/crates/office-ui/src/main.rs b/native/crates/office-ui/src/main.rs
+index 627a423..f746a52 100644
+--- a/native/crates/office-ui/src/main.rs
++++ b/native/crates/office-ui/src/main.rs
+@@ -98,6 +98,12 @@ enum Msg {
+     Annuleer,
+     Deel(usize),
+     Veld(usize),
++    NotitieInvoer {
++        document: u64,
++        hash: String,
++        veld: String,
++        actie: text_editor::Action,
++    },
+     Adres(String),
+     GaNaar,
+     Raak(String),
+@@ -213,6 +219,7 @@ struct Tab {
+     canvas_voorbeeld: Option<(usize, office_core::interactie::Rechthoek)>,
+     markdown: Vec<iced::widget::markdown::Item>,
+     notitie_invoer: bool,
++    notitie_editors: Vec<Option<text_editor::Content>>,
+     scroll: iced::Point,
+     na_bewerking: Option<bool>, // Opslaan; bool geeft Opslaan als aan.
+ }
+@@ -251,6 +258,7 @@ impl Tab {
+             canvas_voorbeeld: None,
+             markdown: vec![],
+             notitie_invoer: false,
++            notitie_editors: vec![],
+             scroll: iced::Point::ORIGIN,
+             na_bewerking: None,
+         }
+@@ -909,6 +917,7 @@ impl App {
+                                 );
+                             let grid_focus = tab.raster.focus;
+                             tab.toon_veld(keuze);
++                            notitie_ui::vernieuw_editors(tab);
+                             tab.raster.focus = grid_focus;
+                             if let Some(s) = raster_selectie {
+                                 tab.adres = s.adres.clone();
+@@ -978,7 +987,9 @@ impl App {
+                             "Pas de huidige tekst eerst toe of maak de invoer ongedaan",
+                         );
+                     }
+-                    t.toon_veld(n);
++                    if !notitie_ui::kies_veld(t, n) {
++                        t.toon_veld(n);
++                    }
+                     t.notitie_invoer = true;
+                 }
+             }
+@@ -987,6 +998,41 @@ impl App {
+                     t.adres = a;
+                 }
+             }
++            Msg::NotitieInvoer {
++                document,
++                hash,
++                veld,
++                actie,
++            } => {
++                let Some(t) = self.tab_mut().filter(|t| {
++                    t.id == document
++                        && !t.bezig
++                        && !t.schrijft
++                        && t.antwoord
++                            .as_ref()
++                            .is_some_and(|a| a.hash == hash && a.beeld.module == Module::Notition)
++                }) else {
++                    return Task::none();
++                };
++                let Some(n) = t
++                    .antwoord
++                    .as_ref()
++                    .unwrap()
++                    .beeld
++                    .velden
++                    .iter()
++                    .position(|v| v.id == veld)
++                else {
++                    return Task::none();
++                };
++                if actie.is_edit() && !t.antwoord.as_ref().unwrap().beeld.velden[n].bewerkbaar {
++                    return Task::none();
++                }
++                if notitie_ui::kies_veld(t, n) {
++                    t.notitie_invoer = true;
++                    return self.update(Msg::Invoer(actie));
++                }
++            }
+             Msg::Raster(bericht) => return raster_ui::update(self, bericht),
+             Msg::Raak(id) => {
+                 if let Some(n) = self
+@@ -1317,6 +1363,14 @@ impl App {
+                         return self.waarschuwing(&e);
+                     }
+                     t.concept |= bewerkt;
++                    if bewerkt
++                        && t.antwoord
++                            .as_ref()
++                            .is_some_and(|a| a.beeld.module == Module::Notition)
++                        && t.veld().is_some_and(|v| v.naam == "Markdown")
++                    {
++                        t.markdown = iced::widget::markdown::parse(&t.editor.text()).collect();
++                    }
+                     if t.raster.bewerken {
+                         raster_ui::registreer_letters(t);
+                     } else {
+@@ -1453,6 +1507,7 @@ impl App {
+                     if t.concept {
+                         let n = t.gekozen;
+                         t.toon_veld(n);
++                        notitie_ui::vernieuw_editors(t);
+                         return Task::none();
+                     }
+                     if !t.bezig && t.antwoord.as_ref().is_some_and(|a| a.terug) {
+diff --git a/native/crates/office-ui/src/notitie_ui.rs b/native/crates/office-ui/src/notitie_ui.rs
+index 085bddf..9bffd0b 100644
+--- a/native/crates/office-ui/src/notitie_ui.rs
++++ b/native/crates/office-ui/src/notitie_ui.rs
+@@ -2,6 +2,44 @@
+ use super::*;
+ use iced::widget::{Space, Stack, column, markdown, pin, row};
+ use office_core::notities::NotitieActie as A;
++pub(super) fn vernieuw_editors(t: &mut Tab) {
++    t.notitie_editors = t
++        .antwoord
++        .as_ref()
++        .filter(|a| a.beeld.module == Module::Notition)
++        .map(|a| {
++            a.beeld
++                .velden
++                .iter()
++                .enumerate()
++                .map(|(n, v)| (n != t.gekozen).then(|| text_editor::Content::with_text(&v.tekst)))
++                .collect()
++        })
++        .unwrap_or_default();
++}
++pub(super) fn inhoud(t: &Tab, n: usize) -> Option<&text_editor::Content> {
++    if n == t.gekozen {
++        Some(&t.editor)
++    } else {
++        t.notitie_editors.get(n)?.as_ref()
++    }
++}
++pub(super) fn kies_veld(t: &mut Tab, n: usize) -> bool {
++    if t.notitie_editors.len() <= n {
++        return false;
++    }
++    if n != t.gekozen {
++        let Some(nieuw) = t.notitie_editors[n].take() else {
++            return false;
++        };
++        t.notitie_editors[t.gekozen] = Some(std::mem::replace(&mut t.editor, nieuw));
++        t.gekozen = n;
++        t.editerversie = t.editerversie.wrapping_add(1);
++        t.adres = t.veld().unwrap().id.clone();
++        t.werk_opmaak_bij();
++    }
++    true
++}
+ pub fn ribbon<'a>(app: &'a App, t: &'a Tab) -> Element<'a, Msg> {
+     let l = app.look();
+     let kan = !t.bezig && !t.concept;
+@@ -37,8 +75,8 @@ pub fn ribbon<'a>(app: &'a App, t: &'a Tab) -> Element<'a, Msg> {
+                 "Sectie",
+                 vec![
+                     column![
+-                        knop("Vrij canvas", A::Sectiesoort { markdown: false }),
+-                        knop("Markdown", A::Sectiesoort { markdown: true }),
++                        knop("Vrij canvas", A::KopieerSectie { markdown: false }),
++                        knop("Markdown", A::KopieerSectie { markdown: true }),
+                         knop("Herstellen", A::Prullenbak(false))
+                     ]
+                     .spacing(2)
+@@ -162,46 +200,60 @@ pub fn weergave<'a>(app: &'a App, t: &'a Tab, a: &'a Antwoord) -> Element<'a, Ms
+         ]
+         .into();
+     };
+-    let title = w::button(l, &p.titel, K::Quiet, D::Regular, None, Some(Msg::Veld(0)));
+-    let editor = |hoogte| {
++    let editor = |n: usize, hoogte| {
++        let veld = &a.beeld.velden[n];
++        let hash = a.hash.clone();
++        let id = veld.id.clone();
+         openaec_ui::design::a11y::named(
+-            text_editor(&t.editor)
++            text_editor(inhoud(t, n).expect("Notitievelden hebben een eigen editor"))
+                 .key_binding(klembord::toets)
+-                .on_action(Msg::Invoer)
++                .on_action(move |actie| Msg::NotitieInvoer {
++                    document: t.id,
++                    hash: hash.clone(),
++                    veld: id.clone(),
++                    actie,
++                })
+                 .font(iced::Font {
+-                    weight: if t.veld().is_some_and(|v| v.opmaak.vet) {
++                    weight: if veld.opmaak.vet {
+                         iced::font::Weight::Bold
+                     } else {
+                         iced::font::Weight::Normal
+                     },
+-                    style: if t.veld().is_some_and(|v| v.opmaak.cursief) {
++                    style: if veld.opmaak.cursief {
+                         iced::font::Style::Italic
+                     } else {
+                         iced::font::Style::Normal
+                     },
+                     ..fonts::BODY
+                 })
+-                .size(14)
+-                .padding(12)
++                .size(match veld.naam.as_str() {
++                    "kop" => 24.,
++                    "subkop" => 18.,
++                    _ => 14.,
++                })
++                .padding(8)
++                .style(move |thema, status| {
++                    let mut stijl = text_editor::default(thema, status);
++                    if !matches!(status, text_editor::Status::Focused { .. }) {
++                        stijl.background = iced::Color::TRANSPARENT.into();
++                        stijl.border.width = 0.;
++                    }
++                    stijl
++                })
+                 .height(hoogte),
+             openaec_ui::design::a11y::Role::TextField,
+-            "Notitietekst",
++            if n == 0 {
++                "Paginatitel"
++            } else {
++                "Notitietekst"
++            },
+         )
+     };
+     let werk: Element<_> = if p.markdown {
+         let md = a.beeld.velden.iter().position(|v| v.naam == "Markdown");
+-        let bewerk: Element<_> = if md == Some(t.gekozen) && t.notitie_invoer {
+-            editor(Length::Fill)
+-        } else {
+-            w::button(
+-                l,
+-                "Markdown bewerken",
+-                K::Secondary,
+-                D::Regular,
+-                None,
+-                md.map(Msg::Veld),
+-            )
+-        };
++        let bewerk: Element<_> = md
++            .map(|n| editor(n, Length::Fill))
++            .unwrap_or_else(|| Space::new().into());
+         let voorbeeld = markdown::view(
+             t.markdown.iter(),
+             markdown::Settings::with_style(markdown::Style::from_palette(
+@@ -247,48 +299,7 @@ pub fn weergave<'a>(app: &'a App, t: &'a Tab, a: &'a Antwoord) -> Element<'a, Ms
+             ]
+             .spacing(5);
+             for &n in &vak.velden {
+-                let veld = &a.beeld.velden[n];
+-                if n == t.gekozen && t.notitie_invoer {
+-                    inhoud = inhoud.push(editor(Length::Fill));
+-                } else {
+-                    let letter = iced::Font {
+-                        weight: if veld.opmaak.vet {
+-                            iced::font::Weight::Bold
+-                        } else {
+-                            iced::font::Weight::Normal
+-                        },
+-                        style: if veld.opmaak.cursief {
+-                            iced::font::Style::Italic
+-                        } else {
+-                            iced::font::Style::Normal
+-                        },
+-                        ..fonts::BODY
+-                    };
+-                    let label = if veld.tekst.is_empty() {
+-                        "Klik om te schrijven"
+-                    } else {
+-                        &veld.tekst
+-                    };
+-                    let knop = iced::widget::button(
+-                        iced::widget::text(label)
+-                            .font(letter)
+-                            .size(match veld.naam.as_str() {
+-                                "kop" => 24.,
+-                                "subkop" => 18.,
+-                                _ => 14.,
+-                            })
+-                            .color(c.text),
+-                    )
+-                    .width(Length::Fill)
+-                    .padding(8)
+-                    .on_press(Msg::Veld(n))
+-                    .style(move |_, s| w::button_style(l, K::Quiet, s));
+-                    inhoud = inhoud.push(openaec_ui::design::a11y::named(
+-                        knop,
+-                        openaec_ui::design::a11y::Role::Button,
+-                        label,
+-                    ));
+-                }
++                inhoud = inhoud.push(editor(n, Length::Shrink));
+             }
+             inhoud = inhoud.push(
+                 row![
+@@ -362,10 +373,7 @@ pub fn weergave<'a>(app: &'a App, t: &'a Tab, a: &'a Antwoord) -> Element<'a, Ms
+             .height(Length::Fill)
+             .into()
+     };
+-    let mut blad = column![title].spacing(8);
+-    if t.gekozen == 0 && t.notitie_invoer {
+-        blad = blad.push(editor(Length::Fixed(70.)));
+-    }
++    let mut blad = column![editor(0, Length::Fixed(38.))].spacing(8);
+     blad = blad.push(werk);
+     row![
+         w::panel(l, "Notitieboeken", 230., vec![], scrollable(nav).into()),
+diff --git a/native/crates/office-ui/src/tests.rs b/native/crates/office-ui/src/tests.rs
+index d8ec63b..7ec703b 100644
+--- a/native/crates/office-ui/src/tests.rs
++++ b/native/crates/office-ui/src/tests.rs
+@@ -287,6 +287,7 @@ pub(super) fn app_met_document(module: Module, bytes: &[u8]) -> App {
+         vooruit: false,
+     });
+     tab.toon_veld(0);
++    notitie_ui::vernieuw_editors(&mut tab);
+     app.tabs.push(tab);
+     app.volgend = 2;
+     app
+diff --git a/native/crates/office-ui/src/tests/raster_proeven.rs b/native/crates/office-ui/src/tests/raster_proeven.rs
+index 22f7566..661135c 100644
+--- a/native/crates/office-ui/src/tests/raster_proeven.rs
++++ b/native/crates/office-ui/src/tests/raster_proeven.rs
+@@ -74,6 +74,169 @@ fn writer_snel(p: &mut Proef, berichten: impl IntoIterator<Item = writer_direct:
+     assert!(!p.app.tab().unwrap().writer_direct.heeft_werk());
+ }
+ #[test]
++fn notitie_omzetting_bewaart_canvas_en_opent_een_gevulde_markdownkopie() {
++    let bron = include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json");
++    let mut p = Proef::met_app(app_met_werkdraad(Module::Notition, bron));
++    let origineel: serde_json::Value = serde_json::from_slice(bron).unwrap();
++    p.klik(iced::Point::new(165., 95.));
++    let d: serde_json::Value = serde_json::from_slice(&p.bron()).unwrap();
++    let secties = d["boeken"][0]["secties"].as_array().unwrap();
++    assert_eq!(
++        secties.len(),
++        3,
++        "Een andere sectiesoort krijgt een afzonderlijke kopie"
++    );
++    assert_eq!(secties[0], origineel["boeken"][0]["secties"][0]);
++    assert_eq!(secties[1], origineel["boeken"][0]["secties"][1]);
++    assert_eq!(secties[2]["soort"], "markdown");
++    assert!(
++        secties[2]["paginas"][0]["markdown"]
++            .as_str()
++            .unwrap()
++            .contains("Een vrij tekstvak")
++    );
++    assert!(
++        secties[2]["paginas"][0]["markdown"]
++            .as_str()
++            .unwrap()
++            .contains("Een idee op een andere plek")
++    );
++    assert!(
++        p.app
++            .tab()
++            .unwrap()
++            .antwoord
++            .as_ref()
++            .unwrap()
++            .beeld
++            .notitie
++            .as_ref()
++            .unwrap()
++            .markdown
++    );
++    assert_eq!(p.app.tab().unwrap().deel, 2);
++    p.bericht(Msg::Terug);
++    assert_eq!(p.bron().as_slice(), bron.as_slice());
++    assert_eq!(p.app.tab().unwrap().deel, 0);
++    assert!(
++        !p.app
++            .tab()
++            .unwrap()
++            .antwoord
++            .as_ref()
++            .unwrap()
++            .beeld
++            .notitie
++            .as_ref()
++            .unwrap()
++            .markdown
++    );
++}
++#[test]
++fn notitie_een_tekstklik_en_direct_typen_behouden_de_invoer() {
++    let bron = include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json");
++    let mut p = Proef::met_app(app_met_werkdraad(Module::Notition, bron));
++    p.klik(iced::Point::new(370., 311.));
++    p.toets(
++        iced::keyboard::Key::Character("9".into()),
++        iced::keyboard::Modifiers::empty(),
++        Some("9"),
++    );
++    let tekst = p.app.tab().unwrap().editor.text();
++    assert_eq!(tekst.replace('9', ""), "Een vrij tekstvak");
++    assert_eq!(
++        tekst.matches('9').count(),
++        1,
++        "De eerste tekstklik moet ook invoer ontvangen"
++    );
++    p.bericht(Msg::PasToe);
++    let d: serde_json::Value = serde_json::from_slice(&p.bron()).unwrap();
++    assert_eq!(
++        d["boeken"][0]["secties"][0]["paginas"][0]["vakken"][0]["blokken"][0]["tekst"],
++        tekst
++    );
++    p.bericht(Msg::Terug);
++    assert_eq!(p.bron().as_slice(), bron.as_slice());
++}
++#[test]
++fn notitie_tekstklikken_en_unicode_in_dezelfde_widgetronde_bewaren_beide_vakken() {
++    use iced::{Event, keyboard as k, mouse};
++    let bron = include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json");
++    let mut p = Proef::met_app(app_met_werkdraad(Module::Notition, bron));
++    let vakken: Vec<_> = p
++        .toegankelijkheid()
++        .nodes
++        .into_iter()
++        .filter(|n| n.node.name == "Notitietekst")
++        .map(|n| n.bounds)
++        .collect();
++    assert_eq!(vakken.len(), 2);
++    let mut events = vec![];
++    for (vak, tekst) in vakken.iter().zip(["9", "é🏠"]) {
++        events.extend([
++            Event::Mouse(mouse::Event::CursorMoved {
++                position: iced::Point::new(vak.x + 12., vak.y + 10.),
++            }),
++            Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)),
++            Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)),
++            Event::Keyboard(k::Event::KeyPressed {
++                key: k::Key::Character(tekst.into()),
++                modified_key: k::Key::Character(tekst.into()),
++                physical_key: k::key::Physical::Unidentified(k::key::NativeCode::Unidentified),
++                location: k::Location::Standard,
++                modifiers: k::Modifiers::empty(),
++                text: Some(tekst.into()),
++                repeat: false,
++            }),
++        ]);
++    }
++    p.gebeurtenissen(events);
++    let t = p.app.tab().unwrap();
++    assert!(t.concept);
++    let eerste = notitie_ui::inhoud(t, 1).unwrap().text();
++    let tweede = notitie_ui::inhoud(t, 2).unwrap().text();
++    assert_eq!(eerste.replace('9', ""), "Een vrij tekstvak");
++    assert_eq!(eerste.matches('9').count(), 1);
++    assert_eq!(tweede.replace("é🏠", ""), "Een idee op een andere plek");
++    assert_eq!(tweede.matches("é🏠").count(), 1);
++    assert_eq!(p.bron().as_slice(), bron);
++    p.bericht(Msg::PasToe);
++    let d: serde_json::Value = serde_json::from_slice(&p.bron()).unwrap();
++    let vakken = &d["boeken"][0]["secties"][0]["paginas"][0]["vakken"];
++    assert_eq!(vakken[0]["blokken"][0]["tekst"], eerste);
++    assert_eq!(vakken[1]["blokken"][0]["tekst"], tweede);
++    let heropen = Sessie::open(Module::Notition, p.bron().as_ref().clone()).unwrap();
++    assert!(
++        heropen
++            .weergave(0)
++            .unwrap()
++            .velden
++            .iter()
++            .any(|v| v.tekst == tweede)
++    );
++    p.bericht(Msg::Terug);
++    assert_eq!(p.bron().as_slice(), bron);
++}
++#[test]
++fn notitie_late_invoer_van_een_andere_bron_wordt_niet_toegepast() {
++    let bron = include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json");
++    let mut p = Proef::met_app(app_met_werkdraad(Module::Notition, bron));
++    let t = p.app.tab().unwrap();
++    let oud = Msg::NotitieInvoer {
++        document: t.id,
++        hash: t.antwoord.as_ref().unwrap().hash.clone(),
++        veld: t.antwoord.as_ref().unwrap().beeld.velden[1].id.clone(),
++        actie: text_editor::Action::Edit(text_editor::Edit::Insert('9')),
++    };
++    p.bericht(Msg::Notitie(
++        office_core::notities::NotitieActie::KopieerSectie { markdown: true },
++    ));
++    let na = p.bron();
++    p.bericht(oud);
++    assert_eq!(*p.bron(), *na);
++    assert!(!p.app.tab().unwrap().concept);
++}
++#[test]
+ fn writer_paginacursor_klikken_schalen_typen_en_een_exacte_undo() {
+     use iced::keyboard::key::Named;
+     for zoom in [0.75, 1., 1.5] {
+diff --git a/native/crates/office-ui/src/werker.rs b/native/crates/office-ui/src/werker.rs
+index e0ff462..c86d3ae 100644
+--- a/native/crates/office-ui/src/werker.rs
++++ b/native/crates/office-ui/src/werker.rs
+@@ -152,7 +152,7 @@ impl Werker {
+                                 beeld=Some(b);raster_selectie=Some(s);*deel=n;
+                             }
+                             Opdracht::Bewerk(n, b) => {
+-                                let b=sessie.bewerk_met_weergave(n,b).map_err(|e|e.to_string())?;*deel=n.min(b.onderdelen.len().saturating_sub(1));beeld=Some(b);
++                                let b=sessie.bewerk_met_weergave(n,b).map_err(|e|e.to_string())?;*deel=b.notitie.as_ref().map(|p|p.deel).unwrap_or(n.min(b.onderdelen.len().saturating_sub(1)));beeld=Some(b);
+                             }
+                             Opdracht::NaarTekst{id,hash,begin,einde} => {
+                                 let (pagina,mut beeld)=sessie.naar_tekstbereik(&id,&hash,begin,einde).map_err(|e|e.to_string())?;
+@@ -195,8 +195,8 @@ impl Werker {
+                                 b.voorkeursveld=Some(id);
+                                 *deel=pagina;beeld=Some(b);
+                             }
+-                            Opdracht::Terug(n) => {sessie.terug().map_err(|e| e.to_string())?;*deel=n;},
+-                            Opdracht::Vooruit(n) => {sessie.vooruit().map_err(|e| e.to_string())?;*deel=n;},
++                            Opdracht::Terug(n) => {let anker=sessie.notitie_anker(n);sessie.terug().map_err(|e| e.to_string())?;*deel=sessie.notitiepositie(anker.as_ref(),n);},
++                            Opdracht::Vooruit(n) => {let anker=sessie.notitie_anker(n);sessie.vooruit().map_err(|e| e.to_string())?;*deel=sessie.notitiepositie(anker.as_ref(),n);},
+                             Opdracht::Markdown(n) => {
+                                 *deel=n;
+                                 let mut beeld =
+diff --git a/native/crates/office-ui/src/writer_invoer.rs b/native/crates/office-ui/src/writer_invoer.rs
+index 7f989ea..23abea8 100644
+--- a/native/crates/office-ui/src/writer_invoer.rs
++++ b/native/crates/office-ui/src/writer_invoer.rs
+@@ -5,6 +5,22 @@ use office_core::document::TekstStap;
+ impl Tab {
+     pub fn tekst_opdracht(&self) -> Bewerking {
+         let v = self.veld().expect("Bewerking vereist een actief veld");
++        if self.antwoord.as_ref().unwrap().beeld.module == Module::Notition {
++            let velden = self
++                .antwoord
++                .as_ref()
++                .unwrap()
++                .beeld
++                .velden
++                .iter()
++                .enumerate()
++                .filter_map(|(n, v)| {
++                    let inhoud = notitie_ui::inhoud(self, n)?.text();
++                    (inhoud != v.tekst).then_some((v.id.clone(), inhoud))
++                })
++                .collect();
++            return Bewerking::Notitie(office_core::notities::NotitieActie::Teksten(velden));
++        }
+         if self.antwoord.as_ref().unwrap().beeld.module == Module::Writer {
+             Bewerking::TekstReeks {
+                 id: v.id.clone(),

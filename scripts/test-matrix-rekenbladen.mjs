@@ -5,7 +5,7 @@
 // kenmerkcontrole (scripts/rekenblad_kenmerken.py) en formulecontrole tegen de onafhankelijke
 // evaluator (scripts/rekenblad_formules.py). Cachewaarden gelden nergens als bewijs.
 //
-// Gebruik: node scripts/test-matrix-rekenbladen.mjs   (Node ≥ 22.18 voor het laden van .ts)
+// Gebruik: node scripts/test-rekenblad-matrix.mjs
 // Uitvoer: .local/matrix/rekenbladen/*.noop.xlsx, *.bewerkt.xlsx en rapport.json (genegeerd door Git).
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
@@ -356,7 +356,7 @@ for (const geval of manifest) {
   assert.deepEqual(
     ondersteund.sort(),
     lijst,
-    "ONDERSTEUNDE_FUNCTIES in src/rekenbladcontrole.ts wijkt af van de engine",
+    `ONDERSTEUNDE_FUNCTIES in src/rekenbladcontrole.ts wijkt af van de engine; gemeten namen: ${ondersteund.join(" ")}`,
   );
   // Is een handle na een paniek in de rekenkern nog bruikbaar?
   const proef = xlsx.openWorkbook(leeg);
@@ -391,7 +391,6 @@ const STIL_GECACHET = {
     "Functies!C1",
     "Functies!C2",
     "Functies!C6",
-    "Functies!C7",
   ],
 };
 for (const g of rapport.gevallen) {
@@ -418,7 +417,7 @@ for (const g of rapport.gevallen) {
 const per = Object.fromEntries(rapport.gevallen.map((g) => [g.naam, g]));
 assert.deepEqual(
   Object.keys(per["onbekende-functies"].controle.onbekendeFuncties).sort(),
-  ["FACT", "ONBEKENDEFUNCTIE", "_XLUDF.MIJNMACRO"],
+  ["ONBEKENDEFUNCTIE", "_XLUDF.MIJNMACRO"],
 );
 assert.deepEqual(per["verouderde-cache"].controle.cacheAfwijkend.sort(), [
   "Cache!A3",

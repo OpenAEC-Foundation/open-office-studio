@@ -23,7 +23,7 @@ import {
   type DocxCommandId,
   type DocxEditorRef,
 } from "@betteroffice/docx-react";
-import type { YrsLoc } from "@betteroffice/docx/yrs";
+import type { YrsLoc, YrsSession } from "@betteroffice/docx/yrs";
 import { AArrowDown, AArrowUp, CalendarClock, Paintbrush } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import i18next from "../../i18n/config";
@@ -56,18 +56,13 @@ import { puntStap, volgendeGrootte } from "./groottereeks";
 import { HERHAALBAAR, Herhaalgeheugen, naamVanOpdracht } from "./herhalen";
 import { Herhaalmelding } from "./herhaalmelding";
 import {
-  deltaUitHtml,
-  heeftHtmlOpmaak,
-  koppelOpmaak,
-  leesHtml,
   platteTekst,
-  stukken,
-  zelfdeDelta,
-  type HtmlTekst,
   type PlakKeuze,
   tabelUitKlembord,
 } from "./plakopties";
 import { kanTabelPlakken, plakTabel } from "../tabel/opdrachten";
+import { maakPlaksessie, pasPlakOpmaakToe, type Plaksessie } from "./plakopmaak";
+import { registreerPlakAfronding } from "./plakAfronding";
 import { DatumTijdDialoog } from "./DatumTijdDialoog";
 import { ontbrekendeStijl } from "../stijlen/model";
 import { metHeleAlinea } from "../stijlen/toepassen";
@@ -80,16 +75,7 @@ import "../menu/menu.css";
 export type TekstOpdrachten = ReturnType<typeof useTekstOpdrachten>;
 
 /** Geplakte tekst waarop de plakopties werken. */
-export interface Plaksessie {
-  story: string;
-  /** Alinea's met het geplakte stuk: [begin, eind) per alinea. */
-  stukken: { paraId: string; begin: number; eind: number; tekst: string }[];
-  html: HtmlTekst | null;
-  /** Opmaak van de plakplek, voor ‘alleen tekst’. */
-  basis: GekopieerdeOpmaak | null;
-  keuze: PlakKeuze;
-  plek: { x: number; y: number };
-}
+export type { Plaksessie } from "./plakopmaak";
 
 interface Bewerken {
   opdrachten: TekstOpdrachten;
@@ -405,9 +391,22 @@ export function TekstBewerken({
         ? { delta: opmaakUitBron(ctx), positie: positieUitBron(ctx), stijl: null }
         : null;
       const start: YrsLoc = { story: begin.range.story, ...begin.range.start };
-      // Na de engine: het geplakte stuk bepalen.
+      // Bij native plakken hoort de opmaak bij dezelfde wachtrijopdracht en
+      // Undo-stap. Leg de basis opnieuw vast als de bron intussen verandert.
+      const overname = registreerPlakAfronding(e, (s, bereik) => {
+        const start: YrsLoc = { story: bereik.story, ...bereik.start };
+        const van = { ...bereik.start, offset: Math.max(0, bereik.start.offset - 1) };
+        const ctx = s.selectionContext({ story: bereik.story, start: van, end: bereik.start });
+        const basis = { delta: opmaakUitBron(ctx), positie: positieUitBron(ctx), stijl: null };
+        return (eind) => {
+          const gelezen = s.readParagraphs({ story: start.story, view: "accepted" });
+          if (gelezen.ok) voltooiPlakken(ref, maakPlaksessie(gelezen.paragraphs, start, eind, html, basis,
+            cursorPlek() ?? { x: innerWidth / 2, y: innerHeight / 2 }, s), alsTekst, s);
+        };
+      });
+      // De browser- en platte-tekstroute houden hun bestaande afhandeling.
       setTimeout(() => {
-        void naPlakken(ref, start, html, basis, alsTekst).catch(() => {});
+        void naPlakken(ref, start, html, basis, alsTekst, () => overname.overgenomen).catch(() => {});
       }, 0);
     };
     window.addEventListener("keydown", toets, true);
@@ -424,33 +423,26 @@ export function TekstBewerken({
     html: string,
     basis: GekopieerdeOpmaak | null,
     alsTekst: boolean,
+    overgenomen: () => boolean,
   ) {
     await ref.flushPendingInput();
+    if (overgenomen()) return;
     const eind = ref.getEditorRef()?.getYrsSession()?.selection()?.head;
     if (!eind || eind.story !== start.story) return;
     const gelezen = await ref.readParagraphs({ story: start.story, view: "accepted" });
     if (!gelezen.ok) return;
-    const i = gelezen.paragraphs.findIndex((p) => p.paraId === start.paraId);
-    const j = gelezen.paragraphs.findIndex((p) => p.paraId === eind.paraId);
-    if (i < 0 || j < i) return;
-    const delen = gelezen.paragraphs.slice(i, j + 1).map((p, k, alle) => {
-      const begin = k === 0 ? start.offset : 0;
-      const tot = k === alle.length - 1 ? eind.offset : p.text.length;
-      return { paraId: p.paraId, begin, eind: tot, tekst: p.text.slice(begin, tot) };
-    });
-    if (!delen.some((d) => d.eind > d.begin)) return;
-    const bron = html ? leesHtml(html) : null;
-    const sessie: Plaksessie = {
-      story: start.story,
-      stukken: delen,
-      html: bron && heeftHtmlOpmaak(bron) ? bron : null,
-      basis,
-      keuze: "tekst",
-      plek: cursorPlek() ?? { x: innerWidth / 2, y: innerHeight / 2 },
-    };
-    // Zoals Word: standaard de bronopmaak behouden, in dezelfde stap als het plakken.
-    if (sessie.html && !alsTekst && pasPlakkeuzeToe(ref, sessie, "behouden", true))
-      sessie.keuze = "behouden";
+    voltooiPlakken(ref, maakPlaksessie(gelezen.paragraphs, start, eind, html, basis,
+      cursorPlek() ?? { x: innerWidth / 2, y: innerHeight / 2 }, ref.getEditorRef()!.getYrsSession()!), alsTekst);
+  }
+
+  function voltooiPlakken(ref: DocxEditorRef, sessie: Plaksessie | null, alsTekst: boolean, native?: YrsSession) {
+    if (!sessie) return;
+    // Bronopmaak en tekst blijven in één stap. Binnen de native wachtrij
+    // publiceert de SDK pas na deze afronding en plaatst zij de Undo-grens.
+    if (sessie.html && !alsTekst) {
+      if (native) { pasPlakOpmaakToe(native, sessie, "behouden"); sessie.keuze = "behouden"; }
+      else if (pasPlakkeuzeToe(ref, sessie, "behouden", true)) sessie.keuze = "behouden";
+    }
     setPlak(sessie);
   }
 
@@ -461,48 +453,7 @@ export function TekstBewerken({
     keuze: PlakKeuze,
     aansluiten = false,
   ) {
-    const geplakt = sessie.stukken.map((s) => s.tekst).join("\n");
-    const per = sessie.html ? koppelOpmaak(geplakt, sessie.html) : [];
-    return alsEenStap(
-      ref,
-      sessie.story,
-      (s) => {
-        let plek = 0;
-        for (const stuk of sessie.stukken) {
-          const range = {
-            story: sessie.story,
-            start: { paraId: stuk.paraId, offset: stuk.begin },
-            end: { paraId: stuk.paraId, offset: stuk.eind },
-          };
-          if (stuk.eind > stuk.begin && sessie.basis) {
-            s.formatRange(range, sessie.basis.delta);
-            if (sessie.basis.positie === "normaal") {
-              const ctx = s.selectionContext(range);
-              if (ctx.superscript !== false) s.toggleMark(range, { type: "superscript" });
-              if (ctx.superscript === "mixed") s.toggleMark(range, { type: "superscript" });
-            }
-          }
-          if (keuze !== "tekst" && sessie.html) {
-            const deltas = per
-              .slice(plek, plek + stuk.tekst.length)
-              .map((o) => (o ? deltaUitHtml(o, keuze === "samenvoegen") : null));
-            for (const deel of stukken(deltas, zelfdeDelta)) {
-              if (!deel.waarde) continue;
-              s.formatRange(
-                {
-                  ...range,
-                  start: { paraId: stuk.paraId, offset: stuk.begin + deel.begin },
-                  end: { paraId: stuk.paraId, offset: stuk.begin + deel.eind },
-                },
-                deel.waarde,
-              );
-            }
-          }
-          plek += stuk.tekst.length + 1;
-        }
-      },
-      { aansluiten },
-    );
+    return alsEenStap(ref, sessie.story, (s) => pasPlakOpmaakToe(s, sessie, keuze), { aansluiten });
   }
 
   function kiesPlakoptie(keuze: PlakKeuze) {

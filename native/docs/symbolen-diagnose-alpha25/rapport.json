@@ -1,0 +1,66 @@
+{
+  "omvang": "Kleine glyphdiagnose op 180×70, geen volledige native UI- of legacypariteit. Twee mislukte vergelijkingen blijven afgekeurd. De uiteindelijke aparte rendererproef gebruikt dezelfde rendererbron, het oorspronkelijke vendorlockbestand en één aanvullende proef met 48 combinaties. Deze 24 tests zijn niet opgeteld bij de 275 workspace-tests.",
+  "mislukte_pogingen": [
+    {
+      "poging": 1,
+      "beelden": [
+        {
+          "bestand": "alpha25-uitlijning-eerste-left.png",
+          "sha256": "9a44083fd37308a6ef0b744ec267e870e821290b3a3d6263adaca29d96c4630f"
+        },
+        {
+          "bestand": "alpha25-uitlijning-eerste-right.png",
+          "sha256": "6516d40f6b67d99d667fecb3eb92b9bc3b2154c10fefaef782e63c6dd69281b1"
+        }
+      ],
+      "breedte": 180,
+      "hoogte": 70,
+      "afwijkende_pixels": 84,
+      "max_kanaalverschil": 1,
+      "testlog_sha256": "3b8d15d7cd29e5039ba21c19d9fa3d677c1e94a9bd798475fa03e57ad8c8e349",
+      "bronmanifest_bij_vervolgronde_sha256": "ad4b809879518c4feec09192d2085c5815265746ad6df3d28bd803588cc89c2c",
+      "geslaagd": false
+    },
+    {
+      "poging": 2,
+      "beelden": [
+        {
+          "bestand": "alpha25-stapeling-tweede-left.png",
+          "sha256": "fdc70c336d1dee8bbe9eca812cd93f9f63582c54d1c905e2279647bf71987a14"
+        },
+        {
+          "bestand": "alpha25-stapeling-tweede-right.png",
+          "sha256": "c67401d16563a1113a1061532e1c2ac2740ad15fb4f9fffa44b5871663359555"
+        }
+      ],
+      "breedte": 180,
+      "hoogte": 70,
+      "afwijkende_pixels": 78,
+      "max_kanaalverschil": 1,
+      "testlog_sha256": "ee7905e34a78ed3eeae9dc26d2fed1e558ddd565eef086881bc725ec6ba8807d",
+      "bronmanifest_bij_vervolgronde_sha256": "f3ddd525830cd395571e47b546c33b38d957d1f265ed2807c378f39625a8968c",
+      "geslaagd": false
+    }
+  ],
+  "laatste_rendererproef_geslaagd": true,
+  "originele_renderer_unitproeven": 18,
+  "originele_png_goldens": 5,
+  "aanvullende_proeven": 1,
+  "aanvullende_combinaties": 48,
+  "proefbron_sha256": "6570b5d3ae02796d8abb6cad0ab132cd6de5d0831b6e56e3d433cef850acc34a",
+  "testlog_sha256": "8fc23f7d413f0786c5e40b430e365df6a881e9d585ec1a665d4ca0008ae3239e",
+  "vendor_lock_sha256": "2cca18edc49f5124cd74d1ee192a7bc4fce050d2930fc55bdd7d8e6153d098a6",
+  "rendererbron": {
+    "font.rs": "9ceef12ac0cd6ca543aeb0cf4beb4f7aeea7beef998b2d1609a392bf721036aa",
+    "font_fallback.rs": "45347ceb88c58e23d4756164312c3cfa3429649163044eca01924cafea60c469",
+    "lib.rs": "f733927068a6de9f65e8035ced3fa72340b680bbea5ce713bb77f5e95e75b72f",
+    "resources.rs": "473c34002e5115fa903922317bf80e0a4bb052eb0a03cf7de095d6b4212934ab"
+  },
+  "padfixture": {
+    "bron": "https://raw.githubusercontent.com/openooxml/betteroffice/4e982c3aea0065578604c3fe7727938533888f66/packages/xlsx/test-fixtures/path-backend-agreement.json",
+    "revisie": "4e982c3aea0065578604c3fe7727938533888f66",
+    "sha256": "9f80f4fa47af21dbdaeb3e6cac643c4b423352d931e4102279d8ec6d06c6756a",
+    "bytes": 578,
+    "omvang": "Ontbrekende upstream-testfixture buiten het gepubliceerde cratepakket, uitsluitend in de privéproef aangevuld; geen wijziging aan de vendorrepository."
+  }
+}

@@ -1,0 +1,15 @@
+# Notities: alpha 38
+
+De drie regressietests faalden vóór de correcties: paginawissel met een nog zichtbare oude editorboom, een zichtbare formaatgreep buiten het werkelijke sleepgebied en een concept dat na undo in de Markdown-preview bleef staan. De eerste gerichte herhaling bevat daarnaast twee herstelde testopstellingsfouten; de oorspronkelijke logs en bronmomenten blijven bewaard. Alle twaalf gerichte Notities-proeven slagen daarna.
+
+De volledige ronde op broncommit `9b98d7d79cd51ee1b3d131bf2aa01dbd540a0d38` slaagt met 398 reguliere Rust-tests, waaronder 158 UI-tests, zes runtimeproeven en zeven Python-tests. Rustfmt, Clippy, bronpins en onafhankelijke lezers slagen. Alle 671 bronbestanden blijven bytegelijk. De terminal eindigt met code 0; iedere onderliggende stap heeft een eigen exitcode en ruwe loghash. De herstelproef reproduceert alle 671 bestanden uit de basiscommit en volledige patch.
+
+Het lokale debugvenster registreert 86 stappen; het geoptimaliseerde CI-Linux-programma 87, inclusief een extra wachttijd bij starten. Stappen omvatten ook wachten en stoppen: dit is geen telling van 87 functies. Beide proeven controleren twee tekstvakken in één transactie, de zichtbare greep, verplaatsen, bronexacte undo, niet-destructieve sectiekopieën, handmatige paginawisseling, Markdown-concept en undo, aanmaken van pagina/sectie/boek en bewerken van de nieuwe paginatitel. Beide eindigen met de oorspronkelijke bronbytes. Volledige previewbeelden vóór en na undo zijn visueel beoordeeld. De eerste broncontrole vergat het gedocumenteerde bijgewerkt-veld; de aangepaste controle staat uitsluitend die tijdwijziging toe op de daadwerkelijk bewerkte pagina en vergelijkt alle overige velden exact. De oorspronkelijke afkeuring blijft bewaard.
+
+De eerste CI-ronde bouwt Windows, Linux en macOS en slaagt op de conversietaak. De gezamenlijke controle faalt echter omdat de workflow nog 57 in plaats van de 60 daadwerkelijk gegenereerde screenshots verwacht. De letterlijke telling is pas na de volledige lokale ronde aangepast; alle overige 670 vastgelegde bronbestanden blijven bytegelijk. De volgende CI-ronde controleert deze workflowwijziging opnieuw. Geen pixelgrens, masker of oorspronkelijk referentiebeeld is aangepast.
+
+Zestig volledige native widgetbeelden, vijftien gedeelde documentbeelden en acht letterbeelden zijn gecontroleerd. De acht vergelijkingen met de oorspronkelijke UI blijven allemaal afgekeurd. Deze bewijzen zijn geen volledige suite-, platform-, installatie- of pixelpariteit. Alle dertig migratieacceptaties blijven false; geen stabiele native vrijgave.
+
+`bewijskopieen.json` koppelt ieder bestand aan de oorspronkelijke bytes en hash. Logs en patches staan als deterministische gzip-bestanden in de repository; uitpakken levert exact de ruwe bytes terug.
+
+De afgesloten CI-herhaling 41337108934 slaagt op alle vijf taken: 3951 verpakte bronbestanden per platform, 120 exacte native beeldparen en 21 paginabezoeken. De bestanden onder `ci-hertest` bevestigen dat beide Linux-programma’s bytegelijk zijn aan de eerder fysiek geteste alpha38-programma’s. De eerste schermtellingafkeuring blijft ongewijzigd bewaard.

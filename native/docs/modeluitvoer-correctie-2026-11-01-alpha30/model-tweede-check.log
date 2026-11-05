@@ -1,0 +1,18 @@
+    Checking office-core v2026.44.9-alpha.29 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-core)
+warning: use of deprecated method `quick_xml::events::attributes::Attribute::<'a>::decode_and_unescape_value`: use `Self::decoded_and_normalized_value()`
+   --> crates/office-core/tests/rekenblad_snelle_navigatie.rs:426:31
+    |
+426 | ...                   a.decode_and_unescape_value(lezer.decoder()).unwrap(),
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated method `quick_xml::events::attributes::Attribute::<'a>::decode_and_unescape_value`: use `Self::decoded_and_normalized_value()`
+   --> crates/office-core/tests/rekenblad_snelle_navigatie.rs:433:38
+    |
+433 |                         assert_eq!(a.decode_and_unescape_value(lezer.decoder()).unwrap(), "12");
+    |                                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `office-core` (test "documentkern") generated 2 warnings
+    Checking office-conversie v2026.44.9-alpha.29 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-conversie)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 9.04s

@@ -1,0 +1,70 @@
+{
+  "versie": "2026.44.9-alpha.32",
+  "geslaagd_binnen_omvang": true,
+  "omvang": "Eerste actieve rasterfocus, lange rijkoppen en behoud van een actieve Writer-paginacursor tijdens een aangesloten opmaaklintklik. Zeven nieuwe echte widgetproeven; geen volledige raster-, fysieke platform- of suitepariteit.",
+  "oorspronkelijke_broncommit": "a574614422b6dfd125c97980a69a82a4cbfa46f9",
+  "spreadsheet_negatief": {
+    "geslaagd": 0,
+    "afgekeurd": 3,
+    "log": "beginfocus-voor-correctie.log",
+    "patch": "beginfocus-voor-correctie.patch"
+  },
+  "spreadsheet_eerste_hertest": {
+    "geslaagd": 2,
+    "afgekeurd": 1,
+    "log": "beginfocus-na-correctie.log",
+    "reden": "De gegevensfixture behandelde een nieuwe focus-Widgetopdracht alsof die zonder widgetboom uitvoerbaar was. Dit was een testopbouwfout, geen afgekeurde rijkopmeting. De oorspronkelijke bron blijft bewaard."
+  },
+  "fixtureaanpassing": "De gedeelde zuivere gegevensfixture laadt expliciet een achtergrondtabblad. Zij negeert geen Widgetopdrachten. De echte beginfocusproeven openen Nieuw/Gelezen vanuit een App zonder document en voeren alle widgetoperaties uit; zij gebruiken deze gegevensfixture niet. De rijkopproef klikt expliciet een cel omdat zij breedte, zoom, klikken en bronbehoud controleert.",
+  "spreadsheet_proeven": [
+    "Nieuw document: direct Rechts/9/Enter en bronexacte undo zonder celklik.",
+    "Geopend document: direct Rechts/9/Enter en bronexacte undo zonder celklik.",
+    "Rij 1000000 past met de werkelijke lettermeting op één regel; celklikken en bronbehoud bij zoom 0.75/1/1.5.",
+    "Een late eerste focusopdracht laat een inmiddels gekozen lettertypeveld werken en verandert de werkmapbron niet."
+  ],
+  "writer_negatief": {
+    "geslaagd": 1,
+    "afgekeurd": 1,
+    "log": "writer-lintfocus-voor-correctie.log",
+    "werkelijke_releaseafkeuring": "../vensterafkeuring-2026-11-01-alpha31-ci/LEESMIJ.md"
+  },
+  "writer_proeven": [
+    "Vet-lintklik en 9 binnen dezelfde widgetronde, vóór berichtafhandeling en focuswerk: tekst, vet/cursief en twee bronexacte undo-stappen.",
+    "Een lettertypeveld aanklikken en 9 binnen dezelfde widgetronde wijzigen de documentbron niet.",
+    "Ook na een voorgaande opmaakklik ontvangt een later lettertypeveld de volgende 9 zonder extra documentteken."
+  ],
+  "writer_correctie": "Aangesloten opmaakknoppen behouden een al actieve paginacursor tijdens hun muisdruk. De volgende gewone toets wordt daardoor al door de echte pagina verwerkt, vóór de asynchrone focusoperatie. Muisloslaten en vensterverlaten ruimen de tijdelijke druk op. Tekstvelden blijven afzonderlijke invoerdoelen; een oud verzoek mag hun focus niet afpakken. De widgetstructuur blijft gelijk tussen beschikbare en tijdelijk uitgeschakelde toestanden.",
+  "eerste_volledige_ronde": {
+    "reguliere_tests": 348,
+    "ui_tests": 128,
+    "geslaagd_binnen_toenmalige_omvang": true,
+    "suiteacceptatie": false,
+    "rapport": "eerste-volledige-ronde/rapport.json",
+    "toelichting": "De werkelijke alpha-31-vensterproef vond daarna een snelle Writer-lintinvoergap op dezelfde Writer-basis. Een nieuwe widgetgebeurtenisronde reproduceert haar vóór de correctie; de oude positieve ronde wordt niet als dekking van dat ontbrekende geval voorgesteld."
+  },
+  "reguliere_tests": 351,
+  "ui_tests": 131,
+  "runtime_tests": 6,
+  "python_tests": 7,
+  "bronbestanden": 662,
+  "testlog_sha256": "ed087e8622549159460b8c696ae09ea4567c4d88c28f4a8865f5087659e52a87",
+  "bronmanifest": "../schermen-2026-11-01-alpha32.json",
+  "beelden": [
+    {
+      "bestand": "spreadsheet-rijkop-lang.png",
+      "sha256": "e636c7ddfd24bd30d707ff12429f6d449b7512cbf9614a367600bb682e71a171"
+    },
+    {
+      "bestand": "writer-lint-direct-typen.png",
+      "sha256": "09efb6c0c09d4dd1ac5c021bcda22189ca80231f6b684ef26875a50437bd2c03"
+    }
+  ],
+  "visueel_bekeken": true,
+  "eigen_releasebouw_en_werkelijke_vensterhertest_afgerond": false,
+  "beperkingen": [
+    "Geen volledige rij-/kolomselectie, automatisch scrollen of overige rasterfuncties.",
+    "De Writer-correctie omvat aangesloten opmaaklintknoppen; overige lint- en keuzevensterflows vragen hun eigen migratie en tests.",
+    "Werkelijke releasevensters op de nieuwe programmahash blijven apart te controleren.",
+    "Alle tien acceptatiegebieden blijven open; geen stabiele native vrijgave."
+  ]
+}

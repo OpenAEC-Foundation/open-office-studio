@@ -1,0 +1,86 @@
+{
+  "versie": "2026.44.9-alpha.31",
+  "geslaagd_binnen_omvang": true,
+  "omvang": "Invoegopmaak kiezen op volledig lege ondersteunde Writer-body-alinea’s, inclusief lege run en alineamarkering. Geen invoegopmaak binnen niet-lege alinea’s, volledige tekenstijlovererving of suitepariteit.",
+  "nieuwe_kernproeven": 5,
+  "nieuwe_widgetproeven": 6,
+  "reguliere_tests": 344,
+  "ui_tests": 124,
+  "runtime_tests": 6,
+  "python_tests": 7,
+  "bronbestanden": 660,
+  "testlog_sha256": "71bdd934b82ace6e8f412901eb037cd90e818b9b028e22b4cdc2f508d66a3174",
+  "onafhankelijk_log_sha256": "d123b8b0160088b919e9ec4725cf0ea0edfef8821e7a1c9a1834572f39734c64",
+  "oorspronkelijke_proef": {
+    "kern_geslaagd": 0,
+    "kern_afgekeurd": 2,
+    "ui_geslaagd": 0,
+    "ui_afgekeurd": 1,
+    "proefbroncommit": "c752341ab177ad4685dcd29abe71e687dcaf1292",
+    "log": "lege-opmaak-voor-correctie.log",
+    "patch": "lege-opmaak-voor-correctie.patch"
+  },
+  "tussenstappen": [
+    "De eerste implementatie schreef lege runopmaak; de echte lintklik verloor daarna vervolginvoer door ontbrekende paginafocus.",
+    "Een aanvankelijke bytevergelijking van nevendelen gebruikte de bron van vóór het al bestaande splitsen. De vastgelegde canonieke vergelijking toont hetzelfde header-/footerresultaat in de eerdere alpha-29-uitvoer. De test vergelijkt de nieuwe opmaakstap met de reeds gesplitste bron en leest oorspronkelijke inhoud onafhankelijk terug.",
+    "De eerste volledige ronde is bewust gestopt na een eerder werkelijk afgekeurd beeld met lege lettervelden. Haar bron, deeluitvoer en logs blijven afzonderlijk behouden.",
+    "Twee aanvullende letterveldproeven faalden vóór het lezen van de reeds opgeloste alineametadata.",
+    "De cursor bleef bij 48 punten op zijn standaardhoogte; opslaan van zowel run- als alineamarkering alleen corrigeerde dat niet. De eigen display-listadapter corrigeert uitsluitend de grootte van nulbrede lege markers voor raster, klikken, cursor en navigatie.",
+    "De tweede volledige ronde faalde op één bestaande zoekpaneelsluitproef: 342 reguliere tests slagen, één faalt. De oude vaste paginafocus-ID was daar nog niet overgezet. Een extra late-sluitproef controleert ook behoud van een later gekozen lettertypeveld.",
+    "De derde volledige ronde slaagde op alle 344 tests, onafhankelijke bestandslezers, zeven Python-tests en bronpins, maar Clippy weigerde een onnodige tijdelijke to_owned in een nieuwe test. De hashkopie is expliciet vóór de muterende aanroep gebonden; geen waarschuwing onderdrukt. De definitieve ronde voert Clippy vóór de lange tests uit.",
+    "De latere markeropname was al correct. Een eerdere visuele lezing daarvan als lege velden was onjuist: de nieuwe volledige opname is bytegelijk. Extra assertions bevestigen Cambria en 11 zowel direct als na undo. De geslaagde extra log heet historisch ongedaan-lettervelden-voor-correctie.log; dat is geen productafkeuring."
+  ],
+  "correcties": [
+    "Lege ondersteunde alinea’s bewaren acht runopmaakkeuzes en hun alineamarkering vóór de eerste letter.",
+    "Lettervelden gebruiken dezelfde reeds opgeloste alineastijl als de engine, met conservatieve afwijzing van onbekende metadata.",
+    "Een echte lintklik geeft de actieve documentpagina bewaakt terug aan de invoer vóór de asynchrone bewerking. Latere invoervelden en andere documenten behouden hun eigen focus.",
+    "De nulbrede cursor volgt het gekozen lege letterformaat; gewone tekstglyphs en PNG-pixels worden niet achteraf bewerkt."
+  ],
+  "visueel_bekeken": [
+    "hertest/writer-invoegopmaak-tekst.png",
+    "hertest/writer-invoegopmaak-leeg.png"
+  ],
+  "markerbeeld_en_hertest_bytegelijk": true,
+  "hertest_leeg_sha256": "ceb5c98790f56ed7b32e068d1bf3e670fc64720e5262e4de9b0123b0058efdc3",
+  "uitvoer": [
+    {
+      "bestand": "writer-lege-invoegopmaak.docx",
+      "sha256": "bdc7a7dae61d88e32986df9f1451c5803cf494d6a600a38aac8a5f0427208c78"
+    },
+    {
+      "bestand": "writer-lege-invoegopmaak-leeg.docx",
+      "sha256": "1d6ffbb5d60182160db0f54fc777d1c24b7f815728cfe3e8a222869451620fd9"
+    },
+    {
+      "bestand": "writer-lege-acht-opmaken.docx",
+      "sha256": "cbdb95e5d13e62e8ff2fbb4c951c9ecb7b126419a1849101c38bda00c84ca348"
+    },
+    {
+      "bestand": "writer-lege-48-punten.docx",
+      "sha256": "b4b27705c762ec93f2ddd6cb85ea7786bf605d342521071a84984b8354fbb83d"
+    },
+    {
+      "bestand": "writer-lege-opmaak-ui.docx",
+      "sha256": "b175d192e42e13dbc7afb55cad4e82374cf07fb8861da175ae728190a93e4fa1"
+    },
+    {
+      "bestand": "writer-lege-opmaak-wachtrij-ui.docx",
+      "sha256": "c9439b02263891ac631b9b58629e584305e9dbc76a180023a0c5395b6684b73a"
+    },
+    {
+      "bestand": "writer-lege-vet-markeringen.json",
+      "sha256": "f6ef8e4a62aa54ebcc39a0df17b85df652ee17f5d3905268b595bb0f91bf8303"
+    },
+    {
+      "bestand": "writer-lege-opmaak-engine-alineamarkeringen.json",
+      "sha256": "96aac0bee8e2ca627d4f947242e4121722d9924cf0601329e6cfef525c06d0b8"
+    }
+  ],
+  "beperkingen": [
+    "Opmaak op een cursor binnen een niet-lege alinea is nog niet volledig aangesloten.",
+    "Lege runs met een eigen benoemde tekenstijl en volledige complexe-scriptopmaak blijven open.",
+    "Lettertypevelden zijn gericht getest; een volledige keuzevenster-/systeemfocusrondgang ontbreekt.",
+    "Werkelijke nieuwe releasevensters en platformbouw horen bij hun eigen programmahash en zijn hiermee niet goedgekeurd.",
+    "Alle tien acceptatiegebieden blijven open; geen stabiele native vrijgave."
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "bronrevisie": "547d9778433360604750a7df41beb8fa26557d31",
+  "run": 41683811723,
+  "taak": 126084448888,
+  "artifact": 13253634481,
+  "rapport": {
+    "maxduur_seconden": 180,
+    "geslaagd": false,
+    "versie": "2026.45.22",
+    "programma_sha256": "e82356a8fea7c4c98482a1fda7c41f7997298e10948df0ade98b9d6322f30f31",
+    "script_sha256": "ca54b04928bf4442d9bb1c89226418172ce870ee3cf4d7c0499a19131d629a0c",
+    "bron_sha256": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee",
+    "rondes": [],
+    "invoergereedheid": "Gewijzigde bron, lege engine-invoerwachtrij en nieuw verschenen plakopties na de eigen opmaakverwerking; bronvergelijkingen daarnaast buiten de tijdmeting.",
+    "grenzen": "Eigen kopie van meegeleverd document; selecteer alles, kopieer, ga naar einde en plak; per ronde broncontrole. Geen snelle plakreeks zonder barrières.",
+    "bewaar_na_ronde": 1,
+    "startprogramma_sha256": "e82356a8fea7c4c98482a1fda7c41f7997298e10948df0ade98b9d6322f30f31",
+    "fout": "TimeoutError()"
+  },
+  "bestanden": {
+    "programma.log": "2d2cf20c6db3878914b7ff00d01c6c9911e3a7bb9d7de8d394e8ea74331c67b5",
+    "afgekeurd.png": "cd86607531f81f019a0cc436d8fc7b595bcd5009e73d5e5a7a07f23103713e64",
+    "rapport.json": "2e48dbc718569a7deefd176aeaaa7e2779539b0ff26dff7abe2cbfa34b3e69d6",
+    "Ontwerpnotitie.docx": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee"
+  },
+  "waargenomen": "Fatale SkSL-modulecompilatie bij opstart; eerste inspectieopdracht geeft geen antwoord. Geen plakronde bereikt.",
+  "oorzaak": "Niet vastgesteld; niet gelijkgesteld aan de eerdere Wasm-allocatorpanic of herstelstartfout.",
+  "exacte_raw_binary_bewaard": false,
+  "verzamelgat": "Groene langdocumentproef was de enige invoer voor de oude foutcollector; negatieve plakproef ontbrak.",
+  "pakketversies_uit_bouwlog": {
+    "libwebkit2gtk-4.1-0": "2.50.4-0ubuntu0.22.04.1",
+    "libjavascriptcoregtk-4.1-0": "2.50.4-0ubuntu0.22.04.1"
+  },
+  "grens_runtime": "Pakketinstallatie uit runnerlog; geladen bibliotheekpaden ontbreken in het negatieve plakrapport.",
+  "controle_desktoppakket": {
+    "artifact": 13256860076,
+    "run": 41683702041,
+    "negatieve_uitgaverun": 41683811723,
+    "verwacht": "e82356a8fea7c4c98482a1fda7c41f7997298e10948df0ade98b9d6322f30f31",
+    "bestanden": [
+      {
+        "naam": "usr/bin/open-office-studio",
+        "sha256": "bbeae602eeea98f7eeca84529c8e0644df9b8950cc73735acdf777330e15ce75",
+        "bytes": 94049744
+      }
+    ],
+    "exacte_negatieve_binary_gevonden": false
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "systeem_lokaal_start": "2026-11-02T05:03:53.528941+01:00",
+  "systeem_utc_start": "2026-11-02T04:03:53.528983+00:00",
+  "programmasource_basiscommit": "6c76a71f9946d02776c2967ad58f91dd26f1b6f8",
+  "voorbeeldbron": "Eigen eerder via GTK bewaarde notitie; de bronkopie blijft bytegelijk",
+  "programmabron": {
+    "basiscommit": "6c76a71f9946d02776c2967ad58f91dd26f1b6f8",
+    "bronbestanden": 733,
+    "bronmanifest_sha256": "95e664a90c9bad809aa316d7e0d1469eddff09a6fa860aff18e977f90638d4ab",
+    "bronpatch_sha256": "d435d7035d3e53ea2445a2950840f245df938e4f6bcb79807ca756a937f6c1b2",
+    "bouwlog_sha256": "8b55d4ac9709de116e651cbfdf34ac17778583d6365c2fb8b076cdb6e0465151",
+    "bouwbron": "Afzonderlijk gebouwde volledige workspace-debugbouw van documentgebonden achtergrondmeldingen en Writer-foutmeldingen; gerichte proeven groen, volledige ronde en platformcontrole nog niet afgesloten.",
+    "programmas": {
+      "open-office-studio-native": {
+        "sha256": "0a66aa6380e2edc9b358781bada22e06a5fefe5d2dd71d1b6195a01d05a9a99b",
+        "versie": "Open Office Studio 2026.45.0-alpha.45 (native)"
+      },
+      "controleer-bestand": {
+        "sha256": "ca67bf8af52351290e7c33d4b65dd66deb6644a6ca6da2c5f910805ffc3c2357",
+        "versie": "Open Office native bestandscontrole 2026.45.0-alpha.45 (debug)"
+      }
+    }
+  },
+  "programma_sha256": "0a66aa6380e2edc9b358781bada22e06a5fefe5d2dd71d1b6195a01d05a9a99b",
+  "proefbron_sha256": "8b9e629169413f536c0d97b347d37a7fd852000f4a76ea85b5d6e3f8539d76b8",
+  "omvang": "Verkennend eigen Linux-venster in aparte Xvfb/D-Bus/XDG. Eigen voorbeeldkopie, geen volledige functie-/pixelgoedkeuring.",
+  "begindata_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13",
+  "stappen": [
+    {
+      "actie": "open",
+      "programma_pid": 3615626,
+      "beeld": {
+        "bestand": "notities-open.png",
+        "sha256": "a519ca3d709516a9d97f177972eaec6c85bc68cad44f2e3b31018f8e415cb2c3",
+        "vensters": [
+          {
+            "id": 4194306,
+            "naam": "Open Office Studio",
+            "klasse": [
+              "",
+              ""
+            ]
+          }
+        ]
+      },
+      "afgerond_monotonic": 931670.410720847
+    },
+    {
+      "actie": "stop",
+      "ontvangen_monotonic": 931792.629372088,
+      "beeld": {
+        "bestand": "notities-expliciet-gestopt.png",
+        "sha256": "a519ca3d709516a9d97f177972eaec6c85bc68cad44f2e3b31018f8e415cb2c3",
+        "vensters": [
+          {
+            "id": 4194306,
+            "naam": "Open Office Studio",
+            "klasse": [
+              "",
+              ""
+            ]
+          }
+        ]
+      },
+      "bron_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13",
+      "afgerond_monotonic": 931792.741644156
+    }
+  ],
+  "expliciet_gestopt": true,
+  "programma_eindcode": -15,
+  "testscherm": ":104",
+  "eigen_sessiebus": "unix:path=/tmp/dbus-fbFjP9b9gD,guid=9e7777fe63f430741f9a72306ae80ba9",
+  "systeem_utc_eind": "2026-11-02T04:06:03.706356+00:00",
+  "systeem_lokaal_eind": "2026-11-02T05:06:03.706383+01:00",
+  "einddata_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13"
+}

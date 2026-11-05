@@ -1,0 +1,91 @@
+name: Rust WebView-preview bouwen
+on:
+  pull_request:
+    paths: ["native/**", "scripts/gui/**", "src/**/*.css", "src/stijl/**", "packages/email/src/start.css", ".github/workflows/rust-webview.yml"]
+  push:
+    branches: [main]
+    paths: ["native/**", "scripts/gui/**", "src/**/*.css", "src/stijl/**", "packages/email/src/start.css", ".github/workflows/rust-webview.yml"]
+  workflow_dispatch:
+permissions:
+  contents: read
+# Laat de lopende controle afronden; bewaar alleen de nieuwste wachtende bron.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  bouwen:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      CARGO_BUILD_JOBS: 2
+      CARGO_PROFILE_DEV_DEBUG: "0"
+      CARGO_PROFILE_TEST_DEBUG: "0"
+      # De Cargo-cache bevat ook oudere proefuitvoer. Iedere poging krijgt een
+      # eigen lege map, zodat nooit eerder bewijs als nieuwe uitvoering geldt.
+      OFFICE_WEBVIEW_PROEF: native/target/webview-vensterproef-${{ github.run_id }}-${{ github.run_attempt }}
+      OFFICE_WEBVIEW_MODULES_PROEF: native/target/webview-moduleproef-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - name: Linux-WebView-afhankelijkheden
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libgtk-3-dev libwebkit2gtk-4.1-dev libxdo-dev libxkbcommon-dev libwayland-dev libx11-dev libxcb1-dev xvfb xauth xdotool python3-xlib python3-pil python3-venv
+      - name: Afzonderlijke omgeving voor native GUI-inspectie
+        if: runner.os == 'Linux'
+        run: |
+          /usr/bin/python3 -m venv --system-site-packages "${RUNNER_TEMP}/office-webview-gui"
+          "${RUNNER_TEMP}/office-webview-gui/bin/python" -m pip install --ignore-installed -r scripts/gui/requirements.txt
+          echo "OFFICE_GUI_PYTHON=${RUNNER_TEMP}/office-webview-gui/bin/python" >> "$GITHUB_ENV"
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            native/target
+          key: office-webview-${{ runner.os }}-${{ hashFiles('native/Cargo.lock', 'native/crates/office-webview/**') }}
+          restore-keys: office-webview-${{ runner.os }}-
+      - name: Oorspronkelijke letter- en stijlbron controleren
+        run: python native/scripts/controleer-webview-bron.py
+      - name: Rust-WebView ook met desktopcode controleren
+        run: cargo clippy --manifest-path native/Cargo.toml --workspace --locked --features open-office-studio-webview/desktop --all-targets -- -D warnings
+      - name: Gerichte WebView-proeven via de volledige werkruimte
+        run: cargo test --manifest-path native/Cargo.toml --workspace --locked --features open-office-studio-webview/desktop webview_ -- --test-threads=1
+      - name: Desktopprogramma bouwen
+        run: cargo build --manifest-path native/Cargo.toml --locked --release -p open-office-studio-webview --features desktop
+      - name: Gebouwde versie controleren
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" = "Windows" ]; then programma=native/target/release/open-office-studio-webview.exe; else programma=native/target/release/open-office-studio-webview; fi
+          "$programma" --version
+      - name: Echte Linux-releasevensters en opgeslagen invoer controleren
+        if: runner.os == 'Linux'
+        run: /usr/bin/python3 native/scripts/proef-webview-venster.py --programma native/target/release/open-office-studio-webview --bron docs/voorbeelden/Notitieboek.json --uitvoer "${{ env.OFFICE_WEBVIEW_PROEF }}"
+      - name: Vijf modules werkelijk bewerken, bewaren en heropenen
+        if: runner.os == 'Linux'
+        run: '"${OFFICE_GUI_PYTHON}" native/scripts/proef-webview-documenten.py --programma native/target/release/open-office-studio-webview --uitvoer "${{ env.OFFICE_WEBVIEW_MODULES_PROEF }}"'
+      - uses: actions/upload-artifact@v4
+        if: always() && runner.os == 'Linux'
+        with:
+          name: rust-webview-vensterproef-${{ runner.os }}
+          path: ${{ env.OFFICE_WEBVIEW_PROEF }}/
+          if-no-files-found: warn
+      - uses: actions/upload-artifact@v4
+        if: always() && runner.os == 'Linux'
+        with:
+          name: rust-webview-moduleproef-${{ runner.os }}
+          path: ${{ env.OFFICE_WEBVIEW_MODULES_PROEF }}/
+          if-no-files-found: warn
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rust-webview-preview-${{ runner.os }}
+          path: |
+            native/target/release/open-office-studio-webview
+            native/target/release/open-office-studio-webview.exe
+            native/crates/office-webview/README.md
+            native/crates/office-webview/LICENSE-LUCIDE
+            native/crates/office-webview/assets/*OFL.txt
+          if-no-files-found: error

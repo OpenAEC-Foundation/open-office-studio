@@ -3,9 +3,11 @@ import re
 import zipfile
 from pathlib import Path
 from docx import Document
+from docx.shared import Mm
 from openpyxl import Workbook
 from pptx import Presentation
 from pptx.util import Inches
+from writer_sjabloon import normaliseer_writer_voorbeeld
 uitvoer = Path(__file__).resolve().parents[1] / 'public' / 'templates'
 uitvoer.mkdir(parents=True, exist_ok=True)
 
@@ -22,10 +24,14 @@ def zet_toepassing(pad):
 
 
 d = Document()
+d.sections[0].page_width = Mm(210)
+d.sections[0].page_height = Mm(297)
 d.core_properties.author = ''
 d.core_properties.last_modified_by = ''
 d.add_paragraph('')
 d.save(uitvoer / 'nieuw.docx')
+tekstsjabloon = uitvoer / 'nieuw.docx'
+tekstsjabloon.write_bytes(normaliseer_writer_voorbeeld(tekstsjabloon.read_bytes()))
 w = Workbook()
 w.active.title = 'Blad 1'
 w.properties.creator = ''

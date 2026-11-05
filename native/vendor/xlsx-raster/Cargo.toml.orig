@@ -1,0 +1,27 @@
+[package]
+name = "betteroffice-xlsx-raster"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+publish = ["crates-io"]
+description = "Server-side raster backend (tiny-skia) for the display list. Never part of the wasm build."
+readme = "README.md"
+keywords = ["xlsx", "spreadsheet", "raster", "rendering", "png"]
+categories = ["rendering", "graphics"]
+
+[lib]
+name = "xlsx_raster"
+
+[dependencies]
+tiny-skia = "0.12"
+png = "0.18"
+rustybuzz = "0.20"
+unicode-segmentation = "1.12"
+xlsx-render.workspace = true
+
+[dev-dependencies]
+xlsx-model.workspace = true
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"

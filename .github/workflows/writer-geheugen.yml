@@ -1,0 +1,117 @@
+name: Writer-geheugenonderzoek op Linux
+run-name: Writer-geheugenonderzoek · ${{ github.ref_name }} · ${{ github.sha }}
+on:
+  push:
+    branches: ["codex/native-rust-office"]
+    paths:
+      - '.github/workflows/writer-geheugen.yml'
+      - 'scripts/test-writer-lang-native.py'
+      - 'scripts/test-writer-rijk-plakken-native.py'
+      - 'scripts/bewaar-writer-foutcontext.py'
+      - 'src/spelling/tekst/sessie.ts'
+      - 'src/spelling/tekst/Golflijnen.tsx'
+      - 'scripts/gui/spelling_weergave.*'
+      - 'scripts/gui/webkit_inspector.py'
+      - 'scripts/gui/worker_bron.js'
+      - 'scripts/test-writer-workerbron.mjs'
+      - 'src/tekst/bewerken/plakopmaak.ts'
+      - 'src/tekst/bewerken/rustTekst.ts'
+      - 'src/tekst/bewerken/rustPlakken.ts'
+      - 'src/tekst/bewerken/rustBron*'
+      - 'src/tekst/bewerken/RustPlakLaag.tsx'
+      - 'native/crates/office-writer-plakken/**'
+      - 'native/vendor/docx-edit/**'
+      - 'native/vendor/yrs/**'
+      - 'native/Cargo.toml'
+      - 'native/Cargo.lock'
+      - 'src-tauri/src/writer_plakken.rs'
+      - 'src-tauri/src/main.rs'
+      - 'patches/@betteroffice__docx@0.5.1.patch'
+      - 'patches/@betteroffice__docx-react@0.5.1.patch'
+  workflow_dispatch:
+    inputs:
+      geheugenrondes:
+        description: Extra selectie-/geschiedenisrondes met expliciete garbagecollection (1–100)
+        required: true
+        default: '20'
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: writer-geheugen-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  onderzoeken:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            src-tauri -> target
+            src/spelling/rust -> target
+      - name: Dezelfde Linux-bouw- en GUI-afhankelijkheden
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev patchelf squashfs-tools python3-gi python3-xlib python3-pil python3-venv xvfb xauth xdotool
+      - name: Afzonderlijke GUI-testomgeving
+        run: |
+          /usr/bin/python3 -m venv --system-site-packages "$RUNNER_TEMP/office-geheugen-gui"
+          "$RUNNER_TEMP/office-geheugen-gui/bin/python" -m pip install --ignore-installed -r scripts/gui/requirements.txt
+          echo "OFFICE_GUI_PYTHON=$RUNNER_TEMP/office-geheugen-gui/bin/python" >> "$GITHUB_ENV"
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/cache@v4
+        with:
+          path: |
+            .local/lettertypen-cache
+            .local/woordenboeken-cache
+          key: dev-assets-${{ hashFiles('assets/lettertypen.json', 'assets/woordenboeken.json') }}
+      - name: Lettertypen, woordenboeken en spellingkern
+        run: |
+          node scripts/haal-lettertypen.mjs
+          node scripts/haal-woordenboeken.mjs
+          node scripts/bouw-spelling-wasm.mjs
+      - run: pnpm versie:check
+      - name: De gewone suite met Linux-verpakkingen bouwen
+        run: pnpm desktop:build --bundles deb,appimage
+      - name: 500 pagina’s inclusief echte herstelkopie en herstelkeuzes
+        run: |
+          "$OFFICE_GUI_PYTHON" scripts/test-writer-lang-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-writer-geheugen/normaal --herstelstart --verwacht-rust-tekst --verwacht-incrementele-bron --verwacht-worker-layout --verwacht-worker-lettertypen --spelling-weergave --framebasis --workerbron
+      - name: Vastgelegde bronupdates onafhankelijk naspelen
+        if: always()
+        # Ook een afgekeurde worker kan een volledige bronreeks hebben bewaard.
+        run: node scripts/test-writer-workerbron.mjs .local/proef-writer-geheugen/normaal/workerbron.json .local/proef-writer-geheugen/normaal/workerbron-herhaling.json
+      - name: Extra selectie, Backspace, undo, redo en garbagecollection
+        env:
+          GEHEUGENRONDES: ${{ inputs.geheugenrondes || '20' }}
+        run: |
+          "$OFFICE_GUI_PYTHON" scripts/test-writer-lang-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-writer-geheugen/herhalen --geheugenrondes "$GEHEUGENRONDES" --geheugen-gc --verwacht-rust-tekst --verwacht-incrementele-bron --verwacht-worker-layout --verwacht-worker-lettertypen --spelling-weergave --framebasis
+      - name: Voorbeeldkopie openen, rijk plakken, bewaren en verder bewerken
+        run: |
+          "$OFFICE_GUI_PYTHON" scripts/test-writer-rijk-plakken-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --rondes 3 --bewaar-na-ronde 1 --maxduur 180 --vereis-rust-plakken --uitvoer .local/proef-writer-geheugen/bewaren
+      - name: Typen en selecteren tijdens spelling na verdubbelen van 128 tabellen
+        run: |
+          "$OFFICE_GUI_PYTHON" scripts/test-writer-rijk-plakken-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --rondes 1 --bron 128-tabellen --methodeprofiel --vervolginvoer --vereis-onderbreekbare-spelling --maxduur 600 --vereis-rust-plakken --uitvoer .local/proef-writer-geheugen/spelling
+      - name: Exacte binary bij afkeuring bewaren
+        if: failure()
+        run: |
+          python3 scripts/bewaar-writer-foutcontext.py --programma src-tauri/target/release/open-office-studio --rapport .local/proef-writer-geheugen/normaal/rapport.json --rapport .local/proef-writer-geheugen/herhalen/rapport.json --rapport .local/proef-writer-geheugen/bewaren/rapport.json --rapport .local/proef-writer-geheugen/spelling/rapport.json --uitvoer .local/proef-writer-geheugen/foutcontext --appimage-map src-tauri/target/release/bundle/appimage
+      - name: Onderzoeksgegevens bewaren
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: writer-geheugen-Linux-${{ github.run_number }}
+          path: |
+            .local/proef-writer-geheugen/
+            !.local/proef-writer-geheugen/foutcontext/inhoud/**
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 30

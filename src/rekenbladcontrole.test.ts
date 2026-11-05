@@ -61,7 +61,8 @@ describe("functienamen in formules", () => {
     expect(isOndersteund("SUM")).toBe(true);
     expect(isOndersteund("_xlfn.XLOOKUP")).toBe(true);
     expect(isOndersteund("_xlfn._xlws.SORT")).toBe(true);
-    expect(isOndersteund("RAND")).toBe(false);
+    expect(isOndersteund("RAND")).toBe(true);
+    expect(isOndersteund("FACT")).toBe(true);
     expect(isOndersteund("IRR")).toBe(false);
     expect(isOndersteund("_xludf.SUM")).toBe(false);
     expect(isOndersteund("ONBEKENDEFUNCTIE")).toBe(false);
@@ -74,11 +75,11 @@ describe("inventarisatie bij openen", () => {
       Rekenen: [
         '<row r="1"><c r="A1"><v>2</v></c><c r="B1"><f>ONBEKEND(A1)</f><v>5</v></c>',
         '<c r="C1"><f>_xludf.MIJNMACRO(A1)</f><v>6</v></c>',
-        '<c r="D1"><f>RAND()*A1</f><v>0.5</v></c></row>',
+        '<c r="D1"><f>IRR(A1:A2)*A1</f><v>0.5</v></c></row>',
         '<row r="2"><c r="A2" t="e"><f>1/0</f><v>#DIV/0!</v></c>',
         '<c r="B2" t="e"><v>#N/A</v></c><c r="C2"><f>A1*3</f></c>',
         '<c r="D2" t="str"><f>IF(A1&gt;1,&quot;ja&quot;,&quot;nee&quot;)</f><v>ja</v></c></row>',
-        '<row r="3"><c r="A3"><f t="shared" ref="A3:A4" si="0">RAND()+A1</f><v>2.4</v></c></row>',
+        '<row r="3"><c r="A3"><f t="shared" ref="A3:A4" si="0">IRR(A1:A2)+A1</f><v>2.4</v></c></row>',
         '<row r="4"><c r="A4"><f t="shared" si="0"/><v>2.7</v></c></row>',
       ].join(""),
     },
@@ -94,7 +95,7 @@ describe("inventarisatie bij openen", () => {
     expect(controle.onbekendeFuncties).toEqual({
       ONBEKEND: ["Rekenen!B1"],
       "_XLUDF.MIJNMACRO": ["Rekenen!C1"],
-      RAND: ["Rekenen!D1", "Rekenen!A3", "Rekenen!A4"],
+      IRR: ["Rekenen!D1", "Rekenen!A3", "Rekenen!A4"],
     });
   });
   it("vindt foutcellen, formules zonder uitkomst en rekensignalen", () => {
@@ -121,7 +122,7 @@ describe("inventarisatie bij openen", () => {
     expect(tekst).toContain(
       "Gebruikersfunctie (macro of invoegtoepassing) MIJNMACRO",
     );
-    expect(tekst).toContain("Functie RAND wordt niet berekend (3 cellen");
+    expect(tekst).toContain("Functie IRR wordt niet berekend (3 cellen");
     expect(tekst).toContain("1 cel had een verouderde opgeslagen uitkomst");
     expect(tekst).toContain("handmatig rekenen");
     expect(tekst).toContain("#DIV/0! (Rekenen!A2); #N/A (Rekenen!B2)");

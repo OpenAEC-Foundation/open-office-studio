@@ -1,0 +1,847 @@
+{
+  "versie": "2026.45.38",
+  "kern": "2026.45.0-alpha.53",
+  "basis_commit": "0cdba9df39dcc066c48a5ad21f1dd4596082b415",
+  "status": "Lokale controles afgerond; platform- en editiecontroles volgen na push. Geen volledige snelheids-/stabiliteits- of migratieacceptatie.",
+  "frontend": {
+    "totaal": 1819,
+    "geslaagd": 1819,
+    "processen": 2,
+    "bestanden": 173
+  },
+  "rust": {
+    "regulier": 23,
+    "integratie": 2,
+    "geslaagd": true
+  },
+  "python": {
+    "totaal": 77,
+    "geslaagd": true
+  },
+  "broncode": {
+    "native/crates/office-writer-plakken/src/bronspiegel.rs": "34cbcc5157defc62ef869c6861231eae4fc3e7ab233bb7f56057df2b4ffa62c2",
+    "native/crates/office-writer-plakken/src/bronvoorraad.rs": "ffe38495731e3bd272923f64d06c31a98b28965953810709c7870f6100169ab0",
+    "native/vendor/docx-edit/src/clipboard_batch.rs": "f6c47e428a55a7332844d036c379795e96872dcaa4543c602c4d9242a3e8b56b",
+    "src-tauri/src/writer_plakken.rs": "1b8fe058e154a9999ef29176b2bfe6ae2bc89b016571cc3581186d67522cbe37",
+    "src/tekst/bewerken/rustBron.ts": "0b01cc65988f6d4c9d202ddd52d686acf4fc913cdb44931a12e0f776a1c21cbd",
+    "src/tekst/bewerken/rustPlakken.ts": "4b6d31f81d3c5d252b878df9737cb9e506891161037d9e89775c23aa217c679e",
+    "src/tekst/bewerken/rustTekst.ts": "075f28452ae602ba624263d496a3b2aeef56b61a3ce7b846a3d50fa741bef9b1",
+    "src/tekst/bewerken/RustPlakLaag.tsx": "42eb8abe18bb1c58a836c1fe6112cffc411fb95b18882107c50640842f7bc482",
+    "native/crates/office-writer-plakken/src/lib.rs": "0c3ea405ea73b82ec57d6ccbb56e5927815c03e9b1951fadec4b25bf38de4626",
+    "src-tauri/src/main.rs": "03d123907b94652dd50cf132e88cdfc289b155dd77b3ee401aef7031b9cf0112"
+  },
+  "bouwketen": {
+    "sessie": 9097,
+    "code": 143,
+    "compiler": "Log meldt geoptimaliseerde releasebouw klaar in 3m42s; ELF aanwezig.",
+    "na_bouw": "Keten kwam niet toe aan kopiëren, meten of GUI-proeven. Geen app- of testproces meer actief.",
+    "oorzaak": "Niet vastgesteld; geen geslaagde complete bouwopdracht geclaimd.",
+    "elf_sha256": "6af66a21a9ec43db3c81a6b3c39cfa30971668007e185660e647055758f5b5e1",
+    "vervolg": "Productiebronnen bytegelijk aan broncode-definitief.json; directe Tauri-CLI schoon laten afsluiten."
+  },
+  "afkeuringen_37": {
+    "geheugen": {
+      "run": 41834760855,
+      "artifact": 13325597384,
+      "sha256_zip": "c0825171e5adf278e38b2c8c0e251a2a244be9222c34b0f6db376cbd9e7b533d",
+      "fout": "Worker materialize out-of-bounds en FrameDelta document epoch moved backwards"
+    },
+    "zeven_linux": {
+      "run": 41834854995,
+      "job": 126593497539,
+      "artifact": 13327834615,
+      "sha256_zip": "1e198e7d26e7c60bc0d6e14c3c668c56655f07f864f1fce2b4624d201b32e6ef",
+      "fout": "Time-out bij openen vóór de eerste plakvolgordestap"
+    },
+    "zelfde_elf_sha256": "3aa02024415aa676550c00d35f18bfc7318832e5567749b75d8997450ecd629f",
+    "hersteld": false
+  },
+  "programma_sha256": "6af66a21a9ec43db3c81a6b3c39cfa30971668007e185660e647055758f5b5e1",
+  "controles": {
+    "typescript": "geslaagd via productiebouw",
+    "rustfmt": "zes werkruimtecrates geslaagd",
+    "clippy": "office-writer-plakken, alle targets, -D warnings geslaagd",
+    "weekversie": "Office/Database 2026-W45.38",
+    "linux_productiebouw": "directe CLI en herbouw na rustfmt terminal 0; beide bytegelijk aan geteste ELF",
+    "workflow_yaml": "desktop/release/geheugen geldig"
+  },
+  "bronmetingen": [
+    {
+      "naam": "meting-37-voor",
+      "code": 0,
+      "programma_sha256": "598c174a633a67a29045f42b42bf06463292f17accae0ea88ce2abd6ad343201",
+      "script_sha256": "ee4620021b40b7ada5a837f659de7ff32f4f43521e4f11fe792638d490f743e7",
+      "rapport_sha256": "ada365a3ac9e2423e1f73a0399dc2aaff4ee3a40507684078859e5d8bca997c5",
+      "geslaagd": true,
+      "invoer_en_inspectie_ms": 2349,
+      "invoer_tot_finale_layout_ms": 3724,
+      "volledige_teksten_exact": true,
+      "verhalen": 1537,
+      "layout_na_invoer": {
+        "final": true,
+        "versie_actueel": true,
+        "layout_actief": true,
+        "paginas": 129,
+        "wacht_ms": 1097.9999999999964
+      },
+      "fouten_voor": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      },
+      "fouten_na": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    {
+      "naam": "meting-38-eerste",
+      "code": 0,
+      "programma_sha256": "6af66a21a9ec43db3c81a6b3c39cfa30971668007e185660e647055758f5b5e1",
+      "script_sha256": "ee4620021b40b7ada5a837f659de7ff32f4f43521e4f11fe792638d490f743e7",
+      "rapport_sha256": "42854aa2e5217de48cece15d03aff27ce30f1c9c1c5488158f1454fbee2c1816",
+      "geslaagd": true,
+      "invoer_en_inspectie_ms": 1955,
+      "invoer_tot_finale_layout_ms": 3016,
+      "volledige_teksten_exact": true,
+      "verhalen": 1537,
+      "layout_na_invoer": {
+        "final": true,
+        "versie_actueel": true,
+        "layout_actief": true,
+        "paginas": 129,
+        "wacht_ms": 845
+      },
+      "fouten_voor": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      },
+      "fouten_na": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    {
+      "naam": "meting-38-tweede",
+      "code": 0,
+      "programma_sha256": "6af66a21a9ec43db3c81a6b3c39cfa30971668007e185660e647055758f5b5e1",
+      "script_sha256": "ee4620021b40b7ada5a837f659de7ff32f4f43521e4f11fe792638d490f743e7",
+      "rapport_sha256": "4f85c8921f9005d04f8fbdd3b0ad40a749a3bedbb0644ed1b9add59601d08109",
+      "geslaagd": true,
+      "invoer_en_inspectie_ms": 1935,
+      "invoer_tot_finale_layout_ms": 3001,
+      "volledige_teksten_exact": true,
+      "verhalen": 1537,
+      "layout_na_invoer": {
+        "final": true,
+        "versie_actueel": true,
+        "layout_actief": true,
+        "paginas": 129,
+        "wacht_ms": 892
+      },
+      "fouten_voor": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      },
+      "fouten_na": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    {
+      "naam": "meting-37-na",
+      "code": 0,
+      "programma_sha256": "598c174a633a67a29045f42b42bf06463292f17accae0ea88ce2abd6ad343201",
+      "script_sha256": "ee4620021b40b7ada5a837f659de7ff32f4f43521e4f11fe792638d490f743e7",
+      "rapport_sha256": "6cdb488b29f26c8587118d429061ec42b6e804590837214218dd632a6b06b684",
+      "geslaagd": true,
+      "invoer_en_inspectie_ms": 2215,
+      "invoer_tot_finale_layout_ms": 3301,
+      "volledige_teksten_exact": true,
+      "verhalen": 1537,
+      "layout_na_invoer": {
+        "final": true,
+        "versie_actueel": true,
+        "layout_actief": true,
+        "paginas": 129,
+        "wacht_ms": 883
+      },
+      "fouten_voor": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      },
+      "fouten_na": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    }
+  ],
+  "verfmetingen": [
+    {
+      "naam": "verfmeting-37-voor",
+      "code": 0,
+      "programma_sha256": "598c174a633a67a29045f42b42bf06463292f17accae0ea88ce2abd6ad343201",
+      "script_sha256": "cebc107663c4762b0351c2d05178b127bdfaffff8d6efb901a00e84014619a0e",
+      "rapport_sha256": "f6e22c52f375f353bb00f3f65db5b9ef7937c4e50404d970cbebac83e7522bb9",
+      "geslaagd": true,
+      "invoer_en_inspectie_ms": 2842,
+      "invoer_tot_finale_layout_ms": 3897,
+      "invoer_tot_getekende_tekst_ms": 4168,
+      "getekende_tekst": {
+        "exact": true,
+        "pogingen": 14,
+        "extra_verf_ms": 271
+      },
+      "volledige_teksten_exact": true,
+      "verhalen": 1537,
+      "layout_na_invoer": {
+        "final": true,
+        "versie_actueel": true,
+        "layout_actief": true,
+        "paginas": 129,
+        "wacht_ms": 836
+      },
+      "fouten_voor": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      },
+      "fouten_na": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    {
+      "naam": "verfmeting-38-eerste",
+      "code": 0,
+      "programma_sha256": "6af66a21a9ec43db3c81a6b3c39cfa30971668007e185660e647055758f5b5e1",
+      "script_sha256": "cebc107663c4762b0351c2d05178b127bdfaffff8d6efb901a00e84014619a0e",
+      "rapport_sha256": "3728ec1685229470a6efde92918cfd882eba26b2f8583a60a316d1bf504a252f",
+      "geslaagd": true,
+      "invoer_en_inspectie_ms": 1995,
+      "invoer_tot_finale_layout_ms": 3058,
+      "invoer_tot_getekende_tekst_ms": 3473,
+      "getekende_tekst": {
+        "exact": true,
+        "pogingen": 21,
+        "extra_verf_ms": 415
+      },
+      "volledige_teksten_exact": true,
+      "verhalen": 1537,
+      "layout_na_invoer": {
+        "final": true,
+        "versie_actueel": true,
+        "layout_actief": true,
+        "paginas": 129,
+        "wacht_ms": 859
+      },
+      "fouten_voor": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      },
+      "fouten_na": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    {
+      "naam": "verfmeting-38-tweede",
+      "code": 0,
+      "programma_sha256": "6af66a21a9ec43db3c81a6b3c39cfa30971668007e185660e647055758f5b5e1",
+      "script_sha256": "cebc107663c4762b0351c2d05178b127bdfaffff8d6efb901a00e84014619a0e",
+      "rapport_sha256": "e14755176d4dd2775119510ca553c6dc5dd7b611c0047bb52a67df0ddc3cb5d1",
+      "geslaagd": true,
+      "invoer_en_inspectie_ms": 1848,
+      "invoer_tot_finale_layout_ms": 2891,
+      "invoer_tot_getekende_tekst_ms": 3305,
+      "getekende_tekst": {
+        "exact": true,
+        "pogingen": 21,
+        "extra_verf_ms": 414
+      },
+      "volledige_teksten_exact": true,
+      "verhalen": 1537,
+      "layout_na_invoer": {
+        "final": true,
+        "versie_actueel": true,
+        "layout_actief": true,
+        "paginas": 129,
+        "wacht_ms": 882.9999999999964
+      },
+      "fouten_voor": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      },
+      "fouten_na": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    {
+      "naam": "verfmeting-37-na",
+      "code": 0,
+      "programma_sha256": "598c174a633a67a29045f42b42bf06463292f17accae0ea88ce2abd6ad343201",
+      "script_sha256": "cebc107663c4762b0351c2d05178b127bdfaffff8d6efb901a00e84014619a0e",
+      "rapport_sha256": "569a082ac27ccc86dce3df29ff80f99dca982dfad723e72613c0b33c160f3629",
+      "geslaagd": true,
+      "invoer_en_inspectie_ms": 2257,
+      "invoer_tot_finale_layout_ms": 3346,
+      "invoer_tot_getekende_tekst_ms": 3698,
+      "getekende_tekst": {
+        "exact": true,
+        "pogingen": 18,
+        "extra_verf_ms": 352
+      },
+      "volledige_teksten_exact": true,
+      "verhalen": 1537,
+      "layout_na_invoer": {
+        "final": true,
+        "versie_actueel": true,
+        "layout_actief": true,
+        "paginas": 129,
+        "wacht_ms": 902
+      },
+      "fouten_voor": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      },
+      "fouten_na": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    }
+  ],
+  "native_proeven": [
+    {
+      "naam": "exacte-hertest-37",
+      "code": 0,
+      "programma_sha256": "3aa02024415aa676550c00d35f18bfc7318832e5567749b75d8997450ecd629f",
+      "script_sha256": "c690f866999ea08d81ed97f30a5269933b24e01955e8b6811bc0e7622e1f1278",
+      "rapport_sha256": "11e349855758f3860e7c2e00c2ff6ce8cf7f20f7df87c19afac3b60655b6c002",
+      "geslaagd": true
+    },
+    {
+      "naam": "exacte-volgorde-37",
+      "code": 0,
+      "programma_sha256": "3aa02024415aa676550c00d35f18bfc7318832e5567749b75d8997450ecd629f",
+      "script_sha256": "7a036f1fbe9c334f42bad331b8cf0aa7edede53c9e883f245697eb126c114f1a",
+      "rapport_sha256": "855045516d352c93a32dc802cd694198a0c2cb0067575f303d558364b2e413f0",
+      "geslaagd": true
+    },
+    {
+      "naam": "renderer-38",
+      "code": 0,
+      "programma_sha256": "6af66a21a9ec43db3c81a6b3c39cfa30971668007e185660e647055758f5b5e1",
+      "script_sha256": "c62f0357d66e4114974f988832edbab139eae8cc9b7f56702e8e473a77e5e902",
+      "rapport_sha256": "f0108633e44d92c669d4846cab62a897683ee5750e4f5fdd4dac0015b7eba247",
+      "geslaagd": true
+    },
+    {
+      "naam": "lang-38",
+      "code": 0,
+      "programma_sha256": "6af66a21a9ec43db3c81a6b3c39cfa30971668007e185660e647055758f5b5e1",
+      "script_sha256": "74e68d99decf1c7f076cb719d2794ddb61d37a163d3e63c1d38dba48bc5dcdd3",
+      "rapport_sha256": "0c56a0c54fbe0536fe4a344354df0f58898e2bd7a958e6adbd06673bd3186159",
+      "geslaagd": true
+    },
+    {
+      "naam": "tekst-38",
+      "code": 0,
+      "programma_sha256": "6af66a21a9ec43db3c81a6b3c39cfa30971668007e185660e647055758f5b5e1",
+      "script_sha256": "b1590d04f779d906f225d867e4c0196ccb62e96784c4857c86a03861ad8a5627",
+      "rapport_sha256": "1d2ea5aeb309ffe78e14c0ed2a9c1718545cdd48d2c3877aaa857a6d6ae068cf",
+      "geslaagd": true
+    },
+    {
+      "naam": "geheugen-38",
+      "code": 0,
+      "programma_sha256": "6af66a21a9ec43db3c81a6b3c39cfa30971668007e185660e647055758f5b5e1",
+      "script_sha256": "74e68d99decf1c7f076cb719d2794ddb61d37a163d3e63c1d38dba48bc5dcdd3",
+      "rapport_sha256": "0e3cf790ed19ded6c7466ada285135033f59842306515971cfc60235100b2878",
+      "geslaagd": true
+    },
+    {
+      "naam": "acht-38",
+      "code": 0,
+      "programma_sha256": "6af66a21a9ec43db3c81a6b3c39cfa30971668007e185660e647055758f5b5e1",
+      "script_sha256": "29a478de731d766687d0a6d0d32788fa900a4c7ab905c53c86a28581076b4f63",
+      "rapport_sha256": "f9b91df8369056ec07f51a9380319113bb0524d43c4d2ea93cf880148695ddcc",
+      "geslaagd": true
+    },
+    {
+      "naam": "vervolginvoer-38",
+      "code": 0,
+      "programma_sha256": "6af66a21a9ec43db3c81a6b3c39cfa30971668007e185660e647055758f5b5e1",
+      "script_sha256": "29a478de731d766687d0a6d0d32788fa900a4c7ab905c53c86a28581076b4f63",
+      "rapport_sha256": "1f083232bb63c37752e948ebb5ab60b3229e404aa22c78cba983213665be51ed",
+      "geslaagd": true
+    },
+    {
+      "naam": "kleur-38",
+      "code": 0,
+      "programma_sha256": "6af66a21a9ec43db3c81a6b3c39cfa30971668007e185660e647055758f5b5e1",
+      "script_sha256": "e872784e5a4e6dd5d6a3842150e7746d374e17f8b9373613ca579c197a99dded",
+      "rapport_sha256": "2fd63ff549613886261ccb881ea81c230a29d3960de179cb8b8c55fa399d6704",
+      "geslaagd": true
+    },
+    {
+      "naam": "bewaren-38",
+      "code": 0,
+      "programma_sha256": "6af66a21a9ec43db3c81a6b3c39cfa30971668007e185660e647055758f5b5e1",
+      "script_sha256": "29a478de731d766687d0a6d0d32788fa900a4c7ab905c53c86a28581076b4f63",
+      "rapport_sha256": "7a30c713feb3e23339a5f4d7d2298832d056f6ca7259990eeedc65e5ca6fcd7c",
+      "geslaagd": true
+    },
+    {
+      "naam": "tabelgrepen-38",
+      "code": 0,
+      "programma_sha256": "6af66a21a9ec43db3c81a6b3c39cfa30971668007e185660e647055758f5b5e1",
+      "script_sha256": "64d0e30e5527caa0a027902d21a241d109f10abb2be8aec67844cc9d017e3966",
+      "rapport_sha256": "34d12c1cfb94a3cbc1386388e7895c7adcde0192df62e29b5c1a681eb9583d44",
+      "geslaagd": true
+    },
+    {
+      "naam": "volgorde-38",
+      "code": 0,
+      "programma_sha256": "6af66a21a9ec43db3c81a6b3c39cfa30971668007e185660e647055758f5b5e1",
+      "script_sha256": "7a036f1fbe9c334f42bad331b8cf0aa7edede53c9e883f245697eb126c114f1a",
+      "rapport_sha256": "53438723d615c5e25605f2c1fbf3dbd92d2b8be7fd02a43f401900d75a3926a4",
+      "geslaagd": true
+    }
+  ],
+  "rastercontrole": {
+    "roi": [
+      755,
+      294,
+      822,
+      309
+    ],
+    "referentie_sha256": "25ae02a27de408d107182ec4b9dfc2a6f67efa590a1986753145d0dd1afa4b97",
+    "uitkomsten": [
+      {
+        "naam": "verfmeting-37-voor",
+        "screenshot_sha256": "25ae02a27de408d107182ec4b9dfc2a6f67efa590a1986753145d0dd1afa4b97",
+        "tekstgebied_exact": true,
+        "lint_afwijkende_pixels": 0,
+        "volledig_afwijkende_pixels": 0
+      },
+      {
+        "naam": "verfmeting-38-eerste",
+        "screenshot_sha256": "31a0e6076c09be067508fe7b00cb723ea78d24d4c6858a718600589405c0dcac",
+        "tekstgebied_exact": true,
+        "lint_afwijkende_pixels": 0,
+        "volledig_afwijkende_pixels": 3
+      },
+      {
+        "naam": "verfmeting-38-tweede",
+        "screenshot_sha256": "31a0e6076c09be067508fe7b00cb723ea78d24d4c6858a718600589405c0dcac",
+        "tekstgebied_exact": true,
+        "lint_afwijkende_pixels": 0,
+        "volledig_afwijkende_pixels": 3
+      },
+      {
+        "naam": "verfmeting-37-na",
+        "screenshot_sha256": "25ae02a27de408d107182ec4b9dfc2a6f67efa590a1986753145d0dd1afa4b97",
+        "tekstgebied_exact": true,
+        "lint_afwijkende_pixels": 0,
+        "volledig_afwijkende_pixels": 0
+      }
+    ]
+  },
+  "native_protocol": {
+    "aanvragen": [
+      " ",
+      "E",
+      "e",
+      "n ",
+      "pro",
+      "e",
+      "fzin."
+    ],
+    "bronnen": [
+      {
+        "schema": 2,
+        "basis": false,
+        "base64_bytes": 1224420
+      },
+      {
+        "schema": 2,
+        "basis": true,
+        "base64_bytes": 48
+      },
+      {
+        "schema": 2,
+        "basis": true,
+        "base64_bytes": 48
+      },
+      {
+        "schema": 2,
+        "basis": true,
+        "base64_bytes": 48
+      },
+      {
+        "schema": 2,
+        "basis": true,
+        "base64_bytes": 48
+      },
+      {
+        "schema": 2,
+        "basis": true,
+        "base64_bytes": 48
+      },
+      {
+        "schema": 2,
+        "basis": true,
+        "base64_bytes": 48
+      }
+    ],
+    "antwoorden": 7,
+    "voorbereiding_ms": [
+      33,
+      29,
+      34,
+      30,
+      31,
+      49,
+      30
+    ],
+    "antwoord_ms": [
+      67,
+      48.99999999999818,
+      41,
+      43,
+      47,
+      62,
+      32
+    ],
+    "native_encoder_bevestigd": 7,
+    "invoke_wijzigbaar": false
+  },
+  "inventaris": {
+    "open_issues": 118,
+    "migratiegebieden": 10,
+    "open_acceptatievlaggen": 30,
+    "gesloten": 0
+  },
+  "bewijs": {
+    "acht-38.json.gz": {
+      "sha256": "a56576f33345911089cdbf580210365648b15a3b35ae48220262d2874fd1813d",
+      "bytes": 24834
+    },
+    "bewaren-38.json.gz": {
+      "sha256": "241e016f38e02327975189e6c3eba370a986b33ff7d4a7daaa59e122a8f8539d",
+      "bytes": 2792
+    },
+    "bouw-45.38-cli.log.gz": {
+      "sha256": "62d05acdb41a323f454a692587c32e178207bb1362eb1c69edc0c6cb7afcad08",
+      "bytes": 10659
+    },
+    "bouw-45.38-definitief.log.gz": {
+      "sha256": "54fb92dd95c05ece78fc34790c5538a6181b0749b76f0a712a08328e9385be96",
+      "bytes": 10725
+    },
+    "bouw-na-rustfmt.log.gz": {
+      "sha256": "c055fee1f9d4fdef4f195aa13dd5313e6e818221bb31b06c55547d92daad6d91",
+      "bytes": 10689
+    },
+    "bouwketen-143.json.gz": {
+      "sha256": "0c3f28feb1772efc1b43f3bdc58b4b6aab56b2ef1bc1514b6c31bab054414dd8",
+      "bytes": 376
+    },
+    "broncode-definitief.json.gz": {
+      "sha256": "8b7a9c9833080140926b91015aa9e554e831473dda6910fac18dcbd4d852af62",
+      "bytes": 515
+    },
+    "ci-37-geheugen-afgekeurd.json.gz": {
+      "sha256": "cf80667ad12cbb12ea75798834d389fa4e558272c08364cbfa7cd1336938b870",
+      "bytes": 3891
+    },
+    "ci-37-geheugen-afgekeurd.png": {
+      "sha256": "53fce26e22386919446f7a75a30916d104adc5b2b6c6679ec55fda5447d94cb1",
+      "bytes": 72985
+    },
+    "ci-37-geheugen-context-controle.json.gz": {
+      "sha256": "54636882cb32c9382735e10b535bf7f9443285b8a94bc7100d45b77c4a9b02a9",
+      "bytes": 1409
+    },
+    "ci-37-geheugen-context.json.gz": {
+      "sha256": "99b0d71f4454f386307b088b3148f440dc35618ed87df5bf8a12cec3e207d24a",
+      "bytes": 4077
+    },
+    "ci-37-geheugen-rapport.json.gz": {
+      "sha256": "cf80667ad12cbb12ea75798834d389fa4e558272c08364cbfa7cd1336938b870",
+      "bytes": 3891
+    },
+    "ci-37-geheugen-taak.log.gz": {
+      "sha256": "3fc30a5782f027c132697e416417648dff1b44ff01035949c551b21101e34521",
+      "bytes": 1139
+    },
+    "ci-37-zeven-afgekeurd.png": {
+      "sha256": "cd86607531f81f019a0cc436d8fc7b595bcd5009e73d5e5a7a07f23103713e64",
+      "bytes": 55875
+    },
+    "ci-37-zeven-context-controle.json.gz": {
+      "sha256": "8c541db10e1632752426b30436a906788fdc79a3521fc0d29b0e5ae0029a08fa",
+      "bytes": 1256
+    },
+    "ci-37-zeven-context.json.gz": {
+      "sha256": "de85afb4d6a8454b5c5054c18c8dbd40bde770684263b34e4a09729ed010b962",
+      "bytes": 3967
+    },
+    "ci-37-zeven-rapport.json.gz": {
+      "sha256": "2e8e6c07aa0eaf4f44d2aec2f160aa767a655667e2595f1b73d1b9439149ab75",
+      "bytes": 415
+    },
+    "ci-37-zeven-taak-api.log.gz": {
+      "sha256": "d62153334a0b4427f8fc6ac33fa846dbd271055322ab794357477e66e0b204f4",
+      "bytes": 110814
+    },
+    "ci-37-zeven-taak.log.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 20
+    },
+    "clippy-schrijver.log.gz": {
+      "sha256": "620eaed6da1f311099a5e7d9f578c33bdbf75178ed94ce1f2e2e8433275b079a",
+      "bytes": 4706
+    },
+    "exacte-hertest-37.json.gz": {
+      "sha256": "66027f7432ac297f446c3d49cbe35a6320665664d3837615deac3452ff1466bc",
+      "bytes": 2777
+    },
+    "exacte-volgorde-37.json.gz": {
+      "sha256": "04b6e9f09b5879e38df5fcc75bb039ba6173e9a986282ceeaa84f7453ac3506f",
+      "bytes": 1819
+    },
+    "frontend-bronidentiteit-voor.json.gz": {
+      "sha256": "4defa8be75dab6c47d573eeda5a8f763feb816a224559c901d8347a10381e2f6",
+      "bytes": 969
+    },
+    "frontend-gericht.json.gz": {
+      "sha256": "74c8df4ab064f549854d63db2dc4171e3efcbffbfc2f6433792182956fdbba56",
+      "bytes": 2452
+    },
+    "frontend-hydratie-volledig.json.gz": {
+      "sha256": "e0e319d78615070e17f2b52e55b655f4839f2766f46894a0934085ddd4fefbd1",
+      "bytes": 78562
+    },
+    "frontend-hydratie.json.gz": {
+      "sha256": "981ed90f0f694934f49fdaf6c382cbdf99fc7c8361565507106a0fa6c0c433b5",
+      "bytes": 2522
+    },
+    "frontend-vector-volledig.json.gz": {
+      "sha256": "4bb90e710d93eff3872e2837538c7cc3f211a2c4defa4607072c95eee696ab6b",
+      "bytes": 78478
+    },
+    "frontend-vector.json.gz": {
+      "sha256": "8ba0282550ee1ec7714644cec20bb25bd1c69977ed8e63efbb18e83cf6f51f0c",
+      "bytes": 2437
+    },
+    "geheugen-38-framebasis.json.gz": {
+      "sha256": "e5b92eb8b941e55597733b2a3e880ae391bb9a591c91f9d77b0c5c97b00d3b8a",
+      "bytes": 416043
+    },
+    "geheugen-38-workerbron.json.gz": {
+      "sha256": "1c201008e8c415d36946ee27dc69b9c470f1efdfd4c09ca253e86760d5c67620",
+      "bytes": 74184
+    },
+    "geheugen-38.json.gz": {
+      "sha256": "815f1c62ca898715f3b3718b9653ee969b50214e690774860547d7a56a6dd06b",
+      "bytes": 5652
+    },
+    "kleur-38.json.gz": {
+      "sha256": "1371e9bf87fd2fdd2fe40704ff164dfe68f3d2009f04e5ce00145f8c3ba3d55c",
+      "bytes": 4867
+    },
+    "lang-38-framebasis.json.gz": {
+      "sha256": "64617de0a2ab48a755f49ba5094b3213ce8ef6e07be4005addf2930763d9e8cd",
+      "bytes": 416003
+    },
+    "lang-38.json.gz": {
+      "sha256": "2af04def05d58147d24f59b0986349bf5dba9e85c9af9aff32e96e73e7078134",
+      "bytes": 4583
+    },
+    "meet-getekende-tekst-native.py.gz": {
+      "sha256": "c0466f6ebefb79b62f768d034e9c349cf30a6f797dc39149e5437603e10bd92c",
+      "bytes": 5403
+    },
+    "meetplan.json.gz": {
+      "sha256": "e4ac3da9b1fc074ca51bd7040644f0dcc642d359ec8343602d90649e025459c9",
+      "bytes": 258
+    },
+    "meetuitkomsten.json.gz": {
+      "sha256": "0dece8323a77a21864e2ee42a3a39d0c643997d9e8036b8005f221ad02b6152d",
+      "bytes": 415
+    },
+    "meting-37-na.json.gz": {
+      "sha256": "090f5a676c1ffcc6b55ae403dfe620a91b524fbfa2d35ad452a7c31114757b3e",
+      "bytes": 1046
+    },
+    "meting-37-voor.json.gz": {
+      "sha256": "82fc667b76430d58d7b2e96673c7244c4fd7e401473705e4aa0400010865b405",
+      "bytes": 1056
+    },
+    "meting-38-eerste.json.gz": {
+      "sha256": "12ce1aaf69743ad90cd2bb40392a673259f917b197426203c325bd47191b98ef",
+      "bytes": 1045
+    },
+    "meting-38-tweede.json.gz": {
+      "sha256": "21136ef35ae4fb914ddbfa52dac775a6947a7f3df871536a8f4d710fdd5f51b9",
+      "bytes": 1048
+    },
+    "na-verf.png": {
+      "sha256": "31a0e6076c09be067508fe7b00cb723ea78d24d4c6858a718600589405c0dcac",
+      "bytes": 92418
+    },
+    "onderzoeksproef-bronvervanging-voor.test.ts.gz": {
+      "sha256": "b07565ebabbe91b8a16d3824786251e7da23d6e6184c2c1b14527b29c56a8325",
+      "bytes": 2313
+    },
+    "onderzoeksproef-bronvervanging.md.gz": {
+      "sha256": "53c2251ecd8fe6101f0d562ccd3d4e61cf37bced2416565d82bc413943d57096",
+      "bytes": 543
+    },
+    "proefuitkomsten.json.gz": {
+      "sha256": "d3d037e6cf753809f08ade5136c5880cabc6f2b04d61006bb9eb6e64f827e1af",
+      "bytes": 833
+    },
+    "proeven.json.gz": {
+      "sha256": "a864776e5a2357c86a04b5733df28b9bc3059611d0fd5de2e55b19e2d8891c45",
+      "bytes": 582
+    },
+    "python-definitief.log.gz": {
+      "sha256": "d261b7e5bb8cec24bc32bb767fc0ed083b061866b5933194f2c52e85de95bc6f",
+      "bytes": 1987
+    },
+    "renderer-38.json.gz": {
+      "sha256": "f2b817939d3fc0287cf584aff47da6e31578787260bd00e0edbd62b4c6d0f1ab",
+      "bytes": 1477
+    },
+    "rust-acht.log.gz": {
+      "sha256": "02202c7162d7edfdb329673624ffe636c1e375979a8eee42151123224d192695",
+      "bytes": 4470
+    },
+    "rust-alpha53.log.gz": {
+      "sha256": "efbacd49ae4b581e946f1f6ef07b12521b43af990f8971b8ce42f2896f7a4b3e",
+      "bytes": 4561
+    },
+    "rust-eerste.log.gz": {
+      "sha256": "a4e1041338311d6368f61c5026e5a8887bf867c3ad9433cd2e40cc423142918c",
+      "bytes": 5390
+    },
+    "rust-vector-definitief.log.gz": {
+      "sha256": "85b7816b68a1208ee5c09e3faf166f9a4812cd1aa6366d5de4e760962813e20a",
+      "bytes": 4633
+    },
+    "rust-vector.log.gz": {
+      "sha256": "1f658248afc6587ffc3949ba0e34f48404d66bafebf6c9814d4c84bb0da991a7",
+      "bytes": 4592
+    },
+    "rust-verbatim.log.gz": {
+      "sha256": "02e1580a07cdd3f36f4323be6900fffbaebd2486faac35c6af9115df43fabbc9",
+      "bytes": 4587
+    },
+    "rust-voorraad.log.gz": {
+      "sha256": "a3c1ea5982b3d9f27cd146a7233c4a11ee2d7cc5dff5e2e3d02b94807b79e0fa",
+      "bytes": 4561
+    },
+    "rustfmt-controle.log.gz": {
+      "sha256": "e3f82020e146453647cfa80ca685574e6558653afb7f46be108f458d3d1a6d18",
+      "bytes": 519
+    },
+    "rustfmt-definitief.log.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 20
+    },
+    "tabelgreep.png": {
+      "sha256": "fdfad2e3caadacbc854e10fe4b33422a7b84593386e5628dd1842ee69566b0bb",
+      "bytes": 159824
+    },
+    "tabelgrepen-38.json.gz": {
+      "sha256": "a6c063723e7179d9c9c93882692cc1c472899921ed9569c2969fb6ed182507c1",
+      "bytes": 1065
+    },
+    "tekst-38.json.gz": {
+      "sha256": "2f5e504bbcd549e2e3c86b3c1413e78e1cb0283bbcecaadb9421759aa7d3e530",
+      "bytes": 2180
+    },
+    "verf-38-profiel.json.gz": {
+      "sha256": "59dfff4baf7cdc4aa0523494158ce06509623d5b6fcd9b03670bee2da49aba31",
+      "bytes": 654033
+    },
+    "verf-na-een-seconde.png": {
+      "sha256": "31a0e6076c09be067508fe7b00cb723ea78d24d4c6858a718600589405c0dcac",
+      "bytes": 92418
+    },
+    "verf-na-twee-frames.png": {
+      "sha256": "76a6ff00949f94023f742b555c19e3916eff40d48b8c45354a8b3e3de538c1dd",
+      "bytes": 92390
+    },
+    "verf-rastercontrole.json.gz": {
+      "sha256": "4d724eda67b8f8970d03b5250de5656849bae89cd9da4c3b869b8dfa9b0acf08",
+      "bytes": 315
+    },
+    "verfdiagnose-native.py.gz": {
+      "sha256": "6795eae0af2788721f46a86b57ba4e2165bd9574445c60f79d85db2acd041815",
+      "bytes": 5373
+    },
+    "verfmeetplan.json.gz": {
+      "sha256": "e6bc37842fe85b2824632655a4326bdfca306d2488bf4261717187a2075214f3",
+      "bytes": 266
+    },
+    "verfmeetuitkomsten.json.gz": {
+      "sha256": "b39628733f632780da63bbefbb00ff311df4acea51d4e352404c2b23216343c3",
+      "bytes": 419
+    },
+    "verfmeting-37-na.json.gz": {
+      "sha256": "302a2bd5e0ecfd6f77d6a955adf7ee339915fe9ac8c659243c74dbc0f95618af",
+      "bytes": 1235
+    },
+    "verfmeting-37-voor.json.gz": {
+      "sha256": "0f2d0b96c65379450b7e5c1a2e51a02cd49fefe25aaf3dd34f3d2cabd7d55d88",
+      "bytes": 1238
+    },
+    "verfmeting-38-eerste.json.gz": {
+      "sha256": "0b176b16b5af9cca798bf4bfb3c09605ee30f1a535c77945e7c181d0741d6bd9",
+      "bytes": 1242
+    },
+    "verfmeting-38-tweede.json.gz": {
+      "sha256": "e8ce6ceacfc3da8658849d001885a22d413d333007067be5352d4bd4b883d850",
+      "bytes": 1248
+    },
+    "vervolginvoer-38.json.gz": {
+      "sha256": "d36456f9789e221196c322bd09af71dc8691e34f8784c5717e1da0da253ceb10",
+      "bytes": 15597
+    },
+    "voer-verfmetingen.py.gz": {
+      "sha256": "8771712ef73e1110548dfce80dcf559e03ab69935010c6ad70680d6615431ecd",
+      "bytes": 637
+    },
+    "volgorde-38.json.gz": {
+      "sha256": "ae52b9d5f745b54a24c1e7a5c798fa5ec8b44e3afd4dc7cc93665c5d6b11cc49",
+      "bytes": 1841
+    },
+    "voor-verf.png": {
+      "sha256": "f937863e608a021f03257a5bba1768c3d8a552ba2abf863669ed6c6d818e990a",
+      "bytes": 91159
+    },
+    "weekversie-definitief.log.gz": {
+      "sha256": "5388b3c17c89a46bf9fba8dfaaf8bebbdb70e272b420b3d103b48905e46b6296",
+      "bytes": 104
+    }
+  },
+  "omgeving": "Geïsoleerde native Linux-app onder Xvfb/X11 met softwareweergave; geen algemene hardware- of FPS-acceptatie."
+}

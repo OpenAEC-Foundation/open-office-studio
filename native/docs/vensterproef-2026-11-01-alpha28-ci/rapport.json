@@ -1,0 +1,135 @@
+{
+  "versie": "Open Office Studio 2026.44.9-alpha.28 (native)",
+  "programma_sha256": "69ee3e6d8dd673754b46c221dad855c09bee0497384fb49773d20779f98b5857",
+  "broncommit": "0a33c75d24603e6f8f18597980a2c71888c2df32",
+  "proefbron_sha256": "2a0ebbafbce5dd780fe9ffbfdb596d3a2ea01a39b72d52fad357b5dcd7b04b6d",
+  "geslaagd": true,
+  "omvang": "Echt native Linux-venster, X11-muis/toetsen en systeemklembord, in eigen Xvfb en vooraf geïsoleerde sessie-D-Bus/XDG-profielen. Geen fysieke hardware, andere platforms, volledige suite, IME-compositie of systeemdialoog.",
+  "stappen": [
+    {
+      "stap": "Eigen XLSX geopend in het echte native venster",
+      "beeld": {
+        "bestand": "spreadsheet-open.png",
+        "sha256": "0c55892c132cf4dc8cda75516ab29630c5fbb9a93e794f35f83e1aa22beaffde"
+      }
+    },
+    {
+      "stap": "Echte muissleep selecteert B2:D4; adresveld via systeemklembord bevestigd",
+      "beeld": {
+        "bestand": "spreadsheet-bereik.png",
+        "sha256": "68b295cb2a4a99cded3fb4aa69d84b63998b77e41069a8f0c890d34c18951824"
+      }
+    },
+    {
+      "stap": "Lintopmaak en bewaren: alle negen cellen vet, oorspronkelijke formules behouden",
+      "beeld": {
+        "bestand": "spreadsheet-bereik-opmaak.png",
+        "sha256": "80632dab0eac311cff2cf341f2d35baa86874ccb1ca2234703cb5121a00c9239"
+      }
+    },
+    {
+      "stap": "Snelle Shift-pijlen, Shift-klik en extra uitbreiding bewaren het oorspronkelijke anker D4"
+    },
+    {
+      "stap": "Bereikopmaak met één undo bronexact hersteld"
+    },
+    {
+      "stap": "Ctrl+C, klik F2, Ctrl+V en één Ctrl+S zonder kunstmatige tussenpauzes: drie bij drie platte waarden bewaard; bereik F2:H4",
+      "beeld": {
+        "bestand": "spreadsheet-klembord.png",
+        "sha256": "6b21ffe94607b0ad5a5fa497b21e92f0b85981af49fb94df987ade564d9f7b86"
+      }
+    },
+    {
+      "stap": "Blokplakken met één undo en één directe bewaaropdracht bronexact hersteld"
+    },
+    {
+      "stap": "Snelle Down/78/Enter zonder onderlinge pauzes bereikt B4; na bewaren B2=3 en B3=78",
+      "beeld": {
+        "bestand": "spreadsheet-snelle-invoer.png",
+        "sha256": "a714d4286bd16d640185514b04b4f9c33eb05e9f329171594a95c5a5be390364"
+      }
+    },
+    {
+      "stap": "Snelle celinvoer met één undo bronexact hersteld"
+    },
+    {
+      "stap": "F2/selecteren/7/Enter/8/Enter en één Ctrl+S zonder kunstmatige tussenpauzes bewaart beide cellen en bereikt B4",
+      "beeld": {
+        "bestand": "spreadsheet-opeenvolgende-invoer.png",
+        "sha256": "f53dd230e6af0c1ff7e0a70b696076346c1c1c59604087aadfe96c1b1bfee9f2"
+      }
+    },
+    {
+      "stap": "Twee celbewerkingen met twee directe undo-opdrachten en één bewaren bronexact hersteld"
+    },
+    {
+      "stap": "F2/Home/7/Enter en één bewaren zonder tussenpauzes schrijft 73 in B2"
+    },
+    {
+      "stap": "Direct verder typen na bewaren zonder nieuwe klik schrijft B3=8 en bereikt B4",
+      "beeld": {
+        "bestand": "spreadsheet-home-en-bewaarfocus.png",
+        "sha256": "87c19517b71e6c8cd8f6f23238cc24de94127e6736b7994e84ee5aeadb766469"
+      }
+    },
+    {
+      "stap": "Beide Home-/bewaarfocusbewerkingen met twee undo-opdrachten en één bewaren bronexact hersteld"
+    },
+    {
+      "stap": "Unicode-systeemklembord in G10 met directe Ctrl+V/Enter en één Ctrl+S zonder tussenpauzes; geen extra bewaren; XML-waarde klopt",
+      "beeld": {
+        "bestand": "spreadsheet-unicode.png",
+        "sha256": "9414905cbfb96eb72e9e03d65dc4393872e459fb621ed140f36c855ba314fb2d"
+      }
+    },
+    {
+      "stap": "Celbewerking met één undo bronexact hersteld"
+    },
+    {
+      "stap": "Bestand geopend en gesloten met behoud van de oorspronkelijke bron"
+    },
+    {
+      "stap": "Eigen venster schoon gesloten",
+      "procescode": 0
+    },
+    {
+      "stap": "Bewaarde Unicode-bron opnieuw in een nieuw echt venster geopend",
+      "bron_sha256": "e6e8ceb7bcaa2a795605877e67dfe0e9a15824acf29518249d720aaecf20a866",
+      "beeld": {
+        "bestand": "spreadsheet-unicode-heropend.png",
+        "sha256": "90ea9dfd238c808ece3550c03049d8918c1d55c71970269fb44ec357110b78ab"
+      }
+    },
+    {
+      "stap": "Heropende cel via F2 en systeemklembord exact gecontroleerd, Escape behoudt bron",
+      "beeld": {
+        "bestand": "spreadsheet-unicode-heropend-gecontroleerd.png",
+        "sha256": "c69044d024405b2b10201fd99928341f9eadd73ce4324f222ad126d3d2e27ad1"
+      }
+    },
+    {
+      "stap": "Ook het heropende eigen venster schoon gesloten",
+      "procescode": 0
+    }
+  ],
+  "functionele_stappen_geslaagd": true,
+  "visuele_controle_geslaagd": true,
+  "visuele_controle": {
+    "omvang": "Gerichte controle van B2=73/B3=8 met B4 als bestemming na Home en verder typen na bewaren, Bestand zonder documentlint/raster en G10 met zichtbaar huisteken na heropenen. Geen volledige suite-, lettertype- of pixelpariteit.",
+    "beelden": [
+      {
+        "bestand": "spreadsheet-home-en-bewaarfocus.png",
+        "sha256": "87c19517b71e6c8cd8f6f23238cc24de94127e6736b7994e84ee5aeadb766469"
+      },
+      {
+        "bestand": "spreadsheet-bestand.png",
+        "sha256": "4d7707ce4705c2518ed5da432ca68a80d522c88d7111c25ab5d24d84f20e4f39"
+      },
+      {
+        "bestand": "spreadsheet-unicode-heropend-gecontroleerd.png",
+        "sha256": "c69044d024405b2b10201fd99928341f9eadd73ce4324f222ad126d3d2e27ad1"
+      }
+    ]
+  }
+}

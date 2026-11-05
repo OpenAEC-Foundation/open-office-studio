@@ -1,0 +1,22 @@
+{
+  "omvang": "Vooraf vastgelegde negatieve regressies, daarna gecorrigeerd en in de volledige suite opnieuw gecontroleerd. De eerdere onvolledige totaalronde is afgebroken vóór een nieuwe focusproef, niet goedgekeurd.",
+  "basiscommit": "3aa197019e8d5b07702252a8bc4a50701c7c59aa",
+  "gevallen": [
+    {
+      "naam": "Lokale navigatie en invoer in één oude widgetronde",
+      "mislukt": 2,
+      "waarneembaar": "De buurcel veroorzaakte nog rasterwerk; de gezamenlijke pijl/7/8/Enter-reeks bleef bij B2 in plaats van B4.",
+      "testlog_sha256": "0f09187f1407c61e332286a76e931c5968e8fa215988e15fa0af285d425c1a85",
+      "reproduceerpatch_sha256": "4bb0252e433c977c8722e93a17d57ee256648e000a7ff381ffb2e6a53dc881b7"
+    },
+    {
+      "naam": "Late lokale focus na nieuwe editor",
+      "mislukt": 1,
+      "waarneembaar": "De oude navigatietaak voerde na het openen van de nieuwe editor nog een focusoperatie uit.",
+      "testlog_sha256": "2b44bdbb14e2b106a442b164b46548470d2f4bdfc2749d810e536249ddae1330",
+      "reproduceerpatch_sha256": "6dfeaa64bda552a5b387572b75618af0cf14ee97c15b367dca92deda3d935662"
+    }
+  ],
+  "laatste_volledige_bron_gecontroleerd": true,
+  "laatste_testlog_sha256": "9a31614a2a5d8b583f5884dbe259d3d9cf04a02f298d97cb5e587a296f44d4cf"
+}

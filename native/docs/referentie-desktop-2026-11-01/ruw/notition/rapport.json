@@ -1,0 +1,92 @@
+{
+  "geslaagd": true,
+  "referentie_goedgekeurd": false,
+  "omvang": "Aanvullende oorspronkelijke Linux-desktopbeelden in eigen Xvfb/D-Bus/XDG-sessie. Waargenomen GUI bediend met X11; geen vervanging van de vaste webreferenties of native pixelgoedkeuring.",
+  "weergaveomgeving": {
+    "WEBKIT_DISABLE_DMABUF_RENDERER": "1",
+    "WEBKIT_DISABLE_COMPOSITING_MODE": "1"
+  },
+  "voorkeuren": {
+    "taal": "nl",
+    "thema": "forge",
+    "updates": {
+      "automatisch": false,
+      "kanaal": "ontwikkel"
+    }
+  },
+  "appimage": {
+    "versie": "2026.44.8",
+    "broncommit": "0fc4d2bbf94bb6025d8d8517d53631d5f830cd1e",
+    "appimage_sha256": "4623bb10ff9e8f3e6eb0d9229e327196c1f1d29b31334856dd95b70ea6047cc2",
+    "digest_bron": "GitHub Release API van OpenAEC-Foundation/open-office-studio, v2026.44.8",
+    "single_instance": "2.5.4: gecontroleerde Linux-implementatie gebruikt uitsluitend de eigen sessie-D-Bus."
+  },
+  "programma_sha256": "10e3ed617e45d4c4e5973d49cb1a2a0846343d05fe82ad322e04a514e39b2700",
+  "acties": [
+    {
+      "opdracht": "01.actie.json",
+      "x11": [
+        [
+          "mousemove",
+          "--sync",
+          76,
+          476
+        ],
+        [
+          "click",
+          1
+        ],
+        [
+          "mousemove",
+          "--sync",
+          0,
+          0
+        ]
+      ],
+      "wacht": 2
+    },
+    {
+      "opdracht": "02.actie.json",
+      "x11": [
+        [
+          "mousemove",
+          "--sync",
+          150,
+          171
+        ],
+        [
+          "click",
+          1
+        ],
+        [
+          "mousemove",
+          "--sync",
+          0,
+          0
+        ]
+      ],
+      "wacht": 2,
+      "afronden": true
+    }
+  ],
+  "module": "notition",
+  "fixture_ingang": "Eigen JSON vóór opstarten als enige notitiesleutel in eigen nieuw WebKit-testprofiel",
+  "opnamen_identiek": true,
+  "bron_ongewijzigd": true,
+  "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+  "voorkeuren_na_start": {
+    "taal": "nl",
+    "thema": "forge",
+    "updates": {
+      "automatisch": false,
+      "kanaal": "ontwikkel"
+    }
+  },
+  "beelden": {
+    "notition-01.actie.png": "0f9521a6af8c757d30f5798e17c9071544f11313987fb33dd52594f9233e6209",
+    "notition-02.actie.png": "0579e19835372a653d11772bd6eeadb1ac38f63bf4196ed0690db11e2af3f4c0",
+    "notition-kandidaat-herhaald.png": "0579e19835372a653d11772bd6eeadb1ac38f63bf4196ed0690db11e2af3f4c0",
+    "notition-kandidaat.png": "0579e19835372a653d11772bd6eeadb1ac38f63bf4196ed0690db11e2af3f4c0",
+    "notition-voor-bediening.png": "37551c46980bf5fc32d9fec31408a77f8fea56cec88bbed7646a87e0b73367f2"
+  }
+}

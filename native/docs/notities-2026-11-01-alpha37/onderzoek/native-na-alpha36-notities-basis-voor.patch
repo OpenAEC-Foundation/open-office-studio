@@ -1,0 +1,96 @@
+diff --git a/native/crates/office-ui/src/tests/raster_proeven.rs b/native/crates/office-ui/src/tests/raster_proeven.rs
+index 22f7566..8af0767 100644
+--- a/native/crates/office-ui/src/tests/raster_proeven.rs
++++ b/native/crates/office-ui/src/tests/raster_proeven.rs
+@@ -74,6 +74,91 @@ fn writer_snel(p: &mut Proef, berichten: impl IntoIterator<Item = writer_direct:
+     assert!(!p.app.tab().unwrap().writer_direct.heeft_werk());
+ }
+ #[test]
++fn notitie_omzetting_bewaart_canvas_en_opent_een_gevulde_markdownkopie() {
++    let bron = include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json");
++    let mut p = Proef::met_app(app_met_werkdraad(Module::Notition, bron));
++    let origineel: serde_json::Value = serde_json::from_slice(bron).unwrap();
++    p.klik(iced::Point::new(165., 95.));
++    let d: serde_json::Value = serde_json::from_slice(&p.bron()).unwrap();
++    let secties = d["boeken"][0]["secties"].as_array().unwrap();
++    assert_eq!(
++        secties.len(),
++        3,
++        "Een andere sectiesoort krijgt een afzonderlijke kopie"
++    );
++    assert_eq!(secties[0], origineel["boeken"][0]["secties"][0]);
++    assert_eq!(secties[1], origineel["boeken"][0]["secties"][1]);
++    assert_eq!(secties[2]["soort"], "markdown");
++    assert!(
++        secties[2]["paginas"][0]["markdown"]
++            .as_str()
++            .unwrap()
++            .contains("Een vrij tekstvak")
++    );
++    assert!(
++        secties[2]["paginas"][0]["markdown"]
++            .as_str()
++            .unwrap()
++            .contains("Een idee op een andere plek")
++    );
++    assert!(
++        p.app
++            .tab()
++            .unwrap()
++            .antwoord
++            .as_ref()
++            .unwrap()
++            .beeld
++            .notitie
++            .as_ref()
++            .unwrap()
++            .markdown
++    );
++    assert_eq!(p.app.tab().unwrap().deel, 2);
++    p.bericht(Msg::Terug);
++    assert_eq!(p.bron().as_slice(), bron.as_slice());
++    assert_eq!(p.app.tab().unwrap().deel, 0);
++    assert!(
++        !p.app
++            .tab()
++            .unwrap()
++            .antwoord
++            .as_ref()
++            .unwrap()
++            .beeld
++            .notitie
++            .as_ref()
++            .unwrap()
++            .markdown
++    );
++}
++#[test]
++fn notitie_een_tekstklik_en_direct_typen_behouden_de_invoer() {
++    let bron = include_bytes!("../../../../../docs/voorbeelden/Notitieboek.json");
++    let mut p = Proef::met_app(app_met_werkdraad(Module::Notition, bron));
++    p.klik(iced::Point::new(370., 311.));
++    p.toets(
++        iced::keyboard::Key::Character("9".into()),
++        iced::keyboard::Modifiers::empty(),
++        Some("9"),
++    );
++    let tekst = p.app.tab().unwrap().editor.text();
++    assert_eq!(tekst.replace('9', ""), "Een vrij tekstvak");
++    assert_eq!(
++        tekst.matches('9').count(),
++        1,
++        "De eerste tekstklik moet ook invoer ontvangen"
++    );
++    p.bericht(Msg::PasToe);
++    let d: serde_json::Value = serde_json::from_slice(&p.bron()).unwrap();
++    assert_eq!(
++        d["boeken"][0]["secties"][0]["paginas"][0]["vakken"][0]["blokken"][0]["tekst"],
++        tekst
++    );
++    p.bericht(Msg::Terug);
++    assert_eq!(p.bron().as_slice(), bron.as_slice());
++}
++#[test]
+ fn writer_paginacursor_klikken_schalen_typen_en_een_exacte_undo() {
+     use iced::keyboard::key::Named;
+     for zoom in [0.75, 1., 1.5] {

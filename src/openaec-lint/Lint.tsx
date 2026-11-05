@@ -851,12 +851,15 @@ export function LintActie({
   naam,
   groot,
   actief,
+  altijdLabel,
   ...props
 }: {
   icoon: LintIcoon;
   naam: string;
   groot?: boolean;
   actief?: boolean | "mixed";
+  /** Houd gelijkende of ingrijpende acties ook in het compacte lint herkenbaar. */
+  altijdLabel?: boolean;
 } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children">) {
   return (
     <button
@@ -865,6 +868,7 @@ export function LintActie({
       className={`ribbon-actie ${groot ? "ribbon-groot" : ""} ${props.className ?? ""}`}
       aria-label={naam}
       aria-pressed={actief}
+      data-altijd-label={altijdLabel || undefined}
       title={props.title ?? naam}
     >
       <Icoon size={groot ? 25 : 17} strokeWidth={1.65} />

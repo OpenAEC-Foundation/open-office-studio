@@ -403,6 +403,7 @@ fn maak_venster(
     };
     let mut bouwer =
         tauri::WebviewWindowBuilder::new(app, label, tauri::WebviewUrl::App(url.into()))
+            .enable_clipboard_access()
             .title(titel)
             .decorations(false)
             .inner_size(1200.0, 800.0)

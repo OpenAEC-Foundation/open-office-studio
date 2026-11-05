@@ -1,0 +1,136 @@
+{
+  "run": 41750129762,
+  "artifact": 13285534526,
+  "zip_sha256": "5e984ca8edb6a4c2505a8b147981fefc3b58cf82d8925fc5cde1cd6eb0103c60",
+  "programma_sha256": "4da486369b44f215220f2b0866f7403c20fffd611a40c020cd369e21799f1bd2",
+  "script_sha256": "4c010c3e9fadea8489344000a3987ce2d82c0c380cfbbd4c9c8043ce30d6ae8e",
+  "contextbestanden": [
+    {
+      "naam": "Open Office Studio_2026.45.27_amd64.AppImage",
+      "sha256": "7741d4ea467c12bd4508feca4a93038fb76c233558a56cfd19238460abae3f01"
+    },
+    {
+      "naam": "context.json",
+      "sha256": "54673374f135cff18e5e20796339e93adf4894d50f8a4bd8ed17b8c6eb9b0b54"
+    },
+    {
+      "naam": "open-office-studio",
+      "sha256": "4da486369b44f215220f2b0866f7403c20fffd611a40c020cd369e21799f1bd2"
+    },
+    {
+      "naam": "proef/Ontwerpnotitie.docx",
+      "sha256": "69704fae2761b2cd032f44f084082387fe114e2a78832625c9b69f904e9f7bcc"
+    },
+    {
+      "naam": "proef/afgekeurd.png",
+      "sha256": "e8037a610e461fb2a3334fdc957b59db5ab6f7716fcd650e0ba1d6a702d6f4f1"
+    },
+    {
+      "naam": "proef/programma.log",
+      "sha256": "36cb68d2bb8e94fc5cf7ceda4d699d27808704de83e01edea659c85f04ef31e6"
+    },
+    {
+      "naam": "rapport.json",
+      "sha256": "b29668591b5e1c5cf61b9348ac30e4a11d7e70308b26fde658d3dc79fd14985f"
+    },
+    {
+      "naam": "scripts/gui/requirements.txt",
+      "sha256": "4d3b280d9e5ae568f66bb597713614b9ef6477a829bf1569ae528fbe306d2f53"
+    },
+    {
+      "naam": "scripts/gui/webkit_inspector.py",
+      "sha256": "1cfec128ef78c59b7765130b63e018cb97f42ce279b98f26b144dfa273c27346"
+    },
+    {
+      "naam": "scripts/test-writer-lang-native.py",
+      "sha256": "aefe6b2f661bc781f6768b5240db99ea46f0fe6209f26276bc73cf756ed592bc"
+    },
+    {
+      "naam": "scripts/test-writer-rust-plakken-volgorde-native.py",
+      "sha256": "4c010c3e9fadea8489344000a3987ce2d82c0c380cfbbd4c9c8043ce30d6ae8e"
+    }
+  ],
+  "checkout": {
+    "GITHUB_SHA": "0bf69af7e48d0d204c2564787dd92aa8ccf4b6fa",
+    "GITHUB_RUN_ID": "41750129762",
+    "GITHUB_JOB": "desktop"
+  },
+  "versie": "2026.45.27",
+  "stappen": [
+    "Werkelijk rijk plakken, één Undo en bronexacte Redo",
+    "Fysiek typen, Shift-selectie, vervangen en Save vóór antwoord; DOCX onafhankelijk exact teruggelezen",
+    "Niet opslaan zonder antwoord; nieuw document en late beantwoording behouden bron en invoer"
+  ],
+  "geslaagd": false,
+  "fout": "AssertionError('GUI of engine meldt fouten')",
+  "fouten": {
+    "gui": [],
+    "console": [
+      {
+        "source": "console-api",
+        "level": "error",
+        "text": "[CanvasRenderer] Document worker unavailable; falling back to the main-thread engine",
+        "type": "log",
+        "line": 12,
+        "column": 213420,
+        "url": "tauri://localhost/assets/editors-D98gIhIA.js",
+        "repeatCount": 1,
+        "timestamp": 1793754826.5185213,
+        "parameters": [
+          {
+            "type": "string",
+            "value": "[CanvasRenderer] Document worker unavailable; falling back to the main-thread engine"
+          },
+          {
+            "type": "object",
+            "objectId": "{\"injectedScriptId\":1,\"id\":1}",
+            "subtype": "error",
+            "className": "F0",
+            "description": "Error: Document worker trapped: Out of bounds memory access (evaluating 'p.editsession_apply_input(this.__wbg_ptr,r,n,t)')",
+            "preview": {
+              "type": "object",
+              "description": "Error: Document worker trapped: Out of bounds memory access (evaluating 'p.editsession_apply_input(this.__wbg_ptr,r,n,t)')",
+              "lossless": false,
+              "subtype": "error",
+              "overflow": false,
+              "properties": [
+                {
+                  "name": "message",
+                  "type": "string",
+                  "value": "Document worker trapped: Out of bounds memory acce…p.editsession_apply_input(this.__wbg_ptr,r,n,t)')"
+                },
+                {
+                  "name": "line",
+                  "type": "number",
+                  "value": "1"
+                },
+                {
+                  "name": "column",
+                  "type": "number",
+                  "value": "28"
+                },
+                {
+                  "name": "stack",
+                  "type": "string",
+                  "value": "F0@\n@tauri://localhost/assets/index-td8JANJZ.js:221:92244"
+                }
+              ]
+            }
+          }
+        ],
+        "stackTrace": {
+          "callFrames": [
+            {
+              "functionName": "zt",
+              "url": "tauri://localhost/assets/editors-D98gIhIA.js",
+              "scriptId": "2",
+              "lineNumber": 12,
+              "columnNumber": 213420
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "grens": "Drie bron-/bewaar-/verwerpstappen slagen, maar de foutbewaking keurt een Wasm-trap in editsession_apply_input met terugval naar de hoofdthread af. De oorspronkelijke negatieve ELF, proefcode en context zijn gecontroleerd. Geen herstel van deze workertrap aangetoond."
+}

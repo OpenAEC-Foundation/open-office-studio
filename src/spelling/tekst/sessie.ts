@@ -8,7 +8,7 @@
  * overlay (Golflijnen.tsx) uit deze gegevens.
  */
 import type { DocxEditorRef, DocxPluginContext, DocxPluginGeometry } from "@betteroffice/docx-react";
-import type { DocxEditStep } from "@betteroffice/docx/yrs";
+import type { DocxEditStep, YrsSession } from "@betteroffice/docx/yrs";
 import { leesInstellingen } from "../../instellingen";
 import type { Controleur, Fout } from "../controleur";
 import { standaardTaal, type Taal, type TaalId } from "../talen";
@@ -128,6 +128,14 @@ export function verschuifPlek(oud: string, nieuw: string, start: number, woord: 
   return plek !== null && nieuw.slice(plek, plek + woord.length) === woord ? plek : null;
 }
 
+interface SegmentCache {
+  sessie: YrsSession;
+  versie: string;
+  lengtes: Map<string, Map<string, number>>;
+  gelezen: Set<string>;
+  per: Map<string, Segment[]>;
+}
+
 export class SpellingSessie {
   /** Laatst gecontroleerde alinea's, in documentvolgorde. */
   alineas: Alinea[] = [];
@@ -159,6 +167,9 @@ export class SpellingSessie {
   private luisteraars = new Set<() => void>();
   private stand = 0;
   private gestopt = false;
+  /** Ook verwijderingen en taalkeuzes maken een lopende lezing ongeldig. */
+  private leesGeneratie = 0;
+  private cursorLezing: { sessie: YrsSession; versie: string; story: string; paraId: string; antwoord: ReturnType<YrsSession["readParagraphs"]> } | null = null;
   /** Aantal getypte tekens in het document (voor de autocorrectie). */
   toetsen = 0;
 
@@ -190,7 +201,9 @@ export class SpellingSessie {
   }
 
   stop() {
+    this.leesGeneratie++;
     this.gestopt = true;
+    this.cursorLezing = null;
     window.clearTimeout(this.timer);
   }
 
@@ -204,7 +217,10 @@ export class SpellingSessie {
   }
 
   bijLaden(ctx: Ctx) {
+    this.leesGeneratie++;
     this.ctx = ctx;
+    this.segmentCache = null;
+    this.cursorLezing = null;
     this.alineas = [];
     this.perId.clear();
     this.vuil.clear();
@@ -214,10 +230,21 @@ export class SpellingSessie {
   }
 
   bijWijziging(ctx: Ctx) {
+    this.leesGeneratie++;
     this.ctx = ctx;
     this.laatsteWijziging = performance.now();
-    const cursor = this.cursor();
-    if (cursor) this.vuil.add(cursor.paraId);
+    // Hier is alleen de alinea-id nodig. cursor() vertaalt óók de offset naar
+    // geaccepteerde tekst en leest daarvoor tekst en de verhaalindex. Doe dat
+    // niet synchroon op elke documentwijziging; de controle volgt gedebounced.
+    let paraId: string | undefined;
+    try {
+      const ed = this.editor()?.getEditorRef();
+      const bereik = ed?.getSelectionRange();
+      if (ed && bereik) paraId = ed.displayPositionToYrsLoc(bereik.from)?.paraId;
+    } catch {
+      // Zonder betrouwbare locatie blijft de volledige hercontrole nodig.
+    }
+    if (paraId !== undefined) this.vuil.add(paraId);
     else this.vuil = new Set(this.perId.keys());
     this.plan(VERTRAGING);
   }
@@ -238,13 +265,34 @@ export class SpellingSessie {
       if (!loc) return null;
       // De sessie telt verwijderde tekst en een voorafgaande tabel mee; de
       // fouten en de autocorrectie rekenen in de geaccepteerde tekst.
-      const r = ed.getYrsSession()?.readParagraphs({ view: "accepted", story: loc.story, paraIds: [loc.paraId] });
+      const sessie = ed.getYrsSession();
+      const r = sessie ? this.leesCursorAlinea(sessie, loc.story, loc.paraId) : null;
       const lengte = r?.ok ? r.paragraphs[0]?.text.length : undefined;
       const delen = lengte === undefined ? null : this.afwijkendeSegmenten(loc.story, loc.paraId, lengte);
       return { paraId: loc.paraId, offset: delen ? naarGeaccepteerd(delen, loc.offset) : loc.offset, story: loc.story };
     } catch {
       return null;
     }
+  }
+
+  /** Alleen de actuele cursoralinea; onbekende of afwijkende versies blijven volledig lezen. */
+  private leesCursorAlinea(sessie: YrsSession, story: string, paraId: string) {
+    let versie: string | null = null;
+    try {
+      const v = sessie.version();
+      if (typeof v === "string" && v.length) versie = v;
+    } catch { /* Zonder betrouwbare versie geen hergebruik. */ }
+    const oud = this.cursorLezing;
+    if (versie !== null && oud?.sessie === sessie && oud.versie === versie && oud.story === story && oud.paraId === paraId) return oud.antwoord;
+    this.cursorLezing = null;
+    const antwoord = sessie.readParagraphs({ view: "accepted", story, paraIds: [paraId] });
+    if (versie !== null && antwoord.ok && antwoord.version === versie
+      && antwoord.paragraphs.length === 1 && antwoord.paragraphs[0].paraId === paraId && antwoord.paragraphs[0].story === story) {
+      try {
+        if (sessie.version() === versie) this.cursorLezing = { sessie, versie, story, paraId, antwoord };
+      } catch { /* Het gelezen antwoord blijft bruikbaar, maar wordt niet bewaard. */ }
+    }
+    return antwoord;
   }
 
   /** De talen uit het geladen pakket (eenmalig per document gelezen). */
@@ -280,6 +328,7 @@ export class SpellingSessie {
   }
 
   kiesAlineaTaal(paraId: string, taal: Taal) {
+    this.leesGeneratie++;
     this.alineaTaal.set(paraId, taal);
     this.vuil.add(paraId);
     this.plan(0);
@@ -287,6 +336,7 @@ export class SpellingSessie {
 
   /** Alles opnieuw (andere taal, instelling of woordenlijst). */
   herbegin() {
+    this.leesGeneratie++;
     for (const a of this.alineas) a.tekst = "\u0000";
     this.plan(0);
   }
@@ -310,6 +360,9 @@ export class SpellingSessie {
   private async voerControleUit() {
     const ctx = this.ctx;
     if (!ctx || this.gestopt) return;
+    const generatie = this.leesGeneratie;
+    const actueel = () => !this.gestopt && generatie === this.leesGeneratie;
+    const opnieuw = () => { if (!this.gestopt) this.opnieuw = true; };
     if (!this.aan) {
       this.alineas = [];
       this.perId.clear();
@@ -317,25 +370,64 @@ export class SpellingSessie {
       this.herteken();
       return;
     }
-    // Alle verhalen in één versie lezen (de hoofdtekst en elke tabelcel apart).
+    // Alle verhalen in één versie lezen, zonder honderden synchrone
+    // Wasm-lezingen in één hoofdthreadtaak te starten. Nieuwe invoer mag
+    // tussen groepen door; zo'n bronwijziging maakt de hele lezing ongeldig.
     const verhalen = this.verhalen();
     const gelezen: { story: string; paragraphs: { story: string; paraId: string; text: string }[] }[] = [];
     try {
       await ctx.run(async (vers) => {
-        const uit = await Promise.all(verhalen.map((story) => vers.read.readParagraphs({ view: "accepted", story })));
         const versies = new Set<string>();
-        uit.forEach((r, i) => {
-          if ("ok" in r && r.ok) {
-            versies.add(r.version);
-            gelezen.push({ story: verhalen[i], paragraphs: r.paragraphs });
+        for (let i = 0; i < verhalen.length;) {
+          if (!actueel() || vers.lifetimeSignal?.aborted) { gelezen.length = 0; return; }
+          // Eén Rust-leestransactie voor maximaal 32 verhalen voorkomt dat
+          // de bronversie en leesprojectie voor iedere cel opnieuw worden gemaakt.
+          // Een afgekorte groep valt terug op de bestaande begrensde leesroute;
+          // gedeeltelijke of gemengde antwoorden worden nooit gepubliceerd.
+          if (typeof vers.read.readStories === "function") {
+            const ids = verhalen.slice(i, i + 32);
+            const groep = await vers.read.readStories({ view: "accepted", stories: ids });
+            if (!actueel() || vers.lifetimeSignal?.aborted) { gelezen.length = 0; return; }
+            if (!("ok" in groep) || !groep.ok || groep.view !== "accepted") { gelezen.length = 0; return; }
+            if (!groep.truncated) {
+              const perStory = new Map(groep.stories.map(r => [r.story, r]));
+              if (groep.stories.length !== ids.length || perStory.size !== ids.length || ids.some(id => !perStory.has(id))) {
+                gelezen.length = 0; return;
+              }
+              versies.add(groep.version);
+              if (versies.size > 1) { gelezen.length = 0; return; }
+              for (const story of ids) {
+                const r = perStory.get(story)!;
+                if (!r.ok || r.paragraphs.some(p => p.story !== story)) { gelezen.length = 0; return; }
+                gelezen.push({ story, paragraphs: r.paragraphs });
+              }
+              i += ids.length;
+              if (i < verhalen.length) await new Promise<void>(klaar => window.setTimeout(klaar, 0));
+              continue;
+            }
           }
-        });
-        // Tussendoor getypt: later opnieuw.
-        if (versies.size > 1) gelezen.length = 0;
+          const van = i, begin = performance.now();
+          const aanvragen = [];
+          do {
+            aanvragen.push(vers.read.readParagraphs({ view: "accepted", story: verhalen[i++] }));
+          } while (i < verhalen.length && i - van < 32 && performance.now() - begin < 8);
+          const uit = await Promise.all(aanvragen);
+          if (!actueel() || vers.lifetimeSignal?.aborted) { gelezen.length = 0; return; }
+          for (let k = 0; k < uit.length; k++) {
+            const r = uit[k];
+            if (!("ok" in r) || !r.ok) { gelezen.length = 0; return; }
+            versies.add(r.version);
+            if (versies.size > 1) { gelezen.length = 0; return; }
+            gelezen.push({ story: verhalen[van + k], paragraphs: r.paragraphs });
+          }
+          if (i < verhalen.length) await new Promise<void>(klaar => window.setTimeout(klaar, 0));
+        }
       });
     } catch {
+      if (!actueel()) opnieuw();
       return;
     }
+    if (!actueel()) { opnieuw(); return; }
     if (!gelezen.length) {
       this.opnieuw = true;
       return;
@@ -375,6 +467,7 @@ export class SpellingSessie {
         teControleren.map((a) => ({ tekst: a.tekst, taal: a.taal })),
         instelling,
       );
+      if (!actueel()) { opnieuw(); return; }
       // Niet onderstrepen terwijl iemand nog aan het woord typt (zoals Word).
       const cursor = performance.now() - this.laatsteWijziging < 1500 ? this.cursor() : null;
       teControleren.forEach((a, i) => {
@@ -386,6 +479,7 @@ export class SpellingSessie {
       });
       this.probleem = null;
     } catch (fout) {
+      if (!actueel()) { opnieuw(); return; }
       this.probleem = String((fout as Error)?.message ?? fout);
       this.aantal = null;
       this.meld();
@@ -448,10 +542,10 @@ export class SpellingSessie {
   }
 
   /** Alinea's die de overlay mag tekenen (niet vuil). */
-  zichtbareFouten(): { alinea: Alinea; fout: Fout }[] {
+  zichtbareFouten(kies?: (alinea: Alinea) => boolean): { alinea: Alinea; fout: Fout }[] {
     const uit: { alinea: Alinea; fout: Fout }[] = [];
     for (const a of this.alineas) {
-      if (this.vuil.has(a.paraId)) continue;
+      if (!a.fouten.length || this.vuil.has(a.paraId) || (kies && !kies(a))) continue;
       for (const f of a.fouten)
         if (!persoonlijk.bevat(f.tekst) && !genegeerd.bevat(f.tekst) && !this.eenmaalGenegeerd(a, f)) uit.push({ alinea: a, fout: f });
     }
@@ -481,44 +575,88 @@ export class SpellingSessie {
     return na ?? lijst.find(({ alinea, fout }) => !(overslaan && alinea.paraId === overslaan.paraId && fout.start === overslaan.start)) ?? null;
   }
 
-  /** Segmenten per alinea met bijgehouden verwijderingen, per sessieversie. */
-  private segmentCache: { versie: string; per: Map<string, Segment[]> } | null = null;
+  /** Compacte lengtes en afwijkende segmenten, uitsluitend voor deze sessieversie. */
+  private segmentCache: SegmentCache | null = null;
 
   /**
    * De sessie-offset (Yrs) van een offset in de geaccepteerde tekst van een
    * alinea. Zonder bijgehouden verwijderingen in de alinea zijn ze gelijk.
    */
   rauw(alinea: Alinea, offset: number, eind = false): number {
-    const delen = this.afwijkendeSegmenten(alinea.story, alinea.paraId, alinea.tekst.length);
+    return this.rauwInContext(alinea, offset, eind, this.segmentenContext());
+  }
+
+  /** Alleen binnen één synchrone leesbewerking gebruiken; er wordt niet bewerkt. */
+  offsetLezer() {
+    const context = this.segmentenContext();
+    if (!context) return this.rauw.bind(this);
+    return (alinea: Alinea, offset: number, eind = false) => this.rauwInContext(alinea, offset, eind, context);
+  }
+
+  private rauwInContext(alinea: Alinea, offset: number, eind: boolean, context: SegmentCache | null): number {
+    const delen = this.afwijkendeSegmenten(alinea.story, alinea.paraId, alinea.tekst.length, context);
     return delen ? naarRauw(delen, offset, eind) : offset;
+  }
+
+  private segmentenContext(): SegmentCache | null {
+    const sessie = this.editor()?.getEditorRef()?.getYrsSession();
+    if (!sessie) return null;
+    try {
+      const versie = String(sessie.version());
+      if (this.segmentCache?.sessie !== sessie || this.segmentCache.versie !== versie)
+        this.segmentCache = { sessie, versie, lengtes: new Map(), gelezen: new Set(), per: new Map() };
+      return this.segmentCache;
+    } catch {
+      return null;
+    }
   }
 
   /**
    * De segmenten van een alinea als de sessie er meer telt dan de
    * geaccepteerde tekst lang is (verwijderingen, tabel ervoor); anders null.
    */
-  private afwijkendeSegmenten(story: string, paraId: string, lengte: number): Segment[] | null {
-    const sessie = this.editor()?.getEditorRef()?.getYrsSession();
-    if (!sessie) return null;
+  private afwijkendeSegmenten(story: string, paraId: string, lengte: number, cache = this.segmentenContext()): Segment[] | null {
+    if (!cache) return null;
+    const sessie = cache.sessie;
     try {
-      const span = sessie.locateParagraph(story, paraId);
-      if (span.end - span.start === lengte) return null;
-      const versie = String(sessie.version());
-      if (this.segmentCache?.versie !== versie) this.segmentCache = { versie, per: new Map() };
+      let lengtes = cache.lengtes.get(story);
+      if (!lengtes) {
+        try {
+          lengtes = new Map();
+          const dubbel = new Set<string>();
+          // De Rust-kern leest deze compacte index in één verhaaldoorloop.
+          // Geen volledige alinea-opzoeking voor iedere woord- en alineagrens.
+          for (const p of sessie.paragraphSpans(story)) {
+            if (lengtes.has(p.paraId) || dubbel.has(p.paraId)) {
+              lengtes.delete(p.paraId);
+              dubbel.add(p.paraId);
+            } else if (Number.isSafeInteger(p.length) && p.length >= 0) lengtes.set(p.paraId, p.length);
+          }
+          cache.lengtes.set(story, lengtes);
+        } catch {
+          // Een nog onbeschikbare index verandert de oorspronkelijke route niet.
+          lengtes = undefined;
+        }
+      }
+      let rauweLengte = lengtes?.get(paraId);
+      if (rauweLengte === undefined) {
+        const span = sessie.locateParagraph(story, paraId);
+        rauweLengte = span.end - span.start;
+      }
+      if (rauweLengte === lengte) return null;
       const sleutel = `${story}\u0000${paraId}`;
-      let delen = this.segmentCache.per.get(sleutel);
-      if (!delen) {
+      if (!cache.gelezen.has(story)) {
         // Eén keer per versie en verhaal: alle alinea's van het verhaal opdelen.
         let huidig: Segment[] = [];
         for (const d of sessie.storySegments(story) as Segment[]) {
           if (d.kind === "pilcrow") {
-            this.segmentCache.per.set(`${story}\u0000${(d as { paraId?: string }).paraId}`, huidig);
+            cache.per.set(`${story}\u0000${(d as { paraId?: string }).paraId}`, huidig);
             huidig = [];
           } else huidig.push(d);
         }
-        delen = this.segmentCache.per.get(sleutel) ?? [];
+        cache.gelezen.add(story);
       }
-      return delen;
+      return cache.per.get(sleutel) ?? [];
     } catch {
       return null;
     }
@@ -570,6 +708,7 @@ export class SpellingSessie {
       gelukt = "ok" in uit && uit.ok;
     });
     if (gelukt) {
+      this.leesGeneratie++;
       for (const { alinea } of doelen) this.vuil.add(alinea.paraId);
       this.plan(0);
     }
@@ -623,7 +762,7 @@ export class SpellingSessie {
     if (!cursor?.story) return;
     let gelezen: { tekst: string; versie: string };
     try {
-      const r = sessie.readParagraphs({ view: "accepted", story: cursor.story, paraIds: [cursor.paraId] });
+      const r = this.leesCursorAlinea(sessie, cursor.story, cursor.paraId);
       if (!r.ok || !r.paragraphs[0]) return;
       gelezen = { tekst: r.paragraphs[0].text, versie: r.version };
     } catch {

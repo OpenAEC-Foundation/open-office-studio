@@ -1,0 +1,123 @@
+{
+  "data": [
+    {
+      "attributes": {
+        "openaec::office::collection": {
+          "profileVersion": "0.1.0-draft.1",
+          "title": "Eigen-email.eml"
+        }
+      },
+      "children": {
+        "document": "/office/document/een"
+      },
+      "path": "/office/voorbeeld"
+    },
+    {
+      "attributes": {
+        "openaec::office::document": {
+          "kind": "email",
+          "source": "/office/payload/26e24d89bcdb89e25ac54358257aaa8d6b483f75fd4dfa09ec82d7302aadc538",
+          "title": "Eigen-email.eml"
+        }
+      },
+      "path": "/office/document/een"
+    },
+    {
+      "attributes": {
+        "openaec::office::payload": {
+          "byteLength": 1101,
+          "content": "RnJvbTogT3BlbkFFQyA8dm9vcmJlZWxkQGV4YW1wbGUuaW52YWxpZD4NClRvOiBsb2thYWxAZXhhbXBsZS5pbnZhbGlkDQpTdWJqZWN0OiBFaWdlbiBlLW1haWxwcm9lZiA5DQpEYXRlOiBTdW4sIDAxIE5vdiAyMDI2IDA5OjAwOjAwICswMDAwDQpNZXNzYWdlLUlEOiA8ZWlnZW4tZW1haWxwcm9lZjlAZXhhbXBsZS5pbnZhbGlkPg0KTUlNRS1WZXJzaW9uOiAxLjANCkNvbnRlbnQtVHlwZTogbXVsdGlwYXJ0L21peGVkOyBib3VuZGFyeT0ib3BlbmFlYy1laWdlbi1lbWFpbHByb2VmOSINCg0KLS1vcGVuYWVjLWVpZ2VuLWVtYWlscHJvZWY5DQpDb250ZW50LVR5cGU6IG11bHRpcGFydC9hbHRlcm5hdGl2ZTsNCiBib3VuZGFyeT0ib3BlbmFlYy1laWdlbi1lbWFpbHByb2VmOS1hbHRlcm5hdGllZiINCg0KLS1vcGVuYWVjLWVpZ2VuLWVtYWlscHJvZWY5LWFsdGVybmF0aWVmDQpDb250ZW50LVR5cGU6IHRleHQvcGxhaW47IGNoYXJzZXQ9InV0Zi04Ig0KQ29udGVudC1UcmFuc2Zlci1FbmNvZGluZzogOGJpdA0KDQpEaXQgaXMgZWVuIGxva2FsZSBlLW1haWxwcm9lZi4NClVuaWNvZGU6IGlkZWXDq24gZW4g8J+PoC4NCkRlIGVpZ2VuIGJpamxhZ2UgYmxpamZ0IGJld2FhcmQuDQoNCi0tb3BlbmFlYy1laWdlbi1lbWFpbHByb2VmOS1hbHRlcm5hdGllZg0KQ29udGVudC1UeXBlOiB0ZXh0L2h0bWw7IGNoYXJzZXQ9InV0Zi04Ig0KQ29udGVudC1UcmFuc2Zlci1FbmNvZGluZzogOGJpdA0KTUlNRS1WZXJzaW9uOiAxLjANCg0KPHA+RGl0IGlzIGVlbiBsb2thbGUgZS1tYWlscHJvZWYuPC9wPjxwPlVuaWNvZGU6IGlkZWXDq24gZW4g8J+PoC48L3A+DQoNCi0tb3BlbmFlYy1laWdlbi1lbWFpbHByb2VmOS1hbHRlcm5hdGllZi0tDQoNCi0tb3BlbmFlYy1laWdlbi1lbWFpbHByb2VmOQ0KQ29udGVudC1UeXBlOiB0ZXh0L3BsYWluDQpDb250ZW50LVRyYW5zZmVyLUVuY29kaW5nOiBiYXNlNjQNCkNvbnRlbnQtRGlzcG9zaXRpb246IGF0dGFjaG1lbnQ7IGZpbGVuYW1lPSJFaWdlbi1iaWpsYWdlLnR4dCINCk1JTUUtVmVyc2lvbjogMS4wDQoNClJXbG5aVzRnWW1scWJHRm5aVGtOQ2c9PQ0KDQotLW9wZW5hZWMtZWlnZW4tZW1haWxwcm9lZjktLQ0K",
+          "encoding": "base64",
+          "fileName": "Eigen-email.eml",
+          "mediaType": "message/rfc822",
+          "sha256": "26e24d89bcdb89e25ac54358257aaa8d6b483f75fd4dfa09ec82d7302aadc538"
+        }
+      },
+      "path": "/office/payload/26e24d89bcdb89e25ac54358257aaa8d6b483f75fd4dfa09ec82d7302aadc538"
+    }
+  ],
+  "header": {
+    "author": "OpenAEC",
+    "dataVersion": "1.0.0",
+    "id": "urn:openaec:office:26e24d89bcdb89e25ac54358257aaa8d6b483f75fd4dfa09ec82d7302aadc538",
+    "ifcxVersion": "ifcx_alpha"
+  },
+  "imports": [],
+  "schemas": {
+    "openaec::office::collection": {
+      "value": {
+        "dataType": "Object",
+        "objectRestrictions": {
+          "values": {
+            "profileVersion": {
+              "dataType": "String"
+            },
+            "title": {
+              "dataType": "String"
+            }
+          }
+        }
+      }
+    },
+    "openaec::office::document": {
+      "value": {
+        "dataType": "Object",
+        "objectRestrictions": {
+          "values": {
+            "kind": {
+              "dataType": "Enum",
+              "enumRestrictions": {
+                "options": [
+                  "writer",
+                  "spreadsheet",
+                  "presentation",
+                  "email",
+                  "notition",
+                  "database"
+                ]
+              }
+            },
+            "source": {
+              "dataType": "Reference"
+            },
+            "title": {
+              "dataType": "String"
+            }
+          }
+        }
+      }
+    },
+    "openaec::office::payload": {
+      "value": {
+        "dataType": "Object",
+        "objectRestrictions": {
+          "values": {
+            "byteLength": {
+              "dataType": "Integer"
+            },
+            "content": {
+              "dataType": "String"
+            },
+            "encoding": {
+              "dataType": "Enum",
+              "enumRestrictions": {
+                "options": [
+                  "base64"
+                ]
+              }
+            },
+            "fileName": {
+              "dataType": "String"
+            },
+            "mediaType": {
+              "dataType": "String"
+            },
+            "sha256": {
+              "dataType": "String"
+            }
+          }
+        }
+      }
+    }
+  }
+}

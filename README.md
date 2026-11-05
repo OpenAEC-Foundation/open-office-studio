@@ -18,7 +18,37 @@
 
 Open Office Studio is a local office environment for Windows, macOS and Linux. It opens and saves Word, Excel and PowerPoint files directly, opens old Microsoft Access databases as an editable copy, and includes a notes module and an email client. Everything runs on your own computer; there is no account and no cloud service.
 
-> **Status:** Open Office Studio is under active development. Releases are published as *pre-releases* (development builds). Test it with copies of your files before relying on it. Eight interface languages are available. See the [release audit and known limitations](docs/tests/2026-10-30-vrijgavecontrole.md), including a confirmed spreadsheet engine crash with `=ISOWEEKNUM()` without an argument.
+> **Status:** Open Office Studio is under active development. Releases are published as *pre-releases* (development builds). Test it with copies of your files before relying on it. Eight interface languages are available. See the [release audit and known limitations](docs/tests/2026-10-30-vrijgavecontrole.md), including a confirmed spreadsheet engine crash with `=ISOWEEKNUM()` without an argument in the published release. That crash is fixed in the development branch since 45.6.
+
+## Native Rust migration
+
+The development branch has a locally tested **2026-W45.14** Tauri build. **1,599 frontend tests and 488 Rust workspace tests pass; six optional Rust tests are skipped.** The new spelling cache belongs to both its native session and version; eight regression checks include the actual Rust document engine with Unicode, revisions and tables. Two native 500-page rounds preserve all text after typing, selection/Backspace, undo/redo, saving and reopening. **Typing is still too slow:** total input time does not improve consistently, although frame pauses are shorter in these rounds. [Measurements, rejected candidate, profiling data and limits](docs/tests/writer-spellingoffsets.md) are recorded. This is not complete feature, performance or pixel-parity acceptance; see [current progress and all 106 open issues](docs/voortgang-migratie.md). The [45.12 build for seven editions on Linux, Windows and macOS](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41587557778) passes with publishing disabled. Newer platform builds are checked separately. Native clipboard access from 45.11 remains covered by [eight Linux checks](docs/tests/writer-klembord.md); the separate [alpha48 native pipeline](native/docs/webview-werker-2026-11-03-alpha48/LEESMIJ.md) now also passes its platform source/image comparison, without claiming parity with the existing suite.
+
+The selected interface migration now uses **Rust/Dioxus with a system WebView,
+retaining the existing HTML classes, CSS and fonts**. The first connection is in
+[`office-webview`](native/crates/office-webview/README.md); it is an early preview,
+with the original module editors and complete UI parity still to be ported.
+Run it with `cargo run --manifest-path native/Cargo.toml -p open-office-studio-webview --features desktop`.
+
+Alpha 48 moves opening, editing, navigation, history and save snapshots to the shared Rust document worker. The UI retains source copies and views without owning document sessions. [The validation report](native/docs/webview-werker-2026-11-03-alpha48/LEESMIJ.md) separates queue/component tests and actual module windows from the remaining full editor and pixel work.
+
+The earlier native preview in [`native/`](native/README.md) uses Iced and the
+shared OpenAEC Blueprint ribbon and remains available as an intermediate step.
+It has working
+DOCX/XLSX/PPTX round trips and IFCX source archives, including complete email
+sources. It is **not yet a replacement for the current suite**; the
+[feature comparison and remaining work](native/README.md#huidige-omvang) describe
+the migration boundary. Version 2026-W44.8 remains the existing release.
+
+Alpha 46 connects Home, document tabs and the existing Office icons. [Full local validation](native/docs/controle-2026-11-02-alpha46.md) passes 447 Rust tests (194 UI), six separate runtime checks and seven Python tests on 736 exact source files. Forty actual Linux debug-window steps verify draft retention, the correct close prompt from Home, saving and returning to Writer. All eight original UI comparisons still fail; alpha 46 cross-platform and optimized release-window checks remain open.
+
+Alpha 45 keeps background and save messages with their own documents, including direct Writer errors. [Full local validation](native/docs/controle-2026-11-02-alpha45.md) passes 442 Rust tests (189 UI), six separate runtime checks and seven Python tests on 733 exact source files. Two actual Linux debug-window runs of nineteen steps each verify that a save conflict remains visible after switching tabs, while the external change and the Writer source remain intact. Command ownership during very rapid key/tab changes needs further checks. All five alpha 45 CI jobs and the targeted nineteen-step optimized Linux release-window check pass: 122 native image pairs, 5417 source files per package and 21 page visits are exact. All eight original UI comparisons still fail.
+
+Alpha 44 connects the Office title bar and fixes active document selection and status when switching or closing tabs. [Full local validation](native/docs/controle-2026-11-02-alpha44.md) passes 436 Rust tests, including 183 UI tests, six separate runtime checks and seven Python tests on 733 exact source files. The actual Linux debug window completes 58 focused steps and preserves the document sources and saved notebook exactly. All five alpha 44 CI jobs pass: 122 native image pairs, 5168 source files per package and 21 page visits are exact. The actual optimized alpha 44 Linux release window completes 58 focused steps and preserves its sources; all eight original UI comparisons still fail.
+
+Alpha 43 fixes notebook creation dates and adds a clock per session, local calendar dates and guarded Ctrl+W document closing. [Full local validation](native/docs/controle-2026-11-02-alpha43.md) passes 430 Rust tests, including 177 UI tests, six separate runtime checks and seven Python tests on 731 exact source files. The actual Linux debug-window retest preserves unapplied text after cancellation and leaves the saved notebook unchanged. All five alpha 43 CI jobs and the focused optimized Linux release-window check pass: 122 native image pairs, 4956 source files per package and 21 page visits are exact. All eight original UI comparisons still fail.
+
+Alpha 42 adds real slide thumbnails and a separate speaker-notes editor. [Full local validation](native/docs/controle-2026-11-01-alpha42.md) passes with 418 Rust tests, including 172 UI tests, six separate runtime checks and seven Python tests. The actual Linux debug-window retest preserves the notes pane during navigation and saves rapid undo/save commands without changing the restored source bytes. All five alpha 42 CI jobs pass: 122 native image pairs, 4725 source files per package and 21 page visits are exact. The actual optimized Linux release-window check passes seventeen scoped steps, including independent notes readback and source-exact undo/save. All eight original UI comparisons still fail, and the full suite migration remains incomplete.
 
 ## Suite or a separate app
 

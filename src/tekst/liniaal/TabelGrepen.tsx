@@ -24,6 +24,8 @@ import { editorVanVlak, volgRegister } from "./register";
 import { zetMaat } from "./meting";
 import { RASTER_TABEL, RASTER_VRIJ, TWIPS_PER_PX, naarCm, rondOp, sleepKolomrand, sleepRijhoogte } from "./model";
 
+import { zichtbarePaginaElementen } from "../paginabereik";
+
 const DIKTE = 7;
 
 interface Greep {
@@ -87,9 +89,7 @@ export function TabelGrepen({ context, geometry }: { context: DocxPluginContext<
       const venster = (scroll ?? vlak).getBoundingClientRect();
       let van = Infinity,
         tot = -Infinity;
-      for (const el of vlak.querySelectorAll<HTMLElement>(".canvas-page[data-page-index]")) {
-        const r = el.getBoundingClientRect();
-        if (r.bottom < venster.top - 200 || r.top > venster.bottom + 200) continue;
+      for (const { pagina: el } of zichtbarePaginaElementen([...vlak.querySelectorAll<HTMLElement>(".canvas-page[data-page-index]")], venster, 200)) {
         const i = Number(el.dataset.pageIndex);
         van = Math.min(van, i);
         tot = Math.max(tot, i);

@@ -6,11 +6,9 @@ en onbedoelde tekstwijziging herkent. Ze vervangen de engineproef
 (scripts/test-matrix-documenten.mjs) niet.
 """
 import importlib.util
-import io
 from pathlib import Path
 import tempfile
 import unittest
-import zipfile
 
 SCRIPTS = Path(__file__).parents[1] / 'scripts'
 
@@ -48,12 +46,11 @@ class Matrix(unittest.TestCase):
         return doel
 
     def test_reproduceerbaar(self):
-        a, b = io.BytesIO(), io.BytesIO()
-        for buf in (a, b):
-            with zipfile.ZipFile(buf, 'w') as z:
-                for naam, delen in fixtures.maak_alle().items():
-                    z.writestr(naam, fixtures.zip_bytes(delen))
-        self.assertEqual(a.getvalue(), b.getvalue())
+        # Vergelijk de fixturebytes zelf. Een extra ZIP rond de fixtures voegt
+        # anders de huidige kloktijd toe en faalt toevallig bij een secondegrens.
+        a, b = ({naam: fixtures.zip_bytes(delen)
+                 for naam, delen in fixtures.maak_alle().items()} for _ in range(2))
+        self.assertEqual(a, b)
 
     def test_fixtures_bevatten_de_matrixkenmerken(self):
         d1 = kenmerken.kenmerken(self.pad / 'D1.docx')

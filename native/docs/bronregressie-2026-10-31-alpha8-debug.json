@@ -1,0 +1,76 @@
+{
+  "betekenis": "Dezelfde vastgepinde openbare bron faalt met alpha 7 en slaagt met de aangepaste alpha-8-debugkern; nog geen release- of platformbewijs voor alpha 8",
+  "voor": {
+    "omvang": "Vastgepinde kop-/voettekstbron: openen, eerste weergave, bewaren en zichtbare tekst/onderdeelstructuur teruglezen; geen volledige opmaak- of pixelcontrole",
+    "programma": "Open Office native bestandscontrole 2026.44.9-alpha.7 (release)",
+    "programma_sha256": "84650d7a5153b74f98f06ab5b887fe1b4338726fdec1bd6b1db78daa4be58a18",
+    "bron": {
+      "id": "kopvoet-standaardfont",
+      "url": "https://raw.githubusercontent.com/apache/poi/d91a76448f0963a93b6cd95fb97fbe1d8bad82c6/test-data/integration/stress023.docx",
+      "sha256": "32b036e66eb701f37e8b64a3c491bf1d6234be3cee1e6e36d2e8435f4516cc94"
+    },
+    "bouwronde": null,
+    "geteste_checkout": null,
+    "geslaagd": false,
+    "adresruimte_bytes": 3221225472,
+    "looptijd_seconden": 0.363,
+    "meting": {
+      "bouwprofiel": "release",
+      "fase": "eerste werkweergave",
+      "fout": "missing font chain for `calibri|0|0`",
+      "native_versie": "2026.44.9-alpha.7",
+      "omvang": "Openen, eerste werkweergave, serialiseren en teruglezen; geen volledige functie-, inhouds-, stijl- of pixelcontrole",
+      "status": "geweigerd"
+    }
+  },
+  "na": {
+    "omvang": "Vastgepinde kop-/voettekstbron: openen, eerste weergave, bewaren en zichtbare tekst/onderdeelstructuur teruglezen; geen volledige opmaak- of pixelcontrole",
+    "programma": "Open Office native bestandscontrole 2026.44.9-alpha.8 (debug)",
+    "programma_sha256": "10d190ad28f4215f9377ee942649d1653ad434d02dd3c89b9893ea9404e42fb6",
+    "bron": {
+      "id": "kopvoet-standaardfont",
+      "url": "https://raw.githubusercontent.com/apache/poi/d91a76448f0963a93b6cd95fb97fbe1d8bad82c6/test-data/integration/stress023.docx",
+      "sha256": "32b036e66eb701f37e8b64a3c491bf1d6234be3cee1e6e36d2e8435f4516cc94"
+    },
+    "bouwronde": null,
+    "geteste_checkout": null,
+    "geslaagd": true,
+    "gelezen_bron_bytes": 358387,
+    "gelezen_bron_sha256": "32b036e66eb701f37e8b64a3c491bf1d6234be3cee1e6e36d2e8435f4516cc94",
+    "adresruimte_bytes": 3221225472,
+    "looptijd_seconden": 8.513,
+    "meting": {
+      "bewaard_bytes": 352743,
+      "bouwprofiel": "debug",
+      "bron_bytes": 358387,
+      "bron_sha256": "32b036e66eb701f37e8b64a3c491bf1d6234be3cee1e6e36d2e8435f4516cc94",
+      "eerste_weergave_ms": 4217,
+      "module": "Writer",
+      "native_versie": "2026.44.9-alpha.8",
+      "omvang": "Openen, eerste werkweergave, serialiseren en teruglezen; geen volledige functie-, inhouds-, stijl- of pixelcontrole",
+      "onderdelen": 14,
+      "open_ms": 427,
+      "status": "geslaagd",
+      "tekstcontrole_sha256": "089c99bec4898664d4e7cdb8e79c94aaa238ff2fff46dac8480473c05b307de8",
+      "totaal_ms": 8448,
+      "weergaves_getest": 1,
+      "zichtbare_velden": 178
+    }
+  },
+  "verkeerde_bron": {
+    "omvang": "Vastgepinde kop-/voettekstbron: openen, eerste weergave, bewaren en zichtbare tekst/onderdeelstructuur teruglezen; geen volledige opmaak- of pixelcontrole",
+    "programma": "Open Office native bestandscontrole 2026.44.9-alpha.8 (debug)",
+    "programma_sha256": "10d190ad28f4215f9377ee942649d1653ad434d02dd3c89b9893ea9404e42fb6",
+    "bron": {
+      "id": "kopvoet-standaardfont",
+      "url": "https://raw.githubusercontent.com/apache/poi/d91a76448f0963a93b6cd95fb97fbe1d8bad82c6/test-data/integration/stress023.docx",
+      "sha256": "32b036e66eb701f37e8b64a3c491bf1d6234be3cee1e6e36d2e8435f4516cc94"
+    },
+    "bouwronde": null,
+    "geteste_checkout": null,
+    "geslaagd": false,
+    "gelezen_bron_bytes": 37434,
+    "gelezen_bron_sha256": "a1fe5935c05612446dbbfcfc1b84c729dc54bf26d559e162616d94eaa98656fa",
+    "fout": "Bronomvang of verplichte bronhash wijkt af; geen document geopend"
+  }
+}

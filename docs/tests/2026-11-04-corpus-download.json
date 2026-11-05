@@ -1,0 +1,24 @@
+{
+  "voor": {
+    "afsluitcode": 0,
+    "bestandsstatus": "downloadfout",
+    "fout": "Error: HTTP 404",
+    "script_sha256": "cc429e5e313026581df06e75e4f09665ffd716478ef7ae212cf513fce4a2cdc8"
+  },
+  "na": {
+    "afsluitcode": 1,
+    "bestandsstatus": "downloadfout",
+    "fout": "Error: HTTP 404",
+    "script_sha256": "284fe92b402586567fce2b3f74ae522602f1fa1606dde4d9ff4147167d8c32a5"
+  },
+  "negatieve_ci_run": 41746220271,
+  "negatieve_macos_job": 126299877455,
+  "bronrevisie_voor": "a84c9b3e36d9558bc551a805afb76173e8ee7e65",
+  "ci_afkeuring": "Drie ontbrekende versleutelde corpusbestanden in pnpm test; downloadstap daarvoor had success. De exacte oorspronkelijke HTTP-fout is niet bewaard.",
+  "regressietests": 7,
+  "echte_schone_download": {
+    "vereist": 4,
+    "opgehaald": 4
+  },
+  "grens": "De voor-na-proef gebruikt de echte oude/nieuwe CLI en een eigen lokale HTTP-404. Ze bewijst de afsluitcodecorrectie, niet de oorzaak van de oorspronkelijke netwerkfout of een geslaagde nieuwe macOS-editiebouw."
+}

@@ -1,0 +1,12 @@
+from pathlib import Path
+from zipfile import ZipFile
+import json,hashlib,subprocess
+r=Path.cwd();w=r/'.local/controle-2026-10-31';verslag=json.loads((r/'native/docs/platformen-2026-11-01-alpha42.json').read_text());p=next(p for p in verslag['pakketten'] if p['platform']=='Linux');archief=w/'native-alpha42-ci-verslagen/native-rust-Linux'/p['pakket'];h=hashlib.sha256(archief.read_bytes()).hexdigest();assert h==archief.with_suffix('.sha256').read_text().split()[0];vast=w/'native-alpha42-ci-linux-vast';assert vast.is_dir() and not list(vast.iterdir());d={'basiscommit':'214471bdaef902cdc6a787cca9f162fdb7920ab4','geteste_checkout':verslag['geteste_checkout'],'bouwronde':'41371137792','bronbestanden':4725,'pakket':p['pakket'],'pakket_sha256':h,'bouwbron':'Daadwerkelijke gecontroleerde Linux-releaseprogramma’s uit de vijf groene CI-taken. Afzonderlijke eigen vensterproef volgt.','programmas':{}}
+with ZipFile(archief) as z:
+ for a in p['programmas']:
+  naam=a['bestand'];keus=[n for n in z.namelist() if Path(n).name==naam];assert len(keus)==1,keus;b=z.read(keus[0]);assert hashlib.sha256(b).hexdigest()==a['sha256'];assert b[:5]==b'\x7fELF\x02';q=vast/naam;q.write_bytes(b);q.chmod(0o555);v=subprocess.check_output([str(q),'--version'],text=True).strip();assert '2026.44.9-alpha.42' in v;d['programmas'][naam]={'sha256':a['sha256'],'versie':v}
+(vast/'herkomst.json').write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n');print(json.dumps(d,ensure_ascii=False))
+s=(w/'gui-alpha42-herstel-functioneel.py').read_text().replace("uit=w/'gui-alpha42-herstel-functioneel'","uit=w/'gui-alpha42-release-presentatie'");(w/'gui-alpha42-release-presentatie.py').write_text(s)
+s=(w/'venster-alpha42-herstel-functioneel.py').read_text().replace('native-alpha42-rasteropt-vast','native-alpha42-ci-linux-vast').replace('presentatie-alpha42-herstel-functioneel-profiel.json','presentatie-alpha42-release-profiel.json').replace('office-present42-funct-','office-present42-release-').replace('gui-alpha42-herstel-functioneel.py','gui-alpha42-release-presentatie.py');(w/'venster-alpha42-release-presentatie.py').write_text(s)
+a=[{'actie':'wacht','seconden':8,'beeldnaam':'geladen'},{'actie':'klik','x':43,'y':45,'beeldnaam':'bestand-eerste'},{'actie':'toets','toetsen':['Escape'],'beeldnaam':'escape-eerste'}]
+a+= [json.loads(l) for l in (w/'acties-alpha42-herstel-functioneel.jsonl').read_text().splitlines() if json.loads(l).get('beeldnaam')!='geladen'];(w/'acties-alpha42-release-presentatie.jsonl').write_text(''.join(json.dumps(v)+'\n' for v in a))

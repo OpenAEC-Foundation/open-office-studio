@@ -1,0 +1,102 @@
+{
+  "versie": "2026.45.4",
+  "datum": "2026-11-02",
+  "sha256": "b55962e9dbee6698b59c1ad617a691d1b1d047c1efa086df36c91979097a514d",
+  "status": "lokale testversie; typvertraging nog niet goedgekeurd",
+  "controles": {
+    "automatisch": {
+      "bestanden": 132,
+      "tests": 1545,
+      "status": "geslaagd"
+    },
+    "writer_opdrachten": {
+      "geslaagd": 68,
+      "mislukt": 0
+    },
+    "typescript_en_productiebouw": "geslaagd",
+    "native_linux_bouw": "geslaagd",
+    "gui": {
+      "start": {
+        "tekst": "Meteen na het openen typen werkt.",
+        "meldingen": ""
+      },
+      "donker": {
+        "rood": 2304,
+        "blauw": 2304,
+        "helder": 3766,
+        "papier": "rgb(31, 31, 31)",
+        "achtergrond": "rgb(20, 20, 20)",
+        "donker": true
+      },
+      "licht": {
+        "rood": 2304,
+        "blauw": 2304,
+        "helder": 0,
+        "papier": "rgb(255, 255, 255)",
+        "achtergrond": "rgb(20, 20, 20)",
+        "donker": false
+      },
+      "terug": {
+        "rood": 2304,
+        "blauw": 2304,
+        "helder": 3766,
+        "papier": "rgb(31, 31, 31)",
+        "achtergrond": "rgb(20, 20, 20)",
+        "donker": true
+      },
+      "afdruk": [
+        {
+          "w": 1588,
+          "h": 2246,
+          "hoek": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "zwart": 6490
+        }
+      ],
+      "fouten": [],
+      "opgeslagenKleurenOngewijzigd": true,
+      "afbeeldingOngewijzigd": true
+    },
+    "native_gui": {
+      "gestart": true,
+      "sha256": "b55962e9dbee6698b59c1ad617a691d1b1d047c1efa086df36c91979097a514d",
+      "proefkopie_opgeslagen": true
+    },
+    "native_lettertypen": {
+      "/fonts/NotoSansJP-Regular.otf": {
+        "bytes": 4533028,
+        "type": "application/font-sfnt"
+      },
+      "/fonts/Carlito-Regular.ttf": {
+        "bytes": 628032,
+        "type": "application/font-sfnt"
+      }
+    },
+    "invoer_chromium": {
+      "tekens": 98,
+      "exact": true,
+      "toetsduur_ms": 4680.099999997765,
+      "frame_max_ms": 66.59999999999945
+    },
+    "invoer_webkit": {
+      "tekens": 98,
+      "toetsen": 98,
+      "toetsduur_ms": 22722.000000000007,
+      "wachtrij_leeg": true,
+      "opmerking": "Geïsoleerde GTK/WebKit-proef met 15 ms ingestelde toetsvertraging; gemeten duur omvat de afhandeling van de toetsen. Geen bewijs dat typen op het gebruikersdocument soepel is."
+    }
+  },
+  "bekende_beperkingen": [
+    "Tekstinvoer en selectie zijn nog te traag; verdere optimalisatie nodig.",
+    "Zeer grote rijke plakbewerkingen nog niet goedgekeurd.",
+    "Niet alle kleurcombinaties en grafische drivers zijn gecontroleerd.",
+    "Geen nieuwe Windows- of macOS-build in deze lokale controle."
+  ],
+  "gebruikersdocumenten_overschreven": false,
+  "oud_programma_afgesloten": false,
+  "vorige_binary_behouden": true
+}

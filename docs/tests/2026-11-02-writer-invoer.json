@@ -1,0 +1,74 @@
+{
+  "versie": "2026.45.3",
+  "datum": "2026-11-02",
+  "status": "lokale testversie; typvertraging en grote plakbewerkingen nog open",
+  "sha256": "4e134524a4e6bf58947b58b7763a95e13c879c459cd74ef2c04ff7eb7b7c8cf4",
+  "proeven": {
+    "typescript_en_productiebouw": "geslaagd",
+    "native_bouw": "geslaagd",
+    "vitest": {
+      "bestanden": 131,
+      "tests": 1538,
+      "status": "geslaagd"
+    },
+    "writer_opdrachten": {
+      "geslaagd": 68,
+      "mislukt": 0
+    },
+    "gui_pagina": {
+      "staand_px": {
+        "w": 793.7333333333333,
+        "h": 1122.5333333333333
+      },
+      "liggend_px": {
+        "w": 1122.5333333333333,
+        "h": 793.7333333333333
+      },
+      "undo_px": {
+        "w": 793.7333333333333,
+        "h": 1122.5333333333333
+      },
+      "redo_px": {
+        "w": 1122.5333333333333,
+        "h": 793.7333333333333
+      },
+      "heropend_px": {
+        "w": 1122.5333333333333,
+        "h": 793.7333333333333
+      },
+      "papier_twips": [
+        16838,
+        11906
+      ],
+      "linkermarge_twips": 720,
+      "zelfde_documentsessie": true,
+      "zelfde_editor_element": true,
+      "workerfouten": false
+    },
+    "papierkleur": {
+      "dark_mode": "rgb(204, 204, 204)",
+      "documentkleur": "rgb(221, 238, 255)"
+    },
+    "native_openen_typen_opslaan_sluiten": {
+      "gestart": true,
+      "sha256": "4e134524a4e6bf58947b58b7763a95e13c879c459cd74ef2c04ff7eb7b7c8cf4",
+      "proefkopie_opgeslagen": true,
+      "oorspronkelijke_tekst_behouden": true,
+      "toegevoegde_testtekst_exact": true
+    },
+    "sectiecontrole": {
+      "vertraging_na_laatste_wijziging_ms": 1000,
+      "lezen_275_paginas_gemiddeld_ms": 29.05,
+      "opmerking": "Alleen secties lezen; geen maat voor totale invoer- of opmaaksnelheid. Controle is uitgesteld tijdens doorlopend typen."
+    }
+  },
+  "bekende_beperkingen": [
+    "Snelle invoer is niet goedgekeurd: stressproeven tonen nog vertraging en soms tekenverschillen.",
+    "Zeer grote rijke plakbewerkingen kunnen nog vastlopen.",
+    "Geen nieuwe Windows- of macOS-build in deze lokale Linux-controle.",
+    "Zwarte flitsen zijn niet op alle grafische drivers gecontroleerd."
+  ],
+  "gebruikersdocumenten_overschreven": false,
+  "oud_programma_afgesloten": false,
+  "vorige_binary_behouden": true
+}

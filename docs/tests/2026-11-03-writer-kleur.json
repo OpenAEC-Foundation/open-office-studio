@@ -1,0 +1,265 @@
+{
+  "datum": "2026-11-03",
+  "versie": "2026.45.8",
+  "basis": "8ee0e4b",
+  "issue": 125,
+  "sha256": "72bc3bf144fd76e7a7025d0672fe0ce99997b1aee6903a4ecff6425cde355d48",
+  "wijziging": "De kleurkiezer bewaart de gekozen waarde direct als lokaal concept en verstuurt één React-kleurafhandeling. Vertraagde opdrachtstatus zet daardoor niet onmiddellijk de vorige kleur terug in het native palet.",
+  "controles": {
+    "vitest": {
+      "bestanden": 136,
+      "geslaagd": 1560
+    },
+    "typescript": "geslaagd",
+    "productiebouw": "geslaagd",
+    "native_linux_bouw": "geslaagd",
+    "module_opdrachten": {
+      "writer": 68,
+      "rekenblad": "geslaagd",
+      "presentatie": 10
+    },
+    "browser": {
+      "versie": "2026.45.8",
+      "stappen": [
+        {
+          "naam": "begin",
+          "vullingen": [],
+          "tekstOngewijzigd": true
+        },
+        {
+          "naam": "geel via kleurveld",
+          "vullingen": [
+            "f6d32d"
+          ],
+          "tekstOngewijzigd": true
+        },
+        {
+          "naam": "ongedaan",
+          "vullingen": [],
+          "tekstOngewijzigd": true
+        },
+        {
+          "naam": "opnieuw",
+          "vullingen": [
+            "f6d32d"
+          ],
+          "tekstOngewijzigd": true
+        },
+        {
+          "naam": "andere kleur",
+          "vullingen": [
+            "99c1f1"
+          ],
+          "tekstOngewijzigd": true
+        },
+        {
+          "naam": "nieuwe editorsessie",
+          "vullingen": [
+            "99c1f1"
+          ],
+          "tekstOngewijzigd": true
+        }
+      ],
+      "fouten": []
+    },
+    "native_linux": {
+      "geslaagd": true,
+      "versie": "2026.45.8",
+      "programma_sha256": "72bc3bf144fd76e7a7025d0672fe0ce99997b1aee6903a4ecff6425cde355d48",
+      "stappen": [
+        {
+          "naam": "begin",
+          "vullingen": [],
+          "tekstExact": true
+        },
+        {
+          "naam": "keuze-f6d32d",
+          "vullingen": [
+            "f6d32d"
+          ],
+          "tekstExact": true
+        },
+        {
+          "naam": "ongedaan",
+          "vullingen": [],
+          "tekstExact": true
+        },
+        {
+          "naam": "opnieuw",
+          "vullingen": [
+            "f6d32d"
+          ],
+          "tekstExact": true
+        },
+        {
+          "naam": "keuze-99c1f1",
+          "vullingen": [
+            "99c1f1"
+          ],
+          "tekstExact": true
+        },
+        {
+          "naam": "nieuw-getypte-tekst",
+          "vullingen": [
+            "99c1f1"
+          ],
+          "tekstExact": true
+        },
+        {
+          "naam": "nieuw-native-proces",
+          "vullingen": [
+            "99c1f1"
+          ],
+          "tekstExact": true
+        }
+      ],
+      "kleurgebeurtenissen": [
+        {
+          "keuze": "f6d32d",
+          "gebeurtenissen": [
+            {
+              "soort": "input",
+              "kleur": "#f6d32d",
+              "native": true
+            },
+            {
+              "soort": "change",
+              "kleur": "#f6d32d",
+              "native": true
+            }
+          ]
+        },
+        {
+          "keuze": "99c1f1",
+          "gebeurtenissen": [
+            {
+              "soort": "input",
+              "kleur": "#99c1f1",
+              "native": true
+            },
+            {
+              "soort": "change",
+              "kleur": "#99c1f1",
+              "native": true
+            }
+          ]
+        }
+      ],
+      "beperking": "GTK3-palet op Linux/X11; geen volledige platform- of functieacceptatie.",
+      "foutmeldingen": []
+    }
+  },
+  "tegenbewijs_oude_bron": {
+    "versie": "2026.45.7",
+    "sha256": "12052f2c0f93b795676d6f02a51f2d3837017e6645b64daf0013070e1d3f3a1d",
+    "native_proef_geslaagd": false,
+    "kleurgebeurtenissen": [
+      {
+        "keuze": "f6d32d",
+        "gebeurtenissen": [
+          {
+            "soort": "input",
+            "kleur": "#f6d32d",
+            "native": true
+          },
+          {
+            "soort": "change",
+            "kleur": "#f6d32d",
+            "native": true
+          },
+          {
+            "soort": "input",
+            "kleur": "#36363e",
+            "native": true
+          },
+          {
+            "soort": "change",
+            "kleur": "#36363e",
+            "native": true
+          },
+          {
+            "soort": "input",
+            "kleur": "#f6d32d",
+            "native": true
+          },
+          {
+            "soort": "change",
+            "kleur": "#f6d32d",
+            "native": true
+          },
+          {
+            "soort": "input",
+            "kleur": "#36363e",
+            "native": true
+          },
+          {
+            "soort": "change",
+            "kleur": "#36363e",
+            "native": true
+          },
+          {
+            "soort": "input",
+            "kleur": "#f6d32d",
+            "native": true
+          },
+          {
+            "soort": "change",
+            "kleur": "#f6d32d",
+            "native": true
+          },
+          {
+            "soort": "input",
+            "kleur": "#36363e",
+            "native": true
+          },
+          {
+            "soort": "change",
+            "kleur": "#36363e",
+            "native": true
+          },
+          {
+            "soort": "input",
+            "kleur": "#f6d32d",
+            "native": true
+          },
+          {
+            "soort": "change",
+            "kleur": "#f6d32d",
+            "native": true
+          },
+          {
+            "soort": "input",
+            "kleur": "#36363e",
+            "native": true
+          },
+          {
+            "soort": "change",
+            "kleur": "#36363e",
+            "native": true
+          },
+          {
+            "soort": "input",
+            "kleur": "#f6d32d",
+            "native": true
+          },
+          {
+            "soort": "change",
+            "kleur": "#f6d32d",
+            "native": true
+          }
+        ]
+      }
+    ],
+    "eerdere_native_docx_controle": "Bij de afzonderlijke eerste reproductie werd geel (f6d32d) tijdens kiezen bewaard, maar na bevestigen donkergrijs (36363e). De herhaalbare proef detecteert de wisseling ook als de laatst bewaarde kleur toevallig geel is.",
+    "browserproef": "De gewone Chromium-kleurveldproef slaagt ook op de oude bron. Zij reproduceert de GTK-terugkoppeling niet en is geen negatief bewijs voor deze fout."
+  },
+  "beperkingen": [
+    "GTK3 op Linux/X11; de paletafmetingen worden vóór muisbediening streng gecontroleerd. Afwijkende native paletten moeten apart worden aangesloten.",
+    "Geen volledige Windows-/macOS-GUI-matrix of toets van alle vrije kleurkeuzes.",
+    "De gedeelde kleurbediening wordt ook gebruikt in rekenblad en presentatie; hun native kleurpaletten zijn niet afzonderlijk in deze proef doorlopen.",
+    "Writer-invoersnelheid en groot plakken blijven open; de volledige Rust-migratie is niet voltooid."
+  ],
+  "gebruikersdocumenten_overschreven": false,
+  "draaiende_gebruikersapp_gestopt": false,
+  "vorige_binaries_behouden": true
+}

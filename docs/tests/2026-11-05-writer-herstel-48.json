@@ -1,0 +1,175 @@
+{
+  "datum": "2026-11-05",
+  "broncommit": "b6df100b4497bca1caa0adefed302a4d82d1f699",
+  "versie": "2026.45.48",
+  "run": 42027716015,
+  "job": 127245999921,
+  "stap": "500 pagina’s inclusief echte herstelkopie en herstelkeuzes",
+  "conclusie": "failure",
+  "afkeuring": {
+    "programma_sha256": "c427bc138b641f20f5ec422f1056c91c2cd18e1b9ec02e20f7adf5371e200dda",
+    "script_sha256": "74e68d99decf1c7f076cb719d2794ddb61d37a163d3e63c1d38dba48bc5dcdd3",
+    "eerder_foutlijsten_leeg": {
+      "voor_heropenen": true,
+      "na_heropenen": true
+    },
+    "fase": "GUI-/enginefout in herstelde kopie na het lezen, bewerken en bewaren van 500 pagina’s en het uitvoeren van de herstelkeuzes",
+    "fout": "Out of bounds memory access in update_display_list",
+    "foutaantallen": {
+      "gui": 1,
+      "engine": 2,
+      "console": 1
+    },
+    "beeld": "Afkeuring zichtbaar als foutmelding; documentinhoud en twee gelijknamige tabbladen zijn nog zichtbaar, geen bewijs van volledig zwart venster."
+  },
+  "context": {
+    "artifact": 13415760308,
+    "zip_sha256": "e7d28a2bc5e90cf63a5f351386877f7c10b32a2d7ab45314b9549582fc22ac71",
+    "crc": "geslaagd",
+    "binnenste_checks": 23,
+    "negative_elf_en_appimage": "Lokaal exact behouden; niet als documentatie gecommit."
+  },
+  "exacte_hertest": {
+    "geslaagd": true,
+    "bytegelijke_binary_en_script": true,
+    "cwd": "Afzonderlijk uitgepakt oorspronkelijk contextpakket",
+    "argumenten": "--herstelstart --verwacht-rust-tekst --verwacht-incrementele-bron --verwacht-worker-layout --verwacht-worker-lettertypen --spelling-weergave --framebasis --workerbron",
+    "grens": "De oorspronkelijke fout is niet verklaard of hersteld. Eén lokale groene herhaling bewijst geen oplossing."
+  },
+  "matrix_bij_peiling": [
+    {
+      "conclusion": "",
+      "databaseId": 42028004316,
+      "headSha": "b6df100b4497bca1caa0adefed302a4d82d1f699",
+      "name": "Uitgave bouwen, ondertekenen en publiceren",
+      "status": "in_progress"
+    },
+    {
+      "conclusion": "",
+      "databaseId": 42027732071,
+      "headSha": "b6df100b4497bca1caa0adefed302a4d82d1f699",
+      "name": "Native Rust controleren en bouwen",
+      "status": "in_progress"
+    },
+    {
+      "conclusion": "",
+      "databaseId": 42027732177,
+      "headSha": "b6df100b4497bca1caa0adefed302a4d82d1f699",
+      "name": "Rust WebView-preview bouwen",
+      "status": "in_progress"
+    },
+    {
+      "conclusion": "",
+      "databaseId": 42027731638,
+      "headSha": "b6df100b4497bca1caa0adefed302a4d82d1f699",
+      "name": "Kantooromgeving controleren en bouwen",
+      "status": "in_progress"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 42027731827,
+      "headSha": "b6df100b4497bca1caa0adefed302a4d82d1f699",
+      "name": "Zelfstandige databasebrowser controleren en bouwen",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 42027716015,
+      "headSha": "b6df100b4497bca1caa0adefed302a4d82d1f699",
+      "name": "Writer-geheugenonderzoek · codex/native-rust-office · b6df100b4497bca1caa0adefed302a4d82d1f699",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 42027715812,
+      "headSha": "b6df100b4497bca1caa0adefed302a4d82d1f699",
+      "name": "Linux-dev · codex/native-rust-office · b6df100b4497bca1caa0adefed302a4d82d1f699",
+      "status": "completed"
+    }
+  ],
+  "grenzen": [
+    "45.48 heeft geen volledige stabiliteits- of platformacceptatie.",
+    "Het eerder lokaal gemeten snelheidsverschil en tekst-/pixelbehoud verklaren deze afzonderlijke CI-fout niet.",
+    "Alle issues en migratievlaggen blijven open; overige platformronden worden op hun eigen terminale resultaat beoordeeld."
+  ],
+  "bewijsmateriaal": [
+    {
+      "bron": "ci48-actueel.json",
+      "sha256": "c4efde4d63f511068923d67a6d1ce22bedd87b500b728aff569d19e815abd25d",
+      "bestand": "writer-herstel-48/ci48-actueel.json.gz",
+      "gzip_sha256": "cc44cb1b96068028fdab3543fe642fb1f14cca916c7b98626493fa4f2e57a3bc"
+    },
+    {
+      "bron": "ci48-geheugen-artefacten.json",
+      "sha256": "65120c96cca7032d31ef2275f9c07f5fecb9107e99bfd0d9eb42d3111b282010",
+      "bestand": "writer-herstel-48/ci48-geheugen-artefacten.json.gz",
+      "gzip_sha256": "314e08dd8810c3b391d59c6a343b1ff31ac20ef1949aea50356e19e98249ca3b"
+    },
+    {
+      "bron": "ci48-geheugen-fout.log",
+      "sha256": "f378adc835d728c72c7b957e9036825d8259d4979ba287c0a4ff6a818370f6d1",
+      "bestand": "writer-herstel-48/ci48-geheugen-fout.log.gz",
+      "gzip_sha256": "24335c5e8b7e3151fce41c42fbf92845b8b25c5ed73501ef6f27677f05067b2f"
+    },
+    {
+      "bron": "ci48-geheugen-zipcontrole.json",
+      "sha256": "d11dfcd8924e6e40acd9bde170cca091956b38b0fa847944e9b967387178c5d5",
+      "bestand": "writer-herstel-48/ci48-geheugen-zipcontrole.json.gz",
+      "gzip_sha256": "0649e327ca4059ba874d9a21474755bb9b9e2989d4e4f5393334312993fd1278"
+    },
+    {
+      "bron": "ci48-geheugen-contextcontrole.json",
+      "sha256": "de8fe5d983d9ee57d9ea95c575a528c22d303ff47726fd2617bb5bc497cc1ae0",
+      "bestand": "writer-herstel-48/ci48-geheugen-contextcontrole.json.gz",
+      "gzip_sha256": "00e03e198bbdb7b0cfd4abf75d927a8f58efdf02b721ac9c7239c578f8034fac"
+    },
+    {
+      "bron": "ci48-geheugen/normaal/rapport.json",
+      "sha256": "c06a0984cc77b4bb30aa227178e471278a1778dfa6a56507bd228159323d8682",
+      "bestand": "writer-herstel-48/ci48-geheugen/normaal/rapport.json.gz",
+      "gzip_sha256": "73537eb5b10511c9d62ffe80b5a6a6e9466c4e6da0d61cb96fa2af32e9cd1058"
+    },
+    {
+      "bron": "ci48-geheugen/normaal/programma.log",
+      "sha256": "571ef0e8198c786e332254dcad20968fe73d53e8d1a5740837a093f4df0326c0",
+      "bestand": "writer-herstel-48/ci48-geheugen/normaal/programma.log.gz",
+      "gzip_sha256": "38db4e6a26c2d5344a399d331fc8c393d495f7fd79c2f03dca09a9ee1ae0c77e"
+    },
+    {
+      "bron": "ci48-geheugen-exacte-hertest/rapport.json",
+      "sha256": "ed62875a5d1caeca5c56714a304ca6ad66db9c1d7a8c5ca27cb2915374df83cc",
+      "bestand": "writer-herstel-48/ci48-geheugen-exacte-hertest/rapport.json.gz",
+      "gzip_sha256": "973cf76f2ae2e3adadd694d6edc51b77edf3f98d90332bbbcc5b71397364bc42"
+    },
+    {
+      "bron": "ci48-geheugen-exacte-hertest/programma.log",
+      "sha256": "5ff8631147b73276959b73f644863c13e0054f35be1be06ac1df156581ac8029",
+      "bestand": "writer-herstel-48/ci48-geheugen-exacte-hertest/programma.log.gz",
+      "gzip_sha256": "5c3ab08f5496c88cf185a9056e01751b5ac8c20d538a2c1bbc8b716492bc8efd"
+    },
+    {
+      "bron": "ci48-geheugen-exacte-hertest.log",
+      "sha256": "ce9e9b0cd83cd66a4ea52aac7783fe19fe1fc307fe976690885b3b5c493e3316",
+      "bestand": "writer-herstel-48/ci48-geheugen-exacte-hertest.log.gz",
+      "gzip_sha256": "d9479822b411dacc15f2f0f36fe8b1cc7c88869582205297403be9951f121dfc"
+    },
+    {
+      "bron": "ci48-foutcontext/writer-foutcontext/context.json",
+      "sha256": "92bde5e9507b7ed9e1d9acc62590329fbfa73020180329e0f1fef4b8b41659ec",
+      "bestand": "writer-herstel-48/ci48-foutcontext/writer-foutcontext/context.json.gz",
+      "gzip_sha256": "4d9175bfdd5f052ae9987525f713496b9f631423036a5d4e0938028fbb70c7ba"
+    },
+    {
+      "bron": "ci48-foutcontext/writer-foutcontext/SHA256SUMS",
+      "sha256": "4942526e37fe4158f5c5b384cea88b6b8f8d6d8d8c1290f656f84c18b98c9206",
+      "bestand": "writer-herstel-48/ci48-foutcontext/writer-foutcontext/SHA256SUMS.gz",
+      "gzip_sha256": "50080cf07af04db37cf2047646581766d8add52df29917bd8f5086f37696cc32"
+    },
+    {
+      "bron": "ci48-foutcontext/writer-foutcontext/scripts/test-writer-lang-native.py",
+      "sha256": "74e68d99decf1c7f076cb719d2794ddb61d37a163d3e63c1d38dba48bc5dcdd3",
+      "bestand": "writer-herstel-48/ci48-foutcontext/writer-foutcontext/scripts/test-writer-lang-native.py.gz",
+      "gzip_sha256": "5f3da80814ff89bbc5f7320098b12ad16ec5ddfcc27070d6f0a367e1c2d1d3c1"
+    }
+  ]
+}

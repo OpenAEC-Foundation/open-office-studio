@@ -1,0 +1,45 @@
+{
+  "versie": "2026.44.9-alpha.18",
+  "omvang": "Letterlijk zoeken binnen alle hoofdtekst-/tabelalinea’s; geen volledige zoek-, GUI- of functiepariteit. Eigen widget-/werkdraadproeven, synthetische bronnen, eigen testklembord.",
+  "reguliere_tests": 219,
+  "nieuwe_kernproeven": 5,
+  "nieuwe_bronbeveiligingsproeven": 2,
+  "nieuwe_gui_proeven": 5,
+  "ui_tests_totaal": 58,
+  "geslaagd": true,
+  "testlog_sha256": "c486927b24ac4dfef1b27dc9744ce48dce9ced2f48a1a032780138550ee373b0",
+  "onafhankelijke_controle_sha256": "caeca5e7955e4670bc485bb73022304b99faa1d5001845e104060baed64e632e",
+  "opmaak_en_bronproeven": [
+    "Unicode-scalargrenzen, astrale en gecombineerde tekens, hoofdletters, hele woorden en letterlijke patroontekens",
+    "Runopmaak en tabelstructuur behouden bij gezamenlijke vervanging; één undo-stap en exacte bronbytes terug",
+    "Late fout, verkeerde brontekst, dubbele alinea en foutief eindresultaat: geen gedeeltelijke wijziging, ook via de directe API",
+    "256 alinea’s gezamenlijk gewijzigd, bewaard en onafhankelijk teruggelezen",
+    "4096-treffer-/tekst-/werkbudgetten; geen stil afgekapt resultaat of overgeslagen alleen-lezen inhoud",
+    "Geldige gezamenlijke vervanging met actieve bronbeveiliging geweigerd; revisieregistratie en onbekende/vergrendelde inhoudssloten alleen-lezen",
+    "Late query-/bron-/paneelantwoorden, echte lintklik, Enter-navigatie, editorfocus en doorgaan na ingevoegde zoektekst"
+  ],
+  "bronbestanden": {
+    "native/crates/office-core/src/writer_zoeken.rs": "82b6516ccb9101af4b5c2a3df1df1fb91448ccd747cf73ce8b826c3c5e6b8f72",
+    "native/crates/office-core/src/writer_tekst.rs": "e38388434545c3f86ac7d7c760cd4de56c65241b199730317f32427fb911c436",
+    "native/crates/office-core/src/writer_document.rs": "18456801895b4d7d454c84bbae4867e6f8de5eac483ae63be3d86782d5db7601",
+    "native/crates/office-ui/src/zoeken_ui.rs": "7c6cd531b57b3c395efcb44180876e99f7ffcd1b4f5683b99a3466039b1093d4",
+    "native/crates/office-core/tests/writer_zoeken.rs": "ae3884d562c8c0a6e1c30d599379fef5b7b64a401d46abe26ebc243835565db7",
+    "native/crates/office-core/tests/writer_beveiliging.rs": "049e30757461e45d6d99295f024f071f762f322217f63ddd80e5ca5cf589bf38",
+    "native/crates/office-ui/src/tests/raster_proeven.rs": "183211284e2ec0c3d8e2a30932251fb69070f6aeb57be5ee09cf91580b6f0f13"
+  },
+  "uitvoer": [
+    {
+      "bestand": "writer-zoeken-ui.docx",
+      "sha256": "07e456eb25668f8372fd57a373b2e54844bf7ff988e7f60989d5186f02a09275"
+    },
+    {
+      "bestand": "writer-zoekvervang-groot.docx",
+      "sha256": "586d7bbeec589b7a78f14cf12713a19567d19b2cefe74f48b50a99d45ab23af3"
+    },
+    {
+      "bestand": "writer-zoekvervang.docx",
+      "sha256": "fb6f4fedba4d7db28f4c2763491c649206156d93815940f16ac676b79be948b7"
+    }
+  ],
+  "scherm_sha256": "ffe006ed3f74ae45affb3756e9a1eb0c6fd978ab6d723241d31d0865e5f082b7"
+}

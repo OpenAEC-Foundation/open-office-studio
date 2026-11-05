@@ -1,0 +1,55 @@
+{
+  "versie": "2026.44.9-alpha.36",
+  "geslaagd": true,
+  "omvang": "Lokale releasecompilatie uit onveranderlijk Git-archief, CRC/bron/notices/versie-pakketcontrole en vaste bronregressie; geen volledige suite- of GUI-goedkeuring.",
+  "bouwbronbestanden": 2918,
+  "alle_bouwbronbytes_voor_en_na_en_git_gelijk": true,
+  "broncommit": "9deec078c7080549f3e6900685ba8357ad3d1547",
+  "bouwbron": "Vast Git-archief en bytegelijke bron op een herbruikbaar, tijdens de volledige bouw onveranderd pad. Beide programma’s vóór volgende builds vastgezet.",
+  "rust_bouwduur_seconden": 1821.253,
+  "bronmanifest_sha256": "6549585284eb498f56eab1625160d1db0b58626455dd39974dac5f0ece0c2969",
+  "programmas": {
+    "open-office-studio-native": {
+      "versie": "Open Office Studio 2026.44.9-alpha.36 (native)",
+      "sha256": "1538890779e4e41adcab407c890f48a3303ea51960b8e91edb35394cf38c6e0a"
+    },
+    "controleer-bestand": {
+      "versie": "Open Office native bestandscontrole 2026.44.9-alpha.36 (release)",
+      "sha256": "fbc86724f3d5342ce1c37b4caf62fe6e6204b13df96c119c4fd8d1244340f42b"
+    }
+  },
+  "bronregressie": {
+    "omvang": "Vastgepinde kop-/voettekstbron: openen, eerste weergave, bewaren en zichtbare tekst/onderdeelstructuur teruglezen; geen volledige opmaak- of pixelcontrole",
+    "programma": "Open Office native bestandscontrole 2026.44.9-alpha.36 (release)",
+    "programma_sha256": "fbc86724f3d5342ce1c37b4caf62fe6e6204b13df96c119c4fd8d1244340f42b",
+    "bron": {
+      "id": "kopvoet-standaardfont",
+      "url": "https://raw.githubusercontent.com/apache/poi/d91a76448f0963a93b6cd95fb97fbe1d8bad82c6/test-data/integration/stress023.docx",
+      "sha256": "32b036e66eb701f37e8b64a3c491bf1d6234be3cee1e6e36d2e8435f4516cc94"
+    },
+    "bouwronde": null,
+    "geteste_checkout": null,
+    "geslaagd": true,
+    "gelezen_bron_bytes": 358387,
+    "gelezen_bron_sha256": "32b036e66eb701f37e8b64a3c491bf1d6234be3cee1e6e36d2e8435f4516cc94",
+    "adresruimte_bytes": 3221225472,
+    "looptijd_seconden": 0.743,
+    "meting": {
+      "bewaard_bytes": 352743,
+      "bouwprofiel": "release",
+      "bron_bytes": 358387,
+      "bron_sha256": "32b036e66eb701f37e8b64a3c491bf1d6234be3cee1e6e36d2e8435f4516cc94",
+      "eerste_weergave_ms": 339,
+      "module": "Writer",
+      "native_versie": "2026.44.9-alpha.36",
+      "omvang": "Openen, eerste werkweergave, serialiseren en teruglezen; geen volledige functie-, inhouds-, stijl- of pixelcontrole",
+      "onderdelen": 14,
+      "open_ms": 57,
+      "status": "geslaagd",
+      "tekstcontrole_sha256": "089c99bec4898664d4e7cdb8e79c94aaa238ff2fff46dac8480473c05b307de8",
+      "totaal_ms": 715,
+      "weergaves_getest": 1,
+      "zichtbare_velden": 178
+    }
+  }
+}

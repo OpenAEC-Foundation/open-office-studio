@@ -1,0 +1,609 @@
+{
+  "versie": "2026.45.36",
+  "kern": "2026.45.0-alpha.52",
+  "basiscommit": "457e11f610f0fc0fcefb2b2ef88372838943b671",
+  "programma_sha256": "e2c47f2172aafc0c01236ac5deccebd115e4eea6a25ac69264c75940f0e9426c",
+  "referentie_sha256": "9b7588486a14e0516e35bf25eac415e2981c65761bf09775ed929f2a3a45c7d2",
+  "scope": "Volledige tabelgegevens hergebruiken binnen dezelfde bronversie; oorspronkelijke enginefout begrensd bewaren. Geen algemene soepelheids-, stabiliteits-, suite- of Rust-interfaceacceptatie.",
+  "bronbestanden_sha256": {
+    "package.json": "09040cf3dcd34a8d7fdfc551c7717e30d33d6ff77c54c6caabb7ab9b8d0cb108",
+    "versie.json": "5e4349dca008c7e5f7ff64fc3dc15e20983f3f06de7ae5079713e968bc47d685",
+    "src-tauri/Cargo.toml": "6aca4fd8f2f5e9858714fc80e5c401859f57a533bef0e13c6a83f21ba6e47485",
+    "src-tauri/Cargo.lock": "e3ee5f5df13697c998f7bc5eddd483430fbfcded4164898acfe5148e5a70f3d4",
+    "src-tauri/tauri.conf.json": "8cb946c38bace0feb15b3adfc7e5cc88567fdebad785e3599058ccfa65b3e104",
+    "apps/database-studio/src-tauri/Cargo.toml": "6e442ede5a559354d45d7546fa867876a32f2bc9282a9a28135c6a05ffa7a5c7",
+    "apps/database-studio/src-tauri/Cargo.lock": "205d96ea8fe83b3a443775fb08b46d57ec1d0be79eb6015050f7e4a43385bd8f",
+    "apps/database-studio/src-tauri/tauri.conf.json": "00c6ff4ea284275f4e516b271a2b2683857e4a9ea85ed6007a0e2e3f58b2de3f",
+    "src/editors.tsx": "e23dbc3b77987356b0cf5b2c33e0ec6bca6cfe039717f4d45aa71d115b2a44f9",
+    "src/tekst/engineFouten.ts": "e59f4f4c2fbd982b948f70838b0b8ac2eb5bc79e408527c03f4bd458f985d9a0",
+    "src/tekst/engineFouten.test.ts": "4ebbebb4ed7e3318c91d5569656067f49887e2c32070be6f07f8b72e5b3db8d5",
+    "src/tekst/liniaal/geometrie.ts": "cdebc50a423c1c65dba1158d385639356af3fb2108eda2323ba19df2fb0ee6bf",
+    "src/tekst/liniaal/tabelcache.test.ts": "93de6b227196acc1264526287de1bfffb8e658275cec46a0e45d75fda53c85cc",
+    "scripts/gui/webkit_inspector.py": "91b9140e133162cac2e2c22a3b91884c13c6855f9bd0e7c49f6bebc25e35fe43",
+    "scripts/test-writer-rendererfout-native.py": "c62f0357d66e4114974f988832edbab139eae8cc9b7f56702e8e473a77e5e902",
+    "scripts/test-writer-tabelgrepen-native.py": "64d0e30e5527caa0a027902d21a241d109f10abb2be8aec67844cc9d017e3966",
+    "scripts/bewaar-writer-foutcontext.py": "87f3f175b210fbe6eb1a84709a9c9925f6c56755cf76354f5ee67b0a29c8b932",
+    "tests/test_framebewaking.py": "4d708676824245d0202fcd52c3d3077b6cdebc9fdcfa8c517256473e867f9d7d",
+    "tests/test_webkit_inspector.py": "1964ebbd260589357d7cb9f3d25c592b435627c3cfa19e710eda37dd61d11f58",
+    "tests/test_writer_foutcontext.py": "45bc3e53147d7ea2b86c59247e6e71560173aa4a4ce96f4813bd53d3f49f1575",
+    ".github/workflows/desktop.yml": "93e0c0c8a517814444afa024c6bcae949b8f8b7330a6b7dc539ffa57a2e273e6",
+    ".github/workflows/release.yml": "fa81e6eae39bef8c2b591926611b1b28899b7fa135c89c355d4fd58f6cb445b4",
+    "pnpm-lock.yaml": "caa859ed9181a41b2c63573bc0b02802b73234c3fb01a4ecb5518e674a0227bb",
+    "patches/@betteroffice__docx-react@0.5.1.patch": "65a3c11e608311028e544014eea30d89cc76ec15e88fdc807d7f4d5d9c64a367"
+  },
+  "bewijsbestanden": {
+    "renderer-36.json": {
+      "pad": "writer-tabelgegevens/renderer-36.json.gz",
+      "sha256": "5c447efd4571055c9c2961413e3bb59cc4d10ff36c450eb2a518f2df486ae5d2",
+      "gzip_sha256": "9891c7967b7ad05839a8de48830434b3b59bb0c74910941cf72cad6064b82475",
+      "geslaagd": true
+    },
+    "cpu-35-voor.json": {
+      "pad": "writer-tabelgegevens/cpu-35-voor.json.gz",
+      "sha256": "17378c3c424616fea904e20fa89893d388e94d03fd8df33e73d9f2ea2c64ec22",
+      "gzip_sha256": "9a1803db6487e4910c9d2420f71b29be01e60789a19ba93ddaab162e12ee97b9",
+      "geslaagd": true
+    },
+    "cpu-35-voor-rauw.json": {
+      "pad": "writer-tabelgegevens/cpu-35-voor-rauw.json.gz",
+      "sha256": "e3cb009521da895e1378c98467e97092678d9ee0a2723a83b08497da312e59f5",
+      "gzip_sha256": "22aac860ae4f9b7da3f1381b9f9c531b0ad94b1f48a89125f20d18318bd6fe0b"
+    },
+    "cpu-36-eerste.json": {
+      "pad": "writer-tabelgegevens/cpu-36-eerste.json.gz",
+      "sha256": "acb96812d02e52c6385509eadf42457f29d8059716257d16deddc295a3a7f57a",
+      "gzip_sha256": "79ec185889afc23b52effc84a7d2eb928ec65bbdb8bae1cf34277ab12f451bc5",
+      "geslaagd": true
+    },
+    "cpu-36-eerste-rauw.json": {
+      "pad": "writer-tabelgegevens/cpu-36-eerste-rauw.json.gz",
+      "sha256": "e61144d871f611557c66130f8c73881bb5c324e3822a0aa07fdb8dff0a2294f1",
+      "gzip_sha256": "b5ee57c7787b680fe598bbc3542539be835ac2b4cca447cb2ff4aab9d4cac80c"
+    },
+    "cpu-36-tweede.json": {
+      "pad": "writer-tabelgegevens/cpu-36-tweede.json.gz",
+      "sha256": "4c0122dd7b8b4bec3db7c05c426becc5d3ece4507a5429716dd73ccecb15ed3f",
+      "gzip_sha256": "fcbeaf9b8798c87ea03785f82a94a6ad896fcf9b75d3e40cac0d54ad988bd7ec",
+      "geslaagd": true
+    },
+    "cpu-36-tweede-rauw.json": {
+      "pad": "writer-tabelgegevens/cpu-36-tweede-rauw.json.gz",
+      "sha256": "37d9b66b7222b9822e8b1dd965d94a87b36346170c5337ea20a058c6df09ae39",
+      "gzip_sha256": "0b24ac4f40b9ce0ece4cd17cb2b30bbf5ae2f81df43f6781bb5a5a968c9be4a6"
+    },
+    "cpu-35-na.json": {
+      "pad": "writer-tabelgegevens/cpu-35-na.json.gz",
+      "sha256": "f20df6cbeb9ad2ce9a49a9faec1be575efe4d8a82ccd0cc4c52f6d07711849f8",
+      "gzip_sha256": "b925da1d2c1ea97462174527e8139ed86cf62feb41cb6f01e7b96a222cae5655",
+      "geslaagd": true
+    },
+    "cpu-35-na-rauw.json": {
+      "pad": "writer-tabelgegevens/cpu-35-na-rauw.json.gz",
+      "sha256": "0408988ff0c6bd8d3c8b816eb0a94e1fd4dc2f64691e1ccb021f84d7c2a3b62b",
+      "gzip_sha256": "125dfe1956e63871f6989b485df34a2ba941afa2810e6712e8120cadc5d3b32f"
+    },
+    "lang-36.json": {
+      "pad": "writer-tabelgegevens/lang-36.json.gz",
+      "sha256": "04f516e172373033be8f2454a814963a028672218babcb998e33069e29672ef3",
+      "gzip_sha256": "cbb1793f9f5a734268e7e3e83d637d86a0391ea8d0f97b48e0775c930b31840c",
+      "geslaagd": true
+    },
+    "tekst-36.json": {
+      "pad": "writer-tabelgegevens/tekst-36.json.gz",
+      "sha256": "99105f32cd2ec7458bb97e6cf94ca642a9190ceedff62b6ac91e589dee5c97a2",
+      "gzip_sha256": "6f8745490e0750fb8bf7ab55f938437dd95bb57e7a1a507882d9c050977f05a1",
+      "geslaagd": true
+    },
+    "geheugen-36.json": {
+      "pad": "writer-tabelgegevens/geheugen-36.json.gz",
+      "sha256": "59ed35252a28b50eb3b5651e68bb73fbeff5d352a9de86d7b2c06f7556f7fec8",
+      "gzip_sha256": "d1d03cf02661dba3cbd05f6167bbfd59a437eeebdec938f2a922ee445d284e8f",
+      "geslaagd": true
+    },
+    "acht-36.json": {
+      "pad": "writer-tabelgegevens/acht-36.json.gz",
+      "sha256": "d659dd6ffdc987c8071a9d009bcd44ce97b1c49decbb2ef771bbace1d2bf2263",
+      "gzip_sha256": "87946327beeb894b1b53aee75a576c53eb3cd13a789cf892d07a8337352bb9d7",
+      "geslaagd": true
+    },
+    "vervolginvoer-36.json": {
+      "pad": "writer-tabelgegevens/vervolginvoer-36.json.gz",
+      "sha256": "2ba91ee5f85ffc5d563aecb90a628058053ed6d1e1cf06a4b8205b28f8828929",
+      "gzip_sha256": "a57729ce3db02931333c434b6ee48cf2da85fb5cc17e762c41565d55499eba4e",
+      "geslaagd": true
+    },
+    "kleur-36.json": {
+      "pad": "writer-tabelgegevens/kleur-36.json.gz",
+      "sha256": "c4be7c50931f23e3481021c66815fda1c5e092f08b41e0c0de865f85e47d96e4",
+      "gzip_sha256": "f044c7211aedb21a8dc047cb6adc2e441e3bb1698d3c0f210416ee7ce1414f8a",
+      "geslaagd": true
+    },
+    "bewaren-36.json": {
+      "pad": "writer-tabelgegevens/bewaren-36.json.gz",
+      "sha256": "4819be29b3b44cd1bc9f2adc9b44cd0b830162c9d9dfe307d50b2e22829b1613",
+      "gzip_sha256": "7b791637de350b1a7332a91aad39b83d506515f950561b025886f1c151331af7",
+      "geslaagd": true
+    },
+    "meting-35-voor.json": {
+      "pad": "writer-tabelgegevens/meting-35-voor.json.gz",
+      "sha256": "583a7a98d08f5a822b809715bb59caa71d0e3b387b17ef125faf4bfc7c99cff0",
+      "gzip_sha256": "93979d7921908743c313721a4917996731354c380d8ee7e21f3e3a5d72b70936",
+      "geslaagd": true
+    },
+    "meting-36-eerste.json": {
+      "pad": "writer-tabelgegevens/meting-36-eerste.json.gz",
+      "sha256": "97c5fdb72a84b254db77b78ac6a1fbebe5951cb670bd243db0be8e4283a78601",
+      "gzip_sha256": "d84af6e03d51a58158235e54b49287c0ee737a582a0b1a952e093c31edabccd3",
+      "geslaagd": true
+    },
+    "meting-36-tweede.json": {
+      "pad": "writer-tabelgegevens/meting-36-tweede.json.gz",
+      "sha256": "ba3c7acd68aee5419af15d07bfb71a95daf923ec30cd41f01a428617168c25c2",
+      "gzip_sha256": "ad4cb4f154d9da7b30a20742b9369bcdbf0e9c587610252f459b8e0993c13ad8",
+      "geslaagd": true
+    },
+    "meting-35-na.json": {
+      "pad": "writer-tabelgegevens/meting-35-na.json.gz",
+      "sha256": "8d25c8cd7d6cf46b930a3585a8db2f1b6f393ff3abe7bf27d5248cf56cc0765d",
+      "gzip_sha256": "deda238519ab1656afeb183cf378e48642de477cd5025741dd89fa5f04e389be",
+      "geslaagd": true
+    },
+    "tabelgrepen-36.json": {
+      "pad": "writer-tabelgegevens/tabelgrepen-36.json.gz",
+      "sha256": "fb0402fc4383a66329d63a3b0eadf54de2fdaea9d3db5a2a60db225a0c5c57d4",
+      "gzip_sha256": "725b0206161614eb29e8f7e10eab8a7959b6ef5a70f11906d56ea64cfeb4f0ae",
+      "geslaagd": true
+    },
+    "frontend.json": {
+      "pad": "writer-tabelgegevens/frontend.json.gz",
+      "sha256": "2bfe97ec809c966b3601482c1370c135c29a60513a35c56805be2e37cbf6aebe",
+      "gzip_sha256": "dcf68de65a0b21f1911f3f516c4389b54ede7fa355fb3099890bb9f2095d43bf"
+    },
+    "tabelcache-voor-definitief.json": {
+      "pad": "writer-tabelgegevens/tabelcache-voor-definitief.json.gz",
+      "sha256": "221d380837770f5868d94804ef30d39f8b895170997acf6eb744d757d6fe40ba",
+      "gzip_sha256": "80568daf22f57616d7821695be8009036cdd853819fd3e7c5277c94ac0b82674"
+    },
+    "open-issues.json": {
+      "pad": "writer-tabelgegevens/open-issues.json.gz",
+      "sha256": "95d275da61da430480ed1dafd9ab8cec26336f6edcb5ce68913a967748a6875d",
+      "gzip_sha256": "4547b84ba4c177778207b1b639a5a84620502529f43fb466c5fe738bc5f7296d"
+    },
+    "profiel-tabellen-native.py": {
+      "pad": "writer-tabelgegevens/profiel-tabellen-native.py.gz",
+      "sha256": "16629653c5d70b4b147d9eadc678dd37f9006296e24728827f3338cf8f86c80f",
+      "gzip_sha256": "e82b880d1ac0e064e79a4498d61573f4eebc63e294dc005040f449c9f7af3476"
+    },
+    "meet-tabellen-native.py": {
+      "pad": "writer-tabelgegevens/meet-tabellen-native.py.gz",
+      "sha256": "710d6df9b364d47b785af08e857feb11c953efc645c630c13d4b6f762367f7ec",
+      "gzip_sha256": "e77ff02af180db0b915507df2452ea4d5fdb82ad83ba6c12c80b0f93f5fc85fb"
+    }
+  },
+  "beelden_sha256": {
+    "na-slepen.png": "81de49ba3443dacef4d3feea12ef95eee9034af2adcf2845ce07ca8c2116d65c",
+    "tabel-heropend.png": "fb03785700004d93bcc7746aede6d10d080068db75d7bea9f6f02bf1f7560e62",
+    "tabelbron-getypt.png": "25ae02a27de408d107182ec4b9dfc2a6f67efa590a1986753145d0dd1afa4b97"
+  },
+  "metingen": [
+    {
+      "proef": "meting-35-voor",
+      "invoer_en_inspectie_ms": 2682,
+      "invoer_tot_finale_layout_ms": 3852,
+      "tabel_metingen": {
+        "actief": false,
+        "tablePayload": {
+          "calls": 54,
+          "ms": 251.00000000000364
+        },
+        "storySegments": {
+          "calls": 2,
+          "ms": 151.99999999999636
+        }
+      },
+      "volledige_teksten_exact": true,
+      "verhalen": 1537,
+      "bron_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "grens": "Ongeprofileerde koude invoer na opnieuw openen: native laatste keyup en invoerbarrière, zonder eis aan zichtbare spellingsgolven. Volledige alinea- en celteksten buiten het profiel gecontroleerd; geen vergelijking met de 500-paginameting of de gelijktijdige hercontrole direct na plakken."
+    },
+    {
+      "proef": "meting-36-eerste",
+      "invoer_en_inspectie_ms": 2271,
+      "invoer_tot_finale_layout_ms": 3378,
+      "tabel_metingen": {
+        "actief": false,
+        "tablePayload": {
+          "calls": 9,
+          "ms": 47.99999999999636
+        },
+        "storySegments": {
+          "calls": 2,
+          "ms": 144
+        }
+      },
+      "volledige_teksten_exact": true,
+      "verhalen": 1537,
+      "bron_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "grens": "Ongeprofileerde koude invoer na opnieuw openen: native laatste keyup en invoerbarrière, zonder eis aan zichtbare spellingsgolven. Volledige alinea- en celteksten buiten het profiel gecontroleerd; geen vergelijking met de 500-paginameting of de gelijktijdige hercontrole direct na plakken."
+    },
+    {
+      "proef": "meting-36-tweede",
+      "invoer_en_inspectie_ms": 2205,
+      "invoer_tot_finale_layout_ms": 3283,
+      "tabel_metingen": {
+        "actief": false,
+        "tablePayload": {
+          "calls": 9,
+          "ms": 41
+        },
+        "storySegments": {
+          "calls": 2,
+          "ms": 139
+        }
+      },
+      "volledige_teksten_exact": true,
+      "verhalen": 1537,
+      "bron_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "grens": "Ongeprofileerde koude invoer na opnieuw openen: native laatste keyup en invoerbarrière, zonder eis aan zichtbare spellingsgolven. Volledige alinea- en celteksten buiten het profiel gecontroleerd; geen vergelijking met de 500-paginameting of de gelijktijdige hercontrole direct na plakken."
+    },
+    {
+      "proef": "meting-35-na",
+      "invoer_en_inspectie_ms": 2762,
+      "invoer_tot_finale_layout_ms": 3977,
+      "tabel_metingen": {
+        "actief": false,
+        "tablePayload": {
+          "calls": 54,
+          "ms": 239
+        },
+        "storySegments": {
+          "calls": 2,
+          "ms": 164.00000000000364
+        }
+      },
+      "volledige_teksten_exact": true,
+      "verhalen": 1537,
+      "bron_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "grens": "Ongeprofileerde koude invoer na opnieuw openen: native laatste keyup en invoerbarrière, zonder eis aan zichtbare spellingsgolven. Volledige alinea- en celteksten buiten het profiel gecontroleerd; geen vergelijking met de 500-paginameting of de gelijktijdige hercontrole direct na plakken."
+    }
+  ],
+  "CPU_diagnoses": [
+    {
+      "proef": "cpu-35-voor",
+      "invoer_en_inspectie_ms": 2488,
+      "tabel_metingen": {
+        "actief": false,
+        "tablePayload": {
+          "calls": 54,
+          "ms": 242.9999999999891
+        },
+        "storySegments": {
+          "calls": 1,
+          "ms": 79
+        }
+      },
+      "hoofdthread_steekproeven": 1378,
+      "grens": "CPU-diagnose met ScriptProfiler; geen zuivere snelheidsvergelijking. Eerste kandidaat is trager; alle ronden behouden."
+    },
+    {
+      "proef": "cpu-36-eerste",
+      "invoer_en_inspectie_ms": 4053,
+      "tabel_metingen": {
+        "actief": false,
+        "tablePayload": {
+          "calls": 9,
+          "ms": 96
+        },
+        "storySegments": {
+          "calls": 1,
+          "ms": 167
+        }
+      },
+      "hoofdthread_steekproeven": 1564,
+      "grens": "CPU-diagnose met ScriptProfiler; geen zuivere snelheidsvergelijking. Eerste kandidaat is trager; alle ronden behouden."
+    },
+    {
+      "proef": "cpu-36-tweede",
+      "invoer_en_inspectie_ms": 2361,
+      "tabel_metingen": {
+        "actief": false,
+        "tablePayload": {
+          "calls": 9,
+          "ms": 47.000000000007276
+        },
+        "storySegments": {
+          "calls": 1,
+          "ms": 86
+        }
+      },
+      "hoofdthread_steekproeven": 1255,
+      "grens": "CPU-diagnose met ScriptProfiler; geen zuivere snelheidsvergelijking. Eerste kandidaat is trager; alle ronden behouden."
+    },
+    {
+      "proef": "cpu-35-na",
+      "invoer_en_inspectie_ms": 2517,
+      "tabel_metingen": {
+        "actief": false,
+        "tablePayload": {
+          "calls": 54,
+          "ms": 254.99999999999636
+        },
+        "storySegments": {
+          "calls": 1,
+          "ms": 76
+        }
+      },
+      "hoofdthread_steekproeven": 1427,
+      "grens": "CPU-diagnose met ScriptProfiler; geen zuivere snelheidsvergelijking. Eerste kandidaat is trager; alle ronden behouden."
+    }
+  ],
+  "controles": {
+    "frontendtests": 1802,
+    "frontendbestanden": 171,
+    "python_tests": 77,
+    "typescript": true,
+    "linux_productiebouw": true,
+    "workflow_yaml": true,
+    "native_proeven": 17,
+    "kandidaatproeven": 13,
+    "referentieproeven": 4,
+    "rust_kernbron_gewijzigd": false
+  },
+  "resterend": {
+    "open_issues": 118,
+    "migratiegebieden": 10,
+    "open_vlaggen": 30,
+    "Wasm_en_verouderde_layout_fouten": "Geen oorzaak of herstel bewezen van beide oorspronkelijke 45.35-Linux-afkeuringen; negatieve binaries en oorspronkelijke proeven blijven behouden.",
+    "CI_op_deze_bron": "Te starten na push; geen officiële release.",
+    "vervolginvoer_ms": 5007
+  },
+  "beeldvergelijking": {
+    "volledig": {
+      "verschillende_pixels": 3,
+      "begrenzing": [
+        6,
+        159,
+        74,
+        161
+      ]
+    },
+    "lint": {
+      "verschillende_pixels": 3,
+      "begrenzing": [
+        6,
+        159,
+        74,
+        161
+      ]
+    }
+  },
+  "beeldgrens": "Eén koude tabeltoestand; drie afwijkende navigatiepixels. Geen volledige pixelpariteit.",
+  "enginefoutproef": {
+    "oorspronkelijke_stack_exact": true,
+    "bron_selectie_bewaren_heropenen": true,
+    "grens": "Eigen queryfout in de echte WebView: foutmelding, bron behouden, bewaren/heropenen.\n\nDe proef wekt bewust één RuntimeError op aan de querygrens. Zij beschadigt geen\nWasm-geheugen en bewijst geen herstel van de oorspronkelijke geheugentrappen.\n",
+    "opname": [
+      {
+        "naam": "RuntimeError",
+        "bericht": "OpenAEC eigen rendererfoutproef",
+        "stack": "@\nU@tauri://localhost/assets/index-DQxWiq97.js:141:135681\nM@tauri://localhost/assets/index-DQxWiq97.js:141:136317\nW@tauri://localhost/assets/index-DQxWiq97.js:141:137464\n@\n@\nglobal code@",
+        "tijd": 1793792521433
+      }
+    ]
+  },
+  "tabelgreepproef": {
+    "fysieke_sleepproef": true,
+    "grid_voor": [
+      [
+        624,
+        9014
+      ]
+    ],
+    "grid_na": [
+      [
+        907,
+        8731
+      ]
+    ],
+    "docx_grids": [
+      [
+        907,
+        8731
+      ]
+    ],
+    "stappen": [
+      "Echte kolomrand versleept; aangrenzende breedtes en alle teksten correct",
+      "Fysieke Undo en Redo herstellen de brongebonden tabelgegevens exact",
+      "Fysiek opgeslagen; kolombreedtes onafhankelijk in DOCX-XML gecontroleerd",
+      "Nieuw eigen proces behoudt alle kolombreedtes, alinea- en celteksten"
+    ]
+  },
+  "grote_plakproef": {
+    "laatste_plak_ms": 18766,
+    "grootste_timerpauze_ms": 4149.999999999993,
+    "layout": {
+      "final": true,
+      "versie_actueel": true,
+      "layout_actief": true,
+      "paginas": 129,
+      "wacht_ms": 1525
+    },
+    "onafhankelijke_DOCX": {
+      "exact": true,
+      "sha256": "83bf0894ac7e54ed89ddf2926258962014f8fcba447a57328164d7d78cf399bf",
+      "bytes": 73316,
+      "body_met_opmaak_sha256": "0808d3dcf34c8251d371d9e4c6eda470ed2597acd850062b5b5f70169333a302",
+      "normalisatie": "Alleen paraId/textId en rsid-attributen verwijderd; tekst, run- en alineaopmaak, hyperlinks en tabelstructuur blijven in de bodyhash."
+    }
+  },
+  "vervolginvoer_na_plakken": {
+    "lezingen": 134,
+    "eersteToetsNaLezingen": 64,
+    "hercontroleGestart": true,
+    "verhalen": 1537,
+    "invoer_tot_bron_ms": 5007,
+    "wacht_voor_invoer_ms": 150,
+    "onderbreekbaar": true,
+    "bron_exact": true,
+    "na_body_begin": "OPENAEC   /   ONTWERPNOTITIE 01Ruimte voor ideeën.Een helder",
+    "na_body_eind": " brengen.Drie uitgangspuntenVOLGENDE STAP   /   Werk de eerste variant uit en bespreek de keuzes. S!",
+    "structuur_exact": true,
+    "grens": "Echte toetsen en bron-/invoerbarrière; geen volledige paginapaint of FPS.",
+    "spelling_na_invoer": {
+      "bron_exact": true,
+      "alinea_aantal": 3329,
+      "celverhalen": 1536
+    }
+  },
+  "inventaris_sha256": {
+    "native/docs/migratie.json": "78f52cfb2969438e45be39b192086718da1c86474235fd9b4ee941bec64a4d5a",
+    "open_issues": "95d275da61da430480ed1dafd9ab8cec26336f6edcb5ce68913a967748a6875d"
+  },
+  "logbestanden_sha256": {
+    "frontend.log": "4d3ed94e86bd1be311cc9c3e9f864ffa1248cbd2ad807f48e12738bcec3dd17e",
+    "typescript-definitief.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "python-definitief.log": "43a42864fec00e95788ab705ca4eb10c4987ad6e313530ddb3f64080a609531f",
+    "bouw-45.36.log": "de8e4f64f62fde3f19b0da9d720979ea9086f1ea3d7575fb83f5d91eebb5bef0",
+    "proefuitkomsten.json": "b6c1f6e2492c38b02507d9ccdcc879198435b558689270ff69d578d0454c0b8d",
+    "meetuitkomsten.json": "9fc9ac0f59775ca4c872cd704380c10b9ce0887e76fca62c5dd76bdb442f8584",
+    "tabelcache-voor-definitief.log": "727dd4347f2b6e0320757c9b2d44f27c1c20b1fa867d5262280b741ad51a8c77"
+  },
+  "CPU_scriptbronnen": {
+    "cpu-35-voor": [
+      {
+        "url": "tauri://localhost/assets/core-BUhCcD2K.js",
+        "bestand": "bron-core-BUhCcD2K.js.gz",
+        "bytes": 2695,
+        "sha256": "bd9612a6a3f9b04eb26fc2f333f1dde54b6c0796cb515b6dfbc30aac2db7d176",
+        "bewaard_als": "writer-tabelgegevens/cpu-35-voor-bron-core-BUhCcD2K.js.gz",
+        "gzip_sha256": "5f9f76f89e365ba69008850da78f6e89412c11b6d4e71a1f3fb22591d8d9de43"
+      },
+      {
+        "url": "tauri://localhost/assets/editors-TtkGB6iE.js",
+        "bestand": "bron-editors-TtkGB6iE.js.gz",
+        "bytes": 1701773,
+        "sha256": "a2354d1f29b426a9de4c234dfe024e75b2034ff96f16c6522c2add359a6af09a",
+        "bewaard_als": "writer-tabelgegevens/cpu-35-voor-bron-editors-TtkGB6iE.js.gz",
+        "gzip_sha256": "c5ae0c8e9401c1b8bc45cb3d5c164961d1269697f1e630138b382bd8309b2c9c"
+      },
+      {
+        "url": "tauri://localhost/assets/index-Mlr0LNHS.js",
+        "bestand": "bron-index-Mlr0LNHS.js.gz",
+        "bytes": 2888204,
+        "sha256": "01a00746e36babf8b549139c673015da27c3cd6d966c725f9020625ba57aae36",
+        "bewaard_als": "writer-tabelgegevens/cpu-35-voor-bron-index-Mlr0LNHS.js.gz",
+        "gzip_sha256": "9d737754821f7ed86aa14a6e405156ad088d36e1e7233b827f8887e4dbd5495a"
+      },
+      {
+        "url": "tauri://localhost/assets/window-CkhQcx_D.js",
+        "bestand": "bron-window-CkhQcx_D.js.gz",
+        "bytes": 14130,
+        "sha256": "0e628e6779ec373034660022f28c93fa857766437fcaaf08d3a6f6089e2303fb",
+        "bewaard_als": "writer-tabelgegevens/cpu-35-voor-bron-window-CkhQcx_D.js.gz",
+        "gzip_sha256": "7c377c345b29d3d2a809924ad5f6399b9b1df0226649407e63fc98c210430835"
+      }
+    ],
+    "cpu-36-eerste": [
+      {
+        "url": "tauri://localhost/assets/core-BUhCcD2K.js",
+        "bestand": "bron-core-BUhCcD2K.js.gz",
+        "bytes": 2695,
+        "sha256": "bd9612a6a3f9b04eb26fc2f333f1dde54b6c0796cb515b6dfbc30aac2db7d176",
+        "bewaard_als": "writer-tabelgegevens/cpu-36-eerste-bron-core-BUhCcD2K.js.gz",
+        "gzip_sha256": "5f9f76f89e365ba69008850da78f6e89412c11b6d4e71a1f3fb22591d8d9de43"
+      },
+      {
+        "url": "tauri://localhost/assets/editors-FhlTQooi.js",
+        "bestand": "bron-editors-FhlTQooi.js.gz",
+        "bytes": 1702515,
+        "sha256": "8e183daa38adb9a549c11d86b94ba21a0c6b04a38b185225a6e0c38a1c1fabad",
+        "bewaard_als": "writer-tabelgegevens/cpu-36-eerste-bron-editors-FhlTQooi.js.gz",
+        "gzip_sha256": "d8a8a564c7bdb69eadb06abfdee89746e1867b7d56d033b0618104b0f0a81220"
+      },
+      {
+        "url": "tauri://localhost/assets/index-DQxWiq97.js",
+        "bestand": "bron-index-DQxWiq97.js.gz",
+        "bytes": 2888204,
+        "sha256": "2f006e10f894c53e75348886b10fa0b1f3c7ca39ce0a25d5ebe3151bc809d06f",
+        "bewaard_als": "writer-tabelgegevens/cpu-36-eerste-bron-index-DQxWiq97.js.gz",
+        "gzip_sha256": "968f52f7ea2706d9f7dfe57a230b5c040bccfea9a8350b07119d78cec2fb2509"
+      }
+    ],
+    "cpu-36-tweede": [
+      {
+        "url": "tauri://localhost/assets/chunk-XUXC3ZKS-CBlNE_D8.js",
+        "bestand": "bron-chunk-XUXC3ZKS-CBlNE_D8.js.gz",
+        "bytes": 12686,
+        "sha256": "e8fb946e151166e246bacab4a5ee937a4297f92ba847958892eb2dd6c3d311fc",
+        "bewaard_als": "writer-tabelgegevens/cpu-36-tweede-bron-chunk-XUXC3ZKS-CBlNE_D8.js.gz",
+        "gzip_sha256": "379e43e80e377e5020120b4db04b8c364ed97bd5b1f4ddd269b298acc68c82f8"
+      },
+      {
+        "url": "tauri://localhost/assets/core-BUhCcD2K.js",
+        "bestand": "bron-core-BUhCcD2K.js.gz",
+        "bytes": 2695,
+        "sha256": "bd9612a6a3f9b04eb26fc2f333f1dde54b6c0796cb515b6dfbc30aac2db7d176",
+        "bewaard_als": "writer-tabelgegevens/cpu-36-tweede-bron-core-BUhCcD2K.js.gz",
+        "gzip_sha256": "5f9f76f89e365ba69008850da78f6e89412c11b6d4e71a1f3fb22591d8d9de43"
+      },
+      {
+        "url": "tauri://localhost/assets/editors-FhlTQooi.js",
+        "bestand": "bron-editors-FhlTQooi.js.gz",
+        "bytes": 1702515,
+        "sha256": "8e183daa38adb9a549c11d86b94ba21a0c6b04a38b185225a6e0c38a1c1fabad",
+        "bewaard_als": "writer-tabelgegevens/cpu-36-tweede-bron-editors-FhlTQooi.js.gz",
+        "gzip_sha256": "d8a8a564c7bdb69eadb06abfdee89746e1867b7d56d033b0618104b0f0a81220"
+      },
+      {
+        "url": "tauri://localhost/assets/index-DQxWiq97.js",
+        "bestand": "bron-index-DQxWiq97.js.gz",
+        "bytes": 2888204,
+        "sha256": "2f006e10f894c53e75348886b10fa0b1f3c7ca39ce0a25d5ebe3151bc809d06f",
+        "bewaard_als": "writer-tabelgegevens/cpu-36-tweede-bron-index-DQxWiq97.js.gz",
+        "gzip_sha256": "968f52f7ea2706d9f7dfe57a230b5c040bccfea9a8350b07119d78cec2fb2509"
+      }
+    ],
+    "cpu-35-na": [
+      {
+        "url": "tauri://localhost/assets/chunk-XUXC3ZKS-CmY-ER9O.js",
+        "bestand": "bron-chunk-XUXC3ZKS-CmY-ER9O.js.gz",
+        "bytes": 12686,
+        "sha256": "7a82487aa4e8f29098e524a4e129c3136a2e8b0445ad2f6327552942c146fd73",
+        "bewaard_als": "writer-tabelgegevens/cpu-35-na-bron-chunk-XUXC3ZKS-CmY-ER9O.js.gz",
+        "gzip_sha256": "5175d3a97492d6b969d865dd6c16a274a8c778afad65fb121ac1444d8ff706ec"
+      },
+      {
+        "url": "tauri://localhost/assets/core-BUhCcD2K.js",
+        "bestand": "bron-core-BUhCcD2K.js.gz",
+        "bytes": 2695,
+        "sha256": "bd9612a6a3f9b04eb26fc2f333f1dde54b6c0796cb515b6dfbc30aac2db7d176",
+        "bewaard_als": "writer-tabelgegevens/cpu-35-na-bron-core-BUhCcD2K.js.gz",
+        "gzip_sha256": "5f9f76f89e365ba69008850da78f6e89412c11b6d4e71a1f3fb22591d8d9de43"
+      },
+      {
+        "url": "tauri://localhost/assets/editors-TtkGB6iE.js",
+        "bestand": "bron-editors-TtkGB6iE.js.gz",
+        "bytes": 1701773,
+        "sha256": "a2354d1f29b426a9de4c234dfe024e75b2034ff96f16c6522c2add359a6af09a",
+        "bewaard_als": "writer-tabelgegevens/cpu-35-na-bron-editors-TtkGB6iE.js.gz",
+        "gzip_sha256": "c5ae0c8e9401c1b8bc45cb3d5c164961d1269697f1e630138b382bd8309b2c9c"
+      },
+      {
+        "url": "tauri://localhost/assets/index-Mlr0LNHS.js",
+        "bestand": "bron-index-Mlr0LNHS.js.gz",
+        "bytes": 2888204,
+        "sha256": "01a00746e36babf8b549139c673015da27c3cd6d966c725f9020625ba57aae36",
+        "bewaard_als": "writer-tabelgegevens/cpu-35-na-bron-index-Mlr0LNHS.js.gz",
+        "gzip_sha256": "9d737754821f7ed86aa14a6e405156ad088d36e1e7233b827f8887e4dbd5495a"
+      },
+      {
+        "url": "tauri://localhost/assets/window-CkhQcx_D.js",
+        "bestand": "bron-window-CkhQcx_D.js.gz",
+        "bytes": 14130,
+        "sha256": "0e628e6779ec373034660022f28c93fa857766437fcaaf08d3a6f6089e2303fb",
+        "bewaard_als": "writer-tabelgegevens/cpu-35-na-bron-window-CkhQcx_D.js.gz",
+        "gzip_sha256": "7c377c345b29d3d2a809924ad5f6399b9b1df0226649407e63fc98c210430835"
+      }
+    ]
+  }
+}

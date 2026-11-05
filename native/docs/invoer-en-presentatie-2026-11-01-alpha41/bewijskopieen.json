@@ -1,0 +1,754 @@
+{
+  "omvang": "Volledige lokale alpha41-ronde afgesloten op 727 bronbestanden en broncommit f5aea496183d011def5f99fb58df1851f917f334. Vijf gerichte proeven en de Windows-checkoutsimulatie slagen; debugvensters blijven op drie seconden afgekeurd. Platformronde en geoptimaliseerd alpha41-venster nog niet afgesloten. Alle kopieën verliesloos.",
+  "kopieen": [
+    {
+      "bron": ".local/controle-2026-10-31/native-na-alpha40-aanraak-voor.patch",
+      "bestand": "reproductie/native-na-alpha40-aanraak-voor.patch.gz",
+      "bron_sha256": "f4524189dd6a8bc9d774fca484d7a80535774854b757f37f5d215a061fc6428e",
+      "opgeslagen_sha256": "72e3f4e969c7c11ef1181cb7cd0e5188c331df30906b45ba87cf0324c0894e41",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-na-alpha40-aanraak-voor.json",
+      "bestand": "reproductie/native-na-alpha40-aanraak-voor.json",
+      "bron_sha256": "6ebaba7f3cec8beef79131615bd5673df756f438ad558f25c37c08885450b29b",
+      "opgeslagen_sha256": "6ebaba7f3cec8beef79131615bd5673df756f438ad558f25c37c08885450b29b",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-na-alpha40-aanraak-voor.log",
+      "bestand": "reproductie/native-na-alpha40-aanraak-voor.log.gz",
+      "bron_sha256": "64c3bd665b1e84ec0b9de2d90969c23a60e05a5c18679b8c72bc7143757d252c",
+      "opgeslagen_sha256": "fe8322b59ddaee877089593887b2501d2bef8a8c7834967d15809a58e6d2b6b8",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-runtimebatch-gericht.log",
+      "bestand": "reproductie/native-alpha41-runtimebatch-gericht.log.gz",
+      "bron_sha256": "2282ffa9d702f3afba527fec8b14ab82092f1e48a3e1fb77d375f1d154ab2646",
+      "opgeslagen_sha256": "55fcc90d756cb3c5336176a7eecc0f829b83a801c103e6f39994dc2a500e4ae7",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-x11-presentatie-gericht.log",
+      "bestand": "reproductie/native-alpha41-x11-presentatie-gericht.log.gz",
+      "bron_sha256": "5b056d3bdef57db0587b96030e9f4cfedc5fb692a02c60e60bf44b7b45c8dcf2",
+      "opgeslagen_sha256": "120be1d54f1f5dab4200979c5ce6f92e6fb55817d99497138c924af162cc1ce8",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-x11-presentatie-opstartlimiet.log",
+      "bestand": "reproductie/native-alpha41-x11-presentatie-opstartlimiet.log.gz",
+      "bron_sha256": "9eefdbf9445ef9fb01db8583759101ab9b49dca2dd71c63ad18f00fb200c55ed",
+      "opgeslagen_sha256": "b083a0ff23fd40006f62c0148f44c39b7898c46c2ce0a863241fea97a60c2297",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-x11-presentatie-hertest.log",
+      "bestand": "reproductie/native-alpha41-x11-presentatie-hertest.log.gz",
+      "bron_sha256": "a17b3f08bb8f8500f5bcd11d728322b5de305f613038ebdb62e6d3abb7d81fde",
+      "opgeslagen_sha256": "8a70d9b0f7c18ed9ea9080773585cf11b20a7023ff87bbd0b5fd54e3b07f82da",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-clippy-voorlopig.log",
+      "bestand": "reproductie/native-alpha41-clippy-voorlopig.log.gz",
+      "bron_sha256": "915b813d294bf24621ca770c1d640714a5030c085a9ce761ec738b7cc3de0848",
+      "opgeslagen_sha256": "feb72b2a75dcc83144690c3d2b02b074e2c519e52565f0663055218721c313b2",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-clippy-hertest.log",
+      "bestand": "reproductie/native-alpha41-clippy-hertest.log.gz",
+      "bron_sha256": "39da028914bf80150d8051dc25ec97856a40075fdfe7a454aae018ca8e8e1277",
+      "opgeslagen_sha256": "7506cbf214f8d01e79a6e6291150e9d228208e4e8596b49b8018b444e77fc712",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-x11-clippy-voor.rs",
+      "bestand": "reproductie/native-alpha41-x11-clippy-voor.rs",
+      "bron_sha256": "f7e7fa1f5a32ae6f16c7d5c199b7b9c82b596d9540b2423df0d1f1bd07a13a34",
+      "opgeslagen_sha256": "f7e7fa1f5a32ae6f16c7d5c199b7b9c82b596d9540b2423df0d1f1bd07a13a34",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-eerste-ui-Cargo.toml",
+      "bestand": "reproductie/native-alpha41-eerste-ui-Cargo.toml",
+      "bron_sha256": "b1b0d4e178df41c145d6c68fcfc4304c7003703cbdd7a00200881a62afaa625b",
+      "opgeslagen_sha256": "b1b0d4e178df41c145d6c68fcfc4304c7003703cbdd7a00200881a62afaa625b",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-metadata-eerste-afkeuring.json",
+      "bestand": "reproductie/native-alpha41-metadata-eerste-afkeuring.json",
+      "bron_sha256": "0126fe13c6d0604a601b243d436af140c4ad11ac3f7dc24f30f3e658a7fd6ee4",
+      "opgeslagen_sha256": "0126fe13c6d0604a601b243d436af140c4ad11ac3f7dc24f30f3e658a7fd6ee4",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-metadata-hertest.log",
+      "bestand": "reproductie/native-alpha41-metadata-hertest.log.gz",
+      "bron_sha256": "dbd8a8270040ca299fdcaf95f9fbb528c316736355c501bc01d2b9c0491df477",
+      "opgeslagen_sha256": "6b20234718a555732fd3c468be702ff7cf2e847a827ba3bba6f48d806712a4c6",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-dependencycontrole.json",
+      "bestand": "reproductie/native-alpha41-dependencycontrole.json",
+      "bron_sha256": "2ce7773a0fbff40147519e35d594554f47fd524ec556fdf2bfabed33dca9b466",
+      "opgeslagen_sha256": "2ce7773a0fbff40147519e35d594554f47fd524ec556fdf2bfabed33dca9b466",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-vendor-checkout.json",
+      "bestand": "reproductie/native-alpha41-vendor-checkout.json",
+      "bron_sha256": "7a91bd845f52315ac10f28bdcec2616fd7a0db44bd7113ea91dfd0fad00ac003",
+      "opgeslagen_sha256": "7a91bd845f52315ac10f28bdcec2616fd7a0db44bd7113ea91dfd0fad00ac003",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-attributen-voor",
+      "bestand": "reproductie/native-alpha41-attributen-voor",
+      "bron_sha256": "c7e4b8c1548431e5e21dbace1759014cfc23b01adc42ed57a2e74bde6a2e93a7",
+      "opgeslagen_sha256": "c7e4b8c1548431e5e21dbace1759014cfc23b01adc42ed57a2e74bde6a2e93a7",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/controleer-nieuwe-vendor-checkout-alpha41.py",
+      "bestand": "reproductie/controleer-nieuwe-vendor-checkout-alpha41.py",
+      "bron_sha256": "08e80f62a72a7a11a91f9d580d5534008e33e61d853e4fe3f82569d8e2a2bbb1",
+      "opgeslagen_sha256": "08e80f62a72a7a11a91f9d580d5534008e33e61d853e4fe3f82569d8e2a2bbb1",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-testbron.json",
+      "bestand": "reproductie/native-alpha41-testbron.json",
+      "bron_sha256": "b20808e57abb00ccf706d14d7788cfd48e0233d45805c9f3868d47c3234e4b3a",
+      "opgeslagen_sha256": "b20808e57abb00ccf706d14d7788cfd48e0233d45805c9f3868d47c3234e4b3a",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-geteste-bron.patch",
+      "bestand": "reproductie/native-alpha41-geteste-bron.patch.gz",
+      "bron_sha256": "7dea66ce2f16746a13a692cd9ee04f9cab2fe653d34db5af257ff870153dcb1c",
+      "opgeslagen_sha256": "d9658730ba25976b9c2656354cc43d2621af4784d012a2c3fc4f7970a5cbd1ea",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-geteste-bron.json",
+      "bestand": "reproductie/native-alpha41-geteste-bron.json",
+      "bron_sha256": "4e468ed44bb475bcd130f0769c2f8aa6ae1b07d7dd356a5d0925c288b5fff98b",
+      "opgeslagen_sha256": "4e468ed44bb475bcd130f0769c2f8aa6ae1b07d7dd356a5d0925c288b5fff98b",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-patchherstel.json",
+      "bestand": "reproductie/native-alpha41-patchherstel.json",
+      "bron_sha256": "e3dad3ef84b3e63979876b2026608760e0574d9101cac5dfad63abac77b050bf",
+      "opgeslagen_sha256": "e3dad3ef84b3e63979876b2026608760e0574d9101cac5dfad63abac77b050bf",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-debugbouw.log",
+      "bestand": "reproductie/native-alpha41-debugbouw.log.gz",
+      "bron_sha256": "cc8cbf5cd3aa7b28364021d7bd36356e752228bf494e4ebfe75e606b5b53e0b4",
+      "opgeslagen_sha256": "4fe9d915736d6b7aa7f4010fbc7614088f8e5523ed73f16db4d9c2539eae8a25",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-debug-vast/herkomst.json",
+      "bestand": "reproductie/native-alpha41-debug-vast/herkomst.json",
+      "bron_sha256": "7e18bfb186be92b3f9898e61c6c0a79fc16be45270df296d06f2eaee78e7e9d4",
+      "opgeslagen_sha256": "7e18bfb186be92b3f9898e61c6c0a79fc16be45270df296d06f2eaee78e7e9d4",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-notities-debug-alpha41.py",
+      "bestand": "reproductie/gui-notities-debug-alpha41.py",
+      "bron_sha256": "a1c30b8c9a2a747d70a7e6715950ab5243aacf130bcb5404baa8b3d98c05a1f2",
+      "opgeslagen_sha256": "a1c30b8c9a2a747d70a7e6715950ab5243aacf130bcb5404baa8b3d98c05a1f2",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/venster-notities-debug-alpha41.py",
+      "bestand": "reproductie/venster-notities-debug-alpha41.py",
+      "bron_sha256": "24246e62fbbbc716cdc234d3c663e5d7a753a39383c1d86b2b0e5539b36a9153",
+      "opgeslagen_sha256": "24246e62fbbbc716cdc234d3c663e5d7a753a39383c1d86b2b0e5539b36a9153",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-notities-debug-alpha41-v2.py",
+      "bestand": "reproductie/gui-notities-debug-alpha41-v2.py",
+      "bron_sha256": "608e1904da1e8ebcab13a8bf95128f0301893f26db1b2c5575a10e936c976eab",
+      "opgeslagen_sha256": "608e1904da1e8ebcab13a8bf95128f0301893f26db1b2c5575a10e936c976eab",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/venster-notities-debug-alpha41-v2.py",
+      "bestand": "reproductie/venster-notities-debug-alpha41-v2.py",
+      "bron_sha256": "4303a0ab7bb1663e46801686126821dd0ea8167fe42f45b5c37d2e116c3f9cbd",
+      "opgeslagen_sha256": "4303a0ab7bb1663e46801686126821dd0ea8167fe42f45b5c37d2e116c3f9cbd",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-notities-debug-venster.log",
+      "bestand": "reproductie/native-alpha41-notities-debug-venster.log.gz",
+      "bron_sha256": "be390ca5a025fd86125c118925c9887bc4509b8614cab16962a995849ea416f9",
+      "opgeslagen_sha256": "eb8a205e2dd3f68fa825ff567f966cc1101cdb259cc3a06a16f074fd3069d2f2",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-notities-debug-venster-v2.log",
+      "bestand": "reproductie/native-alpha41-notities-debug-venster-v2.log.gz",
+      "bron_sha256": "087cf5cd709dfbc39ee7690ee773a8359ad1b8b15d9f5e50c69c32135cd23519",
+      "opgeslagen_sha256": "38b10c03f61ae28ee0d79284360715f756daecebc4ad5194e84ae24bc3246a87",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-enkele-presentatie-voor.rs",
+      "bestand": "reproductie/softbuffer-enkele-presentatie-voor.rs",
+      "bron_sha256": "647dab9a43bcc43fc9fff20917d4da714f66137d6b142f8804a3d8063fcb4468",
+      "opgeslagen_sha256": "647dab9a43bcc43fc9fff20917d4da714f66137d6b142f8804a3d8063fcb4468",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-enkele-presentatie-voor-bouw.json",
+      "bestand": "reproductie/softbuffer-enkele-presentatie-voor-bouw.json",
+      "bron_sha256": "8c4d1d70bcc6328c9be4a03d607812890fcb04cb8f9a51e3ce0e11e774920411",
+      "opgeslagen_sha256": "8c4d1d70bcc6328c9be4a03d607812890fcb04cb8f9a51e3ce0e11e774920411",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-enkele-presentatie-voor-bouw.log",
+      "bestand": "reproductie/softbuffer-enkele-presentatie-voor-bouw.log.gz",
+      "bron_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "opgeslagen_sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-enkele-presentatie-voor.py",
+      "bestand": "reproductie/softbuffer-enkele-presentatie-voor.py",
+      "bron_sha256": "d32f988f5e972e1fe92db96d9098ce4bb278e3ab4ac53921bfdefd47d8058148",
+      "opgeslagen_sha256": "d32f988f5e972e1fe92db96d9098ce4bb278e3ab4ac53921bfdefd47d8058148",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/start-softbuffer-enkele-presentatie-voor.py",
+      "bestand": "reproductie/start-softbuffer-enkele-presentatie-voor.py",
+      "bron_sha256": "82eacc37a4d2c598c0d77f96459ebb4dd86389454ce73432971ee206511fb110",
+      "opgeslagen_sha256": "82eacc37a4d2c598c0d77f96459ebb4dd86389454ce73432971ee206511fb110",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-enkele-presentatie-voor.log",
+      "bestand": "reproductie/softbuffer-enkele-presentatie-voor.log.gz",
+      "bron_sha256": "772c0d31c7adac1de722213f517872f93a6fcd35fc6d59aca4d6224b24ef78ab",
+      "opgeslagen_sha256": "4a00c2e0f6fca16f7113229e92bc086e173c4be252de9b33f533e2b986b27a6e",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-enkele-presentatie-voor-terminal.json",
+      "bestand": "reproductie/softbuffer-enkele-presentatie-voor-terminal.json",
+      "bron_sha256": "01f4e17d537bfecbdbf7ed4e6acd7c4678cbea5051033f1d7d955bd636d89076",
+      "opgeslagen_sha256": "01f4e17d537bfecbdbf7ed4e6acd7c4678cbea5051033f1d7d955bd636d89076",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-enkele-presentatie-na.py",
+      "bestand": "reproductie/softbuffer-enkele-presentatie-na.py",
+      "bron_sha256": "ee8fb84f7e29762472e5e42c698b0f6ac7b24169d7150edff66ef43ac1bc80e8",
+      "opgeslagen_sha256": "ee8fb84f7e29762472e5e42c698b0f6ac7b24169d7150edff66ef43ac1bc80e8",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/start-softbuffer-enkele-presentatie-na.py",
+      "bestand": "reproductie/start-softbuffer-enkele-presentatie-na.py",
+      "bron_sha256": "182bb1ef076bcb87c7681fbaaf81a9111c19a5167cdcff9811d7d81f8d7e745b",
+      "opgeslagen_sha256": "182bb1ef076bcb87c7681fbaaf81a9111c19a5167cdcff9811d7d81f8d7e745b",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-enkele-presentatie-na.log",
+      "bestand": "reproductie/softbuffer-enkele-presentatie-na.log.gz",
+      "bron_sha256": "f6582971427cacb8d7011f3f6e94f374036aa3c1c3f1d63047a2abd714c09496",
+      "opgeslagen_sha256": "02c21b5abfb59fb31dc9062501ade96b7b8faca67c61fba6b2a5ae872285e051",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-enkele-presentatie-na-terminal.json",
+      "bestand": "reproductie/softbuffer-enkele-presentatie-na-terminal.json",
+      "bron_sha256": "572c199c5d91a676d6ad357436c0f264cdba23318f6263cf98bed32a417d6ee4",
+      "opgeslagen_sha256": "572c199c5d91a676d6ad357436c0f264cdba23318f6263cf98bed32a417d6ee4",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-enkele-presentatie-programmas.json",
+      "bestand": "reproductie/softbuffer-enkele-presentatie-programmas.json",
+      "bron_sha256": "acd0e4093d6678a73b728d45ae3952a546b903635dcaabf2bb400d986857bf00",
+      "opgeslagen_sha256": "acd0e4093d6678a73b728d45ae3952a546b903635dcaabf2bb400d986857bf00",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-x11-contract-voor.json",
+      "bestand": "reproductie/softbuffer-x11-contract-voor.json",
+      "bron_sha256": "ab17aa6b4026f24a91fb12fa16a70273f021030a95f3e143dd3c4b0c71a8e241",
+      "opgeslagen_sha256": "ab17aa6b4026f24a91fb12fa16a70273f021030a95f3e143dd3c4b0c71a8e241",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-x11-contract-voor.log",
+      "bestand": "reproductie/softbuffer-x11-contract-voor.log.gz",
+      "bron_sha256": "40333bbf70bb93c3f25352106865dd0fb6da5c90f7ef5a5a3a4f4929f31b3596",
+      "opgeslagen_sha256": "c13739c25c87c0a6480adaed5dd6b1f68c82c5c5df7f3b89f0c9f5ff7c9d999b",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-x11-contract-na.log",
+      "bestand": "reproductie/softbuffer-x11-contract-na.log.gz",
+      "bron_sha256": "36f037a081d4e6b9f2b5120c2ae43e8e66a1d4d2839952a2972881e93b805879",
+      "opgeslagen_sha256": "9fe5d81824a0382ad4f4835bfc499a51c46c9ab0cc73034189ee1b308db4c538",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-x11-contract-vergelijking.json",
+      "bestand": "reproductie/softbuffer-x11-contract-vergelijking.json",
+      "bron_sha256": "474955d8d73d1f1c56926eb37aed4f76d986ba28c8f8be76d24de0b242af7eb9",
+      "opgeslagen_sha256": "474955d8d73d1f1c56926eb37aed4f76d986ba28c8f8be76d24de0b242af7eb9",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-flush-voorproef-afhankelijkheden.json",
+      "bestand": "reproductie/softbuffer-flush-voorproef-afhankelijkheden.json",
+      "bron_sha256": "85ccf15f9f9b112162d34d462fb2397f7e6a9ffb2d7e507f9e9a63627287de3b",
+      "opgeslagen_sha256": "85ccf15f9f9b112162d34d462fb2397f7e6a9ffb2d7e507f9e9a63627287de3b",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-x11-contract-bouw.log",
+      "bestand": "reproductie/softbuffer-x11-contract-bouw.log.gz",
+      "bron_sha256": "6eb9dbcf3ac08faec1af2246116b71409d8e884b9fa6e81dbee43a18ffc62d3c",
+      "opgeslagen_sha256": "5b33882b96765ec985831f62eef784d6e0319ea0bac02a6033f3b279b11452ab",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-x11-contract-bouw-hertest.log",
+      "bestand": "reproductie/softbuffer-x11-contract-bouw-hertest.log.gz",
+      "bron_sha256": "fb8070209959cf4829f3f35b872b27f55134719ee4e1a93c270d1b0227d567e5",
+      "opgeslagen_sha256": "e1828df12cb3d7090227b7baf575627c548375b42ff94f83ade0f80bcc81f471",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-flush-voorproef-eerste-Cargo.toml",
+      "bestand": "reproductie/softbuffer-flush-voorproef-eerste-Cargo.toml",
+      "bron_sha256": "313fa0e3ff0ba140b004d472820a02cd126b737a7d7e1312cf6a335f117b9334",
+      "opgeslagen_sha256": "313fa0e3ff0ba140b004d472820a02cd126b737a7d7e1312cf6a335f117b9334",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-flush-voorproef-eerste-Cargo.lock",
+      "bestand": "reproductie/softbuffer-flush-voorproef-eerste-Cargo.lock",
+      "bron_sha256": "8d4db1d589a06068b005a52730ed4342a03c1c740a5bef55e9b930e89c521c41",
+      "opgeslagen_sha256": "8d4db1d589a06068b005a52730ed4342a03c1c740a5bef55e9b930e89c521c41",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-flush-voorproef-bouw.log",
+      "bestand": "reproductie/softbuffer-flush-voorproef-bouw.log.gz",
+      "bron_sha256": "c6becd32ecc1bf6832e71c35ffa10c24a8eca837c574f8724fc926facb942756",
+      "opgeslagen_sha256": "140f85cc4b4b049af2b193759b2c07c87cedaee5767b172047013fe11e50a392",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-flush-voorproef-bouw-hertest.log",
+      "bestand": "reproductie/softbuffer-flush-voorproef-bouw-hertest.log.gz",
+      "bron_sha256": "0d3f3b42f44514713834883310d3cbdec1de0ee850d1ed57df0202613b61b1c2",
+      "opgeslagen_sha256": "0d167cb83c6bfc3db8279300e620097478e1738a0833e11a2033a5040b5f98e2",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-flush-voorproef-bouw-gepind.log",
+      "bestand": "reproductie/softbuffer-flush-voorproef-bouw-gepind.log.gz",
+      "bron_sha256": "fcc7b1e1d926c65fbfb142a7d27b9e8f259ed082d1adc95f222a53965a538156",
+      "opgeslagen_sha256": "d532629bcab1658306e3cb1dda0383462c5d5270e43b593f8a81e66b5e3f0dae",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/x11_presentatie-ontwerp-alpha41-eerste.rs",
+      "bestand": "reproductie/x11_presentatie-ontwerp-alpha41-eerste.rs",
+      "bron_sha256": "76092756e0fad35a9af7bbf17798b324efdeab2341d92c45a960ee129e0d3bed",
+      "opgeslagen_sha256": "76092756e0fad35a9af7bbf17798b324efdeab2341d92c45a960ee129e0d3bed",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/x11_presentatie-ontwerp-alpha41.rs",
+      "bestand": "reproductie/x11_presentatie-ontwerp-alpha41.rs",
+      "bron_sha256": "f819a2d3587c75a06b156dd32c1aabeac245005321f8e1400fd75ddddd134f78",
+      "opgeslagen_sha256": "f819a2d3587c75a06b156dd32c1aabeac245005321f8e1400fd75ddddd134f78",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-flush-voorproef/src/contract.rs",
+      "bestand": "reproductie/softbuffer-flush-voorproef/src/contract.rs",
+      "bron_sha256": "429d019596fcca89bb485f41cef331516228f56dc5dfebdc26d59367bbe7210d",
+      "opgeslagen_sha256": "429d019596fcca89bb485f41cef331516228f56dc5dfebdc26d59367bbe7210d",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal/Eigen-notities.openaec-notities",
+      "bestand": "gui-alpha41-notition-debug-lokaal/Eigen-notities.openaec-notities",
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+      "opgeslagen_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal/bestand-eerste-escape-zichtbaar.png",
+      "bestand": "gui-alpha41-notition-debug-lokaal/bestand-eerste-escape-zichtbaar.png",
+      "bron_sha256": "3197332fd2d6f1bef0fdd865643580d7c95ed07d793662d3114883d043e8e3b9",
+      "opgeslagen_sha256": "3197332fd2d6f1bef0fdd865643580d7c95ed07d793662d3114883d043e8e3b9",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal/bestand-eerste-escape.png",
+      "bestand": "gui-alpha41-notition-debug-lokaal/bestand-eerste-escape.png",
+      "bron_sha256": "f839b65d0804ebe43125d9af8f660858b258ff31a6bdd4d3dfd3b63b3bb6ec83",
+      "opgeslagen_sha256": "f839b65d0804ebe43125d9af8f660858b258ff31a6bdd4d3dfd3b63b3bb6ec83",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal/bestand-eerste-klik-zichtbaar.png",
+      "bestand": "gui-alpha41-notition-debug-lokaal/bestand-eerste-klik-zichtbaar.png",
+      "bron_sha256": "f839b65d0804ebe43125d9af8f660858b258ff31a6bdd4d3dfd3b63b3bb6ec83",
+      "opgeslagen_sha256": "f839b65d0804ebe43125d9af8f660858b258ff31a6bdd4d3dfd3b63b3bb6ec83",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal/bestand-eerste-klik.png",
+      "bestand": "gui-alpha41-notition-debug-lokaal/bestand-eerste-klik.png",
+      "bron_sha256": "f839b65d0804ebe43125d9af8f660858b258ff31a6bdd4d3dfd3b63b3bb6ec83",
+      "opgeslagen_sha256": "f839b65d0804ebe43125d9af8f660858b258ff31a6bdd4d3dfd3b63b3bb6ec83",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal/bron-60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c.openaec-notities",
+      "bestand": "gui-alpha41-notition-debug-lokaal/bron-60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c.openaec-notities",
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+      "opgeslagen_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal/menu-weergave-afkeuring.json",
+      "bestand": "gui-alpha41-notition-debug-lokaal/menu-weergave-afkeuring.json",
+      "bron_sha256": "1ace691438bcf3c5122076989e091b528f8be496373b1c2254be8466cdee1771",
+      "opgeslagen_sha256": "1ace691438bcf3c5122076989e091b528f8be496373b1c2254be8466cdee1771",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal/notities-bron-geopend.png",
+      "bestand": "gui-alpha41-notition-debug-lokaal/notities-bron-geopend.png",
+      "bron_sha256": "04a73b4cd2bc26b7994bba0592e6f2fefd1877b353af37ebac4173faa69db121",
+      "opgeslagen_sha256": "04a73b4cd2bc26b7994bba0592e6f2fefd1877b353af37ebac4173faa69db121",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal/notities-expliciet-gestopt.png",
+      "bestand": "gui-alpha41-notition-debug-lokaal/notities-expliciet-gestopt.png",
+      "bron_sha256": "f839b65d0804ebe43125d9af8f660858b258ff31a6bdd4d3dfd3b63b3bb6ec83",
+      "opgeslagen_sha256": "f839b65d0804ebe43125d9af8f660858b258ff31a6bdd4d3dfd3b63b3bb6ec83",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal/notities-open.png",
+      "bestand": "gui-alpha41-notition-debug-lokaal/notities-open.png",
+      "bron_sha256": "b37dfae162f4ccd6608d7f0462921228ad40cda57246d3b6e15c509dd3681bf0",
+      "opgeslagen_sha256": "b37dfae162f4ccd6608d7f0462921228ad40cda57246d3b6e15c509dd3681bf0",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal/programma.log",
+      "bestand": "gui-alpha41-notition-debug-lokaal/programma.log.gz",
+      "bron_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "opgeslagen_sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal/rapport.json",
+      "bestand": "gui-alpha41-notition-debug-lokaal/rapport.json",
+      "bron_sha256": "be7614cc91d257cc42191fa01474ad28d7d3d18687b9ec1c517daaeb4ca7950f",
+      "opgeslagen_sha256": "be7614cc91d257cc42191fa01474ad28d7d3d18687b9ec1c517daaeb4ca7950f",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal-v2/Eigen-notities.openaec-notities",
+      "bestand": "gui-alpha41-notition-debug-lokaal-v2/Eigen-notities.openaec-notities",
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+      "opgeslagen_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal-v2/bestand-klik.png",
+      "bestand": "gui-alpha41-notition-debug-lokaal-v2/bestand-klik.png",
+      "bron_sha256": "f839b65d0804ebe43125d9af8f660858b258ff31a6bdd4d3dfd3b63b3bb6ec83",
+      "opgeslagen_sha256": "f839b65d0804ebe43125d9af8f660858b258ff31a6bdd4d3dfd3b63b3bb6ec83",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal-v2/bestand-na-achttien-seconden.png",
+      "bestand": "gui-alpha41-notition-debug-lokaal-v2/bestand-na-achttien-seconden.png",
+      "bron_sha256": "3197332fd2d6f1bef0fdd865643580d7c95ed07d793662d3114883d043e8e3b9",
+      "opgeslagen_sha256": "3197332fd2d6f1bef0fdd865643580d7c95ed07d793662d3114883d043e8e3b9",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal-v2/bestand-na-drie-seconden.png",
+      "bestand": "gui-alpha41-notition-debug-lokaal-v2/bestand-na-drie-seconden.png",
+      "bron_sha256": "f839b65d0804ebe43125d9af8f660858b258ff31a6bdd4d3dfd3b63b3bb6ec83",
+      "opgeslagen_sha256": "f839b65d0804ebe43125d9af8f660858b258ff31a6bdd4d3dfd3b63b3bb6ec83",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal-v2/bestand-na-drieendertig-seconden.png",
+      "bestand": "gui-alpha41-notition-debug-lokaal-v2/bestand-na-drieendertig-seconden.png",
+      "bron_sha256": "3197332fd2d6f1bef0fdd865643580d7c95ed07d793662d3114883d043e8e3b9",
+      "opgeslagen_sha256": "3197332fd2d6f1bef0fdd865643580d7c95ed07d793662d3114883d043e8e3b9",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal-v2/bron-60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c.openaec-notities",
+      "bestand": "gui-alpha41-notition-debug-lokaal-v2/bron-60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c.openaec-notities",
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+      "opgeslagen_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal-v2/escape-na-achttien-seconden.png",
+      "bestand": "gui-alpha41-notition-debug-lokaal-v2/escape-na-achttien-seconden.png",
+      "bron_sha256": "f839b65d0804ebe43125d9af8f660858b258ff31a6bdd4d3dfd3b63b3bb6ec83",
+      "opgeslagen_sha256": "f839b65d0804ebe43125d9af8f660858b258ff31a6bdd4d3dfd3b63b3bb6ec83",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal-v2/escape-na-drie-seconden.png",
+      "bestand": "gui-alpha41-notition-debug-lokaal-v2/escape-na-drie-seconden.png",
+      "bron_sha256": "3197332fd2d6f1bef0fdd865643580d7c95ed07d793662d3114883d043e8e3b9",
+      "opgeslagen_sha256": "3197332fd2d6f1bef0fdd865643580d7c95ed07d793662d3114883d043e8e3b9",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal-v2/escape-toets.png",
+      "bestand": "gui-alpha41-notition-debug-lokaal-v2/escape-toets.png",
+      "bron_sha256": "3197332fd2d6f1bef0fdd865643580d7c95ed07d793662d3114883d043e8e3b9",
+      "opgeslagen_sha256": "3197332fd2d6f1bef0fdd865643580d7c95ed07d793662d3114883d043e8e3b9",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal-v2/notities-expliciet-gestopt.png",
+      "bestand": "gui-alpha41-notition-debug-lokaal-v2/notities-expliciet-gestopt.png",
+      "bron_sha256": "f839b65d0804ebe43125d9af8f660858b258ff31a6bdd4d3dfd3b63b3bb6ec83",
+      "opgeslagen_sha256": "f839b65d0804ebe43125d9af8f660858b258ff31a6bdd4d3dfd3b63b3bb6ec83",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal-v2/notities-geopend.png",
+      "bestand": "gui-alpha41-notition-debug-lokaal-v2/notities-geopend.png",
+      "bron_sha256": "04a73b4cd2bc26b7994bba0592e6f2fefd1877b353af37ebac4173faa69db121",
+      "opgeslagen_sha256": "04a73b4cd2bc26b7994bba0592e6f2fefd1877b353af37ebac4173faa69db121",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal-v2/notities-open.png",
+      "bestand": "gui-alpha41-notition-debug-lokaal-v2/notities-open.png",
+      "bron_sha256": "b37dfae162f4ccd6608d7f0462921228ad40cda57246d3b6e15c509dd3681bf0",
+      "opgeslagen_sha256": "b37dfae162f4ccd6608d7f0462921228ad40cda57246d3b6e15c509dd3681bf0",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal-v2/programma.log",
+      "bestand": "gui-alpha41-notition-debug-lokaal-v2/programma.log.gz",
+      "bron_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "opgeslagen_sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal-v2/rapport.json",
+      "bestand": "gui-alpha41-notition-debug-lokaal-v2/rapport.json",
+      "bron_sha256": "97194fc7c953fe3289e4b07655d8962446ce6080dff7247fd7692a8e8cddf84c",
+      "opgeslagen_sha256": "97194fc7c953fe3289e4b07655d8962446ce6080dff7247fd7692a8e8cddf84c",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/gui-alpha41-notition-debug-lokaal-v2/timing-diagnose.json",
+      "bestand": "gui-alpha41-notition-debug-lokaal-v2/timing-diagnose.json",
+      "bron_sha256": "510e874e82e1aaf511e0b1dce38759f159f4954bd0874aff7d0247f1d3824397",
+      "opgeslagen_sha256": "510e874e82e1aaf511e0b1dce38759f159f4954bd0874aff7d0247f1d3824397",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-enkele-presentatie-voor-uitvoer/na-een-presentatie.png",
+      "bestand": "softbuffer-enkele-presentatie-voor-uitvoer/na-een-presentatie.png",
+      "bron_sha256": "6c8eb0e273b579b754f1647b5a2d848a8d74964ee993703c7e23eea8e909dfff",
+      "opgeslagen_sha256": "6c8eb0e273b579b754f1647b5a2d848a8d74964ee993703c7e23eea8e909dfff",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-enkele-presentatie-voor-uitvoer/na-uitsluitend-verzenden.png",
+      "bestand": "softbuffer-enkele-presentatie-voor-uitvoer/na-uitsluitend-verzenden.png",
+      "bron_sha256": "71b25211828209553c5bb8b0d6da55d98c3546955fea1c2ea1bd153ce654f9cd",
+      "opgeslagen_sha256": "71b25211828209553c5bb8b0d6da55d98c3546955fea1c2ea1bd153ce654f9cd",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-enkele-presentatie-voor-uitvoer/programma.log",
+      "bestand": "softbuffer-enkele-presentatie-voor-uitvoer/programma.log.gz",
+      "bron_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "opgeslagen_sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-enkele-presentatie-voor-uitvoer/rapport.json",
+      "bestand": "softbuffer-enkele-presentatie-voor-uitvoer/rapport.json",
+      "bron_sha256": "cb86f0ff00d8b2d09ea4b379ca724fec3300ebd31e971f117883fed8bc23ef0d",
+      "opgeslagen_sha256": "cb86f0ff00d8b2d09ea4b379ca724fec3300ebd31e971f117883fed8bc23ef0d",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-enkele-presentatie-na-uitvoer/na-een-presentatie.png",
+      "bestand": "softbuffer-enkele-presentatie-na-uitvoer/na-een-presentatie.png",
+      "bron_sha256": "71b25211828209553c5bb8b0d6da55d98c3546955fea1c2ea1bd153ce654f9cd",
+      "opgeslagen_sha256": "71b25211828209553c5bb8b0d6da55d98c3546955fea1c2ea1bd153ce654f9cd",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-enkele-presentatie-na-uitvoer/na-uitsluitend-verzenden.png",
+      "bestand": "softbuffer-enkele-presentatie-na-uitvoer/na-uitsluitend-verzenden.png",
+      "bron_sha256": "71b25211828209553c5bb8b0d6da55d98c3546955fea1c2ea1bd153ce654f9cd",
+      "opgeslagen_sha256": "71b25211828209553c5bb8b0d6da55d98c3546955fea1c2ea1bd153ce654f9cd",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-enkele-presentatie-na-uitvoer/programma.log",
+      "bestand": "softbuffer-enkele-presentatie-na-uitvoer/programma.log.gz",
+      "bron_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "opgeslagen_sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/softbuffer-enkele-presentatie-na-uitvoer/rapport.json",
+      "bestand": "softbuffer-enkele-presentatie-na-uitvoer/rapport.json",
+      "bron_sha256": "d05b0b69b333db9fc8883fb81c30d5ee2735477edf1ce85abdc0d5e7a60bdf1a",
+      "opgeslagen_sha256": "d05b0b69b333db9fc8883fb81c30d5ee2735477edf1ce85abdc0d5e7a60bdf1a",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-definitief-fmt.log",
+      "bestand": "volledige-ronde/native-alpha41-definitief-fmt.log.gz",
+      "bron_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "opgeslagen_sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-definitief-clippy.log",
+      "bestand": "volledige-ronde/native-alpha41-definitief-clippy.log.gz",
+      "bron_sha256": "370f5d3a2d51f092496ed9c4a879fce55c5df2a9ad93e789757bd4887e907aff",
+      "opgeslagen_sha256": "a8112c1771962e9a2d4ed03a5a0ed27751e1f16a5aec8ad222761729d5aa971b",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-definitief-tests.log",
+      "bestand": "volledige-ronde/native-alpha41-definitief-tests.log.gz",
+      "bron_sha256": "7969995743f0807ba26c024b7805d80a3ca13a2321a1773d0e6f61608e6df654",
+      "opgeslagen_sha256": "e85d7b420c82ecbfbf082557f2b4c00455545ff1c1a463c0a9eb4c28a0008678",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-definitief-onafhankelijk.log",
+      "bestand": "volledige-ronde/native-alpha41-definitief-onafhankelijk.log.gz",
+      "bron_sha256": "199499ffc042d4ef5fcfc573307a5334c8004e6868c0352d45571adc64c39769",
+      "opgeslagen_sha256": "5c7c42d9c54c51c82e463be7e9c1e5ae0c72befe41d31626865fdf82d3e21f61",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-definitief-python.log",
+      "bestand": "volledige-ronde/native-alpha41-definitief-python.log.gz",
+      "bron_sha256": "45829767cd74297f64812a7c8c17c8bde9e70f0e9d5b345d569f58ccbd6fb6cc",
+      "opgeslagen_sha256": "f0cc2c6dba32879890c5c6a45d7137526a9069214187f1d9140603e976293c40",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-definitief-bron.log",
+      "bestand": "volledige-ronde/native-alpha41-definitief-bron.log.gz",
+      "bron_sha256": "2913237d8476046d52392c3af78d3b302cb8c593b20e2b142634ae210f86b8e8",
+      "opgeslagen_sha256": "65e3b270643d4c709be42a5839609e0e02c0993dc57501b05572518f175f909c",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-definitief-runtime.log",
+      "bestand": "volledige-ronde/native-alpha41-definitief-runtime.log.gz",
+      "bron_sha256": "00b216ae2cac5ebb0f4efbd7b014175ffb2cd4fd047bfee9bd0e5da153cce701",
+      "opgeslagen_sha256": "3f424fa476b342c27dc7f1b75338a55273bddd847010c1a1799411d4056be4e1",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-definitief-conversie-onafhankelijk.log",
+      "bestand": "volledige-ronde/native-alpha41-definitief-conversie-onafhankelijk.log.gz",
+      "bron_sha256": "2cebd3abf09245f126c56d3b3feb5d8ef442f2ccffbd363f44bce77907e29bdf",
+      "opgeslagen_sha256": "5c7f7e0345ec985df4dc2c98c4604080781e4f69e11453649c2821f96e314580",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-stapstatus.json",
+      "bestand": "afsluiting/native-alpha41-stapstatus.json",
+      "bron_sha256": "c3f346d28a090b25469ec27946d012235d2a3d1152f6ee721ed6700e4001110f",
+      "opgeslagen_sha256": "c3f346d28a090b25469ec27946d012235d2a3d1152f6ee721ed6700e4001110f",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-terminalstatus.json",
+      "bestand": "afsluiting/native-alpha41-terminalstatus.json",
+      "bron_sha256": "16f6d9f57d925a9c2dc84464e00c48eff20c664d61ad94a8a5e539d12bd44f64",
+      "opgeslagen_sha256": "16f6d9f57d925a9c2dc84464e00c48eff20c664d61ad94a8a5e539d12bd44f64",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-finaliseren.log",
+      "bestand": "afsluiting/native-alpha41-finaliseren.log.gz",
+      "bron_sha256": "0086842a7555b08007a6888f1a467f07aae149e39d67fc0dddbf5cd2b220942e",
+      "opgeslagen_sha256": "87bd4124f53343fc0e462fa908f8390a803e5662f4dc981cf86e583a83abaa23",
+      "codering": "gzip; ongewijzigde ruwe bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/controle-alpha41-definitief.py",
+      "bestand": "afsluiting/controle-alpha41-definitief.py",
+      "bron_sha256": "5fe32f2b41b2d5473290a0a36bf38a1638646213ab53a067599601e728273fc1",
+      "opgeslagen_sha256": "5fe32f2b41b2d5473290a0a36bf38a1638646213ab53a067599601e728273fc1",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/start-alpha41-volledig.py",
+      "bestand": "afsluiting/start-alpha41-volledig.py",
+      "bron_sha256": "8decba925e7b563d19444698a0b5413763f91c6df9d6ee96ecf7bd6cec4c31cf",
+      "opgeslagen_sha256": "8decba925e7b563d19444698a0b5413763f91c6df9d6ee96ecf7bd6cec4c31cf",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/finaliseer-alpha41.py",
+      "bestand": "afsluiting/finaliseer-alpha41.py",
+      "bron_sha256": "77580b5c688f627e2f03c15781b0a5c5136eeb252fb02f6a6b4b3ac3ac3de842",
+      "opgeslagen_sha256": "77580b5c688f627e2f03c15781b0a5c5136eeb252fb02f6a6b4b3ac3ac3de842",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-indexcontrole.json",
+      "bestand": "afsluiting/native-alpha41-indexcontrole.json",
+      "bron_sha256": "d10f5fb63106a2d41d6d36947f52a9cda28427a4ee2309cbbe83f3426059f313",
+      "opgeslagen_sha256": "d10f5fb63106a2d41d6d36947f52a9cda28427a4ee2309cbbe83f3426059f313",
+      "codering": "ongewijzigde bytes"
+    },
+    {
+      "bron": ".local/controle-2026-10-31/native-alpha41-gitbroncontrole.json",
+      "bestand": "afsluiting/native-alpha41-gitbroncontrole.json",
+      "bron_sha256": "8b22e135cd5ef49b0be3fe467f995bd61b02d9beaa2fe9d5d4162ea6d21fa44b",
+      "opgeslagen_sha256": "8b22e135cd5ef49b0be3fe467f995bd61b02d9beaa2fe9d5d4162ea6d21fa44b",
+      "codering": "ongewijzigde bytes"
+    }
+  ]
+}

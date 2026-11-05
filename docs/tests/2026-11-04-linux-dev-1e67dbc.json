@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "geslaagd": true,
+  "versie": "2026.45.39",
+  "bronrevisie": "1e67dbc32023318708b7e3ae4ee41a9292ea5946",
+  "run": 41880946289,
+  "run_conclusie": "success",
+  "artifact": 13349933481,
+  "download": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41880946289/artifacts/13349933481",
+  "zip_sha256": "1201425d5caff2e9071421721894971a362019b55f2762d76944bee797a39add",
+  "tar_sha256": "4910ea0f595cb035a902ddfe30db9e93afe97d5892a987ed4fdec99818dd354e",
+  "appimage_sha256": "b0e961a994044bd220251c6631bd3aee8a62c66e5147fe2154b126ac97f6e9d9",
+  "binair": {
+    "startprogramma_sha256": "eb0b254ac0dae6543e6dd7cd02e1baf40a060de95b927313122d6b46323c00aa",
+    "programma_sha256": "c693017e241c6f205f775dfa4f054e7fd8296a916d4621259ac2482171748dcd"
+  },
+  "metadata": {
+    "versie": "2026.45.39",
+    "bronrevisie": "1e67dbc32023318708b7e3ae4ee41a9292ea5946",
+    "platform": "Linux x86_64",
+    "profiel": "org.openaec.office-studio.dev",
+    "appimage": "Open Office Studio Dev_2026.45.39_amd64.AppImage",
+    "sha256": "b0e961a994044bd220251c6631bd3aee8a62c66e5147fe2154b126ac97f6e9d9",
+    "pakketcontroles": [
+      "AppImage type 2",
+      "SquashFS volledig uitgepakt",
+      "AppRun uitvoerbaar",
+      "ELF x64 en bibliotheken gevonden",
+      "snelkoppeling en pictogram aanwezig"
+    ],
+    "controles": [
+      "TypeScript via productiebouw",
+      "Vitest",
+      "Rust-desktoptests"
+    ],
+    "gui_acceptatie": "Niet volledig gecontroleerd; ontwikkelbuild met bekende Writer-problemen.",
+    "webkit_modulekaart": {
+      "geslaagd": true,
+      "omvang": "Twee minimale moduleworkers in de geïnstalleerde WebKitGTK; geen app- of prestatieacceptatie.",
+      "webkit": "2.50.4",
+      "gevallen": {
+        "oud": {
+          "evaluaties": 2,
+          "gelijk": false
+        },
+        "apart": {
+          "evaluaties": 1,
+          "gelijk": true
+        }
+      },
+      "kwetsbaar": true
+    },
+    "native_gui": {
+      "geslaagd": true,
+      "programma_sha256": "c693017e241c6f205f775dfa4f054e7fd8296a916d4621259ac2482171748dcd",
+      "startprogramma_sha256": "eb0b254ac0dae6543e6dd7cd02e1baf40a060de95b927313122d6b46323c00aa",
+      "profiel": "org.openaec.office-studio.dev",
+      "script_sha256": "29a478de731d766687d0a6d0d32788fa900a4c7ab905c53c86a28581076b4f63",
+      "omvang": "Eigen DOCX-kopie, drie plakrondes, bewaren na ronde één en verder bewerken; onafhankelijke inhoudscontrole, verwerpen en nieuw document.",
+      "appimage_startfunctie": "De uitgepakte AppRun is gestart; launcher en werkelijke ELF zijn op hash gecontroleerd. FUSE-mount niet getoetst."
+    }
+  },
+  "controles": [
+    "GitHub-artifactdigests en ZIP-CRC van pakket en GUI-artefact",
+    "Tar-digest, metadata binnen/buiten tar, uitvoerrechten, startscript",
+    "AppImage-digest, ELF x86_64 en type2",
+    "AppRun en werkelijke ELF onafhankelijk uit SquashFS gehasht en gelijk aan CI-GUI-proef",
+    "Oorspronkelijk CI-GUI-rapport en scriptidentiteit gecontroleerd; foutlijsten leeg"
+  ],
+  "grenzen": [
+    "Geen lokale GUI-uitvoering van deze gedownloade AppImage; gerichte CI-proef start uitgepakte AppRun",
+    "FUSE-mount, overige distributies en ARM niet gevalideerd",
+    "Bekende Writer-vertraging en overige migratie-/acceptatiepunten blijven open"
+  ]
+}

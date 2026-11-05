@@ -1,0 +1,1362 @@
+[
+  {
+    "conclusion": "success",
+    "jobs": [
+      {
+        "completedAt": "2026-11-02T04:53:29Z",
+        "conclusion": "success",
+        "databaseId": 125098175128,
+        "name": "desktop (macos-latest)",
+        "startedAt": "2026-11-02T04:39:49Z",
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/setup-node@v4",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm/action-setup@v4",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run dtolnay/rust-toolchain@stable",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v5",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Linux-bouwafhankelijkheden",
+            "number": 7,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Conversieruntime installeren",
+            "number": 8,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm install --frozen-lockfile",
+            "number": 9,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Lettertypencache",
+            "number": 10,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run node scripts/haal-lettertypen.mjs",
+            "number": 11,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Woordenboekencache",
+            "number": 12,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run node scripts/haal-woordenboeken.mjs",
+            "number": 13,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run cargo test --manifest-path src/spelling/rust/Cargo.toml --locked --lib",
+            "number": 14,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run node scripts/bouw-spelling-wasm.mjs",
+            "number": 15,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm versie:check",
+            "number": 16,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Vastgelegde versleutelde proefbestanden ophalen",
+            "number": 17,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm test",
+            "number": 18,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run python -m unittest discover -s tests -v",
+            "number": 19,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run node scripts/test-kantoor-engines.mjs",
+            "number": 20,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm test:opdrachten",
+            "number": 21,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Windows-loader voorbereiden",
+            "number": 22,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm build",
+            "number": 23,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Vastgelegde MDB-, ACCDB- en Strict-proefbestanden ophalen",
+            "number": 24,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Gebouwde databaseparser controleren",
+            "number": 25,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run cargo test --manifest-path src-tauri/Cargo.toml --locked",
+            "number": 26,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "ODF, oudere formaten en PDF werkelijk converteren",
+            "number": 27,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Geconverteerde inhoud onafhankelijk controleren",
+            "number": 28,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Linux-pakket bouwen",
+            "number": 29,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Windows-pakket bouwen",
+            "number": 30,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "macOS-pakket bouwen",
+            "number": 31,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Linux-installers werkelijk uitpakken en controleren",
+            "number": 32,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Windows-installer werkelijk uitpakken en controleren",
+            "number": 33,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 34,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Pakketrapport bewaren",
+            "number": 35,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Woordenboekencache",
+            "number": 65,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Lettertypencache",
+            "number": 66,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/setup-python@v5",
+            "number": 67,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run pnpm/action-setup@v4",
+            "number": 68,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/setup-node@v4",
+            "number": 69,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 70,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 71,
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41389707306/job/125098175128"
+      },
+      {
+        "completedAt": "2026-11-02T04:51:10Z",
+        "conclusion": "success",
+        "databaseId": 125098175302,
+        "name": "desktop (ubuntu-22.04)",
+        "startedAt": "2026-11-02T04:39:49Z",
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/setup-node@v4",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm/action-setup@v4",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run dtolnay/rust-toolchain@stable",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v5",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Linux-bouwafhankelijkheden",
+            "number": 7,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Conversieruntime installeren",
+            "number": 8,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm install --frozen-lockfile",
+            "number": 9,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Lettertypencache",
+            "number": 10,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run node scripts/haal-lettertypen.mjs",
+            "number": 11,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Woordenboekencache",
+            "number": 12,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run node scripts/haal-woordenboeken.mjs",
+            "number": 13,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run cargo test --manifest-path src/spelling/rust/Cargo.toml --locked --lib",
+            "number": 14,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run node scripts/bouw-spelling-wasm.mjs",
+            "number": 15,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm versie:check",
+            "number": 16,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Vastgelegde versleutelde proefbestanden ophalen",
+            "number": 17,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm test",
+            "number": 18,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run python -m unittest discover -s tests -v",
+            "number": 19,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run node scripts/test-kantoor-engines.mjs",
+            "number": 20,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm test:opdrachten",
+            "number": 21,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Windows-loader voorbereiden",
+            "number": 22,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm build",
+            "number": 23,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Vastgelegde MDB-, ACCDB- en Strict-proefbestanden ophalen",
+            "number": 24,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Gebouwde databaseparser controleren",
+            "number": 25,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run cargo test --manifest-path src-tauri/Cargo.toml --locked",
+            "number": 26,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "ODF, oudere formaten en PDF werkelijk converteren",
+            "number": 27,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Geconverteerde inhoud onafhankelijk controleren",
+            "number": 28,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Linux-pakket bouwen",
+            "number": 29,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Windows-pakket bouwen",
+            "number": 30,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "macOS-pakket bouwen",
+            "number": 31,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Linux-installers werkelijk uitpakken en controleren",
+            "number": 32,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Windows-installer werkelijk uitpakken en controleren",
+            "number": 33,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 34,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Pakketrapport bewaren",
+            "number": 35,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Woordenboekencache",
+            "number": 65,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Lettertypencache",
+            "number": 66,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/setup-python@v5",
+            "number": 67,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run pnpm/action-setup@v4",
+            "number": 68,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/setup-node@v4",
+            "number": 69,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 70,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 71,
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41389707306/job/125098175302"
+      },
+      {
+        "completedAt": "2026-11-02T04:56:00Z",
+        "conclusion": "success",
+        "databaseId": 125098175374,
+        "name": "desktop (windows-latest)",
+        "startedAt": "2026-11-02T04:39:49Z",
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/setup-node@v4",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm/action-setup@v4",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run dtolnay/rust-toolchain@stable",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v5",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Linux-bouwafhankelijkheden",
+            "number": 7,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Conversieruntime installeren",
+            "number": 8,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm install --frozen-lockfile",
+            "number": 9,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Lettertypencache",
+            "number": 10,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run node scripts/haal-lettertypen.mjs",
+            "number": 11,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Woordenboekencache",
+            "number": 12,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run node scripts/haal-woordenboeken.mjs",
+            "number": 13,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run cargo test --manifest-path src/spelling/rust/Cargo.toml --locked --lib",
+            "number": 14,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run node scripts/bouw-spelling-wasm.mjs",
+            "number": 15,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm versie:check",
+            "number": 16,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Vastgelegde versleutelde proefbestanden ophalen",
+            "number": 17,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm test",
+            "number": 18,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run python -m unittest discover -s tests -v",
+            "number": 19,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run node scripts/test-kantoor-engines.mjs",
+            "number": 20,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm test:opdrachten",
+            "number": 21,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Windows-loader voorbereiden",
+            "number": 22,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm build",
+            "number": 23,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Vastgelegde MDB-, ACCDB- en Strict-proefbestanden ophalen",
+            "number": 24,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Gebouwde databaseparser controleren",
+            "number": 25,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run cargo test --manifest-path src-tauri/Cargo.toml --locked",
+            "number": 26,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "ODF, oudere formaten en PDF werkelijk converteren",
+            "number": 27,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Geconverteerde inhoud onafhankelijk controleren",
+            "number": 28,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Linux-pakket bouwen",
+            "number": 29,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Windows-pakket bouwen",
+            "number": 30,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "macOS-pakket bouwen",
+            "number": 31,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Linux-installers werkelijk uitpakken en controleren",
+            "number": 32,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Windows-installer werkelijk uitpakken en controleren",
+            "number": 33,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 34,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Pakketrapport bewaren",
+            "number": 35,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Woordenboekencache",
+            "number": 65,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Lettertypencache",
+            "number": 66,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/setup-python@v5",
+            "number": 67,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run pnpm/action-setup@v4",
+            "number": 68,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/setup-node@v4",
+            "number": 69,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 70,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 71,
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41389707306/job/125098175374"
+      }
+    ],
+    "name": "Kantooromgeving controleren en bouwen",
+    "status": "completed",
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41389707306"
+  },
+  {
+    "conclusion": "success",
+    "jobs": [
+      {
+        "completedAt": "2026-11-02T04:47:35Z",
+        "conclusion": "success",
+        "databaseId": 125098175188,
+        "name": "database (windows-latest)",
+        "startedAt": "2026-11-02T04:39:49Z",
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/setup-node@v4",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm/action-setup@v4",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run dtolnay/rust-toolchain@stable",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v5",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Linux-bouwafhankelijkheden",
+            "number": 7,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm install --frozen-lockfile",
+            "number": 8,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm versie:check",
+            "number": 9,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Vastgelegde versleutelde proefbestanden ophalen",
+            "number": 10,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm test",
+            "number": 11,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm database:build",
+            "number": 12,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Vastgelegde databaseproeven ophalen",
+            "number": 13,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Zelfstandige productieparser controleren",
+            "number": 14,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Databasecorpusproef (aantallen, indexen, query’s, VBA, hash)",
+            "number": 15,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Windows-loader voorbereiden",
+            "number": 16,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run cargo test --manifest-path apps/database-studio/src-tauri/Cargo.toml --locked",
+            "number": 17,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Linux-pakketten bouwen",
+            "number": 18,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Windows-pakket bouwen",
+            "number": 19,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "macOS-pakket bouwen",
+            "number": 20,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Linux-pakketten uitpakken en controleren",
+            "number": 21,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Windows-pakket uitpakken en controleren",
+            "number": 22,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 23,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Pakketrapport bewaren",
+            "number": 24,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/setup-python@v5",
+            "number": 45,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run pnpm/action-setup@v4",
+            "number": 46,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/setup-node@v4",
+            "number": 47,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 48,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 49,
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41389707294/job/125098175188"
+      },
+      {
+        "completedAt": "2026-11-02T04:46:04Z",
+        "conclusion": "success",
+        "databaseId": 125098175384,
+        "name": "database (macos-latest)",
+        "startedAt": "2026-11-02T04:39:49Z",
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/setup-node@v4",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm/action-setup@v4",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run dtolnay/rust-toolchain@stable",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v5",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Linux-bouwafhankelijkheden",
+            "number": 7,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm install --frozen-lockfile",
+            "number": 8,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm versie:check",
+            "number": 9,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Vastgelegde versleutelde proefbestanden ophalen",
+            "number": 10,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm test",
+            "number": 11,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm database:build",
+            "number": 12,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Vastgelegde databaseproeven ophalen",
+            "number": 13,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Zelfstandige productieparser controleren",
+            "number": 14,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Databasecorpusproef (aantallen, indexen, query’s, VBA, hash)",
+            "number": 15,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Windows-loader voorbereiden",
+            "number": 16,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run cargo test --manifest-path apps/database-studio/src-tauri/Cargo.toml --locked",
+            "number": 17,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Linux-pakketten bouwen",
+            "number": 18,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Windows-pakket bouwen",
+            "number": 19,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "macOS-pakket bouwen",
+            "number": 20,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Linux-pakketten uitpakken en controleren",
+            "number": 21,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Windows-pakket uitpakken en controleren",
+            "number": 22,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 23,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Pakketrapport bewaren",
+            "number": 24,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/setup-python@v5",
+            "number": 45,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run pnpm/action-setup@v4",
+            "number": 46,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/setup-node@v4",
+            "number": 47,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 48,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 49,
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41389707294/job/125098175384"
+      },
+      {
+        "completedAt": "2026-11-02T04:49:51Z",
+        "conclusion": "success",
+        "databaseId": 125098175460,
+        "name": "database (ubuntu-22.04)",
+        "startedAt": "2026-11-02T04:39:49Z",
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/setup-node@v4",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm/action-setup@v4",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run dtolnay/rust-toolchain@stable",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v5",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Linux-bouwafhankelijkheden",
+            "number": 7,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm install --frozen-lockfile",
+            "number": 8,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm versie:check",
+            "number": 9,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Vastgelegde versleutelde proefbestanden ophalen",
+            "number": 10,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm test",
+            "number": 11,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pnpm database:build",
+            "number": 12,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Vastgelegde databaseproeven ophalen",
+            "number": 13,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Zelfstandige productieparser controleren",
+            "number": 14,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Databasecorpusproef (aantallen, indexen, query’s, VBA, hash)",
+            "number": 15,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Windows-loader voorbereiden",
+            "number": 16,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run cargo test --manifest-path apps/database-studio/src-tauri/Cargo.toml --locked",
+            "number": 17,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Linux-pakketten bouwen",
+            "number": 18,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Windows-pakket bouwen",
+            "number": 19,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "macOS-pakket bouwen",
+            "number": 20,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Linux-pakketten uitpakken en controleren",
+            "number": 21,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Windows-pakket uitpakken en controleren",
+            "number": 22,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 23,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Pakketrapport bewaren",
+            "number": 24,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/setup-python@v5",
+            "number": 45,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run pnpm/action-setup@v4",
+            "number": 46,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/setup-node@v4",
+            "number": 47,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 48,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 49,
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41389707294/job/125098175460"
+      }
+    ],
+    "name": "Zelfstandige databasebrowser controleren en bouwen",
+    "status": "completed",
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41389707294"
+  }
+]

@@ -1,0 +1,47 @@
+{
+  "versie": "2026.44.9-alpha.27",
+  "geslaagd": true,
+  "omvang": "Geordende inline-rasterintenties, platte celbereiken en bron-/bewaarbarrières. Waarden kopiëren leest de opgemaakte tekst uit dezelfde werkmap; plakken schrijft getallen, tekst en expliciete formule-invoer in één transactie. Geen rijke opmaakoverdracht, formuleverschuiving of verplaatsing van bronbereiken.",
+  "kernproeven": [
+    "celklembord_kopieert_opgemaakte_waarden_zonder_bronwijziging_of_geschiedenis",
+    "celklembord_plakt_formules_getallen_en_unicode_als_een_bronexacte_undo",
+    "celklembord_tegelvulling_lege_randen_en_wissen_behouden_celopmaak",
+    "celklembord_late_ongeldige_formule_verandert_geen_enkele_cel",
+    "celklembord_samenvoegingen_alleen_als_hele_anker_of_gezamenlijk_wissen",
+    "celklembord_beveiliging_en_matrixformules_worden_nooit_omzeild"
+  ],
+  "celtekstproeven": [
+    "celtekst_geleende_tabellen_citaten_unicode_en_lege_randen",
+    "celtekst_onvolledige_quotes_nultekens_en_rechthoekbudget_worden_geweigerd",
+    "xmltekens_en_rechthoekbudget_worden_voor_opslaan_gecontroleerd"
+  ],
+  "ui_proeven": [
+    "raster_asynchrone_grensronde_bewaart_alle_invoer_en_celbevestigingen",
+    "raster_asynchrone_plak_enter_en_opslaan_wachten_op_de_geplakte_bron",
+    "raster_bewaren_vanuit_de_sluitvraag_blijft_werken_met_de_invoerwachtrij",
+    "raster_f2_en_selecteer_alles_in_dezelfde_oude_widget_overschrijven_de_cel",
+    "raster_invoer_van_de_oude_inline_editor_bewerkt_na_enter_de_volgende_cel",
+    "raster_invoerbuffer_begrenst_grote_plak_en_meldt_afgewezen_opdrachten_blijvend",
+    "raster_klembord_bereik_kopieer_plak_en_wissen_zijn_geordend_en_bronexact_ongedaan",
+    "raster_klembord_gewijzigd_doel_weigert_laat_antwoord_en_bewaart_wachtende_invoer",
+    "raster_klembord_modale_late_lezing_wacht_en_gaat_nooit_naar_een_ander_document",
+    "raster_klembord_ongeldige_late_formule_bewaart_de_bron_en_hersteltekst",
+    "raster_oud_muisdoel_na_bronbewerking_wordt_geweigerd_maar_relatieve_invoer_blijft_geordend",
+    "raster_rij_invoegen_na_plakken_blijft_achter_de_klembordbewerking",
+    "raster_toetsen_en_ime_commit_blijven_bewaard_terwijl_editorfocus_nog_onderweg_is",
+    "raster_zijeditor_bewaart_zijn_eigen_invoer_en_toepassen"
+  ],
+  "reguliere_tests": 307,
+  "ui_tests": 102,
+  "testlog_sha256": "bcf6046b13548d83a37ba61661cc780780d4908461d734caea53641959dea1d2",
+  "onafhankelijk_sha256": "120ea6114cc2d9ee8f19a0e17189ca3d6878627d74f8c8bd582f6444958608bc",
+  "bronmanifest": "schermen-2026-11-01-alpha27.json",
+  "grenzen": {
+    "cellen": 10000,
+    "platte_utf8_bytes": 4194304,
+    "wachtende_opdrachten": 256,
+    "wachtende_tekstbytes": 4194304
+  },
+  "echte_releasevensterproef_afgerond": true,
+  "echte_releasevensterproef": "vensterproef-2026-11-01-alpha27-ci/rapport.json"
+}

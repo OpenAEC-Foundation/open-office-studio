@@ -15,6 +15,7 @@ import type { DocxEditorRef } from "@betteroffice/docx-react";
 import i18next from "../../i18n/config";
 import { formatGetal } from "../../i18n/opmaak";
 import { begin, engine, klaar, ruw, voorstel, type Engine, type Sessie } from "../gedeeld/engine.ts";
+import { celIn, celMarges as celBinnenMarges, tabelVanCel } from "../liniaal/geometrie.ts";
 import {
   MIN_KOLOM,
   TWIPS_PER_PX,
@@ -178,12 +179,25 @@ function breedteLaatsteSectie(e: Engine) {
 
 /** Beschikbare tekstbreedte (twips) op de pagina waar de tabel staat. */
 export function beschikbareBreedte(e: Engine, loc: TabelLoc) {
+  const celBreedte = breedteInCel(e.sessie, loc.story);
+  if (celBreedte !== null) return celBreedte;
   const eersteCel = tabelEmbed(e.sessie, loc).payload.rows[0]?.cells[0]?.story;
   for (const p of paginasVan(e)) {
     if (eersteCel && p.fragments.some((f) => f.kind === "table" && f.blockId?.endsWith(`:${eersteCel}`)) && p.size && p.margins)
       return Math.round((p.size.w - p.margins.left - p.margins.right) * TWIPS_PER_PX);
   }
   return breedteLaatsteSectie(e);
+}
+
+/** Binnenbreedte van de omvattende cel, inclusief samengevoegde rasterkolommen. */
+export function breedteInCel(sessie: Sessie, verhaal: string): number | null {
+  const info = tabelVanCel(sessie, verhaal, String(sessie.version()));
+  const plek = info && celIn(info.payload, verhaal);
+  if (!info || !plek) return null;
+  const breedtes = info.payload.grid?.length ? info.payload.grid.map((w) => Math.max(1, w)) : huidigeBreedtes(info.payload);
+  const breedte = breedtes.slice(plek.kolom, plek.kolom + plek.span).reduce((a, b) => a + b, 0);
+  const marges = celBinnenMarges(info.payload, plek.rij, verhaal);
+  return Math.max(1, breedte - marges.links - marges.rechts);
 }
 
 /**
@@ -196,16 +210,8 @@ export function breedteBijCursor(e: Engine) {
   const head = e.sessie.selection()?.head;
   // Alleen het verhaal van de cursor telt: de sessie onthoudt een celselectie
   // ook nadat de cursor de tabel heeft verlaten.
-  const cel = /^(.*):t(\d+):r(\d+)c(\d+)$/.exec(head?.story ?? "");
-  if (cel) {
-    try {
-      const breedtes = huidigeBreedtes(tabelEmbed(e.sessie, { story: cel[1], tableIndex: +cel[2] }).payload);
-      // Standaard celmarge links en rechts (108 twips).
-      if (breedtes[+cel[4]]) return Math.max(MIN_KOLOM, breedtes[+cel[4]] - 216);
-    } catch {
-      // Valt terug op de pagina.
-    }
-  }
+  const celBreedte = head && breedteInCel(e.sessie, head.story);
+  if (celBreedte != null) return celBreedte;
   const positie = head ? e.weergave.yrsLocToDisplayPosition(head) : null;
   return tekstbreedteOpPagina(paginasVan(e), positie) ?? breedteLaatsteSectie(e);
 }

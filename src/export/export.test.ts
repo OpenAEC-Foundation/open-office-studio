@@ -165,9 +165,11 @@ describe("Exports uit de engines met de eigen voorbeelden", () => {
   it("rekenblad als TSV en Markdown", async () => {
     const tsv = tekst((await maakExport("xlsx", "tsv", werkmap(), "M")).bytes);
     expect(tsv).toContain("Nr.\tMateriaal\t");
+    expect(tsv).toContain("\t924\t");
     const md = tekst((await maakExport("xlsx", "md", werkmap(), "M")).bytes);
     expect(md).toContain("## Materialen");
     expect(md).not.toContain("xlsx-export:");
+    expect(md).toContain(">€ 3,068.00<");
   });
   it("rekenblad als HTML-tabel en als PNG", async () => {
     const html = tekst(
@@ -175,6 +177,8 @@ describe("Exports uit de engines met de eigen voorbeelden", () => {
     );
     expect(html).toContain('colspan="8"');
     expect(html).toContain("Multiplex berken");
+    expect(html).toContain(">€ 924.00<");
+    expect(html).toContain(">€ 3,068.00<");
     expect(html).not.toMatch(/<script/i);
     const png = (await maakExport("xlsx", "png", werkmap(), "M", { blad: 0 }))
       .bytes;

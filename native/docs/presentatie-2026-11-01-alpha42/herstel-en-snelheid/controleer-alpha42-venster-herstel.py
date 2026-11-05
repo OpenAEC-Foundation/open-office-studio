@@ -1,0 +1,15 @@
+from pathlib import Path
+import json,hashlib
+from zipfile import ZipFile
+from pptx import Presentation
+p=Path('.local/controle-2026-10-31/gui-alpha42-herstel-functioneel');v=json.loads((p/'rapport.json').read_text());assert v['expliciet_gestopt'] and v['programma_eindcode']==-15
+begin=v['begindata_sha256'];eind=v['einddata_sha256'];assert begin=='08e6720f7820dae375fe7b39f26bd66698fdc8e0b4edee88ae28e561ccb8fca4' and eind==begin
+a=p/('bron-'+begin+'.pptx');b=p/'bron-400c6fe87df3b371f3637d2a671ef900fb52508f55c5eafcb8c91f076a546f31.pptx';oud,nieuw=Presentation(a),Presentation(b);assert len(nieuw.slides)==3;assert nieuw.slides[1].notes_slide.notes_text_frame.text.strip()=='Nieuwe presentatienotities';assert nieuw.slides[0].notes_slide.notes_text_frame.text==oud.slides[0].notes_slide.notes_text_frame.text
+for x,y in zip(oud.slides,nieuw.slides):assert [s.text for s in x.shapes if s.has_text_frame]==[s.text for s in y.shapes if s.has_text_frame]
+with ZipFile(a) as x,ZipFile(b) as y:
+ extra=sorted(set(y.namelist())-set(x.namelist()));weg=sorted(set(x.namelist())-set(y.namelist()));gewijzigd=sorted(n for n in x.namelist() if n in y.namelist() and x.read(n)!=y.read(n));assert not weg;assert extra==['ppt/notesSlides/_rels/notesSlide2.xml.rels','ppt/notesSlides/notesSlide2.xml'];assert gewijzigd==['[Content_Types].xml','ppt/slides/_rels/slide2.xml.rels']
+for s in v['stappen']:assert hashlib.sha256((p/s['beeld']['bestand']).read_bytes()).hexdigest()==s['beeld']['sha256']
+assert a.read_bytes()==(p/'Eigen-presentatie.pptx').read_bytes()
+assert {s.get('beeldnaam'):s.get('bron_sha256') for s in v['stappen']}.get('snel-opnieuw-opslaan')==begin
+d={'omvang':'Herstelde geïsoleerde Linux-debugbuild met rasterprofieloptimalisatie. Het paneel blijft in de eerste en latere opnamen aanwezig tijdens navigatie vanuit geselecteerde notities. Nieuwe notities op dia2 onafhankelijk heropend. Snelle Ctrl+Z/Ctrl+S herstelt het gehele oorspronkelijke bestand byte voor byte. De genoteerde bestandscontroles zijn geautomatiseerd; paneelweergave is daarnaast visueel gecontroleerd. Geen volledige GUI-/pixelgoedkeuring.','tijdelijke_paneelweergave_visueel_geslaagd':True,'nieuwe_bewerking_onafhankelijk_teruggelezen':True,'alle_diateksten_gelijk':True,'eerste_notities_gelijk':True,'nieuwe_delen':extra,'gewijzigde_delen':gewijzigd,'undo_bewaard_bytegelijk':True,'beginbron_sha256':begin,'eindbron_sha256':eind,'stappen':len(v['stappen'])}
+(p/'bron-en-weergavecontrole.json').write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n');print(json.dumps(d,ensure_ascii=False))

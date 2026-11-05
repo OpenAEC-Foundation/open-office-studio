@@ -398,7 +398,8 @@ def onbekende_functies():
         'C4': f('_xlfn.TEXTJOIN("-",TRUE,A1:A3)', '1-2-3'),
         'C5': f('SUM(A1:A3)+1', 7),                         # gewone functie, ter vergelijking
         'C6': f('C1+1', 6),                                 # afhankelijk van onbekende functie: #NAME?
-        # Bestaande Excel-functie die de rekenkern niet kent; juist is 1 (na bewerking 2).
+        # FACT werd eerder niet herkend; 0.5.1 moet de verouderde cache nu corrigeren.
+        # 1! = 1; na de bewerking wordt A1 = 2 en geldt 2! = 2.
         'C7': f('FACT(A1)', 99),
     })
     return wb

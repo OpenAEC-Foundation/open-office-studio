@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/gui-writer-alpha34-cursorcontrole.py", line 99, in <module>
+    klik(430,367);sleutel('Home',*(['Right']*8),'shift+Home','ctrl+c');klembord('Links 🏠 ');sleutel('Right');klik(322,219)
+                                                                       ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/gui-writer-alpha34-cursorcontrole.py", line 42, in klembord
+    raise AssertionError('Klembord '+repr(v.stdout)+'; verwacht '+repr(verwacht))
+AssertionError: Klembord ''; verwacht 'Links 🏠 '
+Traceback (most recent call last):
+  File "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/venster-writer-alpha34-cursorcontrole.py", line 10, in <module>
+    subprocess.run(['dbus-run-session','--',str(w/'gui-hulpmiddelen/uitgepakt/usr/bin/xvfb-run'),'-a','-s','-screen 0 1440x900x24 -nolisten tcp',sys.executable,str(w/'gui-writer-alpha34-cursorcontrole.py'),str(vast/'open-office-studio-native'),f'gui-alpha34-writer-cursorcontrole-{variant}',m['broncommit']],env=e,check=True)
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['dbus-run-session', '--', '/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/gui-hulpmiddelen/uitgepakt/usr/bin/xvfb-run', '-a', '-s', '-screen 0 1440x900x24 -nolisten tcp', '/usr/bin/python3', '/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/gui-writer-alpha34-cursorcontrole.py', '/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/native-alpha34-ci-linux-vast/open-office-studio-native', 'gui-alpha34-writer-cursorcontrole-ci', 'fbd0c07ac30dcd22dd95fa7e8e845df51ffe2974']' returned non-zero exit status 1.

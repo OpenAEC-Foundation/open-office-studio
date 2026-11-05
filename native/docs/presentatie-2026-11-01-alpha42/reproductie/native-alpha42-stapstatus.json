@@ -1,0 +1,88 @@
+{
+  "omvang": "Afzonderlijk afgeronde onderliggende controles; de terminal-eindstatus staat hier niet gelijk aan.",
+  "bronmanifest_sha256": "707aef67720851460bd228ff019ba3e6cae5f531129a0896ff5c83993aed8442",
+  "stappen": [
+    {
+      "controle": "debugbouw",
+      "opdracht": [
+        "cargo",
+        "build",
+        "--manifest-path",
+        "native/Cargo.toml",
+        "--workspace",
+        "--locked",
+        "-j",
+        "1"
+      ],
+      "exitcode": 0,
+      "seconden": 66.696,
+      "log": "native-alpha42-definitief-debugbouw.log",
+      "sha256": "44d91725003145cb6c70734943012149d11642c74487b7835a1aa7e3d1580a5d"
+    },
+    {
+      "controle": "fmt",
+      "opdracht": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "native/Cargo.toml",
+        "-p",
+        "office-core",
+        "-p",
+        "open-office-studio-native",
+        "-p",
+        "office-mail",
+        "-p",
+        "office-conversie",
+        "--check"
+      ],
+      "exitcode": 0,
+      "seconden": 1.722,
+      "log": "native-alpha42-definitief-fmt.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "controle": "clippy",
+      "opdracht": [
+        "cargo",
+        "clippy",
+        "--manifest-path",
+        "native/Cargo.toml",
+        "--workspace",
+        "--locked",
+        "--all-targets",
+        "-j",
+        "1",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exitcode": 0,
+      "seconden": 2.441,
+      "log": "native-alpha42-definitief-clippy.log",
+      "sha256": "2ca6f651ad9a030f586f57a3c20f66b89bfb546f61cd079bf7ad79da3de00467"
+    },
+    {
+      "controle": "tests",
+      "opdracht": [
+        "cargo",
+        "test",
+        "--manifest-path",
+        "native/Cargo.toml",
+        "--workspace",
+        "--locked",
+        "-j",
+        "1",
+        "--no-fail-fast",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitcode": 101,
+      "seconden": 2048.956,
+      "log": "native-alpha42-definitief-tests.log",
+      "sha256": "ade3a0b3ef105bed64475ff9c3a7173d80c40b42e7326111c6fca909473e6340"
+    }
+  ],
+  "inhoudelijk_afgerond": false,
+  "bron_van_729_bestanden_bytegelijk": false
+}

@@ -1,0 +1,539 @@
+{
+  "schema": 1,
+  "datum": "2026-11-05",
+  "versie": "2026.45.49",
+  "basiscommit": "fdeb98f",
+  "rustwerkruimte": "2026.45.0-alpha.57",
+  "programma_sha256": "e7295980a17df1e85c9524ad6e384fcf63735162bb60964f4d7aebacf42e5785",
+  "wijziging": "Optionele begrensde lokale tijdregistratie in de bestaande brongebonden Rust-invoerkoppeling; standaard uit, geen extra awaits/timers of gewijzigde native transportfunctie. Geen snelheidsreparatie.",
+  "lokale_controles": {
+    "frontend_tests": 1860,
+    "frontend_bestanden": 179,
+    "typescript": true,
+    "python_tests": 77,
+    "kantoorengines": true,
+    "opdrachten": 10,
+    "weekversie": true,
+    "desktopbouw": "Eerste ronde faalt op één ontbrekend gegenereerd updater-permissiebestand; gerichte cacheherbouw en volledige herhaalde bouw slagen. Eerste log en cachehandeling blijven behouden.",
+    "nieuwe_meetproeven": 6,
+    "nieuwe_werkelijke_sdk_proeven": 4,
+    "rust_unittests": "Niet opnieuw uitgevoerd: geen Rust-broncodewijziging; bestaande alpha57 opnieuw gecompileerd. Geen nieuwe Rust-functiedekking geclaimd."
+  },
+  "native_scenarios": [
+    "passief-meting48-voor",
+    "passief-meting49-eerste",
+    "passief-meting49-tweede",
+    "passief-meting48-na",
+    "invoerfasen49-profiel",
+    "tekst-49-meting",
+    "geheugen-49-meting",
+    "acht-49-meting",
+    "volgorde-49-meting"
+  ],
+  "native_geheugenrondes": 20,
+  "native_gc": true,
+  "invoerfasen": {
+    "geslaagd": true,
+    "getekende_tekst_ms": 23295,
+    "monsters": 68,
+    "sessies_en_levensduren": [
+      [
+        1,
+        1
+      ]
+    ],
+    "totaal_eigen_koppeling_ms": 8912.999999999996,
+    "rust_binnen_ms": 6536,
+    "stappen": {
+      "cursor": {
+        "aantal": 68,
+        "ms": 82.00000000003638,
+        "max_ms": 2.000000000003638
+      },
+      "bron": {
+        "aantal": 68,
+        "ms": 176.99999999996362,
+        "max_ms": 89
+      },
+      "hash": {
+        "aantal": 68,
+        "ms": 165.0000000000109,
+        "max_ms": 93
+      },
+      "aanvraag": {
+        "aantal": 68,
+        "ms": 13.000000000003638,
+        "max_ms": 8
+      },
+      "transport": {
+        "aantal": 68,
+        "ms": 7407.999999999982,
+        "max_ms": 406.00000000000364
+      },
+      "binding": {
+        "aantal": 68,
+        "ms": 57.99999999999636,
+        "max_ms": 15
+      },
+      "mutatie": {
+        "aantal": 68,
+        "ms": 394.0000000000218,
+        "max_ms": 11.999999999996362
+      },
+      "selectie": {
+        "aantal": 68,
+        "ms": 613.9999999999818,
+        "max_ms": 13.000000000007276
+      }
+    },
+    "overgeslagen": 0,
+    "broncontrole": {
+      "verhalen": 1537,
+      "alinea_en_celteksten": 3329,
+      "exact": true
+    },
+    "grenzen": "Transport en hash bevatten wachttijd op de hoofdthread; rustBinnenMs is alleen de bestaande Rust-binnenmeting. Geen volledige CPU-, SDK-publicatie- of tekentijd."
+  },
+  "fysieke_vergelijking": {
+    "metingen": [
+      {
+        "naam": "passief-meting48-voor",
+        "ms": 22648,
+        "programma_sha256": "f4a601f74375afe406750166010c809774225a44912288e866354f580478a784",
+        "broncontrole": {
+          "verhalen": 1537,
+          "alinea_en_celteksten": 3329,
+          "exact": true
+        },
+        "documentpixels": {
+          "roi": [
+            320,
+            210,
+            1140,
+            950
+          ],
+          "uitgesloten_cursor": [
+            491,
+            347,
+            496,
+            366
+          ],
+          "verschillende_pixels": 0,
+          "bbox": null
+        }
+      },
+      {
+        "naam": "passief-meting49-eerste",
+        "ms": 22422,
+        "programma_sha256": "e7295980a17df1e85c9524ad6e384fcf63735162bb60964f4d7aebacf42e5785",
+        "broncontrole": {
+          "verhalen": 1537,
+          "alinea_en_celteksten": 3329,
+          "exact": true
+        },
+        "documentpixels": {
+          "roi": [
+            320,
+            210,
+            1140,
+            950
+          ],
+          "uitgesloten_cursor": [
+            491,
+            347,
+            496,
+            366
+          ],
+          "verschillende_pixels": 0,
+          "bbox": null
+        }
+      },
+      {
+        "naam": "passief-meting49-tweede",
+        "ms": 23519,
+        "programma_sha256": "e7295980a17df1e85c9524ad6e384fcf63735162bb60964f4d7aebacf42e5785",
+        "broncontrole": {
+          "verhalen": 1537,
+          "alinea_en_celteksten": 3329,
+          "exact": true
+        },
+        "documentpixels": {
+          "roi": [
+            320,
+            210,
+            1140,
+            950
+          ],
+          "uitgesloten_cursor": [
+            491,
+            347,
+            496,
+            366
+          ],
+          "verschillende_pixels": 0,
+          "bbox": null
+        }
+      },
+      {
+        "naam": "passief-meting48-na",
+        "ms": 22676,
+        "programma_sha256": "f4a601f74375afe406750166010c809774225a44912288e866354f580478a784",
+        "broncontrole": {
+          "verhalen": 1537,
+          "alinea_en_celteksten": 3329,
+          "exact": true
+        },
+        "documentpixels": {
+          "roi": [
+            320,
+            210,
+            1140,
+            950
+          ],
+          "uitgesloten_cursor": [
+            491,
+            347,
+            496,
+            366
+          ],
+          "verschillende_pixels": 0,
+          "bbox": null
+        }
+      }
+    ],
+    "gemiddeld_oud_ms": 22662.0,
+    "gemiddeld_nieuw_ms": 22970.5,
+    "verhouding_nieuw_oud": 1.01361309681405,
+    "verschil_procent": 1.3613096814049985,
+    "grens": "Eén zware bron/pc, vier ronden; geen algemene responsiviteits- of volledige UI-/suiteacceptatie."
+  },
+  "visueel": "Werkelijke eindbeelden van de fasemeting en herstelde 500-paginakopie bekeken. De getoetste 820×740-documentuitsnede heeft in alle vier vergelijkingsronden nul afwijkende RGB-pixels, uitsluitend de bekende cursorzone gemaskeerd. Geen volledige pixelacceptatie.",
+  "voorlopige_byteproef": "Twee onafhankelijke SDK-antwoorden gaven verschillende attribuut-/klokvolgorde. Log bewaard; definitieve aan/uit-proef gebruikt dezelfde echte delta’s en eist bytegelijke bronupdates, vectoren, inhoud en selectie.",
+  "open_issues": 118,
+  "grenzen": [
+    "Writer blijft ernstig vertraagd: circa 23 seconden voor de hele proefalinea",
+    "Circa 8,9 seconden eigen invoerkoppeling bevat circa 6,5 seconden beperkte Rust-binnenmeting; overige tijd mag niet zonder verdere meting volledig aan SDK-publicatie worden toegeschreven",
+    "Vier vergelijkingsronden op één bron/pc: circa 1,36% hoger kandidaatgemiddelde, geen snelheidswinst, statistische of algemene prestatieacceptatie",
+    "Eerdere afzonderlijke CI48-herstelafkeuring blijft open; lokale groene 49-herstelproef verklaart of herstelt die fout niet",
+    "Platformen, zeven edities en devdownload van deze bron moeten na push afzonderlijk worden gecontroleerd",
+    "Geen issue, migratiegebied of acceptatievlag gesloten; gebruikersstarter en eerdere referenties behouden"
+  ],
+  "volgende_stap": "Splits de SDK-publicatie/tekenroute en het gemeten Rust-binnenwerk verder uit. Geen kleine cursorcache of blinde herinvoering van het eerder tragere mutatiejournaal: de cursorfase bedraagt in deze ronde slechts 82 ms.",
+  "bewijsbestanden": [
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/acht-49-meting-programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/acht-49-meting.json.gz",
+      "sha256": "9a87f92cb610c29d40dd56347b9f666501b844689200a21ad402ea709a82b5a8"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/bouw-en-test-meting49.py.gz",
+      "sha256": "29fb541a9fa3706ee7784834efb190223e6cb67d61f4322d8ff4457c00d0e60d"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/bron-scripts__gui__spelling_vervolginvoer.js.gz",
+      "sha256": "cfb128420224d2a3c437792dece1a17f8eaaf9eb37b6ccb1c679b17c7c252d92"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/bron-scripts__gui__webkit_inspector.py.gz",
+      "sha256": "c280375433d819ab1e0a3a5816ee6331babb3eb0249ccbfb615839747b22241a"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/bron-scripts__test-writer-lang-native.py.gz",
+      "sha256": "d98423cc4d340dee17dc32dcc31d5566c27c446a6b82bea00ec1a0e85e18b668"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/bron-scripts__test-writer-rijk-plakken-native.py.gz",
+      "sha256": "b8ae732627acdddb4bdaa35f0402097ff7a2a35c2fd2b94b690ea9e977c002e4"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/bron-scripts__test-writer-rust-plakken-volgorde-native.py.gz",
+      "sha256": "af19bc1907f0d34a8f7d05556db98a6096f35f2a6398a8a6827e432557f91d0f"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/bron-scripts__test-writer-rust-tekst-native.py.gz",
+      "sha256": "e485b07808995faf526d66217ea14dee6d133bb59c577edba158acdfac30bf4a"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/bron-src__tekst__bewerken__invoerMeting.test.ts.gz",
+      "sha256": "80303c6bfcbb94b90e3abc854502b3e81608653a45badb347db271b65022c233"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/bron-src__tekst__bewerken__invoerMeting.ts.gz",
+      "sha256": "78dbb45461decfe0717555988b1f2e2ce19f7f3016a3bcc7ae3767efd5edc6e4"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/bron-src__tekst__bewerken__rustPlakken.ts.gz",
+      "sha256": "c73762296e02d4cc497629c7bd70d238645d25e107d199ccaec77e8a6926f86e"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/bron-src__tekst__bewerken__rustTekst-meting.test.ts.gz",
+      "sha256": "2279e629dfbdef8f527d7a0129b432c28fe379062c0d9023dd37418b64a56126"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/geheugen-49-meting-programma.log.gz",
+      "sha256": "0cfe12894ff1459cefbebdefc70f8219fb0ff64e9d72626603e5372a45be95ce"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/geheugen-49-meting.json.gz",
+      "sha256": "f79ac4701bf3787df3f2498087c601f6233279ad5bd24d2fa106a8433143d14e"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/herstel-49.png",
+      "sha256": "88d2ed74b52baafd1b6cab3934f174665a9ae75c5e282e44deac29938b7b662f"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/invoerfasen49-profiel-programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/invoerfasen49-profiel.json.gz",
+      "sha256": "f80fd3fad5d3479afc7d07f275dd704dae450ad99ec95f8883ca10f4bdcf16c9"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/invoerfasen49-samenvatting.json.gz",
+      "sha256": "9e7bdf901cff9d245bceca81216568dc2ae379be52d91e29ea68ffaca5de021e"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/invoerfasen49-uitkomsten.json.gz",
+      "sha256": "aab9f6d7087c509a2289ab269af9acc5a2d666cbba564e53698d183d3c8097db"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/kandidaat-49.png",
+      "sha256": "7444153a8e3037d42ae7a1f8d0da4d6ab759805fef6d0d7cf4871dcfa5b14839"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/meet-invoerfasen49.py.gz",
+      "sha256": "3479f5425f0a2172e61b773faeb3717df96da7f0709098f6db6f00c8f703e0c6"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/meting-49.png",
+      "sha256": "c86de6c5f47b2af76fb49fd7053823dc8979161bb3368aebe6866e53b4676b0b"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/meting49-bouw-herhaling.log.gz",
+      "sha256": "b81cbafc094a5daca398c5964a15ddcd267faece03c564307a99589b9581a625"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/meting49-bouw.log.gz",
+      "sha256": "8fecdf5063fb6fa68bdb63d8e8f39c7216e077c6d80031dddc213bc5a331d86b"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/meting49-bronnen.json.gz",
+      "sha256": "ae0834b5b96621aef8a16870a6fe5d061b82373fc63c6c8b958bc909b8016aab"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/meting49-engines.log.gz",
+      "sha256": "6de11f78a95927519636e824a5a448ed252a867685f2835d2da16f2c7370eb14"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/meting49-frontend.log.gz",
+      "sha256": "1a68d8aaa01eb92ac31d4af954ffed6bfa103da38ac271405caf452b87a76768"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/meting49-na-bouw-uitkomsten.json.gz",
+      "sha256": "b1a5886b84fc3ea4f6230c703222b1d3b38ef8f61ddac3e25a9b8df4beb95347"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/meting49-ontbrekende-bouwcache.json.gz",
+      "sha256": "8e396cd58ef18345cdd3d29f31bb9d9c63c11dfa424bfb94ef6a0ba7e87a100d"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/meting49-opdrachten.log.gz",
+      "sha256": "aebe9c229e8376b67a95a3334feb44b01105d21c8e26d0bec658ae1172dfdf16"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/meting49-open-issues.json.gz",
+      "sha256": "c3aa7c9158b1ad95bc543e54e7fd8eac3223ed8bdddc77286f97d1f8ced5422f"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/meting49-pariteit-herhaling.log.gz",
+      "sha256": "69ade04a35a788ccd9d6809d44f5b7cf32dd242791fe8054597203aa441bf765"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/meting49-pariteit.log.gz",
+      "sha256": "e123e6415053b941eff275665c6a4d1947413dd65adadc2c4346a1ba333ae792"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/meting49-passieve-uitkomsten.json.gz",
+      "sha256": "f2cc1c23bec7c35cd4946fdb1246cb5b502f8033be0a7a556e2f465473238a07"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/meting49-proefuitkomsten.json.gz",
+      "sha256": "bdeb12889bf61c4a8468c84159ba458279c4442d4b3f08541f81ed28261721fc"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/meting49-proeven.json.gz",
+      "sha256": "05833712484df7e418fe79942a40e914560e5be24ad7a77adf05f48d61deebaf"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/meting49-python.log.gz",
+      "sha256": "72e1c2008ee449ffcd994b10ca2d10150ddf412139892f4c0e2361dc558ce569"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/meting49-typescript.log.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/meting49-uitkomsten.json.gz",
+      "sha256": "193db3cb2d4c89af76de501295308f89b2cb7caa2bc432e19cdc19df7d3fe775"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/meting49-updatercache.log.gz",
+      "sha256": "711c91786f6cd4da66b0f43224c1211692f310fec33cac466940d88180e6f2e0"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/meting49-vergelijking.json.gz",
+      "sha256": "de9f0d8b9679c662bcb9c35d6f3429ffa73fbd646537b8bca44dfef45f5af148"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/meting49-week.log.gz",
+      "sha256": "59a96391691cefd05aa8693e6c38070e846b0ac4ef983ce82c4b09edbdaba3f1"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/passief-meting48-na-programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/passief-meting48-na.json.gz",
+      "sha256": "5132f3c260777bfb563dee052f9d70f9f4183b6d4529e0d4de435c55ddf4e6c4"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/passief-meting48-voor-programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/passief-meting48-voor.json.gz",
+      "sha256": "5c828205438d2573b4bbfbfc14e5b5475af9e25d575589deea8150dec50b9fb6"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/passief-meting49-eerste-programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/passief-meting49-eerste.json.gz",
+      "sha256": "05b1fdcc6fc26632ed2d94800518970537639c8434aed6b7e29521fe5c92859c"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/passief-meting49-tweede-programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/passief-meting49-tweede.json.gz",
+      "sha256": "739030ba925790157176580a9a8834cb893486654a408989f1ca42309e4b9c0c"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/referentie-48.png",
+      "sha256": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/tekst-49-meting-programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/tekst-49-meting.json.gz",
+      "sha256": "ea3acac85ca926d73017370f1706a25a26974113d96f1b3fd45623bde84444de"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/vergelijk-meting49.py.gz",
+      "sha256": "fd230e375089b137151e12c2c6b01a2df1d6c8439e40903bfd3c8004ed76837c"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/verwerk-invoerfasen49.py.gz",
+      "sha256": "8dbd52b7e38cbdc35c3165b60e3258c131af4f7c1369d0c2f656424a6e87b0ff"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/voer-invoerfasen49.py.gz",
+      "sha256": "2290886368069522b51269d890d45878ad6b64db0ead5e4c132133aeea064b7a"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/voer-meting49-na-bouw.py.gz",
+      "sha256": "54bf9745ddd6a87a287e542c9bf23aa1ff56909334d495d4d1a29c7874b56fd5"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/voer-meting49-passieve-metingen.py.gz",
+      "sha256": "d021483f30c4b1277ee22e7b46fb29af69a84c24898d269e83bc5b3b11597f71"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/voer-meting49-proeven.py.gz",
+      "sha256": "21c07ac53e3b99012a3c592a6212c8956eec18a1af14e5aa1d534192372f6293"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/volgorde-49-meting-programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/volgorde-49-meting.json.gz",
+      "sha256": "e3a5a6b853286c36f75c317424afe630e4257e7d94970dfab04c7ec6f3cf6c65"
+    },
+    {
+      "pad": "docs/tests/writer-invoerfasen-49/meting49-ci-start.json.gz",
+      "sha256": "6f6feba3867e55488c8b74129c94195cdcf5fd74691f6488d0005e1f8a812f4b"
+    }
+  ],
+  "ci_start": {
+    "bronrevisie": "5f5f84a773a9d1925efe73855b11ae9c22cc4980",
+    "ronden": [
+      {
+        "conclusion": "",
+        "databaseId": 42049217706,
+        "headSha": "5f5f84a773a9d1925efe73855b11ae9c22cc4980",
+        "name": "Uitgave bouwen, ondertekenen en publiceren",
+        "status": "in_progress"
+      },
+      {
+        "conclusion": "",
+        "databaseId": 42049172636,
+        "headSha": "5f5f84a773a9d1925efe73855b11ae9c22cc4980",
+        "name": "Rust WebView-preview bouwen",
+        "status": "in_progress"
+      },
+      {
+        "conclusion": "",
+        "databaseId": 42049172758,
+        "headSha": "5f5f84a773a9d1925efe73855b11ae9c22cc4980",
+        "name": "Zelfstandige databasebrowser controleren en bouwen",
+        "status": "in_progress"
+      },
+      {
+        "conclusion": "",
+        "databaseId": 42049172552,
+        "headSha": "5f5f84a773a9d1925efe73855b11ae9c22cc4980",
+        "name": "Kantooromgeving controleren en bouwen",
+        "status": "in_progress"
+      },
+      {
+        "conclusion": "",
+        "databaseId": 42049172785,
+        "headSha": "5f5f84a773a9d1925efe73855b11ae9c22cc4980",
+        "name": "Native Rust controleren en bouwen",
+        "status": "in_progress"
+      },
+      {
+        "conclusion": "",
+        "databaseId": 42049157317,
+        "headSha": "5f5f84a773a9d1925efe73855b11ae9c22cc4980",
+        "name": "Linux-dev · codex/native-rust-office · 5f5f84a773a9d1925efe73855b11ae9c22cc4980",
+        "status": "in_progress"
+      },
+      {
+        "conclusion": "",
+        "databaseId": 42049157133,
+        "headSha": "5f5f84a773a9d1925efe73855b11ae9c22cc4980",
+        "name": "Writer Rust-plakbatch onderzoeken",
+        "status": "in_progress"
+      },
+      {
+        "conclusion": "",
+        "databaseId": 42049157177,
+        "headSha": "5f5f84a773a9d1925efe73855b11ae9c22cc4980",
+        "name": "Writer-geheugenonderzoek · codex/native-rust-office · 5f5f84a773a9d1925efe73855b11ae9c22cc4980",
+        "status": "in_progress"
+      }
+    ],
+    "publiceren": false,
+    "grens": "Dit zijn handles/statussen bij starten, geen geslaagde platformacceptatie. Iedere ronde afzonderlijk opvolgen."
+  }
+}

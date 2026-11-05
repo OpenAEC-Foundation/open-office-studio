@@ -1,0 +1,21 @@
+{
+  "geslaagd": false,
+  "broncommit": "a574614422b6dfd125c97980a69a82a4cbfa46f9",
+  "programma_sha256": "a1713cabe462b0ff5a78e2eb982cab07c55ca3b04c27d917d4dcc0f85af55da8",
+  "oorspronkelijk_orakel_onvoldoende": true,
+  "sterkere_bronvoorwaarde": {
+    "nieuwe_alinea_direct_na_rijke_alinea": true,
+    "voor_tabel": true,
+    "eigen_leeg_snapshot_vastgelegd": true,
+    "invoegopmaak_bewaard": true,
+    "directe_toets_9_bewaard": false
+  },
+  "reden": "De tweede proef bewaart de Vet-keuze op de nieuwe lege alinea maar verliest de onmiddellijk volgende gewone toets. De widgetproeven die na elke klik alle taken afwikkelden dekten deze gebeurtenisvolgorde niet. Een nieuwe ronde met klikken én typen vóór berichtafhandeling reproduceert de fout op de ongewijzigde Writer-basis.",
+  "beelden_daadswerkelijk_bekeken": [
+    "eerste-proef/writer-vet-invoer.png",
+    "eerste-proef/writer-vet-ongedaan.png",
+    "eerste-proef/writer-fout.png",
+    "sterkere-bronvoorwaarde/writer-fout.png"
+  ],
+  "beperking": "De eerste proefvoorwaarde kan het bestaande lege sectie-einde voorbij de tabel aanzien voor de nieuwe alinea. Zonder vastgelegde eerste leegsnapshot is niet bewezen dat dit haar enige afwijking verklaart. Beide oorspronkelijke afkeuringen blijven behouden. De sterkere hertest geeft afzonderlijk werkelijk toetsverlies; geen volledige GUI-goedkeuring."
+}

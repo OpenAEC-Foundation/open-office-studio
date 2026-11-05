@@ -214,7 +214,7 @@ function ZoekPaneel({ modus, verzoek, beginTekst }: { modus: "zoeken" | "vervang
     const ref = api();
     if (!ref) return;
     let wacht: ReturnType<typeof setTimeout> | undefined;
-    const weg = ref.onContentChange(() => {
+    const weg = ref.onDocumentChange(() => {
       clearTimeout(wacht);
       wacht = setTimeout(() => void zoekRef.current(true), 500);
     });

@@ -44,7 +44,7 @@ function useHuidigeAlinea(): Waarden | null {
       if (!ref || ref === gekoppeld) return;
       opruimen.forEach((weg) => weg());
       gekoppeld = ref;
-      opruimen = [ref.onSelectionChange(lees), ref.onContentChange(lees)];
+      opruimen = [ref.onSelectionChange(lees), ref.onDocumentChange(lees)];
       lees();
     }, 500);
     return () => {

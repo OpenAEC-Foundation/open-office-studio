@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "basis_commit": "d3455b13c11f6be95e5495517154649b7b423699",
+  "benchmark_source_sha256": "654c1ddf9ccd3e3873cfbefbe5abe8c6b15cccffe410aa94ff9058bc58750932",
+  "benchmark_programma_sha256": "27471e8776ee9f399be12a9f19403b100fdbe6bc6e52fd7228ce134a60112bc6",
+  "metingen": [
+    {
+      "bestand": "bronkosten-39.json",
+      "bronbytes": 5997678,
+      "sha_mediaan_ms": 3.81842,
+      "sha_hex_mediaan_ms": 3.82102,
+      "serialiseer_mediaan_ms": 37.986877,
+      "warm_voorbereiden_mediaan_ms": 67
+    },
+    {
+      "bestand": "bronkosten-39-tweede.json",
+      "bronbytes": 5997678,
+      "sha_mediaan_ms": 3.769535,
+      "sha_hex_mediaan_ms": 3.863616,
+      "serialiseer_mediaan_ms": 38.4182445,
+      "warm_voorbereiden_mediaan_ms": 65
+    }
+  ],
+  "bewijsbestanden": {
+    "bronkosten-39.json.gz": "3864d8756e6bbee9f59c8e05d62a721354bda12255b2a4898f7560813aca1ba1",
+    "bronkosten-39-tweede.json.gz": "8c09ab6d6da5de98fdc59682f0dcc39fd256a77990e953aaf908ec875a4c17e5",
+    "bronkosten-39.log.gz": "45c047f5d5e23e27a080f88d4aafe5e21f1ded4308d16e8a4a2924cb74585300",
+    "bronkosten-clippy.log.gz": "1a4381634603e4733739798201b7b6dae707ba63bd865b99d7f31d01c302e7dc",
+    "aanvraag-faseprofiel.json.gz": "793088c9049d2c63b44867cbcddd2ccafcfe70c2e0529d61ec2a996301b9ed52",
+    "bron-voor-faseprofiel.log.gz": "10c8e11fbb65ad6ad868ef2c78a61fb06aba9a9125cee879192a0d51e86f3ccb",
+    "leg-native-bron-vast.py.gz": "990739831cb847617a9e223197253392ccbf696d8f539cc2dbe00ff97f43eb65",
+    "bron-voor-faseprofiel/profiel.json.gz": "afcf8f0af9979ddd752398f7b5e089ec943f401c866157909e99f40e760c5432",
+    "ci-39-windows-front/taak.log.gz": "4356b3e1277f8acf886e89634fc771c9a388e32559fff5b869301b83c61a9a46",
+    "grafieken-ci39-hertest.log.gz": "7825a2dd88c053abd3a0c8cfc5a0e2fcf10f91653aaf5041f9746f3012bdcceb",
+    "ci-39-desktop-hertest-afgesloten.json.gz": "54fbb778fbcd4128a8721db16ce559bbdc3e9ffb4e8d219b3deb3012d3ec8ff8"
+  },
+  "grens": "Losse geoptimaliseerde Rust-meting; geen renderer, IPC, FPS of onafhankelijke exclusieve faseverdeling van de gehele app. Geen productwijziging.",
+  "windows_afkeuring": {
+    "run": 41880966994,
+    "job": 126753022672,
+    "bron": "1e67dbc32023318708b7e3ae4ee41a9292ea5946",
+    "test": "src/grafieken/grafieken.test.ts > model > getalnotatie en tabgescheiden plakken",
+    "fout": "Test timed out in 5000ms",
+    "status": "Oorzaak open; Windows-bouw niet bereikt. Geen afgekeurde Windows-appbinary beschikbaar.",
+    "lokale_hertest": "37 grafiektests slagen op Linux; geen bewijs van herstel op Windows."
+  },
+  "windows_hertest": {
+    "run": 41882225371,
+    "bron": "d3455b13c11f6be95e5495517154649b7b423699",
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41882225371",
+    "resultaat": "Desktopcontroles slagen op Linux, Windows en macOS. Het verschil ten opzichte van de afgekeurde bron betreft uitsluitend workflowtriggers voor het geheugenonderzoek. De frontendcode is gelijk. De oorspronkelijke oorzaak blijft open; een groene hertest bewijst geen herstel."
+  }
+}

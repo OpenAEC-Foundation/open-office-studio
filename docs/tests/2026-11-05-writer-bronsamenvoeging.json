@@ -1,0 +1,285 @@
+{
+  "schema": 1,
+  "datum": "2026-11-05",
+  "appversie": "2026.45.49",
+  "native_versie": "2026.45.0-alpha.57",
+  "bronrevisie": "ae6d6f582e1de4cf685add0f16e820b123fb507a",
+  "besluit": "Afgewezen: trager en bestaande interne byte-exactheidstest faalt. Geen productiepatch.",
+  "productie_toelaten": false,
+  "appcode_gewijzigd": false,
+  "bouw": {
+    "code": 0,
+    "seconden": 613.539471527969,
+    "programma_sha256": "481ffbc7b7d461bc389cf7638f39c8506510721a595b7ba8b59c960f08ea0ce6"
+  },
+  "python_tests": 96,
+  "gegevensproef": {
+    "geslaagd": true,
+    "groepen_per_ronde": 68,
+    "tekens_per_ronde": 351,
+    "verhalen": 1537,
+    "alinea_en_celteksten": 3329,
+    "afwijzingen_met_geldige_vervolginvoer_per_variant": 4,
+    "scope": "Zelfde volledige SDK-gegevens-/DOCX-proef; synthetische groepen, geen exacte GUI-batchherhaling."
+  },
+  "ronden": [
+    {
+      "ronde": "referentie-a",
+      "snapshot_ms": 3358.370893,
+      "kern_ms": 6032.88915,
+      "cachehergebruik": 67,
+      "verhalen_opmaak_identiteiten_selectie_undo_redo_docx_exact": true
+    },
+    {
+      "ronde": "samenvoeging-a",
+      "snapshot_ms": 10557.220928,
+      "kern_ms": 13086.718355,
+      "cachehergebruik": 67,
+      "verhalen_opmaak_identiteiten_selectie_undo_redo_docx_exact": true
+    },
+    {
+      "ronde": "samenvoeging-b",
+      "snapshot_ms": 10587.679393,
+      "kern_ms": 13158.238267,
+      "cachehergebruik": 67,
+      "verhalen_opmaak_identiteiten_selectie_undo_redo_docx_exact": true
+    },
+    {
+      "ronde": "referentie-b",
+      "snapshot_ms": 3057.959636,
+      "kern_ms": 5563.860143,
+      "cachehergebruik": 67,
+      "verhalen_opmaak_identiteiten_selectie_undo_redo_docx_exact": true
+    }
+  ],
+  "gemiddelde_kern_ratio": 2.2631304651762982,
+  "gemiddelde_snapshot_ratio": 3.29548177504744,
+  "rust_regressies": {
+    "referentie": {
+      "exitcode": 0,
+      "geslaagd": 28,
+      "gefaald": 0
+    },
+    "kandidaat": {
+      "exitcode": 101,
+      "geslaagd": 27,
+      "gefaald": 1,
+      "test": "bronspiegel::tests::exact_bevestigde_voorstellen_zijn_gelijk_aan_steeds_volledig_reconstrueren",
+      "plaats": "native/crates/office-writer-plakken/src/bronspiegel.rs:256",
+      "grens": "De bevestigde snapshotbytes verschillen. Dit is geen bewijs van tekstverlies; de afzonderlijke volledige gegevensproef slaagt wel. De bestaande assertie is niet versoepeld."
+    }
+  },
+  "binaries": {
+    "office-writer-regressie": "6dc00af54b07307f8099bcc5fd05be72e11ee62f9b09341437e7ff70ea64fa77",
+    "office-writer-bronsamenvoeging": "481ffbc7b7d461bc389cf7638f39c8506510721a595b7ba8b59c960f08ea0ce6"
+  },
+  "beperkingen": [
+    "Geen nieuwe desktopbuild of GUI-/IPC-/FPS-meting; kandidaat is buiten de app getest en afgewezen",
+    "Geen Windows-/macOS-/editieacceptatie of gewijzigde migratievlag",
+    "Geen verklaring/herstel van eerdere workertraps, bewaartime-outs of invoervertraging",
+    "Vier kernronden op één Linux-pc; geen vergelijking met andere tekstverwerkers"
+  ],
+  "volgende_stap": "Splits de deterministische encodeerkosten verder uit; behoud de byte-exacte snapshotpoort. Geen algemene binaire samenvoeging in productie opnemen.",
+  "bestanden": {
+    "docs/tests/writer-bronsamenvoeging/bronnen.json.gz": {
+      "sha256": "49b0e46d0f7c59dfa8fdccf5bb3edf2c13f18e516d2ae8e854595f192839f31b",
+      "uitgepakt_sha256": "b128bc8688dbbfc8f147a42e1dcfdbd9c398e3e320b71ca63668c2e9d97d3588"
+    },
+    "docs/tests/writer-bronsamenvoeging/bouwuitkomst.json.gz": {
+      "sha256": "2a9f1c29c08616a4e114c65d8a1f91648be8cb1dfbc5d47de83861b62a1d7e45",
+      "uitgepakt_sha256": "6d8ddca3283d4c6038edcf3255279be49ac3ec36f2645990f6e4d739c77a91c1"
+    },
+    "docs/tests/writer-bronsamenvoeging/bouw.log.gz": {
+      "sha256": "1fd6f2c48fcfb2bc797581a3498d4200aa7cd80f396d83284b6c74203bbe5148",
+      "uitgepakt_sha256": "a8f27c0b07bd0de1ad1b886fcf1425348843796042d5fcd3b5f69061cb69823b"
+    },
+    "docs/tests/writer-bronsamenvoeging/controle.log.gz": {
+      "sha256": "0584d0fc9525dbdb603c841706cc69d5bcffc1e6dbdf3b298f000cb1d6d86578",
+      "uitgepakt_sha256": "6f23569892172808bd7659b3d6b1535905f00d99994b1017251aad3247716f03"
+    },
+    "docs/tests/writer-bronsamenvoeging/python-definitief.log.gz": {
+      "sha256": "27b6daa13ea6de65a7ff10e2ddeaaf19f14fda5bce326060b742f9642b7eccef",
+      "uitgepakt_sha256": "8ffb81806365e9b2d6134cd4bca0e10d10291dd085a8f1341e53055a3c084ce7"
+    },
+    "docs/tests/writer-bronsamenvoeging/rust-tests.log.gz": {
+      "sha256": "23a765a167784baff64e0ee66a8e5569f26bb982216a2824aac62b68876c8c7b",
+      "uitgepakt_sha256": "a1576eeca148a641bc91446a16e524032218e25ad381eab7161a715a4911398f"
+    },
+    "docs/tests/writer-bronsamenvoeging/rust-referentie-tests.log.gz": {
+      "sha256": "29949acdb5c7da54282a06b59de57c89953a83e2eeaf393c83947bc5db2c9271",
+      "uitgepakt_sha256": "a1eb404bec5cbcbc62e6b0304e83bfd4847e51e098b53956cdfb0a95c80b8d66"
+    },
+    "docs/tests/writer-bronsamenvoeging/samenvoeging.patch.gz": {
+      "sha256": "eb1603f763593e607eacf9325410c7088edd8436ca9ca246d2a444f995988192",
+      "uitgepakt_sha256": "94aa94ed4e8b6bdc200a80881e345f74b47406554c12444f6c8e7da92266e43f"
+    },
+    "docs/tests/writer-bronsamenvoeging/gereedschap.json.gz": {
+      "sha256": "f7fd198a91ff2edb960c625585a5e528cf233bf634d4a0524db0e96b4a01f166",
+      "uitgepakt_sha256": "9a37864f8617155b8116a272717637299260c2cb82322061818f42662f981e8d"
+    },
+    "docs/tests/writer-bronsamenvoeging/afgekeurde-binaries.json.gz": {
+      "sha256": "f8559e4ab020eb4f563abc6602b6dd5e120cec568781df49fd80a56830adb169",
+      "uitgepakt_sha256": "ffcaea58f1c2e8d97223628966b262e9f7b4ef4663f1e379340ce88c988c083c"
+    },
+    "docs/tests/writer-bronsamenvoeging/ABBA.json.gz": {
+      "sha256": "73e1b0e244014279503e88012e165c78f9739ea31f97876591c0ce6753a38d83",
+      "uitgepakt_sha256": "33cfd39b89e11f475a5f44c11cebdb6c563a37e5314b9bd0ebe896bb20054500"
+    },
+    "docs/tests/writer-bronsamenvoeging/referentie-a-rapport.json.gz": {
+      "sha256": "eb3539b628bcddd3acad1d2308fecd8f677d5762512307d05c8e711716367237",
+      "uitgepakt_sha256": "63ad84f6a205cdfa1f83c4ae54ea85e642eb4556528f58b697b1b6e92e6819ed"
+    },
+    "docs/tests/writer-bronsamenvoeging/referentie-a-basis-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "uitgepakt_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tests/writer-bronsamenvoeging/referentie-a-gemeten-stderr.jsonl.gz": {
+      "sha256": "03cdb888dc334f1f21c70aab24126a1370825a6e496b828bebbdc08332c675e0",
+      "uitgepakt_sha256": "f81eb9ff875a140ad74d7d8a5b9be331db80833bd614f85c6f001c520c4a8771"
+    },
+    "docs/tests/writer-bronsamenvoeging/referentie-a-basis-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "uitgepakt_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tests/writer-bronsamenvoeging/referentie-a-gemeten-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "8d8b5dfd9e0807ef222fb5887b68c0fe18043da4958ca2abdd3d1178d16716b2",
+      "uitgepakt_sha256": "ec9e01607a9e87925a536211b3b6e95385b288483038001156522838c2c5faaa"
+    },
+    "docs/tests/writer-bronsamenvoeging/referentie-a-referentie.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "uitgepakt_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377"
+    },
+    "docs/tests/writer-bronsamenvoeging/referentie-a-basis.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "uitgepakt_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377"
+    },
+    "docs/tests/writer-bronsamenvoeging/referentie-a-gemeten.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "uitgepakt_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377"
+    },
+    "docs/tests/writer-bronsamenvoeging/samenvoeging-a-rapport.json.gz": {
+      "sha256": "5eefe37120cfb30a117a56d65c75ecf84c23907abd057f235c26c65a07b10474",
+      "uitgepakt_sha256": "6cf2946059100b2ba9c9d55c5885ddf5c4470a1ab3b0770c601044ab423344f4"
+    },
+    "docs/tests/writer-bronsamenvoeging/samenvoeging-a-basis-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "uitgepakt_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tests/writer-bronsamenvoeging/samenvoeging-a-gemeten-stderr.jsonl.gz": {
+      "sha256": "0a8f2daedec32f9bb3e48362a7a6ba8c193fbf639fc0a81596bc2d9ad5d189f1",
+      "uitgepakt_sha256": "8521db4b87a005ea3bdd38308fbdee3f5160e27b34723beb4120064c8543f232"
+    },
+    "docs/tests/writer-bronsamenvoeging/samenvoeging-a-basis-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "uitgepakt_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tests/writer-bronsamenvoeging/samenvoeging-a-gemeten-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "3c4c6020256fc363d947f39a03640344ea633cfee5f7e55c24754ba2e2523611",
+      "uitgepakt_sha256": "7927443750388518d8234c267154d473631788b67ece46509e140844219e8af9"
+    },
+    "docs/tests/writer-bronsamenvoeging/samenvoeging-a-referentie.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "uitgepakt_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377"
+    },
+    "docs/tests/writer-bronsamenvoeging/samenvoeging-a-basis.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "uitgepakt_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377"
+    },
+    "docs/tests/writer-bronsamenvoeging/samenvoeging-a-gemeten.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "uitgepakt_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377"
+    },
+    "docs/tests/writer-bronsamenvoeging/samenvoeging-b-rapport.json.gz": {
+      "sha256": "2b555eb4a10f3a9078dc4986470dde060b8c9d3b8929e78b23b8d0a4bcab1cb9",
+      "uitgepakt_sha256": "cd082b15ac90867859776b4b294b1cfbb15a0ccd73cb86fd78c694edc522b111"
+    },
+    "docs/tests/writer-bronsamenvoeging/samenvoeging-b-basis-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "uitgepakt_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tests/writer-bronsamenvoeging/samenvoeging-b-gemeten-stderr.jsonl.gz": {
+      "sha256": "e2595df869080ed7932e6ea8a990c6975dec051956c08dbbd56b2c2e745165bd",
+      "uitgepakt_sha256": "31e5ff3c52dd7178a1f84e4b182f6063fea5f608285052287db57d7415d8293e"
+    },
+    "docs/tests/writer-bronsamenvoeging/samenvoeging-b-basis-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "uitgepakt_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tests/writer-bronsamenvoeging/samenvoeging-b-gemeten-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "cab467fe5c4968cc09905fc44f6755e206243284ca44976269437618d2cb924a",
+      "uitgepakt_sha256": "f2abafc7a342cc7484de3287629611f09c5f4f521119758b06777471d7c5ab08"
+    },
+    "docs/tests/writer-bronsamenvoeging/samenvoeging-b-referentie.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "uitgepakt_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377"
+    },
+    "docs/tests/writer-bronsamenvoeging/samenvoeging-b-basis.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "uitgepakt_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377"
+    },
+    "docs/tests/writer-bronsamenvoeging/samenvoeging-b-gemeten.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "uitgepakt_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377"
+    },
+    "docs/tests/writer-bronsamenvoeging/referentie-b-rapport.json.gz": {
+      "sha256": "3d428c67348b44297c45cd5535a93c15ac22778b9c54779a969654d1a33d9470",
+      "uitgepakt_sha256": "5c6351324eb6b964fa471e16b520ba9dd0edc314fff0096ce790988ce706f1e2"
+    },
+    "docs/tests/writer-bronsamenvoeging/referentie-b-basis-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "uitgepakt_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tests/writer-bronsamenvoeging/referentie-b-gemeten-stderr.jsonl.gz": {
+      "sha256": "6b3c8715e61541165f4df947d52f9fc0ab2721b8fbc92ba7e268d467569fcc2d",
+      "uitgepakt_sha256": "f85bce1f046196c368bbf80b3fad355dca56ef3444aa892296ebde7ad9f55b47"
+    },
+    "docs/tests/writer-bronsamenvoeging/referentie-b-basis-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "uitgepakt_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tests/writer-bronsamenvoeging/referentie-b-gemeten-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "ba8fb34b9284de5eba3375820a16997abbeb263524dc6c29542cecf0c3f30c4d",
+      "uitgepakt_sha256": "51f78ab8aa7e549e5edef0e82f11eb0d7f5062afdf3898715a408df546a12e35"
+    },
+    "docs/tests/writer-bronsamenvoeging/referentie-b-referentie.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "uitgepakt_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377"
+    },
+    "docs/tests/writer-bronsamenvoeging/referentie-b-basis.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "uitgepakt_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377"
+    },
+    "docs/tests/writer-bronsamenvoeging/referentie-b-gemeten.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "uitgepakt_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377"
+    },
+    "docs/tests/writer-bronsamenvoeging/uitgevoerde-controleer.mjs.gz": {
+      "sha256": "b54e5b93050afccee6d56e062059b67db0d4aedcd9a9739fe342c03e20cf0240",
+      "uitgepakt_sha256": "9f290e8227131e313dbe9ff35c07c633e4bc034ae980179c15854e80753b59fc"
+    },
+    "docs/tests/writer-bronsamenvoeging/uitgevoerde-controleer-referentie.mjs.gz": {
+      "sha256": "73c82edcd097b472c2ebc63127aea61133ab4af192d43b0b18ec4f08bb35cce1",
+      "uitgepakt_sha256": "11d99e511f37cd55d93e17c7cdd4cb7367cd5f1bbdcc9c106db5aea1a9c464cd"
+    },
+    "docs/tests/writer-bronsamenvoeging/bron-voorbereiden.py.gz": {
+      "sha256": "6500f32dd444156686fef9127b770bfbb0d125943c5f02808f9d456199401a60",
+      "uitgepakt_sha256": "6272a45ee95514207d7ef0fc2d688c6a3d2bd900aa3660000e5b09a47c22087e"
+    },
+    "docs/tests/writer-bronsamenvoeging/bron-bouwen.py.gz": {
+      "sha256": "146e10b2a7b576ca52c56b4f50abc1e2652af2a834a253cd2ac5d582eab93eb7",
+      "uitgepakt_sha256": "c0e22410937fd92775fd3bcd2980373f870683f479efd0b3f9e1deb4207043fa"
+    },
+    "docs/tests/writer-bronsamenvoeging/bron-controleren.py.gz": {
+      "sha256": "810494687ddc67ffcf682cf3d62566c852a1d50f3b19a532dd2d6e4e37940ca9",
+      "uitgepakt_sha256": "a13ac88e1a8a4fef944f4967c28267ab221abb354980a25caf7725d211401a4a"
+    },
+    "docs/tests/writer-bronsamenvoeging/bron-test_writer_bronsamenvoeging.py.gz": {
+      "sha256": "860ff1ac0be81d5450937ca6a1c85c34ed09e14e8f708e52788c93440a535305",
+      "uitgepakt_sha256": "f3313c32c15d322c9368cfdc00ef479bdbee71504bf49422b0635b8275977d45"
+    },
+    "docs/tests/writer-bronsamenvoeging/gemeten-clipboard_batch.rs.gz": {
+      "sha256": "715420d255cd91281d3f243f11aa7579af5ad1d2e3352496c76ad5ec4128bccc",
+      "uitgepakt_sha256": "68c1cb290524433def7e515857f3bfddd5f253b8f6742dbc029aeedab834fe68"
+    }
+  }
+}

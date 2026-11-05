@@ -1,0 +1,54 @@
+{
+  "versie": "Open Office Studio 2026.44.9-alpha.23 (native)",
+  "programma_sha256": "de3d36770e2853c1af0dde6b3c1448d916ecf62363fb350274d35cb23623025e",
+  "broncommit": "bf442d95db57f64e4c11ce4449ed4d1b281b4dd1",
+  "proefbron_sha256": "42284a68d73c0b31d8f5e4b71f38c959ee99a1515dcc96443baeddd58f9fb8cb",
+  "geslaagd": true,
+  "omvang": "Echt native Linux-venster, X11-muis/toetsen en systeemklembord, in eigen Xvfb en vooraf geïsoleerde sessie-D-Bus/XDG-profielen. Geen fysieke hardware, andere platforms, volledige suite, IME-compositie of systeemdialoog.",
+  "stappen": [
+    {
+      "stap": "Eigen XLSX geopend in het echte native venster",
+      "beeld": {
+        "bestand": "spreadsheet-open.png",
+        "sha256": "9b2c24c5c37cdb54eb10b2467734daa622deb43e458304137dfc5caff785774e"
+      }
+    },
+    {
+      "stap": "Echte muissleep selecteert B2:D4; adresveld via systeemklembord bevestigd",
+      "beeld": {
+        "bestand": "spreadsheet-bereik.png",
+        "sha256": "fe7367545e144f0ff8e6f56b9c4188f1859ce21219b9a36b41997d0cfd5cea03"
+      }
+    },
+    {
+      "stap": "Lintopmaak en bewaren: alle negen cellen vet, oorspronkelijke formules behouden",
+      "beeld": {
+        "bestand": "spreadsheet-bereik-opmaak.png",
+        "sha256": "1feff1228551b8b30c8a53a5dc3b3115456f6436175028c811be5d8314fac5ac"
+      }
+    },
+    {
+      "stap": "Snelle Shift-pijlen, Shift-klik en extra uitbreiding bewaren het oorspronkelijke anker D4"
+    },
+    {
+      "stap": "Bereikopmaak met één undo bronexact hersteld"
+    },
+    {
+      "stap": "Unicode-systeemklembord in cel G10, afzonderlijk bevestigd en bewaard; XML-waarde klopt",
+      "beeld": {
+        "bestand": "spreadsheet-unicode.png",
+        "sha256": "56068a4ad0fa2465e7d8454ddf2a97f5cff98f2830987c7468388d37fcf35625"
+      }
+    },
+    {
+      "stap": "Celbewerking met één undo bronexact hersteld"
+    },
+    {
+      "stap": "Bestand geopend en gesloten met behoud van de oorspronkelijke bron"
+    },
+    {
+      "stap": "Eigen venster schoon gesloten",
+      "procescode": 0
+    }
+  ]
+}

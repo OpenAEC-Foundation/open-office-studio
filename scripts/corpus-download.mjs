@@ -112,29 +112,52 @@ const gitHash = (bytes) =>
     .update(`blob ${bytes.length}\0`)
     .update(bytes)
     .digest("hex");
+
+async function download(url) {
+  for (let poging = 1; ; poging++) {
+    try {
+      const antwoord = await fetch(url, {
+        signal: AbortSignal.timeout(30000),
+      });
+      if (!antwoord.ok) {
+        await antwoord.body?.cancel();
+        const fout = new Error(`HTTP ${antwoord.status}`);
+        fout.herhaalbaar = [408, 429, 500, 502, 503, 504].includes(antwoord.status);
+        throw fout;
+      }
+      return Buffer.from(await antwoord.arrayBuffer());
+    } catch (fout) {
+      if (poging >= 3 || fout.herhaalbaar === false) throw fout;
+      // Een tijdelijke verbindingsfout mag niet tot een gedeeltelijk corpus
+      // met een geslaagde bouwstap leiden. Broncontrole volgt na de download.
+      await new Promise((klaar) => setTimeout(klaar, poging * 250));
+    }
+  }
+}
+
 let volgende = 0,
   gereed = 0;
 async function werk() {
   while (volgende < uniek.length) {
     const bestand = uniek[volgende++];
     try {
-      let bytes;
+      let bytes, gedownload = false;
       try {
         bytes = await readFile(bestand.bestand);
       } catch {}
       if (!bytes || gitHash(bytes) !== bestand.gitSha) {
-        const antwoord = await fetch(bestand.url, {
-          signal: AbortSignal.timeout(30000),
-        });
-        if (!antwoord.ok) throw new Error(`HTTP ${antwoord.status}`);
-        bytes = Buffer.from(await antwoord.arrayBuffer());
+        bytes = await download(bestand.url);
         if (gitHash(bytes) !== bestand.gitSha)
           throw new Error(
             "De download wijkt af van de vastgelegde bronrevisie.",
           );
-        await writeFile(bestand.bestand, bytes);
+        gedownload = true;
       }
-      bestand.sha256 = createHash("sha256").update(bytes).digest("hex");
+      const sha256 = createHash("sha256").update(bytes).digest("hex");
+      if (bestand.sha256 && bestand.sha256 !== sha256)
+        throw new Error("De inhoud wijkt af van de vastgelegde SHA-256.");
+      if (gedownload) await writeFile(bestand.bestand, bytes);
+      bestand.sha256 = sha256;
       bestand.status = "opgehaald";
     } catch (error) {
       bestand.status = "downloadfout";
@@ -162,3 +185,9 @@ console.log(
     2,
   ),
 );
+// Bij een expliciet manifest zijn alle bestanden vereist. De ontdekkingsroute
+// blijft bruikbaar als inventarisatie en bewaart ook haar afzonderlijke fouten.
+if (process.argv[2] && uniek.some((bestand) => bestand.status !== "opgehaald")) {
+  console.error("Het verplichte corpus is onvolledig; de controles mogen niet starten.");
+  process.exitCode = 1;
+}

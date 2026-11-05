@@ -1,0 +1,83 @@
+   Compiling open-office-studio-native v2026.44.9-alpha.30 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-ui)
+   Compiling office-core v2026.44.9-alpha.30 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 54.91s
+     Running unittests src/lib.rs (native/target/debug/deps/office_conversie-47847f177fabc928)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_core-71fc56dd06b70d46)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 21 filtered out; finished in 0.00s
+
+     Running unittests src/bin/controleer-bestand.rs (native/target/debug/deps/controleer_bestand-fc3e304ba2030595)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/documentkern.rs (native/target/debug/deps/documentkern-efb96a7387657279)
+
+running 2 tests
+test writer_opmaak::lege_invoegopmaak_na_splitsen_bewaart_bestaande_cursief_en_nieuwe_vetkeuze ... FAILED
+test writer_opmaak::lege_invoegopmaak_zonder_runs_behoudt_acht_opmaakeigenschappen_na_heropenen ... FAILED
+
+failures:
+
+---- writer_opmaak::lege_invoegopmaak_na_splitsen_bewaart_bestaande_cursief_en_nieuwe_vetkeuze stdout ----
+
+thread 'writer_opmaak::lege_invoegopmaak_na_splitsen_bewaart_bestaande_cursief_en_nieuwe_vetkeuze' (3042529) panicked at crates/office-core/tests/writer_opmaak.rs:223:6:
+called `Result::unwrap()` on an `Err` value: Document("Selecteer tekst om de opmaak te wijzigen")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- writer_opmaak::lege_invoegopmaak_zonder_runs_behoudt_acht_opmaakeigenschappen_na_heropenen stdout ----
+
+thread 'writer_opmaak::lege_invoegopmaak_zonder_runs_behoudt_acht_opmaakeigenschappen_na_heropenen' (3042544) panicked at crates/office-core/tests/writer_opmaak.rs:308:10:
+called `Result::unwrap()` on an `Err` value: Document("Selecteer tekst om de opmaak te wijzigen")
+
+
+failures:
+    writer_opmaak::lege_invoegopmaak_na_splitsen_bewaart_bestaande_cursief_en_nieuwe_vetkeuze
+    writer_opmaak::lege_invoegopmaak_zonder_runs_behoudt_acht_opmaakeigenschappen_na_heropenen
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 122 filtered out; finished in 6.41s
+
+error: test failed, to rerun pass `-p office-core --test documentkern`
+     Running ../../vendor/docx-parse/tests/nested_fields.rs (native/target/debug/deps/engine_velden-2964b20478805095)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_mail-1409c271770a53b3)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 51 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (native/target/debug/deps/open_office_studio_native-5a5d75b36a4499c6)
+
+running 1 test
+test tests::raster_proeven::lege_invoegopmaak_echte_vetknop_op_nieuwe_alinea_bewaart_volgende_unicode_tekst ... FAILED
+
+failures:
+
+---- tests::raster_proeven::lege_invoegopmaak_echte_vetknop_op_nieuwe_alinea_bewaart_volgende_unicode_tekst stdout ----
+
+thread 'tests::raster_proeven::lege_invoegopmaak_echte_vetknop_op_nieuwe_alinea_bewaart_volgende_unicode_tekst' (3042549) panicked at crates/office-ui/src/tests/raster_proeven.rs:3370:5:
+Vet kiezen op de lege alinea is niet toegepast: Niet toegepast: Selecteer tekst om de opmaak te wijzigen. De invoer blijft bewaard; Ctrl+Z verwerpt dit concept en de wachtende opdrachten.
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    tests::raster_proeven::lege_invoegopmaak_echte_vetknop_op_nieuwe_alinea_bewaart_volgende_unicode_tekst
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 119 filtered out; finished in 6.66s
+
+error: test failed, to rerun pass `-p open-office-studio-native --bin open-office-studio-native`
+error: 2 targets failed:
+    `-p office-core --test documentkern`
+    `-p open-office-studio-native --bin open-office-studio-native`

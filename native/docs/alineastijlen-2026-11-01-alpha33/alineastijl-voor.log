@@ -1,0 +1,44 @@
+   Compiling office-core v2026.44.9-alpha.32 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-core)
+   Compiling open-office-studio-native v2026.44.9-alpha.32 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-ui)
+error[E0308]: mismatched types
+   --> crates/office-core/tests/writer_opmaak.rs:530:62
+    |
+530 |     let Document::Writer(d) = Document::open(Module::Writer, s.bron()).unwrap() else { unreachable!() };
+    |                               --------------                 ^^^^^^^^ expected `&[u8]`, found `Arc<Vec<u8>>`
+    |                               |
+    |                               arguments to this function are incorrect
+    |
+    = note: expected reference `&[u8]`
+                  found struct `Arc<Vec<u8>>`
+note: associated function defined here
+   --> crates/office-core/src/document.rs:162:12
+    |
+162 |     pub fn open(module: Module, bytes: &[u8]) -> Resultaat<Self> {
+    |            ^^^^
+help: consider borrowing here
+    |
+530 |     let Document::Writer(d) = Document::open(Module::Writer, &s.bron()).unwrap() else { unreachable!() };
+    |                                                              +
+
+error[E0308]: mismatched types
+   --> crates/office-core/tests/writer_opmaak.rs:533:37
+    |
+533 |     let na = ooxml_opc::unzip_parts(s.bron()).unwrap();
+    |              ---------------------- ^^^^^^^^ expected `&[u8]`, found `Arc<Vec<u8>>`
+    |              |
+    |              arguments to this function are incorrect
+    |
+    = note: expected reference `&[u8]`
+                  found struct `Arc<Vec<u8>>`
+note: function defined here
+   --> /home/aia01/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/betteroffice-opc-0.5.1/src/lib.rs:75:8
+    |
+ 75 | pub fn unzip_parts(data: &[u8]) -> Result<Vec<(String, Vec<u8>)>, String> {
+    |        ^^^^^^^^^^^
+help: consider borrowing here
+    |
+533 |     let na = ooxml_opc::unzip_parts(&s.bron()).unwrap();
+    |                                     +
+
+For more information about this error, try `rustc --explain E0308`.
+error: could not compile `office-core` (test "documentkern") due to 2 previous errors

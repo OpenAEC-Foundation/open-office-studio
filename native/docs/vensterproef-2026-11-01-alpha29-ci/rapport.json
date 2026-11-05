@@ -1,0 +1,90 @@
+{
+  "versie": "Open Office Studio 2026.44.9-alpha.29 (native)",
+  "programma_sha256": "0d0f49921ed91a8a1e1729820a8aadde12a2616b5380305d5cdc47883cd56d54",
+  "broncommit": "cf35322ccf19fc8981ee63592d4892f54349e5fd",
+  "proefbron_sha256": "6bda6ba50712a80b47c7fe0c085d9b02a0722a209157899ea51d5e3c1f6fac48",
+  "geslaagd": true,
+  "omvang": "Echt native Linux-venster in eigen Xvfb/D-Bus/XDG-sessie, X11-toetsen/muis en systeemklembord. Eigen DOCX met twee secties, tabel en rijke runs. Geen fysieke hardware, andere platforms, IME, schermlezer of volledige suite-/pixelpariteit.",
+  "stappen": [
+    {
+      "stap": "Eigen rijke DOCX met tabel en twee secties in het echte native venster geopend",
+      "beeld": {
+        "bestand": "writer-open.png",
+        "sha256": "28f4bbe5a6916fd66c62a82f30cd7246395131b964e1aa39907f478d2f7b8415"
+      }
+    },
+    {
+      "stap": "Echte paginaklik en systeemklembord bevestigen de bedoelde Unicode-alinea"
+    },
+    {
+      "stap": "Home/acht pijlen/Enter/7 en één bewaren zonder tussenpauzes maken een echte alinea met directe vervolgtekst",
+      "beeld": {
+        "bestand": "writer-enter-invoer.png",
+        "sha256": "627c296f432560df96576fd9caaa6595e4afd4388cd50c5b0ed5ec1e9c6f802f"
+      }
+    },
+    {
+      "stap": "Shift+Home en systeemklembord bevestigen de cursor direct na 7 in de nieuwe alinea"
+    },
+    {
+      "stap": "Twee directe undo-opdrachten en één bewaren herstellen de oorspronkelijke bronbytes"
+    },
+    {
+      "stap": "Nieuwe splitsing met één bewaren vastgelegd vóór Backspace"
+    },
+    {
+      "stap": "Backspace aan begin nieuwe alinea voegt werkelijk samen; klembord bevestigt cursor op de oorspronkelijke Unicode-grens",
+      "beeld": {
+        "bestand": "writer-backspace.png",
+        "sha256": "265a7598158f090b2323752749bbae0ab463f475bb158f3eea2680bc62249dea"
+      }
+    },
+    {
+      "stap": "Samenvoegen met Backspace met één undo en één bewaren terug naar de gesplitste bron"
+    },
+    {
+      "stap": "Alineasplitsing daarna met één undo en één bewaren bronexact hersteld"
+    },
+    {
+      "stap": "Nieuwe splitsing met één bewaren vastgelegd vóór Delete"
+    },
+    {
+      "stap": "Omhoog/End/Delete en één bewaren voegen de volgende alinea samen en behouden de oorspronkelijke grens",
+      "beeld": {
+        "bestand": "writer-delete.png",
+        "sha256": "697ada2f0a8bd00e9c65562940691c544409aacc4489621eadd7057f652a8bf4"
+      }
+    },
+    {
+      "stap": "Samenvoegen met Delete met één undo en één bewaren terug naar de gesplitste bron"
+    },
+    {
+      "stap": "Alineasplitsing daarna met één undo en één bewaren bronexact hersteld"
+    },
+    {
+      "stap": "Shift+Enter blijft een zachte regelovergang binnen dezelfde alinea",
+      "beeld": {
+        "bestand": "writer-zachte-regel.png",
+        "sha256": "4ee6584dde30112700baf0b98462ebb6d74bc557961850f312f28ac07d5f3684"
+      }
+    },
+    {
+      "stap": "Zachte regelovergang met één undo en één bewaren bronexact hersteld"
+    },
+    {
+      "stap": "Eigen bronvenster schoon gesloten",
+      "procescode": 0
+    },
+    {
+      "stap": "Bewaarde nieuwe alinea in een nieuw werkelijk venster opnieuw geopend en via systeemklembord exact gecontroleerd",
+      "beeld": {
+        "bestand": "writer-heropend.png",
+        "sha256": "b38212113bf7e8a3b11429766a31f5e1c0a43693d94fd66bab6e5160e3742056"
+      }
+    },
+    {
+      "stap": "Ook het heropende eigen venster schoon gesloten",
+      "procescode": 0
+    }
+  ]
+}

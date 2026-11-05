@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/gui-heropen-herkomst-prototype.py", line 97, in <module>
+    klik(1420,16);p.wait(timeout=15);assert p.returncode==0;stappen.append({'stap':'Eigen heropenvenster schoon gesloten'});rapport['geslaagd']=True
+                  ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 1264, in wait
+    return self._wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 2045, in _wait
+    raise TimeoutExpired(self.args, timeout)
+subprocess.TimeoutExpired: Command '['/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/native-na-alpha35-aanwijs4-debug-vast/open-office-studio-native', '/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/gui-alpha35-writer-heropen-aanwijs4-prototype/Eigen-tekst.docx']' timed out after 15 seconds
+Traceback (most recent call last):
+  File "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/venster-heropen-aanwijs4-prototype.py", line 10, in <module>
+    subprocess.run(['dbus-run-session','--',str(w/'gui-hulpmiddelen/uitgepakt/usr/bin/xvfb-run'),'-a','-s','-screen 0 1440x900x24 -nolisten tcp',sys.executable,str(w/'gui-heropen-herkomst-prototype.py'),str(vast/'open-office-studio-native'),f'gui-alpha35-writer-{variant}',m['basiscommit']],env=e,check=True)
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['dbus-run-session', '--', '/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/gui-hulpmiddelen/uitgepakt/usr/bin/xvfb-run', '-a', '-s', '-screen 0 1440x900x24 -nolisten tcp', '/usr/bin/python3', '/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/gui-heropen-herkomst-prototype.py', '/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/native-na-alpha35-aanwijs4-debug-vast/open-office-studio-native', 'gui-alpha35-writer-heropen-aanwijs4-prototype', 'cd01f53686d384abbcda84d1185e67789462159c']' returned non-zero exit status 1.

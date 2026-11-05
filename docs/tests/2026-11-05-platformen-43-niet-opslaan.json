@@ -1,0 +1,211 @@
+{
+  "schema": 1,
+  "bronrevisie": "846177242f79bc00654a4018cee9309a5220d066",
+  "versie": "2026.45.43",
+  "zeven_edities": {
+    "run": 41934880775,
+    "conclusie": "success",
+    "platformen": [
+      "Linux",
+      "Windows",
+      "macOS"
+    ],
+    "publiceren": "skipped; publiceren=false; geen officiële release",
+    "grens": "Geslaagde CI-bouw-/pakket-/signaturecontroles binnen hun workflow. Geen nieuwe onafhankelijke lokale uitpakcontrole van alle grote platformartefacten en geen volledige suitepariteit."
+  },
+  "afzonderlijke_desktopronde": {
+    "run": 41934875518,
+    "conclusie": "failure",
+    "Windows": "success",
+    "macOS": "success",
+    "Linux": "failure",
+    "stap": "Invoervolgorde, bewaren en verwerpen tijdens native Writer-antwoorden",
+    "symptoom": "Na Niet opslaan een wit venster; de volgende startknop bestaat niet. Console meldt Error: recursive use of an object detected which would lead to unsafe aliasing in rust.",
+    "inhoud_ervoor": "Rijk plakken/Undo/Redo en getypte/vervangen/opgemaakte tekst vóór Save onafhankelijk via DOCX teruggelezen; die eerdere stappen slagen.",
+    "oorspronkelijk_rapport_sha256": "2bb90e6086462246acd50ff83cbfa2e4e22c87fbaca6728ad87e6e81549bd3c1",
+    "programma_sha256": "3feb203256bed4163af4117a4f6926417f57f2c9d89d2314482547d49c149058",
+    "script_sha256": "7a036f1fbe9c334f42bad331b8cf0aa7edede53c9e883f245697eb126c114f1a"
+  },
+  "context": {
+    "artifact": 13376366162,
+    "ZIP_controle": "GitHub-digest en ZIP-CRC geslaagd",
+    "innerlijk": "Alle twintig checksums van context/ELF/scripts/bronbestanden gecontroleerd; ELF en script identiek aan oorspronkelijke afkeuring. AppImage en ELF lokaal behouden.",
+    "lokale_hertest": {
+      "geslaagd": true,
+      "programma_en_script_bytegelijk": true,
+      "stappen": [
+        "Werkelijk rijk plakken, één Undo en bronexacte Redo",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór antwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder antwoord; nieuw document en late beantwoording behouden bron en invoer"
+      ],
+      "grens": "Eén gerichte lokale oorspronkelijke hertest slaagt; de oorspronkelijke CI-fout blijft onverklaard en niet hersteld verklaard."
+    },
+    "oorzaak": "Open. Geen testknop-wachttijd of succesvolle andere ronde als reparatie aangemerkt."
+  },
+  "bewijzen": {
+    "platformen-43-niet-opslaan/ci846-zeven-voor46.json.gz": {
+      "sha256": "fda74a1b266297f66ad5271ed7f8ebaf5a956a54032223f33de3f560649f6a9a",
+      "inhoud_sha256": "6b65299b3e6df55b5740d8b17eb5fa8da14bfe2730a68876ae759a2de636a010"
+    },
+    "platformen-43-niet-opslaan/ci846-zeven-artifacten.json.gz": {
+      "sha256": "967d2119e0d8059fcea7f3796801b7327af56070a2a23e31a135a207ee89c9eb",
+      "inhoud_sha256": "73efb8e37336e749e8f1c6c31672d0396d206da7125260a9753893f70ddd9b74"
+    },
+    "platformen-43-niet-opslaan/ci846-voor46-status.json.gz": {
+      "sha256": "a19d4d7e4ab752100f9871c8b0729b04b42b3da8c566075d3490803d886821db",
+      "inhoud_sha256": "7deff55fa57abb4727403ec2feedd06d776910bc7f65994ca4c79e88e17a839b"
+    },
+    "platformen-43-niet-opslaan/ci846-desktop-afkeuring.json.gz": {
+      "sha256": "204013d8f9cae69fde315e83c81483a8bf7600e718bead03e1cf6ef2acae9cca",
+      "inhoud_sha256": "985cff4cc428b54941b7a1b200f1a8bea25f6a86a75f71a6324dcbaa043937ba"
+    },
+    "platformen-43-niet-opslaan/ci846-desktop-linux-afkeuring.log.gz": {
+      "sha256": "733fea2a885c3737e2884dd6ff59093bf3498914b8d63023fd61abde38f2aeb0",
+      "inhoud_sha256": "4afc48e57646d1d487a72fd666dc79a33437816eb8e813a286561f92f9746b88"
+    },
+    "platformen-43-niet-opslaan/ci846-desktop-artifacten.json.gz": {
+      "sha256": "666fc82845444f08ed5483cb1d955586e1360844edfd2cca8ea529d057f7b7bd",
+      "inhoud_sha256": "49a75f6ff03658e05e42da25320b80fa4484e749c7dee4cef1a5b0242b050a63"
+    },
+    "platformen-43-niet-opslaan/ci846-foutcontext-inhoud.json.gz": {
+      "sha256": "a682e3e5f065949cfbca79768449d8fc78493479f2f1e916b3ae3a1c1cad8aed",
+      "inhoud_sha256": "e0de438f29bf3e863ef0fbc789bcc0009bc860d26e10e0a9ab6d736c4ac2cfc6"
+    },
+    "platformen-43-niet-opslaan/ci846-foutcontext-tarinhoud.json.gz": {
+      "sha256": "87b6a70aabd025c4c5f6bbc1eaff5b44ab4110516c68f6df9aeabe1d3ef1f9b6",
+      "inhoud_sha256": "e11c1c7c37519309a0b2dcc1b5c1ee5353a1142d698b8bc5a55da235f845f534"
+    },
+    "platformen-43-niet-opslaan/ci846-foutcontext-controle.json.gz": {
+      "sha256": "85cfd4fc5fc4b298f5504f5c640842ac6b45ce4da780e20641d1e5c0762c0e0c",
+      "inhoud_sha256": "599482797f4cdb9350598aaac0a6a41b66cf49c6d1e0f90bcd8efb54fb559c8a"
+    },
+    "platformen-43-niet-opslaan/ci846-foutcontext/writer-foutcontext/context.json.gz": {
+      "sha256": "ee92a63c413dde96e17e4c51a0d42a0e946d71a0e14c71f7c8cd04278c493e1e",
+      "inhoud_sha256": "e2781681d75c920eab40ea48c1ae5b4376c99c6605ab7bc4ec52956ad71c0bc7"
+    },
+    "platformen-43-niet-opslaan/ci846-foutcontext/writer-foutcontext/rapport.json.gz": {
+      "sha256": "a4a2712c51b0cdfc052f40c86b35f161c733cb81567687e0d834b03f4f619e37",
+      "inhoud_sha256": "2bb90e6086462246acd50ff83cbfa2e4e22c87fbaca6728ad87e6e81549bd3c1"
+    },
+    "platformen-43-niet-opslaan/ci846-foutcontext/writer-foutcontext/SHA256SUMS.gz": {
+      "sha256": "97d8bb86c09629b92d4de9288bc13da7805953fa342213b63647ae50cfc3bce1",
+      "inhoud_sha256": "fbf67694b7b0a32f7b96be9ec1a1b71703f40fe6275d4809f3026ff69595c5d1"
+    },
+    "platformen-43-niet-opslaan/ci846-foutcontext/writer-foutcontext/proef/programma.log.gz": {
+      "sha256": "26e3a9d763a078d05b67fedf3dff5932e9d523799e78b176a47f6900e7a82ef4",
+      "inhoud_sha256": "f1e9d0b8b50a84f7848fb3162d5d2ac74d3f564a0d01466b1c78afb30851eb1d"
+    },
+    "platformen-43-niet-opslaan/ci846-foutcontext/writer-foutcontext/proef/afgekeurd.png": {
+      "sha256": "260898d762d87a2cf2b4b514b478161718713e276f40dfa7e44c3382752a1974",
+      "inhoud_sha256": "260898d762d87a2cf2b4b514b478161718713e276f40dfa7e44c3382752a1974"
+    },
+    "platformen-43-niet-opslaan/ci846-foutcontext/writer-foutcontext/proef/Ontwerpnotitie.docx": {
+      "sha256": "f04815a9dc1509b707c6a766b60fc62a38dc483fc63869f20d380b68e63496a0",
+      "inhoud_sha256": "f04815a9dc1509b707c6a766b60fc62a38dc483fc63869f20d380b68e63496a0"
+    },
+    "platformen-43-niet-opslaan/ci846-foutcontext/writer-foutcontext/scripts/test-writer-lang-native.py.gz": {
+      "sha256": "d98423cc4d340dee17dc32dcc31d5566c27c446a6b82bea00ec1a0e85e18b668",
+      "inhoud_sha256": "74e68d99decf1c7f076cb719d2794ddb61d37a163d3e63c1d38dba48bc5dcdd3"
+    },
+    "platformen-43-niet-opslaan/ci846-foutcontext/writer-foutcontext/scripts/test-writer-rust-plakken-volgorde-native.py.gz": {
+      "sha256": "af19bc1907f0d34a8f7d05556db98a6096f35f2a6398a8a6827e432557f91d0f",
+      "inhoud_sha256": "7a036f1fbe9c334f42bad331b8cf0aa7edede53c9e883f245697eb126c114f1a"
+    },
+    "platformen-43-niet-opslaan/ci846-foutcontext/writer-foutcontext/docs/voorbeelden/Ontwerpnotitie.docx": {
+      "sha256": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee",
+      "inhoud_sha256": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee"
+    },
+    "platformen-43-niet-opslaan/ci846-foutcontext/writer-foutcontext/docs/tests/writer-rust-plakbatch/bron-128-tabellen.docx": {
+      "sha256": "f69528bf0ee7b1e2d89aff2e893a131696e0485dd494b2a7c15b16f55d95b7a5",
+      "inhoud_sha256": "f69528bf0ee7b1e2d89aff2e893a131696e0485dd494b2a7c15b16f55d95b7a5"
+    },
+    "platformen-43-niet-opslaan/ci846-foutcontext/writer-foutcontext/public/templates/nieuw.docx": {
+      "sha256": "8ed2138c559f67d479307cb16872105b5ee6abfb0f9149f8806e4f4181dfdc9b",
+      "inhoud_sha256": "8ed2138c559f67d479307cb16872105b5ee6abfb0f9149f8806e4f4181dfdc9b"
+    },
+    "platformen-43-niet-opslaan/ci846-foutcontext/writer-foutcontext/scripts/gui/webkit_inspector.py.gz": {
+      "sha256": "c280375433d819ab1e0a3a5816ee6331babb3eb0249ccbfb615839747b22241a",
+      "inhoud_sha256": "91b9140e133162cac2e2c22a3b91884c13c6855f9bd0e7c49f6bebc25e35fe43"
+    },
+    "platformen-43-niet-opslaan/ci846-foutcontext/writer-foutcontext/scripts/gui/lettertype_bewijs.js.gz": {
+      "sha256": "81c1ce5d7b6b34aa544363b70cf41dac3071167b78a9998f3426231914735e38",
+      "inhoud_sha256": "35ef4b0f486984925fb1765ad909a20a741e80270d8452e84deac0697fc22238"
+    },
+    "platformen-43-niet-opslaan/ci846-foutcontext/writer-foutcontext/scripts/gui/spelling_weergave.js.gz": {
+      "sha256": "f3afa42c38da9f5f159a011fcde71f13bda914a10274fef5a53298d59887af04",
+      "inhoud_sha256": "aafa81ecd8786ad6ea42f93c8615bd79f4c35d1bc28d57a5a6931b5468e3d132"
+    },
+    "platformen-43-niet-opslaan/ci846-foutcontext/writer-foutcontext/scripts/gui/framebasis.js.gz": {
+      "sha256": "3cd1d1dd79d78e403d10fc165ef35fcc0eaa7049e20f9f9e5320a98e8260ac42",
+      "inhoud_sha256": "f0d0c17073177f6cacea5e4a6e04dd47d79999dc322a6922dd37147d32d4c369"
+    },
+    "platformen-43-niet-opslaan/ci846-foutcontext/writer-foutcontext/scripts/gui/lettertype_bewijs.py.gz": {
+      "sha256": "6ab600d4427cb05abe7c104a6e73ee357c26854a89611e74451b5db017d04490",
+      "inhoud_sha256": "d7c4bc900fcb26d581e61175be8ae400e642b65f28459c4b71c367c6525b8327"
+    },
+    "platformen-43-niet-opslaan/ci846-foutcontext/writer-foutcontext/scripts/gui/worker_bron.js.gz": {
+      "sha256": "56e7d0f73eb2601aec2360bc4084948a357d118b350e703927fed099fc95c970",
+      "inhoud_sha256": "98b2b64ed7e58c9456a9275f2a8e0e5ddc64b84f134969fafffdfeaef941443e"
+    },
+    "platformen-43-niet-opslaan/ci846-foutcontext/writer-foutcontext/scripts/gui/requirements.txt.gz": {
+      "sha256": "f3f0d25498479f244ba35cd323db7efe7c67d0f28e74032f4334c7ec54442d39",
+      "inhoud_sha256": "4d3b280d9e5ae568f66bb597713614b9ef6477a829bf1569ae528fbe306d2f53"
+    },
+    "platformen-43-niet-opslaan/ci846-foutcontext/writer-foutcontext/scripts/gui/spelling_weergave.py.gz": {
+      "sha256": "e1a7cd7828d5d8c7c417b606904a4bc23139be94523c8b49101a1da82e9e6564",
+      "inhoud_sha256": "ca3d68367445f7bc90b241d8f52b8ddeb7277b42adef5cbe0f75d1327fb7a625"
+    },
+    "platformen-43-niet-opslaan/ci846-volgorde-afkeuring/proef-native-writer-volgorde/snel-getypt-bewaard.png": {
+      "sha256": "fdf926fd35e769ac171d275d72cb6fa11f660b8df079487f5b6ab34b4f7ec1b6",
+      "inhoud_sha256": "fdf926fd35e769ac171d275d72cb6fa11f660b8df079487f5b6ab34b4f7ec1b6"
+    },
+    "platformen-43-niet-opslaan/ci846-volgorde-afkeuring/proef-native-writer-volgorde/plakken-redo.png": {
+      "sha256": "f792c32b82ac36d5334ef7485a20a4a0e0dcd516f21c081857bdf9ff891c4443",
+      "inhoud_sha256": "f792c32b82ac36d5334ef7485a20a4a0e0dcd516f21c081857bdf9ff891c4443"
+    },
+    "platformen-43-niet-opslaan/ci846-volgorde-afkeuring/proef-native-writer-volgorde/programma.log.gz": {
+      "sha256": "26e3a9d763a078d05b67fedf3dff5932e9d523799e78b176a47f6900e7a82ef4",
+      "inhoud_sha256": "f1e9d0b8b50a84f7848fb3162d5d2ac74d3f564a0d01466b1c78afb30851eb1d"
+    },
+    "platformen-43-niet-opslaan/ci846-volgorde-afkeuring/proef-native-writer-volgorde/afgekeurd.png": {
+      "sha256": "260898d762d87a2cf2b4b514b478161718713e276f40dfa7e44c3382752a1974",
+      "inhoud_sha256": "260898d762d87a2cf2b4b514b478161718713e276f40dfa7e44c3382752a1974"
+    },
+    "platformen-43-niet-opslaan/ci846-volgorde-afkeuring/proef-native-writer-volgorde/rapport.json.gz": {
+      "sha256": "a4a2712c51b0cdfc052f40c86b35f161c733cb81567687e0d834b03f4f619e37",
+      "inhoud_sha256": "2bb90e6086462246acd50ff83cbfa2e4e22c87fbaca6728ad87e6e81549bd3c1"
+    },
+    "platformen-43-niet-opslaan/ci846-volgorde-afkeuring/proef-native-writer-volgorde/Ontwerpnotitie.docx": {
+      "sha256": "f04815a9dc1509b707c6a766b60fc62a38dc483fc63869f20d380b68e63496a0",
+      "inhoud_sha256": "f04815a9dc1509b707c6a766b60fc62a38dc483fc63869f20d380b68e63496a0"
+    },
+    "platformen-43-niet-opslaan/ci846-hertest-origineel.log.gz": {
+      "sha256": "932084a4dc6964a3dd96cf0ee3f91351c4b0429ac2d6316ccffa4da50e1b6f9a",
+      "inhoud_sha256": "d773c8c9bde8f6376e5170f7022dab1edcb85f985f0a2cf6dec7cf82be8a67d3"
+    },
+    "platformen-43-niet-opslaan/ci846-hertest-origineel/snel-getypt-bewaard.png": {
+      "sha256": "289fe4120c796bdec828f871e5392f7a3b6dcadee8676b3f7d76c72858497d06",
+      "inhoud_sha256": "289fe4120c796bdec828f871e5392f7a3b6dcadee8676b3f7d76c72858497d06"
+    },
+    "platformen-43-niet-opslaan/ci846-hertest-origineel/plakken-redo.png": {
+      "sha256": "0713e822d84176c7a11870f1e9cd522e21ea23f39394c28549435a96e4e8aaa0",
+      "inhoud_sha256": "0713e822d84176c7a11870f1e9cd522e21ea23f39394c28549435a96e4e8aaa0"
+    },
+    "platformen-43-niet-opslaan/ci846-hertest-origineel/programma.log.gz": {
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "inhoud_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413"
+    },
+    "platformen-43-niet-opslaan/ci846-hertest-origineel/rapport.json.gz": {
+      "sha256": "7a2cbb4b43bde5df496bbba6dcf455158df6f1fb713f1cd4046ed2020a7f75dd",
+      "inhoud_sha256": "494977d1238a0e253123da917fd1e4369e0b4d66bbbd2737030e730dfb9496a3"
+    },
+    "platformen-43-niet-opslaan/ci846-hertest-origineel/nieuw-na-laat-antwoord.png": {
+      "sha256": "fcd9fd7bdcbb08ab40dd85be2b5743b2fd2a65e3150ed5f446b798d1f84900e2",
+      "inhoud_sha256": "fcd9fd7bdcbb08ab40dd85be2b5743b2fd2a65e3150ed5f446b798d1f84900e2"
+    },
+    "platformen-43-niet-opslaan/ci846-hertest-origineel/Ontwerpnotitie.docx": {
+      "sha256": "28b9f68f9ee99fafbba522f40d6f849b9f91be66f0fe19ae34762f1ac545439c",
+      "inhoud_sha256": "28b9f68f9ee99fafbba522f40d6f849b9f91be66f0fe19ae34762f1ac545439c"
+    }
+  }
+}

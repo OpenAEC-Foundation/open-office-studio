@@ -1,0 +1,85 @@
+diff --git a/native/crates/office-ui/src/tests/raster_proeven.rs b/native/crates/office-ui/src/tests/raster_proeven.rs
+index af388e2..90418c9 100644
+--- a/native/crates/office-ui/src/tests/raster_proeven.rs
++++ b/native/crates/office-ui/src/tests/raster_proeven.rs
+@@ -2328,3 +2328,80 @@ fn zoekmarkering_wordt_echt_getekend_schaalt_mee_en_vervalt_bij_nieuwe_invoer()
+         std::fs::write(pad.join("writer-zoekmarkering-zoom.json"),serde_json::to_vec_pretty(&serde_json::json!({"schalen":[1.,0.75,1.5],"afwijkende_pixels_zonder_markering":aantallen})).unwrap()).unwrap();
+     }
+ }
++
++#[test]
++fn raster_asynchrone_grensronde_bewaart_alle_invoer_en_celbevestigingen() {
++    use office_core::rekenblad::Richting as R;
++    use raster_ui::Bericht as B;
++    let mut p = Proef::nieuw();
++    let origineel = p.bron();
++    p.bericht(Msg::Raster(B::Kies("X2".into())));
++    // Geen antwoord of widgetvernieuwing tussen deze gepubliceerde intenties.
++    let taken: Vec<_> = [
++        B::Pijl {
++            richting: R::Rechts,
++            selecteer: false,
++        },
++        B::Typ("7".into()),
++        B::Voltooi(R::Onder),
++        B::Typ("8".into()),
++        B::Voltooi(R::Onder),
++    ]
++    .into_iter()
++    .map(|b| p.app.update(Msg::Raster(b)))
++    .collect();
++    for taak in taken {
++        p.taak(taak);
++    }
++    assert_eq!(p.app.tab().unwrap().adres, "Y4");
++    let mut d = Sessie::open(Module::Spreadsheet, p.bron().as_ref().clone()).unwrap();
++    let b = d.naar_cel(0, "Y2").unwrap();
++    assert_eq!(b.velden.iter().find(|v| v.id == "Y2").unwrap().tekst, "7");
++    assert_eq!(b.velden.iter().find(|v| v.id == "Y3").unwrap().tekst, "8");
++    p.bericht(Msg::Terug);
++    p.bericht(Msg::Terug);
++    assert_eq!(*p.bron(), *origineel);
++}
++#[test]
++fn raster_asynchrone_plak_enter_en_opslaan_wachten_op_de_geplakte_bron() {
++    use office_core::rekenblad::Richting as R;
++    let mut p = Proef::nieuw();
++    p.cel("B2", false);
++    let map = std::env::temp_dir().join(format!(
++        "office-raster-plak-{}-{}",
++        std::process::id(),
++        std::time::SystemTime::now()
++            .duration_since(std::time::UNIX_EPOCH)
++            .unwrap()
++            .as_nanos()
++    ));
++    std::fs::create_dir(&map).unwrap();
++    let pad = map.join("Klembord.xlsx");
++    std::fs::write(&pad, p.bron().as_slice()).unwrap();
++    let id = p.app.tab().unwrap().id;
++    {
++        let t = p.app.tab_mut().unwrap();
++        t.pad = Some(pad.clone());
++        t.verwacht = Some(t.antwoord.as_ref().unwrap().hash.clone());
++    }
++    p.klembord.tekst = Some("7".into());
++    let taken = vec![
++        p.app.update(Msg::Klembord(klembord::Actie::Plak)),
++        p.app
++            .update(Msg::Raster(raster_ui::Bericht::Voltooi(R::Onder))),
++        p.app.update(Msg::Opslaan(id, false)),
++    ];
++    for taak in taken {
++        p.taak(taak);
++    }
++    assert_eq!(p.app.tab().unwrap().adres, "B3");
++    let opgeslagen = std::fs::read(&pad).unwrap();
++    let b = Sessie::open(Module::Spreadsheet, opgeslagen.clone())
++        .unwrap()
++        .weergave(0)
++        .unwrap();
++    assert_eq!(b.velden.iter().find(|v| v.id == "B2").unwrap().tekst, "7");
++    assert_eq!(opgeslagen.as_slice(), p.bron().as_slice());
++    assert!(!p.app.tab().unwrap().gewijzigd());
++    std::fs::remove_dir_all(map).unwrap();
++}

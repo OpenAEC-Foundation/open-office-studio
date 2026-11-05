@@ -1,0 +1,379 @@
+{
+  "versie": "2026.44.9-alpha.22",
+  "omvang": "Echte Iced-software-renderer en widgetgebeurtenissen in Rust-tests; eigen klembord en synthetische IME-Commit. Geen fysieke GUI, systeemklembord-, IME-, systeemdialoog- of schermlezerproef.",
+  "reguliere_tests": 258,
+  "runtime_tests": 6,
+  "testlog_sha256": "dcbbaf858d1b6bcc0b2866ecda6099cf8f75f7e61eaf64cc1c68851b1ecdf306",
+  "runtime_log_sha256": "5add806a7053484b138b58f72ea2b8eb5910d10f75b3fc03c9fe6b32a281c5a9",
+  "laatste_ui_tests": 76,
+  "ui_log_sha256": "dcbbaf858d1b6bcc0b2866ecda6099cf8f75f7e61eaf64cc1c68851b1ecdf306",
+  "toelichting": "Alle 258 reguliere tests inclusief 76 GUI-tests geslaagd. Nieuw: omhoog/omlaag over documentregels en pagina’s, Home/End, cursorplaatsing aan gedeelde bronposities van automatische regelafbreking, tabelcelvolgorde, snelle navigatie/invoer, bronongewijzigde navigatie en zichtbare undo-affiniteit. De bestaande pagina-, klembord-, IME- en bewaartests blijven geslaagd. Geen volledige rijke pagina-editor.",
+  "beelden": [
+    {
+      "bestand": "bestand.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "225c6c3ffe962a94b9113ea54be7c38f9426f8457e839b963d265daf54b2e45a"
+    },
+    {
+      "bestand": "email-account-blueprint.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "39ea0c2f6ab66fe0123eb6ab95acc5cb16f6aae15f306065e7a67e46c6ffc68f"
+    },
+    {
+      "bestand": "email-account-dark.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "159e52698fbbd7367f40b6db6b0a6ade561e9f8a1a4c118c1d27c4ed267c1bc7"
+    },
+    {
+      "bestand": "email-account-high-contrast-dark.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "841c259abb59fb2133209e612a50c3b366ed0d5706fdb4be9a6458348c8d88d9"
+    },
+    {
+      "bestand": "email-account-high-contrast-light.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "0e463a0268fb9c2f732910f49a292abcc1ab7a3bcece42921a2f82dc0cb05cb0"
+    },
+    {
+      "bestand": "email-account-light.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "e28ca341e723fb0d02f35e7bb830dd671aca2b2477e02c498dce9ff413ca9152"
+    },
+    {
+      "bestand": "email-postvak-blueprint.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "77c3c9db72a21a10222b1884de40a895725047feedf19f35adbf2f08a8248ae9"
+    },
+    {
+      "bestand": "email-postvak-dark.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "d9198d50c6ee8200dc0ddd54689795589ed1ab9481f8cc36cc4d302c8a5f8189"
+    },
+    {
+      "bestand": "email-postvak-high-contrast-dark.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "42d0a74ed6216dc1cb9e57ce2daedc444ddf48fb88ecaeba734b13248115cb5a"
+    },
+    {
+      "bestand": "email-postvak-high-contrast-light.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "25f0e2b394b2afa9b37a5ac90b850f5bf35fc0eb417de259b00eaed9a53866db"
+    },
+    {
+      "bestand": "email-postvak-light.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "2c7f21a73fc6ab62bcb08da340a7326b8e78b53331562c087644033dd4811cac"
+    },
+    {
+      "bestand": "email-sluiten-blueprint.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "e84bd91f242cb78ce9a071e2662ff7fdec4581c46d8bebbf87ec5c84084c9d89"
+    },
+    {
+      "bestand": "email-sluiten-dark.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "9c353add233008cf974e313f7d3598931067afcc9ccab4e4f4e18d674bc7f0a1"
+    },
+    {
+      "bestand": "email-sluiten-high-contrast-dark.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "c60d389ca81fc4c67da94b103dbf8854d93ae90a10954394a27afc88f74e29cc"
+    },
+    {
+      "bestand": "email-sluiten-high-contrast-light.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "23854ea1c194f64d19cac697c420150b4b5129b0ce63b40a072d968e32abea70"
+    },
+    {
+      "bestand": "email-sluiten-light.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "6a77854648c47f866c4e40febf69973ecee51d301e60604b0b61d3696e4c1ee0"
+    },
+    {
+      "bestand": "export-pdf.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "44486e5c1287e598e97f7fa0d783ee837b5e186a6de7c16233357be9674c3dca"
+    },
+    {
+      "bestand": "notition-canvas.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "c4c6233c2973054da5fd3cd315e23f48af2057f2d4a2a7ecf2d6734f331cf5a2"
+    },
+    {
+      "bestand": "notition-markdown.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "25d0aa8e62a947a28f9df42f8e0c3a0f39b2e1349ceb3578a22c7070c9d68834"
+    },
+    {
+      "bestand": "notition-native-referentie.png",
+      "breedte": 1058,
+      "hoogte": 892,
+      "sha256": "631486b610193d5cbdc677d628140d86196ade676dfe32f63fbcd3a7d6f545f2"
+    },
+    {
+      "bestand": "presentation-dark.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "cbf5736d4bfd4ba571f49a686fe47dc50790e4a8fec8f6abd7ddfbedacc0ed2e"
+    },
+    {
+      "bestand": "presentation-light.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "d357fffeeefc3eaa98352b01b2c239847623369ba5040b1fa75a1b53652e0d96"
+    },
+    {
+      "bestand": "presentation-native-referentie.png",
+      "breedte": 1058,
+      "hoogte": 892,
+      "sha256": "4e50e5e4e49380329c7700a93ede24d45acfa762051bd2f1adf28aa203076ac5"
+    },
+    {
+      "bestand": "spreadsheet-celbewerking.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "ff332fbc06af512fa87c0ea3af691bc9e812141fa47ffd357936601633581eca"
+    },
+    {
+      "bestand": "spreadsheet-dark.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "d6648dc6488fd0aacedd0e575ecc5eeab5165bd4318a6a7e858f7d50d08d6f8a"
+    },
+    {
+      "bestand": "spreadsheet-koppen-scroll.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "9a46478a2b317bc0a16ea3c8df2029ed443fbca8176471be63af1ce28c0282ea"
+    },
+    {
+      "bestand": "spreadsheet-koppen-zoom.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "6705c26cbedcb87a241d88e1e9da79a5815ce3396f2dc9e5fbb66f94adb311a1"
+    },
+    {
+      "bestand": "spreadsheet-light.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "c81776f9c462983abb868e72bfa72397bce975a91d1518611103657d7a5ce7f2"
+    },
+    {
+      "bestand": "spreadsheet-native-referentie.png",
+      "breedte": 1058,
+      "hoogte": 892,
+      "sha256": "a034319f328944923e4b7a1ae07c6eb95792e18cbc5036e5de298278463449a0"
+    },
+    {
+      "bestand": "start.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "ca599565a4117dbcb9f5497e45c9a768058939f7be5f1217dae5dcb9cb864713"
+    },
+    {
+      "bestand": "writer-beveiligd.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "62055188042e15e789a2e31afd9808813bdfcd7d6e08efcf6cb6eb88f322aeeb"
+    },
+    {
+      "bestand": "writer-dark.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "a31e38609915eab1d8814826157db54fe4677f1f538b5bf293b270328120fc8b"
+    },
+    {
+      "bestand": "writer-indeling.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "89e8866482b02df95538720f4f3d8e88e78a5091b9cc9c5a9fe511050c71e830"
+    },
+    {
+      "bestand": "writer-klembord-concept.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "bdbd7a755c862162c769c28c733e04a0d882d95e210c3f6ffe92019eb3591028"
+    },
+    {
+      "bestand": "writer-light.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "71f1137d9669172db806dd2798fb4afdcc6042812aa9e2a60885976989459f91"
+    },
+    {
+      "bestand": "writer-native-referentie.png",
+      "breedte": 1058,
+      "hoogte": 892,
+      "sha256": "9e504568e74580e34dd7e48c26c86639dc2d79850dd7406941eb11562a4157fd"
+    },
+    {
+      "bestand": "writer-pagina-invoer.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "649cb76265a54013d7e7da419a559107c5ee7734207b58ebee25e0ae3ce60e5e"
+    },
+    {
+      "bestand": "writer-pagina-navigatie.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "69234360e92349874984946403637be4e94b208d4a881232db566d03885c273f"
+    },
+    {
+      "bestand": "writer-regelgrens.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "2a7bd7dfa23dbdd10060949f2082ee984afda0a65d3fa49ca2b8c7642ac39e2f"
+    },
+    {
+      "bestand": "writer-selectie-opmaak.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "40043b480a50f1900b16cf6cb82276e37f29117b70f7d5739ce03820d0b5275b"
+    },
+    {
+      "bestand": "writer-zoeken-markering.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "9783256398e2bc85603d62af40c148816ae4696886a914fd475a234c14e6dc20"
+    },
+    {
+      "bestand": "writer-zoeken-pagina.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "d5ae28e41d8d058616a014e08174b4ed32f0f0856b7c3bc4e62e350de141b518"
+    },
+    {
+      "bestand": "writer-zoeken.png",
+      "breedte": 1440,
+      "hoogte": 900,
+      "sha256": "11bfa5f5186acbea5f35272b11cb34841f377c79c747a40ef353b157907a89bd"
+    }
+  ],
+  "aliassen": {
+    "writer.png": "writer-native-referentie.png",
+    "email-account.png": "email-account-light.png",
+    "spreadsheet.png": "spreadsheet-light.png",
+    "email-sluiten.png": "email-sluiten-light.png",
+    "presentation.png": "presentation-light.png",
+    "email-postvak.png": "email-postvak-light.png"
+  },
+  "bronbestanden": {
+    ".gitattributes": "5f7528cf7e115ea0aefc26b0e265fae5848a053ac39635e45d71ed8acc49594b",
+    ".github/workflows/native-rust.yml": "a0bca39b0867ad14e97197c0917870aa93ee29a2f465322d912ec2fdf457459a",
+    "native/Cargo.lock": "35705e69c564ee216817f2c94696afe7dd9d41d4824fd2e98085de92ed0f3587",
+    "native/Cargo.toml": "d4735752aea9828989d4dfe17b0f1e956f8d2552e88df8d22e2fe0c70cca5ed4",
+    "native/crates/office-conversie/Cargo.toml": "3620ad9b03f52cf32f432bed1b36b096da3e1dc18a132495a0d00b69e980a356",
+    "native/crates/office-conversie/src/conversie.rs": "e80b91a3c8d76adfa56ddcbac9e5d91662d7da16a0f944380bc379e62b8d4a4f",
+    "native/crates/office-conversie/src/lib.rs": "2dd4bb27d0729f0ca399d97075506763b4888ecd8bd9dff85aae11a86bf9f086",
+    "native/crates/office-conversie/src/taal.rs": "72a997090d95f5e80960a2ebfc18ba8fece8eac8a5f524b9da8d94184276d1c7",
+    "native/crates/office-conversie/tests/controleer.py": "52c3c8aceabe79989cb788db015c7f7acf24307abbcf1ed0753807d0c3947153",
+    "native/crates/office-core/Cargo.toml": "93da78ef34e8086a9862c2b04932f88eef9e83a8738697da507897cf2045016f",
+    "native/crates/office-core/examples/meet.rs": "7bf82b80e31b86c3ee0965d086cf135bc08a38a150b90d4789ba4c945251f30f",
+    "native/crates/office-core/src/bin/controleer-bestand.rs": "4070c1b1d028ff7ed587e6a39fcdb0574a3bed80c077e3b1662abbc83c6746ea",
+    "native/crates/office-core/src/document.rs": "acf56f23c7237351060f3534d3ccbe21565ee40939a147525b5420ae03be8534",
+    "native/crates/office-core/src/ifcx.rs": "a3747dbd9d80476ae2ed080914a89d01ded1448ff6229e4d7542fd9a692d1f74",
+    "native/crates/office-core/src/interactie.rs": "41cc5bdded02acbf6cc01f52d27e7705ddcb382514c2ddb86491349ee8df505b",
+    "native/crates/office-core/src/lettertype_data.rs": "8a42823e6e9e8f73efa97fdb580c05fb20ec6fac752bbbbcf0794c5bcd015021",
+    "native/crates/office-core/src/lettertypen.rs": "df1fbd3644022c5d99addafb36d994fa079cc749b6e876857bfa7ae7adfd4785",
+    "native/crates/office-core/src/lib.rs": "3bbcbe7bb25c12de9c6af55f9f6ec8077d345c57d099679751d9d36176ac426b",
+    "native/crates/office-core/src/notities.rs": "2e8ffd3b9b9e4c4c6ec1d3c503df2ed8c6ecdea4f253a71cc1c87161bc318578",
+    "native/crates/office-core/src/opmaak.rs": "8c2f12b9868b7e8e3551f92aea7ade4004dde3df7ac957683469d55338c04e47",
+    "native/crates/office-core/src/opslag.rs": "a2e921b704014e77f42548383cbb56a1f2c010578a4f3e78ee1484af00aa089c",
+    "native/crates/office-core/src/presentatie.rs": "5fca5d17c3a1491d41c0c841af029416dec67c1f94f72537ccb0d084dced0692",
+    "native/crates/office-core/src/presentatie_tekst.rs": "7f86cadc5e2cecfabd3a98adddaae009bb6cddeb26641f6cc69d3dcc006a0d63",
+    "native/crates/office-core/src/rekenblad.rs": "ab3b08e22bd5f6c21a09526d319476c926830aa408adb41ccdc4c01de18f8821",
+    "native/crates/office-core/src/rekenblad_beeld.rs": "bd0601c066ac10cb753ad9fba8604294df2047e03002c37ff4aa006f6d9d9e44",
+    "native/crates/office-core/src/writer.rs": "1de8557446b8c6d736d60a6a9acda48ab66e352cda4ca03c06eb567e33fc2b71",
+    "native/crates/office-core/src/writer_beeld.rs": "b68fad9d2b0075dbbcbdb654ce2e0cccff7486dbc9970566ca2340923400fd32",
+    "native/crates/office-core/src/writer_cursor.rs": "385d1c85f67a8f74ecb78e13958a8e7461ec80cc367e59da1c747713f8e81671",
+    "native/crates/office-core/src/writer_document.rs": "55630b67323565017e10f9af8fffea2f886f3d849bdf31add2813761329ba5ac",
+    "native/crates/office-core/src/writer_navigatie.rs": "536d094913c2101fe990872adaa9bc600361782f00015b4f89c42a923e5f724a",
+    "native/crates/office-core/src/writer_opmaak.rs": "582e07f94455adcd94ea2312fac8702a49ea15b7d4e0595cfddbb5ad6224f831",
+    "native/crates/office-core/src/writer_pagina.rs": "ee4949a1cc70b308facf710b9195ec6ed6c0dccb858468887f7a31dedfbb390f",
+    "native/crates/office-core/src/writer_tekst.rs": "e38388434545c3f86ac7d7c760cd4de56c65241b199730317f32427fb911c436",
+    "native/crates/office-core/src/writer_zoeken.rs": "82b6516ccb9101af4b5c2a3df1df1fb91448ccd747cf73ce8b826c3c5e6b8f72",
+    "native/crates/office-core/tests/documenten.rs": "2bbebc1b9c77b7db21ebdb287bbbea466809da181251380c6a60b05c273100e2",
+    "native/crates/office-core/tests/fixtures/controleer.py": "71c705adfd74436c2d9d489de524609ed3e89fb7a53ad6ee1bb4eda22687594c",
+    "native/crates/office-core/tests/fixtures/maak-cachepaginas.py": "52645a33d502c9d34533ead968d35a424be05526cef1a3fe56514c4cece21ba0",
+    "native/crates/office-core/tests/fixtures/maak-kopvoet.py": "0a4f0221914dede4fa8410440bb0c10bc5f9e45c1fc4a08a6a81d56bbf040295",
+    "native/crates/office-core/tests/fixtures/maak-velden.py": "74e3d3f84c131992b9a30d037aef5d020ab627229104c90409256312f29dd68b",
+    "native/crates/office-core/tests/fixtures/maak-weergave.py": "2101749b17c2c1fa9d00b130847efb0c2cb587de557a61e2cab57ea236a381dc",
+    "native/crates/office-core/tests/fixtures/maak.py": "94c355a034dade36441fac5ceecbd75125501e4606fb43df60e81339606d58b8",
+    "native/crates/office-core/tests/interactie.rs": "818ebacdf34b892e5b242b54b5a20216a9d5ec736d07e24dcad7e99259e495d3",
+    "native/crates/office-core/tests/lettertypen.rs": "bcb22fb3b93564717ded045b9b827f3c83194649b05d42d87ed67cca3ccd8b53",
+    "native/crates/office-core/tests/notities_presentatie.rs": "40efc40047a5dd4ab2369509eb8561a47859828fb6b39c67b6cf3236a062db42",
+    "native/crates/office-core/tests/raster_bronbeelden.rs": "cdce7919a130cce1306ca86ee2760d35d443c9150573d509851ad8e320836b8d",
+    "native/crates/office-core/tests/rekenblad_letters.rs": "6756ab72950e69d30f4043773e8887210e5d784285a2b6ff67393281b253810a",
+    "native/crates/office-core/tests/writer_beveiliging.rs": "049e30757461e45d6d99295f024f071f762f322217f63ddd80e5ca5cf589bf38",
+    "native/crates/office-core/tests/writer_cursor.rs": "394aa391948f5a460c9980cae3deeb41774f424542681aeb1f0f906828e6d3f2",
+    "native/crates/office-core/tests/writer_interactie.rs": "4df1cfba9550c3e458b4573844bc90c3152d07d7d72477eb9b6c785a6600f5b9",
+    "native/crates/office-core/tests/writer_invoer.rs": "12c72a561cdd8c53fc81d3184055d71eb2115c07ab6c481874b81898a2f86ccd",
+    "native/crates/office-core/tests/writer_navigatie.rs": "e46413c9131d1e018d6d575a148e6730868d1a5eb282e3c6fc272f929c6914d7",
+    "native/crates/office-core/tests/writer_opmaak.rs": "0d0efed7151c1603215ae14b016974719f5e8c85e39e8b9d82ea3a51f1c94bd9",
+    "native/crates/office-core/tests/writer_pagina.rs": "072b2eeb64dd6d3ba8355a5c44deef26cd13923eb90833ae599a1f44a5f0d771",
+    "native/crates/office-core/tests/writer_regelnavigatie.rs": "476755461a2d11629f6a2d267309bc8b1fbe641d581e8ff21b6e7d9248a86505",
+    "native/crates/office-core/tests/writer_structuur.rs": "398b294a6d06bf542f13f756ab0515b68e1720e4fd9b5d5bf4a302c53e6ac72d",
+    "native/crates/office-core/tests/writer_velden.rs": "fcd24208efad4f4e2482b2679d2e756b702586df92a836e950e784cd8ebbf2ab",
+    "native/crates/office-core/tests/writer_weergave.rs": "f5e530a5f5063e51550b2a385ad7e3dcb3e0a1de73e877ac78481ba33ff50cc0",
+    "native/crates/office-core/tests/writer_zoeken.rs": "ae3884d562c8c0a6e1c30d599379fef5b7b64a401d46abe26ebc243835565db7",
+    "native/crates/office-mail/Cargo.toml": "519be82ec4c498c83d33b0d437f3ae0b56f83b7c519d7817685d5f8826611cbe",
+    "native/crates/office-mail/src/dienst.rs": "f2e7ece04b28bab5f28c1ad75d05e9f8ae66c0e4827296b19792cea388f6385b",
+    "native/crates/office-mail/src/email/accounts.rs": "0763369e68e1bebeb29166f49c621dfca29ab04d555f5d502411a56fab760f4d",
+    "native/crates/office-mail/src/email/autoconfig.rs": "1184099e5aaa9f373bb7090dae15d5fb1a7287b2a801401ca3e943ec8c571318",
+    "native/crates/office-mail/src/email/bestanden.rs": "7ccde4e1e2176ace9f75d979de40596141ce3b95058057ab4b511408cc30efbd",
+    "native/crates/office-mail/src/email/fout.rs": "4357cd3c6fa772d1dbe2e542293a4f8e083f1440d79d56aadabe0451175f3755",
+    "native/crates/office-mail/src/email/imap.rs": "1f887ad88e857cd8afe5589a17314759e072547918f9d305df02de810114f072",
+    "native/crates/office-mail/src/email/mime.rs": "ff5f3000801c61685ff711f5eaf5a3e056fdaf65daf5612ec7991e2a037053c0",
+    "native/crates/office-mail/src/email/mod.rs": "78d6c5ed203c3f423ff6b10eb2e991d604a00684227a2526d29a3505416abee9",
+    "native/crates/office-mail/src/email/nepserver.rs": "bdcb82c0ce2a64034402005f527e56f091d7fa0465f15925df30d546081588ed",
+    "native/crates/office-mail/src/email/oauth.rs": "f2d68ba39d540b07d89340c1c0f29d7fb839698455c722c4b05db33ddf1c99da",
+    "native/crates/office-mail/src/email/smtp.rs": "6848689653797044796ff4171bac2b4b734d742dde2bcca35b7e11e3e2a39bf1",
+    "native/crates/office-mail/src/email/zoeken.rs": "b9db4d0a672703d980a262edac23284467d12bdce9d2fcc0c0cbf286ad8c6c7a",
+    "native/crates/office-mail/src/lib.rs": "9796efe6e551291abb82f8ce156d54c620dc095a338f345b4a24a87223f08cb4",
+    "native/crates/office-ui/Cargo.toml": "7181e1afa4e0ae06440dfb615040eff9b64a20a87c6da2e37a8c851e6841dd10",
+    "native/crates/office-ui/src/documentblad.rs": "e84d2a9a16f034dd800e2d1a453f609467a434928977a246433a8d3a9988bea0",
+    "native/crates/office-ui/src/export_ui.rs": "62cb61b8f01a8413c257767c0cbecd8d7ef4f6f975bbbbd31f66c63bdce9d6f6",
+    "native/crates/office-ui/src/klembord.rs": "a6bd44c5ff9af057287757cb89b4e8cf790f97554f4818b5d352ff003710a86d",
+    "native/crates/office-ui/src/lettertypen_ui.rs": "37f7fdaa7885809a4bc50fd7eabbb51fa19e6361f9d65499135e16b4189c49e9",
+    "native/crates/office-ui/src/lineaal.rs": "d5a0751ab8bf2a9ea428dff743447dbea4a2dd3de1d7985afe6f6de182adaa25",
+    "native/crates/office-ui/src/lint.rs": "6401b16def9aee505d7909acadb641c698bdd332032b92eca5d2bbd5b738a694",
+    "native/crates/office-ui/src/mail_ui.rs": "a4194843c3a6576f89e146974c33addccff45bb601e86eb5beb66fe02901bdfb",
+    "native/crates/office-ui/src/main.rs": "7f33fede3eb1be1c327547c9c1a80161f1a906bafad1c4ea2989ee11f7d2e2cd",
+    "native/crates/office-ui/src/notitie_ui.rs": "c300b9b4d49cd9463fc93bf075afce8d6bd1dbd136939ff2a225cfc1d8f9c0f4",
+    "native/crates/office-ui/src/pagina_ui.rs": "e579fccaf7cd6a9a4ead380564bccc3ee8c598cdb166917179bf8bf4ad5c5ae2",
+    "native/crates/office-ui/src/raster_koppen.rs": "d79f15489d9aa78d14b1185e7bdb0183476031d83b7c90bf520121bbcd53de4e",
+    "native/crates/office-ui/src/raster_ui.rs": "2f7e75ef0cf6b6752b9a8cf94870e260a9ff1c1f9e322b8a99b84d7aab43fb8a",
+    "native/crates/office-ui/src/sleepvak.rs": "79aec13324a4876c8ce468c170eea3c8ec66df8642f9304a7f2e264e3d81f206",
+    "native/crates/office-ui/src/stijl.rs": "6dd960682e733d7c55baa65722002ff7f368a26ef726b121cd435f7795a48c8d",
+    "native/crates/office-ui/src/tests/raster_proeven.rs": "f9b8956eea3c4893f99811be4733da705ce28cf85a7bd8cfe5ad8e9dc2af390f",
+    "native/crates/office-ui/src/tests/schaduw_proeven.rs": "76e1c370908a3c127227f0fa54098e99ca04114400a831cb5660456dda214bd5",
+    "native/crates/office-ui/src/tests.rs": "a005dfb96741b523c0db6b88b37ea877a9b6019e9cd1f011cea7a0d1e6026b14",
+    "native/crates/office-ui/src/werker.rs": "0562855d841a33caf15ee0eb729264b093d82d3be161a34bd14b546830eb2037",
+    "native/crates/office-ui/src/writer_direct.rs": "4793d4fe7e3a5c350ddf46b6ffaef428f648750a80e1677a35534273109b1c67",
+    "native/crates/office-ui/src/writer_invoer.rs": "c6bab6a217ed5722ec58c8ed19bc24a529e73ce2d4f2f924dcb3bc33c4351cb6",
+    "native/crates/office-ui/src/writer_paginablad.rs": "8eff018bf1f5b200462db547b27adaadb6ad237dae55d2bb3ba58b3b2d9cdab4",
+    "native/crates/office-ui/src/zoeken_ui.rs": "fe6b50549de0bb83c55eb4e01599873b1399d6f8fc14424a070cb93d1e98276a",
+    "native/scripts/controleer-bron.py": "572741caeec906e9c5d731d992acb64bf6000572c15d8b43804b90d8ca2381ea",
+    "native/vendor/iced-tiny-skia-bron.json": "d0fb3e42107734ed4f3836bb190fe6413080af4936af79d7fc9782f806d5a965",
+    "native/vendor/xlsx-raster-bron.json": "18bcea7becfceed5b48df9cfabb426a1814467a4379c96a190ca5a6288d72abf"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "versie": "2026.45.2",
+  "datum": "2026-11-02",
+  "status": "lokale testversie; grote plakbewerkingen nog niet opgelost",
+  "sha256": "d172097951fc99d018cfc701f38d800553b8b5195ce9db8215acadff63772bfc",
+  "proeven": {
+    "typescript_en_productiebouw": "geslaagd",
+    "native_bouw": "geslaagd",
+    "vitest": {
+      "bestanden": 127,
+      "tests": 1526,
+      "status": "geslaagd"
+    },
+    "writer_opdrachten": {
+      "geslaagd": 74,
+      "mislukt": 0
+    },
+    "worker_volgorde": "3 regressietests: invoer voor/tijdens initialiseren, opnieuw initialiseren, mislukte poging gevolgd door herstel",
+    "gui_uitvullen": "echte Ctrl+J en Ctrl+L; zichtbaar verschil op twee regels; opslaan en heropenen met behoud van tekst en zonder foutmelding",
+    "native_typen_paginaeinde_opslaan_sluiten": {
+      "gestart": true,
+      "sha256": "d172097951fc99d018cfc701f38d800553b8b5195ce9db8215acadff63772bfc",
+      "proefkopie_opgeslagen": true,
+      "controle": "Momentopnamen van Ctrl+J en Ctrl+L visueel vergeleken. Typen, pagina-einde, terugwissen en sluiten uitgevoerd; Ctrl+S inhoudelijk gecontroleerd. Geen workerfout in deze proef."
+    },
+    "geneste_tabel": "8 rijen en 10 kolommen binnen eerste cel van tabel met 8 rijen en 10 kolommen; visueel gecontroleerd, geen foutmelding",
+    "liniaal_275_paginas": {
+      "herhalingen": 20,
+      "voor_mediaan_ms": 570.953513,
+      "na_mediaan_ms": 0.257793,
+      "na_eerste_meting_maximum_ms": 559.270068,
+      "beperking": "alleen liniaalberekening na tekstwijziging, geen totale invoertijd of FPS"
+    },
+    "gui_selectie_meerdere_alineas": "Ctrl+J: beide alinea’s both; Ctrl+L: beide left; geen foutmelding"
+  },
+  "bekende_beperkingen": [
+    "Zeer grote rijke plakbewerkingen kunnen nog vastlopen; niet opgelost in deze versie.",
+    "Nog geen vergelijkende FPS- of prestatietest met een andere tekstverwerker.",
+    "Zwarte flitsen niet op alle grafische drivers gecontroleerd."
+  ],
+  "eerdere_documenten_overschreven": false,
+  "oude_binary_behouden": true
+}

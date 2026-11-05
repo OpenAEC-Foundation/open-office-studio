@@ -19,6 +19,7 @@ import { useTranslation } from "react-i18next";
 import { intlLocale } from "../../i18n/config";
 import { Actie, Groep } from "../../Ribbon";
 import { useOfficeThema } from "../../stijl/ThemaKnop";
+import { donkerePapierkleur } from "../papierWeergave";
 import { losOp, stijlNaam, voorbeeldStijl } from "./model";
 import { useStijlen } from "./StijlenBeheer";
 import { bevestigingOverslaan } from "./StijlenBeheer";
@@ -192,6 +193,9 @@ function GalerijItem({ stijl, actief, menu }: { stijl: Style; actief: boolean; m
   const { t } = useTranslation("writer");
   const staat = useStijlen();
   const opgelost = losOp(staat.stijlen, stijl.styleId, staat.thema);
+  const { thema } = useOfficeThema();
+  const voorbeeld = voorbeeldStijl(opgelost, 15);
+  if (thema === "forge" && typeof voorbeeld.color === "string") voorbeeld.color = donkerePapierkleur(voorbeeld.color, true);
   const naam = stijlNaam(stijl);
   const sneltoets = SNELTOETSEN[stijl.styleId];
   return (
@@ -212,7 +216,7 @@ function GalerijItem({ stijl, actief, menu }: { stijl: Style; actief: boolean; m
           menu.open(e.clientX || vak.left, e.clientY || vak.bottom, stijl);
         }}
       >
-        <span className="tekst-galerij-tekst" style={voorbeeldStijl(opgelost, 15)}>
+        <span className="tekst-galerij-tekst" style={voorbeeld}>
           {stijl.type === "character" ? <u className="tekst-galerij-teken">a</u> : null}
           {naam}
         </span>

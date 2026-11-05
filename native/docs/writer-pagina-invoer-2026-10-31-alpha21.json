@@ -1,0 +1,32 @@
+{
+  "versie": "2026.44.9-alpha.21",
+  "omvang": "Vijf kernproeven en tien GUI-proeven met echte Iced-widgetgebeurtenissen, eigen klembord en gesimuleerde IME-preedit/commit. Geen fysiek platform, systeemklembord, kandidaatvenster, systeemdialoog, schermlezer of volledige rijke pagina-editor.",
+  "geslaagd": true,
+  "kernproeven": [
+    "frame_hoort_bij_de_zichtbare_tekst_ook_na_een_andere_layout_en_eigen_bewerking",
+    "frame_van_de_zesde_pagina_adresseert_die_pagina_en_geen_hernummerde_body",
+    "leeg_document_heeft_een_werkelijk_cursorvlak_en_een_klikbaar_tekstpunt",
+    "aansluitende_invoer_is_een_undo_stap_en_een_nieuwe_groep_blijft_apart",
+    "gewone_opdracht_fout_en_een_andere_alinea_onderbreken_invoergroepering"
+  ],
+  "gui_proeven": [
+    "writer_paginacursor_klikken_schalen_typen_en_een_exacte_undo",
+    "writer_paginawachtrij_bewaart_snellen_unicode_selectie_knip_plak_en_undo",
+    "writer_paginaselectie_via_slepen_kopieert_bron_en_ime_commit_bewaart_opmaak",
+    "writer_late_paginaklik_wordt_alleen_door_eigen_invoerstappen_verplaatst",
+    "writer_pagina_verliest_focus_naar_zijeditor_en_weigert_alleen_lezen_invoer",
+    "writer_pagina_opslaan_wacht_op_invoer_en_laat_latere_tekst_gewijzigd",
+    "writer_pagina_achtergrondzoeken_en_dubbele_reactie_nemen_cursor_niet_over",
+    "writer_zoekpaneel_sluiten_behoudt_de_werkelijke_editorfocus",
+    "writer_pagina_opmaak_sneltoets_bewaart_cursor_en_onderbreekt_invoerundo",
+    "writer_pagina_kernweigering_bewaart_concept_en_wachtrij_tot_expliciet_verwerpen"
+  ],
+  "reguliere_tests": 250,
+  "gui_tests": 72,
+  "bronbestanden": 96,
+  "bronmanifest": "schermen-2026-10-31-alpha21.json",
+  "testlog_sha256": "c7a0cce8f3e635cceaa7ec0c86117da7083b855fbf8d200ca7858c173d92ed10",
+  "onafhankelijke_uitvoer_sha256": "a30fb292c00f44d0e3cf0dd79a973a4ba1611019c8a0cf2b64e8858320518d33",
+  "writer_pagina_ime_docx_sha256": "e9b6055b212e3138ca87fc608fd0261b2897be56f6eb4f4af1918701af0d45ef",
+  "bronfixture_sha256": "6d225b88fc59171d169407e49cf859eb20b264ff58487f84f5bc5f0ef29090e0"
+}

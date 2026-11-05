@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/gui-writer-alpha35-herkomst-prototype.py", line 84, in <module>
+    klik(430,367);sleutel('End','Return','ctrl+s');wacht(lege_na_rijke_alinea)
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/gui-writer-alpha35-herkomst-prototype.py", line 36, in wacht
+    raise AssertionError('De ene bewaaropdracht leverde niet de verwachte bron op')
+AssertionError: De ene bewaaropdracht leverde niet de verwachte bron op
+Traceback (most recent call last):
+  File "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/venster-writer-alpha35-schaduw-prototype.py", line 10, in <module>
+    subprocess.run(['dbus-run-session','--',str(w/'gui-hulpmiddelen/uitgepakt/usr/bin/xvfb-run'),'-a','-s','-screen 0 1440x900x24 -nolisten tcp',sys.executable,str(w/'gui-writer-alpha35-herkomst-prototype.py'),str(vast/'open-office-studio-native'),f'gui-alpha35-writer-{variant}',m['basiscommit']],env=e,check=True)
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['dbus-run-session', '--', '/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/gui-hulpmiddelen/uitgepakt/usr/bin/xvfb-run', '-a', '-s', '-screen 0 1440x900x24 -nolisten tcp', '/usr/bin/python3', '/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/gui-writer-alpha35-herkomst-prototype.py', '/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/controle-2026-10-31/native-na-alpha35-schaduw-debug-vast/open-office-studio-native', 'gui-alpha35-writer-schaduw-prototype', 'cd01f53686d384abbcda84d1185e67789462159c']' returned non-zero exit status 1.

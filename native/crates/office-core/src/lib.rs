@@ -1,0 +1,33 @@
+//! Documenten en veilige bestandsopslag zonder webinterface.
+pub mod celtekst;
+pub mod document;
+pub mod ifcx;
+pub mod interactie;
+pub mod klok;
+pub mod lettertypen;
+pub mod notities;
+pub mod opmaak;
+pub mod opslag;
+pub mod presentatie;
+mod presentatie_tekst;
+pub mod rekenblad;
+mod rekenblad_beeld;
+pub mod rekenblad_document;
+pub mod rekenblad_klembord;
+pub mod werker;
+pub mod writer;
+mod writer_beeld;
+pub mod writer_cursor;
+pub mod writer_document;
+pub mod writer_lijsten;
+pub mod writer_navigatie;
+mod writer_nummering;
+pub mod writer_opmaak;
+pub mod writer_pagina;
+pub mod writer_stijlen;
+mod writer_tekst;
+pub mod writer_zoeken;
+pub const VERSIE: &str = env!("CARGO_PKG_VERSION");
+
+// Dezelfde brongebonden plakvoorbereiding als de bestaande desktop.
+pub use office_writer_plakken as writer_plakken;

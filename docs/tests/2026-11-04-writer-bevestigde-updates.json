@@ -1,0 +1,618 @@
+{
+  "schema": 1,
+  "acceptatie": "AFGEKEURD: zichtbaar typen is in beide nieuwe ronden langzamer dan de referentie; bovendien faalt een aanvullende warme revisieauteur-/celverhaalpariteitsproef. Geen geteste verbetering of vrijgegeven kandidaat.",
+  "versie": "2026.45.40",
+  "rustwerkruimte": "2026.45.0-alpha.55",
+  "programma_sha256": "16cc2a57d1a283eedfc9ab008add1f18cef8345b205df8105259d8466b95eb7e",
+  "referentie_sha256": "f25c6c3395781209f0d1760c035110c0e846f0b1e394d90860d5e8a526ccc75d",
+  "applicatiebron": {
+    "basiscommit": "3ad2eb6fe9628d426213b4e75680c0c57ef88e1a",
+    "versie": "2026.45.40",
+    "programma": ".local/doorwerk-2026-11-04/incrementele-invoer/open-office-studio-45.40-journaal",
+    "programma_sha256": "16cc2a57d1a283eedfc9ab008add1f18cef8345b205df8105259d8466b95eb7e",
+    "bronbestanden": {
+      "native/Cargo.toml": "89d52ec29293697c857e44ddd25070aa1f5ac62ce16aa0747e00fbd0130161d4",
+      "native/Cargo.lock": "57491285d3a6b8b794aae55381d66d3678b3641011481abad7b747f9cd880e12",
+      "native/crates/office-writer-plakken/src/bronspiegel.rs": "f750dbf36a502c27db2b4cbe0a78105b518c1673a488909f5ef557fceaf9625a",
+      "native/vendor/docx-edit/src/lib.rs": "a7c76dce270f3c84f939d925e11f84d5b7203d730ceacd8d264604346e89f205",
+      "native/vendor/docx-edit/src/clipboard_batch.rs": "0bb21fe2ccebcd33cc48400646bf5b7b867c1975cc7a47cbb226dcaeaa72d9fa",
+      "native/vendor/docx-edit/src/clipboard_batch/confirmed_source.rs": "8033028a48feba79d636a9818e06fe8f2c559101960d36b1b216f2f94b6c96cd",
+      "src-tauri/Cargo.toml": "0d8a05201a0956cad7b380628824d4976cb4ada531a05c934cd1414bcb094a0c",
+      "src-tauri/Cargo.lock": "7f61314443de224f105017e3bf1d84b2b50ba0e4aa7433656261968574e8a0c4",
+      "src-tauri/tauri.conf.json": "9a660dcb649b9d64e6d9c22d4d5d02e7c5956c4cd50ab1e4e198a30646f40f97",
+      "package.json": "d0c1d8fee8cdce575d872cdf3fb6d18d50c18772542554570d0bdf3fb1f06291",
+      "versie.json": "989a82879f767ecaaf6febf33a903002b8c355d5e9fc4be4df0915ec2e30c7fb"
+    },
+    "patch": "journaal40-applicatie.patch.gz",
+    "nieuw_bronbestand_apart": "journaal40-confirmed_source.rs.gz",
+    "desktopbouw": "journaal40-desktopbouw.log",
+    "desktopbouw_code": 0,
+    "grens": "Nog geen GUI- of prestatieacceptatie. Bestaande gebruikersapp en launcher onveranderd."
+  },
+  "bestanden": {
+    "renderer-40-journaal/heropend-en-bewerkt.png": "21f251d09b2bf0a6bed779eb0577a07db962901ee68b2a619e9f8772b89c7c6f",
+    "renderer-40-journaal/programma.log.gz": "0d6971a10e256ebd4805ac8718438d04a75d10b3ae8ee76015ddf01c160e9dc7",
+    "renderer-40-journaal/queryfout-zichtbaar.png": "b86e5734e37a8e02ce8231503cd5e0aef75d0139a45f2c2fdb6704f902b2b67b",
+    "renderer-40-journaal/voor-queryfout.png": "2572d960216091bda470718a13cffab29352ddad2d82235778d18d6a58f59414",
+    "renderer-40-journaal/rapport.json.gz": "84d7a0986610893879fb3e3474698beef50ec335bf7cac65c6aa1f1540755707",
+    "renderer-40-journaal/proef.log.gz": "ad0074feb83c687877e3d750fff439a50f933e4cdf2db8f1e18058ec1bb3b074",
+    "lang-40-journaal/kopvoetlint.png": "91335c4cb29df7369024e4b32cee04aac8d5dcfc3d5f1ba7ac32b01e504338a8",
+    "lang-40-journaal/spelling-eerste-pagina.png": "082346f69d154362e9abc971175564a0824973e5094fd105c75b6c75a050c471",
+    "lang-40-journaal/framebasis.json.gz": "22d0298dae155e4ec5100f44098334f3fc9ffcc0f96c087f7c757f34734cf51d",
+    "lang-40-journaal/spelling-hersteld-venster.png": "88c8bb823a0f892eb520e67e40b9f14c31f4bd9245dbb0e9d09bf388a44296ab",
+    "lang-40-journaal/getypt-pagina-500.png": "a0cfcee024b5a0fd507e10621fe00143023a00e960cfd875738425f4c3c77df0",
+    "lang-40-journaal/spelling-kleiner-venster.png": "33537a12faeaf5be8aa9eed13a7c03998964bb09421198e1fd2d51607087e6d1",
+    "lang-40-journaal/programma.log.gz": "0d6971a10e256ebd4805ac8718438d04a75d10b3ae8ee76015ddf01c160e9dc7",
+    "lang-40-journaal/spelling-zoom-125.png": "fa85ab16cacf4eab58fac97ee6034552f32f5b9f396c18859f3f80a7c9dc1bc5",
+    "lang-40-journaal/spelling-laatste-pagina.png": "1ab74db7090d2f1e22e89dd48b503b185e0de884bf36c2e2015c31e89cd450ab",
+    "lang-40-journaal/spelling-terug-in-document.png": "e9ab0f5451e325b26488b7f1de43b5ee10d3de395f92023dea78550067abb648",
+    "lang-40-journaal/rapport.json.gz": "e33ddbfbbebc6e0252a96bd03c76457318f675974ef3e2af3511cc6434f0449f",
+    "lang-40-journaal/startlint.png": "7e2cfe8e25e92b3c11e0491e4160ca98b7056ee7481894903002d727a65ed7d8",
+    "lang-40-journaal/spelling-verborgen.png": "4c07cfd78aa4df14c7015a5bf716c39548132b7d46c7c1d881220667c13b7fcc",
+    "lang-40-journaal/proef.log.gz": "951e7b8fe08cb9033572ce39ca416d2227497a7eadb8a396b465bde95c5c6d9e",
+    "tekst-40-journaal/snel-getypt-bewaard.png": "c8974a9280d25ac945aeb144256ade4751e02557a66dd5f623220a70d24490cd",
+    "tekst-40-journaal/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "tekst-40-journaal/rapport.json.gz": "721070b984901cc350469170e1ccfecf92337453f3da2ff2798e3204cf619102",
+    "tekst-40-journaal/nieuw-na-laat-antwoord.png": "a75539d262aeb07ae1c7a6c73a819450fc39bedfb64db26b96b107f2d13e8529",
+    "tekst-40-journaal/invoer-redo.png": "9c2d9cc86910bb6a858a64c97a55b0d59701534c01cba434b689b3df77988b2c",
+    "tekst-40-journaal/proef.log.gz": "2ea87fdb4f6bdfae1420c2a04119d0c992b7aa6c40c284e2a23553c64671bbae",
+    "geheugen-40-journaal/herstel-aanbod-herstellen.png": "b08fd4a39aecf26bf0036f8be1f8f64affd2b441565bf4117ae7776dd3fb824a",
+    "geheugen-40-journaal/kopvoetlint.png": "cfec28a209d4da06fc42dd67112653bbd705c15c5be4df9c4dc31bed4270187a",
+    "geheugen-40-journaal/spelling-eerste-pagina.png": "cb64aa7308d564382e53f8726df2df4673f793c702286c247f651d219d9a8d3c",
+    "geheugen-40-journaal/herstel-aanbod-later.png": "b08fd4a39aecf26bf0036f8be1f8f64affd2b441565bf4117ae7776dd3fb824a",
+    "geheugen-40-journaal/framebasis.json.gz": "6b050f359f4ea086a78c2d322cc51af66d30f7269bb425a6e5c8c26acde96082",
+    "geheugen-40-journaal/spelling-hersteld-venster.png": "26a0f5312b417af07b03af30297c103ca6254ca35db3a20e2492efd644157b55",
+    "geheugen-40-journaal/getypt-pagina-500.png": "30e9a5dd6dd4c2b36da68ccc9526ec4dfd05ae357f4be807ab50ec78b3cdd9d9",
+    "geheugen-40-journaal/workerbron.json.gz": "55f3aa5fca95564dddc845c4fdd3286a454ae5465f6880b3bfb53f9a39d4934a",
+    "geheugen-40-journaal/spelling-kleiner-venster.png": "86a252c77f39a313ef03fcd7586e45ff17fba37687a698cec8b8d15453e4dc76",
+    "geheugen-40-journaal/programma.log.gz": "0cfe12894ff1459cefbebdefc70f8219fb0ff64e9d72626603e5372a45be95ce",
+    "geheugen-40-journaal/spelling-zoom-125.png": "8746ba205ceb5991e381d8cffdc338fa08b5ffaca9234701d6c848c23156a171",
+    "geheugen-40-journaal/spelling-laatste-pagina.png": "916bf1943fb741af8f62d5424b85a7262943d3490e6dfb0d672bdda9d8808bf7",
+    "geheugen-40-journaal/spelling-terug-in-document.png": "014448ae6e468a6780024ddace7f87b8d454ef862289a86bfef2b232ed345a94",
+    "geheugen-40-journaal/herstelde-kopie-bewerkt.png": "c6902cb14745f021d2efedc4fb0f974c693b5b77449455a724705a2ad5870a7d",
+    "geheugen-40-journaal/rapport.json.gz": "b0f2f1a786c0be50a23743fedde80058540e9a2a927b60e1a5dbfce0bd502c12",
+    "geheugen-40-journaal/startlint.png": "342af77a625fc5898376cbdf36040eb8ba8618040e6c9f48b96a6a19d3cb0bf7",
+    "geheugen-40-journaal/spelling-verborgen.png": "673381f6db2e1479ec19c3dfb8c3edeb50ea4839ba89314b129412248166194b",
+    "geheugen-40-journaal/proef.log.gz": "4eb4344ce2af8b49b86cbac69482886e3f424f3d93a05a3c3f9b3e9041bab633",
+    "acht-40-journaal/begin.png": "bdde1963931876d1100a02f254004e27fd59baab17b2c81ea54a8893fad52603",
+    "acht-40-journaal/sluitdialoog.png": "bf9b28c8493458466f448d97e103ca706a360d478ef917cbb2333abae5f85f4d",
+    "acht-40-journaal/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "acht-40-journaal/na-plakken.png": "0cdf3bcc16e607e0b964c9f5a7fab7b68e38ab3cde8e4f31434bc9198f701223",
+    "acht-40-journaal/nieuw-na-verwerpen.png": "f784bc804cf692813e111fb3454ecf9ccd8e44677034324da02d56b979172316",
+    "acht-40-journaal/rapport.json.gz": "b39e49714abc89161d58243685a99bac6faa636e6c449764bae3e44314792532",
+    "acht-40-journaal/proef.log.gz": "dc74780ea2b7768e8ef65875bd5f41786a5b5e86290152451f736adfd43e8c48",
+    "vervolginvoer-40-journaal/begin.png": "d4d8209b639863153ebe954c4a592506e72d9a6975ae10fed38012f9cbb102d2",
+    "vervolginvoer-40-journaal/sluitdialoog.png": "6e463e2ba8fc92f9d13adc45abcf6cc9343f53784d7043245173e2a4b684d83e",
+    "vervolginvoer-40-journaal/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "vervolginvoer-40-journaal/vervolginvoer.png": "dd97b6d27cec6c103a1f2bb273056d40a4df5af0f6e29a5f60cb8e3ecfb54aae",
+    "vervolginvoer-40-journaal/na-plakken.png": "84bcee6a779f635d715e07f806bcbcb654d6cf3b5962b988aa6e49f1217df1ec",
+    "vervolginvoer-40-journaal/nieuw-na-verwerpen.png": "4f3183ce2e5050477af6f275fa73b47c1485db2ecd8f436e4826fa7eb937cde4",
+    "vervolginvoer-40-journaal/rapport.json.gz": "e47dcc23cce8f02d1e3806ad14de0350516d5cdbeaf8f142a633406bc3d2cbdf",
+    "vervolginvoer-40-journaal/proef.log.gz": "a6ed8a5c39ebf2f05b4d34342a28b9080ac3fb7403ce490f05ec47b9056e4c1c",
+    "kleur-40-journaal/framebasis.json.gz": "6e23bac98b3f12bbf9e9c96c2c5768588493b0b50b376e3f466174110ec68a38",
+    "kleur-40-journaal/heropend.png": "1c4f2fb24b8028ef80607074ff5339b409e4595629f807d09fc5625f829b2321",
+    "kleur-40-journaal/kiezer-99c1f1.png": "3036378c2a91b2ff3b8df941549ca1d439c2c4a29b17529dd131bad44dc14219",
+    "kleur-40-journaal/programma.log.gz": "0d6971a10e256ebd4805ac8718438d04a75d10b3ae8ee76015ddf01c160e9dc7",
+    "kleur-40-journaal/kiezer-f6d32d.png": "9a50425a25e3c335f12bc0878ba7ec40a32fd934306a8a179ec900f6fed96653",
+    "kleur-40-journaal/rapport.json.gz": "75761fa3eac7dbc535048801940a2b03fcb0653da28f02c0b7b27de69412588d",
+    "kleur-40-journaal/kiezer-eerste-beeld-99c1f1.png": "d89063ef0e2fe862b31b429b774b09906850d632e9feaac1638aa09c85affe91",
+    "kleur-40-journaal/kiezer-eerste-beeld-f6d32d.png": "b38edb8c511d8802a7eeb46a2bba7896a850a6d76d645de67bebb1b0f0a05045",
+    "kleur-40-journaal/proef.log.gz": "9ef7f62d673c01d4e5e7c3b2b72293c53219c533608be07285c4f301ee2225dc",
+    "bewaren-40-journaal/begin.png": "822fa19313484f7c0b3824601f4990abef9c0ebc89f419915f7995ee90ed4249",
+    "bewaren-40-journaal/sluitdialoog.png": "26bd7a42c12196ffe901b8f7027cd6df8f6314de4d07a8276989987825e96678",
+    "bewaren-40-journaal/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "bewaren-40-journaal/na-plakken.png": "c8e7759b577b101bfb21ada8c018f9400fb1fec804c0c98c80992a42055cf6c5",
+    "bewaren-40-journaal/nieuw-na-verwerpen.png": "986d69a9fc8db0fd636b251b06ca117530b7802edbcfca85eb8fe1c4ef5141f9",
+    "bewaren-40-journaal/rapport.json.gz": "ac478f4398b5a12d1d920b6f10a5d81a7540ecd77710369d1c4d6f8c923d98ed",
+    "bewaren-40-journaal/proef.log.gz": "1d244fb7ad2d76df1e71dd6a8729e13c281c98810c476dee04a23f665c3a755d",
+    "tabelgrepen-40-journaal/na-slepen.png": "755a8db99de4eb918fcd02b35af5a36099ac31858df3969883b7ec18a807a721",
+    "tabelgrepen-40-journaal/heropend.png": "e96b3f3eda9c3fa323c8877ae6d87e61c0bc837ddf0ba9a953e0dc4893a791d4",
+    "tabelgrepen-40-journaal/programma.log.gz": "0d6971a10e256ebd4805ac8718438d04a75d10b3ae8ee76015ddf01c160e9dc7",
+    "tabelgrepen-40-journaal/voor-slepen.png": "bdde1963931876d1100a02f254004e27fd59baab17b2c81ea54a8893fad52603",
+    "tabelgrepen-40-journaal/rapport.json.gz": "18034754926b924b0b971ccbd477256f900527eab01d9d451e9d3135e986958f",
+    "tabelgrepen-40-journaal/proef.log.gz": "39e9d560740628bebf3dd6c12a5a24cd5ca73769844f5343f17351a3cae11fae",
+    "volgorde-40-journaal/snel-getypt-bewaard.png": "70a703a15501264437e254a41f0d43a0931937b04e9699a8f569e3b8811311ed",
+    "volgorde-40-journaal/plakken-redo.png": "5ba8771a2f929a3c80e6129984f98ec79b0ec3a0f1b8c0e4ec59b74a959fbb39",
+    "volgorde-40-journaal/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "volgorde-40-journaal/rapport.json.gz": "56296d3376aef1730d6810d33d07c3cbc8417c8c6bb0514a5d8d706c4a395f01",
+    "volgorde-40-journaal/nieuw-na-laat-antwoord.png": "994338e3eb776935fac00b64b9806008efc0d04fd03b2ceac0051ec04fc778b5",
+    "volgorde-40-journaal/proef.log.gz": "1321356aa552eae6a15c631fd1ac95daed2bddb334b1aa1a67fba0abdcf2ca9c",
+    "passief-journaal-39-voor/profiel.json.gz": "e2bbd42625575756e7830da25432a0cd2eefef013d42ed1d365728b5f788bafc",
+    "passief-journaal-39-voor/profiel.png": "0962e74f78128a2fcc6190c9c465fdae87d12beff575168015e7cb2b581b2084",
+    "passief-journaal-39-voor/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "passief-journaal-39-voor/eerste-gelijke-tekst.png": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+    "passief-journaal-39-voor/proef.log.gz": "d81a33cf4373daa0747b716a21d6fbab58dfbf17d0a1b1931e47bc6aa4b22e13",
+    "passief-journaal-40-eerste/profiel.json.gz": "693424f2719c41204719f2386c70d61745c571fc547e41366ea2ca996cb18712",
+    "passief-journaal-40-eerste/profiel.png": "0962e74f78128a2fcc6190c9c465fdae87d12beff575168015e7cb2b581b2084",
+    "passief-journaal-40-eerste/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "passief-journaal-40-eerste/eerste-gelijke-tekst.png": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+    "passief-journaal-40-eerste/proef.log.gz": "fbb4842777df9a53d20b3da26dcf21ab03a805dc15222867ee6cdcad57228069",
+    "passief-journaal-40-tweede/profiel.json.gz": "f2b53a7dc2a4c58e34936a79679902869e398c02768ee2bff26795a6b872f592",
+    "passief-journaal-40-tweede/profiel.png": "5fc35b98f557c8df258054aca31f0aecfbaaa54e35a60a579621c52e49b49386",
+    "passief-journaal-40-tweede/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "passief-journaal-40-tweede/eerste-gelijke-tekst.png": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+    "passief-journaal-40-tweede/proef.log.gz": "2bdb3c449cca0ca564a3ba5ee368e936f4b2af7a008aa7e2b2838832467219ab",
+    "passief-journaal-39-na/profiel.json.gz": "45dd2769f533a1b8afa5f32e16e0c3fce0889f2b7fa625a796a5c5ce42a99b7a",
+    "passief-journaal-39-na/profiel.png": "0962e74f78128a2fcc6190c9c465fdae87d12beff575168015e7cb2b581b2084",
+    "passief-journaal-39-na/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "passief-journaal-39-na/eerste-gelijke-tekst.png": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+    "passief-journaal-39-na/proef.log.gz": "3576e4fce09aeeace5e43967b0e392e8a0b087df4fe59da635725c85f7e6b2b5",
+    "rpc-bevestiging-40-journaal/profiel.json.gz": "92a9de8fbb00b4725321f5e2732ccfcc99f2fedfc2f09209bb5ca145cb0e08c4",
+    "rpc-bevestiging-40-journaal/profiel.png": "7df6be02203f64c3a5b1b664e07c233ae6cc0d1e2e13553ca11f5900511cce1b",
+    "rpc-bevestiging-40-journaal/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "rpc-bevestiging-40-journaal/proef.log.gz": "51bfcf7c0de3493ed84b8dd4d6f9b4852a6c765423201a31c3e1677881668d90",
+    "journaal-oud-voor.json.gz": "53b71c80819b09f516bbbfee55e2962763515435ff1d9c844358c48c8ec7669f",
+    "journaal-oud-voor.log.gz": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+    "journaal-nieuw-eerste.json.gz": "c825e44172174ea841852f4d15b490a527aa79ee6b5a35c4f48a9fb3a6b3188c",
+    "journaal-nieuw-eerste.log.gz": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+    "journaal-nieuw-tweede.json.gz": "5e6612cec55d4a232aa5411a3ec706af69a2058b1f9f1e093d96f3b8d0ef2788",
+    "journaal-nieuw-tweede.log.gz": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+    "journaal-oud-na.json.gz": "0c86f33faec00629d7012fe82ec6b60879c0ecfdbb0f88099c7a77e7963738e2",
+    "journaal-oud-na.log.gz": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+    "journaal-nieuw-checkpoints.json.gz": "c44ecbf980859fce55b42b5843ab635a0d1e7f9a31536af771e0a809a2daab38",
+    "journaal-nieuw-checkpoints.log.gz": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+    "rust-prototype-bronnen/identiteit.json.gz": "1681ec0f8791bd3eab3db840d47a1ddcb835715ddceb74c361836ef7d62716d2",
+    "rust-prototype-bronnen/native/Cargo.lock.gz": "efdd54f6de99ebee3a6534aa784179e82c5fceb168247b0c5a8c5aec3569d4c2",
+    "rust-prototype-bronnen/native/Cargo.toml.gz": "fdfef71cdf85156f0e8ed1b774fc765967b36e9521506215e1eb45d5befce049",
+    "rust-prototype-bronnen/native/crates/office-writer-plakken/Cargo.toml.gz": "a9e4116c72fcc1136c3b5e6cac5c1491b51e9a45148d957fe9c7c013dc82bf96",
+    "rust-prototype-bronnen/native/crates/office-writer-plakken/src/bronspiegel.rs.gz": "fea9021a3ff2558c4ef11bea281375f30afd0f83a29dd87e8b5f79e83951963f",
+    "rust-prototype-bronnen/native/crates/office-writer-plakken/examples/meet_bronkosten.rs.gz": "c9465529cd505ae1fdffaa360cdbee1e75f8cd2bfc25bf4d06a785ab4aa9a4b7",
+    "rust-prototype-bronnen/native/vendor/docx-edit/src/lib.rs.gz": "4dd00f583c6a5f9c85566bbb122435fcf0b74b03b3665e4ab75fc526da67c6e6",
+    "rust-prototype-bronnen/native/vendor/docx-edit/src/clipboard_batch.rs.gz": "b91a96be0b4f35d55699211d9f99cfa283a64087cc2c8d9dad9a907d24b3a8d1",
+    "rust-prototype-bronnen/native/vendor/docx-edit/src/clipboard_batch/confirmed_source.rs.gz": "cd6f2a4f8d37f27cd030453bc229305b20742f640e846458862b1697b3f560ce",
+    "journaal40-app-bronnen.json.gz": "91023f5d05657764ff3313ed4d61962320412039ebacfc6ea761cc3f627724e6",
+    "journaal40-applicatie.patch.gz": "3af3e10be208a7945e93a81ec50712b0a9a5c153c010029eed465eee4d1de3f2",
+    "journaal40-confirmed_source.rs.gz": "cd6f2a4f8d37f27cd030453bc229305b20742f640e846458862b1697b3f560ce",
+    "journaal40-proeven.json.gz": "5092ac5f8a9a2880e3398542bf4fea9d4974701dd1cbd5574c7f87531170c550",
+    "journaal40-proefuitkomsten.json.gz": "8968bb04ba4d5574a6687b620882da7f2f9967752a7497825f808f491f9eea63",
+    "journaal40-passieve-uitkomsten.json.gz": "a46a93db5c00f07116d14623545202f558d69cc50845e16daddd88fbf201c7b4",
+    "journaal40-rpc-uitkomst.json.gz": "c529d80ca32de34d746fa0e0e99fd8283aa705f9bff4382329c7442524da102a",
+    "journaal40-rustcontroles.json.gz": "2419218721554176eee78d6a69e1c7e641b038adba6e5151d2e06b60efc079c3",
+    "journaal40-rusttests.log.gz": "427b7026e1cee277e303c943b6244080cc08f8948478e73b9376deffc9108fbd",
+    "journaal40-clippy.log.gz": "fb78a5f61a87071d7d96c45bdb179875a2f615eb9d74fc73409cbcbd281e9861",
+    "journaal40-fmt.log.gz": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+    "journaal40-desktopbouw.log.gz": "cf9b376f1910dfe310896acf4788468b29a1a82832976694d1416aa8134ef5a6",
+    "journaal40-weekversie.log.gz": "ba867c81c92c4c2b948e994ccc305288701a57bab2815d29695582cb28929b57",
+    "journaal-frontend.log.gz": "a896309dcf54f2085f633ee47710bc64134a800257e6d48c3c82c2f024620b5a",
+    "journaal-typescript.log.gz": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+    "journaal-python.log.gz": "e5694d14f4408e523cedf14c80780ab64904b839bd6cfc6f6fb15710228dd843",
+    "journaal-python-hoofd.log.gz": "2c36a7c93ff8f2083624bb0cc633e12ead680d2d1cb01784324359557d7fecb0",
+    "journaal-bronkosten-uitkomsten.json.gz": "0d2491a7f8d0e83c75afe338e0aa00cd9a97282eeceb5afd6dbfac48e35623b4",
+    "journaal-meetbouw.log.gz": "eb0740124c13f9378c9b188d4b76de5bff1d340210627f0207e2f9dd9915972c",
+    "journaal-mengproef.log.gz": "083d0e8725dd56e09aba96d5b6b9d8d6916c7d1043f260035d33d44bb7245afb",
+    "journaal-eerste.log.gz": "697979be6cb88475a28d1c1d52bad216de82e78291f62933353db4b488bf564b",
+    "journaal-tweede.log.gz": "2f9c86996919a2e64d45bd293afcdad38db26eee47d1771d40f57740b75c79b2",
+    "journaal-derde.log.gz": "04c941895173d8c434621bb1f047976855ad66091f91b2911e597f9fecd1c8c9",
+    "journaal-grenzen.log.gz": "b16b4b21aaf0d01c295e60b3655bdfc6535c697751501dc19cfea5a108cf68bd",
+    "journaal-oude-statische-cache-opruiming.json.gz": "776bef1599f3f854a9498524b155b446660250b3ff7106d42abb3d6b8141d672",
+    "journaal-incremental-opruiming.json.gz": "0fd986af2a13310ebe685f467eb8eb72ebfa49d8ff6403acad0eb20b00e8d1f6",
+    "voer-journaal40-proeven.py.gz": "978572f3f5858827c33b8b1bf398e8e6d5d0217d958f39a8e8b12f42a86b2151",
+    "voer-journaal40-passieve-metingen.py.gz": "1616afa2f5d832cb87e145de4a2e62f8026469c3113baa7e0c847a189c65c412",
+    "meet-passief-doortypen-native.py.gz": "cd2b45747f658acd46f96626b210bcfd72783e30c61b1eabd757356fe6c919ef",
+    "meet-rpc-native.py.gz": "783ff7a323538d092e3e4ed44fbce0bd79e25f2c4d29cef0be5c68f3aa4227ce",
+    "bewaar-journaal40-proeven.py.gz": "94bd1ac7c3a22afe927c3163b9160d0400074562895a192e9efb1259d35a68b6",
+    "referentie39-zeven-platformen.json.gz": "08e3f08caa45380ec42cd425b8677baba2d084ef2ad92d5ae66f4374d784ddcf",
+    "journaal40-warme-auteurs.log.gz": "8590416eb40338cf5c197c531647d0dadf553323aafcdf505fd9ef32d4fbd345",
+    "warme-auteurs-regressie.rs.gz": "17193517bf2166fc307d43a5118e1c798ebb82d08b6fd5def942e5d6594a62e7",
+    "journaal40-rastergroepen.json.gz": "d9aa1a8411c05fa200d9081be502d509408b62dcfc7533e8a8dd9c775ff1cd64",
+    "nawacht2-40-controle-voor/profiel.json.gz": "926863867903b5e803dec84663ef1734277f26a3dbd12254cbe17ee8033b5e30",
+    "nawacht2-40-controle-voor/profiel.png": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef",
+    "nawacht2-40-controle-voor/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "nawacht2-40-controle-voor/eerste-gelijke-tekst.png": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+    "nawacht2-40-controle-voor/proef.log.gz": "cf922616b9965dbb57ac53c2720dc487ebc8804b0336b625920ab1920e3c19f7",
+    "nawacht2-40-yield-0/profiel.json.gz": "401fa56c85a6437340c0ee09c044e6e939cbd1ea6769b6700826c079eb191326",
+    "nawacht2-40-yield-0/profiel.png": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef",
+    "nawacht2-40-yield-0/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "nawacht2-40-yield-0/eerste-gelijke-tekst.png": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+    "nawacht2-40-yield-0/proef.log.gz": "e567020168fbfec23d877f8636f5a489bddb5e23b392bd51f913fcdcfdca98f7",
+    "nawacht2-40-yield-16/profiel.json.gz": "64609d1bb0e204780d8deefcb064dd4cf37bfc64b72734e83f859fa94ad16078",
+    "nawacht2-40-yield-16/profiel.png": "0962e74f78128a2fcc6190c9c465fdae87d12beff575168015e7cb2b581b2084",
+    "nawacht2-40-yield-16/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "nawacht2-40-yield-16/eerste-gelijke-tekst.png": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+    "nawacht2-40-yield-16/proef.log.gz": "0ff11ffedb4f18c1a4387323ff137e004b110b33e06182fe0a40120ed9446f7b",
+    "nawacht2-40-yield-64/profiel.json.gz": "85ab4c81098bfc60a659aeba3e3ed5d27b05b91df4e5f3602953e0e801aaf115",
+    "nawacht2-40-yield-64/profiel.png": "e168d203efda6cbe5c5d92545adb98df08ecb0f05bb51870c118b6d2313dd310",
+    "nawacht2-40-yield-64/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "nawacht2-40-yield-64/eerste-gelijke-tekst.png": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+    "nawacht2-40-yield-64/proef.log.gz": "b96b2d5a10f474759896997babd5438852ab46184184c1ce5911fcea9ed0dd87",
+    "nawacht2-40-controle-na/profiel.json.gz": "0a98163b6c071a42663127d57bd09a94423f738a9eab542d027bcf907e26209a",
+    "nawacht2-40-controle-na/profiel.png": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef",
+    "nawacht2-40-controle-na/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "nawacht2-40-controle-na/eerste-gelijke-tekst.png": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+    "nawacht2-40-controle-na/proef.log.gz": "9c5dc5f824effefdfb9827ee62e4ac2b64e863a6102089f6abe5b2c2a8dff398",
+    "meet-passief-nawacht-native.py.gz": "ef8a7ee3c4dc4f3499cf1d168d0d8f9167ea04c3bda043b48a00f9214d40b8a2",
+    "voer-nawacht40-diagnose.py.gz": "e6dece1ad5dfca27e66b5e0df7045f0286a50e34e4e52caaa49f9152503f5534",
+    "meet-passief-nawacht-native-v2.py.gz": "0b7ae2f0fc1750fd9eec7dda777e58ce59a12a3d1f2b609f078ead282c59d78c",
+    "voer-nawacht40-diagnose-v2.py.gz": "ffad21181a72090f7e05fc5bda99633a6cdc925d7355a4e7a3ac11ddeb839d56",
+    "nawacht40-uitkomsten.json.gz": "19811068d46768c45d0c1789b7e1880ed1ac01e5cdbd878806dd26887ed90ba8",
+    "nawacht40-v2-uitkomsten.json.gz": "8ecffa2c3d84cd23aff4052b115b24af606fddaa488a0b4e4add1283eb785764",
+    "nawacht-40-controle-voor.log.gz": "7b2da38dec1132047b4604a7b187b2ae0d694430126233e5262c7777a514f4fc",
+    "afgekeurde-diagnoseopzet/profiel.json.gz": "073a913729a38cf427af7fab713856597fa9ffc1caa4136dd8477a9774d49585",
+    "afgekeurde-diagnoseopzet/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "rust-prototype-bronnen/LICENSE-UPSTREAM.gz": "d849ab3e2eb8093dd6a89a03dacba46b57504ea98a5915b90aba16571a8cfba4"
+  },
+  "functioneel": [
+    {
+      "naam": "renderer-40-journaal",
+      "code": 0,
+      "seconden": 33.67,
+      "script_sha256": "c62f0357d66e4114974f988832edbab139eae8cc9b7f56702e8e473a77e5e902"
+    },
+    {
+      "naam": "lang-40-journaal",
+      "code": 0,
+      "seconden": 60.9,
+      "script_sha256": "74e68d99decf1c7f076cb719d2794ddb61d37a163d3e63c1d38dba48bc5dcdd3"
+    },
+    {
+      "naam": "tekst-40-journaal",
+      "code": 0,
+      "seconden": 25.77,
+      "script_sha256": "b1590d04f779d906f225d867e4c0196ccb62e96784c4857c86a03861ad8a5627"
+    },
+    {
+      "naam": "geheugen-40-journaal",
+      "code": 0,
+      "seconden": 140.94,
+      "script_sha256": "74e68d99decf1c7f076cb719d2794ddb61d37a163d3e63c1d38dba48bc5dcdd3"
+    },
+    {
+      "naam": "acht-40-journaal",
+      "code": 0,
+      "seconden": 72.27,
+      "script_sha256": "29a478de731d766687d0a6d0d32788fa900a4c7ab905c53c86a28581076b4f63"
+    },
+    {
+      "naam": "vervolginvoer-40-journaal",
+      "code": 0,
+      "seconden": 55.12,
+      "script_sha256": "29a478de731d766687d0a6d0d32788fa900a4c7ab905c53c86a28581076b4f63"
+    },
+    {
+      "naam": "kleur-40-journaal",
+      "code": 0,
+      "seconden": 33.86,
+      "script_sha256": "e872784e5a4e6dd5d6a3842150e7746d374e17f8b9373613ca579c197a99dded"
+    },
+    {
+      "naam": "bewaren-40-journaal",
+      "code": 0,
+      "seconden": 23.97,
+      "script_sha256": "29a478de731d766687d0a6d0d32788fa900a4c7ab905c53c86a28581076b4f63"
+    },
+    {
+      "naam": "tabelgrepen-40-journaal",
+      "code": 0,
+      "seconden": 30.01,
+      "script_sha256": "64d0e30e5527caa0a027902d21a241d109f10abb2be8aec67844cc9d017e3966"
+    },
+    {
+      "naam": "volgorde-40-journaal",
+      "code": 0,
+      "seconden": 28.55,
+      "script_sha256": "7a036f1fbe9c334f42bad331b8cf0aa7edede53c9e883f245697eb126c114f1a"
+    }
+  ],
+  "passieve_metingen": [
+    {
+      "getekende_tekst_ms": 22986,
+      "invoer_en_inspectie_ms": 23234,
+      "toetsen_verzonden_ms": 3892,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "programma_sha256": "f25c6c3395781209f0d1760c035110c0e846f0b1e394d90860d5e8a526ccc75d",
+      "layout_na_opname": {
+        "final": true,
+        "versie_actueel": true,
+        "layout_actief": true,
+        "paginas": 129,
+        "wacht_ms": 0
+      },
+      "naam": "passief-journaal-39-voor"
+    },
+    {
+      "getekende_tekst_ms": 29891,
+      "invoer_en_inspectie_ms": 30210,
+      "toetsen_verzonden_ms": 3878,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "programma_sha256": "16cc2a57d1a283eedfc9ab008add1f18cef8345b205df8105259d8466b95eb7e",
+      "layout_na_opname": {
+        "final": true,
+        "versie_actueel": true,
+        "layout_actief": true,
+        "paginas": 129,
+        "wacht_ms": 1
+      },
+      "naam": "passief-journaal-40-eerste"
+    },
+    {
+      "getekende_tekst_ms": 30590,
+      "invoer_en_inspectie_ms": 30838,
+      "toetsen_verzonden_ms": 3883,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "programma_sha256": "16cc2a57d1a283eedfc9ab008add1f18cef8345b205df8105259d8466b95eb7e",
+      "layout_na_opname": {
+        "final": true,
+        "versie_actueel": true,
+        "layout_actief": true,
+        "paginas": 129,
+        "wacht_ms": 1
+      },
+      "naam": "passief-journaal-40-tweede"
+    },
+    {
+      "getekende_tekst_ms": 23119,
+      "invoer_en_inspectie_ms": 23407,
+      "toetsen_verzonden_ms": 3871,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "programma_sha256": "f25c6c3395781209f0d1760c035110c0e846f0b1e394d90860d5e8a526ccc75d",
+      "layout_na_opname": {
+        "final": true,
+        "versie_actueel": true,
+        "layout_actief": true,
+        "paginas": 129,
+        "wacht_ms": 0
+      },
+      "naam": "passief-journaal-39-na"
+    }
+  ],
+  "rust_prototype": [
+    {
+      "naam": "journaal-oud-voor",
+      "ronden": 20,
+      "warm_mediaan_ms": 68.144314,
+      "warm_max_ms": 71.517698
+    },
+    {
+      "naam": "journaal-nieuw-eerste",
+      "ronden": 20,
+      "warm_mediaan_ms": 17.610609,
+      "warm_max_ms": 20.710081
+    },
+    {
+      "naam": "journaal-nieuw-tweede",
+      "ronden": 20,
+      "warm_mediaan_ms": 17.296956,
+      "warm_max_ms": 20.453198
+    },
+    {
+      "naam": "journaal-oud-na",
+      "ronden": 20,
+      "warm_mediaan_ms": 66.939882,
+      "warm_max_ms": 70.399997
+    },
+    {
+      "naam": "journaal-nieuw-checkpoints",
+      "ronden": 80,
+      "warm_mediaan_ms": 16.808021,
+      "warm_max_ms": 64.585107
+    }
+  ],
+  "grenzen": [
+    "Eigen Linux-testomgeving met afzonderlijk profiel, DBus en Xvfb; geen algemeen platform-, FPS- of volledige suitebewijs.",
+    "64 MiB telt geserialiseerd checkpoint, bevestigde updates en onbevestigde delta; geen bovengrens voor totale heapkosten.",
+    "Geen issue of migratie-acceptatievlag gesloten. Volledige Rust-interface en suiteacceptatie blijven open.",
+    "Losse Rust-metingen zijn een afzonderlijk prototype op alpha54, vóór alleen exportregelopmaak en versieverhoging; geen definitieve desktopmeting."
+  ],
+  "rpc_meting": {
+    "naam": "rpc-bevestiging-40-journaal",
+    "batches": 102,
+    "tekens": 351,
+    "rust_totaal_ms": 3533,
+    "invoer_en_inspectie_ms": 18858,
+    "wachttijd_na_verzenden_ms": 14914,
+    "exacte_bevestigingen": 101
+  },
+  "rastervergelijking": {
+    "passief-journaal-39-voor": {
+      "pixels": 0,
+      "bbox": null,
+      "documentpixels": 0,
+      "document_zonder_cursorpixels": 0,
+      "sha256": "0962e74f78128a2fcc6190c9c465fdae87d12beff575168015e7cb2b581b2084"
+    },
+    "passief-journaal-40-eerste": {
+      "pixels": 0,
+      "bbox": null,
+      "documentpixels": 0,
+      "document_zonder_cursorpixels": 0,
+      "sha256": "0962e74f78128a2fcc6190c9c465fdae87d12beff575168015e7cb2b581b2084"
+    },
+    "passief-journaal-40-tweede": {
+      "pixels": 38,
+      "bbox": [
+        6,
+        33,
+        1120,
+        997
+      ],
+      "documentpixels": 30,
+      "document_zonder_cursorpixels": 0,
+      "sha256": "5fc35b98f557c8df258054aca31f0aecfbaaa54e35a60a579621c52e49b49386",
+      "groepen": [
+        {
+          "pixels": 30,
+          "bbox": [
+            492,
+            349,
+            494,
+            364
+          ]
+        },
+        {
+          "pixels": 3,
+          "bbox": [
+            1118,
+            995,
+            1120,
+            997
+          ]
+        },
+        {
+          "pixels": 2,
+          "bbox": [
+            6,
+            159,
+            7,
+            161
+          ]
+        },
+        {
+          "pixels": 1,
+          "bbox": [
+            73,
+            160,
+            74,
+            161
+          ]
+        },
+        {
+          "pixels": 1,
+          "bbox": [
+            125,
+            33,
+            126,
+            34
+          ]
+        },
+        {
+          "pixels": 1,
+          "bbox": [
+            62,
+            33,
+            63,
+            34
+          ]
+        }
+      ]
+    },
+    "passief-journaal-39-na": {
+      "pixels": 0,
+      "bbox": null,
+      "documentpixels": 0,
+      "document_zonder_cursorpixels": 0,
+      "sha256": "0962e74f78128a2fcc6190c9c465fdae87d12beff575168015e7cb2b581b2084"
+    }
+  },
+  "docx_behoud": {
+    "referentie": "acht-39-begrensd",
+    "kandidaat": "acht-40-journaal",
+    "body_met_opmaak_sha256": "0808d3dcf34c8251d371d9e4c6eda470ed2597acd850062b5b5f70169333a302",
+    "normalisatie": "Alleen paraId/textId en rsid-attributen verwijderd; tekst, run- en alineaopmaak, hyperlinks en tabelstructuur blijven in de bodyhash.",
+    "exact": true
+  },
+  "referentie39_zeven_edities": {
+    "run": 41881398377,
+    "resultaat": "Linux, Windows en macOS slagen; publiceren overgeslagen. Dit betreft referentie39, geen platformacceptatie van kandidaat40."
+  },
+  "aanvullende_regressie": {
+    "geslaagd": false,
+    "log": "journaal40-warme-auteurs.log.gz",
+    "testbron": "warme-auteurs-regressie.rs.gz",
+    "fout": "Delta op stap 1: de warme replica gebruikt revisie-ID 21:1, de volledige reconstructie 21:0. Tellerherstel en revisie-identiteit vragen nader onderzoek; nog geen bewezen reparatie."
+  },
+  "controles": {
+    "rust_unit": 30,
+    "rust_integratie": 2,
+    "frontend": 1819,
+    "frontend_voor_uitsluitend_versieverhoging": true,
+    "python_hoofd": 77,
+    "python_native": 9,
+    "native_functioneel": 10,
+    "passieve_rasterronden": 4,
+    "rpc_ronden": 1,
+    "rustfmt_zes_ci_pakketten": true,
+    "typescript_productiebouw": true,
+    "productiebouw": true,
+    "aanvullende_regressie_mislukt": 1,
+    "clippy_writer_all_targets_voor_extra_regressietest": true
+  },
+  "visueel_bekeken": [
+    "lang-40-journaal/getypt-pagina-500.png",
+    "passief-journaal-39-voor/profiel.png",
+    "passief-journaal-40-eerste/profiel.png",
+    "passief-journaal-40-tweede/profiel.png"
+  ],
+  "eventlus_diagnose": {
+    "grens": "Opzettelijke wijziging uitsluitend in eigen testprofiel, na RPC-JSON en vóór overname. Geen productcode of definitieve prestatieacceptatie. Allezelfde351tekensbron; geen opheffing van afkeuring45.40.",
+    "metingen": [
+      {
+        "naam": "nawacht2-40-controle-voor",
+        "diagnostische_nawacht_ms": -1,
+        "getekende_tekst_ms": 29509,
+        "batches": 101,
+        "broncontrole": {
+          "verhalen": 1537,
+          "alinea_en_celteksten": 3329,
+          "exact": true
+        }
+      },
+      {
+        "naam": "nawacht2-40-yield-0",
+        "diagnostische_nawacht_ms": 0,
+        "getekende_tekst_ms": 29135,
+        "batches": 98,
+        "broncontrole": {
+          "verhalen": 1537,
+          "alinea_en_celteksten": 3329,
+          "exact": true
+        }
+      },
+      {
+        "naam": "nawacht2-40-yield-16",
+        "diagnostische_nawacht_ms": 16,
+        "getekende_tekst_ms": 24302,
+        "batches": 77,
+        "broncontrole": {
+          "verhalen": 1537,
+          "alinea_en_celteksten": 3329,
+          "exact": true
+        }
+      },
+      {
+        "naam": "nawacht2-40-yield-64",
+        "diagnostische_nawacht_ms": 64,
+        "getekende_tekst_ms": 23752,
+        "batches": 65,
+        "broncontrole": {
+          "verhalen": 1537,
+          "alinea_en_celteksten": 3329,
+          "exact": true
+        }
+      },
+      {
+        "naam": "nawacht2-40-controle-na",
+        "diagnostische_nawacht_ms": -1,
+        "getekende_tekst_ms": 28443,
+        "batches": 95,
+        "broncontrole": {
+          "verhalen": 1537,
+          "alinea_en_celteksten": 3329,
+          "exact": true
+        }
+      }
+    ],
+    "eerste_opzet": "Mislukt vóór typen: ontbrekend return true levert undefined op, daardoor kan de asynchrone inspector zijn resultaat niet waarnemen. Aparte v2 met expliciet resultaat; limieten en inhoudsassertions behouden. Originele foutlog en script apart bewaard."
+  },
+  "migratie": {
+    "gebieden": 10,
+    "onvoltooide_acceptatievlaggen": 30,
+    "gesloten_door_deze_proef": 0
+  },
+  "open_issues_na_proef": 118
+}

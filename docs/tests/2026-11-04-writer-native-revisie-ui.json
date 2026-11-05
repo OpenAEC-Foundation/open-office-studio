@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "versie": "2026.45.43",
+  "programma_sha256": "3ea2fb22c4e938395e6e9a99b3d5d80f10772faaf9d29275621b9249d5df29af",
+  "status": "NIET AANGESLOTEN: native revisie-GUI-flow niet bewezen. Beide aanvullende proeven afgekeurd; bestaande SDK-route blijft actief.",
+  "grenzen": [
+    "Eerste proef roept provider en een publicatiecallback rechtstreeks aan, buiten de volledige SDK-mutatiecyclus; bron heeft twee native revisies, weergave blijft achter. Geen bewezen productoorzaak.",
+    "Tweede proef gebruikt ClipboardEvent en wijzigingsmodus; bron toont twee SDK-revisies van Unknown author, geen native RPC. De actuele vastgezette invoer- en plakcallbacks sluiten suggesting expliciet van native uit.",
+    "Dit wijzigt geen testgrens of migratievlag en bewijst geen native revisiegebruikersflow."
+  ],
+  "bestanden": {
+    "revisies-43-native-auteurs/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "revisies-43-native-auteurs/afgekeurd.png": "70b39e818d1b7bed05ab083e95992b4e72f3d2c6db566683f5138232f9a9b87c",
+    "revisies-43-native-auteurs/rapport.json.gz": "6d8114864d7af20fa050a40fc00413cbdd49106263df9cd948482855a6c9dc83",
+    "revisies-43-native-auteurs/proef.log.gz": "57bc0d3cfa3a09b9377184e8b83fd5cfb98b85b590d620b29fe73c2ebff157b9",
+    "revisies-43-native-gebeurtenis/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "revisies-43-native-gebeurtenis/afgekeurd.png": "00e85cb0fbc9bdbf5b126c600d23b386891c36305a75872d0d1b1493941d2868",
+    "revisies-43-native-gebeurtenis/rapport.json.gz": "1de16b6ec533bf21ea5aff78dd73e724e20b8952945b25442a82166df068f68a",
+    "revisies-43-native-gebeurtenis/proef.log.gz": "b584bcbc362516ab9d1b398aa65b2e4c75a47e2be4cd9d2bbc33b8ca38e3a55d",
+    "revisies43-eerste-auteur-GUI.py.gz": "fa81a85d79237b2367dac1e639c558abacf7a32e89bad89eb67fbb99ea8724b8",
+    "revisies43-tweede-auteur-GUI.py.gz": "f4a2acd9b8e1973a04eb5e27c557f2cc452f05c6719f628963e60ceb8eeeee1a"
+  }
+}

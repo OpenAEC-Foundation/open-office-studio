@@ -1,0 +1,10 @@
+
+(open-office-studio:32812): dbind-WARNING **: 17:38:51.381: AT-SPI: Error retrieving accessibility bus address: org.freedesktop.DBus.Error.ServiceUnknown: The name org.a11y.Bus was not provided by any .service files
+Unexpected errors compiling sksl_shared:
+
+error: 1: integer is too large: 2
+...}return b;}$pure half4 $interpolated_to_rgb_unpremul(half4 a,int b,int c){if(bool(c))switch(b){case 2:;case 3:;case 4:a=unpremul(a);break;case 5:;case 6:;case 7:;case 9:;case 10:a=$unpremul_polar(a);br...
+                                                                                                       ^
+1 error
+
+./Source/ThirdParty/skia/src/sksl/SkSLModuleLoader.cpp:157: fatal error: "Unable to load module sksl_shared"

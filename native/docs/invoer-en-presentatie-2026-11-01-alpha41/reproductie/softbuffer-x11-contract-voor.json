@@ -1,0 +1,23 @@
+{
+  "opdracht": [
+    "rustc",
+    "--edition",
+    "2024",
+    ".local/controle-2026-10-31/softbuffer-flush-voorproef/src/contract.rs",
+    "-L",
+    "dependency=native/target/debug/deps",
+    "-o",
+    ".local/controle-2026-10-31/softbuffer-x11-contract-voor",
+    "--extern",
+    "raw_window_handle=native/target/debug/deps/libraw_window_handle-2fbc8c535bf8ee17.rlib",
+    "--extern",
+    "x11rb=native/target/debug/deps/libx11rb-6c7b57b0a86730b8.rlib",
+    "--extern",
+    "softbuffer=native/target/debug/deps/libsoftbuffer-5d65d40f07ccb479.rlib"
+  ],
+  "programma_sha256": "3b6ea95f8770caa851c51031e33e5088a51bc27ff6681496c1daa487d0e92c5d",
+  "fixture_sha256": "429d019596fcca89bb485f41cef331516228f56dc5dfebdc26d59367bbe7210d",
+  "exitcode": 101,
+  "verwachte_functionele_afkeuring": true,
+  "omvang": "Exact dezelfde contractfixture tegenover de oorspronkelijke suite-afhankelijkheid; afzonderlijk diagnoseprogramma, niet geteld als rootwerkruimtetest."
+}

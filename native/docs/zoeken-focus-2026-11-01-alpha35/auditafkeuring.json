@@ -1,0 +1,9 @@
+{
+  "geslaagd": false,
+  "eerste_bewijsaudit": "bewijsaudit-eerste.log",
+  "oorzaak": "De parser verwachtte na iedere git diff --check-melding een regel met +. Bij new blank line at EOF geeft Git uitsluitend de melding; bij trailing whitespace volgt wel de betreffende regel.",
+  "correctie": "De hertestparser onderscheidt exact deze twee diagnostiekvormen. Alle bron-, index-, kopie-, patch-, referentie- en beeldcontroles blijven ongewijzigd vereist; uitsluitend geauthenticeerde ongewijzigde ruwe logs/patches kunnen als exacte uitzondering worden geregistreerd.",
+  "eerste_auditbron": "audit-alpha35.py",
+  "hertestbron": "audit-alpha35-hertest.py",
+  "oorspronkelijk_diagnostieklog_sha256": "70c328c289629b53551492ed78c71fcdce68a4a7319227aadcd52ee53c8b3e1b"
+}

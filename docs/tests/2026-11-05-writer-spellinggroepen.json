@@ -1,0 +1,656 @@
+{
+  "datum": "2026-11-05",
+  "versie": "2026.45.48",
+  "rustwerkruimte": "2026.45.0-alpha.57",
+  "programma_sha256": "f4a601f74375afe406750166010c809774225a44912288e866354f580478a784",
+  "wijziging": "Spelling leest maximaal 32 verhalen via één bestaande Rust/Wasm-readStories-transactie; onderbreekbare volledige terugval bij afkapping, geen gedeeltelijke of gemengde publicatie.",
+  "controles": {
+    "frontend": {
+      "tests": 1850,
+      "bestanden": 177,
+      "geslaagd": true
+    },
+    "typescript": {
+      "exitcode": 0,
+      "terminale_sessie": 69305
+    },
+    "python": 77,
+    "rust_writer": 35,
+    "engines": "geslaagd",
+    "opdrachten": 10,
+    "weekversie": "2026-W45.48",
+    "productiebouw": "geslaagd",
+    "native_scenarios": 12,
+    "geheugenrondes": 20
+  },
+  "regressie": {
+    "oude_module": "8 van 22 gerichte gevallen falen",
+    "nieuwe_module": "22 gerichte gevallen, twee echte spelling-/Wasm-vergelijkingen en drie meethulpgevallen slagen",
+    "tests_na_bouw": "De nieuwe meethulp en contextbewaring zijn na de runtimebouw toegevoegd; de definitieve 1850/177 frontendronde, TSC en 77 Python-tests zijn daarna uitgevoerd. Runtimehashes blijven exact."
+  },
+  "meetproef_afkeuring": {
+    "oorspronkelijk": "Oude probe telt alleen readParagraphs en mist de nieuwe readStories-aanvragen; eerste toets ten onrechte op nul telling. Bron en structuur waren wel exact.",
+    "herstel": "Beide leesmethoden tellen daadwerkelijke aangevraagde verhalen; bestaande onderbreekbaarheids-/bron-/structuur-/volledige-spellingasserties behouden.",
+    "hertest_48": {
+      "eerste_toets_na_aangevraagde_verhalen": 384,
+      "verhalen": 1537,
+      "alinea_aantal_na_invoer": 3329,
+      "celverhalen_na_invoer": 1536,
+      "geslaagd": true
+    },
+    "controle_47": "Dezelfde bijgewerkte native proef slaagt op de oude 47-ELF met de eerste toets na 64 aangevraagde verhalen."
+  },
+  "snelheid": {
+    "metingen": [
+      {
+        "naam": "passief-spelling-47-voor",
+        "ms": 22991,
+        "programma_sha256": "335173aeb33cc483a753d9812db6b6f16a90320b6ee78ef09322b6eb7e5f6c04",
+        "broncontrole": {
+          "verhalen": 1537,
+          "alinea_en_celteksten": 3329,
+          "exact": true
+        },
+        "documentpixels": {
+          "roi": [
+            320,
+            210,
+            1140,
+            950
+          ],
+          "uitgesloten_cursor": [
+            491,
+            347,
+            496,
+            366
+          ],
+          "verschillende_pixels": 0,
+          "bbox": null
+        }
+      },
+      {
+        "naam": "passief-spelling-48-eerste",
+        "ms": 21880,
+        "programma_sha256": "f4a601f74375afe406750166010c809774225a44912288e866354f580478a784",
+        "broncontrole": {
+          "verhalen": 1537,
+          "alinea_en_celteksten": 3329,
+          "exact": true
+        },
+        "documentpixels": {
+          "roi": [
+            320,
+            210,
+            1140,
+            950
+          ],
+          "uitgesloten_cursor": [
+            491,
+            347,
+            496,
+            366
+          ],
+          "verschillende_pixels": 0,
+          "bbox": null
+        }
+      },
+      {
+        "naam": "passief-spelling-48-tweede",
+        "ms": 21974,
+        "programma_sha256": "f4a601f74375afe406750166010c809774225a44912288e866354f580478a784",
+        "broncontrole": {
+          "verhalen": 1537,
+          "alinea_en_celteksten": 3329,
+          "exact": true
+        },
+        "documentpixels": {
+          "roi": [
+            320,
+            210,
+            1140,
+            950
+          ],
+          "uitgesloten_cursor": [
+            491,
+            347,
+            496,
+            366
+          ],
+          "verschillende_pixels": 0,
+          "bbox": null
+        }
+      },
+      {
+        "naam": "passief-spelling-47-na",
+        "ms": 23430,
+        "programma_sha256": "335173aeb33cc483a753d9812db6b6f16a90320b6ee78ef09322b6eb7e5f6c04",
+        "broncontrole": {
+          "verhalen": 1537,
+          "alinea_en_celteksten": 3329,
+          "exact": true
+        },
+        "documentpixels": {
+          "roi": [
+            320,
+            210,
+            1140,
+            950
+          ],
+          "uitgesloten_cursor": [
+            491,
+            347,
+            496,
+            366
+          ],
+          "verschillende_pixels": 0,
+          "bbox": null
+        }
+      }
+    ],
+    "gemiddeld_oud_ms": 23210.5,
+    "gemiddeld_nieuw_ms": 21927.0,
+    "verhouding_nieuw_oud": 0.9447017513625299,
+    "verschil_procent": -5.529824863747013,
+    "grens": "Eén zware bron/pc, vier ronden; geen algemene responsiviteits- of volledige UI-/suiteacceptatie."
+  },
+  "native": [
+    {
+      "naam": "renderer-48-spelling",
+      "geslaagd": true,
+      "programma_sha256": "f4a601f74375afe406750166010c809774225a44912288e866354f580478a784",
+      "script_sha256": "c62f0357d66e4114974f988832edbab139eae8cc9b7f56702e8e473a77e5e902",
+      "rapport_sha256": "22752643d1d48ef0b48b0377450116e70d9d0f0679631927438516a884c93e82"
+    },
+    {
+      "naam": "lang-48-spelling",
+      "geslaagd": true,
+      "programma_sha256": "f4a601f74375afe406750166010c809774225a44912288e866354f580478a784",
+      "script_sha256": "74e68d99decf1c7f076cb719d2794ddb61d37a163d3e63c1d38dba48bc5dcdd3",
+      "rapport_sha256": "2bd8e98ac99a3eb303b00e38c32738f104af2147eb05ab4766ffcbb1d4de1d0b"
+    },
+    {
+      "naam": "tekst-48-spelling",
+      "geslaagd": true,
+      "programma_sha256": "f4a601f74375afe406750166010c809774225a44912288e866354f580478a784",
+      "script_sha256": "b1590d04f779d906f225d867e4c0196ccb62e96784c4857c86a03861ad8a5627",
+      "rapport_sha256": "692f901ce9707227c22320274ec221b6cf3d9bc0e96e16d688e88c99a0a2dc9b"
+    },
+    {
+      "naam": "geheugen-48-spelling",
+      "geslaagd": true,
+      "programma_sha256": "f4a601f74375afe406750166010c809774225a44912288e866354f580478a784",
+      "script_sha256": "74e68d99decf1c7f076cb719d2794ddb61d37a163d3e63c1d38dba48bc5dcdd3",
+      "rapport_sha256": "c52d03d35af4374063b1f6d517a3068aa478bf8cfbfd2485f02cae38f9fc7700"
+    },
+    {
+      "naam": "acht-48-spelling",
+      "geslaagd": true,
+      "programma_sha256": "f4a601f74375afe406750166010c809774225a44912288e866354f580478a784",
+      "script_sha256": "29a478de731d766687d0a6d0d32788fa900a4c7ab905c53c86a28581076b4f63",
+      "rapport_sha256": "572f1fafabdff6d4be125a6e1457514ee5d6c294a6dd732aaf126a408be06d62"
+    },
+    {
+      "naam": "vervolginvoer-48-groepsmeting",
+      "geslaagd": true,
+      "programma_sha256": "f4a601f74375afe406750166010c809774225a44912288e866354f580478a784",
+      "script_sha256": "6f8f69f40536c79f6c151e00e3501c994a4b42efa4c0ccad48fff7f1d4fad53f",
+      "rapport_sha256": "9039700de9e67d45f836a7d87915f63d7ae9f7961d78de11915755be8ee16364"
+    },
+    {
+      "naam": "kleur-48-spelling",
+      "geslaagd": true,
+      "programma_sha256": "f4a601f74375afe406750166010c809774225a44912288e866354f580478a784",
+      "script_sha256": "e872784e5a4e6dd5d6a3842150e7746d374e17f8b9373613ca579c197a99dded",
+      "rapport_sha256": "c91bfba2fbd1dd956e88b6b8a38234ac0ab7c24399d3e2b580d540cf4e9b899c"
+    },
+    {
+      "naam": "bewaren-48-spelling",
+      "geslaagd": true,
+      "programma_sha256": "f4a601f74375afe406750166010c809774225a44912288e866354f580478a784",
+      "script_sha256": "6f8f69f40536c79f6c151e00e3501c994a4b42efa4c0ccad48fff7f1d4fad53f",
+      "rapport_sha256": "2d4aec57c52df14c6c6fc5af5579f31daec55ee0cdbef08cfc0fbd4da032e20b"
+    },
+    {
+      "naam": "tabelgrepen-48-spelling",
+      "geslaagd": true,
+      "programma_sha256": "f4a601f74375afe406750166010c809774225a44912288e866354f580478a784",
+      "script_sha256": "64d0e30e5527caa0a027902d21a241d109f10abb2be8aec67844cc9d017e3966",
+      "rapport_sha256": "9857d6636efd187dc2ff9891518349e1ca9d5b352c6b12e1c55bb15b065e3976"
+    },
+    {
+      "naam": "volgorde-48-spelling",
+      "geslaagd": true,
+      "programma_sha256": "f4a601f74375afe406750166010c809774225a44912288e866354f580478a784",
+      "script_sha256": "7a036f1fbe9c334f42bad331b8cf0aa7edede53c9e883f245697eb126c114f1a",
+      "rapport_sha256": "bcfd3ad68cd1ec51ee9bc93b32cb75e93c304901fa3fbddec3a9cd03eb579ea7"
+    },
+    {
+      "naam": "oorspronkelijke CI-lijstproef",
+      "geslaagd": true,
+      "programma_sha256": "f4a601f74375afe406750166010c809774225a44912288e866354f580478a784",
+      "script_sha256": "77da7bfbc3c6679965e2e55d0341106bc6c02429fd4269b97614e8a78976db13",
+      "rapport_sha256": "019fa278917e4869b39cec49980abda0ec42b82c5e264447ffef4fb42491acf9"
+    },
+    {
+      "naam": "werkelijke spellingsessie",
+      "geslaagd": true,
+      "programma_sha256": "f4a601f74375afe406750166010c809774225a44912288e866354f580478a784",
+      "script_sha256": "4513ada399237b8de498c06fc88118efa220e4ac250dfbd694752e4affc0dc42",
+      "rapport_sha256": "859ff73cc81f51d80d34cf35f7cec70f9a762141211def5dc09995c610669da8",
+      "uitkomst": {
+        "geslaagd": true,
+        "groepen": 50,
+        "verhalen": 1537,
+        "alineas": 3329,
+        "aantal_fouten": 258,
+        "bronvector_gewijzigd": false,
+        "grens": "Werkelijke spellingsessie en echte plug-in in eigen native testvenster; één bron, geen algemene spelling- of prestatieacceptatie."
+      }
+    }
+  ],
+  "grenzen": [
+    "Ongeveer 5,5% eerder volledig getekende alinea op één zware bron/pc; circa 22 seconden is nog te langzaam.",
+    "Geen algemene FPS-, selectielatentie-, suite- of volledige UI-acceptatie.",
+    "De oorspronkelijke CI47-Wasm-geheugenfout bij lijstweergave blijft open; een groene lokale 48-lijstproef bewijst geen herstel.",
+    "Rust-interface blijft onvolledig; React/TypeScript is nog de bruikbare hoofdinterface.",
+    "Alle 118 issues en 30 vlaggen in tien migratiegebieden blijven open; platform-/zeveneditiecontrole op 48 volgt na push, zonder officiële release."
+  ],
+  "bewijsmateriaal": [
+    {
+      "bron": "spelling48-bronnen.json",
+      "sha256": "a10cf8751ab34469d744c57adc5322a78b67c409631a2cf785c823f3f1156d98",
+      "bestand": "writer-spellinggroepen/spelling48-bronnen.json.gz",
+      "gzip_sha256": "c4c5aaea823ebda7a942b5154488d73b2b7080577de5c272d522571093c63b4c"
+    },
+    {
+      "bron": "spelling48-native-audit.json",
+      "sha256": "1f6ba2af78c2e52d1bde70a804543136d70123d45ef9eaccea87c14308cbe4e7",
+      "bestand": "writer-spellinggroepen/spelling48-native-audit.json.gz",
+      "gzip_sha256": "2e3985383f349cd6209ef43b434158ce36f4717b9a335ae9efdc8f216691ce26"
+    },
+    {
+      "bron": "spelling48-uitkomsten.json",
+      "sha256": "c64fbd9f6f93d4d7313f122d77e71b54acefb637d0de44197987d32b09f2cb5e",
+      "bestand": "writer-spellinggroepen/spelling48-uitkomsten.json.gz",
+      "gzip_sha256": "e4b834a01e412910cf699a80464b37df24d9be4fbc548fb0a128469b7d9d4e58"
+    },
+    {
+      "bron": "spelling48-vervolgproefuitkomsten.json",
+      "sha256": "228fc3cb99266cbe64bcd0c13c1e1545941aa9c3d904e87fd906efc60c05963c",
+      "bestand": "writer-spellinggroepen/spelling48-vervolgproefuitkomsten.json.gz",
+      "gzip_sha256": "6e8bc733fc82a60f863b05b79c03a0f9c21adda9547a4bd4b653e6880c4ea742"
+    },
+    {
+      "bron": "spelling48-slotuitkomsten.json",
+      "sha256": "f74fa919e180b1a0e3cbdb925ee2fa4de60dedd34d8f82a7c3cf99425b6f3d1e",
+      "bestand": "writer-spellinggroepen/spelling48-slotuitkomsten.json.gz",
+      "gzip_sha256": "ad717789c5b7c40ea9651efeecc8f7ca513b59143f3fba2dfc8dfb53d702c9c9"
+    },
+    {
+      "bron": "spelling48-rode-proef.json",
+      "sha256": "77fce47fd2b4dd21396bd1a0b375e9f65f07ddd128f8ffccc6094f4015c02975",
+      "bestand": "writer-spellinggroepen/spelling48-rode-proef.json.gz",
+      "gzip_sha256": "e278dd81b245a6a063a29ec376077b98e63e5ef7d8483d390d05ea7f52bab3d9"
+    },
+    {
+      "bron": "spelling48-rode-proef.log",
+      "sha256": "535f4d5b2545ebbdff92202e7299555a1d04ff408c62232c5983c521c5710954",
+      "bestand": "writer-spellinggroepen/spelling48-rode-proef.log.gz",
+      "gzip_sha256": "a4469ab3c92c14d88daced75d16d80c84eebdbdc17efc925ce4abc5972ab0746"
+    },
+    {
+      "bron": "spelling48-gerichte-definitief.log",
+      "sha256": "cbfec0e116c039318ff90bc5eeb161037036222bdf8b09ee951e6a6049a38308",
+      "bestand": "writer-spellinggroepen/spelling48-gerichte-definitief.log.gz",
+      "gzip_sha256": "04aedad1f9737ab12d04033c74fabdf01fd1c6d479235fae69976c02c6de6c5f"
+    },
+    {
+      "bron": "spelling48-meethulp.log",
+      "sha256": "2ca70bef7afb8a92c4075a8198b464e5469f932927cdc30a61b2eec2aa889d04",
+      "bestand": "writer-spellinggroepen/spelling48-meethulp.log.gz",
+      "gzip_sha256": "7d9928693530250c20075a892361f31e47681a05407b028ea8641af92572bd61"
+    },
+    {
+      "bron": "spelling48-definitief-vitest.log",
+      "sha256": "c8eb3f732b007fb638503ff0fdd3da39d0552868a44cb8fb24c0024121fab8d8",
+      "bestand": "writer-spellinggroepen/spelling48-definitief-vitest.log.gz",
+      "gzip_sha256": "cc9bd7001b4d8487b732c12f90a49862f4766a993154dd3fb82c4c93e4e3bca3"
+    },
+    {
+      "bron": "spelling48-definitief-tsc.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bestand": "writer-spellinggroepen/spelling48-definitief-tsc.log.gz",
+      "gzip_sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "bron": "spelling48-definitief-python.log",
+      "sha256": "35bd5d4b74d08406e36732ea3046a65aaed214ceb0d654880c41be408d893e26",
+      "bestand": "writer-spellinggroepen/spelling48-definitief-python.log.gz",
+      "gzip_sha256": "e9d2568b4737ae6931ce65db0a0f2a16668e144bcf04db3d2960d471499c4cbc"
+    },
+    {
+      "bron": "spelling48-rust.log",
+      "sha256": "818e2d2860cc39f25f85b6467c02ced6d58be9d922aa428644c084d66edcdc40",
+      "bestand": "writer-spellinggroepen/spelling48-rust.log.gz",
+      "gzip_sha256": "3ffecb2250c43665b6dd72bf0915646ae7b87db3bd78f917120016868f94f7b1"
+    },
+    {
+      "bron": "spelling48-bouw.log",
+      "sha256": "57d0002ff5448b6c38076f5daac13c599685e21d68eb2cad60689691a56fc3f9",
+      "bestand": "writer-spellinggroepen/spelling48-bouw.log.gz",
+      "gzip_sha256": "ce1b1fbcf4d8936d6d32b9d02d71d92bd536dcb05e3007cdb51ceb4cf0c9c636"
+    },
+    {
+      "bron": "spelling48-engines.log",
+      "sha256": "74e7a56285e814d8b1e87098e3f1a0c5b556e2e653f809d19ad6b5ab09032af4",
+      "bestand": "writer-spellinggroepen/spelling48-engines.log.gz",
+      "gzip_sha256": "dcd7f2c6da35ae7da672c7760f2cbabeb9161f942cc3663388b93ec0d6b83be0"
+    },
+    {
+      "bron": "spelling48-opdrachten.log",
+      "sha256": "35c4e59deeccfe1952ffb639f6070c68b7778bdd3fce798d880250a673e0fe31",
+      "bestand": "writer-spellinggroepen/spelling48-opdrachten.log.gz",
+      "gzip_sha256": "83dd1e16a22aa363740b002dccfe7e13c4ebf2144d3ce36c0ba01f3226fa4674"
+    },
+    {
+      "bron": "spelling48-week.log",
+      "sha256": "a7d28bd6b7e9f7abd5036871c4b21a7b03c77ae840276bf6b73200189874b9d9",
+      "bestand": "writer-spellinggroepen/spelling48-week.log.gz",
+      "gzip_sha256": "2c28bf3ef4e16a6c52c9c7367d71565bd731d11eab66652180242d3f8baf8632"
+    },
+    {
+      "bron": "spelling48-proeven.json",
+      "sha256": "99eb30cf62cdabe3e2e282116821258ae06cb27890df5d471d5f566ffcc722b8",
+      "bestand": "writer-spellinggroepen/spelling48-proeven.json.gz",
+      "gzip_sha256": "90f494c4796736a7ceba0bdcbc77a67c7ae7f1bc8f885ead40f914e5344e2820"
+    },
+    {
+      "bron": "spelling48-vervolgproeven.json",
+      "sha256": "56b40ebd570376093c04252f68d3fa915955b531482b11208afa96bff106604d",
+      "bestand": "writer-spellinggroepen/spelling48-vervolgproeven.json.gz",
+      "gzip_sha256": "7ad3775533b64956035fb56e26790c6bd9df006846a68ee25e0b824ff877904e"
+    },
+    {
+      "bron": "spelling48-passieve-uitkomsten.json",
+      "sha256": "72e2d22372a3fe97a9b9befc4425befade8dc64f3ca4c57b3fd1c07fde8ca999",
+      "bestand": "writer-spellinggroepen/spelling48-passieve-uitkomsten.json.gz",
+      "gzip_sha256": "ad6526e4820fae72a0fedc0bab9aed9152f16d7bde07b2592799da69b3d09e70"
+    },
+    {
+      "bron": "spelling48-vergelijking.json",
+      "sha256": "915bcfb6cabf5e6b682380bc3a502c644952658584b04c38361e011bcbdff7d9",
+      "bestand": "writer-spellinggroepen/spelling48-vergelijking.json.gz",
+      "gzip_sha256": "5048faff82ef4ec017005fe48b4b98a9c0bbde0e10f35fb63959a6d68e9fa283"
+    },
+    {
+      "bron": "spelling48-sessie-oud.ts",
+      "sha256": "e73768b4600af2a69f754de64e43540c183240413412c282966b174679c03b92",
+      "bestand": "writer-spellinggroepen/spelling48-sessie-oud.ts.gz",
+      "gzip_sha256": "06a2594f1f617a077902155e72216709ac03628374e7b5ae6461ae77eb84afad"
+    },
+    {
+      "bron": "spelling48-oorspronkelijke-plakproef.py",
+      "sha256": "29a478de731d766687d0a6d0d32788fa900a4c7ab905c53c86a28581076b4f63",
+      "bestand": "writer-spellinggroepen/spelling48-oorspronkelijke-plakproef.py.gz",
+      "gzip_sha256": "e0664f328b1e5f59079b17aca259600affc8b8df38919d388ad3abaff149b385"
+    },
+    {
+      "bron": "vervolginvoer-48-spelling/rapport.json",
+      "sha256": "4299c48a3b4d75f0c88c784b403b192afad6f5bd0dbaecca4004a430e9f981ec",
+      "bestand": "writer-spellinggroepen/vervolginvoer-48-spelling/rapport.json.gz",
+      "gzip_sha256": "38cfd505930dec64cdf83bed07a4216fee4371c02df60e6e8bfa72ffe830ddc6"
+    },
+    {
+      "bron": "vervolginvoer-48-spelling.log",
+      "sha256": "2f505aef8b9bb3867a7ee7c700d414554cea3da8733b96b09e90f9317c3c6a07",
+      "bestand": "writer-spellinggroepen/vervolginvoer-48-spelling.log.gz",
+      "gzip_sha256": "5aec541efa3aca863373f51ae02092df9eb9c8bb6ec6b4cd05480c3aafaef30e"
+    },
+    {
+      "bron": "spelling48-meethulp-op47/rapport.json",
+      "sha256": "5e21413a28dc51a6297bcebad2b73450541b93713524bc7f98225333d3678279",
+      "bestand": "writer-spellinggroepen/spelling48-meethulp-op47/rapport.json.gz",
+      "gzip_sha256": "699ed319c4abe4d1fd998e5441f58b5dff48b7c9f0acd5c9af3c567c6e10c3f6"
+    },
+    {
+      "bron": "spelling48-oorspronkelijke-lijstproef/rapport.json",
+      "sha256": "019fa278917e4869b39cec49980abda0ec42b82c5e264447ffef4fb42491acf9",
+      "bestand": "writer-spellinggroepen/spelling48-oorspronkelijke-lijstproef/rapport.json.gz",
+      "gzip_sha256": "6faade2fa37b65690a015fb8744babbb324ee12a8846591e408bcba8b86af53a"
+    },
+    {
+      "bron": "spelling48-werkelijke-spelling/profiel.json",
+      "sha256": "859ff73cc81f51d80d34cf35f7cec70f9a762141211def5dc09995c610669da8",
+      "bestand": "writer-spellinggroepen/spelling48-werkelijke-spelling/profiel.json.gz",
+      "gzip_sha256": "084c588ea7072582b9c5d8984322c9a835ecfe1ef824b46d04f6d7e8ec48ad08"
+    },
+    {
+      "bron": "spelling48-werkelijke-spelling/programma.log",
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "bestand": "writer-spellinggroepen/spelling48-werkelijke-spelling/programma.log.gz",
+      "gzip_sha256": "0805b667ac213be27962ff35912a578ff816af5d044ff6bfc57d0f6a00115e7a"
+    },
+    {
+      "bron": "bouw-en-test-spelling48.py",
+      "sha256": "03cbe015c783f21790d5c1eb82c5d52be32e8743cbdc5eb44937975132420c12",
+      "bestand": "writer-spellinggroepen/bouw-en-test-spelling48.py.gz",
+      "gzip_sha256": "3a74f8a700838a6dd030174640bed28ff3defab8959e946d3d8e13cb0899d57b"
+    },
+    {
+      "bron": "voer-spelling48-proeven.py",
+      "sha256": "b8e74f35a77a0cee50b5cdffaf084567f6b942a21046a492d5191ef0f124bbc8",
+      "bestand": "writer-spellinggroepen/voer-spelling48-proeven.py.gz",
+      "gzip_sha256": "cae605f969a95509a3036f0824aa23e9d031619c67ad981d79179df7e9999e5c"
+    },
+    {
+      "bron": "voer-spelling48-vervolgproeven.py",
+      "sha256": "ff1eff65c36af4944bad6a4883bf6a28af2e6458ec9ab66c5b274b8475a1d485",
+      "bestand": "writer-spellinggroepen/voer-spelling48-vervolgproeven.py.gz",
+      "gzip_sha256": "dd7c2d89a88117c1fbd343995c4b613bab71fe103facd8a7216044092d94d037"
+    },
+    {
+      "bron": "voltooi-spelling48.py",
+      "sha256": "e8a8cd81992590800c902089ce59ef25c51e18285408e3750f366b638455bc60",
+      "bestand": "writer-spellinggroepen/voltooi-spelling48.py.gz",
+      "gzip_sha256": "5cda0a2347f83ce6ade7c8a677e25bd05613ad5cf9c14e0fb2c7269ac310b050"
+    },
+    {
+      "bron": "voer-spelling48-passieve-metingen.py",
+      "sha256": "9ee82adb6349a3a6e348ae6b7666f776855a4362ab6ecf322d7afe7ee26325f7",
+      "bestand": "writer-spellinggroepen/voer-spelling48-passieve-metingen.py.gz",
+      "gzip_sha256": "6df602834538de850c454a2748472f3a0c04521e962dc623d5f125e497960c0e"
+    },
+    {
+      "bron": "vergelijk-spelling48.py",
+      "sha256": "3ea1fc1febbda12410ab818c897cf2c0af93fb153965932dfee5f16f5f3e2aef",
+      "bestand": "writer-spellinggroepen/vergelijk-spelling48.py.gz",
+      "gzip_sha256": "90ddcc32192d4fa873d4950dbc985611fa0087e8f765150f8c7a77d6f1844e2d"
+    },
+    {
+      "bron": "controle-spelling48.js",
+      "sha256": "4dc4c2a0f62bf365233332c8ed9b2ddc4407992480d65101a4efc0eddb087ed6",
+      "bestand": "writer-spellinggroepen/controle-spelling48.js.gz",
+      "gzip_sha256": "93532e5d16e0db0f10cf36051ff9b49988856f4733c66bc33f9c89cc4b5852e0"
+    },
+    {
+      "bron": "meet-spelling48-native.py",
+      "sha256": "4513ada399237b8de498c06fc88118efa220e4ac250dfbd694752e4affc0dc42",
+      "bestand": "writer-spellinggroepen/meet-spelling48-native.py.gz",
+      "gzip_sha256": "ef77e2bd1da7e079505ba6ab4644002823c9cdb7b90c3e5f525947cf1bba2b08"
+    },
+    {
+      "bron": "voer-spelling48-werkelijke-spelling.py",
+      "sha256": "093dd7566265d1e7d8cba737e73ac0d4470fce4151211185046b7f78454db349",
+      "bestand": "writer-spellinggroepen/voer-spelling48-werkelijke-spelling.py.gz",
+      "gzip_sha256": "9ee18c2bc4274e4a1021d9f6b30370ba54522454ee2290ba34ed05fc24c1136b"
+    },
+    {
+      "bron": "renderer-48-spelling/rapport.json",
+      "sha256": "22752643d1d48ef0b48b0377450116e70d9d0f0679631927438516a884c93e82",
+      "bestand": "writer-spellinggroepen/renderer-48-spelling/rapport.json.gz",
+      "gzip_sha256": "0826e07fb5ee261f291de2af265155ad38086a1262e51cfc74bf84318e8e1cb4"
+    },
+    {
+      "bron": "lang-48-spelling/rapport.json",
+      "sha256": "2bd8e98ac99a3eb303b00e38c32738f104af2147eb05ab4766ffcbb1d4de1d0b",
+      "bestand": "writer-spellinggroepen/lang-48-spelling/rapport.json.gz",
+      "gzip_sha256": "23255e53b29cbc7e340f08abe4e55f767335c612209a6807e85c94455186e664"
+    },
+    {
+      "bron": "tekst-48-spelling/rapport.json",
+      "sha256": "692f901ce9707227c22320274ec221b6cf3d9bc0e96e16d688e88c99a0a2dc9b",
+      "bestand": "writer-spellinggroepen/tekst-48-spelling/rapport.json.gz",
+      "gzip_sha256": "a6747142ffacf628ae7899d74b287abbf6eb6bdeb8f1a9aaa4ff2a3785a85ac9"
+    },
+    {
+      "bron": "geheugen-48-spelling/rapport.json",
+      "sha256": "c52d03d35af4374063b1f6d517a3068aa478bf8cfbfd2485f02cae38f9fc7700",
+      "bestand": "writer-spellinggroepen/geheugen-48-spelling/rapport.json.gz",
+      "gzip_sha256": "177ce666165b4c6e18b49f20b8d02c2257ce6ce3b19d38b73f2e3c5f0c0cc1b1"
+    },
+    {
+      "bron": "acht-48-spelling/rapport.json",
+      "sha256": "572f1fafabdff6d4be125a6e1457514ee5d6c294a6dd732aaf126a408be06d62",
+      "bestand": "writer-spellinggroepen/acht-48-spelling/rapport.json.gz",
+      "gzip_sha256": "16c10464f00b76b447f9630ad35eee4c9920e5c68f759e9c52f1fd761a2484f6"
+    },
+    {
+      "bron": "vervolginvoer-48-groepsmeting/rapport.json",
+      "sha256": "9039700de9e67d45f836a7d87915f63d7ae9f7961d78de11915755be8ee16364",
+      "bestand": "writer-spellinggroepen/vervolginvoer-48-groepsmeting/rapport.json.gz",
+      "gzip_sha256": "49acc0a91eaa2a53813278af181518c24d6a02d188a967a7b5965dcf7a5e0de5"
+    },
+    {
+      "bron": "kleur-48-spelling/rapport.json",
+      "sha256": "c91bfba2fbd1dd956e88b6b8a38234ac0ab7c24399d3e2b580d540cf4e9b899c",
+      "bestand": "writer-spellinggroepen/kleur-48-spelling/rapport.json.gz",
+      "gzip_sha256": "50633d993178c6f27ef3513a2072cb6af4a2a28a8dc2b8d7bdd9035d802cb2be"
+    },
+    {
+      "bron": "bewaren-48-spelling/rapport.json",
+      "sha256": "2d4aec57c52df14c6c6fc5af5579f31daec55ee0cdbef08cfc0fbd4da032e20b",
+      "bestand": "writer-spellinggroepen/bewaren-48-spelling/rapport.json.gz",
+      "gzip_sha256": "cc84a5fed9d0d59a46cf64a3925f3ee53c80effc0bde20582a93c1eeff4f6a8f"
+    },
+    {
+      "bron": "tabelgrepen-48-spelling/rapport.json",
+      "sha256": "9857d6636efd187dc2ff9891518349e1ca9d5b352c6b12e1c55bb15b065e3976",
+      "bestand": "writer-spellinggroepen/tabelgrepen-48-spelling/rapport.json.gz",
+      "gzip_sha256": "7e93337d13d6b5ee3c8acb494f8a065fa005565cac97a5495625b18929bf4fff"
+    },
+    {
+      "bron": "volgorde-48-spelling/rapport.json",
+      "sha256": "bcfd3ad68cd1ec51ee9bc93b32cb75e93c304901fa3fbddec3a9cd03eb579ea7",
+      "bestand": "writer-spellinggroepen/volgorde-48-spelling/rapport.json.gz",
+      "gzip_sha256": "3e1911cbf838a509f0ff4372b65644b331f1f6f4e223af33c6208780dc2330df"
+    },
+    {
+      "bron": "passief-spelling-47-voor/profiel.json",
+      "sha256": "6979e06a52f7a8f2886951e9e832788d464ab4a5d44c76fe079b3fd0e47b219d",
+      "bestand": "writer-spellinggroepen/passief-spelling-47-voor/profiel.json.gz",
+      "gzip_sha256": "d5d9ac2036900aee7e33da1e285fcbf054909fc0c1d5f4f1b576487c8a07eb15"
+    },
+    {
+      "bron": "passief-spelling-48-eerste/profiel.json",
+      "sha256": "cd81fd3423427528fbc75af0e66ebe7c765ab590f48e560242bcc13d7e93ea8f",
+      "bestand": "writer-spellinggroepen/passief-spelling-48-eerste/profiel.json.gz",
+      "gzip_sha256": "4b2a31450cc131992140f8a129cee0ae8c31a5d9d865313293fa5694a396051f"
+    },
+    {
+      "bron": "passief-spelling-48-tweede/profiel.json",
+      "sha256": "c842e8613ffc0b3c4b949385eccb4c02e24807e4771916c9b47e099c7b485860",
+      "bestand": "writer-spellinggroepen/passief-spelling-48-tweede/profiel.json.gz",
+      "gzip_sha256": "cbe0f81417a712bb21cf531adb1c69b5522939692fb08d2bf38d3a6b40587ef8"
+    },
+    {
+      "bron": "passief-spelling-47-na/profiel.json",
+      "sha256": "7ea96f8ecbd0a3a2af420815b449646072b9425d8813408f9375ee5094031698",
+      "bestand": "writer-spellinggroepen/passief-spelling-47-na/profiel.json.gz",
+      "gzip_sha256": "d6da4c90c608b0c4c2ccaf495c31edb7c1f653bdd467159bb62391582bc1ef02"
+    },
+    {
+      "bron": "proefbronnen/scripts/gui/framebasis.js",
+      "sha256": "f0d0c17073177f6cacea5e4a6e04dd47d79999dc322a6922dd37147d32d4c369",
+      "bestand": "writer-spellinggroepen/proefbronnen/scripts/gui/framebasis.js.gz",
+      "gzip_sha256": "57165737d6c6a43ad402431e695ef653995655c5f581bece1431c16c010d8e4f"
+    },
+    {
+      "bron": "proefbronnen/scripts/gui/lettertype_bewijs.js",
+      "sha256": "35ef4b0f486984925fb1765ad909a20a741e80270d8452e84deac0697fc22238",
+      "bestand": "writer-spellinggroepen/proefbronnen/scripts/gui/lettertype_bewijs.js.gz",
+      "gzip_sha256": "50eb3f90ac72f9491997e8841d48ec959974ad50dd5c369f1c5e5ae6e275468f"
+    },
+    {
+      "bron": "proefbronnen/scripts/gui/lettertype_bewijs.py",
+      "sha256": "d7c4bc900fcb26d581e61175be8ae400e642b65f28459c4b71c367c6525b8327",
+      "bestand": "writer-spellinggroepen/proefbronnen/scripts/gui/lettertype_bewijs.py.gz",
+      "gzip_sha256": "d33eb8fc164044682234c33efb90d40d6eb03d43fa0c09f0daa805efa55bf437"
+    },
+    {
+      "bron": "proefbronnen/scripts/gui/spelling_weergave.js",
+      "sha256": "aafa81ecd8786ad6ea42f93c8615bd79f4c35d1bc28d57a5a6931b5468e3d132",
+      "bestand": "writer-spellinggroepen/proefbronnen/scripts/gui/spelling_weergave.js.gz",
+      "gzip_sha256": "487a3c9d8c0119b38ef24960bc44a257f5cacb51caf5c7c93b12c147879ff730"
+    },
+    {
+      "bron": "proefbronnen/scripts/gui/spelling_weergave.py",
+      "sha256": "ca3d68367445f7bc90b241d8f52b8ddeb7277b42adef5cbe0f75d1327fb7a625",
+      "bestand": "writer-spellinggroepen/proefbronnen/scripts/gui/spelling_weergave.py.gz",
+      "gzip_sha256": "22f583d4fe2aa5a14c1ce0b50d310395f0d7c4faef0d0c4372f2343c5c13858a"
+    },
+    {
+      "bron": "proefbronnen/scripts/gui/webkit_inspector.py",
+      "sha256": "91b9140e133162cac2e2c22a3b91884c13c6855f9bd0e7c49f6bebc25e35fe43",
+      "bestand": "writer-spellinggroepen/proefbronnen/scripts/gui/webkit_inspector.py.gz",
+      "gzip_sha256": "f5f4c88afb03f4d38ff9899daec956da971d3a073a1c7090ae1b1ec657b81101"
+    },
+    {
+      "bron": "proefbronnen/scripts/gui/worker_bron.js",
+      "sha256": "98b2b64ed7e58c9456a9275f2a8e0e5ddc64b84f134969fafffdfeaef941443e",
+      "bestand": "writer-spellinggroepen/proefbronnen/scripts/gui/worker_bron.js.gz",
+      "gzip_sha256": "fa9038f9fcd27849a62797a9d1b73b8aed0e2cdb2e0dc64e9e1c1d9915f6fe35"
+    },
+    {
+      "bron": "proefbronnen/scripts/test-writer-kleur-native.py",
+      "sha256": "e872784e5a4e6dd5d6a3842150e7746d374e17f8b9373613ca579c197a99dded",
+      "bestand": "writer-spellinggroepen/proefbronnen/scripts/test-writer-kleur-native.py.gz",
+      "gzip_sha256": "702efece7345c20b59ccfef0def64a9fa97533ecf66ba2f8a933dd8e33788873"
+    },
+    {
+      "bron": "proefbronnen/scripts/test-writer-lang-native.py",
+      "sha256": "74e68d99decf1c7f076cb719d2794ddb61d37a163d3e63c1d38dba48bc5dcdd3",
+      "bestand": "writer-spellinggroepen/proefbronnen/scripts/test-writer-lang-native.py.gz",
+      "gzip_sha256": "5f3da80814ff89bbc5f7320098b12ad16ec5ddfcc27070d6f0a367e1c2d1d3c1"
+    },
+    {
+      "bron": "proefbronnen/scripts/test-writer-rendererfout-native.py",
+      "sha256": "c62f0357d66e4114974f988832edbab139eae8cc9b7f56702e8e473a77e5e902",
+      "bestand": "writer-spellinggroepen/proefbronnen/scripts/test-writer-rendererfout-native.py.gz",
+      "gzip_sha256": "94c10bab9112dc1b4868d35fc570e78e69a622625e4e2e80efe82fb54c509046"
+    },
+    {
+      "bron": "proefbronnen/scripts/test-writer-rijk-plakken-native.py",
+      "sha256": "6f8f69f40536c79f6c151e00e3501c994a4b42efa4c0ccad48fff7f1d4fad53f",
+      "bestand": "writer-spellinggroepen/proefbronnen/scripts/test-writer-rijk-plakken-native.py.gz",
+      "gzip_sha256": "48ef8eae0839c909018068b26ff3239af3fed97ab51af61687bec61f9836ed61"
+    },
+    {
+      "bron": "proefbronnen/scripts/test-writer-rust-plakken-volgorde-native.py",
+      "sha256": "7a036f1fbe9c334f42bad331b8cf0aa7edede53c9e883f245697eb126c114f1a",
+      "bestand": "writer-spellinggroepen/proefbronnen/scripts/test-writer-rust-plakken-volgorde-native.py.gz",
+      "gzip_sha256": "a42fce849ac683a591d1ce29ec84f8b5947ff77dc8469be79db1d7f13d338528"
+    },
+    {
+      "bron": "proefbronnen/scripts/test-writer-rust-tekst-native.py",
+      "sha256": "b1590d04f779d906f225d867e4c0196ccb62e96784c4857c86a03861ad8a5627",
+      "bestand": "writer-spellinggroepen/proefbronnen/scripts/test-writer-rust-tekst-native.py.gz",
+      "gzip_sha256": "7cb10021a591314ef8800223dc47a99b86d07260b31480b570641941ceb4aff4"
+    },
+    {
+      "bron": "proefbronnen/scripts/test-writer-tabelgrepen-native.py",
+      "sha256": "64d0e30e5527caa0a027902d21a241d109f10abb2be8aec67844cc9d017e3966",
+      "bestand": "writer-spellinggroepen/proefbronnen/scripts/test-writer-tabelgrepen-native.py.gz",
+      "gzip_sha256": "6fd9ce16ef19cfcb9acd9280e39b2cdf759497ab5e702498909b7e2e742d1963"
+    }
+  ]
+}

@@ -1,0 +1,195 @@
+{
+  "datum": "2026-11-04",
+  "productversie": "2026.45.30",
+  "kernversie": "2026.45.0-alpha.51",
+  "wijziging": "Alleen test-/diagnosecode en documentatie; productbinary blijft behouden.",
+  "oorspronkelijke_afkeuring": "2026-11-04-writer-framebasis-45.29.json",
+  "status_framefout": "Open; oorzaak en herstel niet aangetoond.",
+  "hertesten_exacte_afgekeurde_binary": [
+    {
+      "proef": "proef-1",
+      "geslaagd": true,
+      "programma_sha256": "4cea9b0b4e0c836b21e3b76a8b497fca765ec52e04c03afb524138921aa5bf2a",
+      "script_sha256": "210d3b77d74bf50cf8fb3c154d44382db9b7a0b9166c5b586afbcaf87324498c",
+      "rapport_sha256": "eb0da15559b79563ce79ca6a2abbf9dc0673509f2dae5266aebb5aa408998550",
+      "extra_rondes": 0,
+      "grens": "Exacte afgekeurde ELF, bewaarde WebKit 2.50.4-bibliotheken, ander hostsysteem dan CI; geen reproductie of herstelclaim."
+    },
+    {
+      "proef": "stress-1",
+      "geslaagd": true,
+      "programma_sha256": "4cea9b0b4e0c836b21e3b76a8b497fca765ec52e04c03afb524138921aa5bf2a",
+      "script_sha256": "570d388c14dd1fc610575804791818e42f6849aa4086974710639b4c9440f58c",
+      "rapport_sha256": "fb0c04fc4ef2f6a0545ddf7af021cb07c522ec026f90f3eb38efa292b4803181",
+      "extra_rondes": 12,
+      "grens": "Exacte afgekeurde ELF, bewaarde WebKit 2.50.4-bibliotheken, ander hostsysteem dan CI; geen reproductie of herstelclaim."
+    }
+  ],
+  "native_normaal": {
+    "geslaagd": true,
+    "programma_sha256": "f32346d6250d22c98c52be175d5c5fabb9e17f074e3a8e8e7f20930dc31423fc",
+    "script_sha256": "23c5166093fb030e7f55e32054a3fc8db291b1a70c36948384131f3a461e42b0",
+    "rapport_sha256": "74757e8e1b09be8e5c4d86d3b38e6e702f3f723a94846006528c4a232f1189a3",
+    "bronstappen": 8,
+    "framebewaking": {
+      "vanaf": "Na bron-, golflijn-, rAF- en getypte-framecontrole; geen instrumentatie tijdens de invoermeting.",
+      "script_sha256": "f0d0c17073177f6cacea5e4a6e04dd47d79999dc322a6922dd37147d32d4c369",
+      "grens": "Alleen de eigen proefbron; maximaal 2 MiB framebytes, 24 gebeurtenissen en 8.000 paginametadata-items. Geen decoderwijziging of volledige runtimeherkomstcontrole.",
+      "instrumentatiefouten": [],
+      "antwoorden_met_frame": 6
+    },
+    "framebytes": 1613119,
+    "gebeurtenissen": 14,
+    "instrumentatiefouten": [],
+    "omvang": "Eigen 500-paginabron, native tekst, geen volledige hostlayout tijdens invoer, bronselectie/Backspace, geschiedenis, bewaren, pagina-invoeg/undo, nieuw proces en echt gerenderde laatste tekst.",
+    "inspectiecode_sha256": "8a25f8503dd31ddf25a9d11a1f54550e6d28e5b3865c1c99531fbd45f3f5777c",
+    "inspectiecode_grens": "Na de native proeven is uitsluitend het apart geteste behoud van GUI-fouten bij mislukte diagnose-export aangescherpt."
+  },
+  "opzettelijke_negatieve_native_proef": {
+    "verwachte_exitcode": 1,
+    "exitcode": 1,
+    "proef_afgekeurd": true,
+    "fout": "AssertionError('GUI of engine meldt fouten vóór heropenen')",
+    "fouttekst": "[CanvasRenderer] Document worker unavailable; eigen negatieve registratieproef FrameDelta: eigen opzettelijke proefafkeuring",
+    "volledige_stack_bewaard": true,
+    "framebytes": 1831372,
+    "script_sha256": "0705683ee0d58543b6a3e90d0d82405bc4dea55da6cfd523fb4b54ef65906539",
+    "rapport_sha256": "31e840446e30abd6fbe6c6cb8cbb79067f6486d801578c5c4af5d51109dc7184",
+    "grens": "De consolefout is uitsluitend opzettelijk in de eigen testpagina opgewekt. Geen reproductie van de echte decoderfout."
+  },
+  "werkelijke_frameketen": {
+    "geslaagd": true,
+    "frames": [
+      {
+        "frame": 32,
+        "base": 0,
+        "full": true,
+        "operaties": 501
+      },
+      {
+        "frame": 33,
+        "base": 32,
+        "full": false,
+        "operaties": 0
+      },
+      {
+        "frame": 34,
+        "base": 33,
+        "full": false,
+        "operaties": 502
+      },
+      {
+        "frame": 35,
+        "base": 34,
+        "full": false,
+        "operaties": 2
+      }
+    ],
+    "eindpaginaAantal": 500,
+    "spans": 494,
+    "negatieve_basiscontrole": {
+      "gecontroleerd": true,
+      "fout": "FrameDelta: position span shift requires retained positionSpan",
+      "frame": 34,
+      "base": 33,
+      "pagina": 4,
+      "spanDelta": 345
+    }
+  },
+  "proefbestanden": {
+    "docs/tests/writer-framebasis/frames-45.30.json.gz": {
+      "sha256": "dca94bee0bb808cedefee9b6b5ae11585667670c1a5535b3cbc89e117d3cc6a4",
+      "bytes": 390042
+    },
+    "docs/tests/writer-framebasis/opzettelijke-afkeuring-45.30.json.gz": {
+      "sha256": "c97833a30aa80392d68e28551baf30ed055b6d21f15bdc8fd7b9df05cdaf787c",
+      "bytes": 441617
+    }
+  },
+  "bronbestanden": {
+    "scripts/gui/framebasis.js": "f0d0c17073177f6cacea5e4a6e04dd47d79999dc322a6922dd37147d32d4c369",
+    "scripts/gui/webkit_inspector.py": "6112b95e4bf1bc8cc068589257562b2686551cf19307150b237fc0f9ea2bd93a",
+    "scripts/test-writer-lang-native.py": "23c5166093fb030e7f55e32054a3fc8db291b1a70c36948384131f3a461e42b0",
+    "scripts/bewaar-writer-foutcontext.py": "8470a3b82d59b200d01a318def81dc3d9ea01315b12839497d27b42f95332cba",
+    "src/tekst/framebewaking.test.ts": "b9a39b16d60b0b5740ee9458936f042c182b412a0e7b8c150e13b42571f0606f",
+    "tests/test_framebewaking.py": "3fd402476a81bded61ce816e1e90d882a47bfb2a407e3c041553d71d6027a0d5",
+    "tests/test_writer_foutcontext.py": "89fda1fec20da756c9f08a701fe10b153f8582f543d27ab3531122b8f985f005"
+  },
+  "controles": {
+    "frontend_tests": 1738,
+    "frontend_bestanden": 162,
+    "python_tests": 64,
+    "typescript": "geslaagd; afzonderlijke keten met procescode 0",
+    "weekversie": "geslaagd",
+    "workflow_yaml": [
+      "desktop.yml",
+      "release.yml",
+      "writer-geheugen.yml"
+    ]
+  },
+  "ci_productbron_2764937": [
+    {
+      "conclusion": "",
+      "databaseId": 41768135124,
+      "name": "Uitgave bouwen, ondertekenen en publiceren",
+      "status": "in_progress",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41768135124"
+    },
+    {
+      "conclusion": "",
+      "databaseId": 41768043543,
+      "name": "Native Rust controleren en bouwen",
+      "status": "in_progress",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41768043543"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 41768043235,
+      "name": "Zelfstandige databasebrowser controleren en bouwen",
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41768043235"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 41768043233,
+      "name": "Kantooromgeving controleren en bouwen",
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41768043233"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 41768043236,
+      "name": "Rust WebView-preview bouwen",
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41768043236"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 41768035033,
+      "name": "Writer Rust-plakbatch onderzoeken",
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41768035033"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 41768035087,
+      "name": "Linux-dev · codex/native-rust-office · 276493774a7a60d6c72d67de5bb074306d1cba34",
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41768035087"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 41768035097,
+      "name": "Writer-geheugenonderzoek · codex/native-rust-office · 276493774a7a60d6c72d67de5bb074306d1cba34",
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41768035097"
+    }
+  ],
+  "migratie": {
+    "open_issues": 118,
+    "gebieden": 10,
+    "open_acceptatievlaggen": 30,
+    "status": "Onvoltooid; ernstige algemene invoer-/selectievertraging, incidentele stabiliteitsfouten, volledige Rust-interface, volledige suite- en editie-/platformacceptatie blijven open."
+  },
+  "grens": "Geen nieuwe snelheidswinst of volledige stabiliteits-, runtime-, platform- of pixelacceptatie. De gebruikersstarter en documenten zijn behouden."
+}

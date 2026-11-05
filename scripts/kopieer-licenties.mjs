@@ -103,6 +103,13 @@ if (!alleenDatabase)
     "docs/licenties/Y-app-ERPNext-LICENSE.txt",
     `${uitvoermap}/Y-app-ERPNext-LICENSE.txt`,
   );
+// Ook de twee gewijzigde Rust-bronnen van de desktop-plakroute distribueren.
+if (!alleenDatabase) {
+  for (const naam of ["docx-edit", "yrs"]) {
+    await copyFile(`native/vendor/${naam}/LICENSE-UPSTREAM`, `${uitvoermap}/Writer-Rust-${naam}-LICENSE.txt`);
+    await copyFile(`native/vendor/${naam}/OPENAEC-WIJZIGINGEN.md`, `${uitvoermap}/Writer-Rust-${naam}-WIJZIGINGEN.md`);
+  }
+}
 await writeFile(
   `${uitvoermap}/npm.txt`,
   onderdelen.sort().join("\n\n" + "=".repeat(78) + "\n\n"),

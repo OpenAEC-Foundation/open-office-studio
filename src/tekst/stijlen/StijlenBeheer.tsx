@@ -46,6 +46,7 @@ import { Herhaalmelding } from "../bewerken/herhaalmelding";
 import { StijlenVenster } from "./StijlenVenster";
 import { StijlSets } from "./StijlSets";
 import { Bevestiging } from "./Bevestiging";
+import { volgStijlen } from "./volgen";
 import "./stijlen.css";
 
 export type StijlVenster =
@@ -99,45 +100,12 @@ function useDocumentStaat(api: () => DocxEditorRef | null) {
   const [document, setDocument] = useState<Document | null>(null);
   const [selectie, setSelectie] = useState<SelectionState | null>(null);
   const [versie, setVersie] = useState(0);
-  useEffect(() => {
-    let gekoppeld: DocxEditorRef | null = null;
-    let laatste: Document | null = null;
-    let opruimen: (() => void)[] = [];
-    let wachten: ReturnType<typeof setTimeout> | undefined;
-    const koppel = () => {
-      const ref = api();
-      if (ref === gekoppeld && (!ref || ref.getDocument() === laatste)) return;
-      opruimen.forEach((weg) => weg());
-      opruimen = [];
-      gekoppeld = ref;
-      const doc = ref?.getDocument() ?? null;
-      laatste = doc;
-      setDocument(doc);
-      setSelectie(null);
-      if (!ref || !doc) {
-        gekoppeld = null;
-        return;
-      }
-      opruimen = [
-        ref.onSelectionChange((staat) => setSelectie(staat)),
-        ref.onContentChange((nieuw) => {
-          clearTimeout(wachten);
-          wachten = setTimeout(() => {
-            laatste = nieuw;
-            setDocument(nieuw);
-            setVersie((v) => v + 1);
-          }, 400);
-        }),
-      ];
-    };
-    koppel();
-    const poging = setInterval(koppel, 600);
-    return () => {
-      clearInterval(poging);
-      clearTimeout(wachten);
-      opruimen.forEach((weg) => weg());
-    };
-  }, [api]);
+  useEffect(() => volgStijlen(
+    api,
+    setDocument,
+    (staat) => setSelectie((oud) => JSON.stringify(oud) === JSON.stringify(staat) ? oud : staat),
+    () => setVersie((v) => v + 1),
+  ), [api]);
   return { document, selectie, versie };
 }
 

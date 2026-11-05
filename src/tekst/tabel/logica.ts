@@ -6,7 +6,7 @@
 
 export const TWIPS_PER_CM = 1440 / 2.54;
 export const TWIPS_PER_PX = 15;
-/** Kleinste kolombreedte die we instellen (ongeveer 0,4 cm). */
+/** Kleinste kolombreedte bij handmatig aanpassen (ongeveer 0,4 cm). */
 export const MIN_KOLOM = 230;
 
 export const cmNaarTwips = (cm: number) => Math.round(cm * TWIPS_PER_CM);
@@ -16,7 +16,9 @@ export const twipsNaarCm = (twips: number) => Math.round((twips / TWIPS_PER_CM) 
 /** `aantal` gelijke kolommen (hele twips) die samen precies `breedte` zijn. */
 export function gelijkeKolommen(breedte: number, aantal: number): number[] {
   const n = Math.max(1, Math.floor(aantal));
-  const totaal = Math.max(Math.round(breedte), MIN_KOLOM * n);
+  // Ook veel kolommen moeten binnen de beschikbare pagina of omvattende
+  // tabelcel passen. De sleepgrens mag een nieuwe tabel niet breder maken.
+  const totaal = Math.max(Math.round(breedte), n);
   const elk = Math.floor(totaal / n);
   return Array.from({ length: n }, (_, i) => elk + (i === n - 1 ? totaal - elk * n : 0));
 }

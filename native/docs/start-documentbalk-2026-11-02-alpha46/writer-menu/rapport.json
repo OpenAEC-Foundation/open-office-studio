@@ -1,0 +1,461 @@
+{
+  "systeem_lokaal_start": "2026-11-02T06:21:13.980430+01:00",
+  "systeem_utc_start": "2026-11-02T05:21:13.980471+00:00",
+  "programmasource_basiscommit": "68cd58986ea422bfe023f947fccf3ff7c473e94d",
+  "voorbeeldbron": "Eigen eerder via GTK bewaarde notitie; de bronkopie blijft bytegelijk",
+  "programmabron": {
+    "basiscommit": "68cd58986ea422bfe023f947fccf3ff7c473e94d",
+    "bronbestanden": 736,
+    "bronmanifest_sha256": "340e2f5a81c5897e020b59f346bd91c3f26968703646f108813882125f05c081",
+    "bronpatch_sha256": "d368dc4766a080030e6c7085fb91e24d5583a48d00204071b7dd179822f3005d",
+    "bouwlog_sha256": "467caeac39dc50ddf95ab5d2d30e8d75d3072df2ba45ef0943d92c1bbcea9d67",
+    "bouwbron": "Afzonderlijk gebouwde volledige workspace-debugbouw van Start-route, documenttabbladen en bestaande Office-iconen; gerichte proeven groen, volledige ronde en platformcontrole nog niet afgesloten.",
+    "programmas": {
+      "open-office-studio-native": {
+        "sha256": "fff01e8743a5402c4d99bb2323a01a6fcbe0999d6978f54ca0ed5779049e5636",
+        "versie": "Open Office Studio 2026.45.0-alpha.46 (native)"
+      },
+      "controleer-bestand": {
+        "sha256": "dd359ca475973dd03048b2960944b298b41d7a8ed5cb6230947c87d7881946a0",
+        "versie": "Open Office native bestandscontrole 2026.45.0-alpha.46 (debug)"
+      }
+    }
+  },
+  "programma_sha256": "fff01e8743a5402c4d99bb2323a01a6fcbe0999d6978f54ca0ed5779049e5636",
+  "proefbron_sha256": "379688b09448fc00d97550c30497eb6effd9874d8a3d3abf7743c6cfaf7f8d25",
+  "omvang": "Verkennend eigen Linux-venster in aparte Xvfb/D-Bus/XDG. Eigen voorbeeldkopie, geen volledige functie-/pixelgoedkeuring.",
+  "begindata_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13",
+  "stappen": [
+    {
+      "actie": "open",
+      "programma_pid": 3649466,
+      "beeld": {
+        "bestand": "notities-open.png",
+        "sha256": "f2992a994522b29ed9631a7fb2043edb44eeaeca39f5fb9a17f773117f5f04bc",
+        "vensters": [
+          {
+            "id": 4194306,
+            "naam": "Open Office Studio",
+            "klasse": [
+              "",
+              ""
+            ]
+          }
+        ]
+      },
+      "afgerond_monotonic": 936311.105337502
+    },
+    {
+      "actie": "wacht",
+      "seconden": 8,
+      "beeldnaam": "writer-menu-begin",
+      "ontvangen_monotonic": 936311.105521684,
+      "beeld": {
+        "bestand": "writer-menu-begin.png",
+        "sha256": "fce53c6a344b22a8d89ec64d88f24f8ece7f12af94a9c66a95cf8e60c62074ad",
+        "vensters": [
+          {
+            "id": 4194306,
+            "naam": "Open Office Studio",
+            "klasse": [
+              "",
+              ""
+            ]
+          }
+        ]
+      },
+      "bron_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13",
+      "afgerond_monotonic": 936319.790083334
+    },
+    {
+      "actie": "klik",
+      "x": 43,
+      "y": 45,
+      "beeldnaam": "bestand-open",
+      "ontvangen_monotonic": 936319.790211456,
+      "beeld": {
+        "bestand": "bestand-open.png",
+        "sha256": "a8a16243122652aef67b427dda41260214bf3baf3e832e9c25954ec1f72fc60c",
+        "vensters": [
+          {
+            "id": 4194306,
+            "naam": "Open Office Studio",
+            "klasse": [
+              "",
+              ""
+            ]
+          }
+        ]
+      },
+      "bron_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13",
+      "afgerond_monotonic": 936320.616295832
+    },
+    {
+      "actie": "wacht",
+      "seconden": 2,
+      "beeldnaam": "bestand-open-rustig",
+      "ontvangen_monotonic": 936320.616494714,
+      "beeld": {
+        "bestand": "bestand-open-rustig.png",
+        "sha256": "bfc5ef59a709c7673e6c89a04f2d3dc966c7386d0fe7b3e534443a0af52219f4",
+        "vensters": [
+          {
+            "id": 4194306,
+            "naam": "Open Office Studio",
+            "klasse": [
+              "",
+              ""
+            ]
+          }
+        ]
+      },
+      "bron_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13",
+      "afgerond_monotonic": 936323.304685925
+    },
+    {
+      "actie": "toets",
+      "toetsen": [
+        "Escape"
+      ],
+      "beeldnaam": "bestand-escape",
+      "ontvangen_monotonic": 936355.472155841,
+      "beeld": {
+        "bestand": "bestand-escape.png",
+        "sha256": "bfc5ef59a709c7673e6c89a04f2d3dc966c7386d0fe7b3e534443a0af52219f4",
+        "vensters": [
+          {
+            "id": 4194306,
+            "naam": "Open Office Studio",
+            "klasse": [
+              "",
+              ""
+            ]
+          }
+        ]
+      },
+      "bron_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13",
+      "afgerond_monotonic": 936356.216013889
+    },
+    {
+      "actie": "wacht",
+      "seconden": 2,
+      "beeldnaam": "bestand-gesloten",
+      "ontvangen_monotonic": 936356.21613809,
+      "beeld": {
+        "bestand": "bestand-gesloten.png",
+        "sha256": "a8a16243122652aef67b427dda41260214bf3baf3e832e9c25954ec1f72fc60c",
+        "vensters": [
+          {
+            "id": 4194306,
+            "naam": "Open Office Studio",
+            "klasse": [
+              "",
+              ""
+            ]
+          }
+        ]
+      },
+      "bron_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13",
+      "afgerond_monotonic": 936359.014291788
+    },
+    {
+      "actie": "klik",
+      "x": 1256,
+      "y": 16,
+      "beeldnaam": "writer-donker",
+      "ontvangen_monotonic": 936359.014426459,
+      "beeld": {
+        "bestand": "writer-donker.png",
+        "sha256": "a8a16243122652aef67b427dda41260214bf3baf3e832e9c25954ec1f72fc60c",
+        "vensters": [
+          {
+            "id": 4194306,
+            "naam": "Open Office Studio",
+            "klasse": [
+              "",
+              ""
+            ]
+          }
+        ]
+      },
+      "bron_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13",
+      "afgerond_monotonic": 936359.898164478
+    },
+    {
+      "actie": "wacht",
+      "seconden": 2,
+      "beeldnaam": "writer-donker-rustig",
+      "ontvangen_monotonic": 936359.898288569,
+      "beeld": {
+        "bestand": "writer-donker-rustig.png",
+        "sha256": "61ff83ce96c97b3c41e9d679c98cfdc6c5a7af0dc9fa515ed9c5f25dc36d4d5f",
+        "vensters": [
+          {
+            "id": 4194306,
+            "naam": "Open Office Studio",
+            "klasse": [
+              "",
+              ""
+            ]
+          }
+        ]
+      },
+      "bron_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13",
+      "afgerond_monotonic": 936362.59413545
+    },
+    {
+      "actie": "klik",
+      "x": 43,
+      "y": 45,
+      "beeldnaam": "bestand-donker",
+      "ontvangen_monotonic": 936362.594234521,
+      "beeld": {
+        "bestand": "bestand-donker.png",
+        "sha256": "61ff83ce96c97b3c41e9d679c98cfdc6c5a7af0dc9fa515ed9c5f25dc36d4d5f",
+        "vensters": [
+          {
+            "id": 4194306,
+            "naam": "Open Office Studio",
+            "klasse": [
+              "",
+              ""
+            ]
+          }
+        ]
+      },
+      "bron_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13",
+      "afgerond_monotonic": 936363.411508365
+    },
+    {
+      "actie": "wacht",
+      "seconden": 2,
+      "beeldnaam": "bestand-donker-rustig",
+      "ontvangen_monotonic": 936363.411616056,
+      "beeld": {
+        "bestand": "bestand-donker-rustig.png",
+        "sha256": "8b2676fb16e64863d821988ff8ecac57c770f3701f0cdf29736f6617879b1218",
+        "vensters": [
+          {
+            "id": 4194306,
+            "naam": "Open Office Studio",
+            "klasse": [
+              "",
+              ""
+            ]
+          }
+        ]
+      },
+      "bron_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13",
+      "afgerond_monotonic": 936366.092946664
+    },
+    {
+      "actie": "toets",
+      "toetsen": [
+        "Escape"
+      ],
+      "beeldnaam": "bestand-donker-escape",
+      "ontvangen_monotonic": 936370.281161679,
+      "beeld": {
+        "bestand": "bestand-donker-escape.png",
+        "sha256": "8b2676fb16e64863d821988ff8ecac57c770f3701f0cdf29736f6617879b1218",
+        "vensters": [
+          {
+            "id": 4194306,
+            "naam": "Open Office Studio",
+            "klasse": [
+              "",
+              ""
+            ]
+          }
+        ]
+      },
+      "bron_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13",
+      "afgerond_monotonic": 936370.988132771
+    },
+    {
+      "actie": "wacht",
+      "seconden": 2,
+      "beeldnaam": "writer-donker-terug",
+      "ontvangen_monotonic": 936370.988224452,
+      "beeld": {
+        "bestand": "writer-donker-terug.png",
+        "sha256": "433af5c22746986688a495f22db3efc99d8f1b49c42a04161f585f523dda5844",
+        "vensters": [
+          {
+            "id": 4194306,
+            "naam": "Open Office Studio",
+            "klasse": [
+              "",
+              ""
+            ]
+          }
+        ]
+      },
+      "bron_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13",
+      "afgerond_monotonic": 936373.704385709
+    },
+    {
+      "actie": "klik",
+      "x": 1285,
+      "y": 16,
+      "beeldnaam": "instellingen-donker-open",
+      "ontvangen_monotonic": 936373.70450681,
+      "beeld": {
+        "bestand": "instellingen-donker-open.png",
+        "sha256": "433af5c22746986688a495f22db3efc99d8f1b49c42a04161f585f523dda5844",
+        "vensters": [
+          {
+            "id": 4194306,
+            "naam": "Open Office Studio",
+            "klasse": [
+              "",
+              ""
+            ]
+          }
+        ]
+      },
+      "bron_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13",
+      "afgerond_monotonic": 936374.557246802
+    },
+    {
+      "actie": "wacht",
+      "seconden": 2,
+      "beeldnaam": "instellingen-donker-rustig",
+      "ontvangen_monotonic": 936374.557355573,
+      "beeld": {
+        "bestand": "instellingen-donker-rustig.png",
+        "sha256": "771d9180f31c1bb12e7e89581cbf2172868ba71793cdfe799d1285a3740d9275",
+        "vensters": [
+          {
+            "id": 4194306,
+            "naam": "Open Office Studio",
+            "klasse": [
+              "",
+              ""
+            ]
+          }
+        ]
+      },
+      "bron_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13",
+      "afgerond_monotonic": 936377.255610173
+    },
+    {
+      "actie": "toets",
+      "toetsen": [
+        "Escape"
+      ],
+      "beeldnaam": "instellingen-escape",
+      "ontvangen_monotonic": 936377.255713174,
+      "beeld": {
+        "bestand": "instellingen-escape.png",
+        "sha256": "771d9180f31c1bb12e7e89581cbf2172868ba71793cdfe799d1285a3740d9275",
+        "vensters": [
+          {
+            "id": 4194306,
+            "naam": "Open Office Studio",
+            "klasse": [
+              "",
+              ""
+            ]
+          }
+        ]
+      },
+      "bron_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13",
+      "afgerond_monotonic": 936377.986478143
+    },
+    {
+      "actie": "wacht",
+      "seconden": 2,
+      "beeldnaam": "instellingen-gesloten",
+      "ontvangen_monotonic": 936377.986614945,
+      "beeld": {
+        "bestand": "instellingen-gesloten.png",
+        "sha256": "74b1f2d73051b66a31dc06a5b4e011e9b4b816ad7d8265fcea21c5a0633e19f0",
+        "vensters": [
+          {
+            "id": 4194306,
+            "naam": "Open Office Studio",
+            "klasse": [
+              "",
+              ""
+            ]
+          }
+        ]
+      },
+      "bron_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13",
+      "afgerond_monotonic": 936380.695034439
+    },
+    {
+      "actie": "klik",
+      "x": 1256,
+      "y": 16,
+      "beeldnaam": "writer-terug-licht",
+      "ontvangen_monotonic": 936380.695229181,
+      "beeld": {
+        "bestand": "writer-terug-licht.png",
+        "sha256": "1c00bc4ffeaa43dd9bf6009102246f9c8394ace84595f140f4d579b3b93b8ff5",
+        "vensters": [
+          {
+            "id": 4194306,
+            "naam": "Open Office Studio",
+            "klasse": [
+              "",
+              ""
+            ]
+          }
+        ]
+      },
+      "bron_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13",
+      "afgerond_monotonic": 936381.513768181
+    },
+    {
+      "actie": "wacht",
+      "seconden": 2,
+      "beeldnaam": "writer-terug-licht-rustig",
+      "ontvangen_monotonic": 936381.513868802,
+      "beeld": {
+        "bestand": "writer-terug-licht-rustig.png",
+        "sha256": "be0ab540f3eb9ee9825e2dd022e1b4a42c63eb90200cfa6277e21a074e2fd1e4",
+        "vensters": [
+          {
+            "id": 4194306,
+            "naam": "Open Office Studio",
+            "klasse": [
+              "",
+              ""
+            ]
+          }
+        ]
+      },
+      "bron_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13",
+      "afgerond_monotonic": 936384.257044158
+    },
+    {
+      "actie": "stop",
+      "ontvangen_monotonic": 936384.257149289,
+      "beeld": {
+        "bestand": "notities-expliciet-gestopt.png",
+        "sha256": "be0ab540f3eb9ee9825e2dd022e1b4a42c63eb90200cfa6277e21a074e2fd1e4",
+        "vensters": [
+          {
+            "id": 4194306,
+            "naam": "Open Office Studio",
+            "klasse": [
+              "",
+              ""
+            ]
+          }
+        ]
+      },
+      "bron_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13",
+      "afgerond_monotonic": 936384.354044625
+    }
+  ],
+  "expliciet_gestopt": true,
+  "programma_eindcode": -15,
+  "testscherm": ":105",
+  "eigen_sessiebus": "unix:path=/tmp/dbus-Sm1t1YUznh,guid=a6191697c6ec6e69f150861a6ae81dc9",
+  "systeem_utc_eind": "2026-11-02T05:22:35.342203+00:00",
+  "systeem_lokaal_eind": "2026-11-02T06:22:35.342226+01:00",
+  "einddata_sha256": "c39c8cc6be54c175c037be585534c9faa6710521528fd15bbe57f2a796adad13"
+}

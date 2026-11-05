@@ -193,6 +193,14 @@ describe("breedte van een nieuwe tabel", () => {
     expect(vijf.reduce((a, b) => a + b, 0)).toBe(9072);
     expect(new Set(vijf.slice(0, 4)).size).toBe(1);
   });
+  it("houdt een geneste tabel en veel kolommen binnen de beschikbare breedte", () => {
+    for (const [breedte, aantal] of [[500, 10], [9072, 63]]) {
+      const kolommen = gelijkeKolommen(breedte, aantal);
+      expect(kolommen).toHaveLength(aantal);
+      expect(kolommen.reduce((a, b) => a + b, 0)).toBe(breedte);
+      expect(Math.min(...kolommen)).toBeGreaterThan(0);
+    }
+  });
 });
 
 describe("formule: som", () => {

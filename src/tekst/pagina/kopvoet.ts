@@ -372,10 +372,22 @@ export function voegPaginanummerIn(bytes: Uint8Array, opties: PaginanummerOpties
   });
 }
 
-/**
- * Zorgt dat de sectie een (lege) kop- of voettekst heeft, zodat de engine die
- * kan openen om te bewerken. Geeft null als er al een is.
- */
+/** Alle kopteksten vooraf aanmaken, zodat een watermerk geen onbekende verhalen introduceert. */
+export function zorgVoorWatermerkKoppen(bytes: Uint8Array): Uint8Array | null {
+  let uit = bytes;
+  let gewijzigd = false;
+  const aantal = metPakket(bytes, (p) => secties(openDocument(p)).length);
+  for (let i = 0; i < aantal; i++) {
+    const nieuw = zorgVoorKopVoet(uit, i, "header");
+    if (nieuw) {
+      uit = nieuw;
+      gewijzigd = true;
+    }
+  }
+  return gewijzigd ? uit : null;
+}
+
+/** Zorgt voor een bewerkbare kop/voet; null als die al bestaat. */
 export function zorgVoorKopVoet(bytes: Uint8Array, sectie: number, soort: KopVoetSoort): Uint8Array | null {
   return metPakket(bytes, (pakket) => {
     const doc = openDocument(pakket);

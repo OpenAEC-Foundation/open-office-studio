@@ -1,0 +1,2282 @@
+{
+  "datum": "2026-11-04",
+  "versie": "2026.45.26",
+  "rustversie": "2026.45.0-alpha.50",
+  "bronouder": "1a0aa52142d9857a7875be227ecbe8cb6c6cf1c0",
+  "programma_sha256": "92a142c46e4da00e1f2c1dc59fe748a4466fde0a32143ab6d5f2034eaac81527",
+  "protocolprogramma_sha256": "d2db64ce04e87d9a847824bd1204e780410b44e05b7d59536d09b46fe53c7e95",
+  "protocoladapter_sha256": "003da7de3ba1f86c11adf506696d2d28330369fd3b495d9b50d4696ea929f0f6",
+  "bronbestanden_sha256": {
+    "native/vendor/docx-edit/src/ops/table.rs": "89b18b8013e6248fdbab2d759286c8139ce48dbfd41b4c414b7d10f916cb3d26",
+    "native/vendor/docx-edit/src/ops/text.rs": "05f079bbb0dd305e387288211ee084f179df52cd1fb45a86902e4c1e400ee15d",
+    "native/vendor/docx-edit/src/clipboard_batch.rs": "3675481a2ce044a6d2b9173dc27d6f8cdc01e14d6772ebe088cb4edcdb69e9b7",
+    "native/vendor/docx-edit-bron.json": "b96f50a18229551212080463db81610f9bbb94a353d81310a04cd497a916dc57",
+    "native/Cargo.toml": "4bed8cd7e3c9f09d4d2b011f6668f6c94ace6e2b8fcc0b8fde9e23fd654898d9",
+    "native/Cargo.lock": "d3495d92d9ea9ad26ea85b0fe823418839354be6db7ff4dd1c842a19d9da6a56",
+    "src-tauri/Cargo.toml": "d36789743fe766f2e648509e25ce94405191ee2ebf3d2081d61347aa04a67342",
+    "src-tauri/Cargo.lock": "73499c5a3d0aa52d344a5bd785b9f9f33b54ae5564922d4fe1b445e902b5b642",
+    "src-tauri/tauri.conf.json": "27f409376d267d4bcd19f0b8e28b1ac58dfedd6e1a8700b20ad0ca3ab25a0748",
+    "package.json": "87a6493203f94e5c34da53e045f103969ef6372d482add777e4d2ebb388ba758",
+    "versie.json": "04f3d086591d591de254a93010694224fc3ac131bbee69ef9ca2468105cc51ef",
+    "scripts/test-writer-lang-native.py": "aefe6b2f661bc781f6768b5240db99ea46f0fe6209f26276bc73cf756ed592bc",
+    "scripts/bewaar-writer-foutcontext.py": "bfcd4ffd971fe6fa8507acc9a0d6b30465837d2293073926ae7b936fc6742ff4",
+    "native/onderzoek/writer-plakbatch/controleer-randgevallen.mjs": "96b5d80fe535c85ed29ecbed97a8e364488edba48cb79f55bf95eab0fe111bf9",
+    "native/onderzoek/writer-plakbatch/controleer-afwijzingen.mjs": "50ce0ccee6b8e362b9aacc434297c524cfad04294342ed251df56efe14d81362",
+    "native/onderzoek/writer-plakbatch/controleer-groot.mjs": "c75c121ff9e8da759159c8328f1abc770f27040d394f89b35898b3f9eaa7c5a8"
+  },
+  "logbestanden_sha256": {
+    "rust-plak-45.26-frontendtests.log": "10ba918210a12141b66113e14c44428585d816d3614f0a5dd46c5799159a31f8",
+    "herstelbeleid-python-tests-final.log": "a457b29d2c423f3a69afaecdb7a18a1b07547700cf9a934027d9c45bb218b52a",
+    "rust-plak-45.26-desktop-bouw.log": "08ad474878ab14b57787d1590f17956f1b37b2334c49b88c3c224d9c250debce",
+    "rust-plak-alpha50-tests.log": "000050eeca19e153fbec5e8f75436401fea2a1e9b08daa4718bd53a05356b63f",
+    "rust-plak-alpha50-fmt.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "rust-plak-alpha50-broncheck.log": "2913237d8476046d52392c3af78d3b302cb8c593b20e2b142634ae210f86b8e8",
+    "rust-plak-alpha50-webview-broncheck.log": "b9f7aabb5e2b03af4203c36d73777744dbe2ead95b3678213e02094f2b61f2e1"
+  },
+  "controles": {
+    "frontendtests": 1666,
+    "frontendbestanden": 154,
+    "python_tests": 57,
+    "rust_protocoltests": 5,
+    "rust_leesproeven": 2,
+    "typescript_via_productiebouw": true,
+    "desktop_linux_bouw": true,
+    "weekversie": true,
+    "native_broncontroles": true,
+    "volledige_lokale_native_werkruimte_opnieuw_bewezen": false
+  },
+  "codec": {
+    "randgevallen": {
+      "scope": "Gegevens-/DOCX-proeven van private Rust-batch; geen GUI of productacceptatie.",
+      "gevallen": [
+        {
+          "naam": "begin",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 1
+        },
+        {
+          "naam": "midden",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 2
+        },
+        {
+          "naam": "einde",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 1
+        },
+        {
+          "naam": "deelselectie",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 1
+        },
+        {
+          "naam": "meer-alineas",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 2
+        },
+        {
+          "naam": "unicode-midden",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 1
+        },
+        {
+          "naam": "unicode-grens",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 1
+        },
+        {
+          "naam": "lege-alineas",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 1
+        },
+        {
+          "naam": "enkele-tabel",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 6
+        },
+        {
+          "naam": "tabel-na-tekst",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 2
+        },
+        {
+          "naam": "geneste-tabel",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 4
+        },
+        {
+          "naam": "celtekst",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 1
+        },
+        {
+          "naam": "tabel-in-cel",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 3
+        },
+        {
+          "naam": "afbeelding",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 1
+        },
+        {
+          "naam": "afbeelding-na-tabel",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 2
+        },
+        {
+          "naam": "leeg-fragment",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 1
+        },
+        {
+          "naam": "bladwijzer-begin",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 3
+        },
+        {
+          "naam": "bladwijzer-midden",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 1
+        },
+        {
+          "naam": "bladwijzer-selectie",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 2
+        },
+        {
+          "naam": "bladwijzer-tabel",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 7
+        },
+        {
+          "naam": "bladwijzer-afbeelding",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 1
+        },
+        {
+          "naam": "revisie-tekst",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 1
+        },
+        {
+          "naam": "revisie-selectie",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 1
+        },
+        {
+          "naam": "revisie-tabel",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 6
+        },
+        {
+          "naam": "revisie-afbeelding",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 2
+        },
+        {
+          "naam": "vorige-revisie",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 1
+        },
+        {
+          "naam": "revisie-genest",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 5
+        },
+        {
+          "naam": "lege-inline",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 2
+        },
+        {
+          "naam": "inline-na-tabel",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 2
+        },
+        {
+          "naam": "inline-in-cel",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 1
+        },
+        {
+          "naam": "revisie-lege-inline",
+          "geslaagd": true,
+          "verhalen_opmaak_identiteiten": true,
+          "cursor": true,
+          "undo_redo": true,
+          "docx_alle_onderdelen_exact": true,
+          "heropenen": true,
+          "native_ms": 2
+        }
+      ],
+      "geslaagd": true,
+      "rapport_sha256": "d54d1d50b0060c3a892d19c10228ace75adf5b846fff5992a33d2d6afcdb6078"
+    },
+    "afwijzingen": {
+      "scope": "Private foutafhandeling; een mislukte voorbereidingsopdracht levert geen gedeeltelijke delta op. Geen host-/GUI-acceptatie.",
+      "gevallen": [
+        {
+          "naam": "onbekende-alinea",
+          "exitcode": 1,
+          "geen_gedeeltelijke_delta": true,
+          "bron_sha256": "37f0c53f33ce3df192b76bfbbf65b023378d2f10927754fb1c57c2ad34e6399b",
+          "fout": "paragraph \"ontbreekt\" was not found"
+        },
+        {
+          "naam": "offset-buiten-alinea",
+          "exitcode": 1,
+          "geen_gedeeltelijke_delta": true,
+          "bron_sha256": "37f0c53f33ce3df192b76bfbbf65b023378d2f10927754fb1c57c2ad34e6399b",
+          "fout": "index 10000000 is outside the story length 31"
+        },
+        {
+          "naam": "tabel-zonder-rijen",
+          "exitcode": 1,
+          "geen_gedeeltelijke_delta": true,
+          "bron_sha256": "37f0c53f33ce3df192b76bfbbf65b023378d2f10927754fb1c57c2ad34e6399b",
+          "fout": "invalid table: table tblPr must be an object"
+        },
+        {
+          "naam": "afbeelding-geen-data",
+          "exitcode": 1,
+          "geen_gedeeltelijke_delta": true,
+          "bron_sha256": "37f0c53f33ce3df192b76bfbbf65b023378d2f10927754fb1c57c2ad34e6399b",
+          "fout": "invalid format value: Geen data-afbeelding"
+        },
+        {
+          "naam": "afbeelding-beschermd-veld",
+          "exitcode": 1,
+          "geen_gedeeltelijke_delta": true,
+          "bron_sha256": "37f0c53f33ce3df192b76bfbbf65b023378d2f10927754fb1c57c2ad34e6399b",
+          "fout": "invalid format value: Beschermd afbeeldingsveld"
+        },
+        {
+          "naam": "afbeelding-negatieve-maat",
+          "exitcode": 1,
+          "geen_gedeeltelijke_delta": true,
+          "bron_sha256": "37f0c53f33ce3df192b76bfbbf65b023378d2f10927754fb1c57c2ad34e6399b",
+          "fout": "invalid format value: Ongeldige afbeeldingsmaat"
+        },
+        {
+          "naam": "late-tekstfout",
+          "exitcode": 1,
+          "geen_gedeeltelijke_delta": true,
+          "bron_sha256": "37f0c53f33ce3df192b76bfbbf65b023378d2f10927754fb1c57c2ad34e6399b",
+          "fout": "inserted text may not contain paragraph or line breaks"
+        },
+        {
+          "naam": "ontbrekende-tekst",
+          "exitcode": 1,
+          "geen_gedeeltelijke_delta": true,
+          "bron_sha256": "37f0c53f33ce3df192b76bfbbf65b023378d2f10927754fb1c57c2ad34e6399b",
+          "fout": "invalid format value: missing field `text`"
+        }
+      ],
+      "geslaagd": true,
+      "rapport_sha256": "372f158f0c6f1b7b73fb8eef75485d8c8d2418c0f17de3c246d4ebfaaa495f24"
+    },
+    "grote-proef": {
+      "scope": "Afzonderlijke gegevens-/DOCX-proef, geen GUI of algemene snelheidsacceptatie. Twee verschillende runtimes; tijden bevatten verschillende kopieer-/brugkosten.",
+      "bron_sha256": "f69528bf0ee7b1e2d89aff2e893a131696e0485dd494b2a7c15b16f55d95b7a5",
+      "programma_sha256": "003da7de3ba1f86c11adf506696d2d28330369fd3b495d9b50d4696ea929f0f6",
+      "stappen": [
+        "Alle verhalen/opmaak/identiteiten en cursor exact",
+        "Bronexacte undo en redo op beide routes",
+        "Alle uitgepakte DOCX-onderdelen bytegelijk",
+        "Alle verhaalteksten na heropenen structureel exact"
+      ],
+      "voor": {
+        "bodyalinea": 897,
+        "bodytabellen": 128,
+        "verhalen": 769
+      },
+      "voor_hash": "dd0bdc70c9ce51f7d2ac52381355240d891aee3699b8d2a1ab332964e2dfe72e",
+      "sdk_gegevens_ms": 30272,
+      "geslaagd": true,
+      "na": {
+        "bodyalinea": 1793,
+        "bodytabellen": 256,
+        "verhalen": 1537
+      },
+      "na_hash": "5b087c573c243b2200343a1b0417176e6edde6d3c1039b1bf88ba0ca42d248bb",
+      "cursor": true,
+      "exacte_verhalen_opmaak_identiteiten": true,
+      "undo_redo": true,
+      "alle_docx_onderdelen_exact": true,
+      "heropenen_alle_verhaalteksten": true,
+      "native_voorbereiding_ms": 15892,
+      "delta_bytes": 3142984,
+      "docx_onderdelen": 14,
+      "native_docx_sha256": "74d4c27fe44bc4b0326d1730f80a0578d634a68044f09c9098925174f7d2a820",
+      "referentie_docx_sha256": "74d4c27fe44bc4b0326d1730f80a0578d634a68044f09c9098925174f7d2a820",
+      "rapport_sha256": "b5cdf43e5d9f46f3d274af056197a4a3c1a120e46a6fdd63ae9cea91cdf966bc"
+    }
+  },
+  "gui": {
+    "rust-plak-gui-45.26-volgorde": {
+      "geslaagd": true,
+      "versie": "2026.45.26",
+      "programma_sha256": "92a142c46e4da00e1f2c1dc59fe748a4466fde0a32143ab6d5f2034eaac81527",
+      "script_sha256": "4c010c3e9fadea8489344000a3987ce2d82c0c380cfbbd4c9c8043ce30d6ae8e",
+      "grenzen": "Echte WebKit-invoer tijdens native plakken: opmaak/undo, bewaren en verwerpen.\n\nAlleen het terugbezorgen van een werkelijk berekend Rust-antwoord wordt in\ntwee gevallen vastgehouden. Dit is een volgordeproef, geen snelheidsmeting.\n",
+      "bewaring_sha256": "a963f3ef292de53c54da0508dc020fa7e75b862269fca8f527304dbbccd91ec6",
+      "native_opdrachten": [
+        {
+          "requestId": "90265570-787e-4051-9edd-5c4dac999d9f",
+          "range": {
+            "story": "body",
+            "start": {
+              "paraId": "body:p7",
+              "offset": 70
+            },
+            "end": {
+              "paraId": "body:p7",
+              "offset": 70
+            }
+          },
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "story": "body",
+            "paraId": "2166633142:6",
+            "offset": 70
+          }
+        },
+        {
+          "requestId": "1335a001-cb08-432e-94a5-7d3c1f42de31",
+          "range": {
+            "story": "body",
+            "start": {
+              "paraId": "2166633142:6",
+              "offset": 70
+            },
+            "end": {
+              "paraId": "2166633142:6",
+              "offset": 70
+            }
+          },
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "story": "body",
+            "paraId": "2166633142:32",
+            "offset": 70
+          }
+        },
+        {
+          "requestId": "7d689939-5878-48cd-bbdf-19f0b362e84b",
+          "range": {
+            "story": "body",
+            "start": {
+              "paraId": "2166633142:32",
+              "offset": 73
+            },
+            "end": {
+              "paraId": "2166633142:32",
+              "offset": 73
+            }
+          },
+          "gereed": true,
+          "wacht": false,
+          "bronbinding": true,
+          "caret": {
+            "story": "body",
+            "paraId": "2166633142:84",
+            "offset": 73
+          }
+        }
+      ],
+      "fouten": {
+        "gui": [],
+        "console": []
+      },
+      "rapport_sha256": "09240a3ce6cc4702707cd87e4559c6d3b964f9bad18b3bba0ee1ce8e4b9ba434",
+      "stappen": [
+        "Werkelijk rijk plakken, één Undo en bronexacte Redo",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór antwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder antwoord; nieuw document en late beantwoording behouden bron en invoer"
+      ],
+      "procesketen": {
+        "afsluitcode": 0
+      }
+    },
+    "rust-plak-gui-45.26-vijfhonderd": {
+      "geslaagd": true,
+      "versie": "2026.45.26",
+      "programma_sha256": "92a142c46e4da00e1f2c1dc59fe748a4466fde0a32143ab6d5f2034eaac81527",
+      "script_sha256": "aefe6b2f661bc781f6768b5240db99ea46f0fe6209f26276bc73cf756ed592bc",
+      "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+      "invoerinterval_ms": 20,
+      "vaste_nawacht_ms": 2000,
+      "invoer_gereedheid": "Native keyup van de laatste punt, inputwachtrij, zichtbare golflijnen en één exacte controle van de laatste alinea; alle 500 bronalinea’s daarnaast apart vergeleken.",
+      "grenzen": [
+        "Eén gegenereerde 500-paginabron, normale compositor, alleen een lichte teller om getBoundingClientRect. Geen algemene prestatie-, IME-, enorme-plak- of platformacceptatie."
+      ],
+      "startprogramma_sha256": "92a142c46e4da00e1f2c1dc59fe748a4466fde0a32143ab6d5f2034eaac81527",
+      "geladen_runtime": [
+        "/usr/lib/x86_64-linux-gnu/libjavascriptcoregtk-4.1.so.0.10.14",
+        "/usr/lib/x86_64-linux-gnu/libwebkit2gtk-4.1.so.0.21.10"
+      ],
+      "herstelbeleid_proef": {
+        "interval_minuten": 1,
+        "wachtgrens_seconden": 120,
+        "betekenis": "Eén interval, een periodieke tik van 30 seconden en 30 seconden export-/IO-ruimte; de uiteindelijke kopie moet nog steeds volledig actueel zijn."
+      },
+      "invoer_tot_bron_en_golven_ms": 4334,
+      "paginavergelijkingen_tijdens_invoer": {
+        "calls": 6487
+      },
+      "documentuitlezingen_tijdens_invoer": {
+        "calls": 0,
+        "ms": 0,
+        "api_wissels": 128,
+        "actieve_api_gevolgd": true,
+        "omvang": "GetDocument-aanroepen tijdens native invoer tot bron-/golflijngereedheid. De stabiele React-ref volgt vervanging van API-objecten; geen CPU-profiler."
+      },
+      "native_leesaanroepen": {
+        "zelfde_sessie": true,
+        "readParagraphs": {
+          "calls": 7,
+          "ms": 35
+        },
+        "paragraphSpans": {
+          "calls": 26,
+          "ms": 152.99999999999636
+        }
+      },
+      "invoermeting": {
+        "calls": 5613,
+        "classes": {
+          "docx-editor__scroll-container": 254,
+          "canvas-page": 1039,
+          "DIV": 132,
+          "CANVAS": 1527,
+          "canvas-pages__column": 39,
+          "canvas-pages": 1724,
+          "docx-plugin-overlays": 862,
+          "docx-editor__viewport tl-met-liniaal": 36
+        },
+        "golven": 83,
+        "paginas": 500,
+        "tot_bron_en_golven_ms_inclusief_nawacht": 6397
+      },
+      "paginaregister": {
+        "voor": 500,
+        "na": 500,
+        "zoom": 1.15,
+        "add": 0,
+        "delete": 0,
+        "invalidate": 1,
+        "historische_registerwissels": false,
+        "geen_canvaswissels": true,
+        "paginaopdracht": {
+          "ok": true,
+          "status": "executed"
+        },
+        "na_pagina_invoegen": 501,
+        "na_undo": 500,
+        "geslaagd": true
+      },
+      "herstelwaarnemingen": [
+        {
+          "sha256": "179f9f61efeb89d87ec95dc6e26c38e93a5aa8466e8f9eec2c47c43934d258f4",
+          "exact": true,
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57"
+        }
+      ],
+      "herstelkopie": {
+        "sha256": "179f9f61efeb89d87ec95dc6e26c38e93a5aa8466e8f9eec2c47c43934d258f4",
+        "exact": true
+      },
+      "fouten_voor_heropenen": {
+        "gui": [],
+        "console": []
+      },
+      "herstelkeuzes": [
+        {
+          "keuze": "later",
+          "aanbod": {
+            "namen": [
+              "Prestatieproef.docx"
+            ],
+            "tekst": "Recover documentsOpen Office Studio was not closed properly last time. A recovery copy was kept of these documents. Recovering opens a new, unsaved tab; the original file stays unchanged.Prestatieproef.docxText · recovery copy from today 01:02RecoverSave as…DiscardDecide later"
+          },
+          "fouten_voor_keuze": {
+            "gui": [],
+            "console": []
+          }
+        },
+        {
+          "keuze": "herstellen",
+          "aanbod": {
+            "namen": [
+              "Prestatieproef.docx"
+            ],
+            "tekst": "Recover documentsOpen Office Studio was not closed properly last time. A recovery copy was kept of these documents. Recovering opens a new, unsaved tab; the original file stays unchanged.Prestatieproef.docxText · recovery copy from today 01:02RecoverSave as…DiscardDecide later"
+          },
+          "fouten_voor_keuze": {
+            "gui": [],
+            "console": []
+          }
+        }
+      ],
+      "status_na_later": [
+        "Page 1 of 500",
+        "29,002 words, 173,906 characters",
+        "Language unknown · 20,502 spelling errors",
+        "Track Changes: off"
+      ],
+      "fouten_na_heropenen": {
+        "gui": [],
+        "console": []
+      },
+      "verder_na_later_bewaard": true,
+      "bron_na_verder_sha256": "4a3204699b863361235ddb1f856dba764e8aee5621b97c27752f6cb0131aace2",
+      "hersteltabbladen": 2,
+      "herstel_fouten": {
+        "gui": [],
+        "console": []
+      },
+      "bron_eind_sha256": "4a3204699b863361235ddb1f856dba764e8aee5621b97c27752f6cb0131aace2",
+      "rapport_sha256": "1c5e5c9ef2f1ba69ce3e193679c25cf569dffb617fc611a14ddef0f4dbc4512e",
+      "stappen": [
+        {
+          "naam": "beginbron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2",
+          "exact": true
+        },
+        {
+          "naam": "getypte_bron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "exact": true
+        },
+        {
+          "naam": "selectie_en_backspace",
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "exact": true
+        },
+        {
+          "naam": "undo",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "exact": true
+        },
+        {
+          "naam": "redo",
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "exact": true
+        },
+        {
+          "naam": "hersteld_voor_bewaren",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "exact": true
+        },
+        {
+          "naam": "native_bewaaractie_onafhankelijk",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "exact": true
+        },
+        {
+          "naam": "nieuw_proces_heropend",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "exact": true
+        },
+        {
+          "naam": "verder_na_later",
+          "alinea_aantal": 500,
+          "tekst_sha256": "fd7d825b22dee866b9680b7eda810589f0bcff6cc43796092675cc7d54c0126c",
+          "exact": true
+        },
+        {
+          "naam": "herstelde_kopie",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "exact": true
+        },
+        {
+          "naam": "verder_in_herstelde_kopie",
+          "alinea_aantal": 500,
+          "tekst_sha256": "2479dfa76e6a51382e07e955c4058dcb85f9d02950bee6b116734b457cb13c75",
+          "exact": true
+        }
+      ],
+      "procesketen": {
+        "afsluitcode": 0
+      }
+    },
+    "rust-plak-gui-45.26-128": {
+      "maxduur_seconden": 600,
+      "geslaagd": true,
+      "versie": "2026.45.26",
+      "programma_sha256": "92a142c46e4da00e1f2c1dc59fe748a4466fde0a32143ab6d5f2034eaac81527",
+      "script_sha256": "89b905ee19e853d4f9574043fa605ecfceee61e358ba4ef4d6657a8acac6faa2",
+      "bron_sha256": "f69528bf0ee7b1e2d89aff2e893a131696e0485dd494b2a7c15b16f55d95b7a5",
+      "invoergereedheid": "Gewijzigde bron, lege engine-invoerwachtrij en nieuw verschenen plakopties na de eigen opmaakverwerking; bronvergelijkingen daarnaast buiten de tijdmeting.",
+      "grenzen": "Eigen kopie van meegeleverd document; selecteer alles, kopieer, ga naar einde en plak; per ronde broncontrole. Geen snelle plakreeks zonder barrières.",
+      "bewaar_na_ronde": 0,
+      "bronkeuze": "128-tabellen",
+      "startprogramma_sha256": "92a142c46e4da00e1f2c1dc59fe748a4466fde0a32143ab6d5f2034eaac81527",
+      "profiel": "org.openaec.office-studio",
+      "profielopzet": {
+        "methodes": [
+          "applyLocalUpdate",
+          "encodeStateAsUpdate",
+          "version",
+          "readParagraphs",
+          "paragraphSpans",
+          "storySegments",
+          "selectionContext",
+          "applyRawOps",
+          "formatRange",
+          "toggleMark",
+          "selection",
+          "setSelection"
+        ],
+        "betekenis": "Synchrone eigen en inclusieve methodetijd; alleen bron-/invoerbarrière, geen volledige paginapaint of FPS."
+      },
+      "vervolginvoer": {
+        "lezingen": 264,
+        "eersteToetsNaLezingen": 33,
+        "hercontroleGestart": true,
+        "verhalen": 1537,
+        "invoer_tot_bron_ms": 13345,
+        "wacht_voor_invoer_ms": 150,
+        "onderbreekbaar": true,
+        "bron_exact": true,
+        "structuur_exact": true,
+        "grens": "Echte toetsen en bron-/invoerbarrière; geen volledige paginapaint of FPS.",
+        "spelling_na_invoer": {
+          "bron_exact": true,
+          "alinea_aantal": 3329,
+          "celverhalen": 1536
+        }
+      },
+      "statusbalk_na_rust": {
+        "paginas": 129,
+        "body_tekens_utf16": 131331,
+        "grens_ms": 8000,
+        "knoppen": [
+          "Page 128 of 129",
+          "19,714 words, 131,331 characters",
+          "Dutch (Netherlands) · 255 spelling errors",
+          "Track Changes: off"
+        ]
+      },
+      "onafhankelijk_docx": {
+        "exact": true,
+        "sha256": "0429b1bd018c4d87ec2c5d00187aaa3811baeef34af117a82c0bf4f15abdc040",
+        "bytes": 73133,
+        "body_met_opmaak_sha256": "c0140dae8ba8dbc090eda777ccba08ae45b15c675ae28a2db9a2e01ea3c3640f",
+        "normalisatie": "Alleen paraId/textId en rsid-attributen verwijderd; tekst, run- en alineaopmaak, hyperlinks en tabelstructuur blijven in de bodyhash."
+      },
+      "verwerpen_ms": 564,
+      "nieuw_document_na_verwerpen": true,
+      "gui_fouten": [],
+      "console_fouten": [],
+      "rapport_sha256": "09f93ba6272ac80c51a154776e710a692a9882c390908b10065f0df87e773d0c",
+      "rondes": [
+        {
+          "ronde": 1,
+          "plak_tot_bron_ms": 38840,
+          "eventlus": {
+            "timer_ms": 16,
+            "waarnemingen": 1130,
+            "grootste_tussenruimte_ms": 9979.999999999993,
+            "p95_tussenruimte_ms": 22,
+            "betekenis": "Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."
+          },
+          "methodeprofiel": {
+            "version": {
+              "aantal": 49,
+              "totaal_ms": 2.000000000007276,
+              "eigen_ms": 2.000000000007276,
+              "maximum_ms": 1.000000000007276
+            },
+            "selection": {
+              "aantal": 259,
+              "totaal_ms": 2,
+              "eigen_ms": 2,
+              "maximum_ms": 1
+            },
+            "selectionContext": {
+              "aantal": 920,
+              "totaal_ms": 165.99999999999272,
+              "eigen_ms": 165.99999999999272,
+              "maximum_ms": 22
+            },
+            "paragraphSpans": {
+              "aantal": 42,
+              "totaal_ms": 202.99999999999272,
+              "eigen_ms": 202.99999999999272,
+              "maximum_ms": 69.00000000000728
+            },
+            "storySegments": {
+              "aantal": 2308,
+              "totaal_ms": 830.999999999789,
+              "eigen_ms": 830.999999999789,
+              "maximum_ms": 214.99999999998545
+            },
+            "encodeStateAsUpdate": {
+              "aantal": 2,
+              "totaal_ms": 128,
+              "eigen_ms": 128,
+              "maximum_ms": 77
+            },
+            "applyLocalUpdate": {
+              "aantal": 1,
+              "totaal_ms": 623.9999999999927,
+              "eigen_ms": 623.9999999999927,
+              "maximum_ms": 623.9999999999927
+            },
+            "readParagraphs": {
+              "aantal": 33,
+              "totaal_ms": 361.0000000000291,
+              "eigen_ms": 361.0000000000291,
+              "maximum_ms": 145.00000000001455
+            },
+            "applyRawOps": {
+              "aantal": 1,
+              "totaal_ms": 3728,
+              "eigen_ms": 3728,
+              "maximum_ms": 3728,
+              "bewerkingen": 897,
+              "maximum_bewerkingen": 897
+            },
+            "setSelection": {
+              "aantal": 1,
+              "totaal_ms": 16,
+              "eigen_ms": 16,
+              "maximum_ms": 16
+            }
+          },
+          "rust_plakken": {
+            "opdrachten": [
+              {
+                "requestId": "052f29ac-77d9-47e3-959b-f80a9807a9cb",
+                "clientId": 3872470679,
+                "snapshotTekens": 4023772,
+                "gereed": true,
+                "desktopMs": 23499.000000000007,
+                "preparationMs": 23240,
+                "bronbinding": true,
+                "deltaBytes": 2809615
+              }
+            ],
+            "updates": [
+              {
+                "bytes": 2809615
+              }
+            ]
+          },
+          "voor": {
+            "alineas": 897,
+            "uniekeAlineas": 897,
+            "tabellen": 128,
+            "paginas": 65,
+            "lengte": 66689,
+            "body_sha256": "005ed86f9402988c9142969559f872762190e9c3b9af9f111ceb6028df895c5f",
+            "celverhalen": 768,
+            "tabelvormen_sha256": "3f8764b386144ef9b7deebd024347ce88df5f910c40d1caa44945e4c45a8e562"
+          },
+          "na": {
+            "alineas": 1793,
+            "uniekeAlineas": 1793,
+            "tabellen": 256,
+            "paginas": 129,
+            "lengte": 133377,
+            "body_sha256": "4dfe9a7b8da2ba2479164bef55d1f7033c004f213fde642e1c0977aeef2bbd62",
+            "celverhalen": 1536,
+            "tabelvormen_sha256": "71e307bdbb6e3a8ba3cbfdc602bb156455eafb2f0fec83a0cb6726389c5b1ec3"
+          }
+        }
+      ],
+      "procesketen": {
+        "afsluitcode": 143,
+        "volledig_groene_procesproef": false,
+        "grens": "Inhoudsrapport positief, procesketen143; niet als volledig groen geteld. Geen oorzaak achteraf bewezen."
+      }
+    },
+    "rust-plak-gui-45.26-128-herhaling": {
+      "maxduur_seconden": 600,
+      "geslaagd": true,
+      "versie": "2026.45.26",
+      "programma_sha256": "92a142c46e4da00e1f2c1dc59fe748a4466fde0a32143ab6d5f2034eaac81527",
+      "script_sha256": "89b905ee19e853d4f9574043fa605ecfceee61e358ba4ef4d6657a8acac6faa2",
+      "bron_sha256": "f69528bf0ee7b1e2d89aff2e893a131696e0485dd494b2a7c15b16f55d95b7a5",
+      "invoergereedheid": "Gewijzigde bron, lege engine-invoerwachtrij en nieuw verschenen plakopties na de eigen opmaakverwerking; bronvergelijkingen daarnaast buiten de tijdmeting.",
+      "grenzen": "Eigen kopie van meegeleverd document; selecteer alles, kopieer, ga naar einde en plak; per ronde broncontrole. Geen snelle plakreeks zonder barrières.",
+      "bewaar_na_ronde": 0,
+      "bronkeuze": "128-tabellen",
+      "startprogramma_sha256": "92a142c46e4da00e1f2c1dc59fe748a4466fde0a32143ab6d5f2034eaac81527",
+      "profiel": "org.openaec.office-studio",
+      "profielopzet": {
+        "methodes": [
+          "applyLocalUpdate",
+          "encodeStateAsUpdate",
+          "version",
+          "readParagraphs",
+          "paragraphSpans",
+          "storySegments",
+          "selectionContext",
+          "applyRawOps",
+          "formatRange",
+          "toggleMark",
+          "selection",
+          "setSelection"
+        ],
+        "betekenis": "Synchrone eigen en inclusieve methodetijd; alleen bron-/invoerbarrière, geen volledige paginapaint of FPS."
+      },
+      "vervolginvoer": {
+        "lezingen": 135,
+        "eersteToetsNaLezingen": 64,
+        "hercontroleGestart": true,
+        "verhalen": 1537,
+        "invoer_tot_bron_ms": 5123,
+        "wacht_voor_invoer_ms": 150,
+        "onderbreekbaar": true,
+        "bron_exact": true,
+        "structuur_exact": true,
+        "grens": "Echte toetsen en bron-/invoerbarrière; geen volledige paginapaint of FPS.",
+        "spelling_na_invoer": {
+          "bron_exact": true,
+          "alinea_aantal": 3329,
+          "celverhalen": 1536
+        }
+      },
+      "statusbalk_na_rust": {
+        "paginas": 129,
+        "body_tekens_utf16": 131331,
+        "grens_ms": 8000,
+        "knoppen": [
+          "Page 128 of 129",
+          "19,714 words, 131,331 characters",
+          "Dutch (Netherlands) · 255 spelling errors",
+          "Track Changes: off"
+        ]
+      },
+      "onafhankelijk_docx": {
+        "exact": true,
+        "sha256": "c4a3749db0b9708f20ef1c5a501dde0f95f8aa48efa1e5283729629b7dd8f8e3",
+        "bytes": 72787,
+        "body_met_opmaak_sha256": "c0140dae8ba8dbc090eda777ccba08ae45b15c675ae28a2db9a2e01ea3c3640f",
+        "normalisatie": "Alleen paraId/textId en rsid-attributen verwijderd; tekst, run- en alineaopmaak, hyperlinks en tabelstructuur blijven in de bodyhash."
+      },
+      "verwerpen_ms": 457,
+      "nieuw_document_na_verwerpen": true,
+      "gui_fouten": [],
+      "console_fouten": [],
+      "rapport_sha256": "bbd20b39b6df872e9029ab9c4e689c5e98934c34f05889826509140a10460a08",
+      "rondes": [
+        {
+          "ronde": 1,
+          "plak_tot_bron_ms": 23681,
+          "eventlus": {
+            "timer_ms": 16,
+            "waarnemingen": 759,
+            "grootste_tussenruimte_ms": 5204,
+            "p95_tussenruimte_ms": 23,
+            "betekenis": "Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."
+          },
+          "methodeprofiel": {
+            "selection": {
+              "aantal": 262,
+              "totaal_ms": 0.999999999996362,
+              "eigen_ms": 0.999999999996362,
+              "maximum_ms": 0.999999999996362
+            },
+            "version": {
+              "aantal": 47,
+              "totaal_ms": 1,
+              "eigen_ms": 1,
+              "maximum_ms": 1
+            },
+            "selectionContext": {
+              "aantal": 919,
+              "totaal_ms": 71.00000000000728,
+              "eigen_ms": 71.00000000000728,
+              "maximum_ms": 13
+            },
+            "encodeStateAsUpdate": {
+              "aantal": 2,
+              "totaal_ms": 80.99999999999636,
+              "eigen_ms": 80.99999999999636,
+              "maximum_ms": 50.99999999999636
+            },
+            "paragraphSpans": {
+              "aantal": 41,
+              "totaal_ms": 100.00000000000728,
+              "eigen_ms": 100.00000000000728,
+              "maximum_ms": 29
+            },
+            "applyLocalUpdate": {
+              "aantal": 1,
+              "totaal_ms": 411,
+              "eigen_ms": 411,
+              "maximum_ms": 411
+            },
+            "readParagraphs": {
+              "aantal": 33,
+              "totaal_ms": 198.99999999999272,
+              "eigen_ms": 198.99999999999272,
+              "maximum_ms": 93
+            },
+            "storySegments": {
+              "aantal": 770,
+              "totaal_ms": 191,
+              "eigen_ms": 191,
+              "maximum_ms": 80
+            },
+            "applyRawOps": {
+              "aantal": 1,
+              "totaal_ms": 1880,
+              "eigen_ms": 1880,
+              "maximum_ms": 1880,
+              "bewerkingen": 897,
+              "maximum_bewerkingen": 897
+            },
+            "setSelection": {
+              "aantal": 1,
+              "totaal_ms": 9,
+              "eigen_ms": 9,
+              "maximum_ms": 9
+            }
+          },
+          "rust_plakken": {
+            "opdrachten": [
+              {
+                "requestId": "7b2f0796-d485-4aea-8a66-04d525b11c1b",
+                "clientId": 1333121779,
+                "snapshotTekens": 3961600,
+                "gereed": true,
+                "desktopMs": 16729,
+                "preparationMs": 16456,
+                "bronbinding": true,
+                "deltaBytes": 2810944
+              }
+            ],
+            "updates": [
+              {
+                "bytes": 2810944
+              }
+            ]
+          },
+          "voor": {
+            "alineas": 897,
+            "uniekeAlineas": 897,
+            "tabellen": 128,
+            "paginas": 65,
+            "lengte": 66689,
+            "body_sha256": "005ed86f9402988c9142969559f872762190e9c3b9af9f111ceb6028df895c5f",
+            "celverhalen": 768,
+            "tabelvormen_sha256": "3f8764b386144ef9b7deebd024347ce88df5f910c40d1caa44945e4c45a8e562"
+          },
+          "na": {
+            "alineas": 1793,
+            "uniekeAlineas": 1793,
+            "tabellen": 256,
+            "paginas": 129,
+            "lengte": 133377,
+            "body_sha256": "4dfe9a7b8da2ba2479164bef55d1f7033c004f213fde642e1c0977aeef2bbd62",
+            "celverhalen": 1536,
+            "tabelvormen_sha256": "71e307bdbb6e3a8ba3cbfdc602bb156455eafb2f0fec83a0cb6726389c5b1ec3"
+          }
+        }
+      ],
+      "procesketen": {
+        "afsluitcode": 0
+      }
+    },
+    "rust-plak-gui-45.26-acht": {
+      "maxduur_seconden": 600,
+      "geslaagd": true,
+      "versie": "2026.45.26",
+      "programma_sha256": "92a142c46e4da00e1f2c1dc59fe748a4466fde0a32143ab6d5f2034eaac81527",
+      "script_sha256": "89b905ee19e853d4f9574043fa605ecfceee61e358ba4ef4d6657a8acac6faa2",
+      "bron_sha256": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee",
+      "invoergereedheid": "Gewijzigde bron, lege engine-invoerwachtrij en nieuw verschenen plakopties na de eigen opmaakverwerking; bronvergelijkingen daarnaast buiten de tijdmeting.",
+      "grenzen": "Eigen kopie van meegeleverd document; selecteer alles, kopieer, ga naar einde en plak; per ronde broncontrole. Geen snelle plakreeks zonder barrières.",
+      "bewaar_na_ronde": 7,
+      "bronkeuze": "voorbeeld",
+      "startprogramma_sha256": "92a142c46e4da00e1f2c1dc59fe748a4466fde0a32143ab6d5f2034eaac81527",
+      "profiel": "org.openaec.office-studio",
+      "tussenbewaring": {
+        "na_ronde": 7,
+        "bytes": 54592,
+        "sha256": "5c569969866ab8d49cca6bb6e68cb76def888e7ebaeadbd4346b7efb5b08ae2f"
+      },
+      "statusbalk_na_rust": {
+        "paginas": 129,
+        "body_tekens_utf16": 131328,
+        "grens_ms": 8000,
+        "knoppen": [
+          "Page 64 of 129",
+          "19,713 words, 131,328 characters",
+          "Dutch (Netherlands) · 31 spelling errors",
+          "Track Changes: off"
+        ]
+      },
+      "onafhankelijk_docx": {
+        "exact": true,
+        "sha256": "513f2b26c2cd51459552c2203aab720f8f23fb11fce89602f5615ec71d187d73",
+        "bytes": 72840,
+        "body_met_opmaak_sha256": "0808d3dcf34c8251d371d9e4c6eda470ed2597acd850062b5b5f70169333a302",
+        "normalisatie": "Alleen paraId/textId en rsid-attributen verwijderd; tekst, run- en alineaopmaak, hyperlinks en tabelstructuur blijven in de bodyhash."
+      },
+      "verwerpen_ms": 1286,
+      "nieuw_document_na_verwerpen": true,
+      "gui_fouten": [],
+      "console_fouten": [],
+      "rapport_sha256": "6b55a529c3591cbbc0a26e29225456610a8005b210c8c7dca51af7ccc28f71f2",
+      "rondes": [
+        {
+          "ronde": 1,
+          "plak_tot_bron_ms": 1532,
+          "eventlus": {
+            "timer_ms": 16,
+            "waarnemingen": 6,
+            "grootste_tussenruimte_ms": 692.9999999999982,
+            "p95_tussenruimte_ms": 652,
+            "betekenis": "Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."
+          },
+          "rust_plakken": {
+            "opdrachten": [
+              {
+                "requestId": "77862c3f-f1eb-4ca5-affe-d816ab346688",
+                "clientId": 4179744073,
+                "snapshotTekens": 30576,
+                "gereed": true,
+                "desktopMs": 39.99999999999818,
+                "preparationMs": 5,
+                "bronbinding": true,
+                "deltaBytes": 21248
+              }
+            ],
+            "updates": [
+              {
+                "bytes": 21248
+              }
+            ]
+          },
+          "voor": {
+            "alineas": 8,
+            "uniekeAlineas": 8,
+            "tabellen": 1,
+            "paginas": 1,
+            "lengte": 522,
+            "body_sha256": "a061f7aafb3acb6841417998983d18c934aaa67f9a134756b6237d1b280f3914",
+            "celverhalen": 6,
+            "tabelvormen_sha256": "feb115898dccda4f2960aa2b15cda6e998d15c5f65f415b6d956e11c047ce7fd"
+          },
+          "na": {
+            "alineas": 15,
+            "uniekeAlineas": 15,
+            "tabellen": 2,
+            "paginas": 2,
+            "lengte": 1043,
+            "body_sha256": "7f4bef2cf2c41b521da1d069531c73f4290f4b22038fbee39e18c0c53186ce0b",
+            "celverhalen": 12,
+            "tabelvormen_sha256": "d59a5ab06dd5a3b94ee0d2b0aaf12c349e908aef9e35e62f2f6366fce1a084f8"
+          }
+        },
+        {
+          "ronde": 2,
+          "plak_tot_bron_ms": 947,
+          "eventlus": {
+            "timer_ms": 16,
+            "waarnemingen": 9,
+            "grootste_tussenruimte_ms": 468,
+            "p95_tussenruimte_ms": 280,
+            "betekenis": "Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."
+          },
+          "rust_plakken": {
+            "opdrachten": [
+              {
+                "requestId": "bb8fccea-58a3-4297-9433-111e4a0d4767",
+                "clientId": 4179744073,
+                "snapshotTekens": 61688,
+                "gereed": true,
+                "desktopMs": 52,
+                "preparationMs": 37,
+                "bronbinding": true,
+                "deltaBytes": 38478
+              }
+            ],
+            "updates": [
+              {
+                "bytes": 38478
+              }
+            ]
+          },
+          "voor": {
+            "alineas": 15,
+            "uniekeAlineas": 15,
+            "tabellen": 2,
+            "paginas": 2,
+            "lengte": 1043,
+            "body_sha256": "7f4bef2cf2c41b521da1d069531c73f4290f4b22038fbee39e18c0c53186ce0b",
+            "celverhalen": 12,
+            "tabelvormen_sha256": "d59a5ab06dd5a3b94ee0d2b0aaf12c349e908aef9e35e62f2f6366fce1a084f8"
+          },
+          "na": {
+            "alineas": 29,
+            "uniekeAlineas": 29,
+            "tabellen": 4,
+            "paginas": 3,
+            "lengte": 2085,
+            "body_sha256": "85221163a77b0a99e947f47892c9f20ca52efdd65e28e7910537702f89f8dc96",
+            "celverhalen": 24,
+            "tabelvormen_sha256": "c7d39272383e692806765c2653681719ba08e47d133a4b37a270b3ed3ecb7cd5"
+          }
+        },
+        {
+          "ronde": 3,
+          "plak_tot_bron_ms": 1862,
+          "eventlus": {
+            "timer_ms": 16,
+            "waarnemingen": 10,
+            "grootste_tussenruimte_ms": 728.9999999999964,
+            "p95_tussenruimte_ms": 282,
+            "betekenis": "Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."
+          },
+          "rust_plakken": {
+            "opdrachten": [
+              {
+                "requestId": "7cecc3d7-2a63-4b08-b026-bb48e4056637",
+                "clientId": 4179744073,
+                "snapshotTekens": 116496,
+                "gereed": true,
+                "desktopMs": 63,
+                "preparationMs": 40,
+                "bronbinding": true,
+                "deltaBytes": 76451
+              }
+            ],
+            "updates": [
+              {
+                "bytes": 76451
+              }
+            ]
+          },
+          "voor": {
+            "alineas": 29,
+            "uniekeAlineas": 29,
+            "tabellen": 4,
+            "paginas": 3,
+            "lengte": 2085,
+            "body_sha256": "85221163a77b0a99e947f47892c9f20ca52efdd65e28e7910537702f89f8dc96",
+            "celverhalen": 24,
+            "tabelvormen_sha256": "c7d39272383e692806765c2653681719ba08e47d133a4b37a270b3ed3ecb7cd5"
+          },
+          "na": {
+            "alineas": 57,
+            "uniekeAlineas": 57,
+            "tabellen": 8,
+            "paginas": 5,
+            "lengte": 4169,
+            "body_sha256": "df118db07c35d9bf91a4069b7d1c3b47a2fb62f122235fc4cac6c41b03197936",
+            "celverhalen": 48,
+            "tabelvormen_sha256": "e140001ff99f359d456e94d78a91034cd71c4223dc475864e7c9a45db3f24256"
+          }
+        },
+        {
+          "ronde": 4,
+          "plak_tot_bron_ms": 2841,
+          "eventlus": {
+            "timer_ms": 16,
+            "waarnemingen": 17,
+            "grootste_tussenruimte_ms": 776,
+            "p95_tussenruimte_ms": 282,
+            "betekenis": "Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."
+          },
+          "rust_plakken": {
+            "opdrachten": [
+              {
+                "requestId": "7f68dbed-887f-4ad7-9c54-100a9c665bf6",
+                "clientId": 4179744073,
+                "snapshotTekens": 226020,
+                "gereed": true,
+                "desktopMs": 126.99999999999636,
+                "preparationMs": 97,
+                "bronbinding": true,
+                "deltaBytes": 152458
+              }
+            ],
+            "updates": [
+              {
+                "bytes": 152458
+              }
+            ]
+          },
+          "voor": {
+            "alineas": 57,
+            "uniekeAlineas": 57,
+            "tabellen": 8,
+            "paginas": 5,
+            "lengte": 4169,
+            "body_sha256": "df118db07c35d9bf91a4069b7d1c3b47a2fb62f122235fc4cac6c41b03197936",
+            "celverhalen": 48,
+            "tabelvormen_sha256": "e140001ff99f359d456e94d78a91034cd71c4223dc475864e7c9a45db3f24256"
+          },
+          "na": {
+            "alineas": 113,
+            "uniekeAlineas": 113,
+            "tabellen": 16,
+            "paginas": 9,
+            "lengte": 8337,
+            "body_sha256": "3bc8d90cf73573c46481bae781fa41e829da9d5c72549145e0e514ad8abf18c2",
+            "celverhalen": 96,
+            "tabelvormen_sha256": "6ddded7b5729bc54b969215e9b3f421101f692e01c6f045fcf3006b865f1b963"
+          }
+        },
+        {
+          "ronde": 5,
+          "plak_tot_bron_ms": 3821,
+          "eventlus": {
+            "timer_ms": 16,
+            "waarnemingen": 20,
+            "grootste_tussenruimte_ms": 681,
+            "p95_tussenruimte_ms": 339,
+            "betekenis": "Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."
+          },
+          "rust_plakken": {
+            "opdrachten": [
+              {
+                "requestId": "b3b09bc3-c733-47b8-a0d4-80cdc3b0fa17",
+                "clientId": 4179744073,
+                "snapshotTekens": 443688,
+                "gereed": true,
+                "desktopMs": 326.00000000000364,
+                "preparationMs": 290,
+                "bronbinding": true,
+                "deltaBytes": 309403
+              }
+            ],
+            "updates": [
+              {
+                "bytes": 309403
+              }
+            ]
+          },
+          "voor": {
+            "alineas": 113,
+            "uniekeAlineas": 113,
+            "tabellen": 16,
+            "paginas": 9,
+            "lengte": 8337,
+            "body_sha256": "3bc8d90cf73573c46481bae781fa41e829da9d5c72549145e0e514ad8abf18c2",
+            "celverhalen": 96,
+            "tabelvormen_sha256": "6ddded7b5729bc54b969215e9b3f421101f692e01c6f045fcf3006b865f1b963"
+          },
+          "na": {
+            "alineas": 225,
+            "uniekeAlineas": 225,
+            "tabellen": 32,
+            "paginas": 17,
+            "lengte": 16673,
+            "body_sha256": "59293febc435a3a0e76998dcaa8f28ab9b37bd034b8c91c5e6033bf7fd3e300b",
+            "celverhalen": 192,
+            "tabelvormen_sha256": "8768fe3a12a984b2596dbe2710d8775daf7f6530f2704d92a439d7fdd5693abd"
+          }
+        },
+        {
+          "ronde": 6,
+          "plak_tot_bron_ms": 6558,
+          "eventlus": {
+            "timer_ms": 16,
+            "waarnemingen": 35,
+            "grootste_tussenruimte_ms": 1323,
+            "p95_tussenruimte_ms": 1096,
+            "betekenis": "Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."
+          },
+          "rust_plakken": {
+            "opdrachten": [
+              {
+                "requestId": "9effe8c2-848b-4aab-bf62-e2f7ac2f5e46",
+                "clientId": 4179744073,
+                "snapshotTekens": 887492,
+                "gereed": true,
+                "desktopMs": 2371,
+                "preparationMs": 1784,
+                "bronbinding": true,
+                "deltaBytes": 622700
+              },
+              {
+                "requestId": "6889b00f-efb5-4b01-90a0-f697d0aa49a3",
+                "clientId": 4179744073,
+                "snapshotTekens": 908576,
+                "gereed": true,
+                "desktopMs": 1881.9999999999927,
+                "preparationMs": 1807,
+                "bronbinding": true,
+                "deltaBytes": 623815
+              }
+            ],
+            "updates": [
+              {
+                "bytes": 623815
+              }
+            ]
+          },
+          "voor": {
+            "alineas": 225,
+            "uniekeAlineas": 225,
+            "tabellen": 32,
+            "paginas": 17,
+            "lengte": 16673,
+            "body_sha256": "59293febc435a3a0e76998dcaa8f28ab9b37bd034b8c91c5e6033bf7fd3e300b",
+            "celverhalen": 192,
+            "tabelvormen_sha256": "8768fe3a12a984b2596dbe2710d8775daf7f6530f2704d92a439d7fdd5693abd"
+          },
+          "na": {
+            "alineas": 449,
+            "uniekeAlineas": 449,
+            "tabellen": 64,
+            "paginas": 33,
+            "lengte": 33345,
+            "body_sha256": "a808ba20419c1117ade7611646cd48dfa2521ee1adb70d5ababe21e0e6eff6c7",
+            "celverhalen": 384,
+            "tabelvormen_sha256": "4d974a241733f601b0329fd747aaa613200d13d72bb5edc772f4846504153dea"
+          }
+        },
+        {
+          "ronde": 7,
+          "plak_tot_bron_ms": 10946,
+          "eventlus": {
+            "timer_ms": 16,
+            "waarnemingen": 341,
+            "grootste_tussenruimte_ms": 1760,
+            "p95_tussenruimte_ms": 31,
+            "betekenis": "Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."
+          },
+          "rust_plakken": {
+            "opdrachten": [
+              {
+                "requestId": "3628f9bf-8328-4537-9ccd-2621babba36f",
+                "clientId": 4179744073,
+                "snapshotTekens": 1800844,
+                "gereed": true,
+                "desktopMs": 7136.000000000007,
+                "preparationMs": 7005,
+                "bronbinding": true,
+                "deltaBytes": 1249804
+              }
+            ],
+            "updates": [
+              {
+                "bytes": 1249804
+              }
+            ]
+          },
+          "voor": {
+            "alineas": 449,
+            "uniekeAlineas": 449,
+            "tabellen": 64,
+            "paginas": 33,
+            "lengte": 33345,
+            "body_sha256": "a808ba20419c1117ade7611646cd48dfa2521ee1adb70d5ababe21e0e6eff6c7",
+            "celverhalen": 384,
+            "tabelvormen_sha256": "4d974a241733f601b0329fd747aaa613200d13d72bb5edc772f4846504153dea"
+          },
+          "na": {
+            "alineas": 897,
+            "uniekeAlineas": 897,
+            "tabellen": 128,
+            "paginas": 65,
+            "lengte": 66689,
+            "body_sha256": "005ed86f9402988c9142969559f872762190e9c3b9af9f111ceb6028df895c5f",
+            "celverhalen": 768,
+            "tabelvormen_sha256": "3f8764b386144ef9b7deebd024347ce88df5f910c40d1caa44945e4c45a8e562"
+          }
+        },
+        {
+          "ronde": 8,
+          "plak_tot_bron_ms": 29858,
+          "eventlus": {
+            "timer_ms": 16,
+            "waarnemingen": 1080,
+            "grootste_tussenruimte_ms": 5392,
+            "p95_tussenruimte_ms": 22,
+            "betekenis": "Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."
+          },
+          "rust_plakken": {
+            "opdrachten": [
+              {
+                "requestId": "625116fb-a4a5-457d-b41f-169eff87454f",
+                "clientId": 4179744073,
+                "snapshotTekens": 3655856,
+                "gereed": true,
+                "desktopMs": 21755,
+                "preparationMs": 21512,
+                "bronbinding": true,
+                "deltaBytes": 2496706
+              }
+            ],
+            "updates": [
+              {
+                "bytes": 2496706
+              }
+            ]
+          },
+          "voor": {
+            "alineas": 897,
+            "uniekeAlineas": 897,
+            "tabellen": 128,
+            "paginas": 65,
+            "lengte": 66689,
+            "body_sha256": "005ed86f9402988c9142969559f872762190e9c3b9af9f111ceb6028df895c5f",
+            "celverhalen": 768,
+            "tabelvormen_sha256": "3f8764b386144ef9b7deebd024347ce88df5f910c40d1caa44945e4c45a8e562"
+          },
+          "na": {
+            "alineas": 1793,
+            "uniekeAlineas": 1793,
+            "tabellen": 256,
+            "paginas": 129,
+            "lengte": 133377,
+            "body_sha256": "4dfe9a7b8da2ba2479164bef55d1f7033c004f213fde642e1c0977aeef2bbd62",
+            "celverhalen": 1536,
+            "tabelvormen_sha256": "71e307bdbb6e3a8ba3cbfdc602bb156455eafb2f0fec83a0cb6726389c5b1ec3"
+          }
+        }
+      ],
+      "procesketen": {
+        "afsluitcode": 0
+      }
+    },
+    "rust-plak-gui-45.26-lijsten": {
+      "rapport": {
+        "geslaagd": true,
+        "versie": "2026.45.26",
+        "programma_sha256": "92a142c46e4da00e1f2c1dc59fe748a4466fde0a32143ab6d5f2034eaac81527",
+        "script_sha256": "77da7bfbc3c6679965e2e55d0341106bc6c02429fd4269b97614e8a78976db13",
+        "stappen": [
+          {
+            "naam": "01-opsomming",
+            "verwacht": "bullet",
+            "stand": {
+              "alinea": {
+                "paraId": "body:p0",
+                "properties": {
+                  "defaultTextFormatting": {
+                    "fontFamily": {
+                      "ascii": "Caladea",
+                      "asciiTheme": "minorHAnsi",
+                      "cs": "",
+                      "csTheme": "minorBidi",
+                      "eastAsia": "ＭＳ 明朝",
+                      "eastAsiaTheme": "minorEastAsia",
+                      "hAnsi": "Caladea",
+                      "hAnsiTheme": "minorHAnsi"
+                    },
+                    "fontSize": 22,
+                    "fontSizeCs": 22,
+                    "language": {
+                      "bidi": "ar-SA",
+                      "eastAsia": "en-US",
+                      "latin": "en-US"
+                    }
+                  },
+                  "hangingIndent": false,
+                  "lineSpacing": 276,
+                  "lineSpacingRule": "auto",
+                  "listAbstractNumId": 8,
+                  "listIsBullet": true,
+                  "listLevelNumFmts": [
+                    "bullet"
+                  ],
+                  "listMarker": "•",
+                  "listMarkerFontFamily": "Symbol",
+                  "listNumFmt": "bullet",
+                  "numPr": {
+                    "ilvl": 0,
+                    "numId": 1
+                  },
+                  "spaceAfter": 200
+                },
+                "text": "Nummering bewaren en heropenen."
+              },
+              "bullets": {
+                "active": true,
+                "enabled": true
+              },
+              "nummering": {
+                "active": false,
+                "enabled": true
+              }
+            },
+            "bewaard": {
+              "numId": 1,
+              "abstractNumId": 8,
+              "ilvl": 0,
+              "numFmt": "bullet",
+              "nummering_sha256": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce"
+            },
+            "geslaagd": true
+          },
+          {
+            "naam": "02-nummering",
+            "verwacht": "decimal",
+            "stand": {
+              "alinea": {
+                "paraId": "body:p0",
+                "properties": {
+                  "defaultTextFormatting": {
+                    "fontFamily": {
+                      "ascii": "Caladea",
+                      "asciiTheme": "minorHAnsi",
+                      "cs": "",
+                      "csTheme": "minorBidi",
+                      "eastAsia": "ＭＳ 明朝",
+                      "eastAsiaTheme": "minorEastAsia",
+                      "hAnsi": "Caladea",
+                      "hAnsiTheme": "minorHAnsi"
+                    },
+                    "fontSize": 22,
+                    "fontSizeCs": 22,
+                    "language": {
+                      "bidi": "ar-SA",
+                      "eastAsia": "en-US",
+                      "latin": "en-US"
+                    }
+                  },
+                  "hangingIndent": false,
+                  "lineSpacing": 276,
+                  "lineSpacingRule": "auto",
+                  "listAbstractNumId": 7,
+                  "listIsBullet": false,
+                  "listLevelNumFmts": [
+                    "decimal"
+                  ],
+                  "listMarker": "%1.",
+                  "listNumFmt": "decimal",
+                  "numPr": {
+                    "ilvl": 0,
+                    "numId": 5
+                  },
+                  "spaceAfter": 200
+                },
+                "text": "Nummering bewaren en heropenen."
+              },
+              "bullets": {
+                "active": false,
+                "enabled": true
+              },
+              "nummering": {
+                "active": true,
+                "enabled": true
+              }
+            },
+            "bewaard": {
+              "numId": 5,
+              "abstractNumId": 7,
+              "ilvl": 0,
+              "numFmt": "decimal",
+              "nummering_sha256": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce"
+            },
+            "geslaagd": true
+          },
+          {
+            "naam": "03-ongedaan",
+            "verwacht": "bullet",
+            "stand": {
+              "alinea": {
+                "paraId": "body:p0",
+                "properties": {
+                  "defaultTextFormatting": {
+                    "fontFamily": {
+                      "ascii": "Caladea",
+                      "asciiTheme": "minorHAnsi",
+                      "cs": "",
+                      "csTheme": "minorBidi",
+                      "eastAsia": "ＭＳ 明朝",
+                      "eastAsiaTheme": "minorEastAsia",
+                      "hAnsi": "Caladea",
+                      "hAnsiTheme": "minorHAnsi"
+                    },
+                    "fontSize": 22,
+                    "fontSizeCs": 22,
+                    "language": {
+                      "bidi": "ar-SA",
+                      "eastAsia": "en-US",
+                      "latin": "en-US"
+                    }
+                  },
+                  "hangingIndent": false,
+                  "lineSpacing": 276,
+                  "lineSpacingRule": "auto",
+                  "listAbstractNumId": 8,
+                  "listIsBullet": true,
+                  "listLevelNumFmts": [
+                    "bullet"
+                  ],
+                  "listMarker": "•",
+                  "listMarkerFontFamily": "Symbol",
+                  "listNumFmt": "bullet",
+                  "numPr": {
+                    "ilvl": 0,
+                    "numId": 1
+                  },
+                  "spaceAfter": 200
+                },
+                "text": "Nummering bewaren en heropenen."
+              },
+              "bullets": {
+                "active": true,
+                "enabled": true
+              },
+              "nummering": {
+                "active": false,
+                "enabled": true
+              }
+            },
+            "bewaard": {
+              "numId": 1,
+              "abstractNumId": 8,
+              "ilvl": 0,
+              "numFmt": "bullet",
+              "nummering_sha256": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce"
+            },
+            "geslaagd": true
+          },
+          {
+            "naam": "04-opnieuw",
+            "verwacht": "decimal",
+            "stand": {
+              "alinea": {
+                "paraId": "body:p0",
+                "properties": {
+                  "defaultTextFormatting": {
+                    "fontFamily": {
+                      "ascii": "Caladea",
+                      "asciiTheme": "minorHAnsi",
+                      "cs": "",
+                      "csTheme": "minorBidi",
+                      "eastAsia": "ＭＳ 明朝",
+                      "eastAsiaTheme": "minorEastAsia",
+                      "hAnsi": "Caladea",
+                      "hAnsiTheme": "minorHAnsi"
+                    },
+                    "fontSize": 22,
+                    "fontSizeCs": 22,
+                    "language": {
+                      "bidi": "ar-SA",
+                      "eastAsia": "en-US",
+                      "latin": "en-US"
+                    }
+                  },
+                  "hangingIndent": false,
+                  "lineSpacing": 276,
+                  "lineSpacingRule": "auto",
+                  "listAbstractNumId": 7,
+                  "listIsBullet": false,
+                  "listLevelNumFmts": [
+                    "decimal"
+                  ],
+                  "listMarker": "%1.",
+                  "listNumFmt": "decimal",
+                  "numPr": {
+                    "ilvl": 0,
+                    "numId": 5
+                  },
+                  "spaceAfter": 200
+                },
+                "text": "Nummering bewaren en heropenen."
+              },
+              "bullets": {
+                "active": false,
+                "enabled": true
+              },
+              "nummering": {
+                "active": true,
+                "enabled": true
+              }
+            },
+            "bewaard": {
+              "numId": 5,
+              "abstractNumId": 7,
+              "ilvl": 0,
+              "numFmt": "decimal",
+              "nummering_sha256": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce"
+            },
+            "geslaagd": true
+          },
+          {
+            "naam": "05-heropend",
+            "verwacht": "decimal",
+            "stand": {
+              "alinea": {
+                "paraId": "body:p0",
+                "properties": {
+                  "_originalFormatting": {
+                    "lineSpacing": 276,
+                    "lineSpacingRule": "auto",
+                    "numPr": {
+                      "ilvl": 0,
+                      "numId": 5
+                    },
+                    "spaceAfter": 200,
+                    "spacingExplicit": {
+                      "after": true
+                    }
+                  },
+                  "_originalRunBoundaries": [
+                    {
+                      "marksKey": "fontFamily:{\"ascii\":\"Caladea\",\"hAnsi\":\"Caladea\",\"eastAsia\":\"ＭＳ 明朝\",\"cs\":\"\",\"asciiTheme\":\"minorHAnsi\",\"hAnsiTheme\":\"minorHAnsi\",\"eastAsiaTheme\":\"minorEastAsia\",\"csTheme\":\"minorBidi\"}|fontSize:{\"size\":22,\"sizeCs\":22}",
+                      "text": "Nummering bewaren en heropenen."
+                    }
+                  ],
+                  "defaultTextFormatting": {
+                    "fontFamily": {
+                      "ascii": "Caladea",
+                      "asciiTheme": "minorHAnsi",
+                      "cs": "",
+                      "csTheme": "minorBidi",
+                      "eastAsia": "ＭＳ 明朝",
+                      "eastAsiaTheme": "minorEastAsia",
+                      "hAnsi": "Caladea",
+                      "hAnsiTheme": "minorHAnsi"
+                    },
+                    "fontSize": 22,
+                    "fontSizeCs": 22,
+                    "language": {
+                      "bidi": "ar-SA",
+                      "eastAsia": "en-US",
+                      "latin": "en-US"
+                    }
+                  },
+                  "hangingIndent": true,
+                  "indentFirstLine": -360,
+                  "indentLeft": 360,
+                  "lineSpacing": 276,
+                  "lineSpacingRule": "auto",
+                  "listAbstractNumId": 7,
+                  "listIsBullet": false,
+                  "listLevelNumFmts": [
+                    "decimal"
+                  ],
+                  "listMarker": "%1.",
+                  "listNumFmt": "decimal",
+                  "numPr": {
+                    "ilvl": 0,
+                    "numId": 5
+                  },
+                  "spaceAfter": 200,
+                  "spacingExplicit": {
+                    "after": true
+                  }
+                },
+                "text": "Nummering bewaren en heropenen."
+              },
+              "bullets": {
+                "active": false,
+                "enabled": true
+              },
+              "nummering": {
+                "active": true,
+                "enabled": true
+              }
+            },
+            "geslaagd": true
+          },
+          {
+            "naam": "06-terug-opsomming",
+            "verwacht": "bullet",
+            "stand": {
+              "alinea": {
+                "paraId": "body:p0",
+                "properties": {
+                  "_originalFormatting": {
+                    "lineSpacing": 276,
+                    "lineSpacingRule": "auto",
+                    "numPr": {
+                      "ilvl": 0,
+                      "numId": 5
+                    },
+                    "spaceAfter": 200,
+                    "spacingExplicit": {
+                      "after": true
+                    }
+                  },
+                  "_originalRunBoundaries": [
+                    {
+                      "marksKey": "fontFamily:{\"ascii\":\"Caladea\",\"hAnsi\":\"Caladea\",\"eastAsia\":\"ＭＳ 明朝\",\"cs\":\"\",\"asciiTheme\":\"minorHAnsi\",\"hAnsiTheme\":\"minorHAnsi\",\"eastAsiaTheme\":\"minorEastAsia\",\"csTheme\":\"minorBidi\"}|fontSize:{\"size\":22,\"sizeCs\":22}",
+                      "text": "Nummering bewaren en heropenen."
+                    }
+                  ],
+                  "defaultTextFormatting": {
+                    "fontFamily": {
+                      "ascii": "Caladea",
+                      "asciiTheme": "minorHAnsi",
+                      "cs": "",
+                      "csTheme": "minorBidi",
+                      "eastAsia": "ＭＳ 明朝",
+                      "eastAsiaTheme": "minorEastAsia",
+                      "hAnsi": "Caladea",
+                      "hAnsiTheme": "minorHAnsi"
+                    },
+                    "fontSize": 22,
+                    "fontSizeCs": 22,
+                    "language": {
+                      "bidi": "ar-SA",
+                      "eastAsia": "en-US",
+                      "latin": "en-US"
+                    }
+                  },
+                  "hangingIndent": true,
+                  "indentFirstLine": -360,
+                  "indentLeft": 360,
+                  "lineSpacing": 276,
+                  "lineSpacingRule": "auto",
+                  "listAbstractNumId": 8,
+                  "listIsBullet": true,
+                  "listLevelNumFmts": [
+                    "bullet"
+                  ],
+                  "listMarker": "•",
+                  "listMarkerFontFamily": "Symbol",
+                  "listNumFmt": "bullet",
+                  "numPr": {
+                    "ilvl": 0,
+                    "numId": 1
+                  },
+                  "spaceAfter": 200,
+                  "spacingExplicit": {
+                    "after": true
+                  }
+                },
+                "text": "Nummering bewaren en heropenen."
+              },
+              "bullets": {
+                "active": true,
+                "enabled": true
+              },
+              "nummering": {
+                "active": false,
+                "enabled": true
+              }
+            },
+            "bewaard": {
+              "numId": 1,
+              "abstractNumId": 8,
+              "ilvl": 0,
+              "numFmt": "bullet",
+              "nummering_sha256": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce"
+            },
+            "geslaagd": true
+          },
+          {
+            "naam": "07-uit",
+            "verwacht": null,
+            "stand": {
+              "alinea": {
+                "paraId": "body:p0",
+                "properties": {
+                  "_originalFormatting": {
+                    "lineSpacing": 276,
+                    "lineSpacingRule": "auto",
+                    "numPr": {
+                      "ilvl": 0,
+                      "numId": 5
+                    },
+                    "spaceAfter": 200,
+                    "spacingExplicit": {
+                      "after": true
+                    }
+                  },
+                  "_originalRunBoundaries": [
+                    {
+                      "marksKey": "fontFamily:{\"ascii\":\"Caladea\",\"hAnsi\":\"Caladea\",\"eastAsia\":\"ＭＳ 明朝\",\"cs\":\"\",\"asciiTheme\":\"minorHAnsi\",\"hAnsiTheme\":\"minorHAnsi\",\"eastAsiaTheme\":\"minorEastAsia\",\"csTheme\":\"minorBidi\"}|fontSize:{\"size\":22,\"sizeCs\":22}",
+                      "text": "Nummering bewaren en heropenen."
+                    }
+                  ],
+                  "defaultTextFormatting": {
+                    "fontFamily": {
+                      "ascii": "Caladea",
+                      "asciiTheme": "minorHAnsi",
+                      "cs": "",
+                      "csTheme": "minorBidi",
+                      "eastAsia": "ＭＳ 明朝",
+                      "eastAsiaTheme": "minorEastAsia",
+                      "hAnsi": "Caladea",
+                      "hAnsiTheme": "minorHAnsi"
+                    },
+                    "fontSize": 22,
+                    "fontSizeCs": 22,
+                    "language": {
+                      "bidi": "ar-SA",
+                      "eastAsia": "en-US",
+                      "latin": "en-US"
+                    }
+                  },
+                  "hangingIndent": true,
+                  "indentFirstLine": -360,
+                  "indentLeft": 360,
+                  "lineSpacing": 276,
+                  "lineSpacingRule": "auto",
+                  "numPr": {
+                    "ilvl": 0,
+                    "numId": 0
+                  },
+                  "spaceAfter": 200,
+                  "spacingExplicit": {
+                    "after": true
+                  }
+                },
+                "text": "Nummering bewaren en heropenen."
+              },
+              "bullets": {
+                "active": false,
+                "enabled": true
+              },
+              "nummering": {
+                "active": false,
+                "enabled": true
+              }
+            },
+            "bewaard": {
+              "numId": 0,
+              "ilvl": 0,
+              "numFmt": null,
+              "nummering_sha256": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce"
+            },
+            "geslaagd": true
+          }
+        ],
+        "grenzen": [
+          "Eigen nieuw DOCX met bestaande lijstdefinities, één Linux/WebKit-omgeving; geen Windows-, snelheids- of volledige lijstacceptatie."
+        ],
+        "fouten_eerste_proces": {
+          "gui": [],
+          "console": []
+        },
+        "fouten_tweede_proces": {
+          "gui": [],
+          "console": []
+        }
+      },
+      "rapport_sha256": "20ea9759d23135d6fa614f3e050d6a12141cd6d17bac1ef1265dd12f484a160f",
+      "afsluitcode": 0
+    }
+  },
+  "meting_alleen_tabellen": {
+    "voor": {
+      "programma_sha256": "e23ef92a1b64da05ea7c928736e2da486e0e2c7e136b497fa24f24a59343ca1a",
+      "aanvraag_sha256": "6d5b2a69b4fe479c95c706b588dc6f49632da10d6d05ba9ecc1ad9079b800b07",
+      "voorbereiding_ms": 16624,
+      "proces_ms": 16749,
+      "opmerking": "Afzonderlijk protocolproces zonder eigen gelijktijdige compilatie; geen GUI-/algemene snelheidsmeting."
+    },
+    "rondes": [
+      {
+        "ronde": "na-1",
+        "programma_sha256": "a1367e140c0efdaaa98e5d6d259eeb3c8ae66207f81e02a20d1bf4292d682ecd",
+        "aanvraag_sha256": "6d5b2a69b4fe479c95c706b588dc6f49632da10d6d05ba9ecc1ad9079b800b07",
+        "voorbereiding_ms": 16097,
+        "proces_ms": 16219,
+        "delta_bytegelijk_aan_voor": false
+      },
+      {
+        "ronde": "voor-2",
+        "programma_sha256": "e23ef92a1b64da05ea7c928736e2da486e0e2c7e136b497fa24f24a59343ca1a",
+        "aanvraag_sha256": "6d5b2a69b4fe479c95c706b588dc6f49632da10d6d05ba9ecc1ad9079b800b07",
+        "voorbereiding_ms": 16481,
+        "proces_ms": 16605,
+        "delta_bytegelijk_aan_voor": false
+      },
+      {
+        "ronde": "na-2",
+        "programma_sha256": "a1367e140c0efdaaa98e5d6d259eeb3c8ae66207f81e02a20d1bf4292d682ecd",
+        "aanvraag_sha256": "6d5b2a69b4fe479c95c706b588dc6f49632da10d6d05ba9ecc1ad9079b800b07",
+        "voorbereiding_ms": 16301,
+        "proces_ms": 16431,
+        "delta_bytegelijk_aan_voor": false
+      }
+    ],
+    "grens": "Zelfde vaste protocolaanvraag in opeenvolgende eigen processen, zonder eigen compilatie. Nog geen GUI- of algemene snelheidsacceptatie."
+  },
+  "meting_ook_teksteindpunt": {
+    "programma_sha256": "be896ee35f863f557eadfa2fe8f8a7b03050a027451da0402f2b3c173ff159cc",
+    "aanvraag_sha256": "6d5b2a69b4fe479c95c706b588dc6f49632da10d6d05ba9ecc1ad9079b800b07",
+    "voorbereiding_ms": 14563,
+    "proces_ms": 14697,
+    "grens": "Zelfde vaste aanvraag zonder eigen gelijktijdige compilatie of GUI-proef. Geen praktijkacceptatie."
+  },
+  "gdb": {
+    "onderbrekingen_met_stack": 36,
+    "inferior_normaal_geëindigd": true,
+    "gdb_afsluitcode": 1,
+    "oorzaak_gdb_exit": "Verdere stack-/continue-opdrachten na normale inferiorexit. Geen functionele test.",
+    "grens": "Grove onderbrekingsstacks, geen exacte CPU-tijden."
+  },
+  "beelden": {
+    "500_pagina_25_26": {
+      "afmetingen": [
+        1440,
+        1000
+      ],
+      "lint_pixels_afwijkend": 2,
+      "heel_venster_pixels_afwijkend": 5,
+      "bbox": [
+        13,
+        18,
+        126,
+        34
+      ],
+      "documentvlak_gelijk": true
+    },
+    "grote_vervolginvoer_25_26": {
+      "lint_pixels_afwijkend": 0,
+      "heel_venster_pixels_afwijkend": 33,
+      "bbox": [
+        755,
+        939,
+        1120,
+        997
+      ],
+      "grens": "Cursor/onderste zoomindicator; één toestand, geen volledige visuele migratieacceptatie."
+    }
+  },
+  "ci_vorige_bron_45_25": [
+    {
+      "conclusion": "failure",
+      "databaseId": 41737904530,
+      "headSha": "1a0aa52142d9857a7875be227ecbe8cb6c6cf1c0",
+      "name": "Uitgave bouwen, ondertekenen en publiceren",
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41737904530"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 41737841574,
+      "headSha": "1a0aa52142d9857a7875be227ecbe8cb6c6cf1c0",
+      "name": "Zelfstandige databasebrowser controleren en bouwen",
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41737841574"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 41737841602,
+      "headSha": "1a0aa52142d9857a7875be227ecbe8cb6c6cf1c0",
+      "name": "Kantooromgeving controleren en bouwen",
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41737841602"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 41737841410,
+      "headSha": "1a0aa52142d9857a7875be227ecbe8cb6c6cf1c0",
+      "name": "Rust WebView-preview bouwen",
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41737841410"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 41737841523,
+      "headSha": "1a0aa52142d9857a7875be227ecbe8cb6c6cf1c0",
+      "name": "Native Rust controleren en bouwen",
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41737841523"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 41737832183,
+      "headSha": "1a0aa52142d9857a7875be227ecbe8cb6c6cf1c0",
+      "name": "Writer Rust-plakbatch onderzoeken",
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41737832183"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 41737832305,
+      "headSha": "1a0aa52142d9857a7875be227ecbe8cb6c6cf1c0",
+      "name": "Linux-dev · codex/native-rust-office · 1a0aa52142d9857a7875be227ecbe8cb6c6cf1c0",
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41737832305"
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 41737832297,
+      "headSha": "1a0aa52142d9857a7875be227ecbe8cb6c6cf1c0",
+      "name": "Writer-geheugenonderzoek · codex/native-rust-office · 1a0aa52142d9857a7875be227ecbe8cb6c6cf1c0",
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41737832297"
+    }
+  ],
+  "open": {
+    "issues": 118,
+    "migratiegebieden": 10,
+    "acceptatievlaggen": 30,
+    "algemene_snelheidsacceptatie": false,
+    "volledige_rustinterface": false,
+    "historische_stabiliteitsproblemen_opgelost": false
+  },
+  "grenzen": [
+    "De gebruikersstarter blijft 45.23; eigen kopieën/XDG/DBus/Xvfb-profielen, geen gebruikersapps gesloten.",
+    "Een beperkte rustige protocol-/GUI-vergelijking bewijst geen algemene snelheidswinst.",
+    "Verschillende functionele proeven liepen tegelijk; hun tijden zijn niet als rustige vergelijking gebruikt.",
+    "De afkeuring van de 45.25-geheugenroute blijft behouden, met afzonderlijke echte hertests en testbeleid in writer-herstelinterval.md.",
+    "Nieuwe platform-/zeveneditiecontroles volgen op de definitieve gepushte 45.26-bron."
+  ],
+  "nieuwe_rendererafkeuring_45_25": "2026-11-04-writer-renderer-45.25.json"
+}

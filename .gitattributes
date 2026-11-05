@@ -1,2 +1,59 @@
 # Deze upstreamteksten hebben een vastgelegde SHA-256 en moeten bytegelijk blijven.
 docs/licenties/npm/*.txt text eol=lf
+# De native UI-snapshot wordt ook op Windows op zijn exacte bronhash gecontroleerd.
+native/vendor/openaec-ui/** -text -whitespace
+
+native/vendor/document-fonts/** -text -whitespace
+native/vendor/docx-parse/** -text -whitespace
+
+native/vendor/pptx/** -text -whitespace
+native/vendor/xlsx-raster/** -text -whitespace
+native/vendor/xlsx-parse/** -text -whitespace
+native/vendor/iced-tiny-skia/** -text -whitespace
+native/vendor/symbolen/** -text -whitespace
+
+# Eigen native bron en meegeleverde voorbeelden blijven op elk platform LF.
+# Binaire documenten en afbeeldingen blijven door text=auto ongemoeid.
+native/Cargo.toml text eol=lf
+native/Cargo.lock text eol=lf
+native/README.md text eol=lf
+native/crates/** text=auto eol=lf
+native/scripts/** text=auto eol=lf
+native/docs/** text=auto eol=lf
+# Deze gedeelde GUI-hulpbronnen worden bytegelijk in het native pakket opgenomen.
+scripts/gui/** text eol=lf
+# De Rust-WebView bouwt rechtstreeks met deze oorspronkelijke stijlbron.
+src/*.css text eol=lf
+src/openaec-lint/*.css text eol=lf
+src/notities/*.css text eol=lf
+src/status/*.css text eol=lf
+src/stijl/*.css text eol=lf
+src/stijl/*.svg text eol=lf
+src/stijl/bron.json text eol=lf
+packages/email/src/start.css text eol=lf
+docs/voorbeelden/** text=auto eol=lf
+LICENSE text eol=lf
+.gitattributes text eol=lf
+# Eigen metadata rond de vastgepinde bron blijft eveneens LF.
+native/vendor/*.json text eol=lf
+native/vendor/*.md text eol=lf
+
+# Dit oorspronkelijke CI-log bewaart ook zijn Windows-regelafbrekingen.
+native/docs/checkout-diagnose-2026-11-01-alpha30/windows-afgekeurd.log -text -whitespace
+
+# Ook deze vastgepinde bronnen blijven op Windows exact gelijk aan de Git-bytes.
+native/vendor/iced-runtime/** -text -whitespace
+native/vendor/softbuffer/** -text -whitespace
+
+# De afzonderlijke plakproef controleert bronpatches op hun exacte bytes.
+native/onderzoek/writer-plakbatch/** text=auto eol=lf
+native/onderzoek/writer-plakbatch/patches/*.patch text eol=lf -whitespace
+
+# Gepinde bewerkkern en leesprimitieven; bewaar bron en licenties bytegelijk.
+native/vendor/docx-edit/** -text -whitespace
+native/vendor/yrs/** -text -whitespace
+
+# De afzonderlijke invoerfaseproef bewaakt eveneens exacte bronkopieën.
+native/onderzoek/writer-invoerfasen/** text=auto eol=lf
+native/onderzoek/writer-bronsamenvoeging/** text=auto eol=lf
+native/onderzoek/writer-deterministische-sortering/** text=auto eol=lf

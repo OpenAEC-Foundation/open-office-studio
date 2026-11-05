@@ -1,0 +1,193 @@
+{
+  "versie": "2026.45.29",
+  "run": 41761348915,
+  "run_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41761348915",
+  "pr_head": "f3f66e7e64e7d6aecfb3eec89ba99e408f1268a3",
+  "checkout_merge": "ecaf3c33b6e95d2c98870b7dc41bb88504b7f02a",
+  "bronboom_beide": "6cdd6aac1b0c78ce41a03fcdd67bd7823a37f35d",
+  "bronboom_gelijkheid": "Beide GitHub-commitobjecten op hun tree.sha gecontroleerd: dezelfde bronbestanden, verschillend commitobject.",
+  "platformen": {
+    "Windows": "geslaagd",
+    "macOS": "geslaagd",
+    "Linux": "afgekeurd vóór heropenen"
+  },
+  "programma_sha256": "4cea9b0b4e0c836b21e3b76a8b497fca765ec52e04c03afb524138921aa5bf2a",
+  "proefscript_sha256": "1882f83ba61dbbed2d4775f81b8184f9e2fd4b89f443b729ca917a979d467c83",
+  "afkeuring": "AssertionError('GUI of engine meldt fouten vóór heropenen')",
+  "fouten": {
+    "gui": [],
+    "console": [
+      {
+        "source": "console-api",
+        "level": "error",
+        "text": "[CanvasRenderer] Document worker unavailable; falling back to the main-thread engine",
+        "type": "log",
+        "line": 12,
+        "column": 213440,
+        "url": "tauri://localhost/assets/editors-DEt6z7je.js",
+        "repeatCount": 1,
+        "timestamp": 1793760942.6321917,
+        "parameters": [
+          {
+            "type": "string",
+            "value": "[CanvasRenderer] Document worker unavailable; falling back to the main-thread engine"
+          },
+          {
+            "type": "object",
+            "objectId": "{\"injectedScriptId\":1,\"id\":1}",
+            "subtype": "error",
+            "className": "Error",
+            "description": "Error: FrameDelta: position span shift requires retained positionSpan",
+            "preview": {
+              "type": "object",
+              "description": "Error: FrameDelta: position span shift requires retained positionSpan",
+              "lossless": false,
+              "subtype": "error",
+              "overflow": false,
+              "properties": [
+                {
+                  "name": "message",
+                  "type": "string",
+                  "value": "FrameDelta: position span shift requires retained positionSpan"
+                },
+                {
+                  "name": "line",
+                  "type": "number",
+                  "value": "223"
+                },
+                {
+                  "name": "column",
+                  "type": "number",
+                  "value": "110085"
+                },
+                {
+                  "name": "sourceURL",
+                  "type": "string",
+                  "value": "tauri://localhost/assets/index-CqUnIUqh.js"
+                },
+                {
+                  "name": "stack",
+                  "type": "string",
+                  "value": "mTe@tauri://localhost/assets/index-CqUnIUqh.js:223…ri://localhost/assets/index-CqUnIUqh.js:223:91863"
+                }
+              ]
+            }
+          }
+        ],
+        "stackTrace": {
+          "callFrames": [
+            {
+              "functionName": "zt",
+              "url": "tauri://localhost/assets/editors-DEt6z7je.js",
+              "scriptId": "2",
+              "lineNumber": 12,
+              "columnNumber": 213440
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "geslaagde_bronstappen": [
+    {
+      "naam": "beginbron",
+      "alinea_aantal": 500,
+      "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2",
+      "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. ",
+      "exact": true
+    },
+    {
+      "naam": "getypte_bron",
+      "alinea_aantal": 500,
+      "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+      "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+      "exact": true
+    },
+    {
+      "naam": "selectie_en_backspace",
+      "alinea_aantal": 500,
+      "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+      "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+      "exact": true
+    },
+    {
+      "naam": "undo",
+      "alinea_aantal": 500,
+      "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+      "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+      "exact": true
+    },
+    {
+      "naam": "redo",
+      "alinea_aantal": 500,
+      "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+      "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+      "exact": true
+    },
+    {
+      "naam": "hersteld_voor_bewaren",
+      "alinea_aantal": 500,
+      "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+      "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+      "exact": true
+    },
+    {
+      "naam": "native_bewaaractie_onafhankelijk",
+      "alinea_aantal": 500,
+      "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+      "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+      "exact": true
+    }
+  ],
+  "rapport_artifact": {
+    "id": 13291806154,
+    "sha256": "63613be5af08ded3ebef87f14c0cf1a7d38824b988604753940424127064d8e8"
+  },
+  "exacte_context": {
+    "id": 13291458700,
+    "sha256": "4b0765d2810e7a3e9167fef272e648b3fff1b4a4c12d41c96882caebb23660f0",
+    "bestanden": [
+      {
+        "bestand": "Open Office Studio_2026.45.29_amd64.AppImage",
+        "sha256": "084b3a74440ac2d42c1c79d6855dce6b8d3e771e7a1ab7c85269bf0682b69e29"
+      },
+      {
+        "bestand": "context.json",
+        "sha256": "291b171b07ea6077f4fd3db2e6384900099bed2c8a9a9b861a329570a32b7442"
+      },
+      {
+        "bestand": "open-office-studio",
+        "sha256": "4cea9b0b4e0c836b21e3b76a8b497fca765ec52e04c03afb524138921aa5bf2a"
+      },
+      {
+        "bestand": "proef/Prestatieproef.docx",
+        "sha256": "0510dcf8a7a885a3ee3d1b1ef5bb30815ef93b4374047b0e09a85223de1a25de"
+      },
+      {
+        "bestand": "proef/afgekeurd.png",
+        "sha256": "a4da09ada69946b008b67d9c661bafe9795aeeec41e979cba9501551a4d89593"
+      },
+      {
+        "bestand": "proef/programma.log",
+        "sha256": "7932bed0c0683fb0fc584555ca6960cd89fdc0d0e0b2d0a9633ae26f095f2b01"
+      },
+      {
+        "bestand": "rapport.json",
+        "sha256": "3762f786013ad4df708626562aea82011f0385b680f618a31dc3eceb6167f9e8"
+      },
+      {
+        "bestand": "scripts/gui/requirements.txt",
+        "sha256": "4d3b280d9e5ae568f66bb597713614b9ef6477a829bf1569ae528fbe306d2f53"
+      },
+      {
+        "bestand": "scripts/gui/webkit_inspector.py",
+        "sha256": "1cfec128ef78c59b7765130b63e018cb97f42ce279b98f26b144dfa273c27346"
+      },
+      {
+        "bestand": "scripts/test-writer-lang-native.py",
+        "sha256": "1882f83ba61dbbed2d4775f81b8184f9e2fd4b89f443b729ca917a979d467c83"
+      }
+    ]
+  },
+  "vervolg": "Onderzoek de herkomst van retained frames en de vereiste positionSpan bij een verschuiving. Geen oorzaaks- of herstelclaim door een latere groene run. De 45.30-hostsynchronisatie is afzonderlijk gecontroleerd."
+}

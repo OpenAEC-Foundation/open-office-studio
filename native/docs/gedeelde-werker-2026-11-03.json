@@ -1,0 +1,38 @@
+{
+  "datum": "2026-11-03",
+  "basis": "db81946df36fd62ea8c7c7a20461c3aa1a673b35",
+  "wijziging": "De bestaande documentwerker is ongewijzigd qua opdrachtgedrag verplaatst van office-ui naar office-core; office-ui herexporteert de typen.",
+  "controles": {
+    "gerichte_nieuwe_werkerproeven": 4,
+    "kern_inclusief_nieuwe_proeven": 192,
+    "werkruimte_uitgevoerde_proeven": {
+      "office_conversie": 15,
+      "office_core": 192,
+      "office_mail": 51,
+      "office_ui": 198,
+      "x11_presentatie": 1,
+      "webview_scherm": 4,
+      "webview_werkruimte": 7,
+      "totaal_geslaagd": 468,
+      "expliciet_overgeslagen": 6
+    },
+    "brede_opdracht": "cargo test --manifest-path native/Cargo.toml --workspace --locked --features open-office-studio-webview/desktop -- --test-threads=1",
+    "brede_opdracht_beperking": "De eerste uitvoering stopte bij de X11-proef omdat Xvfb niet op PATH stond. Dezelfde reeds gebouwde X11-testbinary slaagt met OFFICE_XVFB naar de aanwezige testvoorziening. De resterende WebView-testbinaries uit dezelfde volledige bouwgrafiek zijn afzonderlijk uitgevoerd en slagen. Dit verslag noemt daarom de samengevoegde resultaten, niet een ononderbroken groene eerste opdracht.",
+    "alle_testprogrammas_bouwen": "geslaagd met --no-run via de volledige werkruimte en desktopfeature",
+    "clippy": "geslaagd: volledige werkruimte, desktopfeature, alle doelen, -D warnings",
+    "rustfmt": "geslaagd voor de gewijzigde pakketten",
+    "bronintegriteit": "gecontroleerd voor de gepinde interface-, lettertype-, parser-, raster-, venster- en stijlbronnen"
+  },
+  "nieuwe_proeven": [
+    "Afzonderlijke sessies en sluiten horen bij de juiste documentidentiteit.",
+    "Een geweigerde bewerking behoudt de bron; een volgende geldige bewerking werkt.",
+    "Een geïnjecteerde klok bewijst dat documentaanmaak op een andere draad gebeurt.",
+    "Achtergrondwerk geeft zijn resultaat terug en draait buiten de aanroepdraad."
+  ],
+  "beperkingen": [
+    "De Dioxus-interface is nog niet aangesloten op deze werker en verricht nog documentwerk op de interfacethread.",
+    "Zes optionele conversie-/vensterproeven zijn hier niet uitgevoerd.",
+    "De tien migratiegebieden blijven onafgevinkt; dit bewijst geen volledige functiepariteit of pixelgelijkheid.",
+    "Windows en macOS moeten deze wijziging nog in CI bouwen en controleren."
+  ]
+}

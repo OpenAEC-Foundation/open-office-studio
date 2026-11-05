@@ -1,0 +1,547 @@
+{
+  "versie": "2026.45.18",
+  "omvang": "Vier opeenvolgende native Linux/WebKit-proeven: 45.17, 45.18, 45.18, 45.17. Eén gegenereerde bron van 500 pagina’s; echte toetsen, selectie/Backspace, undo/redo, native bewaren en nieuw proces. Twee runs per versie op één pc, geen algemene snelheidsacceptatie.",
+  "vorige_meetpoging": "Afgekeurd: een meetpunt op het tijdelijke editorobject miste API-vervanging. De gepubliceerde vier proeven volgen de stabiele React-ref en bevestigen dat de actieve API is gevolgd.",
+  "frontendtests": {
+    "bestanden": 146,
+    "tests": 1616,
+    "geslaagd": true
+  },
+  "python_tests": {
+    "tests": 47,
+    "geslaagd": true
+  },
+  "typescript_en_native_linuxbouw": true,
+  "native_500": [
+    {
+      "ronde": 1,
+      "versie": "2026.45.17",
+      "programma_sha256": "341d97067fdd1ce57409f9946bb8ca8fa95fde94a765e2d7cd4956c6c4135ead",
+      "script_sha256": "6464845e3fcc650a8e7848d1819034e2fe1266c2a5bcedf74e096253619726ec",
+      "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+      "bron_eind_sha256": "8769b17e14091bf81d1de85b25956775bef83a0558101dafb634653d8491f884",
+      "invoer_tot_bron_en_golven_ms": 4022,
+      "documentuitlezingen": {
+        "calls": 3,
+        "ms": 113,
+        "api_wissels": 134,
+        "actieve_api_gevolgd": true,
+        "omvang": "GetDocument-aanroepen tijdens native invoer tot bron-/golflijngereedheid. De stabiele React-ref volgt vervanging van API-objecten; geen CPU-profiler."
+      },
+      "frame_tussenpozen_ms": {
+        "aantal": 33,
+        "maximum": 262,
+        "p95": 248,
+        "omvang": "requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS."
+      },
+      "stappen": [
+        {
+          "naam": "beginbron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. ",
+          "exact": true
+        },
+        {
+          "naam": "getypte_bron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "selectie_en_backspace",
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "exact": true
+        },
+        {
+          "naam": "undo",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "redo",
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "exact": true
+        },
+        {
+          "naam": "hersteld_voor_bewaren",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "native_bewaaractie_onafhankelijk",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "nieuw_proces_heropend",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        }
+      ],
+      "fouten_voor_heropenen": {
+        "gui": [],
+        "console": []
+      },
+      "fouten_na_heropenen": {
+        "gui": [],
+        "console": []
+      },
+      "geslaagd": true
+    },
+    {
+      "ronde": 2,
+      "versie": "2026.45.18",
+      "programma_sha256": "7b36df8cfe7ec436c77fa01d8d0b29e08750c844756781cbb857953247cf4774",
+      "script_sha256": "6464845e3fcc650a8e7848d1819034e2fe1266c2a5bcedf74e096253619726ec",
+      "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+      "bron_eind_sha256": "8c9e630463b3f34fc1d495b6603993a5d843382999afe5bd5060f5355bb0a73c",
+      "invoer_tot_bron_en_golven_ms": 3834,
+      "documentuitlezingen": {
+        "calls": 0,
+        "ms": 0,
+        "api_wissels": 132,
+        "actieve_api_gevolgd": true,
+        "omvang": "GetDocument-aanroepen tijdens native invoer tot bron-/golflijngereedheid. De stabiele React-ref volgt vervanging van API-objecten; geen CPU-profiler."
+      },
+      "frame_tussenpozen_ms": {
+        "aantal": 33,
+        "maximum": 200,
+        "p95": 196,
+        "omvang": "requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS."
+      },
+      "stappen": [
+        {
+          "naam": "beginbron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. ",
+          "exact": true
+        },
+        {
+          "naam": "getypte_bron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "selectie_en_backspace",
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "exact": true
+        },
+        {
+          "naam": "undo",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "redo",
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "exact": true
+        },
+        {
+          "naam": "hersteld_voor_bewaren",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "native_bewaaractie_onafhankelijk",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "nieuw_proces_heropend",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        }
+      ],
+      "fouten_voor_heropenen": {
+        "gui": [],
+        "console": []
+      },
+      "fouten_na_heropenen": {
+        "gui": [],
+        "console": []
+      },
+      "geslaagd": true
+    },
+    {
+      "ronde": 3,
+      "versie": "2026.45.18",
+      "programma_sha256": "7b36df8cfe7ec436c77fa01d8d0b29e08750c844756781cbb857953247cf4774",
+      "script_sha256": "6464845e3fcc650a8e7848d1819034e2fe1266c2a5bcedf74e096253619726ec",
+      "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+      "bron_eind_sha256": "5602404a0e71d67f2353d9970b010b2d777f0f298f49ee6ac4b68220fca19281",
+      "invoer_tot_bron_en_golven_ms": 3907,
+      "documentuitlezingen": {
+        "calls": 0,
+        "ms": 0,
+        "api_wissels": 134,
+        "actieve_api_gevolgd": true,
+        "omvang": "GetDocument-aanroepen tijdens native invoer tot bron-/golflijngereedheid. De stabiele React-ref volgt vervanging van API-objecten; geen CPU-profiler."
+      },
+      "frame_tussenpozen_ms": {
+        "aantal": 35,
+        "maximum": 241,
+        "p95": 233,
+        "omvang": "requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS."
+      },
+      "stappen": [
+        {
+          "naam": "beginbron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. ",
+          "exact": true
+        },
+        {
+          "naam": "getypte_bron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "selectie_en_backspace",
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "exact": true
+        },
+        {
+          "naam": "undo",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "redo",
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "exact": true
+        },
+        {
+          "naam": "hersteld_voor_bewaren",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "native_bewaaractie_onafhankelijk",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "nieuw_proces_heropend",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        }
+      ],
+      "fouten_voor_heropenen": {
+        "gui": [],
+        "console": []
+      },
+      "fouten_na_heropenen": {
+        "gui": [],
+        "console": []
+      },
+      "geslaagd": true
+    },
+    {
+      "ronde": 4,
+      "versie": "2026.45.17",
+      "programma_sha256": "341d97067fdd1ce57409f9946bb8ca8fa95fde94a765e2d7cd4956c6c4135ead",
+      "script_sha256": "6464845e3fcc650a8e7848d1819034e2fe1266c2a5bcedf74e096253619726ec",
+      "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+      "bron_eind_sha256": "f50d1531a818e554bb8d7a079e1a51259ea7c5f688bdbfbd74249d7af3e3a88b",
+      "invoer_tot_bron_en_golven_ms": 4609,
+      "documentuitlezingen": {
+        "calls": 5,
+        "ms": 195.00000000000364,
+        "api_wissels": 124,
+        "actieve_api_gevolgd": true,
+        "omvang": "GetDocument-aanroepen tijdens native invoer tot bron-/golflijngereedheid. De stabiele React-ref volgt vervanging van API-objecten; geen CPU-profiler."
+      },
+      "frame_tussenpozen_ms": {
+        "aantal": 34,
+        "maximum": 309,
+        "p95": 296,
+        "omvang": "requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS."
+      },
+      "stappen": [
+        {
+          "naam": "beginbron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. ",
+          "exact": true
+        },
+        {
+          "naam": "getypte_bron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "selectie_en_backspace",
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "exact": true
+        },
+        {
+          "naam": "undo",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "redo",
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "exact": true
+        },
+        {
+          "naam": "hersteld_voor_bewaren",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "native_bewaaractie_onafhankelijk",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "nieuw_proces_heropend",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        }
+      ],
+      "fouten_voor_heropenen": {
+        "gui": [],
+        "console": []
+      },
+      "fouten_na_heropenen": {
+        "gui": [],
+        "console": []
+      },
+      "geslaagd": true
+    }
+  ],
+  "lintvergelijking": [
+    {
+      "tab": "startlint",
+      "breedte": 1440,
+      "hoogte": 122,
+      "verschillende_pixels": 0,
+      "bediening_en_grenzen_gelijk": true,
+      "beelden": [
+        {
+          "bestand": "startlint-45.17.png",
+          "sha256": "ce2f5efb20f7a9b3d21bd1d06695ba90c724e41517388af00f9f98ed28f503e9"
+        },
+        {
+          "bestand": "startlint-45.18.png",
+          "sha256": "ce2f5efb20f7a9b3d21bd1d06695ba90c724e41517388af00f9f98ed28f503e9"
+        }
+      ]
+    },
+    {
+      "tab": "kopvoetlint",
+      "breedte": 1440,
+      "hoogte": 122,
+      "verschillende_pixels": 0,
+      "bediening_en_grenzen_gelijk": true,
+      "beelden": [
+        {
+          "bestand": "kopvoetlint-45.17.png",
+          "sha256": "19c604712ebbb334e2e2a7a34196a755330ba173c90a0a2f7c81f3e0f6fe09fd"
+        },
+        {
+          "bestand": "kopvoetlint-45.18.png",
+          "sha256": "19c604712ebbb334e2e2a7a34196a755330ba173c90a0a2f7c81f3e0f6fe09fd"
+        }
+      ]
+    }
+  ],
+  "profielen": [
+    {
+      "versie": "2026.45.17",
+      "programma_sha256": "341d97067fdd1ce57409f9946bb8ca8fa95fde94a765e2d7cd4956c6c4135ead",
+      "script_sha256": "183f6f3598337114743a29610f3d280b546b4d3f347f23aa98af2edd0faf4826",
+      "ruwe_profielen_sha256": "df0ad89c213dda1a783c27db7d1e50822dbe13d4d2fe715138088b3e5183ad90",
+      "stackvolgorde_gekalibreerd": true,
+      "hoofdthread_samples": 2030,
+      "samples_met_getDocument": 201,
+      "fouten": {
+        "gui": [],
+        "console": []
+      },
+      "grens": "Samples zijn geen aanroepaantallen of milliseconden. Profilering is alleen diagnose, niet de vier vergelijkende snelheidsproeven."
+    },
+    {
+      "versie": "2026.45.18",
+      "programma_sha256": "7b36df8cfe7ec436c77fa01d8d0b29e08750c844756781cbb857953247cf4774",
+      "script_sha256": "183f6f3598337114743a29610f3d280b546b4d3f347f23aa98af2edd0faf4826",
+      "ruwe_profielen_sha256": "518746f8ce6ee8dfa4e3159d38f8175673d00e180f50765f7e0ec85cdd8a61c6",
+      "stackvolgorde_gekalibreerd": true,
+      "hoofdthread_samples": 1886,
+      "samples_met_getDocument": 0,
+      "fouten": {
+        "gui": [],
+        "console": []
+      },
+      "grens": "Samples zijn geen aanroepaantallen of milliseconden. Profilering is alleen diagnose, niet de vier vergelijkende snelheidsproeven."
+    }
+  ],
+  "rijk_plakken": {
+    "geslaagd": true,
+    "programma_sha256": "7b36df8cfe7ec436c77fa01d8d0b29e08750c844756781cbb857953247cf4774",
+    "script_sha256": "56f7a116f617c27b1bc6015a14d4520d9a59cd002e1fdad12d83a877272be170",
+    "rondes": [
+      {
+        "ronde": 1,
+        "ms": 906,
+        "paginas": 2,
+        "tabellen": 2,
+        "alineas": 15
+      },
+      {
+        "ronde": 2,
+        "ms": 967,
+        "paginas": 3,
+        "tabellen": 4,
+        "alineas": 29
+      },
+      {
+        "ronde": 3,
+        "ms": 895,
+        "paginas": 5,
+        "tabellen": 8,
+        "alineas": 57
+      },
+      {
+        "ronde": 4,
+        "ms": 942,
+        "paginas": 9,
+        "tabellen": 16,
+        "alineas": 113
+      },
+      {
+        "ronde": 5,
+        "ms": 1764,
+        "paginas": 17,
+        "tabellen": 32,
+        "alineas": 225
+      },
+      {
+        "ronde": 6,
+        "ms": 5544,
+        "paginas": 33,
+        "tabellen": 64,
+        "alineas": 449
+      },
+      {
+        "ronde": 7,
+        "ms": 17489,
+        "paginas": 65,
+        "tabellen": 128,
+        "alineas": 897
+      },
+      {
+        "ronde": 8,
+        "ms": 61451,
+        "paginas": 129,
+        "tabellen": 256,
+        "alineas": 1793
+      }
+    ],
+    "bewaar_na_ronde": 1,
+    "eindomvang": {
+      "paginas": 129,
+      "tabellen": 256,
+      "alineas": 1793,
+      "body_codepunten": 131328,
+      "cellen": 1536,
+      "celtekst_codepunten": 49408
+    },
+    "onafhankelijk_docx": {
+      "exact": true,
+      "sha256": "405a73048727d8372ab02de98350bdcc27a2821b53ff9acc4ebb0ae488a3b4e8",
+      "bytes": 73278,
+      "body_met_opmaak_sha256": "c6a30378ac21520c50475ab5290df9cd2d9989fd8c82cd874ef51a6fa37d9fd2",
+      "normalisatie": "Alleen paraId/textId en rsid-attributen verwijderd; tekst, run- en alineaopmaak, hyperlinks en tabelstructuur blijven in de bodyhash."
+    },
+    "opmaakvergelijking_met_45_17": {
+      "geslaagd": true,
+      "voor_sha256": "56c4c6e4f56646a315e2f3146f6a7f74b8939ec8a594c4740fd69df4b8936279",
+      "na_sha256": "405a73048727d8372ab02de98350bdcc27a2821b53ff9acc4ebb0ae488a3b4e8",
+      "tabellen": 256,
+      "gelijke_geerfde_marges_expliciet": 0,
+      "genormaliseerde_body_sha256": "2862d5d4537762cedf4f56264bb36ffa891085511db3524c44fde668699e2df3"
+    },
+    "verwerpen_ms": 446,
+    "nieuw_document_na_verwerpen": true,
+    "gui_fouten": [],
+    "console_fouten": [],
+    "grenzen": "Geen bewijs van snellere enorme plakacties; laatste ronde nog 61,451 s. Het directe eindbeeld toont achterlopende tekentelling; niet na rust gecontroleerd."
+  },
+  "windows_bouwtest": {
+    "oude_run": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41633488883",
+    "oude_conclusie": "Windows faalt op de verwachting dat de automatische bundelaar zelf een onveilige terugimport kiest. Linux/macOS slagen.",
+    "wijziging": "Een opgelegde gedeelde chunk maakt de negatieve proef expliciet; een vierde proef controleert de normale productiebouw zonder opgelegde chunk. Productiebescherming ongewijzigd.",
+    "lokale_vite_proeven": 4,
+    "lokale_proeven_geslaagd": true,
+    "remote_hertest": "Nog na push te volgen."
+  },
+  "resterend": [
+    "Writer-invoer nog circa vier seconden in deze 500-paginaproef; verdere hoofdthread-/tekenoptimalisatie nodig.",
+    "Grote plakactie nog ruim een minuut; snelle reeksen en grotere praktijkbestanden niet afgetest.",
+    "Statusbalktelling na groot plakken nog te onderzoeken.",
+    "Geen volledige visuele suitegelijkheid: twee linten op één venstergrootte en platform vergeleken.",
+    "112 open issues; tien migratiegebieden en dertig acceptatievlaggen blijven open.",
+    "Geen volledige Rust-interface en geen nieuwe gepubliceerde release."
+  ]
+}

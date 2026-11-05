@@ -1,0 +1,24 @@
+{
+  "versie": "2026.44.9-alpha.24",
+  "geslaagd": true,
+  "omvang": "Actieve of onbekende blad-/werkmapbeveiliging maakt de hele werkmap voorlopig alleen-lezen. Geen wachtwoordverificatie, opheffen, bewerkbare uitzonderingen of volledige beschermingpariteit. Werkbladpaden volgen dezelfde relaties/standaardpaden als de engine; ongebruikte delen blokkeren de werkmap niet. De XML-controle maakt geen tweede celboom.",
+  "kernproeven": [
+    "bladbeveiliging_actief_onbekend_en_werkmapblokkade_weigeren_elke_documentopdracht",
+    "bladbeveiliging_sessie_houdt_bron_geschiedenis_en_navigatie_intact",
+    "bladbeveiliging_inactief_ongebruikte_delen_en_afwijkende_relatiedoelen_worden_juist_gelezen",
+    "bladbeveiliging_ongeldige_bladindex_mag_nooit_naar_een_bestaand_blad_teruglopen",
+    "bladbeveiliging_streamende_scan_leest_groot_blad_zonder_tweede_celboom"
+  ],
+  "gui_proeven": [
+    "bladbeveiliging_gui_toont_de_beperking_en_laat_alleen_selectie_en_navigatie_toe",
+    "bladbeveiliging_kern_weigert_ook_bij_een_onjuist_bewerkbaar_frontendveld"
+  ],
+  "reguliere_tests": 272,
+  "gui_tests": 82,
+  "bron_en_fixturebestanden": 178,
+  "bronmanifest": "schermen-2026-10-31-alpha24.json",
+  "testlog_sha256": "e41b6b466108a36345e6c05cd4f36ae43af8bc1391497c66094e3a42f5b71a8a",
+  "onafhankelijke_uitvoer_sha256": "341ca3859dc22c2fa1956daf00d8bdab8ad2f4ebb58c1546694c4cd5ad4e9dc3",
+  "beveiligde_fixture_sha256": "f8769b929ba66424b35f2b5be55038954a1b765602c4ea8b4ff34a87b6f4cf34",
+  "rondgang_sha256": "f8769b929ba66424b35f2b5be55038954a1b765602c4ea8b4ff34a87b6f4cf34"
+}

@@ -63,6 +63,8 @@ import {
   ArrowDownToLine,
   PenLine,
   SpellCheck,
+  Sun,
+  Moon,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { openSpellingVenster } from "../spelling/tekst/menu";
@@ -356,6 +358,8 @@ export function TekstRibbon({
   wijzigLiniaal,
   wijzigNavigatie,
   zoomKoppeling,
+  donkerPapier,
+  wisselPapier,
 }: {
   bestand: () => void;
   liniaal: boolean;
@@ -363,6 +367,8 @@ export function TekstRibbon({
   wijzigLiniaal: () => void;
   wijzigNavigatie: () => void;
   zoomKoppeling?: ZoomKoppeling;
+  donkerPapier?: boolean;
+  wisselPapier?: () => void;
 }) {
   const { t } = useTranslation("ribbon");
   const zoom = useDocxCommand("zoom");
@@ -487,12 +493,14 @@ export function TekstRibbon({
                 args="deleteRow"
                 naam={t("writer.commands.deleteRow")}
                 icoon={Trash2}
+                altijdLabel
               />
               <W
                 id="tableAction"
                 args="deleteColumn"
                 naam={t("writer.commands.deleteColumn")}
                 icoon={Trash2}
+                altijdLabel
               />
             </div>
             <W
@@ -834,6 +842,12 @@ export function TekstRibbon({
               <>
                 <WeergaveGroep />
                 <Groep naam={t("writer.groups.show")}>
+                  {wisselPapier && <Actie
+                    icoon={donkerPapier ? Sun : Moon}
+                    naam={t(donkerPapier ? "writer.commands.lightPaper" : "writer.commands.darkPaper")}
+                    groot
+                    onClick={wisselPapier}
+                  />}
                   <Actie
                     icoon={Ruler}
                     naam={t("writer.commands.ruler")}

@@ -1,0 +1,51 @@
+{
+  "basiscommit": "7a0ad58d53d6a4c273f23088f44194793d49f793",
+  "oude_negatieve_proef_geslaagd": false,
+  "mislukte_proeven": 2,
+  "oude_testlog_sha256": "19fa2600ac1e39ac579a0bea205227586c8964feb392104c0d7df8e4f856a110",
+  "reproduceerpatch_sha256": "0da186bbb7917602118c219191c0184051db8cd51047eea54a18a69b63734b73",
+  "waarneembaar": [
+    "Tijdens X2→Y2-rasterwerk verdwenen de tekens 7 en 8; Y2 bleef leeg.",
+    "Plakken, Enter en bewaren vóór het klembordantwoord bewaarden B2=3 in plaats van 7."
+  ],
+  "volledige_laatste_hertest_geslaagd": true,
+  "hertestlog_sha256": "bcf6046b13548d83a37ba61661cc780780d4908461d734caea53641959dea1d2",
+  "andere_afgebroken_controles": [
+    {
+      "reden": "Eerste controle vóór iedere test gestopt: bronbewaking vond een wijziging tijdens de overdracht van releasebouw naar de definitieve teststart. Geen testgoedkeuring.",
+      "log_sha256": "44f70eae89fbb4dab19728804eda4815a950d1ac0cc1dc045cebde47372653a6"
+    },
+    {
+      "reden": "Eerste diagnostische kernbouw tijdens releasebouw afgebroken om gelijktijdige zware compilatie te vermijden; geen totaalgoedkeuring.",
+      "log_sha256": "052cdef572f9fb139fccc3ae1edef2d7d1904d1b2b4c6da7540fc0809a34b235"
+    },
+    {
+      "reden": "Tweede totale ronde onderbroken vóór bronwijziging om de aanvullende F2/Ctrl+A-regressie eerst concreet te maken; geen totaalgoedkeuring.",
+      "log_sha256": "7a9ea177a281b2bc554d795474f7760a23d4faf53314f4f6ea57b3f83d0dc6a3"
+    }
+  ],
+  "eerste_volledige_ronde": {
+    "geslaagd": false,
+    "regulier_geslaagd": 303,
+    "regulier_mislukt": 3,
+    "ui_geslaagd": 98,
+    "ui_mislukt": 3,
+    "bronbestanden_voor_en_na_bytegelijk": 612,
+    "testlog_sha256": "37723727eab12f844ed8760a4e9ef3d99ecb0354cc09553fa4580fe5c7992a48",
+    "bronmanifest_sha256": "d167d990ebaf8181523014f6b37b60a6df38955c3bb05172b5e4a36f5b728bdb",
+    "reproduceerpatch_sha256": "7dfb7d73a41ba23cecfbed32f206683772d5329fd48caa8211b27839d1629afd",
+    "afwijkingen": [
+      "Een gewone ongeldige inline-formule pauzeerde ook zonder vervolgopdrachten; corrigeren en Escape waren daardoor onbereikbaar. Dit veroorzaakte twee bestaande regressieafkeuringen.",
+      "De blijvende bufferwaarschuwing miste een benoemd toegankelijkheidsknooppunt."
+    ],
+    "correctie": "Pauzeer alleen bij wachtende opdrachten of een ontvangen plakblok; een los inline-concept blijft corrigeerbaar en annuleerbaar. Benoem de zichtbare bufferwaarschuwing. De oorspronkelijke tests blijven ongewijzigd."
+  },
+  "aanvullende_f2_afkeuring": {
+    "geslaagd": false,
+    "mislukte_proeven": 1,
+    "waarneembaar": "F2, Ctrl+A, 7 en Enter vanuit dezelfde oude rasterwidget leveren 37 in plaats van 7 op; Selecteer alles was nog afhankelijk van de oude widgetmodus.",
+    "testlog_sha256": "0f5faf8bb74515f7bf4f3f612649e3a57a2b1a5539e0faf92dcc2052760830e6",
+    "reproduceerpatch_sha256": "19408b9330b31f0c967a280cd2bffbb204c35546fd4dc7e538117cafe40216b7",
+    "correctie": "Publiceer Selecteer alles als relatieve invoerintentie; bepaal bij verwerking de werkelijke editormodus. Dezelfde proef moet 7 bewaren en bronexacte undo behouden."
+  }
+}

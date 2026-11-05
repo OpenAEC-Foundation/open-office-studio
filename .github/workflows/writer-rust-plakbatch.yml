@@ -1,0 +1,139 @@
+name: Writer Rust-plakbatch onderzoeken
+on:
+  push:
+    branches: ["codex/native-rust-office"]
+    paths:
+      - "native/onderzoek/writer-plakbatch/**"
+      - "native/crates/office-writer-plakken/**"
+      - "native/vendor/docx-edit/**"
+      - "native/vendor/yrs/**"
+      - "native/scripts/proef-writer-plak-protocol.py"
+      - "native/Cargo.toml"
+      - "native/Cargo.lock"
+      - "src/tekst/bewerken/rustPlakken*"
+      - "src/tekst/bewerken/rustTekst*"
+      - "src/tekst/bewerken/tekstInvoerRoute.test.ts"
+      - "scripts/test-writer-rust-tekst-protocol.mjs"
+      - "src/tekst/bewerken/plak*"
+      - "src/tekst/bewerken/selectieLezen.test.ts"
+      - "src/tekst/bewerken/TekstBewerken.tsx"
+      - "src/tekst/bewerken/RustPlakLaag.tsx"
+      - "patches/@betteroffice__docx-react@0.5.1.patch"
+      - ".github/workflows/writer-rust-plakbatch.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: writer-rust-plakbatch-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  gegevensproef:
+    name: Geïsoleerde Rust-/SDK-vergelijking op Linux
+    runs-on: ubuntu-22.04
+    timeout-minutes: 40
+    env:
+      CARGO_TARGET_DIR: ${{ github.workspace }}/native/onderzoek/writer-plakbatch/.local/target
+      OFFICE_PLAKBATCH_BIN: ${{ github.workspace }}/native/onderzoek/writer-plakbatch/.local/target/release/office-plakverkenning
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+      - run: python3 native/onderzoek/writer-plakbatch/voorbereiden.py
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: native/onderzoek/writer-plakbatch -> .local/target
+      - run: pnpm install --frozen-lockfile
+      - name: Revisiebijectie weigert identiteitsschade
+        run: node --test native/onderzoek/writer-plakbatch/controleer-revisie-bijectie.mjs
+      - name: Afzonderlijke Rust-proef bouwen
+        run: cargo build --release --locked --manifest-path native/onderzoek/writer-plakbatch/Cargo.toml
+      - name: Lezingen met de oorspronkelijke volledige runs vergelijken
+        run: cargo test --release --locked --manifest-path native/onderzoek/writer-plakbatch/Cargo.toml --test venster
+      - name: Inhoud, cursor, geschiedenis en DOCX controleren
+        run: node native/onderzoek/writer-plakbatch/controleer-randgevallen.mjs
+      - name: Ongeldige aanvragen zonder gedeeltelijke uitvoer weigeren
+        run: node native/onderzoek/writer-plakbatch/controleer-afwijzingen.mjs
+      - name: Grote bron met 128 tabellen bronexact verdubbelen
+        run: node native/onderzoek/writer-plakbatch/controleer-groot.mjs
+      - name: Proefgegevens bewaren
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Writer-Rust-plakbatch-${{ github.run_number }}
+          path: |
+            native/onderzoek/writer-plakbatch/.local/randgevallen/
+            native/onderzoek/writer-plakbatch/.local/afwijzingen/
+            native/onderzoek/writer-plakbatch/.local/grote-proef/
+            native/onderzoek/writer-plakbatch/.local/target/release/office-plakverkenning
+            native/vendor/docx-edit/LICENSE-UPSTREAM
+            native/vendor/docx-edit/OPENAEC-WIJZIGINGEN.md
+            native/vendor/yrs/LICENSE-UPSTREAM
+            native/vendor/yrs/OPENAEC-WIJZIGINGEN.md
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 14
+
+  desktopprotocol:
+    name: Gedeelde desktopcodec en bron-/geschiedenisbehoud
+    runs-on: ubuntu-22.04
+    timeout-minutes: 40
+    env:
+      OFFICE_PLAKBATCH_BIN: ${{ github.workspace }}/native/scripts/proef-writer-plak-protocol.py
+      OFFICE_PLAK_PROTOCOL_BIN: ${{ github.workspace }}/native/target/release/examples/plak_protocol
+      OFFICE_TEKST_PROTOCOL_BIN: ${{ github.workspace }}/native/target/release/examples/tekst_protocol
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: native -> target
+          shared-key: writer-plak-desktop
+      - run: pnpm install --frozen-lockfile
+      - name: Revisiebijectie weigert identiteitsschade
+        run: node --test native/onderzoek/writer-plakbatch/controleer-revisie-bijectie.mjs
+      - name: Levensduur, bronversie en selectievolgorde controleren
+        run: pnpm exec vitest run src/tekst/bewerken/rustPlakken.test.ts src/tekst/bewerken/rustTekst.test.ts src/tekst/bewerken/tekstInvoerRoute.test.ts src/tekst/bewerken/plakopmaak.test.ts src/tekst/bewerken/selectieLezen.test.ts
+      - name: Echte desktopcodec en leesprimitieven testen
+        run: cargo test --release --locked --manifest-path native/Cargo.toml -p office-writer-plakken
+      - name: Protocolprogramma bouwen
+        run: cargo build --release --locked --manifest-path native/Cargo.toml -p office-writer-plakken --example plak_protocol --example tekst_protocol
+      - name: Gewone tekst met de onafhankelijke invoegroute vergelijken
+        run: node scripts/test-writer-rust-tekst-protocol.mjs
+      - name: Drie auteurs afzonderlijk verwerpen, ook na DOCX-heropenen
+        run: node native/onderzoek/writer-plakbatch/controleer-revisies.mjs
+      - name: Dezelfde inhoudsproeven tegen de echte desktopcodec uitvoeren
+        run: |
+          node native/onderzoek/writer-plakbatch/controleer-randgevallen.mjs
+          node native/onderzoek/writer-plakbatch/controleer-afwijzingen.mjs
+          node native/onderzoek/writer-plakbatch/controleer-groot.mjs
+      - name: Protocolbewijs bewaren
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Writer-plak-desktopprotocol-${{ github.run_number }}
+          path: |
+            native/onderzoek/writer-plakbatch/.local/randgevallen/
+            native/onderzoek/writer-plakbatch/.local/afwijzingen/
+            native/onderzoek/writer-plakbatch/.local/grote-proef/
+            native/onderzoek/writer-plakbatch/.local/revisies/
+            native/target/release/examples/plak_protocol
+            native/target/release/examples/tekst_protocol
+            .local/proef-writer-rust-tekst-protocol/
+            native/vendor/docx-edit/LICENSE-UPSTREAM
+            native/vendor/docx-edit/OPENAEC-WIJZIGINGEN.md
+            native/vendor/yrs/LICENSE-UPSTREAM
+            native/vendor/yrs/OPENAEC-WIJZIGINGEN.md
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 14

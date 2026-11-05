@@ -1,6 +1,7 @@
 /// <reference types="vitest/config" />
 import { configDefaults } from "vitest/config";
 import { defineConfig, type Plugin } from "vite";
+import { maakWorkerConfig } from "./scripts/workerconfig";
 
 // De fontpakketten verwijzen naar hun bestanden via import.meta.url, waardoor
 // Vite ze nogmaals in assets/ zet. De app laadt ze uit public/fonts/.
@@ -29,7 +30,7 @@ export default defineConfig({
     // Tests in het Nederlands, ongeacht de systeemtaal (zie docs/i18n.md).
     setupFiles: ["src/i18n/testopzet.ts"],
   },
-  worker: { format: "es" },
+  worker: maakWorkerConfig(),
   build: {
     rollupOptions: {
       output: {

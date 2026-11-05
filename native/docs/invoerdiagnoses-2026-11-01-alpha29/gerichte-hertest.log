@@ -1,0 +1,68 @@
+   Compiling open-office-studio-native v2026.44.9-alpha.28 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-ui)
+   Compiling office-core v2026.44.9-alpha.28 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 51.06s
+     Running unittests src/lib.rs (native/target/debug/deps/office_conversie-e7bb933694c507df)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_core-b2b77bed931a6a04)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 21 filtered out; finished in 0.00s
+
+     Running unittests src/bin/controleer-bestand.rs (native/target/debug/deps/controleer_bestand-af8626752e07a886)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/documentkern.rs (native/target/debug/deps/documentkern-5e80373b4d96dd18)
+
+running 15 tests
+test documenten::presentatie_behoudt_opmaak_en_bewerkt_alineas_met_unicode ... ok
+test interactie::dubbele_alinea_ids_mogen_nooit_een_andere_alinea_wijzigen ... ok
+test interactie::writer_paginageometrie_verwijst_naar_bestaande_alineas ... ok
+test writer_cursor::tabelalinea_en_lege_selectie_blijven_binnen_het_eigen_tekstverhaal ... ok
+test writer_interactie::gewone_opdracht_fout_en_een_andere_alinea_onderbreken_invoergroepering ... ok
+test writer_invoer::unicode_lege_alinea_en_meerdere_stappen_vormen_een_undo_stap ... ok
+test writer_structuur::alineacursor_beide_samenvoegtoetsen_geven_de_oorspronkelijke_grens_terug ... ok
+test writer_structuur::alineacursor_doorkruist_geen_tabelcellen_of_sectie_einde_en_maakt_geen_lege_undo ... ok
+test writer_structuur::alineacursor_lege_nieuwe_alinea_heeft_een_werkelijke_cursor_en_bewaart_runopmaak ... ok
+test writer_structuur::alineacursor_selectie_splitsen_is_atomair_en_behoudt_de_overige_inhoud ... ok
+test writer_structuur::alineacursor_weigert_verouderde_posities_module_en_bronbeveiliging_zonder_wijziging ... ok
+test writer_structuur::lege_alineas_en_sectie_einde_blijven_heropenbaar ... ok
+test writer_weergave::voetnoot_en_grafiek_buiten_alineatekst_renderen_na_teruglezen ... ok
+test writer_zoeken::een_late_fout_en_dubbele_alinea_wijzigen_geen_deel_van_het_document ... ok
+test writer_zoeken::gezamenlijke_vervanging_blijft_correct_over_honderden_alineas ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 102 filtered out; finished in 91.60s
+
+     Running ../../vendor/docx-parse/tests/nested_fields.rs (native/target/debug/deps/engine_velden-dfb8953ae4f73675)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_mail-fd0ada2b1475451c)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 51 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (native/target/debug/deps/open_office_studio_native-ca87d56ef10b0f30)
+
+running 8 tests
+test tests::alineaopdracht_weigert_concept_selectie_en_alleen_lezen ... ok
+test tests::raster_proeven::writer_alineatoets_backspace_voegt_binnen_dezelfde_tekst_samen ... ok
+test tests::raster_proeven::writer_alineatoets_delete_voegt_binnen_dezelfde_tekst_samen ... ok
+test tests::raster_proeven::writer_alineatoets_enter_en_snellen_vervolgtekst_vormen_twee_bronexacte_undo_stappen ... ok
+test tests::raster_proeven::writer_alineatoets_ongeimplementeerde_enter_combinaties_splitsen_geen_alinea ... ok
+test tests::raster_proeven::writer_alineatoets_op_de_grens_van_tabelcellen_bewaart_de_bron_en_geschiedenis ... ok
+test tests::raster_proeven::writer_alineatoets_selectie_en_splitsen_zijn_een_bewerking_met_selectieherstel ... ok
+test tests::raster_proeven::writer_alineatoets_shift_enter_blijft_een_zachte_regelovergang ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 109 filtered out; finished in 77.46s
+

@@ -1,0 +1,321 @@
+{
+  "schema": 1,
+  "versie": "2026.45.41",
+  "applicatiebron": {
+    "basiscommit": "ce06b0e03c81aa5b7b69cd1614bce2761a0d0caf",
+    "versie": "2026.45.41",
+    "rustwerkruimte": "2026.45.0-alpha.55",
+    "programma": ".local/doorwerk-2026-11-04/incrementele-invoer/open-office-studio-45.41-celidentiteiten",
+    "programma_sha256": "4ac8139789e989eb7fbb6452a7ecd63f78dd1538836bbae49c7c2d3c68ad5656",
+    "bronbestanden": {
+      "native/Cargo.toml": "89d52ec29293697c857e44ddd25070aa1f5ac62ce16aa0747e00fbd0130161d4",
+      "native/Cargo.lock": "57491285d3a6b8b794aae55381d66d3678b3641011481abad7b747f9cd880e12",
+      "native/crates/office-writer-plakken/src/bronspiegel.rs": "f750dbf36a502c27db2b4cbe0a78105b518c1673a488909f5ef557fceaf9625a",
+      "native/vendor/docx-edit/src/lib.rs": "a7c76dce270f3c84f939d925e11f84d5b7203d730ceacd8d264604346e89f205",
+      "native/vendor/docx-edit/src/clipboard_batch.rs": "0bb21fe2ccebcd33cc48400646bf5b7b867c1975cc7a47cbb226dcaeaa72d9fa",
+      "native/vendor/docx-edit/src/clipboard_batch/confirmed_source.rs": "8033028a48feba79d636a9818e06fe8f2c559101960d36b1b216f2f94b6c96cd",
+      "src/tekst/liniaal/geometrie.ts": "da369018fb14804150549578df0160ea482b9ef06ed8a6596603ec9006d60906",
+      "src-tauri/Cargo.toml": "9cbe60f9e48dab1fc504c2362fe4ca816e0540651cb961457fcdf4012d287670",
+      "src-tauri/Cargo.lock": "65c8ac3e4f7236c2be39ee7031200ce64c8635664f96993252662b010875cc73",
+      "src-tauri/tauri.conf.json": "d4f0f4b1601667503bcf2e73ebb85f7aeba7bfd46c8e9eac46d7424812e3aff2",
+      "package.json": "6085f04df94dc0e632f3b9daa1351e3b977dfdf08750d5f40cf60787eafa81c2",
+      "versie.json": "3738fc6d5be4723ea6713380b9c2c6caf1c4857ceb86e212a12f510b5e22e2a6"
+    },
+    "bouwlog": "celidentiteiten41-bouw.log",
+    "bouw_code": 0,
+    "frontend_tests": 1824,
+    "typescript": true,
+    "bekende_open_punten": [
+      "Extra warme revisieauteurtest faalt nog; tellerpariteit niet gerepareerd.",
+      "Intermitterende CI-worker-geheugenfout op39 niet als hersteld bewezen.",
+      "GUI- en zichtbare prestatieacceptatie41 nog te toetsen."
+    ],
+    "status": "Lokale kandidaat; niet als download of officiële release aangeboden."
+  },
+  "bestanden": {
+    "renderer-41-celidentiteiten/heropend-en-bewerkt.png": "cffc9592c4564b675453b5ce67fe127c4202e7e227a9e7f4fecab7bb5449a4ab",
+    "renderer-41-celidentiteiten/programma.log.gz": "0d6971a10e256ebd4805ac8718438d04a75d10b3ae8ee76015ddf01c160e9dc7",
+    "renderer-41-celidentiteiten/queryfout-zichtbaar.png": "d678b2a0917842bb4421db8bf467fb223ca0a07990c015f3fe3bfead150a71fd",
+    "renderer-41-celidentiteiten/voor-queryfout.png": "25783c7b52d82249564b9ee8b644cd7b0ae0503ff2737f55495a3a35ffa0c8ad",
+    "renderer-41-celidentiteiten/rapport.json.gz": "dfbe8d5a206c9d54f451d1f0a997ad12c8cb7a526b284fdf6de4fa207c4a31f2",
+    "renderer-41-celidentiteiten/proef.log.gz": "155fd1e7036e5dafecf39505cf608882bed278cf1492213c5522ca8167d330fa",
+    "lang-41-celidentiteiten/kopvoetlint.png": "645040622b567c9c9584ed13fa66ded4c23d97734d556c412107df1a2c3f576d",
+    "lang-41-celidentiteiten/spelling-eerste-pagina.png": "f4dae774f08ece7e29c0b6cbf773b66ab34b881e5af3dce9db8a9cdc5dc232c0",
+    "lang-41-celidentiteiten/framebasis.json.gz": "ec3689bcdcfaa581e65a596c2134daec40ca5ec4e10e281509d2f910acfdae23",
+    "lang-41-celidentiteiten/spelling-hersteld-venster.png": "e127c1d5a7142abb93ab39108c50b0f9471fefc6110820e69b1a3124f28e931f",
+    "lang-41-celidentiteiten/getypt-pagina-500.png": "a0cfcee024b5a0fd507e10621fe00143023a00e960cfd875738425f4c3c77df0",
+    "lang-41-celidentiteiten/spelling-kleiner-venster.png": "27b9ec9038399543154a77af9bb3989da661bb24b5b9f5a774e2d8e7687d4fc2",
+    "lang-41-celidentiteiten/programma.log.gz": "0d6971a10e256ebd4805ac8718438d04a75d10b3ae8ee76015ddf01c160e9dc7",
+    "lang-41-celidentiteiten/spelling-zoom-125.png": "e7928dcb508c869e73da1ff2a0170a23c5b3a20f7d6b09fb967d5f9bfcf344aa",
+    "lang-41-celidentiteiten/spelling-laatste-pagina.png": "1ab74db7090d2f1e22e89dd48b503b185e0de884bf36c2e2015c31e89cd450ab",
+    "lang-41-celidentiteiten/spelling-terug-in-document.png": "fc2dc150b437488ec44709c043291cd6d11345068309c7124331ed913d2077cf",
+    "lang-41-celidentiteiten/rapport.json.gz": "36c9ea502f05e601876d941402d54df2ba6d753336c5646c23c123294e6d7abd",
+    "lang-41-celidentiteiten/startlint.png": "5dc0340f603a27b84a4ebeb065cf9964d7b18338cc2c9e88fc1902ae35b115b3",
+    "lang-41-celidentiteiten/spelling-verborgen.png": "4cc9a5ff689723b67f9152eed2df1549ac52fd08bd8a71463dc998285ca3ea19",
+    "lang-41-celidentiteiten/proef.log.gz": "83d6f7af91475658b8e054dd1d59dd723a7ca37d3a689a0cfd2ea428e736fd14",
+    "tekst-41-celidentiteiten/snel-getypt-bewaard.png": "57ca734b4f12161bc37e20ba59e467eff2892b3af4a50d11645af50a5f07ade7",
+    "tekst-41-celidentiteiten/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "tekst-41-celidentiteiten/rapport.json.gz": "353076959a6c1133c927d7baa45f6da8c2ec615766f93d9c02a5a01285e6a313",
+    "tekst-41-celidentiteiten/nieuw-na-laat-antwoord.png": "c40044b5a88d656e612bdad941aafa2707b921f3a0369ea6ea52ea6ef2af6db4",
+    "tekst-41-celidentiteiten/invoer-redo.png": "9c2d9cc86910bb6a858a64c97a55b0d59701534c01cba434b689b3df77988b2c",
+    "tekst-41-celidentiteiten/proef.log.gz": "1d02c322b8bbc2278279133e7db7dcb55c152c4134ac142df8af13aaeb46307a",
+    "geheugen-41-celidentiteiten/herstel-aanbod-herstellen.png": "1b11adcc68c8a905ffcc91d472dc2273eaf365efb84084260aab0091511da71a",
+    "geheugen-41-celidentiteiten/kopvoetlint.png": "8b38771786eaa099da2f55d102b87aa75d8cb3191e95e35d076522d2270d7eca",
+    "geheugen-41-celidentiteiten/spelling-eerste-pagina.png": "b466d78063c5fc0f61bdbb610b3105b1e5f4081b611aa9427136d68ce53e5aa5",
+    "geheugen-41-celidentiteiten/herstel-aanbod-later.png": "1b11adcc68c8a905ffcc91d472dc2273eaf365efb84084260aab0091511da71a",
+    "geheugen-41-celidentiteiten/framebasis.json.gz": "fcdc48de34d1692f60d5787a43cc2b41e68747920d294f91058ee13c965f4975",
+    "geheugen-41-celidentiteiten/spelling-hersteld-venster.png": "68c495a9b0322506b5fe7dac270ab84b7465d43fd00a573300dbf47f4655f502",
+    "geheugen-41-celidentiteiten/getypt-pagina-500.png": "bef0a81790aeb391155a3c3d4632ad2d5be7a99f841f55c3605e10f4e403bbd4",
+    "geheugen-41-celidentiteiten/workerbron.json.gz": "3bf73756ccd418e4f1b3697d4d3fcec4d1595b9604ddfbbc1d88f672dd8135ff",
+    "geheugen-41-celidentiteiten/spelling-kleiner-venster.png": "33537a12faeaf5be8aa9eed13a7c03998964bb09421198e1fd2d51607087e6d1",
+    "geheugen-41-celidentiteiten/programma.log.gz": "0cfe12894ff1459cefbebdefc70f8219fb0ff64e9d72626603e5372a45be95ce",
+    "geheugen-41-celidentiteiten/spelling-zoom-125.png": "b51230a7a3a899857c6397bf5693ea35682ad9288df31e91718fc9cc792d5a40",
+    "geheugen-41-celidentiteiten/spelling-laatste-pagina.png": "9458e4eb7fdd71094ee0c375d44480d1eccdc7e247ed970a226da6b5ba5c32d6",
+    "geheugen-41-celidentiteiten/spelling-terug-in-document.png": "348e7c8dba07fc917b23e8b293e76b831e37cd98fc5c55d6597e64acf05cd2a5",
+    "geheugen-41-celidentiteiten/herstelde-kopie-bewerkt.png": "f485717080afd74ebc90ea51c10b2d03d15a812c30275aaf2d7a08962f650705",
+    "geheugen-41-celidentiteiten/rapport.json.gz": "603ca2894ae155fa296d7c2109b09c772f3b4b76cc2c622041b3106d4c6e13fe",
+    "geheugen-41-celidentiteiten/startlint.png": "b406ef68186b351aa81b012e1de16eb24a44861517b6906c2891b678c5188602",
+    "geheugen-41-celidentiteiten/spelling-verborgen.png": "9e4ff5d9f33a6ce0d9f34d92d607abeea27f885195bbfdfa37144fbcbe35c072",
+    "geheugen-41-celidentiteiten/proef.log.gz": "03ae59963e6511c995d3ec973c03e5f2b4b3581a1e191349e4e76d95b94ce2f6",
+    "acht-41-celidentiteiten/begin.png": "822fa19313484f7c0b3824601f4990abef9c0ebc89f419915f7995ee90ed4249",
+    "acht-41-celidentiteiten/sluitdialoog.png": "6869e5aed6c4ef5355bfdd43a73ffc41837474f91a92a078d54172bcfb3bfcde",
+    "acht-41-celidentiteiten/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "acht-41-celidentiteiten/na-plakken.png": "f4cec32364b839819a96af2840a0a8051f421598854ddd6e4f9e584c5f7c0631",
+    "acht-41-celidentiteiten/nieuw-na-verwerpen.png": "986d69a9fc8db0fd636b251b06ca117530b7802edbcfca85eb8fe1c4ef5141f9",
+    "acht-41-celidentiteiten/rapport.json.gz": "87deba2a7bf07aded76b88989bf5da85263ce43677b2d44bbca83c375aa3b077",
+    "acht-41-celidentiteiten/proef.log.gz": "2451727b314879ded7b16007eab6bfe846bbb98362c628c20c66a530d7d34206",
+    "vervolginvoer-41-celidentiteiten/begin.png": "0224520095280d133c38cb487336ab809d7c3bae32f68287000417835f97f432",
+    "vervolginvoer-41-celidentiteiten/sluitdialoog.png": "6e463e2ba8fc92f9d13adc45abcf6cc9343f53784d7043245173e2a4b684d83e",
+    "vervolginvoer-41-celidentiteiten/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "vervolginvoer-41-celidentiteiten/vervolginvoer.png": "0f7f7763be9a21e5634f2380ed8f8ab30626220b09b785216f3d83ef3e16463e",
+    "vervolginvoer-41-celidentiteiten/na-plakken.png": "bf25b970269c5049a29896933c59ff0cd5e0374720cbd94fd508b9ba013308da",
+    "vervolginvoer-41-celidentiteiten/nieuw-na-verwerpen.png": "f784bc804cf692813e111fb3454ecf9ccd8e44677034324da02d56b979172316",
+    "vervolginvoer-41-celidentiteiten/rapport.json.gz": "532097cf7ac879b5352efdf6b8a99c4dfd8244bd9522f1e94696c924a75d691c",
+    "vervolginvoer-41-celidentiteiten/proef.log.gz": "f3ebd8510f7e0121194601d8c233c7de853544169cf30444a7924a814a2f9e51",
+    "kleur-41-celidentiteiten/framebasis.json.gz": "68491e9241032c53175e6ea91399eff55e379de52cc6d2475bc5e99438df2829",
+    "kleur-41-celidentiteiten/heropend.png": "32511ca58fc8c4dd873ab6964ff8a725fc1add6ee1204a54647beeaf16083be2",
+    "kleur-41-celidentiteiten/kiezer-99c1f1.png": "50c22654c4f15f8780cf2fb2b298c79aec7e0de4a6bf0ac001d4d95cfe951f40",
+    "kleur-41-celidentiteiten/programma.log.gz": "0d6971a10e256ebd4805ac8718438d04a75d10b3ae8ee76015ddf01c160e9dc7",
+    "kleur-41-celidentiteiten/kiezer-f6d32d.png": "9a50425a25e3c335f12bc0878ba7ec40a32fd934306a8a179ec900f6fed96653",
+    "kleur-41-celidentiteiten/rapport.json.gz": "b4222ad87cf69accb8851541afd95e515ae6b117057cd6474ddd3d2d72b43e39",
+    "kleur-41-celidentiteiten/kiezer-eerste-beeld-99c1f1.png": "d89063ef0e2fe862b31b429b774b09906850d632e9feaac1638aa09c85affe91",
+    "kleur-41-celidentiteiten/kiezer-eerste-beeld-f6d32d.png": "b38edb8c511d8802a7eeb46a2bba7896a850a6d76d645de67bebb1b0f0a05045",
+    "kleur-41-celidentiteiten/proef.log.gz": "5f77193a626f7ea5dc4d0c788773e442bb3aefb04bccdc9f9bb8624f85f6b9c5",
+    "bewaren-41-celidentiteiten/begin.png": "822fa19313484f7c0b3824601f4990abef9c0ebc89f419915f7995ee90ed4249",
+    "bewaren-41-celidentiteiten/sluitdialoog.png": "26bd7a42c12196ffe901b8f7027cd6df8f6314de4d07a8276989987825e96678",
+    "bewaren-41-celidentiteiten/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "bewaren-41-celidentiteiten/na-plakken.png": "c1744e3232f11ce36db7c2f0dad30ece5e6a6eaa4c5b0d1cff8c558271d0d357",
+    "bewaren-41-celidentiteiten/nieuw-na-verwerpen.png": "986d69a9fc8db0fd636b251b06ca117530b7802edbcfca85eb8fe1c4ef5141f9",
+    "bewaren-41-celidentiteiten/rapport.json.gz": "cee5e851d0472718e1f6fbcfd0a19c5b3b6686fa17bf151e897fb1facf17b29f",
+    "bewaren-41-celidentiteiten/proef.log.gz": "edfaae46576cb498956d6b897d31b2037a37869b595485baa80258ea3cece540",
+    "tabelgrepen-41-celidentiteiten/na-slepen.png": "c037c60b18ba19b0ab088576b5ee8366a1105015653eff0d634439a35ed3ce02",
+    "tabelgrepen-41-celidentiteiten/heropend.png": "e96b3f3eda9c3fa323c8877ae6d87e61c0bc837ddf0ba9a953e0dc4893a791d4",
+    "tabelgrepen-41-celidentiteiten/programma.log.gz": "0d6971a10e256ebd4805ac8718438d04a75d10b3ae8ee76015ddf01c160e9dc7",
+    "tabelgrepen-41-celidentiteiten/voor-slepen.png": "bdde1963931876d1100a02f254004e27fd59baab17b2c81ea54a8893fad52603",
+    "tabelgrepen-41-celidentiteiten/rapport.json.gz": "07569d0d558e1e72d95e66e5dbbb4e892de6613639bc443b9c2c9d4b28e58f68",
+    "tabelgrepen-41-celidentiteiten/proef.log.gz": "af5a74a05614e0cddad4104c69ad5c6491185066038f265efd6fd04621de8984",
+    "volgorde-41-celidentiteiten/snel-getypt-bewaard.png": "4405fab4306f83d50c210d3c50fd6d9e2024f99db06cc7af9c28c00d914c9ff2",
+    "volgorde-41-celidentiteiten/plakken-redo.png": "0713e822d84176c7a11870f1e9cd522e21ea23f39394c28549435a96e4e8aaa0",
+    "volgorde-41-celidentiteiten/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "volgorde-41-celidentiteiten/rapport.json.gz": "cbf3961f5718ed147c434e357975420b066b1652b3e31237de8528019845e230",
+    "volgorde-41-celidentiteiten/nieuw-na-laat-antwoord.png": "d73282870acc865a314db7725191bac19224ad42d4733888d9c27e19b5b72609",
+    "volgorde-41-celidentiteiten/proef.log.gz": "96021f9fd24fd90035533cb5a87f710511569a3b530b1ca2a53515ab9cfc5268",
+    "passief-celidentiteiten-39-voor/profiel.json.gz": "5d6ff0aaf824a65ca0d94546bbadd696d671b593e9b2f9ff187db203a6343289",
+    "passief-celidentiteiten-39-voor/profiel.png": "e168d203efda6cbe5c5d92545adb98df08ecb0f05bb51870c118b6d2313dd310",
+    "passief-celidentiteiten-39-voor/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "passief-celidentiteiten-39-voor/eerste-gelijke-tekst.png": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+    "passief-celidentiteiten-39-voor/proef.log.gz": "d135934398f5aeb7c13beb520c3d6980ee3ceb8f13ff3114df9071004a9850fa",
+    "passief-celidentiteiten-41-eerste/profiel.json.gz": "99ba6f1e15385f2b09ac5ac5d43c4fb7be8f63da96f351073ff2e512ddd9e3c1",
+    "passief-celidentiteiten-41-eerste/profiel.png": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef",
+    "passief-celidentiteiten-41-eerste/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "passief-celidentiteiten-41-eerste/eerste-gelijke-tekst.png": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+    "passief-celidentiteiten-41-eerste/proef.log.gz": "62047b29ecd9f7d7d77569ad81ce878744aebb105d9bcd96631e51e5d1ff7f9d",
+    "passief-celidentiteiten-41-tweede/profiel.json.gz": "92c32c95346d40bbe0b9902b54d44f3b239dc8a1735b21dff408fab77e05ac5c",
+    "passief-celidentiteiten-41-tweede/profiel.png": "b99ebad901a93078a5475aeb4a6983ab29105f8a682ddb5e018b55eca314f7ff",
+    "passief-celidentiteiten-41-tweede/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "passief-celidentiteiten-41-tweede/eerste-gelijke-tekst.png": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+    "passief-celidentiteiten-41-tweede/proef.log.gz": "bd610d76eb06d3e7cc89df6d0cc66572240495e085e493c0158d50e2d231ce37",
+    "passief-celidentiteiten-39-na/profiel.json.gz": "4eb3d870554329ef979258046f49ebc59c9867d9139d46d64290ac781f9cda1b",
+    "passief-celidentiteiten-39-na/profiel.png": "0962e74f78128a2fcc6190c9c465fdae87d12beff575168015e7cb2b581b2084",
+    "passief-celidentiteiten-39-na/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "passief-celidentiteiten-39-na/eerste-gelijke-tekst.png": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+    "passief-celidentiteiten-39-na/proef.log.gz": "745d91cee75b91e3fc59d624df9e03c7cfee3abdd2fdf34155de65e67f60d076",
+    "rpc-bevestiging-41-celidentiteiten/profiel.json.gz": "9b28a04350f956db80fb56712a02f72fa062558f13299ae613f45751e56d531a",
+    "rpc-bevestiging-41-celidentiteiten/profiel.png": "8eef6e5b35fd6388f01d73020e6e9a8db875943bee08d85d79ee98ed10bf3554",
+    "rpc-bevestiging-41-celidentiteiten/programma.log.gz": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+    "rpc-bevestiging-41-celidentiteiten/proef.log.gz": "e6c2957125d909231f2603af80c2c6c74392e4b508da5823393b7eb6a28198e4",
+    "bevroren-bron/package.json.gz": "11eaa93f48f0410f9bd0520b98aab2632e1b16fcb12bd175560ddb8f01281cb2",
+    "bevroren-bron/versie.json.gz": "1bd30a7c848f92e2627f6e900ed51b2765ade625bb417031ae8ce8ef49be8378",
+    "bevroren-bron/native/Cargo.lock.gz": "ffa9d001dfaaa637a2fe24701e69b0c2f66535b6d7e3c45298d5916d3426d793",
+    "bevroren-bron/native/Cargo.toml.gz": "979a290856edf25c943854bcc0a0d4ad729ad10b5338a80eff8952f0eb30091e",
+    "bevroren-bron/src-tauri/tauri.conf.json.gz": "10fa4a57b7d20871a1d5dcb12e9b0f43f1ba6234370f463a7c08351723b9ca8f",
+    "bevroren-bron/src-tauri/Cargo.lock.gz": "200232b835d32b966a5c2dc43fe81e9f4049cd63de0e123f294be0cde640776c",
+    "bevroren-bron/src-tauri/Cargo.toml.gz": "548ec6828f654a9178cc308bd00461d359549b8d6007a218e3d330c5ca8300bc",
+    "bevroren-bron/native/crates/office-writer-plakken/src/bronspiegel.rs.gz": "fea9021a3ff2558c4ef11bea281375f30afd0f83a29dd87e8b5f79e83951963f",
+    "bevroren-bron/native/vendor/docx-edit/src/lib.rs.gz": "d48516a5e73053d2812f13dbfc8c8a6e5198f5c704fecaaf35bfbdce5c1bc699",
+    "bevroren-bron/native/vendor/docx-edit/src/clipboard_batch.rs.gz": "8c71526545a2a56cc5e1e8917a637ecfc525d3fbd7f75afbf2ad553e54bb9b5f",
+    "bevroren-bron/native/vendor/docx-edit/src/clipboard_batch/confirmed_source.rs.gz": "cd6f2a4f8d37f27cd030453bc229305b20742f640e846458862b1697b3f560ce",
+    "bevroren-bron/src/tekst/liniaal/geometrie.ts.gz": "e10999b036595283369429dae327e620ab25a38b4acffdc21fad1eedd03e516c",
+    "celidentiteiten41-app-bronnen.json.gz": "4f7b1e6811eb7640bbb2d36b7a7504b9b4bc2ebd0aed72cc23ccb412b41aa262",
+    "celidentiteiten41-applicatie.patch.gz": "ad1f33e325f313081f273cbcfd982604611c978097ae9b76dfaaf92393cce283",
+    "celidentiteiten41-confirmed_source.rs.gz": "cd6f2a4f8d37f27cd030453bc229305b20742f640e846458862b1697b3f560ce",
+    "celidentiteiten41-test.ts.gz": "a7f8d93fc7a08b4b8fbfb58f03b0c175e026e389d6401291c2d9925d5a14517e",
+    "celidentiteiten41-bouw.log.gz": "e89f38165697acd383beff5800434fc522ea8e2e9a3ae9e38ec123f71ebc5ca7",
+    "celidentiteiten41-proefuitkomsten.json.gz": "3cabc0b5befa37030c5b65c0e6476114f86a8ab75b404bc403bf75a2e8029e25",
+    "celidentiteiten41-passieve-uitkomsten.json.gz": "26a975158e128dc28cf390cefc97f9a24858c67752da6405b50b1a8ff4fec427",
+    "celidentiteiten41-rpc-uitkomst.json.gz": "9eb33d608ead50d9d1190f0a4c788dcee323cfb54865a939ec962ddf17cea2b8",
+    "voer-celidentiteiten41-proeven.py.gz": "0d6870b36e118d92ccfcabb18fb346f24b7a73c4ed878e6b64ba0d5e91e78498",
+    "voer-celidentiteiten41-passieve-metingen.py.gz": "085349af061010c2c0b21cb9a73dc4066238475a0f8a1b631f2052a7e3d71c21",
+    "meet-passief-doortypen-native.py.gz": "cd2b45747f658acd46f96626b210bcfd72783e30c61b1eabd757356fe6c919ef",
+    "meet-rpc-native.py.gz": "783ff7a323538d092e3e4ed44fbce0bd79e25f2c4d29cef0be5c68f3aa4227ce",
+    "bewaar-celidentiteiten41-proeven.py.gz": "952ac953ebd0de66c3595217d9dac0ae51c4593a2092b8cdeedd614b7a5c0e35"
+  },
+  "functioneel": [
+    {
+      "naam": "renderer-41-celidentiteiten",
+      "code": 0,
+      "seconden": 32.8
+    },
+    {
+      "naam": "lang-41-celidentiteiten",
+      "code": 0,
+      "seconden": 61.38
+    },
+    {
+      "naam": "tekst-41-celidentiteiten",
+      "code": 0,
+      "seconden": 25.08
+    },
+    {
+      "naam": "geheugen-41-celidentiteiten",
+      "code": 0,
+      "seconden": 140.48
+    },
+    {
+      "naam": "acht-41-celidentiteiten",
+      "code": 0,
+      "seconden": 71.94
+    },
+    {
+      "naam": "vervolginvoer-41-celidentiteiten",
+      "code": 0,
+      "seconden": 54.58
+    },
+    {
+      "naam": "kleur-41-celidentiteiten",
+      "code": 0,
+      "seconden": 33.87
+    },
+    {
+      "naam": "bewaren-41-celidentiteiten",
+      "code": 0,
+      "seconden": 23.94
+    },
+    {
+      "naam": "tabelgrepen-41-celidentiteiten",
+      "code": 0,
+      "seconden": 29.9
+    },
+    {
+      "naam": "volgorde-41-celidentiteiten",
+      "code": 0,
+      "seconden": 28.86
+    }
+  ],
+  "metingen": [
+    {
+      "naam": "passief-celidentiteiten-39-voor",
+      "getekende_tekst_ms": 23375,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "programma_sha256": "f25c6c3395781209f0d1760c035110c0e846f0b1e394d90860d5e8a526ccc75d"
+    },
+    {
+      "naam": "passief-celidentiteiten-41-eerste",
+      "getekende_tekst_ms": 29165,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "programma_sha256": "4ac8139789e989eb7fbb6452a7ecd63f78dd1538836bbae49c7c2d3c68ad5656"
+    },
+    {
+      "naam": "passief-celidentiteiten-41-tweede",
+      "getekende_tekst_ms": 29458,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "programma_sha256": "4ac8139789e989eb7fbb6452a7ecd63f78dd1538836bbae49c7c2d3c68ad5656"
+    },
+    {
+      "naam": "passief-celidentiteiten-39-na",
+      "getekende_tekst_ms": 23091,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "programma_sha256": "f25c6c3395781209f0d1760c035110c0e846f0b1e394d90860d5e8a526ccc75d"
+    }
+  ],
+  "raster": {
+    "passief-celidentiteiten-39-voor": {
+      "pixels": 0,
+      "bbox": null,
+      "documentpixels": 0,
+      "document_zonder_cursorpixels": 0
+    },
+    "passief-celidentiteiten-41-eerste": {
+      "pixels": 3,
+      "bbox": [
+        6,
+        159,
+        74,
+        161
+      ],
+      "documentpixels": 0,
+      "document_zonder_cursorpixels": 0
+    },
+    "passief-celidentiteiten-41-tweede": {
+      "pixels": 2,
+      "bbox": [
+        62,
+        33,
+        126,
+        34
+      ],
+      "documentpixels": 0,
+      "document_zonder_cursorpixels": 0
+    },
+    "passief-celidentiteiten-39-na": {
+      "pixels": 5,
+      "bbox": [
+        62,
+        33,
+        1120,
+        997
+      ],
+      "documentpixels": 0,
+      "document_zonder_cursorpixels": 0
+    }
+  },
+  "acceptatie": "AFGEKEURD: beide nieuwe fysieke invoerronden zijn trager dan de referentie. Tabelceloptimalisatie niet behouden; geen download, gesloten issue of acceptatievlag.",
+  "grenzen": [
+    "Alleen eigen Linux-omgeving; geen volledige suite-, FPS-, platform- of migratieacceptatie.",
+    "Bronidentiteit komt uit de bevroren 41-bronnen, niet uit latere lokale wijzigingen."
+  ],
+  "rpc": {
+    "broncontrole": {
+      "verhalen": 1537,
+      "alinea_en_celteksten": 3329,
+      "exact": true
+    },
+    "batches": 98
+  }
+}

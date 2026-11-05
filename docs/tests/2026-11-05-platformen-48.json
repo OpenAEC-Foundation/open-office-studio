@@ -1,0 +1,204 @@
+{
+  "schema": 1,
+  "datum": "2026-11-05",
+  "versie": "2026.45.48",
+  "ronden": {
+    "database": {
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42027731827",
+      "status": "completed",
+      "conclusie": "success",
+      "bronrevisie": "b6df100b4497bca1caa0adefed302a4d82d1f699",
+      "jobs": [
+        {
+          "naam": "database (macos-latest)",
+          "status": "completed",
+          "conclusie": "success"
+        },
+        {
+          "naam": "database (ubuntu-22.04)",
+          "status": "completed",
+          "conclusie": "success"
+        },
+        {
+          "naam": "database (windows-latest)",
+          "status": "completed",
+          "conclusie": "success"
+        }
+      ]
+    },
+    "desktop": {
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42027731638",
+      "status": "completed",
+      "conclusie": "success",
+      "bronrevisie": "b6df100b4497bca1caa0adefed302a4d82d1f699",
+      "jobs": [
+        {
+          "naam": "desktop (macos-latest)",
+          "status": "completed",
+          "conclusie": "success"
+        },
+        {
+          "naam": "desktop (windows-latest)",
+          "status": "completed",
+          "conclusie": "success"
+        },
+        {
+          "naam": "desktop (ubuntu-22.04)",
+          "status": "completed",
+          "conclusie": "success"
+        }
+      ]
+    },
+    "dev": {
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42027715812",
+      "status": "completed",
+      "conclusie": "success",
+      "bronrevisie": "b6df100b4497bca1caa0adefed302a4d82d1f699",
+      "jobs": [
+        {
+          "naam": "AppImage voor Linux x86_64",
+          "status": "completed",
+          "conclusie": "success"
+        }
+      ]
+    },
+    "edities": {
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42028004316",
+      "status": "completed",
+      "conclusie": "success",
+      "bronrevisie": "b6df100b4497bca1caa0adefed302a4d82d1f699",
+      "jobs": [
+        {
+          "naam": "versie",
+          "status": "completed",
+          "conclusie": "success"
+        },
+        {
+          "naam": "Bouwen – macOS",
+          "status": "completed",
+          "conclusie": "success"
+        },
+        {
+          "naam": "Bouwen – Windows",
+          "status": "completed",
+          "conclusie": "success"
+        },
+        {
+          "naam": "Bouwen – Linux",
+          "status": "completed",
+          "conclusie": "success"
+        },
+        {
+          "naam": "publiceren",
+          "status": "completed",
+          "conclusie": "skipped"
+        }
+      ]
+    },
+    "geheugen": {
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42027716015",
+      "status": "completed",
+      "conclusie": "failure",
+      "bronrevisie": "b6df100b4497bca1caa0adefed302a4d82d1f699",
+      "jobs": [
+        {
+          "naam": "onderzoeken",
+          "status": "completed",
+          "conclusie": "failure"
+        }
+      ]
+    },
+    "native": {
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42027732071",
+      "status": "completed",
+      "conclusie": "success",
+      "bronrevisie": "b6df100b4497bca1caa0adefed302a4d82d1f699",
+      "jobs": [
+        {
+          "naam": "native (macos-latest)",
+          "status": "completed",
+          "conclusie": "success"
+        },
+        {
+          "naam": "native (windows-latest)",
+          "status": "completed",
+          "conclusie": "success"
+        },
+        {
+          "naam": "native (ubuntu-22.04)",
+          "status": "completed",
+          "conclusie": "success"
+        },
+        {
+          "naam": "Conversie met geïnstalleerde kantoorruntime",
+          "status": "completed",
+          "conclusie": "success"
+        },
+        {
+          "naam": "Native beelden en pakketbron tussen platforms",
+          "status": "completed",
+          "conclusie": "success"
+        }
+      ]
+    },
+    "webview": {
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42027732177",
+      "status": "completed",
+      "conclusie": "success",
+      "bronrevisie": "b6df100b4497bca1caa0adefed302a4d82d1f699",
+      "jobs": [
+        {
+          "naam": "bouwen (windows-latest)",
+          "status": "completed",
+          "conclusie": "success"
+        },
+        {
+          "naam": "bouwen (macos-latest)",
+          "status": "completed",
+          "conclusie": "success"
+        },
+        {
+          "naam": "bouwen (ubuntu-22.04)",
+          "status": "completed",
+          "conclusie": "success"
+        }
+      ]
+    }
+  },
+  "grenzen": [
+    "Publiceren overgeslagen; geen officiële release of tag",
+    "Brede Linux-ronde bevat echte GUI-proeven; Windows/macOS-bouw en pakketcontrole bewijzen geen native GUI-pariteit",
+    "De afzonderlijke geheugen-/herstelafkeuring blijft open, ook na een groene editie- of desktopronde",
+    "Geen volledige migratie-, functie-, prestatie- of pixelacceptatie"
+  ],
+  "bewijsbestanden": [
+    {
+      "pad": "docs/tests/platformen-48/database.json.gz",
+      "sha256": "e2f57cc3dfeaf23ac16de16e2f74219046f87db8ed8967e92d873783c83e75bc"
+    },
+    {
+      "pad": "docs/tests/platformen-48/desktop.json.gz",
+      "sha256": "b7e9d3b242248d0531bdd680a42c07fa7cc4d8da79d125792ff62c4a222e4c3b"
+    },
+    {
+      "pad": "docs/tests/platformen-48/dev.json.gz",
+      "sha256": "ec70c13f2ff8ad3e8415414f63506291ab7e72dc2429e1960a1c303b2d93a247"
+    },
+    {
+      "pad": "docs/tests/platformen-48/edities.json.gz",
+      "sha256": "e2a5e9f6973c8094f7769f63337f9bca6992a90f639d2986ce01816094d5d452"
+    },
+    {
+      "pad": "docs/tests/platformen-48/geheugen.json.gz",
+      "sha256": "22096c17094649376c41328db83492c889a9852c7c628c144ae49a30b54d9917"
+    },
+    {
+      "pad": "docs/tests/platformen-48/native.json.gz",
+      "sha256": "2fa2f29be5a24049159c14ccd8a6320a3333e1c77c997cbc2052988002612a83"
+    },
+    {
+      "pad": "docs/tests/platformen-48/webview.json.gz",
+      "sha256": "d09b74262ba9e685c3acc1d34f4985b2a0afcc155877032ca7261b166e8bf7ce"
+    }
+  ]
+}

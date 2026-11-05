@@ -1,0 +1,84 @@
+--- a/src/types/text.rs
++++ b/src/types/text.rs
+@@ -425,6 +425,81 @@
+         let mut asm = DiffAssembler::new(compute_ychange);
+         asm.process(self.as_ref().start, None, None, None, None);
+         asm.finish()
++    }
++
++    /// Bezoek ingesloten objecten met hun UTF-16-positie zonder tekst te kopiëren.
++    fn visit_utf16_embeds<T,F>(&self, _txn: &T, mut visit: F)
++    where T: ReadTxn, F: FnMut(u32,Out)->bool {
++        let mut offset=0u32;
++        let mut n=self.as_ref().start;
++        while let Some(item)=n.as_deref() {
++            if !item.is_deleted() {
++                match &item.content {
++                    ItemContent::String(s)=>offset+=s.len(OffsetKind::Utf16) as u32,
++                    ItemContent::Type(_)|ItemContent::Embed(_)=>{
++                        if let Some(value)=item.content.get_first(){
++                            let len=match &value{Out::Any(Any::String(s))=>s.encode_utf16().count() as u32,_=>1};
++                            if !matches!(&value,Out::Any(Any::String(_))) && !visit(offset,value){return;}
++                            offset+=len;
++                        }
++                    }
++                    _=>{}
++                }
++            }
++            n=item.right;
++        }
++    }
++
++    /// Bezoek volledige opmaakruns die een UTF-16-venster raken.
++    /// De grens knipt nooit een tekst of surrogaatpaar door. De callback kan
++    /// na een volledige run stoppen; eerdere runs worden niet gekopieerd.
++    fn visit_utf16_window<T, F>(&self, _txn: &T, lo: u32, mut visit: F)
++    where T: ReadTxn, F: FnMut(u32, Diff<YChange>) -> bool {
++        let mut current = HashMap::new();
++        let mut pieces = Vec::new();
++        let mut start = 0u32;
++        let mut offset = 0u32;
++        let flush = |pieces: &mut Vec<ItemPtr>, start: u32, offset: u32,
++                     attrs: &Attrs, visit: &mut F| -> bool {
++            if pieces.is_empty() { return true; }
++            let doorgaan = if offset > lo {
++                let text: String = pieces.iter().filter_map(|p| match &p.content { ItemContent::String(s) => Some(s.as_str()), _ => None }).collect();
++                let attrs = (!attrs.is_empty()).then(||Box::new(attrs.clone()));
++                visit(start, Diff::new(text.into(),attrs))
++            } else { true };
++            pieces.clear();
++            doorgaan
++        };
++        let mut n = self.as_ref().start;
++        while let Some(item) = n.as_deref() {
++            if !item.is_deleted() {
++                match &item.content {
++                    ItemContent::String(s) => {
++                        if pieces.is_empty() { start=offset; }
++                        pieces.push(n.expect("Zichtbaar tekstitem heeft een positie"));
++                        offset += s.len(OffsetKind::Utf16) as u32;
++                    }
++                    ItemContent::Type(_) | ItemContent::Embed(_) => {
++                        if !flush(&mut pieces,start,offset,&current,&mut visit) { return; }
++                        if let Some(value)=item.content.get_first() {
++                            let len=match &value{Out::Any(Any::String(s))=>s.encode_utf16().count() as u32,_=>1};
++                            if offset + len > lo {
++                                let attrs=(!current.is_empty()).then(||Box::new(current.clone()));
++                                if !visit(offset,Diff::new(value,attrs)) { return; }
++                            }
++                            offset += len;
++                        }
++                    }
++                    ItemContent::Format(key,value) => {
++                        if !flush(&mut pieces,start,offset,&current,&mut visit) { return; }
++                        update_current_attributes(&mut current,key,value.as_ref());
++                    }
++                    _ => {}
++                }
++            }
++            n=item.right;
++        }
++        flush(&mut pieces,start,offset,&current,&mut visit);
+     }
+ 
+     /// Returns the Delta representation of this YText type.

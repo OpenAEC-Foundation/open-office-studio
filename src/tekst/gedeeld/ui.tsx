@@ -42,6 +42,12 @@ export function useEditorTik() {
   useEffect(() => {
     let opruimen: (() => void)[] = [];
     let gekoppeld: DocxEditorRef | null = null;
+    let frame: number | null = null;
+    // Een bewerking meldt vaak zowel inhoud als selectie. Eén meting volstaat.
+    const plan = () => {
+      if (frame !== null) return;
+      frame = requestAnimationFrame(() => { frame = null; verhoog(); });
+    };
     const koppel = () => {
       const ref = api();
       if (ref === gekoppeld) return;
@@ -49,13 +55,14 @@ export function useEditorTik() {
       opruimen = [];
       gekoppeld = ref;
       if (!ref) return;
-      opruimen = [ref.onSelectionChange(() => verhoog()), ref.onContentChange(() => verhoog())];
+      opruimen = [ref.onSelectionChange(plan), ref.onDocumentChange(plan)];
       verhoog();
     };
     koppel();
     const poging = setInterval(koppel, 700);
     return () => {
       clearInterval(poging);
+      if (frame !== null) cancelAnimationFrame(frame);
       opruimen.forEach((weg) => weg());
     };
   }, [api]);

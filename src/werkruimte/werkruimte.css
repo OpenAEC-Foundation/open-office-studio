@@ -62,6 +62,13 @@
   font: inherit;
   color: inherit;
 }
+/* Native keuzelijsten krijgen het thema van hun dialoog, ook buiten .office. */
+.werkruimte-dialoog select {
+  color-scheme: light;
+}
+.werkruimte-dialoogachtergrond[data-thema="forge"] .werkruimte-dialoog select {
+  color-scheme: dark;
+}
 .werkruimte-sluit {
   display: grid;
   place-items: center;

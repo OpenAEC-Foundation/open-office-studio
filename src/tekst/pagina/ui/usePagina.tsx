@@ -45,6 +45,7 @@ import {
   zetEvenOnevenAnders,
   zetKopVoetAfstand,
   zorgVoorKopVoet,
+  zorgVoorWatermerkKoppen,
   type KopVoetSoort,
   type PaginanummerOpties,
 } from "../kopvoet.ts";
@@ -64,6 +65,7 @@ import {
   PaginanummerDialoog,
 } from "./Dialogen.tsx";
 import "./pagina.css";
+import { wijzigPaginaLive } from "./liveSecties";
 
 const tekst = (e: unknown) => (e instanceof Error ? e.message : String(e));
 
@@ -359,9 +361,15 @@ export function usePagina() {
 
   // --- Pagina-indeling --------------------------------------------------------
 
-  const sectieWijziging = (klaar: string, w: Parameters<typeof wijzigSecties>[2]) =>
-    void pakket({ klaar, cursor: "sectie", werk: (b, { sectie }) => wijzigSecties(b, sectie, w) });
-  // Marges slepen op de liniaal (#47): de sectie van de cursor, via de pakketroute.
+  const sectieWijziging = (melding: string, w: Parameters<typeof wijzigSecties>[2]) => {
+    const ref = api();
+    if (!ref) return;
+    void wijzigPaginaLive(ref, w).then(() => {
+      toonMelding(melding);
+      ref.focus();
+    }).catch((e) => fout(tekst(e)));
+  };
+  // Marges slepen op de liniaal: dezelfde levende sectie als de voorkeuzeknoppen.
   const zichtbaar = useEditorZichtbaar();
   const recentSectie = useRef(sectieWijziging);
   recentSectie.current = sectieWijziging;
@@ -428,15 +436,15 @@ export function usePagina() {
    * opgeslagen gold. Zolang het venster open is kijken we of het document
    * verandert en melden dat dan zelf.
    */
-  const watermerk = () => {
-    const voor = api()?.getDocument();
-    void opdrachten.execute("watermark", null).then((r) => {
+  const openWatermerk = (editor: DocxEditorRef) => {
+    const voor = editor.getDocument();
+    void editor.commands.execute("watermark", null).then((r) => {
       if (!r.ok) return fout(r.failure.message);
       let gezien = false;
       const klok = setInterval(() => {
         const open = [...document.querySelectorAll<HTMLElement>("[role='dialog']")].some((d) => d.getClientRects().length && isWatermerkVenster(d.textContent ?? ""));
         gezien ||= open;
-        const nu = api()?.getDocument();
+        const nu = editor.getDocument();
         if (nu && voor && nu !== voor && apis.herlaad) {
           meldWijziging(apis.herlaad);
           clearInterval(klok);
@@ -444,8 +452,18 @@ export function usePagina() {
       }, 300);
       // Nooit eindeloos: na tien minuten stoppen.
       setTimeout(() => clearInterval(klok), 600000);
-    });
+    }).catch((e) => fout(tekst(e)));
   };
+
+  // Het enginevenster voegt anders een kop aan het documentmodel toe die de
+  // bewerksessie niet kent (hf:rIdWmHdrDefault). Eerst structureel toevoegen
+  // en heropenen; daarna delen weergave, selectie en opslaan dezelfde verhalen.
+  const watermerk = () => void pakket({
+    klaar: t("page.done.headerAdded"),
+    werk: zorgVoorWatermerkKoppen,
+    na: openWatermerk,
+    ongewijzigd: openWatermerk,
+  });
 
   // --- Inhoudsopgave ----------------------------------------------------------
 

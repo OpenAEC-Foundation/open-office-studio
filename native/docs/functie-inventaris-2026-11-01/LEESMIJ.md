@@ -1,0 +1,7 @@
+# Begin van de opdrachtinventaris
+
+De vaste desktopreferentie 2026-W44.8, broncommit 0fc4d2bbf94bb6025d8d8517d53631d5f830cd1e, bevat in de onderzochte TypeScript-boom 151 letterlijke aansluitingen op bekende lintcomponenten en opdrachthaken. Writer heeft 91 aansluitingen met 36 unieke IDs, Spreadsheet 23 met 19 IDs en Presentation 37 met 17 IDs. Tien dynamische aansluitingen zijn apart geregistreerd.
+
+Dit is **geen volledige functie-inventaris of dekkingspercentage**. Eén ID kan meerdere argumentvarianten hebben; menu’s, eigen acties, dynamische lijsten, schil, Notition, Email en Database vragen aanvullende inventarisatie. Een gevonden aansluiting bewijst geen werkende oorspronkelijke functie, native implementatie of geslaagde test. De volgende stap is per concrete opdracht en argumentvariant de native route, fouten, undo, bestandsrondgang en GUI-proef koppelen.
+
+[letterlijke-opdrachten.json](letterlijke-opdrachten.json) bewaart bestandsnamen, regels, IDs, argumentnotatie, dynamische uitdrukkingen en SHA-256 van de gelezen bronbestanden. [bron.mjs](bron.mjs) leest de vaste Git-revisie met de TypeScript-parser, zonder toepassingscode uit te voeren. Reproduceren vraagt een Git-checkout met die revisie en de reeds geïnstalleerde Node-/TypeScript-ontwikkelafhankelijkheden; voer het script vanuit de repositorywortel uit. De uitvoer staat onder de genegeerde lokale controlemap. Het native bronpakket is zelfstandig herbouwbaar maar bevat niet de volledige historische webcheckout voor deze inventarisatie.

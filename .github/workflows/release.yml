@@ -117,8 +117,17 @@ jobs:
           fi
       - name: Linux-bouwafhankelijkheden
         if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev patchelf squashfs-tools poppler-utils
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev patchelf squashfs-tools poppler-utils python3-xlib python3-pil python3-gi python3-venv xvfb xauth xdotool
+      - name: Python-omgeving voor native GUI-proeven
+        if: runner.os == 'Linux'
+        run: |
+          /usr/bin/python3 -m venv --system-site-packages "$RUNNER_TEMP/office-native-gui"
+          "$RUNNER_TEMP/office-native-gui/bin/python" -m pip install --ignore-installed -r scripts/gui/requirements.txt
+          echo "OFFICE_GUI_PYTHON=$RUNNER_TEMP/office-native-gui/bin/python" >> "$GITHUB_ENV"
       - run: pnpm install --frozen-lockfile
+      - name: Browser voor de suitecontrole klaarzetten
+        if: runner.os == 'Linux'
+        run: pnpm exec playwright install --with-deps chromium
       # Extra open lettertypen (assets/lettertypen.json): bewaard per manifestversie,
       # zodat een build zonder netwerk naar GitHub ook werkt.
       - name: Lettertypencache
@@ -187,6 +196,18 @@ jobs:
           else
             pnpm desktop:build --bundles ${{ matrix.bundels }}
           fi
+          if [ "$RUNNER_OS" = Linux ]; then
+            "$OFFICE_GUI_PYTHON" scripts/test-writer-kleur-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-native-writer-kleur
+            "$OFFICE_GUI_PYTHON" scripts/test-writer-klembord-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-native-writer-klembord
+            "$OFFICE_GUI_PYTHON" scripts/test-writer-lijsten-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-native-writer-lijsten
+            OFFICE_ENGINE_OPNAME=1 "$OFFICE_GUI_PYTHON" scripts/test-writer-rendererfout-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-native-writer-renderer
+            "$OFFICE_GUI_PYTHON" scripts/test-writer-tabelgrepen-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-native-writer-tabelgrepen
+            "$OFFICE_GUI_PYTHON" scripts/test-writer-lang-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-native-writer-lang --verwacht-rust-tekst --verwacht-incrementele-bron --verwacht-worker-layout --verwacht-worker-lettertypen --spelling-weergave --framebasis --lettertypebewijs
+            "$OFFICE_GUI_PYTHON" scripts/test-writer-rijk-plakken-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --rondes 3 --bewaar-na-ronde 1 --maxduur 180 --vereis-rust-plakken --uitvoer .local/proef-native-writer-bewaren
+            "$OFFICE_GUI_PYTHON" scripts/test-writer-rust-plakken-volgorde-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-native-writer-volgorde
+            "$OFFICE_GUI_PYTHON" scripts/test-writer-rust-tekst-native.py --programma src-tauri/target/release/open-office-studio --versie "$(node -p "require('./package.json').version")" --uitvoer .local/proef-native-writer-tekst
+            node scripts/test-writer-revisies-gui.mjs
+          fi
           node scripts/verzamel-studio.mjs office
           pnpm database:desktop:build --bundles ${{ matrix.bundels }}
           node scripts/verzamel-studio.mjs database
@@ -248,6 +269,157 @@ jobs:
           for studio in writer spreadsheet presentation email notition; do
             node scripts/bouw-studio.mjs "$studio" --bundles ${{ matrix.bundels }}
           done
+
+      - name: Invoer en bestandsbehoud via de productie-GUI
+        if: runner.os == 'Linux'
+        run: |
+          node scripts/test-rekenblad-gui.mjs
+          node scripts/test-writer-lettergrootte-gui.mjs
+          node scripts/test-writer-kleur-gui.mjs
+          node scripts/test-writer-spiegel-gui.mjs
+          node scripts/test-writer-spelling-gui.mjs
+      - name: GUI-bewijs bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: uitgave-rekenblad-gui-${{ matrix.label }}
+          path: .local/proef-rekenblad-gui/
+          include-hidden-files: true
+          if-no-files-found: warn
+      - name: Native Writer-klembordbewijs bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-writer-klembord-${{ github.workflow }}-${{ matrix.os || matrix.label }}
+          path: .local/proef-native-writer-klembord/
+          include-hidden-files: true
+          if-no-files-found: warn
+      - name: Writer-revisiebewijs bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: writer-revisies-${{ github.workflow }}-${{ matrix.os || matrix.label }}
+          path: .local/proef-writer-revisies/
+          include-hidden-files: true
+          if-no-files-found: warn
+      - name: Native Writer-langdocumentbewijs bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-writer-lang-${{ github.workflow }}-${{ matrix.os || matrix.label }}
+          path: .local/proef-native-writer-lang/
+          include-hidden-files: true
+          if-no-files-found: warn
+      - name: Native Writer-volgordebewijs bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-writer-volgorde-${{ github.workflow }}-${{ matrix.label }}
+          path: |
+            .local/proef-native-writer-volgorde/
+            .local/proef-native-writer-tekst/
+          include-hidden-files: true
+          if-no-files-found: warn
+      - name: Exacte afgekeurde Writer-binary en runtime bewaren
+        if: failure() && runner.os == 'Linux'
+        run: >-
+          python3 scripts/bewaar-writer-foutcontext.py
+          --programma src-tauri/target/release/open-office-studio
+          --rapport .local/proef-native-writer-kleur/rapport.json
+          --rapport .local/proef-native-writer-klembord/rapport.json
+          --rapport .local/proef-native-writer-lijsten/rapport.json
+          --rapport .local/proef-native-writer-renderer/rapport.json
+          --rapport .local/proef-native-writer-tabelgrepen/rapport.json
+          --rapport .local/proef-native-writer-lang/rapport.json
+          --rapport .local/proef-native-writer-bewaren/rapport.json
+          --rapport .local/proef-native-writer-volgorde/rapport.json
+          --rapport .local/proef-native-writer-tekst/rapport.json
+          --uitvoer .local/writer-foutcontext
+          --appimage-map src-tauri/target/release/bundle/appimage
+      - name: Writer-foutcontext uploaden
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: writer-foutcontext-${{ github.workflow }}-${{ matrix.label }}
+          path: |
+            .local/writer-foutcontext/*.tar.gz
+            .local/writer-foutcontext/SHA256SUMS
+          include-hidden-files: true
+          if-no-files-found: ignore
+          retention-days: 30
+      - name: Native Writer-tabelgreepbewijs bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-writer-tabelgrepen-${{ github.workflow }}-${{ matrix.label }}
+          path: .local/proef-native-writer-tabelgrepen/
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Native Writer-rendererbewijs bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-writer-renderer-${{ github.workflow }}-${{ matrix.label }}
+          path: .local/proef-native-writer-renderer/
+          include-hidden-files: true
+          if-no-files-found: warn
+      - name: Native Writer-lijstbewijs bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-writer-lijsten-${{ github.workflow }}-${{ matrix.label }}
+          path: .local/proef-native-writer-lijsten/
+          include-hidden-files: true
+          if-no-files-found: warn
+      - name: Writer-bewaarbewijs bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-writer-bewaren-${{ github.workflow }}-${{ matrix.label }}
+          path: .local/proef-native-writer-bewaren/
+          include-hidden-files: true
+          if-no-files-found: warn
+      - name: Native Writer-kleurbewijs bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-writer-kleur-${{ github.workflow }}-${{ matrix.os || matrix.label }}
+          path: .local/proef-native-writer-kleur/
+          include-hidden-files: true
+          if-no-files-found: warn
+      - name: Lange-documentspelling bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: writer-spelling-${{ github.workflow }}-${{ matrix.os || matrix.label }}
+          path: .local/proef-writer-spelling/
+          include-hidden-files: true
+          if-no-files-found: warn
+      - name: Tekstspiegel en tabelvoorbeeld bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: writer-spiegel-${{ github.workflow }}-${{ matrix.os || matrix.label }}
+          path: .local/proef-writer-spiegel/
+          include-hidden-files: true
+          if-no-files-found: warn
+      - name: Writer-kleurbewijs bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: writer-kleur-${{ github.workflow }}-${{ matrix.os || matrix.label }}
+          path: .local/proef-writer-kleur/
+          include-hidden-files: true
+          if-no-files-found: warn
+      - name: Writer-lettergroottebewijs bewaren
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: uitgave-writer-lettergrootte-gui-${{ matrix.label }}
+          path: .local/proef-writer-lettergrootte/
+          include-hidden-files: true
+          if-no-files-found: warn
 
       # Poort: installer, geïnstalleerd programma en uninstaller dragen een geldige
       # handtekening met tijdstempel. Het programma wordt gecontroleerd zoals het in

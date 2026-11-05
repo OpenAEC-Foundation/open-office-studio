@@ -1,0 +1,45 @@
+   Compiling office-core v2026.44.9-alpha.33 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 10.59s
+     Running unittests src/lib.rs (native/target/debug/deps/office_conversie-83138a4fe4c7ce2e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (native/target/debug/deps/office_core-fd1d0691ce6c0d09)
+
+running 3 tests
+test writer_nummering::proeven::writer_lijst_dubbelzinnige_volgorde_en_geneste_definities_worden_geweigerd ... ok
+test writer_nummering::proeven::writer_lijst_lege_wortel_met_andere_prefix_en_eigen_kenmerken_blijft_geldig ... ok
+test writer_nummering::proeven::writer_lijst_onbekende_kenmerken_plaatjes_en_opruimmarker_blijven_bytegelijk ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 21 filtered out; finished in 0.63s
+
+     Running unittests src/bin/controleer-bestand.rs (native/target/debug/deps/controleer_bestand-bf69e33a830bffb2)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/documentkern.rs (native/target/debug/deps/documentkern-3d38b8bd3ca1c161)
+
+running 1 test
+test writer_opmaak::writer_lijst_nieuwe_definities_worden_bewaard_zonder_oorspronkelijke_lijstbronverlies ... FAILED
+
+failures:
+
+---- writer_opmaak::writer_lijst_nieuwe_definities_worden_bewaard_zonder_oorspronkelijke_lijstbronverlies stdout ----
+
+thread 'writer_opmaak::writer_lijst_nieuwe_definities_worden_bewaard_zonder_oorspronkelijke_lijstbronverlies' (3175320) panicked at crates/office-core/tests/writer_opmaak.rs:827:5:
+assertion `left == right` failed
+  left: [("rId9", HeaderFooter { story_type: "header", hdr_ftr_type: "default", content: [Paragraph(Paragraph { node_type: "paragraph", para_id: None, repeated_para_id: None, para_id_attribute: None, source_ordinal: None, text_id: None, extra_attributes: [], formatting: Some(ParagraphFormatting { alignment: None, bidi: None, space_before: None, space_after: None, space_before_lines: None, space_after_lines: None, line_spacing: None, line_spacing_rule: None, before_autospacing: None, after_autospacing: None, spacing_explicit: None, indent_left: None, indent_right: None, indent_first_line: None, hanging_indent: None, indent_left_chars: None, indent_right_chars: None, indent_first_line_chars: None, hanging_indent_chars: None, borders: None, shading: None, tabs: None, keep_next: None, keep_lines: None, widow_control: None, page_break_before: None, contextual_spacing: None, num_pr: None, num_pr_from_style: None, outline_level: None, style_id: Some("Header"), frame: None, suppress_line_numbers: None, suppress_auto_hyphens: None, snap_to_grid: None, auto_space_de: None, auto_space_dn: None, adjust_right_ind: None, cnf_style: None, run_properties: None }), property_changes: None, p_pr_ins: None, p_pr_del: None, content: [Inline(Run(Run { node_type: Run, formatting: None, property_changes: None, content: [Text { text: "Vaste koptekst", preserve_space: None }] }))], list_rendering: None, rendered_page_break_before: None, section_properties: None })], custom_root_bindings: [RawAttribute { name: "xmlns:mo", value: "http://schemas.microsoft.com/office/mac/office/2008/main" }, RawAttribute { name: "xmlns:mv", value: "urn:schemas-microsoft-com:mac:vml" }, RawAttribute { name: "xmlns:wpi", value: "http://schemas.microsoft.com/office/word/2010/wordprocessingInk" }, RawAttribute { name: "mc:Ignorable", value: "w14 w15 w16se w16cid w16 w16cex w16sdtdh wp14" }], watermark: None })]
+ right: [("rId9", HeaderFooter { story_type: "header", hdr_ftr_type: "default", content: [Paragraph(Paragraph { node_type: "paragraph", para_id: None, repeated_para_id: None, para_id_attribute: None, source_ordinal: None, text_id: None, extra_attributes: [], formatting: Some(ParagraphFormatting { alignment: None, bidi: None, space_before: None, space_after: None, space_before_lines: None, space_after_lines: None, line_spacing: None, line_spacing_rule: None, before_autospacing: None, after_autospacing: None, spacing_explicit: None, indent_left: None, indent_right: None, indent_first_line: None, hanging_indent: None, indent_left_chars: None, indent_right_chars: None, indent_first_line_chars: None, hanging_indent_chars: None, borders: None, shading: None, tabs: None, keep_next: None, keep_lines: None, widow_control: None, page_break_before: None, contextual_spacing: None, num_pr: None, num_pr_from_style: None, outline_level: None, style_id: Some("Header"), frame: None, suppress_line_numbers: None, suppress_auto_hyphens: None, snap_to_grid: None, auto_space_de: None, auto_space_dn: None, adjust_right_ind: None, cnf_style: None, run_properties: None }), property_changes: None, p_pr_ins: None, p_pr_del: None, content: [Inline(Run(Run { node_type: Run, formatting: None, property_changes: None, content: [Text { text: "Vaste koptekst", preserve_space: None }] }))], list_rendering: None, rendered_page_break_before: None, section_properties: None })], custom_root_bindings: [RawAttribute { name: "xmlns:mo", value: "http://schemas.microsoft.com/office/mac/office/2008/main" }, RawAttribute { name: "xmlns:mv", value: "urn:schemas-microsoft-com:mac:vml" }, RawAttribute { name: "xmlns:wpi", value: "http://schemas.microsoft.com/office/word/2010/wordprocessingInk" }, RawAttribute { name: "mc:Ignorable", value: "w14 wp14" }], watermark: None })]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    writer_opmaak::writer_lijst_nieuwe_definities_worden_bewaard_zonder_oorspronkelijke_lijstbronverlies
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 131 filtered out; finished in 1.32s
+
+error: test failed, to rerun pass `-p office-core --test documentkern`

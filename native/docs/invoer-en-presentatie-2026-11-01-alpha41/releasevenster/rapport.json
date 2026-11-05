@@ -1,0 +1,394 @@
+{
+  "voorbeeldbron_commit": "f5aea496183d011def5f99fb58df1851f917f334",
+  "programmabron": {
+    "broncommit": "f5aea496183d011def5f99fb58df1851f917f334",
+    "ci_ronde": "41355267153",
+    "bouwbron": "Linux-pakketbron bytegelijk aan vast Git-archief gecontroleerd; eigen Linux-taak geslaagd; algemene platformstand wordt afzonderlijk gecontroleerd, geen fysieke GUI- of suitegoedkeuring",
+    "programmas": {
+      "open-office-studio-native": {
+        "versie": "Open Office Studio 2026.44.9-alpha.41 (native)",
+        "sha256": "72e8d0092deb26bad424ba888af07b06aa878e3a2d84401e170ae9b8db9592ad"
+      },
+      "controleer-bestand": {
+        "versie": "Open Office native bestandscontrole 2026.44.9-alpha.41 (release)",
+        "sha256": "0f9cd32cb63afc340f8695e84c6461092144621412ae6e8ba42d1286017ee767"
+      }
+    }
+  },
+  "programma_sha256": "72e8d0092deb26bad424ba888af07b06aa878e3a2d84401e170ae9b8db9592ad",
+  "proefbron_sha256": "4a2c0b082ffd58380b40535e943b28dbc45bd719435debb35ef3efd0a3e696d6",
+  "omvang": "Verkennend eigen Linux-venster in aparte Xvfb/D-Bus/XDG. Eigen voorbeeldkopie, geen volledige functie-/pixelgoedkeuring.",
+  "begindata_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+  "stappen": [
+    {
+      "actie": "open",
+      "programma_pid": 3489373,
+      "beeld": {
+        "bestand": "notities-open.png",
+        "sha256": "04a73b4cd2bc26b7994bba0592e6f2fefd1877b353af37ebac4173faa69db121"
+      },
+      "afgerond_monotonic": 911360.600036264
+    },
+    {
+      "actie": "wacht",
+      "seconden": 8,
+      "beeldnaam": "notities-geopend",
+      "ontvangen_monotonic": 911367.011579651,
+      "beeld": {
+        "bestand": "notities-geopend.png",
+        "sha256": "04a73b4cd2bc26b7994bba0592e6f2fefd1877b353af37ebac4173faa69db121"
+      },
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+      "afgerond_monotonic": 911375.701580205
+    },
+    {
+      "actie": "klik",
+      "x": 43,
+      "y": 45,
+      "beeldnaam": "bestand-eerste-klik",
+      "ontvangen_monotonic": 911375.701669416,
+      "beeld": {
+        "bestand": "bestand-eerste-klik.png",
+        "sha256": "3197332fd2d6f1bef0fdd865643580d7c95ed07d793662d3114883d043e8e3b9"
+      },
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+      "afgerond_monotonic": 911376.518749638
+    },
+    {
+      "actie": "wacht",
+      "seconden": 2,
+      "beeldnaam": "bestand-eerste-zichtbaar",
+      "ontvangen_monotonic": 911376.518846829,
+      "beeld": {
+        "bestand": "bestand-eerste-zichtbaar.png",
+        "sha256": "3197332fd2d6f1bef0fdd865643580d7c95ed07d793662d3114883d043e8e3b9"
+      },
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+      "afgerond_monotonic": 911379.196374233
+    },
+    {
+      "actie": "toets",
+      "toetsen": [
+        "Escape"
+      ],
+      "beeldnaam": "bestand-eerste-escape",
+      "ontvangen_monotonic": 911379.196469294,
+      "beeld": {
+        "bestand": "bestand-eerste-escape.png",
+        "sha256": "f839b65d0804ebe43125d9af8f660858b258ff31a6bdd4d3dfd3b63b3bb6ec83"
+      },
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+      "afgerond_monotonic": 911379.89628106
+    },
+    {
+      "actie": "wacht",
+      "seconden": 2,
+      "beeldnaam": "bestand-eerste-escape-zichtbaar",
+      "ontvangen_monotonic": 911379.896390061,
+      "beeld": {
+        "bestand": "bestand-eerste-escape-zichtbaar.png",
+        "sha256": "f839b65d0804ebe43125d9af8f660858b258ff31a6bdd4d3dfd3b63b3bb6ec83"
+      },
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+      "afgerond_monotonic": 911382.602344792
+    },
+    {
+      "actie": "klik",
+      "x": 1158,
+      "y": 618,
+      "beeldnaam": "tweede-vak-focus",
+      "ontvangen_monotonic": 911382.602437613,
+      "beeld": {
+        "bestand": "tweede-vak-focus.png",
+        "sha256": "7aac94ca5e94c875b40d93bae8e7e4c054ff63cc231230a24233b1855c12b4d9"
+      },
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+      "afgerond_monotonic": 911383.416724483
+    },
+    {
+      "actie": "wacht",
+      "seconden": 1,
+      "beeldnaam": "tweede-vak-focus-zichtbaar",
+      "ontvangen_monotonic": 911383.416820524,
+      "beeld": {
+        "bestand": "tweede-vak-focus-zichtbaar.png",
+        "sha256": "38068b8bf0965284c6efc7ed6d73a765d1328942ff287352a07a750257a965e8"
+      },
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+      "afgerond_monotonic": 911385.104499491
+    },
+    {
+      "actie": "sleep",
+      "van": [
+        1063,
+        507
+      ],
+      "naar": [
+        1123,
+        565
+      ],
+      "beeldnaam": "snelle-greep",
+      "ontvangen_monotonic": 911385.104578432,
+      "beeld": {
+        "bestand": "snelle-greep.png",
+        "sha256": "5ab51b6c25ddeb0daf2316106e9e1721879cde584f9d79ec035028b759b31c0c"
+      },
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+      "afgerond_monotonic": 911385.895083957
+    },
+    {
+      "actie": "wacht",
+      "seconden": 1,
+      "beeldnaam": "snelle-greep-zichtbaar",
+      "ontvangen_monotonic": 911385.895237039,
+      "beeld": {
+        "bestand": "snelle-greep-zichtbaar.png",
+        "sha256": "5ab51b6c25ddeb0daf2316106e9e1721879cde584f9d79ec035028b759b31c0c"
+      },
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+      "afgerond_monotonic": 911387.586393467
+    },
+    {
+      "actie": "toets",
+      "toetsen": [
+        "ctrl+s"
+      ],
+      "beeldnaam": "snelle-greep-opslaan",
+      "ontvangen_monotonic": 911387.586471888,
+      "beeld": {
+        "bestand": "snelle-greep-opslaan.png",
+        "sha256": "c72ecde71b8bd418aa024c12d608a26d381961d505741d1098679100b082fd96"
+      },
+      "bron_sha256": "5b1d357aaf25f27497032146136574b6b09d887dfa4cfc72694a7b044738562c",
+      "afgerond_monotonic": 911388.290198792
+    },
+    {
+      "actie": "wacht",
+      "seconden": 1,
+      "beeldnaam": "snelle-greep-bewaard",
+      "ontvangen_monotonic": 911388.290288073,
+      "beeld": {
+        "bestand": "snelle-greep-bewaard.png",
+        "sha256": "c72ecde71b8bd418aa024c12d608a26d381961d505741d1098679100b082fd96"
+      },
+      "bron_sha256": "5b1d357aaf25f27497032146136574b6b09d887dfa4cfc72694a7b044738562c",
+      "afgerond_monotonic": 911389.981267974
+    },
+    {
+      "actie": "toets",
+      "toetsen": [
+        "ctrl+z"
+      ],
+      "beeldnaam": "greep-ongedaan",
+      "ontvangen_monotonic": 911503.378298506,
+      "beeld": {
+        "bestand": "greep-ongedaan.png",
+        "sha256": "f2627062143f636f47c2db50575123af6ea37d63537a143c70756f5b475919b2"
+      },
+      "bron_sha256": "5b1d357aaf25f27497032146136574b6b09d887dfa4cfc72694a7b044738562c",
+      "afgerond_monotonic": 911504.080522263
+    },
+    {
+      "actie": "toets",
+      "toetsen": [
+        "ctrl+s"
+      ],
+      "beeldnaam": "greep-ongedaan-bewaard",
+      "ontvangen_monotonic": 911504.080621944,
+      "beeld": {
+        "bestand": "greep-ongedaan-bewaard.png",
+        "sha256": "1f804786c04dad97fa1eafbc182891ff06f290e17e67d059bc7b7f4538db9ac8"
+      },
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+      "afgerond_monotonic": 911504.794800857
+    },
+    {
+      "actie": "wacht",
+      "seconden": 1,
+      "beeldnaam": "oorspronkelijk-hersteld",
+      "ontvangen_monotonic": 911504.794899827,
+      "beeld": {
+        "bestand": "oorspronkelijk-hersteld.png",
+        "sha256": "1f804786c04dad97fa1eafbc182891ff06f290e17e67d059bc7b7f4538db9ac8"
+      },
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+      "afgerond_monotonic": 911506.50571135
+    },
+    {
+      "actie": "klik",
+      "x": 43,
+      "y": 45,
+      "beeldnaam": "bestand-na-ongedaan",
+      "ontvangen_monotonic": 911506.505800721,
+      "beeld": {
+        "bestand": "bestand-na-ongedaan.png",
+        "sha256": "3b5b0dc9c36af831b96411b498e57aa26488361a614b43b08fdb0665ca90e51f"
+      },
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+      "afgerond_monotonic": 911507.316598184
+    },
+    {
+      "actie": "toets",
+      "toetsen": [
+        "Escape"
+      ],
+      "beeldnaam": "bestand-na-ongedaan-escape",
+      "ontvangen_monotonic": 911507.316689135,
+      "beeld": {
+        "bestand": "bestand-na-ongedaan-escape.png",
+        "sha256": "2217ae36cc99b785ac80c85ac299fcc5d6c7d113cea0142826a639589c85d311"
+      },
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+      "afgerond_monotonic": 911508.018633061
+    },
+    {
+      "actie": "dubbelklik",
+      "x": 800,
+      "y": 700,
+      "beeldnaam": "vrij-blok-toevoegen",
+      "ontvangen_monotonic": 911508.018729492,
+      "beeld": {
+        "bestand": "vrij-blok-toevoegen.png",
+        "sha256": "632d7f2604d15d46058ddae69f8176606cc5269e8433951a95b439159687e926"
+      },
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+      "afgerond_monotonic": 911508.922481505
+    },
+    {
+      "actie": "toets",
+      "toetsen": [
+        "ctrl+s"
+      ],
+      "beeldnaam": "vrij-blok-leeg-bewaard",
+      "ontvangen_monotonic": 911508.922580986,
+      "beeld": {
+        "bestand": "vrij-blok-leeg-bewaard.png",
+        "sha256": "bfd68544e1cb0abe90611e503addd739010327bd07571f2ea77eb412b5504106"
+      },
+      "bron_sha256": "a1912b17564f673520948e13c8964ccf058676ac11feb75d4a84209885aa118d",
+      "afgerond_monotonic": 911509.633411687
+    },
+    {
+      "actie": "klik",
+      "x": 820,
+      "y": 744,
+      "beeldnaam": "vrij-blok-editor",
+      "ontvangen_monotonic": 911509.633886732,
+      "beeld": {
+        "bestand": "vrij-blok-editor.png",
+        "sha256": "5e1f00474cf101b2b5b6866e43a59963bc0bfa19199febc3cf3582e4371fe2bc"
+      },
+      "bron_sha256": "a1912b17564f673520948e13c8964ccf058676ac11feb75d4a84209885aa118d",
+      "afgerond_monotonic": 911510.434208697
+    },
+    {
+      "actie": "tekst",
+      "tekst": "Nieuw vrij blok",
+      "beeldnaam": "vrij-blok-tekst",
+      "ontvangen_monotonic": 911510.434294727,
+      "beeld": {
+        "bestand": "vrij-blok-tekst.png",
+        "sha256": "7e37e60faebfdcba2958ccf67bd4b0402307dda41acbc709a8c0d9538d962923"
+      },
+      "bron_sha256": "a1912b17564f673520948e13c8964ccf058676ac11feb75d4a84209885aa118d",
+      "afgerond_monotonic": 911511.168871949
+    },
+    {
+      "actie": "toets",
+      "toetsen": [
+        "ctrl+s"
+      ],
+      "beeldnaam": "vrij-blok-tekst-bewaard",
+      "ontvangen_monotonic": 911511.168967521,
+      "beeld": {
+        "bestand": "vrij-blok-tekst-bewaard.png",
+        "sha256": "10c1bbb974cf3568161b9fc9d21441a34f1fea1c6c493bfd40fc651fbaf20dae"
+      },
+      "bron_sha256": "653305c8da693d90df46920492ec81a76356aac25125ea00ffcd14a608fa7b0a",
+      "afgerond_monotonic": 911511.853286433
+    },
+    {
+      "actie": "toets",
+      "toetsen": [
+        "ctrl+z"
+      ],
+      "beeldnaam": "vrij-blok-tekst-ongedaan",
+      "ontvangen_monotonic": 911519.076816198,
+      "beeld": {
+        "bestand": "vrij-blok-tekst-ongedaan.png",
+        "sha256": "4d8b4afb68e39e8a85c0dace975194b274a840fd7cf1a04097e43011736f174e"
+      },
+      "bron_sha256": "653305c8da693d90df46920492ec81a76356aac25125ea00ffcd14a608fa7b0a",
+      "afgerond_monotonic": 911519.888045535
+    },
+    {
+      "actie": "toets",
+      "toetsen": [
+        "ctrl+s"
+      ],
+      "beeldnaam": "vrij-blok-tekst-ongedaan-bewaard",
+      "ontvangen_monotonic": 911519.888281537,
+      "beeld": {
+        "bestand": "vrij-blok-tekst-ongedaan-bewaard.png",
+        "sha256": "318d9c86252431697d9f309c2a76cf311373b0b7d5ca3e0a755cd84eac7e2ac4"
+      },
+      "bron_sha256": "a1912b17564f673520948e13c8964ccf058676ac11feb75d4a84209885aa118d",
+      "afgerond_monotonic": 911520.605386852
+    },
+    {
+      "actie": "toets",
+      "toetsen": [
+        "ctrl+z"
+      ],
+      "beeldnaam": "vrij-blok-ongedaan",
+      "ontvangen_monotonic": 911520.605500273,
+      "beeld": {
+        "bestand": "vrij-blok-ongedaan.png",
+        "sha256": "73d702b1cc190f5fd73ccf9e2ed69fe303a54c245de3d64a2b2df262262ab413"
+      },
+      "bron_sha256": "a1912b17564f673520948e13c8964ccf058676ac11feb75d4a84209885aa118d",
+      "afgerond_monotonic": 911521.299574185
+    },
+    {
+      "actie": "toets",
+      "toetsen": [
+        "ctrl+s"
+      ],
+      "beeldnaam": "vrij-blok-ongedaan-bewaard",
+      "ontvangen_monotonic": 911521.299669436,
+      "beeld": {
+        "bestand": "vrij-blok-ongedaan-bewaard.png",
+        "sha256": "613517e68e766a856e49e27a4b39eb6f613ee36f755776c81559e60188e9b817"
+      },
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+      "afgerond_monotonic": 911522.086647298
+    },
+    {
+      "actie": "wacht",
+      "seconden": 1,
+      "beeldnaam": "alles-oorspronkelijk",
+      "ontvangen_monotonic": 911522.086980642,
+      "beeld": {
+        "bestand": "alles-oorspronkelijk.png",
+        "sha256": "613517e68e766a856e49e27a4b39eb6f613ee36f755776c81559e60188e9b817"
+      },
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+      "afgerond_monotonic": 911523.782130958
+    },
+    {
+      "actie": "stop",
+      "ontvangen_monotonic": 911523.782231559,
+      "beeld": {
+        "bestand": "notities-expliciet-gestopt.png",
+        "sha256": "613517e68e766a856e49e27a4b39eb6f613ee36f755776c81559e60188e9b817"
+      },
+      "bron_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c",
+      "afgerond_monotonic": 911523.90366323
+    }
+  ],
+  "expliciet_gestopt": true,
+  "programma_eindcode": -15,
+  "testscherm": ":104",
+  "eigen_sessiebus": "unix:path=/tmp/dbus-5ClQGVrEiZ,guid=10d359e69c37a51b843a051d6ae7bc57",
+  "einddata_sha256": "60a6ee7e1d73b1029a1359192753452c255baa283ce27e70f879a11928050d6c"
+}

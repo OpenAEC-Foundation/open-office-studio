@@ -25,6 +25,7 @@ import { useHerladen } from "./grafieken/ui/herladen";
 import { laadFiltersUitBestand, maakRekenbladLaag } from "./lint/rekenblad-laag";
 import { werkboekBytes } from "./lint/rekenblad-filter";
 import { werkEigenschappenBij } from "./tekst/info/opslaan";
+import { maakInterneOpslag } from "./tekst/gedeeld/interneOpslag";
 import { koppelEditor } from "./export/editorKoppeling";
 import { lettertypeModule } from "./lettertypen/provider";
 import { laadSysteemLettertypen } from "./lettertypen/systeem";
@@ -35,6 +36,15 @@ import { installeerFontCitering } from "./lettertypen/canvasFont";
 import { useTekstSpelling } from "./spelling/tekst/useTekstSpelling";
 import { TEKST_PLUGINS } from "./tekst/gedeeld/markering";
 import { auteur } from "./tekst/gedeeld/engine";
+import { useOfficeThema } from "./stijl/ThemaKnop";
+import { leesPaginaUitPakket } from "./tekst/randen/pagina";
+import "./tekst/papier.css";
+import { wijzigPaginaLive } from "./tekst/pagina/ui/liveSecties";
+import { maakPaginaVolger } from "./tekst/pagina/ui/paginaVolgen";
+import { donkerePapierkleur, installeerPapierWeergave } from "./tekst/papierWeergave";
+import { RustPlakLaag } from "./tekst/bewerken/RustPlakLaag";
+import { meldWriterEngineFout } from "./tekst/engineFouten";
+import type { SectionProperties } from "@betteroffice/docx/types/document";
 
 const PRESENTATIE_PLUGINS = [tekstSelectiePlugin];
 import { usePresentatieStatus, useRekenbladStatus } from "./status/useEditorStatus";
@@ -47,6 +57,7 @@ configureDefaultFonts({
 void laadSysteemLettertypen();
 // "Source Serif 4" e.d. alleen geldig tussen aanhalingstekens op het canvas.
 installeerFontCitering();
+installeerPapierWeergave();
 export type Soort = "docx" | "xlsx" | "pptx";
 export interface EditorProps {
   soort: Soort;
@@ -68,9 +79,14 @@ export interface EditorProps {
 export default function OfficeEditor(props: EditorProps) {
   // Engine-teksten in de interfacetaal; wisselt live mee zonder het document te herladen.
   const engineTaal = useEngineVertaling();
+  const { thema } = useOfficeThema();
+  const [lichtPapier, setLichtPapier] = useState(false);
+  const donkerPapier = thema === "forge" && !lichtPapier;
   const { t } = useTranslation("shell");
   const docx = useRef<DocxEditorRef>(null);
-  const exporteren = useRef(false);
+  const [paginaVolger] = useState(() => maakPaginaVolger(() => docx.current));
+  useEffect(() => () => paginaVolger.stop(), [paginaVolger]);
+  const [interneOpslag] = useState(maakInterneOpslag);
   const [fontFaces, setFontFaces] = useState<PptxFontFace[]>([]);
   const [documentLettertypen, setDocumentLettertypen] = useState<readonly string[]>([]);
   const [liniaal, setLiniaal] = useState(true);
@@ -86,6 +102,23 @@ export default function OfficeEditor(props: EditorProps) {
   useEffect(() => () => stopDiaWijzigingen.current?.(), []);
   const recent = useRef(props);
   recent.current = props;
+  const writerFout = useCallback((fout: Error) => {
+    meldWriterEngineFout(fout, recent.current.fout);
+  }, []);
+  // Ook het venster ‘Aangepaste marges’ gebruikt de bestaande documentsessie.
+  const paginaToepassen = useCallback((p: SectionProperties) => {
+    const geometrie = new Set(["pageWidth", "pageHeight", "orientation", "marginTop", "marginBottom", "marginLeft", "marginRight"]);
+    // Andere toekomstige venstervelden blijven bij de engine in behandeling.
+    if (Object.keys(p).some((k) => !geometrie.has(k))) return false;
+    const ref = docx.current;
+    if (!ref) return false;
+    void wijzigPaginaLive(ref, {
+      ...(p.pageWidth !== undefined && p.pageHeight !== undefined ? { formaat: { breedte: p.pageWidth, hoogte: p.pageHeight } } : {}),
+      ...(p.orientation ? { afdrukstand: p.orientation === "landscape" ? "liggend" : "staand" } as const : {}),
+      marges: { boven: p.marginTop, onder: p.marginBottom, links: p.marginLeft, rechts: p.marginRight },
+    }).then(() => ref.focus()).catch((e) => recent.current.fout(e instanceof Error ? e : new Error(String(e))));
+    return true;
+  }, []);
   const meldEditor = (tekst: string, toon: "info" | "waarschuwing") =>
     recent.current.melding
       ? recent.current.melding(tekst, toon)
@@ -112,23 +145,26 @@ export default function OfficeEditor(props: EditorProps) {
         await presentatieApi.flushPendingInput();
         return presentatieApi.save();
       }
-      if (!docx.current?.getDocument())
+      const ref = docx.current;
+      if (!ref?.getDocument())
         throw new Error(i18next.t("shell:errors.documentNotReady"));
-      exporteren.current = true;
-      try {
-        await docx.current.flushPendingInput();
-        const bytes = await docx.current.save();
+      return interneOpslag.voerUit(async () => {
+        await ref.flushPendingInput();
+        const bytes = await ref.save();
         if (!bytes) throw new Error(i18next.t("shell:errors.documentSaveFailed"));
         // Wachtende eigenschappen uit Bestand › Info gaan mee door het herladen.
-        return werkEigenschappenBij(herladenRecent.current.api, docx.current, new Uint8Array(bytes), false);
-      } finally {
-        exporteren.current = false;
-      }
+        return werkEigenschappenBij(herladenRecent.current.api, ref, new Uint8Array(bytes), false);
+      });
     },
   });
   // Filterpijlen, vulgreep en formulehulp boven het raster (#58, #62, #63).
   const rekenbladLaag = useMemo(maakRekenbladLaag, []);
   const xlsxPlugins = useMemo(() => [...herladen.plugins, rekenbladLaag.plugin], [herladen.plugins, rekenbladLaag]);
+  const papierkleur = useMemo(() => {
+    if (props.soort !== "docx") return null;
+    try { return leesPaginaUitPakket(herladen.bytes).kleur; }
+    catch { return null; }
+  }, [props.soort, herladen.bytes]);
   const herladenRecent = useRef(herladen);
   herladenRecent.current = herladen;
   const apis = useMemo(
@@ -190,35 +226,20 @@ export default function OfficeEditor(props: EditorProps) {
   useEffect(() => {
     if (props.soort !== "docx" || !documentGereed) return;
     props.registreer(async () => {
-      if (!docx.current?.getDocument())
+      const ref = docx.current;
+      if (!ref?.getDocument())
         throw new Error(i18next.t("shell:errors.documentNotReady"));
-      exporteren.current = true;
-      try {
-        const bytes = await docx.current.save();
+      return interneOpslag.voerUit(async () => {
+        await ref.flushPendingInput();
+        const bytes = await ref.save();
         if (!bytes) throw new Error(i18next.t("shell:errors.documentSaveFailed"));
         // docProps (Bestand › Info, statistieken, bewerkingstijd) bijwerken.
-        return werkEigenschappenBij(herladen.api, docx.current, new Uint8Array(bytes), true);
-      } finally {
-        exporteren.current = false;
-      }
+        return werkEigenschappenBij(herladen.api, ref, new Uint8Array(bytes), true);
+      });
     });
-    // Browser: één onzichtbare proef-opslag laadt de WASM die de engine pas bij
-    // opslaan ophaalt, zodat opslaan ook na een nieuwe uitrol blijft werken.
-    let proef = 0;
-    if (!("__TAURI_INTERNALS__" in window))
-      proef = window.setTimeout(() => {
-        if (exporteren.current || !docx.current?.getDocument()) return;
-        exporteren.current = true;
-        void Promise.resolve(docx.current.save())
-          .catch(() => {
-            // Alleen een voorbereiding; echte fouten verschijnen bij opslaan.
-          })
-          .finally(() => {
-            exporteren.current = false;
-          });
-      }, 2500);
+    // Geen proef-opslag tijdens het openen: die concurreert met de eerste
+    // bewerking om de worker. Opslaan gebeurt op verzoek of voor herstel.
     return () => {
-      window.clearTimeout(proef);
       props.registreer(null);
     };
   }, [documentGereed]);
@@ -323,7 +344,11 @@ export default function OfficeEditor(props: EditorProps) {
         <EditorApi.Provider value={apis}>
           <DocumentLettertypen.Provider value={documentLettertypen}>
           <EditorZichtbaar.Provider value={props.zichtbaar ?? true}>
+            <RustPlakLaag key={herladen.sleutel} gewijzigd={() => recent.current.gewijzigd()} fout={(fout) => recent.current.fout(fout)}>
             <DocxEditor
+              // De indeling draait in een worker; het lint gebruikt nog de synchrone documentkopie.
+              legacySyncApi
+              pageMirror="full"
               key={herladen.sleutel}
               ref={docx}
               documentBuffer={herladen.bytes}
@@ -335,13 +360,18 @@ export default function OfficeEditor(props: EditorProps) {
               downloadOnSave={false}
               // Naam bij opmerkingen en bijgehouden wijzigingen (Instellingen), niet "User".
               author={auteur()}
-              onSave={() => {
-                if (!exporteren.current) props.opslaan();
+              // Alleen de gebruikersopdracht opent onze opslagdialoog. Een
+              // interne export voor herladen of herstel doet dat niet.
+              onSaveRequest={() => { props.opslaan(); }}
+              onDocumentChange={() => {
+                props.gewijzigd();
+                paginaVolger.gewijzigd();
               }}
-              onChange={props.gewijzigd}
-              onError={props.fout}
+              onPageSetupApply={paginaToepassen}
+              onError={writerFout}
               rulerUnit="cm"
               onFirstPagePainted={() => {
+                paginaVolger.onthoud();
                 setDocumentGereed(true);
                 herladenRecent.current.naDocx(docx.current);
               }}
@@ -352,9 +382,10 @@ export default function OfficeEditor(props: EditorProps) {
               showRuler={false}
               showOutline={navigatie}
               showOutlineButton={false}
-              colorMode="light"
+              colorMode={thema === "forge" ? "dark" : "light"}
+              style={{ "--office-papierkleur": donkerPapier ? donkerePapierkleur(papierkleur ? `#${papierkleur}` : "#ffffff") : papierkleur ? `#${papierkleur}` : "#ffffff" } as React.CSSProperties}
               i18n={engineTaal.tekst}
-              className="office-tekst"
+              className={`office-tekst${donkerPapier ? " office-papier-donker" : ""}`}
               readOnly={props.inactief}
               toolbar={
                 <TekstRibbon
@@ -363,10 +394,13 @@ export default function OfficeEditor(props: EditorProps) {
                   navigatie={navigatie}
                   wijzigLiniaal={() => setLiniaal(!liniaal)}
                   wijzigNavigatie={() => setNavigatie(!navigatie)}
+                  donkerPapier={donkerPapier}
+                  wisselPapier={thema === "forge" ? () => setLichtPapier((v) => !v) : undefined}
                   zoomKoppeling={zoomKoppeling}
                 />
               }
             />
+            </RustPlakLaag>
             {spelling.element}
           </EditorZichtbaar.Provider>
           </DocumentLettertypen.Provider>
@@ -381,11 +415,13 @@ export default function OfficeEditor(props: EditorProps) {
           <EditorZichtbaar.Provider value={props.zichtbaar ?? true}>
             <div className="office-rekenblad-host" ref={rekenbladHost}>
               <XlsxEditor
+                legacySyncApi
                 key={herladen.sleutel}
                 file={herladen.bytes}
                 plugins={xlsxPlugins}
                 fileName={props.naam}
                 onReady={gereedXlsx}
+                onError={props.fout}
                 onChange={props.gewijzigd}
                 onSave={props.opslaan}
                 i18n={engineTaal.rekenblad}

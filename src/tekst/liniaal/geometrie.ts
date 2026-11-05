@@ -18,6 +18,7 @@ import { deriveDisplayListTableFragmentsOnPages, type DisplayList, type DisplayL
 import type { Tabstop } from "../opmaak";
 import type { TabelLoc } from "../tabel/opdrachten";
 import type { TabelPayload } from "../tabel/logica";
+import { zichtbarePaginaElementen } from "../paginabereik";
 import {
   TWIPS_PER_PX,
   directeTabs,
@@ -65,7 +66,7 @@ export interface PaginaBeeld {
 }
 
 /** Celverhaal `<ouder>:t<n>:r<r>c<k>`. */
-const CEL = /^(.*):t(\d+):r(\d+)c(\d+)$/;
+const CEL = /^(.*):t(\d+):r(\d+)c(\d+)(?:~\d+)?$/;
 
 export interface TabelPlekInfo {
   loc: TabelLoc;
@@ -74,7 +75,12 @@ export interface TabelPlekInfo {
   payload: TabelPayload;
 }
 
-const tabelCache = new WeakMap<object, Map<string, TabelPlekInfo | null>>();
+interface TabelCache {
+  versie: string;
+  cellen: Map<string, TabelPlekInfo | null>;
+  tabellen: Map<string, TabelPlekInfo>;
+}
+const tabelCache = new WeakMap<object, TabelCache>();
 
 /**
  * De tabel waartoe een celverhaal hoort. Het volgnummer in de verhaalnaam
@@ -85,13 +91,32 @@ export function tabelVanCel(sessie: Sessie, celVerhaal: string, versie = ""): Ta
   const m = CEL.exec(celVerhaal);
   if (!m) return null;
   let cache = tabelCache.get(sessie);
-  if (!cache) tabelCache.set(sessie, (cache = new Map()));
-  const sleutel = `${versie}|${celVerhaal}`;
-  if (cache.has(sleutel)) return cache.get(sleutel)!;
-  if (cache.size > 500) cache.clear();
+  if (!cache || cache.versie !== versie) {
+    cache = { versie, cellen: new Map(), tabellen: new Map() };
+    tabelCache.set(sessie, cache);
+  }
+  if (cache.cellen.has(celVerhaal)) return cache.cellen.get(celVerhaal)!;
   const ouder = m[1];
-  const voorvoegsel = `${ouder}:t${m[2]}:r`;
-  const bevat = (payload: TabelPayload | null) => !!payload?.rows?.some((r) => r.cells.some((c) => c.story.startsWith(voorvoegsel)));
+  const bevat = (payload: TabelPayload | null) => !!payload?.rows?.some((r) => r.cells.some((c) => c.story === celVerhaal));
+  // Celranden op dezelfde pagina vragen vaak dezelfde volledige tabel op.
+  // Een oude naamgroep kan na splitsen meerdere tabellen bevatten: controleer
+  // daarom ook bij hergebruik of precies dit celverhaal in de tabel staat.
+  const groep = `${ouder}|${m[2]}`;
+  const bekend = cache.tabellen.get(groep);
+  if (bekend && bevat(bekend.payload)) {
+    if (cache.cellen.size >= 500) cache.cellen.clear();
+    cache.cellen.set(celVerhaal, bekend);
+    return bekend;
+  }
+  const onthoud = (info: TabelPlekInfo | null) => {
+    if (cache.cellen.size >= 500) cache.cellen.clear();
+    cache.cellen.set(celVerhaal, info);
+    if (info) {
+      if (cache.tabellen.size >= 250) cache.tabellen.clear();
+      cache.tabellen.set(groep, info);
+    }
+    return info;
+  };
   let gevonden: TabelPlekInfo | null = null;
   // Meestal klopt het nummer uit de naam; dan hoeft het hele verhaal niet doorlopen.
   try {
@@ -101,8 +126,7 @@ export function tabelVanCel(sessie: Sessie, celVerhaal: string, versie = ""): Ta
     gevonden = null;
   }
   if (gevonden) {
-    cache.set(sleutel, gevonden);
-    return gevonden;
+    return onthoud(gevonden);
   }
   try {
     let index = 0;
@@ -118,8 +142,7 @@ export function tabelVanCel(sessie: Sessie, celVerhaal: string, versie = ""): Ta
   } catch {
     gevonden = null;
   }
-  cache.set(sleutel, gevonden);
-  return gevonden;
+  return onthoud(gevonden);
 }
 
 /** Rij en kolom (rasterkolom, met samengevoegde cellen meegeteld) van een celverhaal. */
@@ -237,13 +260,19 @@ function rechthoek(e: Element): Vak {
 }
 
 /** De pagina's op het scherm met hun indeling. */
-export function paginaBeelden(vlak: Element, paginas: readonly IndelingPagina[]): PaginaBeeld[] {
+export function paginaBeelden(vlak: Element, paginas: readonly IndelingPagina[], venster?: Vak): PaginaBeeld[] {
   const uit: PaginaBeeld[] = [];
-  for (const el of vlak.querySelectorAll<HTMLElement>(".canvas-page[data-page-index]")) {
+  const elementen = [...vlak.querySelectorAll<HTMLElement>(".canvas-page[data-page-index]")]
+    .filter((el) => paginas[Number(el.dataset.pageIndex)]?.size);
+  // paginaInBeeld accepteert ook minder dan één pixel negatieve overlap.
+  // Houd die grens aan en hergebruik de meting uit de zichtbaarheidzoektocht.
+  const beelden = venster
+    ? zichtbarePaginaElementen(elementen, { top: venster.top, bottom: venster.top + venster.height }, 1)
+    : elementen.map((pagina) => ({ pagina, rect: pagina.getBoundingClientRect() }));
+  for (const { pagina: el, rect: r } of beelden) {
     const index = Number(el.dataset.pageIndex);
     const pagina = paginas[index];
-    if (!pagina?.size) continue;
-    const rect = rechthoek(el);
+    const rect = { left: r.left, top: r.top, width: r.width, height: r.height };
     if (!(rect.width > 0)) continue;
     uit.push({ index, rect, schaal: rect.width / pagina.size.w, pagina });
   }
@@ -432,9 +461,19 @@ export interface LiniaalStand {
   inTekst: boolean;
 }
 
+const standaardTabCache = new WeakMap<object, number>();
+
 export function standaardTabAfstand(ref: DocxEditorRef) {
-  const w = (ref.getDocument()?.package as { settings?: { defaultTabStop?: number } } | undefined)?.settings?.defaultTabStop;
-  return typeof w === "number" && w > 0 ? w : 720;
+  const sessie = ref.getEditorRef()?.getYrsSession();
+  const oud = sessie ? standaardTabCache.get(sessie) : undefined;
+  if (oud !== undefined) return oud;
+  // Dit is een pakketinstelling: wijzigen vraagt herladen en dus een nieuwe
+  // sessie. Vermijd een volledige documentkopie bij iedere cursorbeweging.
+  const pakket = ref.getDocument()?.package;
+  const w = (pakket as { settings?: { defaultTabStop?: number } } | undefined)?.settings?.defaultTabStop;
+  const afstand = typeof w === "number" && w > 0 ? w : 720;
+  if (sessie && pakket) standaardTabCache.set(sessie, afstand);
+  return afstand;
 }
 
 /** Meet de liniaal voor de cursor; null zonder document of zichtbare pagina's. */
@@ -455,9 +494,11 @@ export function meetLiniaal(ref: DocxEditorRef, vlak: Element, geometrie: DocxPl
   const inHoofdtekst = verhaal === "body" || verhaal.startsWith("body:");
   const index = inHoofdtekst ? paginaMetPositie(paginas, positie) : -1;
   // Alleen de pagina met de cursor meten (elke meting van een pagina kost een herberekening van de opmaak).
-  const beeld =
-    paginaBeeld(vlak, paginas, index) ??
-    paginaInBeeld(paginaBeelden(vlak, paginas), rechthoek(vlak.querySelector(".docx-editor__scroll-container") ?? vlak));
+  let beeld = paginaBeeld(vlak, paginas, index);
+  if (!beeld) {
+    const venster = rechthoek(vlak.querySelector(".docx-editor__scroll-container") ?? vlak);
+    beeld = paginaInBeeld(paginaBeelden(vlak, paginas, venster), venster);
+  }
   if (!beeld) return null;
   const p = beeld.pagina;
   const kolommen = tekstkolommen(p);
@@ -507,27 +548,30 @@ export function meetLiniaal(ref: DocxEditorRef, vlak: Element, geometrie: DocxPl
     stand.vak = kolommen[0];
   }
   stand.ruimteLinks = Math.max(0, Math.round(stand.vak.links * TWIPS_PER_PX));
-  Object.assign(stand, alineaGegevens(sessie, verhaal, head.paraId, versie));
+  Object.assign(stand, alineaGegevens(sessie, verhaal, head.paraId));
   stand.inTekst = true;
   return stand;
 }
 
 const alineaCache = new WeakMap<object, { sleutel: string; gegevens: Pick<LiniaalStand, "inspringing" | "tabs" | "directe"> }>();
 
-/** Inspringing en tabs van de alinea met de cursor; bij scrollen uit de buffer. */
-function alineaGegevens(sessie: Sessie, verhaal: string, paraId: string, versie: string) {
-  const sleutel = `${versie}|${verhaal}|${paraId}`;
-  const oud = alineaCache.get(sessie);
-  if (oud?.sleutel === sleutel) return oud.gegevens;
-  const attrs = opgelosteAlinea(sessie, verhaal, paraId);
+/** Inspringing en tabs veranderen bij opmaak, niet bij iedere getypte letter. */
+export function alineaGegevens(sessie: Sessie, verhaal: string, paraId: string) {
   // Directe opmaak via de selectiecontext: `paragraphs()` doorloopt het hele verhaal.
   let direct: Record<string, unknown> = {};
   try {
     const plek = { paraId, offset: 0 };
     direct = (sessie.selectionContext({ story: verhaal, start: plek, end: plek }).paragraphProperties ?? {}) as Record<string, unknown>;
   } catch {
-    direct = {};
+    // Een tijdelijk onleesbare selectie mag de vorige stand niet vastzetten.
+    return { inspringing: inspringingUitBlok(undefined), tabs: [], directe: [] };
   }
+  // Stijldefinities veranderen via herladen (een nieuwe sessie). Binnen die
+  // sessie bepalen de alinea-eigenschappen de inspringing en tabstops.
+  const sleutel = JSON.stringify([verhaal, paraId, direct]);
+  const oud = alineaCache.get(sessie);
+  if (oud?.sleutel === sleutel) return oud.gegevens;
+  const attrs = opgelosteAlinea(sessie, verhaal, paraId);
   const gegevens = { inspringing: inspringingUitBlok(attrs), tabs: tabsUitBlok(attrs), directe: directeTabs(direct) };
   alineaCache.set(sessie, { sleutel, gegevens });
   return gegevens;

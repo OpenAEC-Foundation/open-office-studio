@@ -1,0 +1,469 @@
+{
+  "schema": 1,
+  "datum": "2026-11-05",
+  "appversie": "2026.45.49",
+  "native_versie": "2026.45.0-alpha.57",
+  "bronrevisie": "7accabe3c260ef926a0d3b4f45c1407cdbb673e1",
+  "besluit": "Geen aangetoonde kernsnelheidswinst; sorteerkandidaat niet in productie opnemen. Bytecontroles slagen.",
+  "productie_toelaten": false,
+  "appcode_gewijzigd": false,
+  "ronden": [
+    {
+      "ronde": "referentie-a",
+      "snapshot_ms": 4094.57659,
+      "kern_ms": 7275.342105,
+      "cachehergebruik": 67,
+      "docx_onderdelen_bytegelijk": true,
+      "docx_onderdelen": 14
+    },
+    {
+      "ronde": "sortering-a",
+      "snapshot_ms": 3601.669511,
+      "kern_ms": 6769.873755,
+      "cachehergebruik": 67,
+      "docx_onderdelen_bytegelijk": true,
+      "docx_onderdelen": 14
+    },
+    {
+      "ronde": "sortering-b",
+      "snapshot_ms": 3425.705111,
+      "kern_ms": 6439.522987,
+      "cachehergebruik": 67,
+      "docx_onderdelen_bytegelijk": true,
+      "docx_onderdelen": 14
+    },
+    {
+      "ronde": "referentie-b",
+      "snapshot_ms": 3168.258525,
+      "kern_ms": 5750.287336,
+      "cachehergebruik": 67,
+      "docx_onderdelen_bytegelijk": true,
+      "docx_onderdelen": 14
+    }
+  ],
+  "gemiddelde_kern_ratio": 1.0141081321123389,
+  "gemiddelde_snapshot_ratio": 0.9675800855627714,
+  "referentie_kern_bereik_ms": [
+    5750.287336,
+    7275.342105
+  ],
+  "gegevensproef": {
+    "geslaagd": true,
+    "tekens": 351,
+    "groepen": 68,
+    "verhalen": 1537,
+    "alinea_en_celteksten": 3329,
+    "grens": "Vier volledige SDK-vergelijkingen: verhalen/opmaak/identiteiten, selectie, Undo/Redo, bronvectoren, uitgepakte DOCX-delen en heropening. Vier afwijzingen met geldige vervolginvoer per variant. Synthetische groepen, geen exacte GUI-batchgrenzen."
+  },
+  "tests": {
+    "python": 100,
+    "encoder_harnas": 2,
+    "bestaande_rust_regressies": 28,
+    "byte_exactheidstest_ongewijzigd": true
+  },
+  "bouw": {
+    "eerste_exitcode": 143,
+    "eerste_grens": "Onderbroken zonder Rust-foutmelding; oorzaak niet vastgesteld, niet als geslaagde bouw geteld.",
+    "herhaling": {
+      "code": 0,
+      "seconden": 58.91426877694903,
+      "programma_sha256": "69546c1f7d8e75469a3ce858c839635b428c4029ba2c62e6f78c8910e1d6dedf"
+    }
+  },
+  "encoderfasen": {
+    "geslaagd": true,
+    "uitkomst": {
+      "bouwcode": 0,
+      "oorspronkelijke_encoder_sha256": "50467df1c30b12f9e4099fbdff2605219fbede51e180c28cf20173284fc03b1a",
+      "gemeten_encoder_sha256": "e29cfe972357b7b853b7ae21b247ee9ba863203564619de85c4ed6fb580f41b1",
+      "exitcode": 0,
+      "programma_sha256": "42e306ae711f8280c43136d742d1001afb4ed38c95369b9f8d241864039d386e"
+    },
+    "bron": {
+      "fixture_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "bron_sha256": "abf6c78274a0154f6d3777b4a3953e387a41e7816eda0eee68e6089ffc8a5d55",
+      "bytes": 5904487,
+      "verhalen": 1537
+    },
+    "ronden": 3,
+    "herhalingen_per_variant_per_ronde": 10,
+    "invoer_en_alle_encoderbytes_exact": true,
+    "geinstrumenteerde_buitenlooptijd_ns": 1610257878,
+    "referentie_buitenlooptijd_ns": 1528892852,
+    "meetoverhead_ratio": 1.0532182656839317,
+    "complexe_waarden_aandeel_buitenlooptijd": 0.638705819143336,
+    "typen": [
+      {
+        "methode": "write_any",
+        "waardetype": "Map",
+        "aanroepen": 307110,
+        "ns": 329490284,
+        "aandeel_buitenlooptijd": 0.20461957584659618
+      },
+      {
+        "methode": "write_any",
+        "waardetype": "Array",
+        "aanroepen": 115230,
+        "ns": 374212208,
+        "aandeel_buitenlooptijd": 0.23239271989452115
+      },
+      {
+        "methode": "write_any",
+        "waardetype": "String",
+        "aanroepen": 406830,
+        "ns": 23423076,
+        "aandeel_buitenlooptijd": 0.01454616451191801
+      },
+      {
+        "methode": "write_any",
+        "waardetype": "Number",
+        "aanroepen": 299520,
+        "ns": 16774556,
+        "aandeel_buitenlooptijd": 0.010417310313572023
+      },
+      {
+        "methode": "write_any",
+        "waardetype": "Bool",
+        "aanroepen": 99990,
+        "ns": 4444398,
+        "aandeel_buitenlooptijd": 0.0027600535670225116
+      },
+      {
+        "methode": "write_json",
+        "waardetype": "Map",
+        "aanroepen": 299670,
+        "ns": 324778585,
+        "aandeel_buitenlooptijd": 0.2016935234022187
+      },
+      {
+        "methode": "write_json",
+        "waardetype": "Bool",
+        "aanroepen": 23160,
+        "ns": 2105278,
+        "aandeel_buitenlooptijd": 0.001307416674535903
+      },
+      {
+        "methode": "write_json",
+        "waardetype": "Null",
+        "aanroepen": 322830,
+        "ns": 27810035,
+        "aandeel_buitenlooptijd": 0.017270547394893726
+      }
+    ],
+    "grens": "Oorspronkelijke encoder op dezelfde eigen bron in een werkelijke native EditingDoc. Alleen topmethoden hebben klokken; geen dubbel tellen van recursieve subwaarden. Buitenlooptijd bevat bytevergelijkingen, allocatie/vrijgave en meetoverhead. Geen volledig native invoer-/CPU-/GUI-profiel. Eerste dubbelankeropzet afgekeurd vóór een profiel; uiteindelijke patch begrensd tot de juiste encoderimplementatie."
+  },
+  "binaries": {
+    "encoderfasen": {
+      "sha256": "42e306ae711f8280c43136d742d1001afb4ed38c95369b9f8d241864039d386e",
+      "bytes": 7647720
+    },
+    "office-writer-sortering": {
+      "sha256": "69546c1f7d8e75469a3ce858c839635b428c4029ba2c62e6f78c8910e1d6dedf",
+      "bytes": 8668136
+    },
+    "encodercontrole": {
+      "sha256": "35d182b89c3e0af55e1ed95400f66b79680f34a018b2fde2240e06bfa3b0abf6",
+      "bytes": 8184368
+    },
+    "office-writer-regressies": {
+      "sha256": "9d089b61e4c8a1b9d734352b70453b876e225da5502e7363cd96d11da788a621",
+      "bytes": 9974488
+    }
+  },
+  "niet_getest": [
+    "Geen nieuwe desktopbuild of fysieke invoer/selectie/FPS/pixelvergelijking: deze kandidaat toont nog geen overtuigende kernwinst",
+    "Geen nieuwe Windows/macOS-/editieacceptatie",
+    "Geen herstel van eerdere worker-/bewaarfouten of invoervertraging"
+  ],
+  "volgende_stap": "Proef met een begrensde cache voor onveranderlijke Map/Array-waarden in dezelfde bevestigde native replica. Sterke verwijzingen en type/encodeervorm onderscheiden; geheugen tellen en begrenzen; eigenaar-/bronbinding, koude terugval en exacte snapshotbytes behouden. Daarna volledige gegevens-/regressieproef en pas bij kernwinst een fysieke desktopvergelijking. Cache nog niet geïmplementeerd.",
+  "bestanden": {
+    "docs/tests/writer-encoder-sortering/bronnen.json.gz": {
+      "sha256": "08c87794fa665f350ea419ec338509ed5e69d0d0204c9a62fe5b79051a93a7f1",
+      "uitgepakt_sha256": "39eebf7d30428b2e19f6d68fefff5461731a793a63acad58f60dbb1694cd6fb8"
+    },
+    "docs/tests/writer-encoder-sortering/bronverschillen.json.gz": {
+      "sha256": "81efa3b46db278278e65a3c1143509216fec827e1408532612e65ede0267b6c6",
+      "uitgepakt_sha256": "bec6b448a69535d1dc6438d27577806c6e6cbf9baecfd39adb82c88230918c18"
+    },
+    "docs/tests/writer-encoder-sortering/bouw.log.gz": {
+      "sha256": "fa836c29ee03710113539445dc0b13e2c3d504aca09db1176a6f6bf4ff187b05",
+      "uitgepakt_sha256": "84ffd5c248f79896730b42a383f622b395c59c546c80ff9fbeb96f1444129a7a"
+    },
+    "docs/tests/writer-encoder-sortering/bouwuitkomst.json.gz": {
+      "sha256": "aa1afbf3eca111e0b6ccb6dd49de3dca741932ad79f9d6f5aa6ca2a69bc3ab44",
+      "uitgepakt_sha256": "6fdcaae3007a49e0b0f2e56677715fe891e0e32b573175fa063111e7dff1449c"
+    },
+    "docs/tests/writer-encoder-sortering/bouw-herhaling-opdracht.log.gz": {
+      "sha256": "03d310730d0fe879c101de6e301e30eafd5d97e71cc5b6997510525c592ad705",
+      "uitgepakt_sha256": "d18b65f707a0650dd0a99866e95a1f08ffb8bf9790485c39eb3d7f7e912b3b76"
+    },
+    "docs/tests/writer-encoder-sortering/bouw-eerste-onderbroken.log.gz": {
+      "sha256": "86374de310da5634f323a8a410420f08bc565f87d6b0d5d6b7c2948eb08c8883",
+      "uitgepakt_sha256": "e841cc236e57c4b3b97988cdd4f54deb76bc87370654be16de758c65ab5722fa"
+    },
+    "docs/tests/writer-encoder-sortering/bouw-eerste-onderbroken.json.gz": {
+      "sha256": "0472af8af42429bde984a72d4e81989e31bf5981cbc887d6f3aece19e7190548",
+      "uitgepakt_sha256": "e10311cf9cecb73fea3577c752c5c202b502b4855e101f24f5a6bde1cbec1b17"
+    },
+    "docs/tests/writer-encoder-sortering/python-definitief.log.gz": {
+      "sha256": "838f5f5ce140543ba40194a4218b91775a538056639c828d1a6d62ce2c2d8395",
+      "uitgepakt_sha256": "a6c2fb6750cba9c71893dd55e094063a8f660a54973e4979db01a2469ba81e78"
+    },
+    "docs/tests/writer-encoder-sortering/rust-tests.log.gz": {
+      "sha256": "edb450ac86505c8537160ba63bbc921d41501dc68cc000f83bee59c2b1a31437",
+      "uitgepakt_sha256": "95ff218ed22b8c084d07f1e737a9f527da14503721e02bbba89e0bd71f4a6432"
+    },
+    "docs/tests/writer-encoder-sortering/controle.log.gz": {
+      "sha256": "661885a5adc30ac5233bd6e562a50d66961d57beaceeb1c27a61016a35d28bd5",
+      "uitgepakt_sha256": "f0ce7bb65e9613f8e4ed60fa0012449f725d845623e9a0224fa5dd3e5a38da6e"
+    },
+    "docs/tests/writer-encoder-sortering/sortering.patch.gz": {
+      "sha256": "bc844ffc860ed8cb8df848f99eb469b760b99ff914e0eb526f661008bea3e3f9",
+      "uitgepakt_sha256": "a75085124af444bb2773b3271367ae21cc3bb57f69b4613fa1614f131f020ec5"
+    },
+    "docs/tests/writer-encoder-sortering/encodercontrole.json.gz": {
+      "sha256": "ef75e4c951d843fe6fbe2f52a8555554d34ca5292fdbfc480cfaeb9ae2e6c72d",
+      "uitgepakt_sha256": "469741873c52d476e7db11472165eee242e24d14e8498d83a584a2872e55f2e9"
+    },
+    "docs/tests/writer-encoder-sortering/encodercontrole.log.gz": {
+      "sha256": "cd2f2d217a9f06974bcb4875448058c9cd511a3ec0ee68f51dd4e11f760492a4",
+      "uitgepakt_sha256": "e2bcb5846b986623afbaebe08c24e4e4108c9d7261b8c6df0933d104462b5c93"
+    },
+    "docs/tests/writer-encoder-sortering/encodercontrole-bouw.log.gz": {
+      "sha256": "60706505f56ac10fe71708a7411efe2c56ca4486612b8b67ae3090e5658d166b",
+      "uitgepakt_sha256": "3007733c3730880169b9cd123e05aa861be70f99521b0ad6e475c228c7d6307e"
+    },
+    "docs/tests/writer-encoder-sortering/encoderfasen-uitkomst.json.gz": {
+      "sha256": "65fa4f691a68a5922dfddc1f72b34a6adfe21fe1802426b3739d4900b21b3835",
+      "uitgepakt_sha256": "988581eb6a92f07eed07938b9271a037c371cd4eaaf6d404018aa25169ff63f8"
+    },
+    "docs/tests/writer-encoder-sortering/encoderfasen.jsonl.gz": {
+      "sha256": "ba81fbaf0f7d66d1bd84e99a031861ab2dc98c668fb4c803249f62ea1d97879d",
+      "uitgepakt_sha256": "5bec2dca4246c2cecde125de68b741d06f8934dfcb9f9d92792468e30b702b99"
+    },
+    "docs/tests/writer-encoder-sortering/encoderfasen-bouw.log.gz": {
+      "sha256": "2d073a5c34e1c09826023a8fc1bd7d6c82e0aceb27c122d8a8463671def6e873",
+      "uitgepakt_sha256": "199d0d1b4b48c81e2db93e21d65851062308cd1f76f9b1e404e4ba5f6e036943"
+    },
+    "docs/tests/writer-encoder-sortering/encoderfasen-ankerafkeuring.json.gz": {
+      "sha256": "d30f6c24d7ead4ced7f0e38cf96212229a03f49997ce4e2ebef18292a01d7093",
+      "uitgepakt_sha256": "a338239d998dc4b0c9acfa75dd245404636571bea97d28bd5dd742102ce33f9c"
+    },
+    "docs/tests/writer-encoder-sortering/encoderfasen-ankerafkeuring.log.gz": {
+      "sha256": "d264bd14faa17e3f3707e0594a26a136831716caa06f4de5637db77fed423c19",
+      "uitgepakt_sha256": "17390889eae88b2510455f04a0910f483cbace5668eb89e2a00974638b03f867"
+    },
+    "docs/tests/writer-encoder-sortering/encoderfasen-ankerafkeuring.py.gz": {
+      "sha256": "e109d020894f52177e8e7a2aa8b846ab2afbcd9393c66e25e669e506fcf9f227",
+      "uitgepakt_sha256": "84da5e26dbd90fb2c77116cd91ae3fdf5b183fb36e9be197572ea1ad6d7a0eb2"
+    },
+    "docs/tests/writer-encoder-sortering/encoderbron.json.gz": {
+      "sha256": "437c80190d45ef9b5c927df68a3d91df386b5a24a39d93bf7f06b4ef3d9ee802",
+      "uitgepakt_sha256": "11b49ef4c1645486cfcb770d56a0f8ba9595def4d7ef1be53c44b718bfdf089c"
+    },
+    "docs/tests/writer-encoder-sortering/encoderbron.bin.gz": {
+      "sha256": "2796c5ea5d997911e5e0663611be8818becf3c4e744e42820e38fdeadfdea28f",
+      "uitgepakt_sha256": "abf6c78274a0154f6d3777b4a3953e387a41e7816eda0eee68e6089ffc8a5d55"
+    },
+    "docs/tests/writer-encoder-sortering/encoderbron-vector.bin.gz": {
+      "sha256": "051261f011b06f35e5aa7d7bb3a8e5455c4efa56937f28291889fc39bf52d917",
+      "uitgepakt_sha256": "bc6411ace296f0fca7d9a9e1337bd90b24be0db373a3535b40aac6536baf0496"
+    },
+    "docs/tests/writer-encoder-sortering/referentie-encoder.rs.gz": {
+      "sha256": "36d58cac83e3ccfee997f9b83b177951a35e880ef5982ed77f91cb9258155236",
+      "uitgepakt_sha256": "2e12fd7bb1a85135a5420dd99c4046cbd6d74a48eb74f0b89397c59890b12e89"
+    },
+    "docs/tests/writer-encoder-sortering/kandidaat-encoder.rs.gz": {
+      "sha256": "36f82d2d28d9a1e87bd01fa84c428ec48e9bcf7e0d2851e1f0634a6df63e05d1",
+      "uitgepakt_sha256": "7ac0229108bd026766cc0f0d28cb7f3ece80c4597fb26a39cac195d20b2113de"
+    },
+    "docs/tests/writer-encoder-sortering/fasen-encoder.rs.gz": {
+      "sha256": "7a0c1cb5f410155f95b15d893c5133d85cf7a105d9fceb24681cd10f3955927a",
+      "uitgepakt_sha256": "e29cfe972357b7b853b7ae21b247ee9ba863203564619de85c4ed6fb580f41b1"
+    },
+    "docs/tests/writer-encoder-sortering/controleer.mjs.gz": {
+      "sha256": "0fa5e404e626d01988b2e8cdda20f22550c794c15f3c56e59eec7bc318d35c98",
+      "uitgepakt_sha256": "ff85f82d9113757bf87f9da47eaabadf5680a0eea1ad62557aaba5f7be4bc6f6"
+    },
+    "docs/tests/writer-encoder-sortering/controleer-referentie.mjs.gz": {
+      "sha256": "8c8bebe465ea3760dd472c1ff729ecaa20c1f567ca15f124d38ada518b692dbb",
+      "uitgepakt_sha256": "eca85f55888c4236b9b0e0f60fd1e797edfd608589485218d125a7c888df7a05"
+    },
+    "docs/tests/writer-encoder-sortering/behouden-binaries.json.gz": {
+      "sha256": "fa30764cb7b6283f44560a8de0d458c6c2d56c0a774e4752a7ceb57e8e2705d9",
+      "uitgepakt_sha256": "c3d71df52c94b2ec6ed4a3b65258a0aae20d214dcd62883bfbfa1e255f07edfc"
+    },
+    "docs/tests/writer-encoder-sortering/ABBA.json.gz": {
+      "sha256": "77ed3786eadbec4fa5980407cb9e9039693bd85b952ef7001265ef833945d74d",
+      "uitgepakt_sha256": "8cc55a526a68ff71fb58a3384e1698e6174e2f9bf6dc7c007977678e164b8558"
+    },
+    "docs/tests/writer-encoder-sortering/referentie-a-rapport.json.gz": {
+      "sha256": "111034c5a8c66845cce975410cb79f97580aa7ea36760655f08a9f00d5bccb5e",
+      "uitgepakt_sha256": "2d4a05a79262354976794c791339424eb800388ef6c6eddd9de5bb12dc128286"
+    },
+    "docs/tests/writer-encoder-sortering/referentie-a-basis-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "uitgepakt_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tests/writer-encoder-sortering/referentie-a-gemeten-stderr.jsonl.gz": {
+      "sha256": "0481cf2c6ee6895ca2a90bfa37c31cc03db7bb8c064c798c4f2cd64ba4fedec3",
+      "uitgepakt_sha256": "66118df5db3f41a4f3df18e27b801edf049b8d99a01201b1188a90416ee0e553"
+    },
+    "docs/tests/writer-encoder-sortering/referentie-a-basis-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "uitgepakt_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tests/writer-encoder-sortering/referentie-a-gemeten-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "c0682adb8456bf10641ec1e5cca20266e4c38883824d3ec36293f2dddecb5f4c",
+      "uitgepakt_sha256": "243e118a702ed9a17ba1090ccb4e7cc15529a6825bbe0c67f52e87508a096c8d"
+    },
+    "docs/tests/writer-encoder-sortering/referentie-a-referentie.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "uitgepakt_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377"
+    },
+    "docs/tests/writer-encoder-sortering/referentie-a-basis.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "uitgepakt_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377"
+    },
+    "docs/tests/writer-encoder-sortering/referentie-a-gemeten.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "uitgepakt_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377"
+    },
+    "docs/tests/writer-encoder-sortering/sortering-a-rapport.json.gz": {
+      "sha256": "fc52892468d9f32c420fece90fcc2ad5ec07da2978178f8fd87e60bc4c5665b2",
+      "uitgepakt_sha256": "144167e411a07909e53db3230e3292b8877f9d7737814a0eb41bb75ba8908df3"
+    },
+    "docs/tests/writer-encoder-sortering/sortering-a-basis-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "uitgepakt_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tests/writer-encoder-sortering/sortering-a-gemeten-stderr.jsonl.gz": {
+      "sha256": "1c573c429d52b4dffd0e41f92b9f5716c702c28970430c32b8780c37dbe4a64e",
+      "uitgepakt_sha256": "55c39e7525c138c6815d9d3c1113722d2285e2728177d40c822398acb1db6995"
+    },
+    "docs/tests/writer-encoder-sortering/sortering-a-basis-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "uitgepakt_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tests/writer-encoder-sortering/sortering-a-gemeten-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "35511171d4cd2fd2537194b7c159fee50da527c7fcdafec7ae5a5b9ea18ff1eb",
+      "uitgepakt_sha256": "78b17a6ec471a3d945a7d4d6321fb2c5ccc415a71314b0058254983a53482d52"
+    },
+    "docs/tests/writer-encoder-sortering/sortering-a-referentie.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "uitgepakt_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377"
+    },
+    "docs/tests/writer-encoder-sortering/sortering-a-basis.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "uitgepakt_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377"
+    },
+    "docs/tests/writer-encoder-sortering/sortering-a-gemeten.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "uitgepakt_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377"
+    },
+    "docs/tests/writer-encoder-sortering/sortering-b-rapport.json.gz": {
+      "sha256": "0e5d3c19831696f2a731c1d0cbc3ca3a056dba6f2d228a38be710b8871c69724",
+      "uitgepakt_sha256": "00e6d45e13a3839a9645243986cac56987f1e3d06d82c41780d9087dac840f31"
+    },
+    "docs/tests/writer-encoder-sortering/sortering-b-basis-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "uitgepakt_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tests/writer-encoder-sortering/sortering-b-gemeten-stderr.jsonl.gz": {
+      "sha256": "4fe2333c3c26694d2145ee971078c945bd566f50f8172b7cb2f847cb0f85440b",
+      "uitgepakt_sha256": "1123798e387a16b49c9efd9e60fd48880ebcc189b9594d68f5a2aeee7bc0155e"
+    },
+    "docs/tests/writer-encoder-sortering/sortering-b-basis-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "uitgepakt_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tests/writer-encoder-sortering/sortering-b-gemeten-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "7be4545c667f15c1a86b44272382023c1351084a725e228468ee97a7964321e0",
+      "uitgepakt_sha256": "994e9823725c2528941f3bbc588cd4b5f1013218ec58633ea42eaae26a17d4ae"
+    },
+    "docs/tests/writer-encoder-sortering/sortering-b-referentie.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "uitgepakt_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377"
+    },
+    "docs/tests/writer-encoder-sortering/sortering-b-basis.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "uitgepakt_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377"
+    },
+    "docs/tests/writer-encoder-sortering/sortering-b-gemeten.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "uitgepakt_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377"
+    },
+    "docs/tests/writer-encoder-sortering/referentie-b-rapport.json.gz": {
+      "sha256": "b6116ed92f51f3ff0333f77154c862e37c8d15933360f2ea624b2f9659b80e37",
+      "uitgepakt_sha256": "d14f5b4f5c1075271a1c42d2122c553f9bbd7c994edc5856a390a4a7bd108ebb"
+    },
+    "docs/tests/writer-encoder-sortering/referentie-b-basis-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "uitgepakt_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tests/writer-encoder-sortering/referentie-b-gemeten-stderr.jsonl.gz": {
+      "sha256": "2eeb01a6665942e3fc3acb868a3e6d2bb303deb41c46f8bbf3f773100666f610",
+      "uitgepakt_sha256": "ced87cea30f2a2dcd14a41e4c4607003c768797d12da5fe88371ff3293efc7ef"
+    },
+    "docs/tests/writer-encoder-sortering/referentie-b-basis-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "uitgepakt_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tests/writer-encoder-sortering/referentie-b-gemeten-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "96cee35d3a0012e75093ad8a9b9e40d50ca92eed3ab7a0934f8bc906aec4342f",
+      "uitgepakt_sha256": "7376321ecab2ebfdc9bd0a40bacb988748f3a5d1c4a063fa580c41c2ca5772e3"
+    },
+    "docs/tests/writer-encoder-sortering/referentie-b-referentie.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "uitgepakt_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377"
+    },
+    "docs/tests/writer-encoder-sortering/referentie-b-basis.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "uitgepakt_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377"
+    },
+    "docs/tests/writer-encoder-sortering/referentie-b-gemeten.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "uitgepakt_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377"
+    },
+    "docs/tests/writer-encoder-sortering/bron-voorbereiden.py.gz": {
+      "sha256": "2456a25c623b390326d05d9602b6378effc2b12e0c8a3f0ac0329cf491bf256f",
+      "uitgepakt_sha256": "2185f9b7cdaf84d4059bc556225562f77b32f9147d4385bd7a38a1833272d2bb"
+    },
+    "docs/tests/writer-encoder-sortering/bron-bouwen.py.gz": {
+      "sha256": "10d4c0ac88bfcde58d9af823822896adb87b100db914cf7a508c5211a069ab9a",
+      "uitgepakt_sha256": "e16abb4c5410cbd63c6b24c9c362828f0b055328e4a10e9100f20ee3d201ede9"
+    },
+    "docs/tests/writer-encoder-sortering/bron-controleren.py.gz": {
+      "sha256": "66b9a2b832aff3696b664e346c67440b47b5d4150ef83dd2459069ab30393054",
+      "uitgepakt_sha256": "30dc24cd6eb22565454d8453452ae2e3f98e5adcb68aea7be7cd237eb46b91bd"
+    },
+    "docs/tests/writer-encoder-sortering/bron-encodercontrole.py.gz": {
+      "sha256": "65df4d0c40b2eb5840a9c1ace7e905558cd772636d346fbf852a0db1df20f6bd",
+      "uitgepakt_sha256": "589f2233ee8c9d30a489039a2bbb506492b93bf9387a9dd7cc5b29bfaa6b8495"
+    },
+    "docs/tests/writer-encoder-sortering/bron-encodercontrole.rs.gz": {
+      "sha256": "7c25d44e9729e8a3e693c6b9271d26e3860abcce2742b7206e4fb788ac78199d",
+      "uitgepakt_sha256": "3a7282fdfbf15b85118981b4d8a6cfb9b959cc7eb161349dae9fb8c6d9a596d7"
+    },
+    "docs/tests/writer-encoder-sortering/bron-encoderfasen.py.gz": {
+      "sha256": "1603651687395e5002d4ce1ecf08ca848fabceb577e92a039944ce58ed972ac9",
+      "uitgepakt_sha256": "ff29d4e232c719af049f198dad55c140166e3fd17b24c817e04baceb796fa680"
+    },
+    "docs/tests/writer-encoder-sortering/bron-encoderfasen.rs.gz": {
+      "sha256": "51e0dec61aef9c3208e99626a958bec38c2145f05cb1e67f2677f05dc54cd330",
+      "uitgepakt_sha256": "2fe36df6f04ce3b27b5e549c962d99dc18a30db8e4b52f6ae9df20b785811846"
+    },
+    "docs/tests/writer-encoder-sortering/bron-encoderfasen.mjs.gz": {
+      "sha256": "9a96e8ae9848ee351ada236c70d59ae96ceffb425ed0177070599b9d4412b229",
+      "uitgepakt_sha256": "ad6e6365c5105bb134d6e143812f772aa255e44c999ff25c990d8048c262e078"
+    },
+    "docs/tests/writer-encoder-sortering/bron-test_writer_sortering.py.gz": {
+      "sha256": "531c857e588a74f7417fc2611d4cd0c64ce3e11c70236bfccf53d83916d1baf1",
+      "uitgepakt_sha256": "1bae5f3675e248e75c1a317aa8993ff505ee146bd25f08b18782f4841c009410"
+    },
+    "docs/tests/writer-encoder-sortering/gewijzigde-deterministic.rs.gz": {
+      "sha256": "92e85c39d7e264b07d378977eea44626e0df92e94bafadc769fab548511ca407",
+      "uitgepakt_sha256": "2572e68419822957eb0b1be0e2661e3464e9b2567fe2f217ab26556e3fc4a4ec"
+    }
+  }
+}

@@ -1,0 +1,552 @@
+{
+  "datum": "2026-11-04",
+  "oorspronkelijke_afkeuring": {
+    "run": 41737832297,
+    "artifact": 13280687498,
+    "bronrevisie": "1a0aa52142d9857a7875be227ecbe8cb6c6cf1c0",
+    "geslaagd": false,
+    "fout": "AssertionError('Geen actuele eigen periodieke herstelkopie')",
+    "programma_sha256": "d1630d3ba24ca5701c5e0e277b16dd76e617b986226a2c89d2ee848c325ac70d",
+    "script_sha256": "01ef4f53ca0acbb9d0f2e5167e3b8327022c1670b3f732c9f12a8a4ddcd899ec",
+    "rapport_sha256": "da19c40941b220eeaafeb1f89019cf218e2a061d9062c295c618dd626328dd9c",
+    "zip_sha256": "4f149ba5d50fbcea31a44324d7d62382cb8b0a083baf0650fbab9983407965ac",
+    "tar_sha256": "6fb53b7d79987b511942bd738bcbda170820def3d926bc3b6fbd23588b8774a5",
+    "gecontroleerde_bestanden": 11,
+    "grens": "Oorspronkelijke oudere kopietoestand en consolebuffer ontbreken bij deze late afkeuring; exacte oorzaak niet achteraf bewezen."
+  },
+  "hertests": {
+    "ci-45.25-herstelkopie-diagnose1": {
+      "geslaagd": true,
+      "versie": "2026.45.25",
+      "programma_sha256": "d1630d3ba24ca5701c5e0e277b16dd76e617b986226a2c89d2ee848c325ac70d",
+      "script_sha256": "6c56c39d43b89c3d28947a5bb29c82262c6b19ead0aa68893e0fece943cd760c",
+      "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+      "invoerinterval_ms": 20,
+      "vaste_nawacht_ms": 2000,
+      "invoer_gereedheid": "Native keyup van de laatste punt, inputwachtrij, zichtbare golflijnen en één exacte controle van de laatste alinea; alle 500 bronalinea’s daarnaast apart vergeleken.",
+      "grenzen": [
+        "Eén gegenereerde 500-paginabron, normale compositor, alleen een lichte teller om getBoundingClientRect. Geen algemene prestatie-, IME-, enorme-plak- of platformacceptatie."
+      ],
+      "startprogramma_sha256": "eb0b254ac0dae6543e6dd7cd02e1baf40a060de95b927313122d6b46323c00aa",
+      "invoer_tot_bron_en_golven_ms": 6629,
+      "paginavergelijkingen_tijdens_invoer": {
+        "calls": 6487
+      },
+      "documentuitlezingen_tijdens_invoer": {
+        "calls": 0,
+        "ms": 0,
+        "api_wissels": 134,
+        "actieve_api_gevolgd": true,
+        "omvang": "GetDocument-aanroepen tijdens native invoer tot bron-/golflijngereedheid. De stabiele React-ref volgt vervanging van API-objecten; geen CPU-profiler."
+      },
+      "native_leesaanroepen": {
+        "zelfde_sessie": true,
+        "readParagraphs": {
+          "calls": 16,
+          "ms": 106.99999999999636
+        },
+        "paragraphSpans": {
+          "calls": 26,
+          "ms": 128.0000000000109
+        }
+      },
+      "invoermeting": {
+        "calls": 6180,
+        "classes": {
+          "docx-editor__scroll-container": 263,
+          "CANVAS": 1682,
+          "canvas-page": 1067,
+          "DIV": 137,
+          "canvas-pages__column": 39,
+          "canvas-pages": 1970,
+          "docx-plugin-overlays": 985,
+          "docx-editor__viewport tl-met-liniaal": 37
+        },
+        "golven": 83,
+        "paginas": 500,
+        "tot_bron_en_golven_ms_inclusief_nawacht": 9023
+      },
+      "paginaregister": {
+        "voor": 500,
+        "na": 500,
+        "zoom": 1.15,
+        "add": 0,
+        "delete": 0,
+        "invalidate": 1,
+        "historische_registerwissels": false,
+        "geen_canvaswissels": true,
+        "paginaopdracht": {
+          "ok": true,
+          "status": "executed"
+        },
+        "na_pagina_invoegen": 501,
+        "na_undo": 500,
+        "geslaagd": true
+      },
+      "herstelwaarnemingen": [
+        {
+          "bestand": "waargenomen-herstel-1.docx",
+          "sha256": "6979aa90c516bc187630018f9e5b089286720633c1781d78eb52629438fe5919",
+          "exact": true,
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "verschillen": [],
+          "meta": {
+            "naam": "Prestatieproef.docx",
+            "soort": "docx",
+            "exportFormaat": "docx",
+            "datum": 1793749392329
+          }
+        }
+      ],
+      "herstelkopie": {
+        "sha256": "6979aa90c516bc187630018f9e5b089286720633c1781d78eb52629438fe5919",
+        "exact": true
+      },
+      "fouten_voor_heropenen": {
+        "gui": [],
+        "console": []
+      },
+      "herstelkeuzes": [
+        {
+          "keuze": "later",
+          "aanbod": {
+            "namen": [
+              "Prestatieproef.docx"
+            ],
+            "tekst": "Recover documentsOpen Office Studio was not closed properly last time. A recovery copy was kept of these documents. Recovering opens a new, unsaved tab; the original file stays unchanged.Prestatieproef.docxText · recovery copy from today 00:43RecoverSave as…DiscardDecide later"
+          },
+          "fouten_voor_keuze": {
+            "gui": [],
+            "console": []
+          }
+        },
+        {
+          "keuze": "herstellen",
+          "aanbod": {
+            "namen": [
+              "Prestatieproef.docx"
+            ],
+            "tekst": "Recover documentsOpen Office Studio was not closed properly last time. A recovery copy was kept of these documents. Recovering opens a new, unsaved tab; the original file stays unchanged.Prestatieproef.docxText · recovery copy from today 00:43RecoverSave as…DiscardDecide later"
+          },
+          "fouten_voor_keuze": {
+            "gui": [],
+            "console": []
+          }
+        }
+      ],
+      "status_na_later": [
+        "Page 1 of 500",
+        "29,002 words, 173,906 characters",
+        "English (United States) · 20,502 spelling errors",
+        "Track Changes: off"
+      ],
+      "fouten_na_heropenen": {
+        "gui": [],
+        "console": []
+      },
+      "verder_na_later_bewaard": true,
+      "bron_na_verder_sha256": "a5ec3f3fd07cdc71c058693132399cd467f4ff29f46257191a7f53b680bc3968",
+      "hersteltabbladen": 2,
+      "herstel_fouten": {
+        "gui": [],
+        "console": []
+      },
+      "bron_eind_sha256": "a5ec3f3fd07cdc71c058693132399cd467f4ff29f46257191a7f53b680bc3968",
+      "rapport_sha256": "d3ff2590653ae17e46a60fc0a811fb72322892e66405aa8adbda90c6f12ab9f6",
+      "stappen": [
+        {
+          "naam": "beginbron",
+          "exact": true,
+          "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2"
+        },
+        {
+          "naam": "getypte_bron",
+          "exact": true,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57"
+        },
+        {
+          "naam": "selectie_en_backspace",
+          "exact": true,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11"
+        },
+        {
+          "naam": "undo",
+          "exact": true,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57"
+        },
+        {
+          "naam": "redo",
+          "exact": true,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11"
+        },
+        {
+          "naam": "hersteld_voor_bewaren",
+          "exact": true,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57"
+        },
+        {
+          "naam": "native_bewaaractie_onafhankelijk",
+          "exact": true,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57"
+        },
+        {
+          "naam": "nieuw_proces_heropend",
+          "exact": true,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57"
+        },
+        {
+          "naam": "verder_na_later",
+          "exact": true,
+          "tekst_sha256": "fd7d825b22dee866b9680b7eda810589f0bcff6cc43796092675cc7d54c0126c"
+        },
+        {
+          "naam": "herstelde_kopie",
+          "exact": true,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57"
+        },
+        {
+          "naam": "verder_in_herstelde_kopie",
+          "exact": true,
+          "tekst_sha256": "2479dfa76e6a51382e07e955c4058dcb85f9d02950bee6b116734b457cb13c75"
+        }
+      ],
+      "geladen_runtime": [
+        {
+          "pad": ".local/doorwerk-2026-11-02/kandidaat-45.22-runtime-2.50.4/usr/lib/libjavascriptcoregtk-4.1.so.0",
+          "sha256": "15ce22d4c4d76fc6c1f864c211a9b708001529efc3eb8fe4f0b2f3e7b862ceae"
+        },
+        {
+          "pad": ".local/doorwerk-2026-11-02/kandidaat-45.22-runtime-2.50.4/usr/lib/libwebkit2gtk-4.1.so.0",
+          "sha256": "bad3b5eef69398851b140dab7e541d5b8436374e40fe32c733522b14a24f32eb"
+        }
+      ]
+    },
+    "ci-45.25-herstelinterval-gecontroleerd": {
+      "geslaagd": true,
+      "versie": "2026.45.25",
+      "programma_sha256": "d1630d3ba24ca5701c5e0e277b16dd76e617b986226a2c89d2ee848c325ac70d",
+      "script_sha256": "742b374f8e47572a91421d08a9e761d7cd28d91f45807c41f7bcfd981c80166a",
+      "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+      "invoerinterval_ms": 20,
+      "vaste_nawacht_ms": 2000,
+      "invoer_gereedheid": "Native keyup van de laatste punt, inputwachtrij, zichtbare golflijnen en één exacte controle van de laatste alinea; alle 500 bronalinea’s daarnaast apart vergeleken.",
+      "grenzen": [
+        "Eén gegenereerde 500-paginabron, normale compositor, alleen een lichte teller om getBoundingClientRect. Geen algemene prestatie-, IME-, enorme-plak- of platformacceptatie."
+      ],
+      "startprogramma_sha256": "eb0b254ac0dae6543e6dd7cd02e1baf40a060de95b927313122d6b46323c00aa",
+      "invoer_tot_bron_en_golven_ms": 3433,
+      "paginavergelijkingen_tijdens_invoer": {
+        "calls": 3992
+      },
+      "documentuitlezingen_tijdens_invoer": {
+        "calls": 0,
+        "ms": 0,
+        "api_wissels": 72,
+        "actieve_api_gevolgd": true,
+        "omvang": "GetDocument-aanroepen tijdens native invoer tot bron-/golflijngereedheid. De stabiele React-ref volgt vervanging van API-objecten; geen CPU-profiler."
+      },
+      "native_leesaanroepen": {
+        "zelfde_sessie": true,
+        "readParagraphs": {
+          "calls": 11,
+          "ms": 62
+        },
+        "paragraphSpans": {
+          "calls": 16,
+          "ms": 73.00000000000546
+        }
+      },
+      "invoermeting": {
+        "calls": 3248,
+        "classes": {
+          "docx-editor__scroll-container": 149,
+          "canvas-page": 570,
+          "DIV": 77,
+          "CANVAS": 929,
+          "canvas-pages__column": 24,
+          "canvas-pages": 986,
+          "docx-plugin-overlays": 493,
+          "docx-editor__viewport tl-met-liniaal": 20
+        },
+        "golven": 83,
+        "paginas": 500,
+        "tot_bron_en_golven_ms_inclusief_nawacht": 5800
+      },
+      "scope": "Echte eerste periodieke kopie, nieuwe fysieke invoer, standaardinterval vijf minuten en daarna normale keuze één minuut; geen productreparatie.",
+      "standaard_interval_sleutel": null,
+      "eerste_kopie": {
+        "sha256": "a8d5f358a153a70f67036f7ef84c706cca30bf67033b258da94bbf2452086150",
+        "meta": {
+          "naam": "Prestatieproef.docx",
+          "soort": "docx",
+          "exportFormaat": "docx",
+          "datum": 1793749667691
+        }
+      },
+      "na_65_seconden": {
+        "bron_exact": true,
+        "kopie_nog_oud": true,
+        "kopie_is_nieuw": false,
+        "fouten": {
+          "gui": [],
+          "console": []
+        }
+      },
+      "na_intervalkeuze": {
+        "bron_exact": true,
+        "kopie_exact": true,
+        "sha256": "6c4e830bbb361a0a70582e6d9e7792e842de7ed8e047eb4c3b852882b6274fbf",
+        "fouten": {
+          "gui": [],
+          "console": []
+        }
+      },
+      "rapport_sha256": "fd1e107ba0371d422627cbf23818e1d51ab78e8bab84f8536d4ddb3b8d46d6f2",
+      "stappen": [
+        {
+          "naam": "beginbron",
+          "exact": true,
+          "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2"
+        },
+        {
+          "naam": "getypte_bron",
+          "exact": true,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57"
+        }
+      ],
+      "geladen_runtime": [
+        {
+          "pad": ".local/doorwerk-2026-11-02/kandidaat-45.22-runtime-2.50.4/usr/lib/libjavascriptcoregtk-4.1.so.0",
+          "sha256": "15ce22d4c4d76fc6c1f864c211a9b708001529efc3eb8fe4f0b2f3e7b862ceae"
+        },
+        {
+          "pad": ".local/doorwerk-2026-11-02/kandidaat-45.22-runtime-2.50.4/usr/lib/libwebkit2gtk-4.1.so.0",
+          "sha256": "bad3b5eef69398851b140dab7e541d5b8436374e40fe32c733522b14a24f32eb"
+        }
+      ]
+    },
+    "ci-45.25-herstelbeleid-hertest": {
+      "geslaagd": true,
+      "versie": "2026.45.25",
+      "programma_sha256": "d1630d3ba24ca5701c5e0e277b16dd76e617b986226a2c89d2ee848c325ac70d",
+      "script_sha256": "8dd95edf35862ccbf53bbf51e26ca1ee9c0f6ed26036803de7ca21fdcfe2d339",
+      "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+      "invoerinterval_ms": 20,
+      "vaste_nawacht_ms": 2000,
+      "invoer_gereedheid": "Native keyup van de laatste punt, inputwachtrij, zichtbare golflijnen en één exacte controle van de laatste alinea; alle 500 bronalinea’s daarnaast apart vergeleken.",
+      "grenzen": [
+        "Eén gegenereerde 500-paginabron, normale compositor, alleen een lichte teller om getBoundingClientRect. Geen algemene prestatie-, IME-, enorme-plak- of platformacceptatie."
+      ],
+      "startprogramma_sha256": "eb0b254ac0dae6543e6dd7cd02e1baf40a060de95b927313122d6b46323c00aa",
+      "herstelbeleid_proef": {
+        "interval_minuten": 1,
+        "wachtgrens_seconden": 120,
+        "betekenis": "Eén interval, een periodieke tik van 30 seconden en 30 seconden export-/IO-ruimte; de uiteindelijke kopie moet nog steeds volledig actueel zijn."
+      },
+      "invoer_tot_bron_en_golven_ms": 2843,
+      "paginavergelijkingen_tijdens_invoer": {
+        "calls": 2994
+      },
+      "documentuitlezingen_tijdens_invoer": {
+        "calls": 0,
+        "ms": 0,
+        "api_wissels": 62,
+        "actieve_api_gevolgd": true,
+        "omvang": "GetDocument-aanroepen tijdens native invoer tot bron-/golflijngereedheid. De stabiele React-ref volgt vervanging van API-objecten; geen CPU-profiler."
+      },
+      "native_leesaanroepen": {
+        "zelfde_sessie": true,
+        "readParagraphs": {
+          "calls": 9,
+          "ms": 58
+        },
+        "paragraphSpans": {
+          "calls": 12,
+          "ms": 59
+        }
+      },
+      "invoermeting": {
+        "calls": 2845,
+        "classes": {
+          "docx-editor__scroll-container": 121,
+          "canvas-page": 481,
+          "DIV": 61,
+          "CANVAS": 790,
+          "canvas-pages__column": 18,
+          "canvas-pages": 904,
+          "docx-plugin-overlays": 452,
+          "docx-editor__viewport tl-met-liniaal": 18
+        },
+        "golven": 83,
+        "paginas": 500,
+        "tot_bron_en_golven_ms_inclusief_nawacht": 5016
+      },
+      "paginaregister": {
+        "voor": 500,
+        "na": 500,
+        "zoom": 1.15,
+        "add": 0,
+        "delete": 0,
+        "invalidate": 0,
+        "historische_registerwissels": false,
+        "geen_canvaswissels": true,
+        "paginaopdracht": {
+          "ok": true,
+          "status": "executed"
+        },
+        "na_pagina_invoegen": 501,
+        "na_undo": 500,
+        "geslaagd": true
+      },
+      "herstelwaarnemingen": [
+        {
+          "sha256": "4c135de5eb676ab31f15fdfba9f782700cc542e78d8ff6d7cec79d0e09ffdcbb",
+          "exact": true,
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57"
+        }
+      ],
+      "herstelkopie": {
+        "sha256": "4c135de5eb676ab31f15fdfba9f782700cc542e78d8ff6d7cec79d0e09ffdcbb",
+        "exact": true
+      },
+      "fouten_voor_heropenen": {
+        "gui": [],
+        "console": []
+      },
+      "herstelkeuzes": [
+        {
+          "keuze": "later",
+          "aanbod": {
+            "namen": [
+              "Prestatieproef.docx"
+            ],
+            "tekst": "Recover documentsOpen Office Studio was not closed properly last time. A recovery copy was kept of these documents. Recovering opens a new, unsaved tab; the original file stays unchanged.Prestatieproef.docxText · recovery copy from today 00:48RecoverSave as…DiscardDecide later"
+          },
+          "fouten_voor_keuze": {
+            "gui": [],
+            "console": []
+          }
+        },
+        {
+          "keuze": "herstellen",
+          "aanbod": {
+            "namen": [
+              "Prestatieproef.docx"
+            ],
+            "tekst": "Recover documentsOpen Office Studio was not closed properly last time. A recovery copy was kept of these documents. Recovering opens a new, unsaved tab; the original file stays unchanged.Prestatieproef.docxText · recovery copy from today 00:48RecoverSave as…DiscardDecide later"
+          },
+          "fouten_voor_keuze": {
+            "gui": [],
+            "console": []
+          }
+        }
+      ],
+      "status_na_later": [
+        "Page 1 of 500",
+        "29,002 words, 173,906 characters",
+        "English (United States) · 20,502 spelling errors",
+        "Track Changes: off"
+      ],
+      "fouten_na_heropenen": {
+        "gui": [],
+        "console": []
+      },
+      "verder_na_later_bewaard": true,
+      "bron_na_verder_sha256": "5c7d4fba01d1df84b7305939de1848904331852ef0b463d6c77575ffae221642",
+      "hersteltabbladen": 2,
+      "herstel_fouten": {
+        "gui": [],
+        "console": []
+      },
+      "bron_eind_sha256": "5c7d4fba01d1df84b7305939de1848904331852ef0b463d6c77575ffae221642",
+      "rapport_sha256": "4c191b8c05e8607696f4a7433d78f11bb51a0a90f2bf7cb620a143d9b6fcf0e9",
+      "stappen": [
+        {
+          "naam": "beginbron",
+          "exact": true,
+          "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2"
+        },
+        {
+          "naam": "getypte_bron",
+          "exact": true,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57"
+        },
+        {
+          "naam": "selectie_en_backspace",
+          "exact": true,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11"
+        },
+        {
+          "naam": "undo",
+          "exact": true,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57"
+        },
+        {
+          "naam": "redo",
+          "exact": true,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11"
+        },
+        {
+          "naam": "hersteld_voor_bewaren",
+          "exact": true,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57"
+        },
+        {
+          "naam": "native_bewaaractie_onafhankelijk",
+          "exact": true,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57"
+        },
+        {
+          "naam": "nieuw_proces_heropend",
+          "exact": true,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57"
+        },
+        {
+          "naam": "verder_na_later",
+          "exact": true,
+          "tekst_sha256": "fd7d825b22dee866b9680b7eda810589f0bcff6cc43796092675cc7d54c0126c"
+        },
+        {
+          "naam": "herstelde_kopie",
+          "exact": true,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57"
+        },
+        {
+          "naam": "verder_in_herstelde_kopie",
+          "exact": true,
+          "tekst_sha256": "2479dfa76e6a51382e07e955c4058dcb85f9d02950bee6b116734b457cb13c75"
+        }
+      ],
+      "geladen_runtime": [
+        {
+          "pad": ".local/doorwerk-2026-11-02/kandidaat-45.22-runtime-2.50.4/usr/lib/libjavascriptcoregtk-4.1.so.0",
+          "sha256": "15ce22d4c4d76fc6c1f864c211a9b708001529efc3eb8fe4f0b2f3e7b862ceae"
+        },
+        {
+          "pad": ".local/doorwerk-2026-11-02/kandidaat-45.22-runtime-2.50.4/usr/lib/libwebkit2gtk-4.1.so.0",
+          "sha256": "bad3b5eef69398851b140dab7e541d5b8436374e40fe32c733522b14a24f32eb"
+        }
+      ]
+    }
+  },
+  "python": {
+    "tests": 57,
+    "geslaagd": true
+  },
+  "huidige_bronnen_sha256": {
+    "scripts/test-writer-lang-native.py": "aefe6b2f661bc781f6768b5240db99ea46f0fe6209f26276bc73cf756ed592bc",
+    "scripts/bewaar-writer-foutcontext.py": "bfcd4ffd971fe6fa8507acc9a0d6b30465837d2293073926ae7b936fc6742ff4",
+    "tests/test_writer_foutcontext.py": "df8a8c3620582f5e415b73d6e3584f6350ac0b5a10d70102bc551678be3ca8a4",
+    "src/herstel.ts": "e29fdff64edef5a6c11385bf8bb7c4e9d9f23104e1841b176ba19c998731031f",
+    "src/useHerstel.tsx": "45dfbba96287f49f970fb4d11b709fc590b0b736fde3be72e2c0b51f11e53489"
+  },
+  "conclusies": [
+    "De verwachting van een actuele kopie binnen 65 seconden past niet algemeen bij het standaardinterval van vijf minuten. Dit is met echte kopieën, nieuwe toetsen en de normale intervalkeuze gereproduceerd.",
+    "De aangepaste proef kiest één minuut en eist binnen 120 seconden nog steeds alle 500 alinea’s exact.",
+    "Beide volledige lokale hertests slagen met de exacte negatieve ELF en WebKit 2.50.4; de afzonderlijke intervalproef heeft een kleinere omvang.",
+    "Geen productreparatie of herstel van historische geheugen-/rendererafkeuringen bewezen; nieuwe CI-uitvoering vereist."
+  ],
+  "grens_lokale_hertest": "De groene volledige hertest is uitgevoerd vóór de aanvullende try/except voor eventueel falende foutbewaking bij een timeout. Het positieve pad en de inhoudseis zijn daarna niet gewijzigd; nieuwe CI moet de definitieve proefcode toetsen."
+}

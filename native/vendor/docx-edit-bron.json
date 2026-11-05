@@ -1,0 +1,43 @@
+{
+  "pakket": "betteroffice-docx-edit-0.5.1",
+  "bronbestanden_sha256": {
+    "src/lib.rs": "a9b56635127036a5c11257ef39e733b9454ee89165a1875955de6fbc8c57a5be",
+    "src/op.rs": "e37b9ea93ae617b4fc6e431c0a67925f2ac6df8b5de95840f198e8e205b1abeb",
+    "src/ops/mod.rs": "311974e732f8564f0deaa4aa89ab16394b33e0f60f253c42f575828b74bdbeda",
+    "src/ops/paragraph.rs": "4836d159decb10ff3a7aff19fc830a0bd58e8d62d5ad040eb6fcb6416bd595ec",
+    "src/ops/table.rs": "6a24a5f80e45393660d9a32a55d951908c8039ff9ec74eeceae746bde08171f3",
+    "src/ops/embed.rs": "aff535e9338892742885661006ff28403e7dbad66548abb8ab0e3cae721f7917",
+    "src/ops/bookmarks.rs": "b4538abb6e065cad62dc73ace2e20736e56c3bfb7023e41bac3956eba21e17d0",
+    "src/clipboard_batch.rs": null,
+    "src/meting.rs": null,
+    "src/ops/text.rs": "87fd224b7187e9621a958bdaf42df374b00fd92fc527b97e0dce8f8c30aef747"
+  },
+  "patch_sha256": "6f04bd2518b8255d18715af49d392b713fe922bc2c030dacfe177547fdcfe2f5",
+  "grens": "De oorspronkelijke geteste bronpatch is overgenomen zonder diagnostische tijdmeters. De gedeelde productiecodec wordt door Tauri en office-core gebruikt. Nieuwe stappen vragen eigen protocol-, gegevens-, DOCX-, GUI- en platformbewijs; dit manifest bewijst alleen bronherkomst en bestandshashes.",
+  "licentie_bron": "https://raw.githubusercontent.com/openooxml/betteroffice/4e982c3aea0065578604c3fe7727938533888f66/LICENSE",
+  "licentie_sha256": "db17c7e4531fd3e1a376cd87ad1ddf9a195118e47fde7f26b9feb657c8c114af",
+  "aanvullende_wijzigingen_2026_11_04": {
+    "bestanden_sha256": {
+      "src/ops/table.rs": "89b18b8013e6248fdbab2d759286c8139ce48dbfd41b4c414b7d10f916cb3d26",
+      "src/ops/text.rs": "5ad59c1a8788de2c0966a65f3d7216877599eb1abf567ed28601d4488e05b51e",
+      "src/clipboard_batch.rs": "3675481a2ce044a6d2b9173dc27d6f8cdc01e14d6772ebe088cb4edcdb69e9b7",
+      "src/ops/bookmarks.rs": "bacd30d1a878908bf252000ddad9d9f0772f87344d86f0ea739a88e7c36ce00d",
+      "src/ops/paragraph.rs": "336f586cab2ffd7b56795f81fe17e8a93dfe8bc24e3b53096adf02b38b32682b",
+      "OPENAEC-WIJZIGINGEN.md": "8e380a5f51071167c7b10a89377876d33b5b5698cf7891980fe8d685536ebeac"
+    },
+    "doel": "Tabelvolgorde en eindcursor lezen zonder volledige tekstdiff; dezelfde tekstmutatie levert voor de plakbatch een globaal eindpunt zonder herhaalde alineagrensprojectie. Publieke Receipt en definitieve cursorvalidatie blijven behouden. Hergebruik van de actuele alinea-eindmarkering vermijdt herhaalde lezingen; bladwijzers, invoegposities en blokrevisies behouden hun bestaande bewerkingsregels."
+  },
+  "native_revisies_2026_11_04": {
+    "doel": "Gescheiden native revisie-identiteiten en blijvende per-client teller. Afgekeurde bronjournaal- en invoercallbackoptimalisaties niet behouden. Geen prestatie- of suiteacceptatie.",
+    "bestanden_sha256": {
+      "src/lib.rs": "b4d0f1f94e9be9217714404847aedff7b8d2212523c9170b340536bafdfe6955",
+      "src/clipboard_batch.rs": "aa144fd2ee0836dc06a8223d2e2eda6956a67a1a29d08d4f928978dcac290355",
+      "src/clipboard_batch/revision_ids.rs": "71c3b507ea885a998d88d7c375655898efd0d5b4cbb956c72f02e9e5123e4c50",
+      "src/ops/text.rs": "383ce6516702f545ff9cd81d3f21ac17e7517ab6e5627e89567e1b47c66c7a8f",
+      "src/ops/table.rs": "731fbf11a0f3acdafd9fd9205dc9418044759930910dc2ca5b69595405eafff4",
+      "src/ops/paragraph.rs": "b9f16f4dc21f2557b87445f4a8d25b6b055c3431912a76908ff04d7caae72a3c",
+      "src/ops/embed.rs": "54c921366badd6c365a32f130369ddaefb86acdd41dfe5453ace9c207c7b9a1f",
+      "OPENAEC-WIJZIGINGEN.md": "a1f735c348ee8d174211a790710a697309c8c3a7921cf8d99fe3533d2f13544b"
+    }
+  }
+}

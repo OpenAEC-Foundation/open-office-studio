@@ -1,0 +1,37 @@
+{
+  "versie": "2026.45.1",
+  "datum": "2026-11-02",
+  "status": "lokale testversie; grote plakbewerkingen niet opgelost",
+  "sha256": "cec5c6d2efcf4aeec7325156a0af59f5fadbcdf263601ca601e6a4e421e193e1",
+  "proeven": {
+    "typescript_en_productiebouw": "geslaagd",
+    "vitest": {
+      "bestanden": 125,
+      "tests": 1517,
+      "status": "geslaagd"
+    },
+    "writer_opdrachten": {
+      "geslaagd": 68,
+      "mislukt": 0
+    },
+    "native_typen_paginaeinde_opslaan_sluiten": "geslaagd; Ctrl+S-kopie inhoudelijk gecontroleerd",
+    "gui_tabel": {
+      "rijen": 60,
+      "kolommen": 3,
+      "opslaan_en_heropenen": "geslaagd"
+    },
+    "watermerk": "via GUI toegepast; pagina-einde, opslaan en heropenen geslaagd; koptekstverhaal rId9 bekend",
+    "groot_document_sluiten": {
+      "paginas": 275,
+      "miliseconden": 509,
+      "status": "geslaagd in WebKit-proef; desktopmomentopnamen apart gecontroleerd"
+    },
+    "groot_plakken": {
+      "paginas_proefbron": 275,
+      "status": "mislukt: geen voltooiing binnen 240 seconden"
+    },
+    "snelheid_selecteren": "nog haperingen in softwarematig getekende proef; geen vergelijkende meting met andere tekstverwerker"
+  },
+  "eerdere_documenten_overschreven": false,
+  "oude_binary_behouden": true
+}

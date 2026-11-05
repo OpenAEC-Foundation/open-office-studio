@@ -1,0 +1,42 @@
+    Checking office-core v2026.44.9-alpha.32 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-core)
+    Checking open-office-studio-native v2026.44.9-alpha.32 (/home/aia01/Documenten/GitHub/Open-Office-Studio/native/crates/office-ui)
+error[E0283]: type annotations needed
+    --> crates/office-ui/src/lint.rs:580:10
+     |
+ 559 | /         iced::widget::pick_list(
+ 560 | |             overzicht.keuzes.as_slice(),
+ 561 | |             keuze,
+ 562 | |             move |stijl: Alineastijl| {
+...    |
+ 574 | |             },
+ 575 | |         )
+     | |_________- type must be known at this point
+...
+ 580 |           .into()
+     |            ^^^^
+     |
+     = note: the type must implement `openaec_ui::iced::widget::pick_list::Catalog`
+help: the trait `openaec_ui::iced::widget::pick_list::Catalog` is implemented for `openaec_ui::iced::Theme`
+    --> /home/aia01/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/iced_widget-0.14.2/src/pick_list.rs:891:1
+     |
+ 891 | impl Catalog for Theme {
+     | ^^^^^^^^^^^^^^^^^^^^^^
+note: required by a bound in `openaec_ui::iced::widget::pick_list`
+    --> /home/aia01/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/iced_widget-0.14.2/src/helpers.rs:1666:12
+     |
+1656 | pub fn pick_list<'a, T, L, V, Message, Theme, Renderer>(
+     |        --------- required by a bound in this function
+...
+1666 |     Theme: pick_list::Catalog + overlay::menu::Catalog,
+     |            ^^^^^^^^^^^^^^^^^^ required by this bound in `pick_list`
+help: try using a fully qualified path to specify the expected types
+     |
+ 559 ~         <openaec_ui::iced::widget::PickList<'_, office_core::writer_stijlen::Alineastijl, &[office_core::writer_stijlen::Alineastijl], &office_core::writer_stijlen::Alineastijl, Msg, Theme, Renderer> as std::convert::Into<T>>::into(iced::widget::pick_list(
+ 560 |             overzicht.keuzes.as_slice(),
+ ...
+ 578 |         .text_size(12)
+ 579 ~         .padding(3))
+     |
+
+For more information about this error, try `rustc --explain E0283`.
+error: could not compile `open-office-studio-native` (bin "open-office-studio-native" test) due to 1 previous error

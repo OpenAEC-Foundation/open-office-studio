@@ -1,0 +1,1636 @@
+//! Run, text-formatting, image, and shape serializers.
+
+use crate::block::BlockContent;
+use crate::drawingml::{ShapeFill, ShapeOutline};
+use crate::formatting::TextFormatting;
+use crate::image::{Image, ImagePosition, ImageWrap};
+use crate::inline::{Run, RunContent, RunPropertyChange};
+use crate::scalars::{ColorValue, ShadingProperties};
+use crate::shape::Shape;
+use crate::xml::ParseError;
+
+use super::context::SerializerContext;
+use super::raw::{validate_raw_subtree, validate_replayed_fragment};
+use super::xml_writer::{XmlWriter, int_attr, js_number};
+
+pub(crate) const VALID_HIGHLIGHT_COLORS: &[&str] = &[
+    "black",
+    "blue",
+    "cyan",
+    "darkBlue",
+    "darkCyan",
+    "darkGray",
+    "darkGreen",
+    "darkMagenta",
+    "darkRed",
+    "darkYellow",
+    "green",
+    "lightGray",
+    "magenta",
+    "red",
+    "white",
+    "yellow",
+];
+
+/// Serializes the supported `w:rPr` subset in schema order.
+pub fn serialize_text_formatting(formatting: Option<&TextFormatting>) -> String {
+    let Some(formatting) = formatting else {
+        return String::new();
+    };
+    let mut body = XmlWriter::with_capacity(384);
+
+    if let Some(value) = nonempty(formatting.style_id.as_deref()) {
+        empty_attr(&mut body, "w:rStyle", "w:val", value);
+    }
+    if let Some(fonts) = formatting.font_family.as_ref() {
+        let has_attributes = [
+            fonts.ascii.as_deref(),
+            fonts.h_ansi.as_deref(),
+            fonts.east_asia.as_deref(),
+            fonts.cs.as_deref(),
+            fonts.ascii_theme.as_deref(),
+            fonts.h_ansi_theme.as_deref(),
+            fonts.east_asia_theme.as_deref(),
+            fonts.cs_theme.as_deref(),
+            fonts.hint.as_deref(),
+        ]
+        .into_iter()
+        .any(|value| nonempty(value).is_some());
+        if has_attributes {
+            body.start_element("w:rFonts");
+            optional_nonempty_attr(&mut body, "w:ascii", fonts.ascii.as_deref());
+            optional_nonempty_attr(&mut body, "w:hAnsi", fonts.h_ansi.as_deref());
+            optional_nonempty_attr(&mut body, "w:eastAsia", fonts.east_asia.as_deref());
+            optional_nonempty_attr(&mut body, "w:cs", fonts.cs.as_deref());
+            optional_nonempty_attr(&mut body, "w:asciiTheme", fonts.ascii_theme.as_deref());
+            optional_nonempty_attr(&mut body, "w:hAnsiTheme", fonts.h_ansi_theme.as_deref());
+            optional_nonempty_attr(
+                &mut body,
+                "w:eastAsiaTheme",
+                fonts.east_asia_theme.as_deref(),
+            );
+            optional_nonempty_attr(&mut body, "w:cstheme", fonts.cs_theme.as_deref());
+            optional_nonempty_attr(&mut body, "w:hint", fonts.hint.as_deref());
+            body.end_element();
+        }
+    }
+
+    on_off(&mut body, "w:b", formatting.bold);
+    on_off(&mut body, "w:bCs", formatting.bold_cs);
+    on_off(&mut body, "w:i", formatting.italic);
+    on_off(&mut body, "w:iCs", formatting.italic_cs);
+    on_off(&mut body, "w:caps", formatting.all_caps);
+    on_off(&mut body, "w:smallCaps", formatting.small_caps);
+    on_off(&mut body, "w:strike", formatting.strike);
+    on_off(&mut body, "w:dstrike", formatting.double_strike);
+    on_off(&mut body, "w:outline", formatting.outline);
+    on_off(&mut body, "w:shadow", formatting.shadow);
+    on_off(&mut body, "w:emboss", formatting.emboss);
+    on_off(&mut body, "w:imprint", formatting.imprint);
+    on_off(&mut body, "w:vanish", formatting.hidden);
+
+    write_color_element(&mut body, formatting.color.as_ref());
+    optional_integer_element(&mut body, "w:spacing", formatting.spacing);
+    optional_integer_element(&mut body, "w:w", formatting.scale);
+    optional_integer_element(&mut body, "w:kern", formatting.kerning);
+    optional_integer_element(&mut body, "w:position", formatting.position);
+    optional_integer_element(&mut body, "w:sz", formatting.font_size);
+    optional_integer_element(&mut body, "w:szCs", formatting.font_size_cs);
+
+    if let Some(highlight) = nonempty(formatting.highlight.as_deref()).filter(|v| *v != "none") {
+        if VALID_HIGHLIGHT_COLORS.contains(&highlight) {
+            empty_attr(&mut body, "w:highlight", "w:val", highlight);
+        } else if formatting.shading.is_none() {
+            let hex = highlight.strip_prefix('#').unwrap_or(highlight);
+            if hex.len() == 6 && hex.bytes().all(|byte| byte.is_ascii_hexdigit()) {
+                body.start_element("w:shd")
+                    .attribute("w:val", "clear")
+                    .attribute("w:color", "auto")
+                    .attribute("w:fill", hex)
+                    .end_element();
+            }
+        }
+    }
+
+    if let Some(underline) = formatting.underline.as_ref() {
+        body.start_element("w:u")
+            .attribute("w:val", &underline.style);
+        if let Some(color) = underline.color.as_ref() {
+            optional_nonempty_attr(&mut body, "w:color", color.rgb.as_deref());
+            optional_nonempty_attr(&mut body, "w:themeColor", color.theme_color.as_deref());
+            optional_nonempty_attr(&mut body, "w:themeTint", color.theme_tint.as_deref());
+            optional_nonempty_attr(&mut body, "w:themeShade", color.theme_shade.as_deref());
+        }
+        body.end_element();
+    }
+    if let Some(value) = nonempty(formatting.effect.as_deref()).filter(|value| *value != "none") {
+        empty_attr(&mut body, "w:effect", "w:val", value);
+    }
+    if let Some(value) =
+        nonempty(formatting.emphasis_mark.as_deref()).filter(|value| *value != "none")
+    {
+        empty_attr(&mut body, "w:em", "w:val", value);
+    }
+    write_shading(&mut body, formatting.shading.as_ref());
+    if let Some(value) = nonempty(formatting.vert_align.as_deref()).filter(|v| *v != "baseline") {
+        empty_attr(&mut body, "w:vertAlign", "w:val", value);
+    }
+    on_off(&mut body, "w:rtl", formatting.rtl);
+    on_off(&mut body, "w:cs", formatting.cs);
+    on_off(&mut body, "w:snapToGrid", formatting.snap_to_grid);
+    if let Some(language) = formatting.language.as_ref() {
+        let slots = [
+            ("w:val", language.latin.as_deref()),
+            ("w:eastAsia", language.east_asia.as_deref()),
+            ("w:bidi", language.bidi.as_deref()),
+        ];
+        if slots.iter().any(|(_, value)| nonempty(*value).is_some()) {
+            body.start_element("w:lang");
+            for (name, value) in slots {
+                optional_nonempty_attr(&mut body, name, value);
+            }
+            body.end_element();
+        }
+    }
+
+    let body = body.finish();
+    if body.is_empty() {
+        String::new()
+    } else {
+        format!("<w:rPr>{body}</w:rPr>")
+    }
+}
+
+/// Serialize one run, consuming any active rendered-page-break markers.
+pub fn serialize_run(run: &Run, context: &mut SerializerContext) -> Result<String, ParseError> {
+    let mut output = String::from("<w:r>");
+    for _ in 0..context.take_rendered_page_breaks() {
+        output.push_str("<w:lastRenderedPageBreak/>");
+    }
+    output.push_str(&serialize_run_properties(
+        run.formatting.as_ref(),
+        run.property_changes.as_deref(),
+    ));
+    for content in &run.content {
+        output.push_str(&serialize_run_content(content, context)?);
+    }
+    output.push_str("</w:r>");
+    Ok(output)
+}
+
+pub(crate) fn serialize_deleted_run(
+    run: &Run,
+    context: &mut SerializerContext,
+) -> Result<String, ParseError> {
+    let xml = serialize_run(run, context)?;
+    if run.content.iter().any(|content| match content {
+        RunContent::Drawing { .. } => true,
+        RunContent::OpaqueDrawing { previews, .. } => !previews.is_empty(),
+        _ => false,
+    }) {
+        return Ok(xml);
+    }
+    Ok(xml
+        // Only `w:t` elements become `w:delText`.
+        .replace("<w:t>", "<w:delText>")
+        .replace("<w:t ", "<w:delText ")
+        .replace("<w:t/", "<w:delText/")
+        .replace("</w:t>", "</w:delText>")
+        .replace("<w:instrText>", "<w:delInstrText>")
+        .replace("<w:instrText ", "<w:delInstrText ")
+        .replace("<w:instrText/", "<w:delInstrText/")
+        .replace("</w:instrText>", "</w:delInstrText>"))
+}
+
+fn serialize_run_properties(
+    formatting: Option<&TextFormatting>,
+    changes: Option<&[RunPropertyChange]>,
+) -> String {
+    let current = serialize_text_formatting(formatting);
+    let mut inner = strip_wrapper(&current, "<w:rPr>", "</w:rPr>").to_owned();
+    for change in changes.unwrap_or_default() {
+        inner.push_str(&serialize_run_property_change(change));
+    }
+    if inner.is_empty() {
+        String::new()
+    } else {
+        format!("<w:rPr>{inner}</w:rPr>")
+    }
+}
+
+fn serialize_run_property_change(change: &RunPropertyChange) -> String {
+    let mut writer = XmlWriter::with_capacity(128);
+    let id = normalized_tracked_id(change.info.id);
+    let author = nonempty_trimmed(&change.info.author).unwrap_or("Unknown");
+    writer
+        .start_element("w:rPrChange")
+        .attribute("w:id", &id)
+        .attribute("w:author", author);
+    if let Some(date) = change.info.date.as_deref().and_then(nonempty_trimmed) {
+        writer.attribute("w:date", date);
+    }
+    let previous = serialize_text_formatting(change.previous_formatting.as_ref());
+    if previous.is_empty() {
+        writer.start_element("w:rPr").end_element();
+    } else {
+        append_generated(&mut writer, &previous);
+    }
+    writer.end_element();
+    writer.finish()
+}
+
+fn serialize_run_content(
+    content: &RunContent,
+    context: &mut SerializerContext,
+) -> Result<String, ParseError> {
+    let mut writer = XmlWriter::with_capacity(96);
+    match content {
+        RunContent::Text {
+            text,
+            preserve_space,
+        } => {
+            writer.start_element("w:t");
+            if *preserve_space == Some(true)
+                || text.starts_with(' ')
+                || text.ends_with(' ')
+                || text.contains("  ")
+            {
+                writer.attribute("xml:space", "preserve");
+            }
+            writer.text(text).end_element();
+        }
+        RunContent::Tab => {
+            writer.start_element("w:tab").end_element();
+        }
+        RunContent::Break { break_type, clear } => {
+            writer.start_element("w:br");
+            match break_type.as_deref() {
+                Some("page") => {
+                    writer.attribute("w:type", "page");
+                }
+                Some("column") => {
+                    writer.attribute("w:type", "column");
+                }
+                None | Some("textWrapping") => {
+                    let clear = nonempty(clear.as_deref()).filter(|value| *value != "none");
+                    if break_type.is_some() || clear.is_some() {
+                        writer.attribute("w:type", "textWrapping");
+                    }
+                    if let Some(clear) = clear {
+                        writer.attribute("w:clear", clear);
+                    }
+                }
+                _ => {}
+            }
+            writer.end_element();
+        }
+        RunContent::Symbol { font, char } => {
+            writer
+                .start_element("w:sym")
+                .attribute("w:font", font)
+                .attribute("w:char", char)
+                .end_element();
+        }
+        RunContent::FootnoteRef { id, .. } => {
+            writer
+                .start_element("w:footnoteReference")
+                .attribute("w:id", &js_number(*id))
+                .end_element();
+        }
+        RunContent::EndnoteRef { id, .. } => {
+            writer
+                .start_element("w:endnoteReference")
+                .attribute("w:id", &js_number(*id))
+                .end_element();
+        }
+        RunContent::FootnoteRefMark => {
+            writer.start_element("w:footnoteRef").end_element();
+        }
+        RunContent::EndnoteRefMark => {
+            writer.start_element("w:endnoteRef").end_element();
+        }
+        RunContent::Separator => {
+            writer.start_element("w:separator").end_element();
+        }
+        RunContent::ContinuationSeparator => {
+            writer
+                .start_element("w:continuationSeparator")
+                .end_element();
+        }
+        RunContent::FieldChar {
+            char_type,
+            fld_lock,
+            dirty,
+            ..
+        } => {
+            writer
+                .start_element("w:fldChar")
+                .attribute("w:fldCharType", char_type);
+            if *fld_lock == Some(true) {
+                writer.attribute("w:fldLock", "true");
+            }
+            if *dirty == Some(true) {
+                writer.attribute("w:dirty", "true");
+            }
+            writer.end_element();
+        }
+        RunContent::InstrText { text } => {
+            writer.start_element("w:instrText");
+            if text.starts_with(' ') || text.ends_with(' ') || text.contains("  ") {
+                writer.attribute("xml:space", "preserve");
+            }
+            writer.text(text).end_element();
+        }
+        RunContent::SoftHyphen => {
+            writer.start_element("w:softHyphen").end_element();
+        }
+        RunContent::NoBreakHyphen => {
+            writer.start_element("w:noBreakHyphen").end_element();
+        }
+        RunContent::Drawing { image } => return serialize_drawing_content(image, context),
+        RunContent::Shape { shape } => return serialize_shape_content(shape, context),
+        RunContent::HorizontalRule { rule } => {
+            validate_replayed_fragment(&rule.xml)?;
+            return Ok(rule.xml.clone());
+        }
+        RunContent::CommentReference { id } => {
+            writer.start_element("w:commentReference");
+            if let Some(id) = id {
+                writer.attribute("w:id", &js_number(*id));
+            }
+            writer.end_element();
+        }
+        RunContent::Chart { chart } => {
+            if let Some(xml) = chart.drawing_xml.as_deref() {
+                validate_raw_subtree(xml, "w", "drawing")?;
+                return Ok(xml.to_owned());
+            }
+            if let Some(xml) = chart
+                .relationship_id
+                .as_deref()
+                .and_then(|id| context.chart_drawing(id))
+            {
+                validate_raw_subtree(xml, "w", "drawing")?;
+                return Ok(xml.to_owned());
+            }
+            context.warn(format!(
+                "chart run carries no drawing to replay{}; keeping the run out of the output",
+                chart
+                    .relationship_id
+                    .as_deref()
+                    .map(|id| format!(" (rId {id})"))
+                    .unwrap_or_default()
+            ));
+            return Ok(String::new());
+        }
+        RunContent::OpaqueDrawing { xml, .. } => {
+            validate_replayed_fragment(xml)?;
+            return Ok(xml.clone());
+        }
+    }
+    Ok(writer.finish())
+}
+
+/// The authored z-order when the anchor carried one; Word's default otherwise.
+fn relative_height_attr(position: Option<&crate::image::ImagePosition>) -> String {
+    position
+        .and_then(|position| position.relative_height)
+        .map(|value| int_attr(Some(value)))
+        .unwrap_or_else(|| "251658240".to_owned())
+}
+
+/// Serializes one image as WordprocessingDrawing XML.
+pub fn serialize_drawing_content(
+    image: &Image,
+    context: &mut SerializerContext,
+) -> Result<String, ParseError> {
+    let floating = image.wrap.wrap_type != "inline";
+    let id = drawing_id(image.id.as_deref(), context);
+    let name = image
+        .name
+        .as_deref()
+        .filter(|value| !value.is_empty())
+        .or_else(|| image.title.as_deref().filter(|value| !value.is_empty()))
+        .or_else(|| image.filename.as_deref().filter(|value| !value.is_empty()))
+        .map(str::to_owned)
+        .unwrap_or_else(|| format!("Picture {id}"));
+    let graphic = serialize_picture_graphic(image, &id);
+    let mut writer = XmlWriter::with_capacity(1024 + graphic.len());
+    writer.start_element("w:drawing");
+    if floating {
+        writer.start_element("wp:anchor");
+        write_distances(&mut writer, Some(&image.wrap));
+        writer
+            .attribute("simplePos", "0")
+            .attribute(
+                "relativeHeight",
+                &relative_height_attr(image.position.as_ref()),
+            )
+            .attribute(
+                "behindDoc",
+                if image.wrap.wrap_type == "behind" {
+                    "1"
+                } else {
+                    "0"
+                },
+            )
+            .attribute("locked", "0")
+            .attribute(
+                "layoutInCell",
+                if image.layout_in_cell == Some(false) {
+                    "0"
+                } else {
+                    "1"
+                },
+            )
+            .attribute(
+                "allowOverlap",
+                if image.allow_overlap == Some(false) {
+                    "0"
+                } else {
+                    "1"
+                },
+            );
+        writer
+            .start_element("wp:simplePos")
+            .attribute("x", "0")
+            .attribute("y", "0")
+            .end_element();
+        write_position(&mut writer, image.position.as_ref());
+        write_extent(&mut writer, image.size.width, image.size.height);
+        write_effect_extent(&mut writer, image.padding.as_ref());
+        write_wrap(&mut writer, &image.wrap);
+    } else {
+        writer.start_element("wp:inline");
+        write_distances(&mut writer, Some(&image.wrap));
+        write_extent(&mut writer, image.size.width, image.size.height);
+        write_effect_extent(&mut writer, image.padding.as_ref());
+    }
+    writer
+        .start_element("wp:docPr")
+        .attribute("id", &id)
+        .attribute("name", &name);
+    if let Some(alt) = nonempty(image.alt.as_deref()) {
+        writer.attribute("descr", alt);
+    }
+    if image.decorative == Some(true) {
+        writer.attribute("hidden", "1");
+    }
+    writer.end_element();
+    writer.start_element("wp:cNvGraphicFramePr");
+    if image.no_change_aspect == Some(true) {
+        writer
+            .start_element("a:graphicFrameLocks")
+            .attribute(
+                "xmlns:a",
+                "http://schemas.openxmlformats.org/drawingml/2006/main",
+            )
+            .attribute("noChangeAspect", "1")
+            .end_element();
+    }
+    writer.end_element();
+    append_generated(&mut writer, &graphic);
+    writer.end_element().end_element();
+    Ok(writer.finish())
+}
+
+/// Serialize one WordprocessingShape, including recursively typed textbox
+/// paragraphs stored behind the model's cycle-breaking JSON values.
+pub fn serialize_shape_content(
+    shape: &Shape,
+    context: &mut SerializerContext,
+) -> Result<String, ParseError> {
+    let is_text_box = shape.text_box.unwrap_or(shape.shape_type == "textBox");
+    let floating = shape
+        .wrap
+        .as_ref()
+        .is_some_and(|wrap| wrap.wrap_type != "inline");
+    let id = drawing_id(shape.id.as_deref(), context);
+    let name = shape
+        .name
+        .as_deref()
+        .filter(|value| !value.is_empty())
+        .map(str::to_owned)
+        .unwrap_or_else(|| format!("{} {id}", if is_text_box { "TextBox" } else { "Shape" }));
+    let wrap = shape.wrap.as_ref();
+    let mut graphic = XmlWriter::with_capacity(1024);
+    graphic
+        .start_element("a:graphic")
+        .attribute(
+            "xmlns:a",
+            "http://schemas.openxmlformats.org/drawingml/2006/main",
+        )
+        .start_element("a:graphicData")
+        .attribute(
+            "uri",
+            "http://schemas.microsoft.com/office/word/2010/wordprocessingShape",
+        )
+        .start_element("wps:wsp")
+        .start_element("wps:cNvSpPr");
+    if is_text_box {
+        graphic.attribute("txBox", "1");
+    }
+    graphic.end_element().start_element("wps:spPr");
+    write_transform(
+        &mut graphic,
+        shape.transform.as_ref(),
+        shape.size.width,
+        shape.size.height,
+    );
+    graphic
+        .start_element("a:prstGeom")
+        .attribute(
+            "prst",
+            if shape.shape_type == "textBox" {
+                "rect"
+            } else {
+                &shape.shape_type
+            },
+        )
+        .start_element("a:avLst")
+        .end_element()
+        .end_element();
+    write_fill(&mut graphic, shape.fill.as_ref());
+    write_outline(&mut graphic, shape.outline.as_ref());
+    graphic.end_element();
+
+    if let Some(text_body) = shape.text_body.as_ref() {
+        let mut body_properties = XmlWriter::with_capacity(160);
+        body_properties
+            .start_element("wps:bodyPr")
+            .attribute(
+                "rot",
+                &int_attr(Some(text_body.rotation.unwrap_or(0.0) * 60_000.0)),
+            )
+            .attribute("vert", vertical_token(shape));
+        if let Some(wrap) = shape
+            .text_body_properties
+            .as_ref()
+            .and_then(|properties| nonempty(properties.wrap.as_deref()))
+        {
+            body_properties.attribute("wrap", wrap);
+        }
+        if let Some(anchor) = nonempty(text_body.anchor.as_deref()).and_then(anchor_token) {
+            body_properties.attribute("anchor", anchor);
+        }
+        if text_body.anchor_center == Some(true) {
+            body_properties.attribute("anchorCtr", "1");
+        }
+        if let Some(margins) = text_body.margins.as_ref() {
+            optional_int_attr(&mut body_properties, "lIns", margins.left);
+            optional_int_attr(&mut body_properties, "tIns", margins.top);
+            optional_int_attr(&mut body_properties, "rIns", margins.right);
+            optional_int_attr(&mut body_properties, "bIns", margins.bottom);
+        }
+        write_auto_fit(&mut body_properties, shape);
+        body_properties.end_element();
+        if is_text_box || !text_body.content.is_empty() {
+            graphic
+                .start_element("wps:txbx")
+                .start_element("w:txbxContent");
+            for value in &text_body.content {
+                let block: BlockContent = serde_json::to_string(&(value.clone()))
+                    .and_then(|s| serde_json::from_str(&s))
+                    .map_err(|error| {
+                        ParseError::Canonical(format!(
+                            "shape text body contains an invalid block: {error}"
+                        ))
+                    })?;
+                let block = super::sdt::serialize_block_content(&block, context)?;
+                append_generated(&mut graphic, &block);
+            }
+            graphic.end_element().end_element();
+        }
+        append_generated(&mut graphic, &body_properties.finish());
+    }
+    graphic.end_element().end_element().end_element();
+    let graphic = graphic.finish();
+
+    let mut writer = XmlWriter::with_capacity(graphic.len() + 512);
+    writer.start_element("w:drawing");
+    if floating {
+        let wrap = wrap.expect("floating shapes always have wrap properties");
+        writer.start_element("wp:anchor");
+        write_distances(&mut writer, Some(wrap));
+        writer
+            .attribute("simplePos", "0")
+            .attribute(
+                "relativeHeight",
+                &relative_height_attr(shape.position.as_ref()),
+            )
+            .attribute(
+                "behindDoc",
+                if wrap.wrap_type == "behind" { "1" } else { "0" },
+            )
+            .attribute("locked", "0")
+            .attribute("layoutInCell", "1")
+            .attribute("allowOverlap", "1");
+        writer
+            .start_element("wp:simplePos")
+            .attribute("x", "0")
+            .attribute("y", "0")
+            .end_element();
+        write_position(&mut writer, shape.position.as_ref());
+        write_extent(&mut writer, shape.size.width, shape.size.height);
+        write_effect_extent(&mut writer, shape.effect_extent.as_ref());
+        write_wrap(&mut writer, wrap);
+    } else {
+        writer.start_element("wp:inline");
+        match wrap {
+            Some(wrap) => write_distances(&mut writer, Some(wrap)),
+            None => {
+                for name in ["distT", "distB", "distL", "distR"] {
+                    writer.attribute(name, "0");
+                }
+            }
+        }
+        write_extent(&mut writer, shape.size.width, shape.size.height);
+        write_effect_extent(&mut writer, shape.effect_extent.as_ref());
+    }
+    writer
+        .start_element("wp:docPr")
+        .attribute("id", &id)
+        .attribute("name", &name)
+        .end_element()
+        .start_element("wp:cNvGraphicFramePr")
+        .end_element();
+    append_generated(&mut writer, &graphic);
+    writer.end_element().end_element();
+    Ok(writer.finish())
+}
+
+/// `ST_TextAnchoringType` for the canonical anchor the parser reads it into.
+fn anchor_token(anchor: &str) -> Option<&'static str> {
+    match anchor {
+        "top" => Some("t"),
+        "middle" => Some("ctr"),
+        "bottom" => Some("b"),
+        "distributed" => Some("dist"),
+        "justified" => Some("just"),
+        _ => None,
+    }
+}
+
+fn vertical_token(shape: &Shape) -> &'static str {
+    match shape
+        .text_body_properties
+        .as_ref()
+        .and_then(|properties| properties.vertical.as_deref())
+    {
+        Some("vertical") => "vert",
+        Some("vertical270") => "vert270",
+        Some("wordArtVertical") => "wordArtVert",
+        Some("eastAsianVertical") => "eaVert",
+        Some("mongolianVertical") => "mongolianVert",
+        Some("horizontal") => "horz",
+        _ if shape
+            .text_body
+            .as_ref()
+            .is_some_and(|body| body.vertical == Some(true)) =>
+        {
+            "vert"
+        }
+        _ => "horz",
+    }
+}
+
+fn write_auto_fit(writer: &mut XmlWriter, shape: &Shape) {
+    let properties = shape.text_body_properties.as_ref();
+    let auto_fit = shape
+        .text_body
+        .as_ref()
+        .and_then(|body| body.auto_fit.as_deref());
+    match auto_fit {
+        Some("none") => {
+            writer.start_element("a:noAutofit").end_element();
+        }
+        Some("normal") => {
+            writer.start_element("a:normAutofit");
+            optional_int_attr(
+                writer,
+                "fontScale",
+                properties.and_then(|properties| properties.font_scale),
+            );
+            optional_int_attr(
+                writer,
+                "lnSpcReduction",
+                properties.and_then(|properties| properties.line_spacing_reduction),
+            );
+            writer.end_element();
+        }
+        Some("shape") => {
+            writer.start_element("a:spAutoFit").end_element();
+        }
+        _ => {}
+    }
+}
+
+fn serialize_picture_graphic(image: &Image, id: &str) -> String {
+    let relationship_id = if image.relationship_id.is_empty() {
+        "rId1"
+    } else {
+        &image.relationship_id
+    };
+    let name = image
+        .filename
+        .as_deref()
+        .filter(|value| !value.is_empty())
+        .map(str::to_owned)
+        .unwrap_or_else(|| format!("image{id}"));
+    let mut writer = XmlWriter::with_capacity(768);
+    writer
+        .start_element("a:graphic")
+        .attribute(
+            "xmlns:a",
+            "http://schemas.openxmlformats.org/drawingml/2006/main",
+        )
+        .start_element("a:graphicData")
+        .attribute(
+            "uri",
+            "http://schemas.openxmlformats.org/drawingml/2006/picture",
+        )
+        .start_element("pic:pic")
+        .attribute(
+            "xmlns:pic",
+            "http://schemas.openxmlformats.org/drawingml/2006/picture",
+        )
+        .start_element("pic:nvPicPr")
+        .start_element("pic:cNvPr")
+        .attribute("id", id)
+        .attribute("name", &name);
+    writer
+        .end_element()
+        .start_element("pic:cNvPicPr")
+        .end_element()
+        .end_element()
+        .start_element("pic:blipFill")
+        .start_element("a:blip")
+        .attribute("r:embed", relationship_id);
+    if image.opacity.is_some_and(|opacity| opacity < 1.0) {
+        let amount = image.opacity.unwrap_or_default().clamp(0.0, 1.0) * 100_000.0;
+        writer
+            .start_element("a:alphaModFix")
+            .attribute("amt", &int_attr(Some(amount)))
+            .end_element();
+    }
+    writer.end_element();
+    if let Some(crop) = image.crop.as_ref() {
+        let has_crop = [crop.left, crop.top, crop.right, crop.bottom]
+            .into_iter()
+            .flatten()
+            .any(|value| value != 0.0);
+        if has_crop {
+            writer.start_element("a:srcRect");
+            optional_truthy_scaled_attr(&mut writer, "l", crop.left, 100_000.0);
+            optional_truthy_scaled_attr(&mut writer, "t", crop.top, 100_000.0);
+            optional_truthy_scaled_attr(&mut writer, "r", crop.right, 100_000.0);
+            optional_truthy_scaled_attr(&mut writer, "b", crop.bottom, 100_000.0);
+            writer.end_element();
+        }
+    }
+    writer
+        .start_element("a:stretch")
+        .start_element("a:fillRect")
+        .end_element()
+        .end_element()
+        .end_element()
+        .start_element("pic:spPr");
+    write_transform(
+        &mut writer,
+        image.transform.as_ref(),
+        image.size.width,
+        image.size.height,
+    );
+    writer
+        .start_element("a:prstGeom")
+        .attribute("prst", image.shape_type.as_deref().unwrap_or("rect"))
+        .start_element("a:avLst")
+        .end_element()
+        .end_element();
+    if let Some(outline) = image.outline.as_ref() {
+        write_outline(&mut writer, Some(outline));
+    }
+    writer
+        .end_element()
+        .end_element()
+        .end_element()
+        .end_element();
+    writer.finish()
+}
+
+fn write_position(writer: &mut XmlWriter, position: Option<&ImagePosition>) {
+    if let Some(position) = position {
+        write_axis(
+            writer,
+            "wp:positionH",
+            &position.horizontal.relative_to,
+            position.horizontal.alignment.as_deref(),
+            position.horizontal.pos_offset,
+        );
+        write_axis(
+            writer,
+            "wp:positionV",
+            &position.vertical.relative_to,
+            position.vertical.alignment.as_deref(),
+            position.vertical.pos_offset,
+        );
+    } else {
+        write_axis(writer, "wp:positionH", "column", None, Some(0.0));
+        write_axis(writer, "wp:positionV", "paragraph", None, Some(0.0));
+    }
+}
+
+fn write_axis(
+    writer: &mut XmlWriter,
+    element: &'static str,
+    relative_to: &str,
+    alignment: Option<&str>,
+    offset: Option<f64>,
+) {
+    writer
+        .start_element(element)
+        .attribute("relativeFrom", relative_to);
+    if let Some(alignment) = nonempty(alignment) {
+        writer
+            .start_element("wp:align")
+            .text(alignment)
+            .end_element();
+    } else {
+        writer
+            .start_element("wp:posOffset")
+            .text(&int_attr(offset))
+            .end_element();
+    }
+    writer.end_element();
+}
+
+fn write_wrap(writer: &mut XmlWriter, wrap: &ImageWrap) {
+    let text = nonempty(wrap.wrap_text.as_deref()).unwrap_or("bothSides");
+    match wrap.wrap_type.as_str() {
+        "square" => {
+            writer
+                .start_element("wp:wrapSquare")
+                .attribute("wrapText", text)
+                .end_element();
+        }
+        "tight" => write_polygon_wrap(writer, "wp:wrapTight", text),
+        "through" => write_polygon_wrap(writer, "wp:wrapThrough", text),
+        "topAndBottom" => {
+            writer.start_element("wp:wrapTopAndBottom").end_element();
+        }
+        _ => {
+            writer.start_element("wp:wrapNone").end_element();
+        }
+    }
+}
+
+fn write_polygon_wrap(writer: &mut XmlWriter, name: &'static str, text: &str) {
+    writer
+        .start_element(name)
+        .attribute("wrapText", text)
+        .start_element("wp:wrapPolygon")
+        .attribute("edited", "0")
+        .start_element("wp:start")
+        .attribute("x", "0")
+        .attribute("y", "0")
+        .end_element();
+    for (x, y) in [(0, 21_600), (21_600, 21_600), (21_600, 0), (0, 0)] {
+        writer
+            .start_element("wp:lineTo")
+            .attribute("x", &x.to_string())
+            .attribute("y", &y.to_string())
+            .end_element();
+    }
+    writer.end_element().end_element();
+}
+
+fn write_transform(
+    writer: &mut XmlWriter,
+    transform: Option<&crate::drawingml::Transform2D>,
+    width: f64,
+    height: f64,
+) {
+    writer.start_element("a:xfrm");
+    if let Some(rotation) = transform
+        .and_then(|value| value.rotation)
+        .filter(|value| *value != 0.0)
+    {
+        writer.attribute("rot", &int_attr(Some(rotation * 60_000.0)));
+    }
+    if transform.is_some_and(|value| value.flip_h == Some(true)) {
+        writer.attribute("flipH", "1");
+    }
+    if transform.is_some_and(|value| value.flip_v == Some(true)) {
+        writer.attribute("flipV", "1");
+    }
+    writer
+        .start_element("a:off")
+        .attribute("x", "0")
+        .attribute("y", "0")
+        .end_element()
+        .start_element("a:ext")
+        .attribute("cx", &int_attr(Some(width)))
+        .attribute("cy", &int_attr(Some(height)))
+        .end_element()
+        .end_element();
+}
+
+fn write_fill(writer: &mut XmlWriter, fill: Option<&ShapeFill>) {
+    let Some(fill) = fill else {
+        writer.start_element("a:noFill").end_element();
+        return;
+    };
+    match fill.fill_type.as_str() {
+        "none" => {
+            writer.start_element("a:noFill").end_element();
+        }
+        "solid" if fill.color.is_some() => {
+            writer.start_element("a:solidFill");
+            write_drawing_color(writer, fill.color.as_ref());
+            writer.end_element();
+        }
+        "gradient" if fill.gradient.is_some() => {
+            let gradient = fill.gradient.as_ref().unwrap();
+            writer.start_element("a:gradFill").start_element("a:gsLst");
+            for stop in &gradient.stops {
+                writer
+                    .start_element("a:gs")
+                    .attribute("pos", &js_number(stop.position));
+                write_drawing_color(writer, Some(&stop.color));
+                writer.end_element();
+            }
+            writer.end_element();
+            if gradient.gradient_type == "linear" {
+                writer
+                    .start_element("a:lin")
+                    .attribute(
+                        "ang",
+                        &js_number(gradient.angle.unwrap_or_default() * 60_000.0),
+                    )
+                    .attribute("scaled", "1")
+                    .end_element();
+            }
+            writer.end_element();
+        }
+        _ => {}
+    }
+}
+
+fn write_outline(writer: &mut XmlWriter, outline: Option<&ShapeOutline>) {
+    let Some(outline) = outline else {
+        return;
+    };
+    let has_parts = outline.color.is_some()
+        || outline
+            .style
+            .as_deref()
+            .is_some_and(|style| !style.is_empty() && style != "solid")
+        || outline.head_end.is_some()
+        || outline.tail_end.is_some();
+    if outline.width.is_none() && nonempty(outline.cap.as_deref()).is_none() && !has_parts {
+        return;
+    }
+    writer.start_element("a:ln");
+    if let Some(width) = outline.width {
+        writer.attribute("w", &js_number(width));
+    }
+    optional_nonempty_attr(writer, "cap", outline.cap.as_deref());
+    if let Some(color) = outline.color.as_ref() {
+        writer.start_element("a:solidFill");
+        write_drawing_color(writer, Some(color));
+        writer.end_element();
+    }
+    if let Some(style) = nonempty(outline.style.as_deref()).filter(|style| *style != "solid") {
+        writer
+            .start_element("a:prstDash")
+            .attribute("val", style)
+            .end_element();
+    }
+    if let Some(end) = outline.head_end.as_ref() {
+        writer
+            .start_element("a:headEnd")
+            .attribute("type", &end.end_type);
+        optional_nonempty_attr(writer, "w", end.width.as_deref());
+        optional_nonempty_attr(writer, "len", end.length.as_deref());
+        writer.end_element();
+    }
+    if let Some(end) = outline.tail_end.as_ref() {
+        writer
+            .start_element("a:tailEnd")
+            .attribute("type", &end.end_type);
+        optional_nonempty_attr(writer, "w", end.width.as_deref());
+        optional_nonempty_attr(writer, "len", end.length.as_deref());
+        writer.end_element();
+    }
+    writer.end_element();
+}
+
+fn write_drawing_color(writer: &mut XmlWriter, color: Option<&ColorValue>) {
+    let Some(color) = color else {
+        return;
+    };
+    let name = if let Some(rgb) = nonempty(color.rgb.as_deref()) {
+        writer
+            .start_element("a:srgbClr")
+            .attribute("val", &rgb.replacen('#', "", 1));
+        "a:srgbClr"
+    } else if let Some(theme) = nonempty(color.theme_color.as_deref()) {
+        writer.start_element("a:schemeClr").attribute("val", theme);
+        "a:schemeClr"
+    } else {
+        return;
+    };
+    if !color.transforms.is_empty() {
+        use ooxml_drawingml::ColorTransform::*;
+
+        for transform in color.drawingml_transforms() {
+            let name = match transform {
+                Tint(_) => "a:tint",
+                Shade(_) => "a:shade",
+                Hue(_) => "a:hue",
+                HueMod(_) => "a:hueMod",
+                HueOff(_) => "a:hueOff",
+                Sat(_) => "a:sat",
+                SatMod(_) => "a:satMod",
+                SatOff(_) => "a:satOff",
+                Lum(_) => "a:lum",
+                LumMod(_) => "a:lumMod",
+                LumOff(_) => "a:lumOff",
+                Red(_) => "a:red",
+                RedMod(_) => "a:redMod",
+                RedOff(_) => "a:redOff",
+                Green(_) => "a:green",
+                GreenMod(_) => "a:greenMod",
+                GreenOff(_) => "a:greenOff",
+                Blue(_) => "a:blue",
+                BlueMod(_) => "a:blueMod",
+                BlueOff(_) => "a:blueOff",
+                Alpha(_) => "a:alpha",
+                AlphaMod(_) => "a:alphaMod",
+                AlphaOff(_) => "a:alphaOff",
+                Comp => "a:comp",
+                Inv => "a:inv",
+                Gray => "a:gray",
+                Gamma => "a:gamma",
+                InvGamma => "a:invGamma",
+            };
+            writer.start_element(name);
+            if let Some(value) = transform.xml_value() {
+                writer.attribute("val", &value);
+            }
+            writer.end_element();
+        }
+    } else if name == "a:schemeClr" {
+        if let Some(tint) = nonempty(color.theme_tint.as_deref()) {
+            writer
+                .start_element("a:tint")
+                .attribute("val", tint)
+                .end_element();
+        } else if let Some(shade) = nonempty(color.theme_shade.as_deref()) {
+            writer
+                .start_element("a:shade")
+                .attribute("val", shade)
+                .end_element();
+        }
+    }
+    writer.end_element();
+}
+
+pub(crate) fn write_shading(writer: &mut XmlWriter, shading: Option<&ShadingProperties>) {
+    let Some(shading) = shading else {
+        return;
+    };
+    writer
+        .start_element("w:shd")
+        .attribute("w:val", shading.pattern.as_deref().unwrap_or("clear"));
+    if let Some(rgb) = shading
+        .color
+        .as_ref()
+        .and_then(|color| color.rgb.as_deref())
+    {
+        writer.attribute("w:color", rgb);
+    } else if shading.color.as_ref().and_then(|color| color.auto) == Some(true) {
+        writer.attribute("w:color", "auto");
+    }
+    if let Some(rgb) = shading.fill.as_ref().and_then(|color| color.rgb.as_deref()) {
+        writer.attribute("w:fill", rgb);
+    } else if shading.fill.as_ref().and_then(|color| color.auto) == Some(true) {
+        writer.attribute("w:fill", "auto");
+    }
+    if let Some(fill) = shading.fill.as_ref() {
+        optional_nonempty_attr(writer, "w:themeFill", fill.theme_color.as_deref());
+        optional_nonempty_attr(writer, "w:themeFillTint", fill.theme_tint.as_deref());
+        optional_nonempty_attr(writer, "w:themeFillShade", fill.theme_shade.as_deref());
+    }
+    writer.end_element();
+}
+
+fn write_color_element(writer: &mut XmlWriter, color: Option<&ColorValue>) {
+    let Some(color) = color else {
+        return;
+    };
+    if color.auto != Some(true)
+        && nonempty(color.rgb.as_deref()).is_none()
+        && nonempty(color.theme_color.as_deref()).is_none()
+        && nonempty(color.theme_tint.as_deref()).is_none()
+        && nonempty(color.theme_shade.as_deref()).is_none()
+    {
+        return;
+    }
+    writer.start_element("w:color");
+    if color.auto == Some(true) {
+        writer.attribute("w:val", "auto");
+    } else if let Some(rgb) = nonempty(color.rgb.as_deref()) {
+        writer.attribute("w:val", rgb);
+    }
+    optional_nonempty_attr(writer, "w:themeColor", color.theme_color.as_deref());
+    optional_nonempty_attr(writer, "w:themeTint", color.theme_tint.as_deref());
+    optional_nonempty_attr(writer, "w:themeShade", color.theme_shade.as_deref());
+    writer.end_element();
+}
+
+fn write_extent(writer: &mut XmlWriter, width: f64, height: f64) {
+    writer
+        .start_element("wp:extent")
+        .attribute("cx", &int_attr(Some(width)))
+        .attribute("cy", &int_attr(Some(height)))
+        .end_element();
+}
+
+/// The wrap distances the drawing authored; an absent one stays absent.
+fn write_distances(writer: &mut XmlWriter, wrap: Option<&ImageWrap>) {
+    let Some(wrap) = wrap else {
+        return;
+    };
+    for (name, value) in [
+        ("distT", wrap.dist_t),
+        ("distB", wrap.dist_b),
+        ("distL", wrap.dist_l),
+        ("distR", wrap.dist_r),
+    ] {
+        if value.is_some_and(f64::is_finite) {
+            writer.attribute(name, &int_attr(value));
+        }
+    }
+}
+
+fn write_effect_extent(writer: &mut XmlWriter, padding: Option<&crate::image::ImagePadding>) {
+    let Some(padding) = padding else {
+        return;
+    };
+    writer
+        .start_element("wp:effectExtent")
+        .attribute("l", &int_attr(padding.left))
+        .attribute("t", &int_attr(padding.top))
+        .attribute("r", &int_attr(padding.right))
+        .attribute("b", &int_attr(padding.bottom))
+        .end_element();
+}
+
+fn drawing_id(source: Option<&str>, context: &mut SerializerContext) -> String {
+    nonempty(source)
+        .map(str::to_owned)
+        .unwrap_or_else(|| context.allocate_drawing_id())
+}
+
+pub(crate) fn normalized_tracked_id(id: f64) -> String {
+    if id.is_finite() && id >= 0.0 && id.fract() == 0.0 {
+        js_number(id)
+    } else {
+        "0".to_owned()
+    }
+}
+
+pub(crate) fn nonempty(value: Option<&str>) -> Option<&str> {
+    value.filter(|value| !value.is_empty())
+}
+
+pub(crate) fn nonempty_trimmed(value: &str) -> Option<&str> {
+    let value = value.trim();
+    (!value.is_empty()).then_some(value)
+}
+
+pub(crate) fn append_generated(writer: &mut XmlWriter, xml: &str) {
+    writer.append_serialized(xml);
+}
+
+fn strip_wrapper<'a>(value: &'a str, start: &str, end: &str) -> &'a str {
+    value
+        .strip_prefix(start)
+        .and_then(|value| value.strip_suffix(end))
+        .unwrap_or_default()
+}
+
+fn optional_nonempty_attr(writer: &mut XmlWriter, name: &'static str, value: Option<&str>) {
+    if let Some(value) = nonempty(value) {
+        writer.attribute(name, value);
+    }
+}
+
+fn optional_int_attr(writer: &mut XmlWriter, name: &'static str, value: Option<f64>) {
+    if value.is_some() {
+        writer.attribute(name, &int_attr(value));
+    }
+}
+
+fn optional_truthy_scaled_attr(
+    writer: &mut XmlWriter,
+    name: &'static str,
+    value: Option<f64>,
+    scale: f64,
+) {
+    if let Some(value) = value.filter(|value| *value != 0.0) {
+        writer.attribute(name, &int_attr(Some(value * scale)));
+    }
+}
+
+fn optional_integer_element(writer: &mut XmlWriter, name: &'static str, value: Option<f64>) {
+    if value.is_some() {
+        writer
+            .start_element(name)
+            .attribute("w:val", &int_attr(value))
+            .end_element();
+    }
+}
+
+pub(crate) fn empty_attr(
+    writer: &mut XmlWriter,
+    element: &'static str,
+    attr: &'static str,
+    value: &str,
+) {
+    writer
+        .start_element(element)
+        .attribute(attr, value)
+        .end_element();
+}
+
+fn on_off(writer: &mut XmlWriter, name: &'static str, value: Option<bool>) {
+    match value {
+        Some(true) => {
+            writer.start_element(name).end_element();
+        }
+        Some(false) => {
+            writer
+                .start_element(name)
+                .attribute("w:val", "0")
+                .end_element();
+        }
+        None => {}
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::formatting::{FontFamily, RunLanguage, TextFormatting, parse_run_properties};
+    use crate::inline::{Run, RunType};
+    use crate::serializer::s10::SerializerDeterminism;
+    use crate::xml::{ParseBudget, ParseLimits, parse_xml};
+
+    use super::*;
+
+    fn context() -> SerializerContext {
+        SerializerContext::new(&SerializerDeterminism {
+            seed: "0".repeat(64),
+            now: "2000-01-01T00:00:00.000Z".to_owned(),
+        })
+        .unwrap()
+    }
+
+    #[test]
+    fn line_breaks_preserve_explicit_types_and_type_clearing_breaks() {
+        for break_type in [None, Some("textWrapping")] {
+            for clear in [None, Some("all")] {
+                let content = RunContent::Break {
+                    break_type: break_type.map(str::to_owned),
+                    clear: clear.map(str::to_owned),
+                };
+                let expected = if clear.is_some() {
+                    "<w:br w:type=\"textWrapping\" w:clear=\"all\"/>"
+                } else if break_type.is_some() {
+                    "<w:br w:type=\"textWrapping\"/>"
+                } else {
+                    "<w:br/>"
+                };
+                assert_eq!(
+                    serialize_run_content(&content, &mut context()).unwrap(),
+                    expected
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn drawing_color_serialization_preserves_order_and_exact_percentages() {
+        for source in [
+            r#"<a:srgbClr val="4472C4"><a:tint val="50000"/><a:lumMod val="75000"/><a:shade val="12345"/><a:shade val="60000"/><a:hueOff val="-5400000"/><a:comp/></a:srgbClr>"#,
+            r#"<a:schemeClr val="accent1"><a:shade val="50000"/><a:tint val="20000"/></a:schemeClr>"#,
+        ] {
+            let limits = ParseLimits::default();
+            let xml = format!("<a:solidFill>{source}</a:solidFill>");
+            let document = parse_xml(
+                xml.as_bytes(),
+                "drawing.xml",
+                &mut ParseBudget::new(&limits),
+            )
+            .unwrap();
+            let color = crate::drawingml::parse_color_element(document.root()).unwrap();
+            let mut writer = XmlWriter::with_capacity(256);
+            write_drawing_color(&mut writer, Some(&color));
+            assert_eq!(writer.finish(), source);
+        }
+    }
+
+    #[test]
+    fn mixed_color_alpha_survives_serialization() {
+        use ooxml_drawingml::{ColorTransform, resolve_color_value_to_rgba_hex};
+
+        for step in [None, Some(ColorTransform::AlphaMod(0.5))] {
+            let color = ColorValue {
+                rgb: Some("112233".to_owned()),
+                theme_tint: Some("00".to_owned()),
+                alpha: Some(0.25),
+                transforms: std::iter::once(ColorTransform::Tint(1.0))
+                    .chain(step)
+                    .collect(),
+                ..Default::default()
+            };
+            let mut writer = XmlWriter::with_capacity(256);
+            write_drawing_color(&mut writer, Some(&color));
+            let xml = format!("<a:solidFill>{}</a:solidFill>", writer.finish());
+            assert_eq!(xml.contains("<a:alpha "), step.is_none());
+            let limits = ParseLimits::default();
+            let document = parse_xml(
+                xml.as_bytes(),
+                "drawing.xml",
+                &mut ParseBudget::new(&limits),
+            )
+            .unwrap();
+            let reopened = crate::drawingml::parse_color_element(document.root()).unwrap();
+            let expected = if step.is_none() {
+                "#11223340"
+            } else {
+                "#11223380"
+            };
+            assert_eq!(
+                resolve_color_value_to_rgba_hex(Some(&reopened), None).as_deref(),
+                Some(expected)
+            );
+        }
+    }
+
+    #[test]
+    fn picture_presets_survive_drawing_serialization() {
+        for preset in [None, Some("ellipse"), Some("roundRect")] {
+            let mut value = serde_json::to_value(crate::image::placeholder_image("rId1")).unwrap();
+            if let Some(preset) = preset {
+                value["shapeType"] = serde_json::json!(preset);
+            }
+            let image: Image = serde_json::from_value(value).unwrap();
+            let xml = serialize_drawing_content(&image, &mut context()).unwrap();
+            assert!(xml.contains(&format!(
+                r#"<a:prstGeom prst="{}">"#,
+                preset.unwrap_or("rect")
+            )));
+            let limits = crate::xml::ParseLimits::default();
+            let parsed = crate::xml::parse_xml(
+                xml.as_bytes(),
+                "drawing.xml",
+                &mut crate::xml::ParseBudget::new(&limits),
+            )
+            .unwrap();
+            let image = crate::image::parse_drawing(parsed.root().unwrap(), None, None).unwrap();
+            assert_eq!(
+                serde_json::to_value(image).unwrap()["shapeType"].as_str(),
+                preset
+            );
+        }
+    }
+
+    #[test]
+    fn drawing_aspect_lock_serializes_only_when_the_picture_is_locked() {
+        for (locks, locked) in [
+            ("", false),
+            (
+                r#"<wp:cNvGraphicFramePr><a:graphicFrameLocks noChangeAspect="0"/></wp:cNvGraphicFramePr>"#,
+                false,
+            ),
+            (
+                r#"<wp:cNvGraphicFramePr><a:graphicFrameLocks noChangeAspect="1"/></wp:cNvGraphicFramePr>"#,
+                true,
+            ),
+        ] {
+            let source = format!(
+                r#"<w:drawing><wp:inline><wp:extent cx="381000" cy="190500"/><wp:docPr id="1" name="Picture 1"/>{locks}<a:graphic><a:graphicData><pic:pic><pic:blipFill><a:blip r:embed="rId1"/></pic:blipFill></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing>"#
+            );
+            let image = crate::image::parse_drawing(&drawing_root(&source), None, None).unwrap();
+            let xml = serialize_drawing_content(&image, &mut context()).unwrap();
+            assert_eq!(xml.contains(r#"noChangeAspect="1""#), locked, "{xml}");
+        }
+    }
+
+    fn drawing_root(xml: &str) -> crate::xml::XmlElement {
+        let limits = crate::xml::ParseLimits::default();
+        crate::xml::parse_xml(
+            xml.as_bytes(),
+            "drawing.xml",
+            &mut crate::xml::ParseBudget::new(&limits),
+        )
+        .unwrap()
+        .root()
+        .unwrap()
+        .clone()
+    }
+
+    fn start_tag<'a>(xml: &'a str, name: &str) -> &'a str {
+        let start = xml.find(&format!("<{name}")).unwrap();
+        &xml[start..start + xml[start..].find('>').unwrap() + 1]
+    }
+
+    #[test]
+    fn drawings_write_only_the_wrap_distances_and_effect_extent_they_hold() {
+        let picture = r#"<wp:docPr id="1" name="Picture 1"/><a:graphic><a:graphicData><pic:pic><pic:blipFill><a:blip r:embed="rId1"/></pic:blipFill></pic:pic></a:graphicData></a:graphic>"#;
+        for (container, effect, expected) in [
+            ("<wp:inline>", "", "<wp:inline>"),
+            (
+                r#"<wp:inline distT="0" distB="0" distL="0" distR="0">"#,
+                r#"<wp:effectExtent l="0" t="0" r="0" b="0"/>"#,
+                r#"<wp:inline distT="0" distB="0" distL="0" distR="0">"#,
+            ),
+            (
+                r#"<wp:inline distL="114300" distR="114300">"#,
+                r#"<wp:effectExtent l="19050" t="0" r="0" b="0"/>"#,
+                r#"<wp:inline distL="114300" distR="114300">"#,
+            ),
+        ] {
+            let source = format!(
+                r#"<w:drawing>{container}<wp:extent cx="2194560" cy="822960"/>{effect}{picture}</wp:inline></w:drawing>"#
+            );
+            let image = crate::image::parse_drawing(&drawing_root(&source), None, None).unwrap();
+            let xml = serialize_drawing_content(&image, &mut context()).unwrap();
+            assert_eq!(start_tag(&xml, "wp:inline"), expected);
+            if effect.is_empty() {
+                assert!(!xml.contains("wp:effectExtent"), "{xml}");
+            } else {
+                assert_eq!(start_tag(&xml, "wp:effectExtent"), effect);
+            }
+        }
+
+        let source = format!(
+            r#"<w:drawing><wp:anchor distL="114300" simplePos="0" relativeHeight="3" behindDoc="0" locked="0" layoutInCell="1" allowOverlap="1"><wp:simplePos x="0" y="0"/><wp:positionH relativeFrom="column"><wp:posOffset>0</wp:posOffset></wp:positionH><wp:positionV relativeFrom="paragraph"><wp:posOffset>0</wp:posOffset></wp:positionV><wp:extent cx="2194560" cy="822960"/><wp:wrapSquare wrapText="bothSides"/>{picture}</wp:anchor></w:drawing>"#
+        );
+        let image = crate::image::parse_drawing(&drawing_root(&source), None, None).unwrap();
+        let xml = serialize_drawing_content(&image, &mut context()).unwrap();
+        let anchor = start_tag(&xml, "wp:anchor");
+        assert!(
+            anchor.starts_with(r#"<wp:anchor distL="114300" simplePos="0""#),
+            "{anchor}"
+        );
+        assert!(!xml.contains("wp:effectExtent"), "{xml}");
+    }
+
+    #[test]
+    fn inline_shapes_keep_their_effect_extent_and_zero_wrap_distances() {
+        let graphic = r#"<a:graphic><a:graphicData uri="http://schemas.microsoft.com/office/word/2010/wordprocessingShape"><wps:wsp><wps:cNvSpPr/><wps:spPr><a:prstGeom prst="ellipse"><a:avLst/></a:prstGeom></wps:spPr><wps:bodyPr/></wps:wsp></a:graphicData></a:graphic>"#;
+        for (effect, expected) in [
+            ("", None),
+            (
+                r#"<wp:effectExtent l="19050" t="0" r="0" b="0"/>"#,
+                Some(r#"<wp:effectExtent l="19050" t="0" r="0" b="0"/>"#),
+            ),
+        ] {
+            let source = format!(
+                r#"<w:drawing><wp:inline><wp:extent cx="914400" cy="457200"/>{effect}<wp:docPr id="7" name="Shape 7"/>{graphic}</wp:inline></w:drawing>"#
+            );
+            let shape = crate::shape::parse_shape_from_drawing(&drawing_root(&source)).unwrap();
+            let xml = serialize_shape_content(&shape, &mut context()).unwrap();
+            assert_eq!(
+                start_tag(&xml, "wp:inline"),
+                r#"<wp:inline distT="0" distB="0" distL="0" distR="0">"#
+            );
+            match expected {
+                Some(expected) => assert_eq!(start_tag(&xml, "wp:effectExtent"), expected),
+                None => assert!(!xml.contains("wp:effectExtent"), "{xml}"),
+            }
+        }
+    }
+
+    #[test]
+    fn run_bytes_preserve_order_and_escape_all_model_strings() {
+        let run = Run {
+            node_type: RunType::Run,
+            formatting: Some(TextFormatting {
+                style_id: Some("bad\"/><evil&".to_owned()),
+                font_family: Some(FontFamily {
+                    ascii: Some("A&B".to_owned()),
+                    ..FontFamily::default()
+                }),
+                bold: Some(false),
+                italic: Some(true),
+                font_size: Some(23.5),
+                ..TextFormatting::default()
+            }),
+            property_changes: None,
+            content: vec![RunContent::Text {
+                text: " <hello> & ".to_owned(),
+                preserve_space: None,
+            }],
+        };
+        assert_eq!(
+            serialize_run(&run, &mut context()).unwrap(),
+            "<w:r><w:rPr><w:rStyle w:val=\"bad&quot;/&gt;&lt;evil&amp;\"/><w:rFonts w:ascii=\"A&amp;B\"/><w:b w:val=\"0\"/><w:i/><w:sz w:val=\"24\"/></w:rPr><w:t xml:space=\"preserve\"> &lt;hello&gt; &amp; </w:t></w:r>"
+        );
+    }
+
+    #[test]
+    fn run_language_follows_emphasis_in_schema_order() {
+        let formatting = TextFormatting {
+            font_size: Some(20.0),
+            emphasis_mark: Some("dot".to_owned()),
+            language: Some(RunLanguage {
+                latin: Some("en-US".to_owned()),
+                east_asia: Some("ja-JP".to_owned()),
+                bidi: Some("ar-SA".to_owned()),
+            }),
+            ..TextFormatting::default()
+        };
+        assert_eq!(
+            serialize_text_formatting(Some(&formatting)),
+            r#"<w:rPr><w:sz w:val="20"/><w:em w:val="dot"/><w:lang w:val="en-US" w:eastAsia="ja-JP" w:bidi="ar-SA"/></w:rPr>"#
+        );
+    }
+
+    #[test]
+    fn run_language_survives_parse_and_serialize() {
+        for xml in [
+            r#"<w:rPr><w:b/><w:sz w:val="20"/><w:lang w:val="de-DE" w:eastAsia="zh-CN" w:bidi="he-IL"/></w:rPr>"#,
+            r#"<w:rPr><w:lang w:eastAsia="ko-KR"/></w:rPr>"#,
+        ] {
+            let limits = ParseLimits::default();
+            let parsed =
+                parse_xml(xml.as_bytes(), "run.xml", &mut ParseBudget::new(&limits)).unwrap();
+            let formatting = parse_run_properties(parsed.root(), None);
+            assert_eq!(serialize_text_formatting(formatting.as_ref()), xml);
+        }
+    }
+
+    #[test]
+    fn theme_fonts_survive_parse_and_serialize() {
+        let xml = r#"<w:rPr><w:rFonts w:asciiTheme="minorHAnsi" w:hAnsiTheme="minorHAnsi" w:eastAsiaTheme="minorEastAsia" w:cstheme="minorBidi"/></w:rPr>"#;
+        let limits = ParseLimits::default();
+        let parsed = parse_xml(xml.as_bytes(), "run.xml", &mut ParseBudget::new(&limits)).unwrap();
+        let formatting = parse_run_properties(parsed.root(), None);
+        assert_eq!(serialize_text_formatting(formatting.as_ref()), xml);
+    }
+
+    #[test]
+    fn generated_drawing_ids_consume_the_seeded_allocator() {
+        let mut first = context();
+        let mut second = context();
+        let first_id = first.allocate_drawing_id();
+        assert_eq!(first_id, second.allocate_drawing_id());
+        let next_id = first.allocate_drawing_id();
+        assert_eq!(next_id, second.allocate_drawing_id());
+        assert_ne!(first_id, next_id);
+    }
+
+    #[test]
+    fn deleted_vml_group_replays_its_intact_textbox_xml() {
+        let xml = r#"<w:pict><v:group><v:shape><v:imagedata r:id="rId1"/></v:shape><v:rect><v:textbox><w:txbxContent><w:p><w:r><w:t>inner</w:t></w:r></w:p></w:txbxContent></v:textbox></v:rect></v:group></w:pict>"#;
+        let run = Run {
+            node_type: RunType::Run,
+            formatting: None,
+            property_changes: None,
+            content: vec![RunContent::OpaqueDrawing {
+                kind: "pict".to_owned(),
+                xml: xml.to_owned(),
+                preview: None,
+                previews: vec![crate::image::placeholder_image("rId1")],
+                text_box: None,
+            }],
+        };
+        let saved = serialize_deleted_run(&run, &mut context()).unwrap();
+        assert!(saved.contains(xml));
+        assert!(!saved.contains("w:delText"));
+    }
+
+    #[test]
+    fn deleted_text_rewrite_does_not_corrupt_tab_elements() {
+        let run = Run {
+            node_type: RunType::Run,
+            formatting: None,
+            property_changes: None,
+            content: vec![
+                RunContent::Tab,
+                RunContent::Text {
+                    text: " deleted ".to_owned(),
+                    preserve_space: None,
+                },
+            ],
+        };
+        assert_eq!(
+            serialize_deleted_run(&run, &mut context()).unwrap(),
+            "<w:r><w:tab/><w:delText xml:space=\"preserve\"> deleted </w:delText></w:r>"
+        );
+    }
+}

@@ -1,0 +1,23 @@
+{
+  "datum": "2026-11-03",
+  "bevindingen": [
+    {
+      "run": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41547192351",
+      "fout": "De lus voor stijlbronnen overschreef de pakketnaam met src/stijl/bron.json. Daardoor kon het ZIP-bestand niet worden aangemaakt.",
+      "herstel": "Een afzonderlijke variabele voor het stijlpad behoudt de pakketnaam.",
+      "bewijs": "De nieuwe proef voert het echte verpakkingsscript uit met minimale bronbestanden en vervangt alleen de externe programma-antwoorden. Zij faalt op de oude bron met dezelfde FileNotFoundError en slaagt na de correctie. ZIP-inhoud, oorspronkelijke stijlbytes, naam, controlehash en GitHub-uitvoer worden onafhankelijk gelezen."
+    },
+    {
+      "run": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41547192442",
+      "fout": "De Linux-vensterproef weigerde een bestaande uitvoermap uit de Cargo-cache. De eerder bewaarde bewijsbestanden hoorden niet bij deze uitvoering.",
+      "herstel": "De workflow geeft elke run en elke herhaalde poging een afzonderlijke uitvoermap. De proef blijft bestaande mappen weigeren.",
+      "bewijs": "De gecorrigeerde GitHub-vensterproef moet op de nieuwe bron nog worden uitgevoerd; oude beelden gelden niet als nieuw bewijs."
+    }
+  ],
+  "lokale_controles": {
+    "python_native_scripts": "9 proeven geslaagd",
+    "docproeven_volledige_werkruimte_met_desktopcode": "geslaagd; geen uitvoerbare documentatievoorbeelden aanwezig",
+    "volledige_platformverpakking": "opnieuw in CI uit te voeren"
+  },
+  "onderscheid": "De geslaagde Tauri-uitgaveronde 41547290342 voor 2026.45.6 staat los van deze onvoltooide Rust-previewroute."
+}

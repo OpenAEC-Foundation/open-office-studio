@@ -1,0 +1,2870 @@
+{
+  "versie": "2026.45.32",
+  "rust_kern": "2026.45.0-alpha.52",
+  "basiscommit": "9d0c1161d86ff426d35e118bb0f621c7cc917ae2",
+  "programma_sha256": "7a0b1048263df705e0c3a1977b73c95b898cb44a595d06434b8eb451c635b173",
+  "grens": "Native snapshotencoder in de bestaande Tauri-interface; geen volledige Rust-interface, suite-, platform- of algemene snelheidsacceptatie.",
+  "bewijzen": {
+    "native-voor-afkeuring": {
+      "pad": "writer-snapshotencoder/native-voor-afkeuring.json.gz",
+      "rapport_sha256": "25c25afe2b23b569fa7f258f5bd8febaa469b2b6216a7867503dd2c3aca3ddb8",
+      "gzip_sha256": "0daa39a3601f57cd907832c1cc838b307589f65035bdbf4427d1a255939de9b3",
+      "geslaagd": false
+    },
+    "native-500-na": {
+      "pad": "writer-snapshotencoder/native-500-na.json.gz",
+      "rapport_sha256": "593234b0ece25e3b871f1f51e091edfdcea6eddb2168f905547961e7753611cf",
+      "gzip_sha256": "942d73255ff0ca6dda0df401fa146d5df9572edfb7a6f4ce9eda3cf3ec045981",
+      "geslaagd": true
+    },
+    "native-tekst-na": {
+      "pad": "writer-snapshotencoder/native-tekst-na.json.gz",
+      "rapport_sha256": "78c902785bc489ca1dc73c209244dc8103aefdad3ff3a59bba57df6a76fa060f",
+      "gzip_sha256": "44ec7adb3744f5c5ebde2d790a484103dad469883747283c04d1d2b27e2f62aa",
+      "geslaagd": true
+    },
+    "native-acht-na": {
+      "pad": "writer-snapshotencoder/native-acht-na.json.gz",
+      "rapport_sha256": "32bf72488d6af369697dd1b96bdaa1d7b8e24110f610a5cb9a440eb1efeb8b76",
+      "gzip_sha256": "c919fa92e809d41dd4c055ce42944d52b105164f3878ccea76ac3eb8254eb6a0",
+      "geslaagd": true
+    },
+    "native-terugval": {
+      "pad": "writer-snapshotencoder/native-terugval.json.gz",
+      "rapport_sha256": "1bc49da80f69741c5eea3f2d800eb87d10bfdccf92628e8bfd59536a35b439e8",
+      "gzip_sha256": "6a4a310fd05b5342c7d541dc705c1d31933bba0a24d8f05611d47f38fa9c28ec",
+      "geslaagd": true
+    }
+  },
+  "bronbestanden_sha256": {
+    "apps/database-studio/src-tauri/Cargo.lock": "546ffc70fcf0d19b3ed93aa9707bdca2ebc677207d41c8ccff5c980655821f77",
+    "apps/database-studio/src-tauri/Cargo.toml": "ace28d3a35fd59b666124a71b23ba8192bf826cb9e01792553285acf53f8d2b0",
+    "apps/database-studio/src-tauri/tauri.conf.json": "f1ffde9b41d3fd9839ce6c0eda94af2b64e936eb6e834110f0e9929880fc6373",
+    "package.json": "beec1e52f7949c44d7cba5649af0f2631ced37e04298714169669b29c1751390",
+    "scripts/test-writer-lang-native.py": "7b5c6907088435440f4c36c2b6d77cce9faa6af39520e66b8637020a29be2723",
+    "src-tauri/Cargo.lock": "771fe67acde165859f22cec7d2e0ae21bd311bd2dabd9df79e65418df66351ff",
+    "src-tauri/Cargo.toml": "1403f55d22c758d6fd7a24381db8dfcb63dd62af0a69f2a8ae64bb25247bb45e",
+    "src-tauri/tauri.conf.json": "b5b1e34f4180f437f8386b7424c998fe81fab3a7cee31dfc4313b7a263c758fe",
+    "src/tekst/bewerken/rustPlakken.ts": "ed2857eaa0472eb89080083e7daeef221b9f31b03f8494bc14f68e58aa8992e2",
+    "versie.json": "48259d0db0761cb5ebd351d12d5da6e3e1f1d7985b00d786a839695740baa1f9",
+    "src/tekst/bewerken/binaireSnapshot.ts": "bdf6f50b353820f479f057ebc8717d57120214c626be6659024795d981bfe5c2",
+    "src/tekst/bewerken/binaireSnapshot.test.ts": "360fa0f8ddd4fd58ce1ffef8ca4955bb80144e31269dedf5c69c28ad874c1bd5",
+    "scripts/profiel-writer-invoer-native.py": "a5e34f114f7bc6dd5a55ca03cf20b7839443ec087ce1a84c134170657a89dcbb"
+  },
+  "logbestanden_sha256": {
+    "frontendtests.json": "3f819f2f14780db97e63850bb53cc670ecc5373c537f4468422a28566e7e8c2f",
+    "frontendtests.log": "d79342c2f62dc48db57cffb9e3897abf482b08098984b14def53f90ba4fb5b63",
+    "gerichte-tests.json": "009a19da36fb2770dad02cc4ccb0703204f5e05e8379dc51277aea9be955ee46",
+    "gerichte-tests.log": "2241e55ff5986ecedc38c99b3e3c8621018c3e1a78bc34493d763ea5e8392ba5",
+    "typescript.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "python-tests-final.log": "c5119cd3301737b19f839f8415cc3c9aa1d956cca5bc2847f41848d813ada0a0",
+    "desktop-bouw.log": "490c0d4a2c4a00b7b172fc2c94c87bccf1607a31b98c7943bc92d81b4a0906a9",
+    "weekversie.log": "0806e63e9c80f63ee90649f33123b4fc652c39968d5c4f86d3e37023d1ed02ef",
+    "versiecheck.log": "4fd2dc0d5431c4fa54a1da2573f7dae1b78c1d0835be001ecc631a665092028e",
+    "native-terugval-omgeving-afkeuring.log": "5050bae71a674e91864cc4bff009ece4f2da8dbfd66cbb1397c5ec922c6f6d75",
+    "python-tests-definitief.log": "e14672d5fb18f1493b60d7dc86f43d483f1487c98b48445316e6b29765bc7f86"
+  },
+  "controles": {
+    "frontendtests": 1761,
+    "frontendbestanden": 165,
+    "nieuwe_encoderproeven": 9,
+    "python_tests": 64,
+    "typescript": true,
+    "weekversie": true,
+    "linux_productiebouw": true,
+    "rust_kern_gewijzigd": false,
+    "nieuwe_lokale_Rust_kernproeven": "Niet herhaald: Rust-bron en kernversie ongewijzigd; eerdere alpha52-proeven hebben eigen bewijs.",
+    "alle_platformcontroles_op_deze_bron_afgesloten": false
+  },
+  "afzonderlijke_omzetting": {
+    "programma_sha256": "3cbdde0420f2e6fab83a374c609a75e86db704cfd21ff95dd7fcbefd5d0ffe20",
+    "script_sha256": "0c82a5a228dcff6c65eae84c49dbc65626109d57442cf60c4a502063f7aede83",
+    "gegevens": {
+      "native_toBase64": true,
+      "bytes": 908357,
+      "controles": [
+        0,
+        1,
+        2,
+        3,
+        24575,
+        24576,
+        24577,
+        908357
+      ],
+      "metingen": [
+        {
+          "ronde": 0,
+          "route": "oud",
+          "ms": 60,
+          "tekens": 1211144
+        },
+        {
+          "ronde": 0,
+          "route": "native",
+          "ms": 1,
+          "tekens": 1211144
+        },
+        {
+          "ronde": 0,
+          "route": "btoa",
+          "ms": 87,
+          "tekens": 1211144
+        },
+        {
+          "ronde": 1,
+          "route": "btoa",
+          "ms": 66,
+          "tekens": 1211144
+        },
+        {
+          "ronde": 1,
+          "route": "native",
+          "ms": 1,
+          "tekens": 1211144
+        },
+        {
+          "ronde": 1,
+          "route": "oud",
+          "ms": 33,
+          "tekens": 1211144
+        },
+        {
+          "ronde": 2,
+          "route": "oud",
+          "ms": 38,
+          "tekens": 1211144
+        },
+        {
+          "ronde": 2,
+          "route": "native",
+          "ms": 1.000000000001819,
+          "tekens": 1211144
+        },
+        {
+          "ronde": 2,
+          "route": "btoa",
+          "ms": 66,
+          "tekens": 1211144
+        },
+        {
+          "ronde": 3,
+          "route": "btoa",
+          "ms": 49,
+          "tekens": 1211144
+        },
+        {
+          "ronde": 3,
+          "route": "native",
+          "ms": 0,
+          "tekens": 1211144
+        },
+        {
+          "ronde": 3,
+          "route": "oud",
+          "ms": 32.99999999999636,
+          "tekens": 1211144
+        },
+        {
+          "ronde": 4,
+          "route": "oud",
+          "ms": 31.000000000003638,
+          "tekens": 1211144
+        },
+        {
+          "ronde": 4,
+          "route": "native",
+          "ms": 0,
+          "tekens": 1211144
+        },
+        {
+          "ronde": 4,
+          "route": "btoa",
+          "ms": 58.99999999999636,
+          "tekens": 1211144
+        }
+      ]
+    },
+    "grens": "De bestaande base64-bibliotheek, native encoder en btoa-blokken op dezelfde 908.357 bytes; vijf afwisselende rondes in echte WebKit. btoa is trager en wordt niet gebruikt. Geen totale invoer- of CPU-duurmeting."
+  },
+  "native-voor-afkeuring": {
+    "geslaagd": false,
+    "programma_sha256": "3cbdde0420f2e6fab83a374c609a75e86db704cfd21ff95dd7fcbefd5d0ffe20",
+    "script_sha256": "7b5c6907088435440f4c36c2b6d77cce9faa6af39520e66b8637020a29be2723",
+    "invoer_tot_bron_en_golven_ms": 3571,
+    "native_base64": {
+      "beschikbaar": true,
+      "calls": 0,
+      "bytes": 0,
+      "ms": 0
+    },
+    "rust_teksttransport": {
+      "aanvragen": [
+        " ",
+        "E",
+        "e",
+        "n",
+        " ",
+        "p",
+        "roef",
+        "zi",
+        "n."
+      ],
+      "antwoorden": 9,
+      "voorbereiding_ms": [
+        26,
+        22,
+        41,
+        43,
+        32,
+        23,
+        42,
+        25,
+        40
+      ],
+      "antwoord_ms": [
+        54.00000000000182,
+        65,
+        411,
+        76,
+        166,
+        47,
+        72,
+        47.99999999999636,
+        239
+      ],
+      "native_encoder_bevestigd": 0,
+      "invoke_wijzigbaar": false
+    },
+    "fout": "AssertionError('Een native tekstbatch gebruikt de ingebouwde encoder niet')"
+  },
+  "native-500-na": {
+    "geslaagd": true,
+    "programma_sha256": "7a0b1048263df705e0c3a1977b73c95b898cb44a595d06434b8eb451c635b173",
+    "script_sha256": "7b5c6907088435440f4c36c2b6d77cce9faa6af39520e66b8637020a29be2723",
+    "invoer_tot_bron_en_golven_ms": 2300,
+    "native_base64": {
+      "beschikbaar": true,
+      "calls": 7,
+      "bytes": 6428391,
+      "ms": 4.000000000001819
+    },
+    "rust_teksttransport": {
+      "aanvragen": [
+        " ",
+        "Een ",
+        "p",
+        "r",
+        "oefz",
+        "in",
+        "."
+      ],
+      "antwoorden": 7,
+      "voorbereiding_ms": [
+        31,
+        22,
+        36,
+        29,
+        42,
+        44,
+        38
+      ],
+      "antwoord_ms": [
+        52,
+        58,
+        403.00000000000364,
+        54,
+        289,
+        164,
+        62
+      ],
+      "native_encoder_bevestigd": 7,
+      "invoke_wijzigbaar": false
+    },
+    "stappen": [
+      {
+        "naam": "beginbron",
+        "alinea_aantal": 500,
+        "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. ",
+        "exact": true
+      },
+      {
+        "naam": "getypte_bron",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "selectie_en_backspace",
+        "alinea_aantal": 500,
+        "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+        "exact": true
+      },
+      {
+        "naam": "undo",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "redo",
+        "alinea_aantal": 500,
+        "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+        "exact": true
+      },
+      {
+        "naam": "hersteld_voor_bewaren",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "native_bewaaractie_onafhankelijk",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "nieuw_proces_heropend",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "verder_na_later",
+        "alinea_aantal": 500,
+        "tekst_sha256": "fd7d825b22dee866b9680b7eda810589f0bcff6cc43796092675cc7d54c0126c",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin. Verder.",
+        "exact": true
+      },
+      {
+        "naam": "herstelde_kopie",
+        "alinea_aantal": 500,
+        "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+        "exact": true
+      },
+      {
+        "naam": "verder_in_herstelde_kopie",
+        "alinea_aantal": 500,
+        "tekst_sha256": "2479dfa76e6a51382e07e955c4058dcb85f9d02950bee6b116734b457cb13c75",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin. Hersteld.",
+        "exact": true
+      }
+    ],
+    "geheugenrondes": 20,
+    "frame_tussenpozen_ms": {
+      "aantal": 42,
+      "maximum": 232,
+      "p95": 170,
+      "reeks": [
+        1,
+        5,
+        6,
+        25,
+        26,
+        118,
+        46,
+        12,
+        4,
+        2,
+        15,
+        2,
+        81,
+        170,
+        83,
+        198,
+        34,
+        22,
+        232,
+        158,
+        152,
+        23,
+        14,
+        11,
+        52,
+        73,
+        157,
+        140,
+        79,
+        67,
+        137,
+        54,
+        9,
+        15,
+        3,
+        25,
+        3,
+        110,
+        89,
+        16,
+        20,
+        26
+      ],
+      "omvang": "requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS."
+    },
+    "native_leesaanroepen": {
+      "zelfde_sessie": true,
+      "worker_berichten": {
+        "applyUpdate": 7,
+        "sync": 8,
+        "buildFrame": 2
+      },
+      "readParagraphs": {
+        "calls": 6,
+        "ms": 25
+      },
+      "paragraphSpans": {
+        "calls": 10,
+        "ms": 48.99999999999454
+      },
+      "layoutDocumentWithRegionsRetainedJson": {
+        "calls": 0,
+        "ms": 0
+      },
+      "layoutFontRequirementsJson": {
+        "calls": 7,
+        "ms": 173
+      },
+      "residentWorkerSnapshot": {
+        "calls": 8,
+        "ms": 5
+      }
+    }
+  },
+  "native-terugval": {
+    "geslaagd": true,
+    "programma_sha256": "7a0b1048263df705e0c3a1977b73c95b898cb44a595d06434b8eb451c635b173",
+    "script_sha256": "de867d4146db9c77dcda6ec89c3a353c13e548971f392b02d6485008e6a32319",
+    "invoer_tot_bron_en_golven_ms": 3557,
+    "native_base64": {
+      "beschikbaar": false,
+      "calls": 0,
+      "bytes": 0,
+      "ms": 0
+    },
+    "rust_teksttransport": {
+      "aanvragen": [
+        " ",
+        "E",
+        "e",
+        "n ",
+        "p",
+        "ro",
+        "ef",
+        "z",
+        "in."
+      ],
+      "antwoorden": 9,
+      "voorbereiding_ms": [
+        29,
+        25,
+        32,
+        21,
+        44,
+        35,
+        38,
+        25,
+        22
+      ],
+      "antwoord_ms": [
+        53.99999999999818,
+        61,
+        382,
+        44,
+        65.99999999999636,
+        189.99999999999636,
+        73,
+        61,
+        49.00000000000364
+      ],
+      "native_encoder_bevestigd": 0,
+      "invoke_wijzigbaar": false
+    },
+    "opzet": "Eigen kopie van de canonieke 500-paginaproef, met uitsluitend repo-/importpaden aangepast en vóór de invoer Uint8Array.prototype.toBase64 in het eigen appvenster op undefined gezet. Volledige bron-, selectie-, geschiedenis-, bewaar- en heropencontroles behouden.",
+    "eigen_proefscript_sha256": "de867d4146db9c77dcda6ec89c3a353c13e548971f392b02d6485008e6a32319"
+  },
+  "grote_gui": {
+    "rondes": 8,
+    "laatste_ms": 20052,
+    "native": {
+      "opdrachten": [
+        {
+          "requestId": "3c4d3ef8-e85c-46dd-8855-ea3d3b081b5b",
+          "clientId": 917102506,
+          "snapshotTekens": 3655728,
+          "gereed": true,
+          "desktopMs": 13719.000000000007,
+          "preparationMs": 13497,
+          "bronbinding": true,
+          "deltaBytes": 2493322
+        }
+      ],
+      "updates": [
+        {
+          "bytes": 2493322
+        }
+      ]
+    },
+    "eventlus": {
+      "timer_ms": 16,
+      "waarnemingen": 677,
+      "grootste_tussenruimte_ms": 4783.999999999993,
+      "p95_tussenruimte_ms": 22,
+      "betekenis": "Hoofdthreadtimer tijdens de plakactie; geen FPS- of algemene responsiviteitsacceptatie."
+    },
+    "eindinhoud": {
+      "hoofdtekstalineas": 1793,
+      "tabellen": 256,
+      "cellen": 1536
+    },
+    "volledige_layout": {
+      "final": true,
+      "versie_actueel": true,
+      "layout_actief": true,
+      "paginas": 129,
+      "wacht_ms": 1411
+    },
+    "onafhankelijk_docx": {
+      "exact": true,
+      "sha256": "76bfe2ecd802aa793fbd661df31ba43826f6d5377f026b240e645cd0804a042a",
+      "bytes": 73288,
+      "body_met_opmaak_sha256": "0808d3dcf34c8251d371d9e4c6eda470ed2597acd850062b5b5f70169333a302",
+      "normalisatie": "Alleen paraId/textId en rsid-attributen verwijderd; tekst, run- en alineaopmaak, hyperlinks en tabelstructuur blijven in de bodyhash."
+    },
+    "tussenbewaring": {
+      "na_ronde": 7,
+      "bytes": 54984,
+      "sha256": "79b4f208a5a88d1f22791feea1882d8e30fcfd6a4d7813f803fb639c54cb7593"
+    },
+    "verwerpen_ms": 940,
+    "nieuw_document_na_verwerpen": true,
+    "gui_fouten": [],
+    "console_fouten": [],
+    "grens": "Eigen documentkopie, acht rustige opeenvolgende plakrondes met tussentijds bewaren en verwerpen; geen betrouwbare nieuwe grote-plaksnelheidswinst tegenover 45.31."
+  },
+  "profiel_voor": {
+    "programma_sha256": "3cbdde0420f2e6fab83a374c609a75e86db704cfd21ff95dd7fcbefd5d0ffe20",
+    "script_sha256": "a5e34f114f7bc6dd5a55ca03cf20b7839443ec087ce1a84c134170657a89dcbb",
+    "bron_sha256": "a261d6064a34bca6cf1664be4ff0e87b560b405172261ef6eb304e26d7cdfda2",
+    "invoer_en_inspectie_ms": 3717,
+    "samenvatting": {
+      "hoofdthread": {
+        "events": 2,
+        "voltooide_profielen": 1,
+        "samples": 1905,
+        "script_intervallen_unie_s": null,
+        "interval_gebeurtenissen": 0,
+        "top": [
+          [
+            [
+              "join",
+              "",
+              -1,
+              -1
+            ],
+            171
+          ],
+          [
+            [
+              "f",
+              "tauri://localhost/assets/editors-LhYxuTLr.js",
+              72,
+              146974
+            ],
+            128
+          ],
+          [
+            [
+              "getBoundingClientRect",
+              "",
+              -1,
+              -1
+            ],
+            104
+          ],
+          [
+            [
+              "parse",
+              "",
+              -1,
+              -1
+            ],
+            101
+          ],
+          [
+            [
+              "p",
+              "tauri://localhost/assets/editors-LhYxuTLr.js",
+              72,
+              147038
+            ],
+            70
+          ],
+          [
+            [
+              "stringify",
+              "",
+              -1,
+              -1
+            ],
+            51
+          ],
+          [
+            [
+              "fill",
+              "",
+              -1,
+              -1
+            ],
+            43
+          ],
+          [
+            [
+              ".wasm-function[555]",
+              "",
+              -1,
+              -1
+            ],
+            27
+          ],
+          [
+            [
+              "remove",
+              "",
+              -1,
+              -1
+            ],
+            23
+          ],
+          [
+            [
+              "fetch",
+              "",
+              -1,
+              -1
+            ],
+            22
+          ],
+          [
+            [
+              "safeInteger",
+              "tauri://localhost/assets/index-MwzNYq-P.js",
+              141,
+              123613
+            ],
+            22
+          ],
+          [
+            [
+              "value",
+              "tauri://localhost/assets/index-MwzNYq-P.js",
+              141,
+              121251
+            ],
+            22
+          ],
+          [
+            [
+              "clearRect",
+              "",
+              -1,
+              -1
+            ],
+            22
+          ],
+          [
+            [
+              "Uint8Array",
+              "",
+              -1,
+              -1
+            ],
+            21
+          ],
+          [
+            [
+              ".wasm-function[2868]",
+              "",
+              -1,
+              -1
+            ],
+            19
+          ],
+          [
+            [
+              ".wasm-function[2220]",
+              "",
+              -1,
+              -1
+            ],
+            19
+          ],
+          [
+            [
+              "id",
+              "tauri://localhost/assets/index-MwzNYq-P.js",
+              9,
+              35389
+            ],
+            17
+          ],
+          [
+            [
+              "Mu",
+              "tauri://localhost/assets/index-MwzNYq-P.js",
+              143,
+              13310
+            ],
+            16
+          ],
+          [
+            [
+              "querySelectorAll",
+              "",
+              -1,
+              -1
+            ],
+            14
+          ],
+          [
+            [
+              ".wasm-function[8558]",
+              "",
+              -1,
+              -1
+            ],
+            14
+          ],
+          [
+            [
+              ".wasm-function[30]",
+              "",
+              -1,
+              -1
+            ],
+            13
+          ],
+          [
+            [
+              "/[\\uD800-\\uDBFF](?![\\uDC00-\\uDFFF])|(?<![\\uD800-\\uDBFF])[\\uDC00-\\uDFFF]/",
+              "",
+              -1,
+              -1
+            ],
+            13
+          ],
+          [
+            [
+              "drawImage",
+              "",
+              -1,
+              -1
+            ],
+            13
+          ],
+          [
+            [
+              ".wasm-function[10715]",
+              "",
+              -1,
+              -1
+            ],
+            12
+          ],
+          [
+            [
+              ".wasm-function[2299]",
+              "",
+              -1,
+              -1
+            ],
+            11
+          ]
+        ],
+        "inclusief": [
+          [
+            [
+              "eM",
+              "tauri://localhost/assets/index-MwzNYq-P.js",
+              9,
+              125911
+            ],
+            730
+          ],
+          [
+            [
+              "gM",
+              "tauri://localhost/assets/index-MwzNYq-P.js",
+              9,
+              139301
+            ],
+            662
+          ],
+          [
+            [
+              "Cp",
+              "tauri://localhost/assets/index-MwzNYq-P.js",
+              9,
+              137514
+            ],
+            662
+          ],
+          [
+            [
+              "plak",
+              "tauri://localhost/assets/editors-LhYxuTLr.js",
+              72,
+              175195
+            ],
+            532
+          ],
+          [
+            [
+              "pM",
+              "tauri://localhost/assets/index-MwzNYq-P.js",
+              9,
+              137929
+            ],
+            528
+          ],
+          [
+            [
+              "",
+              "tauri://localhost/assets/index-MwzNYq-P.js",
+              9,
+              139365
+            ],
+            528
+          ],
+          [
+            [
+              "pte",
+              "tauri://localhost/assets/index-MwzNYq-P.js",
+              9,
+              132454
+            ],
+            424
+          ],
+          [
+            [
+              "dM",
+              "tauri://localhost/assets/index-MwzNYq-P.js",
+              9,
+              132204
+            ],
+            424
+          ],
+          [
+            [
+              "tM",
+              "tauri://localhost/assets/index-MwzNYq-P.js",
+              9,
+              127046
+            ],
+            424
+          ],
+          [
+            [
+              "wasm-stub",
+              "",
+              -1,
+              -1
+            ],
+            397
+          ],
+          [
+            [
+              "wp",
+              "tauri://localhost/assets/index-MwzNYq-P.js",
+              9,
+              97090
+            ],
+            388
+          ],
+          [
+            [
+              "h",
+              "tauri://localhost/assets/editors-LhYxuTLr.js",
+              72,
+              147168
+            ],
+            364
+          ],
+          [
+            [
+              "Xx",
+              "tauri://localhost/assets/index-MwzNYq-P.js",
+              9,
+              134706
+            ],
+            350
+          ],
+          [
+            [
+              "Qx",
+              "tauri://localhost/assets/index-MwzNYq-P.js",
+              9,
+              135694
+            ],
+            346
+          ],
+          [
+            [
+              "oo",
+              "tauri://localhost/assets/index-MwzNYq-P.js",
+              9,
+              120516
+            ],
+            342
+          ],
+          [
+            [
+              "WD",
+              "tauri://localhost/assets/index-MwzNYq-P.js",
+              9,
+              120657
+            ],
+            342
+          ],
+          [
+            [
+              "Zx",
+              "tauri://localhost/assets/index-MwzNYq-P.js",
+              9,
+              129449
+            ],
+            315
+          ],
+          [
+            [
+              "cte",
+              "tauri://localhost/assets/index-MwzNYq-P.js",
+              9,
+              129940
+            ],
+            314
+          ],
+          [
+            [
+              "iM",
+              "tauri://localhost/assets/index-MwzNYq-P.js",
+              9,
+              130921
+            ],
+            314
+          ],
+          [
+            [
+              "Qk",
+              "tauri://localhost/assets/index-MwzNYq-P.js",
+              9,
+              50509
+            ],
+            268
+          ],
+          [
+            [
+              "O",
+              "tauri://localhost/assets/index-MwzNYq-P.js",
+              2,
+              12717
+            ],
+            212
+          ],
+          [
+            [
+              "vx",
+              "tauri://localhost/assets/index-MwzNYq-P.js",
+              9,
+              73789
+            ],
+            205
+          ],
+          [
+            [
+              "mM",
+              "tauri://localhost/assets/index-MwzNYq-P.js",
+              9,
+              138970
+            ],
+            204
+          ],
+          [
+            [
+              "bound mM",
+              "",
+              -1,
+              -1
+            ],
+            204
+          ],
+          [
+            [
+              "p",
+              "tauri://localhost/assets/editors-LhYxuTLr.js",
+              72,
+              147038
+            ],
+            198
+          ],
+          [
+            [
+              "",
+              "tauri://localhost/assets/editors-LhYxuTLr.js",
+              8,
+              79995
+            ],
+            177
+          ],
+          [
+            [
+              "join",
+              "",
+              -1,
+              -1
+            ],
+            171
+          ],
+          [
+            [
+              "",
+              "tauri://localhost/assets/editors-LhYxuTLr.js",
+              12,
+              61516
+            ],
+            148
+          ],
+          [
+            [
+              "",
+              "tauri://localhost/assets/editors-LhYxuTLr.js",
+              12,
+              62728
+            ],
+            148
+          ],
+          [
+            [
+              "bn",
+              "tauri://localhost/assets/editors-LhYxuTLr.js",
+              12,
+              63573
+            ],
+            148
+          ],
+          [
+            [
+              "layout_font_requirements_json",
+              "tauri://localhost/assets/index-MwzNYq-P.js",
+              223,
+              48218
+            ],
+            135
+          ],
+          [
+            [
+              "f",
+              "tauri://localhost/assets/editors-LhYxuTLr.js",
+              72,
+              146974
+            ],
+            128
+          ],
+          [
+            [
+              ".wasm-function[12930]",
+              "",
+              -1,
+              -1
+            ],
+            128
+          ],
+          [
+            [
+              ".wasm-function[86]",
+              "",
+              -1,
+              -1
+            ],
+            128
+          ],
+          [
+            [
+              "",
+              "tauri://localhost/assets/editors-LhYxuTLr.js",
+              8,
+              77643
+            ],
+            118
+          ]
+        ]
+      },
+      "worker:0.1": {
+        "events": 2,
+        "voltooide_profielen": 1,
+        "samples": 1094,
+        "script_intervallen_unie_s": null,
+        "interval_gebeurtenissen": 0,
+        "top": [
+          [
+            [
+              "decode",
+              "",
+              -1,
+              -1
+            ],
+            52
+          ],
+          [
+            [
+              "postMessage",
+              "",
+              -1,
+              -1
+            ],
+            49
+          ],
+          [
+            [
+              ".wasm-function[30]",
+              "",
+              -1,
+              -1
+            ],
+            48
+          ],
+          [
+            [
+              "value",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              8,
+              117352
+            ],
+            44
+          ],
+          [
+            [
+              ".wasm-function[5070]",
+              "",
+              -1,
+              -1
+            ],
+            40
+          ],
+          [
+            [
+              ".wasm-function[6041]",
+              "",
+              -1,
+              -1
+            ],
+            39
+          ],
+          [
+            [
+              ".wasm-function[555]",
+              "",
+              -1,
+              -1
+            ],
+            36
+          ],
+          [
+            [
+              "parse",
+              "",
+              -1,
+              -1
+            ],
+            33
+          ],
+          [
+            [
+              "safeInteger",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              8,
+              119686
+            ],
+            27
+          ],
+          [
+            [
+              ".wasm-function[2885]",
+              "",
+              -1,
+              -1
+            ],
+            25
+          ],
+          [
+            [
+              ".wasm-function[2868]",
+              "",
+              -1,
+              -1
+            ],
+            24
+          ],
+          [
+            [
+              ".wasm-function[4397]",
+              "",
+              -1,
+              -1
+            ],
+            23
+          ],
+          [
+            [
+              ".wasm-function[50]",
+              "",
+              -1,
+              -1
+            ],
+            22
+          ],
+          [
+            [
+              "wasm-stub",
+              "",
+              -1,
+              -1
+            ],
+            19
+          ],
+          [
+            [
+              "getBigInt64",
+              "",
+              -1,
+              -1
+            ],
+            17
+          ],
+          [
+            [
+              ".wasm-function[2921]",
+              "",
+              -1,
+              -1
+            ],
+            17
+          ],
+          [
+            [
+              ".wasm-function[849]",
+              "",
+              -1,
+              -1
+            ],
+            15
+          ],
+          [
+            [
+              ".wasm-function[12364]",
+              "",
+              -1,
+              -1
+            ],
+            14
+          ],
+          [
+            [
+              ".wasm-function[6087]",
+              "",
+              -1,
+              -1
+            ],
+            13
+          ],
+          [
+            [
+              ".wasm-function[629]",
+              "",
+              -1,
+              -1
+            ],
+            12
+          ],
+          [
+            [
+              ".wasm-function[1394]",
+              "",
+              -1,
+              -1
+            ],
+            12
+          ],
+          [
+            [
+              ".wasm-function[2871]",
+              "",
+              -1,
+              -1
+            ],
+            11
+          ],
+          [
+            [
+              ".wasm-function[1127]",
+              "",
+              -1,
+              -1
+            ],
+            11
+          ],
+          [
+            [
+              ".wasm-function[465]",
+              "",
+              -1,
+              -1
+            ],
+            11
+          ],
+          [
+            [
+              ".wasm-function[3580]",
+              "",
+              -1,
+              -1
+            ],
+            11
+          ]
+        ],
+        "inclusief": [
+          [
+            [
+              "Fc",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              35299
+            ],
+            1041
+          ],
+          [
+            [
+              "",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              2351
+            ],
+            925
+          ],
+          [
+            [
+              "k",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              3427
+            ],
+            925
+          ],
+          [
+            [
+              "k",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              3429
+            ],
+            925
+          ],
+          [
+            [
+              "Fc",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              35296
+            ],
+            924
+          ],
+          [
+            [
+              "b",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              2858
+            ],
+            924
+          ],
+          [
+            [
+              "Cc",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              33998
+            ],
+            924
+          ],
+          [
+            [
+              "b",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              2861
+            ],
+            924
+          ],
+          [
+            [
+              "Cc",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              34001
+            ],
+            924
+          ],
+          [
+            [
+              "wasm-stub",
+              "",
+              -1,
+              -1
+            ],
+            796
+          ],
+          [
+            [
+              "Ea",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              57644
+            ],
+            627
+          ],
+          [
+            [
+              ".wasm-function[413]",
+              "",
+              -1,
+              -1
+            ],
+            374
+          ],
+          [
+            [
+              ".wasm-function[2948]",
+              "",
+              -1,
+              -1
+            ],
+            354
+          ],
+          [
+            [
+              ".wasm-function[361]",
+              "",
+              -1,
+              -1
+            ],
+            348
+          ],
+          [
+            [
+              ".wasm-function[480]",
+              "",
+              -1,
+              -1
+            ],
+            347
+          ],
+          [
+            [
+              "layout_document_with_regions_retained_json",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              8,
+              175835
+            ],
+            333
+          ],
+          [
+            [
+              ".wasm-function[30]",
+              "",
+              -1,
+              -1
+            ],
+            332
+          ],
+          [
+            [
+              ".wasm-function[12934]",
+              "",
+              -1,
+              -1
+            ],
+            269
+          ],
+          [
+            [
+              "yrs_blocks_for_story",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              8,
+              203640
+            ],
+            252
+          ],
+          [
+            [
+              "yrsBlocksForStory",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              9,
+              66471
+            ],
+            252
+          ],
+          [
+            [
+              "build_display_list_frame",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              8,
+              157423
+            ],
+            237
+          ],
+          [
+            [
+              ".wasm-function[12790]",
+              "",
+              -1,
+              -1
+            ],
+            228
+          ],
+          [
+            [
+              ".wasm-function[195]",
+              "",
+              -1,
+              -1
+            ],
+            225
+          ],
+          [
+            [
+              ".wasm-function[12845]",
+              "",
+              -1,
+              -1
+            ],
+            225
+          ],
+          [
+            [
+              ".wasm-function[6503]",
+              "",
+              -1,
+              -1
+            ],
+            210
+          ],
+          [
+            [
+              ".wasm-function[168]",
+              "",
+              -1,
+              -1
+            ],
+            198
+          ],
+          [
+            [
+              "kr",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              69687
+            ],
+            178
+          ],
+          [
+            [
+              ".wasm-function[240]",
+              "",
+              -1,
+              -1
+            ],
+            135
+          ],
+          [
+            [
+              ".wasm-function[4132]",
+              "",
+              -1,
+              -1
+            ],
+            133
+          ],
+          [
+            [
+              "kr",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              69620
+            ],
+            126
+          ],
+          [
+            [
+              "ti",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              66618
+            ],
+            122
+          ],
+          [
+            [
+              ".wasm-function[494]",
+              "",
+              -1,
+              -1
+            ],
+            117
+          ],
+          [
+            [
+              ".wasm-function[50]",
+              "",
+              -1,
+              -1
+            ],
+            116
+          ],
+          [
+            [
+              ".wasm-function[8473]",
+              "",
+              -1,
+              -1
+            ],
+            114
+          ],
+          [
+            [
+              "generatorResume",
+              "",
+              1,
+              11
+            ],
+            112
+          ]
+        ]
+      },
+      "worker:0.2": {
+        "events": 2,
+        "voltooide_profielen": 1,
+        "samples": 0,
+        "script_intervallen_unie_s": null,
+        "interval_gebeurtenissen": 0,
+        "top": [],
+        "inclusief": []
+      }
+    },
+    "kalibratie": {
+      "leaf_eerst": true,
+      "voorbeelden": [
+        [
+          "now",
+          "profielOnder",
+          "profielMidden",
+          "profielBoven",
+          "",
+          "(program)",
+          "evaluateWithScopeExtension",
+          "",
+          "_wrapCall"
+        ],
+        [
+          "profielOnder",
+          "profielMidden",
+          "profielBoven",
+          "",
+          "(program)",
+          "evaluateWithScopeExtension",
+          "",
+          "_wrapCall"
+        ]
+      ],
+      "aantal": 89
+    },
+    "ruwe_data": "writer-snapshotencoder/profiel-voor.json.gz",
+    "ruwe_data_sha256": "d3f23a54b71be212b05fed221f9f5ff31b5393f49b02c51cac7bc35a520c5889",
+    "grens": "WebKit-samples inclusief eigen inspectiepolls; geen proces-CPUduur."
+  },
+  "profiel_na": {
+    "programma_sha256": "7a0b1048263df705e0c3a1977b73c95b898cb44a595d06434b8eb451c635b173",
+    "script_sha256": "a5e34f114f7bc6dd5a55ca03cf20b7839443ec087ce1a84c134170657a89dcbb",
+    "bron_sha256": "a261d6064a34bca6cf1664be4ff0e87b560b405172261ef6eb304e26d7cdfda2",
+    "invoer_en_inspectie_ms": 3168,
+    "samenvatting": {
+      "hoofdthread": {
+        "events": 2,
+        "voltooide_profielen": 1,
+        "samples": 1466,
+        "script_intervallen_unie_s": null,
+        "interval_gebeurtenissen": 0,
+        "top": [
+          [
+            [
+              "parse",
+              "",
+              -1,
+              -1
+            ],
+            119
+          ],
+          [
+            [
+              "getBoundingClientRect",
+              "",
+              -1,
+              -1
+            ],
+            71
+          ],
+          [
+            [
+              "stringify",
+              "",
+              -1,
+              -1
+            ],
+            44
+          ],
+          [
+            [
+              "fill",
+              "",
+              -1,
+              -1
+            ],
+            38
+          ],
+          [
+            [
+              "safeInteger",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              141,
+              123613
+            ],
+            31
+          ],
+          [
+            [
+              "fetch",
+              "",
+              -1,
+              -1
+            ],
+            28
+          ],
+          [
+            [
+              "value",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              141,
+              121251
+            ],
+            25
+          ],
+          [
+            [
+              "resetTransform",
+              "",
+              -1,
+              -1
+            ],
+            23
+          ],
+          [
+            [
+              ".wasm-function[555]",
+              "",
+              -1,
+              -1
+            ],
+            22
+          ],
+          [
+            [
+              ".wasm-function[2868]",
+              "",
+              -1,
+              -1
+            ],
+            20
+          ],
+          [
+            [
+              "getBigInt64",
+              "",
+              -1,
+              -1
+            ],
+            18
+          ],
+          [
+            [
+              "remove",
+              "",
+              -1,
+              -1
+            ],
+            17
+          ],
+          [
+            [
+              ".wasm-function[2220]",
+              "",
+              -1,
+              -1
+            ],
+            14
+          ],
+          [
+            [
+              "querySelectorAll",
+              "",
+              -1,
+              -1
+            ],
+            14
+          ],
+          [
+            [
+              "map",
+              "",
+              1,
+              11
+            ],
+            13
+          ],
+          [
+            [
+              ".wasm-function[1402]",
+              "",
+              -1,
+              -1
+            ],
+            13
+          ],
+          [
+            [
+              "Cf",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              141,
+              160433
+            ],
+            12
+          ],
+          [
+            [
+              ".wasm-function[2871]",
+              "",
+              -1,
+              -1
+            ],
+            12
+          ],
+          [
+            [
+              "clearRect",
+              "",
+              -1,
+              -1
+            ],
+            12
+          ],
+          [
+            [
+              ".wasm-function[10715]",
+              "",
+              -1,
+              -1
+            ],
+            11
+          ],
+          [
+            [
+              ".wasm-function[6878]",
+              "",
+              -1,
+              -1
+            ],
+            11
+          ],
+          [
+            [
+              "drawImage",
+              "",
+              -1,
+              -1
+            ],
+            11
+          ],
+          [
+            [
+              "n",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              2,
+              2759
+            ],
+            10
+          ],
+          [
+            [
+              "rp",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              9,
+              22943
+            ],
+            10
+          ],
+          [
+            [
+              "mW",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              141,
+              63965
+            ],
+            10
+          ]
+        ],
+        "inclusief": [
+          [
+            [
+              "eM",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              9,
+              125911
+            ],
+            649
+          ],
+          [
+            [
+              "gM",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              9,
+              139301
+            ],
+            562
+          ],
+          [
+            [
+              "Cp",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              9,
+              137514
+            ],
+            562
+          ],
+          [
+            [
+              "pM",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              9,
+              137929
+            ],
+            425
+          ],
+          [
+            [
+              "",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              9,
+              139365
+            ],
+            425
+          ],
+          [
+            [
+              "wasm-stub",
+              "",
+              -1,
+              -1
+            ],
+            400
+          ],
+          [
+            [
+              "Zx",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              9,
+              129449
+            ],
+            351
+          ],
+          [
+            [
+              "iM",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              9,
+              130921
+            ],
+            349
+          ],
+          [
+            [
+              "cte",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              9,
+              129940
+            ],
+            349
+          ],
+          [
+            [
+              "pte",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              9,
+              132454
+            ],
+            320
+          ],
+          [
+            [
+              "tM",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              9,
+              127046
+            ],
+            320
+          ],
+          [
+            [
+              "dM",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              9,
+              132204
+            ],
+            320
+          ],
+          [
+            [
+              "Qk",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              9,
+              50509
+            ],
+            300
+          ],
+          [
+            [
+              "wp",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              9,
+              97090
+            ],
+            285
+          ],
+          [
+            [
+              "Xx",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              9,
+              134706
+            ],
+            271
+          ],
+          [
+            [
+              "Qx",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              9,
+              135694
+            ],
+            255
+          ],
+          [
+            [
+              "oo",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              9,
+              120516
+            ],
+            249
+          ],
+          [
+            [
+              "WD",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              9,
+              120657
+            ],
+            249
+          ],
+          [
+            [
+              "vx",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              9,
+              73789
+            ],
+            240
+          ],
+          [
+            [
+              "O",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              2,
+              12717
+            ],
+            235
+          ],
+          [
+            [
+              "mM",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              9,
+              138970
+            ],
+            225
+          ],
+          [
+            [
+              "bound mM",
+              "",
+              -1,
+              -1
+            ],
+            225
+          ],
+          [
+            [
+              "",
+              "tauri://localhost/assets/editors-vlIx4dbF.js",
+              8,
+              79995
+            ],
+            179
+          ],
+          [
+            [
+              "plak",
+              "tauri://localhost/assets/editors-vlIx4dbF.js",
+              72,
+              175308
+            ],
+            172
+          ],
+          [
+            [
+              "bn",
+              "tauri://localhost/assets/editors-vlIx4dbF.js",
+              12,
+              63573
+            ],
+            150
+          ],
+          [
+            [
+              "",
+              "tauri://localhost/assets/editors-vlIx4dbF.js",
+              12,
+              61516
+            ],
+            150
+          ],
+          [
+            [
+              "",
+              "tauri://localhost/assets/editors-vlIx4dbF.js",
+              12,
+              62728
+            ],
+            150
+          ],
+          [
+            [
+              "layout_font_requirements_json",
+              "tauri://localhost/assets/index-C3GAzsZ9.js",
+              223,
+              48218
+            ],
+            142
+          ],
+          [
+            [
+              ".wasm-function[12930]",
+              "",
+              -1,
+              -1
+            ],
+            132
+          ],
+          [
+            [
+              ".wasm-function[86]",
+              "",
+              -1,
+              -1
+            ],
+            132
+          ],
+          [
+            [
+              "parse",
+              "",
+              -1,
+              -1
+            ],
+            119
+          ],
+          [
+            [
+              "",
+              "tauri://localhost/assets/editors-vlIx4dbF.js",
+              8,
+              77643
+            ],
+            117
+          ],
+          [
+            [
+              "",
+              "tauri://localhost/assets/editors-vlIx4dbF.js",
+              72,
+              119179
+            ],
+            113
+          ],
+          [
+            [
+              "",
+              "tauri://localhost/assets/editors-vlIx4dbF.js",
+              12,
+              207920
+            ],
+            112
+          ],
+          [
+            [
+              "",
+              "tauri://localhost/assets/editors-vlIx4dbF.js",
+              12,
+              207916
+            ],
+            112
+          ]
+        ]
+      },
+      "worker:0.2": {
+        "events": 2,
+        "voltooide_profielen": 1,
+        "samples": 0,
+        "script_intervallen_unie_s": null,
+        "interval_gebeurtenissen": 0,
+        "top": [],
+        "inclusief": []
+      },
+      "worker:0.1": {
+        "events": 2,
+        "voltooide_profielen": 1,
+        "samples": 1103,
+        "script_intervallen_unie_s": null,
+        "interval_gebeurtenissen": 0,
+        "top": [
+          [
+            [
+              "decode",
+              "",
+              -1,
+              -1
+            ],
+            51
+          ],
+          [
+            [
+              ".wasm-function[555]",
+              "",
+              -1,
+              -1
+            ],
+            44
+          ],
+          [
+            [
+              "postMessage",
+              "",
+              -1,
+              -1
+            ],
+            43
+          ],
+          [
+            [
+              ".wasm-function[6041]",
+              "",
+              -1,
+              -1
+            ],
+            37
+          ],
+          [
+            [
+              "safeInteger",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              8,
+              119686
+            ],
+            35
+          ],
+          [
+            [
+              ".wasm-function[4397]",
+              "",
+              -1,
+              -1
+            ],
+            33
+          ],
+          [
+            [
+              ".wasm-function[30]",
+              "",
+              -1,
+              -1
+            ],
+            30
+          ],
+          [
+            [
+              "parse",
+              "",
+              -1,
+              -1
+            ],
+            30
+          ],
+          [
+            [
+              "value",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              8,
+              117352
+            ],
+            30
+          ],
+          [
+            [
+              ".wasm-function[5070]",
+              "",
+              -1,
+              -1
+            ],
+            28
+          ],
+          [
+            [
+              "getBigInt64",
+              "",
+              -1,
+              -1
+            ],
+            28
+          ],
+          [
+            [
+              ".wasm-function[2868]",
+              "",
+              -1,
+              -1
+            ],
+            26
+          ],
+          [
+            [
+              ".wasm-function[3580]",
+              "",
+              -1,
+              -1
+            ],
+            22
+          ],
+          [
+            [
+              ".wasm-function[2885]",
+              "",
+              -1,
+              -1
+            ],
+            22
+          ],
+          [
+            [
+              "wasm-stub",
+              "",
+              -1,
+              -1
+            ],
+            20
+          ],
+          [
+            [
+              ".wasm-function[2921]",
+              "",
+              -1,
+              -1
+            ],
+            20
+          ],
+          [
+            [
+              ".wasm-function[2871]",
+              "",
+              -1,
+              -1
+            ],
+            19
+          ],
+          [
+            [
+              ".wasm-function[50]",
+              "",
+              -1,
+              -1
+            ],
+            18
+          ],
+          [
+            [
+              ".wasm-function[849]",
+              "",
+              -1,
+              -1
+            ],
+            17
+          ],
+          [
+            [
+              ".wasm-function[1394]",
+              "",
+              -1,
+              -1
+            ],
+            17
+          ],
+          [
+            [
+              "build_display_list_frame",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              8,
+              157423
+            ],
+            15
+          ],
+          [
+            [
+              ".wasm-function[12364]",
+              "",
+              -1,
+              -1
+            ],
+            13
+          ],
+          [
+            [
+              ".wasm-function[7719]",
+              "",
+              -1,
+              -1
+            ],
+            10
+          ],
+          [
+            [
+              ".wasm-function[8558]",
+              "",
+              -1,
+              -1
+            ],
+            10
+          ],
+          [
+            [
+              ".wasm-function[4230]",
+              "",
+              -1,
+              -1
+            ],
+            10
+          ]
+        ],
+        "inclusief": [
+          [
+            [
+              "Fc",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              35299
+            ],
+            1058
+          ],
+          [
+            [
+              "k",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              3429
+            ],
+            958
+          ],
+          [
+            [
+              "k",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              3427
+            ],
+            957
+          ],
+          [
+            [
+              "",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              2351
+            ],
+            957
+          ],
+          [
+            [
+              "b",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              2861
+            ],
+            957
+          ],
+          [
+            [
+              "b",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              2858
+            ],
+            957
+          ],
+          [
+            [
+              "Fc",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              35296
+            ],
+            956
+          ],
+          [
+            [
+              "Cc",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              33998
+            ],
+            956
+          ],
+          [
+            [
+              "Cc",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              34001
+            ],
+            956
+          ],
+          [
+            [
+              "wasm-stub",
+              "",
+              -1,
+              -1
+            ],
+            802
+          ],
+          [
+            [
+              "Ea",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              57644
+            ],
+            593
+          ],
+          [
+            [
+              ".wasm-function[413]",
+              "",
+              -1,
+              -1
+            ],
+            331
+          ],
+          [
+            [
+              "layout_document_with_regions_retained_json",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              8,
+              175835
+            ],
+            323
+          ],
+          [
+            [
+              ".wasm-function[2948]",
+              "",
+              -1,
+              -1
+            ],
+            311
+          ],
+          [
+            [
+              ".wasm-function[361]",
+              "",
+              -1,
+              -1
+            ],
+            304
+          ],
+          [
+            [
+              ".wasm-function[480]",
+              "",
+              -1,
+              -1
+            ],
+            304
+          ],
+          [
+            [
+              ".wasm-function[30]",
+              "",
+              -1,
+              -1
+            ],
+            291
+          ],
+          [
+            [
+              "build_display_list_frame",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              8,
+              157423
+            ],
+            281
+          ],
+          [
+            [
+              ".wasm-function[12934]",
+              "",
+              -1,
+              -1
+            ],
+            260
+          ],
+          [
+            [
+              ".wasm-function[12845]",
+              "",
+              -1,
+              -1
+            ],
+            260
+          ],
+          [
+            [
+              ".wasm-function[195]",
+              "",
+              -1,
+              -1
+            ],
+            260
+          ],
+          [
+            [
+              ".wasm-function[6503]",
+              "",
+              -1,
+              -1
+            ],
+            243
+          ],
+          [
+            [
+              ".wasm-function[168]",
+              "",
+              -1,
+              -1
+            ],
+            213
+          ],
+          [
+            [
+              "yrs_blocks_for_story",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              8,
+              203640
+            ],
+            198
+          ],
+          [
+            [
+              "yrsBlocksForStory",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              9,
+              66471
+            ],
+            198
+          ],
+          [
+            [
+              "kr",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              69687
+            ],
+            184
+          ],
+          [
+            [
+              ".wasm-function[12790]",
+              "",
+              -1,
+              -1
+            ],
+            179
+          ],
+          [
+            [
+              ".wasm-function[4132]",
+              "",
+              -1,
+              -1
+            ],
+            173
+          ],
+          [
+            [
+              ".wasm-function[240]",
+              "",
+              -1,
+              -1
+            ],
+            150
+          ],
+          [
+            [
+              "kr",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              69620
+            ],
+            141
+          ],
+          [
+            [
+              ".wasm-function[8473]",
+              "",
+              -1,
+              -1
+            ],
+            134
+          ],
+          [
+            [
+              "ti",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              10,
+              66618
+            ],
+            132
+          ],
+          [
+            [
+              ".wasm-function[1394]",
+              "",
+              -1,
+              -1
+            ],
+            121
+          ],
+          [
+            [
+              "vi",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              8,
+              98790
+            ],
+            120
+          ],
+          [
+            [
+              "Dv",
+              "tauri://localhost/assets/chunk-Q7OC7M5Q-DSCzIuXY.js",
+              8,
+              98871
+            ],
+            120
+          ]
+        ]
+      }
+    },
+    "kalibratie": {
+      "leaf_eerst": true,
+      "voorbeelden": [
+        [
+          "profielOnder",
+          "profielMidden",
+          "profielBoven",
+          "",
+          "(program)",
+          "evaluateWithScopeExtension",
+          "",
+          "_wrapCall"
+        ],
+        [
+          "random",
+          "profielOnder",
+          "profielMidden",
+          "profielBoven",
+          "",
+          "(program)",
+          "evaluateWithScopeExtension",
+          "",
+          "_wrapCall"
+        ]
+      ],
+      "aantal": 89
+    },
+    "ruwe_data": "writer-snapshotencoder/profiel-na.json.gz",
+    "ruwe_data_sha256": "425536043061160d778ed0e0d6add6c1066d64395085817871e4f160c1d2560b",
+    "grens": "WebKit-samples inclusief eigen inspectiepolls; geen proces-CPUduur."
+  },
+  "eerdere_afkeuringen": [
+    "Eerste MiB-assertion overschrijdt de testtijdgrens (8.335 ms) bij elementgewijze vergelijking; volledige bytevergelijking behouden met Buffer.equals.",
+    "Eerste lokale terugvalharness faalt vóór appstart door ontbrekend scripts-importpad; afzonderlijke log behouden, import-/repoverwijzing hersteld.",
+    "De oude 45.31-binary faalt op de nieuwe expliciete native-encoderpoort; dit is een opzettelijke negatieve acceptatieproef."
+  ],
+  "beelden": {
+    "referentie_sha256": "8d06b1efc8020a98baf08899a84e39b00c5c29571a59ed33a07b914427ce0dd7",
+    "kandidaat_sha256": "9458e4eb7fdd71094ee0c375d44480d1eccdc7e247ed970a226da6b5ba5c32d6",
+    "afwijkende_pixels": 53,
+    "lint_afwijkende_pixels": 0,
+    "grens": "Eén getypte paginatoestand na afzonderlijke starts; cursorfase kan verschillen. Geen volledige visuele pariteit."
+  },
+  "openstaand": {
+    "issues": 118,
+    "migratiegebieden": 10,
+    "acceptatievlaggen": 30,
+    "gesloten_door_deze_stap": []
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "stappen": [
+    {
+      "naam": "gericht",
+      "opdracht": [
+        "cargo",
+        "test",
+        "--manifest-path",
+        "native/Cargo.toml",
+        "--workspace",
+        "--locked",
+        "--features",
+        "open-office-studio-webview/desktop",
+        "-j1",
+        "webview_",
+        "--",
+        "--test-threads=1"
+      ],
+      "eindcode": 0,
+      "seconden": 30.28,
+      "bron_voor_en_na_bytegelijk": true
+    },
+    {
+      "naam": "clippy",
+      "opdracht": [
+        "cargo",
+        "clippy",
+        "--manifest-path",
+        "native/Cargo.toml",
+        "--workspace",
+        "--locked",
+        "--features",
+        "open-office-studio-webview/desktop",
+        "--all-targets",
+        "-j1",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "eindcode": 0,
+      "seconden": 6.263,
+      "bron_voor_en_na_bytegelijk": true
+    }
+  ],
+  "bronmanifest_sha256": "677341ff111f2c6c235cba64ef672e80dae0c27f4259d31fea1a3860300afa8e"
+}

@@ -1,6 +1,6 @@
 # Functionele lat voor OpenAEC Office
 
-De toepassingen moeten in dagelijkse bewerkingen aanvoelen als gangbare kantoorprogramma’s voor tekst, rekenbladen, presentaties en databases, in een eigen OpenAEC-interface met Tauri + React. Een werkbalk of bestandsviewer alleen voldoet niet. Onderstaande onderdelen zijn acceptatiedoelen, geen verklaring van bestaande ondersteuning.
+De volledige suite wordt naar Rust gemigreerd, inclusief de native interface in OpenAEC-stijl. De bestaande desktoprelease blijft de referentie voor functies, documentgedrag en uiterlijk. De toepassingen moeten in dagelijkse bewerkingen aanvoelen als gangbare kantoorprogramma’s voor tekst, rekenbladen, presentaties, notities, e-mail en databases. Een werkbalk of bestandsviewer alleen voldoet niet. Onderstaande onderdelen zijn acceptatiedoelen, geen verklaring van bestaande ondersteuning.
 
 | Module | Vereist voor een bruikbare eerste versie | Daarna uitbreiden |
 | --- | --- | --- |
@@ -39,6 +39,10 @@ Bronnen zijn projectdocumentatie, geen onafhankelijk bewijs van compatibiliteit.
 5. Exporteer naar PDF en controleer de pagina’s visueel.
 6. Herhaal offline en op Windows, Linux en macOS. Een webbuild bewijst geen desktopinstallatie.
 
-## Huidige stand
+## Native migratie — 1 november 2026
+
+De interface en documentkern worden in Rust opgebouwd. De [native stand en gecontroleerde beperkingen](../../native/README.md) en [tien acceptatiegebieden](../../native/docs/migratie.json) zijn leidend voor deze migratie. Alle gebieden blijven open totdat functies, tests en uiterlijk aantoonbaar gelijk zijn; aantallen tests of platformgelijke screenshots zijn geen percentage voltooiing. Notition en Email horen bij de suite. Database houdt de laagste prioriteit. De bestaande stabiele desktoprelease blijft beschikbaar zolang de native vrijgavevoorwaarden niet zijn behaald.
+
+## Eerdere stand — 21 oktober 2026
 
 De drie hoofdeditors zijn aangesloten op een React-werkruimte met nieuwe bestanden, openen en opslaan als. De Tauri-basis, een lokale Linux-debugbuild en geslaagde releasebuilds voor Windows x64, Linux x64 en macOS ARM64 zijn toegevoegd. Database Studio behoudt zijn voorbeeldopzet. Dit is nog geen volledige kantoorvervanger: zie het [testverslag](../tests/2026-10-21.md) voor uitgevoerde controles en de resterende releasevoorwaarden.

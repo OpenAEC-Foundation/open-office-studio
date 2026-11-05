@@ -55,11 +55,11 @@
 /* Niveau 1: compact. Kleine knoppen tonen alleen hun icoon. In een ingebouwde
    enginewerkbalk alleen het bijschrift (laatste span) verbergen: de werkbalk
    zelf is vaak ook een span. */
-.ribbon .ribbon-groep[data-niveau="1"] .ribbon-actie:not(.ribbon-groot) > span,
+.ribbon .ribbon-groep[data-niveau="1"] .ribbon-actie:not(.ribbon-groot):not([data-altijd-label]) > span,
 .ribbon .ribbon-groep[data-niveau="1"] .ribbon-ingebouwd > span:last-child:not(:first-child) {
   display: none;
 }
-.ribbon .ribbon-groep[data-niveau="1"] .ribbon-actie:not(.ribbon-groot) {
+.ribbon .ribbon-groep[data-niveau="1"] .ribbon-actie:not(.ribbon-groot):not([data-altijd-label]) {
   justify-content: center;
   min-width: 26px;
 }

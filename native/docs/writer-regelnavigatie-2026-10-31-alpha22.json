@@ -1,0 +1,22 @@
+{
+  "versie": "2026.44.9-alpha.22",
+  "geslaagd": true,
+  "omvang": "Vier kernproeven en vier GUI-proeven met echte Iced-widgetgebeurtenissen. Omhoog/omlaag, Home/End, tabelcelvolgorde, paginaovergang, visuele regelgrenzen, Shift-selectie binnen één alinea, snelle navigatie/invoer en undo-affiniteit. Geen volledige rijke paginacursor, selectie over alinea’s of fysieke toetsenbordproef.",
+  "kernproeven": [
+    "cursor_verticaal_tussen_echte_paginas_slaat_koppen_over_en_laat_de_bron_ongemoeid",
+    "cursor_tabelnavigatie_volgt_regels_binnen_de_cel_en_springt_niet_naar_de_buurkolom",
+    "cursor_home_end_en_een_klik_bewaren_de_affiniteit_van_een_automatische_regelgrens",
+    "cursor_ongeldige_versie_pagina_kolom_en_voorkeur_schatten_geen_cursorpositie"
+  ],
+  "gui_proeven": [
+    "cursor_paginapijlen_verwerken_snellen_toetsen_zonder_bronwijziging_of_undo",
+    "cursor_home_end_shiftselectie_en_klembord_volgen_de_werkelijke_documentregel",
+    "cursor_snelle_regelnavigatie_en_typen_behouden_de_juist_geadresseerde_tekst",
+    "cursor_undo_na_invoer_aan_de_regelgrens_herstelt_ook_de_zichtbare_affiniteit"
+  ],
+  "reguliere_tests": 258,
+  "gui_tests": 76,
+  "bronbestanden": 98,
+  "bronmanifest": "schermen-2026-10-31-alpha22.json",
+  "testlog_sha256": "dcbbaf858d1b6bcc0b2866ecda6099cf8f75f7e61eaf64cc1c68851b1ecdf306"
+}

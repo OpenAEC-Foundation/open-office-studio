@@ -1,0 +1,2445 @@
+{
+  "versie": "2026.45.23",
+  "bronrevisie": "ec1b2a4fff930cee8326d9464814ccbb5bad867b",
+  "run": 41690550985,
+  "artifact": 13257283924,
+  "geheugen_negatief": {
+    "rapport_sha256": "52e7d8f270af370dad57c8e3605c932179ef0638c1f0b14f10880163fc350392",
+    "gegevens": {
+      "geslaagd": false,
+      "versie": "2026.45.23",
+      "programma_sha256": "a06234925cfa4fd6f8bbc1d3619c8fbd3cfb4b4659d8465435f6b5faa318db96",
+      "script_sha256": "01ef4f53ca0acbb9d0f2e5167e3b8327022c1670b3f732c9f12a8a4ddcd899ec",
+      "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+      "stappen": [
+        {
+          "naam": "beginbron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. ",
+          "exact": true
+        },
+        {
+          "naam": "getypte_bron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        }
+      ],
+      "invoerinterval_ms": 20,
+      "vaste_nawacht_ms": 2000,
+      "invoer_gereedheid": "Native keyup van de laatste punt, inputwachtrij, zichtbare golflijnen en één exacte controle van de laatste alinea; alle 500 bronalinea’s daarnaast apart vergeleken.",
+      "grenzen": [
+        "Eén gegenereerde 500-paginabron, normale compositor, alleen een lichte teller om getBoundingClientRect. Geen algemene prestatie-, IME-, enorme-plak- of platformacceptatie."
+      ],
+      "startprogramma_sha256": "a06234925cfa4fd6f8bbc1d3619c8fbd3cfb4b4659d8465435f6b5faa318db96",
+      "geladen_runtime": [
+        "/usr/lib/x86_64-linux-gnu/libjavascriptcoregtk-4.1.so.0.9.9",
+        "/usr/lib/x86_64-linux-gnu/libwebkit2gtk-4.1.so.0.19.7"
+      ],
+      "invoer_tot_bron_en_golven_ms": 1868,
+      "paginavergelijkingen_tijdens_invoer": {
+        "calls": 5988
+      },
+      "documentuitlezingen_tijdens_invoer": {
+        "calls": 0,
+        "ms": 0,
+        "api_wissels": 100,
+        "actieve_api_gevolgd": true,
+        "omvang": "GetDocument-aanroepen tijdens native invoer tot bron-/golflijngereedheid. De stabiele React-ref volgt vervanging van API-objecten; geen CPU-profiler."
+      },
+      "native_leesaanroepen": {
+        "zelfde_sessie": true,
+        "readParagraphs": {
+          "calls": 7,
+          "ms": 12.999999999996362
+        },
+        "paragraphSpans": {
+          "calls": 24,
+          "ms": 55.99999999998545
+        }
+      },
+      "frame_tussenpozen_ms": {
+        "aantal": 41,
+        "maximum": 150,
+        "p95": 140,
+        "reeks": [
+          10,
+          16,
+          16,
+          16,
+          17,
+          16,
+          16,
+          16,
+          16,
+          16,
+          62,
+          150,
+          140,
+          87,
+          26,
+          79,
+          110,
+          85,
+          142,
+          128,
+          86,
+          20,
+          54,
+          79,
+          50,
+          81,
+          51,
+          124,
+          134,
+          105,
+          13,
+          6,
+          15,
+          16,
+          16,
+          16,
+          21,
+          12,
+          16,
+          16,
+          16
+        ],
+        "omvang": "requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS."
+      },
+      "invoermeting": {
+        "calls": 4159,
+        "classes": {
+          "docx-editor__scroll-container": 193,
+          "canvas-page": 749,
+          "DIV": 89,
+          "CANVAS": 1228,
+          "canvas-pages__column": 30,
+          "canvas-pages": 1232,
+          "docx-plugin-overlays": 616,
+          "docx-editor__viewport tl-met-liniaal": 22
+        },
+        "golven": 83,
+        "paginas": 500,
+        "tot_bron_en_golven_ms_inclusief_nawacht": 4037
+      },
+      "geheugenproef": {
+        "gevraagde_rondes": 20,
+        "gc_gevraagd": true,
+        "rondes": [
+          {
+            "ronde": 1,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "fouten": {
+              "gui": [
+                {
+                  "tekst": "ErrorOut of bounds memory access (evaluating 'D.editsession_layout_document_with_regions_retained_json(this.__wbg_ptr,i,s)')",
+                  "ronde": 0
+                }
+              ],
+              "console": [
+                {
+                  "source": "console-api",
+                  "level": "error",
+                  "text": "[PagedEditor] Layout pipeline error:",
+                  "type": "log",
+                  "line": 12,
+                  "column": 66212,
+                  "url": "tauri://localhost/assets/editors-LsQT9ZIE.js",
+                  "repeatCount": 1,
+                  "timestamp": 1793729571.5833786,
+                  "parameters": [
+                    {
+                      "type": "string",
+                      "value": "[PagedEditor] Layout pipeline error:"
+                    },
+                    {
+                      "type": "object",
+                      "objectId": "{\"injectedScriptId\":1,\"id\":1}",
+                      "subtype": "error",
+                      "className": "RuntimeError",
+                      "description": "RuntimeError: Out of bounds memory access (evaluating 'D.editsession_layout_document_with_regions_retained_json(this.__wbg_ptr,i,s)')",
+                      "preview": {
+                        "type": "object",
+                        "description": "RuntimeError: Out of bounds memory access (evaluating 'D.editsession_layout_document_with_regions_retained_json(this.__wbg_ptr,i,s)')",
+                        "lossless": false,
+                        "subtype": "error",
+                        "overflow": false,
+                        "properties": [
+                          {
+                            "name": "message",
+                            "type": "string",
+                            "value": "Out of bounds memory access (evaluating 'D.editses…_with_regions_retained_json(this.__wbg_ptr,i,s)')"
+                          },
+                          {
+                            "name": "line",
+                            "type": "number",
+                            "value": "221"
+                          },
+                          {
+                            "name": "column",
+                            "type": "number",
+                            "value": "49083"
+                          },
+                          {
+                            "name": "sourceURL",
+                            "type": "string",
+                            "value": "tauri://localhost/assets/index--3a7BErc.js"
+                          },
+                          {
+                            "name": "stack",
+                            "type": "string",
+                            "value": "65@<?>:wasm-function[65]\n1028@<?>:wasm-function[10…i://localhost/assets/editors-LsQT9ZIE.js:12:61301"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "stackTrace": {
+                    "callFrames": [
+                      {
+                        "functionName": "bt",
+                        "url": "tauri://localhost/assets/editors-LsQT9ZIE.js",
+                        "scriptId": "2",
+                        "lineNumber": 12,
+                        "columnNumber": 66212
+                      },
+                      {
+                        "functionName": "Qt",
+                        "url": "tauri://localhost/assets/editors-LsQT9ZIE.js",
+                        "scriptId": "2",
+                        "lineNumber": 12,
+                        "columnNumber": 67003
+                      },
+                      {
+                        "functionName": "",
+                        "url": "tauri://localhost/assets/editors-LsQT9ZIE.js",
+                        "scriptId": "2",
+                        "lineNumber": 12,
+                        "columnNumber": 68322
+                      },
+                      {
+                        "functionName": "",
+                        "url": "tauri://localhost/assets/editors-LsQT9ZIE.js",
+                        "scriptId": "2",
+                        "lineNumber": 12,
+                        "columnNumber": 61301
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "gc": {
+              "result": {},
+              "id": 49
+            }
+          }
+        ],
+        "grens": "Extra native geschiedenis-/selectiebelasting; geen bewijs dat een incidentele allocatorpanic is opgelost."
+      },
+      "fout": "AssertionError('GUI of engine meldt fouten in de geheugenronde')"
+    }
+  },
+  "herstelstart_positief": {
+    "rapport_sha256": "9eb6bc33fa21b0d34b0fbeaec0c09fe543800f927a1a004444e3a3dca5c1a22d",
+    "gegevens": {
+      "geslaagd": true,
+      "versie": "2026.45.23",
+      "programma_sha256": "a06234925cfa4fd6f8bbc1d3619c8fbd3cfb4b4659d8465435f6b5faa318db96",
+      "script_sha256": "01ef4f53ca0acbb9d0f2e5167e3b8327022c1670b3f732c9f12a8a4ddcd899ec",
+      "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+      "stappen": [
+        {
+          "naam": "beginbron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. ",
+          "exact": true
+        },
+        {
+          "naam": "getypte_bron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "selectie_en_backspace",
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "exact": true
+        },
+        {
+          "naam": "undo",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "redo",
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "exact": true
+        },
+        {
+          "naam": "hersteld_voor_bewaren",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "native_bewaaractie_onafhankelijk",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "nieuw_proces_heropend",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "verder_na_later",
+          "alinea_aantal": 500,
+          "tekst_sha256": "fd7d825b22dee866b9680b7eda810589f0bcff6cc43796092675cc7d54c0126c",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin. Verder.",
+          "exact": true
+        },
+        {
+          "naam": "herstelde_kopie",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "verder_in_herstelde_kopie",
+          "alinea_aantal": 500,
+          "tekst_sha256": "2479dfa76e6a51382e07e955c4058dcb85f9d02950bee6b116734b457cb13c75",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin. Hersteld.",
+          "exact": true
+        }
+      ],
+      "invoerinterval_ms": 20,
+      "vaste_nawacht_ms": 2000,
+      "invoer_gereedheid": "Native keyup van de laatste punt, inputwachtrij, zichtbare golflijnen en één exacte controle van de laatste alinea; alle 500 bronalinea’s daarnaast apart vergeleken.",
+      "grenzen": [
+        "Eén gegenereerde 500-paginabron, normale compositor, alleen een lichte teller om getBoundingClientRect. Geen algemene prestatie-, IME-, enorme-plak- of platformacceptatie."
+      ],
+      "startprogramma_sha256": "a06234925cfa4fd6f8bbc1d3619c8fbd3cfb4b4659d8465435f6b5faa318db96",
+      "geladen_runtime": [
+        "/usr/lib/x86_64-linux-gnu/libjavascriptcoregtk-4.1.so.0.9.9",
+        "/usr/lib/x86_64-linux-gnu/libwebkit2gtk-4.1.so.0.19.7"
+      ],
+      "invoer_tot_bron_en_golven_ms": 1747,
+      "paginavergelijkingen_tijdens_invoer": {
+        "calls": 5489
+      },
+      "documentuitlezingen_tijdens_invoer": {
+        "calls": 0,
+        "ms": 0,
+        "api_wissels": 92,
+        "actieve_api_gevolgd": true,
+        "omvang": "GetDocument-aanroepen tijdens native invoer tot bron-/golflijngereedheid. De stabiele React-ref volgt vervanging van API-objecten; geen CPU-profiler."
+      },
+      "native_leesaanroepen": {
+        "zelfde_sessie": true,
+        "readParagraphs": {
+          "calls": 7,
+          "ms": 10
+        },
+        "paragraphSpans": {
+          "calls": 22,
+          "ms": 56.99999999999454
+        }
+      },
+      "frame_tussenpozen_ms": {
+        "aantal": 39,
+        "maximum": 151,
+        "p95": 144,
+        "reeks": [
+          6.999999999998181,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          19,
+          14,
+          85,
+          151,
+          82,
+          65,
+          89,
+          69,
+          91,
+          51,
+          141,
+          102,
+          79,
+          85,
+          51,
+          79,
+          66,
+          85,
+          60,
+          144,
+          111,
+          17,
+          7,
+          14,
+          16,
+          16,
+          16,
+          23,
+          9,
+          16
+        ],
+        "omvang": "requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS."
+      },
+      "invoermeting": {
+        "calls": 3846,
+        "classes": {
+          "docx-editor__scroll-container": 180,
+          "canvas-page": 668,
+          "DIV": 88,
+          "CANVAS": 1135,
+          "canvas-pages__column": 30,
+          "canvas-pages": 1150,
+          "docx-plugin-overlays": 575,
+          "docx-editor__viewport tl-met-liniaal": 20
+        },
+        "golven": 83,
+        "paginas": 500,
+        "tot_bron_en_golven_ms_inclusief_nawacht": 3916
+      },
+      "selectie_backspace": {
+        "alinea_aantal": 500,
+        "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+        "eerste_verschil": 499,
+        "native_toetsen": [
+          {
+            "key": " ",
+            "code": "Space",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "e",
+            "code": "KeyE",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "e",
+            "code": "KeyE",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "n",
+            "code": "KeyN",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": " ",
+            "code": "Space",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "p",
+            "code": "KeyP",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "r",
+            "code": "KeyR",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "o",
+            "code": "KeyO",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "e",
+            "code": "KeyE",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "f",
+            "code": "KeyF",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "i",
+            "code": "KeyI",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "n",
+            "code": "KeyN",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": ".",
+            "code": "Period",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowleft",
+            "code": "ArrowLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "backspace",
+            "code": "Backspace",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          }
+        ]
+      },
+      "paginaregister": {
+        "voor": 500,
+        "na": 500,
+        "zoom": 1.15,
+        "add": 0,
+        "delete": 0,
+        "invalidate": 3,
+        "historische_registerwissels": false,
+        "geen_canvaswissels": true,
+        "paginaopdracht": {
+          "ok": true,
+          "status": "executed"
+        },
+        "na_pagina_invoegen": 501,
+        "na_undo": 500,
+        "geslaagd": true
+      },
+      "herstelkopie": {
+        "sha256": "7638f9efad12009bb6a444a86b95b81ddc4c87e2d36529b214b65cfba8e9f0d3",
+        "exact": true
+      },
+      "fouten_voor_heropenen": {
+        "gui": [],
+        "console": []
+      },
+      "herstelkeuzes": [
+        {
+          "keuze": "later",
+          "aanbod": {
+            "namen": [
+              "Prestatieproef.docx"
+            ],
+            "tekst": "Recover documentsOpen Office Studio was not closed properly last time. A recovery copy was kept of these documents. Recovering opens a new, unsaved tab; the original file stays unchanged.Prestatieproef.docxText · recovery copy from today 18:11RecoverSave as…DiscardDecide later"
+          },
+          "fouten_voor_keuze": {
+            "gui": [],
+            "console": []
+          }
+        },
+        {
+          "keuze": "herstellen",
+          "aanbod": {
+            "namen": [
+              "Prestatieproef.docx"
+            ],
+            "tekst": "Recover documentsOpen Office Studio was not closed properly last time. A recovery copy was kept of these documents. Recovering opens a new, unsaved tab; the original file stays unchanged.Prestatieproef.docxText · recovery copy from today 18:11RecoverSave as…DiscardDecide later"
+          },
+          "fouten_voor_keuze": {
+            "gui": [],
+            "console": []
+          }
+        }
+      ],
+      "status_na_later": [
+        "Page 1 of 500",
+        "29,002 words, 173,906 characters",
+        "Language unknown · 20,502 spelling errors",
+        "Track Changes: off"
+      ],
+      "fouten_na_heropenen": {
+        "gui": [],
+        "console": []
+      },
+      "verder_na_later_bewaard": true,
+      "bron_na_verder_sha256": "88fbc2be64c19ab8ac8d000c355d98af35c65d4c5937eed266627ee506fee071",
+      "hersteltabbladen": 2,
+      "herstel_fouten": {
+        "gui": [],
+        "console": []
+      },
+      "bron_eind_sha256": "88fbc2be64c19ab8ac8d000c355d98af35c65d4c5937eed266627ee506fee071"
+    }
+  },
+  "lokale_exacte_binary_proef": {
+    "rapport_sha256": "89667a34d9c588edb3be91f7fb90c0428aafbea01a3617094b8349a4d66b5e9c",
+    "gegevens": {
+      "geslaagd": true,
+      "versie": "2026.45.23",
+      "programma_sha256": "a06234925cfa4fd6f8bbc1d3619c8fbd3cfb4b4659d8465435f6b5faa318db96",
+      "script_sha256": "01ef4f53ca0acbb9d0f2e5167e3b8327022c1670b3f732c9f12a8a4ddcd899ec",
+      "bron_begin_sha256": "d4f96aa0dc78a5334b943a2d0ff448a6e41a809e9f7db33ccc577f0335a2609e",
+      "stappen": [
+        {
+          "naam": "beginbron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "8a5346cfc8d2dad24771bd89709e3b373a92c3798e63ec5d4831b327ef68d0f2",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. ",
+          "exact": true
+        },
+        {
+          "naam": "getypte_bron",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "selectie_en_backspace",
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "exact": true
+        },
+        {
+          "naam": "undo",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "redo",
+          "alinea_aantal": 500,
+          "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+          "exact": true
+        },
+        {
+          "naam": "hersteld_voor_bewaren",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "native_bewaaractie_onafhankelijk",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        },
+        {
+          "naam": "nieuw_proces_heropend",
+          "alinea_aantal": 500,
+          "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+          "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+          "exact": true
+        }
+      ],
+      "invoerinterval_ms": 20,
+      "vaste_nawacht_ms": 2000,
+      "invoer_gereedheid": "Native keyup van de laatste punt, inputwachtrij, zichtbare golflijnen en één exacte controle van de laatste alinea; alle 500 bronalinea’s daarnaast apart vergeleken.",
+      "grenzen": [
+        "Eén gegenereerde 500-paginabron, normale compositor, alleen een lichte teller om getBoundingClientRect. Geen algemene prestatie-, IME-, enorme-plak- of platformacceptatie."
+      ],
+      "startprogramma_sha256": "eb0b254ac0dae6543e6dd7cd02e1baf40a060de95b927313122d6b46323c00aa",
+      "geladen_runtime": [
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/kandidaat-45.22-runtime-2.50.4/usr/lib/libjavascriptcoregtk-4.1.so.0",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/kandidaat-45.22-runtime-2.50.4/usr/lib/libwebkit2gtk-4.1.so.0"
+      ],
+      "invoer_tot_bron_en_golven_ms": 3562,
+      "paginavergelijkingen_tijdens_invoer": {
+        "calls": 3493
+      },
+      "documentuitlezingen_tijdens_invoer": {
+        "calls": 0,
+        "ms": 0,
+        "api_wissels": 74,
+        "actieve_api_gevolgd": true,
+        "omvang": "GetDocument-aanroepen tijdens native invoer tot bron-/golflijngereedheid. De stabiele React-ref volgt vervanging van API-objecten; geen CPU-profiler."
+      },
+      "native_leesaanroepen": {
+        "zelfde_sessie": true,
+        "readParagraphs": {
+          "calls": 10,
+          "ms": 41
+        },
+        "paragraphSpans": {
+          "calls": 14,
+          "ms": 62.00000000000364
+        }
+      },
+      "frame_tussenpozen_ms": {
+        "aantal": 37,
+        "maximum": 356,
+        "p95": 327,
+        "reeks": [
+          9,
+          16,
+          16,
+          17,
+          16,
+          16,
+          16,
+          16,
+          35,
+          15,
+          17,
+          15,
+          17,
+          146,
+          318,
+          139,
+          262,
+          159,
+          356,
+          219,
+          113,
+          250,
+          128,
+          276,
+          135,
+          258,
+          179,
+          327,
+          232,
+          4,
+          5,
+          7,
+          14,
+          17,
+          15,
+          17,
+          16
+        ],
+        "omvang": "requestAnimationFrame tijdens invoer en bron-/golflijngereedheid; vóór de vaste nawacht. Geen fysieke beeldscherm-FPS."
+      },
+      "invoermeting": {
+        "calls": 4205,
+        "classes": {
+          "docx-editor__scroll-container": 145,
+          "canvas-page": 580,
+          "DIV": 78,
+          "CANVAS": 1126,
+          "canvas-pages__column": 21,
+          "canvas-pages": 1486,
+          "docx-plugin-overlays": 743,
+          "docx-editor__viewport tl-met-liniaal": 26
+        },
+        "golven": 83,
+        "paginas": 500,
+        "tot_bron_en_golven_ms_inclusief_nawacht": 5743
+      },
+      "geheugenproef": {
+        "gevraagde_rondes": 20,
+        "gc_gevraagd": true,
+        "rondes": [
+          {
+            "ronde": 1,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 54
+            }
+          },
+          {
+            "ronde": 2,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 73
+            }
+          },
+          {
+            "ronde": 3,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 90
+            }
+          },
+          {
+            "ronde": 4,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 105
+            }
+          },
+          {
+            "ronde": 5,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 119
+            }
+          },
+          {
+            "ronde": 6,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 135
+            }
+          },
+          {
+            "ronde": 7,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 150
+            }
+          },
+          {
+            "ronde": 8,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 165
+            }
+          },
+          {
+            "ronde": 9,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 180
+            }
+          },
+          {
+            "ronde": 10,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 193
+            }
+          },
+          {
+            "ronde": 11,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 208
+            }
+          },
+          {
+            "ronde": 12,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 224
+            }
+          },
+          {
+            "ronde": 13,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 238
+            }
+          },
+          {
+            "ronde": 14,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 253
+            }
+          },
+          {
+            "ronde": 15,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 268
+            }
+          },
+          {
+            "ronde": 16,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 282
+            }
+          },
+          {
+            "ronde": 17,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 296
+            }
+          },
+          {
+            "ronde": 18,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 312
+            }
+          },
+          {
+            "ronde": 19,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 325
+            }
+          },
+          {
+            "ronde": 20,
+            "exact": true,
+            "alinea_aantal": 500,
+            "tekst_sha256": "5080465d09c367108b849289940ef044f725a96d14ca248038a375bbe7e10f57",
+            "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een proefzin.",
+            "fouten": {
+              "gui": [],
+              "console": []
+            },
+            "gc": {
+              "result": {},
+              "id": 340
+            }
+          }
+        ],
+        "grens": "Extra native geschiedenis-/selectiebelasting; geen bewijs dat een incidentele allocatorpanic is opgelost."
+      },
+      "selectie_backspace": {
+        "alinea_aantal": 500,
+        "tekst_sha256": "c76db28c2a41bacb216bb05362aed86e294a4557a2ac23c12caa13bb5c845e11",
+        "laatste_alinea": "Pagina 500. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties. Een gewone alinea met woorden en spaties.  Een ",
+        "eerste_verschil": 499,
+        "native_toetsen": [
+          {
+            "key": " ",
+            "code": "Space",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "e",
+            "code": "KeyE",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "e",
+            "code": "KeyE",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "n",
+            "code": "KeyN",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": " ",
+            "code": "Space",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "p",
+            "code": "KeyP",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "r",
+            "code": "KeyR",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "o",
+            "code": "KeyO",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "e",
+            "code": "KeyE",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "f",
+            "code": "KeyF",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "i",
+            "code": "KeyI",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "n",
+            "code": "KeyN",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": ".",
+            "code": "Period",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowleft",
+            "code": "ArrowLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "backspace",
+            "code": "Backspace",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "y",
+            "code": "KeyY",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowright",
+            "code": "ArrowRight",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowleft",
+            "code": "ArrowLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "backspace",
+            "code": "Backspace",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "y",
+            "code": "KeyY",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowright",
+            "code": "ArrowRight",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowleft",
+            "code": "ArrowLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "backspace",
+            "code": "Backspace",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "y",
+            "code": "KeyY",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowright",
+            "code": "ArrowRight",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowleft",
+            "code": "ArrowLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "backspace",
+            "code": "Backspace",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "y",
+            "code": "KeyY",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowright",
+            "code": "ArrowRight",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowleft",
+            "code": "ArrowLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "backspace",
+            "code": "Backspace",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "y",
+            "code": "KeyY",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowright",
+            "code": "ArrowRight",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowleft",
+            "code": "ArrowLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "backspace",
+            "code": "Backspace",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "y",
+            "code": "KeyY",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowright",
+            "code": "ArrowRight",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowleft",
+            "code": "ArrowLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "backspace",
+            "code": "Backspace",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "y",
+            "code": "KeyY",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowright",
+            "code": "ArrowRight",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowleft",
+            "code": "ArrowLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "backspace",
+            "code": "Backspace",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "y",
+            "code": "KeyY",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowright",
+            "code": "ArrowRight",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowleft",
+            "code": "ArrowLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "backspace",
+            "code": "Backspace",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "y",
+            "code": "KeyY",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowright",
+            "code": "ArrowRight",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowleft",
+            "code": "ArrowLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "backspace",
+            "code": "Backspace",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "y",
+            "code": "KeyY",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowright",
+            "code": "ArrowRight",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowleft",
+            "code": "ArrowLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "backspace",
+            "code": "Backspace",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "y",
+            "code": "KeyY",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowright",
+            "code": "ArrowRight",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowleft",
+            "code": "ArrowLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "backspace",
+            "code": "Backspace",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "y",
+            "code": "KeyY",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowright",
+            "code": "ArrowRight",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowleft",
+            "code": "ArrowLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "backspace",
+            "code": "Backspace",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "y",
+            "code": "KeyY",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowright",
+            "code": "ArrowRight",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowleft",
+            "code": "ArrowLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "backspace",
+            "code": "Backspace",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "y",
+            "code": "KeyY",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowright",
+            "code": "ArrowRight",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowleft",
+            "code": "ArrowLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "backspace",
+            "code": "Backspace",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "y",
+            "code": "KeyY",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowright",
+            "code": "ArrowRight",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowleft",
+            "code": "ArrowLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "backspace",
+            "code": "Backspace",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "y",
+            "code": "KeyY",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowright",
+            "code": "ArrowRight",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowleft",
+            "code": "ArrowLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "backspace",
+            "code": "Backspace",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "y",
+            "code": "KeyY",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowright",
+            "code": "ArrowRight",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowleft",
+            "code": "ArrowLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "backspace",
+            "code": "Backspace",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "y",
+            "code": "KeyY",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowright",
+            "code": "ArrowRight",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowleft",
+            "code": "ArrowLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "backspace",
+            "code": "Backspace",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "y",
+            "code": "KeyY",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowright",
+            "code": "ArrowRight",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowleft",
+            "code": "ArrowLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "backspace",
+            "code": "Backspace",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "y",
+            "code": "KeyY",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "z",
+            "code": "KeyZ",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowright",
+            "code": "ArrowRight",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "shift",
+            "code": "ShiftLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "control",
+            "code": "ControlLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "arrowleft",
+            "code": "ArrowLeft",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          },
+          {
+            "key": "backspace",
+            "code": "Backspace",
+            "target": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+          }
+        ]
+      },
+      "paginaregister": {
+        "voor": 500,
+        "na": 500,
+        "zoom": 1.15,
+        "add": 0,
+        "delete": 0,
+        "invalidate": 1,
+        "historische_registerwissels": false,
+        "geen_canvaswissels": true,
+        "paginaopdracht": {
+          "ok": true,
+          "status": "executed"
+        },
+        "na_pagina_invoegen": 501,
+        "na_undo": 500,
+        "geslaagd": true
+      },
+      "fouten_voor_heropenen": {
+        "gui": [],
+        "console": []
+      },
+      "herstelkeuzes": [
+        {
+          "keuze": "later",
+          "aanbod": null,
+          "fouten_voor_keuze": {
+            "gui": [],
+            "console": []
+          }
+        }
+      ],
+      "fouten_na_heropenen": {
+        "gui": [],
+        "console": []
+      },
+      "bron_eind_sha256": "82fa6dd19622aee5319cb8cbf7bf17c278032f3bb73053feb2e3e88b8c7dfcc0"
+    }
+  },
+  "foutpakket_controle": {
+    "archief_sha256": "4298d4719323da1e6977eeba23e37a4e04b537173533507b73cdb5d1b8ced5e7",
+    "programma_sha256": "a06234925cfa4fd6f8bbc1d3619c8fbd3cfb4b4659d8465435f6b5faa318db96",
+    "alle_interne_checksums_gelijk": true,
+    "proefscript": {
+      "beschikbaar": true,
+      "gerapporteerde_sha256": "01ef4f53ca0acbb9d0f2e5167e3b8327022c1670b3f732c9f12a8a4ddcd899ec",
+      "naam": "test-writer-lang-native.py"
+    },
+    "negatieve_run": 41690550985,
+    "artifact": 13257283924
+  },
+  "devdownload_controle": {
+    "run": 41690552163,
+    "artifact": 13257089427,
+    "versie": "2026.45.23",
+    "bronrevisie": "ec1b2a4fff930cee8326d9464814ccbb5bad867b",
+    "archief_sha256": "e9c607c66d393962642519dc3065738f621e198d68836945b3686941deab7958",
+    "bouw": {
+      "versie": "2026.45.23",
+      "bronrevisie": "ec1b2a4fff930cee8326d9464814ccbb5bad867b",
+      "platform": "Linux x86_64",
+      "profiel": "org.openaec.office-studio.dev",
+      "appimage": "Open Office Studio Dev_2026.45.23_amd64.AppImage",
+      "sha256": "a57858907161596e8fa8ab24ca1e542b28a72653316554f6b6d6064564574056",
+      "pakketcontroles": [
+        "AppImage type 2",
+        "SquashFS volledig uitgepakt",
+        "AppRun uitvoerbaar",
+        "ELF x64 en bibliotheken gevonden",
+        "snelkoppeling en pictogram aanwezig"
+      ],
+      "controles": [
+        "TypeScript via productiebouw",
+        "Vitest",
+        "Rust-desktoptests"
+      ],
+      "gui_acceptatie": "Niet volledig gecontroleerd; ontwikkelbuild met bekende Writer-problemen.",
+      "webkit_modulekaart": {
+        "geslaagd": true,
+        "omvang": "Twee minimale moduleworkers in de geïnstalleerde WebKitGTK; geen app- of prestatieacceptatie.",
+        "webkit": "2.50.4",
+        "gevallen": {
+          "oud": {
+            "evaluaties": 2,
+            "gelijk": false
+          },
+          "apart": {
+            "evaluaties": 1,
+            "gelijk": true
+          }
+        },
+        "kwetsbaar": true
+      },
+      "native_gui": {
+        "geslaagd": true,
+        "programma_sha256": "c650ac599bc10b8bb069dacbd4c8e6e2ea45e35b677adf0981e41b992e0feaa4",
+        "startprogramma_sha256": "eb0b254ac0dae6543e6dd7cd02e1baf40a060de95b927313122d6b46323c00aa",
+        "profiel": "org.openaec.office-studio.dev",
+        "script_sha256": "ca54b04928bf4442d9bb1c89226418172ce870ee3cf4d7c0499a19131d629a0c",
+        "omvang": "Eigen DOCX-kopie, drie plakrondes, bewaren na ronde één en verder bewerken; onafhankelijke inhoudscontrole, verwerpen en nieuw document.",
+        "appimage_startfunctie": "De uitgepakte AppRun is gestart; launcher en werkelijke ELF zijn op hash gecontroleerd. FUSE-mount niet getoetst."
+      }
+    },
+    "archief_en_interne_metadata_gelijk": true,
+    "uitvoerrechten_correct": true,
+    "AppImage_volledig_uitgepakt": true,
+    "starter_en_ELF_matchen_native_GUI": true,
+    "grenzen": [
+      "Gerichte devpakketproef; geen volledige GUI-/functieacceptatie.",
+      "Afzonderlijke geheugenronde op gewone binary faalt op Wasm Out of bounds; deze afkeuring blijft open."
+    ]
+  },
+  "grenzen": [
+    "De negatieve Wasm Out of bounds-fout blijft open; bronexacte alinea’s betekenen geen geldige nieuwe weergave.",
+    "De lokale hertest met dezelfde ELF, hetzelfde script en WebKit2.50.4 slaagt voor twintig rondes; andere hostbibliotheken/timing/OS zijn niet gelijk aan CI. Geen herstelclaim.",
+    "De dev-ELF is een ander uitvoerbestand; een groene pakketproef bewijst geen herstel van de afkeuring."
+  ],
+  "overige_CI_statussen": [
+    {
+      "conclusion": null,
+      "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41690570701",
+      "id": 41690570701,
+      "name": "Uitgave bouwen, ondertekenen en publiceren",
+      "status": "in_progress"
+    },
+    {
+      "conclusion": "success",
+      "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41690567692",
+      "id": 41690567692,
+      "name": "Rust WebView-preview bouwen",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41690567702",
+      "id": 41690567702,
+      "name": "Zelfstandige databasebrowser controleren en bouwen",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41690567669",
+      "id": 41690567669,
+      "name": "Kantooromgeving controleren en bouwen",
+      "status": "completed"
+    },
+    {
+      "conclusion": null,
+      "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41690567670",
+      "id": 41690567670,
+      "name": "Native Rust controleren en bouwen",
+      "status": "in_progress"
+    },
+    {
+      "conclusion": "success",
+      "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41690552163",
+      "id": 41690552163,
+      "name": "Linux-dev · codex/native-rust-office · ec1b2a4fff930cee8326d9464814ccbb5bad867b",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41690550985",
+      "id": 41690550985,
+      "name": "Writer-geheugenonderzoek · codex/native-rust-office · ec1b2a4fff930cee8326d9464814ccbb5bad867b",
+      "status": "completed"
+    }
+  ]
+}

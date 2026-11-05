@@ -1,0 +1,9 @@
+{
+  "omvang": "Correctie van een foutieve testverwachting; geen productiegedrag of pixel-/bronassertie afgezwakt.",
+  "oorspronkelijk_log": "native-na-alpha34-zoekfocus-grenzen.log",
+  "oorspronkelijke_patch": "native-na-alpha34-zoekfocus-grenzen-eerste.patch",
+  "fout": "De proef verwachtte dat editerversie gelijk bleef na een tweede klik in dezelfde alinea. De bestaande toon_veld-code verhoogt de versie bij iedere klik; waargenomen 3 tegenover verwacht 2.",
+  "correctie": "De proef vereist nu dezelfde alinea-ID, exact één versieverhoging en de bevestigde cursorpositie 8 vóór het uitvoeren van de oude focusvraag. Tekst, bronwijziging, conceptstatus en bronexacte undo blijven ongewijzigd verplicht.",
+  "hertest": "native-na-alpha34-zoekfocus-grenzen-hertest.log",
+  "hertest_geslaagd": true
+}

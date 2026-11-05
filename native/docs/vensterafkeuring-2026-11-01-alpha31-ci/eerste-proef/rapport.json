@@ -1,0 +1,39 @@
+{
+  "versie": "Open Office Studio 2026.44.9-alpha.31 (native)",
+  "programma_sha256": "a1713cabe462b0ff5a78e2eb982cab07c55ca3b04c27d917d4dcc0f85af55da8",
+  "broncommit": "a574614422b6dfd125c97980a69a82a4cbfa46f9",
+  "proefbron_sha256": "a98b80339bd635b9b0488ee1c9a1f816e0b5fe75dbd8ab78ac0f34eb6d87ef8d",
+  "geslaagd": false,
+  "omvang": "Echt native Linux-venster in eigen Xvfb/D-Bus/XDG-sessie, X11-toetsen/muis en systeemklembord. Eigen DOCX met twee secties, tabel en rijke runs. Geen fysieke hardware, andere platforms, IME, schermlezer of volledige suite-/pixelpariteit.",
+  "stappen": [
+    {
+      "stap": "Rijke eigen DOCX geopend",
+      "beeld": {
+        "bestand": "writer-open.png",
+        "sha256": "66e54ac1c78d0fa494030f25e52347b3bf47f9264a2ebe0dfd9f1d217c139a56"
+      }
+    },
+    {
+      "stap": "End/Enter en één bewaren maken een lege echte alinea"
+    },
+    {
+      "stap": "Werkelijke Vet-lintklik, direct 9 en één bewaren behouden vet én bestaande cursief zonder focusherstel",
+      "beeld": {
+        "bestand": "writer-vet-invoer.png",
+        "sha256": "677855000220595c20a291c76181bee1f5c3aca5148cfd16a6d733fd0947d65f"
+      }
+    },
+    {
+      "stap": "Eén undo en één bewaren verwijderen alleen 9; gekozen invoegopmaak blijft op lege alinea",
+      "beeld": {
+        "bestand": "writer-vet-ongedaan.png",
+        "sha256": "baa674304f15d88a9b6f0ce2eb4b75ecf0d341ca9b253315e6682f7fa3cfb2d4"
+      }
+    }
+  ],
+  "fout": "De ene bewaaropdracht leverde niet de verwachte bron op",
+  "foutbeeld": {
+    "bestand": "writer-fout.png",
+    "sha256": "cfb0dc61a3d3f731ce2da53b66701d698070d2cb5092644a3c5c3941dd8549a4"
+  }
+}
