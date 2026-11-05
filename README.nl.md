@@ -26,6 +26,10 @@ Versie **2026-W44.8** biedt zeven installatiekeuzes: **Open Office Studio**, **O
 
 Office en Notition bewaren notities in afzonderlijke profielen: gebruik een `.openaec-notities`-back-up om je notitieboeken over te zetten. De gerichte apps worden voorlopig met hun eigen nieuwe installer bijgewerkt, zodat ze niet per ongeluk een suite-update installeren.
 
+## IFCX: eerste voorstel
+
+Het [Office-profielvoorstel](docs/ifcx-office-voorstel.md) beschrijft IFCX-opslag voor Writer, Spreadsheet, Presentation, Email en Notition, met Database als latere stap. E-mails bewaren daarin hun volledige oorspronkelijke EML/MIME-bron, inclusief bijlagen. Er is een uitvoerbare bewaarproef; de apps gebruiken deze opslag nog niet standaard.
+
 ## Schermafbeeldingen
 
 | | | |
