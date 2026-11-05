@@ -30,7 +30,16 @@
     "artifact": 13376366162,
     "ZIP_controle": "GitHub-digest en ZIP-CRC geslaagd",
     "innerlijk": "Alle twintig checksums van context/ELF/scripts/bronbestanden gecontroleerd; ELF en script identiek aan oorspronkelijke afkeuring. AppImage en ELF lokaal behouden.",
-    "lokale_hertest": "Nog niet gestart; eerst huidige geïsoleerde snelheidsmeting afronden.",
+    "lokale_hertest": {
+      "geslaagd": true,
+      "programma_en_script_bytegelijk": true,
+      "stappen": [
+        "Werkelijk rijk plakken, één Undo en bronexacte Redo",
+        "Fysiek typen, Shift-selectie, vervangen en Save vóór antwoord; DOCX onafhankelijk exact teruggelezen",
+        "Niet opslaan zonder antwoord; nieuw document en late beantwoording behouden bron en invoer"
+      ],
+      "grens": "Eén gerichte lokale oorspronkelijke hertest slaagt; de oorspronkelijke CI-fout blijft onverklaard en niet hersteld verklaard."
+    },
     "oorzaak": "Open. Geen testknop-wachttijd of succesvolle andere ronde als reparatie aangemerkt."
   },
   "bewijzen": {
@@ -169,6 +178,34 @@
     "platformen-43-niet-opslaan/ci846-volgorde-afkeuring/proef-native-writer-volgorde/Ontwerpnotitie.docx": {
       "sha256": "f04815a9dc1509b707c6a766b60fc62a38dc483fc63869f20d380b68e63496a0",
       "inhoud_sha256": "f04815a9dc1509b707c6a766b60fc62a38dc483fc63869f20d380b68e63496a0"
+    },
+    "platformen-43-niet-opslaan/ci846-hertest-origineel.log.gz": {
+      "sha256": "932084a4dc6964a3dd96cf0ee3f91351c4b0429ac2d6316ccffa4da50e1b6f9a",
+      "inhoud_sha256": "d773c8c9bde8f6376e5170f7022dab1edcb85f985f0a2cf6dec7cf82be8a67d3"
+    },
+    "platformen-43-niet-opslaan/ci846-hertest-origineel/snel-getypt-bewaard.png": {
+      "sha256": "289fe4120c796bdec828f871e5392f7a3b6dcadee8676b3f7d76c72858497d06",
+      "inhoud_sha256": "289fe4120c796bdec828f871e5392f7a3b6dcadee8676b3f7d76c72858497d06"
+    },
+    "platformen-43-niet-opslaan/ci846-hertest-origineel/plakken-redo.png": {
+      "sha256": "0713e822d84176c7a11870f1e9cd522e21ea23f39394c28549435a96e4e8aaa0",
+      "inhoud_sha256": "0713e822d84176c7a11870f1e9cd522e21ea23f39394c28549435a96e4e8aaa0"
+    },
+    "platformen-43-niet-opslaan/ci846-hertest-origineel/programma.log.gz": {
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "inhoud_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413"
+    },
+    "platformen-43-niet-opslaan/ci846-hertest-origineel/rapport.json.gz": {
+      "sha256": "7a2cbb4b43bde5df496bbba6dcf455158df6f1fb713f1cd4046ed2020a7f75dd",
+      "inhoud_sha256": "494977d1238a0e253123da917fd1e4369e0b4d66bbbd2737030e730dfb9496a3"
+    },
+    "platformen-43-niet-opslaan/ci846-hertest-origineel/nieuw-na-laat-antwoord.png": {
+      "sha256": "fcd9fd7bdcbb08ab40dd85be2b5743b2fd2a65e3150ed5f446b798d1f84900e2",
+      "inhoud_sha256": "fcd9fd7bdcbb08ab40dd85be2b5743b2fd2a65e3150ed5f446b798d1f84900e2"
+    },
+    "platformen-43-niet-opslaan/ci846-hertest-origineel/Ontwerpnotitie.docx": {
+      "sha256": "28b9f68f9ee99fafbba522f40d6f849b9f91be66f0fe19ae34762f1ac545439c",
+      "inhoud_sha256": "28b9f68f9ee99fafbba522f40d6f849b9f91be66f0fe19ae34762f1ac545439c"
     }
   }
 }

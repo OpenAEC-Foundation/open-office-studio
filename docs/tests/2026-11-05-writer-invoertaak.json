@@ -1,0 +1,193 @@
+{
+  "schema": 1,
+  "soort": "Tijdelijke runtime-diagnose op eigen geïsoleerde 45.43-binary; geen app-/versiewijziging",
+  "programma_sha256": "3ea2fb22c4e938395e6e9a99b3d5d80f10772faaf9d29275621b9249d5df29af",
+  "ingreep": "De native enqueue-callback op de eigen testpagina krijgt één MessageChannel-taak vóór de bestaande callback. Behoud van oorspronkelijke wachtrij en bron-/selectie-/bewaarvolgorde; ingreep na meting teruggenomen.",
+  "cases": [
+    {
+      "naam": "taak-screen-43-voor",
+      "getekende_tekst_ms": 24050,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "runtime_ingreep": {
+        "actief": false,
+        "grens": "Alleen een tijdelijke meetingreep op de eigen 45.43-testbinary; geen productwijziging. De native invoerwachtrij houdt alle bron-/selectie-/bewaarvolgorde; enqueue krijgt vóór zijn bestaande callback één MessageChannel-taak."
+      }
+    },
+    {
+      "naam": "taak-screen-43-eerste",
+      "getekende_tekst_ms": 23284,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "runtime_ingreep": {
+        "actief": true,
+        "grens": "Alleen een tijdelijke meetingreep op de eigen 45.43-testbinary; geen productwijziging. De native invoerwachtrij houdt alle bron-/selectie-/bewaarvolgorde; enqueue krijgt vóór zijn bestaande callback één MessageChannel-taak.",
+        "statistiek": {
+          "toegelaten": 64,
+          "begonnen": 64,
+          "taakWachtMs": 972.0000000000182,
+          "zelfdeVeld": true,
+          "pending": false
+        }
+      }
+    },
+    {
+      "naam": "taak-screen-43-tweede",
+      "getekende_tekst_ms": 24479,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "runtime_ingreep": {
+        "actief": true,
+        "grens": "Alleen een tijdelijke meetingreep op de eigen 45.43-testbinary; geen productwijziging. De native invoerwachtrij houdt alle bron-/selectie-/bewaarvolgorde; enqueue krijgt vóór zijn bestaande callback één MessageChannel-taak.",
+        "statistiek": {
+          "toegelaten": 65,
+          "begonnen": 65,
+          "taakWachtMs": 1029.999999999971,
+          "zelfdeVeld": true,
+          "pending": false
+        }
+      }
+    },
+    {
+      "naam": "taak-screen-43-na",
+      "getekende_tekst_ms": 22613,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "runtime_ingreep": {
+        "actief": false,
+        "grens": "Alleen een tijdelijke meetingreep op de eigen 45.43-testbinary; geen productwijziging. De native invoerwachtrij houdt alle bron-/selectie-/bewaarvolgorde; enqueue krijgt vóór zijn bestaande callback één MessageChannel-taak."
+      }
+    }
+  ],
+  "gemiddelden_ms": {
+    "referentie": 23331.5,
+    "ingreep": 23881.5
+  },
+  "besluit": "Geen bewezen snelheidswinst; niet in productcode opgenomen. Alle 3.329 teksten exact in iedere ronde. Dit is geen productbuild of volledige featureacceptatie.",
+  "bewijzen": {
+    "writer-invoertaak/meet-invoertaak-native.py.gz": {
+      "sha256": "cdd2c20b51ab6fa4e16cc085e946178adb148bb1bbc6ce0cf18c8cc222c027ab",
+      "inhoud_sha256": "dd7f6138b95c0c3bb7847b7cbbcc28e9e9dab228ab44bc19c60768f542cee8f7"
+    },
+    "writer-invoertaak/voer-invoertaak-screen.py.gz": {
+      "sha256": "66f7aad996bf6e49a8a0491b17714b9ccc4c0540e4511d30fbb44076b0ab4637",
+      "inhoud_sha256": "d3772fa23ba624be25da846bd8a2bfe0b0e07e62a1db1a83a6b52d5290be9eb7"
+    },
+    "writer-invoertaak/invoertaak-screen.log.gz": {
+      "sha256": "1956c72e61a042f6a6712f030e19681c6d428b3560e5121748ddbc7f08086cbf",
+      "inhoud_sha256": "fc85b9a38adc71cbe059df888de494ce07b3c03f322037bd44d0e9442be5c540"
+    },
+    "writer-invoertaak/invoertaak-screen-uitkomsten.json.gz": {
+      "sha256": "5087b7f16c96bec94aca7dc667d1d7b163c0edcd908cf98f2c6a9a180a0ba9f1",
+      "inhoud_sha256": "073c7e8bf523f28798ef3d2cf7db1f1bea39cb6022bbf13c89f003e70b52a292"
+    },
+    "writer-invoertaak/taak-screen-43-voor/profiel.json.gz": {
+      "sha256": "2406ec7c49462c852f7bdb994bb889b32ee5eac8593cdac3b4ed858af1ee1a2a",
+      "inhoud_sha256": "71e96410bbbe47f1a69e4fed3f09ff42b7da7cee6189c51f97589dc4d0cbdcc0"
+    },
+    "writer-invoertaak/taak-screen-43-voor/profiel.png": {
+      "sha256": "e168d203efda6cbe5c5d92545adb98df08ecb0f05bb51870c118b6d2313dd310",
+      "inhoud_sha256": "e168d203efda6cbe5c5d92545adb98df08ecb0f05bb51870c118b6d2313dd310"
+    },
+    "writer-invoertaak/taak-screen-43-voor/programma.log.gz": {
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "inhoud_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413"
+    },
+    "writer-invoertaak/taak-screen-43-voor/Prestatieproef.docx": {
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "inhoud_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c"
+    },
+    "writer-invoertaak/taak-screen-43-voor/eerste-gelijke-tekst.png": {
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "inhoud_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05"
+    },
+    "writer-invoertaak/taak-screen-43-voor.log.gz": {
+      "sha256": "484388e847b20ee214ab3032108a664c9b60a9f7510028e922dec924eee827ed",
+      "inhoud_sha256": "c3cb399673d0e1d98ea49cd7c8218425036ac0b85b42c37f088f7b232a2bee7d"
+    },
+    "writer-invoertaak/taak-screen-43-eerste/profiel.json.gz": {
+      "sha256": "3ead9b8d86fe3f2507dc65aeb613d985ff5614805468fb45b48bd4928a4a4741",
+      "inhoud_sha256": "e7300621b9f99e95908892986fca3c03c8d024e69d76310418f151313fe1208e"
+    },
+    "writer-invoertaak/taak-screen-43-eerste/profiel.png": {
+      "sha256": "82a122718545e92769ef3cc2d790daabc6dc8d1d9fc24f5a9d6ac2ed00dddc51",
+      "inhoud_sha256": "82a122718545e92769ef3cc2d790daabc6dc8d1d9fc24f5a9d6ac2ed00dddc51"
+    },
+    "writer-invoertaak/taak-screen-43-eerste/programma.log.gz": {
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "inhoud_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413"
+    },
+    "writer-invoertaak/taak-screen-43-eerste/Prestatieproef.docx": {
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "inhoud_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c"
+    },
+    "writer-invoertaak/taak-screen-43-eerste/eerste-gelijke-tekst.png": {
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "inhoud_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05"
+    },
+    "writer-invoertaak/taak-screen-43-eerste.log.gz": {
+      "sha256": "cb31f31bc36007ff63ca6cc1a31af52430f61b6abbb414373f9d2b02d55106f7",
+      "inhoud_sha256": "5c9e55410681b25a59c13be438d30cca0d572b5cced79ae4f1bd6986c24406f0"
+    },
+    "writer-invoertaak/taak-screen-43-tweede/profiel.json.gz": {
+      "sha256": "8aeabe59c040f4eb0d32cb517160bcb637306e8e7fcc5be2bb810b53074567a8",
+      "inhoud_sha256": "cf38819f33ccbccb52b5723145c4821135bdb291317142b18f16799dad0161e0"
+    },
+    "writer-invoertaak/taak-screen-43-tweede/profiel.png": {
+      "sha256": "964df9d0b55853ebeb644abe6ec0c71c086865dda15cccaaa4cee4796936559b",
+      "inhoud_sha256": "964df9d0b55853ebeb644abe6ec0c71c086865dda15cccaaa4cee4796936559b"
+    },
+    "writer-invoertaak/taak-screen-43-tweede/programma.log.gz": {
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "inhoud_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413"
+    },
+    "writer-invoertaak/taak-screen-43-tweede/Prestatieproef.docx": {
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "inhoud_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c"
+    },
+    "writer-invoertaak/taak-screen-43-tweede/eerste-gelijke-tekst.png": {
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "inhoud_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05"
+    },
+    "writer-invoertaak/taak-screen-43-tweede.log.gz": {
+      "sha256": "0b2d1726f114949b83c501713b155d44e7ef30b722a9e9ea22b379a504fbc490",
+      "inhoud_sha256": "30255117440327176592298e76e2c1e606aacd2313a79cc587fc4ba08bd03dd6"
+    },
+    "writer-invoertaak/taak-screen-43-na/profiel.json.gz": {
+      "sha256": "49cbd3ab7cae569ec6b3d80144ce5a0f56a8a0110ca5ab8d30e8c193ba0c08bc",
+      "inhoud_sha256": "68fe1e7a181d4085bf8b686cfa93662ccb3b354a94bb3869d509c42dcbdeea98"
+    },
+    "writer-invoertaak/taak-screen-43-na/profiel.png": {
+      "sha256": "ac8b053ab6440d1469f1ad2a0c3838b85a4de5336a1eb31e701d93439c0976d8",
+      "inhoud_sha256": "ac8b053ab6440d1469f1ad2a0c3838b85a4de5336a1eb31e701d93439c0976d8"
+    },
+    "writer-invoertaak/taak-screen-43-na/programma.log.gz": {
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "inhoud_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413"
+    },
+    "writer-invoertaak/taak-screen-43-na/Prestatieproef.docx": {
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "inhoud_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c"
+    },
+    "writer-invoertaak/taak-screen-43-na/eerste-gelijke-tekst.png": {
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "inhoud_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05"
+    },
+    "writer-invoertaak/taak-screen-43-na.log.gz": {
+      "sha256": "c070140503e5a84d0d7d20707c4f8260d8bd387a97beb1d82fa916e81c14fde9",
+      "inhoud_sha256": "1be6d066cf32b80e5923e52834c37a4963cc18d11bfd63bd2364e988680f1d61"
+    }
+  }
+}
