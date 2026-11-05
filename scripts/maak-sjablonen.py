@@ -3,6 +3,7 @@ import re
 import zipfile
 from pathlib import Path
 from docx import Document
+from docx.oxml.ns import qn
 from openpyxl import Workbook
 from pptx import Presentation
 from pptx.util import Inches
@@ -24,6 +25,17 @@ def zet_toepassing(pad):
 d = Document()
 d.core_properties.author = ''
 d.core_properties.last_modified_by = ''
+# Gebruik een Unicode-bolletje dat ook zonder een oud symboollettertype werkt.
+for niveau in d.part.numbering_part.element.findall('.//' + qn('w:lvl')):
+    notatie = niveau.find(qn('w:numFmt'))
+    tekst = niveau.find(qn('w:lvlText'))
+    if notatie is None or notatie.get(qn('w:val')) != 'bullet' or tekst is None:
+        continue
+    tekst.set(qn('w:val'), '•')
+    fonts = niveau.find('.//' + qn('w:rFonts'))
+    if fonts is not None:
+        fonts.set(qn('w:ascii'), 'Arial')
+        fonts.set(qn('w:hAnsi'), 'Arial')
 d.add_paragraph('')
 d.save(uitvoer / 'nieuw.docx')
 w = Workbook()

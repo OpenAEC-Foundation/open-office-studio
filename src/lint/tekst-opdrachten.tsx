@@ -23,6 +23,8 @@ import { leesAlleAlineas } from "../tekst/gedeeld/engine";
 import { ontbrekendeStijl } from "../tekst/stijlen/model";
 import { metHeleAlinea } from "../tekst/stijlen/toepassen";
 import { tabelInvoegen } from "../tekst/tabel/opdrachten";
+import { leesKlembordTekst } from "../klembord";
+import { hoofdletterVervangingen } from "../tekst/bewerken/hoofdletters";
 import {
   selectieBegin,
   specialeTekens,
@@ -33,6 +35,8 @@ import {
   type Hoofdlettersoort,
   type Telling,
 } from "./tekst-logica";
+
+import { gaNaarPagina } from "../tekst/zoeken/ganaar";
 
 export type TekstDialoog = "woorden" | "teken" | "opmerking" | "pagina" | null;
 
@@ -200,7 +204,7 @@ export function useTekstOpdrachten({
             else if (soort.startsWith("image/"))
               data.items.add(new File([blob], `afbeelding.${soort.slice(6)}`, { type: soort }));
           }
-        if (!data.types.length) return;
+        if (!data.types.length) return plakken();
         editor().focus();
         const invoer = tekstVlak();
         const gebeurtenis = new ClipboardEvent("paste", { clipboardData: data, bubbles: true, cancelable: true });
@@ -213,12 +217,7 @@ export function useTekstOpdrachten({
       .catch(() => plakken());
   }
   function plakken() {
-    if (!navigator.clipboard?.readText) {
-      meld(t("writer.errors.pasteNotAllowed", { shortcut: "Ctrl+V" }));
-      return;
-    }
-    navigator.clipboard
-      .readText()
+    void leesKlembordTekst()
       .then((tekst) => tekst && voegIn(tekst))
       .catch(() =>
         meld(t("writer.errors.pasteNotAllowed", { shortcut: "Ctrl+V" })),
@@ -236,6 +235,7 @@ export function useTekstOpdrachten({
       throw new Error(t("writer.errors.selectWithinParagraph"));
     const gelezen = await ref.readParagraphs({
       view: "accepted",
+      story: ref.getEditorRef()?.getYrsSession()?.selection()?.head.story,
       paraIds: [info.paraId],
     });
     const alinea = gelezen.ok ? gelezen.paragraphs[0] : undefined;
@@ -255,9 +255,10 @@ export function useTekstOpdrachten({
           ? volgendeHoofdletters(tekst)
           : wijzigHoofdletters(tekst, soort);
       if (nieuw === tekst) return;
-      const vervangingen = tekenVervangingen(tekst, nieuw, begin) ?? [
-        { begin, eind: begin + tekst.length, tekst: nieuw },
-      ];
+      const sessie = ref.getEditorRef()?.getYrsSession();
+      const vervangingen = (sessie && hoofdletterVervangingen(sessie, alinea.story, alinea.paraId, alinea.text, begin, tekst, nieuw))
+        ?? tekenVervangingen(tekst, nieuw, begin);
+      if (!vervangingen) throw new Error(t("writer.errors.cannotChangeHere"));
       const voorstel = opnemen
         ? {
             suggest: {
@@ -278,6 +279,7 @@ export function useTekstOpdrachten({
             view: "accepted" as const,
           },
           text: v.tekst,
+          expect: { text: alinea.text.slice(v.begin, v.eind) },
           ...voorstel,
         })),
       });
@@ -349,6 +351,18 @@ export function useTekstOpdrachten({
 
   const kanBewerken = () => bewerkbaar;
   const sneltoetsen: Sneltoets[] = [
+    // Op desktop dezelfde plakroute als het lint; de browser behoudt zijn
+    // eigen paste-gebeurtenis met de door de webview geleverde gegevens.
+    {
+      toets: "Ctrl+V",
+      uitvoeren: plakkenMetOpmaak,
+      beschikbaar: () => invoerbaar && "__TAURI_INTERNALS__" in window,
+    },
+    {
+      toets: "Ctrl+Shift+V",
+      uitvoeren: plakken,
+      beschikbaar: () => invoerbaar && "__TAURI_INTERNALS__" in window,
+    },
     {
       toets: "Ctrl+1",
       uitvoeren: () => stijl("Heading1"),
@@ -741,7 +755,8 @@ function GaNaarPagina({
   function ga() {
     if (!geldig) return;
     sluit();
-    api()?.scrollToPage(nummer);
+    const ref = api();
+    if (ref) gaNaarPagina(ref, nummer);
   }
   return (
     <Dialoog

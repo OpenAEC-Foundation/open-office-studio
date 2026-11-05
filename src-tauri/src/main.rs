@@ -174,6 +174,9 @@ async fn bewaar_kopie(request: tauri::ipc::Request<'_>) -> Result<Option<String>
     .map_err(|e| e.to_string())?
 }
 
+#[cfg(all(test, target_os = "linux"))]
+mod klembord_proef;
+
 fn main() {
     tauri::Builder::default()
         // Eerst registreren: een tweede instantie (dubbelklik terwijl de app al
@@ -189,6 +192,7 @@ fn main() {
         ))
         // Updates (#26): de plugin controleert handtekeningen; kanaal en bediening in updates.rs.
         .plugin(tauri_plugin_updater::Builder::new().build())
+        .plugin(tauri_plugin_clipboard_manager::init())
         .manage(updates::Updates::default())
         .manage(vensters::Vensters::default())
         .manage(werkbestanden::Werkbestanden::default())

@@ -1,6 +1,6 @@
 /**
  * Alinea- en tekenopmaak via de Yrs-sessie van de tekstengine
- * (`@betteroffice/docx` 0.4.3). Zo blijven ongedaan maken, wijzigingen
+ * (`@betteroffice/docx` 0.5.1). Zo blijven ongedaan maken, wijzigingen
  * bijhouden en samenwerking intact: elke wijziging is een gewone
  * sessiebewerking.
  *

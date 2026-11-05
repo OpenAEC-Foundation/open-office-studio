@@ -45,6 +45,9 @@ import {
   FlipHorizontal2,
   FlipVertical2,
   Rows3,
+  ArrowUpToLine,
+  ArrowLeftToLine,
+  ArrowRightToLine,
   Trash2,
   Scissors,
   Copy,
@@ -196,6 +199,7 @@ function TekstLettertype() {
         />
         <OpdrachtKleur
           opdracht={markering}
+          bevestigen
           naam={t("writer.commands.highlightColor")}
           icoon={Highlighter}
           args={(color) => ({ color })}
@@ -394,35 +398,35 @@ export function TekstRibbon({
       naam: t("writer.tabs.tableDesign"),
       inhoud: (
         <>
-          <Groep naam={t("writer.groups.rows")}>
+          <Groep naam={t("writer.groups.rows")} className="ribbon-tabel-posities">
             <div className="ribbon-stapel">
               <W
                 id="tableAction"
                 args="addRowAbove"
                 naam={t("writer.commands.insertRowAbove")}
-                icoon={Rows3}
+                icoon={ArrowUpToLine}
               />
               <W
                 id="tableAction"
                 args="addRowBelow"
                 naam={t("writer.commands.insertRowBelow")}
-                icoon={Rows3}
+                icoon={ArrowDownToLine}
               />
             </div>
           </Groep>
-          <Groep naam={t("writer.groups.columns")}>
+          <Groep naam={t("writer.groups.columns")} className="ribbon-tabel-posities">
             <div className="ribbon-stapel">
               <W
                 id="tableAction"
                 args="addColumnLeft"
                 naam={t("writer.commands.insertColumnLeft")}
-                icoon={Columns2}
+                icoon={ArrowLeftToLine}
               />
               <W
                 id="tableAction"
                 args="addColumnRight"
                 naam={t("writer.commands.insertColumnRight")}
-                icoon={Columns2}
+                icoon={ArrowRightToLine}
               />
             </div>
           </Groep>

@@ -209,6 +209,7 @@ export function MiniWerkbalk({
         <Knop id="underline" args={null} naam={t("menu.mini.underline")} icoon={Underline} voerUit={voerUit} />
         <OpdrachtKleur
           opdracht={markering}
+          bevestigen
           naam={t("menu.mini.highlight")}
           icoon={Highlighter}
           args={(color) => ({ color })}

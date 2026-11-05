@@ -9,14 +9,14 @@ importers:
   .:
     dependencies:
       '@betteroffice/docx':
-        specifier: 0.4.3
-        version: 0.4.3(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))
+        specifier: 0.5.1
+        version: 0.5.1(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))
       '@betteroffice/docx-i18n':
-        specifier: 0.4.3
-        version: 0.4.3
+        specifier: 0.5.1
+        version: 0.5.1
       '@betteroffice/docx-react':
-        specifier: 0.4.3
-        version: 0.4.3(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        specifier: 0.5.1
+        version: 0.5.1(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@betteroffice/fonts':
         specifier: 0.4.0
         version: 0.4.0(@betteroffice/fonts-cjk@0.4.0)
@@ -33,14 +33,14 @@ importers:
         specifier: 0.2.0
         version: 0.2.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@betteroffice/xlsx':
-        specifier: 0.3.0
-        version: 0.3.0
+        specifier: 0.5.1
+        version: 0.5.1
       '@betteroffice/xlsx-i18n':
-        specifier: 0.3.0
-        version: 0.3.0
+        specifier: 0.5.1
+        version: 0.5.1
       '@betteroffice/xlsx-react':
-        specifier: 0.3.0
-        version: 0.3.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        specifier: 0.5.1
+        version: 0.5.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@fontsource/inter':
         specifier: ^5.2.0
         version: 5.3.0
@@ -50,6 +50,9 @@ importers:
       '@tauri-apps/api':
         specifier: ^2.9.0
         version: 2.12.4
+      '@tauri-apps/plugin-clipboard-manager':
+        specifier: 2.3.2
+        version: 2.3.2
       buffer:
         specifier: 6.0.3
         version: 6.0.3
@@ -136,11 +139,11 @@ packages:
     resolution: {integrity: sha512-NpugTzbKgGrNe45Ui32cN8vCFFMxVtP/9rtfwv0nP5FRDAjvYBxJcLVpYA9mr1jxP6cnIT7x9LUzuDTbWYYNRA==}
     engines: {node: '>=6.9.0'}
 
-  '@betteroffice/docx-i18n@0.4.3':
-    resolution: {integrity: sha512-8CSSjdurL6V2hkWuENOb2It4vEvnx3CCj9ZiZZ3iZW5oYk3RhGUN5gopLLsriNrGsqLduuOULWSUNf9CEJ9aew==}
+  '@betteroffice/docx-i18n@0.5.1':
+    resolution: {integrity: sha512-+uhvY8y16hVf3xGbvJyhBk3Y8Irsx+gwDOFOmjOHiz9f/ePSysNpQSDD/ZYx8y3GTLHHSfOAWsSkBGkpaHvpEg==}
 
-  '@betteroffice/docx-react@0.4.3':
-    resolution: {integrity: sha512-4xUp8RB5i+iBR+ANLwYw7sahMHvmMnRTn/i0RA8N/F9rxeVpLhCd6EYF5sgXHa6dYcFNS8Fj21ZgrUYcrm6iyg==}
+  '@betteroffice/docx-react@0.5.1':
+    resolution: {integrity: sha512-6qt5UF2pwSnHEEnpCO7LIM/E71p10puDGyWivwea7nkN9gTzjnGTusMyxvwGLxbgOpGmJjwqCuclaAnQ7Dql8Q==}
     peerDependencies:
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
@@ -150,8 +153,8 @@ packages:
       react-dom:
         optional: true
 
-  '@betteroffice/docx@0.4.3':
-    resolution: {integrity: sha512-CEErXJH3iCsi2a61gTNkAofLCzSTcktLmp710gGhMwbBfOqwQ2yI7dRFBV3ElGa9JxkS03IfejvLX0sAvlTrUQ==}
+  '@betteroffice/docx@0.5.1':
+    resolution: {integrity: sha512-90OVOjArTdk7KmHNSGBPMLDPg1sU+k/LI0HooZDdALwidGpjNjFAazkKSTg29K6fpmv6qmygCdJiXCCoxL2GRw==}
     peerDependencies:
       '@betteroffice/fonts': ^0
     peerDependenciesMeta:
@@ -181,17 +184,17 @@ packages:
   '@betteroffice/pptx@0.2.0':
     resolution: {integrity: sha512-pNPQ58tlA+pVibERbLdQNskvP7a0GIMf4jhkCU/gPp8043Ichf6gB3PSb4ra9sfqoIaWqOaZKCWyptovA2+Q0A==}
 
-  '@betteroffice/xlsx-i18n@0.3.0':
-    resolution: {integrity: sha512-wQx7boZyKr+8MDDtUdos52pDfHeyesY8Hrsj4zEiptAi1c+8Tgy+d3sTPyYX2WZit9EoeSGy4AzombARI03vOQ==}
+  '@betteroffice/xlsx-i18n@0.5.1':
+    resolution: {integrity: sha512-IlYiWFIgKIldu2PlcdKjeW54v0A2Gl4SFV3XR5p9IYRUxH4Mi5boG3TxfHSewn12nupul/05fCFiZ+SUxr0Byg==}
 
-  '@betteroffice/xlsx-react@0.3.0':
-    resolution: {integrity: sha512-ZKHTKGvWKz9Np33MiENcE115QDddREO3LuvtZTnPiNVphB3J5DvxICV9FET/CMgKP5Y5WMgtNDJcJfe6AvLo6A==}
+  '@betteroffice/xlsx-react@0.5.1':
+    resolution: {integrity: sha512-ZIjyrxPP5QfULl3Z6DRAiuOpJ0/6VDp2Ihjx1R/FnNJScgp+XYaPbkhsBdR05/lJbjmtOVHZMaJQk5AezNh4QQ==}
     peerDependencies:
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
 
-  '@betteroffice/xlsx@0.3.0':
-    resolution: {integrity: sha512-K2bHtdk/epAxsmvxJlIWBRndjP3ltQU0Oh3p4gcZd2n5/YgXglo3SmMYX4nQe8WEm/yvz91p+aIasKyXXQP9Wg==}
+  '@betteroffice/xlsx@0.5.1':
+    resolution: {integrity: sha512-UHOnzcMML6Ud9D1M4d8FZKmw3AAg2/DttE/sVxM858SgiIpOtzGOqlh62RM9/8y/JW8bR8t+wN69EX8UJvR8EQ==}
 
   '@esbuild/aix-ppc64@0.28.2':
     resolution: {integrity: sha512-XExcO+dvLKvVtNTibSTBej1NCAbaGhWn9Ww1ZPx80qsahhPFe/8jgWP0IchNe0F3HwkU7n8ejhH8bjonqht8mQ==}
@@ -846,6 +849,9 @@ packages:
     resolution: {integrity: sha512-f7/LsY74SVb1ChmOPw1ajOpxii0GSzDAgmWHRci8JUYuuai04rXsSbFobpmB0sP2DdlvMD/B5ZotEn8GOGMRUg==}
     engines: {node: '>= 10'}
     hasBin: true
+
+  '@tauri-apps/plugin-clipboard-manager@2.3.2':
+    resolution: {integrity: sha512-CUlb5Hqi2oZbcZf4VUyUH53XWPPdtpw43EUpCza5HWZJwxEoDowFzNUDt1tRUXA8Uq+XPn17Ysfptip33sG4eQ==}
 
   '@types/chai@5.2.3':
     resolution: {integrity: sha512-Mw558oeA9fFbv65/y4mHtXDs9bPnFMZAL/jxdPFUpOHHIXX91mcgEHbS5Lahr+pwZFR8A7GQleRWeI6cGFC2UA==}
@@ -1787,12 +1793,12 @@ snapshots:
 
   '@babel/runtime@7.29.10': {}
 
-  '@betteroffice/docx-i18n@0.4.3': {}
+  '@betteroffice/docx-i18n@0.5.1': {}
 
-  '@betteroffice/docx-react@0.4.3(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+  '@betteroffice/docx-react@0.5.1(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
-      '@betteroffice/docx': 0.4.3(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))
-      '@betteroffice/docx-i18n': 0.4.3
+      '@betteroffice/docx': 0.5.1(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))
+      '@betteroffice/docx-i18n': 0.5.1
       '@radix-ui/react-select': 2.4.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       clsx: 2.1.1
       sonner: 2.0.8(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -1804,7 +1810,7 @@ snapshots:
       - '@types/react'
       - '@types/react-dom'
 
-  '@betteroffice/docx@0.4.3(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))':
+  '@betteroffice/docx@0.5.1(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))':
     optionalDependencies:
       '@betteroffice/fonts': 0.4.0(@betteroffice/fonts-cjk@0.4.0)
 
@@ -1825,16 +1831,16 @@ snapshots:
 
   '@betteroffice/pptx@0.2.0': {}
 
-  '@betteroffice/xlsx-i18n@0.3.0': {}
+  '@betteroffice/xlsx-i18n@0.5.1': {}
 
-  '@betteroffice/xlsx-react@0.3.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+  '@betteroffice/xlsx-react@0.5.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
-      '@betteroffice/xlsx': 0.3.0
-      '@betteroffice/xlsx-i18n': 0.3.0
+      '@betteroffice/xlsx': 0.5.1
+      '@betteroffice/xlsx-i18n': 0.5.1
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
 
-  '@betteroffice/xlsx@0.3.0': {}
+  '@betteroffice/xlsx@0.5.1': {}
 
   '@esbuild/aix-ppc64@0.28.2':
     optional: true
@@ -2282,6 +2288,10 @@ snapshots:
       '@tauri-apps/cli-win32-arm64-msvc': 2.12.3
       '@tauri-apps/cli-win32-ia32-msvc': 2.12.3
       '@tauri-apps/cli-win32-x64-msvc': 2.12.3
+
+  '@tauri-apps/plugin-clipboard-manager@2.3.2':
+    dependencies:
+      '@tauri-apps/api': 2.12.4
 
   '@types/chai@5.2.3':
     dependencies:

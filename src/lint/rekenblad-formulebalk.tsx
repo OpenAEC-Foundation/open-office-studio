@@ -26,6 +26,7 @@ import { Dialoog } from "../werkruimte/Dialoog";
 import "../werkruimte/werkruimte.css";
 import { RibbonFout } from "../Ribbon";
 import { leesNederlands } from "../rekenbladinvoer";
+import { plaatsFormuleBereik, verwijzingsplek } from "../rekenblad/formuleVerwijzing";
 import { alleenLezen, benoemdeBereiken, gaNaar, Melding, rekenbladHost } from "./rekenblad-opdrachten";
 import { adres, ontleedVerwijzing, serieleDatum, type Cel } from "./rekenblad-logica";
 import {
@@ -91,11 +92,7 @@ const leegWerkboek = () =>
  * komt. Null als dat niet lukt of te groot is.
  */
 export async function voorbeeldResultaat(api: XlsxEditorApi, formule: string, blad: number, cel: Cel): Promise<string | null> {
-  // `ISOWEEKNUM()` zonder argument laat de rekenkern vastlopen en maakt het
-  // werkboek onbruikbaar (docs/tests/2026-10-26-rekenbladen.md). Met een
-  // argument rekent de engine gewoon (`ISOWEEKNUM(1)` → #NUM!), dus alleen de
-  // lege aanroep overslaan.
-  if (/ISOWEEKNUM\s*\(\s*\)/i.test(formule) || !formule.trim()) return null;
+  if (!formule.trim()) return null;
   const refs = verwijzingenIn(`=${formule}`);
   const cellen = refs.reduce(
     (n, r) => n + (r.bereik.bottom - r.bereik.top + 1) * (r.bereik.right - r.bereik.left + 1),
@@ -604,6 +601,55 @@ function UitgevouwenFormule({ api, laag }: { api: XlsxEditorApi; laag: Rekenblad
   const inhoud = useCallback(() => (cel ? api.handle.cell(blad, cel.row, cel.col).input : ""), [api, blad, cel?.row, cel?.col]);
   const [tekst, setTekst] = useState(inhoud);
   const [gewijzigd, setGewijzigd] = useState(false);
+  const veld = useRef<HTMLTextAreaElement>(null);
+  useEffect(() => {
+    let ruimGebaarOp: (() => void) | undefined;
+    const beginVerwijzing = (e: PointerEvent) => {
+      const v = veld.current;
+      if (!v || document.activeElement !== v || v.readOnly || e.button !== 0 || e.ctrlKey || e.altKey || e.metaKey) return;
+      const host = rekenbladHost();
+      if (!(e.target instanceof Node) || !host?.contains(e.target)) return;
+      const anker = api.getPositionAtPoint(e.clientX, e.clientY);
+      const plek = verwijzingsplek(v.value, v.selectionStart, v.selectionEnd);
+      if (!anker || !plek) return;
+      const oorspronkelijk = v.value, begin = v.selectionStart, eind = v.selectionEnd;
+      const stop = (p: PointerEvent) => { p.preventDefault(); p.stopImmediatePropagation(); };
+      const plaats = (p: PointerEvent) => {
+        const focus = api.getPositionAtPoint(p.clientX, p.clientY);
+        if (!focus || focus.sheet !== anker.sheet) return;
+        const nieuw = plaatsFormuleBereik(oorspronkelijk, plek, anker, focus);
+        zetVeld(v, nieuw.tekst, nieuw.cursor);
+      };
+      const beweeg = (p: PointerEvent) => {
+        if (p.pointerId !== e.pointerId) return;
+        stop(p); plaats(p);
+      };
+      const klaar = (p: PointerEvent) => {
+        if (p.pointerId !== e.pointerId) return;
+        stop(p);
+        if (p.type === "pointercancel") zetVeld(v, oorspronkelijk, begin, eind);
+        else plaats(p);
+        ruimGebaarOp?.();
+        v.focus();
+      };
+      ruimGebaarOp?.();
+      ruimGebaarOp = () => {
+        window.removeEventListener("pointermove", beweeg, true);
+        window.removeEventListener("pointerup", klaar, true);
+        window.removeEventListener("pointercancel", klaar, true);
+        ruimGebaarOp = undefined;
+      };
+      stop(e); plaats(e);
+      window.addEventListener("pointermove", beweeg, true);
+      window.addEventListener("pointerup", klaar, true);
+      window.addEventListener("pointercancel", klaar, true);
+    };
+    window.addEventListener("pointerdown", beginVerwijzing, true);
+    return () => {
+      ruimGebaarOp?.();
+      window.removeEventListener("pointerdown", beginVerwijzing, true);
+    };
+  }, [api]);
   useEffect(() => {
     if (!gewijzigd) setTekst(inhoud());
     return api.handle.onUpdate(() => {
@@ -643,6 +689,7 @@ function UitgevouwenFormule({ api, laag }: { api: XlsxEditorApi; laag: Rekenblad
 
   return (
     <textarea
+      ref={veld}
       className="rekenblad-formule-uitgebreid"
       value={tekst}
       rows={4}

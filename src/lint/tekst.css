@@ -83,3 +83,13 @@
   margin-top: 10px;
   font-size: 12px;
 }
+
+
+/* Richting en positie moeten herkenbaar blijven vóór de tabelactie.
+   Bij minder ruimte gebruikt het lint het bestaande gelabelde groepsmenu. */
+.ribbon .ribbon-groep.ribbon-tabel-posities[data-niveau="1"] .ribbon-actie:not(.ribbon-groot) > span {
+  display: inline;
+}
+.ribbon .ribbon-groep.ribbon-tabel-posities[data-niveau="1"] .ribbon-actie:not(.ribbon-groot) {
+  justify-content: flex-start;
+}

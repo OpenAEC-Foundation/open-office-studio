@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { beforeAll, describe, expect, it } from "vitest";
+import { strFromU8, strToU8, unzipSync, zipSync } from "fflate";
 import * as xlsx from "@betteroffice/xlsx";
 import * as pptx from "@betteroffice/pptx";
 import {
@@ -161,6 +162,40 @@ describe("Exports uit de engines met de eigen voorbeelden", () => {
       "01;Multiplex berken;Plaatmateriaal;24;m²;38,5;924;Beschikbaar",
     );
     expect(csv).toMatch(/;Totaal materiaal;;;;;3068;/);
+  });
+  it("berekent formules zonder opgeslagen uitkomst bij CSV-export", async () => {
+    const handle = xlsx.openWorkbook(
+      readFileSync("public/templates/nieuw.xlsx"),
+    );
+    try {
+      handle.editCell(0, 0, 0, "=1+1");
+      const delen = unzipSync(handle.save());
+      const pad = "xl/worksheets/sheet1.xml";
+      const xml = strFromU8(delen[pad]);
+      let gevonden = false;
+      delen[pad] = strToU8(
+        xml.replace(
+          /(<c\b[^>]*\br="A1"[^>]*>)(.*?)(<\/c>)/,
+          (cel, open, inhoud, dicht) => {
+            if (!inhoud.includes("<f>1+1</f>")) return cel;
+            gevonden = true;
+            return `${open}${inhoud.replace(/<v>[^<]*<\/v>/, "")}${dicht}`;
+          },
+        ),
+      );
+      expect(gevonden).toBe(true);
+
+      const uit = await maakExport(
+        "xlsx",
+        "csv",
+        zipSync(delen),
+        "Rekenblad",
+        { blad: 0 },
+      );
+      expect(tekst(uit.bytes)).toBe("2\r\n");
+    } finally {
+      handle.dispose();
+    }
   });
   it("rekenblad als TSV en Markdown", async () => {
     const tsv = tekst((await maakExport("xlsx", "tsv", werkmap(), "M")).bytes);

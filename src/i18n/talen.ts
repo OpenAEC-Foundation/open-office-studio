@@ -36,6 +36,7 @@ export const TAALCODES = [
   "zh-TW",
   "ja",
   "ko",
+  "lo",
 ] as const;
 export type Taal = (typeof TAALCODES)[number];
 
@@ -43,7 +44,7 @@ export type Taal = (typeof TAALCODES)[number];
  * Talen die de app nu aanbiedt, laadt en controleert. De overige codes in
  * TAALCODES zijn voorbereid (deels vertaald) maar nog niet beschikbaar.
  */
-export const INTERFACETALEN = ["nl", "en", "de", "fr", "es", "it", "pt-BR", "zh-CN"] as const satisfies readonly Taal[];
+export const INTERFACETALEN = ["nl", "en", "de", "fr", "es", "it", "pt-BR", "zh-CN", "lo"] as const satisfies readonly Taal[];
 export const isInterfacetaal = (taal: Taal) => (INTERFACETALEN as readonly Taal[]).includes(taal);
 /** Keuze in de instellingen: een vaste taal of "auto" (volgt de systeemtaal). */
 export type TaalKeuze = "auto" | Taal;
@@ -89,6 +90,7 @@ export const TAALNAMEN: Record<Taal, string> = {
   "zh-TW": "中文（繁體）",
   ja: "日本語",
   ko: "한국어",
+  lo: "ພາສາລາວ",
 };
 
 /** Talen die van rechts naar links lopen; de schil spiegelt dan (`<html dir="rtl">`). */
@@ -131,6 +133,7 @@ export const INTL_LOCALE: Record<Taal, string> = {
   "zh-TW": "zh-TW",
   ja: "ja-JP",
   ko: "ko-KR",
+  lo: "lo-LA",
 };
 
 export const isTaal = (waarde: unknown): waarde is Taal =>

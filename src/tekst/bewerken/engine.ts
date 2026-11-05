@@ -1,6 +1,6 @@
 /**
  * Dunne laag over de (experimentele) yrs-API van @betteroffice/docx-react
- * 0.4.3: selectie lezen als bereik, tekenopmaak lezen en toepassen.
+ * 0.5.1: selectie lezen als bereik, tekenopmaak lezen en toepassen.
  *
  * Elke schrijfactie staat tussen twee ongedaan-maakgrenzen, zodat Ctrl+Z hem
  * in precies één stap terugdraait, en publiceert daarna de wijziging zoals de
