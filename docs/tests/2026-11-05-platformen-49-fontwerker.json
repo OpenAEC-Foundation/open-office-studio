@@ -1,0 +1,273 @@
+{
+  "schema": 1,
+  "datum": "2026-11-05",
+  "versie": "2026.45.49",
+  "bronrevisie": "5f5f84a773a9d1925efe73855b11ae9c22cc4980",
+  "ronden": {
+    "desktop": {
+      "run": 42049172552,
+      "conclusie": "success",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42049172552",
+      "jobs": [
+        {
+          "naam": "desktop (macos-latest)",
+          "conclusie": "success"
+        },
+        {
+          "naam": "desktop (windows-latest)",
+          "conclusie": "success"
+        },
+        {
+          "naam": "desktop (ubuntu-22.04)",
+          "conclusie": "success"
+        }
+      ]
+    },
+    "native": {
+      "run": 42049172785,
+      "conclusie": "success",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42049172785",
+      "jobs": [
+        {
+          "naam": "native (windows-latest)",
+          "conclusie": "success"
+        },
+        {
+          "naam": "native (macos-latest)",
+          "conclusie": "success"
+        },
+        {
+          "naam": "Conversie met geïnstalleerde kantoorruntime",
+          "conclusie": "success"
+        },
+        {
+          "naam": "native (ubuntu-22.04)",
+          "conclusie": "success"
+        },
+        {
+          "naam": "Native beelden en pakketbron tussen platforms",
+          "conclusie": "success"
+        }
+      ]
+    },
+    "webview": {
+      "run": 42049172636,
+      "conclusie": "success",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42049172636",
+      "jobs": [
+        {
+          "naam": "bouwen (ubuntu-22.04)",
+          "conclusie": "success"
+        },
+        {
+          "naam": "bouwen (macos-latest)",
+          "conclusie": "success"
+        },
+        {
+          "naam": "bouwen (windows-latest)",
+          "conclusie": "success"
+        }
+      ]
+    },
+    "database": {
+      "run": 42049172758,
+      "conclusie": "success",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42049172758",
+      "jobs": [
+        {
+          "naam": "database (ubuntu-22.04)",
+          "conclusie": "success"
+        },
+        {
+          "naam": "database (windows-latest)",
+          "conclusie": "success"
+        },
+        {
+          "naam": "database (macos-latest)",
+          "conclusie": "success"
+        }
+      ]
+    },
+    "dev": {
+      "run": 42049157317,
+      "conclusie": "success",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42049157317",
+      "jobs": [
+        {
+          "naam": "AppImage voor Linux x86_64",
+          "conclusie": "success"
+        }
+      ]
+    },
+    "geheugen": {
+      "run": 42049157177,
+      "conclusie": "success",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42049157177",
+      "jobs": [
+        {
+          "naam": "onderzoeken",
+          "conclusie": "success"
+        }
+      ]
+    },
+    "plakbatch": {
+      "run": 42049157133,
+      "conclusie": "success",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42049157133",
+      "jobs": [
+        {
+          "naam": "Gedeelde desktopcodec en bron-/geschiedenisbehoud",
+          "conclusie": "success"
+        },
+        {
+          "naam": "Geïsoleerde Rust-/SDK-vergelijking op Linux",
+          "conclusie": "success"
+        }
+      ]
+    },
+    "edities": {
+      "run": 42049217706,
+      "conclusie": "failure",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42049217706",
+      "jobs": [
+        {
+          "naam": "versie",
+          "conclusie": "success"
+        },
+        {
+          "naam": "Bouwen – macOS",
+          "conclusie": "success"
+        },
+        {
+          "naam": "Bouwen – Linux",
+          "conclusie": "failure"
+        },
+        {
+          "naam": "Bouwen – Windows",
+          "conclusie": "success"
+        },
+        {
+          "naam": "publiceren",
+          "conclusie": "skipped"
+        }
+      ]
+    }
+  },
+  "afkeuring": {
+    "run": 42049217706,
+    "job": 127320585217,
+    "stap": "Pakket bouwen (onondertekend), aanvullende fontproef na gewone bewaar-/heropencontrole",
+    "gewone_docx_zip_geldig": [
+      "proef/Prestatieproef.docx"
+    ],
+    "aanvullende_fontexport_bytes": 0,
+    "javascript_fout": "Error: Geen actuele lettertypevraag voor carlito",
+    "python_vervolgfout": "BadZipFile('File is not a zip file')",
+    "visueel": "Document worker trapped: Unreachable code should not be executed in editsession_layout_document_with_regions_retained_json. Werkelijke productwerkertrap zichtbaar; niet alleen een ontbrekende ZIP-fixture.",
+    "programma_sha256": "3a523abadcf4ca803d73c8d3402c43a3e5b64e81b37b1d55a4c9544055067e9d",
+    "script_sha256": "74e68d99decf1c7f076cb719d2794ddb61d37a163d3e63c1d38dba48bc5dcdd3",
+    "context_artifact": 13428097638,
+    "context_zip_sha256": "0b640e6e27a8984742ca1a6dfbf5aca75da14453cc158719263fbc98bf660517",
+    "context_checks": 21,
+    "elf_en_appimage": "Exact lokaal behouden; geen binaries als documentatie gecommit."
+  },
+  "exacte_hertest": {
+    "geslaagd": true,
+    "exit": 0,
+    "vier_fontgevallen_xml_en_tekst_exact": true,
+    "zelfde_elf_en_oorspronkelijke_scripts": true,
+    "grens": "De oorspronkelijke werkertrap is niet verklaard of hersteld. Een lokale groene hertest sluit de negatieve CI-proef niet."
+  },
+  "grenzen": [
+    "Zeven edities: Windows/macOS slagen, Linux faalt; publiceren overgeslagen",
+    "Andere groene 49-ronden bewijzen geen volledige platform-/GUI-/functiepariteit",
+    "Geen issue of migratievlag gesloten; eerdere CI43/47/48-afkeuringen blijven eveneens open"
+  ],
+  "volgende_stap": "Font-/bewaarproef laat de primaire werkerfout en een null-export direct vastleggen; onderzoek source/frame/retained-layoutbinding rond lettertypewijziging en bewaren. Geen testasserties ontspannen of van groene hertest een productfix maken.",
+  "bewijsbestanden": [
+    {
+      "pad": "docs/tests/platformen-49/afgekeurd-rapport.json.gz",
+      "sha256": "f4d70d56919513e26aa66172b32e70357f89d95e4e06918263f85828648b0241"
+    },
+    {
+      "pad": "docs/tests/platformen-49/afgekeurd.png",
+      "sha256": "cb08beb6542a137484d74279a71d7ba004fe2c3558f9b3317628f02473956591"
+    },
+    {
+      "pad": "docs/tests/platformen-49/context-SHA256SUMS.gz",
+      "sha256": "6102a14d1b1781d745c4f02010ec0eb2bdb5ee66645ee7ef5efa3593148d4836"
+    },
+    {
+      "pad": "docs/tests/platformen-49/context.json.gz",
+      "sha256": "2278cb0a197806516792af64a8fb6ff77ea96176f22c06ff2950ec0bf1a5f542"
+    },
+    {
+      "pad": "docs/tests/platformen-49/database.json.gz",
+      "sha256": "dabe8edbec60c29faa12820b439d25c0c0f785cfc7373d5742d2a0028dac39b7"
+    },
+    {
+      "pad": "docs/tests/platformen-49/desktop.json.gz",
+      "sha256": "0aab5af6d83eb681897d07cbec49198a701fa849838eb83f3c79bbe85f255073"
+    },
+    {
+      "pad": "docs/tests/platformen-49/dev.json.gz",
+      "sha256": "f034b1b3d265098b00ca98620f7ad2378d5908d065120d1d182e6dd9d913bf26"
+    },
+    {
+      "pad": "docs/tests/platformen-49/edities.json.gz",
+      "sha256": "1e3b57aa0bb8fb50494880921e49b8cb181cb6f2b7861ed2e38f548db3d971b0"
+    },
+    {
+      "pad": "docs/tests/platformen-49/geheugen.json.gz",
+      "sha256": "32cb95ec605e0f4013f3b3fa40f3c133f338d1bd0d5cef701a2f95264eaffd9e"
+    },
+    {
+      "pad": "docs/tests/platformen-49/hertest-exit.json.gz",
+      "sha256": "df1a4fab3bfc298a88e9b3c1af697597ad62b31961f339d7e0a5b04daa8ed576"
+    },
+    {
+      "pad": "docs/tests/platformen-49/hertest-opdracht.json.gz",
+      "sha256": "9b8e573f7be618b9d08112a6f611685c1038ff0361d7bee2819726cba54a9a48"
+    },
+    {
+      "pad": "docs/tests/platformen-49/hertest-rapport.json.gz",
+      "sha256": "5b64126b982d714ff58084612dbb82deb7a0e466d17d43b4013b2973a7299847"
+    },
+    {
+      "pad": "docs/tests/platformen-49/hertest.log.gz",
+      "sha256": "7bc919b833ae11a2e7cbf9f7ebaef05382c493cd918cc44286591c0ec7b9a144"
+    },
+    {
+      "pad": "docs/tests/platformen-49/job.log.gz",
+      "sha256": "ec6135332d85ac4661dd16cd97bd6d80788f925bb0115fb0f5f0d9f69a4a5099"
+    },
+    {
+      "pad": "docs/tests/platformen-49/lettertype-caladea-nulbytes.docx.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "pad": "docs/tests/platformen-49/native.json.gz",
+      "sha256": "8da7c2758cd1889c8cf8c2add14e5943485b7014073f510b9edcbafc62c607f3"
+    },
+    {
+      "pad": "docs/tests/platformen-49/oorspronkelijke-fontproef.js.gz",
+      "sha256": "81c1ce5d7b6b34aa544363b70cf41dac3071167b78a9998f3426231914735e38"
+    },
+    {
+      "pad": "docs/tests/platformen-49/oorspronkelijke-fontproef.py.gz",
+      "sha256": "6ab600d4427cb05abe7c104a6e73ee357c26854a89611e74451b5db017d04490"
+    },
+    {
+      "pad": "docs/tests/platformen-49/oorspronkelijke-proef.py.gz",
+      "sha256": "d98423cc4d340dee17dc32dcc31d5566c27c446a6b82bea00ec1a0e85e18b668"
+    },
+    {
+      "pad": "docs/tests/platformen-49/plakbatch.json.gz",
+      "sha256": "0fc9b91275c9a79f4e49cfddbaf27ddc3e4b067a912037e2617e2f5b6ab97b50"
+    },
+    {
+      "pad": "docs/tests/platformen-49/webview.json.gz",
+      "sha256": "9dd8f08904b6a2429970819ceafb9d869d8257bc722058e1f3cf9c08fd77bc6a"
+    }
+  ]
+}

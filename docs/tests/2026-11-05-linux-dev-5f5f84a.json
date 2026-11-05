@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "geslaagd": true,
+  "versie": "2026.45.49",
+  "bronrevisie": "5f5f84a773a9d1925efe73855b11ae9c22cc4980",
+  "run": 42049157317,
+  "run_conclusie": "success",
+  "artifact": 13428016631,
+  "download": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42049157317/artifacts/13428016631",
+  "zip_sha256": "f5480b70327fb7f841b2d6d157aced52a68e3a3fadb4a224f8baa892927f388c",
+  "gui_zip_sha256": "5721f81c6d12337708b1832c624e1e25f4da0ea8d0fd46da415035fb6f534c8a",
+  "tar_sha256": "43ebe735b15f89c5008ce7fbb862789875205f4a85ec66d962207f54ebed630e",
+  "appimage_sha256": "dd9c1b0c64b8120a1d15b6cc123b73e39e86039cbb4e8650a453818854ed4a79",
+  "metadata": {
+    "versie": "2026.45.49",
+    "bronrevisie": "5f5f84a773a9d1925efe73855b11ae9c22cc4980",
+    "platform": "Linux x86_64",
+    "profiel": "org.openaec.office-studio.dev",
+    "appimage": "Open Office Studio Dev_2026.45.49_amd64.AppImage",
+    "sha256": "dd9c1b0c64b8120a1d15b6cc123b73e39e86039cbb4e8650a453818854ed4a79",
+    "pakketcontroles": [
+      "AppImage type 2",
+      "SquashFS volledig uitgepakt",
+      "AppRun uitvoerbaar",
+      "ELF x64 en bibliotheken gevonden",
+      "snelkoppeling en pictogram aanwezig"
+    ],
+    "controles": [
+      "TypeScript via productiebouw",
+      "Vitest",
+      "Rust-desktoptests"
+    ],
+    "gui_acceptatie": "Niet volledig gecontroleerd; ontwikkelbuild met bekende Writer-problemen.",
+    "webkit_modulekaart": {
+      "geslaagd": true,
+      "omvang": "Twee minimale moduleworkers in de geïnstalleerde WebKitGTK; geen app- of prestatieacceptatie.",
+      "webkit": "2.50.4",
+      "gevallen": {
+        "oud": {
+          "evaluaties": 2,
+          "gelijk": false
+        },
+        "apart": {
+          "evaluaties": 1,
+          "gelijk": true
+        }
+      },
+      "kwetsbaar": true
+    },
+    "native_gui": {
+      "geslaagd": true,
+      "programma_sha256": "2ee531e43d7fbc62df1c0d12c1f0dbe9444f57e45bce46c7f7695e112efa577e",
+      "startprogramma_sha256": "eb0b254ac0dae6543e6dd7cd02e1baf40a060de95b927313122d6b46323c00aa",
+      "profiel": "org.openaec.office-studio.dev",
+      "script_sha256": "6f8f69f40536c79f6c151e00e3501c994a4b42efa4c0ccad48fff7f1d4fad53f",
+      "omvang": "Eigen DOCX-kopie, drie plakrondes, bewaren na ronde één en verder bewerken; onafhankelijke inhoudscontrole, verwerpen en nieuw document.",
+      "appimage_startfunctie": "De uitgepakte AppRun is gestart; launcher en werkelijke ELF zijn op hash gecontroleerd. FUSE-mount niet getoetst."
+    }
+  },
+  "controles": [
+    "AppImage type 2",
+    "SquashFS volledig uitgepakt",
+    "AppRun uitvoerbaar",
+    "ELF x64 en bibliotheken gevonden",
+    "snelkoppeling en pictogram aanwezig",
+    "ZIP-CRC en GitHub-digests",
+    "Tar-digest, metadata en uitvoerrechten",
+    "AppRun en ELF exact gelijk aan apart CI-GUI-rapport; alle foutlijsten leeg"
+  ],
+  "grenzen": [
+    "Geen lokale GUI-uitvoering van deze gedownloade AppImage",
+    "FUSE-mount, ARM en andere distributies niet gevalideerd",
+    "Writer-invoervertraging en oorspronkelijke Wasm-afkeuringen, ook eerdere afzonderlijke herstel-, sluit- en lijstafkeuringen, blijven open"
+  ],
+  "bewijsbestanden": [
+    {
+      "pad": "docs/tests/linux-dev-5f5f84a/controle.json.gz",
+      "sha256": "472372f43d61485bb4d686e566d7660bb4c85031f32cf35489e121a28d505cd7"
+    },
+    {
+      "pad": "docs/tests/linux-dev-5f5f84a/controleer.py.gz",
+      "sha256": "ff740fd600fee6e62dd6929045a2d476ac5d3357c80e838d99b4886dc2aa609f"
+    },
+    {
+      "pad": "docs/tests/linux-dev-5f5f84a/gui-rapport.json.gz",
+      "sha256": "067d56e86594059d38612f5faaa95d3ecf98321a7b3b0c44f7580c0990d29ed2"
+    }
+  ]
+}
