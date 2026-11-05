@@ -2,7 +2,6 @@ import { useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { vraagAfdrukvoorbeeld } from "../afdrukken/openen";
 import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
-import i18next from "../i18n/config";
 import { useOpmaak } from "../i18n/opmaak";
 import {
   useDocxCommand,
@@ -20,6 +19,7 @@ import { toetsInProfiel } from "./sneltoetsenlijst";
 import { useInstellingen } from "../instellingen";
 import { useProfielToets } from "../tekst/bewerken/profielToets";
 import { useHerhaalbaar } from "../tekst/bewerken/herhaalmelding";
+import { leesAlleAlineas } from "../tekst/gedeeld/engine";
 import { ontbrekendeStijl } from "../tekst/stijlen/model";
 import { metHeleAlinea } from "../tekst/stijlen/toepassen";
 import { tabelInvoegen } from "../tekst/tabel/opdrachten";
@@ -112,12 +112,6 @@ function tekstVlak() {
     actief.classList.contains("paged-editor__yrs-input")
     ? actief
     : tekst;
-}
-
-async function leesAlineas(api: DocxEditorRef) {
-  const gelezen = await api.readParagraphs({ view: "accepted" });
-  if (!gelezen.ok) throw new Error(i18next.t("ribbon:writer.errors.documentUnreadable"));
-  return gelezen;
 }
 
 export function useTekstOpdrachten({
@@ -519,10 +513,10 @@ function WoordenTellen({
     const ref = api();
     if (!ref) return;
     let actief = true;
-    leesAlineas(ref)
-      .then((gelezen) => {
+    leesAlleAlineas(ref)
+      .then((alineas) => {
         if (!actief) return;
-        setGeheel(telTekst(gelezen.paragraphs.map((a) => a.text)));
+        setGeheel(telTekst(alineas.map((a) => a.text)));
         setPaginas(ref.getTotalPages() || ref.getCurrentPage());
         const geselecteerd = ref.getSelectionInfo()?.selectedText ?? "";
         setSelectie(
@@ -836,10 +830,10 @@ export function TekstStatus({
     const tel = (ref: DocxEditorRef) => {
       clearTimeout(wachten);
       wachten = setTimeout(() => {
-        leesAlineas(ref)
-          .then((gelezen) => {
+        leesAlleAlineas(ref)
+          .then((alineas) => {
             if (!actief) return;
-            setTelling(telTekst(gelezen.paragraphs.map((a) => a.text)));
+            setTelling(telTekst(alineas.map((a) => a.text)));
             paginas(ref);
           })
           .catch(() => {});
