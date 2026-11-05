@@ -1,0 +1,53 @@
+name: Issue melden
+description: Meld een fout, verbetering, onderzoek of documentatietaak met de juiste labels.
+body:
+  - type: dropdown
+    id: onderdeel
+    attributes:
+      label: Onderdeel
+      multiple: true
+      options:
+        - Writer (tekst)
+        - Spreadsheet (rekenblad)
+        - Presentatie (presentatie)
+        - Notition (notities)
+        - Algemeen (algemeen)
+        - Agenda (agenda)
+        - Database (database)
+    validations:
+      required: true
+  - type: dropdown
+    id: soort
+    attributes:
+      label: Soort werk
+      options:
+        - Bug (bug)
+        - Verbetering of nieuwe functie (enhancement)
+        - Documentatie (documentation)
+        - Onderzoek (onderzoek)
+        - Routekaart / verzamelissue (routekaart)
+    validations:
+      required: true
+  - type: dropdown
+    id: ui
+    attributes:
+      label: UI / bediening
+      description: Staan knoppen, lint, dialogen, zichtbaarheid of bediening centraal?
+      options: ["Ja", "Nee"]
+    validations:
+      required: true
+  - type: dropdown
+    id: formaten
+    attributes:
+      label: Bestandsformaten
+      description: Staan openen, opslaan, import, export of bestandsbehoud centraal?
+      options: ["Ja", "Nee"]
+    validations:
+      required: true
+  - type: textarea
+    id: beschrijving
+    attributes:
+      label: Beschrijving
+      description: Beschrijf het probleem of doel, verwacht gedrag en acceptatiecriteria. Geef bij fouten reproductiestappen, omgeving en waargenomen gedrag.
+    validations:
+      required: true
