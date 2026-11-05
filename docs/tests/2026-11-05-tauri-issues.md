@@ -138,3 +138,12 @@ document behoudt de juiste weergave. [Interfacebewijs](../screenshots/test-tauri
 
 De volledige suite telt 135 bestanden, 1.559 geslaagde en zeven overgeslagen
 tests; typecontrole en productiebuild slagen.
+
+## Nog open: nootverwijzingen (#144)
+
+Beide noottypen zijn in de productie-interface ingevoegd en op Romeinse
+kleine letters vanaf drie ingesteld. De hoofdtekstverwijzingen blijven
+`1`; de noten gebruiken `iii`. Onafhankelijke controle van het gedownloade
+bestand bevestigt voor beide typen `lowerRoman` en `numStart=3` in de
+sectie-instellingen. De opgeslagen instellingen zijn dus niet verdwenen.
+Deze fout is gereproduceerd, maar nog niet hersteld of afgetekend.
