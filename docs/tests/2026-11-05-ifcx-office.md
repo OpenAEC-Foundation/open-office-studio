@@ -46,7 +46,9 @@ worden niet gebruikt. Alleen synthetische kopieën staan in de proefmap.
 
 - Een geopend IFCX blijft na Ctrl+S in zijn geheel bytegelijk.
 - Daarna ingevoerde tekst blijft na Ctrl+S in de gecontroleerde bron aanwezig;
-  de nieuwe bronrevisie komt naast de oude bron te staan.
+  de nieuwe bronrevisie komt naast de oude bron te staan. Tab, titel en
+  statusbalk eindigen schoon.
+  [Native opslag](../screenshots/test-ifcx-native-opgeslagen-2026-11-05.png).
 - Vanuit een DOCX: tekst invoeren, IFCX kiezen en de native bestandskiezer
   bevestigen. Het gekozen IFCX wordt het nieuwe werkbestand en de tabnaam
   verandert mee. Nieuwe invoer na die naamwisseling blijft behouden. Ctrl+S

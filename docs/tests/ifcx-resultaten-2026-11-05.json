@@ -28,7 +28,7 @@
       "bewerkt": true,
       "opgeslagen": "docx-gewijzigd.ifcx",
       "heropend": true,
-      "sha256": "2e715ec7a9b8e4ad6478d0ff9685d177ea0c9b00994f4a18e387a9bc14756123"
+      "sha256": "7037d57f7ad7a921e6c11df19ac1e3d1b2d2e16dbebf3d7b3cb1864ce6129241"
     },
     {
       "soort": "xlsx",
@@ -56,13 +56,6 @@
   },
   "nativeRondgang": [
     {
-      "geval": "ifcx",
-      "bytegelijkeCtrlS": true,
-      "bewerktEnTeruggeschreven": true,
-      "tekst": "Native IFCX proef",
-      "bestand": "Proef.ifcx"
-    },
-    {
       "geval": "klembord",
       "externLint": true,
       "externCtrlV": true,
@@ -70,6 +63,19 @@
       "internLint": true,
       "tekst": "Basis.Lint.SneltoetsBasis.Lint.SneltoetsBasis.Lint.SneltoetsBasis.Lint.Sneltoets",
       "bestand": "Proef.docx"
+    },
+    {
+      "geval": "ifcx",
+      "bytegelijkeCtrlS": true,
+      "bewerktEnTeruggeschreven": true,
+      "tekst": "Native IFCX proef",
+      "bestand": "Proef.ifcx"
     }
-  ]
+  ],
+  "nativeOpslagcontrole": {
+    "opgeslagenXMLPerStap": true,
+    "venstertitelMinimaalTweeSecondenSchoon": true,
+    "eindbeeldTabEnStatusbalkSchoon": true,
+    "script": "scripts/test-native-tekst-opslag.py"
+  }
 }

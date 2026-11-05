@@ -275,3 +275,26 @@ bestaande installertalen blijven onderling gelijk.
 Het IFCX-voorstel (#115) is afzonderlijk samengevoegd als documentatie en
 experimentele bewaarproef; dit activeert geen nieuwe productieopslag. De
 parallelle Rust-migratie (#116) blijft buiten deze herstelronde.
+
+## Aanvullende native opslagronde — 6 november 2026
+
+PR #154 voegt de daadwerkelijke Office-bronopslag van het IFCX-voorstel toe.
+De [afzonderlijke herstel- en testbeschrijving](2026-11-05-ifcx-office.md) bevat
+het bewijs, de formaatgrenzen en de reproduceerbare opdrachten. Bovenstaande
+waarnemingen blijven de historische stand van de eerdere herstelgroep.
+
+| Issue | Aanvullende uitkomst |
+| --- | --- |
+| #152 | Writer, Spreadsheet en Presentation: IFCX openen, bewerken, opslaan en heropenen; onafhankelijke bron-, formule- en hashcontrole. Native Linux Ctrl+S en Opslaan als/heropenen afzonderlijk uitgevoerd. |
+| #135 | Initialisatiefout nu rechtstreeks gereproduceerd na opslaan in WebKit. Workerstart hersteld; ingevoerde tekst blijft na herhaalde native opslag behouden. |
+| #153 | Te late versiemelding afzonderlijk gereproduceerd en hersteld. Native opgeslagen XML, revisiestatus, titel, tab en statusbalk gecontroleerd. Werkelijk latere invoer blijft gewijzigd. |
+| #126 | Echte Linux-webview: extern en intern plakken via lint en Ctrl+V, met onafhankelijke DOCX-controle en schone toestand na iedere opslag. |
+
+De lokale controles zijn groen: productiebuild, 146 testbestanden met 1.654
+geslaagde proeven en zeven overgeslagen corpusgevallen, 44 Python-proeven en
+de bestaande vertaalcontrole. De bestaande Rust-desktopschil heeft 110
+geslaagde en zes standaard genegeerde proeven. Windows- en macOS-GUI-bediening
+is hiermee niet vrijgegeven. De wijzigingen zijn pas na een geslaagde
+platformcontrole en merge op de hoofdbranch beschikbaar; ze zitten nog niet
+in de gepubliceerde release v2026.45.1. De overige open issues, waaronder
+#144 en de brede klembordcriteria van #20, blijven afzonderlijk te toetsen.
