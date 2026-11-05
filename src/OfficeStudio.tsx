@@ -40,6 +40,7 @@ import {
 import { editorKoppeling } from "./export/koppeling";
 import { controleerPakket } from "./pakketcontrole";
 import { bereidOpenen } from "./import/openen";
+import { serialiseerIfcxBron } from "./ifcx/opslag";
 import { useImportvragen } from "./import/Importvensters";
 import { MACROUITVOER } from "./import/bron";
 import versie from "../versie.json";
@@ -183,6 +184,10 @@ export function OfficeStudio() {
   const eigenInvoerformaten = invoerformaten
     .split(",")
     .filter((ext) => {
+      if (ext === ".ifcx")
+        return ["docx", "xlsx", "pptx"].some((s) =>
+          staatDocumentToe(studio, s as Soort),
+        );
       const soort = bestandssoort(ext.slice(1));
       return soort !== null && staatDocumentToe(studio, soort);
     })
@@ -319,6 +324,8 @@ export function OfficeStudio() {
       if (tabblad.module === "email") emailActies.current?.bewaren();
       return !tabs.isGewijzigd(tabblad);
     }
+    const opslag = tabs.opslag(tabblad.id);
+    let ongewijzigd = !!opslag?.ongewijzigdSindsOpenen && !tabblad.gewijzigd;
     const plan = als
       ? ({ route: "keuze" } as const)
       : opslagplan({
@@ -334,7 +341,8 @@ export function OfficeStudio() {
     if (
       plan.route === "terugschrijven" &&
       tabblad.bron?.versleuteling &&
-      !wachtwoorden.current.has(tabblad.id)
+      !wachtwoorden.current.has(tabblad.id) &&
+      !(plan.ext === "ifcx" && ongewijzigd && tabblad.bron.ifcx)
     )
       return vraagOpslaanAls(tabblad.id);
     const keuze = huidigeKeuze(tabblad);
@@ -366,18 +374,41 @@ export function OfficeStudio() {
       });
     }
     const serialiseer = tabs.serialiseerder(tabblad.id);
-    const opslag = tabs.opslag(tabblad.id);
     if (!serialiseer || !opslag || bezigRef.current) return false;
     bezigRef.current = true;
     setBezig(true);
     setOpslaanBezig(true);
     let alsNodig = false;
     try {
-      const resultaat = await opslag.opslaan(serialiseer, (bytes) =>
-        plan.route === "terugschrijven" && werkbestand
+      const doelExt = plan.route === "terugschrijven" ? plan.ext : keuze.ext;
+      // Laat de editor eerst wachtende invoer verwerken. Alleen wanneer ook
+      // daarna niets sinds openen is bewerkt, mogen de bronbytes terug.
+      const bronSerialiseer =
+        doelExt === "ifcx" && ongewijzigd
+          ? Object.assign(async () => {
+              const bron = await serialiseerIfcxBron(
+                serialiseer,
+                tabblad.bytes,
+                () =>
+                  opslag.ongewijzigdSindsOpenen && !tabs.isGewijzigd(tabblad),
+              );
+              ongewijzigd = bron.ongewijzigd;
+              return bron.bytes;
+            }, { bereidVoor: serialiseer.bereidVoor })
+          : serialiseer;
+      const resultaat = await opslag.opslaan(bronSerialiseer, (bytes) => {
+        if (
+          doelExt === "ifcx" &&
+          tabblad.bron?.versleuteling &&
+          !ongewijzigd &&
+          !wachtwoorden.current.has(tabblad.id)
+        )
+          return Promise.resolve({ status: "opslaan-als" as const });
+        return plan.route === "terugschrijven" && werkbestand
           ? schrijfTerug(tabblad.soort, werkbestand, plan.ext, bytes, {
               bron: tabblad.bron,
               wachtwoord: wachtwoorden.current.get(tabblad.id) ?? undefined,
+              ongewijzigd,
             })
           : bewaarInFormaat(
               tabblad.soort,
@@ -385,8 +416,9 @@ export function OfficeStudio() {
               keuze,
               werkbestand?.token,
               tabblad.bron,
-            ),
-      );
+              { ongewijzigd: !als && ongewijzigd },
+            );
+      });
       if (resultaat.status === "mislukt") {
         meld(
           t("errors.saveFailed", { error: resultaat.fout }),
@@ -397,6 +429,24 @@ export function OfficeStudio() {
       }
       if (resultaat.status !== "afgerond") return false;
       const { uitkomst } = resultaat;
+      if (uitkomst.ifcx && resultaat.actueel) {
+        const sleutel =
+          plan.route === "terugschrijven"
+            ? wachtwoorden.current.get(tabblad.id)
+            : keuze.wachtwoord;
+        tabs.werkBij(tabblad.id, {
+          bron: {
+            ...tabblad.bron,
+            ifcx: uitkomst.ifcx,
+            versleuteling:
+              !als && ongewijzigd && tabblad.bron?.ifcx
+                ? tabblad.bron.versleuteling
+                : sleutel
+                  ? "agile"
+                  : undefined,
+          },
+        });
+      }
       // Een toelichting (verlies bij omzetten, conflictkopie) blijft staan.
       meld(
         opslagMelding(uitkomst),
@@ -731,7 +781,10 @@ export function OfficeStudio() {
   ) {
     const ext = naam.split(".").pop()?.toLowerCase();
     const soort = bestandssoort(ext ?? "");
-    if (!ext || !soort || !staatDocumentToe(studio, soort)) {
+    if (
+      !ext ||
+      (ext !== "ifcx" && (!soort || !staatDocumentToe(studio, soort)))
+    ) {
       meld(
         neerzetMelding(naam) ?? t("errors.unsupportedFormat", { name: naam }),
         null,
@@ -1335,7 +1388,7 @@ export function OfficeStudio() {
           }}
           bevestig={(keuze) => {
             // Het wachtwoord geldt voor het werkbestand in het eigen formaat.
-            if (keuze.ext === opslaanDocument.soort)
+            if (keuze.ext === opslaanDocument.soort || keuze.ext === "ifcx")
               wachtwoorden.current.set(
                 opslaanDocument.id,
                 keuze.wachtwoord ?? null,

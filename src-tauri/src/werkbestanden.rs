@@ -26,7 +26,7 @@ use std::{
 };
 
 /// Eigen bewerkbare formaten: alleen daarin schrijft Ctrl+S terug.
-pub const EIGEN: [&str; 3] = ["docx", "xlsx", "pptx"];
+pub const EIGEN: [&str; 4] = ["docx", "xlsx", "pptx", "ifcx"];
 /// Macroformaten die de webview zelf schrijft (met het VBA-project van het
 /// geopende origineel, `src/import/macros.ts`); na Opslaan als blijven ze
 /// het werkbestand, net als het eigen formaat.
@@ -530,6 +530,26 @@ pub async fn kies_bestanden(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn ifcx_gebruikt_dezelfde_atomaire_pad_en_conflictbeveiliging() {
+        let map = tempfile::tempdir().unwrap();
+        // Hier wordt de padroute getest; de profiel- en hashcontrole staat
+        // vóór de editor in src/ifcx/dossier.ts.
+        let oud = br#"{"revisie":1}"#;
+        let nieuw = br#"{"revisie":2,"bron":"behouden"}"#;
+        let pad = bestand(map.path(), "document.ifcx", oud);
+        let w = Werkbestanden::default();
+        let token = w.registreer(pad.clone(), "main");
+        assert_eq!(w.lees(&token, "main").unwrap(), oud);
+        assert!(matches!(w.schrijf(&token, "main", "ifcx", nieuw, false).unwrap(), Schrijfuitkomst::Opgeslagen { .. }));
+        assert_eq!(std::fs::read(&pad).unwrap(), nieuw);
+        assert_eq!(w.schrijf(&token, "main", "docx", b"PK", false).unwrap(), Schrijfuitkomst::AnderFormaat);
+        assert_eq!(std::fs::read(&pad).unwrap(), nieuw);
+        std::fs::write(&pad, b"extern gewijzigde bron").unwrap();
+        assert_eq!(w.schrijf(&token, "main", "ifcx", oud, false).unwrap(), Schrijfuitkomst::ExternGewijzigd);
+        assert_eq!(std::fs::read(&pad).unwrap(), b"extern gewijzigde bron");
+    }
 
     fn bestand(map: &Path, naam: &str, inhoud: &[u8]) -> PathBuf {
         let pad = map.join(naam);

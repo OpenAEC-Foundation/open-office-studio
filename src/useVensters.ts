@@ -92,6 +92,7 @@ export function useVensters({ tabs, voorOverdracht }: Opties) {
         gewijzigd: overdracht.gewijzigd,
         vingerafdruk: overdracht.vingerafdruk,
         werkbestand: overdracht.werkbestand ?? null,
+        bron: overdracht.bron ?? null,
         melding: eersteKeer() ? i18next.t("shell:windows.documentMoved") : "",
       });
       return true;
@@ -147,6 +148,7 @@ export function useVensters({ tabs, voorOverdracht }: Opties) {
       gewijzigd: tabs.isGewijzigd(tabblad),
       vingerafdruk: tabblad.vingerafdruk,
       werkbestand: tabblad.werkbestand,
+      bron: tabblad.bron,
     };
   }
 

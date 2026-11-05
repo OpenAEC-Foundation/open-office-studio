@@ -4,6 +4,8 @@ import type { MacroOnderdelen } from "./macros";
 
 /** Kenmerken van het geopende bronbestand die bij opslaan meetellen. */
 export interface Bronkenmerken {
+  /** Het volledige IFCX-dossier, inclusief onbekende uitbreidingen. */
+  ifcx?: import("../ifcx/dossier").IfcxBron;
   /** Het origineel was met een wachtwoord versleuteld (het wachtwoord zelf wordt niet bewaard). */
   versleuteling?: "agile" | "standard";
   /** Het VBA-project (byte-identiek) van een DOCM/XLSM/PPTM. */
@@ -12,6 +14,7 @@ export interface Bronkenmerken {
 
 /** OOXML-formaten die de app zelf schrijft en dus kan versleutelen. */
 export const VERSLEUTELBAAR = new Set([
+  "ifcx",
   "docx",
   "xlsx",
   "pptx",

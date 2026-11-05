@@ -24,6 +24,7 @@ import { controleerPakket } from "../pakketcontrole";
 import { MACRO_ID, macronaam, openRapport, type Rapport } from "./rapport";
 import { MACRO_INVOER, MACROFORMAAT, scheidMacros } from "./macros";
 import type { Bronkenmerken } from "./bron";
+import { openIfcx } from "../ifcx/dossier";
 import {
   VerkeerdWachtwoord,
   herkenVersleuteling,
@@ -79,6 +80,21 @@ export async function bereidOpenen(
   bytes: Uint8Array,
   hulp: Openhulp,
 ): Promise<Openresultaat | null> {
+  if (extensieVan(naam) === "ifcx") {
+    const document = await openIfcx(bytes);
+    // De gewone route bewaakt ook pakketgeldigheid, macro's en wachtwoorden.
+    const resultaat = await bereidOpenen(document.naam, document.bytes, hulp);
+    if (!resultaat) return null;
+    if (resultaat.soort !== document.soort)
+      throw new Error(i18next.t("import:ifcx.documents"));
+    return {
+      ...resultaat,
+      naam,
+      gewijzigd: resultaat.gewijzigd,
+      exportFormaat: "ifcx",
+      bron: { ...resultaat.bron, ifcx: document.bron },
+    };
+  }
   const versleuteling = herkenVersleuteling(bytes);
   if (!versleuteling) return bereidOnversleuteld(naam, bytes, hulp, []);
   if (versleuteling.soort !== "agile" && versleuteling.soort !== "standard")
@@ -104,7 +120,9 @@ export async function bereidOpenen(
       info: true,
       gevolg: i18next.t("import:sources.decrypted", {
         method:
-          versleuteling.soort === "agile" ? "ECMA-376 Agile" : "ECMA-376 Standard",
+          versleuteling.soort === "agile"
+            ? "ECMA-376 Agile"
+            : "ECMA-376 Standard",
       }),
     },
   ]);
@@ -123,8 +141,7 @@ async function bereidOnversleuteld(
   bronregels = [...bronregels];
   const ext = extensieVan(naam);
   const soort = bestandssoort(ext);
-  if (!soort)
-    throw new Error(i18next.t("import:errors.unsupportedFormat"));
+  if (!soort) throw new Error(i18next.t("import:errors.unsupportedFormat"));
 
   if (ext === soort) {
     const controle = controleerPakket(bytes, soort);

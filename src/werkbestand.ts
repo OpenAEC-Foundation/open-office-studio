@@ -3,6 +3,7 @@ import type { BewaarUitkomst } from "./opslag";
 import { blokkeerBijVerlies } from "./export/bewaar";
 import { converteer } from "./formaten";
 import { MACROUITVOER, bereidOpslag, type Bronkenmerken } from "./import/bron";
+import { bereidIfcxOpslag } from "./ifcx/opslag";
 
 /**
  * Werkbestand van een documenttabblad (alleen in de desktopapp).
@@ -63,7 +64,7 @@ export function opslagplan(tabblad: {
     return {
       route: "terugschrijven",
       ext,
-      bevestigen: ext !== soort && !werkbestand.bevestigd,
+      bevestigen: ext !== soort && ext !== "ifcx" && !werkbestand.bevestigd,
     };
   }
   return tabblad.heeftKeuze ? { route: "keuze" } : { route: "opslaanAls" };
@@ -98,14 +99,31 @@ export async function schrijfTerug(
   ext: string,
   bytes: Uint8Array,
   /** Versleuteling en macro’s (src/import/bron.ts); het wachtwoord alleen uit het geheugen. */
-  extra: { bron?: Bronkenmerken | null; wachtwoord?: string } = {},
+  extra: {
+    bron?: Bronkenmerken | null;
+    wachtwoord?: string;
+    ongewijzigd?: boolean;
+  } = {},
 ): Promise<BewaarUitkomst> {
   // Een macroformaat met het VBA-project van het origineel schrijft de app zelf.
-  const eigen = ext === soort || (MACROUITVOER.has(ext) && !!extra.bron?.macro);
+  const eigen =
+    ext === soort ||
+    ext === "ifcx" ||
+    (MACROUITVOER.has(ext) && !!extra.bron?.macro);
   blokkeerBijVerlies(bytes, soort, eigen);
   let uitvoer = bytes;
   let toelichting: string | undefined;
-  if (eigen) {
+  let ifcx: import("./ifcx/dossier").IfcxBron | undefined;
+  if (ext === "ifcx") {
+    const klaar = await bereidIfcxOpslag({
+      soort,
+      naam: werkbestand.naam,
+      bytes,
+      ...extra,
+    });
+    uitvoer = klaar.bytes;
+    ifcx = klaar.bron;
+  } else if (eigen) {
     const klaar = await bereidOpslag({ bytes, soort, ext, ...extra });
     uitvoer = klaar.bytes;
     toelichting = klaar.toelichting;
@@ -131,8 +149,8 @@ export async function schrijfTerug(
     },
   );
   const vertaald = vertaal(uitkomst, werkbestand.naam);
-  return toelichting && vertaald.status === "opgeslagen"
-    ? { ...vertaald, toelichting }
+  return vertaald.status === "opgeslagen"
+    ? { ...vertaald, toelichting, ifcx }
     : vertaald;
 }
 

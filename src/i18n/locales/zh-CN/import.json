@@ -245,5 +245,14 @@
     "formulaLike_other": "{{cells}} 个以 =、+、- 或 @ 开头的单元格已作为文本而非公式导入（防止 CSV 注入）。",
     "markdownImages_other": "{{images}} 张使用外部或本地路径的图片未被获取，在文档中显示为文本。仅带入嵌入的数据图片（PNG、JPEG、GIF）。",
     "htmlImages_other": "{{images}} 张外部图片未被获取，在文档中显示为文本。"
+  },
+  "ifcx": {
+    "invalid": "这不是有效的 Office IFCX 文件。",
+    "profile": "不支持此 IFCX 配置或版本。",
+    "composition": "此 IFCX 使用了 Office 无法安全处理的导入、继承或重复节点。",
+    "documents": "请打开仅包含一个 Writer、Spreadsheet 或 Presentation 文档及其嵌入式 Office 源文件的 IFCX。",
+    "integrity": "IFCX 源文件的校验和或字节数不匹配。文件已损坏或被修改。",
+    "size": "IFCX 文件过大（最大 100 MB，其中嵌入式源文件最多 70 MB）。",
+    "historyPassword": "此 IFCX 文件包含较早的未加密源文件。请保存一份 DOCX、XLSX 或 PPTX 副本，关闭并重新打开该副本，然后创建新的受密码保护的 IFCX 文件。"
   }
 }

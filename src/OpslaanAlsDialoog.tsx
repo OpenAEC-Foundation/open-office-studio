@@ -164,7 +164,9 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
   const formaatNaam = (f: Uitvoerformaat) =>
     t(`saveAs.formats.${props.soort}.${f.ext}.name`, { defaultValue: f.naam });
   const formaatBehoud = (f: Uitvoerformaat) =>
-    t(`saveAs.formats.${props.soort}.${f.ext}.keeps`, { defaultValue: f.behoud });
+    t(`saveAs.formats.${props.soort}.${f.ext}.keeps`, {
+      defaultValue: f.behoud,
+    });
   const kan = !!route && !!naam.trim() && bereikGeldig && !wachtwoordFout;
 
   function bevestig() {
@@ -213,7 +215,9 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
       <select value={blad} onChange={(e) => setBlad(Number(e.target.value))}>
         {props.bladen.namen.map((naam, index) => (
           <option key={index} value={index}>
-            {index === props.bladen!.actief ? t("saveAs.activeSheet", { name: naam }) : naam}
+            {index === props.bladen!.actief
+              ? t("saveAs.activeSheet", { name: naam })
+              : naam}
           </option>
         ))}
       </select>
@@ -281,7 +285,9 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
             <>{t("saveAs.runtimeSearching")}</>
           ) : runtime ? (
             <>
-              {t("saveAs.runtimeFound", { version: status.versie ?? status.pad })}{" "}
+              {t("saveAs.runtimeFound", {
+                version: status.versie ?? status.pad,
+              })}{" "}
               <small>
                 {t("saveAs.runtimeDetails", {
                   source:
@@ -314,9 +320,15 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
             <div
               key={groep}
               role="group"
-              aria-label={t(`saveAs.groups.${GROEPSLEUTEL[groep]}`, { defaultValue: GROEPEN[groep] })}
+              aria-label={t(`saveAs.groups.${GROEPSLEUTEL[groep]}`, {
+                defaultValue: GROEPEN[groep],
+              })}
             >
-              <h3>{t(`saveAs.groups.${GROEPSLEUTEL[groep]}`, { defaultValue: GROEPEN[groep] })}</h3>
+              <h3>
+                {t(`saveAs.groups.${GROEPSLEUTEL[groep]}`, {
+                  defaultValue: GROEPEN[groep],
+                })}
+              </h3>
               {formaten.map((formaat) => {
                 const r = routeVan(formaat);
                 return (
@@ -377,7 +389,9 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
                 value={codering}
                 onChange={(e) => setCodering(e.target.value as Codering)}
               >
-                <option value="utf8-bom">{t("saveAs.encodingUtf8BomExcel")}</option>
+                <option value="utf8-bom">
+                  {t("saveAs.encodingUtf8BomExcel")}
+                </option>
                 <option value="utf8">UTF-8</option>
                 <option value="windows-1252">Windows-1252 (ANSI)</option>
               </select>
@@ -438,7 +452,9 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
                 onChange={(e) => setTekstcodering(e.target.value as Codering)}
               >
                 <option value="utf8">UTF-8</option>
-                <option value="utf8-bom">{t("saveAs.encodingUtf8BomNotepad")}</option>
+                <option value="utf8-bom">
+                  {t("saveAs.encodingUtf8BomNotepad")}
+                </option>
                 <option value="windows-1252">Windows-1252 (ANSI)</option>
               </select>
             </label>
@@ -519,7 +535,11 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
         )}
         {route === "afdrukken" && (
           <p className="opslaanals-uitleg">
-            <Trans t={t} i18nKey="saveAs.printRoute" components={{ strong: <strong /> }} />
+            <Trans
+              t={t}
+              i18nKey="saveAs.printRoute"
+              components={{ strong: <strong /> }}
+            />
           </p>
         )}
         {verlies && (
@@ -528,8 +548,10 @@ export function OpslaanAlsDialoog(props: OpslaanAlsProps) {
             bestandsnaam={`${naam.trim() || t("saveAs.untitled")}.${props.soort}`}
           />
         )}
-        {gekozen.ext !== props.soort && route && (
-          <p className="opslaanals-uitleg">{t("saveAs.copyInfo", { ext: props.soort })}</p>
+        {gekozen.ext !== props.soort && gekozen.ext !== "ifcx" && route && (
+          <p className="opslaanals-uitleg">
+            {t("saveAs.copyInfo", { ext: props.soort })}
+          </p>
         )}
         <div className="office-dialoogacties">
           <button type="button" onClick={props.annuleer}>

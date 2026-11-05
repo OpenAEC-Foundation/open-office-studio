@@ -12,6 +12,8 @@ import {
 import { HerstelDialoog } from "./HerstelDialoog";
 import i18next from "./i18n/config";
 import { formatDatumTijd } from "./i18n/opmaak";
+import { bereidIfcxOpslag } from "./ifcx/opslag";
+import { bereidOpenen } from "./import/openen";
 
 const tauri = "__TAURI_INTERNALS__" in window;
 /** Elke halve minuut kijken; een eerste kopie komt dus snel, daarna per interval. */
@@ -97,7 +99,18 @@ export function useHerstel({ tabs, bezig, opslaanAls }: Opties) {
           )
             continue;
           try {
-            const bytes = await serialiseer();
+            const inhoud = await serialiseer();
+            const bytes =
+              tabblad.exportFormaat === "ifcx"
+                ? (
+                    await bereidIfcxOpslag({
+                      soort: tabblad.soort,
+                      naam: tabblad.naam,
+                      bytes: inhoud,
+                      bron: tabblad.bron,
+                    })
+                  ).bytes
+                : inhoud;
             // Intussen opgeslagen of gesloten: geen kopie meer nodig.
             if (!tabs.isGewijzigd(tabblad)) continue;
             await opslag.bewaar(
@@ -156,14 +169,28 @@ export function useHerstel({ tabs, bezig, opslaanAls }: Opties) {
     setWerkt(true);
     try {
       const bytes = await sessie().opslag.lees(item);
+      const ifcx =
+        item.exportFormaat === "ifcx"
+          ? await bereidOpenen("Herstel.ifcx", bytes, {
+              converteer: async () => {
+                throw new Error(i18next.t("import:errors.unsupportedFormat"));
+              },
+            })
+          : null;
+      if (item.exportFormaat === "ifcx" && (!ifcx || ifcx.soort !== item.soort))
+        throw new Error(i18next.t("import:ifcx.documents"));
       const { id } = recent.current.tabs.openDocument({
         naam: item.naam,
         soort: item.soort,
-        bytes,
+        bytes: ifcx?.bytes ?? bytes,
+        bron: ifcx?.bron,
         exportFormaat: item.exportFormaat,
         gewijzigd: true,
         melding: i18next.t("backstage:recovery.restoredFrom", {
-          date: formatDatumTijd(item.datum, { dateStyle: "short", timeStyle: "medium" }),
+          date: formatDatumTijd(item.datum, {
+            dateStyle: "short",
+            timeStyle: "medium",
+          }),
         }),
       });
       await sessie().opslag.verwijder(item.sessie, item.sleutel);

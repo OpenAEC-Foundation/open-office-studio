@@ -25,6 +25,7 @@ import { useHerladen } from "./grafieken/ui/herladen";
 import { laadFiltersUitBestand, maakRekenbladLaag } from "./lint/rekenblad-laag";
 import { werkboekBytes } from "./lint/rekenblad-filter";
 import { werkEigenschappenBij } from "./tekst/info/opslaan";
+import type { Serialiseerder } from "./opslag";
 import { koppelEditor } from "./export/editorKoppeling";
 import { lettertypeModule } from "./lettertypen/provider";
 import { laadSysteemLettertypen } from "./lettertypen/systeem";
@@ -57,7 +58,7 @@ export interface EditorProps {
   fout: (f: Error) => void;
   /** Melding rechtsonder met een eigen toon; zonder valt het terug op `fout`. */
   melding?: (tekst: string, toon: "info" | "waarschuwing") => void;
-  registreer: (opslaan: (() => Promise<Uint8Array>) | null) => void;
+  registreer: (opslaan: Serialiseerder | null) => void;
   opslaan: () => void;
   bestandsmenu: () => void;
   inactief: boolean;
@@ -66,6 +67,10 @@ export interface EditorProps {
   /** Actuele documentzoom voor de statusbalk; null zolang onbekend. */
   zoom: (zoom: number | null) => void;
 }
+// De bestaande synchrone lint-API heeft deze compatibiliteitsprojectie nodig.
+// Haar vertraagde melding mag de opslagstatus niet opnieuw wijzigen.
+const behoudSynchroneProjectie = () => {};
+
 export default function OfficeEditor(props: EditorProps) {
   // Engine-teksten in de interfacetaal; wisselt live mee zonder het document te herladen.
   const engineTaal = useEngineVertaling();
@@ -212,7 +217,7 @@ export default function OfficeEditor(props: EditorProps) {
   }, [documentGereed, herladen.sleutel, props.soort]);
   useEffect(() => {
     if (props.soort !== "docx" || !documentGereed) return;
-    props.registreer(async () => {
+    props.registreer(Object.assign(async () => {
       if (!docx.current?.getDocument())
         throw new Error(i18next.t("shell:errors.documentNotReady"));
       exporteren.current = true;
@@ -224,7 +229,13 @@ export default function OfficeEditor(props: EditorProps) {
       } finally {
         exporteren.current = false;
       }
-    });
+    }, {
+      bereidVoor: async () => {
+        const ref = docx.current;
+        if (!ref) throw new Error(i18next.t("shell:errors.documentNotReady"));
+        await ref.flushPendingInput();
+      },
+    }));
     // Browser: één onzichtbare proef-opslag laadt de WASM die de engine pas bij
     // opslaan ophaalt, zodat opslaan ook na een nieuwe uitrol blijft werken.
     let proef = 0;
@@ -362,7 +373,10 @@ export default function OfficeEditor(props: EditorProps) {
               onSave={() => {
                 if (!exporteren.current) props.opslaan();
               }}
-              onChange={props.gewijzigd}
+              // De oude Document-projectie meldt dezelfde invoer soms pas na
+              // opslaan. De versiemelding hoort bij de bevestigde bewerking.
+              onChange={behoudSynchroneProjectie}
+              onDocumentChange={props.gewijzigd}
               onError={props.fout}
               rulerUnit="cm"
               onFirstPagePainted={() => {

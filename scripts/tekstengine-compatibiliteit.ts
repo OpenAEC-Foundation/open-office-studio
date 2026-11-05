@@ -15,6 +15,26 @@ const CELSELECTIE = [
   ['Kn=Wn?JSON.stringify([Wn.anchor,Wn.head]):`${T.anchor}:${T.head}`', 'Kn=JSON.stringify([Wn?.anchor??T.anchor,Wn?.head??T.head,re?.cellSelection()??null])'],
 ] as const;
 
+/** Eén engine-instantie voor invoer én de later geladen opslagmodule (#135). */
+export function herstelWorkerStart(bron: string): string {
+  const ingang = 'new Worker(new URL("./docxWorker.mjs",import.meta.url),';
+  if (bron.split(ingang).length !== 2)
+    throw new Error("De tekstengine is gewijzigd; controleer eerst de aansluiting voor de workerstart.");
+  return 'import { TekstWorker as Worker } from "openaec-tekst-workerstart";\n' + bron;
+}
+
+/** Meldt een bevestigde versie direct; de dure Document-projectie blijft vertraagd. */
+export function herstelDirecteVersiemelding(bron: string): string {
+  const callback = 'vg=useCallback(()=>{!da$1(U.current)&&Et.session&&po(Et.session.version()),Va$1();},[po,Va$1,Et.session]);cn.current=';
+  const timer = 'I&&(sn.current!==null&&clearTimeout(sn.current),sn.current=setTimeout(()=>{sn.current=null,Be.current?.();},100))';
+  for (const stuk of [callback, timer]) {
+    if (bron.split(stuk).length !== 2)
+      throw new Error("De tekstengine is gewijzigd; controleer eerst de aansluiting voor directe versiemeldingen.");
+  }
+  return bron.replace(callback, callback.replace(';cn.current=', ';vg.oosVersie=()=>{!da$1(U.current)&&Et.session&&po(Et.session.version())};cn.current='))
+    .replace(timer, 'I&&Be.current?.oosVersie?.(),' + timer);
+}
+
 export function herstelTabelKlik(bron: string): string {
   for (const stuk of [TABELPUNT, ...CELSELECTIE.map(([oud]) => oud)]) {
     if (bron.split(stuk).length !== 2)
@@ -101,6 +121,8 @@ export function tekstengineCompatibiliteit(): Plugin {
     name: "tekstengine-tabelinvoer",
     enforce: "pre",
     resolveId(id) {
+      if (id === "openaec-tekst-workerstart")
+        return fileURLToPath(new URL("../src/tekst/gedeeld/workerStart.ts", import.meta.url));
       if (id === "openaec-tekst-workerverhalen")
         return fileURLToPath(new URL("../src/tekst/gedeeld/workerVerhalen.ts", import.meta.url));
       if (id === "openaec-tekst-kolommen")
@@ -111,6 +133,8 @@ export function tekstengineCompatibiliteit(): Plugin {
         return fileURLToPath(new URL("../src/tekst/tabel/klik.ts", import.meta.url));
     },
     transform(bron, id) {
+      if (/\/@betteroffice\/docx\/dist\/chunk-6ZKYZDSZ\.mjs(?:\?.*)?$/.test(id))
+        return { code: herstelWorkerStart(bron), map: null };
       if (/\/@betteroffice\/docx\/dist\/chunk-N5NWITJ6\.mjs(?:\?.*)?$/.test(id))
         return { code: herstelWorkerSnapshot(herstelVerdwenenCelSelectie(bron)), map: null };
       if (/\/@betteroffice\/docx\/dist\/chunk-7WWFGMMF\.mjs(?:\?.*)?$/.test(id))
@@ -118,7 +142,7 @@ export function tekstengineCompatibiliteit(): Plugin {
       if (/\/@betteroffice\/docx-react\/dist\/chunk-LZ2DPBZ6\.mjs(?:\?.*)?$/.test(id))
         return { code: herstelTabelContext(bron), map: null };
       if (!/\/@betteroffice\/docx-react\/dist\/index\.mjs(?:\?.*)?$/.test(id)) return;
-      return { code: herstelTabelKlik(herstelHyperlinkTekst(herstelTabelInvoer(bron))), map: null };
+      return { code: herstelTabelKlik(herstelHyperlinkTekst(herstelTabelInvoer(herstelDirecteVersiemelding(bron)))), map: null };
     },
   };
 }

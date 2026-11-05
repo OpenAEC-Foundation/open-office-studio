@@ -16,7 +16,15 @@ describe("installatieconfiguratie per studio en platform", () => {
         );
         expect(config.app.windows[0].title).toBe(studio.naam);
         expect(config.bundle.windows.nsis.installerHooks).toBeNull();
-        expect(config.bundle.linux.deb.files).toBeNull();
+        expect(config.bundle.linux.deb.files).toEqual(
+          ["email", "notition"].includes(studio.sleutel)
+            ? null
+            : {
+                "/usr/share/mime/packages/open-office-studio.xml": null,
+                [`/usr/share/mime/packages/${studio.programma}.xml`]:
+                  "linux/ifcx-office-mime.xml",
+              },
+        );
         expect(config.bundle.createUpdaterArtifacts).toBe(false);
         expect(config.plugins.updater.pubkey).toBe("");
         const extensies = config.bundle.fileAssociations.flatMap((k) => k.ext);
@@ -24,6 +32,7 @@ describe("installatieconfiguratie per studio en platform", () => {
           expect(extensies).toEqual([]);
         else {
           expect(extensies).toContain(studio.module);
+          expect(extensies).toContain("ifcx");
           for (const soort of ["docx", "xlsx", "pptx"].filter(
             (s) => s !== studio.module,
           ))

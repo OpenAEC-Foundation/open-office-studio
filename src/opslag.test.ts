@@ -12,6 +12,61 @@ const bytes = new Uint8Array([1, 2, 3]);
 const opgeslagen = { status: "opgeslagen", pad: "kopie.docx" } as const;
 
 describe("Opslag van de geopende documentrevisie", () => {
+  it("neemt al wachtende invoer op vóór het bewaken van de snapshotrevisie (#153)", async () => {
+    const opslag = new DocumentOpslag();
+    const id = opslag.wissel();
+    let tekst = "Bas";
+    const serialiseer = Object.assign(async () => new TextEncoder().encode(tekst), {
+      bereidVoor: async () => { tekst = "Basis"; opslag.wijzig(id); },
+    });
+    const bewaar = vi.fn(async (_inhoud: Uint8Array) => opgeslagen);
+    expect(await opslag.opslaan(serialiseer, bewaar)).toMatchObject({ schoon: true });
+    expect(new TextDecoder().decode(bewaar.mock.calls[0][0])).toBe("Basis");
+    expect(opslag.gewijzigd).toBe(false);
+  });
+
+  it.each(["serialiseren", "schrijven"] as const)("houdt echte wijzigingen na voorbereiding tijdens %s apart", async (fase) => {
+    const opslag = new DocumentOpslag();
+    const id = opslag.wissel();
+    const serialiseer = Object.assign(async () => {
+      if (fase === "serialiseren") opslag.wijzig(id);
+      return bytes;
+    }, { bereidVoor: async () => { opslag.wijzig(id); } });
+    const uit = await opslag.opslaan(serialiseer, async () => {
+      if (fase === "schrijven") opslag.wijzig(id);
+      return opgeslagen;
+    });
+    expect(uit).toMatchObject({ schoon: false });
+    expect(opslag.gewijzigd).toBe(true);
+  });
+
+  it("serialiseert en schrijft niet na een documentwissel tijdens voorbereiding", async () => {
+    const opslag = new DocumentOpslag();
+    opslag.wissel();
+    const serialiseer = Object.assign(vi.fn(async () => bytes), {
+      bereidVoor: async () => { opslag.wissel(); },
+    });
+    const bewaar = vi.fn(async () => opgeslagen);
+    expect(await opslag.opslaan(serialiseer, bewaar)).toEqual({ status: "verouderd" });
+    expect(serialiseer).not.toHaveBeenCalled();
+    expect(bewaar).not.toHaveBeenCalled();
+  });
+
+  it("bewaart niets bij een voorbereidingsfout en laat daarna opnieuw opslaan toe", async () => {
+    const opslag = new DocumentOpslag();
+    opslag.wijzig(opslag.wissel());
+    const serialiseer = Object.assign(vi.fn(async () => bytes), {
+      bereidVoor: async () => { throw new Error("Invoer nog niet bevestigd"); },
+    });
+    const bewaar = vi.fn(async () => opgeslagen);
+    expect(await opslag.opslaan(serialiseer, bewaar)).toMatchObject({ status: "mislukt" });
+    expect(serialiseer).not.toHaveBeenCalled();
+    expect(bewaar).not.toHaveBeenCalled();
+    expect(opslag.gewijzigd).toBe(true);
+    expect(opslag.bezig).toBe(false);
+    expect(await opslag.opslaan(async () => bytes, bewaar)).toMatchObject({ schoon: true });
+  });
+
   it("meldt een bevestigde native opslag zonder tussentijdse wijzigingen als schoon", async () => {
     const opslag = new DocumentOpslag();
     const id = opslag.wissel();
