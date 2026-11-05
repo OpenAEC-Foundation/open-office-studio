@@ -1,0 +1,407 @@
+{
+  "schema": 1,
+  "besluit": "45.45 afgekeurd en uit de runtimepatch teruggedraaid; geen push van prototype",
+  "programma_sha256": "5a35a86227724254a2d827c753506207de61e00d0adda383744f0d02c16e112e",
+  "prototype": "De oorspronkelijke layoutbronversie in plaats van documentVersion lezen; globale helper voorkomt lokale c-shadowing. De queryverpakking is in deze proef nog onjuist gelezen.",
+  "tests": {
+    "gericht": 33,
+    "volledig": 1834,
+    "bestanden": 174,
+    "typescript": "geslaagd; ook productiebouw geslaagd",
+    "grens": "De echte resolver is uitgevoerd met een onjuiste publicatievorm. De aanvullende Ma-constructietest controleert alleen het binnenste queryobject. Deze groene tests bewijzen daardoor geen correcte echte wachtroute."
+  },
+  "fysiek": {
+    "referentie_ms": 22291,
+    "referentie_broncontrole": {
+      "verhalen": 1537,
+      "alinea_en_celteksten": 3329,
+      "exact": true
+    },
+    "kandidaat": "Binnen negentig seconden geen volledig gelijk getekende alinea; vierledige vergelijking na eerste kandidaat afgebroken.",
+    "ontvangen_toetsen": 351,
+    "time_outs": [
+      {
+        "status": "timeout",
+        "ms": 5072
+      },
+      {
+        "status": "timeout",
+        "ms": 5062
+      },
+      {
+        "status": "timeout",
+        "ms": 5066
+      },
+      {
+        "status": "timeout",
+        "ms": 5056
+      },
+      {
+        "status": "timeout",
+        "ms": 5068
+      },
+      {
+        "status": "timeout",
+        "ms": 5063.000000000007
+      },
+      {
+        "status": "timeout",
+        "ms": 5055
+      },
+      {
+        "status": "timeout",
+        "ms": 5093
+      },
+      {
+        "status": "timeout",
+        "ms": 5063
+      },
+      {
+        "status": "timeout",
+        "ms": 5061
+      },
+      {
+        "status": "timeout",
+        "ms": 5058
+      },
+      {
+        "status": "timeout",
+        "ms": 5063
+      },
+      {
+        "status": "timeout",
+        "ms": 5054
+      },
+      {
+        "status": "timeout",
+        "ms": 5052
+      },
+      {
+        "status": "timeout",
+        "ms": 5075
+      },
+      {
+        "status": "timeout",
+        "ms": 5059.000000000015
+      },
+      {
+        "status": "timeout",
+        "ms": 5066
+      }
+    ]
+  },
+  "diagnose": {
+    "grens": "Twee aparte opnamen met opzettelijke twaalfsecondenlimiet. WeakMap.get delegeert ongewijzigd aan de oorspronkelijke methode. Geen snelheidsacceptatie of geslaagde documentproef.",
+    "actuele_gereed_voorbeelden": [
+      {
+        "id": 2,
+        "ms": 21900.000000000004,
+        "waarde": "13d32d337e6ea131-3",
+        "verwacht": "13d32d337e6ea131-3",
+        "stack": "@\nmX@tauri://localhost/assets/index-Ci7-gEmb.js:271:26141\nD$e@tauri://localhost/assets/index-Ci7-gEmb.js:271:35932\nHN@tauri://localhost/assets/index-Ci7-gEmb.js:9:59726\nRH@tauri://localhost/assets/editors-CYQDJSQc.js:12:233840\n@tauri://localhost/assets/editors-CYQDJSQc.js:12:265151\nQk@tauri://localhost/assets/index-Ci7-gEmb.js:9:50643\ndD@tauri://localhost/assets/index-Ci7-gEmb.js:9:70440\niM@tauri://localhost/assets/index-Ci7-gEmb.js:9:130933\ncte@tauri://localhost/assets/index-Ci7-gEmb.js:9:129961\nZx@tauri://localhost/assets/index-Ci7-gEmb.js:9:129788\neM@tauri://localhost/assets/index-Ci7-gEmb.js:9:126023\nmM@tauri://localhost/assets/index-Ci7-",
+        "ready": true,
+        "state": {
+          "status": "ready"
+        }
+      },
+      {
+        "id": 2,
+        "ms": 22312,
+        "waarde": "13d32d337e6ea131-3",
+        "verwacht": "13d32d337e6ea131-3",
+        "stack": "@\nmX@tauri://localhost/assets/index-Ci7-gEmb.js:271:26141\nD@tauri://localhost/assets/editors-CYQDJSQc.js:12:201989\nCt@tauri://localhost/assets/editors-CYQDJSQc.js:12:203460\n@tauri://localhost/assets/index-Ci7-gEmb.js:289:49816",
+        "ready": true,
+        "state": {
+          "status": "ready"
+        }
+      }
+    ],
+    "betekenis": "Nieuwe queryobjecten worden tijdens het wachten gepubliceerd en hebben de actuele bronversie en ready=true. De verdenking dat de hele weergave op het einde van de invoerwachtrij wacht wordt hiermee niet bevestigd.",
+    "primaire_publicatie": "let X=useCallback((l,V)=>{let Ae=l.queries;if(!Ae){V===v.current&&A.clear();return}if(V!==v.current)return;Kb(Ae,Kt),A.invalidate();let ee=()=>{if(y.current!==l||V!==v.current||!Ae.isReady()||(A.publish({queries:Ae,frameEpoch:l.frame?.frameEpoch??null}),Y.current.size===0))return;let Me=gt.current,Pe=()=>!on.current&&Me===gt.current&&y.current===l&&V===v.current&&Xw(R.current,l.displayList);queueMicrotask(()=>{for(let we of [...Y.current]){if(!Pe())return;Y.current.has(we)&&we(Ae);}});};if(Ae.isReady()){ee();return}Ae.whenReady().then(ee,()=>{y.current===l&&V===v.current&&A.clear();});}",
+    "vastgestelde_fout": "A.publish ontvangt {queries:Ae,frameEpoch:...}; resolveVersion keek naar dit buitenste object in plaats van naar de metadata en isReady() van snapshot.queries."
+  },
+  "terugdraai": "Alle gewijzigde runtime-/versie-/fixturebestanden zijn vóór herstel op bevroren hashes gecontroleerd en bytegelijk aan HEAD teruggezet; oorspronkelijke patch opnieuw offline geïnstalleerd. Negatieve binary blijft lokaal bewaard.",
+  "vervolg": "Eerst een regressietest met de werkelijk uitgevoerde X-publicatie en haar verpakking. Daarna pas een nieuwe brongebonden resolverproef, fysieke beeld-/bronmeting en native gebruiksscenario’s.",
+  "bewijzen": {
+    "writer-queryverpakking/bronversie45-install.log.gz": {
+      "sha256": "32fdae332dce02353329100529c0fdd2cdb82d6be884c16d547e3c1377aeabf6",
+      "inhoud_sha256": "3fbd18930648cf820939428591a8656d43ce5329298a42283dabb8eba0680af0"
+    },
+    "writer-queryverpakking/bronversie45-gerichte-tests.log.gz": {
+      "sha256": "e0f16f9599329bf94086ee42dcff2a260b5b93d2af0e2c4a144793ec6086846e",
+      "inhoud_sha256": "02ab867e9a1d8177c064fb77b80dd1a81d722ebda609685577b18cf9b2ff8ca0"
+    },
+    "writer-queryverpakking/bronversie45-gerichte-tests-hertest.log.gz": {
+      "sha256": "f4bb76b17db2b46471a9288d8c07b1ee8f6c7cda3af536fef017cfeaefdce413",
+      "inhoud_sha256": "51381b6a014f4f5526aa791a40ff85993d44ef7b46220be8702600121296d56d"
+    },
+    "writer-queryverpakking/bronversie45-tsc.log.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "inhoud_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "writer-queryverpakking/bronversie45-volledig.log.gz": {
+      "sha256": "20989c8e248208ba268bbbca72295bf3d0d3b8962369e0a41a9d45f1ed8c7af0",
+      "inhoud_sha256": "2c26213f9c411c14f4b5374079bc97e12d08a6aea2d4ecad64fee3af00cdf2b6"
+    },
+    "writer-queryverpakking/bronversie45-bouw.log.gz": {
+      "sha256": "6126ee10e2ae2230e38b2bb66f10066c78fdb81bd2d30effa5fa2de605706c0f",
+      "inhoud_sha256": "4043cdb2900054f9a5412785af6fc2567ac2659fbdbf0f4d5dcf1040fd9ff053"
+    },
+    "writer-queryverpakking/bronversie45-bouw-en-meet.log.gz": {
+      "sha256": "910cda8c8bda77e891f7726c721ef2c96293976424c0dc81b9b1ac36d1d08750",
+      "inhoud_sha256": "0aabb2fb49f317c3d62b201eb5f9e0f51b0308cae672b598dee0fbc4e08a79d3"
+    },
+    "writer-queryverpakking/bronversie45-bronnen.json.gz": {
+      "sha256": "2dfb61180ca84ccf91444ed4e4bc7cc158495ba06baf783d4ed7d1947153ae37",
+      "inhoud_sha256": "d7a6d0b1f20809b28ab294ed7537689904b9be6a39e6379916515eb2f2c04ca2"
+    },
+    "writer-queryverpakking/bronversie45-primaire-bron.json.gz": {
+      "sha256": "de97fcd0075aca438c730f84297dd2f96ec560555159600640e143f86b077d44",
+      "inhoud_sha256": "f963bd8efa6032ec425c51a4922edb488e51729bf4e0ac43bad8842488893f1c"
+    },
+    "writer-queryverpakking/bronversie45-publicatievorm.json.gz": {
+      "sha256": "d66c4c86d7023b0ee60ef2e66c1cd3ef881d8409cf7ccc4f644e9f36bf7ce46f",
+      "inhoud_sha256": "76b2c2a9d13c1c992e777c51a7f8e86f43fa682f389e7e2851a6d2b831a20f99"
+    },
+    "writer-queryverpakking/bronversie45-passieve-uitkomsten.json.gz": {
+      "sha256": "3d29979ecfcb962118115791f4a3d66b3922ce6286ced5d050646fc82cf9a375",
+      "inhoud_sha256": "46bf1f0956d25ed70cffbbc03716a3ce2f4248c631de3130bb4c9a6d767d92d7"
+    },
+    "writer-queryverpakking/bronversie45-querybron-diagnose-uitkomst.json.gz": {
+      "sha256": "96986b170560552e56085ebb206737e655864af996da727cdbd6bee16f733fcf",
+      "inhoud_sha256": "08dcf9e3acba07f559472705c7421cd4d84be4482258e226f11a783773a30ec4"
+    },
+    "writer-queryverpakking/bronversie45-querybron-diagnose-v2-uitkomst.json.gz": {
+      "sha256": "e19dfc02b27ce3ab8576265ebe8c30aadee4c61f79e3788907955eb98da21e84",
+      "inhoud_sha256": "1ec0c0c00971071c693323d4bc9ad72cd543af70f9bb7c1e9a6fc0ac42b772f3"
+    },
+    "writer-queryverpakking/bronversie45-querybron-diagnose.log.gz": {
+      "sha256": "fec557629935e0ff46bf9ac6acc3777ff5fb262e2b60dd583a95b2aa6072b56f",
+      "inhoud_sha256": "4469068e4f7d06c5e56cd5770573414ca04ebc90acc7d3a2bbde687f16647caf"
+    },
+    "writer-queryverpakking/bronversie45-querybron-diagnose-v2.log.gz": {
+      "sha256": "28b5e48a4e63e9a8aeedda5fddb3e993a5584cadd114a2affa1fabad4e4b4e56",
+      "inhoud_sha256": "1f03162925ce8a357e2ef3aa4b34a60914695148ddec4d7375ef74e25443e432"
+    },
+    "writer-queryverpakking/bronversie45-terugdraai-install.log.gz": {
+      "sha256": "39ed8636883739c494021eae6af9a8ada77f6d7b383346f1396e952dc9f38b94",
+      "inhoud_sha256": "87dfff7272635c4c1aff5ab006982b63d0733533287e9774bd0308ee2a77c852"
+    },
+    "writer-queryverpakking/meet-bronversie45-native.py.gz": {
+      "sha256": "e6b0ccf9028fb0c68f8d7098b5f193cb82895c3d07e0d65aa1984752702fbc47",
+      "inhoud_sha256": "7b60b122a87f4557e703377718addf3dbecb99960c1d108c3d17b5ec26f2e102"
+    },
+    "writer-queryverpakking/voer-bronversie45-passieve-metingen.py.gz": {
+      "sha256": "20c20aa4c93e35e220214817fcf9dbf06f633911069499e88cf48b8e3d61ebb8",
+      "inhoud_sha256": "cedc03277af47e33eac23a35879470489570cc0a18e6c7f3966650df2532d11d"
+    },
+    "writer-queryverpakking/bouw-en-meet-bronversie45.py.gz": {
+      "sha256": "ed7be4357706c7a53b3f2c69318c3647c493ade73453d3bb9f4bc6aa0e97953c",
+      "inhoud_sha256": "cf6f93cecdf72ae23ab44f64fb179b1e351ba7fb57e1ee32f1a95aa337bf8687"
+    },
+    "writer-queryverpakking/meet-bronversie45-querybron-diagnose.py.gz": {
+      "sha256": "e4e01f1f19f3921c4d2d0d46c2113b76d86523d3e1303bc082e389a49c5b1ad5",
+      "inhoud_sha256": "ca7a6d06efc6cdce10e53dc8df777a43d919b66ccb5f6bf773552daadc2923cd"
+    },
+    "writer-queryverpakking/meet-bronversie45-querybron-diagnose-v2.py.gz": {
+      "sha256": "d16dfe023535d40c2111a160df0635b0e946ece00041d6b419359d01a0c0f96c",
+      "inhoud_sha256": "a81d7c40be168bf45fc6624e9d8e4368059f801e04c4ff7c25e9367cb0536768"
+    },
+    "writer-queryverpakking/voer-bronversie45-querybron-diagnose.py.gz": {
+      "sha256": "9f549560926b37f18dd6dfda07673979a3d036021b2413f1b8ea9ca8634bbe4c",
+      "inhoud_sha256": "7a6aa9e92f597b32e9235bd360747555e0127601d00c384220b2744c2717fe41"
+    },
+    "writer-queryverpakking/voer-bronversie45-querybron-diagnose-v2.py.gz": {
+      "sha256": "dcb035d3f59035f6049e2678e8bc6392be3cd0408e17a001ffcf92f4ce2652f1",
+      "inhoud_sha256": "5e891cdd2660a1432ecb07893578efaf2ab2c009ea6ff357ceab44d9f6c0e9c0"
+    },
+    "writer-queryverpakking/bronversie45-bevroren-bron/package.json.gz": {
+      "sha256": "fa84cbe8695af61901ac6931e0313c11e8a2609ef7ee58f81523d47ce5076cd5",
+      "inhoud_sha256": "1bbe79925ba4f8f95b90a600b462d0e7299510de7c9f474e5706dbe59afdda70"
+    },
+    "writer-queryverpakking/bronversie45-bevroren-bron/versie.json.gz": {
+      "sha256": "ea77eab8ca3595be694d3f85c21213276b8b1d457407ed290c4fb5223a492525",
+      "inhoud_sha256": "aed129003d6af88c7e3cb493e1f4d73b5479c599523a1ea0fb51fde1f5b33383"
+    },
+    "writer-queryverpakking/bronversie45-bevroren-bron/pnpm-lock.yaml.gz": {
+      "sha256": "09408bf5222febf7a76c830572bfcd2563121b0c5b3ee5f854393dea33f822ba",
+      "inhoud_sha256": "2c955769759af04b14cff64fb72f05d741b5433a8ed193134a0b08bfa06397e1"
+    },
+    "writer-queryverpakking/bronversie45-bevroren-bron/patches/@betteroffice__docx-react@0.5.1.patch.gz": {
+      "sha256": "2879c25de7d1b04ad3f4c23f089d26884a366e07dfe6e6442bc65b486d8b7fab",
+      "inhoud_sha256": "0f88f47ced07171666c52587bd62639c936ebb6209e044ef3d0cfea5632cea49"
+    },
+    "writer-queryverpakking/bronversie45-bevroren-bron/native/Cargo.lock.gz": {
+      "sha256": "49a1711b3f99ae2f4e92b32c3b5177e6a45001d56156722cb337152b5f97736c",
+      "inhoud_sha256": "337fc0f92e77f3e94a33b5ef5b6d9b79b9c8b28f07c3fdaac772dddadc4b97e7"
+    },
+    "writer-queryverpakking/bronversie45-bevroren-bron/native/Cargo.toml.gz": {
+      "sha256": "3d1be305b5a6a010c8b334d436679de63cdbadd450c26b3a85e2d72c42a8e199",
+      "inhoud_sha256": "0fa6d4f50ed919d8446e57109faceca53d699059b2a9d40ad5512b660765157e"
+    },
+    "writer-queryverpakking/bronversie45-bevroren-bron/src-tauri/tauri.conf.json.gz": {
+      "sha256": "272830619710f3cc775c4d0f8f131d2b0fd0964e0ff4cf8cc9326979e8566d58",
+      "inhoud_sha256": "2a8df310e88a817be3f8b2e3aa548bee8b71782885dd0fe38b84968aa2ffcb8b"
+    },
+    "writer-queryverpakking/bronversie45-bevroren-bron/src-tauri/Cargo.lock.gz": {
+      "sha256": "9f8de7d213bd220259e5c77c968683c33581ac0a7c7ba6bd6840a77be0ccba97",
+      "inhoud_sha256": "376af4bac59ed0cbc1f1cf9adcd99c9f167e7df40f534a306915712563533a3f"
+    },
+    "writer-queryverpakking/bronversie45-bevroren-bron/src-tauri/Cargo.toml.gz": {
+      "sha256": "cfc94e4138185c42b18f1dc72f61a44d89024f38a1616f6b3f5ba24de84a04bc",
+      "inhoud_sha256": "8079b4cab9450780eb02909dbf55150bbc84ab29f342d9fc400afeb2ddb19651"
+    },
+    "writer-queryverpakking/bronversie45-bevroren-bron/native/crates/office-writer-plakken/src/bronspiegel.rs.gz": {
+      "sha256": "63044858a9ea79529e9005e974ed8b3c4a3c1f4260cdfdf73d1f19eece686b17",
+      "inhoud_sha256": "1d60a1652c7fc5428b8336073a452a23b204d78dc34b8fef850f42f8bc0c7404"
+    },
+    "writer-queryverpakking/bronversie45-bevroren-bron/native/vendor/docx-edit/src/lib.rs.gz": {
+      "sha256": "cad7e38be269f9af49d038b6c681d965787ee86828476d75857781085581b5c0",
+      "inhoud_sha256": "b4d0f1f94e9be9217714404847aedff7b8d2212523c9170b340536bafdfe6955"
+    },
+    "writer-queryverpakking/bronversie45-bevroren-bron/native/vendor/docx-edit/src/clipboard_batch.rs.gz": {
+      "sha256": "4d586ea23ae88dd7ff55f4e9cee4d2e946837dcc1e02f826c154ac587c599f29",
+      "inhoud_sha256": "aa144fd2ee0836dc06a8223d2e2eda6956a67a1a29d08d4f928978dcac290355"
+    },
+    "writer-queryverpakking/bronversie45-bevroren-bron/native/vendor/docx-edit/src/clipboard_batch/revision_ids.rs.gz": {
+      "sha256": "83b583110ea440f1fea1e8cfa0b0f0503136b9afa4f71613627d54aba0997eef",
+      "inhoud_sha256": "71c3b507ea885a998d88d7c375655898efd0d5b4cbb956c72f02e9e5123e4c50"
+    },
+    "writer-queryverpakking/bronversie45-bevroren-bron/native/vendor/docx-edit/src/ops/embed.rs.gz": {
+      "sha256": "8f516cbb68c4189011afcfc89dfba77e35bd1e1a93c5e242b92411eb209f21f9",
+      "inhoud_sha256": "54c921366badd6c365a32f130369ddaefb86acdd41dfe5453ace9c207c7b9a1f"
+    },
+    "writer-queryverpakking/bronversie45-bevroren-bron/native/vendor/docx-edit/src/ops/table.rs.gz": {
+      "sha256": "e62bb4811c395995216c32e963c748d9e883488321dda76c99105e9ab5e33547",
+      "inhoud_sha256": "731fbf11a0f3acdafd9fd9205dc9418044759930910dc2ca5b69595405eafff4"
+    },
+    "writer-queryverpakking/bronversie45-bevroren-bron/native/vendor/docx-edit/src/ops/paragraph.rs.gz": {
+      "sha256": "f3270c461b3b6789157a74ca2128eabc98e1c9ff243fd0dcbfc489cc8964fb5d",
+      "inhoud_sha256": "b9f16f4dc21f2557b87445f4a8d25b6b055c3431912a76908ff04d7caae72a3c"
+    },
+    "writer-queryverpakking/bronversie45-bevroren-bron/native/vendor/docx-edit/src/ops/text.rs.gz": {
+      "sha256": "40e93aa77cfc60ab49d0e9de0e31e17ace6b76636ff5357f486f6d89cffbf301",
+      "inhoud_sha256": "383ce6516702f545ff9cd81d3f21ac17e7517ab6e5627e89567e1b47c66c7a8f"
+    },
+    "writer-queryverpakking/bronversie45-bevroren-bron/src/tekst/invoer-tijdspan.test.ts.gz": {
+      "sha256": "268a0f071fd184ccba6dfd1f20cbd192a43a0cd6f3a446cd3f244bdefe96a5d7",
+      "inhoud_sha256": "71a13bcf63b19106da75da8c7d161986bac5f8c97fb6112e28d86dfcab9877e8"
+    },
+    "writer-queryverpakking/bronversie45-bevroren-bron/src/tekst/bewerken/tekstInvoerRoute.test.ts.gz": {
+      "sha256": "2910985743b6f3c6449ef366149398f6310b44755066bc5376caa80e3c77d21a",
+      "inhoud_sha256": "365c6ca81e1b1cee12ba08ac821e79059dd0dab4eeaac2883f362e5a1ff64f78"
+    },
+    "writer-queryverpakking/bronversie45-bevroren-bron/src/tekst/bewerken/bronAfstemming.test.ts.gz": {
+      "sha256": "c8bb6c5f357aa9779f15f9e06bf2b4863e6a0d9b646f503d409ce7918285ce74",
+      "inhoud_sha256": "a5260887ebe58c926494c2c2d5de08ede174000ee58cd31e53bfb02f397ebab5"
+    },
+    "writer-queryverpakking/bronversie45-bevroren-bron/apps/database-studio/src-tauri/tauri.conf.json.gz": {
+      "sha256": "be014dc89d13c935ba455938b727e7e9f4b2d366b6a573950efc77128b4fd134",
+      "inhoud_sha256": "4dd6a3bd86892600e6e0046cc8b931127b47e9982c702ac5e962f4893cab6f0b"
+    },
+    "writer-queryverpakking/bronversie45-bevroren-bron/apps/database-studio/src-tauri/Cargo.lock.gz": {
+      "sha256": "2e291779d8c5d26e2b135b0a43a8b91da99b0f8597b2067be877d892da5b5d8b",
+      "inhoud_sha256": "22a60269ce37ef7e64c30af5fbfcc23e640f596c4fcfc41bd67ce0dd38724e0a"
+    },
+    "writer-queryverpakking/bronversie45-bevroren-bron/apps/database-studio/src-tauri/Cargo.toml.gz": {
+      "sha256": "74310c7910214a4dcdb24c4a95f705da59ae096fbc97425ade8f15830b10af95",
+      "inhoud_sha256": "6a8a1d45d5fc50a2b1e88ab540ebdaff08491b43486015a8df76807f3ae1da21"
+    },
+    "writer-queryverpakking/passief-bronversie-43-voor/profiel.json.gz": {
+      "sha256": "ce383b9bba1af95316a0cc2c425e7b3ce3f9324cc9a6602ef815585f43b6c4e7",
+      "inhoud_sha256": "081287bb49b0eabdbaff5197498cc9f6f1c2b9aa95c0e4c5629707ffe2ab7db8"
+    },
+    "writer-queryverpakking/passief-bronversie-43-voor/profiel.png": {
+      "sha256": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef",
+      "inhoud_sha256": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef"
+    },
+    "writer-queryverpakking/passief-bronversie-43-voor/programma.log.gz": {
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "inhoud_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413"
+    },
+    "writer-queryverpakking/passief-bronversie-43-voor/Prestatieproef.docx": {
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "inhoud_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c"
+    },
+    "writer-queryverpakking/passief-bronversie-43-voor/eerste-gelijke-tekst.png": {
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "inhoud_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05"
+    },
+    "writer-queryverpakking/passief-bronversie-45-eerste/profiel.json.gz": {
+      "sha256": "9ad044c3b2f0e757b9bcab83c51b3f56fce9476cc2cd70fb0c16c466234a59fb",
+      "inhoud_sha256": "2825fbed41f5584f80c5cdb5ba9dc341db617ee45eeada1590c757cffc0b4d11"
+    },
+    "writer-queryverpakking/passief-bronversie-45-eerste/programma.log.gz": {
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "inhoud_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413"
+    },
+    "writer-queryverpakking/passief-bronversie-45-eerste/Prestatieproef.docx": {
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "inhoud_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c"
+    },
+    "writer-queryverpakking/passief-bronversie-45-eerste/afgekeurd-venster.png": {
+      "sha256": "790681efda0e19ba1299ccee2352136d1797830ff5203e377bcf0c6c4cfe1ab6",
+      "inhoud_sha256": "790681efda0e19ba1299ccee2352136d1797830ff5203e377bcf0c6c4cfe1ab6"
+    },
+    "writer-queryverpakking/passief-bronversie-45-eerste/afgekeurde-tekst.png": {
+      "sha256": "bb56f4a0664f3b175ab569c540516f25b2b4da1b9942f8043b950e294e7ed200",
+      "inhoud_sha256": "bb56f4a0664f3b175ab569c540516f25b2b4da1b9942f8043b950e294e7ed200"
+    },
+    "writer-queryverpakking/querybron-45-diagnose/profiel.json.gz": {
+      "sha256": "a79c95aed5838e12eb07a9cec317ac58dfa49363c3403e6c287720e9158ed7be",
+      "inhoud_sha256": "2cb7bc1596c1422471b2248a8df6efac6ba76d16a8582f368805f9683a22cfa9"
+    },
+    "writer-queryverpakking/querybron-45-diagnose/programma.log.gz": {
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "inhoud_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413"
+    },
+    "writer-queryverpakking/querybron-45-diagnose/Prestatieproef.docx": {
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "inhoud_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c"
+    },
+    "writer-queryverpakking/querybron-45-diagnose/afgekeurd-venster.png": {
+      "sha256": "7db5d20daa89ef34869e39e183406a69069797aff49d161eb1d07b4a1d7cd03d",
+      "inhoud_sha256": "7db5d20daa89ef34869e39e183406a69069797aff49d161eb1d07b4a1d7cd03d"
+    },
+    "writer-queryverpakking/querybron-45-diagnose/afgekeurde-tekst.png": {
+      "sha256": "24573722c560cb675d743fa05dfa85e0095c0f6cb559530707127d02aac9ac64",
+      "inhoud_sha256": "24573722c560cb675d743fa05dfa85e0095c0f6cb559530707127d02aac9ac64"
+    },
+    "writer-queryverpakking/querybron-45-diagnose-v2/profiel.json.gz": {
+      "sha256": "634457d8f1f30b8048a6ba5c910f19845969d263dc896b2d516e3871bed9e847",
+      "inhoud_sha256": "228658ce35f3ee0184569fce4ee2505c0d1b3a44db09883be2f20ecd74bc39cf"
+    },
+    "writer-queryverpakking/querybron-45-diagnose-v2/programma.log.gz": {
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "inhoud_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413"
+    },
+    "writer-queryverpakking/querybron-45-diagnose-v2/Prestatieproef.docx": {
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "inhoud_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c"
+    },
+    "writer-queryverpakking/querybron-45-diagnose-v2/afgekeurd-venster.png": {
+      "sha256": "107a102a7dbaa7bf4f6aedd32f44793684cb144d999e2f078c134de2fac0ed2a",
+      "inhoud_sha256": "107a102a7dbaa7bf4f6aedd32f44793684cb144d999e2f078c134de2fac0ed2a"
+    },
+    "writer-queryverpakking/querybron-45-diagnose-v2/afgekeurde-tekst.png": {
+      "sha256": "24573722c560cb675d743fa05dfa85e0095c0f6cb559530707127d02aac9ac64",
+      "inhoud_sha256": "24573722c560cb675d743fa05dfa85e0095c0f6cb559530707127d02aac9ac64"
+    },
+    "writer-queryverpakking/passief-bronversie-43-voor.log.gz": {
+      "sha256": "7864be718a1e638c645b28fb4b421ec6edb8d4c430317003ec361a9d75f9aa87",
+      "inhoud_sha256": "e7fe2612f5118cce67d534e96cc45f1930ee41b8a4fa225d612d36f36d2e464b"
+    },
+    "writer-queryverpakking/passief-bronversie-45-eerste.log.gz": {
+      "sha256": "a2f13fe5e4745c6fa7b8f536d395bce1a4c4949afa38f0222edea5efba557b41",
+      "inhoud_sha256": "cd87fd2cc42a7c56e7be8e4133d833d1f9490aae985f860633e4c84355276f1e"
+    },
+    "writer-queryverpakking/querybron-45-diagnose.log.gz": {
+      "sha256": "41a7d12f45c7797d05da5e6d61028c269bc4b33caf8c811d72fce31cb13fffc8",
+      "inhoud_sha256": "5a534e21b67fc0bf2e42787b7e04a006d9d626eef2d982cf26fe3cdee150b007"
+    },
+    "writer-queryverpakking/querybron-45-diagnose-v2.log.gz": {
+      "sha256": "3f0dd7d83f66954cc1f80355c341f5d4116c425658a99a9ae43b949ac58d028b",
+      "inhoud_sha256": "1b662965cb040baea6f987525d31ad2bddb94310e0c399c8326d0b3cb9ec447d"
+    }
+  }
+}
