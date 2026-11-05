@@ -26,6 +26,10 @@ Version **2026-W44.8** provides seven installation choices: **Open Office Studio
 
 Office and Notition have separate note storage: use a `.openaec-notities` backup to transfer your notebooks. Dedicated apps currently use manual installer updates, so they cannot accidentally install a suite update.
 
+## IFCX: initial proposal
+
+The [Office profile proposal](docs/ifcx-office-voorstel.md) describes IFCX storage for the Office studios, including the complete original EML/MIME source for email. An executable experiment preserves five source formats byte for byte. This is an experiment; it does not change the apps’ default storage.
+
 ## Screenshots
 
 | | | |
