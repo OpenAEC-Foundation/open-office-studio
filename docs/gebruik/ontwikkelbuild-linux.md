@@ -21,6 +21,10 @@ stabiliteitsproblemen, onder meer eerdere incidentele worker-/Wasm-fouten
 bij grote documenten. Deze download is een testversie. De lokale
 [snelheidsproef voor 45.44](../tests/writer-queryafstemming.md) is afgekeurd en
 teruggedraaid; deze devdownload bevat die proef niet.
+De latere [zeveneditiecontrole en aparte desktopafkeuring](../tests/2026-11-05-platformen-43-niet-opslaan.json)
+blijven onderscheiden: de editiecontrole slaagt op drie platforms, maar een
+aparte Linux-proef krijgt een wit venster met een Rust/Wasm-aliasingfout na
+Niet opslaan tijdens een vastgehouden plakantwoord. De oorzaak is nog open.
 De afzonderlijke [45.39-downloadcontrole](../tests/2026-11-04-linux-dev-1e67dbc.json)
 en oudere afkeuringen blijven bewaard. De download verloopt op 4 december 2026;
 GitHub Actions bewaart deze artefacten dertig dagen.
