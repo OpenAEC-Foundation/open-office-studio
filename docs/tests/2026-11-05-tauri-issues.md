@@ -119,3 +119,22 @@ Bewijs: [heropende koppeling](../screenshots/test-tauri-hyperlink-2026-11-05.png
 
 De volledige suite telt nu 135 bestanden, 1.556 geslaagde en zeven
 overgeslagen tests; de productiebuild slaagt.
+
+## Puntvulling bij eerste invoeging van de inhoudsopgave (#145)
+
+De tijdelijke cursormarkering werd meegenomen bij het vergelijken van
+kopteksten. Met de cursor op de eerste kop werd die kop daardoor niet
+gekoppeld aan een bladwijzer; de eerste weergave tekende kop en paginanummer
+tegen elkaar. Bij volledig bijwerken was de markering weg en werkte de
+koppeling wel. De vergelijking laat nu uitsluitend deze tijdelijke markering
+weg; de oorspronkelijke koptekst en documentopmaak blijven behouden.
+
+Drie regressieproeven plaatsen de cursor aan het begin, midden en eind van
+een kop. Alle drie krijgen meteen een gekoppelde inhoudsopgaveregel met
+rechtertab en puntvulling; volledig bijwerken verandert de regel daarna niet.
+De productie-interface toont direct na invoegen de puntjes en het nummer
+rechts; ook [de variant met twee niveaus](../screenshots/test-tauri-inhoudsopgave-twee-2026-11-05.png) is rechtstreeks na invoegen gecontroleerd. De opgeslagen XML bevat de bijbehorende bladwijzer en het heropende
+document behoudt de juiste weergave. [Interfacebewijs](../screenshots/test-tauri-inhoudsopgave-2026-11-05.png).
+
+De volledige suite telt 135 bestanden, 1.559 geslaagde en zeven overgeslagen
+tests; typecontrole en productiebuild slagen.

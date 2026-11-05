@@ -21,11 +21,11 @@ worden niet gesloten op basis van alleen aanwezige knoppen of broncode.
 | Issue | Stand in deze werkbranch | Bewijs of eerstvolgende controle |
 | --- | --- | --- |
 | [#146](https://github.com/OpenAEC-Foundation/open-office-studio/issues/146) | Hersteld en gecontroleerd | Eén aangeklikte letter vulde ook op Tauri de verkeerde tekst in. De volledige koppeling wordt nu vooringevuld; adreswijziging behoudt tekst en opmaak. Engine-, productie-interface-, undo/redo- en bewaar/heropenproeven groen. |
-| [#145](https://github.com/OpenAEC-Foundation/open-office-studio/issues/145) | Nog te controleren op Tauri | Melding op ontwikkelbuild; minimale proef uitvoeren op deze suite. |
+| [#145](https://github.com/OpenAEC-Foundation/open-office-studio/issues/145) | Hersteld en gecontroleerd | Tijdelijke cursor verstoorde de koppeling van de kop. Drie regressieproeven; beide automatische varianten tonen direct puntvulling. XML en heropenen gecontroleerd. |
 | [#144](https://github.com/OpenAEC-Foundation/open-office-studio/issues/144) | Nog te controleren op Tauri | Melding op ontwikkelbuild; minimale proef uitvoeren op deze suite. |
 | [#143](https://github.com/OpenAEC-Foundation/open-office-studio/issues/143) | Nog te controleren op Tauri | Melding op ontwikkelbuild; minimale proef uitvoeren op deze suite. |
 | [#142](https://github.com/OpenAEC-Foundation/open-office-studio/issues/142) | Hersteld en gecontroleerd | 785 tekens reproduceerden de fout op Tauri; opmaakstukken vervangen binnen één bewaakte bewerking. Zeven engineproeven plus productie-interface, bewaren en heropenen. |
-| [#141](https://github.com/OpenAEC-Foundation/open-office-studio/issues/141) | Nog te controleren op Tauri | Melding op ontwikkelbuild; minimale proef uitvoeren op deze suite. |
+| [#141](https://github.com/OpenAEC-Foundation/open-office-studio/issues/141) | Gedeelde fout afgedekt door lijstherstel | Echte decimale definitie bij wisselen van opsomming naar nummering; engineproef met bewaren/heropenen en undo/redo. Productie-DOCX heeft decimale nummerverwijzingen. |
 | [#140](https://github.com/OpenAEC-Foundation/open-office-studio/issues/140) | Nog te controleren op Tauri | Melding op ontwikkelbuild; minimale proef uitvoeren op deze suite. |
 | [#139](https://github.com/OpenAEC-Foundation/open-office-studio/issues/139) | Nog te controleren op Tauri | Melding op ontwikkelbuild; minimale proef uitvoeren op deze suite. |
 | [#138](https://github.com/OpenAEC-Foundation/open-office-studio/issues/138) | Nog te controleren op Tauri | Melding op ontwikkelbuild; minimale proef uitvoeren op deze suite. |
