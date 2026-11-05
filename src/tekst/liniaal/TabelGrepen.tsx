@@ -18,6 +18,7 @@ import type { DocxPluginContext, DocxPluginGeometry } from "@betteroffice/docx-r
 import { useTranslation } from "react-i18next";
 import { formatGetal } from "../../i18n/opmaak";
 import { zetKolombreedtes, zetRijhoogte } from "../tabel/opdrachten";
+import { celSelectieVakken } from "../tabel/selectie";
 import { tabelBeelden, type IndelingPagina, type TabelBeeld } from "./geometrie";
 import { VLAK } from "./geometriePlugin";
 import { editorVanVlak, volgRegister } from "./register";
@@ -124,9 +125,19 @@ export function TabelGrepen({ context, geometry }: { context: DocxPluginContext<
     () => null,
   );
   const bewerkbaar = !!ref && modus === "editing";
+  useSyncExternalStore(
+    (l) => ref?.commands.subscribe(l) ?? (() => {}),
+    () => {
+      try {
+        return JSON.stringify([sessie?.cellSelection(), sessie?.selection()?.head.story, ref?.commands.getState("tableAction", "mergeCells").enabled]);
+      } catch { return ""; }
+    },
+    () => "",
+  );
   void context;
 
   let grepen: Greep[] = [];
+  let selectievakken: ReturnType<typeof celSelectieVakken> = [];
   if (bewerkbaar && weergave && sessie && layout && bereik && !sleep) {
     try {
       const tabellen = tabelBeelden(
@@ -138,6 +149,9 @@ export function TabelGrepen({ context, geometry }: { context: DocxPluginContext<
         bereik[1],
         String(sessie.version?.() ?? ""),
       );
+      const selectie = sessie.cellSelection();
+      if (selectie && ref?.commands.getState("tableAction", "mergeCells").enabled)
+        selectievakken = tabellen.flatMap((tb) => celSelectieVakken(tb, selectie));
       grepen = tabellen.flatMap((tb, n) => {
         const uit: Greep[] = [];
         const rechts = tb.lijnen[tb.lijnen.length - 1];
@@ -251,7 +265,11 @@ export function TabelGrepen({ context, geometry }: { context: DocxPluginContext<
   }
 
   return (
-    <div ref={laag} className="tl-grepen" data-grepen={grepen.length}>
+    <div ref={laag} className="tl-grepen" data-grepen={grepen.length} data-selectievakken={selectievakken.length}>
+      {selectievakken.map((vak) => {
+        const r = naarLaag(vak.pagina, vak.x, vak.y, vak.width, vak.height);
+        return r && <div key={vak.sleutel} className="tl-celselectie" aria-hidden="true" style={{ left: r.x, top: r.y, width: r.width, height: r.height }} />;
+      })}
       {grepen.map((g) => {
         const r = naarLaag(g.tabel.pagina, g.x, g.y, g.breedte, g.hoogte);
         if (!r) return null;

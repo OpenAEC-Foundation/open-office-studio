@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { createYrsSession } from "@betteroffice/docx/yrs";
 import { actueleCel } from "./navigatie";
+import { tabelVanCel } from "../liniaal/geometrie";
 import { herstelTabelInvoer } from "../../../scripts/tekstengine-compatibiliteit";
 
 const BRON = readFileSync("public/templates/nieuw.docx");
@@ -15,8 +16,10 @@ describe("tabelnavigatie (#128, #137)", () => {
       const r = s.insertTable({ story: "body", paraId: p.paraId, offset: 0 }, 2, 3);
       const verhaal = r.createdStoryIds[0];
       expect(actueleCel(s, verhaal)).toEqual({ ...r.table, row: 0, column: 0 });
+      expect(tabelVanCel(s, verhaal, s.version())?.loc).toEqual(r.table);
       s.insertRow({ ...r.table, row: 0, column: 0 }, "above");
       expect(actueleCel(s, verhaal)).toEqual({ ...r.table, row: 1, column: 0 });
+      expect(tabelVanCel(s, verhaal, s.version())?.loc).toEqual(r.table);
       expect(actueleCel(s, "body")).toBeNull();
     } finally { s.destroy(); }
   });

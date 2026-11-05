@@ -65,7 +65,7 @@ export interface PaginaBeeld {
 }
 
 /** Celverhaal `<ouder>:t<n>:r<r>c<k>`. */
-const CEL = /^(.*):t(\d+):r(\d+)c(\d+)$/;
+const CEL = /^(.*):t(\d+):r(\d+)c(\d+)(?:~[^:]*)?$/;
 
 export interface TabelPlekInfo {
   loc: TabelLoc;
@@ -90,8 +90,7 @@ export function tabelVanCel(sessie: Sessie, celVerhaal: string, versie = ""): Ta
   if (cache.has(sleutel)) return cache.get(sleutel)!;
   if (cache.size > 500) cache.clear();
   const ouder = m[1];
-  const voorvoegsel = `${ouder}:t${m[2]}:r`;
-  const bevat = (payload: TabelPayload | null) => !!payload?.rows?.some((r) => r.cells.some((c) => c.story.startsWith(voorvoegsel)));
+  const bevat = (payload: TabelPayload | null) => !!payload?.rows?.some((r) => r.cells.some((c) => c.story === celVerhaal));
   let gevonden: TabelPlekInfo | null = null;
   // Meestal klopt het nummer uit de naam; dan hoeft het hele verhaal niet doorlopen.
   try {

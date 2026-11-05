@@ -32,10 +32,10 @@ worden niet gesloten op basis van alleen aanwezige knoppen of broncode.
 | [#137](https://github.com/OpenAEC-Foundation/open-office-studio/issues/137) | Hersteld en gericht getest | Actuele celposities uit de tabelstructuur; Tab voegt een rij toe. Interfaceproef met vier cellen, undo/redo, gedownloade XML en heropenen. |
 | [#136](https://github.com/OpenAEC-Foundation/open-office-studio/issues/136) | Nog te controleren op Tauri | Melding op ontwikkelbuild; minimale proef uitvoeren op deze suite. |
 | [#135](https://github.com/OpenAEC-Foundation/open-office-studio/issues/135) | Nog te controleren op Tauri | Melding op ontwikkelbuild; minimale proef uitvoeren op deze suite. |
-| [#133](https://github.com/OpenAEC-Foundation/open-office-studio/issues/133) | Nog te controleren op Tauri | Melding op ontwikkelbuild; minimale proef uitvoeren op deze suite. |
+| [#133](https://github.com/OpenAEC-Foundation/open-office-studio/issues/133) | Gereproduceerd; nog te herstellen | Zichtbare tekst in rij van 4 cm; Midden verplaatst scrollTop blijvend van 108 naar 154. |
 | [#131](https://github.com/OpenAEC-Foundation/open-office-studio/issues/131) | Hersteld; bestaande lintproeven groen | Zichtbare labels in samengebracht voorstel #134. |
 | [#130](https://github.com/OpenAEC-Foundation/open-office-studio/issues/130) | Niet gereproduceerd met de geleverde engine | Drie rijen: bovenste samengevoegde cel splitsen; onderste geometrie, raster, bewaren/heropenen en undo/redo gelijk. Geen algemene visuele vrijgave. |
-| [#129](https://github.com/OpenAEC-Foundation/open-office-studio/issues/129) | Gereproduceerd; nog te herstellen | Slepen over vier cellen maakt samenvoegen beschikbaar, maar de selectie is vooraf onvoldoende zichtbaar. |
+| [#129](https://github.com/OpenAEC-Foundation/open-office-studio/issues/129) | Hersteld en gericht getest | Vier celvlakken zichtbaar; ook selectie met lege cel, behoud in het lint, samenvoegen van precies het getoonde bereik en undo gecontroleerd. |
 | [#128](https://github.com/OpenAEC-Foundation/open-office-studio/issues/128) | Hersteld en gericht getest | Actuele celposities uit de tabelstructuur; Tab voegt een rij toe. Interfaceproef met vier cellen, undo/redo, gedownloade XML en heropenen. |
 | [#127](https://github.com/OpenAEC-Foundation/open-office-studio/issues/127) | Hersteld en gericht getest | Vier regressieproeven en invoegen na paginanavigatie. |
 | [#126](https://github.com/OpenAEC-Foundation/open-office-studio/issues/126) | Nog te controleren op Tauri | Melding op ontwikkelbuild; minimale proef uitvoeren op deze suite. |
@@ -167,3 +167,22 @@ Tab-afhandelaar: bewerken blijft in de bestaande invoerwachtrij.
 Na de volledige testset is aanvullend gecontroleerd dat een voorgestelde
 splitsing geen extra alinearevisie krijgt. Daarvoor blijft de oorspronkelijke
 enginebewerking in gebruik; de opslagproef slaagt.
+
+## Selectie van tabelcellen
+
+De selectielaag tekent de hele celvlakken uit dezelfde tabelstructuur die de
+bewerking gebruikt. Lege cellen, omgekeerd slepen, samengevoegde cellen en
+zichtbare rijfragmenten hebben gerichte proeven. De gewone tekstselectie in
+één cel houdt de engineweergave. Tabelgeometrie herkent nu ook de blijvende
+cel-ids met een achtervoegsel die de huidige engine maakt.
+
+De interfaceproef selecteert eerst vier gevulde cellen, daarna twee cellen
+waarvan één leeg is. Alle bedoelde vlakken zijn zichtbaar, ook na het kiezen
+van Tabelopmaak. Samenvoegen raakt precies de twee laatst geselecteerde cellen;
+undo herstelt de zes oorspronkelijke cellen. Dit is een weergavelaag; het
+bestand wordt niet door de selectie gewijzigd.
+
+[Selectie inclusief lege cel](../screenshots/test-tauri-celselectie-2026-11-05.png).
+
+Eindcontrole na deze wijziging: productiebuild en typecontrole groen;
+130 testbestanden, 1.534 geslaagde proeven en zeven overgeslagen corpusgevallen.
