@@ -33,6 +33,16 @@ celkosten daarvan komt. Daarna kan hergebruik uitsluitend worden toegevoegd
 met betrouwbare verhaal-/versie-/sessie-invalidering, ook voor verwijderingen,
 Undo/Redo, taal- en revisiewijzigingen en nieuwe of gesplitste tabellen.
 
+Een daaropvolgende losse echte SDK/Wasm-proef leest dezelfde bron in vier
+ronden: afzonderlijk / groepen van 32 / groepen van 32 / afzonderlijk.
+Dat kost 3.480 / 181 / 160 / 3.293 ms. De gesorteerde volledige leesantwoorden
+voor alle 1.537 verhalen en 3.329 alinea's zijn exact gelijk op SHA-256.
+`DocxPluginReadClient.readStories` bestaat in de vastgezette plug-in-API.
+Deze uitkomst ondersteunt onderzoek naar groepslezingen voor spelling;
+het is nog geen aangesloten wijziging of GUI-snelheidsbewijs. Afgekorte,
+ontbrekende, geweigerde of gemengde groepsantwoorden moeten veilig worden
+afgehandeld, met behoud van onderbreekbaarheid en alle bestaande talen/fouten.
+
 Alle drie ronden behouden alle 3.329 alinea-/celteksten in 1.537 verhalen.
 Er is geen snelheidswinst of productoptimalisatie geclaimd. Wrappers kunnen
 zelf vertragen, `performance.now()` is afgerond en dit meet geen volledige
