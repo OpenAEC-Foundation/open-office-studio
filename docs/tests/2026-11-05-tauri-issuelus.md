@@ -244,3 +244,34 @@ Laatste controle: productiebuild en typecontrole groen; 133 testbestanden,
 Tauri-desktopschil heeft 109 gewone tests geslaagd en zes standaard
 overgeslagen tests; de vijf conversieproeven en de afzonderlijke
 klembordsysteemproef zijn in deze ronde expliciet uitgevoerd en geslaagd.
+
+## Afronding en sluitselectie
+
+De herstelronde gaat via PR #148 naar de standaardbranch. De gecontroleerde
+sluitselectie bevat twintig concrete meldingen: #120, #122, #123, #124, #125,
+#127, #128, #129, #131, #133, #136, #137, #138, #139, #140, #141, #142, #143,
+#145 en #146. De PR bevat expliciete sluitverwijzingen; het register hierboven
+is een momentopname van de werkbranch, geen actuele GitHub-status.
+
+#126 blijft open voor bediening in de native webview. #130 is met de nieuwe
+engine niet gereproduceerd en mist nog een overeenkomende visuele proef. #135
+blijft open omdat de oorspronkelijke initialisatiefout niet afzonderlijk is
+gereproduceerd. #144 heeft nog de bewezen fout in de nootverwijzingen.
+
+De brede functie-, formaat-, integratie- en routekaartissues blijven open zolang
+hun volledige acceptatiecriteria niet zijn afgetekend. Aanwezige implementaties
+en afzonderlijke geslaagde proeven zijn daarvoor onvoldoende. De gerichte
+formulebalkreparatie is bijvoorbeeld geen vrijgave van alle formulefuncties,
+en de reparatie van inhoudsopgaven bewijst geen figurenlijst of PDF-koppelingen.
+
+Bij het samenbrengen van #118 blijft de op de actuele engine geteste
+formulebereikroute behouden; een tweede globale pointerafhandeling zou dezelfde
+invoer dubbel onderscheppen. #119 levert een Laotiaanse interfacetaal. Ongeldige
+engine-imports en een niet-bestaande CJK-variant zijn verwijderd; de engines
+gebruiken hun bestaande Engelse terugval. Vijftien ontbrekende beschrijvingen
+en argumentnamen zijn voorlopig aangevuld met de Engelse brontekst. De acht
+bestaande installertalen blijven onderling gelijk.
+
+Het IFCX-voorstel (#115) is afzonderlijk samengevoegd als documentatie en
+experimentele bewaarproef; dit activeert geen nieuwe productieopslag. De
+parallelle Rust-migratie (#116) blijft buiten deze herstelronde.
