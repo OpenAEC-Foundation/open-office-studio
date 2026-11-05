@@ -1,8 +1,6 @@
 /**
- * Tabel splitsen via de pakketroute: de engine kent geen splitsbewerking, dus
- * we bewerken word/document.xml (zoals src/grafieken/**) en laden het document
- * opnieuw. Alleen het gesplitste stuk XML verandert; de rest blijft
- * byte-gelijk. Herladen wist de ongedaan-maakgeschiedenis.
+ * Losse pakketbewerkingen voor tabellen. De editor splitst tabellen binnen de
+ * Yrs-sessie (./splitsen.ts), zodat de bewerkingsgeschiedenis behouden blijft.
  */
 import i18next from "../../i18n/config";
 import { Pakket, REL } from "../../grafieken/pakket.ts";

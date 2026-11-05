@@ -23,3 +23,11 @@ export function actueleCel(s: YrsSession, verhaal: string): YrsCellLoc | null {
   }
   return null;
 }
+
+/** Een teruggedraaide tabelsplitsing mag geen selectie op een verdwenen embed houden. */
+export function herstelCelNaGeschiedenis(s: YrsSession, vorigVerhaal?: string) {
+  try { s.cellSelection(); return; } catch { /* Het geselecteerde embed is verwijderd. */ }
+  const verhaal = s.selection()?.head.story;
+  const cel = (verhaal ? actueleCel(s, verhaal) : null) ?? (vorigVerhaal ? actueleCel(s, vorigVerhaal) : null);
+  if (cel) s.setCellSelection({ anchor: cel, head: cel });
+}

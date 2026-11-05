@@ -49,7 +49,26 @@ export function herstelTabelInvoer(bron: string): string {
     .replace(VERLAAT, 'u.insertRow(X,"below")');
 }
 
-/** Alleen de oude synchrone editorroute; de workerroute blijft ongewijzigd. */
+/** Tabelverhalen behouden hun id na verplaatsen; de actuele tabelplek telt. */
+export function herstelTabelContext(bron: string): string {
+  const delen = [
+    ['function j5(e,t){let o=e.selection(),n=o?Fi(o.head.story):null', 'function j5(e,t){let o=e.selection(),n=o?oosActueleCel(e,o.head.story):null'],
+    ['let s=Fi(o.head.story);if(!(!s||Np(e,s)===o.head.story))', 'let s=oosActueleCel(e,o.head.story);if(!(!s||Np(e,s)===o.head.story))'],
+    ['let i=t?e.redo():e.undo(),a=i?e.historyStories():[];', 'let i=t?e.redo():e.undo();i&&oosHerstelCel(e,o?.head.story);let a=i?e.historyStories():[];'],
+    ['function xr(e){let t=e.selection();if(!t||!Fi(t.head.story))return null;let o;', 'function xr(e){let t=e.selection();if(!t||!Fi(t.head.story))return null;let n=oosActueleCel(e,t.head.story);if(!n)return null;let o;'],
+    ['if(o&&Op(o.anchor,o.head)){let i=br(e,o.anchor)', 'if(o&&Op(o.anchor,o.head)&&o.anchor.story===n.story&&o.anchor.tableIndex===n.tableIndex){let i=br(e,o.anchor)'],
+    ['let n=Fi(t.head.story);if(!n)return null;let r;return {target:{focused:n', 'let r;return {target:{focused:n'],
+  ] as const;
+  let uit = bron;
+  for (const [oud, nieuw] of delen) {
+    if (bron.split(oud).length !== 2)
+      throw new Error("De tekstengine is gewijzigd; controleer eerst de aansluiting voor tabelcontext.");
+    uit = uit.replace(oud, nieuw);
+  }
+  return 'import { actueleCel as oosActueleCel, herstelCelNaGeschiedenis as oosHerstelCel } from "openaec-tekst-cel";\n' + uit;
+}
+
+/** Aansluiting voor de synchrone editorroute van de vastgezette engine. */
 export function tekstengineCompatibiliteit(): Plugin {
   return {
     name: "tekstengine-tabelinvoer",
@@ -61,6 +80,8 @@ export function tekstengineCompatibiliteit(): Plugin {
         return fileURLToPath(new URL("../src/tekst/tabel/klik.ts", import.meta.url));
     },
     transform(bron, id) {
+      if (/\/@betteroffice\/docx-react\/dist\/chunk-LZ2DPBZ6\.mjs(?:\?.*)?$/.test(id))
+        return { code: herstelTabelContext(bron), map: null };
       if (!/\/@betteroffice\/docx-react\/dist\/index\.mjs(?:\?.*)?$/.test(id)) return;
       return { code: herstelTabelKlik(herstelHyperlinkTekst(herstelTabelInvoer(bron))), map: null };
     },

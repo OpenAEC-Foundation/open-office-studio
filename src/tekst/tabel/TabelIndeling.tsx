@@ -1,7 +1,7 @@
 /**
  * Lintgroepen voor Tabelopmaak (#48): celgrootte, uitlijning in de cel,
  * celmarges, kopregel herhalen, sorteren, omzetten en splitsen. De bewerkingen
- * staan in ./opdrachten.ts (Yrs-sessie) en ./pakket.ts (splitsen).
+ * staan in ./opdrachten.ts en ./splitsen.ts (Yrs-sessie).
  */
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -26,14 +26,13 @@ import {
 } from "lucide-react";
 import { useDocxCommand, type DocxEditorRef } from "@betteroffice/docx-react";
 import { Groep } from "../../Ribbon";
-import type { Herladen } from "../../lint/editorApi";
 import { openVenster } from "../gedeeld/vensters";
 import { Dialoog } from "../../werkruimte/Dialoog";
 import "../../werkruimte/werkruimte.css";
 import { EigenKnop } from "../../lint/tekst-opdrachten";
 import { useEditorApi } from "../../lint/editorApi";
 import { Keuzemenu, Maatveld, getalUit, toonGetal, useEditorTik, useUitvoeren } from "../gedeeld/ui";
-import { engine } from "../gedeeld/engine";
+import { begin, engine, klaar } from "../gedeeld/engine";
 import {
   celMarges,
   geselecteerdeAlineas,
@@ -50,7 +49,7 @@ import {
   zetRijen,
   type TabelStaat,
 } from "./opdrachten";
-import { splitsTabel } from "./pakket";
+import { splitsTabelSessie } from "./splitsen";
 import { lijnCelUit } from "./uitlijnen";
 import {
   cmNaarTwips,
@@ -63,18 +62,22 @@ import {
   type Sorteersoort,
 } from "./logica";
 
-/** Splitst de tabel boven de rij met de cursor (pakketroute, herladen). */
-export async function splitsHuidigeTabel(ref: DocxEditorRef | null, herlaad: Herladen | null | undefined) {
+/** Splitst de tabel boven de cursor als één ongedaan-maakbare sessiebewerking. */
+export async function splitsHuidigeTabel(ref: DocxEditorRef | null) {
+  if (!ref) return;
+  await ref.flushPendingInput();
   const e = engine(ref);
   const s = tabelStaat(ref);
   if (!s) throw new Error(i18next.t("writer:table.errors.cursorInTable"));
   if (e.ref.commands.getState("editingMode").value === "suggesting")
     throw new Error(i18next.t("writer:table.errors.splitTracking"));
   if (s.plek.tabel.story !== "body") throw new Error(i18next.t("writer:table.errors.splitBodyOnly"));
-  if (!herlaad) throw new Error(i18next.t("writer:table.errors.notReady"));
-  await e.ref.flushPendingInput();
-  const bytes = await herlaad.bytes();
-  herlaad.vervang(splitsTabel(bytes, s.plek.tabel.tableIndex, s.plek.rijen[0]));
+  begin(e);
+  try {
+    splitsTabelSessie(e.sessie, s.plek.tabel, s.plek.rijen[0]);
+  } finally {
+    klaar(e, [s.plek.tabel.story]);
+  }
 }
 
 /** Groepen voor het contexttabblad Tabelopmaak. */
@@ -89,7 +92,7 @@ export function TabelIndeling() {
   const uit = !bewerkbaar || !staat || voorstel;
   const reden = voorstel ? t("table.unavailableWhileTracking") : undefined;
   const setVenster = (id: "rij" | "marges" | "sorteren" | "naarTekst") => openVenster(api.tekst, `tabel.${id}`);
-  const splitsen = () => uitvoeren((ref) => splitsHuidigeTabel(ref, api.herlaad), false);
+  const splitsen = () => uitvoeren((ref) => splitsHuidigeTabel(ref), false);
 
   return (
     <>

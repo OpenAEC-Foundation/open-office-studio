@@ -232,3 +232,38 @@ bestanden, 1.581 geslaagde en zeven overgeslagen tests. Onbegrensde gelijktijdig
 WASM-initialisatie raakte op deze machine de bestaande starttijdlimiet;
 begrensde uitvoering slaagt zonder ruimere tijdlimieten. Typecontrole en
 productiebuild slagen eveneens.
+
+
+## Tabel splitsen met behoud van geschiedenis (#139)
+
+De pakketroute is vervangen door een bewerking binnen dezelfde Yrs-sessie.
+De onderste rijen verhuizen met hun bestaande celverhalen naar een tweede
+tabel; een alineamarkering scheidt de tabellen. Raster, tabel- en celopmaak
+blijven behouden. Een verticale samenvoeging over de splitsgrens wordt vóór
+de wijziging geweigerd. De kopregelmarkering blijft in de bovenste tabel.
+
+Undo verwijderde aanvankelijk wel de tweede tabel, maar de bewaarde
+celselectie verwees daarna nog naar dat verwijderde embed. Dat gaf een fout
+bij het verversen van de interface. De aansluiting voor geschiedenis herstelt
+alleen zo'n ongeldige selectie naar de actuele positie van het celverhaal.
+De native tabelcontext en geschiedenis gebruiken eveneens de actuele plek,
+in plaats van het oude tabelnummer in de blijvende verhaalnaam.
+
+Vijf proeven controleren bronankers, behoud van verhalen en opmaak, eerdere
+geschiedenis, de echte aangepaste native Undo/Redo-opdracht, bewaren en
+heropenen, en weigeren zonder wijziging bij een ongeldige splitsgrens.
+De productie-interface splitst een bewaarde tabel met een gedraaide cel,
+draait die in één stap terug, draait ook eerdere tekstinvoer terug en voert
+beide stappen opnieuw uit. Ctrl+Z vanuit de tabelcel herstelt de tabel eveneens
+zonder consolefout. De onafhankelijke XML-controle van de download bevestigt
+twee tabellen met drie kolommen, alle oorspronkelijke teksten, de eerdere
+invoer en de tekstrichting. Heropenen toont beide tabellen met dezelfde
+inhoud en gedraaide cel.
+[Undo in de interface](../screenshots/test-tauri-tabelsplitsing-undo-2026-11-05.png).
+
+De volledige suite slaagt met `pnpm exec vitest run --maxWorkers=2`: 139
+bestanden, 1.586 geslaagde en zeven overgeslagen tests. Typecontrole,
+productiebuild en vertaalcontrole slagen. De vertaalcontrole meldt de bestaande
+23 taalmapwaarschuwingen. De tabelklikproef leest zijn lettertype nu rechtstreeks
+uit de geïnstalleerde afhankelijkheid, zodat ook een schone bouwomgeving die
+proef kan uitvoeren zonder vooraf gevulde publieke assetmap.
