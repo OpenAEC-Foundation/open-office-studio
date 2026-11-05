@@ -34,6 +34,8 @@ import {
   type Telling,
 } from "./tekst-logica";
 
+import { gaNaarPagina } from "../tekst/zoeken/ganaar";
+
 export type TekstDialoog = "woorden" | "teken" | "opmerking" | "pagina" | null;
 
 /** Lintknop voor een engineopdracht met de sneltoets die wij afhandelen. */
@@ -741,7 +743,8 @@ function GaNaarPagina({
   function ga() {
     if (!geldig) return;
     sluit();
-    api()?.scrollToPage(nummer);
+    const ref = api();
+    if (ref) gaNaarPagina(ref, nummer);
   }
   return (
     <Dialoog

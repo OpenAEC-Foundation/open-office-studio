@@ -33,6 +33,7 @@ interface Fragment {
   kind: string;
   blockId?: string;
   pmStart?: number;
+  pmEnd?: number;
   fromLine?: number;
   toLine?: number;
   resolvedLines?: { segments?: { run?: { pmStart?: number } }[] }[];
@@ -60,9 +61,38 @@ function naarPlek(ref: DocxEditorRef, plek: { story: string; paraId: string; off
   ref.focus();
 }
 
+/** Eerste tekstpositie op de fysieke pagina, ook bij een doorlopende alinea. */
+export function gaNaarPagina(ref: DocxEditorRef, nummer: number) {
+  const lijst = paginas(ref);
+  if (!Number.isInteger(nummer) || nummer < 1 || nummer > lijst.length) return;
+  const eerste = (fragmenten: Fragment[]) => {
+    for (const f of fragmenten) {
+      const positie = f.kind === "paragraph"
+        ? f.resolvedLines?.[0]?.segments?.find((s) => typeof s.run?.pmStart === "number")?.run?.pmStart ?? f.pmStart
+        : f.pmStart;
+      if (positie !== undefined) return positie;
+    }
+    return undefined;
+  };
+  let positie = eerste(lijst[nummer - 1].fragments);
+  // Een lege tussenpagina kan door een sectie-einde ontstaan. Kies dan de
+  // eerstvolgende invoegpositie, of het einde van de voorgaande hoofdtekst.
+  if (positie === undefined) {
+    for (let i = nummer; i < lijst.length && positie === undefined; i++)
+      positie = eerste(lijst[i].fragments);
+    for (let i = nummer - 2; i >= 0 && positie === undefined; i--)
+      positie = [...lijst[i].fragments].reverse().find((f) => f.pmEnd !== undefined)?.pmEnd;
+  }
+  if (positie !== undefined) {
+    engine(ref).weergave.setSelection(positie);
+    ref.focus();
+  }
+  ref.scrollToPage(nummer);
+}
+
 export function paginaDoelen(ref: DocxEditorRef): Doel[] {
   const totaal = ref.getTotalPages() || paginas(ref).length;
-  return Array.from({ length: totaal }, (_, i) => ({ nr: i + 1, label: i18next.t("writer:find.goTo.labels.page", { n: i + 1 }), ga: (r) => r.scrollToPage(i + 1) }));
+  return Array.from({ length: totaal }, (_, i) => ({ nr: i + 1, label: i18next.t("writer:find.goTo.labels.page", { n: i + 1 }), ga: (r) => gaNaarPagina(r, i + 1) }));
 }
 
 export function sectieDoelen(ref: DocxEditorRef): Doel[] {
@@ -72,7 +102,7 @@ export function sectieDoelen(ref: DocxEditorRef): Doel[] {
     const sectie = p.sectionIndex ?? 0;
     if (gezien.has(sectie)) return;
     gezien.add(sectie);
-    uit.push({ nr: uit.length + 1, label: i18next.t("writer:find.goTo.labels.section", { n: uit.length + 1, page: i + 1 }), ga: (r) => r.scrollToPage(i + 1) });
+    uit.push({ nr: uit.length + 1, label: i18next.t("writer:find.goTo.labels.section", { n: uit.length + 1, page: i + 1 }), ga: (r) => gaNaarPagina(r, i + 1) });
   });
   return uit;
 }

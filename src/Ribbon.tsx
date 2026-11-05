@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { ChevronDown, type LucideIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Lint, LintActie, type LintProps, type LintTeksten } from "./openaec-lint";
@@ -221,8 +221,9 @@ export function OpdrachtGetal({
     () => setWaarde(String(opdracht.state.value ?? "")),
     [opdracht.state.value],
   );
-  function toepassen() {
-    const getal = Number(waarde);
+  const aanwijzerWaarde = useRef<string | null>(null);
+  function toepassen(invoer = waarde) {
+    const getal = Number(invoer);
     if (getal >= 1 && getal <= 400 && getal !== opdracht.state.value)
       uitvoeren(args(getal));
     else setWaarde(String(opdracht.state.value ?? ""));
@@ -238,8 +239,28 @@ export function OpdrachtGetal({
       value={waarde}
       disabled={!opdracht.state.enabled}
       onChange={(event) => setWaarde(event.target.value)}
-      onBlur={toepassen}
+      onPointerDown={(event) => {
+        aanwijzerWaarde.current = event.currentTarget.value;
+      }}
+      onPointerUp={(event) => {
+        // De ingebouwde pijltjes wijzigen de waarde zonder focusverlies.
+        const invoer = event.currentTarget.value;
+        if (aanwijzerWaarde.current !== null && invoer !== aanwijzerWaarde.current)
+          toepassen(invoer);
+        aanwijzerWaarde.current = null;
+      }}
+      onPointerCancel={() => { aanwijzerWaarde.current = null; }}
+      onBlur={() => toepassen()}
       onKeyDown={(event) => {
+        if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+          event.preventDefault();
+          const huidig = Number(event.currentTarget.value);
+          if (Number.isFinite(huidig)) {
+            const nieuw = Math.max(1, Math.min(400, huidig + (event.key === "ArrowUp" ? 1 : -1)));
+            setWaarde(String(nieuw));
+            toepassen(String(nieuw));
+          }
+        }
         if (event.key === "Enter") {
           event.preventDefault();
           toepassen();
