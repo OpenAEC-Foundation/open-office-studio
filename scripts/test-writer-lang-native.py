@@ -599,7 +599,14 @@ async def proef(a):
             if a.lettertypebewijs:
                 from gui.lettertype_bewijs import controleer as controleer_lettertypen
                 rapport['lettertypebewijs'] = {}
+                # De fontproef loopt in het heropende proces, met een nieuwe renderer.
+                # De eerdere framebewaking volgt dit proces dus niet vanzelf.
+                if a.framebasis:
+                    await p.begin_framebewaking(a.uitvoer/'framebasis-lettertypen.json')
                 await controleer_lettertypen(p, a.uitvoer, rapport['lettertypebewijs'])
+                if a.framebasis:
+                    stand = await p.bewaar_framebasis()
+                    assert not stand['instrumentatiefouten'], 'Framebewaking meldt instrumentatiefouten tijdens lettertypeproef'
             if a.herstelstart:
                 tekens = sum(len(tekst) for tekst in getypt)
                 rapport['status_na_later'] = await p.run("const eind=performance.now()+8000;while(true){const b=Array.from(document.querySelectorAll('.office-statusbalk .statusbalk-module button')).map(e=>e.textContent||'');if(b[0]?.endsWith(' of 500')&&b[1]?.includes("+json.dumps(f', {tekens:,} characters')+"))return b;if(performance.now()>eind)throw Error('Statusbalk komt niet terug na Later: '+JSON.stringify(b));await new Promise(r=>setTimeout(r,100))}", t=10)

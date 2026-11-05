@@ -19,8 +19,13 @@ async def controleer(p, uitvoer, resultaat=None):
     r['grens'] = 'Volledige worker-/hostantwoorden op dezelfde actuele bron; vier fontopmaakvarianten, onafhankelijk XML en bronexacte Undo. Na de invoermeting; geen snelheidsmeting.'
     ns = {'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
     w = '{'+ns['w']+'}'
+    # Bewaar de primaire JS-/werkerfout vóór eventuele ZIP-vervolgfouten.
+    assert js_geslaagd, r.get('fout', 'Lettertypeproef niet geslaagd')
+    assert len(r['gevallen']) == 4, 'Niet alle vier lettertypevarianten gecontroleerd'
     for geval in r['gevallen']:
-        data = bytes(geval.pop('docx'))
+        brondata = geval.pop('docx')
+        assert isinstance(brondata, list) and brondata and all(type(b) is int and 0 <= b <= 255 for b in brondata), 'Ongeldige DOCX-export'
+        data = bytes(brondata)
         pad = uitvoer/('Lettertype-'+geval['naam']+'.docx')
         pad.write_bytes(data)
         with ZipFile(pad) as z:
@@ -42,6 +47,5 @@ async def controleer(p, uitvoer, resultaat=None):
                 stijl = run.find('w:rPr/w:'+tag, ns)
                 assert stijl is not None and stijl.get(w+'val') not in ['0', 'false', 'off'], 'DOCX verliest gekozen letterstijl'
         geval.update(bestand=pad.name, sha256=hashlib.sha256(data).hexdigest(), xml_exact=True, volledige_tekst_exact=True)
-    assert js_geslaagd, r.get('fout', 'Lettertypeproef niet geslaagd')
     r['geslaagd'] = True
     return r
