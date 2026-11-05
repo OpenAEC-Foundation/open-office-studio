@@ -1,5 +1,5 @@
 /**
- * Gedeelde toegang tot de lagere engine-API van @betteroffice/docx-react 0.4.3
+ * Gedeelde toegang tot de lagere engine-API van @betteroffice/docx-react 0.5.1
  * (`getEditorRef()` → `PagedEditorRef`, `getYrsSession()`). Die API is
  * experimenteel; alles wat de Word-functies (#28, #29, #48, #49, #57) daarmee
  * doen loopt via deze hulpjes, zodat een engine-update op één plek te volgen is.

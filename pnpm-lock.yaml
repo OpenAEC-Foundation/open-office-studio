@@ -9,14 +9,14 @@ importers:
   .:
     dependencies:
       '@betteroffice/docx':
-        specifier: 0.4.3
-        version: 0.4.3(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))
+        specifier: 0.5.1
+        version: 0.5.1(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))
       '@betteroffice/docx-i18n':
-        specifier: 0.4.3
-        version: 0.4.3
+        specifier: 0.5.1
+        version: 0.5.1
       '@betteroffice/docx-react':
-        specifier: 0.4.3
-        version: 0.4.3(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        specifier: 0.5.1
+        version: 0.5.1(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@betteroffice/fonts':
         specifier: 0.4.0
         version: 0.4.0(@betteroffice/fonts-cjk@0.4.0)
@@ -136,11 +136,11 @@ packages:
     resolution: {integrity: sha512-NpugTzbKgGrNe45Ui32cN8vCFFMxVtP/9rtfwv0nP5FRDAjvYBxJcLVpYA9mr1jxP6cnIT7x9LUzuDTbWYYNRA==}
     engines: {node: '>=6.9.0'}
 
-  '@betteroffice/docx-i18n@0.4.3':
-    resolution: {integrity: sha512-8CSSjdurL6V2hkWuENOb2It4vEvnx3CCj9ZiZZ3iZW5oYk3RhGUN5gopLLsriNrGsqLduuOULWSUNf9CEJ9aew==}
+  '@betteroffice/docx-i18n@0.5.1':
+    resolution: {integrity: sha512-+uhvY8y16hVf3xGbvJyhBk3Y8Irsx+gwDOFOmjOHiz9f/ePSysNpQSDD/ZYx8y3GTLHHSfOAWsSkBGkpaHvpEg==}
 
-  '@betteroffice/docx-react@0.4.3':
-    resolution: {integrity: sha512-4xUp8RB5i+iBR+ANLwYw7sahMHvmMnRTn/i0RA8N/F9rxeVpLhCd6EYF5sgXHa6dYcFNS8Fj21ZgrUYcrm6iyg==}
+  '@betteroffice/docx-react@0.5.1':
+    resolution: {integrity: sha512-6qt5UF2pwSnHEEnpCO7LIM/E71p10puDGyWivwea7nkN9gTzjnGTusMyxvwGLxbgOpGmJjwqCuclaAnQ7Dql8Q==}
     peerDependencies:
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
@@ -150,8 +150,8 @@ packages:
       react-dom:
         optional: true
 
-  '@betteroffice/docx@0.4.3':
-    resolution: {integrity: sha512-CEErXJH3iCsi2a61gTNkAofLCzSTcktLmp710gGhMwbBfOqwQ2yI7dRFBV3ElGa9JxkS03IfejvLX0sAvlTrUQ==}
+  '@betteroffice/docx@0.5.1':
+    resolution: {integrity: sha512-90OVOjArTdk7KmHNSGBPMLDPg1sU+k/LI0HooZDdALwidGpjNjFAazkKSTg29K6fpmv6qmygCdJiXCCoxL2GRw==}
     peerDependencies:
       '@betteroffice/fonts': ^0
     peerDependenciesMeta:
@@ -1787,12 +1787,12 @@ snapshots:
 
   '@babel/runtime@7.29.10': {}
 
-  '@betteroffice/docx-i18n@0.4.3': {}
+  '@betteroffice/docx-i18n@0.5.1': {}
 
-  '@betteroffice/docx-react@0.4.3(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+  '@betteroffice/docx-react@0.5.1(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
-      '@betteroffice/docx': 0.4.3(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))
-      '@betteroffice/docx-i18n': 0.4.3
+      '@betteroffice/docx': 0.5.1(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))
+      '@betteroffice/docx-i18n': 0.5.1
       '@radix-ui/react-select': 2.4.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       clsx: 2.1.1
       sonner: 2.0.8(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -1804,7 +1804,7 @@ snapshots:
       - '@types/react'
       - '@types/react-dom'
 
-  '@betteroffice/docx@0.4.3(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))':
+  '@betteroffice/docx@0.5.1(@betteroffice/fonts@0.4.0(@betteroffice/fonts-cjk@0.4.0))':
     optionalDependencies:
       '@betteroffice/fonts': 0.4.0(@betteroffice/fonts-cjk@0.4.0)
 

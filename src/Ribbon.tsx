@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next";
 import { Lint, LintActie, type LintProps, type LintTeksten } from "./openaec-lint";
 import { useInstellingen } from "./instellingen";
 import { InLintPlek } from "./lintplek";
+import { BevestigdeKleur } from "./lint/BevestigdeKleur";
+import { markeerKleur } from "./lint/markeerkleur";
 
 export const RibbonFout = createContext<(bericht: string) => void>(() => {});
 /** Engelse redenen uit de engines, vertaald naar de interfacetaal. */
@@ -173,18 +175,22 @@ export function OpdrachtKleur({
   naam,
   icoon: Icoon,
   args,
+  bevestigen = false,
 }: {
   opdracht: GebondenOpdracht;
   naam: string;
   icoon: LucideIcon;
   args: (kleur: string) => unknown;
+  bevestigen?: boolean;
 }) {
   const uitvoeren = useUitvoeren(opdracht);
   const waarde =
     typeof opdracht.state.value === "string"
       ? opdracht.state.value.replace(/^#/, "")
       : "";
-  const kleur = /^[0-9a-f]{6}$/i.test(waarde) ? `#${waarde}` : "#36363e";
+  const kleur = bevestigen ? markeerKleur(opdracht.state.value) : /^[0-9a-f]{6}$/i.test(waarde) ? `#${waarde}` : "#36363e";
+  if (bevestigen)
+    return <BevestigdeKleur naam={naam} icoon={Icoon} kleur={kleur} beschikbaar={opdracht.state.enabled} toepassen={(nieuw) => uitvoeren(args(nieuw))} />;
   return (
     <label
       className="ribbon-kleur"

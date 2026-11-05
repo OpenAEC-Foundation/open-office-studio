@@ -324,6 +324,7 @@ export default function OfficeEditor(props: EditorProps) {
           <DocumentLettertypen.Provider value={documentLettertypen}>
           <EditorZichtbaar.Provider value={props.zichtbaar ?? true}>
             <DocxEditor
+              legacySyncApi
               key={herladen.sleutel}
               ref={docx}
               documentBuffer={herladen.bytes}

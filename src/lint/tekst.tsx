@@ -196,6 +196,7 @@ function TekstLettertype() {
         />
         <OpdrachtKleur
           opdracht={markering}
+          bevestigen
           naam={t("writer.commands.highlightColor")}
           icoon={Highlighter}
           args={(color) => ({ color })}
