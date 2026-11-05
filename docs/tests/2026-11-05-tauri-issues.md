@@ -24,7 +24,7 @@ weekfunctie een normale foutwaarde; een voorafgaande wijziging blijft behouden.
 ## Resultaten van de eindcontrole
 
 - TypeScript geslaagd.
-- 134 testbestanden geslaagd: 1.553 proeven geslaagd, zeven overgeslagen
+- 136 testbestanden geslaagd: 1.570 proeven geslaagd, zeven overgeslagen
   wegens ontbrekende externe database- en versleutelingscorpusbestanden.
 - De aanvullende opdrachtcontroles voor tekst (68), rekenblad en presentatie
   (10) zijn geslaagd, inclusief opslaan en heropenen.
@@ -76,8 +76,9 @@ pnpm test:opdrachten
 ```
 
 De browserproeven draaien op de webinterface van dezelfde Tauri-bron.
-Er is geen nieuwe installer gebouwd of gepubliceerd, en geen native
-besturingssysteemproef uitgevoerd. Externe corpusgevallen mogen alleen als
+Er is geen nieuwe installer gepubliceerd. De native systeemklembordproef
+draait op een geïsoleerd X11-display; volledige native webviewbediening is
+nog niet afgetekend. Externe corpusgevallen mogen alleen als
 gecontroleerd gelden wanneer de benodigde bestanden werkelijk aanwezig zijn.
 
 ## Lange alinea omzetten naar hoofdletters (#142)
@@ -147,3 +148,52 @@ kleine letters vanaf drie ingesteld. De hoofdtekstverwijzingen blijven
 bestand bevestigt voor beide typen `lowerRoman` en `numStart=3` in de
 sectie-instellingen. De opgeslagen instellingen zijn dus niet verdwenen.
 Deze fout is gereproduceerd, maar nog niet hersteld of afgetekend.
+
+## Systeemklembord (#126)
+
+De Tauri-route leest rechtstreeks het actuele systeemklembord via de
+officiële plug-in. Een fout valt niet terug op een mogelijk verouderd
+browserklembord. Het lint, Ctrl+V en plakken zonder opmaak gebruiken dezelfde
+route. Er is alleen leestoegang voor de bestaande lokale vensters toegevoegd.
+
+Naast de acht routeproeven is de echte JS-plug-inopdracht door gesimuleerde
+IPC gecontroleerd. Een optionele native proef gebruikt twee afzonderlijke
+plug-inverbindingen op een geïsoleerd X11-display: de bron kopieert tekst en
+vervangt die; de ontvanger leest beide actuele waarden. Deze proef slaagt,
+zonder het klembord van de gebruikerssessie aan te raken. De 109 gewone
+schilproeven en vijf expliciet ingeschakelde conversieproeven slagen eveneens.
+
+De browserproef combineert extern plakken, een gewijzigde externe kopie en
+intern kopiëren/plakken; bewaren en heropenen behouden beide volledige
+alinea's. [Interfacebewijs](../screenshots/test-tauri-plakken-2026-11-05.png).
+Native webviewbediening op Windows, macOS en Linux blijft een afzonderlijke
+open controle; deze laagproeven zijn daarvoor geen vrijgave.
+
+## Rasterverwijzingen uit de uitgebreide formulebalk (#58)
+
+De praktijkcontrole vond een invoerfout: tijdens het bewerken van een formule
+in de uitgebreide balk verplaatste een rasterklik de doelcel en ging de
+concepttekst verloren. De balk onderschept nu een verwijzingsgebaar met de
+openbare rastergeometrie, houdt de doelcel vast en voegt het gekozen bereik
+in de concepttekst in. Elke sleepstand rekent vanaf dezelfde oorspronkelijke
+invoegplek. Een bestaande verwijzing wordt als geheel vervangen; tekst erna
+blijft behouden. Annuleren van het aanwijzergebaar herstelt de oorspronkelijke
+concepttekst. Tekst binnen aanhalingstekens wordt niet als verwijzingsplek
+gebruikt. Er wordt pas bij bevestigen een celbewerking opgeslagen.
+
+Elf regressieproeven behandelen invoegplekken, selecties, omgekeerd slepen,
+herhaald slepen, bestaande verwijzingen en aanhalingstekens. De productieproef
+voert 12,5 en 7,5 in, selecteert een bereik via het naamvak, controleert de
+volledige F4-cyclus en gebruikt functiezoeken met argumentuitleg en resultaat
+20. In de gerepareerde uitgebreide balk kiest de muis eerst één cel en daarna
+A1:A2, met behoud van doelcel D3 en de omliggende formuletekst. De voltooide
+formule is `=SUM(A1:A2)`, uitkomst 20; één undo maakt D3 leeg en redo herstelt
+20. De gekleurde rastermarkering volgt A1:A2.
+
+De gedownloade XLSX bevat `SUM(A1:A2)` en resultaatcache 20 in D3; de vijf
+bestaande controlecellen blijven behouden. Heropenen toont opnieuw dezelfde
+formule en uitkomst. [Interfacebewijs](../screenshots/test-tauri-formuleverwijzing-2026-11-05.png).
+De brede functie-issue is hiermee nog niet volledig afgetekend.
+
+Volledige controle: 136 testbestanden, 1.570 geslaagde en zeven overgeslagen
+tests; typecontrole en productiebuild geslaagd.
