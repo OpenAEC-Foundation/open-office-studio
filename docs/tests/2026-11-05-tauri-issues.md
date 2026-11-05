@@ -304,3 +304,56 @@ Volledige controle: `pnpm exec vitest run --maxWorkers=2` slaagt met 140
 bestanden, 1.594 geslaagde en zeven overgeslagen tests. Typecontrole en
 productiebuild slagen eveneens. Het brede kolommen-issue #55 vraagt daarnaast
 nog verdere toetsing van zijn overige functies.
+
+
+## Herkenbare tabelacties en eigen scheidingsteken (#136, #140)
+
+De invoegknoppen voor rijen en kolommen houden hun specifieke actielabels.
+Vier verschillende pijlpictogrammen maken boven, onder, links en rechts
+herkenbaar. In de compacte lintstand worden deze labels niet meer verborgen.
+Het bestaande lint kan de groepen bij minder ruimte als gelabeld menu tonen.
+In de productie-interface zijn alle vier acties uitgevoerd: twee bij twee
+cellen wordt vier bij vier. Vier Undo-stappen herstellen de oorspronkelijke
+tabel. [Normaal lint](../screenshots/test-tauri-tabelknoppen-2026-11-05.png).
+Een tijdelijke controle met 620 pixels beschikbare lintbreedte toont de
+menu's Rijen en Kolommen met volledige actielabels. Vanuit beide menu's is
+een invoegactie uitgevoerd. De tijdelijke controlepagina is daarna verwijderd.
+[Smal lint](../screenshots/test-tauri-tabelknoppen-smal-2026-11-05.png).
+
+Het scheidingstekenveld gebruikt de eerder toegevoegde thema-eigen achtergrond,
+tekst, binnenmarge en vaste minimummaat. De productiecontrole bevestigt 39 ×
+30 pixels en een goed herkenbaar `|`. Met en zonder focus blijven tekst- en
+achtergrondkleur gelijk. In donker zijn tekst en cursor RGB 242/242/240 op
+42/42/49; in licht RGB 43/47/54 op wit.
+[Donker](../screenshots/test-tauri-scheidingsteken-donker-2026-11-05.png) en
+[licht](../screenshots/test-tauri-scheidingsteken-licht-2026-11-05.png).
+
+De conversieproef vond daarnaast een ongeldige celselectie na het verwijderen
+van de tabel. De native koppeling wist nu alleen een selectie waarvan het
+tabelobject niet meer bestaat. Geldige selecties blijven intact; andere
+fouten blijven zichtbaar. De tekstcursor verhuist vóór het verwijderen naar
+de hoofdtekst, zodat directe wijzigingswaarnemers geen verwijderd celverhaal
+hoeven uit te lezen. Vijf regressieproeven behandelen de bronankers, geldige en
+ongeldige selecties, andere fouten, de echte native selectiestaat en de
+gepubliceerde conversie. Een tegenproef met de oude cursorvolgorde faalt.
+
+De interface zet a/b/c/d om naar `a|b` en `c|d`. Eén Undo herstelt de tabel;
+Redo herstelt de twee alinea's. De onafhankelijke XML-controle bevestigt dat
+de download geen tabel meer bevat en beide alinea's met `|` bewaart. Heropenen
+behoudt hetzelfde resultaat. [Opgeslagen conversie](../screenshots/test-tauri-tabel-naar-tekst-2026-11-05.png).
+
+## Workerterugval blijft open (#135)
+
+De oorspronkelijke melding over een niet-geïnitialiseerde worker is in deze
+ronde niet gereproduceerd. Na tabelconversie is wel een verwante fout zichtbaar
+in de console: de achtergrondworker vraagt een inmiddels verwijderd celverhaal
+op en valt terug op de hoofdthread. De conversie, Undo/Redo en bewaren blijven
+werken. De verbeterde lokale selectieafhandeling neemt deze workerterugval
+nog niet weg; de workerlevenscyclus is hiermee niet afgetekend.
+
+
+Volledige controle van deze ronde: `pnpm exec vitest run --maxWorkers=1`
+slaagt met 141 bestanden, 1.599 geslaagde en zeven overgeslagen tests.
+Twee gelijktijdige testworkers raakten op deze machine incidenteel de bestaande
+opstarttijdlimiet van vijf seconden bij zware engineproeven. Eén worker slaagt
+zonder verruimde tijdlimieten. Typecontrole en productiebuild slagen eveneens.

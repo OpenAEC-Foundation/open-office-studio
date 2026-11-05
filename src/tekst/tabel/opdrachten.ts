@@ -634,6 +634,9 @@ export function tabelNaarTekst(ref: DocxEditorRef | null, scheiding: Scheiding) 
     const regels = cellenNaarTekst(tabelTeksten(s, plek.tabel), scheiding).flatMap((r) => r.split("\n"));
     let doel: string | null = alineaNaTabel(s, plek.tabel);
     if (!doel) throw new Error(i18next.t("writer:table.errors.noParagraphAfter"));
+    // De wijzigingswaarnemer kan al direct na verwijderen lezen. Laat hem
+    // daarom geen tekstselectie in een inmiddels verwijderd celverhaal zien.
+    s.setSelection({ story: plek.tabel.story, paraId: doel, offset: 0 });
     s.deleteTable(plek.tabel);
     const eerste = doel;
     for (const regel of regels) {

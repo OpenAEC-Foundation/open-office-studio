@@ -31,3 +31,14 @@ export function herstelCelNaGeschiedenis(s: YrsSession, vorigVerhaal?: string) {
   const cel = (verhaal ? actueleCel(s, verhaal) : null) ?? (vorigVerhaal ? actueleCel(s, vorigVerhaal) : null);
   if (cel) s.setCellSelection({ anchor: cel, head: cel });
 }
+
+/** Een selectie op een verwijderd tabelobject is geen bruikbare celselectie. */
+export function leesCelSelectie<T>(lees: () => T | null, wis: () => unknown): T | null {
+  try { return lees(); } catch (fout) {
+    const bericht = String(fout).replace(/^Error: /, "");
+    if (!/^(?:table \d+ was not found in story |cell selection table no longer resolves$)/.test(bericht)) throw fout;
+    // Alleen de lokale selectiestaat wissen; dit is geen documentbewerking.
+    wis();
+    return null;
+  }
+}

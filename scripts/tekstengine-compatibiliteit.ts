@@ -68,6 +68,15 @@ export function herstelTabelContext(bron: string): string {
   return 'import { actueleCel as oosActueleCel, herstelCelNaGeschiedenis as oosHerstelCel } from "openaec-tekst-cel";\n' + uit;
 }
 
+/** Een verdwenen tabel mag de tijdelijke celselectie niet onleesbaar maken. */
+export function herstelVerdwenenCelSelectie(bron: string): string {
+  const oud = 'cellSelection:()=>JSON.parse(e$1.cell_selection())';
+  if (bron.split(oud).length !== 2)
+    throw new Error("De tekstengine is gewijzigd; controleer eerst de aansluiting voor verdwenen celselecties.");
+  return 'import { leesCelSelectie as oosLeesCelSelectie } from "openaec-tekst-cel";\n'
+    + bron.replace(oud, 'cellSelection:()=>oosLeesCelSelectie(()=>JSON.parse(e$1.cell_selection()),()=>e$1.clear_cell_selection())');
+}
+
 /** Houdt gelijke kolommen in de bestaande native meet- en tekenroute. */
 export function herstelKolommenWeergave(bron: string): string {
   const oud = 'regions:{sections:p(e$1),settings:';
@@ -91,6 +100,8 @@ export function tekstengineCompatibiliteit(): Plugin {
         return fileURLToPath(new URL("../src/tekst/tabel/klik.ts", import.meta.url));
     },
     transform(bron, id) {
+      if (/\/@betteroffice\/docx\/dist\/chunk-N5NWITJ6\.mjs(?:\?.*)?$/.test(id))
+        return { code: herstelVerdwenenCelSelectie(bron), map: null };
       if (/\/@betteroffice\/docx\/dist\/chunk-7WWFGMMF\.mjs(?:\?.*)?$/.test(id))
         return { code: herstelKolommenWeergave(bron), map: null };
       if (/\/@betteroffice\/docx-react\/dist\/chunk-LZ2DPBZ6\.mjs(?:\?.*)?$/.test(id))
