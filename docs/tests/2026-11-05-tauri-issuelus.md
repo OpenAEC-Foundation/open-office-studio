@@ -24,7 +24,7 @@ worden niet gesloten op basis van alleen aanwezige knoppen of broncode.
 | [#145](https://github.com/OpenAEC-Foundation/open-office-studio/issues/145) | Nog te controleren op Tauri | Melding op ontwikkelbuild; minimale proef uitvoeren op deze suite. |
 | [#144](https://github.com/OpenAEC-Foundation/open-office-studio/issues/144) | Nog te controleren op Tauri | Melding op ontwikkelbuild; minimale proef uitvoeren op deze suite. |
 | [#143](https://github.com/OpenAEC-Foundation/open-office-studio/issues/143) | Nog te controleren op Tauri | Melding op ontwikkelbuild; minimale proef uitvoeren op deze suite. |
-| [#142](https://github.com/OpenAEC-Foundation/open-office-studio/issues/142) | Nog te controleren op Tauri | Melding op ontwikkelbuild; minimale proef uitvoeren op deze suite. |
+| [#142](https://github.com/OpenAEC-Foundation/open-office-studio/issues/142) | Hersteld en gecontroleerd | 785 tekens reproduceerden de fout op Tauri; opmaakstukken vervangen binnen één bewaakte bewerking. Zeven engineproeven plus productie-interface, bewaren en heropenen. |
 | [#141](https://github.com/OpenAEC-Foundation/open-office-studio/issues/141) | Nog te controleren op Tauri | Melding op ontwikkelbuild; minimale proef uitvoeren op deze suite. |
 | [#140](https://github.com/OpenAEC-Foundation/open-office-studio/issues/140) | Nog te controleren op Tauri | Melding op ontwikkelbuild; minimale proef uitvoeren op deze suite. |
 | [#139](https://github.com/OpenAEC-Foundation/open-office-studio/issues/139) | Nog te controleren op Tauri | Melding op ontwikkelbuild; minimale proef uitvoeren op deze suite. |

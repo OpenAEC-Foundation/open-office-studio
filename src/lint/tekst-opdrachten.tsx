@@ -24,6 +24,7 @@ import { ontbrekendeStijl } from "../tekst/stijlen/model";
 import { metHeleAlinea } from "../tekst/stijlen/toepassen";
 import { tabelInvoegen } from "../tekst/tabel/opdrachten";
 import { leesKlembordTekst } from "../klembord";
+import { hoofdletterVervangingen } from "../tekst/bewerken/hoofdletters";
 import {
   selectieBegin,
   specialeTekens,
@@ -234,6 +235,7 @@ export function useTekstOpdrachten({
       throw new Error(t("writer.errors.selectWithinParagraph"));
     const gelezen = await ref.readParagraphs({
       view: "accepted",
+      story: ref.getEditorRef()?.getYrsSession()?.selection()?.head.story,
       paraIds: [info.paraId],
     });
     const alinea = gelezen.ok ? gelezen.paragraphs[0] : undefined;
@@ -253,9 +255,10 @@ export function useTekstOpdrachten({
           ? volgendeHoofdletters(tekst)
           : wijzigHoofdletters(tekst, soort);
       if (nieuw === tekst) return;
-      const vervangingen = tekenVervangingen(tekst, nieuw, begin) ?? [
-        { begin, eind: begin + tekst.length, tekst: nieuw },
-      ];
+      const sessie = ref.getEditorRef()?.getYrsSession();
+      const vervangingen = (sessie && hoofdletterVervangingen(sessie, alinea.story, alinea.paraId, alinea.text, begin, tekst, nieuw))
+        ?? tekenVervangingen(tekst, nieuw, begin);
+      if (!vervangingen) throw new Error(t("writer.errors.cannotChangeHere"));
       const voorstel = opnemen
         ? {
             suggest: {
@@ -276,6 +279,7 @@ export function useTekstOpdrachten({
             view: "accepted" as const,
           },
           text: v.tekst,
+          expect: { text: alinea.text.slice(v.begin, v.eind) },
           ...voorstel,
         })),
       });

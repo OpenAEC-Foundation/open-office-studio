@@ -24,7 +24,7 @@ weekfunctie een normale foutwaarde; een voorafgaande wijziging blijft behouden.
 ## Resultaten van de eindcontrole
 
 - TypeScript geslaagd.
-- 133 testbestanden geslaagd: 1.546 proeven geslaagd, zeven overgeslagen
+- 134 testbestanden geslaagd: 1.553 proeven geslaagd, zeven overgeslagen
   wegens ontbrekende externe database- en versleutelingscorpusbestanden.
 - De aanvullende opdrachtcontroles voor tekst (68), rekenblad en presentatie
   (10) zijn geslaagd, inclusief opslaan en heropenen.
@@ -79,3 +79,23 @@ De browserproeven draaien op de webinterface van dezelfde Tauri-bron.
 Er is geen nieuwe installer gebouwd of gepubliceerd, en geen native
 besturingssysteemproef uitgevoerd. Externe corpusgevallen mogen alleen als
 gecontroleerd gelden wanneer de benodigde bestanden werkelijk aanwezig zijn.
+
+## Lange alinea omzetten naar hoofdletters (#142)
+
+Een synthetische alinea van 785 tekens veroorzaakte ook op Tauri de fout:
+648 losse lettervervangingen overschreden de grens van 128 stappen. De
+opdracht vervangt nu één aaneengesloten opmaakstuk per stap, met behoud
+van de oorspronkelijke tekenopmaak en de tekst- en versiecontroles van
+de host. Onduidelijke tekstprojecties worden niet grofweg vervangen.
+
+Zeven proeven met de echte engine controleren lange tekst, gemengde
+opmaak, Unicode, gedeeltelijke selectie, tabelcellen, undo/redo en
+bewaren/heropenen. De oude productie-interface gaf bij 785 tekens een
+fout; dezelfde proef slaagt in de nieuwe bouw. De opgeslagen XML is exact
+gelijk aan de verwachte 785 tekens in hoofdletters. Heropenen toont alle
+130 woorden en 785 tekens. Bewijs: [heropend document](../screenshots/test-tauri-hoofdletters-2026-11-05.png).
+
+De volledige suite telt nu 134 bestanden, 1.553 geslaagde en zeven
+overgeslagen tests. De productiebuild slaagt. De grens van de host blijft
+gelden voor uitzonderlijke selecties met meer dan 128 verschillende
+opmaakstukken; zo'n bewerking wordt veilig geweigerd.
