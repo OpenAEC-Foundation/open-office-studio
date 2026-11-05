@@ -2,16 +2,19 @@ import type { DocxEditorRef } from "@betteroffice/docx-react";
 import { leesSelectie } from "../editor";
 import { begin, engine, klaar } from "../gedeeld/engine";
 import { alineaAttrs } from "../opmaak";
+import { herstelLijstvervolg } from "./vervolg";
 import { lijstVan } from "./model";
 
 /**
- * De gewone opsommingsknop moet naast numPr ook de tekengegevens voor de
- * weergave zetten. Alleen numPr bewaren geeft vóór heropenen geen bolletje.
+ * De gewone lijstknoppen moeten naast numPr ook de tekengegevens voor de
+ * weergave zetten. De bestaande definitie bepaalt de opgeslagen lijstsoort.
  * Geeft onwaar als de gewone engineopdracht als terugval nodig is.
  */
-export async function wisselOpsomming(ref: DocxEditorRef | null): Promise<boolean> {
-  if (!ref || !ref.commands.getState("bulletList").enabled || ref.commands.getState("editingMode").value !== "editing") return false;
+export async function wisselLijst(ref: DocxEditorRef | null, soort: "bullet" | "decimal"): Promise<boolean> {
+  const opdracht = soort === "bullet" ? "bulletList" : "numberedList";
+  if (!ref || !ref.commands.getState(opdracht).enabled || ref.commands.getState("editingMode").value !== "editing") return false;
   const selectie = await leesSelectie(ref);
+  herstelLijstvervolg(selectie.sessie);
   const nummering = ref.getDocument()?.package.numbering;
   if (!nummering) return false;
   const definitie = (id: number) => {
@@ -19,21 +22,21 @@ export async function wisselOpsomming(ref: DocxEditorRef | null): Promise<boolea
     const abstract = nummering.abstractNums.find((n) => n.abstractNumId === nummer?.abstractNumId);
     return nummer && abstract ? { nummer, abstract } : null;
   };
-  const isOpsomming = (p: Record<string, unknown>) => {
+  const zelfdeSoort = (p: Record<string, unknown>) => {
     const lijst = lijstVan(p);
-    return !!lijst && definitie(lijst.numId)?.abstract.levels.some((l) => l.ilvl === lijst.ilvl && l.numFmt === "bullet");
+    return !!lijst && definitie(lijst.numId)?.abstract.levels.some((l) => l.ilvl === lijst.ilvl && l.numFmt === soort);
   };
-  const wissen = selectie.alineas.every((p) => isOpsomming(p.properties));
-  const gekozen = nummering.nums.map((n) => definitie(n.numId)).find((d) => d?.abstract.levels.some((l) => l.ilvl === 0 && l.numFmt === "bullet"));
+  const wissen = selectie.alineas.every((p) => zelfdeSoort(p.properties));
+  const gekozen = nummering.nums.map((n) => definitie(n.numId)).find((d) => d?.abstract.levels.some((l) => l.ilvl === 0 && l.numFmt === soort));
   if (!gekozen) return false;
   const e = engine(ref);
   begin(e);
   try {
     for (const p of selectie.alineas) {
       const oud = lijstVan(p.properties);
-      const eigen = oud && isOpsomming(p.properties) ? definitie(oud.numId) : gekozen;
+      const eigen = oud && zelfdeSoort(p.properties) ? definitie(oud.numId) : gekozen;
       if (!eigen) continue;
-      const niveau = eigen.abstract.levels.find((l) => l.ilvl === (oud && isOpsomming(p.properties) ? oud.ilvl : 0));
+      const niveau = eigen.abstract.levels.find((l) => l.ilvl === (oud && zelfdeSoort(p.properties) ? oud.ilvl : 0));
       if (!niveau) continue;
       const wijziging = wissen
         ? { numPr: { numId: 0, ilvl: 0 }, indentLeft: null, indentFirstLine: null, hangingIndent: null }
@@ -44,9 +47,9 @@ export async function wisselOpsomming(ref: DocxEditorRef | null): Promise<boolea
       // verwijzen naar de bestaande definitie in numbering.xml.
       e.sessie.setParagraphAttrs(bereik, {
         ...attrs,
-        listNumFmt: wissen ? null : "bullet",
-        listIsBullet: wissen ? null : true,
-        listMarker: wissen ? null : niveau.lvlText,
+        listNumFmt: wissen ? null : soort,
+        listIsBullet: wissen ? null : soort === "bullet",
+        listMarker: wissen || soort !== "bullet" ? null : niveau.lvlText,
         listMarkerFontFamily: wissen ? null : niveau.rPr?.fontFamily?.ascii ?? null,
         listLevelNumFmts: wissen ? null : eigen.abstract.levels.map((l) => l.numFmt),
         listAbstractNumId: wissen ? null : eigen.abstract.abstractNumId,
@@ -56,3 +59,6 @@ export async function wisselOpsomming(ref: DocxEditorRef | null): Promise<boolea
   ref.focus();
   return true;
 }
+
+/** De bestaande opsommingsroute, ook voor de miniwerkbalk. */
+export const wisselOpsomming = (ref: DocxEditorRef | null) => wisselLijst(ref, "bullet");

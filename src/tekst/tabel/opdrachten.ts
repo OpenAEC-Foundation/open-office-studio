@@ -14,6 +14,7 @@
 import type { DocxEditorRef } from "@betteroffice/docx-react";
 import i18next from "../../i18n/config";
 import { formatGetal } from "../../i18n/opmaak";
+import { actueleCel } from "./navigatie";
 import { begin, engine, klaar, ruw, voorstel, type Engine, type Sessie } from "../gedeeld/engine.ts";
 import {
   MIN_KOLOM,
@@ -61,10 +62,8 @@ export function tabelPlek(s: Sessie): TabelPlek | null {
   }
   if (!bereik) {
     // Cursor in een cel zonder celselectie: het verhaal heet `<ouder>:t<n>:r<r>c<k>`.
-    const verhaal = s.selection()?.head.story ?? "";
-    const m = /^(.*):t(\d+):r(\d+)c(\d+)$/.exec(verhaal);
-    if (!m) return null;
-    const cel = { story: m[1], tableIndex: +m[2], row: +m[3], column: +m[4] };
+    const cel = actueleCel(s, s.selection()?.head.story ?? "");
+    if (!cel) return null;
     bereik = { anchor: cel, head: cel };
   }
   const { anchor: a, head: h } = bereik;

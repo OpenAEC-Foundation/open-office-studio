@@ -1,6 +1,7 @@
 /// <reference types="vitest/config" />
 import { configDefaults } from "vitest/config";
 import { defineConfig, type Plugin } from "vite";
+import { tekstengineCompatibiliteit } from "./scripts/tekstengine-compatibiliteit";
 
 // De fontpakketten verwijzen naar hun bestanden via import.meta.url, waardoor
 // Vite ze nogmaals in assets/ zet. De app laadt ze uit public/fonts/.
@@ -22,7 +23,7 @@ export default defineConfig({
   define: {
     "import.meta.env.VITE_STUDIO_VARIANT": JSON.stringify(process.env.VITE_STUDIO_VARIANT || "office"),
   },
-  plugins: [fontsUitPublic()],
+  plugins: [fontsUitPublic(), tekstengineCompatibiliteit()],
   // Worktrees van agents en lokale proefuitvoer niet dubbel meetellen.
   test: {
     exclude: [...configDefaults.exclude, ".claude/**", ".local/**"],

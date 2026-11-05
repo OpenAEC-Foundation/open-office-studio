@@ -35,6 +35,7 @@ import { installeerFontCitering } from "./lettertypen/canvasFont";
 import { useTekstSpelling } from "./spelling/tekst/useTekstSpelling";
 import { TEKST_PLUGINS } from "./tekst/gedeeld/markering";
 import { auteur } from "./tekst/gedeeld/engine";
+import { herstelLijstvervolg } from "./tekst/lijst/vervolg";
 
 const PRESENTATIE_PLUGINS = [tekstSelectiePlugin];
 import { usePresentatieStatus, useRekenbladStatus } from "./status/useEditorStatus";
@@ -70,6 +71,8 @@ export default function OfficeEditor(props: EditorProps) {
   const engineTaal = useEngineVertaling();
   const { t } = useTranslation("shell");
   const docx = useRef<DocxEditorRef>(null);
+  const stopLijstvervolg = useRef<(() => void) | null>(null);
+  useEffect(() => () => stopLijstvervolg.current?.(), []);
   const exporteren = useRef(false);
   const [fontFaces, setFontFaces] = useState<PptxFontFace[]>([]);
   const [documentLettertypen, setDocumentLettertypen] = useState<readonly string[]>([]);
@@ -96,6 +99,8 @@ export default function OfficeEditor(props: EditorProps) {
     gewijzigd: () => recent.current.gewijzigd(),
     // De oude engine-handles worden bij het hermounten opgeruimd; niemand mag ze dan nog lezen.
     voorVervangen: () => {
+      stopLijstvervolg.current?.();
+      stopLijstvervolg.current = null;
       setDocumentGereed(false);
       setRekenbladApi(null);
       setPresentatieApi(null);
@@ -187,6 +192,24 @@ export default function OfficeEditor(props: EditorProps) {
     }),
     [props.soort, props.naam, props.bytes],
   );
+  useEffect(() => {
+    if (props.soort !== "docx" || !documentGereed) return;
+    let actief = true;
+    const ref = docx.current;
+    // De eerste pagina kan al getekend zijn vóór de synchrone sessie gereed
+    // is. Wacht daarom op dezelfde invoergrens als de lintbewerkingen.
+    void ref?.flushPendingInput().then(() => {
+      if (!actief) return;
+      const sessie = docx.current?.getEditorRef()?.getYrsSession();
+      stopLijstvervolg.current?.();
+      stopLijstvervolg.current = sessie ? herstelLijstvervolg(sessie) : null;
+    }).catch((fout) => recent.current.fout(fout));
+    return () => {
+      actief = false;
+      stopLijstvervolg.current?.();
+      stopLijstvervolg.current = null;
+    };
+  }, [documentGereed, herladen.sleutel, props.soort]);
   useEffect(() => {
     if (props.soort !== "docx" || !documentGereed) return;
     props.registreer(async () => {

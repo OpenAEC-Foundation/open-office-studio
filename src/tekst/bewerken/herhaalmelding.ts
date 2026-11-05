@@ -5,7 +5,7 @@
  */
 import { createContext, useContext } from "react";
 import { useEditorApi } from "../../lint/editorApi";
-import { wisselOpsomming } from "../lijst/opsomming";
+import { wisselLijst } from "../lijst/opsomming";
 
 export const Herhaalmelding = createContext<(id: string, args: unknown) => void>(() => {});
 
@@ -19,7 +19,7 @@ export function useHerhaalbaar<O extends Uitvoerbaar>(id: string, opdracht: O, v
     ...opdracht,
     execute: async (args?: never) => {
       meld(id, args ?? vasteArgs ?? null);
-      if (id === "bulletList" && await wisselOpsomming(api())) return { ok: true, status: "executed" };
+      if ((id === "bulletList" || id === "numberedList") && await wisselLijst(api(), id === "bulletList" ? "bullet" : "decimal")) return { ok: true, status: "executed" };
       return opdracht.execute(args);
     },
   };

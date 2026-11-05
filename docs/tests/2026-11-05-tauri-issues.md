@@ -24,7 +24,7 @@ weekfunctie een normale foutwaarde; een voorafgaande wijziging blijft behouden.
 ## Resultaten van de eindcontrole
 
 - TypeScript geslaagd.
-- 127 testbestanden geslaagd: 1.522 proeven geslaagd, zeven overgeslagen
+- 129 testbestanden geslaagd: 1.530 proeven geslaagd, zeven overgeslagen
   wegens ontbrekende externe database- en versleutelingscorpusbestanden.
 - De aanvullende opdrachtcontroles voor tekst (68), rekenblad en presentatie
   (10) zijn geslaagd, inclusief opslaan en heropenen.
@@ -35,17 +35,28 @@ weekfunctie een normale foutwaarde; een voorafgaande wijziging blijft behouden.
 
 ## Niet opgelost
 
-#123 blijft open: na Enter in een genummerde lijst wordt de nieuwe alinea
-gewone tekst. Dit is zowel in de gebouwde interface als rechtstreeks met
-`splitParagraph` in de tekstengine 0.5.1 gereproduceerd. De nieuwe alinea krijgt
-de lijstverwijzing en afgeleide lijstgegevens niet mee. Het voortzetten van
-opsommingen valt onder dezelfde resterende fout; #122 is dus slechts gedeeltelijk
-hersteld en mag nog niet worden gesloten.
+De vervolgronde herstelt #123 en het lijstvervolg uit #122. De nieuwe
+alinea krijgt haar lijstverwijzing en tekengegevens binnen dezelfde
+invoerbewerking. Ook de nummerknop kiest nu een echte decimale definitie,
+zodat genummerde tekst na bewaren geen opsomming wordt. Echte engineproeven
+controleren beide lijstsoorten, bewaren/heropenen en undo/redo. De gebouwde
+interface toont item 1 en 2; de gedownloade DOCX bevat twee verwijzingen naar
+dezelfde decimale definitie.
 
-De aangepaste opsommingsknop geldt voor de gewone bewerkmodus. Bij wijzigingen
-bijhouden of ontbrekende lijstdefinities blijft de oorspronkelijke engineopdracht
-in gebruik. De browserproeven bewijzen geen volledig herstel van alle
-markeringshandelingen bij wijzigingen bijhouden.
+Tab doorloopt de bestaande tabelcellen en voegt rechtsonder een rij toe
+(#128). De actuele rasterplek wordt opgezocht in de tabelstructuur, zodat
+blijvende cel-ids na rijinvoeging of celsplitsing geen verkeerde positie
+opleveren (#137). De interfaceproef met vier celteksten en een nieuwe derde
+rij is opgeslagen, heropend en met undo/redo gecontroleerd.
+
+De gewone lijstknoppen gebruiken deze aansluiting in de bewerkmodus. Bij
+wijzigingen bijhouden of ontbrekende definities blijft de oorspronkelijke
+engineopdracht in gebruik. Voor wijzigingen bijhouden is geen volledige
+visuele vrijgave gedaan.
+
+Het volledige register van de lopende controle staat in
+[de issuelus](2026-11-05-tauri-issuelus.md). Niet alle 118 open issues zijn
+hersteld of afgetekend.
 
 De overige open meldingen zijn niet afgetekend. In het bijzonder zijn
 meldingen op de ontwikkelbuild 2026.45.17 gebaseerd op een bron uit de native
