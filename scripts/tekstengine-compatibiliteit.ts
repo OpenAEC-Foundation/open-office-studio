@@ -7,6 +7,19 @@ import type { Plugin } from "vite";
 // Bij een engine-update moet deze broncontrole opnieuw worden beoordeeld.
 const CEL = 'Te=useCallback((h,H=true)=>{if(!u)return  false;let z=ke(),X=z?wa(z.head.story):null;';
 const VERLAAT = 'let vn=Ea$1(u,{story:X.story,tableIndex:X.tableIndex});if(vn)return Tt(vn),true;u.insertRow(X,"below")';
+const LINKTEKST = 'displayText:ge?.displayText??ft';
+const LINKVERVANGING = '||wt)&&T.displayText){let un=';
+
+/** De treffervlakken bevatten losse letters; de sessie kent de hele koppeling. */
+export function herstelHyperlinkTekst(bron: string): string {
+  for (const stuk of [LINKTEKST, LINKVERVANGING]) {
+    if (bron.split(stuk).length !== 2)
+      throw new Error("De tekstengine is gewijzigd; controleer eerst de aansluiting voor hyperlinktekst.");
+  }
+  return bron.replace(LINKTEKST, 'displayText:(o?ra$1(o,ft)?.text:null)??ge?.displayText??ft')
+    // Alleen een adreswijziging mag de bestaande tekenopmaak niet herschrijven.
+    .replace(LINKVERVANGING, '||wt)&&T.displayText&&(!wt||T.displayText!==wt.text)){let un=');
+}
 
 export function herstelTabelInvoer(bron: string): string {
   for (const stuk of [CEL, VERLAAT]) {
@@ -29,7 +42,7 @@ export function tekstengineCompatibiliteit(): Plugin {
     },
     transform(bron, id) {
       if (!/\/@betteroffice\/docx-react\/dist\/index\.mjs(?:\?.*)?$/.test(id)) return;
-      return { code: herstelTabelInvoer(bron), map: null };
+      return { code: herstelHyperlinkTekst(herstelTabelInvoer(bron)), map: null };
     },
   };
 }

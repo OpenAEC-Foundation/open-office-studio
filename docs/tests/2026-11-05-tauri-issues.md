@@ -99,3 +99,23 @@ De volledige suite telt nu 134 bestanden, 1.553 geslaagde en zeven
 overgeslagen tests. De productiebuild slaagt. De grens van de host blijft
 gelden voor uitzonderlijke selecties met meer dan 128 verschillende
 opmaakstukken; zo'n bewerking wordt veilig geweigerd.
+
+## Hyperlinkadres bewerken zonder tekstverlies (#146)
+
+De minimale proef reproduceert de melding ook op Tauri: klikken op de vierde
+letter van `Testlink`, het adres wijzigen en toepassen liet alleen `t` over.
+De kliktreffer bevat één getekende letter. De aansluiting vraagt nu de
+volledige koppeling op bij dezelfde enginezoeker die ook het te bewerken
+bereik bepaalt. Ongewijzigde linktekst wordt niet opnieuw ingevoegd, zodat
+een adreswijziging de bestaande tekenopmaak behoudt. De gerichte aansluiting
+weigert een ongemerkte wijziging van de vastgezette enginebron.
+
+Drie regressieproeven controleren broncompatibiliteit en de echte engine in
+hoofdtekst en tabelcel, met gemengde opmaak, undo/redo en bewaren/heropenen.
+De productie-interface vult `Testlink` in, behoudt acht tekens na toepassen,
+zet alle acht links naar de nieuwe bestemming en herstelt met undo het oude
+adres. Redo, DOCX-XML en heropenen bevestigen de nieuwe bestemming.
+Bewijs: [heropende koppeling](../screenshots/test-tauri-hyperlink-2026-11-05.png).
+
+De volledige suite telt nu 135 bestanden, 1.556 geslaagde en zeven
+overgeslagen tests; de productiebuild slaagt.

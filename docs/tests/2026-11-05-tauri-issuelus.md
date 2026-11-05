@@ -20,7 +20,7 @@ worden niet gesloten op basis van alleen aanwezige knoppen of broncode.
 
 | Issue | Stand in deze werkbranch | Bewijs of eerstvolgende controle |
 | --- | --- | --- |
-| [#146](https://github.com/OpenAEC-Foundation/open-office-studio/issues/146) | Nog te controleren op Tauri | Melding op ontwikkelbuild; minimale proef uitvoeren op deze suite. |
+| [#146](https://github.com/OpenAEC-Foundation/open-office-studio/issues/146) | Hersteld en gecontroleerd | Eén aangeklikte letter vulde ook op Tauri de verkeerde tekst in. De volledige koppeling wordt nu vooringevuld; adreswijziging behoudt tekst en opmaak. Engine-, productie-interface-, undo/redo- en bewaar/heropenproeven groen. |
 | [#145](https://github.com/OpenAEC-Foundation/open-office-studio/issues/145) | Nog te controleren op Tauri | Melding op ontwikkelbuild; minimale proef uitvoeren op deze suite. |
 | [#144](https://github.com/OpenAEC-Foundation/open-office-studio/issues/144) | Nog te controleren op Tauri | Melding op ontwikkelbuild; minimale proef uitvoeren op deze suite. |
 | [#143](https://github.com/OpenAEC-Foundation/open-office-studio/issues/143) | Nog te controleren op Tauri | Melding op ontwikkelbuild; minimale proef uitvoeren op deze suite. |
