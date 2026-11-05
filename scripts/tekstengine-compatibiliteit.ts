@@ -68,18 +68,31 @@ export function herstelTabelContext(bron: string): string {
   return 'import { actueleCel as oosActueleCel, herstelCelNaGeschiedenis as oosHerstelCel } from "openaec-tekst-cel";\n' + uit;
 }
 
+/** Houdt gelijke kolommen in de bestaande native meet- en tekenroute. */
+export function herstelKolommenWeergave(bron: string): string {
+  const oud = 'regions:{sections:p(e$1),settings:';
+  if (bron.split(oud).length !== 2)
+    throw new Error("De tekstengine is gewijzigd; controleer eerst de aansluiting voor kolomweergave.");
+  return 'import { kolommenVoorWeergave as oosKolomSecties } from "openaec-tekst-kolommen";\n'
+    + bron.replace(oud, 'regions:{sections:oosKolomSecties(p(e$1)),settings:');
+}
+
 /** Aansluiting voor de synchrone editorroute van de vastgezette engine. */
 export function tekstengineCompatibiliteit(): Plugin {
   return {
     name: "tekstengine-tabelinvoer",
     enforce: "pre",
     resolveId(id) {
+      if (id === "openaec-tekst-kolommen")
+        return fileURLToPath(new URL("../src/tekst/pagina/kolommenWeergave.ts", import.meta.url));
       if (id === "openaec-tekst-cel")
         return fileURLToPath(new URL("../src/tekst/tabel/navigatie.ts", import.meta.url));
       if (id === "openaec-tekst-tabelpunt")
         return fileURLToPath(new URL("../src/tekst/tabel/klik.ts", import.meta.url));
     },
     transform(bron, id) {
+      if (/\/@betteroffice\/docx\/dist\/chunk-7WWFGMMF\.mjs(?:\?.*)?$/.test(id))
+        return { code: herstelKolommenWeergave(bron), map: null };
       if (/\/@betteroffice\/docx-react\/dist\/chunk-LZ2DPBZ6\.mjs(?:\?.*)?$/.test(id))
         return { code: herstelTabelContext(bron), map: null };
       if (!/\/@betteroffice\/docx-react\/dist\/index\.mjs(?:\?.*)?$/.test(id)) return;

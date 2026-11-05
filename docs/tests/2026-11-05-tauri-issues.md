@@ -267,3 +267,40 @@ productiebuild en vertaalcontrole slagen. De vertaalcontrole meldt de bestaande
 23 taalmapwaarschuwingen. De tabelklikproef leest zijn lettertype nu rechtstreeks
 uit de geïnstalleerde afhankelijkheid, zodat ook een schone bouwomgeving die
 proef kan uitvoeren zonder vooraf gevulde publieke assetmap.
+
+
+## Gescheiden tekstkolommen op A5 (#143)
+
+De gecombineerde proef is gereproduceerd met 785 tekens, uitvullen,
+1 cm inspringing, vier alinearanden, A5 liggend, smalle marges en twee gelijke
+kolommen. De regels waren correct afgebroken, maar de alinea-fragmenten hadden
+de volledige tekstbreedte van de pagina. Uitvullen en de randen gebruikten
+die verkeerde breedte. Daardoor liepen de kolommen door elkaar en buiten de
+pagina. [Voor de reparatie](../screenshots/test-tauri-kolommen-voor-2026-11-05.png).
+
+Het indelingsverzoek gebruikt nu de bestaande expliciete kolomroute met
+dezelfde verdeling uit aantal en tussenruimte. Die route bewaart de werkelijke
+kolombreedte van de fragmenten. Alleen de tijdelijke sectie-eigenschappen van
+het verzoek veranderen; het document zelf blijft gelijke kolommen bevatten.
+Bestaande ongelijke kolommen en documenten met één kolom blijven bij hun
+bestaande indeling. Breedtes van afzonderlijke kolommen die bij gelijke
+kolommen niet tellen, worden ook in de equivalente indeling niet gebruikt.
+
+Acht proeven bewaken de bronkoppeling, onveranderde documenteigenschappen en
+zes echte enginevarianten met twee of drie kolommen, verschillende uitlijning,
+inspringing en randen. De proeven toetsen de fragmentbreedte en de positie van
+alle zichtbare tekens, de alinearanden en behoud van alle tekst. Afsluitende,
+niet-getekende spaties mogen hun bestaande positie buiten de regel houden.
+De opgeslagen kolominstellingen blijven ongewijzigd.
+
+De productie-interface toont de oorspronkelijke proef leesbaar. Een wijziging
+naar centreren en Ctrl+Z behouden de juiste kolommen. Onafhankelijke
+XML-controle van de download bevestigt alle 785 tekens, papierformaat, marges,
+kolominstellingen, inspringing, uitvullen en vier randen. Na heropenen blijven
+beide kolommen leesbaar, zonder consolefout.
+[Herstelde weergave](../screenshots/test-tauri-kolommen-hersteld-2026-11-05.png).
+
+Volledige controle: `pnpm exec vitest run --maxWorkers=2` slaagt met 140
+bestanden, 1.594 geslaagde en zeven overgeslagen tests. Typecontrole en
+productiebuild slagen eveneens. Het brede kolommen-issue #55 vraagt daarnaast
+nog verdere toetsing van zijn overige functies.
