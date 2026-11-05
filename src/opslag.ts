@@ -1,6 +1,11 @@
 import i18next from "./i18n/config";
 import type { Werkbestand } from "./werkbestand";
 
+/** Verwerk reeds wachtende invoer vóór het vastleggen van de opslagrevisie. */
+export type Serialiseerder = (() => Promise<Uint8Array>) & {
+  bereidVoor?: () => Promise<void>;
+};
+
 export type BewaarUitkomst = (
   | {
       status: "opgeslagen";
@@ -13,7 +18,7 @@ export type BewaarUitkomst = (
   | { status: "geëxporteerd"; pad: string }
   | { status: "geannuleerd" }
   | { status: "download" }
-) & { toelichting?: string };
+) & { toelichting?: string; ifcx?: import("./ifcx/dossier").IfcxBron };
 
 type OpslagResultaat =
   | { status: "bezig" | "verouderd" }
@@ -40,6 +45,11 @@ export class DocumentOpslag {
     return this.revisie !== this.opgeslagenRevisie;
   }
 
+  /** Anders dan 'schoon': ook na tussentijds opslaan blijft dit onwaar. */
+  get ongewijzigdSindsOpenen() {
+    return this.revisie === 0;
+  }
+
   /** Verandert bij elke wijziging; voor herstelkopieën. */
   get versie() {
     return `${this.documentId}:${this.revisie}`;
@@ -58,14 +68,16 @@ export class DocumentOpslag {
   }
 
   async opslaan(
-    serialiseer: () => Promise<Uint8Array>,
+    serialiseer: Serialiseerder,
     bewaar: (bytes: Uint8Array) => Promise<BewaarUitkomst>,
   ): Promise<OpslagResultaat> {
     if (this.actief) return { status: "bezig" };
     this.actief = true;
     const documentId = this.documentId;
-    const revisie = this.revisie;
     try {
+      if (serialiseer.bereidVoor) await serialiseer.bereidVoor();
+      if (documentId !== this.documentId) return { status: "verouderd" };
+      const revisie = this.revisie;
       const bytes = await serialiseer();
       // Een oude editor mag na een documentwissel geen opslagdialoog openen.
       if (documentId !== this.documentId) return { status: "verouderd" };

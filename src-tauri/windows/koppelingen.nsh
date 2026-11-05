@@ -6,6 +6,7 @@
 !define OOS_CAPABILITIES "Software\OpenAEC\Open Office Studio\Capabilities"
 
 !macro OOS_ALLE MACRO
+  !insertmacro ${MACRO} ifcx OpenAEC.OfficeStudio.IFCX
   !insertmacro ${MACRO} docx OpenAEC.OfficeStudio.Tekst
   !insertmacro ${MACRO} docm OpenAEC.OfficeStudio.Tekst
   !insertmacro ${MACRO} dotx OpenAEC.OfficeStudio.Tekst

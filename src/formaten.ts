@@ -65,11 +65,15 @@ export function uitvoerformaten(soort: Soort, runtimeBeschikbaar: boolean) {
     .map((formaat) => formaat.ext);
 }
 
-export const invoerformaten = Object.values(catalogus)
-  .flatMap((module) => module.invoer)
+export const invoerformaten = [
+  ...new Set(Object.values(catalogus).flatMap((module) => module.invoer)),
+]
   .map((ext) => `.${ext}`)
   .join(",");
 export function bestandssoort(extensie: string): Soort | null {
+  // Een IFCX kan elk van de drie documentsoorten bevatten. Pas de gevalideerde
+  // inhoud bepaalt de editor; de extensie mag geen Writer-keuze afdwingen.
+  if (extensie === "ifcx") return null;
   return (
     (Object.entries(catalogus).find(([, module]) =>
       module.invoer.includes(extensie),

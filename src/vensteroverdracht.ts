@@ -2,6 +2,8 @@ import i18next from "./i18n/config";
 import type { Soort } from "./editors";
 import type { ModuleNaam } from "./tabbladen";
 import type { Werkbestand } from "./werkbestand";
+import type { Bronkenmerken } from "./import/bron";
+import { Buffer } from "buffer";
 import { titelbron, venstertitel as maakTitel } from "./venstertitel";
 import { studio } from "./studios/gekozen";
 
@@ -22,6 +24,7 @@ export type Overdracht =
       vingerafdruk: string | null;
       /** Pad-token; Rust verhuist het bij bevestigen naar het nieuwe venster. */
       werkbestand?: Werkbestand | null;
+      bron?: Bronkenmerken | null;
     }
   | { type: "module"; module: ModuleNaam };
 
@@ -78,7 +81,27 @@ export function pakIn(overdracht: Overdracht): Uint8Array {
     overdracht.type === "document"
       ? overdracht
       : { ...overdracht, bytes: new Uint8Array() };
-  const json = new TextEncoder().encode(JSON.stringify(kop));
+  // De JSON-kop behoudt de IFCX-brontekst en codeert VBA-bytes expliciet;
+  // Uint8Array wordt anders een object met nummer-eigenschappen.
+  const verpakt = { ...kop };
+  if (verpakt.type === "document" && verpakt.bron?.macro) {
+    const macro = verpakt.bron.macro;
+    Object.assign(verpakt, {
+      bron: {
+        ...verpakt.bron,
+        macro: {
+          ...macro,
+          delen: Object.fromEntries(
+            Object.entries(macro.delen).map(([pad, bytes]) => [
+              pad,
+              Buffer.from(bytes).toString("base64"),
+            ]),
+          ),
+        },
+      },
+    });
+  }
+  const json = new TextEncoder().encode(JSON.stringify(verpakt));
   const uit = new Uint8Array(4 + json.length + bytes.length);
   new DataView(uit.buffer).setUint32(0, json.length, true);
   uit.set(json, 4);
@@ -105,6 +128,16 @@ export function pakUit(pakket: Uint8Array): Overdracht {
     !["docx", "xlsx", "pptx"].includes(kop.soort as string)
   )
     throw new Error("Onbekende overdracht.");
+  const bron = kop.bron as Bronkenmerken | undefined;
+  if (bron?.macro) {
+    bron.macro.delen = Object.fromEntries(
+      Object.entries(bron.macro.delen).map(([pad, bytes]) => {
+        if (typeof bytes !== "string")
+          throw new Error("Ongeldige macro-overdracht.");
+        return [pad, new Uint8Array(Buffer.from(bytes, "base64"))];
+      }),
+    );
+  }
   return {
     ...(kop as Omit<Extract<Overdracht, { type: "document" }>, "bytes">),
     bytes: pakket.slice(4 + lengte),

@@ -246,9 +246,14 @@ export function opslagRapport(kenmerken: OpslaanKenmerken): Rapport | null {
   const matrix = kenmerken.matrix ?? MATRIXVERLIES;
   if (!route) return null;
   const regels: Rapportregel[] = [];
-  const eigen = formaat.ext === soort;
+  const eigen = formaat.ext === soort || formaat.ext === "ifcx";
   const macroformaat = MACROFORMATEN.has(formaat.ext);
-  if (kenmerken.macros && !macroformaat && route !== "afdrukken")
+  if (
+    kenmerken.macros &&
+    !macroformaat &&
+    formaat.ext !== "ifcx" &&
+    route !== "afdrukken"
+  )
     regels.push({
       id: MACRO_ID,
       onderdeel: macronaam(),
@@ -296,7 +301,10 @@ export function opslagRapport(kenmerken: OpslaanKenmerken): Rapport | null {
     if (OUD.has(formaat.ext))
       regels.push({
         onderdeel: t("report.parts.olderBinaryFormat"),
-        gevolg: t("report.save.olderFormat", { ext: formaat.ext, format: soort }),
+        gevolg: t("report.save.olderFormat", {
+          ext: formaat.ext,
+          format: soort,
+        }),
       });
   } else if (
     route === "tekst" ||

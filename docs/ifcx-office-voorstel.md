@@ -4,6 +4,11 @@ Status: **eerste OpenAEC-voorstel, profiel 0.1.0-draft.1, 30 oktober 2026**. Dit
 document en het werkende bewaarvoorbeeld zijn nog geen opslagfunctie in de apps.
 De installers van 2026-W44.8 behouden hun bestaande bestandsopslag.
 
+**Vervolg:** de bronlaag voor Writer, Spreadsheet en Presentation is aangesloten
+op de bestaande Tauri/websuite. Zie [opslag en begrenzing](ifcx-office-opslag.md).
+De hieronder beschreven mail-, notitie- en inhoudelijke modellen blijven een
+voorstel; de bronlaag betekent niet dat al die onderdelen zijn geïmplementeerd.
+
 ## Doel en uitgangspunt
 
 Eén verbonden dossier waarin teksten, werkmappen, presentaties, e-mails en

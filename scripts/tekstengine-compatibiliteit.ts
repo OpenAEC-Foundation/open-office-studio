@@ -15,6 +15,14 @@ const CELSELECTIE = [
   ['Kn=Wn?JSON.stringify([Wn.anchor,Wn.head]):`${T.anchor}:${T.head}`', 'Kn=JSON.stringify([Wn?.anchor??T.anchor,Wn?.head??T.head,re?.cellSelection()??null])'],
 ] as const;
 
+/** Eén engine-instantie voor invoer én de later geladen opslagmodule (#135). */
+export function herstelWorkerStart(bron: string): string {
+  const ingang = 'new Worker(new URL("./docxWorker.mjs",import.meta.url),';
+  if (bron.split(ingang).length !== 2)
+    throw new Error("De tekstengine is gewijzigd; controleer eerst de aansluiting voor de workerstart.");
+  return 'import { TekstWorker as Worker } from "openaec-tekst-workerstart";\n' + bron;
+}
+
 export function herstelTabelKlik(bron: string): string {
   for (const stuk of [TABELPUNT, ...CELSELECTIE.map(([oud]) => oud)]) {
     if (bron.split(stuk).length !== 2)
@@ -101,6 +109,8 @@ export function tekstengineCompatibiliteit(): Plugin {
     name: "tekstengine-tabelinvoer",
     enforce: "pre",
     resolveId(id) {
+      if (id === "openaec-tekst-workerstart")
+        return fileURLToPath(new URL("../src/tekst/gedeeld/workerStart.ts", import.meta.url));
       if (id === "openaec-tekst-workerverhalen")
         return fileURLToPath(new URL("../src/tekst/gedeeld/workerVerhalen.ts", import.meta.url));
       if (id === "openaec-tekst-kolommen")
@@ -111,6 +121,8 @@ export function tekstengineCompatibiliteit(): Plugin {
         return fileURLToPath(new URL("../src/tekst/tabel/klik.ts", import.meta.url));
     },
     transform(bron, id) {
+      if (/\/@betteroffice\/docx\/dist\/chunk-6ZKYZDSZ\.mjs(?:\?.*)?$/.test(id))
+        return { code: herstelWorkerStart(bron), map: null };
       if (/\/@betteroffice\/docx\/dist\/chunk-N5NWITJ6\.mjs(?:\?.*)?$/.test(id))
         return { code: herstelWorkerSnapshot(herstelVerdwenenCelSelectie(bron)), map: null };
       if (/\/@betteroffice\/docx\/dist\/chunk-7WWFGMMF\.mjs(?:\?.*)?$/.test(id))

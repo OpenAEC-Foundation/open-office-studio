@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from "react";
 import i18next from "./i18n/config";
-import { DocumentOpslag } from "./opslag";
+import { DocumentOpslag, type Serialiseerder } from "./opslag";
 import {
   GEHEUGENGRENS,
   aantalDocumenten,
@@ -28,7 +28,7 @@ import {
   type Toon,
 } from "./meldingenWinkel";
 
-type Serialiseer = () => Promise<Uint8Array>;
+type Serialiseer = Serialiseerder;
 
 export type VerlaatKeuze = "opslaan" | "verwerpen" | "annuleren";
 

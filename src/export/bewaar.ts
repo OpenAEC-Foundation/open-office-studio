@@ -15,6 +15,8 @@ import {
 } from "../formaten";
 import type { Codering, Scheidingsteken } from "./csv";
 import type { AppPdfKeuze } from "./PdfOpties";
+import { bereidIfcxOpslag } from "../ifcx/opslag";
+import { MIME, type IfcxBron } from "../ifcx/dossier";
 
 /** Wat de gebruiker in Opslaan als heeft gekozen. */
 export interface OpslaanKeuze {
@@ -128,13 +130,14 @@ export async function bewaarInFormaat(
   token?: string,
   /** Versleuteling en macro’s van het origineel. */
   bron?: Bronkenmerken | null,
+  extra: { ongewijzigd?: boolean } = {},
 ): Promise<BewaarUitkomst> {
   const formaat = uitvoerformaat(soort, keuze.ext);
   if (!formaat) throw new Error("Dit formaat wordt niet ondersteund.");
   const desktop = "__TAURI_INTERNALS__" in window;
   // Een macroformaat is het eigen formaat met het VBA-project van het origineel.
   const macroformaat = MACROUITVOER.has(keuze.ext);
-  const eigen = keuze.ext === soort || macroformaat;
+  const eigen = keuze.ext === soort || macroformaat || keuze.ext === "ifcx";
   const toelichtingen: string[] = [];
   blokkeerBijVerlies(bytes, soort, eigen);
   const melding = verliesmelding(bytes, soort, formaat, keuze.route, {
@@ -146,7 +149,20 @@ export async function bewaarInFormaat(
 
   let uitvoer: Uint8Array;
   let mime = "application/octet-stream";
-  if (keuze.route === "runtime") {
+  let ifcx: IfcxBron | undefined;
+  if (keuze.ext === "ifcx") {
+    const klaar = await bereidIfcxOpslag({
+      soort,
+      bytes,
+      naam: keuze.naam,
+      bron,
+      wachtwoord: keuze.wachtwoord,
+      ...extra,
+    });
+    uitvoer = klaar.bytes;
+    ifcx = klaar.bron;
+    mime = MIME;
+  } else if (keuze.route === "runtime") {
     uitvoer = await converteer(
       bytes,
       soort,
@@ -212,6 +228,7 @@ export async function bewaarInFormaat(
       status: "opgeslagen",
       pad: r.pad,
       toelichting,
+      ifcx,
       ...(r.token && { werkbestand: { token: r.token, naam: r.naam } }),
     };
   }
@@ -226,7 +243,9 @@ export async function bewaarInFormaat(
     return {
       status: "opgeslagen",
       pad: uit.naam,
-      toelichting: [conflict, toelichting].filter(Boolean).join(" ") || undefined,
+      toelichting:
+        [conflict, toelichting].filter(Boolean).join(" ") || undefined,
+      ifcx,
     };
   }
   const url = URL.createObjectURL(
@@ -239,7 +258,7 @@ export async function bewaarInFormaat(
   a.click();
   a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 60000);
-  return { status: "download", toelichting };
+  return { status: "download", toelichting, ifcx };
 }
 
 const MACRO_MIME: Record<Soort, string> = {
