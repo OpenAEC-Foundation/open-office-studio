@@ -55,7 +55,7 @@ describe("klikken in lege tabelruimte (#138)", () => {
         const pos = projectie.positionForLoc({ story, paraId: p.paraId, offset: 0 })!;
         expect(projectie.targetAt(pos).cell?.column).toBe(2);
       }
-      const font = s.registerFont(readFileSync("public/fonts/Caladea-Regular.ttf"));
+      const font = s.registerFont(readFileSync("node_modules/@betteroffice/fonts/assets/Caladea-Regular.ttf"));
       const verzoek = {
         bodyStory: "body", renderEnv: {}, options: { pageGap: 24 },
         regions: { sections: [{ pageSize: { w: 800, h: 1100 }, margins: { top: 90, right: 90, bottom: 90, left: 90 } }] },
