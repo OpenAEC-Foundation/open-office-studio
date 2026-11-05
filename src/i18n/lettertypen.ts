@@ -43,8 +43,8 @@ const SYSTEEM_CJK: Record<Variant, string[]> = {
   JP: ["Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Meiryo", "Noto Sans CJK JP"],
   KR: ["Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans CJK KR", "Source Han Sans KR"],
 };
-/** Thai en Devanagari: alleen systeemlettertypen. */
-const SYSTEEM_OVERIG = ["Leelawadee UI", "Thonburi", "Noto Sans Thai", "Nirmala UI", "Kohinoor Devanagari", "Noto Sans Devanagari"];
+/** Lao, Thai en Devanagari: alleen systeemlettertypen. */
+const SYSTEEM_OVERIG = ["Saysettha OT", "Phetsarath OT", "Noto Sans Lao", "Leelawadee UI", "Thonburi", "Noto Sans Thai", "Nirmala UI", "Kohinoor Devanagari", "Noto Sans Devanagari"];
 
 /** Volgorde van de CJK-varianten per taal; de eerste wint bij gedeelde tekens. */
 export function cjkVolgorde(taal: Taal): Variant[] {
