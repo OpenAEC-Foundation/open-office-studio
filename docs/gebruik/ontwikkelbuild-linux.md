@@ -39,7 +39,8 @@ stabiliteitsproblemen. De brede desktopronde slaagt op Linux, Windows en
 macOS; de aparte geheugenronde faalt in een herstelde 500-paginakopie op een
 Wasm-geheugenfout in `update_display_list`. De exacte negatieve ELF slaagt
 lokaal met dezelfde proefcode, maar de oorspronkelijke fout is niet verklaard
-of hersteld. De zeveneditieronde loopt bij deze controle nog. De groene
+of hersteld. De afzonderlijke zeveneditieronde slaagt op alle drie platforms; publiceren
+is overgeslagen. De groene
 pakketproef is geen volledige suiteacceptatie.
 [Afkeuring en exacte hertest](../tests/2026-11-05-writer-herstel-48.json).
 
