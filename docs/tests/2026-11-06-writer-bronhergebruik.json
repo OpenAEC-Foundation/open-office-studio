@@ -1,0 +1,227 @@
+{
+  "schema": 1,
+  "datum": "2026-11-06",
+  "basis_commit": "ed57cdd29f2544327f2a1ffdc3c94f47f8facf19",
+  "app_ongewijzigd": "2026.45.49 / alpha57",
+  "manifest": {
+    "template_sha256": "c7a0a8e5c675687c0a035c968d77e6f736f663ca34c6f176aab04cd3f79d6afa",
+    "transport_sha256": "5a76362edd62d8c75305bc751a0587977dee61a70c3dafd515b71789683e4265",
+    "helper_sha256": "be52923fc3dbcdfe29ce82a19b66de1d5e8a95ecfc3d6da9a4c3cbff56957053",
+    "ronden": [
+      {
+        "naam": "referentie",
+        "code": 0,
+        "programma_sha256": "e7295980a17df1e85c9524ad6e384fcf63735162bb60964f4d7aebacf42e5785",
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/bronhergebruik/fysieke-proef.py",
+          "--zonder-profiel",
+          "--programma",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-04/incrementele-invoer/open-office-studio-45.49-meting",
+          "--versie",
+          "2026.45.49",
+          "--bron",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/docs/tests/writer-doortypen/bron.docx",
+          "--paginas",
+          "129",
+          "--tekst",
+          " Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer. Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer. Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer.",
+          "--uitvoer",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/bronhergebruik/referentie"
+        ]
+      },
+      {
+        "naam": "afgekeurde-cache",
+        "code": 0,
+        "programma_sha256": "49da87a4df5ff2f209a583aaf92963cd0a9863055c5b21de68408adff0b1f611",
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-02/gui-python/bin/python",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/bronhergebruik/fysieke-proef.py",
+          "--zonder-profiel",
+          "--programma",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-05/desktopcache/afgekeurd/open-office-studio-45.50-cache",
+          "--versie",
+          "2026.45.50",
+          "--bron",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/docs/tests/writer-doortypen/bron.docx",
+          "--paginas",
+          "129",
+          "--tekst",
+          " Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer. Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer. Deze langere proefzin controleert of alle nieuwe tekens in de juiste volgorde verschijnen tijdens doorgaande invoer.",
+          "--uitvoer",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/bronhergebruik/afgekeurde-cache"
+        ]
+      }
+    ]
+  },
+  "ronden": [
+    {
+      "naam": "referentie",
+      "aanvragen": 70,
+      "geschikte_vervolgaanvragen": 69,
+      "koude_bronbytes": 5997678,
+      "warme_bronbytes_min": 4622,
+      "warme_bronbytes_max": 4635,
+      "retry_full": 0,
+      "overgeslagen_metadata": 0,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      },
+      "geïnstrumenteerde_rasterduur_ms": 36026
+    },
+    {
+      "naam": "afgekeurde-cache",
+      "aanvragen": 76,
+      "geschikte_vervolgaanvragen": 75,
+      "koude_bronbytes": 5997678,
+      "warme_bronbytes_min": 4622,
+      "warme_bronbytes_max": 4634,
+      "retry_full": 0,
+      "overgeslagen_metadata": 0,
+      "broncontrole": {
+        "verhalen": 1537,
+        "alinea_en_celteksten": 3329,
+        "exact": true
+      },
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      },
+      "geïnstrumenteerde_rasterduur_ms": 40059
+    }
+  ],
+  "documentpixels": {
+    "roi": [
+      320,
+      210,
+      1140,
+      950
+    ],
+    "cursorzone": [
+      491,
+      347,
+      496,
+      366
+    ],
+    "afwijkend": 0,
+    "grens": "Alleen deze documentuitsnede; geen volledige UI-pariteit."
+  },
+  "python_geslaagd": 113,
+  "besluit": "Alle 69/75 vervolgaanvragen passen exact op het native hergebruikfilter. Geen rechtstreekse reused-vlag, cachetrefferteller of volledige oorzaak gemeten. Geen snelheidsacceptatie of productiepatch.",
+  "grenzen": [
+    "Eigen Linux-testomgeving, één eigen documentkopie per ronde.",
+    "Andere compiler actief; geïnstrumenteerde rasterduur is geen snelheidsvergelijking.",
+    "Geen nieuwe bewaar-, heropen-, grote plak-, multi-document-, platform- of editieacceptatie.",
+    "Oude workertraps en lijstbewaarfout niet opgelost.",
+    "Geen nieuwe release/devdownload of volledige Rust-interface."
+  ],
+  "volgende_stap": "Dezelfde echte GUI-bron reconstrueren in de afzonderlijke replicaproef en cachetreffers/budget meten; SDK-publicatie/tekenen/groepering apart profileren. Het ontbreken van bronhergebruik niet opnieuw als onbewezen hoofdoorzaak aannemen.",
+  "bestanden": [
+    {
+      "bron": ".local/doorwerk-2026-11-06/bronhergebruik/afgekeurde-cache/profiel.json",
+      "bestand": "writer-bronhergebruik/00-profiel.json.gz",
+      "bytes": 37155,
+      "sha256": "ef923b6a6fb31784f8bdb628ca56dfe0ce5c1b69a4f3a4b69a789e8916be6003",
+      "gzip_sha256": "6d09b288b2bcfac5b8b7e294b03648304536749c0c8ce5c24ecc7ff6fc8d0a70"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/bronhergebruik/afgekeurde-cache/programma.log",
+      "bestand": "writer-bronhergebruik/01-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/bronhergebruik/afgekeurde-cache.log",
+      "bestand": "writer-bronhergebruik/02-afgekeurde-cache.log.gz",
+      "bytes": 3645,
+      "sha256": "6d8ffb04039b3d0e429952eda47b4db5ea3560f4fbf7b6ad4ba43b3ae4bb971c",
+      "gzip_sha256": "e292222013552dccd1f947c64de19a411cd2b84633b1b5b1692cfb68b13e7153"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/bronhergebruik/fysieke-proef.py",
+      "bestand": "writer-bronhergebruik/03-fysieke-proef.py.gz",
+      "bytes": 27111,
+      "sha256": "be52923fc3dbcdfe29ce82a19b66de1d5e8a95ecfc3d6da9a4c3cbff56957053",
+      "gzip_sha256": "960443cf67feb06c11fac0cd7c8f7e5ffb02235ce5bb91402391ab7854c61880"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/bronhergebruik/manifest.json",
+      "bestand": "writer-bronhergebruik/04-manifest.json.gz",
+      "bytes": 2915,
+      "sha256": "1d08957953255f3b74e45e673b1cf961361ac7a8f4aa8460f7c822f64e86c037",
+      "gzip_sha256": "85f3e5b395440757c02c8683780274ef06078de226a31de506a2a82c0a7574e2"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/bronhergebruik/python.log",
+      "bestand": "writer-bronhergebruik/05-python.log.gz",
+      "bytes": 848,
+      "sha256": "5005072f2aa5908b2a8181ec12f6b3def3d080f34f1e4b43645b25de756b1404",
+      "gzip_sha256": "641a2db4d3ffa2d58cd0253dc9f2cedd060518c9279b6eef4a2ef1377705d929"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/bronhergebruik/referentie/profiel.json",
+      "bestand": "writer-bronhergebruik/06-profiel.json.gz",
+      "bytes": 34471,
+      "sha256": "9793927a32b63c7f388f6a13d4af17b0689c8de3456dcbda679c6043a8475748",
+      "gzip_sha256": "97af3c36f98897a401b804681e4d575ab189a6c4f8bdba7c3380f21479b77d26"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/bronhergebruik/referentie/programma.log",
+      "bestand": "writer-bronhergebruik/07-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/bronhergebruik/referentie.log",
+      "bestand": "writer-bronhergebruik/08-referentie.log.gz",
+      "bytes": 3645,
+      "sha256": "184ac5c2f08207259925e4d277f63be96a9b8c4c6cccdc82bee8ce5b379f6918",
+      "gzip_sha256": "2c93f946a762417d7af4d02898116298a77ce2dca15505cb75cf3110a1dd0a63"
+    },
+    {
+      "bron": "native/crates/office-writer-plakken/src/bronspiegel.rs",
+      "bestand": "writer-bronhergebruik/09-bronspiegel.rs.gz",
+      "bytes": 24317,
+      "sha256": "1d60a1652c7fc5428b8336073a452a23b204d78dc34b8fef850f42f8bc0c7404",
+      "gzip_sha256": "63044858a9ea79529e9005e974ed8b3c4a3c1f4260cdfdf73d1f19eece686b17"
+    },
+    {
+      "bron": "native/onderzoek/writer-bronhergebruik/transport.js",
+      "bestand": "writer-bronhergebruik/10-transport.js.gz",
+      "bytes": 2603,
+      "sha256": "5a76362edd62d8c75305bc751a0587977dee61a70c3dafd515b71789683e4265",
+      "gzip_sha256": "7d241af5097076b7172b912bd5ee9898df5d5f7d1fc3bb22342f6ae7cdbc0d77"
+    },
+    {
+      "bron": "native/onderzoek/writer-bronhergebruik/transport.test.cjs",
+      "bestand": "writer-bronhergebruik/11-transport.test.cjs.gz",
+      "bytes": 2692,
+      "sha256": "91339469bf6c65d35bf875d332bffa0e92f13665e2a0e3b82b896eb3b1e8b30c",
+      "gzip_sha256": "7c760cd35b83449b79c120a29dd485b1d5744827e6f7b1099a774269d951079c"
+    },
+    {
+      "bron": "native/vendor/docx-edit/src/clipboard_batch.rs",
+      "bestand": "writer-bronhergebruik/12-clipboard_batch.rs.gz",
+      "bytes": 9005,
+      "sha256": "aa144fd2ee0836dc06a8223d2e2eda6956a67a1a29d08d4f928978dcac290355",
+      "gzip_sha256": "4d586ea23ae88dd7ff55f4e9cee4d2e946837dcc1e02f826c154ac587c599f29"
+    },
+    {
+      "bron": "src/tekst/bewerken/rustBron.ts",
+      "bestand": "writer-bronhergebruik/13-rustBron.ts.gz",
+      "bytes": 1603,
+      "sha256": "0b01cc65988f6d4c9d202ddd52d686acf4fc913cdb44931a12e0f776a1c21cbd",
+      "gzip_sha256": "a6f9854680e6720dcdb18e916b2a34328244ee9308517f277a71c7c73f6fba33"
+    }
+  ]
+}
