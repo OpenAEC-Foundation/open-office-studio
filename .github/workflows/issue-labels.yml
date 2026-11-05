@@ -1,0 +1,81 @@
+name: Issue-labels controleren
+on:
+  issues:
+    types: [opened, edited, reopened, labeled, unlabeled]
+permissions:
+  issues: write
+concurrency:
+  group: issue-labels-${{ github.event.issue.number }}
+  cancel-in-progress: false
+jobs:
+  labels:
+    runs-on: ubuntu-latest
+    steps:
+      # Voer uitsluitend vertrouwde workflowcode uit; geen checkout van issuecode.
+      - uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        with:
+          script: |
+            const repo = context.repo;
+            const issue_number = context.issue.number;
+            // Lees actuele labels, ook als andere runs of mensen ze wijzigden.
+            const { data: issue } = await github.rest.issues.get({ ...repo, issue_number });
+            const labels = new Set(issue.labels.map(label => label.name));
+            const areas = ['tekst', 'rekenblad', 'presentatie', 'notities', 'algemeen', 'agenda', 'database'];
+            const types = ['bug', 'enhancement', 'documentation', 'onderzoek', 'routekaart'];
+            const areaChoices = new Map([
+              ['Writer (tekst)', 'tekst'], ['Spreadsheet (rekenblad)', 'rekenblad'],
+              ['Presentatie (presentatie)', 'presentatie'], ['Notition (notities)', 'notities'],
+              ['Algemeen (algemeen)', 'algemeen'], ['Agenda (agenda)', 'agenda'],
+              ['Database (database)', 'database'],
+            ]);
+            const typeChoices = new Map([
+              ['Bug (bug)', 'bug'], ['Verbetering of nieuwe functie (enhancement)', 'enhancement'],
+              ['Documentatie (documentation)', 'documentation'], ['Onderzoek (onderzoek)', 'onderzoek'],
+              ['Routekaart / verzamelissue (routekaart)', 'routekaart'],
+            ]);
+            const body = (issue.body || '').replace(/\r\n/g, '\n');
+            function field(name) {
+              const sections = body.split(/^### /m).slice(1);
+              const matches = sections.filter(section => section.split('\n', 1)[0].trim() === name);
+              // Dubbele koppen zijn dubbelzinnig: geen automatische keuze.
+              return matches.length === 1 ? matches[0].slice(matches[0].indexOf('\n') + 1).trim() : '';
+            }
+            const additions = new Set();
+            if (!areas.some(label => labels.has(label))) {
+              const selected = field('Onderdeel').split(',').map(value => value.trim());
+              if (selected.length && selected.every(value => areaChoices.has(value))) {
+                selected.forEach(value => additions.add(areaChoices.get(value)));
+              }
+            }
+            if (!types.some(label => labels.has(label)) && typeChoices.has(field('Soort werk'))) {
+              additions.add(typeChoices.get(field('Soort werk')));
+            }
+            if (field('UI / bediening') === 'Ja') additions.add('ui');
+            if (field('Bestandsformaten') === 'Ja') additions.add('formaten');
+            const missing = [...additions].filter(label => !labels.has(label));
+            if (missing.length) {
+              // Nieuwe labels één keer aanmaken als ze nog niet bestaan.
+              const existing = await github.paginate(github.rest.issues.listLabelsForRepo, { ...repo, per_page: 100 });
+              for (const name of missing) {
+                if (existing.some(label => label.name === name)) continue;
+                const definitions = {
+                  notities: { color: '0e8a16', description: 'Open Notition Studio: notitieboeken, secties en pagina’s' },
+                  ui: { color: 'c2e0c6', description: 'Interface, zichtbaarheid, toegankelijkheid en bediening' },
+                };
+                if (!definitions[name]) throw new Error(`Repositorylabel ontbreekt: ${name}. Maak dit eerst aan.`);
+                try {
+                  await github.rest.issues.createLabel({ ...repo, name, ...definitions[name] });
+                } catch (error) {
+                  // Een ander issue kan hetzelfde label gelijktijdig hebben aangemaakt.
+                  const raced = error.status === 422 && error.response?.data?.errors?.some(e => e.code === 'already_exists');
+                  if (!raced) throw error;
+                }
+              }
+              await github.rest.issues.addLabels({ ...repo, issue_number, labels: missing });
+              missing.forEach(label => labels.add(label));
+            }
+            const errors = [];
+            if (!areas.some(label => labels.has(label))) errors.push(`Kies ten minste één onderdeel: ${areas.join(', ')}.`);
+            if (!types.some(label => labels.has(label))) errors.push(`Kies ten minste één soort werk: ${types.join(', ')}.`);
+            if (errors.length) core.setFailed(`Issue #${issue_number}: ${errors.join(' ')} Zie docs/issue-labels.md.`);
+            else core.info(`Issue #${issue_number}: onderdeel en soort werk zijn aanwezig.`);
