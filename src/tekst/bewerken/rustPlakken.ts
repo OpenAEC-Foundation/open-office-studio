@@ -3,6 +3,7 @@ import { Buffer } from "buffer";
 import { applyClipboardFragment, sameYrsSelection, storyOffsetForLoc, type DocxClipboardFragment, type YrsAuthor, type YrsLoc, type YrsSelection, type YrsSession, type YrsStoryRange } from "@betteroffice/docx/yrs";
 import { neemPlakAfronding } from "./plakAfronding";
 import { snapshotNaarBase64 } from "./binaireSnapshot";
+import { beginInvoerMeting } from "./invoerMeting";
 
 export interface RustPlakAanvraag {
   schema: 1 | 2;
@@ -95,6 +96,8 @@ export function maakRustPlakKoppeling(opties: RustPlakOpties) {
       const eigenLevensduur = levensduur;
       const geldig = () => actief && levensduur === eigenLevensduur && zelfdeEditor();
       if (!geldig()) return false;
+      const meetpunt = beginInvoerMeting(sessie, eigenLevensduur);
+      let meetuitkomst: "rust" | "synchroon" | "afgebroken" | "fout" = "afgebroken";
       const start = sessie.encodeStickyPosition({ story: bereik.story, ...bereik.start });
       const end = sessie.encodeStickyPosition({ story: bereik.story, ...bereik.end });
       const selectie = sessie.selection();
@@ -113,25 +116,32 @@ export function maakRustPlakKoppeling(opties: RustPlakOpties) {
         if (storyOffsetForLoc(sessie, a) > storyOffsetForLoc(sessie, b)) [a, b] = [b, a];
         return { story: a.story, start: { paraId: a.paraId, offset: a.offset }, end: { paraId: b.paraId, offset: b.offset } };
       };
+      meetpunt?.stap("cursor");
       try {
         // Maak ook een nog lopende plakactie zichtbaar voor Opslaan/Niet opslaan.
         opties.gewijzigd();
         for (let poging = 1; poging <= 3; poging++) {
           if (!geldig()) return false;
+          meetpunt?.poging();
           const range = actueelBereik(), generatie = bronGeneratie;
           const afronden = bereidAfronding?.(sessie, range);
+          meetpunt?.stap("cursor");
           const bron = opties.bron?.lees(sessie);
           const snapshot = new Uint8Array(bron?.bytes ?? sessie.encodeStateAsUpdate());
+          meetpunt?.stap("bron");
           if (snapshot.length > MAX_SNAPSHOT_BYTES) break;
           const sourceVersion = sessie.version();
           const snapshotSha256 = await hash(snapshot);
+          meetpunt?.stap("hash");
           if (!geldig()) return false;
           if (generatie !== bronGeneratie || sourceVersion !== sessie.version()) {
             opties.meting?.({ route: "opnieuw", poging }); continue;
           }
           const aanvraag: RustPlakAanvraag = { schema: bron ? 2 : 1, ...(bron ? { sourceVector: bron.sourceVector } : {}), ...(bron?.basis ? { basis: bron.basis } : {}), requestId: crypto.randomUUID(), documentId, sourceVersion,
             snapshotSha256, snapshot: snapshotNaarBase64(snapshot), clientId: sessie.clientId, range, fragment, author: auteur };
+          meetpunt?.stap("aanvraag");
           const antwoord = await opties.transport(aanvraag);
+          meetpunt?.stap("transport");
           if (!geldig()) return false;
           // Dezelfde client-id mag uitsluitend tegen de nog identieke bron schrijven.
           if (generatie !== bronGeneratie || sourceVersion !== sessie.version()) {
@@ -146,12 +156,17 @@ export function maakRustPlakKoppeling(opties: RustPlakOpties) {
           const delta = antwoordDelta(antwoord, aanvraag);
           opties.bron?.bevestig(sessie, aanvraag, antwoord);
           const verplaatsCursor = sameYrsSelection(sessie.selection(), actueleSelectie());
+          meetpunt?.rust(antwoord.preparationMs);
+          meetpunt?.stap("binding");
           opnemen(() => {
             sessie.applyLocalUpdate(delta);
             afronden?.(antwoord.caret);
           });
+          meetpunt?.stap("mutatie");
           if (verplaatsCursor && geldig()) sessie.setSelection(antwoord.caret);
+          meetpunt?.stap("selectie");
           opties.meting?.({ route: "rust", poging });
+          meetuitkomst = "rust";
           return true;
         }
         if (!geldig()) return false;
@@ -166,13 +181,15 @@ export function maakRustPlakKoppeling(opties: RustPlakOpties) {
         });
         if (verplaatsCursor && geldig()) sessie.setSelection(eindpunt);
         opties.meting?.({ route: "synchroon", poging: 3 });
+        meetuitkomst = "synchroon";
         return true;
       } catch (fout) {
         if (!geldig()) return false;
+        meetuitkomst = "fout";
         const error = fout instanceof Error ? fout : new Error(String(fout));
         opties.fout?.(error);
         throw error;
-      } finally { stop(); }
+      } finally { stop(); meetpunt?.eind(meetuitkomst); }
     },
   };
 }
