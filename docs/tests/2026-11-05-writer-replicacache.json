@@ -1,0 +1,631 @@
+{
+  "schema": 1,
+  "datum": "2026-11-05",
+  "basis_commit": "2b714157ae148c46dad83aa1fa74ef9fff23dd40",
+  "appversie": "2026.45.49",
+  "nativeversie": "2026.45.0-alpha.57",
+  "productiepatch": false,
+  "bouw": {
+    "poging": 1,
+    "code": 0,
+    "seconden": 396.1261892070179,
+    "programma_sha256": "8ca9e1882b031707c22b64588ab43951375a9e547701e00fb54e68549ca9a0c3"
+  },
+  "regressies": {
+    "schema": 1,
+    "geslaagd": true,
+    "varianten": {
+      "referentie": {
+        "code": 0,
+        "seconden": 0.3728178350138478,
+        "verwacht": 28,
+        "volledig_ongefilterd_geslaagd": true
+      },
+      "replicacache": {
+        "code": 0,
+        "seconden": 204.64419065602124,
+        "verwacht": 29,
+        "volledig_ongefilterd_geslaagd": true
+      }
+    }
+  },
+  "python_tests": 109,
+  "metingen": [
+    {
+      "groep": "vergelijking",
+      "ronden": [
+        {
+          "naam": "referentie-a",
+          "kern_ns": 12558295666,
+          "snapshot_ns": 7540589146,
+          "cachehergebruik": 67,
+          "geslaagd": true
+        },
+        {
+          "naam": "replicacache-a",
+          "kern_ns": 4769491961,
+          "snapshot_ns": 2075040391,
+          "cachehergebruik": 67,
+          "geslaagd": true
+        },
+        {
+          "naam": "replicacache-b",
+          "kern_ns": 4090855359,
+          "snapshot_ns": 1760401343,
+          "cachehergebruik": 67,
+          "geslaagd": true
+        },
+        {
+          "naam": "referentie-b",
+          "kern_ns": 5114698138,
+          "snapshot_ns": 2801531401,
+          "cachehergebruik": 67,
+          "geslaagd": true
+        }
+      ],
+      "kernratio": 0.501349540336205,
+      "snapshotratio": 0.3708564134956413,
+      "snelheidsbewijs": false,
+      "grens": "Eerste reeks onder sterk wisselende achtergrondbelasting; alleen inhoudsacceptatie."
+    },
+    {
+      "groep": "vergelijking-rustig",
+      "ronden": [
+        {
+          "naam": "referentie-a",
+          "kern_ns": 5034004464,
+          "snapshot_ns": 2759982488,
+          "cachehergebruik": 67,
+          "geslaagd": true
+        },
+        {
+          "naam": "replicacache-a",
+          "kern_ns": 4545672177,
+          "snapshot_ns": 1954473697,
+          "cachehergebruik": 67,
+          "geslaagd": true
+        },
+        {
+          "naam": "replicacache-b",
+          "kern_ns": 3951130395,
+          "snapshot_ns": 1705405920,
+          "cachehergebruik": 67,
+          "geslaagd": true
+        },
+        {
+          "naam": "referentie-b",
+          "kern_ns": 5080132522,
+          "snapshot_ns": 2779823684,
+          "cachehergebruik": 67,
+          "geslaagd": true
+        }
+      ],
+      "kernratio": 0.8400917036976346,
+      "snapshotratio": 0.6606512039172479,
+      "snelheidsbewijs": true,
+      "grens": "Rustiger herhaling zonder waargenomen zware bouw-/testprocessen bij start; geen volledige hostisolatie of GUI-meting."
+    }
+  ],
+  "binaries": {
+    "kandidaat": {
+      "sha256": "8ca9e1882b031707c22b64588ab43951375a9e547701e00fb54e68549ca9a0c3",
+      "bytes": 8707584
+    },
+    "referentie": {
+      "sha256": "b0f1cbcc76e022dfcd24d362e4d2e5a78955f78de29553ac6edfdc082a9e9d07",
+      "bytes": 8714320
+    },
+    "referentie-regressies": {
+      "sha256": "552cda7c93e74772e1b63833caf3019b82044065cf948b84289e72aeda3193f3",
+      "bytes": 9978680
+    },
+    "kandidaat-regressies": {
+      "sha256": "4e2d2324f26a46e5d9d890e8237e8607193bb7129e76f9c76df6d599801be4ca",
+      "bytes": 10038648
+    }
+  },
+  "bronbestanden": {
+    "native/onderzoek/writer-replicacache/regressies.py": "72877726466a27de2ce472bfde0f75fd67e74ff828a6edcce51e6f2d6eeaf1e4",
+    "native/onderzoek/writer-replicacache/README.md": "3fede05255dc9e730d709849aef909a960996bc85e4379926ca561e53b96edfe",
+    "native/onderzoek/writer-replicacache/controleren.py": "76fe8050dc1539433da9edc36d5334f4fbe029f7bf16760691b93abd159fb863",
+    "native/onderzoek/writer-replicacache/bouwen.py": "b762928e1063763d1016815c04e5b01000ee766348a9916cc7f434f27a8f97f4",
+    "native/onderzoek/writer-replicacache/voorbereiden.py": "031016e151a1158b129c5136a463bb334bcb766e2c07366c5acb25f6bfc6e101",
+    "native/onderzoek/writer-replicacache/cachecontroles.rs": "97af7206a484de8337ace696f2fc82d8c7a4939a0749394651d779630c9bb5ae",
+    "native/onderzoek/writer-replicacache/bron.json": "6c0c8bc3ec392a1cbe8c1443d3f9d0d5863af5a6ca2551ffdaf5b6a57b3d79e2"
+  },
+  "geheugen": {
+    "cachebegroting": 33554432,
+    "bestaande_bronvoorraadbegroting": 67108864,
+    "cachegewicht_meegeteld": true,
+    "rss_gemeten": false,
+    "meerdere_grote_documenten_fysiek_getest": false,
+    "risico": "Extra cachegewicht kan andere bronspiegels eerder verdringen; meerbestandsgebruik nog fysiek toetsen."
+  },
+  "niet_getest": [
+    "Geen nieuwe appbuild of GUI-invoer/selectie/bewaren/heropenen/pixel-/FPS-vergelijking.",
+    "Geen volledige algemene encoder-testsuite of frontend-/TypeScript-hertest op deze bronkopie.",
+    "Geen Windows/macOS-/editieacceptatie, geen release, geen herstel van de eerdere worker-/bewaarfouten."
+  ],
+  "volgende_stap": "Cache als desktopkandidaat aansluiten; passende volledige checks en bouw uitvoeren, vervolgens fysieke ABBA-invoer/selectie/bewaren/heropenen en bron-/beeldvergelijking. Ook meerdere grote documenten en werkelijk geheugen toetsen vóór productieacceptatie.",
+  "bewijsbestanden": {
+    "docs/tests/writer-replicacache/vergelijking/referentie-a.log.gz": {
+      "sha256": "a28cf0f16117f37223a0233d02c5ad5d85605f7e3d1347a0e65f62d2cb8e8a54",
+      "inhoud_sha256": "31008d8dd785ad9b1b19f53fae0cf39af684a9e65caf9da4c537d4a91c4b7647",
+      "bytes": 748
+    },
+    "docs/tests/writer-replicacache/vergelijking/replicacache-a.log.gz": {
+      "sha256": "10febb7583dc2c4e4b49539614f237512ebddab0d31525b712c099bff5dd785a",
+      "inhoud_sha256": "e9571135600771b60d8935897ac6d51dfde052c0e5851edfa69e1e9cc779bc11",
+      "bytes": 740
+    },
+    "docs/tests/writer-replicacache/vergelijking/replicacache-b.log.gz": {
+      "sha256": "0b763e27d1730d8d12f7d0eb37a6b7649f28710b63cd1f6b096b39c33b26134d",
+      "inhoud_sha256": "7ddf33471056d0f6b4183f535874293c5ed0077338db228fa0f85d4857814ac2",
+      "bytes": 738
+    },
+    "docs/tests/writer-replicacache/vergelijking/rapport.json.gz": {
+      "sha256": "7108cc8d181102bbd9067b63d7cc05c94ac04da304a1fc587e4972555d2ed294",
+      "inhoud_sha256": "71c10e86a5dad8e970f57ce27b93358a8a79266ddc37e4795dd4b9566d4b1e1f",
+      "bytes": 6654
+    },
+    "docs/tests/writer-replicacache/vergelijking/referentie-b.log.gz": {
+      "sha256": "f0f6344cf912f41bbd1334b8ca1608f11ba0b554eb97c31860fbc8adc671755e",
+      "inhoud_sha256": "829a8970eca9812ff432cc9b09da20eb35d7ff09a9d0883bbbeaee236ba405f4",
+      "bytes": 740
+    },
+    "docs/tests/writer-replicacache/vergelijking/replicacache-a/basis-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "inhoud_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tests/writer-replicacache/vergelijking/replicacache-a/gemeten-stderr.jsonl.gz": {
+      "sha256": "35c1ba0bd4bfd9a8d61a41a1a58b53cdc6594f60a4665de467c47e2f7ec2f0f0",
+      "inhoud_sha256": "6fce984fa49cc8f196b0d932a55257f06f25e3a722a7308e35927626b88ccf08",
+      "bytes": 23434
+    },
+    "docs/tests/writer-replicacache/vergelijking/replicacache-a/gemeten-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "f20b4888e401074e6e9359ce4bcb16026d5b51f868893b624f5fb5717dcf0acf",
+      "inhoud_sha256": "8c348a49a37667e6e16312e9c967a66af95143f03dfc191fbe90661e47d10ed7",
+      "bytes": 1389
+    },
+    "docs/tests/writer-replicacache/vergelijking/replicacache-a/basis.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "inhoud_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377",
+      "bytes": 73377
+    },
+    "docs/tests/writer-replicacache/vergelijking/replicacache-a/referentie.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "inhoud_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377",
+      "bytes": 73377
+    },
+    "docs/tests/writer-replicacache/vergelijking/replicacache-a/basis-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "inhoud_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tests/writer-replicacache/vergelijking/replicacache-a/gemeten.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "inhoud_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377",
+      "bytes": 73377
+    },
+    "docs/tests/writer-replicacache/vergelijking/replicacache-a/rapport.json.gz": {
+      "sha256": "999cad65d750ac333a7a67a4634dd106aa654ff843afd7b73b3c302d35de3da1",
+      "inhoud_sha256": "8d1f62de1fd21639d6b8bf0a47fba3dfb4ef7b0734885fc5dc11b5684023358b",
+      "bytes": 16250
+    },
+    "docs/tests/writer-replicacache/vergelijking/replicacache-b/basis-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "inhoud_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tests/writer-replicacache/vergelijking/replicacache-b/gemeten-stderr.jsonl.gz": {
+      "sha256": "28d36149ff22d4f9810a3f39fca30fbe8828812d5accd1389827e4f1f4ab1e7d",
+      "inhoud_sha256": "061b651984ca07eda2b32c04b0cfd7a62433f7a3b0ee0e6333d49f4882acd7ef",
+      "bytes": 23390
+    },
+    "docs/tests/writer-replicacache/vergelijking/replicacache-b/gemeten-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "ef57ce76f580bea4f68ed0d9ef50bc37ec08e10743df747c7ce13236c6e726c1",
+      "inhoud_sha256": "4a1bca1a94833b5e9f9fd4793ab5dd59132f74f7b2d10b21f6e425ad200ab6eb",
+      "bytes": 1382
+    },
+    "docs/tests/writer-replicacache/vergelijking/replicacache-b/basis.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "inhoud_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377",
+      "bytes": 73377
+    },
+    "docs/tests/writer-replicacache/vergelijking/replicacache-b/referentie.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "inhoud_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377",
+      "bytes": 73377
+    },
+    "docs/tests/writer-replicacache/vergelijking/replicacache-b/basis-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "inhoud_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tests/writer-replicacache/vergelijking/replicacache-b/gemeten.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "inhoud_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377",
+      "bytes": 73377
+    },
+    "docs/tests/writer-replicacache/vergelijking/replicacache-b/rapport.json.gz": {
+      "sha256": "dec9b5e226e9ce87c699ab75e159ba057bde4620ad632dc94aeab32566abaf11",
+      "inhoud_sha256": "2ef7614c27bdd890a0dc3680e3e1e26675b036e36ff1006820b0bc21cf731aaa",
+      "bytes": 16146
+    },
+    "docs/tests/writer-replicacache/vergelijking/referentie-a/basis-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "inhoud_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tests/writer-replicacache/vergelijking/referentie-a/gemeten-stderr.jsonl.gz": {
+      "sha256": "ee0afb1991970fef06fd0ee672954d1eeeea04cc254dfbb8aface7fcf224ab92",
+      "inhoud_sha256": "41b3186d9c4891785c6518a76f481e70d3ff59e31e909157e49935dce6eb9038",
+      "bytes": 23625
+    },
+    "docs/tests/writer-replicacache/vergelijking/referentie-a/gemeten-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "4f452d946debdf461d59b02eb8fe276c53d6a17c8f180804f3eff4786bee1fa2",
+      "inhoud_sha256": "c2c9f34d0af3454c98fa78e8b156c5cf2972fc079ba6cf0eb9c207ce7907e3d0",
+      "bytes": 1400
+    },
+    "docs/tests/writer-replicacache/vergelijking/referentie-a/basis.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "inhoud_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377",
+      "bytes": 73377
+    },
+    "docs/tests/writer-replicacache/vergelijking/referentie-a/referentie.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "inhoud_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377",
+      "bytes": 73377
+    },
+    "docs/tests/writer-replicacache/vergelijking/referentie-a/basis-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "inhoud_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tests/writer-replicacache/vergelijking/referentie-a/gemeten.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "inhoud_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377",
+      "bytes": 73377
+    },
+    "docs/tests/writer-replicacache/vergelijking/referentie-a/rapport.json.gz": {
+      "sha256": "0556986ecfcaa35172956fd4ad609604c1d0f94c4843948e3001f6196201a1ca",
+      "inhoud_sha256": "c7ad66352c4bc0c94e6862d6dde8d7435a3b4c5b466bf757c38d5bc87765dea0",
+      "bytes": 16274
+    },
+    "docs/tests/writer-replicacache/vergelijking/referentie-b/basis-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "inhoud_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tests/writer-replicacache/vergelijking/referentie-b/gemeten-stderr.jsonl.gz": {
+      "sha256": "57a3edcf2d86beede571ddc4e48a85bcd05efa5d4786686d5c827194a0ba4620",
+      "inhoud_sha256": "faea3327dd1ad4828288bb17a8edd67a5f3519ef00ad11a87023b7865e212feb",
+      "bytes": 23372
+    },
+    "docs/tests/writer-replicacache/vergelijking/referentie-b/gemeten-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "3eef6bc92d8e9a9705edcabae89db6d639a5a9274d1c544c78f3a72ca5b91b58",
+      "inhoud_sha256": "446fa3e266a68b4e088747ebab45120fa18a1ab2640919f05db442ccd6752a32",
+      "bytes": 1380
+    },
+    "docs/tests/writer-replicacache/vergelijking/referentie-b/basis.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "inhoud_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377",
+      "bytes": 73377
+    },
+    "docs/tests/writer-replicacache/vergelijking/referentie-b/referentie.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "inhoud_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377",
+      "bytes": 73377
+    },
+    "docs/tests/writer-replicacache/vergelijking/referentie-b/basis-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "inhoud_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tests/writer-replicacache/vergelijking/referentie-b/gemeten.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "inhoud_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377",
+      "bytes": 73377
+    },
+    "docs/tests/writer-replicacache/vergelijking/referentie-b/rapport.json.gz": {
+      "sha256": "e55547add1030e5b420861bb7ca1f99c7188de982318a26df48f344dd2035e43",
+      "inhoud_sha256": "c768eaecfedb94b8abf130a30070dca7232baa06d90ec50871f54e5686440a62",
+      "bytes": 16150
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/referentie-a.log.gz": {
+      "sha256": "75313818cf4caaca4e513c50164b0796c261a2674b120b8d2ebdf483e8310c5a",
+      "inhoud_sha256": "e74014a58f056bbecfb1568204041b9226abc993caec094d5f6d87be0403f614",
+      "bytes": 739
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/replicacache-a.log.gz": {
+      "sha256": "0591af0d83213f67851c1c4485ca2c310718631bad2f1a2007b3d5f2e99cd8cc",
+      "inhoud_sha256": "7c65d6fcae4a29a6b349e344be12caed81b16dcfc2d2d798f39a3e7d6ebb46a0",
+      "bytes": 739
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/replicacache-b.log.gz": {
+      "sha256": "d966d455b8e3aa595f89339b78d688aeb5c4ab57db4c65ceee54078a3dd11ba0",
+      "inhoud_sha256": "2c6a1a3de29787cc1151629c4b522db72981397bb62d0e8f16e38099881f8e28",
+      "bytes": 739
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/rapport.json.gz": {
+      "sha256": "49dc3947e000ff60c13d720902cc0305e270d6b270c33d2faeaa0a1561e392b8",
+      "inhoud_sha256": "45522ae2d1f2745752487ebae329207f1ecfbd568922cc21e80b994686dcb8a9",
+      "bytes": 6645
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/referentie-b.log.gz": {
+      "sha256": "319ed1a5d186a114f0f821e6c56be3522bb68a04fa791e392d5763ed6e739a4c",
+      "inhoud_sha256": "bab2711882cecda32e2ea2db60b8622bb649f74c520586f0d2d67d49bd0fc7ac",
+      "bytes": 739
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/replicacache-a/basis-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "inhoud_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/replicacache-a/gemeten-stderr.jsonl.gz": {
+      "sha256": "8395665a838659e480d6f6f8c8d7bdf6d4a9d8071a5329ef3edefe63984f2514",
+      "inhoud_sha256": "dfdf26748166753e69c39e3c1456b8b67759276913064e43a6b87332a60270bc",
+      "bytes": 23424
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/replicacache-a/gemeten-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "fcebc73f49e1b8a89f48cbc9d12e6f3a1deed87b15f14defd8c024c6493291dd",
+      "inhoud_sha256": "3e22fa0104f771f876f90e5bc6e27d11dd77ef7e5d6463010159550524cfd2ca",
+      "bytes": 1390
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/replicacache-a/basis.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "inhoud_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377",
+      "bytes": 73377
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/replicacache-a/referentie.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "inhoud_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377",
+      "bytes": 73377
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/replicacache-a/basis-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "inhoud_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/replicacache-a/gemeten.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "inhoud_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377",
+      "bytes": 73377
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/replicacache-a/rapport.json.gz": {
+      "sha256": "93d6818f760bb3fd4399c85e207615b83a217355c195292fc67aea8f340c6fb5",
+      "inhoud_sha256": "273718bd1b0bf297d2a616fce299dcf68fcf2cbeab029e8415e8ca54361ce9a6",
+      "bytes": 16147
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/replicacache-b/basis-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "inhoud_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/replicacache-b/gemeten-stderr.jsonl.gz": {
+      "sha256": "d2d6537818eec7e06a58c8bf1c71e677534ef1b6311d17025818a1a8f9aaf4ff",
+      "inhoud_sha256": "4053220d8b382612b360015ee9e2f87078884846aa6042f7726eaae7186d1827",
+      "bytes": 23362
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/replicacache-b/gemeten-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "9e1445f2beccc31b64f8f8ca352d8f54e03ce67be9b3a77a0d97f9eb3a808e10",
+      "inhoud_sha256": "6b49c236f3446f688e07fd272492b38be00f596aca8f2db529c11e1262d4e840",
+      "bytes": 1383
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/replicacache-b/basis.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "inhoud_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377",
+      "bytes": 73377
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/replicacache-b/referentie.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "inhoud_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377",
+      "bytes": 73377
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/replicacache-b/basis-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "inhoud_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/replicacache-b/gemeten.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "inhoud_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377",
+      "bytes": 73377
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/replicacache-b/rapport.json.gz": {
+      "sha256": "afa5de6fc4437f8ed88c8a457a45ae9e061d29bb43b26b51285cee5ec15def85",
+      "inhoud_sha256": "96bd619140ec9c510139c6bd2f53b17a1a13822d94ceb0103fc6b428bf8ba258",
+      "bytes": 16131
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/referentie-a/basis-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "inhoud_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/referentie-a/gemeten-stderr.jsonl.gz": {
+      "sha256": "0e4b3b37040c305a47370c247d41a501900ed18ab1025ab9bf24021445c5ea19",
+      "inhoud_sha256": "6fcb4813958c45dfe41c63cd653a37cab87126f5a98356d42b3de91378e30098",
+      "bytes": 23364
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/referentie-a/gemeten-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "6df8b9c8ee7556740674ab7cf6a447362a9cc6d8fa89dabc9d2a184460a6ac78",
+      "inhoud_sha256": "94bcdc7a16d027705723453a2622588e0020e05dee50974dae017215a3e39405",
+      "bytes": 1379
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/referentie-a/basis.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "inhoud_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377",
+      "bytes": 73377
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/referentie-a/referentie.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "inhoud_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377",
+      "bytes": 73377
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/referentie-a/basis-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "inhoud_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/referentie-a/gemeten.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "inhoud_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377",
+      "bytes": 73377
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/referentie-a/rapport.json.gz": {
+      "sha256": "c89f49898af400cd240cf9a61fba4e2930ee053195a2df6b598081750ba5a085",
+      "inhoud_sha256": "f134bacced736d098adf0eca7d0f0beeb6fb6dd5bd551e1231084ec8d994eb66",
+      "bytes": 16131
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/referentie-b/basis-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "inhoud_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/referentie-b/gemeten-stderr.jsonl.gz": {
+      "sha256": "a3118caf70a7c3d4506d683c49399a5e9cb7927004d0645f41e6496f585ba162",
+      "inhoud_sha256": "4b61d82acbd11005dbd52c4a80d4b2888fc7391203ddf8d95dabc2a8eab52048",
+      "bytes": 23365
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/referentie-b/gemeten-afwijzingen-stderr.jsonl.gz": {
+      "sha256": "2f55f653ec8e312368de9958f2131698c08db7e5987811324d0f0e66d5ab2fb3",
+      "inhoud_sha256": "e3b8792cd138079dfda27dd0b4bc5a9dd0941859e88ba71839da647c050d10ae",
+      "bytes": 1383
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/referentie-b/basis.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "inhoud_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377",
+      "bytes": 73377
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/referentie-b/referentie.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "inhoud_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377",
+      "bytes": 73377
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/referentie-b/basis-stderr.jsonl.gz": {
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "inhoud_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/referentie-b/gemeten.docx.gz": {
+      "sha256": "74da420c0d8596079dbd2c02e754d83100d4075cc350df348942d84ce0360255",
+      "inhoud_sha256": "033123a438d0118b77e424faa61c4b89c79b88ec46a9ae3e25c708428bc0c377",
+      "bytes": 73377
+    },
+    "docs/tests/writer-replicacache/vergelijking-rustig/referentie-b/rapport.json.gz": {
+      "sha256": "09709a10382f2802881e56172a63e46c35e697d00d05244f4ffe1d39b72d59cb",
+      "inhoud_sha256": "ef5972c9094efcbfa0ae86dc91113fef81ffb87b3ea2b571355c7edcedd2f472",
+      "bytes": 16157
+    },
+    "docs/tests/writer-replicacache/regressies/referentie.log.gz": {
+      "sha256": "ee1840d3d7654c2167a3d322426cc4839636bc58b7f9f588ab7612df41d19587",
+      "inhoud_sha256": "bfe45c848852a0bd8be299655d40ebd18b617f082afaf1519edb796cba749218",
+      "bytes": 27923
+    },
+    "docs/tests/writer-replicacache/regressies/rapport.json.gz": {
+      "sha256": "f26fc8a07ceb00b802d7e66e9552c7fa9322ecb9df2ee512a9977b25e29aa76b",
+      "inhoud_sha256": "456f421ef7f3f15449a7bdcfc5f6e9ae3a6f1c6e1d32265ac32d59b30e91f524",
+      "bytes": 357
+    },
+    "docs/tests/writer-replicacache/regressies/replicacache.log.gz": {
+      "sha256": "eb9703d7ec096684373d1186d97adc42c6c3a25800bb94c9100e3d17a2cd2a83",
+      "inhoud_sha256": "4fe16b02eb1a46af7ff712b167053720d777c15a5c170b57def8450408105ae5",
+      "bytes": 28704
+    },
+    "docs/tests/writer-replicacache/bronnen.json.gz": {
+      "sha256": "0e684a807559a164bfcab900cb16468ad6640f7284f389ffd0853409a347a3ce",
+      "inhoud_sha256": "1461691c84d67229028f683528670f2c03e1ae1efb2a076a4d979b42ad0577d9",
+      "bytes": 48735
+    },
+    "docs/tests/writer-replicacache/bouw-1.log.gz": {
+      "sha256": "d8a5db780214d8ae8e14bbc52a01ed6982122556476ab77b0e8627d50e4c6573",
+      "inhoud_sha256": "50eceb04ba086ac41806d248b2a0de756541c32e871cf90b485fa08ca7e6bf56",
+      "bytes": 29294
+    },
+    "docs/tests/writer-replicacache/bouwuitkomst-1.json.gz": {
+      "sha256": "10dfba3041180243dedea051189fb35f198440efe195f168af277a4a73e31957",
+      "inhoud_sha256": "58be9dd887628a90c1beec003a6cb9354d6b5949965be60b03d298cab6495f63",
+      "bytes": 154
+    },
+    "docs/tests/writer-replicacache/bronverschil.patch.gz": {
+      "sha256": "8aacc024bece982da327b54681baf7c51214358307b856256b6c3cf3ea556fdb",
+      "inhoud_sha256": "b45e7624caa4dc8e99b2052923279a97458bb14357d97d01f41717727c35ab0c",
+      "bytes": 11181
+    },
+    "docs/tests/writer-replicacache/achtergrondbelasting.json.gz": {
+      "sha256": "bcf0434215c642e4a1a8dc1550bcb2abc97177339cfa4a15a68e4e6cc45f9617",
+      "inhoud_sha256": "96fab795c7835850688b4d4bbdea2626ae592ae9c4c63b029b2458fc5a448060",
+      "bytes": 304
+    },
+    "docs/tests/writer-replicacache/rustiger-start.json.gz": {
+      "sha256": "4824d8e5de59e93076be2f6cb04fce0be2dab530c5ff18a0f0cbb17f4fda0cf3",
+      "inhoud_sha256": "f79e5c8b88e5860e7be7a52ef22ede67e9645c6c5c5de476e44427062291bb13",
+      "bytes": 245
+    },
+    "docs/tests/writer-replicacache/python-tests.log.gz": {
+      "sha256": "2224afd6dff685477bd4838c4fb82a9a9acefbc04a03944f3b65394c5573a4d9",
+      "inhoud_sha256": "4c16f0827a67270dacbe459806c025cda2c991ad5f8a12028b54a7cccda93d98",
+      "bytes": 16317
+    },
+    "docs/tests/writer-replicacache/controleer.mjs.gz": {
+      "sha256": "01b151775a663effdbdf637abe04673a6ed1c3a033970f463bc73c65a3145d59",
+      "inhoud_sha256": "b35d669edc43f3c4589fd9166081e2cab80ab654d46beb55be3b71712f0d7c89",
+      "bytes": 8818
+    },
+    "docs/tests/writer-replicacache/controleer-referentie.mjs.gz": {
+      "sha256": "f988e2b24f6f71f20a12b7192d710e417a310b5048d8ed4b785d508dcef4241a",
+      "inhoud_sha256": "1c44d90acc3abcb5b54896b8ce4d61e3b5e3c2b73318575c623d0a08fc964f8f",
+      "bytes": 8966
+    },
+    "docs/tests/writer-replicacache/behouden/hashes.json.gz": {
+      "sha256": "26ebbf66e92fbf4aa964fcf17db99f8488b1cf0ecf38d9354f04b801f8b0a2a4",
+      "inhoud_sha256": "f222e03624eccfb5c278286b18a1418ed1e009ac8057c1848c4cdd52b34d2ff2",
+      "bytes": 528
+    },
+    "docs/tests/writer-replicacache/gemeten/vendor/docx-edit/src/deterministic.rs.gz": {
+      "sha256": "638ee58030c3b3e30e7803f5eed9b2d74030e1d5da9183e5c5eb252c2bfbb901",
+      "inhoud_sha256": "443044325251c27f79330e166c06fd571cc38344d8553f8c236d3ee67b72729e",
+      "bytes": 28107
+    },
+    "docs/tests/writer-replicacache/gemeten/vendor/docx-edit/src/lib.rs.gz": {
+      "sha256": "9acd7db31613bdf26a34c843e28959872a3f4e84197f96bf9f3bc597c5dd6488",
+      "inhoud_sha256": "49f7abbda34b476bda4589be2ef70423489f9087bdb8a1ea26db6a68519051f3",
+      "bytes": 129242
+    },
+    "docs/tests/writer-replicacache/gemeten/vendor/docx-edit/src/clipboard_batch.rs.gz": {
+      "sha256": "1cd97cb536ab99a8372cfa0ac3bf4615439ba851dbea6e29044ef8193f18826c",
+      "inhoud_sha256": "c88136c22041f1b0a517b1d9abaeb71194f020c786ccd2688d6632f9acc002cf",
+      "bytes": 10555
+    },
+    "docs/tests/writer-replicacache/gemeten/vendor/office-writer-plakken/src/bronspiegel.rs.gz": {
+      "sha256": "8b0f54e27fd7d5774b3cb9877360e370cfe34fd730c0ab6d0f45188395007396",
+      "inhoud_sha256": "ab123e354621ee06c624e2289571762e6fb3908c18e6bb89473c92fa4b30a53b",
+      "bytes": 26368
+    },
+    "docs/tests/writer-replicacache/gemeten/Cargo.toml.gz": {
+      "sha256": "b4bcd1e8e857c539626b412dc40d1de035f889c7a348adf54b934e698236f683",
+      "inhoud_sha256": "854f398de6bbb56c1dae98554055256881efacdf2b94827f8483e2094bea4b6d",
+      "bytes": 753
+    },
+    "docs/tests/writer-replicacache/gemeten/Cargo.lock.gz": {
+      "sha256": "d0bb32883c01318e13167eb27478ee2f0fee510eb00ce9f5863cad76421285ae",
+      "inhoud_sha256": "fafb1cda53d2c434f37203d1af4f45f3579570ced3de2bda3a98124614af0a6f",
+      "bytes": 24195
+    },
+    "docs/tests/writer-replicacache/bouwen-uitgevoerd.py.gz": {
+      "sha256": "f57fb4a0ba4fe7a6b5a69aac5783542fe8c559f6bf6af770977479aad7cacb45",
+      "inhoud_sha256": "cf11aa434cabb1507a6b74727d19d9fdc9d9755b8ca50db3fb9cd351d401ad90",
+      "bytes": 1328
+    },
+    "docs/tests/writer-replicacache/controleren-eerste-uitgevoerd.py.gz": {
+      "sha256": "5723a1f8a2aef6d4f1d45ff85d5aaec1c65cbd0211fd18d0609e2fc146172e58",
+      "inhoud_sha256": "4ca60573229ed97afc8a1b3a17ce4bf7740fb225b1b2c94e641f5eeb63c1eb0d",
+      "bytes": 2757
+    }
+  },
+  "uitgevoerde_omhulsels": {
+    "bouwen-uitgevoerd.py": "cf11aa434cabb1507a6b74727d19d9fdc9d9755b8ca50db3fb9cd351d401ad90",
+    "controleren-eerste-uitgevoerd.py": "4ca60573229ed97afc8a1b3a17ce4bf7740fb225b1b2c94e641f5eeb63c1eb0d"
+  }
+}
