@@ -1,0 +1,192 @@
+{
+  "schema": 1,
+  "datum": "2026-11-05",
+  "versie": "2026.45.49",
+  "ci_bron": "b2d73d47bfc14eeedd76497b8a9c69730d75f80a",
+  "run": 42063289274,
+  "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42063289274",
+  "job_linux": 127370668663,
+  "platformen": {
+    "Linux": "failure",
+    "Windows": "success",
+    "macOS": "success",
+    "publiceren": "skipped"
+  },
+  "fout": "Native bewaren ontbreekt na de eerste opsomming; de CRDT-bron bevat de juiste opsomming en tekst. Geen primaire GUI-/enginefout, framebasis of beeld in deze oorspronkelijke lijstafkeuring beschikbaar.",
+  "niet_uitgevoerd": "De lange 500-pagina-/lettertypeproef staat ná de lijstproef en is in deze CI-ronde niet uitgevoerd. Geen claim van geslaagde CI-fontproef.",
+  "artifact": {
+    "id": 13434067395,
+    "zip_sha256": "eaccf8c76ae4c5ebdfa9588b4a273db2b7b8019fb6e5132f81add2a3034a4e56",
+    "github_digest_gecontroleerd": true,
+    "zip_crc": true,
+    "buitenste_tar_hash": true,
+    "binnenste_checks": 19,
+    "programma_sha256": "3a523abadcf4ca803d73c8d3402c43a3e5b64e81b37b1d55a4c9544055067e9d",
+    "grens": "Exact dezelfde ELF als de eerdere behouden fontafkeuring, maar een andere proefafkeuring; geen bewijs van dezelfde oorzaak."
+  },
+  "lokale_controles": {
+    "oorspronkelijke_proef": {
+      "exitcode": 0,
+      "lijststappen": 7,
+      "script_bytegelijk": true,
+      "programma_bytegelijk": true
+    },
+    "bewaakte_proef": {
+      "exitcode": 0,
+      "lijststappen": 7,
+      "frames_eerste_proces": 24,
+      "frames_tweede_proces": 6,
+      "instrumentatiefouten": []
+    },
+    "python_tests": 92,
+    "negatief_ontbrekende_toets": {
+      "exitcode": 1,
+      "verwachte_fout": "Native bewaren ontbreekt",
+      "primaire_fout_behouden": true,
+      "worker_uitgevallen": false,
+      "documentfocus": true,
+      "screenshot_bewaard": true,
+      "grens": "Bewust geen Ctrl+S verzonden in een afzonderlijke proefkopie. Dit is geen nieuwe productafkeuring en verklaart de oorspronkelijke CI-time-out niet."
+    },
+    "eerste_injectiepoging": {
+      "exitcode": 0,
+      "verwachte_afkeuring_niet_opgewekt": true,
+      "grens": "Een later geïnstalleerde keydown-handler blokkeert de eerdere bewaarhandler niet; de producthandler gebruikt stopImmediatePropagation. Deze injectie is afgekeurd als negatief scenario en blijft bewaard."
+    }
+  },
+  "beperkingen": [
+    "Geen verklaring of herstel van de oorspronkelijke CI-lijsttime-out of eerdere workertraps",
+    "Geen productcode gewijzigd, geen snelheidsreparatie of nieuwe appversie",
+    "De toetsregistratie ziet alleen events die haar callback bereiken; eerdere stopImmediatePropagation kan haar overslaan. Een lege toetsenlijst bewijst geen ontbrekende native toets.",
+    "Alleen de heropende lokale nummering en het beeld van de bewuste negatieve proef zijn visueel bekeken; geen pixelpariteit of volledige lijstacceptatie",
+    "Geen nieuwe platform-/editieacceptatie of gesloten issues"
+  ],
+  "bestanden": {
+    "docs/tests/writer-lijsten-ci49/ci-jobs.json.gz": {
+      "sha256": "a23daa63b122ef10be4780b9b316937f1dfc5d42d0dc81d65c4c6a5611af9853",
+      "uitgepakt_sha256": "83e90ee08af23389ce31da7802d45ff31efc97dee4a151d3117f80cc22330e4d"
+    },
+    "docs/tests/writer-lijsten-ci49/ci-linux.log.gz": {
+      "sha256": "ecb79d3599c3657f93a839682f45da98dc697f7e6b1499a01f49248ba0b0ca5a",
+      "uitgepakt_sha256": "2fe831764f31edd9429a567d05ea90fa38ee601e7ac8ed6ed45edfe5f96d8840"
+    },
+    "docs/tests/writer-lijsten-ci49/ci-artifacts.json.gz": {
+      "sha256": "ee93f5bb4f95ea35207e82c580ce1e4c9d5d824b7818d08cc1d5d10b8e6fb9a6",
+      "uitgepakt_sha256": "bb4ba87b0074b528b20a329056131801b2e2aeef69b2f004afc4c5621ab8a97a"
+    },
+    "docs/tests/writer-lijsten-ci49/ci-context.json.gz": {
+      "sha256": "b9c982fe4eb81a59416addcecb820e8fcffcdbff79af2db5664cf35f56cabef2",
+      "uitgepakt_sha256": "010ffdea0bc5697d31fd4aaefe398ee976bef685d107ce7930aade56d8970129"
+    },
+    "docs/tests/writer-lijsten-ci49/ci-rapport.json.gz": {
+      "sha256": "96c8a2f7625d2fa0c32dc177d53535dd08f08d8d1b810943c2c78708af7077cc",
+      "uitgepakt_sha256": "3eb8dd1668daf46eb24dcb55403eb0988178c1072dce42a8ea9d229cd5eff762"
+    },
+    "docs/tests/writer-lijsten-ci49/ci-SHA256SUMS.gz": {
+      "sha256": "9fd5684cf60220c30c4db92decae3e671e406e52d2824d4f9cdbc2489e87d22b",
+      "uitgepakt_sha256": "f29f1e9ee48252d3784b97b975add102b5958568368dc3a5093c0e436f72bc73"
+    },
+    "docs/tests/writer-lijsten-ci49/ci-Lijstenproef.docx.gz": {
+      "sha256": "67f8486d87360c5b772d3249fd799ac941a9813e32765f1a7d6f7ea6292e5478",
+      "uitgepakt_sha256": "8ed2138c559f67d479307cb16872105b5ee6abfb0f9149f8806e4f4181dfdc9b"
+    },
+    "docs/tests/writer-lijsten-ci49/ci-test-writer-lijsten-native.py.gz": {
+      "sha256": "38cf9965fc8e8191865f45ffbaed539d9b6cba1274d87889ac5f4b4a8afe301a",
+      "uitgepakt_sha256": "77da7bfbc3c6679965e2e55d0341106bc6c02429fd4269b97614e8a78976db13"
+    },
+    "docs/tests/writer-lijsten-ci49/originele-hertest.json.gz": {
+      "sha256": "59577a60673610a601e1455074e2856f2ccbe496e5a9de98fbd1d3b877494b43",
+      "uitgepakt_sha256": "8a7f1bf75cc9c2332551c80326f80e965a69528dd723dc28a5754d5ce81d8ac1"
+    },
+    "docs/tests/writer-lijsten-ci49/originele-hertest.log.gz": {
+      "sha256": "626b2f3fb80b59a597da22c828c38ff833f85b4ed3faf28f051ec402b0a67a84",
+      "uitgepakt_sha256": "a46de6372a95667b116727d51de5a41d821b9a1e69c986db0bd57462167ecfde"
+    },
+    "docs/tests/writer-lijsten-ci49/bewaakte-hertest.json.gz": {
+      "sha256": "e12d69c578141a3389d7e35a9e19527e4de656fd262eddbf6de63fe3163014fe",
+      "uitgepakt_sha256": "1358c853ed843bba248605e4c42cf42f8543ad433aa97327edb082f7e13b1021"
+    },
+    "docs/tests/writer-lijsten-ci49/bewaakte-hertest.log.gz": {
+      "sha256": "684187bb2a00a97de82fc040ca58a90ac323122447cc75349605829209e5fae0",
+      "uitgepakt_sha256": "662d4be625f84e17677a01d8732594f130b41f84a7dca58b6272509e34617c56"
+    },
+    "docs/tests/writer-lijsten-ci49/framebasis-lijsten-1.json.gz": {
+      "sha256": "16096813f3467a72a2318d87ce8ef087ec9357c8d5812b5b44a64c6daf72ef35",
+      "uitgepakt_sha256": "82c1f732228031b447356da2d8fbcc160101aa8568b8b29630f1451473f230d7"
+    },
+    "docs/tests/writer-lijsten-ci49/framebasis-lijsten-2.json.gz": {
+      "sha256": "ea5a8371c84d986dd577b1ad19b4d947800b908ea4c6ded832f798244ffe1985",
+      "uitgepakt_sha256": "cfdafb69201c0e756162bd16a9c031977e73ece4bc1989a4220fa695f9bdda3d"
+    },
+    "docs/tests/writer-lijsten-ci49/python.log.gz": {
+      "sha256": "6f2a0d0222042dd66a490d70e284949017dc6c686b958d4fcc6f28bf9def656c",
+      "uitgepakt_sha256": "6d66d48ee1a7c3ebb470c9090adff7d336231953544dc6438409cd8e8484ad9f"
+    },
+    "docs/tests/writer-lijsten-ci49/foutinjectie-script.py.gz": {
+      "sha256": "9c6151ef1450c1b4715b37461169117f6a2e8b74c06c8749e5f7bc6dad4be352",
+      "uitgepakt_sha256": "fc58bfb48d3d51dbcd13888c7bd1aa30e5135ad0a624a1dcb09532277fbb33da"
+    },
+    "docs/tests/writer-lijsten-ci49/foutinjectie-injectie.json.gz": {
+      "sha256": "5d148b62e1f3c35cc5b36d4c0983b60a2d6e9a05e5e18a2f0c37ec52e213a855",
+      "uitgepakt_sha256": "659be080dda68e3858222d2efb80ccc846bbc9755d6ca342e7f9e512b011fa00"
+    },
+    "docs/tests/writer-lijsten-ci49/foutinjectie.log.gz": {
+      "sha256": "83d85096ed294b459ba81ec64677fe8b4753f8f780eb24b3b1c6172e17646655",
+      "uitgepakt_sha256": "374b71e9e93f7fd361ec30c83c038132e61c0d23e1b09d2b4eb430be7282084b"
+    },
+    "docs/tests/writer-lijsten-ci49/ontbrekende-toets-script.py.gz": {
+      "sha256": "73fb71f139e57ddff8900ecf36a9bca898f6a5ce881846b152b624797c13d3df",
+      "uitgepakt_sha256": "f84bee9c1dee4dff93cf2c442fbec8e05cdb02b71039ae7cd12a85ac3a58d423"
+    },
+    "docs/tests/writer-lijsten-ci49/ontbrekende-toets-injectie.json.gz": {
+      "sha256": "e63b7143c69eafba77495e0956e88618008958b16011517407426dc47a58af5c",
+      "uitgepakt_sha256": "4d94ee156ed59e7f7141ba791382953d942215baf4604cddcb41092b9d3cd1cc"
+    },
+    "docs/tests/writer-lijsten-ci49/ontbrekende-toets.log.gz": {
+      "sha256": "e9a2a8813cad83924a8e3397a471430f04e7141f3af33e20c81ef7f33aeed517",
+      "uitgepakt_sha256": "6bf92821c94ef6960e7909c4191b0c0ac22b9dbecb5a83d2f22bbc228fa6ff46"
+    },
+    "docs/tests/writer-lijsten-ci49/foutinjectie-rapport.json.gz": {
+      "sha256": "58cf215c47ba795d737f5d71bd0198f0aa74d5f6f69585158f717ce245a4487d",
+      "uitgepakt_sha256": "12fbccd6847aa096f2a190e247e09e172f23e216a2e2848cdec98480f9160bcf"
+    },
+    "docs/tests/writer-lijsten-ci49/ontbrekende-toets-rapport.json.gz": {
+      "sha256": "ec0e73a49660ad0d20b453f5e759eb385b47fa0f02b4c29fe01d3142baa89321",
+      "uitgepakt_sha256": "6502351655412e27e5afac2eadf5c0086c0f950c61251e2beabe038872e2edc1"
+    },
+    "docs/tests/writer-lijsten-ci49/ontbrekende-toets-afkeuring-lijsten.json.gz": {
+      "sha256": "85d719b38b1aca3705533e11c45e92e17236ac1d60c7f414176a0a50c9bcd5c3",
+      "uitgepakt_sha256": "f78045e2427d47913865370b4cb3c8b6c21144e5e244db279ea373e0720ffc3f"
+    },
+    "docs/tests/writer-lijsten-ci49/ontbrekende-toets-framebasis-lijsten-1.json.gz": {
+      "sha256": "479d175e582a032897291624b8a32f5788ad9dba76d68bd157217f0a1657f1b5",
+      "uitgepakt_sha256": "9335f7c95d6c4ca7592cfd12a670a5c5cb5563e2262b3928f5e47af77b57128a"
+    },
+    "docs/tests/writer-lijsten-ci49/bron-afkeuringsbewaking.py.gz": {
+      "sha256": "537a75c206d203860283929bc054b9c66e84646789dbf42f0c9822a732e4cf07",
+      "uitgepakt_sha256": "2fbca76acf08c52a329cc4230dd19ff5474149da3032d5e3a2b2c683f1072ffe"
+    },
+    "docs/tests/writer-lijsten-ci49/bron-test-writer-lijsten-native.py.gz": {
+      "sha256": "7c01f6960d6bc27294f12dfc620d54f310f9d5c077830f1b673efdc672f98512",
+      "uitgepakt_sha256": "d0668b669729da46cd766cdca02f20e34003fe339ab614c7492137a7ebb76279"
+    },
+    "docs/tests/writer-lijsten-ci49/bron-bewaar-writer-foutcontext.py.gz": {
+      "sha256": "5d02b7ecb6bc14d7e9e62bfcae95114cccaf92078bd125b2c133bbbd15e2416a",
+      "uitgepakt_sha256": "4e628bb1c856a7d4b26b99eebbf58f354a9ce92102ffc59b599a4b812ac7bc47"
+    },
+    "docs/tests/writer-lijsten-ci49/bron-test_afkeuringsbewaking.py.gz": {
+      "sha256": "60437b1686c2b2f3bbfcc13322a74e7e53313dbbe2483e14f8866ffdd40696ca",
+      "uitgepakt_sha256": "d799decdc15d8c72b4bb0b5ef70ef2c8641da7c9ad2a6117f4ae6b9cb235e2e3"
+    },
+    "docs/tests/writer-lijsten-ci49/bron-test_writer_foutcontext.py.gz": {
+      "sha256": "40870e95be291f788995f031d0d67aee93d4abd21870e86df8aaae77f2707f7f",
+      "uitgepakt_sha256": "6717eecdc6b2df0be6da6e00fb2514db77a3a33a4b32ad984be5aef57ad92e84"
+    },
+    "docs/tests/writer-lijsten-ci49/heropende-nummering.png": {
+      "sha256": "ca3feb826f5a742265d4959226ef4d48a93b6f4296089f3718f42cae7ac7a396"
+    },
+    "docs/tests/writer-lijsten-ci49/bewust-ontbrekende-toets.png": {
+      "sha256": "88d2b977e52109e47dd0cb5863f617b519907a3c6072c0e9835b0fcb11899b46"
+    }
+  }
+}

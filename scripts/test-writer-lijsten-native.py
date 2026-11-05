@@ -51,6 +51,7 @@ async def proef(a):
     from Xlib import X, display
     from PIL import Image
     from gui.webkit_inspector import Inspector
+    from gui.afkeuringsbewaking import bewaak
     a.uitvoer.mkdir(parents=True, exist_ok=False)
     bron = a.uitvoer/'Lijstenproef.docx'
     shutil.copyfile(REPO/'public/templates/nieuw.docx', bron)
@@ -116,10 +117,15 @@ async def proef(a):
             await asyncio.sleep(.1)
         raise TimeoutError('Eigen proefvenster niet gevonden')
 
+    procesnummer = 0
+
     async def gereed(p):
+        nonlocal procesnummer
+        procesnummer += 1
         await p.run('''window.proefApi=()=>{const el=document.querySelector('.office-tabpaneel:not([hidden]) .office-tekst');if(!el)return null;for(let f=el[Object.keys(el).find(k=>k.startsWith('__reactFiber$'))];f;f=f.return)for(let s=f.memoizedState,i=0;s&&i<200;i++,s=s.next){const v=s.memoizedState?.current;if(v?.getEditorRef&&v.commands)return v}return null};let einde=performance.now()+60000;while(!proefApi()?.getEditorRef()?.getYrsSession()||proefApi().getTotalPages()<1){if(performance.now()>einde)throw Error('Writer niet gereed');await new Promise(r=>setTimeout(r,100))}await proefApi().flushPendingInput();return true;''')
         assert await p.run("return await window.__TAURI_INTERNALS__.invoke('plugin:app|version');") == a.versie
         await p.begin_foutbewaking()
+        await p.begin_framebewaking(a.uitvoer/f'framebasis-lijsten-{procesnummer}.json')
 
     async def klik(p, label):
         xy = await p.ev("(()=>{const b=Array.from(document.querySelectorAll('.office-lintplek:not([hidden]) .ribbon-baan button')).find(b=>b.getAttribute('aria-label')==="+json.dumps(label)+");if(!b)throw Error('Lijstknop ontbreekt');const r=b.getBoundingClientRect();return{x:Math.round(r.x+r.width/2),y:Math.round(r.y+r.height/2)}})()")
@@ -156,7 +162,7 @@ async def proef(a):
 
     try:
         await start()
-        async with Inspector(int(os.environ['OFFICE_PROEF_HTTP'])) as p:
+        async with Inspector(int(os.environ['OFFICE_PROEF_HTTP'])) as p, bewaak(p, a.uitvoer, beeld):
             await gereed(p)
             await p.run("const e=proefApi().getEditorRef(),p=e.getYrsSession().paragraphs('body')[0];e.setSelection(e.yrsLocToDisplayPosition({story:'body',paraId:p.paraId,offset:0}));proefApi().focus();return true;")
             subprocess.run(['xdotool', 'type', '--clearmodifiers', '--delay', '20', TEKST], check=True)
@@ -173,7 +179,7 @@ async def proef(a):
             assert not any(rapport['fouten_eerste_proces'].values())
         stop()
         await start()
-        async with Inspector(int(os.environ['OFFICE_PROEF_HTTP'])) as p:
+        async with Inspector(int(os.environ['OFFICE_PROEF_HTTP'])) as p, bewaak(p, a.uitvoer, beeld):
             await gereed(p)
             await controle(p, '05-heropend', 'decimal', bewaar=False)
             await klik(p, 'Bullets')

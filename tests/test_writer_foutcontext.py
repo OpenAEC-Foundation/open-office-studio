@@ -181,6 +181,17 @@ class WriterFoutcontext(unittest.TestCase):
                 self.assertEqual(tar.extractfile('writer-foutcontext/proef/' + naam).read(), (self.map / naam).read_bytes())
                 self.assertIn(naam, context['proefbestanden'])
 
+    def test_bewaart_lijstafkeuring_met_exacte_helper_en_framebestanden(self):
+        namen = ['afkeuring-lijsten.json', 'framebasis-lijsten-1.json', 'framebasis-lijsten-1.inspectiefout.json', 'framebasis-lijsten-2.json', 'framebasis-lijsten-2.inspectiefout.json']
+        for naam in namen:
+            (self.map / naam).write_text('{"eigen_proef":true}\n')
+        context = module.bewaar(self.programma, [self.rapport], self.uitvoer, systeem=False)
+        with tarfile.open(self.uitvoer/'writer-foutcontext.tar.gz') as tar:
+            for naam in namen:
+                self.assertEqual(tar.extractfile('writer-foutcontext/proef/'+naam).read(), (self.map/naam).read_bytes())
+                self.assertIn(naam, context['proefbestanden'])
+            self.assertEqual(tar.extractfile('writer-foutcontext/scripts/gui/afkeuringsbewaking.py').read(), (REPO/'scripts/gui/afkeuringsbewaking.py').read_bytes())
+
     def test_bewaart_framebasis_en_de_exacte_diagnosecode(self):
         for naam in ['framebasis.json', 'framebasis.inspectiefout.json', 'framebasis-lettertypen.json', 'framebasis-lettertypen.inspectiefout.json']:
             (self.map / naam).write_text('{"eigen_proef":true}\n')

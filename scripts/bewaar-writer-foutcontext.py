@@ -85,7 +85,9 @@ def bewaar(programma, rapporten, uitvoer, appimage_map=None, systeem=True):
                  'Ontwerpnotitie.docx', 'tussenbewaring.docx', 'geplakt.docx',
                  'Lijstenproef.docx', 'Klembordproef.docx', 'Markeerkleurproef.docx', 'Rendererproef.docx', 'Tabelproef-begin.docx',
                  'Lettertype-caladea.docx', 'Lettertype-carlito.docx', 'Lettertype-vet.docx', 'Lettertype-cursief.docx',
-                 'programma.log', 'afgekeurd.png', 'framebasis.json', 'framebasis.inspectiefout.json',
+                 'programma.log', 'afgekeurd.png', 'afkeuring-lijsten.json',
+                 'framebasis-lijsten-1.json', 'framebasis-lijsten-1.inspectiefout.json',
+                 'framebasis-lijsten-2.json', 'framebasis-lijsten-2.inspectiefout.json', 'framebasis.json', 'framebasis.inspectiefout.json',
                  'framebasis-lettertypen.json', 'framebasis-lettertypen.inspectiefout.json', 'workerbron.json', 'workerbron.inspectiefout.json']:
         bron = rapport.parent / naam
         if bron.is_file():
@@ -115,7 +117,7 @@ def bewaar(programma, rapporten, uitvoer, appimage_map=None, systeem=True):
             break
     if not context['proefscript']['beschikbaar']:
         context['proefscript']['reden'] = 'Geen vast proefscript in deze checkout heeft de gerapporteerde checksum'
-    namen = ['gui/webkit_inspector.py', 'gui/requirements.txt', 'gui/framebasis.js', 'gui/spelling_weergave.py', 'gui/spelling_weergave.js', 'gui/worker_bron.js', 'gui/lettertype_bewijs.py', 'gui/lettertype_bewijs.js']
+    namen = ['gui/webkit_inspector.py', 'gui/afkeuringsbewaking.py', 'gui/requirements.txt', 'gui/framebasis.js', 'gui/spelling_weergave.py', 'gui/spelling_weergave.js', 'gui/worker_bron.js', 'gui/lettertype_bewijs.py', 'gui/lettertype_bewijs.js']
     if context['proefscript'].get('naam') == 'test-writer-rijk-plakken-native.py':
         namen.append('gui/spelling_vervolginvoer.js')
     if context['proefscript']['beschikbaar']:
