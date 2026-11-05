@@ -342,18 +342,43 @@ Redo herstelt de twee alinea's. De onafhankelijke XML-controle bevestigt dat
 de download geen tabel meer bevat en beide alinea's met `|` bewaart. Heropenen
 behoudt hetzelfde resultaat. [Opgeslagen conversie](../screenshots/test-tauri-tabel-naar-tekst-2026-11-05.png).
 
-## Workerterugval blijft open (#135)
+## Workerterugval na tabelconversie (#135)
 
-De oorspronkelijke melding over een niet-geïnitialiseerde worker is in deze
-ronde niet gereproduceerd. Na tabelconversie is wel een verwante fout zichtbaar
-in de console: de achtergrondworker vraagt een inmiddels verwijderd celverhaal
-op en valt terug op de hoofdthread. De conversie, Undo/Redo en bewaren blijven
-werken. De verbeterde lokale selectieafhandeling neemt deze workerterugval
-nog niet weg; de workerlevenscyclus is hiermee niet afgetekend.
+De productieproef reproduceerde een workerfout na tabelconversie. De nieuwe
+documenttoestand bevatte de verwijderde tabelcellen niet meer, maar de
+workersnapshot stuurde nog gecachte tekenopvragingen voor die cellen mee.
+De ontvangende engine weigerde zo'n opvraging en de weergave viel terug op
+de hoofdthread. De eigenlijke conversie en tekst bleven behouden.
 
+De snapshot bevat nu alleen tekenopvragingen voor verhalen die volgens de
+native engine nog bestaan. Volgorde en omgevingen blijven behouden. De
+originele cache blijft intact, zodat teruggebrachte cellen na Undo hun
+bestaande omgeving kunnen blijven gebruiken. Er verandert geen documenttekst
+of geschiedenis door dit filter.
 
-Volledige controle van deze ronde: `pnpm exec vitest run --maxWorkers=1`
-slaagt met 141 bestanden, 1.599 geslaagde en zeven overgeslagen tests.
-Twee gelijktijdige testworkers raakten op deze machine incidenteel de bestaande
-opstarttijdlimiet van vijf seconden bij zware engineproeven. Eén worker slaagt
-zonder verruimde tijdlimieten. Typecontrole en productiebuild slagen eveneens.
+Drie regressieproeven bewaken de bronkoppeling, cachebehoud en de overdracht
+tussen twee echte engines. De oorspronkelijke opvragingen van de tweede
+engine falen na tabelverwijdering. De echte aangepaste snapshotexpressie
+gebruikt de native lijst bestaande verhalen; dezelfde herhaling slaagt daarna
+en behoudt de hoofdtekst en documentversie.
+
+De productie-interface converteert a/b/c/d naar `a|b` en `c|d`, draait dit
+terug en voert het opnieuw uit. Daarop volgt nieuwe tekstinvoer. De console
+blijft zonder workerfout of terugvalmelding. De download bevat de twee
+omgezette alinea's en `Nieuwe invoer`.
+[Conversie en vervolginvoer](../screenshots/test-tauri-worker-conversie-2026-11-05.png).
+
+Ook de oorspronkelijke beschreven invoervolgorde is doorlopen: een tabel met
+drie rijen en één kolom, AutoAanpassen op inhoud, tekstrichting 90° en terug
+naar horizontaal, een celmarge toepassen en met Undo terugdraaien, daarna
+3/1/2 in de drie cellen invoeren. Dit slaagt zonder workerfout. Onafhankelijke
+XML-controle bevestigt precies drie rijen, één kolom en de waarden 3, 1 en 2.
+Heropenen behoudt de drie waarden en geeft eveneens geen workerfout.
+[Invoer na opmaak en Undo](../screenshots/test-tauri-worker-tabelinvoer-2026-11-05.png).
+De oorspronkelijke initialisatiemelding zelf is niet afzonderlijk gereproduceerd;
+de aangetoonde verwante workerfout is wel gerepareerd en de invoerproef slaagt.
+
+Volledige controle: `pnpm exec vitest run --maxWorkers=1` slaagt met 142
+bestanden, 1.602 geslaagde en zeven overgeslagen tests. Typecontrole en
+productiebuild slagen eveneens. Eén testworker houdt de bestaande
+opstarttijdlimieten bruikbaar op deze machine, zonder die te verruimen.

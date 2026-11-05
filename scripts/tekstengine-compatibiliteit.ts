@@ -68,6 +68,15 @@ export function herstelTabelContext(bron: string): string {
   return 'import { actueleCel as oosActueleCel, herstelCelNaGeschiedenis as oosHerstelCel } from "openaec-tekst-cel";\n' + uit;
 }
 
+/** Geen oude tekenopvragingen voor verwijderde verhalen naar de worker sturen. */
+export function herstelWorkerSnapshot(bron: string): string {
+  const oud = 'renderInputs:[...f].map(([H,Ee])=>({story:H,env:structuredClone(Ee)}))';
+  if (bron.split(oud).length !== 2)
+    throw new Error("De tekstengine is gewijzigd; controleer eerst de aansluiting voor workersnapshots.");
+  return 'import { bestaandeWorkerVerhalen as oosWorkerVerhalen } from "openaec-tekst-workerverhalen";\n'
+    + bron.replace(oud, 'renderInputs:oosWorkerVerhalen(f,e$1.story_ids()).map(([H,Ee])=>({story:H,env:structuredClone(Ee)}))');
+}
+
 /** Een verdwenen tabel mag de tijdelijke celselectie niet onleesbaar maken. */
 export function herstelVerdwenenCelSelectie(bron: string): string {
   const oud = 'cellSelection:()=>JSON.parse(e$1.cell_selection())';
@@ -92,6 +101,8 @@ export function tekstengineCompatibiliteit(): Plugin {
     name: "tekstengine-tabelinvoer",
     enforce: "pre",
     resolveId(id) {
+      if (id === "openaec-tekst-workerverhalen")
+        return fileURLToPath(new URL("../src/tekst/gedeeld/workerVerhalen.ts", import.meta.url));
       if (id === "openaec-tekst-kolommen")
         return fileURLToPath(new URL("../src/tekst/pagina/kolommenWeergave.ts", import.meta.url));
       if (id === "openaec-tekst-cel")
@@ -101,7 +112,7 @@ export function tekstengineCompatibiliteit(): Plugin {
     },
     transform(bron, id) {
       if (/\/@betteroffice\/docx\/dist\/chunk-N5NWITJ6\.mjs(?:\?.*)?$/.test(id))
-        return { code: herstelVerdwenenCelSelectie(bron), map: null };
+        return { code: herstelWorkerSnapshot(herstelVerdwenenCelSelectie(bron)), map: null };
       if (/\/@betteroffice\/docx\/dist\/chunk-7WWFGMMF\.mjs(?:\?.*)?$/.test(id))
         return { code: herstelKolommenWeergave(bron), map: null };
       if (/\/@betteroffice\/docx-react\/dist\/chunk-LZ2DPBZ6\.mjs(?:\?.*)?$/.test(id))
