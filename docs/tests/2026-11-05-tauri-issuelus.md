@@ -32,7 +32,7 @@ worden niet gesloten op basis van alleen aanwezige knoppen of broncode.
 | [#137](https://github.com/OpenAEC-Foundation/open-office-studio/issues/137) | Hersteld en gericht getest | Actuele celposities uit de tabelstructuur; Tab voegt een rij toe. Interfaceproef met vier cellen, undo/redo, gedownloade XML en heropenen. |
 | [#136](https://github.com/OpenAEC-Foundation/open-office-studio/issues/136) | Nog te controleren op Tauri | Melding op ontwikkelbuild; minimale proef uitvoeren op deze suite. |
 | [#135](https://github.com/OpenAEC-Foundation/open-office-studio/issues/135) | Nog te controleren op Tauri | Melding op ontwikkelbuild; minimale proef uitvoeren op deze suite. |
-| [#133](https://github.com/OpenAEC-Foundation/open-office-studio/issues/133) | Gereproduceerd; nog te herstellen | Zichtbare tekst in rij van 4 cm; Midden verplaatst scrollTop blijvend van 108 naar 154. |
+| [#133](https://github.com/OpenAEC-Foundation/open-office-studio/issues/133) | Hersteld en gericht getest | Rij van 4 cm; herhaald Boven, Midden en Onder behoudt scrollTop 108. Nieuwe cursor blijft zichtbaar; grensgevallen voor minimaal schuiven hebben drie proeven. |
 | [#131](https://github.com/OpenAEC-Foundation/open-office-studio/issues/131) | Hersteld; bestaande lintproeven groen | Zichtbare labels in samengebracht voorstel #134. |
 | [#130](https://github.com/OpenAEC-Foundation/open-office-studio/issues/130) | Niet gereproduceerd met de geleverde engine | Drie rijen: bovenste samengevoegde cel splitsen; onderste geometrie, raster, bewaren/heropenen en undo/redo gelijk. Geen algemene visuele vrijgave. |
 | [#129](https://github.com/OpenAEC-Foundation/open-office-studio/issues/129) | Hersteld en gericht getest | Vier celvlakken zichtbaar; ook selectie met lege cel, behoud in het lint, samenvoegen van precies het getoonde bereik en undo gecontroleerd. |
@@ -186,3 +186,23 @@ bestand wordt niet door de selectie gewijzigd.
 
 Eindcontrole na deze wijziging: productiebuild en typecontrole groen;
 130 testbestanden, 1.534 geslaagde proeven en zeven overgeslagen corpusgevallen.
+
+## Verticale celuitlijning
+
+Vóór herstel verschoof de weergave bij een volledig zichtbare tekst van 108
+naar 154 pixels bij Midden en naar 167 bij Onder. De aansluiting wacht nu op
+de indeling en de cursorlaag, beëindigt de eerdere cursorverankering via de
+navigatie-API en behoudt de oude positie wanneer de nieuwe cursor daar past.
+Anders wordt de minimaal nodige verplaatsing berekend. Een nieuwe muis-,
+toetsenbord- of schuifhandeling onderbreekt de correctie; ook een gewijzigde
+sessie of selectie maakt de oude correctie ongeldig.
+
+De interfaceproef herhaalt Boven, Midden en Onder op een rij van 4 cm, vanaf
+scrollTop 108. Na iedere afgeronde bewerking blijft die waarde 108; de cursor
+blijft zichtbaar. Drie gerichte proeven controleren behouden, minimaal omhoog
+en minimaal omlaag schuiven. De gewone opmaak- en opslagproeven blijven groen.
+
+[Uitlijning met behouden weergave](../screenshots/test-tauri-celuitlijning-2026-11-05.png).
+
+Eindcontrole: typecontrole, productiebuild en opdrachtcontroles groen;
+131 testbestanden, 1.537 proeven geslaagd en zeven corpusgevallen overgeslagen.

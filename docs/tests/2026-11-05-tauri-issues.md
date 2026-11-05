@@ -24,7 +24,7 @@ weekfunctie een normale foutwaarde; een voorafgaande wijziging blijft behouden.
 ## Resultaten van de eindcontrole
 
 - TypeScript geslaagd.
-- 130 testbestanden geslaagd: 1.534 proeven geslaagd, zeven overgeslagen
+- 131 testbestanden geslaagd: 1.537 proeven geslaagd, zeven overgeslagen
   wegens ontbrekende externe database- en versleutelingscorpusbestanden.
 - De aanvullende opdrachtcontroles voor tekst (68), rekenblad en presentatie
   (10) zijn geslaagd, inclusief opslaan en heropenen.

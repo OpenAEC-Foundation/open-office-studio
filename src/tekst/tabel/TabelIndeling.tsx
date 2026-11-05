@@ -36,7 +36,6 @@ import { Keuzemenu, Maatveld, getalUit, toonGetal, useEditorTik, useUitvoeren } 
 import { engine } from "../gedeeld/engine";
 import {
   celMarges,
-  celUitlijning,
   geselecteerdeAlineas,
   kolommenGelijk,
   maakPassend,
@@ -52,6 +51,7 @@ import {
   type TabelStaat,
 } from "./opdrachten";
 import { splitsTabel } from "./pakket";
+import { lijnCelUit } from "./uitlijnen";
 import {
   cmNaarTwips,
   raadScheiding,
@@ -142,7 +142,7 @@ export function TabelIndeling() {
             actief={staat?.verticaal === "top"}
             disabled={uit}
             uitleg={reden ?? t("table.buttons.alignTopTip")}
-            onClick={() => uitvoeren((r) => celUitlijning(r, "top"))}
+            onClick={() => uitvoeren((r) => lijnCelUit(r, "top"), false)}
           />
           <EigenKnop
             naam={t("table.buttons.alignCenter")}
@@ -150,7 +150,7 @@ export function TabelIndeling() {
             actief={staat?.verticaal === "center"}
             disabled={uit}
             uitleg={reden ?? t("table.buttons.alignCenterTip")}
-            onClick={() => uitvoeren((r) => celUitlijning(r, "center"))}
+            onClick={() => uitvoeren((r) => lijnCelUit(r, "center"), false)}
           />
           <EigenKnop
             naam={t("table.buttons.alignBottom")}
@@ -158,7 +158,7 @@ export function TabelIndeling() {
             actief={staat?.verticaal === "bottom"}
             disabled={uit}
             uitleg={reden ?? t("table.buttons.alignBottomTip")}
-            onClick={() => uitvoeren((r) => celUitlijning(r, "bottom"))}
+            onClick={() => uitvoeren((r) => lijnCelUit(r, "bottom"), false)}
           />
         </div>
         <div className="ribbon-stapel">
