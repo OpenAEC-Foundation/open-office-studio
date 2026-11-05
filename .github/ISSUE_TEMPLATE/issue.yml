@@ -1,53 +1,53 @@
-name: Issue melden
-description: Meld een fout, verbetering, onderzoek of documentatietaak met de juiste labels.
+name: Report an issue
+description: Report a bug, enhancement, research task, or documentation task in English.
 body:
   - type: dropdown
     id: onderdeel
     attributes:
-      label: Onderdeel
+      label: Module
       multiple: true
       options:
-        - Writer (tekst)
-        - Spreadsheet (rekenblad)
-        - Presentatie (presentatie)
-        - Notition (notities)
-        - Algemeen (algemeen)
-        - Agenda (agenda)
-        - Database (database)
+        - Writer
+        - Spreadsheet
+        - Presentation
+        - Notition
+        - General
+        - Calendar
+        - Database
     validations:
       required: true
   - type: dropdown
     id: soort
     attributes:
-      label: Soort werk
+      label: Work type
       options:
-        - Bug (bug)
-        - Verbetering of nieuwe functie (enhancement)
-        - Documentatie (documentation)
-        - Onderzoek (onderzoek)
-        - Routekaart / verzamelissue (routekaart)
+        - Bug
+        - Enhancement or new feature
+        - Documentation
+        - Research
+        - Roadmap / tracking issue
     validations:
       required: true
   - type: dropdown
     id: ui
     attributes:
-      label: UI / bediening
-      description: Staan knoppen, lint, dialogen, zichtbaarheid of bediening centraal?
-      options: ["Ja", "Nee"]
+      label: UI / interaction
+      description: Does this concern buttons, the ribbon, dialogs, visibility, or interaction?
+      options: ["Yes", "No"]
     validations:
       required: true
   - type: dropdown
     id: formaten
     attributes:
-      label: Bestandsformaten
-      description: Staan openen, opslaan, import, export of bestandsbehoud centraal?
-      options: ["Ja", "Nee"]
+      label: File formats
+      description: Does this concern opening, saving, import, export, or file preservation?
+      options: ["Yes", "No"]
     validations:
       required: true
   - type: textarea
     id: beschrijving
     attributes:
-      label: Beschrijving
-      description: Beschrijf het probleem of doel, verwacht gedrag en acceptatiecriteria. Geef bij fouten reproductiestappen, omgeving en waargenomen gedrag.
+      label: Description
+      description: Write in English. Describe the problem or goal, expected behavior, and acceptance criteria. For bugs, include reproduction steps, environment, and observed behavior.
     validations:
       required: true
