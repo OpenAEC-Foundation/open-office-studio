@@ -1,0 +1,1099 @@
+{
+  "schema": 1,
+  "datum": "2026-11-05",
+  "basis_commit": "e7cf78373f44a49a9540050eeeae851682dd88d7",
+  "appversie": "2026.45.49",
+  "nativeversie": "2026.45.0-alpha.57",
+  "productiepatch": false,
+  "bron_sha256": "abf6c78274a0154f6d3777b4a3953e387a41e7816eda0eee68e6089ffc8a5d55",
+  "bron_bytes": 5904487,
+  "python_tests": 104,
+  "rust_proeven_definitief": 3,
+  "metingen": [
+    {
+      "run": 1,
+      "budget": 8388608,
+      "boekhoudgewicht": 8388572,
+      "referentie_40_snapshots_ns": 2473208928,
+      "kandidaat_40_snapshots_ns": 2420327633,
+      "ratio": 0.9786183470384108,
+      "alle_bytes_exact": true,
+      "rust_proeven_uitgevoerd": 0,
+      "proefacceptatie": false,
+      "ruw": [
+        {
+          "bytes": 5904487,
+          "cijfers": [
+            8388572,
+            8388608,
+            0,
+            24067
+          ],
+          "exact": true,
+          "fase": "koud",
+          "ns": 74600162
+        },
+        {
+          "cijfers": [
+            8388572,
+            8388608,
+            0,
+            24067
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": false,
+          "ns": 555269449,
+          "ronde": 0
+        },
+        {
+          "cijfers": [
+            8388572,
+            8388608,
+            25720,
+            239017
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": true,
+          "ns": 620553797,
+          "ronde": 0
+        },
+        {
+          "cijfers": [
+            8388572,
+            8388608,
+            51440,
+            453967
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": true,
+          "ns": 560004366,
+          "ronde": 1
+        },
+        {
+          "cijfers": [
+            8388572,
+            8388608,
+            51440,
+            453967
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": false,
+          "ns": 582977866,
+          "ronde": 1
+        },
+        {
+          "cijfers": [
+            8388572,
+            8388608,
+            51440,
+            453967
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": false,
+          "ns": 526294002,
+          "ronde": 2
+        },
+        {
+          "cijfers": [
+            8388572,
+            8388608,
+            77160,
+            668917
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": true,
+          "ns": 517357462,
+          "ronde": 2
+        },
+        {
+          "cijfers": [
+            8388572,
+            8388608,
+            102880,
+            883867
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": true,
+          "ns": 722412008,
+          "ronde": 3
+        },
+        {
+          "cijfers": [
+            8388572,
+            8388608,
+            102880,
+            883867
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": false,
+          "ns": 808667611,
+          "ronde": 3
+        }
+      ],
+      "binaries": {
+        "schema": 1,
+        "productiebron_sha256": "50467df1c30b12f9e4099fbdff2605219fbede51e180c28cf20173284fc03b1a",
+        "bestanden": {
+          "native/onderzoek/writer-encodercache/cache.rs": "1e96646369b76633520be2764c89c283a7301bc7ff1a7ce2fd0ddbc6ccd4578f",
+          "native/onderzoek/writer-encodercache/proef.rs": "14a7ec9b88d5a8bfdf0e6ef5f44229b7d30d81415f62acd387c98c746fa9f711",
+          "native/onderzoek/writer-encodercache/uitvoeren.py": "d9b0372c0b158bb6b191b6fc67a60f9c35e2b4ad9ac296f858b27ab36dd1f89c",
+          "native/onderzoek/writer-encodercache/.local/referentie.rs": "d2d28cb81ed385199ec8eb1e6a28b89be9f6dd13a0540892e7fbaa334b11e27f",
+          "native/onderzoek/writer-encodercache/.local/kandidaat.rs": "996027e3da689c55323bd890be1bd92661abf3b6b343159e920bfe40918d948e",
+          "native/onderzoek/writer-encodercache/.local/bron.bin": "abf6c78274a0154f6d3777b4a3953e387a41e7816eda0eee68e6089ffc8a5d55"
+        },
+        "bibliotheken": {
+          "native/onderzoek/writer-deterministische-sortering/.local/target/release/deps/libyrs-ba0aff430bb3b5ef.rlib": "f4699c4040d384d45d5e8c52772e52f99bbcb5fb28e5b120d5ac69ab3d222c8b",
+          "native/onderzoek/writer-deterministische-sortering/.local/target/release/deps/libserde_json-60407851006d7be3.rlib": "c6cf29b8e88db939852ffe9f40f1b750f9438b9b52f0d6c6104869ba16342eb8",
+          "native/onderzoek/writer-deterministische-sortering/.local/target/release/deps/libdocx_edit.rlib": "b131777388d0265c120c8ad9d4b0ff1c8dbf35b058de458668052d8cfa2c0390"
+        },
+        "regressies": {
+          "bouwcode": 0,
+          "exitcode": 0,
+          "elf_sha256": "35a3648604fe2bd01c1e9f43564467008772353a73ff34d01e3ce97e366b7da9"
+        },
+        "meting": {
+          "bouwcode": 0,
+          "exitcode": 0,
+          "elf_sha256": "5640e7710f77c33c0594b262f16e395f357efa2e887847afe348ebc6d1728a0f"
+        }
+      }
+    },
+    {
+      "run": 2,
+      "budget": 16777216,
+      "boekhoudgewicht": 16777199,
+      "referentie_40_snapshots_ns": 1856835585,
+      "kandidaat_40_snapshots_ns": 1738841948,
+      "ratio": 0.936454450812348,
+      "alle_bytes_exact": true,
+      "rust_proeven_uitgevoerd": 0,
+      "proefacceptatie": false,
+      "ruw": [
+        {
+          "bytes": 5904487,
+          "cijfers": [
+            16777199,
+            16777216,
+            0,
+            24067
+          ],
+          "exact": true,
+          "fase": "koud",
+          "ns": 57922375
+        },
+        {
+          "cijfers": [
+            16777199,
+            16777216,
+            0,
+            24067
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": false,
+          "ns": 503921198,
+          "ronde": 0
+        },
+        {
+          "cijfers": [
+            16777199,
+            16777216,
+            54300,
+            210437
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": true,
+          "ns": 469457398,
+          "ronde": 0
+        },
+        {
+          "cijfers": [
+            16777199,
+            16777216,
+            108600,
+            396807
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": true,
+          "ns": 442805793,
+          "ronde": 1
+        },
+        {
+          "cijfers": [
+            16777199,
+            16777216,
+            108600,
+            396807
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": false,
+          "ns": 437813443,
+          "ronde": 1
+        },
+        {
+          "cijfers": [
+            16777199,
+            16777216,
+            108600,
+            396807
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": false,
+          "ns": 436201963,
+          "ronde": 2
+        },
+        {
+          "cijfers": [
+            16777199,
+            16777216,
+            162900,
+            583177
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": true,
+          "ns": 412820678,
+          "ronde": 2
+        },
+        {
+          "cijfers": [
+            16777199,
+            16777216,
+            217200,
+            769547
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": true,
+          "ns": 413758079,
+          "ronde": 3
+        },
+        {
+          "cijfers": [
+            16777199,
+            16777216,
+            217200,
+            769547
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": false,
+          "ns": 478898981,
+          "ronde": 3
+        }
+      ],
+      "binaries": {
+        "schema": 1,
+        "productiebron_sha256": "50467df1c30b12f9e4099fbdff2605219fbede51e180c28cf20173284fc03b1a",
+        "bestanden": {
+          "native/onderzoek/writer-encodercache/cache.rs": "1e96646369b76633520be2764c89c283a7301bc7ff1a7ce2fd0ddbc6ccd4578f",
+          "native/onderzoek/writer-encodercache/proef.rs": "6fa8f74c06c86a4fec2117ea357f90573e7ca032a9beee3607009dc067a14aaf",
+          "native/onderzoek/writer-encodercache/uitvoeren.py": "c512daba1f1988f7fa708407206921e1725cf2dffaa6d45a3153626076d1ae43",
+          "native/onderzoek/writer-encodercache/.local/referentie.rs": "d2d28cb81ed385199ec8eb1e6a28b89be9f6dd13a0540892e7fbaa334b11e27f",
+          "native/onderzoek/writer-encodercache/.local/kandidaat.rs": "996027e3da689c55323bd890be1bd92661abf3b6b343159e920bfe40918d948e",
+          "native/onderzoek/writer-encodercache/.local/bron.bin": "abf6c78274a0154f6d3777b4a3953e387a41e7816eda0eee68e6089ffc8a5d55"
+        },
+        "bibliotheken": {
+          "native/onderzoek/writer-deterministische-sortering/.local/target/release/deps/libyrs-ba0aff430bb3b5ef.rlib": "f4699c4040d384d45d5e8c52772e52f99bbcb5fb28e5b120d5ac69ab3d222c8b",
+          "native/onderzoek/writer-deterministische-sortering/.local/target/release/deps/libserde_json-60407851006d7be3.rlib": "c6cf29b8e88db939852ffe9f40f1b750f9438b9b52f0d6c6104869ba16342eb8",
+          "native/onderzoek/writer-deterministische-sortering/.local/target/release/deps/libdocx_edit.rlib": "b131777388d0265c120c8ad9d4b0ff1c8dbf35b058de458668052d8cfa2c0390"
+        },
+        "regressies": {
+          "bouwcode": 0,
+          "exitcode": 0,
+          "elf_sha256": "d64ae6d4ef7e4f6e1d7e2c8b5f1ea74d5f97b1a26fa0fdb2123203d8bbd1bef0"
+        },
+        "meting": {
+          "bouwcode": 0,
+          "exitcode": 0,
+          "elf_sha256": "49ac8a6adc577bbea33077d3faebf9e0295c81508a4af89e6674464bae895cde"
+        }
+      }
+    },
+    {
+      "run": 3,
+      "budget": 33554432,
+      "boekhoudgewicht": 30601920,
+      "referentie_40_snapshots_ns": 1756677402,
+      "kandidaat_40_snapshots_ns": 1074313985,
+      "ratio": 0.6115602009662557,
+      "alle_bytes_exact": true,
+      "rust_proeven_uitgevoerd": 0,
+      "proefacceptatie": false,
+      "ruw": [
+        {
+          "bytes": 5904487,
+          "cijfers": [
+            30601920,
+            33554432,
+            0,
+            24067
+          ],
+          "exact": true,
+          "fase": "koud",
+          "ns": 58340106
+        },
+        {
+          "cijfers": [
+            30601920,
+            33554432,
+            0,
+            24067
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": false,
+          "ns": 441683022,
+          "ronde": 0
+        },
+        {
+          "cijfers": [
+            30601920,
+            33554432,
+            162280,
+            102457
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": true,
+          "ns": 270757751,
+          "ronde": 0
+        },
+        {
+          "cijfers": [
+            30601920,
+            33554432,
+            324560,
+            180847
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": true,
+          "ns": 292322071,
+          "ronde": 1
+        },
+        {
+          "cijfers": [
+            30601920,
+            33554432,
+            324560,
+            180847
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": false,
+          "ns": 430883650,
+          "ronde": 1
+        },
+        {
+          "cijfers": [
+            30601920,
+            33554432,
+            324560,
+            180847
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": false,
+          "ns": 433929357,
+          "ronde": 2
+        },
+        {
+          "cijfers": [
+            30601920,
+            33554432,
+            486840,
+            259237
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": true,
+          "ns": 257075664,
+          "ronde": 2
+        },
+        {
+          "cijfers": [
+            30601920,
+            33554432,
+            649120,
+            337627
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": true,
+          "ns": 254158499,
+          "ronde": 3
+        },
+        {
+          "cijfers": [
+            30601920,
+            33554432,
+            649120,
+            337627
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": false,
+          "ns": 450181373,
+          "ronde": 3
+        }
+      ],
+      "binaries": {
+        "schema": 1,
+        "productiebron_sha256": "50467df1c30b12f9e4099fbdff2605219fbede51e180c28cf20173284fc03b1a",
+        "bestanden": {
+          "native/onderzoek/writer-encodercache/cache.rs": "1e96646369b76633520be2764c89c283a7301bc7ff1a7ce2fd0ddbc6ccd4578f",
+          "native/onderzoek/writer-encodercache/proef.rs": "6fa8f74c06c86a4fec2117ea357f90573e7ca032a9beee3607009dc067a14aaf",
+          "native/onderzoek/writer-encodercache/uitvoeren.py": "c512daba1f1988f7fa708407206921e1725cf2dffaa6d45a3153626076d1ae43",
+          "native/onderzoek/writer-encodercache/.local/referentie.rs": "d2d28cb81ed385199ec8eb1e6a28b89be9f6dd13a0540892e7fbaa334b11e27f",
+          "native/onderzoek/writer-encodercache/.local/kandidaat.rs": "996027e3da689c55323bd890be1bd92661abf3b6b343159e920bfe40918d948e",
+          "native/onderzoek/writer-encodercache/.local/bron.bin": "abf6c78274a0154f6d3777b4a3953e387a41e7816eda0eee68e6089ffc8a5d55"
+        },
+        "bibliotheken": {
+          "native/onderzoek/writer-deterministische-sortering/.local/target/release/deps/libyrs-ba0aff430bb3b5ef.rlib": "f4699c4040d384d45d5e8c52772e52f99bbcb5fb28e5b120d5ac69ab3d222c8b",
+          "native/onderzoek/writer-deterministische-sortering/.local/target/release/deps/libserde_json-60407851006d7be3.rlib": "c6cf29b8e88db939852ffe9f40f1b750f9438b9b52f0d6c6104869ba16342eb8",
+          "native/onderzoek/writer-deterministische-sortering/.local/target/release/deps/libdocx_edit.rlib": "b131777388d0265c120c8ad9d4b0ff1c8dbf35b058de458668052d8cfa2c0390"
+        },
+        "regressies": {
+          "bouwcode": 0,
+          "exitcode": 0,
+          "elf_sha256": "d64ae6d4ef7e4f6e1d7e2c8b5f1ea74d5f97b1a26fa0fdb2123203d8bbd1bef0"
+        },
+        "meting": {
+          "bouwcode": 0,
+          "exitcode": 0,
+          "elf_sha256": "49ac8a6adc577bbea33077d3faebf9e0295c81508a4af89e6674464bae895cde"
+        }
+      }
+    },
+    {
+      "run": 4,
+      "budget": 33554432,
+      "boekhoudgewicht": 30452531,
+      "referentie_40_snapshots_ns": 1732559612,
+      "kandidaat_40_snapshots_ns": 1024866845,
+      "ratio": 0.5915333809593618,
+      "alle_bytes_exact": true,
+      "rust_proeven_uitgevoerd": 3,
+      "proefacceptatie": true,
+      "ruw": [
+        {
+          "bytes": 5904487,
+          "cijfers": [
+            30452531,
+            33554432,
+            0,
+            24067
+          ],
+          "exact": true,
+          "fase": "koud",
+          "ns": 57910309
+        },
+        {
+          "cijfers": [
+            30452531,
+            33554432,
+            0,
+            24067
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": false,
+          "ns": 427197094,
+          "ronde": 0
+        },
+        {
+          "cijfers": [
+            30452531,
+            33554432,
+            161930,
+            102807
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": true,
+          "ns": 260446642,
+          "ronde": 0
+        },
+        {
+          "cijfers": [
+            30452531,
+            33554432,
+            323860,
+            181547
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": true,
+          "ns": 260835477,
+          "ronde": 1
+        },
+        {
+          "cijfers": [
+            30452531,
+            33554432,
+            323860,
+            181547
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": false,
+          "ns": 434920777,
+          "ronde": 1
+        },
+        {
+          "cijfers": [
+            30452531,
+            33554432,
+            323860,
+            181547
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": false,
+          "ns": 422789811,
+          "ronde": 2
+        },
+        {
+          "cijfers": [
+            30452531,
+            33554432,
+            485790,
+            260287
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": true,
+          "ns": 257194733,
+          "ronde": 2
+        },
+        {
+          "cijfers": [
+            30452531,
+            33554432,
+            647720,
+            339027
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": true,
+          "ns": 246389993,
+          "ronde": 3
+        },
+        {
+          "cijfers": [
+            30452531,
+            33554432,
+            647720,
+            339027
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": false,
+          "ns": 447651930,
+          "ronde": 3
+        }
+      ],
+      "binaries": {
+        "schema": 1,
+        "productiebron_sha256": "50467df1c30b12f9e4099fbdff2605219fbede51e180c28cf20173284fc03b1a",
+        "bestanden": {
+          "native/onderzoek/writer-encodercache/cache.rs": "703e8f412d5d09172a83b07ba0bed176086865a630257b17b4ac11d4662b6fef",
+          "native/onderzoek/writer-encodercache/proef.rs": "6fa8f74c06c86a4fec2117ea357f90573e7ca032a9beee3607009dc067a14aaf",
+          "native/onderzoek/writer-encodercache/uitvoeren.py": "92007df207a61dc2c35dd938bcaa99e06f658e837bdeaeb2728c3420f85abc03",
+          "native/onderzoek/writer-encodercache/.local/referentie.rs": "d2d28cb81ed385199ec8eb1e6a28b89be9f6dd13a0540892e7fbaa334b11e27f",
+          "native/onderzoek/writer-encodercache/.local/kandidaat.rs": "0e221bcd7d937ebee18181e53173b9dbe3d74300d7b635d0271531f3ece46cb4",
+          "native/onderzoek/writer-encodercache/.local/bron.bin": "abf6c78274a0154f6d3777b4a3953e387a41e7816eda0eee68e6089ffc8a5d55"
+        },
+        "bibliotheken": {
+          "native/onderzoek/writer-deterministische-sortering/.local/target/release/deps/libyrs-ba0aff430bb3b5ef.rlib": "f4699c4040d384d45d5e8c52772e52f99bbcb5fb28e5b120d5ac69ab3d222c8b",
+          "native/onderzoek/writer-deterministische-sortering/.local/target/release/deps/libserde_json-60407851006d7be3.rlib": "c6cf29b8e88db939852ffe9f40f1b750f9438b9b52f0d6c6104869ba16342eb8",
+          "native/onderzoek/writer-deterministische-sortering/.local/target/release/deps/libdocx_edit.rlib": "b131777388d0265c120c8ad9d4b0ff1c8dbf35b058de458668052d8cfa2c0390"
+        },
+        "regressies": {
+          "bouwcode": 0,
+          "exitcode": 0,
+          "elf_sha256": "893b75778e0a3726c5bd911ee600ab0460c99b3a26985511b1706c28a1107def"
+        },
+        "meting": {
+          "bouwcode": 0,
+          "exitcode": 0,
+          "elf_sha256": "1b534bd67113f2c2e3e530706d380dae34f6b05ed41e2f4dce13f75155331b18"
+        }
+      }
+    },
+    {
+      "run": 5,
+      "budget": 33554432,
+      "boekhoudgewicht": 30665658,
+      "referentie_40_snapshots_ns": 2175367706,
+      "kandidaat_40_snapshots_ns": 1365150475,
+      "ratio": 0.6275492971761529,
+      "alle_bytes_exact": true,
+      "rust_proeven_uitgevoerd": 3,
+      "proefacceptatie": true,
+      "ruw": [
+        {
+          "bytes": 5904487,
+          "cijfers": [
+            30665658,
+            33554432,
+            0,
+            24067
+          ],
+          "exact": true,
+          "fase": "koud",
+          "ns": 71419708
+        },
+        {
+          "cijfers": [
+            30665658,
+            33554432,
+            0,
+            24067
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": false,
+          "ns": 551047747,
+          "ronde": 0
+        },
+        {
+          "cijfers": [
+            30665658,
+            33554432,
+            162140,
+            102597
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": true,
+          "ns": 335226151,
+          "ronde": 0
+        },
+        {
+          "cijfers": [
+            30665658,
+            33554432,
+            324280,
+            181127
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": true,
+          "ns": 351646519,
+          "ronde": 1
+        },
+        {
+          "cijfers": [
+            30665658,
+            33554432,
+            324280,
+            181127
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": false,
+          "ns": 561468211,
+          "ronde": 1
+        },
+        {
+          "cijfers": [
+            30665658,
+            33554432,
+            324280,
+            181127
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": false,
+          "ns": 530734871,
+          "ronde": 2
+        },
+        {
+          "cijfers": [
+            30665658,
+            33554432,
+            486420,
+            259657
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": true,
+          "ns": 351940372,
+          "ronde": 2
+        },
+        {
+          "cijfers": [
+            30665658,
+            33554432,
+            648560,
+            338187
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": true,
+          "ns": 326337433,
+          "ronde": 3
+        },
+        {
+          "cijfers": [
+            30665658,
+            33554432,
+            648560,
+            338187
+          ],
+          "exact": true,
+          "fase": "warm",
+          "herhalingen": 10,
+          "kandidaat": false,
+          "ns": 532116877,
+          "ronde": 3
+        }
+      ],
+      "binaries": {
+        "schema": 1,
+        "productiebron_sha256": "50467df1c30b12f9e4099fbdff2605219fbede51e180c28cf20173284fc03b1a",
+        "bestanden": {
+          "native/onderzoek/writer-encodercache/cache.rs": "703e8f412d5d09172a83b07ba0bed176086865a630257b17b4ac11d4662b6fef",
+          "native/onderzoek/writer-encodercache/proef.rs": "6fa8f74c06c86a4fec2117ea357f90573e7ca032a9beee3607009dc067a14aaf",
+          "native/onderzoek/writer-encodercache/uitvoeren.py": "c14d27259bcf1a4cbe7e1d2e5ff53d5284123bdb23bd09882e5127fb5816ac45",
+          "native/onderzoek/writer-encodercache/.local/referentie.rs": "d2d28cb81ed385199ec8eb1e6a28b89be9f6dd13a0540892e7fbaa334b11e27f",
+          "native/onderzoek/writer-encodercache/.local/kandidaat.rs": "0e221bcd7d937ebee18181e53173b9dbe3d74300d7b635d0271531f3ece46cb4",
+          "native/onderzoek/writer-encodercache/.local/bron.bin": "abf6c78274a0154f6d3777b4a3953e387a41e7816eda0eee68e6089ffc8a5d55"
+        },
+        "bibliotheken": {
+          "native/onderzoek/writer-deterministische-sortering/.local/target/release/deps/libyrs-ba0aff430bb3b5ef.rlib": "f4699c4040d384d45d5e8c52772e52f99bbcb5fb28e5b120d5ac69ab3d222c8b",
+          "native/onderzoek/writer-deterministische-sortering/.local/target/release/deps/libserde_json-60407851006d7be3.rlib": "c6cf29b8e88db939852ffe9f40f1b750f9438b9b52f0d6c6104869ba16342eb8",
+          "native/onderzoek/writer-deterministische-sortering/.local/target/release/deps/libdocx_edit.rlib": "b131777388d0265c120c8ad9d4b0ff1c8dbf35b058de458668052d8cfa2c0390"
+        },
+        "regressies": {
+          "bouwcode": 0,
+          "exitcode": 0,
+          "elf_sha256": "893b75778e0a3726c5bd911ee600ab0460c99b3a26985511b1706c28a1107def"
+        },
+        "meting": {
+          "bouwcode": 0,
+          "exitcode": 0,
+          "elf_sha256": "1b534bd67113f2c2e3e530706d380dae34f6b05ed41e2f4dce13f75155331b18"
+        }
+      }
+    }
+  ],
+  "grenzen": [
+    "Alleen geïntegreerde bron, geen pending updates.",
+    "Drie specifieke Rust-proeven; geen volledige bestaande kernregressies of SDK-/DOCX-ronden op deze kandidaat.",
+    "Geen GUI-, typing-, selectie-, FPS-, geheugen-RSS- of platform-/editieacceptatie.",
+    "Geen productiepatch, nieuwe release, gesloten issue of migratievlag.",
+    "Boekhoudgewicht is inclusief vaste index en sterk vastgehouden recursieve waarden, geen allocator-RSS-grens."
+  ],
+  "volgende_stap": "Cache afzonderlijk aansluiten op echte bevestigde replica, bytes in bronvoorraad meetellen, bevestiging/afwijzing en koude terugval controleren; dan alle bestaande byte-/SDK-/DOCX-poorten en fysieke GUI-vergelijking.",
+  "bewijsbestanden": {
+    "docs/tests/writer-encodercache/bron.bin.gz": {
+      "sha256": "2796c5ea5d997911e5e0663611be8818becf3c4e744e42820e38fdeadfdea28f",
+      "inhoud_sha256": "abf6c78274a0154f6d3777b4a3953e387a41e7816eda0eee68e6089ffc8a5d55",
+      "bytes": 5904487
+    },
+    "docs/tests/writer-encodercache/referentie.rs.gz": {
+      "sha256": "ece3c9fb6797455181318fe5ee8374bf979798d18a34dba6021f6fc6e85ad681",
+      "inhoud_sha256": "d2d28cb81ed385199ec8eb1e6a28b89be9f6dd13a0540892e7fbaa334b11e27f",
+      "bytes": 10236
+    },
+    "docs/tests/writer-encodercache/kandidaat.rs.gz": {
+      "sha256": "47c7b394db5e31d724f9029d35686f757157a68887009ed1a9cde4f7b268a29d",
+      "inhoud_sha256": "0e221bcd7d937ebee18181e53173b9dbe3d74300d7b635d0271531f3ece46cb4",
+      "bytes": 18620
+    },
+    "docs/tests/writer-encodercache/afgekeurde-start.json.gz": {
+      "sha256": "690b2bf6633a7f011e133c0399ac0d6a29b76d468398790599f59ffc637e35ef",
+      "inhoud_sha256": "4c8c251ba108e67bdd67f736679bce07bd4e481e4f38194dd730236e13f8844a",
+      "bytes": 222
+    },
+    "docs/tests/writer-encodercache/afkeuring-proeffilter.json.gz": {
+      "sha256": "f4f8051a77f06ea346fc38125fe4eb78b4eaa1071e2709ab5ed82bb595f92c92",
+      "inhoud_sha256": "6529dbe596bb22daac95128b39d36ce65850f4726eb982cf74ebe4e8d2238937",
+      "bytes": 387
+    },
+    "docs/tests/writer-encodercache/python-tests.log.gz": {
+      "sha256": "0354612c3cdf1812d6198cb7ac569a21fffa8eb227abfa54d2dd1c01bf0b2770",
+      "inhoud_sha256": "7ca23f7d40d7c522e1b74fa9599bcd46847c6960a48bc897fbe8ee088111af99",
+      "bytes": 15417
+    },
+    "docs/tests/writer-encodercache/1/kandidaat.rs.gz": {
+      "sha256": "303af6eeaa3a9f372a695528a88bcf5ffcf7c83c8547dc95113020759b0a42c2",
+      "inhoud_sha256": "996027e3da689c55323bd890be1bd92661abf3b6b343159e920bfe40918d948e",
+      "bytes": 16799
+    },
+    "docs/tests/writer-encodercache/1/meting-bouw.log.gz": {
+      "sha256": "1182d89d9898b525a5b643663bd99d39585fbd5de5580500afe6c2aa8c579061",
+      "inhoud_sha256": "94bdb1d638713151e361b15bfb971d0b39cdeb916864ace05bc181325e7f63d8",
+      "bytes": 4660
+    },
+    "docs/tests/writer-encodercache/1/meting.jsonl.gz": {
+      "sha256": "7e3b7c0fa9c134b3e27bbb483c7f3374f18eace4b125ce4aa9b24362e173e843",
+      "inhoud_sha256": "4f6b7599cd126d5077c4aa629c164376662e9d1bcae198a7d6246373a458e63e",
+      "bytes": 1128
+    },
+    "docs/tests/writer-encodercache/1/uitvoeren.py.gz": {
+      "sha256": "2a0ea6313b4399479298a59b7bed36c5f9b0386f62ddd9ed02c7aff94ea23083",
+      "inhoud_sha256": "d9b0372c0b158bb6b191b6fc67a60f9c35e2b4ad9ac296f858b27ab36dd1f89c",
+      "bytes": 4514
+    },
+    "docs/tests/writer-encodercache/1/regressies-bouw.log.gz": {
+      "sha256": "3e6bdff4c2494da2f47dd43fd2786d30bf8250b00aa23fe33eb06cdb51b1e8b4",
+      "inhoud_sha256": "7b7aee7c0d18820b056382795555e7968eb5625ce149f6735713726a51752e68",
+      "bytes": 4293
+    },
+    "docs/tests/writer-encodercache/1/uitkomst.json.gz": {
+      "sha256": "c6f9f5d53d9ba2840e280592fc9ddd98255f87720cf04cd8461952400db99cf3",
+      "inhoud_sha256": "dc9dc78a57306f63e5e3716bef9262e8828d5bc68790f53ffd4fe0d95cbde579",
+      "bytes": 1747
+    },
+    "docs/tests/writer-encodercache/1/cache.rs.gz": {
+      "sha256": "29b6e192399e539dd9e602b6bb486f893daca42bb6b663ca82c37c0a60f9e7a0",
+      "inhoud_sha256": "1e96646369b76633520be2764c89c283a7301bc7ff1a7ce2fd0ddbc6ccd4578f",
+      "bytes": 6351
+    },
+    "docs/tests/writer-encodercache/1/proef.rs.gz": {
+      "sha256": "dc6f5a50e751b9c1872c903bce452b10ac6c420742b68d4bfe0ca48944307f5c",
+      "inhoud_sha256": "14a7ec9b88d5a8bfdf0e6ef5f44229b7d30d81415f62acd387c98c746fa9f711",
+      "bytes": 1530
+    },
+    "docs/tests/writer-encodercache/1/regressies.jsonl.gz": {
+      "sha256": "b4dd96fd57e446b7b038b733932af6cfe58e17eace8d6089401226bc139ab46c",
+      "inhoud_sha256": "7dcf7977672f3caa3ce6fb9f0e76cb6626c74a163ec59fbe85cfe88787b49101",
+      "bytes": 113
+    },
+    "docs/tests/writer-encodercache/2/kandidaat.rs.gz": {
+      "sha256": "303af6eeaa3a9f372a695528a88bcf5ffcf7c83c8547dc95113020759b0a42c2",
+      "inhoud_sha256": "996027e3da689c55323bd890be1bd92661abf3b6b343159e920bfe40918d948e",
+      "bytes": 16799
+    },
+    "docs/tests/writer-encodercache/2/meting-bouw.log.gz": {
+      "sha256": "1182d89d9898b525a5b643663bd99d39585fbd5de5580500afe6c2aa8c579061",
+      "inhoud_sha256": "94bdb1d638713151e361b15bfb971d0b39cdeb916864ace05bc181325e7f63d8",
+      "bytes": 4660
+    },
+    "docs/tests/writer-encodercache/2/meting.jsonl.gz": {
+      "sha256": "8baa79be6fad24210e8aad00cf8c80b6001735e3b3468b56b7ca6064a09d010f",
+      "inhoud_sha256": "a2950fba67d11d05337880c5614e1848590d7b043dceee88404b802e3fa913ae",
+      "bytes": 1150
+    },
+    "docs/tests/writer-encodercache/2/uitvoeren.py.gz": {
+      "sha256": "4bbe15c71b0572e168f73674765c89570c6c42b9417202727b9db645bc9f2884",
+      "inhoud_sha256": "c512daba1f1988f7fa708407206921e1725cf2dffaa6d45a3153626076d1ae43",
+      "bytes": 4555
+    },
+    "docs/tests/writer-encodercache/2/regressies-bouw.log.gz": {
+      "sha256": "3e6bdff4c2494da2f47dd43fd2786d30bf8250b00aa23fe33eb06cdb51b1e8b4",
+      "inhoud_sha256": "7b7aee7c0d18820b056382795555e7968eb5625ce149f6735713726a51752e68",
+      "bytes": 4293
+    },
+    "docs/tests/writer-encodercache/2/uitkomst.json.gz": {
+      "sha256": "bc3c2aaf52c2d6690ea51b09f0de8b07f36557f289370399e90e6505431e3def",
+      "inhoud_sha256": "1158bc6b333d071a498324739f1842c47a08da026826c243b8b553f9062999db",
+      "bytes": 1747
+    },
+    "docs/tests/writer-encodercache/2/cache.rs.gz": {
+      "sha256": "29b6e192399e539dd9e602b6bb486f893daca42bb6b663ca82c37c0a60f9e7a0",
+      "inhoud_sha256": "1e96646369b76633520be2764c89c283a7301bc7ff1a7ce2fd0ddbc6ccd4578f",
+      "bytes": 6351
+    },
+    "docs/tests/writer-encodercache/2/proef.rs.gz": {
+      "sha256": "88a4ddf0cf7e4312dcfae1f873a00d4a27ea8bb29a4e0486d2bbdf08fcfb0ad8",
+      "inhoud_sha256": "6fa8f74c06c86a4fec2117ea357f90573e7ca032a9beee3607009dc067a14aaf",
+      "bytes": 1622
+    },
+    "docs/tests/writer-encodercache/2/regressies.jsonl.gz": {
+      "sha256": "b4dd96fd57e446b7b038b733932af6cfe58e17eace8d6089401226bc139ab46c",
+      "inhoud_sha256": "7dcf7977672f3caa3ce6fb9f0e76cb6626c74a163ec59fbe85cfe88787b49101",
+      "bytes": 113
+    },
+    "docs/tests/writer-encodercache/3/kandidaat.rs.gz": {
+      "sha256": "303af6eeaa3a9f372a695528a88bcf5ffcf7c83c8547dc95113020759b0a42c2",
+      "inhoud_sha256": "996027e3da689c55323bd890be1bd92661abf3b6b343159e920bfe40918d948e",
+      "bytes": 16799
+    },
+    "docs/tests/writer-encodercache/3/meting-bouw.log.gz": {
+      "sha256": "1182d89d9898b525a5b643663bd99d39585fbd5de5580500afe6c2aa8c579061",
+      "inhoud_sha256": "94bdb1d638713151e361b15bfb971d0b39cdeb916864ace05bc181325e7f63d8",
+      "bytes": 4660
+    },
+    "docs/tests/writer-encodercache/3/meting.jsonl.gz": {
+      "sha256": "e846092f357400823e55cef22f9691309f50eb9ea801df44388b025fce4f7a5a",
+      "inhoud_sha256": "c756efb77d139d3396fad10009a527ff985518611720df7a4ffde2db1fafab1b",
+      "bytes": 1151
+    },
+    "docs/tests/writer-encodercache/3/uitvoeren.py.gz": {
+      "sha256": "4bbe15c71b0572e168f73674765c89570c6c42b9417202727b9db645bc9f2884",
+      "inhoud_sha256": "c512daba1f1988f7fa708407206921e1725cf2dffaa6d45a3153626076d1ae43",
+      "bytes": 4555
+    },
+    "docs/tests/writer-encodercache/3/regressies-bouw.log.gz": {
+      "sha256": "3e6bdff4c2494da2f47dd43fd2786d30bf8250b00aa23fe33eb06cdb51b1e8b4",
+      "inhoud_sha256": "7b7aee7c0d18820b056382795555e7968eb5625ce149f6735713726a51752e68",
+      "bytes": 4293
+    },
+    "docs/tests/writer-encodercache/3/uitkomst.json.gz": {
+      "sha256": "bc3c2aaf52c2d6690ea51b09f0de8b07f36557f289370399e90e6505431e3def",
+      "inhoud_sha256": "1158bc6b333d071a498324739f1842c47a08da026826c243b8b553f9062999db",
+      "bytes": 1747
+    },
+    "docs/tests/writer-encodercache/3/cache.rs.gz": {
+      "sha256": "29b6e192399e539dd9e602b6bb486f893daca42bb6b663ca82c37c0a60f9e7a0",
+      "inhoud_sha256": "1e96646369b76633520be2764c89c283a7301bc7ff1a7ce2fd0ddbc6ccd4578f",
+      "bytes": 6351
+    },
+    "docs/tests/writer-encodercache/3/proef.rs.gz": {
+      "sha256": "88a4ddf0cf7e4312dcfae1f873a00d4a27ea8bb29a4e0486d2bbdf08fcfb0ad8",
+      "inhoud_sha256": "6fa8f74c06c86a4fec2117ea357f90573e7ca032a9beee3607009dc067a14aaf",
+      "bytes": 1622
+    },
+    "docs/tests/writer-encodercache/3/regressies.jsonl.gz": {
+      "sha256": "b4dd96fd57e446b7b038b733932af6cfe58e17eace8d6089401226bc139ab46c",
+      "inhoud_sha256": "7dcf7977672f3caa3ce6fb9f0e76cb6626c74a163ec59fbe85cfe88787b49101",
+      "bytes": 113
+    },
+    "docs/tests/writer-encodercache/4/kandidaat.rs.gz": {
+      "sha256": "47c7b394db5e31d724f9029d35686f757157a68887009ed1a9cde4f7b268a29d",
+      "inhoud_sha256": "0e221bcd7d937ebee18181e53173b9dbe3d74300d7b635d0271531f3ece46cb4",
+      "bytes": 18620
+    },
+    "docs/tests/writer-encodercache/4/meting-bouw.log.gz": {
+      "sha256": "1182d89d9898b525a5b643663bd99d39585fbd5de5580500afe6c2aa8c579061",
+      "inhoud_sha256": "94bdb1d638713151e361b15bfb971d0b39cdeb916864ace05bc181325e7f63d8",
+      "bytes": 4660
+    },
+    "docs/tests/writer-encodercache/4/meting.jsonl.gz": {
+      "sha256": "c1d033e12c456ae639c233de5254630f33cd20e6f4cfa57a45ef526eb96cd59d",
+      "inhoud_sha256": "bb3520a8d1b3c5762ba4263cdd8b489034ecb0ecd4a43ec5e303a590a2d86889",
+      "bytes": 1151
+    },
+    "docs/tests/writer-encodercache/4/uitvoeren.py.gz": {
+      "sha256": "2c5d4d2c9c7054183013f8bcbef7a3f8f32b6e7ae914bd13c588f535255d6136",
+      "inhoud_sha256": "92007df207a61dc2c35dd938bcaa99e06f658e837bdeaeb2728c3420f85abc03",
+      "bytes": 4557
+    },
+    "docs/tests/writer-encodercache/4/regressies-bouw.log.gz": {
+      "sha256": "3e6bdff4c2494da2f47dd43fd2786d30bf8250b00aa23fe33eb06cdb51b1e8b4",
+      "inhoud_sha256": "7b7aee7c0d18820b056382795555e7968eb5625ce149f6735713726a51752e68",
+      "bytes": 4293
+    },
+    "docs/tests/writer-encodercache/4/uitkomst.json.gz": {
+      "sha256": "bb654bfa5ee67a42eabcc6cf4d212b4ec443c5d3608a57e8b137a022394a3732",
+      "inhoud_sha256": "335e43835b51b907f6a6481b04e879e774a11606ac2ded20c9fcdcda187da77d",
+      "bytes": 1747
+    },
+    "docs/tests/writer-encodercache/4/cache.rs.gz": {
+      "sha256": "da6c810daa155be0d831a00a57e34f6765cf7250ce5fdbf0a755fbc0a906d8d3",
+      "inhoud_sha256": "703e8f412d5d09172a83b07ba0bed176086865a630257b17b4ac11d4662b6fef",
+      "bytes": 8172
+    },
+    "docs/tests/writer-encodercache/4/proef.rs.gz": {
+      "sha256": "88a4ddf0cf7e4312dcfae1f873a00d4a27ea8bb29a4e0486d2bbdf08fcfb0ad8",
+      "inhoud_sha256": "6fa8f74c06c86a4fec2117ea357f90573e7ca032a9beee3607009dc067a14aaf",
+      "bytes": 1622
+    },
+    "docs/tests/writer-encodercache/4/regressies.jsonl.gz": {
+      "sha256": "3fe3a14a73ba54fa7d3a89d393292d9bef3abf01478d8ea1a685967b47d63bfb",
+      "inhoud_sha256": "a4e9cfe22dd2eb296da3d0df2e7a76b806ec37cd556f34c86d5b24483ddc65e5",
+      "bytes": 358
+    },
+    "docs/tests/writer-encodercache/5/kandidaat.rs.gz": {
+      "sha256": "47c7b394db5e31d724f9029d35686f757157a68887009ed1a9cde4f7b268a29d",
+      "inhoud_sha256": "0e221bcd7d937ebee18181e53173b9dbe3d74300d7b635d0271531f3ece46cb4",
+      "bytes": 18620
+    },
+    "docs/tests/writer-encodercache/5/meting-bouw.log.gz": {
+      "sha256": "1182d89d9898b525a5b643663bd99d39585fbd5de5580500afe6c2aa8c579061",
+      "inhoud_sha256": "94bdb1d638713151e361b15bfb971d0b39cdeb916864ace05bc181325e7f63d8",
+      "bytes": 4660
+    },
+    "docs/tests/writer-encodercache/5/meting.jsonl.gz": {
+      "sha256": "79676f17710f07b3f77fa34df3d5f39657f337e821f80edf237c90786edbae0e",
+      "inhoud_sha256": "64973f05b5bd5eb1346fa96296c36b7f20826d64c8a8079e70c8969caae21590",
+      "bytes": 1151
+    },
+    "docs/tests/writer-encodercache/5/uitvoeren.py.gz": {
+      "sha256": "f02846943fe9ddf8d6310038c609eb7d5948ed94ad2ec7ccb5b2aa0f12a8247d",
+      "inhoud_sha256": "c14d27259bcf1a4cbe7e1d2e5ff53d5284123bdb23bd09882e5127fb5816ac45",
+      "bytes": 5269
+    },
+    "docs/tests/writer-encodercache/5/regressies-bouw.log.gz": {
+      "sha256": "3e6bdff4c2494da2f47dd43fd2786d30bf8250b00aa23fe33eb06cdb51b1e8b4",
+      "inhoud_sha256": "7b7aee7c0d18820b056382795555e7968eb5625ce149f6735713726a51752e68",
+      "bytes": 4293
+    },
+    "docs/tests/writer-encodercache/5/uitkomst.json.gz": {
+      "sha256": "bbfd9dbf2a26772d0affecd5fce269360f06bcba1fd56c27746f3ae9f9f6ab00",
+      "inhoud_sha256": "c485dec81461bca509bffbadd69f739999a0b0cde6d26f7732f82e516fa32cb8",
+      "bytes": 1747
+    },
+    "docs/tests/writer-encodercache/5/cache.rs.gz": {
+      "sha256": "da6c810daa155be0d831a00a57e34f6765cf7250ce5fdbf0a755fbc0a906d8d3",
+      "inhoud_sha256": "703e8f412d5d09172a83b07ba0bed176086865a630257b17b4ac11d4662b6fef",
+      "bytes": 8172
+    },
+    "docs/tests/writer-encodercache/5/proef.rs.gz": {
+      "sha256": "88a4ddf0cf7e4312dcfae1f873a00d4a27ea8bb29a4e0486d2bbdf08fcfb0ad8",
+      "inhoud_sha256": "6fa8f74c06c86a4fec2117ea357f90573e7ca032a9beee3607009dc067a14aaf",
+      "bytes": 1622
+    },
+    "docs/tests/writer-encodercache/5/regressies.jsonl.gz": {
+      "sha256": "3fe3a14a73ba54fa7d3a89d393292d9bef3abf01478d8ea1a685967b47d63bfb",
+      "inhoud_sha256": "a4e9cfe22dd2eb296da3d0df2e7a76b806ec37cd556f34c86d5b24483ddc65e5",
+      "bytes": 358
+    }
+  }
+}
