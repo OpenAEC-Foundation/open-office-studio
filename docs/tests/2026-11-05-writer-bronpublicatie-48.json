@@ -1,0 +1,112 @@
+{
+  "schema": 1,
+  "datum": "2026-11-05",
+  "bronrevisie": "b6df100b4497bca1caa0adefed302a4d82d1f699",
+  "versie": "2026.45.48",
+  "geslaagd": true,
+  "programma_sha256": "f4a601f74375afe406750166010c809774225a44912288e866354f580478a784",
+  "script_sha256": "93f7efb716f27f59f4cd10f604c198368347a9206d5f3f87b1ec11218b811951",
+  "getekende_tekst_ms": 26434,
+  "toetsen_verzonden_ms": 4069,
+  "broncontrole": {
+    "verhalen": 1537,
+    "alinea_en_celteksten": 3329,
+    "exact": true
+  },
+  "fouten_na": {
+    "gui": [],
+    "engine": [],
+    "console": []
+  },
+  "wrappers_hersteld": true,
+  "methoden": {
+    "encodeStickyPosition": {
+      "aantal": 284,
+      "totaal_ms": 4.0,
+      "max_ms": 1.0
+    },
+    "resolveStickyPosition": {
+      "aantal": 280,
+      "totaal_ms": 89.0,
+      "max_ms": 2.0
+    },
+    "encodeStateAsUpdate": {
+      "aantal": 71,
+      "totaal_ms": 172.0,
+      "max_ms": 73.0
+    },
+    "applyLocalUpdate": {
+      "aantal": 70,
+      "totaal_ms": 396.0,
+      "max_ms": 11
+    },
+    "setSelection": {
+      "aantal": 70,
+      "totaal_ms": 659.0,
+      "max_ms": 23
+    }
+  },
+  "oorspronkelijke_afkeuring": "De tijdelijke native-transportwrapper weigert terecht de niet-overschrijfbare invoke-eigenschap. Afgekeurd vóór de invoer; geen transportduur verkregen. Ongewijzigde ELF en afgekeurde meetcode/rapport blijven behouden.",
+  "meetcontrole": "Werkelijke JS-meethelper in node:vm gecontroleerd op this, argumenten, returnwaarde, bronfout en herstel van oorspronkelijke methoden.",
+  "visueel": "Eindbeeld bekeken: laatste alinea aanwezig in donkere documentweergave; geen zwart document of foutmelding. Geen nieuwe volledige pixelacceptatie.",
+  "grenzen": [
+    "Alleen synchrone inclusieve methodeduur; geen volledige publicatie-, native transport-, worker- of CPUmeting",
+    "Geïnstrumenteerde ronde onder lokale systeembelasting; geen nieuwe stille snelheidsvergelijking en geen regressie-/winstclaim",
+    "Productcode en pakketversie ongewijzigd; oorspronkelijke geheugenfout en invoervertraging blijven open"
+  ],
+  "vervolg": "Optionele begrensde brongebonden tijdregistratie rondom voorbereiding, transport en SDK-publicatie ontwerpen en testen; immutable native transport niet omzeilen. Daarna pas een volgende optimalisatie kiezen.",
+  "bewijsbestanden": [
+    {
+      "pad": "docs/tests/writer-bronpublicatie-48/afgekeurd-profiel.json.gz",
+      "sha256": "2a2a93934e3ec7220136c161b326eb9dd217cfac041151ab8a06695e263260fa"
+    },
+    {
+      "pad": "docs/tests/writer-bronpublicatie-48/afgekeurd-uitkomsten.json.gz",
+      "sha256": "e27310b42bb95cd4aa3c8d71a831aae17f920f9b2750095337fa84d826aaf183"
+    },
+    {
+      "pad": "docs/tests/writer-bronpublicatie-48/afgekeurd.log.gz",
+      "sha256": "d5772a83d204d974e1c6b6de4e43e1e0d300d04c25fb25aec94dca24f63fa209"
+    },
+    {
+      "pad": "docs/tests/writer-bronpublicatie-48/controle-bronpublicatie48.cjs.gz",
+      "sha256": "bd1ad235f840e422b8c6f301eca8980a388aaf78b41ca6939f57977414d7e61e"
+    },
+    {
+      "pad": "docs/tests/writer-bronpublicatie-48/meet-bronpublicatie48.js.gz",
+      "sha256": "fa7a8413dc7a1ef9a980a752a76cf024a6bba4566b0ae236560e3eb23d42e1a5"
+    },
+    {
+      "pad": "docs/tests/writer-bronpublicatie-48/meet-bronpublicatie48.py.gz",
+      "sha256": "56b1deeaf03b91cb9462f4df9550d95d7876cf27b225d2b819cc320578d7a96e"
+    },
+    {
+      "pad": "docs/tests/writer-bronpublicatie-48/meet-native48-afgekeurd.js.gz",
+      "sha256": "08136e07eaeac3ca3c3b4a19c93bd1c63259944a3710625168ad62d73f31a309"
+    },
+    {
+      "pad": "docs/tests/writer-bronpublicatie-48/meet-native48-afgekeurd.py.gz",
+      "sha256": "f09aa0399373b99ef9a7acf511c3fd9fb5669a445188998ee125871f2e2e56bb"
+    },
+    {
+      "pad": "docs/tests/writer-bronpublicatie-48/profiel.json.gz",
+      "sha256": "358c32ff162562acac2c907ccaa131d2b457e21cde77bea0d09be99bcf48b183"
+    },
+    {
+      "pad": "docs/tests/writer-bronpublicatie-48/profiel.png",
+      "sha256": "e72695fc5bd6901e820ee91ce212bf703bc48b8307251b09d69f4c93e9f75627"
+    },
+    {
+      "pad": "docs/tests/writer-bronpublicatie-48/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "pad": "docs/tests/writer-bronpublicatie-48/uitkomsten.json.gz",
+      "sha256": "40bdbcf08d051341cdc4087bc05c8849ad0a8c39873bb15a76c6295f64d5c8cd"
+    },
+    {
+      "pad": "docs/tests/writer-bronpublicatie-48/voer-bronpublicatie48.py.gz",
+      "sha256": "86981b9a7d4a7fd46b9b0e0da1ad727a3e1180016c01d51aa984c1faa98015e1"
+    }
+  ]
+}

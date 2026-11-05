@@ -72,3 +72,27 @@ gemeten: deze meting verklaart niet de volledige invoervertraging. Nieuwe
 hergebruikslagen mogen bron-, versie- en eigenaarsbewaking niet omzeilen.
 
 [Exacte 48-tellers, herkomststacks, scripts en grenzen](2026-11-05-writer-sessielezers-48.json).
+
+
+## Afzonderlijke bronmutatie op 45.48
+
+De oorspronkelijke tijdelijke native-transportmeting stopt vóór het typen:
+de werkelijke `invoke`-eigenschap is niet overschrijfbaar. De afgeschermde
+transportlaag is niet omzeild. De negatieve meetcode en uitkomst blijven bewaard;
+er is hiermee geen native voorbereidings- of transportduur gemeten.
+
+Een volgende proef meet alleen de bestaande synchrone bronmethoden op dezelfde
+48-ELF. Zeventig `applyLocalUpdate`-aanroepen kosten samen 396 ms, zeventig
+`setSelection`-aanroepen 659 ms, 71 momentopnamen 172 ms en de sticky-cursorbinding
+samen 93 ms. Deze inclusieve tijden verklaren geen volledige doorlooptijd:
+de getypte alinea is na 26.434 ms getekend. Alle 3.329 teksten in 1.537 verhalen
+blijven exact, alle foutlijsten zijn leeg en de wrappers zijn hersteld.
+Het eindbeeld is bekeken. De instrumentatie en lokale belasting maken dit geen
+nieuwe rustige snelheidsvergelijking.
+
+Vervolg: begrensde tijdregistratie aan de eigen bronkoppeling en SDK-publicatie,
+met eigenaar-/versiebinding en ongewijzigde promise- en invoervolgorde. De totale
+native wachttijd mag niet als Rust-CPUtijd worden aangemerkt. Er is geen
+productwijziging, snelheidsacceptatie of gesloten stabiliteitsissue.
+
+[Bronmutatietellers, afgekeurde transportmeting, scripts en eindbeeld](2026-11-05-writer-bronpublicatie-48.json).
