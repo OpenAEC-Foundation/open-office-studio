@@ -197,3 +197,38 @@ De brede functie-issue is hiermee nog niet volledig afgetekend.
 
 Volledige controle: 136 testbestanden, 1.570 geslaagde en zeven overgeslagen
 tests; typecontrole en productiebuild geslaagd.
+
+
+## Hoge tabelcellen en actuele celselectie (#138, aanvulling #129)
+
+Een klik onderin een hoge cel plaatste de cursor soms in de alinea na de
+tabel. De muisroute toetst nu eerst het werkelijk getekende celvlak en zoekt
+daarbinnen de bijbehorende tekstpositie. Randen behouden hun eigen bediening.
+De selectie blijft de bestaande bewerkingswachtrij gebruiken.
+
+Twee interne meldingssleutels hielden de eerste celselectie vast zolang de
+tekstcursor gelijk bleef. Beide bevatten nu ook de celselectie. Het eigen
+selectievlak en de kolomgrepen volgen bovendien gemeten celgrenzen wanneer
+de tabel smaller wordt getekend dan de opgeslagen kolombreedtes.
+
+Zeven engineproeven behandelen de bronankers en echte lay-out met hoge cellen,
+een ingevoegde kolom, samenvoegen, marges, tekstrichting en gemengde inhoud.
+Vier rasterproeven behandelen schaling, samengevoegde cellen en ontbrekende
+grenzen. In de productie-interface zijn lege en gevulde cellen aangeklikt,
+kolommen ingevoegd, celmarges en tekstrichting veranderd en een andere zoom
+gebruikt. Invoer bleef in de gekozen cel. Selecteren in beide richtingen
+geeft direct alle zes celvlakken. Samenvoegen en terugdraaien met de lintknop
+behouden inhoud en celopmaak. Toetsenbord-undo met de focus op een lintknop
+is daarmee niet afgetekend en blijft onderdeel van de sneltoetscontrole.
+
+Onafhankelijke XML-controle van de download bevestigt twee rijen met drie
+cellen, de oorspronkelijke teksten en de gedraaide middelste cel. Na
+heropenen zijn de zes cellen opnieuw geselecteerd en is onderin de rechtercel
+tekst ingevoerd; die verschijnt binnen de cel.
+[Interfacebewijs](../screenshots/test-tauri-tabelcursor-2026-11-05.png).
+
+Volledige controle: `pnpm exec vitest run --maxWorkers=2` slaagt met 138
+bestanden, 1.581 geslaagde en zeven overgeslagen tests. Onbegrensde gelijktijdige
+WASM-initialisatie raakte op deze machine de bestaande starttijdlimiet;
+begrensde uitvoering slaagt zonder ruimere tijdlimieten. Typecontrole en
+productiebuild slagen eveneens.

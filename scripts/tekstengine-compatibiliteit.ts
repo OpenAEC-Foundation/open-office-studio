@@ -9,6 +9,24 @@ const CEL = 'Te=useCallback((h,H=true)=>{if(!u)return  false;let z=ke(),X=z?wa(z
 const VERLAAT = 'let vn=Ea$1(u,{story:X.story,tableIndex:X.tableIndex});if(vn)return Tt(vn),true;u.insertRow(X,"below")';
 const LINKTEKST = 'displayText:ge?.displayText??ft';
 const LINKVERVANGING = '||wt)&&T.displayText){let un=';
+const TABELPUNT = 'return U?resolveCanvasPoint(U,P,E,N,{clampToNearestPage:Z}):null},[P,x,t])';
+const CELSELECTIE = [
+  ['JSON.stringify([Kn.context,Kn.tableContext,Kn.range.story,Kn.startParagraphIndex,Kn.endParagraphIndex])', 'JSON.stringify([Kn.context,Kn.tableContext,Kn.range.story,Kn.startParagraphIndex,Kn.endParagraphIndex,re.cellSelection()])'],
+  ['Kn=Wn?JSON.stringify([Wn.anchor,Wn.head]):`${T.anchor}:${T.head}`', 'Kn=JSON.stringify([Wn?.anchor??T.anchor,Wn?.head??T.head,re?.cellSelection()??null])'],
+] as const;
+
+export function herstelTabelKlik(bron: string): string {
+  for (const stuk of [TABELPUNT, ...CELSELECTIE.map(([oud]) => oud)]) {
+    if (bron.split(stuk).length !== 2)
+      throw new Error("De tekstengine is gewijzigd; controleer eerst de aansluiting voor tabelklikken.");
+  }
+  let uit = bron.replace(TABELPUNT,
+    'return U?oosTabelPunt(P,resolveCanvasPoint(U,P,E,N,{clampToNearestPage:Z}),!i&&!m?a(r):null):null},[P,x,t,i,m,a,r])');
+  // Een ander celbereik verandert de tekstcursor niet. De meldingen aan
+  // lint, statusbalk en overlays moeten dit bereik daarom apart volgen.
+  for (const [oud, nieuw] of CELSELECTIE) uit = uit.replace(oud, nieuw);
+  return 'import { herstelTabelPunt as oosTabelPunt } from "openaec-tekst-tabelpunt";\n' + uit;
+}
 
 /** De treffervlakken bevatten losse letters; de sessie kent de hele koppeling. */
 export function herstelHyperlinkTekst(bron: string): string {
@@ -39,10 +57,12 @@ export function tekstengineCompatibiliteit(): Plugin {
     resolveId(id) {
       if (id === "openaec-tekst-cel")
         return fileURLToPath(new URL("../src/tekst/tabel/navigatie.ts", import.meta.url));
+      if (id === "openaec-tekst-tabelpunt")
+        return fileURLToPath(new URL("../src/tekst/tabel/klik.ts", import.meta.url));
     },
     transform(bron, id) {
       if (!/\/@betteroffice\/docx-react\/dist\/index\.mjs(?:\?.*)?$/.test(id)) return;
-      return { code: herstelHyperlinkTekst(herstelTabelInvoer(bron)), map: null };
+      return { code: herstelTabelKlik(herstelHyperlinkTekst(herstelTabelInvoer(bron))), map: null };
     },
   };
 }
