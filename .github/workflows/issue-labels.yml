@@ -23,35 +23,41 @@ jobs:
             const areas = ['tekst', 'rekenblad', 'presentatie', 'notities', 'algemeen', 'agenda', 'database'];
             const types = ['bug', 'enhancement', 'documentation', 'onderzoek', 'routekaart'];
             const areaChoices = new Map([
+              ['Writer', 'tekst'], ['Spreadsheet', 'rekenblad'],
+              ['Presentation', 'presentatie'], ['Notition', 'notities'],
+              ['General', 'algemeen'], ['Calendar', 'agenda'], ['Database', 'database'],
               ['Writer (tekst)', 'tekst'], ['Spreadsheet (rekenblad)', 'rekenblad'],
               ['Presentatie (presentatie)', 'presentatie'], ['Notition (notities)', 'notities'],
               ['Algemeen (algemeen)', 'algemeen'], ['Agenda (agenda)', 'agenda'],
               ['Database (database)', 'database'],
             ]);
             const typeChoices = new Map([
+              ['Bug', 'bug'], ['Enhancement or new feature', 'enhancement'],
+              ['Documentation', 'documentation'], ['Research', 'onderzoek'],
+              ['Roadmap / tracking issue', 'routekaart'],
               ['Bug (bug)', 'bug'], ['Verbetering of nieuwe functie (enhancement)', 'enhancement'],
               ['Documentatie (documentation)', 'documentation'], ['Onderzoek (onderzoek)', 'onderzoek'],
               ['Routekaart / verzamelissue (routekaart)', 'routekaart'],
             ]);
             const body = (issue.body || '').replace(/\r\n/g, '\n');
-            function field(name) {
+            function field(...names) {
               const sections = body.split(/^### /m).slice(1);
-              const matches = sections.filter(section => section.split('\n', 1)[0].trim() === name);
+              const matches = sections.filter(section => names.includes(section.split('\n', 1)[0].trim()));
               // Dubbele koppen zijn dubbelzinnig: geen automatische keuze.
               return matches.length === 1 ? matches[0].slice(matches[0].indexOf('\n') + 1).trim() : '';
             }
             const additions = new Set();
             if (!areas.some(label => labels.has(label))) {
-              const selected = field('Onderdeel').split(',').map(value => value.trim());
+              const selected = field('Module', 'Onderdeel').split(',').map(value => value.trim());
               if (selected.length && selected.every(value => areaChoices.has(value))) {
                 selected.forEach(value => additions.add(areaChoices.get(value)));
               }
             }
-            if (!types.some(label => labels.has(label)) && typeChoices.has(field('Soort werk'))) {
-              additions.add(typeChoices.get(field('Soort werk')));
+            if (!types.some(label => labels.has(label)) && typeChoices.has(field('Work type', 'Soort werk'))) {
+              additions.add(typeChoices.get(field('Work type', 'Soort werk')));
             }
-            if (field('UI / bediening') === 'Ja') additions.add('ui');
-            if (field('Bestandsformaten') === 'Ja') additions.add('formaten');
+            if (['Yes', 'Ja'].includes(field('UI / interaction', 'UI / bediening'))) additions.add('ui');
+            if (['Yes', 'Ja'].includes(field('File formats', 'Bestandsformaten'))) additions.add('formaten');
             const missing = [...additions].filter(label => !labels.has(label));
             if (missing.length) {
               // Nieuwe labels één keer aanmaken als ze nog niet bestaan.
@@ -75,7 +81,7 @@ jobs:
               missing.forEach(label => labels.add(label));
             }
             const errors = [];
-            if (!areas.some(label => labels.has(label))) errors.push(`Kies ten minste één onderdeel: ${areas.join(', ')}.`);
-            if (!types.some(label => labels.has(label))) errors.push(`Kies ten minste één soort werk: ${types.join(', ')}.`);
-            if (errors.length) core.setFailed(`Issue #${issue_number}: ${errors.join(' ')} Zie docs/issue-labels.md.`);
-            else core.info(`Issue #${issue_number}: onderdeel en soort werk zijn aanwezig.`);
+            if (!areas.some(label => labels.has(label))) errors.push(`Choose at least one module label: ${areas.join(', ')}.`);
+            if (!types.some(label => labels.has(label))) errors.push(`Choose at least one work-type label: ${types.join(', ')}.`);
+            if (errors.length) core.setFailed(`Issue #${issue_number}: ${errors.join(' ')} See docs/issue-labels.md.`);
+            else core.info(`Issue #${issue_number}: module and work-type labels are present.`);

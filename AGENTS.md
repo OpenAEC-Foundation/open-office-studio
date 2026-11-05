@@ -2,6 +2,11 @@
 
 ## Issues aanmaken en bijwerken
 
+Schrijf titels en beschrijvingen van issues in het Engels. Behoud technische
+identificatoren en exacte oorspronkelijke proeftekst wanneer die nodig zijn
+om een fout te reproduceren. Laat bestaande labels en statussen bij een
+vertaling ongewijzigd.
+
 Deze regels gelden voor iedere AI-agent, op iedere computer. Lees vóór het
 maken van een issue [de labelafspraken](docs/issue-labels.md), de beschikbare
 repositorylabels en mogelijke duplicaten.
