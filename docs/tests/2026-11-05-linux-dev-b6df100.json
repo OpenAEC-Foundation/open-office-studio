@@ -1,0 +1,257 @@
+{
+  "schema": 1,
+  "geslaagd": true,
+  "versie": "2026.45.48",
+  "bronrevisie": "b6df100b4497bca1caa0adefed302a4d82d1f699",
+  "run": 42027715812,
+  "run_conclusie": "success",
+  "artifact": 13415626298,
+  "download": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42027715812/artifacts/13415626298",
+  "zip_sha256": "abe36439e9dab7ce8718a96022850271b9d39aed6b2e63b7b44f12bc240be5b5",
+  "gui_zip_sha256": "51c24a947b055b1f47531e092cfb53d6e1a1ad0be582a3b2cb803a091de05bdf",
+  "tar_sha256": "651c6fceb52a13a396b190ba98dd3a4fc3fc1fd02968a6f9488275f7d2f22dbb",
+  "appimage_sha256": "5f2b9dd52db28ba237b40026c45559c48656669d9a76b47d5dd3e35694f8105b",
+  "metadata": {
+    "versie": "2026.45.48",
+    "bronrevisie": "b6df100b4497bca1caa0adefed302a4d82d1f699",
+    "platform": "Linux x86_64",
+    "profiel": "org.openaec.office-studio.dev",
+    "appimage": "Open Office Studio Dev_2026.45.48_amd64.AppImage",
+    "sha256": "5f2b9dd52db28ba237b40026c45559c48656669d9a76b47d5dd3e35694f8105b",
+    "pakketcontroles": [
+      "AppImage type 2",
+      "SquashFS volledig uitgepakt",
+      "AppRun uitvoerbaar",
+      "ELF x64 en bibliotheken gevonden",
+      "snelkoppeling en pictogram aanwezig"
+    ],
+    "controles": [
+      "TypeScript via productiebouw",
+      "Vitest",
+      "Rust-desktoptests"
+    ],
+    "gui_acceptatie": "Niet volledig gecontroleerd; ontwikkelbuild met bekende Writer-problemen.",
+    "webkit_modulekaart": {
+      "geslaagd": true,
+      "omvang": "Twee minimale moduleworkers in de geïnstalleerde WebKitGTK; geen app- of prestatieacceptatie.",
+      "webkit": "2.50.4",
+      "gevallen": {
+        "oud": {
+          "evaluaties": 2,
+          "gelijk": false
+        },
+        "apart": {
+          "evaluaties": 1,
+          "gelijk": true
+        }
+      },
+      "kwetsbaar": true
+    },
+    "native_gui": {
+      "geslaagd": true,
+      "programma_sha256": "88ac7d85a8f75c4c7c7493e8806301cabe3b666f7683d83da1897073fe7b30cd",
+      "startprogramma_sha256": "eb0b254ac0dae6543e6dd7cd02e1baf40a060de95b927313122d6b46323c00aa",
+      "profiel": "org.openaec.office-studio.dev",
+      "script_sha256": "6f8f69f40536c79f6c151e00e3501c994a4b42efa4c0ccad48fff7f1d4fad53f",
+      "omvang": "Eigen DOCX-kopie, drie plakrondes, bewaren na ronde één en verder bewerken; onafhankelijke inhoudscontrole, verwerpen en nieuw document.",
+      "appimage_startfunctie": "De uitgepakte AppRun is gestart; launcher en werkelijke ELF zijn op hash gecontroleerd. FUSE-mount niet getoetst."
+    }
+  },
+  "controles": [
+    "AppImage type 2",
+    "SquashFS volledig uitgepakt",
+    "AppRun uitvoerbaar",
+    "ELF x64 en bibliotheken gevonden",
+    "snelkoppeling en pictogram aanwezig",
+    "ZIP-CRC en GitHub-digests",
+    "Tar-digest, metadata en uitvoerrechten",
+    "AppRun en ELF exact gelijk aan apart CI-GUI-rapport; alle foutlijsten leeg"
+  ],
+  "grenzen": [
+    "Geen lokale GUI-uitvoering van deze gedownloade AppImage",
+    "FUSE-mount, ARM en andere distributies niet gevalideerd",
+    "Writer-invoervertraging en oorspronkelijke Wasm-afkeuringen, ook de aparte herstelafkeuring op dezelfde bronrevisie, blijven open"
+  ],
+  "bewijsbestanden": [
+    {
+      "pad": "docs/tests/linux-dev-b6df100/ci-database.json.gz",
+      "sha256": "e2f57cc3dfeaf23ac16de16e2f74219046f87db8ed8967e92d873783c83e75bc"
+    },
+    {
+      "pad": "docs/tests/linux-dev-b6df100/ci-desktop.json.gz",
+      "sha256": "b7e9d3b242248d0531bdd680a42c07fa7cc4d8da79d125792ff62c4a222e4c3b"
+    },
+    {
+      "pad": "docs/tests/linux-dev-b6df100/ci-dev.json.gz",
+      "sha256": "ec70c13f2ff8ad3e8415414f63506291ab7e72dc2429e1960a1c303b2d93a247"
+    },
+    {
+      "pad": "docs/tests/linux-dev-b6df100/ci-edities.json.gz",
+      "sha256": "4725e2954924f606ea497a9e7ff3b78d0b3376f76b5c0a25b63023c0f1fd0c00"
+    },
+    {
+      "pad": "docs/tests/linux-dev-b6df100/ci-geheugen.json.gz",
+      "sha256": "22096c17094649376c41328db83492c889a9852c7c628c144ae49a30b54d9917"
+    },
+    {
+      "pad": "docs/tests/linux-dev-b6df100/ci-native.json.gz",
+      "sha256": "90d6ee3042a7a9eedb06e49859c79da2ce10e99d259563d9cfa5697e143154bb"
+    },
+    {
+      "pad": "docs/tests/linux-dev-b6df100/ci-webview.json.gz",
+      "sha256": "d09b74262ba9e685c3acc1d34f4985b2a0afcc155877032ca7261b166e8bf7ce"
+    },
+    {
+      "pad": "docs/tests/linux-dev-b6df100/controle.json.gz",
+      "sha256": "7a9eb85d5bed554c5311536d504cdb2d2e45b2b02c89229f293436a4434f0c6d"
+    },
+    {
+      "pad": "docs/tests/linux-dev-b6df100/controleer.py.gz",
+      "sha256": "cb5909a012624123f71cb30cfe40c0df3cb69a3707ff1fba8130261854d59589"
+    },
+    {
+      "pad": "docs/tests/linux-dev-b6df100/gui-rapport.json.gz",
+      "sha256": "676950b439e0b9d973db3e6b7d59245ba16dfa20fa6e30c82af5fcf6f02c48f8"
+    }
+  ],
+  "platformpeiling": {
+    "desktop": {
+      "conclusion": "success",
+      "headSha": "b6df100b4497bca1caa0adefed302a4d82d1f699",
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42027731638",
+      "jobs": [
+        {
+          "naam": "desktop (macos-latest)",
+          "status": "completed",
+          "conclusie": "success"
+        },
+        {
+          "naam": "desktop (windows-latest)",
+          "status": "completed",
+          "conclusie": "success"
+        },
+        {
+          "naam": "desktop (ubuntu-22.04)",
+          "status": "completed",
+          "conclusie": "success"
+        }
+      ]
+    },
+    "webview": {
+      "conclusion": "success",
+      "headSha": "b6df100b4497bca1caa0adefed302a4d82d1f699",
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42027732177",
+      "jobs": [
+        {
+          "naam": "bouwen (windows-latest)",
+          "status": "completed",
+          "conclusie": "success"
+        },
+        {
+          "naam": "bouwen (macos-latest)",
+          "status": "completed",
+          "conclusie": "success"
+        },
+        {
+          "naam": "bouwen (ubuntu-22.04)",
+          "status": "completed",
+          "conclusie": "success"
+        }
+      ]
+    },
+    "native": {
+      "conclusion": "",
+      "headSha": "b6df100b4497bca1caa0adefed302a4d82d1f699",
+      "status": "in_progress",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42027732071",
+      "jobs": [
+        {
+          "naam": "native (macos-latest)",
+          "status": "completed",
+          "conclusie": "success"
+        },
+        {
+          "naam": "native (windows-latest)",
+          "status": "in_progress",
+          "conclusie": ""
+        },
+        {
+          "naam": "native (ubuntu-22.04)",
+          "status": "completed",
+          "conclusie": "success"
+        },
+        {
+          "naam": "Conversie met geïnstalleerde kantoorruntime",
+          "status": "completed",
+          "conclusie": "success"
+        }
+      ]
+    },
+    "edities": {
+      "conclusion": "",
+      "headSha": "b6df100b4497bca1caa0adefed302a4d82d1f699",
+      "status": "in_progress",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42028004316",
+      "jobs": [
+        {
+          "naam": "versie",
+          "status": "completed",
+          "conclusie": "success"
+        },
+        {
+          "naam": "Bouwen – macOS",
+          "status": "completed",
+          "conclusie": "success"
+        },
+        {
+          "naam": "Bouwen – Windows",
+          "status": "in_progress",
+          "conclusie": ""
+        },
+        {
+          "naam": "Bouwen – Linux",
+          "status": "in_progress",
+          "conclusie": ""
+        }
+      ]
+    },
+    "database": {
+      "conclusion": "success",
+      "headSha": "b6df100b4497bca1caa0adefed302a4d82d1f699",
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42027731827",
+      "jobs": [
+        {
+          "naam": "database (macos-latest)",
+          "status": "completed",
+          "conclusie": "success"
+        },
+        {
+          "naam": "database (ubuntu-22.04)",
+          "status": "completed",
+          "conclusie": "success"
+        },
+        {
+          "naam": "database (windows-latest)",
+          "status": "completed",
+          "conclusie": "success"
+        }
+      ]
+    },
+    "geheugen": {
+      "conclusion": "failure",
+      "headSha": "b6df100b4497bca1caa0adefed302a4d82d1f699",
+      "status": "completed",
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42027716015",
+      "jobs": [
+        {
+          "naam": "onderzoeken",
+          "status": "completed",
+          "conclusie": "failure"
+        }
+      ]
+    }
+  }
+}

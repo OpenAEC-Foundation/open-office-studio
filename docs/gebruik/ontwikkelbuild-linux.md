@@ -3,9 +3,9 @@
 Een push werkt de broncode bij. Ontwikkelbuilds staan bij GitHub Actions;
 daarvoor is geen officiële release of tag nodig.
 
-De gecontroleerde [45.47-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/41951349430/artifacts/13382150485)
-is gebouwd uit `9006118c1269333d5ab2576d9025dd5c855409f1`.
-De pakketnaam eindigt op `38`: dat is het workflowvolgnummer, niet de appversie.
+De gecontroleerde [45.48-devdownload](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/42027715812/artifacts/13415626298)
+is gebouwd uit `b6df100b4497bca1caa0adefed302a4d82d1f699`.
+De pakketnaam eindigt op `39`: dat is het workflowvolgnummer, niet de appversie.
 De download verloopt op 5 december 2026. Je moet bij GitHub ingelogd zijn.
 
 1. Download het pakket en pak de ZIP uit.
@@ -32,15 +32,16 @@ zijn op hash gelijk aan het apart opgehaalde CI-GUI-rapport. Die gerichte proef
 slaagt voor drie plakrondes, bewaren en verder bewerken, verwerpen en een nieuw
 document; de GUI-, console- en enginefoutlijsten zijn leeg. De download is niet
 hier lokaal als GUI gestart; de FUSE-mount is niet getoetst.
-[Exacte downloadcontrole](../tests/2026-11-05-linux-dev-9006118.json).
+[Exacte downloadcontrole](../tests/2026-11-05-linux-dev-b6df100.json).
 
 Dit is een testversie. Writer heeft nog ernstige invoervertraging en open
-stabiliteitsproblemen. De aparte brede desktopronde van dezelfde bron faalt op
-Linux op een Wasm-geheugenfout in `update_display_list` na lijstwijzigingen;
-Windows/macOS en de afzonderlijke zeveneditieronde slagen. De exacte negatieve
-ELF slaagt lokaal met dezelfde proefcode, maar de oorspronkelijke fout is niet
-verklaard of hersteld. De groene pakketproef is geen volledige suiteacceptatie.
-[Matrix, afkeuring en exacte hertest](../tests/2026-11-05-platformen-47-lijstweergave.json).
+stabiliteitsproblemen. De brede desktopronde slaagt op Linux, Windows en
+macOS; de aparte geheugenronde faalt in een herstelde 500-paginakopie op een
+Wasm-geheugenfout in `update_display_list`. De exacte negatieve ELF slaagt
+lokaal met dezelfde proefcode, maar de oorspronkelijke fout is niet verklaard
+of hersteld. De zeveneditieronde loopt bij deze controle nog. De groene
+pakketproef is geen volledige suiteacceptatie.
+[Afkeuring en exacte hertest](../tests/2026-11-05-writer-herstel-48.json).
 
 Latere lokale wijzigingen zitten niet automatisch in dit pakket. Voor een
 volgende build open je [Linux-ontwikkelbuilds](https://github.com/OpenAEC-Foundation/open-office-studio/actions/workflows/dev-linux.yml),
@@ -48,6 +49,7 @@ kies je een geslaagde uitvoering op `codex/native-rust-office` en controleer je
 de gewenste broncommit bij de download. Nieuwe pakketten vragen hun eigen
 controle; een groen rapport van een vorige binary is geen bewijs daarvoor.
 
-De eerdere [45.43-downloadcontrole](../tests/2026-11-05-linux-dev-bafc220.json)
+De eerdere [45.47-downloadcontrole](../tests/2026-11-05-linux-dev-9006118.json),
+[45.43-downloadcontrole](../tests/2026-11-05-linux-dev-bafc220.json)
 en [45.39-downloadcontrole](../tests/2026-11-04-linux-dev-1e67dbc.json) blijven
 bewaard. Geen officiële release is gepubliceerd.
