@@ -51,3 +51,24 @@ blijven open; de opnieuw opgehaalde GitHub-inventaris telt 118 open issues.
 De zeven 45.47-CI-workflows waren bij de vastgelegde peiling nog actief.
 
 [Exacte bronhashes, tellers, groepen, stacks, scripts en inventaris](2026-11-05-writer-sessielezers.json).
+
+## Hertest op de gepushte 45.48
+
+Een aparte proef op de exacte 48-ELF bevestigt dat de nieuwe route werkelijk
+wordt gebruikt: vijftig `readStories`-aanroepen kosten samen circa 251 ms,
+tegen nog vier `readParagraphs`-aanroepen van samen 129 ms. Alle 3.329 teksten
+in 1.537 verhalen blijven exact en de tijdelijke wrappers zijn hersteld.
+De synchrone publieke methodetijd is samen circa 5.509 ms. Dit is een
+geïnstrumenteerde hertest, geen vervanging van de vier rustige snelheidsronden.
+
+De grootste resterende lezingen zijn body-unitdigests (66 aanroepen, circa
+1.968 ms), body-alineaposities (67 aanroepen, 1.244 ms) en tabelgegevens
+(198 aanroepen, 1.027 ms). De extra gemeten `storiesChangedSince` en
+`locateParagraph` kosten slechts circa dertien en één milliseconde;
+`yrsBlocksForStory` wordt niet aangeroepen. Het hoge aantal goedkope
+`hasStory`-aanroepen is daarom niet op zichzelf de volgende optimalisatie.
+Ook de native voorbereidings-/publicatieduur moet afzonderlijk worden
+gemeten: deze meting verklaart niet de volledige invoervertraging. Nieuwe
+hergebruikslagen mogen bron-, versie- en eigenaarsbewaking niet omzeilen.
+
+[Exacte 48-tellers, herkomststacks, scripts en grenzen](2026-11-05-writer-sessielezers-48.json).
