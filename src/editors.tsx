@@ -67,6 +67,10 @@ export interface EditorProps {
   /** Actuele documentzoom voor de statusbalk; null zolang onbekend. */
   zoom: (zoom: number | null) => void;
 }
+// De bestaande synchrone lint-API heeft deze compatibiliteitsprojectie nodig.
+// Haar vertraagde melding mag de opslagstatus niet opnieuw wijzigen.
+const behoudSynchroneProjectie = () => {};
+
 export default function OfficeEditor(props: EditorProps) {
   // Engine-teksten in de interfacetaal; wisselt live mee zonder het document te herladen.
   const engineTaal = useEngineVertaling();
@@ -371,6 +375,7 @@ export default function OfficeEditor(props: EditorProps) {
               }}
               // De oude Document-projectie meldt dezelfde invoer soms pas na
               // opslaan. De versiemelding hoort bij de bevestigde bewerking.
+              onChange={behoudSynchroneProjectie}
               onDocumentChange={props.gewijzigd}
               onError={props.fout}
               rulerUnit="cm"

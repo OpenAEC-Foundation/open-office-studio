@@ -77,7 +77,7 @@ def tekst(pad):
         xml = ET.fromstring(z.read('word/document.xml'))
     return ''.join(t.text or '' for t in xml.iter('{http://schemas.openxmlformats.org/wordprocessingml/2006/main}t'))
 
-for geval in ['ifcx', 'klembord']:
+for geval in ['klembord', 'ifcx']:
     werk = ROOT / geval
     werk.mkdir()
     env = OWN_ENV.copy()
@@ -125,10 +125,19 @@ for geval in ['ifcx', 'klembord']:
                             if verwacht is None or huidig == verwacht:
                                 # De schrijfactie kan klaar zijn vóór React de
                                 # nieuwe naam en de schone toestand heeft getekend.
-                                schoon_tot = time.monotonic() + 5
+                                schoon_tot = time.monotonic() + 7
+                                schoon_sinds = None
                                 while time.monotonic() < schoon_tot:
-                                    if '•' not in xdo('getwindowname', venster):
-                                        return huidig
+                                    titel = xdo('getwindowname', venster)
+                                    if bestand.name in titel and '•' not in titel:
+                                        if schoon_sinds is None:
+                                            schoon_sinds = time.monotonic()
+                                        # Een nog niet bijgewerkte OS-titel mag niet
+                                        # als bewijs voor een schone opslag gelden.
+                                        if time.monotonic() - schoon_sinds >= 2:
+                                            return huidig
+                                    else:
+                                        schoon_sinds = None
                                     time.sleep(.1)
                                 screenshot(env, werk / 'opslag-blijft-gewijzigd.png')
                                 raise AssertionError('Inhoud bewaard, maar het document blijft gewijzigd')

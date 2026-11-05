@@ -95,10 +95,22 @@ vóór het verwerken van nog wachtende invoer. Die al opgeslagen invoer telde
 daardoor als een latere wijziging.
 [Voor herstel](../screenshots/test-native-opslag-vlag-voor-2026-11-05.png).
 
-De oude `onChange(Document)`-melding wacht bovendien op een aparte,
-vertraagde compatibiliteitsprojectie. Een reeds bewaarde invoerbewerking kan
-daardoor pas ná opslaan nogmaals als gewijzigd worden gemeld. De teksteditor
-gebruikt nu de versiemelding `onDocumentChange` van de bevestigde bewerking.
+De native revisietrace legt de oorzaak preciezer vast: de inputroute plant
+haar wijzigingsmelding 100 ms later. `flushPendingInput` wacht wel op de
+invoer, maar niet op deze uitgestelde melding. Zelfs de nieuwe
+`onDocumentChange`-melding kwam daardoor pas tijdens het serialiseren binnen.
+De opslagrevisie ging in [de trace](native-opslagrevisie-voor-2026-11-05.json)
+tijdens die fase van `1:0` naar `1:1`.
+
+De gerichte engineaansluiting meldt de bevestigde documentversie nu direct.
+De duurdere Document-projectie houdt haar bestaande vertraging; dezelfde
+versie wordt bij die latere projectie niet nogmaals gemeld. De teksteditor
+gebruikt `onDocumentChange` voor de opslagstatus. De compatibiliteitsprojectie
+blijft actief voor de bestaande synchrone lint-API, maar verandert de
+opslagstatus niet meer. Vijf proeven voeren de echte versie-, deduplicatie-
+en timerexpressies uit de vastgezette engine uit. De tegenproef met de oude
+timer blijft gewijzigd; dezelfde bewaarrondgang met directe melding wordt
+schoon. Een echt nieuwe versie tijdens schrijven blijft gewijzigd.
 
 De teksteditor heeft daarnaast een afzonderlijke voorbereidingsstap. De opslag
 verwerkt eerst die wachtende invoer en legt daarna de te bewaken revisie vast.
@@ -107,6 +119,22 @@ onopgeslagen. Een documentwissel tijdens de voorbereiding opent geen
 opslagdialoog; een voorbereidingsfout bewaart niets en laat opnieuw proberen
 toe. Vijf aanvullende regressiegevallen controleren deze grenzen. De
 IFCX-serialiseerder geeft dezelfde voorbereidingsstap door.
+
+De nieuwe ingebedde Tauri-bouw slaagt ook in de native herhaling: na direct
+invoeren van `Basis` en Ctrl+S verdwijnt de markering. Dezelfde controle slaagt
+na elk van de vier plakroutes. Het proefscript controleert eerst de werkelijk
+opgeslagen XML en daarna een minstens twee seconden onafgebroken schone
+native venstertitel, binnen een wachttijd van zeven seconden. Alleen de eerste
+schone titel bleek te vroeg: de OS-titel kon nog de vorige toestand tonen.
+Het eindbeeld bevestigt ook de schone tab en status **Ready**; een tweede
+Ctrl+S is niet nodig om een al bewaarde tekst schoon te krijgen.
+[Nieuwe plak- en opslagtoestand](../screenshots/test-native-plakken-2026-11-05.png).
+
+De [revisietrace na herstel](native-opslagrevisie-na-2026-11-05.json) controleert
+in dezelfde echte webview `Basis vervolg` tegen de opgeslagen XML, de
+synchrone opslagstatus, de DOM-titel en de statusbalk. Die rondgang eindigt
+schoon. De afzonderlijke tegenproef met invoer tijdens een nog lopende opslag
+blijft terecht gewijzigd; het herstel onderdrukt geen echte latere wijzigingen.
 
 ## Extern en intern plakken (#126)
 
@@ -134,7 +162,7 @@ naam van de suite, zodat de gerichte editor die koppeling niet overschrijft.
 is niet geïnstalleerd of als release gepubliceerd.
 
 - Productiebuild en TypeScript: geslaagd.
-- Volledige Vitest-set: 145 bestanden; 1.649 geslaagd, zeven bestaande
+- Volledige Vitest-set: 146 bestanden; 1.654 geslaagd, zeven bestaande
   corpusgevallen overgeslagen.
 - Python: 44 geslaagd.
 - Vertaalcontrole: negen talen × 21 namespaces, 6.829 bronsleutels; nul fouten
