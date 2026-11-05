@@ -14,10 +14,16 @@ function html(beginTab?: string) {
           id: "start",
           naam: "Start",
           inhoud: (
-            <LintGroep naam="Klembord">
-              <LintActie icoon={Icoon} naam="Plakken" groot />
-              <LintActie icoon={Icoon} naam="Vet" actief />
-            </LintGroep>
+            <>
+              <LintGroep naam="Klembord">
+                <LintActie icoon={Icoon} naam="Plakken" groot />
+                <LintActie icoon={Icoon} naam="Vet" actief />
+              </LintGroep>
+              <LintGroep naam="Delete">
+                <LintActie icoon={Icoon} naam="Delete Row" groot />
+                <LintActie icoon={Icoon} naam="Delete Column" groot />
+              </LintGroep>
+            </>
           ),
         },
         { id: "invoegen", naam: "Invoegen", inhoud: null },
@@ -58,6 +64,10 @@ describe("lint: ARIA-structuur", () => {
     expect(markup).toMatch(/role="group" aria-label="Klembord"/);
     expect(markup).toContain('aria-label="Plakken"');
     expect(markup).toMatch(/aria-label="Vet" aria-pressed="true"/);
+    expect(markup).toMatch(/class="ribbon-actie ribbon-groot[^"]*" aria-label="Delete Row"/);
+    expect(markup).toContain("<span>Delete Row</span>");
+    expect(markup).toMatch(/class="ribbon-actie ribbon-groot[^"]*" aria-label="Delete Column"/);
+    expect(markup).toContain("<span>Delete Column</span>");
     // De ingeklapte groepsknop meldt of zijn paneel open is.
     expect(markup).toMatch(/class="ribbon-groep-knop" aria-expanded="false" aria-controls="[^"]+"/);
   });
