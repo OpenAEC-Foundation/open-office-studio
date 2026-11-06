@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "datum": "2026-11-06",
+  "appversie": "2026.45.52",
+  "productiecode_gewijzigd": false,
+  "basis": "a72f66e7",
+  "uitkomst": {
+    "buildStory": "1102 samples, alle via buitenste SZ-constructor → xZ → projectiecallback. Daarvan 942 via lokale selectiesynchronisatie, 160 via selectiebeeld-/afbeeldingscontrole tijdens React-render. Geen van deze samples heeft getDocument in dezelfde vastgelegde stack.",
+    "paragraphSpans": "491 samples: 472 via get/createYrsInputPositionMap (456 vanuit selectiesynchronisatie, 16 vanuit tabel-/displaypositionquery), 19 vanuit eigen afwijkendeSegmenten/autocorrectie.",
+    "readStories": "230 samples; in deze vastgelegde stacks geen hogerliggend kader beschikbaar, dus aanroeper onbekend.",
+    "getDocument": "426 samples, zelfde opslagcallback als eerder. Die afzonderlijke gereedheidskandidaat is inmiddels afgewezen wegens de gemeten typregressie."
+  },
+  "grenzen": [
+    "Analyse van bestaande geijkte opname, geen nieuwe GUI-snelheidsproef. Exacte bronbytes en nul-tijdstempels behouden; geen CPU-tijd/-percentage of FPS.",
+    "Families overlappen in het algemeen; per familie één telling per sample. Buitenste recursieve kader gekozen volgens bewezen leaf-eerstvolgorde.",
+    "Het ontbreken van getDocument in buildStory-stacks is geen bewijs dat deze verrichtingen niet indirect samenhangen. Ontbrekende kaders niet ingevuld.",
+    "Geen SDK-patch, geteste snelheidswinst, gerepareerd issue of migratieacceptatie. De huidige lokale update-oorsprong blijft behouden; applyHostUpdate is geen gelijkwaardige vervanger."
+  ],
+  "vervolg": "Meet per echte native invoergroep de invalidatie-/projectievolgorde en de betrokken verhalen. Pas daarna een beperkte SDK-/Rust-dirtysetroute voorstellen; volledige bron-, revisie-, Undo/Redo-, selectiemap-, DOCX- en fysieke GUI-pariteit blijven vereist.",
+  "invoer": [
+    {
+      "bestand": "writer-invoer52-onderzoek/cpu52-geijkt/gui/cpu-bron-chunk-XUXC3ZKS-Cc71mMFM.js.gz",
+      "sha256": "599e5cd3a51834b2f0f5e225faaa7443d5e6fb82fad9bd5b8dd5290d31d87e2b"
+    },
+    {
+      "bestand": "writer-invoer52-onderzoek/cpu52-geijkt/gui/cpu-bron-core-BUhCcD2K.js.gz",
+      "sha256": "5f9f76f89e365ba69008850da78f6e89412c11b6d4e71a1f3fb22591d8d9de43"
+    },
+    {
+      "bestand": "writer-invoer52-onderzoek/cpu52-geijkt/gui/cpu-bron-editors-dj6Nk6Hy.js.gz",
+      "sha256": "8f7da8e475810007a26274206602c086c18dd400a29a4346209dcb8a97df0d76"
+    },
+    {
+      "bestand": "writer-invoer52-onderzoek/cpu52-geijkt/gui/cpu-bron-index-CGuxWztq.js.gz",
+      "sha256": "e50704b0a433d9b2a92e86afbb45402155f61ef358179c09dc8e04f5415b854a"
+    },
+    {
+      "bestand": "writer-invoer52-onderzoek/cpu52-geijkt/gui/cpu-bron-window-CkhQcx_D.js.gz",
+      "sha256": "7c377c345b29d3d2a809924ad5f6399b9b1df0226649407e63fc98c210430835"
+    },
+    {
+      "bestand": "writer-invoer52-onderzoek/cpu52-geijkt/gui/cpu.json.gz",
+      "sha256": "21733b1db3dd72616cdf8ed25df76b23b809381be439a17c090287d6e7c92f0a"
+    },
+    {
+      "bestand": "writer-invoer52-onderzoek/cpu52-geijkt/gui/profiel.json.gz",
+      "sha256": "08151a0ee02f9a28edcdd13ecdf223af45ae8ecf57dc3dc099653bf1aacf2600"
+    }
+  ],
+  "bestanden": [
+    {
+      "bestand": "writer-positiemap52/verdelen.py.gz",
+      "sha256": "7cfb9fdbb93ed9761dd601e7ba52c116a5771b3544b0a10b3d73c3ed51f13a4a",
+      "origineel_sha256": "db273534a1e79be004e00c9e5515e3f48974363aa499a1d4c271360424d1fc52"
+    },
+    {
+      "bestand": "writer-positiemap52/verdeling.json.gz",
+      "sha256": "90a6081021e62ce08d13a14891623f5d66dd299ca1c17f50aafb35ddda4bb0d0",
+      "origineel_sha256": "cc127c1fb14583be1cbd742e46c309e268210e8dc8ac039194acc017cc6cf060"
+    }
+  ]
+}
