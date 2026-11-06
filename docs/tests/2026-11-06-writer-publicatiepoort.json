@@ -1,0 +1,50 @@
+{
+  "datum": "2026-11-06",
+  "status": "Afzonderlijke ongecommitteerde SDK-kandidaat wordt getoetst; geen prestatie-/functionele-/visuele acceptatie of gepushte apppatch.",
+  "basis": "1a69f57e22dc5d19f27b4fb642b91cd737ec7f98",
+  "hypothese": "De directe invoerpublicatie en onmiddellijk volgende lokale statepublicatie kunnen één bestaande positie-invalidatie delen bij identieke actuele eigenaar, sessie, bronversie, generatie en rendercontext. State/render/documentmeldingen blijven altijd doorlopen.",
+  "begrenzing": "Eén token en hoogstens één geplande microtask; token vervalt bij verbruik, nieuwe directe publicatie, fout of microtask/unmount. Context moet actuele sessie, gereedheid, worker en geen preview/opening aangeven. Afwijkende herkomst/bron/context/generatie en metadatafouten vallen terug op bestaande invalidatie. Callbackafhankelijkheden bevatten de sessie en een actuele contextref voorkomt goedkeuring door oude closures.",
+  "gereed": "29 gerichte contractcontroles geslaagd. Alleen twee unieke plusregelankers in bestaande SDK-patch vervangen; pnpm offline lock-/frozen-installatie geslaagd. Parsercontrole nieuwe SDK groen, root-SDK85a8d0fd behouden; geen hardlink in-place gewijzigd.",
+  "voorbereiding": {
+    "basis": "1a69f57e22dc5d19f27b4fb642b91cd737ec7f98",
+    "sdk_voor": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+    "patch_voor": "65a3c11e608311028e544014eea30d89cc76ec15e88fdc807d7f4d5d9c64a367",
+    "patch_na": "e8511ca9819401264b8acb05de9ae78b12bd8be6b71d4589cc99e3f4f7152d59",
+    "factory_sha256": "a336563cd3b030eb00a04f5df1e1557a6f73eda486caf0cfb0be1b0bccd7f4af",
+    "direct": "_openaecPositieContext=useRef(null),_openaecPositiePoort=useRef(null),Bn=useCallback(T=>{_openaecPositiePoort.current.direct(r.session,()=>r.publishDirectInput(T));},[r.publishDirectInput,r.session])",
+    "staat": "let jn=useCallback((T,I)=>{_openaecPositiePoort.current.staat(r.session,T,()=>{Oe.incrementStateSeq(),Oe.requestRender(),fn(T,I);});},[fn,Oe,r.session])",
+    "voorwaarden": "Alleen prototype; nog geen SDK-installatie, nativefunctie-/beeld-/tijdacceptatie of promotie.",
+    "patch_met_preview_sha256": "544d228cc4a3e2852cd98d58ff82f3df174cdca76e652b343e1974237c79a189",
+    "sdk_na": "df97a7a5cebd3306c22317499a4df19709ae8b19635a5464040a4c4ef3109ad4",
+    "root_sdk_ongewijzigd": true,
+    "bronpatch_sha256": "4232dbebc2f1194e52adaaa0b41376375b35965534ebbd03120e51a4e72edf7b"
+  },
+  "nog_nodig": [
+    "TypeScript, volledige frontend, productieweb-/browser-GUI/actuele lintbron en nativebouw",
+    "Drie echte native scenario’s incl.500pagina’s/spelling/lettertypevarianten en bron-/geschiedenis-/bewaar-/heropen-/verwerpcontroles",
+    "Vóór passieve meting werkelijk één generatie/volledige1537-verhaalopbouw per native groep; geen overschrijdingen en alle3329teksten/351tekens exact",
+    "ABBA en BAAB tegenover de behouden c88-callbackcorrectie, gecontroleerde documentpixels, geen concurrerende compilers/tests; zonder overtuigende winst geen promotie"
+  ],
+  "controllers": {
+    "map": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/publicatiepoort",
+    "frontend_exec": 33503,
+    "lintbron_exec": 21239,
+    "nativebouw_exec": 73936,
+    "native_gui_positie_abba_exec": 30663,
+    "gedrag": "Alle controllers zijn eindig; bouw wacht op alle frontendpoorten, native proeven wachten op bouw en fysieke vergelijking wacht op geslaagde unieke positieopbouw. Geen automatische commit/push/installatie/promotie."
+  },
+  "bewijs": {
+    "docs/tests/writer-publicatiepoort-2026-11-06/poort.cjs.gz": "594eada97bfc1e2206532e65fdec3f46d92ac012baf0bb9b62dd07522b62d931",
+    "docs/tests/writer-publicatiepoort-2026-11-06/controleren.cjs.gz": "318a3fe00319a206362314826703de87f990f7b263920a769e5a02ad1e504e13",
+    "docs/tests/writer-publicatiepoort-2026-11-06/controle.log.gz": "0fd94fcf622390d0562b1c46583d345bf3f38a2ee0d018bc5936f79e59285140",
+    "docs/tests/writer-publicatiepoort-2026-11-06/voorbereiden.cjs.gz": "5170c61254a7c48d6ec726fcb548316d153b8eb4bc8c504530e7a0ca812c7815",
+    "docs/tests/writer-publicatiepoort-2026-11-06/voorbereiding.json.gz": "765bc2b744fec44b9bc25839356f35ba2635aa6329ffa3fafb15f2286cdf9d03",
+    "docs/tests/writer-publicatiepoort-2026-11-06/bron.patch.gz": "e2da99ce78de311316504080210ae27d022aa63cffa6d603b2725d4bb47ff624",
+    "docs/tests/writer-publicatiepoort-2026-11-06/controle.py.gz": "fe1cf81572fa003510187ec5f01166125fb9cd989559cf0a829b7927e6dd650a",
+    "docs/tests/writer-publicatiepoort-2026-11-06/bouw-native.py.gz": "594b31c8669739ffb6a0e7af0d3c4699a0b58ca8e7676b45305a577fdef24c14",
+    "docs/tests/writer-publicatiepoort-2026-11-06/na-bouw.py.gz": "8ca4738ce464edd97b8e326509ede41a79732566224f4eb0d1220bdef1c9ff95",
+    "docs/tests/writer-publicatiepoort-2026-11-06/lintbron-controle.py.gz": "3bfb286ecb82dfad20c165165d9ca56c8f66565a73a057a19340750b1b2c0c6d",
+    "docs/tests/writer-publicatiepoort-2026-11-06/installatie-preview.log.gz": "a03825b0a141056f338b45884504b91a5e156c8fbc602a65e6d6f70dd417ad40",
+    "docs/tests/writer-publicatiepoort-2026-11-06/installatie-lock-preview.log.gz": "dcced3fbb05f4e009bef67ebc2ee18abb643130ea86c66dfde8e7c865e692a86"
+  }
+}
