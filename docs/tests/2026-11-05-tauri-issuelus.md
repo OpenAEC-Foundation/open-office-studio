@@ -87,7 +87,7 @@ worden niet gesloten op basis van alleen aanwezige knoppen of broncode.
 | [#68](https://github.com/OpenAEC-Foundation/open-office-studio/issues/68) | Nog niet volledig afgetekend | Acceptatiecriteria vergelijken met bron, bestaande tests en werkelijke uitvoering. |
 | [#67](https://github.com/OpenAEC-Foundation/open-office-studio/issues/67) | Nog niet volledig afgetekend | Acceptatiecriteria vergelijken met bron, bestaande tests en werkelijke uitvoering. |
 | [#66](https://github.com/OpenAEC-Foundation/open-office-studio/issues/66) | Nog niet volledig afgetekend | Acceptatiecriteria vergelijken met bron, bestaande tests en werkelijke uitvoering. |
-| [#64](https://github.com/OpenAEC-Foundation/open-office-studio/issues/64) | Concept-PR #164; kern en invoerroutes gekoppeld | Aanvullende ingebouwde-datumaudit hersteld: tien JS/WASM-, 54 gerichte kern- en 1.874 unieke appproeven, native gemengde notaties en onbekende regio, bytegelijke herbouw. Volledige kernnacontrole 2.419 proeven groen; zes platformchecks op de definitieve revisie nog open; zie [getalnotatie](2026-11-06-getalnotatie.md). |
+| [#64](https://github.com/OpenAEC-Foundation/open-office-studio/issues/64) | Gemerged en gesloten via PR #164 | Aanvullende ingebouwde-datumaudit hersteld: tien JS/WASM-, 54 gerichte kern- en 1.874 unieke appproeven, native gemengde notaties en onbekende regio, bytegelijke herbouw. Volledige kernnacontrole 2.419 proeven en alle zes platformchecks groen; zie [getalnotatie](2026-11-06-getalnotatie.md). |
 | [#61](https://github.com/OpenAEC-Foundation/open-office-studio/issues/61) | Nog niet volledig afgetekend | Acceptatiecriteria vergelijken met bron, bestaande tests en werkelijke uitvoering. |
 | [#60](https://github.com/OpenAEC-Foundation/open-office-studio/issues/60) | Nog niet volledig afgetekend | Acceptatiecriteria vergelijken met bron, bestaande tests en werkelijke uitvoering. |
 | [#59](https://github.com/OpenAEC-Foundation/open-office-studio/issues/59) | Nog niet volledig afgetekend | Acceptatiecriteria vergelijken met bron, bestaande tests en werkelijke uitvoering. |
@@ -98,7 +98,7 @@ worden niet gesloten op basis van alleen aanwezige knoppen of broncode.
 | [#54](https://github.com/OpenAEC-Foundation/open-office-studio/issues/54) | Nog niet volledig afgetekend | Acceptatiecriteria vergelijken met bron, bestaande tests en werkelijke uitvoering. |
 | [#53](https://github.com/OpenAEC-Foundation/open-office-studio/issues/53) | Nog niet volledig afgetekend | Acceptatiecriteria vergelijken met bron, bestaande tests en werkelijke uitvoering. |
 | [#52](https://github.com/OpenAEC-Foundation/open-office-studio/issues/52) | Nog niet volledig afgetekend | Acceptatiecriteria vergelijken met bron, bestaande tests en werkelijke uitvoering. |
-| [#51](https://github.com/OpenAEC-Foundation/open-office-studio/issues/51) | Nog niet volledig afgetekend | Acceptatiecriteria vergelijken met bron, bestaande tests en werkelijke uitvoering. |
+| [#51](https://github.com/OpenAEC-Foundation/open-office-studio/issues/51) | Omzetten in beide richtingen geïmplementeerd en native getest; breed issue open | Twaalf pakket- en zeven echte kernproeven; één/alle noten omzetten, bewaren en heropenen, behoud van tekst/opmaak/beeld/relaties onafhankelijk gecontroleerd. ODT/PDF-afwijking en inline bewerken nog open; zie [nootomzetting](2026-11-06-nootomzetting.md). |
 | [#50](https://github.com/OpenAEC-Foundation/open-office-studio/issues/50) | Nog niet volledig afgetekend | Acceptatiecriteria vergelijken met bron, bestaande tests en werkelijke uitvoering. |
 | [#49](https://github.com/OpenAEC-Foundation/open-office-studio/issues/49) | Nog niet volledig afgetekend | Acceptatiecriteria vergelijken met bron, bestaande tests en werkelijke uitvoering. |
 | [#48](https://github.com/OpenAEC-Foundation/open-office-studio/issues/48) | Nog niet volledig afgetekend | Acceptatiecriteria vergelijken met bron, bestaande tests en werkelijke uitvoering. |
@@ -318,3 +318,17 @@ native datumproeven zijn groen. De brede issues #51, #60, #61, #71 en #73 zijn
 opnieuw op hun volledige criteria gelezen en blijven open: onder meer
 sectie-/paginanoten en formaatbehoud, venstersplitsing, bladen samen bewerken,
 gespreksnotities en gestructureerde tabellen vragen nog afzonderlijke controle.
+
+
+## Afronding getalnotatie — 6 november 2026
+
+PR #164 is gemerged als `cbb0bf6e` en #64 is gesloten na controle van alle zes
+criteria. Alle zes Windows-/macOS-/Linux-controles van de definitieve revisie
+slagen; de kern slaagt in 2.419 proeven en de app in 1.874 unieke actieve
+proeven. Native invoer, gemengde notaties en 24 bewaarde cellen zijn gecontroleerd.
+Er zijn nu 92 open issues. De resterende nootcriteria van #51 worden afzonderlijk
+afgewerkt; zeven kernproeven voor herstart, plaatsing en omzetten/heropenen
+en twaalf pakketproeven slagen. Native omzetten, bewaren en heropenen zijn
+bewezen met vier onafhankelijk gecontroleerde pakketten. De ODT-/PDF-proef
+vindt nog afwijkende positie en sectienummering; inline bewerken is nog niet
+afgetekend. Zie [nootomzetting](2026-11-06-nootomzetting.md). #51 blijft open.

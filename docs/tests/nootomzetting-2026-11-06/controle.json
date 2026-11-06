@@ -1,0 +1,306 @@
+{
+  "datum": "2026-11-06",
+  "basis": "cbb0bf6efc1e74c6fc50d594962b89f15b310d5b",
+  "pakketcontrole": [
+    {
+      "bestand": "bron.docx",
+      "sha256": "4c32149f0e55fe4d7e96b90950d62df655c567d54d35458a8371d6a06388d4f6",
+      "tellingen": {
+        "voetnoten": 3,
+        "eindnoten": 2
+      },
+      "noten": {
+        "footnote": {
+          "2": " Eerste voetnoot: eigen toelichting. BEHOUDEN OPMAAK bronkoppeling",
+          "6": " Tweede voetnoot: behouden tekst.",
+          "8": " Derde voetnoot in de tweede sectie."
+        },
+        "endnote": {
+          "2": " Bestaande eindnoot met botsend nummer. eindkoppeling",
+          "9": " Tweede bestaande eindnoot."
+        }
+      },
+      "rijkeNoot": [
+        {
+          "soort": "footnote",
+          "id": "2",
+          "vet": true,
+          "kleur": "125AA2",
+          "uitbreiding": "{urn:openaec:notenproef}controle"
+        }
+      ],
+      "gebruikteRelaties": [
+        {
+          "soort": "footnote",
+          "id": "2",
+          "doel": "word/media/nootproef.png",
+          "extern": false
+        },
+        {
+          "soort": "footnote",
+          "id": "2",
+          "doel": "https://example.invalid/nootbron",
+          "extern": true
+        },
+        {
+          "soort": "endnote",
+          "id": "2",
+          "doel": "https://example.invalid/bestaand",
+          "extern": true
+        }
+      ],
+      "beeldSha256": "f193c940f65d4800936cfced8f937b33e289f787d24cb5ed906f87c790f31823",
+      "sectieInstellingen": [
+        "<ns0:footnotePr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pos ns0:val=\"pageBottom\" /><ns0:numFmt ns0:val=\"lowerRoman\" /><ns0:numStart ns0:val=\"3\" /><ns0:numRestart ns0:val=\"eachSect\" /></ns0:footnotePr>",
+        "<ns0:endnotePr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pos ns0:val=\"docEnd\" /><ns0:numFmt ns0:val=\"upperRoman\" /><ns0:numStart ns0:val=\"5\" /><ns0:numRestart ns0:val=\"continuous\" /></ns0:endnotePr>",
+        "<ns0:footnotePr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pos ns0:val=\"pageBottom\" /><ns0:numFmt ns0:val=\"lowerRoman\" /><ns0:numStart ns0:val=\"3\" /><ns0:numRestart ns0:val=\"eachSect\" /></ns0:footnotePr>",
+        "<ns0:endnotePr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pos ns0:val=\"docEnd\" /><ns0:numFmt ns0:val=\"upperRoman\" /><ns0:numStart ns0:val=\"5\" /><ns0:numRestart ns0:val=\"continuous\" /></ns0:endnotePr>"
+      ]
+    },
+    {
+      "bestand": "een-eindnoot.docx",
+      "sha256": "8cf48a7cf5154119edd37f97d8ac17a8bf7808646591deb44da892fbf71bc9dd",
+      "tellingen": {
+        "voetnoten": 2,
+        "eindnoten": 3
+      },
+      "noten": {
+        "footnote": {
+          "6": " Tweede voetnoot: behouden tekst.",
+          "8": " Derde voetnoot in de tweede sectie."
+        },
+        "endnote": {
+          "2": " Bestaande eindnoot met botsend nummer. eindkoppeling",
+          "9": " Tweede bestaande eindnoot.",
+          "1": " Eerste voetnoot: eigen toelichting. BEHOUDEN OPMAAK bronkoppeling"
+        }
+      },
+      "rijkeNoot": [
+        {
+          "soort": "endnote",
+          "id": "1",
+          "vet": true,
+          "kleur": "125AA2",
+          "uitbreiding": "{urn:openaec:notenproef}controle"
+        }
+      ],
+      "gebruikteRelaties": [
+        {
+          "soort": "endnote",
+          "id": "2",
+          "doel": "https://example.invalid/bestaand",
+          "extern": true
+        },
+        {
+          "soort": "endnote",
+          "id": "1",
+          "doel": "word/media/nootproef.png",
+          "extern": false
+        },
+        {
+          "soort": "endnote",
+          "id": "1",
+          "doel": "https://example.invalid/nootbron",
+          "extern": true
+        }
+      ],
+      "beeldSha256": "f193c940f65d4800936cfced8f937b33e289f787d24cb5ed906f87c790f31823",
+      "sectieInstellingen": [
+        "<ns0:footnotePr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pos ns0:val=\"pageBottom\" /><ns0:numFmt ns0:val=\"lowerRoman\" /><ns0:numStart ns0:val=\"3\" /><ns0:numRestart ns0:val=\"eachSect\" /></ns0:footnotePr>",
+        "<ns0:endnotePr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pos ns0:val=\"docEnd\" /><ns0:numFmt ns0:val=\"upperRoman\" /><ns0:numStart ns0:val=\"5\" /><ns0:numRestart ns0:val=\"continuous\" /></ns0:endnotePr>",
+        "<ns0:footnotePr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pos ns0:val=\"pageBottom\" /><ns0:numFmt ns0:val=\"lowerRoman\" /><ns0:numStart ns0:val=\"3\" /><ns0:numRestart ns0:val=\"eachSect\" /></ns0:footnotePr>",
+        "<ns0:endnotePr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pos ns0:val=\"docEnd\" /><ns0:numFmt ns0:val=\"upperRoman\" /><ns0:numStart ns0:val=\"5\" /><ns0:numRestart ns0:val=\"continuous\" /></ns0:endnotePr>"
+      ]
+    },
+    {
+      "bestand": "alle-eindnoten.docx",
+      "sha256": "dd1ba5b49431f4526f2129fd339f17e3f5e4181c1531ad73753f96d3d657b035",
+      "tellingen": {
+        "voetnoten": 0,
+        "eindnoten": 5
+      },
+      "noten": {
+        "footnote": {},
+        "endnote": {
+          "2": " Bestaande eindnoot met botsend nummer. eindkoppeling",
+          "9": " Tweede bestaande eindnoot.",
+          "1": " Eerste voetnoot: eigen toelichting. BEHOUDEN OPMAAK bronkoppeling",
+          "3": " Tweede voetnoot: behouden tekst.",
+          "4": " Derde voetnoot in de tweede sectie."
+        }
+      },
+      "rijkeNoot": [
+        {
+          "soort": "endnote",
+          "id": "1",
+          "vet": true,
+          "kleur": "125AA2",
+          "uitbreiding": "{urn:openaec:notenproef}controle"
+        }
+      ],
+      "gebruikteRelaties": [
+        {
+          "soort": "endnote",
+          "id": "2",
+          "doel": "https://example.invalid/bestaand",
+          "extern": true
+        },
+        {
+          "soort": "endnote",
+          "id": "1",
+          "doel": "word/media/nootproef.png",
+          "extern": false
+        },
+        {
+          "soort": "endnote",
+          "id": "1",
+          "doel": "https://example.invalid/nootbron",
+          "extern": true
+        }
+      ],
+      "beeldSha256": "f193c940f65d4800936cfced8f937b33e289f787d24cb5ed906f87c790f31823",
+      "sectieInstellingen": [
+        "<ns0:footnotePr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pos ns0:val=\"pageBottom\" /><ns0:numFmt ns0:val=\"lowerRoman\" /><ns0:numStart ns0:val=\"3\" /><ns0:numRestart ns0:val=\"eachSect\" /></ns0:footnotePr>",
+        "<ns0:endnotePr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pos ns0:val=\"docEnd\" /><ns0:numFmt ns0:val=\"upperRoman\" /><ns0:numStart ns0:val=\"5\" /><ns0:numRestart ns0:val=\"continuous\" /></ns0:endnotePr>",
+        "<ns0:footnotePr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pos ns0:val=\"pageBottom\" /><ns0:numFmt ns0:val=\"lowerRoman\" /><ns0:numStart ns0:val=\"3\" /><ns0:numRestart ns0:val=\"eachSect\" /></ns0:footnotePr>",
+        "<ns0:endnotePr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pos ns0:val=\"docEnd\" /><ns0:numFmt ns0:val=\"upperRoman\" /><ns0:numStart ns0:val=\"5\" /><ns0:numRestart ns0:val=\"continuous\" /></ns0:endnotePr>"
+      ]
+    },
+    {
+      "bestand": "alle-voetnoten.docx",
+      "sha256": "2abe43206e93758b8ec4ad05fa46ff81791c849993463a91153887c2c7dbeee8",
+      "tellingen": {
+        "voetnoten": 5,
+        "eindnoten": 0
+      },
+      "noten": {
+        "footnote": {
+          "1": " Eerste voetnoot: eigen toelichting. BEHOUDEN OPMAAK bronkoppeling",
+          "2": " Tweede voetnoot: behouden tekst.",
+          "3": " Bestaande eindnoot met botsend nummer. eindkoppeling",
+          "4": " Derde voetnoot in de tweede sectie.",
+          "5": " Tweede bestaande eindnoot."
+        },
+        "endnote": {}
+      },
+      "rijkeNoot": [
+        {
+          "soort": "footnote",
+          "id": "1",
+          "vet": true,
+          "kleur": "125AA2",
+          "uitbreiding": "{urn:openaec:notenproef}controle"
+        }
+      ],
+      "gebruikteRelaties": [
+        {
+          "soort": "footnote",
+          "id": "1",
+          "doel": "word/media/nootproef.png",
+          "extern": false
+        },
+        {
+          "soort": "footnote",
+          "id": "1",
+          "doel": "https://example.invalid/nootbron",
+          "extern": true
+        },
+        {
+          "soort": "footnote",
+          "id": "3",
+          "doel": "https://example.invalid/bestaand",
+          "extern": true
+        }
+      ],
+      "beeldSha256": "f193c940f65d4800936cfced8f937b33e289f787d24cb5ed906f87c790f31823",
+      "sectieInstellingen": [
+        "<ns0:footnotePr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pos ns0:val=\"pageBottom\" /><ns0:numFmt ns0:val=\"lowerRoman\" /><ns0:numStart ns0:val=\"3\" /><ns0:numRestart ns0:val=\"eachSect\" /></ns0:footnotePr>",
+        "<ns0:endnotePr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pos ns0:val=\"docEnd\" /><ns0:numFmt ns0:val=\"upperRoman\" /><ns0:numStart ns0:val=\"5\" /><ns0:numRestart ns0:val=\"continuous\" /></ns0:endnotePr>",
+        "<ns0:footnotePr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pos ns0:val=\"pageBottom\" /><ns0:numFmt ns0:val=\"lowerRoman\" /><ns0:numStart ns0:val=\"3\" /><ns0:numRestart ns0:val=\"eachSect\" /></ns0:footnotePr>",
+        "<ns0:endnotePr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pos ns0:val=\"docEnd\" /><ns0:numFmt ns0:val=\"upperRoman\" /><ns0:numStart ns0:val=\"5\" /><ns0:numRestart ns0:val=\"continuous\" /></ns0:endnotePr>"
+      ]
+    }
+  ],
+  "nativeBediening": [
+    {
+      "stap": "alle vijf eindnoten: eerder opgeslagen in alle-eindnoten.docx"
+    },
+    {
+      "stap": "alle vijf voetnoten",
+      "noten": [
+        {
+          "nummer": "Footnote 1",
+          "tekst": "Eerste voetnoot: eigen toelichting. BEHOUDEN OPMAAK bronkoppeling"
+        },
+        {
+          "nummer": "Footnote 2",
+          "tekst": "Tweede voetnoot: behouden tekst."
+        },
+        {
+          "nummer": "Footnote 3",
+          "tekst": "Bestaande eindnoot met botsend nummer. eindkoppeling"
+        },
+        {
+          "nummer": "Footnote 4",
+          "tekst": "Derde voetnoot in de tweede sectie."
+        },
+        {
+          "nummer": "Footnote 5",
+          "tekst": "Tweede bestaande eindnoot."
+        }
+      ]
+    },
+    {
+      "stap": "na echte heropening",
+      "noten": [
+        {
+          "nummer": "Footnote 1",
+          "tekst": "Eerste voetnoot: eigen toelichting. BEHOUDEN OPMAAK bronkoppeling"
+        },
+        {
+          "nummer": "Footnote 2",
+          "tekst": "Tweede voetnoot: behouden tekst."
+        },
+        {
+          "nummer": "Footnote 3",
+          "tekst": "Bestaande eindnoot met botsend nummer. eindkoppeling"
+        },
+        {
+          "nummer": "Footnote 4",
+          "tekst": "Derde voetnoot in de tweede sectie."
+        },
+        {
+          "nummer": "Footnote 5",
+          "tekst": "Tweede bestaande eindnoot."
+        }
+      ]
+    }
+  ],
+  "geladenAssets": [
+    {
+      "naam": "editors-BDKmZC-2.js",
+      "bytes": 1671632,
+      "sha256": "3f079966d454d83ae92807c3ee9d5afd117a42c66a1c2f2ea3ea158188477a4e"
+    },
+    {
+      "naam": "docx_edit_bg-ONvZFP_n.wasm",
+      "bytes": 24549413,
+      "sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9"
+    },
+    {
+      "naam": "docx_layout_bg-DcsU5iOF.wasm",
+      "bytes": 4366717,
+      "sha256": "e339c612f7a027965aaa990239818c7c556d30877f018f6a3efaf6425a86e8fc"
+    },
+    {
+      "naam": "docx_parse_bg-CrNtYsJD.wasm",
+      "bytes": 6418464,
+      "sha256": "e6188f8e0e4d03ce4b67ef5bcbcf23e6203419fe4a145a60e1e60f26a96b558b"
+    }
+  ],
+  "opruimen": {
+    "appAfgesloten": true,
+    "x11Afgesloten": true
+  },
+  "grens": "Bestaande pakketroute vraagt vooraf bevestiging voor vervallen eerdere Undo-geschiedenis. ODT/PDF en inline nootbewerking zijn niet vrijgegeven."
+}

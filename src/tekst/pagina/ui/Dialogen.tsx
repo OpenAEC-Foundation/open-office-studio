@@ -528,7 +528,7 @@ export function NootInstellingenDialoog({
   );
 }
 
-export function NotenLijst({ noten, gaNaar, sluit }: { noten: NootInfo[]; gaNaar: (n: NootInfo, waar: "verwijzing" | "noot") => void; sluit: () => void }) {
+export function NotenLijst({ noten, gaNaar, sluit, omzetten }: { noten: NootInfo[]; gaNaar: (n: NootInfo, waar: "verwijzing" | "noot") => void; sluit: () => void; omzetten?: (soort: NootSoort, id?: string) => void }) {
   const { t } = useTranslation(["writer", "common"]);
   return (
     <Dialoog
@@ -544,6 +544,15 @@ export function NotenLijst({ noten, gaNaar, sluit }: { noten: NootInfo[]; gaNaar
       {noten.length === 0 ? (
         <p className="werkruimte-uitleg">{t("page.footnotes.list.none")}</p>
       ) : (
+        <>
+        {omzetten && <div className="werkruimte-groep">
+          <p className="werkruimte-uitleg">{t("page.footnotes.convert.hint")}</p>
+          {(["voetnoot", "eindnoot"] as const).map(soort => noten.some(n => n.soort === soort) && (
+            <button key={soort} type="button" className="werkruimte-knop" onClick={() => omzetten(soort)}>
+              {t(soort === "voetnoot" ? "page.footnotes.convert.allFootnotes" : "page.footnotes.convert.allEndnotes")}
+            </button>
+          ))}
+        </div>}
         <ol className="pagina-noten">
           {noten.map((n) => (
             <li key={`${n.soort}-${n.noteId}`}>
@@ -562,10 +571,14 @@ export function NotenLijst({ noten, gaNaar, sluit }: { noten: NootInfo[]; gaNaar
                     ? t("page.footnotes.list.toNoteOnPage", { page: formatGetal(n.paginaNoot + 1) })
                     : t("page.footnotes.list.toNote")}
                 </button>
+                {omzetten && <button type="button" className="werkruimte-knop" onClick={() => omzetten(n.soort, n.noteId)}>
+                  {t(n.soort === "voetnoot" ? "page.footnotes.convert.toEndnote" : "page.footnotes.convert.toFootnote")}
+                </button>}
               </span>
             </li>
           ))}
         </ol>
+        </>
       )}
     </Dialoog>
   );

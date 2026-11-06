@@ -1,0 +1,36 @@
+{
+  "basis": "cbb0bf6efc1e74c6fc50d594962b89f15b310d5b",
+  "volledigeAppset": {
+    "bestanden": 162,
+    "geslaagd": 1896,
+    "overgeslagen": 7,
+    "mislukt": 0
+  },
+  "typecontrole": "tsc --noEmit, geslaagd op 6 november 2026",
+  "logboeken": {
+    "appvolledig-na-getalnotatie.log": {
+      "sha256": "135d4e6c2ece052dabb9b24afcfa9003e80e779f5d78eb557c7681c3a451229f",
+      "einde": "tests) 230ms\n ✓ src/documentzoom.test.ts (8 tests) 222ms\n ✓ src/notities/historie.test.ts (2 tests) 223ms\n ✓ src/tabelvoorbeeld/meten.test.ts (3 tests) 212ms\n ✓ src/werkbestand.test.ts (6 tests) 215ms\n ✓ packages/database/src/ui/extern-logica.test.ts (16 tests) 237ms\n ✓ src/tekst/randen/randen.test.ts (8 tests) 245ms\n ✓ src/instellingen.test.ts (2 tests) 203ms\n ✓ src/tabelvoorbeeld/positie.test.ts (6 tests) 230ms\n ✓ src/werkruimte/werkruimte.test.ts (4 tests) 216ms\n ✓ src/tekst/tabel/selectie.test.ts (3 tests) 267ms\n ✓ src/tekst/bewerken/herhalen.test.ts (2 tests) 227ms\n ✓ src/herstel.test.ts (4 tests) 223ms\n ✓ src/tekst/gedeeld/enginevenster.test.ts (3 tests) 210ms\n ✓ src/tekst/bewerken/groottereeks.test.ts (5 tests) 219ms\n ✓ src/lint/sneltoetsen.test.ts (6 tests) 218ms\n ✓ src/openaec-lint/toetstips.test.ts (5 tests) 229ms\n ✓ src/nederlands-toegankelijk.test.ts (5 tests) 217ms\n ✓ src/wasmGeheugen.test.ts (1 test) 211ms\n ✓ src/klembord-ipc.test.ts (1 test) 245ms\n ✓ src/tekst/tabel/schuifpositie.test.ts (3 tests) 233ms\n ✓ src/openaec-lint/focus.test.ts (1 test) 208ms\n\n Test Files  162 passed (162)\n      Tests  1896 passed | 7 skipped (1903)\n   Start at  12:48:15\n   Duration  220.59s (transform 11.12s, setup 25.40s, collect 18.11s, tests 124.51s, environment 43ms, prepare 15.46s)\n\n"
+    },
+    "i18n-omzetten.log": {
+      "sha256": "0db061d5ef512a6f21f9c85a384084deb108016f87fc9d47e7361b180ed4fe21",
+      "einde": "ort niet bij een taal uit talen.ts\nwaarschuwing: Map hi hoort niet bij een taal uit talen.ts\nwaarschuwing: Map hu hoort niet bij een taal uit talen.ts\nwaarschuwing: Map id hoort niet bij een taal uit talen.ts\nwaarschuwing: Map ja hoort niet bij een taal uit talen.ts\nwaarschuwing: Map ko hoort niet bij een taal uit talen.ts\nwaarschuwing: Map nb hoort niet bij een taal uit talen.ts\nwaarschuwing: Map pl hoort niet bij een taal uit talen.ts\nwaarschuwing: Map pt-PT hoort niet bij een taal uit talen.ts\nwaarschuwing: Map ro hoort niet bij een taal uit talen.ts\nwaarschuwing: Map ru hoort niet bij een taal uit talen.ts\nwaarschuwing: Map sk hoort niet bij een taal uit talen.ts\nwaarschuwing: Map sv hoort niet bij een taal uit talen.ts\nwaarschuwing: Map th hoort niet bij een taal uit talen.ts\nwaarschuwing: Map tr hoort niet bij een taal uit talen.ts\nwaarschuwing: Map uk hoort niet bij een taal uit talen.ts\nwaarschuwing: Map vi hoort niet bij een taal uit talen.ts\nwaarschuwing: Map zh-TW hoort niet bij een taal uit talen.ts\n9 talen × 21 namespaces (backstage, charts, common, database, desktop, email, fonts, functions, import, notes, presentation, print, ribbon, settings, shell, spelling, spreadsheet, statusbar, vba, workspace, writer), 6873 sleutels in de brontaal: in orde, 23 waarschuwingen\n"
+    },
+    "productie-met-assets.log": {
+      "sha256": "172242cead242aafe3b166f809f6462d8cf4b26c77b0d4e8afe24331a6871fdd",
+      "einde": "otherstart/dist-omzetten-met-assets/assets/i18n-de-B72fbTG6.js                                    360.38 kB │ gzip:   111.02 kB\n.local/nootherstart/dist-omzetten-met-assets/assets/i18n-it-DehPljm7.js                                    364.58 kB │ gzip:   109.95 kB\n.local/nootherstart/dist-omzetten-met-assets/assets/i18n-pt-BR-Clj3SVcK.js                                 364.85 kB │ gzip:   110.48 kB\n.local/nootherstart/dist-omzetten-met-assets/assets/i18n-es-BX1dmdG6.js                                    365.54 kB │ gzip:   110.44 kB\n.local/nootherstart/dist-omzetten-met-assets/assets/i18n-fr-CE2fy5mM.js                                    380.34 kB │ gzip:   113.37 kB\n.local/nootherstart/dist-omzetten-met-assets/assets/editors-BDKmZC-2.js                                  1,671.63 kB │ gzip:   535.75 kB\n.local/nootherstart/dist-omzetten-met-assets/assets/index-DDpjmM8j.js                                    2,940.89 kB │ gzip:   906.88 kB\n\n(!) Some chunks are larger than 500 kB after minification. Consider:\n- Using dynamic import() to code-split the application\n- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks\n- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.\n✓ built in 30.32s\n"
+    },
+    "nativebouw-met-assets.log": {
+      "sha256": "16cea9bc150f3df872f679fd499cb127fc923a4152c9e31c93cbc97ef88f4a7e",
+      "einde": "        Info Looking up installed tauri packages to check mismatched versions...\n   Compiling open-office-studio v2026.45.2 (/home/aia01/.cache/open-office-qa/regio-bron-20261106/src-tauri)\nwarning: struct `Tekst` is never constructed\n  --> src/email/fout.rs:63:12\n   |\n63 | pub struct Tekst {\n   |            ^^^^^\n   |\n   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default\n\nwarning: associated items `nieuw` and `waarde` are never used\n  --> src/email/fout.rs:72:12\n   |\n71 | impl Tekst {\n   | ---------- associated items in this implementation\n72 |     pub fn nieuw(sleutel: &'static str, melding: impl Into<String>) -> Self {\n   |            ^^^^^\n...\n79 |     pub fn waarde(mut self, naam: &'static str, waarde: impl ToString) -> Self {\n   |            ^^^^^^\n\nwarning: function `huidige` is never used\n   --> src/taal.rs:108:8\n    |\n108 | pub fn huidige() -> &'static str {\n    |        ^^^^^^^\n\nwarning: `open-office-studio` (bin \"open-office-studio\") generated 3 warnings\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 27.40s\n       Built application at: /home/aia01/Documenten/GitHub/ops-wt/office-namenbeheer-volledig/.local/native-target/debug/open-office-getalnotatie-proef\n"
+    }
+  },
+  "bronbestanden": {
+    "src/tekst/pagina/noten.ts": "bd69a948128172f35d077314bfb71a3b2f3e4abd5e5af7a119f1d2fd17069ddd",
+    "src/tekst/pagina/ui/usePagina.tsx": "1f36b580d0ac73cc6d377ce36df252ba366e6f9d6275ca8ab3f2e43e7fa5ddd6",
+    "src/tekst/pagina/ui/PaginaLint.tsx": "ebbf054f4f13ad765f24de6ad06fdd72e936f61575f80f60a11b2c99ca32f63d",
+    "src/tekst/pagina/ui/Dialogen.tsx": "f47cf8e5756349d08302f3618447b9e9b0138ec53214b70daf8bab78ecc3f64d",
+    "src/tekst/pagina/nootomzetting.test.ts": "704c421df7846508f66e4fae45578ae614130d684cb5724844d7fb1d3794eda2",
+    "src/tekst/pagina/nootherstart-engine.test.ts": "f0eecb0675ebd42eb1c1376da7a2a56cf31bd1bc8ab416550d408410cddfb6c0"
+  }
+}

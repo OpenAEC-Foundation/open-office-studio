@@ -1047,7 +1047,15 @@
         "toNoteOnPage": "الانتقال إلى الحاشية (ص {{page}})"
       },
       "jumpFootnote": "الحاشية السفلية {{number}}: {{text}}",
-      "jumpEndnote": "الحاشية الختامية {{number}}: {{text}}"
+      "jumpEndnote": "الحاشية الختامية {{number}}: {{text}}",
+      "convert": {
+        "title": "Convert notes",
+        "allFootnotes": "Convert all footnotes to endnotes",
+        "allEndnotes": "Convert all endnotes to footnotes",
+        "toEndnote": "Convert to endnote",
+        "toFootnote": "Convert to footnote",
+        "hint": "Content and formatting are preserved. Converted notes use the numbering of the destination kind."
+      }
     },
     "done": {
       "pageNumberInserted": "تم إدراج رقم الصفحة",
@@ -1085,7 +1093,8 @@
       "tocRemoved": "تمت إزالة جدول المحتويات",
       "footnoteInserted": "تم إدراج الحاشية السفلية",
       "endnoteInserted": "تم إدراج الحاشية الختامية",
-      "noteFormatChanged": "تم تغيير تنسيق الحواشي"
+      "noteFormatChanged": "تم تغيير تنسيق الحواشي",
+      "notesConverted": "Notes converted"
     },
     "errors": {
       "notReady": "المستند غير جاهز بعد.",
@@ -1117,7 +1126,8 @@
       "endnoteBodyOnly": "يمكن إدراج الحاشية الختامية في النص الرئيسي فقط، وليس في رأس أو تذييل أو حاشية أخرى.",
       "footnotePosition": "توضع الحواشي السفلية أسفل الصفحة أو أسفل النص.",
       "endnotePosition": "توضع الحواشي الختامية في نهاية المقطع أو المستند.",
-      "endnoteRestartPerPage": "لا يمكن إعادة بدء الحواشي الختامية في كل صفحة."
+      "endnoteRestartPerPage": "لا يمكن إعادة بدء الحواشي الختامية في كل صفحة.",
+      "noteConversionInvalid": "This note cannot be converted: note IDs or related parts are incomplete or ambiguous."
     }
   },
   "paragraph": {
