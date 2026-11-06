@@ -102,6 +102,12 @@ jobs:
       - name: macOS-pakket bouwen
         if: runner.os == 'macOS'
         run: pnpm desktop:build --bundles dmg
+      - name: Bestandskoppelingen in de gebouwde macOS-app controleren
+        if: runner.os == 'macOS'
+        run: python scripts/controleer-macos-koppelingen.py --rapport .local/pakketcontrole-macOS.json
+      - name: Bestanden native via macOS openen bij starten en in de draaiende app
+        if: runner.os == 'macOS'
+        run: python scripts/proef-macos-openen.py --rapport .local/pakketcontrole-macOS-openen.json
       - name: Linux-installers werkelijk uitpakken en controleren
         if: runner.os == 'Linux'
         run: python scripts/controleer-installers.py --platform linux --rapport .local/pakketcontrole-Linux.json
@@ -118,7 +124,6 @@ jobs:
             src-tauri/target/release/bundle/**/*.dmg
           if-no-files-found: error
       - name: Pakketrapport bewaren
-        if: runner.os != 'macOS'
         uses: actions/upload-artifact@v4
         with:
           name: pakketcontrole-${{ runner.os }}

@@ -1,0 +1,102 @@
+{
+  "nativeProgrammaSha256": "138f15e9d93817ca3e908de17a250c09a96e9b8ba7dd2b278b3a802f5519ee33",
+  "nativeLinux": [
+    {
+      "proef": "opstartpad-met-spaties-en-procent",
+      "tabs": [
+        {
+          "tekst": "Start",
+          "actief": "false"
+        },
+        {
+          "tekst": "Bestand met spaties %.xlsx",
+          "actief": "true"
+        }
+      ],
+      "bronhash": "bcd42184aa344552c5dc38c1599454a45365acdf995c784cb8ddb1761e473230"
+    },
+    {
+      "proef": "tweede-start-in-bestaand-venster",
+      "exitcode": 0,
+      "tabs": [
+        {
+          "tekst": "Start",
+          "actief": "false"
+        },
+        {
+          "tekst": "Bestand met spaties %.xlsx",
+          "actief": "false"
+        },
+        {
+          "tekst": "Tweede document.docx",
+          "actief": "true"
+        }
+      ],
+      "documenthash": "4a8958d9a2c6570213a679b178f463bf61c0019b750217557f6d2be2991b4448"
+    },
+    {
+      "proef": "zelfde-pad-activeert-bestaand-tabblad",
+      "exitcode": 0,
+      "tabs": [
+        {
+          "tekst": "Start",
+          "actief": "false"
+        },
+        {
+          "tekst": "Bestand met spaties %.xlsx",
+          "actief": "true"
+        },
+        {
+          "tekst": "Tweede document.docx",
+          "actief": "false"
+        }
+      ]
+    },
+    {
+      "proef": "normaal-opslaan-gebruikt-het-aangewezen-pad",
+      "waarde": "13",
+      "bronhashNa": "4fdb628403d74b7decf0528ba57cb5831a018e77182eb3cfe03addde5318b6ec",
+      "documentOngewijzigd": true,
+      "tabbladen": [
+        {
+          "tekst": "Start",
+          "actief": "false"
+        },
+        {
+          "tekst": "Bestand met spaties %.xlsx",
+          "actief": "true"
+        },
+        {
+          "tekst": "Tweede document.docx",
+          "actief": "false"
+        }
+      ]
+    }
+  ],
+  "python": {
+    "geslaagd": 57,
+    "exitcode": 0
+  },
+  "macOS": {
+    "metadata": "wordt op de werkelijk gebouwde app in CI gecontroleerd",
+    "native": "LaunchServices bij eerste en tweede opening; resultaat wordt in CI gemeten"
+  },
+  "bronnen": {
+    "scripts/controleer-macos-koppelingen.py": "aa9205eebe4e940f2e1e4a2bf1d78b12335407df9e47dfac400ebebb963d4b4a",
+    "scripts/proef-macos-openen.py": "558d192b0861e7932b80fa231ab77d6ffc747ff98cc24f86f0761471052e8e03",
+    "tests/test_macos_koppelingen.py": "e80b5b1d2e203c0b6e0f094f64e748fe7438c34f47d7ccdb05e05471b846d695",
+    ".github/workflows/desktop.yml": "bcc612da37e7decf891dec2d78db94bf8e0c3697c6f64e1071730adf15c8e2ed",
+    "src-tauri/tauri.macos.conf.json": "50f8d417df03fb3917d14dd32a4ebf3e4599d81f8ceb3ff2133b9f7be1196e70",
+    "src-tauri/tauri.linux.conf.json": "9ede13fe7077be424f65e65b0b889b83d9320ae516533ac1c3623a7f7d9aa47b",
+    "src-tauri/tauri.windows.conf.json": "1420a5bbbb3515cb4eea8b4129db031ad77361ec49d20366fc1e9c884a293834",
+    "src-tauri/src/main.rs": "69b60ff9bf710e80415f1fe2de45cc4f9e8257fe7b7dfe12c2fab8cc2f84fcd2",
+    "src-tauri/src/systeembestanden.rs": "37ba8183dabb9fa217c08e6e8fdcfabbecd1222f33f7bcbc5c55197360e20c92",
+    "src-tauri/src/werkbestanden.rs": "3e32e909a2d6547b658869e1a06d68a8cae6b1a81000a9a762e3a6aea146a02d",
+    "src-tauri/src/recent.rs": "d87f8fc506d9606b7a1edf85217cc6d186cbe3a5e6605a3971ebe8d2543f7df9"
+  },
+  "uitvoerbestand": {
+    "naam": "docs/tests/bestandskoppelingen/Opgeslagen-rekenblad.xlsx",
+    "sha256": "4fdb628403d74b7decf0528ba57cb5831a018e77182eb3cfe03addde5318b6ec"
+  },
+  "eigenLinuxProefprocessenAfgesloten": true
+}
