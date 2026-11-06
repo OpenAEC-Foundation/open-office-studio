@@ -120,12 +120,14 @@ export function maakRekenbladLaag(): RekenbladLaag {
       selectie = context.snapshot.selection;
       meld();
     },
-    onEvent(_, event) {
+    onEvent(context, event) {
       if (event.type === "selection-change") {
         selectie = event.selection;
         meld();
       } else if (event.type === "load") {
-        selectie = null;
+        // De engine kan de eerste selectie al vóór deze laadmelding hebben
+        // gepubliceerd. Neem de actuele selectie van dit document over.
+        selectie = context.snapshot.selection;
         markeringen = [];
         meld();
       }

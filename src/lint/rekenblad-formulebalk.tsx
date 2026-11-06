@@ -14,7 +14,7 @@ import {
   useEffect,
   useId,
   useMemo,
-  useReducer,
+  useSyncExternalStore,
   useRef,
   useState,
 } from "react";
@@ -44,6 +44,7 @@ import {
   type Functie,
 } from "./rekenblad-functies";
 import { VERWIJZINGSKLEUREN, type RekenbladLaag } from "./rekenblad-laag";
+import { FormuleKleuren } from "./rekenblad-formulekleuren";
 import "./rekenblad-gereedschap.css";
 
 const VELDEN = '[data-testid="xlsx-cell-editor"], [data-testid="xlsx-formula-input"], .rekenblad-formule-uitgebreid';
@@ -64,11 +65,16 @@ export function zetVeld(veld: Veld, tekst: string, begin: number, eind = begin) 
 
 const tekstVan = (fout: unknown) => (fout instanceof Melding || fout instanceof Error ? fout.message : String(fout));
 
-/** Huidige cel en selectie volgens de laag. */
+const geenSelectie = () => null;
+const geenMeldingen = () => () => {};
+
+/** Huidige selectie, ook als de eerste melding vóór het abonneren plaatsvindt. */
 function useSelectie(laag: RekenbladLaag | null | undefined) {
-  const [, ververs] = useReducer((n: number) => n + 1, 0);
-  useEffect(() => laag?.abonneer(ververs), [laag]);
-  return laag?.selectie() ?? null;
+  return useSyncExternalStore(
+    laag?.abonneer ?? geenMeldingen,
+    laag?.selectie ?? geenSelectie,
+    geenSelectie,
+  );
 }
 
 // ------------------------------------------------------------ voorbeeld
@@ -544,75 +550,22 @@ function Naamvak({ api, laag }: { api: XlsxEditorApi; laag: RekenbladLaag | null
   );
 }
 
-/** Formulebalk met eigen naamvak, fx-knop en uitvouwen; de invoer zelf is die van de engine. */
-export function Formulebalk({
-  api,
-  laag,
-  functieInvoegen,
-}: {
-  api: XlsxEditorApi | null;
-  laag: RekenbladLaag | null | undefined;
-  functieInvoegen: () => void;
-}) {
-  const { t } = useTranslation("spreadsheet");
-  const [uitgevouwen, setUitgevouwen] = useState(false);
-  return (
-    <div className={`office-formulebalk${uitgevouwen ? " is-uitgevouwen" : ""}`}>
-      {api && <Naamvak api={api} laag={laag} />}
-      <button
-        type="button"
-        className="rekenblad-fx"
-        disabled={!api}
-        aria-label={t("formulaBar.insertFunction")}
-        title={`${t("formulaBar.insertFunction")} · Shift+F3`}
-        onMouseDown={(e) => e.preventDefault()}
-        onClick={functieInvoegen}
-      >
-        <i>fx</i>
-      </button>
-      <EditorToolbar.FormulaBar />
-      {api && uitgevouwen && <UitgevouwenFormule api={api} laag={laag} />}
-      <button
-        type="button"
-        className="rekenblad-uitvouwen"
-        aria-expanded={uitgevouwen}
-        aria-label={t(uitgevouwen ? "formulaBar.collapse" : "formulaBar.expand")}
-        title={t(uitgevouwen ? "formulaBar.collapse" : "formulaBar.expand")}
-        onMouseDown={(e) => e.preventDefault()}
-        onClick={() => setUitgevouwen(!uitgevouwen)}
-      >
-        {uitgevouwen ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-      </button>
-    </div>
-  );
-}
-
-/**
- * Meerregelige formulebalk: toont de inhoud van de actieve cel en schrijft
- * bij Enter of Tab via een bewerkingsbatch (één ongedaan-maakstap).
- * Alt+Enter of Shift+Enter geeft een nieuwe regel.
- */
-function UitgevouwenFormule({ api, laag }: { api: XlsxEditorApi; laag: RekenbladLaag | null | undefined }) {
-  const { t } = useTranslation("spreadsheet");
-  const fout = useContext(RibbonFout);
-  const s = useSelectie(laag);
-  const cel = s?.cells?.focus ?? null;
-  const blad = s?.sheetIndex ?? api.handle.sheetInfo().activeSheet;
-  const inhoud = useCallback(() => (cel ? api.handle.cell(blad, cel.row, cel.col).input : ""), [api, blad, cel?.row, cel?.col]);
-  const [tekst, setTekst] = useState(inhoud);
-  const [gewijzigd, setGewijzigd] = useState(false);
-  const veld = useRef<HTMLTextAreaElement>(null);
+/** Bereiken kiezen vanuit beide formulevelden, met behoud van doelcel en concept. */
+function useFormuleBereik(api: XlsxEditorApi | null) {
   useEffect(() => {
+    if (!api) return;
     let ruimGebaarOp: (() => void) | undefined;
     const beginVerwijzing = (e: PointerEvent) => {
-      const v = veld.current;
-      if (!v || document.activeElement !== v || v.readOnly || e.button !== 0 || e.ctrlKey || e.altKey || e.metaKey) return;
+      const v = document.activeElement;
+      if (!isVeld(v) || !v.matches('[data-testid="xlsx-formula-input"], .rekenblad-formule-uitgebreid') || v.readOnly || e.button !== 0 || e.ctrlKey || e.altKey || e.metaKey) return;
       const host = rekenbladHost();
       if (!(e.target instanceof Node) || !host?.contains(e.target)) return;
       const anker = api.getPositionAtPoint(e.clientX, e.clientY);
-      const plek = verwijzingsplek(v.value, v.selectionStart, v.selectionEnd);
+      const begin = v.selectionStart, eind = v.selectionEnd;
+      if (begin === null || eind === null) return;
+      const plek = verwijzingsplek(v.value, begin, eind);
       if (!anker || !plek) return;
-      const oorspronkelijk = v.value, begin = v.selectionStart, eind = v.selectionEnd;
+      const oorspronkelijk = v.value;
       const stop = (p: PointerEvent) => { p.preventDefault(); p.stopImmediatePropagation(); };
       const plaats = (p: PointerEvent) => {
         const focus = api.getPositionAtPoint(p.clientX, p.clientY);
@@ -650,6 +603,68 @@ function UitgevouwenFormule({ api, laag }: { api: XlsxEditorApi; laag: Rekenblad
       window.removeEventListener("pointerdown", beginVerwijzing, true);
     };
   }, [api]);
+}
+
+/** Formulebalk met eigen naamvak, fx-knop en uitvouwen; de invoer zelf is die van de engine. */
+export function Formulebalk({
+  api,
+  laag,
+  functieInvoegen,
+}: {
+  api: XlsxEditorApi | null;
+  laag: RekenbladLaag | null | undefined;
+  functieInvoegen: () => void;
+}) {
+  const { t } = useTranslation("spreadsheet");
+  const [uitgevouwen, setUitgevouwen] = useState(false);
+  useFormuleBereik(api);
+  return (
+    <div className={`office-formulebalk${uitgevouwen ? " is-uitgevouwen" : ""}`}>
+      {api && <Naamvak api={api} laag={laag} />}
+      <button
+        type="button"
+        className="rekenblad-fx"
+        disabled={!api}
+        aria-label={t("formulaBar.insertFunction")}
+        title={`${t("formulaBar.insertFunction")} · Shift+F3`}
+        onMouseDown={(e) => e.preventDefault()}
+        onClick={functieInvoegen}
+      >
+        <i>fx</i>
+      </button>
+      <EditorToolbar.FormulaBar />
+      {api && uitgevouwen && <UitgevouwenFormule api={api} laag={laag} />}
+      {api && <FormuleKleuren />}
+      <button
+        type="button"
+        className="rekenblad-uitvouwen"
+        aria-expanded={uitgevouwen}
+        aria-label={t(uitgevouwen ? "formulaBar.collapse" : "formulaBar.expand")}
+        title={t(uitgevouwen ? "formulaBar.collapse" : "formulaBar.expand")}
+        onMouseDown={(e) => e.preventDefault()}
+        onClick={() => setUitgevouwen(!uitgevouwen)}
+      >
+        {uitgevouwen ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+      </button>
+    </div>
+  );
+}
+
+/**
+ * Meerregelige formulebalk: toont de inhoud van de actieve cel en schrijft
+ * bij Enter of Tab via een bewerkingsbatch (één ongedaan-maakstap).
+ * Alt+Enter of Shift+Enter geeft een nieuwe regel.
+ */
+function UitgevouwenFormule({ api, laag }: { api: XlsxEditorApi; laag: RekenbladLaag | null | undefined }) {
+  const { t } = useTranslation("spreadsheet");
+  const fout = useContext(RibbonFout);
+  const s = useSelectie(laag);
+  const cel = s?.cells?.focus ?? null;
+  const blad = s?.sheetIndex ?? api.handle.sheetInfo().activeSheet;
+  const inhoud = useCallback(() => (cel ? api.handle.cell(blad, cel.row, cel.col).input : ""), [api, blad, cel?.row, cel?.col]);
+  const [tekst, setTekst] = useState(inhoud);
+  const [gewijzigd, setGewijzigd] = useState(false);
+  const veld = useRef<HTMLTextAreaElement>(null);
   useEffect(() => {
     if (!gewijzigd) setTekst(inhoud());
     return api.handle.onUpdate(() => {
@@ -752,6 +767,7 @@ export function useFormuleHulp(laag: RekenbladLaag | null | undefined, actief: b
 
   useEffect(() => {
     if (!actief) return;
+    let frame = 0;
     const inHost = (veld: Element) => !!rekenbladHost()?.contains(veld);
     const werkBij = (veld: Veld) => {
       if (!inHost(veld) || document.activeElement !== veld) return;
@@ -787,11 +803,17 @@ export function useFormuleHulp(laag: RekenbladLaag | null | undefined, actief: b
         argument: f ? { functie: f, index: arg!.index } : null,
       });
     };
+    // De engine moet de invoer eerst overnemen. Een render vanuit de
+    // capture-fase kan het veld anders met de vorige tekst overschrijven.
+    const plan = (veld: Veld) => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => werkBij(veld));
+    };
     const opInvoer = (e: Event) => {
-      if (isVeld(e.target)) werkBij(e.target);
+      if (isVeld(e.target)) plan(e.target);
     };
     const opKlik = (e: Event) => {
-      if (isVeld(e.target)) requestAnimationFrame(() => werkBij(e.target as Veld));
+      if (isVeld(e.target)) plan(e.target);
     };
     const opVerlaten = (e: FocusEvent) => {
       if (!isVeld(e.target)) return;
@@ -839,15 +861,18 @@ export function useFormuleHulp(laag: RekenbladLaag | null | undefined, actief: b
       }
     };
     document.addEventListener("input", opInvoer, true);
+    document.addEventListener("focusin", opInvoer, true);
     document.addEventListener("click", opKlik, true);
     const opLos = (e: KeyboardEvent) => {
-      if (["ArrowLeft", "ArrowRight", "Home", "End"].includes(e.key) && isVeld(e.target)) werkBij(e.target);
+      if (["ArrowLeft", "ArrowRight", "Home", "End"].includes(e.key) && isVeld(e.target)) plan(e.target);
     };
     document.addEventListener("keyup", opLos, true);
     document.addEventListener("focusout", opVerlaten, true);
     window.addEventListener("keydown", opToets, true);
     return () => {
+      cancelAnimationFrame(frame);
       document.removeEventListener("input", opInvoer, true);
+      document.removeEventListener("focusin", opInvoer, true);
       document.removeEventListener("click", opKlik, true);
       document.removeEventListener("keyup", opLos, true);
       document.removeEventListener("focusout", opVerlaten, true);

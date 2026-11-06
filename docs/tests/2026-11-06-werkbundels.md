@@ -54,8 +54,15 @@ blijven open zolang een deel van hun criteria niet is geverifieerd.
   De Chicago-symboolnotatie gaf in beide nootsoorten `3` tegenover de derde
   markering `‡`; dat is [bij #51 vastgelegd](https://github.com/OpenAEC-Foundation/open-office-studio/issues/51#issuecomment-6673990113).
   De nieuwe kandidaat slaagt in 30 kernrondgangen en de native notatie-,
-  noottekst-, Undo/Redo- en opslag-/heropenproeven. Het bredere #51 blijft open.
+  noottekst-, Undo/Redo- en opslag-/heropenproeven. PR #157 is na zes groene
+  platformcontroles gemerged als `059895dc`. Het bredere #51 blijft open.
   Zie [het symboolverslag](2026-11-06-nootsymbolen.md).
+
+- #58: naamvak, invoervolgorde, formulekleuren en beide bereikkeuzes zijn
+  hersteld. De gezamenlijke native bediening, scroll- en opslag-/heropenproef
+  slagen, naast 1.728 tests. #58 en #59 blijven open: een nieuw aangetoonde
+  kernfout maakt lange optelketens tot tekst. Zie
+  [het formuleverslag](2026-11-06-formulebediening.md).
 
 ## 0. Afgeronde opslagronde — PR #154
 
