@@ -37,7 +37,7 @@ export function Titelbalk({
           title={t("header.homeTitle")}
           aria-label={studio.module ? studio.naam : t("header.homeLabel")}
         >
-          <img src={openaecSymbool} alt="" />
+          <img src={studio.sleutel === "database" ? openaecSymbool : `${import.meta.env.BASE_URL}studio-icons/${studio.sleutel}.png`} alt="" />
         </button>
         <div
           className="office-snelletoegang"

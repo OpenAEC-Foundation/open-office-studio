@@ -29,6 +29,9 @@ if (frontend) {
     "--outDir",
     `dist-studios/${sleutel}`,
   ]);
+  const htmlPath = `dist-studios/${sleutel}/index.html`;
+  const html = await readFile(htmlPath, "utf8");
+  await writeFile(htmlPath, html.replace(/href="[^"\n]*favicon\.ico"/, `href="./studio-icons/${sleutel}.png"`));
   await writeFile(
     `dist-studios/${sleutel}/studio.json`,
     JSON.stringify(
