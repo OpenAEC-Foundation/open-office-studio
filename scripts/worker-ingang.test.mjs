@@ -39,6 +39,9 @@ async function bundel({ delen = false, bewaken = false } = {}) {
       modulePreload: false,
       rollupOptions: {
         input: join(bron, "database-worker.ts"),
+        // Een worker heeft geen openbare ingangsuitvoer. Een extra exportfaçade
+        // zou de onveilige terugimport in de voorproef toevallig afschermen.
+        preserveEntrySignatures: false,
         output: {
           format: "es",
           entryFileNames: "ingang.mjs",

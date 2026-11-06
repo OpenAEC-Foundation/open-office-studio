@@ -51,11 +51,11 @@ bewijsbestand.
 ## Regressie en bewijs
 
 - **1.974 tests in 173 bestanden slagen**, tien bestaande corpusgevallen
-  overgeslagen; 175,45 seconden, exitcode 0.
+  overgeslagen; 146,87 seconden, exitcode 0.
 - Zeven nieuwe regressietests gebruiken de echte rekenkern voor breedtemeting
   en de echte statusbalk voor gedeeltelijk lege selecties. Verwachte breedten
   volgen onafhankelijk uit kolomaantallen, 8,43 × 7 + 5 px en één verborgen kolom.
-- Alle 52 Python-controles, de echte documentengines en moduleopdrachten slagen.
+- Alle 57 Python-controles, de echte documentengines en moduleopdrachten slagen.
 - TypeScript, productiefrontend en native bouw slagen.
 - De twee synthetische bronbestanden blijven bytegelijk. Alleen werkkopieën
   zijn in de interface bewerkt. De eigen app en X11-processen zijn afgesloten.
@@ -71,3 +71,17 @@ vijf afzonderlijke statistiekkeuzes uit PR #183. Het is geen volledige controle
 van alle functionaliteit van Email, Notition en Database. Hun uitgebreidere
 proeven en grenzen staan in het verslag van PR #183. De historische openbare
 v2026.45.4-installers bevatten deze vervolgwijziging nog niet.
+
+## Negatieve workerproef op Windows
+
+Een volgende Windows-controle gaf in de bestaande negatieve voorproef één
+registratie in plaats van de bedoelde twee. De testbundel legt nu expliciet
+`preserveEntrySignatures: false` vast, zoals een worker zonder openbare
+ingangsuitvoer. Een onafhankelijke bundelaarvergelijking toont het onderscheid:
+zonder extra exportfaçade importeert de luie chunk de toestandhoudende ingang
+terug en ontstaat de bedoelde tweede registratie met een lege werkkopie; met
+een extra façade wordt die ingang door een ander bestand afgeschermd en blijft
+de waarde juist behouden. Een veilige indeling is geen geldige negatieve
+voorproef. De oorspronkelijke assertions zijn behouden; geen platform wordt
+overgeslagen. De drie workerproeven en daarna de volledige lokale suite slagen.
+Dit wijzigt de testopzet; de native productieprogramma’s zijn niet herbouwd.

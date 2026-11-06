@@ -7,11 +7,11 @@
       "bestanden": 173,
       "geslaagd": 1974,
       "bestaandeOvergeslagen": 10,
-      "duurSeconden": 175.45,
+      "duurSeconden": 146.87,
       "exitcode": 0
     },
     "python": {
-      "geslaagd": 52,
+      "geslaagd": 57,
       "exitcode": 0
     },
     "typen": 0,
@@ -404,5 +404,185 @@
     "docs/tests/statusbalk-passend/Statusproef.xlsx": "bcd42184aa344552c5dc38c1599454a45365acdf995c784cb8ddb1761e473230",
     "docs/tests/statusbalk-passend/Statusproef.docx": "4a8958d9a2c6570213a679b178f463bf61c0019b750217557f6d2be2991b4448",
     "docs/screenshots/test-statusbalk-passend-2026-11-07.png": "2b172fa872571120517054e56811bac3e31182aeb6b16159a0752510b1a5d6f1"
+  },
+  "workerVoorproef": {
+    "preserveEntrySignatures": false,
+    "testbronSha256": "084fa24a8837867711be8cd2ffd79c942312acb28a1c56e06e08f24ca4a1df2b",
+    "bundelaarvergelijking": [
+      {
+        "streng": false,
+        "handmatig": false,
+        "state": {
+          "n": 2,
+          "a": [
+            {
+              "werkkopie": 42,
+              "waarde": 42
+            },
+            {
+              "werkkopie": null,
+              "waarde": 42
+            }
+          ]
+        },
+        "graph": [
+          {
+            "naam": "ingang.mjs",
+            "entry": true,
+            "facade": "database-worker.ts",
+            "imports": [],
+            "dynamic": [
+              "open.mjs"
+            ],
+            "code": "const scriptRel = /* @__PURE__ */ (function detectScriptRel() {\n  const relList = typeof document !== \"undefined\" && document.createElement(\"link\").re"
+          },
+          {
+            "naam": "open.mjs",
+            "entry": false,
+            "facade": "open.ts",
+            "imports": [
+              "ingang.mjs"
+            ],
+            "dynamic": [],
+            "code": "import { w as waarde } from \"./ingang.mjs\";\nconst open = () => waarde;\nexport {\n  open\n};\n"
+          }
+        ]
+      },
+      {
+        "streng": false,
+        "handmatig": true,
+        "state": {
+          "n": 2,
+          "a": [
+            {
+              "werkkopie": 42,
+              "waarde": 42
+            },
+            {
+              "werkkopie": null,
+              "waarde": 42
+            }
+          ]
+        },
+        "graph": [
+          {
+            "naam": "ingang.mjs",
+            "entry": true,
+            "facade": "database-worker.ts",
+            "imports": [],
+            "dynamic": [
+              "open.mjs"
+            ],
+            "code": "const scriptRel = /* @__PURE__ */ (function detectScriptRel() {\n  const relList = typeof document !== \"undefined\" && document.createElement(\"link\").re"
+          },
+          {
+            "naam": "open.mjs",
+            "entry": false,
+            "facade": "open.ts",
+            "imports": [
+              "ingang.mjs"
+            ],
+            "dynamic": [],
+            "code": "import { w as waarde } from \"./ingang.mjs\";\nconst open = () => waarde;\nexport {\n  open\n};\n"
+          }
+        ]
+      },
+      {
+        "streng": true,
+        "handmatig": false,
+        "state": {
+          "n": 1,
+          "a": [
+            {
+              "werkkopie": 42,
+              "waarde": 42
+            },
+            {
+              "werkkopie": 42,
+              "waarde": 42
+            }
+          ]
+        },
+        "graph": [
+          {
+            "naam": "ingang.mjs",
+            "entry": true,
+            "facade": "database-worker.ts",
+            "imports": [
+              "database-worker.mjs"
+            ],
+            "dynamic": [],
+            "code": "import \"./database-worker.mjs\";\n"
+          },
+          {
+            "naam": "database-worker.mjs",
+            "entry": false,
+            "imports": [],
+            "dynamic": [
+              "open.mjs"
+            ],
+            "code": "const scriptRel = /* @__PURE__ */ (function detectScriptRel() {\n  const relList = typeof document !== \"undefined\" && document.createElement(\"link\").re"
+          },
+          {
+            "naam": "open.mjs",
+            "entry": false,
+            "facade": "open.ts",
+            "imports": [
+              "database-worker.mjs"
+            ],
+            "dynamic": [],
+            "code": "import { w as waarde } from \"./database-worker.mjs\";\nconst open = () => waarde;\nexport {\n  open\n};\n"
+          }
+        ]
+      },
+      {
+        "streng": true,
+        "handmatig": true,
+        "state": {
+          "n": 1,
+          "a": [
+            {
+              "werkkopie": 42,
+              "waarde": 42
+            },
+            {
+              "werkkopie": 42,
+              "waarde": 42
+            }
+          ]
+        },
+        "graph": [
+          {
+            "naam": "ingang.mjs",
+            "entry": true,
+            "facade": "database-worker.ts",
+            "imports": [
+              "worker-sessie.mjs"
+            ],
+            "dynamic": [],
+            "code": "import \"./worker-sessie.mjs\";\n"
+          },
+          {
+            "naam": "worker-sessie.mjs",
+            "entry": false,
+            "imports": [],
+            "dynamic": [
+              "open.mjs"
+            ],
+            "code": "const scriptRel = /* @__PURE__ */ (function detectScriptRel() {\n  const relList = typeof document !== \"undefined\" && document.createElement(\"link\").re"
+          },
+          {
+            "naam": "open.mjs",
+            "entry": false,
+            "facade": "open.ts",
+            "imports": [
+              "worker-sessie.mjs"
+            ],
+            "dynamic": [],
+            "code": "import { w as waarde } from \"./worker-sessie.mjs\";\nconst open = () => waarde;\nexport {\n  open\n};\n"
+          }
+        ]
+      }
+    ]
   }
 }
