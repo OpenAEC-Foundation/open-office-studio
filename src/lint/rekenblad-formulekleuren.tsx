@@ -6,13 +6,15 @@ import {
   type CSSProperties,
 } from "react";
 import { createPortal } from "react-dom";
+import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
 import { verwijzingenIn } from "./rekenblad-functies";
-import { VERWIJZINGSKLEUREN } from "./rekenblad-laag";
+import { formuleVerwijzingen, type GekleurdeVerwijzing } from "./rekenblad-verwijzingskleuren";
 
 type Veld = HTMLInputElement | HTMLTextAreaElement;
 interface Beeld {
   veld: Veld;
   tekst: string;
+  verwijzingen: GekleurdeVerwijzing[];
   venster: CSSProperties;
   inhoud: CSSProperties;
 }
@@ -22,7 +24,7 @@ interface Beeld {
  * Alleen de getekende tekst krijgt kleur; deze kopie ontvangt geen bediening
  * en wordt niet aan hulptechnologie aangeboden.
  */
-export function FormuleKleuren() {
+export function FormuleKleuren({ api }: { api: XlsxEditorApi }) {
   const [beeld, setBeeld] = useState<Beeld | null>(null);
   useEffect(() => {
     let frame = 0;
@@ -56,9 +58,11 @@ export function FormuleKleuren() {
       const r = v.getBoundingClientRect(),
         s = getComputedStyle(v);
       const meerregelig = v instanceof HTMLTextAreaElement;
+      const info = api.handle.sheetInfo();
       setBeeld({
         veld: v,
         tekst: v.value,
+        verwijzingen: formuleVerwijzingen(v.value, info.sheetNames[info.activeSheet]).verwijzingen,
         venster: {
           left: r.left + v.clientLeft,
           top: r.top + v.clientTop,
@@ -133,14 +137,14 @@ export function FormuleKleuren() {
       document.removeEventListener("compositionend", eind, true);
       window.removeEventListener("resize", plan);
     };
-  }, []);
+  }, [api]);
   useLayoutEffect(() => {
     const v = beeld?.veld;
     v?.classList.add("rekenblad-formule-met-kleur");
     return () => v?.classList.remove("rekenblad-formule-met-kleur");
   }, [beeld?.veld]);
   if (!beeld) return null;
-  const refs = verwijzingenIn(beeld.tekst);
+  const refs = beeld.verwijzingen;
   let begin = 0;
   return createPortal(
     <div
@@ -157,7 +161,7 @@ export function FormuleKleuren() {
               {ervoor}
               <span
                 style={{
-                  color: VERWIJZINGSKLEUREN[i % VERWIJZINGSKLEUREN.length],
+                  color: r.kleur,
                 }}
               >
                 {r.tekst}

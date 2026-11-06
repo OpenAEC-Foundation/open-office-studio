@@ -105,7 +105,7 @@ blijven exact gelijk. Onafhankelijke ZIP-/XML-inspectie bevestigt de 400-termen-
 formule, A1=11, D2=4400, de vanuit F2 gemaakte E2-formule met waarde 31 en het
 ongewijzigde benoemde bereik Getallen.
 
-De werkelijk geladen editors-bundel heeft SHA-256
+Bij deze eerste gezamenlijke proef heeft de geladen editors-bundel SHA-256
 `bc1565668b29237f5927f04841f5d3cbd0ce0f4d637ed4c863f1c6cda0fa2dd1`;
 de uit de native app opgehaalde XLSX-WASM heeft de hierboven genoemde hash.
 Alle definitieve bedieningcontroleurs slagen met code 0 en registreren nul
@@ -118,13 +118,57 @@ dit staat expliciet in de bewijzen. Het gebruikersprofiel blijft buiten de proef
 [opgeslagen werkmap](lange-formule-native-hersteld-2026-11-06.xlsx) en
 [scherm na heropenen](../screenshots/test-lange-formule-heropend-2026-11-06.png).
 
+## Nacontrole van herhaalde verwijzingen
+
+De aanvullende native tegenproef met `=A1+$A$1+A$1+$A1+B1+A1` toont zes
+verschillende tekstkleuren en zes rasterkaders, waarvan vijf over dezelfde
+cel A1. De laatste kleur bedekt daardoor de eerdere kleuren in het raster.
+Zie [het beeld vóór herstel](../screenshots/test-herhaalde-verwijzingen-voor-2026-11-06.png).
+
+Een gedeelde kleurtoewijzing vergelijkt nu blad en genormaliseerd bereik.
+Absolute/relatieve schrijfwijze, hoofdletters, expliciete verwijzingen naar
+het huidige blad en omgekeerde bereikrichting leveren dezelfde kleur op.
+Elk uniek bereik krijgt één rasterkader; de tekst behoudt alle oorspronkelijke
+verwijzingen. Andere bladen en andere bereiken blijven afzonderlijk herkenbaar.
+Het palet herhaalt pas na acht unieke bereiken.
+
+Acht gerichte proeven bewaken deze gevallen, inclusief bladnamen met een
+apostrof en celachtige tekst buiten verwijzingen. Negen native proeven slagen:
+celinvoer, ingeklapte balk en uitgeklapte balk, ieder met herhalingen, een
+expliciete huidige bladnaam en vierhonderd gelijke verwijzingen. De laatste
+krijgen steeds vierhonderd blauwe tekstfragmenten en precies één blauw rasterkader.
+Selectie E2 blijft behouden; Escape laat het opgeslagen document ongewijzigd.
+De [celinvoer](../screenshots/test-herhaalde-verwijzingen-cel-2026-11-06.png),
+[balk](../screenshots/test-herhaalde-verwijzingen-formulebalk-2026-11-06.png) en
+[uitgeklapte balk](../screenshots/test-herhaalde-verwijzingen-uitgevouwen-2026-11-06.png)
+zijn visueel gecontroleerd.
+
+De eerste automatisch geïnjecteerde lange invoer bereikte de wachtgrens terwijl
+de toetsen nog verwerkt werden. De tekst groeide daarna verder tot de exact
+verwachte 1.200 tekens. De definitieve proef gebruikt een normaal toetsinterval
+en wacht expliciet op de volledige veldwaarde, kleurtekst en het aantal kaders.
+
+Met deze laatste frontend zijn ook de volledige F2-bediening, F4, aanvullen,
+bereikslepen, Undo/Redo en de opslag-/heropenproef opnieuw geslaagd. De keten
+rekent 4000 en na A1=11 opnieuw 4400. Bewaren duurt 2,243 seconden, waarvan
+2,080 seconden met een schone titel. Onafhankelijke ZIP-/XML-inspectie bevestigt
+de exacte formule, opgeslagen waarden en het ongewijzigde benoemde bereik.
+
+De uit deze native app opgehaalde editors-bundel heeft SHA-256
+`37d8f2e4f8a1f2cb67ba9634a1280af377f7a0f610832cebd018511b3951aaed`;
+de opgehaalde XLSX-kern behoudt hash `385e2c53…271a702`. Alle definitieve
+controleurs en het harnas eindigen met code 0; de eigen app en X11-server zijn
+automatisch afgesloten. Er zijn geen consolefouten geregistreerd. Zie het
+[aanvullende native bewijs](herhaalde-verwijzingen-native-2026-11-06.json) en de
+[opgeslagen werkmap](herhaalde-verwijzingen-native-2026-11-06.xlsx).
+
 ## Controles en grenzen
 
 - De volledige XLSX-kern-, mutatie- en facadeset slaagt: 1.725 tests, zestien
   bestaande overgeslagen gevallen, verdeeld over 66 testdoelen.
 - Clippy met `-D warnings` voor alle testdoelen van de drie betrokken pakketten
   en de formatcontrole op de schone gepatchte bron slagen.
-- De volledige app-set slaagt: 151 bestanden, 1.736 tests en zeven bestaande
+- De volledige app-set slaagt: 152 bestanden, 1.744 tests en zeven bestaande
   overgeslagen corpusgevallen. Typecontrole, productie- en native bouw slagen.
 - De acht gerichte WASM-proeven controleren ook matrixberekening,
   foutvolgorde, afronding, expliciete formules en het blijven weigeren van
