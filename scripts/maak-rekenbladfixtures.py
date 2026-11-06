@@ -398,8 +398,7 @@ def onbekende_functies():
         'C4': f('_xlfn.TEXTJOIN("-",TRUE,A1:A3)', '1-2-3'),
         'C5': f('SUM(A1:A3)+1', 7),                         # gewone functie, ter vergelijking
         'C6': f('C1+1', 6),                                 # afhankelijk van onbekende functie: #NAME?
-        # FACT werd eerder niet herkend; 0.5.1 moet de verouderde cache nu corrigeren.
-        # 1! = 1; na de bewerking wordt A1 = 2 en geldt 2! = 2.
+        # FACT is nu ondersteund: 1! = 1 en na bewerking 2! = 1×2 = 2; cache 99 is bewust fout.
         'C7': f('FACT(A1)', 99),
     })
     return wb

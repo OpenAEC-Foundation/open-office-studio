@@ -6,6 +6,12 @@ export const studios = JSON.parse(
 const catalogus = JSON.parse(
   await readFile(new URL("../src/formaten.json", import.meta.url), "utf8"),
 );
+const hoofdconfig = JSON.parse(
+  await readFile(
+    new URL("../src-tauri/tauri.conf.json", import.meta.url),
+    "utf8",
+  ),
+);
 
 /** Configuratie boven op de bestaande desktopbasis; geen gekopieerde Rust-code. */
 export async function studioConfig(sleutel, platform = process.platform) {
@@ -29,6 +35,20 @@ export async function studioConfig(sleutel, platform = process.platform) {
       ? [{ ...k, ext, name: `OpenAEC.${studio.programma}.Document` }]
       : [];
   });
+  // JSON Merge Patch wist bestaande bestandstoewijzingen alleen met null.
+  // Zo installeert een gerichte editor nooit het MIME-bestand van de suite.
+  const mimeBestanden = (pakket) =>
+    invoer.includes("ifcx")
+      ? {
+          ...Object.fromEntries(
+            Object.keys(hoofdconfig.bundle.linux[pakket].files ?? {}).map(
+              (pad) => [pad, null],
+            ),
+          ),
+          [`/usr/share/mime/packages/${studio.programma}.xml`]:
+            "linux/ifcx-office-mime.xml",
+        }
+      : null;
   return {
     productName: studio.naam,
     mainBinaryName: studio.programma,
@@ -51,12 +71,24 @@ export async function studioConfig(sleutel, platform = process.platform) {
       ],
     },
     bundle: {
+      icon: ["32x32.png", "128x128.png", "128x128@2x.png", "512x512.png", "icon.icns", "icon.ico"]
+        .map(naam => `icons/${studio.sleutel}/${naam}`),
       fileAssociations: koppelingen,
       // De eigen koppelingen van de suite mogen niet door een gerichte installer worden overschreven.
-      windows: { nsis: { installerHooks: null } },
+      windows: { nsis: {
+        installerHooks: null,
+        installerIcon: `icons/${studio.sleutel}/icon.ico`,
+        uninstallerIcon: `icons/${studio.sleutel}/icon.ico`,
+      } },
       linux: {
-        deb: { desktopTemplate: "linux/studio.desktop.hbs", files: null },
-        rpm: { desktopTemplate: "linux/studio.desktop.hbs", files: null },
+        deb: {
+          desktopTemplate: "linux/studio.desktop.hbs",
+          files: mimeBestanden("deb"),
+        },
+        rpm: {
+          desktopTemplate: "linux/studio.desktop.hbs",
+          files: mimeBestanden("rpm"),
+        },
       },
       createUpdaterArtifacts: false,
     },

@@ -1,7 +1,29 @@
 /// <reference types="vitest/config" />
 import { configDefaults } from "vitest/config";
 import { defineConfig, type Plugin } from "vite";
-import { maakWorkerConfig } from "./scripts/workerconfig";
+import { controleerWorkerIngang, maakWorkerConfig } from "./scripts/workerconfig";
+import { tekstengineCompatibiliteit } from "./scripts/tekstengine-compatibiliteit";
+import { rekenbladengineCompatibiliteit } from "./scripts/rekenbladengine-compatibiliteit";
+import studios from "./assets/studios.json";
+
+/** Het eerste browserbeeld gebruikt al de identiteit van de gebouwde variant. */
+function studioBeeldmerk(): Plugin {
+  const sleutel = process.env.VITE_STUDIO_VARIANT || "office";
+  const app = studios.find(s => s.sleutel === sleutel);
+  if (!app) throw new Error(`Onbekende studio: ${sleutel}`);
+  return {
+    name: "studio-beeldmerk",
+    transformIndexHtml: {
+      order: "pre",
+      handler(html) {
+        return app.beeldmerk
+          ? html.replace('href="/favicon.ico"', `href="/studios/${sleutel}/favicon.ico"`)
+            .replace(/<title>.*?<\/title>/, `<title>${app.naam} · OpenAEC</title>`)
+          : html;
+      },
+    },
+  };
+}
 
 // De fontpakketten verwijzen naar hun bestanden via import.meta.url, waardoor
 // Vite ze nogmaals in assets/ zet. De app laadt ze uit public/fonts/.
@@ -23,15 +45,15 @@ export default defineConfig({
   define: {
     "import.meta.env.VITE_STUDIO_VARIANT": JSON.stringify(process.env.VITE_STUDIO_VARIANT || "office"),
   },
-  plugins: [fontsUitPublic()],
+  plugins: [studioBeeldmerk(), fontsUitPublic(), tekstengineCompatibiliteit(), rekenbladengineCompatibiliteit()],
   // Worktrees van agents en lokale proefuitvoer niet dubbel meetellen.
   test: {
     // Afzonderlijke Node-/Python-onderzoeksproeven hebben hun eigen runner.
     exclude: [...configDefaults.exclude, ".claude/**", ".local/**", "native/onderzoek/**"],
     // Tests in het Nederlands, ongeacht de systeemtaal (zie docs/i18n.md).
-    setupFiles: ["src/i18n/testopzet.ts"],
+    setupFiles: ["src/i18n/testopzet.ts", "src/tekst/gedeeld/kern-testopzet.ts", "src/rekenblad/kern-testopzet.ts"],
   },
-  worker: maakWorkerConfig(),
+  worker: { ...maakWorkerConfig(), plugins: () => [controleerWorkerIngang(), tekstengineCompatibiliteit(), rekenbladengineCompatibiliteit()] },
   build: {
     rollupOptions: {
       output: {

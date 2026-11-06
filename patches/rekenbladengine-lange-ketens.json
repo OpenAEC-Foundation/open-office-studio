@@ -1,0 +1,71 @@
+{
+  "bron": "https://github.com/openooxml/betteroffice",
+  "commit": "4e982c3aea0065578604c3fe7727938533888f66",
+  "versie": "0.5.1",
+  "bronarchiefSha256": "a773c08b10e0a09e1f4f349cae7889b9f79f2e560ac3f16a0e5b94e25316ade7",
+  "bronarchiefUrl": "https://api.github.com/repos/openooxml/betteroffice/tarball/4e982c3aea0065578604c3fe7727938533888f66",
+  "rustc": "1.98.1",
+  "wasmBindgen": "0.2.129",
+  "binaryen": "132",
+  "binaryenLinuxSha256": "195ddc94f9bc89f45abdabb0b9eea86023d727ba90eac8b35b80f2544fc30572",
+  "wasmOptArgumenten": [
+    "-O3"
+  ],
+  "pakket": "@betteroffice/xlsx",
+  "patch": "rekenbladengine-lange-ketens.patch",
+  "patchSha256": "c19d5e65df78b2bb831cd02536843eb71ff9d2079c6998da2bdc90f78b81e41b",
+  "oorspronkelijkWasmSha256": "21bed8aaac3fe3832455b686084f69548ffed3859feffadc271d138962be9933",
+  "wasmSha256": "3c6bcf0d11f3f66ce4410ae7ba5d55c042477949e9975f3977b4e421079781de",
+  "wasmBytes": 7693796,
+  "stand": "Werkstand voor issue #3: herberekende uitkomsten worden bij expliciet opslaan bewaard, ook zonder inhoudelijke bewerking. De eerdere keten- en regiopatches blijven aanwezig. Nog niet opgenomen in een gepubliceerde uitgave.",
+  "extraPatches": [
+    {
+      "patch": "rekenbladengine-werkmapregio.patch",
+      "patchSha256": "ccf20c63150eb5b4d2493ae66112a46cf70ec986bfaa451232d8079597474ee9",
+      "tests": [
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "werkmapregio"
+        },
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "regionale_batchinvoer"
+        },
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "typed_input"
+        },
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "structured_export"
+        },
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "ingebouwde_datums"
+        }
+      ]
+    },
+    {
+      "patch": "rekenbladengine-herberekende-opslag.patch",
+      "patchSha256": "112e472bd62f61bf203ca5af4123d72816dce9bb9b41a10e6435cc6f31738995",
+      "tests": [
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "workbook"
+        },
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "source_cached_results"
+        },
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "save_reopen"
+        },
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "chart_save"
+        }
+      ]
+    }
+  ]
+}

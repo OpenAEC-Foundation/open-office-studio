@@ -103,9 +103,9 @@ const C: Record<Categorie, Record<string, string>> = {
     "COVARIANCE.P": "array1,array2",
     "COVARIANCE.S": "array1,array2",
     DEVSQ: "number...",
+    FREQUENCY: "data_array,bins_array",
     FORECAST: "x,known_y,known_x",
     "FORECAST.LINEAR": "x,known_y,known_x",
-    FREQUENCY: "data_array,bins_array",
     GEOMEAN: "number...",
     HARMEAN: "number...",
     INTERCEPT: "known_y,known_x",
@@ -130,10 +130,10 @@ const C: Record<Categorie, Record<string, string>> = {
     RANK: "number,ref,[order]",
     "RANK.AVG": "number,ref,[order]",
     "RANK.EQ": "number,ref,[order]",
-    RSQ: "known_y,known_x",
     SKEW: "number...",
     SLOPE: "known_y,known_x",
     SMALL: "array,k",
+    RSQ: "known_y,known_x",
     STDEV: "number...",
     "STDEV.P": "number...",
     "STDEV.S": "number...",
@@ -147,7 +147,6 @@ const C: Record<Categorie, Record<string, string>> = {
     VARP: "number...",
   },
   tekst: {
-    FIXED: "number,[decimals],[no_commas]",
     CHAR: "number",
     CLEAN: "text",
     CODE: "text",
@@ -155,6 +154,7 @@ const C: Record<Categorie, Record<string, string>> = {
     CONCATENATE: "text...",
     EXACT: "text1,text2",
     FIND: "find_text,within_text,[start_num]",
+    FIXED: "number,[decimals],[no_commas]",
     LEFT: "text,[num_chars]",
     LEN: "text",
     LOWER: "text",
@@ -401,14 +401,14 @@ export function woordBijCursor(invoer: string, cursor: number): { begin: number;
   const voor = invoer.slice(0, cursor);
   const { tekst, open } = maskeer(voor);
   if (open) return null;
-  const m = /([A-Za-z_][A-Za-z0-9_.]*)$/.exec(tekst);
+  const m = /([\p{L}_\\][\p{L}\p{M}\p{N}_.\\]*)$/u.exec(tekst);
   if (!m) return null;
   const begin = cursor - m[1].length;
   const ervoor = tekst[begin - 1] ?? "";
   // Niet na een bladnaam, een getal, een punt of binnen een verwijzing ($A, A1:B).
-  if (/[A-Za-z0-9_.$!:]/.test(ervoor)) return null;
+  if (/[\p{L}\p{M}\p{N}_.$!:\\]/u.test(ervoor)) return null;
   // Het woord gaat niet verder na de cursor.
-  if (/^[A-Za-z0-9_.(]/.test(invoer.slice(cursor))) return null;
+  if (/^[\p{L}\p{M}\p{N}_.(\\]/u.test(invoer.slice(cursor))) return null;
   return { begin, woord: m[1] };
 }
 

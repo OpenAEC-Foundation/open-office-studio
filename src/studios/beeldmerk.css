@@ -1,0 +1,24 @@
+.studio-beeldmerk {
+  display: inline-block;
+  flex-shrink: 0;
+  object-fit: contain;
+  vertical-align: middle;
+}
+.office-titelbalk-merk .studio-beeldmerk {
+  width: 24px;
+  height: 24px;
+}
+.module-beeldmerk {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.start-appbeeldmerk {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.start-notities-icoon:has(.studio-beeldmerk) {
+  background: transparent;
+}

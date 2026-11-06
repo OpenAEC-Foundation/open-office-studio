@@ -1,3 +1,4 @@
+import io
 """Testmatrix-hulpmiddelen: synthetische fixtures en onafhankelijke kenmerkcontrole.
 
 Deze proeven gebruiken alleen de standaardbibliotheek en geen engine; ze testen
@@ -9,6 +10,8 @@ import importlib.util
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
+import zipfile
 
 SCRIPTS = Path(__file__).parents[1] / 'scripts'
 
@@ -46,11 +49,20 @@ class Matrix(unittest.TestCase):
         return doel
 
     def test_reproduceerbaar(self):
-        # Vergelijk de fixturebytes zelf. Een extra ZIP rond de fixtures voegt
-        # anders de huidige kloktijd toe en faalt toevallig bij een secondegrens.
-        a, b = ({naam: fixtures.zip_bytes(delen)
-                 for naam, delen in fixtures.maak_alle().items()} for _ in range(2))
-        self.assertEqual(a, b)
+        # Vergelijk de werkelijke fixturepakketten. Een extra testarchief met
+        # actuele ZIP-tijdstempels liet deze proef op een klokgrens onterecht falen.
+        pakketten = []
+        for klok in [(2026, 1, 2, 0, 0, 0, 4, 2, -1),
+                     (2026, 1, 3, 0, 0, 0, 5, 3, -1)]:
+            with patch('zipfile.time.localtime', return_value=klok):
+                pakketten.append({naam: fixtures.zip_bytes(delen)
+                                  for naam, delen in fixtures.maak_alle().items()})
+        self.assertEqual(pakketten[0], pakketten[1])
+        for naam, inhoud in pakketten[0].items():
+            with self.subTest(bestand=naam), zipfile.ZipFile(io.BytesIO(inhoud)) as z:
+                self.assertTrue(z.infolist())
+                for deel in z.infolist():
+                    self.assertEqual(deel.date_time, fixtures.TIJD, deel.filename)
 
     def test_fixtures_bevatten_de_matrixkenmerken(self):
         d1 = kenmerken.kenmerken(self.pad / 'D1.docx')

@@ -1,0 +1,31 @@
+{
+  "wasm": ".local/getalnotatie/wasm-kandidaat/xlsx_wasm_bg-opt.wasm",
+  "wasmSha256": "1df70b43eb29ce0ddf4a58082028f162f1445c1fe530c4acd1bf1267788df336",
+  "checks": [
+    {
+      "naam": "Gescheiden getalregio met echte pakket-JS en WASM",
+      "geslaagd": true
+    },
+    {
+      "naam": "LCID-datumtaal en valuta behouden regionale cijfers",
+      "geslaagd": true
+    },
+    {
+      "naam": "Nederlandse LCID geeft Nederlandse datumwoorden in een Amerikaans bestand",
+      "geslaagd": true
+    },
+    {
+      "naam": "Invoer, Undo/Redo en bewaring zijn \u00e9\u00e9n transactie",
+      "geslaagd": true
+    },
+    {
+      "naam": "TEXT formule berekent opnieuw na regiowissel",
+      "geslaagd": true
+    },
+    {
+      "naam": "Bestaande tekst zonder regio blijft tekst bij ongewijzigd vastleggen",
+      "geslaagd": false,
+      "fout": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  {\n+   kind: 'number',\n+   value: 46037\n-   kind: 'text',\n-   value: '1/15'\n  }\n"
+    }
+  ]
+}

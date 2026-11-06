@@ -59,6 +59,9 @@ describe("functienamen in formules", () => {
   });
   it("kent de ondersteuning van de rekenkern", () => {
     expect(isOndersteund("SUM")).toBe(true);
+    expect(isOndersteund("AREAS")).toBe(true);
+    expect(isOndersteund("FACT")).toBe(true);
+    expect(isOndersteund("ISOWEEKNUM")).toBe(true);
     expect(isOndersteund("_xlfn.XLOOKUP")).toBe(true);
     expect(isOndersteund("_xlfn._xlws.SORT")).toBe(true);
     expect(isOndersteund("RAND")).toBe(true);

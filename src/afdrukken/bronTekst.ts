@@ -12,6 +12,7 @@ import i18next from "../i18n/config";
 import type { DocxEditorRef } from "@betteroffice/docx-react";
 import type { AfdrukDocument, AfdrukPagina, Bladwijzer, Koppeling } from "./model";
 import { metTekstopname, naarPunten } from "./tekstopname";
+import { tekstKoppelingen } from "./tekstKoppelingen";
 
 /** De afdrukroutine rastert met twee beeldpunten per CSS-pixel. */
 const BEELDPUNTEN_PER_PX = 2;
@@ -103,53 +104,17 @@ async function koppenEnKoppelingen(ref: DocxEditorRef) {
   const bladwijzers: Bladwijzer[] = [];
   const koppelingen = new Map<number, Koppeling[]>();
   try {
-    const r = await ref.exportStructuredWithPages({
-      revisionView: "accepted",
-      stories: ["body"],
+    const opties = {
+      revisionView: "accepted" as "accepted" | "markup",
+      stories: ["body", "headers", "footers", "footnotes", "endnotes"] as const,
       includeGeometry: true,
       maxFragments: 50_000,
-    });
+    };
+    let r = await ref.exportStructuredWithPages(opties);
+    if (!r.ok && r.failure.code === "unsupported-revision-layout")
+      r = await ref.exportStructuredWithPages({ ...opties, revisionView: "markup" });
     if (!r.ok) return { bladwijzers, koppelingen };
-    const { structured, layout } = r.content;
-    const perNode = new Map<string, typeof layout.fragments>();
-    for (const f of layout.fragments) {
-      const lijst = perNode.get(f.nodeId) ?? [];
-      lijst.push(f);
-      perNode.set(f.nodeId, lijst);
-    }
-    const tekstVan = (inlines: { kind: string; text?: string }[]) =>
-      inlines.map((i) => (i.kind === "text" ? i.text : i.kind === "tab" ? " " : "")).join("").trim();
-    for (const story of structured.stories)
-      for (const blok of story.blocks) {
-        if (!("paragraph" in blok)) continue;
-        const kop = "heading" in blok ? blok.heading : null;
-        if (kop) {
-          const f = perNode.get(blok.id)?.[0];
-          const titel = tekstVan(blok.paragraph.inlines);
-          if (f && titel)
-            bladwijzers.push({
-              titel,
-              pagina: f.pageIndex,
-              y: (f.geometry?.rects[0]?.y ?? 0) * 0.75,
-              niveau: kop.outlineLevel,
-            });
-        }
-        for (const inline of blok.paragraph.inlines) {
-          if (!inline.link?.href) continue;
-          for (const f of perNode.get(inline.id) ?? [])
-            for (const rect of f.geometry?.rects ?? []) {
-              const lijst = koppelingen.get(f.pageIndex) ?? [];
-              lijst.push({
-                x: rect.x * 0.75,
-                y: rect.y * 0.75,
-                breedte: rect.width * 0.75,
-                hoogte: rect.height * 0.75,
-                url: inline.link.href,
-              });
-              koppelingen.set(f.pageIndex, lijst);
-            }
-        }
-      }
+    return tekstKoppelingen(r.content);
   } catch {
     // Zonder paginakaart: geen bladwijzers of koppelingen.
   }

@@ -31,8 +31,8 @@ export const tekstEs: TekstVertaling = {
     closeDialog: "Cerrar cuadro de diálogo",
   },
   toolbar: {
-    "imageWrap": {
-      "current": "Actual"
+    imageWrap: {
+      current: "Actual"
     },
     ariaLabel: "Barra de herramientas de formato",
     file: "Archivo",
@@ -209,11 +209,11 @@ export const tekstEs: TekstVertaling = {
     },
   },
   dialogs: {
-    "objectGeometry": {
-      "left": "Izquierda (px)",
-      "top": "Arriba (px)",
-      "width": "Ancho (px)",
-      "height": "Alto (px)"
+    objectGeometry: {
+      left: "Izquierda (px)",
+      top: "Arriba (px)",
+      width: "Ancho (px)",
+      height: "Alto (px)"
     },
     findReplace: {
       titleFind: "Buscar",
@@ -638,10 +638,10 @@ export const tekstEs: TekstVertaling = {
     tableDeleted: "Tabla eliminada",
   },
   contextMenu: {
-    "addComment": "Comentario",
-    "resizeImage": "Cambiar tamaño de imagen",
-    "moveImage": "Mover imagen",
-    "columnWidth": "Ancho de columna",
+    addComment: "Comentario",
+    resizeImage: "Cambiar tamaño de imagen",
+    moveImage: "Mover imagen",
+    columnWidth: "Ancho de columna",
     ariaLabel: "Menú de acciones de IA",
     textMenuAriaLabel: "Menú de edición de texto",
     customPromptPlaceholder: "Instrucción personalizada...",
@@ -691,11 +691,11 @@ export const tekstEs: TekstVertaling = {
     menuBarAriaLabel: "Barra de menús",
   },
   errors: {
-    "stillOpening": "El documento todavía se está abriendo. Se podrá escribir cuando esté listo.",
-    "failedToLoadDescription": "El archivo puede estar dañado o contener elementos que este editor todavía no puede leer.",
-    "editorUnavailable": "No se pudo cargar el editor",
-    "editorUnavailableDescription": "Comprueba la conexión y vuelve a cargar la página.",
-    "reloadPage": "Volver a cargar la página",
+    stillOpening: "El documento todavía se está abriendo. Podrá escribir cuando esté listo.",
+    failedToLoadDescription: "El archivo puede estar dañado o utilizar funciones que este editor todavía no admite.",
+    editorUnavailable: "No se pudo cargar el editor",
+    editorUnavailableDescription: "Compruebe la conexión y vuelva a cargar la página.",
+    reloadPage: "Volver a cargar la página",
     loadingDocument: "Cargando documento...",
     noDocumentLoaded: "No hay ningún documento cargado",
     failedToLoad: "No se pudo cargar el documento",
@@ -711,7 +711,7 @@ export const tekstEs: TekstVertaling = {
     unsavedChanges: "Hay cambios sin guardar. ¿Salir de todos modos?",
   },
   table: {
-    "viewGridlines": "Mostrar líneas de cuadrícula",
+    viewGridlines: "Ver cuadrícula",
     insertRowAbove: "Insertar fila encima",
     insertRowBelow: "Insertar fila debajo",
     insertColumnLeft: "Insertar columna a la izquierda",
@@ -842,20 +842,20 @@ export const tekstEs: TekstVertaling = {
     comment: "Comentario",
   },
   editor: {
-    "documentInput": "Entrada del documento",
-    "documentPreview": "Vista previa del documento",
-    "closeNote": "Cerrar nota",
-    "recoverableText": "Texto recuperable del documento",
-    "dismissDraft": "Cerrar borrador",
-    "readDocumentText": "Leer el texto del documento",
-    "documentText": "Texto del documento",
-    "previousText": "Texto anterior",
-    "nextText": "Texto siguiente",
-    "addComment": "Añadir comentario",
-    "noteProperties": "Propiedades de la nota",
-    "recoverableTextNotice": "No se pudo aplicar este texto. Cópialo para conservar el borrador y cierra este aviso.",
-    "documentTextUnavailable": "El texto del documento no está disponible.",
-    "documentTextChanged": "El texto del documento cambió. Vuelve a leerlo.",
+    documentInput: "Entrada del documento",
+    documentPreview: "Vista previa del documento",
+    closeNote: "Cerrar nota",
+    recoverableText: "Texto recuperable del documento",
+    dismissDraft: "Descartar borrador",
+    readDocumentText: "Leer texto del documento",
+    documentText: "Texto del documento",
+    previousText: "Texto anterior",
+    nextText: "Texto siguiente",
+    addComment: "Añadir comentario",
+    noteProperties: "Propiedades de nota",
+    recoverableTextNotice: "No se pudo aplicar este texto. Cópielo para conservar el borrador y después descártelo.",
+    documentTextUnavailable: "El texto del documento no está disponible.",
+    documentTextChanged: "El texto del documento ha cambiado. Vuelva a leerlo.",
     toggleCommentsSidebar: "Mostrar u ocultar la barra lateral de comentarios",
     showDocumentOutline: "Mostrar esquema del documento",
     editing: "Edición",
@@ -1185,20 +1185,23 @@ export const rekenbladEs: RekenbladVertaling = {
     appLabel: "Editor de hojas de cálculo",
     demoCellText: "OpenOOXML xlsx",
     openError: "No se pudo abrir este libro",
-    openErrorDescription: "El archivo puede estar dañado o usar contenido que este editor todavía no puede leer.",
-    stoppedError: "El editor ha encontrado un problema",
-    stoppedErrorDescription: "Vuelve a abrir el libro para seguir editando.",
-    loadError: "No se pudo cargar el editor",
-    loadErrorDescription: "Comprueba la conexión y vuelve a cargar la página.",
-    reloadPage: "Volver a cargar la página",
+    openErrorDescription:
+      "No se pudo abrir el libro. El archivo puede estar dañado o usar un formato no compatible.",
+    stoppedError: "La sesión del editor se ha detenido",
+    stoppedErrorDescription:
+      "La sesión ya no puede aceptar cambios. Recarga la página para volver a abrir el libro.",
+    loadError: "No se pudo cargar el libro",
+    loadErrorDescription:
+      "No se pudo iniciar el motor de hojas de cálculo.",
+    reloadPage: "Recargar página",
     showDetails: "Mostrar detalles",
     openPrompt: "Abrir un archivo XLSX",
     sheetTabsLabel: "Hojas",
   },
   presence: {
     label: "Colaboradores",
-    unavailableSheet: "Hoja no disponible",
-    peerOnSheet: "{name} ({sheet})",
+    unavailableSheet: "En una hoja no disponible",
+    peerOnSheet: "{name} está en {sheet}",
   },
   proposals: {
     panelLabel: "Propuestas del agente",

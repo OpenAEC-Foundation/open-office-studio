@@ -14,7 +14,7 @@ import {
   useEffect,
   useId,
   useMemo,
-  useReducer,
+  useSyncExternalStore,
   useRef,
   useState,
 } from "react";
@@ -25,11 +25,11 @@ import { EditorToolbar, type XlsxEditorApi } from "@betteroffice/xlsx-react";
 import { Dialoog } from "../werkruimte/Dialoog";
 import "../werkruimte/werkruimte.css";
 import { RibbonFout } from "../Ribbon";
-import { leesNederlands } from "../rekenbladinvoer";
+import { regionaleInvoer } from "../rekenblad/regionaleInvoer";
+import { plaatsFormuleBereik, verwijzingsplek } from "../rekenblad/formuleVerwijzing";
 import { alleenLezen, benoemdeBereiken, gaNaar, Melding, rekenbladHost } from "./rekenblad-opdrachten";
 import { adres, ontleedVerwijzing, serieleDatum, type Cel } from "./rekenblad-logica";
 import {
-  aanvullingen,
   argumentBij,
   argumentOnderCursor,
   CATEGORIEEN,
@@ -42,7 +42,11 @@ import {
   type Categorie,
   type Functie,
 } from "./rekenblad-functies";
-import { VERWIJZINGSKLEUREN, type RekenbladLaag } from "./rekenblad-laag";
+import type { RekenbladLaag } from "./rekenblad-laag";
+import { formuleVerwijzingen } from "./rekenblad-verwijzingskleuren";
+import { namenLijst } from "../rekenblad/namen";
+import { aangevuldeFormule, formuleAanvullingen, type FormuleVoorstel } from "../rekenblad/naamAanvullingen";
+import { FormuleKleuren } from "./rekenblad-formulekleuren";
 import "./rekenblad-gereedschap.css";
 
 const VELDEN = '[data-testid="xlsx-cell-editor"], [data-testid="xlsx-formula-input"], .rekenblad-formule-uitgebreid';
@@ -63,11 +67,16 @@ export function zetVeld(veld: Veld, tekst: string, begin: number, eind = begin) 
 
 const tekstVan = (fout: unknown) => (fout instanceof Melding || fout instanceof Error ? fout.message : String(fout));
 
-/** Huidige cel en selectie volgens de laag. */
+const geenSelectie = () => null;
+const geenMeldingen = () => () => {};
+
+/** Huidige selectie, ook als de eerste melding vóór het abonneren plaatsvindt. */
 function useSelectie(laag: RekenbladLaag | null | undefined) {
-  const [, ververs] = useReducer((n: number) => n + 1, 0);
-  useEffect(() => laag?.abonneer(ververs), [laag]);
-  return laag?.selectie() ?? null;
+  return useSyncExternalStore(
+    laag?.abonneer ?? geenMeldingen,
+    laag?.selectie ?? geenSelectie,
+    geenSelectie,
+  );
 }
 
 // ------------------------------------------------------------ voorbeeld
@@ -470,6 +479,7 @@ function Naamvak({ api, laag }: { api: XlsxEditorApi; laag: RekenbladLaag | null
   const veld = useRef<HTMLInputElement>(null);
 
   const cel = s?.cells?.focus;
+  const actiefBlad = s?.sheetIndex ?? api.handle.sheetInfo().activeSheet;
   const bereik = s?.cells
     ? {
         top: Math.min(s.cells.anchor.row, s.cells.focus.row),
@@ -486,12 +496,20 @@ function Naamvak({ api, laag }: { api: XlsxEditorApi; laag: RekenbladLaag | null
       namen.find((n) => {
         const v = ontleedVerwijzing(n.verwijzing);
         if (!v) return false;
-        const bladOk = v.blad === null || v.blad.toLowerCase() === info.sheetNames[info.activeSheet]?.toLowerCase();
+        const bladOk = v.blad === null || v.blad.toLowerCase() === info.sheetNames[actiefBlad]?.toLowerCase();
         return bladOk && JSON.stringify(v.bereik) === JSON.stringify(bereik);
       })?.naam ?? null
     );
-  }, [namen, bereik?.top, bereik?.left, bereik?.bottom, bereik?.right]);
-  useEffect(() => setNamen(benoemdeBereiken(api)), [api]);
+  }, [namen, actiefBlad, bereik?.top, bereik?.left, bereik?.bottom, bereik?.right]);
+  useEffect(() => {
+    const ververs = () => {
+      const nieuw = benoemdeBereiken(api);
+      setNamen((oud) => oud.length === nieuw.length && oud.every((n, i) =>
+        n.naam === nieuw[i].naam && n.verwijzing === nieuw[i].verwijzing) ? oud : nieuw);
+    };
+    ververs();
+    return api.handle.onUpdate(ververs);
+  }, [api, actiefBlad]);
   const toon = tekst ?? naam ?? (cel ? adres(cel) : "");
 
   return (
@@ -543,6 +561,62 @@ function Naamvak({ api, laag }: { api: XlsxEditorApi; laag: RekenbladLaag | null
   );
 }
 
+/** Bereiken kiezen vanuit de formulevelden, met behoud van doelcel en concept. */
+function useFormuleBereik(api: XlsxEditorApi | null) {
+  useEffect(() => {
+    if (!api) return;
+    let ruimGebaarOp: (() => void) | undefined;
+    const beginVerwijzing = (e: PointerEvent) => {
+      const v = document.activeElement;
+      if (!isVeld(v) || v.readOnly || e.button !== 0 || e.ctrlKey || e.altKey || e.metaKey) return;
+      if (e.target === v) return;
+      const host = rekenbladHost();
+      if (!(e.target instanceof Node) || !host?.contains(e.target)) return;
+      const anker = api.getPositionAtPoint(e.clientX, e.clientY);
+      const begin = v.selectionStart, eind = v.selectionEnd;
+      if (begin === null || eind === null) return;
+      const plek = verwijzingsplek(v.value, begin, eind);
+      if (!anker || !plek) return;
+      const oorspronkelijk = v.value;
+      const stop = (p: PointerEvent) => { p.preventDefault(); p.stopImmediatePropagation(); };
+      const plaats = (p: PointerEvent) => {
+        const focus = api.getPositionAtPoint(p.clientX, p.clientY);
+        if (!focus || focus.sheet !== anker.sheet) return;
+        const nieuw = plaatsFormuleBereik(oorspronkelijk, plek, anker, focus);
+        zetVeld(v, nieuw.tekst, nieuw.cursor);
+      };
+      const beweeg = (p: PointerEvent) => {
+        if (p.pointerId !== e.pointerId) return;
+        stop(p); plaats(p);
+      };
+      const klaar = (p: PointerEvent) => {
+        if (p.pointerId !== e.pointerId) return;
+        stop(p);
+        if (p.type === "pointercancel") zetVeld(v, oorspronkelijk, begin, eind);
+        else plaats(p);
+        ruimGebaarOp?.();
+        v.focus();
+      };
+      ruimGebaarOp?.();
+      ruimGebaarOp = () => {
+        window.removeEventListener("pointermove", beweeg, true);
+        window.removeEventListener("pointerup", klaar, true);
+        window.removeEventListener("pointercancel", klaar, true);
+        ruimGebaarOp = undefined;
+      };
+      stop(e); plaats(e);
+      window.addEventListener("pointermove", beweeg, true);
+      window.addEventListener("pointerup", klaar, true);
+      window.addEventListener("pointercancel", klaar, true);
+    };
+    window.addEventListener("pointerdown", beginVerwijzing, true);
+    return () => {
+      ruimGebaarOp?.();
+      window.removeEventListener("pointerdown", beginVerwijzing, true);
+    };
+  }, [api]);
+}
+
 /** Formulebalk met eigen naamvak, fx-knop en uitvouwen; de invoer zelf is die van de engine. */
 export function Formulebalk({
   api,
@@ -555,6 +629,7 @@ export function Formulebalk({
 }) {
   const { t } = useTranslation("spreadsheet");
   const [uitgevouwen, setUitgevouwen] = useState(false);
+  useFormuleBereik(api);
   return (
     <div className={`office-formulebalk${uitgevouwen ? " is-uitgevouwen" : ""}`}>
       {api && <Naamvak api={api} laag={laag} />}
@@ -571,6 +646,7 @@ export function Formulebalk({
       </button>
       <EditorToolbar.FormulaBar />
       {api && uitgevouwen && <UitgevouwenFormule api={api} laag={laag} />}
+      {api && <FormuleKleuren api={api} />}
       <button
         type="button"
         className="rekenblad-uitvouwen"
@@ -600,6 +676,7 @@ function UitgevouwenFormule({ api, laag }: { api: XlsxEditorApi; laag: Rekenblad
   const inhoud = useCallback(() => (cel ? api.handle.cell(blad, cel.row, cel.col).input : ""), [api, blad, cel?.row, cel?.col]);
   const [tekst, setTekst] = useState(inhoud);
   const [gewijzigd, setGewijzigd] = useState(false);
+  const veld = useRef<HTMLTextAreaElement>(null);
   useEffect(() => {
     if (!gewijzigd) setTekst(inhoud());
     return api.handle.onUpdate(() => {
@@ -614,12 +691,10 @@ function UitgevouwenFormule({ api, laag }: { api: XlsxEditorApi; laag: Rekenblad
       try {
         const info = api.handle.sheetInfo();
         const target = { sheetId: info.sheetIds[blad], range: { kind: "rowCol" as const, start: cel, end: cel } };
-        const nl = leesNederlands(tekst);
         const r = await api.applyEdits({
           expectVersion: await api.version(),
           steps: [
-            { op: "setCellInputs", target, inputs: [[nl ? nl.invoer : tekst]] },
-            ...(nl?.notatie ? [{ op: "setNumberFormat" as const, target, format: { type: "custom" as const, pattern: nl.notatie } }] : []),
+            regionaleInvoer(target, [[tekst]]),
           ],
         });
         if (!r.ok) throw new Melding(r.failure.message);
@@ -639,6 +714,7 @@ function UitgevouwenFormule({ api, laag }: { api: XlsxEditorApi; laag: Rekenblad
 
   return (
     <textarea
+      ref={veld}
       className="rekenblad-formule-uitgebreid"
       value={tekst}
       rows={4}
@@ -682,7 +758,7 @@ interface Hulp {
   veld: Veld;
   rect: DOMRect;
   begin: number;
-  voorstellen: Functie[];
+  voorstellen: FormuleVoorstel[];
   gekozen: number;
   /** Of de gebruiker met de pijltjes koos (dan accepteert Enter ook). */
   genavigeerd: boolean;
@@ -694,23 +770,25 @@ interface Hulp {
  * bij het actieve argument, F4 en gekleurde verwijzingen, in de celinvoer en
  * de formulebalk. Geeft het zwevende hulpvenster terug.
  */
-export function useFormuleHulp(laag: RekenbladLaag | null | undefined, actief: boolean) {
+export function useFormuleHulp(laag: RekenbladLaag | null | undefined, api: XlsxEditorApi | null) {
   const [hulp, setHulp] = useState<Hulp | null>(null);
   const recent = useRef<Hulp | null>(null);
   recent.current = hulp;
 
   useEffect(() => {
-    if (!actief) return;
+    if (!api) return;
+    let frame = 0;
     const inHost = (veld: Element) => !!rekenbladHost()?.contains(veld);
     const werkBij = (veld: Veld) => {
       if (!inHost(veld) || document.activeElement !== veld) return;
       const cursor = veld.selectionStart ?? veld.value.length;
       const tekst = veld.value;
       const formule = tekst.startsWith("=");
+      const info = api.handle.sheetInfo();
       // Verwijzingen kleuren.
       laag?.zetMarkeringen(
         formule
-          ? verwijzingenIn(tekst).map((r, i) => ({ blad: r.blad, bereik: r.bereik, kleur: VERWIJZINGSKLEUREN[i % VERWIJZINGSKLEUREN.length] }))
+          ? formuleVerwijzingen(tekst, info.sheetNames[info.activeSheet]).markeringen
           : [],
       );
       if (!formule || veld.selectionStart !== veld.selectionEnd) {
@@ -718,7 +796,11 @@ export function useFormuleHulp(laag: RekenbladLaag | null | undefined, actief: b
         return;
       }
       const woord = woordBijCursor(tekst, cursor);
-      const voorstellen = woord ? aanvullingen(woord.woord) : [];
+      let voorstellen: FormuleVoorstel[] = [];
+      if (woord) {
+        try { voorstellen = formuleAanvullingen(woord.woord, namenLijst(api), info.activeSheet); }
+        catch { voorstellen = formuleAanvullingen(woord.woord, [], info.activeSheet); }
+      }
       const arg = argumentOnderCursor(tekst, cursor);
       const f = arg ? functie(arg.functie) : null;
       if (!voorstellen.length && !f) {
@@ -736,11 +818,17 @@ export function useFormuleHulp(laag: RekenbladLaag | null | undefined, actief: b
         argument: f ? { functie: f, index: arg!.index } : null,
       });
     };
+    // De engine moet de invoer eerst overnemen. Een render vanuit de
+    // capture-fase kan het veld anders met de vorige tekst overschrijven.
+    const plan = (veld: Veld) => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => werkBij(veld));
+    };
     const opInvoer = (e: Event) => {
-      if (isVeld(e.target)) werkBij(e.target);
+      if (isVeld(e.target)) plan(e.target);
     };
     const opKlik = (e: Event) => {
-      if (isVeld(e.target)) requestAnimationFrame(() => werkBij(e.target as Veld));
+      if (isVeld(e.target)) plan(e.target);
     };
     const opVerlaten = (e: FocusEvent) => {
       if (!isVeld(e.target)) return;
@@ -751,10 +839,10 @@ export function useFormuleHulp(laag: RekenbladLaag | null | undefined, actief: b
         }
       }, 120);
     };
-    const kies = (h: Hulp, f: Functie) => {
+    const kies = (h: Hulp, f: FormuleVoorstel) => {
       const cursor = h.veld.selectionStart ?? h.veld.value.length;
-      const tekst = `${h.veld.value.slice(0, h.begin)}${f.naam}(${h.veld.value.slice(cursor)}`;
-      zetVeld(h.veld, tekst, h.begin + f.naam.length + 1);
+      const nieuw = aangevuldeFormule(h.veld.value, h.begin, cursor, f);
+      zetVeld(h.veld, nieuw.tekst, nieuw.cursor);
     };
     const opToets = (e: KeyboardEvent) => {
       if (!isVeld(e.target) || !inHost(e.target) || e.isComposing) return;
@@ -787,37 +875,40 @@ export function useFormuleHulp(laag: RekenbladLaag | null | undefined, actief: b
         setHulp({ ...h, voorstellen: [] });
       }
     };
-    // Eerst de React-invoer vastleggen. Een pluginoverlay bijwerken in de
-    // vangfase kan het gecontroleerde veld nog met de vorige tekst tekenen.
+    // React verwerkt eerst de invoer; focus activeert ook de uitgestelde weergave.
     document.addEventListener("input", opInvoer);
+    document.addEventListener("focusin", opInvoer, true);
     document.addEventListener("click", opKlik, true);
     const opLos = (e: KeyboardEvent) => {
-      if (["ArrowLeft", "ArrowRight", "Home", "End"].includes(e.key) && isVeld(e.target)) werkBij(e.target);
+      if (["ArrowLeft", "ArrowRight", "Home", "End"].includes(e.key) && isVeld(e.target)) plan(e.target);
     };
     document.addEventListener("keyup", opLos, true);
     document.addEventListener("focusout", opVerlaten, true);
     window.addEventListener("keydown", opToets, true);
     return () => {
+      cancelAnimationFrame(frame);
       document.removeEventListener("input", opInvoer);
+      document.removeEventListener("focusin", opInvoer, true);
       document.removeEventListener("click", opKlik, true);
       document.removeEventListener("keyup", opLos, true);
       document.removeEventListener("focusout", opVerlaten, true);
       window.removeEventListener("keydown", opToets, true);
     };
-  }, [actief, laag]);
+  }, [api, laag]);
 
   return hulp ? (
     <FormuleHulp
       hulp={hulp}
       kies={(f) => {
         const cursor = hulp.veld.selectionStart ?? hulp.veld.value.length;
-        zetVeld(hulp.veld, `${hulp.veld.value.slice(0, hulp.begin)}${f.naam}(${hulp.veld.value.slice(cursor)}`, hulp.begin + f.naam.length + 1);
+        const nieuw = aangevuldeFormule(hulp.veld.value, hulp.begin, cursor, f);
+        zetVeld(hulp.veld, nieuw.tekst, nieuw.cursor);
       }}
     />
   ) : null;
 }
 
-function FormuleHulp({ hulp, kies }: { hulp: Hulp; kies: (f: Functie) => void }) {
+function FormuleHulp({ hulp, kies }: { hulp: Hulp; kies: (f: FormuleVoorstel) => void }) {
   const { t } = useTranslation("functions");
   const { t: ts } = useTranslation("spreadsheet");
   const id = useId();
@@ -827,7 +918,7 @@ function FormuleHulp({ hulp, kies }: { hulp: Hulp; kies: (f: Functie) => void })
       <div className="rekenblad-aanvullen" style={plek} role="listbox" aria-label={ts("formulaBar.suggestions")} id={id}>
         {hulp.voorstellen.map((f, i) => (
           <div
-            key={f.naam}
+            key={`${f.soort}:${f.naam}`}
             role="option"
             aria-selected={i === hulp.gekozen}
             className={i === hulp.gekozen ? "is-gekozen" : ""}
@@ -837,7 +928,7 @@ function FormuleHulp({ hulp, kies }: { hulp: Hulp; kies: (f: Functie) => void })
             }}
           >
             <strong>{f.naam}</strong>
-            <span>{t(`fn.${f.naam}`)}</span>
+            <span>{f.soort === "functie" ? t(`fn.${f.naam}`) : f.verwijzing}</span>
           </div>
         ))}
         <p className="rekenblad-zacht">{ts("formulaBar.suggestionsHint")}</p>

@@ -84,6 +84,7 @@ export type TabbladActie =
           | "zoom"
           | "naam"
           | "werkbestand"
+          | "bron"
         >
       >;
     };
@@ -113,14 +114,17 @@ export function actiefTabblad(toestand: TabbladToestand) {
   return toestand.tabbladen.find((t) => t.id === toestand.actief) ?? null;
 }
 
-const regexVeilig = (tekst: string) => tekst.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const regexVeilig = (tekst: string) =>
+  tekst.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 /** Laagste vrije nummer: "Naamloos 1.docx", "Naamloos 2.docx", … (in de interfacetaal). */
 export function naamloos(toestand: TabbladToestand, soort: Soort) {
   const [voor = "", na = ""] = i18next
     .t("shell:tabs.untitled", { n: "\u0000" })
     .split("\u0000");
-  const patroon = new RegExp(`^${regexVeilig(voor)}(\\d+)${regexVeilig(na)}\\.\\w+$`);
+  const patroon = new RegExp(
+    `^${regexVeilig(voor)}(\\d+)${regexVeilig(na)}\\.\\w+$`,
+  );
   const bezet = new Set(
     toestand.tabbladen.flatMap((t) => {
       const m = t.type === "document" ? patroon.exec(t.naam) : null;
@@ -282,7 +286,8 @@ export function tabbladReducer(
         const sleutels = Object.keys(wijziging) as (keyof typeof wijziging)[];
         if (
           sleutels.every(
-            (k) => (t as unknown as Record<string, unknown>)[k] === wijziging[k],
+            (k) =>
+              (t as unknown as Record<string, unknown>)[k] === wijziging[k],
           )
         )
           return t;

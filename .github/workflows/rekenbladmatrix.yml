@@ -1,0 +1,44 @@
+name: Rekenbladmatrix onafhankelijk controleren
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/rekenbladmatrix.yml"
+      - "scripts/*rekenblad*"
+      - "scripts/vergelijk_pakketten.py"
+      - "patches/rekenbladengine-*"
+      - "vendor/rekenbladengine/**"
+      - "src/rekenbladcontrole*"
+      - "src/rekenblad/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  matrix:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pnpm install --frozen-lockfile
+      - name: Productiekern en werkelijk opgeslagen formulewaarden
+        run: node scripts/test-matrix-rekenbladen.mjs
+      - name: Vastgezette tweede kern met dezelfde bronbestanden vergelijken
+        run: node scripts/test-rekenblad-referentie.mjs
+      - name: Formule-, pakket- en kenmerkrapporten bewaren
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rekenbladmatrix
+          path: .local/matrix/rekenbladen/*.json
+          include-hidden-files: true
+          if-no-files-found: error

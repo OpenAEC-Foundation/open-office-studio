@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next";
 import { Lint, LintActie, type LintProps, type LintTeksten } from "./openaec-lint";
 import { useInstellingen } from "./instellingen";
 import { InLintPlek } from "./lintplek";
+import { BevestigdeKleur } from "./lint/BevestigdeKleur";
+import { markeerKleur } from "./lint/markeerkleur";
 
 export const RibbonFout = createContext<(bericht: string) => void>(() => {});
 /** Engelse redenen uit de engines, vertaald naar de interfacetaal. */
@@ -174,23 +176,25 @@ export function OpdrachtKleur({
   naam,
   icoon: Icoon,
   args,
+  bevestigen = false,
 }: {
   opdracht: GebondenOpdracht;
   naam: string;
   icoon: LucideIcon;
   args: (kleur: string) => unknown;
+  bevestigen?: boolean;
 }) {
   const uitvoeren = useUitvoeren(opdracht);
   const waarde =
     typeof opdracht.state.value === "string"
       ? opdracht.state.value.replace(/^#/, "")
       : "";
-  const kleur = /^[0-9a-f]{6}$/i.test(waarde) ? `#${waarde}` : "#36363e";
-  // De native kiezer moet zijn eigen keuze direct terugzien. De opdrachtstatus
-  // komt later binnen; de vorige kleur terugzetten veroorzaakt in WebKit een
-  // nieuwe native kleurgebeurtenis en daarmee een heen-en-weergaande reeks.
+  const kleur = bevestigen ? markeerKleur(opdracht.state.value) : /^[0-9a-f]{6}$/i.test(waarde) ? `#${waarde}` : "#36363e";
+  // Hooks blijven ook bij bevestigde kleuren in dezelfde volgorde staan.
   const [concept, setConcept] = useState(kleur);
   useEffect(() => setConcept(kleur), [kleur]);
+  if (bevestigen)
+    return <BevestigdeKleur naam={naam} icoon={Icoon} kleur={kleur} beschikbaar={opdracht.state.enabled} toepassen={(nieuw) => uitvoeren(args(nieuw))} />;
   return (
     <label
       className="ribbon-kleur"
@@ -258,11 +262,16 @@ export function OpdrachtGetal({
         beginMuis.current = null;
       }}
       onPointerCancel={() => { beginMuis.current = null; }}
-      onKeyUp={(event) => {
-        if (event.key === "ArrowUp" || event.key === "ArrowDown")
-          toepassen(event.currentTarget.value);
-      }}
       onKeyDown={(event) => {
+        if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+          event.preventDefault();
+          const huidig = Number(event.currentTarget.value);
+          if (Number.isFinite(huidig)) {
+            const nieuw = Math.max(1, Math.min(400, huidig + (event.key === "ArrowUp" ? 1 : -1)));
+            setWaarde(String(nieuw));
+            toepassen(String(nieuw));
+          }
+        }
         if (event.key === "Enter") {
           event.preventDefault();
           toepassen(event.currentTarget.value);

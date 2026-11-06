@@ -11,8 +11,6 @@ import {
   Info,
   Plus,
   ArrowUpRight,
-  NotebookPen,
-  Mail,
   Send,
   Settings,
   Keyboard,
@@ -24,6 +22,8 @@ import type { Soort } from "./editors";
 import { toonInstellingen, toonSneltoetsen } from "./werkruimte/gebeurtenissen";
 import { RecenteBestanden } from "./RecenteBestanden";
 import "../packages/email/src/start.css";
+import { StudioBeeldmerk } from "./studios/StudioBeeldmerk";
+import { studio } from "./studios/gekozen";
 
 /**
  * De drie documentmodules. De Nederlandse teksten zijn de brontekst voor wie
@@ -221,7 +221,7 @@ export function StartScherm({
                 : t("start.email")
             }
           >
-            <Mail size={18} />
+            <StudioBeeldmerk module="email" grootte={24} />
             <span>{t("start.email")}</span>
             {!!emailOngelezen && (
               <b className="start-email-teller">
@@ -240,7 +240,7 @@ export function StartScherm({
               onClick={() => nieuw(module.soort)}
               title={module.naam}
             >
-              <module.icoon size={18} />
+              <StudioBeeldmerk module={module.soort} grootte={24} />
               <span>{t(`common:modules.${module.module}`)}</span>
               <Plus size={13} className="nav-plus" />
             </button>
@@ -250,7 +250,7 @@ export function StartScherm({
             onClick={openNotities}
             title="Open Notities Studio"
           >
-            <NotebookPen size={18} />
+            <StudioBeeldmerk module="notities" grootte={24} />
             <span>{t("common:modules.notities")}</span>
             <Plus size={13} className="nav-plus" />
           </button>
@@ -287,7 +287,7 @@ export function StartScherm({
             <span className="start-welkom">
               <span /> {t("start.tagline")}
             </span>
-            <h1>{terug ? t("start.titleFile") : t("start.titleWorkspace")}</h1>
+            <h1 className="start-appbeeldmerk"><StudioBeeldmerk studio={studio} grootte={48} />{terug ? t("start.titleFile") : t("start.titleWorkspace")}</h1>
             <p>{t("start.intro")}</p>
           </div>
           <button
@@ -323,8 +323,8 @@ export function StartScherm({
               >
                 <Voorbeeld soort={module.soort} />
                 <div className="sjabloon-details">
-                  <span className="module-icoon">
-                    <module.icoon size={19} />
+                  <span className="module-beeldmerk">
+                    <StudioBeeldmerk module={module.soort} grootte={32} />
                   </span>
                   <div>
                     <strong>{t(`start.modules.${module.soort}.new`)}</strong>
@@ -342,7 +342,7 @@ export function StartScherm({
           onClick={openNotities}
         >
           <span className="start-notities-icoon">
-            <NotebookPen size={27} strokeWidth={1.5} />
+            <StudioBeeldmerk module="notities" grootte={48} />
           </span>
           <span>
             <strong>{t("start.notesHeading")}</strong>
@@ -358,7 +358,7 @@ export function StartScherm({
           onClick={openEmail}
         >
           <span className="start-notities-icoon">
-            <Mail size={27} strokeWidth={1.5} />
+            <StudioBeeldmerk module="email" grootte={48} />
           </span>
           <span>
             <strong>OpenAEC Email Studio</strong>

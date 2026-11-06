@@ -1,0 +1,101 @@
+{
+  "basis": "c096194 (oorspronkelijke bron + gecontroleerde lange-ketenspatch)",
+  "patchSha256": "ccf20c63150eb5b4d2493ae66112a46cf70ec986bfaa451232d8079597474ee9",
+  "fuzz": 0,
+  "geslaagd": true,
+  "bestanden": [
+    {
+      "pad": "crates/betteroffice-xlsx/src/snapshot/acceptance_tests.rs",
+      "sha256": "7ccefce8feeae0ceb6ca9b052cb79cc9a832ca5615d90adb367edc4afb1fc4cc"
+    },
+    {
+      "pad": "crates/betteroffice-xlsx/src/snapshot/package.rs",
+      "sha256": "f74dc351b46a65c4f4d8c16fe9a5e20a77a0cb3f1d923151542349512fb3f7e7"
+    },
+    {
+      "pad": "crates/betteroffice-xlsx/src/structured/walk.rs",
+      "sha256": "d64ae444f7292230eaf36f03c3ff664eeac5d41403c57598f73f73cedb0f3b5a"
+    },
+    {
+      "pad": "crates/betteroffice-xlsx/src/workbook.rs",
+      "sha256": "02f9fb4756994b6812ccc93494533aae86300b0949ff9b04ab4b85a1fecb7c09"
+    },
+    {
+      "pad": "crates/betteroffice-xlsx/src/workbook/batch.rs",
+      "sha256": "dfabbebaa7470f2f3b0622c94ea2bc460567dbc0cb6beb30694d1a06e9ec0404"
+    },
+    {
+      "pad": "crates/betteroffice-xlsx/src/workbook/target.rs",
+      "sha256": "18246fbd3885ce1e40e682c5a4e4cb1177040a0b736687dad61ee194c9da9cc7"
+    },
+    {
+      "pad": "crates/betteroffice-xlsx/tests/ingebouwde_datums.rs",
+      "sha256": "26aac5b2929d32607088eeddc878451915dc14970f287310668d7f401a1907ca"
+    },
+    {
+      "pad": "crates/betteroffice-xlsx/tests/regionale_batchinvoer.rs",
+      "sha256": "6631a43ba85d61f23e5333153e4e5a1286f9839acf5796ff5a37c5586ae5dfba"
+    },
+    {
+      "pad": "crates/betteroffice-xlsx/tests/structured_export.rs",
+      "sha256": "5397b5ad60a5744acda30a133769da8065c5b1e8752afa44407b90b349fbb1d7"
+    },
+    {
+      "pad": "crates/betteroffice-xlsx/tests/werkmapregio.rs",
+      "sha256": "8295a7110ff6b139c4fa7762b9e74b758ba06202e23d11eb3b5ed13c806fba6f"
+    },
+    {
+      "pad": "crates/xlsx-calc/src/engine.rs",
+      "sha256": "7635806fb18571936d01a854c58cdd001ca5a32d1201907d783e246735b2a4e7"
+    },
+    {
+      "pad": "crates/xlsx-calc/src/eval.rs",
+      "sha256": "94c8ca28d761781dc9ac4853a5434a0481e4205127b3f0c30fd860a76da77f64"
+    },
+    {
+      "pad": "crates/xlsx-calc/src/functions/text.rs",
+      "sha256": "2d6da0d8333544573da703240b19ca7c65b08f48a7b9c10368c604707a71273d"
+    },
+    {
+      "pad": "crates/xlsx-model/src/numfmt.rs",
+      "sha256": "249912e11b9c50023b76f3575e3a57c47fdcf9651872ce79ba299502f4bca037"
+    },
+    {
+      "pad": "crates/xlsx-model/src/numfmt/locale.rs",
+      "sha256": "e625d9c8f00519f814fa07004a7566669ad20686c0f1e33f45413bd0f61f8cc3"
+    },
+    {
+      "pad": "crates/xlsx-model/src/numfmt/regio_tests.rs",
+      "sha256": "efbbd15b7c6d7c5afc4ed0fd36f2fd3b2f792d72155972505d47828c967c0666"
+    },
+    {
+      "pad": "crates/xlsx-model/src/styles.rs",
+      "sha256": "deca2301a8d0228a21fbd5a2edfb66b3230d48b566f0a374f58ed2712315671b"
+    },
+    {
+      "pad": "crates/xlsx-model/src/workbook.rs",
+      "sha256": "e57e6b3408ec59b6a8f764a13c5009146e0fe82a8d68025c5fde94524ebc82e6"
+    },
+    {
+      "pad": "crates/xlsx-ops/src/input.rs",
+      "sha256": "85b966cf4f10f5b656da569e4e8c5423545527e844ed1c7eb7d4f81f94f7631b"
+    },
+    {
+      "pad": "crates/xlsx-ops/src/input/locale.rs",
+      "sha256": "2d49e8ae2789ba0bbd69b7a7a9fb2ede3a114dd5184d07388eeca0143451807f"
+    },
+    {
+      "pad": "crates/xlsx-ops/src/lib.rs",
+      "sha256": "2718fb648ba98c16158d2af8f1379c9918e49056f6f25db1aa71c6492eecdf42"
+    },
+    {
+      "pad": "crates/xlsx-render/src/lib.rs",
+      "sha256": "e1546e9e6ca66432b17ad7441b8431c5b9ed77f4b4f65158c349909dc6bc0d65"
+    },
+    {
+      "pad": "crates/xlsx-render/src/number_format.rs",
+      "sha256": "fadd9142bf40ec93275c610c9bad1f2a2791ee9f4007d26a11af2e5d60404c64"
+    }
+  ],
+  "uitvoer": "patching file crates/betteroffice-xlsx/src/snapshot/acceptance_tests.rs\npatching file crates/betteroffice-xlsx/src/snapshot/package.rs\npatching file crates/betteroffice-xlsx/src/structured/walk.rs\npatching file crates/betteroffice-xlsx/src/workbook.rs\npatching file crates/betteroffice-xlsx/src/workbook/batch.rs\npatching file crates/betteroffice-xlsx/src/workbook/target.rs\npatching file crates/betteroffice-xlsx/tests/ingebouwde_datums.rs\npatching file crates/betteroffice-xlsx/tests/regionale_batchinvoer.rs\npatching file crates/betteroffice-xlsx/tests/structured_export.rs\npatching file crates/betteroffice-xlsx/tests/werkmapregio.rs\npatching file crates/xlsx-calc/src/engine.rs\npatching file crates/xlsx-calc/src/eval.rs\npatching file crates/xlsx-calc/src/functions/text.rs\npatching file crates/xlsx-model/src/numfmt.rs\npatching file crates/xlsx-model/src/numfmt/locale.rs\npatching file crates/xlsx-model/src/numfmt/regio_tests.rs\npatching file crates/xlsx-model/src/styles.rs\npatching file crates/xlsx-model/src/workbook.rs\npatching file crates/xlsx-ops/src/input.rs\npatching file crates/xlsx-ops/src/input/locale.rs\npatching file crates/xlsx-ops/src/lib.rs\npatching file crates/xlsx-render/src/lib.rs\npatching file crates/xlsx-render/src/number_format.rs\n"
+}

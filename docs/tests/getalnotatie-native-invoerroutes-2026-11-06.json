@@ -1,0 +1,61 @@
+{
+  "bewijs": [
+    "Uitgebreide formulebalk legt 12,5 rechtstreeks als regionaal getal vast.",
+    "Native Ctrl+V verwerkt synthetische HTML met x:num/sdval, regionale getallen, datum, procent en formule.",
+    "Eén Undo verwijdert de hele plakbewerking; Redo herstelt waarden en datum/procentnotatie."
+  ],
+  "kandidaat": "ff4aacb847c4a343492f8d119c40086d5f14c93efaaba2de6a6e5cb59be33294",
+  "geladenAssets": [
+    {
+      "naam": "editors-Dl_3u1is.js",
+      "bytes": 1664266,
+      "sha256": "ff4aacb847c4a343492f8d119c40086d5f14c93efaaba2de6a6e5cb59be33294"
+    },
+    {
+      "naam": "xlsx_wasm_bg-gknKW8Tg.wasm",
+      "bytes": 7693158,
+      "sha256": "a46812258ad5efcc54d0cba42bdfc21b99b4f3c873d3e9d701098f7712ee8f07"
+    }
+  ],
+  "heropenen": {
+    "geslaagd": true,
+    "route": "Tab sluiten en via Recente bestanden dezelfde echte XLSX heropenen.",
+    "cellen": [
+      "C18, 12,5",
+      "C20, 1,2345",
+      "D20, 12,5",
+      "E20, 01-01-2026",
+      "F20, 15%",
+      "C21, 1234,5",
+      "D21, 7",
+      "E21, 14"
+    ]
+  },
+  "onafhankelijkeBestandscontrole": {
+    "waarden": {
+      "C18": 12.5,
+      "C20": 1.2345,
+      "D20": 12.5,
+      "E20": 46023.0,
+      "F20": 0.15,
+      "C21": 1234.5,
+      "D21": 7.0,
+      "E21": 14.0
+    },
+    "notaties": {
+      "E20": "dd-mm-yyyy",
+      "F20": "0%"
+    },
+    "formule": "E21=D21*2",
+    "regio": "nl-NL",
+    "sha256": "cfda20bb02224829952c94cd6330b9f72c612310a2f6c477f71db2e9d9d15e02",
+    "controle": "Onafhankelijke ZIP/XML-lezing na echte Tauri-invoer, native HTML-plakken, één Undo/Redo en Ctrl+S."
+  },
+  "klembord": {
+    "profiel": "Alleen eigen Xvfb-display, geen gebruikersklembord",
+    "opgevraagdeDoelen": [
+      "tekst",
+      "html"
+    ]
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "basis": "c096194 (oorspronkelijke bron + vastgelegde lange-ketenspatch)",
+  "patchSha256": "0923b56b9c8ea6d8695847794c0315d52827901aaa933d09f44e5458d4f44680",
+  "fuzz": 0,
+  "geslaagd": true,
+  "bestanden": [
+    {
+      "pad": "crates/betteroffice-xlsx/src/snapshot/acceptance_tests.rs",
+      "sha256": "7ccefce8feeae0ceb6ca9b052cb79cc9a832ca5615d90adb367edc4afb1fc4cc"
+    },
+    {
+      "pad": "crates/betteroffice-xlsx/src/snapshot/package.rs",
+      "sha256": "f74dc351b46a65c4f4d8c16fe9a5e20a77a0cb3f1d923151542349512fb3f7e7"
+    },
+    {
+      "pad": "crates/betteroffice-xlsx/src/structured/walk.rs",
+      "sha256": "df173f1356a1ea6e48c27a33c51e8c30183b19c22b3f1867f8aa29ca47342d1e"
+    },
+    {
+      "pad": "crates/betteroffice-xlsx/src/workbook.rs",
+      "sha256": "297840983c7dcb882d56b804493965312cb07339a508548c4d1f990c24df80c9"
+    },
+    {
+      "pad": "crates/betteroffice-xlsx/src/workbook/batch.rs",
+      "sha256": "12b0bedfeb3f7ea6f7e9beadd33b51279c0bf4974da3416dcad8f65004a2f08c"
+    },
+    {
+      "pad": "crates/betteroffice-xlsx/src/workbook/target.rs",
+      "sha256": "be3040534f952486754f3bb95970572bfbef4198f5df8a51e582cd6b1bdf3903"
+    },
+    {
+      "pad": "crates/betteroffice-xlsx/tests/regionale_batchinvoer.rs",
+      "sha256": "6631a43ba85d61f23e5333153e4e5a1286f9839acf5796ff5a37c5586ae5dfba"
+    },
+    {
+      "pad": "crates/betteroffice-xlsx/tests/structured_export.rs",
+      "sha256": "5397b5ad60a5744acda30a133769da8065c5b1e8752afa44407b90b349fbb1d7"
+    },
+    {
+      "pad": "crates/betteroffice-xlsx/tests/werkmapregio.rs",
+      "sha256": "8295a7110ff6b139c4fa7762b9e74b758ba06202e23d11eb3b5ed13c806fba6f"
+    },
+    {
+      "pad": "crates/xlsx-calc/src/engine.rs",
+      "sha256": "7635806fb18571936d01a854c58cdd001ca5a32d1201907d783e246735b2a4e7"
+    },
+    {
+      "pad": "crates/xlsx-calc/src/eval.rs",
+      "sha256": "94c8ca28d761781dc9ac4853a5434a0481e4205127b3f0c30fd860a76da77f64"
+    },
+    {
+      "pad": "crates/xlsx-calc/src/functions/text.rs",
+      "sha256": "2d6da0d8333544573da703240b19ca7c65b08f48a7b9c10368c604707a71273d"
+    },
+    {
+      "pad": "crates/xlsx-model/src/numfmt.rs",
+      "sha256": "72cd13cbf1962c0f0635559274816ce5b1ebb680183628af9f6bba8b619b70a8"
+    },
+    {
+      "pad": "crates/xlsx-model/src/numfmt/locale.rs",
+      "sha256": "6ee6f74529ee5d7921beaa0c4dc0f7ddd785e45fda43d23833309d9400964c68"
+    },
+    {
+      "pad": "crates/xlsx-model/src/numfmt/regio_tests.rs",
+      "sha256": "efbbd15b7c6d7c5afc4ed0fd36f2fd3b2f792d72155972505d47828c967c0666"
+    },
+    {
+      "pad": "crates/xlsx-model/src/workbook.rs",
+      "sha256": "e57e6b3408ec59b6a8f764a13c5009146e0fe82a8d68025c5fde94524ebc82e6"
+    },
+    {
+      "pad": "crates/xlsx-ops/src/input.rs",
+      "sha256": "85b966cf4f10f5b656da569e4e8c5423545527e844ed1c7eb7d4f81f94f7631b"
+    },
+    {
+      "pad": "crates/xlsx-ops/src/input/locale.rs",
+      "sha256": "d6706f067930dcc4e2776c163b6827bc7a2a477fdc5dd1c9d47cd3010a3f7e05"
+    },
+    {
+      "pad": "crates/xlsx-ops/src/lib.rs",
+      "sha256": "2718fb648ba98c16158d2af8f1379c9918e49056f6f25db1aa71c6492eecdf42"
+    },
+    {
+      "pad": "crates/xlsx-render/src/lib.rs",
+      "sha256": "a02b4e094e95a68b125ef7b53833e6db69a6dd687d9a0f8b5dddc6f00b36b0c5"
+    },
+    {
+      "pad": "crates/xlsx-render/src/number_format.rs",
+      "sha256": "fadd9142bf40ec93275c610c9bad1f2a2791ee9f4007d26a11af2e5d60404c64"
+    }
+  ],
+  "uitvoer": "patching file crates/betteroffice-xlsx/src/snapshot/acceptance_tests.rs\npatching file crates/betteroffice-xlsx/src/snapshot/package.rs\npatching file crates/betteroffice-xlsx/src/structured/walk.rs\npatching file crates/betteroffice-xlsx/src/workbook.rs\npatching file crates/betteroffice-xlsx/src/workbook/batch.rs\npatching file crates/betteroffice-xlsx/src/workbook/target.rs\npatching file crates/betteroffice-xlsx/tests/regionale_batchinvoer.rs\npatching file crates/betteroffice-xlsx/tests/structured_export.rs\npatching file crates/betteroffice-xlsx/tests/werkmapregio.rs\npatching file crates/xlsx-calc/src/engine.rs\npatching file crates/xlsx-calc/src/eval.rs\npatching file crates/xlsx-calc/src/functions/text.rs\npatching file crates/xlsx-model/src/numfmt.rs\npatching file crates/xlsx-model/src/numfmt/locale.rs\npatching file crates/xlsx-model/src/numfmt/regio_tests.rs\npatching file crates/xlsx-model/src/workbook.rs\npatching file crates/xlsx-ops/src/input.rs\npatching file crates/xlsx-ops/src/input/locale.rs\npatching file crates/xlsx-ops/src/lib.rs\npatching file crates/xlsx-render/src/lib.rs\npatching file crates/xlsx-render/src/number_format.rs\n"
+}

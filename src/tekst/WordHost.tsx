@@ -60,7 +60,7 @@ export function WordHost() {
       meldOpdrachtAan("tabel.sorteren", doe(() => openVenster(api, "tabel.sorteren"))),
       meldOpdrachtAan("tabel.naarTekst", doe(() => openVenster(api, "tabel.naarTekst"))),
       meldOpdrachtAan("tabel.kolommenGelijk", doe(() => kolommenGelijk(api()))),
-      meldOpdrachtAan("tabel.splitsen", doe(() => splitsHuidigeTabel(api(), recent.apis.herlaad))),
+      meldOpdrachtAan("tabel.splitsen", doe(() => splitsHuidigeTabel(api()))),
       meldOpdrachtAan("tabel.tekstNaarTabel", doe(() => openTekstNaarTabel(api(), api))),
       meldOpdrachtAan("afbeelding.bijsnijden", doe(() => openVenster(api, "afbeelding.bijsnijden"))),
       meldOpdrachtAan("afbeelding.alt", doe(() => openVenster(api, "afbeelding.alt"))),

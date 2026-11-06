@@ -7,6 +7,7 @@
 import type { DocxEditorRef } from "@betteroffice/docx-react";
 import { meldWijziging } from "../../lint/editorApi";
 import { telTekst } from "../../lint/tekst-logica";
+import { leesAlleAlineas } from "../gedeeld/engine";
 import { leesEigenschappen, schrijfEigenschappen, type KernEigenschappen } from "./docprops";
 
 interface Staat {
@@ -83,13 +84,14 @@ export async function werkEigenschappenBij(
       const vorige = leesEigenschappen(bytes).bewerkingstijd ?? 0;
       wijziging.bewerkingstijd = vorige + Math.round((s?.actief ?? 0) / 60000);
       if (ref) {
-        const gelezen = await ref.readParagraphs({ view: "accepted" });
-        if (gelezen.ok) {
-          const t = telTekst(gelezen.paragraphs.map((a) => a.text));
+        try {
+          const t = telTekst((await leesAlleAlineas(ref)).map((a) => a.text));
           wijziging.woorden = t.woorden;
           wijziging.tekens = t.tekensZonderSpaties;
           wijziging.tekensMetSpaties = t.tekens;
           wijziging.alineas = t.alineas;
+        } catch {
+          // Niet te tellen: de statistieken blijven wat er al in het bestand staat.
         }
         const paginas = ref.getTotalPages();
         if (paginas > 0) wijziging.paginas = paginas;

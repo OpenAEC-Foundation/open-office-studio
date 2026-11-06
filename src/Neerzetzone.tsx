@@ -6,8 +6,7 @@ import { kantoorModule } from "../packages/email/src/kantoor";
 import { bestandssoort } from "./formaten";
 import "./levenscyclus.css";
 
-const tauri =
-  typeof window !== "undefined" && "__TAURI_INTERNALS__" in window;
+const tauri = typeof window !== "undefined" && "__TAURI_INTERNALS__" in window;
 const AFBEELDINGEN = new Set([
   "png",
   "jpg",
@@ -23,10 +22,18 @@ const AFBEELDINGEN = new Set([
 /** Kan de app dit bestand openen? Anders een duidelijke melding. */
 export function neerzetMelding(naam: string): string | null {
   const ext = /\.([^.]+)$/.exec(naam)?.[1]?.toLowerCase() ?? "";
-  if (bestandssoort(ext) || kantoorModule(naam) === "database") return null;
+  if (
+    ext === "ifcx" ||
+    bestandssoort(ext) ||
+    kantoorModule(naam) === "database"
+  )
+    return null;
   if (AFBEELDINGEN.has(ext))
     return i18next.t("shell:dropZone.image", { name: naam });
-  return i18next.t("shell:dropZone.unsupported", { name: naam, ext: ext || "?" });
+  return i18next.t("shell:dropZone.unsupported", {
+    name: naam,
+    ext: ext || "?",
+  });
 }
 
 /** Bevat het slepen bestanden (en niet bijv. tekst uit de editor)? */

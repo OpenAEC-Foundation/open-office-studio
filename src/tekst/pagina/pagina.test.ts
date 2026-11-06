@@ -248,6 +248,23 @@ describe("inhoudsopgave", () => {
     { tekst: "Resultaten", niveau: 1, pagina: "3" },
   ];
 
+  it.each([0, 5, 13])("koppelt de kop ook met een tijdelijke cursor op positie %s (#145)", (positie) => {
+    const kop = "Hoofdstuk een";
+    const metCursor = kop.slice(0, positie) + M + kop.slice(positie);
+    const uit = voegInhoudsopgaveIn(maakDocx(p(metCursor, "Heading1") + p("Een gewone alinea.")), M,
+      [{ tekst: kop, niveau: 1, pagina: "1" }], STANDAARD_INHOUD);
+    const xml = doc(uit), wortel = leesXml(xml);
+    expect(xml).not.toContain(M);
+    const bladwijzer = zoekAlle(wortel, "bookmarkStart")[0];
+    expect(attr(bladwijzer, "name")).toMatch(/^_Toc/);
+    const sdt = zoekAlle(wortel, "sdt")[0];
+    const link = zoekAlle(sdt, "hyperlink")[0];
+    expect(attr(link, "anchor")).toBe(attr(bladwijzer, "name"));
+    expect(zoekAlle(link, "t").map((t) => t.kinderen.map((k) => k.soort === "tekst" ? k.tekst : "").join(""))).toEqual([kop, "1"]);
+    expect(xml).toMatch(/w:tab w:val="right" w:leader="dot"/);
+    expect(werkInhoudsopgaveBij(uit, [{ tekst: kop, niveau: 1, pagina: "1" }], "alles").gewijzigd).toBe(false);
+  });
+
   it("voegt een TOC-veld met regels, bladwijzers en hyperlinks in", () => {
     const uit = voegInhoudsopgaveIn(maakDocx(body), M, koppen, { ...STANDAARD_INHOUD, niveaus: 2 });
     welgevormd(uit);

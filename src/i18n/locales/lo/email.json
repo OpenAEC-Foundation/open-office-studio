@@ -1,0 +1,999 @@
+{
+  "accounts": {
+    "test": {
+      "test": "ທົດສອບ",
+      "testConnection": "ທົດສອບການເຊື່ອມຕໍ່",
+      "testing": "ກຳລັງທົດສອບ…",
+      "retest": "ທົດສອບຄືນໃໝ່",
+      "failed": "ການທົດສອບຫຼົ້ມເຫຼວ"
+    },
+    "settings": {
+      "title": "ການຕັ້ງຄ່າບັນຊີ",
+      "noAccount": "ຍັງບໍ່ທັນມີບັນຊີເທື່ອ.",
+      "addAccount": "ເພີ່ມບັນຊີ",
+      "accountList": "ບັນຊີ",
+      "saving": "ກຳລັງບັນທຶກ…",
+      "saved": "ບັນທຶກການຕັ້ງຄ່າແລ້ວ.",
+      "saveFailed": "ບໍ່ສາມາດບັນທຶກໄດ້",
+      "tabs": {
+        "identity": "ຂໍ້ມູນຕົວຕົນ",
+        "servers": "ເຊີເວີ",
+        "folders": "ໂຟນເດີ",
+        "fetching": "ການດຶງຂໍ້ມູນ ແລະ ຄວາມເປັນສ່ວນຕົວ",
+        "advanced": "ຂັ້ນສູງ"
+      },
+      "deleteAccount": {
+        "title": "ລຶບບັນຊີ",
+        "confirm": "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບ <strong>{{name}}</strong> ({{email}})? ອີເມວຂອງທ່ານຍັງຄົງຢູ່ໃນເຊີເວີ; ລະຫັດຜ່ານທີ່ບັນທຶກໄວ້ຈະຖືກລຶບອອກຈາກພວງກະແຈ (Keychain).",
+        "button": "ລຶບບັນຊີ",
+        "failed": "ບໍ່ສາມາດລຶບບັນຊີໄດ້"
+      },
+      "identity": {
+        "accountName": "ຊື່ບັນຊີ",
+        "accountNameHint": "ສຳລັບໃຫ້ທ່ານເບິ່ງເຫັນຜູ້ດຽວ, ເຊັ່ນ: \"ວຽກ\" ຫຼື \"ສ່ວນຕົວ\".",
+        "yourName": "ຊື່ຂອງທ່ານ",
+        "email": "ທີ່ຢູ່ອີເມວ",
+        "replyTo": "ທີ່ຢູ່ຕອບກັບ",
+        "replyToPlaceholder": "ປະຫວ່າງໄວ້ = ທີ່ຢູ່ອີເມວຂອງທ່ານ",
+        "signature": "ລາຍເຊັນ",
+        "signatureHint": "ເພີ່ມໃສ່ກ້ອງອີເມວໃໝ່ ແລະ ການຕອບກັບ, ຕໍ່ຈາກ \"-- \"."
+      },
+      "oauthAccount": {
+        "signedInAs": "ເຂົ້າສູ່ລະບົບຜ່ານ {{provider}} ໃນນາມ <strong>{{account}}</strong> ແລ້ວ",
+        "noPasswordStored": "ບໍ່ໄດ້ບັນທຶກລະຫັດຜ່ານໄວ້; ການເຂົ້າເຖິງແມ່ນໃຊ້ໂທເຄັນໃນພວງກະແຈ.",
+        "signInAgain": "ເຂົ້າສູ່ລະບົບຄືນໃໝ່",
+        "signedInAgain": "ເຂົ້າສູ່ລະບົບຄືນໃໝ່ໃນນາມ {{account}} ແລ້ວ."
+      },
+      "password": {
+        "change": "ປ່ຽນລະຫັດຜ່ານ",
+        "storedPlaceholder": "ບັນທຶກໄວ້ແລ້ວ · ປະຫວ່າງໄວ້ຖ້າບໍ່ຕ້ອງການປ່ຽນແປງ",
+        "noneStoredPlaceholder": "ຍັງບໍ່ທັນໄດ້ບັນທຶກລະຫັດຜ່ານ"
+      },
+      "folders": {
+        "hint": "ເລືອກບ່ອນທີ່ Email Studio ຈະໃຊ້ເກັບມ້ຽນອີເມວທີ່ສົ່ງແລ້ວ, ຮ່າງອີເມວ, ອີເມວທີ່ຖືກລຶບ ແລະ ອີເມວທີ່ຈັດເກັບໄວ້.",
+        "roles": {
+          "sent": "ອີເມວທີ່ສົ່ງແລ້ວ",
+          "drafts": "ຮ່າງອີເມວ",
+          "trash": "ກະຕ່າຂີ້ເຫຍື້ອ",
+          "archive": "ຄັງຈັດເກັບ"
+        },
+        "automatic": "ອັດຕະໂນມັດ",
+        "automaticWithFolder": "ອັດຕະໂນມັດ ({{folder}})"
+      },
+      "fetching": {
+        "checkForNew": "ກວດເບິ່ງອີເມວໃໝ່",
+        "manualOnly": "ດ້ວຍຕົນເອງເທົ່ານັ້ນ",
+        "everyMinutes_other": "ທຸກໆ {{count}} ນາທີ",
+        "externalContent": "ສະແດງຮູບພາບ ແລະ ເນື້ອຫາທາງໄກສະເໝີ",
+        "externalContentHint": "ແນະນຳໃຫ້ປິດໄວ້: ຮູບພາບທາງໄກຈະແຈ້ງໃຫ້ຜູ້ສົ່ງຮູ້ວ່າທ່ານເປີດອ່ານອີເມວຕອນໃດ ແລະ ຢູ່ໃສ.",
+        "trustedSenders": "ຜູ້ສົ່ງທີ່ອະນຸຍາດໃຫ້ສະແດງເນື້ອຫາທາງໄກສະເໝີ",
+        "forgetSender": "ລຶບ {{sender}} ອອກຈາກລາຍການທີ່ເຊື່ອຖື"
+      },
+      "advanced": {
+        "oauthIntro": "ການເຂົ້າສູ່ລະບົບດ້ວຍ Microsoft ຫຼື Google ຈະໃຊ້ OAuth2. ການຕັ້ງຄ່າເຫຼົ່ານີ້ມີຜົນກັບທຸກບັນຊີ. ທ່ານຈຳເປັນຕ້ອງມີ Client ID ຂອງຕົນເອງກໍຕໍ່ເມື່ອແອັບບໍ່ໄດ້ຕິດຕັ້ງມານຳເທົ່ານັ້ນ; ກະລຸນາເບິ່ງ <code>{{doc}}</code>.",
+        "ispdb": "ຄົ້ນຫາຖານຂໍ້ມູນ Thunderbird ນຳຕອນສ້າງບັນຊີໃໝ່",
+        "ispdbHint": "ຊື່ໂດເມນຈະຖືກສົ່ງໄປຫາ Mozilla. ປິດໄວ້ເປັນຄ່າເລີ່ມຕົ້ນ.",
+        "available": "ພ້ອມນຳໃຊ້.",
+        "unavailable": "ບໍ່ພ້ອມນຳໃຊ້.",
+        "loadingStatus": "ກຳລັງໂຫຼດສະຖານະ…",
+        "clientId": "Client ID",
+        "clientSecret": "Client Secret (ເລືອກໃສ່ໄດ້)",
+        "saveClientId": "ບັນທຶກ Client ID",
+        "clientIdSaved": "ບັນທຶກ Client ID ຂອງ {{provider}} ແລ້ວ.",
+        "clientIdSaveFailed": "ບໍ່ສາມາດບັນທຶກ Client ID ໄດ້",
+        "desktopOnly": "ສາມາດຕັ້ງຄ່າ Client ID ຂອງຕົນເອງໄດ້ສະເພາະໃນແອັບເດັສທັອບເທົ່ານັ້ນ."
+      }
+    },
+    "wizard": {
+      "title": "ເພີ່ມບັນຊີ",
+      "intro": "ນຳໃຊ້ທີ່ຢູ່ອີເມວທີ່ມີຢູ່ຂອງທ່ານ. Email Studio ສາມາດໃຊ້ງານໄດ້ກັບທຸກຜູ້ໃຫ້ບໍລິການທີ່ຮອງຮັບ IMAP ແລະ SMTP.",
+      "fullName": "ຊື່ເຕັມຂອງທ່ານ",
+      "fullNamePlaceholder": "ຊື່ ນາມສະກຸນ",
+      "fullNameHint": "ຊື່ຂອງທ່ານທີ່ຈະສະແດງໃຫ້ຜູ້ຮັບເຫັນ.",
+      "email": "ທີ່ຢູ່ອີເມວ",
+      "emailPlaceholder": "name@example.com",
+      "password": "ລະຫັດຜ່ານ",
+      "passwordHint": "ຈະຖືກນຳໃຊ້ເມື່ອທ່ານເລືອກ \"ທົດສອບ\" ຫຼື \"ສຳເລັດ\" ເທົ່ານັ້ນ, ແລະ ຈະຖືກບັນທຶກໄວ້ໃນພວງກະແຈຂອງລະບົບປະຕິບັດການເທົ່ານັ້ນ.",
+      "ispdb": "ຄົ້ນຫາຖານຂໍ້ມູນ Thunderbird ນຳ",
+      "ispdbHint": "ຈະສົ່ງສະເພາະຊື່ໂດເມນ (ບໍ່ແມ່ນທີ່ຢູ່ອີເມວ ຫຼື ລະຫັດຜ່ານຂອງທ່ານ) ໄປຫາ Mozilla.",
+      "oauthPrompt": "ຫຼື ເຂົ້າສູ່ລະບົບໂດຍບໍ່ໃຊ້ລະຫັດຜ່ານໃນແອັບ:",
+      "enterNameAndEmailFirst": "ກະລຸນາປ້ອນຊື່ ແລະ ທີ່ຢູ່ອີເມວຂອງທ່ານກ່ອນ.",
+      "saving": "ກຳລັງບັນທຶກ…",
+      "done": "ສຳເລັດ",
+      "saveAnyway": "ບັນທຶກຕໍ່ໄປ",
+      "saveTitle": "ບັນທຶກບັນຊີ",
+      "saveUntestedTitle": "ຍັງບໍ່ທັນໄດ້ທົດສອບ (ສຳເລັດ); ທ່ານຍັງສາມາດບັນທຶກບັນຊີໄດ້",
+      "saveFailed": "ບໍ່ສາມາດບັນທຶກບັນຊີໄດ້",
+      "foundSettings": "ພົບເຫັນການຕັ້ງຄ່າແລ້ວ",
+      "serverSettings": "ການຕັ້ງຄ່າເຊີເວີ",
+      "serverSettingsFor": "ການຕັ້ງຄ່າເຊີເວີສຳລັບ {{domain}}",
+      "enterEmailHint": "ປ້ອນທີ່ຢູ່ອີເມວຂອງທ່ານ; Email Studio ຈະຊອກຫາເຊີເວີທີ່ເໝາະສົມໂດຍອັດຕະໂນມັດ.",
+      "searchFailed": "ການຊອກຫາຫຼົ້ມເຫຼວ",
+      "fillInManually": "ກະລຸນາປ້ອນຂໍ້ມູນເຊີເວີດ້ວຍຕົນເອງຢູ່ດ້ານລຸ່ມ.",
+      "nothingFound": "ບໍ່ພົບເຫັນການຕັ້ງຄ່າ. ກະລຸນາປ້ອນຂໍ້ມູນເຊີເວີດ້ວຍຕົນເອງຢູ່ດ້ານລຸ່ມ; ຫາກຕ້ອງການ, ສາມາດສອບຖາມຈາກຜູ້ໃຫ້ບໍລິການຂອງທ່ານ.",
+      "proposals": "ຂໍ້ສະເໜີແນະ",
+      "unencrypted": "ບໍ່ໄດ້ເຂົ້າລະຫັດ",
+      "manualConfiguration": "ກຳນົດຄ່າດ້ວຍຕົນເອງ",
+      "adjusted": "· ແກ້ໄຂແລ້ວ",
+      "fieldsAppear": "ຊ່ອງຂໍ້ມູນເຫຼົ່ານີ້ຈະສະແດງຂຶ້ນຫຼັງຈາກປ້ອນທີ່ຢູ່ອີເມວທີ່ຖືກຕ້ອງ.",
+      "bothServersFailed": "ເຊີເວີທັງສອງຫຼົ້ມເຫຼວ. ກະລຸນາກວດເບິ່ງທີ່ຢູ່, ລະຫັດຜ່ານ ແລະ ຊື່ເຊີເວີ."
+    },
+    "discovery": {
+      "steps": {
+        "builtIn": "ລາຍການທີ່ຕິດຕັ້ງມານຳ",
+        "ownDomain": "ໂດເມນຂອງຕົນເອງ",
+        "dns": "DNS",
+        "ispdb": "ຖານຂໍ້ມູນ Thunderbird",
+        "probe": "ການກວດສອບການເຊື່ອມຕໍ່"
+      },
+      "stepStatus": {
+        "waiting": "ກຳລັງລໍຖ້າ",
+        "busy": "ກຳລັງດຳເນີນການ…",
+        "found": "ພົບເຫັນແລ້ວ",
+        "nothing": "ບໍ່ພົບເຫັນ",
+        "skipped": "ຂ້າມໄປ"
+      },
+      "sources": {
+        "preset": "ລາຍການທີ່ຕິດຕັ້ງມານຳ",
+        "autoconfig": "ການກຳນົດຄ່າຈາກໂດເມນຂອງຕົນເອງ",
+        "srv": "ບັນທຶກ DNS SRV",
+        "mx": "ບັນທຶກ MX (ຜູ້ໃຫ້ບໍລິການທີ່ຮູ້ຈັກ)",
+        "ispdb": "ຖານຂໍ້ມູນ Thunderbird",
+        "guess": "ຊື່ເຊີເວີທົ່ວໄປ"
+      },
+      "unencrypted": "ບໍ່ໄດ້ເຂົ້າລະຫັດ",
+      "reachable": "ສາມາດເຂົ້າເຖິງໄດ້",
+      "unreachable": "ບໍ່ສາມາດເຂົ້າເຖິງໄດ້",
+      "untested": "ຍັງບໍ່ໄດ້ທົດສອບ"
+    },
+    "server": {
+      "incoming": "ຂາເຂົ້າ (IMAP)",
+      "outgoing": "ຂາອອກ (SMTP)",
+      "columns": {
+        "server": "ເຊີເວີ",
+        "port": "ພອດ (Port)",
+        "security": "ຄວາມປອດໄພ",
+        "authentication": "ການຢືນຢັນຕົວຕົນ",
+        "username": "ຊື່ຜູ້ໃຊ້"
+      },
+      "hostLabel": "ເຊີເວີ {{protocol}}",
+      "portLabel": "ພອດ {{protocol}}",
+      "securityLabel": "ຄວາມປອດໄພ {{protocol}}",
+      "authenticationLabel": "ການຢືນຢັນຕົວຕົນ {{protocol}}",
+      "usernameLabel": "ຊື່ຜູ້ໃຊ້ {{protocol}}",
+      "imapPlaceholder": "imap.example.com",
+      "smtpPlaceholder": "smtp.example.com",
+      "securityNone": "ບໍ່ມີ",
+      "authNormal": "ລະຫັດຜ່ານປົກກະຕິ",
+      "authEncrypted": "ລະຫັດຜ່ານທີ່ເຂົ້າລະຫັດ",
+      "unencryptedWarning": "<strong>ການເຊື່ອມຕໍ່ບໍ່ໄດ້ເຂົ້າລະຫັດ.</strong> ລະຫັດຜ່ານ ແລະ ອີເມວຂອງທ່ານຈະຖືກສົ່ງຜ່ານເຄືອຂ່າຍໃນຮູບແບບທີ່ອ່ານໄດ້. ຖ້າຜູ້ໃຫ້ບໍລິການຮອງຮັບ, ກະລຸນາເລືອກ SSL/TLS ຫຼື STARTTLS.",
+      "oauthHint": "OAuth2 ຈະຮຽກຮ້ອງໃຫ້ທ່ານເຂົ້າສູ່ລະບົບກັບຜູ້ໃຫ້ບໍລິການໃນຕອນທົດສອບ ຫຼື ເມື່ອນຳໃຊ້ຄັ້ງທຳອິດ."
+    },
+    "oauth": {
+      "notSupported": "ແອັບເວີຊັນນີ້ຍັງບໍ່ຮອງຮັບການເຂົ້າສູ່ລະບົບດ້ວຍ Microsoft ຫຼື Google ເທື່ອ.",
+      "signInFailed": "ການເຂົ້າສູ່ລະບົບດ້ວຍ {{provider}} ຫຼົ້ມເຫຼວ",
+      "signInWith": "ເຂົ້າສູ່ລະບົບດ້ວຍ {{provider}}",
+      "recommended": "ແນະນຳ",
+      "waitTitle": "ກະລຸນາເຂົ້າສູ່ລະບົບໃຫ້ສຳເລັດໃນບຣາວເຊີ",
+      "waitText": "ໜ້າເຂົ້າສູ່ລະບົບຂອງ {{provider}} ໄດ້ເປີດຂຶ້ນໃນບຣາວເຊີແລ້ວ. ກະລຸນາເຂົ້າສູ່ລະບົບ ແລະ ອະນຸຍາດການເຂົ້າເຖິງອີເມວຢູ່ທີ່ນັ້ນ; ຈາກນັ້ນ Email Studio ຈະດຳເນີນການຕໍ່ຢູ່ບ່ອນນີ້.",
+      "unavailableTitle": "ບໍ່ສາມາດເຂົ້າສູ່ລະບົບດ້ວຍ {{provider}} ຢູ່ບ່ອນນີ້ໄດ້.",
+      "unavailableHelp": "ໃນແອັບເດັສທັອບ, ທ່ານສາມາດຕັ້ງຄ່າ Client ID ຂອງທ່ານເອງສຳລັບ {{provider}} ໄດ້ທີ່ <em>ເຄື່ອງມື › ການຕັ້ງຄ່າບັນຊີ › ຂັ້ນສູງ</em>. ວິທີສ້າງສາມາດເບິ່ງໄດ້ທີ່ <code>{{doc}}</code>. ທ່ານຍັງສາມາດສືບຕໍ່ໃຊ້ລະຫັດຜ່ານ (ແອັບ) ໄດ້ຄືເກົ່າ."
+    }
+  },
+  "errors": {
+    "code": {
+      "connection": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບເຊີເວີໄດ້. ກະລຸນາກວດເບິ່ງການເຊື່ອມຕໍ່ເຄືອຂ່າຍ ລວມທັງຊື່ເຊີເວີ ແລະ ພອດ.",
+      "authentication": "ການເຂົ້າສູ່ລະບົບຫຼົ້ມເຫຼວ. ກະລຸນາກວດເບິ່ງຊື່ຜູ້ໃຊ້ ແລະ ລະຫັດຜ່ານ (ເຄື່ອງມື › ການຕັ້ງຄ່າບັນຊີ).",
+      "certificate": "ໃບຢັ້ງຢືນຂອງເຊີເວີບໍ່ໜ້າເຊື່ອຖື ຫຼື ບໍ່ກົງກັບຊື່ເຊີເວີນີ້.",
+      "timeout": "ເຊີເວີບໍ່ຕອບສະໜອງພາຍໃນເວລາທີ່ກຳນົດ. ກະລຸນາລອງໃໝ່ອີກຄັ້ງໃນພາຍຫຼັງ.",
+      "notFound": "ອີເມວ ຫຼື ໂຟນເດີນີ້ບໍ່ມີຢູ່ໃນເຊີເວີແລ້ວ.",
+      "refused": "ເຊີເວີປະຕິເສດຄຳສັ່ງນີ້.",
+      "tooLarge": "ອີເມວມີຂະໜາດໃຫຍ່ເກີນໄປສຳລັບເຊີເວີ. ກະລຸນາຫຼຸດຂະໜາດ ຫຼື ລຶບໄຟລ໌ຄັດຕິດອອກ.",
+      "unavailable": "ຟັງຊັນນີ້ບໍ່ພ້ອມນຳໃຊ້ຢູ່ບ່ອນນີ້.",
+      "internal": "ເກີດຂໍ້ຜິດພາດບາງຢ່າງ."
+    },
+    "withDetail": "{{explanation}} ({{detail}})",
+    "withContext": "{{context}}: {{message}}",
+    "backendMissing": "ແອັບເດັສທັອບເວີຊັນນີ້ບໍ່ມີຟັງຊັນອີເມວ.",
+    "unexpectedBinary": "ລະບົບຫຼັງບ້ານ (Backend) ສົ່ງຜົນອອກມາເປັນຂໍ້ມູນຖານສອງ (Binary) ທີ່ບໍ່ຄາດຄິດ."
+  },
+  "dialog": {
+    "closeEsc": "ປິດ (Esc)"
+  },
+  "sendAsAttachment": {
+    "title": "ສົ່ງເປັນໄຟລ໌ຄັດຕິດ"
+  },
+  "ribbon": {
+    "tabs": {
+      "start": "ເລີ່ມຕົ້ນ",
+      "view": "ມຸມມອງ",
+      "tools": "ເຄື່ອງມື"
+    },
+    "groups": {
+      "new": "ສ້າງໃໝ່",
+      "respond": "ຕອບກັບ",
+      "delete": "ລຶບ",
+      "mark": "ຕິດປ້າຍ",
+      "organize": "ຈັດລະບຽບ",
+      "layout": "ໂຄງຮ່າງ",
+      "sort": "ຈັດຮຽງ",
+      "message": "ອີເມວ",
+      "accounts": "ບັນຊີ",
+      "folders": "ໂຟນເດີ"
+    },
+    "withShortcut": "{{action}} · {{shortcut}}",
+    "fetch": "ດຶງອີເມວ",
+    "fetchTitle": "ດຶງອີເມວ · {{key}} ຫຼື {{shortcut}}",
+    "readUnread": "ອ່ານແລ້ວ/ຍັງບໍ່ອ່ານ",
+    "readUnreadTitle": "ອ່ານແລ້ວ ຫຼື ຍັງບໍ່ອ່ານ · {{shortcut}}",
+    "star": "ຕິດດາວ",
+    "move": "ຍ້າຍ",
+    "moveTitle": "ຍ້າຍໄປໂຟນເດີ",
+    "folderPane": "ແຜງໂຟນເດີ",
+    "readingPane": "ແຜງອ່ານ",
+    "resetLayout": "ຕັ້ງຄ່າໂຄງຮ່າງຄືນໃໝ່",
+    "sortBy": "ຈັດຮຽງຕາມ",
+    "sort": {
+      "date": "ວັນທີ",
+      "sender": "ຜູ້ສົ່ງ",
+      "subject": "ຫົວຂໍ້",
+      "size": "ຂະໜາດ"
+    },
+    "ascending": "ແຕ່ໜ້ອຍຫາຫຼາຍ",
+    "descending": "ແຕ່ຫຼາຍຫາໜ້ອຍ",
+    "viewSource": "ເບິ່ງລະຫັດຕົ້ນສະບັບ",
+    "accountSettings": "ການຕັ້ງຄ່າບັນຊີ"
+  },
+  "studio": {
+    "errors": {
+      "loadAccounts": "ບໍ່ສາມາດໂຫຼດບັນຊີໄດ້",
+      "loadMessages": "ບໍ່ສາມາດໂຫຼດອີເມວໄດ້",
+      "openMessage": "ບໍ່ສາມາດເປີດອີເມວໄດ້",
+      "delete": "ບໍ່ສາມາດລຶບໄດ້",
+      "move": "ບໍ່ສາມາດຍ້າຍໄດ້",
+      "mark": "ບໍ່ສາມາດໝາຍໄດ້",
+      "forwardAttachments": "ບໍ່ສາມາດດຶງໄຟລ໌ຄັດຕິດທີ່ຈະສົ່ງຕໍ່ໄດ້",
+      "openFile": "ບໍ່ສາມາດເປີດ {{name}} ໄດ້",
+      "saveFile": "ບໍ່ສາມາດບັນທຶກ {{name}} ໄດ້",
+      "source": "ບໍ່ສາມາດດຶງລະຫັດຕົ້ນສະບັບໄດ້",
+      "updateFolder": "ບໍ່ສາມາດອັບເດດໂຟນເດີໄດ້",
+      "deleteFolder": "ບໍ່ສາມາດລຶບໂຟນເດີໄດ້"
+    },
+    "accountAdded": "ເພີ່ມບັນຊີ {{email}} ແລ້ວ.",
+    "addAccount": "ເພີ່ມບັນຊີ",
+    "deletePermanently": {
+      "title": "ລຶບຖາວອນ",
+      "text_other": "ອີເມວ {{count}} ສະບັບຈະຖືກລຶບຖາວອນ. ການດຳເນີນການນີ້ບໍ່ສາມາດຍົກເລີກຄືນໄດ້.",
+      "confirm": "ລຶບຖາວອນ"
+    },
+    "noArchiveFolder": "ບັນຊີນີ້ບໍ່ມີໂຟນເດີຄັງຈັດເກັບ. ກະລຸນາເລືອກອັນໃດອັນໜຶ່ງໃນ \"ເຄື່ອງມື › ການຕັ້ງຄ່າບັນຊີ › ໂຟນເດີ\".",
+    "fetched": "ດຶງອີເມວແລ້ວ.",
+    "deleteFolder": {
+      "title": "ລຶບໂຟນເດີ",
+      "text": "ໂຟນເດີ \"{{folder}}\" ແລະ ອີເມວທັງໝົດໃນນັ້ນຈະຖືກລຶບອອກຈາກເຊີເວີ."
+    },
+    "welcome": {
+      "title": "ຍັງບໍ່ມີບັນຊີອີເມວເທື່ອ",
+      "text": "ເພີ່ມບັນຊີຂອງທ່ານດ້ວຍທີ່ຢູ່ອີເມວ ແລະ ລະຫັດຜ່ານ. Email Studio ຈະຊອກຫາການຕັ້ງຄ່າທີ່ເໝາະສົມໃຫ້."
+    },
+    "folderPaneWidth": "ຄວາມກວ້າງຂອງແຜງໂຟນເດີ",
+    "messageListWidth": "ຄວາມກວ້າງຂອງລາຍການອີເມວ",
+    "messageList": "ລາຍການອີເມວ",
+    "search": {
+      "in": "ຄົ້ນຫາໃນ {{folder}}",
+      "label": "ຄົ້ນຫາອີເມວ ({{shortcut}})",
+      "clear": "ລຶ້າງການຄົ້ນຫາ"
+    },
+    "filter": {
+      "label": "ຕົວກັ່ນຕອງດ່ວນ",
+      "unread": "ຍັງບໍ່ອ່ານ",
+      "unreadTitle": "ສະເພາະທີ່ຍັງບໍ່ອ່ານ",
+      "starred": "ຕິດດາວແລ້ວ",
+      "starredTitle": "ສະເພາະທີ່ຕິດດາວ",
+      "attachment": "ໄຟລ໌ຄັດຕິດ",
+      "attachmentTitle": "ສະເພາະທີ່ມີໄຟລ໌ຄັດຕິດ",
+      "body": "ເນື້ອຫາ",
+      "bodyTitle": "ຄົ້ນຫາໃນເນື້ອຫາອີເມວນຳ (ຊ້າກວ່າ)"
+    },
+    "count": {
+      "filtered": "{{shown}} / {{total}}",
+      "filteredLoaded": "ໂຫຼດແລ້ວ {{shown}} ຈາກທັງໝົດ {{loaded}} ສະບັບ",
+      "messages_other": "{{count}} ສະບັບ",
+      "selected_other": "ເລືອກແລ້ວ {{count}} ສະບັບ"
+    },
+    "noResults": "ບໍ່ພົບເຫັນອີເມວ.",
+    "emptyFolder": "ໂຟນເດີນີ້ຫວ່າງເປົ່າ.",
+    "moveTo_other": "ຍ້າຍ {{count}} ສະບັບໄປຫາ",
+    "folderDialog": {
+      "newTitle": "ສ້າງໂຟນເດີໃໝ່",
+      "renameTitle": "ປ່ຽນຊື່ໂຟນເດີ",
+      "create": "ສ້າງ",
+      "rename": "ປ່ຽນຊື່",
+      "name": "ຊື່",
+      "inside": "ຢູ່ໃນ \"{{folder}}\""
+    },
+    "source": {
+      "title": "ລະຫັດຕົ້ນສະບັບຂອງອີເມວ",
+      "saveAs": "ບັນທຶກເປັນ {{extension}}"
+    }
+  },
+  "address": {
+    "invalid": "ທີ່ຢູ່ບໍ່ຖືກຕ້ອງ: {{address}}",
+    "remove": "ລຶບ {{address}} ອອກ"
+  },
+  "list": {
+    "label": "ອີເມວ",
+    "to": "ເຖິງ: {{address}}",
+    "noRecipient": "(ບໍ່ມີຜູ້ຮັບ)",
+    "replied": "ຕອບກັບແລ້ວ",
+    "hasAttachment": "ມີໄຟລ໌ຄັດຕິດ",
+    "noSubject": "(ບໍ່ມີຫົວຂໍ້)",
+    "star": "ຕິດດາວ",
+    "unstar": "ເອົາດາວອອກ",
+    "loadingMore": "ກຳລັງໂຫຼດອີເມວເພີ່ມເຕີມ…"
+  },
+  "folders": {
+    "label": "ໂຟນເດີ",
+    "loading": "ກຳລັງໂຫຼດໂຟນເດີ…",
+    "unread_other": "ຍັງບໍ່ອ່ານ {{count}} ສະບັບ",
+    "inbox": "ກ່ອງຈົດໝາຍເຂົ້າ"
+  },
+  "reader": {
+    "loadingMessage": "ກຳລັງໂຫຼດອີເມວ…",
+    "chooseMessage": "ເລືອກອີເມວເພື່ອອ່ານ.",
+    "label": "ອີເມວ: {{subject}}",
+    "reply": "ຕອບກັບ",
+    "replyTitle": "ຕອບກັບ · {{shortcut}}",
+    "replyAll": "ຕອບກັບທັງໝົດ",
+    "replyAllTitle": "ຕອບກັບທັງໝົດ · {{shortcut}}",
+    "forward": "ສົ່ງຕໍ່",
+    "forwardTitle": "ສົ່ງຕໍ່ · {{shortcut}}",
+    "archive": "ຈັດເກັບ",
+    "archiveTitle": "ຈັດເກັບ · {{shortcut}}",
+    "delete": "ລຶບ",
+    "deleteTitle": "ລຶບ · {{shortcut}}",
+    "starTitle": "ຕິດດາວ · {{shortcut}}",
+    "from": "ຈາກ",
+    "to": "ເຖິງ",
+    "none": "(ບໍ່ມີ)",
+    "cc": "ສຳເນົາເຖິງ (Cc)",
+    "replyTo": "ຕອບກັບຫາ",
+    "date": "ວັນທີ",
+    "external": {
+      "blocked_other": "ເພື່ອປົກປ້ອງຄວາມເປັນສ່ວນຕົວຂອງທ່ານ, ຮູບພາບທາງໄກ {{count}} ຮູບໄດ້ຖືກບລັອກໄວ້.",
+      "desktopHint": "ເມື່ອທ່ານອະນຸຍາດ, ແອັບຈະດຶງ ແລະ ສະແດງຮູບພາບເຫຼົ່ານີ້ ໂດຍບໍ່ໃຫ້ອີເມວເຊື່ອມຕໍ່ໄປຫາບ່ອນໃດເລີຍ.",
+      "demoHint": "(ໃນເວີຊັນທົດລອງ, ພວກມັນຊີ້ໄປຫາທີ່ຢູ່ທີ່ບໍ່ມີຢູ່ຈິງ.)",
+      "show": "ສະແດງເນື້ອຫາທາງໄກ",
+      "alwaysFrom": "ສະແດງເນື້ອຫາຈາກ {{sender}} ສະເໝີ",
+      "failed_other": "ບໍ່ສາມາດດຶງຮູບພາບທາງໄກ {{count}} ຮູບໄດ້."
+    },
+    "attachments": {
+      "label": "ໄຟລ໌ຄັດຕິດ",
+      "previewOrOpen": "ກົດຄັ້ງດຽວ: ເບິ່ງຕົວຢ່າງ · ກົດສອງຄັ້ງ: ເປີດໃນ {{module}}",
+      "preview": "ເບິ່ງຕົວຢ່າງ",
+      "openCopyTitle": "ເປີດເປັນສະບັບສຳເນົາທີ່ແກ້ໄຂໄດ້ໃນ {{module}}",
+      "openIn": "ເປີດໃນ {{module}}",
+      "saveTitle": "ບັນທຶກລົງໃນຄອມພິວເຕີເຄື່ອງນີ້"
+    },
+    "content": "ເນື້ອຫາອີເມວ",
+    "loadingContent": "ກຳລັງໂຫຼດເນື້ອຫາ…"
+  },
+  "compose": {
+    "errors": {
+      "saveDraft": "ບໍ່ສາມາດບັນທຶກຮ່າງອີເມວໄດ້",
+      "noRecipients": "ກະລຸນາເພີ່ມຜູ້ຮັບຢ່າງໜ້ອຍໜຶ່ງຄົນ.",
+      "send": "ບໍ່ສາມາດສົ່ງໄດ້",
+      "attachmentsLarge": "ໄຟລ໌ຄັດຕິດລວມກັນມີຂະໜາດ {{size}}; ຫຼາຍເຊີເວີຈະປະຕິເສດອີເມວທີ່ມີຂະໜາດເກີນ {{max}}.",
+      "linkNotAllowed": "ອະນຸຍາດສະເພາະລິ້ງ http(s), mailto ແລະ tel ເທົ່ານັ້ນ."
+    },
+    "noSubject": {
+      "title": "ບໍ່ມີຫົວຂໍ້",
+      "text": "ອີເມວນີ້ບໍ່ມີຫົວຂໍ້. ທ່ານຍັງຕ້ອງການສົ່ງຢູ່ບໍ່?",
+      "fillIn": "ປ້ອນຫົວຂໍ້",
+      "sendWithout": "ສົ່ງໂດຍບໍ່ມີຫົວຂໍ້"
+    },
+    "forgotAttachment": {
+      "title": "ລືມຕິດຄັດໄຟລ໌ບໍ່?",
+      "text": "ອີເມວຂອງທ່ານມີການກ່າວເຖິງ <strong>\"{{word}}\"</strong>, ແຕ່ຍັງບໍ່ທັນໄດ້ຕິດຄັດໄຟລ໌ເທື່ອ.",
+      "sendAnyway": "ສົ່ງຕໍ່ໄປ",
+      "keywords": "ໄຟລ໌ຄັດຕິດ|ຄັດຕິດ|ຕິດຄັດ|ທີ່ຕິດຄັດມາ|ເບິ່ງໄຟລ໌ຄັດຕິດ"
+    },
+    "addAttachment": "ເພີ່ມໄຟລ໌ຄັດຕິດ",
+    "attachment": "ຄັດຕິດ",
+    "removeAttachment": "ລຶບ {{name}} ອອກ",
+    "attachmentsSummary_other": "{{count}} ໄຟລ໌ · {{size}}",
+    "dropToAttach": "ລາກແລ້ວວາງລົງບ່ອນນີ້ເພື່ອຕິດຄັດໄຟລ໌",
+    "sent": "ສົ່ງອີເມວແລ້ວ.",
+    "sentWithSubject": "ສົ່ງອີເມວແລ້ວ: {{subject}}.",
+    "unsent": {
+      "title": "ອີເມວຍັງບໍ່ໄດ້ສົ່ງ",
+      "text": "ຕ້ອງການບັນທຶກອີເມວນີ້ໄວ້ເປັນຮ່າງບໍ່?",
+      "discard": "ຍົກເລີກ",
+      "saveDraft": "ບັນທຶກຮ່າງ"
+    },
+    "label": "ຂຽນອີເມວ: {{subject}}",
+    "newMessage": "ອີເມວໃໝ່",
+    "send": "ສົ່ງ",
+    "sending": "ກຳລັງສົ່ງ…",
+    "sendTitle": "ສົ່ງ · {{shortcut}}",
+    "draft": "ຮ່າງ",
+    "savingDraft": "ກຳລັງບັນທຶກ…",
+    "saveDraftTitle": "ບັນທຶກເປັນຮ່າງ · {{shortcut}}",
+    "dismissError": "ປິດການແຈ້ງເຕືອນ",
+    "from": "ຈາກ",
+    "to": "ເຖິງ",
+    "cc": "ສຳເນົາເຖິງ (Cc)",
+    "bcc": "ສຳເນົາລັບເຖິງ (Bcc)",
+    "subject": "ຫົວຂໍ້",
+    "body": "ເນື້ອຫາອີເມວ",
+    "format": {
+      "label": "ຮູບແບບ",
+      "withShortcut": "{{action}} · {{shortcut}}",
+      "bold": "ໂຕໜາ",
+      "italic": "ໂຕອຽງ",
+      "underline": "ຂີດກ້ອງ",
+      "bullets": "ຈຸດຫົວຂໍ້",
+      "numbering": "ລຳດັບເລກ",
+      "link": "ລິ້ງ",
+      "insertLink": "ແຊກລິ້ງ",
+      "clear": "ລຶ້າງຮູບແບບ",
+      "linkAddress": "ທີ່ຢູ່ລິ້ງ",
+      "insert": "ແຊກ"
+    }
+  },
+  "link": {
+    "browserFailed": "ບໍ່ສາມາດເປີດບຣາວເຊີໄດ້. ກະລຸນາສຳເນົາທີ່ຢູ່: {{url}}",
+    "phoneTitle": "ເບີໂທລະສັບ",
+    "openTitle": "ເປີດລິ້ງບໍ່?",
+    "copied": "ສຳເນົາທີ່ຢູ່ແລ້ວ.",
+    "copyFailed": "ການສຳເນົາຫຼົ້ມເຫຼວ; ກະລຸນາເລືອກທີ່ຢູ່ດ້ວຍຕົນເອງ.",
+    "copy": "ສຳເນົາທີ່ຢູ່",
+    "openInBrowser": "ເປີດໃນບຣາວເຊີ",
+    "phoneIntro": "ພົບເບີໂທລະສັບນີ້ໃນອີເມວ:",
+    "realTarget": "ລິ້ງນີ້ຊີ້ໄປຫາຕົວຈິງແມ່ນ:",
+    "misleading": "ຂໍ້ຄວາມໃນອີເມວສະແດງເປັນ <strong>{{shown}}</strong>, ແຕ່ລິ້ງຊີ້ໄປຫາ <strong>{{actual}}</strong>. ອັນນີ້ອາດເປັນການຫຼອກລວງ (Phishing).",
+    "unencrypted": "ໝາຍເຫດ: ລິ້ງນີ້ບໍ່ໄດ້ໃຊ້ການເຊື່ອມຕໍ່ທີ່ເຂົ້າລະຫັດ (http)."
+  },
+  "files": {
+    "saveUnsupported": "ແອັບເດັສທັອບເວີຊັນນີ້ຍັງບໍ່ສາມາດບັນທຶກ {{name}} ໄດ້. ກະລຸນາເປີດໄຟລ໌ຄັດຕິດໃນໂມດູນ ຫຼື ອັບເດດແອັບ.",
+    "saved": "ບັນທຶກແລ້ວ: {{path}}",
+    "saveCancelled": "ຍົກເລີກການບັນທຶກແລ້ວ.",
+    "downloadRequested": "ໄດ້ຮ້ອງຂໍການດາວໂຫຼດແລ້ວ. ກະລຸນາກວດເບິ່ງໄຟລ໌ໃນໂຟນເດີດາວໂຫຼດ."
+  },
+  "quote": {
+    "unknownSender": "(ບໍ່ຮູ້ຈັກ)",
+    "wroteOn": "{{sender}} ຂຽນເມື່ອ {{date}} ວ່າ:",
+    "wrote": "{{sender}} ຂຽນວ່າ:",
+    "forwarded": "ອີເມວທີ່ສົ່ງຕໍ່",
+    "subject": "ຫົວຂໍ້: {{value}}",
+    "date": "ວັນທີ: {{value}}",
+    "from": "ຈາກ: {{value}}",
+    "to": "ເຖິງ: {{value}}",
+    "cc": "ສຳເນົາເຖິງ: {{value}}"
+  },
+  "demo": {
+    "banner": "ໂໝດທົດລອງ — ບໍ່ສາມາດໃຊ້ອີເມວແທ້ໃນບຣາວເຊີໄດ້; ກະລຸນາໃຊ້ແອັບເດັສທັອບ.",
+    "accountName": "ກ່ອງອີເມວທົດລອງ",
+    "folders": {
+      "notifications": "ການແຈ້ງເຕືອນ",
+      "drafts": "ຮ່າງອີເມວ",
+      "sent": "ສົ່ງແລ້ວ",
+      "archive": "ຄັງຈັດເກັບ",
+      "junk": "ອີເມວຂີ້ເຫຍື້ອ",
+      "trash": "ກະຕ່າຂີ້ເຫຍື້ອ"
+    },
+    "welcome": {
+      "subject": "ຍິນດີຕ້ອນຮັບສູ່ OpenAEC Email Studio",
+      "heading": "ຍິນດີຕ້ອນຮັບ!",
+      "intro": "ນີ້ແມ່ນກ່ອງອີເມວທົດລອງ. ໃນບຣາວເຊີ, Email Studio ບໍ່ສາມາດຮັບ ຫຼື ສົ່ງອີເມວຕົວຈິງໄດ້; ກະລຸນາໃຊ້ແອັບເດັສທັອບ.",
+      "introHtml": "ນີ້ແມ່ນ<strong>ກ່ອງອີເມວທົດລອງ</strong>. ໃນບຣາວເຊີ, Email Studio ບໍ່ສາມາດຮັບ ຫຼື ສົ່ງອີເມວຕົວຈິງໄດ້; ກະລຸນາໃຊ້ແອັບເດັສທັອບ.",
+      "tryIt": "ທົດລອງໃຊ້ໄດ້ຕາມສະບາຍ: ຕອບກັບ, ຕິດດາວ (S), ຍ້າຍໄປຄັງຈັດເກັບ, ແລະ ເປີດໄຟລ໌ຄັດຕິດໃນໂປຣແກຣມເອກະສານ ຫຼື ຕາຕະລາງ.",
+      "tryItHtml": "ທົດລອງໃຊ້ໄດ້ຕາມສະບາຍ: ຕອບກັບ, ຕິດດາວ (<kbd>S</kbd>), ຍ້າຍໄປຄັງຈັດເກັບ, ແລະ ເປີດໄຟລ໌ຄັດຕິດໃນໂປຣແກຣມເອກະສານ ຫຼື ຕາຕະລາງ.",
+      "logoText": "ໂລໂກ້ OpenAEC ດ້ານລຸ່ມແມ່ນຮູບພາບທີ່ຝັງມາພ້ອມກັບໄຟລ໌ຄັດຕິດ (cid:).",
+      "logoAlt": "ໂລໂກ້ OpenAEC",
+      "logoHtml": "ໂລໂກ້ທາງຊ້າຍແມ່ນຮູບພາບທີ່ຝັງມາພ້ອມກັບໄຟລ໌ຄັດຕິດ."
+    },
+    "errors": {
+      "accountNotFound": "ບໍ່ມີບັນຊີນີ້.",
+      "messageNotFound": "ບໍ່ມີອີເມວນີ້.",
+      "folderExists": "ໂຟນເດີນີ້ມີຢູ່ແລ້ວ.",
+      "folderCannotRename": "ບໍ່ສາມາດປ່ຽນຊື່ໂຟນເດີນີ້ໄດ້.",
+      "specialFolderDelete": "ບໍ່ສາມາດລຶບໂຟນເດີພິເສດໄດ້.",
+      "attachmentNotFound": "ບໍ່ມີໄຟລ໌ຄັດຕິດນີ້.",
+      "targetFolderNotFound": "ບໍ່ພົບໂຟນເດີປາຍທາງ.",
+      "noRecipients": "ບໍ່ໄດ້ລະບຸຜູ້ຮັບ.",
+      "recipientRefused": "ທົດລອງ: ເຊີເວີປະຕິເສດຜູ້ຮັບ {{domain}}.",
+      "attachmentsTooLarge": "ທົດລອງ: ຈຳກັດຂະໜາດໄຟລ໌ຄັດຕິດໄວ້ທີ່ {{max}}."
+    },
+    "accountAdded": {
+      "subject": "ເພີ່ມບັນຊີຂອງທ່ານແລ້ວ (ທົດລອງ)",
+      "text": "ເພີ່ມບັນຊີ {{email}} ເຂົ້າໃນໂໝດທົດລອງແລ້ວ. {{notice}}"
+    },
+    "discovery": {
+      "knownProvider": "ຜູ້ໃຫ້ບໍລິການທີ່ຮູ້ຈັກ (ທົດລອງ).",
+      "mx": "ບັນທຶກ MX ຂອງ {{domain}} ຊີ້ໄປຫາ mail.protection.outlook.com (ທົດລອງ).",
+      "ownServer": "{{name}} (ເຊີເວີຂອງຕົນເອງ)",
+      "autoconfig": "ພົບເຫັນຢູ່ autoconfig.{{domain}} (ທົດລອງ).",
+      "srv": "_imaps._tcp ແລະ _submission._tcp (ທົດລອງ).",
+      "ispdb": "ມາຈາກຖານຂໍ້ມູນ Thunderbird (ທົດລອງ).",
+      "guessImapOk": "ຊື່ເຊີເວີທົ່ວໄປ; ການກວດສອບ IMAP ສຳເລັດ (ທົດລອງ).",
+      "guessAlternative": "ຊື່ເຊີເວີສຳຮອງ (ທົດລອງ)."
+    },
+    "test": {
+      "noServer": "ບໍ່ໄດ້ລະບຸເຊີເວີ {{protocol}}.",
+      "invalidPort": "ພອດບໍ່ຖືກຕ້ອງ.",
+      "unreachable": "ທົດລອງ: ບໍ່ສາມາດເຂົ້າເຖິງ {{host}} ໄດ້.",
+      "simulated": "ທົດລອງ: ຈຳລອງການເຊື່ອມຕໍ່ແລ້ວ.",
+      "simulatedUnencrypted": "ທົດລອງ: ຈຳລອງການເຊື່ອມຕໍ່ແລ້ວ (ບໍ່ໄດ້ເຂົ້າລະຫັດ!)."
+    },
+    "oauthDesktopOnly": "ສາມາດເຂົ້າສູ່ລະບົບດ້ວຍ Microsoft ຫຼື Google ໄດ້ສະເພາະໃນແອັບເດັສທັອບເທົ່ານັ້ນ."
+  },
+  "preview": {
+    "loading": "ກຳລັງໂຫຼດຕົວຢ່າງ…",
+    "dialog": {
+      "attachments": "ໄຟລ໌ຄັດຕິດ",
+      "previous": "ໄຟລ໌ຄັດຕິດກ່ອນໜ້າ",
+      "previousTitle": "ໄຟລ໌ຄັດຕິດກ່ອນໜ້າ (←)",
+      "next": "ໄຟລ໌ຄັດຕິດຕໍ່ໄປ",
+      "nextTitle": "ໄຟລ໌ຄັດຕິດຕໍ່ໄປ (→)",
+      "close": "ປິດການເບິ່ງຕົວຢ່າງ",
+      "closeTitle": "ປິດ (Esc)",
+      "fetching": "ກຳລັງດຶງໄຟລ໌ຄັດຕິດ…",
+      "fetchFailed": "ບໍ່ສາມາດດຶງໄຟລ໌ຄັດຕິດໄດ້: {{message}}"
+    },
+    "card": {
+      "fileName": "ຊື່ໄຟລ໌",
+      "size": "ຂະໜາດ",
+      "openExternal": "ເປີດດ້ວຍແອັບເລີ່ມຕົ້ນ",
+      "unknown": "ບໍ່ຮູ້ຈັກ",
+      "attention": "ແຈ້ງເຕືອນ",
+      "yes": "ແມ່ນ",
+      "no": "ບໍ່"
+    },
+    "detection": {
+      "kinds": {
+        "pdf": "ໄຟລ໌ PDF",
+        "dwg": "ແບບແຕ້ມ DWG",
+        "dxf": "ແບບແຕ້ມ DXF",
+        "ifc": "ໂມເດວ IFC",
+        "markdown": "Markdown",
+        "text": "ຂໍ້ຄວາມ",
+        "image": "ຮູບພາບ",
+        "office": "ເອກະສານ Office",
+        "unknown": "ໄຟລ໌ທີ່ບໍ່ຮູ້ຈັກ"
+      },
+      "contentDiffers": "ຊື່ລະບຸວ່າແມ່ນ {{kind}}, ແຕ່ເນື້ອໃນພາຍໃນບໍ່ແມ່ນ.",
+      "mismatch": "ໄຟລ໌ຄັດຕິດນີ້ມີຊື່ວ່າ \".{{extension}}\" ({{named}}), ແຕ່ເນື້ອໃນແມ່ນ {{actual}}.",
+      "mismatchSubtype": "ໄຟລ໌ຄັດຕິດນີ້ມີຊື່ວ່າ \".{{extension}}\" ({{named}}), ແຕ່ເນື້ອໃນແມ່ນ {{actual}} ({{subtype}}).",
+      "contentBinary": "ຊື່ລະບຸວ່າແມ່ນ {{kind}}, ແຕ່ເນື້ອໃນເປັນຂໍ້ມູນຖານສອງ (Binary).",
+      "notSvg": "ຊື່ລະບຸວ່າແມ່ນຮູບພາບ SVG, ແຕ່ເນື້ອໃນບໍ່ແມ່ນ SVG.",
+      "signatureMissing": "ຊື່ລະບຸວ່າແມ່ນ {{kind}}, ແຕ່ເນື້ອໃນຂາດລັກສະນະສະເພາະທີ່ກ່ຽວຂ້ອງ."
+    },
+    "image": {
+      "loadFailed": "ບໍ່ສາມາດໂຫຼດຮູບພາບໄດ້: {{message}}",
+      "subtitle": "ຮູບພາບ",
+      "cannotDisplay": "ບໍ່ສາມາດສະແດງຮູບພາບນີ້ຢູ່ບ່ອນນີ້ໄດ້ (ໄຟລ໌ເສຍຫາຍ ຫຼື ເປັນຮູບແບບທີ່ບໍ່ຮອງຮັບ).",
+      "tooLarge": "ຮູບພາບນີ້ໃຫຍ່ກວ່າ {{size}} MB, ຈະບໍ່ສະແດງຕົວຢ່າງ.",
+      "tooManyPixels": "ຮູບພາບນີ້ມີຂະໜາດ {{width}} × {{height}} ພິກເຊວ (ເກີນ {{megapixels}} ລ້ານພິກເຊວ), ຈະບໍ່ສະແດງຕົວຢ່າງ.",
+      "toolbar": "ຮູບພາບ",
+      "zoomOut": "ຫຍໍ້ເຂົ້າ",
+      "zoomOutTitle": "ຫຍໍ້ເຂົ້າ (−)",
+      "zoomIn": "ຂະຫຍາຍອອກ",
+      "zoomInTitle": "ຂະຫຍາຍອອກ (+)",
+      "fit": "ພໍດີກັບໜ້າຕ່າງ",
+      "fitTitle": "ພໍດີກັບໜ້າຕ່າງ (0)",
+      "actualSize": "ຂະໜາດຕົວຈິງ (100%)",
+      "actualSizeTitle": "ຂະໜາດຕົວຈິງ",
+      "rotate": "ໝູນຕາມເຂັມໂມງ",
+      "rotateTitle": "ໝູນຕາມເຂັມໂມງ (R)",
+      "area": "ພື້ນທີ່ສະແດງຮູບພາບ"
+    },
+    "text": {
+      "loadFailed": "ບໍ່ສາມາດໂຫຼດຂໍ້ຄວາມໄດ້: {{message}}",
+      "toolbar": "ຂໍ້ຄວາມ",
+      "encoding": "ການເຂົ້າລະຫັດຕົວອັກສອນ: {{encoding}}",
+      "utf8Bom": "UTF-8 (ມີ BOM)",
+      "formatJson": "ຈັດຮູບແບບ JSON",
+      "wrapLines": "ຕັດແຖວອັດຕະໂນມັດ",
+      "truncated": "ສະແດງ {{limit}} ຕົວທຳອິດຈາກທັງໝົດ {{size}}. ບັນທຶກໄຟລ໌ເພື່ອເບິ່ງເນື້ອຫາທັງໝົດ.",
+      "contentOf": "ເນື້ອຫາຂອງ {{name}}"
+    },
+    "markdown": {
+      "loadFailed": "ບໍ່ສາມາດໂຫຼດໄຟລ໌ໄດ້: {{message}}",
+      "linkNotOpened": "ລິ້ງບໍ່ໄດ້ເປີດ: {{url}}",
+      "imageFallback": "ຮູບພາບ",
+      "externalBlocked": "{{alt}} (ບລັອກຮູບພາບພາຍນອກແລ້ວ)",
+      "unavailable": "{{alt}} (ບໍ່ພ້ອມນຳໃຊ້)",
+      "view": "ມຸມມອງ",
+      "rendered": "ສະແດງຜົນ",
+      "source": "ລະຫັດຕົ້ນສະບັບ",
+      "showExternalImages": "ສະແດງຮູບພາບພາຍນອກ",
+      "truncated": "ສະແດງ {{limit}} ຕົວທຳອິດຈາກທັງໝົດ {{size}}.",
+      "confirmLabel": "ເປີດລິ້ງ",
+      "confirmQuestion": "ຕ້ອງການເປີດລິ້ງນີ້ນອກ Office Studio ບໍ່?"
+    },
+    "pdf": {
+      "loadFailed": "ບໍ່ສາມາດໂຫຼດ PDF ໄດ້: {{message}}",
+      "properties": "ຄຸນສົມບັດ",
+      "frameTitle": "PDF: {{name}}",
+      "linuxUnsupported": "WebView ເທິງ Linux ບໍ່ສາມາດສະແດງ PDF ໄດ້ຢ່າງໝັ້ນຄົງ. ການສະແດງຕົວຢ່າງເຕັມຮູບແບບຈະມີໃນເວີຊັນຕໍ່ໄປ (Rust viewer).",
+      "cannotPreview": "ບໍ່ສາມາດສະແດງຕົວຢ່າງ PDF ນີ້ຢູ່ບ່ອນນີ້ໄດ້. ການສະແດງຕົວຢ່າງເຕັມຮູບແບບຈະມີໃນເວີຊັນຕໍ່ໄປ (Rust viewer).",
+      "subtitle": "ເອກະສານ PDF",
+      "subtitleVersion": "PDF {{version}}",
+      "pages": "ຈຳນວນໜ້າ",
+      "author": "ຜູ້ຂຽນ",
+      "subject": "ຫົວຂໍ້",
+      "createdWith": "ສ້າງດ້ວຍ",
+      "created": "ສ້າງເມື່ອ",
+      "modified": "ແກ້ໄຂເມື່ອ",
+      "encrypted": "ເຂົ້າລະຫັດແລ້ວ",
+      "incomplete": "ໄຟລ໌ຄືຊິບໍ່ຄົບຖ້ວນ ຫຼື ເສຍຫາຍ",
+      "showPreview": "ສະແດງຕົວຢ່າງ"
+    },
+    "cad": {
+      "loadFailed": "ບໍ່ສາມາດໂຫຼດແບບແຕ້ມໄດ້: {{message}}",
+      "previewLater": "ການສະແດງຕົວຢ່າງຈະມີໃນເວີຊັນຕໍ່ໄປ (Rust viewer).",
+      "tooLargeToParse": "ໄຟລ໌ນີ້ໃຫຍ່ເກີນໄປ, ບໍ່ສາມາດວິເຄາະຢູ່ບ່ອນນີ້ໄດ້. ການສະແດງຕົວຢ່າງຈະມີໃນເວີຊັນຕໍ່ໄປ (Rust viewer).",
+      "dwgSubtitle": "ແບບແຕ້ມ AutoCAD (DWG)",
+      "dxfSubtitle": "ແບບແຕ້ມ DXF",
+      "dxfBinarySubtitle": "ແບບແຕ້ມ DXF ແບບຖານສອງ (Binary)",
+      "format": "ຮູບແບບ",
+      "savedAs": "ບັນທຶກເປັນຮູບແບບ",
+      "unknownAutocadVersion": "ເວີຊັນ AutoCAD ທີ່ບໍ່ຮູ້ຈັກ",
+      "units": "ຫົວໜ່ວຍ",
+      "entities": "Entity",
+      "blocks": "ບລັອກ (Block)",
+      "layers": "ເລເຢີ (Layer)",
+      "thumbnailAlt": "ຮູບຫຍໍ້ທີ່ຝັງຢູ່ໃນແບບແຕ້ມ",
+      "thumbnailCaption": "ຮູບຫຍໍ້ຈາກໄຟລ໌",
+      "entitiesByType": "Entity ແບ່ງຕາມປະເພດ",
+      "layersCount": "ເລເຢີ ({{n}})",
+      "andMore": "… ແລະ ອີກ {{n}} ລາຍການ",
+      "versionRange": "AutoCAD {{from}} ຫາ {{to}}",
+      "versionAndLater": "AutoCAD {{version}} ຂຶ້ນໄປ",
+      "unitCode": "ລະຫັດ {{code}}",
+      "unitNames": {
+        "unitless": "ບໍ່ມີຫົວໜ່ວຍ",
+        "inch": "ນິ້ວ",
+        "foot": "ຟຸດ",
+        "mile": "ໄມລ໌",
+        "millimeter": "ມິນລິແມັດ",
+        "centimeter": "ຊັງຕີແມັດ",
+        "meter": "ແມັດ",
+        "kilometer": "ກິໂລແມັດ",
+        "microinch": "ໄມໂຄຣນິ້ວ",
+        "mil": "ມິນ (Mil)",
+        "yard": "ຫລາ",
+        "angstrom": "ອັງສະຕຣອມ",
+        "nanometer": "ນາໂນແມັດ",
+        "micron": "ໄມຄຣອນ",
+        "decimeter": "ເດຊີແມັດ",
+        "decameter": "ເດກາແມັດ",
+        "hectometer": "ເຮັກໂຕແມັດ",
+        "gigameter": "ກິກາແມັດ",
+        "astronomicalUnit": "ຫົວໜ່ວຍດາຣາສາດ",
+        "lightYear": "ປີແສງ",
+        "parsec": "ພາເຊັກ",
+        "usSurveyFoot": "ຟຸດສຳຫຼວດສະຫະລັດ",
+        "usSurveyInch": "ນິ້ວສຳຫຼວດສະຫະລັດ",
+        "usSurveyYard": "ຫລາສຳຫຼວດສະຫະລັດ",
+        "usSurveyMile": "ໄມລ໌ສຳຫຼວດສະຫະລັດ"
+      }
+    },
+    "ifc": {
+      "loadFailed": "ບໍ່ສາມາດໂຫຼດໂມເດວໄດ້: {{message}}",
+      "previewLater": "ການສະແດງຕົວຢ່າງ 3D ຈະມີໃນເວີຊັນຕໍ່ໄປ (Rust viewer).",
+      "tooLarge": "ໂມເດວນີ້ໃຫຍ່ກວ່າ {{size}} MB, ຈະບໍ່ວິເຄາະຢູ່ບ່ອນນີ້.",
+      "analysing": "ກຳລັງວິເຄາະໂມເດວ… {{percent}}",
+      "cancelled": "ຍົກເລີກການວິເຄາະແລ້ວ.",
+      "retry": "ວິເຄາະຄືນໃໝ່",
+      "failed": "ການວິເຄາະຫຼົ້ມເຫຼວ: {{message}}",
+      "subtitle": "ໂມເດວ IFC",
+      "subtitleWithSchema": "ໂມເດວ IFC · {{schemas}}",
+      "nameInFile": "ຊື່ໃນໄຟລ໌",
+      "timestamp": "ເວລາບັນທຶກ (Timestamp)",
+      "author": "ຜູ້ສ້າງ",
+      "organization": "ອົງກອນ",
+      "application": "ແອັບພລິເຄຊັນ",
+      "description": "ລາຍລະອຽດ",
+      "sites": "ສະຖານທີ່ (Site)",
+      "buildings": "ອາຄານ",
+      "entities": "Entity",
+      "incomplete": "ໄຟລ໌ຄືຊິບໍ່ຄົບຖ້ວນ (ຂາດ END-ISO-10303-21)",
+      "storeys": "ຊັ້ນອາຄານ ({{n}})",
+      "elementsHeading": "ອົງປະກອບອາຄານ",
+      "allEntityTypes": "ປະເພດ Entity ທັງໝົດ ({{n}})",
+      "elements": {
+        "wall": "ຝາ",
+        "wallStandardCase": "ຝາ (ມາດຕະຖານ)",
+        "curtainWall": "ຝາກະຈົກ",
+        "slab": "ພື້ນ",
+        "roof": "ຫຼັງຄາ",
+        "column": "ເສົາ",
+        "beam": "ຂາງ",
+        "member": "ຊິ້ນສ່ວນໂຄງສ້າງ",
+        "plate": "ແຜ່ນໂຄງສ້າງ",
+        "door": "ປະຕູ",
+        "window": "ປ່ອງຢ້ຽມ",
+        "stair": "ຂັ້ນໄດ",
+        "ramp": "ທາງຄ້ອຍ",
+        "railing": "ຮາວ",
+        "covering": "ວັດສະດຸຫຸ້ມຜິວ",
+        "footing": "ຖານຮາກ",
+        "pile": "ເສົາເຂັມ",
+        "space": "ພື້ນທີ່ວ່າງ (Space)",
+        "opening": "ຊ່ອງເປີດ",
+        "furnishing": "ເຟີນີເຈີ",
+        "flowSegment": "ທໍ່ລົມ ແລະ ທໍ່ນ້ຳ",
+        "flowTerminal": "ອຸປະກອນປາຍທາງລະບົບ",
+        "proxy": "ອົງປະກອບອາຄານອື່ນໆ",
+        "storey": "ຊັ້ນ"
+      }
+    },
+    "office": {
+      "kinds": {
+        "document": "ເອກະສານຂໍ້ຄວາມ",
+        "spreadsheet": "ຕາຕະລາງຄຳນວນ",
+        "presentation": "ບົດນຳສະເໜີ",
+        "database": "ຖານຂໍ້ມູນ"
+      },
+      "genericDocument": "ເອກະສານ Office",
+      "type": "ປະເພດ",
+      "openFailed": "ເປີດບໍ່ສຳເລັດ: {{message}}",
+      "openCopyHint": "ເປີດສະບັບສຳເນົາທີ່ແກ້ໄຂໄດ້ໃນ {{module}}. ໄຟລ໌ຕົ້ນສະບັບໃນອີເມວຈະບໍ່ມີການປ່ຽນແປງ.",
+      "cannotOpen": "ບໍ່ສາມາດເປີດຮູບແບບ Office ນີ້ຢູ່ບ່ອນນີ້ໄດ້.",
+      "opening": "ກຳລັງເປີດ…",
+      "openIn": "ເປີດໃນ {{module}}"
+    },
+    "unknown": {
+      "subtitle": "ບໍ່ມີຕົວຢ່າງໃຫ້ເບິ່ງ",
+      "declaredType": "ປະເພດທີ່ລະບຸ",
+      "extension": "ນາມສະກຸນໄຟລ໌",
+      "none": "ບໍ່ມີ",
+      "message": "ບໍ່ສາມາດສະແດງຕົວຢ່າງສຳລັບໄຟລ໌ປະເພດນີ້ໄດ້. ກະລຸນາບັນທຶກໄຟລ໌, ແລະ ເປີດສະເພາະເມື່ອທ່ານເຊື່ອຖືຜູ້ສົ່ງເທົ່ານັ້ນ."
+    }
+  },
+  "backend": {
+    "accounts": {
+      "fileCorrupt": "ໄຟລ໌ບັນຊີ {{path}} ເສຍຫາຍ.",
+      "fileUnreadable": "ບໍ່ສາມາດອ່ານໄຟລ໌ບັນຊີໄດ້.",
+      "fileWriteFailed": "ບໍ່ສາມາດຂຽນໄຟລ໌ບັນຊີໄດ້.",
+      "invalidEmail": "ກະລຸນາປ້ອນທີ່ຢູ່ອີເມວທີ່ຖືກຕ້ອງ.",
+      "invalidReplyTo": "ທີ່ຢູ່ຕອບກັບບໍ່ແມ່ນທີ່ຢູ່ອີເມວທີ່ຖືກຕ້ອງ.",
+      "lineBreakInName": "ຊື່ບໍ່ສາມາດມີການຂຶ້ນແຖວໃໝ່ໄດ້.",
+      "notFound": "ບໍ່ມີບັນຊີນີ້ແລ້ວ.",
+      "saveFailed": "ບໍ່ສາມາດບັນທຶກບັນຊີໄດ້.",
+      "usernameMissing": "ກະລຸນາປ້ອນຊື່ຜູ້ໃຊ້ສຳລັບ IMAP ແລະ SMTP."
+    },
+    "attachments": {
+      "blockedDatabase": "ດ້ວຍເຫດຜົນດ້ານຄວາມປອດໄພ, \"{{name}}\" ຈະບໍ່ເປີດໂດຍອັດຕະໂນມັດ. ກະລຸນາເປີດຖານຂໍ້ມູນ Access ໃນ Database Studio. ຫາກຍັງຕ້ອງການເບິ່ງ, ກະລຸນາບັນທຶກໄຟລ໌ຄັດຕິດໄວ້.",
+      "blockedExecutable": "ດ້ວຍເຫດຜົນດ້ານຄວາມປອດໄພ, \"{{name}}\" ຈະບໍ່ເປີດໂດຍອັດຕະໂນມັດ. ໄຟລ໌ປະເພດນີ້ສາມາດຮັນໂປຣແກຣມໄດ້. ຫາກຍັງຕ້ອງການເບິ່ງ, ກະລຸນາບັນທຶກໄຟລ໌ຄັດຕິດໄວ້.",
+      "blockedMacros": "ດ້ວຍເຫດຜົນດ້ານຄວາມປອດໄພ, \"{{name}}\" ຈະບໍ່ເປີດໂດຍອັດຕະໂນມັດ. ເອກະສານນີ້ມີມາໂຄຣ (Macro). ຫາກຍັງຕ້ອງການເບິ່ງ, ກະລຸນາບັນທຶກໄຟລ໌ຄັດຕິດໄວ້.",
+      "blockedScripts": "ດ້ວຍເຫດຜົນດ້ານຄວາມປອດໄພ, \"{{name}}\" ຈະບໍ່ເປີດໂດຍອັດຕະໂນມັດ. ໄຟລ໌ປະເພດນີ້ອາດມີສະຄຣິບ (Script). ຫາກຍັງຕ້ອງການເບິ່ງ, ກະລຸນາບັນທຶກໄຟລ໌ຄັດຕິດໄວ້.",
+      "emptyOrTooLarge": "ໄຟລ໌ຄັດຕິດຫວ່າງເປົ່າ ຫຼື ໃຫຍ່ກວ່າ 100 MB.",
+      "executableContent": "\"{{name}}\" ແມ່ນ {{kind}}, ຈະບໍ່ຖືກເປີດດ້ວຍເຫດຜົນດ້ານຄວາມປອດໄພ.",
+      "invalidName": "ຊື່ໄຟລ໌ບໍ່ຖືກຕ້ອງ.",
+      "kind": {
+        "linuxProgram": "ໂປຣແກຣມ Linux (ELF)",
+        "macProgram": "ໂປຣແກຣມ macOS (Mach-O) ຫຼື Java class",
+        "script": "ສະຄຣິບ (Script)",
+        "windowsProgram": "ໂປຣແກຣມ Windows (PE)",
+        "windowsShortcut": "ທາງລັດ Windows"
+      },
+      "nameMissing": "ບໍ່ມີຊື່ໄຟລ໌.",
+      "noProgram": "ບໍ່ພົບໂປຣແກຣມທີ່ສາມາດເປີດໄຟລ໌ຄັດຕິດນີ້ໄດ້.",
+      "notFound": "ບໍ່ມີໄຟລ໌ຄັດຕິດ {{index}} ໃນອີເມວນີ້.",
+      "openFailed": "ເປີດບໍ່ສຳເລັດ.",
+      "sendAsBinary": "ກະລຸນາສົ່ງໄຟລ໌ຄັດຕິດເປັນຂໍ້ມູນຖານສອງ (Binary) ທີ່ບໍ່ເກີນ 100 MB.",
+      "tempDirFailed": "ບໍ່ສາມາດສ້າງໂຟນເດີຊົ່ວຄາວໄດ້.",
+      "tempSaveFailed": "ບໍ່ສາມາດບັນທຶກໄຟລ໌ຄັດຕິດໄວ້ຊົ່ວຄາວໄດ້."
+    },
+    "auth": {
+      "failed": "ການເຂົ້າສູ່ລະບົບ {{host}} ຫຼົ້ມເຫຼວ: ຊື່ຜູ້ໃຊ້ ຫຼື ລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ ({{detail}}). Gmail, Outlook, iCloud ແລະ Yahoo ຈຳເປັນຕ້ອງໃຊ້ລະຫັດຜ່ານສະເພາະແອັບ.",
+      "noPassword": "ບັນຊີນີ້ຍັງບໍ່ໄດ້ປ້ອນ ຫຼື ບັນທຶກລະຫັດຜ່ານໄວ້.",
+      "noStoredPassword": "ບັນຊີນີ້ຍັງບໍ່ໄດ້ບັນທຶກລະຫັດຜ່ານ. ກະລຸນາປ້ອນລະຫັດຜ່ານໃນການຕັ້ງຄ່າບັນຊີ."
+    },
+    "autoconfig": {
+      "httpsRedirectOnly": "ຕິດຕາມການປ່ຽນເສັ້ນທາງທີ່ຊີ້ໄປຫາ HTTPS ເທົ່ານັ້ນ.",
+      "invalidEncoding": "ການເຂົ້າລະຫັດຕົວອັກສອນໃນໄຟລ໌ກຳນົດຄ່າບໍ່ຖືກຕ້ອງ.",
+      "notFound": "ບໍ່ພົບການກຳນົດຄ່າ (HTTP {{status}}).",
+      "tooManyRedirects": "ມີການປ່ຽນເສັ້ນທາງຫຼາຍເກີນໄປ."
+    },
+    "common": {
+      "saveFailed": "ການບັນທຶກຫຼົ້ມເຫຼວ."
+    },
+    "compose": {
+      "attachmentCorrupt": "ໄຟລ໌ຄັດຕິດ \"{{name}}\" ເສຍຫາຍ.",
+      "attachmentsTooLarge": "ຂະໜາດລວມຂອງໄຟລ໌ຄັດຕິດເກີນ {{max}} MB. ກະລຸນາສົ່ງໄຟລ໌ຂະໜາດໃຫຍ່ຜ່ານລິ້ງແບ່ງປັນ.",
+      "buildFailed": "ບໍ່ສາມາດສ້າງອີເມວໄດ້ ({{detail}}).",
+      "field": {
+        "bcc": "ສຳເນົາລັບເຖິງ (Bcc)",
+        "cc": "ສຳເນົາເຖິງ (Cc)",
+        "from": "ຈາກ",
+        "inReplyTo": "In-Reply-To",
+        "references": "References",
+        "replyTo": "Reply-To",
+        "subject": "ຫົວຂໍ້",
+        "to": "ເຖິງ"
+      },
+      "invalidAddress": "\"{{address}}\" ໃນ {{field}} ບໍ່ແມ່ນທີ່ຢູ່ອີເມວທີ່ຖືກຕ້ອງ.",
+      "invalidCharacters": "{{field}} ມີຕົວອັກສອນທີ່ບໍ່ຖືກຕ້ອງ.",
+      "invalidEnvelope": "ຊອງຈົດໝາຍ (Envelope) ບໍ່ຖືກຕ້ອງ.",
+      "noRecipients": "ກະລຸນາປ້ອນຜູ້ຮັບຢ່າງໜ້ອຍໜຶ່ງຄົນ."
+    },
+    "connection": {
+      "failed": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ {{host}} ໄດ້: {{detail}}",
+      "hostNotFound": "ບໍ່ພົບຊື່ເຊີເວີ {{host}}.",
+      "refused": "ເຊີເວີ {{host}} ປະຕິເສດການເຊື່ອມຕໍ່. ກະລຸນາກວດເບິ່ງພອດ ແລະ ການຕັ້ງຄ່າຄວາມປອດໄພ.",
+      "reset": "ການເຊື່ອມຕໍ່ກັບ {{host}} ຖືກຕັດການເຊື່ອມຕໍ່ຢ່າງກະທັນຫັນ. ການຕັ້ງຄ່າຄວາມປອດໄພ (SSL/TLS ຫຼື STARTTLS) ກົງກັບພອດບໍ່?",
+      "timeout": "ເຊີເວີ {{host}} ບໍ່ຕອບສະໜອງພາຍໃນເວລາທີ່ກຳນົດ. ກະລຸນາກວດເບິ່ງຊື່ເຊີເວີ, ພອດ ແລະ ໄຟວໍ (Firewall)."
+    },
+    "files": {
+      "saveFailed": "ບໍ່ສາມາດບັນທຶກໄຟລ໌ໄດ້."
+    },
+    "http": {
+      "invalidHttpResponse": "ການຕອບສະໜອງ HTTP ບໍ່ຖືກຕ້ອງ.",
+      "invalidResponse": "ການຕອບສະໜອງບໍ່ຖືກຕ້ອງ.",
+      "invalidServerName": "ຊື່ເຊີເວີ {{host}} ບໍ່ຖືກຕ້ອງ.",
+      "invalidUrl": "ທີ່ຢູ່ URL ບໍ່ຖືກຕ້ອງ.",
+      "plainOnlyLocal": "ອະນຸຍາດໃຫ້ນຳໃຊ້ HTTP ແບບບໍ່ເຂົ້າລະຫັດສະເພາະກັບຄອມພິວເຕີເຄື່ອງນີ້ເທົ່ານັ້ນ.",
+      "redirectWithoutLocation": "ການປ່ຽນເສັ້ນທາງຂາດທີ່ຢູ່ປາຍທາງ.",
+      "responseTooLarge": "ການຕອບສະໜອງຈາກເຊີເວີມີຂະໜາດໃຫຍ່ເກີນໄປ."
+    },
+    "images": {
+      "credentialsInUrl": "ບໍ່ດຶງຂໍ້ມູນຈາກທີ່ຢູ່ທີ່ມີຂໍ້ມູນປະຈຳຕົວໃນການເຂົ້າສູ່ລະບົບ.",
+      "hostNotFound": "ບໍ່ພົບ {{host}}.",
+      "httpOnly": "ອະນຸຍາດສະເພາະທີ່ຢູ່ http ແລະ https ເທົ່ານັ້ນ.",
+      "invalidServerName": "ຊື່ເຊີເວີບໍ່ຖືກຕ້ອງ.",
+      "notAnImage": "ທີ່ຢູ່ນີ້ບໍ່ໄດ້ສົ່ງຮູບພາບກັບຄືນມາ.",
+      "privateAddress": "ບໍ່ດຶງເນື້ອຫາພາຍນອກຈາກທີ່ຢູ່ພາຍໃນ ຫຼື ທີ່ຢູ່ໃນເຄື່ອງ.",
+      "timeout": "ຮູບພາບໂຫຼດບໍ່ສຳເລັດພາຍໃນ 10 ວິນາທີ.",
+      "tooLarge": "ຮູບພາບໃຫຍ່ກວ່າ 10 MB.",
+      "tooManyRedirects": "ມີການປ່ຽນເສັ້ນທາງຫຼາຍເກີນໄປ (ສູງສຸດ 3 ຄັ້ງ).",
+      "unavailable": "ຮູບພາບບໍ່ພ້ອມນຳໃຊ້ (HTTP {{status}}).",
+      "unknownRedirect": "ການປ່ຽນເສັ້ນທາງທີ່ບໍ່ຮູ້ຈັກ.",
+      "unsupportedImage": "ເນື້ອຫາບໍ່ແມ່ນຮູບພາບທີ່ຮອງຮັບ."
+    },
+    "imap": {
+      "action": {
+        "copy": "ສຳເນົາ",
+        "countFolders": "ນັບຈຳນວນໂຟນເດີ",
+        "createFolder": "ສ້າງໂຟນເດີ",
+        "delete": "ລຶບ",
+        "deleteFolder": "ລຶບໂຟນເດີ",
+        "expunge": "ລຶ້າງຂໍ້ມູນເກົ່າ",
+        "fetchMessage": "ດຶງອີເມວ",
+        "fetchMessages": "ດຶງອີເມວ",
+        "flag": "ໝາຍທຸງ",
+        "listFolders": "ດຶງລາຍການໂຟນເດີ",
+        "move": "ຍ້າຍ",
+        "openFolder": "ເປີດໂຟນເດີ",
+        "openNamedFolder": "ເປີດໂຟນເດີ \"{{folder}}\"",
+        "renameFolder": "ປ່ຽນຊື່ໂຟນເດີ",
+        "saveToDrafts": "ບັນທຶກລົງຮ່າງອີເມວ",
+        "saveToFolder": "ບັນທຶກລົງໂຟນເດີ",
+        "saveToSent": "ບັນທຶກລົງອີເມວທີ່ສົ່ງແລ້ວ",
+        "search": "ຄົ້ນຫາ",
+        "signIn": "ເຂົ້າສູ່ລະບົບ",
+        "startTls": "STARTTLS"
+      },
+      "alreadyInTrash": "ອີເມວເຫຼົ່ານີ້ຢູ່ໃນກະຕ່າຂີ້ເຫຍື້ອແລ້ວ; ກະລຸນາລຶບພວກມັນຖາວອນ.",
+      "appendRejected": "{{action}}: ເຊີເວີປະຕິເສດອີເມວ.",
+      "badCommand": "{{action}}: ເຊີເວີບໍ່ເຂົ້າໃຈຄຳສັ່ງນີ້ ({{detail}}).",
+      "cannotDeleteInbox": "ບໍ່ສາມາດລຶບກ່ອງຈົດໝາຍເຂົ້າໄດ້.",
+      "cannotRenameInbox": "ບໍ່ສາມາດປ່ຽນຊື່ກ່ອງຈົດໝາຍເຂົ້າໄດ້.",
+      "closedImmediately": "{{host}} ຕັດການເຊື່ອມຕໍ່ທັນທີ. ການຕັ້ງຄ່າຄວາມປອດໄພ (SSL/TLS ຫຼື STARTTLS) ກົງກັບພອດບໍ່?",
+      "commandTimeout": "{{host}} ບໍ່ຕອບສະໜອງພາຍໃນ {{seconds}} ວິນາທີ.",
+      "connectTimeout": "{{host}}:{{port}} ບໍ່ມີການຕອບສະໜອງພາຍໃນ {{seconds}} ວິນາທີ. ກະລຸນາກວດເບິ່ງຊື່ເຊີເວີ, ພອດ ແລະ ໄຟວໍ.",
+      "connectionLost": "ການເຊື່ອມຕໍ່ກັບ {{host}} ຖືກຕັດ.",
+      "draftsFolderMissing": "ບໍ່ພົບໂຟນເດີຮ່າງອີເມວໃນເຊີເວີ. ກະລຸນາເລືອກໂຟນເດີດັ່ງກ່າວໃນການຕັ້ງຄ່າບັນຊີ.",
+      "greetingRefused": "{{host}} ປະຕິເສດການເຊື່ອມຕໍ່: {{detail}}",
+      "invalidFolderName": "ຊື່ໂຟນເດີບໍ່ຖືກຕ້ອງ.",
+      "invalidMessage": "ອີເມວບໍ່ຖືກຕ້ອງ.",
+      "invalidName": "{{action}}: ຊື່ມີຕົວອັກສອນທີ່ບໍ່ຖືກຕ້ອງ.",
+      "invalidSearchCharacters": "ຂໍ້ຄວາມຄົ້ນຫາມີຕົວອັກສອນທີ່ບໍ່ຖືກຕ້ອງ.",
+      "messageGone": "ອີເມວນີ້ບໍ່ມີແລ້ວ (ອາດຖືກຍ້າຍ ຫຼື ລຶບໄປແລ້ວ).",
+      "messageTooLarge": "ອີເມວມີຂະໜາດ {{size}} MB; Email Studio ສາມາດເປີດອີເມວໄດ້ສູງສຸດ {{max}} MB.",
+      "noStarttls": "{{host}} ບໍ່ຮອງຮັບ STARTTLS ໃນພອດ {{port}}. ກະລຸນາເລືອກ SSL/TLS (ປົກກະຕິແມ່ນພອດ 993).",
+      "noTrash": "ບໍ່ພົບໂຟນເດີກະຕ່າຂີ້ເຫຍື້ອໃນເຊີເວີ. ກະລຸນາເລືອກໂຟນເດີກະຕ່າຂີ້ເຫຍື້ອໃນການຕັ້ງຄ່າບັນຊີ ຫຼື ລຶບຖາວອນ.",
+      "noValidMessages": "ບໍ່ໄດ້ລະບຸອີເມວທີ່ຖືກຕ້ອງ.",
+      "notFound": "{{action}}: {{detail}}",
+      "quotaExceeded": "{{action}}: ພື້ນທີ່ກ່ອງອີເມວເຕັມແລ້ວ ({{detail}}).",
+      "refused": "{{action}}: ເຊີເວີປະຕິເສດ ({{detail}}).",
+      "retryLater": "{{message}} (ເພື່ອຫຼີກລ່ຽງການຖືກເຊີເວີບລັອກ, Email Studio ຈະລອງໃໝ່ອີກຄັ້ງໃນອີກ {{retrySeconds}} ວິນາທີ.)",
+      "searchTooLong": "ຂໍ້ຄວາມຄົ້ນຫາຍາວເກີນໄປ.",
+      "sentFolderMissing": "ບໍ່ພົບໂຟນເດີອີເມວທີ່ສົ່ງແລ້ວໃນເຊີເວີ. ກະລຸນາເລືອກໂຟນເດີດັ່ງກ່າວໃນການຕັ້ງຄ່າບັນຊີ.",
+      "signInTimeout": "ການເຂົ້າສູ່ລະບົບ {{host}} ໃຊ້ເວລາດົນເກີນໄປ.",
+      "specialFolderMissing": "ບໍ່ພົບໂຟນເດີນີ້ໃນເຊີເວີ. ກະລຸນາເລືອກໂຟນເດີດັ່ງກ່າວໃນການຕັ້ງຄ່າບັນຊີ.",
+      "unexpectedError": "{{action}}: ເກີດຂໍ້ຜິດພາດທີ່ບໍ່ຄາດຄິດ.",
+      "unexpectedResponse": "{{action}}: ເຊີເວີສົ່ງການຕອບສະໜອງທີ່ບໍ່ຄາດຄິດ.",
+      "unexpectedState": "ສະຖານະການເຊື່ອມຕໍ່ບໍ່ຄາດຄິດ."
+    },
+    "keychain": {
+      "notResponding": "ພວງກະແຈ (Keychain) ບໍ່ຕອບສະໜອງ.",
+      "unavailable": "ພວງກະແຈຂອງລະບົບປະຕິບັດການບໍ່ພ້ອມນຳໃຊ້. Email Studio ຈະບໍ່ບັນທຶກລະຫັດຜ່ານເປັນຂໍ້ຄວາມທຳມະດາຢ່າງເດັດຂາດ; ເທິງ Linux ຈຳເປັນຕ້ອງມີ Secret Service (ເຊັ່ນ: GNOME Keyring ຫຼື KWallet).",
+      "unexpected": "ພວງກະແຈສົ່ງຂໍ້ຜິດພາດທີ່ບໍ່ຄາດຄິດອອກມາ."
+    },
+    "links": {
+      "openFailed": "ບໍ່ສາມາດເປີດລິ້ງໄດ້.",
+      "unsupportedScheme": "ສາມາດເປີດໄດ້ສະເພາະລິ້ງ http, https ແລະ mailto ເທົ່ານັ້ນ."
+    },
+    "messages": {
+      "invalidMime": "ບໍ່ສາມາດອ່ານອີເມວໄດ້ (ໂຄງສ້າງ MIME ບໍ່ຖືກຕ້ອງ).",
+      "unreadable": "ບໍ່ສາມາດອ່ານອີເມວໄດ້."
+    },
+    "oauth": {
+      "browserFailed": "ບໍ່ສາມາດເປີດເວັບບຣາວເຊີເພື່ອເຂົ້າສູ່ລະບົບໄດ້.",
+      "cancelled": "ການເຂົ້າສູ່ລະບົບຖືກຍົກເລີກ.",
+      "cancelledOrDenied": "ການເຂົ້າສູ່ລະບົບ {{provider}} ຖືກຍົກເລີກ ຫຼື ຖືກປະຕິເສດ.",
+      "clientMisconfigured": "OAuth Client ຂອງ {{provider}} ຖືກກຳນົດຄ່າບໍ່ຖືກຕ້ອງ (Client ID ຫຼື Secret).",
+      "emailUnknown": "ບໍ່ສາມາດກຳນົດທີ່ຢູ່ອີເມວທີ່ໃຊ້ເຂົ້າສູ່ລະບົບໄດ້; ກະລຸນາປ້ອນທີ່ຢູ່ແລ້ວລອງໃໝ່.",
+      "invalidClientId": "ນີ້ບໍ່ແມ່ນ Client ID ທີ່ຖືກຕ້ອງ.",
+      "invalidTokenEndpoint": "ປາຍທາງໂທເຄັນ (Token Endpoint) ບໍ່ຖືກຕ້ອງ.",
+      "noAccessToken": "{{provider}} ບໍ່ໄດ້ສົ່ງ Access Token ກັບມາ (HTTP {{status}}).",
+      "noFreePort": "ບໍ່ມີພອດຊົ່ວຄາວທີ່ຫວ່າງສຳລັບການເຂົ້າສູ່ລະບົບ.",
+      "noPort": "ບໍ່ມີພອດ.",
+      "noRefreshToken": "{{provider}} ບໍ່ໄດ້ສົ່ງ Refresh Token ກັບມາ; ກະລຸນາເຂົ້າສູ່ລະບົບຄືນໃໝ່.",
+      "noStoredSignIn": "ກະລຸນາເຂົ້າສູ່ລະບົບ {{provider}} ຄືນໃໝ່: ບັນຊີນີ້ບໍ່ມີຂໍ້ມູນການເຂົ້າສູ່ລະບົບບັນທຶກໄວ້.",
+      "notConfigured": {
+        "google": "ຍັງບໍ່ໄດ້ຕັ້ງຄ່າການເຂົ້າສູ່ລະບົບດ້ວຍ Google: ບໍ່ມີ Client ID. ກະລຸນາສ້າງ OAuth Client ປະເພດ \"ແອັບເດັສທັອບ\" ໃນ Google Cloud (ປ່ຽນເສັ້ນທາງຜ່ານ http://127.0.0.1), ເປີດໃຊ້ Gmail API, ແລະ ເພີ່ມຂອບເຂດ https://mail.google.com/ ໃນໜ້າຈໍຍິນຍອມ. ຈາກນັ້ນປ້ອນ Client ID ແລະ Client Secret (ເບິ່ງ docs/email-oauth.md).",
+        "microsoft": "ຍັງບໍ່ໄດ້ຕັ້ງຄ່າການເຂົ້າສູ່ລະບົບດ້ວຍ Microsoft: ບໍ່ມີ Client ID. ກະລຸນາລົງທະບຽນແອັບເປັນ \"Public Client\" ໃນ Microsoft Entra (App registrations), ເພີ່ມແພລັດຟອມ \"Mobile and desktop applications\" ດ້ວຍ Redirect URI ເປັນ http://localhost, ແລະ ມອບສິດ IMAP.AccessAsUser.All, SMTP.Send, offline_access, openid ແລະ email. ຈາກນັ້ນປ້ອນ Client ID (ເບິ່ງ docs/email-oauth.md)."
+      },
+      "providerRefused": "{{provider}} ປະຕິເສດການເຂົ້າສູ່ລະບົບ ({{detail}}).",
+      "randomUnavailable": "ບໍ່ມີແຫຼ່ງສຸ່ມທີ່ປອດໄພພ້ອມນຳໃຊ້.",
+      "reauthenticate": "ກະລຸນາເຂົ້າສູ່ລະບົບ {{provider}} ຄືນໃໝ່: ສິດການເຂົ້າເຖິງໝົດອາຍຸ ຫຼື ຖືກຍົກເລີກແລ້ວ.",
+      "settingSaveFailed": "ບໍ່ສາມາດບັນທຶກການຕັ້ງຄ່າ OAuth ໄດ້.",
+      "signInFirst": "ບັນຊີນີ້ໃຊ້ OAuth2: ກະລຸນາເຂົ້າສູ່ລະບົບດ້ວຍ Microsoft ຫຼື Google ກ່ອນ.",
+      "signInFirstToTest": "ກະລຸນາເຂົ້າສູ່ລະບົບດ້ວຍ Microsoft ຫຼື Google ກ່ອນເພື່ອທົດສອບ OAuth2.",
+      "signInTimeout": "ການເຂົ້າສູ່ລະບົບ {{provider}} ເກີນ 5 ນາທີ, ຈຶ່ງຖືກຍົກເລີກ.",
+      "stateMismatch": "ການຕອບສະໜອງຈາກໜ້າເຂົ້າສູ່ລະບົບບໍ່ກົງກັບຮອບການເຂົ້າສູ່ລະບົບນີ້ (state ບໍ່ກົງກັນ).",
+      "timeout": "{{provider}} ບໍ່ຕອບສະໜອງພາຍໃນເວລາທີ່ກຳນົດ.",
+      "tokenRefused": "{{provider}} ປະຕິເສດໂທເຄັນ ({{detail}}).",
+      "unexpectedResponse": "{{provider}} ສົ່ງການຕອບສະໜອງທີ່ບໍ່ຄາດຄິດ (HTTP {{status}})."
+    },
+    "security": {
+      "cramMd5SmtpUnsupported": "SMTP ບໍ່ຮອງຮັບລະຫັດຜ່ານທີ່ເຂົ້າລະຫັດ (CRAM-MD5). ກະລຸນາເລືອກ \"ລະຫັດຜ່ານປົກກະຕິ\"; ລະຫັດຜ່ານຈະຖືກເຂົ້າລະຫັດຄືກັນເມື່ອຜ່ານ SSL/TLS ຫຼື STARTTLS.",
+      "invalidServerName": "\"{{host}}\" ບໍ່ແມ່ນຊື່ເຊີເວີ {{protocol}} ທີ່ຖືກຕ້ອງ.",
+      "notLocalhost": "{{host}} ບໍ່ແມ່ນຄອມພິວເຕີເຄື່ອງນີ້, ຈຶ່ງປະຕິເສດການເຊື່ອມຕໍ່ແບບບໍ່ເຂົ້າລະຫັດ.",
+      "portMissing": "ຂາດພອດສຳລັບ {{protocol}}.",
+      "unencryptedRefused": "ປະຕິເສດການເຂົ້າສູ່ລະບົບ {{host}} ແບບບໍ່ເຂົ້າລະຫັດ: ລະຫັດຜ່ານຂອງທ່ານຈະຖືກສົ່ງຜ່ານເຄືອຂ່າຍໃນຮູບແບບທີ່ອ່ານໄດ້. ກະລຸນາເລືອກ SSL/TLS ຫຼື STARTTLS. ອະນຸຍາດການເຊື່ອມຕໍ່ແບບບໍ່ເຂົ້າລະຫັດສະເພາະກັບຄອມພິວເຕີເຄື່ອງນີ້ (localhost) ເທົ່ານັ້ນ ເຊັ່ນ: ສຳລັບ Proton Mail Bridge."
+    },
+    "server": {
+      "noTimelyResponse": "{{host}} ບໍ່ຕອບສະໜອງພາຍໃນເວລາທີ່ກຳນົດ."
+    },
+    "smtp": {
+      "authMethodUnsupported": "SMTP ບໍ່ຮອງຮັບວິທີການເຂົ້າສູ່ລະບົບນີ້.",
+      "error": "ເກີດຂໍ້ຜິດພາດ SMTP ທີ່ {{host}}: {{detail}}",
+      "messageTooLarge": "{{host}} ປະຕິເສດຍ້ອນອີເມວໃຫຍ່ເກີນໄປ ({{detail}}).",
+      "noAuthMechanism": "{{host}} ບໍ່ມີວິທີການເຂົ້າສູ່ລະບົບທີ່ Email Studio ຮອງຮັບ (PLAIN ຫຼື LOGIN). ກະລຸນາເລືອກ STARTTLS ຫຼື SSL/TLS; ຫຼາຍເຊີເວີຈະອະນຸຍາດໃຫ້ເຂົ້າສູ່ລະບົບໄດ້ຫຼັງຈາກເຂົ້າລະຫັດແລ້ວເທົ່ານັ້ນ.",
+      "oauthRejected": "{{host}} ປະຕິເສດໂທເຄັນ OAuth2; ທ່ານອາດຕ້ອງເຂົ້າສູ່ລະບົບຄືນໃໝ່.",
+      "rejected": "{{host}} ປະຕິເສດອີເມວ ({{detail}}).",
+      "sendTimeout": "ການສົ່ງຜ່ານ {{host}} ໃຊ້ເວລາດົນເກີນໄປ.",
+      "tlsFailed": "ບໍ່ສາມາດສ້າງການເຊື່ອມຕໍ່ທີ່ປອດໄພກັບ {{host}} ໄດ້ ({{detail}}). ການຕັ້ງຄ່າຄວາມປອດໄພກົງກັບພອດບໍ່?",
+      "tryLater": "{{host}} ບໍ່ສາມາດຮັບອີເມວໄດ້ໃນຕອນນີ້; ກະລຸນາລອງໃໝ່ອີກຄັ້ງໃນພາຍຫຼັງ ({{detail}})."
+    },
+    "storage": {
+      "appDataDirNotFound": "ບໍ່ພົບໂຟນເດີຂໍ້ມູນຂອງແອັບ.",
+      "dataDirCreateFailed": "ບໍ່ສາມາດສ້າງໂຟນເດີຂໍ້ມູນໄດ້.",
+      "dataDirMissing": "ຂາດໂຟນເດີຂໍ້ມູນ."
+    },
+    "test": {
+      "signedIn": "ເຂົ້າສູ່ລະບົບ {{host}} ແລ້ວ.",
+      "signedInUnencrypted": "ເຂົ້າສູ່ລະບົບ {{host}} ແລ້ວ. ໝາຍເຫດ: ການເຊື່ອມຕໍ່ {{protocol}} ບໍ່ໄດ້ເຂົ້າລະຫັດ. ອະນຸຍາດໃຫ້ເຮັດແບບນີ້ໄດ້ກໍຍ້ອນວ່າເຊີເວີຮັນຢູ່ໃນຄອມພິວເຕີເຄື່ອງນີ້ເທົ່ານັ້ນ."
+    },
+    "tls": {
+      "certificateRejected": "ປະຕິເສດການເຊື່ອມຕໍ່ທີ່ປອດໄພກັບ {{host}}: {{reason}}. ເພື່ອປົກປ້ອງລະຫັດຜ່ານຂອງທ່ານ, Email Studio ຈະບໍ່ເຊື່ອມຕໍ່ກັບເຊີເວີທີ່ບໍ່ສາມາດຢືນຢັນຕົວຕົນໄດ້.",
+      "handshakeFailed": "ບໍ່ສາມາດສ້າງການເຊື່ອມຕໍ່ທີ່ປອດໄພກັບ {{host}} ໄດ້ ({{detail}}). ການຕັ້ງຄ່າຄວາມປອດໄພ (SSL/TLS ຫຼື STARTTLS) ກົງກັບພອດບໍ່?",
+      "handshakeTimeout": "ການທັກທາຍ TLS (Handshake) ກັບ {{host}} ໃຊ້ເວລາດົນເກີນໄປ.",
+      "invalidServerName": "\"{{host}}\" ບໍ່ແມ່ນຊື່ເຊີເວີ TLS ທີ່ຖືກຕ້ອງ.",
+      "reason": {
+        "expired": "ໃບຢັ້ງຢືນໝົດອາຍຸແລ້ວ",
+        "invalid": "ໃບຢັ້ງຢືນບໍ່ຖືກຕ້ອງ ({{detail}})",
+        "notYetValid": "ໃບຢັ້ງຢືນຍັງບໍ່ທັນມີຜົນນຳໃຊ້ (ໂມງຂອງຄອມພິວເຕີເຄື່ອງນີ້ຖືກຕ້ອງບໍ່?)",
+        "revoked": "ໃບຢັ້ງຢືນຖືກຍົກເລີກແລ້ວ",
+        "unknownIssuer": "ໃບຢັ້ງຢືນບໍ່ໄດ້ອອກໂດຍໜ່ວຍງານອອກໃບຢັ້ງຢືນທີ່ໜ້າເຊື່ອຖື (ອາດເປັນໃບຢັ້ງຢືນທີ່ເຊັນດ້ວຍຕົນເອງ)",
+        "wrongName": "ໃບຢັ້ງຢືນບໍ່ກົງກັບຊື່ {{host}}; ກະລຸນາໃຊ້ຊື່ເຊີເວີທີ່ສະແດງຢູ່ໃນໃບຢັ້ງຢືນ"
+      }
+    }
+  }
+}

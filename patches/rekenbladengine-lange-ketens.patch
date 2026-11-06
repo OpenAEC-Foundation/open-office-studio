@@ -1,0 +1,675 @@
+diff --git a/crates/betteroffice-xlsx/src/move_range.rs b/crates/betteroffice-xlsx/src/move_range.rs
+--- a/crates/betteroffice-xlsx/src/move_range.rs
++++ b/crates/betteroffice-xlsx/src/move_range.rs
+@@ -298,6 +298,26 @@
+                 changed,
+             )?),
+         },
++        Expr::BinaryChain { first, rest } => Expr::BinaryChain {
++            first: Box::new(rewrite_expr(
++                first,
++                owner,
++                target_name,
++                moved_sheet,
++                source,
++                target,
++                changed,
++            )?),
++            rest: rest
++                .iter()
++                .map(|(b, e)| {
++                    Ok((
++                        *b,
++                        rewrite_expr(e, owner, target_name, moved_sheet, source, target, changed)?,
++                    ))
++                })
++                .collect::<Result<Vec<_>>>()?,
++        },
+         Expr::FuncCall { name, .. }
+             if name.eq_ignore_ascii_case("OFFSET") || name.eq_ignore_ascii_case("INDIRECT") =>
+         {
+diff --git a/crates/xlsx-calc/src/array.rs b/crates/xlsx-calc/src/array.rs
+--- a/crates/xlsx-calc/src/array.rs
++++ b/crates/xlsx-calc/src/array.rs
+@@ -274,6 +274,9 @@
+             start: lhs,
+             end: rhs,
+         } => nodes(lhs) + nodes(rhs),
++        Expr::BinaryChain { first, rest } => {
++            nodes(first) - 1 + rest.iter().map(|(_, e)| 1 + nodes(e)).sum::<u64>()
++        }
+         Expr::FuncCall { args, .. } => args.iter().map(nodes).sum(),
+         _ => 0,
+     }
+@@ -395,6 +398,14 @@
+             let left = evaluate_array(lhs, ctx);
+             let right = evaluate_array(rhs, ctx);
+             map2(left, right, ctx, |a, b| apply_binary(*op, a, b, ctx))
++        }
++        Expr::BinaryChain { first, rest } => {
++            let mut value = evaluate_array(first, ctx);
++            for (op, rhs) in rest {
++                let right = evaluate_array(rhs, ctx);
++                value = map2(value, right, ctx, |a, b| apply_binary(*op, a, b, ctx));
++            }
++            value
+         }
+         // these yield a reference, so a multi-cell result is a block here
+         Expr::FuncCall { name, .. }
+@@ -906,6 +917,9 @@
+             }
+             Expr::Unary { expr, .. } | Expr::Percent(expr) => walk(expr, depth - 1),
+             Expr::Binary { lhs, rhs, .. } => walk(lhs, depth - 1) || walk(rhs, depth - 1),
++            Expr::BinaryChain { first, rest } => {
++                walk(first, depth - 1) || rest.iter().any(|(_, e)| walk(e, depth - 1))
++            }
+             Expr::RangeJoin { start, end } => walk(start, depth - 1) || walk(end, depth - 1),
+             _ => false,
+         }
+diff --git a/crates/xlsx-calc/src/deps.rs b/crates/xlsx-calc/src/deps.rs
+--- a/crates/xlsx-calc/src/deps.rs
++++ b/crates/xlsx-calc/src/deps.rs
+@@ -82,6 +82,12 @@
+             walk(lhs, out, seen);
+             walk(rhs, out, seen);
+         }
++        Expr::BinaryChain { first, rest } => {
++            walk(first, out, seen);
++            for (_, expr) in rest {
++                walk(expr, out, seen);
++            }
++        }
+         Expr::FuncCall { name, args, .. } => {
+             for (index, arg) in args.iter().enumerate() {
+                 if positional_argument(name, index, arg) {
+diff --git a/crates/xlsx-calc/src/eval.rs b/crates/xlsx-calc/src/eval.rs
+--- a/crates/xlsx-calc/src/eval.rs
++++ b/crates/xlsx-calc/src/eval.rs
+@@ -697,6 +697,17 @@
+         },
+         Expr::Unary { op, expr } => coerced(&evaluate(expr, ctx), ctx, |v| apply_unary(*op, v)),
+         Expr::Binary { op, lhs, rhs } => eval_binary(*op, lhs, rhs, ctx),
++        Expr::BinaryChain { first, rest } => {
++            let mut value = evaluate(first, ctx);
++            for (op, rhs) in rest {
++                if let CellValue::Error { .. } = value {
++                    break;
++                }
++                let right = evaluate(rhs, ctx);
++                value = apply_binary(*op, &value, &right, ctx);
++            }
++            value
++        }
+         Expr::Percent(inner) => coerced(&evaluate(inner, ctx), ctx, apply_percent),
+         Expr::Literal(value) => kept(ctx, normalize_provider_value(value.clone())),
+         Expr::ArrayLiteral { .. } => crate::array::evaluate_array(expr, ctx).into_scalar(),
+diff --git a/crates/xlsx-calc/src/graph.rs b/crates/xlsx-calc/src/graph.rs
+--- a/crates/xlsx-calc/src/graph.rs
++++ b/crates/xlsx-calc/src/graph.rs
+@@ -326,6 +326,10 @@
+                         expressions.push(rhs);
+                         expressions.push(lhs);
+                     }
++                    Expr::BinaryChain { first, rest } => {
++                        expressions.extend(rest.iter().rev().map(|(_, e)| e));
++                        expressions.push(first);
++                    }
+                     Expr::Number(_)
+                     | Expr::Literal(_)
+                     | Expr::Text(_)
+@@ -818,6 +822,20 @@
+                 pending.push((rhs, other_rhs));
+                 pending.push((lhs, other_lhs));
+             }
++            (
++                Expr::BinaryChain { first, rest },
++                Expr::BinaryChain {
++                    first: other_first,
++                    rest: other_rest,
++                },
++            ) => {
++                assert_eq!(rest.len(), other_rest.len());
++                pending.push((first, other_first));
++                for ((op, expr), (other_op, other_expr)) in rest.iter().zip(other_rest) {
++                    assert_eq!(op, other_op);
++                    pending.push((expr, other_expr));
++                }
++            }
+             (Expr::Percent(expr), Expr::Percent(other_expr)) => {
+                 pending.push((expr, other_expr));
+             }
+@@ -873,6 +891,10 @@
+                 expressions.push(rhs);
+                 expressions.push(lhs);
+             }
++            Expr::BinaryChain { first, rest } => {
++                expressions.extend(rest.iter().rev().map(|(_, e)| e));
++                expressions.push(first);
++            }
+             Expr::FuncCall { name, args, .. } => expressions.extend(
+                 args.iter()
+                     .enumerate()
+@@ -903,6 +925,10 @@
+             Expr::Binary { lhs, rhs, .. } => {
+                 expressions.push(rhs);
+                 expressions.push(lhs);
++            }
++            Expr::BinaryChain { first, rest } => {
++                expressions.extend(rest.iter().rev().map(|(_, e)| e));
++                expressions.push(first);
+             }
+             Expr::FuncCall { name, args, .. } => expressions.extend(
+                 args.iter()
+@@ -955,6 +981,10 @@
+             Expr::Binary { lhs, rhs, .. } => {
+                 expressions.push(rhs);
+                 expressions.push(lhs);
++            }
++            Expr::BinaryChain { first, rest } => {
++                expressions.extend(rest.iter().rev().map(|(_, e)| e));
++                expressions.push(first);
+             }
+             Expr::Number(_)
+             | Expr::Text(_)
+diff --git a/crates/xlsx-calc/src/parser.rs b/crates/xlsx-calc/src/parser.rs
+--- a/crates/xlsx-calc/src/parser.rs
++++ b/crates/xlsx-calc/src/parser.rs
+@@ -63,6 +63,11 @@
+         op: BinaryOp,
+         lhs: Box<Expr>,
+         rhs: Box<Expr>,
++    },
++    /// Links naar rechts uit te voeren bewerkingen, zonder hergroepering.
++    BinaryChain {
++        first: Box<Expr>,
++        rest: Vec<(BinaryOp, Expr)>,
+     },
+     Percent(Box<Expr>),
+     /// `A1:INDEX(..)`: excel's range operator between two references. the
+@@ -189,8 +194,38 @@
+             }
+             self.advance();
+             let rhs = self.expr_bp(r_bp, depth + 1)?;
++            if let Expr::BinaryChain { rest, .. } = &mut lhs.expr {
++                let ast_depth = lhs.depth.max(rhs.depth + 1);
++                self.validate_ast_depth(ast_depth)?;
++                rest.push((op, rhs.expr));
++                lhs.depth = ast_depth;
++                continue;
++            }
+             let ast_depth = lhs.depth.max(rhs.depth) + 1;
+-            self.validate_ast_depth(ast_depth)?;
++            if ast_depth > MAX_DEPTH {
++                let mut first = lhs.expr;
++                let mut rest = vec![(op, rhs.expr)];
++                while let Expr::Binary { op, lhs, rhs } = first {
++                    rest.push((op, *rhs));
++                    first = *lhs;
++                }
++                rest.reverse();
++                let ast_depth = std::iter::once(&first)
++                    .chain(rest.iter().map(|(_, expr)| expr))
++                    .map(tree_depth)
++                    .max()
++                    .unwrap_or(0)
++                    + 1;
++                self.validate_ast_depth(ast_depth)?;
++                lhs = ParsedExpr {
++                    expr: Expr::BinaryChain {
++                        first: Box::new(first),
++                        rest,
++                    },
++                    depth: ast_depth,
++                };
++                continue;
++            }
+             lhs = ParsedExpr {
+                 expr: Expr::Binary {
+                     op,
+@@ -447,6 +482,33 @@
+     }
+ }
+ 
++fn tree_depth(expr: &Expr) -> usize {
++    let mut pending = vec![(expr, 1)];
++    let mut depth = 0;
++    while let Some((expr, at)) = pending.pop() {
++        depth = depth.max(at);
++        match expr {
++            Expr::ArrayLiteral { values, .. } => pending.extend(values.iter().map(|e| (e, at + 1))),
++            Expr::Unary { expr, .. } | Expr::Percent(expr) => pending.push((expr, at + 1)),
++            Expr::Binary { lhs, rhs, .. }
++            | Expr::RangeJoin {
++                start: lhs,
++                end: rhs,
++            } => {
++                pending.push((lhs, at + 1));
++                pending.push((rhs, at + 1));
++            }
++            Expr::BinaryChain { first, rest } => {
++                pending.push((first, at + 1));
++                pending.extend(rest.iter().map(|(_, e)| (e, at + 1)));
++            }
++            Expr::FuncCall { args, .. } => pending.extend(args.iter().map(|e| (e, at + 1))),
++            _ => {}
++        }
++    }
++    depth
++}
++
+ /// what `:` accepts as an end: something that already designates cells, a
+ /// call that may resolve to one, or the `#REF!` excel leaves behind when a
+ /// deletion takes an end away.
+@@ -779,15 +841,16 @@
+     }
+ 
+     #[test]
+-    fn rejects_deep_left_associative_chain() {
+-        let src = std::iter::repeat_n("1", MAX_DEPTH + 1)
+-            .collect::<Vec<_>>()
+-            .join("+");
+-        assert!(
+-            parse_formula(&src)
+-                .unwrap_err()
+-                .message
+-                .contains("too deep")
+-        );
+-    }
+-}
++    fn accepteert_lange_vlakke_ketens() {
++        for aantal in [100, 101, 200, 400, 1000, 5000] {
++            let src = std::iter::repeat_n("1", aantal)
++                .collect::<Vec<_>>()
++                .join("+");
++            let expr = parse_formula(&src).unwrap();
++            assert!(tree_depth(&expr) <= MAX_DEPTH);
++            assert_eq!(expr.to_formula(), src);
++        }
++        let src = std::iter::repeat_n("1", 5001).collect::<Vec<_>>().join("+");
++        assert!(parse_formula(&src).is_err());
++    }
++}
+diff --git a/crates/xlsx-calc/src/printer.rs b/crates/xlsx-calc/src/printer.rs
+--- a/crates/xlsx-calc/src/printer.rs
++++ b/crates/xlsx-calc/src/printer.rs
+@@ -110,6 +110,34 @@
+                 // left-associative: the right child needs parens at equal bp
+                 let s = format!("{}{}{}", lhs.print(bp), binary_token(op), rhs.print(bp + 1));
+                 if bp < parent_bp { format!("({s})") } else { s }
++            }
++            Expr::BinaryChain { first, rest } => {
++                let Some((first_op, _)) = rest.first() else {
++                    return first.print(parent_bp);
++                };
++                let outer = binary_bp(&rest.last().unwrap().0) < parent_bp;
++                let brackets = rest
++                    .windows(2)
++                    .filter(|pair| binary_bp(&pair[0].0) < binary_bp(&pair[1].0))
++                    .count()
++                    + usize::from(outer);
++                let mut text = "(".repeat(brackets);
++                text.push_str(&first.print(binary_bp(first_op)));
++                for (index, (op, rhs)) in rest.iter().enumerate() {
++                    let bp = binary_bp(op);
++                    text.push_str(binary_token(op));
++                    text.push_str(&rhs.print(bp + 1));
++                    if rest
++                        .get(index + 1)
++                        .is_some_and(|(next, _)| bp < binary_bp(next))
++                    {
++                        text.push(')');
++                    }
++                }
++                if outer {
++                    text.push(')');
++                }
++                text
+             }
+             Expr::FuncCall {
+                 func: Some(Func::Union),
+diff --git a/crates/xlsx-ops/src/conditional_formats.rs b/crates/xlsx-ops/src/conditional_formats.rs
+--- a/crates/xlsx-ops/src/conditional_formats.rs
++++ b/crates/xlsx-ops/src/conditional_formats.rs
+@@ -175,6 +175,7 @@
+         }
+         Expr::Unary { expr, .. } | Expr::Percent(expr) => child(expr),
+         Expr::Binary { lhs, rhs, .. } => child(lhs) || child(rhs),
++        Expr::BinaryChain { first, rest } => child(first) || rest.iter().any(|(_, e)| child(e)),
+         Expr::FuncCall { name, args, .. } => {
+             name.eq_ignore_ascii_case("INDIRECT")
+                 || name.eq_ignore_ascii_case("OFFSET")
+diff --git a/crates/xlsx-ops/src/remap.rs b/crates/xlsx-ops/src/remap.rs
+--- a/crates/xlsx-ops/src/remap.rs
++++ b/crates/xlsx-ops/src/remap.rs
+@@ -1277,6 +1277,10 @@
+         Expr::RangeJoin { start, end } => {
+             contains_unqualified_reference(start) || contains_unqualified_reference(end)
+         }
++        Expr::BinaryChain { first, rest } => {
++            contains_unqualified_reference(first)
++                || rest.iter().any(|(_, e)| contains_unqualified_reference(e))
++        }
+         Expr::FuncCall { args, .. } => args.iter().any(contains_unqualified_reference),
+         _ => false,
+     }
+@@ -1295,6 +1299,9 @@
+         Expr::RangeJoin { start, end } => {
+             contains_table_reference(start) || contains_table_reference(end)
+         }
++        Expr::BinaryChain { first, rest } => {
++            contains_table_reference(first) || rest.iter().any(|(_, e)| contains_table_reference(e))
++        }
+         Expr::FuncCall { args, .. } => args.iter().any(contains_table_reference),
+         _ => false,
+     }
+@@ -1308,6 +1315,9 @@
+         Expr::RangeJoin { .. } => true,
+         Expr::Unary { expr, .. } | Expr::Percent(expr) => contains_range_join(expr),
+         Expr::Binary { lhs, rhs, .. } => contains_range_join(lhs) || contains_range_join(rhs),
++        Expr::BinaryChain { first, rest } => {
++            contains_range_join(first) || rest.iter().any(|(_, e)| contains_range_join(e))
++        }
+         Expr::FuncCall { args, .. } => args.iter().any(contains_range_join),
+         _ => false,
+     }
+@@ -1320,6 +1330,9 @@
+         Expr::Binary { lhs, rhs, .. } => contains_column_range(lhs) || contains_column_range(rhs),
+         Expr::RangeJoin { start, end } => {
+             contains_column_range(start) || contains_column_range(end)
++        }
++        Expr::BinaryChain { first, rest } => {
++            contains_column_range(first) || rest.iter().any(|(_, e)| contains_column_range(e))
+         }
+         Expr::FuncCall { args, .. } => args.iter().any(contains_column_range),
+         _ => false,
+@@ -2272,6 +2285,13 @@
+             lhs: Box::new(transform(lhs, op, matches_target, changed)),
+             rhs: Box::new(transform(rhs, op, matches_target, changed)),
+         },
++        Expr::BinaryChain { first, rest } => Expr::BinaryChain {
++            first: Box::new(transform(first, op, matches_target, changed)),
++            rest: rest
++                .iter()
++                .map(|(b, e)| (*b, transform(e, op, matches_target, changed)))
++                .collect(),
++        },
+         Expr::FuncCall { name, func, args } => Expr::FuncCall {
+             name: name.clone(),
+             func: *func,
+diff --git a/crates/xlsx-calc/tests/lange_ketens.rs b/crates/xlsx-calc/tests/lange_ketens.rs
+new file mode 100644
+--- /dev/null
++++ b/crates/xlsx-calc/tests/lange_ketens.rs
+@@ -0,0 +1,128 @@
++use xlsx_calc::{
++    EvalContext, Value, evaluate, evaluate_array, parse_formula, rebuild_and_recalc_all,
++    recalc_after, references,
++};
++use xlsx_model::{Cell, CellRef, CellValue, ErrorValue, Sheet, SheetId, Workbook};
++
++fn getal(value: f64) -> CellValue {
++    CellValue::Number { value }
++}
++fn cel(adres: &str) -> CellRef {
++    CellRef::parse_a1(adres).unwrap()
++}
++fn werkmap() -> Workbook {
++    let mut wb = Workbook::default();
++    let mut sheet = Sheet::new("Blad 1");
++    sheet.set_cell(
++        cel("A1"),
++        Cell {
++            value: getal(10.0),
++            ..Cell::default()
++        },
++    );
++    sheet.set_cell(
++        cel("A2"),
++        Cell {
++            value: getal(20.0),
++            ..Cell::default()
++        },
++    );
++    wb.sheets.push(sheet);
++    wb
++}
++fn keten(term: &str, aantal: usize) -> String {
++    std::iter::repeat_n(term, aantal)
++        .collect::<Vec<_>>()
++        .join("+")
++}
++fn waarde(bron: &str, wb: &Workbook) -> CellValue {
++    evaluate(
++        &parse_formula(bron).unwrap(),
++        &EvalContext::new(wb, SheetId(0)),
++    )
++}
++
++#[test]
++fn rekent_lange_ketens_en_bewaart_de_formuletekst() {
++    let wb = werkmap();
++    for aantal in [101, 200, 400, 1000] {
++        let bron = keten("A1", aantal);
++        let expr = parse_formula(&bron).unwrap();
++        assert_eq!(
++            evaluate(&expr, &EvalContext::new(&wb, SheetId(0))),
++            getal(10.0 * aantal as f64)
++        );
++        assert_eq!(expr.to_formula(), bron);
++        assert_eq!(parse_formula(&expr.to_formula()).unwrap(), expr);
++        assert_eq!(references(&expr).len(), 1);
++    }
++}
++
++#[test]
++fn behoudt_volgorde_voorrang_en_afronding() {
++    let wb = werkmap();
++    let bron = format!("1000{}", "-1".repeat(399));
++    assert_eq!(waarde(&bron, &wb), getal(601.0));
++    let bron = format!("10000000000000000+1-10000000000000000{}", "+0".repeat(398));
++    assert_eq!(waarde(&bron, &wb), getal(0.0));
++    let lang = keten("A1", 400);
++    for (bron, verwacht) in [
++        (format!("{lang}*2"), 4010.0),
++        (format!("({lang})*2+3"), 8003.0),
++        (format!("(({lang})*2+3)/2"), 4001.5),
++        (format!("2/({lang})"), 0.0005),
++    ] {
++        let expr = parse_formula(&bron).unwrap();
++        assert_eq!(waarde(&bron, &wb), getal(verwacht));
++        assert_eq!(waarde(&expr.to_formula(), &wb), getal(verwacht));
++    }
++}
++
++#[test]
++fn behoudt_arrayberekening_en_foutvolgorde() {
++    let wb = werkmap();
++    let bron = keten("A1:A2", 400);
++    match evaluate_array(
++        &parse_formula(&bron).unwrap(),
++        &EvalContext::new(&wb, SheetId(0)),
++    ) {
++        Value::Array(a) => {
++            assert_eq!((a.rows(), a.cols()), (2, 1));
++            assert_eq!(a.at(0, 0), getal(4000.0));
++            assert_eq!(a.at(1, 0), getal(8000.0));
++        }
++        value => panic!("{value:?}"),
++    }
++    assert_eq!(waarde(&format!("SUMPRODUCT({bron})"), &wb), getal(12000.0));
++    let bron = format!("#DIV/0!{}+#N/A", "+0".repeat(400));
++    assert_eq!(
++        waarde(&bron, &wb),
++        CellValue::Error {
++            value: ErrorValue::Div0
++        }
++    );
++}
++
++#[test]
++fn herberekent_na_een_bronwijziging() {
++    let mut wb = werkmap();
++    let bron = format!("{}+A2", keten("A1", 400));
++    wb.sheets[0].set_cell(
++        cel("B1"),
++        Cell {
++            formula: Some(bron),
++            ..Cell::default()
++        },
++    );
++    let (mut graph, _) = rebuild_and_recalc_all(&mut wb, None);
++    assert_eq!(wb.sheets[0].cell(cel("B1")).unwrap().value, getal(4020.0));
++    wb.sheets[0].set_cell(
++        cel("A2"),
++        Cell {
++            value: getal(30.0),
++            ..Cell::default()
++        },
++    );
++    recalc_after(&mut wb, &mut graph, &[(SheetId(0), cel("A2"))], None);
++    assert_eq!(wb.sheets[0].cell(cel("B1")).unwrap().value, getal(4030.0));
++}
+diff --git a/crates/betteroffice-xlsx/tests/lange_ketens.rs b/crates/betteroffice-xlsx/tests/lange_ketens.rs
+new file mode 100644
+--- /dev/null
++++ b/crates/betteroffice-xlsx/tests/lange_ketens.rs
+@@ -0,0 +1,139 @@
++use betteroffice_xlsx::{
++    CalculationOptions, Cell, CellRange, CellRef, CellValue, EditRequest, Op, Sheet, SheetId,
++    Workbook, WorkbookModel,
++};
++use serde_json::json;
++
++fn cel(adres: &str) -> CellRef {
++    CellRef::parse_a1(adres).unwrap()
++}
++fn getal(value: f64) -> CellValue {
++    CellValue::Number { value }
++}
++fn werkmap() -> Workbook {
++    let mut bron = Sheet::new("Blad 1");
++    for (adres, waarde) in [("A1", 10.0), ("A2", 20.0)] {
++        bron.set_cell(
++            cel(adres),
++            Cell {
++                value: getal(waarde),
++                ..Cell::default()
++            },
++        );
++    }
++    Workbook::from_model(WorkbookModel {
++        sheets: vec![bron, Sheet::new("Som")],
++        ..Default::default()
++    })
++    .unwrap()
++}
++fn formule() -> String {
++    format!(
++        "{}+'Blad 1'!A2",
++        std::iter::repeat_n("'Blad 1'!A1", 400)
++            .collect::<Vec<_>>()
++            .join("+")
++    )
++}
++fn verwacht(wb: &Workbook, bron: &str, waarde: f64) {
++    let cell = wb.model().sheets[1].cell(cel("B1")).unwrap();
++    assert_eq!(cell.formula.as_deref(), Some(bron));
++    assert_eq!(cell.value, getal(waarde));
++    let invoer = wb.cell(SheetId(1), cel("B1")).unwrap();
++    assert!(invoer.is_formula);
++    assert_eq!(invoer.input, format!("={bron}"));
++}
++
++#[test]
++fn invoer_en_expliciete_formules_blijven_bewaard_en_herberekenen() {
++    for op in ["setCellInputs", "setFormulas"] {
++        let mut wb = werkmap();
++        let bron = formule();
++        let mut stap =
++            json!({"op":op,"target":{"sheetId":"sheet:1","range":{"kind":"a1","a1":"B1"}}});
++        if op == "setFormulas" {
++            stap["formulas"] = json!([[bron]]);
++        } else {
++            stap["inputs"] = json!([[format!("={bron}")]]);
++        }
++        let request: EditRequest =
++            serde_json::from_value(json!({"expectVersion":wb.version(),"steps":[stap]})).unwrap();
++        wb.apply_edits(&request).unwrap().unwrap();
++        verwacht(&wb, &bron, 4020.0);
++        let mut wb = Workbook::open(&wb.save().unwrap()).unwrap();
++        verwacht(&wb, &bron, 4020.0);
++        wb.edit_cell(SheetId(0), cel("A2"), "30", CalculationOptions::default())
++            .unwrap();
++        verwacht(&wb, &bron, 4030.0);
++        wb.undo(CalculationOptions::default()).unwrap();
++        verwacht(&wb, &bron, 4020.0);
++        wb.redo(CalculationOptions::default()).unwrap();
++        verwacht(&wb, &bron, 4030.0);
++    }
++}
++
++#[test]
++fn herschrijft_alle_verwijzingen_bij_rijen_verplaatsen_en_bladnaam() {
++    let mut wb = werkmap();
++    let bron = formule();
++    let opties = CalculationOptions::default();
++    wb.edit_cell(SheetId(1), cel("B1"), &format!("={bron}"), opties)
++        .unwrap();
++    verwacht(&wb, &bron, 4020.0);
++    wb.apply_ops(
++        vec![Op::InsertRows {
++            sheet: SheetId(0),
++            at: 0,
++            count: 1,
++        }],
++        opties,
++    )
++    .unwrap();
++    let verplaatst = wb.model().sheets[1]
++        .cell(cel("B1"))
++        .unwrap()
++        .formula
++        .clone()
++        .unwrap();
++    let refs = xlsx_calc::references(&xlsx_calc::parse_formula(&verplaatst).unwrap());
++    assert_eq!(refs.len(), 2);
++    assert_eq!(refs[0].1.start, cel("A2"));
++    assert_eq!(refs[1].1.start, cel("A3"));
++    verwacht(&wb, &verplaatst, 4020.0);
++    wb.move_range(
++        SheetId(0),
++        CellRange::new(cel("A2"), cel("A3")),
++        cel("A4"),
++        opties,
++    )
++    .unwrap();
++    wb.apply_ops(
++        vec![Op::RenameSheet {
++            sheet: SheetId(0),
++            name: "Bron".into(),
++        }],
++        opties,
++    )
++    .unwrap();
++    let hernoemd = wb.model().sheets[1]
++        .cell(cel("B1"))
++        .unwrap()
++        .formula
++        .clone()
++        .unwrap();
++    let refs = xlsx_calc::references(&xlsx_calc::parse_formula(&hernoemd).unwrap());
++    assert_eq!(refs.len(), 2);
++    assert!(
++        refs.iter()
++            .all(|(sheet, _)| sheet.as_deref() == Some("Bron"))
++    );
++    assert_eq!(refs[0].1.start, cel("A4"));
++    assert_eq!(refs[1].1.start, cel("A5"));
++    verwacht(&wb, &hernoemd, 4020.0);
++    let heropend = Workbook::open(&wb.save().unwrap()).unwrap();
++    verwacht(&heropend, &hernoemd, 4020.0);
++    for _ in 0..3 {
++        wb.undo(opties).unwrap();
++    }
++    verwacht(&wb, &bron, 4020.0);
++}

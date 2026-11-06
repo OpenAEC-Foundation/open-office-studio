@@ -88,6 +88,14 @@ class Formulecontrole(unittest.TestCase):
         self.assertEqual(waarden(formules.verwacht(self.pad / 'fouten.xlsx')), {
             'Fouten!B1': '#DIV/0!', 'Fouten!B2': '#REF!', 'Fouten!B3': '#N/A', 'Fouten!B4': '#N/A',
             'Fouten!B5': -1.0, 'Fouten!B6': True, 'Fouten!B7': '#VALUE!', 'Fouten!B8': '#DIV/0!'})
+
+    def test_exportmeting_blijft_gescheiden_van_de_verwachting(self):
+        # De bron bevat bewust 999 als cache, maar A1+A2 = 2+3 = 5.
+        pad = self.pad / 'cache.xlsx'
+        self.assertEqual(formules.opgeslagen(pad)['Cache!A3'], {'soort': 'number', 'waarde': 999.0})
+        self.assertEqual(formules.verwacht(pad)['Cache!A3'], {'soort': 'number', 'waarde': 5.0})
+        # Ook na lezen van de cache blijft de onafhankelijke berekening onaangetast.
+        self.assertEqual(formules.verwacht(pad, {('Cache', 'A1'): '4'})['Cache!A3']['waarde'], 7.0)
         na = waarden(formules.verwacht(self.pad / 'fouten.xlsx', {('Fouten', 'A2'): '4'}))
         self.assertEqual((na['Fouten!B1'], na['Fouten!B5'], na['Fouten!B6']), (2.5, 2.5, False))
 

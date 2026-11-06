@@ -3,7 +3,7 @@
 // Per fixture: openen → opslaan zonder wijziging, de beperkte bewerking uit de testmatrix,
 // opslaan en heropenen. Daarna pakketvergelijking (scripts/vergelijk_pakketten.py),
 // kenmerkcontrole (scripts/rekenblad_kenmerken.py) en formulecontrole tegen de onafhankelijke
-// evaluator (scripts/rekenblad_formules.py). Cachewaarden gelden nergens als bewijs.
+// evaluator (scripts/rekenblad_formules.py). Broncachewaarden zijn geen onafhankelijke verwachting.
 //
 // Gebruik: node scripts/test-rekenblad-matrix.mjs
 // Uitvoer: .local/matrix/rekenbladen/*.noop.xlsx, *.bewerkt.xlsx en rapport.json (genegeerd door Git).
@@ -13,13 +13,29 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import { performance } from "node:perf_hooks";
 import * as xlsx from "@betteroffice/xlsx";
-import {
+import { createServer } from "vite";
+
+// De appmodule gebruikt dezelfde extensieloze TypeScript-imports als Vite.
+// Laad die via Vite zonder HTTP-, HMR- of bestandsbewakingsserver.
+const lader = await createServer({ configFile: false, appType: "custom",
+  cacheDir: ".local/matrix/rekenbladen/vite-cache",
+  optimizeDeps: { noDiscovery: true, include: [] },
+  server: { middlewareMode: true, hmr: false, watch: null, preTransformRequests: false } });
+let controle, metBeginregio, regionaleInvoer;
+try {
+  controle = await lader.ssrLoadModule("/src/rekenbladcontrole.ts");
+  ({ metBeginregio } = await lader.ssrLoadModule("/src/rekenblad/werkmapregio.ts"));
+  ({ regionaleInvoer } = await lader.ssrLoadModule("/src/rekenblad/regionaleInvoer.ts"));
+  const { controleerRekenbladKern } = await lader.ssrLoadModule("/scripts/rekenbladengine-compatibiliteit.ts");
+  controleerRekenbladKern();
+} finally { await lader.close(); }
+const {
   ONDERSTEUNDE_FUNCTIES,
   inventariseerRekenblad,
   leesUitWerkboek,
   rekenbladMelding,
   vergelijkCache,
-} from "../src/rekenbladcontrole.ts";
+} = controle;
 
 // 519 Excel-functienamen als kandidaten: handmatig samengesteld, niet gegarandeerd volledig.
 const KANDIDATEN = `
@@ -70,7 +86,7 @@ VALUE VALUETOTEXT VAR VAR.P VAR.S VARA VARP VARPA VDB VLOOKUP VSTACK WEBSERVICE 
 WEEKNUM WEIBULL WEIBULL.DIST WORKDAY WORKDAY.INTL WRAPCOLS WRAPROWS XIRR XLOOKUP XMATCH XNPV
 XOR YEAR YEARFRAC YIELD YIELDDISC YIELDMAT Z.TEST ZTEST
 `;
-const MAP = ".local/matrix/rekenbladen";
+const MAP = process.env.OOS_MATRIX_UIT ?? ".local/matrix/rekenbladen";
 const sha = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const mb = (n) => Math.round((n / 1024 / 1024) * 10) / 10;
 const ms = (n) => Math.round(n);
@@ -138,11 +154,9 @@ function vergelijkFormules(verwacht, engine) {
   return { gecontroleerd: Object.keys(verwacht).length, afwijkend };
 }
 
-await xlsx.initWasm(
-  await readFile(
-    "node_modules/@betteroffice/xlsx/dist/generated/xlsx_wasm_bg.wasm",
-  ),
-);
+const kernPad = process.env.OOS_REKENBLAD_WASM ?? "vendor/rekenbladengine/xlsx_wasm_bg.wasm";
+const kern = await readFile(kernPad);
+await xlsx.initWasm(kern);
 const pakket = JSON.parse(
   await readFile("node_modules/@betteroffice/xlsx/package.json", "utf8"),
 );
@@ -153,6 +167,9 @@ const rapport = {
   engine: {
     pakket: `${pakket.name}@${pakket.version}`,
     wasm: xlsx.wasmVersion(),
+    kernPad,
+    kernSha256: sha(kern),
+    route: process.env.OOS_REKENBLAD_WASM ? "expliciete tegenproef" : "productiekern",
   },
   node: process.version,
   gevallen: [],
@@ -205,7 +222,19 @@ for (const geval of manifest) {
   const noop = boek.save();
   uitkomst.opslaanNoopMs = ms(performance.now() - t);
   await writeFile(`${MAP}/${geval.naam}.noop.xlsx`, noop);
-  xlsx.openWorkbook(noop).dispose();
+  // Heropenen rekent opnieuw en kan daardoor een foute opgeslagen cache maskeren.
+  // Controleer daarom de werkelijk geschreven resultaten zonder engine.
+  uitkomst.opgeslagenZonderBewerking = vergelijkFormules(
+    verwachtVoor,
+    Object.fromEntries(inventariseerRekenblad(noop).cellen.map((c) => [
+      `${c.blad}!${c.cel}`, c.opgeslagen ?? undefined,
+    ])),
+  );
+  const noopHeropend = xlsx.openWorkbook(noop);
+  uitkomst.formulesNaNoopHeropenen = vergelijkFormules(
+    verwachtVoor, engineWaarden(noopHeropend, sleutels),
+  );
+  noopHeropend.dispose();
 
   // Beperkte bewerking zoals de editor die doorgeeft (editCell met gebruikersinvoer).
   const p = positie(cel);
@@ -328,6 +357,34 @@ for (const geval of manifest) {
   rapport.nederlands = { weergave, invoer };
 }
 
+// Daarnaast de daadwerkelijke appaansluiting: één Nederlandse bestandsregio
+// en ruwe gebruikersinvoer met localized:true, zoals de formulebalk die doorgeeft.
+{
+  let boek = xlsx.openWorkbook(metBeginregio(new Uint8Array(await readFile(`${MAP}/nl-notatie.xlsx`)), "nl-NL"));
+  const lees = a1 => boek.readCells({ ranges: [{ sheetId: boek.sheetInfo().sheetIds[0], range: { kind: "a1", a1 } }] }).ranges[0].cells[0][0];
+  const weergave = Object.fromEntries(["A1", "A2", "A3", "A4", "A5", "A6", "A7"].map(a1 =>
+    [a1, lees(a1).displayText]));
+  assert.equal(weergave.A1, "1.234,50");
+  const invoer = [];
+  // 26-10-2026 ligt 46.321 dagen na 30-12-1899 in het 1900-datumstelsel.
+  const gevallen = [["B1", "1,5", 1.5], ["B2", "26-10-2026", 46321],
+    ["B3", "26-10-2026", 46321], ["C1", "1,5", 1.5], ["C2", "1.234,5", 1234.5]];
+  for (const [a1, tekst, verwacht] of gevallen) {
+    const target = { sheetId: boek.sheetInfo().sheetIds[0], range: { kind: "a1", a1 } };
+    const resultaat = boek.applyEdits({ expectVersion: boek.version(), steps: [regionaleInvoer(target, [[tekst]])] });
+    assert.equal(resultaat.ok, true);
+    const c = lees(a1);
+    assert.deepEqual(c.value, { kind: "number", value: verwacht });
+    invoer.push({ cel: a1, invoer: tekst, waarde: c.value.value, weergave: c.displayText });
+  }
+  const bytes = boek.save(); boek.dispose(); boek = xlsx.openWorkbook(bytes);
+  for (const [a1, , verwacht] of gevallen)
+    assert.deepEqual(lees(a1).value, { kind: "number", value: verwacht });
+  assert.equal(lees("A1").displayText, weergave.A1);
+  boek.dispose();
+  rapport.nederlands.app = { regio: "nl-NL", weergave, invoer, heropend: true };
+}
+
 // Ondersteunde functies: de lijst in src/rekenbladcontrole.ts moet overeenkomen met de engine.
 {
   const kandidaten = KANDIDATEN.split(/\s+/).filter(Boolean);
@@ -397,6 +454,8 @@ for (const g of rapport.gevallen) {
   const toegestaan = STIL_GECACHET[g.naam] ?? [];
   for (const fase of [
     "formulesNaOpenen",
+    "opgeslagenZonderBewerking",
+    "formulesNaNoopHeropenen",
     "formulesNaBewerking",
     "formulesNaHeropenen",
     "opgeslagenNaBewerking",
@@ -419,6 +478,8 @@ assert.deepEqual(
   Object.keys(per["onbekende-functies"].controle.onbekendeFuncties).sort(),
   ["ONBEKENDEFUNCTIE", "_XLUDF.MIJNMACRO"],
 );
+// FACT(1)=1; na A1=2 wordt dat 1×2=2. De bewust opgeslagen 99 mag niet blijven staan.
+assert.deepEqual(per["onbekende-functies"].controle.cacheAfwijkend, ["Functies!C7"]);
 assert.deepEqual(per["verouderde-cache"].controle.cacheAfwijkend.sort(), [
   "Cache!A3",
   "Cache!A4",
@@ -433,6 +494,8 @@ assert.deepEqual(Object.keys(per.foutwaarden.controle.foutcellen).sort(), [
 ]);
 
 for (const g of rapport.gevallen) {
+  for (const veld of ["kenmerkenNoop", "kenmerkenBewerkt"])
+    assert.deepEqual(g[veld].verloren_of_gewijzigd, [], `${g.naam}: onverwacht kenmerkverlies bij ${veld}`);
   const n = g.formulesNaHeropenen.gecontroleerd;
   const verloren = g.kenmerkenBewerkt.verloren_of_gewijzigd.map(
     (v) => v.kenmerk,

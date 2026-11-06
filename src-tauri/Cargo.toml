@@ -17,6 +17,8 @@ tauri-plugin-single-instance = "2"
 # Automatische updates (#26, src/updates.rs): ondertekende pakketten uit GitHub Releases.
 # Versie bewust vast op een uitgave van minstens zeven dagen oud (Cargo.lock).
 tauri-plugin-updater = "2.14.0"
+# Tekst lezen na een expliciete plakopdracht; terugval voor desktopwebviews.
+tauri-plugin-clipboard-manager = "=2.3.2"
 # Lijst met uitgaven van GitHub (één GET); zelfde reqwest/rustls als de updater.
 reqwest = { version = "0.13", default-features = false, features = ["rustls-no-provider"] }
 semver = "1"
@@ -47,6 +49,7 @@ hickory-resolver = { version = "0.26", default-features = false, features = ["sy
 fontdb = { version = "0.24", default-features = false, features = ["std", "fs", "fontconfig"] }
 
 [dev-dependencies]
+tauri = { version = "2", features = ["test"] }
 tokio = { version = "1", features = ["net", "time", "io-util", "sync", "rt", "rt-multi-thread", "macros"] }
 
 [target.'cfg(unix)'.dependencies]

@@ -997,7 +997,15 @@
         "toNoteOnPage": "주석으로 이동({{page}}페이지)"
       },
       "jumpFootnote": "각주 {{number}}: {{text}}",
-      "jumpEndnote": "미주 {{number}}: {{text}}"
+      "jumpEndnote": "미주 {{number}}: {{text}}",
+      "convert": {
+        "title": "Convert notes",
+        "allFootnotes": "Convert all footnotes to endnotes",
+        "allEndnotes": "Convert all endnotes to footnotes",
+        "toEndnote": "Convert to endnote",
+        "toFootnote": "Convert to footnote",
+        "hint": "Content and formatting are preserved. Converted notes use the numbering of the destination kind."
+      }
     },
     "done": {
       "pageNumberInserted": "페이지 번호를 삽입했습니다",
@@ -1035,7 +1043,8 @@
       "tocRemoved": "목차를 제거했습니다",
       "footnoteInserted": "각주를 삽입했습니다",
       "endnoteInserted": "미주를 삽입했습니다",
-      "noteFormatChanged": "주석 서식을 변경했습니다"
+      "noteFormatChanged": "주석 서식을 변경했습니다",
+      "notesConverted": "Notes converted"
     },
     "errors": {
       "notReady": "문서가 아직 준비되지 않았습니다.",
@@ -1067,7 +1076,8 @@
       "endnoteBodyOnly": "미주는 본문에만 삽입할 수 있으며 머리글, 바닥글 또는 다른 주석에는 삽입할 수 없습니다.",
       "footnotePosition": "각주는 페이지 아래쪽이나 텍스트 아래에 배치됩니다.",
       "endnotePosition": "미주는 구역 끝이나 문서 끝에 배치됩니다.",
-      "endnoteRestartPerPage": "미주는 페이지마다 다시 시작할 수 없습니다."
+      "endnoteRestartPerPage": "미주는 페이지마다 다시 시작할 수 없습니다.",
+      "noteConversionInvalid": "This note cannot be converted: note IDs or related parts are incomplete or ambiguous."
     }
   },
   "paragraph": {
@@ -1537,7 +1547,7 @@
       "toText": "텍스트로 변환",
       "toTextTip": "표를 텍스트로 변환",
       "split": "표 나누기",
-      "splitTip": "커서가 있는 행 위에서 표를 나눕니다. 문서가 다시 로드되며 이전 단계는 더 이상 실행 취소할 수 없습니다."
+      "splitTip": "커서가 있는 행 위에서 표를 나눕니다."
     },
     "row": {
       "title": "행 속성",

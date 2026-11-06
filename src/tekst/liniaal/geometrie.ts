@@ -14,7 +14,8 @@
  *  - `.canvas-page[data-page-index]` voor de plek op het scherm.
  */
 import type { DocxEditorRef, DocxPluginGeometry } from "@betteroffice/docx-react";
-import { deriveDisplayListTableFragmentsOnPages, type DisplayList, type DisplayListTableFragment } from "@betteroffice/docx/layout/render";
+import { deriveDisplayListSelectedCellRects, deriveDisplayListTableFragmentsOnPages, type DisplayList, type DisplayListTableFragment } from "@betteroffice/docx/layout/render";
+import { getekendRaster } from "./tabelraster";
 import type { Tabstop } from "../opmaak";
 import type { TabelLoc } from "../tabel/opdrachten";
 import type { TabelPayload } from "../tabel/logica";
@@ -66,7 +67,7 @@ export interface PaginaBeeld {
 }
 
 /** Celverhaal `<ouder>:t<n>:r<r>c<k>`. */
-const CEL = /^(.*):t(\d+):r(\d+)c(\d+)(?:~\d+)?$/;
+const CEL = /^(.*):t(\d+):r(\d+)c(\d+)(?:~[^:]*)?$/;
 
 export interface TabelPlekInfo {
   loc: TabelLoc;
@@ -398,8 +399,17 @@ export function tabelBeelden(
     for (const f of fragmenten) {
       const info = tabelPerSleutel.get(f.tableKey);
       if (!info) continue;
-      const raster = rasterVan(info.payload);
-      const lijnen = cumulatief(raster).map((t) => f.originX + t / TWIPS_PER_PX);
+      const cellen = info.payload.rows.flatMap((r, row) => {
+        let col = Number(r.trPr?.gridBefore ?? 0);
+        return r.cells.map((c) => {
+          const colSpan = Math.max(1, Number(c.tcPr?.colspan ?? 1));
+          const cel = { tableKey: f.tableKey, row, col, rowSpan: Math.max(1, Number(c.tcPr?.rowspan ?? 1)), colSpan };
+          col += colSpan;
+          return cel;
+        });
+      });
+      const vakken = deriveDisplayListSelectedCellRects(lijst, cellen, sleutelVan).filter((c) => c.pageIndex === f.pageIndex);
+      const { raster, lijnen } = getekendRaster(rasterVan(info.payload), f.originX, vakken);
       const banden = [...f.rowBands].sort((a, b) => a.rowIndex - b.rowIndex);
       const rijen = banden.map((b, i) => {
         const volgende = banden[i + 1];

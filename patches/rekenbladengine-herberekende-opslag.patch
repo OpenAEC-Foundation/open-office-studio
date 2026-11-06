@@ -1,0 +1,192 @@
+diff --git a/crates/betteroffice-xlsx/src/workbook.rs b/crates/betteroffice-xlsx/src/workbook.rs
+index ee8a2a3..cdae58f 100644
+--- a/crates/betteroffice-xlsx/src/workbook.rs
++++ b/crates/betteroffice-xlsx/src/workbook.rs
+@@ -2032,7 +2032,8 @@ impl Workbook {
+     /// calculation, formulas the file stored no result for. One that moves none of these
+     /// leaves it. Such a recalculation also notifies observers with an empty
+     /// [`UpdateOrigin::Recalculation`] event. It counts as an edit, so the next save writes
+-    /// the recalculated values; the recalculation at open does not.
++    /// the recalculated values. Ook de herberekening bij openen wordt bij
++    /// expliciet opslaan bewaard; die maakt geen gebruikersbewerking aan.
+     pub fn recalculate_all(&mut self, options: CalculationOptions) -> CalculationResult {
+         let result = self.recalculate(options);
+         self.edited_since_open = true;
+diff --git a/crates/betteroffice-xlsx/tests/workbook.rs b/crates/betteroffice-xlsx/tests/workbook.rs
+index 42a2d70..f8b1904 100644
+--- a/crates/betteroffice-xlsx/tests/workbook.rs
++++ b/crates/betteroffice-xlsx/tests/workbook.rs
+@@ -12,6 +12,7 @@ use betteroffice_xlsx::{
+ use std::collections::BTreeMap;
+ use std::sync::atomic::{AtomicUsize, Ordering};
+ use std::sync::{Arc, Mutex};
++use xlsx_model::CellProvider;
+ use yrs::Update as YrsUpdate;
+ use yrs::updates::decoder::Decode;
+ use yrs::updates::encoder::Encode;
+@@ -4380,11 +4381,17 @@ fn a_refused_array_formula_saves_its_rectangle() {
+         }
+     );
+     let saved = workbook.save().unwrap();
+-    assert_eq!(saved, bytes);
++    assert_ne!(saved, bytes);
+     let reopened = Workbook::open(&saved).unwrap();
+     let sheet = &reopened.model().sheets[0];
+     assert_eq!(sheet.array_formula(cell("C20")), Some(rectangle));
+-    assert_eq!(sheet.cell(cell("C20")).unwrap().value, CellValue::Empty);
++    // De zichtbare begrenzingsfout wordt bij expliciet opslaan ook bewaard.
++    assert_eq!(
++        sheet.cell(cell("C20")).unwrap().value,
++        CellValue::Error {
++            value: ErrorValue::Num
++        },
++    );
+     assert_eq!(
+         sheet.cell(cell("D25")).unwrap().value,
+         CellValue::Number { value: 7.0 }
+@@ -8010,7 +8017,7 @@ fn recalculation_fixture(formula: &str, cache: &str) -> Vec<u8> {
+ }
+ 
+ #[test]
+-fn recalculated_values_leave_source_caches_and_container_unchanged() {
++fn opslag_bewaart_de_bij_openen_herberekende_uitkomsten() {
+     let options = CalculationOptions {
+         now_serial: Some(45000.25),
+     };
+@@ -8029,7 +8036,15 @@ fn recalculated_values_leave_source_caches_and_container_unchanged() {
+                 workbook.model().sheets[0].cell(cell("B2")).unwrap().value,
+                 CellValue::Number { value },
+             );
+-            assert_eq!(workbook.save().unwrap(), source, "{formula} {cache}");
++            let direct = workbook.save().unwrap();
++            assert_eq!(
++                Workbook::open(&direct)
++                    .unwrap()
++                    .model()
++                    .value(SheetId(0), cell("B2")),
++                CellValue::Number { value },
++                "{formula} {cache}: expliciet opslaan zonder inhoudelijke bewerking",
++            );
+             workbook.recalculate_all(options);
+             let saved = workbook.save().unwrap();
+             assert_ne!(saved, source, "{formula} {cache}");
+@@ -10393,7 +10408,14 @@ fn an_edit_saves_recalculated_array_values() {
+     assert_eq!(value("C2"), Some(CellValue::Number { value: 2.0 }));
+     assert_eq!(value("C3"), Some(CellValue::Number { value: 3.0 }));
+ 
+-    assert_eq!(workbook.save().unwrap(), source);
++    let direct = Workbook::open(&workbook.save().unwrap()).unwrap();
++    for (address, expected) in [("C1", 1.0), ("C2", 2.0), ("C3", 3.0)] {
++        assert_eq!(
++            direct.model().value(SheetId(0), cell(address)),
++            CellValue::Number { value: expected },
++            "De uitvloeiende uitkomst {address} moet ook zonder bewerking worden opgeslagen",
++        );
++    }
+     workbook
+         .edit_cell(SheetId(0), cell("A4"), "4", CalculationOptions::default())
+         .unwrap();
+@@ -11283,3 +11305,74 @@ fn unrelated_currency_format_edits_refresh_formula_results() {
+         CellValue::Number { value: 13.0 }
+     );
+ }
++
++#[test]
++fn opslag_behoudt_het_containerarchief_bij_gelijke_uitkomsten() {
++    for (formula, cache) in [("1+2", "<v>3</v>"), ("ONBEKEND()", "<v>81</v>")] {
++        let source = recalculation_fixture(formula, cache);
++        assert_eq!(Workbook::open(&source).unwrap().save().unwrap(), source);
++        for workbook in [
++            Workbook::open_recalculated(&source, CalculationOptions::default()).unwrap(),
++            Workbook::open_collaborative_recalculated(&source, 703, CalculationOptions::default())
++                .unwrap(),
++        ] {
++            assert_eq!(workbook.save().unwrap(), source, "{formula}");
++        }
++    }
++}
++
++#[test]
++fn opslag_ververst_gedeelde_formules_en_waardetypen_met_behoud_van_onbekende_delen() {
++    let mut parts = preservation_fixture_parts();
++    set_test_part(&mut parts, "xl/worksheets/sheet1.xml", br#"<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetData><row r="1"><c r="A1"><v>1</v></c><c r="B1"><f t="shared" si="0" ref="B1:B2">A1*2</f><v>99</v></c><c r="C1" t="str"><f>IF(TRUE(),&quot;nieuw&quot;,&quot;oud&quot;)</f><v>oud</v></c><c r="D1" t="b"><f>1=1</f><v>0</v></c><c r="E1" t="e"><f>1/0</f><v>#VALUE!</v></c><c r="F1"><f>ONBEKEND()</f><v>81</v></c></row><row r="2"><c r="A2"><v>2</v></c><c r="B2"><f t="shared" si="0"/><v>99</v></c><c r="F2"><f>F1+1</f><v>82</v></c></row></sheetData></worksheet>"#.to_vec());
++    let source = ooxml_opc::rezip_parts(&parts).unwrap();
++    let workbook = Workbook::open_recalculated(&source, CalculationOptions::default()).unwrap();
++    let saved = workbook.save().unwrap();
++    let measured = Workbook::open(&saved).unwrap();
++    // B1=1×2=2, B2=2×2=4. De onbekende functie en haar afhankelijke cache blijven behouden.
++    for (address, value) in [
++        ("B1", CellValue::Number { value: 2.0 }),
++        ("B2", CellValue::Number { value: 4.0 }),
++        (
++            "C1",
++            CellValue::Text {
++                value: "nieuw".into(),
++            },
++        ),
++        ("D1", CellValue::Bool { value: true }),
++        (
++            "E1",
++            CellValue::Error {
++                value: ErrorValue::Div0,
++            },
++        ),
++        ("F1", CellValue::Number { value: 81.0 }),
++        ("F2", CellValue::Number { value: 82.0 }),
++    ] {
++        assert_eq!(
++            measured.model().value(SheetId(0), cell(address)),
++            value,
++            "{address}"
++        );
++    }
++    let source_parts = package_map(&source);
++    let saved_parts = package_map(&saved);
++    assert!(!saved_parts.contains_key("xl/calcChain.xml"));
++    for (name, bytes) in source_parts {
++        if [
++            "xl/worksheets/sheet1.xml",
++            "xl/workbook.xml",
++            "xl/_rels/workbook.xml.rels",
++            "[Content_Types].xml",
++            "xl/calcChain.xml",
++        ]
++        .contains(&name.as_str())
++        {
++            continue;
++        }
++        assert_eq!(saved_parts.get(&name), Some(&bytes), "{name}");
++    }
++    let sheet = String::from_utf8(saved_parts["xl/worksheets/sheet1.xml"].clone()).unwrap();
++    assert!(sheet.contains("si=\"0\""));
++    assert!(sheet.contains("ref=\"B1:B2\""));
++}
+diff --git a/crates/xlsx-parse/src/write.rs b/crates/xlsx-parse/src/write.rs
+index 714764a..ffbdcd3 100644
+--- a/crates/xlsx-parse/src/write.rs
++++ b/crates/xlsx-parse/src/write.rs
+@@ -417,9 +417,9 @@ pub(crate) fn serialize_workbook_with_package_and_origins(
+ #[doc(hidden)]
+ #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+ pub struct SaveEdits {
+-    /// the model differs from the one the package was read with. False means
+-    /// the caller guarantees an untouched model, which is returned as the
+-    /// source bytes; true drops the now-stale calculation chain.
++    /// Een inhoudelijke bewerking laat de berekeningsketen vervallen.
++    /// Ook zonder bewerking kan herberekening het model hebben veranderd;
++    /// de schrijver vergelijkt daarom altijd met het oorspronkelijke model.
+     pub changed: bool,
+     /// an edit moved cells a preserved part names but this crate cannot
+     /// rewrite. The caller resolves that against
+@@ -495,7 +495,10 @@ pub fn serialize_workbook_with_package_and_origins_after_edits_and_active_sheet_
+             "sheet origin count does not match workbook".to_owned(),
+         ));
+     }
+-    let edited = edits.changed;
++    // Openen herberekent formules zonder een gebruikersbewerking te registreren.
++    // De actuele uitkomsten moeten bij expliciet opslaan toch worden geschreven.
++    // Alleen een werkelijk gelijk model mag de oorspronkelijke bytes teruggeven.
++    let edited = edits.changed || wb != &package.original_workbook;
+     let claimed = claimed_origins(package, origins);
+     let view_plan = views::ViewPlan::new(package, &claimed, active_sheet)?;
+     if !edited

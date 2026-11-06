@@ -4,7 +4,7 @@
  */
 import { readFileSync } from "node:fs";
 import { beforeAll, beforeEach, describe, expect, it } from "vitest";
-import { strFromU8, unzipSync } from "fflate";
+import { strFromU8, strToU8, unzipSync, zipSync } from "fflate";
 import * as xlsx from "@betteroffice/xlsx";
 import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
 import { ontleedBereik } from "../lint/rekenblad-logica";
@@ -138,6 +138,54 @@ describe("bladen in een bestaand bestand (#61)", () => {
   });
 });
 
+describe("lege ISOWEEKNUM-aanroep (#120)", () => {
+  it("geeft een foutwaarde zonder de handle te beschadigen", () => {
+    h.editCell(0, 0, 0, "7");
+    h.editCell(0, 1, 0, "=ISOWEEKNUM()");
+    expect(waarde(h, 0, "A2").value).toEqual({ kind: "error", value: "#VALUE!" });
+
+    h.editCell(0, 2, 0, "=A1*2");
+    expect(waarde(h, 0, "A3").value).toEqual({ kind: "number", value: 14 });
+
+    const terug = xlsx.openWorkbook(h.save());
+    expect(waarde(terug, 0, "A2").formula).toBe("ISOWEEKNUM()");
+    expect(waarde(terug, 0, "A3").value).toEqual({ kind: "number", value: 14 });
+    terug.editCell(0, 3, 0, "=A1+1");
+    expect(waarde(terug, 0, "A4").value).toEqual({ kind: "number", value: 8 });
+    expect(terug.save()).toBeInstanceOf(Uint8Array);
+  });
+
+  it("verwerkt dezelfde formule bij plakken en heropenen", async () => {
+    selectie = "A2";
+    await plak(api, { tekst: "=ISOWEEKNUM()" });
+    expect(waarde(h, 0, "A2").value).toEqual({ kind: "error", value: "#VALUE!" });
+
+    const terug = xlsx.openWorkbook(h.save());
+    expect(waarde(terug, 0, "A2").formula).toBe("ISOWEEKNUM()");
+    terug.editCell(0, 2, 0, "=1+1");
+    expect(waarde(terug, 0, "A3").value).toEqual({ kind: "number", value: 2 });
+    expect(terug.save()).toBeInstanceOf(Uint8Array);
+  });
+
+  it("opent een bestand met de formule en laat bewerken en opslaan toe", () => {
+    const delen = unzipSync(readFileSync("public/templates/nieuw.xlsx"));
+    const pad = "xl/worksheets/sheet1.xml";
+    delen[pad] = strToU8(
+      strFromU8(delen[pad]).replace(
+        "<sheetData></sheetData>",
+        '<sheetData><row r="1"><c r="A1"><f>ISOWEEKNUM()</f><v></v></c></row></sheetData>',
+      ),
+    );
+    const geopend = xlsx.openWorkbook(zipSync(delen));
+
+    expect(waarde(geopend, 0, "A1").formula).toBe("ISOWEEKNUM()");
+    expect(waarde(geopend, 0, "A1").value).toEqual({ kind: "error", value: "#VALUE!" });
+    geopend.editCell(0, 0, 1, "=1+1");
+    expect(waarde(geopend, 0, "B1").value).toEqual({ kind: "number", value: 2 });
+    expect(geopend.save()).toBeInstanceOf(Uint8Array);
+  });
+});
+
 describe("klembord (#20)", () => {
   function vul() {
     h.editCell(0, 0, 0, "1");
@@ -190,6 +238,9 @@ describe("klembord (#20)", () => {
     expect(waarde(h, 0, "C20").displayText).toBe("");
   });
   it("plakt een HTML-tabel uit een ander programma met Nederlandse getallen en datums", async () => {
+    // De app legt de bestandsregio bij het openen vast. Dit kale testboek
+    // heeft die app-initialisatie niet doorlopen; geef de regio expliciet mee.
+    h.applyOps([{ type: "setDefinedName", name: "_OpenAEC_NumberLocale", refers_to: '"nl-NL"', scope: null, hidden: true }]);
     const html =
       "<html><body><table><tr><th>Post</th><th>Bedrag</th><th>Datum</th></tr>" +
       "<tr><td>Hout &amp; staal</td><td>1.234,50</td><td>1-2-2026</td></tr>" +
@@ -199,7 +250,7 @@ describe("klembord (#20)", () => {
     expect(waarde(h, 0, "B3").displayText).toBe("Hout & staal");
     expect(waarde(h, 0, "C3").value).toEqual({ kind: "number", value: 1234.5 });
     expect(waarde(h, 0, "D3").value).toEqual({ kind: "number", value: 46054 });
-    expect(waarde(h, 0, "D3").displayText).toBe("1-2-2026");
+    expect(waarde(h, 0, "D3").displayText).toBe("01-02-2026");
     expect(waarde(h, 0, "D4").value).toEqual({ kind: "number", value: 0.15 });
     expect(waarde(h, 0, "C4").displayText).toBe("");
   });

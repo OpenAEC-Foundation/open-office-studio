@@ -997,7 +997,15 @@
         "toNoteOnPage": "转到注释（第 {{page}} 页）"
       },
       "jumpFootnote": "脚注 {{number}}：{{text}}",
-      "jumpEndnote": "尾注 {{number}}：{{text}}"
+      "jumpEndnote": "尾注 {{number}}：{{text}}",
+      "convert": {
+        "title": "Convert notes",
+        "allFootnotes": "Convert all footnotes to endnotes",
+        "allEndnotes": "Convert all endnotes to footnotes",
+        "toEndnote": "Convert to endnote",
+        "toFootnote": "Convert to footnote",
+        "hint": "Content and formatting are preserved. Converted notes use the numbering of the destination kind."
+      }
     },
     "done": {
       "pageNumberInserted": "已插入页码",
@@ -1036,7 +1044,8 @@
       "footnoteInserted": "已插入脚注",
       "endnoteInserted": "已插入尾注",
       "noteFormatChanged": "已更改注释格式",
-      "marginsChanged": "已更改页边距"
+      "marginsChanged": "已更改页边距",
+      "notesConverted": "Notes converted"
     },
     "errors": {
       "notReady": "文档尚未就绪。",
@@ -1068,7 +1077,8 @@
       "endnoteBodyOnly": "尾注只能插入正文中，不能插入页眉、页脚或其他注释中。",
       "footnotePosition": "脚注位于页面底端或文字下方。",
       "endnotePosition": "尾注位于节的结尾或文档结尾。",
-      "endnoteRestartPerPage": "尾注不能每页重新编号。"
+      "endnoteRestartPerPage": "尾注不能每页重新编号。",
+      "noteConversionInvalid": "This note cannot be converted: note IDs or related parts are incomplete or ambiguous."
     }
   },
   "paragraph": {
@@ -1538,7 +1548,7 @@
       "toText": "转换为文本",
       "toTextTip": "将表格转换为文本",
       "split": "拆分表格",
-      "splitTip": "在光标所在行的上方拆分表格。文档将重新加载；之后无法撤消之前的步骤。",
+      "splitTip": "在光标所在行的上方拆分表格。",
       "textDirection": "文字方向",
       "textDirectionTip": "所选单元格中的文字方向",
       "textDirectionHorizontal": "水平",

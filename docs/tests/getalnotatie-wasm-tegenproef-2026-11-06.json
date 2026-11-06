@@ -1,0 +1,35 @@
+{
+  "wasm": "vendor/rekenbladengine/xlsx_wasm_bg.wasm",
+  "wasmSha256": "385e2c53ddcbddded2060cb1d749b6c0e9b3b84f87f73290c71e82932271a702",
+  "checks": [
+    {
+      "naam": "Gescheiden getalregio met echte pakket-JS en WASM",
+      "geslaagd": false,
+      "fout": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '1,234.50'\n- '1.234,50'\n"
+    },
+    {
+      "naam": "LCID-datumtaal en valuta behouden regionale cijfers",
+      "geslaagd": false,
+      "fout": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '\u20ac 1,234.50'\n- '\u20ac 1.234,50'\n      ^\n"
+    },
+    {
+      "naam": "Nederlandse LCID geeft Nederlandse datumwoorden in een Amerikaans bestand",
+      "geslaagd": false,
+      "fout": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'Thursday 1 January 2026'\n- 'donderdag 1 januari 2026'\n"
+    },
+    {
+      "naam": "Invoer, Undo/Redo en bewaring zijn \u00e9\u00e9n transactie",
+      "geslaagd": false,
+      "fout": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  {\n    kind: 'number',\n+   value: 1.234\n-   value: 1234\n  }\n"
+    },
+    {
+      "naam": "TEXT formule berekent opnieuw na regiowissel",
+      "geslaagd": false,
+      "fout": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '1,234.50'\n- '1.234,50'\n"
+    },
+    {
+      "naam": "Bestaande tekst zonder regio blijft tekst bij ongewijzigd vastleggen",
+      "geslaagd": true
+    }
+  ]
+}

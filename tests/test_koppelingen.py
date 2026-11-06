@@ -52,7 +52,7 @@ class Koppelingen(unittest.TestCase):
                     if soort:
                         self.assertIn(ext, catalogus[soort]['invoer'])
                     else:
-                        self.assertIn(ext, ('mdb', 'accdb'))
+                        self.assertIn(ext, ('mdb', 'accdb', 'ifcx'))
 
     def test_extensies_zijn_uniek(self):
         for platform in ('windows', 'macos', 'linux'):
@@ -65,9 +65,10 @@ class Koppelingen(unittest.TestCase):
         gevonden = set(re.findall(r'!insertmacro \$\{MACRO\} (\w+) ([\w.]+)', haak))
         self.assertEqual(gevonden, verwacht)
 
-    def test_dertig_formaten_inclusief_access(self):
+    def test_eenendertig_formaten_inclusief_ifcx(self):
         alle = per_extensie(koppelingen)
-        self.assertEqual(len(alle), 30)
+        self.assertEqual(len(alle), 31)
+        self.assertEqual(alle['ifcx'][0], 'OpenAEC.OfficeStudio.IFCX')
         self.assertEqual(alle['mdb'][0], 'OpenAEC.OfficeStudio.Database')
         self.assertEqual(alle['accdb'][0], 'OpenAEC.OfficeStudio.Database')
 

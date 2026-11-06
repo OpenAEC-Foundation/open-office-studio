@@ -241,9 +241,13 @@ interface Koppeling {
  * met dezelfde tekst, buiten de inhoudsopgave. Geeft per kop de alinea en een
  * bestaande _Toc-bladwijzer.
  */
-function koppelKoppen(doc: WordDocument, koppen: Kop[], buiten: { start: number; eind: number } | null): Koppeling[] {
+function koppelKoppen(doc: WordDocument, koppen: Kop[], buiten: { start: number; eind: number } | null, markering: string | null = null): Koppeling[] {
   const alineas = zoekAlle(doc.body, "p").filter((p) => !buiten || p.eind <= buiten.start || p.start >= buiten.eind);
-  const teksten = alineas.map((p) => vergelijkTekst(alineaTekst(p)));
+  // De tijdelijke cursor op een kop is geen deel van de gezochte koptekst.
+  const teksten = alineas.map((p) => {
+    const tekst = alineaTekst(p);
+    return vergelijkTekst(markering ? tekst.replace(markering, "") : tekst);
+  });
   let vanaf = 0;
   return koppen.map((kop) => {
     const doel = vergelijkTekst(kop.tekst);
@@ -347,7 +351,7 @@ export function voegInhoudsopgaveIn(bytes: Uint8Array, markering: string | null,
     voorbereiden(doc, opties);
     doc = openDocument(pakket);
     // Eerst bladwijzers op de koppen (de markering blijft daarbij staan).
-    const koppelingen = koppelKoppen(doc, koppen, null);
+    const koppelingen = koppelKoppen(doc, koppen, null, markering);
     const bw = bladwijzersToevoegen(doc, koppelingen);
     if (bw.length) {
       pakket.schrijf(doc.pad, vervang(doc.xml, bw));

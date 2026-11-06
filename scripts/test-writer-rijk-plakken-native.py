@@ -62,7 +62,15 @@ async def proef(a):
 
     def beeld(naam):
         g = v.get_geometry()
-        raw = v.get_image(0, 0, g.width, g.height, X.ZPixmap, 4294967295)
+        wortel = d.screen().root
+        oorsprong = wortel.translate_coords(v, 0, 0)
+        scherm = wortel.get_geometry()
+        assert 0 <= oorsprong.x and 0 <= oorsprong.y
+        assert oorsprong.x + g.width <= scherm.width and oorsprong.y + g.height <= scherm.height
+        # Een GTK-tooltip is een apart X-venster. XGetImage op alleen de app
+        # geeft voor bedekte pixels ongedefinieerde (hier zwarte) waarden.
+        # Lees het zichtbare eigen testscherm, begrensd tot het appvenster.
+        raw = wortel.get_image(oorsprong.x, oorsprong.y, g.width, g.height, X.ZPixmap, 4294967295)
         Image.frombytes('RGB', (g.width, g.height), raw.data, 'raw', 'BGRX').save(a.uitvoer / (naam + '.png'))
 
     def key(*toetsen):
@@ -280,14 +288,20 @@ async def proef(a):
             print('Volledige actuele layout:', json.dumps(r['volledige_layout']), flush=True)
             # De statusbalk telt gedebounced. Een direct beeld kan nog de oude
             # helft tonen; eis begrensd de werkelijke, bijgewerkte totalen.
-            tekens = len(stand['body'].encode('utf-16-le')) // 2
+            # De documenttotalen omvatten ook de zichtbare tabelcellen; alleen
+            # de hoofdtekst tellen zou de herstelde statistiek ten onrechte afkeuren.
+            # Gebruik de onafhankelijk uit de tabelstructuur gelezen celteksten,
+            # zodat verdwenen/of losgeraakte verhalen niet stil worden meegeteld.
+            body_tekens = len(stand['body'].encode('utf-16-le')) // 2
+            cel_tekens = sum(len(c['tekst'].encode('utf-16-le')) // 2 for c in stand['cellen'])
+            tekens = body_tekens + cel_tekens
             verwachte_tekens = f', {tekens:,} characters'
             verwachte_paginas = f" of {stand['paginas']:,}"
             status = await p.run(
                 "let eind=performance.now()+8000;while(true){let b=Array.from(document.querySelectorAll('.office-statusbalk .statusbalk-module button')).map(e=>e.textContent||'');"
                 "if(b[0]?.endsWith(" + json.dumps(verwachte_paginas) + ")&&b[1]?.includes(" + json.dumps(verwachte_tekens) + "))return b;"
                 "if(performance.now()>eind)throw Error('Statusbalktotalen blijven achter: '+JSON.stringify(b));await new Promise(r=>setTimeout(r,100));}", t=10)
-            r['statusbalk_na_rust'] = {'paginas': stand['paginas'], 'body_tekens_utf16': tekens, 'grens_ms': 8000, 'knoppen': status}
+            r['statusbalk_na_rust'] = {'paginas': stand['paginas'], 'body_tekens_utf16': body_tekens, 'cel_tekens_utf16': cel_tekens, 'document_tekens_utf16': tekens, 'grens_ms': 8000, 'knoppen': status}
             beeld('na-plakken')
             # Bewaar een aparte kopie; de geopende bron blijft onopgeslagen.
             data = await p.run('let b=new Uint8Array(await api().save());return Array.from(b);', t=90)
@@ -319,6 +333,12 @@ async def proef(a):
             await p.run("let eind=performance.now()+30000;while(!api()?.getEditorRef()?.getYrsSession()){if(performance.now()>eind)throw Error('Geen nieuw document na verwerpen');await new Promise(r=>setTimeout(r,100))}return true;")
             assert len(await p.ev("api().getEditorRef().getYrsSession().paragraphs('body').map(p=>p.text).join('')")) == 0
             beeld('nieuw-na-verwerpen')
+            # Bewaar daarnaast het papier zonder de nog boven de startknop
+            # hangende tooltip; geen canvasinhoud of documentbron aanpassen.
+            subprocess.run(['xdotool', 'mousemove', '--window', str(v.id), '1350', '170'], check=True)
+            await asyncio.sleep(1)
+            beeld('nieuw-na-verwerpen-zonder-tooltip')
+            r['beeldbron'] = 'Eigen geïsoleerd X11-rootvenster, begrensd tot de app; inclusief echte overlappende vensters.'
             r['nieuw_document_na_verwerpen'] = True
             assert hashlib.sha256(bron.read_bytes()).hexdigest() == r['bron_sha256'], 'Niet opslaan wijzigde bron'
             fouten = await p.fouten()

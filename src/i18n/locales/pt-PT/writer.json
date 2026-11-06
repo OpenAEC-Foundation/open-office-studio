@@ -1017,7 +1017,15 @@
         "toNoteOnPage": "Ir para a nota (p. {{page}})"
       },
       "jumpFootnote": "Nota de rodapé {{number}}: {{text}}",
-      "jumpEndnote": "Nota de fim {{number}}: {{text}}"
+      "jumpEndnote": "Nota de fim {{number}}: {{text}}",
+      "convert": {
+        "title": "Convert notes",
+        "allFootnotes": "Convert all footnotes to endnotes",
+        "allEndnotes": "Convert all endnotes to footnotes",
+        "toEndnote": "Convert to endnote",
+        "toFootnote": "Convert to footnote",
+        "hint": "Content and formatting are preserved. Converted notes use the numbering of the destination kind."
+      }
     },
     "done": {
       "pageNumberInserted": "Número de página inserido",
@@ -1055,7 +1063,8 @@
       "tocRemoved": "Índice removido",
       "footnoteInserted": "Nota de rodapé inserida",
       "endnoteInserted": "Nota de fim inserida",
-      "noteFormatChanged": "Formato das notas alterado"
+      "noteFormatChanged": "Formato das notas alterado",
+      "notesConverted": "Notes converted"
     },
     "errors": {
       "notReady": "O documento ainda não está pronto.",
@@ -1087,7 +1096,8 @@
       "endnoteBodyOnly": "Uma nota de fim só pode ser inserida no texto principal, não em um cabeçalho, rodapé ou outra nota.",
       "footnotePosition": "As notas de rodapé ficam no fim da página ou abaixo do texto.",
       "endnotePosition": "As notas de fim ficam no fim da seção ou do documento.",
-      "endnoteRestartPerPage": "As notas de fim não podem reiniciar a cada página."
+      "endnoteRestartPerPage": "As notas de fim não podem reiniciar a cada página.",
+      "noteConversionInvalid": "This note cannot be converted: note IDs or related parts are incomplete or ambiguous."
     }
   },
   "paragraph": {
@@ -1559,7 +1569,7 @@
       "toText": "Converter em texto",
       "toTextTip": "Converter a tabela em texto",
       "split": "Dividir tabela",
-      "splitTip": "Divide a tabela acima da linha com o cursor. O documento é recarregado; Anular deixa de funcionar para as etapas anteriores."
+      "splitTip": "Divide a tabela acima da linha com o cursor."
     },
     "row": {
       "title": "Propriedades da linha",

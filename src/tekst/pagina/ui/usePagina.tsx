@@ -50,7 +50,7 @@ import {
   type PaginanummerOpties,
 } from "../kopvoet.ts";
 import { STANDAARD_INHOUD, leesInhoudsopgave, verwijderInhoudsopgave, voegInhoudsopgaveIn, werkInhoudsopgaveBij, type InhoudOpties } from "../inhoudsopgave.ts";
-import { leesNootInstellingen, voegNootIn, zetNootInstellingen, type NootSoort } from "../noten.ts";
+import { converteerNoten, leesNootInstellingen, voegNootIn, zetNootInstellingen, type NootSoort } from "../noten.ts";
 import { bewerkKopVoet, haalKoppen, haalNoten, herstelPlek, kopVoetActief, leesPlek, sectieStand, sluitKopVoet, wachtOpIndeling, zetMarkering, type NootInfo } from "./engine.ts";
 import { leesMelding, herladenBevestigd, neemBeurt, neemTaak, onthoudBevestiging, planNaHerladen, sluitMelding, toonMelding, volgMelding, type NaHerladen } from "./staat.ts";
 import {
@@ -600,6 +600,15 @@ export function usePagina() {
         <NotenLijst
           noten={noten}
           sluit={sluit}
+          omzetten={bewerkbaar ? (soort, id) => {
+            void pakket({
+              klaar: t("page.done.notesConverted"),
+              werk: (bytes) => {
+                const uit = converteerNoten(bytes, soort, id === undefined ? undefined : [id]);
+                return uit.aantal ? uit.bytes : null;
+              },
+            });
+          } : undefined}
           gaNaar={(n, waar) => {
             setVenster(null);
             gaNaarNoot(editor, n, waar);

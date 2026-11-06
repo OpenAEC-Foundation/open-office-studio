@@ -34,9 +34,6 @@ export interface Markering {
   kleur: string;
 }
 
-/** Kleuren zoals gangbare rekenbladen verwijzingen tonen. */
-export const VERWIJZINGSKLEUREN = ["#2b6cd8", "#c43d3d", "#7a3fc4", "#1f8a4c", "#c4721f", "#b8379a", "#2a8d96", "#7d6a12"];
-
 export interface RekenbladLaag {
   plugin: XlsxPlugin;
   selectie: () => XlsxPluginSelection;
@@ -120,12 +117,14 @@ export function maakRekenbladLaag(): RekenbladLaag {
       selectie = context.snapshot.selection;
       meld();
     },
-    onEvent(_, event) {
+    onEvent(context, event) {
       if (event.type === "selection-change") {
         selectie = event.selection;
         meld();
       } else if (event.type === "load") {
-        selectie = null;
+        // De engine kan de eerste selectie al vóór deze laadmelding hebben
+        // gepubliceerd. Neem de actuele selectie van dit document over.
+        selectie = context.snapshot.selection;
         markeringen = [];
         meld();
       }

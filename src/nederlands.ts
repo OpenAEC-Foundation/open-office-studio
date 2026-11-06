@@ -4,6 +4,12 @@ import type { Translations as DiaVertaling } from "@betteroffice/pptx-i18n";
 
 export const tekstNl: TekstVertaling = {
   _lang: "nl",
+  contextMenu: {
+    addComment: "Opmerking",
+    resizeImage: "Afbeelding vergroten of verkleinen",
+    moveImage: "Afbeelding verplaatsen",
+    columnWidth: "Kolombreedte",
+  },
   common: {
     cancel: "Annuleren",
     insert: "Invoegen",
@@ -25,6 +31,9 @@ export const tekstNl: TekstVertaling = {
     send: "Versturen",
   },
   toolbar: {
+    imageWrap: {
+      current: "Huidig"
+    },
     ariaLabel: "Opmaak",
     file: "Bestand",
     format: "Opmaak",
@@ -77,6 +86,12 @@ export const tekstNl: TekstVertaling = {
   },
   // Enginevensters die vanuit Tabelopmaak, Afbeeldingsopmaak en Ctrl+K opengaan.
   dialogs: {
+    objectGeometry: {
+      left: "Links (px)",
+      top: "Boven (px)",
+      width: "Breedte (px)",
+      height: "Hoogte (px)"
+    },
     hyperlink: {
       titleEdit: "Koppeling bewerken",
       titleInsert: "Koppeling invoegen",
@@ -214,6 +229,7 @@ export const tekstNl: TekstVertaling = {
     zoomLevel: "Zoomniveau",
   },
   table: {
+    viewGridlines: "Rasterlijnen weergeven",
     insertRowAbove: "Rij boven invoegen",
     insertRowBelow: "Rij onder invoegen",
     insertColumnLeft: "Kolom links invoegen",
@@ -399,6 +415,20 @@ export const tekstNl: TekstVertaling = {
     },
   },
   editor: {
+    documentInput: "Documentinvoer",
+    documentPreview: "Documentvoorbeeld",
+    closeNote: "Noot sluiten",
+    recoverableText: "Herstelbare documenttekst",
+    dismissDraft: "Concept verwijderen",
+    readDocumentText: "Documenttekst lezen",
+    documentText: "Documenttekst",
+    previousText: "Vorige tekst",
+    nextText: "Volgende tekst",
+    addComment: "Opmerking toevoegen",
+    noteProperties: "Nooteigenschappen",
+    recoverableTextNotice: "Deze tekst kon niet worden verwerkt. Kopieer de tekst om het concept te bewaren en sluit daarna het concept.",
+    documentTextUnavailable: "Documenttekst is niet beschikbaar.",
+    documentTextChanged: "De documenttekst is gewijzigd. Lees de tekst opnieuw.",
     toggleCommentsSidebar: "Opmerkingen tonen",
     showDocumentOutline: "Navigatie tonen",
     editing: "Bewerken",
@@ -431,6 +461,13 @@ export const tekstNl: TekstVertaling = {
     replyCount: "{count, plural, one {# antwoord} other {# antwoorden}}",
   },
   trackedChanges: {
+    agent: "agent",
+    previousChange: "Vorige wijziging",
+    nextChange: "Volgende wijziging",
+    changeBy: "Wijziging door {author}",
+    changeCount: "{count, plural, one {# wijziging} other {# wijzigingen}}",
+    acceptAll: "Alles accepteren",
+    acceptAllChanges: "Alle wijzigingen accepteren",
     unknown: "Onbekend",
     replaced: "Vervangen:",
     with: "door",
@@ -457,6 +494,11 @@ export const tekstNl: TekstVertaling = {
     comment: "Opmerking",
   },
   errors: {
+    stillOpening: "Dit document wordt nog geopend. Typen kan zodra het gereed is.",
+    failedToLoadDescription: "Het bestand kan beschadigd zijn of onderdelen bevatten die deze editor nog niet ondersteunt.",
+    editorUnavailable: "De editor kon niet worden geladen",
+    editorUnavailableDescription: "Controleer de verbinding en laad de pagina opnieuw.",
+    reloadPage: "Pagina opnieuw laden",
     loadingDocument: "Document laden…",
     noDocumentLoaded: "Er is geen document geladen",
     failedToLoad: "Het document kon niet worden geladen",

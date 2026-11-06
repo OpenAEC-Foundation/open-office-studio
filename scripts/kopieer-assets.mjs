@@ -1,4 +1,6 @@
 import { cp, mkdir } from "node:fs/promises";
+import { controleerStudioIconen } from "./controleer-studio-iconen.mjs";
+await controleerStudioIconen();
 await mkdir("public/voorbeelden", { recursive: true });
 for (const naam of [
   "Ontwerpnotitie.docx",

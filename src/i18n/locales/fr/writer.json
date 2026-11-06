@@ -1017,7 +1017,15 @@
         "toNoteOnPage": "Atteindre la note (p. {{page}})"
       },
       "jumpFootnote": "Note de bas de page {{number}} : {{text}}",
-      "jumpEndnote": "Note de fin {{number}} : {{text}}"
+      "jumpEndnote": "Note de fin {{number}} : {{text}}",
+      "convert": {
+        "title": "Convert notes",
+        "allFootnotes": "Convert all footnotes to endnotes",
+        "allEndnotes": "Convert all endnotes to footnotes",
+        "toEndnote": "Convert to endnote",
+        "toFootnote": "Convert to footnote",
+        "hint": "Content and formatting are preserved. Converted notes use the numbering of the destination kind."
+      }
     },
     "done": {
       "pageNumberInserted": "Numéro de page inséré",
@@ -1056,7 +1064,8 @@
       "footnoteInserted": "Note de bas de page insérée",
       "endnoteInserted": "Note de fin insérée",
       "noteFormatChanged": "Format des notes modifié",
-      "marginsChanged": "Marges modifiées"
+      "marginsChanged": "Marges modifiées",
+      "notesConverted": "Notes converted"
     },
     "errors": {
       "notReady": "Le document n'est pas encore prêt.",
@@ -1088,7 +1097,8 @@
       "endnoteBodyOnly": "Une note de fin ne peut être insérée que dans le texte principal, pas dans un en-tête, un pied de page ou une autre note.",
       "footnotePosition": "Les notes de bas de page sont placées en bas de la page ou sous le texte.",
       "endnotePosition": "Les notes de fin sont placées à la fin de la section ou du document.",
-      "endnoteRestartPerPage": "Les notes de fin ne peuvent pas recommencer à chaque page."
+      "endnoteRestartPerPage": "Les notes de fin ne peuvent pas recommencer à chaque page.",
+      "noteConversionInvalid": "This note cannot be converted: note IDs or related parts are incomplete or ambiguous."
     }
   },
   "paragraph": {
@@ -1560,7 +1570,7 @@
       "toText": "Convertir en texte",
       "toTextTip": "Convertir le tableau en texte",
       "split": "Fractionner le tableau",
-      "splitTip": "Fractionne le tableau au-dessus de la ligne contenant le curseur. Le document est rechargé ; Annuler ne fonctionne alors plus pour les étapes précédentes.",
+      "splitTip": "Fractionne le tableau au-dessus de la ligne contenant le curseur.",
       "textDirection": "Orientation du texte",
       "textDirectionTip": "Orientation du texte dans les cellules sélectionnées",
       "textDirectionHorizontal": "Horizontale",

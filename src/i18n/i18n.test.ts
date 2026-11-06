@@ -20,6 +20,7 @@ import i18next, { huidigeTaal, NAMESPACES, zetTaal } from "./config";
 import { bepaalTaal, INTERFACETALEN, isRtl, TAALCODES, TAALNAMEN, zoekTaal } from "./talen";
 import { formatDatum, formatGetal, formatLijst, meervoudVorm } from "./opmaak";
 import { ENGINE_BRON, laadEngineVertaling } from "./engine";
+import { uiLettertypen } from "./lettertypen";
 import { tekstEs, rekenbladEs, diaEs } from "./engine/es";
 // @ts-expect-error -- JavaScript-module zonder typen
 import { controleerVertalingen } from "../../scripts/controleer-i18n.mjs";
@@ -50,16 +51,26 @@ describe("taalkeuze", () => {
     expect(zoekTaal("nn-NO")).toBe("nb");
     expect(zoekTaal("iw")).toBe("he");
     expect(zoekTaal("en_US")).toBe("en");
+    expect(zoekTaal("lo-LA")).toBe("lo");
+    expect(zoekTaal("lo")).toBe("lo");
     expect(zoekTaal("NL-be")).toBe("nl");
     expect(zoekTaal("xx")).toBeNull();
   });
 
-  it("heeft 31 talen met een eigen naam en RTL voor ar en he", () => {
-    expect(TAALCODES).toHaveLength(31);
+  it("heeft 32 talen met een eigen naam en RTL voor ar en he", () => {
+    expect(TAALCODES).toHaveLength(32);
     for (const code of TAALCODES) expect(TAALNAMEN[code]).toBeTruthy();
     expect(isRtl("ar")).toBe(true);
     expect(isRtl("he")).toBe(true);
     expect(isRtl("nl")).toBe(false);
+  });
+});
+
+describe("Laotiaanse interface", () => {
+  it("bouwt een lettertypestapel zonder ongeldige CJK-variant", () => {
+    const stapel = uiLettertypen("lo");
+    expect(stapel).toContain("Noto Sans Lao");
+    expect(stapel).toContain("Saysettha OT");
   });
 });
 
@@ -153,6 +164,7 @@ describe("engine-vertalingen", () => {
     expect(ENGINE_BRON.de).toBe("enginepakket");
     expect(ENGINE_BRON["pt-PT"]).toBe("geleend");
     expect(ENGINE_BRON.ja).toBe("terugval");
+    expect(ENGINE_BRON.lo).toBe("terugval");
     expect((await laadEngineVertaling("nl")).tekst._lang).toBe("nl");
     expect((await laadEngineVertaling("en")).tekst._lang).toBe("en");
     const de = await laadEngineVertaling("de");
@@ -160,6 +172,8 @@ describe("engine-vertalingen", () => {
     expect((await laadEngineVertaling("pt-PT")).tekst._lang).toBe("pt-BR");
     expect((await laadEngineVertaling("zh-CN")).dia._lang).toBe("zh-CN");
     expect((await laadEngineVertaling("ja")).tekst._lang).toBe("en");
+    const lo = await laadEngineVertaling("lo");
+    expect([lo.tekst._lang, lo.rekenblad._lang, lo.dia._lang]).toEqual(["en", "en", "en"]);
     expect((await laadEngineVertaling("es")).tekst).toBe(tekstEs);
   });
 
@@ -196,6 +210,7 @@ describe("controle-script", () => {
       woord_one: "{{count}} woord",
       woord_other: "{{count}} woorden",
     });
+    await schrijf("lo", { a: "ສະບາຍດີ {{naam}}", b: { c: "ຂໍ້ຄວາມ" }, woord_one: "{{count}} ຂໍ້ຄວາມ", woord_other: "{{count}} ຂໍ້ຄວາມ" });
     await schrijf("en", {
       a: "Hello {{naam}}",
       b: { c: "Text" },

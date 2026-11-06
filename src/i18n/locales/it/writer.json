@@ -1017,7 +1017,15 @@
         "toNoteOnPage": "Vai alla nota (p. {{page}})"
       },
       "jumpFootnote": "Nota a piè di pagina {{number}}: {{text}}",
-      "jumpEndnote": "Nota di chiusura {{number}}: {{text}}"
+      "jumpEndnote": "Nota di chiusura {{number}}: {{text}}",
+      "convert": {
+        "title": "Convert notes",
+        "allFootnotes": "Convert all footnotes to endnotes",
+        "allEndnotes": "Convert all endnotes to footnotes",
+        "toEndnote": "Convert to endnote",
+        "toFootnote": "Convert to footnote",
+        "hint": "Content and formatting are preserved. Converted notes use the numbering of the destination kind."
+      }
     },
     "done": {
       "pageNumberInserted": "Numero di pagina inserito",
@@ -1056,7 +1064,8 @@
       "footnoteInserted": "Nota a piè di pagina inserita",
       "endnoteInserted": "Nota di chiusura inserita",
       "noteFormatChanged": "Formato note modificato",
-      "marginsChanged": "Margini modificati"
+      "marginsChanged": "Margini modificati",
+      "notesConverted": "Notes converted"
     },
     "errors": {
       "notReady": "Il documento non è ancora pronto.",
@@ -1088,7 +1097,8 @@
       "endnoteBodyOnly": "Una nota di chiusura può essere inserita solo nel testo principale, non in un'intestazione, un piè di pagina o un'altra nota.",
       "footnotePosition": "Le note a piè di pagina vengono collocate in fondo alla pagina o sotto il testo.",
       "endnotePosition": "Le note di chiusura vengono collocate alla fine della sezione o del documento.",
-      "endnoteRestartPerPage": "Le note di chiusura non possono ricominciare a ogni pagina."
+      "endnoteRestartPerPage": "Le note di chiusura non possono ricominciare a ogni pagina.",
+      "noteConversionInvalid": "This note cannot be converted: note IDs or related parts are incomplete or ambiguous."
     }
   },
   "paragraph": {
@@ -1560,7 +1570,7 @@
       "toText": "Converti in testo",
       "toTextTip": "Converti la tabella in testo",
       "split": "Dividi tabella",
-      "splitTip": "Divide la tabella sopra la riga con il cursore. Il documento viene ricaricato; Annulla non funziona più per i passaggi precedenti.",
+      "splitTip": "Divide la tabella sopra la riga con il cursore.",
       "textDirection": "Direzione testo",
       "textDirectionTip": "Direzione del testo nelle celle selezionate",
       "textDirectionHorizontal": "Orizzontale",

@@ -20,12 +20,14 @@ import {
   EditorZichtbaar,
   registreerWijziging,
 } from "./lint/editorApi";
-import { useNederlandseInvoer } from "./useNederlandseInvoer";
+import { metBeginregio } from "./rekenblad/werkmapregio";
+import { intlLocale } from "./i18n/config";
 import { useHerladen } from "./grafieken/ui/herladen";
 import { laadFiltersUitBestand, maakRekenbladLaag } from "./lint/rekenblad-laag";
 import { werkboekBytes } from "./lint/rekenblad-filter";
 import { werkEigenschappenBij } from "./tekst/info/opslaan";
 import { maakInterneOpslag } from "./tekst/gedeeld/interneOpslag";
+import type { Serialiseerder } from "./opslag";
 import { koppelEditor } from "./export/editorKoppeling";
 import { lettertypeModule } from "./lettertypen/provider";
 import { laadSysteemLettertypen } from "./lettertypen/systeem";
@@ -45,6 +47,7 @@ import { donkerePapierkleur, installeerPapierWeergave } from "./tekst/papierWeer
 import { RustPlakLaag } from "./tekst/bewerken/RustPlakLaag";
 import { meldWriterEngineFout } from "./tekst/engineFouten";
 import type { SectionProperties } from "@betteroffice/docx/types/document";
+import { herstelLijstvervolg } from "./tekst/lijst/vervolg";
 
 const PRESENTATIE_PLUGINS = [tekstSelectiePlugin];
 import { usePresentatieStatus, useRekenbladStatus } from "./status/useEditorStatus";
@@ -67,7 +70,7 @@ export interface EditorProps {
   fout: (f: Error) => void;
   /** Melding rechtsonder met een eigen toon; zonder valt het terug op `fout`. */
   melding?: (tekst: string, toon: "info" | "waarschuwing") => void;
-  registreer: (opslaan: (() => Promise<Uint8Array>) | null) => void;
+  registreer: (opslaan: Serialiseerder | null) => void;
   opslaan: () => void;
   bestandsmenu: () => void;
   inactief: boolean;
@@ -76,6 +79,10 @@ export interface EditorProps {
   /** Actuele documentzoom voor de statusbalk; null zolang onbekend. */
   zoom: (zoom: number | null) => void;
 }
+// De bestaande synchrone lint-API heeft deze compatibiliteitsprojectie nodig.
+// Haar vertraagde melding mag de opslagstatus niet opnieuw wijzigen.
+const behoudSynchroneProjectie = () => {};
+
 export default function OfficeEditor(props: EditorProps) {
   // Engine-teksten in de interfacetaal; wisselt live mee zonder het document te herladen.
   const engineTaal = useEngineVertaling();
@@ -87,6 +94,9 @@ export default function OfficeEditor(props: EditorProps) {
   const [paginaVolger] = useState(() => maakPaginaVolger(() => docx.current));
   useEffect(() => () => paginaVolger.stop(), [paginaVolger]);
   const [interneOpslag] = useState(maakInterneOpslag);
+  const stopLijstvervolg = useRef<(() => void) | null>(null);
+  useEffect(() => () => stopLijstvervolg.current?.(), []);
+  const exporteren = useRef(false);
   const [fontFaces, setFontFaces] = useState<PptxFontFace[]>([]);
   const [documentLettertypen, setDocumentLettertypen] = useState<readonly string[]>([]);
   const [liniaal, setLiniaal] = useState(true);
@@ -129,6 +139,8 @@ export default function OfficeEditor(props: EditorProps) {
     gewijzigd: () => recent.current.gewijzigd(),
     // De oude engine-handles worden bij het hermounten opgeruimd; niemand mag ze dan nog lezen.
     voorVervangen: () => {
+      stopLijstvervolg.current?.();
+      stopLijstvervolg.current = null;
       setDocumentGereed(false);
       setRekenbladApi(null);
       setPresentatieApi(null);
@@ -149,11 +161,16 @@ export default function OfficeEditor(props: EditorProps) {
       if (!ref?.getDocument())
         throw new Error(i18next.t("shell:errors.documentNotReady"));
       return interneOpslag.voerUit(async () => {
-        await ref.flushPendingInput();
-        const bytes = await ref.save();
-        if (!bytes) throw new Error(i18next.t("shell:errors.documentSaveFailed"));
-        // Wachtende eigenschappen uit Bestand › Info gaan mee door het herladen.
-        return werkEigenschappenBij(herladenRecent.current.api, ref, new Uint8Array(bytes), false);
+        exporteren.current = true;
+        try {
+          await ref.flushPendingInput();
+          const bytes = await ref.save();
+          if (!bytes) throw new Error(i18next.t("shell:errors.documentSaveFailed"));
+          // Wachtende eigenschappen uit Bestand › Info gaan mee door het herladen.
+          return await werkEigenschappenBij(herladenRecent.current.api, ref, new Uint8Array(bytes), false);
+        } finally {
+          exporteren.current = false;
+        }
       });
     },
   });
@@ -178,7 +195,11 @@ export default function OfficeEditor(props: EditorProps) {
     }),
     [rekenbladApi, presentatieApi, herladen.api, herladen.grafiekSelectie, rekenbladLaag],
   );
-  useNederlandseInvoer(rekenbladHost, rekenbladApi);
+  const beginRegio = useRef(intlLocale());
+  const rekenbladBytes = useMemo(
+    () => props.soort === "xlsx" ? metBeginregio(herladen.bytes, beginRegio.current) : herladen.bytes,
+    [herladen.bytes, props.soort],
+  );
   // Spellingcontrole en autocorrectie (#21): golflijnen, menu, F7, statusbalk.
   const spelling = useTekstSpelling(
     () => docx.current,
@@ -225,24 +246,64 @@ export default function OfficeEditor(props: EditorProps) {
   );
   useEffect(() => {
     if (props.soort !== "docx" || !documentGereed) return;
-    props.registreer(async () => {
+    let actief = true;
+    const ref = docx.current;
+    // De eerste pagina kan al getekend zijn vóór de synchrone sessie gereed
+    // is. Wacht daarom op dezelfde invoergrens als de lintbewerkingen.
+    void ref?.flushPendingInput().then(() => {
+      if (!actief) return;
+      const sessie = docx.current?.getEditorRef()?.getYrsSession();
+      stopLijstvervolg.current?.();
+      stopLijstvervolg.current = sessie ? herstelLijstvervolg(sessie) : null;
+    }).catch((fout) => recent.current.fout(fout));
+    return () => {
+      actief = false;
+      stopLijstvervolg.current?.();
+      stopLijstvervolg.current = null;
+    };
+  }, [documentGereed, herladen.sleutel, props.soort]);
+  useEffect(() => {
+    if (props.soort !== "docx" || !documentGereed) return;
+    props.registreer(Object.assign(async () => {
       const ref = docx.current;
       if (!ref?.getDocument())
         throw new Error(i18next.t("shell:errors.documentNotReady"));
       return interneOpslag.voerUit(async () => {
-        await ref.flushPendingInput();
-        const bytes = await ref.save();
-        if (!bytes) throw new Error(i18next.t("shell:errors.documentSaveFailed"));
-        // docProps (Bestand › Info, statistieken, bewerkingstijd) bijwerken.
-        return werkEigenschappenBij(herladen.api, ref, new Uint8Array(bytes), true);
+        exporteren.current = true;
+        try {
+          await ref.flushPendingInput();
+          const bytes = await ref.save();
+          if (!bytes) throw new Error(i18next.t("shell:errors.documentSaveFailed"));
+          // docProps (Bestand › Info, statistieken, bewerkingstijd) bijwerken.
+          return await werkEigenschappenBij(herladen.api, ref, new Uint8Array(bytes), true);
+        } finally {
+          exporteren.current = false;
+        }
       });
-    });
-    // Geen proef-opslag tijdens het openen: die concurreert met de eerste
-    // bewerking om de worker. Opslaan gebeurt op verzoek of voor herstel.
+    }, {
+      bereidVoor: async () => {
+        const ref = docx.current;
+        if (!ref) throw new Error(i18next.t("shell:errors.documentNotReady"));
+        await ref.flushPendingInput();
+      },
+    }));
+    // Alleen de browser warmt de opslagmodule vooraf op; alle exports delen dezelfde rij.
+    let proef = 0;
+    if (!("__TAURI_INTERNALS__" in window))
+      proef = window.setTimeout(() => {
+        const ref = docx.current;
+        if (exporteren.current || !ref?.getDocument()) return;
+        void interneOpslag.voerUit(async () => {
+          exporteren.current = true;
+          try { await ref.flushPendingInput(); await ref.save(); }
+          finally { exporteren.current = false; }
+        }).catch(() => {});
+      }, 2500);
     return () => {
+      window.clearTimeout(proef);
       props.registreer(null);
     };
-  }, [documentGereed]);
+  }, [documentGereed, interneOpslag]);
   // Lettertypen van het document: vervangers voor wat hier ontbreekt, met een
   // melding; de presentatie-engine krijgt de lettertypebestanden zelf.
   useEffect(() => {
@@ -362,13 +423,14 @@ export default function OfficeEditor(props: EditorProps) {
               author={auteur()}
               // Alleen de gebruikersopdracht opent onze opslagdialoog. Een
               // interne export voor herladen of herstel doet dat niet.
-              onSaveRequest={() => { props.opslaan(); }}
+              onSaveRequest={() => { if (!exporteren.current) props.opslaan(); }}
               onDocumentChange={() => {
                 props.gewijzigd();
                 paginaVolger.gewijzigd();
               }}
               onPageSetupApply={paginaToepassen}
               onError={writerFout}
+              onChange={behoudSynchroneProjectie}
               rulerUnit="cm"
               onFirstPagePainted={() => {
                 paginaVolger.onthoud();
@@ -417,7 +479,7 @@ export default function OfficeEditor(props: EditorProps) {
               <XlsxEditor
                 legacySyncApi
                 key={herladen.sleutel}
-                file={herladen.bytes}
+                file={rekenbladBytes}
                 plugins={xlsxPlugins}
                 fileName={props.naam}
                 onReady={gereedXlsx}

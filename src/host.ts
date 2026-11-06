@@ -24,18 +24,24 @@ export interface HostBewaard {
 export type HostMeldingSoort = "info" | "waarschuwing" | "fout";
 
 export interface OfficeHost {
-  save(naam: string, bytes: Uint8Array, basisVersie?: number): Promise<HostBewaard | void>;
+  save(
+    naam: string,
+    bytes: Uint8Array,
+    basisVersie?: number,
+  ): Promise<HostBewaard | void>;
   open?(): Promise<HostBestand | null>;
   saveAs?(naam: string, bytes: Uint8Array): Promise<HostBewaard | void>;
   melding?(soort: HostMeldingSoort, tekst: string): void;
 }
 
 /** De soorten die de host als document opslaat; andere exports blijven een download. */
-export const HOST_SOORTEN = ["docx", "xlsx", "pptx", "md"];
+export const HOST_SOORTEN = ["docx", "xlsx", "pptx", "md", "ifcx"];
 
 export function officeHost(): OfficeHost | undefined {
   const host = (window as { openaecHost?: Partial<OfficeHost> }).openaecHost;
-  return host && typeof host.save === "function" ? (host as OfficeHost) : undefined;
+  return host && typeof host.save === "function"
+    ? (host as OfficeHost)
+    : undefined;
 }
 
 /** Versies van documenten uit de host, per bestandsnaam. */
@@ -45,8 +51,13 @@ const doorverwijzing = new Map<string, string>();
 
 const huidigeNaam = (naam: string) => doorverwijzing.get(naam) ?? naam;
 
-export function noteerHostBestand(bestand: Pick<HostBestand, "naam" | "versie" | "alleenLezen">) {
-  versies.set(bestand.naam, { versie: bestand.versie, alleenLezen: bestand.alleenLezen });
+export function noteerHostBestand(
+  bestand: Pick<HostBestand, "naam" | "versie" | "alleenLezen">,
+) {
+  versies.set(bestand.naam, {
+    versie: bestand.versie,
+    alleenLezen: bestand.alleenLezen,
+  });
   doorverwijzing.delete(bestand.naam);
 }
 

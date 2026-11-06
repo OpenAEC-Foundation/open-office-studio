@@ -1,0 +1,81 @@
+{
+  "browserBronnen": [
+    {
+      "soort": "docx",
+      "bytes": 36568,
+      "sha256": "d9086d4aa437d814620135a6dffb06ff940a9dbf5c34a6589d537d9112c41f74",
+      "opgeslagen": "docx-bewaard.ifcx",
+      "heropend": true
+    },
+    {
+      "soort": "xlsx",
+      "bytes": 4766,
+      "sha256": "0f3ba70a70215b2814959b2b70e651a63f4b497c66b7eedbf9fb2ead2f2ee544",
+      "opgeslagen": "xlsx-bewaard.ifcx",
+      "heropend": true
+    },
+    {
+      "soort": "pptx",
+      "bytes": 28245,
+      "sha256": "ef220706f4ac866df87eb848f24a1250732fdecefe4bd34b579f83e1836c7ce9",
+      "opgeslagen": "pptx-bewaard.ifcx",
+      "heropend": true
+    }
+  ],
+  "browserBewerkingen": [
+    {
+      "soort": "docx",
+      "bewerkt": true,
+      "opgeslagen": "docx-gewijzigd.ifcx",
+      "heropend": true,
+      "sha256": "7037d57f7ad7a921e6c11df19ac1e3d1b2d2e16dbebf3d7b3cb1864ce6129241"
+    },
+    {
+      "soort": "xlsx",
+      "bewerkt": true,
+      "opgeslagen": "xlsx-gewijzigd.ifcx",
+      "heropend": true,
+      "sha256": "9c1cf5761c53ab98dd10d5c3227ac609dbf525d1dcab8c1911c7475ac1d6b154"
+    },
+    {
+      "soort": "pptx",
+      "bewerkt": true,
+      "opgeslagen": "pptx-gewijzigd.ifcx",
+      "heropend": true,
+      "sha256": "9d0d932095a049828378f776eed1c1bedb8c77549c67b2eae8be75f22282a511"
+    }
+  ],
+  "nativeOpslaanAls": {
+    "nativeOpslaanAlsIFCX": true,
+    "vervolginvoerNaNaamwisseling": true,
+    "CtrlSOverschrijftNieuwePad": true,
+    "oorspronkelijkeDocxOngewijzigd": true,
+    "tekst": "Voor opslaan als en verder",
+    "bronrevisies": 2,
+    "nativeGeslotenEnHeropend": true
+  },
+  "nativeRondgang": [
+    {
+      "geval": "klembord",
+      "externLint": true,
+      "externCtrlV": true,
+      "internCtrlV": true,
+      "internLint": true,
+      "tekst": "Basis.Lint.SneltoetsBasis.Lint.SneltoetsBasis.Lint.SneltoetsBasis.Lint.Sneltoets",
+      "bestand": "Proef.docx"
+    },
+    {
+      "geval": "ifcx",
+      "bytegelijkeCtrlS": true,
+      "bewerktEnTeruggeschreven": true,
+      "tekst": "Native IFCX proef",
+      "bestand": "Proef.ifcx"
+    }
+  ],
+  "nativeOpslagcontrole": {
+    "opgeslagenXMLPerStap": true,
+    "venstertitelMinimaalTweeSecondenSchoon": true,
+    "eindbeeldTabEnStatusbalkSchoon": true,
+    "script": "scripts/test-native-tekst-opslag.py"
+  }
+}

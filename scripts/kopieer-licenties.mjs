@@ -72,43 +72,70 @@ async function lees(map) {
 }
 const project = JSON.parse(await readFile("package.json", "utf8"));
 const alleenDatabase = process.argv.includes("--database");
-const namen = alleenDatabase
+const alleenVoorbeeld = process.argv.includes("--voorbeeld");
+const namen = alleenVoorbeeld
   ? [
       "react",
       "react-dom",
-      "lucide-react",
-      "mdb-reader",
-      "sql.js",
-      "buffer",
-      "process",
-      "@tauri-apps/api",
-      "@fontsource/inter",
-      "@fontsource/space-grotesk",
+      "fflate",
+      "@betteroffice/docx-react",
+      "@betteroffice/xlsx-react",
+      "@betteroffice/pptx-react",
+      "@betteroffice/fonts",
+      "@betteroffice/fonts-cjk",
     ]
-  : Object.keys(project.dependencies);
+  : alleenDatabase
+    ? [
+        "react",
+        "react-dom",
+        "lucide-react",
+        "mdb-reader",
+        "sql.js",
+        "buffer",
+        "process",
+        "@tauri-apps/api",
+        "@fontsource/inter",
+        "@fontsource/space-grotesk",
+      ]
+    : Object.keys(project.dependencies);
 for (const naam of namen) {
   const map = await vind(resolve("."), naam);
   if (!map) throw new Error(`Productieafhankelijkheid ontbreekt: ${naam}`);
   await lees(map);
 }
-const uitvoermap = alleenDatabase
-  ? "apps/database-studio/public/licenses"
-  : "public/licenses";
+const uitvoermap = alleenVoorbeeld
+  ? "packages/voorbeeld/dist/licenses"
+  : alleenDatabase
+    ? "apps/database-studio/public/licenses"
+    : "public/licenses";
 await mkdir(uitvoermap, { recursive: true });
-await copyFile("src/stijl/LICENSE", `${uitvoermap}/OpenAEC-style-LICENSE.txt`);
-await copyFile("src/stijl/bron.json", `${uitvoermap}/OpenAEC-style-bron.json`);
+if (!alleenVoorbeeld) {
+  await copyFile(
+    "src/stijl/LICENSE",
+    `${uitvoermap}/OpenAEC-style-LICENSE.txt`,
+  );
+  await copyFile(
+    "src/stijl/bron.json",
+    `${uitvoermap}/OpenAEC-style-bron.json`,
+  );
+}
 // E-mailbackend (Rust) bevat code uit Y-app-ERPNext onder de MIT-licentie.
-if (!alleenDatabase)
+if (!alleenDatabase && !alleenVoorbeeld)
   await copyFile(
     "docs/licenties/Y-app-ERPNext-LICENSE.txt",
     `${uitvoermap}/Y-app-ERPNext-LICENSE.txt`,
   );
-// Ook de twee gewijzigde Rust-bronnen van de desktop-plakroute distribueren.
-if (!alleenDatabase) {
+// Native bewerkkern en beide gecompileerde kernels houden hun eigen bronvermelding.
+if (!alleenDatabase && !alleenVoorbeeld) {
   for (const naam of ["docx-edit", "yrs"]) {
     await copyFile(`native/vendor/${naam}/LICENSE-UPSTREAM`, `${uitvoermap}/Writer-Rust-${naam}-LICENSE.txt`);
     await copyFile(`native/vendor/${naam}/OPENAEC-WIJZIGINGEN.md`, `${uitvoermap}/Writer-Rust-${naam}-WIJZIGINGEN.md`);
   }
+}
+if (!alleenDatabase) {
+  for (const soort of ["tekstengine", "rekenbladengine"])
+    for (const bestand of ["LICENSE", "NOTICE"])
+      await copyFile(`vendor/${soort}/${bestand}`, `${uitvoermap}/${soort}-${bestand}.txt`);
 }
 await writeFile(
   `${uitvoermap}/npm.txt`,

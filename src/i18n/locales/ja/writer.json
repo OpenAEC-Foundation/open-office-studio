@@ -997,7 +997,15 @@
         "toNoteOnPage": "注へ移動 ({{page}} ページ)"
       },
       "jumpFootnote": "脚注 {{number}}: {{text}}",
-      "jumpEndnote": "文末脚注 {{number}}: {{text}}"
+      "jumpEndnote": "文末脚注 {{number}}: {{text}}",
+      "convert": {
+        "title": "Convert notes",
+        "allFootnotes": "Convert all footnotes to endnotes",
+        "allEndnotes": "Convert all endnotes to footnotes",
+        "toEndnote": "Convert to endnote",
+        "toFootnote": "Convert to footnote",
+        "hint": "Content and formatting are preserved. Converted notes use the numbering of the destination kind."
+      }
     },
     "done": {
       "pageNumberInserted": "ページ番号を挿入しました",
@@ -1035,7 +1043,8 @@
       "tocRemoved": "目次を削除しました",
       "footnoteInserted": "脚注を挿入しました",
       "endnoteInserted": "文末脚注を挿入しました",
-      "noteFormatChanged": "注の書式を変更しました"
+      "noteFormatChanged": "注の書式を変更しました",
+      "notesConverted": "Notes converted"
     },
     "errors": {
       "notReady": "ドキュメントの準備がまだできていません。",
@@ -1067,7 +1076,8 @@
       "endnoteBodyOnly": "文末脚注は本文にのみ挿入でき、ヘッダー、フッター、別の注には挿入できません。",
       "footnotePosition": "脚注はページの最後または本文の直後に配置されます。",
       "endnotePosition": "文末脚注はセクションの最後または文書の最後に配置されます。",
-      "endnoteRestartPerPage": "文末脚注はページごとに番号を振り直すことはできません。"
+      "endnoteRestartPerPage": "文末脚注はページごとに番号を振り直すことはできません。",
+      "noteConversionInvalid": "This note cannot be converted: note IDs or related parts are incomplete or ambiguous."
     }
   },
   "paragraph": {
@@ -1537,7 +1547,7 @@
       "toText": "表の解除",
       "toTextTip": "表を文字列に変換します",
       "split": "表の分割",
-      "splitTip": "カーソルがある行の上で表を分割します。ドキュメントが再読み込みされ、それまでの操作は元に戻せなくなります。"
+      "splitTip": "カーソルがある行の上で表を分割します。"
     },
     "row": {
       "title": "行のプロパティ",

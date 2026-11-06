@@ -2,7 +2,6 @@ import { useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { vraagAfdrukvoorbeeld } from "../afdrukken/openen";
 import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
-import i18next from "../i18n/config";
 import { useOpmaak } from "../i18n/opmaak";
 import {
   useDocxCommand,
@@ -20,9 +19,12 @@ import { toetsInProfiel } from "./sneltoetsenlijst";
 import { useInstellingen } from "../instellingen";
 import { useProfielToets } from "../tekst/bewerken/profielToets";
 import { useHerhaalbaar } from "../tekst/bewerken/herhaalmelding";
+import { leesAlleAlineas } from "../tekst/gedeeld/engine";
 import { ontbrekendeStijl } from "../tekst/stijlen/model";
 import { metHeleAlinea } from "../tekst/stijlen/toepassen";
 import { tabelInvoegen } from "../tekst/tabel/opdrachten";
+import { leesKlembordTekst } from "../klembord";
+import { hoofdletterVervangingen } from "../tekst/bewerken/hoofdletters";
 import {
   selectieBegin,
   specialeTekens,
@@ -33,6 +35,8 @@ import {
   type Hoofdlettersoort,
   type Telling,
 } from "./tekst-logica";
+
+import { gaNaarPagina } from "../tekst/zoeken/ganaar";
 
 export type TekstDialoog = "woorden" | "teken" | "opmerking" | "pagina" | null;
 
@@ -113,12 +117,6 @@ function tekstVlak() {
     actief.classList.contains("paged-editor__yrs-input")
     ? actief
     : tekst;
-}
-
-async function leesAlineas(api: DocxEditorRef) {
-  const gelezen = await api.readParagraphs({ view: "accepted" });
-  if (!gelezen.ok) throw new Error(i18next.t("ribbon:writer.errors.documentUnreadable"));
-  return gelezen;
 }
 
 export function useTekstOpdrachten({
@@ -207,7 +205,7 @@ export function useTekstOpdrachten({
             else if (soort.startsWith("image/"))
               data.items.add(new File([blob], `afbeelding.${soort.slice(6)}`, { type: soort }));
           }
-        if (!data.types.length) return;
+        if (!data.types.length) return plakken();
         editor().focus();
         const invoer = tekstVlak();
         const gebeurtenis = new ClipboardEvent("paste", { clipboardData: data, bubbles: true, cancelable: true });
@@ -220,12 +218,7 @@ export function useTekstOpdrachten({
       .catch(() => plakken());
   }
   function plakken() {
-    if (!navigator.clipboard?.readText) {
-      meld(t("writer.errors.pasteNotAllowed", { shortcut: "Ctrl+V" }));
-      return;
-    }
-    navigator.clipboard
-      .readText()
+    void leesKlembordTekst()
       .then((tekst) => tekst && voegIn(tekst))
       .catch(() =>
         meld(t("writer.errors.pasteNotAllowed", { shortcut: "Ctrl+V" })),
@@ -243,6 +236,7 @@ export function useTekstOpdrachten({
       throw new Error(t("writer.errors.selectWithinParagraph"));
     const gelezen = await ref.readParagraphs({
       view: "accepted",
+      story: ref.getEditorRef()?.getYrsSession()?.selection()?.head.story,
       paraIds: [info.paraId],
     });
     const alinea = gelezen.ok ? gelezen.paragraphs[0] : undefined;
@@ -262,9 +256,10 @@ export function useTekstOpdrachten({
           ? volgendeHoofdletters(tekst)
           : wijzigHoofdletters(tekst, soort);
       if (nieuw === tekst) return;
-      const vervangingen = tekenVervangingen(tekst, nieuw, begin) ?? [
-        { begin, eind: begin + tekst.length, tekst: nieuw },
-      ];
+      const sessie = ref.getEditorRef()?.getYrsSession();
+      const vervangingen = (sessie && hoofdletterVervangingen(sessie, alinea.story, alinea.paraId, alinea.text, begin, tekst, nieuw))
+        ?? tekenVervangingen(tekst, nieuw, begin);
+      if (!vervangingen) throw new Error(t("writer.errors.cannotChangeHere"));
       const voorstel = opnemen
         ? {
             suggest: {
@@ -285,6 +280,7 @@ export function useTekstOpdrachten({
             view: "accepted" as const,
           },
           text: v.tekst,
+          expect: { text: alinea.text.slice(v.begin, v.eind) },
           ...voorstel,
         })),
       });
@@ -356,6 +352,18 @@ export function useTekstOpdrachten({
 
   const kanBewerken = () => bewerkbaar;
   const sneltoetsen: Sneltoets[] = [
+    // Op desktop dezelfde plakroute als het lint; de browser behoudt zijn
+    // eigen paste-gebeurtenis met de door de webview geleverde gegevens.
+    {
+      toets: "Ctrl+V",
+      uitvoeren: plakkenMetOpmaak,
+      beschikbaar: () => invoerbaar && "__TAURI_INTERNALS__" in window,
+    },
+    {
+      toets: "Ctrl+Shift+V",
+      uitvoeren: plakken,
+      beschikbaar: () => invoerbaar && "__TAURI_INTERNALS__" in window,
+    },
     {
       toets: "Ctrl+1",
       uitvoeren: () => stijl("Heading1"),
@@ -520,10 +528,10 @@ function WoordenTellen({
     const ref = api();
     if (!ref) return;
     let actief = true;
-    leesAlineas(ref)
-      .then((gelezen) => {
+    leesAlleAlineas(ref)
+      .then((alineas) => {
         if (!actief) return;
-        setGeheel(telTekst(gelezen.paragraphs.map((a) => a.text)));
+        setGeheel(telTekst(alineas.map((a) => a.text)));
         setPaginas(ref.getTotalPages() || ref.getCurrentPage());
         const geselecteerd = ref.getSelectionInfo()?.selectedText ?? "";
         setSelectie(
@@ -748,7 +756,8 @@ function GaNaarPagina({
   function ga() {
     if (!geldig) return;
     sluit();
-    api()?.scrollToPage(nummer);
+    const ref = api();
+    if (ref) gaNaarPagina(ref, nummer);
   }
   return (
     <Dialoog
@@ -837,10 +846,10 @@ export function TekstStatus({
     const tel = (ref: DocxEditorRef) => {
       clearTimeout(wachten);
       wachten = setTimeout(() => {
-        leesAlineas(ref)
-          .then((gelezen) => {
+        leesAlleAlineas(ref)
+          .then((alineas) => {
             if (!actief) return;
-            setTelling(telTekst(gelezen.paragraphs.map((a) => a.text)));
+            setTelling(telTekst(alineas.map((a) => a.text)));
             paginas(ref);
           })
           .catch(() => {});

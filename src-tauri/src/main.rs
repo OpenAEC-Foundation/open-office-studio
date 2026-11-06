@@ -175,6 +175,9 @@ async fn bewaar_kopie(request: tauri::ipc::Request<'_>) -> Result<Option<String>
     .map_err(|e| e.to_string())?
 }
 
+#[cfg(all(test, target_os = "linux"))]
+mod klembord_proef;
+
 fn main() {
     // WebKitGTK: vermijd zwarte of achterblijvende canvasbeelden door DMA-BUF.
     // Een expliciete systeeminstelling blijft voorgaan; de compositor blijft aan.
@@ -212,6 +215,7 @@ fn main() {
         ))
         // Updates (#26): de plugin controleert handtekeningen; kanaal en bediening in updates.rs.
         .plugin(tauri_plugin_updater::Builder::new().build())
+        .plugin(tauri_plugin_clipboard_manager::init())
         .manage(updates::Updates::default())
         .manage(office_writer_plakken::BronVoorraad::default())
         .manage(vensters::Vensters::default())

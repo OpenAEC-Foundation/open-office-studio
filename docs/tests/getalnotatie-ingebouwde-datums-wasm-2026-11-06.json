@@ -1,0 +1,46 @@
+{
+  "wasm": ".local/getalnotatie/wasm-ingebouwde-datums/xlsx_wasm_bg-opt.wasm",
+  "wasmSha256": "cfa8112fb6c1f057c03587dfc87a968ab665904632a9d1adae6907156819ce69",
+  "checks": [
+    {
+      "naam": "Gescheiden getalregio met echte pakket-JS en WASM",
+      "geslaagd": true
+    },
+    {
+      "naam": "LCID-datumtaal en valuta behouden regionale cijfers",
+      "geslaagd": true
+    },
+    {
+      "naam": "Nederlandse LCID geeft Nederlandse datumwoorden in een Amerikaans bestand",
+      "geslaagd": true
+    },
+    {
+      "naam": "Invoer, Undo/Redo en bewaring zijn één transactie",
+      "geslaagd": true
+    },
+    {
+      "naam": "TEXT formule berekent opnieuw na regiowissel",
+      "geslaagd": true
+    },
+    {
+      "naam": "Bestaande tekst zonder regio blijft tekst bij ongewijzigd vastleggen",
+      "geslaagd": true
+    },
+    {
+      "naam": "Regionale batchvlag blijft behouden door de echte pakket-JS",
+      "geslaagd": true
+    },
+    {
+      "naam": "Ingebouwde datum volgt regio, invoervolgorde en bewaren zonder id-wijziging",
+      "geslaagd": true
+    },
+    {
+      "naam": "Geïmporteerde ingebouwde datumtijd behoudt id 22 en volgt regiowissel",
+      "geslaagd": true
+    },
+    {
+      "naam": "Geïmporteerde lage valuta-id gebruikt de expliciete code",
+      "geslaagd": true
+    }
+  ]
+}

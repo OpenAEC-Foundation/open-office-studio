@@ -1,3 +1,5 @@
+import { StudioBeeldmerk } from "../studios/StudioBeeldmerk";
+import { studio } from "../studios/gekozen";
 /**
  * Instellingen volgens de OpenAEC-standaard (Style Book, SettingsDialog.tsx):
  * modal van 560 × 500 met een zijbalk van 120 px en tabs, voorbeeld bij elke
@@ -236,7 +238,7 @@ export function InstellingenVenster({ sluit }: { sluit: () => void }) {
   );
 }
 
-function Sectie({ titel, children }: { titel: string; children: ReactNode }) {
+function Sectie({ titel, children }: { titel: ReactNode; children: ReactNode }) {
   return (
     <section className="instellingen-sectie">
       <h3>{titel}</h3>
@@ -576,7 +578,9 @@ function Over({ instellingen, wijzig }: { instellingen: Instellingen; wijzig: (w
   const { t } = useTranslation("settings");
   return (
     <>
-      <Sectie titel={t("about.appName")}>
+      <Sectie titel={import.meta.env.VITE_DATABASE_APP === "1" ? t("about.appName") : (
+        <span className="start-appbeeldmerk"><StudioBeeldmerk studio={studio} grootte={32} />{t("about.appName")}</span>
+      )}>
         <dl className="instellingen-over">
           <dt>{t("about.version")}</dt>
           <dd>

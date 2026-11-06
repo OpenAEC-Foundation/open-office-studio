@@ -66,6 +66,7 @@ import { registreerPlakAfronding } from "./plakAfronding";
 import { DatumTijdDialoog } from "./DatumTijdDialoog";
 import { ontbrekendeStijl } from "../stijlen/model";
 import { metHeleAlinea } from "../stijlen/toepassen";
+import { wisselLijst } from "../lijst/opsomming";
 import { Contextmenu, type MenuPlek } from "../menu/Contextmenu";
 import { MiniWerkbalk, toonBijSelectie } from "../menu/MiniWerkbalk";
 import { Plakopties } from "../menu/Plakopties";
@@ -212,9 +213,10 @@ export function TekstBewerken({
     if (HERHAALBAAR.has(id))
       geheugen.onthoud({ naam: naamVanOpdracht(id, args), uitvoeren: () => voerUit(id, args) });
     grens();
-    store
-      .execute(id, args)
-      .then((resultaat) => {
+    const uitvoering = id === "bulletList" || id === "numberedList"
+      ? wisselLijst(api(), id === "bulletList" ? "bullet" : "decimal").then((gedaan) => gedaan ? { ok: true as const, status: "executed" as const } : store.execute(id, args))
+      : store.execute(id, args);
+    uitvoering.then((resultaat) => {
         grens();
         if (!resultaat.ok) fout(new Error(resultaat.failure.message));
       })

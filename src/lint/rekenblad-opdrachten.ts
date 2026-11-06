@@ -4,6 +4,7 @@ import { meldWijziging, zichtbaarElement } from "./editorApi";
 import { filtersNaOps } from "./rekenblad-filter";
 import type {
   CapturedFormat,
+  NumberFormatMutation,
   XlsxCellValue,
   XlsxEditRequest,
   XlsxEditStep,
@@ -47,6 +48,7 @@ export interface Selectie {
 type Pane = { rows: number; cols: number; top_left: Cel } | null;
 /** Ruwe structurele engine-opdrachten die `applyOps` aantoonbaar accepteert. */
 export type RuweOp =
+  | import("@betteroffice/xlsx").XlsxDefinedNameOp
   | {
       type: "insertRows" | "deleteRows";
       sheet: number;
@@ -59,6 +61,7 @@ export type RuweOp =
       at: number;
       count: number;
     }
+  | { type: "setRangeNumberFormat"; sheet: number; range: { start: Cel; end: Cel }; format: NumberFormatMutation }
   | { type: "addSheet"; index: number; name: string }
   | { type: "removeSheet"; index: number }
   | { type: "renameSheet"; sheet: number; name: string }
@@ -150,9 +153,12 @@ const engineteksten: [RegExp, string][] = [
   [/out of (range|bounds)/i, "outOfRange"],
 ];
 
-export async function voerOpsUit(api: XlsxEditorApi, ops: RuweOp[]) {
+export async function voerOpsUit(api: XlsxEditorApi, ops: RuweOp[], verwachteVersie?: string) {
   if (alleenLezen(api)) throw new Melding(melding("readOnly"));
-  await api.version();
+  const versie = await api.version();
+  if (verwachteVersie !== undefined && (versie !== verwachteVersie || api.handle.version() !== verwachteVersie))
+    throw new Melding(melding("staleVersion"));
+  if (alleenLezen(api)) throw new Melding(melding("readOnly"));
   let resultaat;
   try {
     resultaat = api.handle.applyOps(ops);
@@ -474,12 +480,23 @@ export function benoemdeBereiken(api: XlsxEditorApi) {
     const uitvoer = api.handle.exportStructured({
       scope: [{ sheet: info.activeSheet, range: "A1" }],
       maxCells: 1,
+      includeHiddenNames: true,
     });
-    return uitvoer.ok
-      ? uitvoer.content.definedNames
-          .filter((naam) => !naam.hidden && ontleedVerwijzing(naam.formula))
-          .map((naam) => ({ naam: naam.name, verwijzing: naam.formula }))
-      : [];
+    if (!uitvoer.ok) return [];
+    const kandidaten = uitvoer.content.definedNames
+      .filter((naam) => naam.localSheet === null || naam.localSheet.index === info.activeSheet)
+      .sort((a, b) => Number(!!b.localSheet) - Number(!!a.localSheet));
+    const gezien = new Set<string>();
+    const namen: { naam: string; verwijzing: string }[] = [];
+    for (const naam of kandidaten) {
+      const sleutel = naam.name.toLowerCase();
+      if (gezien.has(sleutel)) continue;
+      gezien.add(sleutel);
+      // Ook een lokale constante of verborgen naam schermt de werkmapnaam af.
+      if (!naam.hidden && ontleedVerwijzing(naam.formula))
+        namen.push({ naam: naam.name, verwijzing: naam.formula });
+    }
+    return namen;
   } catch {
     return [];
   }
