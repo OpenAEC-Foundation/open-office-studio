@@ -1,0 +1,1024 @@
+{
+  "schema": 1,
+  "datum": "2026-11-06",
+  "basis_commit": "8e34482d9650174c1883d63a72a0e6d4ca3a9bb9",
+  "app_ongewijzigd": "2026.45.49 / alpha57",
+  "kandidaat": {
+    "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/fontbundeling/open-office-studio-45.51-font",
+    "programma_sha256": "e86ef648fa8a47cc661ee27775d601a2d1e6207929fb9e0a75fa4a2922a14f86",
+    "versie": "2026.45.51",
+    "sdk_sha256": "52431b34fa5d71bf149716a058c28e741157ccde41bd3c76156b334e3651a983",
+    "poort_sha256": "75c6d10ffff5a4c312fcd694765deb2021708ac16dd7d5d4387923ba7d5c648f"
+  },
+  "besluit": "Afgekeurd: geen overtuigende snelheidswinst en ontbrekende actuele Caladea-fontvraag. Niet promoveren.",
+  "ronden": [
+    {
+      "naam": "referentie-a",
+      "getekende_tekst_ms": 23630,
+      "programma_sha256": "e7295980a17df1e85c9524ad6e384fcf63735162bb60964f4d7aebacf42e5785"
+    },
+    {
+      "naam": "font-a",
+      "getekende_tekst_ms": 23300,
+      "programma_sha256": "e86ef648fa8a47cc661ee27775d601a2d1e6207929fb9e0a75fa4a2922a14f86"
+    },
+    {
+      "naam": "font-b",
+      "getekende_tekst_ms": 23048,
+      "programma_sha256": "e86ef648fa8a47cc661ee27775d601a2d1e6207929fb9e0a75fa4a2922a14f86"
+    },
+    {
+      "naam": "referentie-b",
+      "getekende_tekst_ms": 22723,
+      "programma_sha256": "e7295980a17df1e85c9524ad6e384fcf63735162bb60964f4d7aebacf42e5785"
+    },
+    {
+      "naam": "autocorrectie-uit",
+      "getekende_tekst_ms": 6513,
+      "programma_sha256": "e7295980a17df1e85c9524ad6e384fcf63735162bb60964f4d7aebacf42e5785"
+    }
+  ],
+  "reference_gemiddeld_ms": 23176.5,
+  "font_gemiddeld_ms": 23174.0,
+  "fontafkeuring": {
+    "geslaagd": false,
+    "gevallen": [],
+    "alinea_aantal": 500,
+    "tekst_sha256": "bd3cc4b7c68f7096aefd6a7778c880524b5b7894d296fc59c882d709ce81a1c0",
+    "fout": "Error: Geen actuele lettertypevraag voor caladea",
+    "diagnose": {
+      "fase": "lettertypevraag",
+      "variant": "caladea",
+      "fouten": [],
+      "verzoeken": [
+        {
+          "worker": 1,
+          "type": "applyUpdate",
+          "id": 14,
+          "fase": "opmaak",
+          "variant": "caladea",
+          "bronversie_bij_stap": "79743dc33f6d5535-2"
+        },
+        {
+          "worker": 1,
+          "type": "sync",
+          "id": 15,
+          "fase": "lettertypevraag",
+          "variant": "caladea",
+          "bronversie_bij_stap": "79743dc33f6d5535-3",
+          "expectedFrameEpoch": 6,
+          "snapshotRevision": 4
+        },
+        {
+          "worker": 1,
+          "type": "save",
+          "id": 16,
+          "fase": "lettertypevraag",
+          "variant": "caladea",
+          "bronversie_bij_stap": "79743dc33f6d5535-3"
+        }
+      ],
+      "bron_actief": true,
+      "bronversie": "79743dc33f6d5535-3",
+      "worker_uitgevallen": false,
+      "laatste_lettertypeversie": null
+    },
+    "script_sha256": "a64459717d04c166aa4e94b9b0f86a190cc70b80a9b6a0b2f2e2ee0c26822b89",
+    "python_sha256": "c7380cae05493ef40652d81312aa1efedeceef1d3ae521b33b4544132b5f085a",
+    "grens": "Volledige worker-/hostantwoorden op dezelfde actuele bron; vier fontopmaakvarianten, onafhankelijk XML en bronexacte Undo. Na de invoermeting; geen snelheidsmeting."
+  },
+  "documentpixels": {
+    "roi": [
+      320,
+      210,
+      1140,
+      950
+    ],
+    "cursorzone": [
+      491,
+      347,
+      496,
+      366
+    ],
+    "afwijkend": 0
+  },
+  "grenzen": [
+    "Alleen Linux, eigen testprofielen en fixturekopieën; geen release, download, installatie of gebruikersinstelling gewijzigd.",
+    "Autocorrectie uit is uitsluitend één diagnostische ronde op dezelfde referentie-ELF, geen oplossing of behoud van autocorrectie bewezen.",
+    "Fontproef faalt bij eerste variant; geen van vier fontgevallen volledig geslaagd. Oorzaak niet bewezen.",
+    "Oude workertraps, bewaren en overige platforms/edities/migratie niet geaccepteerd."
+  ],
+  "volgende_stap": "Autocorrectie mag gewone invoergroepen niet via flushPendingInput onderbreken. Onderzoek één gedeelde natuurlijke-rustwacht per bron, met behoud van versie/tekst/bron/stop-bewaking en autocorrectiegedrag.",
+  "bestanden": [
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/autocorrectie-uit/fysieke-proef.py",
+      "bestand": "writer-fontbundeling/000-fysieke-proef.py.gz",
+      "bytes": 24315,
+      "sha256": "f293f64d5b2b809128ff28e2154c255befd34ff42c8a70623a0ba656dd002969",
+      "gzip_sha256": "bc08c436fdfea5972a8afbae0145415e7ae18e7dbb273a777029fd4816587788"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/autocorrectie-uit/gui/Prestatieproef.docx",
+      "bestand": "writer-fontbundeling/001-Prestatieproef.docx.gz",
+      "bytes": 73262,
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip_sha256": "d513cd05cb2dd662086d747c915b197ce61a6c0b6e5c1a7e7bd7bfdb64d308c6"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/autocorrectie-uit/gui/eerste-gelijke-tekst.png",
+      "bestand": "writer-fontbundeling/002-eerste-gelijke-tekst.png.gz",
+      "bytes": 31219,
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip_sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/autocorrectie-uit/gui/profiel.json",
+      "bestand": "writer-fontbundeling/003-profiel.json.gz",
+      "bytes": 2879,
+      "sha256": "493994b618f1463bc84608ff602a22bc99156108107309888cabd2390a10bb1d",
+      "gzip_sha256": "5c18edb4ee87479b5a3b4e0f4a73ce449406eac9c8d15ce41a6658ed3238f298"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/autocorrectie-uit/gui/profiel.png",
+      "bestand": "writer-fontbundeling/004-profiel.png.gz",
+      "bytes": 118014,
+      "sha256": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef",
+      "gzip_sha256": "96e97054bcfcd4ae5024433533996e95e66b010af2be623e771aaf861ffbf864"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/autocorrectie-uit/gui/programma.log",
+      "bestand": "writer-fontbundeling/005-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/autocorrectie-uit/manifest.json",
+      "bestand": "writer-fontbundeling/006-manifest.json.gz",
+      "bytes": 1540,
+      "sha256": "61c26e8d00335facf897ff27bb7e86bfe66250c804712318efefa9e38b864da0",
+      "gzip_sha256": "51f596bfc846cfda5383bc23c981ae05237f9743b659077d28760cad1e900c6e"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/autocorrectie-uit/proef.log",
+      "bestand": "writer-fontbundeling/007-proef.log.gz",
+      "bytes": 3600,
+      "sha256": "2fa017b130bcc58deeaf060df69f048a97caa04c5d7bcc68a5e7fd7a4483758f",
+      "gzip_sha256": "76bc6190610b73d28af7e37f6758089f8dfc2c1a70a3a981b8a5c2bace941914"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/bouwen-eerste.json",
+      "bestand": "writer-fontbundeling/008-bouwen-eerste.json.gz",
+      "bytes": 250,
+      "sha256": "00640a10cbe752d2458ce46b1f85460d1e1f09fb4acd44e04c86b563cc15b030",
+      "gzip_sha256": "63eb20839ae46294ae07ab04fc06a4d5b371b119464bed26eccdab9494527120"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/bouwen-herkoppeling.json",
+      "bestand": "writer-fontbundeling/009-bouwen-herkoppeling.json.gz",
+      "bytes": 1261,
+      "sha256": "c41898e04e1b75f642a8277c23fc6b1d2f4c460d8b439e4ed686c94cf65f15b2",
+      "gzip_sha256": "bf5d3f9f6e89800f4577216fc323c51a0d179651cc6c01f249af457d4f8ae4e3"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/bouwen-tijdgrens-herhaling.json",
+      "bestand": "writer-fontbundeling/010-bouwen-tijdgrens-herhaling.json.gz",
+      "bytes": 252,
+      "sha256": "6c9d818a240c2473e1391cb8129310315f79230ab9d5d26aa76927df7dd8ef28",
+      "gzip_sha256": "6f06e01a4536e72f91b84da19c595d5069f0db8f2b05c9e454f8a2b06afe64a3"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/bouwen-tijdgrens.json",
+      "bestand": "writer-fontbundeling/011-bouwen-tijdgrens.json.gz",
+      "bytes": 251,
+      "sha256": "9d77ede77b242c3cb18617978c52f4dbf1325c5337e2d9d9818600f355342295",
+      "gzip_sha256": "f3b37108e69a44847a14f99936de0be448fdb90bf04cb9e58266eea12c31ab9b"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/bouwen.json",
+      "bestand": "writer-fontbundeling/012-bouwen.json.gz",
+      "bytes": 1305,
+      "sha256": "831f58fefcac41b76337d0ab1eed48dab597cfc6deafea7f9853c38b79afa50e",
+      "gzip_sha256": "b1e59f8fc74b808f213140bab72d26c22ebd356cfe7545245a16420b14befff9"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/broncontrole-definitief.json",
+      "bestand": "writer-fontbundeling/013-broncontrole-definitief.json.gz",
+      "bytes": 1151,
+      "sha256": "1ddece5fe854f1b9c0300bed20b6749bfba6bf993e10aded7f53f7fdad361920",
+      "gzip_sha256": "f5070db0feccadcfaaf147e6be61e434907719847a4d8a0afa216fea31fcfc4b"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/broncontrole.json",
+      "bestand": "writer-fontbundeling/014-broncontrole.json.gz",
+      "bytes": 1151,
+      "sha256": "a79612bb631fa8aab5ea2bce97b295c1f78eba2026550ec60e22e7bb7496cc51",
+      "gzip_sha256": "3490e7cbb3020ce6acd9bd9c3a1cc87adfc205d5314c28f13ccbf3bf0d3bc5e9"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/bronnen-voor-predicate.json",
+      "bestand": "writer-fontbundeling/015-bronnen-voor-predicate.json.gz",
+      "bytes": 1269,
+      "sha256": "54c766cdf3e6526ac21cb3f464273da67db9d93fa41ed2c85040215d38a11a56",
+      "gzip_sha256": "bb02cdd1d5124ccc905700db780f0d4d94d2274f00640ad70f6982051532984b"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/bronnen-voor-reentrantie.json",
+      "bestand": "writer-fontbundeling/016-bronnen-voor-reentrantie.json.gz",
+      "bytes": 1179,
+      "sha256": "80b6a0c90d64274a9d65cf4107882173922eb6a9d102d72acea5f8e1aad8726f",
+      "gzip_sha256": "160b135ca68ec3a198706d43995e65917ff9db3b63872d492411bcbedc4e6373"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/bronnen.json",
+      "bestand": "writer-fontbundeling/017-bronnen.json.gz",
+      "bytes": 1269,
+      "sha256": "42f1c8e8f40d8c7594ea0409690f9f7bb61ddbe442cc5ef81c416c4a10a3367c",
+      "gzip_sha256": "283c36f9de0b36e1c98c91be7da57501edf9444c6c01c375d3c01e571023f156"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/desktop-herkoppeling.log",
+      "bestand": "writer-fontbundeling/018-desktop-herkoppeling.log.gz",
+      "bytes": 66242,
+      "sha256": "c2fc92f0f1006c818f836a33b1e902a2f62dbb08e90f6a13baec46ecc4e4ef04",
+      "gzip_sha256": "da47a75e269d33d6707770aedcf05de78f472516e8cedf25301ae34e32ec671e"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/desktop.log",
+      "bestand": "writer-fontbundeling/019-desktop.log.gz",
+      "bytes": 65641,
+      "sha256": "bdc9e2c79804630ce242d7cabb466d2fbb54f672a19d48ba02e02b7d6badf388",
+      "gzip_sha256": "0be4905bb4d2807cdbe1c5ac16aa175e59a7fc72b5c3764a2ad869ed608ecf80"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/engines-herkoppeling.log",
+      "bestand": "writer-fontbundeling/020-engines-herkoppeling.log.gz",
+      "bytes": 153,
+      "sha256": "74e7a56285e814d8b1e87098e3f1a0c5b556e2e653f809d19ad6b5ab09032af4",
+      "gzip_sha256": "6de11f78a95927519636e824a5a448ed252a867685f2835d2da16f2c7370eb14"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/engines.log",
+      "bestand": "writer-fontbundeling/021-engines.log.gz",
+      "bytes": 153,
+      "sha256": "74e7a56285e814d8b1e87098e3f1a0c5b556e2e653f809d19ad6b5ab09032af4",
+      "gzip_sha256": "6de11f78a95927519636e824a5a448ed252a867685f2835d2da16f2c7370eb14"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/frontend-eerste.log",
+      "bestand": "writer-fontbundeling/022-frontend-eerste.log.gz",
+      "bytes": 29200,
+      "sha256": "3409e531fdc61fa6dfa904be9825456e5905877fbcbf071b2b711c9a0b0c63f2",
+      "gzip_sha256": "02eca74a55bdb128c8b69ad497fef37b17cf92969fe578398746dfb434fe69a2"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/frontend-herkoppeling.log",
+      "bestand": "writer-fontbundeling/023-frontend-herkoppeling.log.gz",
+      "bytes": 27751,
+      "sha256": "e2034ef6589366e90abc960d5a8d90342597db7df7e4eb2676ae7866c4d02a7b",
+      "gzip_sha256": "1e0d24dfcb6d56bcfc349acf746d6cbbf673afd495fceb3c41672af5ddbe109b"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/frontend-root.log",
+      "bestand": "writer-fontbundeling/024-frontend-root.log.gz",
+      "bytes": 26831,
+      "sha256": "19c8dbcadd71c3a48a5a48edb3221cf15d28a13ad3d61a4c17956e8f78f93384",
+      "gzip_sha256": "ae12ae2f85a73b1a0326670fa254fc6237b11e4ce63f7a9032a56387359d755a"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/frontend-sigterm.log",
+      "bestand": "writer-fontbundeling/025-frontend-sigterm.log.gz",
+      "bytes": 26910,
+      "sha256": "01b7983ea1340b85669c504efef1fc19063b694e0a6859ec9f26e14c4e4a2c9c",
+      "gzip_sha256": "3a640cef799ac54111ef8cddd33a8d7995c697a873370c25cea4db5cfe317f01"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/frontend-tijdgrens-herhaling.log",
+      "bestand": "writer-fontbundeling/026-frontend-tijdgrens-herhaling.log.gz",
+      "bytes": 38329,
+      "sha256": "d0a15d0805ee188abdca89ab29af40881b0729661d6307bab3e0ea6b6a4dade0",
+      "gzip_sha256": "da362d8bda55eb799b58956ede6c14698df165de810aed42fe6c9d8620917314"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/frontend-tijdgrens.log",
+      "bestand": "writer-fontbundeling/027-frontend-tijdgrens.log.gz",
+      "bytes": 34949,
+      "sha256": "f463b665f481306e566e506e54fd8320c116d986fe9d3c63f33a96f91de51e99",
+      "gzip_sha256": "462b0575d236eb268d6ddd2f1f553a95981f1e497ad1b078fef85aa6f5e1c68e"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/frontend.log",
+      "bestand": "writer-fontbundeling/028-frontend.log.gz",
+      "bytes": 23208,
+      "sha256": "455495d9f78af1eff49821354662b4f00253ecbcc1e4c36963222ef62f1ea77d",
+      "gzip_sha256": "aefcb7e6a989fefdb909b749da5fb8a2910dbd8e135e39761494e0e0f48724d6"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/functioneel.json",
+      "bestand": "writer-fontbundeling/029-functioneel.json.gz",
+      "bytes": 1658,
+      "sha256": "0af0101a34661cda9d060c3f5251da1350e0e47baf35d67d40908010f542040f",
+      "gzip_sha256": "aeb65412bd023f6c43777a81b59ab064f29e1f4db55a64f9d209b23f166a5dc7"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gebouwd.json",
+      "bestand": "writer-fontbundeling/030-gebouwd.json.gz",
+      "bytes": 427,
+      "sha256": "5c7ccb7c4328045649e101ae4307902303cc5d715c1ef64e735059539363566f",
+      "gzip_sha256": "aadf561324117b281eb1832a7e90d2aaf9f0e57f840f68b9018ed16d9e8286d1"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gui/font-a/Prestatieproef.docx",
+      "bestand": "writer-fontbundeling/031-Prestatieproef.docx.gz",
+      "bytes": 73262,
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip_sha256": "d513cd05cb2dd662086d747c915b197ce61a6c0b6e5c1a7e7bd7bfdb64d308c6"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gui/font-a/eerste-gelijke-tekst.png",
+      "bestand": "writer-fontbundeling/032-eerste-gelijke-tekst.png.gz",
+      "bytes": 31219,
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip_sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gui/font-a/profiel.json",
+      "bestand": "writer-fontbundeling/033-profiel.json.gz",
+      "bytes": 2908,
+      "sha256": "31d1cf8c333d74c6358510286e6bb323dfa6dfdc239c1a679b35a18020580f49",
+      "gzip_sha256": "19b44e2f7c52e24db206950359a05425d137a9df7e6b60d50b31057d5f724cd3"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gui/font-a/profiel.png",
+      "bestand": "writer-fontbundeling/034-profiel.png.gz",
+      "bytes": 118057,
+      "sha256": "fa1e74284d4a01057dd2dfd26f903387f5d506943b81f157d953522b6c3975ca",
+      "gzip_sha256": "67d1e7df71159b90e537fa32f49717eda590bd3c0f3ff4c109866f0f0ceccde1"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gui/font-a/programma.log",
+      "bestand": "writer-fontbundeling/035-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gui/font-a.log",
+      "bestand": "writer-fontbundeling/036-font-a.log.gz",
+      "bytes": 3601,
+      "sha256": "f5ff56d1d82f2f4fe5bf17a5e368b992942fd112ec22f786498f0c37829e01eb",
+      "gzip_sha256": "c906bb6b84f54e7c3884ff8abb83730a3731052a3f72dd33c9b4edf93e280014"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gui/font-b/Prestatieproef.docx",
+      "bestand": "writer-fontbundeling/037-Prestatieproef.docx.gz",
+      "bytes": 73262,
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip_sha256": "d513cd05cb2dd662086d747c915b197ce61a6c0b6e5c1a7e7bd7bfdb64d308c6"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gui/font-b/eerste-gelijke-tekst.png",
+      "bestand": "writer-fontbundeling/038-eerste-gelijke-tekst.png.gz",
+      "bytes": 31219,
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip_sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gui/font-b/profiel.json",
+      "bestand": "writer-fontbundeling/039-profiel.json.gz",
+      "bytes": 2882,
+      "sha256": "617c199f08403ba042351eb99ff2f50b3d10a19cc50d7d4c40ad0c1044d67bcf",
+      "gzip_sha256": "0984903171f6f99c8564d7ed7a78de4dd8c55811b087f0dd09cf5aa2e55d9dd1"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gui/font-b/profiel.png",
+      "bestand": "writer-fontbundeling/040-profiel.png.gz",
+      "bytes": 118056,
+      "sha256": "7444153a8e3037d42ae7a1f8d0da4d6ab759805fef6d0d7cf4871dcfa5b14839",
+      "gzip_sha256": "9eed65ab77c19aa99f9dfb73f70ba79adeed46ace57929fb66a8692a78cd7e4e"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gui/font-b/programma.log",
+      "bestand": "writer-fontbundeling/041-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gui/font-b.log",
+      "bestand": "writer-fontbundeling/042-font-b.log.gz",
+      "bytes": 3601,
+      "sha256": "2d17eae83e8be47120655d8f6f3714acb1afd71398b36e58089b663aaf43eefd",
+      "gzip_sha256": "3624fec0198a718900e28ee1a9f94ce5c7ea41a32326a7a7bfebd7b98fcc2b99"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gui/rapport.json",
+      "bestand": "writer-fontbundeling/043-rapport.json.gz",
+      "bytes": 5133,
+      "sha256": "c9df01d6bbc2fbcaf19e9ba8775bc0eb2c123fa3676244e0c4471709d4dd903c",
+      "gzip_sha256": "79d3d06d735e4afbf6744ff49bc27ea5049c3170ff16ab0b6bf9ce056cfa4ffd"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gui/referentie-a/Prestatieproef.docx",
+      "bestand": "writer-fontbundeling/044-Prestatieproef.docx.gz",
+      "bytes": 73262,
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip_sha256": "d513cd05cb2dd662086d747c915b197ce61a6c0b6e5c1a7e7bd7bfdb64d308c6"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gui/referentie-a/eerste-gelijke-tekst.png",
+      "bestand": "writer-fontbundeling/045-eerste-gelijke-tekst.png.gz",
+      "bytes": 31219,
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip_sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gui/referentie-a/profiel.json",
+      "bestand": "writer-fontbundeling/046-profiel.json.gz",
+      "bytes": 2882,
+      "sha256": "59fc2730bf3f1f472ac4dff8fbb4d82f5d90d5eda5e540a543c780e2b953a024",
+      "gzip_sha256": "767a00dccc4040173e313e423d19dbbe05a86f9f2b33b5ea669f5f45146d4b9c"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gui/referentie-a/profiel.png",
+      "bestand": "writer-fontbundeling/047-profiel.png.gz",
+      "bytes": 118018,
+      "sha256": "0962e74f78128a2fcc6190c9c465fdae87d12beff575168015e7cb2b581b2084",
+      "gzip_sha256": "022832a0eb18f316c6ab821055ac0e324ee6b2ed49629f0b67a3a9f4394a730a"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gui/referentie-a/programma.log",
+      "bestand": "writer-fontbundeling/048-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gui/referentie-a.log",
+      "bestand": "writer-fontbundeling/049-referentie-a.log.gz",
+      "bytes": 3601,
+      "sha256": "3769b4f037c6f72b64fc46cdcdbdaaecd9125f88252b9f8ff7a96ffd6708a279",
+      "gzip_sha256": "1499fa659f47be67d25766ad9ae90fc0f2784b24e1d8b9cb0b1512e4179be05c"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gui/referentie-b/Prestatieproef.docx",
+      "bestand": "writer-fontbundeling/050-Prestatieproef.docx.gz",
+      "bytes": 73262,
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip_sha256": "d513cd05cb2dd662086d747c915b197ce61a6c0b6e5c1a7e7bd7bfdb64d308c6"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gui/referentie-b/eerste-gelijke-tekst.png",
+      "bestand": "writer-fontbundeling/051-eerste-gelijke-tekst.png.gz",
+      "bytes": 31219,
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip_sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gui/referentie-b/profiel.json",
+      "bestand": "writer-fontbundeling/052-profiel.json.gz",
+      "bytes": 2882,
+      "sha256": "64f0aaa518e713cbae3afe97faab4241264c32c7c704fbde264447fd534b0a32",
+      "gzip_sha256": "2efa6cb8752b31a7909b7b3bcb4412ab88425c3efffaffc32cab57e596b5d97e"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gui/referentie-b/profiel.png",
+      "bestand": "writer-fontbundeling/053-profiel.png.gz",
+      "bytes": 118018,
+      "sha256": "0962e74f78128a2fcc6190c9c465fdae87d12beff575168015e7cb2b581b2084",
+      "gzip_sha256": "022832a0eb18f316c6ab821055ac0e324ee6b2ed49629f0b67a3a9f4394a730a"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gui/referentie-b/programma.log",
+      "bestand": "writer-fontbundeling/054-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/gui/referentie-b.log",
+      "bestand": "writer-fontbundeling/055-referentie-b.log.gz",
+      "bytes": 3601,
+      "sha256": "1a21b0ee77e9f7f8c576802675188c76567362b2dfde3bc257b055c1fe8c8873",
+      "gzip_sha256": "18006456850465a057b2644d4f42be97573b638cb9648550840048e9ebf19e56"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/herhaling-tijdgrens.log",
+      "bestand": "writer-fontbundeling/056-herhaling-tijdgrens.log.gz",
+      "bytes": 3298,
+      "sha256": "0ff7c99e0638fe2082dbae732b4fd84d88a63eadf736875fbb2160b68f2a0bea",
+      "gzip_sha256": "8d39548883bfcaf41f1c0c5ca7b0d9b6eca58201ad1ae2b5b613f64c53ad1e8c"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/host-test-eerste.ts",
+      "bestand": "writer-fontbundeling/057-host-test-eerste.ts.gz",
+      "bytes": 15878,
+      "sha256": "66b1d3dbb90ae4d3b027af206ac16fd9cc4f1d353c3832fc88b5861a6c2d03fd",
+      "gzip_sha256": "7e60ddd2c5d18ac8625012a83cd87358263dad80bf060640aca51cff8572bafd"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/host.test-onjuiste-versiestub.ts",
+      "bestand": "writer-fontbundeling/058-host.test-onjuiste-versiestub.ts.gz",
+      "bytes": 16479,
+      "sha256": "fbc431b9b68a4e6a3eb4064a5cabcff9be0bdfb4c9125133458ed6cc494f3325",
+      "gzip_sha256": "0f03781a1137b3b2ce5941ac896ada45cbd3daee8fe855954841df15e879ad92"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/host.test.ts",
+      "bestand": "writer-fontbundeling/059-host.test.ts.gz",
+      "bytes": 16543,
+      "sha256": "b0ee11d9a83fd1b1d94f66ba351e2b92abd9caf83e93bf833056e70bc6fb3fbf",
+      "gzip_sha256": "c5171e9f90b3ec46de720cd76ce274fa2c40a2094bb47e221eee34060961babf"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/hostproeven-definitief.log",
+      "bestand": "writer-fontbundeling/060-hostproeven-definitief.log.gz",
+      "bytes": 324,
+      "sha256": "dfd5d927d010b5373d90fd1567bad369098d5e794f85ffa85fecfef70ff08db8",
+      "gzip_sha256": "201491f20b54087cee68674470c2b00877b54d4a852a888001675aad5bc83e6c"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/hostproeven-eerste.json",
+      "bestand": "writer-fontbundeling/061-hostproeven-eerste.json.gz",
+      "bytes": 286,
+      "sha256": "cfc2d56519d8dee3b1e046f664f4bc76092c5e8e26b5c66fc1bd8ede95753647",
+      "gzip_sha256": "97e244983a20319b4db750cfe97e54749a96632986028fcdb784b0cd78aff144"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/hostproeven-eerste.log",
+      "bestand": "writer-fontbundeling/062-hostproeven-eerste.log.gz",
+      "bytes": 323,
+      "sha256": "4f4933cd6745b6ec29249cc6c2a3c1c4bfdfdde4911720d4f9b96189bb316036",
+      "gzip_sha256": "827405e227d6f7d008c12278fb44b2bef333e987d105649a8837497dd7d979cf"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/hostproeven-onjuiste-versiestub.json",
+      "bestand": "writer-fontbundeling/063-hostproeven-onjuiste-versiestub.json.gz",
+      "bytes": 202,
+      "sha256": "b9b160d156c1f654a5f59131b1458dc3f699d96d9a0dae0f933eb4403a99748a",
+      "gzip_sha256": "632a905edcd8199b1f10ce7463f96b55e2ff01514433fda688f5eba1f91aaf42"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/hostproeven-onjuiste-versiestub.log",
+      "bestand": "writer-fontbundeling/064-hostproeven-onjuiste-versiestub.log.gz",
+      "bytes": 4485,
+      "sha256": "8e5ac5aa453999fa3b1ac1fca16654057ee55df33c2504d5a5d4593d974e1c86",
+      "gzip_sha256": "7eeec5111e0842bb462d7151165fcd8bbed8ba5abb8701cadd643001d466f395"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/hostproeven.json",
+      "bestand": "writer-fontbundeling/065-hostproeven.json.gz",
+      "bytes": 286,
+      "sha256": "b1afba893106e53a8bcec8b1402a6410b2758de3b353b334d8becf4d2ae3e694",
+      "gzip_sha256": "354a7c727b05c1c430ec2f6eef88addc621c5d130880468078983deddcfb07ce"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/hostproeven.log",
+      "bestand": "writer-fontbundeling/066-hostproeven.log.gz",
+      "bytes": 326,
+      "sha256": "7cde0d14dc2323dcdb74b6ca8678ce6530f0562f58394e7b8935ebe286cfeec7",
+      "gzip_sha256": "ce9b3e566bf5ea7527c1a8d6d72b9fbdca3fbf1d02d9fbc65dfa0a14bd363147"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/lang-font/Prestatieproef.docx",
+      "bestand": "writer-fontbundeling/067-Prestatieproef.docx.gz",
+      "bytes": 44901,
+      "sha256": "c6f99a07c0d2f6d32bdd503115ab9ab369c87bdbc2f36213c4b34172787d176c",
+      "gzip_sha256": "cfe5cadb0c75bcd86296f670220017b341036f193e2da4794aef6b7c238ac7b4"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/lang-font/afgekeurd.png",
+      "bestand": "writer-fontbundeling/068-afgekeurd.png.gz",
+      "bytes": 78583,
+      "sha256": "1aa9275cc7c0a67f09f0fd7415d4e3c0c854e857448f78f253b17c5661d8f918",
+      "gzip_sha256": "fd4bef05cb5f7f17f5ebb957b2ec80b4c6debd96e2ebd35da26133dd502be7b0"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/lang-font/framebasis-lettertypen.json",
+      "bestand": "writer-fontbundeling/069-framebasis-lettertypen.json.gz",
+      "bytes": 194073,
+      "sha256": "66e52c0b2b4c90c8149c4c4dfd11df0c96a6a951b72f7b37de72a2fe729a7b34",
+      "gzip_sha256": "09af28f38b6bfd5cb85c8417d2875fc19ee4653be429efa094213343c92311cf"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/lang-font/framebasis.json",
+      "bestand": "writer-fontbundeling/070-framebasis.json.gz",
+      "bytes": 3406486,
+      "sha256": "16d25661ca74dfddb012cb5c2815ea8922896be671cd4750293dd2c942d58ccc",
+      "gzip_sha256": "df4093725305bb503c6420fc41cea117aee2a7427f8f6f8cd6c75e9137946204"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/lang-font/getypt-pagina-500.png",
+      "bestand": "writer-fontbundeling/071-getypt-pagina-500.png.gz",
+      "bytes": 116826,
+      "sha256": "a0cfcee024b5a0fd507e10621fe00143023a00e960cfd875738425f4c3c77df0",
+      "gzip_sha256": "01ee86b5ae068d45283f2a615dd706a582258eebe77d59b2f8280f6d5e881672"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/lang-font/herstel-aanbod-later.png",
+      "bestand": "writer-fontbundeling/072-herstel-aanbod-later.png.gz",
+      "bytes": 101036,
+      "sha256": "1edefca5507b77a32aebd0727d74ff8257d21bc3f4500a12e23ba5ef0011e9c0",
+      "gzip_sha256": "2bc9726570e45ea5947cedf474962d77b4496581ba4ef19dc4fda9cfc97d6cc5"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/lang-font/kopvoetlint.png",
+      "bestand": "writer-fontbundeling/073-kopvoetlint.png.gz",
+      "bytes": 116022,
+      "sha256": "a757f2c99b426f4e5bb8c0fb9d3abdb899fb049fbb340b70a35baf97d47e8aed",
+      "gzip_sha256": "745530e1ae4761aa75f5f99dd8a0cf89394143632182914131e18a1598a588da"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/lang-font/programma.log",
+      "bestand": "writer-fontbundeling/074-programma.log.gz",
+      "bytes": 268,
+      "sha256": "7005cd69af26badf3cb3510ad157fca78404c7d11bb686d902c13ede386b5d5a",
+      "gzip_sha256": "0d6971a10e256ebd4805ac8718438d04a75d10b3ae8ee76015ddf01c160e9dc7"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/lang-font/rapport.json",
+      "bestand": "writer-fontbundeling/075-rapport.json.gz",
+      "bytes": 23638,
+      "sha256": "5e41fd10ba235f44614ac381e77a4b25420e3bf15227164ddfd662a4119bc494",
+      "gzip_sha256": "7cec0e9345f13202cabade1c145d94940ebe0161f2ad3406b0cf78fcf859d79e"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/lang-font/startlint.png",
+      "bestand": "writer-fontbundeling/076-startlint.png.gz",
+      "bytes": 129883,
+      "sha256": "12ccf1c428239a1aaefdbd16516f949f1208efb01c9017b8c6ee33ae039bbf47",
+      "gzip_sha256": "dcf1bf5f04d0be36a25d8fbefb7883e758124110c16c1d0a7edbe33bcf56f0e0"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/lang-font.log",
+      "bestand": "writer-fontbundeling/077-lang-font.log.gz",
+      "bytes": 4977,
+      "sha256": "4bd652981daa200ecb00d3c9f00b56f18dbf7a3e6018985dd0ca809b50b56652",
+      "gzip_sha256": "881afb1c3ffe1c3436f86242141ed7d4adfcdb684d5ec8065930c77b96dac29d"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/opdrachten-herkoppeling.log",
+      "bestand": "writer-fontbundeling/078-opdrachten-herkoppeling.log.gz",
+      "bytes": 5191,
+      "sha256": "35c4e59deeccfe1952ffb639f6070c68b7778bdd3fce798d880250a673e0fe31",
+      "gzip_sha256": "aebe9c229e8376b67a95a3334feb44b01105d21c8e26d0bec658ae1172dfdf16"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/opdrachten.log",
+      "bestand": "writer-fontbundeling/079-opdrachten.log.gz",
+      "bytes": 5191,
+      "sha256": "35c4e59deeccfe1952ffb639f6070c68b7778bdd3fce798d880250a673e0fe31",
+      "gzip_sha256": "aebe9c229e8376b67a95a3334feb44b01105d21c8e26d0bec658ae1172dfdf16"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/poort-integratie-definitief.log",
+      "bestand": "writer-fontbundeling/080-poort-integratie-definitief.log.gz",
+      "bytes": 445,
+      "sha256": "71ca2bfcc8162ea5056603060340497a1160aa4ab08bb68805a79cda79f266d4",
+      "gzip_sha256": "3aa88613502acb27fa0b976c707848f2162078f08dad7e90702edaedac36a0e3"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/poort-integratie-eind-33.log",
+      "bestand": "writer-fontbundeling/081-poort-integratie-eind-33.log.gz",
+      "bytes": 443,
+      "sha256": "386c851b4c6e292a6e09937e6c37bcd19337aeefc1f1c3ba9c540ed5b88179ca",
+      "gzip_sha256": "a3ff760633dad04ef9bd081c9b553d59a75e1d5b89e22099526a48c2785dc4cb"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/poort-integratie-eind.log",
+      "bestand": "writer-fontbundeling/082-poort-integratie-eind.log.gz",
+      "bytes": 315,
+      "sha256": "1c6425f43bd31718dc8ec4870a2b8d94ca2482f96964fe56b2902b3370ebb72a",
+      "gzip_sha256": "6edafb658696cad3caf6af6869d31ddce6c93dee3b819443421519c81c263de0"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/poort-integratie.log",
+      "bestand": "writer-fontbundeling/083-poort-integratie.log.gz",
+      "bytes": 443,
+      "sha256": "1d1bcb7229769b6cde56911dd94f46a5b0e9a5a84c75f2c2c2aab94c232e0a9a",
+      "gzip_sha256": "646d038958c0d042786c55d5d59377985f6fbaee1fb14fb1edc41eb39b7aa5cd"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/poort-node-definitief.log",
+      "bestand": "writer-fontbundeling/084-poort-node-definitief.log.gz",
+      "bytes": 82,
+      "sha256": "1b02e0f385361b244f70cf7a65ec7fe2b6b2349995fb714af2a6bf04f0d1e368",
+      "gzip_sha256": "01cd3beb9607877d545f291a06e6fc27cbd657e5286a9589085654761bfc44cb"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/poort-node-eind.log",
+      "bestand": "writer-fontbundeling/085-poort-node-eind.log.gz",
+      "bytes": 82,
+      "sha256": "1b02e0f385361b244f70cf7a65ec7fe2b6b2349995fb714af2a6bf04f0d1e368",
+      "gzip_sha256": "01cd3beb9607877d545f291a06e6fc27cbd657e5286a9589085654761bfc44cb"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/predicate-afkeuring/poort.js",
+      "bestand": "writer-fontbundeling/086-poort.js.gz",
+      "bytes": 1360,
+      "sha256": "b33a58a17a259118b0ed13e7bbf8ea1116c217743c0bfcd7bc5f5efb759111a0",
+      "gzip_sha256": "dcd30b706ecca77308c4d8a9fe263a9180b1cfdbae86ee2475ef5f77b4e899a9"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/predicate-afkeuring/poort.test.cjs",
+      "bestand": "writer-fontbundeling/087-poort.test.cjs.gz",
+      "bytes": 4421,
+      "sha256": "a81b2f84d8b36fe264391c1c668de6aab9213dfc71e2092e5f175733f0745d12",
+      "gzip_sha256": "c0e11d06d5db0873c32baa70863c57bca649737b4dad2496a18c9be5dfe952c4"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/predicate-afkeuring/test.log",
+      "bestand": "writer-fontbundeling/088-test.log.gz",
+      "bytes": 689,
+      "sha256": "bea3dcf1a703a9c392bd02994b06932145ed3c076dbaa5823dd9bb419df6e43f",
+      "gzip_sha256": "cba5334fcbee635981271460717f8397a88f7ceab5d3dd52eb91b24901097a2c"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/python-definitief.log",
+      "bestand": "writer-fontbundeling/089-python-definitief.log.gz",
+      "bytes": 851,
+      "sha256": "09a901b299ea8a9305bea3571a035964291f6ae442a400460e293465e6d952ee",
+      "gzip_sha256": "9d75c4cec61643e950dc47a05f5bf28fcc70559a83b20c1ffba45e0293894fc2"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/python.log",
+      "bestand": "writer-fontbundeling/090-python.log.gz",
+      "bytes": 851,
+      "sha256": "45dfb66b0421956d784b13555d15eee6d98d3e52b34d0020644cd092faa993b7",
+      "gzip_sha256": "b9149d4e9ec4bdca22b912855b91f1b35c260566298a0d7f6bad77e16cc45760"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/sdk-voor-predicate.mjs",
+      "bestand": "writer-fontbundeling/091-sdk-voor-predicate.mjs.gz",
+      "bytes": 384458,
+      "sha256": "b96295a376581e8ee58e1246096f12cee821d2994b6448d58ff7f0019f82bdde",
+      "gzip_sha256": "df7b258f624c6683162395808d83ef37b932f91bcf7f3e9cffb9a294be8a7b61"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/sdk-voor-reentrantie.mjs",
+      "bestand": "writer-fontbundeling/092-sdk-voor-reentrantie.mjs.gz",
+      "bytes": 384453,
+      "sha256": "e4f26612047f81531256d600a66cd457096dae7f247b41c527823e1b5ec31973",
+      "gzip_sha256": "08eeb0dfb3aa6958424460829d2f6ea17f51b06ada053cd32216acb254254db1"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/selectie/Ontwerpnotitie.docx",
+      "bestand": "writer-fontbundeling/093-Ontwerpnotitie.docx.gz",
+      "bytes": 43603,
+      "sha256": "849e54dee9d8cdaa7e9335d5d62b473acee60d3d1fd8eda1111875abf8dce7fe",
+      "gzip_sha256": "d6a5081ba48f1a2155aea183eb118fbe5064571dd79d15ec875e9e4a346b43f6"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/selectie/invoer-redo.png",
+      "bestand": "writer-fontbundeling/094-invoer-redo.png.gz",
+      "bytes": 160405,
+      "sha256": "9c2d9cc86910bb6a858a64c97a55b0d59701534c01cba434b689b3df77988b2c",
+      "gzip_sha256": "6bb737aa1e6ce4f027ba18fd4f4ba22f0a0b3f0b884fff1e8c0d6d0894fc8c49"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/selectie/nieuw-na-laat-antwoord.png",
+      "bestand": "writer-fontbundeling/095-nieuw-na-laat-antwoord.png.gz",
+      "bytes": 76073,
+      "sha256": "994338e3eb776935fac00b64b9806008efc0d04fd03b2ceac0051ec04fc778b5",
+      "gzip_sha256": "3c33f1242ebda73c0117dc06845c311368a9f2ecc36b217f3a1afcea2e5e80a1"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/selectie/programma.log",
+      "bestand": "writer-fontbundeling/096-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/selectie/rapport.json",
+      "bestand": "writer-fontbundeling/097-rapport.json.gz",
+      "bytes": 20875,
+      "sha256": "042592ba8e2e2c26b3f83e41115bf677fc2120abf257a533600e0f46a97bf559",
+      "gzip_sha256": "073c827a402f8d28ecd42431ddb75fecc980ce1b9386fc4679e4b4a0d396cfa8"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/selectie/snel-getypt-bewaard.png",
+      "bestand": "writer-fontbundeling/098-snel-getypt-bewaard.png.gz",
+      "bytes": 169046,
+      "sha256": "70fa72969e3a5845f72881193c1341ea01077dcf14a827d0739aa5206b204d3d",
+      "gzip_sha256": "9579eaf2c1eb566dd4372eeae537110e991a19823760ca7fda8426118965891a"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/selectie.log",
+      "bestand": "writer-fontbundeling/099-selectie.log.gz",
+      "bytes": 3532,
+      "sha256": "bcb99c7ddbe130516aa660f7b8ce4f09a85cb161e8c1b0f4ae014ace90ed43c1",
+      "gzip_sha256": "570dc7376262533fa7b9f918e619e977ea718fdf2bb146f5eb24fad024186bce"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/tijdlijn/fysieke-proef.py",
+      "bestand": "writer-fontbundeling/100-fysieke-proef.py.gz",
+      "bytes": 30116,
+      "sha256": "a2c1080d5a0eb8829a132aa6b44c8a1753f2c95701d3573a909ec015a9852f6e",
+      "gzip_sha256": "6d16eb239d748c8d4820c80ab05762725d3ffa0dd7b78e327e524110170f7e5d"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/tijdlijn/gui/Prestatieproef.docx",
+      "bestand": "writer-fontbundeling/101-Prestatieproef.docx.gz",
+      "bytes": 73262,
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "gzip_sha256": "d513cd05cb2dd662086d747c915b197ce61a6c0b6e5c1a7e7bd7bfdb64d308c6"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/tijdlijn/gui/eerste-gelijke-tekst.png",
+      "bestand": "writer-fontbundeling/102-eerste-gelijke-tekst.png.gz",
+      "bytes": 31219,
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "gzip_sha256": "dd0bf2264e71d80a04f130a139a3450e14220747072a2f07268dd5d198230533"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/tijdlijn/gui/profiel.json",
+      "bestand": "writer-fontbundeling/103-profiel.json.gz",
+      "bytes": 290081,
+      "sha256": "0ca8d3b9f3ec0c9f6b28b6e5ef34e7fe3bb0243e3dfec0a96cd2afa94a3a298d",
+      "gzip_sha256": "6e73061bfb0088d26988b8f63ac3f3d6fc9f0383d2da8530010a523dfbbe9c1a"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/tijdlijn/gui/profiel.png",
+      "bestand": "writer-fontbundeling/104-profiel.png.gz",
+      "bytes": 118057,
+      "sha256": "fa1e74284d4a01057dd2dfd26f903387f5d506943b81f157d953522b6c3975ca",
+      "gzip_sha256": "67d1e7df71159b90e537fa32f49717eda590bd3c0f3ff4c109866f0f0ceccde1"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/tijdlijn/gui/programma.log",
+      "bestand": "writer-fontbundeling/105-programma.log.gz",
+      "bytes": 134,
+      "sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "gzip_sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/tijdlijn/manifest.json",
+      "bestand": "writer-fontbundeling/106-manifest.json.gz",
+      "bytes": 1462,
+      "sha256": "a421e564f516a385375b91be1d0286e60849f51d08ea755b7669194966c30959",
+      "gzip_sha256": "5d1f9e1fc875c899635813a3e0e1efaee651e389a6193807cdbc149f1a6f1f30"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/tijdlijn/meten.log",
+      "bestand": "writer-fontbundeling/107-meten.log.gz",
+      "bytes": 3601,
+      "sha256": "ab687f4f8ee1cc1a26d68c77641c7cad66d41376aa7ee13003b673c426b709e9",
+      "gzip_sha256": "f3262d7434759b504ce820436e319ebffcf201da649d54a1083b734cadaf205d"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/typescript-herkoppeling.log",
+      "bestand": "writer-fontbundeling/108-typescript-herkoppeling.log.gz",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gzip_sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/typescript.log",
+      "bestand": "writer-fontbundeling/109-typescript.log.gz",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gzip_sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/vastleggen-eind.log",
+      "bestand": "writer-fontbundeling/110-vastleggen-eind.log.gz",
+      "bytes": 21,
+      "sha256": "15964d809b2a28f61814b25aab0139e5046d57a69018d7ddad2a21465aa2c3c4",
+      "gzip_sha256": "74de8ad4d144b1d2e8d7da03da332e84d67f6fea038863ba3772eda7839e0d54"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/vitest-inventaris.log",
+      "bestand": "writer-fontbundeling/111-vitest-inventaris.log.gz",
+      "bytes": 6380,
+      "sha256": "12a878b31f632046610c700e7d8ab652b3766c3d074876ddb3b5e8613f3f2fcd",
+      "gzip_sha256": "55d6cd842a98b1be14584f4101861c6ef97a6cb9fd36988d966fb61b9c0f5d32"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/vitest.config.mjs",
+      "bestand": "writer-fontbundeling/112-vitest.config.mjs.gz",
+      "bytes": 161,
+      "sha256": "3198535daae5ebc398271ade9965a6f7ae8b4381944f09d177c5969bf016443e",
+      "gzip_sha256": "c2f9a600e074d9d4a98810c3a8b18a7e372cb76021f8b85beef93a7f3d3db6e1"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/voorbouw.json",
+      "bestand": "writer-fontbundeling/113-voorbouw.json.gz",
+      "bytes": 201,
+      "sha256": "2c3c0df3f163cbbdd68f9dfb6f685f46ced50eee58185245050220069f3a4a02",
+      "gzip_sha256": "c2db7b89446b7b24021036f504c33bddb1c5e21b2546c2ece02ae7430020ac83"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/weekversie-herkoppeling.log",
+      "bestand": "writer-fontbundeling/114-weekversie-herkoppeling.log.gz",
+      "bytes": 53,
+      "sha256": "5fc3b38cc6ba4f76683c8dcc20e2724496f1df011fdc99992e40a0c66cb1369b",
+      "gzip_sha256": "7f707dbe0566550c1dd30f379bcd8dfb08e81114c8a7e4b7dc68246bbbbed21c"
+    },
+    {
+      "bron": ".local/doorwerk-2026-11-06/fontbundeling/weekversie.log",
+      "bestand": "writer-fontbundeling/115-weekversie.log.gz",
+      "bytes": 53,
+      "sha256": "5fc3b38cc6ba4f76683c8dcc20e2724496f1df011fdc99992e40a0c66cb1369b",
+      "gzip_sha256": "7f707dbe0566550c1dd30f379bcd8dfb08e81114c8a7e4b7dc68246bbbbed21c"
+    },
+    {
+      "bron": "native/onderzoek/writer-fontbundeling/README.md",
+      "bestand": "writer-fontbundeling/116-README.md.gz",
+      "bytes": 4901,
+      "sha256": "bd84ed42fd1544947e58a7096d23898777af9a5d5de55c8007510fadcf646762",
+      "gzip_sha256": "9057fffa0fd41b78ec7ff6614a76fcf873a15780a0145c468aba2eb45b3332df"
+    },
+    {
+      "bron": "native/onderzoek/writer-fontbundeling/autocorrectieflag.py",
+      "bestand": "writer-fontbundeling/117-autocorrectieflag.py.gz",
+      "bytes": 1923,
+      "sha256": "5c55fda95049ace8c08afa4659b68513a097786666fb6ce061f02d1582524f26",
+      "gzip_sha256": "c660992de598659fc015bcd651e33cebeb6a372b155d83ab09f467e9dfdc8d08"
+    },
+    {
+      "bron": "native/onderzoek/writer-fontbundeling/bouwen.py",
+      "bestand": "writer-fontbundeling/118-bouwen.py.gz",
+      "bytes": 2600,
+      "sha256": "57d18c712b5adef53dc828bd3e5acf5ebc141e9effef8bd2106e9a8e91a7e1bf",
+      "gzip_sha256": "5ebf6f2e5ba35ce11671aadfaf6dc7c6acb7b4215a7f15bc9f6ea4a5b7b38c0e"
+    },
+    {
+      "bron": "native/onderzoek/writer-fontbundeling/broncontrole.py",
+      "bestand": "writer-fontbundeling/119-broncontrole.py.gz",
+      "bytes": 1445,
+      "sha256": "a3e4e1881a46edb04ecfaa0de2bee2ba866c184173669dd0292f27ae1bf89b14",
+      "gzip_sha256": "e7f8ef3b2f2a894432d40755abcbdf1cef2c7041ab154e0ca332b9c5974d5c4d"
+    },
+    {
+      "bron": "native/onderzoek/writer-fontbundeling/extra-hostproeven.ts",
+      "bestand": "writer-fontbundeling/120-extra-hostproeven.ts.gz",
+      "bytes": 3393,
+      "sha256": "bdfe90e61748778d54c96145da5ae697e1319d5c2e316e550b4eba1c5012bf1b",
+      "gzip_sha256": "6845a794ee86ea130900e5a93cce1183914d77e157cb4c19462df9175c90981a"
+    },
+    {
+      "bron": "native/onderzoek/writer-fontbundeling/functioneel.py",
+      "bestand": "writer-fontbundeling/121-functioneel.py.gz",
+      "bytes": 1570,
+      "sha256": "3e4bddf251d4a23f96971eff67ab6a8fabd32ea46e279dc52d957aa18c3d645b",
+      "gzip_sha256": "4ca97cd30266d410f591c3e821c3d70cc54f1638f0153a38c0f038b6c4bebfd6"
+    },
+    {
+      "bron": "native/onderzoek/writer-fontbundeling/fysiek.py",
+      "bestand": "writer-fontbundeling/122-fysiek.py.gz",
+      "bytes": 2262,
+      "sha256": "eb0f1d98828b9c5c63e597662d22d5a6ac9dd893faa7b7f189557078da6534d9",
+      "gzip_sha256": "d279b93ebd56a06b665ce7c97d0239bf5ff656067fa3bdc953271134a521451f"
+    },
+    {
+      "bron": "native/onderzoek/writer-fontbundeling/hostproeven.py",
+      "bestand": "writer-fontbundeling/123-hostproeven.py.gz",
+      "bytes": 1707,
+      "sha256": "a434c8e55305fcbcc0fbb717da92580ee991c08ab11a5332fc852665a6967244",
+      "gzip_sha256": "d4121f9f4683e78ce88dd6f3e115f6f3dd3d92a366c92d65093f6617ddaef8aa"
+    },
+    {
+      "bron": "native/onderzoek/writer-fontbundeling/meting.py",
+      "bestand": "writer-fontbundeling/124-meting.py.gz",
+      "bytes": 2100,
+      "sha256": "d77ae5def96ee9951598bb35f20b97ac46b23e5dc8cf5e88a2c9513000d0edde",
+      "gzip_sha256": "b4cb0728c9ca12a29467fd1c0ddc31a16ceb02bf3b93aeb97318e70eeeb5773e"
+    },
+    {
+      "bron": "native/onderzoek/writer-fontbundeling/poort.js",
+      "bestand": "writer-fontbundeling/125-poort.js.gz",
+      "bytes": 1451,
+      "sha256": "75c6d10ffff5a4c312fcd694765deb2021708ac16dd7d5d4387923ba7d5c648f",
+      "gzip_sha256": "144b7a6f724dd22e7ea02238ac103d334ad385c7df20ca65c22d38aafc3ace88"
+    },
+    {
+      "bron": "native/onderzoek/writer-fontbundeling/poort.test.cjs",
+      "bestand": "writer-fontbundeling/126-poort.test.cjs.gz",
+      "bytes": 4421,
+      "sha256": "a81b2f84d8b36fe264391c1c668de6aab9213dfc71e2092e5f175733f0745d12",
+      "gzip_sha256": "c0e11d06d5db0873c32baa70863c57bca649737b4dad2496a18c9be5dfe952c4"
+    },
+    {
+      "bron": "native/onderzoek/writer-fontbundeling/vastleggen.py",
+      "bestand": "writer-fontbundeling/127-vastleggen.py.gz",
+      "bytes": 4849,
+      "sha256": "4ed1ba1f5d54d108ab21f7da44821df4cf837676dc6f68ba8c17a753276e5267",
+      "gzip_sha256": "dc1f44cb2b1520220c556fc9ee8371894c1f264d045cc94ec4ba5f18e0871fd0"
+    },
+    {
+      "bron": "native/onderzoek/writer-fontbundeling/voorbereiden.py",
+      "bestand": "writer-fontbundeling/128-voorbereiden.py.gz",
+      "bytes": 3672,
+      "sha256": "88021014d5af93ceb5737e4f744d5432fc61914ac06a9f0c47279e18b2ab82d0",
+      "gzip_sha256": "8e18332b6dd989081f0c786e02a88415649965230983308fa745b44c95817378"
+    },
+    {
+      "bron": "native/onderzoek/writer-fontbundeling/voorbouw.py",
+      "bestand": "writer-fontbundeling/129-voorbouw.py.gz",
+      "bytes": 1065,
+      "sha256": "8b7370efe16b58876718fab383fe720b4056336735fecc4ff62f79171f407c20",
+      "gzip_sha256": "2601e11719f7bf306af9fc979fac92b095eab262f90519be41f12652e3fc145b"
+    }
+  ]
+}

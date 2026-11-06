@@ -26,7 +26,8 @@ export default defineConfig({
   plugins: [fontsUitPublic()],
   // Worktrees van agents en lokale proefuitvoer niet dubbel meetellen.
   test: {
-    exclude: [...configDefaults.exclude, ".claude/**", ".local/**"],
+    // Afzonderlijke Node-/Python-onderzoeksproeven hebben hun eigen runner.
+    exclude: [...configDefaults.exclude, ".claude/**", ".local/**", "native/onderzoek/**"],
     // Tests in het Nederlands, ongeacht de systeemtaal (zie docs/i18n.md).
     setupFiles: ["src/i18n/testopzet.ts"],
   },
