@@ -206,8 +206,10 @@ en [MS-OI29500 §2.1.712](https://learn.microsoft.com/en-us/openspecs/office_sta
 ## Resterende acceptatie
 
 De eerste brede kernronde stopte met signaal 143, zonder afgeronde eindtelling;
-die geldt niet als geslaagd. De volledige set loopt opnieuw met twee testthreads.
-De zes platformchecks van de eerdere commit `c368e593` zijn groen; de nieuwe
-revisie moet nog worden gepusht en gecontroleerd. De zes issuecriteria blijven
-onafgevinkt tot de gezamenlijke acceptatie is bewezen. PR #164 blijft concept
-en #64 blijft open.
+die geldt niet als geslaagd. De [volledige nacontrole](getalnotatie-ingebouwde-datums-kernnacontrole-2026-11-06.json)
+met twee testthreads slaagt in **2.419 proeven**, 81 sets, met zestien bestaande
+gevallen overgeslagen en nul mislukkingen. De lokale acceptatie is daarmee groen.
+De zes platformchecks van de eerdere commit `c368e593` zijn groen; de definitieve
+revisie moet nog alle zes platformchecks doorlopen. De zes issuecriteria
+blijven onafgevinkt tot die gezamenlijke acceptatie is bewezen. PR #164 blijft
+concept en #64 blijft open.
