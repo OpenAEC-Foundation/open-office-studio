@@ -18,6 +18,8 @@ import type {
 } from "@betteroffice/xlsx";
 import i18next from "../i18n/config";
 import { intlLocale } from "../i18n/config";
+import { leesWerkmapinstelling } from "../rekenblad/werkmapregio";
+import { laadInvoerlezer } from "../rekenblad/invoerlezer";
 import {
   alleenLezen,
   leesSelectie,
@@ -678,6 +680,21 @@ export async function pasFilterToe(api: XlsxEditorApi, blad: number, sheetId: st
 export async function zetKolomFilter(api: XlsxEditorApi, blad: number, sheetId: string, kolom: number, kf: KolomFilter | null) {
   const f = bladFilter(api.handle, blad);
   if (!f) return;
+  if (kf?.soort === "voorwaarden") {
+    const teLezen = kf.voorwaarden.filter((v) => v.getal === undefined && !["begintMet", "eindigtOp", "bevat", "bevatNiet"].includes(v.operator));
+    if (teLezen.length) {
+      const versie = await api.version();
+      const instelling = leesWerkmapinstelling(api);
+      const lezer = await laadInvoerlezer(instelling.regio, instelling.datumstelsel);
+      try {
+        const waarden = lezer.lees([teLezen.map((v) => v.waarde)])[0];
+        const getallen = new Map(teLezen.map((v, i) => [v, waarden[i].kind === "number" ? waarden[i].value : null]));
+        kf = { ...kf, voorwaarden: kf.voorwaarden.map((v) => getallen.has(v) ? { ...v, getal: getallen.get(v)! } : v) };
+      } finally { lezer.dispose(); }
+      if (await api.version() !== versie || api.handle.version() !== versie)
+        throw new Melding(i18next.t("ribbon:spreadsheet.messages.staleVersion"));
+    }
+  }
   const kolommen = new Map(f.kolommen);
   if (kf) kolommen.set(kolom, kf);
   else kolommen.delete(kolom);

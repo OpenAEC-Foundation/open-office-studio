@@ -8,9 +8,11 @@
  * die meeschuiven en met opmaak, net als in Excel.
  */
 import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
-import type { CapturedFormat, XlsxCellValue, XlsxEditStep } from "@betteroffice/xlsx";
+import type { CapturedFormat, XlsxEditStep } from "@betteroffice/xlsx";
 import i18next from "../i18n/config";
-import { leesNederlands } from "../rekenbladinvoer";
+import { leesWerkmapinstelling } from "./werkmapregio";
+import { laadInvoerlezer } from "./invoerlezer";
+import { regionaleInvoer } from "./regionaleInvoer";
 import {
   bereikA1,
   MAX_KOLOMMEN,
@@ -247,32 +249,20 @@ export function isEigenKopie(inhoud: KlembordInhoud) {
 
 interface Bron {
   cellen: BronCel[][];
-  /** Getalnotaties uit Nederlandse invoer (alleen van buiten), per cel in bronvorm. */
-  notaties: (string | undefined)[][];
   intern: Kopie | null;
 }
 
 function bronVan(inhoud: KlembordInhoud): Bron {
   if (isEigenKopie(inhoud))
-    return { cellen: laatste!.cellen, notaties: [], intern: laatste };
-  const rijen = (inhoud.html && leesHtmlTabel(inhoud.html)) || leesTsv(inhoud.tekst);
-  const notaties: (string | undefined)[][] = [];
-  const cellen = rijen.map((rij, r) =>
-    rij.map((tekst, k) => {
-      const nl = leesNederlands(tekst);
-      (notaties[r] ??= [])[k] = nl?.notatie;
-      const invoer = nl ? nl.invoer : tekst;
-      const getal = Number(invoer);
-      const waarde: XlsxCellValue =
-        invoer === ""
-          ? { kind: "empty" }
-          : invoer.trim() !== "" && Number.isFinite(getal)
-            ? { kind: "number", value: getal }
-            : { kind: "text", value: tekst };
-      return { invoer, formule: invoer.startsWith("="), waarde };
-    }),
-  );
-  return { cellen, notaties, intern: null };
+    return { cellen: laatste!.cellen, intern: laatste };
+  const getallen = new Map<string, number>();
+  const rijen = (inhoud.html && leesHtmlTabel(inhoud.html, (r, k, waarde) => getallen.set(`${r}:${k}`, waarde))) || leesTsv(inhoud.tekst);
+  const cellen = rijen.map((rij, r) => rij.map((invoer, k): BronCel => ({
+    invoer, formule: invoer.startsWith("="),
+    waarde: getallen.has(`${r}:${k}`) ? { kind: "number", value: getallen.get(`${r}:${k}`)! } : invoer === "" ? { kind: "empty" } : { kind: "text", value: invoer },
+    canoniek: getallen.has(`${r}:${k}`),
+  })));
+  return { cellen, intern: null };
 }
 
 /** Opmaak in doelvorm: bij transponeren rij en kolom van de cellen gewisseld. */
@@ -292,11 +282,11 @@ export async function plak(
   inhoud: KlembordInhoud,
   opties: PlakOpties = STANDAARD_PLAKKEN,
 ) {
+  let versie = await api.version();
   const { blad, sheetId, bereik } = leesSelectie(api);
   const bron = bronVan(inhoud);
   if (!bron.cellen.length || !bron.cellen[0].length) throw new Melding(melding("empty"));
   const cellen = opties.transponeren ? transponeer(bron.cellen) : bron.cellen;
-  const notaties = opties.transponeren ? transponeer(bron.notaties) : bron.notaties;
   const hoog = cellen.length;
   const breed = cellen[0].length;
   if (hoog * breed > MAX_CELLEN) throw new Melding(melding("tooLarge"));
@@ -311,6 +301,21 @@ export async function plak(
     throw new Melding(melding("outOfSheet"));
   const intern = bron.intern;
   if (opties.wat === "opmaak" && !intern?.opmaak) throw new Melding(melding("noFormats"));
+
+  // Gewoon plakken geeft de onbewerkte tekst aan de echte celparser. Voor
+  // waarden/bewerkingen lezen we eerst de bronwaarden met dezelfde parser,
+  // regio en datumoorsprong, in een afzonderlijke lege werkmap.
+  const regionaal = !intern && opties.wat !== "waarden" && opties.bewerking === "geen";
+  if (!intern && !regionaal && opties.wat !== "opmaak") {
+    const instelling = leesWerkmapinstelling(api);
+    const lezer = await laadInvoerlezer(instelling.regio, instelling.datumstelsel);
+    try {
+      const waarden = lezer.lees(cellen.map((rij) => rij.map((c) => c.invoer)));
+      cellen.forEach((rij, r) => rij.forEach((c, k) => { if (!c.canoniek) c.waarde = waarden[r][k]; }));
+    } finally { lezer.dispose(); }
+  }
+  if (await api.version() !== versie || api.handle.version() !== versie)
+    throw new Melding(i18next.t("ribbon:spreadsheet.messages.staleVersion"));
 
   // De cellen zoals ze nu zijn (voor bewerkingen en lege cellen overslaan).
   const h = api.handle;
@@ -335,12 +340,12 @@ export async function plak(
       kolommen: gebied.left + k - (intern.bereik.left + bk),
     };
   };
-  const nieuw = plakInvoer(cellen, huidig, opties, verschuiving);
-  const invoer = nieuw.map((rij, r) => rij.map((w, k) => w ?? huidig[r][k].invoer));
-  const verandert = nieuw.some((rij) => rij.some((w) => w !== null));
+  const nieuw = regionaal
+    ? cellen.map((rij) => rij.map((c) => opties.legeOverslaan && c.invoer === "" ? null : c.invoer))
+    : plakInvoer(cellen, huidig, opties, verschuiving);
 
   // 1. Opmaak (uit de app), vóór de inhoud: invoer wordt gelezen met de notatie van de cel.
-  if (intern?.opmaak && (opties.wat === "alles" || opties.wat === "opmaak"))
+  if (intern?.opmaak && (opties.wat === "alles" || opties.wat === "opmaak")) {
     await voerOpsUit(api, [
       {
         type: "applyRangeFormat",
@@ -348,31 +353,16 @@ export async function plak(
         range: { start: { row: gebied.top, col: gebied.left }, end: { row: gebied.bottom, col: gebied.right } },
         format: opmaakNaar(intern.opmaak, opties.transponeren),
       },
-    ]);
+    ], versie);
+    versie = h.version();
+  }
 
-  // 2. Getalnotaties van Nederlandse invoer van buiten (1-1-2026, € 12,50, 15%).
-  const notatieStappen: XlsxEditStep[] = [];
-  if (!intern && opties.wat !== "opmaak")
-    notaties.forEach((rij, r) =>
-      rij?.forEach((notatie, k) => {
-        if (!notatie || nieuw[r]?.[k] === null) return;
-        const cel = { row: gebied.top + r, col: gebied.left + k };
-        notatieStappen.push({
-          op: "setNumberFormat",
-          target: { sheetId, range: { kind: "rowCol", start: cel, end: cel } },
-          format: { type: "custom", pattern: notatie },
-        });
-      }),
-    );
-  if (notatieStappen.length) await bewerk(api, notatieStappen);
-
-  // 3. De inhoud, plus bij knippen het leegmaken van de bron.
-  const stappen: XlsxEditStep[] = [];
-  if (verandert)
-    stappen.push({ op: "setCellInputs", target: doel(sheetId, gebied), inputs: invoer });
+  // Inhoud en afgeleide getalnotaties zijn één Undo-stap. Overgeslagen
+  // cellen komen niet in de opdracht; hun tekst/formule wordt niet herlezen.
+  const stappen: XlsxEditStep[] = invoerStappen(sheetId, gebied, nieuw, regionaal, cellen.map((rij) => rij.map((c) => !!c.canoniek)));
   if (intern?.knippen && opties.wat !== "opmaak" && intern.blad === blad)
     stappen.push(...leegmaken(sheetId, intern.bereik, gebied));
-  if (stappen.length) await bewerk(api, stappen);
+  if (stappen.length) await bewerk(api, stappen, versie);
   if (intern?.knippen) laatste = null;
 
   api.selectCells(blad, {
@@ -380,6 +370,26 @@ export async function plak(
     focus: start,
   });
   return gebied;
+}
+
+function invoerStappen(sheetId: string, gebied: Bereik, invoer: (string | null)[][], regionaal: boolean, canoniek: boolean[][]): XlsxEditStep[] {
+  const lokaal = (r: number, k: number) => regionaal && !canoniek[r]?.[k];
+  const stap = (b: Bereik, inputs: string[][], regio: boolean): XlsxEditStep => regio
+    ? regionaleInvoer(doel(sheetId, b), inputs)
+    : { op: "setCellInputs", target: doel(sheetId, b), inputs };
+  const eerste = lokaal(0, 0);
+  if (invoer.every((rij, r) => rij.every((w, k) => w !== null && lokaal(r, k) === eerste))) return [stap(gebied, invoer as string[][], eerste)];
+  const stappen: XlsxEditStep[] = [];
+  invoer.forEach((rij, r) => {
+    for (let k = 0; k < rij.length;) {
+      if (rij[k] === null) { k++; continue; }
+      const start = k;
+      const regio = lokaal(r, k);
+      while (k < rij.length && rij[k] !== null && lokaal(r, k) === regio) k++;
+      stappen.push(stap({ top: gebied.top + r, bottom: gebied.top + r, left: gebied.left + start, right: gebied.left + k - 1 }, [rij.slice(start, k) as string[]], regio));
+    }
+  });
+  return stappen;
 }
 
 /** Stappen die de bron leeg maken, buiten het doelgebied (in stroken per rij). */
@@ -407,8 +417,8 @@ function leegmaken(sheetId: string, bron: Bereik, doelGebied: Bereik): XlsxEditS
   return stappen;
 }
 
-async function bewerk(api: XlsxEditorApi, steps: XlsxEditStep[]) {
-  const resultaat = await api.applyEdits({ expectVersion: await api.version(), steps });
+async function bewerk(api: XlsxEditorApi, steps: XlsxEditStep[], expectVersion: string) {
+  const resultaat = await api.applyEdits({ expectVersion, steps });
   if (!resultaat.ok)
     throw new Melding(
       resultaat.failure.code === "locked-target"

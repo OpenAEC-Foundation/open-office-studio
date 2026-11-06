@@ -15,7 +15,31 @@
   "patch": "rekenbladengine-lange-ketens.patch",
   "patchSha256": "c19d5e65df78b2bb831cd02536843eb71ff9d2079c6998da2bdc90f78b81e41b",
   "oorspronkelijkWasmSha256": "21bed8aaac3fe3832455b686084f69548ffed3859feffadc271d138962be9933",
-  "wasmSha256": "385e2c53ddcbddded2060cb1d749b6c0e9b3b84f87f73290c71e82932271a702",
-  "wasmBytes": 7670630,
-  "stand": "1725 native XLSX-tests geslaagd, 16 bestaande gevallen overgeslagen. Clippy en schone bronformatcontrole groen. Acht gerichte WASM-tests en volledige app-set (1744 geslaagd, 7 overgeslagen) groen; oorspronkelijke kern faalt zevenmaal. Typecontrole, productie- en native bouw groen. Alle formulebalkcriteria, F2-bediening, lange keten, Undo/Redo, herberekening, opslag en heropenen native geverifieerd. Schone herbouw levert identieke kernbytes."
+  "wasmSha256": "a46812258ad5efcc54d0cba42bdfc21b99b4f3c873d3e9d701098f7712ee8f07",
+  "wasmBytes": 7693158,
+  "stand": "Concept-PR #164: lange ketens en bestandsregio. 2411 native kernproeven (16 bestaande overgeslagen), zeven JS/WASM-proeven, bytegelijke schone herbouw, 1867 unieke appproeven (10 bestaande overgeslagen), type-/vertaal-/productiecontrole en gerichte native invoer/opslag/heropening groen. Acceptatie #64 en zes platformchecks nog vereist vóór merge.",
+  "extraPatches": [
+    {
+      "patch": "rekenbladengine-werkmapregio.patch",
+      "patchSha256": "0923b56b9c8ea6d8695847794c0315d52827901aaa933d09f44e5458d4f44680",
+      "tests": [
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "werkmapregio"
+        },
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "regionale_batchinvoer"
+        },
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "typed_input"
+        },
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "structured_export"
+        }
+      ]
+    }
+  ]
 }

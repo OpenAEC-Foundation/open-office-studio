@@ -191,19 +191,29 @@
       "chf": "CHF (franco)",
       "brl": "R$ (real)",
       "cny": "¥ (yuan)",
-      "geen": "Nenhum"
+      "geen": "Nenhum",
+      "lak": "₭ Lao kip"
     },
     "type": "Tipo",
     "code": "Código de formato",
     "examples": "Códigos de exemplo",
     "generalHint": "Geral mostra os números como foram digitados, sem formato fixo.",
     "accountingHint": "Contábil alinha os símbolos de moeda e as casas decimais em uma coluna; zero vira um traço.",
-    "fractionHint": "O mecanismo de cálculo ainda mostra frações como decimais na grade; o formato é mantido no arquivo e o Excel e o LibreOffice mostram a fração.",
+    "fractionHint": "The denominator determines the fraction’s display precision.",
     "textHint": "Como texto, a entrada é mostrada exatamente como digitada, inclusive números.",
     "customHint": "Seções: positivo;negativo;zero;texto. 0 e # são posições de dígitos, . o separador decimal, , o separador de milhar, [Red] uma cor, \"texto\" texto literal.",
-    "engineNote": "O exemplo segue o idioma da interface. A grade ainda mostra os números com os separadores do mecanismo de cálculo.",
+    "engineNote": "The preview shows the full formatted value. A narrow cell may shorten it or show overflow marks.",
     "selectCell": "Selecione uma célula primeiro.",
-    "emptyCode": "Digite um código de formato."
+    "emptyCode": "Digite um código de formato.",
+    "workbookLocale": "Workbook locale",
+    "localeHint": "Controls default number/date display and input. Saved in this file.",
+    "errors": {
+      "invalidRegion": "This locale is not supported.",
+      "nameConflict": "The workbook setting conflicts with an existing defined name.",
+      "staleDocument": "The workbook has changed. Reopen Format Cells.",
+      "missingSheet": "The original worksheet no longer exists.",
+      "previewLoad": "The number-format preview could not be loaded."
+    }
   },
   "clipboard": {
     "paste": "Colar",

@@ -191,19 +191,29 @@
       "chf": "CHF (franc)",
       "brl": "R$ (real)",
       "cny": "¥ (yuan)",
-      "geen": "Aucun"
+      "geen": "Aucun",
+      "lak": "₭ Lao kip"
     },
     "type": "Type",
     "code": "Code de format",
     "examples": "Codes d’exemple",
     "generalHint": "Standard affiche les nombres tels qu’ils ont été saisis, sans format fixe.",
     "accountingHint": "Comptabilité aligne les symboles monétaires et les décimales dans une colonne ; zéro devient un tiret.",
-    "fractionHint": "Le moteur de calcul affiche encore les fractions sous forme décimale dans la grille ; le format est conservé dans le fichier et Excel et LibreOffice affichent la fraction.",
+    "fractionHint": "The denominator determines the fraction’s display precision.",
     "textHint": "En texte, la saisie s’affiche exactement comme tapée, nombres compris.",
     "customHint": "Sections : positif;négatif;zéro;texte. 0 et # sont des positions de chiffres, . le séparateur décimal, , le séparateur de milliers, [Red] une couleur, \"texte\" du texte littéral.",
-    "engineNote": "L’aperçu suit la langue de l’interface. La grille affiche encore les nombres avec les séparateurs du moteur de calcul.",
+    "engineNote": "The preview shows the full formatted value. A narrow cell may shorten it or show overflow marks.",
     "selectCell": "Sélectionnez d’abord une cellule.",
-    "emptyCode": "Saisissez un code de format."
+    "emptyCode": "Saisissez un code de format.",
+    "workbookLocale": "Workbook locale",
+    "localeHint": "Controls default number/date display and input. Saved in this file.",
+    "errors": {
+      "invalidRegion": "This locale is not supported.",
+      "nameConflict": "The workbook setting conflicts with an existing defined name.",
+      "staleDocument": "The workbook has changed. Reopen Format Cells.",
+      "missingSheet": "The original worksheet no longer exists.",
+      "previewLoad": "The number-format preview could not be loaded."
+    }
   },
   "clipboard": {
     "paste": "Coller",

@@ -1,9 +1,17 @@
 {
   "basis": "c096194 (oorspronkelijke bron + vastgelegde lange-ketenspatch)",
-  "patchSha256": "a446b11af4889b8a836327bdc1f75813c7a6c953a60e88a2e7e47cc8dc27d372",
+  "patchSha256": "0923b56b9c8ea6d8695847794c0315d52827901aaa933d09f44e5458d4f44680",
   "fuzz": 0,
   "geslaagd": true,
   "bestanden": [
+    {
+      "pad": "crates/betteroffice-xlsx/src/snapshot/acceptance_tests.rs",
+      "sha256": "7ccefce8feeae0ceb6ca9b052cb79cc9a832ca5615d90adb367edc4afb1fc4cc"
+    },
+    {
+      "pad": "crates/betteroffice-xlsx/src/snapshot/package.rs",
+      "sha256": "f74dc351b46a65c4f4d8c16fe9a5e20a77a0cb3f1d923151542349512fb3f7e7"
+    },
     {
       "pad": "crates/betteroffice-xlsx/src/structured/walk.rs",
       "sha256": "df173f1356a1ea6e48c27a33c51e8c30183b19c22b3f1867f8aa29ca47342d1e"
@@ -14,11 +22,19 @@
     },
     {
       "pad": "crates/betteroffice-xlsx/src/workbook/batch.rs",
-      "sha256": "b2658dc9c276f5261666b00f5659570066da518623fdfbfb6f226fa7b4057d72"
+      "sha256": "12b0bedfeb3f7ea6f7e9beadd33b51279c0bf4974da3416dcad8f65004a2f08c"
     },
     {
       "pad": "crates/betteroffice-xlsx/src/workbook/target.rs",
       "sha256": "be3040534f952486754f3bb95970572bfbef4198f5df8a51e582cd6b1bdf3903"
+    },
+    {
+      "pad": "crates/betteroffice-xlsx/tests/regionale_batchinvoer.rs",
+      "sha256": "6631a43ba85d61f23e5333153e4e5a1286f9839acf5796ff5a37c5586ae5dfba"
+    },
+    {
+      "pad": "crates/betteroffice-xlsx/tests/structured_export.rs",
+      "sha256": "5397b5ad60a5744acda30a133769da8065c5b1e8752afa44407b90b349fbb1d7"
     },
     {
       "pad": "crates/betteroffice-xlsx/tests/werkmapregio.rs",
@@ -73,5 +89,5 @@
       "sha256": "fadd9142bf40ec93275c610c9bad1f2a2791ee9f4007d26a11af2e5d60404c64"
     }
   ],
-  "uitvoer": "checking file crates/betteroffice-xlsx/src/structured/walk.rs\nchecking file crates/betteroffice-xlsx/src/workbook.rs\nchecking file crates/betteroffice-xlsx/src/workbook/batch.rs\nchecking file crates/betteroffice-xlsx/src/workbook/target.rs\nchecking file crates/betteroffice-xlsx/tests/werkmapregio.rs\nchecking file crates/xlsx-calc/src/engine.rs\nchecking file crates/xlsx-calc/src/eval.rs\nchecking file crates/xlsx-calc/src/functions/text.rs\nchecking file crates/xlsx-model/src/numfmt.rs\nchecking file crates/xlsx-model/src/numfmt/locale.rs\nchecking file crates/xlsx-model/src/numfmt/regio_tests.rs\nchecking file crates/xlsx-model/src/workbook.rs\nchecking file crates/xlsx-ops/src/input.rs\nchecking file crates/xlsx-ops/src/input/locale.rs\nchecking file crates/xlsx-ops/src/lib.rs\nchecking file crates/xlsx-render/src/lib.rs\nchecking file crates/xlsx-render/src/number_format.rs\n"
+  "uitvoer": "patching file crates/betteroffice-xlsx/src/snapshot/acceptance_tests.rs\npatching file crates/betteroffice-xlsx/src/snapshot/package.rs\npatching file crates/betteroffice-xlsx/src/structured/walk.rs\npatching file crates/betteroffice-xlsx/src/workbook.rs\npatching file crates/betteroffice-xlsx/src/workbook/batch.rs\npatching file crates/betteroffice-xlsx/src/workbook/target.rs\npatching file crates/betteroffice-xlsx/tests/regionale_batchinvoer.rs\npatching file crates/betteroffice-xlsx/tests/structured_export.rs\npatching file crates/betteroffice-xlsx/tests/werkmapregio.rs\npatching file crates/xlsx-calc/src/engine.rs\npatching file crates/xlsx-calc/src/eval.rs\npatching file crates/xlsx-calc/src/functions/text.rs\npatching file crates/xlsx-model/src/numfmt.rs\npatching file crates/xlsx-model/src/numfmt/locale.rs\npatching file crates/xlsx-model/src/numfmt/regio_tests.rs\npatching file crates/xlsx-model/src/workbook.rs\npatching file crates/xlsx-ops/src/input.rs\npatching file crates/xlsx-ops/src/input/locale.rs\npatching file crates/xlsx-ops/src/lib.rs\npatching file crates/xlsx-render/src/lib.rs\npatching file crates/xlsx-render/src/number_format.rs\n"
 }

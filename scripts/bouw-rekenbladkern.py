@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Bouw de vastgezette rekenbladkern met ondersteuning voor lange ketens.
+"""Bouw de vastgezette rekenbladkern met de gecontroleerde bronpatches.
 
 De bronmap moet nieuw zijn. Bestaande bronbestanden of npm-pakketten worden
 niet overschreven. Download en patch worden vóór het compileren geverifieerd.
@@ -30,9 +30,11 @@ def main():
     args = parser.parse_args()
     repo = Path(__file__).resolve().parents[1]
     metadata = json.loads((repo / 'patches/rekenbladengine-lange-ketens.json').read_text())
-    patch = repo / 'patches' / metadata['patch']
-    if sha256(patch) != metadata['patchSha256']:
-        raise SystemExit('De rekenbladpatch wijkt af van de vastgelegde checksum.')
+    patches = [metadata, *metadata.get('extraPatches', [])]
+    for onderdeel in patches:
+        patch = repo / 'patches' / onderdeel['patch']
+        if sha256(patch) != onderdeel['patchSha256']:
+            raise SystemExit('De rekenbladpatch wijkt af van de vastgelegde checksum: ' + onderdeel['patch'])
     rustc = subprocess.check_output(['rustc', '--version'], text=True).strip()
     if not rustc.startswith('rustc ' + metadata['rustc'] + ' '):
         raise SystemExit('Gebruik de vastgelegde Rust-versie: ' + metadata['rustc'])
@@ -74,18 +76,26 @@ def main():
                 with tar.extractfile(lid) as bron, doel.open('xb') as bestand:
                     while blok := bron.read(1024 * 1024):
                         bestand.write(blok)
-    subprocess.run(['patch', '-p1', '--fuzz=0', '--batch', '--forward', '-i', str(patch)], cwd=bronmap, check=True)
+    for onderdeel in patches:
+        patch = repo / 'patches' / onderdeel['patch']
+        subprocess.run(['patch', '-p1', '--fuzz=0', '--batch', '--forward', '-i', str(patch)], cwd=bronmap, check=True)
     if args.controle:
         for pakket in ['betteroffice-xlsx-calc', 'betteroffice-xlsx']:
             subprocess.run(['cargo', 'test', '-p', pakket, '--locked', '--test', 'lange_ketens'], cwd=bronmap, check=True)
+        for onderdeel in metadata.get('extraPatches', []):
+            for proef in onderdeel.get('tests', []):
+                subprocess.run(['cargo', 'test', '-p', proef['pakket'], '--locked', '--test', proef['test']], cwd=bronmap, check=True)
     uitvoer = args.uitvoer.resolve()
     if uitvoer.exists():
         raise SystemExit('De uitvoermap bestaat al; kies een nieuwe map.')
-    omgeving = {**os.environ, 'CARGO_TARGET_DIR': str(bronmap / 'target-wasm')}
+    omgeving = dict(os.environ)
+    omgeving.setdefault('CARGO_TARGET_DIR', str(bronmap / 'target-wasm'))
+    doelmap = Path(omgeving['CARGO_TARGET_DIR']).resolve()
+    omgeving['CARGO_TARGET_DIR'] = str(doelmap)
     omgeving.setdefault('CARGO_BUILD_JOBS', '2')
     subprocess.run(['cargo', 'build', '-p', 'xlsx-wasm', '--lib', '--target', 'wasm32-unknown-unknown', '--release', '--locked'], cwd=bronmap, env=omgeving, check=True)
     uitvoer.mkdir(parents=True)
-    subprocess.run([args.wasm_bindgen, '--target', 'web', '--out-name', 'xlsx_wasm', '--out-dir', str(uitvoer), str(bronmap / 'target-wasm/wasm32-unknown-unknown/release/xlsx_wasm.wasm')], check=True)
+    subprocess.run([args.wasm_bindgen, '--target', 'web', '--out-name', 'xlsx_wasm', '--out-dir', str(uitvoer), str(doelmap / 'wasm32-unknown-unknown/release/xlsx_wasm.wasm')], check=True)
     kern = uitvoer / 'xlsx_wasm_bg.wasm'
     tijdelijk = uitvoer / 'xlsx_wasm_bg-geoptimaliseerd.wasm'
     subprocess.run([args.wasm_opt, '-O3', str(kern), '-o', str(tijdelijk)], check=True)
@@ -107,7 +117,7 @@ const contract = pad => {
 if (contract(process.argv[1]) !== contract(process.argv[2]))
   throw new Error('De gebouwde rekenbladkern heeft een andere JS/WASM-interface.');
 ''', str(kern), str(origineel)], check=True)
-    resultaat = {'bronCommit': metadata['commit'], 'patchSha256': metadata['patchSha256'], 'rustc': rustc, 'wasmBindgen': bindgen, 'wasmOpt': optimizer, 'wasmSha256': sha256(kern), 'wasmBytes': kern.stat().st_size}
+    resultaat = {'bronCommit': metadata['commit'], 'patches': [{'patch': p['patch'], 'sha256': p['patchSha256']} for p in patches], 'rustc': rustc, 'wasmBindgen': bindgen, 'wasmOpt': optimizer, 'wasmSha256': sha256(kern), 'wasmBytes': kern.stat().st_size}
     (uitvoer / 'bouw.json').write_text(json.dumps(resultaat, indent=2) + '\n')
     print(json.dumps(resultaat, indent=2))
 

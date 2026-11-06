@@ -12,8 +12,11 @@ export function controleerRekenbladKern(): void {
   const meta = JSON.parse(lees("../patches/rekenbladengine-lange-ketens.json").toString());
   const kern = lees("../vendor/rekenbladengine/xlsx_wasm_bg.wasm");
   const origineel = lees("../node_modules/@betteroffice/xlsx/dist/generated/xlsx_wasm_bg.wasm");
-  if (som(lees("../patches/rekenbladengine-lange-ketens.patch")) !== meta.patchSha256 ||
-      som(kern) !== meta.wasmSha256 || som(origineel) !== meta.oorspronkelijkWasmSha256)
+  for (const patch of [meta, ...(meta.extraPatches ?? [])]) {
+    if (som(lees(`../patches/${patch.patch}`)) !== patch.patchSha256)
+      throw new Error(`De bronpatch ${patch.patch} wijkt af van de gecontroleerde versie.`);
+  }
+  if (som(kern) !== meta.wasmSha256 || som(origineel) !== meta.oorspronkelijkWasmSha256)
     throw new Error("De rekenbladkern of zijn bron wijkt af van de gecontroleerde versie.");
   const contract = (bytes: Uint8Array) => {
     const module = new WebAssembly.Module(Uint8Array.from(bytes));

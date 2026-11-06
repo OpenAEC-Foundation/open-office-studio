@@ -183,19 +183,29 @@
       "chf": "CHF (Franken)",
       "brl": "R$ (Real)",
       "cny": "¥ (Yuan)",
-      "geen": "Keins"
+      "geen": "Keins",
+      "lak": "₭ Lao kip"
     },
     "type": "Typ",
     "code": "Formatcode",
     "examples": "Beispielcodes",
     "generalHint": "Standard zeigt Zahlen so, wie sie eingegeben wurden, ohne festes Format.",
     "accountingHint": "Buchhaltung richtet Währungssymbole und Dezimalzeichen in einer Spalte aus; null wird ein Strich.",
-    "fractionHint": "Die Tabellen-Engine zeigt Brüche im Raster noch als Dezimalzahl; das Format bleibt in der Datei erhalten und Excel und LibreOffice zeigen den Bruch.",
+    "fractionHint": "The denominator determines the fraction’s display precision.",
     "textHint": "Als Text wird die Eingabe genau so angezeigt, wie Sie sie tippen, auch Zahlen.",
     "customHint": "Abschnitte: positiv;negativ;null;Text. 0 und # sind Ziffernstellen, . das Dezimalzeichen, , das Tausendertrennzeichen, [Red] eine Farbe, \"Text\" wörtlicher Text.",
-    "engineNote": "Das Beispiel folgt der Sprache der Oberfläche. Das Raster zeigt Zahlen noch mit den Trennzeichen der Tabellen-Engine.",
+    "engineNote": "The preview shows the full formatted value. A narrow cell may shorten it or show overflow marks.",
     "selectCell": "Wählen Sie zuerst eine Zelle aus.",
-    "emptyCode": "Geben Sie einen Formatcode ein."
+    "emptyCode": "Geben Sie einen Formatcode ein.",
+    "workbookLocale": "Workbook locale",
+    "localeHint": "Controls default number/date display and input. Saved in this file.",
+    "errors": {
+      "invalidRegion": "This locale is not supported.",
+      "nameConflict": "The workbook setting conflicts with an existing defined name.",
+      "staleDocument": "The workbook has changed. Reopen Format Cells.",
+      "missingSheet": "The original worksheet no longer exists.",
+      "previewLoad": "The number-format preview could not be loaded."
+    }
   },
   "clipboard": {
     "paste": "Einfügen",

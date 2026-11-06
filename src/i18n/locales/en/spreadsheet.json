@@ -183,19 +183,29 @@
       "chf": "CHF (franc)",
       "brl": "R$ (real)",
       "cny": "¥ (yuan)",
-      "geen": "None"
+      "geen": "None",
+      "lak": "₭ Lao kip"
     },
     "type": "Type",
     "code": "Format code",
     "examples": "Sample codes",
     "generalHint": "General shows numbers as entered, without a fixed format.",
     "accountingHint": "Accounting lines up currency symbols and decimal points in a column; zero becomes a dash.",
-    "fractionHint": "The spreadsheet engine still shows fractions as decimals in the grid; the format is kept in the file and Excel and LibreOffice show the fraction.",
+    "fractionHint": "The denominator determines the fraction’s display precision.",
     "textHint": "As text, the entry is shown exactly as typed, numbers included.",
     "customHint": "Sections: positive;negative;zero;text. 0 and # are digit places, . the decimal separator, , the thousands separator, [Red] a color, \"text\" literal text.",
-    "engineNote": "The sample follows the interface language. The grid still shows numbers with the spreadsheet engine's separators.",
+    "engineNote": "The preview shows the full formatted value. A narrow cell may shorten it or show overflow marks.",
     "selectCell": "Select a cell first.",
-    "emptyCode": "Enter a format code."
+    "emptyCode": "Enter a format code.",
+    "workbookLocale": "Workbook locale",
+    "localeHint": "Controls default number/date display and input. Saved in this file.",
+    "errors": {
+      "invalidRegion": "This locale is not supported.",
+      "nameConflict": "The workbook setting conflicts with an existing defined name.",
+      "staleDocument": "The workbook has changed. Reopen Format Cells.",
+      "missingSheet": "The original worksheet no longer exists.",
+      "previewLoad": "The number-format preview could not be loaded."
+    }
   },
   "clipboard": {
     "paste": "Paste",

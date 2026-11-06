@@ -1,4 +1,5 @@
 /** Naamdefinities en namen uit selectiekoppen (#70), op de bestaande XLSX-kern. */
+import { isRegioNaam } from "./regiokeuze";
 import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
 import type { XlsxDefinedNameOp } from "@betteroffice/xlsx";
 import { voerOpsUit } from "../lint/rekenblad-opdrachten";
@@ -15,6 +16,9 @@ export interface Bereiknaam {
   blad: number | null;
   verborgen: boolean;
 }
+
+export const interneRegioNaam = (n: Bereiknaam) => isRegioNaam(n.naam) && n.blad === null && n.verborgen;
+export const beschermdeNaam = (n: Bereiknaam) => /^_xlnm\./i.test(n.naam) || interneRegioNaam(n);
 
 export type NaamfoutCode =
   | "invalidName"
@@ -78,7 +82,7 @@ export function zichtbareNamen(namen: Bereiknaam[], blad: number) {
 
 /** Namen zijn geen adressen, R1C1-verwijzingen of booleaanse constanten. */
 export function naamFout(naam: string): NaamfoutCode | null {
-  if (/^_xlnm\./i.test(naam)) return "reservedName";
+  if (/^_xlnm\./i.test(naam) || isRegioNaam(naam)) return "reservedName";
   if (
     !naam ||
     naam.length > 255 ||
@@ -90,9 +94,10 @@ export function naamFout(naam: string): NaamfoutCode | null {
   return null;
 }
 
-function controleer(api: XlsxEditorApi, naam: Bereiknaam) {
+function controleer(api: XlsxEditorApi, naam: Bereiknaam, oorspronkelijk?: Bereiknaam) {
   const fout = naamFout(naam.naam);
-  if (fout) throw new Naamfout(fout, naam.naam);
+  const bestaandeGebruikersnaam = isRegioNaam(naam.naam) && oorspronkelijk?.naam === naam.naam && !interneRegioNaam(oorspronkelijk) && !interneRegioNaam(naam);
+  if (fout && !(fout === "reservedName" && bestaandeGebruikersnaam)) throw new Naamfout(fout, naam.naam);
   if (!naam.verwijzing.trim()) throw new Naamfout("emptyDefinition", naam.naam);
   if (
     naam.blad !== null &&
@@ -134,7 +139,7 @@ export async function bewaarNaam(
     naam: invoer.naam.trim(),
     verwijzing: invoer.verwijzing.trim().replace(/^=/, ""),
   };
-  controleer(api, nieuw);
+  controleer(api, nieuw, oorspronkelijk);
   const namen = namenLijst(api);
   const oud =
     oorspronkelijk && namen.find((n) => sleutel(n) === sleutel(oorspronkelijk));
@@ -164,7 +169,7 @@ export async function verwijderNaam(
 ) {
   const versie = await api.version();
   controleerBladen(api, verwachteBladen);
-  if (/^_xlnm\./i.test(oorspronkelijk.naam))
+  if (beschermdeNaam(oorspronkelijk))
     throw new Naamfout("reservedName", oorspronkelijk.naam);
   const oud = namenLijst(api).find(
     (n) => sleutel(n) === sleutel(oorspronkelijk),

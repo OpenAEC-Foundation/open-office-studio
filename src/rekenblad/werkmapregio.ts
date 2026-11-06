@@ -1,4 +1,5 @@
 /** Bestandsgebonden getalnotatie (#64), onafhankelijk van de interfacetaal. */
+import i18next from "../i18n/config";
 import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
 import { zipSync, type Zippable } from "fflate";
 import { Pakket } from "../grafieken/pakket";
@@ -12,47 +13,30 @@ import {
 } from "../grafieken/xml";
 import { voerOpsUit } from "../lint/rekenblad-opdrachten";
 
-export const REGIONAAM = "_OpenAEC_NumberLocale";
-export const WERKMAPREGIOS = [
-  "nl-NL",
-  "en-GB",
-  "en-US",
-  "de-DE",
-  "fr-FR",
-  "es-ES",
-  "it-IT",
-  "pt-BR",
-  "zh-CN",
-  "lo-LA",
-] as const;
-export type Werkmapregio = (typeof WERKMAPREGIOS)[number];
-export const isRegioNaam = (naam: string) =>
-  naam.toLowerCase() === REGIONAAM.toLowerCase();
-export function herkenRegio(waarde: string): Werkmapregio | null {
-  const sleutel = waarde.replaceAll("_", "-").toLowerCase();
-  return WERKMAPREGIOS.find((r) => r.toLowerCase() === sleutel) ?? null;
+import { herkenRegio, isRegioNaam, REGIONAAM, type Werkmapregio } from "./regiokeuze";
+export { herkenRegio, isRegioNaam, REGIONAAM, WERKMAPREGIOS, type Werkmapregio } from "./regiokeuze";
+
+export class Regiofout extends Error {
+  constructor(public code: "invalidRegion" | "nameConflict" | "staleDocument" | "missingSheet") {
+    super(i18next.t(`spreadsheet:numberFormat.errors.${code}`));
+  }
 }
 
 /** Alleen een bekende constante is een instelling; geen formule evalueren. */
-function leesRegiodefinitie(api: XlsxEditorApi) {
+export function leesWerkmapinstelling(api: XlsxEditorApi) {
   const r = api.handle.exportStructured({
     scope: [{ sheet: api.handle.sheetInfo().activeSheet, range: "A1" }],
-    maxCells: 1,
-    includeHiddenNames: true,
-    includeHiddenSheets: true,
+    maxCells: 1, includeHiddenNames: true, includeHiddenSheets: true,
   });
   if (!r.ok) throw new Error(r.failure.message);
-  return r.content.definedNames.find(
-    (n) => isRegioNaam(n.name) && !n.localSheet,
-  );
+  const definitie = r.content.definedNames.find((n) => isRegioNaam(n.name) && !n.localSheet);
+  const constante = definitie?.hidden && /^"([^"]+)"$/.exec(definitie.formula)?.[1];
+  const regio: Werkmapregio = (constante && herkenRegio(constante)) || "en-GB";
+  return { regio, datumstelsel: r.content.dateSystem, definitie };
 }
 
 export function leesWerkmapregio(api: XlsxEditorApi): Werkmapregio {
-  const definitie = leesRegiodefinitie(api);
-  const naam = definitie?.hidden ? definitie : undefined;
-  const constante = naam && /^"([^"]+)"$/.exec(naam.formula)?.[1];
-  // Dezelfde terugval als de kern voor oudere bestanden zonder instelling.
-  return (constante && herkenRegio(constante)) || "en-GB";
+  return leesWerkmapinstelling(api).regio;
 }
 
 export async function bewaarWerkmapregio(
@@ -61,11 +45,11 @@ export async function bewaarWerkmapregio(
   versie?: string,
 ) {
   const bekend = herkenRegio(regio);
-  if (!bekend) throw new Error("Onbekende werkmapregio.");
+  if (!bekend) throw new Regiofout("invalidRegion");
   const verwacht = versie ?? (await api.version());
-  const bestaand = leesRegiodefinitie(api);
+  const bestaand = leesWerkmapinstelling(api).definitie;
   if (bestaand && !bestaand.hidden)
-    throw new Error("De bestandsregio heeft een conflicterende naamdefinitie.");
+    throw new Regiofout("nameConflict");
   await voerOpsUit(
     api,
     [

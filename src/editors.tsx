@@ -20,7 +20,8 @@ import {
   EditorZichtbaar,
   registreerWijziging,
 } from "./lint/editorApi";
-import { useNederlandseInvoer } from "./useNederlandseInvoer";
+import { metBeginregio } from "./rekenblad/werkmapregio";
+import { intlLocale } from "./i18n/config";
 import { useHerladen } from "./grafieken/ui/herladen";
 import { laadFiltersUitBestand, maakRekenbladLaag } from "./lint/rekenblad-laag";
 import { werkboekBytes } from "./lint/rekenblad-filter";
@@ -152,7 +153,11 @@ export default function OfficeEditor(props: EditorProps) {
     }),
     [rekenbladApi, presentatieApi, herladen.api, herladen.grafiekSelectie, rekenbladLaag],
   );
-  useNederlandseInvoer(rekenbladHost, rekenbladApi);
+  const beginRegio = useRef(intlLocale());
+  const rekenbladBytes = useMemo(
+    () => props.soort === "xlsx" ? metBeginregio(herladen.bytes, beginRegio.current) : herladen.bytes,
+    [herladen.bytes, props.soort],
+  );
   // Spellingcontrole en autocorrectie (#21): golflijnen, menu, F7, statusbalk.
   const spelling = useTekstSpelling(
     () => docx.current,
@@ -421,7 +426,7 @@ export default function OfficeEditor(props: EditorProps) {
               <XlsxEditor
                 key={herladen.sleutel}
                 legacySyncApi
-                file={herladen.bytes}
+                file={rekenbladBytes}
                 plugins={xlsxPlugins}
                 fileName={props.naam}
                 onReady={gereedXlsx}

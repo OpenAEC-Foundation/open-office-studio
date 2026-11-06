@@ -1,3 +1,27 @@
+diff --git a/crates/betteroffice-xlsx/src/snapshot/acceptance_tests.rs b/crates/betteroffice-xlsx/src/snapshot/acceptance_tests.rs
+index dfdec98..1bdf9db 100644
+--- a/crates/betteroffice-xlsx/src/snapshot/acceptance_tests.rs
++++ b/crates/betteroffice-xlsx/src/snapshot/acceptance_tests.rs
+@@ -2659,6 +2659,7 @@ fn request(workbook: &Workbook, sheet: usize) -> EditRequest {
+         history: Default::default(),
+         calculation: CalculationRequest::default(),
+         steps: vec![EditStep::new(EditOperation::SetCellInputs {
++            localized: false,
+             target: RangeTarget {
+                 sheet_id: format!("sheet:{sheet}"),
+                 range: RangeAddress::A1 {
+diff --git a/crates/betteroffice-xlsx/src/snapshot/package.rs b/crates/betteroffice-xlsx/src/snapshot/package.rs
+index 0aeb1df..aef0fbc 100644
+--- a/crates/betteroffice-xlsx/src/snapshot/package.rs
++++ b/crates/betteroffice-xlsx/src/snapshot/package.rs
+@@ -218,6 +218,7 @@ Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart"
+             history: Default::default(),
+             calculation: CalculationRequest::default(),
+             steps: vec![EditStep::new(EditOperation::SetCellInputs {
++                localized: false,
+                 target: RangeTarget {
+                     sheet_id: format!("sheet:{sheet}"),
+                     range: RangeAddress::A1 {
 diff --git a/crates/betteroffice-xlsx/src/structured/walk.rs b/crates/betteroffice-xlsx/src/structured/walk.rs
 index bbbf3a8..10f2f00 100644
 --- a/crates/betteroffice-xlsx/src/structured/walk.rs
@@ -297,10 +321,10 @@ index 92d84d5..66e1a57 100644
                          )
                      })
 diff --git a/crates/betteroffice-xlsx/src/workbook/batch.rs b/crates/betteroffice-xlsx/src/workbook/batch.rs
-index 617c31e..aa43eb5 100644
+index 617c31e..a3b29b1 100644
 --- a/crates/betteroffice-xlsx/src/workbook/batch.rs
 +++ b/crates/betteroffice-xlsx/src/workbook/batch.rs
-@@ -15,7 +15,6 @@ use xlsx_calc::graph::DepGraph;
+@@ -15,14 +15,13 @@ use xlsx_calc::graph::DepGraph;
  use xlsx_calc::{RecalcResult, parse_formula, recalc_after_with_seed};
  use xlsx_model::{CellRange, CellRef, CellValue, Sheet, SheetId};
  use xlsx_ops::{CellState, NumberFormatMutation, Op, OpError, StylePatch, StyleProperty};
@@ -308,7 +332,27 @@ index 617c31e..aa43eb5 100644
  
  use super::staging::CommitHistory;
  use super::target::{CellTarget, FindRequest, RangeTarget, ReadRequest, Resolved, cell_target};
-@@ -561,6 +560,7 @@ impl Workbook {
+ use super::{
+     StagedApply, Workbook, authority_error, calculation_result, cell_states_semantically_equal,
+-    current_cell_state, edit_cell_state, validate_cell_state, validate_model_sheets, validate_op,
+-    written_cell_style,
++    current_cell_state, edit_cell_state, edit_cell_state_in_locale, validate_cell_state,
++    validate_model_sheets, validate_op, written_cell_style,
+ };
+ use crate::authority::{SyncOrigin, cell_format_fits};
+ use crate::{CalculationOptions, Error, Result};
+@@ -146,6 +145,10 @@ pub enum EditOperation {
+     SetCellInputs {
+         target: RangeTarget,
+         inputs: Vec<Vec<String>>,
++        /// Alleen ruwe gebruikersinvoer volgt de regio van het bestand.
++        /// Bestaande opdrachtgevers blijven canonieke getallen schrijven.
++        #[serde(default, skip_serializing_if = "std::ops::Not::not")]
++        localized: bool,
+     },
+     SetCellValues {
+         target: RangeTarget,
+@@ -561,6 +564,7 @@ impl Workbook {
          sheet: SheetId,
          at: CellRef,
          guard: &CellGuard,
@@ -316,7 +360,7 @@ index 617c31e..aa43eb5 100644
      ) -> Option<&'static str> {
          let stored = self.model.sheet(sheet).and_then(|sheet| sheet.cell(at));
          if let Some(value) = &guard.value
-@@ -575,7 +575,12 @@ impl Workbook {
+@@ -575,7 +579,12 @@ impl Workbook {
          }
          if let Some(text) = &guard.display_text {
              let current = stored.map_or_else(String::new, |cell| {
@@ -330,7 +374,7 @@ index 617c31e..aa43eb5 100644
              });
              if current != *text {
                  return Some("display text");
-@@ -738,8 +743,9 @@ impl Workbook {
+@@ -738,8 +747,9 @@ impl Workbook {
              ));
          }
          if let Some(guard) = &step.expect {
@@ -341,6 +385,38 @@ index 617c31e..aa43eb5 100644
                      return Err(at(
                          EditFailureCode::ContentMismatch,
                          format!("the {field} of {} does not match its guard", cell.to_a1()),
+@@ -748,11 +758,28 @@ impl Workbook {
+             }
+         }
+         let effect = match &step.operation {
+-            EditOperation::SetCellInputs { inputs, .. } => {
++            EditOperation::SetCellInputs {
++                inputs, localized, ..
++            } => {
++                let locale = if *localized {
++                    self.model.number_locale_setting()
++                } else {
++                    None
++                };
+                 let mut states = Vec::new();
+                 for (cell, input) in resolved.iter().zip(inputs.iter().flatten()) {
+-                    let (state, format) =
+-                        edit_cell_state(&self.model, resolved.sheet, cell, input, now_serial);
++                    let (state, format) = if *localized {
++                        edit_cell_state_in_locale(
++                            &self.model,
++                            resolved.sheet,
++                            cell,
++                            input,
++                            now_serial,
++                            locale,
++                        )
++                    } else {
++                        edit_cell_state(&self.model, resolved.sheet, cell, input, now_serial)
++                    };
+                     validate_cell_state(&state).map_err(|error| {
+                         at(
+                             EditFailureCode::InvalidStep,
 diff --git a/crates/betteroffice-xlsx/src/workbook/target.rs b/crates/betteroffice-xlsx/src/workbook/target.rs
 index ede4b9f..26a93ad 100644
 --- a/crates/betteroffice-xlsx/src/workbook/target.rs
@@ -415,6 +491,203 @@ index ede4b9f..26a93ad 100644
                  if !text.contains(request.text.as_str()) {
                      continue;
                  }
+diff --git a/crates/betteroffice-xlsx/tests/regionale_batchinvoer.rs b/crates/betteroffice-xlsx/tests/regionale_batchinvoer.rs
+new file mode 100644
+index 0000000..d44ba19
+--- /dev/null
++++ b/crates/betteroffice-xlsx/tests/regionale_batchinvoer.rs
+@@ -0,0 +1,179 @@
++use betteroffice_xlsx::{
++    CalculationOptions, CellRange, CellRef, CellValue, DateSystem, EditRequest,
++    NumberFormatMutation, Sheet, SheetId, Workbook, WorkbookModel,
++};
++use serde_json::{Value, json};
++
++fn at(a1: &str) -> CellRef {
++    CellRef::parse_a1(a1).unwrap()
++}
++fn boek(regio: Option<&str>, datumstelsel: DateSystem) -> Workbook {
++    let mut model = WorkbookModel {
++        sheets: vec![Sheet::new("Gegevens")],
++        date_system: datumstelsel,
++        ..Default::default()
++    };
++    if let Some(regio) = regio {
++        model.defined_names.push(xlsx_model::DefinedName {
++            name: "_OpenAEC_NumberLocale".into(),
++            formula: format!("\"{regio}\""),
++            local_sheet: None,
++            hidden: true,
++        });
++    }
++    Workbook::from_model(model).unwrap()
++}
++fn request(boek: &Workbook, a1: &str, inputs: Value, localized: Option<Value>) -> Value {
++    let mut stap = json!({"op":"setCellInputs","target":{"sheetId":"sheet:0","range":{"kind":"a1","a1":a1}},"inputs":inputs});
++    if let Some(localized) = localized {
++        stap["localized"] = localized;
++    }
++    json!({"expectVersion":boek.version(),"steps":[stap]})
++}
++fn uitvoeren(boek: &mut Workbook, r: Value) {
++    let request: EditRequest = serde_json::from_value(r).unwrap();
++    assert!(boek.apply_edits(&request).unwrap().unwrap().applied);
++}
++fn waarde(boek: &Workbook, a1: &str) -> CellValue {
++    boek.model().sheets[0]
++        .cell(at(a1))
++        .map(|c| c.value.clone())
++        .unwrap_or_default()
++}
++fn getal(n: f64) -> CellValue {
++    CellValue::Number { value: n }
++}
++fn getoond(boek: &Workbook, a1: &str) -> String {
++    boek.model().sheets[0]
++        .cell(at(a1))
++        .map(|c| xlsx_render::workbook_display_text(boek.model(), c))
++        .unwrap_or_default()
++}
++
++#[test]
++fn bestaande_canonieke_batchinvoer_blijft_ongewijzigd() {
++    let mut b = boek(Some("nl-NL"), DateSystem::V1900);
++    let r = request(&b, "A1", json!([["1.234"]]), None);
++    uitvoeren(&mut b, r);
++    assert_eq!(waarde(&b, "A1"), getal(1.234));
++}
++#[test]
++fn regionale_batch_bewaart_getal_datum_en_procent_in_een_transactie() {
++    let mut b = boek(Some("nl-NL"), DateSystem::V1900);
++    let r = request(
++        &b,
++        "A1:C1",
++        json!([["1.234", "1-1-2026", "15%"]]),
++        Some(json!(true)),
++    );
++    uitvoeren(&mut b, r);
++    assert_eq!(waarde(&b, "A1"), getal(1234.0));
++    // 01-01-2026 is datumgetal 46023 in het bestaande stelsel 1900.
++    assert_eq!(waarde(&b, "B1"), getal(46023.0));
++    assert_eq!(waarde(&b, "C1"), getal(0.15));
++    assert_eq!(getoond(&b, "B1"), "01-01-2026");
++    assert_eq!(getoond(&b, "C1"), "15%");
++    b.undo(CalculationOptions::default()).unwrap();
++    for a1 in ["A1", "B1", "C1"] {
++        assert_eq!(waarde(&b, a1), CellValue::Empty);
++    }
++    b.redo(CalculationOptions::default()).unwrap();
++    assert_eq!(getoond(&b, "B1"), "01-01-2026");
++    assert_eq!(getoond(&b, "C1"), "15%");
++    let bytes = b.save().unwrap();
++    let heropend = Workbook::open(&bytes).unwrap();
++    assert_eq!(getoond(&heropend, "B1"), "01-01-2026");
++    assert_eq!(getoond(&heropend, "C1"), "15%");
++}
++#[test]
++fn regionale_batch_respecteert_datumstelsel_1904() {
++    let mut b = boek(Some("nl-NL"), DateSystem::V1904);
++    let r = request(&b, "A1", json!([["1-1-2026"]]), Some(json!(true)));
++    uitvoeren(&mut b, r);
++    // Het verschil tussen beide bestaande datumstelsels is 1462 dagen.
++    assert_eq!(waarde(&b, "A1"), getal(46023.0 - 1462.0));
++    assert_eq!(getoond(&b, "A1"), "01-01-2026");
++}
++#[test]
++fn tekstnotatie_apostrof_en_formules_blijven_onderscheiden() {
++    let mut b = boek(Some("nl-NL"), DateSystem::V1900);
++    b.set_range_number_format(
++        SheetId(0),
++        CellRange::new(at("A1"), at("A1")),
++        NumberFormatMutation::PlainText,
++        CalculationOptions::default(),
++    )
++    .unwrap();
++    let r = request(
++        &b,
++        "A1:C1",
++        json!([["12,5", "'12,5", "=1+1"]]),
++        Some(json!(true)),
++    );
++    uitvoeren(&mut b, r);
++    assert_eq!(
++        waarde(&b, "A1"),
++        CellValue::Text {
++            value: "12,5".into()
++        }
++    );
++    assert_eq!(
++        waarde(&b, "B1"),
++        CellValue::Text {
++            value: "12,5".into()
++        }
++    );
++    assert_eq!(waarde(&b, "C1"), getal(2.0));
++}
++#[test]
++fn verschillende_regios_worden_per_bestand_toegepast() {
++    for (regio, raw, value) in [
++        ("nl-NL", "1.234,50", 1234.5),
++        ("en-US", "1,234.50", 1234.5),
++        ("fr-FR", "1\u{202f}234,50", 1234.5),
++    ] {
++        let mut b = boek(Some(regio), DateSystem::V1900);
++        let r = request(&b, "A1", json!([[raw]]), Some(json!(true)));
++        uitvoeren(&mut b, r);
++        assert_eq!(waarde(&b, "A1"), getal(value), "{regio}");
++    }
++}
++#[test]
++fn ongeldige_vlag_en_verouderde_batch_veranderen_niets() {
++    let mut b = boek(Some("nl-NL"), DateSystem::V1900);
++    let versie = b.version();
++    assert!(
++        serde_json::from_value::<EditRequest>(request(
++            &b,
++            "A1",
++            json!([["12,5"]]),
++            Some(json!("true"))
++        ))
++        .is_err()
++    );
++    assert_eq!(b.version(), versie);
++    let r = request(&b, "A1", json!([["12,5"]]), Some(json!(true)));
++    b.edit_cell(SheetId(0), at("B1"), "7", CalculationOptions::default())
++        .unwrap();
++    let request: EditRequest = serde_json::from_value(r).unwrap();
++    assert!(b.apply_edits(&request).unwrap().is_err());
++    assert_eq!(waarde(&b, "A1"), CellValue::Empty);
++}
++#[test]
++fn expliciete_false_verdwijnt_uit_de_canonieke_serialisatie() {
++    let b = boek(Some("nl-NL"), DateSystem::V1900);
++    let r: EditRequest =
++        serde_json::from_value(request(&b, "A1", json!([["12.5"]]), Some(json!(false)))).unwrap();
++    assert!(
++        serde_json::to_value(&r).unwrap()["steps"][0]
++            .get("localized")
++            .is_none()
++    );
++}
++#[test]
++fn zonder_bestandsinstelling_blijft_de_bestaande_invoerroute_gelden() {
++    let mut b = boek(None, DateSystem::V1900);
++    let r = request(&b, "A1", json!([["1.234"]]), Some(json!(true)));
++    uitvoeren(&mut b, r);
++    assert_eq!(waarde(&b, "A1"), getal(1.234));
++}
+diff --git a/crates/betteroffice-xlsx/tests/structured_export.rs b/crates/betteroffice-xlsx/tests/structured_export.rs
+index 476d459..f9b248b 100644
+--- a/crates/betteroffice-xlsx/tests/structured_export.rs
++++ b/crates/betteroffice-xlsx/tests/structured_export.rs
+@@ -1096,6 +1096,7 @@ fn export_anchors_are_batch_targets() {
+                 history: EditHistory::Separate,
+                 calculation: CalculationRequest::default(),
+                 steps: vec![EditStep::new(EditOperation::SetCellInputs {
++                    localized: false,
+                     target,
+                     inputs: vec![vec!["edited".to_owned()]],
+                 })],
 diff --git a/crates/betteroffice-xlsx/tests/werkmapregio.rs b/crates/betteroffice-xlsx/tests/werkmapregio.rs
 new file mode 100644
 index 0000000..ce4d78d

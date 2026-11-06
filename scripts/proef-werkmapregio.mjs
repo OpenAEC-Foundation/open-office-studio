@@ -139,6 +139,25 @@ proef(
     });
   },
 );
+proef("Regionale batchvlag blijft behouden door de echte pakket-JS", () => {
+  const h = boek("nl-NL");
+  const target = { sheetId: h.sheetInfo().sheetIds[0], range: { kind: "a1", a1: "A1:C1" } };
+  const voor = h.historyState().undoDepth;
+  const r = h.applyEdits({ expectVersion: h.version(), steps: [{
+    op: "setCellInputs", target, inputs: [["12,5", "1-1-2026", "15%"]], localized: true,
+  }] });
+  assert.equal(r.ok, true, JSON.stringify(r));
+  assert.deepEqual(["A1", "B1", "C1"].map(a1 => lees(h, a1).value), [12.5, 46023, 0.15].map(value => ({ kind: "number", value })));
+  assert.equal(lees(h, "B1").displayText, "01-01-2026");
+  assert.equal(h.historyState().undoDepth, voor + 1);
+  h.undo();
+  assert.equal(lees(h, "B1").value.kind, "empty");
+  assert.equal(lees(h, "B1").displayText, "");
+  h.redo();
+  assert.equal(lees(h, "B1").displayText, "01-01-2026");
+  const opnieuw = xlsx.openWorkbook(h.save()); boeken.push(opnieuw);
+  assert.equal(lees(opnieuw, "B1").displayText, "01-01-2026");
+});
 const result = {
   wasm: pad,
   wasmSha256: createHash("sha256").update(wasm).digest("hex"),

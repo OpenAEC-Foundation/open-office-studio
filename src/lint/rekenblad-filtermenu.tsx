@@ -298,7 +298,7 @@ export function FilterMenu({
                 list={`${id}-waarden`}
                 aria-label={t("data.filter.value")}
                 placeholder={datums ? t("data.filter.valueDate") : getallen ? t("data.filter.valueNumber") : t("data.filter.value")}
-                onChange={(e) => setVoorwaarden(voorwaarden.map((x, j) => (j === i ? { ...x, waarde: e.target.value } : x)))}
+                onChange={(e) => setVoorwaarden(voorwaarden.map((x, j) => (j === i ? { ...x, waarde: e.target.value, getal: undefined } : x)))}
               />
               {i === 0 && (
                 <div className="rekenblad-enof" role="radiogroup" aria-label={t("data.filter.combine")}>

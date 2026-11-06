@@ -1,10 +1,10 @@
 {
-  "stand": "Kandidaat voor #64, nog niet aangesloten op de app of uitgegeven.",
+  "stand": "Geïntegreerd in de concept-PR voor #64; nog niet gemerged of uitgegeven.",
   "bronCommit": "4e982c3aea0065578604c3fe7727938533888f66",
   "naPatch": "rekenbladengine-lange-ketens.patch",
   "naPatchSha256": "c19d5e65df78b2bb831cd02536843eb71ff9d2079c6998da2bdc90f78b81e41b",
   "patch": "rekenbladengine-werkmapregio.patch",
-  "patchSha256": "a446b11af4889b8a836327bdc1f75813c7a6c953a60e88a2e7e47cc8dc27d372",
+  "patchSha256": "0923b56b9c8ea6d8695847794c0315d52827901aaa933d09f44e5458d4f44680",
   "regiogegevens": {
     "generator": "Intl",
     "node": "24.22.1",
@@ -12,10 +12,10 @@
     "kalender": "gregory",
     "tijdzone": "UTC"
   },
-  "gewijzigdeBestanden": 17,
+  "gewijzigdeBestanden": 21,
   "afzonderlijkeWerkmapproeven": 10,
   "modelproeven": 111,
-  "nieuweWasmGeleverd": false,
+  "nieuweWasmGeleverd": true,
   "rustc": "1.98.1",
   "wasmBindgen": "0.2.129",
   "wasmOpt": "132",
@@ -30,13 +30,17 @@
     "regressie": "Brede native controle vond tekst 1/15 die in een bestand zonder regio als datum kon worden vastgelegd; huidige bron herstelt de oude invoerroute.",
     "jsWasmContractGelijk": true
   },
-  "actueleWasm": "Tweede, nog niet aangesloten kandidaat: zes gerichte WASM-proeven groen; volledige kernnacontrole loopt.",
-  "gerichteNativeNacontrole": 38,
+  "actueleWasm": "Geïntegreerde kern van concept-PR #164: 2411 native kernproeven, zeven JS/WASM-proeven, gelijke herbouw en gerichte native Tauri-invoerroutes groen. Resterende acceptatie en platformchecks vóór merge.",
+  "gerichteNativeNacontrole": 46,
   "clippy": "groen (--lib, vijf XLSX-pakketten, -D warnings)",
-  "wasmKandidaatSha256": "e4becef5e4a50fc9a95b5d8e454d0e06aa4748e6f6a420f24be17f2366eee265",
-  "wasmKandidaatBytes": 7692571,
-  "wasmGerichteProeven": 6,
+  "wasmKandidaatSha256": "a46812258ad5efcc54d0cba42bdfc21b99b4f3c873d3e9d701098f7712ee8f07",
+  "wasmKandidaatBytes": 7693158,
+  "wasmGerichteProeven": 7,
   "jsWasmContractGelijk": true,
   "rustfmt": "groen (cargo fmt --all --check)",
-  "herbouwBytegelijk": true
+  "herbouwBytegelijk": true,
+  "afzonderlijkeBatchproeven": 8,
+  "volledigeNativeKernproeven": 2411,
+  "overgeslagenNativeKernproeven": 16,
+  "testsets": 80
 }

@@ -12,6 +12,7 @@ import {
   namenUitKoppen,
   verwijderNaam,
   zichtbareNamen,
+  interneRegioNaam,
   type Bereiknaam,
 } from "./namen";
 
@@ -58,6 +59,42 @@ const inhoud = (h: WorkbookHandle, a1: string, blad = 0) => {
   if (!r.ok) throw new Error(r.failure.message);
   return r.ranges[0].cells[0][0].value;
 };
+
+describe("naambeheer beschermt de bestandsregio", () => {
+  const regio = "_OpenAEC_NumberLocale";
+  it("weigert nieuwe namen die voor de instelling gereserveerd zijn", async () => {
+    const { h, api } = boek(); const voor = h.version();
+    await expect(bewaarNaam(api, naam(regio, '"nl-NL"'))).rejects.toMatchObject({ code: "reservedName" });
+    expect(h.version()).toBe(voor);
+  });
+  it("weigert bewerken en verwijderen van interne metadata", async () => {
+    const { h, api } = boek();
+    h.applyOps([{ type: "setDefinedName", name: regio, refers_to: '"nl-NL"', scope: null, hidden: true }]);
+    const n = namenLijst(api).find((n) => n.naam === regio)!; const voor = h.version();
+    expect(interneRegioNaam(n)).toBe(true);
+    await expect(bewaarNaam(api, { ...n, verwijzing: '"en-US"' }, n)).rejects.toMatchObject({ code: "reservedName" });
+    await expect(verwijderNaam(api, n)).rejects.toMatchObject({ code: "reservedName" });
+    expect(zichtbareNamen(namenLijst(api), 0).some((n) => n.naam === regio)).toBe(false);
+    expect(h.version()).toBe(voor);
+  });
+  it("laat een bestaande zichtbare gebruikersnaam met dezelfde naam bewerkbaar", async () => {
+    const { h, api } = boek();
+    h.applyOps([{ type: "setDefinedName", name: regio, refers_to: "7", scope: null, hidden: false }]);
+    const n = namenLijst(api).find((n) => n.naam === regio)!;
+    await bewaarNaam(api, { ...n, verwijzing: "8" }, n);
+    const gewijzigd = namenLijst(api).find((n) => n.naam === regio)!;
+    expect(gewijzigd.verwijzing).toBe("8");
+    await verwijderNaam(api, gewijzigd);
+    expect(namenLijst(api).some((n) => n.naam === regio)).toBe(false);
+  });
+  it("maakt een bestaande lokale verborgen naam niet tot globale metadata", async () => {
+    const { h, api } = boek();
+    h.applyOps([{ type: "setDefinedName", name: regio, refers_to: "7", scope: 0, hidden: true }]);
+    const n = namenLijst(api).find((n) => n.naam === regio)!; const voor = h.version();
+    await expect(bewaarNaam(api, { ...n, blad: null }, n)).rejects.toMatchObject({ code: "reservedName" });
+    expect(h.version()).toBe(voor);
+  });
+});
 
 describe("naambeheer met echte kern", () => {
   it.each(["Ömzet", "名前", "Bedrag.netto"])(
