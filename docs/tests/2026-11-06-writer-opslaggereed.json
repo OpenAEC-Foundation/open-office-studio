@@ -1,0 +1,1920 @@
+{
+  "schema": 1,
+  "datum": "2026-11-06",
+  "basis": "8c25cf1d431f441921e48856b1693fd5f257ab8e",
+  "besluit": "45.53 afgekeurd voor promotie: beide fysieke typvolgorden trager. Productiebron blijft 45.52/alpha57. Geen gerepareerd issue, release, platform- of migratieacceptatie.",
+  "wijziging": "Alleen de geregistreerde Writer-opslagcallback controleert de bestaande sessie in plaats van getDocument; interne herlaadcallback blijft gelijk. Zeven proeven tegen de echte callback; SDK/native kern gelijk.",
+  "programma": {
+    "versie": "2026.45.53",
+    "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/opslaggereed53/open-office-studio-45.53-opslaggereed",
+    "programma_sha256": "7568dfe558e53060e5b02dc8319be75cd47bb2f1140b326d7eeb31eda7e1e27b",
+    "sdk_sha256": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+    "hergebruikte_target": "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/target",
+    "geen_gui_acceptatie": true
+  },
+  "typvergelijking": [
+    {
+      "groep": "gui-abba",
+      "punten": [
+        {
+          "naam": "kandidaat-a",
+          "versie": "2026.45.53",
+          "ms": 7120,
+          "programma_sha256": "7568dfe558e53060e5b02dc8319be75cd47bb2f1140b326d7eeb31eda7e1e27b"
+        },
+        {
+          "naam": "kandidaat-b",
+          "versie": "2026.45.53",
+          "ms": 7458,
+          "programma_sha256": "7568dfe558e53060e5b02dc8319be75cd47bb2f1140b326d7eeb31eda7e1e27b"
+        },
+        {
+          "naam": "referentie-a",
+          "versie": "2026.45.52",
+          "ms": 7242,
+          "programma_sha256": "98d34a5d2ffe86c6bab8832ba751cd3fc22edd13935c26579f34f49b481be039"
+        },
+        {
+          "naam": "referentie-b",
+          "versie": "2026.45.52",
+          "ms": 6623,
+          "programma_sha256": "98d34a5d2ffe86c6bab8832ba751cd3fc22edd13935c26579f34f49b481be039"
+        }
+      ],
+      "verhouding_nieuw_oud": 1.051424450054093
+    },
+    {
+      "groep": "typen-baab",
+      "punten": [
+        {
+          "naam": "nieuw-a",
+          "versie": "2026.45.53",
+          "ms": 7226,
+          "programma_sha256": "7568dfe558e53060e5b02dc8319be75cd47bb2f1140b326d7eeb31eda7e1e27b"
+        },
+        {
+          "naam": "nieuw-b",
+          "versie": "2026.45.53",
+          "ms": 7077,
+          "programma_sha256": "7568dfe558e53060e5b02dc8319be75cd47bb2f1140b326d7eeb31eda7e1e27b"
+        },
+        {
+          "naam": "oud-a",
+          "versie": "2026.45.52",
+          "ms": 6704,
+          "programma_sha256": "98d34a5d2ffe86c6bab8832ba751cd3fc22edd13935c26579f34f49b481be039"
+        },
+        {
+          "naam": "oud-b",
+          "versie": "2026.45.52",
+          "ms": 6757,
+          "programma_sha256": "98d34a5d2ffe86c6bab8832ba751cd3fc22edd13935c26579f34f49b481be039"
+        }
+      ],
+      "verhouding_nieuw_oud": 1.0625510734715102
+    }
+  ],
+  "bewaarvergelijking": [
+    {
+      "groep": "bewaar-abba",
+      "punten": [
+        {
+          "naam": "nieuw-a",
+          "versie": "2026.45.53",
+          "programma_sha256": "7568dfe558e53060e5b02dc8319be75cd47bb2f1140b326d7eeb31eda7e1e27b",
+          "ronden": [
+            {
+              "ronde": 1,
+              "ctrl_s_tot_file_en_knop_gereed_ms": 7305.204607997439,
+              "getDocument": {
+                "calls": 1,
+                "ms": 358,
+                "api_wissels": 76,
+                "actieve_api_gevolgd": true
+              },
+              "docx_sha256": "e37855a0dfdb07d2e31bc2ac5f29653b74195938e16a8ba41d701ce46ea2d5a3",
+              "body_en_cellen_exact": true
+            },
+            {
+              "ronde": 2,
+              "ctrl_s_tot_file_en_knop_gereed_ms": 3122.0247890014434,
+              "getDocument": {
+                "calls": 0,
+                "ms": 0,
+                "api_wissels": 116,
+                "actieve_api_gevolgd": true
+              },
+              "docx_sha256": "9f3e5b6ce24c046fe5c8a9f2d10871f167a4df275a54492370e43b76a5139ddf",
+              "body_en_cellen_exact": true
+            },
+            {
+              "ronde": 3,
+              "ctrl_s_tot_file_en_knop_gereed_ms": 2852.294181000616,
+              "getDocument": {
+                "calls": 0,
+                "ms": 0,
+                "api_wissels": 156,
+                "actieve_api_gevolgd": true
+              },
+              "docx_sha256": "1efc429161a0545b548ed1818b97cea6807592ba02ba6e8f46ee4f3f098bdfc9",
+              "body_en_cellen_exact": true
+            }
+          ]
+        },
+        {
+          "naam": "nieuw-b",
+          "versie": "2026.45.53",
+          "programma_sha256": "7568dfe558e53060e5b02dc8319be75cd47bb2f1140b326d7eeb31eda7e1e27b",
+          "ronden": [
+            {
+              "ronde": 1,
+              "ctrl_s_tot_file_en_knop_gereed_ms": 7603.676478996931,
+              "getDocument": {
+                "calls": 1,
+                "ms": 319.00000000000364,
+                "api_wissels": 76,
+                "actieve_api_gevolgd": true
+              },
+              "docx_sha256": "d2f006607ac1cecc9a4f2411e30cd174d1ac6a0ca71b80b31630ecef8349031f",
+              "body_en_cellen_exact": true
+            },
+            {
+              "ronde": 2,
+              "ctrl_s_tot_file_en_knop_gereed_ms": 3650.5489949995535,
+              "getDocument": {
+                "calls": 0,
+                "ms": 0,
+                "api_wissels": 116,
+                "actieve_api_gevolgd": true
+              },
+              "docx_sha256": "2a87104643faf06778b230bc2d0e2504366d561397555f7f66387a7ed3e1a955",
+              "body_en_cellen_exact": true
+            },
+            {
+              "ronde": 3,
+              "ctrl_s_tot_file_en_knop_gereed_ms": 3254.638992002583,
+              "getDocument": {
+                "calls": 0,
+                "ms": 0,
+                "api_wissels": 156,
+                "actieve_api_gevolgd": true
+              },
+              "docx_sha256": "2e01ea6809f98047449454dc63902c04ca4ee34698194cae392d6166b6afc6fd",
+              "body_en_cellen_exact": true
+            }
+          ]
+        },
+        {
+          "naam": "oud-a",
+          "versie": "2026.45.52",
+          "programma_sha256": "98d34a5d2ffe86c6bab8832ba751cd3fc22edd13935c26579f34f49b481be039",
+          "ronden": [
+            {
+              "ronde": 1,
+              "ctrl_s_tot_file_en_knop_gereed_ms": 6842.671833997883,
+              "getDocument": {
+                "calls": 2,
+                "ms": 459,
+                "api_wissels": 74,
+                "actieve_api_gevolgd": true
+              },
+              "docx_sha256": "a1418f79bef2360357a5efcf07c76402ecd845daea1eeedc208c94f803dcc7d3",
+              "body_en_cellen_exact": true
+            },
+            {
+              "ronde": 2,
+              "ctrl_s_tot_file_en_knop_gereed_ms": 3196.745455999917,
+              "getDocument": {
+                "calls": 1,
+                "ms": 405,
+                "api_wissels": 114,
+                "actieve_api_gevolgd": true
+              },
+              "docx_sha256": "33865cd3c14b5dd39def39244fe740a53cfe0d3f8427b8382980d93878c2596c",
+              "body_en_cellen_exact": true
+            },
+            {
+              "ronde": 3,
+              "ctrl_s_tot_file_en_knop_gereed_ms": 2685.56197900034,
+              "getDocument": {
+                "calls": 1,
+                "ms": 425,
+                "api_wissels": 154,
+                "actieve_api_gevolgd": true
+              },
+              "docx_sha256": "e05a7c0aa5711f84b0b8cf76afadbf49a7e0448f884b35e21750da890a46eb51",
+              "body_en_cellen_exact": true
+            }
+          ]
+        },
+        {
+          "naam": "oud-b",
+          "versie": "2026.45.52",
+          "programma_sha256": "98d34a5d2ffe86c6bab8832ba751cd3fc22edd13935c26579f34f49b481be039",
+          "ronden": [
+            {
+              "ronde": 1,
+              "ctrl_s_tot_file_en_knop_gereed_ms": 6774.082227995677,
+              "getDocument": {
+                "calls": 2,
+                "ms": 522.9999999999927,
+                "api_wissels": 74,
+                "actieve_api_gevolgd": true
+              },
+              "docx_sha256": "9bb230de29018e3760e130f36898acfd7cae9881fad350afe7f285d9e7523cac",
+              "body_en_cellen_exact": true
+            },
+            {
+              "ronde": 2,
+              "ctrl_s_tot_file_en_knop_gereed_ms": 3711.02638499724,
+              "getDocument": {
+                "calls": 1,
+                "ms": 475,
+                "api_wissels": 116,
+                "actieve_api_gevolgd": true
+              },
+              "docx_sha256": "747e5702c4ee07b6ab34b622e62dc3d479515c039dfe77e9e0eb536b79e121e0",
+              "body_en_cellen_exact": true
+            },
+            {
+              "ronde": 3,
+              "ctrl_s_tot_file_en_knop_gereed_ms": 2781.453153998882,
+              "getDocument": {
+                "calls": 1,
+                "ms": 344.0000000000073,
+                "api_wissels": 156,
+                "actieve_api_gevolgd": true
+              },
+              "docx_sha256": "01f0b522331b52ddd53267cc791a1f31e9fcf24188d91437a2a5cfb7cc64c6aa",
+              "body_en_cellen_exact": true
+            }
+          ]
+        }
+      ],
+      "verhouding_nieuw_oud": 1.0691319920400475
+    },
+    {
+      "groep": "bewaar-frames",
+      "punten": [
+        {
+          "naam": "nieuw-a",
+          "versie": "2026.45.53",
+          "programma_sha256": "7568dfe558e53060e5b02dc8319be75cd47bb2f1140b326d7eeb31eda7e1e27b",
+          "ronden": [
+            {
+              "ronde": 1,
+              "ctrl_s_tot_file_en_knop_gereed_ms": 7107.032863998029,
+              "getDocument": {
+                "calls": 1,
+                "ms": 390,
+                "api_wissels": 72,
+                "actieve_api_gevolgd": true,
+                "frames": {
+                  "aantal": 413,
+                  "max_tussen_ms": 665
+                }
+              },
+              "docx_sha256": "40ce0ab2576a31e6b458164c42b40f98d9d9c37f760f43ef41383928d9f47207",
+              "body_en_cellen_exact": true
+            },
+            {
+              "ronde": 2,
+              "ctrl_s_tot_file_en_knop_gereed_ms": 3016.5616989979753,
+              "getDocument": {
+                "calls": 0,
+                "ms": 0,
+                "api_wissels": 112,
+                "actieve_api_gevolgd": true,
+                "frames": {
+                  "aantal": 64,
+                  "max_tussen_ms": 502
+                }
+              },
+              "docx_sha256": "c869d39219b9256d6389546aafd5b08da342621629c816f9e712cfac0ceab84a",
+              "body_en_cellen_exact": true
+            },
+            {
+              "ronde": 3,
+              "ctrl_s_tot_file_en_knop_gereed_ms": 2570.8689279999817,
+              "getDocument": {
+                "calls": 0,
+                "ms": 0,
+                "api_wissels": 152,
+                "actieve_api_gevolgd": true,
+                "frames": {
+                  "aantal": 104,
+                  "max_tussen_ms": 236
+                }
+              },
+              "docx_sha256": "da769176d90094b19e6dbad7f047279dfda7365072b15d413aa747267f1420ff",
+              "body_en_cellen_exact": true
+            }
+          ]
+        },
+        {
+          "naam": "nieuw-b",
+          "versie": "2026.45.53",
+          "programma_sha256": "7568dfe558e53060e5b02dc8319be75cd47bb2f1140b326d7eeb31eda7e1e27b",
+          "ronden": [
+            {
+              "ronde": 1,
+              "ctrl_s_tot_file_en_knop_gereed_ms": 7607.421359003638,
+              "getDocument": {
+                "calls": 1,
+                "ms": 368,
+                "api_wissels": 76,
+                "actieve_api_gevolgd": true,
+                "frames": {
+                  "aantal": 396,
+                  "max_tussen_ms": 754
+                }
+              },
+              "docx_sha256": "a23b125f73aea91727a4b6c2d00f68a96b41024932a66618a2bcc1e95660b24c",
+              "body_en_cellen_exact": true
+            },
+            {
+              "ronde": 2,
+              "ctrl_s_tot_file_en_knop_gereed_ms": 3547.6432600044063,
+              "getDocument": {
+                "calls": 0,
+                "ms": 0,
+                "api_wissels": 118,
+                "actieve_api_gevolgd": true,
+                "frames": {
+                  "aantal": 122,
+                  "max_tussen_ms": 365
+                }
+              },
+              "docx_sha256": "c973aa4f9408107234545ce590edc37d55134e526e797c382d521aedc7b35aa9",
+              "body_en_cellen_exact": true
+            },
+            {
+              "ronde": 3,
+              "ctrl_s_tot_file_en_knop_gereed_ms": 2438.6087140010204,
+              "getDocument": {
+                "calls": 0,
+                "ms": 0,
+                "api_wissels": 158,
+                "actieve_api_gevolgd": true,
+                "frames": {
+                  "aantal": 99,
+                  "max_tussen_ms": 249
+                }
+              },
+              "docx_sha256": "a0e1b7742da74fc24d89b1197a1d983b26e604c4db016b3e799f9a7b54986417",
+              "body_en_cellen_exact": true
+            }
+          ]
+        },
+        {
+          "naam": "oud-a",
+          "versie": "2026.45.52",
+          "programma_sha256": "98d34a5d2ffe86c6bab8832ba751cd3fc22edd13935c26579f34f49b481be039",
+          "ronden": [
+            {
+              "ronde": 1,
+              "ctrl_s_tot_file_en_knop_gereed_ms": 6840.685274997668,
+              "getDocument": {
+                "calls": 2,
+                "ms": 453,
+                "api_wissels": 74,
+                "actieve_api_gevolgd": true,
+                "frames": {
+                  "aantal": 404,
+                  "max_tussen_ms": 632
+                }
+              },
+              "docx_sha256": "a24e59ea8b84bafa6c69eff26dacc84e4431ba72b5ffc2ffb22762cb47bb5464",
+              "body_en_cellen_exact": true
+            },
+            {
+              "ronde": 2,
+              "ctrl_s_tot_file_en_knop_gereed_ms": 3551.4582109972253,
+              "getDocument": {
+                "calls": 1,
+                "ms": 400.00000000000364,
+                "api_wissels": 116,
+                "actieve_api_gevolgd": true,
+                "frames": {
+                  "aantal": 95,
+                  "max_tussen_ms": 618
+                }
+              },
+              "docx_sha256": "9706dfcff83b764cedf127e9a906a9dd03a4f9a0160a72e3734438dfdd88ffc3",
+              "body_en_cellen_exact": true
+            },
+            {
+              "ronde": 3,
+              "ctrl_s_tot_file_en_knop_gereed_ms": 2736.1639630034915,
+              "getDocument": {
+                "calls": 1,
+                "ms": 391,
+                "api_wissels": 156,
+                "actieve_api_gevolgd": true,
+                "frames": {
+                  "aantal": 94,
+                  "max_tussen_ms": 476
+                }
+              },
+              "docx_sha256": "6c42526b6e28bfe4d0efa04732a711ddf5f52061a4b8632ae00898bc0ee5b1f5",
+              "body_en_cellen_exact": true
+            }
+          ]
+        },
+        {
+          "naam": "oud-b",
+          "versie": "2026.45.52",
+          "programma_sha256": "98d34a5d2ffe86c6bab8832ba751cd3fc22edd13935c26579f34f49b481be039",
+          "ronden": [
+            {
+              "ronde": 1,
+              "ctrl_s_tot_file_en_knop_gereed_ms": 6923.411742995086,
+              "getDocument": {
+                "calls": 2,
+                "ms": 507.00000000000364,
+                "api_wissels": 74,
+                "actieve_api_gevolgd": true,
+                "frames": {
+                  "aantal": 400,
+                  "max_tussen_ms": 606
+                }
+              },
+              "docx_sha256": "e5fb8a54e6da099e8a427429eb548e55929afdf66966abb5d4a50daa94df292a",
+              "body_en_cellen_exact": true
+            },
+            {
+              "ronde": 2,
+              "ctrl_s_tot_file_en_knop_gereed_ms": 3060.4762059956556,
+              "getDocument": {
+                "calls": 1,
+                "ms": 338,
+                "api_wissels": 114,
+                "actieve_api_gevolgd": true,
+                "frames": {
+                  "aantal": 45,
+                  "max_tussen_ms": 590
+                }
+              },
+              "docx_sha256": "7fca59838f3c67fcca6d3ad19f96a324dc55bfdcc763f5a7e9dd884bd65bebec",
+              "body_en_cellen_exact": true
+            },
+            {
+              "ronde": 3,
+              "ctrl_s_tot_file_en_knop_gereed_ms": 2819.803393998882,
+              "getDocument": {
+                "calls": 1,
+                "ms": 420.0000000000073,
+                "api_wissels": 154,
+                "actieve_api_gevolgd": true,
+                "frames": {
+                  "aantal": 98,
+                  "max_tussen_ms": 549
+                }
+              },
+              "docx_sha256": "8a0c164b324621940885ab8da82646b2be73bae2f9d809548f17f12444329273",
+              "body_en_cellen_exact": true
+            }
+          ]
+        }
+      ],
+      "verhouding_nieuw_oud": 1.0137335357321964
+    }
+  ],
+  "controles": {
+    "frontend": "1870 geslaagd, 7 overgeslagen van 1877. Vervolgens alle drie betrokken bestanden met bestaande proefdata herhaald: 53 geslaagd, geen skips; geen enkele volledige 1877-passronde geclaimd.",
+    "regressie_oud": "Zes van zeven nieuwe gevallen falen op oude bron; bewijst gerichte dekking, geen snelheid.",
+    "overig": "TypeScript, engines, opdrachten, weekversie, 118 Python-tests en Linux no-bundlebouw slagen. Canonieke tekst-, plak-/bewaar-/verwerp- en 500-pagina-/herstel-/spelling-/workerproeven slagen; exacte opdrachten/logs bewaard."
+  },
+  "grenzen": [
+    "Eigen geïsoleerde vensters/profielen/documentkopieën; geen gebruikersdocumenten of installatie gewijzigd.",
+    "Vier typmetingen per versie, één 129-paginabron; geen algemene FPS-/soepelheidsclaim of oorzakelijk bewijs van de regressie.",
+    "Opslag bevat echte Ctrl+S, filewijziging én gereed gemelde opslagknop; bron en onafhankelijk DOCX-body-/celteksten exact; geen volledige opmaak-/onderdeelpariteit door deze aanvullende opslagproef.",
+    "rAF meet hoofdthreadcallback-intervallen, geen scherm-FPS; inspectie en eigen meetpunten kosten tijd. Eerste en warme bewaring afzonderlijk beoordelen.",
+    "Bouwmarker geen_gui_acceptatie uit gebouwd.json beschrijft de bouwfase; latere GUI-successen maken deze kandidaat nog niet geaccepteerd.",
+    "Sommige afgebroken voorbereidingen en eerste corpusronde zijn behouden; geen app-/testpoort verzwakt.",
+    "Ruwe getDocument-teller meet uitsluitend de aangeroepen publieke API; intern geïnduceerde projecties niet volledig geteld. Nieuwe eerste bewaring heeft nog één aanroep.",
+    "Geen 45.53-installers, Windows/macOS, zeveneditiematrix, release of downloadacceptatie. Eerdere worker-/leen-/verwerp-/zwarte-rasterafkeuringen blijven open.",
+    "Volgende stap: kalibreer de resterende buildStory-/paragraphSpans-/positiemapkosten per echte native invoergroep, met behoud van lokale oorsprong, Undo/Redo, revisies en brongelijkheid; geen applyHostUpdate als vervanger voor lokale mutaties."
+  ],
+  "bestanden": [
+    {
+      "bestand": "writer-opslaggereed/actief.json.gz",
+      "sha256": "55e0ee712d815726db53cc59e0dcf4570919c2696dbf360e290b5d02578e5ce9",
+      "origineel_sha256": "a5902e4b9d2c16a9b25e3938c035ff2ecc5d8e0ca188de4a4f642214b0db1ebe",
+      "origineel_bytes": 309,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/assets.log.gz",
+      "sha256": "ce09138b4eff51865b0932bfc400287e70587f57ea0016aa66fe7c131810258b",
+      "origineel_sha256": "d4274f509ebef7acd2f690a34d4c48b8bdf6c4f9cf74e0ab9e58d0b2347392bd",
+      "origineel_bytes": 209,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/beeldvergelijking.json.gz",
+      "sha256": "b3857e8f13097559c617a785c9736b16f1601c3f740cf651263c50a09a3b7fb7",
+      "origineel_sha256": "3f057a14ba09ce58c543ac91c7d0f995c20b37bb34bc676bbd2b539fdf194870",
+      "origineel_bytes": 4646,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/beeldvergelijking.py.gz",
+      "sha256": "34a39eaee51d97ccaa0e8bd4001a2481f4fbc40732f0971c7fd726dd29a1ae41",
+      "origineel_sha256": "286b5e0ab07c3787b949951899a1f026973c4cf3518dcf8071c4edb47b30ed7b",
+      "origineel_bytes": 1452,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaarproef-frames.py.gz",
+      "sha256": "fb70cc0c44848c43b7e1fc42088c74afd0e8ac27b990db9287e8458d748fe46d",
+      "origineel_sha256": "123e725b255b711dd2a158bd824fca805e78e6eea8c44a92af8f97694a4e1198",
+      "origineel_bytes": 12244,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaarproef.py.gz",
+      "sha256": "15f099ae9e5755a6b1a9a9b4e2c7a74b7ed96778d7b827cbc38a4eae2bcb69d3",
+      "origineel_sha256": "af8567c64e0f9e160158f29680ab841fcda82ee8e3e95a25429cc4f7a4f4f2fb",
+      "origineel_bytes": 11710,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bouwen.json.gz",
+      "sha256": "876b24455d52bc004ecd82dca3afdc9326e43312d7a1e037bf0a56db9ca74071",
+      "origineel_sha256": "edf4c7695a980fc7ba57dc41ddc677039ed8057e27447bfbba3607e90990ec9d",
+      "origineel_bytes": 2154,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bouwen.py.gz",
+      "sha256": "5b0851e69e8c21db9acf63f81dc35c4bf28cc8ea44959d6597d5204aeb3b0468",
+      "origineel_sha256": "342e03c096e54624191086fde4c8bb78d9c179005031150374d66499f16501ec",
+      "origineel_bytes": 2735,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bronnen.json.gz",
+      "sha256": "7775c8b0c8a0cab2497917002f5743ba657a963793e6006482356298a781caef",
+      "origineel_sha256": "063cd0a510effff0290c1f2acb12ce3e70c93d1969d942de1c4807bc35f874ed",
+      "origineel_bytes": 1773049,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/controleer.py.gz",
+      "sha256": "20f50b8fe769cba92512c425fed8a7dab7c23e97038b4650202cd3d546d0b73a",
+      "origineel_sha256": "262057940e5af73a7e87361735265ca43bf8136839b72b085b3ae72fddbb41af",
+      "origineel_bytes": 433,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/corpus-herhaling.log.gz",
+      "sha256": "740cfdd0cf957f220bcc42a6f7a02c8974fb03c001c27429e3a1ed72c89a03cb",
+      "origineel_sha256": "38718b8d7e145a867beb7db2ec2d7e2249313e896dda3fc33ba34d055f19e657",
+      "origineel_bytes": 670,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/corpus-met-proefdata.log.gz",
+      "sha256": "365bb63c096dfe928fd8bd60786f539b8ee9b10550b8facaa39cf29759f30780",
+      "origineel_sha256": "b31fc0db1ab0802d5127752c166486326cb7a35e320ec5774d39177f8732e017",
+      "origineel_bytes": 730,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/corpus.json.gz",
+      "sha256": "ca60275b76c249109831eb1898d81b75317d9262b4a3ec1b616dce00dad2d967",
+      "origineel_sha256": "202e3b8d2e0e00293f8cc127cc708d3946e2d77d6d41a6d6e68f354aca43fc33",
+      "origineel_bytes": 55242,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/desktop.log.gz",
+      "sha256": "edcf12fd1383d563c5e45f891446285b4b4607fc980d8f670f40bdfb296ed97e",
+      "origineel_sha256": "d8479696dca5902fafa2fa852bca75f1e1e25481a45ede586cb3a86b1c499d54",
+      "origineel_bytes": 66347,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/engines.log.gz",
+      "sha256": "6de11f78a95927519636e824a5a448ed252a867685f2835d2da16f2c7370eb14",
+      "origineel_sha256": "74e7a56285e814d8b1e87098e3f1a0c5b556e2e653f809d19ad6b5ab09032af4",
+      "origineel_bytes": 153,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/frontend.log.gz",
+      "sha256": "054ccf60c01a893814e059f4c9744ff2dbe769591ca58e1d9d485ca8726fd07c",
+      "origineel_sha256": "c4efdfe73d750862c514e9d401572268db719fd599942632d3b7cfcda4ed0a9b",
+      "origineel_bytes": 21158,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gebouwd.json.gz",
+      "sha256": "dbaa65708a58afcaec33f2821fdbcc79a9344e6ad4dd59b40b119af3f6a2e3a1",
+      "origineel_sha256": "4ad02bb3b385480bb62d4fba823e76ec9f117d5b2fafc6bfeb64c122789838db",
+      "origineel_bytes": 513,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-bronnen.json.gz",
+      "sha256": "c2413265083cdd6cf8b7573e6c8d3f4427e49127068e84f3e267ca03b5d10e23",
+      "origineel_sha256": "9e86b742c30c4bceb2a34bb5048a8bc0a115d3e969248a20868ff35bf400e8a5",
+      "origineel_bytes": 10882,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-lang.log.gz",
+      "sha256": "f82a7f5cc1e30314ddc83682bddebc0167ccb0048f9469f2d939e926d25c041a",
+      "origineel_sha256": "409b84cd37e684210fdd7d5c0f161019bd739a6813aedbfc4ff55664ad0e50d3",
+      "origineel_bytes": 3892,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-na-bouw.log.gz",
+      "sha256": "c3e07c9dde89e8213f6f56b48b9f29be46b6387d02799393ae3db3fd1d562948",
+      "origineel_sha256": "e14b719e8097475a709591ba11607ecf2a5e9551095d6a16df25f300e26fc95b",
+      "origineel_bytes": 318,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-na-bouw.py.gz",
+      "sha256": "af3bb75213acd4a4aa1c20a9182b74cf68a4da845dbc71d0fef98ee6f158d120",
+      "origineel_sha256": "fce008bb2602c6e721a8b51c5262597264385d8290ab78eb8a2ecd5f3b047cc6",
+      "origineel_bytes": 4011,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-plakken.log.gz",
+      "sha256": "71ef36813ca5d798c176cbd5ec0d8c462c0730478b94cc0fff09456f458911a2",
+      "origineel_sha256": "bf768e95d1ebab7f3c024a049c663fd6f255dafbd0ff29ba9f652ab876395208",
+      "origineel_bytes": 3870,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-tekst.log.gz",
+      "sha256": "337908a0bd5637806182b8579554ed12bf84bd1169f3e75a90bbe7ef8a75bbd9",
+      "origineel_sha256": "87afa10abc1c7fef0b23d5e37bd3ef643e830a2e16318880c9d7a025e8daf346",
+      "origineel_bytes": 3532,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-voortgang.json.gz",
+      "sha256": "3de8fb9058821af0cf7715ed81e060fd9c6f33d803d0b02ba4907781b1bbbd4a",
+      "origineel_sha256": "cb42f3b704e46173d364841e3ac24b708c012c662063b2d0980d1ff2da8d5b94",
+      "origineel_bytes": 7893,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/herhaling.json.gz",
+      "sha256": "745b0ba40bdd23976dc8f0b7246e205a1c9cb45b111063101997ee3045abb033",
+      "origineel_sha256": "5a0e1223df8b5b7e705391322991f0d7435e26c3e2f7ee9e05326432dfe77c50",
+      "origineel_bytes": 8447,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/herhaling.log.gz",
+      "sha256": "5c36cc5146987ca161bf24908b086faf46fba6bc7104ac760bace399e8bd6c8a",
+      "origineel_sha256": "5bfcdabae1e5651b3b4bcd9c339d7a877d5435bb57876735c6fd26d6f4f2d837",
+      "origineel_bytes": 424,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/herhaling.py.gz",
+      "sha256": "32fc4c7a8fa711b7b86251b0b43fcb626ae51bdd6532e6102ec08ea96dd84e36",
+      "origineel_sha256": "c93e8eb9c5c3ef0983fc34abdc39c3d084f61e33d9f1597648ce2be0fd86a491",
+      "origineel_bytes": 2328,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/hervatten.json.gz",
+      "sha256": "cf57b90f417ca098e1baaa341775cf36cbffb31587761f117ed4f5f13221d90e",
+      "origineel_sha256": "6f27aba6ef222d2be6a5afecd5bffab8205f5677fad829cec292672cb04c7d3f",
+      "origineel_bytes": 499,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/maak-bewaarproef.py.gz",
+      "sha256": "a07467dc3a9a44cac9ce258574cf533fe3ad82609884ff7cf9913540b7178cdf",
+      "origineel_sha256": "c66d967dd6f6d30c4920d10ebdd1e5607b42ba0896c1de3de43cae4fa4c8dced",
+      "origineel_bytes": 4510,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/opdrachten.log.gz",
+      "sha256": "aebe9c229e8376b67a95a3334feb44b01105d21c8e26d0bec658ae1172dfdf16",
+      "origineel_sha256": "35c4e59deeccfe1952ffb639f6070c68b7778bdd3fce798d880250a673e0fe31",
+      "origineel_bytes": 5191,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/opslaggereed.test.ts.gz",
+      "sha256": "d89fee5bb1e444e3214e2c5576ae55c138829289091e54a477db01b82f75b196",
+      "origineel_sha256": "57bb93aefd1b689110c81918ad8e422ec49712e081b0bba0fa8bdeec78658dac",
+      "origineel_bytes": 3758,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/python.log.gz",
+      "sha256": "7d84c27a2bb38d152b6e758ba7e1eea9967e04e614c1680b8b9cbc8cf9ae54b1",
+      "origineel_sha256": "60bd1f80ddfe0ba3fefa088e59fe621f2b661e901950294c33a53a69a918a1a6",
+      "origineel_bytes": 17873,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/regressie-oud.log.gz",
+      "sha256": "a6afc7955d98903a39753093a7e466fedf0413db464d3daebc122646ae488155",
+      "origineel_sha256": "3e965f607b343ed51ff320b1712e18f3e8028d187368469a5dfaf3fb1b1e2ccc",
+      "origineel_bytes": 6254,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/typescript.log.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "origineel_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origineel_bytes": 0,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/vastleggen.py.gz",
+      "sha256": "97d3c19beeb495324e299a069f27951aa70c7e559b4feafdfc6741e217970979",
+      "origineel_sha256": "1f3143ee22cec8af843cdaa610f3b4c51617ac919a5451c6c3917a19b46f056c",
+      "origineel_bytes": 5797,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/voorbereiden-gericht.py.gz",
+      "sha256": "30609bb7dcc9c2855bdd83f3104e79a03c3661d734e877736e78636370021994",
+      "origineel_sha256": "9d3b8901de6060a14c4cb4d414d25d54116414f61da9578495c71cf405b91958",
+      "origineel_bytes": 2500,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/voorbereiden-herstel.py.gz",
+      "sha256": "99e34cfba4edeea9f287bfbef8b7f8c96955f24560288e3897262b6d7d852ec0",
+      "origineel_sha256": "d2841d801984c2884b4f23bf4d60ab306989bc5062b0b1adb5caf7afd26a0c3b",
+      "origineel_bytes": 2361,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/voorbereiden.py.gz",
+      "sha256": "4671beeb4fed229fe447f2a7fc4d735c23b6832fe402593d11a772c8838bd950",
+      "origineel_sha256": "deb732e97a2c09ffd56023ee2ddbc41fd42216d0e04be2abf36b7c1ee6f2ea82",
+      "origineel_bytes": 2436,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/voorbouw.py.gz",
+      "sha256": "f0c3c40042a3bca21f9e19d43a6186571217be3c89146f7c0fefeb5e5ce68054",
+      "origineel_sha256": "80e309e523aa2342dda5dc49f0d25ff9d998ea70e75642e607305b766a50b008",
+      "origineel_bytes": 404,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/weekversie.log.gz",
+      "sha256": "179906902b3eaec77fea181ac5c0295cb586f30f5446051db28f3db610de8487",
+      "origineel_sha256": "8080c48341c17163edd26d38905da1c8c172c7349ff00f2190291a4b92c57106",
+      "origineel_bytes": 53,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bron/apps/database-studio/src-tauri/Cargo.lock.gz",
+      "sha256": "c6722f5c5aff0c3243a63cb8262678f8f2c3408296ff33d4ac90e21daa71da31",
+      "origineel_sha256": "626e51cc74703d411caa04ab9eb884d9f756c1e0caeda6fa543f41039ad3b128",
+      "origineel_bytes": 122865,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bron/apps/database-studio/src-tauri/Cargo.toml.gz",
+      "sha256": "18b871cc258f16a1c75b814dd6ad90a78d0631bb675c9cf515325753e4b8167e",
+      "origineel_sha256": "fec17a1fd75d396d54ec51c05e17aa2fb4026be4b90c2fe84556c4f4f27a23f1",
+      "origineel_bytes": 423,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bron/apps/database-studio/src-tauri/tauri.conf.json.gz",
+      "sha256": "d2038a4f163ce556140c2c6efeedd9f916388054c4415102286c8507200d5ffa",
+      "origineel_sha256": "f5d0b1c13c16875cf602ef6a2ff03d30acc196e110ce2aec274d4721e9f02d95",
+      "origineel_bytes": 1526,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bron/package.json.gz",
+      "sha256": "2582302af74a717ce4eaeed147981e23a5619856552a9b131144a0e00bc0b508",
+      "origineel_sha256": "7e51eb24b07b9fcada1b8315d639daeed31461a0c8b64789067991538a1962db",
+      "origineel_bytes": 2880,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bron/src-tauri/Cargo.lock.gz",
+      "sha256": "4ab8366000b2834f5897fbdb805f6e218ee9e60e788f223ec844103f84760f85",
+      "origineel_sha256": "7827c4ae52868cd78b3b1f03acdd73df2b285464f2fd19422897d52424f6582e",
+      "origineel_bytes": 162564,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bron/src-tauri/Cargo.toml.gz",
+      "sha256": "6f36010b3f1eaebad9182e591c6eaf09738c8602ce6d77a1d54bc3e0ceedbfdb",
+      "origineel_sha256": "e63a25ff6d08175725c68a95c32238ba94ca5c7fb4c2d183b0a53a6196d8f50a",
+      "origineel_bytes": 2564,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bron/src-tauri/tauri.conf.json.gz",
+      "sha256": "266346ec491ed0f85bfc319732b30fdca4ab901a66841ffede7ec279dba41841",
+      "origineel_sha256": "4ea29396243032e23bf53dae7e149da35ec3c588855bbd184a1f1c842e9ca3c1",
+      "origineel_bytes": 2080,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bron/src/editors.tsx.gz",
+      "sha256": "b8e24a6738db1b5fadec419641e4cf4d263a2d395a030fbe101c4908c8001602",
+      "origineel_sha256": "f0324e1f797d6148afbbbe39b1c299e074674de6e5582ff0c853cb121a882270",
+      "origineel_bytes": 20415,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bron/versie.json.gz",
+      "sha256": "da6d9e86c94280811cd64b2a1d05a51edac5f4b34e2f5811b580e07ce1746978",
+      "origineel_sha256": "f46318471a263b501bdff2cb54b43440e86e3ab730b700ac68881e48b6487707",
+      "origineel_bytes": 105,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bron/src/tekst/opslaggereed.test.ts.gz",
+      "sha256": "d89fee5bb1e444e3214e2c5576ae55c138829289091e54a477db01b82f75b196",
+      "origineel_sha256": "57bb93aefd1b689110c81918ad8e422ec49712e081b0bba0fa8bdeec78658dac",
+      "origineel_bytes": 3758,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-tekst/Ontwerpnotitie.docx",
+      "sha256": "1d56e44d19285d72e98acede3f6076b33904c1a62d345083670051fa4481c57a",
+      "origineel_sha256": "1d56e44d19285d72e98acede3f6076b33904c1a62d345083670051fa4481c57a",
+      "origineel_bytes": 43603,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-tekst/invoer-redo.png",
+      "sha256": "9c2d9cc86910bb6a858a64c97a55b0d59701534c01cba434b689b3df77988b2c",
+      "origineel_sha256": "9c2d9cc86910bb6a858a64c97a55b0d59701534c01cba434b689b3df77988b2c",
+      "origineel_bytes": 160405,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-tekst/nieuw-na-laat-antwoord.png",
+      "sha256": "825eb4ba0252c70aed237dd9a012a78e28d2b467b9d0d00281cc424b97290e4c",
+      "origineel_sha256": "825eb4ba0252c70aed237dd9a012a78e28d2b467b9d0d00281cc424b97290e4c",
+      "origineel_bytes": 76064,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-tekst/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "origineel_bytes": 134,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-tekst/rapport.json.gz",
+      "sha256": "fa5915420945ff2e5883f81a2f90cda24a97f3837da0f505ad819d79ba9258b1",
+      "origineel_sha256": "89ae27679bad3c71ed447d699a29218c653e003b10cf551bffd3774ad6aebafb",
+      "origineel_bytes": 21687,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-tekst/snel-getypt-bewaard.png",
+      "sha256": "839b70c3696afc310e6653f739723786f6d1b1e931ca1cfd897bf19db3465ff9",
+      "origineel_sha256": "839b70c3696afc310e6653f739723786f6d1b1e931ca1cfd897bf19db3465ff9",
+      "origineel_bytes": 166140,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-plakken/Ontwerpnotitie.docx",
+      "sha256": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee",
+      "origineel_sha256": "0ee2a15bf2dda3969bc0a7c9076a1207ca0077d7297cdd32e5507667e019c9ee",
+      "origineel_bytes": 36453,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-plakken/begin.png",
+      "sha256": "13e05c9202ab4d16a22d46e07756f28e17da247836a5cc4793e1f128b337f4fe",
+      "origineel_sha256": "13e05c9202ab4d16a22d46e07756f28e17da247836a5cc4793e1f128b337f4fe",
+      "origineel_bytes": 159550,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-plakken/geplakt.docx",
+      "sha256": "14179178bece6f4a35d60811d89967985051eedb62bf98bd0b7a4235ffb2260f",
+      "origineel_sha256": "14179178bece6f4a35d60811d89967985051eedb62bf98bd0b7a4235ffb2260f",
+      "origineel_bytes": 37653,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-plakken/na-plakken.png",
+      "sha256": "6ba96586ab29ce56ef3843fa846ee0b3bcd0fdf118dc8d662e343b952de566dd",
+      "origineel_sha256": "6ba96586ab29ce56ef3843fa846ee0b3bcd0fdf118dc8d662e343b952de566dd",
+      "origineel_bytes": 155869,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-plakken/nieuw-na-verwerpen.png",
+      "sha256": "4f3183ce2e5050477af6f275fa73b47c1485db2ecd8f436e4826fa7eb937cde4",
+      "origineel_sha256": "4f3183ce2e5050477af6f275fa73b47c1485db2ecd8f436e4826fa7eb937cde4",
+      "origineel_bytes": 63033,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-plakken/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "origineel_bytes": 134,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-plakken/rapport.json.gz",
+      "sha256": "d408676b43ac22bdc0c4e924796ae71f1cbd20379f156346dad6295e99b9887a",
+      "origineel_sha256": "06690a7739eefab6d5fa1f54ad250f8827dddf06a67d4b92838c1f38d89861af",
+      "origineel_bytes": 35249,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-plakken/sluitdialoog.png",
+      "sha256": "26bd7a42c12196ffe901b8f7027cd6df8f6314de4d07a8276989987825e96678",
+      "origineel_sha256": "26bd7a42c12196ffe901b8f7027cd6df8f6314de4d07a8276989987825e96678",
+      "origineel_bytes": 156049,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-plakken/tussenbewaring.docx",
+      "sha256": "6f2df2b691ea1d2de638ed614f3153cd0295ad19c6517b0166822509bf2b629d",
+      "origineel_sha256": "6f2df2b691ea1d2de638ed614f3153cd0295ad19c6517b0166822509bf2b629d",
+      "origineel_bytes": 36715,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-lang/Prestatieproef.docx",
+      "sha256": "785db9dd329e027545bd307701444d1dc4d60a8eb2bcaf161f96155d21f771da",
+      "origineel_sha256": "785db9dd329e027545bd307701444d1dc4d60a8eb2bcaf161f96155d21f771da",
+      "origineel_bytes": 44909,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-lang/framebasis.json.gz",
+      "sha256": "6c17221f47e048f0745a5ce273e15d95031b5ca244f7c403f2dfcbf45848180f",
+      "origineel_sha256": "ff45e746de6103271947dd07f25f24d259e80d1f9e40e8084ebb50fb07b0d889",
+      "origineel_bytes": 3341936,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-lang/getypt-pagina-500.png",
+      "sha256": "30e9a5dd6dd4c2b36da68ccc9526ec4dfd05ae357f4be807ab50ec78b3cdd9d9",
+      "origineel_sha256": "30e9a5dd6dd4c2b36da68ccc9526ec4dfd05ae357f4be807ab50ec78b3cdd9d9",
+      "origineel_bytes": 116847,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-lang/herstel-aanbod-herstellen.png",
+      "sha256": "cf35f24dc7eb357b9a608e2b426f80ea80f532280f27bbcf8f935df98381689f",
+      "origineel_sha256": "cf35f24dc7eb357b9a608e2b426f80ea80f532280f27bbcf8f935df98381689f",
+      "origineel_bytes": 101297,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-lang/herstel-aanbod-later.png",
+      "sha256": "cf35f24dc7eb357b9a608e2b426f80ea80f532280f27bbcf8f935df98381689f",
+      "origineel_sha256": "cf35f24dc7eb357b9a608e2b426f80ea80f532280f27bbcf8f935df98381689f",
+      "origineel_bytes": 101297,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-lang/hersteld.docx",
+      "sha256": "42a686d302ce029727108e332d3108829ed98f770f5065cd6f1add1ad1e942a3",
+      "origineel_sha256": "42a686d302ce029727108e332d3108829ed98f770f5065cd6f1add1ad1e942a3",
+      "origineel_bytes": 44860,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-lang/herstelde-kopie-bewerkt.png",
+      "sha256": "1645976d32b078b46ad59e852dd46ce7b0318f85660ce51c7f9faf28f63e30a5",
+      "origineel_sha256": "1645976d32b078b46ad59e852dd46ce7b0318f85660ce51c7f9faf28f63e30a5",
+      "origineel_bytes": 120359,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-lang/herstelkopie.docx",
+      "sha256": "13f7019c980f22f5374a2f9af037645df21086b5f4f0d9df11ae7a30a778c31a",
+      "origineel_sha256": "13f7019c980f22f5374a2f9af037645df21086b5f4f0d9df11ae7a30a778c31a",
+      "origineel_bytes": 44902,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-lang/kopvoetlint.png",
+      "sha256": "95fcd6fafdeb7b4ed1cc6c789bc19379fc73bfc27cb8fb5703dd48d2b4c3a746",
+      "origineel_sha256": "95fcd6fafdeb7b4ed1cc6c789bc19379fc73bfc27cb8fb5703dd48d2b4c3a746",
+      "origineel_bytes": 113497,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-lang/programma.log.gz",
+      "sha256": "0cfe12894ff1459cefbebdefc70f8219fb0ff64e9d72626603e5372a45be95ce",
+      "origineel_sha256": "5ff8631147b73276959b73f644863c13e0054f35be1be06ac1df156581ac8029",
+      "origineel_bytes": 402,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-lang/rapport.json.gz",
+      "sha256": "711c4361a191ee9b66d14bae2186aab8d976387c9208fb4115e7ec2fe74642fd",
+      "origineel_sha256": "05649d88f02742d3f0669f0154209fda104c4d11e9eea8ece526215c727f5841",
+      "origineel_bytes": 31144,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-lang/spelling-eerste-pagina.png",
+      "sha256": "8093c7eb3fccde70cf2949206d4768f4dedab1e60f6faa5d66b04340dea0efd1",
+      "origineel_sha256": "8093c7eb3fccde70cf2949206d4768f4dedab1e60f6faa5d66b04340dea0efd1",
+      "origineel_bytes": 115845,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-lang/spelling-hersteld-venster.png",
+      "sha256": "2e7d3fd37f07adde8ffd7e30c30ea0becd6651eb222d8ae98e997635d4b197b6",
+      "origineel_sha256": "2e7d3fd37f07adde8ffd7e30c30ea0becd6651eb222d8ae98e997635d4b197b6",
+      "origineel_bytes": 114745,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-lang/spelling-kleiner-venster.png",
+      "sha256": "0528e877a208dd345a99bac06cd7068415b1b5b5a31e497f4995f28d7996bb13",
+      "origineel_sha256": "0528e877a208dd345a99bac06cd7068415b1b5b5a31e497f4995f28d7996bb13",
+      "origineel_bytes": 53753,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-lang/spelling-laatste-pagina.png",
+      "sha256": "916bf1943fb741af8f62d5424b85a7262943d3490e6dfb0d672bdda9d8808bf7",
+      "origineel_sha256": "916bf1943fb741af8f62d5424b85a7262943d3490e6dfb0d672bdda9d8808bf7",
+      "origineel_bytes": 116822,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-lang/spelling-terug-in-document.png",
+      "sha256": "a6201156af338594b547d99f822427a6e6d14542b8a87e276dd8946fa175abd6",
+      "origineel_sha256": "a6201156af338594b547d99f822427a6e6d14542b8a87e276dd8946fa175abd6",
+      "origineel_bytes": 54113,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-lang/spelling-verborgen.png",
+      "sha256": "6f5ee6c36ba988d0e525df1170fe65c88d5cf066ec82a1c9105ccbd8cd43b31f",
+      "origineel_sha256": "6f5ee6c36ba988d0e525df1170fe65c88d5cf066ec82a1c9105ccbd8cd43b31f",
+      "origineel_bytes": 116630,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-lang/spelling-zoom-125.png",
+      "sha256": "36459418699c3d513b4d9ade3bd8b52363b51769383c85233d39252e54dbbe3f",
+      "origineel_sha256": "36459418699c3d513b4d9ade3bd8b52363b51769383c85233d39252e54dbbe3f",
+      "origineel_bytes": 138735,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-lang/startlint.png",
+      "sha256": "7f72f894887e2b3a4ff324d36a9e0f74274dca7e3c6a24936b85a5c147fda06c",
+      "origineel_sha256": "7f72f894887e2b3a4ff324d36a9e0f74274dca7e3c6a24936b85a5c147fda06c",
+      "origineel_bytes": 126690,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-lang/workerbron.json.gz",
+      "sha256": "f425df10f66f1fda3847e30d8ce854d32a1c5dadb5eca5ffe78cc1c085881117",
+      "origineel_sha256": "2f5d8144c3bcd8b94d7d58923e5c96861695dfec7e148d3aafe8e4c4d172285d",
+      "origineel_bytes": 4181902,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-abba/kandidaat-a/Prestatieproef.docx",
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_bytes": 73262,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-abba/kandidaat-a/eerste-gelijke-tekst.png",
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_bytes": 31219,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-abba/kandidaat-a/profiel.json.gz",
+      "sha256": "d74d236daf29fee54f6b416c3d0712f00cfe9721a12c57a54e5873a7b7b029f1",
+      "origineel_sha256": "63ab526e95f28b85dad53c91d7c8d1592a546658400829b38175375c1fdea3de",
+      "origineel_bytes": 2905,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-abba/kandidaat-a/profiel.png",
+      "sha256": "e168d203efda6cbe5c5d92545adb98df08ecb0f05bb51870c118b6d2313dd310",
+      "origineel_sha256": "e168d203efda6cbe5c5d92545adb98df08ecb0f05bb51870c118b6d2313dd310",
+      "origineel_bytes": 118017,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-abba/kandidaat-a/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "origineel_bytes": 134,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-abba/kandidaat-a.log.gz",
+      "sha256": "dbe52e1cb296b803e47f67e4307fd1faf82d4137aaa3751ec6f7036a6857ae2c",
+      "origineel_sha256": "c33ee24163ce87827f3d6d7f181840c9e0c7ff682cd0c9252ca1b7feb3f2f025",
+      "origineel_bytes": 3600,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-abba/kandidaat-b/Prestatieproef.docx",
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_bytes": 73262,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-abba/kandidaat-b/eerste-gelijke-tekst.png",
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_bytes": 31219,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-abba/kandidaat-b/profiel.json.gz",
+      "sha256": "67883b51dbb081587fe42aab3d5eb15e72eca58594e14632863f7ddd0d9ff8c5",
+      "origineel_sha256": "976fde5130edc43023de3471d8d08c609306b665e999da6cddd672b34451501f",
+      "origineel_bytes": 2879,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-abba/kandidaat-b/profiel.png",
+      "sha256": "5c272b1870c20f56be9a342446ebd1654f25a2bc8bb9f2298e46323b9a1f4a87",
+      "origineel_sha256": "5c272b1870c20f56be9a342446ebd1654f25a2bc8bb9f2298e46323b9a1f4a87",
+      "origineel_bytes": 118055,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-abba/kandidaat-b/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "origineel_bytes": 134,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-abba/kandidaat-b.log.gz",
+      "sha256": "affadf4646474decd8c9a278de07a1cdcaf187483e2574ec58f638df91666cd5",
+      "origineel_sha256": "8b805b17ad00e2373b57060c6869213c0435e6a33495de9fd8c3b59845af3d54",
+      "origineel_bytes": 3600,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-abba/referentie-a/Prestatieproef.docx",
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_bytes": 73262,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-abba/referentie-a/eerste-gelijke-tekst.png",
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_bytes": 31219,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-abba/referentie-a/profiel.json.gz",
+      "sha256": "92c58a47a296892807a8a81eefeb2d3c1ad0875cdde517bce159089a2e796430",
+      "origineel_sha256": "5a64825c73846bf9c76d1ee8b49126d791c155d80050d7a62191a0f718aa6c8a",
+      "origineel_bytes": 2879,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-abba/referentie-a/profiel.png",
+      "sha256": "e168d203efda6cbe5c5d92545adb98df08ecb0f05bb51870c118b6d2313dd310",
+      "origineel_sha256": "e168d203efda6cbe5c5d92545adb98df08ecb0f05bb51870c118b6d2313dd310",
+      "origineel_bytes": 118017,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-abba/referentie-a/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "origineel_bytes": 134,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-abba/referentie-a.log.gz",
+      "sha256": "adb0682ac41ea119ab0702982b1fe3ff10bdc294525f7dfc77dd87d389de2c60",
+      "origineel_sha256": "808d5def839acc002f913405becdc442dd9d0d1f873fc235dc7a7797d3fb2ae9",
+      "origineel_bytes": 3600,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-abba/referentie-b/Prestatieproef.docx",
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_bytes": 73262,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-abba/referentie-b/eerste-gelijke-tekst.png",
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_bytes": 31219,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-abba/referentie-b/profiel.json.gz",
+      "sha256": "694c6569d937f8667df0af1eba3a0d2cf6f874776b6bf94b75bc3c4c1729564b",
+      "origineel_sha256": "76540dc36932826797cc83fbd55f0010d4840d9c4017e0ffdeb47349e6f0cd40",
+      "origineel_bytes": 2895,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-abba/referentie-b/profiel.png",
+      "sha256": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef",
+      "origineel_sha256": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef",
+      "origineel_bytes": 118014,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-abba/referentie-b/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "origineel_bytes": 134,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/gui-abba/referentie-b.log.gz",
+      "sha256": "66a5ef510fca665ab4fa704bcbeb86f335ab0bb73efabc1177e6585d8e4e69a4",
+      "origineel_sha256": "2d3b47f2d140dc85a5dd0f3ba08b19646a485b21a94ca10b05c13ff12ba8f4e2",
+      "origineel_bytes": 3600,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/typen-baab/nieuw-a/Prestatieproef.docx",
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_bytes": 73262,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/typen-baab/nieuw-a/eerste-gelijke-tekst.png",
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_bytes": 31219,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/typen-baab/nieuw-a/profiel.json.gz",
+      "sha256": "ae083971667f83a128366eea958147f2a3ba83f6a141f580a095793eb3a77298",
+      "origineel_sha256": "9bc6c31fa469f7cfb97d43d457a52e2b6a406fc2dfe55ada1cf711312ce8fc68",
+      "origineel_bytes": 2879,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/typen-baab/nieuw-a/profiel.png",
+      "sha256": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef",
+      "origineel_sha256": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef",
+      "origineel_bytes": 118014,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/typen-baab/nieuw-a/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "origineel_bytes": 134,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/typen-baab/nieuw-a.log.gz",
+      "sha256": "4bc5d0fb48fe7dfdfff20a53ab8d7f937391b975b4c6e98fcda7e6067e5c7a1f",
+      "origineel_sha256": "41686a4991c9d0943b1411fbd93cb767e255e3c6dff2cdc01adabec918be7ea3",
+      "origineel_bytes": 3600,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/typen-baab/nieuw-b/Prestatieproef.docx",
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_bytes": 73262,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/typen-baab/nieuw-b/eerste-gelijke-tekst.png",
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_bytes": 31219,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/typen-baab/nieuw-b/profiel.json.gz",
+      "sha256": "6db96f00a575bb00e7c0d1b75df67c9e3ca4be918dd9e6724f389c761103c698",
+      "origineel_sha256": "7415afff6b400ce881200b6009e29040966c58ba2edd17656b1b25cddc93559b",
+      "origineel_bytes": 2879,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/typen-baab/nieuw-b/profiel.png",
+      "sha256": "e168d203efda6cbe5c5d92545adb98df08ecb0f05bb51870c118b6d2313dd310",
+      "origineel_sha256": "e168d203efda6cbe5c5d92545adb98df08ecb0f05bb51870c118b6d2313dd310",
+      "origineel_bytes": 118017,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/typen-baab/nieuw-b/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "origineel_bytes": 134,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/typen-baab/nieuw-b.log.gz",
+      "sha256": "c113e38ccbb3b04f97a6fd2826f3174f947a73e3822dfdad0c3b354fe72c2949",
+      "origineel_sha256": "7acf00cd7570b75bcf3bd9a323c34d33202733b2dbf42ae7f411113ca4e6eef5",
+      "origineel_bytes": 3600,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/typen-baab/oud-a/Prestatieproef.docx",
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_bytes": 73262,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/typen-baab/oud-a/eerste-gelijke-tekst.png",
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_bytes": 31219,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/typen-baab/oud-a/profiel.json.gz",
+      "sha256": "77ac24ec7569a5dba406841b2290c3f882a8c5b3570e86990a26b1e8ad729968",
+      "origineel_sha256": "d2c6209ed0e6b32195ddfea6fc76ce4e898feb7bbdaf9a35c5ec798301a784f4",
+      "origineel_bytes": 2879,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/typen-baab/oud-a/profiel.png",
+      "sha256": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef",
+      "origineel_sha256": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef",
+      "origineel_bytes": 118014,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/typen-baab/oud-a/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "origineel_bytes": 134,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/typen-baab/oud-a.log.gz",
+      "sha256": "137833527563a375780771664eae767afc0e935e65918828ad7e7988d6ab2425",
+      "origineel_sha256": "cb6169c463d6bcb3615ad0be0bf3fbcdb4193e62a2d48b9039f7c22ecdb29359",
+      "origineel_bytes": 3600,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/typen-baab/oud-b/Prestatieproef.docx",
+      "sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_sha256": "b9cb1571f4a8b0d33b5f67c284ba96a97bcf0e4ab57b95e47c0d0555d283385c",
+      "origineel_bytes": 73262,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/typen-baab/oud-b/eerste-gelijke-tekst.png",
+      "sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_sha256": "667e6054c2ea3a8b74a98665440a5aec7beb1126083ee4cf65a1fd98267f9b05",
+      "origineel_bytes": 31219,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/typen-baab/oud-b/profiel.json.gz",
+      "sha256": "0dc8028a9d5a9741b1e43f5197ca97a268cffcd7531370c6fb075e9e1f331859",
+      "origineel_sha256": "83ad2d9e2d4bac1dbef5f28cd28757bd170c9fbe057e19a07a4b0e5b74a32ddc",
+      "origineel_bytes": 2879,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/typen-baab/oud-b/profiel.png",
+      "sha256": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef",
+      "origineel_sha256": "ce5f36c73ec0dd36f71aa68ebcfcf76ac82968e66316381f01f5dd732386a3ef",
+      "origineel_bytes": 118014,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/typen-baab/oud-b/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "origineel_bytes": 134,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/typen-baab/oud-b.log.gz",
+      "sha256": "4f45db82f74da8803e08dcf5dbcc7b635f504be4b3b32095144b1f0f12dcc554",
+      "origineel_sha256": "8dbc1d224527c639ef1f6a57bd01576cd73e8877ecfebd9f8ee3b78fbe3ac1c1",
+      "origineel_bytes": 3600,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/manifest.json.gz",
+      "sha256": "19205f413166abd5cc9e330b97ce52e1ddbe2920e05d8995021337f91ce3184b",
+      "origineel_sha256": "7cd7a4387366324074a5d132fe95ff17076820a9f9e66cbcfd7fbacc864905ed",
+      "origineel_bytes": 2889,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/nieuw-a/Ontwerpnotitie.docx",
+      "sha256": "1efc429161a0545b548ed1818b97cea6807592ba02ba6e8f46ee4f3f098bdfc9",
+      "origineel_sha256": "1efc429161a0545b548ed1818b97cea6807592ba02ba6e8f46ee4f3f098bdfc9",
+      "origineel_bytes": 79706,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/nieuw-a/bewaard-1.docx",
+      "sha256": "e37855a0dfdb07d2e31bc2ac5f29653b74195938e16a8ba41d701ce46ea2d5a3",
+      "origineel_sha256": "e37855a0dfdb07d2e31bc2ac5f29653b74195938e16a8ba41d701ce46ea2d5a3",
+      "origineel_bytes": 79701,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/nieuw-a/bewaard-2.docx",
+      "sha256": "9f3e5b6ce24c046fe5c8a9f2d10871f167a4df275a54492370e43b76a5139ddf",
+      "origineel_sha256": "9f3e5b6ce24c046fe5c8a9f2d10871f167a4df275a54492370e43b76a5139ddf",
+      "origineel_bytes": 79705,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/nieuw-a/bewaard-3.docx",
+      "sha256": "1efc429161a0545b548ed1818b97cea6807592ba02ba6e8f46ee4f3f098bdfc9",
+      "origineel_sha256": "1efc429161a0545b548ed1818b97cea6807592ba02ba6e8f46ee4f3f098bdfc9",
+      "origineel_bytes": 79706,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/nieuw-a/na-drie-bewaringen.png",
+      "sha256": "a459f121eac4db4e59c714d13b1dacdedbaaa3862ff92a2737a0abbe90c87ac0",
+      "origineel_sha256": "a459f121eac4db4e59c714d13b1dacdedbaaa3862ff92a2737a0abbe90c87ac0",
+      "origineel_bytes": 168291,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/nieuw-a/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "origineel_bytes": 134,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/nieuw-a/rapport.json.gz",
+      "sha256": "40acc22a8408e5d04edee28210f70fe35d8b611c7c13a631fc8fa9c6560ca518",
+      "origineel_sha256": "8014ad595a1b8e4f595a49d61f7e0c65e6adf5c0acccfd9eb310dcfd3828ac86",
+      "origineel_bytes": 2412,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/nieuw-a.log.gz",
+      "sha256": "187b114f8a0e7a89953236ced9249d1dfd0877b8a867bf87961ef89da843d57d",
+      "origineel_sha256": "c41029bb212b8ccbf4125a2c367a3d05b8a91ba24203307c51c95032f5925531",
+      "origineel_bytes": 3532,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/nieuw-b/Ontwerpnotitie.docx",
+      "sha256": "2e01ea6809f98047449454dc63902c04ca4ee34698194cae392d6166b6afc6fd",
+      "origineel_sha256": "2e01ea6809f98047449454dc63902c04ca4ee34698194cae392d6166b6afc6fd",
+      "origineel_bytes": 79706,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/nieuw-b/bewaard-1.docx",
+      "sha256": "d2f006607ac1cecc9a4f2411e30cd174d1ac6a0ca71b80b31630ecef8349031f",
+      "origineel_sha256": "d2f006607ac1cecc9a4f2411e30cd174d1ac6a0ca71b80b31630ecef8349031f",
+      "origineel_bytes": 79702,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/nieuw-b/bewaard-2.docx",
+      "sha256": "2a87104643faf06778b230bc2d0e2504366d561397555f7f66387a7ed3e1a955",
+      "origineel_sha256": "2a87104643faf06778b230bc2d0e2504366d561397555f7f66387a7ed3e1a955",
+      "origineel_bytes": 79704,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/nieuw-b/bewaard-3.docx",
+      "sha256": "2e01ea6809f98047449454dc63902c04ca4ee34698194cae392d6166b6afc6fd",
+      "origineel_sha256": "2e01ea6809f98047449454dc63902c04ca4ee34698194cae392d6166b6afc6fd",
+      "origineel_bytes": 79706,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/nieuw-b/na-drie-bewaringen.png",
+      "sha256": "6c37d7ad6cb3710aa25d69a66b68d7e75d481e73b22dcd58ab9e61660455382d",
+      "origineel_sha256": "6c37d7ad6cb3710aa25d69a66b68d7e75d481e73b22dcd58ab9e61660455382d",
+      "origineel_bytes": 168310,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/nieuw-b/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "origineel_bytes": 134,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/nieuw-b/rapport.json.gz",
+      "sha256": "da1e051c314fce3ce7472471cbfcca8ebdc9000c37e58f6a0dcf3b92f0121315",
+      "origineel_sha256": "73f49a24af724d823ffef4d6b356e7e0eb9ba923e892852a5ebf703753b2891d",
+      "origineel_bytes": 2427,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/nieuw-b.log.gz",
+      "sha256": "55339aa07218f069a67ffd540f317fc2ca574f7b4eceb6b10e7c95fd6fa8f58d",
+      "origineel_sha256": "ab766e1372ff9f6f40483a966590b8cea63f90a2528d38774c817bb36b1b414e",
+      "origineel_bytes": 3532,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/oud-a/Ontwerpnotitie.docx",
+      "sha256": "e05a7c0aa5711f84b0b8cf76afadbf49a7e0448f884b35e21750da890a46eb51",
+      "origineel_sha256": "e05a7c0aa5711f84b0b8cf76afadbf49a7e0448f884b35e21750da890a46eb51",
+      "origineel_bytes": 79705,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/oud-a/bewaard-1.docx",
+      "sha256": "a1418f79bef2360357a5efcf07c76402ecd845daea1eeedc208c94f803dcc7d3",
+      "origineel_sha256": "a1418f79bef2360357a5efcf07c76402ecd845daea1eeedc208c94f803dcc7d3",
+      "origineel_bytes": 79702,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/oud-a/bewaard-2.docx",
+      "sha256": "33865cd3c14b5dd39def39244fe740a53cfe0d3f8427b8382980d93878c2596c",
+      "origineel_sha256": "33865cd3c14b5dd39def39244fe740a53cfe0d3f8427b8382980d93878c2596c",
+      "origineel_bytes": 79704,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/oud-a/bewaard-3.docx",
+      "sha256": "e05a7c0aa5711f84b0b8cf76afadbf49a7e0448f884b35e21750da890a46eb51",
+      "origineel_sha256": "e05a7c0aa5711f84b0b8cf76afadbf49a7e0448f884b35e21750da890a46eb51",
+      "origineel_bytes": 79705,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/oud-a/na-drie-bewaringen.png",
+      "sha256": "844db855e53d215e6c29d968bacb19844563d7cf2c2e7f74570979e344074770",
+      "origineel_sha256": "844db855e53d215e6c29d968bacb19844563d7cf2c2e7f74570979e344074770",
+      "origineel_bytes": 168171,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/oud-a/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "origineel_bytes": 134,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/oud-a/rapport.json.gz",
+      "sha256": "b11e837cfdf255ff5b17d5117b8bc069f5e3add6edd56df53c21bb5bb930c518",
+      "origineel_sha256": "141fa6bc89b563fa30aea434506e92ac840ac008c32ba7eb8401cf54d26c28b2",
+      "origineel_bytes": 2414,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/oud-a.log.gz",
+      "sha256": "e7961f49df9d8a75a46d9dbd3a1f7ada29fcae98cd00667f921a5d1289946db6",
+      "origineel_sha256": "5d30f3813f82bde7a9d41e720a12e13796cf5e4e59f585a443e04ef48201da52",
+      "origineel_bytes": 3532,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/oud-b/Ontwerpnotitie.docx",
+      "sha256": "01f0b522331b52ddd53267cc791a1f31e9fcf24188d91437a2a5cfb7cc64c6aa",
+      "origineel_sha256": "01f0b522331b52ddd53267cc791a1f31e9fcf24188d91437a2a5cfb7cc64c6aa",
+      "origineel_bytes": 79707,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/oud-b/bewaard-1.docx",
+      "sha256": "9bb230de29018e3760e130f36898acfd7cae9881fad350afe7f285d9e7523cac",
+      "origineel_sha256": "9bb230de29018e3760e130f36898acfd7cae9881fad350afe7f285d9e7523cac",
+      "origineel_bytes": 79703,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/oud-b/bewaard-2.docx",
+      "sha256": "747e5702c4ee07b6ab34b622e62dc3d479515c039dfe77e9e0eb536b79e121e0",
+      "origineel_sha256": "747e5702c4ee07b6ab34b622e62dc3d479515c039dfe77e9e0eb536b79e121e0",
+      "origineel_bytes": 79704,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/oud-b/bewaard-3.docx",
+      "sha256": "01f0b522331b52ddd53267cc791a1f31e9fcf24188d91437a2a5cfb7cc64c6aa",
+      "origineel_sha256": "01f0b522331b52ddd53267cc791a1f31e9fcf24188d91437a2a5cfb7cc64c6aa",
+      "origineel_bytes": 79707,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/oud-b/na-drie-bewaringen.png",
+      "sha256": "3be5e306055fcdbfdcec7440e6c879b7153bfefd355ae7157b8f8633c905002f",
+      "origineel_sha256": "3be5e306055fcdbfdcec7440e6c879b7153bfefd355ae7157b8f8633c905002f",
+      "origineel_bytes": 168183,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/oud-b/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "origineel_bytes": 134,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/oud-b/rapport.json.gz",
+      "sha256": "ac51f55b1da2b618e08c505c84b105c6b942aae2beab03c8ffac895a2e45335a",
+      "origineel_sha256": "f791ecdbbff2a6055b81326e60a9d1d490a9acabe0c49e080b339e82c08d86a5",
+      "origineel_bytes": 2442,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-abba/oud-b.log.gz",
+      "sha256": "3fb0daa09934e71917fe04677d6ed6c16ec1d0a02c131d74c3f39672dcecc9f4",
+      "origineel_sha256": "5e119815cbec2c73cef6706587a3f20ae9e06d4c4b07fb41788c40302a5ea0c2",
+      "origineel_bytes": 3532,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/nieuw-a/Ontwerpnotitie.docx",
+      "sha256": "da769176d90094b19e6dbad7f047279dfda7365072b15d413aa747267f1420ff",
+      "origineel_sha256": "da769176d90094b19e6dbad7f047279dfda7365072b15d413aa747267f1420ff",
+      "origineel_bytes": 79708,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/nieuw-a/bewaard-1.docx",
+      "sha256": "40ce0ab2576a31e6b458164c42b40f98d9d9c37f760f43ef41383928d9f47207",
+      "origineel_sha256": "40ce0ab2576a31e6b458164c42b40f98d9d9c37f760f43ef41383928d9f47207",
+      "origineel_bytes": 79704,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/nieuw-a/bewaard-2.docx",
+      "sha256": "c869d39219b9256d6389546aafd5b08da342621629c816f9e712cfac0ceab84a",
+      "origineel_sha256": "c869d39219b9256d6389546aafd5b08da342621629c816f9e712cfac0ceab84a",
+      "origineel_bytes": 79706,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/nieuw-a/bewaard-3.docx",
+      "sha256": "da769176d90094b19e6dbad7f047279dfda7365072b15d413aa747267f1420ff",
+      "origineel_sha256": "da769176d90094b19e6dbad7f047279dfda7365072b15d413aa747267f1420ff",
+      "origineel_bytes": 79708,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/nieuw-a/na-drie-bewaringen.png",
+      "sha256": "1de82e070d31e44843b089b5337b38575a11a3633a075cb5a44ae73cf6d85202",
+      "origineel_sha256": "1de82e070d31e44843b089b5337b38575a11a3633a075cb5a44ae73cf6d85202",
+      "origineel_bytes": 168197,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/nieuw-a/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "origineel_bytes": 134,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/nieuw-a/rapport.json.gz",
+      "sha256": "9b1a1c8fb8c30db8d444a94f12665f6ed9d32d62fbc694e8a91a0809a77a552e",
+      "origineel_sha256": "b36912616bbf7868881db1221677f04b6b7a475146880ca0ee11c8cbae3b190c",
+      "origineel_bytes": 2673,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/nieuw-a.log.gz",
+      "sha256": "be1d718664f4c1388d72f1e68c0258f32dec6e8d62a1ca100511b0a26ca34c1e",
+      "origineel_sha256": "4c4ec1c972e4c5db62ddbe2c6726b05897562fa000988bc266b95eaac713b9ca",
+      "origineel_bytes": 3532,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/nieuw-b/Ontwerpnotitie.docx",
+      "sha256": "a0e1b7742da74fc24d89b1197a1d983b26e604c4db016b3e799f9a7b54986417",
+      "origineel_sha256": "a0e1b7742da74fc24d89b1197a1d983b26e604c4db016b3e799f9a7b54986417",
+      "origineel_bytes": 79708,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/nieuw-b/bewaard-1.docx",
+      "sha256": "a23b125f73aea91727a4b6c2d00f68a96b41024932a66618a2bcc1e95660b24c",
+      "origineel_sha256": "a23b125f73aea91727a4b6c2d00f68a96b41024932a66618a2bcc1e95660b24c",
+      "origineel_bytes": 79703,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/nieuw-b/bewaard-2.docx",
+      "sha256": "c973aa4f9408107234545ce590edc37d55134e526e797c382d521aedc7b35aa9",
+      "origineel_sha256": "c973aa4f9408107234545ce590edc37d55134e526e797c382d521aedc7b35aa9",
+      "origineel_bytes": 79705,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/nieuw-b/bewaard-3.docx",
+      "sha256": "a0e1b7742da74fc24d89b1197a1d983b26e604c4db016b3e799f9a7b54986417",
+      "origineel_sha256": "a0e1b7742da74fc24d89b1197a1d983b26e604c4db016b3e799f9a7b54986417",
+      "origineel_bytes": 79708,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/nieuw-b/na-drie-bewaringen.png",
+      "sha256": "43ddff81f469b6351ea3d423c2ee93666c3e4977d9fc05622ac100f4de0f8afe",
+      "origineel_sha256": "43ddff81f469b6351ea3d423c2ee93666c3e4977d9fc05622ac100f4de0f8afe",
+      "origineel_bytes": 168183,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/nieuw-b/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "origineel_bytes": 134,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/nieuw-b/rapport.json.gz",
+      "sha256": "685213516b1136b08f2bd7b8cedb4668a2d0a74dc377de0bb5b8778f199ce668",
+      "origineel_sha256": "d3a5ca523a971dd50ebedac5359a762c70a91352978b8d9fdddaee90c1d46063",
+      "origineel_bytes": 2673,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/nieuw-b.log.gz",
+      "sha256": "c6bbfa5af4d1261f08d2b55c626668360d0368a6e3b8ab2035cd67472ee9f9be",
+      "origineel_sha256": "e326ed2d9b7e9cc2627f4b178015261fe092a93a3141aa6779760b557c2c3f77",
+      "origineel_bytes": 3532,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/oud-a/Ontwerpnotitie.docx",
+      "sha256": "6c42526b6e28bfe4d0efa04732a711ddf5f52061a4b8632ae00898bc0ee5b1f5",
+      "origineel_sha256": "6c42526b6e28bfe4d0efa04732a711ddf5f52061a4b8632ae00898bc0ee5b1f5",
+      "origineel_bytes": 79708,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/oud-a/bewaard-1.docx",
+      "sha256": "a24e59ea8b84bafa6c69eff26dacc84e4431ba72b5ffc2ffb22762cb47bb5464",
+      "origineel_sha256": "a24e59ea8b84bafa6c69eff26dacc84e4431ba72b5ffc2ffb22762cb47bb5464",
+      "origineel_bytes": 79704,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/oud-a/bewaard-2.docx",
+      "sha256": "9706dfcff83b764cedf127e9a906a9dd03a4f9a0160a72e3734438dfdd88ffc3",
+      "origineel_sha256": "9706dfcff83b764cedf127e9a906a9dd03a4f9a0160a72e3734438dfdd88ffc3",
+      "origineel_bytes": 79706,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/oud-a/bewaard-3.docx",
+      "sha256": "6c42526b6e28bfe4d0efa04732a711ddf5f52061a4b8632ae00898bc0ee5b1f5",
+      "origineel_sha256": "6c42526b6e28bfe4d0efa04732a711ddf5f52061a4b8632ae00898bc0ee5b1f5",
+      "origineel_bytes": 79708,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/oud-a/na-drie-bewaringen.png",
+      "sha256": "8b169aceead416dcbceaffde1f597a86c67b487ca68aad06338971e322bfb00d",
+      "origineel_sha256": "8b169aceead416dcbceaffde1f597a86c67b487ca68aad06338971e322bfb00d",
+      "origineel_bytes": 168024,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/oud-a/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "origineel_bytes": 134,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/oud-a/rapport.json.gz",
+      "sha256": "c452ac42ddc149ae78795a4fff66534b8c16780c667cf30f623421accc2ea2f6",
+      "origineel_sha256": "17a11242f1e09c1473f55fe44bdb48d00cd6dfa8b077feb2352c650d68ed5f8d",
+      "origineel_bytes": 2691,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/oud-a.log.gz",
+      "sha256": "6a9cd32d67cdd2282f09a75bca5930b68ce939599e130c718055d7b7bdbf8a6a",
+      "origineel_sha256": "98a76e04db4a83c429e60b3f8dbc1aeab730967743856ecccab61ce9e85dd138",
+      "origineel_bytes": 3532,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/oud-b/Ontwerpnotitie.docx",
+      "sha256": "8a0c164b324621940885ab8da82646b2be73bae2f9d809548f17f12444329273",
+      "origineel_sha256": "8a0c164b324621940885ab8da82646b2be73bae2f9d809548f17f12444329273",
+      "origineel_bytes": 79708,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/oud-b/bewaard-1.docx",
+      "sha256": "e5fb8a54e6da099e8a427429eb548e55929afdf66966abb5d4a50daa94df292a",
+      "origineel_sha256": "e5fb8a54e6da099e8a427429eb548e55929afdf66966abb5d4a50daa94df292a",
+      "origineel_bytes": 79704,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/oud-b/bewaard-2.docx",
+      "sha256": "7fca59838f3c67fcca6d3ad19f96a324dc55bfdcc763f5a7e9dd884bd65bebec",
+      "origineel_sha256": "7fca59838f3c67fcca6d3ad19f96a324dc55bfdcc763f5a7e9dd884bd65bebec",
+      "origineel_bytes": 79706,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/oud-b/bewaard-3.docx",
+      "sha256": "8a0c164b324621940885ab8da82646b2be73bae2f9d809548f17f12444329273",
+      "origineel_sha256": "8a0c164b324621940885ab8da82646b2be73bae2f9d809548f17f12444329273",
+      "origineel_bytes": 79708,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/oud-b/na-drie-bewaringen.png",
+      "sha256": "745209377c9f05cf75481f5afe8276b20f5bc269f5984ee51ecbd3e66cdc9401",
+      "origineel_sha256": "745209377c9f05cf75481f5afe8276b20f5bc269f5984ee51ecbd3e66cdc9401",
+      "origineel_bytes": 168038,
+      "gzip": false
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/oud-b/programma.log.gz",
+      "sha256": "8ff3ded1ef41429c29f21f489ddfbbb231fe26fccf7e600446bcf8fdaa3c7818",
+      "origineel_sha256": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "origineel_bytes": 134,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/oud-b/rapport.json.gz",
+      "sha256": "42389ab4609349adfae60a80b98304b279b63127890fd6820d25e3027d77eca9",
+      "origineel_sha256": "6fc72077529fdb8fc5e99f877b547b0be4e97b71fd2c646da576920914b1471d",
+      "origineel_bytes": 2704,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/bewaar-frames/oud-b.log.gz",
+      "sha256": "13fbbb22edd0d9b67e6cd328f67a8a4a3daf214c451ca7c143a0c8d26f79a17e",
+      "origineel_sha256": "d752a7f60f8089aeea69b417075eda60ec8876fbf72b21d277e45b5097010d34",
+      "origineel_bytes": 3532,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/canoniek/scripts/test-writer-rust-tekst-native.py.gz",
+      "sha256": "e485b07808995faf526d66217ea14dee6d133bb59c577edba158acdfac30bf4a",
+      "origineel_sha256": "b1590d04f779d906f225d867e4c0196ccb62e96784c4857c86a03861ad8a5627",
+      "origineel_bytes": 15666,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/canoniek/scripts/test-writer-rijk-plakken-native.py.gz",
+      "sha256": "ec15f10d8bc87ea1ca1c10f45cd538123f56d0bb3db8ea17fc1ea20a103591ff",
+      "origineel_sha256": "90c00f7069baa0eec698e3a0c9afd1a0d5e60b60dbd4dd4bb334ff9bb2478e5c",
+      "origineel_bytes": 31819,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/canoniek/scripts/test-writer-lang-native.py.gz",
+      "sha256": "abd4477d3dffe044440b9973fee0c2b1065938935746daa03d37f48c77af0435",
+      "origineel_sha256": "ce80b390f1679c1ff46b70423199775c59b42adbb22f5188549bab287a83b486",
+      "origineel_bytes": 55778,
+      "gzip": true
+    },
+    {
+      "bestand": "writer-opslaggereed/canoniek/native/onderzoek/writer-desktopcache/meten.py.gz",
+      "sha256": "ce7f6f7b9e781cb83017f05352dcfc7fe1ea6a2610667867244a776918b11d96",
+      "origineel_sha256": "c7a0a8e5c675687c0a035c968d77e6f736f663ca34c6f176aab04cd3f79d6afa",
+      "origineel_bytes": 24256,
+      "gzip": true
+    }
+  ],
+  "beeldcontrole": {
+    "rapport": "writer-opslaggereed/beeldvergelijking.json.gz",
+    "resultaat": "Acht statische 1440x1000-eindbeelden: documentuitsnede [320,210,1140,950] buiten cursor [491,347,496,366] exact gelijk. Ruwe verschillen per beeld afzonderlijk bewaard; geen volledige UI-acceptatie."
+  },
+  "bewaarinterpretatie": "Warme opslag: gemiddelde grootste rAF-callbackpauze 558,25 ms oud versus 338 ms nieuw (vier warme cycli per versie). Eerste opslagpauzes oud 632/606 versus nieuw 665/754 ms. Geen causale of algemene FPS-claim. Totale opslagwandtijd hoger in beide afzonderlijke ABBA-ronden; typwandtijd eveneens hoger, dus niet promoveren."
+}
