@@ -87,7 +87,7 @@ worden niet gesloten op basis van alleen aanwezige knoppen of broncode.
 | [#68](https://github.com/OpenAEC-Foundation/open-office-studio/issues/68) | Nog niet volledig afgetekend | Acceptatiecriteria vergelijken met bron, bestaande tests en werkelijke uitvoering. |
 | [#67](https://github.com/OpenAEC-Foundation/open-office-studio/issues/67) | Nog niet volledig afgetekend | Acceptatiecriteria vergelijken met bron, bestaande tests en werkelijke uitvoering. |
 | [#66](https://github.com/OpenAEC-Foundation/open-office-studio/issues/66) | Nog niet volledig afgetekend | Acceptatiecriteria vergelijken met bron, bestaande tests en werkelijke uitvoering. |
-| [#64](https://github.com/OpenAEC-Foundation/open-office-studio/issues/64) | Concept-PR #164; kern en invoerroutes gekoppeld | 2.411 kernproeven, 1.867 unieke appproeven, native invoer/opslag/heropening en bytegelijke herbouw gecontroleerd. Volledige issue-audit (onder meer ingebouwde datumcodes) en platformchecks nog open; zie [getalnotatie](2026-11-06-getalnotatie.md). |
+| [#64](https://github.com/OpenAEC-Foundation/open-office-studio/issues/64) | Concept-PR #164; kern en invoerroutes gekoppeld | Aanvullende ingebouwde-datumaudit hersteld: tien JS/WASM-, 54 gerichte kern- en 1.874 unieke appproeven, native gemengde notaties en onbekende regio, bytegelijke herbouw. Volledige kernnacontrole en nieuwe platformchecks nog open; zie [getalnotatie](2026-11-06-getalnotatie.md). |
 | [#61](https://github.com/OpenAEC-Foundation/open-office-studio/issues/61) | Nog niet volledig afgetekend | Acceptatiecriteria vergelijken met bron, bestaande tests en werkelijke uitvoering. |
 | [#60](https://github.com/OpenAEC-Foundation/open-office-studio/issues/60) | Nog niet volledig afgetekend | Acceptatiecriteria vergelijken met bron, bestaande tests en werkelijke uitvoering. |
 | [#59](https://github.com/OpenAEC-Foundation/open-office-studio/issues/59) | Nog niet volledig afgetekend | Acceptatiecriteria vergelijken met bron, bestaande tests en werkelijke uitvoering. |
@@ -298,3 +298,23 @@ is hiermee niet vrijgegeven. De wijzigingen zijn pas na een geslaagde
 platformcontrole en merge op de hoofdbranch beschikbaar; ze zitten nog niet
 in de gepubliceerde release v2026.45.1. De overige open issues, waaronder
 #144 en de brede klembordcriteria van #20, blijven afzonderlijk te toetsen.
+
+
+## Actuele vervolgstand — 6 november 2026
+
+GitHub heeft op deze controledatum 93 open issues. Bovenstaande oorspronkelijke
+momentopname blijft herkenbaar als historie; de volgende gerichte afrondingen
+zijn inmiddels gemerged en de betreffende issues zijn gesloten:
+
+- PR #154: #126, #135, #152 en #153; native invoer, IFCX en opslag.
+- PR #155: #144; nummering van voet-/eindnoot en verwijzing gelijk.
+- PR #159: #58; formulebediening inclusief de lange vlakke formuleketen.
+- PR #163: #70; volledig naambeheer, 45 regressieproeven en native
+  maken/wijzigen/verwijderen, scopes, Undo/Redo, opslaan en heropenen.
+
+De openbare release 2026-W45.2 bevat PR #154–#159. PR #163 is daarna gemerged.
+Getalnotatie #64 wordt verder afgewerkt in concept-PR #164; de aanvullende
+native datumproeven zijn groen. De brede issues #51, #60, #61, #71 en #73 zijn
+opnieuw op hun volledige criteria gelezen en blijven open: onder meer
+sectie-/paginanoten en formaatbehoud, venstersplitsing, bladen samen bewerken,
+gespreksnotities en gestructureerde tabellen vragen nog afzonderlijke controle.

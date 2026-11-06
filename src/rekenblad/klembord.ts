@@ -308,7 +308,7 @@ export async function plak(
   const regionaal = !intern && opties.wat !== "waarden" && opties.bewerking === "geen";
   if (!intern && !regionaal && opties.wat !== "opmaak") {
     const instelling = leesWerkmapinstelling(api);
-    const lezer = await laadInvoerlezer(instelling.regio, instelling.datumstelsel);
+    const lezer = await laadInvoerlezer(instelling.bekendeRegio, instelling.datumstelsel);
     try {
       const waarden = lezer.lees(cellen.map((rij) => rij.map((c) => c.invoer)));
       cellen.forEach((rij, r) => rij.forEach((c, k) => { if (!c.canoniek) c.waarde = waarden[r][k]; }));

@@ -18,6 +18,31 @@ const format = { type: "custom" as const, pattern: '#,##0.00;[Red](#,##0.00)' };
 const code = (h: WorkbookHandle, blad = 0) => h.selectionFormatting(blad, "A1").numberFormatPattern;
 
 describe("getalvenster: één transactie voor notatie en bestandsregio", () => {
+  it("laat een ongewijzigd venster geen nieuwe geschiedenis of opmaak maken", async () => {
+    const { h, api } = boek(); const d = doel(api); const geschiedenis = h.historyState();
+    await bewaarGetalopmaak(api, d, null, d.regio);
+    expect(h.version()).toBe(d.versie); expect(h.historyState()).toEqual(geschiedenis);
+  });
+  it("vervangt een toekomstige regio uitsluitend na een expliciete nieuwe keuze", async () => {
+    const { h, api } = boek(); h.applyOps([{ type: "setDefinedName", name: REGIONAAM, refers_to: '"toekomstig-Land"', hidden: true, scope: null }]);
+    const d = doel(api); await bewaarGetalopmaak(api, d, null, "en-GB", true);
+    expect(leesWerkmapregio(api)).toBe("en-GB");
+    const r = h.exportStructured({ scope: [{ sheet: 0, range: "A1" }], includeHiddenNames: true, includeHiddenSheets: true });
+    expect(r.ok && r.content.definedNames.find((n) => n.name === REGIONAAM)?.formula).toBe('"en-GB"');
+    h.undo();
+    const terug = h.exportStructured({ scope: [{ sheet: 0, range: "A1" }], includeHiddenNames: true, includeHiddenSheets: true });
+    expect(terug.ok && terug.content.definedNames.find((n) => n.name === REGIONAAM)?.formula).toBe('"toekomstig-Land"');
+  });
+  it("wijzigt alleen de regio zonder ingebouwde of gemengde celnotaties te herschrijven", async () => {
+    const { h, api } = boek();
+    h.setNumberFormat(0, "A1", "date"); h.setNumberFormat(0, "B1", { type: "custom", pattern: "m/d/yy" });
+    const d = { ...doel(api), bereik: { top: 0, left: 0, bottom: 0, right: 1 } };
+    const voor = h.captureFormat(0, "A1:B1"); const diepte = h.historyState().undoDepth;
+    await bewaarGetalopmaak(api, d, null, "en-US");
+    expect(h.captureFormat(0, "A1:B1")).toEqual(voor);
+    expect(leesWerkmapregio(api)).toBe("en-US"); expect(h.historyState().undoDepth).toBe(diepte + 1);
+    h.undo(); expect(leesWerkmapregio(api)).toBe("nl-NL"); expect(h.captureFormat(0, "A1:B1")).toEqual(voor);
+  });
   it("leest een lege opgemaakte cel met haar exacte code", () => {
     const { h, api } = boek();
     h.setNumberFormat(0, "B2", { type: "custom", pattern: '[$-409]dddd, mmmm d, yyyy' });

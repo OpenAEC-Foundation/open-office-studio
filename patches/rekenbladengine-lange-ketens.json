@@ -15,13 +15,13 @@
   "patch": "rekenbladengine-lange-ketens.patch",
   "patchSha256": "c19d5e65df78b2bb831cd02536843eb71ff9d2079c6998da2bdc90f78b81e41b",
   "oorspronkelijkWasmSha256": "21bed8aaac3fe3832455b686084f69548ffed3859feffadc271d138962be9933",
-  "wasmSha256": "a46812258ad5efcc54d0cba42bdfc21b99b4f3c873d3e9d701098f7712ee8f07",
-  "wasmBytes": 7693158,
-  "stand": "Concept-PR #164: lange ketens en bestandsregio. 2411 native kernproeven (16 bestaande overgeslagen), zeven JS/WASM-proeven, bytegelijke schone herbouw, 1867 unieke appproeven (10 bestaande overgeslagen), type-/vertaal-/productiecontrole en gerichte native invoer/opslag/heropening groen. Acceptatie #64 en zes platformchecks nog vereist vóór merge.",
+  "wasmSha256": "cfa8112fb6c1f057c03587dfc87a968ab665904632a9d1adae6907156819ce69",
+  "wasmBytes": 7693941,
+  "stand": "Concept-PR #164: ingebouwde datumcodes 14/22 en expliciete lage valutacodes hersteld. 54 gerichte native kernproeven, tien JS/WASM-proeven, 1874 unieke appproeven, type-/vertaal-/productiecontrole, bytegelijke schone herbouw en twee native venster-/bewaarproeven groen. Volledige kernnacontrole en platformchecks op deze revisie nog vereist vóór merge.",
   "extraPatches": [
     {
       "patch": "rekenbladengine-werkmapregio.patch",
-      "patchSha256": "0923b56b9c8ea6d8695847794c0315d52827901aaa933d09f44e5458d4f44680",
+      "patchSha256": "ccf20c63150eb5b4d2493ae66112a46cf70ec986bfaa451232d8079597474ee9",
       "tests": [
         {
           "pakket": "betteroffice-xlsx",
@@ -38,6 +38,10 @@
         {
           "pakket": "betteroffice-xlsx",
           "test": "structured_export"
+        },
+        {
+          "pakket": "betteroffice-xlsx",
+          "test": "ingebouwde_datums"
         }
       ]
     }

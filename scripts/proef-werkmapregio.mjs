@@ -6,6 +6,7 @@ import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { createHash } from "node:crypto";
 import assert from "node:assert/strict";
 import { resolve, join } from "node:path";
+import { unzipSync, zipSync, strFromU8, strToU8 } from "fflate";
 const uitvoer = resolve(process.argv[3] ?? ".local/getalnotatie");
 mkdirSync(uitvoer, { recursive: true });
 const pad = process.argv[2];
@@ -157,6 +158,44 @@ proef("Regionale batchvlag blijft behouden door de echte pakket-JS", () => {
   assert.equal(lees(h, "B1").displayText, "01-01-2026");
   const opnieuw = xlsx.openWorkbook(h.save()); boeken.push(opnieuw);
   assert.equal(lees(opnieuw, "B1").displayText, "01-01-2026");
+});
+proef("Ingebouwde datum volgt regio, invoervolgorde en bewaren zonder id-wijziging", () => {
+  const h = boek("nl-NL");
+  const target = { sheetId: h.sheetInfo().sheetIds[0], range: { kind: "a1", a1: "A1" } };
+  h.applyEdits({ expectVersion: h.version(), steps: [{ op: "setCellValues", target, values: [[{ kind: "number", value: 46023 }]] }, { op: "setNumberFormat", target, format: "date" }] });
+  assert.equal(lees(h, "A1").displayText, "01-01-2026");
+  h.editCell(0, 0, 0, "1-2-2026");
+  assert.deepEqual(lees(h, "A1").value, { kind: "number", value: 46054 });
+  assert.equal(lees(h, "A1").displayText, "01-02-2026");
+  const opnieuw = xlsx.openWorkbook(h.save()); boeken.push(opnieuw);
+  assert.equal(lees(opnieuw, "A1").displayText, "01-02-2026");
+  assert.deepEqual(opnieuw.captureFormat(0, "A1").formats[0].numberFormat, { kind: "builtin", id: 14 });
+});
+function gewijzigdeStijlen(h, oud, nieuw) {
+  const pakket = unzipSync(h.save());
+  const xml = strFromU8(pakket["xl/styles.xml"]);
+  assert(xml.includes(`numFmtId="${oud}"`));
+  pakket["xl/styles.xml"] = strToU8(xml.replaceAll(`numFmtId="${oud}"`, `numFmtId="${nieuw}"`));
+  const opnieuw = xlsx.openWorkbook(zipSync(pakket, { mtime: new Date("1980-01-01T00:00:00Z") })); boeken.push(opnieuw);
+  return opnieuw;
+}
+proef("Geïmporteerde ingebouwde datumtijd behoudt id 22 en volgt regiowissel", () => {
+  const bron = boek("nl-NL");
+  const target = { sheetId: bron.sheetInfo().sheetIds[0], range: { kind: "a1", a1: "A1" } };
+  bron.applyEdits({ expectVersion: bron.version(), steps: [{ op: "setCellValues", target, values: [[{ kind: "number", value: 46023.625 }]] }, { op: "setNumberFormat", target, format: "date" }] });
+  const h = gewijzigdeStijlen(bron, 14, 22);
+  assert.equal(lees(h, "A1").displayText, "01-01-2026 15:00");
+  h.applyOps([{ type: "setDefinedName", name: "_OpenAEC_NumberLocale", refers_to: '"en-US"', scope: null, hidden: true }]);
+  assert.equal(lees(h, "A1").displayText, "01/01/2026 15:00");
+  assert.deepEqual(h.captureFormat(0, "A1").formats[0].numberFormat, { kind: "builtin", id: 22 });
+});
+proef("Geïmporteerde lage valuta-id gebruikt de expliciete code", () => {
+  const bron = boek("nl-NL");
+  bron.editCell(0, 0, 0, "1234,5");
+  bron.setNumberFormat(0, "A1", { type: "custom", pattern: '0.00" €"' });
+  const h = gewijzigdeStijlen(bron, 164, 5);
+  assert.equal(lees(h, "A1").displayText, "1234,50 €");
+  assert.deepEqual(lees(h, "A1").value, { kind: "number", value: 1234.5 });
 });
 const result = {
   wasm: pad,

@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import type { XlsxEditorApi } from "@betteroffice/xlsx-react";
 import type { NumberFormatMutation, XlsxCellValue } from "@betteroffice/xlsx";
 import { useOpmaak } from "../i18n/opmaak";
+import { bereikA1 } from "../lint/rekenblad-logica";
 import { Paneel, tekstVan } from "../lint/rekenblad-dialogen";
 import { leesSelectie, Melding } from "../lint/rekenblad-opdrachten";
 import {
@@ -18,7 +19,7 @@ import {
   type Categorie,
   type Keuzes,
 } from "./getalnotatie";
-import { laadGetalvoorbeelden, type Getalvoorbeelden } from "./getalvoorbeeld";
+import { laadGetalvoorbeelden, type Getalvoorbeelden, type Voorbeeldcode } from "./getalvoorbeeld";
 import { leesWerkmapinstelling, WERKMAPREGIOS, type Werkmapregio } from "./werkmapregio";
 import { bewaarGetalopmaak, leesGetalcode } from "./getalopmaak";
 import { standaardValuta } from "./notatieOpdrachten";
@@ -49,6 +50,8 @@ const VOORBEELDCODES = [
 function leesHuidige(api: XlsxEditorApi) {
   const { blad, sheetId, bereik, focus } = leesSelectie(api);
   const code = leesGetalcode(api, blad, focus);
+  const opmaak = api.handle.captureFormat(blad, bereikA1({ top: focus.row, bottom: focus.row, left: focus.col, right: focus.col })).formats[0] as { numberFormat?: { kind: string; id?: number } } | undefined;
+  const ingebouwd: 14 | 22 | null = opmaak?.numberFormat?.kind === "builtin" && (opmaak.numberFormat.id === 14 || opmaak.numberFormat.id === 22) ? (opmaak.numberFormat.id as 14 | 22) : null;
   let waarde: XlsxCellValue = { kind: "empty" };
   const lezing = api.handle.readCells({
     ranges: [
@@ -59,7 +62,7 @@ function leesHuidige(api: XlsxEditorApi) {
     ],
   });
   if (lezing.ok) waarde = lezing.ranges[0].cells[0]?.[0]?.value ?? waarde;
-  return { code, waarde, sheetId, bereik, versie: api.handle.version(), ...leesWerkmapinstelling(api) };
+  return { code, ingebouwd, waarde, sheetId, bereik, versie: api.handle.version(), ...leesWerkmapinstelling(api) };
 }
 
 export function GetalVenster({
@@ -79,15 +82,20 @@ export function GetalVenster({
       return null;
     }
   });
-  const [regio, setRegio] = useState<Werkmapregio>(huidig?.regio ?? "en-GB");
+  const [regio, setRegio] = useState<Werkmapregio | null>(huidig?.bekendeRegio ?? null);
+  const [regioGewijzigd, setRegioGewijzigd] = useState(false);
   const regiotekst = useMemo(() => new Intl.DisplayNames([opmaak.locale], { type: "language" }), [opmaak.locale]);
   const [kernvoorbeeld, setKernvoorbeeld] = useState<Getalvoorbeelden | null>(null);
-  const [start] = useState(() => herkenCode(huidig?.code ?? "General"));
+  const [start] = useState(() => {
+    const herkend = herkenCode(huidig?.code ?? "General");
+    return huidig?.ingebouwd ? { categorie: "datum" as const, keuzes: { ...herkend.keuzes, datum: huidig.code } } : herkend;
+  });
+  const [opmaakGewijzigd, setOpmaakGewijzigd] = useState(false);
   const [categorie, setCategorie] = useState<Categorie>(start.categorie);
   const [keuzes, setKeuzes] = useState<Keuzes>(() =>
     start.categorie === "valuta" || start.categorie === "boekhouding"
       ? start.keuzes
-      : { ...start.keuzes, valuta: standaardValuta(regio) },
+      : { ...start.keuzes, valuta: standaardValuta(regio ?? "en-GB") },
   );
   const [status, setStatus] = useState(huidig ? "" : t("numberFormat.selectCell"));
   useEffect(() => {
@@ -99,9 +107,9 @@ export function GetalVenster({
     }).catch((fout) => { if (!gesloten) setStatus(tekstVan(fout)); });
     return () => { gesloten = true; kern?.dispose(); };
   }, []);
-  const toon = (waarde: number | string, patroon: string) =>
+  const toon = (waarde: number | string, patroon: Voorbeeldcode) =>
     kernvoorbeeld?.toon(waarde, patroon, regio, huidig?.datumstelsel ?? "1900") ?? { tekst: "…" };
-  const zet = (extra: Partial<Keuzes>) => setKeuzes((k) => ({ ...k, ...extra }));
+  const zet = (extra: Partial<Keuzes>) => { setOpmaakGewijzigd(true); setKeuzes((k) => ({ ...k, ...extra })); };
   const code = bouwCode(categorie, keuzes);
 
   // Voorbeeld: de waarde van de actieve cel, anders een vast getal.
@@ -111,7 +119,8 @@ export function GetalVenster({
     if (w?.kind === "text") return w.value;
     return categorie === "datum" || categorie === "tijd" ? 46000.75 : 1234.5678;
   }, [huidig, categorie]);
-  const voorbeeld = toon(voorbeeldWaarde, code);
+  const voorbeeld = toon(voorbeeldWaarde, !opmaakGewijzigd && huidig?.ingebouwd ? huidig.ingebouwd : code);
+  const effectieveCode = voorbeeld.code ?? code;
   // Tweede regel: hetzelfde getal met het andere teken, zodat beide secties te zien zijn.
   const negatiefVoorbeeld =
     typeof voorbeeldWaarde === "number" && ["getal", "valuta", "boekhouding"].includes(categorie)
@@ -127,8 +136,8 @@ export function GetalVenster({
           ? "plainText"
           : { type: "custom", pattern: code };
     try {
-      if (!code.trim()) throw new Melding(t("numberFormat.emptyCode"));
-      await bewaarGetalopmaak(api, huidig, format, regio);
+      if (opmaakGewijzigd && !code.trim()) throw new Melding(t("numberFormat.emptyCode"));
+      await bewaarGetalopmaak(api, huidig, opmaakGewijzigd ? format : null, regio ?? huidig.regio, regioGewijzigd);
       sluiten();
     } catch (fout) {
       setStatus(tekstVan(fout));
@@ -186,7 +195,7 @@ export function GetalVenster({
             type="button"
             role="option"
             aria-selected={c === waarde}
-            onClick={() => kies(c)}
+            onClick={() => { if (c !== waarde) kies(c); }}
           >
             {toon(categorie === "breuk" ? 1.75 : 46000.75, c).tekst}
           </button>
@@ -210,7 +219,7 @@ export function GetalVenster({
               checked={keuzes.duizendtal}
               onChange={(e) => zet({ duizendtal: e.target.checked })}
             />
-            {t("numberFormat.thousands", { separator: new Intl.NumberFormat(regio).formatToParts(1000).find((p) => p.type === "group")?.value ?? "," })}
+            {t("numberFormat.thousands", { separator: new Intl.NumberFormat(regio ?? "en-US").formatToParts(1000).find((p) => p.type === "group")?.value ?? "," })}
           </label>
           {negatief}
         </>
@@ -243,7 +252,7 @@ export function GetalVenster({
       opties = decimalen;
       break;
     case "datum":
-      opties = codelijst(DATUMCODES, keuzes.datum, (datum) => zet({ datum }), t("numberFormat.type"));
+      opties = codelijst([...new Set([effectieveCode, ...DATUMCODES])], effectieveCode, (datum) => zet({ datum }), t("numberFormat.type"));
       break;
     case "tijd":
       opties = codelijst(TIJDCODES, keuzes.tijd, (tijd) => zet({ tijd }), t("numberFormat.type"));
@@ -310,7 +319,8 @@ export function GetalVenster({
               const i = CATEGORIEEN.indexOf(categorie);
               const volgende = CATEGORIEEN[(i + (e.key === "ArrowDown" ? 1 : -1) + CATEGORIEEN.length) % CATEGORIEEN.length];
               setCategorie(volgende);
-              if (volgende === "aangepast") zet({ code });
+              setOpmaakGewijzigd(true);
+              if (volgende === "aangepast") zet({ code: effectieveCode });
               (e.currentTarget.querySelectorAll("button")[CATEGORIEEN.indexOf(volgende)] as HTMLElement)?.focus();
             }}
           >
@@ -322,9 +332,11 @@ export function GetalVenster({
                   aria-selected={c === categorie}
                   tabIndex={c === categorie ? 0 : -1}
                   onClick={() => {
+                    if (c === categorie) return;
                     // Aangepast begint bij de code van nu.
-                    if (c === "aangepast") zet({ code });
+                    if (c === "aangepast") zet({ code: effectieveCode });
                     setCategorie(c);
+                    setOpmaakGewijzigd(true);
                   }}
                 >
                   {t(`numberFormat.categories.${c}`)}
@@ -335,11 +347,12 @@ export function GetalVenster({
           <div className="rekenblad-formulier">
             <label>
               {t("numberFormat.workbookLocale")}
-              <select value={regio} onChange={(e) => setRegio(e.target.value as Werkmapregio)}>
+              <select value={regio ?? ""} onChange={(e) => { setRegio(e.target.value as Werkmapregio); setRegioGewijzigd(true); }}>
+                {regio === null && <option value="" disabled>{t("numberFormat.keepFileLocale")}</option>}
                 {WERKMAPREGIOS.map((r) => <option key={r} value={r}>{regiotekst.of(r) ?? r}</option>)}
               </select>
             </label>
-            <p className="rekenblad-hint">{t("numberFormat.localeHint")}</p>
+            <p className="rekenblad-hint">{t(regio === null ? "numberFormat.unknownLocaleHint" : "numberFormat.localeHint")}</p>
             <div className="rekenblad-voorbeeld" aria-live="polite">
               <span className="rekenblad-hint">{t("numberFormat.preview")}</span>
               <output className={voorbeeld.kleur === "red" ? "is-rood" : undefined} style={voorbeeld.kleur && voorbeeld.kleur !== "red" ? { color: voorbeeld.kleur } : undefined}>
@@ -351,7 +364,7 @@ export function GetalVenster({
                 </output>
               )}
               <span className="rekenblad-hint">
-                {t("numberFormat.codeShown", { code })}
+                {t("numberFormat.codeShown", { code: effectieveCode })}
               </span>
             </div>
             {opties}
@@ -362,7 +375,7 @@ export function GetalVenster({
           <button type="button" onClick={sluiten}>
             {t("common:cancel")}
           </button>
-          <button type="submit" className="rekenblad-primair" disabled={!huidig || !kernvoorbeeld || !!voorbeeld.fout}>
+          <button type="submit" className="rekenblad-primair" disabled={!huidig || !kernvoorbeeld || (opmaakGewijzigd && !!voorbeeld.fout)}>
             {t("common:ok")}
           </button>
         </div>

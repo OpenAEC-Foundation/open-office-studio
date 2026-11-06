@@ -685,7 +685,7 @@ export async function zetKolomFilter(api: XlsxEditorApi, blad: number, sheetId: 
     if (teLezen.length) {
       const versie = await api.version();
       const instelling = leesWerkmapinstelling(api);
-      const lezer = await laadInvoerlezer(instelling.regio, instelling.datumstelsel);
+      const lezer = await laadInvoerlezer(instelling.bekendeRegio, instelling.datumstelsel);
       try {
         const waarden = lezer.lees([teLezen.map((v) => v.waarde)])[0];
         const getallen = new Map(teLezen.map((v, i) => [v, waarden[i].kind === "number" ? waarden[i].value : null]));

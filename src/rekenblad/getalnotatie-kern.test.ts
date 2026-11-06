@@ -10,6 +10,24 @@ afterEach(() => open.splice(0).forEach((v) => v.dispose()));
 const voorbeeld = () => { const v = maakGetalvoorbeelden(bytes); open.push(v); return v; };
 
 describe("getalvoorbeelden met de werkelijke rekenkern", () => {
+  it("gebruikt zonder herkende bestandsregio dezelfde oude datumweergave als het bestand", () => {
+    const v = voorbeeld();
+    expect(v.toon(46054, 14, null, "1900").tekst).toBe("2/1/26");
+    expect(v.toon(46054, 14, "nl-NL", "1900").tekst).toBe("01-02-2026");
+    expect(v.toon(46054, 14, null, "1900").tekst).toBe("2/1/26");
+  });
+  it("volgt de bestandsregio bij een ingebouwde datum zonder die als eigen code vast te zetten", () => {
+    const v = voorbeeld();
+    expect(v.toon(46023, 14, "nl-NL", "1900")).toMatchObject({ tekst: "01-01-2026", code: "dd-mm-yyyy" });
+    expect(v.toon(46023, 14, "en-US", "1900")).toMatchObject({ tekst: "01/01/2026", code: "mm/dd/yyyy" });
+    expect(v.toon(46023.625, 22, "nl-NL", "1900")).toMatchObject({ tekst: "01-01-2026 15:00", code: "dd-mm-yyyy h:mm" });
+    expect(v.toon(0, 14, "nl-NL", "1904")).toMatchObject({ tekst: "01-01-1904", code: "dd-mm-yyyy" });
+  });
+  it("meldt dat een ongeschikte breukcode terugvalt op Algemene notatie", () => {
+    const v = voorbeeld().toon(1234.5, "0/0/0", "nl-NL", "1900");
+    expect(v.fout).toBeTruthy();
+    expect(v.tekst).toBe("1234,5");
+  });
   it.each([
     [1234.5678, "General", "1234,5678"],
     [1234.5678, "#,##0.00", "1.234,57"],
@@ -55,6 +73,11 @@ describe("getalvoorbeelden met de werkelijke rekenkern", () => {
 });
 
 describe("regionale bronwaarden zonder gebruikersbestand", () => {
+  it("gebruikt zonder herkende regio de oorspronkelijke invoerroute", () => {
+    const oud = maakInvoerlezer(bytes, null, "1900"); const brits = maakInvoerlezer(bytes, "en-GB", "1900"); open.push(oud, brits);
+    expect(oud.lees([["1/2/2026"]])).toEqual([[{ kind: "number", value: 46024 }]]);
+    expect(brits.lees([["1/2/2026"]])).toEqual([[{ kind: "number", value: 46054 }]]);
+  });
   it.each([
     ["nl-NL", "1900", ["12,5", "1.234", "15%", "1-1-2026"], [12.5, 1234, 0.15, 46023]],
     ["nl-NL", "1904", ["12,5", "1.234", "15%", "1-1-2026"], [12.5, 1234, 0.15, 44561]],

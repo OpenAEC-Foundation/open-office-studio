@@ -4,13 +4,13 @@ import { laadProefsjabloon, openProefwerkmap } from "./proefwerkmap";
 import { REGIONAAM, type Werkmapregio } from "./regiokeuze";
 import { regionaleInvoer } from "./regionaleInvoer";
 
-export async function laadInvoerlezer(regio: Werkmapregio, datumstelsel: "1900" | "1904") {
+export async function laadInvoerlezer(regio: Werkmapregio | null, datumstelsel: "1900" | "1904") {
   return maakInvoerlezer(await laadProefsjabloon(), regio, datumstelsel);
 }
 
-export function maakInvoerlezer(bytes: Uint8Array, regio: Werkmapregio, datumstelsel: "1900" | "1904") {
+export function maakInvoerlezer(bytes: Uint8Array, regio: Werkmapregio | null, datumstelsel: "1900" | "1904") {
   const h = openProefwerkmap(bytes, datumstelsel);
-  h.applyOps([{ type: "setDefinedName", name: REGIONAAM, refers_to: JSON.stringify(regio), scope: null, hidden: true }]);
+  if (regio !== null) h.applyOps([{ type: "setDefinedName", name: REGIONAAM, refers_to: JSON.stringify(regio), scope: null, hidden: true }]);
   let gesloten = false;
   return {
     lees(teksten: string[][]): XlsxCellValue[][] {

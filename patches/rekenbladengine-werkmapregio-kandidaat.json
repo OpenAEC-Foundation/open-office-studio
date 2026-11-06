@@ -4,7 +4,7 @@
   "naPatch": "rekenbladengine-lange-ketens.patch",
   "naPatchSha256": "c19d5e65df78b2bb831cd02536843eb71ff9d2079c6998da2bdc90f78b81e41b",
   "patch": "rekenbladengine-werkmapregio.patch",
-  "patchSha256": "0923b56b9c8ea6d8695847794c0315d52827901aaa933d09f44e5458d4f44680",
+  "patchSha256": "ccf20c63150eb5b4d2493ae66112a46cf70ec986bfaa451232d8079597474ee9",
   "regiogegevens": {
     "generator": "Intl",
     "node": "24.22.1",
@@ -12,7 +12,7 @@
     "kalender": "gregory",
     "tijdzone": "UTC"
   },
-  "gewijzigdeBestanden": 21,
+  "gewijzigdeBestanden": 23,
   "afzonderlijkeWerkmapproeven": 10,
   "modelproeven": 111,
   "nieuweWasmGeleverd": true,
@@ -30,17 +30,17 @@
     "regressie": "Brede native controle vond tekst 1/15 die in een bestand zonder regio als datum kon worden vastgelegd; huidige bron herstelt de oude invoerroute.",
     "jsWasmContractGelijk": true
   },
-  "actueleWasm": "Geïntegreerde kern van concept-PR #164: 2411 native kernproeven, zeven JS/WASM-proeven, gelijke herbouw en gerichte native Tauri-invoerroutes groen. Resterende acceptatie en platformchecks vóór merge.",
-  "gerichteNativeNacontrole": 46,
+  "actueleWasm": "Kandidaat met ingebouwde datumcodes: tien JS/WASM-proeven, 54 gerichte native kernproeven, 1874 unieke appproeven, gelijke herbouw en twee native venster-/bewaarproeven groen. Volledige kernnacontrole en platformchecks op de nieuwe revisie nog vereist.",
+  "gerichteNativeNacontrole": 54,
   "clippy": "groen (--lib, vijf XLSX-pakketten, -D warnings)",
-  "wasmKandidaatSha256": "a46812258ad5efcc54d0cba42bdfc21b99b4f3c873d3e9d701098f7712ee8f07",
-  "wasmKandidaatBytes": 7693158,
-  "wasmGerichteProeven": 7,
+  "wasmKandidaatSha256": "cfa8112fb6c1f057c03587dfc87a968ab665904632a9d1adae6907156819ce69",
+  "wasmKandidaatBytes": 7693941,
+  "wasmGerichteProeven": 10,
   "jsWasmContractGelijk": true,
   "rustfmt": "groen (cargo fmt --all --check)",
   "herbouwBytegelijk": true,
   "afzonderlijkeBatchproeven": 8,
-  "volledigeNativeKernproeven": 2411,
-  "overgeslagenNativeKernproeven": 16,
-  "testsets": 80
+  "vorigeVolledigeNativeKernproeven": 2411,
+  "vorigeOvergeslagenNativeKernproeven": 16,
+  "vorigeTestsets": 80
 }

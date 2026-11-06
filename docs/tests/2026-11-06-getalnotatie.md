@@ -61,11 +61,11 @@ haakjes, datumtaal en boekhouding volgen dezelfde formatter als het raster.
 De [regiopatch](../../patches/rekenbladengine-werkmapregio.patch) wordt na de
 lange-ketenspatch op de vastgezette bron toegepast. De
 [patchcontrole](getalnotatie-patchcontrole-2026-11-06.json) verifieert alle
-21 gewijzigde bronbestanden na toepassen zonder fuzz. De productiecontrole
+21 gewijzigde bronbestanden van de eerdere revisie na toepassen zonder fuzz. De productiecontrole
 bewaakt beide patchhashes, oorspronkelijke en aangepaste WASM en het volledige
 JS/WASM-contract. De npm-pakketten blijven ongewijzigd.
 
-De aangesloten kern is 7.693.158 bytes, SHA-256
+De eerder aangesloten kern was 7.693.158 bytes, SHA-256
 `a46812258ad5efcc54d0cba42bdfc21b99b4f3c873d3e9d701098f7712ee8f07`.
 Een schone herbouw uit het gecontroleerde bronarchief met beide patches
 levert bytegelijk deze kern; zie het
@@ -138,10 +138,76 @@ getekend; de volledige datum en juiste numerieke waarde blijven behouden.
 
 ![Native getalweergave](../screenshots/getalnotatie-raster-tussencontrole-2026-11-06.png)
 
+## Aanvullende audit: ingebouwde datums en behoud van celcodes
+
+De vorige kern (`a4681225…`) gaf bij ingebouwde datumcode 14 nog `1/1/26`
+in een Nederlandse werkmap. Invoer `1-2-2026` in zo’n cel kon als 2 januari
+worden gelezen. De [tegenproef met de werkelijke JS/WASM-koppeling](getalnotatie-ingebouwde-datums-tegenproef-2026-11-06.json)
+slaagt in zeven en faalt in drie gevallen. Ook een expliciete lage valutacode
+kon verloren gaan door de vaste impliciete tabel.
+
+De nieuwe kern volgt de bekende bestandsregio voor ingebouwde codes 14 en 22.
+Een Nederlandse ingebouwde datum toont `01-02-2026`, een Amerikaanse
+`02/01/2026`. De numerieke waarde blijft 46054. Eigen codes zoals `m/d/yy`
+blijven in hun oorspronkelijke volgorde staan. Expliciete codes bij lage
+valuta-id’s worden uit het bestand gelezen. Zonder herkende regio blijft de
+oude interpretatie behouden. De gekozen korte datumcodes gebruiken een
+Gregoriaanse kalender en vier jaarcijfers.
+
+Het getalvenster bewaart de oorspronkelijke ingebouwde id en gemengde
+celnotaties wanneer uitsluitend de regio wordt gewijzigd. Een ongewijzigd
+venster maakt geen geschiedenis. Aangepast begint bij de effectief getoonde
+code. Een ongeschikte code meldt de benadering van de kern en kan niet worden
+toegepast. Een onbekende regio wordt zichtbaar als bestaande instelling;
+alleen een expliciete keuze mag die vervangen. Speciaal plakken en
+filtervoorwaarden gebruiken dan eveneens de oorspronkelijke invoerroute.
+
+De actuele kern heeft **7.693.941 bytes**, SHA-256
+`cfa8112fb6c1f057c03587dfc87a968ab665904632a9d1adae6907156819ce69`.
+De [nieuwe patchcontrole](getalnotatie-ingebouwde-datums-patchcontrole-2026-11-06.json)
+verifieert 23 bronbestanden zonder fuzz. De [schone geordende herbouw](getalnotatie-ingebouwde-datums-kernherbouw-2026-11-06.json)
+levert bytegelijk deze module. De complete JS/WASM-interface blijft gelijk.
+Alle [tien JS/WASM-proeven](getalnotatie-ingebouwde-datums-wasm-2026-11-06.json)
+slagen; daarnaast slagen 54 gerichte native kernproeven, Clippy en bronformatcontrole.
+De voorafgaande aantallen en kernhashes hierboven beschrijven de eerdere revisie.
+
+De [nieuwe appnacontrole](getalnotatie-ingebouwde-datums-appnacontrole-2026-11-06.json)
+controleert **1.874 unieke actieve proeven**, met tien bestaande gevallen
+overgeslagen. Vijf tests bereikten 5000 ms tijdens gelijktijdige builds; de
+rustige herhaling van alle vijf volledige bestanden slaagt in 60 proeven.
+Geen deadline of verwachting is verruimd. Type-, vertaal- en productiecontrole
+slagen. De definitieve editorchunk heeft SHA-256
+`155f4dea9a0b65b5f2f518efb93eaedf598f31abb51fdcd94b336e3194c91608`.
+
+De [nieuwe native controle](getalnotatie-ingebouwde-datums-native-2026-11-06.json)
+verifieert de geladen editor- en kernbytes, F2-invoer `1-2-2026`, regiowissel
+op een gemengde selectie, één Undo/Redo, een ongeschikte eigen code, bewaren
+en heropenen. Onafhankelijke ZIP/XML-lezing bevestigt codes 14, 22, de eigen
+code `m/d/yy`, expliciete valutacode 5 en alle vier numerieke waarden. Een aanvullende vergelijking bevestigt bij
+alle 24 fixturecellen exact behoud van type, waarde, formule, notatie-id en
+eigen code. Een
+[tweede bewaarproef](getalnotatie-onbekende-regio-bewaard-2026-11-06.xlsx)
+behoudt een onbekende regio bij uitsluitend een celcodewijziging; expliciet
+kiezen en één Undo zijn afzonderlijk gecontroleerd. Beide native testprofielen
+zijn volledig afgesloten. Na deze native controle is uitsluitend het
+scheidingsteken in de hint voor een onbekende regio gelijkgetrokken met de
+bestaande Engelse kernterugval; de bewerkingsroutes zijn gelijk. De aanvullende
+type- en productiebouw slagen; de nieuwe editorhash is
+`8a1e40ca6b54b7263a9030cfe9a8162289462e571d67649ef6245b446a07e169`. De [bron](getalnotatie-ingebouwde-datums-bron-2026-11-06.xlsx)
+en [bewaarde werkmap](getalnotatie-ingebouwde-datums-bewaard-2026-11-06.xlsx)
+zijn zelfstandig controleerbaar.
+
+![Ingebouwde datum en eigen codes na heropenen](../screenshots/getalnotatie-ingebouwde-datums-heropend-2026-11-06.png)
+
+Onderbouwing van impliciete en expliciete nummerformaten:
+[Open XML NumberingFormat](https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.numberingformat)
+en [MS-OI29500 §2.1.712](https://learn.microsoft.com/en-us/openspecs/office_standards/ms-oi29500/17d11129-219b-4e2c-88db-45844d21e528).
+
 ## Resterende acceptatie
 
-De zes platformchecks en de volledige issue-audit staan nog open. Ook de
-interpretatie van ingebouwde datumcodes tegenover de bestandsregio moet
-expliciet worden beoordeeld; een aanwezige eigen datumcode wordt behouden.
-De zes issuecriteria blijven onafgevinkt tot de gezamenlijke acceptatie is
-bewezen. PR #164 blijft concept en #64 blijft open.
+De eerste brede kernronde stopte met signaal 143, zonder afgeronde eindtelling;
+die geldt niet als geslaagd. De volledige set loopt opnieuw met twee testthreads.
+De zes platformchecks van de eerdere commit `c368e593` zijn groen; de nieuwe
+revisie moet nog worden gepusht en gecontroleerd. De zes issuecriteria blijven
+onafgevinkt tot de gezamenlijke acceptatie is bewezen. PR #164 blijft concept
+en #64 blijft open.

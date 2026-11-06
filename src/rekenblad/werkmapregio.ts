@@ -31,8 +31,9 @@ export function leesWerkmapinstelling(api: XlsxEditorApi) {
   if (!r.ok) throw new Error(r.failure.message);
   const definitie = r.content.definedNames.find((n) => isRegioNaam(n.name) && !n.localSheet);
   const constante = definitie?.hidden && /^"([^"]+)"$/.exec(definitie.formula)?.[1];
-  const regio: Werkmapregio = (constante && herkenRegio(constante)) || "en-GB";
-  return { regio, datumstelsel: r.content.dateSystem, definitie };
+  const bekendeRegio = (constante && herkenRegio(constante)) || null;
+  const regio: Werkmapregio = bekendeRegio ?? "en-GB";
+  return { regio, bekendeRegio, datumstelsel: r.content.dateSystem, definitie };
 }
 
 export function leesWerkmapregio(api: XlsxEditorApi): Werkmapregio {

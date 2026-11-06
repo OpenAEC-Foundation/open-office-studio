@@ -1,0 +1,292 @@
+{
+  "kandidaat": {
+    "editors": "editors-C8acVMrM.js",
+    "editorsSha256": "155f4dea9a0b65b5f2f518efb93eaedf598f31abb51fdcd94b336e3194c91608",
+    "wasm": "xlsx_wasm_bg-DkCjh8Go.wasm",
+    "wasmSha256": "cfa8112fb6c1f057c03587dfc87a968ab665904632a9d1adae6907156819ce69",
+    "backendCommit": "d20c93e18aa6f878705ba3cfbc97877d5f943716"
+  },
+  "isolatie": "Afzonderlijke Xvfb, DBus, XDG-profielen en inspector1467. Geen gebruikersscherm of gebruikersklembord gebruikt.",
+  "geladenAssets": [
+    {
+      "naam": "editors-C8acVMrM.js",
+      "bytes": 1665669,
+      "sha256": "155f4dea9a0b65b5f2f518efb93eaedf598f31abb51fdcd94b336e3194c91608"
+    },
+    {
+      "naam": "xlsx_wasm_bg-DkCjh8Go.wasm",
+      "bytes": 7693941,
+      "sha256": "cfa8112fb6c1f057c03587dfc87a968ab665904632a9d1adae6907156819ce69"
+    }
+  ],
+  "bekendeRegio": {
+    "bewijs": [
+      "F2-invoer 1-2-2026 in een bestaande ingebouwde datumcel blijft 1 februari.",
+      "Gemengde selectie: alleen de regio wijzigt, eigen datumcode blijft gelijk.",
+      "Regiowijziging is één Undo/Redo-stap.",
+      "Aangepaste code begint bij de effectieve regionale ingebouwde datumcode.",
+      "Ongeschikte eigen code geeft een melding en kan niet worden toegepast.",
+      "Bewaarde werkmap behoudt regionale en eigen datumweergave na heropening."
+    ],
+    "bestand": "getalnotatie-ingebouwde-datums-bewaard-2026-11-06.xlsx",
+    "raster": [
+      "A2, 02/01/2026",
+      "B2, 2/1/26",
+      "C2, 02/01/2026 15:00",
+      "D2, 1,234.50 €"
+    ]
+  },
+  "bestandscontroleBekendeRegio": {
+    "regio": "\"en-US\"",
+    "cellen": {
+      "A2": {
+        "value": 46054.0,
+        "numFmtId": 14,
+        "code": "ingebouwd"
+      },
+      "B2": {
+        "value": 46054.0,
+        "numFmtId": 175,
+        "code": "m/d/yy"
+      },
+      "C2": {
+        "value": 46054.625,
+        "numFmtId": 22,
+        "code": "ingebouwd"
+      },
+      "D2": {
+        "value": 1234.5,
+        "numFmtId": 5,
+        "code": "#,##0.00\" €\""
+      }
+    },
+    "geslaagd": true
+  },
+  "onbekendeRegio": {
+    "bewijs": [
+      "Onbekende bestandsregio blijft behouden bij uitsluitend een eigen celcode (eerder in deze proef opgeslagen).",
+      "Uitsluitend een expliciete regiokeuze vervangt de onbekende instelling.",
+      "Eén Undo herstelt de onbekende instelling en de oude ingebouwde datumtijd."
+    ],
+    "bestand": "getalnotatie-onbekende-regio-bewaard-2026-11-06.xlsx"
+  },
+  "bestandscontroleOnbekendeRegio": [
+    {
+      "bestand": "alleen-opmaak.xlsx",
+      "regio": "toekomst-regio",
+      "eigenCodeA2": "0.00",
+      "ingebouwdeCodeC2": 22,
+      "waardenBehouden": true
+    },
+    {
+      "bestand": "expliciete-regio.xlsx",
+      "regio": "en-GB",
+      "eigenCodeA2": "0.00",
+      "ingebouwdeCodeC2": 22,
+      "waardenBehouden": true
+    }
+  ],
+  "qaAantekeningen": [
+    "Bij de onbekende regio raakte de eerste toetsenreeks de Nederlandse optie; de waardecontrole hield de proef tegen voordat werd toegepast. De selectiestap is hervat met End en achtmaal Up; Brits gekozen, XML en Undo gecontroleerd.",
+    "Een vroege opname na heropenen had nog geen getekende koppen. De DOM bevatte de koppen; na vensterhertekening toont de stabiele opname alle rij-/kolomkoppen en statusbediening. Zonder vergelijking met de basis geen bevestigde regressieclaim."
+  ],
+  "opruimen": [
+    {
+      "appAfgesloten": true,
+      "x11Afgesloten": true
+    },
+    {
+      "appAfgesloten": true,
+      "x11Afgesloten": true
+    }
+  ],
+  "bestanden": [
+    {
+      "naam": "getalnotatie-ingebouwde-datums-bron-2026-11-06.xlsx",
+      "sha256": "68e7a31414ac52fa251d9aa0f64fca91280d768cc5623a8078dd67080d2c5a41"
+    },
+    {
+      "naam": "getalnotatie-ingebouwde-datums-bewaard-2026-11-06.xlsx",
+      "sha256": "caecf75b2c7ab1ef933970f04184a1fc921a704ff349aa7b074accb96d7e3511"
+    },
+    {
+      "naam": "getalnotatie-onbekende-regio-bewaard-2026-11-06.xlsx",
+      "sha256": "be28923fc3d57c678ae63f94f42719bcfa27a99bd4e245eb6a128c2551146b90"
+    }
+  ],
+  "alleFixturecellen": {
+    "geslaagd": true,
+    "aantal": 24,
+    "cellen": {
+      "A2": {
+        "soort": "n",
+        "waarde": 46054.0,
+        "formule": null,
+        "numFmtId": 14,
+        "code": "ingebouwd"
+      },
+      "B2": {
+        "soort": "n",
+        "waarde": 46054.0,
+        "formule": null,
+        "numFmtId": 175,
+        "code": "m/d/yy"
+      },
+      "C2": {
+        "soort": "n",
+        "waarde": 46054.625,
+        "formule": null,
+        "numFmtId": 22,
+        "code": "ingebouwd"
+      },
+      "D2": {
+        "soort": "n",
+        "waarde": 1234.5,
+        "formule": null,
+        "numFmtId": 5,
+        "code": "#,##0.00\" €\""
+      },
+      "A3": {
+        "soort": "n",
+        "waarde": 1234.5678,
+        "formule": null,
+        "numFmtId": 165,
+        "code": "#,##0.00"
+      },
+      "B3": {
+        "soort": "text",
+        "waarde": "Getal",
+        "formule": null,
+        "numFmtId": 0,
+        "code": "ingebouwd"
+      },
+      "A4": {
+        "soort": "n",
+        "waarde": 1234.5,
+        "formule": null,
+        "numFmtId": 166,
+        "code": "[$€-413] #,##0.00"
+      },
+      "B4": {
+        "soort": "text",
+        "waarde": "Valuta",
+        "formule": null,
+        "numFmtId": 0,
+        "code": "ingebouwd"
+      },
+      "A5": {
+        "soort": "n",
+        "waarde": 1234.5,
+        "formule": null,
+        "numFmtId": 167,
+        "code": "_-[$€-413] * #,##0.00_-;_-[$€-413] * -#,##0.00_-;_-[$€-413] * \"-\"??_-;_-@_-"
+      },
+      "B5": {
+        "soort": "text",
+        "waarde": "Boekhouding",
+        "formule": null,
+        "numFmtId": 0,
+        "code": "ingebouwd"
+      },
+      "A6": {
+        "soort": "n",
+        "waarde": 46023.0,
+        "formule": null,
+        "numFmtId": 168,
+        "code": "dd-mm-yyyy"
+      },
+      "B6": {
+        "soort": "text",
+        "waarde": "Datum",
+        "formule": null,
+        "numFmtId": 0,
+        "code": "ingebouwd"
+      },
+      "A7": {
+        "soort": "n",
+        "waarde": 0.625,
+        "formule": null,
+        "numFmtId": 169,
+        "code": "hh:mm"
+      },
+      "B7": {
+        "soort": "text",
+        "waarde": "Tijd",
+        "formule": null,
+        "numFmtId": 0,
+        "code": "ingebouwd"
+      },
+      "A8": {
+        "soort": "n",
+        "waarde": 0.15,
+        "formule": null,
+        "numFmtId": 170,
+        "code": "0.00%"
+      },
+      "B8": {
+        "soort": "text",
+        "waarde": "Percentage",
+        "formule": null,
+        "numFmtId": 0,
+        "code": "ingebouwd"
+      },
+      "A9": {
+        "soort": "n",
+        "waarde": 1.75,
+        "formule": null,
+        "numFmtId": 171,
+        "code": "# ?/?"
+      },
+      "B9": {
+        "soort": "text",
+        "waarde": "Breuk",
+        "formule": null,
+        "numFmtId": 0,
+        "code": "ingebouwd"
+      },
+      "A10": {
+        "soort": "n",
+        "waarde": 1234.5,
+        "formule": null,
+        "numFmtId": 172,
+        "code": "0.00E+00"
+      },
+      "B10": {
+        "soort": "text",
+        "waarde": "Wetenschappelijk",
+        "formule": null,
+        "numFmtId": 0,
+        "code": "ingebouwd"
+      },
+      "A11": {
+        "soort": "text",
+        "waarde": "012,50",
+        "formule": null,
+        "numFmtId": 173,
+        "code": "@"
+      },
+      "B11": {
+        "soort": "text",
+        "waarde": "Tekst",
+        "formule": null,
+        "numFmtId": 0,
+        "code": "ingebouwd"
+      },
+      "A12": {
+        "soort": "n",
+        "waarde": -1234.5,
+        "formule": null,
+        "numFmtId": 174,
+        "code": "#,##0.00;[Red](#,##0.00)"
+      },
+      "B12": {
+        "soort": "text",
+        "waarde": "Eigen code",
+        "formule": null,
+        "numFmtId": 0,
+        "code": "ingebouwd"
+      }
+    }
+  },
+  "wijzigingNaNativeControle": "Uitsluitend de groeperingshint bij een onbekende regio volgt nu en-US, overeenkomstig de bestaande kernterugval; geen wijziging in de geteste bewerkingsroutes."
+}
