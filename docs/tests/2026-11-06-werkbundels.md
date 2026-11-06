@@ -23,6 +23,16 @@ blijven open zolang een deel van hun criteria niet is geverifieerd.
 
 ## Actuele bewijzen
 
+- De openbare [release v2026.45.2](https://github.com/OpenAEC-Foundation/open-office-studio/releases/tag/v2026.45.2)
+  bevat de herstelrondes #154–#159 en 28 installers voor zeven apps. Alle zestig
+  releasebestanden zijn daadwerkelijk gedownload en geverifieerd, inclusief
+  veertien Linux-handtekeningen. De zeven Linux-apps zijn gestart en hun schermen
+  bekeken; alle 28 openbare downloadlinks geven HTTP 200. Zie het
+  [releasebewijs](uitgave-2026.45.2-controle.json).
+- #70: de native tegenproef bevestigt verkeerde voorrang bij gelijke werkmap-
+  en bladnamen en een verouderde naam na bladwisselen. De kandidaat herstelt
+  deze bediening; zestien gerichte WASM-proeven en 1.760 app-proeven slagen.
+  Het volledige naambeheer blijft open. Zie het [naamvakverslag](2026-11-06-naamvak.md).
 - PR #154 is gemerged als `7f2d317a`. IFCX-opslag en herstel van Writer-invoer
   en opslagstatus zijn lokaal en met zes geslaagde platformcontroles geverifieerd.
   #126, #135, #152 en #153 zijn gesloten met afzonderlijk testbewijs. Zie de

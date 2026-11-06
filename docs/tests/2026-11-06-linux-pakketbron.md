@@ -21,7 +21,10 @@ andere hosts en paden, CRLF, ontbrekende bronbestanden en herhaalbaarheid.
 De volledige Python-set slaagt lokaal. De CI roept het script aan voor
 `/etc/apt`; lokale proeven gebruiken tijdelijke mappen.
 
-De CI van de bijbehorende PR meet het effect op een echte Linux-runner.
-Deze wijziging verandert de reeds gestarte releasebouw 42166423448 niet en
-maakt geen nieuwe release of tag aan. Bron en oorspronkelijke meetgegevens
+De CI van PR #161 meet daarna 38 seconden voor de Office-stap en 26 seconden
+voor Database, tegenover 1.314 seconden voor de eerdere stap. Beide nieuwe
+stappen slagen op echte Linux-runners; broncommit, joblinks en tijdstempels
 staan in [het meetbestand](linux-pakketbron-2026-11-06.json).
+Dit zijn afzonderlijke netwerkmetingen en geen garantie voor iedere volgende
+run. De wijziging verandert releasebouw 42166423448 niet en maakt geen nieuwe
+release of tag aan.
