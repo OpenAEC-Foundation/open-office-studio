@@ -55,7 +55,15 @@ rekenkern: zichtbare indices, behoud na bewerking, uitsluitend weergavekeuze,
 ongeldige werkmap zonder zichtbaar blad, verplaatsen/Undo/Redo, verwijderen
 van het laatste zichtbare blad, juiste keuze na verwijderen en de bronpoort.
 De volledige toepassingssuite telt 1.925 geslaagde en 10 overgeslagen tests;
-167 bestanden zijn groen. Typecontrole en productiebouw zijn geslaagd.
+167 bestanden zijn groen op de oorspronkelijke basis. Na opname van de
+nootopmaakcorrectie uit #177 zijn 1.946 tests geslaagd en twee bestaande
+nootproeven tijdens gelijktijdig bouwen op hun tijdslimiet gestuit. Beide
+bestanden zijn daarna ongewijzigd serieel herhaald: alle 19 proeven zijn
+geslaagd, met de oorspronkelijke tijdslimiet. Samen zijn daarmee alle 1.948
+actieve tests afgedekt; 10 blijven overgeslagen. Typecontrole en productiebouw
+op deze nieuwe basis zijn eveneens geslaagd. De
+[opruimcontrole](verborgen-bladen-2026-11-06/cleanup.json) bevestigt dat beide
+eigen browsers en servers afgesloten zijn.
 
 De bestaande schrijver bewaart `activeTab` en `tabSelected` bij een andere
 bladkeuze. De proef controleert daarom bytebehoud van alle overige gegevens,
