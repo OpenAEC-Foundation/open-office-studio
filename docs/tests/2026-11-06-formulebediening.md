@@ -4,7 +4,10 @@ Vier fouten zijn hersteld: het lege naamvak na openen, het verdwijnen van
 getypte formuleletters, ontbrekende kleuren in de formuletekst en bereikselectie
 vanuit de ingeklapte balk. De controles hieronder slagen. Deze ronde van PR #158 vond daarnaast een
 kernfout in lange optelketens. De opvolgende correctie en aanvullende F2-proeven
-staan in [het kernverslag](2026-11-06-lange-formuleketens.md). De gepubliceerde v2026.45.1 bevat deze wijzigingen niet.
+staan in [het kernverslag](2026-11-06-lange-formuleketens.md). PR #159 is na zes
+groene platformcontroles gemerged als `06463ebd`; #58 is gesloten. De
+[statuscontrole](formulebediening-platformen-2026-11-06.json) legt dit vast.
+De gepubliceerde v2026.45.1 bevat deze wijzigingen niet.
 
 ## Reproductie en correcties
 

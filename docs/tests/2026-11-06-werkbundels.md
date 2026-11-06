@@ -1,8 +1,8 @@
 # Werkbundels voor de bestaande Tauri-suite
 
 Momentopname bij de indeling: 6 november 2026; 101 open issues.
-Na het mergen van PR #154 en #155 en de ondertekeningsaudit zijn zes daarvan
-aantoonbaar gesloten; 95 blijven open. De eerdere administratie staat in
+Na het mergen van PR #154, #155 en #159 en de ondertekeningsaudit zijn zeven
+daarvan aantoonbaar gesloten; 94 blijven open. De eerdere administratie staat in
 [het issueregister](2026-11-05-tauri-issuelus.md). Deze indeling verandert geen
 issue-status en voegt geen extra verzamelissues toe. Iedere melding staat precies
 één keer in deze momentopname. Het parallelle native interfacetraject (#116)
@@ -63,13 +63,16 @@ blijven open zolang een deel van hun criteria niet is geverifieerd.
   slagen, naast 1.728 tests. PR #158 is na zes groene platformcontroles gemerged
   als `2db5147c`. De opvolgende kerncorrectie bewaart en berekent lange
   optelketens en herstelt ook F2-kleuren en bereikkeuze. Alle lokale criteria
-  van #58 zijn daarmee opnieuw beproefd; aftekening wacht op de opvolgende
-  platformcontroles en merge. De opvolger slaagt in 1.744 app-proeven en 1.725
+  van #58 zijn daarmee opnieuw beproefd. PR #159 is na zes groene
+  platformcontroles gemerged als `06463ebd`; #58 is gesloten en de zes criteria
+  zijn afgetekend. De opvolger slaagt in 1.744 app-proeven en 1.725
   kernproeven. De nacontrole herstelt ook wisselende kleuren en gestapelde
   rasterkaders bij herhaalde verwijzingen; negen native kleurproeven en een
   nieuwe F2-/opslag-/heropenronde slagen. Het bredere #59 blijft open. Zie het
   [formuleverslag](2026-11-06-formulebediening.md) en
-  [kernverslag](2026-11-06-lange-formuleketens.md).
+  [kernverslag](2026-11-06-lange-formuleketens.md). De
+  [platform- en statuscontrole](formulebediening-platformen-2026-11-06.json)
+  bewaart de broncommit, merge, zes controle-uitkomsten en sluitingsdatum.
 
 ## 0. Afgeronde opslagronde — PR #154
 
