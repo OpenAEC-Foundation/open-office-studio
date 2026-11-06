@@ -1,17 +1,13 @@
 import {
   ArrowLeft,
-  FileText,
   FolderOpen,
-  Mail,
-  NotebookPen,
   Plus,
-  Presentation,
-  Sheet,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { ReactNode } from "react";
 import type { Soort } from "../editors";
 import { isDocumentmodule, type Studio } from "./model";
+import { StudioBeeldmerk } from "./StudioBeeldmerk";
 
 /** Dezelfde werkruimte en editors, met uitsluitend de ingang van deze installatie. */
 export function StudioStart({
@@ -37,16 +33,6 @@ export function StudioStart({
   const soort = isDocumentmodule(studio.module) ? studio.module : null;
   const sleutel =
     soort === "docx" ? "tekst" : soort === "xlsx" ? "rekenblad" : "presentatie";
-  const Icoon =
-    soort === "docx"
-      ? FileText
-      : soort === "xlsx"
-        ? Sheet
-        : soort === "pptx"
-          ? Presentation
-          : studio.module === "email"
-            ? Mail
-            : NotebookPen;
   return (
     <div className="office-start">
       <aside className="start-navigatie">
@@ -77,7 +63,7 @@ export function StudioStart({
                 openModule(studio.module === "email" ? "email" : "notities")
               }
             >
-              <Icoon size={18} />
+              <StudioBeeldmerk studio={studio} grootte={24} />
               {t(`common:modules.${studio.module}`)}
             </button>
           )}
@@ -93,7 +79,7 @@ export function StudioStart({
               <span />
               {t("start.tagline")}
             </span>
-            <h1>{studio.naam}</h1>
+            <h1 className="start-appbeeldmerk"><StudioBeeldmerk studio={studio} grootte={48} />{studio.naam}</h1>
           </div>
         </div>
         {soort ? (
@@ -109,8 +95,8 @@ export function StudioStart({
                   onClick={() => nieuw(soort)}
                 >
                   <div className="sjabloon-details">
-                    <span className="module-icoon">
-                      <Icoon size={24} />
+                    <span className="module-beeldmerk">
+                      <StudioBeeldmerk studio={studio} grootte={32} />
                     </span>
                     <div>
                       <strong>{t(`start.modules.${soort}.new`)}</strong>
@@ -129,7 +115,7 @@ export function StudioStart({
                 disabled={bezig}
                 onClick={() => voorbeeld(soort)}
               >
-                <Icoon size={18} />
+                <StudioBeeldmerk studio={studio} grootte={24} />
                 {t(`start.modules.${soort}.example`)}
               </button>
             </section>
@@ -150,7 +136,7 @@ export function StudioStart({
               openModule(studio.module === "email" ? "email" : "notities")
             }
           >
-            <Icoon size={18} />
+            <StudioBeeldmerk studio={studio} grootte={24} />
             {t(`common:modules.${studio.module}`)}
           </button>
         )}

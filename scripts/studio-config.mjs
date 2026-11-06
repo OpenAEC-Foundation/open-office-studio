@@ -71,6 +71,8 @@ export async function studioConfig(sleutel, platform = process.platform) {
       ],
     },
     bundle: {
+      icon: ["32x32.png", "128x128.png", "128x128@2x.png", "512x512.png", "icon.icns", "icon.ico"]
+        .map(naam => `icons/${studio.sleutel}/${naam}`),
       fileAssociations: koppelingen,
       // De eigen koppelingen van de suite mogen niet door een gerichte installer worden overschreven.
       windows: { nsis: { installerHooks: null } },
