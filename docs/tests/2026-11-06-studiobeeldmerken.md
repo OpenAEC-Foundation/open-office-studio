@@ -85,8 +85,10 @@ De nieuwe PE-controle weigert de oorspronkelijke foutieve installer. De
 normale Windows-pakketcontrole onderzoekt voortaan zowel de installer als
 het ingepakte programma. De ondertekende uitgave installeert bovendien ieder
 pakket en controleert ook de werkelijk aangemaakte uninstaller vóór verwijdering.
-Deze laatste uitgavecontrole moet nog slagen; de kleine proeven voeren geen
-installatie op een gebruikerscomputer uit.
+Deze laatste controle is inmiddels geslaagd in de ondertekende uitgaverun.
+De kleine proeven hieronder zijn het voorafgaande bronbewijs; de
+[definitieve pakket- en startcontroles](2026-11-06-uitgave-2026-45-3.md)
+betreffen de daadwerkelijk gepubliceerde installers.
 
 De oorspronkelijke Linux-DEB bevat vier bytegelijke launcher-PNG's en de
 juiste desktopverwijzing. Dit staat in de [Linux-pakketcontrole](studiobeeldmerken-2026-11-06/pakket-linux.json).

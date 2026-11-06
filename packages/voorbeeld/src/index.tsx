@@ -54,6 +54,7 @@ export function KantoorVoorbeeld(props: KantoorVoorbeeldProps) {
     const controller = new AbortController();
     zetGeladen(null);
     const meld = (s: VoorbeeldStatus) => {
+      if (recent.current.bron !== props.bron) return;
       zetToestand({ bron: props.bron, status: s });
       recent.current.onStatus?.(s);
     };
@@ -88,7 +89,8 @@ export function KantoorVoorbeeld(props: KantoorVoorbeeldProps) {
           return;
         }
         const bytes = await props.bron.laad(controller.signal);
-        if (controller.signal.aborted) return;
+        if (controller.signal.aborted || recent.current.bron !== props.bron)
+          return;
         if (!(bytes instanceof Uint8Array))
           throw new Error("De voorbeeldbron leverde geen bestandsbytes.");
         if (bytes.byteLength > maxBytes) {
@@ -138,7 +140,11 @@ export function KantoorVoorbeeld(props: KantoorVoorbeeldProps) {
     aansluiting.current = kanaal.port1;
     let geopend = false;
     kanaal.port1.onmessage = ({ data }: MessageEvent<VanFrame>) => {
-      if (aansluiting.current !== kanaal.port1) return;
+      if (
+        aansluiting.current !== kanaal.port1 ||
+        recent.current.bron !== geladen.bron
+      )
+        return;
       if (data?.soort === "aansluiting") {
         // Alleen het verwachte frame kent het onvoorspelbare fragment; dat staat niet in dit bericht.
         if (geopend || data.sessie !== geladen.sessie) return;

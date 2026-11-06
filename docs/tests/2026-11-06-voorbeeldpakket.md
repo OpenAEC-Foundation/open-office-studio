@@ -27,15 +27,15 @@ nodig en drie de hier niet gebouwde spelling-WASM. De acht pakketproeven zijn
 allemaal uitgevoerd. De licentiekopie voor de gewone Office- en databasebouw
 slaagt eveneens; de standaardroutes blijven beschikbaar.
 
-De hostcomponent is 2.159 bytes gzip. De tarball is 58.988.484 bytes; uitgepakt
-105.734.727 bytes, inclusief alle engine-, font- en licentiebestanden. In deze
+De hostcomponent is 2.184 bytes gzip. De tarball is 55.917.734 bytes; uitgepakt
+102.652.361 bytes, inclusief alle engine-, font- en licentiebestanden. In deze
 lokale uitvoering zijn de eerste openingen als volgt gemeten:
 
 | Voorbeeld | Naar `gereed` | HTTP-bytes inclusief bron | Berekend gzip |
 | --- | ---: | ---: | ---: |
-| DOCX | 2.479 ms | 33.883.028 | 11.876.678 |
-| XLSX | 864 ms | 11.410.747 | 4.422.095 |
-| PPTX | 685 ms | 8.672.137 | 3.443.266 |
+| DOCX | 2.562 ms | 33.883.028 | 11.876.678 |
+| XLSX | 943 ms | 11.410.747 | 4.422.095 |
+| PPTX | 763 ms | 8.672.137 | 3.443.266 |
 
 Deze tijden horen bij deze machine, Chromium en de meegeleverde documenten.
 Het zijn geen resultaten op een telefoon of een beperkt netwerk. De
@@ -51,6 +51,12 @@ JSON-rapport.
 - PPTX: drie dia's zichtbaar; tweede dia aanklikbaar; inhoud blijft behouden
   bij typen/verwijderen en de presentatornotities zijn niet bewerkbaar.
 - De bronbuffer blijft bytegelijk en wordt niet losgemaakt door overdracht.
+- Na het aanklikken van het echte hoofddoek en invoeren van een teken,
+  tekstinvoer en Delete blijven ook alle canvas-PNG's bytegelijk. Bij de
+  presentatie wordt daarbij de titelvorm geselecteerd, niet een thumbnail.
+- De tarball mag alleen bestanden van het pakket bevatten. De algemene
+  Office-publicmap wordt niet meegekopieerd; een extra bestand buiten de
+  distributie-indeling laat de pakketproef falen.
 - Een gesloten voorbeeld haalt geen renderer-, WASM- of fontbestanden op;
   ieder document laadt uitsluitend de eigen WASM-kernen.
 - ODT en OLE geven `conversie`; gewone tekst geeft `onbekend`; beschadigde

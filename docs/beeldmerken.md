@@ -63,11 +63,12 @@ en het venster Over.
 
 ## Vrijgave
 
-De bron- en herbouwcontrole is geen geïnstalleerde-appcontrole. #165–#170
-blijven open totdat de nieuwe beelden ook in de werkelijke apps en de
-normaal uitgebrachte installerbestanden zijn gecontroleerd. De bestaande
-downloads 2026-W45.1 en 2026-W45.2 blijven behouden; deze ronde wordt voorbereid
-voor 2026-W45.3.
+De bron- en herbouwcontrole is aangevuld met controles van de normale
+uitgavepakketten. [2026-W45.3 is openbaar](https://github.com/OpenAEC-Foundation/open-office-studio/releases/tag/v2026.45.3)
+met 28 installers voor alle zeven apps. De zes beeldmerkissues #165–#170 zijn
+na de platformcontroles en werkelijke Linux-startproeven gesloten. De
+[vrijgavecontrole met pakketgegevens en screenshots](tests/2026-11-06-uitgave-2026-45-3.md)
+legt dit vast. De eerdere downloads 2026-W45.1 en 2026-W45.2 blijven behouden.
 
 De Windows-installer en uninstaller hebben afzonderlijke NSIS-instellingen.
 Ook die verwijzen expliciet naar de eigen ICO; alleen `bundle.icon` is niet

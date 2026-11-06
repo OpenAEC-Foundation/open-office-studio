@@ -15,6 +15,7 @@ import { gzipSync } from "node:zlib";
 process.chdir(fileURLToPath(new URL("..", import.meta.url)));
 await build({
   configFile: false,
+  publicDir: false,
   build: {
     outDir: "packages/voorbeeld/dist",
     emptyOutDir: true,

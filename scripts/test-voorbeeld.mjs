@@ -53,6 +53,15 @@ const tar = JSON.parse(
     { cwd: resolve("packages/voorbeeld") },
   ),
 )[0];
+// De gewone Office-publicmap mag niet ongemerkt meereizen in een bibliotheek.
+assert(
+  tar.files.every(({ path }) =>
+    /^(package\.json|README\.md|THIRD-PARTY-NOTICES\.md|kopieer-assets\.mjs|dist\/(?:index\.js|[^/]+\.d\.ts|bundel\.json|LICENSE|(?:frame|licenses)\/.+))$/.test(
+      path,
+    ),
+  ),
+  "De pakketdistributie bevat bestanden buiten het zelfstandige voorbeeld.",
+);
 opdracht("tar", ["-xf", join(uit, tar.filename), "-C", pakketMap]);
 const pakket = join(pakketMap, "package");
 const { kopieerVoorbeeldAssets } = await import(
@@ -460,11 +469,43 @@ try {
       await klikFrame("button", "1");
       await wacht(300);
     }
-    await klikFrame("canvas");
+    // In de presentatie staat het hoofddoek na de kleine thumbnails.
+    // Kies het grootste canvas en raak de titelvorm; zo telt de echte editorbediening.
+    const canvasPunt = await ev(
+      `(()=>{const f=document.querySelector('iframe'),a=f.getBoundingClientRect(),c=[...f.contentDocument.querySelectorAll('canvas')].sort((x,y)=>y.width*y.height-x.width*x.height)[0],b=c.getBoundingClientRect();return {x:a.x+b.x+b.width*${soort === "pptx" ? 0.25 : 0.5},y:a.y+b.y+b.height*${soort === "pptx" ? 0.33 : 0.5}}})()`,
+    );
+    await cdp("Input.dispatchMouseEvent", {
+      type: "mousePressed",
+      button: "left",
+      clickCount: 1,
+      ...canvasPunt,
+    });
+    await cdp("Input.dispatchMouseEvent", {
+      type: "mouseReleased",
+      button: "left",
+      clickCount: 1,
+      ...canvasPunt,
+    });
     await wacht(150);
     const voor = await ev(
       `document.querySelector('iframe').contentDocument.body.textContent`,
     );
+    const pixelsVoor = await ev(
+      `Array.from(document.querySelector('iframe').contentDocument.querySelectorAll('canvas'),c=>c.toDataURL())`,
+    );
+    await cdp("Input.dispatchKeyEvent", {
+      type: "keyDown",
+      key: "X",
+      code: "KeyX",
+      windowsVirtualKeyCode: 88,
+      text: "X",
+    });
+    await cdp("Input.dispatchKeyEvent", {
+      type: "keyUp",
+      key: "X",
+      code: "KeyX",
+      windowsVirtualKeyCode: 88,
+    });
     await cdp("Input.insertText", { text: "DIT_MAG_NIET_WIJZIGEN" });
     await cdp("Input.dispatchKeyEvent", {
       type: "keyDown",
@@ -483,6 +524,13 @@ try {
       `document.querySelector('iframe').contentDocument.body.textContent`,
     );
     assert.equal(na, voor, `${soort}: documentinhoud veranderde na toetsen`);
+    assert.deepEqual(
+      await ev(
+        `Array.from(document.querySelector('iframe').contentDocument.querySelectorAll('canvas'),c=>c.toDataURL())`,
+      ),
+      pixelsVoor,
+      `${soort}: getekende inhoud veranderde na toetsen`,
+    );
     assert(
       !(await ev(
         `document.querySelector('iframe').contentWindow.__voorbeeldproef.getekend.some(t=>t.includes('DIT_MAG_NIET'))`,
