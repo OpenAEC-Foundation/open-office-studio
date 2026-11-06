@@ -1,0 +1,350 @@
+[
+  {
+    "id": 128047488197,
+    "naam": "Bouwen \u2013 Windows",
+    "uitkomst": "success",
+    "bron": "be1c6c8c3ac3b3e2cadcb25c2f64367e1e48d543",
+    "stappen": [
+      {
+        "naam": "Set up job",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run actions/checkout@v4",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Ondertekening beschikbaar",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run actions/setup-node@v4",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run pnpm/action-setup@v4",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run dtolnay/rust-toolchain@stable",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run actions/setup-python@v5",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Updater-artefacten (alleen met geheim en publieke sleutel)",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Linux-bouwafhankelijkheden",
+        "uitkomst": "skipped"
+      },
+      {
+        "naam": "Run pnpm install --frozen-lockfile",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Lettertypencache",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run node scripts/haal-lettertypen.mjs",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Woordenboekencache",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run node scripts/haal-woordenboeken.mjs",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run pnpm versie:check",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Vastgelegde versleutelde proefbestanden ophalen",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run pnpm test",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run python -m unittest discover -s tests -v",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run node scripts/test-kantoor-engines.mjs",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run pnpm test:opdrachten",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Windows-loader voorbereiden",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run cargo test --manifest-path src-tauri/Cargo.toml --locked",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run cargo test --manifest-path apps/database-studio/src-tauri/Cargo.toml --locked",
+        "uitkomst": "success"
+      },
+      {
+        "naam": ".NET 8 voor de signeerclient",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Authenticode voorbereiden",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "App Store Connect-sleutel klaarzetten",
+        "uitkomst": "skipped"
+      },
+      {
+        "naam": "Pakket bouwen (onondertekend)",
+        "uitkomst": "skipped"
+      },
+      {
+        "naam": "Pakket bouwen (Windows, ondertekend)",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Pakket bouwen (macOS, ondertekend en genotariseerd)",
+        "uitkomst": "skipped"
+      },
+      {
+        "naam": "Authenticode controleren (installer, programma en uninstaller)",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Handtekening en notarisatie controleren (macOS)",
+        "uitkomst": "skipped"
+      },
+      {
+        "naam": "Linux-installers werkelijk uitpakken en controleren",
+        "uitkomst": "skipped"
+      },
+      {
+        "naam": "Windows-installer werkelijk uitpakken en controleren",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run actions/upload-artifact@v4",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Post .NET 8 voor de signeerclient",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Post Woordenboekencache",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Post Lettertypencache",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Post Run actions/setup-python@v5",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Post Run pnpm/action-setup@v4",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Post Run actions/setup-node@v4",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Post Run actions/checkout@v4",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Complete job",
+        "uitkomst": "success"
+      }
+    ]
+  },
+  {
+    "id": 128047488220,
+    "naam": "Bouwen \u2013 macOS",
+    "uitkomst": "success",
+    "bron": "be1c6c8c3ac3b3e2cadcb25c2f64367e1e48d543",
+    "stappen": [
+      {
+        "naam": "Set up job",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run actions/checkout@v4",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Ondertekening beschikbaar",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run actions/setup-node@v4",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run pnpm/action-setup@v4",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run dtolnay/rust-toolchain@stable",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run actions/setup-python@v5",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Updater-artefacten (alleen met geheim en publieke sleutel)",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Linux-bouwafhankelijkheden",
+        "uitkomst": "skipped"
+      },
+      {
+        "naam": "Run pnpm install --frozen-lockfile",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Lettertypencache",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run node scripts/haal-lettertypen.mjs",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Woordenboekencache",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run node scripts/haal-woordenboeken.mjs",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run pnpm versie:check",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Vastgelegde versleutelde proefbestanden ophalen",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run pnpm test",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run python -m unittest discover -s tests -v",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run node scripts/test-kantoor-engines.mjs",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run pnpm test:opdrachten",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Windows-loader voorbereiden",
+        "uitkomst": "skipped"
+      },
+      {
+        "naam": "Run cargo test --manifest-path src-tauri/Cargo.toml --locked",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Run cargo test --manifest-path apps/database-studio/src-tauri/Cargo.toml --locked",
+        "uitkomst": "success"
+      },
+      {
+        "naam": ".NET 8 voor de signeerclient",
+        "uitkomst": "skipped"
+      },
+      {
+        "naam": "Authenticode voorbereiden",
+        "uitkomst": "skipped"
+      },
+      {
+        "naam": "App Store Connect-sleutel klaarzetten",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Pakket bouwen (onondertekend)",
+        "uitkomst": "skipped"
+      },
+      {
+        "naam": "Pakket bouwen (Windows, ondertekend)",
+        "uitkomst": "skipped"
+      },
+      {
+        "naam": "Pakket bouwen (macOS, ondertekend en genotariseerd)",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Authenticode controleren (installer, programma en uninstaller)",
+        "uitkomst": "skipped"
+      },
+      {
+        "naam": "Handtekening en notarisatie controleren (macOS)",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Linux-installers werkelijk uitpakken en controleren",
+        "uitkomst": "skipped"
+      },
+      {
+        "naam": "Windows-installer werkelijk uitpakken en controleren",
+        "uitkomst": "skipped"
+      },
+      {
+        "naam": "Run actions/upload-artifact@v4",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Post Woordenboekencache",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Post Lettertypencache",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Post Run actions/setup-python@v5",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Post Run pnpm/action-setup@v4",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Post Run actions/setup-node@v4",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Post Run actions/checkout@v4",
+        "uitkomst": "success"
+      },
+      {
+        "naam": "Complete job",
+        "uitkomst": "success"
+      }
+    ]
+  }
+]
