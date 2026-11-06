@@ -167,9 +167,19 @@ async def proef(a):
         print(titel, vullingen, flush=True)
         return bytes_
 
-    async def kies(p, venster, kolom, rij, verwacht):
+    async def kies(p, venster, kolom, rij, verwacht, vorige):
         await p.ev("window.kleurEvents=[];window.kleurLuisteraar??=(e)=>{if(e.target.type==='color')kleurEvents.push({soort:e.type,kleur:e.target.value,native:e.isTrusted})};for(let s of ['input','change'])document.addEventListener(s,kleurLuisteraar,true)")
-        pos = await p.ev('(()=>{let e=Array.from(document.querySelectorAll(".ribbon-kleur input")).find(e=>e.getBoundingClientRect().width>0),r=e.getBoundingClientRect();return {x:Math.round(r.x+r.width/2),y:Math.round(r.y+r.height/2)}})()')
+        # Markeerkleur heeft een bevestigingsdialoog. Het losse kleurveld in
+        # het lint hoort bij tekstkleur en mag deze proef niet bedienen.
+        pos = await p.ev('(()=>{const knoppen=Array.from(document.querySelectorAll("button.ribbon-kleur[aria-haspopup=dialog]")).filter(e=>e.getBoundingClientRect().width>0);if(knoppen.length!==1||knoppen[0].getAttribute("aria-label")!=="Text Highlight Color")throw Error("Geen unieke markeerkleurknop");const r=knoppen[0].getBoundingClientRect();return {x:Math.round(r.x+r.width/2),y:Math.round(r.y+r.height/2)}})()')
+        subprocess.run(['xdotool', 'mousemove', '--window', str(venster.id), str(pos['x']), str(pos['y']), 'click', '1'], check=True)
+        # Geel is de standaard conceptkleur. Kies eerst zwart in het eigen
+        # palet zodat GTK echt een andere waarde moet teruggeven; een ongewijzigde
+        # keuze hoeft geen input/change te sturen. De documentbron blijft gelijk.
+        zwart = await p.run('let einde=performance.now()+5000;while(true){const d=document.querySelector(".werkruimte-dialoog[role=dialog]");const e=d?.querySelector("button[aria-label=\\\"#000000\\\"]");if(d?.querySelector("h2")?.textContent==="Text Highlight Color"&&e?.getBoundingClientRect().width){const r=e.getBoundingClientRect();return {x:Math.round(r.x+r.width/2),y:Math.round(r.y+r.height/2)}}if(performance.now()>einde)throw Error("Zwart conceptkleurvak niet gereed");await new Promise(r=>setTimeout(r,50))}')
+        subprocess.run(['xdotool', 'mousemove', '--window', str(venster.id), str(zwart['x']), str(zwart['y']), 'click', '1'], check=True)
+        await p.run('let einde=performance.now()+5000;while(document.querySelector(".werkruimte-dialoog input[type=color]")?.value!=="#000000"){if(performance.now()>einde)throw Error("Conceptkleur niet zwart");await new Promise(r=>setTimeout(r,50))}return true;')
+        pos = await p.run('let einde=performance.now()+5000;while(true){const d=document.querySelector(".werkruimte-dialoog[role=dialog]");const e=d?.querySelector("input[type=color]");if(d?.querySelector("h2")?.textContent==="Text Highlight Color"&&e?.getBoundingClientRect().width){const r=e.getBoundingClientRect();return {x:Math.round(r.x+r.width/2),y:Math.round(r.y+r.height/2)}}if(performance.now()>einde)throw Error("Markeerkleurdialoog niet gereed");await new Promise(r=>setTimeout(r,50))}')
         subprocess.run(['xdotool', 'mousemove', '--window', str(venster.id), str(pos['x']), str(pos['y']), 'click', '1'], check=True)
         kiezer = await zoekvenster(lambda n: n == 'Select Color')
         g = kiezer.get_geometry()
@@ -200,9 +210,14 @@ async def proef(a):
         await asyncio.sleep(1)
         events = await p.ev('kleurEvents')
         rapport['kleurgebeurtenissen'].append({'keuze': verwacht, 'gebeurtenissen': events})
+        assert 1 <= len(events) <= 4 and all(e['kleur'] == '#'+verwacht and e['native'] for e in events), events
+        # Ook na de echte GTK-keuze verandert de bron pas door Toepassen.
+        await controle(p, 'nog-niet-toegepast-'+verwacht, vorige)
+        pos = await p.ev('(()=>{const d=document.querySelector(".werkruimte-dialoog[role=dialog]");const knoppen=Array.from(d?.querySelectorAll("button")??[]).filter(e=>e.textContent==="Apply");if(knoppen.length!==1||knoppen[0].disabled)throw Error("Geen actieve knop Apply");const r=knoppen[0].getBoundingClientRect();return {x:Math.round(r.x+r.width/2),y:Math.round(r.y+r.height/2)}})()')
+        subprocess.run(['xdotool', 'mousemove', '--window', str(venster.id), str(pos['x']), str(pos['y']), 'click', '1'], check=True)
+        await p.run('let einde=performance.now()+5000;while(document.querySelector(".werkruimte-dialoog[role=dialog]")){if(performance.now()>einde)throw Error("Markeerkleurdialoog niet gesloten na Apply");await new Promise(r=>setTimeout(r,50))}await proefApi().flushPendingInput();return true;')
         # Bewaar eerst het tegenbewijs als de kleur verkeerd terugkoppelt.
         await controle(p, 'keuze-'+verwacht, verwacht)
-        assert 1 <= len(events) <= 4 and all(e['kleur'] == '#'+verwacht and e['native'] for e in events), events
 
     try:
         venster = await start(bron)
@@ -214,7 +229,7 @@ async def proef(a):
             await p.begin_framebewaking(a.uitvoer/'framebasis.json')
             print('Document gereed', flush=True)
             await controle(p, 'begin', None)
-            await kies(p, venster, 2, 2, 'f6d32d')
+            await kies(p, venster, 2, 2, 'f6d32d', None)
             # Leg de geldige basis vast vóór de eerder vastgelopen Undo-opdracht.
             # Een daarna onbereikbare WebView kan haar ring niet meer exporteren.
             rapport['framebasis_voor_undo'] = await p.bewaar_framebasis()
@@ -222,7 +237,7 @@ async def proef(a):
             await controle(p, 'ongedaan', None)
             await p.run('await proefApi().commands.execute("redo",null);return true;')
             await controle(p, 'opnieuw', 'f6d32d')
-            await kies(p, venster, 0, 0, '99c1f1')
+            await kies(p, venster, 0, 0, '99c1f1', 'f6d32d')
             await p.ev('proefApi().getEditorRef().focus()')
             subprocess.run(['xdotool', 'key', '--clearmodifiers', 'ctrl+End'], check=True)
             subprocess.run(['xdotool', 'type', '--clearmodifiers', 'X'], check=True)

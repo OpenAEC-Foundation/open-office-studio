@@ -57,6 +57,25 @@ try {
   async function controle(naam, punten) {
     // Opmaakantwoorden en de lintstatus mogen asynchroon binnenkomen.
     await page.waitForTimeout(350);
+    // Lees de actuele synchrone lintbron vóór save deze kan verversen.
+    const actueel = await page.evaluate(async () => {
+      await proefApi().flushPendingInput();
+      const document = proefApi().getDocument();
+      if (!document?.package.document) throw Error("Actuele lintbron ontbreekt");
+      const tekst = [], groottes = [];
+      function lees(knoop) {
+        if (!knoop || typeof knoop !== "object") return;
+        if (knoop.type === "text") tekst.push(knoop.text);
+        if (knoop.type === "run" && knoop.content?.some(k => k.type === "text" && k.text))
+          groottes.push(knoop.formatting?.fontSize ?? null);
+        for (const kind of knoop.content ?? []) lees(kind);
+      }
+      for (const blok of document.package.document.content) lees(blok);
+      return { tekst: tekst.join(""), groottes };
+    });
+    assert.equal(actueel.tekst, tekst, `${naam}: actuele linttekst vóór bewaren`);
+    assert(actueel.groottes.length > 0);
+    assert(actueel.groottes.every(g => g === punten * 2), `${naam}: actuele lintlettergrootte vóór bewaren: ${actueel.groottes}`);
     const bytes = await bewaard();
     const doc = strFromU8(unzipSync(bytes)["word/document.xml"]);
     assert.equal([...doc.matchAll(/<w:t(?:\s[^>]*)?>([^<]*)<\/w:t>/g)].map(m => m[1]).join(""), tekst, naam);

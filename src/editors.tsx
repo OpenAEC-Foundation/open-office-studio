@@ -79,10 +79,6 @@ export interface EditorProps {
   /** Actuele documentzoom voor de statusbalk; null zolang onbekend. */
   zoom: (zoom: number | null) => void;
 }
-// De bestaande synchrone lint-API heeft deze compatibiliteitsprojectie nodig.
-// Haar vertraagde melding mag de opslagstatus niet opnieuw wijzigen.
-const behoudSynchroneProjectie = () => {};
-
 export default function OfficeEditor(props: EditorProps) {
   // Engine-teksten in de interfacetaal; wisselt live mee zonder het document te herladen.
   const engineTaal = useEngineVertaling();
@@ -430,7 +426,8 @@ export default function OfficeEditor(props: EditorProps) {
               }}
               onPageSetupApply={paginaToepassen}
               onError={writerFout}
-              onChange={behoudSynchroneProjectie}
+              // Het lint leest de actuele bron op verzoek. Een lege onChange
+              // laat de engine bij iedere invoergroep het hele document kopiëren.
               rulerUnit="cm"
               onFirstPagePainted={() => {
                 paginaVolger.onthoud();
