@@ -13,6 +13,12 @@ de breedtes van niet-geselecteerde rijen blijven gelijk. De voorkeursbreedte
 wordt over de kinderen verdeeld. De aansluiting van de bestaande splitsdialoog
 laat minder zichtbare kolommen dan rasterstroken toe.
 
+Import neemt alleen werkelijk aanwezige voorkeursbreedtes over. Afgeleide
+percentages van het tabelraster worden geen auteursopmaak, zowel in de native
+import als in de JS-documentimport. Daardoor blijven ontbrekende `tcW`-gegevens
+bij bewaren ontbreken. Expliciete kleine percentagewaarden blijven geldig,
+ook wanneer ze numeriek op een berekend rasterpercentage lijken.
+
 De precieze broncommit, checksum van het bronarchief, patch en bouwgereedschappen
 staan in [de herkomstgegevens](../../patches/tekstengine-nootnummering.json).
 De [bronpatch](../../patches/tekstengine-nootnummering.patch) bevat ook de gerichte
@@ -49,6 +55,7 @@ dezelfde kern uit deze map.
 ```sh
 pnpm exec vitest run src/tekst/pagina/nootnummering-engine.test.ts
 pnpm exec vitest run src/tekst/tabel/splitsen-geometrie-engine.test.ts src/tekst/tabel/splitsen-dialoog.test.ts
+pnpm exec vitest run src/tekst/tabel/voorkeursbreedte-opslag-engine.test.ts
 pnpm test --maxWorkers=2
 pnpm build
 ```
@@ -64,3 +71,9 @@ Undo/Redo en bewaren/heropenen, bij vaste en automatische tabelindeling.
 Absolute en procentuele voorkeursbreedtes en herhaald samenvoegen/delen zijn
 meegenomen. Zie [het controleverslag](../../docs/tests/2026-11-06-celsplitsing.md)
 voor de afbakening ten opzichte van het nog openstaande #130.
+
+De opslagproef laadt de productiecorrectie voor JS-import in een tijdelijke
+kopie van de volledige SDK-modulegraaf. De meegeleverde WASM-kernen worden daar
+voorgeladen. Dit houdt interne sessiegegevens bij elkaar en wijzigt het
+geïnstalleerde npm-pakket niet. Zes opslagroutes en achttien gevallen met
+bestaande of nieuw ingestelde voorkeuren controleren de werkelijk geschreven XML.

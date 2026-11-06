@@ -580,3 +580,112 @@
 +    }
 +
 +    #[test]
+--- a/crates/docx-edit/src/seed.rs
++++ b/crates/docx-edit/src/seed.rs
+@@ -4436,17 +4435,0 @@
+-pub(crate) fn synthesized_cell_width(
+-    widths: &[Option<f64>],
+-    total_width: f64,
+-    start_column: usize,
+-    colspan: usize,
+-) -> Option<f64> {
+-    (!widths.is_empty() && total_width > 0.0).then(|| {
+-        let cell_width: f64 = widths
+-            .iter()
+-            .skip(start_column)
+-            .take(colspan)
+-            .flatten()
+-            .sum();
+-        (cell_width / total_width * 100.0).round()
+-    })
+-}
+-
+@@ -4456 +4438,0 @@
+-    grid_width: Option<f64>,
+@@ -4477,6 +4459,4 @@
+-    let width = field(field(formatting, "width"), "value")
+-        .cloned()
+-        .or_else(|| options.grid_width.map(|value| json!(value)));
+-    let width_type = field(field(formatting, "width"), "type")
+-        .cloned()
+-        .or_else(|| options.grid_width.map(|_| Value::String("pct".to_owned())));
++    // Het raster bepaalt de getekende breedte; een ontbrekende auteursvoorkeur
++    // blijft ontbreken. Een berekend percentage is geen OOXML-voorkeurswaarde.
++    let width = field(field(formatting, "width"), "value").cloned();
++    let width_type = field(field(formatting, "width"), "type").cloned();
+@@ -4754 +4733,0 @@
+-    let total_width: f64 = widths.iter().flatten().sum();
+@@ -4781 +4759,0 @@
+-        let grid_width = synthesized_cell_width(&widths, total_width, start_column, colspan);
+@@ -4795 +4772,0 @@
+-                grid_width,
+@@ -4848 +4824,0 @@
+-                grid_width: (total_width > 0.0).then_some(100.0),
+@@ -7599,6 +7575,3 @@
+-            for (cell, width) in projected.rows[0].cells.iter().zip([25.0, 75.0]) {
+-                assert_eq!(cell.attrs.get("width").and_then(Value::as_f64), Some(width));
+-                assert_eq!(
+-                    cell.attrs.get("widthType").and_then(Value::as_str),
+-                    Some("pct")
+-                );
++            for cell in &projected.rows[0].cells {
++                assert!(cell.attrs.get("width").is_none());
++                assert!(cell.attrs.get("widthType").is_none());
+@@ -7669,0 +7643,35 @@
++        }
++    }
++
++    #[test]
++    fn expliciete_voorkeur_gelijk_aan_een_oud_rasterpercentage_blijft_geldig() {
++        let document = seed_body(&[json!({
++            "type": "table", "columnWidths": [3000, 6000],
++            "formatting": {"layout": "fixed", "width": {"value": 9000, "type": "dxa"}},
++            "rows": [{"type": "tableRow", "cells": [
++                {"type": "tableCell", "content": []},
++                {"type": "tableCell", "content": []}
++            ]}]
++        })]);
++        for (column, width) in [(0, 33.0), (1, 67.0)] {
++            document.set_cell_text_format(
++                &EditCtx::local("", ""),
++                &crate::TableRange::cell(crate::CellLoc::new("body", 0, 0, column)),
++                &HashMap::from([
++                    ("width".to_owned(), Any::Number(width)),
++                    ("widthType".to_owned(), Any::from("pct")),
++                ]),
++            ).unwrap();
++        }
++        let blocks = crate::bridge::yrs_doc_to_layout_blocks(
++            &document, "body", &crate::bridge::RenderEnv::default(),
++        ).unwrap();
++        let docx_layout::types::LayoutBlock::Table(table) = &blocks[0] else { panic!() };
++        for (cell, value) in table.rows[0].cells.iter().zip([33.0, 67.0]) {
++            assert_eq!(cell.width_value, Some(value));
++        }
++        // 9000 twips = 600 px. Voorkeuren 33/5000 en 67/5000 geven
++        // 3,96 en 8,04 px; de resterende 588 px wordt gelijk verdeeld.
++        let actual = measured_table_column_widths(table);
++        for (width, expected) in actual.into_iter().zip([297.96, 302.04]) {
++            assert!((width - expected).abs() < 1e-9);
+--- a/crates/docx-edit/src/bridge/mod.rs
++++ b/crates/docx-edit/src/bridge/mod.rs
+@@ -57 +56,0 @@
+-use crate::seed::synthesized_cell_width;
+@@ -2044 +2042,0 @@
+-    let total_grid_width: f64 = grid_widths.iter().flatten().sum();
+@@ -2140,12 +2138,3 @@
+-            let authored_width = tc_pr
+-                .get("_originalFormatting")
+-                .and_then(any_map)
+-                .and_then(|value| value.get("width"));
+-            let synthesized_width = original.is_some()
+-                && authored_width.is_none()
+-                && width_type.as_deref() == Some("pct")
+-                && width_value.is_some()
+-                && width_value
+-                    == synthesized_cell_width(&grid_widths, total_grid_width, column, colspan);
+-            let width_value =
+-                width_value.filter(|_| width_type.as_deref() != Some("auto") && !synthesized_width);
++            // Bij import zijn alleen auteurswaarden opgenomen. Ook een kleine
++            // expliciet ingestelde pct-waarde blijft een echte voorkeur.
++            let width_value = width_value.filter(|_| width_type.as_deref() != Some("auto"));

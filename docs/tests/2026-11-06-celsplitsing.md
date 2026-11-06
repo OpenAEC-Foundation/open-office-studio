@@ -67,48 +67,83 @@ bij een gewijzigde engine stopt de bouw.
   geblokkeerd. De oorspronkelijke metadata laat dezelfde geldige verdeling niet toe.
 
 De geoptimaliseerde edit-kern heeft SHA-256
-`b5624e380efd667199e7a9d00b0d8aa63aaed2402447290c5388653454d04069`
-(24.568.979 bytes). De JS/WASM-interface blijft 30 imports en 298 exports.
-De losse layoutkern blijft bytegelijk aan PR #155. Beide werkelijke
-productie-assets zijn tegen het manifest gecontroleerd.
+`9e5af39bbfd74008c6660b93076c5c9e2747312211e39f266ea75c3a87a01be4`
+(24.549.505 bytes). De JS/WASM-interface blijft 30 imports en 298 exports.
+De losse layoutkern blijft bytegelijk aan PR #155.
 
-De volledige Office-set vóór de aanvullende opslagtegenproef slaagt: 149
-bestanden, 1.681 geslaagde en zeven bestaande overgeslagen tests. Typecontrole
-en productiebuild slagen. De achttien gerichte tabelproeven slagen ook met
-werkelijke OOXML-percentages: 5000 = 100% en 3750 = 75%. Het volledige
-tekstkernlog bevat 986 geslaagde tests en twee overgeslagen prestatieproeven.
-De uitvoerder rapporteerde daarna afsluitcode 143; de afsluiting wordt daarom
-nogmaals gecontroleerd met een afzonderlijk vastgelegd procesresultaat.
+De volledige aangepaste tekstkern slaagt met 987 tests en twee overgeslagen
+prestatieproeven; het afzonderlijk vastgelegde procesresultaat heeft afsluitcode
+0. De vijf aanvullende integratiedoelen slagen met samen 53 tests. De importset
+slaagt afzonderlijk met 63 tests. De volledige Office-set slaagt met 150
+bestanden, 1.708 geslaagde en zeven bestaande overgeslagen tests.
 
-## Native bediening en nog openstaande opslagfout
+## Bronvoorkeuren behouden bij import en opslag
 
-Een native Linux-bouw met de productiefrontend is gestart op een eigen
-X11-scherm, met een leeg profiel en eigen applicatie-id. De werkelijke
-ingebedde edit-asset is opnieuw gehasht en komt overeen met bovenstaande kern.
-Via **Table Design → Split Cell** is de bovenste cel in drie kolommen gedeeld.
-De bovenste vakken zijn elk 208 pixels breed; de twee onderste rijen houden
-hun vakken van 312 pixels. Ctrl+Z herstelt de volledige oorspronkelijke
-tekengeometrie; Ctrl+Shift+Z herstelt de driedeling. Na Ctrl+S, tab sluiten en
-Ctrl+O via de native bestandskiezer zijn tekst en getekende grenzen gelijk.
-Er zijn nul consolefouten. Zie het
+De eerste native tegenproef met kern `b5624e38` bewaarde de zichtbare grenzen,
+maar voegde `tcW`-voorkeuren toe die niet in het bronbestand stonden: 33 `pct`
+in de bovenste rij en 50 `pct` in de onderste rijen. Het eerdere
 [controlebestand](celsplitsing-native-2026-11-06.json) en de beelden
 [vóór splitsen](../screenshots/test-celsplitsing-native-voor-2026-11-06.png) en
-[na heropenen](../screenshots/test-celsplitsing-native-heropend-2026-11-06.png).
+[na heropenen](../screenshots/test-celsplitsing-native-heropend-2026-11-06.png)
+leggen die tegenproef vast; ze zijn geen aftekening van de huidige kern.
 
-**De opslaggetrouwheid is nog niet geslaagd.** De oorspronkelijke bron bevat
-geen `tcW`-voorkeursbreedtes. Na native bewaren bevatten ook de niet-geselecteerde
-onderste cellen nieuwe `pct`-waarden van 50; de nieuwe bovenste cellen krijgen
-33. De bronvoorkeur wordt daarmee niet behouden. Een OOXML-waarde van 33
-vijftigsten is bovendien geen derde van de tabel. De volledige opslagproef
-blijft daarom rood, ondanks de gelijk gebleven zichtbare geometrie.
+Zowel de native import als de JS-documentprojectie vulde een ontbrekende
+voorkeursbreedte aan met het afgeronde rasteraandeel op schaal 0–100. Opslag
+behandelde dat vervolgens als een werkelijk opgegeven OOXML-voorkeur op schaal
+0–5000. De correctie voorkomt deze aanvulling bij beide importen. De
+rasterbreedtes blijven voor de indeling beschikbaar. De brug respecteert elke
+werkelijk opgegeven voorkeur, ook wanneer haar kleine getal toevallig op een
+vroeger afgeleid rasterpercentage lijkt.
 
-De aanvullende proef `voorkeursbreedte-opslag-engine.test.ts` controleert zes
-geldige combinaties van native/documentprojectie en sessie-/editoropslag,
-met en zonder splitsen. Twee ongewijzigde native routes slagen; vier gevallen
-reproduceren de nieuwe voorkeuren. Ook de documentprojectie zonder splitsen
-vertoont de afwijking. Deze regressieproef blijft bewust actief; de PR blijft
-concept totdat de bron van deze afgeleide breedtes is hersteld en de
-opslaggetrouwheid opnieuw slaagt. #48 en #130 blijven open.
+De opslagproef controleert nu 24 gevallen: zes combinaties met/zonder delen
+via native/documentimport en sessie-/editoropslag, plus achttien gevallen met
+een expliciete voorkeur uit de bron of een nieuwe bewerking. Die voorkeuren
+zijn 50 `pct`, 2500 `pct` en 4000 `dxa`. Alle gevallen slagen. De Node-proef
+laadt een eigen kopie van de volledige SDK-modulegraaf met dezelfde
+broncorrectie als de productiebuild; het gedeelde pakket blijft onaangeroerd.
+
+## Native controle en eerste-opslagmelding
+
+De native proef met de nieuwe kern `9e5af39b` is in een eigen X11-scherm,
+profiel en applicatie-id uitgevoerd. De ingebedde asset heeft de verwachte
+SHA-256. Delen in twee en drie kolommen, Undo/Redo en opnieuw samenvoegen en
+delen naar twee zichtbare cellen slagen. De bovenste driedeling is 3 × 208
+pixels; de onderste rijen blijven elk 2 × 312 pixels. Na de werkelijke eerste
+Ctrl+S bevat de DOCX nul `tcW`-elementen, overeenkomstig de bron.
+
+Die proef ontdekte een afzonderlijke statusafwijking: het bestand is geschreven,
+maar de wijzigingsstip blijft na de eerste opslag staan. Een nieuwe kopie van
+de bron met alleen een driedeling reproduceert dit ook. Instrumentatie toont
+dat `adoptWorkerSaveUpdates` de door de opslagworker gepubliceerde
+alinea-identiteiten overneemt; de engineversie stijgt daarbij zonder nieuwe
+gebruikersinvoer. De directe versiemelding telt dit ten onrechte als een
+bewerking tijdens opslaan. Een tweede opslag blijft schoon, maar geldt niet
+als oplossing of als geslaagde eerste-opslagproef.
+
+De JS-aansluiting markeert uitsluitend deze synchrone adoptie op de betrokken
+sessie. De deduplicatie bevestigt haar versie zonder een inhoudswijziging te
+melden. De markering wordt in `finally` hersteld. Echte invoer vóór of na die
+adoptie tijdens de asynchrone opslag blijft als onopgeslagen gelden. De drie
+nieuwe regressiegevallen voeren de werkelijke bundeluitdrukkingen uit: zonder
+correctie faalt het geval zonder nieuwe invoer; met correctie slagen alle drie.
+De native eerste-opslag-/heropenproef met deze aanvullende JS-correctie slaagt:
+na de eerste Ctrl+S blijft de titel 2,064 seconden schoon binnen 3,444 seconden
+na de toets, ruim binnen de vaste grens van zeven seconden. Na sluiten en
+heropenen zijn alle celteksten en getekende grenzen exact gelijk aan vóór het
+sluiten. Het opgeslagen raster is `[3120,1560,1560,3120]`, met overspanningen
+`[1,2,1]` boven en `[2,2]` in beide onderste rijen. Geen enkele cel heeft een
+nieuwe `tcW`. De opnieuw-samengevoegde cel mag in de echte dialoog van vier
+rasterstroken naar twee zichtbare kolommen worden gedeeld.
+
+Zie het [nieuwe native bewijs](celsplitsing-native-behoud-2026-11-06.json),
+de [eerste-opslagtegenproef](eerste-opslag-tegenproef-2026-11-06.json) en de
+nieuwe beelden [vóór delen](../screenshots/test-celsplitsing-native-behoud-voor-2026-11-06.png)
+en [na heropenen](../screenshots/test-celsplitsing-native-behoud-heropend-2026-11-06.png).
+De bestaande melding over aangepaste XML-gegevens is zichtbaar in beide beelden;
+voor deze proef is geen volledige consolefoutregistratie gemaakt. Typecontrole,
+productiebuild en native bouw slagen; de 27 backendbronbestanden zijn bytegelijk
+aan de repository. De applicatie en het eigen X11-scherm zijn na de proef
+opgeruimd. #48 en #130 blijven open wegens hun ruimere criteria.
 
 ## Afzonderlijke observatie bij het opzetten van de proef
 

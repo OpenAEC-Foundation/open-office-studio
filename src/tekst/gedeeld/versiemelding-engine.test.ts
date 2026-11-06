@@ -9,16 +9,17 @@ const oudTimer = 'I&&(sn.current!==null&&clearTimeout(sn.current),sn.current=set
 /** Voert de echte versie-, deduplicatie- en timerexpressies van 0.5.1 uit. */
 function koppeling(direct: boolean, wijziging: () => void) {
   const code = herstelDirecteVersiemelding(bron);
-  const begin = code.indexOf("po=useCallback(M=>{");
+  const begin = code.indexOf("po=useCallback(");
   const einde = code.indexOf(",Wc=useRef(", begin);
   const cbBegin = code.indexOf("vg=useCallback(()=>{");
   const cbEind = code.indexOf("cn.current=", cbBegin);
   const projecteer = vi.fn();
-  let versie = "versie-1";
+  let versienummer = 1;
+  const sessie = { version: () => `versie-${versienummer}`, oosBewaarUpdate: false };
   const maak = new Function("useCallback", "uo", "mt", "Yt", "da$1", "U", "Et", "Va$1",
     `let ${code.slice(begin, einde)}; let ${code.slice(cbBegin, cbEind)} return vg;`);
   const callback = maak((fn: unknown) => fn, { current: null }, { current: wijziging }, { current: new Set() },
-    () => false, { current: {} }, { session: { version: () => versie } }, projecteer);
+    () => false, { current: {} }, { session: sessie }, projecteer);
   const timer = { current: null };
   const timerBron = direct ? code : bron;
   const timerBegin = timerBron.indexOf(direct ? "I&&Be.current?.oosVersie?.()" : oudTimer);
@@ -28,7 +29,21 @@ function koppeling(direct: boolean, wijziging: () => void) {
     `return (${timerBron.slice(timerBegin, timerEind)});`);
   return {
     meld: () => meld(true, { current: callback }, timer, clearTimeout, setTimeout),
-    volgendeVersie: () => { versie = "versie-2"; },
+    volgendeVersie: () => { versienummer++; },
+    neemOpslagUpdateOver: () => {
+      // Het echte worker-adoptieanker uit dezelfde bundel, inclusief herstel
+      // van de markering bij een fout of een geneste adoptie.
+      const begin = code.indexOf("Le=>L.current.adoptWorkerSaveUpdates(Le)");
+      const nieuw = code.indexOf("Le=>{const oosVorige=");
+      const anker = nieuw >= 0 ? nieuw : begin;
+      const einde = code.indexOf("}),Cr=$(ge)", anker);
+      if (anker < 0 || einde < 0) throw new Error("Worker-adoptie ontbreekt");
+      const adopteer = new Function("ge", "L", `return (${code.slice(anker, einde - 1)});`)(sessie, {
+        current: { adoptWorkerSaveUpdates: (fn: () => void) => fn() },
+      });
+      adopteer(() => { versienummer++; meld(true, { current: callback }, timer, clearTimeout, setTimeout); });
+      expect(sessie.oosBewaarUpdate).toBeFalsy();
+    },
     projecteer,
   };
 }
@@ -36,7 +51,7 @@ function koppeling(direct: boolean, wijziging: () => void) {
 afterEach(() => vi.useRealTimers());
 
 describe("bevestigde tekstversie vóór de opslagrevisie (#153)", () => {
-  it("bewaakt beide bronankers van de vastgezette engine", () => {
+  it("bewaakt de bronankers van de vastgezette engine", () => {
     expect(herstelDirecteVersiemelding(bron)).toContain("I&&Be.current?.oosVersie?.()");
     expect(() => herstelDirecteVersiemelding("andere engine")).toThrow("versiemeldingen");
     expect(() => herstelDirecteVersiemelding(bron + bron)).toThrow("versiemeldingen");
@@ -83,4 +98,23 @@ describe("bevestigde tekstversie vóór de opslagrevisie (#153)", () => {
     expect(r).toMatchObject({ schoon: false });
     expect(opslag.gewijzigd).toBe(true);
   });
+  it.each(["geen", "voor", "na"])("telt opslagidentiteiten niet als invoer; echte wijziging: %s", async (invoer) => {
+    vi.useFakeTimers();
+    const opslag = new DocumentOpslag(); const id = opslag.wissel();
+    const k = koppeling(true, () => opslag.wijzig(id));
+    const serialiseer = Object.assign(async () => {
+      if (invoer === "voor") { k.volgendeVersie(); k.meld(); }
+      k.neemOpslagUpdateOver();
+      if (invoer === "na") { k.volgendeVersie(); k.meld(); }
+      vi.advanceTimersByTime(100);
+      return new TextEncoder().encode("Basis");
+    }, { bereidVoor: async () => { k.meld(); } });
+    const r = await opslag.opslaan(serialiseer, async () => ({ status: "opgeslagen", pad: "Proef.docx" }));
+    expect(r).toMatchObject({ schoon: invoer === "geen" });
+    expect(opslag.gewijzigd).toBe(invoer !== "geen");
+    // Na de eigen opslag-adoptie blijft gewone invoer meldbaar.
+    k.volgendeVersie(); k.meld();
+    expect(opslag.gewijzigd).toBe(true);
+  });
+
 });
