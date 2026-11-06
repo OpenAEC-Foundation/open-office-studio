@@ -5,8 +5,10 @@ weer als formules. De aanvullende celinvoer via F2 heeft nu dezelfde
 verwijzingskleuren en bereikkeuze als de formulebalken. Het parallelle native
 interfacetraject (#116) valt buiten deze wijziging.
 
-Dit voltooit de lokale acceptatieproeven van #58, naast PR #158. Aftekening
-op GitHub volgt na de platformcontroles en merge. Het bredere #59 blijft open.
+Dit voltooit de acceptatieproeven van #58, naast PR #158. PR #159 is na zes
+groene platformcontroles gemerged als `06463ebd`; #58 is gesloten en de zes
+criteria zijn afgetekend. Zie de [platform- en statuscontrole](formulebediening-platformen-2026-11-06.json).
+Het bredere #59 blijft open.
 De gepubliceerde installers van v2026.45.1 bevatten deze correctie niet.
 
 ## Reproductie en kerncorrectie
