@@ -1,0 +1,45 @@
+.rekenblad-naambeheer {
+  max-height: min(720px, calc(100vh - 160px));
+  overflow-y: auto;
+}
+.rekenblad-namentabel {
+  max-height: 280px;
+  overflow: auto;
+  border: 1px solid var(--rand, #ccc);
+}
+.rekenblad-namentabel table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: start;
+}
+.rekenblad-namentabel th,
+.rekenblad-namentabel td {
+  padding: 5px 8px;
+  vertical-align: top;
+}
+.rekenblad-namentabel th {
+  position: sticky;
+  top: 0;
+  background: var(--paneel-achtergrond, #fff);
+}
+.rekenblad-namentabel .is-gekozen {
+  background: var(--accent-zacht, #fff0d9);
+  color: #222;
+}
+.rekenblad-namentabel td button {
+  color: inherit;
+  text-align: start;
+}
+.rekenblad-namentabel code {
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+.rekenblad-naambeheer textarea {
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  font: inherit;
+  border: 1px solid #dfe3e9;
+  border-radius: 6px;
+  padding: 7px 9px;
+}

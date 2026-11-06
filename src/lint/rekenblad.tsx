@@ -128,8 +128,9 @@ import { openRekenbladVenster, RekenbladExtra } from "../rekenblad/RekenbladExtr
 import { kopieer, leesKlembord, plak } from "../rekenblad/klembord";
 import { optimaleBreedte, optimaleHoogte } from "../rekenblad/structuur";
 import { valutaNotatie } from "../rekenblad/notatieOpdrachten";
+import { NamenBeheer } from "../rekenblad/NamenBeheer";
 
-type Paneel = "zoeken" | "ganaar" | "hernoemen" | "sorteren" | "reeks" | null;
+type Paneel = "zoeken" | "ganaar" | "hernoemen" | "sorteren" | "reeks" | "namen" | null;
 
 function useStand(api: XlsxEditorApi | null) {
   const [, ververs] = useReducer((n: number) => n + 1, 0);
@@ -634,6 +635,7 @@ export function RekenbladRibbon({
   );
   const functies = (
     <Groep naam={t("spreadsheet.groups.function")}>
+      <A naam={t("spreadsheet:names.title")} icoon={ClipboardList} uit={false} doe={() => setPaneel("namen")} />
       <Actie
         naam={t("spreadsheet.commands.insertFunction")}
         icoon={Sigma}
@@ -1047,6 +1049,7 @@ export function RekenbladRibbon({
       )}
       {api && paneel === "sorteren" && <SorteerVenster api={api} sluit={sluiten} />}
       {api && paneel === "reeks" && <ReeksVenster api={api} sluit={sluiten} />}
+      {api && paneel === "namen" && <NamenBeheer api={api} sluiten={sluiten} />}
       {api && functiePlek && (
         <FunctieVenster
           api={api}

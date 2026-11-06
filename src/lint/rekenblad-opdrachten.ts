@@ -47,6 +47,7 @@ export interface Selectie {
 type Pane = { rows: number; cols: number; top_left: Cel } | null;
 /** Ruwe structurele engine-opdrachten die `applyOps` aantoonbaar accepteert. */
 export type RuweOp =
+  | import("@betteroffice/xlsx").XlsxDefinedNameOp
   | {
       type: "insertRows" | "deleteRows";
       sheet: number;
@@ -150,9 +151,12 @@ const engineteksten: [RegExp, string][] = [
   [/out of (range|bounds)/i, "outOfRange"],
 ];
 
-export async function voerOpsUit(api: XlsxEditorApi, ops: RuweOp[]) {
+export async function voerOpsUit(api: XlsxEditorApi, ops: RuweOp[], verwachteVersie?: string) {
   if (alleenLezen(api)) throw new Melding(melding("readOnly"));
-  await api.version();
+  const versie = await api.version();
+  if (verwachteVersie !== undefined && (versie !== verwachteVersie || api.handle.version() !== verwachteVersie))
+    throw new Melding(melding("staleVersion"));
+  if (alleenLezen(api)) throw new Melding(melding("readOnly"));
   let resultaat;
   try {
     resultaat = api.handle.applyOps(ops);

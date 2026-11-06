@@ -365,7 +365,7 @@
     "expand": "Formulebalk uitvouwen",
     "collapse": "Formulebalk samenvouwen",
     "expandedLabel": "Inhoud van cel {{cell}} (Enter: vastleggen, Alt+Enter: nieuwe regel)",
-    "suggestions": "Functievoorstellen",
+    "suggestions": "Formulevoorstellen",
     "suggestionsHint": "Tab: invoegen · ↑↓: kiezen · Esc: sluiten"
   },
   "insertFunction": {
@@ -383,5 +383,47 @@
     "result": "Resultaat:",
     "resultUnavailable": "geen voorbeeld beschikbaar",
     "insert": "Invoegen"
+  },
+  "names": {
+    "title": "Naambeheer",
+    "name": "Naam",
+    "scope": "Bereik",
+    "workbook": "Werkmap",
+    "refersTo": "Verwijst naar",
+    "hidden": "Verborgen",
+    "empty": "Geen naamdefinities gevonden.",
+    "new": "Nieuwe naam",
+    "fromSelection": "Namen uit selectie",
+    "reservedHint": "Deze ingebouwde naam wordt door de werkmap beheerd en kan hier niet worden gewijzigd.",
+    "deleteQuestion": "Naam “{{name}}” verwijderen?",
+    "deleteHint": "Formules die deze naam gebruiken kunnen daarna een fout geven. Ongedaan maken herstelt de naam.",
+    "deleted": "De naam is verwijderd.",
+    "saved": "De naamdefinities zijn bijgewerkt.",
+    "editHint": "De naam blijft behouden; pas de verwijzing, zichtbaarheid of het bereik aan.",
+    "definitionHint": "Gebruik een absolute bladverwijzing, een constante of een formule. Bijvoorbeeld ='Blad 1'!$A$1:$A$10, =0.21 of =SUM('Blad 1'!$A$1:$A$10).",
+    "selection": "Selectie: {{range}}",
+    "headersHint": "De gekozen kopregels vallen buiten het benoemde gegevensbereik. Spaties worden underscores. Bestaande of dubbele namen worden niet overschreven.",
+    "headerSides": "Koppen gebruiken uit",
+    "sides": {
+      "boven": "Bovenste rij",
+      "onder": "Onderste rij",
+      "links": "Linkerkolom",
+      "rechts": "Rechterkolom"
+    },
+    "preview": "Voorbeeldnamen tonen",
+    "skipped": "Overgeslagen kopcellen zonder tekst: {{cells}}",
+    "errors": {
+      "invalidName": "Gebruik een naam van maximaal 255 tekens, zonder spaties of celadres; begin met een letter of underscore.",
+      "emptyDefinition": "Vul een bereik, constante of formule in.",
+      "duplicateName": "Naam “{{name}}” bestaat al binnen dit bereik.",
+      "staleName": "De naam of werkmap is intussen gewijzigd. Lees de lijst opnieuw of maak een nieuw voorstel.",
+      "invalidScope": "De bladen zijn intussen gewijzigd. Open dit venster opnieuw.",
+      "reservedName": "Naam “{{name}}” is gereserveerd voor de werkmap.",
+      "emptyHeaders": "De gekozen koppen bevatten geen bruikbare namen.",
+      "headerConflict": "Kop “{{name}}” levert een dubbele of bestaande naam op. Er is niets gewijzigd.",
+      "selectionTooLarge": "Kies maximaal 5.000 kopcellen tegelijk.",
+      "invalidSelection": "Selecteer kopcellen met minstens één gegevenscel ernaast en kies de kant met de koppen.",
+      "readFailed": "De naamdefinities of kopcellen konden niet worden gelezen."
+    }
   }
 }

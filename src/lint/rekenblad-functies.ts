@@ -401,14 +401,14 @@ export function woordBijCursor(invoer: string, cursor: number): { begin: number;
   const voor = invoer.slice(0, cursor);
   const { tekst, open } = maskeer(voor);
   if (open) return null;
-  const m = /([A-Za-z_][A-Za-z0-9_.]*)$/.exec(tekst);
+  const m = /([\p{L}_\\][\p{L}\p{M}\p{N}_.\\]*)$/u.exec(tekst);
   if (!m) return null;
   const begin = cursor - m[1].length;
   const ervoor = tekst[begin - 1] ?? "";
   // Niet na een bladnaam, een getal, een punt of binnen een verwijzing ($A, A1:B).
-  if (/[A-Za-z0-9_.$!:]/.test(ervoor)) return null;
+  if (/[\p{L}\p{M}\p{N}_.$!:\\]/u.test(ervoor)) return null;
   // Het woord gaat niet verder na de cursor.
-  if (/^[A-Za-z0-9_.(]/.test(invoer.slice(cursor))) return null;
+  if (/^[\p{L}\p{M}\p{N}_.(\\]/u.test(invoer.slice(cursor))) return null;
   return { begin, woord: m[1] };
 }
 

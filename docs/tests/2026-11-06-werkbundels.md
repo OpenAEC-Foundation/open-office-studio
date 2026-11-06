@@ -30,9 +30,13 @@ blijven open zolang een deel van hun criteria niet is geverifieerd.
   bekeken; alle 28 openbare downloadlinks geven HTTP 200. Zie het
   [releasebewijs](uitgave-2026.45.2-controle.json).
 - #70: de native tegenproef bevestigt verkeerde voorrang bij gelijke werkmap-
-  en bladnamen en een verouderde naam na bladwisselen. De kandidaat herstelt
-  deze bediening; zestien gerichte WASM-proeven en 1.760 app-proeven slagen.
-  Het volledige naambeheer blijft open. Zie het [naamvakverslag](2026-11-06-naamvak.md).
+  en bladnamen en een verouderde naam na bladwisselen. PR #162 herstelt
+  deze bediening en is na zes groene platformcontroles gemerged als `c3e9acc7`.
+  De opvolgende kandidaat voegt het naambeheervenster, namen uit koppen en
+  formuleaanvulling toe. Alle vijf criteria slagen lokaal, inclusief native
+  bewaren/heropenen; 1.806 app-proeven slagen. #70 blijft open tot de opvolgende
+  platformcontroles en merge. Zie het [naamvakverslag](2026-11-06-naamvak.md)
+  en [naambeheerverslag](2026-11-06-naambeheer.md).
 - PR #154 is gemerged als `7f2d317a`. IFCX-opslag en herstel van Writer-invoer
   en opslagstatus zijn lokaal en met zes geslaagde platformcontroles geverifieerd.
   #126, #135, #152 en #153 zijn gesloten met afzonderlijk testbewijs. Zie de
