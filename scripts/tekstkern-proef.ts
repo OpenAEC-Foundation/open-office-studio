@@ -1,7 +1,8 @@
 import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
-import { herstelCelBreedteBron } from "./tekstengine-compatibiliteit";
+import { createHash } from "node:crypto";
+import { herstelCelBreedteBron, herstelNootverwijzingOpmaak } from "./tekstengine-compatibiliteit";
 
 /**
  * De Node-proef laadt dezelfde broncorrectie als Vite, met een eigen kopie van
@@ -15,8 +16,14 @@ export async function openTekstkernProef() {
   const sluit = () => rmSync(map, { recursive: true, force: true });
   try {
     cpSync(resolve("node_modules/@betteroffice/docx/dist"), map, { recursive: true });
-    const bronpad = join(map, "chunk-N5NWITJ6.mjs");
-    writeFileSync(bronpad, herstelCelBreedteBron(readFileSync(bronpad, "utf8")));
+    const aansluiting = [];
+    const som = (tekst: string) => createHash("sha256").update(tekst).digest("hex");
+    for (const [naam, herstel] of [["chunk-N5NWITJ6.mjs", herstelCelBreedteBron],
+      ["chunk-HAZBP3QT.mjs", herstelNootverwijzingOpmaak]] as const) {
+      const pad = join(map, naam), bron = readFileSync(pad, "utf8"), uit = herstel(bron);
+      writeFileSync(pad, uit);
+      aansluiting.push({ naam, oorspronkelijkSha256: som(bron), sha256: som(uit) });
+    }
     const laad = (pad: string) => import(/* @vite-ignore */ pathToFileURL(join(map, pad)).href);
     const edit = await laad("wasm-edit.mjs");
     await edit.preloadEditWasm(readFileSync(process.env.OOS_NOOT_WASM ?? "vendor/tekstengine/docx_edit_bg.wasm"));
@@ -25,6 +32,7 @@ export async function openTekstkernProef() {
     return {
       sdk: await laad("yrs/index.mjs") as typeof import("@betteroffice/docx/yrs"),
       docx: await laad("docx/index.mjs") as typeof import("@betteroffice/docx/docx"),
+      aansluiting,
       sluit,
     };
   } catch (e) {

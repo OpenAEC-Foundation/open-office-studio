@@ -1,0 +1,26 @@
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+  font-family: system-ui, sans-serif;
+}
+header {
+  box-sizing: border-box;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+header output {
+  font-size: 11px;
+}
+main {
+  height: calc(100% - 52px);
+  min-height: 0;
+}
+.h-full {
+  height: 100%;
+}

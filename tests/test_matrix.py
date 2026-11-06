@@ -109,6 +109,17 @@ class Matrix(unittest.TestCase):
         zonder_timing = self.variant('P3.pptx', wijzig={'ppt/slides/slide1.xml': lambda x: x[:x.index('<p:timing>')] + x[x.index('</p:timing>') + len('</p:timing>'):]})
         self.assertIn('animatie', kenmerken.beoordeel(self.pad / 'P3.pptx', zonder_timing)['kenmerken_verloren'])
 
+    def test_noot_blijft_bestaan_maar_verliest_opmaak(self):
+        bron = self.pad / 'D3.docx'
+        zonder_stijl = self.variant('D3.docx', wijzig={'word/document.xml': lambda x: x.replace(
+            '<w:rPr><w:rStyle w:val="Voetnootmarkering"/></w:rPr><w:footnoteReference',
+            '<w:footnoteReference')})
+        r = kenmerken.beoordeel(bron, zonder_stijl)
+        self.assertTrue(r['kenmerken_resultaat']['voetnoten'])
+        self.assertFalse(r['nootverwijzingen_opmaak']['bewaard'])
+        self.assertEqual(r['nootverwijzingen_opmaak']['afwijkingen'], ['word/document.xml:footnoteReference:1'])
+        self.assertTrue(kenmerken.beoordeel(bron, bron)['nootverwijzingen_opmaak']['bewaard'])
+
     def test_bedoelde_wijziging_en_onbedoelde_tekst(self):
         deel, oud, nieuw = fixtures.BEWERKINGEN['P2']
         bewerking = {'onderdeel': deel, 'oud': oud, 'nieuw': nieuw}

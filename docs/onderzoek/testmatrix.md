@@ -30,7 +30,12 @@ D1–D3 en P1–P3 zijn op 26 oktober 2026 met synthetische fixtures uitgevoerd:
 `node scripts/test-matrix-documenten.mjs` (fixtures via
 `scripts/maak-matrixfixtures.py`, kenmerkcontrole via
 `scripts/matrix_kenmerken.py`, uitvoer in `.local/matrix/documenten/`).
-Praktijkbestanden en de GUI-proef met deze bestanden staan nog open.
+De [herhaalde documentmatrix van 6 november](../tests/2026-11-06-documentmatrix.md)
+gebruikt de actuele productiekern en vergelijkt D1–D3 met de oorspronkelijke
+Y-app-adapter in een echte browser en de gepubliceerde native Writer. Daarbij
+is verloren tekenopmaak van een nootverwijzing gevonden en hersteld. De
+kenmerkcontrole bewaakt die opmaak nu afzonderlijk. Praktijkbestanden en de
+volledige visuele paginavergelijking staan nog open.
 
 R1–R3 zijn eveneens eerder uitgevoerd; het oorspronkelijke
 [rekenbladverslag](../tests/2026-10-26-rekenbladen.md) betreft de oudere kern.
